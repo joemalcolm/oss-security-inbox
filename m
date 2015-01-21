@@ -1,31 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/04/7
-Message-ID: <54F74705.4020309@redhat.com>
-Date: Wed, 04 Mar 2015 10:55:17 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Another Python app (rhn-setup: rhnreg_ks) not checking hostnames in certs properly CVE-2015-1777
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/21/5
+Message-ID: <87k30gxpp5.fsf@redhat.com>
+Date: Wed, 21 Jan 2015 13:50:46 +0100
+From: Martin Prpic <mprpic@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: two issues in vorbis-tools
 Content-Type: text/plain; charset=utf-8
 
-https://bugzilla.redhat.com/show_bug.cgi?id=1198740
+Hi,
 
-Jan Bee of the Google Security Team reports:
+Two issues were reported in vorbis-tools on Full Disclosure:
 
-The /usr/sbin/rhnreg_ks fails to properly validate hostnames in
-certificates. This can result in man in the middle attacks.
+http://seclists.org/fulldisclosure/2015/Jan/78
 
-===
+Issues in question:
 
-Please note that this issue cannot easily be exploited to cause any
-significant damage to a system other then preventing registration from
-taking place properly which the attacker would be able to do in any
-event if the can man in the middle the connection.
+https://trac.xiph.org/ticket/2137
+-- a divide-by-zero issue leading to a crash
 
+https://trac.xiph.org/ticket/2136
+-- an integer overflow leading to an out-of-bounds memory read
 
+Thank you!
 
 -- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Martin Prpič / Red Hat Product Security
