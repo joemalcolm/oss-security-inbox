@@ -1,82 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/11/8
-Message-Id: <20150311171159.03DCA6C0002@smtpvmsrv1.mitre.org>
-Date: Wed, 11 Mar 2015 13:11:59 -0400 (EDT)
-From: cve-assign@...re.org
-To: jmm@...ian.org, siddharth@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: spencer regexp
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/21/16
+Message-ID: <20150121232848.GD6755@core.inversepath.com>
+Date: Thu, 22 Jan 2015 00:28:48 +0100
+From: Andrea Barisani <lcars@...rt.org>
+To: oss-security@...ts.openwall.com, ocert-announce@...ts.ocert.org, bugtraq@...urityfocus.com
+Subject: [oCERT-2015-001] JasPer input sanitization errors
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-> http://www.kb.cert.org/vuls/id/695940
-> https://guidovranken.wordpress.com/2015/02/04/full-disclosure-heap-overflow-in-h-spencers-regex-library-on-32-bit-systems/
+#2015-001 JasPer input sanitization errors
 
-http://openwall.com/lists/oss-security/2015/02/07/14 says "I have to
-admit we're having a hard time trying to think of a service that
-exposes regcomp(3) over the internet."
+Description:
 
-http://openwall.com/lists/oss-security/2015/02/16/8 says "in many
-cases the code is only used when building for Android or Windows" and
-indirectly refers to multiple bugs such as:
+The JasPer project is an open source implementation for the JPEG-2000 codec.
 
-  https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=778396
-  https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=778395
+The library is affected by an off-by-one error in a buffer boundary check in
+jpc_dec_process_sot(), leading to a heap based buffer overflow, as well as
+multiple unrestricted stack memory use issues in jpc_qmfb.c, leading to stack
+overflow.
 
-For example:
+A specially crafted JPEG-2000 file can be used to trigger the vulnerabilities.
 
-  Package: cups
+Affected version:
 
-  The regex copy is only used when building on Windows. I double-checked
-  by removing the entire vcnet/regex directory and rebuilding cups.
+JasPer <= 1.900.1
 
-This is potentially ambiguous. We thought that "when building on
-Windows" would imply something like "if a user is following the steps
-in the CUPS INSTALL.txt file on a Windows machine, then that user is
-able to provide malicious input to the regcomp function during one of
-those steps." It now appears that what was meant was "The problematic
-regcomp function is present in a Windows build of CUPS. Any
-exploitation could occur only after the build has finished."
+Fixed version:
 
-In general, when one oss-security post suggests that an issue may not
-be realistically exploitable with untrusted input (e.g., "having a
-hard time trying to think of a service" above), and no other
-oss-security post suggests that the issue is realistically
-exploitable, then there might not be a CVE assignment.
+JasPer, N/A
 
-Here, we'll propose an exploitation scenario for comment. We think
-that this is (at least marginally) realistic, although it might not
-be. Unless there's an objection stating that no realistic exploitation
-scenario can exist, we'll assign a CVE ID for the original regcomp bug
-this week.
+Credit: vulnerability report received from <pyddeh@...il.com>.
 
-Example:
+CVE: CVE-2014-8157 (off-by-one heap buffer overflow),
+     CVE-2014-8158 (stack overflow)
 
-  Someone develops a new email filtering language as an alternative
-  to Sieve (RFC 5228). Like Sieve, the language's scripts are
-  intended to run on a mail server that does not permit arbitrary
-  code execution by ordinary mailbox owners. In the new language,
-  the match type of ":matches" is implemented with regcomp.
-  There is no limit on script size, and thus the 682 Mb requirement
-  from the regcomp bug report isn't a concern. It is plausible that
-  an ordinary mailbox owner can create a script that triggers the
-  bug and achieves remote code execution on the mail server.
+Timeline:
+2015-01-06: vulnerability report received
+2015-01-06: contacted affected vendors, assigned CVEs
+2015-01-21: advisory release
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+References:
+http://www.ece.uvic.ca/~frodo/jasper
 
-iQEcBAEBAgAGBQJVAHbeAAoJEKllVAevmvmsucwIAJBGMGBHsZg1oKSFhEn2wCJ7
-el1LhsIHmAk0R4rQ1E5IAQFgfNvZ5dA0lagHA7V3prYCM5rgtgGzPTA6SE0Bljl7
-rTCcxZKxs9jXJKnQsV566sdqUcN86WX8ZKp/IqBLxMa9uufi+fbdDeSYGU5R4rF4
-JvrLoRWokvdwkOxB+M4mykKKeEV0+52hBmmC/xxUdVJPdwgTEvL+SL93q8XQlZNN
-BKaFoF6sczCxwWo50u/87qUY44hkwTonHIw6ABWELPH6f0+pgG6T5vlbYS1HVPfn
-XcY6Sz4iyYmtt5AElhwRHaMVuG9EYuHtILPz+Fd5H84ePf18LYe+VQAzZl4S3Jk=
-=7w/F
------END PGP SIGNATURE-----
+-- 
+Andrea Barisani |                Founder & Project Coordinator
+          oCERT | OSS Computer Security Incident Response Team
+
+<lcars@...rt.org>                         http://www.ocert.org
+ 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
+        "Pluralitas non est ponenda sine necessitate"
