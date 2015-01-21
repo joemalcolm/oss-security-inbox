@@ -1,38 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/13/3
-Message-ID: <54B57580.7080404@mccme.ru>
-Date: Tue, 13 Jan 2015 22:44:00 +0300
-From: Alexander Cherepanov <cherepan@...me.ru>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: lhasa: directory traversals
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/21/10
+Message-ID: <54BFB1B7.4020402@tycho.nsa.gov>
+Date: Wed, 21 Jan 2015 09:03:35 -0500
+From: Stephen Smalley <sds@...ho.nsa.gov>
+To: James Morris <jmorris@...ei.org>, Ben Hutchings <ben@...adent.org.uk>
+CC: Alexander Viro <viro@...iv.linux.org.uk>, linux-fsdevel@...r.kernel.org, linux-security-module@...r.kernel.org, LKML <linux-kernel@...r.kernel.org>, 770492@...s.debian.org, Ben Harris <bjh21@....ac.uk>, oss-security@...ts.openwall.com, John Johansen <john.johansen@...onical.com>, Paul Moore <paul@...l-moore.com>, Casey Schaufler <casey@...aufler-ca.com>
+Subject: Re: [RFC PATCH RESEND] vfs: Move security_inode_killpriv() after permission checks
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+On 01/20/2015 06:17 PM, James Morris wrote:
+> On Sat, 17 Jan 2015, Ben Hutchings wrote:
+> 
+>> chown() and write() should clear all privilege attributes on
+>> a file - setuid, setgid, setcap and any other extended
+>> privilege attributes.
+>>
+>> However, any attributes beyond setuid and setgid are managed by the
+>> LSM and not directly by the filesystem, so they cannot be set along
+>> with the other attributes.
+>>
+>> Currently we call security_inode_killpriv() in notify_change(),
+>> but in case of a chown() this is too early - we have not called
+>> inode_change_ok() or made any filesystem-specific permission/sanity
+>> checks.
+>>
+>> Add a new function setattr_killpriv() which calls
+>> security_inode_killpriv() if necessary, and change the setattr()
+>> implementation to call this in each filesystem that supports xattrs.
+>> This assumes that extended privilege attributes are always stored in
+>> xattrs.
+> 
+> It'd be useful to get some input from LSM module maintainers on this. 
+> 
+> e.g. doesn't SELinux already handle this via policy directives?
 
-Directory traversals were fixed in lhasa a couple of years ago.
+There have been a couple postings of a similar patch set [1] by Jan
+Kara, although I don't believe that series addressed chown().
 
-They were not found by me. I've just rediscovered one of them and 
-wondered why it worked on Debian wheezy but not on Debian jessie.
+If I am reading the patches correctly, they (correctly) don't affect
+SELinux or Smack labels; they are just calling the existing
+security_inode_killpriv() hook, which is only implemented for the
+capability module to remove the security.capability xattr.
 
-1.
-Sanitize directory paths and do not allow '..'
-https://github.com/fragglet/lhasa/commit/64b96b5c1d08293b6c373f616b206d951ee358f7
-
-2.
-Add deferred creation for dangerous symlinks.
-https://github.com/fragglet/lhasa/commit/3bab39fd492a8924bdd25615ef40ca68c0c7ad0f
-
-which should probably be accompanied by
-
-Fix some corner cases with symlink handling.
-https://github.com/fragglet/lhasa/commit/adcd9912803e69ebeb000cc4c341fbc64820ed1f
-
-Only show symlink extraction message once.
-https://github.com/fragglet/lhasa/commit/c26557dd1b2e640e9785686355c5a2945483460b
-
-but I haven't looked inside.
-
-Could CVE please be assigned?
-
--- 
-Alexander Cherepanov
+[1] http://marc.info/?l=linux-security-module&m=141890696325054&w=2
