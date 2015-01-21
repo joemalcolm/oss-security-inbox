@@ -1,44 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/10/15
-Message-ID: <54DA6EC2.4070301@sumptuouscapital.com>
-Date: Tue, 10 Feb 2015 21:49:06 +0100
-From: Kristian Fiskerstrand <kristian.fiskerstrand@...ptuouscapital.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/21/6
+Message-ID: <20150121140116.185e420a@pc>
+Date: Wed, 21 Jan 2015 14:01:16 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: Cups: cupsRasterReadPixels buffer overflow
+Subject: Re: CVE request: two issues in vorbis-tools
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+On Wed, 21 Jan 2015 13:50:46 +0100
+Martin Prpic <mprpic@...hat.com> wrote:
 
-Cups 2.0.2 was released[0] including the following item in changelog:
-Security: cupsRasterReadPixels buffer overflow with invalid page
-header and compressed raster data (STR #4551 [1]).
+> Two issues were reported in vorbis-tools on Full Disclosure:
+> 
+> http://seclists.org/fulldisclosure/2015/Jan/78
 
-Has a CVE already been assigned to this, if not, can one be assigned?
+In addition to that: I reported this issue
+https://trac.xiph.org/ticket/2009
+a while back which also crashes oggenc.
+I didn't think about security implications back then, but it's also an
+out of bounds read issue.
 
-Thanks
+After bugging the devs on irc it got fixed in the code but never saw a
+release.
 
-References:
-[0] https://www.cups.org/
-[1] https://www.cups.org/str.php?L4551
-- -- 
-- ----------------------------
-Kristian Fiskerstrand
-Blog: http://blog.sumptuouscapital.com
-Twitter: @krifisk
-- ----------------------------
-Public OpenPGP key 0xE3EDFAE3 at hkp://pool.sks-keyservers.net
-fpr:94CB AFDD 3034 5109 5618 35AA 0B7F 8B60 E3ED FAE3
-- ----------------------------
-Cogito ergo sum
-I think, therefore I am
------BEGIN PGP SIGNATURE-----
+-- 
+Hanno Böck
+http://hboeck.de/
 
-iQEcBAEBCgAGBQJU2m6+AAoJEP7VAChXwav63lkH/3MWawq7d6xMe19mBRmCauQt
-wz5KMChpRgLlgKxUejl+jetjm7n1xNJpb4hg6lSuBdb6+KcfmWrlEUxbbCN34HiH
-oKAFmby2/VxTyrj1Bq1ce6BbtAmP6TTHI3/LmsUOA+QVvHFTBKfasEDoXXKBEzgu
-of4OMLuSFjuFaqlfPOr8VlvZGpKUJaZS1LRJRMEe/ts9Vu3CRcvMicYhgt32Q6LA
-OnxVVN4F+nIDuyxFKyRifHVRFp3tW5od2SLxXA51epEzHgnPz3eHDmzKk079jxra
-V7voBTKTuGKW5Gf2d6pjkQo7JAqARdv+3GIXBuB+YkwpSDl6pG6lP6gOcZCrobA=
-=/iVv
------END PGP SIGNATURE-----
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
+
+Content of type "application/pgp-signature" skipped
