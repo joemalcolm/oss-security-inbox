@@ -1,32 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/07/12
-Message-ID: <54D67473.8000806@redhat.com>
-Date: Sat, 07 Feb 2015 13:24:19 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: Assign a CVE Identifier <cve-assign@...re.org>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, security@...cle.com
-Subject: some really old openjdk stuff/possible java
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/21/8
+Message-ID: <20150121134139.GU12661@dhcp-25-225.brq.redhat.com>
+Date: Wed, 21 Jan 2015 14:41:40 +0100
+From: Petr Matousek <pmatouse@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: "Mehaffey, John" <John_Mehaffey@...tor.com>
+Subject: Re: CVE Request: Linux kernel information leak in event device handling
 Content-Type: text/plain; charset=utf-8
 
-All of these are 4-6 years old, nothing to exciting.
+On Wed, Jan 21, 2015 at 02:03:17PM +0100, Pavel Machek wrote:
+> On Wed 2015-01-21 13:49:45, Petr Matousek wrote:
+> > On Tue, Jan 20, 2015 at 03:23:19PM +0000, Mehaffey, John wrote:
+> > > > From: Marcus Meissner [meissner@...e.de]
+> > > > Sent: Tuesday, January 20, 2015 6:43 AM
+> > > > To: OSS Security List
+> > > > Subject: [oss-security] CVE Request: Linux kernel information leak in event device handling
+> > > >
+> > > > Hi,
+> > > >
+> > > > This needs a CVE, information leak out of the kernel.
+> > > >
+> > > > This probably was introduced by commit 483180281f0ac60d1138710eb21f4b9961901294
+> > > > in Linux 3.9.
+> > > >
+> > > > Ciao, Marcus
+> > > >
+> > > > http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=7c4f56070fde2367766fa1fb04852599b5e1ad35
+> > > > https://bugzilla.suse.com/show_bug.cgi?id=904899
+> > > >
+> > > > Input: evdev - fix EVIOCG{type} ioctl
+> > > >
+> > > > The 'max' size passed into the function is measured in number of bits
+> > > > (KEY_MAX, LED_MAX, etc) so we need to convert it accordingly before
+> > > > trying to copy the data out, otherwise we will try copying too much
+> > > > and end up with up with a page fault.
+> > > >
+> > > > Reported-by: Pavel Machek <pavel@....cz>
+> > > > Reviewed-by: Pavel Machek <pavel@....cz>
+> > > > Reviewed-by: David Herrmann <dh.herrmann@...il.com>
+> > > > Signed-off-by: Dmitry Torokhov <dmitry.torokhov@...il.com>
+> > > 
+> > > I don't see how this could leak information to the user.
+> > > 
+> > > Without the patch, too much memory is allocated internally in the driver, and too much data is copied into that buffer (potentially causing a page fault) but the same, correct amount of data is copied out to the user both before and after this patch.
+> > 
+> > @Pavel -- did you encounter the page fault? Looking at the code, even
+> > the oversized copy from dev->sw looks to be satisfied by the remaining
+> > fields in input_dev structure.
+> 
+> Yes. I guess you could search the original report somewhere...
 
-https://bugzilla.redhat.com/show_bug.cgi?id=512684
+Ah, I see it now. It's the KEY_MAX ...
 
-https://bugzilla.redhat.com/show_bug.cgi?id=512714
+For the record, the original report is at
+http://www.gossamer-threads.com/lists/linux/kernel/2021715 .
 
-https://bugzilla.redhat.com/show_bug.cgi?id=521086
-
-https://bugzilla.redhat.com/show_bug.cgi?id=554683
-
-https://bugzilla.redhat.com/show_bug.cgi?id=646543
-
-https://bugzilla.redhat.com/show_bug.cgi?id=678501
-This one was communicated to oracle apparently, I have no further info.
-
-https://bugzilla.redhat.com/show_bug.cgi?id=689445
-
+Thanks,
 -- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Petr Matousek / Red Hat Product Security
+PGP: 0xC44977CA 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
