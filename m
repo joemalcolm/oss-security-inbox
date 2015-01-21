@@ -1,29 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/22/14
-Message-ID: <20150222190702.GA12648@pisco.westfalen.local>
-Date: Sun, 22 Feb 2015 20:07:02 +0100
-From: Moritz Muehlenhoff <jmm@...ian.org>
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: CVE Request: jabberd remote information disclosure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/21/14
+Message-ID: <1421873387.31046.202.camel@decadent.org.uk>
+Date: Wed, 21 Jan 2015 20:49:47 +0000
+From: Ben Hutchings <ben@...adent.org.uk>
+To: Solar Designer <solar@...nwall.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: [RFC PATCH RESEND] vfs: Move security_inode_killpriv() after permission checks
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Feb 09, 2015 at 10:55:11PM +0100, Thijs Alkemade wrote:
-> Hello,
+On Wed, 2015-01-21 at 13:54 +0300, Solar Designer wrote:
+> Ben, all -
 > 
-> A buffer overflow was found in the XMPP server jabberd2 when normalizing
-> strings that can lead to remote information disclosure [1]. When parsing a
-> JID, jabberd2 version 2.3.2 and below truncate the data but do not verify
-> whether the result is valid UTF8 before passing it to libidn. If the data ends
-> with an unterminated multi-byte UTF8 sequence then libidn may copy data past
-> the buffer into the result. This can be exploited by remote clients or remote
-> servers.
+> On Sat, Jan 17, 2015 at 11:26:46PM +0000, Ben Hutchings wrote:
+> > chown() and write() should clear all privilege attributes on
+> > a file - setuid, setgid, setcap and any other extended
+> > privilege attributes.
+> > 
+> > However, any attributes beyond setuid and setgid are managed by the
+> > LSM and not directly by the filesystem, so they cannot be set along
+> > with the other attributes.
+> [...]
 > 
-> Could you please assign a CVE for this issue?
+> First of all, thank you for your work on the Linux kernel!
 > 
-> [1] = https://github.com/jabberd2/jabberd2/issues/85
+> Going forward, I think it may be better to CC this sort of messages to
+> the kernel-hardening list (like it's been done on some occasions before,
+> see below) rather than to oss-security - and only post summary messages
+> to oss-security, separately (not CC'ed to anywhere else).
+[...]
 
-This seems to have fallen through the cracks, adding cve-assign to CC.
+Sorry, I'd forgotten about that one.  I'll try to pick the right list in
+future.
 
-Cheers,
-        Moritz
+Ben.
+
+-- 
+Ben Hutchings
+Larkinson's Law: All laws are basically false.
+
+Download attachment "signature.asc" of type "application/pgp-signature" (812 bytes)
