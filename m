@@ -1,67 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/10/9
-Message-ID: <54FF1436.4040702@redhat.com>
-Date: Tue, 10 Mar 2015 09:56:38 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/21/9
+Message-ID: <20150121141504.GA1656@jwilk.net>
+Date: Wed, 21 Jan 2015 15:15:04 +0100
+From: Jakub Wilk <jwilk@...lk.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: Another Python app (rhn-setup: rhnreg_ks) not checking hostnames in certs properly CVE-2015-1777
+Subject: Re: heap overflow in procmail
 Content-Type: text/plain; charset=utf-8
 
-On 10/03/15 03:41 AM, John Haxby wrote:
-> On 09/03/15 20:39, Kurt Seifried wrote:
->> I find this really hard to believe based on the past. So you're
->> saying Oracle is willing to work with Red Hat and the community in
->> general now? Can we get access to the MySQL security bugs and test
->> cases for example? This would be HUGELY helpful to the community.
-> 
-> I have no link to MySQL.   You need to take this up with those people.
-> 
-> 
->> I'll believe Oracle is willing to work with the community when I 
->> actually see Oracle participate and help the community. Until then
->> it's just words from some random Oracle employee and most likely
->> isn't official policy.
-> 
->> So prove to us you want to work with us (e.g. by opening up the
->> MySQL security bugs/test cases) and we can definitely look at
->> future cooperation.
-> 
-> I would really like to be able to do that, but this is a political
-> problem outside my control.
+* Tavis Ormandy <taviso@...gle.com>, 2014-09-03, 11:52:
+>I noticed a heap overflow in procmail when parsing addresses with 
+>unbalanced quotes.
 
-What you're saying simply is "what you asked me is to hard, so I won't
-do it, heck I won't even try it". This is not the Open Source way.
+Unfortunately, there's more:
+https://bugs.debian.org/769937
 
-> None of this, however, has anything to do with the matter at hand.  If
-> no one from Red Hat is unwilling to cooperate in getting a single
-> backward-compatible resolution to incorporating PEP-466 into the
-> distro python versions then perhaps someone else is.
+Apparently procmail upstream is inactive; and nobody understands how 
+this code works.
 
-My experience is a lot of people propose a LOT of things on email lists,
-but when it actually comes down to them doing the work, nothing happens
-because quite often the people proposing the work don't have the
-expertise or ability to do it. oss-security@ archives are littered with
-such examples (e.g. the whole code audit thing).
+At this point, I'd recommend that formail users switch to reformail[0], 
+which is mostly (but not completely) compatible with formail.
 
-So it's not that I'm unwilling, I simply don't see why you need massive
-corporate/community buy in at this point, premature optimization and all
-that. Build a solution, or more than one solution and try them out, then
-report back to oss-security@ with what works/doesn't work. In general
-the best way to determine what the best solution is for a problem is to
-try several solutions out. Prototype code and experimental data is worth
-1000 meetings.
-
-Come back to us with data/a working solution and then I'd be willing to
-consider investing some time/energy into this, but until then this is
-simply an experimental project that may not even be needed (who knows,
-we don't because we're basically holding a useless meeting right now via
-email).
-
-
+[0] http://www.courier-mta.org/reformail.html
 
 -- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Jakub Wilk
