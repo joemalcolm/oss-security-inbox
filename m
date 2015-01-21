@@ -1,62 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/12/13
-Message-Id: <20150212172721.E686672E133@smtpvbsrv1.mitre.org>
-Date: Thu, 12 Feb 2015 12:27:21 -0500 (EST)
-From: cve-assign@...re.org
-To: Todd.Miller@...rtesan.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: sudo TZ issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/21/13
+Message-ID: <54BFF440.7070001@canonical.com>
+Date: Wed, 21 Jan 2015 13:47:28 -0500
+From: Marc Deslauriers <marc.deslauriers@...onical.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request: XSS and response-splitting bugs in rabbitmq management plugin
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello,
 
-Your February 9 message said "CVE request," your February 11 message
-didn't withdraw the request, and you mentioned that 'the promise that
-commands be started with a "safe" environment' is an intended property
-of sudo. That's sufficient for a CVE; use CVE-2014-9680.
+The following issues were fixed in RabbitMQ 3.4.1:
 
-> There are really two issues here: exposure of TZ parsing bugs and
-> access to arbitrary (potentially user-controlled) files. I'm happy
-> to put the blame for TZ parsing bugs on libc or the application.
-> However, there is no real way for the application to tell that it
-> is being run by an unprivileged user and that operations that would
-> otherwise be safe (opening a user-specified time zone file) may be
-> dangerous.
+(as described in
+https://groups.google.com/forum/#!topic/rabbitmq-users/-3Z2FyGtXhs )
 
-The scope of CVE-2014-9680 is limited to the undesired ability of an
-attacker to trigger an open call for a pathname outside the zoneinfo
-directory (whether this is done with an absolute pathname or a
-relative pathname). The scope of CVE-2014-9680 does not include
-blocking other types of invalid or potentially malicious TZ values.
-For example:
+26437 prevent /api/* from returning text/html error messages which could
+       act as an XSS vector (since 2.1.0)
+26433 fix response-splitting vulnerability in /api/downloads
+       (since 2.1.0)
 
-> It is longer than the value of PATH_MAX.
+Bug 26437 allowed an attacker to create a URL to "/api/..." which would
+provoke an internal server error, resulting in the server returning an
+html page with text from the URL embedded and not escaped. This was
+fixed by ensuring all URLs below /api/ only ever return responses with a
+content type of application/json, even in the case of an internal server
+error.
 
-It seems simple to envision a program for which a length of PATH_MAX-2
-triggers a buffer overflow. Even if such a program were known, we
-wouldn't want to assign a CVE ID to sudo on the basis that PATH_MAX-2
-isn't blocked.
+Bug 26433 allowed an attacker to specify a URL to /api/definitions which
+would cause an arbitrary additional header to be returned. This was
+fixed by stripping out CR/LF from the "download" query string parameter.
 
-> http://openwall.com/lists/oss-security/2014/10/15/24
 
-> Procmail is another program that recklessly whitelists TZ
+Fixed by:
+https://github.com/rabbitmq/rabbitmq-management/commit/b5a5fc31bd49ad821a655ea9e2fe920d670a62ad
 
-Use CVE-2014-9681 for the similar issue in procmail.
+Could CVEs please be assigned to these issue?
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Thanks,
 
-iQEcBAEBAgAGBQJU3OIQAAoJEKllVAevmvms/M0H+QGrI9RHIuVe3o1srcyy7fSx
-qKl/T8hMjXLp5dliRa2MlTCHFqzpzuT/v+xeAk7u7HIRTyfo8eKqO5PJZANCTG3m
-0dlBICOjLx3ne3QyP+2DSJM+iSh0Z5Qz2vpUKz05Ry0jSzEY/cF/t7NBPEo0f0pw
-CDMK/BxMVbhYHZnRs4MmCU0hPG2w0q/aa4I45rVJilB3z+sF1IDClw/uJWu3ZAMi
-ysAb278nfhMVzAklvzdwb2jpjk41orPPXY6XRGL2lsIEbZ+CFDPJs6mEW8q1oYxJ
-BE3nxsblJ543Y2KGkGVXXxg485H4FBhMkBL/znFmzPkHUKeTh3wl271d3krpbJU=
-=bEKj
------END PGP SIGNATURE-----
+Marc.
+
+-- 
+Marc Deslauriers
+Ubuntu Security Engineer     | http://www.ubuntu.com/
+Canonical Ltd.               | http://www.canonical.com/
