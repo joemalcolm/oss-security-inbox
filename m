@@ -1,16 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/31/7
-Message-ID: <CAMsfipC0gADNWfGngsmG7cetgTP2Do0EB-5-6KHBZi_Q_+5=aA@mail.gmail.com>
-Date: Sat, 31 Jan 2015 18:00:32 +0100
-From: Achref Akremi <ach.n30@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: Piwigo SQL Injection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/22/5
+Message-ID: <Pine.LNX.4.64.1501220949060.18848@beijing.mitre.org>
+Date: Thu, 22 Jan 2015 09:51:40 -0500 (EST)
+From: cve-assign@...re.org
+To: mancha <mancha1@...o.com>
+cc: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: Re: CVE Request: Info-ZIP unzip 6.0
 Content-Type: text/plain; charset=utf-8
 
-Hi,
 
-Can I get a CVE ID for Piwigo SQL Injection vulnerability fixed in Piwigo
-2.7.3
+>> OOB access (both read and write) issues exist in test_compr_eb
+>> (extract.c) that can result in application crash or other unspecified
+>> impact.
+>>
+>> This vulnerability can be triggered via crafted zip archives with extra
+>> fields that advertise STORED method compression (i.e. no compression)
+>> and have uncompressed field sizes smaller than the corresponding
+>> compressed field sizes.
+>>
+>> This issue is different from CVE-2014-8140 [1].
+>>
+>> Please allocate a CVE identifier for this vulnerability.
+>>
+>> --mancha
+>>
+>>
+>> Timeline:
+>>
+>> 2014-10-24: Crasher bundled in afl
+>> 2014-11-02: Existence of crasher shared on OSS-SEC [2]
+>> 2014-11-03: Crasher analyzed and fix developed [3]
+>> 2014-11-03: Maintainer contacted [4]
+>> 2014-12-22: CVE requested
+>>
+>> ----
+>> [1] https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2014-8140
+>> [2] http://seclists.org/oss-sec/2014/q4/489
+>> [3] http://seclists.org/oss-sec/2014/q4/507
+>> [4] http://www.info-zip.org/phpBB3/viewtopic.php?f=7&t=450
 
-http://piwigo.org/releases/2.7.3
+Use CVE-2014-9636.
 
+---
+
+CVE assignment team, MITRE CVE Numbering Authority M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
