@@ -1,48 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/02/3
-Message-ID: <20150202174834.GA22419@ursa.suse.cz>
-Date: Mon, 2 Feb 2015 18:48:35 +0100
-From: Vitezslav Cizek <vcizek@...e.cz>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: cpio -- directory traversal
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/22/4
+Message-ID: <Pine.LNX.4.64.1501220927200.18848@beijing.mitre.org>
+Date: Thu, 22 Jan 2015 09:28:14 -0500 (EST)
+From: cve-assign@...re.org
+To: Salvatore Bonaccorso <carnil@...ian.org>
+cc: OSS Security Mailinglist <oss-security@...ts.openwall.com>, CVE Assignments MITRE <cve-assign@...re.org>
+Subject: Re: Possible CVE request: sympa: vulnerability in the web interface
 Content-Type: text/plain; charset=utf-8
 
-Hi,
 
-* Dne Friday 16. January 2015, 03:44:25 [CET] Alexander Cherepanov napsal:
-> Hi!
-> 
-> cpio is susceptible to a directory traversal vulnerability via symlinks.
+On Tue, 20 Jan 2015, Salvatore Bonaccorso wrote:
 
-Here's a patch we use in SUSE for some time.
-It forbids to write over symlinks, similar to bsdtar.
-It also adds a new option "--extract-over-symlinks" to restore the original
-behaviour.
+> Hi
+>
+> I would like to ask if a CVE could be assigned for the following issue
+> (it is not clear if upstream has already requested one):
+> https://www.sympa.org/security_advisories#security_breaches_in_newsletter_posting
+>
+> The advisory reads:
+>
+>> A vulnerability have been discovered in Sympa web interface that
+>> allows access to files on the server filesystem.
+>>
+>> This breach allows to send to a list or a user any file readable by
+>> the Sympa user, located on the server filesystem, using the Sympa web
+>> interface newsletter posting area.
+>
+> Upstream patch: https://sourcesup.renater.fr/scm/viewvc.php/branches/sympa-6.1-branch/wwsympa/wwsympa.fcgi.in?root=sympa&r1=11562&r2=11778&view=patch
+>
+> Thanks in advance,
+>
+> Regards,
+> Salvatore
 
-I sent it to Sergey Poznyakoff (upstream maintainer) in July,
-but there was no response.
+Use CVE-2015-1306.
 
-Here's a corresponding bug in SUSE bugzilla:
-https://bugzilla.suse.com/show_bug.cgi?id=658010
+---
 
-> Initial report:
-> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=774669
-> 
-> Upstream report:
-> https://lists.gnu.org/archive/html/bug-cpio/2015-01/msg00000.html
-> 
-> Some discussion:
-> http://www.openwall.com/lists/oss-security/2015/01/07/5
-> http://www.openwall.com/lists/oss-security/2015/01/08/4
-> 
-> Could CVE(s) please be assigned?
-> 
-> -- 
-> Alexander Cherepanov
-
--- 
-Vita Cizek
-
-View attachment "cpio-check_for_symlinks.patch" of type "text/x-patch" (5057 bytes)
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+CVE assignment team, MITRE CVE Numbering Authority M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
