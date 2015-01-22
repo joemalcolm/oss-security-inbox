@@ -1,23 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/09/3
-Message-ID: <54FDC958.6060608@oracle.com>
-Date: Mon, 09 Mar 2015 16:24:56 +0000
-From: John Haxby <john.haxby@...cle.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2014-8172
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/22/11
+Message-ID: <1701304.lQakmNqAQp@xps>
+Date: Thu, 22 Jan 2015 22:34:59 +0100
+From: Albert Astals Cid <aacid@....org>
+To: cve-assign@...re.org
+Cc: OSS Security Mailinglist <oss-security@...ts.openwall.com>, security@....org
+Subject: Re: KDE Plasma vulnerabilities: need CVE
 Content-Type: text/plain; charset=utf-8
 
-Hello All,
+El Dijous, 22 de gener de 2015, a les 10:07:07, cve-assign@...re.org va 
+escriure:
+> > Hi, can we get two CVEs assigned for the attached vulnerabilities?
+> > 
+> > Thanks,
+> > 
+> >  Albert
+> 
+> plasma-workspace: Network access from screen locker
+> 
+> kde-workspace, plasma-workspace: X11 clients can eavesdrop input
+> events while screen is locked
+> 
+> CVE-2015-1307 - plasma-workspace: Network access from screen locker
+> 
+> CVE-2015-1308 - kde-workspace, plasma-workspace: X11 clients can eavesdrop
+> input events while screen is locked
 
-Recently Red Hat released an update that covers CVE-2014-8172, a
-potential soft lockup when performing async io due to files_lock
-excessive locking.  The fix for this is given as
-http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=eee5cc2702929fd41cce28058dc6d6717f723f87
+Ok, thanks :)
 
-Neither the patch author (Al Viro) nor our kernel security team can see
-how this patch prevents the async io related soft lockup.
+Cheers,
+  Albert
 
-Is there any more information about this that can be shared here or
-elsewhere?
 
-jch
+> 
+> ---
+> 
+> CVE assignment team, MITRE CVE Numbering Authority M/S M300
+> 202 Burlington Road, Bedford, MA 01730 USA
+> [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+
