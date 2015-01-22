@@ -1,34 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/10/12
-Message-ID: <20150210175705.GI23507@oevtugenva.nrevsny.pk>
-Date: Tue, 10 Feb 2015 12:57:05 -0500
-From: Rich Felker <dalias@...c.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/22/2
+Message-ID: <CAD3CancKYnpWhMd7Za2155rPKQ1jjQ5C2T6vEp5XO2V=itEgPQ@mail.gmail.com>
+Date: Thu, 22 Jan 2015 19:41:21 +1300
+From: Matthew Daley <mattd@...fuzz.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: wordexp(3)
+Cc: cve-assign@...re.org
+Subject: Re: CVE request / advisory: Apache Traffic Server 5.0.0 - 5.1.1
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Feb 10, 2015 at 08:27:56PM +0300, Solar Designer wrote:
+Ping.
+
+On 6 January 2015 at 21:42, Matthew Daley <mattd@...fuzz.com> wrote:
 > Hi,
-> 
-> I found this curious and relevant to this list, off Twitter:
-> 
-> (x250) <%worr> RT @FioraAeterna: oh my gosh, Apple's libc literally implements "wordexp" by shelling out to perl: https://github.com/Apple-FOSS-Mirror/Libc/blob/2ca2ae74647714acfc18674c3114b1a5d3325d7d/gen/wordexp.c#L192
-> 
-> <worr> So yesterday, @FioraAeterna tweeted this: https://github.com/Apple-FOSS-Mirror/Libc/blob/2ca2ae74647714acfc18674c3114b1a5d3325d7d/gen/wordexp.c#L192. I've decided to take a tour of wordexp(3) implementations
-> <@worr> They can't all be that bad
-> (x2) <@worr> NetBSD and FreeBSD both use a sh builtin to implement wordexp(3): http://svnweb.freebsd.org/base/head/lib/libc/gen/wordexp.c?revision=254977&view=markup http://cvsweb.netbsd.org/bsdweb.cgi/src/lib/libc/gen/wordexp.c?rev=1.3&content-type=text/x-cvsweb-markup&only_with_tag=MAIN
-> (x5) <@worr> OpenBSD wins the wordexp(3) contest, by refusing to implement it altogether.
-> <@worr> Correction: glibc implements a huge recursive descent parser, and only shells out when it needs to do subshell expansions.
-> <@worr> tbh, wordexp(3) is an antifeature. Maybe even a misfeature.
-> <@worr> Here's the implementation, btw: https://sourceware.org/git/?p=glibc.git;a=blob;f=posix/wordexp.c;h=26f3a2653feba2b1a5904937d9d6b58c32109e24;hb=a39208bd7fb76c1b01c127b4c61f9bfd915bfe7c#l872
-> <@worr> Continuing on my tour of wordexp(3) implementations, here's Illumos': https://github.com/joyent/illumos-joyent/blob/master/usr/src/lib/libc/port/regex/wordexp.c#L218-L290 It constructs a small shell script and runs it
-
-POSIX is explict that the wordexp interface is designed such that
-invoking a shell is one valid implementation choice. My view on all
-this is that pretty much anything wordexp-related is not CVE-worthy;
-wordexp simply is not a proper tool to be using in programs dealing
-with untrusted inputs -- either untrusted input strings, or untrusted
-environment contents. Obviously implementations using /bin/sh were
-vulnerable to shellshock on systems where /bin/sh is bash.
-
-Rich
+>
+> I'd like to request a CVE ID for this issue. It was found in Apache
+> Traffic Server (http://trafficserver.apache.org/), an open-source
+> caching proxy webserver.
+>
+> This is the first such request but the issue has been semi-public for
+> a few weeks now; this message serves as an advisory as well. (Note
+> this probably needs a CVE-2014-* ID)
+>
+> Affected software: Apache Traffic Server
+> Description: Receiving a HTTP TRACE request containing a
+> "Max-Forwards" header with a value of "0" will cause the
+> traffic_server process to crash with an assertion failure, even in
+> release builds.
+>
+> The parent process, traffic_manager, will restart the traffic_server
+> process when it sees that it has crashed. However, it takes several
+> seconds before the new process is ready to handle requests, during
+> which the server appears unresponsive to the outside world. Also,
+> traffic_manager will queue incoming requests until the new process is
+> ready to handle them. These queued requests might consist of more of
+> the same request that caused the traffic_server process to crash in
+> the first place. This allows a remote attacker to perform an effective
+> DoS of the server with very little resources by simply sending the
+> crashing request repeatedly.
+>
+> Affected versions: 5.0.0 - 5.1.1 (5.x.x series before 5.1.2)
+> Fixed version: 5.1.2
+> Bug entry: https://issues.apache.org/jira/browse/TS-3223
+> Fix: https://git-wip-us.apache.org/repos/asf?p=trafficserver.git;a=commit;h=8b5f0345dade6b2822d9b52c8ad12e63011a5c12
+> Release notes: https://issues.apache.org/jira/secure/ReleaseNote.jspa?version=12327089&styleName=Html&projectId=12310963
+> Reported by: Matthew Daley
+>
+> Please let me know if you need any further information.
+>
+> Thanks,
+>
+> - Matthew Daley
