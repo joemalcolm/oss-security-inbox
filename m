@@ -1,35 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/22/6
-Message-ID: <20150222122520.GA21440@eldamar.local>
-Date: Sun, 22 Feb 2015 13:25:20 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: heap overflow in procmail
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/22/7
+Message-ID: <Pine.LNX.4.64.1501221010440.18848@beijing.mitre.org>
+Date: Thu, 22 Jan 2015 10:14:27 -0500 (EST)
+From: cve-assign@...re.org
+To: Martin Prpic <mprpic@...hat.com>
+cc: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: Re: CVE request: directory traversal flaw in patch
 Content-Type: text/plain; charset=utf-8
 
-Hi MITRE team,
 
-On Thu, Feb 12, 2015 at 03:14:10PM +0100, Jakub Wilk wrote:
-> >>https://bugs.debian.org/769937
-> [...]
-> >The Debian bug report does not contain diagnosis of the type of
-> >programming error that is triggering each crash, so it is not clear how
-> >many CVE identifiers must be assigned.
-> 
-> There are two distinct buffer overflows:
-> 
-> * Off-by-one heap overflow when parsing addresses that have left angle
-> bracket, then a comma, but no right angle bracket. For example:
-> <moo@...mple.com,
-> 
-> * Heap overflow when parsing addresses that end with backslash. For example:
-> <moo@...mple.com\
-> 
-> Credit goes to Jan Darmochwal for identifying the root causes.
+> Hi!
+>
+> I think these issues in patch also deserve CVEs:
+>
+> https://savannah.gnu.org/bugs/?44051
+> "With a specific file, patch goes to infinite loop and eats all CPU time."
 
-Not sure if this got lost, so just reasking. Can you assing CVEs based
-on the above? (actually one or two CVEs?)
 
-Regards,
-Salvatore
+Use CVE-2014-9637.
+
+> http://git.savannah.gnu.org/cgit/patch.git/commit/?id=44a987e02f04b9d81a0db4a611145cad1093a2d3 
+> "Add line number overflow checking. Based on Robert C. Seacord's INT32-C 
+> document for integer overflow checking and Tobias Stoeckmann's "integer 
+> overflows and oob memory access" patch for FreeBSD."
+
+What is the security impact of this issue?  The commit is not immediately 
+clear.
+
+---
+
+CVE assignment team, MITRE CVE Numbering Authority M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
