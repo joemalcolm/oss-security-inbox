@@ -1,55 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/05/15
-Message-ID: <20150105181329.GA15234@kludge.henri.nerv.fi>
-Date: Mon, 5 Jan 2015 20:13:29 +0200
-From: Henri Salo <henri@...v.fi>
-To: Korvin Szanto <Korvin@...tlandlabs.com>
-Cc: oss-security@...ts.openwall.com, Simo Ben youssef <simo@...xploit.com>
-Subject: Re: CVE request: Concrete5 XSS vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/22/6
+Message-ID: <Pine.LNX.4.64.1501221006010.18848@beijing.mitre.org>
+Date: Thu, 22 Jan 2015 10:07:07 -0500 (EST)
+From: cve-assign@...re.org
+To: Albert Astals Cid <aacid@....org>
+cc: OSS Security Mailinglist <oss-security@...ts.openwall.com>, CVE Assignments MITRE <cve-assign@...re.org>, security@....org
+Subject: Re: KDE Plasma vulnerabilities: need CVE
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-On Mon, Jan 05, 2015 at 09:56:24AM -0800, Korvin Szanto wrote:
-> This has been fixed in 5.7.3 for some time
-> https://github.com/concrete5/concrete5-5.7.0/commit/e3d47d2af88ddef36deaf754ef22f1f39b9b623b
-> 
-> We have a security disclosure program for this so any disclosure
-> outside of our program is very irresponsible and unprofessional. You
-> end up with outdated information and leave us unable to fix the issue
-> in a secure way since we cannot see it until it's brought to our
-> attention through our disclosure program.
+> Hi, can we get two CVEs assigned for the attached vulnerabilities?
+>
+> Thanks,
+>  Albert
 
-Original advisory in http://seclists.org/bugtraq/2014/Dec/53 says following:
+plasma-workspace: Network access from screen locker
 
-"""
-Disclosure time-line
-02 November 2014: Discovery.
-03 November 2014: Initial report sent.
-11 November 2014: Second contact.
-No response.
-09 December 2014: Public disclosure.
-"""
+kde-workspace, plasma-workspace: X11 clients can eavesdrop input
+events while screen is locked
 
-I do not know how author of that advisory tried to contact Concrete5. For
-future cases: https://www.concrete5.org/developers/security/
+CVE-2015-1307 - plasma-workspace: Network access from screen locker
 
-I only requested CVE for coordination purposes. In this case CVE is used to
-notify end-users to actually update their software so that they are not affected
-by this vulnerability. If you want more details please contact me off-list.
+CVE-2015-1308 - kde-workspace, plasma-workspace: X11 clients can eavesdrop 
+input events while screen is locked
 
-Would it be possible for Concrete5 to request CVEs in the future as part of your
-security disclosure program?
+---
 
-https://people.redhat.com/kseifrie/CVE-OpenSource-Request-HOWTO.html
-
-- -- 
-Henri Salo
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iEYEARECAAYFAlSq1EkACgkQXf6hBi6kbk9o4ACeLhGKVeF1+JIMjrUVJMzIgDf4
-CTMAn3QMFpwXw7ZBzUFS6Luv9euuIX6z
-=GYNG
------END PGP SIGNATURE-----
+CVE assignment team, MITRE CVE Numbering Authority M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
