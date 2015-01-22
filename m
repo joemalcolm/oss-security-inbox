@@ -1,60 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/03/19
-Message-ID: <Pine.LNX.4.64.1501031853270.1923@beijing.mitre.org>
-Date: Sat, 3 Jan 2015 18:54:05 -0500 (EST)
-From: cve-assign@...re.org
-To: Dawa Ometto <d.l.a.ometto@...nl>
-cc: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: Re: Re: CVE request: remote code execution vulnerability in gollum < 3.1.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/22/1
+Message-ID: <CAO33bZUoNPSMYObtR0a38g4h3kB45JqnbYmjVseK2Cgom+TURQ@mail.gmail.com>
+Date: Thu, 22 Jan 2015 10:44:56 +1000
+From: David Jorm <david.jorm@...il.com>
+To: oss-security@...ts.openwall.com,  opendaylight-announce@...ts.opendaylight.org
+Subject: Defense4all security advisory: CVE-2014-8149 users can export report data to an arbitrary file on the server's filesystem
 Content-Type: text/plain; charset=utf-8
 
+It was found that the defense4all framework's "dump" method allows a user
+to request that report data is exported to a file on the server's
+filesystem. The user can specify any path, and the server will write to it
+with no validation. This could be used to perform a range of attacks. For
+example, a critical file could be overwritten, thereby disabling the
+defense4all server. On Windows servers, a UNC path could be injected,
+potentially causing the server to write data to remote filesystems. An
+attacker cannot control the contents of the file, but they can define a
+report query that returns no results, and therefore force it to write an
+empty file. An error message is received if the server cannot write to the
+provided path. An attacker could therefore use this issue to map out the
+writable filesystem on the server and potentially perform more advanced
+attacks by manipulating special files in the /dev and /proc filesystems of
+Linux servers.
 
-On Thu, 18 Dec 2014, Dawa Ometto wrote:
+It was also found that defense4all was using Spring 3.0.0 RC3. This
+component is vulnerable to a number of vulnerabilities as listed on the
+pivotal advisories page: http://www.pivotal.io/security
+Full details including how to apply a patch are available on the
+OpenDaylight security advisories page:
 
-> Resubmitting this (while fixing version number typo in the subject-line)
-> since it never did receive a CVE.
->
-> On 04/12/14 22:08, Dawa Ometto wrote:
->> Hi,
->>
->> I just released a fix for a remote code execution vulnerability in
->> gollum [1]. The vulnerable code was in the gollum-grit_adapter [2] ruby
->> gem dependency as of gollum v3.1.0, but the exploitable code was also
->> present before that version, in the gollum-lib [3] gem dependency (code
->> was abstracted from gollum-lib to the new dependency).
->>
->> Type of vulnerability: remote code execution
->> Attack outcome: run arbitrary commands, shell access
->> Vulnerable versions: gollum < 3.1.1, gollum-lib < 4.0.1,
->> gollum-grit_adapter < 0.1.1
->> Fix: `gem update gollum` will update the dependencies.
->> Link to vulnerability/fix diff:
->> https://github.com/gollum/grit_adapter/commit/4520d973c81fecfebbeacd2ef2f1849d763951c7
->> Link to project issue: https://github.com/gollum/gollum/issues/913
->>
->> Description: The bug exploits the fact that gollum uses the grit gem for
->> git repository access, which makes command-line calls to `git grep` to
->> search files. `git grep` has an `-O` or `--open-files-in-pager` option
->> which can spawn an arbitrary process (to act as pager). In vulnerable
->> versions of gollum, searching for the string `-O<arbitrary command>` or
->> `--open-files-in-pager <arbritary command>` in the wiki's search field
->> will execute an arbitrary shell command. However, this will only work if
->> the string "master" (or more precisely, the name of the git branch that
->> gollum is using) is found in one of the wiki's files: "master" is then
->> interpreted as the search query, `-O<arbitary code>` as a command line
->> option to `git grep`.
->>
->> The fix in the `gollum-grit_adapter` gem v.0.1.1 shell-escapes the
->> user's query and removes any -O or --open-file-in-pager option from it.
->>
->> [1] https://github.com/gollum/gollum, https://rubygems.org/gems/gollum
->> [2] https://github.com/gollum/grit_adapter
->> [3] https://github.com/gollum/gollum-lib
+https://wiki.opendaylight.org/view/Security_Advisories
 
-Use CVE-2014-9489.
+Thanks
+David Jorm on behalf of the OpenDaylight security response team
 
----
-
-CVE assignment team, MITRE CVE Numbering Authority M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
