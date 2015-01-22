@@ -1,38 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/08/3
-Message-ID: <20150208115333.36b3e932@pc>
-Date: Sun, 8 Feb 2015 11:53:33 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: lynx: crash when parsing overly long links
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/22/3
+Message-ID: <Pine.LNX.4.64.1501220917090.18848@beijing.mitre.org>
+Date: Thu, 22 Jan 2015 09:23:05 -0500 (EST)
+From: cve-assign@...re.org
+To: Kurt Seifried <kseifried@...hat.com>
+cc: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>
+Subject: Re: ping on CVE Request for jenkins-tomcat: Secure and HttpOnly flags are not, set for cookies with Jenkins on Tomcat
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 06 Feb 2015 18:55:08 -0700
-Kurt Seifried <kseifried@...hat.com> wrote:
 
+> Has there been any movement on
+>
+> http://www.openwall.com/lists/oss-security/2015/01/14/1
+>
+> or is it CVE rejected?
 
-> Sorry forgot to include the link
-> 
-> https://bugzilla.redhat.com/show_bug.cgi?id=605286
+CVE-2014-9634 - Secure flag not set
+CVE-2014-9635 - HttpOnly flag not set
 
-Here's the upstream reference/changelog:
-http://lynx.isc.org/current/CHANGES.html#v2.8.8dev.4
+---
 
-quote:
-"* limit parsed URIs with new config parameter MAX_URI_SIZE, default
-8192 (RedHat #605286, forwarded by Vincent Danen). For arbitrarily long
-URIs, alloca() could run out of stack space -TD"
-
-
-So it got fixed in the 4th dev version of 2.8.8. Everyone who's using
-2.8.8 (release version) or above is not affected.
-
-
--- 
-Hanno Böck
-http://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
-
-Content of type "application/pgp-signature" skipped
+CVE assignment team, MITRE CVE Numbering Authority M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
