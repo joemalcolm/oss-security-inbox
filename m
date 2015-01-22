@@ -1,25 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/11/8
-Message-ID: <54DB4CDC.8050701@redhat.com>
-Date: Wed, 11 Feb 2015 13:36:44 +0100
-From: Florian Weimer <fweimer@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: wordexp(3)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/22/8
+Message-ID: <Pine.LNX.4.64.1501221137470.18848@beijing.mitre.org>
+Date: Thu, 22 Jan 2015 11:41:14 -0500 (EST)
+From: cve-assign@...re.org
+To: Jakub Wilk <jwilk@...lk.net>
+cc: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: Re: heap overflow in procmail
 Content-Type: text/plain; charset=utf-8
 
-On 02/11/2015 01:17 PM, Stuart Henderson wrote:
-> On 2015/02/10 20:27, Solar Designer wrote:
->> (x5) <@worr> OpenBSD wins the wordexp(3) contest, by refusing to implement it altogether.
-> 
-> It might be of interest to know that we've only got patches in 2 ports
-> as a result of this: celestia and filezilla (we're using globs instead
-> of wordexp for these; I'm not aware of any negative feedback relating
-> to these patches).
 
-There is software out there which automatically uses a shell-based
-implementation if the system does not provide wordexp.  With this in
-mind, it makes sense to provide the interface even if you dislike it
-(same thing with strlcpy).
+On Wed, 21 Jan 2015, Jakub Wilk wrote:
 
--- 
-Florian Weimer / Red Hat Product Security
+> * Tavis Ormandy <taviso@...gle.com>, 2014-09-03, 11:52:
+>> I noticed a heap overflow in procmail when parsing addresses with 
+>> unbalanced quotes.
+>
+> Unfortunately, there's more:
+> https://bugs.debian.org/769937
+>
+> Apparently procmail upstream is inactive; and nobody understands how this 
+> code works.
+>
+> At this point, I'd recommend that formail users switch to reformail[0], which 
+> is mostly (but not completely) compatible with formail.
+>
+> [0] http://www.courier-mta.org/reformail.html
+>
+> -- 
+> Jakub Wilk
+
+The Debian bug report does not contain diagnosis of the type of 
+programming error that is triggering each crash, so it is not clear how 
+many CVE identifiers must be assigned.
+
+What are the root causes of the errors for each of the three test cases?
+
+---
+
+CVE assignment team, MITRE CVE Numbering Authority M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
