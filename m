@@ -1,35 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/03/4
-Message-ID: <54D0A335.1040209@redhat.com>
-Date: Tue, 03 Feb 2015 11:30:13 +0100
-From: Florian Weimer <fweimer@...hat.com>
-To: const@...elinux.com
-CC: oss-security@...ts.openwall.com
-Subject: Re: workaround for GHOST glibc vulnerability CVE-2015-0235
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/22/9
+Message-ID: <Pine.LNX.4.64.1501221146380.18848@beijing.mitre.org>
+Date: Thu, 22 Jan 2015 11:50:16 -0500 (EST)
+From: cve-assign@...re.org
+To: Hanno Böck <hanno@...eck.de>
+cc: mprpic@...hat.com, oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: Re: CVE request: two issues in vorbis-tools
 Content-Type: text/plain; charset=utf-8
 
-On 02/02/2015 03:52 PM, Constantine Shulyupin wrote:
-> CVE-2015-0235-workaround is a shared library wrapper with additional checks
-> for the vulnerable functions gethostbyname2_r and gethostbyname_r .
-> 
-> The proper solution for CVE-2015-0235 is to upgrade glibc to at least
-> glibc-2.18.
-> 
-> In some cases, an immediate glibc upgrade is not possible, for example in
-> custom production embedded systems, because such an upgrade requires a
-> validation of the whole system.
-> 
-> In such cases, this workaround provides a hot fix solution, which is easier
-> to validate.
-> 
-> Source code: https://github.com/makelinux/CVE-2015-0235-workaround
 
-You should make all symbols static.  With the current code, you risk
-symbol collisions.
+On Wed, 21 Jan 2015, Hanno Böck wrote:
 
-Why don't you hook gethostbyname?  I'm not sure if gethosybyname is
-implement in terms of gethostbyname_r.  (The call stacks I have suggest
-it isn't.)
+> On Wed, 21 Jan 2015 13:50:46 +0100
+> Martin Prpic <mprpic@...hat.com> wrote:
+>
+>> Two issues were reported in vorbis-tools on Full Disclosure:
+>>
+>> http://seclists.org/fulldisclosure/2015/Jan/78
 
--- 
-Florian Weimer / Red Hat Product Security
+CVE-2014-9638 - https://trac.xiph.org/ticket/2137 (division by zero)
+
+CVE-2014-9639 - https://trac.xiph.org/ticket/2136 (integer overflow)
+
+(These received IDs from 2014 due to the date of the bug report.)
+
+> In addition to that: I reported this issue
+> https://trac.xiph.org/ticket/2009
+> a while back which also crashes oggenc.
+>
+> I didn't think about security implications back then, but it's also an
+> out of bounds read issue.
+>
+> After bugging the devs on irc it got fixed in the code but never saw a
+> release.
+
+Use CVE-2014-9640.
+
+---
+
+CVE assignment team, MITRE CVE Numbering Authority M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
