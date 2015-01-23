@@ -1,23 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/10/6
-Message-ID: <54D9F59F.80501@redhat.com>
-Date: Tue, 10 Feb 2015 13:12:15 +0100
-From: Florian Weimer <fweimer@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: cve-assign@...re.org
-Subject: Re: CVE-Request -- Linux kernel - panic on nftables rule flush
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/23/1
+Message-ID: <228550367.12515213.1421985935436.JavaMail.zimbra@redhat.com>
+Date: Thu, 22 Jan 2015 23:05:35 -0500 (EST)
+From: Wade Mealing <wmealing@...hat.com>
+To: cve-assign@...re.org, OSS Security List <oss-security@...ts.openwall.com>
+Subject: CVE Request: Linux kernel - Denial of service in notify_change for xattrs.
 Content-Type: text/plain; charset=utf-8
 
-On 02/10/2015 07:42 AM, Wade Mealing wrote:
-> Gday,
-> 
-> I'd like to request a CVE for a denial of service attack found here here https://bugzilla.kernel.org/show_bug.cgi?id=91441.
-> 
-> A remote attacker with the NET_CAP_ADMIN capability could use this to panic (denial of service) a system if they were able to flush a chain with a jump target.
-> 
-> More info: https://bugzilla.redhat.com/show_bug.cgi?id=1190966
+I'd like to request a CVE for an issue brought up on this list on Jan 17th 2015.  I did not
+see one created for this issue titled:
 
-This should “A local attacker with the CAP_NET_ADMIN capability".
+"Re: [RFC PATCH RESEND] vfs: Move security_inode_killpriv() after permission checks"
 
--- 
-Florian Weimer / Red Hat Product Security
+http://www.openwall.com/lists/oss-security/2015/01/21/3t
+
+This issue can be classified as a denial of service.
+
+Example:
+
+[wmealing]$ ping -c1  www.google.com
+PING www.google.com (216.58.220.100) 56(84) bytes of data.
+64 bytes from syd10s01-in-f4.1e100.net (216.58.220.100): icmp_seq=1 ttl=51 time=14.1 ms
+--- www.google.com ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 14.162/14.162/14.162/0.000 ms
+
+[wmealing]$ chown root:root /usr/bin/ping
+chown: changing ownership of ‘/usr/bin/ping’: Operation not permitted
+
+[wmealing]$ ping www.google.com
+ping: icmp open socket: Operation not permitted
+
+This can cause a denial of service for applications which use the capabilities subsystem such as
+pirahnah (arping), netconsole (arping), some kdump implementations, etc.
+
+Thank you.
+
+Wade Mealing -- Red Hat Product Security
