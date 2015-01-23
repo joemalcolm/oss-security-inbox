@@ -1,31 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/20/4
-Message-ID: <20150120154555.GA10176@eldamar.local>
-Date: Tue, 20 Jan 2015 16:45:55 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Cc: CVE Assignments MITRE <cve-assign@...re.org>
-Subject: Possible CVE request: sympa: vulnerability in the web interface
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/23/10
+Message-ID: <54C2BF6D.8020901@mozilla.com>
+Date: Fri, 23 Jan 2015 16:38:53 -0500
+From: David Lawrence <dkl@...illa.com>
+To: security@...zilla.org,  "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>
+Subject: Re: CVE request for BZ
 Content-Type: text/plain; charset=utf-8
 
-Hi
+Sorry not explicit in the sec adv but you are correct. No exploit has been reported
+regarding the webservices changes and was  just to prevent such problems in the
+future. The methods that were unintentionaly accessible were all relatively harmless.
+We added the safeguard in case other modules were imported in the future which could
+possibly give out sensitive data unintentionally.
 
-I would like to ask if a CVE could be assigned for the following issue
-(it is not clear if upstream has already requested one):
-https://www.sympa.org/security_advisories#security_breaches_in_newsletter_posting
+Thanks
+dkl
 
-The advisory reads:
+On 01/23/2015 04:29 PM, Kurt Seifried wrote:
+> http://www.bugzilla.org/security/4.0.15/
+>
+> one has a CVE, and this one does not:
+>
+> Class:       Information Leak
+> Versions:    2.23.3 to 4.0.15, 4.1.1 to 4.2.11, 4.3.1 to 4.4.6, 4.5.1 to
+> 4.5.6
+> Fixed In:    4.0.16, 4.2.12, 4.4.7, 5.0rc1
+> Description: Using the WebServices API, a user can possibly execute imported
+>              functions from other non-WebService modules. A whitelist
+> has now
+>              been added that lists explicit methods that can be executed
+> via the
+>              API.
+> References:  https://bugzilla.mozilla.org/show_bug.cgi?id=1090275
+>
+> was this classed as hardening hence no CVE? E.g. has no exploit been
+> found, or?
+>
 
-> A vulnerability have been discovered in Sympa web interface that
-> allows access to files on the server filesystem.
-> 
-> This breach allows to send to a list or a user any file readable by
-> the Sympa user, located on the server filesystem, using the Sympa web
-> interface newsletter posting area.
+-- 
+David Lawrence
+dkl@...illa.com
+bugzilla.mozilla.org
 
-Upstream patch: https://sourcesup.renater.fr/scm/viewvc.php/branches/sympa-6.1-branch/wwsympa/wwsympa.fcgi.in?root=sympa&r1=11562&r2=11778&view=patch
-
-Thanks in advance,
-
-Regards,
-Salvatore
