@@ -1,28 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/06/9
-Message-ID: <20150106151723.GA13028@mail.corp.redhat.com>
-Date: Tue, 6 Jan 2015 16:17:23 +0100
-From: Vasyl Kaigorodov <vkaigoro@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Possible CVE request: python-pillow: potential denial-of-service in PNG decompression code
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/23/2
+Message-ID: <54C1E0AB.6040703@redhat.com>
+Date: Thu, 22 Jan 2015 22:48:27 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>, report@...esecurity.io
+Subject: CVE requests for nodejs marked VBScript Content Injection and sequelize SQL Injection in Order
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Can I get a CVE for:
 
-Pillow release 2.7.0 fixes a potential denial-of-service issue in PNG
-decompression code [1].
+https://nodesecurity.io/advisories/marked_vbscript_injection
 
-Exact upstream commit that resolves this:
-https://github.com/python-pillow/Pillow/commit/b3e09122e527ae554eb590741bbd7611d5710e40
+and for:
 
-[1]: http://pillow.readthedocs.org/releasenotes/2.7.0.html#png-text-chunk-size-limits
+https://nodesecurity.io/advisories/sequelize-sql-injection-order
 
-Does it deserve a CVE, or it's considered a hardening measure, and not
-a vulnerability?
+Thanks
 
-Thanks.
 -- 
-Vasyl Kaigorodov | Red Hat Product Security
-PGP:  0xABB6E828 A7E0 87FF 5AB5 48EB 47D0 2868 217B F9FC ABB6 E828
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-Content of type "application/pgp-signature" skipped
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
