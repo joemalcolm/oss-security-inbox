@@ -1,49 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/13/10
-Message-ID: <Pine.LNX.4.64.1502130922160.2592@beijing.mitre.org>
-Date: Fri, 13 Feb 2015 09:28:44 -0500 (EST)
-From: cve-assign@...re.org
-To: Steve Kemp <steve@...ve.org.uk>
-cc: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: Re: CVE Request - dns-sync node module
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/23/7
+Message-ID: <54C28FF3.2050200@canonical.com>
+Date: Fri, 23 Jan 2015 13:16:19 -0500
+From: Marc Deslauriers <marc.deslauriers@...onical.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request: Linux kernel crypto api unprivileged arbitrary module load
 Content-Type: text/plain; charset=utf-8
 
+Hello,
 
->  This never did receive an allocation, did it?
->
-> On Tue Nov 11, 2014 at 20:02:40 +0000, Steve Kemp wrote:
->>
->>   The dns-sync library for node.js allows resolving hostnames in
->>  a synchronous fashion
->>
->>   All versions of dns-sync prior to the release 0.1.1 were
->>  vulnerable to arbitrary command execution via maliciously
->>  formed hostnames.  For example:
->>
->>     var dnsSync = require('dns-sync');
->>     console.log(dnsSync.resolve('$(id > /tmp/foo)'));
->>
->>   This is caused by the hostname being passed through a shell
->>  as part of a command execution.
->>
->>   I disclosed/reported this here:
->>
->>         https://github.com/skoranga/node-dns-sync/issues/1
->>
->>   The following commit resolves the bug:
->>
->>         https://github.com/skoranga/node-dns-sync/commit/d9abaae384b198db1095735ad9c1c73d7b890a0d
->
->
-> Steve
-> --
-> Git-based DNS hosting
-> https://dns-api.com/
+The Crypto API in the Linux kernel before 3.19 allowed unprivileged users to
+load arbitrary kernel modules.
 
-Use CVE-2014-9682.
+Info:
+https://lkml.org/lkml/2013/3/4/70
+https://plus.google.com/+MathiasKrause/posts/PqFCo4bfrWu
 
----
+Fixed by:
+https://git.kernel.org/linus/5d26a105b5a7
+https://git.kernel.org/linus/4943ba16bbc2
+https://git.kernel.org/linus/3e14dcf7cb80
 
-CVE assignment team, MITRE CVE Numbering Authority M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+Could a CVE please be assigned to this issue?
+
+Thanks,
+
+Marc.
+
+-- 
+Marc Deslauriers
+Ubuntu Security Engineer     | http://www.ubuntu.com/
+Canonical Ltd.               | http://www.canonical.com/
