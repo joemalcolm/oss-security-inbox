@@ -1,33 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/18/8
-Message-ID: <Pine.LNX.4.64.1501181527130.14308@beijing.mitre.org>
-Date: Sun, 18 Jan 2015 15:27:53 -0500 (EST)
-From: cve-assign@...re.org
-To: Alexander Cherepanov <ch3root@...nwall.com>
-cc: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: Re: CVE Request: ha -- directory traversals
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/23/5
+Message-ID: <CAO7kU2T6KX1OLm5bOpQ5rMut3iRxKddpyAZBvggh-jsamx-5Kg@mail.gmail.com>
+Date: Fri, 23 Jan 2015 11:53:22 +0200
+From: Paris Z <paris8105@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: two issues in vorbis-tools
 Content-Type: text/plain; charset=utf-8
 
+Hi,
 
-On Fri, 16 Jan 2015, Alexander Cherepanov wrote:
+Original poster of the reports here. My original concern was also that
+these were minor issues, so I didn't request CVEs. I posted in FD list
+because a month has passed and I still haven't received any answers in the
+vorbis-tools bug tracker.
 
-> Hi!
+2015-01-23 10:36 GMT+02:00 Hanno Böck <hanno@...eck.de>:
+
+> On Thu, 22 Jan 2015 11:50:16 -0500 (EST)
+> cve-assign@...re.org wrote:
 >
-> ha is susceptible to directory traversal vulnerabilities via absolute and 
-> relative paths.
+> >
+> > On Wed, 21 Jan 2015, Hanno Böck wrote:
+> >
+> > > On Wed, 21 Jan 2015 13:50:46 +0100
+> > > Martin Prpic <mprpic@...hat.com> wrote:
+> > >
+> > >> Two issues were reported in vorbis-tools on Full Disclosure:
+> > >>
+> > >> http://seclists.org/fulldisclosure/2015/Jan/78
+> >
+> > CVE-2014-9638 - https://trac.xiph.org/ticket/2137 (division by zero)
+> >
+> > CVE-2014-9639 - https://trac.xiph.org/ticket/2136 (integer overflow)
 >
-> Initial report:
-> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=774954
+> These two also affect opusenc.
+> I don't know if this deserves more CVEs, because these issues are
+> likely minor, but wanted to note it for completeness. It is a
+> different software package. I'll add comments to the corresponding bug
+> reports.
 >
-> Could CVE(s) please be assigned?
+> --
+> Hanno Böck
+> http://hboeck.de/
 >
-> -- 
-> Alexander Cherepanov
+> mail/jabber: hanno@...eck.de
+> GPG: BBB51E42
+>
 
-Use CVE-2015-1198.
-
----
-
-CVE assignment team, MITRE CVE Numbering Authority M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
