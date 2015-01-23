@@ -1,35 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/06/5
-Message-ID: <54D53C32.8070608@redhat.com>
-Date: Fri, 06 Feb 2015 15:12:02 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/23/8
+Message-ID: <54C2BD56.7020506@redhat.com>
+Date: Fri, 23 Jan 2015 14:29:58 -0700
 From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request for denial-of-service vulnerability in fcgi
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>, security@...zilla.org
+Subject: CVE request for BZ
 Content-Type: text/plain; charset=utf-8
 
-Just a note this needs a 2012 CVE:
+http://www.bugzilla.org/security/4.0.15/
 
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=681591
+one has a CVE, and this one does not:
 
-On 06/02/15 04:11 AM, Till Maas wrote:
-> Hi,
-> 
-> there appears to be at least a denial-of-service vulnerability in fcgi:
-> https://bugzilla.redhat.com/show_bug.cgi?id=1189958
-> 
-> Can someone pleas assign a CVE id to this, to make sure that other
-> distributions notice this problem as well.
-> 
-> Unfortunately it looks like fastcgi upstream now died, as their mailing
-> list is not reachable anymore:
-> http://mailman.fastcgi.com/mailman/listinfo/fastcgi-developers
-> 
-> So if someone knows how to contact them, please forward them this
-> information.
-> 
-> Regards
-> Till Maas
-> 
+Class:       Information Leak
+Versions:    2.23.3 to 4.0.15, 4.1.1 to 4.2.11, 4.3.1 to 4.4.6, 4.5.1 to
+4.5.6
+Fixed In:    4.0.16, 4.2.12, 4.4.7, 5.0rc1
+Description: Using the WebServices API, a user can possibly execute imported
+             functions from other non-WebService modules. A whitelist
+has now
+             been added that lists explicit methods that can be executed
+via the
+             API.
+References:  https://bugzilla.mozilla.org/show_bug.cgi?id=1090275
+
+was this classed as hardening hence no CVE? E.g. has no exploit been
+found, or?
 
 -- 
 Kurt Seifried -- Red Hat -- Product Security -- Cloud
