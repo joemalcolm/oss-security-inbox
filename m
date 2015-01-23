@@ -1,44 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/26/8
-Message-ID: <20150126201203.GA3574@alf.mars>
-Date: Mon, 26 Jan 2015 21:12:03 +0100
-From: Helmut Grohne <helmut@...divi.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/23/6
+Message-ID: <20150123110732.GB25462@kludge.henri.nerv.fi>
+Date: Fri, 23 Jan 2015 13:07:32 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Cc: Victor Seva <linuxmaniac@...reviejawireless.org>
-Subject: kamailio: multiple /tmp file vulnerabilities
+Subject: Re: CVE-Request -- ferretCMS v.1.0.4-alpha -- Multiple reflecting/stored XSS- and SQLi-vulnerabilities, unrestricted file upload
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Fri, Jan 23, 2015 at 07:14:56AM +0100, Steffen Rösemann wrote:
+> I found multiple reflecting/stored XSS- and SQLi-vulnerabilities as well as
+> an unrestricted file upload in the CMS ferretCMS v.1.0.4 which is currently
+> in the alpha development stage.
 
-There are multiple /tmp file vulnerabilities to be found in the kamailio
-SIP proxy. While many of these issues only affect configuration examples
-or outdated components, some do affect the default configuration.
+>From https://github.com/JRogaishio/ferretCMS/issues/63
 
-Initial disclosures:
- http://bugs.debian.org/712083 (2013)
- http://bugs.debian.org/775681 (2015)
-Upstream issue:
- https://github.com/kamailio/kamailio/issues/48
+"""
+However, please know that ferretCMS is in the 'alpha' development stage and as
+such is NOT recommended to be used on live websites.
+"""
 
-At this point, three issues are well understood:
- * The kamctl administrative utility and default configuration would use
-   /tmp/kamailio_fifo (#712083, 2013, fixed in Debian's kamailio
-   4.0.2-1).
- * The kamcmd administrative utility and default configuration would use
-   /tmp/kamailio_ctl (#775681, 2015, patch available).
- * The kamailio build process would use constant filenames in /tmp
-   allowing to elevate privileges to the build user (#775681, 2015,
-   patch available).
-
-The combined patch can be found at:
-https://bugs.debian.org/cgi-bin/bugreport.cgi?msg=17;filename=0001-fix-fifo-and-ctl-defaults-pointing-to-unsecure-tmp-d.patch;att=1;bug=775681
-
-While the last issue definitely affects the upstream kamailio build,
-arguably the first two issues are packaging specific. If they are
-treated as such, it is worth noting that kamailio was never part of a
-Debian stable release and thus this may not be worth issuing a CVE.
-
-I would like to thank Victor Seva for his timely responses, kind
-interaction and providing patches for all of these issues.
-
-Helmut
+-- 
+Henri Salo
