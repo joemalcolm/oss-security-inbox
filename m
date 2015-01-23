@@ -1,43 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/22/9
-Message-ID: <Pine.LNX.4.64.1501221146380.18848@beijing.mitre.org>
-Date: Thu, 22 Jan 2015 11:50:16 -0500 (EST)
-From: cve-assign@...re.org
-To: Hanno Böck <hanno@...eck.de>
-cc: mprpic@...hat.com, oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: Re: CVE request: two issues in vorbis-tools
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/23/9
+Message-ID: <54C2BF6B.4080508@redhat.com>
+Date: Fri, 23 Jan 2015 14:38:51 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>
+Subject: [perl #119505] Segfault from bad backreference
 Content-Type: text/plain; charset=utf-8
 
+http://perl5.git.perl.org/perl.git/commitdiff/0c2990d652e985784f095bba4bc356481a66aa06
 
-On Wed, 21 Jan 2015, Hanno Böck wrote:
+The code that parses regex backrefs (or ambiguous backref/octal) such as
+\123, did a simple atoi(), which could wrap round to negative values on
+long digit strings and cause seg faults.
 
-> On Wed, 21 Jan 2015 13:50:46 +0100
-> Martin Prpic <mprpic@...hat.com> wrote:
->
->> Two issues were reported in vorbis-tools on Full Disclosure:
->>
->> http://seclists.org/fulldisclosure/2015/Jan/78
+Include a check on the length of the digit string, and if greater than 9
+digits, assume it can never be a valid backref (obviating the need for
+the atoi() call).
 
-CVE-2014-9638 - https://trac.xiph.org/ticket/2137 (division by zero)
+I've also simplified the code a bit, putting most of the \g handling
+code into a single block, rather than doing multiple "if (isg) {...}".
 
-CVE-2014-9639 - https://trac.xiph.org/ticket/2136 (integer overflow)
+PoC:
 
-(These received IDs from 2014 due to the date of the bug report.)
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=776046
+perl -e '/\7777777777/'
 
-> In addition to that: I reported this issue
-> https://trac.xiph.org/ticket/2009
-> a while back which also crashes oggenc.
->
-> I didn't think about security implications back then, but it's also an
-> out of bounds read issue.
->
-> After bugging the devs on irc it got fixed in the code but never saw a
-> release.
+not sure if this can be exploited at all, but someone creative maybe has
+ideas, if so this may need a CVE.
 
-Use CVE-2014-9640.
+-- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
----
 
-CVE assignment team, MITRE CVE Numbering Authority M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
