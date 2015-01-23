@@ -1,17 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/14/1
-Message-ID: <20150314080530.GB16114@kludge.henri.nerv.fi>
-Date: Sat, 14 Mar 2015 10:05:30 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/23/4
+Message-ID: <20150123093601.2ebf1ee3@pc>
+Date: Fri, 23 Jan 2015 09:36:01 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Cc: Edric Teo <edric@...rterbitbybit.com>
-Subject: CVE-2015-2289: Serendipity CMS cross-site scripting vulnerability in 2.0 version
+Subject: Re: CVE request: two issues in vorbis-tools
 Content-Type: text/plain; charset=utf-8
 
-Affected: 2.0
-Fixed in: 2.0.1
-Original advisory: http://seclists.org/bugtraq/2015/Mar/69
-Vendor advisory: http://blog.s9y.org/archives/263-Serendipity-2.0.1-released.html
+On Thu, 22 Jan 2015 11:50:16 -0500 (EST)
+cve-assign@...re.org wrote:
+
+> 
+> On Wed, 21 Jan 2015, Hanno Böck wrote:
+> 
+> > On Wed, 21 Jan 2015 13:50:46 +0100
+> > Martin Prpic <mprpic@...hat.com> wrote:
+> >
+> >> Two issues were reported in vorbis-tools on Full Disclosure:
+> >>
+> >> http://seclists.org/fulldisclosure/2015/Jan/78
+> 
+> CVE-2014-9638 - https://trac.xiph.org/ticket/2137 (division by zero)
+> 
+> CVE-2014-9639 - https://trac.xiph.org/ticket/2136 (integer overflow)
+
+These two also affect opusenc.
+I don't know if this deserves more CVEs, because these issues are
+likely minor, but wanted to note it for completeness. It is a
+different software package. I'll add comments to the corresponding bug
+reports.
 
 -- 
-Henri Salo
+Hanno Böck
+http://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
+
+Content of type "application/pgp-signature" skipped
