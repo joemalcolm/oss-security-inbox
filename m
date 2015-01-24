@@ -1,17 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/11/6
-Message-ID: <20150211121715.GV28137@symphytum.spacehopper.org>
-Date: Wed, 11 Feb 2015 12:17:15 +0000
-From: Stuart Henderson <sthen@...nbsd.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: wordexp(3)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/24/10
+Message-Id: <20150124193212.EEAE333205D@smtpvbsrv1.mitre.org>
+Date: Sat, 24 Jan 2015 14:32:12 -0500 (EST)
+From: cve-assign@...re.org
+To: oss@...ernot.info
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: PHP int overflow
 Content-Type: text/plain; charset=utf-8
 
-On 2015/02/10 20:27, Solar Designer wrote:
-> (x5) <@worr> OpenBSD wins the wordexp(3) contest, by refusing to implement it altogether.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-It might be of interest to know that we've only got patches in 2 ports
-as a result of this: celestia and filezilla (we're using globs instead
-of wordexp for these; I'm not aware of any negative feedback relating
-to these patches).
+> I found an integer overflow in PHP, in the conversation of dates to
+> "Julian Day Count" function.
+> 
+> The commit, with a PoC can be found here:
+> https://github.com/MegaManSec/php-src/commit/a538d2f5605798422f2746636ecdc300f8ebcaa1
 
+Use CVE-2015-1353.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJUw/LpAAoJEKllVAevmvmsiYoH/Ag+n/8x+blfJyccUhjt39bp
+nRxsuZw2MIx7COJcoufIxeycu2YGnm1O9RxZBA9lKmVYjb0wjMi9yHogcWkT8UOo
+i93ARMw7V6UFp1nV+2Kv5BgVh2EcwEBXyDkKkcaN2l68Dm3nRoApMB4i4m7G67BC
+K2T1L4eq1orQCNaR7n4hup2155pHZbLqZQRMAYn5EGQPr/+zPjgq+PQKes631US5
+SXrnthRKOAfZk9QVIlxf5t1JfVvC3Cta0HgETTaXJ8TbqEAA5AXw8hl+RmhWgFnI
+Cto73LM+iiA1tyxDXdXnfdRqV/uxmqK+FCgO6asyCuT7EYOpBZ74Wmq1z+RVJRc=
+=VLR4
+-----END PGP SIGNATURE-----
