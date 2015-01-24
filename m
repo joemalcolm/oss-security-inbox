@@ -1,33 +1,90 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/13/6
-Message-ID: <CANtF8NB7CmoLrvojivyfvzBcVS+eY5K2Ssq5hgw6tbQSHHwOVw@mail.gmail.com>
-Date: Fri, 13 Mar 2015 09:55:18 -0500
-From: Grandma Eubanks <tborland1@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Disabling reading of kernel log buffer reading for user
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/24/9
+Message-Id: <20150124192851.74EE36C001B@smtpvmsrv1.mitre.org>
+Date: Sat, 24 Jan 2015 14:28:51 -0500 (EST)
+From: cve-assign@...re.org
+To: oss@...ernot.info
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: PHP
 Content-Type: text/plain; charset=utf-8
 
-Yeah, now comes the fun part. How to abuse services to bypass it?
-Also, have you checked what happens with KASLR? Where it writes where the
-new segments are?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I have a bug ticket open with redhat for a while now on abusing a
-particular service that ends up dumping dmesg and chmod's it to any user
-privilege to navigate around dmesg_restrict.
+> Date: Thu, 08 Jan 2015 22:11:09 +1100
+> I'm requesting multiple CVE-ID's for multiple vulnerabilities in PHP
+> that I found:
 
-On Fri, Mar 13, 2015 at 7:44 AM, Jann Horn <jann@...jh.net> wrote:
 
-> On Fri, Mar 13, 2015 at 09:56:58AM +0000, halfdog wrote:
-> > * What would be the side effects of making /dev/kmesg only root
-> accessible? Maybe syslog not able to write kmessages to log?
-> > * Would it be safe to disable the syslog syscall for action
-> SYSLOG_ACTION_READ_* and all users except root and syslog? Does someone
-> have tested selinux config for that?
->
-> /proc/sys/kernel/dmesg_restrict can be used to restrict access to the log
-> buffer.
-> It looks like at least rsyslogd uses /proc/kmsg to read messages from the
-> log
-> buffer, and that file is only accessible for root anyway.
->
+> Use after free in 'opcache' component of PHP
+> https://bugs.php.net/bug.php?id=68677
+> http://git.php.net/?p=php-src.git;a=commit;h=777c39f4042327eac4b63c7ee87dc1c7a09a3115
 
+Use CVE-2015-1351.
+
+
+(requests 2 and 3 are skipped because of the
+http://openwall.com/lists/oss-security/2015/01/08/5 post)
+
+
+> Null Pointer Dereference in pgsql
+> https://bugs.php.net/bug.php?id=68741
+> http://git.php.net/?p=php-src.git;a=commit;h=124fb22a13fafa3648e4e15b4f207c7096d8155e
+
+Use CVE-2015-1352 for this issue in which a return value isn't
+validated.
+
+
+> Null Pointer Dereference in ereg(regex)
+> https://bugs.php.net/bug.php?id=68740
+> http://git.php.net/?p=php-src.git;a=commit;h=124fb22a13fafa3648e4e15b4f207c7096d8155e
+
+Because of an unusual process step on MITRE's end, there was also some
+communication about these bugs that was only between MITRE and Joshua
+Rogers, without a Cc to oss-security. For Bug #68740, the additional
+discussion sent to us was (more or less) was that code in between
+lines 140 and 167 wouldn't change g->setbits to a non-NULL value. This
+is also essentially implied by the reasoning used in the Description
+section of Bug #68740. (We didn't want to send the private e-mail
+here, but Joshua Rogers is free to send it if he wants.)
+
+MITRE doesn't have a full code analysis and isn't confident about
+whether the "explicit null dereference" exists or not. All we can
+offer is that the "wouldn't change g->setbits to a non-NULL value"
+seems somewhat implausible because it means that significant intended
+functionality of the code wouldn't have worked at all.
+
+As an example, this sequence of function calls seems possible:
+
+  p_str - ordinary - bothcases - p_bracket - allocset
+
+where allocset contains:
+
+  p->g->setbits = (uch *)malloc(nbytes);
+  
+and a memset (and the code before the line-140 "g->setbits = NULL"
+includes a "p->g = g").
+
+We're going to defer a CVE assignment for Bug #68740 until someone
+outside MITRE offers additional analysis. It might be worthwhile to
+update Bug #68740 so that the "explicit null dereference" term isn't
+used. Although maybe a code path with a NULL pointer dereference can
+be found, it's apparently not the case that g->setbits is explicitly
+guaranteed to be NULL on line 1279.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJUw/F5AAoJEKllVAevmvmsQi0H/A+DkH6FsNqUv6mmXBj7UCbL
+rQdAjfZGcMDA43oQBWBbKPqetAae63eBLyxzZOTOPqlRS5vr1U6Ly4s4equlvzsm
+govktU8CC7mdg6t5ZRYVh4CQHPsf4VnEf/bAK0ExlDPyl0zSQMXewZ5BJjh9VCXs
+Ap6CeWqaN5rS38IDxDOH5MTpqrOAdWP/U5YtSZdUdBvcXR7bla5Aal2aAPXA92kp
+HrIU0JXOz5FHCOKeoMvri+RxkrSJe+/8WUQfCI/o4PuUcoq+WHm4YZXHQ3mnck9k
+W5SMGA/a+xrTPHXWyqLYo0tY+7VIHQDIpBPTnhw2Hw7+d9vSt5jU9BW4kXNOKrs=
+=715+
+-----END PGP SIGNATURE-----
