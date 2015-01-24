@@ -1,53 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/24/18
-Message-ID: <20150124235257.GA11792@inutil.org>
-Date: Sun, 25 Jan 2015 00:52:57 +0100
-From: Moritz Muehlenhoff <jmm@...ian.org>
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: Re: CVE request / advisory: Apache Traffic Server 5.0.0 - 5.1.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/24/5
+Message-Id: <20150124145903.177CA3AE060@smtpvbsrv1.mitre.org>
+Date: Sat, 24 Jan 2015 09:59:03 -0500 (EST)
+From: cve-assign@...re.org
+To: wmealing@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: Linux kernel - Denial of service in notify_change for xattrs.
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jan 22, 2015 at 07:41:21PM +1300, Matthew Daley wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> > I'd like to request a CVE ID for this issue. It was found in Apache
-> > Traffic Server (http://trafficserver.apache.org/), an open-source
-> > caching proxy webserver.
-> >
-> > This is the first such request but the issue has been semi-public for
-> > a few weeks now; this message serves as an advisory as well. (Note
-> > this probably needs a CVE-2014-* ID)
-> >
-> > Affected software: Apache Traffic Server
-> > Description: Receiving a HTTP TRACE request containing a
-> > "Max-Forwards" header with a value of "0" will cause the
-> > traffic_server process to crash with an assertion failure, even in
-> > release builds.
-> >
-> > The parent process, traffic_manager, will restart the traffic_server
-> > process when it sees that it has crashed. However, it takes several
-> > seconds before the new process is ready to handle requests, during
-> > which the server appears unresponsive to the outside world. Also,
-> > traffic_manager will queue incoming requests until the new process is
-> > ready to handle them. These queued requests might consist of more of
-> > the same request that caused the traffic_server process to crash in
-> > the first place. This allows a remote attacker to perform an effective
-> > DoS of the server with very little resources by simply sending the
-> > crashing request repeatedly.
-> >
-> > Affected versions: 5.0.0 - 5.1.1 (5.x.x series before 5.1.2)
-> > Fixed version: 5.1.2
-> > Bug entry: https://issues.apache.org/jira/browse/TS-3223
-> > Fix: https://git-wip-us.apache.org/repos/asf?p=trafficserver.git;a=commit;h=8b5f0345dade6b2822d9b52c8ad12e63011a5c12
-> > Release notes: https://issues.apache.org/jira/secure/ReleaseNote.jspa?version=12327089&styleName=Html&projectId=12310963
-> > Reported by: Matthew Daley
-> >
-> > Please let me know if you need any further information.
+> [wmealing]$ chown root:root /usr/bin/ping
+> chown: changing ownership of '/usr/bin/ping': Operation not permitted
+> 
+> [wmealing]$ ping www.google.com
+> ping: icmp open socket: Operation not permitted
+> 
+> This can cause a denial of service for applications which use the
+> capabilities subsystem such as pirahnah (arping), netconsole (arping),
+> some kdump implementations, etc.
 
-> Ping.
+>> Currently we call security_inode_killpriv() in notify_change(),
+>> but in case of a chown() this is too early - we have not called
+>> inode_change_ok() or made any filesystem-specific permission/sanity
+>> checks.
 
-This was assigned CVE-2014-10022:
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-10022
+>> + * setattr_killpriv - remove extended privilege attributes from a file
+>> + * @dentry: Directory entry passed to the setattr operation
+>> + * @iattr: New attributes pased to the setattr operation
+>> + *
+>> + * All filesystems that can carry extended privilege attributes
+>> + * should call this from their setattr operation *after* validating
+>> + * the attribute changes.
 
-Cheers,
-        Moritz
+This is a somewhat unusual situation in which there is arguably a
+single underlying discovery: if any filesystem supports extended
+privilege attributes, its setattr operation has a requirement for
+certain code that supports the functionality of removing extended
+privilege attributes. Previously, there was no such requirement in the
+sense that notify_change was (wrongly) expected to support that
+functionality. Thus, it seems best to model this as a single security
+problem (with a single CVE ID) in which the set of requirements for
+setattr operations was incomplete. It does not seem worthwhile to
+model this as a series of related security problems (with multiple CVE
+IDs) in which individual filesystems had their own independent
+implementation errors.
+
+Use CVE-2015-1350.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJUw7LsAAoJEKllVAevmvmsxFwIAI8+WBXMKoJ7r+rWI7eeXoSn
+mGcb3gMBNS4siHYk12q22wcSHL/MbPqeUwWYT6b28xgf79GHkuLFyEksunhVoLzB
+TFrg1co3TjhzOtxAMV+VjjPRmfiS0Odc3KVsFyHX3FkNbPRLqy7d/yHMstScOTXM
+NzqpxrVRrL0Xs4LiOXWfWsAl1pkHpoDZSEC6FNxB2O87LowQF1qn/UlT88QczYoN
+4R66bDM3grd8iqohrpRk9ILiD97ZDShpwL8AIT27yxWttC2QiltSWTqCLvTGOZ4V
+ovk5gI1kAcGvGE32ILLYPrqDERLM4O3LqZtsd+793yj2yuqDs9D4cNj9XAdij5M=
+=WP6T
+-----END PGP SIGNATURE-----
