@@ -1,66 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/20/12
-Message-Id: <201502200754.04392.tmb@65535.com>
-Date: Fri, 20 Feb 2015 07:53:58 +0000
-From: Tim Brown <tmb@...35.com>
-To: oss-security@...ts.openwall.com
-Cc: Paul Pluzhnikov <ppluzhnikov@...gle.com>, Rich Felker <dalias@...c.org>
-Subject: Re: Fixing the glibc runtime linker
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/24/16
+Message-ID: <CALx_OUDtr80X9k=xZcJZkCLuBoCdOmwh46Pn2HwJpAepa-uP6A@mail.gmail.com>
+Date: Sat, 24 Jan 2015 14:55:32 -0800
+From: Michal Zalewski <lcamtuf@...edump.cx>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: Multiple vulnerabilities in LibTIFF and associated tools
 Content-Type: text/plain; charset=utf-8
 
-On Friday 20 February 2015 08:14:47 Paul Pluzhnikov wrote:
-> On Thu, Feb 19, 2015 at 11:57 PM, Rich Felker <dalias@...c.org> wrote:
-> > How is an empty or relative rpath easy?
-> 
-> all: foo
-> foo: foo.c
->         ${CC} -Wl,-rpath=${VAR} -o $@ $^
-> 
-> 
-> If VAR is unset, or set to relative path, resulting binary will be "bad".
-> 
-> Quoting original Tim's message:
-> > Over the last couple of years I've spent a good deal of time dealing with
-> > vendors who, for one reason or another have shipped binaries where it is
-> > possible to inject "untrusted" code into running processes, notably but
-> > not exclusively via DT_RPATH.
-> 
-> I can easily believe that such binaries are fairly common.
+Oh well... if the cat is out the bag anyway, here's what I reported to
+them. These affect the library itself and would also impact uses
+within ImageMagick, etc.
 
-That covers the DT_RPATH/DT_RUNPATH case adequately, here's a (similar) 
-example for LD_LIBRARY_PATH:
+http://lcamtuf.coredump.cx/afl/vulns/libtiff-mem2.tif
 
-* https://www.nth-dimension.org.uk/blog.php?id=87
+  - uninitialized memory in putcontig8bitCIELab / TIFFCIELabToXYZ
+    I'm guesisng this is a dupe of CVE-2014-8127
 
-The point is that I don't think it needs to be this way. As I said in my 
-initial post, Solaris has had saner (although IMO not perhaps perfect) 
-handling of this class of bug for years. If you look at the cases I've 
-publicly reported over the last few years, Solaris wouldn't have been affected 
-by any of them (despite what at least one vendor has said) because it does the 
-sensible thing.
+http://lcamtuf.coredump.cx/afl/vulns/libtiff-cvs-1.tif
 
-I'll certainly have another look at the non-priv'd case (I'm leaning towards 
-having $RELATIVE (new) and $ORIGIN honoured for them (despite the fact that it 
-compromises the basic premis a little)) but I don't see a good argument for 
-not protecting setuid/setgid binaries in the manner described.
+  - uninitialized memory in putcontig8bitYCbCr21tile
+    Fixed in:
 
-Having guaged appetite, I don't think the objections are insurmountable so 
-it's worth progressing with.
+      2014-12-29  Even Rouault  <even.rouault@...tialys.com>
 
-I guess, having kicked this bug class for a while (and even put out a paper 
-looking at the wider issue of linker behaviour), I'm trying to put my money 
-where my mouth is. That's what we're supposed to do, no? Find fixes rather than 
-just keep pointing out problems.
+      * libtiff/tif_getimage.c: in OJPEG case, fix checks on strile width/height
+        in the putcontig8bitYCbCr42tile, putcontig8bitYCbCr41tile and
+        putcontig8bitYCbCr21tile cases.
 
-To Rich specifically, I'm keen to get some kind of fix adopted, so once I've had 
-a chance to mull over the logging and necessary cases for relative paths a 
-little more, I'll circulate a revised patch and we can kick it around further. 
-I don't know what your thoughts are on MUSL, but I'd certainly prefer to get 
-buy in from you guys, if at all possible.
- 
-Tim
--- 
-Tim Brown
-<mailto:tmb@...35.com>
+    I don't think this had a CVE number assigned yet.
 
-Download attachment "signature.asc " of type "application/pgp-signature" (820 bytes)
+http://lcamtuf.coredump.cx/afl/vulns/libtiff-cvs-2.tif
+
+  - uninitialized memory in NeXTDecode
+    Fixed in:
+
+      2014-12-29  Even Rouault  <even.rouault@...tialys.com>
+
+      * libtiff/tif_next.c: add new tests to check that we don't read outside of
+      the compressed input stream buffer.
+
+    I don't think this had a CVE number assigned yet.
+
+http://lcamtuf.coredump.cx/afl/vulns/libtiff5.tif
+
+  - another use of uninitialized memory in NeXTDecode after fixing the
+previous case.
+    I don't think this had a CVE number assigned yet.
+
+The communications with upstream have been spotty, which is probably
+in part because many people are submitting crash reports at once. I
+don't know when they plan the next release, and the commits often
+aren't flagged as security-relevant or credited to any particular
+report or reporter.
+
+Anyway, the bottom line is that for now, using the last stable version
+of libtiff on anything attacker-controlled is probably a bad idea.
+
+/mz
