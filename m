@@ -1,27 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/10/15
-Message-ID: <20150310204221.GA12423@openwall.com>
-Date: Tue, 10 Mar 2015 23:42:21 +0300
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/24/1
+Message-ID: <20150124062408.GA12698@eldamar.local>
+Date: Sat, 24 Jan 2015 07:24:08 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: steevee.aka@...il.com, cve-assign@...re.org
-Subject: Re: Instant v2.0 SQL Injection Vulnerability
+Cc: Assign a CVE Identifier <cve-assign@...re.org>
+Subject: Re: [perl #119505] Segfault from bad backreference
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Mar 10, 2015 at 01:12:16PM -0400, cve-assign@...re.org wrote:
-> Also, note that this vendor (apparently from Iowa in the U.S.) is not
-> the same as the InstantCMS vendor (see CVE-2013-6839), apparently
-> located in Russia.
+Hi Kurt,
 
-This is what confused me into accepting the message for oss-security.
-I found this website:
+On Fri, Jan 23, 2015 at 02:38:51PM -0700, Kurt Seifried wrote:
+> http://perl5.git.perl.org/perl.git/commitdiff/0c2990d652e985784f095bba4bc356481a66aa06
+> 
+> The code that parses regex backrefs (or ambiguous backref/octal) such as
+> \123, did a simple atoi(), which could wrap round to negative values on
+> long digit strings and cause seg faults.
+> 
+> Include a check on the length of the digit string, and if greater than 9
+> digits, assume it can never be a valid backref (obviating the need for
+> the atoi() call).
+> 
+> I've also simplified the code a bit, putting most of the \g handling
+> code into a single block, rather than doing multiple "if (isg) {...}".
+> 
+> PoC:
+> 
+> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=776046
+> perl -e '/\7777777777/'
+> 
+> not sure if this can be exploited at all, but someone creative maybe has
+> ideas, if so this may need a CVE.
 
-http://www.instantcms.ru/get
+Just additional infomration: I think this was way back found already
+around 2008, in opensuse-commits the following can be found:
 
-which says (in Russian) that InstantCMS is licensed under GNU GPLv2.
+http://marc.info/?l=opensuse-commit&m=121933719424130
 
-If the message was about a proprietary product (or a SaaS offering?),
-then ideally we should have rejected it... but as discussed before, it's
-unrealistic for list moderators to investigate these things thoroughly.
+then also reported in the Perl request-tracker at
 
-Alexander
+https://rt.perl.org/Public/Bug/Display.html?id=119505
+
+Regards,
+Salvatore
