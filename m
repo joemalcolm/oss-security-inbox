@@ -1,34 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/20/19
-Message-Id: <20150220183524.B17EC72E0AA@smtpvbsrv1.mitre.org>
-Date: Fri, 20 Feb 2015 13:35:24 -0500 (EST)
-From: cve-assign@...re.org
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/24/13
+Message-ID: <54C40A9B.6090809@internot.info>
+Date: Sun, 25 Jan 2015 08:11:55 +1100
+From: Joshua Rogers <oss@...ernot.info>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: CVE-2015-2041 - Linux kernel - incorrect data type in llc2_timeout_table
+Subject: Re: Re: CVE Request: PHP
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 25/01/15 07:43, Joshua Rogers wrote:
+> "REG_EXTENDED", according to the regex(3) manual, is for "POSIX Extended
+> Regular Expression syntax"
+>
+> which probably isn't that common.
+Actually, I worked it out:
 
-CVE-2015-2041 has been assigned to this issue (disclosed last month)
-in which a sysctl table has incorrect .maxlen values:
+if you edit the isinsets function,
 
-  http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=6b8d9117ccb4f81b1244aafa7bc70ef8fa45fc49
+with this:
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+        register unsigned uc = (unsigned char)c;
+        printf("ncols: %d\n", ncols);
 
-iQEcBAEBAgAGBQJU53y/AAoJEKllVAevmvmsnrIH/25D/9OwDivxQwwEMS8jS59+
-rdVbVgFbQldveNWgivXeos0J/vEgqEvGqsBHGh+4QxWsUUtL2EH+pVd/VQG5iYnO
-V9aaHJTqkJPGzMdFXcnAvfxtFbBiJwR+OUn0TBTqsWy5iRiPpu1sl/Lz8eUdd+Zi
-h8J+qMx+NA4LkA9vBm0nqIQvtJjqwK8lr1C9LcdCs//2LJl+VDN4ZfRKKYNvBlys
-YyuwfqvsnrsBWwvUMT5iGXSmV/v7YQ63HznHn1DfhiLXXxyvlO0REH/aLrtyQ43l
-rc5cUrhqpMdaeCSGogwKatElp50zxxCdGR+Xlq9Gc0pyUhaOYpX7oeWyIb62wC4=
-=8QK3
------END PGP SIGNATURE-----
+        for (i = 0, col = g->setbits; i < ncols; i++, col += g->csetsize) {
+        printf("inside isinsets2: %d\n", col[uc]); 
+                if (col[uc] != 0)
+                        return(1);
+        }
+
+you'll see  that 'isinsets' is false on a normal run of ereg(which is
+extended POSIX regex by default)
+and when running ereg, it'll printf 'ncols: 0' constantly.
+
+I don't know how 'sets' are done in PHP ereg, however.
+
+
+Thanks,
+-- 
+-- Joshua Rogers <https://internot.info/>
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
