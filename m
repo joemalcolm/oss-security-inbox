@@ -1,34 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/28/6
-Message-ID: <54C84744.6020401@gmail.com>
-Date: Tue, 27 Jan 2015 18:19:48 -0800
-From: Jonathan Brossard <endrazine@...il.com>
-To: Qualys Security Advisory <qsa@...lys.com>
-CC: oss-security@...ts.openwall.com
-Subject: Re: GHOST gethostbyname() heap overflow in glibc (CVE-2015-0235)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/24/8
+Message-Id: <20150124182246.39BF5332036@smtpvbsrv1.mitre.org>
+Date: Sat, 24 Jan 2015 13:22:46 -0500 (EST)
+From: cve-assign@...re.org
+To: minipli@...glemail.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, marc.deslauriers@...onical.com
+Subject: Re: CVE Request: Linux kernel crypto api unprivileged arbitrary module load
 Content-Type: text/plain; charset=utf-8
 
-Dear Qualys team, dear list,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> From GHOST.c :
-> ...
->   char name[10];
->   memset(name, '0', len);
->   name[len] = '\0';
-> ...
+> Even though this was a new discovery, not explicitly mentioned in the
+> initial report, it's the same bug, essentially -- using the AF_ALG
+> interface to load arbitrary modules. In fact, commits 5d26a105b5a7 and
+> 4943ba16bbc2 should have been a single one ...
 
-I have been made aware off line that I have been working with an edited
-version of GHOST.c : the original version has a name buffer of size
-1024, which is indeed perfectly fine to copy 991 + 1 byte !
+Thanks for the additional clarification. However, we're planning to
+keep the distinct IDs of CVE-2013-7421 and CVE-2014-9644. We don't
+combine issues based only on finding that they affect the same module
+and have the same impact, and were fixed at roughly the same time. The
+4943ba16bbc2db05115707b3ff7b4874e9e3c560 example of loading
+'vfat(blowfish)' is new attack information that wasn't obvious, and
+didn't become public until 20 months later.
 
-There is no stack overflow in the original GHOST.c code : my humble
-appology for the noise :(
+(In this type of situation, we would prefer two CVE IDs even if
+everything had been fixed in a single commit. Admittedly, if there
+were a single commit, and no other information were posted, it might
+have been much harder to notice that there were two discoveries. So,
+there might have been the less preferable outcome of one CVE ID.)
 
-Best regards,
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-j-
-
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (182 bytes)
+iQEcBAEBAgAGBQJUw+KDAAoJEKllVAevmvms5nYH/j0K5Sd3M4yJWDxB2/kpF00A
+cXJU3o+Mm8l/AjJEd3blJ4IKG4FavAKN3YRjxPfbhIj34p8SaYCdMmDVylXftvsi
+3SiU9v7/k1q6U3JOh/jVj5gx+LsBlKmriL6TjqiBbGwjz3natEtXauRJ3/mIThxS
+rDHSfMr8zDGDrjUB9zIy50C2eQcVuDkc8YD1xM5vwUm9cL2xbYS8dY15kEY8c/fB
+J98yDVgGMdtZhr189yYnsRx6Cps/40wgpQ8D3/SBdUfN6nbv0M5Ao8X067y2L86y
+VbpS29B4Q4X9PR1oTC8ZVR3FvykTjjJvz0BCMN9P2lFWADquRkMjQkulwOO9tjQ=
+=/VtB
+-----END PGP SIGNATURE-----
