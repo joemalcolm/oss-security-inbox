@@ -1,46 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/12/15
-Message-Id: <20150212180511.B01096C00AB@smtpvmsrv1.mitre.org>
-Date: Thu, 12 Feb 2015 13:05:11 -0500 (EST)
-From: cve-assign@...re.org
-To: hecmargi@....es
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE-Request -- Google Email App 4.2.2 remote denial of service
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/24/18
+Message-ID: <20150124235257.GA11792@inutil.org>
+Date: Sun, 25 Jan 2015 00:52:57 +0100
+From: Moritz Muehlenhoff <jmm@...ian.org>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: Re: Re: CVE request / advisory: Apache Traffic Server 5.0.0 - 5.1.1
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Thu, Jan 22, 2015 at 07:41:21PM +1300, Matthew Daley wrote:
 
-> http://hmarco.org/bugs/google_email_app_4.2.2_denial_of_service.html
+> > I'd like to request a CVE ID for this issue. It was found in Apache
+> > Traffic Server (http://trafficserver.apache.org/), an open-source
+> > caching proxy webserver.
+> >
+> > This is the first such request but the issue has been semi-public for
+> > a few weeks now; this message serves as an advisory as well. (Note
+> > this probably needs a CVE-2014-* ID)
+> >
+> > Affected software: Apache Traffic Server
+> > Description: Receiving a HTTP TRACE request containing a
+> > "Max-Forwards" header with a value of "0" will cause the
+> > traffic_server process to crash with an assertion failure, even in
+> > release builds.
+> >
+> > The parent process, traffic_manager, will restart the traffic_server
+> > process when it sees that it has crashed. However, it takes several
+> > seconds before the new process is ready to handle requests, during
+> > which the server appears unresponsive to the outside world. Also,
+> > traffic_manager will queue incoming requests until the new process is
+> > ready to handle them. These queued requests might consist of more of
+> > the same request that caused the traffic_server process to crash in
+> > the first place. This allows a remote attacker to perform an effective
+> > DoS of the server with very little resources by simply sending the
+> > crashing request repeatedly.
+> >
+> > Affected versions: 5.0.0 - 5.1.1 (5.x.x series before 5.1.2)
+> > Fixed version: 5.1.2
+> > Bug entry: https://issues.apache.org/jira/browse/TS-3223
+> > Fix: https://git-wip-us.apache.org/repos/asf?p=trafficserver.git;a=commit;h=8b5f0345dade6b2822d9b52c8ad12e63011a5c12
+> > Release notes: https://issues.apache.org/jira/secure/ReleaseNote.jspa?version=12327089&styleName=Html&projectId=12310963
+> > Reported by: Matthew Daley
+> >
+> > Please let me know if you need any further information.
 
-At this point, the best available information is that this is a
-vulnerability in some part of open-source software under
-https://android.googlesource.com/platform/packages/apps/Email/
-(although we don't know the specific lines of code at fault), that
-there is a security impact for a fully specified attack methodology,
-and that there isn't any clear evidence that this is a duplicate of a
-finding from a previous year. Use CVE-2015-1574.
+> Ping.
 
-> https://android.googlesource.com/platform/packages/apps/Email/+/6fb157c90cc04a062eefa5ede850b6efd8d2fc80
+This was assigned CVE-2014-10022:
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-10022
 
-This might not be a security fix. The goal of this fix might be to
-ensure that other types of blank Content-Disposition headers are
-considered equivalent to "Content-Disposition: inline" so that the
-"treat text and images as viewables" code path is used.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJU3OrJAAoJEKllVAevmvmssb4H/RcixNJl7ZSn5POK4z+oqAN0
-26L1q9sFlLWVLjv7oXj/YisKGOKTR0QyCTn1mW8UzHC5eDlTuWb1kuY0FCuiNeka
-z9RYhWgoXqKCv2zuPW5LoeQW5uk4wWfwByv85olDPDm5xjvWdhWndxSXueS5VcCj
-Fe3x9XIM5i7rX2UOEivdZM1aibdrhzj9CHRwdbi0yIDdNBWzfePqm26g060gD6EG
-daCh7vC2Rs47h4ugcbuiayN2UGYE6iG6LVtmuM0C+v6OKYda1F9OMP8NUKSebCxi
-x7gdeluVzKUpiYz0eRHsz5QJ4nDH9CWo8D/CXmfBt3IBE5L2e/MLy/UCkqtXOiM=
-=kugD
------END PGP SIGNATURE-----
+Cheers,
+        Moritz
