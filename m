@@ -1,23 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/06/10
-Message-ID: <54D54DF7.7000803@oracle.com>
-Date: Fri, 06 Feb 2015 15:27:51 -0800
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
-To: Kurt Seifried <kseifried@...hat.com>
-CC: oss-security@...ts.openwall.com, Assign a CVE Identifier <cve-assign@...re.org>
-Subject: Re: lynx: crash when parsing overly long links
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/24/3
+Message-ID: <20150124102102.GA10281@eldamar.local>
+Date: Sat, 24 Jan 2015 11:21:02 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Cc: CVE Assignments MITRE <cve-assign@...re.org>
+Subject: CVE Request: patch: CVE needed for incomplete fix for CVE-2015-1196?
 Content-Type: text/plain; charset=utf-8
 
-On 02/ 6/15 03:05 PM, Kurt Seifried wrote:
-> This is an old one, making public:
->
-> lynx: crash when parsing overly long links
->
-> it may need a CVE
+Hi,
 
-Is there a bug id, changelog entry, or patch that distros can use to make
-sure we've fixed this?
+It was reported that the fix for CVE-2015-1196 was incomplete. It was
+reported to the Debian BTS as #775901[1] and as well mentioned in Red
+Hat's Bugzilla at [2].
 
--- 
-	-Alan Coopersmith-              alan.coopersmith@...cle.com
-	 Oracle Solaris Engineering - http://blogs.oracle.com/alanc
+Does this need a separate CVE?
+
+ [1] https://bugs.debian.org/775901
+ [2] https://bugzilla.redhat.com/show_bug.cgi?id=1182154#c10
+
+Regards,
+Salvatore
