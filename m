@@ -1,57 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/28/5
-Message-Id: <20150228173710.70B0D6C0024@smtpvmsrv1.mitre.org>
-Date: Sat, 28 Feb 2015 12:37:10 -0500 (EST)
-From: cve-assign@...re.org
-To: blinken@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: PuTTY fails to clear private key information from memory
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/24/11
+Message-id: <22B480B3-9777-4DCB-8334-CD7AD31862F3@me.com>
+Date: Sat, 24 Jan 2015 15:05:26 -0500
+From: "Larry W. Cashdollar" <larry0@...com>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: SEANux 1.0 remote back door
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello All,
+I thought you might be interested in this from by blog with screen shots http://www.vapid.dhs.org/blog/01-23-2015/ :
 
-Use CVE-2015-2157.
+SEANux 1.0 backdoor
 
-This falls into a narrow set of situations in which a CVE ID can be
-assigned even though the issue does not cross privilege boundaries.
-The vendor is specifically announcing this as "This is a security
-vulnerability." (Also, wiping private-key memory is a conventional
-behavior seen in many products. It is not the same as wiping any
-memory block that any researcher may feel is sensitive in some way.)
+Larry W. Cashdollar
+1/23/2015
 
-> http://www.chiark.greenend.org.uk/~sgtatham/putty/wishlist/private-key-not-wiped-2.html
 
-> However, if you ever told Pageant to delete a key from memory, it
-> would not have properly deleted it: it would still have retained a
-> copy by mistake due to this bug.
+SEANux 1.0 is a linux distribution Available here developed by the Syrian Electronic Army. It has an apache webserver listening on 0.0.0.0:80
+root@...ry-VirtualBox:/etc/mysql# netstat -an
+Active Internet connections (servers and established)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State      
+tcp        0      0 127.0.0.1:6010          0.0.0.0:*               LISTEN     
+tcp        0      0 127.0.0.1:3306          0.0.0.0:*               LISTEN     
+tcp        0      0 127.0.1.1:53            0.0.0.0:*               LISTEN     
+tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN     
+tcp        0      0 127.0.0.1:631           0.0.0.0:*               LISTEN     
+tcp        0      0 192.168.0.33:22         192.168.0.22:53474      ESTABLISHED
+tcp6       0      0 ::1:6010                :::*                    LISTEN     
+tcp6       0      0 :::80                   :::*                    LISTEN     
+tcp6       0      0 :::22                   :::*                    LISTEN     
+tcp6       0      0 ::1:631                 :::*                    LISTEN     
+tcp6       1      0 ::1:57375               ::1:631                 CLOSE_WAIT 
+udp        0      0 0.0.0.0:68              0.0.0.0:*                          
+udp        0      0 0.0.0.0:52375           0.0.0.0:*                          
+udp        0      0 0.0.0.0:5353            0.0.0.0:*                          
+udp        0      0 0.0.0.0:41938           0.0.0.0:*                          
+udp        0      0 0.0.0.0:31229           0.0.0.0:*                          
+udp        0      0 127.0.1.1:53            0.0.0.0:*                          
+udp6       0      0 :::37598                :::*                               
+udp6       0      0 :::5353                 :::*                               
+udp6       0      0 :::12590                :::*                               
+udp6       0      0 :::52638                :::*                               
+udp6       0      0 :::546                  :::*                               
+Active UNIX domain sockets (servers and established)
 
-Because of the "this bug" wording, a single CVE ID is assigned.
-However, in general, these two cases could be distinguished:
+This apache server is a tool server hosting web based tools by the SEA
+One of the tools is a backdoor to the system
 
-  - violating a user's reasonable expectations about what preemptive
-    memory wiping should occur
+The path http://192.168.0.33/tools/sea.php is a back door for the SEA. 
 
-  - providing a UI feature advertised as a way to tell a product to
-    wipe a key from memory, accompanied by actual behavior in which no
-    wiping occurs
+Here is a screen shot after logging in: 
 
-with separate CVE IDs. In other words, there would be two CVE IDs if
-there were two bugs (one for each case) fixed independently.
+From lines 6-15 contain the credentials sea.php:
+     6 $user = 'SEA'; ^M
+     7 $pass = 'SEA'; ^M
+     8 $uselogin = 1;^M
+     9 $sh3llColor = "#0040FF";^M
+    10 ^M
+    11 # MySQL Info ---------^M
+    12 $DBhost = "localhost";^M
+    13 $DBuser = "root";^M
+    14 $DBpass = "root";^M
+    15 #---------------------^M
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJU8fxVAAoJEKllVAevmvmsPEAIAI+BEhf4vgQeJ0DUdXbbYRsH
-gJHqdlKZSMrPsu3TKKkahVLwifZaijJvMqTItzvZOPJQ5/E5Wv2CfHZxWiJYDSwq
-JEszf1IUAA0trny8h8wDtj8sAbDG5m/yTYEIp68bp/zxn/1g7ti9arzBjZXQUmpM
-3HAJE8l2ajIwRgtq3TJagTJ8uFpMb9qh1fXmL5SoMP8y/dfRPgT0IntIQtg3LzgB
-RLPFpY+6Ftk1GSK7ZcamWt1CSnk/UPWjKCbpqTWa6z4HNdcNuO6CFwpMLH/e3P2t
-pTFlLW+z6pxTmPAfkB9mspAR2vGVyfbBMpktxwpUTSNtkxemfC8RAU60WvRyOHc=
-=aQwW
------END PGP SIGNATURE-----
+So I thought this backdoor might allow root access to the mysql database running on port 3306. But the credentials are set for mysql during setup, and I don't see any other code to run sql queries on the system. Perhaps they just default to root root as that's a very common password combo for mysql installs?
