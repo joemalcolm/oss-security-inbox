@@ -1,31 +1,81 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/12/4
-Message-Id: <201501121936.37902.thijs@debian.org>
-Date: Mon, 12 Jan 2015 19:36:37 +0100
-From: Thijs Kinkhorst <thijs@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: pigz, kgb, pax: directory traversal
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/24/17
+Message-id: <9E9B4751-9353-4605-A4F2-4E261F7D5038@me.com>
+Date: Sat, 24 Jan 2015 18:17:56 -0500
+From: "Larry W. Cashdollar" <larry0@...com>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: Re: SEANux 1.0 remote back door
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+After discussing this with the SEA, we’ve determined this is a misconfiguration.  They are planning on fixing it in the next release.
 
-Three additional cases of directory traversal in archiving utilities have been 
-reported to Debian. Please assign a CVE id to each.
+The fix is simply modifying apache’s ports.conf to bind apache to localhost.
 
-- pigz
-  Report: https://bugs.debian.org/774978
-  Fix: 
-https://github.com/madler/pigz/commit/fdad1406b3ec809f4954ff7cdf9e99eb18c2458f
+# cat ports.conf |grep -n 127
+8:NameVirtualHost 127.0.0.1:80
+9:Listen 127.0.0.1:80
 
-- kgb
-  Report: https://bugs.debian.org/774989
-
-- pax
-  Report: https://bugs.debian.org/774716 and
-      http://www.openwall.com/lists/oss-security/2015/01/07/5
+Actually one of the fastest vendor responses I’ve ever seen. :-)
 
 
-Thanks,
+> On Jan 24, 2015, at 3:05 PM, Larry W. Cashdollar <larry0@...com> wrote:
+> 
+> Hello All,
+> I thought you might be interested in this from by blog with screen shots http://www.vapid.dhs.org/blog/01-23-2015/ :
+> 
+> SEANux 1.0 backdoor
+> 
+> Larry W. Cashdollar
+> 1/23/2015
+> 
+> 
+> SEANux 1.0 is a linux distribution Available here developed by the Syrian Electronic Army. It has an apache webserver listening on 0.0.0.0:80
+> root@...ry-VirtualBox:/etc/mysql# netstat -an
+> Active Internet connections (servers and established)
+> Proto Recv-Q Send-Q Local Address           Foreign Address         State      
+> tcp        0      0 127.0.0.1:6010          0.0.0.0:*               LISTEN     
+> tcp        0      0 127.0.0.1:3306          0.0.0.0:*               LISTEN     
+> tcp        0      0 127.0.1.1:53            0.0.0.0:*               LISTEN     
+> tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN     
+> tcp        0      0 127.0.0.1:631           0.0.0.0:*               LISTEN     
+> tcp        0      0 192.168.0.33:22         192.168.0.22:53474      ESTABLISHED
+> tcp6       0      0 ::1:6010                :::*                    LISTEN     
+> tcp6       0      0 :::80                   :::*                    LISTEN     
+> tcp6       0      0 :::22                   :::*                    LISTEN     
+> tcp6       0      0 ::1:631                 :::*                    LISTEN     
+> tcp6       1      0 ::1:57375               ::1:631                 CLOSE_WAIT 
+> udp        0      0 0.0.0.0:68              0.0.0.0:*                          
+> udp        0      0 0.0.0.0:52375           0.0.0.0:*                          
+> udp        0      0 0.0.0.0:5353            0.0.0.0:*                          
+> udp        0      0 0.0.0.0:41938           0.0.0.0:*                          
+> udp        0      0 0.0.0.0:31229           0.0.0.0:*                          
+> udp        0      0 127.0.1.1:53            0.0.0.0:*                          
+> udp6       0      0 :::37598                :::*                               
+> udp6       0      0 :::5353                 :::*                               
+> udp6       0      0 :::12590                :::*                               
+> udp6       0      0 :::52638                :::*                               
+> udp6       0      0 :::546                  :::*                               
+> Active UNIX domain sockets (servers and established)
+> 
+> This apache server is a tool server hosting web based tools by the SEA
+> One of the tools is a backdoor to the system
+> 
+> The path http://192.168.0.33/tools/sea.php is a back door for the SEA. 
+> 
+> Here is a screen shot after logging in: 
+> 
+> From lines 6-15 contain the credentials sea.php:
+>     6 $user = 'SEA'; ^M
+>     7 $pass = 'SEA'; ^M
+>     8 $uselogin = 1;^M
+>     9 $sh3llColor = "#0040FF";^M
+>    10 ^M
+>    11 # MySQL Info ---------^M
+>    12 $DBhost = "localhost";^M
+>    13 $DBuser = "root";^M
+>    14 $DBpass = "root";^M
+>    15 #---------------------^M
+> 
+> 
+> So I thought this backdoor might allow root access to the mysql database running on port 3306. But the credentials are set for mysql during setup, and I don't see any other code to run sql queries on the system. Perhaps they just default to root root as that's a very common password combo for mysql installs?
 
-Thijs Kinkhorst
-Debian security team
