@@ -1,52 +1,87 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/22/2
-Message-ID: <CAD3CancKYnpWhMd7Za2155rPKQ1jjQ5C2T6vEp5XO2V=itEgPQ@mail.gmail.com>
-Date: Thu, 22 Jan 2015 19:41:21 +1300
-From: Matthew Daley <mattd@...fuzz.com>
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: CVE request / advisory: Apache Traffic Server 5.0.0 - 5.1.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/24/4
+Message-Id: <20150124145342.6F8BF3AE03A@smtpvbsrv1.mitre.org>
+Date: Sat, 24 Jan 2015 09:53:42 -0500 (EST)
+From: cve-assign@...re.org
+To: marc.deslauriers@...onical.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: Linux kernel crypto api unprivileged arbitrary module load
 Content-Type: text/plain; charset=utf-8
 
-Ping.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On 6 January 2015 at 21:42, Matthew Daley <mattd@...fuzz.com> wrote:
-> Hi,
->
-> I'd like to request a CVE ID for this issue. It was found in Apache
-> Traffic Server (http://trafficserver.apache.org/), an open-source
-> caching proxy webserver.
->
-> This is the first such request but the issue has been semi-public for
-> a few weeks now; this message serves as an advisory as well. (Note
-> this probably needs a CVE-2014-* ID)
->
-> Affected software: Apache Traffic Server
-> Description: Receiving a HTTP TRACE request containing a
-> "Max-Forwards" header with a value of "0" will cause the
-> traffic_server process to crash with an assertion failure, even in
-> release builds.
->
-> The parent process, traffic_manager, will restart the traffic_server
-> process when it sees that it has crashed. However, it takes several
-> seconds before the new process is ready to handle requests, during
-> which the server appears unresponsive to the outside world. Also,
-> traffic_manager will queue incoming requests until the new process is
-> ready to handle them. These queued requests might consist of more of
-> the same request that caused the traffic_server process to crash in
-> the first place. This allows a remote attacker to perform an effective
-> DoS of the server with very little resources by simply sending the
-> crashing request repeatedly.
->
-> Affected versions: 5.0.0 - 5.1.1 (5.x.x series before 5.1.2)
-> Fixed version: 5.1.2
-> Bug entry: https://issues.apache.org/jira/browse/TS-3223
-> Fix: https://git-wip-us.apache.org/repos/asf?p=trafficserver.git;a=commit;h=8b5f0345dade6b2822d9b52c8ad12e63011a5c12
-> Release notes: https://issues.apache.org/jira/secure/ReleaseNote.jspa?version=12327089&styleName=Html&projectId=12310963
-> Reported by: Matthew Daley
->
-> Please let me know if you need any further information.
->
-> Thanks,
->
-> - Matthew Daley
+> The Crypto API in the Linux kernel before 3.19 allowed unprivileged users to
+> load arbitrary kernel modules.
+
+> https://plus.google.com/+MathiasKrause/posts/PqFCo4bfrWu
+
+> https://lkml.org/lkml/2013/3/4/70
+> https://git.kernel.org/linus/5d26a105b5a73e5635eae0629b42fa0a90e07b7b
+
+Use CVE-2013-7421 for the original 2013 discovery by Mathias Krause,
+with a "Try the code snippet below on a system with
+CONFIG_CRYPTO_USER_API=y" attack.
+
+The scope of CVE-2013-7421 does not include any other parts of the
+related 2013-03-03 discussion. In particular, the scope of
+CVE-2013-7421 does not include the general concepts of "making things
+safer with no real cost" and "Allowing simple, safe, well understood
+work-arounds" in the https://lkml.org/lkml/2013/3/3/35 post. Also, the
+scope of CVE-2013-7421 does not include any other security
+implications, for other subsystems, of the "This isn't the case for
+filesystems and a few others, unfortunately" observation in the
+https://lkml.org/lkml/2013/3/3/88 post.
+
+
+> https://git.kernel.org/linus/4943ba16bbc2db05115707b3ff7b4874e9e3c560
+
+Use CVE-2014-9644 for this second discovery in 2014, mentioned in
+PqFCo4bfrWu as 'stumbled over the first flaw -- not handling crypto
+templates correctly. This means, the patch would prevent loading the
+vfat.ko module when requesting a cipher named "vfat" but would fail to
+do so if one would request "vfat(aes)" instead.' As far as we can
+tell, this is a discovery of a separate attack vector that wasn't
+implied by the 2013 post.
+
+
+> https://git.kernel.org/linus/3e14dcf7cb80b34a1f38b55bc96f02d23fdaaaaf
+
+This isn't within the scope of either CVE-2013-7421 or CVE-2014-9644.
+As far as we can tell, it is largely a usability fix. The example
+mentioned is "This fixes, e.g., requesting 'ecb(blowfish-generic)',
+which used to work with kernels v3.18 and below." Is there also a
+security impact if 3e14dcf7cb80b34a1f38b55bc96f02d23fdaaaaf is
+missing? For example, is it likely that code exists that requests
+ecb(blowfish-generic) in an environment without
+3e14dcf7cb80b34a1f38b55bc96f02d23fdaaaaf, and is able to continue
+working afterward, but falls back to weak encryption?
+
+
+Finally, here is one more CVE ID for the last issue that PqFCo4bfrWu
+mentions:
+
+> https://bugs.busybox.net/show_bug.cgi?id=7652
+> http://git.busybox.net/busybox/commit/?id=4e314faa0aecb66717418e9a47a4451aec59262b
+
+Use CVE-2014-9645. The scope of this CVE ID is the entire problem of
+path stripping. (In other words, CVE-2014-9645 is not specific to the
+'If one would request a cipher named "/vfat"' attack, and is not
+specific to the Crypto API.)
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJUw7GnAAoJEKllVAevmvmsSGYH+QGuxDsDlzYM7If+yc+qmSMh
+RpG3iaenpzXCqDRePWl3d8ghKMP/ykkplzRxyAU9KFQYsC380u113eVcG/Jp7OL2
+ARmzwqoYTJ9rIzicNOX2vEtZ2G3S1u57TPxjUEi/I1RD/L8b7LOeE1mb0/1MHvsP
+eAIwPuBD6zS21wUpQow6Y9F3IlItJBkaMGXwqgxiO8ABD56rTKy+msBxDhxxvllR
+noVwKZDsJteocQuhzS8Nb6M31T0mj8rszFpHyZLB54hTFyLY9u8nnjpJVpnjZi/R
+ovw9Obe7+W2182KoNRNtXNwp9ztjjvh9QCc30vmB7ML07/raBVm1E/z/+ctMqo0=
+=oBcQ
+-----END PGP SIGNATURE-----
