@@ -1,63 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/28/22
-Message-ID: <87oapia86q.fsf@mid.deneb.enyo.de>
-Date: Wed, 28 Jan 2015 22:47:57 +0100
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/25/1
+Message-ID: <54C4AC90.9050003@openwall.com>
+Date: Sun, 25 Jan 2015 11:42:56 +0300
+From: Alexander Cherepanov <ch3root@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: GHOST gethostbyname() heap overflow in glibc (CVE-2015-0235)
+Subject: Re: SEANux 1.0 remote back door
 Content-Type: text/plain; charset=utf-8
 
-> On Wed, 28 Jan 2015, Huzaifa Sidhpurwala wrote:
->
->> On 01/27/2015 11:35 PM, Florian Weimer wrote:
->>> * Marek Kroemeke:
->>>
->>>> We just noticed CVE-2015-0235 , and we thought we will drop this one
->>>> in - apologies for low quality , we didn't really have time yet to
->>>> analyse it, but it seems to be related, so it makes sense to patch
->>>> things once right ?
->>>
->>> It's not related, and we cannot patch it at the same time because
->>> packages for the gethostbyname issue are already ready, they just have
->>> to be released.  (When we change critical system components, we also
->>> need to be extra-careful with testing, which takes time.)
->>>
->>> Andreas Schwab fixed this in 2011:
->>>
->>>   <https://sourceware.org/git/gitweb.cgi?p=glibc.git;a=commitdiff;h=2e96f1c7>
->>>
->>> If I'm not mistaken, this commit when into glibc 2.15.
->>>
->>> I have not yet found the corresponding glibc bug (if it exists).
->>>
->>> The bug only materializes if the getaddrinfo functions is called with
->>> the AI_IDN flag, and if glibc has been compiled with libidn support
->>> (but I haven't checked if you can switch that off these days).
->>>
->>
->> MITRE,
->>
->> This is a new flaw, can you please assign a CVE id to this?
->>
->> https://bugzilla.redhat.com/show_bug.cgi?id=797096
->>
->> Thanks!
->>
->> -- 
->> Huzaifa Sidhpurwala / Red Hat Product Security Team
->
-> Use CVE-2012-6686 for "unbound alloca use in glob_in_dir" as covered
-> by Red Hat Bugzilla ID 797096.
+On 2015-01-24 23:05, Larry W. Cashdollar wrote:
+> SEANux 1.0 is a linux distribution Available here developed by the Syrian Electronic Army.
 
-Oh, it seems Huzaifa posted the wrong Bugzilla reference.
+Is it open source?
 
-We still need assignment for this fix:
+BTW nice joke:
 
-  <https://sourceware.org/git/gitweb.cgi?p=glibc.git;a=commitdiff;h=2e96f1c7>
+"Larry W. Cashdollar
+Security Response Engineer @ Akamai
 
-The matching Red Hat Bugzilla bug is:
+Actually, I think you guys did a really good job with the distro! Really 
+nice! I'm going to run it as one of my desktops I like it so much!"
 
-  <https://bugzilla.redhat.com/show_bug.cgi?id=981942>
+At least I hope it's a joke:-)
 
-I haven't yet seen an upstream bug for it; this change happened before
-upstream required bugs being filed for all user-visible changes.
+-- 
+Alexander Cherepanov
