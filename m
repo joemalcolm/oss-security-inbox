@@ -1,29 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/05/1
-Message-ID: <CACYkhxiyoQWsnKHOZuBCPjQn9=jJPbLzk_cvGx3vHyjNU5u1nA@mail.gmail.com>
-Date: Thu, 5 Feb 2015 11:18:01 +1100
-From: Michael Samuel <mik@...net.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/25/5
+Message-ID: <20150125184713.GB24557@kludge.henri.nerv.fi>
+Date: Sun, 25 Jan 2015 20:47:13 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: Re: Apache 2.4 mod_ssl SSLSessionTickets -- others vulnerable?
+Cc: Hans-Martin Münch <muench@...waisecurity.de>
+Subject: CVE request: MSA-2015-01: Wordpress Plugin Pixabay Images Multiple Vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-On 5 February 2015 at 03:35, Mark Felder <feld@...d.me> wrote:
->   *) mod_ssl: New directive SSLSessionTickets (On|Off).
+Hi,
 
-And as with nginx and OpenSSL s3_srvr.c, there's no retval check on
-RAND_pseudo_bytes() when creating the IV to encrypt the session
-ticket.
+Can I get 2014 year CVEs for following vulnerabilities in WordPress plugin
+pixabay-images, thanks.
 
-This isn't exploitable with the default RNG (you won't get this far
-without a working RNG), but be careful if your engine is flaking out -
- you could be sending something else out with your IVs...
+Original advisory: http://seclists.org/bugtraq/2015/Jan/94
 
-For the record:
--1 : Error, buffer not filled
- 0 : Buffer filled with potentially predictable entropy (unless an
-engine aliased their RAND_bytes interface to RAND_pseudo_bytes!)
- 1 : Success
+"""
+1) Authentication bypass
+The plugin does not correctly check if the user is logged in. Certain
+code can be called without authentication
 
+2) Arbitrary file upload
+The plugin code does not validate the host in the provided download URL,
+which allows to upload malicious files, including PHP code.
 
-Regards,
-  Michael
+3) Path Traversal
+Certain values are not sanitized before they are used in a file operation.
+This allows to store files outside of the "download" folder. 
+
+4) Cross Site Scripting (XSS)
+The generated author link uses unsanitized user values which can be
+abused for Cross Site Scripting (XSS) attacks. 
+"""
+
+Fixed in 2.4 version.
+
+Listed in OSVDB as:
+http://osvdb.org/117144 Pixabay Images Plugin for WordPress pixabay-images.php
+image_user Parameter Reflected XSS
+http://osvdb.org/117145 Pixabay Images Plugin for WordPress pixabay-images.php
+Image Upload Handling Missing File Type Restrictions Remote Code Execution
+http://osvdb.org/117146 Pixabay Images Plugin for WordPress pixabay-images.php
+Image Upload Handling Authentication Bypass
+http://osvdb.org/117147 Pixabay Images Plugin for WordPress pixabay-images.php
+Image Upload Handling Path Traversal Issue
+
+-- 
+Henri Salo
