@@ -1,35 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/03/13
-Message-Id: <20150203165724.083F9B2E3C2@smtpvbsrv1.mitre.org>
-Date: Tue,  3 Feb 2015 11:57:24 -0500 (EST)
-From: cve-assign@...re.org
-To: pmatouse@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request -- Linux kernel - net: DoS due to routing packets to too many different dsts/too fast
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/25/2
+Message-id: <677CD838-2FD1-47A3-B442-83517E2521B7@me.com>
+Date: Sun, 25 Jan 2015 06:25:07 -0500
+From: "Larry W. Cashdollar" <larry0@...com>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: Re: SEANux 1.0 remote back door
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=df4d92549f23e1c037e83323aff58a21b3de7fe0
+> On Jan 25, 2015, at 3:42 AM, Alexander Cherepanov <ch3root@...nwall.com> wrote:
+> 
+> On 2015-01-24 23:05, Larry W. Cashdollar wrote:
+>> SEANux 1.0 is a linux distribution Available here developed by the Syrian Electronic Army.
+> 
+> Is it open source?
 
-> https://bugzilla.redhat.com/show_bug.cgi?id=1183744
+Yes, it’s based off of ubuntu and uses those software repositories for updates.
 
-Use CVE-2015-1465.
+> 
+> BTW nice joke:
+> 
+> "Larry W. Cashdollar
+> Security Response Engineer @ Akamai
+> 
+> Actually, I think you guys did a really good job with the distro! Really nice! I'm going to run it as one of my desktops I like it so much!"
+> 
+> At least I hope it's a joke:-)
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+I have lots of desktops in the lab. ;-)
 
-iQEcBAEBAgAGBQJU0P1oAAoJEKllVAevmvmsiGEIALOQOpGAyhhOgPUdZn/S879c
-Ox7Y7fInk76URtsBKXM7tbNXWpbKNrHPVB9qHWJxvW9qVW8RJUc7inQa7YDV/kiR
-WwtRHOiaujOsyzUIzXbS35/ELMEwi9y9DuLC6ghKHd3vhvOoqnEVKFbhKWJRUDqt
-smpw/3cUKOXGNticCGHYJx4cdv0JFpeYat2U6IlGqwkSvXDCkixV/OQIpGJgexWj
-ze8fxY+ZGTLmur3BQHPO0eZeHNQRj0StjdPfjaOG1WRL/rn04gw76tsyzmWaN46J
-F0QZaDOIwOuUqaNDV/W/CuzK5JEWzKfhcIv/3/T4n78vwyO4+gEg8BXADiiEiM8=
-=0OZ0
------END PGP SIGNATURE-----
+
+> 
+> -- 
+> Alexander Cherepanov
+
