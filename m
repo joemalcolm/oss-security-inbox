@@ -1,37 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/10/6
-Message-ID: <809225766.19081720.1425996986804.JavaMail.zimbra@redhat.com>
-Date: Tue, 10 Mar 2015 10:16:26 -0400 (EDT)
-From: Francisco Alonso <falonsoe@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/25/4
+Message-ID: <54C50C4C.6010807@openwall.com>
+Date: Sun, 25 Jan 2015 18:31:24 +0300
+From: Alexander Cherepanov <ch3root@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: CVE Request: PHP 5.6.6 changelog
+Subject: Re: SEANux 1.0 remote back door
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 2015-01-25 14:25, Larry W. Cashdollar wrote:
+>
+>> On Jan 25, 2015, at 3:42 AM, Alexander Cherepanov <ch3root@...nwall.com> wrote:
+>>
+>> On 2015-01-24 23:05, Larry W. Cashdollar wrote:
+>>> SEANux 1.0 is a linux distribution Available here developed by the Syrian Electronic Army.
+>>
+>> Is it open source?
+>
+> Yes, it’s based off of ubuntu and uses those software repositories for updates.
 
-Could a CVE be please assigned to the following issues? [3] (in case it was
-not requested to MITRE before):
+Sure, it's based on some open-source software, it wouldn't be a linux 
+distribution otherwise. But is it open source itself? Actually, I'm not 
+sure what does this mean exactly but it's the second distro brought to 
+oss-security recently (the first one was Red Star) which seems to be 
+more appropriate for full-disclosure than for oss-security.
 
-[1] PHP: heap buffer overflow in enchant_broker_request_dict() :
-https://bugs.php.net/bug.php?id=68552
-http://svn.php.net/viewvc/pecl/enchant/trunk/enchant.c?r1=317600&r2=335803
-https://bugzilla.redhat.com/show_bug.cgi?id=1194737
+But maybe it's just me...
 
-
-[2] PHP: Double free with disabled ZMM:
-https://bugs.php.net/bug.php?id=68827
-http://git.php.net/?p=php-src.git;a=commit;h=91aa340180eccfc15d4a143b54d47b8120f898be
-https://bugzilla.redhat.com/show_bug.cgi?id=1194741
-
-
-[3] PHP: use after free in phar_object.c
-https://bugs.php.net/bug.php?id=68901
-http://git.php.net/?p=php-src.git;a=commit;h=b2cf3f064b8f5efef89bb084521b61318c71781b
-https://bugzilla.redhat.com/show_bug.cgi?id=1194747
-
-
-Thank you
-
-Francisco Alonso / Red Hat Product Security
-PGP: 0xA026440E 0825 020C 7A5A 4F86 9038  B1C8 5562 688F A026 440E
+-- 
+Alexander Cherepanov
