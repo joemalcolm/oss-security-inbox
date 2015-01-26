@@ -1,38 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/03/20
-Message-ID: <Pine.LNX.4.64.1501031854570.1923@beijing.mitre.org>
-Date: Sat, 3 Jan 2015 18:55:53 -0500 (EST)
-From: cve-assign@...re.org
-To: David Cramer <david@...sentry.com>
-cc: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: Re: CVE Request
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/26/7
+Message-ID: <54C689DC.8080908@canonical.com>
+Date: Mon, 26 Jan 2015 13:39:24 -0500
+From: Marc Deslauriers <marc.deslauriers@...onical.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: XSS and response-splitting bugs in rabbitmq management plugin
 Content-Type: text/plain; charset=utf-8
 
+On 2015-01-21 01:47 PM, Marc Deslauriers wrote:
+> Hello,
+> 
+> The following issues were fixed in RabbitMQ 3.4.1:
+> 
+> (as described in
+> https://groups.google.com/forum/#!topic/rabbitmq-users/-3Z2FyGtXhs )
+> 
+> 26437 prevent /api/* from returning text/html error messages which could
+>        act as an XSS vector (since 2.1.0)
+> 26433 fix response-splitting vulnerability in /api/downloads
+>        (since 2.1.0)
+> 
+> Bug 26437 allowed an attacker to create a URL to "/api/..." which would
+> provoke an internal server error, resulting in the server returning an
+> html page with text from the URL embedded and not escaped. This was
+> fixed by ensuring all URLs below /api/ only ever return responses with a
+> content type of application/json, even in the case of an internal server
+> error.
+> 
+> Bug 26433 allowed an attacker to specify a URL to /api/definitions which
+> would cause an arbitrary additional header to be returned. This was
+> fixed by stripping out CR/LF from the "download" query string parameter.
+> 
+> 
+> Fixed by:
+> https://github.com/rabbitmq/rabbitmq-management/commit/b5a5fc31bd49ad821a655ea9e2fe920d670a62ad
+> 
+> Could CVEs please be assigned to these issue?
+> 
+> Thanks,
+> 
+> Marc.
+> 
 
-On Mon, 8 Dec 2014, David Cramer wrote:
+ping?
 
-> Software name and optionally vendor name
-> raven-ruby (part of Sentry)
->
-> Type of vulnerability
-> DoS
->
-> Link to vulnerable source code or fix
-> https://www.google.com/url?q=https%3A%2F%2Fgithub.com%2Fgetsentry%2Fraven-ruby%2Fcommit%2F477ee93a3f735be33bc1e726820654cdf6e22d8f&sa=D&sntz=1&usg=AFQjCNHdtqW_RuP8AZJu6fsevXS354EhrQ
->
-> Link to security advisory
-> https://groups.google.com/forum/#!topic/getsentry/Cz5bih0ZY1U
->
-> Affected version(s)
-> 0.6.0 and newer. Likely this translates to every single version anyone uses.
->
-> Software version(s) fixed (if available)
-> 0.12.2
+Marc.
 
-Use CVE-2014-9490.
-
----
-
-CVE assignment team, MITRE CVE Numbering Authority M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
