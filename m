@@ -1,46 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/28/20
-Message-ID: <Pine.LNX.4.64.1501281313510.9171@beijing.mitre.org>
-Date: Wed, 28 Jan 2015 13:17:40 -0500 (EST)
-From: cve-assign@...re.org
-To: Hanno Böck <hanno@...eck.de>
-cc: OSS Security <oss-security@...ts.openwall.com>, cve-assign@...re.org
-Subject: Re: the other glibc issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/26/9
+Message-ID: <54C6A743.4070508@redhat.com>
+Date: Mon, 26 Jan 2015 13:44:51 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE HOWTO - updated and moved to github
 Content-Type: text/plain; charset=utf-8
 
+https://github.com/RedHatProductSecurity/CVE-HOWTO
 
-On Wed, 28 Jan 2015, Hanno Böck wrote:
+replaces the old
+https://people.redhat.com/kseifrie/CVE-OpenSource-Request-HOWTO.html
 
-> Hi,
->
-> Not sure why solardesigner didn't post this himself, but he tweetet
-> yesterday:
-> glibc "getaddrinfo() writes DNS queries to random file descriptors
-> under high load" https://sourceware.org/bugzilla/show_bug.cgi?id=15946
-> … "Fixed in 2.20", reopened, CVE?
->
-> The corresponding bug title says most of it. It's supposed to be fixed
-> in glibc 2.20, however there is a comment saying it is not.
->
-> cu,
-> -- 
-> Hanno Böck
-> http://hboeck.de/
->
-> mail/jabber: hanno@...eck.de
-> GPG: BBB51E42
+I'll also be adding some information on SPLIT/MERGE and other details
+for people that want to know more. Feedback is welcome, pull requests
+even more so.
 
-Use CVE-2013-7423 for ths initial bug report at 2013-09-12 09:50:17 UTC 
-stating: "Under high load, getaddrinfo() starts sending DNS queries to 
-random file descriptors, e.g. some unrelated socket connected to a remote 
-service."
+-- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-Which comment says that the issue is unfixed?  The 2015-01-08 14:21:11 UTC 
-comment by David Nilsson says "I'm unable to reproduce the correct 
-behaviour," but does not suggest that the vulnerability is still present.
 
----
-
-CVE assignment team, MITRE CVE Numbering Authority M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
