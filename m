@@ -1,60 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/01/1
-Message-ID: <54A4753F.5030005@gmail.com>
-Date: Wed, 31 Dec 2014 14:14:23 -0800
-From: Stanislav Malyshev <smalyshev@...il.com>
-To: cve-assign@...re.org, carnil@...ian.org
-CC: oss-security@...ts.openwall.com, security@....net
-Subject: Re: CVE Request: PHP: out of bounds read crashes php-cgi
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/26/3
+Message-ID: <54C60087.1040301@redhat.com>
+Date: Mon, 26 Jan 2015 09:53:27 +0100
+From: Florian Weimer <fweimer@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Reject CVE-2012-3878?
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+This was initially i assigned CVE-2012-3878, before it was determined
+that it should not be treated as a vulnerability:
 
-On 12/31/14 9:30 AM, cve-assign@...re.org wrote:
->> https://bugs.php.net/bug.php?id=68618 (out of bounds read crashes
->> php-cgi).
-> 
->> http://git.php.net/?p=php-src.git;a=commit;h=f9ad3086693fce680fbe246e4a45aa92edd2ac35
-> 
-> Use CVE-2014-9427.
-> 
-> Can you clarify what threat models exist that cross privilege
-> boundaries? Bug #68618 says "could disclose server memory, but anyone
+<http://www.nntp.perl.org/group/perl.perl5.porters/2012/07/msg189909.html>
 
-I'm not sure if it's exploitable at all. For starters, it requires
-feeding arbitrary files to PHP - which means you already have the
-equivalent of full shell access to the host in question as the user
-running PHP. In theory, it can result in memory contents disclosure -
-though since we're talking about mmap it requires the map used for this
-file to be aligned just next to another one, otherwise it'd just segfault.
+The CVE description has somehow leaked, but not the relationship with
+the URL, making it non-obvious what this is about.
 
-> that can upload php scripts can do far worse." Is the only relevant
-> scenario that the attacker uploads a crafted .php file and thereby
-> obtains read access (that would otherwise be unavailable) to memory
-> locations within a parent process?
-
-The potential for reading memory is for the php-cgi process, since CGI
-is its own process. So the only data that can potentially be disclosed
-is from the CGI process itself. Also, to result in disclosure and not
-just segfault the attacker will need to somehow achieve that memory
-beyond the region to which the file is mapped would be a valid memory
-and contain something that PHP's lexer would interpret as a complete PHP
-script (otherwise it'd just keep scanning until it hits unmapped memory
-where it would segfault). I'm not saying it's not possible at all, but
-it'd probably be very non-trivial to do this if possible. I'm pretty
-sure none of it is possible without, as described above, the equivalent
-of shell access under the user running PHP. So I'm not sure if there's
-any privilege escalation anyway - maybe if PHP setup is very restricted
-so no outside file/program access is possible.
-
-> Or is it relevant that a victim may accidentally upload an
-> incorrect .php file, and may expect that this is harmless, but the
-> actual behavior is that PHP reads and executes out-of-bounds data that
-> the victim did not wish to execute?
-
-It's impossible with "accidental" script - it has to be specially made.
-E.g. for the problem to happen the file has to start with '#' and have
-no newlines (i.e. not be an actual PHP script).
 -- 
-Stas Malyshev
-smalyshev@...il.com
+Florian Weimer / Red Hat Product Security
