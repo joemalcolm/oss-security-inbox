@@ -1,41 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/11/12
-Message-Id: <20150211173534.103ADB2EA62@smtpvbsrv1.mitre.org>
-Date: Wed, 11 Feb 2015 12:35:34 -0500 (EST)
-From: cve-assign@...re.org
-To: hecmargi@....es
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE-Request -- Google Email App 4.2.2 remote denial of service
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/26/1
+Message-ID: <54C5B38E.8060402@redhat.com>
+Date: Sun, 25 Jan 2015 20:25:02 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Marcus Meissner <meissner@...e.de>
+Subject: busybox CVE-2014-9645
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Just saw this, I'm guessing it affects all busybox:
 
-> It is a different source code and fix. The source code is available in:
-> 
-> https://android.googlesource.com/platform/packages/apps/Email
-> 
-> ... in the Email App this is done by the MimeUtility.java
+https://bugs.busybox.net/show_bug.cgi?id=7652
 
-Do you mean it's this fix:
+Mathias Krause 2014-11-19 21:22:25 UTC
+modprobe uses the "basename" of the module argument as the module to
+load, as
+can be seen here:
 
-  https://android.googlesource.com/platform/packages/apps/Email/+/6fb157c90cc04a062eefa5ede850b6efd8d2fc80
+bbox:~# lsmod | grep vfat
+bbox:~# modprobe foo/bar/baz/vfat
+bbox:~# lsmod | grep vfat
+vfat                   17135  0
+fat                    61984  1 vfat
+bbox:~# find /lib/modules/`uname -r` -name vfat.ko
+/lib/modules/3.18.0-rc5+/vfat.ko
 
-?
+It should instead fail to load the module -- actually fail to *find* the
+module.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+This can even be abused to load arbitrary modules by nullifying enforced
+module
+prefixes some of the Linux kernel's subsystems try to apply to prevent just
+that:
 
-iQEcBAEBAgAGBQJU25JrAAoJEKllVAevmvmsHToIALG1fbYsfbgoRvCul7LvgRHf
-p84/EKs4GNKrYlqnA6V5cu9HaTPWWaxl+vmJsF2AU391id46iks1/ZD3Gj/14B9T
-6j7NmYn8dkERwgPoL0fgZk1JpXYyxOdXCMO88uC911DnJfhHC+Xs4DHaL1LrPfSl
-SEfcDVqqima/VBswVo9q+TqA9B0aTN6RqGAE5rnZFdOlhLprTdUWptrDhY/fyuDT
-/m1CCboG0R/uG2FYBACNIlwESeH0BnjcPKMpeKKaYI4Hwl86OCGlVSwgmEcDxU91
-p9MeFxitpljqKM4PA+XdI4a9RZownAJaCEnKjT9sATzZaLTbT8rXmKaaJ5W8Wf4=
-=nkPI
------END PGP SIGNATURE-----
+bbox:~# lsmod | grep usb
+bbox:~# ifconfig /usbserial up
+ifconfig: SIOCGIFFLAGS: No such device
+bbox:~# lsmod | grep usb
+usbserial              32201  0
+
+The actual modprobe invocation, done by the kernel was:
+/sbin/modprobe -q -- netdev-/usbserial
+
+Due to the bug, the "netdev-" prefix including the "/" are ignored and the
+usbserial.ko module gets loaded.
+
+The same works for filesystems, e.g.:
+
+bbox:~# lsmod | grep snd_pcm
+bbox:~# mount -t /snd_pcm none /
+mount: mounting none on / failed: No such device
+bbox:~# lsmod | grep snd_pcm
+snd_pcm                88826  0
+snd_timer              26606  1 snd_pcm
+snd                    61141  2 snd_pcm,snd_timer
+
+This time the kernel called out to:
+/sbin/modprobe -q -- fs-/snd_pcm
+
+Note the "fs-" prefix.
+Comment 1
+
+-- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
