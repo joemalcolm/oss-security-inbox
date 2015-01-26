@@ -1,38 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/18/1
-Message-ID: <54BBDC6B.80109@openwall.com>
-Date: Sun, 18 Jan 2015 19:16:43 +0300
-From: Alexander Cherepanov <ch3root@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: lhasa: directory traversals
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/26/2
+Message-ID: <54C5D351.9020703@redhat.com>
+Date: Sun, 25 Jan 2015 22:40:33 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>
+Subject: unshield directory traversal
 Content-Type: text/plain; charset=utf-8
 
-On 2015-01-14 20:33, Henri Salo wrote:
-> On Tue, Jan 13, 2015 at 10:44:00PM +0300, Alexander Cherepanov wrote:
->> https://github.com/fragglet/lhasa/commit/64b96b5c1d08293b6c373f616b206d951ee358f7
->> https://github.com/fragglet/lhasa/commit/3bab39fd492a8924bdd25615ef40ca68c0c7ad0f
->> https://github.com/fragglet/lhasa/commit/adcd9912803e69ebeb000cc4c341fbc64820ed1f
->> https://github.com/fragglet/lhasa/commit/c26557dd1b2e640e9785686355c5a2945483460b
->
-> All of these commits are only in versions 0.1.0 and 0.2.0 so no need for
-> "incomplete fix for" CVE(s).
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=776193
 
-Yeah, all of them are between 0.0.7 and 0.1.0. But '..' and symlinks are 
-usually seen as different issues.
+Package: unshield
+Version: 1.0-1
+Tags: security
 
-> Use cases would have be nice.
+unshield is vulnerable to directory traversal via "../" sequences. As a
+proof of concept, unpacking the attached InstallShield archive creates a
+file in /tmp:
 
-An example for '..' is easy:
+$ ls /tmp/moo
+ls: cannot access /tmp/moo: No such file or directory
 
-$ touch ../rel
-$ jlha a test.lzh ../rel
-$ rm ../rel
-$ lhasa x test.lzh
+$ unshield x data1.cab
+Cabinet: data1.cab
+ extracting:
+./Bovine_Files/../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../tmp/moo
+--------  -------
+         1 files
 
-But jlha front-end doesn't handle symlinks so you have to use non-free 
-lha to archive symlinks. There are some examples in the lhasa repo though:
+$ ls /tmp/moo
+/tmp/moo
 
-https://github.com/fragglet/lhasa/tree/master/test/archives/lha_unix114i
+
+-- System Information:
+Debian Release: 8.0
+ APT prefers unstable
+ APT policy: (990, 'unstable'), (500, 'experimental')
+Architecture: i386 (x86_64)
+Foreign Architectures: amd64
+
+Kernel: Linux 3.2.0-4-amd64 (SMP w/2 CPU cores)
+Locale: LANG=C, LC_CTYPE=pl_PL.UTF-8 (charmap=UTF-8)
+Shell: /bin/sh linked to /bin/dash
+Init: sysvinit (via /sbin/init)
+
+Versions of packages unshield depends on:
+ii  libc6         2.19-13
+ii  libunshield0  1.0-1
+ii  zlib1g        1:1.2.8.dfsg-2+b1
 
 -- 
-Alexander Cherepanov
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
