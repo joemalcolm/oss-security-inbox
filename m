@@ -1,23 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/17/7
-Message-ID: <20150217212415.GW5587@outflux.net>
-Date: Tue, 17 Feb 2015 13:24:16 -0800
-From: Kees Cook <keescook@...omium.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/26/8
+Message-ID: <20150126201203.GA3574@alf.mars>
+Date: Mon, 26 Jan 2015 21:12:03 +0100
+From: Helmut Grohne <helmut@...divi.de>
 To: oss-security@...ts.openwall.com
-Cc: Tyler Hicks <tyhicks@...onical.com>, Dmitry Chernenkov <dmitryc@...gle.com>, Michael Halcrow <mhalcrow@...gle.com>
-Subject: CVE request: Linux kernel ecryptfs 1-byte overwrite
+Cc: Victor Seva <linuxmaniac@...reviejawireless.org>
+Subject: kamailio: multiple /tmp file vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Hi,
 
-This fixes a 1-byte NULL write past the end of allocated memory:
+There are multiple /tmp file vulnerabilities to be found in the kamailio
+SIP proxy. While many of these issues only affect configuration examples
+or outdated components, some do affect the default configuration.
 
-http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=942080643bce061c3dd9d5718d3b745dcb39a8bc
+Initial disclosures:
+ http://bugs.debian.org/712083 (2013)
+ http://bugs.debian.org/775681 (2015)
+Upstream issue:
+ https://github.com/kamailio/kamailio/issues/48
 
-Thanks,
+At this point, three issues are well understood:
+ * The kamctl administrative utility and default configuration would use
+   /tmp/kamailio_fifo (#712083, 2013, fixed in Debian's kamailio
+   4.0.2-1).
+ * The kamcmd administrative utility and default configuration would use
+   /tmp/kamailio_ctl (#775681, 2015, patch available).
+ * The kamailio build process would use constant filenames in /tmp
+   allowing to elevate privileges to the build user (#775681, 2015,
+   patch available).
 
--Kees
+The combined patch can be found at:
+https://bugs.debian.org/cgi-bin/bugreport.cgi?msg=17;filename=0001-fix-fifo-and-ctl-defaults-pointing-to-unsecure-tmp-d.patch;att=1;bug=775681
 
--- 
-Kees Cook
-Chrome OS Security
+While the last issue definitely affects the upstream kamailio build,
+arguably the first two issues are packaging specific. If they are
+treated as such, it is worth noting that kamailio was never part of a
+Debian stable release and thus this may not be worth issuing a CVE.
+
+I would like to thank Victor Seva for his timely responses, kind
+interaction and providing patches for all of these issues.
+
+Helmut
