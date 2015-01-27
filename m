@@ -1,54 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/11/2
-Message-ID: <1540854589.19728500.1426070730837.JavaMail.zimbra@redhat.com>
-Date: Wed, 11 Mar 2015 06:45:30 -0400 (EDT)
-From: Francisco Alonso <falonsoe@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: CVE Request: PHP 5.6.6 changelog
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/27/16
+Message-ID: <Pine.LNX.4.64.1501271306190.11165@beijing.mitre.org>
+Date: Tue, 27 Jan 2015 13:07:25 -0500 (EST)
+From: cve-assign@...re.org
+To: Patrick William <pat@...k911labs.com>
+cc: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: Re: CVE Request: Webmin & Usermin - Read Mail Module Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hi again,
 
-Please as upstream has not flagged these bugs as security. Just ask if the CVE identifiers have been requested before (It is not necessary to assign them yet).
+> I need to request 2 CVE's; one for Usermin and one for Webmin.
+>
+> Both of them are vulnerable to a hardlink arbitrary file access within the 
+> Read Mail Module. The end result is the ability to open any file on the 
+> server, including root owned files, which could lead to a privilege 
+> escalation.
+>
+> Reference: http://www.webmin.com/index.html
+>
+> "January 1: Webmin 1.730 and Usermin 1.640 released - This update includes 
+> security fixes to produce against malicious links in the Read Mail module..."
+>
+> Thanks!
 
-Thank you.
+Only one identifier is needed.  Use CVE-2015-1377.
 
-Francisco Alonso / Red Hat Product Security
-PGP: 0xA026440E 0825 020C 7A5A 4F86 9038  B1C8 5562 688F A026 440E
+---
 
------ Original Message -----
-> From: "Francisco Alonso" <falonsoe@...hat.com>
-> To: oss-security@...ts.openwall.com
-> Cc: cve-assign@...re.org
-> Sent: Tuesday, March 10, 2015 10:16:26 AM
-> Subject: CVE Request: PHP 5.6.6 changelog
-> 
-> Hi,
-> 
-> Could a CVE be please assigned to the following issues? [3] (in case it was
-> not requested to MITRE before):
-> 
-> [1] PHP: heap buffer overflow in enchant_broker_request_dict() :
-> https://bugs.php.net/bug.php?id=68552
-> http://svn.php.net/viewvc/pecl/enchant/trunk/enchant.c?r1=317600&r2=335803
-> https://bugzilla.redhat.com/show_bug.cgi?id=1194737
-> 
-> 
-> [2] PHP: Double free with disabled ZMM:
-> https://bugs.php.net/bug.php?id=68827
-> http://git.php.net/?p=php-src.git;a=commit;h=91aa340180eccfc15d4a143b54d47b8120f898be
-> https://bugzilla.redhat.com/show_bug.cgi?id=1194741
-> 
-> 
-> [3] PHP: use after free in phar_object.c
-> https://bugs.php.net/bug.php?id=68901
-> http://git.php.net/?p=php-src.git;a=commit;h=b2cf3f064b8f5efef89bb084521b61318c71781b
-> https://bugzilla.redhat.com/show_bug.cgi?id=1194747
-> 
-> 
-> Thank you
-> 
-> Francisco Alonso / Red Hat Product Security
-> PGP: 0xA026440E 0825 020C 7A5A 4F86 9038  B1C8 5562 688F A026 440E
-> 
+CVE assignment team, MITRE CVE Numbering Authority M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
