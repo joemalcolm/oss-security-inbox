@@ -1,54 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/12/7
-Message-ID: <Pine.LNX.4.64.1502120931560.17759@beijing.mitre.org>
-Date: Thu, 12 Feb 2015 09:33:28 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/27/3
+Message-ID: <Pine.LNX.4.64.1501271050200.11165@beijing.mitre.org>
+Date: Tue, 27 Jan 2015 11:02:11 -0500 (EST)
 From: cve-assign@...re.org
-To: Helmut Grohne <helmut@...divi.de>
-cc: oss-security@...ts.openwall.com, Victor Seva <linuxmaniac@...reviejawireless.org>, cve-assign@...re.org
-Subject: Re: kamailio: multiple /tmp file vulnerabilities
+To: Salvatore Bonaccorso <carnil@...ian.org>
+cc: oss-security@...ts.openwall.com, Assign a CVE Identifier <cve-assign@...re.org>
+Subject: Re: [perl #119505] Segfault from bad backreference
 Content-Type: text/plain; charset=utf-8
 
 
-> There are multiple /tmp file vulnerabilities to be found in the kamailio
-> SIP proxy. While many of these issues only affect configuration examples
-> or outdated components, some do affect the default configuration.
+On Sat, 24 Jan 2015, Salvatore Bonaccorso wrote:
+
+> Hi Kurt,
 >
-> Initial disclosures:
-> http://bugs.debian.org/712083 (2013)
-> http://bugs.debian.org/775681 (2015)
-> Upstream issue:
-> https://github.com/kamailio/kamailio/issues/48
+> On Fri, Jan 23, 2015 at 02:38:51PM -0700, Kurt Seifried wrote:
+>> http://perl5.git.perl.org/perl.git/commitdiff/0c2990d652e985784f095bba4bc356481a66aa06
+>>
+>> The code that parses regex backrefs (or ambiguous backref/octal) such as
+>> \123, did a simple atoi(), which could wrap round to negative values on
+>> long digit strings and cause seg faults.
+>>
+>> Include a check on the length of the digit string, and if greater than 9
+>> digits, assume it can never be a valid backref (obviating the need for
+>> the atoi() call).
+>>
+>> I've also simplified the code a bit, putting most of the \g handling
+>> code into a single block, rather than doing multiple "if (isg) {...}".
+>>
+>> PoC:
+>>
+>> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=776046
+>> perl -e '/\7777777777/'
+>>
+>> not sure if this can be exploited at all, but someone creative maybe has
+>> ideas, if so this may need a CVE.
 >
-> At this point, three issues are well understood:
-> * The kamctl administrative utility and default configuration would use
->   /tmp/kamailio_fifo (#712083, 2013, fixed in Debian's kamailio
->   4.0.2-1).
-
-Use CVE-2013-7426.
-
-> * The kamcmd administrative utility and default configuration would use
->   /tmp/kamailio_ctl (#775681, 2015, patch available).
-
-Use CVE-2015-1590.
-
-> * The kamailio build process would use constant filenames in /tmp
->   allowing to elevate privileges to the build user (#775681, 2015,
->   patch available).
-
-Use CVE-2015-1591.
-
-> The combined patch can be found at:
-> https://bugs.debian.org/cgi-bin/bugreport.cgi?msg=17;filename=0001-fix-fifo-and-ctl-defaults-pointing-to-unsecure-tmp-d.patch;att=1;bug=775681
+> Just additional infomration: I think this was way back found already
+> around 2008, in opensuse-commits the following can be found:
 >
-> While the last issue definitely affects the upstream kamailio build,
-> arguably the first two issues are packaging specific. If they are
-> treated as such, it is worth noting that kamailio was never part of a
-> Debian stable release and thus this may not be worth issuing a CVE.
+> http://marc.info/?l=opensuse-commit&m=121933719424130
 >
-> I would like to thank Victor Seva for his timely responses, kind
-> interaction and providing patches for all of these issues.
+> then also reported in the Perl request-tracker at
 >
-> Helmut
+> https://rt.perl.org/Public/Bug/Display.html?id=119505
+>
+> Regards,
+> Salvatore
+
+Use CVE-2013-7422 for the issue as disclosed in 
+https://rt.perl.org/Public/Bug/Display.html?id=119505 for "Segfault in 
+S_regmatch from bad backreference," as demonstrated using:
+
+   ./perl -e '/\7777777777/'
+
+
+The relationships between CVE-2013-7422 and this OpenSUSE commit are not 
+immediately clear:
+
+   http://marc.info/?l=opensuse-commit&m=121933719424130
+
+This commit has both "fix regexp backref overflow crash [bnc#372331]" and, 
+separately, "Fix another regexp backref overflow crash."  This suggests 
+two separate bugs.
+
+A test for perl-regexp-refoverflow.diff (regcomp.c) uses:
+
+   perl -e '/\6666666666/'
+
+but the code change casts atoi()'s return value to unsigned, whereas the 
+CVE-2013-7422 commit uses different logic that minimizes use of atoi().
 
 ---
 
