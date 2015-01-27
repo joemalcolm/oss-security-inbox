@@ -1,37 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/29/12
-Message-Id: <20150129124732.B5ACA6C0044@smtpvmsrv1.mitre.org>
-Date: Thu, 29 Jan 2015 07:47:32 -0500 (EST)
-From: cve-assign@...re.org
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/27/18
+Message-ID: <20150127182020.GA19621@localhost.localdomain>
+Date: Tue, 27 Jan 2015 10:20:20 -0800
+From: Qualys Security Advisory <qsa@...lys.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: CVE-2015-1420 - Linux kernel fs/fhandle.c race condition
+Subject: Re: Qualys Security Advisory CVE-2015-0235 - GHOST: glibc gethostbyname buffer overflow
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Tue, Jan 27, 2015 at 09:20:21AM -0800, Michal Zalewski wrote:
+> Nice work - thanks for the thoroughly investigated and detailed advisory.
 
-CVE-2015-1420 has been assigned to this fs/fhandle.c race condition
-that can lead to reading too many bytes of data:
+Thank you very much. We also sincerely regret that some information
+about this vulnerability was leaked a few hours before the Coordinated
+Release Date (Time, in this particular case).
 
-  http://marc.info/?l=linux-kernel&m=142247707318982&w=2
+> you be willing to publish the list of the reviewed implementations to
+> reduce the amount of repeated work?
 
-(not yet available at
-http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/log/fs/fhandle.c)
+Here is a list of potential targets that we investigated (they all call
+gethostbyname, one way or another), but to the best of our knowledge,
+the buffer overflow cannot be triggered in any of them:
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+apache, cups, dovecot, gnupg, isc-dhcp, lighttpd, mariadb/mysql,
+nfs-utils, nginx, nodejs, openldap, openssh, postfix, proftpd,
+pure-ftpd, rsyslog, samba, sendmail, sysklogd, syslog-ng, tcp_wrappers,
+vsftpd, xinetd.
 
-iQEcBAEBAgAGBQJUyioAAAoJEKllVAevmvmsUuoIAKmnNDhxYiqQCoGnKNgfkxOr
-NWPnVmBh/T+OraPxhQX5xLrdMSfSpK0XjHYXuou531GQr4u9nXXMWNLM1TNa/rS2
-4oG2DLdzHZ0mhsWg6v+kkJwXm+1He80FVUr15ZxQxC45wdN+abe+u23BJUaPRPGe
-cUKhmel4XIES5/vQUkC042ijD5n8i03PHesAexhpgAF3hOE0WYrODP12x07E9wnZ
-XdlZusLuGVUIUoG3hucI5fjszl1Z9oAEWdWKIQ7fpACd3xxDrCbZufP0Fk2/POhY
-wLmVrQj43e+m2SdepEupgM0E86oytchKhts1sRSNheCuVidwiLtZ6k5VsbXWs7w=
-=fNxI
------END PGP SIGNATURE-----
+That being said, we believe it would be interesting if other people
+could have a look, just in case we missed something.
+
+With best regards,
+
+-- 
+the Qualys Security Advisory team
