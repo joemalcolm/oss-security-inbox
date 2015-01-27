@@ -1,103 +1,161 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/05/9
-Message-ID: <CABniQZNx=6sdWV2n6+NkD+fdXu8DcTaBRG9UnskOmU0trOcg=A@mail.gmail.com>
-Date: Thu, 5 Feb 2015 23:36:59 +0800
-From: Shawn <citypw@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/27/25
+Message-ID: <54C8032C.6040808@collabora.co.uk>
+Date: Tue, 27 Jan 2015 21:29:16 +0000
+From: Simon McVittie <simon.mcvittie@...labora.co.uk>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel: multiple x86_64 vulnerabilities
+Subject: CVE-2014-8156: freesmartphone.org stack configures D-Bus system bus to be insecure
 Content-Type: text/plain; charset=utf-8
 
-Great analysis. Just for the record, there was a POC released for a while:
-https://rdot.org/forum/showthread.php?t=3341
+Type of vulnerability: CWE-284 Improper Access Control
+Exploitable by: local users
+Impact: unknown, dependent on installed D-Bus system services; at least
+local denial of service
+Reporter: Simon McVittie, Collabora Ltd.
+Reported to vendor: 2015-01-13
 
-On Tue, Feb 3, 2015 at 3:21 PM, Solar Designer <solar@...nwall.com> wrote:
-> On Mon, Dec 15, 2014 at 10:01:19AM -0800, Andy Lutomirski wrote:
->> CVE-2014-9322: local privilege escalation, all kernel versions
->
-> Here's Rafal Wojtczuk's writeup on exploiting it:
->
-> http://labs.bromium.com/2015/02/02/exploiting-badiret-vulnerability-cve-2014-9322-linux-kernel-privilege-escalation/
->
-> It's been a while since Andy posted this, so I'll quote the rest of his
-> message for context:
->
->> Any kernel that is not patched against CVE-2014-9090 is vulnerable to
->> privilege escalation due to incorrect handling of a #SS fault caused
->> by an IRET instruction.  In particular, if IRET executes on a
->> writeable kernel stack (this was always the case before 3.16 and is
->> sometimes the case on 3.16 and newer), the assembly function
->> general_protection will execute with the user's gsbase and the
->> kernel's gsbase swapped.
->>
->> This is likely to be easy to exploit for privilege escalation, except
->> on systems with SMAP or UDEREF.  On those systems, assuming that the
->> mitigation works correctly, the impact of this bug may be limited to
->> massive memory corruption and an eventual crash or reboot.
->>
->> As with CVE-2014-9090, this is fixed by:
->>
->> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/arch/x86/kernel/entry_64.S?id=6f442be2fb22be02cafa606f1769fa1e6f894441
->>
->> The related fix to remove bad_iret is also an effective mitigation to
->> prevent a bug like this from being reintroduced:
->>
->> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/arch/x86/kernel/entry_64.S?id=b645af2d5905c4e32399005b867987919cbfc3ae
->>
->> Partial credit for this bug goes to Borislav Petkov, who asked pointed
->> questions about CVE-2014-9090, causing me to realize that there were
->> two separate bugs in #SS handling.  The first bug (CVE-2014-9090)
->> caused a fatal double fault, masking the second bug that caused the
->> gsbase issue.
->>
->> ----------
->>
->> The next two bugs are related to espfix.  The IRET instruction has IMO
->> a blatant design flaw: IRET to a 16-bit user stack segment will leak
->> bits 31:16 of the kernel stack pointer.  This flaw exists on 32-bit
->> and 64-bit systems.  32-bit Linux kernels have mitigated this leak for
->> a long time, and 64-bit Linux kernels have mitigated this leak since
->> 3.16.  The mitigation is called espfix.
->>
->> CVE-2014-8133: espfix bypass using set_thread_area
->>
->> On all kernels, a valid 16-bit stack segment can be created using
->> set_thread_area.  Arranging to return to such a stack segment will
->> bypass espfix, leaking bits 31:16 of the kernel stack pointer.  Fixed
->> by:
->>
->> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/arch/x86?id=41bdc78544b8a93a9c6814b8bbbfef966272abbe
->>
->> CVE-2014-8134: espfix was broken on 32-bit KVM paravirt guests
->>
->> espfix was completely broken on 32-bit Linux KVM guests with
->> CONFIG_KVM_GUEST=y.  Fixed by:
->>
->> https://git.kernel.org/cgit/virt/kvm/kvm.git/commit/?h=linux-next&id=29fa6825463c97e5157284db80107d1bfac5d77b
->>
->> This commit hasn't made it to Linus' tree yet.
->>
->> ----------
->>
->> CVE-2014-9090 (previously announced), CVE-2014-9322, CVE-2014-8133,
->> and CVE-2014-8134 can be tested by sigreturn_32, available here:
->>
->> https://gitorious.org/linux-test-utils/linux-clock-tests/source/10b9a7d317f6d8ae5f32bcb4bbbb186acdd6b89a
->>
->> Save your data before running this on a production system.  If you a
->> vulnerable to CVE-2014-9090 or CVE-2014-9322, the test will crash your
->> system.  The espfix issues will cause warnings and failures that
->> mention register mismatches.
->>
->> --
->> Andy Lutomirski
->> AMA Capital Management, LLC
+While checking Debian for incorrect/dangerous D-Bus security policy
+files (found in /etc/dbus-1/system.d/*.conf) I found that the
+freesmartphone.org (fso) stack contains several problematic rules.
 
+Summary of modules confirmed to be affected:
 
+Debian package fso-gsmd version 0.12.0-3
+Debian package fso-usaged version 0.12.0-2
+Upstream cornucopia.git (fsoaudiod, fsodatad, fsodeviced, fsogsmd,
+fsonetworkd, fsotdld, fsousaged) git master on 2015-01-19
 
--- 
-GNU powered it...
-GPL protect it...
-God blessing it...
+Debian package fso-frameworkd version 0.9.5.9+git20110512-4
+Upstream framework.git version 0.10.1 and git master on 2015-01-19
 
-regards
-Shawn
+In addition, Debian packaging for one fso-related package, also
+available in Ubuntu and possibly other derivatives, has a similar flaw:
+
+Debian package phonefsod version 0.1+git20121018-1
+(Upstream code for phonefsod
+<http://git.shr-project.org/git/?p=phonefsod.git> was not vulnerable as
+of 2015-01-19)
+
+Other fso modules might be affected, I only scanned the ones available
+in Debian.
+
+Please see below for further technical details of the faulty security
+policies, and some advice on fixing them, which is applicable to any
+project with D-Bus security policy files. For further advice, please
+contact dbus@...ts.freedesktop.org (public mailing list) or
+dbus-security@...ts.freedesktop.org (non-public list for embargoed
+security vulnerabilities), and explain what security policy you intend
+your service to have.
+
+Category 1: send_path != "/"
+----------------------------
+
+This refers to configurations like this:
+
+    <policy context="default">
+        ...
+        <allow send_path="/org/freesmartphone/Framework"/>
+
+This allows every local user to send arbitrary D-Bus messages to the
+path /org/freesmartphone/Framework on *any* D-Bus system service (rough
+HTTP analogy: send a POST to http://server/org/freesmartphone/Framework
+on any server).
+
+At first glance, this might seem harmless, because why would a non-fso
+service have any functionality at that path? However, services that use
+a low-level binding like libdbus and implement their functionality via a
+message filter do not necessarily differentiate between paths.
+
+Notably, org.freedesktop.DBus, the pseudo-service provided by
+dbus-daemon, provides the same API at every object path (and is
+constrained to do so by backwards compatibility). dbus releases 1.8.14
+and 1.9.6 mitigate this by locking down functionality that is not
+intended to be public, so that it can only be accessed at the canonical
+path /org/freedesktop/DBus. However, in earlier dbus releases, this can
+be used to make the dbus-daemon consume arbitrary amounts of memory.
+
+It is possible that other system services have similar behaviour; the
+worst-case impact is arbitrary root code execution, although I do not
+know of a specific service where this would happen.
+
+Example files: etc/dbus-1/system.d/frameworkd.conf in fso-frameworkd,
+data/fsogsmd.conf in fso-gsmd, data/fsousaged.conf in fso-usaged
+
+In addition, while data/dbus-1/phonefsod.conf in
+phonefsod/0.1+git20121018-1 is not vulnerable, the Debian-specific
+version in debian/phonefsod.conf has the same issue.
+
+Category 2: send_path = "/"
+---------------------------
+
+This is a variation of category 1 where the affected path is "/":
+
+    <policy context="default">
+        ...
+        <allow send_path="/"/>
+
+This is potentially more serious than category 1, because it affects any
+system service that either provides the same API on every object path,
+or specifically provides API at "/". Older versions of BlueZ are one
+example of a service that specifically uses "/".
+
+etc/dbus-1/system.d/frameworkd.conf in
+fso-frameworkd/0.9.5.9+git20110512-4 has this pattern.
+
+Fixing these vulnerabilities
+----------------------------
+
+Where possible, the recommended pattern is for the only <allow> rules to
+be <allow own="x.y.z"/> and/or <allow send_destination="x.y.z"/>.
+
+If it is necessary to control different object paths differently, either
+use Polkit/PolicyKit, or specify both in the same <allow> rule:
+
+    <allow send_destination="x.y.z" send_path="/a/b/c"/>
+
+This is treated as an "logical and" operation: the rule will only match
+sending messages that meet all the criteria. Similarly, you can combine
+send_destination with send_interface and/or send_member in the same
+<allow> or <deny> rule.
+
+The best practice is that every rule with <allow send_something> should
+have a send_destination attribute.
+
+If the destination will not own a well-known bus name (e.g. the "agent"
+pattern in which BlueZ calls out to agent processes running as GUI
+users) and so send_destination cannot be used, prefer <allow
+send_interface> instead of <allow send_path>, and only allow root (or a
+specific daemon user, if not root) to do this. For instance, this is
+acceptable:
+
+    <policy user="root">
+        <allow send_interface="com.example.MyAgent"/>
+    </policy>
+
+Parts of the fso D-Bus policy files indicate a misunderstanding of these
+files' syntax. If you write multiple <allow send_*> rules in the same
+<policy> block, that is effectively an "logical or" operation: each rule
+separately allows sending messages that match it.
+
+In particular, there is no functional difference between
+
+    <policy context="default">
+        <allow send_path="/x/y/z"/>
+        <allow send_destination="x.y.z"/>
+    </policy>
+
+and
+
+    <policy context="default">
+        <allow send_path="/x/y/z"/>
+    </policy>
+    <policy context="default">
+        <allow send_destination="x.y.z"/>
+    </policy>
+
+and the send_path rule is equally problematic in both spellings. The
+<policy> only controls who the rules apply to (everyone/a specific
+user/a specific group); it does not provide "logical and" semantics.
+
+    S
+
