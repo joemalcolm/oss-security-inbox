@@ -1,47 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/06/2
-Message-ID: <CAB_jSYwDW1mT2-u2v_cWPY0J4eTscAk4_-NN8vjcmSpv_nRswQ@mail.gmail.com>
-Date: Fri, 6 Feb 2015 10:27:19 +0800
-From: Marina Glancy <marina@...dle.com>
-To: cve-assign@...re.org
-Cc: Kurt Seifried <kseifried@...hat.com>, oss-security@...ts.openwall.com,  security <security@...dle.com>
-Subject: Re: CVE request for Moodlee MDL-48980 Security: Always clean the result from min_get_slash_argument - Moodle
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/27/17
+Message-ID: <Pine.LNX.4.64.1501271310560.11165@beijing.mitre.org>
+Date: Tue, 27 Jan 2015 13:14:04 -0500 (EST)
+From: cve-assign@...re.org
+To: Sebastian Pipping <sebastian@...ping.org>
+cc: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: Re: CVE or not: 2x grml-debootstrap
 Content-Type: text/plain; charset=utf-8
 
-Hello,
-We already had CVE for this issue: CVE-2015-0246, which one do you want us
-to publish? Or both?
-Sincerely,
-Marina Glancy
-Development Process Manager, Moodle HQ
 
-On Fri, Feb 6, 2015 at 12:59 AM, <cve-assign@...re.org> wrote:
 
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
+> I recently ran into two bugs in grml-debootstrap, documented in detail
+> at the following GitHub issues.
 >
-> >
-> http://git.moodle.org/gw?p=moodle.git;a=commit;h=af9a7937cc085f96bdbc4724cadec6eeae0242fc
-> >
-> > MDL-48980 Security: Always clean the result from min_get_slash_argument
 >
-> Use CVE-2015-1493.
+> 1) For the first
 >
-> - --
-> CVE assignment team, MITRE CVE Numbering Authority
-> M/S M300
-> 202 Burlington Road, Bedford, MA 01730 USA
-> [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1.4.14 (SunOS)
+>  Issues with sourcing cmdlineopts.clp from current working directory
+>  https://github.com/grml/grml-debootstrap/issues/59
 >
-> iQEcBAEBAgAGBQJU06ESAAoJEKllVAevmvmsUnoH/2YfDh5GcUTl/+QiOeH2Drj9
-> 81MUmmh7BEQEJ6lV5oFgnwTw+QBSkzgGwtTyYyOTc0BD0sDYIoS3IuiDJD7/tPtr
-> /wAMaPss8k+G20V+2IbeG9bJSx1vf9ZIhh1nV8lahsVEH9VFq1895y6/epOOKVmR
-> spX1LYl/JgoXveOGuyu1xZmNLxNtJhCBR5+CKMF3GUPsv7PvU4uO1h00Gwz0UkVL
-> KZPiZCyfPHzodypx9cwCiQFLzNWwi1SCIGXmAHIH55W14mfhX/BB4Q1qNyvPOUEs
-> z2XEYrXkbJtJRuQz/AJJiYiYd7PLkWlfdYiVatvwNGNiWP8CPpzmCzVIy5iLvoA=
-> =CZWg
-> -----END PGP SIGNATURE-----
->
+> I am rather clear about exploitability.
+> Please review the proposed approach for a fix.
 
+Use CVE-2015-1378.
+
+>
+> 2) For the second
+>
+>  Lack of user input escaping / use of $!`"\ in passwords
+>  https://github.com/grml/grml-debootstrap/issues/58
+>
+> I still wonder about realistic exploitation scenarios.  Since the tool
+> is usually executed by root or using sudo, input from a non-root user
+> would need to make its way into the command line, unfiltered or filtered
+> insufficiently.
+
+A CVE will not be assigned at this time.
+
+>  It could either be a service like
+>
+>  live-build
+>  http://cgi.build.live-systems.org/cgi-bin/live-build
+>
+> (they don't call grml-debootstrap, if the code is [2])
+> or a sudoers config like
+>
+>  user23 ALL=(ALL) NOPASSWD: /usr/sbin/grml-debootstrap \
+>    --password * .....
+>
+> though I am note sure how much of a likely setup that is.
+>
+> Other ideas on scenarios?
+> Also, please review my proposal on escaping.
+>
+> Thanks and best,
+>
+>
+>
+> Sebastian
+>
+>
+> [1] https://github.com/grml/grml-debootstrap
+> [2] https://packages.debian.org/de/wheezy/live-build
+
+
+---
+
+CVE assignment team, MITRE CVE Numbering Authority M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
