@@ -1,37 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/03/5
-Message-ID: <20150303114550.GA28436@suse.de>
-Date: Tue, 3 Mar 2015 12:45:50 +0100
-From: Marcus Meissner <meissner@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: Debian / xterm #779397
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/27/13
+Message-ID: <CALx_OUAG6dp=7tVrvimHV9+6+J7351QH9UcDswOaW_BRFd=exw@mail.gmail.com>
+Date: Tue, 27 Jan 2015 09:21:32 -0800
+From: Michal Zalewski <lcamtuf@...edump.cx>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: GHOST gethostbyname() heap overflow in glibc (CVE-2015-0235)
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Mar 03, 2015 at 10:06:30AM +0000, Simon McVittie wrote:
-> On 03/03/15 09:19, Thomas Dickey wrote:
-> > | From: "Kurt Seifried" <kseifried@...hat.com>
-> > | 
-> > | $ xterm -S/dev/pts/20
-> > | *** buffer overflow detected ***: /usr/bin/xterm terminated
-> > |
-> > | Did this get a CVE? I don't see a DSA for xterm.
-> > 
-> > no - someone mentioned the problem in an email - nothing more was said
-> 
-> There's some discussion on the Debian bug about whether this should be
-> considered to be a security vulnerability, or just a bug. Not every
-> buffer overflow is a vulnerability: it can only be a vulnerability if an
-> attacker can trigger it.
-> 
-> Is there any reason why it would be useful/sensible to pass untrusted
-> (pseudo-terminal filename, fd) pairs to the -S option? It seems to me
-> that if you're passing partially or entirely attacker-controlled
-> filenames to this option, you have probably already lost.
+I find it... profoundly disappointing... that we get to learn about
+0-days via PR agency leaks (or that external PR agencies get to know
+about 0-days before the rest of the world - hey, sounds like a juicy
+target).
 
-In modern times xterm should not be setuid root, but there might be legacy
-systems where it is.
+That said, the advisory makes up for it...
 
-On Linux with /dev/pts and utempter it should not be necessary anymore for 
-10+ years.
-
-Ciao, Marcus
+/mz
