@@ -1,35 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/27/18
-Message-ID: <20150127182020.GA19621@localhost.localdomain>
-Date: Tue, 27 Jan 2015 10:20:20 -0800
-From: Qualys Security Advisory <qsa@...lys.com>
-To: oss-security@...ts.openwall.com
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/27/12
+Message-ID: <CALx_OUBvSjVFY06HYtuRHH-y0R=FD=mBiqTg-EH5uL-ALeWQiw@mail.gmail.com>
+Date: Tue, 27 Jan 2015 09:20:21 -0800
+From: Michal Zalewski <lcamtuf@...edump.cx>
+To: oss-security <oss-security@...ts.openwall.com>
 Subject: Re: Qualys Security Advisory CVE-2015-0235 - GHOST: glibc gethostbyname buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jan 27, 2015 at 09:20:21AM -0800, Michal Zalewski wrote:
-> Nice work - thanks for the thoroughly investigated and detailed advisory.
+Nice work - thanks for the thoroughly investigated and detailed advisory.
 
-Thank you very much. We also sincerely regret that some information
-about this vulnerability was leaked a few hours before the Coordinated
-Release Date (Time, in this particular case).
+Given the constraints, I'm assuming that Exim was the only obviously
+remotely exploitable case that you were able to identify? I'd imagine
+that you investigated OpenSSH, Apache, other SMTP agents, etc? Would
+you be willing to publish the list of the reviewed implementations to
+reduce the amount of repeated work?
 
-> you be willing to publish the list of the reviewed implementations to
-> reduce the amount of repeated work?
-
-Here is a list of potential targets that we investigated (they all call
-gethostbyname, one way or another), but to the best of our knowledge,
-the buffer overflow cannot be triggered in any of them:
-
-apache, cups, dovecot, gnupg, isc-dhcp, lighttpd, mariadb/mysql,
-nfs-utils, nginx, nodejs, openldap, openssh, postfix, proftpd,
-pure-ftpd, rsyslog, samba, sendmail, sysklogd, syslog-ng, tcp_wrappers,
-vsftpd, xinetd.
-
-That being said, we believe it would be interesting if other people
-could have a look, just in case we missed something.
-
-With best regards,
-
--- 
-the Qualys Security Advisory team
+/mz
