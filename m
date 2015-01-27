@@ -1,31 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/01/5
-Message-ID: <20150101131256.GA9109@eldamar.local>
-Date: Thu, 1 Jan 2015 14:12:56 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Cc: CVE Assignments MITRE <cve-assign@...re.org>
-Subject: CVE Request: libmspack: frame_end overflow which could cause infinite loop
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/27/28
+Message-ID: <Pine.LNX.4.64.1501271819410.11165@beijing.mitre.org>
+Date: Tue, 27 Jan 2015 18:20:17 -0500 (EST)
+From: cve-assign@...re.org
+To: Salvatore Bonaccorso <carnil@...ian.org>
+cc: OSS Security Mailinglist <oss-security@...ts.openwall.com>, CVE Assignments MITRE <cve-assign@...re.org>
+Subject: Re: CVE Request: patch: directory traversal via file rename
 Content-Type: text/plain; charset=utf-8
 
-Hi,
 
-Jakub Wilk originally reported to the Debian BTS a problem with
-cabextract on a specially crafted cab file, causing cabextract to hang
-forever. The problem is actually in the embedded copy of libmspack, see
-[1]. Libmspack, a library to provide compression and decompression of
-some file formats used by Microsoft, is used in many project (or
-embedded there like also Clamav). This issue can cause a remotely
-exploitable denial-of-service condition due to clamav thread hanging
-forever while scanning the file. A patch is available at [2] for
-libmspack.
+> Hi
+>
+> Could you please assign a CVE for the following issue in patch? There
+> is a directory traversal flaw via file rename.
+>
+> It was reported to the Debian BTS as #775873[1] and is different from
+> #775227, which was a directory traversal via symlinks and got
+> CVE-2015-1196.
+>
+> [1] https://bugs.debian.org/775873
+> [2] https://savannah.gnu.org/bugs/?44059
+>
+> Regards,
+> Salvatore
 
-Could you please assign a CVE for this issue in libmspack?
+Use CVE-2015-1395.
 
-References:
+---
 
- [1] https://bugs.debian.org/773041
- [2] http://anonscm.debian.org/cgit/collab-maint/libmspack.git/tree/debian/patches/qtmd-fix-frame_end-overflow.patch
-
-Regards,
-Salvatore
+CVE assignment team, MITRE CVE Numbering Authority M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
