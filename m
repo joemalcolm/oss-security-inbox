@@ -1,48 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/10/8
-Message-Id: <20150310155102.9EDAA72E0D0@smtpvbsrv1.mitre.org>
-Date: Tue, 10 Mar 2015 11:51:02 -0400 (EDT)
-From: cve-assign@...re.org
-To: mprpic@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: Ruby on Rails ActiveModel::Name to_json Call Infinite Loop Remote DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/27/7
+Message-ID: <CAAuWqpY2OBmDoDRj0K5hoj3=oAdhLdfy9qFREnqarxSH9RNDvQ@mail.gmail.com>
+Date: Tue, 27 Jan 2015 17:23:20 +0100
+From: Paolo Perego <paolo@...oredcode.com>
+To: oss-security@...ts.openwall.com, cve-assign@...re.org
+Cc: Dylan Kuhn <cyberhobo@...erhobo.net>
+Subject: CVE request: XSS in search functionality for Geo Mashup Wordpress plugin
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Citing the description, Geo Mashup is a plugin for Wordpress designed
+to let you
+save location information with posts, pages, and other WordPress objects.
+These information can then be presented on interactive maps in many ways.
 
-As far as we can tell, the status of this is that:
+Plugin versions before 1.8.3 suffer from a cross site scripting
+vulnerability when displaying search results. The search key was not
+properly sanitized so an attacker can eventually inject arbitrary
+javascript code.
 
-  https://github.com/rubysec/ruby-advisory-db/issues/130#issuecomment-77688439
+Plugin author was contacted on December 16, and by January 11 the
+vulnerability was fixed and plugin version 1.8.3 was released (
+https://wordpress.org/plugins/geo-mashup/changelog/).
 
-(in, more or less, the role of the upstream vendor) suggests an
-alternative interpretation in which this is a bug but not a
-vulnerability. The bug has been fixed:
 
-  https://github.com/rails/rails/commit/a0580e974b4a058a983de6c593e4573bd94b76f0
+Paolo
+-- 
+$ cd /pub
+$ more beer
 
-As mentioned at:
+Il primo blog di application security italiano morbido fuori e croccante
+dentro: https://codiceinsicuro.it
 
-  https://github.com/rails/rails/pull/19055#issuecomment-75798877
-
-the bug made it possible to write code that had an unintentional
-infinite loop. Apparently nobody has yet mentioned an actual or
-realistic scenario in which the infinite looping can begin only after
-a manipulation of input by a client.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJU/xJiAAoJEKllVAevmvmsQe4H/iIDCXa5vM4lPC3Et3UTKooO
-BKV0T3cxNTLwpWNz7tYEPaRTohompQTtE0E43Wm9RWB9ODI7taWGA3rOpUbhG+LO
-wWQjIKkYc+ax0JD5q0tboqENnV9um0u7RqHid21diSXXACIq/37CDoGZgddScJso
-yw1t2ZNZeJwe4IBsrxIrkSRG6RoeOfpRt+DuET/vEuTQRJdif/zri7MJp6FMCN/n
-fK0jEFKb1D9WV1EPb/+e12h5SiyZHFCat6Gd5gckNXLHvhs3FfYtf5bIgV0vQR48
-eOt1mAH7sh9eStvqndR+hkJHRsGRWs+o5NyWEYd+EBY3ZxOo4qJGSnnj6nZ4v6k=
-=QZrH
------END PGP SIGNATURE-----
