@@ -1,66 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/02/4
-Message-ID: <54F40C5C.1040407@redhat.com>
-Date: Mon, 02 Mar 2015 00:08:12 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com, jvn@....jp, Assign a CVE Identifier <cve-assign@...re.org>
-Subject: Re: CVE-2015-0881
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/27/20
+Message-ID: <Pine.LNX.4.64.1501271326040.11165@beijing.mitre.org>
+Date: Tue, 27 Jan 2015 13:27:41 -0500 (EST)
+From: cve-assign@...re.org
+To: Fabian Keil <freebsd-listen@...iankeil.de>
+cc: OSS Security Mailinglist <oss-security@...ts.openwall.com>, cve-assign@...re.org
+Subject: Re: CVE request for Privoxy
 Content-Type: text/plain; charset=utf-8
 
-So for those of us vendors/etc that need to backport security fixes
-and/or confirm our software is fixed how are we supposed to do this?
 
-How long will the patch/attack information be embargoed for?
+> Privoxy 3.0.23 contains fixes for the following security issues:
+>
+> - Fixed a DoS issue in case of client requests with incorrect
+>  chunk-encoded body. When compiled with assertions enabled
+>  (the default) they could previously cause Privoxy to abort().
+>  Reported by Matthew Daley.
+>  http://ijbswa.cvs.sourceforge.net/viewvc/ijbswa/current/jcc.c?r1=1.433&r2=1.434
 
-Also why has this been covered up for over 5 years and is now still a
-secret? I'm very confused and I have some grave concerns about how
-JVN/upstream is handling this.
+Use CVE-2015-1380.
 
-On 28/02/15 09:16 PM, Amos Jeffries wrote:
-> On 24/02/2015 4:34 a.m., Kurt Seifried wrote:
->> Regarding CVE-2015-0881
-> 
->> http://jvn.jp/en/jp/JVN64455813/index.html 
->> http://jvndb.jvn.jp/en/contents/2015/JVNDB-2015-000019.html
-> 
-> 
-> JPCERT has now provided me a copy of the attack. They have requested I
-> not reveal the details, so I am treating that and the patch details as
-> embargoed for the time being.
-> 
-> Without revealing too much (I hope) I can confirm:
-> 
-> * It is a known vulnerability
->  - to upstream that is, but no CVE assigned.
-> 
-> * The initial report of this issue to upstream occured during 2009.
-> 
-> * Squid 1.x, 2.x, and 3.0 releases are all vulnerable.
-> 
-> * All Squid-3.1 stable releases are not vunerable.
->  - eg, you can bump the fixed version number back to 3.1.1 for most OS
-> distributions.
-> 
-> 
-> For the record; there is now FALSE information floating around in some
-> CVE-2015-0881 "copies" about it being about CRLF issues. The Cisco
-> report came to my attention first, but they are not alone.
-> 
-> To all those people cut-n-pasting blurb text from CWE-113 in place of
-> the JPCERT description: please dont do that. There are multiple "HTTP
-> response splitting" attack vectors which have nothing to do with the
-> (current) CWE-113 description. This is one of those cases.
-> 
-> HTH
-> 
-> Amos Jeffries
-> Squid Software Foundation
-> 
-> 
+> - Fixed multiple segmentation faults and memory leaks in the
+>  pcrs code. This fix also increases the chances that an invalid
+>  pcrs command is rejected as such. Previously some invalid commands
+>  would be loaded without error. Note that Privoxy's pcrs sources
+>  (action and filter files) are considered trustworthy input and
+>  should not be writable by untrusted third-parties.
+>  http://ijbswa.cvs.sourceforge.net/viewvc/ijbswa/current/pcrs.c?r1=1.46&r2=1.47
 
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Use CVE-2015-1381.
 
+> - Fixed an 'invalid read' bug which could at least theoretically
+>  cause Privoxy to crash.
+>  http://ijbswa.cvs.sourceforge.net/viewvc/ijbswa/current/parsers.c?r1=1.297&r2=1.298
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Use CVE-2015-1382.
+
+> Please assign CVEs for them.
+>
+> The second issue could potentially affect other programs that use pcrs.c,
+> but I'm not aware of any that do. Privoxy imported the file from the upstream
+> project pcrs (not to be confused with pcre) which is no longer maintained.
+>
+> The last two issues were partially discovered with afl-fuzz.
+>
+> Fabian
+
+---
+
+CVE assignment team, MITRE CVE Numbering Authority M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
