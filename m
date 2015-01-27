@@ -1,41 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/05/7
-Message-ID: <20150305124602.GA7844@kronk.local>
-Date: Thu, 5 Mar 2015 13:46:02 +0100
-From: Alessandro Ghedini <alessandro@...dini.me>
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: CVE Request: libarchive -- directory traversal in bsdcpio
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/27/8
+Message-ID: <Pine.LNX.4.64.1501271131201.11165@beijing.mitre.org>
+Date: Tue, 27 Jan 2015 11:33:28 -0500 (EST)
+From: cve-assign@...re.org
+To: Marc Deslauriers <marc.deslauriers@...onical.com>
+cc: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: Re: CVE Request: XSS and response-splitting bugs in rabbitmq management plugin
 Content-Type: text/plain; charset=utf-8
 
-On dom, feb 22, 2015 at 08:01:10 +0100, Moritz Muehlenhoff wrote:
-> On Fri, Jan 16, 2015 at 06:19:21AM +0300, Alexander Cherepanov wrote:
-> > Hi!
-> > 
-> > bsdcpio tool from libarchive bundle is susceptible to a directory traversal
-> > vulnerability via absolute paths.
-> > 
-> > Initial discussion:
-> > http://www.openwall.com/lists/oss-security/2015/01/07/5
-> > 
-> > Upstream report:
-> > https://groups.google.com/d/msg/libarchive-discuss/dN9y1VvE1Qk/Z9uerigjQn0J
-> > 
-> > My proposed (minimal) fix (non-Windows):
-> > https://groups.google.com/group/libarchive-discuss/attach/a78932ecb50340ae/0001-Quick-n-dirty-fix-for-bsdcpio-directory-traversal-vu.patch?part=0.1
-> > 
-> > Discussion is ongoing.
-> > 
-> > Could CVE(s) please be assigned?
-> 
-> This seems to have fallen through the cracks, explicitly adding cve-assign
-> to CC.
 
-FYI, the issue has now been fixed upstream [0] (only on POSIX platforms though,
-not Windows).
+> Hello,
+>
+> The following issues were fixed in RabbitMQ 3.4.1:
+>
+> (as described in
+> https://groups.google.com/forum/#!topic/rabbitmq-users/-3Z2FyGtXhs )
+>
+> 26437 prevent /api/* from returning text/html error messages which could
+>       act as an XSS vector (since 2.1.0)
 
-Cheers
+Use CVE-2014-9649.
 
-[0] https://github.com/libarchive/libarchive/commit/59357157706d47c365b2227739e17daba3607526
+> 26433 fix response-splitting vulnerability in /api/downloads
+>       (since 2.1.0)
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Use CVE-2014-9650.
+
+
+> Bug 26437 allowed an attacker to create a URL to "/api/..." which would
+> provoke an internal server error, resulting in the server returning an
+> html page with text from the URL embedded and not escaped. This was
+> fixed by ensuring all URLs below /api/ only ever return responses with a
+> content type of application/json, even in the case of an internal server
+> error.
+>
+> Bug 26433 allowed an attacker to specify a URL to /api/definitions which
+> would cause an arbitrary additional header to be returned. This was
+> fixed by stripping out CR/LF from the "download" query string parameter.
+>
+>
+> Fixed by:
+> https://github.com/rabbitmq/rabbitmq-management/commit/b5a5fc31bd49ad821a655ea9e2fe920d670a62ad
+>
+> Could CVEs please be assigned to these issue?
+>
+> Thanks,
+>
+> Marc.
+>
+> -- 
+> Marc Deslauriers
+> Ubuntu Security Engineer     | http://www.ubuntu.com/
+> Canonical Ltd.               | http://www.canonical.com/
+
+---
+
+CVE assignment team, MITRE CVE Numbering Authority M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
