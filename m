@@ -1,28 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/18/7
-Message-ID: <20150218141411.GB23489@eldamar.local>
-Date: Wed, 18 Feb 2015 15:14:11 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Cc: CVE Assignments MITRE <cve-assign@...re.org>
-Subject: CVE Request: xdg-utils: xdg-open: command injection vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/27/21
+Message-ID: <54C7D8F3.3020503@gmail.com>
+Date: Tue, 27 Jan 2015 19:29:07 +0100
+From: Sven Kieske <svenkieske@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Qualys Security Advisory CVE-2015-0235 - GHOST: glibc gethostbyname buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-Hi
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Another command injection vulnerability was reported to the Debian
-bugtracker. The constraints to exploit this are similar to the ones
-for CVE-2014-9622.
+On 27.01.2015 19:20, Qualys Security Advisory wrote:
+> Here is a list of potential targets that we investigated (they all
+> call gethostbyname, one way or another), but to the best of our
+> knowledge, the buffer overflow cannot be triggered in any of them:
+> 
+> apache, cups, dovecot, gnupg, isc-dhcp, lighttpd, mariadb/mysql, 
+> nfs-utils, nginx, nodejs, openldap, openssh, postfix, proftpd, 
+> pure-ftpd, rsyslog, samba, sendmail, sysklogd, syslog-ng,
+> tcp_wrappers, vsftpd, xinetd.
+> 
+> That being said, we believe it would be interesting if other
+> people could have a look, just in case we missed something.
 
-Debian Bug: https://bugs.debian.org/777722
-Upstream Bug: https://bugs.freedesktop.org/show_bug.cgi?id=89129
+Here is a potential list from openhub.net code search:
 
-Jiri Horner created as well a patch for this issue, which is attached
-to the original bug and attached also a PoC.
+https://code.openhub.net/search?p=0&s=gethostbyname&p=0
 
-https://bugs.debian.org/cgi-bin/bugreport.cgi?msg=5;filename=xdg-open.diff;att=1;bug=777722
+might be worth investigating
 
-Could you please assign a CVE for this issue?
+kind regards
 
-Regards,
-Salvatore
+Sven
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iQGcBAEBAgAGBQJUx9jyAAoJEAq0kGAWDrqlzsIL/i3OzGxxgE8p0pf+wi34wmne
+Nq5yhNk42DHCExP1YfabDy41OobwXO9IdgT6zYqPQBM55N9dgyON+ph3lggw8psG
+UDGgA+o+plc2gBbFS/aLFLHM2ALqyn7oqTIgqD/Sw1gbiiYvgHp40PMwBYYcW56/
+oPRletR9q4npOGkVxByskNS8+b0VaFbmwVg6CQMYiR8UyWLRoTILtMV0DWXlhkxU
+m6Qfo8kDNkR3lLi3n5tIkfTJsLF2NWWHiS4PDjc32JJahUjlIjyfBaHWs8T8KN6h
+clUHB3BV7rp3ZBw4STgPwz0OVHPsGGnsj9x4m3dX4kEk39SHewFfYrXAqO1o3vot
+Kfq3RTh/pesL6Ze/talnXS0KCYep7Jxi3lxIuNHoAI2VxKVbdTgEDBZlBuNLuz3H
+ABT627Gh6fAxtrtsdjU7AlsjDiEXRXt8YvgQUJJy5S89sdM3ewbhsl91sqOJTkYl
+W+nnngzcvOImxfxWn/A4xnGcstle3rsZ2gaeQBQkgA==
+=h6GH
+-----END PGP SIGNATURE-----
