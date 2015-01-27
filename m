@@ -1,43 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/04/18
-Message-ID: <Pine.LNX.4.64.1501041736390.3184@beijing.mitre.org>
-Date: Sun, 4 Jan 2015 17:44:30 -0500 (EST)
-From: "Steven M. Christey" <coley@...re.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/27/30
+Message-ID: <CAEu1J=_GjTOUhdV7-v89NG2K0eMoCGqJYSUa=5a480cgX-tQ3g@mail.gmail.com>
+Date: Tue, 27 Jan 2015 14:03:10 -0800
+From: endrazine <endrazine@...il.com>
 To: oss-security@...ts.openwall.com
-cc: Dan McDonald <danmcd@...iti.com>, cve-assign@...re.org
-Subject: Re: CVE Request for illumos distributions
+Cc: Qualys Security Advisory <qsa@...lys.com>
+Subject: Re: GHOST gethostbyname() heap overflow in glibc (CVE-2015-0235)
 Content-Type: text/plain; charset=utf-8
 
+Dear list,
 
-On Sat, 3 Jan 2015, Christos Zoulas wrote:
+In case you were trying to work based on the public information :
+There is an obvious stack overflow in Qualys' GHOST.c poc : the name buffer
+is 10 bytes long and 900+ bytes of data are copied to it. This is
+independant of the gethostbyname() overflow and isn't glibc's fault...
+Totally epic PR quality information ;(
 
-> On Jan 3,  6:57pm, cve-assign@...re.org (cve-assign@...re.org) wrote:
-> -- Subject: Re: [oss-security] CVE Request for illumos distributions
+Best regards,
+
+j-
+
+On Tue, Jan 27, 2015 at 9:45 AM, Solar Designer <solar@...nwall.com> wrote:
+
+> On Tue, Jan 27, 2015 at 09:21:32AM -0800, Michal Zalewski wrote:
+> > I find it... profoundly disappointing... that we get to learn about
+> > 0-days via PR agency leaks (or that external PR agencies get to know
+> > about 0-days before the rest of the world - hey, sounds like a juicy
+> > target).
+> >
+> > That said, the advisory makes up for it...
 >
-> | > Illumos bug #5421 - http://illumos.org/issues/5421 which is now fixed in
-> | > the upstream illumos-gate, is an innocuous fix to a serious problem that
-> | > allows an arbitrary user in the global zone (non-global zones are not
-> | > able to panic the machine) to panic the machine.
-> |
-> | Use CVE-2014-9491.
+> I agree.  I am more concerned that PR agencies appear to have had early
+> access to this information than that the information leaked to the
+> public a few hours early.  When it did become public, everyone could
+> proceed with their advisories, updates, etc.  But before it did, who
+> knows what bad bugs with access to a PR agency's database or e-mail
+> could have been doing and for how long (I hope also just another few
+> hours, but I really don't know).
 >
-> Shouldn't we be using CVE-2015-XXXX by now?
+> We use PGP on the linux-distros list (the issue was first brought to
+> there on January 18), but I doubt that communication between Qualys and
+> their PR agency, nor within the PR agency, was similarly encrypted.
+> Perhaps they were using some Word "documents" and stuff.  And even if it
+> were encrypted, notifying a PR agency early goes beyond need-to-know
+> from everyone else's security perspective.
+>
+> Unfortunately, that's how PR agencies work, they want some "warm up"
+> time.  I think the only solution for companies like Qualys is to not try
+> to reap the usual PR benefits from this type of findings.  Have their
+> technical folks disclose to the proper technical channels instead, and
+> do not issue a formal press release - well, or do it a few days later,
+> referring not so much to the actual findings, but to how well the
+> company worked with the infosec community.  This would be better PR,
+> too, at least within the smaller but highly relevant infosec community.
+>
+> Of course, personally I would not care about some company's PR, but I
+> realize that many companies do care and this affects the resources they
+> put into analyzing vulnerabilities (as you say, "the advisory makes up
+> for it").  Hence my thinking of a workaround above.
+>
+> Alexander
+>
 
-This ID (and others) used a 2014 date because the bug report was 
-technically public in 2014.  The year portion of a CVE ID typically 
-reflects when the CVE was requested for non-public issues; or for 
-already-public issues, the year portion typically reflects the year of 
-disclosure.  The disclosure date itself can be a subject of 
-interpretation, such as when an issue is disclosed at a 
-publicly-accessible URL but only likely to be noticed by a limited 
-audience ("technically public") versus when the issue becomes "widely 
-public" to the infosec industry.
-
-Especially in the transition from the end of one year to the beginning of 
-the next year, there can be a mixture of dates.  Also, CVE (and every 
-other vulnerability "database" or repository) frequently add entries for 
-earlier years.  Accordingly, there is still a chance that CVE-2014-xxxx 
-IDs will reach 5 digits, either in 2015 or later, as we continue to cover 
-older issues that we discover or did not prioritize in earlier years.
-
-- Steve
