@@ -1,136 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/21/4
-Message-ID: <CALH-=7xMt0ejkN5dG+eiGLgKJn+aA7cyZcTrhT46hq0HVMeGiw@mail.gmail.com>
-Date: Sat, 21 Feb 2015 13:36:14 +0100
-From: Steffen Rösemann <steffen.roesemann1986@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-Request -- MyBB v. 1.8.3 -- Multiple stored XSS-vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/27/19
+Message-ID: <Pine.LNX.4.64.1501271320180.11165@beijing.mitre.org>
+Date: Tue, 27 Jan 2015 13:21:21 -0500 (EST)
+From: cve-assign@...re.org
+To: Gerhard Rieger <gerhard@...t-unreach.org>
+cc: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: Re: Socat security advisory 6 - Possible DoS with fork
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve, Josh, vendors, list.
 
-The researchers adamziaja, Devilshakerz, DingjieYang and me found multiple
-stored XSS-vulnerabilities in the administrative backend of CMS MyBB v.
-1.8.3.
+> Socat security advisory 6 - Possible DoS with fork
+>
+> Overview
+>  socats signal handler implementations are not async-signal-safe and
+>  can cause crash or freeze of socat processes
+>
+> Vulnerability Id: (pending)
+>
+> Severity: Low
+>
+> Details
+>  Socats signal handler implementations are not asnyc-signal-safe. When
+>  a signal is triggered while the process is within a non
+>  async-signal-safe function the signal handler will call a non
+>  sync-signal-safe function too. POSIX specifies the behaviour in this
+>  situation as undefined. Dependend on involved functions, libraries,
+>  and operating system, the process can continue, freeze, or crash.
+>  Mostly this issue occurs when socat is in listening mode with fork
+>  option and a couple of child processes terminate at the same time.
+>
+> Testcase
+>  none
+>
+> Affected versions
+>  1.0.0.0 - 1.7.2.4
+>  2.0.0-b1 - 2.0.0-b7
+>
+> Not affected or corrected versions
+>  1.7.3.0 and later
+>  2.0.0-b8 (to be released) and later
+>
+> Workaround
+>  none
+>
+> Download
+>  The updated sources can be downloaded from:
+>
+>    http://www.dest-unreach.org/socat/download/socat-1.7.3.0.tar.gz
+>
+> Credits
+>   Credits to Peter Lobsinger
 
-The stored XSS-vulnerabilities can be found in different modules in the
-following locations of a common MyBB installation:
+Use CVE-2015-1379.
 
-======================
-Module "config-attachment_types"
-======================
+---
 
-via form-field MIME-type:
-
-http://{TARGET}/admin/index.php?module=config-attachment_types&action=add
-
-executed in: e.g. http://
-{TARGET}/admin/index.php?module=config-attachment_types
-
-===============
-Module "config-mycode"
-===============
-
-via form fields "title" and "short description":
-
-http://{TARGET}/admin/index.php?module=config-mycode&action=add
-
-executed in: e.g. http://{TARGET}/admin/index.php?module=config-mycode
-
-===================
-Module "forum-management"
-===================
-
-via form field "title":
-
-http://{TARGET}/admin/index.php?module=forum-management&action=add
-
-executed in: e.g. http://{TARGET}/admin/index.php?module=forum
-
-==============
-Module "user-groups"
-==============
-
-via form fields "title" and/or "short description":
-
-http://{TARGET}/admin/index.php?module=user-groups&action=add
-
-executed in: e.g. http://{TARGET}/admin/index.php?module=user-groups
-
-================
-Module "style-templates"
-================
-
-via form field "name":
-
-http://{TARGET}/admin/index.php?module=style-templates&action=add_set
-
-executed in: e.g. http://{TARGET}/admin/index.php?module=style-templates
-
-====================================
-Module "style-templates" in action "add_template_group"
-====================================
-
-via form field "title":
-
-http://
-{TARGET}/admin/index.php?module=style-templates&action=add_template_group
-
-executed in: e.g. http://
-{TARGET}/admin/index.php?module=style-templates&sid={TEMPLATES_NUMERIC_ID}
-
-=============
-Module "tool-tasks"
-=============
-
-via form field "title":
-
-http://{TARGET}/admin/index.php?module=tools-tasks&action=add
-
-executed in: e.g. http://{TARGET}/admin/index.php?module=tools-adminlog
-
-=================
-Module "config-post_icons"
-=================
-
-via form field "name":
-
-http://{TARGET}/admin/index.php?module=config-post_icons&action=add
-
-executed in: e.g. http://{TARGET}/admin/index.php?module=tools-adminlog
-
-=============
-Module "user-titles"
-=============
-
-via form field "title to assign":
-
-http://{TARGET}/admin/index.php?module=user-titles&action=add
-
-executed in: e.g. http://{TARGET}/admin/index.php?module=tools-adminlog
-
-================
-Module "config-banning"
-================
-
-via form field "username":
-
-http://{TARGET}/admin/index.php?module=config-banning&type=usernames
-
-executed in: e.g. http://{TARGET}/admin/index.php?module=tools-adminlog
-
-Can I have a CVE-ID/CVE-IDs for these issues?
-
-Thank you very much.
-
-Greetings from Germany.
-
-Steffen Rösemann
-
-[1] http://www.mybb.com
-[2] http://sroesemann.blogspot.de/2015/02/sroeadv-2015-15.html
-[3] http://www.mybb.com/get-involved/security/
-[4]
-http://blog.mybb.com/2015/02/15/mybb-1-8-4-released-feature-update-security-maintenance-release/
-[5] http://seclists.org/fulldisclosure/2015/Feb/80
-
+CVE assignment team, MITRE CVE Numbering Authority M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
