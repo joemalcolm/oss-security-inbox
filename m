@@ -1,38 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/16/16
-Message-ID: <54B98976.8090108@enovance.com>
-Date: Fri, 16 Jan 2015 16:58:14 -0500
-From: Tristan Cacqueray <tristan.cacqueray@...vance.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/27/5
+Message-ID: <20150127161103.GA18713@openwall.com>
+Date: Tue, 27 Jan 2015 19:11:03 +0300
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request for vulnerability in OpenStack Glance
+Cc: Qualys Security Advisory <qsa@...lys.com>
+Subject: Re: GHOST gethostbyname() heap overflow in glibc (CVE-2015-0235)
 Content-Type: text/plain; charset=utf-8
 
-A vulnerability was discovered in OpenStack (see below). In order to
-ensure full traceability, we need a CVE number assigned that we can
-attach to further notifications. This issue is already public, although an
-advisory was not sent yet.
+On Tue, Jan 27, 2015 at 05:04:58PM +0100, Hanno B??ck wrote:
+> Origin seems to be a report from qualys.
 
-Title: Glance user storage quota bypass
-Reporter: Tushar Patil (NTT)
-Products: Glance
-Versions: up to 2014.1.3 and 2014.2 version up to 2014.2.1
+They're about to send the full advisory in here.  This was coordinated
+disclosure, but unfortunately there are discrepancies of a few hours.
+The public disclosure time-of-day was coordinated too, but clearly was
+not literally followed by everyone.
 
-Description:
-Tushar Patil from NTT reported a vulnerability in Glance. By deleting images
-that are being uploaded, a malicious user can overcome the storage quota and
-thus may overrun the backend. Images in deleted state are not taken into
-account by quota and won't be effectively deleted until the upload is
-completed. Only Glance setups configured with user_storage_quota are
-affected.
-
-References:
-https://launchpad.net/bugs/1398830
-
-Thanks in advance,
-
--- 
-Tristan Cacqueray
-OpenStack Vulnerability Management Team
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+Alexander
