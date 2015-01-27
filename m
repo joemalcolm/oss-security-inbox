@@ -1,44 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/01/6
-Message-ID: <CAE2SPAZD3KFjGh85mY5MixXrS=O6h8v_0JK=XvZ4R1iJ1ZNvCw@mail.gmail.com>
-Date: Thu, 1 Jan 2015 15:41:50 +0100
-From: Bastien ROUCARIES <roucaries.bastien@...il.com>
-To: Gynvael Coldwind <gynvael@...dwind.pl>
-Cc: oss-security@...ts.openwall.com, jodie.cunningham+osssecurity@...il.com
-Subject: Re: Imagemagick fuzzing bug
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/27/15
+Message-ID: <87a914yu83.fsf@mid.deneb.enyo.de>
+Date: Tue, 27 Jan 2015 19:05:48 +0100
+From: Florian Weimer <fw@...eb.enyo.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: GHOST gethostbyname() heap overflow in glibc (CVE-2015-0235)
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Dec 24, 2014 at 10:32 PM, Gynvael Coldwind <gynvael@...dwind.pl> wrote:
-> Hey,
->
-> Original reporter from google side here.
->
->>
->> You are aware that there is graphicsmagick which shares lots of code
->> with im (it's an early fork)? It'd be nice to also report these issues
->> to them if they apply. (I also reported a couple of issues in both
->> im/gm lately and devs were always quick to fix things)
->
->
-> Do you know if either im or gm backport fixes from each other?
-> I fuzzed only im, so I've reported to im. I don't mind reporting to both in
-> the future, but if they DO backport fixes, that would lead into collisions
-> (i.e. two different fixes for one bug, makes merging harder).
+* Marek Kroemeke:
 
-Usually I ask fordebian graphickmagick to check the code condition.
-But to my best knowledge they do not backport, except if you ask. So
-you should try your image on graphicmagick and check if it crash
+> We just noticed CVE-2015-0235 , and we thought we will drop this one
+> in - apologies for low quality , we didn't really have time yet to
+> analyse it, but it seems to be related, so it makes sense to patch
+> things once right ?
 
-BTW one patch was not correct please found updated patch queue here:
-http://anonscm.debian.org/cgit/collab-maint/imagemagick.git/log/?h=debian-patches/6.8.9.9-5
+It's not related, and we cannot patch it at the same time because
+packages for the gethostbyname issue are already ready, they just have
+to be released.  (When we change critical system components, we also
+need to be extra-careful with testing, which takes time.)
 
-I have backported to 6.7.7.10 here
-http://anonscm.debian.org/cgit/collab-maint/imagemagick.git/log/?h=debian/6.7.7.10-5%2bdeb7u4
-(not yet fully tested)
+Andreas Schwab fixed this in 2011:
 
-And i plan to backport to 6.6.0.4
+  <https://sourceware.org/git/gitweb.cgi?p=glibc.git;a=commitdiff;h=2e96f1c7>
 
-Bastien
+If I'm not mistaken, this commit when into glibc 2.15.
 
-> Cheers,
-> Gynvael
+I have not yet found the corresponding glibc bug (if it exists).
+
+The bug only materializes if the getaddrinfo functions is called with
+the AI_IDN flag, and if glibc has been compiled with libidn support
+(but I haven't checked if you can switch that off these days).
