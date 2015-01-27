@@ -1,52 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/23/4
-Message-Id: <20150223074156.50170332017@smtpvbsrv1.mitre.org>
-Date: Mon, 23 Feb 2015 02:41:56 -0500 (EST)
-From: cve-assign@...re.org
-To: me@...jsalkema.de
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: jabberd remote information disclosure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/27/23
+Message-ID: <CAN10O-ZaBV4Rw+60qa0ERtq0Eqdbhk7BwP=86qD23UDMZL3Qfw@mail.gmail.com>
+Date: Tue, 27 Jan 2015 20:04:35 +0000
+From: Filip Palian <s3810@...stk.edu.pl>
+To: oss-security@...ts.openwall.com
+Subject: Re: GHOST gethostbyname() heap overflow in glibc (CVE-2015-0235)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+2015-01-27 18:05 GMT+00:00 Florian Weimer <fw@...eb.enyo.de>:
+>
+> * Marek Kroemeke:
+>
+> > We just noticed CVE-2015-0235 , and we thought we will drop this one
+> > in - apologies for low quality , we didn't really have time yet to
+> > analyse it, but it seems to be related, so it makes sense to patch
+> > things once right ?
+>
+> It's not related, and we cannot patch it at the same time because
+> packages for the gethostbyname issue are already ready, they just have
+> to be released.  (When we change critical system components, we also
+> need to be extra-careful with testing, which takes time.)
 
-> When parsing a JID, jabberd2 version 2.3.2 and below truncate the data
-> but do not verify whether the result is valid UTF8 before passing it
-> to libidn. If the data ends with an unterminated multi-byte UTF8
-> sequence then libidn may copy data past the buffer into the result.
+We have no access to vendor list, thus we had no prior knowledge if
+the fixes are ready or not.
 
-> https://github.com/jabberd2/jabberd2/issues/85
+In our opinion it is related to CVE-2015-0235 for couple of reasons.
+It would be rather pointless to name them all here as someone else
+still would have a different opinion, understood.
 
-> the stringprep functions from libidn require the input to be valid UTF8
+Dunno about the glibc 2.15 but the bug can be triggered with
+"libc6:i386 2.13-38+deb7u7".  So again, the patches exist but the most
+recent packages are affected.
 
-> The libidn documentation claims "This function will not read or write
-> to characters outside that size." about the length of the buffer that
-> needs to be specified, but this is not true,
+Many smart and more experienced members of this list may be interested
+in analyzing this bug. Maybe it's only a regular bug, which can be
+considered DoS at most in some circumstances or maybe there's more
+than meets the eye. Hard to tell without in-depth analysis a la Qualys
+one (by the report one can see how much effort it requires to reach
+that level of honesty).
 
-We think this requires one CVE ID for jabberd2 and one CVE ID for
-libidn, because the issues could be addressed independently. For
-example, if only jabberd2 is changed, then libidn still has an
-out-of-bounds read issue with input from other programs. If only
-libidn were changed and (for example) the change was to fail on
-invalid UTF-8 data, then that would have a DoS effect on jabberd2.
+Thanks Florian for an initial skim through the code.
 
-Did you believe that libidn does not have a vulnerability on
-its own?
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+F
 
-iQEcBAEBAgAGBQJU6tlTAAoJEKllVAevmvmsTR0H/3XUuU95oYjii19G1GIBNy5A
-4CyZyUD4rqiXIXN1TN/3V8JuPnG7/C0sVc6vP6QVu6xzVWOTQhtarSWlX2cxn0kS
-ExvZtwdJW0olsnX+kxYsoHE9PIt07bfbXp1kHHKKJDmP8SNputJ+4upyjkVbLHxM
-EanwjeoWQE79c1CpQvt6yxWapd2HeKhoiFmg1/5UVeyoazZaG5KAZZqRKoFiOAWf
-IXh4nifPjBUJADSV58g5AGVj5QGznNinsvngF92bMPczjdKG8fPz0oG6VefQ+YXc
-yEey2jylUkJIBrwzENnCKz9775dOy7lTJV67WxaKcroaiQdZHrv3Y7HGlTpvs0M=
-=MZLy
------END PGP SIGNATURE-----
+
+
+>
+> Andreas Schwab fixed this in 2011:
+>
+>   <https://sourceware.org/git/gitweb.cgi?p=glibc.git;a=commitdiff;h=2e96f1c7>
+>
+> If I'm not mistaken, this commit when into glibc 2.15.
+>
+> I have not yet found the corresponding glibc bug (if it exists).
+>
+> The bug only materializes if the getaddrinfo functions is called with
+> the AI_IDN flag, and if glibc has been compiled with libidn support
+> (but I haven't checked if you can switch that off these days).
