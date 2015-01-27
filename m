@@ -1,30 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/26/10
-Message-ID: <20150226181653.GA24970@inutil.org>
-Date: Thu, 26 Feb 2015 19:16:53 +0100
-From: Moritz Muehlenhoff <jmm@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/27/4
+Message-ID: <20150127170458.10d6dced@pc>
+Date: Tue, 27 Jan 2015 17:04:58 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: CVE Request: null ptr deref in lame v3.99.5
+Subject: GHOST gethostbyname() heap overflow in glibc (CVE-2015-0235)
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Feb 26, 2015 at 12:08:25PM -0600, Brian Carpenter wrote:
-> Bug reports:
-> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=777160
-> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=777161
-> 
-> Fixed by Debian patch here:
-> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=775959
-> 
-> Tracker:
-> https://tracker.debian.org/news/672916
-> 
-> Issue appears to be fixed in the Debian repos and in the upstream source,
-> however, no upstream release has been made yet (3.99.5 is still available
-> for download on Sourceforge).
+There seems to be news out about a heap overflow in
+glibc's gethostbyname() function.
 
-This has already been requested two weeks ago:
-http://www.openwall.com/lists/oss-security/2015/02/12/8
+The original is french which I don't understand, hackernews links
+google translate:
 
-Cheers,
-        Moritz
+https://translate.google.com/translate?hl=en&sl=fr&tl=en&u=http%3A%2F%2Fwww.frsag.org%2Fpipermail%2Ffrsag%2F2015-January%2F005722.html
+
+This is redhat's report:
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2015-0235
+
+Origin seems to be a report from qualys.
+
+-- 
+Hanno Böck
+http://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
+
+Content of type "application/pgp-signature" skipped
