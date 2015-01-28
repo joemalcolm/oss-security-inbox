@@ -1,71 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/11/3
-Message-ID: <20150211061555.GR23507@oevtugenva.nrevsny.pk>
-Date: Wed, 11 Feb 2015 01:15:55 -0500
-From: Rich Felker <dalias@...c.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: wordexp(3)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/28/4
+Message-ID: <CAEu1J=-Z9gPVtqvV=qhdwW5ZDQDs8x6kqBVYLscSusWKB+xQCQ@mail.gmail.com>
+Date: Tue, 27 Jan 2015 17:47:47 -0800
+From: endrazine <endrazine@...il.com>
+To: Qualys Security Advisory <qsa@...lys.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: GHOST gethostbyname() heap overflow in glibc (CVE-2015-0235)
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Feb 10, 2015 at 12:57:05PM -0500, Rich Felker wrote:
-> On Tue, Feb 10, 2015 at 08:27:56PM +0300, Solar Designer wrote:
-> > Hi,
-> > 
-> > I found this curious and relevant to this list, off Twitter:
-> > 
-> > (x250) <%worr> RT @FioraAeterna: oh my gosh, Apple's libc literally implements "wordexp" by shelling out to perl: https://github.com/Apple-FOSS-Mirror/Libc/blob/2ca2ae74647714acfc18674c3114b1a5d3325d7d/gen/wordexp.c#L192
-> > 
-> > <worr> So yesterday, @FioraAeterna tweeted this: https://github.com/Apple-FOSS-Mirror/Libc/blob/2ca2ae74647714acfc18674c3114b1a5d3325d7d/gen/wordexp.c#L192. I've decided to take a tour of wordexp(3) implementations
-> > <@worr> They can't all be that bad
-> > (x2) <@worr> NetBSD and FreeBSD both use a sh builtin to implement wordexp(3): http://svnweb.freebsd.org/base/head/lib/libc/gen/wordexp.c?revision=254977&view=markup http://cvsweb.netbsd.org/bsdweb.cgi/src/lib/libc/gen/wordexp.c?rev=1.3&content-type=text/x-cvsweb-markup&only_with_tag=MAIN
-> > (x5) <@worr> OpenBSD wins the wordexp(3) contest, by refusing to implement it altogether.
-> > <@worr> Correction: glibc implements a huge recursive descent parser, and only shells out when it needs to do subshell expansions.
-> > <@worr> tbh, wordexp(3) is an antifeature. Maybe even a misfeature.
-> > <@worr> Here's the implementation, btw: https://sourceware.org/git/?p=glibc.git;a=blob;f=posix/wordexp.c;h=26f3a2653feba2b1a5904937d9d6b58c32109e24;hb=a39208bd7fb76c1b01c127b4c61f9bfd915bfe7c#l872
-> > <@worr> Continuing on my tour of wordexp(3) implementations, here's Illumos': https://github.com/joyent/illumos-joyent/blob/master/usr/src/lib/libc/port/regex/wordexp.c#L218-L290 It constructs a small shell script and runs it
-> 
-> POSIX is explict that the wordexp interface is designed such that
-> invoking a shell is one valid implementation choice. My view on all
-> this is that pretty much anything wordexp-related is not CVE-worthy;
-> wordexp simply is not a proper tool to be using in programs dealing
-> with untrusted inputs -- either untrusted input strings, or untrusted
-> environment contents. Obviously implementations using /bin/sh were
-> vulnerable to shellshock on systems where /bin/sh is bash.
+Dear Qualys team, dear list,
 
-To elaborate on the above, the RATIONALE text reads:
+> ???
 
-    "While wordexp() could be implemented entirely as a library
-    routine, it is expected that most implementations run a shell in a
-    subprocess to do the expansion."
+I assume this is an invitation to elaborate ;)
 
-Source:
-http://pubs.opengroup.org/onlinepubs/9699919799/functions/wordexp.html
+>From GHOST.c :
+...
+  char name[10];
+  memset(name, '0', len);
+  name[len] = '\0';
+...
 
-In addition to the allowance of shell-based implementations, the text
-of the standard puts a burden on the calling application not to pass
-certain dangerous strings:
 
-    "... Therefore, the application shall ensure that words does not
-    contain an unquoted <newline> character or any of the unquoted
-    shell special characters '|', '&', ';', '<', '>' except in the
-    context of command substitution as specified in XCU Command
-    Substitution."
+len is worth 991 at that point in time. Quite clearly, this will not fit
+into 10 bytes :)
 
-However, later in the DESCRIPTION, the following text appears, which
-seems to specify a behavior for this case:
+I am merely mentioning it in case anyone else was trying to run this code
+and was hitting this particular stack overflow.
 
-    "If the implementation supports the utilities defined in the Shell
-    and Utilities volume of POSIX.1-2008, and words contains an
-    unquoted character- <newline>, '|', '&', ';', '<', '>' , '(', ')',
-    '{', '}' - in an inappropriate context, wordexp() shall fail, and
-    the number of expanded words shall be 0."
+It is till an epic bug, congratulations on finding it !
 
-Read together, this seems to require conforming implementations to
-detect bad characters, but also requires conforming applications not
-to pass them; one or the other of these requirements is rather
-useless, then.
+Best regards,
 
-In any case, I would hope all of the above serves as sufficient
-warning that you should not pass untrusted input to wordexp. :-)
+j-
 
-Rich
+On Tue, Jan 27, 2015 at 4:00 PM, Qualys Security Advisory <qsa@...lys.com>
+wrote:
+
+> On Tue, Jan 27, 2015 at 02:03:10PM -0800, endrazine wrote:
+> > There is an obvious stack overflow in Qualys' GHOST.c poc : the name
+> buffer
+> > is 10 bytes long and 900+ bytes of data are copied to it. This is
+>
+> ???
+>
+> --
+> QSA
+>
+
