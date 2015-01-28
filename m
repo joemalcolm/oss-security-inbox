@@ -1,51 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/21/16
-Message-ID: <20150121232848.GD6755@core.inversepath.com>
-Date: Thu, 22 Jan 2015 00:28:48 +0100
-From: Andrea Barisani <lcars@...rt.org>
-To: oss-security@...ts.openwall.com, ocert-announce@...ts.ocert.org, bugtraq@...urityfocus.com
-Subject: [oCERT-2015-001] JasPer input sanitization errors
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/28/5
+Message-ID: <20150128021842.GA25488@openwall.com>
+Date: Wed, 28 Jan 2015 05:18:42 +0300
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: GHOST gethostbyname() heap overflow in glibc (CVE-2015-0235)
 Content-Type: text/plain; charset=utf-8
 
+On Tue, Jan 27, 2015 at 05:45:17PM -0800, Qualys Security Advisory wrote:
+> On Tue, Jan 27, 2015 at 08:45:12PM +0300, Solar Designer wrote:
+> > He found out that apparently the ghost image appeared on the Qualys
+> > website on October 2.
+> 
+> What?!  No idea where this image came from, who created it, or why, or
+> when.  What is absolutely certain is that October 2 has nothing to do
+> with this bug, simply because the first time someone here had the idea
+> of calling it "GHOST" was on Friday evening!  Yes, Friday, January 23,
+> 2015!
 
-#2015-001 JasPer input sanitization errors
+Great.
 
-Description:
+Then I suppose this was a pre-existing stock image with that date, and
+someone found and re-used it later for this purpose preserving its older
+(unrelated) timestamp.  Sounds like a plausible guess.
 
-The JasPer project is an open source implementation for the JPEG-2000 codec.
+> Please please please, less pointless bickering, more code auditing.
 
-The library is affected by an off-by-one error in a buffer boundary check in
-jpc_dec_process_sot(), leading to a heap based buffer overflow, as well as
-multiple unrestricted stack memory use issues in jpc_qmfb.c, leading to stack
-overflow.
+I agree, but I think this is not bickering, but rather reflections on
+modern vulnerability handling processes.  This is not about blame, at
+least not for me.  Vulnerabilities with names and logos are a fairly
+recent trend, although use of vulnerabilities for PR isn't new (many if
+not most of us are doing it to a varying extent, often with the noble
+goal of being able to do more work like this; that's OK).  We're trying
+to figure out whether this has drawbacks, which ones, how bad (or not)
+they are, and how we can do better (or motivate others to do better).
+By demonstrating that your company did not sit on this for too long
+you'd provide a good example to others.  And by discussing these aspects
+we demonstrate that we care about disclosure timelines.
 
-A specially crafted JPEG-2000 file can be used to trigger the vulnerabilities.
+And, one thing I regret I did not suggest to you to add to the advisory
+is a timeline.  I have no idea what it looked like prior to the point
+when you contacted me earlier this month.
 
-Affected version:
+Finally, let me state that I find the quality and extent of your
+analysis impressive, and that it really helps.  Thank you!
 
-JasPer <= 1.900.1
-
-Fixed version:
-
-JasPer, N/A
-
-Credit: vulnerability report received from <pyddeh@...il.com>.
-
-CVE: CVE-2014-8157 (off-by-one heap buffer overflow),
-     CVE-2014-8158 (stack overflow)
-
-Timeline:
-2015-01-06: vulnerability report received
-2015-01-06: contacted affected vendors, assigned CVEs
-2015-01-21: advisory release
-
-References:
-http://www.ece.uvic.ca/~frodo/jasper
-
--- 
-Andrea Barisani |                Founder & Project Coordinator
-          oCERT | OSS Computer Security Incident Response Team
-
-<lcars@...rt.org>                         http://www.ocert.org
- 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
-        "Pluralitas non est ponenda sine necessitate"
+Alexander
