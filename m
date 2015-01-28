@@ -1,39 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/28/14
-Message-ID: <20150128120405.4bfabf1b@pc>
-Date: Wed, 28 Jan 2015 12:04:05 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Cc: yunlian@...gle.com
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/28/15
+Message-ID: <CAA7hUgFCbN=KNcktzH6fU+JJ+NxAS0i8RcVuLeWWvJ56wreptg@mail.gmail.com>
+Date: Wed, 28 Jan 2015 12:19:56 +0100
+From: Raphael Geissert <geissert@...ian.org>
+To: Open Source Security <oss-security@...ts.openwall.com>
 Subject: Re: GHOST gethostbyname() heap overflow in glibc (CVE-2015-0235)
 Content-Type: text/plain; charset=utf-8
 
 Hi,
 
-the german IT news webpage heise mentions this: back in April 2014
-Chrome OS applied the patch:
-https://chromium.googlesource.com/chromiumos/overlays/chromiumos-overlay/+/7738d06627941a2119ba15f3472320c5cecc7be6%5E!/#F0
+On 28 January 2015 at 12:04, Hanno Böck <hanno@...eck.de> wrote:
+> Hi,
+>
+> the german IT news webpage heise mentions this: back in April 2014
+> Chrome OS applied the patch:
+> https://chromium.googlesource.com/chromiumos/overlays/chromiumos-overlay/+/7738d06627941a2119ba15f3472320c5cecc7be6%5E!/#F0
 
-The comit message clearly states they were aware of the vulnerability
-nature of this fix:
-"glibc: backport an nss overflow patch.
+For the lazy here's a link to the chromium OS bug report:
+http://code.google.com/p/chromium/issues/detail?id=364511
 
-This beckports a patch to fix a nss vulnerability inside glibc."
-
-I'm CC-ing the committer. Maybe we can shed some light on this.
-
-Two people having fixed this in different places without crying alarm -
-it's worrying.
-
-Here's the german article mentioning this:
-http://www.heise.de/newsticker/meldung/Ghost-Uralte-Luecke-in-Glibc-bedroht-Linux-Server-2530159.html
-
-cu,
+Cheers,
 -- 
-Hanno Böck
-http://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
-
-Content of type "application/pgp-signature" skipped
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
