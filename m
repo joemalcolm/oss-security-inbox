@@ -1,33 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/05/1
-Message-ID: <54F7B64A.9070400@redhat.com>
-Date: Wed, 04 Mar 2015 18:50:02 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com, Assign a CVE Identifier <cve-assign@...re.org>
-Subject: Re: unassigning CVE-2015-2104
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/28/13
+Message-ID: <20150128104252.GA5404@chaz.gmail.com>
+Date: Wed, 28 Jan 2015 10:42:52 +0000
+From: Stephane Chazelas <stephane.chazelas@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Qualys Security Advisory CVE-2015-0235 - GHOST: glibc gethostbyname buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-Just a heads up, I did not assign this one, I dunno who's pool it came
-from (I'm going to guess directly from Mitre), so adding them to the CC
-either way to make sure they explicitly know.
-
-On 04/03/15 02:27 PM, Paul McMillan wrote:
-> Hi,
+2015-01-27 11:54:10 -0800, Michal Zalewski:
+> > apache, cups, dovecot, gnupg, isc-dhcp, lighttpd, mariadb/mysql,
+> > nfs-utils, nginx, nodejs, openldap, openssh, postfix, proftpd,
+> > pure-ftpd, rsyslog, samba, sendmail, sysklogd, syslog-ng, tcp_wrappers,
+> > vsftpd, xinetd.
 > 
-> I'm part of the Python security response team, and we'd like to have
-> CVE-2015-2104 unassigned. It was opened by a bug reporter without
-> consulting with us first, and was assigned without input from the
-> project. The reported bug stems from a misunderstanding of documented
-> behavior, and is a bug in upstream code, rather than a security issue
-> with the core Python language.
-> 
-> Regards,
-> -Paul
-> 
+> Cool, thanks!
+[...]
 
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+What about clients? AFAICT from the output of:
 
+sudo stap -e 'probe
+  process("/lib/x86_64-linux-gnu/libc.so.6").function("__gethostbyname_r"),
+  process("/lib/x86_64-linux-gnu/libc.so.6").function("gethostbyname"),
+  process("/lib/x86_64-linux-gnu/libc.so.6").function("gethostbyname2"),
+  process("/lib/x86_64-linux-gnu/libc.so.6").function("__gethostbyname2_r"),
+  process("/lib/x86_64-linux-gnu/libc.so.6").function("__new_gethostbyname2_r")
+  { printf("[%s][%d]->%s(%s)\n", execname(), pid(), pp(), $name$)}'
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+All of google-chrome, firefox, thunderbird call at least one of
+those with network supplied data.
+
+Things like spam filters and antivirus are likely at risk
+(thinking of network IDSes and other spam filtering/proxy appliances).
+
+DHCP clients? Fancy wireless auth?
+
+Cheers, 
+Stephane
+
