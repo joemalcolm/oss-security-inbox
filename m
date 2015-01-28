@@ -1,39 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/05/6
-Message-ID: <54F84F82.1090508@redhat.com>
-Date: Thu, 05 Mar 2015 13:43:46 +0100
-From: Florian Weimer <fweimer@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Certificate pinning and the browser PKI
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/28/11
+Message-ID: <54C8A1A6.6030003@redhat.com>
+Date: Wed, 28 Jan 2015 14:15:26 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+To: oss-security@...ts.openwall.com, Mitre CVE assign department <cve-assign@...re.org>
+Subject: Re: GHOST gethostbyname() heap overflow in glibc (CVE-2015-0235)
 Content-Type: text/plain; charset=utf-8
 
-I'm looking for suggestions how to implement certificate pinning.
+On 01/27/2015 11:35 PM, Florian Weimer wrote:
+> * Marek Kroemeke:
+> 
+>> We just noticed CVE-2015-0235 , and we thought we will drop this one
+>> in - apologies for low quality , we didn't really have time yet to
+>> analyse it, but it seems to be related, so it makes sense to patch
+>> things once right ?
+> 
+> It's not related, and we cannot patch it at the same time because
+> packages for the gethostbyname issue are already ready, they just have
+> to be released.  (When we change critical system components, we also
+> need to be extra-careful with testing, which takes time.)
+> 
+> Andreas Schwab fixed this in 2011:
+> 
+>   <https://sourceware.org/git/gitweb.cgi?p=glibc.git;a=commitdiff;h=2e96f1c7>
+> 
+> If I'm not mistaken, this commit when into glibc 2.15.
+> 
+> I have not yet found the corresponding glibc bug (if it exists).
+> 
+> The bug only materializes if the getaddrinfo functions is called with
+> the AI_IDN flag, and if glibc has been compiled with libidn support
+> (but I haven't checked if you can switch that off these days).
+> 
 
-Things are relatively straightforward if you are not in the browser PKI
-because you can pin a long-term CA certificate instead, and not the
-server certificate.  Same if you have a dedicated (sub-)CA in the
-browser PKI.
+MITRE,
 
-But if your server has to be in the browser PKI, things get a bit messy.
- Pinning the CA may not offer much protection (because you are still
-exposed to RA failures at the CA).  Pinning the server certificate is
-problematic because the certificates are relatively short-lived, and the
-rollovers have to be coordinated carefully.
+This is a new flaw, can you please assign a CVE id to this?
 
-So for the browser PKI case, it may make sense to pin the server public
-key instead (n *and *e), not the entire certificate.  During regular
-rollover, you can keep the public key, and you can have a pre-pinned
-offline copy for emergency rollovers.
+https://bugzilla.redhat.com/show_bug.cgi?id=797096
 
-Or use SNI, a different endpoint name, and a separate certificate
-outside browser PKI, and pin that.
+Thanks!
 
-Are there other options I'm missing?
-
-The pinned certificate magically appears, thanks to the software update
-infrastructure, so that's a solved problem.  It's just synchronizing
-things within the update infrastructure to external events that can be
-tricky, for various reasons.
 
 -- 
-Florian Weimer / Red Hat Product Security
+Huzaifa Sidhpurwala / Red Hat Product Security Team
