@@ -1,46 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/20/5
-Message-Id: <201502200630.49887.tmb@65535.com>
-Date: Fri, 20 Feb 2015 06:30:41 +0000
-From: Tim Brown <tmb@...35.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/28/21
+Message-ID: <54C94110.2010609@reactos.org>
+Date: Wed, 28 Jan 2015 21:05:36 +0100
+From: Pierre Schweitzer <pierre@...ctos.org>
 To: oss-security@...ts.openwall.com
-Cc: Paul Pluzhnikov <ppluzhnikov@...gle.com>
-Subject: Re: Fixing the glibc runtime linker
+Subject: Re: kgb-bot can be crashed by some network traffic
 Content-Type: text/plain; charset=utf-8
 
-On Friday 20 February 2015 01:38:31 Paul Pluzhnikov wrote:
-> On Thu, Feb 19, 2015 at 2:19 PM, Tim Brown <tmb@...35.com> wrote:
-> > More often than not, the underlying issue is an empty element within the
-> > DT_RPATH header or equivalent. Sometimes it's not, but even in those
-> > cases, it is largely that one or more elements isn't qualifed (i.e. it
-> > doesn't start with /). The attached patch fixes this, by ignoring any
-> > elements of DT_RPATH, LD_LIBRARY_PATH that do not start with a /, and/or
-> > junking any use of dlopen where the filename is likewise unqualified.
-> > 
-> > Won't this break stuff?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+Hi,
+
+This bug report is pretty unclear. What is the exact request sent to
+allow such a crash? Does it bypass the password security?
+Furthermore, due to its design, kgb-bot isn't supposed to be wide
+open, but only restricted to kgb-client to send their commit messages.
+
+Anyone with more information?
+
+With my best regards,
+
+On 28/01/2015 06:37, Kurt Seifried wrote:
+> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=776424
 > 
-> FWIW, relative RPATHs are quite fundamental to our test execution
-> environment, and any patch that unconditionally ignores them would
-> have to be reverted in our tree.
+> Source: kgb-bot Version: 1.33-2 Severity: important Tags: security
+> 
+> 2015.01.19 18:08:39: Listening on http://0.0.0.0:9999?session=KGB 
+> 2015.01.19 18:08:43: Connected to freenode (holmes.freenode.net) 
+> 2015.01.19 18:08:43: Joining #commits... 2015.01.19 18:08:43:
+> Connected to oftc (graviton.oftc.net) 2015.01.19 18:08:43: Joining
+> #ikiwiki #vcs-home #git-annex... Did not get DONE/CLOSE event for
+> Wheel ID 73 from IP 222.186.34.155 at 
+> /usr/share/perl5/POE/Component/Server/SimpleHTTP.pm line 221. I had
+> a problem posting to event Got_Request of session SOAPServer for 
+> DIR handler '.*'. As reported by Kernel: 'No such file or
+> directory', perhaps the session name is spelled incorrectly for
+> this handler? at /usr/share/perl5/POE/Session.pm line 483.
+> 
+> This has happened to me twice now, and it takes the bot down.
+> 
+> not sure how exploitable this is though.
+> 
 
-That's useful to know. Is that for setuid binaries or more generally? As I 
-noted, it would be dead easy only to use the part of the patch that rejects 
-them for the former only. Although as I said, that offers less protection. 
-Would that make the patch more consumable? Another option would be to have 
-something like /etc/suid-debug which could flag that an override is in 
-operation.
 
-> Also, don't you want to discuss this on libc-alpha? oss-security could
-> be all for it, but without buy-in from libc-alpha your patch is
-> unlikely to be going anywhere.
+- -- 
+Pierre Schweitzer <pierre at reactos.org>
+System & Network Administrator
+Senior Kernel Developer
+ReactOS Deutschland e.V.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-I'm intending to, but getting security folk, who may well wear slightly more 
-positive hats to begin with, to review it, seemed like a safe place to start. 
-I can well imagine pursuading the glibc folk will be more difficult :/.
-
-Tim
--- 
-Tim Brown
-<mailto:tmb@...35.com>
-
-Download attachment "signature.asc " of type "application/pgp-signature" (820 bytes)
+iQIcBAEBAgAGBQJUyUEPAAoJEHVFVWw9WFsLP9MQALDNRlflvCrXFcBImcvoQMzf
+rCxy0thnXAecRC4nDOvuT6e0t/kGAJR/0kPciCooPuneOiEBF7JYZkev5lZW1Ynh
+RQVRIpAC4DeDjrs0tdGvs52wvJvoFp+IOZ0bf6OBUjGP65/K9CXva0l3UYRhr4lR
+ayCCjVMu+iMDyJKwibH2zuP11u8TBpMgh1u5d+4PSPwjpB5sM3RrDNNKlaSnnfTM
+/d9JNIqz5UH2Vh3AEfOhhai1/bXUD5z2p5/8lEgTnpKeKq79qSqWG8mVnMraErL5
+IpD96aPWpM+p6drpVhRua5CL97EHx7azY5tfyHYQKNW/9uToYDSaFV2zcFdIQQaX
+H/f8g+e/bSQtfR0zzr21xXIlozmffSYrADnUsR1G/O8vfRQv0dWupnb4FYNaOoII
+9KvJRAo2bcY1ipk6vNDjxF1tH0lbWSrIfOwSfFxOfP3VaBoc64coF5ywiIpb8uEw
+MaLyYAgJXv9PKxW57yuceEEDDD4GLjxeQw8k3WXJtL0860WcXleCXet60TRrIsy5
+tJP8/CIkkqdeznbn+xUQaNUeuMuUxnIJdHcM4YPrTnro8IRm8HcHxkV/urDFsxo7
+tLqa32ND6A3dpBmsaCh6007WcZKnG4Prw601zzG9R/1w3H13hTSfOk0m6N3sTkmo
+2uAjP5sMf1RcED8WsyJx
+=TNwF
+-----END PGP SIGNATURE-----
