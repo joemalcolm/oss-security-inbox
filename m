@@ -1,38 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/05/12
-Message-ID: <Pine.LNX.4.64.1501051232350.8826@beijing.mitre.org>
-Date: Mon, 5 Jan 2015 12:33:48 -0500 (EST)
-From: cve-assign@...re.org
-To: Steffen Rösemann <steffen.roesemann1986@...il.com>
-cc: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: Re: CVE Request -- CMS Absolut Engine v. 1.73 -- Multiple vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/28/2
+Message-ID: <54C82FB6.9000107@treenet.co.nz>
+Date: Wed, 28 Jan 2015 13:39:18 +1300
+From: Amos Jeffries <squid3@...enet.co.nz>
+To: oss-security@...ts.openwall.com
+Subject: Re: Qualys Security Advisory CVE-2015-0235 - GHOST: glibc gethostbyname buffer overflow
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On Sat, 3 Jan 2015, Steffen Rösemann wrote:
+On 28/01/2015 7:20 a.m., Qualys Security Advisory wrote:
+> On Tue, Jan 27, 2015 at 09:20:21AM -0800, Michal Zalewski wrote:
+>> Nice work - thanks for the thoroughly investigated and detailed
+>> advisory.
+> 
+> Thank you very much. We also sincerely regret that some
+> information about this vulnerability was leaked a few hours before
+> the Coordinated Release Date (Time, in this particular case).
+> 
+>> you be willing to publish the list of the reviewed
+>> implementations to reduce the amount of repeated work?
+> 
+> Here is a list of potential targets that we investigated (they all
+> call gethostbyname, one way or another), but to the best of our
+> knowledge, the buffer overflow cannot be triggered in any of them:
+> 
+> apache, cups, dovecot, gnupg, isc-dhcp, lighttpd, mariadb/mysql, 
+> nfs-utils, nginx, nodejs, openldap, openssh, postfix, proftpd, 
+> pure-ftpd, rsyslog, samba, sendmail, sysklogd, syslog-ng,
+> tcp_wrappers, vsftpd, xinetd.
 
-> I found multiple vulnerabilities in CMS Absolut Engine v.1.73 including SQL
-> injections and a reflecting XSS vulnerability residing in its
-> administrative backend.
->
-> Can you assign a CVE ID for it?
->
-> Greetings, Steffen
->
-> References:
->
-> [1] http://sroesemann.blogspot.de/2014/12/sroeadv-2014-08.html
-> [2]
-> http://sroesemann.blogspot.de/2014/12/report-for-advisory-sroeadv-2014-08.html
-> [3] http://seclists.org/fulldisclosure/2014/Dec/131
-> [4] http://www.absolutengine.com/
+You can add squid, its bundled plugin helpers, squidpurge, and
+cachemgr.cgi to that list as not vulnerable. gethostbyname() use is
+protected by filters on remotely provided inputs.
 
-CVE-2014-9435 - SQL injection
+The squidclient tool version 3.0 and older may be vulnerable if the
+bad value is provided through the command line -l  or -h parameters.
+This may be a problem for any scripted products using the tool as a
+backend. Version 3.1 and newer of this tool are not vulnerable.
 
-CVE-2014-9434 - XSS
+Amos Jeffries
+Squid Software Foundation
 
----
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.22 (MingW32)
 
-CVE assignment team, MITRE CVE Numbering Authority M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+iQEbBAEBAgAGBQJUyC+1AAoJELJo5wb/XPRjg1oH+JJdmbB877JAmSp/ETTfaj6Z
+2UdHKe5zMlgqHkU8kz8H5PpGPGMrPOvUQWSoUp+o9iUndmK9vDXauuojGdHMJI5c
+Vl5LQ4kIeSBC7uHvsbRneu8CoYEn8FrvubGuAz2Uq3nmDNCWVdQ5j0OCAhApqOTo
+VX5wIuxginW/0nFmRBJ8q81iFXqCD058XkCG7r6ulGvk1/AUtqUq9wuKNBG2Ov08
+ELG9zCqxqk+N/NRyi1MrCTQccGieVE+kmeyCRsVsERoJlPLXlADt6j41Szj/Qdkm
+K4Lkq9pvBf722cuepr62LgJGyJX9D3YK+LmQk6zK8BdE/PIa9seniH+upxv8sQ==
+=dj7r
+-----END PGP SIGNATURE-----
