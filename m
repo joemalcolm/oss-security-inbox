@@ -1,48 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/30/15
-Message-ID: <BAY405-EAS3352C90E02E199894FC297BDF310@phx.gbl>
-Date: Fri, 30 Jan 2015 11:54:49 +0100
-From: linkbc02 <linkbc02@...look.com>
-To: <oss-security@...ts.openwall.com>
-Subject: R: GHOST gethostbyname() heap overflow in glibc (CVE-2015-0235)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/28/9
+Message-ID: <54C875AA.5080009@redhat.com>
+Date: Tue, 27 Jan 2015 22:37:46 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>
+Subject: kgb-bot can be crashed by some network traffic
 Content-Type: text/plain; charset=utf-8
 
-|If you try upgrading glibc and the issue goes away, _that_ would be a
-|reason to suspect relevance. 
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=776424
 
-Hi, already done
+Source: kgb-bot
+Version: 1.33-2
+Severity: important
+Tags: security
 
+2015.01.19 18:08:39: Listening on http://0.0.0.0:9999?session=KGB
+2015.01.19 18:08:43: Connected to freenode (holmes.freenode.net)
+2015.01.19 18:08:43: Joining #commits...
+2015.01.19 18:08:43: Connected to oftc (graviton.oftc.net)
+2015.01.19 18:08:43: Joining #ikiwiki #vcs-home #git-annex...
+Did not get DONE/CLOSE event for Wheel ID 73 from IP 222.186.34.155 at
+/usr/share/perl5/POE/Component/Server/SimpleHTTP.pm line 221.
+I had a problem posting to event Got_Request of session SOAPServer for
+DIR handler '.*'. As reported by Kernel: 'No such file or directory',
+perhaps the session name is spelled incorrectly for this handler? at
+/usr/share/perl5/POE/Session.pm line 483.
 
-# rpm -q glibc 
-glibc-2.12-1.132.el6_5.2.x86_64
-glibc-2.12-1.132.el6_5.2.i686
+This has happened to me twice now, and it takes the bot down.
 
-# yum update glibc
+not sure how exploitable this is though.
 
-
-# rpm -q glibc    
-glibc-2.12-1.149.el6_6.5.x86_64
-glibc-2.12-1.149.el6_6.5.i686
-
-
-
-# /etc/init.d/dovecot restart
-
-
-# telnet localhost 143
-Trying 127.0.0.1...
-Connected to localhost.
-Escape character is '^]'.
-* OK [CAPABILITY IMAP4rev1 LITERAL+ SASL-IR LOGIN-REFERRALS ID ENABLE IDLE
-STARTTLS AUTH=PLAIN AUTH=LOGIN] IMAP ready.
-1 login
-00000000000000000000000000000000000000000000000000000000000000000000000000-c
-utted-
+-- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
 
-BAD Error in IMAP command received by server.
-
-* BAD Error in IMAP command received by server.
-
-
-#dmesg doesn't show anymore segfault and core dump
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
