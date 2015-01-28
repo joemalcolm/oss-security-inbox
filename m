@@ -1,68 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/01/2
-Message-ID: <54F292A6.2000000@treenet.co.nz>
-Date: Sun, 01 Mar 2015 17:16:38 +1300
-From: Amos Jeffries <squid3@...enet.co.nz>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2015-0881
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/28/7
+Message-ID: <20150128023626.GA23553@localhost.localdomain>
+Date: Tue, 27 Jan 2015 18:36:26 -0800
+From: Qualys Security Advisory <qsa@...lys.com>
+To: endrazine <endrazine@...il.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: GHOST gethostbyname() heap overflow in glibc (CVE-2015-0235)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Tue, Jan 27, 2015 at 05:47:47PM -0800, endrazine wrote:
+> From GHOST.c :
+> ...
+>   char name[10];
+>   memset(name, '0', len);
+>   name[len] = '\0';
+> ...
 
-On 24/02/2015 4:34 a.m., Kurt Seifried wrote:
-> Regarding CVE-2015-0881
-> 
-> http://jvn.jp/en/jp/JVN64455813/index.html 
-> http://jvndb.jvn.jp/en/contents/2015/JVNDB-2015-000019.html
-> 
+Interesting!  But where did you possibly get that code?  Every copy of
+our advisory includes the original proof-of-concept, which is quite
+different from what you are showing here:
 
-JPCERT has now provided me a copy of the attack. They have requested I
-not reveal the details, so I am treating that and the patch details as
-embargoed for the time being.
+...
+  char name[sizeof(temp.buffer)];
+...
 
-Without revealing too much (I hope) I can confirm:
+References:
 
-* It is a known vulnerability
- - to upstream that is, but no CVE assigned.
+http://www.openwall.com/lists/oss-security/2015/01/27/9
+https://www.qualys.com/research/security-advisories/GHOST-CVE-2015-0235.txt
 
-* The initial report of this issue to upstream occured during 2009.
+And just in case:
 
-* Squid 1.x, 2.x, and 3.0 releases are all vulnerable.
+$ md5sum GHOST.c
+aa8dbce88e54027dbd4723ccd142f717  GHOST.c
 
-* All Squid-3.1 stable releases are not vunerable.
- - eg, you can bump the fixed version number back to 3.1.1 for most OS
-distributions.
+With best regards,
 
-
-For the record; there is now FALSE information floating around in some
-CVE-2015-0881 "copies" about it being about CRLF issues. The Cisco
-report came to my attention first, but they are not alone.
-
-To all those people cut-n-pasting blurb text from CWE-113 in place of
-the JPCERT description: please dont do that. There are multiple "HTTP
-response splitting" attack vectors which have nothing to do with the
-(current) CWE-113 description. This is one of those cases.
-
-HTH
-
-Amos Jeffries
-Squid Software Foundation
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.22 (MingW32)
-
-iQIcBAEBAgAGBQJU8pKmAAoJEGvSOzfXE+nLB1wQAIXeG2dUuCKIZL/Pj+992OjM
-wHyJrewmS1LYpHnbr/HdzG3vP65HlAl81jdBZEq+vD1Ma9s7gftewQB/sVhYE8Hy
-2XKIO6is3vJrE16MZtm8BWo3hgYAbm5E3Ks2ejkVbbPFO1reMHsyzHxV10UBW+Zm
-MwawiWrAb3ZI7pKMOjHhGtZCBgLd3ZaiBqgLKJisC3F0FPKSHlmptNhBnwkCsHb6
-ndBTjAfareCbGOpwwNe4mLqhUcvQeqz2f/94aB1COR9xz/iqaZlgXsz5TOjqthYi
-9Xck2AKKsQKPjQs32/eTsmCQSwAIhTYcoHa6qhpbldORKo985Od2G2BJrIQe1i/S
-SCKAClec/I+ICFiQc24nWl2NA9qQ7GOB+JU5B9N1DvcH8RVWVvyIsh2Z/hJmMMrO
-aPWGUI/eu/Q6WxbEqT0g9R3g+2bFQtTEiLWeJ5PcO/zI0LpRV0nX+Clc9GQMj/uk
-8glwig4jYXPpiqrWB9JmN/LUy1IqfP/ioIAqLuB/FmX5LMyTd5WkoPcs056kGE+1
-hWOqKAwSFf49zl/Y+GN+OPz56Iyy27LA7A74R35URR1D2gBg/xh2+ojLYqfcJm0S
-gZBBd5IJkmb3uF2rHOIgCMLIfehAvR+wPdjK/qNVGiaXPnIFmE0NPd5mKeXVJtSA
-redKcbc20FKHz3skctD/
-=P1gX
------END PGP SIGNATURE-----
+-- 
+the Qualys Security Advisory team
