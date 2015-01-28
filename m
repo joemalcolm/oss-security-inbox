@@ -1,35 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/17/9
-Message-Id: <20150217223444.6494B6C0002@smtpvmsrv1.mitre.org>
-Date: Tue, 17 Feb 2015 17:34:44 -0500 (EST)
-From: cve-assign@...re.org
-To: keescook@...omium.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, tyhicks@...onical.com, dmitryc@...gle.com, mhalcrow@...gle.com
-Subject: Re: CVE request: Linux kernel ecryptfs 1-byte overwrite
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/28/10
+Message-ID: <20150128080806.GO24150@more-magic.net>
+Date: Wed, 28 Jan 2015 09:08:06 +0100
+From: Peter Bex <peter@...e-magic.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request for buffer overrun in CHICKEN Scheme's substring-index[-ci] procedures
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-> This fixes a 1-byte NULL write past the end of allocated memory:
+On Mon, Jan 12, 2015 at 05:44:37PM +0100, Moritz Heidkamp wrote:
+> Hello,
 > 
-> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=942080643bce061c3dd9d5718d3b745dcb39a8bc
+> I would like to request a CVE for a buffer overrun vulnerability in
+> CHICKEN Scheme's substring-index[-ci] procedures.
 
-Use CVE-2014-9683.
+What's the status on this?  The CVE request was made over 2 weeks ago
+yet there hasn't been an ID assigned.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Cheers,
+Peter Bex
 
-iQEcBAEBAgAGBQJU48GNAAoJEKllVAevmvmsCN4H/02C8vfBtVI6OM7MMDbUgjGC
-YZPprYF79g12qnBbH2ESYIXfeUY7LWUhlGoh0/h7natZpnIFsHSXQxt8QqqmjiMh
-w2QcMd1fOOA+TSnHtWk/Rvq1/X+mmQ5E9HvHMdx/MvbJk/fEOdLPCnARLPKyDO0i
-3mPdMkcmKSC/2swERuhoB03+Z+tPcAPxrGZhQHxk9D0vl3AVtSzOTmftjrFGrwvl
-1wrlmCx0R1hieBr1YxhI1bWhPorXGLL6YeCOyeM741zL2dB5I+lX9moy3CwMJQwv
-Fd23/gTTNzJHlx/PK0hLmKKB+ZhTtMvQDm5mYYsgZWhskuSN3oJgojxNobDSf0k=
-=Cz7v
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
