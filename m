@@ -1,45 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/08/3
-Message-ID: <CAFYC4_2OAQ-7sZdF17xRuxDS6Ry_04msy9zwyw73BFgLUReu4g@mail.gmail.com>
-Date: Thu, 08 Jan 2015 13:57:43 +0000
-From: Daniel Strøm <ds@...4web.dk>
-To: oss-security@...ts.openwall.com
-Subject: CVE request
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/28/12
+Message-ID: <20150128111948.2eb63550@redhat.com>
+Date: Wed, 28 Jan 2015 11:19:48 +0100
+From: Tomas Hoger <thoger@...hat.com>
+To: OSS Security <oss-security@...ts.openwall.com>
+Subject: CVE request - ICU
 Content-Type: text/plain; charset=utf-8
 
-Hi
+Hi!
 
-I'd like a CVE for the following security issue:
-https://github.com/ZF-Commons/ZfcUser/issues/550
+Chrome 40.0.2214.91 fixes multiple issues in bundled ICU:
 
-And in text:
-Security advisory: XSS vulnerability in login redirect param
+http://googlechromereleases.blogspot.com/2015/01/stable-update.html
 
-ZfcUser version 1.2.2 has been released and includes a security for this
-vulnerability. Fix has been applied in @baf0e46
-<https://github.com/ZF-Commons/ZfcUser/commit/baf0e460>
-Affected versions
+Besides tracking externally reported issues under separate CVEs, Chrome
+team also hid one ICU fix under the internal findings CVE-2015-1205.
 
-All versions below 1.2.2 are affected. dev-master is fixed starting from @
-2cc167a <https://github.com/ZF-Commons/ZfcUser/commit/2cc167a>
-Exploits
+https://code.google.com/p/chromium/issues/detail?id=432209 (non public)
 
-Because of missing escaping of the URL param redirect a XSS attack is
-possible.
-For example: Setting the redirect param to "><a%20href="http://github.com
-">GitHub.com</a><inpu%20type="hidden"%20" would result in a link added to
-the login page.
-Resolution
+is listed among High issues in:
 
-If you are using any version of ZfcUser below 1.2.2 please upgrade
-immediately by running composer update.
-Credits
+https://code.google.com/p/chromium/issues/detail?id=449894
 
-The vulnerability was discovered and fixed by @GyunerZeki
-<https://github.com/GyunerZeki>
+and can be tracked down to:
 
+https://chromium.googlesource.com/chromium/deps/icu/+/dd727641e190d60e4593bcb3a35c7f51eb4925c5
 
-Thank you,
+and ICU upstream:
 
-Daniel Strøm
+http://bugs.icu-project.org/trac/ticket/11371 (also non public)
+http://bugs.icu-project.org/trac/changeset/36801
 
+-- 
+Tomas Hoger / Red Hat Product Security
