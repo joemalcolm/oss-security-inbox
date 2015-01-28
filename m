@@ -1,41 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/30/13
-Message-ID: <BAY405-EAS152F9FC814BD515624211BADF310@phx.gbl>
-Date: Fri, 30 Jan 2015 11:09:01 +0100
-From: linkbc02 <linkbc02@...look.com>
-To: <oss-security@...ts.openwall.com>
-Subject: R: GHOST gethostbyname() heap overflow in glibc (CVE-2015-0235)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/28/19
+Message-ID: <Pine.LNX.4.64.1501281305450.9171@beijing.mitre.org>
+Date: Wed, 28 Jan 2015 13:07:15 -0500 (EST)
+From: cve-assign@...re.org
+To: Moritz Muehlenhoff <jmm@...ian.org>
+cc: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: Re: CVE request for buffer overrun in CHICKEN Scheme's substring-index[-ci] procedures
 Content-Type: text/plain; charset=utf-8
 
-Sorry Alexander, I quoted the wrong one.
-I can confirm, Dovecot, at least, got crashed, I asked also Timo S. that is
-digging about it.
-Screenshot
-http://goo.gl/JwhWIf
 
+On Wed, 28 Jan 2015, Moritz Muehlenhoff wrote:
 
+> On Wed, Jan 28, 2015 at 09:08:06AM +0100, Peter Bex wrote:
+>> On Mon, Jan 12, 2015 at 05:44:37PM +0100, Moritz Heidkamp wrote:
+>>> Hello,
+>>>
+>>> I would like to request a CVE for a buffer overrun vulnerability in
+>>> CHICKEN Scheme's substring-index[-ci] procedures.
+>>
+>> What's the status on this?  The CVE request was made over 2 weeks ago
+>> yet there hasn't been an ID assigned.
+>
+> I'm adding cve-assign to CC, that usually helps.
+>
+> Cheers,
+>        Moritz
 
-|-----Messaggio originale-----
-|Da: Solar Designer [mailto:solar@...nwall.com]
-|Inviato: venerdì 30 gennaio 2015 10:47
-|A: oss-security@...ts.openwall.com
-|Cc: linkbc02
-|Oggetto: Re: [oss-security] GHOST gethostbyname() heap overflow in glibc
-|(CVE-2015-0235)
-|
-|On Fri, Jan 30, 2015 at 10:24:56AM +0100, linkbc02 wrote:
-|> Dovecot: It seems that libdovecot-storage.so can be triggered and you can
-|read the core dump
-|>
-|> imap[29914]: segfault at 0 ip 00007f1e525263a0 sp 00007fffaeed7818
-|>  error 4 in libdovecot-storage.so.0.0.0[7f1e5249e000+10f000]
-|
-|I reluctantly approved the above posting even though it contains no
-|indication this has anything to do with GHOST, and it bottom-quotes a
-|mostly irrelevant message (latest one from the thread).
-|
-|linkbc02, if you have any reason to believe this is relevant to GHOST,
-|then please explain.  And if you have no such reason, then please also
-|state so, and we'll more confidently disregard this false alarm. ;-)
-|
-|Alexander
+Use CVE-2014-9651.
+
+---
+
+CVE assignment team, MITRE CVE Numbering Authority M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
