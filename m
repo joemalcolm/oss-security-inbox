@@ -1,56 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/27/24
-Message-ID: <20150127204947.GA22829@openwall.com>
-Date: Tue, 27 Jan 2015 23:49:48 +0300
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Cc: Qualys Security Advisory <qsa@...lys.com>
-Subject: Re: GHOST gethostbyname() heap overflow in glibc (CVE-2015-0235)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/28/16
+Message-ID: <20150128122200.13c21df2@pc>
+Date: Wed, 28 Jan 2015 12:22:00 +0100
+From: Hanno Böck <hanno@...eck.de>
+To: OSS Security <oss-security@...ts.openwall.com>
+Subject: the other glibc issue
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jan 27, 2015 at 09:21:32AM -0800, Michal Zalewski wrote:
-> I find it... profoundly disappointing... that we get to learn about
-> 0-days via PR agency leaks (or that external PR agencies get to know
-> about 0-days before the rest of the world - hey, sounds like a juicy
-> target).
-> 
-> That said, the advisory makes up for it...
+Hi,
 
-Michal has just made this blog post, which I guess he's too shy to
-advertise in here, but I will:
+Not sure why solardesigner didn't post this himself, but he tweetet
+yesterday:
+glibc "getaddrinfo() writes DNS queries to random file descriptors
+under high load" https://sourceware.org/bugzilla/show_bug.cgi?id=15946
+… "Fixed in 2.20", reopened, CVE?
 
-http://lcamtuf.blogspot.com/2015/01/technical-analysis-of-qualys-ghost.html
+The corresponding bug title says most of it. It's supposed to be fixed
+in glibc 2.20, however there is a comment saying it is not.
 
-He found out that apparently the ghost image appeared on the Qualys
-website on October 2.  I've just downloaded the image as well, and I
-confirm that this is what the server reports as the file's timestamp.
-While it's not surprising that thorough vulnerability analysis, with a
-lot of other pieces of software considered, could be taking a long time
-(and a lot of effort), the 3+ month delay (is it for real?) is worrying.
-Maybe many of us would have preferred the balance between
-pre-publication analysis vs. delay adjusted differently.  Maybe we
-would have preferred the company handling this sort of discovery not
-spend time thinking of a fancy name and logo, focusing on speedier
-vulnerability handling instead.  On the bright side, I guess this
-name/logo thing did not take up the technical folks' time, so was
-unlikely a cause of the delay (but the thorough analysis most certainly
-was, which has pros and cons to us).  Another aspect is that compared to
-the delay since the issue was silently fixed in upstream glibc, the
-extra 3+ months are not that bad (as weird as it sounds).
+cu,
+-- 
+Hanno Böck
+http://hboeck.de/
 
-A related concern is that if the timestamp on the image file reflects
-when work on preparing the web page right on the public-facing web
-server started, then some info on the vulnerability (whatever info that
-web page has, or had at the time) may have been subject to extra risk
-(via a possible web server compromise, or a compromise of related
-systems - such as those holding web server backups, and those used to
-edit web content).  This is not certain, though (the file may have been
-copied from another machine along with its timestamp at a later time,
-much closer to the public disclosure date).
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
 
-The GHOST name was not yet in the (almost final) advisory draft sent to
-the linux-distros list on January 18, nor was there any other name for
-this vulnerability in there.  So it appeared to be an afterthought to me
-when I learned of this name earlier today.  But perhaps it was not.
-
-Alexander
+Content of type "application/pgp-signature" skipped
