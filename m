@@ -1,31 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/04/14
-Message-ID: <54A97E16.2070606@oracle.com>
-Date: Sun, 04 Jan 2015 09:53:26 -0800
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
-To: oss-security@...ts.openwall.com
-CC: gremlin@...mlin.ru
-Subject: Re: CVE Request for illumos distributions
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/28/20
+Message-ID: <Pine.LNX.4.64.1501281313510.9171@beijing.mitre.org>
+Date: Wed, 28 Jan 2015 13:17:40 -0500 (EST)
+From: cve-assign@...re.org
+To: Hanno Böck <hanno@...eck.de>
+cc: OSS Security <oss-security@...ts.openwall.com>, cve-assign@...re.org
+Subject: Re: the other glibc issue
 Content-Type: text/plain; charset=utf-8
 
-On 01/ 3/15 10:26 PM, gremlin@...mlin.ru wrote:
-> On 2015-01-04 15:06:51 +1100, Dave Horsfall wrote:
+
+On Wed, 28 Jan 2015, Hanno Böck wrote:
+
+> Hi,
 >
->   >> | Use CVE-2014-9491.
->   >> Shouldn't we be using CVE-2015-XXXX by now?
->   > I'd rather see CVE-2015-XXXXX - look how close we came...
->   > Is there a CVE for that?
+> Not sure why solardesigner didn't post this himself, but he tweetet
+> yesterday:
+> glibc "getaddrinfo() writes DNS queries to random file descriptors
+> under high load" https://sourceware.org/bugzilla/show_bug.cgi?id=15946
+> … "Fixed in 2.20", reopened, CVE?
 >
-> First CVE ID in 2015 is CVE-2015-0001; once we get to CVE-2015-9999,
-> the next ID will be CVE-2015-10000.
+> The corresponding bug title says most of it. It's supposed to be fixed
+> in glibc 2.20, however there is a comment saying it is not.
+>
+> cu,
+> -- 
+> Hanno Böck
+> http://hboeck.de/
+>
+> mail/jabber: hanno@...eck.de
+> GPG: BBB51E42
 
-Except that https://cve.mitre.org/cve/identifiers/syntaxchange.html
-says they won't wait that long, and will issue a 5 digit CVE ID in
-the next couple of weeks.
+Use CVE-2013-7423 for ths initial bug report at 2013-09-12 09:50:17 UTC 
+stating: "Under high load, getaddrinfo() starts sending DNS queries to 
+random file descriptors, e.g. some unrelated socket connected to a remote 
+service."
 
-(Even without that, CVE ID's aren't strictly issued in order, as blocks
-  of id's go out to each numbering authority for them to assign as needed.)
+Which comment says that the issue is unfixed?  The 2015-01-08 14:21:11 UTC 
+comment by David Nilsson says "I'm unable to reproduce the correct 
+behaviour," but does not suggest that the vulnerability is still present.
 
--- 
-	-Alan Coopersmith-              alan.coopersmith@...cle.com
-	 Oracle Solaris Engineering - http://blogs.oracle.com/alanc
+---
+
+CVE assignment team, MITRE CVE Numbering Authority M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
