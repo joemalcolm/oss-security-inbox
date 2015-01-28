@@ -1,27 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/06/7
-Message-ID: <878ufakzhq.fsf@redhat.com>
-Date: Fri, 06 Mar 2015 14:49:05 +0100
-From: Martin Prpic <mprpic@...hat.com>
-To: "oss-security\@lists.openwall.com" <oss-security@...ts.openwall.com>
-Subject: CVE request: Ruby on Rails ActiveModel::Name to_json Call Infinite Loop Remote DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/28/14
+Message-ID: <20150128120405.4bfabf1b@pc>
+Date: Wed, 28 Jan 2015 12:04:05 +0100
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Cc: yunlian@...gle.com
+Subject: Re: GHOST gethostbyname() heap overflow in glibc (CVE-2015-0235)
 Content-Type: text/plain; charset=utf-8
 
-Hello, I don't see a CVE assigned to this anywhere:
+Hi,
 
-http://osvdb.org/show/osvdb/118954
+the german IT news webpage heise mentions this: back in April 2014
+Chrome OS applied the patch:
+https://chromium.googlesource.com/chromiumos/overlays/chromiumos-overlay/+/7738d06627941a2119ba15f3472320c5cecc7be6%5E!/#F0
 
-"Ruby on Rails contains a flaw that is triggered when handling a to_json
-call to ActiveModel::Name, which can cause an infinite loop. This may
-allow a remote attacker to cause a denial of service."
+The comit message clearly states they were aware of the vulnerability
+nature of this fix:
+"glibc: backport an nss overflow patch.
 
-This looks to link to the corresponding upstream issues:
+This beckports a patch to fix a nss vulnerability inside glibc."
 
-https://github.com/rubysec/ruby-advisory-db/issues/130
+I'm CC-ing the committer. Maybe we can shed some light on this.
 
-Could a CVE be please assigned?
+Two people having fixed this in different places without crying alarm -
+it's worrying.
 
-Thank you!
+Here's the german article mentioning this:
+http://www.heise.de/newsticker/meldung/Ghost-Uralte-Luecke-in-Glibc-bedroht-Linux-Server-2530159.html
 
+cu,
 -- 
-Martin Prpič / Red Hat Product Security
+Hanno Böck
+http://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
+
+Content of type "application/pgp-signature" skipped
