@@ -1,44 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/26/3
-Message-ID: <20150226104159.679@usenet.piggo.com>
-Date: Thu, 26 Feb 2015 10:22:57 +0000 (UTC)
-From: Sébastien Delafond <sdelafond@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/28/17
+Message-ID: <20150128112550.GC2917@pisco.westfalen.local>
+Date: Wed, 28 Jan 2015 12:25:50 +0100
+From: Moritz Muehlenhoff <jmm@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: mod-gnutls: GnuTLSClientVerify require is ignored
+Cc: cve-assign@...re.org
+Subject: Re: CVE request for buffer overrun in CHICKEN Scheme's substring-index[-ci] procedures
 Content-Type: text/plain; charset=utf-8
 
-> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=578663#10 is
-> apparently about ignoring GnuTLSClientVerify when this directive is
-> present only in a server config context.
+On Wed, Jan 28, 2015 at 09:08:06AM +0100, Peter Bex wrote:
+> On Mon, Jan 12, 2015 at 05:44:37PM +0100, Moritz Heidkamp wrote:
+> > Hello,
+> > 
+> > I would like to request a CVE for a buffer overrun vulnerability in
+> > CHICKEN Scheme's substring-index[-ci] procedures.
+> 
+> What's the status on this?  The CVE request was made over 2 weeks ago
+> yet there hasn't been an ID assigned.
 
-This is the issue at hand, yes.
-
-> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=578663#10 is
-> apparently discussing the 2009 bug when saying "This bug still
-> exists in current stable and unstable packages" but perhaps is
-> actually referring to a remaining issue that exists because of an
-> incomplete fix for the 2009 bug.
-
-Correct.
-
-> The various discussion of "when I browse site2 in IE, it shows me
-> the certificate of site1" and "it seems curl extension of php also
-> can't correctly connect" in
-> http://issues.outoforder.cc/view.php?id=93#c187 is possibly a user
-> error and not a valid third vulnerability report.
-
-Agreed.
-
-> So, are you looking for:
->
->   one CVE-2009-#### ID  -- vulnerability involving the directory context
->
->   one CVE-2015-#### ID  -- vulnerability involving the server config context
-
-The latter; this issue is definitely about the server config context
-being ignored.
+I'm adding cve-assign to CC, that usually helps.
 
 Cheers,
-
---Seb
-
+        Moritz
