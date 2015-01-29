@@ -1,32 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/27/29
-Message-ID: <Pine.LNX.4.64.1501271821150.11165@beijing.mitre.org>
-Date: Tue, 27 Jan 2015 18:22:11 -0500 (EST)
-From: cve-assign@...re.org
-To: Salvatore Bonaccorso <carnil@...ian.org>
-cc: OSS Security Mailinglist <oss-security@...ts.openwall.com>, CVE Assignments MITRE <cve-assign@...re.org>
-Subject: Re: CVE Request: patch: CVE needed for incomplete fix for CVE-2015-1196?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/29/8
+Message-ID: <54C9F7E2.5020302@redhat.com>
+Date: Thu, 29 Jan 2015 02:05:38 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: GHOST gethostbyname() heap overflow in glibc (CVE-2015-0235)
 Content-Type: text/plain; charset=utf-8
 
+On 29/01/15 01:16 AM, Sven Kieske wrote:
+> On 29/01/15 07:20, Paul Pluzhnikov wrote:
+>> If I was supposed to cry alarm, I would have to cry alarm every time
+>> there is a buffer overflow in glibc, which doesn't seem very useful.
+> 
+> Well as someone who is very careful, I _would_ consider every buffer
+> overflow a security risk unless proven otherwise.
+> 
+> It's unexpected behaviour, isn't it?
+> It's up to the surrounding systems such as ASLR to mitigate it.
+> But neither is ASLR deployed everywhere, nor is it a silver bullet
+> to solve the problem.
+> 
+> But I don't want to really reiterate this discussion.
+> All possible opinions on this topic have already been stated.
 
-> Hi,
->
-> It was reported that the fix for CVE-2015-1196 was incomplete. It was
-> reported to the Debian BTS as #775901[1] and as well mentioned in Red
-> Hat's Bugzilla at [2].
->
-> Does this need a separate CVE?
->
-> [1] https://bugs.debian.org/775901
-> [2] https://bugzilla.redhat.com/show_bug.cgi?id=1182154#c10
->
-> Regards,
-> Salvatore
+So you'll be doing the work to confirm which ones are/are not, patch
+them, regression test the patches and so on? Awesome!
 
-Use CVE-2015-1396.
+There's a reason we don't treat every potential security flaw as a
+security vulnerability. We have finite resources and pretty much an
+infinite number of flaws to deal with. Until you solve that problem we
+have to make due with "best effort", letting perfection be the enemy of
+good will kill us.
 
----
+-- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-CVE assignment team, MITRE CVE Numbering Authority M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
