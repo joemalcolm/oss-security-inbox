@@ -1,37 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/14/5
-Message-Id: <20150214152948.0D711332056@smtpvbsrv1.mitre.org>
-Date: Sat, 14 Feb 2015 10:29:48 -0500 (EST)
-From: cve-assign@...re.org
-To: steffen.roesemann1986@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE-Request -- Landsknecht Adminsystems v.4.0.1 (DEV, beta version) -- Reflecting XSS, unrestricted file-upload and underlaying CSRF
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/29/19
+Message-ID: <20150129164849.GA2310@localhost.localdomain>
+Date: Thu, 29 Jan 2015 08:48:49 -0800
+From: Qualys Security Advisory <qsa@...lys.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Qualys Security Advisory CVE-2015-0235 - GHOST: glibc gethostbyname buffer overflow
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Dear All,
 
-Use CVE-2015-1603 for both XSS issues.
+We were asked off-list whether HAProxy is vulnerable to GHOST or not,
+and thought others might be interested in the answer as well.  The short
+version is:  HAProxy is NOT vulnerable to GHOST.
 
-Use CVE-2015-1604 for the "upload arbitrary files" issue.
+The slightly longer version is:  we are looking for gethostbyname()
+calls whose hostname argument can be controlled by an attacker.  There
+are indeed a few calls to gethostbyname() in HAProxy, but their hostname
+arguments all depend on the configuration file, in the end, so they are
+safe (side note: there is getaddrinfo() support too, but it seems to be
+turned on for Solaris only, by default).
 
-The available information doesn't suggest that any of the behavior
-would typically be considered a separate CSRF vulnerability. There is
-no CVE ID for Landsknecht Adminsystems CSRF.
+Hope this is useful.  With best regards,
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJU32mXAAoJEKllVAevmvmsCW8H/jyeFJ4gGAF99n0lkRoocR4x
-VKVXjxIHa30xj/L6385pgon4rh5SYydABYsHQR2dN+090POwo8Pi7ZDvCXVu78gG
-zwpPSZJpdKvusRUaRfUh66pCKsYsiw0S7D/rWf/5ICZWPRBlQbuAKyZeR3cBlD7l
-NxzwpuWsPo4qPoFc//+r7M7UTjm619UjTvFHdV8cv+VTXwCYwDKRY6ivFU5cemoF
-rL41HnMIRRzjEytfWJTRtKdFDLAf5+EtqdNlEPWPrm6kLv6BME4Xq3TGi07zbSkI
-Q8Uhm5+bcEYKmb7WjiPfxabMDbd0YIWhuskWIciJNOI5pyJRVAqnKBDjJIANYKE=
-=w6LF
------END PGP SIGNATURE-----
+-- 
+the Qualys Security Advisory team
