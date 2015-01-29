@@ -1,88 +1,87 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/03/10
-Message-Id: <20150303203916.EB7683AE009@smtpvbsrv1.mitre.org>
-Date: Tue,  3 Mar 2015 15:39:16 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/29/21
+Message-ID: <Pine.LNX.4.64.1501291126380.25737@beijing.mitre.org>
+Date: Thu, 29 Jan 2015 11:52:02 -0500 (EST)
 From: cve-assign@...re.org
-To: mprpic@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: Maven downloads JARs via HTTP
+To: Kurt Seifried <kseifried@...hat.com>
+cc: oss-security@...ts.openwall.com, huzaifas@...hat.com, Mitre CVE assign department <cve-assign@...re.org>
+Subject: Re: GHOST gethostbyname() heap overflow in glibc (CVE-2015-0235)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-> I don't see a CVE assigned for this anywhere:
-> 
-> https://jira.codehaus.org/browse/MNG-5672
+> On 28/01/15 06:57 PM, Huzaifa Sidhpurwala wrote:
+>> On 01/29/2015 03:17 AM, Florian Weimer wrote:
+>>
+>>>> Use CVE-2012-6686 for "unbound alloca use in glob_in_dir" as covered
+>>>> by Red Hat Bugzilla ID 797096.
+>>>
+>>> Oh, it seems Huzaifa posted the wrong Bugzilla reference.
+>>>
+>>
+>> Yes, sorry wrong bz.
+>>
+>>> We still need assignment for this fix:
+>>>
+>>>   <https://sourceware.org/git/gitweb.cgi?p=glibc.git;a=commitdiff;h=2e96f1c7>
+>>>
+>>> The matching Red Hat Bugzilla bug is:
+>>>
+>>>   <https://bugzilla.redhat.com/show_bug.cgi?id=981942>
+>> The above is the correct bug  with the corresponding impact at:
+>> https://bugzilla.redhat.com/show_bug.cgi?id=1186614
+>>
+>> MITRE,
+>>
+>> Can we still use the above CVE for this issue?
+>
+> This would be a bad idea and lead to much confusion, especially for
+> people that have already consumed this CVE and written up reports that
+> in turn have been shipped to other people/etc.
+>
+> Can we REJECT this CVE if the issue is not a security issue, obviously
+> if it is a security issue we should keep this CVE.
 
-In many cases, security-related changes that a vendor characterizes as
-an "Improvement" do not have CVE IDs:
+The scope of CVE-2012-6686 has already been explicitly identified, i.e. it 
+is 797096.  If 797096 does not cover a security issue, or is a duplicate, 
+then we would need to REJECT the CVE.
 
-  > Switch access to Maven Central to HTTPS
-  > Type: Improvement
-  
-  > the Sonatype Operations team has coordinated certificates and other
-  > setup with our excellent CDN provider Fastly and you can now all
-  > enjoy the content of the Central Repository via HTTPS/SSL.
+However, 797096 reports that the issue "can lead to program crashes if 
+excessively long inputs are passed to certain functions."  This still 
+sounds like it could be a vulnerability.
 
-This suggests that, at the time that the default configuration was
-shipped for 3.2.2, the repo.maven.apache.org web site was not
-accessible via https, or at least not for free.
-(http://web.archive.org/web/20140702132623/http://www.sonatype.com/clm/secure-access-to-central
-suggests that https was available for $10.) Given that that is what
-existed, we don't feel that there is a clear answer to the question of
-whether Maven should have refused to access
-http://repo.maven.apache.org URLs or whether it should have accepted
-the risk of man-in-the-middle attacks. Neither answer would be
-inherently a "mistake." At least some deployments of Maven are on
-relatively secure networks at software-development companies, where
-man-in-the-middle attacks are relatively difficult and/or infrequent.
-Installation of Maven on a portable machine that is commonly connected
-via public Wi-Fi is not the prevailing use case.
+Is this already associated with a different CVE?  797096 points to 
+RHBA-2013:0022, which maps to CVE-2013-4357.  However, 797096's title does 
+not include CVE-2013-4357.
 
-(The question on the other side, specifically whether
-repo.maven.apache.org should ever have been deployed with its former
-configuration, is site-specific and is outside the scope of CVE. Note
-that this was apparently intentional:
-https://news.ycombinator.com/item?id=8101758 says "The reality is that
-prior to moving to a CDN, it was going to be pretty intensive to offer
-SSL on the scale of traffic we were seeing. The priority at that time
-was ensuring higher availability.")
+> Additionally if we can get a new CVE for Bz981942 that would be great,
+> thanks!
 
-Also, https://news.ycombinator.com/item?id=8100517 says "It's possible
-to sign jars, but in my experimentation with standard tools, these
-signatures aren't checked."
-https://news.ycombinator.com/item?id=8101735 says "Signatures have
-been required on Central for years and there are tools to verify them,
-including repository managers." MITRE has not researched whether any
-version of Maven was able to download and use a signed file, and could
-have checked the signature but did not actually implement signature
-checking. There is a possibility of one or more CVE IDs if anyone has
-identified a corresponding Maven code problem or fix.
+There now appear to be two different requests for two separate Bugzilla 
+IDs that might be discussing the same issue.  Please clarify.
 
-To summarize, we don't think it's currently worthwhile to assign CVE
-IDs for all cases in which any product obtains code from an http
-endpoint and could then conceivably execute that code. There are MANY
-such cases. As in the above Central Repository example, existence of
-http endpoints can be intentional, and the world hasn't transitioned
-to a state where everyone believes that http is always wrong. We've
-asked about this previously here (see the end of the
-http://openwall.com/lists/oss-security/2014/06/26/5 post) but nobody
-responded.
+BZ 1186614 is "glibc: Invalid-free when using getaddrinfo()".  It points 
+to 
+https://sourceware.org/git/gitweb.cgi?p=glibc.git;a=commitdiff;h=2e96f1c7 
+which is "Fix encoding name for IDN in getaddrinfo" and modifies 
+gaih_inet() in sysdeps/posix/getaddrinfo.c by setting name=p and 
+malloc_name=true.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
+CVE-2013-7424 is now assigned with the issue whose scope is defined by 
+commit 2e96f1c7 / gaih_inet().  (A 2011 year is not used because 2e96f1c7 
+does not clearly identify any security relevance.)
+
+A separate Bugzilla ID, 981942, might be a duplicate.  It is titled "ping6 
+with idn causes crash," includes Comment 4 (Carlos O'Donell 2013-07-08 
+09:54:18 EDT) which references a discrepancy with upstream's "name = p;" 
+fix in gaih_inet().  It also directly includes commit 2e96f1c7, which has 
+now been associated with CVE-2013-7424/BZ1186614.  Yet, here in 981942, 
+there is no apparent reference to 1186614.
+
+Is 981942 a duplicate of CVE-2013-7424/BZ1186614, or is a separate CVE ID 
+required?  If a new ID is required, please explain the difference.
+
+---
+
+CVE assignment team, MITRE CVE Numbering Authority M/S M300
 202 Burlington Road, Bedford, MA 01730 USA
 [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJU9hunAAoJEKllVAevmvmsNjAH/RiOr2s8Ne3KwnHUORo4g3Mc
-kdQ5TkdVhpYqfmm4C5zfkXZYgvkA0pbkj3owoyQEq6EDUPEhx1bBAEyZ5GW6AUhA
-2nKn7UCZNOOyDpvwbGEfTqw1jSg6lQHGpHeaCudXp6ypL05K4262C3Ei/ewQLFvm
-Vwge7SifkFpT2YjSKMaYjNF8c2gU+CIMAcc4PIaujfsErx66c9I0JEkltJIyKH7J
-WGM8meQvTj5GqEXHJvGswWqhZC+Y6kzjIB5MXk5GJZClzS0gvEt5vKVI0kimMmGc
-fumBuNyBJTh9UVFjBc785R/+5Ee8HhebgFiVZh9Qljv0xnD3FJrQLcUhxvGsAYE=
-=rpbn
------END PGP SIGNATURE-----
