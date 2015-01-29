@@ -1,23 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/15/1
-Message-ID: <20150115065641.GE18830@kludge.henri.nerv.fi>
-Date: Thu, 15 Jan 2015 08:56:41 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/29/25
+Message-ID: <54CA8856.6000903@openwall.com>
+Date: Thu, 29 Jan 2015 22:21:58 +0300
+From: Alexander Cherepanov <ch3root@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-Request -- CMS b2evolution v.5.2.0 -- Reflecting XSS vulnerability in filemanager functionality
+Subject: Fwd: ClamAV® blog: ClamAV 0.98.6 has been released!
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi!
 
-Fixed in 5.2.1 version.
+FYI:
 
-- -- 
-Henri Salo
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+ClamAV 0.98.6 release notes list several issues which looks like 
+security fixes but only one CVE mentioned.
 
-iEYEARECAAYFAlS3ZKkACgkQXf6hBi6kbk/EXACgobA8v+eNpA8mbR85uzP1rSH/
-YfEAoMqRuWAaDysP7GYpQJ+zLAkKze+A
-=XgEo
------END PGP SIGNATURE-----
+ChangeLog lists bugzilla numbers but the bugs are not yet public.
+
+Relevant commit are not yet in github repo but the diff between 0.98.6 
+branch and the released tarball is quite small and seems to contain 
+almost only relevant fixes.
+
+Alexander Cherepanov
+
+-------- Forwarded Message --------
+Subject: ClamAV® blog: ClamAV 0.98.6 has been released!
+Date: Tue, 27 Jan 2015 23:24:43 +0000
+From: Joel Esler (jesler) <jesler@...co.com>
+To: clamav-announce@...ts.clamav.net <clamav-announce@...ts.clamav.net>, 
+ClamAV users ML <clamav-users@...ts.clamav.net>, clamav-dev(mailer list) 
+<clamav-dev@...co.com>
+
+
+http://blog.clamav.net/2015/01/clamav-0986-has-been-released.html
+
+ClamAV 0.98.6 is a bug fix release correcting the following:
+
+
+   *   library shared object revisions.
+   *   installation issues on some Mac OS X and FreeBSD platforms.
+   *   includes a patch from Sebastian Andrzej Siewior making ClamAV pid 
+files compatible with systemd.
+   *   - Fix a heap out of bounds condition with crafted Yoda's crypter 
+files. This issue was discovered by Felix Groebert of the Google 
+Security Team.
+   *   - Fix a heap out of bounds condition with crafted mew packer 
+files. This issue was discovered by Felix Groebert of the Google 
+Security Team.
+   *   - Fix a heap out of bounds condition with crafted upx packer 
+files. This issue was discovered by Kevin Szkudlapski of Quarkslab.
+   *   - Fix a heap out of bounds condition with crafted upack packer 
+files. This issue was discovered by Sebastian Andrzej Siewior. 
+CVE-2014-9328.
+   *   - Compensate a crash due to incorrect compiler optimization when 
+handling crafted petite packer files. This issue was discovered by 
+Sebastian Andrzej Siewior.
+
+Thanks to the following ClamAV community members for code submissions
+and bug reporting included in ClamAV 0.98.6:
+
+Sebastian Andrzej Siewior
+Felix Groebert
+Kevin Szkudlapski
+Mark Pizzolato
+Daniel J. Luke
+
+Please download the latest release of ClamAV from 0.98.6 from our 
+download page<http://www.clamav.net/download.html>.
+
+--
+Joel Esler
+Open Source Manager
+Threat Intelligence Team Lead
+Talos
+
