@@ -1,38 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/28/9
-Message-ID: <54C875AA.5080009@redhat.com>
-Date: Tue, 27 Jan 2015 22:37:46 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>
-Subject: kgb-bot can be crashed by some network traffic
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/29/7
+Message-ID: <20150129085023.GA6572@openwall.com>
+Date: Thu, 29 Jan 2015 11:50:23 +0300
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: the other glibc issue
 Content-Type: text/plain; charset=utf-8
 
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=776424
+Oh, can we use descriptive Subjects, please?  (I am leaving this one
+intact not to introduce even further confusion.)
 
-Source: kgb-bot
-Version: 1.33-2
-Severity: important
-Tags: security
+On Wed, Jan 28, 2015 at 01:17:40PM -0500, cve-assign@...re.org wrote:
+> Use CVE-2013-7423 for ths initial bug report at 2013-09-12 09:50:17 UTC 
+> stating: "Under high load, getaddrinfo() starts sending DNS queries to 
+> random file descriptors, e.g. some unrelated socket connected to a remote 
+> service."
+> 
+> Which comment says that the issue is unfixed?  The 2015-01-08 14:21:11 UTC 
+> comment by David Nilsson says "I'm unable to reproduce the correct 
+> behaviour," but does not suggest that the vulnerability is still present.
 
-2015.01.19 18:08:39: Listening on http://0.0.0.0:9999?session=KGB
-2015.01.19 18:08:43: Connected to freenode (holmes.freenode.net)
-2015.01.19 18:08:43: Joining #commits...
-2015.01.19 18:08:43: Connected to oftc (graviton.oftc.net)
-2015.01.19 18:08:43: Joining #ikiwiki #vcs-home #git-annex...
-Did not get DONE/CLOSE event for Wheel ID 73 from IP 222.186.34.155 at
-/usr/share/perl5/POE/Component/Server/SimpleHTTP.pm line 221.
-I had a problem posting to event Got_Request of session SOAPServer for
-DIR handler '.*'. As reported by Kernel: 'No such file or directory',
-perhaps the session name is spelled incorrectly for this handler? at
-/usr/share/perl5/POE/Session.pm line 483.
+That comment you mention seemed to imply that, but here are the news off
+Twitter:
 
-This has happened to me twice now, and it takes the bot down.
+<solardiz> glibc "getaddrinfo() writes DNS queries to random file descriptors under high load" https://sourceware.org/bugzilla/show_bug.cgi?id=15946 "Fixed in 2.20", reopened, CVE?
+<@RichFelker> @solardiz Yeah I've been following this and pushing for it to be taken seriously for a long time...
+<@RichFelker> @solardiz Looks like a false positive, a bug in the testcase rather than in #glibc. See https://sourceware.org/ml/glibc-bugs/2015-01/msg00226.html
+<@solardiz> @RichFelker To me, this message says that the bug still being reproducible on glibc 2.20 is a false positive, but the fix in 2.20 was needed
+<@solardiz> @RichFelker Someone should run the corrected testcase on pre-2.20 to see if the issue was reproducible before the fix or not
 
-not sure how exploitable this is though.
+So glibc 2.20 appears OK, and we need to re-test older glibc - but from
+the patch it looks like there was indeed this bug before 2.20.
 
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Alexander
