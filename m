@@ -1,44 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/03/3
-Message-ID: <1420245619045.89559@corp.iixpeering.net>
-Date: Sat, 3 Jan 2015 00:40:19 +0000
-From: David Jorm <djorm@...p.iixpeering.net>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: 2012 CVE request: XXE in nokogiri ruby gem
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/29/16
+Message-ID: <CALoOobObksh63Oi2Xf-Ny13WXsmNB=xGQ2YeVwpk6d77pxVx0Q@mail.gmail.com>
+Date: Thu, 29 Jan 2015 08:00:48 -0800
+From: Paul Pluzhnikov <ppluzhnikov@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: GHOST gethostbyname() heap overflow in glibc (CVE-2015-0235)
 Content-Type: text/plain; charset=utf-8
 
-Just following up on this issue. Upstream has confirmed that no CVE ID was ever assigned:
+On Thu, Jan 29, 2015 at 4:09 AM, Hanno Böck <hanno@...eck.de> wrote:
 
+> And yes: I'd like people to cry alarm every time they see a buffer
+> overflow in glibc or any other core lib.
 
-https://github.com/sparklemotion/nokogiri/issues/693#issuecomment-68426535
+What is the appropriate forum to cry alarm on?
 
+We are not a distro, and (AFAICT) are not on any of the closed lists.
+But maybe we should be.
 
-Thanks
-
---
-
-David Jorm / IIX Product Security
-
-
-________________________________
-From: David Jorm
-Sent: Tuesday, December 30, 2014 5:01 PM
-To: oss-security@...ts.openwall.com
-Subject: 2012 CVE request: XXE in nokogiri ruby gem
-
-
-Hi All
-
-
-An XXE issue was reported and fixed in nokogiri, but as far as I can see no CVE ID was ever assigned. It appears a lot of people haven't updated their dependencies as a result, so a CVE ID would be helpful. For details, see:
-
-
-https://github.com/sparklemotion/nokogiri/issues/693#issuecomment-68334768
-
-
-Thanks
-
---
-
-David Jorm / IIX Product Security
-
+Thanks,
+-- 
+Paul Pluzhnikov
