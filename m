@@ -1,60 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/11/5
-Message-ID: <55006ABD.4040208@oracle.com>
-Date: Wed, 11 Mar 2015 16:18:05 +0000
-From: John Haxby <john.haxby@...cle.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Another Python app (rhn-setup: rhnreg_ks) not checking hostnames in certs properly CVE-2015-1777
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/29/23
+Message-ID: <682FB378-D03A-44EE-9C4F-697E63B19CA6@redhat.com>
+Date: Thu, 29 Jan 2015 11:52:08 -0700
+From: "Vincent Danen" <vdanen@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE request: xchat/hexchat don't properly verify SSL certificates
 Content-Type: text/plain; charset=utf-8
 
-On 11/03/15 15:48, Kurt Seifried wrote:
-> On 03/10/2015 08:05 PM, Michael Samuel wrote:
->> Hi Kurt,
->> 
->> Your corporate pissing match with Oracle is not helpful.
+As reported [1]:
 
-Indeed, please cut it out.  You're dealing with an individual, me,
-here.   I'm just someone who is trying to improve things in small but
-useful ways.   Someone who, incidentally, is personally hurt all of this.
+XChat did not verify that the server hostname matched the domain name in 
+the subject's Common Name (CN) or subjectAltName field in X.509 
+certificates. This could allow a man-in-the-middle attacker to spoof an 
+SSL server if they had a certificate that was valid for any domain name.
 
-> 
-> I think there's probably some cultural disconnect here that is
-> causing issues, a big part of Red Hat is "upstream first" and doing
-> things the open source way.
+The same code is used in hexchat.
 
-We're actually no different, whatever you might think.  (Obviously this
-does not apply to the large suite of closed or semi-closed applications
-that oracle produces; I'm only talking about the Linux group here.)
+This was initially reported to hexchat in 2013 [2] and fixed last 
+November [3].  I'm not sure if it should receive a 2013 or a 2014 CVE.  
+Can one be assigned to this?
 
-[snip]
+Thanks.
 
-> However here's the cool thing. If Oracle thinks they have a good 
-> solution they can participate with upstreams, or simply try it.
-
-I think there's a misunderstanding here.  I was asking for cooperation
-to come up with a solution, participating with other people who, like,
-I assumed, Red Hat, have an interest in solving this specific problem
-without breaking existing (admitedly flawed) applications.  I know it's
- not straightforward, if it was I'd've just produced a patch.  I'm still
-happy to work with anyone to sort this out.
-
-[snip]
-
-> I am actually working on something that will hopefully provide a
-> better solution (for values of speed and ease of fixing flaws) than
-> a traditional audit/code fix, (I'd rather address entire classes
-> of security flaw rather than one instance of the flaw at a time).
-> But like all things security infinite workload delays specific
-> projects.
-
-If this fixes the specific problem as a side effect that would be
-great.  Details are lacking though, and there's no obvious link here
-to making adapting PEP-466 for backwards compatibility (and I have
-absolutely no arguments with the rejected solutions for Python).
+[1] https://bugzilla.redhat.com/show_bug.cgi?id=1081839
+[2] https://github.com/hexchat/hexchat/issues/524
+[3] 
+https://github.com/hexchat/hexchat/commit/c9b63f7f9be01692b03fa15275135a4910a7e02d
 
 
-
-This is my last message on the list on the subject.
-
-jch
-
+-- 
+Vincent Danen / Red Hat Product Security
