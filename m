@@ -1,25 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/17/5
-Message-ID: <20150217205232.GA24361@breakpoint.cc>
-Date: Tue, 17 Feb 2015 21:52:32 +0100
-From: Sebastian Andrzej Siewior <cve-announce@...breakpoint.cc>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/29/28
+Message-ID: <CALPTtNW_=992qjV3aem8Z=h9f_nYLAE3nzbpgt-2qvM8PmJp4w@mail.gmail.com>
+Date: Thu, 29 Jan 2015 15:04:52 -0800
+From: Reed Loden <reed@...dloden.com>
 To: oss-security@...ts.openwall.com
-Cc: lcamtuf@...edump.cx
-Subject: CVE-2014-9328: clamav: special crafted upack files may lead to segfault
+Subject: Re: CVE request: xchat/hexchat don't properly verify SSL certificates
 Content-Type: text/plain; charset=utf-8
 
-upack is a tool for compressing .exe (.dll and such) files under
-windows. clamav [0] is a virus scanning tool which is able to unpack
-such files during scanning.
+You're welcome to check the "Accept invalid SSL certificates" box in that
+case, but the default should be that SSL/TLS certificates are correctly
+validated. :)
 
-A handcrafted file could lead the de-compressor to access beyond bounds
-leading to crash. This has been fixed via [1] and is part of the current
-(0.96.6) release.
+~reed
 
-This bug has been discovered by AFL [2], american fuzzy lop.
+On Thu, Jan 29, 2015 at 11:24 AM, Sam Dodrill <shadow.h511@...il.com> wrote:
 
-[0] http://www.clamav.net/
-[1] https://github.com/vrtadmin/clamav-devel/commit/5e1fbf3668bd167828d675830103b3c1ccdcb76d
-[2] http://lcamtuf.coredump.cx/afl/
+> A lot of the time IRC networks will not pay for a verified SSL cert due to
+> the fact that the kind of SSL cert they would need (a wildcard one) is
+> financially prohibitive. I don't think this is a security bug with hexchat
+> more a symptom of the fact that SSL combines encryption and identity
+> verification where sometimes people only want the former.
+>
+> On Thu Jan 29 2015 at 10:58:51 AM Marc Deslauriers <
+> marc.deslauriers@...onical.com> wrote:
+>
+> > On 2015-01-29 01:52 PM, Vincent Danen wrote:
+> > > As reported [1]:
+> > >
+> > > XChat did not verify that the server hostname matched the domain name
+> in
+> > the
+> > > subject's Common Name (CN) or subjectAltName field in X.509
+> > certificates. This
+> > > could allow a man-in-the-middle attacker to spoof an SSL server if they
+> > had a
+> > > certificate that was valid for any domain name.
+> > >
+> > > The same code is used in hexchat.
+> > >
+> > > This was initially reported to hexchat in 2013 [2] and fixed last
+> > November [3].
+> > > I'm not sure if it should receive a 2013 or a 2014 CVE.  Can one be
+> > assigned to
+> > > this?
+> > >
+> > > Thanks.
+> > >
+> > > [1] https://bugzilla.redhat.com/show_bug.cgi?id=1081839
+> > > [2] https://github.com/hexchat/hexchat/issues/524
+> > > [3]
+> > >
+> https://github.com/hexchat/hexchat/commit/c9b63f7f9be01692b03fa15275135a
+> > 4910a7e02d
+> > >
+> >
+> > Looks like XChat-GNOME is vulnerable also.
+> >
+> > Marc.
+> >
+> >
+> > --
+> > Marc Deslauriers
+> > Ubuntu Security Engineer     | http://www.ubuntu.com/
+> > Canonical Ltd.               | http://www.canonical.com/
+> >
+>
 
-Sebastian
