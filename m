@@ -1,31 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/06/5
-Message-ID: <20150106092438.GA354@lorien.valinor.li>
-Date: Tue, 6 Jan 2015 10:24:38 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Cc: CVE Assignments MITRE <cve-assign@...re.org>
-Subject: Dublicate CVE assignment for directory traversal in elfutils? (CVE-2014-9486 and CVE-2014-9447)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/29/26
+Message-ID: <20150129214125.5ee653dd@redhat.com>
+Date: Thu, 29 Jan 2015 21:41:25 +0100
+From: Tomas Hoger <thoger@...hat.com>
+To: cve-assign@...re.org
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Re: CVE request - ICU
 Content-Type: text/plain; charset=utf-8
 
-Hi
+On Thu, 29 Jan 2015 09:18:32 -0500 (EST) cve-assign@...re.org wrote:
 
-while updating our tracker information at Debian i noticed that there
-might be a dublicate CVE assignment for elfutils:
+> > https://code.google.com/p/chromium/issues/detail?id=432209
+> > https://chromium.googlesource.com/chromium/deps/icu/+/dd727641e190d60e4593bcb3a35c7f51eb4925c5
+> > http://bugs.icu-project.org/trac/changeset/36801
+> 
+> Do you believe there's enough information available to determine how
+> many CVEs should exist that are specific to Chromium bug 432209?
 
-In
+...
 
-https://marc.info/?l=oss-security&m=142032305709528&w=2
+> The utypes.h change mentions:
+> 
+>   U_REGEX_PATTERN_TOO_BIG,              /**< Pattern exceeds limits on size or complexity.   @draft ICU 55   */
+> 
+> In some cases in various products, a length fix is motivated by an
+> overflow or overflows, which would have one CVE, and a complexity fix
+> is motivated by a desire to restrict a resource-consumption attack,
+> which might have its own CVE (but, in any case, would not be the same
+> as the overflow CVE).
 
-CVE-2014-9486 was assigned for elfutils, with fixing commit identified
-with
+I do not have access to either of the private upstream bugs to know if
+any resource consumption attacks are mentioned there.  My understanding
+is that the fix aims to ensure that lengths / operands / indexes do not
+exceed 2^24.
 
-https://git.fedorahosted.org/cgit/elfutils.git/commit/?id=147018e729e7c22eeabf15b82d26e4bf68a0d18e
+I'm guessing, but complexity may refer to exceeding the limit with
+short patterns as well.  This issue was fixed in the same Chrome update
+(CVE-2014-7923 or CVE-2014-7926), short patterns cause generation of
+invalid opcodes because of operands exceeding 2^24:
 
-In https://bugzilla.redhat.com/show_bug.cgi?id=1178888 though the same
-commit is referenced, but the bug aliased to CVE-2014-9447.
+http://bugs.icu-project.org/trac/changeset/36724
+https://chromium.googlesource.com/chromium/deps/icu/+/3af4ce5982311035e5f36803d547c0befa576c8c
 
-Should one of those actually be rejected?
+> This leads to a possibility of these two observations:
+> 
+>   A. the entire known vulnerability is that the unpatched code
+>      calculates certain values without ensuring that they can be
+>      represented in a 24-bit field
+> 
+>   B. the vendor has not stated whether there is a vulnerability
+>      related solely to the concept of complexity. Possibly part of
+>      36801 addresses complexity as a security-hardening measure, not a
+>      vulnerability fix. Or, possibly nothing in 36801 is exclusively
+>      about complexity.
+> 
+> Should there be one CVE ID now, for observation A alone?
 
-Regards,
-Salvatore
+That's what can be done based on the information public at the moment.
+This may not be perfect, but still significant improvement from having
+this grouped with 30+ other, likely unrelated, issues under single CVE.
+
+-- 
+Tomas Hoger / Red Hat Product Security
