@@ -1,23 +1,86 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/10/2
-Message-ID: <54D97009.3040603@redhat.com>
-Date: Mon, 09 Feb 2015 19:42:17 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>
-Subject: Current outstanding CVE requests
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/29/9
+Message-Id: <E1YGn47-0001DT-OP@xenbits.xen.org>
+Date: Thu, 29 Jan 2015 11:15:15 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 118 - arm: vgic: incorrect rate limiting of guest triggered logging
 Content-Type: text/plain; charset=utf-8
 
-Myself, several coworkers and other people have outstanding CVE requests
-(I've put them in a spreadsheet so I can clean out my inbox
-https://docs.google.com/spreadsheets/d/1L3ltTkrrIn_wrDOXZx7OXrwVeglk2qeN17DW6c9kz1U/edit#gid=0
-- please note this list is not complete, email me to get access so you
-can edit it). I'm wondering if there's anything I can do to back fill or
-otherwise help with the load for CVE assignments on Open Source
-software. Thanks.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+                    Xen Security Advisory XSA-118
 
+    arm: vgic: incorrect rate limiting of guest triggered logging
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+ISSUE DESCRIPTION
+=================
+
+On ARM systems the code which deals with virtualising the GIC
+distributor would, under various circumstances, log messages on a
+guest accessible code path without appropriate rate limiting.
+
+IMPACT
+======
+
+A malicious guest could cause repeated logging to the hypervisor
+console, leading to a Denial of Service attack.
+
+VULNERABLE SYSTEMS
+==================
+
+Xen 4.4 and later systems running on ARM hardware are vulnerable.
+
+x86 systems are not affected.
+
+MITIGATION
+==========
+
+The problematic log messages are issued with priority Warning.
+
+Therefore they can be rate limited by adding "loglvl=error/warning" to the
+hypervisor command line or suppressed entirely by adding "loglvl=error".
+
+NOTE REGARDING LACK OF EMBARGO
+==============================
+
+This bug was publicly reported on xen-devel, before it was appreciated
+that there was a security problem.
+
+CREDITS
+=======
+
+This issue was discovered by Julien Grall.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch(es) resolves this issue.
+
+xsa118-unstable-4.5-{1,2}.patch       xen-unstable, Xen 4.5.x
+xsa118-4.4.patch                      Xen 4.4.x
+
+$ sha256sum xsa118*.patch
+5741cfe408273bd80e1a03c21a5650f963d7103fd022c688730f55dcf5373433  xsa118-4.4.patch
+ee24a4c5e12b67d7539f08b644080c87797f31b4402215cd4efbbc6114bffc25  xsa118-4.5-unstable-1.patch
+bd532e3cd535fcdea51f43631a519012baff068cb62d2205fc25f2c823f031eb  xsa118-4.5-unstable-2.patch
+$
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQEcBAEBAgAGBQJUyhXoAAoJEIP+FMlX6CvZIWsH/2cK4jijgzepEboZAyIl2E8f
+wWMaF6Jr28YfQz8Zcpwi4GY9BecBjm2ZUuvuHS/yPGBIvriOiZXjMtlchd3FBhjw
+CTvCasqFX6DYizduAPBcph/vY2LoiYn/i74+M55I6u5g8WL/o7p3Ea3UXKg8ZdgB
+PdQnLJSi4iqbO6mfdgw3lb5gfVk/DUh0rW87CoOhdPNJrQWlw9zTpfjIvrGzIDXJ
+jV5eW8mBhfTE8TfuJ2cFgMZgoob709EduJ8wgLqOPMAmn1HCC/MNNtEiZhliw2yD
+WQePLlXXvwXxNhHP6Ge/698unV4zPDvlCxTYjBOsZWPC1ITVhMHZ1+j3z0mXO0U=
+=2kMW
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa118-4.4.patch" of type "application/octet-stream" (4777 bytes)
+
+Download attachment "xsa118-4.5-unstable-1.patch" of type "application/octet-stream" (10235 bytes)
+
+Download attachment "xsa118-4.5-unstable-2.patch" of type "application/octet-stream" (4902 bytes)
