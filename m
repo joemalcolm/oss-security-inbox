@@ -1,99 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/05/4
-Message-Id: <E1YTUk4-0001zw-QW@xenbits.xen.org>
-Date: Thu, 05 Mar 2015 12:19:04 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 121 (CVE-2015-2044) - Information leak via internal x86 system device emulation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/29/18
+Message-ID: <CALx_OUD-0YmmKLw4CH7MvSu_qB4VRkDawEwuJ52X6UtB-joaig@mail.gmail.com>
+Date: Thu, 29 Jan 2015 08:20:58 -0800
+From: Michal Zalewski <lcamtuf@...edump.cx>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: GHOST gethostbyname() heap overflow in glibc (CVE-2015-0235)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+The reality is that there probably are hundreds of security bugs that
+are fixed without CVEs and advisories every year, because of a
+combination of several things:
 
-            Xen Security Advisory CVE-2015-2044 / XSA-121
-                              version 3
+1) "Accidental" fixes as a part of code rewrites or design changes,
 
-       Information leak via internal x86 system device emulation
+2) Developers not knowledgeable enough to understand the impact or
+quickly assess exploitability,
 
-UPDATES IN VERSION 3
-====================
+3) Developers being actively opposed to treating security
+vulnerabilities in a special way, disliking the security community, or
+wanting to sweep bugs under the rug.
 
-Public release.
+In addition to this, even when advisories are written, there are
+incentives to game the system. Some have an incentive to overhype
+issues, others to make them go away, and yet others make the world
+worse by comparing the security of products by counting CVEs.
 
-ISSUE DESCRIPTION
-=================
+This kind of sucks, but I'm not sure how can we fix this in a
+practical way. The best approach may be to release and push out new
+versions of packages far more aggressively, without trying to identify
+and cherry-pick security updates. This also means causing a lot more
+breakage, but maybe that's OK.
 
-Emulation routines in the hypervisor dealing with certain system
-devices check whether the access size by the guest is a supported one.
-When the access size is unsupported these routines failed to set the
-data to be returned to the guest for read accesses, so that hypervisor
-stack contents are copied into the destination of the operation, thus
-becoming visible to the guest.
+/mz
 
-IMPACT
-======
-
-A malicious HVM guest might be able to read sensitive data relating
-to other guests.
-
-VULNERABLE SYSTEMS
-==================
-
-Xen 3.2.x and later are vulnerable.
-Xen 3.1.x and earlier have not been inspected.
-
-Only HVM guests can take advantage of this vulnerability.
-
-Only x86 systems are vulnerable.  ARM systems are not vulnerable.
-
-MITIGATION
-==========
-
-Running only PV guests will avoid this issue.
-
-CREDITS
-=======
-
-This issue was discovered by Jan Beulich of SUSE.
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue.
-
-xsa121.patch        xen-unstable, Xen 4.5.x, Xen 4.4.x, Xen 4.3.x, Xen 4.2.x
-
-$ sha256sum xsa121*.patch
-e74afb34e8059e8ee25b803019c192aa47c29208af2c19fb81aa84b0d7c0d268  xsa121.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQEcBAEBAgAGBQJU+EmOAAoJEIP+FMlX6CvZnU0IAJZE8lD0dqlM9RyIMopSOZwp
-CYEVhmk03UsTIpJci1zVg+QUs7owe/p6tamuy4B/XFG6tGs4vsqVeUk8lvs8/Gzs
-6RsEkHvOdy1Np9r8vCp2SShKsom0dE13t3JwAY+mftJNHFN2QTPmHbfi8XpnVotm
-1nsLXl+8FAWa+d3ZULQTZXKJw6f2dNuXu9NHIvaNzP+IffJ6zKLPr9b8Va71yztA
-0MPuUziRxVoJ5xWtoceN4qEdsnIZo5N9JN90fZSGSdiR976Qh1lhMu1ak4aVcNJa
-qljKSQQPOmfyHjyKsULvLlCYUldonkIfBVaJ+5QmZEVPMCDxig36m49QMOCNwOg=
-=BATt
------END PGP SIGNATURE-----
-
-Download attachment "xsa121.patch" of type "application/octet-stream" (1379 bytes)
+PS. A good chunk of the bugs linked to via
+http://lcamtuf.coredump.cx/afl/ probably don't have CVEs assigned,
+probably including most of the security-relevant ones here:
+https://udd.debian.org/cgi-bin/bts-usertags.cgi?user=jwilk@debian.org&tag=afl
+. I actually tried to ping cve-assign@ about the libtiff bugs, but
+they didn't get back to me.
