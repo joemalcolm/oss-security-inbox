@@ -1,31 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/22/6
-Message-ID: <Pine.LNX.4.64.1501221006010.18848@beijing.mitre.org>
-Date: Thu, 22 Jan 2015 10:07:07 -0500 (EST)
-From: cve-assign@...re.org
-To: Albert Astals Cid <aacid@....org>
-cc: OSS Security Mailinglist <oss-security@...ts.openwall.com>, CVE Assignments MITRE <cve-assign@...re.org>, security@....org
-Subject: Re: KDE Plasma vulnerabilities: need CVE
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/29/24
+Message-ID: <54CA82B8.7080409@canonical.com>
+Date: Thu, 29 Jan 2015 13:58:00 -0500
+From: Marc Deslauriers <marc.deslauriers@...onical.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: xchat/hexchat don't properly verify SSL certificates
 Content-Type: text/plain; charset=utf-8
 
+On 2015-01-29 01:52 PM, Vincent Danen wrote:
+> As reported [1]:
+> 
+> XChat did not verify that the server hostname matched the domain name in the
+> subject's Common Name (CN) or subjectAltName field in X.509 certificates. This
+> could allow a man-in-the-middle attacker to spoof an SSL server if they had a
+> certificate that was valid for any domain name.
+> 
+> The same code is used in hexchat.
+> 
+> This was initially reported to hexchat in 2013 [2] and fixed last November [3]. 
+> I'm not sure if it should receive a 2013 or a 2014 CVE.  Can one be assigned to
+> this?
+> 
+> Thanks.
+> 
+> [1] https://bugzilla.redhat.com/show_bug.cgi?id=1081839
+> [2] https://github.com/hexchat/hexchat/issues/524
+> [3]
+> https://github.com/hexchat/hexchat/commit/c9b63f7f9be01692b03fa15275135a4910a7e02d
+> 
 
-> Hi, can we get two CVEs assigned for the attached vulnerabilities?
->
-> Thanks,
->  Albert
+Looks like XChat-GNOME is vulnerable also.
 
-plasma-workspace: Network access from screen locker
+Marc.
 
-kde-workspace, plasma-workspace: X11 clients can eavesdrop input
-events while screen is locked
 
-CVE-2015-1307 - plasma-workspace: Network access from screen locker
-
-CVE-2015-1308 - kde-workspace, plasma-workspace: X11 clients can eavesdrop 
-input events while screen is locked
-
----
-
-CVE assignment team, MITRE CVE Numbering Authority M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-- 
+Marc Deslauriers
+Ubuntu Security Engineer     | http://www.ubuntu.com/
+Canonical Ltd.               | http://www.canonical.com/
