@@ -1,33 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/21/6
-Message-ID: <20150121140116.185e420a@pc>
-Date: Wed, 21 Jan 2015 14:01:16 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: two issues in vorbis-tools
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/29/5
+Message-ID: <54C9EC51.7060002@mittwald.de>
+Date: Thu, 29 Jan 2015 09:16:17 +0100
+From: Sven Kieske <s.kieske@...twald.de>
+To: <oss-security@...ts.openwall.com>
+Subject: Re: GHOST gethostbyname() heap overflow in glibc (CVE-2015-0235)
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 21 Jan 2015 13:50:46 +0100
-Martin Prpic <mprpic@...hat.com> wrote:
+On 29/01/15 07:20, Paul Pluzhnikov wrote:
+> If I was supposed to cry alarm, I would have to cry alarm every time
+> there is a buffer overflow in glibc, which doesn't seem very useful.
 
-> Two issues were reported in vorbis-tools on Full Disclosure:
-> 
-> http://seclists.org/fulldisclosure/2015/Jan/78
+Well as someone who is very careful, I _would_ consider every buffer
+overflow a security risk unless proven otherwise.
 
-In addition to that: I reported this issue
-https://trac.xiph.org/ticket/2009
-a while back which also crashes oggenc.
-I didn't think about security implications back then, but it's also an
-out of bounds read issue.
+It's unexpected behaviour, isn't it?
+It's up to the surrounding systems such as ASLR to mitigate it.
+But neither is ASLR deployed everywhere, nor is it a silver bullet
+to solve the problem.
 
-After bugging the devs on irc it got fixed in the code but never saw a
-release.
-
+But I don't want to really reiterate this discussion.
+All possible opinions on this topic have already been stated.
 -- 
-Hanno Böck
-http://hboeck.de/
+Mit freundlichen Grüßen / Regards
 
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
+Sven Kieske
 
-Content of type "application/pgp-signature" skipped
+Systemadministrator
+Mittwald CM Service GmbH & Co. KG
+Königsberger Straße 6
+32339 Espelkamp
+T: +49-5772-293-100
+F: +49-5772-293-333
+https://www.mittwald.de
+Geschäftsführer: Robert Meyer
+St.Nr.: 331/5721/1033, USt-IdNr.: DE814773217, HRA 6640, AG Bad Oeynhausen
+Komplementärin: Robert Meyer Verwaltungs GmbH, HRB 13260, AG Bad Oeynhausen
