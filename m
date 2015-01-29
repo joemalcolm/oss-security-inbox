@@ -1,27 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/26/10
-Message-ID: <20150126220137.GA29601@hunt>
-Date: Mon, 26 Jan 2015 14:01:37 -0800
-From: Seth Arnold <seth.arnold@...onical.com>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: CVE HOWTO - updated and moved to github
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/29/12
+Message-Id: <20150129124732.B5ACA6C0044@smtpvmsrv1.mitre.org>
+Date: Thu, 29 Jan 2015 07:47:32 -0500 (EST)
+From: cve-assign@...re.org
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: CVE-2015-1420 - Linux kernel fs/fhandle.c race condition
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jan 26, 2015 at 01:44:51PM -0700, Kurt Seifried wrote:
-> https://github.com/RedHatProductSecurity/CVE-HOWTO
-> 
-> replaces the old
-> https://people.redhat.com/kseifrie/CVE-OpenSource-Request-HOWTO.html
-> 
-> I'll also be adding some information on SPLIT/MERGE and other details
-> for people that want to know more. Feedback is welcome, pull requests
-> even more so.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-It'd probably be best if the old one 301 Moved Permanently to the new one,
-or just a meta redirect if that's the best that can be done. Otherwise
-Google and other search engines may never rank your new one higher.
+CVE-2015-1420 has been assigned to this fs/fhandle.c race condition
+that can lead to reading too many bytes of data:
 
-Thanks
+  http://marc.info/?l=linux-kernel&m=142247707318982&w=2
 
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+(not yet available at
+http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/log/fs/fhandle.c)
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJUyioAAAoJEKllVAevmvmsUuoIAKmnNDhxYiqQCoGnKNgfkxOr
+NWPnVmBh/T+OraPxhQX5xLrdMSfSpK0XjHYXuou531GQr4u9nXXMWNLM1TNa/rS2
+4oG2DLdzHZ0mhsWg6v+kkJwXm+1He80FVUr15ZxQxC45wdN+abe+u23BJUaPRPGe
+cUKhmel4XIES5/vQUkC042ijD5n8i03PHesAexhpgAF3hOE0WYrODP12x07E9wnZ
+XdlZusLuGVUIUoG3hucI5fjszl1Z9oAEWdWKIQ7fpACd3xxDrCbZufP0Fk2/POhY
+wLmVrQj43e+m2SdepEupgM0E86oytchKhts1sRSNheCuVidwiLtZ6k5VsbXWs7w=
+=fNxI
+-----END PGP SIGNATURE-----
