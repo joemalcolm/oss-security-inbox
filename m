@@ -1,77 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/27/3
-Message-ID: <Pine.LNX.4.64.1501271050200.11165@beijing.mitre.org>
-Date: Tue, 27 Jan 2015 11:02:11 -0500 (EST)
-From: cve-assign@...re.org
-To: Salvatore Bonaccorso <carnil@...ian.org>
-cc: oss-security@...ts.openwall.com, Assign a CVE Identifier <cve-assign@...re.org>
-Subject: Re: [perl #119505] Segfault from bad backreference
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/29/1
+Message-ID: <54C993A6.8040803@redhat.com>
+Date: Thu, 29 Jan 2015 07:27:58 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+To: oss-security@...ts.openwall.com, Mitre CVE assign department <cve-assign@...re.org>
+Subject: Re: GHOST gethostbyname() heap overflow in glibc (CVE-2015-0235)
 Content-Type: text/plain; charset=utf-8
 
+On 01/29/2015 03:17 AM, Florian Weimer wrote:
 
-On Sat, 24 Jan 2015, Salvatore Bonaccorso wrote:
+>> Use CVE-2012-6686 for "unbound alloca use in glob_in_dir" as covered
+>> by Red Hat Bugzilla ID 797096.
+> 
+> Oh, it seems Huzaifa posted the wrong Bugzilla reference.
+> 
 
-> Hi Kurt,
->
-> On Fri, Jan 23, 2015 at 02:38:51PM -0700, Kurt Seifried wrote:
->> http://perl5.git.perl.org/perl.git/commitdiff/0c2990d652e985784f095bba4bc356481a66aa06
->>
->> The code that parses regex backrefs (or ambiguous backref/octal) such as
->> \123, did a simple atoi(), which could wrap round to negative values on
->> long digit strings and cause seg faults.
->>
->> Include a check on the length of the digit string, and if greater than 9
->> digits, assume it can never be a valid backref (obviating the need for
->> the atoi() call).
->>
->> I've also simplified the code a bit, putting most of the \g handling
->> code into a single block, rather than doing multiple "if (isg) {...}".
->>
->> PoC:
->>
->> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=776046
->> perl -e '/\7777777777/'
->>
->> not sure if this can be exploited at all, but someone creative maybe has
->> ideas, if so this may need a CVE.
->
-> Just additional infomration: I think this was way back found already
-> around 2008, in opensuse-commits the following can be found:
->
-> http://marc.info/?l=opensuse-commit&m=121933719424130
->
-> then also reported in the Perl request-tracker at
->
-> https://rt.perl.org/Public/Bug/Display.html?id=119505
->
-> Regards,
-> Salvatore
+Yes, sorry wrong bz.
 
-Use CVE-2013-7422 for the issue as disclosed in 
-https://rt.perl.org/Public/Bug/Display.html?id=119505 for "Segfault in 
-S_regmatch from bad backreference," as demonstrated using:
+> We still need assignment for this fix:
+> 
+>   <https://sourceware.org/git/gitweb.cgi?p=glibc.git;a=commitdiff;h=2e96f1c7>
+> 
+> The matching Red Hat Bugzilla bug is:
+> 
+>   <https://bugzilla.redhat.com/show_bug.cgi?id=981942>
+The above is the correct bug  with the corresponding impact at:
+https://bugzilla.redhat.com/show_bug.cgi?id=1186614
 
-   ./perl -e '/\7777777777/'
+MITRE,
+
+Can we still use the above CVE for this issue?
+
+> 
+> I haven't yet seen an upstream bug for it; this change happened before
+> upstream required bugs being filed for all user-visible changes.
+> 
 
 
-The relationships between CVE-2013-7422 and this OpenSUSE commit are not 
-immediately clear:
-
-   http://marc.info/?l=opensuse-commit&m=121933719424130
-
-This commit has both "fix regexp backref overflow crash [bnc#372331]" and, 
-separately, "Fix another regexp backref overflow crash."  This suggests 
-two separate bugs.
-
-A test for perl-regexp-refoverflow.diff (regcomp.c) uses:
-
-   perl -e '/\6666666666/'
-
-but the code change casts atoi()'s return value to unsigned, whereas the 
-CVE-2013-7422 commit uses different logic that minimizes use of atoi().
-
----
-
-CVE assignment team, MITRE CVE Numbering Authority M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-- 
+Huzaifa Sidhpurwala / Red Hat Product Security Team
