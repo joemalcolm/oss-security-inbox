@@ -1,43 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/04/8
-Message-Id: <C78DD699-4921-435E-8E19-7EED71E56B11@stufft.io>
-Date: Wed, 4 Mar 2015 13:14:15 -0500
-From: Donald Stufft <donald@...fft.io>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/29/30
+Message-ID: <20150129235224.GA9204@openwall.com>
+Date: Fri, 30 Jan 2015 02:52:24 +0300
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Another Python app (rhn-setup: rhnreg_ks) not checking hostnames in certs properly CVE-2015-1777
+Subject: Re: Qualys Security Advisory CVE-2015-0235 - GHOST: glibc gethostbyname buffer overflow
 Content-Type: text/plain; charset=utf-8
 
+On Tue, Jan 27, 2015 at 10:20:20AM -0800, Qualys Security Advisory wrote:
+> Here is a list of potential targets that we investigated (they all call
+> gethostbyname, one way or another), but to the best of our knowledge,
+> the buffer overflow cannot be triggered in any of them:
+> 
+> apache, cups, dovecot, gnupg, isc-dhcp, lighttpd, mariadb/mysql,
+> nfs-utils, nginx, nodejs, openldap, openssh, postfix, proftpd,
+> pure-ftpd, rsyslog, samba, sendmail, sysklogd, syslog-ng, tcp_wrappers,
+> vsftpd, xinetd.
+> 
+> That being said, we believe it would be interesting if other people
+> could have a look, just in case we missed something.
 
-> On Mar 4, 2015, at 12:55 PM, Kurt Seifried <kseifried@...hat.com> wrote:
-> 
-> https://bugzilla.redhat.com/show_bug.cgi?id=1198740
-> 
-> Jan Bee of the Google Security Team reports:
-> 
-> The /usr/sbin/rhnreg_ks fails to properly validate hostnames in
-> certificates. This can result in man in the middle attacks.
-> 
-> ===
-> 
-> Please note that this issue cannot easily be exploited to cause any
-> significant damage to a system other then preventing registration from
-> taking place properly which the attacker would be able to do in any
-> event if the can man in the middle the connection.
-> 
-> 
-> 
-> --
-> Kurt Seifried -- Red Hat -- Product Security -- Cloud
-> PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-> 
+That's an impressive list above, thanks!
 
-Note: Python 2.7.9+ and 3.4.3+ will cause most apps like this to
-automatically start validating hostnames. It may be easier to backport
-those changes than to find every Python app that doesn’t check hostnames.
+To add on the topic and aggregate the relevant news in this thread:
 
----
-Donald Stufft
-PGP: 7C6B 7C5D 5E2B 6356 A926 F04F 6E3C BCE9 3372 DCFA
+Today there's some talk about GHOST possibly being exploitable via web
+apps, and in particular via the pingback feature in WordPress:
 
+http://threatpost.com/php-applications-wordpress-subject-to-ghost-glibc-vulnerability/110755
 
-Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
+Alexander
