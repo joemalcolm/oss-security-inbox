@@ -1,37 +1,86 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/04/6
-Message-Id: <1423067744.65358.223075205.4AE926CB@webmail.messagingengine.com>
-Date: Wed, 04 Feb 2015 10:35:44 -0600
-From: Mark Felder <feld@...d.me>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/29/20
+Message-ID: <54CA64B9.3070901@redhat.com>
+Date: Thu, 29 Jan 2015 09:50:01 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Apache 2.4 mod_ssl SSLSessionTickets -- others vulnerable?
+Subject: Re: GHOST gethostbyname() heap overflow in glibc (CVE-2015-0235)
 Content-Type: text/plain; charset=utf-8
 
->From the 2.4.12 changelog:
+On 29/01/15 05:09 AM, Hanno Böck wrote:
+> On Thu, 29 Jan 2015 02:05:38 -0700
+> Kurt Seifried <kseifried@...hat.com> wrote:
+> 
+>> So you'll be doing the work to confirm which ones are/are not, patch
+>> them, regression test the patches and so on? Awesome!
+>>
+>> There's a reason we don't treat every potential security flaw as a
+>> security vulnerability. We have finite resources and pretty much an
+>> infinite number of flaws to deal with. Until you solve that problem we
+>> have to make due with "best effort", letting perfection be the enemy
+>> of good will kill us.
+> 
+> I find that sarcastic comment inappropriate. After all it's your
+> company that's selling a product that makes the promise to backport
+> important security fixes for years.
+
+Which we do... when we find out about them. That's sort of the problem
+here. People are fixing security flaws, and as Michael Zalewski's post
+eloquently points out, a lot of them are not treated as security bugs
+for various reasons, and thus all the vendors backporting may not find
+out about them. We do monitor quite a few sources but the Open Source
+world is rather massive and the number of commits daily is on the large
+side.
+
+This is why for example I've been trying to make CVE's easily available
+so people are more likely to come to us with borderline issues ("I'm not
+sure but this looks weird and may be security related"). I'm also
+working on a set of examples for the CVE HOWTO so again developers will
+hopefully be able to realize when things look weird and may be a
+security issue and not just a flaw. I'm trying to find ways to help
+educate people/make it easier for them to report security issues but
+this is a non trivial problem.
+
+We also are willing to help people coordinate disclosure/inform
+upstreams (this is quite often a more difficult task than it should be),
+again to minimize the chances of things being missed and people being
+impacted.
+
+> I think we have a real problem here and I'd like to have a talk how to
+> solve it. Debian, Redhat, Ubuntu and many others are making an implicit
+> promise with their long time supported stable distributions that they'll
+> take care of important bugs. I have big doubts how capable they are in
+> delivering that promise. There are just too many bugs to take care of.
+
+Solving it is easy. Solving it in an economic manner that doesn't cost
+an obscene amount of money is another matter. This also ignores the
+simple fact that even with an unlimited supply of money the number of
+security skilled developers is not currently that huge. Witness the
+number of people participating on this list, or finding security bugs,
+or doing security research.
+
+> I'll write up something longer on that topic later today.
+> 
+> And yes: I'd like people to cry alarm every time they see a buffer
+> overflow in glibc or any other core lib. Even if we aren't capable of
+> deeply checking every one of them: Having the information available
+> somewhere else than depply hidden in a google bugtracker would be an
+> improvement. If it is too much for this list create another place for
+> it.
+
+Having it at least be accessible to many people (e.g. the public) would
+probably be better than not I suspect. The bad guys will find out
+regardless if they really want to find a vuln to exploit, at least we
+can give the good guys a chance. But my concern is still "who does the
+work with all these alarms to confirm if they are in fact security or
+just a flaw" so we don't just end up with a huge pile of "maybe".
+
+TL;DR: The tragedy of the commons, we're knee deep in sheep poop. Some
+of it may be on fire.
+
+-- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
 
-  *) mod_ssl: New directive SSLSessionTickets (On|Off).
-     The directive controls the use of TLS session tickets (RFC 5077),
-     default value is "On" (unchanged behavior).
-     Session ticket creation uses a random key created during web
-     server startup and recreated during restarts. No other key
-     recreation mechanism is available currently. Therefore using
-     session
-     tickets without restarting the web server with an appropriate
-     frequency
-     (e.g. daily) compromises perfect forward secrecy. [Rainer Jung]
-
-
-So if you use Apache 2.4 and care about PFS protecting your data, you
-should turn this feature off. This appears to be an implementation issue
-because there is no other way for Apache to recreate keys. I don't know
-a lot about the fine details of Session Tickets, but can anyone care to
-comment if there are other known bad implementations of session tickets
-out there? Does this affect Apache 2.2? Nginx? Lighttpd?
-
-
-Thanks
-
-
-I find this bizarre that a known security weakness like this is left
-"on" by default...
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
