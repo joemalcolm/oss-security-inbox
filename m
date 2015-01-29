@@ -1,23 +1,96 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/14/1
-Message-ID: <54B5C022.6060105@redhat.com>
-Date: Tue, 13 Jan 2015 18:02:26 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>
-Subject: CVE Request for jenkins-tomcat: Secure and HttpOnly flags are not set for cookies with Jenkins on Tomcat
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/29/14
+Message-Id: <20150129141832.DDBC9332037@smtpvbsrv1.mitre.org>
+Date: Thu, 29 Jan 2015 09:18:32 -0500 (EST)
+From: cve-assign@...re.org
+To: thoger@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request - ICU
 Content-Type: text/plain; charset=utf-8
 
-jenkins-tomcat: Secure and HttpOnly flags are not set for cookies with
-Jenkins on Tomcat
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=769682
+> https://code.google.com/p/chromium/issues/detail?id=432209
+> https://chromium.googlesource.com/chromium/deps/icu/+/dd727641e190d60e4593bcb3a35c7f51eb4925c5
+> http://bugs.icu-project.org/trac/changeset/36801
 
-seems like it should get a CVE:
-http://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=httponly
+Do you believe there's enough information available to determine how
+many CVEs should exist that are specific to Chromium bug 432209?
 
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+36801 says "Improved checking of regular expression pattern size
+limits," and "Improved" doesn't necessarily imply a specific number of
+CVEs.
 
+The utypes.h change mentions:
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+  U_REGEX_PATTERN_TOO_BIG,              /**< Pattern exceeds limits on size or complexity.   @draft ICU 55   */
+
+In some cases in various products, a length fix is motivated by an
+overflow or overflows, which would have one CVE, and a complexity fix
+is motivated by a desire to restrict a resource-consumption attack,
+which might have its own CVE (but, in any case, would not be the same
+as the overflow CVE).
+
+The new RegexTest::TestBug11371 function mentions:
+
+  // Pattern with too much string data, such that string indexes overflow operand data field size 
+  // in compiled instruction.
+
+which might imply that at least one overflow attack was possible
+against the unpatched code.
+
+Other parts of 36801 mention both:
+
+  Append a new instruction onto the compiled pattern.
+  Includes error checking, limiting the size of the 
+  pattern to lengths that can be represented in the 
+  24 bit operand field of an instruction.
+
+and
+
+  Allocate space in the back-tracking stack frame.
+  Return the index for the newly allocated data. 
+  The frame indexes are inserted into various 
+  opcodes while compiling the pattern, meaning that frame 
+  size must be restricted to the size that will fit 
+  as an operand (24 bits). 
+
+If the unpatched code allowed overflow attacks against both the
+pattern and the back-tracking stack frame, then these would be
+combined into one CVE if the flaw types were the same.
+
+However, 36801 might also have other changes (possibly related to the
+new RegexCompile::allocateData function) that are intended to address
+complexity problems and not intended to address overflows.
+
+This leads to a possibility of these two observations:
+
+  A. the entire known vulnerability is that the unpatched code
+     calculates certain values without ensuring that they can be
+     represented in a 24-bit field
+
+  B. the vendor has not stated whether there is a vulnerability
+     related solely to the concept of complexity. Possibly part of
+     36801 addresses complexity as a security-hardening measure, not a
+     vulnerability fix. Or, possibly nothing in 36801 is exclusively
+     about complexity.
+
+Should there be one CVE ID now, for observation A alone?
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJUykBsAAoJEKllVAevmvms6ZsIAMepafrfQtfJFKET4m5wz+1Q
+IQeMZCBv2nqoToyNfSOcaOPnx567rAhTsIPEgugOW9Oc3A0FgIYCgqLQqIvD4Aog
+rBsgV1I7BZ0Uol/ucZHnccLGQZtfm8cPYZTbpHm/LD2pTwV2uVv6Oo5X9pukNTAx
+dFRPg4MdzpxaXeEnCt8oXixC9ekivJLk/XT7eZUKmiZo+7gQa1qsDZweymVMqn5f
+KkB3cHBu6YMZ1g9qodtif7qZf5kszQvp5JWKVpopBt1M0gngYGKJyHJIr9ciU/AM
+KqVAWxoHXgySDOS8fMyfsjjQArbcf1G+yzC9BoGxMNyvgsJ8pIceWauBnLH96/8=
+=s1KV
+-----END PGP SIGNATURE-----
