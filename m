@@ -1,86 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/29/20
-Message-ID: <54CA64B9.3070901@redhat.com>
-Date: Thu, 29 Jan 2015 09:50:01 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/29/27
+Message-ID: <CADBeeMvFHQs+KzEcXYUAxqx8Ew6hzZdMVu3apnybLYeuhzjxWg@mail.gmail.com>
+Date: Thu, 29 Jan 2015 19:24:19 +0000
+From: Sam Dodrill <shadow.h511@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: GHOST gethostbyname() heap overflow in glibc (CVE-2015-0235)
+Subject: Re: CVE request: xchat/hexchat don't properly verify SSL certificates
 Content-Type: text/plain; charset=utf-8
 
-On 29/01/15 05:09 AM, Hanno Böck wrote:
-> On Thu, 29 Jan 2015 02:05:38 -0700
-> Kurt Seifried <kseifried@...hat.com> wrote:
-> 
->> So you'll be doing the work to confirm which ones are/are not, patch
->> them, regression test the patches and so on? Awesome!
->>
->> There's a reason we don't treat every potential security flaw as a
->> security vulnerability. We have finite resources and pretty much an
->> infinite number of flaws to deal with. Until you solve that problem we
->> have to make due with "best effort", letting perfection be the enemy
->> of good will kill us.
-> 
-> I find that sarcastic comment inappropriate. After all it's your
-> company that's selling a product that makes the promise to backport
-> important security fixes for years.
+A lot of the time IRC networks will not pay for a verified SSL cert due to
+the fact that the kind of SSL cert they would need (a wildcard one) is
+financially prohibitive. I don't think this is a security bug with hexchat
+more a symptom of the fact that SSL combines encryption and identity
+verification where sometimes people only want the former.
 
-Which we do... when we find out about them. That's sort of the problem
-here. People are fixing security flaws, and as Michael Zalewski's post
-eloquently points out, a lot of them are not treated as security bugs
-for various reasons, and thus all the vendors backporting may not find
-out about them. We do monitor quite a few sources but the Open Source
-world is rather massive and the number of commits daily is on the large
-side.
+On Thu Jan 29 2015 at 10:58:51 AM Marc Deslauriers <
+marc.deslauriers@...onical.com> wrote:
 
-This is why for example I've been trying to make CVE's easily available
-so people are more likely to come to us with borderline issues ("I'm not
-sure but this looks weird and may be security related"). I'm also
-working on a set of examples for the CVE HOWTO so again developers will
-hopefully be able to realize when things look weird and may be a
-security issue and not just a flaw. I'm trying to find ways to help
-educate people/make it easier for them to report security issues but
-this is a non trivial problem.
+> On 2015-01-29 01:52 PM, Vincent Danen wrote:
+> > As reported [1]:
+> >
+> > XChat did not verify that the server hostname matched the domain name in
+> the
+> > subject's Common Name (CN) or subjectAltName field in X.509
+> certificates. This
+> > could allow a man-in-the-middle attacker to spoof an SSL server if they
+> had a
+> > certificate that was valid for any domain name.
+> >
+> > The same code is used in hexchat.
+> >
+> > This was initially reported to hexchat in 2013 [2] and fixed last
+> November [3].
+> > I'm not sure if it should receive a 2013 or a 2014 CVE.  Can one be
+> assigned to
+> > this?
+> >
+> > Thanks.
+> >
+> > [1] https://bugzilla.redhat.com/show_bug.cgi?id=1081839
+> > [2] https://github.com/hexchat/hexchat/issues/524
+> > [3]
+> > https://github.com/hexchat/hexchat/commit/c9b63f7f9be01692b03fa15275135a
+> 4910a7e02d
+> >
+>
+> Looks like XChat-GNOME is vulnerable also.
+>
+> Marc.
+>
+>
+> --
+> Marc Deslauriers
+> Ubuntu Security Engineer     | http://www.ubuntu.com/
+> Canonical Ltd.               | http://www.canonical.com/
+>
 
-We also are willing to help people coordinate disclosure/inform
-upstreams (this is quite often a more difficult task than it should be),
-again to minimize the chances of things being missed and people being
-impacted.
-
-> I think we have a real problem here and I'd like to have a talk how to
-> solve it. Debian, Redhat, Ubuntu and many others are making an implicit
-> promise with their long time supported stable distributions that they'll
-> take care of important bugs. I have big doubts how capable they are in
-> delivering that promise. There are just too many bugs to take care of.
-
-Solving it is easy. Solving it in an economic manner that doesn't cost
-an obscene amount of money is another matter. This also ignores the
-simple fact that even with an unlimited supply of money the number of
-security skilled developers is not currently that huge. Witness the
-number of people participating on this list, or finding security bugs,
-or doing security research.
-
-> I'll write up something longer on that topic later today.
-> 
-> And yes: I'd like people to cry alarm every time they see a buffer
-> overflow in glibc or any other core lib. Even if we aren't capable of
-> deeply checking every one of them: Having the information available
-> somewhere else than depply hidden in a google bugtracker would be an
-> improvement. If it is too much for this list create another place for
-> it.
-
-Having it at least be accessible to many people (e.g. the public) would
-probably be better than not I suspect. The bad guys will find out
-regardless if they really want to find a vuln to exploit, at least we
-can give the good guys a chance. But my concern is still "who does the
-work with all these alarms to confirm if they are in fact security or
-just a flaw" so we don't just end up with a huge pile of "maybe".
-
-TL;DR: The tragedy of the commons, we're knee deep in sheep poop. Some
-of it may be on fire.
-
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
