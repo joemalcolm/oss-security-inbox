@@ -1,80 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/26/1
-Message-Id: <20150226054749.2E2736C0014@smtpvmsrv1.mitre.org>
-Date: Thu, 26 Feb 2015 00:47:49 -0500 (EST)
-From: cve-assign@...re.org
-To: seb@...ian.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: mod-gnutls: GnuTLSClientVerify require is ignored
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/29/3
+Message-ID: <54C9DB24.60309@redhat.com>
+Date: Thu, 29 Jan 2015 00:03:00 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com, Mitre CVE assign department <cve-assign@...re.org>
+Subject: Re: GHOST gethostbyname() heap overflow in glibc (CVE-2015-0235)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-> mod-gnutls doesn't consider the server's client verify mode, even if the
-> verify mode was unset in the directory configuration. As a result,
-> invalid certificates are ignored and clients can connect and receive
-> data as long as they presented any certificate whatsoever.
+On 28/01/15 06:57 PM, Huzaifa Sidhpurwala wrote:
+> On 01/29/2015 03:17 AM, Florian Weimer wrote:
 > 
-> https://bugs.debian.org/578663
-> https://github.com/airtower-luna/mod_gnutls/commit/5a8a32bbfb8a83fe6358c5c31c443325a7775fc2
-> http://issues.outoforder.cc/view.php?id=93
+>>> Use CVE-2012-6686 for "unbound alloca use in glob_in_dir" as covered
+>>> by Red Hat Bugzilla ID 797096.
+>>
+>> Oh, it seems Huzaifa posted the wrong Bugzilla reference.
+>>
+> 
+> Yes, sorry wrong bz.
+> 
+>> We still need assignment for this fix:
+>>
+>>   <https://sourceware.org/git/gitweb.cgi?p=glibc.git;a=commitdiff;h=2e96f1c7>
+>>
+>> The matching Red Hat Bugzilla bug is:
+>>
+>>   <https://bugzilla.redhat.com/show_bug.cgi?id=981942>
+> The above is the correct bug  with the corresponding impact at:
+> https://bugzilla.redhat.com/show_bug.cgi?id=1186614
+> 
+> MITRE,
+> 
+> Can we still use the above CVE for this issue?
 
-We haven't been able to determine how many different vulnerabilities
-are being reported. The 2009 report is apparently about ignoring
-GnuTLSClientVerify when this directive is present in a directory
-context, whereas
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=578663#10 is
-apparently about ignoring GnuTLSClientVerify when this directive is
-present only in a server config context.
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=578663#10 is
-apparently discussing the 2009 bug when saying "This bug still exists
-in current stable and unstable packages" but perhaps is actually
-referring to a remaining issue that exists because of an incomplete
-fix for the 2009 bug.
+This would be a bad idea and lead to much confusion, especially for
+people that have already consumed this CVE and written up reports that
+in turn have been shipped to other people/etc.
 
-The 2009 report seems to imply that that verification problem is an
-impact of a bug related to improper "rehandshake" handling
-(http://issues.outoforder.cc/view.php?id=93#c140). Also,
-http://issues.outoforder.cc/view.php?id=93#c187 suggests that the
-verification problem is observed with some browsers but not others,
-which might mean that sessions with certain browsers (or browsers with
-certain SSL configurations) do not end up having a "rehandshake."
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=578663#10 has no
-mention of "rehandshake" or anything similar, and instead apparently
-blames the problem on "the authentication hook (mgs_hook_authz)."
-Similarly, the 2015 patch (i.e.,
-5a8a32bbfb8a83fe6358c5c31c443325a7775fc2) seems to be a fix for a
-missing check in the 2009 patch (i.e., the
-http://issues.outoforder.cc/file_download.php?file_id=34&type=bug
-patch).
+Can we REJECT this CVE if the issue is not a security issue, obviously
+if it is a security issue we should keep this CVE.
 
-The various discussion of "when I browse site2 in IE, it shows me the
-certificate of site1" and "it seems curl extension of php also can't
-correctly connect" in http://issues.outoforder.cc/view.php?id=93#c187
-is possibly a user error and not a valid third vulnerability report.
+Additionally if we can get a new CVE for Bz981942 that would be great,
+thanks!
 
-So, are you looking for:
+>>
+>> I haven't yet seen an upstream bug for it; this change happened before
+>> upstream required bugs being filed for all user-visible changes.
+>>
+> 
+> 
 
-  one CVE-2009-#### ID  -- vulnerability involving the directory context
+-- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-  one CVE-2015-#### ID  -- vulnerability involving the server config context
 
-?
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJU7rKSAAoJEKllVAevmvmsImMH/3JMN+d67QFOoiqdmtBdVpAP
-F3gWqctza+yLK1ocUAimX4Rhl/H6Cnm2D10A1u5rInXJ7FzZrsPD5dfkNLfJlMbI
-qCv54tzAC0sMb2qziEIGPmRj0koVPM1sWY5nhOwWl0CM7wIYX/MW4VDzC6LK/ias
-MfuD5vJnPjA7pIu2MNEz8gOOuF7HDrZvnqX5T9pEcKsEIK3lXRHNGtY/r+71VOPR
-DnZ0saIccfnNaYfN6fUg5PcPFisk2BzX7h8z5NyhfhtNypdcEerllgFmuW0J/Zxf
-xs9I+vrIROE/PDVrTUxjeWoc/QlW/tR8UExgMRPR3MPn08iOOPGSbCsLKGfrBZA=
-=nfvd
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
