@@ -1,38 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/24/4
-Message-ID: <CAJ_zFk+sKW657jJcs0ObL3SMz3g=zdv_NgOcf5eQPQXnY+82EA@mail.gmail.com>
-Date: Tue, 24 Feb 2015 12:35:07 -0800
-From: Tavis Ormandy <taviso@...gle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/30/19
+Message-ID: <20150130230812.GO4574@oevtugenva.nrevsny.pk>
+Date: Fri, 30 Jan 2015 18:08:12 -0500
+From: Rich Felker <dalias@...c.org>
 To: oss-security@...ts.openwall.com
-Cc: Kurt Seifried <kseifried@...hat.com>, Assign a CVE Identifier <cve-assign@...re.org>, jb@...eolan.org
-Subject: Re: Re: [videolan] older issues in libbluray
+Subject: Re: the other glibc issue
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Feb 23, 2015 at 7:47 AM, Jean-Baptiste Kempf <jb@...eolan.org> wrote:
->
-> On 23 Feb, Kurt Seifried wrote :
-> > Again my apologies for this mess. The good news is that all our current
-> > embargoed flaws (none against VLC currently =) are being actively
-> > handled (e.g. worked on in a current time frame) and moving forwards we
-> > should hopefully be able to avoid issues like this.
->
-> One libbluray issue was already fixed.
-> The second one is not really fixable, since BD-J is actually executing
-> java code from the outside.
+On Thu, Jan 29, 2015 at 11:50:23AM +0300, Solar Designer wrote:
+> Oh, can we use descriptive Subjects, please?  (I am leaving this one
+> intact not to introduce even further confusion.)
+> 
+> On Wed, Jan 28, 2015 at 01:17:40PM -0500, cve-assign@...re.org wrote:
+> > Use CVE-2013-7423 for ths initial bug report at 2013-09-12 09:50:17 UTC 
+> > stating: "Under high load, getaddrinfo() starts sending DNS queries to 
+> > random file descriptors, e.g. some unrelated socket connected to a remote 
+> > service."
+> > 
+> > Which comment says that the issue is unfixed?  The 2015-01-08 14:21:11 UTC 
+> > comment by David Nilsson says "I'm unable to reproduce the correct 
+> > behaviour," but does not suggest that the vulnerability is still present.
+> 
+> That comment you mention seemed to imply that, but here are the news off
+> Twitter:
+> 
+> <solardiz> glibc "getaddrinfo() writes DNS queries to random file descriptors under high load" https://sourceware.org/bugzilla/show_bug.cgi?id=15946 "Fixed in 2.20", reopened, CVE?
+> <@RichFelker> @solardiz Yeah I've been following this and pushing for it to be taken seriously for a long time...
+> <@RichFelker> @solardiz Looks like a false positive, a bug in the testcase rather than in #glibc. See https://sourceware.org/ml/glibc-bugs/2015-01/msg00226.html
+> <@solardiz> @RichFelker To me, this message says that the bug still being reproducible on glibc 2.20 is a false positive, but the fix in 2.20 was needed
+> <@solardiz> @RichFelker Someone should run the corrected testcase on pre-2.20 to see if the issue was reproducible before the fix or not
+> 
+> So glibc 2.20 appears OK, and we need to re-test older glibc - but from
+> the patch it looks like there was indeed this bug before 2.20.
 
-Forgive my unfamiliarity with BluRay, but based on what you just said,
-it seems like the solution is what was described in the report: just
-use a JSM?
+I followed up on the bug tracker, and Jiri Hruska reports having
+tested the fixed testcase against the pre-fix glibc and is correctly
+detects the original bug. See:
 
-> > Also one request (not just specific to VLC, but everyone with a
-> > project): please have a security@ email address for your project or a
-> > security web page that makes it obvious how to contact and report things
->
-> We have a security email.
->
-> With my kindest regards,
->
-> --
-> Jean-Baptiste Kempf
-> http://www.jbkempf.com/ - +33 672 704 734
-> Sent from my Electronic Device
+https://sourceware.org/ml/glibc-bugs/2015-01/msg00273.html
+
+Rich
