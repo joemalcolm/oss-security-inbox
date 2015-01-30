@@ -1,25 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/04/13
-Message-ID: <20150104062638.GA16143@gremlin.ru>
-Date: Sun, 4 Jan 2015 09:26:38 +0300
-From: gremlin@...mlin.ru
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/30/4
+Message-ID: <20150130012223.5c193004@pc>
+Date: Fri, 30 Jan 2015 01:22:23 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request for illumos distributions
+Subject: Re: GHOST gethostbyname() heap overflow in glibc (CVE-2015-0235)
 Content-Type: text/plain; charset=utf-8
 
-On 2015-01-04 15:06:51 +1100, Dave Horsfall wrote:
+On Fri, 30 Jan 2015 03:14:10 +0300
+Solar Designer <solar@...nwall.com> wrote:
 
- >> | Use CVE-2014-9491.
- >> Shouldn't we be using CVE-2015-XXXX by now?
- > I'd rather see CVE-2015-XXXXX - look how close we came...
- > Is there a CVE for that?
+> > because I felt waiting for them stops me from reporting more issues.
+> 
+> Huh?!  IMO, no one should ever wait for a CVE before reporting an
+> issue!
 
-First CVE ID in 2015 is CVE-2015-0001; once we get to CVE-2015-9999,
-the next ID will be CVE-2015-10000.
+Okay, maybe this was prone to misinterpretation.
 
-Consider it as "CVE-%u-%04u".
-
+I thought it more like "If I try to track all the issues where I have
+requested CVEs and check whether I really got them or whether I should
+ask again I'd loose time I could better use to fuzz the next library."
+I don't remember actively delaying reporting or publication of a vuln
+due to lack of CVEs.
 
 -- 
-Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
-GPG: 8832FE9FA791F7968AC96E4E909DAC45EF3B1FA8 @ hkp://keys.gnupg.net
+Hanno Böck
+http://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
+
+Content of type "application/pgp-signature" skipped
