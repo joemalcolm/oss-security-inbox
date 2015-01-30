@@ -1,37 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/04/10
-Message-Id: <1423073375.97687.223118365.6793316D@webmail.messagingengine.com>
-Date: Wed, 04 Feb 2015 12:09:35 -0600
-From: Mark Felder <feld@...d.me>
-To: oss-security@...ts.openwall.com
-Subject: Re: Apache 2.4 mod_ssl SSLSessionTickets -- others vulnerable?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/30/13
+Message-ID: <BAY405-EAS152F9FC814BD515624211BADF310@phx.gbl>
+Date: Fri, 30 Jan 2015 11:09:01 +0100
+From: linkbc02 <linkbc02@...look.com>
+To: <oss-security@...ts.openwall.com>
+Subject: R: GHOST gethostbyname() heap overflow in glibc (CVE-2015-0235)
 Content-Type: text/plain; charset=utf-8
 
+Sorry Alexander, I quoted the wrong one.
+I can confirm, Dovecot, at least, got crashed, I asked also Timo S. that is
+digging about it.
+Screenshot
+http://goo.gl/JwhWIf
 
 
-On Wed, Feb 4, 2015, at 11:59, Reed Loden wrote:
-> ... or you could do something like what Twitter did [0] and write your
-> own
-> scripts to generate new session ticket keys regularly and store them only
-> in a tmpfs or /dev/shm type environment.
-> 
-> agl also talks about this problem on his blog [1] a while ago.
-> 
-> As for your earlier question, nginx has the same issue here [2]. Really
-> all
-> comes down to OpenSSL not making it easy to do better.
-> 
-> ~reed
-> 
-> [0] https://blog.twitter.com/2013/forward-secrecy-at-twitter
-> [1] https://www.imperialviolet.org/2013/06/27/botchingpfs.html
-> [2]
-> http://nginx.org/en/docs/http/ngx_http_ssl_module.html#ssl_session_ticket_key
-> 
 
-Okay, so the failure is two-pronged: the current limitations in OpenSSL
-with regards to managing session ticket keys, and the use of session
-tickets when PFS cipher is negotiated.
-
-
-Thanks for all the details, guys.
+|-----Messaggio originale-----
+|Da: Solar Designer [mailto:solar@...nwall.com]
+|Inviato: venerdì 30 gennaio 2015 10:47
+|A: oss-security@...ts.openwall.com
+|Cc: linkbc02
+|Oggetto: Re: [oss-security] GHOST gethostbyname() heap overflow in glibc
+|(CVE-2015-0235)
+|
+|On Fri, Jan 30, 2015 at 10:24:56AM +0100, linkbc02 wrote:
+|> Dovecot: It seems that libdovecot-storage.so can be triggered and you can
+|read the core dump
+|>
+|> imap[29914]: segfault at 0 ip 00007f1e525263a0 sp 00007fffaeed7818
+|>  error 4 in libdovecot-storage.so.0.0.0[7f1e5249e000+10f000]
+|
+|I reluctantly approved the above posting even though it contains no
+|indication this has anything to do with GHOST, and it bottom-quotes a
+|mostly irrelevant message (latest one from the thread).
+|
+|linkbc02, if you have any reason to believe this is relevant to GHOST,
+|then please explain.  And if you have no such reason, then please also
+|state so, and we'll more confidently disregard this false alarm. ;-)
+|
+|Alexander
