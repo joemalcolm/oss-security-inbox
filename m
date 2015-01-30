@@ -1,38 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/06/10
-Message-Id: <20150106175917.BC25C6C00E5@smtpvmsrv1.mitre.org>
-Date: Tue,  6 Jan 2015 12:59:17 -0500 (EST)
-From: cve-assign@...re.org
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/30/12
+Message-ID: <54CB5717.60503@tao.at>
+Date: Fri, 30 Jan 2015 11:04:07 +0100
+From: Sven Schwedas <sven.schwedas@....at>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: CVE-2014-9529 - Linux kernel security/keys/gc.c race condition
+Subject: Re: CVE request: xchat/hexchat don't properly verify SSL certificates
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 2015-01-29 20:24, Sam Dodrill wrote:
+> A lot of the time IRC networks will not pay for a verified SSL cert due to
+> the fact that the kind of SSL cert they would need (a wildcard one) is
+> financially prohibitive.
 
-CVE-2014-9529 has been assigned to this issue in security/keys/gc.c
-that can lead to memory corruption or a panic:
+IRC servers can consider using CACert.org or their own CA and adding
+that to clients; Let's Encrypt seems to be making progress too, so this
+problem will hopefully solve itself in a few months. That shouldn't be a
+reason to ship a broken TLS implementation.
 
-  http://marc.info/?l=linux-kernel&m=141986398232547&w=2
-  http://marc.info/?l=linux-kernel&m=142047362307894&w=2
+> I don't think this is a security bug with hexchat
+> more a symptom of the fact that SSL combines encryption and identity
+> verification where sometimes people only want the former.
 
-(not yet available at
-http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/log/security/keys/gc.c)
+What's the point of encryption without identity verification, anyway?
+MITM attacks are laughably trivial there.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+> 
+> On Thu Jan 29 2015 at 10:58:51 AM Marc Deslauriers <
+> marc.deslauriers@...onical.com> wrote:
+> 
+>> On 2015-01-29 01:52 PM, Vincent Danen wrote:
+>>> As reported [1]:
+>>>
+>>> XChat did not verify that the server hostname matched the domain name in
+>> the
+>>> subject's Common Name (CN) or subjectAltName field in X.509
+>> certificates. This
+>>> could allow a man-in-the-middle attacker to spoof an SSL server if they
+>> had a
+>>> certificate that was valid for any domain name.
+>>>
+>>> The same code is used in hexchat.
+>>>
+>>> This was initially reported to hexchat in 2013 [2] and fixed last
+>> November [3].
+>>> I'm not sure if it should receive a 2013 or a 2014 CVE.  Can one be
+>> assigned to
+>>> this?
+>>>
+>>> Thanks.
+>>>
+>>> [1] https://bugzilla.redhat.com/show_bug.cgi?id=1081839
+>>> [2] https://github.com/hexchat/hexchat/issues/524
+>>> [3]
+>>> https://github.com/hexchat/hexchat/commit/c9b63f7f9be01692b03fa15275135a
+>> 4910a7e02d
+>>>
+>>
+>> Looks like XChat-GNOME is vulnerable also.
+>>
+>> Marc.
+>>
+>>
+>> --
+>> Marc Deslauriers
+>> Ubuntu Security Engineer     | http://www.ubuntu.com/
+>> Canonical Ltd.               | http://www.canonical.com/
+>>
+> 
 
-iQEcBAEBAgAGBQJUrCFRAAoJEKllVAevmvmsyA4IAIh+kbncaMb8/okcoRBwCGuc
-3u9QyifANmAxp3AErN/JzrEi1mWfQ/1dI+XMucINM5+4ddOpLoPsr2B1Vt7EYiAN
-O47FfVodTvEsKYRqkbXXidfVjl8lU8WiQa6PA5mdzf8eSv88wIJqHXqwQUx9YCVS
-K7/FJEjhC4c0lkDG4oTlrPuTOjNgdXSM5qlgkwp5F6im1GWN9t3ckfYq5OXL11a4
-dZ52i5v5N0SHwy0skfhVndql6Q/Y5tTfYfY6+QIALZ/58vUGqyt6k47RpNsilLSE
-grkjJjSwI4ySj7HO1R4K8lpCiUWPLK8qMMS1D42Fb5fQ7aVjeb9xhWO1r3iMLbI=
-=PoZ+
------END PGP SIGNATURE-----
+-- 
+Mit freundlichen Grüßen, / Best Regards,
+Sven Schwedas
+Systemadministrator
+TAO Beratungs- und Management GmbH | Lendplatz 45 | A - 8020 Graz
+Mail/XMPP: sven.schwedas@....at | +43 (0)680 301 7167
+http://software.tao.at
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (649 bytes)
