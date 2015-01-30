@@ -1,60 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/27/19
-Message-ID: <Pine.LNX.4.64.1501271320180.11165@beijing.mitre.org>
-Date: Tue, 27 Jan 2015 13:21:21 -0500 (EST)
-From: cve-assign@...re.org
-To: Gerhard Rieger <gerhard@...t-unreach.org>
-cc: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: Re: Socat security advisory 6 - Possible DoS with fork
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/30/18
+Message-ID: <CAJYVuzm_e6sLuQmxX2OXxgVg0z=YS-A6PMvu4UT1N5ULycbwCw@mail.gmail.com>
+Date: Fri, 30 Jan 2015 14:27:24 -0500
+From: TingPing <tingping@...gping.se>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: xchat/hexchat don't properly verify SSL certificates
 Content-Type: text/plain; charset=utf-8
 
+If anybody cares, HexChats plan is to support cert-pinning so users can
+still trust self-signed certs. Eitherway this has little to do with
+validating hostnames, especially self-signed certs should always have
+matching hostnames.
 
-> Socat security advisory 6 - Possible DoS with fork
->
-> Overview
->  socats signal handler implementations are not async-signal-safe and
->  can cause crash or freeze of socat processes
->
-> Vulnerability Id: (pending)
->
-> Severity: Low
->
-> Details
->  Socats signal handler implementations are not asnyc-signal-safe. When
->  a signal is triggered while the process is within a non
->  async-signal-safe function the signal handler will call a non
->  sync-signal-safe function too. POSIX specifies the behaviour in this
->  situation as undefined. Dependend on involved functions, libraries,
->  and operating system, the process can continue, freeze, or crash.
->  Mostly this issue occurs when socat is in listening mode with fork
->  option and a couple of child processes terminate at the same time.
->
-> Testcase
->  none
->
-> Affected versions
->  1.0.0.0 - 1.7.2.4
->  2.0.0-b1 - 2.0.0-b7
->
-> Not affected or corrected versions
->  1.7.3.0 and later
->  2.0.0-b8 (to be released) and later
->
-> Workaround
->  none
->
-> Download
->  The updated sources can be downloaded from:
->
->    http://www.dest-unreach.org/socat/download/socat-1.7.3.0.tar.gz
->
-> Credits
->   Credits to Peter Lobsinger
+On Fri, Jan 30, 2015 at 9:15 AM, Kurt Seifried <kseifried@...hat.com> wrote:
 
-Use CVE-2015-1379.
+> On 30/01/15 02:56 AM, Michael Samuel wrote:
+> > On 30 January 2015 at 06:24, Sam Dodrill <shadow.h511@...il.com> wrote:
+> >> A lot of the time IRC networks will not pay for a verified SSL cert due
+> to
+> >> the fact that the kind of SSL cert they would need (a wildcard one) is
+> >> financially prohibitive. I don't think this is a security bug with
+> hexchat
+> >> more a symptom of the fact that SSL combines encryption and identity
+> >> verification where sometimes people only want the former.
+> >
+> > The correct response to this is for them to publish their self-signed
+> > certificate (or even a CA certificate) and have it pasted into the
+> > client, along with the configuration.
+>
+> Sorry what? A DV (Domain Validated) wildcard cert is now 80-90$ a year
+> from many providers (google "cheap ssl"). SSL certs are no longer
+> expensive and have not been for many years.
+>
+> > The client could then perform a byte-wise compare of the public key.
+> >
+> > I assume well-known networks could have their certificates hard-coded
+> > into the client.
+>
+> No. Just no. You put root certs on the client side, not the actual
+> server certs. Google "crypto agility" and so on.
+>
+> --
+> Kurt Seifried -- Red Hat -- Product Security -- Cloud
+> PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+>
+>
 
----
-
-CVE assignment team, MITRE CVE Numbering Authority M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
