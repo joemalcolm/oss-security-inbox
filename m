@@ -1,44 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/13/7
-Message-ID: <54DE02A7.3060302@upv.es>
-Date: Fri, 13 Feb 2015 14:56:55 +0100
-From: Hector Marco <hecmargi@....es>
-To: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE-Request -- Linux ASLR integer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/30/5
+Message-ID: <CAGXu5jJzygq4-Xh=5C=T0tC_QhhjtYYy9=y5E0V9P47aZ-KvZg@mail.gmail.com>
+Date: Thu, 29 Jan 2015 16:28:06 -0800
+From: Kees Cook <keescook@...omium.org>
+To: Solar Designer <solar@...nwall.com>
+Cc: Paul Pluzhnikov <ppluzhnikov@...il.com>, oss-security@...ts.openwall.com
+Subject: Re: GHOST gethostbyname() heap overflow in glibc (CVE-2015-0235)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Thu, Jan 29, 2015 at 4:02 PM, Solar Designer <solar@...nwall.com> wrote:
+> Paul, Kees -
+>
+> On Thu, Jan 29, 2015 at 08:00:48AM -0800, Paul Pluzhnikov wrote:
+>> On Thu, Jan 29, 2015 at 4:09 AM, Hanno B??ck <hanno@...eck.de> wrote:
+>> > And yes: I'd like people to cry alarm every time they see a buffer
+>> > overflow in glibc or any other core lib.
+>>
+>> What is the appropriate forum to cry alarm on?
+>
+> As a moderator for oss-security, I'd appreciate it if you cry alarm in
+> here.  And if this ever becomes too noisy, that would be an interesting
+> problem to have and we'll find a way to deal with it then. :-)
+>
+>> We are not a distro, and (AFAICT) are not on any of the closed lists.
+>> But maybe we should be.
+>
+> Actually, Chrome OS is listed as a member of linux-distros here:
+>
+> http://oss-security.openwall.org/wiki/mailing-lists/distros
+>
+> and the person subscribed on behalf of Chrome OS is Kees Cook
+> (previously representing Ubuntu).  Given your comment above, we have to
+> double-check whether this is currently correct.  Is Kees Cook currently
+> representing Chrome OS on linux-distros?  If so, why were you not aware
+> of that?  (I think this is unrelated to the handling of GHOST, but since
+> this was brought up we just have to deal with it as well.)
 
-It worth metion that the patch was already sent:
+I'm representing Chrome OS on linux-distros, yes. As for GHOST, I
+wasn't aware of the issue when it was fixed back in April in the
+Chrome OS bug tracker -- it was handled by the package maintainers, it
+seems, and never got escalated, unfortunately.
 
-https://lkml.org/lkml/2015/1/7/811
+-Kees
 
-
-Hector Marco.
-http://hmarco.org
-
-
-El 13/02/15 a las 13:26, Hector Marco escribió:
-> Hi,
->
-> A bug in Linux ASLR implementation for versions prior to 3.19-rc3 has
-> been found. The issue is that the stack for processes is not properly
-> randomized on some 64 bit architectures due to an integer overflow.
->
-> Affected systems have reduced the stack entropy of the processes by four.
->
->
-> Details at:
-> http://hmarco.org/bugs/linux-ASLR-integer-overflow.html
->
->
->
-> Could you please assign a CVE-ID for this?
->
->
->
-> Hector Marco.
-> http://hmarco.org
->
-> Cyber-security researcher at
-> http://cybersecurity.upv.es/
+-- 
+Kees Cook
+Chrome OS Security
