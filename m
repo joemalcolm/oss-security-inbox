@@ -1,25 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/10/11
-Message-ID: <20150210172756.GA8690@openwall.com>
-Date: Tue, 10 Feb 2015 20:27:56 +0300
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: wordexp(3)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/30/6
+Message-ID: <87vbjp9ee5.fsf@alice.fifthhorseman.net>
+Date: Thu, 29 Jan 2015 21:43:46 -0500
+From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
+To: Hanno Böck <hanno@...eck.de>, oss-security@...ts.openwall.com
+Subject: Re: GHOST gethostbyname() heap overflow in glibc (CVE-2015-0235)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Thu 2015-01-29 19:00:35 -0500, Hanno Böck wrote:
+> As promised, I wrote down my lengthy thoughts in a blog post:
+> https://blog.hboeck.de/archives/864-What-the-GHOST-tells-us-about-free-software-vulnerability-management.html
 
-I found this curious and relevant to this list, off Twitter:
+thanks for this writeup, Hanno.  you wrote:
 
-(x250) <%worr> RT @FioraAeterna: oh my gosh, Apple's libc literally implements "wordexp" by shelling out to perl: https://github.com/Apple-FOSS-Mirror/Libc/blob/2ca2ae74647714acfc18674c3114b1a5d3325d7d/gen/wordexp.c#L192
+>> It would be an interesting (and time consuming) project to take a
+>> package like PHP and check for all the security vulnerabilities whether
+>> they are fixed in the latest packages in Debian Squeeze/Wheezy, all Red
+>> Hat Enterprise versions and other long term support systems.
 
-<worr> So yesterday, @FioraAeterna tweeted this: https://github.com/Apple-FOSS-Mirror/Libc/blob/2ca2ae74647714acfc18674c3114b1a5d3325d7d/gen/wordexp.c#L192. I've decided to take a tour of wordexp(3) implementations
-<@worr> They can't all be that bad
-(x2) <@worr> NetBSD and FreeBSD both use a sh builtin to implement wordexp(3): http://svnweb.freebsd.org/base/head/lib/libc/gen/wordexp.c?revision=254977&view=markup http://cvsweb.netbsd.org/bsdweb.cgi/src/lib/libc/gen/wordexp.c?rev=1.3&content-type=text/x-cvsweb-markup&only_with_tag=MAIN
-(x5) <@worr> OpenBSD wins the wordexp(3) contest, by refusing to implement it altogether.
-<@worr> Correction: glibc implements a huge recursive descent parser, and only shells out when it needs to do subshell expansions.
-<@worr> tbh, wordexp(3) is an antifeature. Maybe even a misfeature.
-<@worr> Here's the implementation, btw: https://sourceware.org/git/?p=glibc.git;a=blob;f=posix/wordexp.c;h=26f3a2653feba2b1a5904937d9d6b58c32109e24;hb=a39208bd7fb76c1b01c127b4c61f9bfd915bfe7c#l872
-<@worr> Continuing on my tour of wordexp(3) implementations, here's Illumos': https://github.com/joyent/illumos-joyent/blob/master/usr/src/lib/libc/port/regex/wordexp.c#L218-L290 It constructs a small shell script and runs it
+I don't know about RHEL, but Debian's security tracker does actually try
+to do this, and to coordinate it with the CVEs.  For example:
 
-Alexander
+  https://security-tracker.debian.org/tracker/source-package/php5
+
+It ain't pretty, but it's there.  If you (or anyone) is interested in
+working on this sort of tracker, or integrating between this and other
+trackers, please talk to the debian security team:
+
+  https://wiki.debian.org/Teams/Security
+
+Regards,
+
+      --dkg
+
+Download attachment "signature.asc" of type "application/pgp-signature" (949 bytes)
