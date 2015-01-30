@@ -1,26 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/16/5
-Message-ID: <CAFicg87T2PYuZ-BBd4X2UNShS_Tq2T_A9cZ2O=m6j=zyhsat5w@mail.gmail.com>
-Date: Mon, 16 Feb 2015 15:42:06 +0100
-From: Maxin John <maxin@...inbjohn.info>
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org, sona.sarmadi@...a.com
-Subject: CVE-Request - bitbake
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/30/15
+Message-ID: <BAY405-EAS3352C90E02E199894FC297BDF310@phx.gbl>
+Date: Fri, 30 Jan 2015 11:54:49 +0100
+From: linkbc02 <linkbc02@...look.com>
+To: <oss-security@...ts.openwall.com>
+Subject: R: GHOST gethostbyname() heap overflow in glibc (CVE-2015-0235)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+|If you try upgrading glibc and the issue goes away, _that_ would be a
+|reason to suspect relevance. 
 
-Executing "bitbake -g -u depexp <package>" when DISPLAY is not
-properly set causes segfault and a denial of service (through OOM) via
-a crafted script.
+Hi, already done
 
-Bug Report URL:
-https://bugzilla.yoctoproject.org/show_bug.cgi?id=7299
 
-Patch link (master branch):
-http://git.openembedded.org/bitbake/commit/?id=f35e9bd7b59c180fe9a3d9177efb57b92d9cd373
+# rpm -q glibc 
+glibc-2.12-1.132.el6_5.2.x86_64
+glibc-2.12-1.132.el6_5.2.i686
 
-Can a CVE be assigned to this please?
+# yum update glibc
 
-Thanks and Regards,
-Maxin
+
+# rpm -q glibc    
+glibc-2.12-1.149.el6_6.5.x86_64
+glibc-2.12-1.149.el6_6.5.i686
+
+
+
+# /etc/init.d/dovecot restart
+
+
+# telnet localhost 143
+Trying 127.0.0.1...
+Connected to localhost.
+Escape character is '^]'.
+* OK [CAPABILITY IMAP4rev1 LITERAL+ SASL-IR LOGIN-REFERRALS ID ENABLE IDLE
+STARTTLS AUTH=PLAIN AUTH=LOGIN] IMAP ready.
+1 login
+00000000000000000000000000000000000000000000000000000000000000000000000000-c
+utted-
+
+
+BAD Error in IMAP command received by server.
+
+* BAD Error in IMAP command received by server.
+
+
+#dmesg doesn't show anymore segfault and core dump
