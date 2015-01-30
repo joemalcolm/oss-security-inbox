@@ -1,31 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/03/3
-Message-ID: <54F587A6.1080603@debian.org>
-Date: Tue, 03 Mar 2015 10:06:30 +0000
-From: Simon McVittie <smcv@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/30/16
+Message-ID: <54CB920E.3010400@redhat.com>
+Date: Fri, 30 Jan 2015 07:15:42 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: Debian / xterm #779397
+Subject: Re: CVE request: xchat/hexchat don't properly verify SSL certificates
 Content-Type: text/plain; charset=utf-8
 
-On 03/03/15 09:19, Thomas Dickey wrote:
-> | From: "Kurt Seifried" <kseifried@...hat.com>
-> | 
-> | $ xterm -S/dev/pts/20
-> | *** buffer overflow detected ***: /usr/bin/xterm terminated
-> |
-> | Did this get a CVE? I don't see a DSA for xterm.
+On 30/01/15 02:56 AM, Michael Samuel wrote:
+> On 30 January 2015 at 06:24, Sam Dodrill <shadow.h511@...il.com> wrote:
+>> A lot of the time IRC networks will not pay for a verified SSL cert due to
+>> the fact that the kind of SSL cert they would need (a wildcard one) is
+>> financially prohibitive. I don't think this is a security bug with hexchat
+>> more a symptom of the fact that SSL combines encryption and identity
+>> verification where sometimes people only want the former.
 > 
-> no - someone mentioned the problem in an email - nothing more was said
+> The correct response to this is for them to publish their self-signed
+> certificate (or even a CA certificate) and have it pasted into the
+> client, along with the configuration.
 
-There's some discussion on the Debian bug about whether this should be
-considered to be a security vulnerability, or just a bug. Not every
-buffer overflow is a vulnerability: it can only be a vulnerability if an
-attacker can trigger it.
+Sorry what? A DV (Domain Validated) wildcard cert is now 80-90$ a year
+from many providers (google "cheap ssl"). SSL certs are no longer
+expensive and have not been for many years.
 
-Is there any reason why it would be useful/sensible to pass untrusted
-(pseudo-terminal filename, fd) pairs to the -S option? It seems to me
-that if you're passing partially or entirely attacker-controlled
-filenames to this option, you have probably already lost.
+> The client could then perform a byte-wise compare of the public key.
+> 
+> I assume well-known networks could have their certificates hard-coded
+> into the client.
 
-    S
+No. Just no. You put root certs on the client side, not the actual
+server certs. Google "crypto agility" and so on.
 
+-- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
