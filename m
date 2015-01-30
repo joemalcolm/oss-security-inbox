@@ -1,60 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/08/2
-Message-ID: <54AE65CD.6090000@internot.info>
-Date: Thu, 08 Jan 2015 22:11:09 +1100
-From: Joshua Rogers <oss@...ernot.info>
-To: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: CVE Request: PHP
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/30/10
+Message-ID: <20150130094641.GA14903@openwall.com>
+Date: Fri, 30 Jan 2015 12:46:41 +0300
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Cc: linkbc02 <linkbc02@...look.com>
+Subject: Re: GHOST gethostbyname() heap overflow in glibc (CVE-2015-0235)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Fri, Jan 30, 2015 at 10:24:56AM +0100, linkbc02 wrote:
+> Dovecot: It seems that libdovecot-storage.so can be triggered and you can read the core dump
+> 
+> imap[29914]: segfault at 0 ip 00007f1e525263a0 sp 00007fffaeed7818
+>  error 4 in libdovecot-storage.so.0.0.0[7f1e5249e000+10f000]
 
-I'm requesting multiple CVE-ID's for multiple vulnerabilities in PHP
-that I found:
+I reluctantly approved the above posting even though it contains no
+indication this has anything to do with GHOST, and it bottom-quotes a
+mostly irrelevant message (latest one from the thread).
 
---
+linkbc02, if you have any reason to believe this is relevant to GHOST,
+then please explain.  And if you have no such reason, then please also
+state so, and we'll more confidently disregard this false alarm. ;-)
 
-CVE Request 1:
-
-Use after free in 'opcache' component of PHP
-Bug report: https://bugs.php.net/bug.php?id=68677&edit=2
-Commit fix:
-http://git.php.net/?p=php-src.git;a=commit;h=777c39f4042327eac4b63c7ee87dc1c7a09a3115
-
-
-CVE Request 2:
-
-Uninitalized Pointer Read in PHP core('fopen()')
-Bug report: https://bugs.php.net/bug.php?id=68692&edit=2
-Commit fix:
-http://git.php.net/?p=php-src.git;a=commit;h=7ebdc8d70d7617f2c3353b027663ef54a24a2248
-
-CVE Request 3:
-Uninitalized Pointer Read in PHP core
-Bug report: https://bugs.php.net/bug.php?id=68694&edit=2
-Commit fix:
-http://git.php.net/?p=php-src.git;a=commit;h=f3ea1b0b6a42a08093bf9191ad76fb4b5e0a653b
-
-
-CVE Request 4:
-Null Pointer Deference in pgsql
-Bug report: https://bugs.php.net/bug.php?id=68741&edit=2
-Commit fix:
-http://git.php.net/?p=php-src.git;a=commit;h=124fb22a13fafa3648e4e15b4f207c7096d8155e
-
-CVE Request 5:
-Null Pointer Deference in ereg(regex)
-Bug report: https://bugs.php.net/bug.php?id=68740&edit=2
-Commit fix:
-http://git.php.net/?p=php-src.git;a=commit;h=124fb22a13fafa3648e4e15b4f207c7096d8155e
-
-
-
-
-
-Thanks,
--- 
--- Joshua Rogers <https://internot.info/>
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Alexander
