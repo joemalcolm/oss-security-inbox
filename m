@@ -1,55 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/09/2
-Message-ID: <20150109060238.GA7291@elende.valinor.li>
-Date: Fri, 9 Jan 2015 07:02:38 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Cc: CVE Assignments MITRE <cve-assign@...re.org>, Albert Astals Cid <aacid@....org>
-Subject: CVE Request: kwallet: incorrect CBC encryption handling
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/30/2
+Message-ID: <20150130000209.GA10301@openwall.com>
+Date: Fri, 30 Jan 2015 03:02:09 +0300
+From: Solar Designer <solar@...nwall.com>
+To: Paul Pluzhnikov <ppluzhnikov@...il.com>, Kees Cook <keescook@...omium.org>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: GHOST gethostbyname() heap overflow in glibc (CVE-2015-0235)
 Content-Type: text/plain; charset=utf-8
 
-Hi
+Paul, Kees -
 
-The following KDE Project Security Advisory was issued at
-https://www.kde.org/info/security/advisory-20150109-1.txt .
+On Thu, Jan 29, 2015 at 08:00:48AM -0800, Paul Pluzhnikov wrote:
+> On Thu, Jan 29, 2015 at 4:09 AM, Hanno B??ck <hanno@...eck.de> wrote:
+> > And yes: I'd like people to cry alarm every time they see a buffer
+> > overflow in glibc or any other core lib.
+> 
+> What is the appropriate forum to cry alarm on?
 
-> Title:          Fix kwalletd CBC encryption handling
-> Risk Rating:    Low
-> Platforms:      All
-> Versions:       kwalletd < Applications 14.12.1, KF5::KWallet < 5.6.0
-> Author:         Valentin Rusu <kde@...u.info>
-> Date:           9 January 2015
-> 
-> Overview
-> ========
-> 
-> Until KDE Applications 14.12.0, kwalletd incorrectly handled CBC encryption blocks when
-> encrypting secrets in kwl files. The secrets were still encrypted, but the
-> result binary data corresponded to an ECB encrypted block instead of CBC.
-> 
-> Impact
-> ======
-> 
-> The ECB encryption algorithm, even if it'll scramble user data, it'll produce
-> same encrypted byte sequence for the same input text. As a result, attackers
-> may eventually find-out the encrypted text.
-> 
-> Solution
-> ========
-> 
-> For kde-runtime KWallet upgrade to KDE Applications 14.12.1 or apply the following patch:
->   http://quickgit.kde.org/?p=kde-runtime.git&a=commit&h=14a8232d0b5b1bc5e0ad922292c6b5a1c501165c
-> 
-> For KDE Frameworks 5 KWallet upgrade to 5.6.0 or apply the following patch:
->   http://quickgit.kde.org/?p=kwallet.git&a=commit&h=6e588d795e6631c3c9d84d85fd3884a159b45849
-> 
-> Credits
-> =======
-> 
-> Thanks to Itay Duvdevani for finding the issue and for letting us know.
-> Thanks to Valentin Rusu for implementing the fix.
+As a moderator for oss-security, I'd appreciate it if you cry alarm in
+here.  And if this ever becomes too noisy, that would be an interesting
+problem to have and we'll find a way to deal with it then. :-)
 
-Could you please assing a CVE for this issue?
+> We are not a distro, and (AFAICT) are not on any of the closed lists.
+> But maybe we should be.
 
-Regards,
-Salvatore
+Actually, Chrome OS is listed as a member of linux-distros here:
+
+http://oss-security.openwall.org/wiki/mailing-lists/distros
+
+and the person subscribed on behalf of Chrome OS is Kees Cook
+(previously representing Ubuntu).  Given your comment above, we have to
+double-check whether this is currently correct.  Is Kees Cook currently
+representing Chrome OS on linux-distros?  If so, why were you not aware
+of that?  (I think this is unrelated to the handling of GHOST, but since
+this was brought up we just have to deal with it as well.)
+
+Thank you!
+
+Alexander
