@@ -1,58 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/30/7
-Message-ID: <54CB0C41.1020301@openwall.com>
-Date: Fri, 30 Jan 2015 07:44:49 +0300
-From: Alexander Cherepanov <ch3root@...nwall.com>
-To: oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>
-CC: Paul Pluzhnikov <ppluzhnikov@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/30/8
+Message-ID: <54CB4C7A.2070009@redhat.com>
+Date: Fri, 30 Jan 2015 10:18:50 +0100
+From: Florian Weimer <fweimer@...hat.com>
+To: oss-security@...ts.openwall.com
 Subject: Re: GHOST gethostbyname() heap overflow in glibc (CVE-2015-0235)
 Content-Type: text/plain; charset=utf-8
 
-On 2015-01-30 03:28, Kees Cook wrote:
-> On Thu, Jan 29, 2015 at 4:02 PM, Solar Designer <solar@...nwall.com> wrote:
->> Paul, Kees -
->>
->> On Thu, Jan 29, 2015 at 08:00:48AM -0800, Paul Pluzhnikov wrote:
->>> On Thu, Jan 29, 2015 at 4:09 AM, Hanno B??ck <hanno@...eck.de> wrote:
->>>> And yes: I'd like people to cry alarm every time they see a buffer
->>>> overflow in glibc or any other core lib.
->>>
->>> What is the appropriate forum to cry alarm on?
->>
->> As a moderator for oss-security, I'd appreciate it if you cry alarm in
->> here.  And if this ever becomes too noisy, that would be an interesting
->> problem to have and we'll find a way to deal with it then. :-)
->>
->>> We are not a distro, and (AFAICT) are not on any of the closed lists.
->>> But maybe we should be.
->>
->> Actually, Chrome OS is listed as a member of linux-distros here:
->>
->> http://oss-security.openwall.org/wiki/mailing-lists/distros
->>
->> and the person subscribed on behalf of Chrome OS is Kees Cook
->> (previously representing Ubuntu).  Given your comment above, we have to
->> double-check whether this is currently correct.  Is Kees Cook currently
->> representing Chrome OS on linux-distros?  If so, why were you not aware
->> of that?  (I think this is unrelated to the handling of GHOST, but since
->> this was brought up we just have to deal with it as well.)
->
-> I'm representing Chrome OS on linux-distros, yes. As for GHOST, I
-> wasn't aware of the issue when it was fixed back in April in the
-> Chrome OS bug tracker -- it was handled by the package maintainers, it
-> seems, and never got escalated, unfortunately.
->
-> -Kees
+On 01/29/2015 05:00 PM, Paul Pluzhnikov wrote:
+> On Thu, Jan 29, 2015 at 4:09 AM, Hanno Böck <hanno@...eck.de> wrote:
+> 
+>> And yes: I'd like people to cry alarm every time they see a buffer
+>> overflow in glibc or any other core lib.
+> 
+> What is the appropriate forum to cry alarm on?
 
-I cannot help but ask: is 
-https://code.google.com/p/chromium/issues/detail?id=364511#c9 from you? 
-(Sorry, I see only a partial email address there, and I cannot expand it 
-for some reason.) Was it automated then?
+It depends on whether you want to do it publicly.  For the public case,
+you can post either on libc-alpha or here, with an appropriate subject,
+and people will pick it up.
 
-https://code.google.com/p/chromium/issues/detail?id=364511#c10 is from 
-Tim Willis and he is from the Chrome security team, right? I'm not sure 
-what you mean by "escalated" but comments #10 and #14 show that the 
-Chrome security team can catch relevant issues itself (which is nice).
+As described here,
+
+  <https://sourceware.org/glibc/wiki/Security%20Process>
+
+glibc relies on downstreams for confidential security bug handling, so
+that's another option.
+
+The eventual goal is to flag all security bugs as security+ in the glibc
+Bugzilla, but we are not quite there yet.  Both historic bugs still
+await analysis, and there are some remaining tough calls.  The next step
+after that work is complete will be to track down already-assigned CVEs
+and deal with the remaining missing ones.  To my knowledge, there are no
+major issues among those, but it is always difficult to predict what
+applications do with such a low-level library.
+
+Apparently, we also have historic security-relevant commits without
+corresponding Bugzilla bugs.  This dates back to the time before glibc
+switched to a more collaborative/consensus-based development model.  The
+current policy is that all user-visible changes need Bugzilla bugs.  I
+don't know what to do about those stealth commits.
 
 -- 
-Alexander Cherepanov
+Florian Weimer / Red Hat Product Security
