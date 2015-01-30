@@ -1,71 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/11/7
-Message-ID: <20150211122706.GA7774@zoho.com>
-Date: Wed, 11 Feb 2015 12:27:06 +0000
-From: mancha <mancha1@...o.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/30/14
+Message-ID: <20150130102502.GA15118@openwall.com>
+Date: Fri, 30 Jan 2015 13:25:02 +0300
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: sms@...inode.info, cve-assign@...re.org, thoger@...hat.com
-Subject: Re: CVE Request: Info-ZIP unzip 6.0
+Subject: Re: GHOST gethostbyname() heap overflow in glibc (CVE-2015-0235)
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Feb 10, 2015 at 02:11:59PM +0100, Tomas Hoger wrote:
-> On Mon, 22 Dec 2014 18:14:58 +0000 mancha wrote:
-> 
-> > OOB access (both read and write) issues exist in test_compr_eb
-> > (extract.c) that can result in application crash or other
-> > unspecified impact.
-> > 
-> > This vulnerability can be triggered via crafted zip archives with
-> > extra fields that advertise STORED method compression (i.e. no
-> > compression) and have uncompressed field sizes smaller than the
-> > corresponding compressed field sizes.
-> > 
-> > This issue is different from CVE-2014-8140 [1].
-> 
-> FWIW, those issues are not entirely different, as the oCERT-2014-011
-> reproducer triggered the same issue your patch addresses - memcpy()
-> buffer overflow when using STORED compression and the uncompressed
-> size field value smaller than the rest of the data in the extra field
-> block.  In case of the oCERT-2014-011 report, the size was special -
-> 0.  Your check, however, would prevent overflow on the test case.
-> 
-> The check to reject uncompressed size of 0 is still needed to avoid
-> bypassing check if extra field block still has enough data for the
-> compression header.  That makes it possible to bypass your check and
-> trigger integer underflow in memextract() when EB_CMPRHEADLEN (2 + 4)
-> is subtracted from srcsize, which leads to memcpy() with size close to
-> SIZE_MAX.
-> 
-> Your patch, unzip-6.0_overflow2.diff, which is what got applied
-> upstream, seems to perform an incorrect check.  It ensures that
-> eb_ucsize is equal to eb_size - compr_offset.  The latter value
-> includes compression header length (EB_CMPRHEADLEN), which is not
-> included in eb_ucsize AFAICT (based on what I could find in
-> extrafld.txt or os2/os2zip.c in Zip 3.0 sources).  It seems the check
-> should be:
-> 
->   (eb_size - compr_offset - EB_CMPRHEADLEN != eb_ucsize)
-> 
-> Can you or upstream confirm?
-> 
-> This problem would not be a security problem, but a bug that could
-> cause well-formed extra fields to be rejected as invalid.
+On Fri, Jan 30, 2015 at 11:09:01AM +0100, linkbc02 wrote:
+> Sorry Alexander, I quoted the wrong one.
+> I can confirm, Dovecot, at least, got crashed, I asked also Timo S. that is
+> digging about it.
+> Screenshot
+> http://goo.gl/JwhWIf
 
-You're right. The identity that should hold in stored method is:
+The screenshot shows you entering lots of 0's when talking the IMAP
+protocol.  It does not necessarily indicate any relevance to GHOST.
 
-  eb_size - compr_offset - EB_CMPRHEADLEN == eb_ucsize
+If you try upgrading glibc and the issue goes away, _that_ would be a
+reason to suspect relevance.  OTOH, if the issue persists even with
+GHOST-patched glibc, that would be a reason to think it's an unrelated
+issue (which most likely it is).  Can you perform this test maybe?
+Don't forget to restart Dovecot after the glibc upgrade.
 
-What must have thrown me for a loop when churning out the patch is the
-weird wording in unzpriv.h:
+As to use of the mailing list, I'd prefer no screenshots, pastebins,
+etc. in here.  Instead, post the information in plain text form right in
+here.  And here are some guidelines on better quoting:
 
-  #define EB_OS2_HLEN    4  /* size of OS2/ACL compressed data header */
+http://www.complang.tuwien.ac.at/anton/mail-news-errors.html
+http://www.netmeister.org/news/learn2quote.html
 
-Thanks for catching that.
-
-I've removed the buggy patch from sf and replaced it with:
-
-http://sf.net/projects/mancha/files/sec/unzip-6.0_overflow3.diff
-
---mancha
-
-Content of type "application/pgp-signature" skipped
+Alexander
