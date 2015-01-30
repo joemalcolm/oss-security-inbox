@@ -1,27 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/26/5
-Message-ID: <54EF3A07.20401@redhat.com>
-Date: Thu, 26 Feb 2015 16:21:43 +0100
-From: Florian Weimer <fweimer@...hat.com>
-To: oss-security@...ts.openwall.com, Assign a CVE Identifier <cve-assign@...re.org>
-Subject: CVE request: glibc: potential application crash due to overread in fnmatch
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/30/11
+Message-ID: <CACYkhxjWgPkzNVr=tVZAJXG8gDVeEJ0ZZuH4rpcQFGmggX+61w@mail.gmail.com>
+Date: Fri, 30 Jan 2015 20:56:19 +1100
+From: Michael Samuel <mik@...net.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: xchat/hexchat don't properly verify SSL certificates
 Content-Type: text/plain; charset=utf-8
 
-When processing certain malformed patterns, fnmatch can skip over the
-NUL byte terminating the pattern.  This can potentially result in an
-application crash if fnmatch hits an unmapped page before encountering a
-NUL byte.
+On 30 January 2015 at 06:24, Sam Dodrill <shadow.h511@...il.com> wrote:
+> A lot of the time IRC networks will not pay for a verified SSL cert due to
+> the fact that the kind of SSL cert they would need (a wildcard one) is
+> financially prohibitive. I don't think this is a security bug with hexchat
+> more a symptom of the fact that SSL combines encryption and identity
+> verification where sometimes people only want the former.
 
-Upstream bug report:
+The correct response to this is for them to publish their self-signed
+certificate (or even a CA certificate) and have it pasted into the
+client, along with the configuration.
 
-  https://sourceware.org/bugzilla/show_bug.cgi?id=18032
+The client could then perform a byte-wise compare of the public key.
 
-The fix is here:
-
-
-https://sourceware.org/git/gitweb.cgi?p=glibc.git;h=4a28f4d55a6cc33474c0792fe93b5942d81bf185
-
-It will go into glibc 2.22.
-
--- 
-Florian Weimer / Red Hat Product Security
+I assume well-known networks could have their certificates hard-coded
+into the client.
