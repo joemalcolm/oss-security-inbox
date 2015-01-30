@@ -1,72 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/14/1
-Message-Id: <20150214002125.579443AE100@smtpvbsrv1.mitre.org>
-Date: Fri, 13 Feb 2015 19:21:25 -0500 (EST)
-From: cve-assign@...re.org
-To: steffen.roesemann1986@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE-Request -- Landsknecht Adminsystems v.4.0.1 (DEV, beta version) -- Reflecting XSS, unrestricted file-upload and underlaying CSRF
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/30/1
+Message-ID: <20150130010035.039da42c@pc>
+Date: Fri, 30 Jan 2015 01:00:35 +0100
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: GHOST gethostbyname() heap overflow in glibc (CVE-2015-0235)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi all,
 
-> As there seems not be an existing permission-model, users can read/execute
-> files  an administrator/user uploaded and vice versa.
+As promised, I wrote down my lengthy thoughts in a blog post:
+https://blog.hboeck.de/archives/864-What-the-GHOST-tells-us-about-free-software-vulnerability-management.html
 
-We think this means anyone can execute a file regardless of who
-uploaded it. Do you mean that a file uploaded by a user can ONLY be
-executed by an administrator or different user, whereas a file
-uploaded by an administrator can ONLY be executed by a user?
+On Thu, 29 Jan 2015 09:50:01 -0700
+Kurt Seifried <kseifried@...hat.com> wrote:
 
-> This issue includes an underlaying CSRF-vulnerability, as a user is able to
-> upload a malicious file and trick another user or the administrator into
-> visiting the link to the file.
+> This is why for example I've been trying to make CVE's easily
+> available so people are more likely to come to us with borderline
+> issues ("I'm not sure but this looks weird and may be security
+> related"). I'm also working on a set of examples for the CVE HOWTO so
+> again developers will hopefully be able to realize when things look
+> weird and may be a security issue and not just a flaw. I'm trying to
+> find ways to help educate people/make it easier for them to report
+> security issues but this is a non trivial problem.
 
-We're not sure whether you mean the CSRF concept is relevant in a way
-that is unusual for an "upload arbitrary files" issue.
+Regarding CVEs - I made similar experiences as Michal. It's very
+mixed, sometimes I get CVEs quickly, sometimes I don't get answers to
+requests.
 
-If the attacker can upload a file, with the upload location and/or
-file extension allowing execute access, then the typical outcome is
-that exactly that file is executed. It is not typically the case that
-a product modifies uploaded files to insert a CSRF protection
-mechanism. Also, it is not typically the case that a pathname such as
-/upload/files/{UPLOADED_FILE} would actually execute a wrapper program
-(containing a CSRF protection mechanism) before executing
-UPLOADED_FILE itself.
+I would like the CVE process to be a better tool to organize this (as
+I've written in my blog post), but right now I feel it's not working
+reliably enough for that. At some point I stopped caring too much about
+CVEs because I felt waiting for them stops me from reporting more
+issues.
 
-For these reasons, the ability to upload executable files to
-/upload/files/{UPLOADED_FILE} would normally be considered a single
-vulnerability, and would not lead to a conclusion that the product has
-an independent CSRF problem.
 
-Also, the primary threat model for "upload arbitrary files" issues is
-that the file uploading and the file execution are done by the same
-person. Certainly, it could be interesting to upload JavaScript code
-and trick an administrator into executing it. However, if the attacker
-can upload and execute PHP code without any tricking, ability to
-upload JavaScript is usually not considered an independently relevant
-problem. In common (but not all) cases, given an attacker's "upload
-arbitrary files" ability, the entire class of scenarios in which the
-file is later executed by a different person isn't independently
-relevant.
+cu,
+-- 
+Hanno Böck
+http://hboeck.de/
 
-So, we think one CVE for the two XSS issues, and one CVE for file
-upload, is the correct number. Do you have another interpretation?
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJU3pRRAAoJEKllVAevmvmszRgIAKTqAfCFqlHNnWIZtADfF6Gk
-jMwCV5kugJjpzO0yzOkZ/luN0tKJBEKwAZbRfFr9KRnHldfJAE2DSf1TmSBEtKL8
-m6RyGtRSleNiwH1Ed/w9oGGMjdO2ascnLYr+extIMhuy8H4l/VEhghi3et+Ud1X8
-dUeHFB84zRdVqcmLi8xJIXtXLNQDpGI+FQY8jjBvQ2UqPp55Kk+cJdgQQUV8p4vg
-5/vDZVfdpKCoJvfK5lMOTopZDzjix+z+ldKWHvuhg+IWX0H57UHzDIUlsnagzS7e
-a1/eRUjZtjjtKmTBF7SHjVDDBaNVQwtZLPyyc/g5VxA+NelfCqORCeBJIqLUVss=
-=Iqmo
------END PGP SIGNATURE-----
+Content of type "application/pgp-signature" skipped
