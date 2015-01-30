@@ -1,55 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/04/9
-Message-ID: <54F750F3.4070502@redhat.com>
-Date: Wed, 04 Mar 2015 11:37:39 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/30/3
+Message-ID: <20150130001410.GA10438@openwall.com>
+Date: Fri, 30 Jan 2015 03:14:10 +0300
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Another Python app (rhn-setup: rhnreg_ks) not checking hostnames in certs properly CVE-2015-1777
+Subject: Re: GHOST gethostbyname() heap overflow in glibc (CVE-2015-0235)
 Content-Type: text/plain; charset=utf-8
 
-On 04/03/15 11:14 AM, Donald Stufft wrote:
-> 
->> On Mar 4, 2015, at 12:55 PM, Kurt Seifried <kseifried@...hat.com> wrote:
->>
->> https://bugzilla.redhat.com/show_bug.cgi?id=1198740
->>
->> Jan Bee of the Google Security Team reports:
->>
->> The /usr/sbin/rhnreg_ks fails to properly validate hostnames in
->> certificates. This can result in man in the middle attacks.
->>
->> ===
->>
->> Please note that this issue cannot easily be exploited to cause any
->> significant damage to a system other then preventing registration from
->> taking place properly which the attacker would be able to do in any
->> event if the can man in the middle the connection.
->>
->>
->>
->> --
->> Kurt Seifried -- Red Hat -- Product Security -- Cloud
->> PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
->>
-> 
-> Note: Python 2.7.9+ and 3.4.3+ will cause most apps like this to
-> automatically start validating hostnames. It may be easier to backport
-> those changes than to find every Python app that doesn’t check hostnames.
+On Fri, Jan 30, 2015 at 01:00:35AM +0100, Hanno B??ck wrote:
+> At some point I stopped caring too much about CVEs
 
-Yup, I am aware of that, but as you know Red Hat is pretty conservative
-on updates to things like Python/etc because we have to support customer
-applications that we have never seen and will never see (e.g. internal
-corp software), and if we break those apps due to changes in underlying
-languages there is a big problem.
+FWIW, I never cared about them much.  But I do care about the confusion
+and its possible negative impact:
 
-> ---
-> Donald Stufft
-> PGP: 7C6B 7C5D 5E2B 6356 A926 F04F 6E3C BCE9 3372 DCFA
-> 
+> because I felt waiting for them stops me from reporting more issues.
 
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Huh?!  IMO, no one should ever wait for a CVE before reporting an issue!
 
+If it is possible to get a CVE assigned during an embargo period that
+would exist anyway, and without disclosing the vulnerability detail to
+any extra party, great!  (e.g. this happens for issues handled via the
+distros list, where CVEs are currently getting assigned from Red Hat's
+pool without having to inform any extra party.)  If this is not
+possible, then do without CVE (and one may be assigned when the issue is
+already public in here).
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Alexander
