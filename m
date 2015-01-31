@@ -1,45 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/04/12
-Message-ID: <20150104043206.GA18630@eldamar.local>
-Date: Sun, 4 Jan 2015 05:32:06 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/31/1
+Message-ID: <CA+Qk1jbSf=8bHoQdw+qT7vGkRh-ZAbs4v2TLhDySUAtKeo0oEg@mail.gmail.com>
+Date: Sat, 31 Jan 2015 16:11:21 +0500
+From: Ammar Brohi <brohiammar@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: Vincent Danen <vdanen@...hat.com>, cve-assign@...re.org
-Subject: Re: CVE request: denial of service flaw in firebird
+Subject: Re: R: GHOST gethostbyname() heap overflow in glibc (CVE-2015-0235)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+I wonder how to detect this vulnerability? Any remote or local script to
+run?
 
-On Sat, Jan 03, 2015 at 06:59:18PM -0500, cve-assign@...re.org wrote:
-> 
-> >I've not seen a CVE for this; could one be assigned?  Thanks.
-> >
-> >It was found that an unauthenticated remote attacker could send a
-> >malformed network packet to a firebird server, which would cause the
-> >server to crash.
-> >
-> >http://www.firebirdsql.org/en/news/security-updates-for-v2-1-and-v2-5-series-66011/
-> >http://tracker.firebirdsql.org/browse/CORE-4630
-> >http://sourceforge.net/p/firebird/code/60331/
-> >https://bugs.mageia.org/show_bug.cgi?id=14726
-> >https://bugzilla.redhat.com/show_bug.cgi?id=1172445
-> 
-> Use CVE-2014-9492.
+Thanks,
 
-I have a question back on this assignment. Initially CORE-4630 did not
-had a CVE reference in the title at leat afair, but some time ago the
-reference to CVE-2014-9323 appeared.
+On Fri, Jan 30, 2015 at 3:54 PM, linkbc02 <linkbc02@...look.com> wrote:
 
-We used then this reference in Debian to track the issue, but also
-others have it:
+> |If you try upgrading glibc and the issue goes away, _that_ would be a
+> |reason to suspect relevance.
+>
+> Hi, already done
+>
+>
+> # rpm -q glibc
+> glibc-2.12-1.132.el6_5.2.x86_64
+> glibc-2.12-1.132.el6_5.2.i686
+>
+> # yum update glibc
+>
+>
+> # rpm -q glibc
+> glibc-2.12-1.149.el6_6.5.x86_64
+> glibc-2.12-1.149.el6_6.5.i686
+>
+>
+>
+> # /etc/init.d/dovecot restart
+>
+>
+> # telnet localhost 143
+> Trying 127.0.0.1...
+> Connected to localhost.
+> Escape character is '^]'.
+> * OK [CAPABILITY IMAP4rev1 LITERAL+ SASL-IR LOGIN-REFERRALS ID ENABLE IDLE
+> STARTTLS AUTH=PLAIN AUTH=LOGIN] IMAP ready.
+> 1 login
+>
+> 00000000000000000000000000000000000000000000000000000000000000000000000000-c
+> utted-
+>
+>
+> BAD Error in IMAP command received by server.
+>
+> * BAD Error in IMAP command received by server.
+>
+>
+> #dmesg doesn't show anymore segfault and core dump
+>
 
-https://bugzilla.suse.com/show_bug.cgi?id=910653
-https://bugzilla.redhat.com/show_bug.cgi?id=1172445
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-9323
-https://security-tracker.debian.org/tracker/CVE-2014-9323
-
-Should CVE-2014-9492 be rejected and CVE-2014-9323 to be still
-continued to be used?
-
-Regards,
-Salvatore
