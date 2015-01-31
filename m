@@ -1,46 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/30/1
-Message-ID: <20150130010035.039da42c@pc>
-Date: Fri, 30 Jan 2015 01:00:35 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/31/3
+Message-ID: <20150131124752.GH1138@kludge.henri.nerv.fi>
+Date: Sat, 31 Jan 2015 14:47:52 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: Re: GHOST gethostbyname() heap overflow in glibc (CVE-2015-0235)
+Subject: CVE request: Roundcube cross-site scripting vulnerability fixed in 1.0.5
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+Hi,
 
-As promised, I wrote down my lengthy thoughts in a blog post:
-https://blog.hboeck.de/archives/864-What-the-GHOST-tells-us-about-free-software-vulnerability-management.html
+Can I get 2015 CVE for Roundcube cross-site scripting vulnerability fixed in
+1.0.5 version, thanks.
 
-On Thu, 29 Jan 2015 09:50:01 -0700
-Kurt Seifried <kseifried@...hat.com> wrote:
+http://roundcube.net/news/2015/01/24/security-update-1.0.5/
+http://trac.roundcube.net/wiki/Changelog#RELEASE1.0.5
+http://trac.roundcube.net/ticket/1490227
 
-> This is why for example I've been trying to make CVE's easily
-> available so people are more likely to come to us with borderline
-> issues ("I'm not sure but this looks weird and may be security
-> related"). I'm also working on a set of examples for the CVE HOWTO so
-> again developers will hopefully be able to realize when things look
-> weird and may be a security issue and not just a flaw. I'm trying to
-> find ways to help educate people/make it easier for them to report
-> security issues but this is a non trivial problem.
-
-Regarding CVEs - I made similar experiences as Michal. It's very
-mixed, sometimes I get CVEs quickly, sometimes I don't get answers to
-requests.
-
-I would like the CVE process to be a better tool to organize this (as
-I've written in my blog post), but right now I feel it's not working
-reliably enough for that. At some point I stopped caring too much about
-CVEs because I felt waiting for them stops me from reporting more
-issues.
-
-
-cu,
 -- 
-Hanno Böck
-http://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
-
-Content of type "application/pgp-signature" skipped
+Henri Salo
