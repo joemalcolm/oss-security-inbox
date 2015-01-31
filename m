@@ -1,30 +1,115 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/14/6
-Message-ID: <20150114173354.GB18830@kludge.henri.nerv.fi>
-Date: Wed, 14 Jan 2015 19:33:54 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/31/8
+Message-ID: <6a5d47317034484b3746f60913a28e13@tribut.de>
+Date: Sat, 31 Jan 2015 23:27:54 +0100
+From: Felix Eckhofer <felix@...but.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: lhasa: directory traversals
+Subject: RCE, XSS and HTTP header injection in fli4l web interface
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+== fli4l security advisory 
+====================================================
 
-On Tue, Jan 13, 2015 at 10:44:00PM +0300, Alexander Cherepanov wrote:
-> https://github.com/fragglet/lhasa/commit/64b96b5c1d08293b6c373f616b206d951ee358f7
-> https://github.com/fragglet/lhasa/commit/3bab39fd492a8924bdd25615ef40ca68c0c7ad0f
-> https://github.com/fragglet/lhasa/commit/adcd9912803e69ebeb000cc4c341fbc64820ed1f
-> https://github.com/fragglet/lhasa/commit/c26557dd1b2e640e9785686355c5a2945483460b
+Package:    httpd
+Impact:     Root Compromise (Existing account for web administration 
+interface)
+             Cross-site Scripting
 
-All of these commits are only in versions 0.1.0 and 0.2.0 so no need for
-"incomplete fix for" CVE(s). Use cases would have be nice.
+===============================================================================
 
-- --
-Henri Salo
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+1. Summary:
 
-iEYEARECAAYFAlS2qIIACgkQXf6hBi6kbk9QGQCgrU3/Ifc9L0uVyi59pYcM8/Hk
-D/4AniTOUbuCSckMwj9bWPT1TuBl9OUR
-=ZU0I
------END PGP SIGNATURE-----
+Several vulnerabilities were discovered in the web administration 
+frontend for
+fli4l contained in the 'httpd' package.  These include arbitrary command
+execution, XSS vulnerabilities and HTTP header injection.
+
+2. Relevant releases:
+
+Fli4l 3.x: All versions
+Fli4l 4.0: All tarballs up to 2015-01-23
+
+3. Description:
+
+The function show_tab_header provided by include/cgi-helper 
+insufficiently
+sanitized its input. An attacker could use this flaw to execute 
+arbitrary
+programs on the router as root. The affected scripts included with the 
+httpd
+package require the attacker to have a valid login for the web 
+administration
+interface.
+
+The script admin/pf.cgi insufficiently sanitized its input. An attacker 
+with at
+least "support:systeminfo" rights could use this flaw to execute 
+arbitrary
+programs on the router as root.
+
+The script admin/conntrack.cgi insufficiently escaped its output. An 
+attacker
+could use this flaw to perform a cross-site scripting (XSS) attack 
+against an
+authenticated user with at least "conntrack:view" rights.
+
+The script admin/index.cgi insufficiently escaped its output. An 
+attacker could
+use this flaw to perform a cross-site scripting (XSS) attack against any
+authenticated user.
+
+The script admin/log_syslog.cgi insufficiently escaped its output. An 
+attacker
+could use this flaw to perform a cross-site scripting (XSS) attack 
+against an
+authenticated user with any rights within the "logs" realm.
+
+The script admin/problems.cgi insufficiently escaped its output. An 
+attacker
+could use this flaw to perform a cross-site scripting (XSS) attack 
+against any
+authenticated user.
+
+The script admin/status.cgi insufficiently escaped its output. An 
+attacker
+could use this flaw to perform a cross-site scripting (XSS) attack 
+against an
+authenticated user with any rights within the "status" realm.
+
+The script admin/status_network.cgi insufficiently escaped its output. 
+An
+attacker could use this flaw to perform a cross-site scripting (XSS) 
+attack
+or inject HTTP headers into the response against an authenticated user 
+with at
+least "status:view" rights.
+
+The script admin/status_system.cgi insufficiently escaped its output. An
+attacker could use this flaw to perform a cross-site scripting (XSS) 
+attack
+against an authenticated user with at least "status:view" rights.
+
+We recommend all users to upgrade to the new package versions.
+
+4. Solution:
+
+These issues are fixed in fli4l Version 3.10.1 and tarballs of the 
+development
+branch 4.0 from 2015-01-30 and later.
+
+As a workaround, the web administration interface can be disabled (set
+OPT_HTTPD='no'). Alternatively, revoke access to the web interface for
+all untrusted users and only use the incognito mode of your browser to 
+access
+the web administration interface.
+
+5. Acknowledgments:
+
+These issues were discovered by Felix Eckhofer during an internal code 
+audit.
+
+6. Contact:
+
+The fli4l security team can be reached using security-team [at] fli4l 
+[dot] de.
+More information is available on http://www.fli4l.de/en/home/security/
