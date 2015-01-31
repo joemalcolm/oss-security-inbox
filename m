@@ -1,40 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/12/1
-Message-ID: <CALH-=7yEwd2M_TN39H=9SvgkaCtESuHGdb1fQ8OubJdW9YHnZA@mail.gmail.com>
-Date: Mon, 12 Jan 2015 15:42:58 +0100
-From: Steffen Rösemann <steffen.roesemann1986@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-Request -- CMS PHPKit WCMS v.1.6.6 -- Reflecting XSS vulnerability in administrative backend (poll archive)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/31/6
+Message-Id: <20150131134516.3694CB2E011@smtpvbsrv1.mitre.org>
+Date: Sat, 31 Jan 2015 08:45:16 -0500 (EST)
+From: cve-assign@...re.org
+To: henri@...v.fi
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: Roundcube cross-site scripting vulnerability fixed in 1.0.5
 Content-Type: text/plain; charset=utf-8
 
-Hi Josh, Steve, vendors, list.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I found a reflecting XSS vulnerability in the poll archive of the
-administrative backend of CMS PHPKit WCMS v.1.6.6 [Build: 1660014].
+> http://roundcube.net/news/2015/01/24/security-update-1.0.5/
+> http://trac.roundcube.net/wiki/Changelog#RELEASE1.0.5
+> http://trac.roundcube.net/ticket/1490227
 
-It is located here on a common PHPKit WCMS installation:
+Use CVE-2015-1433.
 
-http://{TARGET}/upload_files/pk/include.php?path=pollarchive&result=1
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-The parameter "result" is vulnerable by appending arbitrary HTML- and/or
-JavaScriptcode to it.
-
-Example:
-
-http://
-{TARGET}/upload_files/pk/include.php?path=pollarchive&result=1%22%3E%3Cscript%3Ealert%28document.cookie%29%3C/script%3E%3C!--
-
-
-Could you please assign a CVE-ID for it?
-
-Thank you!
-
-Steffen Rösemann
-
-References:
-
-[1] http://www.phpkit.com/de/
-[2] http://sroesemann.blogspot.de/2014/12/sroeadv-2014-07.html
-[3]
-http://sroesemann.blogspot.de/2015/01/report-for-advisory-sroeadv-2014-07.html
-
+iQEcBAEBAgAGBQJUzNwOAAoJEKllVAevmvmslFEIAMe4o0bGJX2E/Sx7bEFPU7/H
+6Q0BSvtpT0fB/uTaq/5uyS9gs6QcL0T2cJQLZI2UPfVC08SsZPZoZIKn3kTw30ON
+hpgmydfQxE5ouzSiUDoSFgpZvN5KUsbinsMmEIjgdtw6eCt44wGvJyZonYKoTNSf
+1XG8ilwLg5XoP8gb0QbwTXEWwnloU9yntlRLSGwTqG8kcxHOoNFmOoxsjigJPh85
+AQtWD3LFiJfUjHDsQmmQZ2frIUJZ7KPvj3wNxOm3973+WmOYRmYlA4UtIdhFMCjK
+063qLViWYzk0QdJRtXPyoS654ukKhBPilWpYH1Vz6GpcmR0m3iI6KeTxVW3qJu0=
+=mdVb
+-----END PGP SIGNATURE-----
