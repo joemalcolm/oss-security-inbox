@@ -1,25 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/09/4
-Message-ID: <54D87C43.2000106@redhat.com>
-Date: Mon, 09 Feb 2015 10:22:11 +0100
-From: Florian Weimer <fweimer@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2014-8165: remote code execution in powerpc-utils-python
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/31/5
+Message-Id: <20150131134153.84C7072E067@smtpvbsrv1.mitre.org>
+Date: Sat, 31 Jan 2015 08:41:53 -0500 (EST)
+From: cve-assign@...re.org
+To: henri@...v.fi
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: phpbb3 CSRF and CSS injection
 Content-Type: text/plain; charset=utf-8
 
-Dhiru Kholia, then of Red Hat Product Security, discovered that
-powerpc-utils-python used Python pickles in an insecure way, potentially
-resulting in remote code execution as root:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-  <http://sourceforge.net/p/powerpc-utils/mailman/message/32884230/>
-  <https://bugzilla.redhat.com/show_bug.cgi?id=1073139>
+> https://wiki.phpbb.com/Release_Highlights/3.0.13
 
-The affected program (amsvis) requires an IBM POWER machine with
-firmware support for Active Memory Sharing, or it won't even start.
-Such machines appear to be extremely rare.
+> https://tracker.phpbb.com/browse/PHPBB3-13531
+> https://github.com/phpbb/phpbb/pull/3316
+> "CSS Injection via Relative Path Overwrite. Thanks to James Kettle for bringing
+> this to our attention"
 
-Active Memory Sharing is not related at all to the Agentless Management
-Service from another enterprise vendor, despite the common acronym.
+Use CVE-2015-1431.
 
--- 
-Florian Weimer / Red Hat Product Security
+
+> https://tracker.phpbb.com/browse/PHPBB3-13526
+> https://github.com/phpbb/phpbb/pull/3311
+> "The ucp_pm_options form key is now properly validated. Thanks to FBNeal and
+> lampsys who reported this independently."
+
+Use CVE-2015-1432.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJUzNs2AAoJEKllVAevmvmsNr8IAL8lCP4ttRCxvmCV/83hKvwY
+Tb+Flg8mrnl70GI4u7QWrzPjAfBaZNwSOc1/MfSsa0j91Zy4MjE+jkp/yPlfpT4t
+7j811JhVGG2BOF0sCWhFis/O/EfzmVMAlZrYm56+zlQZ5HVarWpBu5SjwVVLO51y
+DLQK+9tshTBDSaYaKAC1ksJQMlafU1ADbHH61e88Pu4hbAVSJZ68OM8+rwSNZY+e
+gE3b5DonuEwSUCP+hW8R2jaf/0U+imv2FLCPWkqlg2NXQUW+wNbL+GeT9JM/hqrL
+Jxb4Nx7I7jaJuiuXzIQ3xrwagYVS7/avtsXoANumANlc0qIwl+Ib0uz1ttCxHR8=
+=VJhc
+-----END PGP SIGNATURE-----
