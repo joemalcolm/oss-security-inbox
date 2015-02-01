@@ -1,42 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/24/13
-Message-ID: <54C40A9B.6090809@internot.info>
-Date: Sun, 25 Jan 2015 08:11:55 +1100
-From: Joshua Rogers <oss@...ernot.info>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/01/6
+Message-ID: <9517e4490c27cf8693fadb3316c44c9f@tribut.de>
+Date: Sun, 01 Feb 2015 14:42:20 +0100
+From: Felix Eckhofer <felix@...but.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE Request: PHP
+Subject: Re: RCE, XSS and HTTP header injection in fli4l web interface
 Content-Type: text/plain; charset=utf-8
 
-On 25/01/15 07:43, Joshua Rogers wrote:
-> "REG_EXTENDED", according to the regex(3) manual, is for "POSIX Extended
-> Regular Expression syntax"
->
-> which probably isn't that common.
-Actually, I worked it out:
+Hey.
 
-if you edit the isinsets function,
+Am 01.02.2015 04:05, schrieb cve-assign@...re.org:
+> For the "execute arbitrary programs" issues, can you provide specific
+> names for the vulnerability types, or any equivalent information?
+> Examples of vulnerability types can be found on the
+> https://www.owasp.org/index.php/Category:Vulnerability and
+> http://cwe.mitre.org web sites.
 
-with this:
-
-        register unsigned uc = (unsigned char)c;
-        printf("ncols: %d\n", ncols);
-
-        for (i = 0, col = g->setbits; i < ncols; i++, col += g->csetsize) {
-        printf("inside isinsets2: %d\n", col[uc]); 
-                if (col[uc] != 0)
-                        return(1);
-        }
-
-you'll see  that 'isinsets' is false on a normal run of ereg(which is
-extended POSIX regex by default)
-and when running ereg, it'll printf 'ncols: 0' constantly.
-
-I don't know how 'sets' are done in PHP ereg, however.
+Thank you for your response and sorry for the inaccurate description. In 
+both cases user-supplied strings are used in an expression which is 
+later passed to /bin/sh's eval. So I would classify both as Command 
+Injection (https://www.owasp.org/index.php/Command_Injection).
 
 
-Thanks,
--- 
--- Joshua Rogers <https://internot.info/>
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Best Regards
+felix
