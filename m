@@ -1,64 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/17/9
-Message-ID: <Pine.LNX.4.64.1501171747180.17900@beijing.mitre.org>
-Date: Sat, 17 Jan 2015 17:50:04 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/01/2
+Message-Id: <20150201030536.13CAC6DCAC4@smtpvmsrv1.mitre.org>
+Date: Sat, 31 Jan 2015 22:05:36 -0500 (EST)
 From: cve-assign@...re.org
-To: Alexander Cherepanov <ch3root@...nwall.com>
-cc: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: Re: CVE request: file(1) DoS
+To: felix@...but.de
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: RCE, XSS and HTTP header injection in fli4l web interface
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On Fri, 16 Jan 2015, Alexander Cherepanov wrote:
+For the "execute arbitrary programs" issues, can you provide specific
+names for the vulnerability types, or any equivalent information?
+Examples of vulnerability types can be found on the
+https://www.owasp.org/index.php/Category:Vulnerability and
+http://cwe.mitre.org web sites. The paragraphs about
+include/cgi-helper and admin/pf.cgi aren't sufficient to determine the
+number of CVE IDs. For example, if one allows a SQL injection attack,
+and the other allows an attack with a ';' or other shell
+metacharacters, then they would have different CVE IDs. If both are
+about shell metacharacters, then they would have the same CVE ID.
 
-> On 16.01.2015 16:15, Marc Deslauriers wrote:
->> On 2015-01-03 02:50 PM, Alexander Cherepanov wrote:
->>> On 2014-12-17 03:44, Alexander Cherepanov wrote:
->>>> There are two more DoSes fixed in ELF parser of file(1), similar to the
->>>> recent CVE-2014-8116.
->>> 
->>> These fixes were included in 5.22 release:
->>> 
->>> http://mx.gw.com/pipermail/file/2015/001660.html
->>> 
->>>> 1. Limit the number of ELF notes processed
->>>> Report: http://mx.gw.com/pipermail/file/2014/001653.html
->>>> Fix: 
->>>> https://github.com/file/file/commit/ce90e05774dd77d86cfc8dfa6da57b32816841c4
->>> 
->>> This issue seems to be introduced here:
->>> 
->>> https://github.com/file/file/commit/956a45ab1c54b11304b367056f41905e72a02380#diff-bc5c24ef9f39a5f4963ca28ecbc645b3L423
->>> 
->>> 
->>> which ended up in 5.08 release. Hence releases 5.08--5.21 are vulnerable.
-
-Use CVE-2014-9620.
-
-
-
->>>> 2. Limit string printing to 100 chars
->>>> Report: http://mx.gw.com/pipermail/file/2014/001654.html
->>>> Fix: 
->>>> https://github.com/file/file/commit/65437cee25199dbd385fb35901bc0011e164276c
->>> 
->>> This issue was introduced in the following commit:
->>> 
->>> https://github.com/file/file/commit/c8451af8ab0c2e2a93ce93b9c68257d31576cc85
->>> 
->>> which ended up in 5.16 release. Hence releases 5.16--5.21 are vulnerable.
->>> 
->>>> Both problems amplified by the fact that the same section in ELF file
->>>> can be referenced and processed by file(1) multiple times. This is also
->>>> fixed in the first commit linked above.
->>>> 
->>>> Could CVE(s) please be assigned?
-
-
-Use CVE-2014-9621.
-
----
-
-CVE assignment team, MITRE CVE Numbering Authority M/S M300
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
 202 Burlington Road, Bedford, MA 01730 USA
 [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJUzZebAAoJEKllVAevmvmsQswIAJYIvTJFKLacqs3onLqcLpSH
+WwxlKT46XFAK6pz43OEpz72orYJkzcZsYUerSQYjhHSCrZE5QWcE+XG6f3oZ5LTQ
+6UuWLZhSN5B2nYjv6D2VDy+PCdMdzXDyuULBN9WfhH3AozxSOKdJsilbONCEy4i0
+DDSmGHkScXmZ6euqhRjsXx6MY5LkxaXVTKd4Sftc2k4KDuJANa7G1u3Lt9ziuf2s
+9YZDSedfRDz1xnrbf0UTPHgc3VI1Cj3DF6G5sn9gLgvrQAkQNrZZwBSFZasNeG3u
+QXO0iCaH+vjAMBKRasMCy/t4GdgItBJH6SiuP9YG4Slk8ICQDqu5gY8tS1yTS3o=
+=Q8PG
+-----END PGP SIGNATURE-----
