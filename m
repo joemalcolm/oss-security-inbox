@@ -1,57 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/29/27
-Message-ID: <CADBeeMvFHQs+KzEcXYUAxqx8Ew6hzZdMVu3apnybLYeuhzjxWg@mail.gmail.com>
-Date: Thu, 29 Jan 2015 19:24:19 +0000
-From: Sam Dodrill <shadow.h511@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: xchat/hexchat don't properly verify SSL certificates
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/01/5
+Message-Id: <20150201125107.3998713A752@smtpvmsrv1.mitre.org>
+Date: Sun,  1 Feb 2015 07:51:07 -0500 (EST)
+From: cve-assign@...re.org
+To: felix@...but.de
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: RCE, XSS and HTTP header injection in fli4l web interface
 Content-Type: text/plain; charset=utf-8
 
-A lot of the time IRC networks will not pay for a verified SSL cert due to
-the fact that the kind of SSL cert they would need (a wildcard one) is
-financially prohibitive. I don't think this is a security bug with hexchat
-more a symptom of the fact that SSL combines encryption and identity
-verification where sometimes people only want the former.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On Thu Jan 29 2015 at 10:58:51 AM Marc Deslauriers <
-marc.deslauriers@...onical.com> wrote:
+>> arbitrary command execution,
 
-> On 2015-01-29 01:52 PM, Vincent Danen wrote:
-> > As reported [1]:
-> >
-> > XChat did not verify that the server hostname matched the domain name in
-> the
-> > subject's Common Name (CN) or subjectAltName field in X.509
-> certificates. This
-> > could allow a man-in-the-middle attacker to spoof an SSL server if they
-> had a
-> > certificate that was valid for any domain name.
-> >
-> > The same code is used in hexchat.
-> >
-> > This was initially reported to hexchat in 2013 [2] and fixed last
-> November [3].
-> > I'm not sure if it should receive a 2013 or a 2014 CVE.  Can one be
-> assigned to
-> > this?
-> >
-> > Thanks.
-> >
-> > [1] https://bugzilla.redhat.com/show_bug.cgi?id=1081839
-> > [2] https://github.com/hexchat/hexchat/issues/524
-> > [3]
-> > https://github.com/hexchat/hexchat/commit/c9b63f7f9be01692b03fa15275135a
-> 4910a7e02d
-> >
->
-> Looks like XChat-GNOME is vulnerable also.
->
-> Marc.
->
->
-> --
-> Marc Deslauriers
-> Ubuntu Security Engineer     | http://www.ubuntu.com/
-> Canonical Ltd.               | http://www.canonical.com/
->
+> For the "execute arbitrary programs" issues, can you provide specific
+> names for the vulnerability types, or any equivalent information?
+> The paragraphs about include/cgi-helper and admin/pf.cgi aren't
+> sufficient to determine the number of CVE IDs.
 
+The vulnerability-type information was sent to MITRE without a Cc to
+oss-security. Perhaps it will be sent here later. include/cgi-helper
+and admin/pf.cgi have the same vulnerability type.
+
+Use CVE-2015-1443 for both of these.
+
+
+> XSS vulnerabilities
+
+Use CVE-2015-1444 for all of these.
+
+
+> HTTP header injection.
+
+Use CVE-2015-1445.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJUziDZAAoJEKllVAevmvmsoN8H/1zAC7qaa/6zqK9GxPq+pAH9
+YRA4fhkNYgEzXBAt1X74Q5VaIRwVLqkyu1q7C+z8dPv28UK7vLkwW2VX+kr1nIjP
+AWQay4ZL4Co/0JLHrwjnTfT3rNwb1lPWbIEimxP+CaTzNsi9VyXf7YOrGOFmtaXk
+CSnztxVT9HTu0mVr3NGdmTk/2nmEmApsguoRXgr9XlO4k2DlFJNjH1x1rN8HT967
+LpgirymP7NyZEsVMOu9vQxnM9//OVkROoIlvvrZ6bYuRrdH0vU5SS4+mvvll788h
+6neXVJnXZtXwtNodHSt+6TYXd9hq+iuAhUnsgs9s0b9y39iv9N7QgNHomXg1LLg=
+=fTWW
+-----END PGP SIGNATURE-----
