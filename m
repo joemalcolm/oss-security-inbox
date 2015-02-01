@@ -1,64 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/27/27
-Message-ID: <Pine.LNX.4.64.1501271800060.11165@beijing.mitre.org>
-Date: Tue, 27 Jan 2015 18:00:49 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/01/1
+Message-Id: <20150201030225.9EB6D6DCAC4@smtpvmsrv1.mitre.org>
+Date: Sat, 31 Jan 2015 22:02:25 -0500 (EST)
 From: cve-assign@...re.org
-To: Kurt Seifried <kseifried@...hat.com>
-cc: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>
-Subject: Re: unshield directory traversal
+To: ach.n30@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: Piwigo SQL Injection
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
+> Can I get a CVE ID for Piwigo SQL Injection vulnerability fixed in Piwigo
+> 2.7.3
+> 
+> http://piwigo.org/releases/2.7.3
 
-> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=776193
->
-> Package: unshield
-> Version: 1.0-1
-> Tags: security
->
-> unshield is vulnerable to directory traversal via "../" sequences. As a
-> proof of concept, unpacking the attached InstallShield archive creates a
-> file in /tmp:
->
-> $ ls /tmp/moo
-> ls: cannot access /tmp/moo: No such file or directory
->
-> $ unshield x data1.cab
-> Cabinet: data1.cab
-> extracting:
-> ./Bovine_Files/../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../tmp/moo
-> --------  -------
->         1 files
->
-> $ ls /tmp/moo
-> /tmp/moo
->
->
-> -- System Information:
-> Debian Release: 8.0
-> APT prefers unstable
-> APT policy: (990, 'unstable'), (500, 'experimental')
-> Architecture: i386 (x86_64)
-> Foreign Architectures: amd64
->
-> Kernel: Linux 3.2.0-4-amd64 (SMP w/2 CPU cores)
-> Locale: LANG=C, LC_CTYPE=pl_PL.UTF-8 (charmap=UTF-8)
-> Shell: /bin/sh linked to /bin/dash
-> Init: sysvinit (via /sbin/init)
->
-> Versions of packages unshield depends on:
-> ii  libc6         2.19-13
-> ii  libunshield0  1.0-1
-> ii  zlib1g        1:1.2.8.dfsg-2+b1
->
-> -- 
-> Kurt Seifried -- Red Hat -- Product Security -- Cloud
-> PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Use CVE-2015-1441.
 
-Use CVE-2015-1386.
+Are you able to send the corresponding changeset URL here, e.g., a
+URL starting with http://piwigo.org/dev/changeset/ followed by a number?
 
----
-
-CVE assignment team, MITRE CVE Numbering Authority M/S M300
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
 202 Burlington Road, Bedford, MA 01730 USA
 [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJUzZakAAoJEKllVAevmvmsLMEH/i6GZKBM9384wJi+gDL2OnmP
+NXVKO04o7VnMwMUmDkqrf2prUBXIunWAANPWu3bZhc3meElN2fQXcb5tKZP+fF9H
+q7R2yK8FtCG4caA6QDNF6jDr5wiXQ05br56SC2ZHuX6PUAW7ze9jT5lV83FEAbIL
+hpHYfUpr+NYkrHo27k2FPCcYzEsgs3IpBfPOHUrCpUE4qQWzM0BccvP7Id/w3g1x
+2GLmQnOPLVhL6DFbgnL5S58odyFaaMdpwqPngDclncql8cOA+GTcvSxrFHy/KxUD
+s5SQv0YJl3EEDLY7mV75fhvaXQomlm6P6caGGWEmJ1UvGo9F6XvNCxLFqA+CeJc=
+=f8vT
+-----END PGP SIGNATURE-----
