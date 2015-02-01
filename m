@@ -1,38 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/23/11
-Message-ID: <54EAF367.4030806@redhat.com>
-Date: Mon, 23 Feb 2015 10:31:19 +0100
-From: Florian Weimer <fweimer@...hat.com>
-To: Jean-Baptiste Kempf <jb@...eolan.org>
-CC: oss-security@...ts.openwall.com, Assign a CVE Identifier <cve-assign@...re.org>, VideoLAN Security Team <security@...eolan.org>
-Subject: Re: CVE request: BD-J implementation in libbluray
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/01/4
+Message-Id: <20150201123920.696C4332051@smtpvbsrv1.mitre.org>
+Date: Sun,  1 Feb 2015 07:39:20 -0500 (EST)
+From: cve-assign@...re.org
+To: steffen.roesemann1986@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE-Request -- Zerocms <= v. 1.3.3 -- SQL injection vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-On 02/23/2015 10:27 AM, Jean-Baptiste Kempf wrote:
-> On 23 Feb, Florian Weimer wrote :
->> Missing Java Security Manager sandboxing mechanism / feature in the
->> org.videolan.BDJLoader class
-> 
-> The code corresponding to:
-> https://bugzilla.redhat.com/show_bug.cgi?id=959433
-> 
-> is gone from newer release. You should upgrade, since we don't support
-> old releases.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Still needs CVE assignment, though.
+> article_id parameter used in zero_view_article.php
 
-> As for https://bugzilla.redhat.com/show_bug.cgi?id=959434
-> 
-> "Fixing it would not change anything. Xlet (that requests the mount, or is
-> being executed from the mount) could as well uncompress the files by self
-> where it wants, even download other files from internet."
-> 
-> So, maybe you want to have a full Xlet sandboxing? Or is it something
-> else?
+This seems to be a duplicate report; please see:
 
-Yes, I do think full sandboxing is required because content publishers
-have attacked end user system integrity in the past, so I don't think
-they can be trusted.
+  http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-4034
 
--- 
-Florian Weimer / Red Hat Product Security
+
+> user_id parameter used in a POST request in zero_transact_user.php
+
+Use CVE-2015-1442.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJUzh4BAAoJEKllVAevmvmsSHcIAKCYb0CAnhJYgTux5fSGQyiK
+XNeJhfTWsAlsThIi4PTXcX2s67zRbQRtzlAlczPxDbCWNlpl5SCl7rnOlv1lPUT1
+xJUZleKRhkI0U5GQC3xPzMCuS729ccbktET+s1QfWS+7iZ1QXWNExyATEQasLM3r
+X0V1wi455h2u4cYlzYd4MLYLOwCrHxq8UDbgHrW1VDU9avODSwvQrzEyKOj3Gjw5
+zQWCvqager/1BJP/vtQfocLzCeJ9g+leJ0VoLRdXtgubkGclk1to3biyXBUNfHfV
+wm6geuzGccgHM6SnLBLfubsA5xo2ccBwLQkrTxOYAHXi+WhR/knVeIyrRZdnYDY=
+=WRkR
+-----END PGP SIGNATURE-----
