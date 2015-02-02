@@ -1,23 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/04/9
-Message-ID: <54A89FFE.2060404@internot.info>
-Date: Sun, 04 Jan 2015 13:05:50 +1100
-From: Joshua Rogers <oss@...ernot.info>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/02/3
+Message-ID: <20150202174834.GA22419@ursa.suse.cz>
+Date: Mon, 2 Feb 2015 18:48:35 +0100
+From: Vitezslav Cizek <vcizek@...e.cz>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request for illumos distributions
+Subject: Re: CVE Request: cpio -- directory traversal
 Content-Type: text/plain; charset=utf-8
 
-On 04/01/15 13:02, Christos Zoulas wrote:
-> | Use CVE-2014-9491.
->
-> Shouldn't we be using CVE-2015-XXXX by now?
->
-> Happy New Year,
->
-> christos
-It's probably 2014-[..] since the issue was first raised on 2014-12-09.
--- 
--- Joshua Rogers <https://internot.info/>
+Hi,
 
+* Dne Friday 16. January 2015, 03:44:25 [CET] Alexander Cherepanov napsal:
+> Hi!
+> 
+> cpio is susceptible to a directory traversal vulnerability via symlinks.
+
+Here's a patch we use in SUSE for some time.
+It forbids to write over symlinks, similar to bsdtar.
+It also adds a new option "--extract-over-symlinks" to restore the original
+behaviour.
+
+I sent it to Sergey Poznyakoff (upstream maintainer) in July,
+but there was no response.
+
+Here's a corresponding bug in SUSE bugzilla:
+https://bugzilla.suse.com/show_bug.cgi?id=658010
+
+> Initial report:
+> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=774669
+> 
+> Upstream report:
+> https://lists.gnu.org/archive/html/bug-cpio/2015-01/msg00000.html
+> 
+> Some discussion:
+> http://www.openwall.com/lists/oss-security/2015/01/07/5
+> http://www.openwall.com/lists/oss-security/2015/01/08/4
+> 
+> Could CVE(s) please be assigned?
+> 
+> -- 
+> Alexander Cherepanov
+
+-- 
+Vita Cizek
+
+View attachment "cpio-check_for_symlinks.patch" of type "text/x-patch" (5057 bytes)
 
 Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
