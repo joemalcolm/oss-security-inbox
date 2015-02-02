@@ -1,55 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/12/12
-Message-Id: <20150212165405.5C4B66C009C@smtpvmsrv1.mitre.org>
-Date: Thu, 12 Feb 2015 11:54:05 -0500 (EST)
-From: cve-assign@...re.org
-To: kristian.fiskerstrand@...ptuouscapital.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Cups: cupsRasterReadPixels buffer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/02/1
+Message-ID: <CAE7jHC9A3zKWAvv5__j0WS1DTxLhX0CZui4pXqW7Jx6cHA4GLw@mail.gmail.com>
+Date: Mon, 2 Feb 2015 16:52:18 +0200
+From: Constantine Shulyupin <const@...elinux.com>
+To: oss-security@...ts.openwall.com
+Subject: workaround for GHOST glibc vulnerability CVE-2015-0235
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+CVE-2015-0235-workaround is a shared library wrapper with additional checks
+for the vulnerable functions gethostbyname2_r and gethostbyname_r .
 
-> https://www.cups.org/str.php?L4551
+The proper solution for CVE-2015-0235 is to upgrade glibc to at least
+glibc-2.18.
 
-> A malformed compressed raster file can trigger a buffer overflow in
-> cupsRasterReadPixels.
+In some cases, an immediate glibc upgrade is not possible, for example in
+custom production embedded systems, because such an upgrade requires a
+validation of the whole system.
 
->> causes count (which is unsigned) to wrap around
+In such cases, this workaround provides a hot fix solution, which is easier
+to validate.
 
-> I can confirm that that patch fixes the buffer overflow
+Source code: https://github.com/makelinux/CVE-2015-0235-workaround
 
-Use CVE-2014-9679 for this integer overflow that was fixed in 2.0.2.
 
-The scope of this CVE does not include the "nothing that guarantees
-that r->bpp is non-zero" observation the "Feb 1, 2015" comment.
+-- 
+Constantine Shulyupin
+http://www.MakeLinux.com/
+Embedded Linux Systems
+and Device Drivers
 
-> since compression isn't used between filters and since we use
-> sandboxing whenever possible, it is unlikely that this will be
-> exploitable
-
-This isn't directly relevant to whether a CVE should exist, but
-http://cups.org/documentation.php/doc-2.0/man-cups-files.conf.html
-mentions 'Specifies the level of security sandboxing that is applied
-to print filters, backends, and other child processes of the
-scheduler. The default is "strict". This directive is currently only
-used/supported on OS X.' Apparently some online discussions of CUPS
-include third-party recommendations to disable sandboxing.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJU3NpOAAoJEKllVAevmvms+zAH/RzYRlzOX/Mm66NVZE5Svr8j
-XDMba6Yls6khp4rhXsUtIyjwRt+sjag5v+QWiDBv1ZEGJwD72MalgUQwYHOy0AGj
-fmqu6kiRd2rFU/c95IHj4N5H3NXvsrspWbmo8/p7cBTl5i/zDRCK8rG15SoTEHu/
-CUNR3KPeuVawwUzH4dFlWAQkTUP5DL20xPFcJb+kXr/vu7uwxedamjBH8twGVD6v
-/Pe8ktGAmfYEuj4tbcsj4kyU30U7wCzIAw5uZ2DvtuaP8uLyWeBqYAaWyz/754uC
-dFbGodPxsMmltshpDPHsRdMzjN5kc6fHAYJzW8r/sqsvR2xNlBV+u1J4Vw06EH4=
-=2glT
------END PGP SIGNATURE-----
