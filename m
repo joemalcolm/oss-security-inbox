@@ -1,47 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/05/1
-Message-ID: <54A9EAA9.5000303@redhat.com>
-Date: Sun, 04 Jan 2015 18:36:41 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: alan.coopersmith@...cle.com, gremlin@...mlin.ru, cve@...re.org
-Subject: Re: Assignment of CVE IDs with 5 or more digits by January 13, 2015
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/03/4
+Message-ID: <54D0A335.1040209@redhat.com>
+Date: Tue, 03 Feb 2015 11:30:13 +0100
+From: Florian Weimer <fweimer@...hat.com>
+To: const@...elinux.com
+CC: oss-security@...ts.openwall.com
+Subject: Re: workaround for GHOST glibc vulnerability CVE-2015-0235
 Content-Type: text/plain; charset=utf-8
 
-Might I suggest we use a larger ID (e.g. 6 digit one) for the next
-"major" issue in order to effectively force people into compliance? I
-fear if it's only 5/6 digits for "minor" issues some orgs/vendors may
-try to ignore the issue for a while longer. Alternatively maybe hand out
-a few blocks of 5/6 digit ID's to vendors like RHT/MSFT/etc.
+On 02/02/2015 03:52 PM, Constantine Shulyupin wrote:
+> CVE-2015-0235-workaround is a shared library wrapper with additional checks
+> for the vulnerable functions gethostbyname2_r and gethostbyname_r .
+> 
+> The proper solution for CVE-2015-0235 is to upgrade glibc to at least
+> glibc-2.18.
+> 
+> In some cases, an immediate glibc upgrade is not possible, for example in
+> custom production embedded systems, because such an upgrade requires a
+> validation of the whole system.
+> 
+> In such cases, this workaround provides a hot fix solution, which is easier
+> to validate.
+> 
+> Source code: https://github.com/makelinux/CVE-2015-0235-workaround
 
-On 04/01/15 04:04 PM, Steven M. Christey wrote:
-> 
-> Based on recent discussion on oss-security and general interest, I
-> thought it was important to clarify what is currently planned for
-> issuing 5-digit CVE IDs by the dealine of January 13, 2015.
-> 
-> Currently, CVE-2014-9509 is our last allocated ID from 2014.  During
-> 2015, we will continue to issue CVE-2014-xxxx IDs for other issues that
-> were disclosed in 2014, but it is highly unlikely that we will cross the
-> 5-digit threshold by January 13.
-> 
-> We will still issue at least one valid 5-digit CVE-2014-xxxxx ID, and
-> probably more, on January 13.  This is a one-time exception to our usual
-> sequential allocation process.  We are doing this as a final "test" to
-> ensure that CVE-using implementations can handle the syntax change.
-> 
-> We might also issue CVE IDs with more than 5 digits, since it is highly
-> likely that some implementations will make a 5-digit assumption, even
-> though an arbitrary number of digits is allowed by the syntax change,
-> which went into effect more than a year ago.
-> 
-> 
-> Steve Christey Coley
-> CVE Editor
+You should make all symbols static.  With the current code, you risk
+symbol collisions.
+
+Why don't you hook gethostbyname?  I'm not sure if gethosybyname is
+implement in terms of gethostbyname_r.  (The call stacks I have suggest
+it isn't.)
 
 -- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Florian Weimer / Red Hat Product Security
