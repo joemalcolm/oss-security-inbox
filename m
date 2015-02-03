@@ -1,44 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/22/11
-Message-ID: <20150222185555.GA10823@pisco.westfalen.local>
-Date: Sun, 22 Feb 2015 19:55:55 +0100
-From: Moritz Mühlenhoff <jmm@...til.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/03/9
+Message-ID: <20150203145647.GA4404@inutil.org>
+Date: Tue, 3 Feb 2015 15:56:47 +0100
+From: Moritz Muehlenhoff <jmm@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: CVE Assignments MITRE <cve-assign@...re.org>
-Subject: Re: Possible CVE Requests: libmspack: several issues
+Cc: scarybeasts@...il.com
+Subject: Re: vsftpd problem in deny_hosts
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Feb 03, 2015 at 04:52:05PM +0100, Salvatore Bonaccorso wrote:
-> Hi
+On Tue, Feb 03, 2015 at 12:45:24PM +0300, Solar Designer wrote:
+> On Tue, Feb 03, 2015 at 09:28:36AM +0100, Marcus Meissner wrote:
+> > IBM reported to us a problem in vsftpd deny_hosts problem.
+> > 
+> > CVE-2015-1419
+> > 
+> > https://bugzilla.novell.com/show_bug.cgi?id=915522
+> > 
+> > Description;
+> >  Set the option "deny_file" in /etc/vsftpd.conf on a top-directory (for example "deny_file=/home/*")
+> >  Then log in with ftp and try to cd to "/home/" first, which will fail, then try to cd to "/./home/" which will succeed!
+> >  The latter case shouldn't be possible as well!
 > 
-> Several issues with the libmspack library were reported recently in
-> the Debian bugtracker by Jakub Wilk. An (older) copy of libmspack is
-> also embedded in ClamAV (not verified if this version is also affected
-> by these issues).
-> 
-> The reported bugs are the following:
-> 
-> null pointer dereference on a crafted CAB:
->  - https://bugs.debian.org/774665
-> 
-> CHM decompression: division by zero
->  - https://bugs.debian.org/774725
-> 
-> CHM decompression: pointer arithmetic overflow
->  - https://bugs.debian.org/774726
-> 
-> off-by-one buffer over-read in mspack/mszipd.c
->  - https://bugs.debian.org/775498
-> 
-> off-by-one buffer under-read in mspack/lzxd.c
->  - https://bugs.debian.org/775499
-> 
-> CHM decompression: another pointer arithmetic overflow
->  - https://bugs.debian.org/775687
-> 
-> Could CVEs be assigned for these issues?
+> What does upstream say about this?  (CC'ing.)
 
-This seems to have fallen through the cracks.
+At least the man page states the deny_file is not a full-blown security measure:
+
+| This option is very simple, and should not be used for serious
+| access control - the filesystem's permissions should be used in preference.
 
 Cheers,
         Moritz
