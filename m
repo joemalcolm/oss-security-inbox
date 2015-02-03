@@ -1,65 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/23/21
-Message-ID: <54EB637B.7090704@enovance.com>
-Date: Mon, 23 Feb 2015 12:29:31 -0500
-From: Tristan Cacqueray <tristan.cacqueray@...vance.com>
-To: oss-security@...ts.openwall.com
-Subject: [OSSA 2015-004] Glance import task leaks image in backend (CVE-2014-9684, CVE-2015-1881)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/03/13
+Message-Id: <20150203165724.083F9B2E3C2@smtpvbsrv1.mitre.org>
+Date: Tue,  3 Feb 2015 11:57:24 -0500 (EST)
+From: cve-assign@...re.org
+To: pmatouse@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request -- Linux kernel - net: DoS due to routing packets to too many different dsts/too fast
 Content-Type: text/plain; charset=utf-8
 
-========================================================
-OSSA-2015-004: Glance import task leaks image in backend
-========================================================
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-:Date: February 23, 2015
-:CVE: CVE-2014-9684, CVE-2015-1881
+> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=df4d92549f23e1c037e83323aff58a21b3de7fe0
 
+> https://bugzilla.redhat.com/show_bug.cgi?id=1183744
 
-Affects
-~~~~~~~
-- Glance: 2014.2 versions through 2014.2.2
+Use CVE-2015-1465.
 
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-Description
-~~~~~~~~~~~
-Abhishek Kekane from NTT and Mike Fedosin from Mirantis reported a
-vulnerability in the Glance import task. By creating numerous images
-using the task API and deleting them, an authenticated attacker may
-accumulate untracked image data in the backend resulting in potential
-resource exhaustion and denial of service. All glance setups using API
-v2 are affected.
-
-
-Patches
-~~~~~~~
-- https://review.openstack.org/156553 (Juno)
-- https://review.openstack.org/157067 (Juno)
-- https://review.openstack.org/156493 (Kilo)
-- https://review.openstack.org/122427 (Kilo)
-
-
-Credits
-~~~~~~~
-- Abhishek Kekane from NTT (CVE-2015-1881)
-- Mike Fedosin from Mirantis (CVE-2014-9684)
-
-
-References
-~~~~~~~~~~
-- https://launchpad.net/bugs/1420696
-- https://launchpad.net/bugs/1371118
-- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-9684
-- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-1881
-
-
-Notes
-~~~~~
-- This fix will be included in the kilo-3 development milestone and in future
-  2014.2.3 (juno) release.
-
---
-Tristan Cacqueray
-OpenStack Vulnerability Management Team
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+iQEcBAEBAgAGBQJU0P1oAAoJEKllVAevmvmsiGEIALOQOpGAyhhOgPUdZn/S879c
+Ox7Y7fInk76URtsBKXM7tbNXWpbKNrHPVB9qHWJxvW9qVW8RJUc7inQa7YDV/kiR
+WwtRHOiaujOsyzUIzXbS35/ELMEwi9y9DuLC6ghKHd3vhvOoqnEVKFbhKWJRUDqt
+smpw/3cUKOXGNticCGHYJx4cdv0JFpeYat2U6IlGqwkSvXDCkixV/OQIpGJgexWj
+ze8fxY+ZGTLmur3BQHPO0eZeHNQRj0StjdPfjaOG1WRL/rn04gw76tsyzmWaN46J
+F0QZaDOIwOuUqaNDV/W/CuzK5JEWzKfhcIv/3/T4n78vwyO4+gEg8BXADiiEiM8=
+=0OZ0
+-----END PGP SIGNATURE-----
