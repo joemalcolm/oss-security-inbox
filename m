@@ -1,32 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/18/10
-Message-ID: <Pine.LNX.4.64.1501181534440.14308@beijing.mitre.org>
-Date: Sun, 18 Jan 2015 15:35:23 -0500 (EST)
-From: cve-assign@...re.org
-To: Alexander Cherepanov <ch3root@...nwall.com>
-cc: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: Re: CVE Request: pxz -- race condition in setting permissions
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/03/2
+Message-ID: <20150203082836.GH10714@suse.de>
+Date: Tue, 3 Feb 2015 09:28:36 +0100
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: vsftpd problem in deny_hosts
 Content-Type: text/plain; charset=utf-8
 
+Hi,
 
-On Fri, 16 Jan 2015, Alexander Cherepanov wrote:
+IBM reported to us a problem in vsftpd deny_hosts problem.
 
-> Hi!
->
-> pxz suffers from a race condition in setting permissions on output file.
->
-> Initial report:
-> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=775306
->
-> Could CVE(s) please be assigned?
->
-> -- 
-> Alexander Cherepanov
+CVE-2015-1419
 
-Use CVE-2015-1200.
+https://bugzilla.novell.com/show_bug.cgi?id=915522
 
----
+Description;
+ Set the option "deny_file" in /etc/vsftpd.conf on a top-directory (for example "deny_file=/home/*")
+ Then log in with ftp and try to cd to "/home/" first, which will fail, then try to cd to "/./home/" which will succeed!
+ The latter case shouldn't be possible as well!
 
-CVE assignment team, MITRE CVE Numbering Authority M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+Ciao, Marcus
