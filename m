@@ -1,110 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/05/13
-Message-Id: <20150305214202.30F818BC005@smtpvmsrv1.mitre.org>
-Date: Thu,  5 Mar 2015 16:42:02 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/03/15
+Message-Id: <20150203225417.2EBB66DC00D@smtpvmsrv1.mitre.org>
+Date: Tue,  3 Feb 2015 17:54:17 -0500 (EST)
 From: cve-assign@...re.org
-To: paul@...illan.ws
+To: steffen.roesemann1986@...il.com
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: unassigning CVE-2015-2104
+Subject: Re: CVE-Request -- Pragyan CMS v.3.0 -- SQL injection vulnerability
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-We think that the issue reduces to the question of whether it's
-acceptable for urlparse to provide inconsistent information about the
-structure of a URL.
+> Attackers can exploit that vulnerability by appending arbitrary SQL queries
+> to a registered users profile id without being authenticated.
+> 
+> /user:1%27+and+1=2+union+select+database%28%29,version%28%29,3+--+
+> 
+> http://sroesemann.blogspot.de/2015/01/sroeadv-2015-11.html
+> https://github.com/delta/pragyan/issues/206
+> http://pastebin.com/ip2gGYuS
+> http://sroesemann.blogspot.de/2015/02/advisory-for-sroeadv-2015-11.html
+> http://seclists.org/fulldisclosure/2015/Feb/18
 
-https://docs.python.org/2/library/urlparse.html says:
-
-   urlparse.urlparse(urlstring[, scheme[, allow_fragments]])
-   Parse a URL into six components, returning a 6-tuple. This
-   corresponds to the general structure of a URL:
-   scheme://netloc/path;parameters?query#fragment.
-
-
-   urlparse.urlunparse(parts)
-   Construct a URL from a tuple as returned by urlparse(). The parts
-   argument can be any six-item iterable. This may result in a
-   slightly different, but equivalent URL, if the URL that was parsed
-   originally had unnecessary delimiters (for example, a ? with an
-   empty query; the RFC states that these are equivalent).
-
-The first issue is that the urlunparse documentation is ambiguous. We
-believe the reasonable interpretation is that there is a missing third
-sentence: "This ALWAYS results in a URL that is either identical or
-equivalent to the URL that was parsed originally." There's another
-interpretation that we believe is unreasonable: "This may result in a
-slightly different, but equivalent URL, if the URL that was parsed
-originally had unnecessary delimiters. If the URL that was parsed
-originally did not have unnecessary delimiters, then the behavior of
-urlunparse is UNDEFINED."
-
-So, our expectation is that urlunparse(urlparse(original_url)) should
-not have any significant effect on the meaning of original_url. We
-also think that a Python user should be able to rely on that property
-to make security-relevant decisions. To simply the situation, consider
-a case where the URL is used exclusively within Python code, and is
-never accessed by any web browser.
-
-The actual behavior is:
-
-   >>> from urlparse import urlparse, urlunparse
-   >>> print urlparse("////example.com")
-   ParseResult(scheme='', netloc='', path='//example.com', params='', query='', fragment='')
-   >>> print urlparse(urlunparse(urlparse("////example.com")))
-   ParseResult(scheme='', netloc='example.com', path='', params='', query='', fragment='')
-   >>> print urlparse(urlunparse(urlparse(urlunparse(urlparse("////example.com")))))
-   ParseResult(scheme='', netloc='example.com', path='', params='', query='', fragment='')
-
-Here, urlparse(urlunparse(original_url)) does have a significant
-effect on the meaning of original_url. The Python user may have wanted
-to make a security-relevant decision based on whether netloc was an
-empty string. However, netloc is different depending on whether
-urlparse(urlunparse(original_url)) occurs at least once. The user's
-application (suppose it's called "PyNetlocExaminer") is affected in a
-security-relevant way.
-
-The next question is, if there is a CVE for a report of a
-security-relevant problem, what product is named as the primary
-affected product within that CVE. There is no perfect answer to this
-question. Especially in the case of a general-purpose language such as
-Python, there's an extremely wide range of bugs that might become
-security-relevant in some applications. What we usually try to do is
-make the CVE useful to users who may need to perform a software
-update. Specifically:
-
-  1. If the language implementation is not ever going to be changed
-     (for example: because the language maintainer believes the
-     observed behavior has always been correct, or the language
-     maintainer believes that it has retroactively become correct
-     because any change would break compatibility with other
-     applications), then the application is named as the primary
-     affected product in the CVE. In other words, if the inconsistency
-     between netloc='' and netloc='example.com' were actually the
-     intended behavior all along, then PyNetlocExaminer would be named
-     in the CVE. Here, realistically, the end user would need to
-     update or manually fix PyNetlocExaminer.
-
-  2. If the language implementation is incorrect and is planned to be
-     changed at some point, and that would eliminate the
-     security-relevant problem, then the language implementation is
-     named in the CVE. (An application might also be named in the CVE,
-     especially if there are very few affected applications.) This
-     option occurs regardless of whether the language maintainer
-     believes that it is a language vulnerability. (The language
-     maintainer has the option of composing a dispute that would be
-     appended to the CVE.) Here, the end user may ultimately decide to
-     address the problem by updating their Python installation, not by
-     updating PyNetlocExaminer.
-
-Again, this is imperfect. It works best in the relatively common case
-where a language bug has security relevance in many applications. It
-might work especially poorly in a case where a language bug has
-security relevance in exactly one application. However, it seems
-preferable to do the above consistently, rather than make the outcome
-depend on application populations, or depend on reaching universal
-agreement about what code should have been written differently.
+Use CVE-2015-1471.
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -114,11 +32,11 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJU+MySAAoJEKllVAevmvmsGi4IALM/2tPEiXGngJUwUwqOlq+l
-BBqSWW1320YcEzr/lL21BKDtgG/KIGy2l5C4Nb7Ma0nGIT2PiQKrhOuSaKZ7wXJ3
-14S7GthxCOPNjveW7tAHKpOlV/oIOYN5HHS3OuzzvM5iJ+CR2Bo3cIxKhsRSzF3b
-qNfiPq4NPgBBeJgtMD5nbMEid9mAvYJZG8iUAzm1QWoZC3Em4vOlzuLKx/cJ+NcB
-ccn8symBKuokF9JJCy4ztgzafSCIxapV2IgQXlq+ow1ET3uqEAkYQQWy3p2kQ6a3
-d+OWsAhBO/iTodoQx5OtCxJu9cITiM+bD+Q8yUNVjhzbRHVIvZyFWdPznWqOjCs=
-=FbZx
+iQEcBAEBAgAGBQJU0VCfAAoJEKllVAevmvmsI60H/ilF12jFosK4ISdLVWrF13Uq
+kh0bzif+CUb7sog+InOQvVKM6V0Ci+39BjIzEkU5EQRWZQyVedMQaRYp7zMkPyUO
+aNLOM8DvMGFXrzRE8/ofTUa1Bq1K4vlA46YOfsm2VAbwxvGDkFEHW39sGpJyw1SL
+Qn3hrBhGfCdevFXrh8ZKvMmo/rVi4/kAazfZezYNOos4qlTTxLGFljl9rzJVsI8d
+v+MhkzD/+0sf/27pUczwLdd8XRfd0qWbTCVq8z1T/s9qKj7sq54uJZQlDsnhpKcC
+RLGlsX2EgqzjFOBWEnIlNZw74VYySOkR7ztuyWDRKtz0khhBviFA7ZpDxMqYEE4=
+=DrF7
 -----END PGP SIGNATURE-----
