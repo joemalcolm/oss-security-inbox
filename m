@@ -1,22 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/12/8
-Message-ID: <20150212160501.GA5068@pisco.westfalen.local>
-Date: Thu, 12 Feb 2015 17:05:01 +0100
-From: Moritz Muehlenhoff <jmm@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/03/16
+Message-ID: <54D156F1.5090904@gmail.com>
+Date: Wed, 04 Feb 2015 00:17:05 +0100
+From: Gsunde Orangen <gsunde.orangen@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: CVE request: lame
+Subject: Re: CVE request: heap buffer overflow in glibc swscanf
 Content-Type: text/plain; charset=utf-8
 
+Hi Paul, all,
 
-Hi,
-please assign a CVE ID for this security issue in the LAME MP3 encoder.
-It has been reported multiple times in the Debian BTS:
+test case also fails on 2.18 and 2.17, tested on openSUSE.
+I assume this bug was introduced by the fix for
+https://sourceware.org/bugzilla/show_bug.cgi?id=13138
 
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=775959
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=777160
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=777161
+Thus glibc 2.15ff are vulnerable.
 
-Cheers,
-        Moritz
-        
+Gsunde
+
+On Sun, 1 Feb 2015 11:22:54 -0800, Paul Pluzhnikov wrote:
+> Greetings,
+>
+> https://sourceware.org/bugzilla/show_bug.cgi?id=16618
+> is almost 1 year old, and still not fixed in glibc trunk.
+>
+> I have verified that the test case from it fails with libc6
+> 2.19-0ubuntu6.5 and current trunk glibc.
+>
+> Don't know if it's exploitable, but it seems like it could easily be.
+>
+> (I'll see if I can fix it in the mean time.)
+>
+> Thanks,
+> --
+> Paul Pluzhnikov
