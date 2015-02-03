@@ -1,137 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/15/5
-Message-ID: <CACd+vpeiS5ukjowuWVtNPZUGO+J-V=YCStT7NO679jYx=p+jJg@mail.gmail.com>
-Date: Sun, 15 Mar 2015 14:30:44 +0530
-From: Puneeth Gowda <puneethis021@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request - Apache Solr 4.10
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/03/5
+Message-ID: <CAE7jHC9kVTbck_rM71mNSv=H-djJ=a7j0m1rDwXksrppU6-wQg@mail.gmail.com>
+Date: Tue, 3 Feb 2015 13:15:17 +0200
+From: Constantine Shulyupin <const@...elinux.com>
+To: Florian Weimer <fweimer@...hat.com>
+Cc: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: workaround for GHOST glibc vulnerability CVE-2015-0235
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Added static, thank.
 
-Please assign a CVE for this issue :
-Software : Apache Solr
-Version : 4.10
+You are right, gethostbyname is vulnerable too, but less.
+gethostbyname is implemented in
+http://osxr.org/glibc/source/nss/getXXbyYY.c?v=glibc-2.17#0101
+It allocates buffer from heap, not stack, which is less danger.
 
-Thanks
-Puneeth
-
-FYI,
-
-
-
----------- Forwarded message ----------
-From: Puneeth Gowda <puneethis021@...il.com>
-Date: Tue, Nov 18, 2014 at 8:30 AM
-Subject: Re: Security Vulnerability in Solr v4.10
-To: Stefan Matheis <steffkes@...che.org>
-
-
-Hello Stefan,
-
-Patch is working fine..
-Issue has been fixed now.
+Actually the bug is in __nss_hostname_digits_dots @
+http://osxr.org/glibc/source/nss/digits_dots.c?v=glibc-2.17#0036.
+Is it much more complex and dangerous to overload
+__nss_hostname_digits_dots. Better upgrade to newer glibc.
 
 Thanks
-Puneeth
+
+On Tue, Feb 3, 2015 at 12:30 PM, Florian Weimer <fweimer@...hat.com> wrote:
+
+> On 02/02/2015 03:52 PM, Constantine Shulyupin wrote:
+> > CVE-2015-0235-workaround is a shared library wrapper with additional
+> checks
+> > for the vulnerable functions gethostbyname2_r and gethostbyname_r .
+> >
+> > The proper solution for CVE-2015-0235 is to upgrade glibc to at least
+> > glibc-2.18.
+> >
+> > In some cases, an immediate glibc upgrade is not possible, for example in
+> > custom production embedded systems, because such an upgrade requires a
+> > validation of the whole system.
+> >
+> > In such cases, this workaround provides a hot fix solution, which is
+> easier
+> > to validate.
+> >
+> > Source code: https://github.com/makelinux/CVE-2015-0235-workaround
+>
+> You should make all symbols static.  With the current code, you risk
+> symbol collisions.
+>
+> Why don't you hook gethostbyname?  I'm not sure if gethosybyname is
+> implement in terms of gethostbyname_r.  (The call stacks I have suggest
+> it isn't.)
+>
+> --
+> Florian Weimer / Red Hat Product Security
+>
 
 
 
-On Fri, Nov 14, 2014 at 1:51 AM, Stefan Matheis <steffkes@...che.org> wrote:
-
->  Hi Puneeth
->
-> I'm really sorry about the late reply - this is my first CVE i'm handling,
-> so i'm trying to do it properly and wanted to ensure that everything is
-> working according to plans & ASF agenda.
->
-> The CVE you've asked about is CSV-2014-3628, the fix i was working on
-> already is committed to trunk, you can have a look at the applied changes
-> at https://issues.apache.org/jira/browse/SOLR-6738 . I'd be happy to know
-> if that covers all the cases you've discovered or if there are more that
-> i've missed with this fix!
->
-> -Stefan
->
-> On Sunday, November 2, 2014 at 8:38 AM, Puneeth Gowda wrote:
->
-> Hi Stefan,
->
-> Thank you for your response.
->
-> I'd really appreciate if you could assign a CVE to this bug. !
->
-> Thanks
-> puneeth
->
-> On Sun, Nov 2, 2014 at 4:52 AM, Stefan Matheis <steffkes@...che.org>
-> wrote:
->
->  Hi Puneeth
->
-> Sorry for the late response, thanks for reporting this vulnerability - i'm
-> hereby acknowledging it on behalf of the Lucene PMC.
->
-> We have investigated your report and accept it. I'm already working on a
-> fix.
->
-> -Stefan
->
-> -------- Original Message --------
-> Subject: Security Vulnerability in Solr v4.10
-> Date: Wed, 29 Oct 2014 16:57:06 +0530
-> From: Puneeth Gowda <puneethis021@...il.com>
-> To: security@...che.org
->
->
->
-> Hi,
->
-> I would like to report a stored xss vulnerability in solr web app
-> version : 4.10
->
-> ###################################################
-> Vulnerability Name : Stored XSS
-> Software : Apache Solr
-> Version : 4.10
-> ###################################################
->
-> POC:
->
->
-> Steps:
-> 1)Search with following query :
-> fq=lang%3A1&fq=%3A1&facet=true&facet.field="}<img src=a
->
-> onerror=alert(xss)>&facet.date=dateline&facet.date.start=2006-01-01T00%3A00%3A00.000Z%2FDAY&facet.date.end=2014-01-20T00%3A00%3A00.000Z%2FDAY%2B1DAY&facet.date.gap=%2B1DAY&facet.mincount=1&f.title.facet.limit=20&
-> json.nl
-> <http://json.nl
-> >=map&sort=dateline%20desc&rows=1&facet_ranges=&q=*:*&wt=json
->
-> Final URL :
-> http://localhost:8080/solr/
-> <app>/select?fq=lang%3A1&fq=%3A1&facet=true&facet.field="}<img
-> src=a
->
-> onerror=alert(xss)>&facet.date=dateline&facet.date.start=2006-01-01T00%3A00%3A00.000Z%2FDAY&facet.date.end=2014-01-20T00%3A00%3A00.000Z%2FDAY%2B1DAY&facet.date.gap=%2B1DAY&facet.mincount=1&f.title.facet.limit=20&
-> json.nl
-> <http://json.nl
-> >=map&sort=dateline%20desc&rows=1&facet_ranges=&q=*:*&wt=json
->
-> 2) Now browse to Solr Admin panel
-> URL: http://localhost:8080/solr/
-> Click on Plugins/stats after selecting <core> from the drop down.
-> Browser displays popup.
->
-> Reason : The parameter "fieldvalucache" stores all searched queries
-> without sanitizing, which results in execution of javascript.
->
->
-> Thanks
-> Puneeth
->
->
->
->
->
+-- 
+Constantine Shulyupin
+http://www.MakeLinux.com/
+Embedded Linux Systems
+and Device Drivers
 
