@@ -1,54 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/16/12
-Message-ID: <54B93058.4000000@openwall.com>
-Date: Fri, 16 Jan 2015 18:38:00 +0300
-From: Alexander Cherepanov <ch3root@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/03/8
+Message-ID: <20150203142929.GL10104@suse.de>
+Date: Tue, 3 Feb 2015 15:29:29 +0100
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-CC: cve-assign@...re.org
-Subject: Re: CVE request: file(1) DoS
+Cc: CVE Assignments MITRE <cve-assign@...re.org>
+Subject: Re: CVE Request: MySQL: MyISAM temporary file issue
 Content-Type: text/plain; charset=utf-8
 
-On 16.01.2015 16:15, Marc Deslauriers wrote:
-> On 2015-01-03 02:50 PM, Alexander Cherepanov wrote:
->> On 2014-12-17 03:44, Alexander Cherepanov wrote:
->>> There are two more DoSes fixed in ELF parser of file(1), similar to the
->>> recent CVE-2014-8116.
->>
->> These fixes were included in 5.22 release:
->>
->> http://mx.gw.com/pipermail/file/2015/001660.html
->>
->>> 1. Limit the number of ELF notes processed
->>> Report: http://mx.gw.com/pipermail/file/2014/001653.html
->>> Fix: https://github.com/file/file/commit/ce90e05774dd77d86cfc8dfa6da57b32816841c4
->>
->> This issue seems to be introduced here:
->>
->> https://github.com/file/file/commit/956a45ab1c54b11304b367056f41905e72a02380#diff-bc5c24ef9f39a5f4963ca28ecbc645b3L423
->>
->>
->> which ended up in 5.08 release. Hence releases 5.08--5.21 are vulnerable.
->>
->>> 2. Limit string printing to 100 chars
->>> Report: http://mx.gw.com/pipermail/file/2014/001654.html
->>> Fix: https://github.com/file/file/commit/65437cee25199dbd385fb35901bc0011e164276c
->>
->> This issue was introduced in the following commit:
->>
->> https://github.com/file/file/commit/c8451af8ab0c2e2a93ce93b9c68257d31576cc85
->>
->> which ended up in 5.16 release. Hence releases 5.16--5.21 are vulnerable.
->>
->>> Both problems amplified by the fact that the same section in ELF file
->>> can be referenced and processed by file(1) multiple times. This is also
->>> fixed in the first commit linked above.
->>>
->>> Could CVE(s) please be assigned?
->>
->
-> Did these ever get CVEs?
+On Wed, Sep 10, 2014 at 06:00:08PM +0200, Salvatore Bonaccorso wrote:
+> Hi
+> 
+> The changes for MySQL 5.5.39[1] and 5.6.20[2] contain a reference to
+> the following issue, which could be exploited by a local user to run
+> arbitrary code in context of the mysqld server.
+> 
+> MyISAM temporary files could be used to mount a code-execution attack.
+> (Bug #18045646).
+> 
+> This is also tracked in[3] and [4] mentioning as relevant fix [5].
+> 
+> Was a CVE already requested for this issue? If not, could one be
+> assigned?
+> 
+> Regards,
+> Salvatore
+> 
+>  [1] https://dev.mysql.com/doc/relnotes/mysql/5.5/en/news-5-5-39.html
+>  [2] https://dev.mysql.com/doc/relnotes/mysql/5.6/en/news-5-6-20.html
+>  [3] https://bugzilla.redhat.com/show_bug.cgi?id=1126271
+>  [4] https://bugs.gentoo.org/show_bug.cgi?id=518718
+>  [5] https://bazaar.launchpad.net/~mysql/mysql-server/5.5/revision/4638
 
-Not that I know of.
+Hi folks.
 
--- 
-Alexander Cherepanov
+By reviewing our mysql and mariadb issues we correlated this unknown issue
+to a bugreport submitted to us by an external researcher.
+
+CVE-2014-4274
+
+https://bugzilla.suse.com/show_bug.cgi?id=857678
+
+The bugreport also has a reproducer.
+
+Stefan "nordi" Nordhausen reported this issue to both Oracle and to us on
+7th of January 2014.
+
+Oracle fixed it in their 2014oct CPU.
+MariaDB fixed it in 10.0.13 I think.
+
+
+We had sadly lacked disclosure timeline control on this issue and reactions on
+Oracle side were also, errm, delayed.
+
+Ciao, Marcus
