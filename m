@@ -1,52 +1,89 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/12/17
-Message-Id: <20150212235040.0BF9172E00D@smtpvbsrv1.mitre.org>
-Date: Thu, 12 Feb 2015 18:50:40 -0500 (EST)
-From: cve-assign@...re.org
-To: john@...nuts.net
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: MovableType before 5.2.12 - Movable Type
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/03/1
+Message-ID: <20150203072158.GA16833@openwall.com>
+Date: Tue, 3 Feb 2015 10:21:58 +0300
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Linux kernel: multiple x86_64 vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Mon, Dec 15, 2014 at 10:01:19AM -0800, Andy Lutomirski wrote:
+> CVE-2014-9322: local privilege escalation, all kernel versions
 
-> MoveableType 5.2.12 was released today to fix a flaw where Perl's
-> Storable::thaw() was called on data sent by unauthenticated remote users
-> in some interfaces.
+Here's Rafal Wojtczuk's writeup on exploiting it:
+
+http://labs.bromium.com/2015/02/02/exploiting-badiret-vulnerability-cve-2014-9322-linux-kernel-privilege-escalation/
+
+It's been a while since Andy posted this, so I'll quote the rest of his
+message for context:
+
+> Any kernel that is not patched against CVE-2014-9090 is vulnerable to
+> privilege escalation due to incorrect handling of a #SS fault caused
+> by an IRET instruction.  In particular, if IRET executes on a
+> writeable kernel stack (this was always the case before 3.16 and is
+> sometimes the case on 3.16 and newer), the assembly function
+> general_protection will execute with the user's gsbase and the
+> kernel's gsbase swapped.
 > 
-> https://movabletype.org/news/2015/02/movable_type_607_and_5212_released_to_close_security_vulnera.html
-
-> We are releasing Movable Type 6.0.7 and 5.2.12 as mandatory security updates.
-
-> In previous versions, including the Movable Type 6.0.6 and 5.2.11 are susceptible
-
-Note that 5.2.11 is open source (from the
-https://movabletype.org/downloads/archives/5.x/MTOS-5.2.11.zip
-distribution) but we think that 6.0.6 is not open source.
-
-> The payload example provided to SixApart was a local file inclusion
-> attack, but unauthenticated arbitrary remote code execution should be
-> straightforward
-
-Use CVE-2015-1592.
-
-There aren't separate CVE IDs for different impacts of the underlying
-"called on data sent by unauthenticated remote users" issue.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJU3TuVAAoJEKllVAevmvmsww4H/i+mhMmZ/wXa2QXyMDfu3Ojr
-lgPuScQ7/DNIEeKhdhnbjtlF4wRsdsohOx7CyYlNt3QjTu6h8ngGH+JG8sQjtcaU
-OnB091V+hOAXsetdr5bZFDr/+o7a6lz/GrhaURJJHgXXcJhbWvrfn/vEuadVQZtS
-26raOvgRmomr6T0+kv+6SSMCy78N7eHJnUDWHUS/d+2a/G5Hpe1pYWpvF5hZLNYY
-uH9D4C6gmLdD0HaujOy+2Pv8QnE2OMFoQ14yfcdc+N2JxSVKA0I/50lbB0axMXDf
-zmR2I18Sx4ccBm97yX2qFs5uqNk6O4nZQ74mRp003ZvQXqwN3RnW4YbbxGAVmaI=
-=4v/h
------END PGP SIGNATURE-----
+> This is likely to be easy to exploit for privilege escalation, except
+> on systems with SMAP or UDEREF.  On those systems, assuming that the
+> mitigation works correctly, the impact of this bug may be limited to
+> massive memory corruption and an eventual crash or reboot.
+> 
+> As with CVE-2014-9090, this is fixed by:
+> 
+> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/arch/x86/kernel/entry_64.S?id=6f442be2fb22be02cafa606f1769fa1e6f894441
+> 
+> The related fix to remove bad_iret is also an effective mitigation to
+> prevent a bug like this from being reintroduced:
+> 
+> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/arch/x86/kernel/entry_64.S?id=b645af2d5905c4e32399005b867987919cbfc3ae
+> 
+> Partial credit for this bug goes to Borislav Petkov, who asked pointed
+> questions about CVE-2014-9090, causing me to realize that there were
+> two separate bugs in #SS handling.  The first bug (CVE-2014-9090)
+> caused a fatal double fault, masking the second bug that caused the
+> gsbase issue.
+> 
+> ----------
+> 
+> The next two bugs are related to espfix.  The IRET instruction has IMO
+> a blatant design flaw: IRET to a 16-bit user stack segment will leak
+> bits 31:16 of the kernel stack pointer.  This flaw exists on 32-bit
+> and 64-bit systems.  32-bit Linux kernels have mitigated this leak for
+> a long time, and 64-bit Linux kernels have mitigated this leak since
+> 3.16.  The mitigation is called espfix.
+> 
+> CVE-2014-8133: espfix bypass using set_thread_area
+> 
+> On all kernels, a valid 16-bit stack segment can be created using
+> set_thread_area.  Arranging to return to such a stack segment will
+> bypass espfix, leaking bits 31:16 of the kernel stack pointer.  Fixed
+> by:
+> 
+> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/arch/x86?id=41bdc78544b8a93a9c6814b8bbbfef966272abbe
+> 
+> CVE-2014-8134: espfix was broken on 32-bit KVM paravirt guests
+> 
+> espfix was completely broken on 32-bit Linux KVM guests with
+> CONFIG_KVM_GUEST=y.  Fixed by:
+> 
+> https://git.kernel.org/cgit/virt/kvm/kvm.git/commit/?h=linux-next&id=29fa6825463c97e5157284db80107d1bfac5d77b
+> 
+> This commit hasn't made it to Linus' tree yet.
+> 
+> ----------
+> 
+> CVE-2014-9090 (previously announced), CVE-2014-9322, CVE-2014-8133,
+> and CVE-2014-8134 can be tested by sigreturn_32, available here:
+> 
+> https://gitorious.org/linux-test-utils/linux-clock-tests/source/10b9a7d317f6d8ae5f32bcb4bbbb186acdd6b89a
+> 
+> Save your data before running this on a production system.  If you a
+> vulnerable to CVE-2014-9090 or CVE-2014-9322, the test will crash your
+> system.  The espfix issues will cause warnings and failures that
+> mention register mismatches.
+> 
+> -- 
+> Andy Lutomirski
+> AMA Capital Management, LLC
