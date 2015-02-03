@@ -1,24 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/11/17/18
-Message-ID: <20151117221139.GE3818@oevtugenva.nrevsny.pk>
-Date: Tue, 17 Nov 2015 17:11:39 -0500
-From: Rich Felker <dalias@...c.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/03/7
+Message-ID: <20150203142337.GK10104@suse.de>
+Date: Tue, 3 Feb 2015 15:23:37 +0100
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: Fwd: x86 ROP mitigation
+Cc: scarybeasts@...il.com
+Subject: Re: vsftpd problem in deny_hosts
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Nov 17, 2015 at 01:52:07PM -0500, Daniel Micay wrote:
-> Is that really the right approach vs. preventing hijacking of flow
-> control via return pointers and function pointers? It doesn't really
-> seem like there's an end game in mind where it actually prevents ROP
-> rather than just removing many useful gadgets. Making useful ROP gadgets
-> harder to find doesn't mean much, since tools are used to find them and
-> the tools can be improved if it becomes necessary.
+On Tue, Feb 03, 2015 at 12:45:24PM +0300, Solar Designer wrote:
+> On Tue, Feb 03, 2015 at 09:28:36AM +0100, Marcus Meissner wrote:
+> > IBM reported to us a problem in vsftpd deny_hosts problem.
+> > 
+> > CVE-2015-1419
+> > 
+> > https://bugzilla.novell.com/show_bug.cgi?id=915522
+> > 
+> > Description;
+> >  Set the option "deny_file" in /etc/vsftpd.conf on a top-directory (for example "deny_file=/home/*")
+> >  Then log in with ftp and try to cd to "/home/" first, which will fail, then try to cd to "/./home/" which will succeed!
+> >  The latter case shouldn't be possible as well!
 > 
-> i.e. why not just go with something like PaX's RAP
+> What does upstream say about this?  (CC'ing.)
 
-My understanding is that it's not ABI-compatible with non-RAP code, so
-you'd essentially be going with a whole new ABI. If so, this is going
-to be completely impractical for most users. Am I mistaken?
+Due to internal communication troubles we had not contacted upstream.
 
-Rich
+Sorry for that. :(
+
+Ciao, Marcus
