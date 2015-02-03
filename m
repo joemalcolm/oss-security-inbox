@@ -1,87 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/24/4
-Message-Id: <20150124145342.6F8BF3AE03A@smtpvbsrv1.mitre.org>
-Date: Sat, 24 Jan 2015 09:53:42 -0500 (EST)
-From: cve-assign@...re.org
-To: marc.deslauriers@...onical.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Linux kernel crypto api unprivileged arbitrary module load
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/03/10
+Message-ID: <CAMnK33VmjfmdiZz14MyJEaCFYd8ty26pigmDO_wF2i1W8Yg+zw@mail.gmail.com>
+Date: Tue, 3 Feb 2015 07:29:15 -0800
+From: Chris Evans <scarybeasts@...il.com>
+To: Moritz Muehlenhoff <jmm@...ian.org>
+Cc: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: vsftpd problem in deny_hosts
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Tue, Feb 3, 2015 at 6:56 AM, Moritz Muehlenhoff <jmm@...ian.org> wrote:
 
-> The Crypto API in the Linux kernel before 3.19 allowed unprivileged users to
-> load arbitrary kernel modules.
+> On Tue, Feb 03, 2015 at 12:45:24PM +0300, Solar Designer wrote:
+> > On Tue, Feb 03, 2015 at 09:28:36AM +0100, Marcus Meissner wrote:
+> > > IBM reported to us a problem in vsftpd deny_hosts problem.
+> > >
+> > > CVE-2015-1419
+> > >
+> > > https://bugzilla.novell.com/show_bug.cgi?id=915522
+> > >
+> > > Description;
+> > >  Set the option "deny_file" in /etc/vsftpd.conf on a top-directory
+> (for example "deny_file=/home/*")
+> > >  Then log in with ftp and try to cd to "/home/" first, which will
+> fail, then try to cd to "/./home/" which will succeed!
+> > >  The latter case shouldn't be possible as well!
+> >
+> > What does upstream say about this?  (CC'ing.)
+>
+> At least the man page states the deny_file is not a full-blown security
+> measure:
+>
+> | This option is very simple, and should not be used for serious
+> | access control - the filesystem's permissions should be used in
+> preference.
+>
 
-> https://plus.google.com/+MathiasKrause/posts/PqFCo4bfrWu
+Yeah, this option is very half-assed. I should probably have known better
+than to implement it.
 
-> https://lkml.org/lkml/2013/3/4/70
-> https://git.kernel.org/linus/5d26a105b5a73e5635eae0629b42fa0a90e07b7b
+Other quotes from the man page:
+---
+In
+              particular aware that if a filename is accessible by  a
+ variety
+              of  names  (perhaps  due  to symbolic links or hard links),
+then
+              care must be taken to deny access to all the names.
+---
+Because  of  this,  you will need to
+              carefully and exhaustively test any application of this
+ option.
+              And  you  are  recommended to use filesystem permissions for
+any
+              important security policies due to  their  greater
+ reliability.
+---
 
-Use CVE-2013-7421 for the original 2013 discovery by Mathias Krause,
-with a "Try the code snippet below on a system with
-CONFIG_CRYPTO_USER_API=y" attack.
+The "variety of names" clause above is for situations like /home vs.
+/./home/ vs. /../home vs. /.././../home etc.
 
-The scope of CVE-2013-7421 does not include any other parts of the
-related 2013-03-03 discussion. In particular, the scope of
-CVE-2013-7421 does not include the general concepts of "making things
-safer with no real cost" and "Allowing simple, safe, well understood
-work-arounds" in the https://lkml.org/lkml/2013/3/3/35 post. Also, the
-scope of CVE-2013-7421 does not include any other security
-implications, for other subsystems, of the "This isn't the case for
-filesystems and a few others, unfortunately" observation in the
-https://lkml.org/lkml/2013/3/3/88 post.
+This option is just a regex-like match against the raw FTP argument. So,
+I'm not sure it's possible to use deny_file=/home/*. Even if that were
+tweaked to deny_file=*/home/*, it would only work if the initial directory
+were set _outside_ /home -- if it wasn't, RETR some/relative/path would
+work because /home/ does not appear in the string.
 
-
-> https://git.kernel.org/linus/4943ba16bbc2db05115707b3ff7b4874e9e3c560
-
-Use CVE-2014-9644 for this second discovery in 2014, mentioned in
-PqFCo4bfrWu as 'stumbled over the first flaw -- not handling crypto
-templates correctly. This means, the patch would prevent loading the
-vfat.ko module when requesting a cipher named "vfat" but would fail to
-do so if one would request "vfat(aes)" instead.' As far as we can
-tell, this is a discovery of a separate attack vector that wasn't
-implied by the 2013 post.
-
-
-> https://git.kernel.org/linus/3e14dcf7cb80b34a1f38b55bc96f02d23fdaaaaf
-
-This isn't within the scope of either CVE-2013-7421 or CVE-2014-9644.
-As far as we can tell, it is largely a usability fix. The example
-mentioned is "This fixes, e.g., requesting 'ecb(blowfish-generic)',
-which used to work with kernels v3.18 and below." Is there also a
-security impact if 3e14dcf7cb80b34a1f38b55bc96f02d23fdaaaaf is
-missing? For example, is it likely that code exists that requests
-ecb(blowfish-generic) in an environment without
-3e14dcf7cb80b34a1f38b55bc96f02d23fdaaaaf, and is able to continue
-working afterward, but falls back to weak encryption?
+Perhaps the wording in the man page is not strong enough, or not detailed
+enough about implications, or I should just remove it? Suggestions welcome.
 
 
-Finally, here is one more CVE ID for the last issue that PqFCo4bfrWu
-mentions:
+Cheers
+Chris
 
-> https://bugs.busybox.net/show_bug.cgi?id=7652
-> http://git.busybox.net/busybox/commit/?id=4e314faa0aecb66717418e9a47a4451aec59262b
 
-Use CVE-2014-9645. The scope of this CVE ID is the entire problem of
-path stripping. (In other words, CVE-2014-9645 is not specific to the
-'If one would request a cipher named "/vfat"' attack, and is not
-specific to the Crypto API.)
+>
+> Cheers,
+>         Moritz
+>
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJUw7GnAAoJEKllVAevmvmsSGYH+QGuxDsDlzYM7If+yc+qmSMh
-RpG3iaenpzXCqDRePWl3d8ghKMP/ykkplzRxyAU9KFQYsC380u113eVcG/Jp7OL2
-ARmzwqoYTJ9rIzicNOX2vEtZ2G3S1u57TPxjUEi/I1RD/L8b7LOeE1mb0/1MHvsP
-eAIwPuBD6zS21wUpQow6Y9F3IlItJBkaMGXwqgxiO8ABD56rTKy+msBxDhxxvllR
-noVwKZDsJteocQuhzS8Nb6M31T0mj8rszFpHyZLB54hTFyLY9u8nnjpJVpnjZi/R
-ovw9Obe7+W2182KoNRNtXNwp9ztjjvh9QCc30vmB7ML07/raBVm1E/z/+ctMqo0=
-=oBcQ
------END PGP SIGNATURE-----
