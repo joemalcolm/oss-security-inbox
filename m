@@ -1,51 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/21/2
-Message-ID: <54BEE5A5.5050807@schaufler-ca.com>
-Date: Tue, 20 Jan 2015 15:32:53 -0800
-From: Casey Schaufler <casey@...aufler-ca.com>
-To: James Morris <jmorris@...ei.org>, Ben Hutchings <ben@...adent.org.uk>
-CC: Alexander Viro <viro@...iv.linux.org.uk>, linux-fsdevel@...r.kernel.org, linux-security-module@...r.kernel.org, LKML <linux-kernel@...r.kernel.org>, 770492@...s.debian.org, Ben Harris <bjh21@....ac.uk>, oss-security@...ts.openwall.com, John Johansen <john.johansen@...onical.com>, Paul Moore <paul@...l-moore.com>, Stephen Smalley <sds@...ho.nsa.gov>, Casey Schaufler <casey@...aufler-ca.com>
-Subject: Re: [RFC PATCH RESEND] vfs: Move security_inode_killpriv() after permission checks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/04/3
+Message-ID: <20150203164908.GA26391@fear.qoop.org>
+Date: Tue, 3 Feb 2015 10:49:08 -0600
+From: "Joshua J. Drake" <oss-sec@...p.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: vsftpd problem in deny_hosts
 Content-Type: text/plain; charset=utf-8
 
-On 1/20/2015 3:17 PM, James Morris wrote:
-> On Sat, 17 Jan 2015, Ben Hutchings wrote:
->
->> chown() and write() should clear all privilege attributes on
->> a file - setuid, setgid, setcap and any other extended
->> privilege attributes.
->>
->> However, any attributes beyond setuid and setgid are managed by the
->> LSM and not directly by the filesystem, so they cannot be set along
->> with the other attributes.
->>
->> Currently we call security_inode_killpriv() in notify_change(),
->> but in case of a chown() this is too early - we have not called
->> inode_change_ok() or made any filesystem-specific permission/sanity
->> checks.
->>
->> Add a new function setattr_killpriv() which calls
->> security_inode_killpriv() if necessary, and change the setattr()
->> implementation to call this in each filesystem that supports xattrs.
->> This assumes that extended privilege attributes are always stored in
->> xattrs.
-> It'd be useful to get some input from LSM module maintainers on this.
+Maybe it would be prudent to canonicalize the path and match against
+that instead. What are your thoughts?
 
-I've already chimed in.
+PS. sorry for the top post
 
-Clearing the Smack label on a file because someone writes to it
-makes no sense whatsoever. The same with chown. The Smack label is
-attached to the object, which is a container of data, not the data
-itself. Smack labels are Mandatory Access Control labels, not Information
-labels. If that doesn't mean anything to the reader, check out the
-P1003.1e/2c (withdrawn) DRAFT.
+Joshua
 
-The proposed implementation does not correctly handle either
-Mandatory Access Control labels or Information labels. The MAC
-label is *very different* from the setuid bit.
+On Tue, Feb 03, 2015 at 07:29:15AM -0800, Chris Evans wrote:
+> 
+> The "variety of names" clause above is for situations like /home vs.
+> /./home/ vs. /../home vs. /.././../home etc.
+> 
+> This option is just a regex-like match against the raw FTP argument. So,
+> I'm not sure it's possible to use deny_file=/home/*. Even if that were
+> tweaked to deny_file=*/home/*, it would only work if the initial directory
+> were set _outside_ /home -- if it wasn't, RETR some/relative/path would
+> work because /home/ does not appear in the string.
+> 
+> Perhaps the wording in the man page is not strong enough, or not detailed
+> enough about implications, or I should just remove it? Suggestions welcome.
 
->
-> e.g. doesn't SELinux already handle this via policy directives?
->
->
-
+Download attachment "signature.asc" of type "application/pgp-signature" (812 bytes)
