@@ -1,24 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/24/2
-Message-ID: <20150124100317.GA8130@eldamar.local>
-Date: Sat, 24 Jan 2015 11:03:17 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Cc: CVE Assignments MITRE <cve-assign@...re.org>
-Subject: CVE Request: patch: directory traversal via file rename
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/03/6
+Message-ID: <20150203111548.GA18828@localhost.localdomain>
+Date: Tue, 3 Feb 2015 03:15:48 -0800
+From: Qualys Security Advisory <qsa@...lys.com>
+To: oss-security@...ts.openwall.com
+Cc: const@...elinux.com
+Subject: Re: workaround for GHOST glibc vulnerability CVE-2015-0235
 Content-Type: text/plain; charset=utf-8
 
-Hi
+On Tue, Feb 03, 2015 at 11:30:13AM +0100, Florian Weimer wrote:
+> Why don't you hook gethostbyname?  I'm not sure if gethosybyname is
+> implement in terms of gethostbyname_r.  (The call stacks I have suggest
+> it isn't.)
 
-Could you please assign a CVE for the following issue in patch? There
-is a directory traversal flaw via file rename.
+Actually, gethostbyname() calls gethostbyname_r(), but before it does,
+it calls the vulnerable function __nss_hostname_digits_dots(), so you're
+right, this would still be exploitable.
 
-It was reported to the Debian BTS as #775873[1] and is different from
-#775227, which was a directory traversal via symlinks and got
-CVE-2015-1196.
+With best regards,
 
- [1] https://bugs.debian.org/775873
- [2] https://savannah.gnu.org/bugs/?44059
-
-Regards,
-Salvatore
+-- 
+the Qualys Security Advisory team
