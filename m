@@ -1,42 +1,87 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/22/4
-Message-ID: <Pine.LNX.4.64.1501220927200.18848@beijing.mitre.org>
-Date: Thu, 22 Jan 2015 09:28:14 -0500 (EST)
-From: cve-assign@...re.org
-To: Salvatore Bonaccorso <carnil@...ian.org>
-cc: OSS Security Mailinglist <oss-security@...ts.openwall.com>, CVE Assignments MITRE <cve-assign@...re.org>
-Subject: Re: Possible CVE request: sympa: vulnerability in the web interface
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/04/8
+Message-Id: <1423072230.91582.223100497.5688F508@webmail.messagingengine.com>
+Date: Wed, 04 Feb 2015 11:50:30 -0600
+From: Mark Felder <feld@...d.me>
+To: oss-security@...ts.openwall.com
+Subject: Re: Apache 2.4 mod_ssl SSLSessionTickets -- others vulnerable?
 Content-Type: text/plain; charset=utf-8
 
 
-On Tue, 20 Jan 2015, Salvatore Bonaccorso wrote:
 
-> Hi
->
-> I would like to ask if a CVE could be assigned for the following issue
-> (it is not clear if upstream has already requested one):
-> https://www.sympa.org/security_advisories#security_breaches_in_newsletter_posting
->
-> The advisory reads:
->
->> A vulnerability have been discovered in Sympa web interface that
->> allows access to files on the server filesystem.
->>
->> This breach allows to send to a list or a user any file readable by
->> the Sympa user, located on the server filesystem, using the Sympa web
->> interface newsletter posting area.
->
-> Upstream patch: https://sourcesup.renater.fr/scm/viewvc.php/branches/sympa-6.1-branch/wwsympa/wwsympa.fcgi.in?root=sympa&r1=11562&r2=11778&view=patch
->
-> Thanks in advance,
->
-> Regards,
-> Salvatore
+On Wed, Feb 4, 2015, at 10:55, Florent Daigniere wrote:
+> On Wed, 2015-02-04 at 10:35 -0600, Mark Felder wrote:
+> > From the 2.4.12 changelog:
+> > 
+> > 
+> >   *) mod_ssl: New directive SSLSessionTickets (On|Off).
+> >      The directive controls the use of TLS session tickets (RFC 5077),
+> >      default value is "On" (unchanged behavior).
+> >      Session ticket creation uses a random key created during web
+> >      server startup and recreated during restarts. No other key
+> >      recreation mechanism is available currently. Therefore using
+> >      session
+> >      tickets without restarting the web server with an appropriate
+> >      frequency
+> >      (e.g. daily) compromises perfect forward secrecy. [Rainer Jung]
+> > 
+> > 
+> > So if you use Apache 2.4 and care about PFS protecting your data, you
+> > should turn this feature off. This appears to be an implementation issue
+> > because there is no other way for Apache to recreate keys. I don't know
+> > a lot about the fine details of Session Tickets, but can anyone care to
+> > comment if there are other known bad implementations of session tickets
+> > out there? Does this affect Apache 2.2? Nginx? Lighttpd?
+> > 
+> > 
+> > Thanks
+> > I find this bizarre that a known security weakness like this is left
+> > "on" by default...
+> 
+> You're right, it's "bizarre"
+> 
+> I've tried to make some noise about it two years ago [1] ... 
+> 
+> IMHO it's OpenSSL's default that should be changed. The server
+> implementation shouldn't give a ticket if it's picked a PFS enabled
+> cipher (or a cipher which aims at providing better security than
+> AES128-CBC) unless explicitly told to do so (the case where there is
+> more than one server).
+> 
+> Apache HTTPd's new setting (SSLSessionTicketKeyFile), allowing you to
+> set the ticket key is *DANGEROUS* as documented [1]. It encourages users
+> explicitly to store the key on a forensically carvable medium...
+> "The ticket key file contains sensitive keying material and should be
+> protected with file permissions similar to those used for
+> SSLCertificateKeyFile."
+> Which is exactly what you shouldn't do!
+> 
 
-Use CVE-2015-1306.
+Thanks for the details, Florent. After reviewing this blog post [1] it's
+much clearer now, but I'm still a bit fuzzy on if "session caching" and
+"session IDs" (RFC 5246, TLS 1.2) -- also as identified by Qualys
+SSLLabs line item "Session resumption (caching)" -- are the same; is the
+Session Cache caching session IDs? I only ask because I know that
+webservers have had SSL Session Cache features for years, but RFC 5246
+is TLS 1.2 in its entirety and I believe I've seen this feature predate
+TLS 1.2. Was session caching / IDs always part of the SSL/TLS spec, now
+superseded by the newer TLS 1.2 RFC?
 
----
+If I'm understanding that correctly the following would be true: the use
+of session caching is not a known vulnerability, but the use of session
+tickets is a potential vulnerability. The design of the session tickets
+(RFC 5077) appears to solve a specific problem: reducing expensive TLS
+renegotiation when you have a cluster of servers and the session is not
+guaranteed to stick to a specific server/load balancer. Additionally
+OpenSSL lacks key rotation for session tickets, so it seems safe to
+assume all software using OpenSSL with session tickets enabled are
+likely not working around this problem by enforcing their own key
+rotation.
 
-CVE assignment team, MITRE CVE Numbering Authority M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+This feels like a feature that should always be turned off unless your
+environment absolutely requires it; especially if you have measurable
+performance impact / negative client experience without it.
+
+
+[1]
+http://vincent.bernat.im/en/blog/2011-ssl-session-reuse-rfc5077.html
