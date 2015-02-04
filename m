@@ -1,35 +1,130 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/22/1
-Message-ID: <CAO33bZUoNPSMYObtR0a38g4h3kB45JqnbYmjVseK2Cgom+TURQ@mail.gmail.com>
-Date: Thu, 22 Jan 2015 10:44:56 +1000
-From: David Jorm <david.jorm@...il.com>
-To: oss-security@...ts.openwall.com,  opendaylight-announce@...ts.opendaylight.org
-Subject: Defense4all security advisory: CVE-2014-8149 users can export report data to an arbitrary file on the server's filesystem
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/04/11
+Message-ID: <1423073838.11205.24.camel@trustmatta.com>
+Date: Wed, 04 Feb 2015 19:17:18 +0100
+From: Florent Daigniere <florent.daigniere@...stmatta.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Apache 2.4 mod_ssl SSLSessionTickets -- others vulnerable?
 Content-Type: text/plain; charset=utf-8
 
-It was found that the defense4all framework's "dump" method allows a user
-to request that report data is exported to a file on the server's
-filesystem. The user can specify any path, and the server will write to it
-with no validation. This could be used to perform a range of attacks. For
-example, a critical file could be overwritten, thereby disabling the
-defense4all server. On Windows servers, a UNC path could be injected,
-potentially causing the server to write data to remote filesystems. An
-attacker cannot control the contents of the file, but they can define a
-report query that returns no results, and therefore force it to write an
-empty file. An error message is received if the server cannot write to the
-provided path. An attacker could therefore use this issue to map out the
-writable filesystem on the server and potentially perform more advanced
-attacks by manipulating special files in the /dev and /proc filesystems of
-Linux servers.
+On Wed, 2015-02-04 at 11:50 -0600, Mark Felder wrote:
+> 
+> On Wed, Feb 4, 2015, at 10:55, Florent Daigniere wrote:
+> > On Wed, 2015-02-04 at 10:35 -0600, Mark Felder wrote:
+> > > From the 2.4.12 changelog:
+> > > 
+> > > 
+> > >   *) mod_ssl: New directive SSLSessionTickets (On|Off).
+> > >      The directive controls the use of TLS session tickets (RFC 5077),
+> > >      default value is "On" (unchanged behavior).
+> > >      Session ticket creation uses a random key created during web
+> > >      server startup and recreated during restarts. No other key
+> > >      recreation mechanism is available currently. Therefore using
+> > >      session
+> > >      tickets without restarting the web server with an appropriate
+> > >      frequency
+> > >      (e.g. daily) compromises perfect forward secrecy. [Rainer Jung]
+> > > 
+> > > 
+> > > So if you use Apache 2.4 and care about PFS protecting your data, you
+> > > should turn this feature off. This appears to be an implementation issue
+> > > because there is no other way for Apache to recreate keys. I don't know
+> > > a lot about the fine details of Session Tickets, but can anyone care to
+> > > comment if there are other known bad implementations of session tickets
+> > > out there? Does this affect Apache 2.2? Nginx? Lighttpd?
+> > > 
+> > > 
+> > > Thanks
+> > > I find this bizarre that a known security weakness like this is left
+> > > "on" by default...
+> > 
+> > You're right, it's "bizarre"
+> > 
+> > I've tried to make some noise about it two years ago [1] ... 
+> > 
+> > IMHO it's OpenSSL's default that should be changed. The server
+> > implementation shouldn't give a ticket if it's picked a PFS enabled
+> > cipher (or a cipher which aims at providing better security than
+> > AES128-CBC) unless explicitly told to do so (the case where there is
+> > more than one server).
+> > 
+> > Apache HTTPd's new setting (SSLSessionTicketKeyFile), allowing you to
+> > set the ticket key is *DANGEROUS* as documented [1]. It encourages users
+> > explicitly to store the key on a forensically carvable medium...
+> > "The ticket key file contains sensitive keying material and should be
+> > protected with file permissions similar to those used for
+> > SSLCertificateKeyFile."
+> > Which is exactly what you shouldn't do!
+> > 
+> 
+> Thanks for the details, Florent. After reviewing this blog post [1] it's
+> much clearer now, but I'm still a bit fuzzy on if "session caching" and
+> "session IDs" (RFC 5246, TLS 1.2) -- also as identified by Qualys
+> SSLLabs line item "Session resumption (caching)" -- are the same; is the
+> Session Cache caching session IDs? I only ask because I know that
+> webservers have had SSL Session Cache features for years, but RFC 5246
+> is TLS 1.2 in its entirety and I believe I've seen this feature predate
+> TLS 1.2. Was session caching / IDs always part of the SSL/TLS spec, now
+> superseded by the newer TLS 1.2 RFC?
+> 
 
-It was also found that defense4all was using Spring 3.0.0 RC3. This
-component is vulnerable to a number of vulnerabilities as listed on the
-pivotal advisories page: http://www.pivotal.io/security
-Full details including how to apply a patch are available on the
-OpenDaylight security advisories page:
+There's two different resumption mechanisms. Both involve accessing the
+key material, what differs is where/how it's retained.
 
-https://wiki.opendaylight.org/view/Security_Advisories
+session-ids: The server assigns an id to the key material and sends the
+id to the client. This requires the server to keep state but is widely
+supported by all clients (SSLv3 does that already)
 
-Thanks
-David Jorm on behalf of the OpenDaylight security response team
+session-tickets: The server creates a ticket containing the encrypted
+key material and asks the client to safekeep it for him. This doesn't
+require the server to keep any state and therefore scales better... but
+is a TLS extension that not all clients support.
 
+
+In practice, even if key session-ids are in use, the key material might
+leave the server (a very common setup is to have a memcache server store
+the key material for all servers in a datacenter). This is configured
+using SSLSessionCache.
+
+> If I'm understanding that correctly the following would be true: the use
+> of session caching is not a known vulnerability, but the use of session
+> tickets is a potential vulnerability. The design of the session tickets
+> (RFC 5077) appears to solve a specific problem: reducing expensive TLS
+> renegotiation when you have a cluster of servers and the session is not
+> guaranteed to stick to a specific server/load balancer.
+
+Session Tickets are about "making it scale in very large environment
+(several datacenters)" or "when memory is limited (think embedded/IoT)"
+
+>  Additionally
+> OpenSSL lacks key rotation for session tickets, so it seems safe to
+> assume all software using OpenSSL with session tickets enabled are
+> likely not working around this problem by enforcing their own key
+> rotation.
+> 
+
+Yes. The problem doesn't just affect browsers... and it's not "just" PFS
+either.
+
+Some people go out of their way to try to have more than 128bits of
+security or to use non-AES based ciphers... their efforts are likely to
+be vain if session tickets as OpenSSL issues them are issued.
+
+> This feels like a feature that should always be turned off unless your
+> environment absolutely requires it; especially if you have measurable
+> performance impact / negative client experience without it.
+> 
+
+Don't get me wrong, I think that session tickets are a good thing and
+that all clients should have support for it... but as far as the server
+side implementations go, I agree with you; they shouldn't be enabled by
+default.
+
+Whether it's Google, Facebook, Twitter, youname it, they all had to
+reimplement their own session ticket magic; it hopefully does the right
+thing (PFS wise).
+
+Regards,
+	Florent
+
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
