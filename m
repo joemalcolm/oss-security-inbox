@@ -1,45 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/20/16
-Message-ID: <20150220165041.GU23507@oevtugenva.nrevsny.pk>
-Date: Fri, 20 Feb 2015 11:50:41 -0500
-From: Rich Felker <dalias@...c.org>
-To: Paul Pluzhnikov <ppluzhnikov@...gle.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Fixing the glibc runtime linker
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/04/2
+Message-ID: <54D19336.1050307@gmail.com>
+Date: Tue, 03 Feb 2015 22:34:14 -0500
+From: Daniel Micay <danielmicay@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: CVE request: heap buffer overflow in glibc swscanf
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Feb 20, 2015 at 12:14:47AM -0800, Paul Pluzhnikov wrote:
-> On Thu, Feb 19, 2015 at 11:57 PM, Rich Felker <dalias@...c.org> wrote:
+> Here, it seems that the goal of the policy is risk management for use
+> of alloca. This is security relevant for some applications that use
+> glibc, because it could (for example) allow a denial of service attack
+> that's intended to trigger a failed alloca. There was one intended
+> policy, and the the incorrect "__libc_use_alloca (newsize)" caused a
+> different (and weaker) policy to be enforced instead.
 > 
-> > How is an empty or relative rpath easy?
-> 
-> all: foo
-> foo: foo.c
->         ${CC} -Wl,-rpath=${VAR} -o $@ $^
-> 
-> 
-> If VAR is unset, or set to relative path, resulting binary will be "bad".
+> Use CVE-2015-1473 for this risk-management error.
 
-If the rpath is needed for the binary to work, this should result in
-immediate failure when you try to run it, which would be detected and
-corrected before it becomes an issue.
+alloca isn't checked if -fstack-check isn't used, and most distributions
+don't use it. There's a good chance that a guard page will be hit but no
+guarantee without -fstack-check.
 
-If it's not needed for the binary to work, this is a huge incompetence
-or policy failure issue that's not going to be fixed by restricting
-RPATH. And it would probably be better solved by having ld produce
-warnings for relative or blank RPATH (or even refusing to generate
-such without an additional override option) rather than by potentially
-breaking existing binaries.
 
-Aside from that, I'm not fundamentally opposed to restricting relative
-RPATH in suid binaries (or rather AT_SECURE), but it should not be
-restricted in other cases. If it is restricted in the suid case, I
-believe the correct way is refusing to run the binary at all. Just
-ignoring the RPATH will possibly result in the wrong libraries being
-loaded, which could itself lead to vulnerabilities.
-
-Further discussion really should take place on libc-alpha or perhaps
-by opening a bug on the glibc bug tracker ("ld.so accepts unsafe
-relative RPATHS when running suid programs").
-
-Rich
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
