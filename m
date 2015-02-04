@@ -1,31 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/20/10
-Message-ID: <20150220075756.GT23507@oevtugenva.nrevsny.pk>
-Date: Fri, 20 Feb 2015 02:57:56 -0500
-From: Rich Felker <dalias@...c.org>
-To: Paul Pluzhnikov <ppluzhnikov@...gle.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Fixing the glibc runtime linker
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/04/1
+Message-Id: <20150204031641.3BD0472E049@smtpvbsrv1.mitre.org>
+Date: Tue,  3 Feb 2015 22:16:41 -0500 (EST)
+From: cve-assign@...re.org
+To: ppluzhnikov@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, jsm28@....gnu.org
+Subject: Re: CVE request: heap buffer overflow in glibc swscanf
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Feb 19, 2015 at 11:50:37PM -0800, Paul Pluzhnikov wrote:
-> On Thu, Feb 19, 2015 at 11:34 PM, Rich Felker <dalias@...c.org> wrote:
-> 
-> > I don't see how you think this is a security issue at all.
-> 
-> I think the point is that 'system(argv[1])' is a hard mistake to make
-> by accident, but empty or relative RPATH is easy, and is not
-> immediately discoverable: you have to run 'readelf -d a.out' and then
-> think about what you see.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-How is an empty or relative rpath easy? You have to explicitly add
--Wl,-rpath,[whatever] to the linker command line. Most people don't
-even know this option exists, and those who do need to understand how
-it works or they're not going to get results that even work. If an
-rpath is needed and you accidentally make it cwd-relative rather than
-absolute or origin-relative, running your program is just going to
-fail when you're not in the 'right' working directory; this is such
-obvious breakage that it should be caught immediately by even basic
-testing.
+> https://sourceware.org/bugzilla/show_bug.cgi?id=16618
 
-Rich
+> stdio-common/vfscanf.c has an ADDW macro that tries to determine
+> whether to use malloc or alloca for allocations. But in the malloc
+> case, it only allocates newsize bytes instead of the required
+> newsize * sizeof (CHAR_T). Thus the allocated buffer gets overrun in
+> the wide-string case
+
+( referring to
+https://sourceware.org/git/gitweb.cgi?p=glibc.git;a=blob_plain;f=stdio-common/vfscanf.c;hb=HEAD )
+
+Use CVE-2015-1472 for this issue in which an incorrect second argument
+to realloc leads to a buffer overflow.
+
+
+> The logic also has a problem that the comparison UCHAR_MAX + 1 >
+> 2 * wpmax doesn't allow for 2 * wpmax overflowing, though that would
+> only apply if half the address space gets allocated.
+
+We think you mean that the integer overflow isn't reachable because,
+on platforms supported by glibc, the ADDW macro wouldn't be used in a
+case where "2 * wpmax" overflows. The value of wpmax is limited by the
+requirement that that value was previously used in a successful
+realloc call. If the realloc had failed, a "goto errout" would have
+occurred.
+
+If this is incorrect and the integer overflow actually is reachable
+when operating on very long input data, then a separate CVE ID can be
+assigned for the integer overflow. In any case, the integer overflow
+is not within the scope of CVE-2015-1472.
+
+
+> The check with __libc_use_alloca also checks against the number of
+> array entries to allocate rather than the number of bytes, so the
+> function can allocate up to four times as many bytes as is libc policy
+> on the stack in the wide character case.
+
+Here, it seems that the goal of the policy is risk management for use
+of alloca. This is security relevant for some applications that use
+glibc, because it could (for example) allow a denial of service attack
+that's intended to trigger a failed alloca. There was one intended
+policy, and the the incorrect "__libc_use_alloca (newsize)" caused a
+different (and weaker) policy to be enforced instead.
+
+Use CVE-2015-1473 for this risk-management error.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJU0Y4mAAoJEKllVAevmvmsgBUIAMj4u37bJEH/oibsqjXHcSgz
+C1XY1mZej/ojdVuAmWyiX1MZGUDzhaLEz6AdRjhQg7BtdVUfdQ1PjV8q+PT8gORD
+nuIwWYT281XbIuVkJ2YT2Su789FxylQeOYhzl2rDyKecc+J24v/eL7PNFNrcYy2+
+1/i+q2FXFS0lP6QcvZbWlEryJzWl4sN47LIwvhreRsWFH5N4o7x6It7mzE3yRu5O
+YAb52wRPABFWDozyYgDc06qood/Gyok1eCBzkhuO7MRO4dAjWexPh2oEg7mFkygM
+6FM/P6wNbN/n5Hqx39+PE/TQCKVuWZFcrATFugFiWSVWPBlEQjJpcctJv2TNQC8=
+=lBV+
+-----END PGP SIGNATURE-----
