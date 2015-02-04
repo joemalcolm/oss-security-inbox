@@ -1,49 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/23/5
-Message-ID: <CAO7kU2T6KX1OLm5bOpQ5rMut3iRxKddpyAZBvggh-jsamx-5Kg@mail.gmail.com>
-Date: Fri, 23 Jan 2015 11:53:22 +0200
-From: Paris Z <paris8105@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: two issues in vorbis-tools
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/04/14
+Message-ID: <54D2835B.8060001@redhat.com>
+Date: Wed, 04 Feb 2015 13:38:51 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>
+Subject: Old nagios CVE
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+So I'm just doing some spring cleaning:
 
-Original poster of the reports here. My original concern was also that
-these were minor issues, so I didn't request CVEs. I posted in FD list
-because a month has passed and I still haven't received any answers in the
-vorbis-tools bug tracker.
+http://www.nagios.org/news/77-news-announcements/133-nagios-302-and-212-released
 
-2015-01-23 10:36 GMT+02:00 Hanno Böck <hanno@...eck.de>:
+nagios cross-site scripting in statusmap.cgi
 
-> On Thu, 22 Jan 2015 11:50:16 -0500 (EST)
-> cve-assign@...re.org wrote:
->
-> >
-> > On Wed, 21 Jan 2015, Hanno Böck wrote:
-> >
-> > > On Wed, 21 Jan 2015 13:50:46 +0100
-> > > Martin Prpic <mprpic@...hat.com> wrote:
-> > >
-> > >> Two issues were reported in vorbis-tools on Full Disclosure:
-> > >>
-> > >> http://seclists.org/fulldisclosure/2015/Jan/78
-> >
-> > CVE-2014-9638 - https://trac.xiph.org/ticket/2137 (division by zero)
-> >
-> > CVE-2014-9639 - https://trac.xiph.org/ticket/2136 (integer overflow)
->
-> These two also affect opusenc.
-> I don't know if this deserves more CVEs, because these issues are
-> likely minor, but wanted to note it for completeness. It is a
-> different software package. I'll add comments to the corresponding bug
-> reports.
->
-> --
-> Hanno Böck
-> http://hboeck.de/
->
-> mail/jabber: hanno@...eck.de
-> GPG: BBB51E42
->
+we have this as found and reported towards the end of 2008, the public
+update was 2009 so this will need a 2008 CVE, thanks.
 
+
+-- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
