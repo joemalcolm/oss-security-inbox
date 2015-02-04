@@ -1,56 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/20/7
-Message-ID: <87wq4hxvoa.fsf@redhat.com>
-Date: Tue, 20 Jan 2015 17:29:25 +0100
-From: Martin Prpic <mprpic@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: CVE request: directory traversal flaw in patch
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/04/15
+Message-ID: <54D29AC7.4050601@redhat.com>
+Date: Wed, 04 Feb 2015 15:18:47 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>, security@...dle.com
+Subject: CVE request for Moodlee MDL-48980 Security: Always clean the result from min_get_slash_argument
 Content-Type: text/plain; charset=utf-8
 
-cve-assign@...re.org writes:
+I don't think this has a CVE yet
 
-> On Wed, 14 Jan 2015, Martin Prpic wrote:
->
->> Hi,
->>
->> A directory traversal flaw was reported in patch:
->>
->> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=775227
->> https://bugzilla.redhat.com/show_bug.cgi?id=1182154
->>
->> Could a CVE please be assigned to this issue? Thank you.
->>
->> --
->> Martin Prpič / Red Hat Product Security
->
-> Use CVE-2015-1196.
->
-> ---
->
-> CVE assignment team, MITRE CVE Numbering Authority M/S M300
-> 202 Burlington Road, Bedford, MA 01730 USA
-> [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+http://git.moodle.org/gw?p=moodle.git;a=commit;h=af9a7937cc085f96bdbc4724cadec6eeae0242fc
 
-Hi!
+MDL-48980 Security: Always clean the result from min_get_slash_argument
 
-I think these issues in patch also deserve CVEs:
+The result from this function is used in send_file calls and if unclean
+(windows dir separators, or .. path components) it could expose
+sensitive files (e.g. .php files). Now we always clean the result from
+this function even if it means double cleaning.
 
-https://savannah.gnu.org/bugs/?44051
-"With a specific file, patch goes to infinite loop and eats all CPU time."
+I also fixed the unit test for this function and added a new test for
+this cleaning.
 
-https://savannah.gnu.org/bugs/?44051
-"Got an other issue which output this before segfault: patching file util.h
-
-Ran out of memory using Plan A -- trying again...
-
-patching file util.h
-Segmentation fault"
-
-http://git.savannah.gnu.org/cgit/patch.git/commit/?id=44a987e02f04b9d81a0db4a611145cad1093a2d3
-"Add line number overflow checking. Based on Robert C. Seacord's INT32-C document for integer overflow checking and Tobias Stoeckmann's "integer overflows and oob memory access" patch for FreeBSD."
-
-Thank you!
+I also updated the comments to point to get_file_argument as the full
+version of min_get_slash_argument.
 
 -- 
-Martin Prpič / Red Hat Product Security
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
