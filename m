@@ -1,29 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/12/3
-Message-ID: <20150212141410.GA647@jwilk.net>
-Date: Thu, 12 Feb 2015 15:14:10 +0100
-From: Jakub Wilk <jwilk@...lk.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/04/5
+Message-ID: <20150204094039.GC13052@suse.de>
+Date: Wed, 4 Feb 2015 10:40:39 +0100
+From: Johannes Segitz <jsegitz@...e.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: heap overflow in procmail
+Subject: CVE request: NULL ptr deref in php
 Content-Type: text/plain; charset=utf-8
 
->>https://bugs.debian.org/769937
-[...]
->The Debian bug report does not contain diagnosis of the type of 
->programming error that is triggering each crash, so it is not clear 
->how many CVE identifiers must be assigned.
+Hello,
 
-There are two distinct buffer overflows:
+couldn't find a CVE for https://bugs.php.net/bug.php?id=68545 fixed in
+http://git.php.net/?p=php-src.git;a=commitdiff;h=13f1c276ab72cf1a8a400fd013b9289d0018a340(1)
 
-* Off-by-one heap overflow when parsing addresses that have left angle 
-bracket, then a comma, but no right angle bracket. For example: 
-<moo@...mple.com,
+Can a CVE please be assigned?
 
-* Heap overflow when parsing addresses that end with backslash. For 
-example: <moo@...mple.com\
+Johannes
+--
+GPG Key E7C81FA0       EE16 6BCE AD56 E034 BFB3  3ADD 7BF7 29D5 E7C8 1FA0
+Subkey fingerprint:    250F 43F5 F7CE 6F1E 9C59  4F95 BC27 DD9D 2CC4 FD66
+SUSE LINUX GmbH        Maxfeldstraße 5            90409 Nürnberg, Germany
+GF: Felix Imendörffer, Jane Smithard, Jennifer Guild, Dilip Upmanyu, Graham Norton, HRB 21284 (AG Nürnberg)
 
-Credit goes to Jan Darmochwal for identifying the root causes.
-
--- 
-Jakub Wilk
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
