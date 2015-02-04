@@ -1,28 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/16/10
-Message-ID: <20150116080552.GA8782@kludge.henri.nerv.fi>
-Date: Fri, 16 Jan 2015 10:05:52 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/04/13
+Message-ID: <20150204204930.682ac950@pc>
+Date: Wed, 4 Feb 2015 20:49:30 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-Request -- CMS b2evolution v.5.2.0 -- Reflecting XSS vulnerability in filemanager functionality
+Subject: Re: CVE Request: PHP/file: out-of-bounds memory access in softmagic
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Wed, 4 Feb 2015 19:53:36 +0100
+Moritz Muehlenhoff <jmm@...ian.org> wrote:
 
-On Thu, Jan 15, 2015 at 04:44:39PM -0500, Daniel Kahn Gillmor wrote:
-> An attacker could take this signed message, and replay it "From" you
-> with a changed subject line to try to indicate that you think some other
-> bug was fixed in some other piece of software, version 5.2.1.
+> Originally reported in file:
+> Bug report: http://bugs.gw.com/view.php?id=398
+> Fix:
+> https://github.com/file/file/commit/59e63838913eee47f5c120a6c53d4565af638158
 
-I'll be more careful in the future with automatic PGP signing. :)
+There are more such issues, I haven't tested them in php:
+http://bugs.gw.com/view.php?id=409
+http://mx.gw.com/pipermail/file/2014/001649.html
 
-- -- 
-Henri Salo
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+-- 
+Hanno Böck
+http://hboeck.de/
 
-iEYEARECAAYFAlS4xmAACgkQXf6hBi6kbk9D0gCfeWLTaJkV5FB+Px9hWQBTbf4l
-Q0IAn31Gg1Tve0qNoA7cut3HhGIkf8L+
-=v7tU
------END PGP SIGNATURE-----
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
+
+Content of type "application/pgp-signature" skipped
