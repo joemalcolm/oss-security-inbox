@@ -1,54 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/24/6
-Message-ID: <54C3D660.2070206@dest-unreach.org>
-Date: Sat, 24 Jan 2015 18:29:04 +0100
-From: Gerhard Rieger <gerhard@...t-unreach.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/04/10
+Message-Id: <1423073375.97687.223118365.6793316D@webmail.messagingengine.com>
+Date: Wed, 04 Feb 2015 12:09:35 -0600
+From: Mark Felder <feld@...d.me>
 To: oss-security@...ts.openwall.com
-Subject: Socat security advisory 6 - Possible DoS with fork
+Subject: Re: Apache 2.4 mod_ssl SSLSessionTickets -- others vulnerable?
 Content-Type: text/plain; charset=utf-8
 
-Socat security advisory 6 - Possible DoS with fork
-
-Overview
-  socats signal handler implementations are not async-signal-safe and
-  can cause crash or freeze of socat processes
-
-Vulnerability Id: (pending)
-
-Severity: Low
-
-Details
-  Socats signal handler implementations are not asnyc-signal-safe. When
-  a signal is triggered while the process is within a non
-  async-signal-safe function the signal handler will call a non
-  sync-signal-safe function too. POSIX specifies the behaviour in this
-  situation as undefined. Dependend on involved functions, libraries,
-  and operating system, the process can continue, freeze, or crash.
-  Mostly this issue occurs when socat is in listening mode with fork
-  option and a couple of child processes terminate at the same time.
-
-Testcase
-  none
-
-Affected versions
-  1.0.0.0 - 1.7.2.4
-  2.0.0-b1 - 2.0.0-b7
-
-Not affected or corrected versions
-  1.7.3.0 and later
-  2.0.0-b8 (to be released) and later
-
-Workaround
-  none
-
-Download
-  The updated sources can be downloaded from:
-
-    http://www.dest-unreach.org/socat/download/socat-1.7.3.0.tar.gz
-
-Credits
-   Credits to Peter Lobsinger
 
 
+On Wed, Feb 4, 2015, at 11:59, Reed Loden wrote:
+> ... or you could do something like what Twitter did [0] and write your
+> own
+> scripts to generate new session ticket keys regularly and store them only
+> in a tmpfs or /dev/shm type environment.
+> 
+> agl also talks about this problem on his blog [1] a while ago.
+> 
+> As for your earlier question, nginx has the same issue here [2]. Really
+> all
+> comes down to OpenSSL not making it easy to do better.
+> 
+> ~reed
+> 
+> [0] https://blog.twitter.com/2013/forward-secrecy-at-twitter
+> [1] https://www.imperialviolet.org/2013/06/27/botchingpfs.html
+> [2]
+> http://nginx.org/en/docs/http/ngx_http_ssl_module.html#ssl_session_ticket_key
+> 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+Okay, so the failure is two-pronged: the current limitations in OpenSSL
+with regards to managing session ticket keys, and the use of session
+tickets when PFS cipher is negotiated.
+
+
+Thanks for all the details, guys.
