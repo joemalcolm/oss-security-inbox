@@ -1,43 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/06/3
-Message-ID: <20150206055122.GA12687@kiwi>
-Date: Thu, 5 Feb 2015 21:51:22 -0800
-From: Ryan Tandy <ryan@...dis.ca>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/04/12
+Message-ID: <20150204185336.GC6221@pisco.westfalen.local>
+Date: Wed, 4 Feb 2015 19:53:36 +0100
+From: Moritz Muehlenhoff <jmm@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: pkg-openldap-devel@...ts.alioth.debian.org, security@...ian.org
-Subject: CVE request: two OpenLDAP DoS issues
+Cc: cve-assign@...re.org
+Subject: CVE Request: PHP/file: out-of-bounds memory access in softmagic
 Content-Type: text/plain; charset=utf-8
 
 Hi,
+please assign a CVE ID for this issue in file (and in the respective
+PHP extension):
 
-OpenLDAP slapd has two bugs that allow a remote unauthenticated client 
-to crash the LDAP server.
+Originally reported in file:
+Bug report: http://bugs.gw.com/view.php?id=398
+Fix: https://github.com/file/file/commit/59e63838913eee47f5c120a6c53d4565af638158
 
-The deref overlay in slapd 2.4.13 through 2.4.40 dereferences a NULL 
-pointer when a search request includes the Deref control with an empty 
-list of attributes to return (missing input validation).
+A slightly modified version is also present in PHP (it should receive
+the same CVE ID):
+Bug report: https://bugs.php.net/bug.php?id=68735
+Fix: https://bugs.php.net/patch-display.php?bug=68735&patch=bug68735.patch&revision=1420309079
 
-Fix:
-http://www.openldap.org/devel/gitweb.cgi?p=openldap.git;a=commitdiff;h=c32e74763f77675b9e144126e375977ed6dc562c
+We've already fixed these in Debian updates (but CVE IDs haven't been available
+back then):
 
-References:
-http://www.openldap.org/its/?findid=8027
-http://bugs.debian.org/776988
+file: https://lists.debian.org/debian-security-announce/2015/msg00003.html
+php5: https://lists.debian.org/debian-security-announce/2015/msg00008.html
 
-Certain search queries including the Matched Values control can trigger 
-a double free in slapd 2.4.40 when freeing operation controls. This is a 
-regression in 2.4.40, no earlier releases are affected.
-
-Fix:
-http://www.openldap.org/devel/gitweb.cgi?p=openldap.git;a=commitdiff;h=2f1a2dd329b91afe561cd06b872d09630d4edb6a
-
-References:
-http://www.openldap.org/its/?findid=8046
-http://bugs.debian.org/776991
-
-May we have CVEs assigned to these, please?
-
-thanks,
-Ryan
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Cheers,
+        Moritz
+        
