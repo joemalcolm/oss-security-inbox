@@ -1,50 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/28/4
-Message-ID: <CAEu1J=-Z9gPVtqvV=qhdwW5ZDQDs8x6kqBVYLscSusWKB+xQCQ@mail.gmail.com>
-Date: Tue, 27 Jan 2015 17:47:47 -0800
-From: endrazine <endrazine@...il.com>
-To: Qualys Security Advisory <qsa@...lys.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: GHOST gethostbyname() heap overflow in glibc (CVE-2015-0235)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/04/4
+Message-ID: <54D1E991.6040001@redhat.com>
+Date: Wed, 04 Feb 2015 10:42:41 +0100
+From: Florian Weimer <fweimer@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: cve-assign@...re.org, jsm28@....gnu.org
+Subject: Re: Re: CVE request: heap buffer overflow in glibc swscanf
 Content-Type: text/plain; charset=utf-8
 
-Dear Qualys team, dear list,
+On 02/04/2015 04:16 AM, cve-assign@...re.org wrote:
+>> The check with __libc_use_alloca also checks against the number
+>> of array entries to allocate rather than the number of bytes, so
+>> the function can allocate up to four times as many bytes as is
+>> libc policy on the stack in the wide character case.
+> 
+> Here, it seems that the goal of the policy is risk management for
+> use of alloca. This is security relevant for some applications that
+> use glibc, because it could (for example) allow a denial of service
+> attack that's intended to trigger a failed alloca. There was one
+> intended policy, and the the incorrect "__libc_use_alloca
+> (newsize)" caused a different (and weaker) policy to be enforced
+> instead.
 
-> ???
+If you want to assign CVE IDs for stack overflows in glibc without
+demonstrated application impact, we really need to find a way to
+streamline the process because there are quite a few missing assignments.
 
-I assume this is an invitation to elaborate ;)
+I wouldn't mind getting a pool of CVEs (for multiple years, going back
+to around 2000), and assigning them to issues in the glibc Bugzilla
+instance, and posting weekly summaries to oss-security.  Would that
+work for you?
 
->From GHOST.c :
-...
-  char name[10];
-  memset(name, '0', len);
-  name[len] = '\0';
-...
-
-
-len is worth 991 at that point in time. Quite clearly, this will not fit
-into 10 bytes :)
-
-I am merely mentioning it in case anyone else was trying to run this code
-and was hitting this particular stack overflow.
-
-It is till an epic bug, congratulations on finding it !
-
-Best regards,
-
-j-
-
-On Tue, Jan 27, 2015 at 4:00 PM, Qualys Security Advisory <qsa@...lys.com>
-wrote:
-
-> On Tue, Jan 27, 2015 at 02:03:10PM -0800, endrazine wrote:
-> > There is an obvious stack overflow in Qualys' GHOST.c poc : the name
-> buffer
-> > is 10 bytes long and 900+ bytes of data are copied to it. This is
->
-> ???
->
-> --
-> QSA
->
-
+-- 
+Florian Weimer / Red Hat Product Security
