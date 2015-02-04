@@ -1,31 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/04/3
-Message-ID: <20150203164908.GA26391@fear.qoop.org>
-Date: Tue, 3 Feb 2015 10:49:08 -0600
-From: "Joshua J. Drake" <oss-sec@...p.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/04/7
+Message-ID: <1423068934.5497.61.camel@trustmatta.com>
+Date: Wed, 04 Feb 2015 17:55:34 +0100
+From: Florent Daigniere <florent.daigniere@...stmatta.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: vsftpd problem in deny_hosts
+Subject: Re: Apache 2.4 mod_ssl SSLSessionTickets -- others vulnerable?
 Content-Type: text/plain; charset=utf-8
 
-Maybe it would be prudent to canonicalize the path and match against
-that instead. What are your thoughts?
-
-PS. sorry for the top post
-
-Joshua
-
-On Tue, Feb 03, 2015 at 07:29:15AM -0800, Chris Evans wrote:
+On Wed, 2015-02-04 at 10:35 -0600, Mark Felder wrote:
+> From the 2.4.12 changelog:
 > 
-> The "variety of names" clause above is for situations like /home vs.
-> /./home/ vs. /../home vs. /.././../home etc.
 > 
-> This option is just a regex-like match against the raw FTP argument. So,
-> I'm not sure it's possible to use deny_file=/home/*. Even if that were
-> tweaked to deny_file=*/home/*, it would only work if the initial directory
-> were set _outside_ /home -- if it wasn't, RETR some/relative/path would
-> work because /home/ does not appear in the string.
+>   *) mod_ssl: New directive SSLSessionTickets (On|Off).
+>      The directive controls the use of TLS session tickets (RFC 5077),
+>      default value is "On" (unchanged behavior).
+>      Session ticket creation uses a random key created during web
+>      server startup and recreated during restarts. No other key
+>      recreation mechanism is available currently. Therefore using
+>      session
+>      tickets without restarting the web server with an appropriate
+>      frequency
+>      (e.g. daily) compromises perfect forward secrecy. [Rainer Jung]
 > 
-> Perhaps the wording in the man page is not strong enough, or not detailed
-> enough about implications, or I should just remove it? Suggestions welcome.
+> 
+> So if you use Apache 2.4 and care about PFS protecting your data, you
+> should turn this feature off. This appears to be an implementation issue
+> because there is no other way for Apache to recreate keys. I don't know
+> a lot about the fine details of Session Tickets, but can anyone care to
+> comment if there are other known bad implementations of session tickets
+> out there? Does this affect Apache 2.2? Nginx? Lighttpd?
+> 
+> 
+> Thanks
+> I find this bizarre that a known security weakness like this is left
+> "on" by default...
 
-Download attachment "signature.asc" of type "application/pgp-signature" (812 bytes)
+You're right, it's "bizarre"
+
+I've tried to make some noise about it two years ago [1] ... 
+
+IMHO it's OpenSSL's default that should be changed. The server
+implementation shouldn't give a ticket if it's picked a PFS enabled
+cipher (or a cipher which aims at providing better security than
+AES128-CBC) unless explicitly told to do so (the case where there is
+more than one server).
+
+Apache HTTPd's new setting (SSLSessionTicketKeyFile), allowing you to
+set the ticket key is *DANGEROUS* as documented [1]. It encourages users
+explicitly to store the key on a forensically carvable medium...
+"The ticket key file contains sensitive keying material and should be
+protected with file permissions similar to those used for
+SSLCertificateKeyFile."
+Which is exactly what you shouldn't do!
+
+Regards,
+	Florent
+
+[1]
+https://media.blackhat.com/us-13/US-13-Daigniere-TLS-Secrets-Slides.pdf
+[2]
+https://httpd.apache.org/docs/2.4/mod/mod_ssl.html#sslsessionticketkeyfile
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
