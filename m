@@ -1,18 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/12/6
-Message-ID: <Pine.LNX.4.64.1502120921070.17759@beijing.mitre.org>
-Date: Thu, 12 Feb 2015 09:21:45 -0500 (EST)
-From: cve-assign@...re.org
-To: Steffen Rösemann <steffen.roesemann1986@...il.com>
-cc: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: Re: CVE-Request -- CMS b2evolution v.5.2.0 -- Reflecting XSS vulnerability in filemanager functionality
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/04/6
+Message-Id: <1423067744.65358.223075205.4AE926CB@webmail.messagingengine.com>
+Date: Wed, 04 Feb 2015 10:35:44 -0600
+From: Mark Felder <feld@...d.me>
+To: oss-security@...ts.openwall.com
+Subject: Apache 2.4 mod_ssl SSLSessionTickets -- others vulnerable?
 Content-Type: text/plain; charset=utf-8
 
+>From the 2.4.12 changelog:
 
-This issue was assigned CVE-2014-9599 and published in January.
 
----
+  *) mod_ssl: New directive SSLSessionTickets (On|Off).
+     The directive controls the use of TLS session tickets (RFC 5077),
+     default value is "On" (unchanged behavior).
+     Session ticket creation uses a random key created during web
+     server startup and recreated during restarts. No other key
+     recreation mechanism is available currently. Therefore using
+     session
+     tickets without restarting the web server with an appropriate
+     frequency
+     (e.g. daily) compromises perfect forward secrecy. [Rainer Jung]
 
-CVE assignment team, MITRE CVE Numbering Authority M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+
+So if you use Apache 2.4 and care about PFS protecting your data, you
+should turn this feature off. This appears to be an implementation issue
+because there is no other way for Apache to recreate keys. I don't know
+a lot about the fine details of Session Tickets, but can anyone care to
+comment if there are other known bad implementations of session tickets
+out there? Does this affect Apache 2.2? Nginx? Lighttpd?
+
+
+Thanks
+
+
+I find this bizarre that a known security weakness like this is left
+"on" by default...
