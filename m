@@ -1,110 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/01/3
-Message-ID: <CAA=AuEcQjqhF9wCO9eH9KYLhUGtYD7J8ogVGcQr57pjpBbwLVw@mail.gmail.com>
-Date: Sun, 1 Mar 2015 06:57:32 +0100
-From: Jerome Athias <athiasjerome@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: Assign a CVE Identifier <cve-assign@...re.org>, jvn@....jp
-Subject: Re: CVE-2015-0881
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/05/6
+Message-ID: <20150205140015.GC12454@core.inversepath.com>
+Date: Thu, 5 Feb 2015 15:00:15 +0100
+From: Andrea Barisani <lcars@...rt.org>
+To: oss-security@...ts.openwall.com, ocert-announce@...ts.ocert.org, bugtraq@...urityfocus.com
+Subject: [oCERT-2015-002] e2fsprogs input sanitization errors
 Content-Type: text/plain; charset=utf-8
 
-I just disagree with rational 1) -in general-, e.g. SCADA and ICS
-systems running 5+ years outdated softwares and hardwares
 
-simple cross-reference of some vulnerabilities databases give attribution
-http://www.securityfocus.com/bid/72703/info
+#2015-002 e2fsprogs input sanitization errors
 
-My 2c
+Description:
 
+The e2fsprogs package is a set of open source utilities for ext2, ext3 and
+ext4 filesytems.
 
-2015-02-23 16:34 GMT+01:00 Kurt Seifried <kseifried@...hat.com>:
-> Regarding CVE-2015-0881
->
-> http://jvn.jp/en/jp/JVN64455813/index.html
-> http://jvndb.jvn.jp/en/contents/2015/JVNDB-2015-000019.html
->
-> Unless JVN can provide more details I would like to recommend we CVE
-> REJECT this issue based on the following rational:
->
-> 1) It's an issue discovered "today" in software that was supposedly
-> fixed 5 years ago
-> 2) No information on the vuln or the specific fix has been made
-> vulnerable, which may be ok for closed source vendors using CVE but this
-> leads to point 3...
-> 3) Even the upstream project can't make sense of this, and I'm inclined
-> to trust them (e.g. they are not playing the "we want to minimize the
-> number of CVE's assigned against our software game like some vendors).
->
-> I would suggest if JVN doesn't get back to us within a week (this seems
-> like more then enough time) that this CVE be REJECT'ed.
->
-> Mitre: thoughts or comments?
->
-> On 22/02/15 04:37 AM, Amos Jeffries wrote:
->> On 22/02/2015 7:17 p.m., Kurt Seifried wrote:
->>> I'm trying to track down information on CVE-2015-0881.
->>
->>> I can't find a squid security contact (security@...id-cache.org
->>> bounced), there's no security report, and no link to a source code
->>> patch for this.
->>
->> - From the "Contact Us page"
->> (<http://www.squid-cache.org/Support/contact.html>)
->>
->>   squid-bugs @ lists.squid-cache.org
->>
->> ... which goes to me and some other trusted developers. I dont mind
->> direct contacts for this type of thing, but the main contact address
->> guarantees someone sees it within a few hrs.
->>
->>
->> Regarding the CVE:
->>
->> 1) This is the first I've heard about this particular CVE number
->> assignment.
->>
->> 2) I did have some discusions with JPCERT about _a_ response splitting
->> vulnerability around those years. But the messages from them were IIRC
->> about replicating response splitting in a 2.x versions which were
->> incompletely fixed by:
->> <http://www.squid-cache.org/Versions/v2/2.5/bugs/#squid-2.5.STABLE7-header_parsing>
->> (did not get a CVE AFAIK).
->>
->> 3) I have not been able to replicate the #2 issue in the Squid-3
->> series and several iterations of changes to the parsers there have
->> been careful to take the above issue into account. So I'm not sure
->> where the 3.1.10 comes from. Assuming it is the same vulnerability.
->>
->>
->>
->>> This is regarding 3.1.9 and earlier, 3.1.10 was released on 22 Dec
->>> 2010, so 4+ years ago.
->>
->>> Needless to say I am more than a bit confused. A link to a specific
->>> code patch/vuln/file would be helpful. Also if anyone knows how to
->>> contact Squid re security issues properly I'd love to know.
->>
->>
->> I'm not sure 3.1.10 is the right version for attribution on any
->> response splitting fix. There certainly were no patches solving
->> anything related to respinse splitting in that version. Some
->> borderline memory leak vulnerabilities perhapse, but not response
->> splitting.
->>
->>
->> NP: Just to confuse things there was a major replacement of the HTTP
->> request-line parser on the 2015-02-10 which does explicitly fix all
->> lot of known HTTP request-line parse issues, including a few response
->> splitting vectors using downgrade to HTTP/0.9 handling. That will only
->> be in the 3.6 series though.
->>
->>
->> Amos Jeffries
->> Squid Software Foundation
->>
->>
->
-> --
-> Kurt Seifried -- Red Hat -- Product Security -- Cloud
-> PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
->
+The libext2fs library, part of e2fsprogs and utilized by its utilities, is
+affected by a boundary check error on block group descriptor information,
+leading to a heap based buffer overflow.
+
+A specially crafted filesystem image can be used to trigger the vulnerability.
+
+Affected version:
+
+e2fsprogs < 1.42.12
+
+Fixed version:
+
+e2fsprogs >= 1.42.12
+
+Credit: vulnerability report from Jose Duart of Google Security Team
+        <jduart AT google.com>.
+
+CVE: CVE-2015-0247
+
+Timeline:
+
+2015-01-19: vulnerability report received
+2015-01-29: contacted affected vendors, assigned CVEs
+2015-02-05: advisory release
+
+References:
+http://git.kernel.org/cgit/fs/ext2/e2fsprogs.git/commit/?id=f66e6ce4
+
+Permalink:
+http://www.ocert.org/advisories/ocert-2015-002.html
+
+-- 
+Andrea Barisani |                Founder & Project Coordinator
+          oCERT | OSS Computer Security Incident Response Team
+
+<lcars@...rt.org>                         http://www.ocert.org
+ 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
+        "Pluralitas non est ponenda sine necessitate"
