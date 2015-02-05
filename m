@@ -1,36 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/01/4
-Message-ID: <54A51BC1.6080705@mccme.ru>
-Date: Thu, 01 Jan 2015 13:04:49 +0300
-From: Alexander Cherepanov <cherepan@...me.ru>
-To: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: Re: cve request: miniunzip directory traversal
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/05/14
+Message-ID: <20150205175347.GF20715@kludge.henri.nerv.fi>
+Date: Thu, 5 Feb 2015 19:53:47 +0200
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: CVE request for Zero-day in the Fancybox-for-WordPress Plugin
 Content-Type: text/plain; charset=utf-8
 
-On 2015-01-01 00:44, Michael Gilbert wrote:
-> Jakub Wilk discovered a directory traversal issue in the miniunzip
-> tool [0], which is part of minizip [1].  Attached is a proposed
-> solution.
+On Thu, Feb 05, 2015 at 11:52:19AM -0500, cve-assign@...re.org wrote:
+> Use CVE-2015-1494.
 
-Attached patch seems to deal with absolute paths only. What about 
-relative ones?
+Please note they released 3.0.4 to mitigate the problem in case someone updates,
+but does not remove malicious code. This is unusual from WordPress plugin
+authors. I am very happy to see improvement.
 
-$ touch ../file
-
-$ zip test.zip ../file
-   adding: ../file (stored 0%)
-
-$ rm ../file
-
-$ miniunzip test.zip
-MiniUnz 1.01b, demo of zLib + Unz package written by Gilles Vollant
-more info at http://www.winimage.com/zLibDll/unzip.html
-
-test.zip opened
-  extracting: ../file
-
-$ ls ../file
-../file
+3.0.4
+    Renamed the setting affected by the security issue mentioned in 3.0.3. This
+    should stop the malicious code from appearing on sites where the plugin is
+    updated without removing the malicious code.
 
 -- 
-Alexander Cherepanov
+Henri Salo
