@@ -1,41 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/27/26
-Message-ID: <Pine.LNX.4.64.1501271740530.11165@beijing.mitre.org>
-Date: Tue, 27 Jan 2015 17:41:41 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/05/12
+Message-Id: <20150205171551.6B398B2E42F@smtpvbsrv1.mitre.org>
+Date: Thu,  5 Feb 2015 12:15:51 -0500 (EST)
 From: cve-assign@...re.org
-To: Paolo Perego <paolo@...oredcode.com>
-cc: oss-security@...ts.openwall.com, cve-assign@...re.org, Dylan Kuhn <cyberhobo@...erhobo.net>
-Subject: Re: CVE request: XSS in search functionality for Geo Mashup Wordpress plugin
+To: jmm@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: PHP/file: out-of-bounds memory access in softmagic
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> Citing the description, Geo Mashup is a plugin for Wordpress designed
-> to let you
-> save location information with posts, pages, and other WordPress objects.
-> These information can then be presented on interactive maps in many ways.
->
-> Plugin versions before 1.8.3 suffer from a cross site scripting
-> vulnerability when displaying search results. The search key was not
-> properly sanitized so an attacker can eventually inject arbitrary
-> javascript code.
->
-> Plugin author was contacted on December 16, and by January 11 the
-> vulnerability was fixed and plugin version 1.8.3 was released (
-> https://wordpress.org/plugins/geo-mashup/changelog/).
->
->
-> Paolo
-> -- 
-> $ cd /pub
-> $ more beer
->
-> Il primo blog di application security italiano morbido fuori e croccante
-> dentro: https://codiceinsicuro.it
+> http://bugs.gw.com/view.php?id=398
+> https://github.com/file/file/commit/59e63838913eee47f5c120a6c53d4565af638158
 
-Use CVE-2015-1383.
+> https://bugs.php.net/bug.php?id=68735
+> https://bugs.php.net/patch-display.php?bug=68735&patch=bug68735.patch&revision=1420309079
 
----
+Use CVE-2014-9652.
 
-CVE assignment team, MITRE CVE Numbering Authority M/S M300
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
 202 Burlington Road, Bedford, MA 01730 USA
 [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJU06TNAAoJEKllVAevmvmsNnMH/1Pp9TUN2QeL6HgkRc0CI/za
+zE1CUHtJbgHwCP7Ky1NPJQKBrkyHT3ttxnhBAxw7UL5A/79Mv31BspwlST7nVrW5
+Uytqd1whtax/csMI1aUTeBymkE4/ZgkBxdvp8LAsEax6XOsiaC1szBaCnWikB/VT
+qM+5LVSQZBxJzSSV+vPUeMSMeako142sZnW7uCobKNRc5vJ7vD3xTXfDClCbaybo
+e+ayRLB+jej81X/d3ILZi9GzG9wIld+1rRcxXpknVgMqUIRMxMil0hXKjdv229cu
+TxES4GlZaV5bcJPatwrsf4Te5SVVWCgEdnxmzZduGnlOcEJKKG4K2v9pxVaSSTg=
+=Gl2+
+-----END PGP SIGNATURE-----
