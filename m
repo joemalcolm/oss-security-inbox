@@ -1,61 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/13/15
-Message-ID: <mblroc$8h6$1@ger.gmane.org>
-Date: Fri, 13 Feb 2015 22:53:16 +0100
-From: Damien Regad <dregad@...tisbt.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: XSS in MantisBT
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/05/13
+Message-Id: <20150205172017.65F516C0032@smtpvmsrv1.mitre.org>
+Date: Thu,  5 Feb 2015 12:20:17 -0500 (EST)
+From: cve-assign@...re.org
+To: hanno@...eck.de
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: PHP/file: out-of-bounds memory access in softmagic
 Content-Type: text/plain; charset=utf-8
 
-On 2015-02-10 01:41, P Richards wrote:
- > This issue looks fairly like the issue previously identified in
- > adm_config_report.php in May 2014, as an XSS. See
- > 
-https://github.com/mantisbt/mantisbt/commit/cabacdc291c251bfde0dc2a2c945c02cef41bf40
- > I'm still waiting for the CVE to be provided for
- > cabacdc291c251bfde0dc2a2c945c02cef41bf40 from May, or could you let
- > me know what CVE was assigned for the initial fix?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-A 5 seconds search through the MantisBT changesets tells me that it was 
-CVE-2014-8986.
-See https://www.mantisbt.org/bugs/view.php?id=17889.
+> There are more such issues, I haven't tested them in php:
+> http://bugs.gw.com/view.php?id=409
+> http://mx.gw.com/pipermail/file/2014/001649.html
 
-Which, by the way, would have been even easier for you to find if you 
-had actually bothered to follow the process and report the security 
-issue in our tracker yourself instead of emailing me that PDF file of 
-yours and making me do the legwork.
+Our initial thought is that the 001649.html disclosure occurred first,
+and has a single root cause that also applies to id=409. So, we don't
+think that id=409 can have its own separate CVE ID, even though the
+id=409 report contained additional detail.
 
- > And in fact, it looking at the diff, my initial thought was you were
- > trying to take a vulnerability discovered by myself and pass it off
- > as something new crediting someone else and yourself for the fix -
- > although it may be this was unintentional as it appears you
- > re-introduced the same bug a few months after the initial fix.
+Use CVE-2014-9653 for the entire "readelf.c uses pread() ... it's
+happy with partial reads and valgrind show various errors" report
+fixed by "file has been changed to bail out when pread() returns
+partial buffers."
 
-You know, this really sounds like paranoia... You know me, and should 
-know better. I have never taken credit for somebody else's work. Credit 
-was given, where it was due:
-http://thread.gmane.org/gmane.comp.security.oss.general/14706/focus=14849
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
- > [...]
- >
- > It seems you then modified the fix for this vulnerability in August
- > to re-introduce the vulnerability [...]
- >
- > And now are requesting a CVE for the new issue crediting a different
- > researchcompany for the 'new vulnerability', with no mention of the
- > original discovery for this issue in May 2014.
- >
- > @Mitre: How is this handled? Do you assign two CVE's in this case?
-
-As far as I can tell, while related, these are indeed 2 distinct issues 
-even though they are evidently related.
-
-Quite frankly, I just can't be bothered to analyze whether my follow-up 
-fix for CVE-2014-8986 reintroduced the issue or not.
-
-Even if I did, the fact remains that 1.2.19 was released as it was, so 
-we DO have two distinct issues here in any case.
-
-D
-
-
+iQEcBAEBAgAGBQJU06XtAAoJEKllVAevmvms2QQIAIxDhtDG27FFsr8hsZQMJYqa
+4Jk9r2vXKb8hmM/xenVWmCwHxz67UjZ3wgL5lU6z5hJMRaLfR4tddIhhgK+I+9p/
+MslcATfZyBzal1uXaiiN81sYs+PPUdWYf9wCaI/j+F8O9sl2690OeSUOn+S3T8vf
+ZyMV2DIJnDYVo4TK+6xjuYnk1Tcq2sqvWO5BK07+pNAbtsWk4TikurSEuBc1KLSD
+TJ6LBOgf/HZPGqCx3PX+oKP/oN/OPP5mp31qM5A8RNjt3gYoqNhDQQ4uo7lYTUCH
+xy14S2XfNwvD+YNhBam1Vn+5+MxNqiEjuoOQ1ztP5Jb86A8fQdyfxS0lyVWSn18=
+=WfCL
+-----END PGP SIGNATURE-----
