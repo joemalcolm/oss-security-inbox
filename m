@@ -1,48 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/27/14
-Message-ID: <20150127174512.GB20691@openwall.com>
-Date: Tue, 27 Jan 2015 20:45:12 +0300
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Cc: Qualys Security Advisory <qsa@...lys.com>
-Subject: Re: GHOST gethostbyname() heap overflow in glibc (CVE-2015-0235)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/05/3
+Message-ID: <54D2D5B1.7080707@redhat.com>
+Date: Wed, 04 Feb 2015 19:30:09 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Daniel Stenberg <daniel@...x.se>
+Subject: MP3::Info file loading from cwd
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jan 27, 2015 at 09:21:32AM -0800, Michal Zalewski wrote:
-> I find it... profoundly disappointing... that we get to learn about
-> 0-days via PR agency leaks (or that external PR agencies get to know
-> about 0-days before the rest of the world - hey, sounds like a juicy
-> target).
-> 
-> That said, the advisory makes up for it...
+With apologies, this should have been made public some time ago however
+it fell through the cracks. This is a ow severity issue, it requires
+significant attack/victim interaction and local access.
 
-I agree.  I am more concerned that PR agencies appear to have had early
-access to this information than that the information leaked to the
-public a few hours early.  When it did become public, everyone could
-proceed with their advisories, updates, etc.  But before it did, who
-knows what bad bugs with access to a PR agency's database or e-mail
-could have been doing and for how long (I hope also just another few
-hours, but I really don't know).
+This was assigned CVE-2013-6499
 
-We use PGP on the linux-distros list (the issue was first brought to
-there on January 18), but I doubt that communication between Qualys and
-their PR agency, nor within the PR agency, was similarly encrypted.
-Perhaps they were using some Word "documents" and stuff.  And even if it
-were encrypted, notifying a PR agency early goes beyond need-to-know
-from everyone else's security perspective.
+https://bugzilla.redhat.com/show_bug.cgi?id=1018805
 
-Unfortunately, that's how PR agencies work, they want some "warm up"
-time.  I think the only solution for companies like Qualys is to not try
-to reap the usual PR benefits from this type of findings.  Have their
-technical folks disclose to the proper technical channels instead, and
-do not issue a formal press release - well, or do it a few days later,
-referring not so much to the actual findings, but to how well the
-company worked with the infosec community.  This would be better PR,
-too, at least within the smaller but highly relevant infosec community.
+-- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-Of course, personally I would not care about some company's PR, but I
-realize that many companies do care and this affects the resources they
-put into analyzing vulnerabilities (as you say, "the advisory makes up
-for it").  Hence my thinking of a workaround above.
 
-Alexander
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
