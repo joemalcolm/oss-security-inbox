@@ -1,117 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/23/2
-Message-ID: <CALH-=7zMVWB0AckWwmAGjHi0npUqeqOmvF=GPfakNh__qPacpA@mail.gmail.com>
-Date: Mon, 23 Feb 2015 05:54:30 +0100
-From: Steffen Rösemann <steffen.roesemann1986@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-Request -- Zeuscart v. 4 -- Multiple reflecting XSS-, SQLi and InformationDisclosure-vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/05/8
+Message-ID: <CAGeh-pFf60m79xH8-W3A9OKrvHB4nmJ-JvK9JbFgnL4BYDiQtQ@mail.gmail.com>
+Date: Thu, 5 Feb 2015 15:34:45 +0100
+From: Dejan Bosanac <dejan@...httale.net>
+To: "dev@...ivemq.apache.org" <dev@...ivemq.apache.org>,  "users@...ivemq.apache.org" <users@...ivemq.apache.org>,  Apache Security Response Team <security@...che.org>, oss-security@...ts.openwall.com,  bugtraq@...urityfocus.com
+Subject: [ANNOUNCE] CVE-2014-3579 - ActiveMQ Apollo vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve, Josh, vendors, list.
+A security vulnerability has been reported agains ActiveMQ Apollo 1.7 and
+older versions.
 
-I found multiple reflecting XSS-, SQLi- and
-InformationDisclosure-vulnerabilities in ECommerce Shopping-Cart Zeuscart
-v.4.
+Please check the following document and see if you’re affected
 
-====
-XSS
-====
+http://activemq.apache.org/security-advisories.data/CVE-2014-3579-announcement.txt
 
-Reflecting XSS-vulnerabilities can be found in a common
-Zeuscart-installation in the following locations and could be exploited for
-example by crafting a link and make a registered user click on that link.
+ActiveMQ Apollo 1.7.1 with appropriate fixes is released and available for
+upgrade
 
-The parameter "search", which is used in the index.php is vulnerable to
-XSS-attacks.
-
-Exploit-Example:
-
-http://
-{TARGET}/index.php?do=search&search=%22%3E%3Cbody%20onload=eval%28alert%28document.cookie%29%29%20%3E%3C!--
-
-
-By appending arbitrary HTML- and/or JavaScript-code to the parameter
-"schltr" which is as well used in index.php, an attacker could exploit this
-XSS-vulnerable parameter:
-
-Exploit-Example:
-
-http://
-{TARGET}/index.php?do=brands&schltr=All%3Cbody%20onload=eval%28alert%28String.fromCharCode%2888,83,83%29%29%29%20%3E
-
-
-The third XSS-vulnerability can be found in the "brand"-parameter, which is
-again used in index.php.
-
-Exploit-Example:
-
-http://
-{TARGET}/index.php?do=viewbrands&brand=Bata%3Cbody%20onload=eval%28alert%28String.fromCharCode%2888,83,83%29%29%29%20%3E
-
-
-====
-SQLi
-====
-
-The SQL injection-vulnerabilities can be found in the administrative
-backend of Zeuscart v. 4 and reside in the following locations in a common
-installation.
-
-By appending arbitrary SQL statements to the "id"-parameter, an attacker
-could exploit this SQL injection vulnerability:
-
-Exploit-Example:
-
-http://
-{TARGET}/admin/?do=disporders&action=detail&id=1+and+1=2+union+select+1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,database%28%29,34,35,version%28%29,37,38+--+
-
-
-Another SQL injection vulnerability can be found here and can be exploited
-by appending SQL statements to the vulnerable "cid"-parameter:
-
-Exploit-Example:
-
-http://
-{TARGET}/admin/?do=editcurrency&cid=1+and+1=2+union+select+1,database%28%29,3,version%28%29,5+--+
-
-
-The last SQL injection vulnerability I found can be found in the following
-location and can be exploited by appending SQL statements to the vulnerable
-"id" parameter:
-
-http://
-{TARGET}/admin/?do=subadminmgt&action=edit&id=1+and+1=2+union+select+1,version%28%29,3,database%28%29,5+--+
-
-
-==============
-Information Disclosure
-==============
-
-The administrative backend of Zeuscart v. 4 allows the admin to use a
-functionality, which displays the PHP-installation settings via phpinfo():
-
-http://{TARGET}/admin/?do=getphpinfo
-
-Unfortunately, the PHP-script does not check, if an authorized admin
-executes this functionality: It is possible even for unregistered users to
-request the above link to see the informations, phpinfo() displays. That
-could expose sensitive informations to an attacker which could lead to
-further exploitation.
-
-Can I have a CVE-ID / CVE-IDs for these issues?
-
-Thank you very much.
-
-Greetings from Germany.
-
-Steffen Rösemann
-
-References:
-
-[1] http://zeuscart.com/
-[2] https://github.com/ZeusCart/zeuscart
-[3] https://github.com/ZeusCart/zeuscart/issues/28
-[4] http://sroesemann.blogspot.de/2015/01/sroeadv-2015-12.html
-[5] https://github.com/sroesemann/zeuscart
-[6] http://seclists.org/fulldisclosure/2015/Feb/89
+Regards
+--
+Dejan Bosanac
+----------------------
+Red Hat, Inc.
+dbosanac@...hat.com
+Twitter: @dejanb
+Blog: http://sensatic.net
+ActiveMQ in Action: http://www.manning.com/snyder/
 
