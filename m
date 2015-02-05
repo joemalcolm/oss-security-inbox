@@ -1,44 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/23/10
-Message-ID: <54C2BF6D.8020901@mozilla.com>
-Date: Fri, 23 Jan 2015 16:38:53 -0500
-From: David Lawrence <dkl@...illa.com>
-To: security@...zilla.org,  "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>
-Subject: Re: CVE request for BZ
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/05/7
+Message-ID: <CAGeh-pEn-kKXbhfm=oJm2ypm9tbGiz8J3Tn1Nf9fX0W6jRXJFg@mail.gmail.com>
+Date: Thu, 5 Feb 2015 15:32:00 +0100
+From: Dejan Bosanac <dejan@...httale.net>
+To: "dev@...ivemq.apache.org" <dev@...ivemq.apache.org>,  "users@...ivemq.apache.org" <users@...ivemq.apache.org>,  Apache Security Response Team <security@...che.org>, oss-security@...ts.openwall.com,  bugtraq@...urityfocus.com
+Subject: [ANNOUNCE] CVE-2014-3600, CVE-2014-3612 and CVE-2014-8110 - Apache ActiveMQ vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Sorry not explicit in the sec adv but you are correct. No exploit has been reported
-regarding the webservices changes and was  just to prevent such problems in the
-future. The methods that were unintentionaly accessible were all relatively harmless.
-We added the safeguard in case other modules were imported in the future which could
-possibly give out sensitive data unintentionally.
+There have been a several security vulnerabilities reported against Apache
+ActiveMQ 5.10.0 and older versions.
 
-Thanks
-dkl
+Please check the following documents and see if you’re affected by them
 
-On 01/23/2015 04:29 PM, Kurt Seifried wrote:
-> http://www.bugzilla.org/security/4.0.15/
->
-> one has a CVE, and this one does not:
->
-> Class:       Information Leak
-> Versions:    2.23.3 to 4.0.15, 4.1.1 to 4.2.11, 4.3.1 to 4.4.6, 4.5.1 to
-> 4.5.6
-> Fixed In:    4.0.16, 4.2.12, 4.4.7, 5.0rc1
-> Description: Using the WebServices API, a user can possibly execute imported
->              functions from other non-WebService modules. A whitelist
-> has now
->              been added that lists explicit methods that can be executed
-> via the
->              API.
-> References:  https://bugzilla.mozilla.org/show_bug.cgi?id=1090275
->
-> was this classed as hardening hence no CVE? E.g. has no exploit been
-> found, or?
->
+http://activemq.apache.org/security-advisories.data/CVE-2014-3600-announcement.txt
+http://activemq.apache.org/security-advisories.data/CVE-2014-3612-announcement.txt
+http://activemq.apache.org/security-advisories.data/CVE-2014-8110-announcement.txt
 
--- 
-David Lawrence
-dkl@...illa.com
-bugzilla.mozilla.org
+Apache ActiveMQ 5.10.1 and 5.11.0 with appropriate fixes are released and
+available for upgrade
+
+Regards
+--
+Dejan Bosanac
+----------------------
+Red Hat, Inc.
+dbosanac@...hat.com
+Twitter: @dejanb
+Blog: http://sensatic.net
+ActiveMQ in Action: http://www.manning.com/snyder/
 
