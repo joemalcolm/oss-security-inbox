@@ -1,32 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/03/9
-Message-ID: <20150203145647.GA4404@inutil.org>
-Date: Tue, 3 Feb 2015 15:56:47 +0100
-From: Moritz Muehlenhoff <jmm@...ian.org>
-To: oss-security@...ts.openwall.com
-Cc: scarybeasts@...il.com
-Subject: Re: vsftpd problem in deny_hosts
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/05/15
+Message-Id: <20150205202051.EFD8B42E02A@smtpvbsrv1.mitre.org>
+Date: Thu,  5 Feb 2015 15:20:51 -0500 (EST)
+From: cve-assign@...re.org
+To: thoger@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request - ICU
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Feb 03, 2015 at 12:45:24PM +0300, Solar Designer wrote:
-> On Tue, Feb 03, 2015 at 09:28:36AM +0100, Marcus Meissner wrote:
-> > IBM reported to us a problem in vsftpd deny_hosts problem.
-> > 
-> > CVE-2015-1419
-> > 
-> > https://bugzilla.novell.com/show_bug.cgi?id=915522
-> > 
-> > Description;
-> >  Set the option "deny_file" in /etc/vsftpd.conf on a top-directory (for example "deny_file=/home/*")
-> >  Then log in with ftp and try to cd to "/home/" first, which will fail, then try to cd to "/./home/" which will succeed!
-> >  The latter case shouldn't be possible as well!
-> 
-> What does upstream say about this?  (CC'ing.)
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-At least the man page states the deny_file is not a full-blown security measure:
+>> https://code.google.com/p/chromium/issues/detail?id=432209
+>> https://chromium.googlesource.com/chromium/deps/icu/+/dd727641e190d60e4593bcb3a35c7f51eb4925c5
+>> http://bugs.icu-project.org/trac/changeset/36801
 
-| This option is very simple, and should not be used for serious
-| access control - the filesystem's permissions should be used in preference.
+>>   A. the entire known vulnerability is that the unpatched code
+>>      calculates certain values without ensuring that they can be
+>>      represented in a 24-bit field
 
-Cheers,
-        Moritz
+>> Should there be one CVE ID now, for observation A alone?
+
+> That's what can be done based on the information public at the moment.
+
+There doesn't appear to be any additional information or another
+expressed viewpoint, so we'll proceed with assigning CVE-2014-9654 for
+observation A.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJU09BLAAoJEKllVAevmvmsztkH/RpBrRIk+v5Rm6hjbIO9w5Lx
+Mo48AqnpwWthNobKgYKY1cQLRwuVTwwe4opZJUEOPRpjff1OiHS0m1Nhbd/E6CCh
+P/yw6nZgxeXDMDjnBbzblSkbLkgXe/V3QbU+wYAuhw+/16C4jX5wx09MFnQpWKRV
+y41nfyp6Xzdgl+/6R6o8t3sBXoi5kD9lZx0sndUs1ipcqzboij6k1KJvPXr5rvif
+xPJfFPBxjxETBFri4Lsv+27F9q5Pjucootd2fidE47KirIDOktDxdBQOGEnjtii/
+E9tsNNgoieNkb0MCMdkJmf7yGOqq3PxPB54UtSydtaiHxrwMoaCq9u+gh01p/o0=
+=brIj
+-----END PGP SIGNATURE-----
