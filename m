@@ -1,27 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/02/5
-Message-ID: <87385ny2dn.fsf@redhat.com>
-Date: Mon, 02 Mar 2015 14:07:00 +0100
-From: Martin Prpic <mprpic@...hat.com>
-To: "oss-security\@lists.openwall.com" <oss-security@...ts.openwall.com>
-Subject: CVE request: Maven downloads JARs via HTTP
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/05/1
+Message-ID: <CACYkhxiyoQWsnKHOZuBCPjQn9=jJPbLzk_cvGx3vHyjNU5u1nA@mail.gmail.com>
+Date: Thu, 5 Feb 2015 11:18:01 +1100
+From: Michael Samuel <mik@...net.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: Apache 2.4 mod_ssl SSLSessionTickets -- others vulnerable?
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 5 February 2015 at 03:35, Mark Felder <feld@...d.me> wrote:
+>   *) mod_ssl: New directive SSLSessionTickets (On|Off).
 
-I don't see a CVE assigned for this anywhere:
+And as with nginx and OpenSSL s3_srvr.c, there's no retval check on
+RAND_pseudo_bytes() when creating the IV to encrypt the session
+ticket.
 
-https://jira.codehaus.org/browse/MNG-5672
+This isn't exploitable with the default RNG (you won't get this far
+without a working RNG), but be careful if your engine is flaking out -
+ you could be sending something else out with your IVs...
 
-"Maven Central can now be accessed via HTTPS. I think the default
-configuration should be switched to use that, rather than the current
-unsecured HTTP transport."
+For the record:
+-1 : Error, buffer not filled
+ 0 : Buffer filled with potentially predictable entropy (unless an
+engine aliased their RAND_bytes interface to RAND_pseudo_bytes!)
+ 1 : Success
 
-This was fixed in Maven 3.2.3:
 
-https://maven.apache.org/docs/3.2.3/release-notes.html
-
-Thanks,
-
--- 
-Martin Prpič / Red Hat Product Security
+Regards,
+  Michael
