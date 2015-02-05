@@ -1,54 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/05/5
-Message-ID: <8959E1A7-7458-4588-B913-44E918A4827D@redhat.com>
-Date: Mon, 05 Jan 2015 08:33:49 -0700
-From: "Vincent Danen" <vdanen@...hat.com>
-To: "Salvatore Bonaccorso" <carnil@...ian.org>
-Cc: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: Re: CVE request: denial of service flaw in firebird
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/05/4
+Message-ID: <54D2D938.5070006@redhat.com>
+Date: Wed, 04 Feb 2015 19:45:12 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: foomatic file loading from cwd
 Content-Type: text/plain; charset=utf-8
 
-On 01/03/2015, at 21:32 PM, Salvatore Bonaccorso wrote:
+With apologies, this should have been made public some time ago however
+it fell through the cracks. This is a low severity issue, it requires
+significant attack/victim interaction and local access.
 
-> Hi,
->
-> On Sat, Jan 03, 2015 at 06:59:18PM -0500, cve-assign@...re.org wrote:
->>
->>> I've not seen a CVE for this; could one be assigned?  Thanks.
->>>
->>> It was found that an unauthenticated remote attacker could send a
->>> malformed network packet to a firebird server, which would cause the
->>> server to crash.
->>>
->>> http://www.firebirdsql.org/en/news/security-updates-for-v2-1-and-v2-5-series-66011/
->>> http://tracker.firebirdsql.org/browse/CORE-4630
->>> http://sourceforge.net/p/firebird/code/60331/
->>> https://bugs.mageia.org/show_bug.cgi?id=14726
->>> https://bugzilla.redhat.com/show_bug.cgi?id=1172445
->>
->> Use CVE-2014-9492.
->
-> I have a question back on this assignment. Initially CORE-4630 did not
-> had a CVE reference in the title at leat afair, but some time ago the
-> reference to CVE-2014-9323 appeared.
->
-> We used then this reference in Debian to track the issue, but also
-> others have it:
->
-> https://bugzilla.suse.com/show_bug.cgi?id=910653
-> https://bugzilla.redhat.com/show_bug.cgi?id=1172445
-> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-9323
-> https://security-tracker.debian.org/tracker/CVE-2014-9323
->
-> Should CVE-2014-9492 be rejected and CVE-2014-9323 to be still
-> continued to be used?
+This was assigned CVE-2013-6500
 
-Thanks for this, Salvatore.  I hadn't noticed that the CVE was assigned. 
-  I think 9492 should be rejected; I don't know where 9323 came from but 
-we have already released errata with that CVE name for Fedora and it 
-looks like many others (as you noted) are also using 9323.
-
-
+https://bugzilla.redhat.com/show_bug.cgi?id=995090
 
 -- 
-Vincent Danen / Red Hat Product Security
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
