@@ -1,26 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/20/2
-Message-Id: <20150220002731.A123C42E066@smtpvbsrv1.mitre.org>
-Date: Thu, 19 Feb 2015 19:27:31 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/05/10
+Message-Id: <20150205165219.CF16C6C0056@smtpvmsrv1.mitre.org>
+Date: Thu,  5 Feb 2015 11:52:19 -0500 (EST)
 From: cve-assign@...re.org
-To: steffen.roesemann1986@...il.com
+To: kseifried@...hat.com
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE-Request -- Piwigo <= v. 2.7.3 -- Reflecting XSS- and SQLi-vulnerability in administrative backend
+Subject: Re: CVE request for Zero-day in the Fancybox-for-WordPress Plugin
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> The reflecting XSS vulnerability resides in the "page" parameter used in
-> the file admin.php which can be found in the administrative backend
+> http://blog.sucuri.net/2015/02/zero-day-in-the-fancybox-for-wordpress-plugin.html
 
-Use CVE-2015-2034.
+> https://wordpress.org/plugins/fancybox-for-wordpress/changelog/
 
+> 3.0.3
+> 
+> Fixed a security issue. (Thanks to mickaelb for reporting and
+> Konstantin Kovshenin for providing the fix)
 
-> The SQL injection vulnerability can as well be found in the administrative
-> backend and can be found in the "History" functionality
+> https://plugins.trac.wordpress.org/changeset/1082625/
 
-Use CVE-2015-2035.
+Use CVE-2015-1494.
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -30,11 +32,11 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJU5n8dAAoJEKllVAevmvmsBGAH/iAnJvlIEeHYbfuMtAR3fMgw
-V0IpzOvu7QochzHf9yfqIX9rQKHl7k8dSZyG1DBFfLR1QvOFvr8BoC6TtMV6fgwS
-JDY1cyjkmHwbNuuRDBgNv4EYJOQhdEGSMDkQaQUZPBkjgtUQkzSWIk5ZnTtsTWX9
-Sz90zzFcgpdYrQo6WQnTlS2USYSOILz0RcpJRtkx/gukTfmQgMgy/gqS29paXDsg
-1RMlanW7+J4WtaQgirucjMC9FTPKoXF47/Ink4tXgB1ZIii3+1+JHSisjk+AhfeR
-ZdJMlMEaimLJCihQ33v1tqXc6FcfSA2aU+dXAZ4n7lmtvLeiSF6zCtLT0pb6m3A=
-=qH4s
+iQEcBAEBAgAGBQJU059ZAAoJEKllVAevmvmsb6MH/0VWFcMUx7Uv5WgHDGGWvo6Y
+zbiq6KPrIlkk6QRjLypJr4sose/zM1iV48LzYIg5qBiTuUf2Xg22VyzbeSCyYdbb
+2j4rHvY5nAOpSJ7ziSWREd1igC7VmtQyhxHOUk1yKWIxN+XkjEhJbAulNXVLvh9f
+aElP7NISaOvHJG7bJaN3UBaMVWlfuhBQ9D6vivL4vkE4UdBLw98iPftOsxN84l5o
+KBVUkzmVEvC55i1pRe2s45opzic/jEE+AiQlipn6UuuPJYfeI+hvxq7rb24AwhCM
+GuvanI7inBqF6YocW7iumBn2JPvkqmxBQAqImYDbUSMe9icPR9sM/MKahy2aBRs=
+=xgTa
 -----END PGP SIGNATURE-----
