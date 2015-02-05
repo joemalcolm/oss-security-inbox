@@ -1,81 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/04/7
-Message-ID: <54A88529.5090607@internot.info>
-Date: Sun, 04 Jan 2015 11:11:21 +1100
-From: Joshua Rogers <oss@...ernot.info>
-To: oss-security@...ts.openwall.com
-Subject: Fwd: Re: CVE Request Question
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/05/5
+Message-Id: <20150205133333.AF5206C0056@smtpvmsrv1.mitre.org>
+Date: Thu,  5 Feb 2015 08:33:33 -0500 (EST)
+From: cve-assign@...re.org
+To: jsegitz@...e.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: NULL ptr deref in php
 Content-Type: text/plain; charset=utf-8
 
-I'm forwarding this to oss-security just for the interest of documentation.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
+> couldn't find a CVE for https://bugs.php.net/bug.php?id=68545
 
-Thanks,
+Does a crash triggered by an unserialize argument cross privilege
+boundaries in typical cases?
 
+http://php.net/manual/function.unserialize.php says
 
--------- Forwarded Message --------
-Subject:     Re: CVE Request Question
-Date:     Mon, 29 Dec 2014 11:38:17 -0500 (EST)
-From:     cve-assign@...re.org
-To:     bugreports@...ernot.info
-CC:     cve-assign@...re.org
+   Do not pass untrusted user input to unserialize(). Unserialization
+   can result in code being loaded and executed due to object
+   instantiation and autoloading, and a malicious user may be able to
+   exploit this.
 
+In the past, there have been CVEs for remote code execution that rely
+on an untrusted unserialize argument, e.g., CVE-2014-3669 and
+CVE-2014-8142. These may be important for attacks against some types
+of restricted environments.
 
+CVE inclusion for unserialize crashes could potentially be handled
+differently.
 
-> https://bugs.php.net/bug.php?id=68665
+For example, is it common for a PHP application to accept some
+untrusted unserialize arguments but not arbitrary untrusted
+unserialize arguments, with a decision process that would accept the
+https://bugs.php.net/bug.php?id=68545 example argument, because static
+analysis could prove that that argument is safe with respect to code
+execution?
 
-As far as we can tell, Bug #68665 has two completely unrelated bugs
-and you are perhaps asking about CVE IDs for both of them.
+If not, then (at least for crash situations) perhaps it would be
+better to focus on CVE assignments at the application level for
+applications that are inconsistent with the "Do not pass untrusted
+user input to unserialize()" documentation.
 
-First, there is an apprentice.c bug:
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-> I found an invalid free that will cause a crash/memory corruption in the
-> master repo(git) of PHP:
-
->
-http://git.php.net/?p=php-src.git;a=commit;h=a72cd07f2983dc43a6bb35209dc4687852e53c09
-
-[ and in PHP 5.6
-
-http://git.php.net/?p=php-src.git;a=commit;h=ef89ab2f99fbd9b7b714556d4f1f50644eb54191
-]
-
-Use CVE-2014-9426.
-
-
-Then, there is a zend_language_scanner.c bug:
-
-> I found an invalid free that will cause a crash/memory corruption in the
-> master repo(git) of PHP:
->
->
-http://git.php.net/?p=php-src.git;a=commit;h=68dd8e8bd7c994dd7a127535d6b4cd22e8c1fc28
->
-> and a test case:
->
->
-http://git.php.net/?p=php-src.git;a=commit;h=67c47e7861a612634bc56525163b6c781aada8db
->
-> But from a PHP dev, regarding whether a CVE-ID should be assigned:
-> > Hmm, I'd say no. The language scanner one is master only, so
-shouldn't have been used in any production.
->
-> I'm just wondering if even though it's only in master, it falls within
-> scope of CVE-ID's?
-
-There is currently no CVE ID for this. The practice that we follow is
-not the same for every piece of software. For example, in the past we
-have assigned CVE IDs for vulnerabilities in FFmpeg that did not
-affect any FFmpeg release. The rationale for this is that Google was
-incorporating unreleased FFmpeg code into Chrome. In the case of PHP,
-we do not know of (for example) current cases in which a Linux
-distribution ships packages based on using the PHP master tree at an
-arbitrary point in time. Also, we have not seen PHP maintainers
-advertise that end users should individually use master. Accordingly,
-for PHP, master seems to not directly correspond to a "product," and
-at least some of the bugs are a reflection of the code being in an
-indeterminate development state.
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+iQEcBAEBAgAGBQJU03B7AAoJEKllVAevmvmsXS0IAI0qvlgEjcBxzvIy9y89SNB2
+G+0V024xf+QrFWTryWVhs04AaffkxLdqZP2VUiAjgzasyQ6XHRwGmTvfR6kwbTZj
+X8R5xiCCSoKvT1LVtQKedeeuxQ0n4/V/maOXnp1l0QRby90I2KhKf9uCw22kLDHr
+Iws34tm5GMgI+jMMEnUsHoDFW4iDYiTOmOCkzdJ6CytjR1TxWXWhAm4IZnuLpmEE
+d3aNjWJbbIQfaVCStgnLnUOWs7qeWRLC2L6g0jp/llQ5iMIu3T3WZH2HyBLSZeDO
+UWJ7KzM42g0hrBHuXen9TD6IPrpwO41zNwxEoUT9Lcav+fnZFUHasMYd326V288=
+=Z9Jt
+-----END PGP SIGNATURE-----
