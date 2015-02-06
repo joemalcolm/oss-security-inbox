@@ -1,45 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/04/6
-Message-ID: <Pine.LNX.4.64.1501031909160.1923@beijing.mitre.org>
-Date: Sat, 3 Jan 2015 19:11:10 -0500 (EST)
-From: cve-assign@...re.org
-To: Pere Orga <gotrunks@...il.com>
-cc: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: Re: CVE requests: Drupal contributed modules
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/06/5
+Message-ID: <54D53C32.8070608@redhat.com>
+Date: Fri, 06 Feb 2015 15:12:02 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request for denial-of-service vulnerability in fcgi
 Content-Type: text/plain; charset=utf-8
 
+Just a note this needs a 2012 CVE:
 
-> Please could some CVEs be assigned to the following announcements, if
-> they have not been already?
->
-> https://www.drupal.org/node/2386387
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=681591
 
-CVE-2014-9498 - SA-CONTRIB-2014-116 - Webform Invitation XSS
+On 06/02/15 04:11 AM, Till Maas wrote:
+> Hi,
+> 
+> there appears to be at least a denial-of-service vulnerability in fcgi:
+> https://bugzilla.redhat.com/show_bug.cgi?id=1189958
+> 
+> Can someone pleas assign a CVE id to this, to make sure that other
+> distributions notice this problem as well.
+> 
+> Unfortunately it looks like fastcgi upstream now died, as their mailing
+> list is not reachable anymore:
+> http://mailman.fastcgi.com/mailman/listinfo/fastcgi-developers
+> 
+> So if someone knows how to contact them, please forward them this
+> information.
+> 
+> Regards
+> Till Maas
+> 
 
-> https://www.drupal.org/node/2390839
+-- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-CVE-2014-9499 - SA-CONTRIB-2014-121 - Godwin's Law XSS
 
-> https://www.drupal.org/node/2390849
-
-CVE-2014-9500 - SA-CONTRIB-2014-122 - MoIP XSS
-
-> https://www.drupal.org/node/2390897
-
-CVE-2014-9501 - SA-CONTRIB-2014-124 - Poll Chart XSS
-
-> https://www.drupal.org/node/2394979
-
-CVE-2014-9502 - SA-CONTRIB-2014-126 - Open Atrium - CSRF
-CVE-2014-9503 - SA-CONTRIB-2014-126 - Open Atrium - Access Bypass
-CVE-2014-9504 - SA-CONTRIB-2014-126 - Open Atrium - OG Subgroups Access Bypass
-
-> https://www.drupal.org/node/2395015
-
-CVE-2014-9505 - SA-CONTRIB-2014-127 - School Administration XSS
-
----
-
-CVE assignment team, MITRE CVE Numbering Authority M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
