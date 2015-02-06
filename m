@@ -1,18 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/18/12
-Message-ID: <CA+8g5KFQM=OAiRWPv-UcR7hwiuJdZ87usuUkFbR09rq-W_h_+A@mail.gmail.com>
-Date: Sun, 18 Jan 2015 11:43:14 -0800
-From: Jim Meyering <jim@...ering.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/06/4
+Message-ID: <20150206111131.GD8364@genius.invalid>
+Date: Fri, 6 Feb 2015 12:11:31 +0100
+From: Till Maas <opensource@...l.name>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: grep heap buffer overrun
+Subject: CVE request for denial-of-service vulnerability in fcgi
 Content-Type: text/plain; charset=utf-8
 
-Invoking grep with a carefully crafted combination of input and regexp
-can cause a segfault and/or reading from uninitialized memory.
+Hi,
 
-Here's how it evolved: http://bugs.gnu.org/19563
-Here's the upstream fix:
-http://git.sv.gnu.org/cgit/grep.git/commit/?id=83a95bd8c8561875b948cadd417c653dbe7ef2e2
+there appears to be at least a denial-of-service vulnerability in fcgi:
+https://bugzilla.redhat.com/show_bug.cgi?id=1189958
 
-This is particularly relevant for those who do not exec grep directly,
-but rather embed parts of grep in another tool.
+Can someone pleas assign a CVE id to this, to make sure that other
+distributions notice this problem as well.
+
+Unfortunately it looks like fastcgi upstream now died, as their mailing
+list is not reachable anymore:
+http://mailman.fastcgi.com/mailman/listinfo/fastcgi-developers
+
+So if someone knows how to contact them, please forward them this
+information.
+
+Regards
+Till Maas
