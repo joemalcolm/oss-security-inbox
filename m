@@ -1,45 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/24/1
-Message-ID: <20150124062408.GA12698@eldamar.local>
-Date: Sat, 24 Jan 2015 07:24:08 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: oss-security@...ts.openwall.com
-Cc: Assign a CVE Identifier <cve-assign@...re.org>
-Subject: Re: [perl #119505] Segfault from bad backreference
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/06/10
+Message-ID: <54D54DF7.7000803@oracle.com>
+Date: Fri, 06 Feb 2015 15:27:51 -0800
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
+To: Kurt Seifried <kseifried@...hat.com>
+CC: oss-security@...ts.openwall.com, Assign a CVE Identifier <cve-assign@...re.org>
+Subject: Re: lynx: crash when parsing overly long links
 Content-Type: text/plain; charset=utf-8
 
-Hi Kurt,
+On 02/ 6/15 03:05 PM, Kurt Seifried wrote:
+> This is an old one, making public:
+>
+> lynx: crash when parsing overly long links
+>
+> it may need a CVE
 
-On Fri, Jan 23, 2015 at 02:38:51PM -0700, Kurt Seifried wrote:
-> http://perl5.git.perl.org/perl.git/commitdiff/0c2990d652e985784f095bba4bc356481a66aa06
-> 
-> The code that parses regex backrefs (or ambiguous backref/octal) such as
-> \123, did a simple atoi(), which could wrap round to negative values on
-> long digit strings and cause seg faults.
-> 
-> Include a check on the length of the digit string, and if greater than 9
-> digits, assume it can never be a valid backref (obviating the need for
-> the atoi() call).
-> 
-> I've also simplified the code a bit, putting most of the \g handling
-> code into a single block, rather than doing multiple "if (isg) {...}".
-> 
-> PoC:
-> 
-> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=776046
-> perl -e '/\7777777777/'
-> 
-> not sure if this can be exploited at all, but someone creative maybe has
-> ideas, if so this may need a CVE.
+Is there a bug id, changelog entry, or patch that distros can use to make
+sure we've fixed this?
 
-Just additional infomration: I think this was way back found already
-around 2008, in opensuse-commits the following can be found:
-
-http://marc.info/?l=opensuse-commit&m=121933719424130
-
-then also reported in the Perl request-tracker at
-
-https://rt.perl.org/Public/Bug/Display.html?id=119505
-
-Regards,
-Salvatore
+-- 
+	-Alan Coopersmith-              alan.coopersmith@...cle.com
+	 Oracle Solaris Engineering - http://blogs.oracle.com/alanc
