@@ -1,179 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/04/10
-Message-ID: <CAPcZBq7ocrmyvAawf-zcr9Uk2BGOxSi--tSvmzNiiWMGsPCREA@mail.gmail.com>
-Date: Sun, 4 Jan 2015 10:56:32 +0800
-From: 罗大龙 <luodalongde@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: 【Vulnerability Report 】 - from QIHU 360 China
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/06/9
+Message-ID: <54D54C70.1020206@redhat.com>
+Date: Fri, 06 Feb 2015 16:21:20 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>
+Subject: older issues in libbluray
 Content-Type: text/plain; charset=utf-8
 
-HI there,
+https://bugzilla.redhat.com/show_bug.cgi?id=959434
+https://bugzilla.redhat.com/show_bug.cgi?id=959433
 
+these may warrant a cve
 
+-- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-Greeting! This is Qinghao Tang from QIHU 360  company, China. I am a
-security researcher there.
 
-I'm writing to apply for a CVE ID, for a 0day vulnerability in ffmpeg.
-Please refer to below report.
-
-
-
-[requester info]
-
-         name: Qinghao Tang
-
-         company: QIHU 360  company, China
-
-         email:luodalongde@...il.com
-
-
-
-[vendor info]
-
-         name: ffmpeg
-
-         email: ffmpeg-security@...peg.org
-
-         website: http://www.ffmpeg.org/
-
-
-
-[vulnerable ffmpeg version]
-
-    2.1.x
-
-
-
-[vulnerability Description]
-
-    The seg_write_packet () function in ffmpeg-2.1.4/libavformat/segment.c
-exists a UAF (use after free) vulnerability , which allows remote attachers
-to cause a denial of service(invalid memory handler) or possibly  execute
-arbitrary code  by use a crafted  video file.
-
-
-
-
-
-[vulnerability resaon]
-
-static int seg_write_packet(AVFormatContext *s, AVPacket *pkt)
-
-{
-
-    SegmentContext *seg = s->priv_data;
-
-    AVFormatContext *oc = seg->avf;
-
-    ....
-
-    //segment_start() -> segment_mux_init()：s->priv_data->avf  =
-avformat_alloc_context()
-
-    //i.e. reset：s->priv_data->avf
-
-    if ((ret = segment_start(s, seg->individual_header_trailer)) < 0)
-
-        goto fail;
-
-    ....
-
-fail:
-
-    if (pkt->stream_index == seg->reference_stream_index)
-
-        seg->frame_count++;
-
-
-
-    if (ret < 0) {
-
-        if (seg->list)
-
-            avio_close(seg->list_pb);
-
-              //oc has been freed before.
-
-        avformat_free_context(oc);
-
-    }
-
-
-
-         return ret;
-
-}
-
-
-
-
-
-
-
-
-
-[crash info from /var/log/messages]
-
-Dec 24 15:41:26 w-r351 kernel: ffmpeg[8927]: segfault at 7fffffff0 ip
-000000000057599e sp 00007fff0beacfc0 error 4 in ffmpeg[400000+a7b000]
-
-Dec 23 02:45:58 localhost kernel: ffmpeg[11883]: segfault at 8000 ip
-0000000000ba45c2 sp 00007fff740292d0 error 4 in ffmpeg[400000+a7b000]
-
-Dec 17 01:18:31 w-r359 kernel: ffmpeg[17119]: segfault at 100000028ip
-00000000005758de sp 00007fff4b1847a0 error 4 in ffmpeg[400000+a7b000]
-
-Dec 17 09:13:59 w-r351 kernel: ffmpeg[4451]: segfault at 1c8 ip
-0000000000575949 sp 00007fff23065010 error 4 in ffmpeg[400000+a7b000]
-
-
-
-[patch]
-
-ffmpeg-2.1.6/libavformat/segment.c
-
-
-
---- segment.c    2014-11-29 03:34:20.000000000 +0800
-
-+++ segment.c.new    2014-12-25 10:21:24.257001354 +0800
-
-@@ -713,7 +713,7 @@
-
-    if (ret < 0) {
-
-        if (seg->list)
-
-            avio_close(seg->list_pb);
-
--        avformat_free_context(oc);
-
-+        avformat_free_context(seg->avf);
-
-    }
-
-
-
-    return ret;
-
-
-
-[vulnerability sample]
-
-The sample is a porn video.
-
-Download url:http://www.datafilehost.com/d/b384ec71
-
-
-
-
-
-Thanks
-
-
-
-
-
-Merry Christmas and a happy new year!
-
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
