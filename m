@@ -1,26 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/25/1
-Message-ID: <54C4AC90.9050003@openwall.com>
-Date: Sun, 25 Jan 2015 11:42:56 +0300
-From: Alexander Cherepanov <ch3root@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: SEANux 1.0 remote back door
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/06/6
+Message-ID: <54D548D1.4000002@redhat.com>
+Date: Fri, 06 Feb 2015 16:05:53 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>
+Subject: lynx: crash when parsing overly long links
 Content-Type: text/plain; charset=utf-8
 
-On 2015-01-24 23:05, Larry W. Cashdollar wrote:
-> SEANux 1.0 is a linux distribution Available here developed by the Syrian Electronic Army.
+This is an old one, making public:
 
-Is it open source?
+lynx: crash when parsing overly long links
 
-BTW nice joke:
-
-"Larry W. Cashdollar
-Security Response Engineer @ Akamai
-
-Actually, I think you guys did a really good job with the distro! Really 
-nice! I'm going to run it as one of my desktops I like it so much!"
-
-At least I hope it's a joke:-)
+it may need a CVE
 
 -- 
-Alexander Cherepanov
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
