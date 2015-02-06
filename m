@@ -1,55 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/16/17
-Message-ID: <m9c7o8$mgd$1@ger.gmane.org>
-Date: Sat, 17 Jan 2015 00:44:08 +0100
-From: Damien Regad <dregad@...tisbt.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/06/1
+Message-ID: <54D40611.6010303@openwall.com>
+Date: Fri, 06 Feb 2015 03:08:49 +0300
+From: Alexander Cherepanov <ch3root@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2015-1042: URL redirection issue in MantisBT
+Subject: Re: CVE Request: cpio -- directory traversal
 Content-Type: text/plain; charset=utf-8
 
-Greetings,
+On 2015-02-02 20:48, Vitezslav Cizek wrote:
+> * Dne Friday 16. January 2015, 03:44:25 [CET] Alexander Cherepanov napsal:
+>> cpio is susceptible to a directory traversal vulnerability via symlinks.
+>
+> Here's a patch we use in SUSE for some time.
 
-Please update CVE-2015-1042 with the information below
+Thanks for sharing!
 
+> It forbids to write over symlinks, similar to bsdtar.
 
-Description:
+Nice, this is a simple and easy approach. But I wonder if it's widely 
+acceptable. GNU tar follows symlinks which are not extracted from the 
+archive and, in http://www.openwall.com/lists/oss-security/2015/01/08/4, 
+Florian Weimer said: "If [the current directory] already contains 
+symbolic links, some users expect that those links are followed because 
+they have used symlinks to move part of the file system tree to 
+somewhere else (perhaps a large file system)."
 
-A bug in the URL sanitization routine allows an attacker to craft an URL 
-that can redirect outside of the MantisBT instance's domain.
-
-This is related to CVE-2014-6316 [1], and the same API function is 
-affected by the same vulnerability, but the root cause is different.
-
-Both examples below will redirect to Google:
-- On a server with http connection:
-http://www.example.com/mantis-directory/login_page.php?return=https:/www.google.com
-- On a server with https connection:
-https://www.example.com/mantis-directory/login_page.php?return=http:/www.google.com
-
-
-Affected versions:
-- >= 1.2.0a3, <= 1.2.18
-- 1.3.0-beta.1
-
-Fixed in versions:
-- 1.2.19 (not yet released)
-- 1.3.0-beta.2 (not yet released)
-
-Patch:
-See Github [2]
-
-Credit:
-The issue was discovered by Alejo Popovici [3] and fixed by Damien Regad 
-(MantisBT Developer).
-
-References:
-Further details available in our issue tracker [3]
-
-
-[1] http://article.gmane.org/gmane.comp.security.oss.general/15384
-[2] http://github.com/mantisbt/mantisbt/commit/d95f070d (1.2.x)
-     http://github.com/mantisbt/mantisbt/commit/e7e2b550 (1.3.x)
-[3] https://www.mantisbt.org/bugs/view.php?id=17997
-
-
-
+-- 
+Alexander Cherepanov
