@@ -1,39 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/18/7
-Message-ID: <Pine.LNX.4.64.1501181515270.14308@beijing.mitre.org>
-Date: Sun, 18 Jan 2015 15:25:14 -0500 (EST)
-From: cve-assign@...re.org
-To: Alexander Cherepanov <ch3root@...nwall.com>
-cc: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: Re: CVE Request: cpio -- directory traversal
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/06/13
+Message-ID: <54D55109.3060506@redhat.com>
+Date: Fri, 06 Feb 2015 16:40:57 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: Assign a CVE Identifier <cve-assign@...re.org>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: libmnl: incorrect validation of netlink message origin allows attackers to spoof netlink messages
 Content-Type: text/plain; charset=utf-8
 
+https://bugzilla.redhat.com/show_bug.cgi?id=848949
 
-On Fri, 16 Jan 2015, Alexander Cherepanov wrote:
+this may warrant a cve
 
-> Hi!
->
-> cpio is susceptible to a directory traversal vulnerability via symlinks.
->
-> Initial report:
-> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=774669
->
-> Upstream report:
-> https://lists.gnu.org/archive/html/bug-cpio/2015-01/msg00000.html
->
-> Some discussion:
-> http://www.openwall.com/lists/oss-security/2015/01/07/5
-> http://www.openwall.com/lists/oss-security/2015/01/08/4
->
-> Could CVE(s) please be assigned?
->
-> -- 
-> Alexander Cherepanov
+-- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-Use CVE-2015-1197.
 
----
-
-CVE assignment team, MITRE CVE Numbering Authority M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
