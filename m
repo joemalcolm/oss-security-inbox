@@ -1,42 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/22/8
-Message-ID: <Pine.LNX.4.64.1501221137470.18848@beijing.mitre.org>
-Date: Thu, 22 Jan 2015 11:41:14 -0500 (EST)
-From: cve-assign@...re.org
-To: Jakub Wilk <jwilk@...lk.net>
-cc: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: Re: heap overflow in procmail
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/06/3
+Message-ID: <20150206055122.GA12687@kiwi>
+Date: Thu, 5 Feb 2015 21:51:22 -0800
+From: Ryan Tandy <ryan@...dis.ca>
+To: oss-security@...ts.openwall.com
+Cc: pkg-openldap-devel@...ts.alioth.debian.org, security@...ian.org
+Subject: CVE request: two OpenLDAP DoS issues
 Content-Type: text/plain; charset=utf-8
 
+Hi,
 
-On Wed, 21 Jan 2015, Jakub Wilk wrote:
+OpenLDAP slapd has two bugs that allow a remote unauthenticated client 
+to crash the LDAP server.
 
-> * Tavis Ormandy <taviso@...gle.com>, 2014-09-03, 11:52:
->> I noticed a heap overflow in procmail when parsing addresses with 
->> unbalanced quotes.
->
-> Unfortunately, there's more:
-> https://bugs.debian.org/769937
->
-> Apparently procmail upstream is inactive; and nobody understands how this 
-> code works.
->
-> At this point, I'd recommend that formail users switch to reformail[0], which 
-> is mostly (but not completely) compatible with formail.
->
-> [0] http://www.courier-mta.org/reformail.html
->
-> -- 
-> Jakub Wilk
+The deref overlay in slapd 2.4.13 through 2.4.40 dereferences a NULL 
+pointer when a search request includes the Deref control with an empty 
+list of attributes to return (missing input validation).
 
-The Debian bug report does not contain diagnosis of the type of 
-programming error that is triggering each crash, so it is not clear how 
-many CVE identifiers must be assigned.
+Fix:
+http://www.openldap.org/devel/gitweb.cgi?p=openldap.git;a=commitdiff;h=c32e74763f77675b9e144126e375977ed6dc562c
 
-What are the root causes of the errors for each of the three test cases?
+References:
+http://www.openldap.org/its/?findid=8027
+http://bugs.debian.org/776988
 
----
+Certain search queries including the Matched Values control can trigger 
+a double free in slapd 2.4.40 when freeing operation controls. This is a 
+regression in 2.4.40, no earlier releases are affected.
 
-CVE assignment team, MITRE CVE Numbering Authority M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+Fix:
+http://www.openldap.org/devel/gitweb.cgi?p=openldap.git;a=commitdiff;h=2f1a2dd329b91afe561cd06b872d09630d4edb6a
+
+References:
+http://www.openldap.org/its/?findid=8046
+http://bugs.debian.org/776991
+
+May we have CVEs assigned to these, please?
+
+thanks,
+Ryan
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
