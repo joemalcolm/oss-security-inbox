@@ -1,92 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/25/3
-Message-Id: <E1YQZwX-0001DY-PV@xenbits.xen.org>
-Date: Wed, 25 Feb 2015 11:15:53 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 118 (CVE-2015-1563) - arm: vgic: incorrect rate limiting of guest triggered logging
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/06/2
+Message-ID: <CAB_jSYwDW1mT2-u2v_cWPY0J4eTscAk4_-NN8vjcmSpv_nRswQ@mail.gmail.com>
+Date: Fri, 6 Feb 2015 10:27:19 +0800
+From: Marina Glancy <marina@...dle.com>
+To: cve-assign@...re.org
+Cc: Kurt Seifried <kseifried@...hat.com>, oss-security@...ts.openwall.com,  security <security@...dle.com>
+Subject: Re: CVE request for Moodlee MDL-48980 Security: Always clean the result from min_get_slash_argument - Moodle
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello,
+We already had CVE for this issue: CVE-2015-0246, which one do you want us
+to publish? Or both?
+Sincerely,
+Marina Glancy
+Development Process Manager, Moodle HQ
 
-            Xen Security Advisory CVE-2015-1563 / XSA-118
-                              version 2
+On Fri, Feb 6, 2015 at 12:59 AM, <cve-assign@...re.org> wrote:
 
-    arm: vgic: incorrect rate limiting of guest triggered logging
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>
+> >
+> http://git.moodle.org/gw?p=moodle.git;a=commit;h=af9a7937cc085f96bdbc4724cadec6eeae0242fc
+> >
+> > MDL-48980 Security: Always clean the result from min_get_slash_argument
+>
+> Use CVE-2015-1493.
+>
+> - --
+> CVE assignment team, MITRE CVE Numbering Authority
+> M/S M300
+> 202 Burlington Road, Bedford, MA 01730 USA
+> [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1.4.14 (SunOS)
+>
+> iQEcBAEBAgAGBQJU06ESAAoJEKllVAevmvmsUnoH/2YfDh5GcUTl/+QiOeH2Drj9
+> 81MUmmh7BEQEJ6lV5oFgnwTw+QBSkzgGwtTyYyOTc0BD0sDYIoS3IuiDJD7/tPtr
+> /wAMaPss8k+G20V+2IbeG9bJSx1vf9ZIhh1nV8lahsVEH9VFq1895y6/epOOKVmR
+> spX1LYl/JgoXveOGuyu1xZmNLxNtJhCBR5+CKMF3GUPsv7PvU4uO1h00Gwz0UkVL
+> KZPiZCyfPHzodypx9cwCiQFLzNWwi1SCIGXmAHIH55W14mfhX/BB4Q1qNyvPOUEs
+> z2XEYrXkbJtJRuQz/AJJiYiYd7PLkWlfdYiVatvwNGNiWP8CPpzmCzVIy5iLvoA=
+> =CZWg
+> -----END PGP SIGNATURE-----
+>
 
-UPDATES IN VERSION 2
-====================
-
-CVE assigned.
-
-ISSUE DESCRIPTION
-=================
-
-On ARM systems the code which deals with virtualising the GIC
-distributor would, under various circumstances, log messages on a
-guest accessible code path without appropriate rate limiting.
-
-IMPACT
-======
-
-A malicious guest could cause repeated logging to the hypervisor
-console, leading to a Denial of Service attack.
-
-VULNERABLE SYSTEMS
-==================
-
-Xen 4.4 and later systems running on ARM hardware are vulnerable.
-
-x86 systems are not affected.
-
-MITIGATION
-==========
-
-The problematic log messages are issued with priority Warning.
-
-Therefore they can be rate limited by adding "loglvl=error/warning" to the
-hypervisor command line or suppressed entirely by adding "loglvl=error".
-
-NOTE REGARDING LACK OF EMBARGO
-==============================
-
-This bug was publicly reported on xen-devel, before it was appreciated
-that there was a security problem.
-
-CREDITS
-=======
-
-This issue was discovered by Julien Grall.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch(es) resolves this issue.
-
-xsa118-unstable-4.5-{1,2}.patch       xen-unstable, Xen 4.5.x
-xsa118-4.4.patch                      Xen 4.4.x
-
-$ sha256sum xsa118*.patch
-5741cfe408273bd80e1a03c21a5650f963d7103fd022c688730f55dcf5373433  xsa118-4.4.patch
-ee24a4c5e12b67d7539f08b644080c87797f31b4402215cd4efbbc6114bffc25  xsa118-4.5-unstable-1.patch
-bd532e3cd535fcdea51f43631a519012baff068cb62d2205fc25f2c823f031eb  xsa118-4.5-unstable-2.patch
-$
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQEcBAEBAgAGBQJU7a6RAAoJEIP+FMlX6CvZR7UH/3zahTQv65m5AZCtXcihzjjd
-EuTAnc9I1yPcHqyEDgilVsDHCM25R7TA7Fn++sYTkIvzcUAwEfJDhEJxy5SOfWFo
-pAVbuV8p/0iKOjsufJgY40nNGyhLknPH2p+deH6P039th0X2CdnFpxSHkewjSJQH
-OTdeLUt2jfvsBBO/ufOH3z1fc+L/L119PDbcAmhiX9JzS4UeqsE9zKzDa/LfwXCm
-uL5Ggk99zuyNs3xaun6zQfRErFel0qXLIl36MIiyFXtyElD0liO5h15EjityoeXH
-6ZVoAex459R9Xrr3f5snoFVazzBfCwnchmMCFqpRNfH7l8VNkdzav3HoUKAbMU8=
-=8ydP
------END PGP SIGNATURE-----
-
-Download attachment "xsa118-4.4.patch" of type "application/octet-stream" (4777 bytes)
-
-Download attachment "xsa118-4.5-unstable-1.patch" of type "application/octet-stream" (10235 bytes)
-
-Download attachment "xsa118-4.5-unstable-2.patch" of type "application/octet-stream" (4902 bytes)
