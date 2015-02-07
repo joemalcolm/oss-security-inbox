@@ -1,91 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/06/6
-Message-ID: <54F9A6EA.5060508@oracle.com>
-Date: Fri, 06 Mar 2015 13:08:58 +0000
-From: John Haxby <john.haxby@...cle.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Another Python app (rhn-setup: rhnreg_ks) not checking hostnames in certs properly CVE-2015-1777
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/07/14
+Message-ID: <20150207213939.GA23823@nef.pbox.org>
+Date: Sat, 7 Feb 2015 22:39:39 +0100
+From: Alistair Crooks <agc@...src.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Spencer regexp heap overflow?
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi,
 
-On 06/03/15 01:02, Kurt Seifried wrote:
-> Please contact your TAM/GSS with this request, it carries a lot
-> more impact if customers want something that we also want.
+We were contacted in retrospect by a researcher about this blog entry
+he'd written and published:
 
+	https://guidovranken.wordpress.com/2015/02/04/full-disclosure-heap-overflow-in-h-spencers-regex-library-on-32-bit-systems/
 
-I know "me too" isn't helpful, but I'm going to say "me too" anyway.
+and I haven't seen anything flying across this list, so I thought I'd
+bring it to people's attention here.
 
+There's a fix in NetBSD HEAD for this, and it will flow out to the
+release branches in due course.
 
-> 
-> On 05/03/15 04:09 PM, Michael Samuel wrote:
->> Could RedHat ship a new package that replaced python's default
->> SSL library with the one that validates TLS by default and
->> release a RHEA?
->> 
->> That way customers (like me) who never want broken TLS on their 
->> network can just install a package and it's fixed.
+I have to admit we're having a hard time trying to think of a service
+that exposes regcomp(3) over the internet - there's a reason that
+Google did re2 for Google code, after all - but I may well be missing
+something...
 
+Regards,
+Alistair
 
-It occurred to me that we could have a patch that has a global switch
-(eg a file in, say, /etc/sysconfig and a corresponding switch for
-individual applications) that switches on the correct behaviour.   I
-know it's a bit of a mess, but that way people who don't care will
-continue in blissful ignorance and people that do care can do
-something about it.
-
-jch
-
-
->> 
->> Regards, Michael
->> 
->> On 6 March 2015 at 05:36, Kurt Seifried <kseifried@...hat.com>
->> wrote:
->>> 
->>> 
->>> On 05/03/15 10:06 AM, John Haxby wrote:
->>>> PEP 476 cites 11 CVEs that resulted from python not properly
->>>> validating certificates.   This would be number 12.
->>>> 
->>>> Shouldn't python versions prior to 2.7.9 and 3.4.3 have a CVE
->>>> each for the lack of verification? If internal corporate
->>>> software stops working because of invalid certificates,
->>>> wasn't it broken anyway?
->>> 
->>> So if something is advertised as having a security feature and
->>> does not or it is broken then it gets a CVE. In this case
->>> Python, and basically every other SSL/TLS implementation on the
->>> planet, by default, did not check hostnames in certs, but they
->>> did provide that capability should you choose to use it. So no
->>> CVE since it wasn't "meant to be secure" as I understand it.
->>> 
->>> Now for my personal opinion: Doing SSL/TLS with server certs
->>> and not checking the hostname in a server cert is completely
->>> insane and utterly defeats the purpose. However there are cases
->>> where a certificate may not have a hostname field, or need a
->>> valid hostname field, e.g. a client certificate where you
->>> mostly care about the fact that the client has it at all. So I
->>> can see why they made hostname checks optional, but again, I
->>> think it was a very bad decision long term as evidenced by:
->>> 
->>> http://www.cve.mitre.org/cgi-bin/cvekey.cgi?keyword=certificate+hostname+check
->>>
->>>>
->>> 
-jch
->>>> 
->>> 
->>> -- Kurt Seifried -- Red Hat -- Product Security -- Cloud PGP
->>> A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
->>> 
-> 
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iF4EAREIAAYFAlT5pt8ACgkQRQu7fpQvo8iXBQD+Ndbpfs/q86yN+KxS/pkPd2bB
-YoV1Dqx3bnVq8s5kD3cA/japMu5aO2C4KMlTojUn50vuKNM0rT8kWC4xoaKBGrPF
-=FL48
------END PGP SIGNATURE-----
+NetBSD/pkgsrc security
