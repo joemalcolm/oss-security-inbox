@@ -1,80 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/30/12
-Message-ID: <54CB5717.60503@tao.at>
-Date: Fri, 30 Jan 2015 11:04:07 +0100
-From: Sven Schwedas <sven.schwedas@....at>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: xchat/hexchat don't properly verify SSL certificates
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/07/6
+Message-ID: <54D64964.6090202@redhat.com>
+Date: Sat, 07 Feb 2015 10:20:36 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>
+Subject: gcj jar manifest parsing segfault with classpath references
 Content-Type: text/plain; charset=utf-8
 
-On 2015-01-29 20:24, Sam Dodrill wrote:
-> A lot of the time IRC networks will not pay for a verified SSL cert due to
-> the fact that the kind of SSL cert they would need (a wildcard one) is
-> financially prohibitive.
+https://bugzilla.redhat.com/show_bug.cgi?id=524177
 
-IRC servers can consider using CACert.org or their own CA and adding
-that to clients; Let's Encrypt seems to be making progress too, so this
-problem will hopefully solve itself in a few months. That shouldn't be a
-reason to ship a broken TLS implementation.
+not sure if this really counts since an attacker that controls the
+manifest can include arbitrary stuff.
 
-> I don't think this is a security bug with hexchat
-> more a symptom of the fact that SSL combines encryption and identity
-> verification where sometimes people only want the former.
-
-What's the point of encryption without identity verification, anyway?
-MITM attacks are laughably trivial there.
-
-> 
-> On Thu Jan 29 2015 at 10:58:51 AM Marc Deslauriers <
-> marc.deslauriers@...onical.com> wrote:
-> 
->> On 2015-01-29 01:52 PM, Vincent Danen wrote:
->>> As reported [1]:
->>>
->>> XChat did not verify that the server hostname matched the domain name in
->> the
->>> subject's Common Name (CN) or subjectAltName field in X.509
->> certificates. This
->>> could allow a man-in-the-middle attacker to spoof an SSL server if they
->> had a
->>> certificate that was valid for any domain name.
->>>
->>> The same code is used in hexchat.
->>>
->>> This was initially reported to hexchat in 2013 [2] and fixed last
->> November [3].
->>> I'm not sure if it should receive a 2013 or a 2014 CVE.  Can one be
->> assigned to
->>> this?
->>>
->>> Thanks.
->>>
->>> [1] https://bugzilla.redhat.com/show_bug.cgi?id=1081839
->>> [2] https://github.com/hexchat/hexchat/issues/524
->>> [3]
->>> https://github.com/hexchat/hexchat/commit/c9b63f7f9be01692b03fa15275135a
->> 4910a7e02d
->>>
->>
->> Looks like XChat-GNOME is vulnerable also.
->>
->> Marc.
->>
->>
->> --
->> Marc Deslauriers
->> Ubuntu Security Engineer     | http://www.ubuntu.com/
->> Canonical Ltd.               | http://www.canonical.com/
->>
-> 
 
 -- 
-Mit freundlichen Grüßen, / Best Regards,
-Sven Schwedas
-Systemadministrator
-TAO Beratungs- und Management GmbH | Lendplatz 45 | A - 8020 Graz
-Mail/XMPP: sven.schwedas@....at | +43 (0)680 301 7167
-http://software.tao.at
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (649 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
