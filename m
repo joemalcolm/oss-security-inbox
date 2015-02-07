@@ -1,25 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/17/3
-Message-ID: <CAM-f9EMCOVtOP1EZU4ZcmGLBNXNoWJ+YYvLxngJd8yqcMxAJdg@mail.gmail.com>
-Date: Tue, 17 Feb 2015 10:20:54 +0000
-From: Patrick Coleman <blinken@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: vulnerabilities in libcsoap
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/07/10
+Message-ID: <54D6581D.1020709@redhat.com>
+Date: Sat, 07 Feb 2015 11:23:25 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>
+Subject: kernel: v4l: videobuf: hotfix a bug on multiple calls to mmap()
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Feb 17, 2015 at 10:15 AM, Patrick Coleman <blinken@...il.com> wrote:
-> Hi,
->
-> A number of vulnerabilities exist in nanohttp, a lightweight webserver library
-> included with libcsoap (http://csoap.sourceforge.net). Patches are
-> provided below against
-> 1.1.0-17.2.
+https://bugzilla.redhat.com/show_bug.cgi?id=620629
 
-Apologies, hit send a little early. The version number above is the
-latest Debian package version, from upstream version 1.1.0.
+not sure if this ever got a cve (or needs one, depends on device perms)
 
-I'm posting here following a recommendation on debian-security, and
-Debian bug #778599 has been raised for this issue. Note upstream
-appears to be unmaintained.
+-- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
--Patrick
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
