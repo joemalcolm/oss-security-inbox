@@ -1,17 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/27/13
-Message-ID: <CALx_OUAG6dp=7tVrvimHV9+6+J7351QH9UcDswOaW_BRFd=exw@mail.gmail.com>
-Date: Tue, 27 Jan 2015 09:21:32 -0800
-From: Michal Zalewski <lcamtuf@...edump.cx>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: GHOST gethostbyname() heap overflow in glibc (CVE-2015-0235)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/07/3
+Message-Id: <20150207123959.DA9B442E024@smtpvbsrv1.mitre.org>
+Date: Sat,  7 Feb 2015 07:39:59 -0500 (EST)
+From: cve-assign@...re.org
+To: ryan@...dis.ca
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, pkg-openldap-devel@...ts.alioth.debian.org, security@...ian.org
+Subject: Re: CVE request: two OpenLDAP DoS issues
 Content-Type: text/plain; charset=utf-8
 
-I find it... profoundly disappointing... that we get to learn about
-0-days via PR agency leaks (or that external PR agencies get to know
-about 0-days before the rest of the world - hey, sounds like a juicy
-target).
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-That said, the advisory makes up for it...
+> OpenLDAP slapd has two bugs that allow a remote unauthenticated client
+> to crash the LDAP server.
+>
+> The deref overlay in slapd 2.4.13 through 2.4.40 dereferences a NULL
+> pointer when a search request includes the Deref control with an empty
+> list of attributes to return (missing input validation).
+>
+> http://www.openldap.org/devel/gitweb.cgi?p=openldap.git;a=commit;h=c32e74763f77675b9e144126e375977ed6dc562c
+>
+> http://www.openldap.org/its/?findid=8027
+> http://bugs.debian.org/776988
 
-/mz
+Use CVE-2015-1545.
+
+
+> Certain search queries including the Matched Values control can trigger
+> a double free in slapd 2.4.40 when freeing operation controls. This is a
+> regression in 2.4.40, no earlier releases are affected.
+>
+> http://www.openldap.org/devel/gitweb.cgi?p=openldap.git;a=commit;h=2f1a2dd329b91afe561cd06b872d09630d4edb6a
+>
+> http://www.openldap.org/its/?findid=8046
+> http://bugs.debian.org/776991
+
+Use CVE-2015-1546.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJU1gclAAoJEKllVAevmvms8AMIAIG/qdU+6kjgw2l8oZCHUYJo
+2UGU/fZ0qAJK9w3pVfxdllmgc+ZtWmQz1Yz7Hb24+EShFakbFrHbyjFaGlPF3O7F
+FcCyAv05C4Um4bM5Qs1joXdaZ2E/ZgCDmLoF5+13Y6f3ZfXTZFgPgrCZKbctjXaq
+TnnNYV5OuU+m0AzWlcT/IMy2FmvzbS6atBhQupJdCr3X5jBTDsfRiJflA+l2HAB5
+PTh23/YhN+g/HLWzJ10jSgIAoi9hC5h+0pu/u0dzLSFWRr7HNVLfOIOsjpUsi+mR
+ulm3fU6fJj3TzqMGnNhdLGSjDbegpTkKwg2Izzx6VdGAmLLndaUbLmAQeUuG47I=
+=enpu
+-----END PGP SIGNATURE-----
