@@ -1,58 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/03/1
-Message-ID: <54A73280.2010909@redhat.com>
-Date: Fri, 02 Jan 2015 17:06:24 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>
-Subject: Possible "new" CVE for Zoo directory traversal
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/07/16
+Message-ID: <CALPTtNXFKSd7kjC1xbm9j_r4YvnEpObwkraztwhf2FYW0vDaKw@mail.gmail.com>
+Date: Sat, 7 Feb 2015 15:31:40 -0800
+From: Reed Loden <reed@...dloden.com>
+To: oss-security@...ts.openwall.com
+Cc: Assign a CVE Identifier <cve-assign@...re.org>, security@...illa.org,  Dan Veditz <dveditz@...illa.com>
+Subject: Re: Mozilla: Use-after-free when doing multiple nesting using bad tags
 Content-Type: text/plain; charset=utf-8
 
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=774453
+https://bugzilla.mozilla.org/show_bug.cgi?id=679572#c2 states "The
+addresses look like it's hit our \"frame-poisoning\" mitigation which would
+make that an unmapped and unexploitable address but that's off the top of
+my head and needs investigation.", so if true, it's only a DoS, which
+Mozilla doesn't assign CVEs for since it's not exploitable.
 
-Package: zoo
-Version: 2.10-27+b1
-Tags: security
+Check
+http://robert.ocallahan.org/2010/10/mitigating-dangling-pointer-bugs-using_15.html
+for more information about frame poisoning and how it works to make what
+used to be always critical security bugs into just crash bugs.
 
-Either the fix for CVE-2005-2349 (bug #309594) wasn't complete, or it
-bit-rotted, because Zoo is still susceptible to directory traversal:
+Also, Mozilla is a CNA, so requests for CVEs for Mozilla products should be
+directed to them. I've cc'd security@ and Dan Veditz to confirm the above,
+however.
 
-$ pwd
-/home/jwilk
+~reed
+(with his Mozilla Security Group hat on)
 
-$ zoo x traversal.zoo
-Zoo:  /tmp/moo       -- extracted
+On Sat, Feb 7, 2015 at 10:29 AM, Kurt Seifried <kseifried@...hat.com> wrote:
 
-$ ls -l /tmp/moo
--rw-r--r-- 1 jwilk users 4 Jan  5  2015 /tmp/moo
+> https://bugzilla.mozilla.org/show_bug.cgi?id=679572
+> https://bugzilla.redhat.com/show_bug.cgi?id=751934
+>
+> not sure why this never got a cve/security treatment
+>
+> --
+> Kurt Seifried -- Red Hat -- Product Security -- Cloud
+> PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+>
+>
 
-
-The script I used to create the test case is available at:
-https://bitbucket.org/jwilk/path-traversal-samples
-
--- System Information:
-Debian Release: 8.0
- APT prefers unstable
- APT policy: (990, 'unstable'), (500, 'experimental')
-Architecture: i386 (x86_64)
-Foreign Architectures: amd64
-
-Kernel: Linux 3.2.0-4-amd64 (SMP w/2 CPU cores)
-Locale: LANG=C, LC_CTYPE=pl_PL.UTF-8 (charmap=UTF-8)
-Shell: /bin/sh linked to /bin/dash
-Init: sysvinit (via /sbin/init)
-
-Versions of packages zoo depends on:
-ii  libc6  2.19-13
-
--- 
-Jakub Wilk
-
-
-https://security-tracker.debian.org/tracker/CVE-2005-2349
-
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
