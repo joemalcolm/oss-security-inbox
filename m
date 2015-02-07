@@ -1,52 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/01/5
-Message-Id: <20150201125107.3998713A752@smtpvmsrv1.mitre.org>
-Date: Sun,  1 Feb 2015 07:51:07 -0500 (EST)
-From: cve-assign@...re.org
-To: felix@...but.de
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: RCE, XSS and HTTP header injection in fli4l web interface
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/07/12
+Message-ID: <54D67473.8000806@redhat.com>
+Date: Sat, 07 Feb 2015 13:24:19 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: Assign a CVE Identifier <cve-assign@...re.org>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, security@...cle.com
+Subject: some really old openjdk stuff/possible java
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+All of these are 4-6 years old, nothing to exciting.
 
->> arbitrary command execution,
+https://bugzilla.redhat.com/show_bug.cgi?id=512684
 
-> For the "execute arbitrary programs" issues, can you provide specific
-> names for the vulnerability types, or any equivalent information?
-> The paragraphs about include/cgi-helper and admin/pf.cgi aren't
-> sufficient to determine the number of CVE IDs.
+https://bugzilla.redhat.com/show_bug.cgi?id=512714
 
-The vulnerability-type information was sent to MITRE without a Cc to
-oss-security. Perhaps it will be sent here later. include/cgi-helper
-and admin/pf.cgi have the same vulnerability type.
+https://bugzilla.redhat.com/show_bug.cgi?id=521086
 
-Use CVE-2015-1443 for both of these.
+https://bugzilla.redhat.com/show_bug.cgi?id=554683
+
+https://bugzilla.redhat.com/show_bug.cgi?id=646543
+
+https://bugzilla.redhat.com/show_bug.cgi?id=678501
+This one was communicated to oracle apparently, I have no further info.
+
+https://bugzilla.redhat.com/show_bug.cgi?id=689445
+
+-- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
 
-> XSS vulnerabilities
-
-Use CVE-2015-1444 for all of these.
-
-
-> HTTP header injection.
-
-Use CVE-2015-1445.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJUziDZAAoJEKllVAevmvmsoN8H/1zAC7qaa/6zqK9GxPq+pAH9
-YRA4fhkNYgEzXBAt1X74Q5VaIRwVLqkyu1q7C+z8dPv28UK7vLkwW2VX+kr1nIjP
-AWQay4ZL4Co/0JLHrwjnTfT3rNwb1lPWbIEimxP+CaTzNsi9VyXf7YOrGOFmtaXk
-CSnztxVT9HTu0mVr3NGdmTk/2nmEmApsguoRXgr9XlO4k2DlFJNjH1x1rN8HT967
-LpgirymP7NyZEsVMOu9vQxnM9//OVkROoIlvvrZ6bYuRrdH0vU5SS4+mvvll788h
-6neXVJnXZtXwtNodHSt+6TYXd9hq+iuAhUnsgs9s0b9y39iv9N7QgNHomXg1LLg=
-=fTWW
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
