@@ -1,56 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/05/4
-Message-ID: <54AAA8BD.8090603@collabora.co.uk>
-Date: Mon, 05 Jan 2015 15:07:41 +0000
-From: Simon McVittie <simon.mcvittie@...labora.co.uk>
-To: oss-security@...ts.openwall.com, dev@...ts.midgard-project.org,  user@...ts.midgard-project.org
-Subject: CVE-2014-8148: midgard-core configures D-Bus system bus to be insecure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/07/9
+Message-ID: <20150207183347.75d03966@pc>
+Date: Sat, 7 Feb 2015 18:33:47 +0100
+From: Hanno Böck <hanno@...eck.de>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: Assign a CVE Identifier <cve-assign@...re.org>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: ghostscript double free and invalid read caused by embedded jbig2 data
 Content-Type: text/plain; charset=utf-8
 
-[Re-posting with upstream list addresses spelled correctly. People on
-oss-security: sorry for the noise, and please send any replies to this
-one, not to the previous attempt.]
+On Sat, 07 Feb 2015 10:27:29 -0700
+Kurt Seifried <kseifried@...hat.com> wrote:
 
-Type of vulnerability: CWE-284 Improper Access Control
-Exploitable by: local users
-Impact: could allow arbitrary code execution as root (dependent on
-installed D-Bus system services)
-Reporter: Simon McVittie, Collabora Ltd.
-Upstream notified: 2014-12-19
+> https://bugzilla.redhat.com/show_bug.cgi?id=570425
+> 
+> I'm pretty sure this issue is different than CVE-2009-0196
 
-Midgard2 is an open source content repository for data-intensive web and
-desktop applications.
+Ghostscript right now has ~180 open unfixed bugs from fuzzing:
+http://bugs.ghostscript.com/buglist.cgi?component=fuzzing&query_format=advanced&resolution=---
 
-While checking Debian for incorrect/dangerous D-Bus security policy
-files (found in /etc/dbus-1/system.d/*.conf) I found this access control
-rule in midgard2-common/10.05.7.1-2, part of the upstream project
-midgard-core:
+I believe most of them are related to this fuzzing effort from 2013:
+http://gynvael.coldwind.pl/?id=493
+(I think Gynvael is on this list, maybe he can comment on the state)
 
-<policy context="default">               <==== "applies to everyone"
-  <allow own="org.midgardproject" />     <==== probably undesired
-  <allow send_type="method_call"/>       <==== definitely bad
-  <allow send_type="signal" />           <==== not good either
-</policy>
+gs already does invalid memory reads without any fuzzing at all. Just
+compile it with asan and try to use the pdfwrite device.
 
-This is analogous to an overly permissive "chmod": it allows any process
-on the system bus to send any method call or signal to any other process
-on the system bus, including those that are normally forbidden either
-explicitly or via the system bus' documented default-deny policy. Some
-D-Bus system services perform additional authorization checks, either
-via Polkit/PolicyKit or internally, but many services rely on the system
-bus to apply their intended security model.
 
-For instance, depending on installed software, this vulnerability could
-allow unprivileged local users to:
+-- 
+Hanno Böck
+http://hboeck.de/
 
-* invoke Avahi's SetHostName() method
-* communicate with bluetooth devices using BlueZ
-* install printer drivers using system-config-printer
-* run NetworkManager "dispatcher" scripts
-* ...
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
 
-It seems likely that at least one of these services can be used for
-arbitrary code execution as root, making this a severe vulnerability.
-
-Regards,
-    S
+Content of type "application/pgp-signature" skipped
