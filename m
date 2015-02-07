@@ -1,25 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/09/6
-Message-Id: <BC7B2046-7156-4489-9829-8FE4387184A5@oracle.com>
-Date: Mon, 9 Mar 2015 18:52:58 +0000
-From: John Haxby <john.haxby@...cle.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Another Python app (rhn-setup: rhnreg_ks) not checking hostnames in certs properly CVE-2015-1777
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/07/4
+Message-Id: <20150207124451.04A7E6C015D@smtpvmsrv1.mitre.org>
+Date: Sat,  7 Feb 2015 07:44:51 -0500 (EST)
+From: cve-assign@...re.org
+To: opensource@...l.name
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request for denial-of-service vulnerability in fcgi
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> On 9 Mar 2015, at 16:47, Kurt Seifried <kseifried@...hat.com> wrote:
+> there appears to be at least a denial-of-service vulnerability in fcgi:
+> https://bugzilla.redhat.com/show_bug.cgi?id=1189958
+
+> According to the bug report, if more than 1024 connections are received, a segfault can occur.
 > 
-> If vendors want features in their rebranded RHEL they can add them. I
-> have no clue why you would need broad agreement from the community
-> including Red Hat to add a feature to Oracle Linux.
+> https://bugs.launchpad.net/ubuntu/+source/libfcgi/+bug/933417
+> 
+> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=681591
 
-On the other hand, if two loosely compatible vendors want the same feature it makes sense to have the feature implemented in the same way.
+Use CVE-2012-6687.
 
-For this python certificate validation, we could have as many different mechanisms as there are distros and chaos would rule.   Even worse, you might pick the mechanism from the wrong distro and it has no effect and we (people on this list) would be guilty of weakening security by confusion.
+The scope of this CVE does not include the
+https://bugs.launchpad.net/ubuntu/+source/libfcgi/+bug/933417/comments/5
+issue in OS_DoIo. If there is an OS_DoIo vulnerability, a separate
+CVE ID would be needed.
 
-It’s not a question of lack of talent: all the distro vendors have talented people who can fix problems, it’s a question of doing the best by our joint customer base.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-Does that make sense?
-
-jch
+iQEcBAEBAgAGBQJU1gf/AAoJEKllVAevmvmseD0H/jmMNvGcAE101HMyXsbJUT2r
+wVIfAiLa7Igiu6p0dLASp5rXe924aJg8eVrBL+mfWvNX0f9YlFx+g7qB82NE9h2n
+vtqVRlLYxucL7LYgwoQTt9slkWbhtCnYp9etItJzm+nWejOURTkvr7CZ/HgGeJDy
+Yc0eLzEamsXSeSnnLZyn3CGG0bL9nFLE30oTnNHbrffDMzsV9CtS62omgD59PfLV
+gN7wcx3V6FJdILdMLlV/HJTa+cqnQzLU0H+0s3ZVI2f0ikonnKJj3lwxGnnOcOqC
+c2JRRiBI79CeGsqdsfMNejg/4cv3AbvvwaxZ7/fmHo9YjgRRG3U97dT/vi3U9G0=
+=2ZDL
+-----END PGP SIGNATURE-----
