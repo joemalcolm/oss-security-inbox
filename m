@@ -1,41 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/26/7
-Message-ID: <54EF5A0C.7010408@redhat.com>
-Date: Thu, 26 Feb 2015 10:38:20 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/07/2
+Message-ID: <54D5707C.1000708@redhat.com>
+Date: Fri, 06 Feb 2015 18:55:08 -0700
 From: Kurt Seifried <kseifried@...hat.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "tseaver@...ladion.com >> Tres Seaver" <tseaver@...ladion.com>, matt@...thewwilkes.name, nathan@...gheem.us, Assign a CVE Identifier <cve-assign@...re.org>
-Subject: XSS In Zope
+To: Alan Coopersmith <alan.coopersmith@...cle.com>
+CC: oss-security@...ts.openwall.com, Assign a CVE Identifier <cve-assign@...re.org>
+Subject: Re: lynx: crash when parsing overly long links
 Content-Type: text/plain; charset=utf-8
 
-So originally Radek Steoger of Red Hat found an XSS in luci/conga:
 
-==========
-Within luci's use of Products.PluggableAuthService there appears to be
-an XSS, e.g.:
 
-https://luci.example.com:8084/acl_users/users/manage_updatePasswordForm?manage_tabs_message=%3Cscript%3Ealert('1234')%3C/script%3E
-==========
+On 06/02/15 04:27 PM, Alan Coopersmith wrote:
+> On 02/ 6/15 03:05 PM, Kurt Seifried wrote:
+>> This is an old one, making public:
+>>
+>> lynx: crash when parsing overly long links
+>>
+>> it may need a CVE
+> 
+> Is there a bug id, changelog entry, or patch that distros can use to make
+> sure we've fixed this?
+> 
 
-this was tracked down to being in Products.PluggableAuthService (a
-component of Zope).
+Sorry forgot to include the link
 
-I notified the Zope security people, they tracked it down on their end,
-this was actually found/fixed in 2009:
+https://bugzilla.redhat.com/show_bug.cgi?id=605286
 
-https://bugs.launchpad.net/zope2/+bug/490514
 
-https://github.com/zopefoundation/Zope/commit/2abdf14620f146857dc8e3ffd2b6a754884c331d
-
-and the fix was forward ported from the 2.10 branch, as well as to the
-2.11 branch and the trunk. The fix landed in:
-  Zope 2.10.10
-  Zope 2.11.5
-  Zope 2.12.2
-
-With thanks to Tres, Matt and Nathan for sorting this out/chasing it
-down on Zope's end (basically they did all the heavy lifting).
-
-So this should probably get a CVE from 2009.
 
 -- 
 Kurt Seifried -- Red Hat -- Product Security -- Cloud
