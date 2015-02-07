@@ -1,39 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/16/13
-Message-ID: <20150116182209.GA13165@eldamar.local>
-Date: Fri, 16 Jan 2015 19:22:09 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: oss-security@...ts.openwall.com
-Cc: CVE Assignments MITRE <cve-assign@...re.org>
-Subject: Re: CVE Request: xdg-utils: xdg-open: command injection vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/07/7
+Message-ID: <54D64B01.90605@redhat.com>
+Date: Sat, 07 Feb 2015 10:27:29 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: Assign a CVE Identifier <cve-assign@...re.org>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: ghostscript double free and invalid read caused by embedded jbig2 data
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+https://bugzilla.redhat.com/show_bug.cgi?id=570425
 
-On Thu, Jan 01, 2015 at 08:51:31AM +0100, Salvatore Bonaccorso wrote:
-> From the references it is not clear, if a CVE was already requested in
-> past, but I have not found a reference here. xdg-open has a command
-> injection vulnerability, which was reported on [1] and [2]. The
-> Freedesktop.org Bug entry contains also a patch[3]. The issue was
-> hilighted again on the fulldisclosure list in [4].
-> 
-> In case it is not yet assigned, could you please assign a CVE for this
-> RCE for xdg-open in xdg-utils?
-> 
-> References:
-> 
->  [1] https://bugs.gentoo.org/show_bug.cgi?id=472888
->  [2] https://bugs.freedesktop.org/show_bug.cgi?id=66670
->  [3] https://bugs.freedesktop.org/attachment.cgi?id=109536
->  [4] http://seclists.org/fulldisclosure/2014/Nov/36
->  [5] https://bugs.debian.org/773085
+I'm pretty sure this issue is different than CVE-2009-0196
 
-Just wanted to ask back, can a CVE be assigned for this xdg-open
-issue? Is anything required missing? Important: Note that the
-referenced upstream approach is still beeing worked on. In Debian the
-following patch was applied:
+-- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-http://sources.debian.net/src/xdg-utils/1.1.0~rc1%2Bgit20111210-7.3/debian/patches/xdg-open-safe.diff/
 
-Regards,
-Salvatore
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
