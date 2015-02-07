@@ -1,15 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/13/9
-Message-ID: <Pine.LNX.4.64.1502130916250.2592@beijing.mitre.org>
-Date: Fri, 13 Feb 2015 09:17:20 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/07/5
+Message-ID: <Pine.LNX.4.64.1502071208290.4091@beijing.mitre.org>
+Date: Sat, 7 Feb 2015 12:13:13 -0500 (EST)
 From: cve-assign@...re.org
-To: Steffen Rösemann <steffen.roesemann1986@...il.com>
-cc: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: Re: CVE Request -- CMS Kajona v. 4.6 -- Reflecting XSS in administrative backend
+To: Michal Zalewski <lcamtuf@...edump.cx>
+cc: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: Multiple vulnerabilities in LibTIFF and associated tools
 Content-Type: text/plain; charset=utf-8
 
 
-CVE-2015-0917 was already assigned and published in January.
+> http://lcamtuf.coredump.cx/afl/vulns/libtiff-cvs-1.tif
+>
+>  - uninitialized memory in putcontig8bitYCbCr21tile
+>    Fixed in:
+>
+>      2014-12-29  Even Rouault  <even.rouault@...tialys.com>
+>
+>      * libtiff/tif_getimage.c: in OJPEG case, fix checks on strile width/height
+>        in the putcontig8bitYCbCr42tile, putcontig8bitYCbCr41tile and
+>        putcontig8bitYCbCr21tile cases.
+>
+>    I don't think this had a CVE number assigned yet.
+>
+> http://lcamtuf.coredump.cx/afl/vulns/libtiff-cvs-2.tif
+>
+>  - uninitialized memory in NeXTDecode
+>    Fixed in:
+>
+>      2014-12-29  Even Rouault  <even.rouault@...tialys.com>
+>
+>      * libtiff/tif_next.c: add new tests to check that we don't read outside of
+>      the compressed input stream buffer.
+>
+>    I don't think this had a CVE number assigned yet.
+>
+
+Use CVE-2014-9655 for these two issues related to access of uninitialized 
+memory, as demonstrated by libtiff-cvs-1.tif and libtiff-cvs-2.tif.
+
+
+> http://lcamtuf.coredump.cx/afl/vulns/libtiff5.tif
+>
+>  - another use of uninitialized memory in NeXTDecode after fixing the
+> previous case.
+>    I don't think this had a CVE number assigned yet.
+
+
+Use CVE-2015-1547 for this issue.
 
 ---
 
