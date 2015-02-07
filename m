@@ -1,23 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/18/11
-Message-ID: <54E5081F.2020902@redhat.com>
-Date: Wed, 18 Feb 2015 14:46:07 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/07/17
+Message-ID: <54D6A6C8.2000800@redhat.com>
+Date: Sat, 07 Feb 2015 16:59:04 -0700
 From: Kurt Seifried <kseifried@...hat.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: foomatic file loading from cwd
+To: oss-security@...ts.openwall.com
+CC: Assign a CVE Identifier <cve-assign@...re.org>, security@...illa.org, Dan Veditz <dveditz@...illa.com>
+Subject: Re: Mozilla: Use-after-free when doing multiple nesting using bad tags
 Content-Type: text/plain; charset=utf-8
 
-> With apologies, this should have been made public some time ago
-> however it fell through the cracks. This is a low severity issue, it
-> requires significant attack/victim interaction and local access.
->
-> This was assigned CVE-2013-6500
->
-> https://bugzilla.redhat.com/show_bug.cgi?id=995090
+On 07/02/15 04:31 PM, Reed Loden wrote:
+> https://bugzilla.mozilla.org/show_bug.cgi?id=679572#c2 states "The
+> addresses look like it's hit our \"frame-poisoning\" mitigation which would
+> make that an unmapped and unexploitable address but that's off the top of
+> my head and needs investigation.", so if true, it's only a DoS, which
+> Mozilla doesn't assign CVEs for since it's not exploitable.
 
-With apologies please REJECT CVE-2013-6500, this issue is not in
-foomatic. There may be an issue in Perl Encode however whether or not it
-is a security issue (or simply "broken by design" is up for debate.
+Agreed.
+
+> Check
+> http://robert.ocallahan.org/2010/10/mitigating-dangling-pointer-bugs-using_15.html
+> for more information about frame poisoning and how it works to make what
+> used to be always critical security bugs into just crash bugs.
+> 
+> Also, Mozilla is a CNA, so requests for CVEs for Mozilla products should be
+> directed to them. I've cc'd security@ and Dan Veditz to confirm the above,
+> however.
+
+Derp, sorry I should have cc'ed you guys.
+
+The good news is I'm basically done cleaning all the old embargoed cruft
+out of our BZ so no more surprises =)
+
+
 
 -- 
 Kurt Seifried -- Red Hat -- Product Security -- Cloud
