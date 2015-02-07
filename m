@@ -1,29 +1,14 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/30/3
-Message-ID: <20150330040125.GA9622@oevtugenva.nrevsny.pk>
-Date: Mon, 30 Mar 2015 00:01:25 -0400
-From: Rich Felker <dalias@...c.org>
-To: musl@...ts.openwall.com, oss-security@...ts.openwall.com
-Subject: Security advisory for musl libc - stack-based buffer overflow in ipv6 literal parsing [CVE-2015-1817]
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/07/13
+Message-ID: <CAAnPYQ5RfvZ+jiAs2EdSksiBpsOuRfds2g3c1zQq5b-7kYj6Tg@mail.gmail.com>
+Date: Sat, 07 Feb 2015 21:25:47 +0000
+From: Gynvael Coldwind <gynvael@...dwind.pl>
+To: oss-security@...ts.openwall.com, Kurt Seifried <kseifried@...hat.com>
+Cc: Assign a CVE Identifier <cve-assign@...re.org>
+Subject: Re: ghostscript double free and invalid read caused by embedded jbig2 data
 Content-Type: text/plain; charset=utf-8
 
-A stack-based buffer overflow has been found in musl libc's ipv6
-address literal parsing code. Programs which call the inet_pton or
-getaddrinfo function with AF_INET6 or AF_UNSPEC and untrusted address
-strings are affected. Successful exploitation yields control of the
-return address. Having enabled stack protector at the application
-level does not mitigate the issue. All users should patch or upgrade.
+> (I think Gynvael is on this list, maybe he can comment on the state)
+Uh, sorry, I actually lost track of what was fixed in the end and I don't
+believe we re-fuzzed it again.
 
-Software: musl libc (http://www.musl-libc.org)
-
-Severity: high
-
-Affected Versions: 0.9.15 - 1.0.4, 1.1.0 - 1.1.7.
-
-Bug introduced in commit: 78f889153167452de4cbced921f6428b3d4f663a
-
-Bug fixed in commit: fc13acc3dcb5b1f215c007f583a63551f6a71363
-
-Patch: musl_dn_expand_overflow_fix.diff (attached) (fix+hardening)
-
-View attachment "musl_inet_pton_overflow_fix.diff" of type "text/plain" (592 bytes)
