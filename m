@@ -1,34 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/10/5
-Message-ID: <CAB8XdGBJuywczWKQz5otQH4kgu2kEGtOxgZNpA5-2hy4f0ySeA@mail.gmail.com>
-Date: Tue, 10 Feb 2015 11:41:37 +0000
-From: Colm O hEigeartaigh <coheigea@...che.org>
-To: users@...apache.org, "dev@...apache.org" <dev@...apache.org>,  Apache Security Response Team <security@...che.org>, oss-security@...ts.openwall.com,  bugtraq@...urityfocus.com
-Cc: Juraj Somorovsky <juraj.somorovsky@....de>
-Subject: Two new security advisories released for Apache WSS4J
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/07/1
+Message-ID: <54D55FB0.8070706@redhat.com>
+Date: Fri, 06 Feb 2015 17:43:28 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: python-rope: pickle.load of remotely supplied data with no authentication required
 Content-Type: text/plain; charset=utf-8
 
-Two new security advisories have been released for Apache WSS4J:
-
-1) CVE-2015-0226: Apache WSS4J is (still) vulnerable to Bleichenbacher's
-attack
-
-http://ws.apache.org/wss4j/advisories/CVE-2015-0226.txt.asc
-
-2) CVE-2015-0227: Apache WSS4J doesn't correctly enforce the
-requireSignedEncryptedDataElements property
-
-http://ws.apache.org/wss4j/advisories/CVE-2015-0227.txt.asc
-
-Please note that both of these advisories were fixed in WSS4J 2.0.2 and
-1.6.17, both of which were released last year.
-
-Colm.
-
+https://bugzilla.redhat.com/show_bug.cgi?id=1116485
+CVE-2014-3539
 
 -- 
-Colm O hEigeartaigh
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-Talend Community Coder
-http://coders.talend.com
 
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
