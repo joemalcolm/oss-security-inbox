@@ -1,50 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/02/10
-Message-ID: <54F4B8EE.90401@debian.org>
-Date: Mon, 02 Mar 2015 19:24:30 +0000
-From: Simon McVittie <smcv@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/08/3
+Message-ID: <20150208115333.36b3e932@pc>
+Date: Sun, 8 Feb 2015 11:53:33 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: Maven downloads JARs via HTTP
+Subject: Re: lynx: crash when parsing overly long links
 Content-Type: text/plain; charset=utf-8
 
-On 02/03/15 17:26, gremlin@...mlin.ru wrote:
-> On 2015-03-02 17:34:55 +0100, Martin Prpic wrote:
+On Fri, 06 Feb 2015 18:55:08 -0700
+Kurt Seifried <kseifried@...hat.com> wrote:
+
+
+> Sorry forgot to include the link
 > 
->  >>> "Maven Central can now be accessed via HTTPS. I think the
->  >>> default configuration should be switched to use that, rather
->  >>> than the current unsecured HTTP transport."
-> 
->  >> Does it use any sort of package signing and signature
->  >> verification?
-> 
->  > Seeing as the patch only does s/http/https/,
-> 
-> Obviously, that doesn't really help.
+> https://bugzilla.redhat.com/show_bug.cgi?id=605286
 
-It's a start, at least... it tells you that this was a reply to your
-request, made by someone controlling the corresponding private key for a
-"valid" certificate for Maven Central's hostname. Whether that's enough
-depends on your threat model.
+Here's the upstream reference/changelog:
+http://lynx.isc.org/current/CHANGES.html#v2.8.8dev.4
 
-If the attacker capabilities assumed by your threat model include "can
-obtain arbitrary certs from a widely-trusted CA" or "has obtained Maven
-Central's private key" then no, it doesn't help. Similarly, if the
-attacker's capabilities include "can upload arbitrary packages to Maven
-Central" (I assume there's some sort of access control so the author of
-log4j can upload new log4j versions but not new Eclipse versions, or
-whatever?) then it doesn't help.
+quote:
+"* limit parsed URIs with new config parameter MAX_URI_SIZE, default
+8192 (RedHat #605286, forwarded by Vincent Danen). For arbitrarily long
+URIs, alloca() could run out of stack space -TD"
 
-However, if the attacker is assumed to be able to do neither of these
-things (think "man-in-the-middle on the same coffee shop wifi as you"
-rather than "the NSA") then this is enough.
 
-An end-to-end integrity check from the original publisher to the
-consumer would prevent more attacks, but would also be harder to deploy
-(it requires action from each publisher, verification at each consumer,
-and a way to determine whether publisher X is authorized to publish
-package Y); protecting against trivial attacks is not as good as
-protecting against sophisticated attacks, but seems considerably better
-than not protecting against anything at all.
+So it got fixed in the 4th dev version of 2.8.8. Everyone who's using
+2.8.8 (release version) or above is not affected.
 
-    S
 
+-- 
+Hanno Böck
+http://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
+
+Content of type "application/pgp-signature" skipped
