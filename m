@@ -1,47 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/06/11
-Message-ID: <alpine.LFD.2.10.1501070031290.8245@javelin.pnq.redhat.com>
-Date: Wed, 7 Jan 2015 00:42:51 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: CVE request Linux kernel: isofs: unchecked printing of ER records
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/08/1
+Message-ID: <Pine.LNX.4.64.1502072255220.4091@beijing.mitre.org>
+Date: Sat, 7 Feb 2015 22:55:55 -0500 (EST)
+From: cve-assign@...re.org
+To: Kurt Seifried <kseifried@...hat.com>
+cc: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>
+Subject: Re: kgb-bot can be crashed by some network traffic
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-     Hello,
+> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=776424
+>
+> Source: kgb-bot
+> Version: 1.33-2
+> Severity: important
+> Tags: security
+>
+> 2015.01.19 18:08:39: Listening on http://0.0.0.0:9999?session=KGB
+> 2015.01.19 18:08:43: Connected to freenode (holmes.freenode.net)
+> 2015.01.19 18:08:43: Joining #commits...
+> 2015.01.19 18:08:43: Connected to oftc (graviton.oftc.net)
+> 2015.01.19 18:08:43: Joining #ikiwiki #vcs-home #git-annex...
+> Did not get DONE/CLOSE event for Wheel ID 73 from IP 222.186.34.155 at
+> /usr/share/perl5/POE/Component/Server/SimpleHTTP.pm line 221.
+> I had a problem posting to event Got_Request of session SOAPServer for
+> DIR handler '.*'. As reported by Kernel: 'No such file or directory',
+> perhaps the session name is spelled incorrectly for this handler? at
+> /usr/share/perl5/POE/Session.pm line 483.
+>
+> This has happened to me twice now, and it takes the bot down.
+>
+> not sure how exploitable this is though.
+>
+> -- 
+> Kurt Seifried -- Red Hat -- Product Security -- Cloud
+> PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-Linux kernel built with the iso9660 file system(CONFIG_ISO9660_FS) support is 
-vulnerable to an information leakage flaw. This could occur while accessing 
-data on an iso9660 image with RockRidge extension reference(ER) records.
+Use CVE-2015-1554.
 
-An unprivileged user/process could use this flaw to leak (=~255)kernel memory 
-bytes.
+---
 
-Upstream fix:
-- -------------
-   -> https://git.kernel.org/linus/4e2024624e678f0ebb916e6192bd23c1f9fdf696
-
-Thank you.
-- --
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBAgAGBQJUrDOzAAoJEN0TPTL+WwQf2PcQALxIhn9tVXU6kvjlVA+joBmn
-7gNDMY/ij02bhf0pNxkoCYSi17Jif7VhUf5ODVGWsi2CzTVIiKh8lSv8ajWbIUV4
-X1Pzz5DSXROPunB2ZV+rjdbiIgFthEqsgegSL0OjHtS1lSsJMHnPWkRQYVibCLdd
-WdcvbFqqmFmN8yItLDBr+gfgZ1ZNA8guMamiQwZIgVt8NIIGtFss7ggIVRyyWbmb
-nwk26DITdd1jX/2nwlHdzqN07GZhaaiwDkHuLiIW1py9fnJ6WiCgL/EEOX113K0O
-ArzguZkbIsdiKQdyOcjJvU6wIcavZpWXi0ZEuM4jIpcu5ZxtV0c1/PbZAoSCqXR3
-qO4X8H0hifWCFq9Vo5eDs/UCV1EWv9jj3b4q4CDtshyPmsWONMAbiZ0oDbnghF6r
-a6N8fw4cv+CYKocsavqVqzM+njkLUM0bKT/heAc3Cu94/pRkh3zTEEslm0YI0uh3
-rFjJvB+VCu+Y/exDfEI4tV8A/ics5lBbwfmh1Q5UU+S29G5iWnxx6KZ+o2NJnPlZ
-Agf7+07fNuCuhgE4VCqJOWeF83rEZTZgJRmUYFVGqyAai+GHbmuK3XPF9Q0fy3M4
-IdJ85P7JC4gOQFvvpnLAnZ4jxW5UBGg7T25Ft6H4Yqss6pqmLjejjJIL9Um46Xnc
-ySRJm0OG1qiy6c/+EyTk
-=N9Pd
------END PGP SIGNATURE-----
+CVE assignment team, MITRE CVE Numbering Authority M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
