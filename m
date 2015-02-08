@@ -1,35 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/09/14
-Message-ID: <20150209231414.GD12688@dojo.mi.org>
-Date: Mon, 9 Feb 2015 18:14:14 -0500
-From: "Mike O'Connor" <mjo@...o.mi.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-Request -- Google Email App 4.2.2 remote denial of service
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/08/4
+Message-Id: <20150208203431.070556C0041@smtpvmsrv1.mitre.org>
+Date: Sun,  8 Feb 2015 15:34:31 -0500 (EST)
+From: cve-assign@...re.org
+To: kseifried@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: kernel: v4l: videobuf: hotfix a bug on multiple calls to mmap() - Linux kernel
 Content-Type: text/plain; charset=utf-8
 
-:A bug in the stock Google email application version 4.4.2.0200 has been 
-:found. An attacker can remotely perform an Denial Of Service attack by 
-:sending a specially crafted email. No interaction form the user is 
-:needed to produce the crash just receive the malicious email.
-:
-:When the victim receives the malicious email, the application crashes 
-:while trying to download the email.The email application can not be used 
-:until the offending email is removed.
-:
-:The email version 4.2.2.0200 running on a Samsung Galaxy 4 mini fully 
-:updated (19 Jan 2015) is vulnerable. Newer versions 4.2.2.0400 are not 
-:affected.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-FWIW, Android 5.0/Lollipop has removed this Email app and merged its
-functionality with the Gmail app.  I would argue that your calling the
-app the "Google email app" versus the "Android email app" would confuse
-things, but Google's done enough confusing here by having their Gmail
-app now do more than Gmail.  :)
+> https://bugzilla.redhat.com/show_bug.cgi?id=620629
+> 
+> not sure if this ever got a cve (or needs one, depends on device perms)
 
+> http://linuxtv.org/irc/v4l/index.php?date=2010-07-29
+> 
+> [12:15] <posciak> I see there is no limit on count in v4l2_ext_ctrls
+> structure... This has a direct influence on kernel memory allocation
+> in do_ioctl2, i.e. userspace could pass big numbers and have kernel
+> allocate huge amounts of memory... but since kmalloc won't allocate
+> more than a couple of kilobytes, I guess there is not much of a
+> problem problem here... just mentioning :)
+> 
+> [12:24] <posciak> I guess introducing a VIDEO_MAX_EXT_CTRLS_SIZE or
+> something like that would help, as you mentioned
+> 
+> [12:53] <hverkuil> I thought that that patch was merged. I guess not,
+> I'll see if I can make it part of my controller fw patch series. Some
+> sort of sanity check there would be welcome.
 
--- 
- Michael J. O'Connor                                          mjo@...o.mi.org
- =--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--=
-"I don't want the world.  I just want your half."       -They Might Be Giants
+Use CVE-2010-5321 for the
+https://bugzilla.redhat.com/show_bug.cgi?id=620629#c0 "calling mmap
+enough times for the same buffer (offset) resulted in a new memory
+allocation by videobuf on each such call and losing the old
+allocation, resulting in a leak each time and the system running out
+of memory" issue.
 
-Content of type "application/pgp-signature" skipped
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJU18d3AAoJEKllVAevmvms9B4IAKSnHhGpXLNE4kiGhTqj0kdl
+n5w6ARNyZJxAEv2FAdtjY79F9E/HakvMNqfx2+VowUEPi1T5G+6xWGYjpe/i7L88
+ItCgc/q0nzb1zpUz0jckyrKFmbgtG2I424lGbrIzC74Yx0eGgUtKfz8ERtb+A5wu
+wS6Fo+tlmdyK0QUn+h6lopisOY8SgaTbWwuAigUa7iOTSBn+8s/qyuBs47Um7FXy
+sV+LJ23fm7YKSQ+2zDDvpPP4rq9LOwXlTN7Ka+MBJ4RHR4fUjeRV+t08wRRbddh8
+gYaEAh0RLaiuKMSSm0nV25ZZSWy+A6qY1mcMMmeNWB2NUoaAP9ryEOZkWJym/ZM=
+=Rvy1
+-----END PGP SIGNATURE-----
