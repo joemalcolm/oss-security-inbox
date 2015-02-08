@@ -1,81 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/07/5
-Message-ID: <54ADC49F.1000800@mccme.ru>
-Date: Thu, 08 Jan 2015 02:43:27 +0300
-From: Alexander Cherepanov <cherepan@...me.ru>
-To: oss-security@...ts.openwall.com
-Subject: Directory traversals in cpio and friends?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/08/7
+Message-ID: <54D7E7E8.9030808@gmail.com>
+Date: Sun, 08 Feb 2015 14:49:12 -0800
+From: Stanislav Malyshev <smalyshev@...il.com>
+To: Kurt Seifried <kseifried@...hat.com>, security@....net,  "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: CVE-2013-6501 php: predictible filename used for cache in world writable directory
 Content-Type: text/plain; charset=utf-8
 
 Hi!
 
-I've taken a look at how dir traversals are dealt with in several 
-implementations of tar and cpio. The picture is kinda strange.
+> https://bugzilla.redhat.com/show_bug.cgi?id=1009103
+> 
+> not sure if this got fixed or not, PHP can you comment?
 
-First of all, I believe it's usually agreed that archivers must not 
-touch files outside the current directory by default. Is there an 
-authoritative link for this?
-
-Then, it seems there are 3 main ways to exploit dir traversals in 
-through archives:
-
-1) via absolute paths, the column 'abs' below;
-
-2) via relative paths with '..', the column 'rel' below;
-
-3) via symlinks to directories, the column 'link' below.
-
-Software:
-
-1) GNU tar and cpio, called 'tar' and 'cpio' below, tested versions from 
-Debian jessie and git head;
-
-2) BSD tar and cpio (based on libarchive), called 'bsdtar' and 'bsdcpio' 
-below, tested versions from Debian jessie and git head;
-
-3) OpenBSD-derived(?) pax, with tools called 'paxtar', 'paxcpio' and 
-'pax' below, tested versions from Debian jessie and FreeBSD 
-10.0-RELEASE-p12.
-
-The results of tests of tar and cpio archives against various commands 
-follow. '=' means that the corresponding file is not extracted, 'x' 
-means that it is extracted. IMHO secure configuration should list three 
-'=', insecure configuration should list three 'x', everything else is 
-inconsistent. The list created by the attached scripts.
-
-=== tar ===
-abs     rel     link    cmd
-=       =       =       tar -x
-x       x       x       tar -x -P
-=       =       =       bsdtar -x
-x       x       x       bsdtar -x -P
-=       x       x       paxtar -x
-x       x       x       paxtar -x -P
-x       x       x       pax -r
-
-=== cpio ===
-abs     rel     link    cmd
-x       x       x       cpio -i
-=       =       x       cpio -i --no-absolute-filenames
-x       =       =       bsdcpio -i
-x       x       x       bsdcpio -i --insecure
-x       x       x       paxcpio -i
-
-tar and bsdtar are ok. Good. But not much.
-
-Question 1. Perhaps there are some reasons why all cpio variants (unlike 
-tar) extract files with absolute paths by default?
-
-Question 2. BSD folks which are behind pax* tools don't consider 
-directory traversal a vulnerability, do they?
-
-The only 'x' in the line for `cpio -i --no-absolute-filenames` seems to 
-be a clear vuln. Reported here: https://bugs.debian.org/774669 and now 
-sent to upstream ml.
-
+This seems to be easily fixed by proper configuration (i.e. having
+soap.wsdl_cache_dir set to a directory accessible only to the user
+running PHP, or, on the shared host, having per-user config for each
+user) but I'm not sure how to fix it in the generic case since that
+directory wouldn't exist by default. On specific package - like RH - it
+could create a separate directory - like /tmp/php-wsdl-cache - with web
+server permissions and set the variable to use it - but since default
+PHP install has no install scripts not sure yet how to improve it in a
+generic way.
 -- 
-Alexander Cherepanov
-
-View attachment "test-tar-1.sh.txt" of type "text/plain" (713 bytes)
-
-View attachment "test-tar-all.sh.txt" of type "text/plain" (428 bytes)
+Stas Malyshev
+smalyshev@...il.com
