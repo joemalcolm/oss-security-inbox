@@ -1,39 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/11/1
-Message-ID: <CACYkhxgkjhvh+z=r4GYS4x2QZC1WmZoCBMewwZmKg_zQcj1d9A@mail.gmail.com>
-Date: Wed, 11 Mar 2015 11:05:50 +1100
-From: Michael Samuel <mik@...net.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: Another Python app (rhn-setup: rhnreg_ks) not checking hostnames in certs properly CVE-2015-1777
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/08/8
+Message-ID: <54D7EAF1.8060306@redhat.com>
+Date: Sun, 08 Feb 2015 16:02:09 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>
+Subject: please REJECT CVE-2013-4186
 Content-Type: text/plain; charset=utf-8
 
-Hi Kurt,
+CVE-2013-4186 was used to label an issue that is not a vulnerability, so
+please REJECT this CVE. Thanks.
 
-Your corporate pissing match with Oracle is not helpful.
+-- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-On 11 March 2015 at 02:56, Kurt Seifried <kseifried@...hat.com> wrote:
-> My experience is a lot of people propose a LOT of things on email lists,
-> but when it actually comes down to them doing the work, nothing happens
-> because quite often the people proposing the work don't have the
-> expertise or ability to do it. oss-security@ archives are littered with
-> such examples (e.g. the whole code audit thing).
 
-I proposed this in the context of me giving up reporting these sorts of bugs
-to RedHat (go search my BZ account), and frankly since you don't have
-the resources to perform simple tests against your main products (RHEV,
-Satellite, RHN), then a blanket solution seems reasonable.
-
-> So it's not that I'm unwilling, I simply don't see why you need massive
-> corporate/community buy in at this point, premature optimization and all
-> that. Build a solution, or more than one solution and try them out, then
-> report back to oss-security@ with what works/doesn't work. In general
-> the best way to determine what the best solution is for a problem is to
-> try several solutions out. Prototype code and experimental data is worth
-> 1000 meetings.
-
-It's not a problem because nobody's looking.  Holy crap, just look at
-Satellite 6 and tell me you think that product doesn't need more than an
-audit.
-
-Regards,
-  Michael
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
