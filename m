@@ -1,43 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/06/7
-Message-ID: <54ABBA71.8080303@internot.info>
-Date: Tue, 06 Jan 2015 21:35:29 +1100
-From: Joshua Rogers <oss@...ernot.info>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request(s): GnuPG 2/GPG2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/09/5
+Message-Id: <20150209124858.BDB1642E064@smtpvbsrv1.mitre.org>
+Date: Mon,  9 Feb 2015 07:48:58 -0500 (EST)
+From: cve-assign@...re.org
+To: marina@...dle.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, kseifried@...hat.com
+Subject: Re: CVE request for Moodlee MDL-48980 Security: Always clean the result from min_get_slash_argument - Moodle
 Content-Type: text/plain; charset=utf-8
 
-On 06/01/15 04:42, cve-assign@...re.org wrote:
->
-> What is the attack scenario for these double frees?  It is not
-> immediately clear whether there is a role for an attacker who is not
-> the GnuPG user.
-Here is the response from Werner:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
----
+> We already had CVE for this issue: CVE-2015-0246
 
->> Double free in scd/command.c:
->> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=773471
+>> Use CVE-2015-1493.
 
-Could be triggered due to an out of memory condition or a wrong use of a
-functions.  Hard to exploit I guess.
+CVE-2015-1493 will continue to be the ID for the "MSA-15-0009:
+Directory Traversal Attack possible through some files serving JS"
+issue (MDL-48980 and MDL-48990). We will reject the CVE-2015-0246 ID
+with a pointer to CVE-2015-1493.
 
->> Double free in sm/minip12.c:
->> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=773472
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-That may happen if iconv_open fails.  Memory error or utf-8 not
-available.  Note that the buffer is allocated in out secure memory and
-thus the gcry_free() zeroes the memory.  I can't see how this can be
-exploted but I am not an expert for this.
---- 
-
-
-Hopefully that answers the question,
-
-
-Thanks,
--- 
--- Joshua Rogers <https://internot.info/>
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+iQEcBAEBAgAGBQJU2KvjAAoJEKllVAevmvms1mEH/iqPDDn96KErVjn/kUJxOMy0
+mQVImv0njIEt9MmV1f4spiMLVtxoirGup5hZrcj9O2pAvDiOivV8skOOk9CCfKtS
+0jIj0Du2WublCn49bsXGy+tsLEMaqKZ0Xc5LuTakwCNZBQgEeM8Fx8t6C5z2aCj4
+RsS+u4FqGW9oxCwYM36exInzTYMxPrTOtDxIm1vxDkSLOVdvi2HLFvVFA6S2YeIB
+LEq1NEtWTyqvuhFGI07nC2EdU5UxeaziwaHbuIWc0ah2U1cqz1CLswo4rWNh3fMt
+F1xfgTm1CwrsHqntJjA0oB5l0JioYMjVVlBAK/F6zEQgODrI11cjyKYcZh1grvA=
+=+xEI
+-----END PGP SIGNATURE-----
