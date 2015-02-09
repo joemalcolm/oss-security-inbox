@@ -1,14 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/17/4
-Message-ID: <m9c95v$bo3$1@ger.gmane.org>
-Date: Sat, 17 Jan 2015 01:08:31 +0100
-From: Damien Regad <dregad@...tisbt.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/09/14
+Message-ID: <20150209231414.GD12688@dojo.mi.org>
+Date: Mon, 9 Feb 2015 18:14:14 -0500
+From: "Mike O'Connor" <mjo@...o.mi.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2014-9571, -9572 and -9573 affect MantisBT
+Subject: Re: CVE-Request -- Google Email App 4.2.2 remote denial of service
 Content-Type: text/plain; charset=utf-8
 
-I just realized that I forgot to reference "MantisBT" in the subject of 
-my last 3 messages, apologies for any confusion this may have caused.
+:A bug in the stock Google email application version 4.4.2.0200 has been 
+:found. An attacker can remotely perform an Denial Of Service attack by 
+:sending a specially crafted email. No interaction form the user is 
+:needed to produce the crash just receive the malicious email.
+:
+:When the victim receives the malicious email, the application crashes 
+:while trying to download the email.The email application can not be used 
+:until the offending email is removed.
+:
+:The email version 4.2.2.0200 running on a Samsung Galaxy 4 mini fully 
+:updated (19 Jan 2015) is vulnerable. Newer versions 4.2.2.0400 are not 
+:affected.
 
-Damien
+FWIW, Android 5.0/Lollipop has removed this Email app and merged its
+functionality with the Gmail app.  I would argue that your calling the
+app the "Google email app" versus the "Android email app" would confuse
+things, but Google's done enough confusing here by having their Gmail
+app now do more than Gmail.  :)
 
+
+-- 
+ Michael J. O'Connor                                          mjo@...o.mi.org
+ =--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--=
+"I don't want the world.  I just want your half."       -They Might Be Giants
+
+Content of type "application/pgp-signature" skipped
