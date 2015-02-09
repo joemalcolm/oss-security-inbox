@@ -1,41 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/14/4
-Message-ID: <CAN-Kwu2avp1zjFAk5Wrbe-HNFrUtuCpXYJrLN89tYb+Aq98aeg@mail.gmail.com>
-Date: Sat, 14 Mar 2015 11:50:48 -0500
-From: Ian Cordasco <graffatcolmingov@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/09/13
+Message-Id: <5EAC8776-84E0-4502-AFFA-7DC61DF0812E@thijsalkema.de>
+Date: Mon, 9 Feb 2015 22:55:11 +0100
+From: Thijs Alkemade <me@...jsalkema.de>
 To: oss-security@...ts.openwall.com
-Cc: Cory Benfield <cory@...asa.co.uk>, Matthew Daley <mattd@...fuzz.com>, requests@...relist.org
-Subject: CVE Request for python-requests session fixation vulnerability
+Subject: CVE Request: jabberd remote information disclosure
 Content-Type: text/plain; charset=utf-8
 
-Last night, Matthew Daley (CC'd on this email) privately disclosed to
-the requests project a vulnerability in requests which has now been
-fixed in requests v2.6.0
-(https://warehouse.python.org/project/requests/2.6.0/) by this commit:
-https://github.com/kennethreitz/requests/commit/3bd8afbff29e50b38f889b2f688785a669b9aafc.
+Hello,
 
-The following is the relevant excerpts from the description provided by Matthew:
+A buffer overflow was found in the XMPP server jabberd2 when normalizing
+strings that can lead to remote information disclosure [1]. When parsing a
+JID, jabberd2 version 2.3.2 and below truncate the data but do not verify
+whether the result is valid UTF8 before passing it to libidn. If the data ends
+with an unterminated multi-byte UTF8 sequence then libidn may copy data past
+the buffer into the result. This can be exploited by remote clients or remote
+servers.
 
-The issue occurs when Requests is handling a HTTP response that is a
-redirection and that also sets cookies without an explicit domain
-parameter. Instead of the cookies only being set for the domain which
-sent the HTTP response, they are also sent to the redirection target,
-regardless of its domain.
+Could you please assign a CVE for this issue?
 
-The issue could be exploited in the following ways:
-* If you are the redirection source (ie. you can make Requests hit
-your URL), you can make Requests perform a request to any third-party
-domain with cookies of your choosing. This may be useful in performing
-a session fixation attack.
-* If you are the redirection target (ie. you can make a third-party
-site redirect to your URL), you are able to steal any cookies set by
-the third-party redirection.
+[1] = https://github.com/jabberd2/jabberd2/issues/85
 
-The change that introduced this vulnerability was first included in
-version 2.1.0 of requests. As such every version since that version up
-to and including 2.5.3 are vulnerable to this attack.
+Best regards,
+Thijs Alkemade
 
-Please assign an identifier for this.
-
-Thank you,
-Ian Cordasco
+Download attachment "signature.asc" of type "application/pgp-signature" (842 bytes)
