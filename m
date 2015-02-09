@@ -1,44 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/13/3
-Message-ID: <20150313113745.GA4135@odroid>
-Date: Fri, 13 Mar 2015 11:37:45 +0000
-From: Marek Kroemeke <kroemeke@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/09/8
+Message-ID: <54D91A76.6000000@openwall.com>
+Date: Mon, 09 Feb 2015 23:37:10 +0300
+From: Alexander Cherepanov <ch3root@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Disabling reading of kernel log buffer reading for user
+Subject: Re: CVE-Request -- Google Email App 4.2.2 remote denial of service
 Content-Type: text/plain; charset=utf-8
 
-http://lwn.net/Articles/414813/
+On 2015-02-09 22:07, Hector Marco wrote:
+> A bug in the stock Google email application version 4.4.2.0200 has been
+> found.
 
-echo 1 > /proc/sys/kernel/dmesg_restrict
+Is it open source? I don't see any links to commits/patches in the 
+write-up on you site. If it's not open source, full-disclosure is 
+probably is a better venue for this report.
 
-
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
-> 
-> Hello List,
-> 
-> After years working on Linux, I just found out, that any user not only root can read the kernel log buffer - I never even considered that this could be the case.
-> 
-> As this behavior is documented and expected, this is not a security vulnerability. But to avoid things like in [1], I would like to disable that on my machines.
-> 
-> Questions:
-> 
-> * What would be the side effects of making /dev/kmesg only root accessible? Maybe syslog not able to write kmessages to log?
-> 
-> * Would it be safe to disable the syslog syscall for action SYSLOG_ACTION_READ_* and all users except root and syslog? Does someone have tested selinux config for that?
-> 
-> hd
-> 
-> 
-> [1] http://www.halfdog.net/Security/2015/HavingFunWithDmesg/
-> 
-> - -- 
-> http://www.halfdog.net/
-> PGP: 156A AE98 B91F 0114 FE88  2BD8 C459 9386 feed a bee
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1
-> 
-> iEYEARECAAYFAlUCtGQACgkQxFmThv7tq+4FFQCeN4Txgu40/tDsWGSVaK2sm7La
-> VusAnRUCtETL9IGmaeSyQUt2dyCQgCpV
-> =Krnc
-> -----END PGP SIGNATURE-----
+-- 
+Alexander Cherepanov
