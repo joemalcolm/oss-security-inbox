@@ -1,18 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/09/5
-Message-ID: <54AF9828.7050600@redhat.com>
-Date: Fri, 09 Jan 2015 09:58:16 +0100
-From: Florian Weimer <fweimer@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/09/9
+Message-ID: <54D91D01.7060602@oracle.com>
+Date: Mon, 09 Feb 2015 12:48:01 -0800
+From: Ritwik Ghoshal <ritwik.ghoshal@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: kwallet: incorrect CBC encryption handling
+CC: Oracle Security Alerts <secalert_us@...cle.com>
+Subject: Re: CVE-2013-4578 OpenJDK: jarsigner does not detect unsigned bytecode injected into signed jars
 Content-Type: text/plain; charset=utf-8
 
-On 01/09/2015 07:52 AM, Marcus Meissner wrote:
-> This is already CVE-2013-7252 I think.
+Hi Kurt,
 
-Yes, here's the previous discussion:
+This issue was addressed in Java 7U51 as a security-in-depth fix because
+of CVSS 0 score. Oracle doesn't assign CVEs to CVSS 0 issues.
 
-   <http://www.openwall.com/lists/oss-security/2014/01/02/3>
+Please note: the correct email address to contact Oracle Security Alert
+team is secalert_us@...cle.com.
 
--- 
-Florian Weimer / Red Hat Product Security
+Thanks,
+-Ritwik
+
+
+On 2/8/2015 2:37 PM, Kurt Seifried wrote:
+> CVE-2013-4578 OpenJDK: jarsigner does not detect unsigned bytecode
+> injected into signed jars
+>
+> https://bugzilla.redhat.com/show_bug.cgi?id=1031471
+>
+> Fixed upstream in OpenJDK:
+>
+> http://hg.openjdk.java.net/jdk7u/jdk7u/jdk/rev/d5f36e1c927e
+>
+> Also reportedly fixed in Oracle Java in CPU Jan 2014
+>
+> http://www.oracle.com/technetwork/topics/security/cpujan2014-1972949.html
+>
+> But I don't see the CVE. Oracle can you confirm if this was fixed, and
+> which CVE it was given? Thanks.
+>
+
