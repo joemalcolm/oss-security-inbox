@@ -1,31 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/08/6
-Message-ID: <54D7E536.3060608@redhat.com>
-Date: Sun, 08 Feb 2015 15:37:42 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: security@...cle.com, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: CVE-2013-4578 OpenJDK: jarsigner does not detect unsigned bytecode injected into signed jars
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/09/10
+Message-ID: <mbb99v$lqr$1@ger.gmane.org>
+Date: Mon, 09 Feb 2015 22:37:02 +0100
+From: Damien Regad <dregad@...tisbt.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: XSS in MantisBT
 Content-Type: text/plain; charset=utf-8
 
-CVE-2013-4578 OpenJDK: jarsigner does not detect unsigned bytecode
-injected into signed jars
+Greetings,
 
-https://bugzilla.redhat.com/show_bug.cgi?id=1031471
+Please assign a CVE ID for the following issue
 
-Fixed upstream in OpenJDK:
+Description:
 
-http://hg.openjdk.java.net/jdk7u/jdk7u/jdk/rev/d5f36e1c927e
+The MantisBT Configuration Report (adm_config_report.php) did not 
+properly sanitize the form variables used when saving a filter, allowing 
+an attacker to embed JavaScript code which would be executed in the 
+client's browser when displaying the page.
 
-Also reportedly fixed in Oracle Java in CPU Jan 2014
+Affected versions:
+- >= 1.2.13
+- 1.3.0-beta.1
 
-http://www.oracle.com/technetwork/topics/security/cpujan2014-1972949.html
+Fixed in versions:
+- 1.2.20 (not yet released)
+- 1.3.0-beta.2 (not yet released)
 
-But I don't see the CVE. Oracle can you confirm if this was fixed, and
-which CVE it was given? Thanks.
+Patch:
+See Github [1]
 
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Credit:
+This vulnerability was discovered by Fortinet's FortiGuard Labs 
+(reference FG-VD-15-008 [2])
+The issue was fixed by Damien Regad (MantisBT Developer).
 
+References:
+Further details will be available in our issue tracker [2] once this 
+goes public.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+[1] https://github.com/mantisbt/mantisbt/commit/6defeed5 (1.2.x)
+     https://github.com/mantisbt/mantisbt/commit/3c6f6e56 (1.3.x)
+[2] http://www.fortiguard.com/advisory/UpcomingAdvisories.html
+[3] https://www.mantisbt.org/bugs/view.php?id=19301
+
