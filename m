@@ -1,23 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/03/6
-Message-ID: <20150203111548.GA18828@localhost.localdomain>
-Date: Tue, 3 Feb 2015 03:15:48 -0800
-From: Qualys Security Advisory <qsa@...lys.com>
-To: oss-security@...ts.openwall.com
-Cc: const@...elinux.com
-Subject: Re: workaround for GHOST glibc vulnerability CVE-2015-0235
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/09/7
+Message-ID: <54D90576.8040308@upv.es>
+Date: Mon, 09 Feb 2015 20:07:34 +0100
+From: Hector Marco <hecmargi@....es>
+To: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: CVE-Request -- Google Email App 4.2.2 remote denial of service
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Feb 03, 2015 at 11:30:13AM +0100, Florian Weimer wrote:
-> Why don't you hook gethostbyname?  I'm not sure if gethosybyname is
-> implement in terms of gethostbyname_r.  (The call stacks I have suggest
-> it isn't.)
+Hi,
 
-Actually, gethostbyname() calls gethostbyname_r(), but before it does,
-it calls the vulnerable function __nss_hostname_digits_dots(), so you're
-right, this would still be exploitable.
+A bug in the stock Google email application version 4.4.2.0200 has been 
+found. An attacker can remotely perform an Denial Of Service attack by 
+sending a specially crafted email. No interaction form the user is 
+needed to produce the crash just receive the malicious email.
 
-With best regards,
+When the victim receives the malicious email, the application crashes 
+while trying to download the email.The email application can not be used 
+until the offending email is removed.
 
--- 
-the Qualys Security Advisory team
+The email version 4.2.2.0200 running on a Samsung Galaxy 4 mini fully 
+updated (19 Jan 2015) is vulnerable. Newer versions 4.2.2.0400 are not 
+affected.
+
+
+Proof of concept exploit remote crasher and more details:
+
+http://hmarco.org/bugs/google_email_app_4.2.2_denial_of_service.html
+
+
+Could you please assign a CVE-ID for this?
+
+
+
+Hector Marco.
+http://hmarco.org
+
+Cyber-security researcher at
+http://cybersecurity.upv.es/
+
+
