@@ -1,39 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/01/1
-Message-Id: <20150201030225.9EB6D6DCAC4@smtpvmsrv1.mitre.org>
-Date: Sat, 31 Jan 2015 22:02:25 -0500 (EST)
-From: cve-assign@...re.org
-To: ach.n30@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: Piwigo SQL Injection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/09/6
+Message-ID: <54D8D09B.9000504@collabora.co.uk>
+Date: Mon, 09 Feb 2015 15:22:03 +0000
+From: Simon McVittie <simon.mcvittie@...labora.co.uk>
+To: oss-security@...ts.openwall.com
+CC: "dbus@...ts.freedesktop.org" <dbus@...ts.freedesktop.org>
+Subject: CVE-2015-0245: denial of service in dbus >= 1.4 systemd activation
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Bug tracked as: CVE-2015-0245
+Bug tracked as: https://bugs.freedesktop.org/show_bug.cgi?id=88811
+Versions affected: dbus >= 1.4.0
+Versions fixed: >= 1.9.10, 1.8.x >= 1.8.16, 1.6.x >= 1.6.30
+Type of vulnerability: CWE-285 Improper Authorization
+Exploitable by: local users
+Impact: denial of service
+Reporter: Simon McVittie, Collabora Ltd.
 
-> Can I get a CVE ID for Piwigo SQL Injection vulnerability fixed in Piwigo
-> 2.7.3
-> 
-> http://piwigo.org/releases/2.7.3
+D-Bus <http://www.freedesktop.org/wiki/Software/dbus/> is an
+asynchronous inter-process communication system, commonly used
+for system services or within a desktop session on Linux and other
+operating systems.
 
-Use CVE-2015-1441.
+dbus-daemon can "activate" (auto-start) D-Bus services on-demand when it
+receives a message addressed to them. In versions >= 1.4.0 of dbus, it
+can do this by using a D-Bus signal to ask systemd to carry out the
+actual service start.
 
-Are you able to send the corresponding changeset URL here, e.g., a
-URL starting with http://piwigo.org/dev/changeset/ followed by a number?
+systemd sends back an ActivationFailure D-Bus signal if the activation
+fails. However, when it receives these signals, dbus-daemon does not
+verify that the signal actually came from systemd. A malicious local
+user could send repeated ActivationFailure signals in the hope that it
+would "win the race" with the genuine signal, causing D-Bus to send back
+an error to the client that requested activation.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Mitigation: the system service is not actually prevented from starting
+or claiming its well-known bus name, and after it has done so,
+subsequent clients can communicate with it as usual.
 
-iQEcBAEBAgAGBQJUzZakAAoJEKllVAevmvmsLMEH/i6GZKBM9384wJi+gDL2OnmP
-NXVKO04o7VnMwMUmDkqrf2prUBXIunWAANPWu3bZhc3meElN2fQXcb5tKZP+fF9H
-q7R2yK8FtCG4caA6QDNF6jDr5wiXQ05br56SC2ZHuX6PUAW7ze9jT5lV83FEAbIL
-hpHYfUpr+NYkrHo27k2FPCcYzEsgs3IpBfPOHUrCpUE4qQWzM0BccvP7Id/w3g1x
-2GLmQnOPLVhL6DFbgnL5S58odyFaaMdpwqPngDclncql8cOA+GTcvSxrFHy/KxUD
-s5SQv0YJl3EEDLY7mV75fhvaXQomlm6P6caGGWEmJ1UvGo9F6XvNCxLFqA+CeJc=
-=f8vT
------END PGP SIGNATURE-----
+The recommended fix for stable distributions is to alter system.conf
+similar to the attached patch (commit link below), or upgrade to version
+1.8.16 or 1.6.30. This restricts the attack to uid 0, making it a
+non-issue in practice.
+
+http://cgit.freedesktop.org/dbus/dbus/commit/?id=6dbd09fedc396c53b25ea73c6c8a278beca349c7
+
+The full solution involves additional code changes and has only been
+made in the 1.9 development branch so far, but is easy to backport to
+1.8 if required (e.g. for environments where uid 0 is not all-powerful
+due to use of LSMs). It requires two additional commits:
+
+http://cgit.freedesktop.org/dbus/dbus/commit/?id=aaea59916398d1c590490edb0471a01bcf20e6d7
+http://cgit.freedesktop.org/dbus/dbus/commit/?id=03c5e161752fe1ff4925955800ca9c78d09a6e0c
+
+Regards,
+    S
+
+-- 
+Simon McVittie, Collabora Ltd.
+on behalf of the D-Bus maintainers
+
+View attachment "0001-CVE-2015-0245-prevent-forged-ActivationFailure-from-.patch" of type "text/x-patch" (1550 bytes)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (794 bytes)
