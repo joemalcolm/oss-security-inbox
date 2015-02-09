@@ -1,23 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/05/12
-Message-Id: <20150205171551.6B398B2E42F@smtpvbsrv1.mitre.org>
-Date: Thu,  5 Feb 2015 12:15:51 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/09/11
+Message-Id: <20150209214033.F2B0F3AE124@smtpvbsrv1.mitre.org>
+Date: Mon,  9 Feb 2015 16:40:33 -0500 (EST)
 From: cve-assign@...re.org
-To: jmm@...ian.org
+To: hecmargi@....es
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: PHP/file: out-of-bounds memory access in softmagic
+Subject: Re: CVE-Request -- Google Email App 4.2.2 remote denial of service
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> http://bugs.gw.com/view.php?id=398
-> https://github.com/file/file/commit/59e63838913eee47f5c120a6c53d4565af638158
+> A bug in the stock Google email application
 
-> https://bugs.php.net/bug.php?id=68735
-> https://bugs.php.net/patch-display.php?bug=68735&patch=bug68735.patch&revision=1420309079
+Is the source code and fix in 4.2.2.0400 the same as in:
 
-Use CVE-2014-9652.
+  https://src.chromium.org/viewvc/blink?revision=152293&view=revision
+
+? If so, then it is an open-source vulnerability, and can have one
+CVE-2013-#### ID assigned here, even if the relevant HTTPParsers.cpp code
+is also bundled in one or more closed-source products.
+
+If it is independent source code that happens to have the same
+attack vector (the attack vector in
+http://hmarco.org/bugs/google_email_app_4.2.2_denial_of_service.html
+appears to be identical to the attack vector in the
+https://src.chromium.org/viewvc/blink/trunk/LayoutTests/http/tests/misc/resources/nearly-empty-content-disposition.php
+test), then revision 152293 could probably have a separate new
+CVE-2013-#### ID.
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -27,11 +37,11 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJU06TNAAoJEKllVAevmvmsNnMH/1Pp9TUN2QeL6HgkRc0CI/za
-zE1CUHtJbgHwCP7Ky1NPJQKBrkyHT3ttxnhBAxw7UL5A/79Mv31BspwlST7nVrW5
-Uytqd1whtax/csMI1aUTeBymkE4/ZgkBxdvp8LAsEax6XOsiaC1szBaCnWikB/VT
-qM+5LVSQZBxJzSSV+vPUeMSMeako142sZnW7uCobKNRc5vJ7vD3xTXfDClCbaybo
-e+ayRLB+jej81X/d3ILZi9GzG9wIld+1rRcxXpknVgMqUIRMxMil0hXKjdv229cu
-TxES4GlZaV5bcJPatwrsf4Te5SVVWCgEdnxmzZduGnlOcEJKKG4K2v9pxVaSSTg=
-=Gl2+
+iQEcBAEBAgAGBQJU2SjYAAoJEKllVAevmvms7XgH/160UM97gBilVzyom9QDvbMs
+qxDlphiOqH2J5+ShSPmKLmUcaT9snIylAQnBadTolsZxFeNsOjdIH0zJhnoafvUR
+BjhUO1Z8ABrUifyLJuk0aezXErEoS2COVqaWu0IYYpJ3OPIExnGJw9cIQP4YHfDQ
+aryvVRmsyasA42H72Ao+lF3W/om4fb8j32o78/Zp5Lp9yAn9Iq0XOtn/HjrhFCU9
+TN6gil7OOb0nyKedRFmK60+Ek7ME+hIMCFrEftOJgZ6RTNc9V3fDJL2AD61jS8Wr
+LF3FJSKoTRyA8QeRsL+zU9uCw3KHmx2l65rbxvjgURXMJgGykFIGVc22itJm8tM=
+=xXk6
 -----END PGP SIGNATURE-----
