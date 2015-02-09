@@ -1,35 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/03/16
-Message-ID: <54D156F1.5090904@gmail.com>
-Date: Wed, 04 Feb 2015 00:17:05 +0100
-From: Gsunde Orangen <gsunde.orangen@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/09/4
+Message-ID: <54D87C43.2000106@redhat.com>
+Date: Mon, 09 Feb 2015 10:22:11 +0100
+From: Florian Weimer <fweimer@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: heap buffer overflow in glibc swscanf
+Subject: CVE-2014-8165: remote code execution in powerpc-utils-python
 Content-Type: text/plain; charset=utf-8
 
-Hi Paul, all,
+Dhiru Kholia, then of Red Hat Product Security, discovered that
+powerpc-utils-python used Python pickles in an insecure way, potentially
+resulting in remote code execution as root:
 
-test case also fails on 2.18 and 2.17, tested on openSUSE.
-I assume this bug was introduced by the fix for
-https://sourceware.org/bugzilla/show_bug.cgi?id=13138
+  <http://sourceforge.net/p/powerpc-utils/mailman/message/32884230/>
+  <https://bugzilla.redhat.com/show_bug.cgi?id=1073139>
 
-Thus glibc 2.15ff are vulnerable.
+The affected program (amsvis) requires an IBM POWER machine with
+firmware support for Active Memory Sharing, or it won't even start.
+Such machines appear to be extremely rare.
 
-Gsunde
+Active Memory Sharing is not related at all to the Agentless Management
+Service from another enterprise vendor, despite the common acronym.
 
-On Sun, 1 Feb 2015 11:22:54 -0800, Paul Pluzhnikov wrote:
-> Greetings,
->
-> https://sourceware.org/bugzilla/show_bug.cgi?id=16618
-> is almost 1 year old, and still not fixed in glibc trunk.
->
-> I have verified that the test case from it fails with libc6
-> 2.19-0ubuntu6.5 and current trunk glibc.
->
-> Don't know if it's exploitable, but it seems like it could easily be.
->
-> (I'll see if I can fix it in the mean time.)
->
-> Thanks,
-> --
-> Paul Pluzhnikov
+-- 
+Florian Weimer / Red Hat Product Security
