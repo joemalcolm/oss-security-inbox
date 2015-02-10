@@ -1,42 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/10/13
-Message-Id: <20150210200315.564F56C001C@smtpvmsrv1.mitre.org>
-Date: Tue, 10 Feb 2015 15:03:15 -0500 (EST)
-From: cve-assign@...re.org
-To: wmealing@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE-Request -- Linux kernel - panic on nftables rule flush
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/10/12
+Message-ID: <20150210175705.GI23507@oevtugenva.nrevsny.pk>
+Date: Tue, 10 Feb 2015 12:57:05 -0500
+From: Rich Felker <dalias@...c.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: wordexp(3)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-> I'd like to request a CVE for a denial of service attack found here
-> here https://bugzilla.kernel.org/show_bug.cgi?id=91441.
+On Tue, Feb 10, 2015 at 08:27:56PM +0300, Solar Designer wrote:
+> Hi,
 > 
-> A local attacker with the CAP_NET_ADMIN capability could use this to
-> panic (denial of service) a system if they were able to flush a chain
-> with a jump target.
+> I found this curious and relevant to this list, off Twitter:
 > 
-> https://bugzilla.redhat.com/show_bug.cgi?id=1190966
+> (x250) <%worr> RT @FioraAeterna: oh my gosh, Apple's libc literally implements "wordexp" by shelling out to perl: https://github.com/Apple-FOSS-Mirror/Libc/blob/2ca2ae74647714acfc18674c3114b1a5d3325d7d/gen/wordexp.c#L192
 > 
-> http://git.kernel.org/cgit/linux/kernel/git/pablo/nf.git/commit/?id=a2f18db0c68fec96631c10cad9384c196e9008ac
+> <worr> So yesterday, @FioraAeterna tweeted this: https://github.com/Apple-FOSS-Mirror/Libc/blob/2ca2ae74647714acfc18674c3114b1a5d3325d7d/gen/wordexp.c#L192. I've decided to take a tour of wordexp(3) implementations
+> <@worr> They can't all be that bad
+> (x2) <@worr> NetBSD and FreeBSD both use a sh builtin to implement wordexp(3): http://svnweb.freebsd.org/base/head/lib/libc/gen/wordexp.c?revision=254977&view=markup http://cvsweb.netbsd.org/bsdweb.cgi/src/lib/libc/gen/wordexp.c?rev=1.3&content-type=text/x-cvsweb-markup&only_with_tag=MAIN
+> (x5) <@worr> OpenBSD wins the wordexp(3) contest, by refusing to implement it altogether.
+> <@worr> Correction: glibc implements a huge recursive descent parser, and only shells out when it needs to do subshell expansions.
+> <@worr> tbh, wordexp(3) is an antifeature. Maybe even a misfeature.
+> <@worr> Here's the implementation, btw: https://sourceware.org/git/?p=glibc.git;a=blob;f=posix/wordexp.c;h=26f3a2653feba2b1a5904937d9d6b58c32109e24;hb=a39208bd7fb76c1b01c127b4c61f9bfd915bfe7c#l872
+> <@worr> Continuing on my tour of wordexp(3) implementations, here's Illumos': https://github.com/joyent/illumos-joyent/blob/master/usr/src/lib/libc/port/regex/wordexp.c#L218-L290 It constructs a small shell script and runs it
 
-Use CVE-2015-1573.
+POSIX is explict that the wordexp interface is designed such that
+invoking a shell is one valid implementation choice. My view on all
+this is that pretty much anything wordexp-related is not CVE-worthy;
+wordexp simply is not a proper tool to be using in programs dealing
+with untrusted inputs -- either untrusted input strings, or untrusted
+environment contents. Obviously implementations using /bin/sh were
+vulnerable to shellshock on systems where /bin/sh is bash.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJU2mOdAAoJEKllVAevmvmsYzsIAJicgFQssefTILJ8Q0wVMaP0
-zFSDlFS1WEHHdXpR0ksDAw2IubJ4IDhBlwq1vRu//TWCXH+RLvttJg7XFXFa/rQA
-LSF7oW9C9st9HLe1g9ZQUnA2kj098TkSSkOULpkiQPDY+MFG3FdG8CBehBxxV1I7
-kfYioMDjkUZtdS75aEFm85aSoHnQIEC1bKJhwT2DXiC/Bkxyc9f6mqppn3F0Czzo
-As8o9ZnsPeZ7zCneMd9niALjVmcZZ37Y0AuSc96ShFTTS2CEoLnNqJhe2QjA+1R/
-7zd8jbdrhIPMwex+LbQZFBUcqo6we++T7TMFFtoPiwWlaTFuk67dWJ1xbZK6PzE=
-=Dd9X
------END PGP SIGNATURE-----
+Rich
