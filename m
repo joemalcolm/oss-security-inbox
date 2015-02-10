@@ -1,45 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/09/2
-Message-ID: <CAB_jSYzNoZCkXHBUS2+zNJMA9ZNXL0KSz0uVuXx8zH+mhNA+Gg@mail.gmail.com>
-Date: Mon, 9 Feb 2015 10:55:49 +0800
-From: Marina Glancy <marina@...dle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/10/11
+Message-ID: <20150210172756.GA8690@openwall.com>
+Date: Tue, 10 Feb 2015 20:27:56 +0300
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Moodle security issue made public
+Subject: wordexp(3)
 Content-Type: text/plain; charset=utf-8
 
-Hi Kurt, we have still waited for a week after the release with the
-announcing of the security issue this time but we are actively
-discussing the change of process starting from the next release.
+Hi,
 
-The following security notifications have now been made public. Thanks
-to OSS members for their cooperation. It also looks like OSS has
-accidentally issued us another identifier: CVE-2015-1493. I'm letting
-you know that I have never used it in our announcements
+I found this curious and relevant to this list, off Twitter:
 
-MSA-15-0009: Directory Traversal Attack possible through some files serving JS
+(x250) <%worr> RT @FioraAeterna: oh my gosh, Apple's libc literally implements "wordexp" by shelling out to perl: https://github.com/Apple-FOSS-Mirror/Libc/blob/2ca2ae74647714acfc18674c3114b1a5d3325d7d/gen/wordexp.c#L192
 
-Description:       Parameter "file" passed to scripts serving JS was not
-                   always cleaned from including "../" in the path, allowing
-                   to read files located outside of moodle directory. All OS
-                   are affected but especially vulnerable are Windows servers
-Issue summary:     Preauthenticated Local File Disclosure
-Severity/Risk:     Serious
-Versions affected: 2.8 to 2.8.2, 2.7 to 2.7.4, 2.6 to 2.6.7 and earlier
-                   unsupported versions
-Versions fixed:    2.8.3, 2.7.5 and 2.6.8
-Reported by:       Emiel Florijn
-Issue no.:         MDL-48980 and MDL-48990
-Workaround:        Prevent access to URLs containing "../" or "..\" in web
-                   server configuration
-CVE identifier:    CVE-2015-0246
-Changes (master):
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-48980
+<worr> So yesterday, @FioraAeterna tweeted this: https://github.com/Apple-FOSS-Mirror/Libc/blob/2ca2ae74647714acfc18674c3114b1a5d3325d7d/gen/wordexp.c#L192. I've decided to take a tour of wordexp(3) implementations
+<@worr> They can't all be that bad
+(x2) <@worr> NetBSD and FreeBSD both use a sh builtin to implement wordexp(3): http://svnweb.freebsd.org/base/head/lib/libc/gen/wordexp.c?revision=254977&view=markup http://cvsweb.netbsd.org/bsdweb.cgi/src/lib/libc/gen/wordexp.c?rev=1.3&content-type=text/x-cvsweb-markup&only_with_tag=MAIN
+(x5) <@worr> OpenBSD wins the wordexp(3) contest, by refusing to implement it altogether.
+<@worr> Correction: glibc implements a huge recursive descent parser, and only shells out when it needs to do subshell expansions.
+<@worr> tbh, wordexp(3) is an antifeature. Maybe even a misfeature.
+<@worr> Here's the implementation, btw: https://sourceware.org/git/?p=glibc.git;a=blob;f=posix/wordexp.c;h=26f3a2653feba2b1a5904937d9d6b58c32109e24;hb=a39208bd7fb76c1b01c127b4c61f9bfd915bfe7c#l872
+<@worr> Continuing on my tour of wordexp(3) implementations, here's Illumos': https://github.com/joyent/illumos-joyent/blob/master/usr/src/lib/libc/port/regex/wordexp.c#L218-L290 It constructs a small shell script and runs it
 
-
-
-Marina Glancy
-Development Process Manager
-
-marina@...dle.com
-+61894674167 | moodle.com
-The world's open source learning platform
+Alexander
