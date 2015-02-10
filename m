@@ -1,41 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/29/18
-Message-ID: <CALx_OUD-0YmmKLw4CH7MvSu_qB4VRkDawEwuJ52X6UtB-joaig@mail.gmail.com>
-Date: Thu, 29 Jan 2015 08:20:58 -0800
-From: Michal Zalewski <lcamtuf@...edump.cx>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: GHOST gethostbyname() heap overflow in glibc (CVE-2015-0235)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/10/9
+Message-ID: <54DA1580.8070102@upv.es>
+Date: Tue, 10 Feb 2015 15:28:16 +0100
+From: Hector Marco <hecmargi@....es>
+To: cve-assign@...re.org
+CC: oss-security@...ts.openwall.com
+Subject: Re: Re: CVE-Request -- Google Email App 4.2.2 remote denial of service
 Content-Type: text/plain; charset=utf-8
 
-The reality is that there probably are hundreds of security bugs that
-are fixed without CVEs and advisories every year, because of a
-combination of several things:
 
-1) "Accidental" fixes as a part of code rewrites or design changes,
 
-2) Developers not knowledgeable enough to understand the impact or
-quickly assess exploitability,
+El 09/02/15 a las 22:40, cve-assign@...re.org escribió:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>
+>> A bug in the stock Google email application
+>
+> Is the source code and fix in 4.2.2.0400 the same as in:
+>
+>    https://src.chromium.org/viewvc/blink?revision=152293&view=revision
+>
+> ? If so, then it is an open-source vulnerability, and can have one
+> CVE-2013-#### ID assigned here, even if the relevant HTTPParsers.cpp code
+> is also bundled in one or more closed-source products.
+>
+> If it is independent source code that happens to have the same
+> attack vector (the attack vector in
+> http://hmarco.org/bugs/google_email_app_4.2.2_denial_of_service.html
+> appears to be identical to the attack vector in the
+> https://src.chromium.org/viewvc/blink/trunk/LayoutTests/http/tests/misc/resources/nearly-empty-content-disposition.php
+> test), then revision 152293 could probably have a separate new
+> CVE-2013-#### ID.
 
-3) Developers being actively opposed to treating security
-vulnerabilities in a special way, disliking the security community, or
-wanting to sweep bugs under the rug.
+It is a different source code and fix. The source code is available in:
 
-In addition to this, even when advisories are written, there are
-incentives to game the system. Some have an incentive to overhype
-issues, others to make them go away, and yet others make the world
-worse by comparing the security of products by counting CVEs.
+https://android.googlesource.com/platform/packages/apps/Email
 
-This kind of sucks, but I'm not sure how can we fix this in a
-practical way. The best approach may be to release and push out new
-versions of packages far more aggressively, without trying to identify
-and cherry-pick security updates. This also means causing a lot more
-breakage, but maybe that's OK.
+Note that the HTTPParsers.cpp is the file which parses the headers but 
+in the Email App this is done by the MimeUtility.java.
 
-/mz
+It seems that the Chromium bug is very similar to the Email one, but I 
+think the attack vector is different since in the first case, it can be 
+exploited by sending an email and in the second case by visiting a website.
 
-PS. A good chunk of the bugs linked to via
-http://lcamtuf.coredump.cx/afl/ probably don't have CVEs assigned,
-probably including most of the security-relevant ones here:
-https://udd.debian.org/cgi-bin/bts-usertags.cgi?user=jwilk@debian.org&tag=afl
-. I actually tried to ping cve-assign@ about the libtiff bugs, but
-they didn't get back to me.
+
+Regards,
+Hector Marco.
