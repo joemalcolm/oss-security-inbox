@@ -1,28 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/14/5
-Message-Id: <B4504CAD-32FD-41F1-86EC-E14CCB880E02@andyet.net>
-Date: Wed, 14 Jan 2015 08:33:10 -0800
-From: Adam Baldwin <baldwin@...yet.net>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>, "report@...esecurity.io" <report@...esecurity.io>
-Subject: Re: Node.js "serve-static" module Open Redirect
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/10/8
+Message-ID: <20150210141159.22729e84@redhat.com>
+Date: Tue, 10 Feb 2015 14:11:59 +0100
+From: Tomas Hoger <thoger@...hat.com>
+To: mancha <mancha1@...o.com>
+Cc: oss-security@...ts.openwall.com, sms@...inode.info, cve-assign@...re.org
+Subject: Re: CVE Request: Info-ZIP unzip 6.0
 Content-Type: text/plain; charset=utf-8
 
-Yes we post to mitre for CVE. We're short staffed so slow. We can try and cross post to oss-security too in the future. 
+On Mon, 22 Dec 2014 18:14:58 +0000 mancha wrote:
 
-Adam Baldwin
+> OOB access (both read and write) issues exist in test_compr_eb
+> (extract.c) that can result in application crash or other unspecified
+> impact.
+> 
+> This vulnerability can be triggered via crafted zip archives with
+> extra fields that advertise STORED method compression (i.e. no
+> compression) and have uncompressed field sizes smaller than the
+> corresponding compressed field sizes.
+> 
+> This issue is different from CVE-2014-8140 [1].
 
-> On Jan 13, 2015, at 8:56 PM, Kurt Seifried <kseifried@...hat.com> wrote:
-> 
-> https://nodesecurity.io/advisories/serve-static-open-redirect
-> 
-> Says CVE pending, no idea where/whom they asked, I assume Mitre?
-> 
-> Also if nodesecurity.io could post these advisories to oss-security that
-> would be helpful, thanks!
-> 
-> -- 
-> Kurt Seifried -- Red Hat -- Product Security -- Cloud
-> PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-> 
+FWIW, those issues are not entirely different, as the oCERT-2014-011
+reproducer triggered the same issue your patch addresses - memcpy()
+buffer overflow when using STORED compression and the uncompressed size
+field value smaller than the rest of the data in the extra field block.
+In case of the oCERT-2014-011 report, the size was special - 0.  Your
+check, however, would prevent overflow on the test case.
 
+The check to reject uncompressed size of 0 is still needed to avoid
+bypassing check if extra field block still has enough data for the
+compression header.  That makes it possible to bypass your check and
+trigger integer underflow in memextract() when EB_CMPRHEADLEN (2 + 4)
+is subtracted from srcsize, which leads to memcpy() with size close to
+SIZE_MAX.
+
+Your patch, unzip-6.0_overflow2.diff, which is what got applied
+upstream, seems to perform an incorrect check.  It ensures that
+eb_ucsize is equal to eb_size - compr_offset.  The latter value
+includes compression header length (EB_CMPRHEADLEN), which is not
+included in eb_ucsize AFAICT (based on what I could find in
+extrafld.txt or os2/os2zip.c in Zip 3.0 sources).  It seems the check
+should be:
+
+  (eb_size - compr_offset - EB_CMPRHEADLEN != eb_ucsize)
+
+Can you or upstream confirm?
+
+This problem would not be a security problem, but a bug that could
+cause well-formed extra fields to be rejected as invalid.
+
+-- 
+Tomas Hoger / Red Hat Product Security
