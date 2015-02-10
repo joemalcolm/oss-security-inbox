@@ -1,164 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/19/1
-Message-ID: <CAG_z0FT9avE_wZOO8D4xzh35z4V0aQ_kpSDxJ2UNked8pzR3vA@mail.gmail.com>
-Date: Mon, 19 Jan 2015 10:09:06 +0800
-From: Marina Glancy <marina@...dle.com>
-To: oss-security@...ts.openwall.com
-Subject: Moodle security issues are now public
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/10/5
+Message-ID: <CAB8XdGBJuywczWKQz5otQH4kgu2kEGtOxgZNpA5-2hy4f0ySeA@mail.gmail.com>
+Date: Tue, 10 Feb 2015 11:41:37 +0000
+From: Colm O hEigeartaigh <coheigea@...che.org>
+To: users@...apache.org, "dev@...apache.org" <dev@...apache.org>,  Apache Security Response Team <security@...che.org>, oss-security@...ts.openwall.com,  bugtraq@...urityfocus.com
+Cc: Juraj Somorovsky <juraj.somorovsky@....de>
+Subject: Two new security advisories released for Apache WSS4J
 Content-Type: text/plain; charset=utf-8
 
-The following security notifications have now been made public. Thanks
-to OSS members for their cooperation.
+Two new security advisories have been released for Apache WSS4J:
 
-Sincerely,
-Marina Glancy
-Development Process Manager
-Moodle HQ
+1) CVE-2015-0226: Apache WSS4J is (still) vulnerable to Bleichenbacher's
+attack
+
+http://ws.apache.org/wss4j/advisories/CVE-2015-0226.txt.asc
+
+2) CVE-2015-0227: Apache WSS4J doesn't correctly enforce the
+requireSignedEncryptedDataElements property
+
+http://ws.apache.org/wss4j/advisories/CVE-2015-0227.txt.asc
+
+Please note that both of these advisories were fixed in WSS4J 2.0.2 and
+1.6.17, both of which were released last year.
+
+Colm.
 
 
+-- 
+Colm O hEigeartaigh
 
-==============================================================================
-MSA-15-0001: Insufficient access check in LTI module
+Talend Community Coder
+http://coders.talend.com
 
-Description:       Absence of capability check in AJAX backend script could
-                   allow any enrolled user to search the list of registered
-                   tools
-Issue summary:     mod/lti/ajax.php security problems
-Severity/Risk:     Minor
-Versions affected: 2.8 to 2.8.1, 2.7 to 2.7.3, 2.6 to 2.6.6 and earlier
-                   unsupported versions
-Versions fixed:    2.8.2, 2.7.4 and 2.6.7
-Reported by:       Petr Skoda
-Issue no.:         MDL-47920
-CVE identifier:    CVE-2015-0211
-Changes (master):
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-47920
-
-==============================================================================
-MSA-15-0002: XSS vulnerability in course request pending approval page
-
-Description:       Course summary on course request pending approval page was
-                   displayed to the manager unescaped and could be used for
-                   XSS attack
-Issue summary:     XSS in course request pending approval page (Privilege
-                   Escalation?)
-Severity/Risk:     Serious
-Versions affected: 2.8 to 2.8.1, 2.7 to 2.7.3, 2.6 to 2.6.6 and earlier
-                   unsupported versions
-Versions fixed:    2.8.2, 2.7.4 and 2.6.7
-Reported by:       Skylar Kelty
-Issue no.:         MDL-48368
-Workaround:        Grant permission moodle/course:request only to trusted
-                   users
-CVE identifier:    CVE-2015-0212
-Changes (master):
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-48368
-
-==============================================================================
-MSA-15-0003: CSRF possible in Glossary module
-
-Description:       Two files in the Glossary module lacked a session key check
-                   potentially allowing cross-site request forgery
-Issue summary:     Multiple CSRF in mod glossary
-Severity/Risk:     Serious
-Versions affected: 2.8 to 2.8.1, 2.7 to 2.7.3, 2.6 to 2.6.6 and earlier
-                   unsupported versions
-Versions fixed:    2.8.2, 2.7.4 and 2.6.7
-Reported by:       Ankit Agarwal
-Issue no.:         MDL-48106
-CVE identifier:    CVE-2015-0213
-Changes (master):
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-48106
-
-==============================================================================
-MSA-15-0004: Information leak through messaging functions in web-services
-
-Description:       Through web-services it was possible to access
-                   messaging-related functions such as people search even if
-                   messaging is disabled on the site
-Issue summary:     Messages external functions doesn't check if messaging is
-                   enabled
-Severity/Risk:     Minor
-Versions affected: 2.8 to 2.8.1, 2.7 to 2.7.3, 2.6 to 2.6.6 and earlier
-                   unsupported versions
-Versions fixed:    2.8.2, 2.7.4 and 2.6.7
-Reported by:       Juan Leyva
-Issue no.:         MDL-48329
-Workaround:        Disable web services or disable individual message-related
-                   functions
-CVE identifier:    CVE-2015-0214
-Changes (master):
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-48329
-
-==============================================================================
-MSA-15-0005: Insufficient access check in calendar functions in web-services
-
-Description:       Through web-services it was possible to get information
-                   about calendar events which user did not have enough
-                   permissions to see
-Issue summary:     calendar/externallib.php lacks
-                   self::validate_context($context);
-Severity/Risk:     Minor
-Versions affected: 2.8 to 2.8.1, 2.7 to 2.7.3, 2.6 to 2.6.6 and earlier
-                   unsupported versions
-Versions fixed:    2.8.2, 2.7.4 and 2.6.7
-Reported by:       Petr Skoda
-Issue no.:         MDL-48017
-CVE identifier:    CVE-2015-0215
-Changes (master):
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-48017
-
-==============================================================================
-MSA-15-0006: Capability to grade Lesson module is missing XSS bitmask
-
-Description:       Users with capability to grade in Lesson module were not
-                   reported as users with XSS risk but their feedback was
-                   displayed without cleaning
-Issue summary:     mod/lesson:grade capability missing RISK_XSS but essay
-                   feedback is displayed with noclean=true
-Severity/Risk:     Minor
-Versions affected: 2.8 to 2.8.1
-Versions fixed:    2.8.2
-Reported by:       Damyon Wiese
-Issue no.:         MDL-48034
-CVE identifier:    CVE-2015-0216
-Changes (master):
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-48034
-
-==============================================================================
-MSA-15-0007: ReDoS possible in the multimedia filter
-
-Description:       Not optimal regular expression in the filter could be
-                   exploited to create extra server load or make particular
-                   page unavailable
-Issue summary:     ReDOS in the multimedia filter
-Severity/Risk:     Serious
-Versions affected: 2.8 to 2.8.1, 2.7 to 2.7.3, 2.6 to 2.6.6 and earlier
-                   unsupported versions
-Versions fixed:    2.8.2, 2.7.4 and 2.6.7
-Reported by:       Nicolas Martignoni
-Issue no.:         MDL-48546
-Workaround:        Disable multimedia filter
-CVE identifier:    CVE-2015-0217
-Changes (master):
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-48546
-
-==============================================================================
-MSA-15-0008: Forced logout through Shibboleth authentication plugin
-
-Description:       It was possible to forge a request to logout users even
-                   when not authenticated through Shibboleth
-Issue summary:     Forced logout via auth/shibboleth/logout.php
-Severity/Risk:     Serious
-Versions affected: 2.8 to 2.8.1, 2.7 to 2.7.3, 2.6 to 2.6.6 and earlier
-                   unsupported versions
-Versions fixed:    2.8.2, 2.7.4 and 2.6.7
-Reported by:       Petr Skoda
-Issue no.:         MDL-47964
-Workaround:        Deny access to file auth/shibboleth/logout.php in webserver
-                   configuration
-CVE identifier:    CVE-2015-0218
-Changes (master):
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-47964
-
-==============================================================================
