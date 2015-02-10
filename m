@@ -1,40 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/29/24
-Message-ID: <54CA82B8.7080409@canonical.com>
-Date: Thu, 29 Jan 2015 13:58:00 -0500
-From: Marc Deslauriers <marc.deslauriers@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/10/6
+Message-ID: <54D9F59F.80501@redhat.com>
+Date: Tue, 10 Feb 2015 13:12:15 +0100
+From: Florian Weimer <fweimer@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: xchat/hexchat don't properly verify SSL certificates
+CC: cve-assign@...re.org
+Subject: Re: CVE-Request -- Linux kernel - panic on nftables rule flush
 Content-Type: text/plain; charset=utf-8
 
-On 2015-01-29 01:52 PM, Vincent Danen wrote:
-> As reported [1]:
+On 02/10/2015 07:42 AM, Wade Mealing wrote:
+> Gday,
 > 
-> XChat did not verify that the server hostname matched the domain name in the
-> subject's Common Name (CN) or subjectAltName field in X.509 certificates. This
-> could allow a man-in-the-middle attacker to spoof an SSL server if they had a
-> certificate that was valid for any domain name.
+> I'd like to request a CVE for a denial of service attack found here here https://bugzilla.kernel.org/show_bug.cgi?id=91441.
 > 
-> The same code is used in hexchat.
+> A remote attacker with the NET_CAP_ADMIN capability could use this to panic (denial of service) a system if they were able to flush a chain with a jump target.
 > 
-> This was initially reported to hexchat in 2013 [2] and fixed last November [3]. 
-> I'm not sure if it should receive a 2013 or a 2014 CVE.  Can one be assigned to
-> this?
-> 
-> Thanks.
-> 
-> [1] https://bugzilla.redhat.com/show_bug.cgi?id=1081839
-> [2] https://github.com/hexchat/hexchat/issues/524
-> [3]
-> https://github.com/hexchat/hexchat/commit/c9b63f7f9be01692b03fa15275135a4910a7e02d
-> 
+> More info: https://bugzilla.redhat.com/show_bug.cgi?id=1190966
 
-Looks like XChat-GNOME is vulnerable also.
-
-Marc.
-
+This should “A local attacker with the CAP_NET_ADMIN capability".
 
 -- 
-Marc Deslauriers
-Ubuntu Security Engineer     | http://www.ubuntu.com/
-Canonical Ltd.               | http://www.canonical.com/
+Florian Weimer / Red Hat Product Security
