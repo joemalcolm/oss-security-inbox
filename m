@@ -1,67 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/24/7
-Message-ID: <CA+rthh-T+mTJZTz-LnoD_ZZfDUD6aprDFstSbSiXVmRTc8PDFg@mail.gmail.com>
-Date: Sat, 24 Jan 2015 18:43:13 +0100
-From: Mathias Krause <minipli@...glemail.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/10/7
+Message-ID: <54D9F6F7.1050802@redhat.com>
+Date: Tue, 10 Feb 2015 13:17:59 +0100
+From: Florian Weimer <fweimer@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: marc.deslauriers@...onical.com, cve-assign@...re.org
-Subject: Re: Re: CVE Request: Linux kernel crypto api unprivileged arbitrary module load
+Subject: Re: CVE request: sudo TZ issue
 Content-Type: text/plain; charset=utf-8
 
-On 24 January 2015 at 15:53,  <cve-assign@...re.org> wrote:
->> The Crypto API in the Linux kernel before 3.19 allowed unprivileged users to
->> load arbitrary kernel modules.
->
->> https://plus.google.com/+MathiasKrause/posts/PqFCo4bfrWu
->
->> https://lkml.org/lkml/2013/3/4/70
->> https://git.kernel.org/linus/5d26a105b5a73e5635eae0629b42fa0a90e07b7b
->
-> Use CVE-2013-7421 for the original 2013 discovery by Mathias Krause,
-> with a "Try the code snippet below on a system with
-> CONFIG_CRYPTO_USER_API=y" attack.
-> [...]
+On 02/09/2015 10:42 PM, Todd C. Miller wrote:
 
->> https://git.kernel.org/linus/4943ba16bbc2db05115707b3ff7b4874e9e3c560
->
-> Use CVE-2014-9644 for this second discovery in 2014, mentioned in
-> PqFCo4bfrWu as 'stumbled over the first flaw -- not handling crypto
-> templates correctly. This means, the patch would prevent loading the
-> vfat.ko module when requesting a cipher named "vfat" but would fail to
-> do so if one would request "vfat(aes)" instead.' As far as we can
-> tell, this is a discovery of a separate attack vector that wasn't
-> implied by the 2013 post.
+> Beginning with sudo 1.8.12, TZ is only passed through by default
+> if it is considered "safe".  The TZ variable is now considered
+> "unsafe" if any of the following are true:
+> 
+>     o   It consists of a fully-qualified path name that
+>         does not match the location of the zoneinfo directory.
+> 
+>     o   It contains a ".." path element.
+> 
+>     o   It contains white space or non-printable characters.
+> 
+>     o   It is longer than the value of PATH_MAX.
 
-Even though this was a new discovery, not explicitly mentioned in the
-initial report, it's the same bug, essentially -- using the AF_ALG
-interface to load arbitrary modules. In fact, commits 5d26a105b5a7 and
-4943ba16bbc2 should have been a single one in the first place. But for
-whatever reasons commit 5d26a105b5a7 was applied, so the template
-issue had to be fixed in the follow-up commit 4943ba16bbc2. However,
-both commits were merged together into Linus' tree that ended up in
-v3.19-rc1. See the merge commit at [1] and the discussion at [2] for
-further reference.
+You also need to ignore a leading “:” for the absolute path name check,
+to match glibc behavior (and potentially others).
 
-[1] https://git.kernel.org/linus/e3aa91a7cb21
-[2] http://www.mail-archive.com/linux-crypto@vger.kernel.org/msg12369.html
+The code in sudo 1.8.12 handles this case correctly, but it's not clear
+from the description above.
 
-So I think CVE-2014-9644 should be marked as a duplicate of
-CVE-2013-7421. It's the same issue, really.
+-- 
+Florian Weimer / Red Hat Product Security
 
->> https://git.kernel.org/linus/3e14dcf7cb80b34a1f38b55bc96f02d23fdaaaaf
->
-> This isn't within the scope of either CVE-2013-7421 or CVE-2014-9644.
-> As far as we can tell, it is largely a usability fix. The example
-> mentioned is "This fixes, e.g., requesting 'ecb(blowfish-generic)',
-> which used to work with kernels v3.18 and below." Is there also a
-> security impact if 3e14dcf7cb80b34a1f38b55bc96f02d23fdaaaaf is
-> missing? For example, is it likely that code exists that requests
-> ecb(blowfish-generic) in an environment without
-> 3e14dcf7cb80b34a1f38b55bc96f02d23fdaaaaf, and is able to continue
-> working afterward, but falls back to weak encryption?
-
-It's just an API compliance fix to not regress the user interface for
-the Crypt User API. No security fix, AFAICS.
-
-Regards,
-Mathias
