@@ -1,37 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/07/2
-Message-ID: <Pine.LNX.4.64.1501070751540.9814@beijing.mitre.org>
-Date: Wed, 7 Jan 2015 07:52:53 -0500 (EST)
-From: cve-assign@...re.org
-To: Salvatore Bonaccorso <carnil@...ian.org>
-cc: oss-security@...ts.openwall.com, CVE Assignments MITRE <cve-assign@...re.org>
-Subject: Re: CVE Request: libmspack: frame_end overflow which could cause infinite loop
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/10/16
+Message-ID: <20150210224919.GB27607@boyd>
+Date: Tue, 10 Feb 2015 16:49:19 -0600
+From: Tyler Hicks <tyhicks@...onical.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: eCryptfs key wrapping help to crack user password
 Content-Type: text/plain; charset=utf-8
 
+On 2015-02-10 15:07:24, Sylvain Pelissier wrote:
+> Hi,
+> 
+> I have noticed that ecryptfs-utils is the default program used by the
+> Ubuntu distributions for home folder encryption since version 10.04.
+> In this case, a wrapping key is generated from the user password
+> using the hash function SHA-512 applied 65536 times. By default, the
+> wrapping key is hashed with the default fixed salt
+> (0x0011223344556677) and stored in the a file.
+> This was already noticed in bug :
+> https://bugs.launchpad.net/ecryptfs/+bug/906550
+> For  Ubuntu installations time-memory trade-off (rainbow tables, etc.)
+> can apply, as well as bulk dictionary attacks to crack user passwords
+> of Ubuntu installations when the home folder encryption is activated.
+> I am currently working to correct this weakness.
 
-On Wed, 7 Jan 2015, Salvatore Bonaccorso wrote:
+Thanks for reporting this issue, Sylvain.
 
-> On Thu, Jan 01, 2015 at 02:12:56PM +0100, Salvatore Bonaccorso wrote:
->> Libmspack, a library to provide compression and decompression of
->> some file formats used by Microsoft, is used in many project (or
->> embedded there like also Clamav). This issue can cause a remotely
->> exploitable denial-of-service condition due to clamav thread hanging
->> forever while scanning the file. A patch is available at [2] for
->> libmspack.
->
-> I have to clarify this last part of my CVE request for libmspack. I
-> mentioned clamav embedding libmspack. Upstream Clamav tarball embeds
-> an older version of libmspack, which does not seem to be affected by
-> this problem. The problem itself for libmspack can be reproduced with
-> https://bugs.debian.org/773041#13 .
->
-> Regards,
-> Salvatore
+I have confirmed the analysis above and upstream ecryptfs-utils is
+working to correct the problem.
 
-Use CVE-2014-9556.
+Tyler
 
----
-
-CVE assignment team, MITRE CVE Numbering Authority M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
