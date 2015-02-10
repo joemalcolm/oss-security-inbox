@@ -1,52 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/05/2
-Message-ID: <54AAA7D8.3080903@collabora.co.uk>
-Date: Mon, 05 Jan 2015 15:03:52 +0000
-From: Simon McVittie <simon.mcvittie@...labora.co.uk>
-To: oss-security@...ts.openwall.com, dev@...ts.migard-project.org,  user@...ts.migard-project.org
-Subject: CVE-2014-8148: midgard-core configures D-Bus system bus to be insecure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/10/10
+Message-ID: <CAOkUe-DJ1XTF5keJSn7Fm8wv=TYkhMbCJc788ptUR+yuCE6y-w@mail.gmail.com>
+Date: Tue, 10 Feb 2015 15:07:24 +0100
+From: Sylvain Pelissier <sylvain.pelissier@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: eCryptfs key wrapping help to crack user password
 Content-Type: text/plain; charset=utf-8
 
-Type of vulnerability: CWE-284 Improper Access Control
-Exploitable by: local users
-Impact: could allow arbitrary code execution as root (dependent on
-installed D-Bus system services)
-Reporter: Simon McVittie, Collabora Ltd.
-Upstream notified: 2014-12-19
+Hi,
 
-Midgard2 is an open source content repository for data-intensive web and
-desktop applications.
+I have noticed that ecryptfs-utils is the default program used by the
+Ubuntu distributions for home folder encryption since version 10.04.
+In this case, a wrapping key is generated from the user password
+using the hash function SHA-512 applied 65536 times. By default, the
+wrapping key is hashed with the default fixed salt
+(0x0011223344556677) and stored in the a file.
+This was already noticed in bug :
+https://bugs.launchpad.net/ecryptfs/+bug/906550
+For  Ubuntu installations time-memory trade-off (rainbow tables, etc.)
+can apply, as well as bulk dictionary attacks to crack user passwords
+of Ubuntu installations when the home folder encryption is activated.
+I am currently working to correct this weakness.
 
-While checking Debian for incorrect/dangerous D-Bus security policy
-files (found in /etc/dbus-1/system.d/*.conf) I found this access control
-rule in midgard2-common/10.05.7.1-2, part of the upstream project
-midgard-core:
-
-<policy context="default">               <==== "applies to everyone"
-  <allow own="org.midgardproject" />     <==== probably undesired
-  <allow send_type="method_call"/>       <==== definitely bad
-  <allow send_type="signal" />           <==== not good either
-</policy>
-
-This is analogous to an overly permissive "chmod": it allows any process
-on the system bus to send any method call or signal to any other process
-on the system bus, including those that are normally forbidden either
-explicitly or via the system bus' documented default-deny policy. Some
-D-Bus system services perform additional authorization checks, either
-via Polkit/PolicyKit or internally, but many services rely on the system
-bus to apply their intended security model.
-
-For instance, depending on installed software, this vulnerability could
-allow unprivileged local users to:
-
-* invoke Avahi's SetHostName() method
-* communicate with bluetooth devices using BlueZ
-* install printer drivers using system-config-printer
-* run NetworkManager "dispatcher" scripts
-* ...
-
-It seems likely that at least one of these services can be used for
-arbitrary code execution as root, making this a severe vulnerability.
-
-Regards,
-    S
+Sylvain Pelissier
