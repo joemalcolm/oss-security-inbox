@@ -1,48 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/29/11
-Message-ID: <20150129130913.1cb0a9e9@pc>
-Date: Thu, 29 Jan 2015 13:09:13 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: GHOST gethostbyname() heap overflow in glibc (CVE-2015-0235)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/10/13
+Message-Id: <20150210200315.564F56C001C@smtpvmsrv1.mitre.org>
+Date: Tue, 10 Feb 2015 15:03:15 -0500 (EST)
+From: cve-assign@...re.org
+To: wmealing@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE-Request -- Linux kernel - panic on nftables rule flush
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 29 Jan 2015 02:05:38 -0700
-Kurt Seifried <kseifried@...hat.com> wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> So you'll be doing the work to confirm which ones are/are not, patch
-> them, regression test the patches and so on? Awesome!
+> I'd like to request a CVE for a denial of service attack found here
+> here https://bugzilla.kernel.org/show_bug.cgi?id=91441.
 > 
-> There's a reason we don't treat every potential security flaw as a
-> security vulnerability. We have finite resources and pretty much an
-> infinite number of flaws to deal with. Until you solve that problem we
-> have to make due with "best effort", letting perfection be the enemy
-> of good will kill us.
+> A local attacker with the CAP_NET_ADMIN capability could use this to
+> panic (denial of service) a system if they were able to flush a chain
+> with a jump target.
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=1190966
+> 
+> http://git.kernel.org/cgit/linux/kernel/git/pablo/nf.git/commit/?id=a2f18db0c68fec96631c10cad9384c196e9008ac
 
-I find that sarcastic comment inappropriate. After all it's your
-company that's selling a product that makes the promise to backport
-important security fixes for years.
+Use CVE-2015-1573.
 
-I think we have a real problem here and I'd like to have a talk how to
-solve it. Debian, Redhat, Ubuntu and many others are making an implicit
-promise with their long time supported stable distributions that they'll
-take care of important bugs. I have big doubts how capable they are in
-delivering that promise. There are just too many bugs to take care of.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-I'll write up something longer on that topic later today.
-
-And yes: I'd like people to cry alarm every time they see a buffer
-overflow in glibc or any other core lib. Even if we aren't capable of
-deeply checking every one of them: Having the information available
-somewhere else than depply hidden in a google bugtracker would be an
-improvement. If it is too much for this list create another place for
-it.
-
--- 
-Hanno Böck
-http://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
-
-Content of type "application/pgp-signature" skipped
+iQEcBAEBAgAGBQJU2mOdAAoJEKllVAevmvmsYzsIAJicgFQssefTILJ8Q0wVMaP0
+zFSDlFS1WEHHdXpR0ksDAw2IubJ4IDhBlwq1vRu//TWCXH+RLvttJg7XFXFa/rQA
+LSF7oW9C9st9HLe1g9ZQUnA2kj098TkSSkOULpkiQPDY+MFG3FdG8CBehBxxV1I7
+kfYioMDjkUZtdS75aEFm85aSoHnQIEC1bKJhwT2DXiC/Bkxyc9f6mqppn3F0Czzo
+As8o9ZnsPeZ7zCneMd9niALjVmcZZ37Y0AuSc96ShFTTS2CEoLnNqJhe2QjA+1R/
+7zd8jbdrhIPMwex+LbQZFBUcqo6we++T7TMFFtoPiwWlaTFuk67dWJ1xbZK6PzE=
+=Dd9X
+-----END PGP SIGNATURE-----
