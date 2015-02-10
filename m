@@ -1,40 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/21/1
-Message-ID: <alpine.LRH.2.11.1501211014580.15885@namei.org>
-Date: Wed, 21 Jan 2015 10:17:29 +1100 (AEDT)
-From: James Morris <jmorris@...ei.org>
-To: Ben Hutchings <ben@...adent.org.uk>
-cc: Alexander Viro <viro@...iv.linux.org.uk>, linux-fsdevel@...r.kernel.org, linux-security-module@...r.kernel.org, LKML <linux-kernel@...r.kernel.org>, 770492@...s.debian.org, Ben Harris <bjh21@....ac.uk>, oss-security@...ts.openwall.com, John Johansen <john.johansen@...onical.com>, Paul Moore <paul@...l-moore.com>, Stephen Smalley <sds@...ho.nsa.gov>, Casey Schaufler <casey@...aufler-ca.com>
-Subject: Re: [RFC PATCH RESEND] vfs: Move security_inode_killpriv() after permission checks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/10/15
+Message-ID: <54DA6EC2.4070301@sumptuouscapital.com>
+Date: Tue, 10 Feb 2015 21:49:06 +0100
+From: Kristian Fiskerstrand <kristian.fiskerstrand@...ptuouscapital.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request: Cups: cupsRasterReadPixels buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-On Sat, 17 Jan 2015, Ben Hutchings wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
 
-> chown() and write() should clear all privilege attributes on
-> a file - setuid, setgid, setcap and any other extended
-> privilege attributes.
-> 
-> However, any attributes beyond setuid and setgid are managed by the
-> LSM and not directly by the filesystem, so they cannot be set along
-> with the other attributes.
-> 
-> Currently we call security_inode_killpriv() in notify_change(),
-> but in case of a chown() this is too early - we have not called
-> inode_change_ok() or made any filesystem-specific permission/sanity
-> checks.
-> 
-> Add a new function setattr_killpriv() which calls
-> security_inode_killpriv() if necessary, and change the setattr()
-> implementation to call this in each filesystem that supports xattrs.
-> This assumes that extended privilege attributes are always stored in
-> xattrs.
+Cups 2.0.2 was released[0] including the following item in changelog:
+Security: cupsRasterReadPixels buffer overflow with invalid page
+header and compressed raster data (STR #4551 [1]).
 
-It'd be useful to get some input from LSM module maintainers on this. 
+Has a CVE already been assigned to this, if not, can one be assigned?
 
-e.g. doesn't SELinux already handle this via policy directives?
+Thanks
 
+References:
+[0] https://www.cups.org/
+[1] https://www.cups.org/str.php?L4551
+- -- 
+- ----------------------------
+Kristian Fiskerstrand
+Blog: http://blog.sumptuouscapital.com
+Twitter: @krifisk
+- ----------------------------
+Public OpenPGP key 0xE3EDFAE3 at hkp://pool.sks-keyservers.net
+fpr:94CB AFDD 3034 5109 5618 35AA 0B7F 8B60 E3ED FAE3
+- ----------------------------
+Cogito ergo sum
+I think, therefore I am
+-----BEGIN PGP SIGNATURE-----
 
--- 
-James Morris
-<jmorris@...ei.org>
-
+iQEcBAEBCgAGBQJU2m6+AAoJEP7VAChXwav63lkH/3MWawq7d6xMe19mBRmCauQt
+wz5KMChpRgLlgKxUejl+jetjm7n1xNJpb4hg6lSuBdb6+KcfmWrlEUxbbCN34HiH
+oKAFmby2/VxTyrj1Bq1ce6BbtAmP6TTHI3/LmsUOA+QVvHFTBKfasEDoXXKBEzgu
+of4OMLuSFjuFaqlfPOr8VlvZGpKUJaZS1LRJRMEe/ts9Vu3CRcvMicYhgt32Q6LA
+OnxVVN4F+nIDuyxFKyRifHVRFp3tW5od2SLxXA51epEzHgnPz3eHDmzKk079jxra
+V7voBTKTuGKW5Gf2d6pjkQo7JAqARdv+3GIXBuB+YkwpSDl6pG6lP6gOcZCrobA=
+=/iVv
+-----END PGP SIGNATURE-----
