@@ -1,35 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/06/2
-Message-ID: <54F8FE63.9030801@treenet.co.nz>
-Date: Fri, 06 Mar 2015 14:09:55 +1300
-From: Amos Jeffries <squid3@...enet.co.nz>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/10/3
+Message-ID: <8654447.8593062.1423550523425.JavaMail.zimbra@redhat.com>
+Date: Tue, 10 Feb 2015 01:42:03 -0500 (EST)
+From: Wade Mealing <wmealing@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: unassigning CVE-2015-2104
+Cc: cve-assign@...re.org
+Subject: CVE-Request -- Linux kernel - panic on nftables rule flush
 Content-Type: text/plain; charset=utf-8
 
-On 6/03/2015 10:42 a.m., cve-assign@...re.org wrote:
-> We think that the issue reduces to the question of whether it's
-> acceptable for urlparse to provide inconsistent information about the
-> structure of a URL.
-> 
-> https://docs.python.org/2/library/urlparse.html says:
-> 
->    urlparse.urlparse(urlstring[, scheme[, allow_fragments]])
->    Parse a URL into six components, returning a 6-tuple. This
->    corresponds to the general structure of a URL:
->    scheme://netloc/path;parameters?query#fragment.
+Gday,
 
-My 2c ... no it does not.
+I'd like to request a CVE for a denial of service attack found here here https://bugzilla.kernel.org/show_bug.cgi?id=91441.
 
-There are 7 parts in a URL. What is called "netloc" in that description
-is actually two fields: [userinfo '@'] authority
+A remote attacker with the NET_CAP_ADMIN capability could use this to panic (denial of service) a system if they were able to flush a chain with a jump target.
 
-The userinfo field is very much alive and well in non-HTTP schemes.
+More info: https://bugzilla.redhat.com/show_bug.cgi?id=1190966
 
+Thanks
 
-Ignoring the userinfo field leaves implementations open to attacks of
-the form:
-   scheme://example.com@...shing.com/path
-
-AYJ
-
+Wade Mealing
