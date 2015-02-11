@@ -1,108 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/04/9
-Message-ID: <CALPTtNX4yFvjTY0jHGEGfMA8RK5LUCfu+MsJPFmt6WrHAbEa6g@mail.gmail.com>
-Date: Wed, 4 Feb 2015 09:59:59 -0800
-From: Reed Loden <reed@...dloden.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/11/3
+Message-ID: <20150211061555.GR23507@oevtugenva.nrevsny.pk>
+Date: Wed, 11 Feb 2015 01:15:55 -0500
+From: Rich Felker <dalias@...c.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Apache 2.4 mod_ssl SSLSessionTickets -- others vulnerable?
+Subject: Re: wordexp(3)
 Content-Type: text/plain; charset=utf-8
 
-... or you could do something like what Twitter did [0] and write your own
-scripts to generate new session ticket keys regularly and store them only
-in a tmpfs or /dev/shm type environment.
+On Tue, Feb 10, 2015 at 12:57:05PM -0500, Rich Felker wrote:
+> On Tue, Feb 10, 2015 at 08:27:56PM +0300, Solar Designer wrote:
+> > Hi,
+> > 
+> > I found this curious and relevant to this list, off Twitter:
+> > 
+> > (x250) <%worr> RT @FioraAeterna: oh my gosh, Apple's libc literally implements "wordexp" by shelling out to perl: https://github.com/Apple-FOSS-Mirror/Libc/blob/2ca2ae74647714acfc18674c3114b1a5d3325d7d/gen/wordexp.c#L192
+> > 
+> > <worr> So yesterday, @FioraAeterna tweeted this: https://github.com/Apple-FOSS-Mirror/Libc/blob/2ca2ae74647714acfc18674c3114b1a5d3325d7d/gen/wordexp.c#L192. I've decided to take a tour of wordexp(3) implementations
+> > <@worr> They can't all be that bad
+> > (x2) <@worr> NetBSD and FreeBSD both use a sh builtin to implement wordexp(3): http://svnweb.freebsd.org/base/head/lib/libc/gen/wordexp.c?revision=254977&view=markup http://cvsweb.netbsd.org/bsdweb.cgi/src/lib/libc/gen/wordexp.c?rev=1.3&content-type=text/x-cvsweb-markup&only_with_tag=MAIN
+> > (x5) <@worr> OpenBSD wins the wordexp(3) contest, by refusing to implement it altogether.
+> > <@worr> Correction: glibc implements a huge recursive descent parser, and only shells out when it needs to do subshell expansions.
+> > <@worr> tbh, wordexp(3) is an antifeature. Maybe even a misfeature.
+> > <@worr> Here's the implementation, btw: https://sourceware.org/git/?p=glibc.git;a=blob;f=posix/wordexp.c;h=26f3a2653feba2b1a5904937d9d6b58c32109e24;hb=a39208bd7fb76c1b01c127b4c61f9bfd915bfe7c#l872
+> > <@worr> Continuing on my tour of wordexp(3) implementations, here's Illumos': https://github.com/joyent/illumos-joyent/blob/master/usr/src/lib/libc/port/regex/wordexp.c#L218-L290 It constructs a small shell script and runs it
+> 
+> POSIX is explict that the wordexp interface is designed such that
+> invoking a shell is one valid implementation choice. My view on all
+> this is that pretty much anything wordexp-related is not CVE-worthy;
+> wordexp simply is not a proper tool to be using in programs dealing
+> with untrusted inputs -- either untrusted input strings, or untrusted
+> environment contents. Obviously implementations using /bin/sh were
+> vulnerable to shellshock on systems where /bin/sh is bash.
 
-agl also talks about this problem on his blog [1] a while ago.
+To elaborate on the above, the RATIONALE text reads:
 
-As for your earlier question, nginx has the same issue here [2]. Really all
-comes down to OpenSSL not making it easy to do better.
+    "While wordexp() could be implemented entirely as a library
+    routine, it is expected that most implementations run a shell in a
+    subprocess to do the expansion."
 
-~reed
+Source:
+http://pubs.opengroup.org/onlinepubs/9699919799/functions/wordexp.html
 
-[0] https://blog.twitter.com/2013/forward-secrecy-at-twitter
-[1] https://www.imperialviolet.org/2013/06/27/botchingpfs.html
-[2]
-http://nginx.org/en/docs/http/ngx_http_ssl_module.html#ssl_session_ticket_key
+In addition to the allowance of shell-based implementations, the text
+of the standard puts a burden on the calling application not to pass
+certain dangerous strings:
 
-On Wed, Feb 4, 2015 at 9:50 AM, Mark Felder <feld@...d.me> wrote:
+    "... Therefore, the application shall ensure that words does not
+    contain an unquoted <newline> character or any of the unquoted
+    shell special characters '|', '&', ';', '<', '>' except in the
+    context of command substitution as specified in XCU Command
+    Substitution."
 
->
->
-> On Wed, Feb 4, 2015, at 10:55, Florent Daigniere wrote:
-> > On Wed, 2015-02-04 at 10:35 -0600, Mark Felder wrote:
-> > > From the 2.4.12 changelog:
-> > >
-> > >
-> > >   *) mod_ssl: New directive SSLSessionTickets (On|Off).
-> > >      The directive controls the use of TLS session tickets (RFC 5077),
-> > >      default value is "On" (unchanged behavior).
-> > >      Session ticket creation uses a random key created during web
-> > >      server startup and recreated during restarts. No other key
-> > >      recreation mechanism is available currently. Therefore using
-> > >      session
-> > >      tickets without restarting the web server with an appropriate
-> > >      frequency
-> > >      (e.g. daily) compromises perfect forward secrecy. [Rainer Jung]
-> > >
-> > >
-> > > So if you use Apache 2.4 and care about PFS protecting your data, you
-> > > should turn this feature off. This appears to be an implementation
-> issue
-> > > because there is no other way for Apache to recreate keys. I don't know
-> > > a lot about the fine details of Session Tickets, but can anyone care to
-> > > comment if there are other known bad implementations of session tickets
-> > > out there? Does this affect Apache 2.2? Nginx? Lighttpd?
-> > >
-> > >
-> > > Thanks
-> > > I find this bizarre that a known security weakness like this is left
-> > > "on" by default...
-> >
-> > You're right, it's "bizarre"
-> >
-> > I've tried to make some noise about it two years ago [1] ...
-> >
-> > IMHO it's OpenSSL's default that should be changed. The server
-> > implementation shouldn't give a ticket if it's picked a PFS enabled
-> > cipher (or a cipher which aims at providing better security than
-> > AES128-CBC) unless explicitly told to do so (the case where there is
-> > more than one server).
-> >
-> > Apache HTTPd's new setting (SSLSessionTicketKeyFile), allowing you to
-> > set the ticket key is *DANGEROUS* as documented [1]. It encourages users
-> > explicitly to store the key on a forensically carvable medium...
-> > "The ticket key file contains sensitive keying material and should be
-> > protected with file permissions similar to those used for
-> > SSLCertificateKeyFile."
-> > Which is exactly what you shouldn't do!
-> >
->
-> Thanks for the details, Florent. After reviewing this blog post [1] it's
-> much clearer now, but I'm still a bit fuzzy on if "session caching" and
-> "session IDs" (RFC 5246, TLS 1.2) -- also as identified by Qualys
-> SSLLabs line item "Session resumption (caching)" -- are the same; is the
-> Session Cache caching session IDs? I only ask because I know that
-> webservers have had SSL Session Cache features for years, but RFC 5246
-> is TLS 1.2 in its entirety and I believe I've seen this feature predate
-> TLS 1.2. Was session caching / IDs always part of the SSL/TLS spec, now
-> superseded by the newer TLS 1.2 RFC?
->
-> If I'm understanding that correctly the following would be true: the use
-> of session caching is not a known vulnerability, but the use of session
-> tickets is a potential vulnerability. The design of the session tickets
-> (RFC 5077) appears to solve a specific problem: reducing expensive TLS
-> renegotiation when you have a cluster of servers and the session is not
-> guaranteed to stick to a specific server/load balancer. Additionally
-> OpenSSL lacks key rotation for session tickets, so it seems safe to
-> assume all software using OpenSSL with session tickets enabled are
-> likely not working around this problem by enforcing their own key
-> rotation.
->
-> This feels like a feature that should always be turned off unless your
-> environment absolutely requires it; especially if you have measurable
-> performance impact / negative client experience without it.
->
->
-> [1]
-> http://vincent.bernat.im/en/blog/2011-ssl-session-reuse-rfc5077.html
->
+However, later in the DESCRIPTION, the following text appears, which
+seems to specify a behavior for this case:
 
+    "If the implementation supports the utilities defined in the Shell
+    and Utilities volume of POSIX.1-2008, and words contains an
+    unquoted character- <newline>, '|', '&', ';', '<', '>' , '(', ')',
+    '{', '}' - in an inappropriate context, wordexp() shall fail, and
+    the number of expanded words shall be 0."
+
+Read together, this seems to require conforming implementations to
+detect bad characters, but also requires conforming applications not
+to pass them; one or the other of these requirements is rather
+useless, then.
+
+In any case, I would hope all of the above serves as sufficient
+warning that you should not pass untrusted input to wordexp. :-)
+
+Rich
