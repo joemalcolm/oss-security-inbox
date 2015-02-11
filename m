@@ -1,33 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/27/28
-Message-ID: <Pine.LNX.4.64.1501271819410.11165@beijing.mitre.org>
-Date: Tue, 27 Jan 2015 18:20:17 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/11/12
+Message-Id: <20150211173534.103ADB2EA62@smtpvbsrv1.mitre.org>
+Date: Wed, 11 Feb 2015 12:35:34 -0500 (EST)
 From: cve-assign@...re.org
-To: Salvatore Bonaccorso <carnil@...ian.org>
-cc: OSS Security Mailinglist <oss-security@...ts.openwall.com>, CVE Assignments MITRE <cve-assign@...re.org>
-Subject: Re: CVE Request: patch: directory traversal via file rename
+To: hecmargi@....es
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE-Request -- Google Email App 4.2.2 remote denial of service
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> Hi
->
-> Could you please assign a CVE for the following issue in patch? There
-> is a directory traversal flaw via file rename.
->
-> It was reported to the Debian BTS as #775873[1] and is different from
-> #775227, which was a directory traversal via symlinks and got
-> CVE-2015-1196.
->
-> [1] https://bugs.debian.org/775873
-> [2] https://savannah.gnu.org/bugs/?44059
->
-> Regards,
-> Salvatore
+> It is a different source code and fix. The source code is available in:
+> 
+> https://android.googlesource.com/platform/packages/apps/Email
+> 
+> ... in the Email App this is done by the MimeUtility.java
 
-Use CVE-2015-1395.
+Do you mean it's this fix:
 
----
+  https://android.googlesource.com/platform/packages/apps/Email/+/6fb157c90cc04a062eefa5ede850b6efd8d2fc80
 
-CVE assignment team, MITRE CVE Numbering Authority M/S M300
+?
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
 202 Burlington Road, Bedford, MA 01730 USA
 [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJU25JrAAoJEKllVAevmvmsHToIALG1fbYsfbgoRvCul7LvgRHf
+p84/EKs4GNKrYlqnA6V5cu9HaTPWWaxl+vmJsF2AU391id46iks1/ZD3Gj/14B9T
+6j7NmYn8dkERwgPoL0fgZk1JpXYyxOdXCMO88uC911DnJfhHC+Xs4DHaL1LrPfSl
+SEfcDVqqima/VBswVo9q+TqA9B0aTN6RqGAE5rnZFdOlhLprTdUWptrDhY/fyuDT
+/m1CCboG0R/uG2FYBACNIlwESeH0BnjcPKMpeKKaYI4Hwl86OCGlVSwgmEcDxU91
+p9MeFxitpljqKM4PA+XdI4a9RZownAJaCEnKjT9sATzZaLTbT8rXmKaaJ5W8Wf4=
+=nkPI
+-----END PGP SIGNATURE-----
