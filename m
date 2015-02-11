@@ -1,33 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/01/2
-Message-ID: <20150101064241.GB5862@eldamar.local>
-Date: Thu, 1 Jan 2015 07:42:41 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: cve-assign@...re.org
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Linux: Remote crash via batman-adv module - Linux kernel
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/11/1
+Message-Id: <15021022132533_202004A2@antinode.info>
+Date: Tue, 10 Feb 2015 22:13:25 -0600 (CST)
+From: "Steven M. Schweda" <sms@...inode.info>
+To: thoger@...hat.com
+Cc: MANCHA1@...o.com, Info-ZIP-Dev@...tley.com, OSS-SECURITY@...ts.openwall.com, CVE-ASSIGN@...re.org
+Subject: Re: CVE Request: Info-ZIP unzip 6.0
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+From: Tomas Hoger <thoger@...hat.com>
 
-On Wed, Dec 31, 2014 at 12:32:02PM -0500, cve-assign@...re.org wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
+> Your patch, unzip-6.0_overflow2.diff, which is what got applied
+> upstream, seems to perform an incorrect check.  It ensures that
+> eb_ucsize is equal to eb_size - compr_offset.  The latter value
+> includes compression header length (EB_CMPRHEADLEN), which is not
+> included in eb_ucsize AFAICT (based on what I could find in
+> extrafld.txt or os2/os2zip.c in Zip 3.0 sources).  It seems the check
+> should be:
 > 
-> > linux could crash when using the batman-adv module
-> > 
-> > http://thread.gmane.org/gmane.linux.network/343494
-> > https://bugs.debian.org/774155
-> > https://lists.open-mesh.org/pipermail/b.a.t.m.a.n/2014-November/012561.html
-> > https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=5b6698b0e4a37053de35cc24ee695b98a7eb712b
+>   (eb_size - compr_offset - EB_CMPRHEADLEN != eb_ucsize)
 > 
-> Use CVE-2014-9428. The scope of this CVE ID is the problem as
-> described in 5b6698b0e4a37053de35cc24ee695b98a7eb712b. The scope does
-> not include other issues referenced in 343494, such as the
-> "-Wlogical-not-parentheses" issue in the
-> https://bugzilla.kernel.org/show_bug.cgi?id=84061 bug.
+> Can you or upstream confirm?
+> 
+> This problem would not be a security problem, but a bug that could
+> cause well-formed extra fields to be rejected as invalid.
 
-Thank you for the CVE assignment!
+   Hello.  I'm upstream.
 
-Regards,
-Salvatore
+   Thanks for the report.  I may be easily swayed, but I agree.  I was
+more worried about the buffer-overflow problems, and did not carefully
+analyze this part of the patch.  As I read the spec (for OS/2), eb_size
+should include the 4-byte eb_ucsize value (eb_cmpr_offs = EB_OS2_HLEN ->
+compr_offset), the 6-byte compressed-data header (2-byte compression
+method plus 4-byte CRC = EB_CMPRHEADLEN), and the eb_ucsize bytes of
+compressed (well, STOREd, actually) data.
+
+   Part of the fun here is that I have no easy access to an actual OS/2
+(or AtheOS, or BeOS, or pre-OS-X Mac, or ...) system, which makes it
+tough to run a real test on this code.  (The rest of the world is
+probably in the same boat, so it's not clear that anyone would ever
+notice this, but it can't hurt (much) to make it correct.)
+
+   Unless someone talks me out of it soon, I'll make some equivalent
+change to the replacement 6.00 extract.c (and the current development
+edition), and throw it into the pile here.
+
+------------------------------------------------------------------------
+
+   Steven M. Schweda               sms@...inode-info
+   382 South Warwick Street        (+1) 651-699-9818
+   Saint Paul  MN  55105-2547
