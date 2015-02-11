@@ -1,77 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/06/3
-Message-ID: <CADZ5QDFCYSoqKzu+9EHtZh+KRB7Yoh5ZSCshjbhZkRywfw-9-w@mail.gmail.com>
-Date: Mon, 5 Jan 2015 14:12:35 -0600
-From: Simo Ben youssef <simo@...xploit.com>
-To: Korvin Szanto <Korvin@...tlandlabs.com>
-Cc: Henri Salo <henri@...v.fi>, oss-security@...ts.openwall.com, cve-assign@...re.org,  abuse@...crete5.org, security@...crete5.org,  Simo Ben youssef <simo@...xploit.com>
-Subject: Re: CVE request: Concrete5 XSS vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/11/14
+Message-ID: <54DBAB85.1030004@upv.es>
+Date: Wed, 11 Feb 2015 20:20:37 +0100
+From: Hector Marco <hecmargi@....es>
+To: cve-assign@...re.org
+CC: oss-security@...ts.openwall.com
+Subject: Re: CVE-Request -- Google Email App 4.2.2 remote denial of service
 Content-Type: text/plain; charset=utf-8
 
-Korvin,
-
-You need to get your facts right before pointing fingers.
-First of all and as we stated in our advisory on the 9th of December 2014,
-the vulnerabilities were discovered on the 2nd of November 2014 to affect
-5.7.2 (and 5.7.2.1 later on December) which was the the latest version at
-that time (As downloaded from concrete5.org).
-The fix on your github was pushed on the 10th of December 2014, a day after
-we published our advisory on FD and Bugtraq.
-You accuse us of being irresponsible and unprofessional for not disclosing
-the vulnerabilities to you first and it's not true since we contacted you
-twice through your security program at HackerOne (Report #33848) which
-hasn't been even "triaged" yet.
-
-I think what's really unprofessional is your inability to monitor your own
-security programs while putting the blame on people who reach out to you to
-help you fix your flaws.
 
 
-On Mon, Jan 5, 2015 at 11:56 AM, Korvin Szanto <Korvin@...tlandlabs.com>
-wrote:
-
-> This has been fixed in 5.7.3 for some time
+On 11/02/15 18:35, cve-assign@...re.org wrote:
+>> It is a different source code and fix. The source code is
+>> available in:
+> 
+>> https://android.googlesource.com/platform/packages/apps/Email
+> 
+>> ... in the Email App this is done by the MimeUtility.java
+> 
+> Do you mean it's this fix:
+> 
+> https://android.googlesource.com/platform/packages/apps/Email/+/6fb157c90cc04a062eefa5ede850b6efd8d2fc80
 >
-> https://github.com/concrete5/concrete5-5.7.0/commit/e3d47d2af88ddef36deaf754ef22f1f39b9b623b
->
-> We have a security disclosure program for this so any disclosure
-> outside of our program is very irresponsible and unprofessional. You
-> end up with outdated information and leave us unable to fix the issue
-> in a secure way since we cannot see it until it's brought to our
-> attention through our disclosure program.
->
-> On Fri, Jan 2, 2015 at 11:43 AM, Henri Salo <henri@...v.fi> wrote:
-> > -----BEGIN PGP SIGNED MESSAGE-----
-> > Hash: SHA1
-> >
-> > Can you assign CVE identifier for following vulnerability in Concrete5,
-> thanks.
-> >
-> > http://seclists.org/bugtraq/2014/Dec/53
-> > http://osvdb.org/115633
-> > http://osvdb.org/115634
-> >
-> > ps. there is something wrong with
-> http://www.openwall.com/lists/oss-security/ it
-> > says "an error occurred while processing this directive"
-> >
-> > - --
-> > Henri Salo
-> > -----BEGIN PGP SIGNATURE-----
-> > Version: GnuPG v1.4.12 (GNU/Linux)
-> >
-> > iEYEARECAAYFAlSm9P4ACgkQXf6hBi6kbk+bfQCgjF/EWeO4Wfs0SUSsq96LwNpE
-> > AWAAn1yKEw9eDAlJ6cQczjzHZ7VGdXUp
-> > =0mVH
-> > -----END PGP SIGNATURE-----
->
+>  ?
+> 
+> 
 
+I have tested this bug against the Email App in a Samsung Galaxy S4
+(4.2.2.0200 vulnerable) and S5 mini (4.2.2.0400 not vulnerable) but I
+didn't find these versions numbers in the Email git repository.
 
-
--- 
-Simo Ben youssef
-Vulnerability Research Engineer
-O: (708) 629-6922 M: (312) 725-8043
-MorXploit Research
-www.morxploit.com
+That patch fixes a problem with matches with the vulnerability that I
+reported but only with that I can not say that that patch fixes what I
+have reported.
 
