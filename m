@@ -1,53 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/19/1
-Message-ID: <20150219002524.GA16545@zoho.com>
-Date: Thu, 19 Feb 2015 00:25:24 +0000
-From: mancha <mancha1@...o.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/11/6
+Message-ID: <20150211121715.GV28137@symphytum.spacehopper.org>
+Date: Wed, 11 Feb 2015 12:17:15 +0000
+From: Stuart Henderson <sthen@...nbsd.org>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: CVE request: xrdp
+Subject: Re: wordexp(3)
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Feb 18, 2015 at 08:22:06PM +0000, mancha wrote:
-> Starting with glibc 2.17 (eglibc 2.17), crypt() fails with EINVAL (w/
-> NULL return) if the salt violates specifications. Additionally, on
-> FIPS-140 enabled Linux systems, DES or MD5 encrypted passwords passed
-> to crypt() fail with EPERM (w/ NULL return).
-> 
-> It was discovered by Ken Milnore that xrdp 0.6.1 and earlier, when
-> validating user accounts against plain passwd files or via
-> shadow-utils, does not check for NULL returns from crypt(). [1]
-> 
-> --- sesman/verify_user.c ---
->   encr = crypt(pass,salt);
->   if (g_strncmp(encr, hash, 34) != 0)
->   {
->     return 0;
->   }
->   return 1;
-> ----------------------------
-> 
-> A NULL return crashes the xrdp-sesman daemon resulting in an xrdp
-> server denial of service (for all modules that use xrdp's session
-> manager for user authentication via old-style passwd files or via
-> shadow passwords).
-> 
-> This has been fixed by upstream in its development branch. [2]
-> 
-> Please allocate a CVE for this issue.
-> 
-> Thanks.
-> 
-> --mancha
-> 
-> ======
-> [1] http://sourceforge.net/p/xrdp/mailman/message/32985523/
-> [2] https://github.com/neutrinolabs/xrdp/commit/851c762ee722
+On 2015/02/10 20:27, Solar Designer wrote:
+> (x5) <@worr> OpenBSD wins the wordexp(3) contest, by refusing to implement it altogether.
 
-I should add, because it wasn't entirely clear from my report, this
-issue only affects implementations that directly call glibc's crypt
-not those that authenticate via PAM or kerberos.
+It might be of interest to know that we've only got patches in 2 ports
+as a result of this: celestia and filezilla (we're using globs instead
+of wordexp for these; I'm not aware of any negative feedback relating
+to these patches).
 
---mancha
-
-Content of type "application/pgp-signature" skipped
