@@ -1,52 +1,78 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/08/2
-Message-Id: <3BF611E3-C8DB-47E8-9C8F-5EAC4E541648@oracle.com>
-Date: Sun, 8 Mar 2015 17:18:28 +0000
-From: John Haxby <john.haxby@...cle.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Another Python app (rhn-setup: rhnreg_ks) not checking hostnames in certs properly CVE-2015-1777
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/11/2
+Message-Id: <20150211055916.4B62342E0D3@smtpvbsrv1.mitre.org>
+Date: Wed, 11 Feb 2015 00:59:16 -0500 (EST)
+From: cve-assign@...re.org
+To: Todd.Miller@...rtesan.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: sudo TZ issue
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> On 7 Mar 2015, at 03:54, Kurt Seifried <kseifried@...hat.com> wrote:
-> 
-> On 06/03/15 06:08 AM, John Haxby wrote:
->> On 06/03/15 01:02, Kurt Seifried wrote:
->>> Please contact your TAM/GSS with this request, it carries a lot
->>> more impact if customers want something that we also want.
->> 
->> 
->> I know "me too" isn't helpful, but I'm going to say "me too" anyway.
->> 
->> It occurred to me that we could have a patch that has a global switch
->> (eg a file in, say, /etc/sysconfig and a corresponding switch for
->> individual applications) that switches on the correct behaviour.   I
->> know it's a bit of a mess, but that way people who don't care will
->> continue in blissful ignorance and people that do care can do
->> something about it.
-> 
-> That would be one way. But why can't Oracle build it and open source it?
-> Oracle has a Linux distribution too I thought? Or do you need Red Hat
-> engineering to do it first? If so as I said, customer cases carry far
-> more weight than oss-security for feature requests.
+> http://www.sudo.ws/alerts/tz.html
 
+We are not sure why this is being interpreted as a vulnerability in
+sudo that should have a CVE assignment in which sudo is the
+responsible product. It appears that you are adding a new security
+feature in which sudo chooses to help prevent exploitation of bugs in
+a system library such as libc. Adding security features is often not
+within the scope of CVE. We're not disputing that it's worthwhile for
+you to change the sudo code and publish an alert explaining why you
+did that. It's just that some types of worthwhile changes can have CVE
+IDs whereas others can't.
 
-Sorry, I didn’t mean to imply that Red Hat should do this first.   I’m also sorry if this came across as antagonistic: my intention was to try to find a way forward that would be beneficial to us both and to everyone else.
+For example, see:
 
-There is no reason at all why I should not do this, but I would rather do it with broad agreement.   There is also absolutely no way this could be done as closed-source and I’m not sure why you think I could or would do that.
+  http://www.openwall.com/lists/oss-security/2014/10/16/2
 
-If both Red Hat have customer requests then that would help everyone would it not?
+Also:
 
-jch
+> As such, a program run via sudo will inherit the (possibly malicious)
+> value of TZ.
 
-> 
->> jch
-> 
-> 
-> --
-> Kurt Seifried -- Red Hat -- Product Security -- Cloud
-> PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-> 
+Depending on how other code is written, a TZ value could still be
+malicious even if it doesn't satisfy the definition of "unsafe" that
+you included. Should there be other CVEs for sudo if any such code is
+identified?
 
+To be clear, you can have a CVE assignment if, as the "vendor" of
+sudo, you believe that absense of the new "unsafe" checking was an
+implementation mistake in sudo. However, in that case, can you clarify
+whether it is one mistake or multiple mistakes? For example, is there
+a documented or implied security policy for sudo that addresses the
+current situation? A policy might be something like:
 
-Download attachment "signature.asc" of type "application/pgp-signature" (237 bytes)
+ - for every environment variable passed through by default, there is
+   supposed to be a proactive review of all common use cases of that
+   environment variable, and sudo is supposed to have input validation
+   that ensures that the environment variable's value is normal and
+   properly handled within that use case
+
+or, for multiple policies:
+
+  - sudo is supposed to prevent traversal attacks with environment
+    variables
+  
+  - sudo is supposed to block syntactically invalid values of
+    environment variables
+
+  - sudo is supposed to block long values of environment variables
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJU2u8mAAoJEKllVAevmvmswp8H/0HzL1216WeNJxPvb3E5SSOf
+nZv/2M5BxOdC4OTWmVPzxmUVkwKlTMlf7iKLOZqb2scsrRGHi8EshsSvLZ2iFKIy
+Y+axIv8YqS8IkvAC3rgDegY8DYrN4+phffHfzAa9ekrndgIjFEjk9AFo4u7p0xUs
+rBtohfkufg0wWpajUctfkeV8MnoA4RSpZDu1MymNdfdx4c66Wyu28LFY8/scqscO
+UO1/RcpwRXp1rJS5SBsa+HsW+TohROzMHMhWTphStHWb3fNMhm9+X6hYQydbeFWh
+EjK0TlhwXT3Vm6eoPQBaPdheKDU8F+YvhUDtxKeQzmhrjuVpy56YDV/uXQWHtBU=
+=I0i/
+-----END PGP SIGNATURE-----
