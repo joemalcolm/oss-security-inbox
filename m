@@ -1,31 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/01/3
-Message-ID: <20150101075131.GA12426@eldamar.local>
-Date: Thu, 1 Jan 2015 08:51:31 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Cc: CVE Assignments MITRE <cve-assign@...re.org>
-Subject: CVE Request: xdg-utils: xdg-open: command injection vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/11/8
+Message-ID: <54DB4CDC.8050701@redhat.com>
+Date: Wed, 11 Feb 2015 13:36:44 +0100
+From: Florian Weimer <fweimer@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: wordexp(3)
 Content-Type: text/plain; charset=utf-8
 
-Hi
+On 02/11/2015 01:17 PM, Stuart Henderson wrote:
+> On 2015/02/10 20:27, Solar Designer wrote:
+>> (x5) <@worr> OpenBSD wins the wordexp(3) contest, by refusing to implement it altogether.
+> 
+> It might be of interest to know that we've only got patches in 2 ports
+> as a result of this: celestia and filezilla (we're using globs instead
+> of wordexp for these; I'm not aware of any negative feedback relating
+> to these patches).
 
->From the references it is not clear, if a CVE was already requested in
-past, but I have not found a reference here. xdg-open has a command
-injection vulnerability, which was reported on [1] and [2]. The
-Freedesktop.org Bug entry contains also a patch[3]. The issue was
-hilighted again on the fulldisclosure list in [4].
+There is software out there which automatically uses a shell-based
+implementation if the system does not provide wordexp.  With this in
+mind, it makes sense to provide the interface even if you dislike it
+(same thing with strlcpy).
 
-In case it is not yet assigned, could you please assign a CVE for this
-RCE for xdg-open in xdg-utils?
-
-References:
-
- [1] https://bugs.gentoo.org/show_bug.cgi?id=472888
- [2] https://bugs.freedesktop.org/show_bug.cgi?id=66670
- [3] https://bugs.freedesktop.org/attachment.cgi?id=109536
- [4] http://seclists.org/fulldisclosure/2014/Nov/36
- [5] https://bugs.debian.org/773085
-
-Regards,
-Salvatore
+-- 
+Florian Weimer / Red Hat Product Security
