@@ -1,41 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/03/12
-Message-ID: <CACYkhxi4j2ROWgxPn6CerouZFRzvP1=R4TV9AiHjeqMTWEaTnw@mail.gmail.com>
-Date: Wed, 4 Mar 2015 10:42:08 +1100
-From: Michael Samuel <mik@...net.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/11/7
+Message-ID: <20150211122706.GA7774@zoho.com>
+Date: Wed, 11 Feb 2015 12:27:06 +0000
+From: mancha <mancha1@...o.com>
 To: oss-security@...ts.openwall.com
-Subject: PostgreSQL password hashing
+Cc: sms@...inode.info, cve-assign@...re.org, thoger@...hat.com
+Subject: Re: CVE Request: Info-ZIP unzip 6.0
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+On Tue, Feb 10, 2015 at 02:11:59PM +0100, Tomas Hoger wrote:
+> On Mon, 22 Dec 2014 18:14:58 +0000 mancha wrote:
+> 
+> > OOB access (both read and write) issues exist in test_compr_eb
+> > (extract.c) that can result in application crash or other
+> > unspecified impact.
+> > 
+> > This vulnerability can be triggered via crafted zip archives with
+> > extra fields that advertise STORED method compression (i.e. no
+> > compression) and have uncompressed field sizes smaller than the
+> > corresponding compressed field sizes.
+> > 
+> > This issue is different from CVE-2014-8140 [1].
+> 
+> FWIW, those issues are not entirely different, as the oCERT-2014-011
+> reproducer triggered the same issue your patch addresses - memcpy()
+> buffer overflow when using STORED compression and the uncompressed
+> size field value smaller than the rest of the data in the extra field
+> block.  In case of the oCERT-2014-011 report, the size was special -
+> 0.  Your check, however, would prevent overflow on the test case.
+> 
+> The check to reject uncompressed size of 0 is still needed to avoid
+> bypassing check if extra field block still has enough data for the
+> compression header.  That makes it possible to bypass your check and
+> trigger integer underflow in memextract() when EB_CMPRHEADLEN (2 + 4)
+> is subtracted from srcsize, which leads to memcpy() with size close to
+> SIZE_MAX.
+> 
+> Your patch, unzip-6.0_overflow2.diff, which is what got applied
+> upstream, seems to perform an incorrect check.  It ensures that
+> eb_ucsize is equal to eb_size - compr_offset.  The latter value
+> includes compression header length (EB_CMPRHEADLEN), which is not
+> included in eb_ucsize AFAICT (based on what I could find in
+> extrafld.txt or os2/os2zip.c in Zip 3.0 sources).  It seems the check
+> should be:
+> 
+>   (eb_size - compr_offset - EB_CMPRHEADLEN != eb_ucsize)
+> 
+> Can you or upstream confirm?
+> 
+> This problem would not be a security problem, but a bug that could
+> cause well-formed extra fields to be rejected as invalid.
 
-I'm posting this to the list, since it seems to be making the rounds finally :)
+You're right. The identity that should hold in stored method is:
 
-The "pass the hash" flaw and weak password hashing scheme in
-PostgreSQL was known to be weak at the time it was implemented.  I was
-among a chorus of people who spoke out about it at the time of it's
-inclusion, but the developers' response boiled down to:
-http://marc.info/?l=postgresql-general&m=111414028609961&w=2
+  eb_size - compr_offset - EB_CMPRHEADLEN == eb_ucsize
 
-This was recently rediscovered by atom from hashcat:
-http://hashcat.net/forum/thread-4148.html
+What must have thrown me for a loop when churning out the patch is the
+weird wording in unzpriv.h:
 
-To protect yourself:
-1) Put "password" instead of "md5" in pg_hba.conf
-2) Use a randomly generated, unique password rather than an actual word.
-3) Don't let attackers see your pg_shadow
+  #define EB_OS2_HLEN    4  /* size of OS2/ACL compressed data header */
 
-The reason for (1) is that the password auth protocol doesn't accept
-hashes.  Use TLS if network attacks are a problem.
+Thanks for catching that.
 
-The reason for (2) - which is a good idea anyway - is because the hash
-in the database is is just md5(password username).  If the username is
-"wordpress" for example, you could crack multiple hashes for similar
-cost to cracking one.
+I've removed the buggy patch from sf and replaced it with:
 
-(3) is a bit tongue-in-cheek, but pg_shadow is only accessible to
-superusers, so don't connect your webapp as a database superuser and
-you significantly reduce the risk of lots of bad stuff :)
+http://sf.net/projects/mancha/files/sec/unzip-6.0_overflow3.diff
 
-Regards,
-  Michael
+--mancha
+
+Content of type "application/pgp-signature" skipped
