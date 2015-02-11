@@ -1,30 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/04/17
-Message-ID: <Pine.LNX.4.64.1501041734580.3184@beijing.mitre.org>
-Date: Sun, 4 Jan 2015 17:36:13 -0500 (EST)
-From: "Steven M. Christey" <coley@...re.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request for illumos distributions
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/11/9
+Message-Id: <15021106422098_202004A2@antinode.info>
+Date: Wed, 11 Feb 2015 06:42:21 -0600 (CST)
+From: "Steven M. Schweda" <sms@...inode.info>
+To: mancha1@...o.com, OSS-SECURITY@...ts.openwall.com, CVE-ASSIGN@...re.org, THOGER@...hat.com
+Cc: Info-ZIP-Dev@...tley.com
+Subject: Re: CVE Request: Info-ZIP unzip 6.0
 Content-Type: text/plain; charset=utf-8
 
+From: mancha <mancha1@...o.com>
 
-On Sun, 4 Jan 2015, gremlin@...mlin.ru wrote:
+> I've removed the buggy patch from sf and replaced it with:
+> 
+> http://sf.net/projects/mancha/files/sec/unzip-6.0_overflow3.diff
 
-> On 2015-01-04 15:06:51 +1100, Dave Horsfall wrote:
->
-> >> | Use CVE-2014-9491.
-> >> Shouldn't we be using CVE-2015-XXXX by now?
-> > I'd rather see CVE-2015-XXXXX - look how close we came...
-> > Is there a CVE for that?
->
-> First CVE ID in 2015 is CVE-2015-0001; once we get to CVE-2015-9999,
-> the next ID will be CVE-2015-10000.
->
-> Consider it as "CVE-%u-%04u".
+   Also changed:
 
-People who consider the ID format as "CVE-%u-%04u" might not comply with 
-all the example IDs provided in CVE test data, as made available to the 
-public for almost a year at 
-http://cve.mitre.org/cve/identifiers/syntaxchange.html#guidance
+      http://antinode.info/ftp/info-zip/unzip60/extract.c
 
-- Steve
+2253c2253,2254
+<     if ((eb_compr_method == STORED) && (eb_size - compr_offset != eb_ucsize))
+---
+>     if ((eb_compr_method == STORED) &&
+>      (eb_size != compr_offset + EB_CMPRHEADLEN + eb_ucsize))
+
+------------------------------------------------------------------------
+
+   Steven M. Schweda               sms@...inode-info
+   382 South Warwick Street        (+1) 651-699-9818
+   Saint Paul  MN  55105-2547
