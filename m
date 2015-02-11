@@ -1,69 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/20/18
-Message-ID: <20150220171218.GV23507@oevtugenva.nrevsny.pk>
-Date: Fri, 20 Feb 2015 12:12:18 -0500
-From: Rich Felker <dalias@...c.org>
-To: Paul Pluzhnikov <ppluzhnikov@...gle.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Fixing the glibc runtime linker
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/11/4
+Message-ID: <54DB1D78.1010901@redhat.com>
+Date: Wed, 11 Feb 2015 10:14:32 +0100
+From: Florian Weimer <fweimer@...hat.com>
+To: cve-assign@...re.org
+CC: oss-security@...ts.openwall.com
+Subject: Re: Re: CVE request: sudo TZ issue
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Feb 20, 2015 at 09:04:48AM -0800, Paul Pluzhnikov wrote:
-> On Fri, Feb 20, 2015 at 8:50 AM, Rich Felker <dalias@...c.org> wrote:
+On 02/11/2015 06:59 AM, cve-assign@...re.org wrote:
+>> http://www.sudo.ws/alerts/tz.html
 > 
-> > On Fri, Feb 20, 2015 at 12:14:47AM -0800, Paul Pluzhnikov wrote:
-> 
-> >> If VAR is unset, or set to relative path, resulting binary will be "bad".
-> >
-> > If the rpath is needed for the binary to work, this should result in
-> > immediate failure when you try to run it, which would be detected and
-> > corrected before it becomes an issue.
-> 
-> Right. Except the picture may be slightly more complicated, e.g. the binary
-> has optional dependencies on libfoo.so and libbar.so, and the build uses
-> 
->   ${CC} -Wl,-rpath=${LIBFOO_INSTALL}:${LIBBAR_INSTALL} ...
-> 
-> and one or both of _INSTALL paths may be empty in a given build.
-> 
-> The bad RPATH may also not be immediately discovered because e.g. the
-> developer has LD_LIBRARY_PATH set (which is common because developers often
-> use debug version of the library installed separately from release one).
-> 
-> All of this is to say that that is a relatively easy mistake to make.
-> 
-> I fully agree with you that a competent vendor will not make this mistake,
-> but there appears to be sufficient evidence that incompetent vendors
-> exist :-)
+> We are not sure why this is being interpreted as a vulnerability
+> in sudo that should have a CVE assignment in which sudo is the 
+> responsible product. It appears that you are adding a new security 
+> feature in which sudo chooses to help prevent exploitation of bugs
+> in a system library such as libc.
 
-Thanks for clarifying the scenarion you have in mind. That makes a lot
-more sense.
+Changing environment variables is not compliant with the prevalent
+interpretation of of POSIX, and as a result, at least glibc will not
+change its behavior.  This means that AT_SECURE programs such as sudo
+need to implement proper filtering.
 
-> > If it's not needed for the binary to work, this is a huge incompetence
-> > or policy failure issue that's not going to be fixed by restricting
-> > RPATH. And it would probably be better solved by having ld produce
-> > warnings for relative or blank RPATH (or even refusing to generate
-> > such without an additional override option) rather than by potentially
-> > breaking existing binaries.
-> 
-> Interesting notion. I am not sure how open binutils developers will be to it:
-> after all you explicitly asked for empty RPATH with command line argument.
-> 
-> Should GCC also refuse to compile 'execve(argv[1]);' unless a
-> -fyes-i-know-what-i-am-doing flag is given?
+I will obtain clarification from the Austin Group that scrubbing
+environment variables in the implementation name space is allowed, and
+then we can revisit this matter as far as glibc is concerned.
 
-That's probably too specific to spend effort diagnosing, but GCC
-already has functionality to warn about deprecated/dangerous functions
-like gets and even to poison the identifiers (if you want) so that any
-reference to them is an error. So I don't think it's too much of a
-stretch to say that it would be nice for the linker to have options to
-diagnose dangerous erroneous usage.
-
-Of course there are other situations where I would be on the other
-side of this argument saying it's annoying and unnecessary to
-competent developers, so I can't say for sure that it's the right
-thing, but it seems like an idea worth exploring. Especially in case
-developers might be using new binutils/gcc but producing binaryware
-that's going to work with older versions of glibc/ld.so.
-
-Rich
+-- 
+Florian Weimer / Red Hat Product Security
