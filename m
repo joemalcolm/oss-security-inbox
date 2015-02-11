@@ -1,32 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/05/13
-Message-ID: <Pine.LNX.4.64.1501051240190.8826@beijing.mitre.org>
-Date: Mon, 5 Jan 2015 12:42:41 -0500 (EST)
-From: cve-assign@...re.org
-To: Joshua Rogers <honey@...ernot.info>
-cc: oss-security@...ts.openwall.com
-Subject: Re: CVE Request(s): GnuPG 2/GPG2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/11/13
+Message-ID: <20150211190009.GA27822@eldamar.local>
+Date: Wed, 11 Feb 2015 20:00:09 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: oss-security@...ts.openwall.com
+Cc: CVE Assignments MITRE <cve-assign@...re.org>
+Subject: Re: heap overflow in procmail
 Content-Type: text/plain; charset=utf-8
 
+Hi,
 
-On Tue, 30 Dec 2014, Joshua Rogers wrote:
+On Wed, Jan 21, 2015 at 03:15:04PM +0100, Jakub Wilk wrote:
+> * Tavis Ormandy <taviso@...gle.com>, 2014-09-03, 11:52:
+> >I noticed a heap overflow in procmail when parsing addresses with
+> >unbalanced quotes.
+> 
+> Unfortunately, there's more:
+> https://bugs.debian.org/769937
 
-> I found multiple vulnerabilities in GPG2.
-> Could some CVE-ID(s) be assigned please.
-> Patches were provided by multiple people.
->
-> --
-> Double free in scd/command.c:
-> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=773471
->
-> Double free in sm/minip12.c:
-> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=773472
+For this an Darmochwal provided a patch to the Debian bugtracker:
 
-What is the attack scenario for these double frees?  It is not immediately 
-clear whether there is a role for an attacker who is not the GnuPG user.
+https://bugs.debian.org/cgi-bin/bugreport.cgi?msg=11;filename=formail.patch;att=1;bug=769937
 
----
-
-CVE assignment team, MITRE CVE Numbering Authority M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+Regards,
+Salvatore
