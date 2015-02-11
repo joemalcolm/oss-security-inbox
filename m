@@ -1,35 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/05/11
-Message-Id: <20150205165938.CFB8A6C0042@smtpvmsrv1.mitre.org>
-Date: Thu,  5 Feb 2015 11:59:38 -0500 (EST)
-From: cve-assign@...re.org
-To: kseifried@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, security@...dle.com
-Subject: Re: CVE request for Moodlee MDL-48980 Security: Always clean the result from min_get_slash_argument - Moodle
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/11/11
+Message-ID: <20150211174006.GA1234@sentinelchicken.org>
+Date: Wed, 11 Feb 2015 09:40:06 -0800
+From: Tim <tim-security@...tinelchicken.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: wordexp(3)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-> http://git.moodle.org/gw?p=moodle.git;a=commit;h=af9a7937cc085f96bdbc4724cadec6eeae0242fc
+> > It might be of interest to know that we've only got patches in 2 ports
+> > as a result of this: celestia and filezilla (we're using globs instead
+> > of wordexp for these; I'm not aware of any negative feedback relating
+> > to these patches).
 > 
-> MDL-48980 Security: Always clean the result from min_get_slash_argument
+> There is software out there which automatically uses a shell-based
+> implementation if the system does not provide wordexp.  With this in
+> mind, it makes sense to provide the interface even if you dislike it
+> (same thing with strlcpy).
 
-Use CVE-2015-1493.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+I disagree.
 
-iQEcBAEBAgAGBQJU06ESAAoJEKllVAevmvmsUnoH/2YfDh5GcUTl/+QiOeH2Drj9
-81MUmmh7BEQEJ6lV5oFgnwTw+QBSkzgGwtTyYyOTc0BD0sDYIoS3IuiDJD7/tPtr
-/wAMaPss8k+G20V+2IbeG9bJSx1vf9ZIhh1nV8lahsVEH9VFq1895y6/epOOKVmR
-spX1LYl/JgoXveOGuyu1xZmNLxNtJhCBR5+CKMF3GUPsv7PvU4uO1h00Gwz0UkVL
-KZPiZCyfPHzodypx9cwCiQFLzNWwi1SCIGXmAHIH55W14mfhX/BB4Q1qNyvPOUEs
-z2XEYrXkbJtJRuQz/AJJiYiYd7PLkWlfdYiVatvwNGNiWP8CPpzmCzVIy5iLvoA=
-=CZWg
------END PGP SIGNATURE-----
+Providing a badly designed interface, even if it is "standard", simply
+invites more depedence on it.  If people have to exert extra effort to
+code around the lack of a dangerous interface, then they are less
+likely to rely on dangerous approaches, such as generating shell
+syntax from within C.  Yes, they could just use system() or popen(),
+but these interfaces should be deprecated as well.  We have to take a
+stand some time.
+
+Most programmers like to think that other programmers should just
+"know what they are doing" and use these interfaces with care.  The
+reality is, there will always be a significant percentage of
+developers who don't "know what they are doing".  If we want to avoid
+vulnerabilities in software, we need to start thinking about how to 
+provide APIs that discourage (but don't prevent) unsafe practices, so
+that those who are naive will find that the path of least resistance
+is to write secure code to begin with.
+
+tim
