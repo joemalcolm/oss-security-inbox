@@ -1,35 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/12/2
-Message-ID: <5500E32F.80006@internot.info>
-Date: Thu, 12 Mar 2015 11:51:59 +1100
-From: Joshua Rogers <oss@...ernot.info>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE Request: PHP 5.6.6 changelog
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/12/5
+Message-ID: <Pine.LNX.4.64.1502120916070.17759@beijing.mitre.org>
+Date: Thu, 12 Feb 2015 09:16:51 -0500 (EST)
+From: cve-assign@...re.org
+To: Steffen Rösemann <steffen.roesemann1986@...il.com>
+cc: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: Re: CVE-Request -- CMS Croogo v.2.2.0 -- Reflecting XSS in filemanager in the administrative backend
 Content-Type: text/plain; charset=utf-8
 
-Reporter here of 2 bugs.
 
+This issue was assigned CVE-2015-1053 and published in January.
 
-On 11/03/15 21:45, Francisco Alonso wrote:
-> > [2] PHP: Double free with disabled ZMM:
-> > https://bugs.php.net/bug.php?id=68827
-> > http://git.php.net/?p=php-src.git;a=commit;h=91aa340180eccfc15d4a143b54d47b8120f898be
-> > https://bugzilla.redhat.com/show_bug.cgi?id=1194741
-> > 
-Not a security vuln.
+---
 
-
-> [3] PHP: use after free in phar_object.c
-> https://bugs.php.net/bug.php?id=68901
-> http://git.php.net/?p=php-src.git;a=commit;h=b2cf3f064b8f5efef89bb084521b61318c71781b
-> https://bugzilla.redhat.com/show_bug.cgi?id=1194747
-I'm going to be honest: I can't remember why I didn't get a CVE assigned
-for this.
-
-
-Thanks,
--- 
--- Joshua Rogers <https://internot.info/>
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+CVE assignment team, MITRE CVE Numbering Authority M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
