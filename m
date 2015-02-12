@@ -1,23 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/15/1
-Message-Id: <20150315011442.06B013AE215@smtpvbsrv1.mitre.org>
-Date: Sat, 14 Mar 2015 21:14:42 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/12/15
+Message-Id: <20150212180511.B01096C00AB@smtpvmsrv1.mitre.org>
+Date: Thu, 12 Feb 2015 13:05:11 -0500 (EST)
 From: cve-assign@...re.org
-To: graffatcolmingov@...il.com
-Cc: cve-assign@...re.org, cory@...asa.co.uk, mattd@...fuzz.com, oss-security@...ts.openwall.com
-Subject: Re: CVE Request for python-requests session fixation vulnerability
+To: hecmargi@....es
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE-Request -- Google Email App 4.2.2 remote denial of service
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> https://github.com/kennethreitz/requests/commit/3bd8afbff29e50b38f889b2f688785a669b9aafc
+> http://hmarco.org/bugs/google_email_app_4.2.2_denial_of_service.html
 
-> Instead of the cookies only being set for the domain which sent the
-> HTTP response, they are also sent to the redirection target
+At this point, the best available information is that this is a
+vulnerability in some part of open-source software under
+https://android.googlesource.com/platform/packages/apps/Email/
+(although we don't know the specific lines of code at fault), that
+there is a security impact for a fully specified attack methodology,
+and that there isn't any clear evidence that this is a duplicate of a
+finding from a previous year. Use CVE-2015-1574.
 
-Use CVE-2015-2296 for this one issue that has impacts of both
-session fixation and cookie stealing.
+> https://android.googlesource.com/platform/packages/apps/Email/+/6fb157c90cc04a062eefa5ede850b6efd8d2fc80
+
+This might not be a security fix. The goal of this fix might be to
+ensure that other types of blank Content-Disposition headers are
+considered equivalent to "Content-Disposition: inline" so that the
+"treat text and images as viewables" code path is used.
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -27,11 +36,11 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJVBNu0AAoJEKllVAevmvmsnf8H/2HJTi7OH++STszOmfMkHQTO
-t+LO8G44Ge9NwmMbZF3lXy7Yi71VJLcpNjrHs2+fPiUWZmYaP3+5d5tDOOz8au8c
-iuOdxoNucOBaJNvXIVUkzjeKqz640zlu2+RCzVwJ7GSLQ9wtj4adMU3hgQ1OtY6O
-9jtXnSW6L16NKTaegOn7Ay+0eCEVPDSKaeXSH9ITmwklsnome/HSav+co/KMy121
-pcUow+qForQGPkboy95HWAwN0IJycASwKxHpW6RmOSg8zYwjrpsDrufdTkKarl4T
-xi3LKLUp4k611XzPG2LZAcfs5Q4XARpbbp/TICQVx7E5VmKrdtGhObMJj8WgT9A=
-=VU7C
+iQEcBAEBAgAGBQJU3OrJAAoJEKllVAevmvmssb4H/RcixNJl7ZSn5POK4z+oqAN0
+26L1q9sFlLWVLjv7oXj/YisKGOKTR0QyCTn1mW8UzHC5eDlTuWb1kuY0FCuiNeka
+z9RYhWgoXqKCv2zuPW5LoeQW5uk4wWfwByv85olDPDm5xjvWdhWndxSXueS5VcCj
+Fe3x9XIM5i7rX2UOEivdZM1aibdrhzj9CHRwdbi0yIDdNBWzfePqm26g060gD6EG
+daCh7vC2Rs47h4ugcbuiayN2UGYE6iG6LVtmuM0C+v6OKYda1F9OMP8NUKSebCxi
+x7gdeluVzKUpiYz0eRHsz5QJ4nDH9CWo8D/CXmfBt3IBE5L2e/MLy/UCkqtXOiM=
+=kugD
 -----END PGP SIGNATURE-----
