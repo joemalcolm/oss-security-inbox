@@ -1,43 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/27/4
-Message-ID: <1425038397.11955.26.camel@trustmatta.com>
-Date: Fri, 27 Feb 2015 12:59:57 +0100
-From: Florent Daigniere <florent.daigniere@...stmatta.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/12/1
+Message-ID: <54DC0021.7090501@gmail.com>
+Date: Wed, 11 Feb 2015 20:21:37 -0500
+From: Daniel Micay <danielmicay@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: RFC 4253 section 8 wooes
+Subject: Re: wordexp(3)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 11/02/15 12:40 PM, Tim wrote:
+>>> It might be of interest to know that we've only got patches in 2 ports
+>>> as a result of this: celestia and filezilla (we're using globs instead
+>>> of wordexp for these; I'm not aware of any negative feedback relating
+>>> to these patches).
+>>
+>> There is software out there which automatically uses a shell-based
+>> implementation if the system does not provide wordexp.  With this in
+>> mind, it makes sense to provide the interface even if you dislike it
+>> (same thing with strlcpy).
+> 
+> 
+> I disagree.
+> 
+> Providing a badly designed interface, even if it is "standard", simply
+> invites more depedence on it.  If people have to exert extra effort to
+> code around the lack of a dangerous interface, then they are less
+> likely to rely on dangerous approaches, such as generating shell
+> syntax from within C.  Yes, they could just use system() or popen(),
+> but these interfaces should be deprecated as well.  We have to take a
+> stand some time.
 
-RFC 4253 section 8 describes how the DiffieHellman exchange is done in
-SSH... It mandates a few sanity bound-checks (for both the values of
-exponents and exponentials) that some implementations are not doing...
+ISO C and POSIX are primarily composed of badly designed interfaces. If
+it was as simple as iteratively improving the interfaces and dropping
+compatibility for the old ones, then the C standard library would be a
+drastically different beast.
 
-Can you please assign three CVEs for the following bugs?
+A large portion could be immediately discarded due to thread unsafety
+along with dropping the locale and wide character mess and replacing it
+with sane UTF-8 and Unicode Scalar Value support.
 
-MATTA-2015-002 PuTTY
-will be fixed in the upcoming release (0.64 I think)
-- The exponential is not checked for trivial values
+C strings should certainly go too, considering that they're both
+needlessly error prone and slow. The worst part is forcing dynamic
+allocation and copying in order to view substrings.
 
-MATTA-2015-001 Dropbox
-fixed in: https://secure.ucc.asn.au/hg/dropbear/rev/a1e79ffa5862
-- The exponential is not checked for all trivial values (it just does
-what the RFC mandates, which is clearly not enough!)
-- The exponent picked might be a trivial value (this is theoretical more
-than anything else assuming the CSPRNG is working). It's a regression
-from 0.49
-(https://secure.ucc.asn.au/hg/dropbear/diff/00703f1df67a/random.c)
+I don't think there's much that would be kept if it was as simple as
+providing a better interface, deprecating the old ones and then removing
+them shortly thereafter.
 
-Further details and a full advisory will be published at 
-https://www.trustmatta.com/advisories/MATTA-2015-001.txt
-https://www.trustmatta.com/advisories/MATTA-2015-002.txt
-when the patches are in a released build. Our current understanding is
-that no third party can take advantage of those bugs unless both the
-client and the server are vulnerable AND either side picks a weak
-exponent. The likelihood of that happening in practice is almost nil and
-the impact limited in any case.
+> Most programmers like to think that other programmers should just
+> "know what they are doing" and use these interfaces with care.  The
+> reality is, there will always be a significant percentage of
+> developers who don't "know what they are doing".  If we want to avoid
+> vulnerabilities in software, we need to start thinking about how to 
+> provide APIs that discourage (but don't prevent) unsafe practices, so
+> that those who are naive will find that the path of least resistance
+> is to write secure code to begin with.
 
-Regards,
-	Florent
+The obvious first step is writing new software and new components for
+old software in languages that are memory safe and aren't filled with
+poorly designed legacy APIs. It worked out quite well for Android...
 
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+C is fundamentally based upon placing a huge amount of trust in the
+programmer, and has lots of historical baggage like this. Since wordexp
+is so rarely used it's hard to see why it's getting so much attention.
+
+We live in a world where you can just grep around for malloc/realloc in
+most C projects and find dozens of heap overflows... this is a blip on
+the radar.
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
