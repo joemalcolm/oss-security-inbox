@@ -1,35 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/31/6
-Message-Id: <20150131134516.3694CB2E011@smtpvbsrv1.mitre.org>
-Date: Sat, 31 Jan 2015 08:45:16 -0500 (EST)
-From: cve-assign@...re.org
-To: henri@...v.fi
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: Roundcube cross-site scripting vulnerability fixed in 1.0.5
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/12/3
+Message-ID: <20150212141410.GA647@jwilk.net>
+Date: Thu, 12 Feb 2015 15:14:10 +0100
+From: Jakub Wilk <jwilk@...lk.net>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: Re: heap overflow in procmail
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+>>https://bugs.debian.org/769937
+[...]
+>The Debian bug report does not contain diagnosis of the type of 
+>programming error that is triggering each crash, so it is not clear 
+>how many CVE identifiers must be assigned.
 
-> http://roundcube.net/news/2015/01/24/security-update-1.0.5/
-> http://trac.roundcube.net/wiki/Changelog#RELEASE1.0.5
-> http://trac.roundcube.net/ticket/1490227
+There are two distinct buffer overflows:
 
-Use CVE-2015-1433.
+* Off-by-one heap overflow when parsing addresses that have left angle 
+bracket, then a comma, but no right angle bracket. For example: 
+<moo@...mple.com,
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+* Heap overflow when parsing addresses that end with backslash. For 
+example: <moo@...mple.com\
 
-iQEcBAEBAgAGBQJUzNwOAAoJEKllVAevmvmslFEIAMe4o0bGJX2E/Sx7bEFPU7/H
-6Q0BSvtpT0fB/uTaq/5uyS9gs6QcL0T2cJQLZI2UPfVC08SsZPZoZIKn3kTw30ON
-hpgmydfQxE5ouzSiUDoSFgpZvN5KUsbinsMmEIjgdtw6eCt44wGvJyZonYKoTNSf
-1XG8ilwLg5XoP8gb0QbwTXEWwnloU9yntlRLSGwTqG8kcxHOoNFmOoxsjigJPh85
-AQtWD3LFiJfUjHDsQmmQZ2frIUJZ7KPvj3wNxOm3973+WmOYRmYlA4UtIdhFMCjK
-063qLViWYzk0QdJRtXPyoS654ukKhBPilWpYH1Vz6GpcmR0m3iI6KeTxVW3qJu0=
-=mdVb
------END PGP SIGNATURE-----
+Credit goes to Jan Darmochwal for identifying the root causes.
+
+-- 
+Jakub Wilk
