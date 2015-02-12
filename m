@@ -1,44 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/02/2
-Message-Id: <20150302040932.C48DE6C002F@smtpvmsrv1.mitre.org>
-Date: Sun,  1 Mar 2015 23:09:32 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/12/11
+Message-ID: <Pine.LNX.4.64.1502121133220.24585@beijing.mitre.org>
+Date: Thu, 12 Feb 2015 11:34:44 -0500 (EST)
 From: cve-assign@...re.org
-To: sebastian@...ping.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: DokuWiki privilege escalation in RPC API
+To: Francisco Alonso <rs@...skills.cz>
+cc: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: Re: CVE request: Reflected XSS / Content Spoofing in FlexPaper
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-> Security Hotfix 2014-09-29c: fixes privilege escalation in RPC API
-> 
-> https://www.dokuwiki.org/changes
-> https://github.com/splitbrain/dokuwiki/issues/1056
-> https://github.com/splitbrain/dokuwiki/commit/4970ad24ce49ec76a0ee67bca7594f918ced2f5f
+> Can a CVE please be assigned to the following issue:
+>
+> FlexPaper Flash viewer Reflected XSS and Content Spoofing via Swfile
+> parameter in FlexPaperViewer.swf file.
+>
+> Fixed via FlexPaper 2.3.1 Release.
+>
+> References:
+> http://blog.flexpaper.org/post/105984224083/flexpaper-2-3-1-release-notes
+> https://code.google.com/p/flexpaper/
+> http://www.theregister.co.uk/2014/12/23/wikileaks_pdf_viewer_vuln/
+> http://www.pcworld.com/article/2862812/flaw-in-opensource-pdf-viewer-could-put-wikileaks-users-others-at-risk.html
 
-Use CVE-2015-2172.
+CVE-2014-9677 - XSS
 
-> DokuWiki maintenance release 2014-09-29c (of 2015-02-25)
+CVE-2014-9678 - content spoofing
 
-We agree that 2014-09-29c does not mean that the release had been
-announced during 2014. For example, see:
+---
 
-  http://web.archive.org/web/20150121213236/http://www.dokuwiki.org/changes
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
+CVE assignment team, MITRE CVE Numbering Authority M/S M300
 202 Burlington Road, Bedford, MA 01730 USA
 [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJU8+IVAAoJEKllVAevmvmsFM8IAJbf12dtIQbfeDg42RD/KRJu
-WfOsO36OBI226TJP10XNX4xXOfz1mzK/0XH1VvlzOZp5Bwd+x4QEEKC5q0Fq0TJI
-+XmD4PrKHRBiLYVErsEf4jxxXUrQv044bFXPtg/2U0G3wEqCYy/s7maVf+1xRF+t
-hgtI4KdVl02RHku6V2+cK7Lr/qgfnXO5mFbizyDNAWag3EVDycOs1wFer0yBrUhu
-MZlsW5W6DrhfcRuxg4XEy7blTvG/7a7SpHTgIAo+6u3lER1xxgUEepllJpltm0mi
-U1GyIE5v2cZvKdVwVXEssVzOBVlF52BNjY/Ooz+SaE7AGoLfXqnySxB+P4hktdw=
-=ihN0
------END PGP SIGNATURE-----
