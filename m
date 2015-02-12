@@ -1,39 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/24/6
-Message-ID: <CAJ_zFk+hy4ns=VZQPeBibnP_BieFXvaoj7wgr2sWEZWmh6jpEg@mail.gmail.com>
-Date: Tue, 24 Feb 2015 13:09:17 -0800
-From: Tavis Ormandy <taviso@...gle.com>
-To: Jean-Baptiste Kempf <jb@...eolan.org>
-Cc: oss-security@...ts.openwall.com, Kurt Seifried <kseifried@...hat.com>,  Assign a CVE Identifier <cve-assign@...re.org>
-Subject: Re: Re: [videolan] older issues in libbluray
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/12/17
+Message-Id: <20150212235040.0BF9172E00D@smtpvbsrv1.mitre.org>
+Date: Thu, 12 Feb 2015 18:50:40 -0500 (EST)
+From: cve-assign@...re.org
+To: john@...nuts.net
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: MovableType before 5.2.12 - Movable Type
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Feb 24, 2015 at 1:03 PM, Jean-Baptiste Kempf <jb@...eolan.org> wrote:
-> On 24 Feb, Tavis Ormandy wrote :
->> On Mon, Feb 23, 2015 at 7:47 AM, Jean-Baptiste Kempf <jb@...eolan.org> wrote:
->> >
->> > On 23 Feb, Kurt Seifried wrote :
->> > > Again my apologies for this mess. The good news is that all our current
->> > > embargoed flaws (none against VLC currently =) are being actively
->> > > handled (e.g. worked on in a current time frame) and moving forwards we
->> > > should hopefully be able to avoid issues like this.
->> >
->> > One libbluray issue was already fixed.
->> > The second one is not really fixable, since BD-J is actually executing
->> > java code from the outside.
->>
->> Forgive my unfamiliarity with BluRay, but based on what you just said,
->> it seems like the solution is what was described in the report: just
->> use a JSM?
->
-> I don't see the JSM mentioned in the bugreport.
->
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I didn't get the bug report, I was referring to the subject Florian
-pasted, "missing Java Security Manager sandbox in the BD-J
-implementation". If you run untrusted java, you would normally use a
-JSM, if you don't use one that does sound like a bug to me.
+> MoveableType 5.2.12 was released today to fix a flaw where Perl's
+> Storable::thaw() was called on data sent by unauthenticated remote users
+> in some interfaces.
+> 
+> https://movabletype.org/news/2015/02/movable_type_607_and_5212_released_to_close_security_vulnera.html
 
-Sigh, embargoes.
+> We are releasing Movable Type 6.0.7 and 5.2.12 as mandatory security updates.
 
-Tavis.
+> In previous versions, including the Movable Type 6.0.6 and 5.2.11 are susceptible
+
+Note that 5.2.11 is open source (from the
+https://movabletype.org/downloads/archives/5.x/MTOS-5.2.11.zip
+distribution) but we think that 6.0.6 is not open source.
+
+> The payload example provided to SixApart was a local file inclusion
+> attack, but unauthenticated arbitrary remote code execution should be
+> straightforward
+
+Use CVE-2015-1592.
+
+There aren't separate CVE IDs for different impacts of the underlying
+"called on data sent by unauthenticated remote users" issue.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJU3TuVAAoJEKllVAevmvmsww4H/i+mhMmZ/wXa2QXyMDfu3Ojr
+lgPuScQ7/DNIEeKhdhnbjtlF4wRsdsohOx7CyYlNt3QjTu6h8ngGH+JG8sQjtcaU
+OnB091V+hOAXsetdr5bZFDr/+o7a6lz/GrhaURJJHgXXcJhbWvrfn/vEuadVQZtS
+26raOvgRmomr6T0+kv+6SSMCy78N7eHJnUDWHUS/d+2a/G5Hpe1pYWpvF5hZLNYY
+uH9D4C6gmLdD0HaujOy+2Pv8QnE2OMFoQ14yfcdc+N2JxSVKA0I/50lbB0axMXDf
+zmR2I18Sx4ccBm97yX2qFs5uqNk6O4nZQ74mRp003ZvQXqwN3RnW4YbbxGAVmaI=
+=4v/h
+-----END PGP SIGNATURE-----
