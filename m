@@ -1,36 +1,84 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/07/2
-Message-ID: <54D5707C.1000708@redhat.com>
-Date: Fri, 06 Feb 2015 18:55:08 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: Alan Coopersmith <alan.coopersmith@...cle.com>
-CC: oss-security@...ts.openwall.com, Assign a CVE Identifier <cve-assign@...re.org>
-Subject: Re: lynx: crash when parsing overly long links
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/12/14
+Message-Id: <E1YLxlX-0005MD-7c@xenbits.xen.org>
+Date: Thu, 12 Feb 2015 17:41:27 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 117 (CVE-2015-0268) - arm: vgic-v2: GICD_SGIR is not properly emulated
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
+            Xen Security Advisory CVE-2015-0268 / XSA-117
+                              version 2
 
-On 06/02/15 04:27 PM, Alan Coopersmith wrote:
-> On 02/ 6/15 03:05 PM, Kurt Seifried wrote:
->> This is an old one, making public:
->>
->> lynx: crash when parsing overly long links
->>
->> it may need a CVE
-> 
-> Is there a bug id, changelog entry, or patch that distros can use to make
-> sure we've fixed this?
-> 
+           arm: vgic-v2: GICD_SGIR is not properly emulated
 
-Sorry forgot to include the link
+UPDATES IN VERSION 2
+====================
 
-https://bugzilla.redhat.com/show_bug.cgi?id=605286
+CVE assigned.
 
+Mention CVE and XSA numbers in patch commit message.
 
+Public release.
 
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+ISSUE DESCRIPTION
+=================
 
+When decoding a guest write to a specific register in the virtual
+interrupt controller Xen would treat an invalid value as a critical
+error and crash the host.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+IMPACT
+======
+
+By writing an invalid value to the GICD.SGIR register a guest can
+crash the host, resulting in a Denial of Service attack.
+
+VULNERABLE SYSTEMS
+==================
+
+Xen 4.5 and later systems running on ARM hardware with version 2 of
+the generic interrupt controller are vulnerable.
+
+Systems running on ARM hardware with version 3 of the generic
+interrupt controller are not vulnerable.
+
+x86 systems are not affected.
+
+MITIGATION
+==========
+
+None.
+
+CREDITS
+=======
+
+This issue was discovered by Julien Grall.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa117.patch        Xen 4.5.x, xen-unstable
+
+$ sha256sum xsa117*.patch
+5d7c1ec3bd604ed49999a56fefeebda1206f424b1b48c0e44899f13bc1e55cd0  xsa117.patch
+$
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQEcBAEBAgAGBQJU3OW0AAoJEIP+FMlX6CvZePcH/06WboLULU7JEfvzFqpnxpQV
+XmNXCuvjcOt4d/w77a78kq8Bw8RUiDHR3f6qb+sJeNsJ1V55o0/KGgydEu+DqoF7
+3bftmPDvuBcqoF3+7KupjRp0sBU+11Q/Jtb+P/0ZtVReFKGxmpg8kBura56rL3wf
+iL1kMA4V0Kd4abmXXr6yUJMQuI19OZSQ43Zo7F9kOomyc7lcKB6vhnMtCiXw1F9Y
+zfnyP1V1s5h77juSe01pQhEqjDlKv/NNkfJav6s7eVYVbJAwFgUP2vOZ14t2dR+o
+5M8PPwF6EFBm421Z1D67caBh1ovGzeywZcrCl8nxuex+dqwomLymIMaL0P/fY6g=
+=edQs
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa117.patch" of type "application/octet-stream" (1378 bytes)
