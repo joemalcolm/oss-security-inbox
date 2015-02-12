@@ -1,30 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/11/4
-Message-ID: <54DB1D78.1010901@redhat.com>
-Date: Wed, 11 Feb 2015 10:14:32 +0100
-From: Florian Weimer <fweimer@...hat.com>
-To: cve-assign@...re.org
-CC: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE request: sudo TZ issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/12/12
+Message-Id: <20150212165405.5C4B66C009C@smtpvmsrv1.mitre.org>
+Date: Thu, 12 Feb 2015 11:54:05 -0500 (EST)
+From: cve-assign@...re.org
+To: kristian.fiskerstrand@...ptuouscapital.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: Cups: cupsRasterReadPixels buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-On 02/11/2015 06:59 AM, cve-assign@...re.org wrote:
->> http://www.sudo.ws/alerts/tz.html
-> 
-> We are not sure why this is being interpreted as a vulnerability
-> in sudo that should have a CVE assignment in which sudo is the 
-> responsible product. It appears that you are adding a new security 
-> feature in which sudo chooses to help prevent exploitation of bugs
-> in a system library such as libc.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Changing environment variables is not compliant with the prevalent
-interpretation of of POSIX, and as a result, at least glibc will not
-change its behavior.  This means that AT_SECURE programs such as sudo
-need to implement proper filtering.
+> https://www.cups.org/str.php?L4551
 
-I will obtain clarification from the Austin Group that scrubbing
-environment variables in the implementation name space is allowed, and
-then we can revisit this matter as far as glibc is concerned.
+> A malformed compressed raster file can trigger a buffer overflow in
+> cupsRasterReadPixels.
 
--- 
-Florian Weimer / Red Hat Product Security
+>> causes count (which is unsigned) to wrap around
+
+> I can confirm that that patch fixes the buffer overflow
+
+Use CVE-2014-9679 for this integer overflow that was fixed in 2.0.2.
+
+The scope of this CVE does not include the "nothing that guarantees
+that r->bpp is non-zero" observation the "Feb 1, 2015" comment.
+
+> since compression isn't used between filters and since we use
+> sandboxing whenever possible, it is unlikely that this will be
+> exploitable
+
+This isn't directly relevant to whether a CVE should exist, but
+http://cups.org/documentation.php/doc-2.0/man-cups-files.conf.html
+mentions 'Specifies the level of security sandboxing that is applied
+to print filters, backends, and other child processes of the
+scheduler. The default is "strict". This directive is currently only
+used/supported on OS X.' Apparently some online discussions of CUPS
+include third-party recommendations to disable sandboxing.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJU3NpOAAoJEKllVAevmvms+zAH/RzYRlzOX/Mm66NVZE5Svr8j
+XDMba6Yls6khp4rhXsUtIyjwRt+sjag5v+QWiDBv1ZEGJwD72MalgUQwYHOy0AGj
+fmqu6kiRd2rFU/c95IHj4N5H3NXvsrspWbmo8/p7cBTl5i/zDRCK8rG15SoTEHu/
+CUNR3KPeuVawwUzH4dFlWAQkTUP5DL20xPFcJb+kXr/vu7uwxedamjBH8twGVD6v
+/Pe8ktGAmfYEuj4tbcsj4kyU30U7wCzIAw5uZ2DvtuaP8uLyWeBqYAaWyz/754uC
+dFbGodPxsMmltshpDPHsRdMzjN5kc6fHAYJzW8r/sqsvR2xNlBV+u1J4Vw06EH4=
+=2glT
+-----END PGP SIGNATURE-----
