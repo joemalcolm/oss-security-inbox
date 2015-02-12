@@ -1,49 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/01/1
-Message-Id: <20150301011037.082DC42E016@smtpvbsrv1.mitre.org>
-Date: Sat, 28 Feb 2015 20:10:37 -0500 (EST)
-From: cve-assign@...re.org
-To: brian.carpenter@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: pngcrush 1.7.83 crash bug (most likely exploitable)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/12/8
+Message-ID: <20150212160501.GA5068@pisco.westfalen.local>
+Date: Thu, 12 Feb 2015 17:05:01 +0100
+From: Moritz Muehlenhoff <jmm@...ian.org>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: CVE request: lame
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-> I found a crash bug in pngcrush that is most likely
-> exploitable and wanted to get a CVE assignment for it. I've already been in
-> contact with the pngcrush author and this bug has been fixed in pngcrush
-> v1.7.84 (which was released today, no mention of this in the changelog
-> though: http://sourceforge.net/p/pmt/news/2015/02/pngcrush-1784-released/).
+Hi,
+please assign a CVE ID for this security issue in the LAME MP3 encoder.
+It has been reported multiple times in the Debian BTS:
 
-> Access violation on destination operand
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=775959
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=777160
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=777161
 
-> Exploitability Classification: EXPLOITABLE
-> Explanation: The target crashed on an access violation at an address
-> matching the destination operand of the instruction. This likely indicates
-> a write access violation, which means the attacker may control the write
-> address and/or value.
-
-> I've attached the test case but here is a hexdump:
-> 0000000 4d8a 474e 0a0d 0a1a 0000 0000 3030 3030
-> 0000010
-
-Use CVE-2015-2158.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJU8ma2AAoJEKllVAevmvmsFAYH/0ujgIRpqfsSkLyHnkg/Fl5s
-VyZGtK6cQYxhOGcIpc6Jr4BwrdeL3+lJhyWxKoighU334ZrCmSfaMnZPfiQluOcH
-cCNBsFp+8YyIazB9PMyds3s5MxpwhIcp0DuD4aIQBOXiciMgEF64LvW/zhfLZ4QC
-GmlcHmKYs5pYgbc/nFxnhZ9fIlLtkghyPCJb4F6b80Z6S/58UCV73QiULUFP3zhS
-3XftzLhEJuCUxqXg6K0fd9NTxujrs7oHUmS47ElZLnN1o/TvqnO6uDfEPzfMqGn1
-4/0ZNN56EjTumiGqij6LxxbbNX5JiqNEA8lBmMI5uW3+2P/muAk3m3/Q0x+xm1E=
-=BZb9
------END PGP SIGNATURE-----
+Cheers,
+        Moritz
+        
