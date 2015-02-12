@@ -1,37 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/10/7
-Message-ID: <54FF084D.9070300@oracle.com>
-Date: Tue, 10 Mar 2015 15:05:49 +0000
-From: John Haxby <john.haxby@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/12/2
+Message-ID: <1423747538.1931.10.camel@nixnuts.net>
+Date: Thu, 12 Feb 2015 07:25:38 -0600
+From: John Lightsey <john@...nuts.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: PEP-466 common compatible implementation. (was ... CVE-2015-1777)
+Subject: CVE request: MovableType before 5.2.12
 Content-Type: text/plain; charset=utf-8
 
-On 10/03/15 10:59, Michael Samuel wrote:
-> I'm happy to help work on this.
-> 
-> The two ways to attack this seem to be:
-> 
-> 1) Use alternatives for the ssl module, and a new package has a
-> higher priority version of the module.
-> 
-> 2) Include both versions of the module under different names, and
-> have a script that symlinks the correct one in place.  This may work
-> better in chroot environments, etc.
+Hi there,
 
-I think the second one with alternatives thrown in would work well.
+MoveableType 5.2.12 was released today to fix a flaw where Perl's
+Storable::thaw() was called on data sent by unauthenticated remote users
+in some interfaces.
 
-Individual applications that want to behave correctly can use the new
-module.   Existing applications can use the old module (by default) or
-the new module (if alternatives is configured that way).  That way
-existing applications that depend on the old broken behaviour will still
-work (albeit no more securely
+https://movabletype.org/news/2015/02/movable_type_607_and_5212_released_to_close_security_vulnera.html
 
-I admit I haven't used alternatives much (ie never in anger) but this
-does sound like an approach that will give a clean mechanism across
-distros.   Certainly better than my ill-thought-out wild guess.
+The payload example provided to SixApart was a local file inclusion
+attack, but unauthenticated arbitrary remote code execution should be
+straightforward by tailoring the payload for the mix of Perl installed
+on the system running MTOS.
 
-Alexander: is this the right place to discuss nitty-gritty details or
-should be take the discussion elsewhere?
+Please assign a CVE number for this issue.
 
-jch
+John
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
