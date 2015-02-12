@@ -1,25 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/28/15
-Message-ID: <CAA7hUgFCbN=KNcktzH6fU+JJ+NxAS0i8RcVuLeWWvJ56wreptg@mail.gmail.com>
-Date: Wed, 28 Jan 2015 12:19:56 +0100
-From: Raphael Geissert <geissert@...ian.org>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: Re: GHOST gethostbyname() heap overflow in glibc (CVE-2015-0235)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/12/4
+Message-ID: <Pine.LNX.4.64.1502120914510.17759@beijing.mitre.org>
+Date: Thu, 12 Feb 2015 09:15:55 -0500 (EST)
+From: cve-assign@...re.org
+To: Steffen Rösemann <steffen.roesemann1986@...il.com>
+cc: oss-security@...ts.openwall.com
+Subject: Re: CVE-Request -- CMS PHPKit WCMS v.1.6.6 -- Reflecting XSS vulnerability in administrative backend (poll archive)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
 
-On 28 January 2015 at 12:04, Hanno Böck <hanno@...eck.de> wrote:
-> Hi,
->
-> the german IT news webpage heise mentions this: back in April 2014
-> Chrome OS applied the patch:
-> https://chromium.googlesource.com/chromiumos/overlays/chromiumos-overlay/+/7738d06627941a2119ba15f3472320c5cecc7be6%5E!/#F0
+This issue was assigned CVE-2015-1052 and published in January.
 
-For the lazy here's a link to the chromium OS bug report:
-http://code.google.com/p/chromium/issues/detail?id=364511
+---
 
-Cheers,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+CVE assignment team, MITRE CVE Numbering Authority M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
