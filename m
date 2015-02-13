@@ -1,21 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/10/3
-Message-ID: <8654447.8593062.1423550523425.JavaMail.zimbra@redhat.com>
-Date: Tue, 10 Feb 2015 01:42:03 -0500 (EST)
-From: Wade Mealing <wmealing@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: CVE-Request -- Linux kernel - panic on nftables rule flush
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/13/4
+Message-ID: <54DDED64.2020904@upv.es>
+Date: Fri, 13 Feb 2015 13:26:12 +0100
+From: Hector Marco <hecmargi@....es>
+To: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: CVE-Request -- Linux ASLR integer overflow
 Content-Type: text/plain; charset=utf-8
 
-Gday,
+Hi,
 
-I'd like to request a CVE for a denial of service attack found here here https://bugzilla.kernel.org/show_bug.cgi?id=91441.
+A bug in Linux ASLR implementation for versions prior to 3.19-rc3 has 
+been found. The issue is that the stack for processes is not properly 
+randomized on some 64 bit architectures due to an integer overflow.
 
-A remote attacker with the NET_CAP_ADMIN capability could use this to panic (denial of service) a system if they were able to flush a chain with a jump target.
+Affected systems have reduced the stack entropy of the processes by four.
 
-More info: https://bugzilla.redhat.com/show_bug.cgi?id=1190966
 
-Thanks
+Details at:
+http://hmarco.org/bugs/linux-ASLR-integer-overflow.html
 
-Wade Mealing
+
+
+Could you please assign a CVE-ID for this?
+
+
+
+Hector Marco.
+http://hmarco.org
+
+Cyber-security researcher at
+http://cybersecurity.upv.es/
