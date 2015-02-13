@@ -1,25 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/16/1
-Message-ID: <loom.20150216T104620-663@post.gmane.org>
-Date: Mon, 16 Feb 2015 09:53:17 +0000 (UTC)
-From: Damien Regad <dregad@...tisbt.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: XSS in MantisBT
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/13/18
+Message-ID: <20150214003449.24cb68b2@pc>
+Date: Sat, 14 Feb 2015 00:34:49 +0100
+From: Hanno Böck <hanno@...eck.de>
+To: cve-assign@...re.org
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Multiple issues in GnuPG found through keyring fuzzing (TFPA 001/2015)
 Content-Type: text/plain; charset=utf-8
 
-P Richards <paul@...> writes:
+On Fri, 13 Feb 2015 18:27:31 -0500 (EST)
+cve-assign@...re.org wrote:
 
+> Can you provide more information about a scenario in which a GnuPG
+> NULL pointer dereference has a security impact? A typical use case of
+> GnuPG is a single session with a single command line. The code in
+> question is not part of Libgcrypt, which may be used for long-running
+> processes.
+
+I don't really think these null ptr issues are vulnerabilities. I just
+mentioned everything I found with fuzzing in the advisory.
+
+> Do you mean that:
 > 
-> According to github
-> https://github.com/mantisbt/mantisbt/commit/cabacdc2
-> the fix referenced for CVE-2014-8986 has never been tagged to a 1.2.x 
-> release.
+>   1. it is possible to create the problematic keyring
+>      using --import commands, e.g., the user has
+>      imported normal keys for years and now imports
+>      a crafted key
+> 
+>   2. the problematic keyring makes the product largely
+>      unusable, e.g., there is a crash with a common
+>      command such as --list-keys
+> 
+>   3. it is not possible to fix the problematic keyring
+>      with any available commands such as --delete-keys
+> 
+>   4. therefore, the product remains unusable unless the
+>      user obtains other code to correct the keyring, and
+>      thus there is a denial of service
 
-It would help if you looked at the 1.2.x commit...
+That's actually an interesting idea I haven't thought about, however
+would require further analysis whether it's possible.
 
-http://github.com/mantisbt/mantisbt/commit/e326b73a
+> Also, access to each of your four crashes.fuzzing-project.org URLs
+> currently fails with a 403. We can probably provide at least two CVE
+> IDs in total after those URLs are available.
 
-$ git describe --contains e326b73a
-release-1.2.18~27
+Sorry, fixed.
 
 
+-- 
+Hanno Böck
+http://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
+
+Content of type "application/pgp-signature" skipped
