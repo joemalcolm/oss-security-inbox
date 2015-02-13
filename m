@@ -1,40 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/13/13
-Message-Id: <20150213200416.9DC3B332065@smtpvbsrv1.mitre.org>
-Date: Fri, 13 Feb 2015 15:04:16 -0500 (EST)
-From: cve-assign@...re.org
-To: hecmargi@....es
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/13/7
+Message-ID: <54DE02A7.3060302@upv.es>
+Date: Fri, 13 Feb 2015 14:56:55 +0100
+From: Hector Marco <hecmargi@....es>
+To: cve-assign@...re.org, oss-security@...ts.openwall.com
 Subject: Re: CVE-Request -- Linux ASLR integer overflow
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
+It worth metion that the patch was already sent:
+
+https://lkml.org/lkml/2015/1/7/811
+
+
+Hector Marco.
+http://hmarco.org
+
+
+El 13/02/15 a las 13:26, Hector Marco escribió:
+> Hi,
+>
 > A bug in Linux ASLR implementation for versions prior to 3.19-rc3 has
 > been found. The issue is that the stack for processes is not properly
 > randomized on some 64 bit architectures due to an integer overflow.
 >
 > Affected systems have reduced the stack entropy of the processes by four.
-
+>
+>
+> Details at:
 > http://hmarco.org/bugs/linux-ASLR-integer-overflow.html
-> https://lkml.org/lkml/2015/1/7/811
-
-Use CVE-2015-1593.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJU3lhQAAoJEKllVAevmvmsqTwIAKophyPwyC60/+1yVSxqroSn
-vjB9rzp1LSq32tcUccyZFAZKs2ruz/9FUFnHmF+9O3FCxnsS5ksmwFKNjaxbVhsx
-vp7/p87ThvTK8zTMYloj4WAZocL0UMheHC+MfYtQjyYC4HiEZshUxifPG6PuYLnQ
-/XEGPhaZQFNC3RF208jBGRhjLgAmkMNMHaRRy6f2dKJFVhXaPPdKhj9HqGN2co6R
-a78DytZLtE7TynmF2MilaXF0BudXeJAPf+O32tCU/8m/5jV5y8ekcxqsFEG3VWE0
-uzoEiQmZvMa7vWk01o5tgGO4Fi3ZMik2Z/bNRs2G4OiPT23O5dLma8lJoWDYj+k=
-=P3nO
------END PGP SIGNATURE-----
+>
+>
+>
+> Could you please assign a CVE-ID for this?
+>
+>
+>
+> Hector Marco.
+> http://hmarco.org
+>
+> Cyber-security researcher at
+> http://cybersecurity.upv.es/
