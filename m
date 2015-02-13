@@ -1,81 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/24/17
-Message-id: <9E9B4751-9353-4605-A4F2-4E261F7D5038@me.com>
-Date: Sat, 24 Jan 2015 18:17:56 -0500
-From: "Larry W. Cashdollar" <larry0@...com>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: Re: SEANux 1.0 remote back door
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/13/15
+Message-ID: <mblroc$8h6$1@ger.gmane.org>
+Date: Fri, 13 Feb 2015 22:53:16 +0100
+From: Damien Regad <dregad@...tisbt.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: XSS in MantisBT
 Content-Type: text/plain; charset=utf-8
 
-After discussing this with the SEA, we’ve determined this is a misconfiguration.  They are planning on fixing it in the next release.
+On 2015-02-10 01:41, P Richards wrote:
+ > This issue looks fairly like the issue previously identified in
+ > adm_config_report.php in May 2014, as an XSS. See
+ > 
+https://github.com/mantisbt/mantisbt/commit/cabacdc291c251bfde0dc2a2c945c02cef41bf40
+ > I'm still waiting for the CVE to be provided for
+ > cabacdc291c251bfde0dc2a2c945c02cef41bf40 from May, or could you let
+ > me know what CVE was assigned for the initial fix?
 
-The fix is simply modifying apache’s ports.conf to bind apache to localhost.
+A 5 seconds search through the MantisBT changesets tells me that it was 
+CVE-2014-8986.
+See https://www.mantisbt.org/bugs/view.php?id=17889.
 
-# cat ports.conf |grep -n 127
-8:NameVirtualHost 127.0.0.1:80
-9:Listen 127.0.0.1:80
+Which, by the way, would have been even easier for you to find if you 
+had actually bothered to follow the process and report the security 
+issue in our tracker yourself instead of emailing me that PDF file of 
+yours and making me do the legwork.
 
-Actually one of the fastest vendor responses I’ve ever seen. :-)
+ > And in fact, it looking at the diff, my initial thought was you were
+ > trying to take a vulnerability discovered by myself and pass it off
+ > as something new crediting someone else and yourself for the fix -
+ > although it may be this was unintentional as it appears you
+ > re-introduced the same bug a few months after the initial fix.
 
+You know, this really sounds like paranoia... You know me, and should 
+know better. I have never taken credit for somebody else's work. Credit 
+was given, where it was due:
+http://thread.gmane.org/gmane.comp.security.oss.general/14706/focus=14849
 
-> On Jan 24, 2015, at 3:05 PM, Larry W. Cashdollar <larry0@...com> wrote:
-> 
-> Hello All,
-> I thought you might be interested in this from by blog with screen shots http://www.vapid.dhs.org/blog/01-23-2015/ :
-> 
-> SEANux 1.0 backdoor
-> 
-> Larry W. Cashdollar
-> 1/23/2015
-> 
-> 
-> SEANux 1.0 is a linux distribution Available here developed by the Syrian Electronic Army. It has an apache webserver listening on 0.0.0.0:80
-> root@...ry-VirtualBox:/etc/mysql# netstat -an
-> Active Internet connections (servers and established)
-> Proto Recv-Q Send-Q Local Address           Foreign Address         State      
-> tcp        0      0 127.0.0.1:6010          0.0.0.0:*               LISTEN     
-> tcp        0      0 127.0.0.1:3306          0.0.0.0:*               LISTEN     
-> tcp        0      0 127.0.1.1:53            0.0.0.0:*               LISTEN     
-> tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN     
-> tcp        0      0 127.0.0.1:631           0.0.0.0:*               LISTEN     
-> tcp        0      0 192.168.0.33:22         192.168.0.22:53474      ESTABLISHED
-> tcp6       0      0 ::1:6010                :::*                    LISTEN     
-> tcp6       0      0 :::80                   :::*                    LISTEN     
-> tcp6       0      0 :::22                   :::*                    LISTEN     
-> tcp6       0      0 ::1:631                 :::*                    LISTEN     
-> tcp6       1      0 ::1:57375               ::1:631                 CLOSE_WAIT 
-> udp        0      0 0.0.0.0:68              0.0.0.0:*                          
-> udp        0      0 0.0.0.0:52375           0.0.0.0:*                          
-> udp        0      0 0.0.0.0:5353            0.0.0.0:*                          
-> udp        0      0 0.0.0.0:41938           0.0.0.0:*                          
-> udp        0      0 0.0.0.0:31229           0.0.0.0:*                          
-> udp        0      0 127.0.1.1:53            0.0.0.0:*                          
-> udp6       0      0 :::37598                :::*                               
-> udp6       0      0 :::5353                 :::*                               
-> udp6       0      0 :::12590                :::*                               
-> udp6       0      0 :::52638                :::*                               
-> udp6       0      0 :::546                  :::*                               
-> Active UNIX domain sockets (servers and established)
-> 
-> This apache server is a tool server hosting web based tools by the SEA
-> One of the tools is a backdoor to the system
-> 
-> The path http://192.168.0.33/tools/sea.php is a back door for the SEA. 
-> 
-> Here is a screen shot after logging in: 
-> 
-> From lines 6-15 contain the credentials sea.php:
->     6 $user = 'SEA'; ^M
->     7 $pass = 'SEA'; ^M
->     8 $uselogin = 1;^M
->     9 $sh3llColor = "#0040FF";^M
->    10 ^M
->    11 # MySQL Info ---------^M
->    12 $DBhost = "localhost";^M
->    13 $DBuser = "root";^M
->    14 $DBpass = "root";^M
->    15 #---------------------^M
-> 
-> 
-> So I thought this backdoor might allow root access to the mysql database running on port 3306. But the credentials are set for mysql during setup, and I don't see any other code to run sql queries on the system. Perhaps they just default to root root as that's a very common password combo for mysql installs?
+ > [...]
+ >
+ > It seems you then modified the fix for this vulnerability in August
+ > to re-introduce the vulnerability [...]
+ >
+ > And now are requesting a CVE for the new issue crediting a different
+ > researchcompany for the 'new vulnerability', with no mention of the
+ > original discovery for this issue in May 2014.
+ >
+ > @Mitre: How is this handled? Do you assign two CVE's in this case?
+
+As far as I can tell, while related, these are indeed 2 distinct issues 
+even though they are evidently related.
+
+Quite frankly, I just can't be bothered to analyze whether my follow-up 
+fix for CVE-2014-8986 reintroduced the issue or not.
+
+Even if I did, the fact remains that 1.2.19 was released as it was, so 
+we DO have two distinct issues here in any case.
+
+D
+
 
