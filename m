@@ -1,25 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/05/10
-Message-ID: <Pine.LNX.4.64.1501051227310.8826@beijing.mitre.org>
-Date: Mon, 5 Jan 2015 12:28:41 -0500 (EST)
-From: "Steven M. Christey" <coley@...re.org>
-To: David Jorm <djorm@...p.iixpeering.net>
-cc: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, cve-assign@...re.org
-Subject: Re: Re: 2012 CVE request: XXE in nokogiri ruby gem
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/13/11
+Message-ID: <CALH-=7wYB-5XpRKoDH4i7VQ3u09nTDFPZ_DzPnD-xSYHsZ_8CA@mail.gmail.com>
+Date: Fri, 13 Feb 2015 17:06:12 +0100
+From: Steffen Rösemann <steffen.roesemann1986@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-Request -- Landsknecht Adminsystems v.4.0.1 (DEV, beta version) -- Reflecting XSS, unrestricted file-upload and underlaying CSRF
 Content-Type: text/plain; charset=utf-8
 
+Hi Steve, Josh, vendors, list.
 
-On Sat, 3 Jan 2015, David Jorm wrote:
+I found reflecting XSS-vulnerabilities, a unrestricted file-upload and
+underlaying CSRF-vulnerabilities in CMS Landsknecht Adminsystems v. 4.0.1
+(DEV, beta version).
 
-> Just following up on this issue. Upstream has confirmed that no CVE ID 
-> was ever assigned:
->
-> https://github.com/sparklemotion/nokogiri/issues/693#issuecomment-68426535
+Technical details:
 
-Use CVE-2012-6685.
+=======================
+Reflecting XSS-vulnerabilities
+=======================
 
----
+A reflecting XSS vulnerability can be found in the index.php and can be
+abused via the vulnerable "page"-parameter. See the following example,
+including exploit-example:
 
-CVE assignment team, MITRE CVE Numbering Authority M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+http://
+{TARGET}/index.php?page=home%22%3E%3Cscript%3Ealert%28document.cookie%29%3C/script%3E&lang=de%27
+
+Another reflecting XSS vulnerability can be found in the system.php-file
+and can be exploited via the vulnerable "id" parameter:
+
+http://
+{TARGET}/asys/site/system.php?action=users_users&mode=edit&id=1%22%3E%3Cscript%3Ealert%281%29%3C/script%3E
+
+==================================
+Unrestricted file-upload / Underlaying CSRF
+==================================
+
+Registered users and administrators are able to upload arbitrary files via
+the following upload-form, located here:
+
+http://{TARGET}/asys/site/files.php?action=upload&path=/
+
+As there seems not be an existing permission-model, users can read/execute
+files  an administrator/user uploaded and vice versa.
+
+This issue includes an underlaying CSRF-vulnerability, as a user is able to
+upload a malicious file and trick another user or the administrator into
+visiting the link to the file.
+
+All files get uploaded here without being renamed:
+
+http://{TARGET}/upload/files/{UPLOADED_FILE}
+
+
+Can I please have a CVE-ID / CVE-IDs for this issue?
+
+Thank you very much.
+
+Greetings from Germany.
+
+Steffen Rösemann
+
+References:
+
+[1] https://github.com/kneecht/adminsystems
+[2] http://sroesemann.blogspot.de/2015/01/sroeadv-2015-14.html
+[3] https://github.com/kneecht/adminsystems/issues/1
+[4] https://github.com/sroesemann/adminsystems
+[5]
+http://sroesemann.blogspot.de/2015/02/report-for-advisory-sroeadv-2015-14.html
+[6] http://seclists.org/fulldisclosure/2015/Feb/50
+
