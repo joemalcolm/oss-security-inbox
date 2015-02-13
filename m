@@ -1,23 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/29/4
-Message-ID: <1422515098.31049.494.camel@debian.org>
-Date: Thu, 29 Jan 2015 08:04:58 +0100
-From: Yves-Alexis Perez <corsac@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/13/3
+Message-ID: <20150213121725.GA1280@zoho.com>
+Date: Fri, 13 Feb 2015 12:17:25 +0000
+From: mancha <mancha1@...o.com>
 To: oss-security@...ts.openwall.com
-Cc: yunlian@...gle.com
-Subject: Re: GHOST gethostbyname() heap overflow in glibc (CVE-2015-0235)
+Cc: cve-assign@...re.org
+Subject: CVE Requests - glibc overflows (strxfrm)
 Content-Type: text/plain; charset=utf-8
 
-On mer., 2015-01-28 at 22:20 -0800, Paul Pluzhnikov wrote:
-> If I was supposed to cry alarm, I would have to cry alarm every time
-> there is a buffer overflow in glibc, which doesn't seem very useful.
+Hello.
 
-Actually, a quick git log --grep "buffer over" in glibc git doesn't
-reveal that much of them (although in case of CVE-2015-0235 the upstream
-commit message wasn't even talking of a buffer overflow).
+1. Joseph Myers discovered strxfrm is vulnerable to integer overflows
+when computing memory allocation sizes (similar to CVE-2012-4412). i.e.
+in string/strxfrm_l.c:
 
-Regards,
--- 
-Yves-Alexis
+  idxarr = (int32_t *) malloc ((srclen + 1) * (sizeof (int32_t) + 1));
 
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+Attached strxfrm-int32.c should trigger on 32-bit machines.
+
+2. Shaun Colley discovered strxfrm falls back to an unbounded alloca if
+malloc fails making it vulnerable to stack-based buffer overflows
+(similar to CVE-2012-4424) [1]. Attached strxfrm-alloca.c should
+trigger.
+
+
+Both issues were fixed in glibc 2.21 [2] and a quick check shows
+vulnerable code appears to go back to at least glibc 2.3.
+
+Please allocate CVEs for these issues. Many thanks.
+
+--mancha
+
+==============
+
+[1] https://sourceware.org/bugzilla/show_bug.cgi?id=16009
+[2] https://sourceware.org/git/gitweb.cgi?p=glibc.git;h=0f9e585480ed
+
+View attachment "strxfrm-alloca.c" of type "text/plain" (407 bytes)
+
+View attachment "strxfrm-int32.c" of type "text/plain" (336 bytes)
+
+Content of type "application/pgp-signature" skipped
