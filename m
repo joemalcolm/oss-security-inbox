@@ -1,24 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/04/2
-Message-ID: <54D19336.1050307@gmail.com>
-Date: Tue, 03 Feb 2015 22:34:14 -0500
-From: Daniel Micay <danielmicay@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/13/1
+Message-ID: <20150213070505.GC23507@oevtugenva.nrevsny.pk>
+Date: Fri, 13 Feb 2015 02:05:05 -0500
+From: Rich Felker <dalias@...c.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE request: heap buffer overflow in glibc swscanf
+Cc: cve-assign@...re.org
+Subject: Re: Re: CVE request: sudo TZ issue
 Content-Type: text/plain; charset=utf-8
 
-> Here, it seems that the goal of the policy is risk management for use
-> of alloca. This is security relevant for some applications that use
-> glibc, because it could (for example) allow a denial of service attack
-> that's intended to trigger a failed alloca. There was one intended
-> policy, and the the incorrect "__libc_use_alloca (newsize)" caused a
-> different (and weaker) policy to be enforced instead.
+On Wed, Feb 11, 2015 at 10:20:03AM -0700, Todd C. Miller wrote:
+> > Depending on how other code is written, a TZ value could still be
+> > malicious even if it doesn't satisfy the definition of "unsafe" that
+> > you included. Should there be other CVEs for sudo if any such code is
+> > identified?
 > 
-> Use CVE-2015-1473 for this risk-management error.
+> There are really two issues here: exposure of TZ parsing bugs and
+> access to arbitrary (potentially user-controlled) files.  I'm happy
+> to put the blame for TZ parsing bugs on libc or the application.
+> However, there is no real way for the application to tell that it
+> is being run by an unpriviliged user and that operations that would
+> otherwise be safe (opening a user-specified time zone file) may be
+> dangerous.
 
-alloca isn't checked if -fstack-check isn't used, and most distributions
-don't use it. There's a good chance that a guard page will be hit but no
-guarantee without -fstack-check.
+Why does sudo run the target program with both effective and real ids
+set to root? Why not run with only the effective uid set to root? Then
+the program would know that it's being run by an unprivileged user
+with elevated privileges (and its libc would restrict or ignore
+environment variables for internal libc use). Does such invocation
+break too many programs?
 
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Rich
