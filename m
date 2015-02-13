@@ -1,82 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/10/1
-Message-ID: <008201d044ca$3efd61e0$bcf825a0$@mantisforge.org>
-Date: Tue, 10 Feb 2015 00:41:01 -0000
-From: "P Richards" <paul@...tisforge.org>
-To: <oss-security@...ts.openwall.com>
-Cc: <cve-assign@...re.org>
-Subject: RE: CVE request: XSS in MantisBT
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/13/17
+Message-Id: <20150213232731.5200A8BC020@smtpvmsrv1.mitre.org>
+Date: Fri, 13 Feb 2015 18:27:31 -0500 (EST)
+From: cve-assign@...re.org
+To: hanno@...eck.de
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Multiple issues in GnuPG found through keyring fuzzing (TFPA 001/2015)
 Content-Type: text/plain; charset=utf-8
 
-Hi Damien,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-This issue looks fairly like the issue previously identified in adm_config_report.php in May 2014, as an XSS. See https://github.com/mantisbt/mantisbt/commit/cabacdc291c251bfde0dc2a2c945c02cef41bf40 . I'm still waiting for the CVE to be provided for cabacdc291c251bfde0dc2a2c945c02cef41bf40 from May, or could you let me know what CVE was assigned for the initial fix?
+> https://blog.fuzzing-project.org/5-Multiple-issues-in-GnuPG-found-through-keyring-fuzzing-TFPA-0012015.html
 
-This fix was set to trigger an error if a user tried to set a value of filter_config_id through any means.
+Can you provide more information about a scenario in which a GnuPG
+NULL pointer dereference has a security impact? A typical use case of
+GnuPG is a single session with a single command line. The code in
+question is not part of Libgcrypt, which may be used for long-running
+processes.
 
-And in fact, it looking at the diff, my initial thought was you were trying to take a vulnerability discovered by myself and pass it off as something new crediting someone else and yourself for the fix - although it may be this was unintentional as it appears you re-introduced the same bug a few months after the initial fix.  
+Do you mean that:
 
-If we look at the initial commit: 
+  1. it is possible to create the problematic keyring
+     using --import commands, e.g., the user has
+     imported normal keys for years and now imports
+     a crafted key
 
-Line 167 : $t_filter_config_value  = gpc_get_string( 'filter_config_id', META_FILTER_NONE );
-Line 191 : $t_filter_config_value  = $t_cookie_contents[2];
+  2. the problematic keyring makes the product largely
+     unusable, e.g., there is a crash with a common
+     command such as --list-keys
 
-Lines 199 to Line 206 add the following code:
+  3. it is not possible to fix the problematic keyring
+     with any available commands such as --delete-keys
 
-+if( !is_blank( $t_filter_config_value ) && (int)$t_filter_config_value !== META_FILTER_NONE ) {
-+	// check that config value exists
-+	if( @config_get_global( $t_filter_config_value ) === null ) {
-+		$t_cookie_path = config_get( 'cookie_path' );
-+		gpc_clear_cookie( $t_cookie_name, $t_cookie_path );
-+
-+		trigger_error( ERROR_GENERIC, ERROR );
-+	}
-+}
+  4. therefore, the product remains unusable unless the
+     user obtains other code to correct the keyring, and
+     thus there is a denial of service
 
-The code block in lines 199 to 206 is executed on all code paths before display of any information to user.
+?
 
-It seems you then modified the fix for this vulnerability in August to re-introduce the vulnerability by moving the fix for the XSS issue in adm_config_page.php with filter_config_id being unchecked to a specific code path (i.e. only to apply to cookie values). See https://github.com/mantisbt/mantisbt/commit/3d0625d84d5d08a998673713df1711e1d46b0b86
+If the situation were something like:
 
-And now are requesting a CVE for the new issue crediting a different research company for the 'new vulnerability', with no mention of the original discovery for this issue in May 2014.
+  1. the problematic keyring cannot be created using
+     --import commands; the issue is specific to a
+    new keyring that a user obtains from an untrusted
+    source
 
-@Mitre: How is this handled? Do you assign two CVE's in this case? Or could you confirm what CVE ID was initially issued for this fix which I can use when publishing the discovery information for this issue with the 31st May 2014 date.
+  2. there is a crash in some situation
 
-Thanks
-Paul
+  3. the user can avoid the impact by discontinuing
+     use of this new keyring
 
------Original Message-----
-From: Damien Regad [mailto:dregad@...tisbt.org] 
-Sent: 09 February 2015 21:37
-To: oss-security@...ts.openwall.com
-Subject: [oss-security] CVE request: XSS in MantisBT
+then we think that a CVE ID may not be applicable.
 
-Greetings,
+Also, access to each of your four crashes.fuzzing-project.org URLs
+currently fails with a 403. We can probably provide at least two CVE
+IDs in total after those URLs are available.
 
-Please assign a CVE ID for the following issue
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-Description:
-
-The MantisBT Configuration Report (adm_config_report.php) did not properly sanitize the form variables used when saving a filter, allowing an attacker to embed JavaScript code which would be executed in the client's browser when displaying the page.
-
-Affected versions:
-- >= 1.2.13
-- 1.3.0-beta.1
-
-Fixed in versions:
-- 1.2.20 (not yet released)
-- 1.3.0-beta.2 (not yet released)
-
-Patch:
-See Github [1]
-
-Credit:
-This vulnerability was discovered by Fortinet's FortiGuard Labs (reference FG-VD-15-008 [2]) The issue was fixed by Damien Regad (MantisBT Developer).
-
-References:
-Further details will be available in our issue tracker [2] once this goes public.
-
-[1] https://github.com/mantisbt/mantisbt/commit/6defeed5 (1.2.x)
-     https://github.com/mantisbt/mantisbt/commit/3c6f6e56 (1.3.x) [2] http://www.fortiguard.com/advisory/UpcomingAdvisories.html
-[3] https://www.mantisbt.org/bugs/view.php?id=19301
-
-
+iQEcBAEBAgAGBQJU3of5AAoJEKllVAevmvmscd8IAIJeHfu3UoyLoA3gs+SIsy+F
+d45YIjagmNB/U9i5AYtBCgD+c3SYZnkCOFuqNjaxJPd0NgnhI6rkuc5bgkrbGKzL
+SwVrHWtyqHBmfWHDvetekXaBSRvG0ufSJ4LkKpLD+aRXNQ/qqVqeEUT0U91TzIZH
+0nv9ALKhfm41/cU6USACsRb16cfOdiWJ/dPrFFCRBmirM9RV01T+XXNeHLLPN1H1
+9Rn5tyYWyu7NU9dmPhRJTwicyG9+apga9724lnuwzp6ujI0tT8pNSCm5xkQYiCHE
+z96Kn1DjncJ7vRCs8v7+vVK4qB1qNjpHUd2pLqDr+1sy7d3uwT+W8kHY6cP0QL4=
+=lEJf
+-----END PGP SIGNATURE-----
