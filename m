@@ -1,27 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/08/7
-Message-ID: <54D7E7E8.9030808@gmail.com>
-Date: Sun, 08 Feb 2015 14:49:12 -0800
-From: Stanislav Malyshev <smalyshev@...il.com>
-To: Kurt Seifried <kseifried@...hat.com>, security@....net,  "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: CVE-2013-6501 php: predictible filename used for cache in world writable directory
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/13/2
+Message-ID: <54DDB5EC.8060708@debian.org>
+Date: Fri, 13 Feb 2015 08:29:32 +0000
+From: Simon McVittie <smcv@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: CVE request: sudo TZ issue
 Content-Type: text/plain; charset=utf-8
 
-Hi!
-
-> https://bugzilla.redhat.com/show_bug.cgi?id=1009103
+On 13/02/15 07:05, Rich Felker wrote:
+> On Wed, Feb 11, 2015 at 10:20:03AM -0700, Todd C. Miller wrote:
+>> However, there is no real way for the application to tell that it
+>> is being run by an unpriviliged user and that operations that would
+>> otherwise be safe (opening a user-specified time zone file) may be
+>> dangerous.
 > 
-> not sure if this got fixed or not, PHP can you comment?
+> Why does sudo run the target program with both effective and real ids
+> set to root? Why not run with only the effective uid set to root?
 
-This seems to be easily fixed by proper configuration (i.e. having
-soap.wsdl_cache_dir set to a directory accessible only to the user
-running PHP, or, on the shared host, having per-user config for each
-user) but I'm not sure how to fix it in the generic case since that
-directory wouldn't exist by default. On specific package - like RH - it
-could create a separate directory - like /tmp/php-wsdl-cache - with web
-server permissions and set the variable to use it - but since default
-PHP install has no install scripts not sure yet how to improve it in a
-generic way.
--- 
-Stas Malyshev
-smalyshev@...il.com
+Firstly, as far as I'm aware, sudo's design is "su, but better" and
+setting the real uid matches how su works.
+
+Secondly, becoming root is not the only reason why you might want to use
+sudo or su; they can also be used to drop privileges from root to
+non-root, or switch from one non-root user to another. Under the current
+design, the target program can't switch back; if the real uid was still
+that of the original user, it could.
+
+Thirdly, if every program and every library is expected to be aware of
+Unix arcana like "if euid != uid, then the results of getenv() are
+untrustworthy", then that would effectively put every program invoked
+via sudo, and every library that they link, into the trusted set. AIUI,
+part of the point of sudo is that it does the checks and acts as the
+trust boundary, so that the target program doesn't have to.
+
+    S
+
