@@ -1,48 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/13/11
-Message-ID: <alpine.LFD.2.11.1503132328110.12380@wniryva>
-Date: Fri, 13 Mar 2015 23:30:23 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: CVE request: Linux kernel: tty: kobject reference leakage in tty_open
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/13/16
+Message-ID: <000a01d047de$4077a8c0$c166fa40$@mantisforge.org>
+Date: Fri, 13 Feb 2015 22:41:47 -0000
+From: "P Richards" <paul@...tisforge.org>
+To: <oss-security@...ts.openwall.com>
+Subject: RE: Re: CVE request: XSS in MantisBT
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+According to github https://github.com/mantisbt/mantisbt/commit/cabacdc291c251bfde0dc2a2c945c02cef41bf40 - the fix referenced for CVE-2014-8986 has never been tagged to a 1.2.x release.
 
-   Hello,
+I've not yet done an announcement for this fix as it's not gone into a release.
 
-Linux kernel built with the virtual console support(CONFIG_VT) is vulnerable
-to a NULL pointer dereference issue. It could occur while accessing pseudo
-terminal device(/dev/pts/*) files.
+It's listed as the fix @ http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-8986, however, that changeset has never been tagged against 1.2.
 
-An unprivileged user could use this flaw to crash the system kernel resulting
-in DoS.
-
-Upstream fix:
-- -------------
-   -> https://git.kernel.org/linus/c290f8358acaeffd8e0c551ddcc24d1206143376
+Paul
 
 
-Thank you.
-- --
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+-----Original Message-----
+From: Damien Regad [mailto:dregad@...tisbt.org] 
+Sent: 13 February 2015 21:53
+To: oss-security@...ts.openwall.com
+Subject: [oss-security] Re: CVE request: XSS in MantisBT
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+On 2015-02-10 01:41, P Richards wrote:
+ > This issue looks fairly like the issue previously identified in  > adm_config_report.php in May 2014, as an XSS. See  >
+https://github.com/mantisbt/mantisbt/commit/cabacdc291c251bfde0dc2a2c945c02cef41bf40
+ > I'm still waiting for the CVE to be provided for  > cabacdc291c251bfde0dc2a2c945c02cef41bf40 from May, or could you let  > me know what CVE was assigned for the initial fix?
 
-iQIcBAEBAgAGBQJVAyW3AAoJEN0TPTL+WwQfOCAP/3z7CRPQj4glHgVFdkxuzk1/
-xlXwJJTRYlVDWe2F/lCbeP+jzQne37MzVl8Qma4OA2iAuySsRUQvjkc/6mMB6j+6
-9LVg0XV6hlZl0oFmxcWbQlNQLuhJsHOPja863aNvKoDZbh6mVIGi98BOaBjeMQUd
-Y81pGh5+BFYVk6hhcWPA2Zxok/MW+HN/JjvDqQReILsL5ApqRAxw0EBmZ3YpWBYL
-oxdRUT2FoRTKB5FFEgm6KAQdTSc9iqnH/QUTE4/s5wMCy20lb6j9bIk7pKkE6VmA
-XLwtioC/ttNR/Npe2kPXHm3KG4MH8Uftjd3IYdtJeJ7vjjgmPY3jAZZm/dBECWRZ
-Q9waGh9k8t6pEhaCz4jql21m1uoHLritnrLuAz56dOfh3R6TS46QEKqf7IgaqZ41
-psgQQKmX3gy9lyWoWdcWYgCvg5QJaW2lVotTTbCbSs/qfNmqJo2nMzTVL5UxTYic
-Adj0Y3KvrkIbAjEdyaNmwOMqH2pq8LUb87wDlD4DD7pRzZDFV6vzXA7wL5Za7VOr
-S8t3VvFfsMPUW+Y2zTdahWiGkgiQXxmFhaOC9KeSWFmgpxDQjJSPtdFdlRdu6gtX
-9ZXd7JSkwcFPujAFJ4SHI67ilo1rnqh3n6HZqOtaKTQCn6L7Mnn3ht/vumkxQpbF
-qjvQJOX+4OcFRe025MOM
-=ZQtV
------END PGP SIGNATURE-----
+A 5 seconds search through the MantisBT changesets tells me that it was CVE-2014-8986.
+See https://www.mantisbt.org/bugs/view.php?id=17889.
+
+Which, by the way, would have been even easier for you to find if you had actually bothered to follow the process and report the security issue in our tracker yourself instead of emailing me that PDF file of yours and making me do the legwork.
+
+ > And in fact, it looking at the diff, my initial thought was you were  > trying to take a vulnerability discovered by myself and pass it off  > as something new crediting someone else and yourself for the fix -  > although it may be this was unintentional as it appears you  > re-introduced the same bug a few months after the initial fix.
+
+You know, this really sounds like paranoia... You know me, and should know better. I have never taken credit for somebody else's work. Credit was given, where it was due:
+http://thread.gmane.org/gmane.comp.security.oss.general/14706/focus=14849
+
+ > [...]
+ >
+ > It seems you then modified the fix for this vulnerability in August  > to re-introduce the vulnerability [...]  >  > And now are requesting a CVE for the new issue crediting a different  > researchcompany for the 'new vulnerability', with no mention of the  > original discovery for this issue in May 2014.
+ >
+ > @Mitre: How is this handled? Do you assign two CVE's in this case?
+
+As far as I can tell, while related, these are indeed 2 distinct issues even though they are evidently related.
+
+Quite frankly, I just can't be bothered to analyze whether my follow-up fix for CVE-2014-8986 reintroduced the issue or not.
+
+Even if I did, the fact remains that 1.2.19 was released as it was, so we DO have two distinct issues here in any case.
+
+D
+
+
+
