@@ -1,36 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/19/2
-Message-ID: <CANTw=MPcu4YoQwO3BCiBXz+g3DmFPHWB=QrNq2x71dncaF9U4A@mail.gmail.com>
-Date: Wed, 18 Feb 2015 20:32:04 -0500
-From: Michael Gilbert <michael.s.gilbert@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/14/4
+Message-ID: <20150214133032.1f5dbbf8@pc>
+Date: Sat, 14 Feb 2015 13:30:32 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Cc: carnil@...ian.org, cve-assign@...re.org
-Subject: Re: Re: CVE Request: xdg-utils: xdg-open: command injection vulnerability
+Subject: Re: CVE Request : Several Bugs Found on Libflac 1.3.1 and Libtta++-2.2
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Feb 18, 2015 at 1:35 PM, CVE assign wrote:
-> Our understanding from
-> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=777722#12 is that
-> the report has not identified a vulnerability (or even a bug) in dash.
+Hi,
 
-It is probably at least a design flaw (and a reasonably
-well-documented one at that [0]).  Bash on the other hand is not
-vulnerable to the same class of problems:
+On Fri, 13 Feb 2015 21:44:10 +0800
+Zhenghao Hu <zhenghaohuu@...il.com> wrote:
 
-$ cat testme
-testme() {
-   x=backfromthedead
-   local x
-   echo $x
-}
-testme
+> Several bugs found in the latest libflac and libtta codec fuzzing
+> with AFL ( http://lcamtuf.coredump.cx/afl/), working together with
+> Nie Sen, from K33nTeam.
 
-$ bash testme
+I think I haven't posted this here yet: Also recently fuzzed flac
+with afl and found something:
 
-$ dash testme
-backfromthedead
+https://git.xiph.org/?p=flac.git;a=commit;h=43ba7ad05f1656e885ce2f34a9a72494f45705ae
+https://sourceforge.net/p/flac/bugs/421/
 
-Best wishes,
-Mike
+Crashing sample is attached to the bug report.
 
-[0] $ man dash
+What happens is that flac does an malloc for the number of comments. If
+that fails due to an insane number of comments it'll fail, but it will
+still try to access the non-allocated memory.
+
+I think the upstream fix is not optimal - it limits the amount of
+allowed comments. That probably fixes this in most situations, but it
+still leaves problems, because it doesn't check for malloc
+failures.
+
+cu,
+-- 
+Hanno Böck
+http://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
+
+Content of type "application/pgp-signature" skipped
