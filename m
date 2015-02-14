@@ -1,21 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/16/4
-Message-ID: <54B880B0.4010804@openwall.com>
-Date: Fri, 16 Jan 2015 06:08:32 +0300
-From: Alexander Cherepanov <ch3root@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request: ppmd -- directory traversals
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/14/6
+Message-Id: <20150214155943.DECA2332056@smtpvbsrv1.mitre.org>
+Date: Sat, 14 Feb 2015 10:59:43 -0500 (EST)
+From: cve-assign@...re.org
+To: hanno@...eck.de
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Multiple issues in GnuPG found through keyring fuzzing (TFPA 001/2015)
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-ppmd is susceptible to directory traversal vulnerabilities via absolute 
-and relative paths.
+> https://blog.fuzzing-project.org/5-Multiple-issues-in-GnuPG-found-through-keyring-fuzzing-TFPA-0012015.html
 
-Initial report:
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=775218
+A build-packet.c report says "Use after free" but the listed commit
+is for an invalid memory read that was fixed in two other .c files.
 
-Could CVE(s) please be assigned?
+The keybox_search.c report says "memcpy with overlapping ranges" but
+the listed commit apparently fixes "sign extension on shift" issues.
 
--- 
-Alexander Cherepanov
+We suspect that what you mean is that the commits are directly
+applicable as listed, and the difference is that your report states
+the ultimate impact found by afl-fuzz, and your report isn't intended
+to directly show how that ultimate impact results from the code
+problem.
+
+With this interpretation:
+
+  CVE-2015-1606 - Use after free, resulting from failure to skip
+                  invalid packets
+
+  CVE-2015-1607 - memcpy with overlapping ranges, resulting from
+                  incorrect bitwise left shifts
+
+There's currently no information suggesting that the NULL pointer
+dereference issues could have a security impact; they currently do not
+have CVE IDs.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJU33B+AAoJEKllVAevmvmstiQH/2nHN4/1NUH4TO7bTBx4tOmm
+PYR2e5gl0cwCvfFHLxDYiJFFtO8KG+GW7emroo9qqCBcsZhWE95XE5VJXN7RSXXJ
+JqihRwGl8pLQ459e3ZZR3rSTixGz28Fx/QGp59G7+mfNwPuaWGh6pg7Uukd4Zr1/
+PlL4qkhXPH6auBW3pYDAqzf/s5a8O3WPOV2jUkB7x5+VYNy//tOwGbMFwlhPCgCr
+IhjLi18UpeBkp7nVEIlSqkmRL7MSHYA7ov83CMTfl0Wj6YFHSTJHwUzPMQkQNhXG
+xjllvOTZznnUW7Fs48psYRsd3iRM5XHIyYaHnHOy461yrqKrkcPtECadjIKbScA=
+=LLyD
+-----END PGP SIGNATURE-----
