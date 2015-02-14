@@ -1,75 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/04/1
-Message-Id: <20150204031641.3BD0472E049@smtpvbsrv1.mitre.org>
-Date: Tue,  3 Feb 2015 22:16:41 -0500 (EST)
-From: cve-assign@...re.org
-To: ppluzhnikov@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, jsm28@....gnu.org
-Subject: Re: CVE request: heap buffer overflow in glibc swscanf
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/14/7
+Message-ID: <20150214174056.GK5587@outflux.net>
+Date: Sat, 14 Feb 2015 09:40:56 -0800
+From: Kees Cook <keescook@...omium.org>
+To: oss-security@...ts.openwall.com
+Cc: Hector Marco-Gisbert <hecmargi@....es>
+Subject: Re: CVE-Request -- Linux ASLR integer overflow
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Fri, Feb 13, 2015 at 02:56:55PM +0100, Hector Marco wrote:
+> Hi,
+> 
+> It worth metion that the patch was already sent:
+> 
+> https://lkml.org/lkml/2015/1/7/811
 
-> https://sourceware.org/bugzilla/show_bug.cgi?id=16618
+I've sent this patch again, after cleaning it up further:
+https://lkml.org/lkml/2015/2/14/61
 
-> stdio-common/vfscanf.c has an ADDW macro that tries to determine
-> whether to use malloc or alloca for allocations. But in the malloc
-> case, it only allocates newsize bytes instead of the required
-> newsize * sizeof (CHAR_T). Thus the allocated buffer gets overrun in
-> the wide-string case
+Thanks for working on this!
 
-( referring to
-https://sourceware.org/git/gitweb.cgi?p=glibc.git;a=blob_plain;f=stdio-common/vfscanf.c;hb=HEAD )
+-Kees
 
-Use CVE-2015-1472 for this issue in which an incorrect second argument
-to realloc leads to a buffer overflow.
-
-
-> The logic also has a problem that the comparison UCHAR_MAX + 1 >
-> 2 * wpmax doesn't allow for 2 * wpmax overflowing, though that would
-> only apply if half the address space gets allocated.
-
-We think you mean that the integer overflow isn't reachable because,
-on platforms supported by glibc, the ADDW macro wouldn't be used in a
-case where "2 * wpmax" overflows. The value of wpmax is limited by the
-requirement that that value was previously used in a successful
-realloc call. If the realloc had failed, a "goto errout" would have
-occurred.
-
-If this is incorrect and the integer overflow actually is reachable
-when operating on very long input data, then a separate CVE ID can be
-assigned for the integer overflow. In any case, the integer overflow
-is not within the scope of CVE-2015-1472.
-
-
-> The check with __libc_use_alloca also checks against the number of
-> array entries to allocate rather than the number of bytes, so the
-> function can allocate up to four times as many bytes as is libc policy
-> on the stack in the wide character case.
-
-Here, it seems that the goal of the policy is risk management for use
-of alloca. This is security relevant for some applications that use
-glibc, because it could (for example) allow a denial of service attack
-that's intended to trigger a failed alloca. There was one intended
-policy, and the the incorrect "__libc_use_alloca (newsize)" caused a
-different (and weaker) policy to be enforced instead.
-
-Use CVE-2015-1473 for this risk-management error.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJU0Y4mAAoJEKllVAevmvmsgBUIAMj4u37bJEH/oibsqjXHcSgz
-C1XY1mZej/ojdVuAmWyiX1MZGUDzhaLEz6AdRjhQg7BtdVUfdQ1PjV8q+PT8gORD
-nuIwWYT281XbIuVkJ2YT2Su789FxylQeOYhzl2rDyKecc+J24v/eL7PNFNrcYy2+
-1/i+q2FXFS0lP6QcvZbWlEryJzWl4sN47LIwvhreRsWFH5N4o7x6It7mzE3yRu5O
-YAb52wRPABFWDozyYgDc06qood/Gyok1eCBzkhuO7MRO4dAjWexPh2oEg7mFkygM
-6FM/P6wNbN/n5Hqx39+PE/TQCKVuWZFcrATFugFiWSVWPBlEQjJpcctJv2TNQC8=
-=lBV+
------END PGP SIGNATURE-----
+> 
+> 
+> Hector Marco.
+> http://hmarco.org
+> 
+> 
+> El 13/02/15 a las 13:26, Hector Marco escribió:
+> >Hi,
+> >
+> >A bug in Linux ASLR implementation for versions prior to 3.19-rc3 has
+> >been found. The issue is that the stack for processes is not properly
+> >randomized on some 64 bit architectures due to an integer overflow.
+> >
+> >Affected systems have reduced the stack entropy of the processes by four.
+> >
+> >
+> >Details at:
+> >http://hmarco.org/bugs/linux-ASLR-integer-overflow.html
+> >
+> >
+> >
+> >Could you please assign a CVE-ID for this?
+> >
+> >
+> >
+> >Hector Marco.
+> >http://hmarco.org
+> >
+> >Cyber-security researcher at
+> >http://cybersecurity.upv.es/
+-- 
+Kees Cook
