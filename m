@@ -1,31 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/02/9
-Message-ID: <20150302172645.GC12838@gremlin.ru>
-Date: Mon, 2 Mar 2015 20:26:45 +0300
-From: gremlin@...mlin.ru
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: Maven downloads JARs via HTTP
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/14/5
+Message-Id: <20150214152948.0D711332056@smtpvbsrv1.mitre.org>
+Date: Sat, 14 Feb 2015 10:29:48 -0500 (EST)
+From: cve-assign@...re.org
+To: steffen.roesemann1986@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE-Request -- Landsknecht Adminsystems v.4.0.1 (DEV, beta version) -- Reflecting XSS, unrestricted file-upload and underlaying CSRF
 Content-Type: text/plain; charset=utf-8
 
-On 2015-03-02 17:34:55 +0100, Martin Prpic wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
- >>> "Maven Central can now be accessed via HTTPS. I think the
- >>> default configuration should be switched to use that, rather
- >>> than the current unsecured HTTP transport."
+Use CVE-2015-1603 for both XSS issues.
 
- >> Does it use any sort of package signing and signature
- >> verification?
+Use CVE-2015-1604 for the "upload arbitrary files" issue.
 
- > Seeing as the patch only does s/http/https/,
+The available information doesn't suggest that any of the behavior
+would typically be considered a separate CSRF vulnerability. There is
+no CVE ID for Landsknecht Adminsystems CSRF.
 
-Obviously, that doesn't really help.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
- > I would say, unfortunately, no.
-
-Well... it seems like we have yet another class of vulnerabilities
-fully inducted by stupidity: "%s lacks integrity check on update".
-
-
--- 
-Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
-GPG: 8832FE9FA791F7968AC96E4E909DAC45EF3B1FA8 @ hkp://keys.gnupg.net
+iQEcBAEBAgAGBQJU32mXAAoJEKllVAevmvmsCW8H/jyeFJ4gGAF99n0lkRoocR4x
+VKVXjxIHa30xj/L6385pgon4rh5SYydABYsHQR2dN+090POwo8Pi7ZDvCXVu78gG
+zwpPSZJpdKvusRUaRfUh66pCKsYsiw0S7D/rWf/5ICZWPRBlQbuAKyZeR3cBlD7l
+NxzwpuWsPo4qPoFc//+r7M7UTjm619UjTvFHdV8cv+VTXwCYwDKRY6ivFU5cemoF
+rL41HnMIRRzjEytfWJTRtKdFDLAf5+EtqdNlEPWPrm6kLv6BME4Xq3TGi07zbSkI
+Q8Uhm5+bcEYKmb7WjiPfxabMDbd0YIWhuskWIciJNOI5pyJRVAqnKBDjJIANYKE=
+=w6LF
+-----END PGP SIGNATURE-----
