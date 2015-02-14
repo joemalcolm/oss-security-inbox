@@ -1,32 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/29/23
-Message-ID: <682FB378-D03A-44EE-9C4F-697E63B19CA6@redhat.com>
-Date: Thu, 29 Jan 2015 11:52:08 -0700
-From: "Vincent Danen" <vdanen@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE request: xchat/hexchat don't properly verify SSL certificates
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/14/1
+Message-Id: <20150214002125.579443AE100@smtpvbsrv1.mitre.org>
+Date: Fri, 13 Feb 2015 19:21:25 -0500 (EST)
+From: cve-assign@...re.org
+To: steffen.roesemann1986@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE-Request -- Landsknecht Adminsystems v.4.0.1 (DEV, beta version) -- Reflecting XSS, unrestricted file-upload and underlaying CSRF
 Content-Type: text/plain; charset=utf-8
 
-As reported [1]:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-XChat did not verify that the server hostname matched the domain name in 
-the subject's Common Name (CN) or subjectAltName field in X.509 
-certificates. This could allow a man-in-the-middle attacker to spoof an 
-SSL server if they had a certificate that was valid for any domain name.
+> As there seems not be an existing permission-model, users can read/execute
+> files  an administrator/user uploaded and vice versa.
 
-The same code is used in hexchat.
+We think this means anyone can execute a file regardless of who
+uploaded it. Do you mean that a file uploaded by a user can ONLY be
+executed by an administrator or different user, whereas a file
+uploaded by an administrator can ONLY be executed by a user?
 
-This was initially reported to hexchat in 2013 [2] and fixed last 
-November [3].  I'm not sure if it should receive a 2013 or a 2014 CVE.  
-Can one be assigned to this?
+> This issue includes an underlaying CSRF-vulnerability, as a user is able to
+> upload a malicious file and trick another user or the administrator into
+> visiting the link to the file.
 
-Thanks.
+We're not sure whether you mean the CSRF concept is relevant in a way
+that is unusual for an "upload arbitrary files" issue.
 
-[1] https://bugzilla.redhat.com/show_bug.cgi?id=1081839
-[2] https://github.com/hexchat/hexchat/issues/524
-[3] 
-https://github.com/hexchat/hexchat/commit/c9b63f7f9be01692b03fa15275135a4910a7e02d
+If the attacker can upload a file, with the upload location and/or
+file extension allowing execute access, then the typical outcome is
+that exactly that file is executed. It is not typically the case that
+a product modifies uploaded files to insert a CSRF protection
+mechanism. Also, it is not typically the case that a pathname such as
+/upload/files/{UPLOADED_FILE} would actually execute a wrapper program
+(containing a CSRF protection mechanism) before executing
+UPLOADED_FILE itself.
 
+For these reasons, the ability to upload executable files to
+/upload/files/{UPLOADED_FILE} would normally be considered a single
+vulnerability, and would not lead to a conclusion that the product has
+an independent CSRF problem.
 
--- 
-Vincent Danen / Red Hat Product Security
+Also, the primary threat model for "upload arbitrary files" issues is
+that the file uploading and the file execution are done by the same
+person. Certainly, it could be interesting to upload JavaScript code
+and trick an administrator into executing it. However, if the attacker
+can upload and execute PHP code without any tricking, ability to
+upload JavaScript is usually not considered an independently relevant
+problem. In common (but not all) cases, given an attacker's "upload
+arbitrary files" ability, the entire class of scenarios in which the
+file is later executed by a different person isn't independently
+relevant.
+
+So, we think one CVE for the two XSS issues, and one CVE for file
+upload, is the correct number. Do you have another interpretation?
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJU3pRRAAoJEKllVAevmvmszRgIAKTqAfCFqlHNnWIZtADfF6Gk
+jMwCV5kugJjpzO0yzOkZ/luN0tKJBEKwAZbRfFr9KRnHldfJAE2DSf1TmSBEtKL8
+m6RyGtRSleNiwH1Ed/w9oGGMjdO2ascnLYr+extIMhuy8H4l/VEhghi3et+Ud1X8
+dUeHFB84zRdVqcmLi8xJIXtXLNQDpGI+FQY8jjBvQ2UqPp55Kk+cJdgQQUV8p4vg
+5/vDZVfdpKCoJvfK5lMOTopZDzjix+z+ldKWHvuhg+IWX0H57UHzDIUlsnagzS7e
+a1/eRUjZtjjtKmTBF7SHjVDDBaNVQwtZLPyyc/g5VxA+NelfCqORCeBJIqLUVss=
+=Iqmo
+-----END PGP SIGNATURE-----
