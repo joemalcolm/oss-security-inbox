@@ -1,26 +1,90 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/17/1
-Message-ID: <20150217113252.GA9764@mail.corp.redhat.com>
-Date: Tue, 17 Feb 2015 12:32:52 +0100
-From: Vasyl Kaigorodov <vkaigoro@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: novnc: session hijack through insecurely set session token cookies
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/14/2
+Message-Id: <A15E727D-B513-4DFE-A0BD-387B7C7949B0@gmail.com>
+Date: Sat, 14 Feb 2015 07:09:54 +0100
+From: Steffen Rösemann <steffen.roesemann1986@...il.com>
+To: cve-assign@...re.org
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE-Request -- Landsknecht Adminsystems v.4.0.1 (DEV, beta version) -- Reflecting XSS, unrestricted file-upload and underlaying CSRF
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+> We think this means anyone can execute a file regardless of who
+> uploaded it. Do you mean that a file uploaded by a user can ONLY be
+> executed by an administrator or different user, whereas a file
+> uploaded by an administrator can ONLY be executed by a user?
 
-Paul McMillan reported that noVNC prior to this patch:
-https://github.com/kanaka/noVNC/commit/ad941faddead705cd611921730054767a0b32dcd
-allows an attacker to steal insecurely set session token cookies, hijacking active or inactive VNC sessions.
 
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=1193451
+I mean that anyone can execute files, regardless of who uploaded it.
 
-Can a CVE be assigned to this please?
+> So, we think one CVE for the two XSS issues, and one CVE for file
+> upload, is the correct number. Do you have another interpretation?
 
-Thanks.
--- 
-Vasyl Kaigorodov | Red Hat Product Security
-PGP:  0xABB6E828 A7E0 87FF 5AB5 48EB 47D0 2868 217B F9FC ABB6 E828
+No, I follow your interpretation. Thank you very much.
 
-Content of type "application/pgp-signature" skipped
+Greetings.
+
+> Am 14.02.2015 um 01:21 schrieb cve-assign@...re.org:
+> 
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+> 
+>> As there seems not be an existing permission-model, users can read/execute
+>> files  an administrator/user uploaded and vice versa.
+> 
+> We think this means anyone can execute a file regardless of who
+> uploaded it. Do you mean that a file uploaded by a user can ONLY be
+> executed by an administrator or different user, whereas a file
+> uploaded by an administrator can ONLY be executed by a user?
+> 
+>> This issue includes an underlaying CSRF-vulnerability, as a user is able to
+>> upload a malicious file and trick another user or the administrator into
+>> visiting the link to the file.
+> 
+> We're not sure whether you mean the CSRF concept is relevant in a way
+> that is unusual for an "upload arbitrary files" issue.
+> 
+> If the attacker can upload a file, with the upload location and/or
+> file extension allowing execute access, then the typical outcome is
+> that exactly that file is executed. It is not typically the case that
+> a product modifies uploaded files to insert a CSRF protection
+> mechanism. Also, it is not typically the case that a pathname such as
+> /upload/files/{UPLOADED_FILE} would actually execute a wrapper program
+> (containing a CSRF protection mechanism) before executing
+> UPLOADED_FILE itself.
+> 
+> For these reasons, the ability to upload executable files to
+> /upload/files/{UPLOADED_FILE} would normally be considered a single
+> vulnerability, and would not lead to a conclusion that the product has
+> an independent CSRF problem.
+> 
+> Also, the primary threat model for "upload arbitrary files" issues is
+> that the file uploading and the file execution are done by the same
+> person. Certainly, it could be interesting to upload JavaScript code
+> and trick an administrator into executing it. However, if the attacker
+> can upload and execute PHP code without any tricking, ability to
+> upload JavaScript is usually not considered an independently relevant
+> problem. In common (but not all) cases, given an attacker's "upload
+> arbitrary files" ability, the entire class of scenarios in which the
+> file is later executed by a different person isn't independently
+> relevant.
+> 
+> So, we think one CVE for the two XSS issues, and one CVE for file
+> upload, is the correct number. Do you have another interpretation?
+> 
+> - -- 
+> CVE assignment team, MITRE CVE Numbering Authority
+> M/S M300
+> 202 Burlington Road, Bedford, MA 01730 USA
+> [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1.4.14 (SunOS)
+> 
+> iQEcBAEBAgAGBQJU3pRRAAoJEKllVAevmvmszRgIAKTqAfCFqlHNnWIZtADfF6Gk
+> jMwCV5kugJjpzO0yzOkZ/luN0tKJBEKwAZbRfFr9KRnHldfJAE2DSf1TmSBEtKL8
+> m6RyGtRSleNiwH1Ed/w9oGGMjdO2ascnLYr+extIMhuy8H4l/VEhghi3et+Ud1X8
+> dUeHFB84zRdVqcmLi8xJIXtXLNQDpGI+FQY8jjBvQ2UqPp55Kk+cJdgQQUV8p4vg
+> 5/vDZVfdpKCoJvfK5lMOTopZDzjix+z+ldKWHvuhg+IWX0H57UHzDIUlsnagzS7e
+> a1/eRUjZtjjtKmTBF7SHjVDDBaNVQwtZLPyyc/g5VxA+NelfCqORCeBJIqLUVss=
+> =Iqmo
+> -----END PGP SIGNATURE-----
+
