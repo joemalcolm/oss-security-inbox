@@ -1,29 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/28/16
-Message-ID: <20150128122200.13c21df2@pc>
-Date: Wed, 28 Jan 2015 12:22:00 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: OSS Security <oss-security@...ts.openwall.com>
-Subject: the other glibc issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/14/3
+Message-ID: <CACFhWPMpUWFenDZrq1Khbb2aMf=LggqK6hs4Uv+VfN9ZKExRTw@mail.gmail.com>
+Date: Fri, 13 Feb 2015 23:36:30 -0500
+From: Matt Mahoney <mattmahoneyfl@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Possible vulnerability fixed in ZPAQ v7.02
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+I have released an update to the zpaq archiver to patch a possible
+vulnerability. zpaq is a journaling archiver for incremental backups.
+http://mattmahoney.net/dc/zpaq.html
 
-Not sure why solardesigner didn't post this himself, but he tweetet
-yesterday:
-glibc "getaddrinfo() writes DNS queries to random file descriptors
-under high load" https://sourceware.org/bugzilla/show_bug.cgi?id=15946
-… "Fixed in 2.20", reopened, CVE?
+I discussed the technical details in
+http://encode.ru/threads/456-zpaq-updates?p=42632#post42632
 
-The corresponding bug title says most of it. It's supposed to be fixed
-in glibc 2.20, however there is a comment saying it is not.
+zpaq supports forward compatibility between versions by storing the
+decompression code in the archive in a virtual machine language called
+ZPAQL. As an optimization, zpaq will translate the ZPAQL code into x86
+or x86-64. The vulnerability is versions 7.01 and earlier of libzpaq,
+an API that provides the compression and decompression services to
+zpaq and possibly other applications. One vulnerability allows a
+specially crafted archive to write past the end of an array on the
+heap. Another allows execution of the generated x86 or x86-64 to fall
+off the end of the program and execute unallocated memory. Both bugs
+can be triggered by extracting or just listing a specially crafted
+archive. I did not investigate whether these bugs could be exploited,
+but it seems possible. The patched zpaq v7.02 and libzpaq v7.02 are
+available at the above website.
 
-cu,
 -- 
-Hanno Böck
-http://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
-
-Content of type "application/pgp-signature" skipped
+-- Matt Mahoney, mattmahoneyfl@...il.com
