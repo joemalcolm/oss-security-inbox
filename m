@@ -1,48 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/16/3
-Message-ID: <alpine.LFD.2.11.1503161306320.12457@wniryva>
-Date: Mon, 16 Mar 2015 13:16:22 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: Re: CVE request: Linux kernel: tty: kobject reference leakage in tty_open
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/15/4
+Message-Id: <20150215193537.0E504332014@smtpvbsrv1.mitre.org>
+Date: Sun, 15 Feb 2015 14:35:37 -0500 (EST)
+From: cve-assign@...re.org
+To: hecmargi@....es
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE-Request -- Google Email App 4.2.2 remote denial of service
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-   Hello Greg,
+Can you resolve the version discrepancy in
 
-+-- On Fri, 13 Mar 2015, Greg KH wrote --+
-| >    -> https://git.kernel.org/linus/c290f8358acaeffd8e0c551ddcc24d1206143376
-| Digging up patches from 2011?  Why?
+  http://hmarco.org/bugs/google_email_app_4.2.2_denial_of_service.html
 
-  Not digging up old patches, the issue was brought to our attention as RHEL-6 
-is affected.
+? This begins by stating "A bug in the stock Google email application
+version 4.4.2.0200" but then says "We have found the bug in email
+version 4.2.2.0200."
 
-| What does asking for a CVE for such an old issue help with?
+Was any version number starting with "4.4" actually tested?
 
-  Well, it helps in tracking the issue for later and letting wider audience 
-know about it. As there could be other distributions that are affected by it.
-
-Thank you.
-- --
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
-
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Version: GnuPG v1.4.14 (SunOS)
 
-iQIcBAEBAgAGBQJVBopOAAoJEN0TPTL+WwQfAsEQALBf/noehwQwzVH/9jrcc0un
-hRwBWvNCzOGuvAuZDb25v6mxd3adLYgz4FKQ89D0jDhAqmpf3M2nYhn7nVyT/JoO
-2nwyfqQp0k1dnGpLvCGDNi99BcP50thU23AbtOolyWYopEopcXqcCUCJkVfCj5N+
-ZANUE1pjIh/kPUEgCpKzbDgmrweC0ctjAzDlv57qPwUBXeFWbXt4HhQuAtxEoW3x
-VnNwgVNR3fSe67cBQ5ah/BKjRoQkHJZUjaOeVCBtrE2XtHVxLeUcRng3oxoHdP+z
-lxaCiBjBrbN+lrmsVM+OLDC73e97vnM2K35CGfIrKk7xiu2K8MaIPEMUnQ3E7AUR
-DQiJXuweLeIroYA0DVVa97dIdmxokHxdL4PuW3fDQ/4DaU6LTjzvocJbyWZudNOe
-hTn4lD2VwBvLiNB5tqdc55dbPs3KrjxopV7db3yY4IesDsSfuA89ndQYMHkT6wcE
-Mx3bYnF1CfnrdcLI35ZK7RMaDKgaKn3RUVb5/BguAven/gas8ntorojwaW6lLc2E
-Hm50/BeZNZRgs6kh48V3fdOWmlnjBgV1oY5X4hUv4NUFIXhUjtfGFgyr1Y9mdQ4V
-pYL3r9t0Wc1ptsglIYLbcEzKD0hrrjTOsv0k5egVPcL3ku2n2iSQB2WMcx2aKVwl
-FJ8ltd4qcSa+mhBrNamD
-=hyMr
+iQEcBAEBAgAGBQJU4PSMAAoJEKllVAevmvmsLaQIAJslZCuKNCHKqzwnlKw4X710
+4CwpWTW73dU7o3SIHa4U3EI//wEUW9nBNK8dk1YyP8NfMLRtuK2lnKO/OI2Fs26J
+NmAQ5RUrQsbXBsIAaLS08N+B32j0MLUVfIh5lNjA3FJSbt21fQHM3XTIJp2vrceV
+Qle2CuOQk5qKVFU0azhWx8s3qx4xRfdBDga6RqdmX5+7a+eZHXQJUlXRsRVuRYkM
+4aRjEvCpiY2e4rEUz9EHg97RB7DMi2w14PKOFBgM6kCWspVvVWMqwIihjjArE+gM
+tTCFC/BUNHlMapReb6HsVap2jloSBgTCMIqzYDPi3pOsUGT4acurldlW68cm0YU=
+=FbOW
 -----END PGP SIGNATURE-----
