@@ -1,61 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/05/5
-Message-Id: <20150205133333.AF5206C0056@smtpvmsrv1.mitre.org>
-Date: Thu,  5 Feb 2015 08:33:33 -0500 (EST)
-From: cve-assign@...re.org
-To: jsegitz@...e.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: NULL ptr deref in php
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/15/2
+Message-ID: <54E09A0B.1050201@gmail.com>
+Date: Sun, 15 Feb 2015 08:07:23 -0500
+From: Daniel Micay <danielmicay@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-Request - Offset2lib
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 15/02/15 07:38 AM, Hector Marco wrote:
+> Hello,
+> 
+> 
+> Offset2lib is a security weakness on the implementation of the ASLR in
+> GNU/Linux when the executable is PIE compiled which affects all
+> architectures except s390.
+> 
+> Advisory URL:
+> http://cybersecurity.upv.es/attacks/offset2lib/offset2lib.html
+> 
+> Link patch submission:
+> https://lkml.org/lkml/2015/1/7/527
+> 
+> 
+> Can a CVE be assigned to this please?
+> 
+> Thank you.
+> Hector Marco.
 
-> couldn't find a CVE for https://bugs.php.net/bug.php?id=68545
+This kind of room for improvement in the ASLR implementation doesn't
+seem like it's worthy of a CVE. There are many ways of making it more
+fine grained, but there are diminishing returns. This won't help if
+there are usable ROP gadgets in the application code.
 
-Does a crash triggered by an unserialize argument cross privilege
-boundaries in typical cases?
+AFAIK, it didn't attempt / claim to offer this level of granularity, so
+it's not the same as something like the vdso issue where an expected
+exploit mitigation was totally broken.
 
-http://php.net/manual/function.unserialize.php says
+It could also add a gap between each library and do more than just base
+randomization for mmap... but it's an endless rabbit hole and at some
+point the costs become significant, while the gains are dubious.
 
-   Do not pass untrusted user input to unserialize(). Unserialization
-   can result in code being loaded and executed due to object
-   instantiation and autoloading, and a malicious user may be able to
-   exploit this.
 
-In the past, there have been CVEs for remote code execution that rely
-on an untrusted unserialize argument, e.g., CVE-2014-3669 and
-CVE-2014-8142. These may be important for attacks against some types
-of restricted environments.
-
-CVE inclusion for unserialize crashes could potentially be handled
-differently.
-
-For example, is it common for a PHP application to accept some
-untrusted unserialize arguments but not arbitrary untrusted
-unserialize arguments, with a decision process that would accept the
-https://bugs.php.net/bug.php?id=68545 example argument, because static
-analysis could prove that that argument is safe with respect to code
-execution?
-
-If not, then (at least for crash situations) perhaps it would be
-better to focus on CVE assignments at the application level for
-applications that are inconsistent with the "Do not pass untrusted
-user input to unserialize()" documentation.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJU03B7AAoJEKllVAevmvmsXS0IAI0qvlgEjcBxzvIy9y89SNB2
-G+0V024xf+QrFWTryWVhs04AaffkxLdqZP2VUiAjgzasyQ6XHRwGmTvfR6kwbTZj
-X8R5xiCCSoKvT1LVtQKedeeuxQ0n4/V/maOXnp1l0QRby90I2KhKf9uCw22kLDHr
-Iws34tm5GMgI+jMMEnUsHoDFW4iDYiTOmOCkzdJ6CytjR1TxWXWhAm4IZnuLpmEE
-d3aNjWJbbIQfaVCStgnLnUOWs7qeWRLC2L6g0jp/llQ5iMIu3T3WZH2HyBLSZeDO
-UWJ7KzM42g0hrBHuXen9TD6IPrpwO41zNwxEoUT9Lcav+fnZFUHasMYd326V288=
-=Z9Jt
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
