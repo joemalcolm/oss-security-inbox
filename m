@@ -1,55 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/18/3
-Message-ID: <54E4656B.3060606@openwall.com>
-Date: Wed, 18 Feb 2015 13:11:55 +0300
-From: Alexander Cherepanov <ch3root@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request: cabextract -- directory traversal
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/16/4
+Message-ID: <54E1CB6E.9080808@upv.es>
+Date: Mon, 16 Feb 2015 11:50:22 +0100
+From: Hector Marco <hecmargi@....es>
+To: cve-assign@...re.org
+CC: oss-security@...ts.openwall.com
+Subject: Re: CVE-Request -- Google Email App 4.2.2 remote denial of service
 Content-Type: text/plain; charset=utf-8
 
-Hi!
 
-cabextract is susceptible to a directory traversal vulnerability. While 
-extracting files from an archive, it removes leading slashes from 
-filenames but does it before possibly decoding UTF-8 and doesn't check 
-for invalid UTF-8. Hence an absolute filename can be shoved through by 
-using overlong encoding for the leading slash (and setting utf8 
-attribute in the header). This can be exploited by a malicious archive 
-to write files outside the current directory.
+El 15/02/15 a las 20:35, cve-assign@...re.org escribió:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>
+> Can you resolve the version discrepancy in
+>
+>    http://hmarco.org/bugs/google_email_app_4.2.2_denial_of_service.html
+>
+> ? This begins by stating "A bug in the stock Google email application
+> version 4.4.2.0200" but then says "We have found the bug in email
+> version 4.2.2.0200."
+>
+> Was any version number starting with "4.4" actually tested?
 
-Illustration:
 
-$ touch xxxxxxxxxx
-$ lcab xxxxxxxxxx test.cab
-$ sed -i 's|\x20\x00xxxxxxxxxx|\xa0\x00\xe0\x80\xaftmp/abs|g' test.cab
-$ rm xxxxxxxxxx
+It was tested against a newer version, the 4.4.4-36 and it is not 
+vulnerable. I corrected the number, thank you.
 
-$ ls /tmp/abs
-ls: cannot access /tmp/abs: No such file or directory
 
-$ ./cabextract test.cab
-Extracting cabinet: test.cab
-   extracting /tmp/abs
 
-All done, no errors.
-
-$ ls /tmp/abs
-/tmp/abs
-
-In the sed command above, \xe0\x80\xaf is an overlong encoding for '/', 
-\xa0\x00 are flags updated to include utf-8 flag.
-
-The issue was found in cabextract 1.4 and 2-byte encoding (\xc0\xaf) was 
-enough to hide '/'. cabextract 1.5 tightened utf-8 checks and 3-byte 
-encoding is now necessary.
-
-The issue was reported to Stuart Caie today and fixed in less than 4h:
-
-http://sourceforge.net/p/libmspack/code/217/
-
-Another release of cabextract is expected in the next few days.
-
-Could CVE please be assigned?
-
--- 
-Alexander Cherepanov
+>
+> - --
+> CVE assignment team, MITRE CVE Numbering Authority
+> M/S M300
+> 202 Burlington Road, Bedford, MA 01730 USA
+> [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1.4.14 (SunOS)
+>
+> iQEcBAEBAgAGBQJU4PSMAAoJEKllVAevmvmsLaQIAJslZCuKNCHKqzwnlKw4X710
+> 4CwpWTW73dU7o3SIHa4U3EI//wEUW9nBNK8dk1YyP8NfMLRtuK2lnKO/OI2Fs26J
+> NmAQ5RUrQsbXBsIAaLS08N+B32j0MLUVfIh5lNjA3FJSbt21fQHM3XTIJp2vrceV
+> Qle2CuOQk5qKVFU0azhWx8s3qx4xRfdBDga6RqdmX5+7a+eZHXQJUlXRsRVuRYkM
+> 4aRjEvCpiY2e4rEUz9EHg97RB7DMi2w14PKOFBgM6kCWspVvVWMqwIihjjArE+gM
+> tTCFC/BUNHlMapReb6HsVap2jloSBgTCMIqzYDPi3pOsUGT4acurldlW68cm0YU=
+> =FbOW
+> -----END PGP SIGNATURE-----
+>
