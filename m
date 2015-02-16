@@ -1,31 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/20/1
-Message-ID: <54E672C6.1040307@gathman.org>
-Date: Thu, 19 Feb 2015 18:33:26 -0500
-From: Stuart Gathman <stuart@...hman.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/16/7
+Message-ID: <loom.20150216T174342-443@post.gmane.org>
+Date: Mon, 16 Feb 2015 17:03:39 +0000 (UTC)
+From: Damien Regad <dregad@...tisbt.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Fixing the glibc runtime linker
+Subject: Re: CVE request: XSS in MantisBT
 Content-Type: text/plain; charset=utf-8
 
-On 02/19/2015 05:19 PM, Tim Brown wrote:
-> What's the fix?
->
-> More often than not, the underlying issue is an empty element within the
-> DT_RPATH header or equivalent. Sometimes it's not, but even in those cases, it
-> is largely that one or more elements isn't qualifed (i.e. it doesn't start
-> with /). The attached patch fixes this, by ignoring any elements of DT_RPATH,
-> LD_LIBRARY_PATH that do not start with a /, and/or junking any use of dlopen
-> where the filename is likewise unqualified.
->
-> Won't this break stuff?
->
-> Maybe (certainly it is means a change to glibc behaviour), but more often than
-> not, the fact that a given binary currently works in an unsafe way is a bug -
-> and an exploitable one at that. Moreoever, Solaris has had a similar sanitity
-> check (in their case only for privileged setuid binaries) for a good number of
-> years without serious incident. I believe we should be fixing software that
-> exhibits the behaviour I've described, but this patch will (I think) kill the
-> bug class irrespective of that.
-There needs to be a way to log the paths being ignored - so at least 
-some people will have a clue as to why their program doesn't work. I'm 
-not sure what that way is.
+Paul,
+
+OK, fine, so your original commit fixed the problem and my subsequent fix
+reintroduced part of the issue. Sorry about that, but shit happens. It have
+been nice however, if you had tested the code back then (i.e. before 1.2.18
+was released) instead of today, but anyway what's done is done.
+
+Now, the facts:
+- we don't have any single release with just cabacdc2 (or a port of it) in
+it so it's pointless arguing that it actually fixed the issue.
+- In 1.3, cabacdc2 + 3d0625d8 together form at least a *partial* fix for
+CVE-2014-8986 (released in 1.3.0-beta.1)
+- In 1.2, e326b73a is a combination of the above 2 (released in 1.2.18)
+
+Can you please test the commits attached to [1] and confirm that they do
+indeed fully address the original issue.
+
+@Mitre, please let us know whether this warrants a new CVE (following the
+same logic as in [2]) or if I should refer to the existing CVE-2014-8986 for
+this.
+
+[1] https://www.mantisbt.org/bugs/view.php?id=19301
+[2] http://thread.gmane.org/gmane.comp.security.oss.general/14977/focus=15392
+
+
+
