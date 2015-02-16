@@ -1,56 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/12/14
-Message-Id: <20150312213758.C6F7972E115@smtpvbsrv1.mitre.org>
-Date: Thu, 12 Mar 2015 17:37:58 -0400 (EDT)
-From: cve-assign@...re.org
-To: fweimer@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: glibc scanf implementation crashes on certain inputs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/16/2
+Message-ID: <000a01d049cf$3899b600$a9cd2200$@mantisforge.org>
+Date: Mon, 16 Feb 2015 09:59:13 -0000
+From: "P Richards" <paul@...tisforge.org>
+To: <oss-security@...ts.openwall.com>
+Cc: <cve-assign@...re.org>
+Subject: RE: Re: CVE request: XSS in MantisBT
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+As the initial discoverer of CVE-2014-8986, I can confirm that the commit in
+e326b73a does not fix the issue reported in CVE-2014-8986.
 
-> https://sourceware.org/bugzilla/show_bug.cgi?id=13138
+The commit
+https://github.com/mantisbt/mantisbt/commit/cabacdc291c251bfde0dc2a2c945c02c
+ef41bf40 does fix CVE-2014-8986.
+
+@mitre: The description @
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-8986 is incorrect -
+"MantisBT 1.2.13 through 1.2.17". The issue described in CVE-2014-8986 was
+not fixed in either 1.2.18 or .1.2.19. How does one get the status of this
+issue updated?
+
+Thanks
+Paul
+
+-----Original Message-----
+From: Damien Regad [mailto:dregad@...tisbt.org] 
+Sent: 16 February 2015 09:53
+To: oss-security@...ts.openwall.com
+Subject: [oss-security] Re: CVE request: XSS in MantisBT
+
+P Richards <paul@...> writes:
+
 > 
-> causes scanf and related functions to crash when processing certain
-> inputs. This happens with the numeric conversions (%d, %f and others),
-> and includes valid numbers (ISO C allows crashes or worse on invalid
-> inputs, but glibc is buggy even by this standard).
->
-> The first glibc version which received the fix for this bug is 2.15.
+> According to github
+> https://github.com/mantisbt/mantisbt/commit/cabacdc2
+> the fix referenced for CVE-2014-8986 has never been tagged to a 1.2.x 
+> release.
 
-Use CVE-2011-5320 for the
-https://sourceware.org/bugzilla/show_bug.cgi?id=13138#c4 issue, i.e.,
-the "huge string of zeros" attack vector.
+It would help if you looked at the 1.2.x commit...
 
-The scope of this CVE does not include the original "5"x21000000 input
-string for a %i argument. As far as we can tell, Bug 13138 doesn't
-resolve the question of whether a crash is a permitted behavior for
-that input. It seems that the relevant standards perhaps should have
-specified that that results in an ERANGE error without a crash, but
-the published wordings are not precise enough to determine whether
-unexpected "5"x21000000 handling is a vulnerability.
+http://github.com/mantisbt/mantisbt/commit/e326b73a
 
-Similarly, the scope of this CVE certainly does not include "string
-conversions that overflow the destination buffer" in the
-https://sourceware.org/bugzilla/show_bug.cgi?id=13138#c3 comment. In
-that case, undefined behavior is the documented outcome, so we feel
-that there isn't a vulnerability.
+$ git describe --contains e326b73a
+release-1.2.18~27
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJVAgZmAAoJEKllVAevmvms/84H/0tjViMSuEM83gujKzVjRAB0
-ulmErPQSY5BmgSux5DeLA2SQiYLEkX/0wpacjwytuHa2R6PBEWEJEj6PpRw6zUpQ
-/FOGwUeekpL6gmanOb8jRETDvyFXaDYqlwkRf/+UbUzEqKccRoM6lcV6asscafQL
-WIeo/tsz54lsXiUudHS8ZVIrCbO+BVOEKHGZ5RTlBm9cGryllf7fcnDgp6IkahHZ
-2+nOAAtUq8gur0j/4HBDAoseUH+fvRkEJfC52wSrJAefV4SMF9JDrTqssnYgux1F
-xeQs0AZDDr2iGS5bkaxc2PZ14UcASex+mrYp6I0c7klvMcwDuWWQRZc3qTLJBPY=
-=RpzJ
------END PGP SIGNATURE-----
+
