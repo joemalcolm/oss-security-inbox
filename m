@@ -1,94 +1,137 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/05/5
-Message-Id: <E1YTUk8-00020t-62@xenbits.xen.org>
-Date: Thu, 05 Mar 2015 12:19:08 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 122 (CVE-2015-2045) - Information leak through version information hypercall
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/16/3
+Message-ID: <20150216104812.GB7815@mail.corp.redhat.com>
+Date: Mon, 16 Feb 2015 11:48:12 +0100
+From: Vasyl Kaigorodov <vkaigoro@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request : Several Bugs Found on Libflac 1.3.1 and Libtta++-2.2
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello Zhenghao,
 
-            Xen Security Advisory CVE-2015-2045 / XSA-122
-                              version 3
+Were these issues reported upstream already?
+If so - could you please post the corresponding bug tracker urls here
+as well?
 
-         Information leak through version information hypercall
+Thanks.
+-- 
+Vasyl Kaigorodov | Red Hat Product Security
+PGP:  0xABB6E828 A7E0 87FF 5AB5 48EB 47D0 2868 217B F9FC ABB6 E828
+On Fri, 13 Feb 2015, Zhenghao Hu wrote:
 
-UPDATES IN VERSION 3
-====================
+> Several bugs found in the latest libflac and libtta codec fuzzing with AFL (
+> http://lcamtuf.coredump.cx/afl/), working together with Nie Sen, from
+> K33nTeam.
+> The input POC files can be found on
+> https://sourceforge.net/projects/pocfiles/files/
+> 
+> ---------------------------------------------------------------------------------------------------------------------------------------
+> 
+> Libflac 1.3.1 SEGV in libFLAC.so
+> 
+>   Run :
+>     ./flac -e -f -o ~/out.ogg t1.flac
+> 
+>   Codes related :
+>     src/libFLAC/stream_encoder.c    line:2143
+>     Function FLAC__stream_encoder_process()
+> 
+>       for(channel = 0; channel < channels; channel++)
+> 
+> memcpy(&encoder->private_->integer_signal[channel][encoder->private_->current_sample_number],
+> &buffer[channel][j], sizeof(buffer[channel][0]) * n);
+> 
+>     Reference:
+>         http://xiph.org/flac/
+> 
+> ---------------------------------------------------------------------------------------------------------------------------------------
+> 
+> Libflac 1.3.1 Codec Frontend Bug
+> 
+>   Run :
+>     ./flac -e -f -o ~/out.ogg t2.flac
+> 
+>   Code Related :
+>     src/flac/encoder.c        line:1878
+>     Function EncoderSession_init_encoder()
+> 
+>         else if(e->total_samples_to_encode !=
+> cs->tracks[cs->num_tracks-1].offset) {
+> 
+>   Reference:
+>         http://xiph.org/flac/
+> 
+> ---------------------------------------------------------------------------------------------------------------------------------------
+> Libflac 1.3.1 Stack overflow
+> 
+>     In Command-line flac encoder/decoder tool, bytes_to_read is not
+> properly checked against the size of ucbuffer, which causes a stack
+> overflow when performing fread in encoding.
+> 
+>     Codes related to the crash are in src/flac/encode.c function
+> flac__encode_file()
+> 
+>     const size_t bytes_to_read = (size_t)min(
+> 
+>                   encoder_session.fmt.iff.data_bytes,
+> 
+> (FLAC__uint64)CHUNK_OF_SAMPLES *
+> (FLAC__uint64)encoder_session.info.bytes_per_wide_sample
+>                                             );
+>     bytes_read = fread(ucbuffer.u8, sizeof(unsigned char), bytes_to_read,
+> infile);
+> 
+>     POC:
+>         ./flac -e -f -o ~/test.flac ~/libflac_stack.wav
+> 
+>     Reference:
+>         http://xiph.org/flac/
+> 
+> ---------------------------------------------------------------------------------------------------------------------------------------
+> 
+> Libtta++ 2.2 divide-by-0 error
+> 
+>     In TTA consoole frontend tool, speciafically crafted wave_hdr would
+> result in a divide-by-zero error.
+> 
+>     Problematic codes are as follows. In console/tta.cpp, function
+> compress()
+> 
+>         smp_size = (wave_hdr.num_channels * ((wave_hdr.bits_per_sample + 7)
+> / 8));
+>         ...
+>         ...
+>         info.samples = data_size / smp_size;
+> 
+>     POC:
+>         ./tta -e ~/libtta_float.wav ~/test.tta
+> 
+>     Reference:
+>         http://sourceforge.net/projects/tta/
+> 
+> ---------------------------------------------------------------------------------------------------------------------------------------
+> 
+> Libtta++ 2.2 tta_encoder class heap overflow
+> 
+>     tta_encoder.fnum is not checked in tta_encoder::process_stream, which
+> causes a heap overflow when trying to write the seek_table indexed by fnum.
+> 
+>     Codes related to the crash are in libtta.cpp , encoder::process_stream()
+> 
+>         seek_table = (TTAuint64 *) tta_malloc(frames * sizeof(TTAuint64));
+> 
+>         seek_table[fnum++] = fifo.count;
+> 
+>     POC:
+>         ./tta -e ~/heap.wav ~/test.tta
+> 
+>     Reference:
+>         http://sourceforge.net/projects/tta/
+> 
+> ---------------------------------------------------------------------------------------------------------------------------------------
+> 
+> Thanks!
+> --
+> Zhenghao Hu / K33nTeam
 
-Public release.
-
-ISSUE DESCRIPTION
-=================
-
-The code handling certain sub-operations of the HYPERVISOR_xen_version
-hypercall fails to fully initialize all fields of structures
-subsequently copied back to guest memory. Due to this hypervisor stack
-contents are copied into the destination of the operation, thus
-becoming visible to the guest.
-
-IMPACT
-======
-
-A malicious guest might be able to read sensitive data relating to
-other guests.
-
-VULNERABLE SYSTEMS
-==================
-
-Xen 3.2.x and later are vulnerable.
-Xen 3.1.x and earlier have not been inspected.
-
-MITIGATION
-==========
-
-There is no mitigation available for this issue.
-
-CREDITS
-=======
-
-This issue was discovered by Aaron Adams of NCC Group.
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue.
-
-xsa122.patch        xen-unstable, Xen 4.5.x, Xen 4.4.x, Xen 4.3.x, Xen 4.2.x
-
-$ sha256sum xsa122*.patch
-13404ef363ee347db1571ee91afaa962a68e616a7596c2441a29e26f6db9ec47  xsa122.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQEcBAEBAgAGBQJU+EmQAAoJEIP+FMlX6CvZZxIIAJVuGIRZ1dEiX1VPY71dZ52t
-CSIBfHMpynwxT7oUwbw/Akk3d1M/uAV/8QvM1DoG9//U6hQgZfY5UVn3Ihp1k7Fy
-BitDKdDn3T10ys/URtotX+8+Alm1diM/6sIrAF5kG3IBf0VCkEaV5jVI0ZIuee5u
-AOHhj9HJN9bPRGSTlNlkRx0Tjlw8Worrluex2romagALxLEXYejOM8syuQl5qSFj
-VdqhNvmZV23664ZTrgSZxU17O+AajMNi+M9sYUFSPfAA8VHu42G7Ox4CqY7pxyg7
-b9g2BgVVWRkZIhZPYeEr3RcxNP7wITAeFYP18c48VBd6gmHYK9sSwwSoXgYGuwE=
-=ddMG
------END PGP SIGNATURE-----
-
-Download attachment "xsa122.patch" of type "application/octet-stream" (1456 bytes)
+Content of type "application/pgp-signature" skipped
