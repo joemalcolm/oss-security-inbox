@@ -1,36 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/11/14
-Message-ID: <54DBAB85.1030004@upv.es>
-Date: Wed, 11 Feb 2015 20:20:37 +0100
-From: Hector Marco <hecmargi@....es>
-To: cve-assign@...re.org
-CC: oss-security@...ts.openwall.com
-Subject: Re: CVE-Request -- Google Email App 4.2.2 remote denial of service
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/16/5
+Message-ID: <CAFicg87T2PYuZ-BBd4X2UNShS_Tq2T_A9cZ2O=m6j=zyhsat5w@mail.gmail.com>
+Date: Mon, 16 Feb 2015 15:42:06 +0100
+From: Maxin John <maxin@...inbjohn.info>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org, sona.sarmadi@...a.com
+Subject: CVE-Request - bitbake
 Content-Type: text/plain; charset=utf-8
 
+Hi,
 
+Executing "bitbake -g -u depexp <package>" when DISPLAY is not
+properly set causes segfault and a denial of service (through OOM) via
+a crafted script.
 
-On 11/02/15 18:35, cve-assign@...re.org wrote:
->> It is a different source code and fix. The source code is
->> available in:
-> 
->> https://android.googlesource.com/platform/packages/apps/Email
-> 
->> ... in the Email App this is done by the MimeUtility.java
-> 
-> Do you mean it's this fix:
-> 
-> https://android.googlesource.com/platform/packages/apps/Email/+/6fb157c90cc04a062eefa5ede850b6efd8d2fc80
->
->  ?
-> 
-> 
+Bug Report URL:
+https://bugzilla.yoctoproject.org/show_bug.cgi?id=7299
 
-I have tested this bug against the Email App in a Samsung Galaxy S4
-(4.2.2.0200 vulnerable) and S5 mini (4.2.2.0400 not vulnerable) but I
-didn't find these versions numbers in the Email git repository.
+Patch link (master branch):
+http://git.openembedded.org/bitbake/commit/?id=f35e9bd7b59c180fe9a3d9177efb57b92d9cd373
 
-That patch fixes a problem with matches with the vulnerability that I
-reported but only with that I can not say that that patch fixes what I
-have reported.
+Can a CVE be assigned to this please?
 
+Thanks and Regards,
+Maxin
