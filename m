@@ -1,55 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/18/11
-Message-ID: <Pine.LNX.4.64.1501181540090.14308@beijing.mitre.org>
-Date: Sun, 18 Jan 2015 15:44:02 -0500 (EST)
-From: cve-assign@...re.org
-To: Damien Regad <dregad@...tisbt.org>
-cc: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: Re: CVE request: CAPTCHA bypass in MantisBT
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/16/1
+Message-ID: <loom.20150216T104620-663@post.gmane.org>
+Date: Mon, 16 Feb 2015 09:53:17 +0000 (UTC)
+From: Damien Regad <dregad@...tisbt.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: XSS in MantisBT
 Content-Type: text/plain; charset=utf-8
 
+P Richards <paul@...> writes:
 
-On Sat, 17 Jan 2015, Damien Regad wrote:
+> 
+> According to github
+> https://github.com/mantisbt/mantisbt/commit/cabacdc2
+> the fix referenced for CVE-2014-8986 has never been tagged to a 1.2.x 
+> release.
 
-> Greetings,
->
-> Please assign a CVE ID for the following issue
->
->
-> Description:
->
-> An attacker can get an unlimited amount of CAPTCHA "samples" with different 
-> perturbations for the same challenge, which makes the whole captcha utterly 
-> useless and very easy to bypass.
->
->
-> Affected versions:
-> <= 1.2.19
->
-> Fixed in versions:
-> 1.2.19 (not yet released)
->
-> Patch:
-> See Github [1]
->
-> Credit:
-> This vulnerability was reported [2] by Florent Daigniere from Matta 
-> Consulting.
-> The issue was fixed by Damien Regad (MantisBT Developer).
->
-> References:
-> Further details available in our issue tracker [2]
->
-> [1] https://github.com/mantisbt/mantisbt/commit/39a92726
-> [2] https://www.mantisbt.org/bugs/view.php?id=17984
+It would help if you looked at the 1.2.x commit...
 
-Use CVE-2014-9624.  (Although 17984 apparently was not publicly accessible 
-until 2015, the 39a92726 commit appears to have been uploaded to GitHub on 
-December 29, 2014, and it clearly describes a security issue.  Therefore a 
-2014 ID is used.)
+http://github.com/mantisbt/mantisbt/commit/e326b73a
 
----
+$ git describe --contains e326b73a
+release-1.2.18~27
 
-CVE assignment team, MITRE CVE Numbering Authority M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+
