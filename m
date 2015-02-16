@@ -1,19 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/08/5
-Message-ID: <54D7E11A.8080008@redhat.com>
-Date: Sun, 08 Feb 2015 15:20:10 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: security@....net, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: CVE-2013-6501 php: predictible filename used for cache in world writable directory
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/16/8
+Message-ID: <20150216181915.GA20337@inutil.org>
+Date: Mon, 16 Feb 2015 19:19:15 +0100
+From: Moritz Muehlenhoff <jmm@...ian.org>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: CVE request: spencer regexp
 Content-Type: text/plain; charset=utf-8
 
-https://bugzilla.redhat.com/show_bug.cgi?id=1009103
+Hi,
+please assign a CVE ID for this:
 
-not sure if this got fixed or not, PHP can you comment?
+http://www.kb.cert.org/vuls/id/695940
+https://guidovranken.wordpress.com/2015/02/04/full-disclosure-heap-overflow-in-h-spencers-regex-library-on-32-bit-systems/
 
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+This affects multiple source packages including local copies of the
+code. However, in many cases the code is only used when building for
+Android or Windows.
 
+Current WIP status for source packages in Debian:
+https://security-tracker.debian.org/tracker/TEMP-0778389-A8C6F9
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Cheers,
+        Moritz
