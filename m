@@ -1,25 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/22/7
-Message-ID: <20150222132717.499@usenet.piggo.com>
-Date: Sun, 22 Feb 2015 12:32:36 +0000 (UTC)
-From: Sébastien Delafond <seb@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/17/1
+Message-ID: <20150217113252.GA9764@mail.corp.redhat.com>
+Date: Tue, 17 Feb 2015 12:32:52 +0100
+From: Vasyl Kaigorodov <vkaigoro@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: mod-gnutls: GnuTLSClientVerify require is ignored
+Subject: CVE request: novnc: session hijack through insecurely set session token cookies
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hello,
 
-mod-gnutls doesn't consider the server's client verify mode, even if the
-verify mode was unset in the directory configuration. As a result,
-invalid certificates are ignored and clients can connect and receive
-data as long as they presented any certificate whatsoever.
+Paul McMillan reported that noVNC prior to this patch:
+https://github.com/kanaka/noVNC/commit/ad941faddead705cd611921730054767a0b32dcd
+allows an attacker to steal insecurely set session token cookies, hijacking active or inactive VNC sessions.
 
-  Debian bug: https://bugs.debian.org/578663
-  Patch and detailed description: https://github.com/airtower-luna/mod_gnutls/commit/5a8a32bbfb8a83fe6358c5c31c443325a7775fc2
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=1193451
 
-Could you please assign a CVE for this issue ?
+Can a CVE be assigned to this please?
 
-Cheers,
+Thanks.
+-- 
+Vasyl Kaigorodov | Red Hat Product Security
+PGP:  0xABB6E828 A7E0 87FF 5AB5 48EB 47D0 2868 217B F9FC ABB6 E828
 
---Seb
-
+Content of type "application/pgp-signature" skipped
