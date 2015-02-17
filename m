@@ -1,56 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/23/3
-Message-Id: <20150223073805.48D076C000E@smtpvmsrv1.mitre.org>
-Date: Mon, 23 Feb 2015 02:38:05 -0500 (EST)
-From: cve-assign@...re.org
-To: ch3root@...nwall.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: cabextract -- directory traversal
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/17/5
+Message-ID: <20150217205232.GA24361@breakpoint.cc>
+Date: Tue, 17 Feb 2015 21:52:32 +0100
+From: Sebastian Andrzej Siewior <cve-announce@...breakpoint.cc>
+To: oss-security@...ts.openwall.com
+Cc: lcamtuf@...edump.cx
+Subject: CVE-2014-9328: clamav: special crafted upack files may lead to segfault
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+upack is a tool for compressing .exe (.dll and such) files under
+windows. clamav [0] is a virus scanning tool which is able to unpack
+such files during scanning.
 
-> it removes leading slashes from filenames but does it before possibly
-> decoding UTF-8 and doesn't check for invalid UTF-8
+A handcrafted file could lead the de-compressor to access beyond bounds
+leading to crash. This has been fixed via [1] and is part of the current
+(0.96.6) release.
 
-> The issue was reported to Stuart Caie today and fixed in less than 4h:
+This bug has been discovered by AFL [2], american fuzzy lop.
 
-> http://sourceforge.net/p/libmspack/code/217/
+[0] http://www.clamav.net/
+[1] https://github.com/vrtadmin/clamav-devel/commit/5e1fbf3668bd167828d675830103b3c1ccdcb76d
+[2] http://lcamtuf.coredump.cx/afl/
 
-Your report seems to be about the need for the "/* remove leading
-slashes */" code to occur after (not before) the "/* get next UTF-8
-character */" code. Is this the only vulnerability being reported, or
-is the stated behavior of "This doesn't reject bad UTF-8 with overlong
-encodings, but does re-encode it as valid UTF-8" an independent
-vulnerability?
-
-> /* special case if there's only one file - just take the first slash */
-> 
-> if (c == '\\') return 0; /* backslash = MS-DOS */
-> 
-> isunix = unix_path_seperators(cab->files);
-> 
-> sep   = (isunix) ? '/'  : '\\'; /* the path-seperator */
-> 
->  while (*fname == sep) fname++;
-
-What happens if the .cab archive contains only one file, and \/tmp/abs
-is the filename?
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJU6thCAAoJEKllVAevmvmschIH/jvsovXKOb3R8XToivGmAJG4
-raI0rK3IgcvAk3UbH+N9Ss6rSvx4XO4U5NWKWZmTIT8NENOmCR6OffRpyodmNkV0
-1yeyTt0YsVaOz35vmyh/GIf9VtsMB1XsUK8Z4V7aAnCr8qsJmzKRwD2tqaKu+m5j
-D5Zq3QsIXaEOzXTjrQsCJpSzaGKoKG9jjW3xXC8hdrqBl3V8qbXGVIAQ3a5yOexb
-Crx38WncATW1C3wDpQ7g8E6VZ22sbYEJSs2ebm36KCUGtRq6zGZQJjy1ajokpiKM
-lTIKtOGN03YAG1EpWPWKEp4cLKYVffhB1pe9pQAh6nTPYg/9CKZzQRCL7Ya8m2s=
-=ok2P
------END PGP SIGNATURE-----
+Sebastian
