@@ -1,22 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/22/4
-Message-ID: <20150222070728.GA21383@eldamar.local>
-Date: Sun, 22 Feb 2015 08:07:28 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Cc: CVE Assignments MITRE <cve-assign@...re.org>
-Subject: CVE Request: TYPO3-CORE-SA-2015-001: Authentication Bypass in TYPO3 CMS 4.5
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/17/6
+Message-ID: <20150217205236.GA25556@breakpoint.cc>
+Date: Tue, 17 Feb 2015 21:52:37 +0100
+From: Sebastian Andrzej Siewior <cve-announce@...breakpoint.cc>
+To: oss-security@...ts.openwall.com
+Cc: lcamtuf@...edump.cx
+Subject: CVE-2015-1463: clamav: special crafted petite can lead to a crash
 Content-Type: text/plain; charset=utf-8
 
-Hi
+I haven't requested this CVE but it looks to what I / AFL have
+discovered.
+petite [0] is too for compressing .exe (.dll and such) files under
+windows. clamav [1] is a virus scanning tool which is able to unpack
+such files during scanning.
 
-Could you please assign a CVE for the authentication bypass
-vulnerability in typo3, as repleased per TYPO3-CORE-SA-2015-001?
+A handcrafted file could lead the de-compressor to access beyond bounds
+leading to crash because the compiler might have removed the boundary
+check. The boundary remains there up to the gcc 4.7 series. Starting
+with gcc 4.8 the compiler removes the check because it assumes that a
+signed overflow can not become negative. According to the gcc folks this
+assumption is within the C specification. As a fix [2] one of the
+variables becomes unsigned and is part of the current (0.96.6) release.
 
-References:
+This bug has been discovered by AFL [3], american fuzzy lop.
 
-https://typo3.org/teams/security/security-bulletins/typo3-core/typo3-core-sa-2015-001
-https://review.typo3.org/#/c/37013/
+[0] http://www.un4seen.com/petite/
+[1] http://www.clamav.net/
+[2] https://github.com/vrtadmin/clamav-devel/commit/96ff19a19eba64bdf47f2f12ecdbc5ee331c09e2
+[3] http://lcamtuf.coredump.cx/afl/
 
-Regards,
-Salvatore
+Sebastian
