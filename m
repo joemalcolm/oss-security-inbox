@@ -1,28 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/22/10
-Message-ID: <Pine.LNX.4.64.1501221200270.18848@beijing.mitre.org>
-Date: Thu, 22 Jan 2015 12:01:22 -0500 (EST)
-From: cve-assign@...re.org
-To: Jim Meyering <jim@...ering.net>
-cc: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: Re: CVE request: grep heap buffer overrun
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/17/4
+Message-ID: <20150217182950.GP29052@zorglub.office.conostix.com>
+Date: Tue, 17 Feb 2015 19:29:51 +0100
+From: William Robinet <william.robinet@...ostix.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2015-1315 - Info-ZIP UnZip - Out-of-bounds Write
 Content-Type: text/plain; charset=utf-8
 
+Dear oss-security list,
 
-> Invoking grep with a carefully crafted combination of input and regexp
-> can cause a segfault and/or reading from uninitialized memory.
->
-> Here's how it evolved: http://bugs.gnu.org/19563
-> Here's the upstream fix:
-> http://git.sv.gnu.org/cgit/grep.git/commit/?id=83a95bd8c8561875b948cadd417c653dbe7ef2e2
->
-> This is particularly relevant for those who do not exec grep directly,
-> but rather embed parts of grep in another tool.
+Here is an advisory [0] about a heap-based buffer overflow vulnerability
+found in Info-Zip "UnZip" [1].
+This was discovered on Ubuntu 14.04.1 LTS (amd64) with package unzip
+version 6.0-9ubuntu1.2 with the help of afl [2].
+This vulnerability could possibly lead to arbitrary code execution.
 
-Use CVE-2015-1345.
+The problem lies in the "unix/unix.c:charset_to_intern()" function which
+is part of the 06-unzip60-alt-iconv-utf8 patch (Ubuntu reference [3]).
+It can be triggered during string conversion from CP866 to UTF-8 for
+which the destination buffer is not large enough.
 
----
+The problematic code is present in:
+- Info-ZIP beta/development release version 6.10b
+- Ubuntu unzip package (see version numbers in advisory [0])
+- FreeBSD archivers/unzip port (depending on the port configuration)
 
-CVE assignment team, MITRE CVE Numbering Authority M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+Timeline:
+20150210 - Ubuntu contacted, CVE assigned, disclosure date defined
+20150211 - FreeBSD & Upstream contacted
+20150212 - Openwall distros mailing list notified
+20150217 - Public disclosure
+
+An updated iconv patch (received from Ubuntu) is available at [4].
+
+William
+(Please note I'm not a member of the list)
+
+
+[0]
+  http://www.conostix.com/pub/adv/CVE-2015-1315-Info-ZIP-unzip-Out-of-bounds_Write.txt
+[1]
+  http://www.info-zip.org/UnZip.html
+[2]
+  american fuzzy lop - http://lcamtuf.coredump.cx/afl/
+[3]
+  Ubuntu iconv patch:
+  http://archive.ubuntu.com/ubuntu/pool/main/u/unzip/unzip_6.0-9ubuntu1.2.debian.tar.gz
+    file debian/patches/06-unzip60-alt-iconv-utf8
+[4]
+  http://www.conostix.com/pub/adv/06-unzip60-alt-iconv-utf8_CVE-2015-1315.patch
+
+-- 
+GPG Key ID/Fingerprint:
+    74C7A949/B509 4137 1353 A3FC 6A87  AA06 003F A3DF 74C7 A949
+
+Conostix S.A.
+4, Rue d'Arlon
+L-8399 Windhof (Koerich)
+T. +352 26 10 30 61
+F. +352 26 10 30 62
