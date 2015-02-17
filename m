@@ -1,45 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/25/4
-Message-ID: <54EDC1B2.9000602@oracle.com>
-Date: Wed, 25 Feb 2015 12:36:02 +0000
-From: John Haxby <john.haxby@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/17/7
+Message-ID: <20150217212415.GW5587@outflux.net>
+Date: Tue, 17 Feb 2015 13:24:16 -0800
+From: Kees Cook <keescook@...omium.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Fixing the glibc runtime linker
+Cc: Tyler Hicks <tyhicks@...onical.com>, Dmitry Chernenkov <dmitryc@...gle.com>, Michael Halcrow <mhalcrow@...gle.com>
+Subject: CVE request: Linux kernel ecryptfs 1-byte overwrite
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hello,
 
-On 19/02/15 22:19, Tim Brown wrote:
-> What's the fix?
-> 
-> More often than not, the underlying issue is an empty element 
-> within the DT_RPATH header or equivalent. Sometimes it's not, but 
-> even in those cases, it is largely that one or more elements isn't 
-> qualifed (i.e. it doesn't start with /). The attached patch fixes 
-> this, by ignoring any elements of DT_RPATH, LD_LIBRARY_PATH that
-> do not start with a /, and/or junking any use of dlopen where the 
-> filename is likewise unqualified.
+This fixes a 1-byte NULL write past the end of allocated memory:
 
-What about things like -Wl,-rpath=/tmp ?
+http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=942080643bce061c3dd9d5718d3b745dcb39a8bc
 
-That one is particularly egregious and, as Casper mentioned, there are
-other ways of getting stupid RPATHs.  I've seen a fair number of them :)
+Thanks,
 
-Would it be useful to check to see if and rpath directory is not
-writable by the someone other than the uid/euid?  Of course, it does
-nothing for an RPATH that goes over NFS.
+-Kees
 
-The Fedora packaging guidelines forbid the use of rpath completely
-which is beginning to look more and more attractive.
-
-jch
-
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iF4EAREIAAYFAlTtwaYACgkQRQu7fpQvo8ihGAD/fppL/PSXpLep2TVz4Eh5G/ch
-NxyTZXDIpXs0DAZTNuAA/RDQ7KBXT/43McHtHMHKFPlMWGnjEEkaAZ8MNQcle0Cs
-=mnPH
------END PGP SIGNATURE-----
+-- 
+Kees Cook
+Chrome OS Security
