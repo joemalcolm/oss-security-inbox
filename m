@@ -1,22 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/20/9
-Message-ID: <CALoOobMabfas=TDaWkQBNNTz9Rq-F1tCGb3A0-ijrUo1SFK2HA@mail.gmail.com>
-Date: Thu, 19 Feb 2015 23:50:37 -0800
-From: Paul Pluzhnikov <ppluzhnikov@...gle.com>
-To: Rich Felker <dalias@...c.org>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Fixing the glibc runtime linker
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/17/3
+Message-ID: <CAM-f9EMCOVtOP1EZU4ZcmGLBNXNoWJ+YYvLxngJd8yqcMxAJdg@mail.gmail.com>
+Date: Tue, 17 Feb 2015 10:20:54 +0000
+From: Patrick Coleman <blinken@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: vulnerabilities in libcsoap
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Feb 19, 2015 at 11:34 PM, Rich Felker <dalias@...c.org> wrote:
+On Tue, Feb 17, 2015 at 10:15 AM, Patrick Coleman <blinken@...il.com> wrote:
+> Hi,
+>
+> A number of vulnerabilities exist in nanohttp, a lightweight webserver library
+> included with libcsoap (http://csoap.sourceforge.net). Patches are
+> provided below against
+> 1.1.0-17.2.
 
-> I don't see how you think this is a security issue at all.
+Apologies, hit send a little early. The version number above is the
+latest Debian package version, from upstream version 1.1.0.
 
-I think the point is that 'system(argv[1])' is a hard mistake to make
-by accident, but empty or relative RPATH is easy, and is not
-immediately discoverable: you have to run 'readelf -d a.out' and then
-think about what you see.
+I'm posting here following a recommendation on debian-security, and
+Debian bug #778599 has been raised for this issue. Note upstream
+appears to be unmaintained.
 
-
--- 
-Paul Pluzhnikov
+-Patrick
