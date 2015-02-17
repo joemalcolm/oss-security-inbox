@@ -1,34 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/02/1
-Message-ID: <54F3CC49.20206@pipping.org>
-Date: Mon, 02 Mar 2015 03:34:49 +0100
-From: Sebastian Pipping <sebastian@...ping.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/17/2
+Message-ID: <CAM-f9EOVTwjFgMF84VCG2KVBQUfEOtv3wZbGFgRmZhBD1=5BTw@mail.gmail.com>
+Date: Tue, 17 Feb 2015 10:15:57 +0000
+From: Patrick Coleman <blinken@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: DokuWiki privilege escalation in RPC API
+Subject: CVE request: vulnerabilities in libcsoap
 Content-Type: text/plain; charset=utf-8
 
-Hello!
+Hi,
 
+A number of vulnerabilities exist in nanohttp, a lightweight webserver library
+included with libcsoap (http://csoap.sourceforge.net). Patches are
+provided below against
+1.1.0-17.2.
 
-DokuWiki maintenance release 2014-09-29c (of 2015-02-25) has this change
-log entry [1]:
+* Remote buffer overflow
+If the server is misconfigured, a remote user can trigger a buffer
+overflow by requesting a resource of a certain length.
+http://patrick.ld.net.au/libcsoap/nanohttp-buffer-1.patch
 
-  "Security Hotfix 2014-09-29c: fixes privilege escalation in RPC API"
+* Remote null pointer dereference
+A remote user can cause a null pointer dereference by sending a
+malformed Authorization: header.
+http://patrick.ld.net.au/libcsoap/nanohttp-nullp-1.patch
 
-The related issue at GitHub is
+Please let me know if you req
 
-  https://github.com/splitbrain/dokuwiki/issues/1056
+Cheers,
 
-and the related commit is
-
-
-https://github.com/splitbrain/dokuwiki/commit/4970ad24ce49ec76a0ee67bca7594f918ced2f5f
-
-Best,
-
-
-
-Sebastian
-
-
-[1] https://www.dokuwiki.org/changes
+Patrick
