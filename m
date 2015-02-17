@@ -1,63 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/15/6
-Message-Id: <20150315173739.6DCCA6C0017@smtpvmsrv1.mitre.org>
-Date: Sun, 15 Mar 2015 13:37:39 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/17/9
+Message-Id: <20150217223444.6494B6C0002@smtpvmsrv1.mitre.org>
+Date: Tue, 17 Feb 2015 17:34:44 -0500 (EST)
 From: cve-assign@...re.org
-To: falonsoe@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, oss@...ernot.info
-Subject: Re: CVE Request: PHP 5.6.6 changelog
+To: keescook@...omium.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, tyhicks@...onical.com, dmitryc@...gle.com, mhalcrow@...gle.com
+Subject: Re: CVE request: Linux kernel ecryptfs 1-byte overwrite
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> [1] PHP: heap buffer overflow in enchant_broker_request_dict()
-> https://bugs.php.net/bug.php?id=68552
-> http://svn.php.net/viewvc/pecl/enchant/trunk/enchant.c?r1=317600&r2=335803
-> https://bugzilla.redhat.com/show_bug.cgi?id=1194737
+> This fixes a 1-byte NULL write past the end of allocated memory:
+> 
+> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=942080643bce061c3dd9d5718d3b745dcb39a8bc
 
-> AddressSanitizer: heap-buffer-overflow ...
-> WRITE of size 4
-
-Use CVE-2014-9705.
-
-
-> [3] PHP: use after free in phar_object.c
-> https://bugs.php.net/bug.php?id=68901
-> http://git.php.net/?p=php-src.git;a=commit;h=b2cf3f064b8f5efef89bb084521b61318c71781b
-> https://bugzilla.redhat.com/show_bug.cgi?id=1194747
-
-The bug report refers to this version of the code:
-
-https://raw.githubusercontent.com/php/php-src/ad32e033274ea49d05164418241946d2f1798894/ext/phar/phar_object.c
-
-  newpath = oldpath;
-  goto its_ok;
-
-with
-
-  its_ok:
-  if (SUCCESS == php_stream_stat_path(newpath, &ssb)) {
-     efree(oldpath);
-     zend_throw_exception_ex(spl_ce_BadMethodCallException, 0, "phar \"%s\" exists and must be unlinked prior to conversion", newpath);
-
-Use CVE-2015-2301.
-
-
-> [2] PHP: Double free with disabled ZMM
-> https://bugs.php.net/bug.php?id=68827
-> http://git.php.net/?p=php-src.git;a=commit;h=91aa340180eccfc15d4a143b54d47b8120f898be
-> https://bugzilla.redhat.com/show_bug.cgi?id=1194741
-
-This apparently ended with:
-
-  [2015-01-14 12:53 UTC] tony2001@....net
-    -Type: Security
-    +Type: Feature/Change Request 
-
-There is no CVE ID. It is potentially confusing because the commit
-uses the original title of the bug report, but the "[2015-01-14 12:33
-UTC]" comment suggests that a double free is impossible.
+Use CVE-2014-9683.
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -67,11 +25,11 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJVBcL4AAoJEKllVAevmvmsEKgIAJCwBXEfUNPaaHiICHkgcd4h
-6Epeh3412VAiiDqtg8hbs8DKIpGvKdxP45mehyGO0mrEqcDwwT/+vTOJcWlVvoOp
-IzzFwjiTlrY8vdaWuaCw0V/n8ybHYIsocUhyLJiO067b7XPwmDSWZGT35dFAXyQD
-eAvPQEcgWxCDKuqCwixPse4s48wUCNwsVFSunPkNQRSeeeQW5Ou6exohmNmD6O07
-3n6BuikB9Z/iXrP650hxZSEaFJNBKpFx0mCsuRhKW975qa5Pa1qkE5O41N/PHLjL
-Z0isZ5r73GuLnO4ZUv5QVfnePhp+aHCPfaRh38DQgbarDmTSCjOX1o0mi2ubox0=
-=flzX
+iQEcBAEBAgAGBQJU48GNAAoJEKllVAevmvmsCN4H/02C8vfBtVI6OM7MMDbUgjGC
+YZPprYF79g12qnBbH2ESYIXfeUY7LWUhlGoh0/h7natZpnIFsHSXQxt8QqqmjiMh
+w2QcMd1fOOA+TSnHtWk/Rvq1/X+mmQ5E9HvHMdx/MvbJk/fEOdLPCnARLPKyDO0i
+3mPdMkcmKSC/2swERuhoB03+Z+tPcAPxrGZhQHxk9D0vl3AVtSzOTmftjrFGrwvl
+1wrlmCx0R1hieBr1YxhI1bWhPorXGLL6YeCOyeM741zL2dB5I+lX9moy3CwMJQwv
+Fd23/gTTNzJHlx/PK0hLmKKB+ZhTtMvQDm5mYYsgZWhskuSN3oJgojxNobDSf0k=
+=Cz7v
 -----END PGP SIGNATURE-----
