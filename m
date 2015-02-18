@@ -1,29 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/23/15
-Message-ID: <20150223135131.405@usenet.piggo.com>
-Date: Mon, 23 Feb 2015 12:52:21 +0000 (UTC)
-From: Sébastien Delafond <seb@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: mod-gnutls: GnuTLSClientVerify require is ignored
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/18/9
+Message-Id: <20150218183557.C4B9A8BC004@smtpvmsrv1.mitre.org>
+Date: Wed, 18 Feb 2015 13:35:57 -0500 (EST)
+From: cve-assign@...re.org
+To: carnil@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: xdg-utils: xdg-open: command injection vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On 2015-02-22, Sébastien Delafond <seb@...ian.org> wrote:
->
-> Hi,
->
-> mod-gnutls doesn't consider the server's client verify mode, even if the
-> verify mode was unset in the directory configuration. As a result,
-> invalid certificates are ignored and clients can connect and receive
-> data as long as they presented any certificate whatsoever.
->
->   Debian bug: https://bugs.debian.org/578663
->   Patch and detailed description: https://github.com/airtower-luna/mod_gnutls/commit/5a8a32bbfb8a83fe6358c5c31c443325a7775fc2
->
-> Could you please assign a CVE for this issue ?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Explicitely adding cve-assign to Cc.
+> Another command injection vulnerability was reported to the Debian
+> bugtracker. The constraints to exploit this are similar to the ones
+> for CVE-2014-9622.
+> 
+> Debian Bug: https://bugs.debian.org/777722
+> Upstream Bug: https://bugs.freedesktop.org/show_bug.cgi?id=89129
+> 
+> Jiri Horner created as well a patch for this issue, which is attached
+> to the original bug and attached also a PoC.
+> 
+> https://bugs.debian.org/cgi-bin/bugreport.cgi?msg=5;filename=xdg-open.diff;att=1;bug=777722
 
-Cheers,
+Use CVE-2015-1877 for this issue in which the file variable has a
+value from an unintended scope.
 
---Seb
+> apparently not very local in this case (maybe also dash problem?)
 
+Our understanding from
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=777722#12 is that
+the report has not identified a vulnerability (or even a bug) in dash.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJU5NrCAAoJEKllVAevmvmsSTkIAI2apAJWwlXYZQ8hJt0zpm1G
+D3NygSGpEQhW7gotv5ghmD1P/cHbA4eI0fRRoG3P28jgQ13ITNIv/DOyNse/E1NS
+IKOHQWODyEogIPSZPL3JYt4LhmY76Q2+rWFaE87DZP35YksFNsm2wRIxnHYxM3t2
+n3UeVSBUfvSZAZVJBjqAT98ZNSd9vKX99eA8dhOV3W3TTg4bTdeN/OgR5VD+NA4q
+N4nfnysxXEVmDpOELqQ5pEEFKl5WjQvmPUSyh8C7nqN26J1IJKCtzRWHJyFmHhNL
+AjFoJuHQemLhwUHgrK5E6SDBeLZAl3QjN8WgoTWKATDTbX8CUO8eOdYrzxK/eGU=
+=68eY
+-----END PGP SIGNATURE-----
