@@ -1,68 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/11/7
-Message-Id: <5E84AA9B-F5E5-45B4-9936-59251A3B08C2@stufft.io>
-Date: Wed, 11 Mar 2015 12:37:17 -0400
-From: Donald Stufft <donald@...fft.io>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/18/5
+Message-ID: <CAOp4FwRmbE3vuPtfO_s_C2X+79SZG5khmThEEQ=XDsNEKbxuRg@mail.gmail.com>
+Date: Wed, 18 Feb 2015 15:19:54 +0400
+From: Loganaden Velvindron <loganaden@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Another Python app (rhn-setup: rhnreg_ks) not checking hostnames in certs properly CVE-2015-1777
+Cc: Assign a CVE Identifier <cve-assign@...re.org>
+Subject: Re: CVE-Request: Linux ASLR mmap weakness: Reducing entropy by half
 Content-Type: text/plain; charset=utf-8
 
+On Wed, Feb 18, 2015 at 3:01 PM, Hector Marco <hecmargi@....es> wrote:
+> Hi,
+>
+> A bug in Linux ASLR implementation for versions prior to 3.19 has been
+> found. The issue is that the mmap area for processes is not properly
+> randomized on some architectures.
+>
+> Affected systems have reduced the mmap base area entropy of the processes by
+> half.
+>
+>
+> Details at:
+> http://hmarco.org/bugs/linux-ASLR-reducing-mmap-by-half.html
 
-> On Mar 11, 2015, at 12:28 PM, Kurt Seifried <kseifried@...hat.com> wrote:
-> 
-> On 03/11/2015 10:18 AM, John Haxby wrote:
->> I think there's a misunderstanding here.  I was asking for cooperation
->> to come up with a solution, participating with other people who, like,
->> I assumed, Red Hat, have an interest in solving this specific problem
->> without breaking existing (admitedly flawed) applications.  I know it's
->> not straightforward, if it was I'd've just produced a patch.  I'm still
->> happy to work with anyone to sort this out.
-> 
-> Me too. But I trust Nick and he's smart. I don't stick my finger into
-> every security pie because 1) I'm not an expert in all things and 2) I
-> have a finite life span and need to sleep.
-> 
-> So again my advice is: work with upstream/the community. You don't need
-> my input yet. Nick has spent far, far, far more time thinking about how
-> to fix Python/SSL/TLS then I ever will. Once you have a definitive
-> solution that you are pretty sure works, then please, by all means poke me.
-> 
->> 
->> [snip]
->> 
->>> I am actually working on something that will hopefully provide a
->>> better solution (for values of speed and ease of fixing flaws) than
->>> a traditional audit/code fix, (I'd rather address entire classes
->>> of security flaw rather than one instance of the flaw at a time).
->>> But like all things security infinite workload delays specific
->>> projects.
->> 
->> If this fixes the specific problem as a side effect that would be
->> great.  Details are lacking though, and there's no obvious link here
->> to making adapting PEP-466 for backwards compatibility (and I have
->> absolutely no arguments with the rejected solutions for Python).
-> 
-> This is a different project and related to web interfaces (which are a
-> growing pain point security wise).
-> 
->> 
->> This is my last message on the list on the subject.
->> 
->> jch
->> 
-> 
-> --
-> Kurt Seifried -- Red Hat -- Product Security -- Cloud
-> PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Hi Hector,
 
-If you want opt in better security, a little bit of monkey patching and
-a module on PyPI would fix that. The reason PEP 466 rejected something on
-PyPI is because it was opt in and we didn’t consider opt in to be a good
-enough fix for upstream Python.
-
----
-Donald Stufft
-PGP: 7C6B 7C5D 5E2B 6356 A926 F04F 6E3C BCE9 3372 DCFA
+The timeline is not rendered properly on Google chrome browser or
+mozilla firefox.
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
+>
+>
+>
+> Could you please assign a CVE-ID for this?
+>
+>
+>
+> Hector Marco.
+> http://hmarco.org
+>
+> Cyber-security researcher at
+> http://cybersecurity.upv.es/
+
+
+
+-- 
+This message is strictly personal and the opinions expressed do not
+represent those of my employers, either past or present.
