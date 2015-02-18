@@ -1,20 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/07/11
-Message-ID: <54D6598A.9040906@redhat.com>
-Date: Sat, 07 Feb 2015 11:29:30 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: Assign a CVE Identifier <cve-assign@...re.org>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Mozilla: Use-after-free when doing multiple nesting using bad tags
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/18/6
+Message-ID: <54E478CF.4080200@upv.es>
+Date: Wed, 18 Feb 2015 12:34:39 +0100
+From: Hector Marco <hecmargi@....es>
+To: oss-security@...ts.openwall.com
+CC: Assign a CVE Identifier <cve-assign@...re.org>
+Subject: Re: CVE-Request: Linux ASLR mmap weakness: Reducing entropy by half
 Content-Type: text/plain; charset=utf-8
 
-https://bugzilla.mozilla.org/show_bug.cgi?id=679572
-https://bugzilla.redhat.com/show_bug.cgi?id=751934
-
-not sure why this never got a cve/security treatment
-
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+El 18/02/15 a las 12:19, Loganaden Velvindron escribió:
+> On Wed, Feb 18, 2015 at 3:01 PM, Hector Marco <hecmargi@....es> wrote:
+>> Hi,
+>>
+>> A bug in Linux ASLR implementation for versions prior to 3.19 has been
+>> found. The issue is that the mmap area for processes is not properly
+>> randomized on some architectures.
+>>
+>> Affected systems have reduced the mmap base area entropy of the processes by
+>> half.
+>>
+>>
+>> Details at:
+>> http://hmarco.org/bugs/linux-ASLR-reducing-mmap-by-half.html
+>
+> Hi Hector,
+>
+> The timeline is not rendered properly on Google chrome browser or
+> mozilla firefox.
+
+Thank you! Solved it.
+
+>
+>
+>>
+>>
+>>
+>> Could you please assign a CVE-ID for this?
+>>
+>>
+>>
+>> Hector Marco.
+>> http://hmarco.org
+>>
+>> Cyber-security researcher at
+>> http://cybersecurity.upv.es/
+>
+>
+>
