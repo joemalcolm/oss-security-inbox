@@ -1,65 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/04/7
-Message-ID: <1423068934.5497.61.camel@trustmatta.com>
-Date: Wed, 04 Feb 2015 17:55:34 +0100
-From: Florent Daigniere <florent.daigniere@...stmatta.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Apache 2.4 mod_ssl SSLSessionTickets -- others vulnerable?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/18/11
+Message-ID: <54E5081F.2020902@redhat.com>
+Date: Wed, 18 Feb 2015 14:46:07 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: foomatic file loading from cwd
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 2015-02-04 at 10:35 -0600, Mark Felder wrote:
-> From the 2.4.12 changelog:
-> 
-> 
->   *) mod_ssl: New directive SSLSessionTickets (On|Off).
->      The directive controls the use of TLS session tickets (RFC 5077),
->      default value is "On" (unchanged behavior).
->      Session ticket creation uses a random key created during web
->      server startup and recreated during restarts. No other key
->      recreation mechanism is available currently. Therefore using
->      session
->      tickets without restarting the web server with an appropriate
->      frequency
->      (e.g. daily) compromises perfect forward secrecy. [Rainer Jung]
-> 
-> 
-> So if you use Apache 2.4 and care about PFS protecting your data, you
-> should turn this feature off. This appears to be an implementation issue
-> because there is no other way for Apache to recreate keys. I don't know
-> a lot about the fine details of Session Tickets, but can anyone care to
-> comment if there are other known bad implementations of session tickets
-> out there? Does this affect Apache 2.2? Nginx? Lighttpd?
-> 
-> 
-> Thanks
-> I find this bizarre that a known security weakness like this is left
-> "on" by default...
+> With apologies, this should have been made public some time ago
+> however it fell through the cracks. This is a low severity issue, it
+> requires significant attack/victim interaction and local access.
+>
+> This was assigned CVE-2013-6500
+>
+> https://bugzilla.redhat.com/show_bug.cgi?id=995090
 
-You're right, it's "bizarre"
+With apologies please REJECT CVE-2013-6500, this issue is not in
+foomatic. There may be an issue in Perl Encode however whether or not it
+is a security issue (or simply "broken by design" is up for debate.
 
-I've tried to make some noise about it two years ago [1] ... 
-
-IMHO it's OpenSSL's default that should be changed. The server
-implementation shouldn't give a ticket if it's picked a PFS enabled
-cipher (or a cipher which aims at providing better security than
-AES128-CBC) unless explicitly told to do so (the case where there is
-more than one server).
-
-Apache HTTPd's new setting (SSLSessionTicketKeyFile), allowing you to
-set the ticket key is *DANGEROUS* as documented [1]. It encourages users
-explicitly to store the key on a forensically carvable medium...
-"The ticket key file contains sensitive keying material and should be
-protected with file permissions similar to those used for
-SSLCertificateKeyFile."
-Which is exactly what you shouldn't do!
-
-Regards,
-	Florent
-
-[1]
-https://media.blackhat.com/us-13/US-13-Daigniere-TLS-Secrets-Slides.pdf
-[2]
-https://httpd.apache.org/docs/2.4/mod/mod_ssl.html#sslsessionticketkeyfile
+-- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
