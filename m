@@ -1,19 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/21/17
-Message-ID: <6042468.xNppZa3h7T@xps>
-Date: Thu, 22 Jan 2015 00:48:16 +0100
-From: Albert Astals Cid <aacid@....org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Cc: CVE Assignments MITRE <cve-assign@...re.org>, security@....org
-Subject: Re: KDE Plasma vulnerabilities: need CVE
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/18/10
+Message-ID: <20150218202206.GB30771@zoho.com>
+Date: Wed, 18 Feb 2015 20:22:06 +0000
+From: mancha <mancha1@...o.com>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: CVE request: xrdp
 Content-Type: text/plain; charset=utf-8
 
-Ping?
+Starting with glibc 2.17 (eglibc 2.17), crypt() fails with EINVAL (w/
+NULL return) if the salt violates specifications. Additionally, on
+FIPS-140 enabled Linux systems, DES or MD5 encrypted passwords passed to
+crypt() fail with EPERM (w/ NULL return).
 
-El Divendres, 16 de gener de 2015, a les 22:47:08, Albert Astals Cid va 
-escriure:
-> Hi, can we get two CVEs assigned for the attached vulnerabilities?
-> 
-> Thanks,
->   Albert
+It was discovered by Ken Milnore that xrdp 0.6.1 and earlier, when
+validating user accounts against plain passwd files or via shadow-utils,
+does not check for NULL returns from crypt(). [1]
 
+--- sesman/verify_user.c ---
+  encr = crypt(pass,salt);
+  if (g_strncmp(encr, hash, 34) != 0)
+  {
+    return 0;
+  }
+  return 1;
+----------------------------
+
+A NULL return crashes the xrdp-sesman daemon resulting in an xrdp server
+denial of service (for all modules that use xrdp's session manager for
+user authentication via old-style passwd files or via shadow passwords).
+
+This has been fixed by upstream in its development branch. [2]
+
+Please allocate a CVE for this issue.
+
+Thanks.
+
+--mancha
+
+======
+[1] http://sourceforge.net/p/xrdp/mailman/message/32985523/
+[2] https://github.com/neutrinolabs/xrdp/commit/851c762ee722
+
+
+Content of type "application/pgp-signature" skipped
