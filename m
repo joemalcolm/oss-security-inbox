@@ -1,21 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/06/6
-Message-ID: <54D548D1.4000002@redhat.com>
-Date: Fri, 06 Feb 2015 16:05:53 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>
-Subject: lynx: crash when parsing overly long links
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/18/4
+Message-ID: <54E47111.2030608@upv.es>
+Date: Wed, 18 Feb 2015 12:01:37 +0100
+From: Hector Marco <hecmargi@....es>
+To: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: CVE-Request: Linux ASLR mmap weakness: Reducing entropy by half
 Content-Type: text/plain; charset=utf-8
 
-This is an old one, making public:
+Hi,
 
-lynx: crash when parsing overly long links
+A bug in Linux ASLR implementation for versions prior to 3.19 has been 
+found. The issue is that the mmap area for processes is not properly 
+randomized on some architectures.
 
-it may need a CVE
-
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Affected systems have reduced the mmap base area entropy of the 
+processes by half.
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Details at:
+http://hmarco.org/bugs/linux-ASLR-reducing-mmap-by-half.html
+
+
+
+Could you please assign a CVE-ID for this?
+
+
+
+Hector Marco.
+http://hmarco.org
+
+Cyber-security researcher at
+http://cybersecurity.upv.es/
