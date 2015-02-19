@@ -1,35 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/04/4
-Message-ID: <54D1E991.6040001@redhat.com>
-Date: Wed, 04 Feb 2015 10:42:41 +0100
-From: Florian Weimer <fweimer@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/19/1
+Message-ID: <20150219002524.GA16545@zoho.com>
+Date: Thu, 19 Feb 2015 00:25:24 +0000
+From: mancha <mancha1@...o.com>
 To: oss-security@...ts.openwall.com
-CC: cve-assign@...re.org, jsm28@....gnu.org
-Subject: Re: Re: CVE request: heap buffer overflow in glibc swscanf
+Cc: cve-assign@...re.org
+Subject: Re: CVE request: xrdp
 Content-Type: text/plain; charset=utf-8
 
-On 02/04/2015 04:16 AM, cve-assign@...re.org wrote:
->> The check with __libc_use_alloca also checks against the number
->> of array entries to allocate rather than the number of bytes, so
->> the function can allocate up to four times as many bytes as is
->> libc policy on the stack in the wide character case.
+On Wed, Feb 18, 2015 at 08:22:06PM +0000, mancha wrote:
+> Starting with glibc 2.17 (eglibc 2.17), crypt() fails with EINVAL (w/
+> NULL return) if the salt violates specifications. Additionally, on
+> FIPS-140 enabled Linux systems, DES or MD5 encrypted passwords passed
+> to crypt() fail with EPERM (w/ NULL return).
 > 
-> Here, it seems that the goal of the policy is risk management for
-> use of alloca. This is security relevant for some applications that
-> use glibc, because it could (for example) allow a denial of service
-> attack that's intended to trigger a failed alloca. There was one
-> intended policy, and the the incorrect "__libc_use_alloca
-> (newsize)" caused a different (and weaker) policy to be enforced
-> instead.
+> It was discovered by Ken Milnore that xrdp 0.6.1 and earlier, when
+> validating user accounts against plain passwd files or via
+> shadow-utils, does not check for NULL returns from crypt(). [1]
+> 
+> --- sesman/verify_user.c ---
+>   encr = crypt(pass,salt);
+>   if (g_strncmp(encr, hash, 34) != 0)
+>   {
+>     return 0;
+>   }
+>   return 1;
+> ----------------------------
+> 
+> A NULL return crashes the xrdp-sesman daemon resulting in an xrdp
+> server denial of service (for all modules that use xrdp's session
+> manager for user authentication via old-style passwd files or via
+> shadow passwords).
+> 
+> This has been fixed by upstream in its development branch. [2]
+> 
+> Please allocate a CVE for this issue.
+> 
+> Thanks.
+> 
+> --mancha
+> 
+> ======
+> [1] http://sourceforge.net/p/xrdp/mailman/message/32985523/
+> [2] https://github.com/neutrinolabs/xrdp/commit/851c762ee722
 
-If you want to assign CVE IDs for stack overflows in glibc without
-demonstrated application impact, we really need to find a way to
-streamline the process because there are quite a few missing assignments.
+I should add, because it wasn't entirely clear from my report, this
+issue only affects implementations that directly call glibc's crypt
+not those that authenticate via PAM or kerberos.
 
-I wouldn't mind getting a pool of CVEs (for multiple years, going back
-to around 2000), and assigning them to issues in the glibc Bugzilla
-instance, and posting weekly summaries to oss-security.  Would that
-work for you?
+--mancha
 
--- 
-Florian Weimer / Red Hat Product Security
+Content of type "application/pgp-signature" skipped
