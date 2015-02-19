@@ -1,52 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/11/1
-Message-Id: <15021022132533_202004A2@antinode.info>
-Date: Tue, 10 Feb 2015 22:13:25 -0600 (CST)
-From: "Steven M. Schweda" <sms@...inode.info>
-To: thoger@...hat.com
-Cc: MANCHA1@...o.com, Info-ZIP-Dev@...tley.com, OSS-SECURITY@...ts.openwall.com, CVE-ASSIGN@...re.org
-Subject: Re: CVE Request: Info-ZIP unzip 6.0
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/19/6
+Message-Id: <20150219174436.6BA0A6C0013@smtpvmsrv1.mitre.org>
+Date: Thu, 19 Feb 2015 12:44:36 -0500 (EST)
+From: cve-assign@...re.org
+To: tristan.cacqueray@...vance.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request for vulnerability in OpenStack Glance
 Content-Type: text/plain; charset=utf-8
 
-From: Tomas Hoger <thoger@...hat.com>
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> Your patch, unzip-6.0_overflow2.diff, which is what got applied
-> upstream, seems to perform an incorrect check.  It ensures that
-> eb_ucsize is equal to eb_size - compr_offset.  The latter value
-> includes compression header length (EB_CMPRHEADLEN), which is not
-> included in eb_ucsize AFAICT (based on what I could find in
-> extrafld.txt or os2/os2zip.c in Zip 3.0 sources).  It seems the check
-> should be:
-> 
->   (eb_size - compr_offset - EB_CMPRHEADLEN != eb_ucsize)
-> 
-> Can you or upstream confirm?
-> 
-> This problem would not be a security problem, but a bug that could
-> cause well-formed extra fields to be rejected as invalid.
+> Title: Glance import task leaks image in backend
 
-   Hello.  I'm upstream.
+Is this about two separate findings, one in 2014 and one in 2015, that
+were ultimately fixed at the same time in Glance:
 
-   Thanks for the report.  I may be easily swayed, but I agree.  I was
-more worried about the buffer-overflow problems, and did not carefully
-analyze this part of the patch.  As I read the spec (for OS/2), eb_size
-should include the 4-byte eb_ucsize value (eb_cmpr_offs = EB_OS2_HLEN ->
-compr_offset), the 6-byte compressed-data header (2-byte compression
-method plus 4-byte CRC = EB_CMPRHEADLEN), and the eb_ucsize bytes of
-compressed (well, STOREd, actually) data.
+  https://review.openstack.org/#/c/122427/
+  Sep 18, 2014 ... an exception is raised and is not handled ...
+  the uploaded image file stays in a storage and clogs it
 
-   Part of the fun here is that I have no easy access to an actual OS/2
-(or AtheOS, or BeOS, or pre-OS-X Mac, or ...) system, which makes it
-tough to run a real test on this code.  (The rest of the world is
-probably in the same boat, so it's not clear that anyone would ever
-notice this, but it can't hurt (much) to make it correct.)
+  https://review.openstack.org/#/c/156553
+  Feb 17, 2015 ... Import task does not update the location
+  of the image ... Image data remains in backend for
+  deleted image
 
-   Unless someone talks me out of it soon, I'll make some equivalent
-change to the replacement 6.00 extract.c (and the current development
-edition), and throw it into the pile here.
+? If so, then it should have two CVE IDs.
 
-------------------------------------------------------------------------
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-   Steven M. Schweda               sms@...inode-info
-   382 South Warwick Street        (+1) 651-699-9818
-   Saint Paul  MN  55105-2547
+iQEcBAEBAgAGBQJU5iCbAAoJEKllVAevmvmsN9oH/ilgIGL/X5VyVLc55d4egDZs
+flqTOk5e7VTA6B31iX6/O3A74SUXPNTEilzzm5wsx0+fTb9cblgRSLU69PqnC45U
+U+FU0kjeiyEMN0UGYPGxC37EctrIBu/SMattJZ2Z9EpAZZ0eAai2zUvNt3/5DVSS
++6cctx7z5jsm4Qz+gXDkYhl6HJlxJ2m596NcFZWvjEMtlTFEfKMHSSvkcYJG315O
+H8bvt82lZFL7df3LCsrlbdey6r/jdrLBcP0Epmv87igla211Lr21yZ/zCyJHLIpi
+xdiqwNcTDLrIVH7BSUrCdsS0uDfy3q05IW/9YmN/n45qO6cB22Iy03IKo/GizIc=
+=NiIp
+-----END PGP SIGNATURE-----
