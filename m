@@ -1,40 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/10/17
-Message-Id: <1D5C84D8-CB3B-44D2-9705-209F39C5CAFD@oracle.com>
-Date: Tue, 10 Mar 2015 20:44:05 +0000
-From: John Haxby <john.haxby@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/20/1
+Message-ID: <54E672C6.1040307@gathman.org>
+Date: Thu, 19 Feb 2015 18:33:26 -0500
+From: Stuart Gathman <stuart@...hman.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Another Python app (rhn-setup: rhnreg_ks) not checking hostnames in certs properly CVE-2015-1777
+Subject: Re: Fixing the glibc runtime linker
 Content-Type: text/plain; charset=utf-8
 
-
-> On 10 Mar 2015, at 15:56, Kurt Seifried <kseifried@...hat.com> wrote:
-> 
->> None of this, however, has anything to do with the matter at hand.  If
->> no one from Red Hat is unwilling to cooperate in getting a single
->> backward-compatible resolution to incorporating PEP-466 into the
->> distro python versions then perhaps someone else is.
-> 
-> My experience is a lot of people propose a LOT of things on email lists,
-> but when it actually comes down to them doing the work, nothing happens
-> because quite often the people proposing the work don't have the
-> expertise or ability to do it. oss-security@ archives are littered with
-> such examples (e.g. the whole code audit thing).
-> 
-> So it's not that I'm unwilling, I simply don't see why you need massive
-> corporate/community buy in at this point, premature optimization and all
-> that. Build a solution, or more than one solution and try them out, then
-> report back to oss-security@ with what works/doesn't work. In general
-> the best way to determine what the best solution is for a problem is to
-> try several solutions out. Prototype code and experimental data is worth
-> 1000 meetings.
-> 
-> Come back to us with data/a working solution and then I'd be willing to
-> consider investing some time/energy into this, but until then this is
-> simply an experimental project that may not even be needed (who knows,
-> we don't because we're basically holding a useless meeting right now via
-> email).
-
-You’re not interested, that’s fine.
-
-jch
+On 02/19/2015 05:19 PM, Tim Brown wrote:
+> What's the fix?
+>
+> More often than not, the underlying issue is an empty element within the
+> DT_RPATH header or equivalent. Sometimes it's not, but even in those cases, it
+> is largely that one or more elements isn't qualifed (i.e. it doesn't start
+> with /). The attached patch fixes this, by ignoring any elements of DT_RPATH,
+> LD_LIBRARY_PATH that do not start with a /, and/or junking any use of dlopen
+> where the filename is likewise unqualified.
+>
+> Won't this break stuff?
+>
+> Maybe (certainly it is means a change to glibc behaviour), but more often than
+> not, the fact that a given binary currently works in an unsafe way is a bug -
+> and an exploitable one at that. Moreoever, Solaris has had a similar sanitity
+> check (in their case only for privileged setuid binaries) for a good number of
+> years without serious incident. I believe we should be fixing software that
+> exhibits the behaviour I've described, but this patch will (I think) kill the
+> bug class irrespective of that.
+There needs to be a way to log the paths being ignored - so at least 
+some people will have a clue as to why their program doesn't work. I'm 
+not sure what that way is.
