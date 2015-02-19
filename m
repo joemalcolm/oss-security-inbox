@@ -1,71 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/19/4
-Message-ID: <54E569E3.7050205@redhat.com>
-Date: Wed, 18 Feb 2015 21:43:15 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: cve-assign@...re.org, security@...ebsd.org
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/19/3
+Message-Id: <20150219040341.7295FB2E162@smtpvbsrv1.mitre.org>
+Date: Wed, 18 Feb 2015 23:03:41 -0500 (EST)
+From: cve-assign@...re.org
+To: kseifried@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, security@...ebsd.org
 Subject: Re: FreeBSD: URGENT: RNG broken for last 4 months
 Content-Type: text/plain; charset=utf-8
 
-On 18/02/15 09:03 PM, cve-assign@...re.org wrote:
->> If you are running a current kernel r273872 or later, please upgrade
-> 
-> Our perspective at this point is that FreeBSD-CURRENT is not a
-> "software product" and typically should not have CVE assignments. If
-> anyone on the FreeBSD Security Officer Team believes that this, for
-> whatever reason, is a case where FreeBSD-CURRENT should have a CVE, we
-> are willing to go with their preference.
-> 
->> quite a few people run -current (and it's a 4 month affected window),
->> so if we're assigning CVE's to stuff hosted in github, then it seems
->> fair
-> 
-> A project on github can be a software product if the developers choose
-> to use github that way. FreeBSD-CURRENT is, for example, advertised as
-> "any given commit is just as likely to introduce new bugs as to fix
-> existing ones"
-> (https://www.freebsd.org/doc/en/books/handbook/current-stable.html).
-> The defined use cases for FreeBSD-CURRENT don't suggest that it has
-> any expected behavior, security-wise or otherwise: it is just a point
-> in the development process. Also, we don't happen to know of
-> situations where third parties repackage and support FreeBSD-CURRENT
-> code (e.g., as the embedded OS of an appliance).
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I respectfully disagree due to the fact that FreeBSD gives explicit
-instructions on running current:
+> If you are running a current kernel r273872 or later, please upgrade
 
-https://www.freebsd.org/doc/en_US.ISO8859-1/books/handbook/current-stable.html
+Our perspective at this point is that FreeBSD-CURRENT is not a
+"software product" and typically should not have CVE assignments. If
+anyone on the FreeBSD Security Officer Team believes that this, for
+whatever reason, is a case where FreeBSD-CURRENT should have a CVE, we
+are willing to go with their preference.
 
-and even places it above using -stable in the order in the book. Looking
-at the instructions:
+> quite a few people run -current (and it's a 4 month affected window),
+> so if we're assigning CVE's to stuff hosted in github, then it seems
+> fair
 
-To track FreeBSD-CURRENT:
+A project on github can be a software product if the developers choose
+to use github that way. FreeBSD-CURRENT is, for example, advertised as
+"any given commit is just as likely to introduce new bugs as to fix
+existing ones"
+(https://www.freebsd.org/doc/en/books/handbook/current-stable.html).
+The defined use cases for FreeBSD-CURRENT don't suggest that it has
+any expected behavior, security-wise or otherwise: it is just a point
+in the development process. Also, we don't happen to know of
+situations where third parties repackage and support FreeBSD-CURRENT
+code (e.g., as the embedded OS of an appliance).
 
-Join the freebsd-current and the svn-src-head lists. This is essential
-in order to see the comments that people are making about the current
-state of the system and to receive important bulletins about the current
-state of FreeBSD-CURRENT.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-if you look at those mailing lists you will see there are a ton of
-posters, so obviously more than a few people are using this.
-
-Any ways just my 5 cents, I don't think it's a good precedent to set
-that "oh the vendor says this is beta/not supported/etc so no CVE" when:
-
-1) a lot of people use it (e.g. Google Chrome was a "beta", but it  had
-several million users so it got CVEs)
-2) the affected timeframe was quite significant (4 months, so for yearly
-key roll over that's 1/3 of the population affected)
-3) the problem can linger on despite the system being updated (e.g. any
-certs/keys need to be re-generated).
-
-
-
-
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+iQEcBAEBAgAGBQJU5V/UAAoJEKllVAevmvmswX0IAJvlnDzjyPxNgRbkZbMkqBlP
+jWu4RE4wKDIdNbMWKkPofiS0CjxT1JUvdjWJccUuEFvGMusGQcPahbIlkWUMvnRw
+fzJz+y8ge2Va7VrFoy+MzP083d3X1/oUeSf/MF4UjruoUhu1LFrTKRvHZhjuVJDn
+/VXmbtScI3V8zNPkmOcepdhau6AWzXi1kZ0jvTcAPtobkXc/MUCOkr2hca5iACDL
+zLr/H3rzRxBMqGLXW4YqvWWRTBZc5+l3w6RGuiY5oJWkigs8UTNyKurovsw/zGZ9
+lpflDjdBbSKaFvycWNOJLj9A0bTD7jo1M/6EUdzvIzBGlVnbSrlCiFfES5jpmXI=
+=6XgW
+-----END PGP SIGNATURE-----
