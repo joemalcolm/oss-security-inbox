@@ -1,68 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/17/1
-Message-ID: <54B9A5EA.2050008@mantisbt.org>
-Date: Sat, 17 Jan 2015 00:59:38 +0100
-From: Damien Regad <dregad@...tisbt.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/19/4
+Message-ID: <54E569E3.7050205@redhat.com>
+Date: Wed, 18 Feb 2015 21:43:15 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: advisory@...ridge.ch
-Subject: CVE-2014-9571: XSS in install.php
+CC: cve-assign@...re.org, security@...ebsd.org
+Subject: Re: FreeBSD: URGENT: RNG broken for last 4 months
 Content-Type: text/plain; charset=utf-8
 
-Greetings,
+On 18/02/15 09:03 PM, cve-assign@...re.org wrote:
+>> If you are running a current kernel r273872 or later, please upgrade
+> 
+> Our perspective at this point is that FreeBSD-CURRENT is not a
+> "software product" and typically should not have CVE assignments. If
+> anyone on the FreeBSD Security Officer Team believes that this, for
+> whatever reason, is a case where FreeBSD-CURRENT should have a CVE, we
+> are willing to go with their preference.
+> 
+>> quite a few people run -current (and it's a 4 month affected window),
+>> so if we're assigning CVE's to stuff hosted in github, then it seems
+>> fair
+> 
+> A project on github can be a software product if the developers choose
+> to use github that way. FreeBSD-CURRENT is, for example, advertised as
+> "any given commit is just as likely to introduce new bugs as to fix
+> existing ones"
+> (https://www.freebsd.org/doc/en/books/handbook/current-stable.html).
+> The defined use cases for FreeBSD-CURRENT don't suggest that it has
+> any expected behavior, security-wise or otherwise: it is just a point
+> in the development process. Also, we don't happen to know of
+> situations where third parties repackage and support FreeBSD-CURRENT
+> code (e.g., as the embedded OS of an appliance).
 
-Please update CVE-2014-9571 with the information below
+I respectfully disagree due to the fact that FreeBSD gives explicit
+instructions on running current:
 
+https://www.freebsd.org/doc/en_US.ISO8859-1/books/handbook/current-stable.html
 
-Description:
+and even places it above using -stable in the order in the book. Looking
+at the instructions:
 
-Vulnerabilities described in this section can be used by attackers to 
-steal cookies of application’s administrator and other website users. 
-Attackers can also perform spear phishing attacks against web site 
-visitors by replacing original content of the web site with arbitrary 
-HTML and script code, perform drive-by-download attacks by injecting 
-malware into web pages, and bypass existing CSRF protection mechanism.
+To track FreeBSD-CURRENT:
 
-The vulnerability exists due to insufficient filtration of input data 
-passed via the "admin_username" and "admin_password" HTTP GET parameters 
-to "/[admin]/install.php" script. A remote attacker can trick a 
-logged-in user to open a specially crafted link and execute arbitrary 
-HTML and script code in browser in context of the vulnerable website.
+Join the freebsd-current and the svn-src-head lists. This is essential
+in order to see the comments that people are making about the current
+state of the system and to receive important bulletins about the current
+state of FreeBSD-CURRENT.
 
-Below are two exploitation examples that use the "alert()" JavaScript 
-function to display "immuniweb" word:
+if you look at those mailing lists you will see there are a ton of
+posters, so obviously more than a few people are using this.
 
-http://mantis/[admin]/install.php?install=1&admin_username=1%27%22%3E%3Cscript%3Ealert%28%27immuniweb%27%29;%3C/script%3E
-http://mantis/[admin]/install.php?install=1&admin_password=1%27%22%3E%3Cscript%3Ealert%28%27immuniweb%27%29;%3C/script%3E
+Any ways just my 5 cents, I don't think it's a good precedent to set
+that "oh the vendor says this is beta/not supported/etc so no CVE" when:
 
-Note, that "[admin]" in the URL is changed by default during MantisBT 
-installation. Therefore, the attacker must know the location of the 
-administrative interface in order to perform the attack. However, admin 
-panel URL can be bruteforced or predicted in many cases.
-
-Affected versions:
-- <= 1.2.19
-- <= 1.3.0-beta.1
-
-Fixed in versions:
-- 1.2.19 (not yet released)
-- 1.3.0-beta.2 (not yet released)
-
-Patch:
-See Github [1]
-
-Credit:
-This vulnerability was reported [2] by High-Tech Bridge Security 
-Research Lab (https://www.htbridge.com/), via advisory ID HTB23243 [3].
-The issue was fixed by Damien Regad (MantisBT Developer).
-
-References:
-Further details available in our issue tracker [4]
-
-[1] http://github.com/mantisbt/mantisbt/commit/6d47c047 (1.2.x)
-     http://github.com/mantisbt/mantisbt/commit/132cd6d0 (1.3.x)
-[2] https://www.mantisbt.org/bugs/view.php?id=17937
-[3] https://www.htbridge.com/advisory/HTB23243
-[4] https://www.mantisbt.org/bugs/view.php?id=17938
+1) a lot of people use it (e.g. Google Chrome was a "beta", but it  had
+several million users so it got CVEs)
+2) the affected timeframe was quite significant (4 months, so for yearly
+key roll over that's 1/3 of the population affected)
+3) the problem can linger on despite the system being updated (e.g. any
+certs/keys need to be re-generated).
 
 
 
+
+-- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
