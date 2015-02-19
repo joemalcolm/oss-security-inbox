@@ -1,134 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/13/8
-Message-Id: <E1YWRzm-0008Az-7I@xenbits.xen.org>
-Date: Fri, 13 Mar 2015 15:59:30 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 98 (CVE-2014-3969) - insufficient permissions checks accessing guest memory on ARM
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/19/9
+Message-Id: <201502192219.29436.tmb@65535.com>
+Date: Thu, 19 Feb 2015 22:19:23 +0000
+From: Tim Brown <tmb@...35.com>
+To: oss-security@...ts.openwall.com
+Subject: Fixing the glibc runtime linker
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+A while ago, I suggested that I'd been working on glibc with regard to making 
+it handle runtime linking more securely. Today, I finally managed to get a 
+patch together which I think is worth sharing. I'd therefore like to issue a 
+request for comments for the attached patch, and enquire if any distros feel 
+like incorporating it? A few points on the rationale...
 
-            Xen Security Advisory CVE-2014-3969 / XSA-98
-                              version 5
+Why? 
 
-       insufficient permissions checks accessing guest memory on ARM
+Over the last couple of years I've spent a good deal of time dealing with 
+vendors who, for one reason or another have shipped binaries where it is 
+possible to inject "untrusted" code into running processes, notably but not 
+exclusively via DT_RPATH.
 
-UPDATES IN VERSION 5
-====================
+What's the fix?
 
-The issue described in update 4 also affects Xen 4.5 which was not
-released at the time of the original advisory.  The extra patch
-supplied with version 4 of this advisory is for Xen 4.5.x (as well as
-4.4.x and xen-unstable).
+More often than not, the underlying issue is an empty element within the 
+DT_RPATH header or equivalent. Sometimes it's not, but even in those cases, it 
+is largely that one or more elements isn't qualifed (i.e. it doesn't start 
+with /). The attached patch fixes this, by ignoring any elements of DT_RPATH, 
+LD_LIBRARY_PATH that do not start with a /, and/or junking any use of dlopen 
+where the filename is likewise unqualified.
 
-Added credits for updated issue.
+Won't this break stuff?
 
-UPDATES IN VERSION 4
-====================
+Maybe (certainly it is means a change to glibc behaviour), but more often than 
+not, the fact that a given binary currently works in an unsafe way is a bug - 
+and an exploitable one at that. Moreoever, Solaris has had a similar sanitity 
+check (in their case only for privileged setuid binaries) for a good number of 
+years without serious incident. I believe we should be fixing software that 
+exhibits the behaviour I've described, but this patch will (I think) kill the 
+bug class irrespective of that.
 
-Supply an additional patch for arm64. The original patches had the
-permissions check backwards, meaning that a guest could read a
-write-only mapping and vice versa, rendering the original fix
-ineffective an inparticular not closing down the ability for a guest
-to write to a readonly page via the hypervisor.
+Further thoughts?
 
-This issue was discussed on a public IRC channel and therefore it has
-been agreed with the discoverer that it should not subject to a new
-embargo.
+The patch attached is the most robust variant I've produced in that it kills 
+unqualified linker paths, irrespective of the privilege or otherwise of the 
+affected binary. We could kill the checks for non-setuid binaries or we could 
+add some additional errors in such cases. I did experiment with only checking 
+a subset of cases (namely where LD_LIBRARY_PATH itself is set) if the process 
+wasn't privileged, but in the end, I concluded that the loading of any 
+unqualified linker path could provide an exploit vector (if the non-setuid 
+binary is executed from a privileged process etc) and so erred on the side of 
+caution. A useful variant of my patch for auditors is one that logs dangerous 
+conditions rather than reject them outright, but I'm unconviced that it is 
+helpful for the masses.
 
-32-bit ARM systems are not affected by this mistake; the original fix
-remains correct for 32-bit.
+Tim
+-- 
+Tim Brown
+<mailto:tmb@...35.com>
 
-ISSUE DESCRIPTION
-=================
+View attachment "no-unqualified-linker-paths.diff" of type "text/x-patch" (6122 bytes)
 
-When accessing guest memory Xen does not correctly perform permissions
-checks on the (possibly guest provided) virtual address: it only
-checks that the mapping is readable by the guest, even when writing on
-behalf of the guest.  This allows a guest to write to memory which
-it should only be able to read.
-
-A guest running on a vulnerable system is able to write to memory
-which should be read-only.  This includes supposedly read only foreign
-mappings established using the grant table mechanism.  Such read-only
-mappings are commonly used as part of the paravirtualised I/O drivers
-(such as guest disk write and network transmit).
-
-In order to exploit this vulnerability the guest must have a mapping
-of the memory; it does not allow access to arbitrary addresses.
-
-In the event that a guest executes code from a page which has been
-shared read-only with another guest it would be possible to mount a
-take over attack on that guest.
-
-IMPACT
-======
-
-A domain which is deliberately exchanging data with another,
-malicious, domain, may be vulnerable to privilege escalation.  The
-vulnerability depends on the precise behaviour of the victim domain.
-
-In a typical configuration this means that, depending on the behaviour
-of the toolstack or device driver domain, a malicious guest
-administrator might be able to escalate their privilege to that of the
-whole host.
-
-VULNERABLE SYSTEMS
-==================
-
-Both 32- and 64-bit ARM systems are vulnerable from Xen 4.4 onward.
-
-MITIGATION
-==========
-
-None.
-
-CREDITS
-=======
-
-This issue was discovered by Julien Grall.
-
-The additional issue reported in update 4 was discovered by Tamas K
-Lengyel.
-
-RESOLUTION
-==========
-
-Applying the appropriate pair of attached patches along with the
-additional update resolves this issue.
-
-xsa98-unstable-{01,02}.patch        xen-unstable
-xsa98-4.4-{01,02}.patch             Xen 4.4.x
-xsa98-update.patch                  Additional update for unstable, 4.5.x and 4.4.x
-
-$ sha256sum xsa98*.patch
-b8535aad5ae969675d59781a81ce0b24491f1abc01aaf36c3620fd7fb6cc84eb  xsa98-unstable-01.patch
-f5e8a93525a8905653da6377097f77681ff8121b973063ff6081e27547ceaa67  xsa98-unstable-02.patch
-6f63bc2e0a0a39bbd9137513a5d130ae2c78d1fd2ebf9172bf49456f73f0a67b  xsa98-4.4-01.patch
-b338472ecce3c31a55d1a936eebbd4e46cb3ad989b91a64d4b8c5d3ca80d875d  xsa98-4.4-02.patch
-8bb4a23174c0c9b1a23a41d4669900877483fd526d331d0c377c32845feb2eb8  xsa98-update.patch
-$
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQEcBAEBAgAGBQJVAwlFAAoJEIP+FMlX6CvZBGMH/1qZuF20x5mfSn9TPDXJZrU4
-dc6Jab7VDISnfy2CkLPsyLeaOolWm34HgP0a+vggInuxtKmo7TIvoJBUVi6ndsJI
-mqSWsoUvOl6PthAB1/4WNH2e/wySxBLFEwQWnUZRXxW32LrQzb+rVcJvvHjZiYKR
-p7NYKYklCZDKhmX5DdANjO1RDg561UnenEMsgUbOdyjsk2s8o+/ni927ZUzhnxQe
-NY9LqpgOyjBLb+5tStq2v03A+ax7mgzRMQLYlWsuY+Vt08HQsPuEPxN9JNkpmEwb
-A46OICRNMEwzKmt6ZKpYJSibiffHAMm5aeRd2SalpUjlIAg67H/LHf0vV/4bJ9o=
-=igf6
------END PGP SIGNATURE-----
-
-Download attachment "xsa98-unstable-01.patch" of type "application/octet-stream" (5701 bytes)
-
-Download attachment "xsa98-unstable-02.patch" of type "application/octet-stream" (7913 bytes)
-
-Download attachment "xsa98-4.4-01.patch" of type "application/octet-stream" (5699 bytes)
-
-Download attachment "xsa98-4.4-02.patch" of type "application/octet-stream" (7800 bytes)
-
-Download attachment "xsa98-update.patch" of type "application/octet-stream" (954 bytes)
+Download attachment "signature.asc " of type "application/pgp-signature" (820 bytes)
