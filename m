@@ -1,19 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/02/2
-Message-ID: <20150202164014.GE2300@dhcp-25-225.brq.redhat.com>
-Date: Mon, 2 Feb 2015 17:40:15 +0100
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/19/2
+Message-ID: <CANTw=MPcu4YoQwO3BCiBXz+g3DmFPHWB=QrNq2x71dncaF9U4A@mail.gmail.com>
+Date: Wed, 18 Feb 2015 20:32:04 -0500
+From: Michael Gilbert <michael.s.gilbert@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request -- Linux kernel - net: DoS due to routing packets to too many different dsts/too fast
+Cc: carnil@...ian.org, cve-assign@...re.org
+Subject: Re: Re: CVE Request: xdg-utils: xdg-open: command injection vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Can please be CVE assigned to
-http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=df4d92549f23e1c037e83323aff58a21b3de7fe0
+On Wed, Feb 18, 2015 at 1:35 PM, CVE assign wrote:
+> Our understanding from
+> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=777722#12 is that
+> the report has not identified a vulnerability (or even a bug) in dash.
 
-Reference:
-https://bugzilla.redhat.com/show_bug.cgi?id=1183744
+It is probably at least a design flaw (and a reasonably
+well-documented one at that [0]).  Bash on the other hand is not
+vulnerable to the same class of problems:
 
-Thanks,
--- 
-Petr Matousek / Red Hat Product Security
-PGP: 0xC44977CA 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
+$ cat testme
+testme() {
+   x=backfromthedead
+   local x
+   echo $x
+}
+testme
+
+$ bash testme
+
+$ dash testme
+backfromthedead
+
+Best wishes,
+Mike
+
+[0] $ man dash
