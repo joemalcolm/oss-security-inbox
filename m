@@ -1,34 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/13/7
-Message-ID: <20150313150524.GA690@openwall.com>
-Date: Fri, 13 Mar 2015 18:05:24 +0300
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/19/5
+Message-ID: <54E60316.9080703@enovance.com>
+Date: Thu, 19 Feb 2015 10:36:54 -0500
+From: Tristan Cacqueray <tristan.cacqueray@...vance.com>
 To: oss-security@...ts.openwall.com
-Cc: "CERT(R) Coordination Center" <cert@...t.org>
-Subject: Re: Vendor adoption of PIE INFO#934476 oss-security
+Subject: CVE request for vulnerability in OpenStack Glance
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Mar 12, 2015 at 08:31:42PM -0700, Nick Kralevich wrote:
-> I wanted to provide a followup on this year-old thread.
+A vulnerability was discovered in OpenStack (see below). In order to
+ensure full traceability, we need a CVE number assigned that we can
+attach to further notifications. This issue is already public, although an
+advisory was not sent yet.
 
-Thank you!
+Title: Glance import task leaks image in backend
+Reporter: Abhishek Kekane (NTT)
+Products: Glance
+Affects: 2014.2 versions through 2014.2.2
 
-> With the release of Android 5.0, Android has removed support for
-> non-PIE binaries [1] [2]. Attempting to run a non-PIE binary will
-> generate an error on Android. In this way, we ensure that all binaries
-> take full advantage of Android's ASLR implementation.
-> 
-> This is just one of the many security enhancements added in Android
-> 5.*, and one that I hope other Linux distributions will pick up.
-> 
-> [1] https://source.android.com/devices/tech/security/enhancements/enhancements50.html
-> [2] https://android.googlesource.com/platform/bionic/+/76e289c026f11126fc88841b3019fd5bb419bb67
+Description:
+Abhishek Kekane from NTT reported a vulnerability in the Glance import task.
+By creating numerous images using the task API and deleting them, an
+authenticated attacker may accumulate untracked image data in the backend
+resulting in potential resource exhaustion and denial of service. All glance
+setups using API v2 are affected.
 
-I brought this to Twitter, and here's a comment by Rich Felker:
+References:
+https://launchpad.net/bugs/1420696
+https://launchpad.net/bugs/1422716
 
-<solardiz> Android 5.0 "has removed support for non-PIE binaries. Attempting to run a non-PIE binary will generate an error" http://www.openwall.com/lists/oss-security/2015/03/13/1
-<@RichFelker> @solardiz Guess that means no emacs on Android...
-<@solardiz> @RichFelker Why, can't one build Emacs as PIE?
-<@RichFelker> @solardiz The whole dumper issue. The final emacs binary is a dump of an emacs with a lisp heap full of pointers and no relocation data.
+Thanks in advance,
 
-Alexander
+-- 
+Tristan Cacqueray
+OpenStack Vulnerability Management Team
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
