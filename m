@@ -1,21 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/03/8
-Message-ID: <20150303155504.GA8220@chaz.gmail.com>
-Date: Tue, 3 Mar 2015 15:55:04 +0000
-From: Stephane Chazelas <stephane.chazelas@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: Debian / xterm #779397
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/20/14
+Message-ID: <20150220140716.GA30662@eldamar.local>
+Date: Fri, 20 Feb 2015 15:07:16 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Cc: CVE Assignments MITRE <cve-assign@...re.org>
+Subject: CVE Request: Gtk2 Perl Module: incorrect memory management in Gtk2::Gdk::Display::list_devices
 Content-Type: text/plain; charset=utf-8
 
-2015-03-03 12:45:50 +0100, Marcus Meissner:
-[...]
-> In modern times xterm should not be setuid root, but there might be legacy
-> systems where it is.
-[...]
+Hi,
 
-The bug/crash happens after xterm has dropped privileges, so
-even there, that would not be an issue.
+A new upstream version of the Gtk2 Perl module was released (1.2495)
+fixing incorrect memory management in
+Gtk2::Gdk::Display::list_devices. Upstream commit is at
 
--- 
-Stephane
+https://git.gnome.org/browse/perl-Gtk2/commit/?id=4856da628ce37099b27b66a88141dc6daad693b0
 
+References:
+-----------
+ - https://bugzilla.redhat.com/show_bug.cgi?id=1188219
+ - https://mail.gnome.org/archives/gtk-perl-list/2015-January/msg00039.html
+ - https://bugs.mageia.org/show_bug.cgi?id=15173
+ - https://lwn.net/Vulnerabilities/633094/
+
+Could you assign a CVE for it?
+
+Regards,
+Salvatore
