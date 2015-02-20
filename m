@@ -1,31 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/06/12
-Message-ID: <20150106194831.GA596@kludge.henri.nerv.fi>
-Date: Tue, 6 Jan 2015 21:48:31 +0200
-From: Henri Salo <henri@...v.fi>
-To: cve-assign@...re.org
-Cc: Marcela Bénétrix <marcelavbx@...il.com>, oss-security@...ts.openwall.com
-Subject: CVE-2012-5853
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/20/6
+Message-Id: <201502200633.32599.tmb@65535.com>
+Date: Fri, 20 Feb 2015 06:33:31 +0000
+From: Tim Brown <tmb@...35.com>
+To: oss-security@...ts.openwall.com
+Cc: Stuart Gathman <stuart@...hman.org>
+Subject: Re: Fixing the glibc runtime linker
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Thursday 19 February 2015 23:33:26 Stuart Gathman wrote:
+> On 02/19/2015 05:19 PM, Tim Brown wrote:
+> > What's the fix?
+> > 
+> > More often than not, the underlying issue is an empty element within the
+> > DT_RPATH header or equivalent. Sometimes it's not, but even in those
+> > cases, it is largely that one or more elements isn't qualifed (i.e. it
+> > doesn't start with /). The attached patch fixes this, by ignoring any
+> > elements of DT_RPATH, LD_LIBRARY_PATH that do not start with a /, and/or
+> > junking any use of dlopen where the filename is likewise unqualified.
+> > 
+> > Won't this break stuff?
+> > 
+> > Maybe (certainly it is means a change to glibc behaviour), but more often
+> > than not, the fact that a given binary currently works in an unsafe way
+> > is a bug - and an exploitable one at that. Moreoever, Solaris has had a
+> > similar sanitity check (in their case only for privileged setuid
+> > binaries) for a good number of years without serious incident. I believe
+> > we should be fixing software that exhibits the behaviour I've described,
+> > but this patch will (I think) kill the bug class irrespective of that.
+> 
+> There needs to be a way to log the paths being ignored - so at least
+> some people will have a clue as to why their program doesn't work. I'm
+> not sure what that way is.
 
-Hi MITRE,
+Probably something to take up with the glibc folk directly, but I could 
+envisage using the LD_DEBUG infrastructure.
 
-Did you assign CVE-2012-5853 for WordPress plugin cardoza-ajax-search
-SQL-injection vulnerability as described in advisory: 
-http://seclists.org/bugtraq/2012/Nov/33
+Tim
+-- 
+Tim Brown
+<mailto:tmb@...35.com>
 
-It still seems to be RESERVED and without information even Marcela received that
-CVE ID Nov 2012.
-
-- -- 
-Henri Salo
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iEYEARECAAYFAlSsPA8ACgkQXf6hBi6kbk80XgCfR70MtuXvaz5cYVUVMB39Pkpe
-Wb8AnR19rJnNkI60TCwSFGFzdjv39/7m
-=+p7u
------END PGP SIGNATURE-----
+Download attachment "signature.asc " of type "application/pgp-signature" (820 bytes)
