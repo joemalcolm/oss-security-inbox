@@ -1,47 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/11/4
-Message-ID: <Pine.LNX.4.64.1501110939210.26662@beijing.mitre.org>
-Date: Sun, 11 Jan 2015 09:41:00 -0500 (EST)
-From: cve-assign@...re.org
-To: Daniel Strøm <ds@...4web.dk>
-cc: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: Re: CVE request
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/20/9
+Message-ID: <CALoOobMabfas=TDaWkQBNNTz9Rq-F1tCGb3A0-ijrUo1SFK2HA@mail.gmail.com>
+Date: Thu, 19 Feb 2015 23:50:37 -0800
+From: Paul Pluzhnikov <ppluzhnikov@...gle.com>
+To: Rich Felker <dalias@...c.org>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Fixing the glibc runtime linker
 Content-Type: text/plain; charset=utf-8
 
+On Thu, Feb 19, 2015 at 11:34 PM, Rich Felker <dalias@...c.org> wrote:
 
-> I'd like a CVE for the following security issue:
-> https://github.com/ZF-Commons/ZfcUser/issues/550
->
-> And in text:
-> Security advisory: XSS vulnerability in login redirect param
->
-> ZfcUser version 1.2.2 has been released and includes a security for this
-> vulnerability. Fix has been applied in @baf0e46
-> <https://github.com/ZF-Commons/ZfcUser/commit/baf0e460>
-> Affected versions
->
-> All versions below 1.2.2 are affected. dev-master is fixed starting from @
-> 2cc167a <https://github.com/ZF-Commons/ZfcUser/commit/2cc167a>
-> Exploits
->
-> Because of missing escaping of the URL param redirect a XSS attack is
-> possible.
-> For example: Setting the redirect param to "><a%20href="http://github.com
-> ">GitHub.com</a><inpu%20type="hidden"%20" would result in a link added to
-> the login page.
-> Resolution
->
-> If you are using any version of ZfcUser below 1.2.2 please upgrade
-> immediately by running composer update.
-> Credits
->
-> The vulnerability was discovered and fixed by @GyunerZeki
-> <https://github.com/GyunerZeki>
+> I don't see how you think this is a security issue at all.
 
-Use CVE-2015-1039.
+I think the point is that 'system(argv[1])' is a hard mistake to make
+by accident, but empty or relative RPATH is easy, and is not
+immediately discoverable: you have to run 'readelf -d a.out' and then
+think about what you see.
 
----
 
-CVE assignment team, MITRE CVE Numbering Authority M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-- 
+Paul Pluzhnikov
