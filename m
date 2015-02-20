@@ -1,40 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/11/3
-Message-ID: <420269753.1243110.1426076807630.JavaMail.zimbra@redhat.com>
-Date: Wed, 11 Mar 2015 08:26:47 -0400 (EDT)
-From: Siddharth Sharma <siddharth@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/20/3
+Message-ID: <CALoOobPnytiXWVe5yogLt-00Mdu_b1VbXLAWVezfjTy4yaU4Kg@mail.gmail.com>
+Date: Thu, 19 Feb 2015 17:38:31 -0800
+From: Paul Pluzhnikov <ppluzhnikov@...gle.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: CVE request: spencer regexp
+Subject: Re: Fixing the glibc runtime linker
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Thu, Feb 19, 2015 at 2:19 PM, Tim Brown <tmb@...35.com> wrote:
 
-Is there a CVE which was assigned to this flaw ?
+> More often than not, the underlying issue is an empty element within the
+> DT_RPATH header or equivalent. Sometimes it's not, but even in those cases, it
+> is largely that one or more elements isn't qualifed (i.e. it doesn't start
+> with /). The attached patch fixes this, by ignoring any elements of DT_RPATH,
+> LD_LIBRARY_PATH that do not start with a /, and/or junking any use of dlopen
+> where the filename is likewise unqualified.
+>
+> Won't this break stuff?
 
-Regards,
--------------------------------------------
-Siddharth Sharma / Red Hat Product Security
+FWIW, relative RPATHs are quite fundamental to our test execution
+environment, and any patch that unconditionally ignores them would
+have to be reverted in our tree.
 
------ Original Message -----
-From: "Moritz Muehlenhoff" <jmm@...ian.org>
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Sent: Monday, February 16, 2015 11:49:15 PM
-Subject: [oss-security] CVE request: spencer regexp
+Also, don't you want to discuss this on libc-alpha? oss-security could
+be all for it, but without buy-in from libc-alpha your patch is
+unlikely to be going anywhere.
 
-Hi,
-please assign a CVE ID for this:
-
-http://www.kb.cert.org/vuls/id/695940
-https://guidovranken.wordpress.com/2015/02/04/full-disclosure-heap-overflow-in-h-spencers-regex-library-on-32-bit-systems/
-
-This affects multiple source packages including local copies of the
-code. However, in many cases the code is only used when building for
-Android or Windows.
-
-Current WIP status for source packages in Debian:
-https://security-tracker.debian.org/tracker/TEMP-0778389-A8C6F9
-
-Cheers,
-        Moritz
+-- 
+Paul Pluzhnikov
