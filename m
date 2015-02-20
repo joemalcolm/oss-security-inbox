@@ -1,27 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/01/4
-Message-ID: <871tl9vvnp.fsf@mid.deneb.enyo.de>
-Date: Sun, 01 Mar 2015 11:50:34 +0100
-From: Florian Weimer <fw@...eb.enyo.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE request: BD-J implementation in libbluray
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/20/10
+Message-ID: <20150220075756.GT23507@oevtugenva.nrevsny.pk>
+Date: Fri, 20 Feb 2015 02:57:56 -0500
+From: Rich Felker <dalias@...c.org>
+To: Paul Pluzhnikov <ppluzhnikov@...gle.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Fixing the glibc runtime linker
 Content-Type: text/plain; charset=utf-8
 
-* Sven Schwedas:
+On Thu, Feb 19, 2015 at 11:50:37PM -0800, Paul Pluzhnikov wrote:
+> On Thu, Feb 19, 2015 at 11:34 PM, Rich Felker <dalias@...c.org> wrote:
+> 
+> > I don't see how you think this is a security issue at all.
+> 
+> I think the point is that 'system(argv[1])' is a hard mistake to make
+> by accident, but empty or relative RPATH is easy, and is not
+> immediately discoverable: you have to run 'readelf -d a.out' and then
+> think about what you see.
 
-> On 2015-02-23 10:34, Jean-Baptiste Kempf wrote:
->> On 23 Feb, Florian Weimer wrote :
->>> Yes, I do think full sandboxing is required because content publishers
->>> have attacked end user system integrity in the past, so I don't think
->>> they can be trusted.
->> 
->> BD-J code comes from Blu-Rays. Downloading non-official blurays and
->> executing it is like taking random binaries from internet and running
->> them.
->
-> And the Sony rootkit came from official, store-bought discs …
+How is an empty or relative rpath easy? You have to explicitly add
+-Wl,-rpath,[whatever] to the linker command line. Most people don't
+even know this option exists, and those who do need to understand how
+it works or they're not going to get results that even work. If an
+rpath is needed and you accidentally make it cwd-relative rather than
+absolute or origin-relative, running your program is just going to
+fail when you're not in the 'right' working directory; this is such
+obvious breakage that it should be caught immediately by even basic
+testing.
 
-Someone seems to have worked independently on a proof of concept for
-this issue:
-
-<https://www.nccgroup.com/en/blog/2015/02/abusing-blu-ray-players-pt-1-sandbox-escapes/>
+Rich
