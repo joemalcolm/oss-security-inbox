@@ -1,26 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/06/13
-Message-ID: <CABuU+O3HJ6F8pz3MaULjYz1yeBBPsGn0QV7tcZU3goLmuqpUuA@mail.gmail.com>
-Date: Tue, 6 Jan 2015 21:45:13 +0100
-From: Francisco Alonso <rs@...skills.cz>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/20/8
+Message-ID: <20150220073450.GS23507@oevtugenva.nrevsny.pk>
+Date: Fri, 20 Feb 2015 02:34:50 -0500
+From: Rich Felker <dalias@...c.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: Reflected XSS / Content Spoofing in FlexPaper
+Cc: Paul Pluzhnikov <ppluzhnikov@...gle.com>
+Subject: Re: Fixing the glibc runtime linker
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On Fri, Feb 20, 2015 at 06:30:41AM +0000, Tim Brown wrote:
+> On Friday 20 February 2015 01:38:31 Paul Pluzhnikov wrote:
+> > On Thu, Feb 19, 2015 at 2:19 PM, Tim Brown <tmb@...35.com> wrote:
+> > > More often than not, the underlying issue is an empty element within the
+> > > DT_RPATH header or equivalent. Sometimes it's not, but even in those
+> > > cases, it is largely that one or more elements isn't qualifed (i.e. it
+> > > doesn't start with /). The attached patch fixes this, by ignoring any
+> > > elements of DT_RPATH, LD_LIBRARY_PATH that do not start with a /, and/or
+> > > junking any use of dlopen where the filename is likewise unqualified.
+> > > 
+> > > Won't this break stuff?
+> > 
+> > FWIW, relative RPATHs are quite fundamental to our test execution
+> > environment, and any patch that unconditionally ignores them would
+> > have to be reverted in our tree.
+> 
+> That's useful to know. Is that for setuid binaries or more generally? As I 
+> noted, it would be dead easy only to use the part of the patch that rejects 
+> them for the former only. Although as I said, that offers less protection. 
+> Would that make the patch more consumable? Another option would be to have 
+> something like /etc/suid-debug which could flag that an override is in 
+> operation.
 
-Can a CVE please be assigned to the following issue:
+I don't see how you think this is a security issue at all. The RPATH
+is _in the binary_ that you're running. It's not an input at runtime.
+If relative paths are used (either ${ORIGIN}-relative or cwd-relative)
+then the base (location of the executable file or working directory)
+is an input, but the fact that they're being used is a matter of how
+the binary was generated, not how it was invoked. Anyone can
+intentionally make a binary that does unsafe things (e.g.
+system(argv[1])) as suid. Limiting the usefulness of RPATH does not
+seem to contribute to security, especially since RPATH is not used at
+all by default and has to be manually setup, presumably by somebody
+who knows what they're doing.
 
-FlexPaper Flash viewer Reflected XSS and Content Spoofing via Swfile
-parameter in FlexPaperViewer.swf file.
-
-Fixed via FlexPaper 2.3.1 Release.
-
-References:
-http://blog.flexpaper.org/post/105984224083/flexpaper-2-3-1-release-notes
-https://code.google.com/p/flexpaper/
-http://www.theregister.co.uk/2014/12/23/wikileaks_pdf_viewer_vuln/
-http://www.pcworld.com/article/2862812/flaw-in-opensource-pdf-viewer-could-put-wikileaks-users-others-at-risk.html
-
-Thanks,
-
+Rich
