@@ -1,32 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/13/4
-Message-ID: <54DDED64.2020904@upv.es>
-Date: Fri, 13 Feb 2015 13:26:12 +0100
-From: Hector Marco <hecmargi@....es>
-To: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: CVE-Request -- Linux ASLR integer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/20/16
+Message-ID: <20150220165041.GU23507@oevtugenva.nrevsny.pk>
+Date: Fri, 20 Feb 2015 11:50:41 -0500
+From: Rich Felker <dalias@...c.org>
+To: Paul Pluzhnikov <ppluzhnikov@...gle.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Fixing the glibc runtime linker
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Fri, Feb 20, 2015 at 12:14:47AM -0800, Paul Pluzhnikov wrote:
+> On Thu, Feb 19, 2015 at 11:57 PM, Rich Felker <dalias@...c.org> wrote:
+> 
+> > How is an empty or relative rpath easy?
+> 
+> all: foo
+> foo: foo.c
+>         ${CC} -Wl,-rpath=${VAR} -o $@ $^
+> 
+> 
+> If VAR is unset, or set to relative path, resulting binary will be "bad".
 
-A bug in Linux ASLR implementation for versions prior to 3.19-rc3 has 
-been found. The issue is that the stack for processes is not properly 
-randomized on some 64 bit architectures due to an integer overflow.
+If the rpath is needed for the binary to work, this should result in
+immediate failure when you try to run it, which would be detected and
+corrected before it becomes an issue.
 
-Affected systems have reduced the stack entropy of the processes by four.
+If it's not needed for the binary to work, this is a huge incompetence
+or policy failure issue that's not going to be fixed by restricting
+RPATH. And it would probably be better solved by having ld produce
+warnings for relative or blank RPATH (or even refusing to generate
+such without an additional override option) rather than by potentially
+breaking existing binaries.
 
+Aside from that, I'm not fundamentally opposed to restricting relative
+RPATH in suid binaries (or rather AT_SECURE), but it should not be
+restricted in other cases. If it is restricted in the suid case, I
+believe the correct way is refusing to run the binary at all. Just
+ignoring the RPATH will possibly result in the wrong libraries being
+loaded, which could itself lead to vulnerabilities.
 
-Details at:
-http://hmarco.org/bugs/linux-ASLR-integer-overflow.html
+Further discussion really should take place on libc-alpha or perhaps
+by opening a bug on the glibc bug tracker ("ld.so accepts unsafe
+relative RPATHS when running suid programs").
 
-
-
-Could you please assign a CVE-ID for this?
-
-
-
-Hector Marco.
-http://hmarco.org
-
-Cyber-security researcher at
-http://cybersecurity.upv.es/
+Rich
