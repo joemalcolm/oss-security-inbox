@@ -1,26 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/04/4
-Message-ID: <Pine.LNX.4.64.1501031906160.1923@beijing.mitre.org>
-Date: Sat, 3 Jan 2015 19:07:28 -0500 (EST)
-From: cve-assign@...re.org
-To: Joshua Rogers <honey@...ernot.info>
-cc: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: Re: Re: CVE Request: libsndfile buffer overread
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/20/18
+Message-ID: <20150220171218.GV23507@oevtugenva.nrevsny.pk>
+Date: Fri, 20 Feb 2015 12:12:18 -0500
+From: Rich Felker <dalias@...c.org>
+To: Paul Pluzhnikov <ppluzhnikov@...gle.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Fixing the glibc runtime linker
 Content-Type: text/plain; charset=utf-8
 
+On Fri, Feb 20, 2015 at 09:04:48AM -0800, Paul Pluzhnikov wrote:
+> On Fri, Feb 20, 2015 at 8:50 AM, Rich Felker <dalias@...c.org> wrote:
+> 
+> > On Fri, Feb 20, 2015 at 12:14:47AM -0800, Paul Pluzhnikov wrote:
+> 
+> >> If VAR is unset, or set to relative path, resulting binary will be "bad".
+> >
+> > If the rpath is needed for the binary to work, this should result in
+> > immediate failure when you try to run it, which would be detected and
+> > corrected before it becomes an issue.
+> 
+> Right. Except the picture may be slightly more complicated, e.g. the binary
+> has optional dependencies on libfoo.so and libbar.so, and the build uses
+> 
+>   ${CC} -Wl,-rpath=${LIBFOO_INSTALL}:${LIBBAR_INSTALL} ...
+> 
+> and one or both of _INSTALL paths may be empty in a given build.
+> 
+> The bad RPATH may also not be immediately discovered because e.g. the
+> developer has LD_LIBRARY_PATH set (which is common because developers often
+> use debug version of the library installed separately from release one).
+> 
+> All of this is to say that that is a relatively easy mistake to make.
+> 
+> I fully agree with you that a competent vendor will not make this mistake,
+> but there appears to be sufficient evidence that incompetent vendors
+> exist :-)
 
->> A buffer overread was found in libsndfile by me, in the latest version.=
->
->> Fix commit here:
->> https://github.com/erikd/libsndfile/commit/dbe14f00030af5d3577f4cabbf98=
-> 61db59e9c378
->>
->> Could I get a CVE-ID for it?
+Thanks for clarifying the scenarion you have in mind. That makes a lot
+more sense.
 
-Use CVE-2014-9496.
+> > If it's not needed for the binary to work, this is a huge incompetence
+> > or policy failure issue that's not going to be fixed by restricting
+> > RPATH. And it would probably be better solved by having ld produce
+> > warnings for relative or blank RPATH (or even refusing to generate
+> > such without an additional override option) rather than by potentially
+> > breaking existing binaries.
+> 
+> Interesting notion. I am not sure how open binutils developers will be to it:
+> after all you explicitly asked for empty RPATH with command line argument.
+> 
+> Should GCC also refuse to compile 'execve(argv[1]);' unless a
+> -fyes-i-know-what-i-am-doing flag is given?
 
----
+That's probably too specific to spend effort diagnosing, but GCC
+already has functionality to warn about deprecated/dangerous functions
+like gets and even to poison the identifiers (if you want) so that any
+reference to them is an error. So I don't think it's too much of a
+stretch to say that it would be nice for the linker to have options to
+diagnose dangerous erroneous usage.
 
-CVE assignment team, MITRE CVE Numbering Authority M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+Of course there are other situations where I would be on the other
+side of this argument saying it's annoying and unnecessary to
+competent developers, so I can't say for sure that it's the right
+thing, but it seems like an idea worth exploring. Especially in case
+developers might be using new binutils/gcc but producing binaryware
+that's going to work with older versions of glibc/ld.so.
+
+Rich
