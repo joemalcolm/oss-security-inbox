@@ -1,18 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/06/18
-Message-ID: <3278C1E1-9415-4E68-9F46-410D28ACB947@redhat.com>
-Date: Tue, 06 Jan 2015 16:32:16 -0700
-From: "Vincent Danen" <vdanen@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: unsubscribe mmcallis@...hat.com
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/20/5
+Message-Id: <201502200630.49887.tmb@65535.com>
+Date: Fri, 20 Feb 2015 06:30:41 +0000
+From: Tim Brown <tmb@...35.com>
+To: oss-security@...ts.openwall.com
+Cc: Paul Pluzhnikov <ppluzhnikov@...gle.com>
+Subject: Re: Fixing the glibc runtime linker
 Content-Type: text/plain; charset=utf-8
 
-On 01/06/2015, at 16:28 PM, Vincent Danen wrote:
+On Friday 20 February 2015 01:38:31 Paul Pluzhnikov wrote:
+> On Thu, Feb 19, 2015 at 2:19 PM, Tim Brown <tmb@...35.com> wrote:
+> > More often than not, the underlying issue is an empty element within the
+> > DT_RPATH header or equivalent. Sometimes it's not, but even in those
+> > cases, it is largely that one or more elements isn't qualifed (i.e. it
+> > doesn't start with /). The attached patch fixes this, by ignoring any
+> > elements of DT_RPATH, LD_LIBRARY_PATH that do not start with a /, and/or
+> > junking any use of dlopen where the filename is likewise unqualified.
+> > 
+> > Won't this break stuff?
+> 
+> FWIW, relative RPATHs are quite fundamental to our test execution
+> environment, and any patch that unconditionally ignores them would
+> have to be reverted in our tree.
 
-> unsubscribe
+That's useful to know. Is that for setuid binaries or more generally? As I 
+noted, it would be dead easy only to use the part of the patch that rejects 
+them for the former only. Although as I said, that offers less protection. 
+Would that make the patch more consumable? Another option would be to have 
+something like /etc/suid-debug which could flag that an override is in 
+operation.
 
-Sigh.  Sorry about the noise... forgot about ezmlm's special addresses.
+> Also, don't you want to discuss this on libc-alpha? oss-security could
+> be all for it, but without buy-in from libc-alpha your patch is
+> unlikely to be going anywhere.
 
+I'm intending to, but getting security folk, who may well wear slightly more 
+positive hats to begin with, to review it, seemed like a safe place to start. 
+I can well imagine pursuading the glibc folk will be more difficult :/.
 
+Tim
 -- 
-Vincent Danen / Red Hat Product Security
+Tim Brown
+<mailto:tmb@...35.com>
+
+Download attachment "signature.asc " of type "application/pgp-signature" (820 bytes)
