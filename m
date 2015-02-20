@@ -1,31 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/17/2
-Message-ID: <CAM-f9EOVTwjFgMF84VCG2KVBQUfEOtv3wZbGFgRmZhBD1=5BTw@mail.gmail.com>
-Date: Tue, 17 Feb 2015 10:15:57 +0000
-From: Patrick Coleman <blinken@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: vulnerabilities in libcsoap
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/20/7
+Message-ID: <CALoOobPz3A6spHVWGaiZc_zvWtf0oUizwCXRk4T=CFu+WbJMFg@mail.gmail.com>
+Date: Thu, 19 Feb 2015 23:25:01 -0800
+From: Paul Pluzhnikov <ppluzhnikov@...gle.com>
+To: Tim Brown <tmb@...35.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Fixing the glibc runtime linker
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Thu, Feb 19, 2015 at 10:30 PM, Tim Brown <tmb@...35.com> wrote:
+> On Friday 20 February 2015 01:38:31 Paul Pluzhnikov wrote:
 
-A number of vulnerabilities exist in nanohttp, a lightweight webserver library
-included with libcsoap (http://csoap.sourceforge.net). Patches are
-provided below against
-1.1.0-17.2.
+>> FWIW, relative RPATHs are quite fundamental to our test execution
+>> environment, and any patch that unconditionally ignores them would
+>> have to be reverted in our tree.
+>
+> That's useful to know. Is that for setuid binaries or more generally?
 
-* Remote buffer overflow
-If the server is misconfigured, a remote user can trigger a buffer
-overflow by requesting a resource of a certain length.
-http://patrick.ld.net.au/libcsoap/nanohttp-buffer-1.patch
+We don't build/test setuid binaries, so if you only enforced the
+restriction for setuid binaries, then we wouldn't have any problem.
 
-* Remote null pointer dereference
-A remote user can cause a null pointer dereference by sending a
-malformed Authorization: header.
-http://patrick.ld.net.au/libcsoap/nanohttp-nullp-1.patch
+> As I
+> noted, it would be dead easy only to use the part of the patch that rejects
+> them for the former only. Although as I said, that offers less protection.
+> Would that make the patch more consumable?
 
-Please let me know if you req
+Yes, that form would work for us.
 
-Cheers,
+> Another option would be to have
+> something like /etc/suid-debug which could flag that an override is in
+> operation.
 
-Patrick
+You could also reject relative RPATH for all binaries, unless a
+specific LD_ALLOW_RELATIVE_RPATH or some such environment variable is
+set.
+
+We could then set that environment variable in the test execution
+environment, but not outside of it.
+
+I guess my point is that we must have the ability to use relative
+RPATH in testing, so either we'll have to revert your patch, or make
+an escape hatch of some sort.
+
+
+-- 
+Paul Pluzhnikov
