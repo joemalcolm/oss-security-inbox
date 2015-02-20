@@ -1,48 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/30/18
-Message-ID: <CAJYVuzm_e6sLuQmxX2OXxgVg0z=YS-A6PMvu4UT1N5ULycbwCw@mail.gmail.com>
-Date: Fri, 30 Jan 2015 14:27:24 -0500
-From: TingPing <tingping@...gping.se>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/20/12
+Message-Id: <201502200754.04392.tmb@65535.com>
+Date: Fri, 20 Feb 2015 07:53:58 +0000
+From: Tim Brown <tmb@...35.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: xchat/hexchat don't properly verify SSL certificates
+Cc: Paul Pluzhnikov <ppluzhnikov@...gle.com>, Rich Felker <dalias@...c.org>
+Subject: Re: Fixing the glibc runtime linker
 Content-Type: text/plain; charset=utf-8
 
-If anybody cares, HexChats plan is to support cert-pinning so users can
-still trust self-signed certs. Eitherway this has little to do with
-validating hostnames, especially self-signed certs should always have
-matching hostnames.
+On Friday 20 February 2015 08:14:47 Paul Pluzhnikov wrote:
+> On Thu, Feb 19, 2015 at 11:57 PM, Rich Felker <dalias@...c.org> wrote:
+> > How is an empty or relative rpath easy?
+> 
+> all: foo
+> foo: foo.c
+>         ${CC} -Wl,-rpath=${VAR} -o $@ $^
+> 
+> 
+> If VAR is unset, or set to relative path, resulting binary will be "bad".
+> 
+> Quoting original Tim's message:
+> > Over the last couple of years I've spent a good deal of time dealing with
+> > vendors who, for one reason or another have shipped binaries where it is
+> > possible to inject "untrusted" code into running processes, notably but
+> > not exclusively via DT_RPATH.
+> 
+> I can easily believe that such binaries are fairly common.
 
-On Fri, Jan 30, 2015 at 9:15 AM, Kurt Seifried <kseifried@...hat.com> wrote:
+That covers the DT_RPATH/DT_RUNPATH case adequately, here's a (similar) 
+example for LD_LIBRARY_PATH:
 
-> On 30/01/15 02:56 AM, Michael Samuel wrote:
-> > On 30 January 2015 at 06:24, Sam Dodrill <shadow.h511@...il.com> wrote:
-> >> A lot of the time IRC networks will not pay for a verified SSL cert due
-> to
-> >> the fact that the kind of SSL cert they would need (a wildcard one) is
-> >> financially prohibitive. I don't think this is a security bug with
-> hexchat
-> >> more a symptom of the fact that SSL combines encryption and identity
-> >> verification where sometimes people only want the former.
-> >
-> > The correct response to this is for them to publish their self-signed
-> > certificate (or even a CA certificate) and have it pasted into the
-> > client, along with the configuration.
->
-> Sorry what? A DV (Domain Validated) wildcard cert is now 80-90$ a year
-> from many providers (google "cheap ssl"). SSL certs are no longer
-> expensive and have not been for many years.
->
-> > The client could then perform a byte-wise compare of the public key.
-> >
-> > I assume well-known networks could have their certificates hard-coded
-> > into the client.
->
-> No. Just no. You put root certs on the client side, not the actual
-> server certs. Google "crypto agility" and so on.
->
-> --
-> Kurt Seifried -- Red Hat -- Product Security -- Cloud
-> PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
->
->
+* https://www.nth-dimension.org.uk/blog.php?id=87
 
+The point is that I don't think it needs to be this way. As I said in my 
+initial post, Solaris has had saner (although IMO not perhaps perfect) 
+handling of this class of bug for years. If you look at the cases I've 
+publicly reported over the last few years, Solaris wouldn't have been affected 
+by any of them (despite what at least one vendor has said) because it does the 
+sensible thing.
+
+I'll certainly have another look at the non-priv'd case (I'm leaning towards 
+having $RELATIVE (new) and $ORIGIN honoured for them (despite the fact that it 
+compromises the basic premis a little)) but I don't see a good argument for 
+not protecting setuid/setgid binaries in the manner described.
+
+Having guaged appetite, I don't think the objections are insurmountable so 
+it's worth progressing with.
+
+I guess, having kicked this bug class for a while (and even put out a paper 
+looking at the wider issue of linker behaviour), I'm trying to put my money 
+where my mouth is. That's what we're supposed to do, no? Find fixes rather than 
+just keep pointing out problems.
+
+To Rich specifically, I'm keen to get some kind of fix adopted, so once I've had 
+a chance to mull over the logging and necessary cases for relative paths a 
+little more, I'll circulate a revised patch and we can kick it around further. 
+I don't know what your thoughts are on MUSL, but I'd certainly prefer to get 
+buy in from you guys, if at all possible.
+ 
+Tim
+-- 
+Tim Brown
+<mailto:tmb@...35.com>
+
+Download attachment "signature.asc " of type "application/pgp-signature" (820 bytes)
