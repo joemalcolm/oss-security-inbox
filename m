@@ -1,34 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/16/5
-Message-Id: <20150316091820.E68986C004D@smtpvmsrv1.mitre.org>
-Date: Mon, 16 Mar 2015 05:18:20 -0400 (EDT)
-From: cve-assign@...re.org
-To: jmm@...ian.org, siddharth@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: spencer regexp
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/20/11
+Message-ID: <CALoOobPzwfx+gz=Y8bMP4573OT7mUEZ6qj+a-3LZNcsRuNkCRA@mail.gmail.com>
+Date: Fri, 20 Feb 2015 00:14:47 -0800
+From: Paul Pluzhnikov <ppluzhnikov@...gle.com>
+To: Rich Felker <dalias@...c.org>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Fixing the glibc runtime linker
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Thu, Feb 19, 2015 at 11:57 PM, Rich Felker <dalias@...c.org> wrote:
 
-> http://www.kb.cert.org/vuls/id/695940
-> https://guidovranken.wordpress.com/2015/02/04/full-disclosure-heap-overflow-in-h-spencers-regex-library-on-32-bit-systems/
+> How is an empty or relative rpath easy?
 
-Use CVE-2015-2305.
+all: foo
+foo: foo.c
+        ${CC} -Wl,-rpath=${VAR} -o $@ $^
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJVBp+GAAoJEKllVAevmvms3wcH/1uqqjT+PcJnDlLvZhl4TCG6
-G8Osx9Cvf742qsu3gHbZQStE2m/WjceQkvSCEhxVLnwQ8KjBEPrHo1Txf/miEkNl
-POxvjGRaE6E1vXz1yma22UdZ5yLSEPuQ5dQjpUo9ooIjU60kh8FvLlwxySwBzwXo
-sORdCWahBKP5x9dqx8DSxl4yW6MO08B3iFGyAvGWrsRjoIXh0eDd0SOEzTNr6xom
-P65A0ey9seAuqp6ag2491wXWueUN4mUY+91BQwgjkf6hH1esO+Q5dPiR+m/QTVWp
-5dYdj67hMdBIjUHMfqD9vC69Mp8OiPvuKh6PGQxytc2zkTWg1tX83p/xA6QvxsE=
-=Ewvb
------END PGP SIGNATURE-----
+If VAR is unset, or set to relative path, resulting binary will be "bad".
+
+Quoting original Tim's message:
+
+> Over the last couple of years I've spent a good deal of time dealing with
+> vendors who, for one reason or another have shipped binaries where it is
+> possible to inject "untrusted" code into running processes, notably but not
+> exclusively via DT_RPATH.
+
+I can easily believe that such binaries are fairly common.
+
+
+
+-- 
+Paul Pluzhnikov
