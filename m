@@ -1,40 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/01/2
-Message-Id: <20150201030536.13CAC6DCAC4@smtpvmsrv1.mitre.org>
-Date: Sat, 31 Jan 2015 22:05:36 -0500 (EST)
-From: cve-assign@...re.org
-To: felix@...but.de
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: RCE, XSS and HTTP header injection in fli4l web interface
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/20/17
+Message-ID: <CALoOobM3759qX7xmsi9oDOkAZRXALUTPB00_sA_564TLwmGs7w@mail.gmail.com>
+Date: Fri, 20 Feb 2015 09:04:48 -0800
+From: Paul Pluzhnikov <ppluzhnikov@...gle.com>
+To: Rich Felker <dalias@...c.org>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Fixing the glibc runtime linker
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Fri, Feb 20, 2015 at 8:50 AM, Rich Felker <dalias@...c.org> wrote:
 
-For the "execute arbitrary programs" issues, can you provide specific
-names for the vulnerability types, or any equivalent information?
-Examples of vulnerability types can be found on the
-https://www.owasp.org/index.php/Category:Vulnerability and
-http://cwe.mitre.org web sites. The paragraphs about
-include/cgi-helper and admin/pf.cgi aren't sufficient to determine the
-number of CVE IDs. For example, if one allows a SQL injection attack,
-and the other allows an attack with a ';' or other shell
-metacharacters, then they would have different CVE IDs. If both are
-about shell metacharacters, then they would have the same CVE ID.
+> On Fri, Feb 20, 2015 at 12:14:47AM -0800, Paul Pluzhnikov wrote:
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+>> If VAR is unset, or set to relative path, resulting binary will be "bad".
+>
+> If the rpath is needed for the binary to work, this should result in
+> immediate failure when you try to run it, which would be detected and
+> corrected before it becomes an issue.
 
-iQEcBAEBAgAGBQJUzZebAAoJEKllVAevmvmsQswIAJYIvTJFKLacqs3onLqcLpSH
-WwxlKT46XFAK6pz43OEpz72orYJkzcZsYUerSQYjhHSCrZE5QWcE+XG6f3oZ5LTQ
-6UuWLZhSN5B2nYjv6D2VDy+PCdMdzXDyuULBN9WfhH3AozxSOKdJsilbONCEy4i0
-DDSmGHkScXmZ6euqhRjsXx6MY5LkxaXVTKd4Sftc2k4KDuJANa7G1u3Lt9ziuf2s
-9YZDSedfRDz1xnrbf0UTPHgc3VI1Cj3DF6G5sn9gLgvrQAkQNrZZwBSFZasNeG3u
-QXO0iCaH+vjAMBKRasMCy/t4GdgItBJH6SiuP9YG4Slk8ICQDqu5gY8tS1yTS3o=
-=Q8PG
------END PGP SIGNATURE-----
+Right. Except the picture may be slightly more complicated, e.g. the binary
+has optional dependencies on libfoo.so and libbar.so, and the build uses
+
+  ${CC} -Wl,-rpath=${LIBFOO_INSTALL}:${LIBBAR_INSTALL} ...
+
+and one or both of _INSTALL paths may be empty in a given build.
+
+The bad RPATH may also not be immediately discovered because e.g. the
+developer has LD_LIBRARY_PATH set (which is common because developers often
+use debug version of the library installed separately from release one).
+
+All of this is to say that that is a relatively easy mistake to make.
+
+I fully agree with you that a competent vendor will not make this mistake,
+but there appears to be sufficient evidence that incompetent vendors
+exist :-)
+
+> If it's not needed for the binary to work, this is a huge incompetence
+> or policy failure issue that's not going to be fixed by restricting
+> RPATH. And it would probably be better solved by having ld produce
+> warnings for relative or blank RPATH (or even refusing to generate
+> such without an additional override option) rather than by potentially
+> breaking existing binaries.
+
+Interesting notion. I am not sure how open binutils developers will be to it:
+after all you explicitly asked for empty RPATH with command line argument.
+
+Should GCC also refuse to compile 'execve(argv[1]);' unless a
+-fyes-i-know-what-i-am-doing flag is given?
+
+> Aside from that, I'm not fundamentally opposed to restricting relative
+> RPATH in suid binaries (or rather AT_SECURE), but it should not be
+> restricted in other cases. If it is restricted in the suid case, I
+> believe the correct way is refusing to run the binary at all. Just
+> ignoring the RPATH will possibly result in the wrong libraries being
+> loaded, which could itself lead to vulnerabilities.
+
+Sounds good to me.
+
+-- 
+Paul Pluzhnikov
