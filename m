@@ -1,46 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/03/11
-Message-ID: <CAPLnt65ViRVYhN+dapCrzeqvD+N-nT6ZkmziZRP8YcL8Ums0hw@mail.gmail.com>
-Date: Tue, 3 Mar 2015 18:07:45 -0500
-From: Galen Charlton <gmc@...library.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/20/2
+Message-Id: <20150220002731.A123C42E066@smtpvbsrv1.mitre.org>
+Date: Thu, 19 Feb 2015 19:27:31 -0500 (EST)
+From: cve-assign@...re.org
+To: steffen.roesemann1986@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE-Request -- Piwigo <= v. 2.7.3 -- Reflecting XSS- and SQLi-vulnerability in administrative backend
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-As a committer for the Evergreen integrated library system project,
-I'd like to request CVE number(s) for the following issues in today's
-security releases.
+> The reflecting XSS vulnerability resides in the "page" parameter used in
+> the file admin.php which can be found in the administrative backend
 
-Release announcement:
+Use CVE-2015-2034.
 
-http://evergreen-ils.org/security-releases-evergreen-2-7-4-2-6-7-and-2-5-9/
 
-Security issues resolved with the release:
+> The SQL injection vulnerability can as well be found in the administrative
+> backend and can be found in the "History" functionality
 
-[1] Org Unit Setting View Permissions Can Be Bypassed
+Use CVE-2015-2035.
 
-https://bugs.launchpad.net/evergreen/+bug/1424755
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-[2] Credit Card Processor settings visible in LSE History
-
-https://bugs.launchpad.net/evergreen/+bug/1206589
-
-Both bugs had permitted remote unauthenticated access of confidential
-application configuration settings.
-
-Regards,
-
-Galen
--- 
-Galen Charlton
-Infrastructure and Added Services Manager
-Equinox Software, Inc. / The Open Source Experts
-email:  gmc@...library.com
-direct: +1 770-709-5581
-cell:   +1 404-984-4366
-skype:  gmcharlt
-web:    http://www.esilibrary.com/
-Supporting Koha and Evergreen: http://koha-community.org &
-http://evergreen-ils.org
+iQEcBAEBAgAGBQJU5n8dAAoJEKllVAevmvmsBGAH/iAnJvlIEeHYbfuMtAR3fMgw
+V0IpzOvu7QochzHf9yfqIX9rQKHl7k8dSZyG1DBFfLR1QvOFvr8BoC6TtMV6fgwS
+JDY1cyjkmHwbNuuRDBgNv4EYJOQhdEGSMDkQaQUZPBkjgtUQkzSWIk5ZnTtsTWX9
+Sz90zzFcgpdYrQo6WQnTlS2USYSOILz0RcpJRtkx/gukTfmQgMgy/gqS29paXDsg
+1RMlanW7+J4WtaQgirucjMC9FTPKoXF47/Ink4tXgB1ZIii3+1+JHSisjk+AhfeR
+ZdJMlMEaimLJCihQ33v1tqXc6FcfSA2aU+dXAZ4n7lmtvLeiSF6zCtLT0pb6m3A=
+=qH4s
+-----END PGP SIGNATURE-----
