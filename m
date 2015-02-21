@@ -1,54 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/03/4
-Message-ID: <20150303103257.GD12838@gremlin.ru>
-Date: Tue, 3 Mar 2015 13:32:57 +0300
-From: gremlin@...mlin.ru
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/21/6
+Message-ID: <20150221152142.GY23507@oevtugenva.nrevsny.pk>
+Date: Sat, 21 Feb 2015 10:21:42 -0500
+From: Rich Felker <dalias@...c.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: validation on update
+Subject: Re: Fixing the glibc runtime linker
 Content-Type: text/plain; charset=utf-8
 
-On 2015-03-02 19:24:30 +0000, Simon McVittie wrote:
+On Fri, Feb 20, 2015 at 08:44:28AM -0800, Paul Pluzhnikov wrote:
+> On Fri, Feb 20, 2015 at 1:22 AM,  <Casper.Dik@...cle.com> wrote:
+> >
+> >>FWIW, relative RPATHs are quite fundamental to our test execution
+> >>environment, and any patch that unconditionally ignores them would
+> >>have to be reverted in our tree.
+> 
+> It turns out I was mistaken: we don't use relative RPATHs after all.
+> 
+> > But wouldn't that make the libraries and executables less reliable?
+> 
+> Our testing infrastructure is described in some detail here:
+> http://google-engtools.blogspot.com/2011/06/testing-at-speed-and-scale-of-google.html
+> 
+> The essential problem is that the paths to all the libraries in the cloud
+> are effectively unpredictable. They are however predictable relative to
+> $ORIGIN, which is what we actually use [1].
 
- >>>> Does it use any sort of package signing and signature
- >>>> verification?
- >>> Seeing as the patch only does s/http/https/,
- >> Obviously, that doesn't really help.
- > It's a start, at least...
+${ORIGIN}-based RPATH is not subject to the same security issues as
+cwd-relative RPATH. There are some issues to consider with suids
+(malicious hardlinks, for example) but I believe these can all be
+mitigated by having the whole device non-writable except by root or
+enabling hardlink restrictions in the kernel.
 
-Of course, that's much better than nothing.
+> > They can pick up random libraries or cause some delays when one of the
+> > relative paths points to a NFS mounted directory.
+> 
+> We only build tests that way, not final binaries. Random libraries and
+> NFS are not a concern for us, because the 'in the cloud' environment is
+> tightly controlled -- we know exactly what files the test will see at
+> runtime (relative to $ORIGIN).
+> 
+> > Any reason you can't change to using LD_LIBRARY_PATH for testing?
+> 
+> We used to use LD_LIBRARY_PATH, but it has several problems. Consider a
+> Python or Java program that needs to load some C++ shared library, and
+> also wants to fork off a separate C++ executable. Consider further that
+> the python may be built for ix86, while the C++ executable may be built
+> for x86_64.
+> 
+> What should the LD_LIBRARY_PATH look like? Should it leak from python into
+> C++ executable? It's complicated :-)
 
- > it tells you that this was a reply to your request, made by
- > someone controlling the corresponding private key for a "valid"
- > certificate for Maven Central's hostname.
+For exactly this reason -- that it's inherited -- LD_LIBRARY_PATH
+really should not be used, or at least its use should be limited to
+building and testing, not actual deployment. RPATH is a much more
+appropriate tool.
 
-That's good for the first communication.
-
- > An end-to-end integrity check from the original publisher to
- > the consumer would prevent more attacks, but would also be
- > harder to deploy (it requires action from each publisher,
-
-Running `gpg --detach-sign < package.tar.gz > package.tar.gz.sig`
-(or, better, `gpg -ba ...`) on each release isn't a big deal...
-
- > verification at each consumer,
-
-Running `gpg --verify package.tar.gz.sig package.tar.gz` will do
-that just perfectly. And, when talking about automatic updates,
-that should be included into the update procedure.
-
- > and a way to determine whether publisher X is authorized to
- > publish package Y);
-
-`gpg --no-default-keyring --keyring /path/authors.pub --verify ...`
-
- > protecting against trivial attacks is not as good as protecting
- > against sophisticated attacks, but seems considerably better
- > than not protecting against anything at all.
-
-Yes. But I hope the software developers wouldn't stop after that
-and will use the above-mentioned trivial commands as well.
-
-
--- 
-Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
-GPG: 8832FE9FA791F7968AC96E4E909DAC45EF3B1FA8 @ hkp://keys.gnupg.net
+Rich
