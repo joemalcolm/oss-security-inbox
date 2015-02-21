@@ -1,73 +1,136 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/23/19
-Message-ID: <54EB49EA.9020905@redhat.com>
-Date: Mon, 23 Feb 2015 08:40:26 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: Jean-Baptiste Kempf <jb@...eolan.org>
-CC: oss-security@...ts.openwall.com, videolan@...eolan.org, Assign a CVE Identifier <cve-assign@...re.org>
-Subject: Re: [videolan] older issues in libbluray
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/21/4
+Message-ID: <CALH-=7xMt0ejkN5dG+eiGLgKJn+aA7cyZcTrhT46hq0HVMeGiw@mail.gmail.com>
+Date: Sat, 21 Feb 2015 13:36:14 +0100
+From: Steffen Rösemann <steffen.roesemann1986@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-Request -- MyBB v. 1.8.3 -- Multiple stored XSS-vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-So the good news/bad news is I'm finished cleaning out about 20 older
-bugs that were embargoed and not properly handled (mostly due to them
-stalling and then being forgotten I guess, some were from 6 years ago,
-well before I even worked for Red Hat).
+Hi Steve, Josh, vendors, list.
 
-Again my apologies for this mess. The good news is that all our current
-embargoed flaws (none against VLC currently =) are being actively
-handled (e.g. worked on in a current time frame) and moving forwards we
-should hopefully be able to avoid issues like this.
+The researchers adamziaja, Devilshakerz, DingjieYang and me found multiple
+stored XSS-vulnerabilities in the administrative backend of CMS MyBB v.
+1.8.3.
 
-Also one request (not just specific to VLC, but everyone with a
-project): please have a security@ email address for your project or a
-security web page that makes it obvious how to contact and report things
-privately, this is a common problem and easily solved (and will make it
-much easier for people to report issues).
+The stored XSS-vulnerabilities can be found in different modules in the
+following locations of a common MyBB installation:
 
-I just recently found myself emailing random security@ addresses at
-other projects to see if they bounce or not. I still have no idea if the
-projects received my security report (no bounce so here's hoping!).
+======================
+Module "config-attachment_types"
+======================
 
-On 23/02/15 01:52 AM, Jean-Baptiste Kempf wrote:
-> We never were contacted.
-> This is not really cool.
-> 
-> On 22 Feb, Kurt Seifried wrote :
->> With apologies, I tracked down the original report and added it to our
->> BZs. I was also under the impression VideoLan had been contacted but
->> just to ensure this is the case adding them to the CC.
->>
->> On 22/02/15 11:43 AM, Moritz Mühlenhoff wrote:
->>> On Fri, Feb 06, 2015 at 04:21:20PM -0700, Kurt Seifried wrote:
->>>> https://bugzilla.redhat.com/show_bug.cgi?id=959434
->>>> https://bugzilla.redhat.com/show_bug.cgi?id=959433
->>>>
->>>> these may warrant a cve
->>>
->>> Have these been reported to libbluray upstream? The
->>> Bugzilla entries are rather scarce on details.
->>>
->>> Cheers,
->>>         Moritz
->>>
->>
->> -- 
->> Kurt Seifried -- Red Hat -- Product Security -- Cloud
->> PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
->>
-> 
-> 
-> 
->> _______________________________________________
->> videolan mailing list
->> videolan@...eolan.org
->> https://mailman.videolan.org/listinfo/videolan
-> 
-> 
+via form-field MIME-type:
 
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+http://{TARGET}/admin/index.php?module=config-attachment_types&action=add
 
+executed in: e.g. http://
+{TARGET}/admin/index.php?module=config-attachment_types
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+===============
+Module "config-mycode"
+===============
+
+via form fields "title" and "short description":
+
+http://{TARGET}/admin/index.php?module=config-mycode&action=add
+
+executed in: e.g. http://{TARGET}/admin/index.php?module=config-mycode
+
+===================
+Module "forum-management"
+===================
+
+via form field "title":
+
+http://{TARGET}/admin/index.php?module=forum-management&action=add
+
+executed in: e.g. http://{TARGET}/admin/index.php?module=forum
+
+==============
+Module "user-groups"
+==============
+
+via form fields "title" and/or "short description":
+
+http://{TARGET}/admin/index.php?module=user-groups&action=add
+
+executed in: e.g. http://{TARGET}/admin/index.php?module=user-groups
+
+================
+Module "style-templates"
+================
+
+via form field "name":
+
+http://{TARGET}/admin/index.php?module=style-templates&action=add_set
+
+executed in: e.g. http://{TARGET}/admin/index.php?module=style-templates
+
+====================================
+Module "style-templates" in action "add_template_group"
+====================================
+
+via form field "title":
+
+http://
+{TARGET}/admin/index.php?module=style-templates&action=add_template_group
+
+executed in: e.g. http://
+{TARGET}/admin/index.php?module=style-templates&sid={TEMPLATES_NUMERIC_ID}
+
+=============
+Module "tool-tasks"
+=============
+
+via form field "title":
+
+http://{TARGET}/admin/index.php?module=tools-tasks&action=add
+
+executed in: e.g. http://{TARGET}/admin/index.php?module=tools-adminlog
+
+=================
+Module "config-post_icons"
+=================
+
+via form field "name":
+
+http://{TARGET}/admin/index.php?module=config-post_icons&action=add
+
+executed in: e.g. http://{TARGET}/admin/index.php?module=tools-adminlog
+
+=============
+Module "user-titles"
+=============
+
+via form field "title to assign":
+
+http://{TARGET}/admin/index.php?module=user-titles&action=add
+
+executed in: e.g. http://{TARGET}/admin/index.php?module=tools-adminlog
+
+================
+Module "config-banning"
+================
+
+via form field "username":
+
+http://{TARGET}/admin/index.php?module=config-banning&type=usernames
+
+executed in: e.g. http://{TARGET}/admin/index.php?module=tools-adminlog
+
+Can I have a CVE-ID/CVE-IDs for these issues?
+
+Thank you very much.
+
+Greetings from Germany.
+
+Steffen Rösemann
+
+[1] http://www.mybb.com
+[2] http://sroesemann.blogspot.de/2015/02/sroeadv-2015-15.html
+[3] http://www.mybb.com/get-involved/security/
+[4]
+http://blog.mybb.com/2015/02/15/mybb-1-8-4-released-feature-update-security-maintenance-release/
+[5] http://seclists.org/fulldisclosure/2015/Feb/80
+
