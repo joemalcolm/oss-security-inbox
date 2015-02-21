@@ -1,28 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/22/1
-Message-ID: <54E9746A.6040606@redhat.com>
-Date: Sat, 21 Feb 2015 23:17:14 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>, jvn@....jp
-Subject: CVE-2015-0881
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/21/5
+Message-Id: <20150221150739.5B0846C006F@smtpvmsrv1.mitre.org>
+Date: Sat, 21 Feb 2015 10:07:39 -0500 (EST)
+From: cve-assign@...re.org
+To: paul@...tisforge.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, dregad@...tisbt.org
+Subject: Re: CVE request: XSS in MantisBT
 Content-Type: text/plain; charset=utf-8
 
-I'm trying to track down information on CVE-2015-0881.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I can't find a squid security contact (security@...id-cache.org
-bounced), there's no security report, and no link to a source code patch
-for this.
+> I'm not actually sure what "types of attacks" are blocked
 
-This is regarding 3.1.9 and earlier, 3.1.10 was released on 22 Dec 2010,
-so 4+ years ago.
+The vendor can expand on this if they wish. At present, the available
+information is this statement:
 
-Needless to say I am more than a bit confused. A link to a specific code
-patch/vuln/file would be helpful. Also if anyone knows how to contact
-Squid re security issues properly I'd love to know.
+  In 1.3, cabacdc2 + 3d0625d8 together form at least a *partial* fix
 
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+in the http://openwall.com/lists/oss-security/2015/02/16/7 post. The
+concept of a code change with a "partial fix" ordinarily means that at
+least one attack vector is blocked by that code change, such as an
+attack vector that relied on a specific code path that was affected by
+the change.
 
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+iQEcBAEBAgAGBQJU6J6JAAoJEKllVAevmvmsDVIIAMVGqyQVahMFtcem3pOQym3z
+2u2WtvlwiAxQ9vvmFJvyuYzKWvjqXI17M30G4WhweriLtG/Xoqg2u4cQL5TC7hUP
+bVAD1yVnoGBEOOAUXZtsNg6Od79IMRkpOtdcdgKislsN7BZuwnXKkek8TNvjZtvz
+wL9lfwvjKkusoqohl7GSLZ9eErB5vY1tGAruzp4gzxnQZtZGGRMcvawwUe6ptuat
+UIoHZzglTRfMBEEgvMy7DdhHS3nc9YBuT3tK1C6a5h/UfMjKYvZjMEe0+hicL1kH
+WFFpYI7Cm451KgBs9JS5qVBlGLRFDa2Tt1sIZZ9q7+suYSSa6NjZOLLO0BMCpeg=
+=lsDW
+-----END PGP SIGNATURE-----
