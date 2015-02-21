@@ -1,75 +1,154 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/13/17
-Message-Id: <20150213232731.5200A8BC020@smtpvmsrv1.mitre.org>
-Date: Fri, 13 Feb 2015 18:27:31 -0500 (EST)
-From: cve-assign@...re.org
-To: hanno@...eck.de
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Multiple issues in GnuPG found through keyring fuzzing (TFPA 001/2015)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/21/2
+Message-ID: <002301d04dbc$b0dc4380$1294ca80$@mantisforge.org>
+Date: Sat, 21 Feb 2015 09:56:39 -0000
+From: "P Richards" <paul@...tisforge.org>
+To: <cve-assign@...re.org>, <dregad@...tisbt.org>
+Cc: <oss-security@...ts.openwall.com>
+Subject: RE: CVE request: XSS in MantisBT
 Content-Type: text/plain; charset=utf-8
+
+Hi, I'm now confused.
+
+"  A. We do not plan to change
+     http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-8986 to
+     state that 1.2.18 and 1.2.19 are affected versions. CVE-2014-8986
+     is now specifically about types of attacks that are successful
+     against 1.2.17 but are not successful against 1.2.18 or 1.2.19."
+
+The original vulnerability was to allow users to inject arbitrary html for
+xss via the filter_config_id parameter. For example:
+
+e.g. a POST or GET to /adm_config_report.php with
+filter_config_id=database_version'/><script>alert(4849)</script>;
+
+This is successful against 1.2.17, 1.2.18 and 1.2.19. 
+
+I'm not actually sure what "types of attacks" are blocked by CVE-2014-8986
+in its current state as mantis has remained vulnerable to the issue
+throughout.
+
+I've already created bug reports with linux distributions that ship mantis
+1.2.18 and stated that CVE-2014-8986 was included that the fix the
+vulnerability was not included so as they can protect their customers, as
+from the test cases I have here the issues that I originally identified were
+never fixed.
+
+Thanks
+Paul
+
+
+-----Original Message-----
+From: cve-assign@...re.org [mailto:cve-assign@...re.org] 
+Sent: 21 February 2015 03:14
+To: dregad@...tisbt.org
+Cc: cve-assign@...re.org; oss-security@...ts.openwall.com;
+paul@...tisforge.org
+Subject: Re: CVE request: XSS in MantisBT
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> https://blog.fuzzing-project.org/5-Multiple-issues-in-GnuPG-found-through-keyring-fuzzing-TFPA-0012015.html
+> The MantisBT Configuration Report (adm_config_report.php) did not 
+> properly sanitize the form variables used when saving a filter, 
+> allowing an attacker to embed JavaScript code
 
-Can you provide more information about a scenario in which a GnuPG
-NULL pointer dereference has a security impact? A typical use case of
-GnuPG is a single session with a single command line. The code in
-question is not part of Libgcrypt, which may be used for long-running
-processes.
+The details of this situation are somewhat unusual from the perspective of
+CVE assignment. The short answer is that CVE-2015-2046 is a new CVE ID that
+is about the specific portion of the original May
+2014 adm_config_report.php discovery that remains present in version
+1.2.18 and 1.2.19.
 
-Do you mean that:
+The meaning of CVE-2014-8986 has now been changed to the specific portion of
+the original May 2014 adm_config_report.php discovery that was already fixed
+in version 1.2.18.
 
-  1. it is possible to create the problematic keyring
-     using --import commands, e.g., the user has
-     imported normal keys for years and now imports
-     a crafted key
+The set of CVE assignments has been arranged this way because it corresponds
+to a standard pattern in which one vulnerability report is made, the vendor
+releases changed code that turns out to be an incomplete fix for the
+vulnerability, and then a second vulnerability report is made that
+corresponds to a valid attack against the changed code. This matches some of
+the principal details of the current situation, e.g.,
 
-  2. the problematic keyring makes the product largely
-     unusable, e.g., there is a crash with a common
-     command such as --list-keys
+  one vulnerability report is made:
+     adm_config_page.php had an XSS issue with filter_config_id being
+unchecked
+     (see http://openwall.com/lists/oss-security/2015/02/10/1 - this is
+      a discussion of the original report; it is not the original report
+      itself)
 
-  3. it is not possible to fix the problematic keyring
-     with any available commands such as --delete-keys
+  the vendor releases changed code:
+     - In 1.3, cabacdc2 + 3d0625d8 together form at least a *partial* fix
+for
+       [the above vulnerability report] (released in 1.3.0-beta.1)
+     - In 1.2, e326b73a is a combination of the above 2 (released in 1.2.18)
+     (see http://openwall.com/lists/oss-security/2015/02/16/7)
 
-  4. therefore, the product remains unusable unless the
-     user obtains other code to correct the keyring, and
-     thus there is a denial of service
+  a second vulnerability report is made that corresponds to a valid
+  attack against the changed code:
+     (see http://openwall.com/lists/oss-security/2015/02/09/10)
 
-?
+The following items, although significant to understanding the situation as
+a whole, do not directly affect the set of CVE
+assignments:
 
-If the situation were something like:
+  1. The development of the cabacdc291c251bfde0dc2a2c945c02cef41bf40
+     change, which was apparently a complete fix for all aspects of
+     the problem.
 
-  1. the problematic keyring cannot be created using
-     --import commands; the issue is specific to a
-    new keyring that a user obtains from an untrusted
-    source
+  2. The commit of cabacdc291c251bfde0dc2a2c945c02cef41bf40 on May 31,
+     2014, which apparently would have fixed all aspects of the
+     problem if a user deployed a MantisBT installation based on the
+     latest May 31, 2014 github code, instead of one based on a
+     MantisBT release.
 
-  2. there is a crash in some situation
+  3. The specific way in which
+     cabacdc291c251bfde0dc2a2c945c02cef41bf40 was transformed into an
+     incomplete fix (e.g., by moving a code block so that it affected
+     only a single code path).
 
-  3. the user can avoid the impact by discontinuing
-     use of this new keyring
+  4. The original meaning of the CVE-2014-8986 ID.
 
-then we think that a CVE ID may not be applicable.
+  5. The possibility that the FG-VD-15-008 discovery relied, in part,
+     on previously published information, rather than exclusively new
+     analysis.
 
-Also, access to each of your four crashes.fuzzing-project.org URLs
-currently fails with a 403. We can probably provide at least two CVE
-IDs in total after those URLs are available.
+The reason that this set of CVE assignments is unusual is that, in a common
+"incomplete fix" situation, the reason for issuing a release with an
+incomplete fix is that nobody recognized how to fix the entire problem. In
+those situations, it is typically not necessary to adjust the meaning of the
+original CVE, because that CVE usually captures everything that was
+originally known about the problem. Here, apparently one or more persons
+knew that
+cabacdc291c251bfde0dc2a2c945c02cef41bf40 was the complete fix, but the
+1.2.18 release still did not ship with that complete fix.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
+Finally, to anticipate two questions:
+
+  A. We do not plan to change
+     http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-8986 to
+     state that 1.2.18 and 1.2.19 are affected versions. CVE-2014-8986
+     is now specifically about types of attacks that are successful
+     against 1.2.17 but are not successful against 1.2.18 or 1.2.19.
+
+  B. Discoverer information for CVEs is not determined or published by
+     MITRE. We think the most likely scenario is that the original
+     discoverer of CVE-2014-8986 was Paul Richards, whereas
+     CVE-2015-2046 was independently discovered by both Paul Richards
+     and FortiGuard Labs. Other possibilities exist.
+
+- --
+CVE assignment team, MITRE CVE Numbering Authority M/S M300
+202 Burlington Road, Bedford, MA 01730 USA [ PGP key available through
+http://cve.mitre.org/cve/request_id.html ] -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJU3of5AAoJEKllVAevmvmscd8IAIJeHfu3UoyLoA3gs+SIsy+F
-d45YIjagmNB/U9i5AYtBCgD+c3SYZnkCOFuqNjaxJPd0NgnhI6rkuc5bgkrbGKzL
-SwVrHWtyqHBmfWHDvetekXaBSRvG0ufSJ4LkKpLD+aRXNQ/qqVqeEUT0U91TzIZH
-0nv9ALKhfm41/cU6USACsRb16cfOdiWJ/dPrFFCRBmirM9RV01T+XXNeHLLPN1H1
-9Rn5tyYWyu7NU9dmPhRJTwicyG9+apga9724lnuwzp6ujI0tT8pNSCm5xkQYiCHE
-z96Kn1DjncJ7vRCs8v7+vVK4qB1qNjpHUd2pLqDr+1sy7d3uwT+W8kHY6cP0QL4=
-=lEJf
+iQEcBAEBAgAGBQJU5/dIAAoJEKllVAevmvmsiyAH/RgwlxaCqRrLB6TrY7wxVeMT
+1qeelJNHYZSOpyvqBGRrhXUHt0HI3foGywj4Io+YGYLt2r6GUm47YEMsJ+YZg2Tk
+FX4Rrb4eTcil8j5SSPBcrzGbaA6ZlkjSTUnXv2127OKKRYd115mWreWOovLa00OT
+Z+Qp6ZnUVp3hn4DyGc8IvTXzH4VfgEcFka4SCjDZ+UDC/Jf/mEXGCb5esSJdMkmK
+QyQzNE6pey4QYPxWgbrvwcouSFKyMQ6XVdh0fSPnyMvxN2JpuZr2I4KYo1JvBQmU
+Z5iTS5p/fCkxNyIw3QSa0QcL+oSZM5a1v3U1HhXlxBXzpkhjzYyUPIC2kVvM1cs=
+=tjY7
 -----END PGP SIGNATURE-----
+
