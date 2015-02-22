@@ -1,94 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/24/15
-Message-ID: <20150124220638.GG16167@zorglub.office.conostix.com>
-Date: Sat, 24 Jan 2015 23:06:38 +0100
-From: William Robinet <william.robinet@...ostix.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/22/7
+Message-ID: <20150222132717.499@usenet.piggo.com>
+Date: Sun, 22 Feb 2015 12:32:36 +0000 (UTC)
+From: Sébastien Delafond <seb@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Multiple vulnerabilities in LibTIFF and associated tools
+Subject: CVE Request: mod-gnutls: GnuTLSClientVerify require is ignored
 Content-Type: text/plain; charset=utf-8
 
-Dear oss-security list,
+Hi,
 
-Multiple vulnerabilities have been discovered in several tools distributed
-along with LibTIFF.
+mod-gnutls doesn't consider the server's client verify mode, even if the
+verify mode was unset in the directory configuration. As a result,
+invalid certificates are ignored and clients can connect and receive
+data as long as they presented any certificate whatsoever.
 
-Upstream references:
-- CVE-2014-8130 libtiff: Divide By Zero in the tiffdither tool
-  http://bugzilla.maptools.org/show_bug.cgi?id=2483
-- CVE-2014-8127 libtiff: Out-of-bounds Read in the thumbnail tool
-  http://bugzilla.maptools.org/show_bug.cgi?id=2484
-- CVE-2014-8127 libtiff: Out-of-bounds Read in the tiff2bw tool
-  http://bugzilla.maptools.org/show_bug.cgi?id=2485
-- CVE-2014-8127 libtiff: Out-of-bounds Read in the tiff2rgba tool
-  http://bugzilla.maptools.org/show_bug.cgi?id=2486
-- CVE-2014-8129 libtiff: Out-of-bounds Read & Write in the tiff2pdf tool
-  http://bugzilla.maptools.org/show_bug.cgi?id=2487
-- CVE-2014-8129 libtiff: Out-of-bounds Read & Write in the tiff2pdf tool
-  http://bugzilla.maptools.org/show_bug.cgi?id=2488
-- CVE-2014-8128 libtiff: Out-of-bounds Write in the thumbnail tool
-  http://bugzilla.maptools.org/show_bug.cgi?id=2489
-- CVE-2014-8128 libtiff: Out-of-bounds Write in the tiffdither tool
-  http://bugzilla.maptools.org/show_bug.cgi?id=2490
-- CVE-2014-8128 libtiff: Out-of-bounds Write in the tiffdither tool
-  http://bugzilla.maptools.org/show_bug.cgi?id=2491
-- CVE-2014-8128 libtiff: Out-of-bounds Write in the tiffdither tool
-  http://bugzilla.maptools.org/show_bug.cgi?id=2492
-- CVE-2014-8128 libtiff: Out-of-bounds Write in the thumbnail and tiffcmp tools
-  http://bugzilla.maptools.org/show_bug.cgi?id=2493
-- CVE-2014-8128 libtiff: Out-of-bounds Write in the tiff2pdf tool
-  http://bugzilla.maptools.org/show_bug.cgi?id=2495
-- CVE-2014-8127 libtiff: Out-of-bounds Read in the tiff2ps and tiffdither tools
-  http://bugzilla.maptools.org/show_bug.cgi?id=2496
-- CVE-2014-8127 libtiff: Out-of-bounds Read in the tiffmedian tool
-  http://bugzilla.maptools.org/show_bug.cgi?id=2497
-- CVE-2014-8128 libtiff: Out-of-bounds Write in the thumbnail and tiffcmp tools
-  http://bugzilla.maptools.org/show_bug.cgi?id=2499
-- CVE-2014-8127 libtiff: Out-of-bounds Read in the tiffset tool
-  http://bugzilla.maptools.org/show_bug.cgi?id=2500
-- CVE-2014-8128 libtiff: Out-of-bounds Writes in the tiffdither tool
-  http://bugzilla.maptools.org/show_bug.cgi?id=2501
+  Debian bug: https://bugs.debian.org/578663
+  Patch and detailed description: https://github.com/airtower-luna/mod_gnutls/commit/5a8a32bbfb8a83fe6358c5c31c443325a7775fc2
 
-All the crashes were discovered with the help of afl
-(http://lcamtuf.coredump.cx/afl/).
+Could you please assign a CVE for this issue ?
 
-Advisories:
-- CVE-2014-8127
-  http://www.conostix.com/pub/adv/CVE-2014-8127-LibTIFF-Out-of-bounds_Reads.txt
-- CVE-2014-8128
-  http://www.conostix.com/pub/adv/CVE-2014-8128-LibTIFF-Out-of-bounds_Writes.txt
-- CVE-2014-8129
-  http://www.conostix.com/pub/adv/CVE-2014-8129-LibTIFF-Out-of-bounds_Reads_and_Writes.txt
-- CVE-2014-8130
-  http://www.conostix.com/pub/adv/CVE-2014-8130-LibTIFF-Division_By_Zero.txt
+Cheers,
 
-This was tested on Ubuntu 14.04.1 LTS (amd64) LibTIFF 4.0.3-7ubuntu0.1 .
+--Seb
 
-Last stable LibTIFF source release v4.0.3 is also affected.
-
-Upstream CVS HEAD contains fixes for all bugs except the following:
-- CVE-2014-8128 libtiff: Out-of-bounds Write in the thumbnail and tiffcmp tools
-  http://bugzilla.maptools.org/show_bug.cgi?id=2499
-- CVE-2014-8127 libtiff: Out-of-bounds Read in the tiffset tool
-  http://bugzilla.maptools.org/show_bug.cgi?id=2500
-- CVE-2014-8128 libtiff: Out-of-bounds Writes in the tiffdither tool
-  http://bugzilla.maptools.org/show_bug.cgi?id=2501
-
-Please accept my apologies for the mishandling of this report. I did not
-conform to the distros list policy regarding embargo time enforcement
-and I failed to notify oss-security before creating bug reports on
-public upstream's Bugzilla.
-Clearly, notifying the distros list before upstream was not the way to go.
-I take full responsibility for this.
-
-William
-(Please note I'm not a member of the list)
-
--- 
-GPG Key ID/Fingerprint:
-    74C7A949/B509 4137 1353 A3FC 6A87  AA06 003F A3DF 74C7 A949
-
-Conostix S.A.
-4, Rue d'Arlon
-L-8399 Windhof (Koerich)
-T. +352 26 10 30 61
-F. +352 26 10 30 62
