@@ -1,17 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/16/15
-Message-ID: <1555347.0pyNi20yRt@xps>
-Date: Fri, 16 Jan 2015 22:47:08 +0100
-From: Albert Astals Cid <aacid@....org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Cc: CVE Assignments MITRE <cve-assign@...re.org>, security@....org
-Subject: KDE Plasma vulnerabilities: need CVE
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/22/8
+Message-Id: <20150222182628.A84C46C0001@smtpvmsrv1.mitre.org>
+Date: Sun, 22 Feb 2015 13:26:28 -0500 (EST)
+From: cve-assign@...re.org
+To: carnil@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: TYPO3-CORE-SA-2015-001: Authentication Bypass in TYPO3 CMS 4.5
 Content-Type: text/plain; charset=utf-8
 
-Hi, can we get two CVEs assigned for the attached vulnerabilities?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Thanks,
-  Albert
-View attachment "screenlocker-network.txt" of type "text/plain" (1345 bytes)
+> Could you please assign a CVE for the authentication bypass
+> vulnerability in typo3, as repleased per TYPO3-CORE-SA-2015-001?
+> 
+> https://typo3.org/teams/security/security-bulletins/typo3-core/typo3-core-sa-2015-001
+> https://review.typo3.org/#/c/37013/
 
-View attachment "screenlocker-input.txt" of type "text/plain" (1599 bytes)
+Use CVE-2015-2047.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJU6h7pAAoJEKllVAevmvms8K8IALDOteuYRBpdsIWJ/7UgsmB1
+ssSg0ASfw8G2onMi3aAKxeuRppMSzvGZ+vIJBzyA6ULmNN6nRZbgSqqTSI4UmuQV
+dC5hxFIqVNcbIRwBCoUt3OI1Q5W1IAkYjAMs0lX8k+sPvopGq/huo39AuwcO2Apq
+dEysbH/vgVQA2XQgsMVC9IyKEbP52mwiFmAotpIqnnWktbXzq2KdPMuU+ykP6TvM
+KBJnTYV0Z39SiaB/HHW1KsnK5sGqS7tmpst2AXHjer4QsKrZhyvy1vvW9kD4ffw3
+NXJRXfYS/3OxhS7Kg8w1s2g78PvYiCdDE2qzdFFkrYO1o3to1e5ZvJ1ibtaUz7c=
+=RFQW
+-----END PGP SIGNATURE-----
