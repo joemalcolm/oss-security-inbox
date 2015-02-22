@@ -1,38 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/15/3
-Message-Id: <20150315012240.AC4BB3AE215@smtpvbsrv1.mitre.org>
-Date: Sat, 14 Mar 2015 21:22:40 -0400 (EDT)
-From: cve-assign@...re.org
-To: fungi@...goth.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, security@...erpad.org, John@...ear.co, webzwo0i@...2.de, stefan@...fans-entwicklerecke.de
-Subject: Re: CVE Request for information leak in Etherpad exports
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/22/14
+Message-ID: <20150222190702.GA12648@pisco.westfalen.local>
+Date: Sun, 22 Feb 2015 20:07:02 +0100
+From: Moritz Muehlenhoff <jmm@...ian.org>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: Re: CVE Request: jabberd remote information disclosure
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Mon, Feb 09, 2015 at 10:55:11PM +0100, Thijs Alkemade wrote:
+> Hello,
+> 
+> A buffer overflow was found in the XMPP server jabberd2 when normalizing
+> strings that can lead to remote information disclosure [1]. When parsing a
+> JID, jabberd2 version 2.3.2 and below truncate the data but do not verify
+> whether the result is valid UTF8 before passing it to libidn. If the data ends
+> with an unterminated multi-byte UTF8 sequence then libidn may copy data past
+> the buffer into the result. This can be exploited by remote clients or remote
+> servers.
+> 
+> Could you please assign a CVE for this issue?
+> 
+> [1] = https://github.com/jabberd2/jabberd2/issues/85
 
-> When exporting a padID all pads for which the requested ID is a
-> substring are also returned, regardless of access restriction,
-> resulting in an information leak.
+This seems to have fallen through the cracks, adding cve-assign to CC.
 
-> https://github.com/ether/etherpad-lite/commit/a0fb65205c7d7ff95f00eb9fd88e93b300f30c3d
-> src/node/utils/ExportEtherpad.js
-
-Use CVE-2015-2298.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJVBN5hAAoJEKllVAevmvmsIWYIAK2zmv2az2A9vdA6+kDMqzCs
-z3RLJsiRxb1TRSYN1TSrrIQ3+LAJhE+JxiFAWCp0jnkdOK86Z6p0hU08O2ZIMhQR
-gExq6WvmestmGJ/OIJ0qIBiFhlDTgHD43ZtrTduTMteTHt27W5fAFhg4xOsufHUw
-TSzODFHfgCCofq2ybOIufnMnovPEdSrSdbTwD+W1r8sIGOjjJj3+ZCXFXgkB/604
-yOaXXupyXizujecLqdHxTgs3DJfa9qhyEGoyEpQbAAa6Od0yJGeiO0pGMXG2EPSJ
-m+bqTdm9X9w2qWC5jiwCC5viOo8/xktIga4mIR99FbXY4z8bSP90odusYf1caxU=
-=G10F
------END PGP SIGNATURE-----
+Cheers,
+        Moritz
