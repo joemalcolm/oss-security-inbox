@@ -1,34 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/22/7
-Message-ID: <Pine.LNX.4.64.1501221010440.18848@beijing.mitre.org>
-Date: Thu, 22 Jan 2015 10:14:27 -0500 (EST)
-From: cve-assign@...re.org
-To: Martin Prpic <mprpic@...hat.com>
-cc: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: Re: CVE request: directory traversal flaw in patch
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/22/15
+Message-ID: <CALoOobMqEaniZtCMiuqOPWLVp9+evdTWa2kf2Lu+qo=U2PP7ng@mail.gmail.com>
+Date: Sun, 22 Feb 2015 12:10:03 -0800
+From: Paul Pluzhnikov <ppluzhnikov@...il.com>
+To: oss-security@...ts.openwall.com
+Cc: Florian Weimer <fweimer@...hat.com>
+Subject: CVE request: glibc PR 17269 _IO_wstr_overflow integer overflow
 Content-Type: text/plain; charset=utf-8
 
+Greetings,
 
-> Hi!
->
-> I think these issues in patch also deserve CVEs:
->
-> https://savannah.gnu.org/bugs/?44051
-> "With a specific file, patch goes to infinite loop and eats all CPU time."
+Not sure if this is exploitable:
+https://sourceware.org/bugzilla/show_bug.cgi?id=17269
 
+Fixed by:
+https://sourceware.org/git/gitweb.cgi?p=glibc.git;h=bdf1ff052a8e23d637f2c838fa5642d78fcedc33
 
-Use CVE-2014-9637.
-
-> http://git.savannah.gnu.org/cgit/patch.git/commit/?id=44a987e02f04b9d81a0db4a611145cad1093a2d3 
-> "Add line number overflow checking. Based on Robert C. Seacord's INT32-C 
-> document for integer overflow checking and Tobias Stoeckmann's "integer 
-> overflows and oob memory access" patch for FreeBSD."
-
-What is the security impact of this issue?  The commit is not immediately 
-clear.
-
----
-
-CVE assignment team, MITRE CVE Numbering Authority M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+Thanks,
+-- 
+Paul Pluzhnikov
