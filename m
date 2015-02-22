@@ -1,45 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/15/4
-Message-ID: <87y4p31zy0.fsf@alice.fifthhorseman.net>
-Date: Thu, 15 Jan 2015 16:44:39 -0500
-From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
-To: Henri Salo <henri@...v.fi>, oss-security@...ts.openwall.com
-Subject: Re: CVE-Request -- CMS b2evolution v.5.2.0 -- Reflecting XSS vulnerability in filemanager functionality
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/22/11
+Message-ID: <20150222185555.GA10823@pisco.westfalen.local>
+Date: Sun, 22 Feb 2015 19:55:55 +0100
+From: Moritz Mühlenhoff <jmm@...til.org>
+To: oss-security@...ts.openwall.com
+Cc: CVE Assignments MITRE <cve-assign@...re.org>
+Subject: Re: Possible CVE Requests: libmspack: several issues
 Content-Type: text/plain; charset=utf-8
 
-Hi Henri--
+On Tue, Feb 03, 2015 at 04:52:05PM +0100, Salvatore Bonaccorso wrote:
+> Hi
+> 
+> Several issues with the libmspack library were reported recently in
+> the Debian bugtracker by Jakub Wilk. An (older) copy of libmspack is
+> also embedded in ClamAV (not verified if this version is also affected
+> by these issues).
+> 
+> The reported bugs are the following:
+> 
+> null pointer dereference on a crafted CAB:
+>  - https://bugs.debian.org/774665
+> 
+> CHM decompression: division by zero
+>  - https://bugs.debian.org/774725
+> 
+> CHM decompression: pointer arithmetic overflow
+>  - https://bugs.debian.org/774726
+> 
+> off-by-one buffer over-read in mspack/mszipd.c
+>  - https://bugs.debian.org/775498
+> 
+> off-by-one buffer under-read in mspack/lzxd.c
+>  - https://bugs.debian.org/775499
+> 
+> CHM decompression: another pointer arithmetic overflow
+>  - https://bugs.debian.org/775687
+> 
+> Could CVEs be assigned for these issues?
 
-Your recent message:
+This seems to have fallen through the cracks.
 
-On Thu 2015-01-15 01:56:41 -0500, Henri Salo wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
->
-> Fixed in 5.2.1 version.
->
-> - -- 
-> Henri Salo
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1.4.12 (GNU/Linux)
->
-> iEYEARECAAYFAlS3ZKkACgkQXf6hBi6kbk/EXACgobA8v+eNpA8mbR85uzP1rSH/
-> YfEAoMqRuWAaDysP7GYpQJ+zLAkKze+A
-> =XgEo
-> -----END PGP SIGNATURE-----
-
-Is a bit troubling, because it seems to rely on the Subject: line for
-necessary context in interpreting the signed message.
-
-An attacker could take this signed message, and replay it "From" you
-with a changed subject line to try to indicate that you think some other
-bug was fixed in some other piece of software, version 5.2.1.
-
-You can avoid this kind of problem by ensuring that the messages you
-sign are context-independent (e.g. including the information currently
-in this message's subject line in your message body directly as well).
-
-Regards,
-
-   --dkg
-
-Download attachment "signature.asc" of type "application/pgp-signature" (949 bytes)
+Cheers,
+        Moritz
