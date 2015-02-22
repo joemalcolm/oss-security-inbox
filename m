@@ -1,25 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/16/8
-Message-ID: <20150216181915.GA20337@inutil.org>
-Date: Mon, 16 Feb 2015 19:19:15 +0100
-From: Moritz Muehlenhoff <jmm@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/22/2
+Message-ID: <CAA+8RQY+C66zTX6kH=nDimk0apdvyJ5fzMKHDtk8wD_EODPfzA@mail.gmail.com>
+Date: Sun, 22 Feb 2015 01:28:28 -0500
+From: C Peters <chuck.peters@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: CVE request: spencer regexp
+Cc: Assign a CVE Identifier <cve-assign@...re.org>, jvn@....jp
+Subject: Re: CVE-2015-0881
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-please assign a CVE ID for this:
+Amos Jeffries <squid3@...enet.co.nz> sent out the most recent
+announcements.
+http://lists.squid-cache.org/pipermail/squid-announce/2015-February/000012.html
+​
 
-http://www.kb.cert.org/vuls/id/695940
-https://guidovranken.wordpress.com/2015/02/04/full-disclosure-heap-overflow-in-h-spencers-regex-library-on-32-bit-systems/
+Hope it helps,
+Chuck
 
-This affects multiple source packages including local copies of the
-code. However, in many cases the code is only used when building for
-Android or Windows.
-
-Current WIP status for source packages in Debian:
-https://security-tracker.debian.org/tracker/TEMP-0778389-A8C6F9
-
-Cheers,
-        Moritz
