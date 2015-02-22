@@ -1,45 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/28/9
-Message-Id: <9BED3ED4-66D7-4DA7-8F04-116ADF2A493F@gmail.com>
-Date: Sun, 1 Mar 2015 00:59:18 +0100
-From: Zubin Mithra <zubin.mithra@...il.com>
-To: blinken@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: PuTTY fails to clear private key information from memory
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/22/1
+Message-ID: <54E9746A.6040606@redhat.com>
+Date: Sat, 21 Feb 2015 23:17:14 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>, jvn@....jp
+Subject: CVE-2015-0881
 Content-Type: text/plain; charset=utf-8
 
-Signed PGP part
-Use CVE-2015-2157.
+I'm trying to track down information on CVE-2015-0881.
 
-This falls into a narrow set of situations in which a CVE ID can be
-assigned even though the issue does not cross privilege boundaries.
-The vendor is specifically announcing this as "This is a security
-vulnerability." (Also, wiping private-key memory is a conventional
-behavior seen in many products. It is not the same as wiping any
-memory block that any researcher may feel is sensitive in some way.)
+I can't find a squid security contact (security@...id-cache.org
+bounced), there's no security report, and no link to a source code patch
+for this.
 
-> http://www.chiark.greenend.org.uk/~sgtatham/putty/wishlist/private-key-not-wiped-2.html
+This is regarding 3.1.9 and earlier, 3.1.10 was released on 22 Dec 2010,
+so 4+ years ago.
 
-> However, if you ever told Pageant to delete a key from memory, it
-> would not have properly deleted it: it would still have retained a
-> copy by mistake due to this bug.
+Needless to say I am more than a bit confused. A link to a specific code
+patch/vuln/file would be helpful. Also if anyone knows how to contact
+Squid re security issues properly I'd love to know.
 
-Because of the "this bug" wording, a single CVE ID is assigned.
-However, in general, these two cases could be distinguished:
+-- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-  - violating a user's reasonable expectations about what preemptive
-    memory wiping should occur
 
-  - providing a UI feature advertised as a way to tell a product to
-    wipe a key from memory, accompanied by actual behavior in which no
-    wiping occurs
-
-with separate CVE IDs. In other words, there would be two CVE IDs if
-there were two bugs (one for each case) fixed independently.
-
---
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
-
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
