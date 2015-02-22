@@ -1,36 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/25/2
-Message-id: <677CD838-2FD1-47A3-B442-83517E2521B7@me.com>
-Date: Sun, 25 Jan 2015 06:25:07 -0500
-From: "Larry W. Cashdollar" <larry0@...com>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: Re: SEANux 1.0 remote back door
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/22/12
+Message-ID: <20150222185821.GA11056@pisco.westfalen.local>
+Date: Sun, 22 Feb 2015 19:58:22 +0100
+From: jmm@...ian.org
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: Re: CVE request: xchat/hexchat don't properly verify SSL certificates
 Content-Type: text/plain; charset=utf-8
 
-
-> On Jan 25, 2015, at 3:42 AM, Alexander Cherepanov <ch3root@...nwall.com> wrote:
+On Thu, Jan 29, 2015 at 11:52:08AM -0700, Vincent Danen wrote:
+> As reported [1]:
 > 
-> On 2015-01-24 23:05, Larry W. Cashdollar wrote:
->> SEANux 1.0 is a linux distribution Available here developed by the Syrian Electronic Army.
+> XChat did not verify that the server hostname matched the domain name in the
+> subject's Common Name (CN) or subjectAltName field in X.509 certificates.
+> This could allow a man-in-the-middle attacker to spoof an SSL server if they
+> had a certificate that was valid for any domain name.
 > 
-> Is it open source?
-
-Yes, it’s based off of ubuntu and uses those software repositories for updates.
-
+> The same code is used in hexchat.
 > 
-> BTW nice joke:
+> This was initially reported to hexchat in 2013 [2] and fixed last November
+> [3].  I'm not sure if it should receive a 2013 or a 2014 CVE.  Can one be
+> assigned to this?
 > 
-> "Larry W. Cashdollar
-> Security Response Engineer @ Akamai
+> Thanks.
 > 
-> Actually, I think you guys did a really good job with the distro! Really nice! I'm going to run it as one of my desktops I like it so much!"
-> 
-> At least I hope it's a joke:-)
+> [1] https://bugzilla.redhat.com/show_bug.cgi?id=1081839
+> [2] https://github.com/hexchat/hexchat/issues/524
+> [3] https://github.com/hexchat/hexchat/commit/c9b63f7f9be01692b03fa15275135a4910a7e02d
 
-I have lots of desktops in the lab. ;-)
+This seems to have fallen through the cracks, explicitly
+adding cve-assign to CC.
 
-
-> 
-> -- 
-> Alexander Cherepanov
-
+Cheers,
+        Moritz
