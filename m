@@ -1,37 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/05/12
-Message-ID: <20150305210001.GA13526@pisco.westfalen.local>
-Date: Thu, 5 Mar 2015 22:00:01 +0100
-From: Moritz Mühlenhoff <jmm@...til.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/22/13
+Message-ID: <20150222190110.GB11056@pisco.westfalen.local>
+Date: Sun, 22 Feb 2015 20:01:10 +0100
+From: Moritz Muehlenhoff <jmm@...ian.org>
 To: oss-security@...ts.openwall.com
 Cc: cve-assign@...re.org
 Subject: Re: CVE Request: libarchive -- directory traversal in bsdcpio
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Feb 22, 2015 at 08:01:10PM +0100, Moritz Muehlenhoff wrote:
-> On Fri, Jan 16, 2015 at 06:19:21AM +0300, Alexander Cherepanov wrote:
-> > Hi!
-> > 
-> > bsdcpio tool from libarchive bundle is susceptible to a directory traversal
-> > vulnerability via absolute paths.
-> > 
-> > Initial discussion:
-> > http://www.openwall.com/lists/oss-security/2015/01/07/5
-> > 
-> > Upstream report:
-> > https://groups.google.com/d/msg/libarchive-discuss/dN9y1VvE1Qk/Z9uerigjQn0J
-> > 
-> > My proposed (minimal) fix (non-Windows):
-> > https://groups.google.com/group/libarchive-discuss/attach/a78932ecb50340ae/0001-Quick-n-dirty-fix-for-bsdcpio-directory-traversal-vu.patch?part=0.1
-> > 
-> > Discussion is ongoing.
-> > 
-> > Could CVE(s) please be assigned?
+On Fri, Jan 16, 2015 at 06:19:21AM +0300, Alexander Cherepanov wrote:
+> Hi!
 > 
-> This seems to have fallen through the cracks, explicitly adding cve-assign
-> to CC.
+> bsdcpio tool from libarchive bundle is susceptible to a directory traversal
+> vulnerability via absolute paths.
+> 
+> Initial discussion:
+> http://www.openwall.com/lists/oss-security/2015/01/07/5
+> 
+> Upstream report:
+> https://groups.google.com/d/msg/libarchive-discuss/dN9y1VvE1Qk/Z9uerigjQn0J
+> 
+> My proposed (minimal) fix (non-Windows):
+> https://groups.google.com/group/libarchive-discuss/attach/a78932ecb50340ae/0001-Quick-n-dirty-fix-for-bsdcpio-directory-traversal-vu.patch?part=0.1
+> 
+> Discussion is ongoing.
+> 
+> Could CVE(s) please be assigned?
 
-Now released as DSA 3180.
+This seems to have fallen through the cracks, explicitly adding cve-assign
+to CC.
 
 Cheers,
         Moritz
