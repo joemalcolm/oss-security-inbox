@@ -1,40 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/30/2
-Message-ID: <20150130000209.GA10301@openwall.com>
-Date: Fri, 30 Jan 2015 03:02:09 +0300
-From: Solar Designer <solar@...nwall.com>
-To: Paul Pluzhnikov <ppluzhnikov@...il.com>, Kees Cook <keescook@...omium.org>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: GHOST gethostbyname() heap overflow in glibc (CVE-2015-0235)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/22/9
+Message-ID: <20150222184334.GA10086@pisco.westfalen.local>
+Date: Sun, 22 Feb 2015 19:43:34 +0100
+From: Moritz Mühlenhoff <jmm@...til.org>
+To: oss-security@...ts.openwall.com
+Cc: Assign a CVE Identifier <cve-assign@...re.org>
+Subject: Re: older issues in libbluray
 Content-Type: text/plain; charset=utf-8
 
-Paul, Kees -
-
-On Thu, Jan 29, 2015 at 08:00:48AM -0800, Paul Pluzhnikov wrote:
-> On Thu, Jan 29, 2015 at 4:09 AM, Hanno B??ck <hanno@...eck.de> wrote:
-> > And yes: I'd like people to cry alarm every time they see a buffer
-> > overflow in glibc or any other core lib.
+On Fri, Feb 06, 2015 at 04:21:20PM -0700, Kurt Seifried wrote:
+> https://bugzilla.redhat.com/show_bug.cgi?id=959434
+> https://bugzilla.redhat.com/show_bug.cgi?id=959433
 > 
-> What is the appropriate forum to cry alarm on?
+> these may warrant a cve
 
-As a moderator for oss-security, I'd appreciate it if you cry alarm in
-here.  And if this ever becomes too noisy, that would be an interesting
-problem to have and we'll find a way to deal with it then. :-)
+Have these been reported to libbluray upstream? The
+Bugzilla entries are rather scarce on details.
 
-> We are not a distro, and (AFAICT) are not on any of the closed lists.
-> But maybe we should be.
-
-Actually, Chrome OS is listed as a member of linux-distros here:
-
-http://oss-security.openwall.org/wiki/mailing-lists/distros
-
-and the person subscribed on behalf of Chrome OS is Kees Cook
-(previously representing Ubuntu).  Given your comment above, we have to
-double-check whether this is currently correct.  Is Kees Cook currently
-representing Chrome OS on linux-distros?  If so, why were you not aware
-of that?  (I think this is unrelated to the handling of GHOST, but since
-this was brought up we just have to deal with it as well.)
-
-Thank you!
-
-Alexander
+Cheers,
+        Moritz
