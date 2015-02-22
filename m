@@ -1,48 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/10/4
-Message-ID: <54B18F3E.60504@mccme.ru>
-Date: Sat, 10 Jan 2015 23:44:46 +0300
-From: Alexander Cherepanov <cherepan@...me.ru>
-To: oss-security@...ts.openwall.com
-Subject: Re: Directory traversals in cpio and friends?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/22/4
+Message-ID: <20150222070728.GA21383@eldamar.local>
+Date: Sun, 22 Feb 2015 08:07:28 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Cc: CVE Assignments MITRE <cve-assign@...re.org>
+Subject: CVE Request: TYPO3-CORE-SA-2015-001: Authentication Bypass in TYPO3 CMS 4.5
 Content-Type: text/plain; charset=utf-8
 
-On 2015-01-08 17:12, Florian Weimer wrote:
-> On 01/08/2015 12:43 AM, Alexander Cherepanov wrote:
->> I've taken a look at how dir traversals are dealt with in several
->> implementations of tar and cpio. The picture is kinda strange.
->>
->> First of all, I believe it's usually agreed that archivers must not
->> touch files outside the current directory by default. Is there an
->> authoritative link for this?
->
-> Only if the current directory (or, more generally, the target directory
-> for the extraction operation) is initially empty.
+Hi
 
-Thank you for bringing this up. I thought about it but didn't come to 
-any conclusion myself.
+Could you please assign a CVE for the authentication bypass
+vulnerability in typo3, as repleased per TYPO3-CORE-SA-2015-001?
 
-> If it already contains symbolic links, some users expect that those
-> links are followed because they have used symlinks to move part of the
-> file system tree to somewhere else (perhaps a large file system).
+References:
 
-It's not clear to me that this expectation should trump the expectation 
-to be able to safely extract several archives in the same directory. tar 
-and bsdtar handle it differently. And links to previous discussions?
+https://typo3.org/teams/security/security-bulletins/typo3-core/typo3-core-sa-2015-001
+https://review.typo3.org/#/c/37013/
 
->> The only 'x' in the line for `cpio -i --no-absolute-filenames` seems to
->> be a clear vuln. Reported here: https://bugs.debian.org/774669 and now
->> sent to upstream ml.
-
-It's here:
-
-http://lists.gnu.org/archive/html/bug-cpio/2015-01/msg00000.html
-
-> Yes, that's inconsistent and looks like a bug worth fixing.
-
-The only 'x' in the line for `bsdcpio -i` turned out to be a bug too:
-
-https://groups.google.com/d/msg/libarchive-discuss/dN9y1VvE1Qk/8VMP28AIf2EJ
-
--- 
-Alexander Cherepanov
+Regards,
+Salvatore
