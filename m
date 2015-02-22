@@ -1,24 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/03/21
-Message-ID: <Pine.LNX.4.64.1501031856300.1923@beijing.mitre.org>
-Date: Sat, 3 Jan 2015 18:57:29 -0500 (EST)
-From: cve-assign@...re.org
-To: Dan McDonald <danmcd@...iti.com>
-cc: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: Re: CVE Request for illumos distributions
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/22/6
+Message-ID: <20150222122520.GA21440@eldamar.local>
+Date: Sun, 22 Feb 2015 13:25:20 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: Re: heap overflow in procmail
 Content-Type: text/plain; charset=utf-8
 
+Hi MITRE team,
 
+On Thu, Feb 12, 2015 at 03:14:10PM +0100, Jakub Wilk wrote:
+> >>https://bugs.debian.org/769937
+> [...]
+> >The Debian bug report does not contain diagnosis of the type of
+> >programming error that is triggering each crash, so it is not clear how
+> >many CVE identifiers must be assigned.
+> 
+> There are two distinct buffer overflows:
+> 
+> * Off-by-one heap overflow when parsing addresses that have left angle
+> bracket, then a comma, but no right angle bracket. For example:
+> <moo@...mple.com,
+> 
+> * Heap overflow when parsing addresses that end with backslash. For example:
+> <moo@...mple.com\
+> 
+> Credit goes to Jan Darmochwal for identifying the root causes.
 
-> Illumos bug #5421 - http://illumos.org/issues/5421 which is now fixed in 
-> the upstream illumos-gate, is an innocuous fix to a serious problem that 
-> allows an arbitrary user in the global zone (non-global zones are not 
-> able to panic the machine) to panic the machine.
+Not sure if this got lost, so just reasking. Can you assing CVEs based
+on the above? (actually one or two CVEs?)
 
-Use CVE-2014-9491.
-
----
-
-CVE assignment team, MITRE CVE Numbering Authority M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+Regards,
+Salvatore
