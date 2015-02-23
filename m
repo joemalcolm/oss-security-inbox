@@ -1,36 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/09/10
-Message-ID: <20150109201829.GA1526@jwilk.net>
-Date: Fri, 9 Jan 2015 21:18:29 +0100
-From: Jakub Wilk <jwilk@...lk.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/23/14
+Message-ID: <20150223101124.GA14911@dhcp-25-225.brq.redhat.com>
+Date: Mon, 23 Feb 2015 11:11:26 +0100
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Directory traversals in cpio and friends?
+Subject: CVE-2015-0275 -- Linux kernel: fs: ext4: fallocate zero range page size > block size BUG()
 Content-Type: text/plain; charset=utf-8
 
-* Alexander Cherepanov <cherepan@...me.ru>, 2015-01-08, 02:43:
->The results of tests of tar and cpio archives against various commands 
->follow. '=' means that the corresponding file is not extracted, 'x' 
->means that it is extracted. IMHO secure configuration should list 
->three '=', insecure configuration should list three 'x', everything 
->else is inconsistent. The list created by the attached scripts.
->
->=== tar ===
->abs     rel     link    cmd
->=       =       =       tar -x
->x       x       x       tar -x -P
->=       =       =       bsdtar -x
->x       x       x       bsdtar -x -P
->=       x       x       paxtar -x
->x       x       x       paxtar -x -P
->x       x       x       pax -r
+Currently there is a bug in zero range code which causes zero range
+calls to only allocate block aligned portion of the range, while
+ignoring the rest in some cases.
 
-Let me add:
+In some cases, namely if the end of the range is past isize, we do
+attempt to preallocate the last nonaligned block. However this might
+cause kernel to BUG() in some carefully designed zero range requests on
+setups where page size > block size.
 
-=       =       x       star -x
-=       =       =       star -x -secure-links
-x       x       x       star -x -/ -..
+Proposed upstream patch:
+http://www.spinics.net/lists/linux-ext4/msg47193.html
 
-(tested with star 1.5.3)
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=1193907
 
+Thanks,
 -- 
-Jakub Wilk
+Petr Matousek / Red Hat Product Security
+PGP: 0xC44977CA 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
