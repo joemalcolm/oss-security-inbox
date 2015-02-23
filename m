@@ -1,38 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/19/5
-Message-ID: <54E60316.9080703@enovance.com>
-Date: Thu, 19 Feb 2015 10:36:54 -0500
-From: Tristan Cacqueray <tristan.cacqueray@...vance.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/23/1
+Message-ID: <54EA91C5.9050607@redhat.com>
+Date: Sun, 22 Feb 2015 19:34:45 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request for vulnerability in OpenStack Glance
+CC: Assign a CVE Identifier <cve-assign@...re.org>, videolan@...eolan.org
+Subject: Re: older issues in libbluray
 Content-Type: text/plain; charset=utf-8
 
-A vulnerability was discovered in OpenStack (see below). In order to
-ensure full traceability, we need a CVE number assigned that we can
-attach to further notifications. This issue is already public, although an
-advisory was not sent yet.
+With apologies, I tracked down the original report and added it to our
+BZs. I was also under the impression VideoLan had been contacted but
+just to ensure this is the case adding them to the CC.
 
-Title: Glance import task leaks image in backend
-Reporter: Abhishek Kekane (NTT)
-Products: Glance
-Affects: 2014.2 versions through 2014.2.2
-
-Description:
-Abhishek Kekane from NTT reported a vulnerability in the Glance import task.
-By creating numerous images using the task API and deleting them, an
-authenticated attacker may accumulate untracked image data in the backend
-resulting in potential resource exhaustion and denial of service. All glance
-setups using API v2 are affected.
-
-References:
-https://launchpad.net/bugs/1420696
-https://launchpad.net/bugs/1422716
-
-Thanks in advance,
+On 22/02/15 11:43 AM, Moritz Mühlenhoff wrote:
+> On Fri, Feb 06, 2015 at 04:21:20PM -0700, Kurt Seifried wrote:
+>> https://bugzilla.redhat.com/show_bug.cgi?id=959434
+>> https://bugzilla.redhat.com/show_bug.cgi?id=959433
+>>
+>> these may warrant a cve
+> 
+> Have these been reported to libbluray upstream? The
+> Bugzilla entries are rather scarce on details.
+> 
+> Cheers,
+>         Moritz
+> 
 
 -- 
-Tristan Cacqueray
-OpenStack Vulnerability Management Team
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
