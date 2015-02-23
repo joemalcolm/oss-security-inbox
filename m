@@ -1,57 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/29/3
-Message-ID: <54C9DB24.60309@redhat.com>
-Date: Thu, 29 Jan 2015 00:03:00 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com, Mitre CVE assign department <cve-assign@...re.org>
-Subject: Re: GHOST gethostbyname() heap overflow in glibc (CVE-2015-0235)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/23/15
+Message-ID: <20150223135131.405@usenet.piggo.com>
+Date: Mon, 23 Feb 2015 12:52:21 +0000 (UTC)
+From: Sébastien Delafond <seb@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: mod-gnutls: GnuTLSClientVerify require is ignored
 Content-Type: text/plain; charset=utf-8
 
-On 28/01/15 06:57 PM, Huzaifa Sidhpurwala wrote:
-> On 01/29/2015 03:17 AM, Florian Weimer wrote:
-> 
->>> Use CVE-2012-6686 for "unbound alloca use in glob_in_dir" as covered
->>> by Red Hat Bugzilla ID 797096.
->>
->> Oh, it seems Huzaifa posted the wrong Bugzilla reference.
->>
-> 
-> Yes, sorry wrong bz.
-> 
->> We still need assignment for this fix:
->>
->>   <https://sourceware.org/git/gitweb.cgi?p=glibc.git;a=commitdiff;h=2e96f1c7>
->>
->> The matching Red Hat Bugzilla bug is:
->>
->>   <https://bugzilla.redhat.com/show_bug.cgi?id=981942>
-> The above is the correct bug  with the corresponding impact at:
-> https://bugzilla.redhat.com/show_bug.cgi?id=1186614
-> 
-> MITRE,
-> 
-> Can we still use the above CVE for this issue?
+On 2015-02-22, Sébastien Delafond <seb@...ian.org> wrote:
+>
+> Hi,
+>
+> mod-gnutls doesn't consider the server's client verify mode, even if the
+> verify mode was unset in the directory configuration. As a result,
+> invalid certificates are ignored and clients can connect and receive
+> data as long as they presented any certificate whatsoever.
+>
+>   Debian bug: https://bugs.debian.org/578663
+>   Patch and detailed description: https://github.com/airtower-luna/mod_gnutls/commit/5a8a32bbfb8a83fe6358c5c31c443325a7775fc2
+>
+> Could you please assign a CVE for this issue ?
 
-This would be a bad idea and lead to much confusion, especially for
-people that have already consumed this CVE and written up reports that
-in turn have been shipped to other people/etc.
+Explicitely adding cve-assign to Cc.
 
-Can we REJECT this CVE if the issue is not a security issue, obviously
-if it is a security issue we should keep this CVE.
+Cheers,
 
-Additionally if we can get a new CVE for Bz981942 that would be great,
-thanks!
+--Seb
 
->>
->> I haven't yet seen an upstream bug for it; this change happened before
->> upstream required bugs being filed for all user-visible changes.
->>
-> 
-> 
-
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
