@@ -1,26 +1,16 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/21/9
-Message-ID: <20150121141504.GA1656@jwilk.net>
-Date: Wed, 21 Jan 2015 15:15:04 +0100
-From: Jakub Wilk <jwilk@...lk.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/23/22
+Message-ID: <20150223182609.GA5522@pisco.westfalen.local>
+Date: Mon, 23 Feb 2015 19:26:09 +0100
+From: Moritz Muehlenhoff <jmm@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: heap overflow in procmail
+Cc: cve-assign@...re.org
+Subject: CVE request: unace
 Content-Type: text/plain; charset=utf-8
 
-* Tavis Ormandy <taviso@...gle.com>, 2014-09-03, 11:52:
->I noticed a heap overflow in procmail when parsing addresses with 
->unbalanced quotes.
+Hi,
+please assign a CVE ID for this integer overflow in unace:
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=775003
 
-Unfortunately, there's more:
-https://bugs.debian.org/769937
-
-Apparently procmail upstream is inactive; and nobody understands how 
-this code works.
-
-At this point, I'd recommend that formail users switch to reformail[0], 
-which is mostly (but not completely) compatible with formail.
-
-[0] http://www.courier-mta.org/reformail.html
-
--- 
-Jakub Wilk
+Cheers,
+        Moritz
