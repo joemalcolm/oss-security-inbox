@@ -1,35 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/12/5
-Message-ID: <54B44A24.5030405@enovance.com>
-Date: Mon, 12 Jan 2015 17:26:44 -0500
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/23/21
+Message-ID: <54EB637B.7090704@enovance.com>
+Date: Mon, 23 Feb 2015 12:29:31 -0500
 From: Tristan Cacqueray <tristan.cacqueray@...vance.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request for vulnerability in OpenStack Glance
+Subject: [OSSA 2015-004] Glance import task leaks image in backend (CVE-2014-9684, CVE-2015-1881)
 Content-Type: text/plain; charset=utf-8
 
-A vulnerability was discovered in OpenStack (see below). In order to
-ensure full traceability, we need a CVE number assigned that we can
-attach to further notifications. This issue is already public, although
-an advisory was not sent yet.
+========================================================
+OSSA-2015-004: Glance import task leaks image in backend
+========================================================
 
-Title: Glance v2 API unrestricted path traversal through filesystem://
-       scheme
-Reporter: Jin Liu (EMC)
-Products: Glance
-Versions: up to 2014.1.3 and 2014.2 versions up to 2014.2.1
+:Date: February 23, 2015
+:CVE: CVE-2014-9684, CVE-2015-1881
 
-Description:
-Jin Liu from EMC reported that path traversal vulnerabilities in Glance
-were not fully patched in OSSA 2014-041. By setting a malicious image
-location to a filesystem:// scheme an authenticated user can still
-download or delete any file on the Glance server for which the Glance
-process user has access to. Only setups using the Glance V2 API are
-affected by this flaw.
 
-References:
-https://launchpad.net/bugs/1408663
+Affects
+~~~~~~~
+- Glance: 2014.2 versions through 2014.2.2
 
-Thanks in advance,
+
+Description
+~~~~~~~~~~~
+Abhishek Kekane from NTT and Mike Fedosin from Mirantis reported a
+vulnerability in the Glance import task. By creating numerous images
+using the task API and deleting them, an authenticated attacker may
+accumulate untracked image data in the backend resulting in potential
+resource exhaustion and denial of service. All glance setups using API
+v2 are affected.
+
+
+Patches
+~~~~~~~
+- https://review.openstack.org/156553 (Juno)
+- https://review.openstack.org/157067 (Juno)
+- https://review.openstack.org/156493 (Kilo)
+- https://review.openstack.org/122427 (Kilo)
+
+
+Credits
+~~~~~~~
+- Abhishek Kekane from NTT (CVE-2015-1881)
+- Mike Fedosin from Mirantis (CVE-2014-9684)
+
+
+References
+~~~~~~~~~~
+- https://launchpad.net/bugs/1420696
+- https://launchpad.net/bugs/1371118
+- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-9684
+- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-1881
+
+
+Notes
+~~~~~
+- This fix will be included in the kilo-3 development milestone and in future
+  2014.2.3 (juno) release.
 
 --
 Tristan Cacqueray
