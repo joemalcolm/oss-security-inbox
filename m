@@ -1,34 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/23/8
-Message-ID: <54C2BD56.7020506@redhat.com>
-Date: Fri, 23 Jan 2015 14:29:58 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>, security@...zilla.org
-Subject: CVE request for BZ
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/23/10
+Message-ID: <20150223092740.GA19399@videolan.org>
+Date: Mon, 23 Feb 2015 10:27:40 +0100
+From: Jean-Baptiste Kempf <jb@...eolan.org>
+To: Florian Weimer <fweimer@...hat.com>
+Cc: oss-security@...ts.openwall.com, Assign a CVE Identifier <cve-assign@...re.org>, VideoLAN Security Team <security@...eolan.org>
+Subject: Re: CVE request: BD-J implementation in libbluray
 Content-Type: text/plain; charset=utf-8
 
-http://www.bugzilla.org/security/4.0.15/
+On 23 Feb, Florian Weimer wrote :
+> Missing Java Security Manager sandboxing mechanism / feature in the
+> org.videolan.BDJLoader class
 
-one has a CVE, and this one does not:
+The code corresponding to:
+https://bugzilla.redhat.com/show_bug.cgi?id=959433
 
-Class:       Information Leak
-Versions:    2.23.3 to 4.0.15, 4.1.1 to 4.2.11, 4.3.1 to 4.4.6, 4.5.1 to
-4.5.6
-Fixed In:    4.0.16, 4.2.12, 4.4.7, 5.0rc1
-Description: Using the WebServices API, a user can possibly execute imported
-             functions from other non-WebService modules. A whitelist
-has now
-             been added that lists explicit methods that can be executed
-via the
-             API.
-References:  https://bugzilla.mozilla.org/show_bug.cgi?id=1090275
+is gone from newer release. You should upgrade, since we don't support
+old releases.
 
-was this classed as hardening hence no CVE? E.g. has no exploit been
-found, or?
+
+As for https://bugzilla.redhat.com/show_bug.cgi?id=959434
+
+"Fixing it would not change anything. Xlet (that requests the mount, or is
+being executed from the mount) could as well uncompress the files by self
+where it wants, even download other files from internet."
+
+So, maybe you want to have a full Xlet sandboxing? Or is it something
+else?
 
 -- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Jean-Baptiste Kempf
+http://www.jbkempf.com/ - +33 672 704 734
+Sent from my Electronic Device
