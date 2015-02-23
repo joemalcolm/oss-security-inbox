@@ -1,40 +1,101 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/23/4
-Message-ID: <20150123093601.2ebf1ee3@pc>
-Date: Fri, 23 Jan 2015 09:36:01 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: two issues in vorbis-tools
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/23/17
+Message-ID: <54EB4876.7000707@redhat.com>
+Date: Mon, 23 Feb 2015 08:34:14 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com, Assign a CVE Identifier <cve-assign@...re.org>, jvn@....jp
+Subject: Re: CVE-2015-0881
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 22 Jan 2015 11:50:16 -0500 (EST)
-cve-assign@...re.org wrote:
+Regarding CVE-2015-0881
 
-> 
-> On Wed, 21 Jan 2015, Hanno Böck wrote:
-> 
-> > On Wed, 21 Jan 2015 13:50:46 +0100
-> > Martin Prpic <mprpic@...hat.com> wrote:
-> >
-> >> Two issues were reported in vorbis-tools on Full Disclosure:
-> >>
-> >> http://seclists.org/fulldisclosure/2015/Jan/78
-> 
-> CVE-2014-9638 - https://trac.xiph.org/ticket/2137 (division by zero)
-> 
-> CVE-2014-9639 - https://trac.xiph.org/ticket/2136 (integer overflow)
+http://jvn.jp/en/jp/JVN64455813/index.html
+http://jvndb.jvn.jp/en/contents/2015/JVNDB-2015-000019.html
 
-These two also affect opusenc.
-I don't know if this deserves more CVEs, because these issues are
-likely minor, but wanted to note it for completeness. It is a
-different software package. I'll add comments to the corresponding bug
-reports.
+Unless JVN can provide more details I would like to recommend we CVE
+REJECT this issue based on the following rational:
+
+1) It's an issue discovered "today" in software that was supposedly
+fixed 5 years ago
+2) No information on the vuln or the specific fix has been made
+vulnerable, which may be ok for closed source vendors using CVE but this
+leads to point 3...
+3) Even the upstream project can't make sense of this, and I'm inclined
+to trust them (e.g. they are not playing the "we want to minimize the
+number of CVE's assigned against our software game like some vendors).
+
+I would suggest if JVN doesn't get back to us within a week (this seems
+like more then enough time) that this CVE be REJECT'ed.
+
+Mitre: thoughts or comments?
+
+On 22/02/15 04:37 AM, Amos Jeffries wrote:
+> On 22/02/2015 7:17 p.m., Kurt Seifried wrote:
+>> I'm trying to track down information on CVE-2015-0881.
+> 
+>> I can't find a squid security contact (security@...id-cache.org 
+>> bounced), there's no security report, and no link to a source code
+>> patch for this.
+> 
+> - From the "Contact Us page"
+> (<http://www.squid-cache.org/Support/contact.html>)
+> 
+>   squid-bugs @ lists.squid-cache.org
+> 
+> ... which goes to me and some other trusted developers. I dont mind
+> direct contacts for this type of thing, but the main contact address
+> guarantees someone sees it within a few hrs.
+> 
+> 
+> Regarding the CVE:
+> 
+> 1) This is the first I've heard about this particular CVE number
+> assignment.
+> 
+> 2) I did have some discusions with JPCERT about _a_ response splitting
+> vulnerability around those years. But the messages from them were IIRC
+> about replicating response splitting in a 2.x versions which were
+> incompletely fixed by:
+> <http://www.squid-cache.org/Versions/v2/2.5/bugs/#squid-2.5.STABLE7-header_parsing>
+> (did not get a CVE AFAIK).
+> 
+> 3) I have not been able to replicate the #2 issue in the Squid-3
+> series and several iterations of changes to the parsers there have
+> been careful to take the above issue into account. So I'm not sure
+> where the 3.1.10 comes from. Assuming it is the same vulnerability.
+> 
+> 
+> 
+>> This is regarding 3.1.9 and earlier, 3.1.10 was released on 22 Dec
+>> 2010, so 4+ years ago.
+> 
+>> Needless to say I am more than a bit confused. A link to a specific
+>> code patch/vuln/file would be helpful. Also if anyone knows how to
+>> contact Squid re security issues properly I'd love to know.
+> 
+> 
+> I'm not sure 3.1.10 is the right version for attribution on any
+> response splitting fix. There certainly were no patches solving
+> anything related to respinse splitting in that version. Some
+> borderline memory leak vulnerabilities perhapse, but not response
+> splitting.
+> 
+> 
+> NP: Just to confuse things there was a major replacement of the HTTP
+> request-line parser on the 2015-02-10 which does explicitly fix all
+> lot of known HTTP request-line parse issues, including a few response
+> splitting vectors using downgrade to HTTP/0.9 handling. That will only
+> be in the 3.6 series though.
+> 
+> 
+> Amos Jeffries
+> Squid Software Foundation
+> 
+> 
 
 -- 
-Hanno Böck
-http://hboeck.de/
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
 
-Content of type "application/pgp-signature" skipped
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
