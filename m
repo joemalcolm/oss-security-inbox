@@ -1,38 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/23/13
-Message-ID: <54EAF4F7.8030308@tao.at>
-Date: Mon, 23 Feb 2015 10:37:59 +0100
-From: Sven Schwedas <sven.schwedas@....at>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE request: BD-J implementation in libbluray
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/23/19
+Message-ID: <54EB49EA.9020905@redhat.com>
+Date: Mon, 23 Feb 2015 08:40:26 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: Jean-Baptiste Kempf <jb@...eolan.org>
+CC: oss-security@...ts.openwall.com, videolan@...eolan.org, Assign a CVE Identifier <cve-assign@...re.org>
+Subject: Re: [videolan] older issues in libbluray
 Content-Type: text/plain; charset=utf-8
 
-On 2015-02-23 10:34, Jean-Baptiste Kempf wrote:
-> On 23 Feb, Florian Weimer wrote :
->>> As for https://bugzilla.redhat.com/show_bug.cgi?id=959434
->>>
->>> "Fixing it would not change anything. Xlet (that requests the mount, or is
->>> being executed from the mount) could as well uncompress the files by self
->>> where it wants, even download other files from internet."
->>>
->>> So, maybe you want to have a full Xlet sandboxing? Or is it something
->>> else?
+So the good news/bad news is I'm finished cleaning out about 20 older
+bugs that were embargoed and not properly handled (mostly due to them
+stalling and then being forgotten I guess, some were from 6 years ago,
+well before I even worked for Red Hat).
+
+Again my apologies for this mess. The good news is that all our current
+embargoed flaws (none against VLC currently =) are being actively
+handled (e.g. worked on in a current time frame) and moving forwards we
+should hopefully be able to avoid issues like this.
+
+Also one request (not just specific to VLC, but everyone with a
+project): please have a security@ email address for your project or a
+security web page that makes it obvious how to contact and report things
+privately, this is a common problem and easily solved (and will make it
+much easier for people to report issues).
+
+I just recently found myself emailing random security@ addresses at
+other projects to see if they bounce or not. I still have no idea if the
+projects received my security report (no bounce so here's hoping!).
+
+On 23/02/15 01:52 AM, Jean-Baptiste Kempf wrote:
+> We never were contacted.
+> This is not really cool.
+> 
+> On 22 Feb, Kurt Seifried wrote :
+>> With apologies, I tracked down the original report and added it to our
+>> BZs. I was also under the impression VideoLan had been contacted but
+>> just to ensure this is the case adding them to the CC.
 >>
->> Yes, I do think full sandboxing is required because content publishers
->> have attacked end user system integrity in the past, so I don't think
->> they can be trusted.
+>> On 22/02/15 11:43 AM, Moritz Mühlenhoff wrote:
+>>> On Fri, Feb 06, 2015 at 04:21:20PM -0700, Kurt Seifried wrote:
+>>>> https://bugzilla.redhat.com/show_bug.cgi?id=959434
+>>>> https://bugzilla.redhat.com/show_bug.cgi?id=959433
+>>>>
+>>>> these may warrant a cve
+>>>
+>>> Have these been reported to libbluray upstream? The
+>>> Bugzilla entries are rather scarce on details.
+>>>
+>>> Cheers,
+>>>         Moritz
+>>>
+>>
+>> -- 
+>> Kurt Seifried -- Red Hat -- Product Security -- Cloud
+>> PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+>>
 > 
-> BD-J code comes from Blu-Rays. Downloading non-official blurays and
-> executing it is like taking random binaries from internet and running
-> them.
-
-And the Sony rootkit came from official, store-bought discs …
-
-> Patches are welcome, though...
 > 
 > 
-> With my kindest regards,
+>> _______________________________________________
+>> videolan mailing list
+>> videolan@...eolan.org
+>> https://mailman.videolan.org/listinfo/videolan
+> 
 > 
 
+-- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-Download attachment "signature.asc" of type "application/pgp-signature" (649 bytes)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
