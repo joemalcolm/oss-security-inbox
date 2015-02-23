@@ -1,44 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/14/4
-Message-ID: <20150214133032.1f5dbbf8@pc>
-Date: Sat, 14 Feb 2015 13:30:32 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request : Several Bugs Found on Libflac 1.3.1 and Libtta++-2.2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/23/3
+Message-Id: <20150223073805.48D076C000E@smtpvmsrv1.mitre.org>
+Date: Mon, 23 Feb 2015 02:38:05 -0500 (EST)
+From: cve-assign@...re.org
+To: ch3root@...nwall.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: cabextract -- directory traversal
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On Fri, 13 Feb 2015 21:44:10 +0800
-Zhenghao Hu <zhenghaohuu@...il.com> wrote:
+> it removes leading slashes from filenames but does it before possibly
+> decoding UTF-8 and doesn't check for invalid UTF-8
 
-> Several bugs found in the latest libflac and libtta codec fuzzing
-> with AFL ( http://lcamtuf.coredump.cx/afl/), working together with
-> Nie Sen, from K33nTeam.
+> The issue was reported to Stuart Caie today and fixed in less than 4h:
 
-I think I haven't posted this here yet: Also recently fuzzed flac
-with afl and found something:
+> http://sourceforge.net/p/libmspack/code/217/
 
-https://git.xiph.org/?p=flac.git;a=commit;h=43ba7ad05f1656e885ce2f34a9a72494f45705ae
-https://sourceforge.net/p/flac/bugs/421/
+Your report seems to be about the need for the "/* remove leading
+slashes */" code to occur after (not before) the "/* get next UTF-8
+character */" code. Is this the only vulnerability being reported, or
+is the stated behavior of "This doesn't reject bad UTF-8 with overlong
+encodings, but does re-encode it as valid UTF-8" an independent
+vulnerability?
 
-Crashing sample is attached to the bug report.
+> /* special case if there's only one file - just take the first slash */
+> 
+> if (c == '\\') return 0; /* backslash = MS-DOS */
+> 
+> isunix = unix_path_seperators(cab->files);
+> 
+> sep   = (isunix) ? '/'  : '\\'; /* the path-seperator */
+> 
+>  while (*fname == sep) fname++;
 
-What happens is that flac does an malloc for the number of comments. If
-that fails due to an insane number of comments it'll fail, but it will
-still try to access the non-allocated memory.
+What happens if the .cab archive contains only one file, and \/tmp/abs
+is the filename?
 
-I think the upstream fix is not optimal - it limits the amount of
-allowed comments. That probably fixes this in most situations, but it
-still leaves problems, because it doesn't check for malloc
-failures.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-cu,
--- 
-Hanno Böck
-http://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
-
-Content of type "application/pgp-signature" skipped
+iQEcBAEBAgAGBQJU6thCAAoJEKllVAevmvmschIH/jvsovXKOb3R8XToivGmAJG4
+raI0rK3IgcvAk3UbH+N9Ss6rSvx4XO4U5NWKWZmTIT8NENOmCR6OffRpyodmNkV0
+1yeyTt0YsVaOz35vmyh/GIf9VtsMB1XsUK8Z4V7aAnCr8qsJmzKRwD2tqaKu+m5j
+D5Zq3QsIXaEOzXTjrQsCJpSzaGKoKG9jjW3xXC8hdrqBl3V8qbXGVIAQ3a5yOexb
+Crx38WncATW1C3wDpQ7g8E6VZ22sbYEJSs2ebm36KCUGtRq6zGZQJjy1ajokpiKM
+lTIKtOGN03YAG1EpWPWKEp4cLKYVffhB1pe9pQAh6nTPYg/9CKZzQRCL7Ya8m2s=
+=ok2P
+-----END PGP SIGNATURE-----
