@@ -1,25 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/30/10
-Message-ID: <20150130094641.GA14903@openwall.com>
-Date: Fri, 30 Jan 2015 12:46:41 +0300
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/23/5
+Message-ID: <54EAE60B.3040101@redhat.com>
+Date: Mon, 23 Feb 2015 09:34:19 +0100
+From: Florian Weimer <fweimer@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: linkbc02 <linkbc02@...look.com>
-Subject: Re: GHOST gethostbyname() heap overflow in glibc (CVE-2015-0235)
+Subject: Re: older issues in libbluray
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jan 30, 2015 at 10:24:56AM +0100, linkbc02 wrote:
-> Dovecot: It seems that libdovecot-storage.so can be triggered and you can read the core dump
+On 02/22/2015 07:43 PM, Moritz Mühlenhoff wrote:
+> On Fri, Feb 06, 2015 at 04:21:20PM -0700, Kurt Seifried wrote:
+>> https://bugzilla.redhat.com/show_bug.cgi?id=959434
+>> https://bugzilla.redhat.com/show_bug.cgi?id=959433
+>>
+>> these may warrant a cve
 > 
-> imap[29914]: segfault at 0 ip 00007f1e525263a0 sp 00007fffaeed7818
->  error 4 in libdovecot-storage.so.0.0.0[7f1e5249e000+10f000]
+> Have these been reported to libbluray upstream?
 
-I reluctantly approved the above posting even though it contains no
-indication this has anything to do with GHOST, and it bottom-quotes a
-mostly irrelevant message (latest one from the thread).
+Yes, they were reported upstream in mid-2013, together with another issue.
 
-linkbc02, if you have any reason to believe this is relevant to GHOST,
-then please explain.  And if you have no such reason, then please also
-state so, and we'll more confidently disregard this false alarm. ;-)
-
-Alexander
+-- 
+Florian Weimer / Red Hat Product Security
