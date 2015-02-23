@@ -1,43 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/17/5
-Message-ID: <m9ccqr$1vq$1@ger.gmane.org>
-Date: Sat, 17 Jan 2015 02:10:51 +0100
-From: Damien Regad <dregad@...tisbt.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: CAPTCHA bypass in MantisBT
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/23/4
+Message-Id: <20150223074156.50170332017@smtpvbsrv1.mitre.org>
+Date: Mon, 23 Feb 2015 02:41:56 -0500 (EST)
+From: cve-assign@...re.org
+To: me@...jsalkema.de
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: jabberd remote information disclosure
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Greetings,
+> When parsing a JID, jabberd2 version 2.3.2 and below truncate the data
+> but do not verify whether the result is valid UTF8 before passing it
+> to libidn. If the data ends with an unterminated multi-byte UTF8
+> sequence then libidn may copy data past the buffer into the result.
 
-Please assign a CVE ID for the following issue
+> https://github.com/jabberd2/jabberd2/issues/85
 
+> the stringprep functions from libidn require the input to be valid UTF8
 
-Description:
+> The libidn documentation claims "This function will not read or write
+> to characters outside that size." about the length of the buffer that
+> needs to be specified, but this is not true,
 
-An attacker can get an unlimited amount of CAPTCHA "samples" with 
-different perturbations for the same challenge, which makes the whole 
-captcha utterly useless and very easy to bypass.
+We think this requires one CVE ID for jabberd2 and one CVE ID for
+libidn, because the issues could be addressed independently. For
+example, if only jabberd2 is changed, then libidn still has an
+out-of-bounds read issue with input from other programs. If only
+libidn were changed and (for example) the change was to fail on
+invalid UTF-8 data, then that would have a DoS effect on jabberd2.
 
+Did you believe that libidn does not have a vulnerability on
+its own?
 
-Affected versions:
-<= 1.2.19
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-Fixed in versions:
-1.2.19 (not yet released)
-
-Patch:
-See Github [1]
-
-Credit:
-This vulnerability was reported [2] by Florent Daigniere from Matta 
-Consulting.
-The issue was fixed by Damien Regad (MantisBT Developer).
-
-References:
-Further details available in our issue tracker [2]
-
-[1] https://github.com/mantisbt/mantisbt/commit/39a92726
-[2] https://www.mantisbt.org/bugs/view.php?id=17984
-
-
+iQEcBAEBAgAGBQJU6tlTAAoJEKllVAevmvmsTR0H/3XUuU95oYjii19G1GIBNy5A
+4CyZyUD4rqiXIXN1TN/3V8JuPnG7/C0sVc6vP6QVu6xzVWOTQhtarSWlX2cxn0kS
+ExvZtwdJW0olsnX+kxYsoHE9PIt07bfbXp1kHHKKJDmP8SNputJ+4upyjkVbLHxM
+EanwjeoWQE79c1CpQvt6yxWapd2HeKhoiFmg1/5UVeyoazZaG5KAZZqRKoFiOAWf
+IXh4nifPjBUJADSV58g5AGVj5QGznNinsvngF92bMPczjdKG8fPz0oG6VefQ+YXc
+yEey2jylUkJIBrwzENnCKz9775dOy7lTJV67WxaKcroaiQdZHrv3Y7HGlTpvs0M=
+=MZLy
+-----END PGP SIGNATURE-----
