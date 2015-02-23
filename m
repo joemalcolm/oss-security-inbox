@@ -1,22 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/28/10
-Message-ID: <20150128080806.GO24150@more-magic.net>
-Date: Wed, 28 Jan 2015 09:08:06 +0100
-From: Peter Bex <peter@...e-magic.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request for buffer overrun in CHICKEN Scheme's substring-index[-ci] procedures
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/23/6
+Message-ID: <20150223085222.GA16620@videolan.org>
+Date: Mon, 23 Feb 2015 09:52:22 +0100
+From: Jean-Baptiste Kempf <jb@...eolan.org>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: oss-security@...ts.openwall.com, videolan@...eolan.org, Assign a CVE Identifier <cve-assign@...re.org>
+Subject: Re: [videolan] older issues in libbluray
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jan 12, 2015 at 05:44:37PM +0100, Moritz Heidkamp wrote:
-> Hello,
+We never were contacted.
+This is not really cool.
+
+On 22 Feb, Kurt Seifried wrote :
+> With apologies, I tracked down the original report and added it to our
+> BZs. I was also under the impression VideoLan had been contacted but
+> just to ensure this is the case adding them to the CC.
 > 
-> I would like to request a CVE for a buffer overrun vulnerability in
-> CHICKEN Scheme's substring-index[-ci] procedures.
+> On 22/02/15 11:43 AM, Moritz Mühlenhoff wrote:
+> > On Fri, Feb 06, 2015 at 04:21:20PM -0700, Kurt Seifried wrote:
+> >> https://bugzilla.redhat.com/show_bug.cgi?id=959434
+> >> https://bugzilla.redhat.com/show_bug.cgi?id=959433
+> >>
+> >> these may warrant a cve
+> > 
+> > Have these been reported to libbluray upstream? The
+> > Bugzilla entries are rather scarce on details.
+> > 
+> > Cheers,
+> >         Moritz
+> > 
+> 
+> -- 
+> Kurt Seifried -- Red Hat -- Product Security -- Cloud
+> PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+> 
 
-What's the status on this?  The CVE request was made over 2 weeks ago
-yet there hasn't been an ID assigned.
 
-Cheers,
-Peter Bex
 
-Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
+> _______________________________________________
+> videolan mailing list
+> videolan@...eolan.org
+> https://mailman.videolan.org/listinfo/videolan
+
+
+-- 
+With my kindest regards,
+
+-- 
+Jean-Baptiste Kempf
+http://www.jbkempf.com/ - +33 672 704 734
+Sent from my Electronic Device
