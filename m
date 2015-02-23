@@ -1,24 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/23/8
-Message-ID: <54EAED57.3090304@redhat.com>
-Date: Mon, 23 Feb 2015 10:05:27 +0100
-From: Florian Weimer <fweimer@...hat.com>
-To: oss-security@...ts.openwall.com, Kurt Seifried <kseifried@...hat.com>
-CC: videolan@...eolan.org
-Subject: Re: older issues in libbluray
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/23/20
+Message-ID: <20150223154726.GA22383@videolan.org>
+Date: Mon, 23 Feb 2015 16:47:26 +0100
+From: Jean-Baptiste Kempf <jb@...eolan.org>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: oss-security@...ts.openwall.com, Assign a CVE Identifier <cve-assign@...re.org>
+Subject: Re: [videolan] older issues in libbluray
 Content-Type: text/plain; charset=utf-8
 
-On 02/23/2015 09:52 AM, Jean-Baptiste Kempf wrote:
-> We never were contacted.
-> This is not really cool.
+On 23 Feb, Kurt Seifried wrote :
+> Again my apologies for this mess. The good news is that all our current
+> embargoed flaws (none against VLC currently =) are being actively
+> handled (e.g. worked on in a current time frame) and moving forwards we
+> should hopefully be able to avoid issues like this.
 
-You were contacted in 2013:
+One libbluray issue was already fixed.
+The second one is not really fixable, since BD-J is actually executing
+java code from the outside.
 
-Date: Mon, 6 May 2013 10:18:24 -0400 (EDT)
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: VideoLAN Security Team <security@...eolan.org>
-Subject: [EMBARGOED] libbluray: TOCTOU, directory traversal && missing
-Java Security Manager sandbox in the BD-J implementation
+> Also one request (not just specific to VLC, but everyone with a
+> project): please have a security@ email address for your project or a
+> security web page that makes it obvious how to contact and report things
+
+We have a security email.
+
+With my kindest regards,
 
 -- 
-Florian Weimer / Red Hat Product Security
+Jean-Baptiste Kempf
+http://www.jbkempf.com/ - +33 672 704 734
+Sent from my Electronic Device
