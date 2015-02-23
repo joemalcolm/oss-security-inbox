@@ -1,39 +1,149 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/05/11
-Message-ID: <Pine.LNX.4.64.1501051231060.8826@beijing.mitre.org>
-Date: Mon, 5 Jan 2015 12:31:47 -0500 (EST)
-From: cve-assign@...re.org
-To: Steffen Rösemann <steffen.roesemann1986@...il.com>
-cc: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: Re: CVE Request -- Contenido 4.9.x - 4.9.5 -- Reflecting XSS vulnerability in exception handler with deactivated AMR function
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/23/23
+Message-Id: <56A64072-07CE-470B-9FD5-E003203557F7@gmail.com>
+Date: Mon, 23 Feb 2015 21:52:42 +0100
+From: Steffen Rösemann <steffen.roesemann1986@...il.com>
+To: cve-assign@...re.org
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE-Request -- phpBugTracker v. 1.6.0 -- Multiple SQLi, stored/reflecting XSS- and CSRF-vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
+Hello MITRE.
 
-On Sat, 3 Jan 2015, Steffen Rösemann wrote:
+Thank you for your reply.
 
-> Hello Josh, Steve, vendors, list.
->
-> I found a reflecting XSS vulnerability in the exception handler function of
-> CMS Contenido, which affects all versions from 4.9.x to 4.9.5 when using
-> having disabled advanced mod rewrite (AMR) function, which is used for
-> generating SEO-friendly URLs.
->
-> The vulnerability can be triggered by submitting arbitrary HTML- and/or
-> JavaScriptcode in parameters "idcat", "idart" and "lang" to the PHP file
-> front_content.php.
->
-> Can you assign a CVE ID for it please?
->
-> [1] http://sroesemann.blogspot.de/2014/12/sroeadv-2014-03.html
-> [2]
-> http://sroesemann.blogspot.de/2014/12/report-for-advisory-sroeadv-2014-03.html
-> [3] http://www.contenido.org/de/cms/CONTENIDO/News/index-c-2044-3.html
-> [4] http://seclists.org/fulldisclosure/2014/Dec/111
+I have setup a fresh installation of phpBugTracker v. 1.6.0, in which I found the issues in.
 
-Use CVE-2014-9433.
+> Can you clarify how the example attack URLs interact with this
+> product's approach to access control? As far as we can tell,
+> https://github.com/a-v-k/phpBugTracker/commit/df720d21fcd01fe0273b7db120feb4977ff065d9
+> established a model for access control in which there is both a
+> superadmin role and an admin role.
 
----
 
-CVE assignment team, MITRE CVE Numbering Authority M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+From the results of my researches, I can say, that there only exists one group that has administrative rights, called „Admin“. The first administrators-account, which gets created during the installation-process has the name „System Admin“, but as far as I checked, this account has no more rights than any other administrator-account created afterwards. They are all in the group „Admin“.
+
+> We think the situation is:
+> 
+> In other words, you are not reporting any discoveries in
+> which an attacker is directly bypassing access control.
+
+
+Absolutely right!
+
+> 2. In some cases, stored XSS is relevant only in the context of a CSRF
+> attack, because otherwise a superadmin would need to enter the XSS
+> string intentionally. In other cases, stored XSS is independently
+> relevant because it could be used for privilege escalation from admin
+> to superadmin.
+
+I think any person with access to an administrative account could enter the XSS intentionally, for example to compromise other admin-accounts. I logged in with an administrative account which has been created after the installation and exploited the stored XSS in severity.php („description“ input field). The XSS has been executed on severity.php, when the „System Admin“-account has been logged in and visited this site.
+
+> 3. A SQL injection attack could be relevant even if CSRF is not used.
+> In other words, someone with admin (or even superadmin) privileges
+> does not necessarily have the inherent ability to execute arbitrary
+> SQL statements.
+
+Thats right.
+
+
+> 4. Some of the vendor's commits have fixed attack vectors that you did
+> not report (in addition to attack vectors that you did report). For
+> example:
+> 
+> https://github.com/a-v-k/phpBugTracker/commit/5eff13de038838b1d15108ca6e73c7a85731b85f
+>  + case 'del' :
+>  +     if (check_action_key_die()) {
+>  +         del_group(get_get_int('group_id'));
+
+Right, I did not found these vulnerabilities and I do not know, if the developer, who adopted the project recently, has found these himself as he is implementing security to the projects code at the moment. I am not able to give you more information on these issues.
+
+> 5. Most of the issues were fixed in 1.7.0; however, there were
+> additional XSS fixes in 1.7.2.
+
+It seems that you are right, I have overlooked and tested it again.
+
+> If so, then there would probably be seven CVE IDs in total (six for
+> the 1.7.0 fixes: for multiple CSRF discovered by you, multiple CSRF
+> discovered by the vendor, multiple XSS discovered by you, multiple XSS
+> discovered by the vendor, multiple SQL injection discovered by you,
+> and multiple SQL injection discovered by the vendor; and one for the
+> 1.7.2 fixes).
+
+Okay then...
+
+Greetings.
+
+Steffen Rösemann
+
+
+
+
+> Am 22.02.2015 um 22:01 schrieb cve-assign@...re.org:
+> 
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+> 
+>> I found multiple SQLI-, stored/reflecting XSS- and CSRF-vulnerabilities in
+>> Issuetracker phpBugTracker v. 1.6.0.
+> 
+> Can you clarify how the example attack URLs interact with this
+> product's approach to access control? As far as we can tell,
+> https://github.com/a-v-k/phpBugTracker/commit/df720d21fcd01fe0273b7db120feb4977ff065d9
+> established a model for access control in which there is both a
+> superadmin role and an admin role. We think the situation is:
+> 
+> 1. You mean that all of your http://{TARGET}/admin/ example URLs are
+> accessed within the context of a session with the correct/expected
+> authentication. In some cases, $perm->check('Admin') must succeed, and
+> in other cases (e.g., project.php), the $perm->check('Admin') test is
+> not used. In other words, you are not reporting any discoveries in
+> which an attacker is directly bypassing access control.
+> 
+> 2. In some cases, stored XSS is relevant only in the context of a CSRF
+> attack, because otherwise a superadmin would need to enter the XSS
+> string intentionally. In other cases, stored XSS is independently
+> relevant because it could be used for privilege escalation from admin
+> to superadmin.
+> 
+> 3. A SQL injection attack could be relevant even if CSRF is not used.
+> In other words, someone with admin (or even superadmin) privileges
+> does not necessarily have the inherent ability to execute arbitrary
+> SQL statements.
+> 
+> 4. Some of the vendor's commits have fixed attack vectors that you did
+> not report (in addition to attack vectors that you did report). For
+> example:
+> 
+> https://github.com/a-v-k/phpBugTracker/commit/5eff13de038838b1d15108ca6e73c7a85731b85f
+>  + case 'del' :
+>  +     if (check_action_key_die()) {
+>  +         del_group(get_get_int('group_id'));
+> 
+> 5. Most of the issues were fixed in 1.7.0; however, there were
+> additional XSS fixes in 1.7.2.
+> 
+> If so, then there would probably be seven CVE IDs in total (six for
+> the 1.7.0 fixes: for multiple CSRF discovered by you, multiple CSRF
+> discovered by the vendor, multiple XSS discovered by you, multiple XSS
+> discovered by the vendor, multiple SQL injection discovered by you,
+> and multiple SQL injection discovered by the vendor; and one for the
+> 1.7.2 fixes).
+> 
+> - -- 
+> CVE assignment team, MITRE CVE Numbering Authority
+> M/S M300
+> 202 Burlington Road, Bedford, MA 01730 USA
+> [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1.4.14 (SunOS)
+> 
+> iQEcBAEBAgAGBQJU6kL3AAoJEKllVAevmvmsSiIIAMM+ogKLVBV+97oQ7FI4REXd
+> jVoHOczDBZ1oGhDDRv9C5WXF9YqErgMYb7rGVHbcdBbYO44tyvgH4icufwXIGUSz
+> dpZNFg2L7fLkrJWPfIXL29HsuQc48pBKxr3m4nC8MNc6SWIGvxc4HLeBsojw4wz0
+> P3QEr2klfc6nUACtDqPJeLoQjBSAKaEKZMGsCQWYR1G82faVnnQm9Jwnmps/h2MB
+> 49LNGTNkke71BemNS2F39vVfAZEBAaxECFJBVplPjihh5W264eoUrDkLxynjDy7c
+> Rg7x07bqG4BdiDvOYjdRpG3ChSMtj3PZsIWHNj17MC92TB0WfQ9RHOe17PyiEpU=
+> =c4/m
+> -----END PGP SIGNATURE-----
+
