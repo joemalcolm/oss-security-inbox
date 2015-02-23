@@ -1,43 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/05/13
-Message-Id: <20150205172017.65F516C0032@smtpvmsrv1.mitre.org>
-Date: Thu,  5 Feb 2015 12:20:17 -0500 (EST)
-From: cve-assign@...re.org
-To: hanno@...eck.de
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: PHP/file: out-of-bounds memory access in softmagic
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/23/8
+Message-ID: <54EAED57.3090304@redhat.com>
+Date: Mon, 23 Feb 2015 10:05:27 +0100
+From: Florian Weimer <fweimer@...hat.com>
+To: oss-security@...ts.openwall.com, Kurt Seifried <kseifried@...hat.com>
+CC: videolan@...eolan.org
+Subject: Re: older issues in libbluray
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 02/23/2015 09:52 AM, Jean-Baptiste Kempf wrote:
+> We never were contacted.
+> This is not really cool.
 
-> There are more such issues, I haven't tested them in php:
-> http://bugs.gw.com/view.php?id=409
-> http://mx.gw.com/pipermail/file/2014/001649.html
+You were contacted in 2013:
 
-Our initial thought is that the 001649.html disclosure occurred first,
-and has a single root cause that also applies to id=409. So, we don't
-think that id=409 can have its own separate CVE ID, even though the
-id=409 report contained additional detail.
+Date: Mon, 6 May 2013 10:18:24 -0400 (EDT)
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: VideoLAN Security Team <security@...eolan.org>
+Subject: [EMBARGOED] libbluray: TOCTOU, directory traversal && missing
+Java Security Manager sandbox in the BD-J implementation
 
-Use CVE-2014-9653 for the entire "readelf.c uses pread() ... it's
-happy with partial reads and valgrind show various errors" report
-fixed by "file has been changed to bail out when pread() returns
-partial buffers."
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJU06XtAAoJEKllVAevmvms2QQIAIxDhtDG27FFsr8hsZQMJYqa
-4Jk9r2vXKb8hmM/xenVWmCwHxz67UjZ3wgL5lU6z5hJMRaLfR4tddIhhgK+I+9p/
-MslcATfZyBzal1uXaiiN81sYs+PPUdWYf9wCaI/j+F8O9sl2690OeSUOn+S3T8vf
-ZyMV2DIJnDYVo4TK+6xjuYnk1Tcq2sqvWO5BK07+pNAbtsWk4TikurSEuBc1KLSD
-TJ6LBOgf/HZPGqCx3PX+oKP/oN/OPP5mp31qM5A8RNjt3gYoqNhDQQ4uo7lYTUCH
-xy14S2XfNwvD+YNhBam1Vn+5+MxNqiEjuoOQ1ztP5Jb86A8fQdyfxS0lyVWSn18=
-=WfCL
------END PGP SIGNATURE-----
+-- 
+Florian Weimer / Red Hat Product Security
