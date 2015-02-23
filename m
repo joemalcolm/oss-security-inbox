@@ -1,49 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/06/4
-Message-ID: <CAD3Cane9b_czm7TdVPdfCZTVbMhZ5+qppb4YQHpC+ZtucF0W-Q@mail.gmail.com>
-Date: Tue, 6 Jan 2015 21:42:20 +1300
-From: Matthew Daley <mattd@...fuzz.com>
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: CVE request / advisory: Apache Traffic Server 5.0.0 - 5.1.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/23/11
+Message-ID: <54EAF367.4030806@redhat.com>
+Date: Mon, 23 Feb 2015 10:31:19 +0100
+From: Florian Weimer <fweimer@...hat.com>
+To: Jean-Baptiste Kempf <jb@...eolan.org>
+CC: oss-security@...ts.openwall.com, Assign a CVE Identifier <cve-assign@...re.org>, VideoLAN Security Team <security@...eolan.org>
+Subject: Re: CVE request: BD-J implementation in libbluray
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 02/23/2015 10:27 AM, Jean-Baptiste Kempf wrote:
+> On 23 Feb, Florian Weimer wrote :
+>> Missing Java Security Manager sandboxing mechanism / feature in the
+>> org.videolan.BDJLoader class
+> 
+> The code corresponding to:
+> https://bugzilla.redhat.com/show_bug.cgi?id=959433
+> 
+> is gone from newer release. You should upgrade, since we don't support
+> old releases.
 
-I'd like to request a CVE ID for this issue. It was found in Apache
-Traffic Server (http://trafficserver.apache.org/), an open-source
-caching proxy webserver.
+Still needs CVE assignment, though.
 
-This is the first such request but the issue has been semi-public for
-a few weeks now; this message serves as an advisory as well. (Note
-this probably needs a CVE-2014-* ID)
+> As for https://bugzilla.redhat.com/show_bug.cgi?id=959434
+> 
+> "Fixing it would not change anything. Xlet (that requests the mount, or is
+> being executed from the mount) could as well uncompress the files by self
+> where it wants, even download other files from internet."
+> 
+> So, maybe you want to have a full Xlet sandboxing? Or is it something
+> else?
 
-Affected software: Apache Traffic Server
-Description: Receiving a HTTP TRACE request containing a
-"Max-Forwards" header with a value of "0" will cause the
-traffic_server process to crash with an assertion failure, even in
-release builds.
+Yes, I do think full sandboxing is required because content publishers
+have attacked end user system integrity in the past, so I don't think
+they can be trusted.
 
-The parent process, traffic_manager, will restart the traffic_server
-process when it sees that it has crashed. However, it takes several
-seconds before the new process is ready to handle requests, during
-which the server appears unresponsive to the outside world. Also,
-traffic_manager will queue incoming requests until the new process is
-ready to handle them. These queued requests might consist of more of
-the same request that caused the traffic_server process to crash in
-the first place. This allows a remote attacker to perform an effective
-DoS of the server with very little resources by simply sending the
-crashing request repeatedly.
-
-Affected versions: 5.0.0 - 5.1.1 (5.x.x series before 5.1.2)
-Fixed version: 5.1.2
-Bug entry: https://issues.apache.org/jira/browse/TS-3223
-Fix: https://git-wip-us.apache.org/repos/asf?p=trafficserver.git;a=commit;h=8b5f0345dade6b2822d9b52c8ad12e63011a5c12
-Release notes: https://issues.apache.org/jira/secure/ReleaseNote.jspa?version=12327089&styleName=Html&projectId=12310963
-Reported by: Matthew Daley
-
-Please let me know if you need any further information.
-
-Thanks,
-
-- Matthew Daley
+-- 
+Florian Weimer / Red Hat Product Security
