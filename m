@@ -1,27 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/09/1
-Message-ID: <CAO33bZX7RP0fZOns1Rn-AE7Da8Hxmo3YP5MAa1TMmO2AUM1Vrg@mail.gmail.com>
-Date: Thu, 8 Jan 2015 20:10:18 -0800
-From: David Jorm <david.jorm@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/24/4
+Message-ID: <CAJ_zFk+sKW657jJcs0ObL3SMz3g=zdv_NgOcf5eQPQXnY+82EA@mail.gmail.com>
+Date: Tue, 24 Feb 2015 12:35:07 -0800
+From: Tavis Ormandy <taviso@...gle.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: local privilege escalation flaw in Red Star OS 3.0
+Cc: Kurt Seifried <kseifried@...hat.com>, Assign a CVE Identifier <cve-assign@...re.org>, jb@...eolan.org
+Subject: Re: Re: [videolan] older issues in libbluray
 Content-Type: text/plain; charset=utf-8
 
-Hi All
+On Mon, Feb 23, 2015 at 7:47 AM, Jean-Baptiste Kempf <jb@...eolan.org> wrote:
+>
+> On 23 Feb, Kurt Seifried wrote :
+> > Again my apologies for this mess. The good news is that all our current
+> > embargoed flaws (none against VLC currently =) are being actively
+> > handled (e.g. worked on in a current time frame) and moving forwards we
+> > should hopefully be able to avoid issues like this.
+>
+> One libbluray issue was already fixed.
+> The second one is not really fixable, since BD-J is actually executing
+> java code from the outside.
 
-Red Star OS 3.0 (붉은별) ships with the root account disabled. A flaw has been
-identified that allows a local user to jailbreak the environment and gain
-root access. As noted here:
-http://richardg867.wordpress.com/2015/01/01/notes-on-red-star-os-3-0/
+Forgive my unfamiliarity with BluRay, but based on what you just said,
+it seems like the solution is what was described in the report: just
+use a JSM?
 
-"The root user is disabled on Red Star, and it doesn’t look like there is a
-way to enable it. Fortunately, they left a big security hole: the Software
-Manager (swmng.app), which runs as root through sudo and will install any
-RPM package, even if unsigned."
-
-Please assign a CVE ID to this issue.
-
-Thanks
-
-David
-
+> > Also one request (not just specific to VLC, but everyone with a
+> > project): please have a security@ email address for your project or a
+> > security web page that makes it obvious how to contact and report things
+>
+> We have a security email.
+>
+> With my kindest regards,
+>
+> --
+> Jean-Baptiste Kempf
+> http://www.jbkempf.com/ - +33 672 704 734
+> Sent from my Electronic Device
