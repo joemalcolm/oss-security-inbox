@@ -1,44 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/05/9
-Message-ID: <Pine.LNX.4.64.1501051203540.8826@beijing.mitre.org>
-Date: Mon, 5 Jan 2015 12:08:39 -0500 (EST)
-From: "Steven M. Christey" <coley@...re.org>
-To: Salvatore Bonaccorso <carnil@...ian.org>
-cc: OSS Security Mailinglist <oss-security@...ts.openwall.com>, CVE Assignments MITRE <cve-assign@...re.org>, Jakub Wilk <jwilk@...ian.org>
-Subject: Re: CVE Request: arj: symlink directory traversal and directory traversal via //multiple/leading/slash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/24/1
+Message-Id: <20150224033017.5F30672E002@smtpvbsrv1.mitre.org>
+Date: Mon, 23 Feb 2015 22:30:17 -0500 (EST)
+From: cve-assign@...re.org
+To: jmm@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: unace
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On Sat, 3 Jan 2015, Salvatore Bonaccorso wrote:
+> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=775003
+> 
+> unace crashes when trying to test integrity of the attached file:
+> 
+> gdb says it's an integer overflow, followed by buffer overflow:
+> 
+> #1  0x0000000000401558 in read_header (print_err=0) at unace.c:171
+> 171              memcpy(mhead.AV, tp, rd-(USHORT)(tp-readbuf));
+> (gdb) print rd-(USHORT)(tp-readbuf)
+> $1 = -27
+> 
+> This bug was found using American fuzzy lop:
+> https://packages.debian.org/experimental/afl
 
-> arj: symlink directory traversal:
-> - https://bugs.debian.org/774434
+Use CVE-2015-2063.
 
-Use CVE-2015-0556.
-
-> arj: directory traversal via //multiple/leading/slash:
-> - https://bugs.debian.org/774435
-
-Use CVE-2015-0557.
-
-> Reproducers for both issues are also attached bot the corresponding
-> bugs.
->
-> Could you assign CVE(s) for these isues? (Are two ore one appropriate?
-> It is the same reporter and similar kind of issue).
-
-Two CVEs are used here.
-
-While the bugs have the same technical impact - accessing files outside of 
-an intended directory - the root causes and vulnerability types are 
-different.  774434 does not handle when symlink destinations point outside 
-the directory.  774435 is a protection mechanism failure in which an 
-attempt is made to protect against directory traversal by removing a 
-leading slash, but not considering that there can be multiple leading 
-slashes.
-
----
-
-CVE assignment team, MITRE CVE Numbering Authority M/S M300
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
 202 Burlington Road, Bedford, MA 01730 USA
 [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJU6++4AAoJEKllVAevmvmsgwAIAIstNrDKMbTvgu6KWL4u+frE
+/glmgt4yTfcPiKbz9i54lmPTNva6xetiVxLT5A3s//u/AuWZEgMUArvEyK/sRTEf
+or9fwx8hW45j+z05ShzxXxNO92iXLZ9rCHV7ztlijapbiIQvyDW0TgRJ7m8VaEMq
+ak7zvfZCzDWdC/jhb2oLl2dfSDNlqRSJtq8YFNaz0pmBBsC77hwM/vqxbdVk4ite
+tu7QQ7nPPYHaVywOUXobZIhNRp+QogXAyQMGar/n5lgGFZPMDn/ItC4m4lBqFEA7
+jcosECnjPuj7JS7kizBUBz0K3Kc8DegyJjtLwOU2HQtnUbHHGsGbWoOw2L+IXn4=
+=lNTs
+-----END PGP SIGNATURE-----
