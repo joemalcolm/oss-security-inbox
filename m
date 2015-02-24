@@ -1,21 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/22/15
-Message-ID: <CALoOobMqEaniZtCMiuqOPWLVp9+evdTWa2kf2Lu+qo=U2PP7ng@mail.gmail.com>
-Date: Sun, 22 Feb 2015 12:10:03 -0800
-From: Paul Pluzhnikov <ppluzhnikov@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/24/7
+Message-ID: <20150224221147.GA20304@pisco.westfalen.local>
+Date: Tue, 24 Feb 2015 23:11:47 +0100
+From: Moritz Muehlenhoff <jmm@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: Florian Weimer <fweimer@...hat.com>
-Subject: CVE request: glibc PR 17269 _IO_wstr_overflow integer overflow
+Cc: cve-assign@...re.org
+Subject: Re: CVE Request: Linux kernel information leak in event device handling
 Content-Type: text/plain; charset=utf-8
 
-Greetings,
+On Tue, Jan 20, 2015 at 03:43:00PM +0100, Marcus Meissner wrote:
+> Hi,
+> 
+> This needs a CVE, information leak out of the kernel.
+> 
+> This probably was introduced by commit 483180281f0ac60d1138710eb21f4b9961901294
+> in Linux 3.9.
+> 
+> Ciao, Marcus
+> 
+> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=7c4f56070fde2367766fa1fb04852599b5e1ad35
+> https://bugzilla.suse.com/show_bug.cgi?id=904899
+> 
+> Input: evdev - fix EVIOCG{type} ioctl
+> 
+> The 'max' size passed into the function is measured in number of bits
+> (KEY_MAX, LED_MAX, etc) so we need to convert it accordingly before
+> trying to copy the data out, otherwise we will try copying too much
+> and end up with up with a page fault.
+> 
+> Reported-by: Pavel Machek <pavel@....cz>
+> Reviewed-by: Pavel Machek <pavel@....cz>
+> Reviewed-by: David Herrmann <dh.herrmann@...il.com>
+> Signed-off-by: Dmitry Torokhov <dmitry.torokhov@...il.com>
 
-Not sure if this is exploitable:
-https://sourceware.org/bugzilla/show_bug.cgi?id=17269
+This seems to have fallen through the cracks, explicitly adding
+cve-assign to CC.
 
-Fixed by:
-https://sourceware.org/git/gitweb.cgi?p=glibc.git;h=bdf1ff052a8e23d637f2c838fa5642d78fcedc33
-
-Thanks,
--- 
-Paul Pluzhnikov
+Cheers,
+        Moritz
