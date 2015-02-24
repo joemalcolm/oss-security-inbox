@@ -1,35 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/28/12
-Message-ID: <20150128111948.2eb63550@redhat.com>
-Date: Wed, 28 Jan 2015 11:19:48 +0100
-From: Tomas Hoger <thoger@...hat.com>
-To: OSS Security <oss-security@...ts.openwall.com>
-Subject: CVE request - ICU
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/24/6
+Message-ID: <CAJ_zFk+hy4ns=VZQPeBibnP_BieFXvaoj7wgr2sWEZWmh6jpEg@mail.gmail.com>
+Date: Tue, 24 Feb 2015 13:09:17 -0800
+From: Tavis Ormandy <taviso@...gle.com>
+To: Jean-Baptiste Kempf <jb@...eolan.org>
+Cc: oss-security@...ts.openwall.com, Kurt Seifried <kseifried@...hat.com>,  Assign a CVE Identifier <cve-assign@...re.org>
+Subject: Re: Re: [videolan] older issues in libbluray
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+On Tue, Feb 24, 2015 at 1:03 PM, Jean-Baptiste Kempf <jb@...eolan.org> wrote:
+> On 24 Feb, Tavis Ormandy wrote :
+>> On Mon, Feb 23, 2015 at 7:47 AM, Jean-Baptiste Kempf <jb@...eolan.org> wrote:
+>> >
+>> > On 23 Feb, Kurt Seifried wrote :
+>> > > Again my apologies for this mess. The good news is that all our current
+>> > > embargoed flaws (none against VLC currently =) are being actively
+>> > > handled (e.g. worked on in a current time frame) and moving forwards we
+>> > > should hopefully be able to avoid issues like this.
+>> >
+>> > One libbluray issue was already fixed.
+>> > The second one is not really fixable, since BD-J is actually executing
+>> > java code from the outside.
+>>
+>> Forgive my unfamiliarity with BluRay, but based on what you just said,
+>> it seems like the solution is what was described in the report: just
+>> use a JSM?
+>
+> I don't see the JSM mentioned in the bugreport.
+>
 
-Chrome 40.0.2214.91 fixes multiple issues in bundled ICU:
+I didn't get the bug report, I was referring to the subject Florian
+pasted, "missing Java Security Manager sandbox in the BD-J
+implementation". If you run untrusted java, you would normally use a
+JSM, if you don't use one that does sound like a bug to me.
 
-http://googlechromereleases.blogspot.com/2015/01/stable-update.html
+Sigh, embargoes.
 
-Besides tracking externally reported issues under separate CVEs, Chrome
-team also hid one ICU fix under the internal findings CVE-2015-1205.
-
-https://code.google.com/p/chromium/issues/detail?id=432209 (non public)
-
-is listed among High issues in:
-
-https://code.google.com/p/chromium/issues/detail?id=449894
-
-and can be tracked down to:
-
-https://chromium.googlesource.com/chromium/deps/icu/+/dd727641e190d60e4593bcb3a35c7f51eb4925c5
-
-and ICU upstream:
-
-http://bugs.icu-project.org/trac/ticket/11371 (also non public)
-http://bugs.icu-project.org/trac/changeset/36801
-
--- 
-Tomas Hoger / Red Hat Product Security
+Tavis.
