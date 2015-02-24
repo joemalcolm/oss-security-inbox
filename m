@@ -1,86 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/29/9
-Message-Id: <E1YGn47-0001DT-OP@xenbits.xen.org>
-Date: Thu, 29 Jan 2015 11:15:15 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 118 - arm: vgic: incorrect rate limiting of guest triggered logging
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/24/5
+Message-ID: <20150224210337.GA25373@videolan.org>
+Date: Tue, 24 Feb 2015 22:03:37 +0100
+From: Jean-Baptiste Kempf <jb@...eolan.org>
+To: Tavis Ormandy <taviso@...gle.com>
+Cc: oss-security@...ts.openwall.com, Kurt Seifried <kseifried@...hat.com>, Assign a CVE Identifier <cve-assign@...re.org>
+Subject: Re: Re: [videolan] older issues in libbluray
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 24 Feb, Tavis Ormandy wrote :
+> On Mon, Feb 23, 2015 at 7:47 AM, Jean-Baptiste Kempf <jb@...eolan.org> wrote:
+> >
+> > On 23 Feb, Kurt Seifried wrote :
+> > > Again my apologies for this mess. The good news is that all our current
+> > > embargoed flaws (none against VLC currently =) are being actively
+> > > handled (e.g. worked on in a current time frame) and moving forwards we
+> > > should hopefully be able to avoid issues like this.
+> >
+> > One libbluray issue was already fixed.
+> > The second one is not really fixable, since BD-J is actually executing
+> > java code from the outside.
+> 
+> Forgive my unfamiliarity with BluRay, but based on what you just said,
+> it seems like the solution is what was described in the report: just
+> use a JSM?
 
-                    Xen Security Advisory XSA-118
+I don't see the JSM mentioned in the bugreport.
 
-    arm: vgic: incorrect rate limiting of guest triggered logging
 
-ISSUE DESCRIPTION
-=================
-
-On ARM systems the code which deals with virtualising the GIC
-distributor would, under various circumstances, log messages on a
-guest accessible code path without appropriate rate limiting.
-
-IMPACT
-======
-
-A malicious guest could cause repeated logging to the hypervisor
-console, leading to a Denial of Service attack.
-
-VULNERABLE SYSTEMS
-==================
-
-Xen 4.4 and later systems running on ARM hardware are vulnerable.
-
-x86 systems are not affected.
-
-MITIGATION
-==========
-
-The problematic log messages are issued with priority Warning.
-
-Therefore they can be rate limited by adding "loglvl=error/warning" to the
-hypervisor command line or suppressed entirely by adding "loglvl=error".
-
-NOTE REGARDING LACK OF EMBARGO
-==============================
-
-This bug was publicly reported on xen-devel, before it was appreciated
-that there was a security problem.
-
-CREDITS
-=======
-
-This issue was discovered by Julien Grall.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch(es) resolves this issue.
-
-xsa118-unstable-4.5-{1,2}.patch       xen-unstable, Xen 4.5.x
-xsa118-4.4.patch                      Xen 4.4.x
-
-$ sha256sum xsa118*.patch
-5741cfe408273bd80e1a03c21a5650f963d7103fd022c688730f55dcf5373433  xsa118-4.4.patch
-ee24a4c5e12b67d7539f08b644080c87797f31b4402215cd4efbbc6114bffc25  xsa118-4.5-unstable-1.patch
-bd532e3cd535fcdea51f43631a519012baff068cb62d2205fc25f2c823f031eb  xsa118-4.5-unstable-2.patch
-$
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQEcBAEBAgAGBQJUyhXoAAoJEIP+FMlX6CvZIWsH/2cK4jijgzepEboZAyIl2E8f
-wWMaF6Jr28YfQz8Zcpwi4GY9BecBjm2ZUuvuHS/yPGBIvriOiZXjMtlchd3FBhjw
-CTvCasqFX6DYizduAPBcph/vY2LoiYn/i74+M55I6u5g8WL/o7p3Ea3UXKg8ZdgB
-PdQnLJSi4iqbO6mfdgw3lb5gfVk/DUh0rW87CoOhdPNJrQWlw9zTpfjIvrGzIDXJ
-jV5eW8mBhfTE8TfuJ2cFgMZgoob709EduJ8wgLqOPMAmn1HCC/MNNtEiZhliw2yD
-WQePLlXXvwXxNhHP6Ge/698unV4zPDvlCxTYjBOsZWPC1ITVhMHZ1+j3z0mXO0U=
-=2kMW
------END PGP SIGNATURE-----
-
-Download attachment "xsa118-4.4.patch" of type "application/octet-stream" (4777 bytes)
-
-Download attachment "xsa118-4.5-unstable-1.patch" of type "application/octet-stream" (10235 bytes)
-
-Download attachment "xsa118-4.5-unstable-2.patch" of type "application/octet-stream" (4902 bytes)
+-- 
+Jean-Baptiste Kempf
+http://www.jbkempf.com/ - +33 672 704 734
+Sent from my Electronic Device
