@@ -1,22 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/17/8
-Message-ID: <87oaosqkgt.fsf@mid.deneb.enyo.de>
-Date: Tue, 17 Feb 2015 22:47:14 +0100
-From: Florian Weimer <fw@...eb.enyo.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-Request - bitbake
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/24/3
+Message-ID: <54EC643F.4080901@redhat.com>
+Date: Tue, 24 Feb 2015 12:45:03 +0100
+From: Florian Weimer <fweimer@...hat.com>
+To: oss-security@...ts.openwall.com, Mitre CVE assign department <cve-assign@...re.org>
+CC: Kurt Seifried <kseifried@...hat.com>
+Subject: Please REJECT CVE-2012-6686
 Content-Type: text/plain; charset=utf-8
 
-* Maxin John:
+On 01/29/2015 05:52 PM, cve-assign@...re.org wrote:
 
-> Executing "bitbake -g -u depexp <package>" when DISPLAY is not
-> properly set causes segfault and a denial of service (through OOM) via
-> a crafted script.
->
-> Bug Report URL:
-> https://bugzilla.yoctoproject.org/show_bug.cgi?id=7299
+> The scope of CVE-2012-6686 has already been explicitly identified, i.e.
+> it is 797096.  If 797096 does not cover a security issue, or is a
+> duplicate, then we would need to REJECT the CVE.
 
-I'm not sure if this is a security vulnerability in Bitbake.  It's a
-build tool, right?  If the build jobs are not constraint externally,
-the build commands could cause resource exhaustion in their own right,
-I think.
+It is a duplicate of CVE-2013-4357, assigned here:
+
+http://www.openwall.com/lists/oss-security/2013/09/17/4
+
+-- 
+Florian Weimer / Red Hat Product Security
