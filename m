@@ -1,36 +1,92 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/23/9
-Message-ID: <54C2BF6B.4080508@redhat.com>
-Date: Fri, 23 Jan 2015 14:38:51 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>
-Subject: [perl #119505] Segfault from bad backreference
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/25/3
+Message-Id: <E1YQZwX-0001DY-PV@xenbits.xen.org>
+Date: Wed, 25 Feb 2015 11:15:53 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 118 (CVE-2015-1563) - arm: vgic: incorrect rate limiting of guest triggered logging
 Content-Type: text/plain; charset=utf-8
 
-http://perl5.git.perl.org/perl.git/commitdiff/0c2990d652e985784f095bba4bc356481a66aa06
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-The code that parses regex backrefs (or ambiguous backref/octal) such as
-\123, did a simple atoi(), which could wrap round to negative values on
-long digit strings and cause seg faults.
+            Xen Security Advisory CVE-2015-1563 / XSA-118
+                              version 2
 
-Include a check on the length of the digit string, and if greater than 9
-digits, assume it can never be a valid backref (obviating the need for
-the atoi() call).
+    arm: vgic: incorrect rate limiting of guest triggered logging
 
-I've also simplified the code a bit, putting most of the \g handling
-code into a single block, rather than doing multiple "if (isg) {...}".
+UPDATES IN VERSION 2
+====================
 
-PoC:
+CVE assigned.
 
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=776046
-perl -e '/\7777777777/'
+ISSUE DESCRIPTION
+=================
 
-not sure if this can be exploited at all, but someone creative maybe has
-ideas, if so this may need a CVE.
+On ARM systems the code which deals with virtualising the GIC
+distributor would, under various circumstances, log messages on a
+guest accessible code path without appropriate rate limiting.
 
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+IMPACT
+======
 
+A malicious guest could cause repeated logging to the hypervisor
+console, leading to a Denial of Service attack.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+VULNERABLE SYSTEMS
+==================
+
+Xen 4.4 and later systems running on ARM hardware are vulnerable.
+
+x86 systems are not affected.
+
+MITIGATION
+==========
+
+The problematic log messages are issued with priority Warning.
+
+Therefore they can be rate limited by adding "loglvl=error/warning" to the
+hypervisor command line or suppressed entirely by adding "loglvl=error".
+
+NOTE REGARDING LACK OF EMBARGO
+==============================
+
+This bug was publicly reported on xen-devel, before it was appreciated
+that there was a security problem.
+
+CREDITS
+=======
+
+This issue was discovered by Julien Grall.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch(es) resolves this issue.
+
+xsa118-unstable-4.5-{1,2}.patch       xen-unstable, Xen 4.5.x
+xsa118-4.4.patch                      Xen 4.4.x
+
+$ sha256sum xsa118*.patch
+5741cfe408273bd80e1a03c21a5650f963d7103fd022c688730f55dcf5373433  xsa118-4.4.patch
+ee24a4c5e12b67d7539f08b644080c87797f31b4402215cd4efbbc6114bffc25  xsa118-4.5-unstable-1.patch
+bd532e3cd535fcdea51f43631a519012baff068cb62d2205fc25f2c823f031eb  xsa118-4.5-unstable-2.patch
+$
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQEcBAEBAgAGBQJU7a6RAAoJEIP+FMlX6CvZR7UH/3zahTQv65m5AZCtXcihzjjd
+EuTAnc9I1yPcHqyEDgilVsDHCM25R7TA7Fn++sYTkIvzcUAwEfJDhEJxy5SOfWFo
+pAVbuV8p/0iKOjsufJgY40nNGyhLknPH2p+deH6P039th0X2CdnFpxSHkewjSJQH
+OTdeLUt2jfvsBBO/ufOH3z1fc+L/L119PDbcAmhiX9JzS4UeqsE9zKzDa/LfwXCm
+uL5Ggk99zuyNs3xaun6zQfRErFel0qXLIl36MIiyFXtyElD0liO5h15EjityoeXH
+6ZVoAex459R9Xrr3f5snoFVazzBfCwnchmMCFqpRNfH7l8VNkdzav3HoUKAbMU8=
+=8ydP
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa118-4.4.patch" of type "application/octet-stream" (4777 bytes)
+
+Download attachment "xsa118-4.5-unstable-1.patch" of type "application/octet-stream" (10235 bytes)
+
+Download attachment "xsa118-4.5-unstable-2.patch" of type "application/octet-stream" (4902 bytes)
