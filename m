@@ -1,53 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/06/14
-Message-ID: <CALH-=7zPVz0iu117wBJwQuiGdN17hfeAbH-dZWbSkS6Hz2apHQ@mail.gmail.com>
-Date: Tue, 6 Jan 2015 22:48:02 +0100
-From: Steffen Rösemann <steffen.roesemann1986@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/25/4
+Message-ID: <54EDC1B2.9000602@oracle.com>
+Date: Wed, 25 Feb 2015 12:36:02 +0000
+From: John Haxby <john.haxby@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request -- CMS Sefrengo v.1.6.0 -- SQL injection and XSS vulnerabilities
+Subject: Re: Fixing the glibc runtime linker
 Content-Type: text/plain; charset=utf-8
 
-Hello Josh, Steve, vendors, list.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-I found two SQL injection vulnerabilities and a reflecting XSS
-vulnerability in the content management system Sefrengo v. 1.6.0.
+On 19/02/15 22:19, Tim Brown wrote:
+> What's the fix?
+> 
+> More often than not, the underlying issue is an empty element 
+> within the DT_RPATH header or equivalent. Sometimes it's not, but 
+> even in those cases, it is largely that one or more elements isn't 
+> qualifed (i.e. it doesn't start with /). The attached patch fixes 
+> this, by ignoring any elements of DT_RPATH, LD_LIBRARY_PATH that
+> do not start with a /, and/or junking any use of dlopen where the 
+> filename is likewise unqualified.
 
-They all reside in the administrative backend of the CMS in the following
-paths of a common installation:
+What about things like -Wl,-rpath=/tmp ?
 
-SQL injection vulnerabilities:
+That one is particularly egregious and, as Casper mentioned, there are
+other ways of getting stupid RPATHs.  I've seen a fair number of them :)
 
-http://{TARGET}/backend/main.php?area=con_configcat&idcat=1&idtplconf=0
-http://{TARGET}/backend/main.php?area=plug&idclient=1
+Would it be useful to check to see if and rpath directory is not
+writable by the someone other than the uid/euid?  Of course, it does
+nothing for an RPATH that goes over NFS.
 
-XSS vulnerability:
+The Fedora packaging guidelines forbid the use of rpath completely
+which is beginning to look more and more attractive.
 
-http://
-{TARGET}/backend/main.php?area=user&idgroup=0&order=&ascdesc=ASC&searchterm=&page=1
+jch
 
-The SQL injection vulnerabilities can be exploited via the parameters
-"idcat" and "idclient". The XSS vulnerability can be exploited via the
-parameter "searchterm".
 
-Could you please assign a CVE-ID / CVE-IDs for it?
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Thank you!
-
-Greetings
-
-Steffen Rösemann
-
-References:
-
-[1] http://sroesemann.blogspot.de/2014/12/sroeadv-2014-06.html
-[2]
-http://sroesemann.blogspot.de/2015/01/report-for-advisory-sroeadv-2014-06.html
-[3] http://sroesemann.blogspot.de/2015/01/sroeadv-2015-04.html
-[4]
-http://sroesemann.blogspot.de/2015/01/report-for-advisory-sroeadv-2015-04.html
-[5] http://forum.sefrengo.org/index.php?showtopic=3360
-[6]
-https://github.com/sefrengo-cms/sefrengo-1.x/commit/ed3ad864b8d36499402e981301d95074e583ac04
-[7] http://seclists.org/fulldisclosure/2015/Jan/9
-[8] http://seclists.org/fulldisclosure/2015/Jan/10
-
+iF4EAREIAAYFAlTtwaYACgkQRQu7fpQvo8ihGAD/fppL/PSXpLep2TVz4Eh5G/ch
+NxyTZXDIpXs0DAZTNuAA/RDQ7KBXT/43McHtHMHKFPlMWGnjEEkaAZ8MNQcle0Cs
+=mnPH
+-----END PGP SIGNATURE-----
