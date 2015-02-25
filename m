@@ -1,57 +1,169 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/06/6
-Message-ID: <20150106093932.GB9193@mail.corp.redhat.com>
-Date: Tue, 6 Jan 2015 10:39:33 +0100
-From: Vasyl Kaigorodov <vkaigoro@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/25/5
+Message-ID: <CAELuwWRm7Y8FwE9PUynTO_YDgS21janCX4z-nhUoFC+zten3hA@mail.gmail.com>
+Date: Wed, 25 Feb 2015 20:39:42 +0800
+From: Zhenghao Hu <zhenghaohuu@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: dir traversal in elfutils
+Subject: Re: CVE Request : Several Bugs Found on Libflac 1.3.1 and Libtta++-2.2
 Content-Type: text/plain; charset=utf-8
 
-Hello everyone,
+Now all fixed! So... can i get a CVE please?
 
-> >Initial (terse) report:
-> >https://lists.fedorahosted.org/pipermail/elfutils-devel/2014-December/004499.html
-> >
-> >Fix (with analysis in commit message):
-> >https://git.fedorahosted.org/cgit/elfutils.git/commit/?id=147018e729e7c22eeabf15b82d26e4bf68a0d18e
+http://sourceforge.net/p/flac/bugs/425/#3fd8
+http://sourceforge.net/p/tta/bugs/9/#10f7
+
+On Tue, Feb 17, 2015 at 12:57 AM, Zhenghao Hu <zhenghaohuu@...il.com> wrote:
+
+> Almost Forgot.. Thanks for reminding.
 >
-> Use CVE-2014-9486.
+> https://sourceforge.net/p/flac/bugs/425/
+> https://sourceforge.net/p/tta/bugs/9/
+>
+>
+> On Mon, Feb 16, 2015 at 6:48 PM, Vasyl Kaigorodov <vkaigoro@...hat.com>
+> wrote:
+>
+>> Hello Zhenghao,
+>>
+>> Were these issues reported upstream already?
+>> If so - could you please post the corresponding bug tracker urls here
+>> as well?
+>>
+>> Thanks.
+>> --
+>> Vasyl Kaigorodov | Red Hat Product Security
+>> PGP:  0xABB6E828 A7E0 87FF 5AB5 48EB 47D0 2868 217B F9FC ABB6 E828
+>> On Fri, 13 Feb 2015, Zhenghao Hu wrote:
+>>
+>> > Several bugs found in the latest libflac and libtta codec fuzzing with
+>> AFL (
+>> > http://lcamtuf.coredump.cx/afl/), working together with Nie Sen, from
+>> > K33nTeam.
+>> > The input POC files can be found on
+>> > https://sourceforge.net/projects/pocfiles/files/
+>> >
+>> >
+>> ---------------------------------------------------------------------------------------------------------------------------------------
+>> >
+>> > Libflac 1.3.1 SEGV in libFLAC.so
+>> >
+>> >   Run :
+>> >     ./flac -e -f -o ~/out.ogg t1.flac
+>> >
+>> >   Codes related :
+>> >     src/libFLAC/stream_encoder.c    line:2143
+>> >     Function FLAC__stream_encoder_process()
+>> >
+>> >       for(channel = 0; channel < channels; channel++)
+>> >
+>> >
+>> memcpy(&encoder->private_->integer_signal[channel][encoder->private_->current_sample_number],
+>> > &buffer[channel][j], sizeof(buffer[channel][0]) * n);
+>> >
+>> >     Reference:
+>> >         http://xiph.org/flac/
+>> >
+>> >
+>> ---------------------------------------------------------------------------------------------------------------------------------------
+>> >
+>> > Libflac 1.3.1 Codec Frontend Bug
+>> >
+>> >   Run :
+>> >     ./flac -e -f -o ~/out.ogg t2.flac
+>> >
+>> >   Code Related :
+>> >     src/flac/encoder.c        line:1878
+>> >     Function EncoderSession_init_encoder()
+>> >
+>> >         else if(e->total_samples_to_encode !=
+>> > cs->tracks[cs->num_tracks-1].offset) {
+>> >
+>> >   Reference:
+>> >         http://xiph.org/flac/
+>> >
+>> >
+>> ---------------------------------------------------------------------------------------------------------------------------------------
+>> > Libflac 1.3.1 Stack overflow
+>> >
+>> >     In Command-line flac encoder/decoder tool, bytes_to_read is not
+>> > properly checked against the size of ucbuffer, which causes a stack
+>> > overflow when performing fread in encoding.
+>> >
+>> >     Codes related to the crash are in src/flac/encode.c function
+>> > flac__encode_file()
+>> >
+>> >     const size_t bytes_to_read = (size_t)min(
+>> >
+>> >                   encoder_session.fmt.iff.data_bytes,
+>> >
+>> > (FLAC__uint64)CHUNK_OF_SAMPLES *
+>> > (FLAC__uint64)encoder_session.info.bytes_per_wide_sample
+>> >                                             );
+>> >     bytes_read = fread(ucbuffer.u8, sizeof(unsigned char),
+>> bytes_to_read,
+>> > infile);
+>> >
+>> >     POC:
+>> >         ./flac -e -f -o ~/test.flac ~/libflac_stack.wav
+>> >
+>> >     Reference:
+>> >         http://xiph.org/flac/
+>> >
+>> >
+>> ---------------------------------------------------------------------------------------------------------------------------------------
+>> >
+>> > Libtta++ 2.2 divide-by-0 error
+>> >
+>> >     In TTA consoole frontend tool, speciafically crafted wave_hdr would
+>> > result in a divide-by-zero error.
+>> >
+>> >     Problematic codes are as follows. In console/tta.cpp, function
+>> > compress()
+>> >
+>> >         smp_size = (wave_hdr.num_channels * ((wave_hdr.bits_per_sample
+>> + 7)
+>> > / 8));
+>> >         ...
+>> >         ...
+>> >         info.samples = data_size / smp_size;
+>> >
+>> >     POC:
+>> >         ./tta -e ~/libtta_float.wav ~/test.tta
+>> >
+>> >     Reference:
+>> >         http://sourceforge.net/projects/tta/
+>> >
+>> >
+>> ---------------------------------------------------------------------------------------------------------------------------------------
+>> >
+>> > Libtta++ 2.2 tta_encoder class heap overflow
+>> >
+>> >     tta_encoder.fnum is not checked in tta_encoder::process_stream,
+>> which
+>> > causes a heap overflow when trying to write the seek_table indexed by
+>> fnum.
+>> >
+>> >     Codes related to the crash are in libtta.cpp ,
+>> encoder::process_stream()
+>> >
+>> >         seek_table = (TTAuint64 *) tta_malloc(frames *
+>> sizeof(TTAuint64));
+>> >
+>> >         seek_table[fnum++] = fifo.count;
+>> >
+>> >     POC:
+>> >         ./tta -e ~/heap.wav ~/test.tta
+>> >
+>> >     Reference:
+>> >         http://sourceforge.net/projects/tta/
+>> >
+>> >
+>> ---------------------------------------------------------------------------------------------------------------------------------------
+>> >
+>> > Thanks!
+>> > --
+>> > Zhenghao Hu / K33nTeam
+>>
+>
+>
 
-Something is not quite correct here, wasn't CVE-2014-9447 assigned to
-this already?
-
-http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2014-9447
-
-Thanks.
--- 
-Vasyl Kaigorodov | Red Hat Product Security
-PGP:  0xABB6E828 A7E0 87FF 5AB5 48EB 47D0 2868 217B F9FC ABB6 E828
-On Sat, 03 Jan 2015, cve-assign@...re.org wrote:
-
-> 
-> On Mon, 29 Dec 2014, Alexander Cherepanov wrote:
-> 
-> >Hi!
-> >
-> >A dir traversal vuln is fixed in elfutils:
-> >
-> >Initial (terse) report:
-> >https://lists.fedorahosted.org/pipermail/elfutils-devel/2014-December/004499.html
-> >
-> >Fix (with analysis in commit message):
-> >https://git.fedorahosted.org/cgit/elfutils.git/commit/?id=147018e729e7c22eeabf15b82d26e4bf68a0d18e
-> >
-> >At least versions 0.152 and 0.161 are affected.
-> >
-> >Could CVE please be assigned?
-> >
-> 
-> Use CVE-2014-9486.
-> 
-> ---
-> 
-> CVE assignment team, MITRE CVE Numbering Authority M/S M300
-> 202 Burlington Road, Bedford, MA 01730 USA
-> [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
-
-Content of type "application/pgp-signature" skipped
