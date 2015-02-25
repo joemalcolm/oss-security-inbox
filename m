@@ -1,41 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/28/3
-Message-Id: <20150228041146.904966C0016@smtpvmsrv1.mitre.org>
-Date: Fri, 27 Feb 2015 23:11:46 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/25/2
+Message-Id: <20150225105941.5B38A1BE11E@smtpvbsrv1.mitre.org>
+Date: Wed, 25 Feb 2015 05:59:41 -0500 (EST)
 From: cve-assign@...re.org
-To: tyhicks@...onical.com, sylvain.pelissier@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: eCryptfs key wrapping help to crack user password
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: CVE-2015-2080 - Jetty remote unauthenticated credential exposure
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> In this case, a wrapping key is generated from the user password
-> using the hash function SHA-512 applied 65536 times. By default, the
-> wrapping key is hashed with the default fixed salt
-> (0x0011223344556677) and stored in the a file.
-> This was already noticed in bug :
-> https://bugs.launchpad.net/ecryptfs/+bug/906550
+CVE-2015-2080 has been assigned to this issue in which Jetty sends an
+HTTP response to one client containing HTTP request data from a
+different client:
 
-
-> https://bugs.launchpad.net/ecryptfs/+bug/906550/comments/5
-
-> all installations end up wrapping (encrypting) the mount passphrase
-> with the user login password and the DEFAULT SALT VALUE. A unique salt
-> value among almost all installations makes them a convenient target
-> for a rainbow table attack on the wrapped-passphrase file.
-
-> I got here because I am dabbling with a config package to implement
-> mandatory eCryptfs encrypted home for all users of a system
-
-Use CVE-2014-9687. Our interpretation is that this is a vendor CVE
-request based on a vendor's perspective that ecryptfs-setup-private's
-use of the default salt was never the intended behavior. (For example,
-http://bazaar.launchpad.net/~ecryptfs/ecryptfs/trunk/view/head:/doc/beginners_guide/ecryptfs_beginners_guide.tex
-says "It is highly advised that you also provide a salt along with the
-password, which will help make an attack against your files harder
-than if you use the default salt.")
+  http://dev.eclipse.org/mhonarc/lists/jetty-announce/msg00074.html
+  https://github.com/eclipse/jetty.project/blob/master/advisories/2015-02-24-httpparser-error-buffer-bleed.md
+  http://blog.gdssecurity.com/labs/2015/2/25/jetleak-vulnerability-remote-leakage-of-shared-buffers-in-je.html
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -45,11 +27,11 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJU8T+GAAoJEKllVAevmvmsK88H/RM59bZPtTnS7oPAsXrAmYeY
-7zx+ZkmYxwOpTr5HQg/IZw16MnSb83GG7YtRa6XjTadf8jBYuzZpHxAnWncjo+em
-6Q3fmTG9yayBcZVV/7/99+mvOcbHE+sF20qg/imRawHUEWQx8wVxk2Z/G6Ef4Eff
-kM2fhxKJRfRo1Xb7r3ZPsnQzA2xz3aO9EZaqbsGsQCSoFp9yEmIqiCHL7f8datOw
-lOfLJX4U+au/IMMxGkGr+gZZYMCVZb7TUnQDIQXDB1oC4W6Lk5yWfKOqI/3pmaie
-muK0BpzE5P4RMLgnP2voHuvOXM9WnjlTeV1wC80qYMVP9UJsjWiaMIV5d1shxYw=
-=RVyA
+iQEcBAEBAgAGBQJU7ap3AAoJEKllVAevmvmsDnEH/ikj6IU/6p1JtEu4Z7gQfsyq
+0ZVsgz1qLbskRENzifL8XVemf+yjKryUJXGfFDFGPFc/2WsaqeaBoedsoAsfvDfg
+ZjfueEQJU6ZHkXaLGodZrp7s/GAZOEbHxQ6Tw+dsdO8pVS8j83xQXGTrBlKOBs+x
+nw8CwPS2dOwFkU58G4ja5O9xzpM2/Ry0l+/z6W72JywK9FAZQzR3OpUdx3LhJRRz
+KtqDu6pDNUAetjyM0uVhKWjdBqzMbR+ZWDs20oeXrs4KTwHvItWcxz5frFErJeCw
+MgAKS1j0lujlSbGyQiC+lnrze5QbVY2zWusV78XjJKgreUHxLlqv5QVQ4A+GylI=
+=2yu/
 -----END PGP SIGNATURE-----
