@@ -1,26 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/28/7
-Message-ID: <20150228203814.GU23507@oevtugenva.nrevsny.pk>
-Date: Sat, 28 Feb 2015 15:38:14 -0500
-From: Rich Felker <dalias@...c.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/25/1
+Message-ID: <CAM-f9ENKSW1VACBbsqvMyBOMB37hzbwMAz_-x-jOYdec28wmpA@mail.gmail.com>
+Date: Wed, 25 Feb 2015 10:33:16 +0000
+From: Patrick Coleman <blinken@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: sstewartgallus00@...angara.bc.ca, ryao@...too.org
-Subject: Re: Re: CVE request: Linux kernel silently ignores MS_RDONLY for bind mounts
+Subject: Re: CVE request: vulnerabilities in libcsoap
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Feb 26, 2015 at 02:58:17PM -0500, Daniel Micay wrote:
-> The commit adding this in 2.6.26 did actually document the weird
-> behaviour, so I guess it's just "by design". Users of the API like LXC,
-> Docker and systemd would likely have to iterate over /proc/self/mounts
-> and remount everything due to the way MS_REC works. Anyway, there's
-> clearly something wrong here when containers are claiming to have a
-> read-only mount feature but writes to the directory tree aren't prevented...
+On 17 Feb 2015 10:20, "Patrick Coleman" <blinken@...il.com> wrote:
+>
+> On Tue, Feb 17, 2015 at 10:15 AM, Patrick Coleman <blinken@...il.com>
+wrote:
+> > Hi,
+> >
+> > A number of vulnerabilities exist in nanohttp, a lightweight webserver
+library
+> > included with libcsoap (http://csoap.sourceforge.net). Patches are
+> > provided below against
+> > 1.1.0-17.2.
+>
+> Apologies, hit send a little early. The version number above is the
+> latest Debian package version, from upstream version 1.1.0.
+>
+> I'm posting here following a recommendation on debian-security, and
+> Debian bug #778599 has been raised for this issue. Note upstream
+> appears to be unmaintained.
 
-I'm wondering what the actual impact of this issue is supposed to be.
-Why would any of the uids inside the container have write access to a
-shared filesystem on which their uids are presumably not even
-meaningful? It seems to me like this would only affect world-writable
-files/directories on the shared filesystem, which sound like a bad
-idea to begin with.
+Hi,
 
-Rich
+Just wanted to follow up on this. Can a CVE ID be assigned for this issue?
+
+If there is any further information required please let me know.
+
+-Patrick
+
