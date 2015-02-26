@@ -1,46 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/18/10
-Message-ID: <20150218202206.GB30771@zoho.com>
-Date: Wed, 18 Feb 2015 20:22:06 +0000
-From: mancha <mancha1@...o.com>
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: CVE request: xrdp
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/26/2
+Message-ID: <54EEE796.7010201@redhat.com>
+Date: Thu, 26 Feb 2015 10:29:58 +0100
+From: Florian Weimer <fweimer@...hat.com>
+To: oss-security@...ts.openwall.com, Assign a CVE Identifier <cve-assign@...re.org>
+Subject: CVE request: glibc scanf implementation crashes on certain inputs
 Content-Type: text/plain; charset=utf-8
 
-Starting with glibc 2.17 (eglibc 2.17), crypt() fails with EINVAL (w/
-NULL return) if the salt violates specifications. Additionally, on
-FIPS-140 enabled Linux systems, DES or MD5 encrypted passwords passed to
-crypt() fail with EPERM (w/ NULL return).
+This bug
 
-It was discovered by Ken Milnore that xrdp 0.6.1 and earlier, when
-validating user accounts against plain passwd files or via shadow-utils,
-does not check for NULL returns from crypt(). [1]
+  https://sourceware.org/bugzilla/show_bug.cgi?id=13138
 
---- sesman/verify_user.c ---
-  encr = crypt(pass,salt);
-  if (g_strncmp(encr, hash, 34) != 0)
-  {
-    return 0;
-  }
-  return 1;
-----------------------------
+causes scanf and related functions to crash when processing certain
+inputs.  This happens with the numeric conversions (%d, %f and others),
+and includes valid numbers (ISO C allows crashes or worse on invalid
+inputs, but glibc is buggy even by this standard).
 
-A NULL return crashes the xrdp-sesman daemon resulting in an xrdp server
-denial of service (for all modules that use xrdp's session manager for
-user authentication via old-style passwd files or via shadow passwords).
+The first glibc version which received the fix for this bug is 2.15.
+The bug was reported in 2011, so it should receive a CVE-2011-XXXX name.
 
-This has been fixed by upstream in its development branch. [2]
-
-Please allocate a CVE for this issue.
-
-Thanks.
-
---mancha
-
-======
-[1] http://sourceforge.net/p/xrdp/mailman/message/32985523/
-[2] https://github.com/neutrinolabs/xrdp/commit/851c762ee722
-
-
-Content of type "application/pgp-signature" skipped
+-- 
+Florian Weimer / Red Hat Product Security
