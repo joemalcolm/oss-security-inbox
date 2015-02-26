@@ -1,31 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/05/7
-Message-ID: <CAGeh-pEn-kKXbhfm=oJm2ypm9tbGiz8J3Tn1Nf9fX0W6jRXJFg@mail.gmail.com>
-Date: Thu, 5 Feb 2015 15:32:00 +0100
-From: Dejan Bosanac <dejan@...httale.net>
-To: "dev@...ivemq.apache.org" <dev@...ivemq.apache.org>,  "users@...ivemq.apache.org" <users@...ivemq.apache.org>,  Apache Security Response Team <security@...che.org>, oss-security@...ts.openwall.com,  bugtraq@...urityfocus.com
-Subject: [ANNOUNCE] CVE-2014-3600, CVE-2014-3612 and CVE-2014-8110 - Apache ActiveMQ vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/26/3
+Message-ID: <20150226104159.679@usenet.piggo.com>
+Date: Thu, 26 Feb 2015 10:22:57 +0000 (UTC)
+From: Sébastien Delafond <sdelafond@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: mod-gnutls: GnuTLSClientVerify require is ignored
 Content-Type: text/plain; charset=utf-8
 
-There have been a several security vulnerabilities reported against Apache
-ActiveMQ 5.10.0 and older versions.
+> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=578663#10 is
+> apparently about ignoring GnuTLSClientVerify when this directive is
+> present only in a server config context.
 
-Please check the following documents and see if you’re affected by them
+This is the issue at hand, yes.
 
-http://activemq.apache.org/security-advisories.data/CVE-2014-3600-announcement.txt
-http://activemq.apache.org/security-advisories.data/CVE-2014-3612-announcement.txt
-http://activemq.apache.org/security-advisories.data/CVE-2014-8110-announcement.txt
+> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=578663#10 is
+> apparently discussing the 2009 bug when saying "This bug still
+> exists in current stable and unstable packages" but perhaps is
+> actually referring to a remaining issue that exists because of an
+> incomplete fix for the 2009 bug.
 
-Apache ActiveMQ 5.10.1 and 5.11.0 with appropriate fixes are released and
-available for upgrade
+Correct.
 
-Regards
---
-Dejan Bosanac
-----------------------
-Red Hat, Inc.
-dbosanac@...hat.com
-Twitter: @dejanb
-Blog: http://sensatic.net
-ActiveMQ in Action: http://www.manning.com/snyder/
+> The various discussion of "when I browse site2 in IE, it shows me
+> the certificate of site1" and "it seems curl extension of php also
+> can't correctly connect" in
+> http://issues.outoforder.cc/view.php?id=93#c187 is possibly a user
+> error and not a valid third vulnerability report.
+
+Agreed.
+
+> So, are you looking for:
+>
+>   one CVE-2009-#### ID  -- vulnerability involving the directory context
+>
+>   one CVE-2015-#### ID  -- vulnerability involving the server config context
+
+The latter; this issue is definitely about the server config context
+being ignored.
+
+Cheers,
+
+--Seb
 
