@@ -1,87 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/04/8
-Message-Id: <1423072230.91582.223100497.5688F508@webmail.messagingengine.com>
-Date: Wed, 04 Feb 2015 11:50:30 -0600
-From: Mark Felder <feld@...d.me>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/26/8
+Message-ID: <54EF5E01.1090203@gmail.com>
+Date: Thu, 26 Feb 2015 12:55:13 -0500
+From: Daniel Micay <danielmicay@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Apache 2.4 mod_ssl SSLSessionTickets -- others vulnerable?
+CC: sstewartgallus00@...angara.bc.ca, ryao@...too.org
+Subject: CVE request: Linux kernel silently ignores MS_RDONLY for bind mounts
 Content-Type: text/plain; charset=utf-8
 
+This has been an issue in the kernel for a long time (likely since bind
+mounts were introduced), and a patch does exist to fix it but it hasn't
+been applied.
+
+Here's the bug report:
+
+https://bugzilla.kernel.org/show_bug.cgi?id=24912
+
+Here's the latest iteration of the patch:
+
+https://lkml.org/lkml/2014/11/5/911
+
+This is not only something that software developers will expect to work,
+but AFAIK it has always been intended to work. I don't think there's any
+disagreement that this is a bug. Leaving the directory tree writable
+when it's supposed to be read-only without reporting an error is very
+problematic.
+
+The widely used workaround (among people who realize it doesn't work) is
+to remount the bind mount as read-only. That can open up a race and it
+also doesn't mix well with MS_REC. The remount call will only apply the
+read-only flag to the top-level mount despite MS_REC.
+
+In systemd, there are various features suffering from security flaws due
+to this kernel bug. The ReadOnlyDirectories for units only applies to
+the top-level mount and systemd-nspawn's --bind-ro switch doesn't make
+the submounts read-only. The flaws in systemd are documented so a CVE
+assignment for those issues wouldn't make sense. I think they'd be
+willing to fix these if the underlying kernel bug is dealt with.
 
 
-On Wed, Feb 4, 2015, at 10:55, Florent Daigniere wrote:
-> On Wed, 2015-02-04 at 10:35 -0600, Mark Felder wrote:
-> > From the 2.4.12 changelog:
-> > 
-> > 
-> >   *) mod_ssl: New directive SSLSessionTickets (On|Off).
-> >      The directive controls the use of TLS session tickets (RFC 5077),
-> >      default value is "On" (unchanged behavior).
-> >      Session ticket creation uses a random key created during web
-> >      server startup and recreated during restarts. No other key
-> >      recreation mechanism is available currently. Therefore using
-> >      session
-> >      tickets without restarting the web server with an appropriate
-> >      frequency
-> >      (e.g. daily) compromises perfect forward secrecy. [Rainer Jung]
-> > 
-> > 
-> > So if you use Apache 2.4 and care about PFS protecting your data, you
-> > should turn this feature off. This appears to be an implementation issue
-> > because there is no other way for Apache to recreate keys. I don't know
-> > a lot about the fine details of Session Tickets, but can anyone care to
-> > comment if there are other known bad implementations of session tickets
-> > out there? Does this affect Apache 2.2? Nginx? Lighttpd?
-> > 
-> > 
-> > Thanks
-> > I find this bizarre that a known security weakness like this is left
-> > "on" by default...
-> 
-> You're right, it's "bizarre"
-> 
-> I've tried to make some noise about it two years ago [1] ... 
-> 
-> IMHO it's OpenSSL's default that should be changed. The server
-> implementation shouldn't give a ticket if it's picked a PFS enabled
-> cipher (or a cipher which aims at providing better security than
-> AES128-CBC) unless explicitly told to do so (the case where there is
-> more than one server).
-> 
-> Apache HTTPd's new setting (SSLSessionTicketKeyFile), allowing you to
-> set the ticket key is *DANGEROUS* as documented [1]. It encourages users
-> explicitly to store the key on a forensically carvable medium...
-> "The ticket key file contains sensitive keying material and should be
-> protected with file permissions similar to those used for
-> SSLCertificateKeyFile."
-> Which is exactly what you shouldn't do!
-> 
-
-Thanks for the details, Florent. After reviewing this blog post [1] it's
-much clearer now, but I'm still a bit fuzzy on if "session caching" and
-"session IDs" (RFC 5246, TLS 1.2) -- also as identified by Qualys
-SSLLabs line item "Session resumption (caching)" -- are the same; is the
-Session Cache caching session IDs? I only ask because I know that
-webservers have had SSL Session Cache features for years, but RFC 5246
-is TLS 1.2 in its entirety and I believe I've seen this feature predate
-TLS 1.2. Was session caching / IDs always part of the SSL/TLS spec, now
-superseded by the newer TLS 1.2 RFC?
-
-If I'm understanding that correctly the following would be true: the use
-of session caching is not a known vulnerability, but the use of session
-tickets is a potential vulnerability. The design of the session tickets
-(RFC 5077) appears to solve a specific problem: reducing expensive TLS
-renegotiation when you have a cluster of servers and the session is not
-guaranteed to stick to a specific server/load balancer. Additionally
-OpenSSL lacks key rotation for session tickets, so it seems safe to
-assume all software using OpenSSL with session tickets enabled are
-likely not working around this problem by enforcing their own key
-rotation.
-
-This feels like a feature that should always be turned off unless your
-environment absolutely requires it; especially if you have measurable
-performance impact / negative client experience without it.
-
-
-[1]
-http://vincent.bernat.im/en/blog/2011-ssl-session-reuse-rfc5077.html
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
