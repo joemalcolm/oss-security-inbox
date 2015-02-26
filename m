@@ -1,88 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/10/11
-Message-Id: <20150310171216.1144E42E048@smtpvbsrv1.mitre.org>
-Date: Tue, 10 Mar 2015 13:12:16 -0400 (EDT)
-From: cve-assign@...re.org
-To: steevee.aka@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Instant v2.0 SQL Injection Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/26/4
+Message-ID: <20150226122840.56ca6cbf@pc>
+Date: Thu, 26 Feb 2015 12:28:40 +0100
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: Joomla Google Maps Plugin
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-Are you able to identify this vulnerability within a specific download
-of open-source software?
+Akamai is currently warning of old versions of a joomla google maps
+plugin. Akamai advisory:
+http://www.stateoftheinternet.com/resources-web-security-threat-advisories-2015-joomla-reflection-attack-ddos-for-hire.html
 
-What we've been able to find is:
+These vulns have not seen CVEs as far as I can see. They have been fixed
+in 3.1. This is the developers announcement:
+http://tech.reumer.net/Google-Maps/Documentation-of-plugin-Googlemap/security-release-3-1-of-plugin-googlemaps.html
 
-   http://web.archive.org/web/20081219100117/http://overcoffee.com/
-   http://web.archive.org/web/20050405113015/http://aura.overcoffee.com/
-   (previous version of web site)
+And here are some more details:
+http://cxsecurity.com/issue/WLB-2014020215
 
-   http://web.archive.org/web/20100105143144/http://overcoffee.com/
-   (later version of web site)
+1 Denial of Service / reflection issue (this seems the one akamai is
+most concerned about)
+1 XML injection
+2 XSS
+1 path disclosure
+1 anti automation (not sure this counts as a vulnerability)
 
-The above archived aura.overcoffee.com page suggests that web sites
-existed with "Powered By Instant v2.0 another OverCoffee production"
-in the footer.
+I've added detection to freewvs [1] (which is btw a tool you might find
+interesting, although its functionality overlaps with a similar tool
+called pyfiscan and there are some preliminary plans to maybe merge the
+development work of the two in the future).
 
-The archived overcoffee.com page suggests that the company's goal was
-"packages of web development services and applications." Linked pages
-refer to "we provide all our clients with a log-in username and
-password to their own area of the SelfServe control panel" and "we
-partner with our clients from initial consultation through design,
-hosting, and management."
+[1] https://source.schokokeks.org/freewvs/
 
-This might mean that "Instant v2.0" was a web-design offering that
-typically resulted in a web site hosted and maintained by the vendor.
+cu,
+-- 
+Hanno Böck
+http://hboeck.de/
 
-To obtain a CVE ID on the oss-security list, it's necessary to
-establish that the vendor has (currently or in the past) packaged the
-product in question as open source.
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
 
-To obtain a CVE ID at all, it's necessary to establish that there is
-or was a specific packaged product. A CVE ID is not assigned for "web
-development services" that create customer-specific sites/code, even
-if multiple customers happened to receive a specific file (such as
-product_cat.php) and a vulnerability is found in that file. Also, it's
-necessary to establish that customers are responsible for security
-updates of the specific packaged product. This is very often the case
-if different installations of a product are installed on servers
-controlled by different customers. In this situation, this seems
-perhaps unlikely because the six example sites do not all have unique
-IP addresses. (Admittedly, it's possible for a vendor to initially
-maintain its customers' web sites but then later announce that the
-customers need to start maintaining them on their own.)
-
-Also, note that this vendor (apparently from Iowa in the U.S.) is not
-the same as the InstantCMS vendor (see CVE-2013-6839), apparently
-located in Russia.
-
-To summarize:
-
-  - if you know that this is open source, you can send more
-    information about that to oss-security@...ts.openwall.com
-
-  - if you don't know whether it's open source but know that "Instant
-    v2.0" was shipped as a software package installable by arbitrary
-    customers, you can send more information about that to
-    cve-assign@...re.org (That address can be used, optionally, even
-    if it is open source. Please do not send to both addresses.)
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJU/yWAAAoJEKllVAevmvmsgGcH/jF05h+Dbiv/JA3V6fqh4LKQ
-3H3Be/s47jEMTwUJDs4Y3/b6E88C0BRJcHWEgPsFbeLCI3jRFmquEJbOlBr/nuTk
-qzYAtWz2EA+OaxkzpcLQJnhBknYrGFIZdEuBBtsYq32/1tvPbKOxu06tgRcktZr6
-N5x+giSLH2ziOGd1N+9R0Wg4Us1HKzu8XjpiC8u/1EOR7yHreEPd85lVbHNKDZJj
-pdjcULb33mTrEloTsjfH3gp7LzyoBdZn5QPE5DP6UKk5g5a+B22f2x9SZS+qr3mN
-bl0+vGmxUACF9F0OP60jnU9sJ/SlT+JfMKyapB4JHwlXNMmSLNPo0iv+mmBh7T8=
-=ixTb
------END PGP SIGNATURE-----
+Content of type "application/pgp-signature" skipped
