@@ -1,39 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/08/1
-Message-Id: <6A5EBF40-21D7-44B6-A3DD-C559B771BDC0@technologysecure.com>
-Date: Wed, 7 Jan 2015 19:40:12 -0500
-From: Yury German <yurylie@...yweb.com>
-To: oss-security@...ts.openwall.com, cve-assign@...re.org
-Cc: fk@...iankeil.de
-Subject: CVE Request for Privoxy Version: 3.0.22
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/26/7
+Message-ID: <54EF5A0C.7010408@redhat.com>
+Date: Thu, 26 Feb 2015 10:38:20 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "tseaver@...ladion.com >> Tres Seaver" <tseaver@...ladion.com>, matt@...thewwilkes.name, nathan@...gheem.us, Assign a CVE Identifier <cve-assign@...re.org>
+Subject: XSS In Zope
 Content-Type: text/plain; charset=utf-8
 
-Privoxy Version 3.0.22 has two vulnerabilities that were fixed in the version of Privoxy 3.0.22. Can we please assign CVE(s) to this.
+So originally Radek Steoger of Red Hat found an XSS in luci/conga:
 
-Fixed a memory leak when rejecting client connections due to
-the socket limit being reached (CID 66382). This affected
-Privoxy 3.0.21 when compiled with IPv6 support (on most
-platforms this is the default).
+==========
+Within luci's use of Products.PluggableAuthService there appears to be
+an XSS, e.g.:
+
+https://luci.example.com:8084/acl_users/users/manage_updatePasswordForm?manage_tabs_message=%3Cscript%3Ealert('1234')%3C/script%3E
+==========
+
+this was tracked down to being in Products.PluggableAuthService (a
+component of Zope).
+
+I notified the Zope security people, they tracked it down on their end,
+this was actually found/fixed in 2009:
+
+https://bugs.launchpad.net/zope2/+bug/490514
+
+https://github.com/zopefoundation/Zope/commit/2abdf14620f146857dc8e3ffd2b6a754884c331d
+
+and the fix was forward ported from the 2.10 branch, as well as to the
+2.11 branch and the trunk. The fix landed in:
+  Zope 2.10.10
+  Zope 2.11.5
+  Zope 2.12.2
+
+With thanks to Tres, Matt and Nathan for sorting this out/chasing it
+down on Zope's end (basically they did all the heavy lifting).
+
+So this should probably get a CVE from 2009.
+
+-- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
 
-Fixed an immediate-use-after-free bug (CID 66394) and two
-additional unconfirmed use-after-free complaints made by
-Coverity scan (CID 66391, CID 66376).
-
-URL to the Page: http://www.privoxy.org/announce.txt <http://www.privoxy.org/announce.txt>
-
-
-Thank you,
-Yury German
-E-Mail: BlueKnight@...hnologysecure.com
-
-PGP/GPG Key ID: 35001B8C
-
-
-
-
-
-
-Content of type "text/html" skipped
-
-Download attachment "signature.asc" of type "application/pgp-signature" (843 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
