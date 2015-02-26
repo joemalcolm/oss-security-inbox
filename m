@@ -1,30 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/03/5
-Message-ID: <20150103064426.GA31730@eldamar.local>
-Date: Sat, 3 Jan 2015 07:44:26 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Cc: CVE Assignments MITRE <cve-assign@...re.org>, Jakub Wilk <jwilk@...ian.org>
-Subject: CVE Request: arj: symlink directory traversal and directory traversal via //multiple/leading/slash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/26/5
+Message-ID: <54EF3A07.20401@redhat.com>
+Date: Thu, 26 Feb 2015 16:21:43 +0100
+From: Florian Weimer <fweimer@...hat.com>
+To: oss-security@...ts.openwall.com, Assign a CVE Identifier <cve-assign@...re.org>
+Subject: CVE request: glibc: potential application crash due to overread in fnmatch
 Content-Type: text/plain; charset=utf-8
 
-Hi
+When processing certain malformed patterns, fnmatch can skip over the
+NUL byte terminating the pattern.  This can potentially result in an
+application crash if fnmatch hits an unmapped page before encountering a
+NUL byte.
 
-Jakub Wilk reported two directory traversal issues with arj, an
-archiver for .arj files. There are two issues reported as separate
-bugs to the Debian BTS:
+Upstream bug report:
 
-arj: symlink directory traversal:
- - https://bugs.debian.org/774434
+  https://sourceware.org/bugzilla/show_bug.cgi?id=18032
 
-arj: directory traversal via //multiple/leading/slash:
- - https://bugs.debian.org/774435
+The fix is here:
 
-Reproducers for both issues are also attached bot the corresponding
-bugs.
 
-Could you assign CVE(s) for these isues? (Are two ore one appropriate?
-It is the same reporter and similar kind of issue).
+https://sourceware.org/git/gitweb.cgi?p=glibc.git;h=4a28f4d55a6cc33474c0792fe93b5942d81bf185
 
-Regards,
-Salvatore
+It will go into glibc 2.22.
+
+-- 
+Florian Weimer / Red Hat Product Security
