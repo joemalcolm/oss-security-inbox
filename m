@@ -1,45 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/07/4
-Message-Id: <20150207124451.04A7E6C015D@smtpvmsrv1.mitre.org>
-Date: Sat,  7 Feb 2015 07:44:51 -0500 (EST)
-From: cve-assign@...re.org
-To: opensource@...l.name
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request for denial-of-service vulnerability in fcgi
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/26/12
+Message-ID: <54EF7AD9.5010703@gmail.com>
+Date: Thu, 26 Feb 2015 14:58:17 -0500
+From: Daniel Micay <danielmicay@...il.com>
+To: oss-security@...ts.openwall.com
+CC: sstewartgallus00@...angara.bc.ca, ryao@...too.org
+Subject: Re: CVE request: Linux kernel silently ignores MS_RDONLY for bind mounts
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+The commit adding this in 2.6.26 did actually document the weird
+behaviour, so I guess it's just "by design". Users of the API like LXC,
+Docker and systemd would likely have to iterate over /proc/self/mounts
+and remount everything due to the way MS_REC works. Anyway, there's
+clearly something wrong here when containers are claiming to have a
+read-only mount feature but writes to the directory tree aren't prevented...
 
-> there appears to be at least a denial-of-service vulnerability in fcgi:
-> https://bugzilla.redhat.com/show_bug.cgi?id=1189958
 
-> According to the bug report, if more than 1024 connections are received, a segfault can occur.
-> 
-> https://bugs.launchpad.net/ubuntu/+source/libfcgi/+bug/933417
-> 
-> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=681591
-
-Use CVE-2012-6687.
-
-The scope of this CVE does not include the
-https://bugs.launchpad.net/ubuntu/+source/libfcgi/+bug/933417/comments/5
-issue in OS_DoIo. If there is an OS_DoIo vulnerability, a separate
-CVE ID would be needed.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJU1gf/AAoJEKllVAevmvmseD0H/jmMNvGcAE101HMyXsbJUT2r
-wVIfAiLa7Igiu6p0dLASp5rXe924aJg8eVrBL+mfWvNX0f9YlFx+g7qB82NE9h2n
-vtqVRlLYxucL7LYgwoQTt9slkWbhtCnYp9etItJzm+nWejOURTkvr7CZ/HgGeJDy
-Yc0eLzEamsXSeSnnLZyn3CGG0bL9nFLE30oTnNHbrffDMzsV9CtS62omgD59PfLV
-gN7wcx3V6FJdILdMLlV/HJTa+cqnQzLU0H+0s3ZVI2f0ikonnKJj3lwxGnnOcOqC
-c2JRRiBI79CeGsqdsfMNejg/4cv3AbvvwaxZ7/fmHo9YjgRRG3U97dT/vi3U9G0=
-=2ZDL
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
