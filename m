@@ -1,26 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/28/4
-Message-ID: <CAM-f9EMfmbRoqY9cg2unwKJ5A6YKuFoaf+=POxiLo=XujGUf6Q@mail.gmail.com>
-Date: Sat, 28 Feb 2015 12:38:01 +0000
-From: Patrick Coleman <blinken@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request: PuTTY fails to clear private key information from memory
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/26/6
+Message-Id: <20150226173621.8113B6C002E@smtpvmsrv1.mitre.org>
+Date: Thu, 26 Feb 2015 12:36:21 -0500 (EST)
+From: cve-assign@...re.org
+To: seb@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: mod-gnutls: GnuTLSClientVerify require is ignored
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-PuTTY suite versions 0.51 to 0.63 fail to clear SSH-2 private key
-information from memory when loading and saving key files to disk,
-leading to potential disclosure. The issue affects keys stored on disk
-in encrypted and unencrypted form, and is present in PuTTY, Plink,
-PSCP, PSFTP, Pageant and PuTTYgen.
+OK, we'll provide both because someone else might be interested in a
+CVE mapping for the 2009 issue.
 
-The maintainers have provided details at [1], and have promptly
-patched the vulnerability in version 0.64 [2].
+>>   one CVE-2009-#### ID  -- vulnerability involving the directory context
 
-Can a CVE please be assigned for this issue?
+Use CVE-2009-5144.
 
--Patrick
 
-1. http://www.chiark.greenend.org.uk/~sgtatham/putty/wishlist/private-key-not-wiped-2.html
-2. http://www.chiark.greenend.org.uk/~sgtatham/putty/changes.html
+>>   one CVE-2015-#### ID  -- vulnerability involving the server config context
+
+Use CVE-2015-2091.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJU71kMAAoJEKllVAevmvmsmTEH/2qv8B78/6a6jN3L5ZV5hqHc
+utcT9cx0YKmIOk84Qioa5SYaX5KpCbcBPiv7ARK4n3l/jEGGUEAzhOFGvRNDLYPl
+au0A6bn48dfyB1txoFZmN3Uv+XjE3iQmmGNfFPTem3BaTvV9+Fmx9zG6APQkE407
+YbukxJ43MKLvQgJvKJF+uvb+UlRbXL+y38S+JDR7i6xOVqmGmY0VyRMHEI0u9WoA
+PIQtczND5fdJYkYG/1kRGpaUHgKj8PCBQc7+8UQjUxCVm6EzHtwuKCmrVTlrgXyQ
+J284WP+kDGTctmEmTuKH2IJGCe04oKvr0DdpadwZisrI7+PJKwDEI9/IwqJ+MWk=
+=fJok
+-----END PGP SIGNATURE-----
