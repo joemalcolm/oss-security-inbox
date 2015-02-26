@@ -1,20 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/31/3
-Message-ID: <20150131124752.GH1138@kludge.henri.nerv.fi>
-Date: Sat, 31 Jan 2015 14:47:52 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/26/9
+Message-ID: <CANMVOuy=ejwJiD7X18QRuCYgtOP=ZXHZVfN+-Evi+Ua_hboznQ@mail.gmail.com>
+Date: Thu, 26 Feb 2015 12:08:25 -0600
+From: Brian Carpenter <brian.carpenter@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: Roundcube cross-site scripting vulnerability fixed in 1.0.5
+Subject: CVE Request: null ptr deref in lame v3.99.5
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Bug reports:
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=777160
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=777161
 
-Can I get 2015 CVE for Roundcube cross-site scripting vulnerability fixed in
-1.0.5 version, thanks.
+Fixed by Debian patch here:
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=775959
 
-http://roundcube.net/news/2015/01/24/security-update-1.0.5/
-http://trac.roundcube.net/wiki/Changelog#RELEASE1.0.5
-http://trac.roundcube.net/ticket/1490227
+Tracker:
+https://tracker.debian.org/news/672916
 
--- 
-Henri Salo
+Issue appears to be fixed in the Debian repos and in the upstream source,
+however, no upstream release has been made yet (3.99.5 is still available
+for download on Sourceforge).
+
