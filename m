@@ -1,53 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/05/14
-Message-ID: <CACYkhxioBj+oaOG_amxfGSiDCNVjJBj-MZfjkbkk9nRsbma5fQ@mail.gmail.com>
-Date: Fri, 6 Mar 2015 10:09:22 +1100
-From: Michael Samuel <mik@...net.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: Another Python app (rhn-setup: rhnreg_ks) not checking hostnames in certs properly CVE-2015-1777
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/26/1
+Message-Id: <20150226054749.2E2736C0014@smtpvmsrv1.mitre.org>
+Date: Thu, 26 Feb 2015 00:47:49 -0500 (EST)
+From: cve-assign@...re.org
+To: seb@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: mod-gnutls: GnuTLSClientVerify require is ignored
 Content-Type: text/plain; charset=utf-8
 
-Could RedHat ship a new package that replaced python's default SSL
-library with the one that validates TLS by default and release a RHEA?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-That way customers (like me) who never want broken TLS on their
-network can just install a package and it's fixed.
+> mod-gnutls doesn't consider the server's client verify mode, even if the
+> verify mode was unset in the directory configuration. As a result,
+> invalid certificates are ignored and clients can connect and receive
+> data as long as they presented any certificate whatsoever.
+> 
+> https://bugs.debian.org/578663
+> https://github.com/airtower-luna/mod_gnutls/commit/5a8a32bbfb8a83fe6358c5c31c443325a7775fc2
+> http://issues.outoforder.cc/view.php?id=93
 
-Regards,
-  Michael
+We haven't been able to determine how many different vulnerabilities
+are being reported. The 2009 report is apparently about ignoring
+GnuTLSClientVerify when this directive is present in a directory
+context, whereas
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=578663#10 is
+apparently about ignoring GnuTLSClientVerify when this directive is
+present only in a server config context.
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=578663#10 is
+apparently discussing the 2009 bug when saying "This bug still exists
+in current stable and unstable packages" but perhaps is actually
+referring to a remaining issue that exists because of an incomplete
+fix for the 2009 bug.
 
-On 6 March 2015 at 05:36, Kurt Seifried <kseifried@...hat.com> wrote:
->
->
-> On 05/03/15 10:06 AM, John Haxby wrote:
->> PEP 476 cites 11 CVEs that resulted from python not properly validating
->> certificates.   This would be number 12.
->>
->> Shouldn't python versions prior to 2.7.9 and 3.4.3 have a CVE each for
->> the lack of verification? If internal corporate software stops working
->> because of invalid certificates, wasn't it broken anyway?
->
-> So if something is advertised as having a security feature and does not
-> or it is broken then it gets a CVE. In this case Python, and basically
-> every other SSL/TLS implementation on the planet, by default, did not
-> check hostnames in certs, but they did provide that capability should
-> you choose to use it. So no CVE since it wasn't "meant to be secure" as
-> I understand it.
->
-> Now for my personal opinion: Doing SSL/TLS with server certs and not
-> checking the hostname in a server cert is completely insane and utterly
-> defeats the purpose. However there are cases where a certificate may not
-> have a hostname field, or need a valid hostname field, e.g. a client
-> certificate where you mostly care about the fact that the client has it
-> at all. So I can see why they made hostname checks optional, but again,
-> I think it was a very bad decision long term as evidenced by:
->
-> http://www.cve.mitre.org/cgi-bin/cvekey.cgi?keyword=certificate+hostname+check
->
->> jch
->>
->
-> --
-> Kurt Seifried -- Red Hat -- Product Security -- Cloud
-> PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
->
+The 2009 report seems to imply that that verification problem is an
+impact of a bug related to improper "rehandshake" handling
+(http://issues.outoforder.cc/view.php?id=93#c140). Also,
+http://issues.outoforder.cc/view.php?id=93#c187 suggests that the
+verification problem is observed with some browsers but not others,
+which might mean that sessions with certain browsers (or browsers with
+certain SSL configurations) do not end up having a "rehandshake."
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=578663#10 has no
+mention of "rehandshake" or anything similar, and instead apparently
+blames the problem on "the authentication hook (mgs_hook_authz)."
+Similarly, the 2015 patch (i.e.,
+5a8a32bbfb8a83fe6358c5c31c443325a7775fc2) seems to be a fix for a
+missing check in the 2009 patch (i.e., the
+http://issues.outoforder.cc/file_download.php?file_id=34&type=bug
+patch).
+
+The various discussion of "when I browse site2 in IE, it shows me the
+certificate of site1" and "it seems curl extension of php also can't
+correctly connect" in http://issues.outoforder.cc/view.php?id=93#c187
+is possibly a user error and not a valid third vulnerability report.
+
+So, are you looking for:
+
+  one CVE-2009-#### ID  -- vulnerability involving the directory context
+
+  one CVE-2015-#### ID  -- vulnerability involving the server config context
+
+?
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJU7rKSAAoJEKllVAevmvmsImMH/3JMN+d67QFOoiqdmtBdVpAP
+F3gWqctza+yLK1ocUAimX4Rhl/H6Cnm2D10A1u5rInXJ7FzZrsPD5dfkNLfJlMbI
+qCv54tzAC0sMb2qziEIGPmRj0koVPM1sWY5nhOwWl0CM7wIYX/MW4VDzC6LK/ias
+MfuD5vJnPjA7pIu2MNEz8gOOuF7HDrZvnqX5T9pEcKsEIK3lXRHNGtY/r+71VOPR
+DnZ0saIccfnNaYfN6fUg5PcPFisk2BzX7h8z5NyhfhtNypdcEerllgFmuW0J/Zxf
+xs9I+vrIROE/PDVrTUxjeWoc/QlW/tR8UExgMRPR3MPn08iOOPGSbCsLKGfrBZA=
+=nfvd
+-----END PGP SIGNATURE-----
