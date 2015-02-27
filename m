@@ -1,39 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/23/1
-Message-ID: <228550367.12515213.1421985935436.JavaMail.zimbra@redhat.com>
-Date: Thu, 22 Jan 2015 23:05:35 -0500 (EST)
-From: Wade Mealing <wmealing@...hat.com>
-To: cve-assign@...re.org, OSS Security List <oss-security@...ts.openwall.com>
-Subject: CVE Request: Linux kernel - Denial of service in notify_change for xattrs.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/27/6
+Message-ID: <4009640.mNMviFSgYl@remote-exploit>
+Date: Fri, 27 Feb 2015 19:55:04 +0530
+From: Siddharth Sharma <sisharma@...hat.com>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: CVE-2015-0296 preinstall scriptlet in texlive-base rpm of fedora allows unprivileged user to delete arbitrary files(maybe others)
 Content-Type: text/plain; charset=utf-8
 
-I'd like to request a CVE for an issue brought up on this list on Jan 17th 2015.  I did not
-see one created for this issue titled:
+Hi,
 
-"Re: [RFC PATCH RESEND] vfs: Move security_inode_killpriv() after permission checks"
+For more information please refer to: 
+https://bugzilla.redhat.com/show_bug.cgi?id=1197082
 
-http://www.openwall.com/lists/oss-security/2015/01/21/3t
+Thanks,
+-- 
+Siddharth Sharma / Red Hat Product Security / Key ID : 0xD9F6489A      
+Fingerprint :  0x6F04C684 A49C E4CE 8148 E841 CD6F 8E55 D9F6 489A
 
-This issue can be classified as a denial of service.
-
-Example:
-
-[wmealing]$ ping -c1  www.google.com
-PING www.google.com (216.58.220.100) 56(84) bytes of data.
-64 bytes from syd10s01-in-f4.1e100.net (216.58.220.100): icmp_seq=1 ttl=51 time=14.1 ms
---- www.google.com ping statistics ---
-1 packets transmitted, 1 received, 0% packet loss, time 0ms
-rtt min/avg/max/mdev = 14.162/14.162/14.162/0.000 ms
-
-[wmealing]$ chown root:root /usr/bin/ping
-chown: changing ownership of ‘/usr/bin/ping’: Operation not permitted
-
-[wmealing]$ ping www.google.com
-ping: icmp open socket: Operation not permitted
-
-This can cause a denial of service for applications which use the capabilities subsystem such as
-pirahnah (arping), netconsole (arping), some kdump implementations, etc.
-
-Thank you.
-
-Wade Mealing -- Red Hat Product Security
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
