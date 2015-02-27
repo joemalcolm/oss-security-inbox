@@ -1,39 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/13/2
-message-id: <5502B46A.6010601@halfdog.net>
-Date: Fri, 13 Mar 2015 09:56:58 +0000
-From: halfdog <me@...fdog.net>
-To: oss-security@...ts.openwall.com
-Subject: Disabling reading of kernel log buffer reading for user
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/27/2
+Message-Id: <20150227073424.A185E52E086@smtpvbsrv1.mitre.org>
+Date: Fri, 27 Feb 2015 02:34:24 -0500 (EST)
+From: cve-assign@...re.org
+To: jmm@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: libmnl: incorrect validation of netlink message origin allows attackers to spoof netlink messages - Linux kernel
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-Hello List,
+> can you please assign a CVE ID for the kernel
+> 
+> This was fixed in 3.6 with
+> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=20e1db19db5d6b9e4e83021595eab0dc8f107bef
 
-After years working on Linux, I just found out, that any user not only root can read the kernel log buffer - I never even considered that this could be the case.
+We haven't seen anyone object to that type of CVE assignment, so use
+CVE-2012-6689 for this Linux kernel issue.
 
-As this behavior is documented and expected, this is not a security vulnerability. But to avoid things like in [1], I would like to disable that on my machines.
-
-Questions:
-
-* What would be the side effects of making /dev/kmesg only root accessible? Maybe syslog not able to write kmessages to log?
-
-* Would it be safe to disable the syslog syscall for action SYSLOG_ACTION_READ_* and all users except root and syslog? Does someone have tested selinux config for that?
-
-hd
-
-
-[1] http://www.halfdog.net/Security/2015/HavingFunWithDmesg/
+(There may be an alternative viewpoint that the issue, or at least the
+patch, was a security/functionality tradeoff.
+http://marc.info/?l=linux-netdev&m=134522422125983&w=2 says "The
+second tries to address netlink spoofing for non-root processes from
+the kernel while disabling the ability of two processes to
+communicate. Yes, this may be controversial I guess." This refers to
+the http://marc.info/?l=linux-netdev&m=134522422925986&w=2 patch.)
 
 - -- 
-http://www.halfdog.net/
-PGP: 156A AE98 B91F 0114 FE88  2BD8 C459 9386 feed a bee
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Version: GnuPG v1.4.14 (SunOS)
 
-iEYEARECAAYFAlUCtGQACgkQxFmThv7tq+4FFQCeN4Txgu40/tDsWGSVaK2sm7La
-VusAnRUCtETL9IGmaeSyQUt2dyCQgCpV
-=Krnc
+iQEcBAEBAgAGBQJU8B0KAAoJEKllVAevmvmshZUH/3rdgF/TqUhinOrKRcS3Kv/N
+x9e5h3g5i5bqMOKffu/09gWx/3MdVLpVTY67WBdZNnLsq0CBm2kDdq9HNcy/i5LT
+T5bxZUxiZtG023MYOP27dwI+DZvcikdY89C1yVoLzKWHDhb2z27UXbct9X36jFGG
+YiPdMXABtqd6Hbp1QMVWTvCrDz+RDVvoJtL29dUxYb2jBS7koW6pPIlWp4vyzF0j
+KaouZ6jZ8U7kH1/BlLDZ64TsBviryT24O4aJza+muGTeOJgzKbbrqreNA+cGNISQ
+2ZGxctQgRZClO56nS+Bhb3NAFAmlT7sZHaRV06FMXOAqw/QroqjVQIQ2tkpM1/Q=
+=Hy74
 -----END PGP SIGNATURE-----
