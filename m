@@ -1,32 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/23/20
-Message-ID: <20150223154726.GA22383@videolan.org>
-Date: Mon, 23 Feb 2015 16:47:26 +0100
-From: Jean-Baptiste Kempf <jb@...eolan.org>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security@...ts.openwall.com, Assign a CVE Identifier <cve-assign@...re.org>
-Subject: Re: [videolan] older issues in libbluray
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/27/4
+Message-ID: <1425038397.11955.26.camel@trustmatta.com>
+Date: Fri, 27 Feb 2015 12:59:57 +0100
+From: Florent Daigniere <florent.daigniere@...stmatta.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: RFC 4253 section 8 wooes
 Content-Type: text/plain; charset=utf-8
 
-On 23 Feb, Kurt Seifried wrote :
-> Again my apologies for this mess. The good news is that all our current
-> embargoed flaws (none against VLC currently =) are being actively
-> handled (e.g. worked on in a current time frame) and moving forwards we
-> should hopefully be able to avoid issues like this.
+Hi,
 
-One libbluray issue was already fixed.
-The second one is not really fixable, since BD-J is actually executing
-java code from the outside.
+RFC 4253 section 8 describes how the DiffieHellman exchange is done in
+SSH... It mandates a few sanity bound-checks (for both the values of
+exponents and exponentials) that some implementations are not doing...
 
-> Also one request (not just specific to VLC, but everyone with a
-> project): please have a security@ email address for your project or a
-> security web page that makes it obvious how to contact and report things
+Can you please assign three CVEs for the following bugs?
 
-We have a security email.
+MATTA-2015-002 PuTTY
+will be fixed in the upcoming release (0.64 I think)
+- The exponential is not checked for trivial values
 
-With my kindest regards,
+MATTA-2015-001 Dropbox
+fixed in: https://secure.ucc.asn.au/hg/dropbear/rev/a1e79ffa5862
+- The exponential is not checked for all trivial values (it just does
+what the RFC mandates, which is clearly not enough!)
+- The exponent picked might be a trivial value (this is theoretical more
+than anything else assuming the CSPRNG is working). It's a regression
+from 0.49
+(https://secure.ucc.asn.au/hg/dropbear/diff/00703f1df67a/random.c)
 
--- 
-Jean-Baptiste Kempf
-http://www.jbkempf.com/ - +33 672 704 734
-Sent from my Electronic Device
+Further details and a full advisory will be published at 
+https://www.trustmatta.com/advisories/MATTA-2015-001.txt
+https://www.trustmatta.com/advisories/MATTA-2015-002.txt
+when the patches are in a released build. Our current understanding is
+that no third party can take advantage of those bugs unless both the
+client and the server are vulnerable AND either side picks a weak
+exponent. The likelihood of that happening in practice is almost nil and
+the impact limited in any case.
+
+Regards,
+	Florent
+
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
