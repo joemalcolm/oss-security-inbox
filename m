@@ -1,41 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/26/6
-Message-Id: <20150226173621.8113B6C002E@smtpvmsrv1.mitre.org>
-Date: Thu, 26 Feb 2015 12:36:21 -0500 (EST)
-From: cve-assign@...re.org
-To: seb@...ian.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: mod-gnutls: GnuTLSClientVerify require is ignored
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/27/5
+Message-ID: <87zj7zo0d3.fsf@alice.fifthhorseman.net>
+Date: Fri, 27 Feb 2015 10:11:36 -0500
+From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
+To: Florent Daigniere <florent.daigniere@...stmatta.com>, oss-security@...ts.openwall.com
+Subject: dropbear and PuTTY missing DHE sanity checks  [was: Re: CVE request: RFC 4253 section 8 wooes]
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Fri 2015-02-27 06:59:57 -0500, Florent Daigniere wrote:
 
-OK, we'll provide both because someone else might be interested in a
-CVE mapping for the 2009 issue.
+> RFC 4253 section 8 describes how the DiffieHellman exchange is done in
+> SSH... It mandates a few sanity bound-checks (for both the values of
+> exponents and exponentials) that some implementations are not doing...
+>
+> Can you please assign three CVEs for the following bugs?
+>
+> MATTA-2015-002 PuTTY
+> will be fixed in the upcoming release (0.64 I think)
+> - The exponential is not checked for trivial values
+>
+> MATTA-2015-001 Dropbox
+                 ^^^^^^^ I'm pretty sure you mean dropbear here, based
+                         on the links below.
+                 
+> fixed in: https://secure.ucc.asn.au/hg/dropbear/rev/a1e79ffa5862
+> - The exponential is not checked for all trivial values (it just does
+> what the RFC mandates, which is clearly not enough!)
+> - The exponent picked might be a trivial value (this is theoretical more
+> than anything else assuming the CSPRNG is working). It's a regression
+> from 0.49
+> (https://secure.ucc.asn.au/hg/dropbear/diff/00703f1df67a/random.c)
 
->>   one CVE-2009-#### ID  -- vulnerability involving the directory context
+regards,
 
-Use CVE-2009-5144.
-
-
->>   one CVE-2015-#### ID  -- vulnerability involving the server config context
-
-Use CVE-2015-2091.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJU71kMAAoJEKllVAevmvmsmTEH/2qv8B78/6a6jN3L5ZV5hqHc
-utcT9cx0YKmIOk84Qioa5SYaX5KpCbcBPiv7ARK4n3l/jEGGUEAzhOFGvRNDLYPl
-au0A6bn48dfyB1txoFZmN3Uv+XjE3iQmmGNfFPTem3BaTvV9+Fmx9zG6APQkE407
-YbukxJ43MKLvQgJvKJF+uvb+UlRbXL+y38S+JDR7i6xOVqmGmY0VyRMHEI0u9WoA
-PIQtczND5fdJYkYG/1kRGpaUHgKj8PCBQc7+8UQjUxCVm6EzHtwuKCmrVTlrgXyQ
-J284WP+kDGTctmEmTuKH2IJGCe04oKvr0DdpadwZisrI7+PJKwDEI9/IwqJ+MWk=
-=fJok
------END PGP SIGNATURE-----
+  --dkg
