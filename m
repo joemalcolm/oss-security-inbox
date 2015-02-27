@@ -1,21 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/02/6
-Message-ID: <20150302132554.GB12838@gremlin.ru>
-Date: Mon, 2 Mar 2015 16:25:54 +0300
-From: gremlin@...mlin.ru
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/27/1
+Message-ID: <20150227020059.GA4890@boyd>
+Date: Thu, 26 Feb 2015 20:01:00 -0600
+From: Tyler Hicks <tyhicks@...onical.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: Maven downloads JARs via HTTP
+Cc: cve-assign@...re.org
+Subject: Re: eCryptfs key wrapping help to crack user password
 Content-Type: text/plain; charset=utf-8
 
-On 2015-03-02 14:07:00 +0100, Martin Prpic wrote:
+[adding cve-assign to cc]
 
- > "Maven Central can now be accessed via HTTPS. I think the
- > default configuration should be switched to use that, rather
- > than the current unsecured HTTP transport."
+On 2015-02-10 16:49:19, Tyler Hicks wrote:
+> On 2015-02-10 15:07:24, Sylvain Pelissier wrote:
+> > Hi,
+> > 
+> > I have noticed that ecryptfs-utils is the default program used by the
+> > Ubuntu distributions for home folder encryption since version 10.04.
+> > In this case, a wrapping key is generated from the user password
+> > using the hash function SHA-512 applied 65536 times. By default, the
+> > wrapping key is hashed with the default fixed salt
+> > (0x0011223344556677) and stored in the a file.
+> > This was already noticed in bug :
+> > https://bugs.launchpad.net/ecryptfs/+bug/906550
+> > For  Ubuntu installations time-memory trade-off (rainbow tables, etc.)
+> > can apply, as well as bulk dictionary attacks to crack user passwords
+> > of Ubuntu installations when the home folder encryption is activated.
+> > I am currently working to correct this weakness.
+> 
+> Thanks for reporting this issue, Sylvain.
+> 
+> I have confirmed the analysis above and upstream ecryptfs-utils is
+> working to correct the problem.
+> 
+> Tyler
 
-Does it use any sort of package signing and signature verification?
-
-
--- 
-Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
-GPG: 8832FE9FA791F7968AC96E4E909DAC45EF3B1FA8 @ hkp://keys.gnupg.net
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
