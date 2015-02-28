@@ -1,41 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/29/1
-Message-ID: <54C993A6.8040803@redhat.com>
-Date: Thu, 29 Jan 2015 07:27:58 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
-To: oss-security@...ts.openwall.com, Mitre CVE assign department <cve-assign@...re.org>
-Subject: Re: GHOST gethostbyname() heap overflow in glibc (CVE-2015-0235)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/28/5
+Message-Id: <20150228173710.70B0D6C0024@smtpvmsrv1.mitre.org>
+Date: Sat, 28 Feb 2015 12:37:10 -0500 (EST)
+From: cve-assign@...re.org
+To: blinken@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: PuTTY fails to clear private key information from memory
 Content-Type: text/plain; charset=utf-8
 
-On 01/29/2015 03:17 AM, Florian Weimer wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
->> Use CVE-2012-6686 for "unbound alloca use in glob_in_dir" as covered
->> by Red Hat Bugzilla ID 797096.
-> 
-> Oh, it seems Huzaifa posted the wrong Bugzilla reference.
-> 
+Use CVE-2015-2157.
 
-Yes, sorry wrong bz.
+This falls into a narrow set of situations in which a CVE ID can be
+assigned even though the issue does not cross privilege boundaries.
+The vendor is specifically announcing this as "This is a security
+vulnerability." (Also, wiping private-key memory is a conventional
+behavior seen in many products. It is not the same as wiping any
+memory block that any researcher may feel is sensitive in some way.)
 
-> We still need assignment for this fix:
-> 
->   <https://sourceware.org/git/gitweb.cgi?p=glibc.git;a=commitdiff;h=2e96f1c7>
-> 
-> The matching Red Hat Bugzilla bug is:
-> 
->   <https://bugzilla.redhat.com/show_bug.cgi?id=981942>
-The above is the correct bug  with the corresponding impact at:
-https://bugzilla.redhat.com/show_bug.cgi?id=1186614
+> http://www.chiark.greenend.org.uk/~sgtatham/putty/wishlist/private-key-not-wiped-2.html
 
-MITRE,
+> However, if you ever told Pageant to delete a key from memory, it
+> would not have properly deleted it: it would still have retained a
+> copy by mistake due to this bug.
 
-Can we still use the above CVE for this issue?
+Because of the "this bug" wording, a single CVE ID is assigned.
+However, in general, these two cases could be distinguished:
 
-> 
-> I haven't yet seen an upstream bug for it; this change happened before
-> upstream required bugs being filed for all user-visible changes.
-> 
+  - violating a user's reasonable expectations about what preemptive
+    memory wiping should occur
 
+  - providing a UI feature advertised as a way to tell a product to
+    wipe a key from memory, accompanied by actual behavior in which no
+    wiping occurs
 
--- 
-Huzaifa Sidhpurwala / Red Hat Product Security Team
+with separate CVE IDs. In other words, there would be two CVE IDs if
+there were two bugs (one for each case) fixed independently.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJU8fxVAAoJEKllVAevmvmsPEAIAI+BEhf4vgQeJ0DUdXbbYRsH
+gJHqdlKZSMrPsu3TKKkahVLwifZaijJvMqTItzvZOPJQ5/E5Wv2CfHZxWiJYDSwq
+JEszf1IUAA0trny8h8wDtj8sAbDG5m/yTYEIp68bp/zxn/1g7ti9arzBjZXQUmpM
+3HAJE8l2ajIwRgtq3TJagTJ8uFpMb9qh1fXmL5SoMP8y/dfRPgT0IntIQtg3LzgB
+RLPFpY+6Ftk1GSK7ZcamWt1CSnk/UPWjKCbpqTWa6z4HNdcNuO6CFwpMLH/e3P2t
+pTFlLW+z6pxTmPAfkB9mspAR2vGVyfbBMpktxwpUTSNtkxemfC8RAU60WvRyOHc=
+=aQwW
+-----END PGP SIGNATURE-----
