@@ -1,38 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/12/16
-Message-Id: <20150212204735.7B67372EB85@smtpvbsrv1.mitre.org>
-Date: Thu, 12 Feb 2015 15:47:35 -0500 (EST)
-From: cve-assign@...re.org
-To: jmm@...ian.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: archmage directory traversal
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/28/8
+Message-ID: <54F250AA.1040808@gmail.com>
+Date: Sat, 28 Feb 2015 18:35:06 -0500
+From: Daniel Micay <danielmicay@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: CVE request: Linux kernel silently ignores MS_RDONLY for bind mounts
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-> please assign a CVE ID for this directory traversal in archmage:
-> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=776164
+On 28/02/15 03:38 PM, Rich Felker wrote:
+> On Thu, Feb 26, 2015 at 02:58:17PM -0500, Daniel Micay wrote:
+>> The commit adding this in 2.6.26 did actually document the weird
+>> behaviour, so I guess it's just "by design". Users of the API like LXC,
+>> Docker and systemd would likely have to iterate over /proc/self/mounts
+>> and remount everything due to the way MS_REC works. Anyway, there's
+>> clearly something wrong here when containers are claiming to have a
+>> read-only mount feature but writes to the directory tree aren't prevented...
 > 
-> archmage is vulnerable to directory traversal via "../" sequences. As a 
-> proof of concept, unpacking the attached CHM file creates a file in 
-> /tmp
+> I'm wondering what the actual impact of this issue is supposed to be.
+> Why would any of the uids inside the container have write access to a
+> shared filesystem on which their uids are presumably not even
+> meaningful? It seems to me like this would only affect world-writable
+> files/directories on the shared filesystem, which sound like a bad
+> idea to begin with.
 
-Use CVE-2015-1589.
+It's true that in many cases it's meaningless, but it does have value
+when it's just a non-root user in a mount namespace (no NEWUSER) or if
+the gid/uid maps are set up to allow writes to some rw bind mounts. The
+distinction between rw and ro mounts in these tools may not be very
+useful, but if it's there it should be implemented sanely.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Mount namespaces are also being used by systemd and other tools as a
+coarse form of access control, essentially to work around the inability
+to mix and match LSMs. It doesn't really do what it says on the tin due
+to the submount issue, and I doubt that all of the projects using it
+realize that. It would also be a lot more sensible for systemd to drop
+MS_REC if it's supposed to be read-only or put in the effort to do it
+properly. Documenting the flaw is great... but it should just work.
 
-iQEcBAEBAgAGBQJU3REQAAoJEKllVAevmvms3b4IALKbsUUNpNbS+B/wKOTln6Wn
-777lAP5WnFym0Tv86hp8zOE8AAEhmhWUmkMfIakZ6fC+V8WF2oAiHc3tQks7JKt6
-AwyfmcyGJlBNc/ZOpRpeGZ9MfL/igNXf/pEYrt8BF1TroznfW30ZLP4J5CvYod7Z
-dhmM0y6LhSAIJkYPlowCC4n7m3DIbmlexuoOhVdG0k89R6TzEXaMEKZvdvchyta2
-3S1EMviuGKGTx64ZcIgjLXRys++qtFmfiu4sv+ywOJ1zWLgv0K+pU/f39lOEryyY
-pObrvjbyEnwX8/vDIgjPp062VIeVIgEynfugmu28c9UME/gBMVn8+Y1xJtpRQos=
-=wCNl
------END PGP SIGNATURE-----
+It would be better to use the right tool for the job here (MAC) but
+projects want these features in a portable way and since LSMs can't be
+mixed together (other than Yama) they can't just pick one and ship a
+policy as distributions haven't settled on a common denominator.
+
+I don't think it's a serious issue, but I'm bothered by the kernel just
+silently ignoring MS_RDONLY and forcing various userspace projects to
+use a half-working hack to work around it.
+
+Anyway, I thought this was an old neglected bug that everyone just
+decided to work around rather than an intended part of the design. I was
+trying to bring some attention to it, but in hindsight it didn't make
+sense to make the thread.
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
