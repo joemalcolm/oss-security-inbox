@@ -1,26 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/06/1
-Message-ID: <54AB2FF9.1040006@internot.info>
-Date: Tue, 06 Jan 2015 11:44:41 +1100
-From: Joshua Rogers <oss@...ernot.info>
-To: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: CVE Revoke
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/28/2
+Message-Id: <20150228032801.72B1342E0A8@smtpvbsrv1.mitre.org>
+Date: Fri, 27 Feb 2015 22:28:01 -0500 (EST)
+From: cve-assign@...re.org
+To: steffen.roesemann1986@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE-Request -- MyBB v. 1.8.3 -- Multiple stored XSS-vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I'm requesting a revoke of the CVE-ID: CVE-2014-9426.
-The reason is due to when erealloc fails, it doesn't return, it causes a
-bailout.
-If erealloc causes a bailout, it is not possible for this double free to
-happen.
+> /admin/index.php?module=config-attachment_types&action=add
+> /admin/index.php?module=config-mycode&action=add
+> /admin/index.php?module=forum-management&action=add
+> /admin/index.php?module=user-groups&action=add
+> /admin/index.php?module=style-templates&action=add_set
+> /admin/index.php?module=style-templates&action=add_template_group
+> /admin/index.php?module=tools-tasks&action=add
+> /admin/index.php?module=config-post_icons&action=add
+> /admin/index.php?module=user-titles&action=add
+> /admin/index.php?module=config-banning&type=usernames
 
-Discussion here: https://bugs.php.net/bug.php?id=68665&thanks=2
+Use CVE-2015-2149 for all of these XSS issues. Note that the scope of
+CVE-2015-2149 is limited to the "Low Risk: Multiple XSS vulnerability
+requiring admin permissions �.. reported by adamziaja, Devilshakerz,
+DingjieYang and sroesemann" section of the
+http://blog.mybb.com/2015/02/15/mybb-1-8-4-released-feature-update-security-maintenance-release/
+post, and does not include anything discovered by anyone else. The
+other MyBB vulnerabilities fixed in 1.8.4 will most likely all have
+CVE assignments on cve.mitre.org soon; however, we will not be
+announcing the CVE IDs here in advance, because they are outside the
+scope of the CVE request.
 
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-Thanks,
--- 
--- Joshua Rogers <https://internot.info/>
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+iQEcBAEBAgAGBQJU8TVwAAoJEKllVAevmvmsyd0H/3t5knGYQv2MKbULY3JHwsks
+d8r9u/xWnl8XAsiKl4nNN68lY+P1ZWouzr++9ixnWwRXLBR7mpEdek+OS/3ckpI6
+zpYbgcBJoMjev3c4rNoHram4bkL18fg20AmTqbGjlY08E2+UEiyILoOeU9Pn+pHX
+iaVv768b8xMrd283PeWKPbdQ3KJckl04kqNaq/BhlTRpRDOqeZCq3+FciQ/ZVGeZ
+sH1WhRDl5uVxewkmoDwJfb1xdgRmloX3dy3tYUTwwtA1i5JQpWrCoRFMa/Q2FnBT
+uPeTR2KPbM7uNINPhHVLO2tdDyKfByjs8SYMkUdJSNroGLYrS5M7VX/X84mYcqQ=
+=55TS
+-----END PGP SIGNATURE-----
