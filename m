@@ -1,48 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/26/7
-Message-ID: <54C689DC.8080908@canonical.com>
-Date: Mon, 26 Jan 2015 13:39:24 -0500
-From: Marc Deslauriers <marc.deslauriers@...onical.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: XSS and response-splitting bugs in rabbitmq management plugin
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/28/3
+Message-Id: <20150228041146.904966C0016@smtpvmsrv1.mitre.org>
+Date: Fri, 27 Feb 2015 23:11:46 -0500 (EST)
+From: cve-assign@...re.org
+To: tyhicks@...onical.com, sylvain.pelissier@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: eCryptfs key wrapping help to crack user password
 Content-Type: text/plain; charset=utf-8
 
-On 2015-01-21 01:47 PM, Marc Deslauriers wrote:
-> Hello,
-> 
-> The following issues were fixed in RabbitMQ 3.4.1:
-> 
-> (as described in
-> https://groups.google.com/forum/#!topic/rabbitmq-users/-3Z2FyGtXhs )
-> 
-> 26437 prevent /api/* from returning text/html error messages which could
->        act as an XSS vector (since 2.1.0)
-> 26433 fix response-splitting vulnerability in /api/downloads
->        (since 2.1.0)
-> 
-> Bug 26437 allowed an attacker to create a URL to "/api/..." which would
-> provoke an internal server error, resulting in the server returning an
-> html page with text from the URL embedded and not escaped. This was
-> fixed by ensuring all URLs below /api/ only ever return responses with a
-> content type of application/json, even in the case of an internal server
-> error.
-> 
-> Bug 26433 allowed an attacker to specify a URL to /api/definitions which
-> would cause an arbitrary additional header to be returned. This was
-> fixed by stripping out CR/LF from the "download" query string parameter.
-> 
-> 
-> Fixed by:
-> https://github.com/rabbitmq/rabbitmq-management/commit/b5a5fc31bd49ad821a655ea9e2fe920d670a62ad
-> 
-> Could CVEs please be assigned to these issue?
-> 
-> Thanks,
-> 
-> Marc.
-> 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-ping?
+> In this case, a wrapping key is generated from the user password
+> using the hash function SHA-512 applied 65536 times. By default, the
+> wrapping key is hashed with the default fixed salt
+> (0x0011223344556677) and stored in the a file.
+> This was already noticed in bug :
+> https://bugs.launchpad.net/ecryptfs/+bug/906550
 
-Marc.
 
+> https://bugs.launchpad.net/ecryptfs/+bug/906550/comments/5
+
+> all installations end up wrapping (encrypting) the mount passphrase
+> with the user login password and the DEFAULT SALT VALUE. A unique salt
+> value among almost all installations makes them a convenient target
+> for a rainbow table attack on the wrapped-passphrase file.
+
+> I got here because I am dabbling with a config package to implement
+> mandatory eCryptfs encrypted home for all users of a system
+
+Use CVE-2014-9687. Our interpretation is that this is a vendor CVE
+request based on a vendor's perspective that ecryptfs-setup-private's
+use of the default salt was never the intended behavior. (For example,
+http://bazaar.launchpad.net/~ecryptfs/ecryptfs/trunk/view/head:/doc/beginners_guide/ecryptfs_beginners_guide.tex
+says "It is highly advised that you also provide a salt along with the
+password, which will help make an attack against your files harder
+than if you use the default salt.")
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJU8T+GAAoJEKllVAevmvmsK88H/RM59bZPtTnS7oPAsXrAmYeY
+7zx+ZkmYxwOpTr5HQg/IZw16MnSb83GG7YtRa6XjTadf8jBYuzZpHxAnWncjo+em
+6Q3fmTG9yayBcZVV/7/99+mvOcbHE+sF20qg/imRawHUEWQx8wVxk2Z/G6Ef4Eff
+kM2fhxKJRfRo1Xb7r3ZPsnQzA2xz3aO9EZaqbsGsQCSoFp9yEmIqiCHL7f8datOw
+lOfLJX4U+au/IMMxGkGr+gZZYMCVZb7TUnQDIQXDB1oC4W6Lk5yWfKOqI/3pmaie
+muK0BpzE5P4RMLgnP2voHuvOXM9WnjlTeV1wC80qYMVP9UJsjWiaMIV5d1shxYw=
+=RVyA
+-----END PGP SIGNATURE-----
