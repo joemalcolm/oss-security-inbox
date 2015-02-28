@@ -1,16 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/29/13
-Message-ID: <20150129125314.GA3439@dhcp-25-225.brq.redhat.com>
-Date: Thu, 29 Jan 2015 13:53:14 +0100
-From: Petr Matousek <pmatouse@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request -- Linux kernel - net: sctp: slab corruption from use after free on INIT collisions
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/28/9
+Message-Id: <9BED3ED4-66D7-4DA7-8F04-116ADF2A493F@gmail.com>
+Date: Sun, 1 Mar 2015 00:59:18 +0100
+From: Zubin Mithra <zubin.mithra@...il.com>
+To: blinken@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: PuTTY fails to clear private key information from memory
 Content-Type: text/plain; charset=utf-8
 
-Can please be CVE assigned to
-http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=600ddd6825543962fb807884169e57b580dba208
+Signed PGP part
+Use CVE-2015-2157.
 
-Thanks,
--- 
-Petr Matousek / Red Hat Product Security
-PGP: 0xC44977CA 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
+This falls into a narrow set of situations in which a CVE ID can be
+assigned even though the issue does not cross privilege boundaries.
+The vendor is specifically announcing this as "This is a security
+vulnerability." (Also, wiping private-key memory is a conventional
+behavior seen in many products. It is not the same as wiping any
+memory block that any researcher may feel is sensitive in some way.)
+
+> http://www.chiark.greenend.org.uk/~sgtatham/putty/wishlist/private-key-not-wiped-2.html
+
+> However, if you ever told Pageant to delete a key from memory, it
+> would not have properly deleted it: it would still have retained a
+> copy by mistake due to this bug.
+
+Because of the "this bug" wording, a single CVE ID is assigned.
+However, in general, these two cases could be distinguished:
+
+  - violating a user's reasonable expectations about what preemptive
+    memory wiping should occur
+
+  - providing a UI feature advertised as a way to tell a product to
+    wipe a key from memory, accompanied by actual behavior in which no
+    wiping occurs
+
+with separate CVE IDs. In other words, there would be two CVE IDs if
+there were two bugs (one for each case) fixed independently.
+
+--
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+
