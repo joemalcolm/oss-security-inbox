@@ -1,26 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/11/13
-Message-ID: <20150211190009.GA27822@eldamar.local>
-Date: Wed, 11 Feb 2015 20:00:09 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/28/7
+Message-ID: <20150228203814.GU23507@oevtugenva.nrevsny.pk>
+Date: Sat, 28 Feb 2015 15:38:14 -0500
+From: Rich Felker <dalias@...c.org>
 To: oss-security@...ts.openwall.com
-Cc: CVE Assignments MITRE <cve-assign@...re.org>
-Subject: Re: heap overflow in procmail
+Cc: sstewartgallus00@...angara.bc.ca, ryao@...too.org
+Subject: Re: Re: CVE request: Linux kernel silently ignores MS_RDONLY for bind mounts
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Thu, Feb 26, 2015 at 02:58:17PM -0500, Daniel Micay wrote:
+> The commit adding this in 2.6.26 did actually document the weird
+> behaviour, so I guess it's just "by design". Users of the API like LXC,
+> Docker and systemd would likely have to iterate over /proc/self/mounts
+> and remount everything due to the way MS_REC works. Anyway, there's
+> clearly something wrong here when containers are claiming to have a
+> read-only mount feature but writes to the directory tree aren't prevented...
 
-On Wed, Jan 21, 2015 at 03:15:04PM +0100, Jakub Wilk wrote:
-> * Tavis Ormandy <taviso@...gle.com>, 2014-09-03, 11:52:
-> >I noticed a heap overflow in procmail when parsing addresses with
-> >unbalanced quotes.
-> 
-> Unfortunately, there's more:
-> https://bugs.debian.org/769937
+I'm wondering what the actual impact of this issue is supposed to be.
+Why would any of the uids inside the container have write access to a
+shared filesystem on which their uids are presumably not even
+meaningful? It seems to me like this would only affect world-writable
+files/directories on the shared filesystem, which sound like a bad
+idea to begin with.
 
-For this an Darmochwal provided a patch to the Debian bugtracker:
-
-https://bugs.debian.org/cgi-bin/bugreport.cgi?msg=11;filename=formail.patch;att=1;bug=769937
-
-Regards,
-Salvatore
+Rich
