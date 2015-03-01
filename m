@@ -1,45 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/08/1
-Message-ID: <Pine.LNX.4.64.1502072255220.4091@beijing.mitre.org>
-Date: Sat, 7 Feb 2015 22:55:55 -0500 (EST)
-From: cve-assign@...re.org
-To: Kurt Seifried <kseifried@...hat.com>
-cc: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>
-Subject: Re: kgb-bot can be crashed by some network traffic
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/01/2
+Message-ID: <54F292A6.2000000@treenet.co.nz>
+Date: Sun, 01 Mar 2015 17:16:38 +1300
+From: Amos Jeffries <squid3@...enet.co.nz>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2015-0881
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=776424
->
-> Source: kgb-bot
-> Version: 1.33-2
-> Severity: important
-> Tags: security
->
-> 2015.01.19 18:08:39: Listening on http://0.0.0.0:9999?session=KGB
-> 2015.01.19 18:08:43: Connected to freenode (holmes.freenode.net)
-> 2015.01.19 18:08:43: Joining #commits...
-> 2015.01.19 18:08:43: Connected to oftc (graviton.oftc.net)
-> 2015.01.19 18:08:43: Joining #ikiwiki #vcs-home #git-annex...
-> Did not get DONE/CLOSE event for Wheel ID 73 from IP 222.186.34.155 at
-> /usr/share/perl5/POE/Component/Server/SimpleHTTP.pm line 221.
-> I had a problem posting to event Got_Request of session SOAPServer for
-> DIR handler '.*'. As reported by Kernel: 'No such file or directory',
-> perhaps the session name is spelled incorrectly for this handler? at
-> /usr/share/perl5/POE/Session.pm line 483.
->
-> This has happened to me twice now, and it takes the bot down.
->
-> not sure how exploitable this is though.
->
-> -- 
-> Kurt Seifried -- Red Hat -- Product Security -- Cloud
-> PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+On 24/02/2015 4:34 a.m., Kurt Seifried wrote:
+> Regarding CVE-2015-0881
+> 
+> http://jvn.jp/en/jp/JVN64455813/index.html 
+> http://jvndb.jvn.jp/en/contents/2015/JVNDB-2015-000019.html
+> 
 
-Use CVE-2015-1554.
+JPCERT has now provided me a copy of the attack. They have requested I
+not reveal the details, so I am treating that and the patch details as
+embargoed for the time being.
 
----
+Without revealing too much (I hope) I can confirm:
 
-CVE assignment team, MITRE CVE Numbering Authority M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+* It is a known vulnerability
+ - to upstream that is, but no CVE assigned.
+
+* The initial report of this issue to upstream occured during 2009.
+
+* Squid 1.x, 2.x, and 3.0 releases are all vulnerable.
+
+* All Squid-3.1 stable releases are not vunerable.
+ - eg, you can bump the fixed version number back to 3.1.1 for most OS
+distributions.
+
+
+For the record; there is now FALSE information floating around in some
+CVE-2015-0881 "copies" about it being about CRLF issues. The Cisco
+report came to my attention first, but they are not alone.
+
+To all those people cut-n-pasting blurb text from CWE-113 in place of
+the JPCERT description: please dont do that. There are multiple "HTTP
+response splitting" attack vectors which have nothing to do with the
+(current) CWE-113 description. This is one of those cases.
+
+HTH
+
+Amos Jeffries
+Squid Software Foundation
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.22 (MingW32)
+
+iQIcBAEBAgAGBQJU8pKmAAoJEGvSOzfXE+nLB1wQAIXeG2dUuCKIZL/Pj+992OjM
+wHyJrewmS1LYpHnbr/HdzG3vP65HlAl81jdBZEq+vD1Ma9s7gftewQB/sVhYE8Hy
+2XKIO6is3vJrE16MZtm8BWo3hgYAbm5E3Ks2ejkVbbPFO1reMHsyzHxV10UBW+Zm
+MwawiWrAb3ZI7pKMOjHhGtZCBgLd3ZaiBqgLKJisC3F0FPKSHlmptNhBnwkCsHb6
+ndBTjAfareCbGOpwwNe4mLqhUcvQeqz2f/94aB1COR9xz/iqaZlgXsz5TOjqthYi
+9Xck2AKKsQKPjQs32/eTsmCQSwAIhTYcoHa6qhpbldORKo985Od2G2BJrIQe1i/S
+SCKAClec/I+ICFiQc24nWl2NA9qQ7GOB+JU5B9N1DvcH8RVWVvyIsh2Z/hJmMMrO
+aPWGUI/eu/Q6WxbEqT0g9R3g+2bFQtTEiLWeJ5PcO/zI0LpRV0nX+Clc9GQMj/uk
+8glwig4jYXPpiqrWB9JmN/LUy1IqfP/ioIAqLuB/FmX5LMyTd5WkoPcs056kGE+1
+hWOqKAwSFf49zl/Y+GN+OPz56Iyy27LA7A74R35URR1D2gBg/xh2+ojLYqfcJm0S
+gZBBd5IJkmb3uF2rHOIgCMLIfehAvR+wPdjK/qNVGiaXPnIFmE0NPd5mKeXVJtSA
+redKcbc20FKHz3skctD/
+=P1gX
+-----END PGP SIGNATURE-----
