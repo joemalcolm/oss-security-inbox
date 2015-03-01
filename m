@@ -1,28 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/14/3
-Message-ID: <me124c$4ga$1@ger.gmane.org>
-Date: Sat, 14 Mar 2015 11:22:04 +0100
-From: Damien Regad <dregad@...tisbt.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2014-6316: URL redirection issue in MantisBT
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/01/1
+Message-Id: <20150301011037.082DC42E016@smtpvbsrv1.mitre.org>
+Date: Sat, 28 Feb 2015 20:10:37 -0500 (EST)
+From: cve-assign@...re.org
+To: brian.carpenter@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: pngcrush 1.7.83 crash bug (most likely exploitable)
 Content-Type: text/plain; charset=utf-8
 
-On 2014-12-05 23:35, P Richards wrote:
-> "Paul Richards also found another redirection issue in permalink_page.php,
- > which turned out to have the same root cause."
->
-> And nik-picking here, but the issue that I identified in permalink_page.php
- > I believe was a cross site scripting issue and not a URL redirection
- > vulnerability so should probably be allocated a separate CVE
- > identifier?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-For the record, you reported it to me as a redirection, in the PDF 
-document you sent by e-mail.
+> I found a crash bug in pngcrush that is most likely
+> exploitable and wanted to get a CVE assignment for it. I've already been in
+> contact with the pngcrush author and this bug has been fixed in pngcrush
+> v1.7.84 (which was released today, no mention of this in the changelog
+> though: http://sourceforge.net/p/pmt/news/2015/02/pngcrush-1784-released/).
 
-Anyway, since I came upon this following up on another user's report for 
-the same issue, I'm setting things straight now with a CVE request for 
-the XSS:
+> Access violation on destination operand
 
-http://thread.gmane.org/gmane.comp.security.oss.general/16119
+> Exploitability Classification: EXPLOITABLE
+> Explanation: The target crashed on an access violation at an address
+> matching the destination operand of the instruction. This likely indicates
+> a write access violation, which means the attacker may control the write
+> address and/or value.
 
+> I've attached the test case but here is a hexdump:
+> 0000000 4d8a 474e 0a0d 0a1a 0000 0000 3030 3030
+> 0000010
 
+Use CVE-2015-2158.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJU8ma2AAoJEKllVAevmvmsFAYH/0ujgIRpqfsSkLyHnkg/Fl5s
+VyZGtK6cQYxhOGcIpc6Jr4BwrdeL3+lJhyWxKoighU334ZrCmSfaMnZPfiQluOcH
+cCNBsFp+8YyIazB9PMyds3s5MxpwhIcp0DuD4aIQBOXiciMgEF64LvW/zhfLZ4QC
+GmlcHmKYs5pYgbc/nFxnhZ9fIlLtkghyPCJb4F6b80Z6S/58UCV73QiULUFP3zhS
+3XftzLhEJuCUxqXg6K0fd9NTxujrs7oHUmS47ElZLnN1o/TvqnO6uDfEPzfMqGn1
+4/0ZNN56EjTumiGqij6LxxbbNX5JiqNEA8lBmMI5uW3+2P/muAk3m3/Q0x+xm1E=
+=BZb9
+-----END PGP SIGNATURE-----
