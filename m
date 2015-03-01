@@ -1,34 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/03/6
-Message-ID: <CALH-=7wR5r4z=NCJpPaUWmHhHzeik_oM2xrd22WJxSVStuFXEw@mail.gmail.com>
-Date: Sat, 3 Jan 2015 10:02:21 +0100
-From: Steffen Rösemann <steffen.roesemann1986@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/01/4
+Message-ID: <871tl9vvnp.fsf@mid.deneb.enyo.de>
+Date: Sun, 01 Mar 2015 11:50:34 +0100
+From: Florian Weimer <fw@...eb.enyo.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request -- Contenido 4.9.x - 4.9.5 -- Reflecting XSS vulnerability in exception handler with deactivated AMR function
+Subject: Re: Re: CVE request: BD-J implementation in libbluray
 Content-Type: text/plain; charset=utf-8
 
-Hello Josh, Steve, vendors, list.
+* Sven Schwedas:
 
-I found a reflecting XSS vulnerability in the exception handler function of
-CMS Contenido, which affects all versions from 4.9.x to 4.9.5 when using
-having disabled advanced mod rewrite (AMR) function, which is used for
-generating SEO-friendly URLs.
+> On 2015-02-23 10:34, Jean-Baptiste Kempf wrote:
+>> On 23 Feb, Florian Weimer wrote :
+>>> Yes, I do think full sandboxing is required because content publishers
+>>> have attacked end user system integrity in the past, so I don't think
+>>> they can be trusted.
+>> 
+>> BD-J code comes from Blu-Rays. Downloading non-official blurays and
+>> executing it is like taking random binaries from internet and running
+>> them.
+>
+> And the Sony rootkit came from official, store-bought discs …
 
-The vulnerability can be triggered by submitting arbitrary HTML- and/or
-JavaScriptcode in parameters "idcat", "idart" and "lang" to the PHP file
-front_content.php.
+Someone seems to have worked independently on a proof of concept for
+this issue:
 
-Can you assign a CVE ID for it please?
-
-Greetings and Happy New Year,
-
-Steffen Rösemann
-
-References:
-
-[1] http://sroesemann.blogspot.de/2014/12/sroeadv-2014-03.html
-[2]
-http://sroesemann.blogspot.de/2014/12/report-for-advisory-sroeadv-2014-03.html
-[3] http://www.contenido.org/de/cms/CONTENIDO/News/index-c-2044-3.html
-[4] http://seclists.org/fulldisclosure/2014/Dec/111
-
+<https://www.nccgroup.com/en/blog/2015/02/abusing-blu-ray-players-pt-1-sandbox-escapes/>
