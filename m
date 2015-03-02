@@ -1,30 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/25/4
-Message-ID: <54C50C4C.6010807@openwall.com>
-Date: Sun, 25 Jan 2015 18:31:24 +0300
-From: Alexander Cherepanov <ch3root@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: SEANux 1.0 remote back door
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/02/5
+Message-ID: <87385ny2dn.fsf@redhat.com>
+Date: Mon, 02 Mar 2015 14:07:00 +0100
+From: Martin Prpic <mprpic@...hat.com>
+To: "oss-security\@lists.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE request: Maven downloads JARs via HTTP
 Content-Type: text/plain; charset=utf-8
 
-On 2015-01-25 14:25, Larry W. Cashdollar wrote:
->
->> On Jan 25, 2015, at 3:42 AM, Alexander Cherepanov <ch3root@...nwall.com> wrote:
->>
->> On 2015-01-24 23:05, Larry W. Cashdollar wrote:
->>> SEANux 1.0 is a linux distribution Available here developed by the Syrian Electronic Army.
->>
->> Is it open source?
->
-> Yes, it’s based off of ubuntu and uses those software repositories for updates.
+Hi,
 
-Sure, it's based on some open-source software, it wouldn't be a linux 
-distribution otherwise. But is it open source itself? Actually, I'm not 
-sure what does this mean exactly but it's the second distro brought to 
-oss-security recently (the first one was Red Star) which seems to be 
-more appropriate for full-disclosure than for oss-security.
+I don't see a CVE assigned for this anywhere:
 
-But maybe it's just me...
+https://jira.codehaus.org/browse/MNG-5672
+
+"Maven Central can now be accessed via HTTPS. I think the default
+configuration should be switched to use that, rather than the current
+unsecured HTTP transport."
+
+This was fixed in Maven 3.2.3:
+
+https://maven.apache.org/docs/3.2.3/release-notes.html
+
+Thanks,
 
 -- 
-Alexander Cherepanov
+Martin Prpič / Red Hat Product Security
