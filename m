@@ -1,60 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/10/1
-Message-ID: <54FEBC42.60104@oracle.com>
-Date: Tue, 10 Mar 2015 09:41:22 +0000
-From: John Haxby <john.haxby@...cle.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Another Python app (rhn-setup: rhnreg_ks) not checking hostnames in certs properly CVE-2015-1777
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/02/3
+Message-id: <fae0de0ca6ac.54f3ef00@langara.bc.ca>
+Date: Mon, 02 Mar 2015 05:02:56 +0000 (GMT)
+From: Steven Stewart-Gallus <sstewartgallus00@...angara.bc.ca>
+To: Rich Felker <dalias@...c.org>
+Cc: oss-security@...ts.openwall.com, ryao@...too.org
+Subject: Re: CVE request: Linux kernel silently ignores MS_RDONLY for bind mounts
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hello,
 
-On 09/03/15 20:39, Kurt Seifried wrote:
-> I find this really hard to believe based on the past. So you're
-> saying Oracle is willing to work with Red Hat and the community in
-> general now? Can we get access to the MySQL security bugs and test
-> cases for example? This would be HUGELY helpful to the community.
+I suppose it's time I gave my opinion on this matter.  Personally, I
+am ambivalent about whether this really deserves a CVE (or if the CVE
+should be with the Linux kernel or with the applications that misuse
+this API) as I feel it is the responsibility of API users like LXC and
+systemd to make sure that they aren't misusing these interfaces but I
+would still like this feature to be implemented and I will explain
+why. For my own needs (with my own project at
+https://gitorious.org/linted/linted) I sandbox processes without
+raising privileges by means such as setuid applications and so can
+only map uids and gids to the current user.  However, I still need to
+prevent certain processes from writing to the user's home directory
+and as such need to mount the /home hierarchy read only and
+recursively.  Mostly though this is not a big problem for me because I
+only need to mount the user's home directory when developing (because
+I need to run binaries that are built inside the user's home
+directory).  Also, there is the possibility of bind mounting special
+hierarchies such as /dev, /proc and /sys read only (these are not just
+one filesystem but need to be bound recursively) but I don't consider
+this a strong use case.
 
-I have no link to MySQL.   You need to take this up with those people.
+Thank you,
+Steven Stewart-Gallus
 
-> 
-> I'll believe Oracle is willing to work with the community when I 
-> actually see Oracle participate and help the community. Until then
-> it's just words from some random Oracle employee and most likely
-> isn't official policy.
-> 
-> So prove to us you want to work with us (e.g. by opening up the
-> MySQL security bugs/test cases) and we can definitely look at
-> future cooperation.
-
-I would really like to be able to do that, but this is a political
-problem outside my control.
-
-We, the linux team, already contribute not inconsiderable amounts to
-the community: we're a big contributor to xen, to parts of the linux
-kernel including btrfs, ocfs2 (obviously), nfs ... the MAINTAINERS
-file lists 13 maintainers with @oracle.com maintainers.   It wouldn't
-take a lot of searching to find our contributions to numerous other
-projects.
-
-None of this, however, has anything to do with the matter at hand.  If
-no one from Red Hat is unwilling to cooperate in getting a single
-backward-compatible resolution to incorporating PEP-466 into the
-distro python versions then perhaps someone else is.
-
-If there's interest, I'll gladly work with anyone who wants to find a
-way to do this.   This is just me trying, as usual, to do the best by
-everyone.  I don't speak for Oracle, I'm not paid enough for that, I'm
-just trying to make sure that we don't wind up with a backported fix
-that makes the overall situation worse.
-
-So can we please set aside the anti-corporate sentiments?
-jch
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iF4EAREIAAYFAlT+vDYACgkQRQu7fpQvo8iCJAD/fE7RhFUrNTJkvxkaBBidQvG4
-m3VLzug74/zMt/oQFbEA/A2ykhF8V3Cnbvt23OvczCpJOOxr/d9cB0M9m+IvpZtA
-=mKaH
------END PGP SIGNATURE-----
