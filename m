@@ -1,27 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/17/7
-Message-ID: <5807406.e1kI3bJFPT@eee>
-Date: Sat, 17 Jan 2015 12:55:41 +0100
-From: Raphael Geissert <geissert@...ian.org>
-To: oss-security@...ts.openwall.com
-Cc: christoph.dalitz@...niederrhein.de
-Subject: CVE-2005-2096 and gamera
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/02/7
+Message-Id: <20150302143715.ED7996C0041@smtpvmsrv1.mitre.org>
+Date: Mon,  2 Mar 2015 09:37:15 -0500 (EST)
+From: cve-assign@...re.org
+To: kseifried@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, tseaver@...ladion.com, matt@...thewwilkes.name, nathan@...gheem.us
+Subject: Re: XSS In Zope
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-While lurking around the Debian archive and codesearch[0], I noticed that 
-gamera[1] embeds a copy of zlib that is vulnerable to CVE-2005-2096.
+> https://bugs.launchpad.net/zope2/+bug/490514
+> https://github.com/zopefoundation/Zope/commit/2abdf14620f146857dc8e3ffd2b6a754884c331d
 
-Oh joy.
+> There is an XSS vulnerability in ZMI pages that use the
+> manage_tabs_message querystring variable.
 
-(Debian's package doesn't seem to be affected, as it does an rm -r on the 
-embedded copy)
+> This bug is not actually present in the default ZMI, where the
+> views are all implemented as DTMLFiles. Rather, it shows up in
+> add-on product code (such as GenericSetup) which use
+> PageTemplateFiles for the ZMI, but call into the existing DTML
+> header and footer templates so::
+> 
+>   <h1 tal:replace="structure here/manage_page_header">HEADER</h1>
+>   <h1 tal:replace="structure here/manage_tabs">TABS</h1>
+>   ...
+>   <h1 tal:replace="structure here/manage_page_footer">FOOTER</h1>
+> 
+> In this case, the code in the call_with_ns function (in
+> Products.PageTemplates.ZRPythonExpr) fails to ensure that "tainting"
+> is preserved.
 
-[0]http://codesearch.debian.net/
-[1]http://gamera.sourceforge.net/
+> preserve tainting when calling into DTML from ZPT.
 
-Cheers,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+> src/Products/PageTemplates/ZRPythonExpr.py
+> +   if hasattr(request, 'taintWrapper'):
+> +       request = request.taintWrapper()
+
+Use CVE-2009-5145.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJU9HUHAAoJEKllVAevmvmsen4H/j/LhKRNPKej5EjMgaIEgQHu
+VRfuIRy21r1xBJLMtN+JHofRdknvjHFbVBlzI2rRyGUd8YwOiA0HM2sz1/sR4F6z
+gwm97+XDhi6YHIJHHlMhGOM1rrlx7nu0HHgWxwNFL+7LxbuyaZUYsskvUopyTD/J
+Y60vg4lkkXf0jIphw1Qj8Yhzk0OIvKxjUL1V+Fd8aiLiHoXDA6fovkVI9be0deWB
+OCeHpXE2DHpvW9IZLio+QsBaajHxfiKc2ib2k4ilBwxE6B4c7OpsBbgC6A6YHMhm
+WtqK8h8pRxX+IwISSZS1Ar+OSlw9lKuSox09s3tZyoLpmYjhPeEisDm0YdbxPwE=
+=ankS
+-----END PGP SIGNATURE-----
