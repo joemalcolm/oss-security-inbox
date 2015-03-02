@@ -1,21 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/07/6
-Message-ID: <54D64964.6090202@redhat.com>
-Date: Sat, 07 Feb 2015 10:20:36 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>
-Subject: gcj jar manifest parsing segfault with classpath references
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/02/8
+Message-ID: <87wq2zwe6o.fsf@redhat.com>
+Date: Mon, 02 Mar 2015 17:34:55 +0100
+From: Martin Prpic <mprpic@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: Maven downloads JARs via HTTP
 Content-Type: text/plain; charset=utf-8
 
-https://bugzilla.redhat.com/show_bug.cgi?id=524177
+gremlin@...mlin.ru writes:
 
-not sure if this really counts since an attacker that controls the
-manifest can include arbitrary stuff.
+> On 2015-03-02 14:07:00 +0100, Martin Prpic wrote:
+>
+>  > "Maven Central can now be accessed via HTTPS. I think the
+>  > default configuration should be switched to use that, rather
+>  > than the current unsecured HTTP transport."
+>
+> Does it use any sort of package signing and signature verification?
 
+Seeing as the patch only does s/http/https/, I would say, unfortunately, no.
+
+https://git-wip-us.apache.org/repos/asf?p=maven.git;a=patch;h=92161918
 
 -- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Martin Prpič / Red Hat Product Security
