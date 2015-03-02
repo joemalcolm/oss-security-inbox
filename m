@@ -1,130 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/04/11
-Message-ID: <1423073838.11205.24.camel@trustmatta.com>
-Date: Wed, 04 Feb 2015 19:17:18 +0100
-From: Florent Daigniere <florent.daigniere@...stmatta.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Apache 2.4 mod_ssl SSLSessionTickets -- others vulnerable?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/02/4
+Message-ID: <54F40C5C.1040407@redhat.com>
+Date: Mon, 02 Mar 2015 00:08:12 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com, jvn@....jp, Assign a CVE Identifier <cve-assign@...re.org>
+Subject: Re: CVE-2015-0881
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 2015-02-04 at 11:50 -0600, Mark Felder wrote:
+So for those of us vendors/etc that need to backport security fixes
+and/or confirm our software is fixed how are we supposed to do this?
+
+How long will the patch/attack information be embargoed for?
+
+Also why has this been covered up for over 5 years and is now still a
+secret? I'm very confused and I have some grave concerns about how
+JVN/upstream is handling this.
+
+On 28/02/15 09:16 PM, Amos Jeffries wrote:
+> On 24/02/2015 4:34 a.m., Kurt Seifried wrote:
+>> Regarding CVE-2015-0881
 > 
-> On Wed, Feb 4, 2015, at 10:55, Florent Daigniere wrote:
-> > On Wed, 2015-02-04 at 10:35 -0600, Mark Felder wrote:
-> > > From the 2.4.12 changelog:
-> > > 
-> > > 
-> > >   *) mod_ssl: New directive SSLSessionTickets (On|Off).
-> > >      The directive controls the use of TLS session tickets (RFC 5077),
-> > >      default value is "On" (unchanged behavior).
-> > >      Session ticket creation uses a random key created during web
-> > >      server startup and recreated during restarts. No other key
-> > >      recreation mechanism is available currently. Therefore using
-> > >      session
-> > >      tickets without restarting the web server with an appropriate
-> > >      frequency
-> > >      (e.g. daily) compromises perfect forward secrecy. [Rainer Jung]
-> > > 
-> > > 
-> > > So if you use Apache 2.4 and care about PFS protecting your data, you
-> > > should turn this feature off. This appears to be an implementation issue
-> > > because there is no other way for Apache to recreate keys. I don't know
-> > > a lot about the fine details of Session Tickets, but can anyone care to
-> > > comment if there are other known bad implementations of session tickets
-> > > out there? Does this affect Apache 2.2? Nginx? Lighttpd?
-> > > 
-> > > 
-> > > Thanks
-> > > I find this bizarre that a known security weakness like this is left
-> > > "on" by default...
-> > 
-> > You're right, it's "bizarre"
-> > 
-> > I've tried to make some noise about it two years ago [1] ... 
-> > 
-> > IMHO it's OpenSSL's default that should be changed. The server
-> > implementation shouldn't give a ticket if it's picked a PFS enabled
-> > cipher (or a cipher which aims at providing better security than
-> > AES128-CBC) unless explicitly told to do so (the case where there is
-> > more than one server).
-> > 
-> > Apache HTTPd's new setting (SSLSessionTicketKeyFile), allowing you to
-> > set the ticket key is *DANGEROUS* as documented [1]. It encourages users
-> > explicitly to store the key on a forensically carvable medium...
-> > "The ticket key file contains sensitive keying material and should be
-> > protected with file permissions similar to those used for
-> > SSLCertificateKeyFile."
-> > Which is exactly what you shouldn't do!
-> > 
+>> http://jvn.jp/en/jp/JVN64455813/index.html 
+>> http://jvndb.jvn.jp/en/contents/2015/JVNDB-2015-000019.html
 > 
-> Thanks for the details, Florent. After reviewing this blog post [1] it's
-> much clearer now, but I'm still a bit fuzzy on if "session caching" and
-> "session IDs" (RFC 5246, TLS 1.2) -- also as identified by Qualys
-> SSLLabs line item "Session resumption (caching)" -- are the same; is the
-> Session Cache caching session IDs? I only ask because I know that
-> webservers have had SSL Session Cache features for years, but RFC 5246
-> is TLS 1.2 in its entirety and I believe I've seen this feature predate
-> TLS 1.2. Was session caching / IDs always part of the SSL/TLS spec, now
-> superseded by the newer TLS 1.2 RFC?
+> 
+> JPCERT has now provided me a copy of the attack. They have requested I
+> not reveal the details, so I am treating that and the patch details as
+> embargoed for the time being.
+> 
+> Without revealing too much (I hope) I can confirm:
+> 
+> * It is a known vulnerability
+>  - to upstream that is, but no CVE assigned.
+> 
+> * The initial report of this issue to upstream occured during 2009.
+> 
+> * Squid 1.x, 2.x, and 3.0 releases are all vulnerable.
+> 
+> * All Squid-3.1 stable releases are not vunerable.
+>  - eg, you can bump the fixed version number back to 3.1.1 for most OS
+> distributions.
+> 
+> 
+> For the record; there is now FALSE information floating around in some
+> CVE-2015-0881 "copies" about it being about CRLF issues. The Cisco
+> report came to my attention first, but they are not alone.
+> 
+> To all those people cut-n-pasting blurb text from CWE-113 in place of
+> the JPCERT description: please dont do that. There are multiple "HTTP
+> response splitting" attack vectors which have nothing to do with the
+> (current) CWE-113 description. This is one of those cases.
+> 
+> HTH
+> 
+> Amos Jeffries
+> Squid Software Foundation
+> 
 > 
 
-There's two different resumption mechanisms. Both involve accessing the
-key material, what differs is where/how it's retained.
-
-session-ids: The server assigns an id to the key material and sends the
-id to the client. This requires the server to keep state but is widely
-supported by all clients (SSLv3 does that already)
-
-session-tickets: The server creates a ticket containing the encrypted
-key material and asks the client to safekeep it for him. This doesn't
-require the server to keep any state and therefore scales better... but
-is a TLS extension that not all clients support.
+-- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
 
-In practice, even if key session-ids are in use, the key material might
-leave the server (a very common setup is to have a memcache server store
-the key material for all servers in a datacenter). This is configured
-using SSLSessionCache.
-
-> If I'm understanding that correctly the following would be true: the use
-> of session caching is not a known vulnerability, but the use of session
-> tickets is a potential vulnerability. The design of the session tickets
-> (RFC 5077) appears to solve a specific problem: reducing expensive TLS
-> renegotiation when you have a cluster of servers and the session is not
-> guaranteed to stick to a specific server/load balancer.
-
-Session Tickets are about "making it scale in very large environment
-(several datacenters)" or "when memory is limited (think embedded/IoT)"
-
->  Additionally
-> OpenSSL lacks key rotation for session tickets, so it seems safe to
-> assume all software using OpenSSL with session tickets enabled are
-> likely not working around this problem by enforcing their own key
-> rotation.
-> 
-
-Yes. The problem doesn't just affect browsers... and it's not "just" PFS
-either.
-
-Some people go out of their way to try to have more than 128bits of
-security or to use non-AES based ciphers... their efforts are likely to
-be vain if session tickets as OpenSSL issues them are issued.
-
-> This feels like a feature that should always be turned off unless your
-> environment absolutely requires it; especially if you have measurable
-> performance impact / negative client experience without it.
-> 
-
-Don't get me wrong, I think that session tickets are a good thing and
-that all clients should have support for it... but as far as the server
-side implementations go, I agree with you; they shouldn't be enabled by
-default.
-
-Whether it's Google, Facebook, Twitter, youname it, they all had to
-reimplement their own session ticket magic; it hopefully does the right
-thing (PFS wise).
-
-Regards,
-	Florent
-
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
