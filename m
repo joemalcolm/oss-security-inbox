@@ -1,47 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/20/7
-Message-ID: <CALoOobPz3A6spHVWGaiZc_zvWtf0oUizwCXRk4T=CFu+WbJMFg@mail.gmail.com>
-Date: Thu, 19 Feb 2015 23:25:01 -0800
-From: Paul Pluzhnikov <ppluzhnikov@...gle.com>
-To: Tim Brown <tmb@...35.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Fixing the glibc runtime linker
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/02/9
+Message-ID: <20150302172645.GC12838@gremlin.ru>
+Date: Mon, 2 Mar 2015 20:26:45 +0300
+From: gremlin@...mlin.ru
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: Maven downloads JARs via HTTP
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Feb 19, 2015 at 10:30 PM, Tim Brown <tmb@...35.com> wrote:
-> On Friday 20 February 2015 01:38:31 Paul Pluzhnikov wrote:
+On 2015-03-02 17:34:55 +0100, Martin Prpic wrote:
 
->> FWIW, relative RPATHs are quite fundamental to our test execution
->> environment, and any patch that unconditionally ignores them would
->> have to be reverted in our tree.
->
-> That's useful to know. Is that for setuid binaries or more generally?
+ >>> "Maven Central can now be accessed via HTTPS. I think the
+ >>> default configuration should be switched to use that, rather
+ >>> than the current unsecured HTTP transport."
 
-We don't build/test setuid binaries, so if you only enforced the
-restriction for setuid binaries, then we wouldn't have any problem.
+ >> Does it use any sort of package signing and signature
+ >> verification?
 
-> As I
-> noted, it would be dead easy only to use the part of the patch that rejects
-> them for the former only. Although as I said, that offers less protection.
-> Would that make the patch more consumable?
+ > Seeing as the patch only does s/http/https/,
 
-Yes, that form would work for us.
+Obviously, that doesn't really help.
 
-> Another option would be to have
-> something like /etc/suid-debug which could flag that an override is in
-> operation.
+ > I would say, unfortunately, no.
 
-You could also reject relative RPATH for all binaries, unless a
-specific LD_ALLOW_RELATIVE_RPATH or some such environment variable is
-set.
-
-We could then set that environment variable in the test execution
-environment, but not outside of it.
-
-I guess my point is that we must have the ability to use relative
-RPATH in testing, so either we'll have to revert your patch, or make
-an escape hatch of some sort.
+Well... it seems like we have yet another class of vulnerabilities
+fully inducted by stupidity: "%s lacks integrity check on update".
 
 
 -- 
-Paul Pluzhnikov
+Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
+GPG: 8832FE9FA791F7968AC96E4E909DAC45EF3B1FA8 @ hkp://keys.gnupg.net
