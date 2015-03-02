@@ -1,30 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/20/3
-Message-ID: <CALoOobPnytiXWVe5yogLt-00Mdu_b1VbXLAWVezfjTy4yaU4Kg@mail.gmail.com>
-Date: Thu, 19 Feb 2015 17:38:31 -0800
-From: Paul Pluzhnikov <ppluzhnikov@...gle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/02/6
+Message-ID: <20150302132554.GB12838@gremlin.ru>
+Date: Mon, 2 Mar 2015 16:25:54 +0300
+From: gremlin@...mlin.ru
 To: oss-security@...ts.openwall.com
-Subject: Re: Fixing the glibc runtime linker
+Subject: Re: CVE request: Maven downloads JARs via HTTP
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Feb 19, 2015 at 2:19 PM, Tim Brown <tmb@...35.com> wrote:
+On 2015-03-02 14:07:00 +0100, Martin Prpic wrote:
 
-> More often than not, the underlying issue is an empty element within the
-> DT_RPATH header or equivalent. Sometimes it's not, but even in those cases, it
-> is largely that one or more elements isn't qualifed (i.e. it doesn't start
-> with /). The attached patch fixes this, by ignoring any elements of DT_RPATH,
-> LD_LIBRARY_PATH that do not start with a /, and/or junking any use of dlopen
-> where the filename is likewise unqualified.
->
-> Won't this break stuff?
+ > "Maven Central can now be accessed via HTTPS. I think the
+ > default configuration should be switched to use that, rather
+ > than the current unsecured HTTP transport."
 
-FWIW, relative RPATHs are quite fundamental to our test execution
-environment, and any patch that unconditionally ignores them would
-have to be reverted in our tree.
+Does it use any sort of package signing and signature verification?
 
-Also, don't you want to discuss this on libc-alpha? oss-security could
-be all for it, but without buy-in from libc-alpha your patch is
-unlikely to be going anywhere.
 
 -- 
-Paul Pluzhnikov
+Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
+GPG: 8832FE9FA791F7968AC96E4E909DAC45EF3B1FA8 @ hkp://keys.gnupg.net
