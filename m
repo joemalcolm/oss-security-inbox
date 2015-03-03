@@ -1,34 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/07/4
-Message-ID: <20150107145459.GB21575@mail.corp.redhat.com>
-Date: Wed, 7 Jan 2015 15:54:59 +0100
-From: Vasyl Kaigorodov <vkaigoro@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/03/3
+Message-ID: <54F587A6.1080603@debian.org>
+Date: Tue, 03 Mar 2015 10:06:30 +0000
+From: Simon McVittie <smcv@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: roundcubemail: possible CSRF attacks to some address book operations as well as to the ACL and Managesieve plugins
+Subject: Re: Re: Debian / xterm #779397
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On 03/03/15 09:19, Thomas Dickey wrote:
+> | From: "Kurt Seifried" <kseifried@...hat.com>
+> | 
+> | $ xterm -S/dev/pts/20
+> | *** buffer overflow detected ***: /usr/bin/xterm terminated
+> |
+> | Did this get a CVE? I don't see a DSA for xterm.
+> 
+> no - someone mentioned the problem in an email - nothing more was said
 
-Version 1.0.4 of Roundcube [1] contains a security fix:
-...
-Security: Fix possible CSRF attacks to some address book operations as
-well as to the ACL and Managesieve plugins.
-...
+There's some discussion on the Debian bug about whether this should be
+considered to be a security vulnerability, or just a bug. Not every
+buffer overflow is a vulnerability: it can only be a vulnerability if an
+attacker can trigger it.
 
-Upstream commit:
-https://github.com/roundcube/roundcubemail/commit/376cbfd4f2dfcf455717409b70d9d056cbeb08b1
+Is there any reason why it would be useful/sensible to pass untrusted
+(pseudo-terminal filename, fd) pairs to the -S option? It seems to me
+that if you're passing partially or entirely attacker-controlled
+filenames to this option, you have probably already lost.
 
-[1]: http://roundcube.net/news/2014/12/18/update-1.0.4-released/
+    S
 
-Can a CVE be assigned to this please?
-
-References:
-https://bugs.gentoo.org/show_bug.cgi?id=534766
-https://bugzilla.redhat.com/show_bug.cgi?id=1179780
-
-Thanks.
--- 
-Vasyl Kaigorodov | Red Hat Product Security
-PGP:  0xABB6E828 A7E0 87FF 5AB5 48EB 47D0 2868 217B F9FC ABB6 E828
-
-Content of type "application/pgp-signature" skipped
