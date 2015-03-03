@@ -1,57 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/06/5
-Message-ID: <54F980ED.2060702@treenet.co.nz>
-Date: Fri, 06 Mar 2015 23:26:53 +1300
-From: Amos Jeffries <squid3@...enet.co.nz>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/03/9
+Message-ID: <20150303182658.GA13127@eldamar.local>
+Date: Tue, 3 Mar 2015 19:26:58 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2015-0881
+Cc: CVE Assignments MITRE <cve-assign@...re.org>
+Subject: Re: Possible CVE Requests: libmspack: several issues
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi MITRE CVE assignment team,
 
-On 2/03/2015 8:08 p.m., Kurt Seifried wrote:
-> So for those of us vendors/etc that need to backport security
-> fixes and/or confirm our software is fixed how are we supposed to
-> do this?
+On Sun, Feb 22, 2015 at 07:55:55PM +0100, Moritz Mühlenhoff wrote:
+> On Tue, Feb 03, 2015 at 04:52:05PM +0100, Salvatore Bonaccorso wrote:
+> > Hi
+> > 
+> > Several issues with the libmspack library were reported recently in
+> > the Debian bugtracker by Jakub Wilk. An (older) copy of libmspack is
+> > also embedded in ClamAV (not verified if this version is also affected
+> > by these issues).
+> > 
+> > The reported bugs are the following:
+> > 
+> > null pointer dereference on a crafted CAB:
+> >  - https://bugs.debian.org/774665
+> > 
+> > CHM decompression: division by zero
+> >  - https://bugs.debian.org/774725
+> > 
+> > CHM decompression: pointer arithmetic overflow
+> >  - https://bugs.debian.org/774726
+> > 
+> > off-by-one buffer over-read in mspack/mszipd.c
+> >  - https://bugs.debian.org/775498
+> > 
+> > off-by-one buffer under-read in mspack/lzxd.c
+> >  - https://bugs.debian.org/775499
+> > 
+> > CHM decompression: another pointer arithmetic overflow
+> >  - https://bugs.debian.org/775687
+> > 
+> > Could CVEs be assigned for these issues?
 > 
-> How long will the patch/attack information be embargoed for?
-> 
-> Also why has this been covered up for over 5 years and is now still
-> a secret? I'm very confused and I have some grave concerns about
-> how JVN/upstream is handling this.
+> This seems to have fallen through the cracks.
 
+Can you assign CVEs for these issues, or is there anything more
+needed? 
 
-Until today it seems:
- https://jvn.jp/en/jp/JVN64455813/index.html
-
-Patch is
-<http://www.squid-cache.org/Versions/v3/3.1/changesets/b9619.patch> if
-you want to try back-porting. Take care though if you do, all the
-earlier versions have different logics surrounding how the connection
-data gets accounted.
-
-I hope this one is better for you. Still outstanding on Mitre's
-verdict about the CVE number though. JPCERT tell me that should be
-next week, but you probably know more than me how reliable an estimate
-that is.
-
-Amos
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.22 (MingW32)
-
-iQIcBAEBAgAGBQJU+YDtAAoJEGvSOzfXE+nLAr0P/A2t1MnOAlMFdiWfaIekX3YU
-3ONgvIXzBvI9jisBGO1PwREPhZ6M7CC8ogLwgyw07Em67aZ8BjKJg6CnbTE+7ioE
-hxtU6YnvAP6zbhtsjHuJoYEX/os93WrfTcnLQ81leGoHRpff59AYrFZaxI4gR5oo
-9FfjTkpZwwghVwcrFIGPlsQLgHVUg3YX+giDjdzGKJWCmr/kVq6dTuqkwKthyQC9
-r7ITCdy4t8VRcT8mEpUolN/caNbcJyK+1JhLILDD8F6J713U9DHpCKdhODbK0dhQ
-bDWmmUCjnUmpO+gCpoUqRovYODhq/80JbZlz1uI0aRmIc35SaPPGnjox58CN1gLs
-pBxNED4vY+OmfO/FjOF4a6D6WFm1vgHekCjl2jOijtdiAH9NvJg049yhc/hNfq/t
-Jkcbqtf7Soyu20GmVAdKqO0OAcF9Cban+Z7O5Ce3J5R6ipHzJDGFWXoZWGR3Kz2R
-qRK2r1h9j4hKDuD1hMAUwI5o23BfpJ0zLPT7Fe94bqNhx6kB8ouWAH8Ey49Mz76e
-FxDCWX597vu2ConCQG6pWM/XC36aEK/bBbgt2G1dARbwExKWUa8am3Up5PFlzqN8
-oGAHK/Bf0iskDu8EFOMt7/8InI3tPC2aikRYBwdbQLBpv9sIErkNXn0WN/GnVTFW
-1udFgNsQqloS4PAPDxdh
-=E5sM
------END PGP SIGNATURE-----
+Regards,
+Salvatore
