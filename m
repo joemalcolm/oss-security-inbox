@@ -1,56 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/15/4
-Message-Id: <20150315042616.DE2A46C0005@smtpvmsrv1.mitre.org>
-Date: Sun, 15 Mar 2015 00:26:16 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/03/10
+Message-Id: <20150303203916.EB7683AE009@smtpvbsrv1.mitre.org>
+Date: Tue,  3 Mar 2015 15:39:16 -0500 (EST)
 From: cve-assign@...re.org
-To: blinken@...il.com
+To: mprpic@...hat.com
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: vulnerabilities in libcsoap
+Subject: Re: CVE request: Maven downloads JARs via HTTP
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> * Remote null pointer dereference
-> A remote user can cause a null pointer dereference by sending a
-> malformed Authorization: header.
-> http://patrick.ld.net.au/libcsoap/nanohttp-nullp-1.patch
+> I don't see a CVE assigned for this anywhere:
+> 
+> https://jira.codehaus.org/browse/MNG-5672
 
-Use CVE-2015-2297 for (only) this null pointer dereference.
+In many cases, security-related changes that a vendor characterizes as
+an "Improvement" do not have CVE IDs:
 
+  > Switch access to Maven Central to HTTPS
+  > Type: Improvement
+  
+  > the Sonatype Operations team has coordinated certificates and other
+  > setup with our excellent CDN provider Fastly and you can now all
+  > enjoy the content of the Central Repository via HTTPS/SSL.
 
-> * Remote buffer overflow
-> If the server is misconfigured, a remote user can trigger a buffer
-> overflow by requesting a resource of a certain length.
-> http://patrick.ld.net.au/libcsoap/nanohttp-buffer-1.patch
+This suggests that, at the time that the default configuration was
+shipped for 3.2.2, the repo.maven.apache.org web site was not
+accessible via https, or at least not for free.
+(http://web.archive.org/web/20140702132623/http://www.sonatype.com/clm/secure-access-to-central
+suggests that https was available for $10.) Given that that is what
+existed, we don't feel that there is a clear answer to the question of
+whether Maven should have refused to access
+http://repo.maven.apache.org URLs or whether it should have accepted
+the risk of man-in-the-middle attacks. Neither answer would be
+inherently a "mistake." At least some deployments of Maven are on
+relatively secure networks at software-development companies, where
+man-in-the-middle attacks are relatively difficult and/or infrequent.
+Installation of Maven on a portable machine that is commonly connected
+via public Wi-Fi is not the prevailing use case.
 
-First, this doesn't seem to be a new discovery.
-http://csoap.sourceforge.net/downloads.php links to
-http://csoap.sourceforge.net/downloads/libsoap-snapshot.tar.gz and
-this contains a libsoap-20070125 top-level directory with a
-nanohttp/nanohttp-server.c file dated 2007-01-01. This file apparently
-has the bug fixed in a (very) slightly different way:
+(The question on the other side, specifically whether
+repo.maven.apache.org should ever have been deployed with its former
+configuration, is site-specific and is outside the scope of CVE. Note
+that this was apparently intentional:
+https://news.ycombinator.com/item?id=8101758 says "The reality is that
+prior to moving to a CDN, it was going to be pretty intensive to offer
+SSL on the scale of traffic we were seeing. The priority at that time
+was ensuring higher availability.")
 
-   char buffer[256];
-   snprintf(buffer, 256, "service '%s' is not registered properly (service function is NULL)", req->path);
+Also, https://news.ycombinator.com/item?id=8100517 says "It's possible
+to sign jars, but in my experimentation with standard tools, these
+signatures aren't checked."
+https://news.ycombinator.com/item?id=8101735 says "Signatures have
+been required on Central for years and there are tools to verify them,
+including repository managers." MITRE has not researched whether any
+version of Maven was able to download and use a signed file, and could
+have checked the signature but did not actually implement signature
+checking. There is a possibility of one or more CVE IDs if anyone has
+identified a corresponding Maven code problem or fix.
 
-More importantly, we haven't been able to find any indication that
-this issue is within the scope of CVE. As far as we can tell, building
-libcsoap does not create a sample HTTP server. If someone writes their
-own application to create an HTTP server, the "else" code path after
-"if (service->func != NULL)" should always be unreachable. If this
-code path is reachable, that's a bug in their application and
-therefore a site-specific problem. Unless the upstream vendor has
-stated something else, the behavior of the library is undefined if the
-application is wrong. If the actual behavior is a remote buffer
-overflow, that's within the bounds of undefined behavior. We don't
-feel that there are required security properties for a code path
-that's not reachable in any supported or reasonable use of a library.
-
-Also, we don't think it's especially likely that someone would write
-an application in which service->func can ever be NULL. For example,
-libsoap-20070125 has a nanohttp-admin.c file in which service->func is
-always the _httpd_admin_entry function.
+To summarize, we don't think it's currently worthwhile to assign CVE
+IDs for all cases in which any product obtains code from an http
+endpoint and could then conceivably execute that code. There are MANY
+such cases. As in the above Central Repository example, existence of
+http endpoints can be intentional, and the world hasn't transitioned
+to a state where everyone believes that http is always wrong. We've
+asked about this previously here (see the end of the
+http://openwall.com/lists/oss-security/2014/06/26/5 post) but nobody
+responded.
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -60,11 +78,11 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJVBQjcAAoJEKllVAevmvmszCkH/Rcxdhsn/4nFu1YT/VJft2dH
-kowC3v3ryXUjsRTJJPcg+wi7MDwSYDPuywl0CFHnlkYoI5VoLDnQMt10FL/JP7QK
-5kasChItF2w+luT1Zm7UXZKXJ1w5CadfGyt8SCp4IZKDFxlVwFd0rcH/sVaOeVYg
-AbAM6HE9jwgKl+1P6azbr7NjxDbt5banwiXrRIL7ffmP/JcRxn6oAacQwJNRasrW
-rLO3MBhqwEpXJvs8ISZL7Kjcz5uZd7YPnZZBGcDEpvl9q6a3AittinNiXqP7lHUV
-CUOKGci3AehDvGf59CIVqAyLbcPF32tmwwfRKhuv5JqMyhp+xTmI1UGRx+8BPdw=
-=xgNk
+iQEcBAEBAgAGBQJU9hunAAoJEKllVAevmvmsNjAH/RiOr2s8Ne3KwnHUORo4g3Mc
+kdQ5TkdVhpYqfmm4C5zfkXZYgvkA0pbkj3owoyQEq6EDUPEhx1bBAEyZ5GW6AUhA
+2nKn7UCZNOOyDpvwbGEfTqw1jSg6lQHGpHeaCudXp6ypL05K4262C3Ei/ewQLFvm
+Vwge7SifkFpT2YjSKMaYjNF8c2gU+CIMAcc4PIaujfsErx66c9I0JEkltJIyKH7J
+WGM8meQvTj5GqEXHJvGswWqhZC+Y6kzjIB5MXk5GJZClzS0gvEt5vKVI0kimMmGc
+fumBuNyBJTh9UVFjBc785R/+5Ee8HhebgFiVZh9Qljv0xnD3FJrQLcUhxvGsAYE=
+=rpbn
 -----END PGP SIGNATURE-----
