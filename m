@@ -1,60 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/08/6
-Message-ID: <54AEC437.9010607@enovance.com>
-Date: Thu, 08 Jan 2015 12:53:59 -0500
-From: Tristan Cacqueray <tristan.cacqueray@...vance.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/03/8
+Message-ID: <20150303155504.GA8220@chaz.gmail.com>
+Date: Tue, 3 Mar 2015 15:55:04 +0000
+From: Stephane Chazelas <stephane.chazelas@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: [OSSA 2015-001] L3 agent denial of service with radvd 2.0+ (CVE-2014-8153)
+Subject: Re: Re: Debian / xterm #779397
 Content-Type: text/plain; charset=utf-8
 
-=========================================================
-OSSA-2015-001: L3 agent denial of service with radvd 2.0+
-=========================================================
+2015-03-03 12:45:50 +0100, Marcus Meissner:
+[...]
+> In modern times xterm should not be setuid root, but there might be legacy
+> systems where it is.
+[...]
 
-:Date: January 08, 2015
-:CVE: CVE-2014-8153
+The bug/crash happens after xterm has dropped privileges, so
+even there, that would not be an issue.
 
+-- 
+Stephane
 
-Affects
-~~~~~~~
-- Neutron: 2014.2 version up to 2014.2.1
-
-
-Description
-~~~~~~~~~~~
-Ihar Hrachyshka from Red Hat reported a vulnerability in Neutron. By
-creating 8 routers and assigning each of them a non-provider ipv6
-subnet, a malicious user may block router update processing for all
-tenants, potentially resulting in a Denial of Service. Only Neutron
-setups running with radvd 2.0+ are affected.
-
-
-Patches
-~~~~~~~
-- https://review.openstack.org/141575 (Juno)
-- https://review.openstack.org/138688 (Kilo)
-
-
-Credits
-~~~~~~~
-- Ihar Hrachyshka from Red Hat (CVE-2014-8153)
-
-
-References
-~~~~~~~~~~
-- https://launchpad.net/bugs/1399172
-- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-8153
-
-
-Notes
-~~~~~
-- This fix will be included in a future 2014.2.2 release.
-- The OSSA announce format for the 2015 advisories has been changed to
-  RST.
-
---
-Tristan Cacqueray
-OpenStack Vulnerability Management Team
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
