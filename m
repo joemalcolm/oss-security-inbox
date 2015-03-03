@@ -1,34 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/08/4
-Message-ID: <54AE9052.7060302@redhat.com>
-Date: Thu, 08 Jan 2015 15:12:34 +0100
-From: Florian Weimer <fweimer@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Directory traversals in cpio and friends?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/03/2
+Message-ID: <487521909.11041800.1425374376302.JavaMail.root@his.com>
+Date: Tue, 3 Mar 2015 04:19:36 -0500 (EST)
+From: Thomas Dickey <dickey@....com>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: oss-security@...ts.openwall.com,  Assign a CVE Identifier <cve-assign@...re.org>, security@...ian.org,  dickey@...isible-island.net
+Subject: Re: Debian / xterm #779397
 Content-Type: text/plain; charset=utf-8
 
-On 01/08/2015 12:43 AM, Alexander Cherepanov wrote:
-> Hi!
->
-> I've taken a look at how dir traversals are dealt with in several
-> implementations of tar and cpio. The picture is kinda strange.
->
-> First of all, I believe it's usually agreed that archivers must not
-> touch files outside the current directory by default. Is there an
-> authoritative link for this?
+----- Original Message -----
+| From: "Kurt Seifried" <kseifried@...hat.com>
+| To: oss-security@...ts.openwall.com, "Assign a CVE Identifier" <cve-assign@...re.org>, security@...ian.org,
+| dickey@...isible-island.net
+| Sent: Tuesday, March 3, 2015 2:23:55 AM
+| Subject: Debian / xterm #779397
+| 
+| https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=779397#23
+| 
+| Package: xterm
+| Version: 312-1
+| Severity: important
+| Tags: security
+| 
+| $ xterm -S/dev/pts/20
+| *** buffer overflow detected ***: /usr/bin/xterm terminated
+| 
+| =======
+| 
+| This was fixed in #314, two months ago.
+| 
+| --
+| Thomas E. Dickey <dickey@...isible-island.net>
+| 
+| Did this get a CVE? I don't see a DSA for xterm.
 
-Only if the current directory (or, more generally, the target directory 
-for the extraction operation) is initially empty.
-
-If it already contains symbolic links, some users expect that those 
-links are followed because they have used symlinks to move part of the 
-file system tree to somewhere else (perhaps a large file system).
-
-> The only 'x' in the line for `cpio -i --no-absolute-filenames` seems to
-> be a clear vuln. Reported here: https://bugs.debian.org/774669 and now
-> sent to upstream ml.
-
-Yes, that's inconsistent and looks like a bug worth fixing.
+no - someone mentioned the problem in an email - nothing more was said
 
 -- 
-Florian Weimer / Red Hat Product Security
+Thomas E. Dickey <dickey@...isible-island.net>
+http://invisible-island.net
+ftp://invisible-island.net
