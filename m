@@ -1,50 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/18/9
-Message-Id: <20150218183557.C4B9A8BC004@smtpvmsrv1.mitre.org>
-Date: Wed, 18 Feb 2015 13:35:57 -0500 (EST)
-From: cve-assign@...re.org
-To: carnil@...ian.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: xdg-utils: xdg-open: command injection vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/03/12
+Message-ID: <CACYkhxi4j2ROWgxPn6CerouZFRzvP1=R4TV9AiHjeqMTWEaTnw@mail.gmail.com>
+Date: Wed, 4 Mar 2015 10:42:08 +1100
+From: Michael Samuel <mik@...net.net>
+To: oss-security@...ts.openwall.com
+Subject: PostgreSQL password hashing
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi all,
 
-> Another command injection vulnerability was reported to the Debian
-> bugtracker. The constraints to exploit this are similar to the ones
-> for CVE-2014-9622.
-> 
-> Debian Bug: https://bugs.debian.org/777722
-> Upstream Bug: https://bugs.freedesktop.org/show_bug.cgi?id=89129
-> 
-> Jiri Horner created as well a patch for this issue, which is attached
-> to the original bug and attached also a PoC.
-> 
-> https://bugs.debian.org/cgi-bin/bugreport.cgi?msg=5;filename=xdg-open.diff;att=1;bug=777722
+I'm posting this to the list, since it seems to be making the rounds finally :)
 
-Use CVE-2015-1877 for this issue in which the file variable has a
-value from an unintended scope.
+The "pass the hash" flaw and weak password hashing scheme in
+PostgreSQL was known to be weak at the time it was implemented.  I was
+among a chorus of people who spoke out about it at the time of it's
+inclusion, but the developers' response boiled down to:
+http://marc.info/?l=postgresql-general&m=111414028609961&w=2
 
-> apparently not very local in this case (maybe also dash problem?)
+This was recently rediscovered by atom from hashcat:
+http://hashcat.net/forum/thread-4148.html
 
-Our understanding from
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=777722#12 is that
-the report has not identified a vulnerability (or even a bug) in dash.
+To protect yourself:
+1) Put "password" instead of "md5" in pg_hba.conf
+2) Use a randomly generated, unique password rather than an actual word.
+3) Don't let attackers see your pg_shadow
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+The reason for (1) is that the password auth protocol doesn't accept
+hashes.  Use TLS if network attacks are a problem.
 
-iQEcBAEBAgAGBQJU5NrCAAoJEKllVAevmvmsSTkIAI2apAJWwlXYZQ8hJt0zpm1G
-D3NygSGpEQhW7gotv5ghmD1P/cHbA4eI0fRRoG3P28jgQ13ITNIv/DOyNse/E1NS
-IKOHQWODyEogIPSZPL3JYt4LhmY76Q2+rWFaE87DZP35YksFNsm2wRIxnHYxM3t2
-n3UeVSBUfvSZAZVJBjqAT98ZNSd9vKX99eA8dhOV3W3TTg4bTdeN/OgR5VD+NA4q
-N4nfnysxXEVmDpOELqQ5pEEFKl5WjQvmPUSyh8C7nqN26J1IJKCtzRWHJyFmHhNL
-AjFoJuHQemLhwUHgrK5E6SDBeLZAl3QjN8WgoTWKATDTbX8CUO8eOdYrzxK/eGU=
-=68eY
------END PGP SIGNATURE-----
+The reason for (2) - which is a good idea anyway - is because the hash
+in the database is is just md5(password username).  If the username is
+"wordpress" for example, you could crack multiple hashes for similar
+cost to cracking one.
+
+(3) is a bit tongue-in-cheek, but pg_shadow is only accessible to
+superusers, so don't connect your webapp as a database superuser and
+you significantly reduce the risk of lots of bad stuff :)
+
+Regards,
+  Michael
