@@ -1,32 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/18/6
-Message-ID: <Pine.LNX.4.64.1501181510480.14308@beijing.mitre.org>
-Date: Sun, 18 Jan 2015 15:11:55 -0500 (EST)
-From: cve-assign@...re.org
-To: Martin Prpic <mprpic@...hat.com>
-cc: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: Re: CVE request: directory traversal flaw in patch
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/03/6
+Message-ID: <54F5CA9A.6020504@upv.es>
+Date: Tue, 03 Mar 2015 15:52:10 +0100
+From: Hector Marco <hecmargi@....es>
+To: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE-Request: Linux ASLR mmap weakness: Reducing entropy by half
 Content-Type: text/plain; charset=utf-8
 
+Hello Mitre,
 
-On Wed, 14 Jan 2015, Martin Prpic wrote:
+Any update about this issue ?
 
+
+
+El 18/02/15 a las 12:01, Hector Marco escribió:
 > Hi,
 >
-> A directory traversal flaw was reported in patch:
+> A bug in Linux ASLR implementation for versions prior to 3.19 has been found.
+> The issue is that the mmap area for processes is not properly randomized on some
+> architectures.
 >
-> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=775227
-> https://bugzilla.redhat.com/show_bug.cgi?id=1182154
+> Affected systems have reduced the mmap base area entropy of the processes by half.
 >
-> Could a CVE please be assigned to this issue? Thank you.
 >
-> --
-> Martin Prpič / Red Hat Product Security
-
-Use CVE-2015-1196.
-
----
-
-CVE assignment team, MITRE CVE Numbering Authority M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+> Details at:
+> http://hmarco.org/bugs/linux-ASLR-reducing-mmap-by-half.html
+>
+>
+>
+> Could you please assign a CVE-ID for this?
+>
+>
+>
+> Hector Marco.
+> http://hmarco.org
+>
+> Cyber-security researcher at
+> http://cybersecurity.upv.es/
