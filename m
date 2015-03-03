@@ -1,49 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/15/3
-Message-ID: <20150215163202.GA12719@kludge.henri.nerv.fi>
-Date: Sun, 15 Feb 2015 18:32:02 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/03/5
+Message-ID: <20150303114550.GA28436@suse.de>
+Date: Tue, 3 Mar 2015 12:45:50 +0100
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: End of the m0n0wall project
+Subject: Re: Re: Debian / xterm #779397
 Content-Type: text/plain; charset=utf-8
 
-http://m0n0.ch/wall/end_announcement.php
+On Tue, Mar 03, 2015 at 10:06:30AM +0000, Simon McVittie wrote:
+> On 03/03/15 09:19, Thomas Dickey wrote:
+> > | From: "Kurt Seifried" <kseifried@...hat.com>
+> > | 
+> > | $ xterm -S/dev/pts/20
+> > | *** buffer overflow detected ***: /usr/bin/xterm terminated
+> > |
+> > | Did this get a CVE? I don't see a DSA for xterm.
+> > 
+> > no - someone mentioned the problem in an email - nothing more was said
+> 
+> There's some discussion on the Debian bug about whether this should be
+> considered to be a security vulnerability, or just a bug. Not every
+> buffer overflow is a vulnerability: it can only be a vulnerability if an
+> attacker can trigger it.
+> 
+> Is there any reason why it would be useful/sensible to pass untrusted
+> (pseudo-terminal filename, fd) pairs to the -S option? It seems to me
+> that if you're passing partially or entirely attacker-controlled
+> filenames to this option, you have probably already lost.
 
-"""
-Dear m0n0wall enthusiasts,
+In modern times xterm should not be setuid root, but there might be legacy
+systems where it is.
 
-on this day 12 years ago, I have released the first version of m0n0wall to the
-public. In theory, one could still run that version - pb1 it was called - on a
-suitably old PC and use it to control the Internet access of a small LAN (not
-that it would be recommended security-wise). However, the world keeps turning,
-and while m0n0wall has made an effort to keep up, there are now better solutions
-available and under active development.
+On Linux with /dev/pts and utempter it should not be necessary anymore for 
+10+ years.
 
-Therefore, today I announce that the m0n0wall project has officially ended. No
-development will be done anymore, and there will be no further releases.
-
-The forums and the mailing list will be frozen at the end of this month. All the
-contents of the website, repository, downloads, mailing list and forum will be
-archived in a permanent location on the web so that they remain accessible
-indefinitely to anyone who might be interested in them.
-
-m0n0wall has served as the seed for several other well known open source
-projects, like pfSense, FreeNAS and AskoziaPBX. The newest offspring, OPNsense
-(https://opnsense.org), aims to continue the open source spirit of m0n0wall
-while updating the technology to be ready for the future. In my view, it is the
-perfect way to bring the m0n0wall idea into 2015, and I encourage all current
-m0n0wall users to check out OPNsense and contribute if they can.
-
-Finally, I would like to take this opportunity to thank everyone who has been
-involved in the m0n0wall project and helped in some way or another - by
-contributing code, documentation, answering questions on the mailing list or the
-forum, donating or just spreading the word. It has been a great journey for me,
-and I'm convinced that even now that it has come to an end, the m0n0wall spirit
-will live on in the various projects it has spawned.
-
-Manuel Kasper
-15 February 2015
-"""
-
--- 
-Henri Salo
+Ciao, Marcus
