@@ -1,25 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/02/8
-Message-ID: <87wq2zwe6o.fsf@redhat.com>
-Date: Mon, 02 Mar 2015 17:34:55 +0100
-From: Martin Prpic <mprpic@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/03/4
+Message-ID: <20150303103257.GD12838@gremlin.ru>
+Date: Tue, 3 Mar 2015 13:32:57 +0300
+From: gremlin@...mlin.ru
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: Maven downloads JARs via HTTP
+Subject: Re: validation on update
 Content-Type: text/plain; charset=utf-8
 
-gremlin@...mlin.ru writes:
+On 2015-03-02 19:24:30 +0000, Simon McVittie wrote:
 
-> On 2015-03-02 14:07:00 +0100, Martin Prpic wrote:
->
->  > "Maven Central can now be accessed via HTTPS. I think the
->  > default configuration should be switched to use that, rather
->  > than the current unsecured HTTP transport."
->
-> Does it use any sort of package signing and signature verification?
+ >>>> Does it use any sort of package signing and signature
+ >>>> verification?
+ >>> Seeing as the patch only does s/http/https/,
+ >> Obviously, that doesn't really help.
+ > It's a start, at least...
 
-Seeing as the patch only does s/http/https/, I would say, unfortunately, no.
+Of course, that's much better than nothing.
 
-https://git-wip-us.apache.org/repos/asf?p=maven.git;a=patch;h=92161918
+ > it tells you that this was a reply to your request, made by
+ > someone controlling the corresponding private key for a "valid"
+ > certificate for Maven Central's hostname.
+
+That's good for the first communication.
+
+ > An end-to-end integrity check from the original publisher to
+ > the consumer would prevent more attacks, but would also be
+ > harder to deploy (it requires action from each publisher,
+
+Running `gpg --detach-sign < package.tar.gz > package.tar.gz.sig`
+(or, better, `gpg -ba ...`) on each release isn't a big deal...
+
+ > verification at each consumer,
+
+Running `gpg --verify package.tar.gz.sig package.tar.gz` will do
+that just perfectly. And, when talking about automatic updates,
+that should be included into the update procedure.
+
+ > and a way to determine whether publisher X is authorized to
+ > publish package Y);
+
+`gpg --no-default-keyring --keyring /path/authors.pub --verify ...`
+
+ > protecting against trivial attacks is not as good as protecting
+ > against sophisticated attacks, but seems considerably better
+ > than not protecting against anything at all.
+
+Yes. But I hope the software developers wouldn't stop after that
+and will use the above-mentioned trivial commands as well.
+
 
 -- 
-Martin Prpič / Red Hat Product Security
+Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
+GPG: 8832FE9FA791F7968AC96E4E909DAC45EF3B1FA8 @ hkp://keys.gnupg.net
