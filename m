@@ -1,39 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/15/4
-Message-Id: <20150215193537.0E504332014@smtpvbsrv1.mitre.org>
-Date: Sun, 15 Feb 2015 14:35:37 -0500 (EST)
-From: cve-assign@...re.org
-To: hecmargi@....es
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE-Request -- Google Email App 4.2.2 remote denial of service
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/03/7
+Message-ID: <54F5D5EB.3020406@redhat.com>
+Date: Tue, 03 Mar 2015 08:40:27 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: validation on update
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 03/03/15 03:32 AM, gremlin@...mlin.ru wrote:
+> On 2015-03-02 19:24:30 +0000, Simon McVittie wrote:
+>  > An end-to-end integrity check from the original publisher to
+>  > the consumer would prevent more attacks, but would also be
+>  > harder to deploy (it requires action from each publisher,
+> 
+> Running `gpg --detach-sign < package.tar.gz > package.tar.gz.sig`
+> (or, better, `gpg -ba ...`) on each release isn't a big deal...
+> 
+>  > verification at each consumer,
+> 
+> Running `gpg --verify package.tar.gz.sig package.tar.gz` will do
+> that just perfectly. And, when talking about automatic updates,
+> that should be included into the update procedure.
+> 
+>  > and a way to determine whether publisher X is authorized to
+>  > publish package Y);
+> 
+> `gpg --no-default-keyring --keyring /path/authors.pub --verify ...`
 
-Can you resolve the version discrepancy in
+No but key distribution and management is a real problem. How does
+upstream sign all these things securely but also conveniently on their
+end? How do they store the key (Hardware Security Module?). How does
+upstream distribute the key (just HTTPS website? in the maven source?
+hope nobody spoofs them.
 
-  http://hmarco.org/bugs/google_email_app_4.2.2_denial_of_service.html
+There's a simple reason most projects don't sign software, key
+management is such a pain (how do you security backup something that
+should only exist in one spot? Encrypt it? Ok how do you secure that
+key... Not saying it shouldn't be done, but just pointing out it's a
+little more work than running "gpg --sigh".
 
-? This begins by stating "A bug in the stock Google email application
-version 4.4.2.0200" but then says "We have found the bug in email
-version 4.2.2.0200."
+Does anyone have any good guidelines/procedure docs on this stuff? E.g.
+which HSM devices support GPG, etc?
 
-Was any version number starting with "4.4" actually tested?
+-- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJU4PSMAAoJEKllVAevmvmsLaQIAJslZCuKNCHKqzwnlKw4X710
-4CwpWTW73dU7o3SIHa4U3EI//wEUW9nBNK8dk1YyP8NfMLRtuK2lnKO/OI2Fs26J
-NmAQ5RUrQsbXBsIAaLS08N+B32j0MLUVfIh5lNjA3FJSbt21fQHM3XTIJp2vrceV
-Qle2CuOQk5qKVFU0azhWx8s3qx4xRfdBDga6RqdmX5+7a+eZHXQJUlXRsRVuRYkM
-4aRjEvCpiY2e4rEUz9EHg97RB7DMi2w14PKOFBgM6kCWspVvVWMqwIihjjArE+gM
-tTCFC/BUNHlMapReb6HsVap2jloSBgTCMIqzYDPi3pOsUGT4acurldlW68cm0YU=
-=FbOW
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
