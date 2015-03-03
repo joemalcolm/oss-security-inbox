@@ -1,75 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/02/11
-Message-Id: <20150302194400.55BEB6C004B@smtpvmsrv1.mitre.org>
-Date: Mon,  2 Mar 2015 14:44:00 -0500 (EST)
-From: cve-assign@...re.org
-To: steffen.roesemann1986@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE-Request -- Zeuscart v. 4 -- Multiple reflecting XSS-, SQLi and InformationDisclosure-vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/03/1
+Message-ID: <54F5618B.4000605@redhat.com>
+Date: Tue, 03 Mar 2015 00:23:55 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>, security@...ian.org, dickey@...isible-island.net
+Subject: Debian / xterm #779397
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=779397#23
 
-> Reflecting XSS-vulnerabilities can be found in a common
-> Zeuscart-installation in the following locations
+Package: xterm
+Version: 312-1
+Severity: important
+Tags: security
 
-Use CVE-2015-2182.
+$ xterm -S/dev/pts/20
+*** buffer overflow detected ***: /usr/bin/xterm terminated
 
+=======
 
-> The SQL injection-vulnerabilities can be found in the administrative
-> backend of Zeuscart v. 4
+This was fixed in #314, two months ago.
 
-We did not completely understand this part of the vendor interaction:
+-- 
+Thomas E. Dickey <dickey@...isible-island.net>
 
-https://github.com/ZeusCart/zeuscart/issues/28#issuecomment-72829334
-https://github.com/ZeusCart/zeuscart/commit/fa919a5e4887a7d348166eac4f10b041684208ca
+Did this get a CVE? I don't see a DSA for xterm.
 
-https://github.com/ZeusCart/zeuscart/issues/28#issuecomment-73352761
-
-The vendor seems to be suggesting the CVE-2014-3868 patch, which had
-been previously discussed in the
-http://seclists.org/fulldisclosure/2014/Jun/116 post. This patch seems
-related to:
-
-  prodid
-  qty
-  variations
-  subId
-
-whereas your report is about:
-
-  id
-  cid
-
-(An entirely separate issue is that the patch has a "$_POST['qty'] =
-abs((int)$_GET['prodid']);" line that might result in unintended
-quantity values.)
-
-So, we think that there is not, in any sense, a "version" of ZeusCart
-that fixes any attack vector that you reported. If there were an
-incomplete fix, additional CVE IDs may be required.
-
-Use CVE-2015-2183 for all of the SQL injection issues in your report.
+-- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
 
-> http://{TARGET}/admin/?do=getphpinfo
-
-Use CVE-2015-2184.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJU9L0YAAoJEKllVAevmvmsxg4H/2QQ2pZsaIpRjAVyQELpFKz3
-YsXxJJpPNJCBsUNi2gLKMGXUf9imACx6R5Zv73YW0hWNGfDBKKSO6J2crmLd0kQh
-66IW7vKagZHhJaQoubt2hf9YPGBTC4afOBwuFjIqDKNzFTQ8tpDl2Z6NJ59TGLKV
-ORMVZNBWy04KS86dBblmj1fDeFVzKqpOEoatDlgdFrOZgbzqGqVudXrdBpvB+yFu
-LnKZyun11bu4U1CRe2FXGa3+IEXVRuruUlnu5Fey+pnVtIkJ0wVwXWJzMBNK+zSM
-PH+f+/FwBmigSuejhKjukbOUZjZmNjbGynxpSQm35NSs+72VNqsvhWLztRQhXIo=
-=G7BY
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
