@@ -1,70 +1,90 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/28/18
-Message-ID: <Pine.LNX.4.64.1501281236560.9171@beijing.mitre.org>
-Date: Wed, 28 Jan 2015 13:03:41 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/04/1
+Message-Id: <20150304010828.A85F9B2E09B@smtpvbsrv1.mitre.org>
+Date: Tue,  3 Mar 2015 20:08:28 -0500 (EST)
 From: cve-assign@...re.org
-To: Huzaifa Sidhpurwala <huzaifas@...hat.com>
-cc: oss-security@...ts.openwall.com, Mitre CVE assign department <cve-assign@...re.org>
-Subject: Re: GHOST gethostbyname() heap overflow in glibc (CVE-2015-0235)
+To: gmc@...library.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request - Evergreen
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On Wed, 28 Jan 2015, Huzaifa Sidhpurwala wrote:
+> http://evergreen-ils.org/security-releases-evergreen-2-7-4-2-6-7-and-2-5-9/
 
-> On 01/27/2015 11:35 PM, Florian Weimer wrote:
->> * Marek Kroemeke:
->>
->>> We just noticed CVE-2015-0235 , and we thought we will drop this one
->>> in - apologies for low quality , we didn't really have time yet to
->>> analyse it, but it seems to be related, so it makes sense to patch
->>> things once right ?
->>
->> It's not related, and we cannot patch it at the same time because
->> packages for the gethostbyname issue are already ready, they just have
->> to be released.  (When we change critical system components, we also
->> need to be extra-careful with testing, which takes time.)
->>
->> Andreas Schwab fixed this in 2011:
->>
->>   <https://sourceware.org/git/gitweb.cgi?p=glibc.git;a=commitdiff;h=2e96f1c7>
->>
->> If I'm not mistaken, this commit when into glibc 2.15.
->>
->> I have not yet found the corresponding glibc bug (if it exists).
->>
->> The bug only materializes if the getaddrinfo functions is called with
->> the AI_IDN flag, and if glibc has been compiled with libidn support
->> (but I haven't checked if you can switch that off these days).
->>
->
-> MITRE,
->
-> This is a new flaw, can you please assign a CVE id to this?
->
-> https://bugzilla.redhat.com/show_bug.cgi?id=797096
->
-> Thanks!
->
-> -- 
-> Huzaifa Sidhpurwala / Red Hat Product Security Team
+We have these initial questions, in part to determine whether there should
+be a total of two CVE IDs or three CVE IDs.
 
-Use CVE-2012-6686 for "unbound alloca use in glob_in_dir" as covered by 
-Red Hat Bugzilla ID 797096.
+http://openwall.com/lists/oss-security/2015/03/03/11 says:
 
-How is 797096 related to the 2e96f1c7 commit?  The 2e96f1c7 commit does 
-not appear to be directly related to alloca usage; it concentrates on 
-setting "malloc_name = true" in gaih_inet().  However, a submitted patch 
-for Bugzilla 797096 
-(https://bugzilla.redhat.com/attachment.cgi?id=583711&action=diff) 
-performs includes much more extensive changes to gaih_inet(), modifies 
-other functions, and omits the "name = p;" logic that is used in 2e96f1c7.
+> Both bugs had permitted remote unauthenticated access of confidential
+> application configuration settings.
 
-Also, 797096 is marked as "closed" and points to RHBA-2013:0022-2, which 
-references CVE-2013-4357, which is RH Bug 1009643, which says "glibc: 
-stack overflow in getaddrinfo()'s use of alloca()."
+but https://bugs.launchpad.net/evergreen/+bug/1206589 says:
 
----
+> Any user who can authenticate to Evergreen and make the proper
+> open-ils.pcrud calls can view the history of any setting ... once
+> anonymous pcrud goes in, no login would be required either.
 
-CVE assignment team, MITRE CVE Numbering Authority M/S M300
+Was there a released version of Evergreen in which an unauthenticated
+attacker could view a setting's history by exploiting this bug?
+
+https://bugs.launchpad.net/evergreen/+bug/1206589 also says:
+
+> An immediate fix for this would be to add a permission, just about any
+> permission that a patron would not have ... The
+> collab/dyrcona/lp1206589-quick-fix branch in the security repo adds a
+> retrieve permission of STAFF_LOGIN ... That leaves us pretty much
+> where the initial bug reports assumes we were with settings exposed
+> only to unauthorized staff ... Since I have suggested removing the
+> open-ils.pcrud controller, leaving cstore as the only mode of access
+> to these settings, new API calls would need to be added to search and
+> retrieve the settings history.
+
+and
+http://git.evergreen-ils.org/?p=Evergreen.git;a=commit;h=ac588e879cf73ff1b65617e0bd273361d3529063
+says:
+
+> Temporary Fix for Org. Unit Settings History Bug
+     
+>  1. It adds a retrieve permission of STAFF_LOGIN.  This at least
+> requires someone with staff permission to be able to view settings
+> history.
+
+Does this mean that:
+
+ - in version 2.7.3, there is a major vulnerability in which a
+   setting's history can be viewed by any authenticated user,
+   including users with the "patron" role
+
+ - in version 2.7.4, there is a minor vulnerability in which a
+   setting's history can be viewed by all persons with the staff role,
+   which would include unauthorized staff in many realistic
+   deployments. This might be fixed in a future release by forcing all
+   access to use cstore, or by some other undetermined change.
+
+?
+
+> https://bugs.launchpad.net/evergreen/+bug/1424755
+
+This seems to be a much simpler case that was completely fixed by
+http://git.evergreen-ils.org/?p=Evergreen.git;a=commit;h=3a0f1cc7b2efa517ee4cd4c6a682237554fed307
+and had allowed unauthenticated access. It will have only one CVE ID.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
 202 Burlington Road, Bedford, MA 01730 USA
 [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJU9lpzAAoJEKllVAevmvmsbdQH/22bw/68/mpyxJ6cOvlw7e1M
+QSfNIO+feS9aS9c7k7y2g6yV0KEC7b261gSLQlJFpPVYq7sBh/Y9jLcQhINOWb1j
+8m5DP8lqHF4iiCXxxxwJsG5MM2AxvKnk0KXcfGu8qnd6OOmuO4xC+hM5P3XdpRFQ
+RJeQU8lSDYHD3yb9D+lfvybr/2ceUVAVTuJCeCLDBj0yr7Gvn3+R0as/mqTt6jyU
+EQqciiLFntiucwSOAFQDD0rA0/9JP+ORDC47BcIyDgi0Xca/T+36NbeIsskMXEjO
+liBCap+fLIuFWQ0dx5zS+9YQjYwaWyTeaXOFTfjhPUVkgao2CF5aoRSL0qL1zIg=
+=3sHe
+-----END PGP SIGNATURE-----
