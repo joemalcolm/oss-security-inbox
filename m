@@ -1,48 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/11/8
-Message-ID: <Pine.LNX.4.64.1501111148060.1737@beijing.mitre.org>
-Date: Sun, 11 Jan 2015 12:00:55 -0500 (EST)
-From: cve-assign@...re.org
-To: Damien Regad <dregad@...tisbt.org>
-cc: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: Re: Re: CVE-2014-6316: URL redirection issue in MantisBT
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/04/8
+Message-Id: <C78DD699-4921-435E-8E19-7EED71E56B11@stufft.io>
+Date: Wed, 4 Mar 2015 13:14:15 -0500
+From: Donald Stufft <donald@...fft.io>
+To: oss-security@...ts.openwall.com
+Subject: Re: Another Python app (rhn-setup: rhnreg_ks) not checking hostnames in certs properly CVE-2015-1777
 Content-Type: text/plain; charset=utf-8
 
 
-> During follow-up tests he performed on the fix for CVE-2014-6316 (which was 
-> released in MantisBT 1.2.18), Alejo Popovici noticed [1] that the earlier fix 
-> was only partial.
->
-> With certain browsers (FF 34, Chrome 39 but not IE11) it is still possible to 
-> effect a cross-domain redirection using a redirect address having a single 
-> slash, e.g.
->
-> - http://example.com/mantis/login_page.php?return=https:/google.com or
-> - https://example.com/mantis/login_page.php?return=http:/google.com
->
-> This is essentially the same vulnerability that was described in 
-> CVE-2014-6316, but due to a different root cause (for which a patch will be 
-> issued soon).
->
-> I would like to know if I should be using the same CVE ID, or if a new one 
-> needs to be issued.
->
-> Thanks in advance.
->
-> Damien Regad
-> MantisBT Developer
->
->
-> [1] https://www.mantisbt.org/bugs/view.php?id=17997
+> On Mar 4, 2015, at 12:55 PM, Kurt Seifried <kseifried@...hat.com> wrote:
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=1198740
+> 
+> Jan Bee of the Google Security Team reports:
+> 
+> The /usr/sbin/rhnreg_ks fails to properly validate hostnames in
+> certificates. This can result in man in the middle attacks.
+> 
+> ===
+> 
+> Please note that this issue cannot easily be exploited to cause any
+> significant damage to a system other then preventing registration from
+> taking place properly which the attacker would be able to do in any
+> event if the can man in the middle the connection.
+> 
+> 
+> 
+> --
+> Kurt Seifried -- Red Hat -- Product Security -- Cloud
+> PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+> 
 
-CVE creates separate identifiers if two bugs do not affect the same 
-versions.  This can occur with incomplete fixes.  Since bug 17997 affects 
-1.2.18 but CVE-2014-6316 does not, a separate CVE ID is used.
-
-Use CVE-2015-1042.
+Note: Python 2.7.9+ and 3.4.3+ will cause most apps like this to
+automatically start validating hostnames. It may be easier to backport
+those changes than to find every Python app that doesn’t check hostnames.
 
 ---
+Donald Stufft
+PGP: 7C6B 7C5D 5E2B 6356 A926 F04F 6E3C BCE9 3372 DCFA
 
-CVE assignment team, MITRE CVE Numbering Authority M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+
+Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
