@@ -1,46 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/11/6
-Message-ID: <Pine.LNX.4.64.1501110946540.26662@beijing.mitre.org>
-Date: Sun, 11 Jan 2015 09:47:55 -0500 (EST)
-From: cve-assign@...re.org
-To: Steffen Rösemann <steffen.roesemann1986@...il.com>
-cc: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: Re: CVE Request -- CMS e107 v.1.0.4 -- Reflecting XSS vulnerability in filemanager functionality
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/04/10
+Message-ID: <CAO_YWRVHsFN4EYu40ci4ywTT0fALV3uy2mf5FPJOux+jHR3ycg@mail.gmail.com>
+Date: Wed, 4 Mar 2015 21:27:25 +0000
+From: Paul McMillan <paul@...illan.ws>
+To: oss-security@...ts.openwall.com
+Subject: unassigning CVE-2015-2104
 Content-Type: text/plain; charset=utf-8
 
+Hi,
 
-> Hi Josh, Steve, vendors, list.
->
-> I found a reflecting XSS vulnerability in the filemanager functionality in
-> the administrative backend of CMS e107 v.1.0.4.
->
-> It can be exploited by an attacker like in the following example:
->
-> http://{TARGET}/e107_admin/filemanager.php?e107_files/%3C%73%63%72%69%70%74%3Ealert(String.fromCharCode(34,
-> 88, 83, 83,
-> 34))%3C%2F%73%63%72%69%70%74%3E%3C!--%3C%2F%73%63%72%69%70%74%3E%3C!--
->
-> Could you please assign a CVE-ID for it?
->
-> Thank you!
->
-> Greetings.
->
-> Steffen Rösemann
->
-> References:
->
-> [1] http://e107.org/
-> [2] http://sroesemann.blogspot.de/2014/12/sroeadv-2014-05.html
-> [3] https://github.com/e107inc/e107v1/issues/2
-> [4]
-> http://sroesemann.blogspot.de/2015/01/report-for-advisory-sroeadv-2014-05.html
-> [5] http://seclists.org/fulldisclosure/2015/Jan/18
+I'm part of the Python security response team, and we'd like to have
+CVE-2015-2104 unassigned. It was opened by a bug reporter without
+consulting with us first, and was assigned without input from the
+project. The reported bug stems from a misunderstanding of documented
+behavior, and is a bug in upstream code, rather than a security issue
+with the core Python language.
 
-Use CVE-2015-1041.
-
----
-
-CVE assignment team, MITRE CVE Numbering Authority M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+Regards,
+-Paul
