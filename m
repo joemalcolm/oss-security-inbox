@@ -1,32 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/29/30
-Message-ID: <20150129235224.GA9204@openwall.com>
-Date: Fri, 30 Jan 2015 02:52:24 +0300
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Qualys Security Advisory CVE-2015-0235 - GHOST: glibc gethostbyname buffer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/04/2
+Message-ID: <CAPLnt65Udqh+AfqRPOGG8pwGxopuPw3S=qG64z8d+q_FkPrGQw@mail.gmail.com>
+Date: Tue, 3 Mar 2015 21:00:53 -0500
+From: Galen Charlton <gmc@...library.com>
+To: cve-assign@...re.org
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request - Evergreen
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jan 27, 2015 at 10:20:20AM -0800, Qualys Security Advisory wrote:
-> Here is a list of potential targets that we investigated (they all call
-> gethostbyname, one way or another), but to the best of our knowledge,
-> the buffer overflow cannot be triggered in any of them:
-> 
-> apache, cups, dovecot, gnupg, isc-dhcp, lighttpd, mariadb/mysql,
-> nfs-utils, nginx, nodejs, openldap, openssh, postfix, proftpd,
-> pure-ftpd, rsyslog, samba, sendmail, sysklogd, syslog-ng, tcp_wrappers,
-> vsftpd, xinetd.
-> 
-> That being said, we believe it would be interesting if other people
-> could have a look, just in case we missed something.
+Hi,
 
-That's an impressive list above, thanks!
+On Tue, Mar 3, 2015 at 8:08 PM,  <cve-assign@...re.org> wrote:
+>> Both bugs had permitted remote unauthenticated access of confidential
+>> application configuration settings.
+>
+> but https://bugs.launchpad.net/evergreen/+bug/1206589 says:
+>
+>> Any user who can authenticate to Evergreen and make the proper
+>> open-ils.pcrud calls can view the history of any setting ... once
+>> anonymous pcrud goes in, no login would be required either.
+>
+> Was there a released version of Evergreen in which an unauthenticated
+> attacker could view a setting's history by exploiting this bug?
 
-To add on the topic and aggregate the relevant news in this thread:
+Yes, there was -- the comment in the bug report does not take into
+account the fact that the open-ils.pcrud endpoint supports anonymous,
+unauthenticated retrieval of database objects under pcrud's purview if
+a user permission for retrieval is not explicitly specified in
+fm_IDL.xml.
 
-Today there's some talk about GHOST possibly being exploitable via web
-apps, and in particular via the pingback feature in WordPress:
+>  - in version 2.7.3, there is a major vulnerability in which a
+>    setting's history can be viewed by any authenticated user,
+>    including users with the "patron" role
 
-http://threatpost.com/php-applications-wordpress-subject-to-ghost-glibc-vulnerability/110755
+Almost -- per my response above, unauthenticated users could also gain
+access to a setting's history as, prior to the patch, anonymous
+retrieval was possible via open-ils.pcrud.
 
-Alexander
+>  - in version 2.7.4, there is a minor vulnerability in which a
+>    setting's history can be viewed by all persons with the staff role,
+>    which would include unauthorized staff in many realistic
+>    deployments. This might be fixed in a future release by forcing all
+>    access to use cstore, or by some other undetermined change.
+> ?
+
+Correct, and I agree with the implication that bug 1206589 would
+therefore warrant two CVE numbers.
+
+Regards,
+
+Galen
+-- 
+Galen Charlton
+Infrastructure and Added Services Manager
+Equinox Software, Inc. / The Open Source Experts
+email:  gmc@...library.com
+direct: +1 770-709-5581
+cell:   +1 404-984-4366
+skype:  gmcharlt
+web:    http://www.esilibrary.com/
+Supporting Koha and Evergreen: http://koha-community.org &
+http://evergreen-ils.org
