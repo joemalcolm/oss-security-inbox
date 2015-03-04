@@ -1,45 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/19/6
-Message-Id: <20150219174436.6BA0A6C0013@smtpvmsrv1.mitre.org>
-Date: Thu, 19 Feb 2015 12:44:36 -0500 (EST)
-From: cve-assign@...re.org
-To: tristan.cacqueray@...vance.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request for vulnerability in OpenStack Glance
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/04/7
+Message-ID: <54F74705.4020309@redhat.com>
+Date: Wed, 04 Mar 2015 10:55:17 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Another Python app (rhn-setup: rhnreg_ks) not checking hostnames in certs properly CVE-2015-1777
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+https://bugzilla.redhat.com/show_bug.cgi?id=1198740
 
-> Title: Glance import task leaks image in backend
+Jan Bee of the Google Security Team reports:
 
-Is this about two separate findings, one in 2014 and one in 2015, that
-were ultimately fixed at the same time in Glance:
+The /usr/sbin/rhnreg_ks fails to properly validate hostnames in
+certificates. This can result in man in the middle attacks.
 
-  https://review.openstack.org/#/c/122427/
-  Sep 18, 2014 ... an exception is raised and is not handled ...
-  the uploaded image file stays in a storage and clogs it
+===
 
-  https://review.openstack.org/#/c/156553
-  Feb 17, 2015 ... Import task does not update the location
-  of the image ... Image data remains in backend for
-  deleted image
+Please note that this issue cannot easily be exploited to cause any
+significant damage to a system other then preventing registration from
+taking place properly which the attacker would be able to do in any
+event if the can man in the middle the connection.
 
-? If so, then it should have two CVE IDs.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJU5iCbAAoJEKllVAevmvmsN9oH/ilgIGL/X5VyVLc55d4egDZs
-flqTOk5e7VTA6B31iX6/O3A74SUXPNTEilzzm5wsx0+fTb9cblgRSLU69PqnC45U
-U+FU0kjeiyEMN0UGYPGxC37EctrIBu/SMattJZ2Z9EpAZZ0eAai2zUvNt3/5DVSS
-+6cctx7z5jsm4Qz+gXDkYhl6HJlxJ2m596NcFZWvjEMtlTFEfKMHSSvkcYJG315O
-H8bvt82lZFL7df3LCsrlbdey6r/jdrLBcP0Epmv87igla211Lr21yZ/zCyJHLIpi
-xdiqwNcTDLrIVH7BSUrCdsS0uDfy3q05IW/9YmN/n45qO6cB22Iy03IKo/GizIc=
-=NiIp
------END PGP SIGNATURE-----
+-- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
