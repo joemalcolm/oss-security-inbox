@@ -1,61 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/03/12
-Message-ID: <20150203172458.1da9edd0@pc>
-Date: Tue, 3 Feb 2015 17:24:58 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: Possible CVE Requests: libmspack: several issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/04/3
+Message-Id: <20150304031520.82D73B2E0DF@smtpvbsrv1.mitre.org>
+Date: Tue,  3 Mar 2015 22:15:20 -0500 (EST)
+From: cve-assign@...re.org
+To: gmc@...library.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request - Evergreen
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On Tue, 3 Feb 2015 16:52:05 +0100
-Salvatore Bonaccorso <carnil@...ian.org> wrote:
+Thanks for the clarification. Reorganizing and rewording gives these
+three CVE IDs:
 
-> Several issues with the libmspack library were reported recently in
-> the Debian bugtracker by Jakub Wilk.
+CVE-2013-7435
+http://evergreen-ils.org/security-releases-evergreen-2-7-4-2-6-7-and-2-5-9/
+http://evergreen-ils.org/downloads/ChangeLog-2.7.3-2.7.4
+https://bugs.launchpad.net/evergreen/+bug/1206589
+http://git.evergreen-ils.org/?p=Evergreen.git;a=commit;h=ac588e879cf73ff1b65617e0bd273361d3529063
 
-Some additional info: This code is shared with cabextract. I recently
-also reported issues to the author that were all fixed in
-the cabextract 1.5 and libmspack 0.5alpha releases.
-(The author was unaware that I am not part of debian, so he only
-mentions Debian fixes in the release notes - but these include the
-fixes for the issues reported by me).
-
-Rundown of issues I found:
-
-Invalid read in ensure_filepath:
-
-==29962==ERROR: AddressSanitizer: heap-buffer-overflow on address
-0x60200000efd2 at pc 0x40aafd bp 0x7fff365ba030 sp 0x7fff365ba020 READ
-of size 1 at 0x60200000efd2 thread T0 #0 0x40aafc in ensure_filepath
-src/cabextract.c:1034 #1 0x40aafc in process_cabinet
-src/cabextract.c:504 #2 0x40aafc in main src/cabextract.c:350
-    #3 0x7ff5e30f8f9f in __libc_start_main (/lib64/libc.so.6+0x1ff9f)
-    #4 0x40be2d (/tmp/cabextract-1.4/cabextract+0x40be2d)
-
-Invalid in create_output_name:
-==29965==ERROR: AddressSanitizer: heap-buffer-overflow on address
-0x60200000effe at pc 0x40a9b8 bp 0x7fffd50309e0 sp 0x7fffd50309d0 READ
-of size 1 at 0x60200000effe thread T0 #0 0x40a9b7 in create_output_name
-src/cabextract.c:828 #1 0x40a9b7 in process_cabinet src/cabextract.c:444
-    #2 0x40a9b7 in main src/cabextract.c:350
-    #3 0x7f68d131bf9f in __libc_start_main (/lib64/libc.so.6+0x1ff9f)
-    #4 0x40be2d (/tmp/cabextract-1.4/cabextract+0x40be2d)
+scope =
+ - in version 2.7.3, there is a major vulnerability in which a
+   setting's history can be viewed by an unauthenticated
+   attacker
 
 
-All found with american fuzzy lop.
 
-(P.S.: Do we have a policy on attachments on this list? I was unsure if
-it'd be apprechiated that I attach the issue-exposing samples)
+CVE-2015-2203
+http://evergreen-ils.org/security-releases-evergreen-2-7-4-2-6-7-and-2-5-9/
+http://evergreen-ils.org/downloads/ChangeLog-2.7.3-2.7.4
+https://bugs.launchpad.net/evergreen/+bug/1206589
+http://git.evergreen-ils.org/?p=Evergreen.git;a=commit;h=ac588e879cf73ff1b65617e0bd273361d3529063
+
+scope =
+ - in version 2.7.4, there is a minor vulnerability in which a
+   setting's history can be viewed by all persons with the staff role,
+   which would include unauthorized staff in many realistic
+   deployments. This might be fixed in a future release by forcing all
+   access to use cstore, or by some other undetermined change.
 
 
-cu,
--- 
-Hanno Böck
-http://hboeck.de/
 
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
+CVE-2015-2204
+http://evergreen-ils.org/security-releases-evergreen-2-7-4-2-6-7-and-2-5-9/
+http://evergreen-ils.org/downloads/ChangeLog-2.7.3-2.7.4
+https://bugs.launchpad.net/evergreen/+bug/1424755
+http://git.evergreen-ils.org/?p=Evergreen.git;a=commit;h=3a0f1cc7b2efa517ee4cd4c6a682237554fed307
 
-Content of type "application/pgp-signature" skipped
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJU9nhRAAoJEKllVAevmvmspb0H/0a0gf5sm39980V0DRgH9op6
+vrrrqEdcfoFSyG2vNst5Atnv+rQZEs9LoRSP8j/RbsbMCXdxz1Cyg7J67xIKhWKq
+Dy5kuEzfoX1n96WOv/+MA5+35JmbX6/WZtojukeS/y6ubv12JBMleqFF8sZht/Ri
+UZdMt/Uro+oMpm6POd/wuQt6YQ/z4Z6wjYLbamDhJqrW67bZYsA+dh5lbkzrjXXD
+8QFWNSLnur/wcKtqTTw0kSoWdZAjj70u8RnFY3kHrmPtWR7MlVlaTU0PFLGnJoUC
+5zk7+k5ULwWM3Fre8dPYIMaAU4ZRnP3OdpqN/7RTic+9op+0RxpoF7W+02VhQfM=
+=ynfk
+-----END PGP SIGNATURE-----
