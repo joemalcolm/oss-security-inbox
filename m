@@ -1,41 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/07/16
-Message-ID: <CALPTtNXFKSd7kjC1xbm9j_r4YvnEpObwkraztwhf2FYW0vDaKw@mail.gmail.com>
-Date: Sat, 7 Feb 2015 15:31:40 -0800
-From: Reed Loden <reed@...dloden.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/04/9
+Message-ID: <54F750F3.4070502@redhat.com>
+Date: Wed, 04 Mar 2015 11:37:39 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Assign a CVE Identifier <cve-assign@...re.org>, security@...illa.org,  Dan Veditz <dveditz@...illa.com>
-Subject: Re: Mozilla: Use-after-free when doing multiple nesting using bad tags
+Subject: Re: Another Python app (rhn-setup: rhnreg_ks) not checking hostnames in certs properly CVE-2015-1777
 Content-Type: text/plain; charset=utf-8
 
-https://bugzilla.mozilla.org/show_bug.cgi?id=679572#c2 states "The
-addresses look like it's hit our \"frame-poisoning\" mitigation which would
-make that an unmapped and unexploitable address but that's off the top of
-my head and needs investigation.", so if true, it's only a DoS, which
-Mozilla doesn't assign CVEs for since it's not exploitable.
+On 04/03/15 11:14 AM, Donald Stufft wrote:
+> 
+>> On Mar 4, 2015, at 12:55 PM, Kurt Seifried <kseifried@...hat.com> wrote:
+>>
+>> https://bugzilla.redhat.com/show_bug.cgi?id=1198740
+>>
+>> Jan Bee of the Google Security Team reports:
+>>
+>> The /usr/sbin/rhnreg_ks fails to properly validate hostnames in
+>> certificates. This can result in man in the middle attacks.
+>>
+>> ===
+>>
+>> Please note that this issue cannot easily be exploited to cause any
+>> significant damage to a system other then preventing registration from
+>> taking place properly which the attacker would be able to do in any
+>> event if the can man in the middle the connection.
+>>
+>>
+>>
+>> --
+>> Kurt Seifried -- Red Hat -- Product Security -- Cloud
+>> PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+>>
+> 
+> Note: Python 2.7.9+ and 3.4.3+ will cause most apps like this to
+> automatically start validating hostnames. It may be easier to backport
+> those changes than to find every Python app that doesn’t check hostnames.
 
-Check
-http://robert.ocallahan.org/2010/10/mitigating-dangling-pointer-bugs-using_15.html
-for more information about frame poisoning and how it works to make what
-used to be always critical security bugs into just crash bugs.
+Yup, I am aware of that, but as you know Red Hat is pretty conservative
+on updates to things like Python/etc because we have to support customer
+applications that we have never seen and will never see (e.g. internal
+corp software), and if we break those apps due to changes in underlying
+languages there is a big problem.
 
-Also, Mozilla is a CNA, so requests for CVEs for Mozilla products should be
-directed to them. I've cc'd security@ and Dan Veditz to confirm the above,
-however.
+> ---
+> Donald Stufft
+> PGP: 7C6B 7C5D 5E2B 6356 A926 F04F 6E3C BCE9 3372 DCFA
+> 
 
-~reed
-(with his Mozilla Security Group hat on)
+-- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-On Sat, Feb 7, 2015 at 10:29 AM, Kurt Seifried <kseifried@...hat.com> wrote:
 
-> https://bugzilla.mozilla.org/show_bug.cgi?id=679572
-> https://bugzilla.redhat.com/show_bug.cgi?id=751934
->
-> not sure why this never got a cve/security treatment
->
-> --
-> Kurt Seifried -- Red Hat -- Product Security -- Cloud
-> PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
->
->
-
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
