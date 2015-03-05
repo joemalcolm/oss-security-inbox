@@ -1,24 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/30/11
-Message-ID: <CACYkhxjWgPkzNVr=tVZAJXG8gDVeEJ0ZZuH4rpcQFGmggX+61w@mail.gmail.com>
-Date: Fri, 30 Jan 2015 20:56:19 +1100
-From: Michael Samuel <mik@...net.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/05/9
+Message-ID: <54F89F37.2040608@hlrs.de>
+Date: Thu, 05 Mar 2015 19:23:51 +0100
+From: Martin Hecht <hecht@...s.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: xchat/hexchat don't properly verify SSL certificates
+Subject: Re: Certificate pinning and the browser PKI
 Content-Type: text/plain; charset=utf-8
 
-On 30 January 2015 at 06:24, Sam Dodrill <shadow.h511@...il.com> wrote:
-> A lot of the time IRC networks will not pay for a verified SSL cert due to
-> the fact that the kind of SSL cert they would need (a wildcard one) is
-> financially prohibitive. I don't think this is a security bug with hexchat
-> more a symptom of the fact that SSL combines encryption and identity
-> verification where sometimes people only want the former.
+Hi Florian,
 
-The correct response to this is for them to publish their self-signed
-certificate (or even a CA certificate) and have it pasted into the
-client, along with the configuration.
+On 03/05/2015 01:43 PM, Florian Weimer wrote:
+> I'm looking for suggestions how to implement certificate pinning.
+>
+> Things are relatively straightforward if you are not in the browser PKI
+> because you can pin a long-term CA certificate instead, and not the
+> server certificate.  Same if you have a dedicated (sub-)CA in the
+> browser PKI.
+>
+> But if your server has to be in the browser PKI, things get a bit messy.
+>  Pinning the CA may not offer much protection (because you are still
+> exposed to RA failures at the CA).  
+If you implement it yourself, I think you can pin any certificate in the
+chain. The more you go up the chain the more you are at risk for RA
+failures, but on the other hand the more long-living the certificates
+will be. Even if you pin the root CA of the browser PKI, you are still
+better off pinning that one, than trusting all of the root CAs in the
+browser PKI.
 
-The client could then perform a byte-wise compare of the public key.
+> Pinning the server certificate is
+> problematic because the certificates are relatively short-lived, and the
+> rollovers have to be coordinated carefully.
+>
+> So for the browser PKI case, it may make sense to pin the server public
+> key instead (n *and *e), not the entire certificate.  During regular
+> rollover, you can keep the public key, and you can have a pre-pinned
+> offline copy for emergency rollovers.
+It depends if the CA policies allow to re-use the server keys. To my
+understanding the concept of certificates with an expiration date is
+also based on the assumption that forcing the certificate holders to
+renew the certificate improves security (because the use of unnoticed
+stolen credentials gets stopped at least at some time). I'm not sure how
+many CAs force their clients to renew the keys when they replace the
+server certificate.
+>
+> Or use SNI, a different endpoint name, and a separate certificate
+> outside browser PKI, and pin that.
+>
+> Are there other options I'm missing?
+A mixture of all that? e.g. pin a hash over the root CA certificate and
+the subject(s) of the Sub-CAs in the chain. That would even allow the
+intermediate CAs to change their keys but you verify at least the path
+which you go down from the root CA.
+...and combine the pinning with crls or ocsp
+>
+> The pinned certificate magically appears, thanks to the software update
+> infrastructure, so that's a solved problem.  It's just synchronizing
+> things within the update infrastructure to external events that can be
+> tricky, for various reasons.
+Well, as you already indicated, if the server certificates are exchanged
+quite shortly before they expire, it becomes a problem to propagate the
+information to the clients. If you start pinning somewhere higher up in
+the chain you usually have one life time of an intermediate CA
+certificate for communicating the new one to the clients. But still, for
+this time frame you have to trust both of them because you don't know
+when exactly the updates are are installed, and probably neither the
+exact time when the server certificate is exchanged.
 
-I assume well-known networks could have their certificates hard-coded
-into the client.
+kind regards,
+Martin
+
+
