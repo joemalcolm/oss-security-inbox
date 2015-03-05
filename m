@@ -1,29 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/05/8
-Message-ID: <CAGeh-pFf60m79xH8-W3A9OKrvHB4nmJ-JvK9JbFgnL4BYDiQtQ@mail.gmail.com>
-Date: Thu, 5 Feb 2015 15:34:45 +0100
-From: Dejan Bosanac <dejan@...httale.net>
-To: "dev@...ivemq.apache.org" <dev@...ivemq.apache.org>,  "users@...ivemq.apache.org" <users@...ivemq.apache.org>,  Apache Security Response Team <security@...che.org>, oss-security@...ts.openwall.com,  bugtraq@...urityfocus.com
-Subject: [ANNOUNCE] CVE-2014-3579 - ActiveMQ Apollo vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/05/3
+Message-ID: <54F81196.9060004@gmail.com>
+Date: Thu, 05 Mar 2015 09:19:34 +0100
+From: Gsunde Orangen <gsunde.orangen@...il.com>
+To: fulldisclosure@...lists.org, oss-security@...ts.openwall.com
+Subject: Re: [FD] Java 8u40 released: why?
 Content-Type: text/plain; charset=utf-8
 
-A security vulnerability has been reported agains ActiveMQ Apollo 1.7 and
-older versions.
+I'd be interested in that, too.
+In case this out-of-band release is about an important security fix,
+then either this is something new (details still to be disclosed).
+Or it is associated with CVE-2014-6593 (e.g. incomplete or buggy fix in
+the January release)? The detais (named as "SKIP-TLS") had been
+disclosed just this week along with the "FREAK" attack (see
+https://www.smacktls.com/#skip). Former descriptions of CVE-2014-6593
+only indicated a failure to properly check the ChangeCipherSpec in the
+TLS connection handshake; but apparently - esp. on client side - much
+more could go wrong in former JSSE implemenations.
 
-Please check the following document and see if you’re affected
+Maybe someone involved in openJDK could tell more...
 
-http://activemq.apache.org/security-advisories.data/CVE-2014-3579-announcement.txt
+Gsunde
 
-ActiveMQ Apollo 1.7.1 with appropriate fixes is released and available for
-upgrade
 
-Regards
---
-Dejan Bosanac
-----------------------
-Red Hat, Inc.
-dbosanac@...hat.com
-Twitter: @dejanb
-Blog: http://sensatic.net
-ActiveMQ in Action: http://www.manning.com/snyder/
+On 04.03.2015, 02:23 paul.szabo@...ney.edu.au wrote:
+> I notice that Java (JDK, JRE) update 8u40 has been released.
+> Though
+>   http://www.oracle.com/technetwork/java/javase/downloads/index.html
+> says "this release includes important security fixes", the release notes
+>   http://www.oracle.com/technetwork/java/javase/8u40-relnotes-2389089.html
+> says the "security baseline" is 1.8.0_31 (unchanged).
+> I do not notice any major "useability" issues fixed.
+> So: why this out-of-band release?
+> 
+> Thanks, Paul
+> 
+> Paul Szabo   psz@...hs.usyd.edu.au   http://www.maths.usyd.edu.au/u/psz/
+> School of Mathematics and Statistics   University of Sydney    Australia
+> 
+> _______________________________________________
+> Sent through the Full Disclosure mailing list
+> https://nmap.org/mailman/listinfo/fulldisclosure
+> Web Archives & RSS: http://seclists.org/fulldisclosure/
+> 
 
