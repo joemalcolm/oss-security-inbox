@@ -1,25 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/20/12
-Message-ID: <54BEC2A1.7040704@cs.uni-goettingen.de>
-Date: Tue, 20 Jan 2015 22:03:29 +0100
-From: Fabian Yamaguchi <fabian.yamaguchi@...uni-goettingen.de>
-To: <cve-assign@...re.org>
-CC: <oss-security@...ts.openwall.com>
-Subject: Re: Vulnerabilities in VLC 2.1.5
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/05/8
+Message-ID: <54F88D1E.1070200@oracle.com>
+Date: Thu, 05 Mar 2015 17:06:38 +0000
+From: John Haxby <john.haxby@...cle.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Another Python app (rhn-setup: rhnreg_ks) not checking hostnames in certs properly CVE-2015-1777
 Content-Type: text/plain; charset=utf-8
 
-Thank you!
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-On 01/20/2015 09:58 PM, cve-assign@...re.org wrote:
->> * Buffer overflow in updater:
+On 04/03/15 18:37, Kurt Seifried wrote:
+> On 04/03/15 11:14 AM, Donald Stufft wrote:
+>> > 
+>>> >> On Mar 4, 2015, at 12:55 PM, Kurt Seifried <kseifried@...hat.com> wrote:
+>>> >>
+>>> >> https://bugzilla.redhat.com/show_bug.cgi?id=1198740
+>>> >>
+>>> >> Jan Bee of the Google Security Team reports:
+>>> >>
+>>> >> The /usr/sbin/rhnreg_ks fails to properly validate hostnames in
+>>> >> certificates. This can result in man in the middle attacks.
+>>> >>
+>>> >> ===
+>>> >>
+>>> >> Please note that this issue cannot easily be exploited to cause any
+>>> >> significant damage to a system other then preventing registration from
+>>> >> taking place properly which the attacker would be able to do in any
+>>> >> event if the can man in the middle the connection.
+>>> >>
+>>> >>
+>>> >>
+>>> >> --
+>>> >> Kurt Seifried -- Red Hat -- Product Security -- Cloud
+>>> >> PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+>>> >>
+>> > 
+>> > Note: Python 2.7.9+ and 3.4.3+ will cause most apps like this to
+>> > automatically start validating hostnames. It may be easier to backport
+>> > those changes than to find every Python app that doesn’t check hostnames.
+> Yup, I am aware of that, but as you know Red Hat is pretty conservative
+> on updates to things like Python/etc because we have to support customer
+> applications that we have never seen and will never see (e.g. internal
+> corp software), and if we break those apps due to changes in underlying
+> languages there is a big problem.
 > 
->> https://github.com/videolan/vlc/commit/fbe2837bc80f155c001781041a54c58b5524fc14
-> 
-> Use CVE-2014-9625 for this integer truncation caused by a cast to
-> size_t (with resultant buffer overflow).
-> 
-> 
-...
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+PEP 476 cites 11 CVEs that resulted from python not properly validating
+certificates.   This would be number 12.
+
+Shouldn't python versions prior to 2.7.9 and 3.4.3 have a CVE each for
+the lack of verification? If internal corporate software stops working
+because of invalid certificates, wasn't it broken anyway?
+
+jch
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iF4EAREIAAYFAlT4jREACgkQRQu7fpQvo8gQ6wD/Spvj6v0XdrQ2dOG5/r63gpSb
+0v0XXopM3J9M0IhBCAQA/02UcObkNkXxM4zj43TWdOeJEuabuBHl9rHubmBDo/9/
+=NJa4
+-----END PGP SIGNATURE-----
