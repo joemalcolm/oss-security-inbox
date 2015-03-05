@@ -1,37 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/14/5
-Message-ID: <20150314223525.GZ2456@yuggoth.org>
-Date: Sat, 14 Mar 2015 22:35:25 +0000
-From: Jeremy Stanley <fungi@...goth.org>
-To: OSS Security <oss-security@...ts.openwall.com>
-Cc: CVE Request <cve-assign@...re.org>, Etherpad Security <security@...erpad.org>, John McLear <John@...ear.co>, webzwo0i <webzwo0i@...2.de>, Stefan Müller <stefan@...fans-entwicklerecke.de>
-Subject: CVE Request for information leak in Etherpad exports
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/05/10
+Message-ID: <54F8A23D.5050405@redhat.com>
+Date: Thu, 05 Mar 2015 11:36:45 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Another Python app (rhn-setup: rhnreg_ks) not checking hostnames in certs properly CVE-2015-1777
 Content-Type: text/plain; charset=utf-8
 
-A vulnerability was discovered in Etherpad (see below). In order to
-ensure full traceability, we need a CVE number assigned that we can
-attach to further notifications. This issue is already public.
 
-Title: Information leak in Etherpad exports
-Reporter: webzwo0i
-Versions: 1.5.0 through 1.5.1
 
-Description:
-webzwo0i reported a vulnerability in the export functionality of
-current Etherpad releases. When exporting a padID all pads for which
-the requested ID is a substring are also returned, regardless of
-access restriction, resulting in an information leak. This includes
-group pads created via the API.
+On 05/03/15 10:06 AM, John Haxby wrote:
+> PEP 476 cites 11 CVEs that resulted from python not properly validating
+> certificates.   This would be number 12.
+> 
+> Shouldn't python versions prior to 2.7.9 and 3.4.3 have a CVE each for
+> the lack of verification? If internal corporate software stops working
+> because of invalid certificates, wasn't it broken anyway?
 
-Notes:
-This bug was introduced in commit 1081156 which was initially
-included in the 1.5.0 release, and is fixed in commit a0fb652 which
-will appear in a future 1.5.2 release.
+So if something is advertised as having a security feature and does not
+or it is broken then it gets a CVE. In this case Python, and basically
+every other SSL/TLS implementation on the planet, by default, did not
+check hostnames in certs, but they did provide that capability should
+you choose to use it. So no CVE since it wasn't "meant to be secure" as
+I understand it.
 
-References:
-https://github.com/ether/etherpad-lite/commit/a0fb652
+Now for my personal opinion: Doing SSL/TLS with server certs and not
+checking the hostname in a server cert is completely insane and utterly
+defeats the purpose. However there are cases where a certificate may not
+have a hostname field, or need a valid hostname field, e.g. a client
+certificate where you mostly care about the fact that the client has it
+at all. So I can see why they made hostname checks optional, but again,
+I think it was a very bad decision long term as evidenced by:
+
+http://www.cve.mitre.org/cgi-bin/cvekey.cgi?keyword=certificate+hostname+check
+
+> jch
+> 
 
 -- 
-Jeremy Stanley
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-Download attachment "signature.asc" of type "application/pgp-signature" (950 bytes)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
