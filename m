@@ -1,45 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/21/10
-Message-ID: <54BFB1B7.4020402@tycho.nsa.gov>
-Date: Wed, 21 Jan 2015 09:03:35 -0500
-From: Stephen Smalley <sds@...ho.nsa.gov>
-To: James Morris <jmorris@...ei.org>, Ben Hutchings <ben@...adent.org.uk>
-CC: Alexander Viro <viro@...iv.linux.org.uk>, linux-fsdevel@...r.kernel.org, linux-security-module@...r.kernel.org, LKML <linux-kernel@...r.kernel.org>, 770492@...s.debian.org, Ben Harris <bjh21@....ac.uk>, oss-security@...ts.openwall.com, John Johansen <john.johansen@...onical.com>, Paul Moore <paul@...l-moore.com>, Casey Schaufler <casey@...aufler-ca.com>
-Subject: Re: [RFC PATCH RESEND] vfs: Move security_inode_killpriv() after permission checks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/05/12
+Message-ID: <20150305210001.GA13526@pisco.westfalen.local>
+Date: Thu, 5 Mar 2015 22:00:01 +0100
+From: Moritz Mühlenhoff <jmm@...til.org>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: Re: CVE Request: libarchive -- directory traversal in bsdcpio
 Content-Type: text/plain; charset=utf-8
 
-On 01/20/2015 06:17 PM, James Morris wrote:
-> On Sat, 17 Jan 2015, Ben Hutchings wrote:
+On Sun, Feb 22, 2015 at 08:01:10PM +0100, Moritz Muehlenhoff wrote:
+> On Fri, Jan 16, 2015 at 06:19:21AM +0300, Alexander Cherepanov wrote:
+> > Hi!
+> > 
+> > bsdcpio tool from libarchive bundle is susceptible to a directory traversal
+> > vulnerability via absolute paths.
+> > 
+> > Initial discussion:
+> > http://www.openwall.com/lists/oss-security/2015/01/07/5
+> > 
+> > Upstream report:
+> > https://groups.google.com/d/msg/libarchive-discuss/dN9y1VvE1Qk/Z9uerigjQn0J
+> > 
+> > My proposed (minimal) fix (non-Windows):
+> > https://groups.google.com/group/libarchive-discuss/attach/a78932ecb50340ae/0001-Quick-n-dirty-fix-for-bsdcpio-directory-traversal-vu.patch?part=0.1
+> > 
+> > Discussion is ongoing.
+> > 
+> > Could CVE(s) please be assigned?
 > 
->> chown() and write() should clear all privilege attributes on
->> a file - setuid, setgid, setcap and any other extended
->> privilege attributes.
->>
->> However, any attributes beyond setuid and setgid are managed by the
->> LSM and not directly by the filesystem, so they cannot be set along
->> with the other attributes.
->>
->> Currently we call security_inode_killpriv() in notify_change(),
->> but in case of a chown() this is too early - we have not called
->> inode_change_ok() or made any filesystem-specific permission/sanity
->> checks.
->>
->> Add a new function setattr_killpriv() which calls
->> security_inode_killpriv() if necessary, and change the setattr()
->> implementation to call this in each filesystem that supports xattrs.
->> This assumes that extended privilege attributes are always stored in
->> xattrs.
-> 
-> It'd be useful to get some input from LSM module maintainers on this. 
-> 
-> e.g. doesn't SELinux already handle this via policy directives?
+> This seems to have fallen through the cracks, explicitly adding cve-assign
+> to CC.
 
-There have been a couple postings of a similar patch set [1] by Jan
-Kara, although I don't believe that series addressed chown().
+Now released as DSA 3180.
 
-If I am reading the patches correctly, they (correctly) don't affect
-SELinux or Smack labels; they are just calling the existing
-security_inode_killpriv() hook, which is only implemented for the
-capability module to remove the security.capability xattr.
-
-[1] http://marc.info/?l=linux-security-module&m=141890696325054&w=2
+Cheers,
+        Moritz
