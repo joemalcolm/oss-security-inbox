@@ -1,51 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/08/5
-Message-ID: <54AEB831.9080002@internot.info>
-Date: Fri, 09 Jan 2015 04:02:41 +1100
-From: Joshua Rogers <oss@...ernot.info>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: PHP
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/05/1
+Message-ID: <54F7B64A.9070400@redhat.com>
+Date: Wed, 04 Mar 2015 18:50:02 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com, Assign a CVE Identifier <cve-assign@...re.org>
+Subject: Re: unassigning CVE-2015-2104
 Content-Type: text/plain; charset=utf-8
 
-On 08/01/15 22:11, Joshua Rogers wrote:
+Just a heads up, I did not assign this one, I dunno who's pool it came
+from (I'm going to guess directly from Mitre), so adding them to the CC
+either way to make sure they explicitly know.
 
-> CVE Request 2:
->
-> Uninitalized Pointer Read in PHP core('fopen()')
-> Bug report: https://bugs.php.net/bug.php?id=68692&edit=2
-> Commit fix:
-> http://git.php.net/?p=php-src.git;a=commit;h=7ebdc8d70d7617f2c3353b027663ef54a24a2248
-Not a valid security risk. In all cases of the 'vulnerable' function
-being used, a specific case is not true, which means that it cannot be
-exploited.
->>                 if (!(stream = php_stream_open_wrapper(p + 10, mode,
->> options, opened_path))) {
->>                         efree(pathdup);
->>                         return NULL;
->>                 }
-'stream' must be false when php_stream_apply_filter_list is called,
-which for all cases in the PHP code, cannot be.
+On 04/03/15 02:27 PM, Paul McMillan wrote:
+> Hi,
+> 
+> I'm part of the Python security response team, and we'd like to have
+> CVE-2015-2104 unassigned. It was opened by a bug reporter without
+> consulting with us first, and was assigned without input from the
+> project. The reported bug stems from a misunderstanding of documented
+> behavior, and is a bug in upstream code, rather than a security issue
+> with the core Python language.
+> 
+> Regards,
+> -Paul
+> 
 
-> CVE Request 3:
-> Uninitalized Pointer Read in PHP core
-> Bug report: https://bugs.php.net/bug.php?id=68694&edit=2
-> Commit fix:
-> http://git.php.net/?p=php-src.git;a=commit;h=f3ea1b0b6a42a08093bf9191ad76fb4b5e0a653b
-This is invalid too.
-It requires, like the request #2, for 'stream' to be NULL.
-
->         for (key = php_strtok_r(tmp, ",", &lasts);
-In this case, 'tmp' must be NULL for it to crash/be exploited.
-But tmp is defined:
->         tmp = estrndup(new_value->val, new_value->len);
-estrndup uses "emalloc", which like the other one from a few days ago
-that I revoked, doesn't return NULL, but just crashes the program with
-out-of-memory exit.
-
-
-Thanks,
 -- 
--- Joshua Rogers <https://internot.info/>
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
 
 Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
