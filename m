@@ -1,21 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/22/9
-Message-ID: <20150222184334.GA10086@pisco.westfalen.local>
-Date: Sun, 22 Feb 2015 19:43:34 +0100
-From: Moritz Mühlenhoff <jmm@...til.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/05/11
+Message-ID: <20150305213836.02295978@redhat.com>
+Date: Thu, 5 Mar 2015 21:38:36 +0100
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Assign a CVE Identifier <cve-assign@...re.org>
-Subject: Re: older issues in libbluray
+Subject: Re: Another Python app (rhn-setup: rhnreg_ks) not checking hostnames in certs properly CVE-2015-1777
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Feb 06, 2015 at 04:21:20PM -0700, Kurt Seifried wrote:
-> https://bugzilla.redhat.com/show_bug.cgi?id=959434
-> https://bugzilla.redhat.com/show_bug.cgi?id=959433
+On Thu, 05 Mar 2015 17:06:38 +0000 John Haxby wrote:
+
+> PEP 476 cites 11 CVEs that resulted from python not properly
+> validating certificates.   This would be number 12.
 > 
-> these may warrant a cve
+> Shouldn't python versions prior to 2.7.9 and 3.4.3 have a CVE each for
+> the lack of verification?
 
-Have these been reported to libbluray upstream? The
-Bugzilla entries are rather scarce on details.
+http://seclists.org/oss-sec/2014/q4/1028
 
-Cheers,
-        Moritz
+-- 
+Tomas Hoger / Red Hat Product Security
