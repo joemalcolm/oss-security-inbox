@@ -1,39 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/28/13
-Message-ID: <20150128104252.GA5404@chaz.gmail.com>
-Date: Wed, 28 Jan 2015 10:42:52 +0000
-From: Stephane Chazelas <stephane.chazelas@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/05/2
+Message-ID: <20150305014533.GA30991@blough.us>
+Date: Wed, 4 Mar 2015 20:45:33 -0500
+From: Bill Blough <devel@...ugh.us>
 To: oss-security@...ts.openwall.com
-Subject: Re: Qualys Security Advisory CVE-2015-0235 - GHOST: glibc gethostbyname buffer overflow
+Subject: CVE-2014-6440: Heap Overflow in VLC Transcode Module
 Content-Type: text/plain; charset=utf-8
 
-2015-01-27 11:54:10 -0800, Michal Zalewski:
-> > apache, cups, dovecot, gnupg, isc-dhcp, lighttpd, mariadb/mysql,
-> > nfs-utils, nginx, nodejs, openldap, openssh, postfix, proftpd,
-> > pure-ftpd, rsyslog, samba, sendmail, sysklogd, syslog-ng, tcp_wrappers,
-> > vsftpd, xinetd.
-> 
-> Cool, thanks!
-[...]
 
-What about clients? AFAICT from the output of:
+Executive Summary
+-----------------
 
-sudo stap -e 'probe
-  process("/lib/x86_64-linux-gnu/libc.so.6").function("__gethostbyname_r"),
-  process("/lib/x86_64-linux-gnu/libc.so.6").function("gethostbyname"),
-  process("/lib/x86_64-linux-gnu/libc.so.6").function("gethostbyname2"),
-  process("/lib/x86_64-linux-gnu/libc.so.6").function("__gethostbyname2_r"),
-  process("/lib/x86_64-linux-gnu/libc.so.6").function("__new_gethostbyname2_r")
-  { printf("[%s][%d]->%s(%s)\n", execname(), pid(), pp(), $name$)}'
+VLC versions before 2.1.5 contain a vulnerability in the transcode module that
+may allow a corrupted stream to overflow buffers on the heap. With a
+non-malicious input, this could lead to heap corruption and a crash.  However,
+under the right circumstances, a malicious attacker could potentially use this
+vulnerability to hijack program execution, and on some platforms, execute
+arbitrary code.
 
-All of google-chrome, firefox, thunderbird call at least one of
-those with network supplied data.
 
-Things like spam filters and antivirus are likely at risk
-(thinking of network IDSes and other spam filtering/proxy appliances).
+Remediation
+-----------
 
-DHCP clients? Fancy wireless auth?
+Prior to being notified of this issue, the VLC team had already made changes to
+the 2.2 development branch [0][1][2] that corrects this issue by reinitilizing
+the filters when a format change is detected. However, the fixes had not yet
+been backported to the 2.1 maintenance branch.
+                                                                               
+Once notified, the VLC team quickly resolved the issue by backporting the
+relevant patches to the maintenance branch [3][4][5]. They also added an
+additional check on both the development[6] and maintenance[7] branches for
+good measure.
 
-Cheers, 
-Stephane
+CVE-2014-6440 [8] was assigned to this issue.
 
+Timeline
+--------
+
+ 2014-04-18: VLC team notified of issue
+
+ 2014-04-19: Fixed in VLC repository
+
+ 2014-07-06: VLC 2.1.5 maintenance release
+
+
+A more detailed writeup can be found on my blog [9].
+
+Please note, I am not subscribed to the list, so please CC me if you reply.
+
+Bill
+
+
+[0]: http://git.videolan.org/?p=vlc.git;a=commit;h=a3a150b91f09620dc0d81c22db591a20faf4b2a5
+[1]: http://git.videolan.org/?p=vlc.git;a=commit;h=39a99d25872f64dacd470fda86ba2193a55cda52
+[2]: http://git.videolan.org/?p=vlc.git;a=commit;h=26989ea2d98380eef28843ffa8ca490e8f9d6dae
+[3]: http://git.videolan.org/?p=vlc/vlc-2.1.git;a=commit;h=28bd6670a26bf88c2523b7302e2c22f8ca210bb7
+[4]: http://git.videolan.org/?p=vlc/vlc-2.1.git;a=commit;h=feca6658b4b84b4bc8b7a08431e811813277d31b
+[5]: http://git.videolan.org/?p=vlc/vlc-2.1.git;a=commit;h=e40a4a1a54be2b69e4e001451f0dd91f3857a976
+[6]: http://git.videolan.org/?p=vlc.git;a=commit;h=a113b849e428b71813a569021bd10d6974f6621f
+[7]: http://git.videolan.org/?p=vlc/vlc-2.1.git;a=commit;h=a5bee4c5cf0c8fca0d1ddaf570aeebc78e824b15
+[8]: https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-6440              
+[9]: http://billblough.net/blog/2015-03-04-cve-2014-6440-heap-overflow-in-vlc-transcode-module
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (967 bytes)
