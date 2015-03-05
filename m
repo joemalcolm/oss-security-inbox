@@ -1,42 +1,94 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/05/10
-Message-Id: <20150205165219.CF16C6C0056@smtpvmsrv1.mitre.org>
-Date: Thu,  5 Feb 2015 11:52:19 -0500 (EST)
-From: cve-assign@...re.org
-To: kseifried@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request for Zero-day in the Fancybox-for-WordPress Plugin
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/05/5
+Message-Id: <E1YTUk8-00020t-62@xenbits.xen.org>
+Date: Thu, 05 Mar 2015 12:19:08 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 122 (CVE-2015-2045) - Information leak through version information hypercall
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> http://blog.sucuri.net/2015/02/zero-day-in-the-fancybox-for-wordpress-plugin.html
+            Xen Security Advisory CVE-2015-2045 / XSA-122
+                              version 3
 
-> https://wordpress.org/plugins/fancybox-for-wordpress/changelog/
+         Information leak through version information hypercall
 
-> 3.0.3
-> 
-> Fixed a security issue. (Thanks to mickaelb for reporting and
-> Konstantin Kovshenin for providing the fix)
+UPDATES IN VERSION 3
+====================
 
-> https://plugins.trac.wordpress.org/changeset/1082625/
+Public release.
 
-Use CVE-2015-1494.
+ISSUE DESCRIPTION
+=================
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+The code handling certain sub-operations of the HYPERVISOR_xen_version
+hypercall fails to fully initialize all fields of structures
+subsequently copied back to guest memory. Due to this hypervisor stack
+contents are copied into the destination of the operation, thus
+becoming visible to the guest.
+
+IMPACT
+======
+
+A malicious guest might be able to read sensitive data relating to
+other guests.
+
+VULNERABLE SYSTEMS
+==================
+
+Xen 3.2.x and later are vulnerable.
+Xen 3.1.x and earlier have not been inspected.
+
+MITIGATION
+==========
+
+There is no mitigation available for this issue.
+
+CREDITS
+=======
+
+This issue was discovered by Aaron Adams of NCC Group.
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue.
+
+xsa122.patch        xen-unstable, Xen 4.5.x, Xen 4.4.x, Xen 4.3.x, Xen 4.2.x
+
+$ sha256sum xsa122*.patch
+13404ef363ee347db1571ee91afaa962a68e616a7596c2441a29e26f6db9ec47  xsa122.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-iQEcBAEBAgAGBQJU059ZAAoJEKllVAevmvmsb6MH/0VWFcMUx7Uv5WgHDGGWvo6Y
-zbiq6KPrIlkk6QRjLypJr4sose/zM1iV48LzYIg5qBiTuUf2Xg22VyzbeSCyYdbb
-2j4rHvY5nAOpSJ7ziSWREd1igC7VmtQyhxHOUk1yKWIxN+XkjEhJbAulNXVLvh9f
-aElP7NISaOvHJG7bJaN3UBaMVWlfuhBQ9D6vivL4vkE4UdBLw98iPftOsxN84l5o
-KBVUkzmVEvC55i1pRe2s45opzic/jEE+AiQlipn6UuuPJYfeI+hvxq7rb24AwhCM
-GuvanI7inBqF6YocW7iumBn2JPvkqmxBQAqImYDbUSMe9icPR9sM/MKahy2aBRs=
-=xgTa
+iQEcBAEBAgAGBQJU+EmQAAoJEIP+FMlX6CvZZxIIAJVuGIRZ1dEiX1VPY71dZ52t
+CSIBfHMpynwxT7oUwbw/Akk3d1M/uAV/8QvM1DoG9//U6hQgZfY5UVn3Ihp1k7Fy
+BitDKdDn3T10ys/URtotX+8+Alm1diM/6sIrAF5kG3IBf0VCkEaV5jVI0ZIuee5u
+AOHhj9HJN9bPRGSTlNlkRx0Tjlw8Worrluex2romagALxLEXYejOM8syuQl5qSFj
+VdqhNvmZV23664ZTrgSZxU17O+AajMNi+M9sYUFSPfAA8VHu42G7Ox4CqY7pxyg7
+b9g2BgVVWRkZIhZPYeEr3RcxNP7wITAeFYP18c48VBd6gmHYK9sSwwSoXgYGuwE=
+=ddMG
 -----END PGP SIGNATURE-----
+
+Download attachment "xsa122.patch" of type "application/octet-stream" (1456 bytes)
