@@ -1,19 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/26/3
-Message-ID: <54C60087.1040301@redhat.com>
-Date: Mon, 26 Jan 2015 09:53:27 +0100
-From: Florian Weimer <fweimer@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/05/7
+Message-ID: <20150305124602.GA7844@kronk.local>
+Date: Thu, 5 Mar 2015 13:46:02 +0100
+From: Alessandro Ghedini <alessandro@...dini.me>
 To: oss-security@...ts.openwall.com
-Subject: Reject CVE-2012-3878?
+Cc: cve-assign@...re.org
+Subject: Re: CVE Request: libarchive -- directory traversal in bsdcpio
 Content-Type: text/plain; charset=utf-8
 
-This was initially i assigned CVE-2012-3878, before it was determined
-that it should not be treated as a vulnerability:
+On dom, feb 22, 2015 at 08:01:10 +0100, Moritz Muehlenhoff wrote:
+> On Fri, Jan 16, 2015 at 06:19:21AM +0300, Alexander Cherepanov wrote:
+> > Hi!
+> > 
+> > bsdcpio tool from libarchive bundle is susceptible to a directory traversal
+> > vulnerability via absolute paths.
+> > 
+> > Initial discussion:
+> > http://www.openwall.com/lists/oss-security/2015/01/07/5
+> > 
+> > Upstream report:
+> > https://groups.google.com/d/msg/libarchive-discuss/dN9y1VvE1Qk/Z9uerigjQn0J
+> > 
+> > My proposed (minimal) fix (non-Windows):
+> > https://groups.google.com/group/libarchive-discuss/attach/a78932ecb50340ae/0001-Quick-n-dirty-fix-for-bsdcpio-directory-traversal-vu.patch?part=0.1
+> > 
+> > Discussion is ongoing.
+> > 
+> > Could CVE(s) please be assigned?
+> 
+> This seems to have fallen through the cracks, explicitly adding cve-assign
+> to CC.
 
-<http://www.nntp.perl.org/group/perl.perl5.porters/2012/07/msg189909.html>
+FYI, the issue has now been fixed upstream [0] (only on POSIX platforms though,
+not Windows).
 
-The CVE description has somehow leaked, but not the relationship with
-the URL, making it non-obvious what this is about.
+Cheers
 
--- 
-Florian Weimer / Red Hat Product Security
+[0] https://github.com/libarchive/libarchive/commit/59357157706d47c365b2227739e17daba3607526
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
