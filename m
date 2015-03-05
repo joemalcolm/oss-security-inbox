@@ -1,32 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/04/12
-Message-ID: <20150204185336.GC6221@pisco.westfalen.local>
-Date: Wed, 4 Feb 2015 19:53:36 +0100
-From: Moritz Muehlenhoff <jmm@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/05/14
+Message-ID: <CACYkhxioBj+oaOG_amxfGSiDCNVjJBj-MZfjkbkk9nRsbma5fQ@mail.gmail.com>
+Date: Fri, 6 Mar 2015 10:09:22 +1100
+From: Michael Samuel <mik@...net.net>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: CVE Request: PHP/file: out-of-bounds memory access in softmagic
+Subject: Re: Another Python app (rhn-setup: rhnreg_ks) not checking hostnames in certs properly CVE-2015-1777
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-please assign a CVE ID for this issue in file (and in the respective
-PHP extension):
+Could RedHat ship a new package that replaced python's default SSL
+library with the one that validates TLS by default and release a RHEA?
 
-Originally reported in file:
-Bug report: http://bugs.gw.com/view.php?id=398
-Fix: https://github.com/file/file/commit/59e63838913eee47f5c120a6c53d4565af638158
+That way customers (like me) who never want broken TLS on their
+network can just install a package and it's fixed.
 
-A slightly modified version is also present in PHP (it should receive
-the same CVE ID):
-Bug report: https://bugs.php.net/bug.php?id=68735
-Fix: https://bugs.php.net/patch-display.php?bug=68735&patch=bug68735.patch&revision=1420309079
+Regards,
+  Michael
 
-We've already fixed these in Debian updates (but CVE IDs haven't been available
-back then):
-
-file: https://lists.debian.org/debian-security-announce/2015/msg00003.html
-php5: https://lists.debian.org/debian-security-announce/2015/msg00008.html
-
-Cheers,
-        Moritz
-        
+On 6 March 2015 at 05:36, Kurt Seifried <kseifried@...hat.com> wrote:
+>
+>
+> On 05/03/15 10:06 AM, John Haxby wrote:
+>> PEP 476 cites 11 CVEs that resulted from python not properly validating
+>> certificates.   This would be number 12.
+>>
+>> Shouldn't python versions prior to 2.7.9 and 3.4.3 have a CVE each for
+>> the lack of verification? If internal corporate software stops working
+>> because of invalid certificates, wasn't it broken anyway?
+>
+> So if something is advertised as having a security feature and does not
+> or it is broken then it gets a CVE. In this case Python, and basically
+> every other SSL/TLS implementation on the planet, by default, did not
+> check hostnames in certs, but they did provide that capability should
+> you choose to use it. So no CVE since it wasn't "meant to be secure" as
+> I understand it.
+>
+> Now for my personal opinion: Doing SSL/TLS with server certs and not
+> checking the hostname in a server cert is completely insane and utterly
+> defeats the purpose. However there are cases where a certificate may not
+> have a hostname field, or need a valid hostname field, e.g. a client
+> certificate where you mostly care about the fact that the client has it
+> at all. So I can see why they made hostname checks optional, but again,
+> I think it was a very bad decision long term as evidenced by:
+>
+> http://www.cve.mitre.org/cgi-bin/cvekey.cgi?keyword=certificate+hostname+check
+>
+>> jch
+>>
+>
+> --
+> Kurt Seifried -- Red Hat -- Product Security -- Cloud
+> PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+>
