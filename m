@@ -1,101 +1,99 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/23/17
-Message-ID: <54EB4876.7000707@redhat.com>
-Date: Mon, 23 Feb 2015 08:34:14 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com, Assign a CVE Identifier <cve-assign@...re.org>, jvn@....jp
-Subject: Re: CVE-2015-0881
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/05/4
+Message-Id: <E1YTUk4-0001zw-QW@xenbits.xen.org>
+Date: Thu, 05 Mar 2015 12:19:04 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 121 (CVE-2015-2044) - Information leak via internal x86 system device emulation
 Content-Type: text/plain; charset=utf-8
 
-Regarding CVE-2015-0881
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-http://jvn.jp/en/jp/JVN64455813/index.html
-http://jvndb.jvn.jp/en/contents/2015/JVNDB-2015-000019.html
+            Xen Security Advisory CVE-2015-2044 / XSA-121
+                              version 3
 
-Unless JVN can provide more details I would like to recommend we CVE
-REJECT this issue based on the following rational:
+       Information leak via internal x86 system device emulation
 
-1) It's an issue discovered "today" in software that was supposedly
-fixed 5 years ago
-2) No information on the vuln or the specific fix has been made
-vulnerable, which may be ok for closed source vendors using CVE but this
-leads to point 3...
-3) Even the upstream project can't make sense of this, and I'm inclined
-to trust them (e.g. they are not playing the "we want to minimize the
-number of CVE's assigned against our software game like some vendors).
+UPDATES IN VERSION 3
+====================
 
-I would suggest if JVN doesn't get back to us within a week (this seems
-like more then enough time) that this CVE be REJECT'ed.
+Public release.
 
-Mitre: thoughts or comments?
+ISSUE DESCRIPTION
+=================
 
-On 22/02/15 04:37 AM, Amos Jeffries wrote:
-> On 22/02/2015 7:17 p.m., Kurt Seifried wrote:
->> I'm trying to track down information on CVE-2015-0881.
-> 
->> I can't find a squid security contact (security@...id-cache.org 
->> bounced), there's no security report, and no link to a source code
->> patch for this.
-> 
-> - From the "Contact Us page"
-> (<http://www.squid-cache.org/Support/contact.html>)
-> 
->   squid-bugs @ lists.squid-cache.org
-> 
-> ... which goes to me and some other trusted developers. I dont mind
-> direct contacts for this type of thing, but the main contact address
-> guarantees someone sees it within a few hrs.
-> 
-> 
-> Regarding the CVE:
-> 
-> 1) This is the first I've heard about this particular CVE number
-> assignment.
-> 
-> 2) I did have some discusions with JPCERT about _a_ response splitting
-> vulnerability around those years. But the messages from them were IIRC
-> about replicating response splitting in a 2.x versions which were
-> incompletely fixed by:
-> <http://www.squid-cache.org/Versions/v2/2.5/bugs/#squid-2.5.STABLE7-header_parsing>
-> (did not get a CVE AFAIK).
-> 
-> 3) I have not been able to replicate the #2 issue in the Squid-3
-> series and several iterations of changes to the parsers there have
-> been careful to take the above issue into account. So I'm not sure
-> where the 3.1.10 comes from. Assuming it is the same vulnerability.
-> 
-> 
-> 
->> This is regarding 3.1.9 and earlier, 3.1.10 was released on 22 Dec
->> 2010, so 4+ years ago.
-> 
->> Needless to say I am more than a bit confused. A link to a specific
->> code patch/vuln/file would be helpful. Also if anyone knows how to
->> contact Squid re security issues properly I'd love to know.
-> 
-> 
-> I'm not sure 3.1.10 is the right version for attribution on any
-> response splitting fix. There certainly were no patches solving
-> anything related to respinse splitting in that version. Some
-> borderline memory leak vulnerabilities perhapse, but not response
-> splitting.
-> 
-> 
-> NP: Just to confuse things there was a major replacement of the HTTP
-> request-line parser on the 2015-02-10 which does explicitly fix all
-> lot of known HTTP request-line parse issues, including a few response
-> splitting vectors using downgrade to HTTP/0.9 handling. That will only
-> be in the 3.6 series though.
-> 
-> 
-> Amos Jeffries
-> Squid Software Foundation
-> 
-> 
+Emulation routines in the hypervisor dealing with certain system
+devices check whether the access size by the guest is a supported one.
+When the access size is unsupported these routines failed to set the
+data to be returned to the guest for read accesses, so that hypervisor
+stack contents are copied into the destination of the operation, thus
+becoming visible to the guest.
 
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+IMPACT
+======
 
+A malicious HVM guest might be able to read sensitive data relating
+to other guests.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+VULNERABLE SYSTEMS
+==================
+
+Xen 3.2.x and later are vulnerable.
+Xen 3.1.x and earlier have not been inspected.
+
+Only HVM guests can take advantage of this vulnerability.
+
+Only x86 systems are vulnerable.  ARM systems are not vulnerable.
+
+MITIGATION
+==========
+
+Running only PV guests will avoid this issue.
+
+CREDITS
+=======
+
+This issue was discovered by Jan Beulich of SUSE.
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue.
+
+xsa121.patch        xen-unstable, Xen 4.5.x, Xen 4.4.x, Xen 4.3.x, Xen 4.2.x
+
+$ sha256sum xsa121*.patch
+e74afb34e8059e8ee25b803019c192aa47c29208af2c19fb81aa84b0d7c0d268  xsa121.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQEcBAEBAgAGBQJU+EmOAAoJEIP+FMlX6CvZnU0IAJZE8lD0dqlM9RyIMopSOZwp
+CYEVhmk03UsTIpJci1zVg+QUs7owe/p6tamuy4B/XFG6tGs4vsqVeUk8lvs8/Gzs
+6RsEkHvOdy1Np9r8vCp2SShKsom0dE13t3JwAY+mftJNHFN2QTPmHbfi8XpnVotm
+1nsLXl+8FAWa+d3ZULQTZXKJw6f2dNuXu9NHIvaNzP+IffJ6zKLPr9b8Va71yztA
+0MPuUziRxVoJ5xWtoceN4qEdsnIZo5N9JN90fZSGSdiR976Qh1lhMu1ak4aVcNJa
+qljKSQQPOmfyHjyKsULvLlCYUldonkIfBVaJ+5QmZEVPMCDxig36m49QMOCNwOg=
+=BATt
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa121.patch" of type "application/octet-stream" (1379 bytes)
