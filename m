@@ -1,41 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/13/12
-Message-ID: <CAFOKM3r5geYXHitFzrY7PjVcRGvdUS_XOsiCSHaubM9z+cYL3A@mail.gmail.com>
-Date: Fri, 13 Mar 2015 12:23:09 -0700
-From: Dean Pierce <pierce403@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/05/6
+Message-ID: <54F84F82.1090508@redhat.com>
+Date: Thu, 05 Mar 2015 13:43:46 +0100
+From: Florian Weimer <fweimer@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: catdoc has bugs
+Subject: Certificate pinning and the browser PKI
 Content-Type: text/plain; charset=utf-8
 
-"catdoc" is a command line tool for extracting readable text from
-Microsoft office documents.  It is used by the command "less" when
-opening a .doc file, and if it's not installed, less will ask you to
-install it.  It's also listed as a forensics tool on certain websites.
-Catdoc has bugs.
+I'm looking for suggestions how to implement certificate pinning.
 
-The attached* word documents were generated with American Fuzzy Lop.
-The first attached tarball contains 35 somewhat analyzed sample
-crashes.  I've also included the raw crash samples with 27 additional
-crashes that were generated between the initial disclosure time and
-right now.  AFL identified them as unique issues (presumably different
-code paths) though the offending code seems to be in the following
-places:
+Things are relatively straightforward if you are not in the browser PKI
+because you can pin a long-term CA certificate instead, and not the
+server certificate.  Same if you have a dedicated (sub-)CA in the
+browser PKI.
 
-substmap.c:151 (crash)
-numutils.c:22 (some crash, some trigger ASAN)
-ole.c:108 (ASAN)
-ole.c:315 (ASAN)
+But if your server has to be in the browser PKI, things get a bit messy.
+ Pinning the CA may not offer much protection (because you are still
+exposed to RA failures at the CA).  Pinning the server certificate is
+problematic because the certificates are relatively short-lived, and the
+rollovers have to be coordinated carefully.
 
-The ASAN crashes indicate memory corruptions, but there are some solid
-segfaults in substmap.c and numultils.c.  The crashes seem to be read
-violations, so non-trivial to exploit, and since DoS and memory
-disclosures aren't super interesting for document parers, it's
-unlikely that any of these deserve a CVE.
+So for the browser PKI case, it may make sense to pin the server public
+key instead (n *and *e), not the entire certificate.  During regular
+rollover, you can keep the public key, and you can have a pre-pinned
+offline copy for emergency rollovers.
 
-There are likely more bugs, and catdoc also includes a ppt parser and
-an xls parser.
+Or use SNI, a different endpoint name, and a separate certificate
+outside browser PKI, and pin that.
 
-* The attachments were too big (>200k), so I made this website instead
-: https://catdocbugs.neocities.org/
+Are there other options I'm missing?
 
-  - DEAN
+The pinned certificate magically appears, thanks to the software update
+infrastructure, so that's a solved problem.  It's just synchronizing
+things within the update infrastructure to external events that can be
+tricky, for various reasons.
+
+-- 
+Florian Weimer / Red Hat Product Security
