@@ -1,52 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/11/5
-Message-ID: <Pine.LNX.4.64.1501110945530.26662@beijing.mitre.org>
-Date: Sun, 11 Jan 2015 09:46:43 -0500 (EST)
-From: cve-assign@...re.org
-To: Steffen Rösemann <steffen.roesemann1986@...il.com>
-cc: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: Re: CVE Request -- CMS BEdita v. 3.4.0 -- Multiple stored XSS vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/06/7
+Message-ID: <878ufakzhq.fsf@redhat.com>
+Date: Fri, 06 Mar 2015 14:49:05 +0100
+From: Martin Prpic <mprpic@...hat.com>
+To: "oss-security\@lists.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE request: Ruby on Rails ActiveModel::Name to_json Call Infinite Loop Remote DoS
 Content-Type: text/plain; charset=utf-8
 
+Hello, I don't see a CVE assigned to this anywhere:
 
-> I found multiple stored XSS vulnerabilities in the administrative backend
-> of CMS BEdita v.3.4.0 (release-date: 9th-May-2014).
->
-> The vulnerabilities can be found in the following paths of a common BEdita
-> installation:
->
-> http://{TARGET}/index.php/home/profile (in form with id „editProfile“  via
-> input field with id „lrealname")
->
-> http://{TARGET}/index.php/ (in form with id „addQuickItem“ via input field
-> with name "data[title]" and name "data[description]")
->
-> http://{TARGET}/index.php/areas (in form with id „saveNote“ via input field
-> with id „note text")
->
-> http://{TARGET}/index.php/documents/view (in form with id „updateForm“ via
-> input field with id „titleBEObject“ and input field with id „tagsArea“)
->
-> The vulnerabilities can be exploited by using arbitray HTML- and/or
-> JavaScriptcode, e.g. <script>alert(document.cookie)</script>.
->
-> Could you please assign a CVE-ID for it?
->
-> Thank you. Greetings.
->
-> Steffen Rösemann
->
-> References:
->
-> [1] http://www.bedita.com
-> [2] http://sroesemann.blogspot.de/2014/12/sroeadv-2014-10.html
-> [3] https://github.com/bedita/bedita/issues/566
-> [4] http://seclists.org/fulldisclosure/2015/Jan/16
+http://osvdb.org/show/osvdb/118954
 
-Use CVE-2015-1040.
+"Ruby on Rails contains a flaw that is triggered when handling a to_json
+call to ActiveModel::Name, which can cause an infinite loop. This may
+allow a remote attacker to cause a denial of service."
 
----
+This looks to link to the corresponding upstream issues:
 
-CVE assignment team, MITRE CVE Numbering Authority M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+https://github.com/rubysec/ruby-advisory-db/issues/130
+
+Could a CVE be please assigned?
+
+Thank you!
+
+-- 
+Martin Prpič / Red Hat Product Security
