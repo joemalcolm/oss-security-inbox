@@ -1,18 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/22/2
-Message-ID: <CAA+8RQY+C66zTX6kH=nDimk0apdvyJ5fzMKHDtk8wD_EODPfzA@mail.gmail.com>
-Date: Sun, 22 Feb 2015 01:28:28 -0500
-From: C Peters <chuck.peters@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/06/1
+Message-ID: <54F8FC9C.8010901@redhat.com>
+Date: Thu, 05 Mar 2015 18:02:20 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Assign a CVE Identifier <cve-assign@...re.org>, jvn@....jp
-Subject: Re: CVE-2015-0881
+Subject: Re: Another Python app (rhn-setup: rhnreg_ks) not checking hostnames in certs properly CVE-2015-1777
 Content-Type: text/plain; charset=utf-8
 
-Amos Jeffries <squid3@...enet.co.nz> sent out the most recent
-announcements.
-http://lists.squid-cache.org/pipermail/squid-announce/2015-February/000012.html
-​
+Please contact your TAM/GSS with this request, it carries a lot more
+impact if customers want something that we also want.
 
-Hope it helps,
-Chuck
+On 05/03/15 04:09 PM, Michael Samuel wrote:
+> Could RedHat ship a new package that replaced python's default SSL
+> library with the one that validates TLS by default and release a RHEA?
+> 
+> That way customers (like me) who never want broken TLS on their
+> network can just install a package and it's fixed.
+> 
+> Regards,
+>   Michael
+> 
+> On 6 March 2015 at 05:36, Kurt Seifried <kseifried@...hat.com> wrote:
+>>
+>>
+>> On 05/03/15 10:06 AM, John Haxby wrote:
+>>> PEP 476 cites 11 CVEs that resulted from python not properly validating
+>>> certificates.   This would be number 12.
+>>>
+>>> Shouldn't python versions prior to 2.7.9 and 3.4.3 have a CVE each for
+>>> the lack of verification? If internal corporate software stops working
+>>> because of invalid certificates, wasn't it broken anyway?
+>>
+>> So if something is advertised as having a security feature and does not
+>> or it is broken then it gets a CVE. In this case Python, and basically
+>> every other SSL/TLS implementation on the planet, by default, did not
+>> check hostnames in certs, but they did provide that capability should
+>> you choose to use it. So no CVE since it wasn't "meant to be secure" as
+>> I understand it.
+>>
+>> Now for my personal opinion: Doing SSL/TLS with server certs and not
+>> checking the hostname in a server cert is completely insane and utterly
+>> defeats the purpose. However there are cases where a certificate may not
+>> have a hostname field, or need a valid hostname field, e.g. a client
+>> certificate where you mostly care about the fact that the client has it
+>> at all. So I can see why they made hostname checks optional, but again,
+>> I think it was a very bad decision long term as evidenced by:
+>>
+>> http://www.cve.mitre.org/cgi-bin/cvekey.cgi?keyword=certificate+hostname+check
+>>
+>>> jch
+>>>
+>>
+>> --
+>> Kurt Seifried -- Red Hat -- Product Security -- Cloud
+>> PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+>>
 
+-- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
