@@ -1,38 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/07/1
-Message-ID: <54FA7687.2040401@redhat.com>
-Date: Fri, 06 Mar 2015 20:54:47 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/06/2
+Message-ID: <54F8FE63.9030801@treenet.co.nz>
+Date: Fri, 06 Mar 2015 14:09:55 +1300
+From: Amos Jeffries <squid3@...enet.co.nz>
 To: oss-security@...ts.openwall.com
-Subject: Re: Another Python app (rhn-setup: rhnreg_ks) not checking hostnames in certs properly CVE-2015-1777
+Subject: Re: Re: unassigning CVE-2015-2104
 Content-Type: text/plain; charset=utf-8
 
-On 06/03/15 06:08 AM, John Haxby wrote:
-> On 06/03/15 01:02, Kurt Seifried wrote:
->> Please contact your TAM/GSS with this request, it carries a lot
->> more impact if customers want something that we also want.
+On 6/03/2015 10:42 a.m., cve-assign@...re.org wrote:
+> We think that the issue reduces to the question of whether it's
+> acceptable for urlparse to provide inconsistent information about the
+> structure of a URL.
 > 
+> https://docs.python.org/2/library/urlparse.html says:
 > 
-> I know "me too" isn't helpful, but I'm going to say "me too" anyway.
->
-> It occurred to me that we could have a patch that has a global switch
-> (eg a file in, say, /etc/sysconfig and a corresponding switch for
-> individual applications) that switches on the correct behaviour.   I
-> know it's a bit of a mess, but that way people who don't care will
-> continue in blissful ignorance and people that do care can do
-> something about it.
+>    urlparse.urlparse(urlstring[, scheme[, allow_fragments]])
+>    Parse a URL into six components, returning a 6-tuple. This
+>    corresponds to the general structure of a URL:
+>    scheme://netloc/path;parameters?query#fragment.
 
-That would be one way. But why can't Oracle build it and open source it?
-Oracle has a Linux distribution too I thought? Or do you need Red Hat
-engineering to do it first? If so as I said, customer cases carry far
-more weight than oss-security for feature requests.
+My 2c ... no it does not.
 
-> jch
+There are 7 parts in a URL. What is called "netloc" in that description
+is actually two fields: [userinfo '@'] authority
+
+The userinfo field is very much alive and well in non-HTTP schemes.
 
 
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Ignoring the userinfo field leaves implementations open to attacks of
+the form:
+   scheme://example.com@...shing.com/path
 
+AYJ
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
