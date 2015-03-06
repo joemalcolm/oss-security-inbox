@@ -1,75 +1,91 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/29/25
-Message-ID: <54CA8856.6000903@openwall.com>
-Date: Thu, 29 Jan 2015 22:21:58 +0300
-From: Alexander Cherepanov <ch3root@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/06/6
+Message-ID: <54F9A6EA.5060508@oracle.com>
+Date: Fri, 06 Mar 2015 13:08:58 +0000
+From: John Haxby <john.haxby@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: Fwd: ClamAV® blog: ClamAV 0.98.6 has been released!
+Subject: Re: Another Python app (rhn-setup: rhnreg_ks) not checking hostnames in certs properly CVE-2015-1777
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-FYI:
-
-ClamAV 0.98.6 release notes list several issues which looks like 
-security fixes but only one CVE mentioned.
-
-ChangeLog lists bugzilla numbers but the bugs are not yet public.
-
-Relevant commit are not yet in github repo but the diff between 0.98.6 
-branch and the released tarball is quite small and seems to contain 
-almost only relevant fixes.
-
-Alexander Cherepanov
-
--------- Forwarded Message --------
-Subject: ClamAV® blog: ClamAV 0.98.6 has been released!
-Date: Tue, 27 Jan 2015 23:24:43 +0000
-From: Joel Esler (jesler) <jesler@...co.com>
-To: clamav-announce@...ts.clamav.net <clamav-announce@...ts.clamav.net>, 
-ClamAV users ML <clamav-users@...ts.clamav.net>, clamav-dev(mailer list) 
-<clamav-dev@...co.com>
+On 06/03/15 01:02, Kurt Seifried wrote:
+> Please contact your TAM/GSS with this request, it carries a lot
+> more impact if customers want something that we also want.
 
 
-http://blog.clamav.net/2015/01/clamav-0986-has-been-released.html
-
-ClamAV 0.98.6 is a bug fix release correcting the following:
+I know "me too" isn't helpful, but I'm going to say "me too" anyway.
 
 
-   *   library shared object revisions.
-   *   installation issues on some Mac OS X and FreeBSD platforms.
-   *   includes a patch from Sebastian Andrzej Siewior making ClamAV pid 
-files compatible with systemd.
-   *   - Fix a heap out of bounds condition with crafted Yoda's crypter 
-files. This issue was discovered by Felix Groebert of the Google 
-Security Team.
-   *   - Fix a heap out of bounds condition with crafted mew packer 
-files. This issue was discovered by Felix Groebert of the Google 
-Security Team.
-   *   - Fix a heap out of bounds condition with crafted upx packer 
-files. This issue was discovered by Kevin Szkudlapski of Quarkslab.
-   *   - Fix a heap out of bounds condition with crafted upack packer 
-files. This issue was discovered by Sebastian Andrzej Siewior. 
-CVE-2014-9328.
-   *   - Compensate a crash due to incorrect compiler optimization when 
-handling crafted petite packer files. This issue was discovered by 
-Sebastian Andrzej Siewior.
+> 
+> On 05/03/15 04:09 PM, Michael Samuel wrote:
+>> Could RedHat ship a new package that replaced python's default
+>> SSL library with the one that validates TLS by default and
+>> release a RHEA?
+>> 
+>> That way customers (like me) who never want broken TLS on their 
+>> network can just install a package and it's fixed.
 
-Thanks to the following ClamAV community members for code submissions
-and bug reporting included in ClamAV 0.98.6:
 
-Sebastian Andrzej Siewior
-Felix Groebert
-Kevin Szkudlapski
-Mark Pizzolato
-Daniel J. Luke
+It occurred to me that we could have a patch that has a global switch
+(eg a file in, say, /etc/sysconfig and a corresponding switch for
+individual applications) that switches on the correct behaviour.   I
+know it's a bit of a mess, but that way people who don't care will
+continue in blissful ignorance and people that do care can do
+something about it.
 
-Please download the latest release of ClamAV from 0.98.6 from our 
-download page<http://www.clamav.net/download.html>.
+jch
 
---
-Joel Esler
-Open Source Manager
-Threat Intelligence Team Lead
-Talos
 
+>> 
+>> Regards, Michael
+>> 
+>> On 6 March 2015 at 05:36, Kurt Seifried <kseifried@...hat.com>
+>> wrote:
+>>> 
+>>> 
+>>> On 05/03/15 10:06 AM, John Haxby wrote:
+>>>> PEP 476 cites 11 CVEs that resulted from python not properly
+>>>> validating certificates.   This would be number 12.
+>>>> 
+>>>> Shouldn't python versions prior to 2.7.9 and 3.4.3 have a CVE
+>>>> each for the lack of verification? If internal corporate
+>>>> software stops working because of invalid certificates,
+>>>> wasn't it broken anyway?
+>>> 
+>>> So if something is advertised as having a security feature and
+>>> does not or it is broken then it gets a CVE. In this case
+>>> Python, and basically every other SSL/TLS implementation on the
+>>> planet, by default, did not check hostnames in certs, but they
+>>> did provide that capability should you choose to use it. So no
+>>> CVE since it wasn't "meant to be secure" as I understand it.
+>>> 
+>>> Now for my personal opinion: Doing SSL/TLS with server certs
+>>> and not checking the hostname in a server cert is completely
+>>> insane and utterly defeats the purpose. However there are cases
+>>> where a certificate may not have a hostname field, or need a
+>>> valid hostname field, e.g. a client certificate where you
+>>> mostly care about the fact that the client has it at all. So I
+>>> can see why they made hostname checks optional, but again, I
+>>> think it was a very bad decision long term as evidenced by:
+>>> 
+>>> http://www.cve.mitre.org/cgi-bin/cvekey.cgi?keyword=certificate+hostname+check
+>>>
+>>>>
+>>> 
+jch
+>>>> 
+>>> 
+>>> -- Kurt Seifried -- Red Hat -- Product Security -- Cloud PGP
+>>> A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+>>> 
+> 
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iF4EAREIAAYFAlT5pt8ACgkQRQu7fpQvo8iXBQD+Ndbpfs/q86yN+KxS/pkPd2bB
+YoV1Dqx3bnVq8s5kD3cA/japMu5aO2C4KMlTojUn50vuKNM0rT8kWC4xoaKBGrPF
+=FL48
+-----END PGP SIGNATURE-----
