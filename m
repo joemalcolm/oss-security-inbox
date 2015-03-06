@@ -1,33 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/10/16
-Message-ID: <20150210224919.GB27607@boyd>
-Date: Tue, 10 Feb 2015 16:49:19 -0600
-From: Tyler Hicks <tyhicks@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/06/5
+Message-ID: <54F980ED.2060702@treenet.co.nz>
+Date: Fri, 06 Mar 2015 23:26:53 +1300
+From: Amos Jeffries <squid3@...enet.co.nz>
 To: oss-security@...ts.openwall.com
-Subject: Re: eCryptfs key wrapping help to crack user password
+Subject: Re: CVE-2015-0881
 Content-Type: text/plain; charset=utf-8
 
-On 2015-02-10 15:07:24, Sylvain Pelissier wrote:
-> Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 2/03/2015 8:08 p.m., Kurt Seifried wrote:
+> So for those of us vendors/etc that need to backport security
+> fixes and/or confirm our software is fixed how are we supposed to
+> do this?
 > 
-> I have noticed that ecryptfs-utils is the default program used by the
-> Ubuntu distributions for home folder encryption since version 10.04.
-> In this case, a wrapping key is generated from the user password
-> using the hash function SHA-512 applied 65536 times. By default, the
-> wrapping key is hashed with the default fixed salt
-> (0x0011223344556677) and stored in the a file.
-> This was already noticed in bug :
-> https://bugs.launchpad.net/ecryptfs/+bug/906550
-> For  Ubuntu installations time-memory trade-off (rainbow tables, etc.)
-> can apply, as well as bulk dictionary attacks to crack user passwords
-> of Ubuntu installations when the home folder encryption is activated.
-> I am currently working to correct this weakness.
+> How long will the patch/attack information be embargoed for?
+> 
+> Also why has this been covered up for over 5 years and is now still
+> a secret? I'm very confused and I have some grave concerns about
+> how JVN/upstream is handling this.
 
-Thanks for reporting this issue, Sylvain.
 
-I have confirmed the analysis above and upstream ecryptfs-utils is
-working to correct the problem.
+Until today it seems:
+ https://jvn.jp/en/jp/JVN64455813/index.html
 
-Tyler
+Patch is
+<http://www.squid-cache.org/Versions/v3/3.1/changesets/b9619.patch> if
+you want to try back-porting. Take care though if you do, all the
+earlier versions have different logics surrounding how the connection
+data gets accounted.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+I hope this one is better for you. Still outstanding on Mitre's
+verdict about the CVE number though. JPCERT tell me that should be
+next week, but you probably know more than me how reliable an estimate
+that is.
+
+Amos
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.22 (MingW32)
+
+iQIcBAEBAgAGBQJU+YDtAAoJEGvSOzfXE+nLAr0P/A2t1MnOAlMFdiWfaIekX3YU
+3ONgvIXzBvI9jisBGO1PwREPhZ6M7CC8ogLwgyw07Em67aZ8BjKJg6CnbTE+7ioE
+hxtU6YnvAP6zbhtsjHuJoYEX/os93WrfTcnLQ81leGoHRpff59AYrFZaxI4gR5oo
+9FfjTkpZwwghVwcrFIGPlsQLgHVUg3YX+giDjdzGKJWCmr/kVq6dTuqkwKthyQC9
+r7ITCdy4t8VRcT8mEpUolN/caNbcJyK+1JhLILDD8F6J713U9DHpCKdhODbK0dhQ
+bDWmmUCjnUmpO+gCpoUqRovYODhq/80JbZlz1uI0aRmIc35SaPPGnjox58CN1gLs
+pBxNED4vY+OmfO/FjOF4a6D6WFm1vgHekCjl2jOijtdiAH9NvJg049yhc/hNfq/t
+Jkcbqtf7Soyu20GmVAdKqO0OAcF9Cban+Z7O5Ce3J5R6ipHzJDGFWXoZWGR3Kz2R
+qRK2r1h9j4hKDuD1hMAUwI5o23BfpJ0zLPT7Fe94bqNhx6kB8ouWAH8Ey49Mz76e
+FxDCWX597vu2ConCQG6pWM/XC36aEK/bBbgt2G1dARbwExKWUa8am3Up5PFlzqN8
+oGAHK/Bf0iskDu8EFOMt7/8InI3tPC2aikRYBwdbQLBpv9sIErkNXn0WN/GnVTFW
+1udFgNsQqloS4PAPDxdh
+=E5sM
+-----END PGP SIGNATURE-----
