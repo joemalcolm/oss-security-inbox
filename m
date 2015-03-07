@@ -1,36 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/13/14
-Message-ID: <20150313194639.GA4645@kroah.com>
-Date: Fri, 13 Mar 2015 20:46:39 +0100
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/07/1
+Message-ID: <54FA7687.2040401@redhat.com>
+Date: Fri, 06 Mar 2015 20:54:47 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: Linux kernel: tty: kobject reference leakage in tty_open
+Subject: Re: Another Python app (rhn-setup: rhnreg_ks) not checking hostnames in certs properly CVE-2015-1777
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Mar 13, 2015 at 11:30:23PM +0530, P J P wrote:
->    Hello,
+On 06/03/15 06:08 AM, John Haxby wrote:
+> On 06/03/15 01:02, Kurt Seifried wrote:
+>> Please contact your TAM/GSS with this request, it carries a lot
+>> more impact if customers want something that we also want.
 > 
-> Linux kernel built with the virtual console support(CONFIG_VT) is vulnerable
-> to a NULL pointer dereference issue. It could occur while accessing pseudo
-> terminal device(/dev/pts/*) files.
 > 
-> An unprivileged user could use this flaw to crash the system kernel resulting
-> in DoS.
-> 
-> Upstream fix:
-> -------------
->    -> https://git.kernel.org/linus/c290f8358acaeffd8e0c551ddcc24d1206143376
+> I know "me too" isn't helpful, but I'm going to say "me too" anyway.
+>
+> It occurred to me that we could have a patch that has a global switch
+> (eg a file in, say, /etc/sysconfig and a corresponding switch for
+> individual applications) that switches on the correct behaviour.   I
+> know it's a bit of a mess, but that way people who don't care will
+> continue in blissful ignorance and people that do care can do
+> something about it.
 
-Digging up patches from 2011?  Why?  It should have long-ago been
-backported to all relevant kernel releases from any company that has a
-kernel that is still supported today that is older than the 3.2 release
-and newer than 2.6.28.
+That would be one way. But why can't Oracle build it and open source it?
+Oracle has a Linux distribution too I thought? Or do you need Red Hat
+engineering to do it first? If so as I said, customer cases carry far
+more weight than oss-security for feature requests.
 
-And if you are a company that is ignoring stable kernel patches for
-their old kernel releases, well, that's just not very wise :)
+> jch
 
-What does asking for a CVE for such an old issue help with?
 
-thanks,
+-- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-greg k-h
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
