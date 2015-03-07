@@ -1,68 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/10/18
-Message-ID: <54DA942A.3050202@oracle.com>
-Date: Tue, 10 Feb 2015 15:28:42 -0800
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
-To: oss-security@...ts.openwall.com
-Subject: Fwd: X.Org Security Advisory: CVE-2015-0255: Information leak in the XkbSetGeometry request of X servers
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/08/1
+Message-ID: <87r3t0k88p.fsf@alice.fifthhorseman.net>
+Date: Sat, 07 Mar 2015 09:49:58 -0800
+From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
+To: Florian Weimer <fweimer@...hat.com>, oss-security@...ts.openwall.com
+Subject: Re: Certificate pinning and the browser PKI
 Content-Type: text/plain; charset=utf-8
 
+On Thu 2015-03-05 13:43:46 +0100, Florian Weimer wrote:
+> So for the browser PKI case, it may make sense to pin the server public
+> key instead (n *and *e), not the entire certificate.  During regular
+> rollover, you can keep the public key, and you can have a pre-pinned
+> offline copy for emergency rollovers.
 
+yes, this is the right approach.  in the HTTPS context, HPKP actually
+pins public keys, and not certificates.  You can even pin the EE's
+public key and multiple backup offline public keys, so that in the event
+of a compromise of your EE's primary key, you can promote one of the
+backups to active use, generate a new backup, and still have other
+backups that can be considered valid even by clients that still only
+know of the old keys.  Planning this way lets you sustain multiple
+rollover events over the lifetime of the PKP directive without locking
+out infrequent visitors.
 
-
--------- Original Message --------
-Subject: X.Org Security Advisory: CVE-2015-0255: Information leak in the 
-XkbSetGeometry request of X servers
-Date: Wed, 11 Feb 2015 08:48:35 +1000
-From: Peter Hutterer <peter.hutterer@...hat.com>
-To: xorg-announce@...ts.x.org
-CC: Olivier Fourdan <ofourdan@...hat.com>, xorg@...ts.x.org, 
-xorg-devel@...ts.x.org
-
-X.Org Security Advisory: Feb 10, 2015 - CVE-2015-0255
-Information leak in the XkbSetGeometry request of X servers
-===========================================================
-Description:
-============
-Olivier Fourdan from Red Hat has discovered a protocol handling issue in
-the way the X server code base handles the XkbSetGeometry request.
-
-The issue stems from the server trusting the client to send valid string
-lengths in the request data. A malicious client with string lengths
-exceeding the request length can cause the server to copy adjacent
-memory data into the XKB structs. This data is then available to the
-client via the XkbGetGeometry request.
-The data length is at least up to 64k, it is possible to obtain more
-data by chaining strings, each string length is then determined by
-whatever happens to be in that 16-bit region of memory.
-
-A similarly crafted request can likely cause the X server to crash.
-
-This issue has been assigned CVE-2015-0255
-
-Affected Versions:
-==================
-This bug appears to have been introduced in X11R6.1 (March 1996) and is
-thus believed to be present in every X server release since, including
-the current stable releases 1.16.3 and 1.17.0
-
-Fixes:
-======
-A fix is available via the patch linked below which is intended to be
-included in xorg-server-1.16.4 and 1.17.1
-http://cgit.freedesktop.org/xorg/xserver/commit/?id=20079c36cf7d377938ca5478447d8b9045cb7d43
-
-Note that this patch requires another patch to apply without conflicts:
-http://cgit.freedesktop.org/xorg/xserver/commit/?id=81c90dc8f0aae3b65730409b1b615b5fa7280ebd
-
-Thanks:
-=======
-The X.Org Foundation thanks Olivier for bringing this issue to our
-attention and providing the fixes.
-
-
-
-
-Download attachment "Attached Message Part" of type "application/pgp-signature" (182 bytes)
-
-View attachment "Attached Message Part" of type "text/plain" (191 bytes)
+     --dkg
