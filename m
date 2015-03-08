@@ -1,61 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/26/5
-Message-ID: <54C66A23.4010405@enovance.com>
-Date: Mon, 26 Jan 2015 11:24:03 -0500
-From: Tristan Cacqueray <tristan.cacqueray@...vance.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/08/2
+Message-Id: <3BF611E3-C8DB-47E8-9C8F-5EAC4E541648@oracle.com>
+Date: Sun, 8 Mar 2015 17:18:28 +0000
+From: John Haxby <john.haxby@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: [OSSA 2015-003] Glance user storage quota bypass (CVE-2014-9623)
+Subject: Re: Another Python app (rhn-setup: rhnreg_ks) not checking hostnames in certs properly CVE-2015-1777
 Content-Type: text/plain; charset=utf-8
 
-===============================================
-OSSA-2015-003: Glance user storage quota bypass
-===============================================
 
-:Date: January 26, 2015
-:CVE: CVE-2014-9623
-
-
-Affects
-~~~~~~~
-- Glance: up to 2014.1.3 and 2014.2 versions up to 2014.2.1
-
-
-Description
-~~~~~~~~~~~
-Tushar Patil from NTT reported a vulnerability in Glance. By deleting
-images that are being uploaded, a malicious user can overcome the
-storage quota and thus may overrun the backend. Images in deleted
-state are not taken into account by quota and won't be effectively
-deleted until the upload is completed. Only Glance setups configured
-with user_storage_quota are affected.
-
-
-Patches
-~~~~~~~
-- https://review.openstack.org/149646 (Icehouse)
-- https://review.openstack.org/149387 (Juno)
-- https://review.openstack.org/144464 (Kilo)
+> On 7 Mar 2015, at 03:54, Kurt Seifried <kseifried@...hat.com> wrote:
+> 
+> On 06/03/15 06:08 AM, John Haxby wrote:
+>> On 06/03/15 01:02, Kurt Seifried wrote:
+>>> Please contact your TAM/GSS with this request, it carries a lot
+>>> more impact if customers want something that we also want.
+>> 
+>> 
+>> I know "me too" isn't helpful, but I'm going to say "me too" anyway.
+>> 
+>> It occurred to me that we could have a patch that has a global switch
+>> (eg a file in, say, /etc/sysconfig and a corresponding switch for
+>> individual applications) that switches on the correct behaviour.   I
+>> know it's a bit of a mess, but that way people who don't care will
+>> continue in blissful ignorance and people that do care can do
+>> something about it.
+> 
+> That would be one way. But why can't Oracle build it and open source it?
+> Oracle has a Linux distribution too I thought? Or do you need Red Hat
+> engineering to do it first? If so as I said, customer cases carry far
+> more weight than oss-security for feature requests.
 
 
-Credits
-~~~~~~~
-- Tushar Patil from NTT (CVE-2014-9623)
+Sorry, I didn’t mean to imply that Red Hat should do this first.   I’m also sorry if this came across as antagonistic: my intention was to try to find a way forward that would be beneficial to us both and to everyone else.
+
+There is no reason at all why I should not do this, but I would rather do it with broad agreement.   There is also absolutely no way this could be done as closed-source and I’m not sure why you think I could or would do that.
+
+If both Red Hat have customer requests then that would help everyone would it not?
+
+jch
+
+> 
+>> jch
+> 
+> 
+> --
+> Kurt Seifried -- Red Hat -- Product Security -- Cloud
+> PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+> 
 
 
-References
-~~~~~~~~~~
-- https://launchpad.net/bugs/1398830
-- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-9623
-
-
-Notes
-~~~~~
-- This fix will be included in the kilo-2 development milestone and in future
-  2014.2.2 (juno) and 2014.1.4 (icehouse) releases.
-
---
-Tristan Cacqueray
-OpenStack Vulnerability Management Team
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (237 bytes)
