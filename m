@@ -1,26 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/01/6
-Message-ID: <9517e4490c27cf8693fadb3316c44c9f@tribut.de>
-Date: Sun, 01 Feb 2015 14:42:20 +0100
-From: Felix Eckhofer <felix@...but.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/09/8
+Message-ID: <54FE050A.5080901@redhat.com>
+Date: Mon, 09 Mar 2015 14:39:38 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: RCE, XSS and HTTP header injection in fli4l web interface
+Subject: Re: Another Python app (rhn-setup: rhnreg_ks) not checking hostnames in certs properly CVE-2015-1777
 Content-Type: text/plain; charset=utf-8
 
-Hey.
+On 09/03/15 12:52 PM, John Haxby wrote:
+> 
+>> On 9 Mar 2015, at 16:47, Kurt Seifried <kseifried@...hat.com> wrote:
+>>
+>> If vendors want features in their rebranded RHEL they can add them. I
+>> have no clue why you would need broad agreement from the community
+>> including Red Hat to add a feature to Oracle Linux.
+> 
+> On the other hand, if two loosely compatible vendors want the same feature it makes sense to have the feature implemented in the same way.
+> 
+> For this python certificate validation, we could have as many different mechanisms as there are distros and chaos would rule.   Even worse, you might pick the mechanism from the wrong distro and it has no effect and we (people on this list) would be guilty of weakening security by confusion.
+> 
+> It’s not a question of lack of talent: all the distro vendors have talented people who can fix problems, it’s a question of doing the best by our joint customer base.
+> 
+> Does that make sense?
+> 
+> jch
+> 
 
-Am 01.02.2015 04:05, schrieb cve-assign@...re.org:
-> For the "execute arbitrary programs" issues, can you provide specific
-> names for the vulnerability types, or any equivalent information?
-> Examples of vulnerability types can be found on the
-> https://www.owasp.org/index.php/Category:Vulnerability and
-> http://cwe.mitre.org web sites.
+I find this really hard to believe based on the past. So you're saying
+Oracle is willing to work with Red Hat and the community in general now?
+Can we get access to the MySQL security bugs and test cases for example?
+This would be HUGELY helpful to the community.
 
-Thank you for your response and sorry for the inaccurate description. In 
-both cases user-supplied strings are used in an expression which is 
-later passed to /bin/sh's eval. So I would classify both as Command 
-Injection (https://www.owasp.org/index.php/Command_Injection).
+I'll believe Oracle is willing to work with the community when I
+actually see Oracle participate and help the community. Until then it's
+just words from some random Oracle employee and most likely isn't
+official policy.
+
+So prove to us you want to work with us (e.g. by opening up the MySQL
+security bugs/test cases) and we can definitely look at future cooperation.
+
+-- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
 
-Best Regards
-felix
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
