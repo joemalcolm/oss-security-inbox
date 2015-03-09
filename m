@@ -1,68 +1,78 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/28/21
-Message-ID: <54C94110.2010609@reactos.org>
-Date: Wed, 28 Jan 2015 21:05:36 +0100
-From: Pierre Schweitzer <pierre@...ctos.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/09/4
+Message-ID: <54FDCEBD.5040206@redhat.com>
+Date: Mon, 09 Mar 2015 10:47:57 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: kgb-bot can be crashed by some network traffic
+Subject: Re: Another Python app (rhn-setup: rhnreg_ks) not checking hostnames in certs properly CVE-2015-1777
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+This is off topic but anyways, I don't care if people repackage RHEL and
+give it away/sell it, that's something the business model we have
+explicitly takes into account, and indeed something we actively support
+with groups that participate meaningfully in the open source community
+(e.g. with the CentOS and Scientific Linux community).
 
-Hi,
+If customers want features in RHEL asking on oss-security is not the way
+to go about it, ask your TAM/GSS.
 
-This bug report is pretty unclear. What is the exact request sent to
-allow such a crash? Does it bypass the password security?
-Furthermore, due to its design, kgb-bot isn't supposed to be wide
-open, but only restricted to kgb-client to send their commit messages.
+If vendors want features in their rebranded RHEL they can add them. I
+have no clue why you would need broad agreement from the community
+including Red Hat to add a feature to Oracle Linux.
 
-Anyone with more information?
+If you lack the engineering talent to add this feature, then at least
+with RHEL you can become a customer and get support (new features if
+requested by enough customers obviously become more of a priority but I
+can't make any promises obviously). Which leads back to the "ask your
+TAM/GSS" point.
 
-With my best regards,
 
-On 28/01/2015 06:37, Kurt Seifried wrote:
-> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=776424
+On 08/03/15 11:18 AM, John Haxby wrote:
 > 
-> Source: kgb-bot Version: 1.33-2 Severity: important Tags: security
+>> On 7 Mar 2015, at 03:54, Kurt Seifried <kseifried@...hat.com> wrote:
+>>
+>> On 06/03/15 06:08 AM, John Haxby wrote:
+>>> On 06/03/15 01:02, Kurt Seifried wrote:
+>>>> Please contact your TAM/GSS with this request, it carries a lot
+>>>> more impact if customers want something that we also want.
+>>>
+>>>
+>>> I know "me too" isn't helpful, but I'm going to say "me too" anyway.
+>>>
+>>> It occurred to me that we could have a patch that has a global switch
+>>> (eg a file in, say, /etc/sysconfig and a corresponding switch for
+>>> individual applications) that switches on the correct behaviour.   I
+>>> know it's a bit of a mess, but that way people who don't care will
+>>> continue in blissful ignorance and people that do care can do
+>>> something about it.
+>>
+>> That would be one way. But why can't Oracle build it and open source it?
+>> Oracle has a Linux distribution too I thought? Or do you need Red Hat
+>> engineering to do it first? If so as I said, customer cases carry far
+>> more weight than oss-security for feature requests.
 > 
-> 2015.01.19 18:08:39: Listening on http://0.0.0.0:9999?session=KGB 
-> 2015.01.19 18:08:43: Connected to freenode (holmes.freenode.net) 
-> 2015.01.19 18:08:43: Joining #commits... 2015.01.19 18:08:43:
-> Connected to oftc (graviton.oftc.net) 2015.01.19 18:08:43: Joining
-> #ikiwiki #vcs-home #git-annex... Did not get DONE/CLOSE event for
-> Wheel ID 73 from IP 222.186.34.155 at 
-> /usr/share/perl5/POE/Component/Server/SimpleHTTP.pm line 221. I had
-> a problem posting to event Got_Request of session SOAPServer for 
-> DIR handler '.*'. As reported by Kernel: 'No such file or
-> directory', perhaps the session name is spelled incorrectly for
-> this handler? at /usr/share/perl5/POE/Session.pm line 483.
 > 
-> This has happened to me twice now, and it takes the bot down.
+> Sorry, I didn’t mean to imply that Red Hat should do this first.   I’m also sorry if this came across as antagonistic: my intention was to try to find a way forward that would be beneficial to us both and to everyone else.
 > 
-> not sure how exploitable this is though.
+> There is no reason at all why I should not do this, but I would rather do it with broad agreement.   There is also absolutely no way this could be done as closed-source and I’m not sure why you think I could or would do that.
+> 
+> If both Red Hat have customer requests then that would help everyone would it not?
+> 
+> jch
+> 
+>>
+>>> jch
+>>
+>>
+>> --
+>> Kurt Seifried -- Red Hat -- Product Security -- Cloud
+>> PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+>>
 > 
 
+-- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-- -- 
-Pierre Schweitzer <pierre at reactos.org>
-System & Network Administrator
-Senior Kernel Developer
-ReactOS Deutschland e.V.
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQIcBAEBAgAGBQJUyUEPAAoJEHVFVWw9WFsLP9MQALDNRlflvCrXFcBImcvoQMzf
-rCxy0thnXAecRC4nDOvuT6e0t/kGAJR/0kPciCooPuneOiEBF7JYZkev5lZW1Ynh
-RQVRIpAC4DeDjrs0tdGvs52wvJvoFp+IOZ0bf6OBUjGP65/K9CXva0l3UYRhr4lR
-ayCCjVMu+iMDyJKwibH2zuP11u8TBpMgh1u5d+4PSPwjpB5sM3RrDNNKlaSnnfTM
-/d9JNIqz5UH2Vh3AEfOhhai1/bXUD5z2p5/8lEgTnpKeKq79qSqWG8mVnMraErL5
-IpD96aPWpM+p6drpVhRua5CL97EHx7azY5tfyHYQKNW/9uToYDSaFV2zcFdIQQaX
-H/f8g+e/bSQtfR0zzr21xXIlozmffSYrADnUsR1G/O8vfRQv0dWupnb4FYNaOoII
-9KvJRAo2bcY1ipk6vNDjxF1tH0lbWSrIfOwSfFxOfP3VaBoc64coF5ywiIpb8uEw
-MaLyYAgJXv9PKxW57yuceEEDDD4GLjxeQw8k3WXJtL0860WcXleCXet60TRrIsy5
-tJP8/CIkkqdeznbn+xUQaNUeuMuUxnIJdHcM4YPrTnro8IRm8HcHxkV/urDFsxo7
-tLqa32ND6A3dpBmsaCh6007WcZKnG4Prw601zzG9R/1w3H13hTSfOk0m6N3sTkmo
-2uAjP5sMf1RcED8WsyJx
-=TNwF
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
