@@ -1,26 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/05/6
-Message-ID: <Pine.LNX.4.64.1501051052470.8826@beijing.mitre.org>
-Date: Mon, 5 Jan 2015 10:54:11 -0500 (EST)
-From: cve-assign@...re.org
-To: Vincent Danen <vdanen@...hat.com>
-cc: Salvatore Bonaccorso <carnil@...ian.org>, oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: Re: CVE request: denial of service flaw in firebird
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/09/5
+Message-ID: <20150309142942.78f2bc28@freyja>
+Date: Mon, 9 Mar 2015 14:29:42 -0300
+From: Fabio Olive Leite <fleite@...hat.com>
+To: OSS Security <oss-security@...ts.openwall.com>
+Subject: Please assign a CVE to this recent cups-filters vulnerability
 Content-Type: text/plain; charset=utf-8
 
+Hello,
 
->> Should CVE-2014-9492 be rejected and CVE-2014-9323 to be still
->> continued to be used?
->
-> Thanks for this, Salvatore.  I hadn't noticed that the CVE was assigned.  I 
-> think 9492 should be rejected; I don't know where 9323 came from but we have 
-> already released errata with that CVE name for Fedora and it looks like many 
-> others (as you noted) are also using 9323.
+CVE-2014-2707 had an incomplete fix, which prompted the new upstream
+fix below. Can Mitre please assign a CVE to it?
 
-To confirm, we will REJECT CVE-2014-9492 and preserve CVE-2014-9323.
+https://bugs.linuxfoundation.org/show_bug.cgi?id=1265
 
----
+Thank you.
 
-CVE assignment team, MITRE CVE Numbering Authority M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-- 
+Fábio Olivé Leite -- Red Hat Product Security Team
+F1C1 1876 3922 1906 6631  0C31 92A5 9276 250D 8380
+
+Content of type "application/pgp-signature" skipped
