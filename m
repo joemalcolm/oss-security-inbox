@@ -1,27 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/16/1
-Message-ID: <54B87B09.2030502@openwall.com>
-Date: Fri, 16 Jan 2015 05:44:25 +0300
-From: Alexander Cherepanov <ch3root@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/09/6
+Message-Id: <BC7B2046-7156-4489-9829-8FE4387184A5@oracle.com>
+Date: Mon, 9 Mar 2015 18:52:58 +0000
+From: John Haxby <john.haxby@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: cpio -- directory traversal
+Subject: Re: Another Python app (rhn-setup: rhnreg_ks) not checking hostnames in certs properly CVE-2015-1777
 Content-Type: text/plain; charset=utf-8
 
-Hi!
 
-cpio is susceptible to a directory traversal vulnerability via symlinks.
+> On 9 Mar 2015, at 16:47, Kurt Seifried <kseifried@...hat.com> wrote:
+> 
+> If vendors want features in their rebranded RHEL they can add them. I
+> have no clue why you would need broad agreement from the community
+> including Red Hat to add a feature to Oracle Linux.
 
-Initial report:
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=774669
+On the other hand, if two loosely compatible vendors want the same feature it makes sense to have the feature implemented in the same way.
 
-Upstream report:
-https://lists.gnu.org/archive/html/bug-cpio/2015-01/msg00000.html
+For this python certificate validation, we could have as many different mechanisms as there are distros and chaos would rule.   Even worse, you might pick the mechanism from the wrong distro and it has no effect and we (people on this list) would be guilty of weakening security by confusion.
 
-Some discussion:
-http://www.openwall.com/lists/oss-security/2015/01/07/5
-http://www.openwall.com/lists/oss-security/2015/01/08/4
+It’s not a question of lack of talent: all the distro vendors have talented people who can fix problems, it’s a question of doing the best by our joint customer base.
 
-Could CVE(s) please be assigned?
+Does that make sense?
 
--- 
-Alexander Cherepanov
+jch
