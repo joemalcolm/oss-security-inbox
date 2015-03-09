@@ -1,33 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/29/15
-Message-Id: <20150129150709.6D0806C0044@smtpvmsrv1.mitre.org>
-Date: Thu, 29 Jan 2015 10:07:09 -0500 (EST)
-From: cve-assign@...re.org
-To: pmatouse@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request -- Linux kernel - net: sctp: slab corruption from use after free on INIT collisions
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/09/2
+Message-ID: <20150309090333.GA7745@suse.de>
+Date: Mon, 9 Mar 2015 10:03:33 +0100
+From: Marcus Meissner <meissner@...e.de>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: Re: CVE Request: libarchive -- directory traversal in bsdcpio
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=600ddd6825543962fb807884169e57b580dba208
+can someone else beside Mitre assign a CVE?
 
-Use CVE-2015-1421.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJUykv/AAoJEKllVAevmvmsd54H/iRodG9s1pb1PKl7Enk83lZJ
-yV4qkzzlOdibDHxau6t/gcubEXfIW4TzqofaNC1bzluhCiyBo2udYXhYA/zroOJY
-mPeha9xywN1uKOME8g3jATUW5m7RlW/z5jE8L22RGBt8AzsD11TSDhjWKKgyMyjB
-2R6ptPf52HgFl9HBZZhU2lRe4BPk7Mv0/y53hHXIOmK6PC+y3btyO4B5w0zKJv2i
-LHTt3yYD4hIeqJxDVfucZ+DY3HxERkmpH9xXWdD2bL7GGNuNsBc8LABB37hyyCZr
-KOS98ho0Z2kBF93PjoFSkS5XeOFlgBiiD7nNHUV9FCIE5CDb6/aHWreJGWQlhp0=
-=vkZ+
------END PGP SIGNATURE-----
+Ciao, Marcus
+On Thu, Mar 05, 2015 at 10:00:01PM +0100, Moritz Mühlenhoff wrote:
+> On Sun, Feb 22, 2015 at 08:01:10PM +0100, Moritz Muehlenhoff wrote:
+> > On Fri, Jan 16, 2015 at 06:19:21AM +0300, Alexander Cherepanov wrote:
+> > > Hi!
+> > > 
+> > > bsdcpio tool from libarchive bundle is susceptible to a directory traversal
+> > > vulnerability via absolute paths.
+> > > 
+> > > Initial discussion:
+> > > http://www.openwall.com/lists/oss-security/2015/01/07/5
+> > > 
+> > > Upstream report:
+> > > https://groups.google.com/d/msg/libarchive-discuss/dN9y1VvE1Qk/Z9uerigjQn0J
+> > > 
+> > > My proposed (minimal) fix (non-Windows):
+> > > https://groups.google.com/group/libarchive-discuss/attach/a78932ecb50340ae/0001-Quick-n-dirty-fix-for-bsdcpio-directory-traversal-vu.patch?part=0.1
+> > > 
+> > > Discussion is ongoing.
+> > > 
+> > > Could CVE(s) please be assigned?
+> > 
+> > This seems to have fallen through the cracks, explicitly adding cve-assign
+> > to CC.
+> 
+> Now released as DSA 3180.
+> 
+> Cheers,
+>         Moritz
+> 
