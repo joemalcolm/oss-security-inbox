@@ -1,56 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/26/2
-Message-ID: <54C5D351.9020703@redhat.com>
-Date: Sun, 25 Jan 2015 22:40:33 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>
-Subject: unshield directory traversal
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/09/3
+Message-ID: <54FDC958.6060608@oracle.com>
+Date: Mon, 09 Mar 2015 16:24:56 +0000
+From: John Haxby <john.haxby@...cle.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2014-8172
 Content-Type: text/plain; charset=utf-8
 
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=776193
+Hello All,
 
-Package: unshield
-Version: 1.0-1
-Tags: security
+Recently Red Hat released an update that covers CVE-2014-8172, a
+potential soft lockup when performing async io due to files_lock
+excessive locking.  The fix for this is given as
+http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=eee5cc2702929fd41cce28058dc6d6717f723f87
 
-unshield is vulnerable to directory traversal via "../" sequences. As a
-proof of concept, unpacking the attached InstallShield archive creates a
-file in /tmp:
+Neither the patch author (Al Viro) nor our kernel security team can see
+how this patch prevents the async io related soft lockup.
 
-$ ls /tmp/moo
-ls: cannot access /tmp/moo: No such file or directory
+Is there any more information about this that can be shared here or
+elsewhere?
 
-$ unshield x data1.cab
-Cabinet: data1.cab
- extracting:
-./Bovine_Files/../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../tmp/moo
---------  -------
-         1 files
-
-$ ls /tmp/moo
-/tmp/moo
-
-
--- System Information:
-Debian Release: 8.0
- APT prefers unstable
- APT policy: (990, 'unstable'), (500, 'experimental')
-Architecture: i386 (x86_64)
-Foreign Architectures: amd64
-
-Kernel: Linux 3.2.0-4-amd64 (SMP w/2 CPU cores)
-Locale: LANG=C, LC_CTYPE=pl_PL.UTF-8 (charmap=UTF-8)
-Shell: /bin/sh linked to /bin/dash
-Init: sysvinit (via /sbin/init)
-
-Versions of packages unshield depends on:
-ii  libc6         2.19-13
-ii  libunshield0  1.0-1
-ii  zlib1g        1:1.2.8.dfsg-2+b1
-
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+jch
