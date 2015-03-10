@@ -1,94 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/06/8
-Message-Id: <E1Y8TRA-0002IN-Up@xenbits.xen.org>
-Date: Tue, 06 Jan 2015 12:40:41 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 116 (CVE-2015-0361) - xen crash due to use after free on hvm guest teardown
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/10/7
+Message-ID: <54FF084D.9070300@oracle.com>
+Date: Tue, 10 Mar 2015 15:05:49 +0000
+From: John Haxby <john.haxby@...cle.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: PEP-466 common compatible implementation. (was ... CVE-2015-1777)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 10/03/15 10:59, Michael Samuel wrote:
+> I'm happy to help work on this.
+> 
+> The two ways to attack this seem to be:
+> 
+> 1) Use alternatives for the ssl module, and a new package has a
+> higher priority version of the module.
+> 
+> 2) Include both versions of the module under different names, and
+> have a script that symlinks the correct one in place.  This may work
+> better in chroot environments, etc.
 
-            Xen Security Advisory CVE-2015-0361 / XSA-116
-                              version 3
+I think the second one with alternatives thrown in would work well.
 
-        xen crash due to use after free on hvm guest teardown
+Individual applications that want to behave correctly can use the new
+module.   Existing applications can use the old module (by default) or
+the new module (if alternatives is configured that way).  That way
+existing applications that depend on the old broken behaviour will still
+work (albeit no more securely
 
-UPDATES IN VERSION 3
-====================
+I admit I haven't used alternatives much (ie never in anger) but this
+does sound like an approach that will give a clean mechanism across
+distros.   Certainly better than my ill-thought-out wild guess.
 
-Public release.
+Alexander: is this the right place to discuss nitty-gritty details or
+should be take the discussion elsewhere?
 
-ISSUE DESCRIPTION
-=================
-
-Certain data accessible (via hypercalls) by the domain controlling the
-execution of a HVM domain is being freed prematurely, leading to the
-respective memory regions to possibly be read from and written to in
-ways unexpected by their new owner(s).
-
-IMPACT
-======
-
-Malicious or buggy stub domain kernels or tool stacks otherwise living
-outside of Domain0 can mount a denial of service attack which, if
-successful, can affect the whole system.
-
-Only domains controlling HVM guests can exploit this vulnerability.
-(This includes domains providing hardware emulation services to HVM
-guests.)
-
-VULNERABLE SYSTEMS
-==================
-
-Xen versions from 4.2 onwards are vulnerable on x86 systems.
-ARM systems are not vulnerable.
-
-This vulnerability is only applicable to Xen systems using stub domains
-or other forms of disaggregation of control domains for HVM guests.
-
-MITIGATION
-==========
-
-Running only PV guests will avoid this issue.
-
-(The security of a Xen system using stub domains is still better than
-with a qemu-dm running as an unrestricted dom0 process.  Therefore
-users with these configurations should not switch to an unrestricted
-dom0 qemu-dm.)
-
-CREDITS
-=======
-
-The issue was discovered by Mihai Donțu from Bitdefender who also
-supplied the fix.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa116.patch          xen-unstable, Xen 4.4.x
-xsa116-4.3-4.2.patch  Xen 4.3.x, Xen 4.2.x
-
-$ sha256sum xsa116*.patch
-84b5a7bb2386e3d95d9d836a4a2504870723694ddaf537f1b59db75b7c63e9bd  xsa116.patch
-3aed6d157f62343a806347ea7c37bb8cdf50ee68002449bded9c7c1712810201  xsa116-4.3-4.2.patch
-$
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQEcBAEBAgAGBQJUq9eeAAoJEIP+FMlX6CvZZx8H/0jivCICcJ7SLhIJsAZAVwA4
-gLpVaWk9qFMSUeYaccLG3naEHk/S5X8154J+VTb7cXDRFWI7lFAodUOhd0MRKzKc
-ZrauMNZDuUnjyJxQZEjreGQW/pfUO6IIsR/MOAPRoiyKOmOmSDoRTo7UJucZUgfr
-HtA5A58Fwiaw5t7LVXzxMI3EAR+ZL4M/e8Vv/F9sKfMSsGSfxPuTHVVoA1k9iUOF
-6yq8pEX+BAZfZSVd2GokD0DipZwvULSlJNMlTBBhK7RGiUgzn6HaxLHvGxEg7JhC
-0n97mVCJ8WIAwoqpEBU0E9xhN5Xxv4gTH5Dqhruw94X8gMhLe/BueYMXfYWIC18=
-=Z+TF
------END PGP SIGNATURE-----
-
-Download attachment "xsa116.patch" of type "application/octet-stream" (1012 bytes)
-
-Download attachment "xsa116-4.3-4.2.patch" of type "application/octet-stream" (913 bytes)
+jch
