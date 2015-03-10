@@ -1,34 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/24/5
-Message-ID: <20150224210337.GA25373@videolan.org>
-Date: Tue, 24 Feb 2015 22:03:37 +0100
-From: Jean-Baptiste Kempf <jb@...eolan.org>
-To: Tavis Ormandy <taviso@...gle.com>
-Cc: oss-security@...ts.openwall.com, Kurt Seifried <kseifried@...hat.com>, Assign a CVE Identifier <cve-assign@...re.org>
-Subject: Re: Re: [videolan] older issues in libbluray
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/10/8
+Message-Id: <20150310155102.9EDAA72E0D0@smtpvbsrv1.mitre.org>
+Date: Tue, 10 Mar 2015 11:51:02 -0400 (EDT)
+From: cve-assign@...re.org
+To: mprpic@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: Ruby on Rails ActiveModel::Name to_json Call Infinite Loop Remote DoS
 Content-Type: text/plain; charset=utf-8
 
-On 24 Feb, Tavis Ormandy wrote :
-> On Mon, Feb 23, 2015 at 7:47 AM, Jean-Baptiste Kempf <jb@...eolan.org> wrote:
-> >
-> > On 23 Feb, Kurt Seifried wrote :
-> > > Again my apologies for this mess. The good news is that all our current
-> > > embargoed flaws (none against VLC currently =) are being actively
-> > > handled (e.g. worked on in a current time frame) and moving forwards we
-> > > should hopefully be able to avoid issues like this.
-> >
-> > One libbluray issue was already fixed.
-> > The second one is not really fixable, since BD-J is actually executing
-> > java code from the outside.
-> 
-> Forgive my unfamiliarity with BluRay, but based on what you just said,
-> it seems like the solution is what was described in the report: just
-> use a JSM?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I don't see the JSM mentioned in the bugreport.
+As far as we can tell, the status of this is that:
 
+  https://github.com/rubysec/ruby-advisory-db/issues/130#issuecomment-77688439
 
--- 
-Jean-Baptiste Kempf
-http://www.jbkempf.com/ - +33 672 704 734
-Sent from my Electronic Device
+(in, more or less, the role of the upstream vendor) suggests an
+alternative interpretation in which this is a bug but not a
+vulnerability. The bug has been fixed:
+
+  https://github.com/rails/rails/commit/a0580e974b4a058a983de6c593e4573bd94b76f0
+
+As mentioned at:
+
+  https://github.com/rails/rails/pull/19055#issuecomment-75798877
+
+the bug made it possible to write code that had an unintentional
+infinite loop. Apparently nobody has yet mentioned an actual or
+realistic scenario in which the infinite looping can begin only after
+a manipulation of input by a client.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJU/xJiAAoJEKllVAevmvmsQe4H/iIDCXa5vM4lPC3Et3UTKooO
+BKV0T3cxNTLwpWNz7tYEPaRTohompQTtE0E43Wm9RWB9ODI7taWGA3rOpUbhG+LO
+wWQjIKkYc+ax0JD5q0tboqENnV9um0u7RqHid21diSXXACIq/37CDoGZgddScJso
+yw1t2ZNZeJwe4IBsrxIrkSRG6RoeOfpRt+DuET/vEuTQRJdif/zri7MJp6FMCN/n
+fK0jEFKb1D9WV1EPb/+e12h5SiyZHFCat6Gd5gckNXLHvhs3FfYtf5bIgV0vQR48
+eOt1mAH7sh9eStvqndR+hkJHRsGRWs+o5NyWEYd+EBY3ZxOo4qJGSnnj6nZ4v6k=
+=QZrH
+-----END PGP SIGNATURE-----
