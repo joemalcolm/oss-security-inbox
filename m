@@ -1,118 +1,118 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/11/7
-Message-ID: <20150111150752.GB6185@kludge.henri.nerv.fi>
-Date: Sun, 11 Jan 2015 17:07:52 +0200
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: CVE request: TYPO3-EXT-SA-2015-001, TYPO3-EXT-SA-2015-002, TYPO3-EXT-SA-2015-003
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/10/4
+Message-Id: <E1YVIqQ-0002vG-E4@xenbits.xen.org>
+Date: Tue, 10 Mar 2015 12:01:06 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 120 (CVE-2015-2150) - Non-maskable interrupts triggerable by guests
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-Hi,
+            Xen Security Advisory CVE-2015-2150 / XSA-120
+                              version 4
 
-Can I get CVE IDs for following vulnerabilities, thank you.
+              Non-maskable interrupts triggerable by guests
 
-http://typo3.org/teams/security/security-bulletins/typo3-extensions/typo3-ext-sa-2015-001/
+UPDATES IN VERSION 4
+====================
 
-It has been discovered that the extension "LDAP / SSO Authentication"
-(ig_ldap_sso_auth) is susceptible to Improper Authentication.
+Public release.
 
-Release Date: January 8, 2015
+ISSUE DESCRIPTION
+=================
 
-Bulletin Update: January 8, 2015 (Affected Versions, Severity)
+Guests are currently permitted to modify all of the (writable) bits in
+the PCI command register of devices passed through to them. This in
+particular allows them to disable memory and I/O decoding on the
+device unless the device is an SR-IOV virtual function, in which case
+subsequent accesses to the respective MMIO or I/O port ranges would
+- - on PCI Express devices - lead to Unsupported Request responses. The
+treatmeant of such errors is platform specific.
 
-Component Type: Third party extension. This extension is not a part of the TYPO3
-default installation.
+IMPACT
+======
 
-Affected Versions: 2.0.0
+In the event that the platform surfaces aforementioned UR responses as
+Non-Maskable Interrupts, and either the OS is configured to treat NMIs
+as fatal or (e.g. via ACPI's APEI) the platform tells the OS to treat
+these errors as fatal, the host would crash, leading to a Denial of
+Service.
 
-Vulnerability Type: Improper Authentication
+VULNERABLE SYSTEMS
+==================
 
-Severity: Critical
+Xen versions 3.3 and onwards are vulnerable due to supporting PCI
+pass-through. Upstream Linux versions 3.1 and onwards are vulnerable
+due to supporting PCI backend functionality. Other Linux versions as
+well as other OS versions may be vulnerable too.
 
-Suggested CVSS v2.0: AV:N/AC:L/Au:N/C:P/I:P/A:N/E:F/RL:OF/RC:C
+Any domain which is given access to a non-SR-IOV virtual function PCI
+Express device can take advantage of this vulnerability.
 
-Problem Description: The extension insufficiently authenticates an user against
-LDAP/AD.
+MITIGATION
+==========
 
-Solution: Updated version 2.0.1 is available from the TYPO3 extension manager
-and at
-http://typo3.org/extensions/repository/download/ig_ldap_sso_auth/2.0.1/t3x/.
+This issue can be avoided by not assigning PCI Express devices other
+than SR-IOV virtual functions to untrusted guests.
 
-Credits: Credits go to Stefan Kaifer who discovered the vulnerability.
+CREDITS
+=======
 
+This issue was discovered by Jan Beulich of SUSE.
 
-http://typo3.org/teams/security/security-bulletins/typo3-extensions/typo3-ext-sa-2015-002/
+RESOLUTION
+==========
 
-It has been discovered that the extension "Content Rating" (content_rating) is
-susceptible to Cross-Site Scripting and SQL Injection.
+Applying the appropriate attached patch resolves this issue for the
+indicated versions of Linux, but only for ordinary PCI config space
+accesses by the guest. See XSA-124 for all other cases.
 
-Release Date: January 9, 2015
+xsa120.patch                Linux 3.19
+xsa120-classic.patch        linux-2.6.18-xen.hg
 
-Component Type: Third party extension. This extension is not a part of the TYPO3
-default installation.
+$ sha256sum xsa120*.patch
+ecd4568d418d6e275f1eebdba4867e7cfdc6a487292db0e9eff0e9e7e2c91826  xsa120-classic.patch
+32441fd3930848f7533f74376648fbeb5e35870661e1259860fe10f9a1f67f88  xsa120.patch
+$
 
-Affected Versions: 1.0.3 and all versions below
+DEPLOYMENT DURING EMBARGO
+=========================
 
-Vulnerability Type: Cross-Site Scripting, SQL Injection
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
 
-Severity: High
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
 
-Suggested CVSS v2.0: AV:N/AC:M/Au:N/C:P/I:P/A:N/E:POC/RL:U/RC:C
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
 
-Problem Description: The extension fails to properly escape user input in HTML
-and SQL context.
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
 
-Solution: Versions of this extension that are known to be vulnerable will no
-longer be available for download from the TYPO3 Extension Repository. The
-extension author failed in providing a security fix for the reported
-vulnerability in a decent amount of time. Please uninstall and delete the
-extension folder from your installation.
-
-Credits: Credits go to Steffen Müller who discovered and reported the
-vulnerabilities. 
-
-
-http://typo3.org/teams/security/security-bulletins/typo3-extensions/typo3-ext-sa-2015-003/
-
-It has been discovered that the extension "Content Rating Extbase"
-(content_rating_extbase) is susceptible to Cross-Site Scripting and SQL
-Injection.
-
-Release Date: January 9, 2015
-
-Component Type: Third party extension. This extension is not a part of the TYPO3
-default installation.
-
-Affected Versions: 2.0.3 and all versions below
-
-Vulnerability Type: Cross-Site Scripting, SQL Injection
-
-Severity: High
-
-Suggested CVSS v2.0: AV:N/AC:M/Au:N/C:P/I:P/A:N/E:POC/RL:U/RC:C
-
-Problem Description: The extension fails to properly escape user input in HTML
-and SQL context.
-
-Solution: Versions of this extension that are known to be vulnerable will no
-longer be available for download from the TYPO3 Extension Repository. The
-extension author failed in providing a security fix for the reported
-vulnerability in a decent amount of time. Please uninstall and delete the
-extension folder from your installation.
-
-Credits: Credits go to Steffen Müller who discovered and reported the
-vulnerabilities.
-
-- -- 
-Henri Salo
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.12 (GNU/Linux)
 
-iEYEARECAAYFAlSykcgACgkQXf6hBi6kbk87SgCfRGA6v9XYxy4G1n9AIov1hnXG
-gvYAoLm1tyheuIUe00K2f4c8eC259d9m
-=JFAw
+iQEcBAEBAgAGBQJU/tzUAAoJEIP+FMlX6CvZcDcIALHGaamMEPKtOANKkWW7cxJz
+zWrgU+6cg/slx6wlgTnHB0/9N/zb9VPUZO3j7TS4VNL6z5zu3S1aTelo5w0F5j2N
+rbQrmnJ56P7iTGU0UwerueGPUzRAOqw5JNJK/i7Y2nZo/r7Y8IkwZub8nxpeBaPF
+YN3gqd7iTmq5IkM0mQNUuSmneLlMVX32dITSatKjaUNaBI54aH8byM+lUjdFyUYv
+tKjb6HJD0upo7e5MPmchC1+/1B+Jm7YfAIMJ6Mn168pHMSy9Zn0p0zFeVGCA41u7
+L28yDiIVfu1XWcOLWryAQQ4e/rMv1Bpy7Q259SUUj4bUiQDmRdqOdZmaXHlO/Po=
+=H+jB
 -----END PGP SIGNATURE-----
+
+Download attachment "xsa120-classic.patch" of type "application/octet-stream" (3716 bytes)
+
+Download attachment "xsa120.patch" of type "application/octet-stream" (3745 bytes)
