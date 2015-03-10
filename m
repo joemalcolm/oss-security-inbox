@@ -1,40 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/13/2
-Message-ID: <CALH-=7xLvS+1dBd=gpF+80cjUosZukJEUX0K52mh8LZuivf=rg@mail.gmail.com>
-Date: Tue, 13 Jan 2015 19:02:53 +0100
-From: Steffen Rösemann <steffen.roesemann1986@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/10/14
+Message-ID: <20150310201236.74af14e9@pc1.fritz.box>
+Date: Tue, 10 Mar 2015 20:12:36 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE-Request -- CMS b2evolution v.5.2.0 -- Reflecting XSS vulnerability in filemanager functionality
+Subject: less invalid memory access fixed (CVE-2014-9488)
 Content-Type: text/plain; charset=utf-8
 
-Hi Josh, Steve, vendors, list.
+I stumbled over an invalid memory access in less a while ago:
+https://blog.fuzzing-project.org/3-less-out-of-bounds-read-access-TFPA-0022014.html
 
-I found a reflecting XSS vulnerability in CMS b2evolution v.5.2.0
-(release-date: 30th Dec 2014). It is located in its filemanager
-functionality, which can be accessed in the administrative backend by the
-following URL (assuming a common b2evolution installation):
+While I never got a reply from the less developers it seems with
+version 475 they finally fixed it. They don't have any release
+announcements or public repositories, but there is a mentioning in the
+file version.c probably related:
++v475  3/2/15    Fix possible buffer overrun with invalid UTF-8; 
++                fix bug when compiled with no regex; fix non-match
+  search.
 
-http://
-{TARGET}/blogs/admin.php?fm_filter=&actionArray[filter]=Apply&ctrl=files&locale=&blog=1&mode=&ajax_request=0&root=collection_1&path=&fm_mode=&linkctrl=&linkdata=&iframe_name=&fm_hide_dirtree=0&fm_flatmode=&fm_order=&fm_orderasc=
+This is likely the change that fixes this bug (but I haven't verified
+that, there are multiple things changed between 474 and 475):
 
-The "fm_filter" parameter is vulnerable to XSS attacks and can be exploited
-by an attacker like in the following example:
+--- less-474/line.c	2015-01-31 00:20:29.000000000 +0100
++++ less-475/line.c	2015-03-05 20:07:08.000000000 +0100
+@@ -807,7 +807,7 @@
+ 			mbc_buf[mbc_buf_index++] = c;
+ 			if (mbc_buf_index < mbc_buf_len)
+ 				return (0);
+-			if (is_utf8_well_formed(mbc_buf))
++			if (is_utf8_well_formed(mbc_buf,
+mbc_buf_index)) r = do_append(get_wchar(mbc_buf), mbc_buf, mbc_pos);
+ 			else
+ 				/* Complete, but not shortest form,
+ 				sequence. */
 
-http://
-{TARGET}/blogs/admin.php?fm_filter=%22%3E%3Cscript%3Ealert%28document.cookie%29%3C/script%3E&actionArray[filter]=Apply&ctrl=files&locale=&blog=1&mode=&ajax_request=0&root=collection_1&path=&fm_mode=&linkctrl=&linkdata=&iframe_name=&fm_hide_dirtree=0&fm_flatmode=&fm_order=&fm_orderasc=
 
-Could you please assign a CVE-ID for it?
+If mitre and osvdb maintainers read this: please update the entries in
+your databases accordingly.
 
-Thank you very much!
+I'll also update the blog post / advisory.
 
-Greetings.
+-- 
+Hanno Böck
+http://hboeck.de/
 
-Steffen Rösemann
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
 
-References:
-
-[1] http://b2evolution.net/
-[2] http://sroesemann.blogspot.de/2014/12/sroeadv-2014-09.html
-[3]
-http://sroesemann.blogspot.de/2015/01/report-for-advisory-sroeadv-2014-09.html
-
+Content of type "application/pgp-signature" skipped
