@@ -1,64 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/05/8
-Message-ID: <54F88D1E.1070200@oracle.com>
-Date: Thu, 05 Mar 2015 17:06:38 +0000
-From: John Haxby <john.haxby@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/10/9
+Message-ID: <54FF1436.4040702@redhat.com>
+Date: Tue, 10 Mar 2015 09:56:38 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
 Subject: Re: Another Python app (rhn-setup: rhnreg_ks) not checking hostnames in certs properly CVE-2015-1777
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
-
-On 04/03/15 18:37, Kurt Seifried wrote:
-> On 04/03/15 11:14 AM, Donald Stufft wrote:
->> > 
->>> >> On Mar 4, 2015, at 12:55 PM, Kurt Seifried <kseifried@...hat.com> wrote:
->>> >>
->>> >> https://bugzilla.redhat.com/show_bug.cgi?id=1198740
->>> >>
->>> >> Jan Bee of the Google Security Team reports:
->>> >>
->>> >> The /usr/sbin/rhnreg_ks fails to properly validate hostnames in
->>> >> certificates. This can result in man in the middle attacks.
->>> >>
->>> >> ===
->>> >>
->>> >> Please note that this issue cannot easily be exploited to cause any
->>> >> significant damage to a system other then preventing registration from
->>> >> taking place properly which the attacker would be able to do in any
->>> >> event if the can man in the middle the connection.
->>> >>
->>> >>
->>> >>
->>> >> --
->>> >> Kurt Seifried -- Red Hat -- Product Security -- Cloud
->>> >> PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
->>> >>
->> > 
->> > Note: Python 2.7.9+ and 3.4.3+ will cause most apps like this to
->> > automatically start validating hostnames. It may be easier to backport
->> > those changes than to find every Python app that doesn’t check hostnames.
-> Yup, I am aware of that, but as you know Red Hat is pretty conservative
-> on updates to things like Python/etc because we have to support customer
-> applications that we have never seen and will never see (e.g. internal
-> corp software), and if we break those apps due to changes in underlying
-> languages there is a big problem.
+On 10/03/15 03:41 AM, John Haxby wrote:
+> On 09/03/15 20:39, Kurt Seifried wrote:
+>> I find this really hard to believe based on the past. So you're
+>> saying Oracle is willing to work with Red Hat and the community in
+>> general now? Can we get access to the MySQL security bugs and test
+>> cases for example? This would be HUGELY helpful to the community.
 > 
+> I have no link to MySQL.   You need to take this up with those people.
+> 
+> 
+>> I'll believe Oracle is willing to work with the community when I 
+>> actually see Oracle participate and help the community. Until then
+>> it's just words from some random Oracle employee and most likely
+>> isn't official policy.
+> 
+>> So prove to us you want to work with us (e.g. by opening up the
+>> MySQL security bugs/test cases) and we can definitely look at
+>> future cooperation.
+> 
+> I would really like to be able to do that, but this is a political
+> problem outside my control.
+
+What you're saying simply is "what you asked me is to hard, so I won't
+do it, heck I won't even try it". This is not the Open Source way.
+
+> None of this, however, has anything to do with the matter at hand.  If
+> no one from Red Hat is unwilling to cooperate in getting a single
+> backward-compatible resolution to incorporating PEP-466 into the
+> distro python versions then perhaps someone else is.
+
+My experience is a lot of people propose a LOT of things on email lists,
+but when it actually comes down to them doing the work, nothing happens
+because quite often the people proposing the work don't have the
+expertise or ability to do it. oss-security@ archives are littered with
+such examples (e.g. the whole code audit thing).
+
+So it's not that I'm unwilling, I simply don't see why you need massive
+corporate/community buy in at this point, premature optimization and all
+that. Build a solution, or more than one solution and try them out, then
+report back to oss-security@ with what works/doesn't work. In general
+the best way to determine what the best solution is for a problem is to
+try several solutions out. Prototype code and experimental data is worth
+1000 meetings.
+
+Come back to us with data/a working solution and then I'd be willing to
+consider investing some time/energy into this, but until then this is
+simply an experimental project that may not even be needed (who knows,
+we don't because we're basically holding a useless meeting right now via
+email).
 
 
-PEP 476 cites 11 CVEs that resulted from python not properly validating
-certificates.   This would be number 12.
 
-Shouldn't python versions prior to 2.7.9 and 3.4.3 have a CVE each for
-the lack of verification? If internal corporate software stops working
-because of invalid certificates, wasn't it broken anyway?
+-- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-jch
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iF4EAREIAAYFAlT4jREACgkQRQu7fpQvo8gQ6wD/Spvj6v0XdrQ2dOG5/r63gpSb
-0v0XXopM3J9M0IhBCAQA/02UcObkNkXxM4zj43TWdOeJEuabuBHl9rHubmBDo/9/
-=NJa4
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
