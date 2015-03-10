@@ -1,56 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/11/6
-Message-ID: <55006D13.4040002@redhat.com>
-Date: Wed, 11 Mar 2015 10:28:03 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/10/15
+Message-ID: <20150310204221.GA12423@openwall.com>
+Date: Tue, 10 Mar 2015 23:42:21 +0300
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Another Python app (rhn-setup: rhnreg_ks) not checking hostnames in certs properly CVE-2015-1777
+Cc: steevee.aka@...il.com, cve-assign@...re.org
+Subject: Re: Instant v2.0 SQL Injection Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On 03/11/2015 10:18 AM, John Haxby wrote:
-> I think there's a misunderstanding here.  I was asking for cooperation
-> to come up with a solution, participating with other people who, like,
-> I assumed, Red Hat, have an interest in solving this specific problem
-> without breaking existing (admitedly flawed) applications.  I know it's
->  not straightforward, if it was I'd've just produced a patch.  I'm still
-> happy to work with anyone to sort this out.
+On Tue, Mar 10, 2015 at 01:12:16PM -0400, cve-assign@...re.org wrote:
+> Also, note that this vendor (apparently from Iowa in the U.S.) is not
+> the same as the InstantCMS vendor (see CVE-2013-6839), apparently
+> located in Russia.
 
-Me too. But I trust Nick and he's smart. I don't stick my finger into
-every security pie because 1) I'm not an expert in all things and 2) I
-have a finite life span and need to sleep.
+This is what confused me into accepting the message for oss-security.
+I found this website:
 
-So again my advice is: work with upstream/the community. You don't need
-my input yet. Nick has spent far, far, far more time thinking about how
-to fix Python/SSL/TLS then I ever will. Once you have a definitive
-solution that you are pretty sure works, then please, by all means poke me.
+http://www.instantcms.ru/get
 
-> 
-> [snip]
-> 
->> I am actually working on something that will hopefully provide a
->> better solution (for values of speed and ease of fixing flaws) than
->> a traditional audit/code fix, (I'd rather address entire classes
->> of security flaw rather than one instance of the flaw at a time).
->> But like all things security infinite workload delays specific
->> projects.
-> 
-> If this fixes the specific problem as a side effect that would be
-> great.  Details are lacking though, and there's no obvious link here
-> to making adapting PEP-466 for backwards compatibility (and I have
-> absolutely no arguments with the rejected solutions for Python).
+which says (in Russian) that InstantCMS is licensed under GNU GPLv2.
 
-This is a different project and related to web interfaces (which are a
-growing pain point security wise).
+If the message was about a proprietary product (or a SaaS offering?),
+then ideally we should have rejected it... but as discussed before, it's
+unrealistic for list moderators to investigate these things thoroughly.
 
-> 
-> This is my last message on the list on the subject.
-> 
-> jch
-> 
-
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Alexander
