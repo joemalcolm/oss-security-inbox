@@ -1,23 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/05/3
-Message-ID: <54D2D5B1.7080707@redhat.com>
-Date: Wed, 04 Feb 2015 19:30:09 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Daniel Stenberg <daniel@...x.se>
-Subject: MP3::Info file loading from cwd
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/10/16
+Message-Id: <E51BB432-BC69-469C-98B4-F755B09C4515@oracle.com>
+Date: Tue, 10 Mar 2015 20:42:50 +0000
+From: John Haxby <john.haxby@...cle.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Another Python app (rhn-setup: rhnreg_ks) not checking hostnames in certs properly CVE-2015-1777
 Content-Type: text/plain; charset=utf-8
 
-With apologies, this should have been made public some time ago however
-it fell through the cracks. This is a ow severity issue, it requires
-significant attack/victim interaction and local access.
 
-This was assigned CVE-2013-6499
+> On 10 Mar 2015, at 15:56, Kurt Seifried <kseifried@...hat.com <mailto:kseifried@...hat.com>> wrote:
+> 
+>>> So prove to us you want to work with us (e.g. by opening up the
+>>> MySQL security bugs/test cases) and we can definitely look at
+>>> future cooperation.
+>> 
+>> I would really like to be able to do that, but this is a political
+>> problem outside my control.
+> 
+> What you're saying simply is "what you asked me is to hard, so I won't
+> do it, heck I won't even try it". This is not the Open Source way.
 
-https://bugzilla.redhat.com/show_bug.cgi?id=1018805
 
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+It’s not hard, it’s impossible.   You seem to imagine that I can get the board to change its mind; you have as much influence as I do.
 
+Please do not harp on about this.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+jch
