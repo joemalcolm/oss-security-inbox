@@ -1,45 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/08/7
-Message-ID: <CALH-=7zfourEk9ZfT9Go5Fsd2Mwh7i1B8yi1_cX3SyRROzDhfA@mail.gmail.com>
-Date: Thu, 8 Jan 2015 21:37:18 +0100
-From: Steffen Rösemann <steffen.roesemann1986@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request -- CMS BEdita v. 3.4.0 -- Multiple stored XSS vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/10/12
+Message-Id: <20150310182126.CDAF66C0079@smtpvmsrv1.mitre.org>
+Date: Tue, 10 Mar 2015 14:21:26 -0400 (EDT)
+From: cve-assign@...re.org
+To: kroemeke@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Varnish 4.0.3 heap-buffer-overflow while parsing backend server HTTP response.
 Content-Type: text/plain; charset=utf-8
 
-Hi Josh, Steve, vendors, list.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I found multiple stored XSS vulnerabilities in the administrative backend
-of CMS BEdita v.3.4.0 (release-date: 9th-May-2014).
+> Our understanding after previous reports is that varnish security model assumes full
+> trust of the backend, so this is not considered a security problem
 
-The vulnerabilities can be found in the following paths of a common BEdita
-installation:
+We'll try to infer CVE inclusion based on:
 
-http://{TARGET}/index.php/home/profile (in form with id „editProfile“  via
-input field with id „lrealname")
+  http://openwall.com/lists/oss-security/2014/07/08/13
 
-http://{TARGET}/index.php/ (in form with id „addQuickItem“ via input field
-with name "data[title]" and name "data[description]")
+Our understanding is that Varnish Cache trusts the backend HTTP
+servers for two specific properties:
 
-http://{TARGET}/index.php/areas (in form with id „saveNote“ via input field
-with id „note text")
+  1. integrity of the web content
+  2. availability of the externally offered web service
 
-http://{TARGET}/index.php/documents/view (in form with id „updateForm“ via
-input field with id „titleBEObject“ and input field with id „tagsArea“)
+In the July 2014 discussion, the scenario was that a single use of a
+rogue backend server, caused by DNS spoofing, could cause a long-lived
+denial of service of the externally offered web service. There wasn't
+a CVE ID assignment because (as a rough summary) the product resolves
+DNS names only once, and the administrator is able to verify the IP
+addresses before those addresses are used.
 
-The vulnerabilities can be exploited by using arbitray HTML- and/or
-JavaScriptcode, e.g. <script>alert(document.cookie)</script>.
+More generally, no privilege boundary is crossed if a backend HTTP
+server arbitrarily interferes with the intended behavior of the
+externally offered web service.
 
-Could you please assign a CVE-ID for it?
+There's a separate question of whether a privilege boundary is crossed
+if a backend HTTP server can take control of the Varnish Cache server
+machine. As far as we know, the Varnish Cache vendor has not directly
+commented on that.
 
-Thank you. Greetings.
+So, we expect that the outcome would be:
 
-Steffen Rösemann
+  - if the AddressSanitizer report corresponds to a buffer overflow or
+    buffer over-read that we understand is exploitable only for a
+    crash, then there won't be a CVE
 
-References:
+  - if the AddressSanitizer report corresponds to a remote code
+    execution vulnerability, then it's up to the vendor to clarify
+    their perspective on trusting backend HTTP servers. If a system
+    administrator decides to use a DNS domain name in a backend
+    definition, and this results in reaching a wrong backend server,
+    and that backend server launches a successful code-execution
+    attack, this is perhaps sufficiently outside the bounds of
+    expected or reasonable behavior that a CVE is required.
 
-[1] http://www.bedita.com
-[2] http://sroesemann.blogspot.de/2014/12/sroeadv-2014-10.html
-[3] https://github.com/bedita/bedita/issues/566
-[4] http://seclists.org/fulldisclosure/2015/Jan/16
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
+iQEcBAEBAgAGBQJU/zWoAAoJEKllVAevmvmsEAIIAJXn5WTb28VWOJTx2rQTUNyf
+rOAsm0IzgUYYDf0+061CwTzyZrNV3IjLYBs6P2/t+Qvh1Z9F2+sDcf1cWn7dJORo
+6cc7m6hUBBaFBbYItDKp4UvnBMiyEKeC3bMEnMPdB6Z/Ukev2tO8Go6RwJL0jnDP
+Ry48HSNhiJMtBmMf+PXsq4rOFz3VSvJhL0iv105URg/h8hBM0WZqhjfVL0MGuGDu
+jdvlz3GR3xl7rPgaPDsKN/jdVcDVkKKvsbjD6yeJ6G28WuSg29VRDVQZX+utm5LE
+MwNZzEyTqffDtSJzx1nieTczLK7wcg+bD8wmb6rwFYf/Tsy0OZGOdyf6vaJsTPU=
+=tBwy
+-----END PGP SIGNATURE-----
