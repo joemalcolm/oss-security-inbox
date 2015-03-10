@@ -1,32 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/27/16
-Message-ID: <Pine.LNX.4.64.1501271306190.11165@beijing.mitre.org>
-Date: Tue, 27 Jan 2015 13:07:25 -0500 (EST)
-From: cve-assign@...re.org
-To: Patrick William <pat@...k911labs.com>
-cc: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: Re: CVE Request: Webmin & Usermin - Read Mail Module Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/10/2
+Message-ID: <CACYkhxhMeGxu-F_drzY_Jst+q+f48u-ok-C34g6_eB8DJWxjLQ@mail.gmail.com>
+Date: Tue, 10 Mar 2015 21:59:13 +1100
+From: Michael Samuel <mik@...net.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: Another Python app (rhn-setup: rhnreg_ks) not checking hostnames in certs properly CVE-2015-1777
 Content-Type: text/plain; charset=utf-8
 
-
-> I need to request 2 CVE's; one for Usermin and one for Webmin.
+On 10 March 2015 at 20:41, John Haxby <john.haxby@...cle.com> wrote:
+> None of this, however, has anything to do with the matter at hand.  If
+> no one from Red Hat is unwilling to cooperate in getting a single
+> backward-compatible resolution to incorporating PEP-466 into the
+> distro python versions then perhaps someone else is.
 >
-> Both of them are vulnerable to a hardlink arbitrary file access within the 
-> Read Mail Module. The end result is the ability to open any file on the 
-> server, including root owned files, which could lead to a privilege 
-> escalation.
->
-> Reference: http://www.webmin.com/index.html
->
-> "January 1: Webmin 1.730 and Usermin 1.640 released - This update includes 
-> security fixes to produce against malicious links in the Read Mail module..."
->
-> Thanks!
+> If there's interest, I'll gladly work with anyone who wants to find a
+> way to do this.   This is just me trying, as usual, to do the best by
+> everyone.  I don't speak for Oracle, I'm not paid enough for that, I'm
+> just trying to make sure that we don't wind up with a backported fix
+> that makes the overall situation worse.
 
-Only one identifier is needed.  Use CVE-2015-1377.
+I'm happy to help work on this.
 
----
+The two ways to attack this seem to be:
 
-CVE assignment team, MITRE CVE Numbering Authority M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+1) Use alternatives for the ssl module, and a new package has a
+higher priority version of the module.
+
+2) Include both versions of the module under different names, and
+have a script that symlinks the correct one in place.  This may work
+better in chroot environments, etc.
+
+Regards,
+  Michael
