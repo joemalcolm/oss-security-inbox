@@ -1,39 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/30/16
-Message-ID: <54CB920E.3010400@redhat.com>
-Date: Fri, 30 Jan 2015 07:15:42 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/10/1
+Message-ID: <54FEBC42.60104@oracle.com>
+Date: Tue, 10 Mar 2015 09:41:22 +0000
+From: John Haxby <john.haxby@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: xchat/hexchat don't properly verify SSL certificates
+Subject: Re: Another Python app (rhn-setup: rhnreg_ks) not checking hostnames in certs properly CVE-2015-1777
 Content-Type: text/plain; charset=utf-8
 
-On 30/01/15 02:56 AM, Michael Samuel wrote:
-> On 30 January 2015 at 06:24, Sam Dodrill <shadow.h511@...il.com> wrote:
->> A lot of the time IRC networks will not pay for a verified SSL cert due to
->> the fact that the kind of SSL cert they would need (a wildcard one) is
->> financially prohibitive. I don't think this is a security bug with hexchat
->> more a symptom of the fact that SSL combines encryption and identity
->> verification where sometimes people only want the former.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
+
+On 09/03/15 20:39, Kurt Seifried wrote:
+> I find this really hard to believe based on the past. So you're
+> saying Oracle is willing to work with Red Hat and the community in
+> general now? Can we get access to the MySQL security bugs and test
+> cases for example? This would be HUGELY helpful to the community.
+
+I have no link to MySQL.   You need to take this up with those people.
+
 > 
-> The correct response to this is for them to publish their self-signed
-> certificate (or even a CA certificate) and have it pasted into the
-> client, along with the configuration.
-
-Sorry what? A DV (Domain Validated) wildcard cert is now 80-90$ a year
-from many providers (google "cheap ssl"). SSL certs are no longer
-expensive and have not been for many years.
-
-> The client could then perform a byte-wise compare of the public key.
+> I'll believe Oracle is willing to work with the community when I 
+> actually see Oracle participate and help the community. Until then
+> it's just words from some random Oracle employee and most likely
+> isn't official policy.
 > 
-> I assume well-known networks could have their certificates hard-coded
-> into the client.
+> So prove to us you want to work with us (e.g. by opening up the
+> MySQL security bugs/test cases) and we can definitely look at
+> future cooperation.
 
-No. Just no. You put root certs on the client side, not the actual
-server certs. Google "crypto agility" and so on.
+I would really like to be able to do that, but this is a political
+problem outside my control.
 
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+We, the linux team, already contribute not inconsiderable amounts to
+the community: we're a big contributor to xen, to parts of the linux
+kernel including btrfs, ocfs2 (obviously), nfs ... the MAINTAINERS
+file lists 13 maintainers with @oracle.com maintainers.   It wouldn't
+take a lot of searching to find our contributions to numerous other
+projects.
 
+None of this, however, has anything to do with the matter at hand.  If
+no one from Red Hat is unwilling to cooperate in getting a single
+backward-compatible resolution to incorporating PEP-466 into the
+distro python versions then perhaps someone else is.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+If there's interest, I'll gladly work with anyone who wants to find a
+way to do this.   This is just me trying, as usual, to do the best by
+everyone.  I don't speak for Oracle, I'm not paid enough for that, I'm
+just trying to make sure that we don't wind up with a backported fix
+that makes the overall situation worse.
+
+So can we please set aside the anti-corporate sentiments?
+jch
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iF4EAREIAAYFAlT+vDYACgkQRQu7fpQvo8iCJAD/fE7RhFUrNTJkvxkaBBidQvG4
+m3VLzug74/zMt/oQFbEA/A2ykhF8V3Cnbvt23OvczCpJOOxr/d9cB0M9m+IvpZtA
+=mKaH
+-----END PGP SIGNATURE-----
