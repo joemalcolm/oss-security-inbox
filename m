@@ -1,35 +1,104 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/29/7
-Message-ID: <20150129085023.GA6572@openwall.com>
-Date: Thu, 29 Jan 2015 11:50:23 +0300
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: the other glibc issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/10/13
+Message-ID: <20150310191141.GB883@odroid>
+Date: Tue, 10 Mar 2015 19:11:41 +0000
+From: Marek Kroemeke <kroemeke@...il.com>
+To: cve-assign@...re.org
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Varnish 4.0.3 heap-buffer-overflow while parsing backend server HTTP response.
 Content-Type: text/plain; charset=utf-8
 
-Oh, can we use descriptive Subjects, please?  (I am leaving this one
-intact not to introduce even further confusion.)
+Hi there,
 
-On Wed, Jan 28, 2015 at 01:17:40PM -0500, cve-assign@...re.org wrote:
-> Use CVE-2013-7423 for ths initial bug report at 2013-09-12 09:50:17 UTC 
-> stating: "Under high load, getaddrinfo() starts sending DNS queries to 
-> random file descriptors, e.g. some unrelated socket connected to a remote 
-> service."
+It sounds like the same discussion that we had - we tried to avoid it by adding that 
+last line of the report *cough* ;-)
+
+You don't need DNS spoofing - a php script which returns required "rouge" headers
+is enough right? When reporting the previous bugs, the thinking was more about cases like :
+
+* CDNs using varnish (in the same way cloudflare uses nginx, akamai uses "ghost"  etc...)
+* Shared hosting environments that put varnish in front 
+* Cases where backend app's response splitting bug is escalated to DoS
+  or in this case, possibly to have RCE on server in between the client
+  and the backend app.
+* Cases where you have backends with different level of "trust"
+
+And again - it all depends on how you treat reverse proxy server. Our understanding
+is that rfc doesn't specify or describe "reverse http proxy" , and essentially
+this can be treated as a server (when looking from browser perspective) or a client
+when looking from the backend server perspective. Question was - is a case where "client"
+ may end up in in that undefined state (DoS , RCE due to some buffer overflow..) be treated
+as a security problem. Conclusion was that DoS is acceptable, not sure what about other 
+types of bugs though. 
+
+To be clear - we think that if vendor clearly says that you have to fully trust your
+backend server when you use the product, then this is what it is, but we can't/couldn't
+find anything like that on vendor's website (should we? - don't know, open question). 
+
+regards,
+
+
+On Tue, Mar 10, 2015 at 02:21:26PM -0400, cve-assign@...re.org wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
 > 
-> Which comment says that the issue is unfixed?  The 2015-01-08 14:21:11 UTC 
-> comment by David Nilsson says "I'm unable to reproduce the correct 
-> behaviour," but does not suggest that the vulnerability is still present.
-
-That comment you mention seemed to imply that, but here are the news off
-Twitter:
-
-<solardiz> glibc "getaddrinfo() writes DNS queries to random file descriptors under high load" https://sourceware.org/bugzilla/show_bug.cgi?id=15946 "Fixed in 2.20", reopened, CVE?
-<@RichFelker> @solardiz Yeah I've been following this and pushing for it to be taken seriously for a long time...
-<@RichFelker> @solardiz Looks like a false positive, a bug in the testcase rather than in #glibc. See https://sourceware.org/ml/glibc-bugs/2015-01/msg00226.html
-<@solardiz> @RichFelker To me, this message says that the bug still being reproducible on glibc 2.20 is a false positive, but the fix in 2.20 was needed
-<@solardiz> @RichFelker Someone should run the corrected testcase on pre-2.20 to see if the issue was reproducible before the fix or not
-
-So glibc 2.20 appears OK, and we need to re-test older glibc - but from
-the patch it looks like there was indeed this bug before 2.20.
-
-Alexander
+> > Our understanding after previous reports is that varnish security model assumes full
+> > trust of the backend, so this is not considered a security problem
+> 
+> We'll try to infer CVE inclusion based on:
+> 
+>   http://openwall.com/lists/oss-security/2014/07/08/13
+> 
+> Our understanding is that Varnish Cache trusts the backend HTTP
+> servers for two specific properties:
+> 
+>   1. integrity of the web content
+>   2. availability of the externally offered web service
+> 
+> In the July 2014 discussion, the scenario was that a single use of a
+> rogue backend server, caused by DNS spoofing, could cause a long-lived
+> denial of service of the externally offered web service. There wasn't
+> a CVE ID assignment because (as a rough summary) the product resolves
+> DNS names only once, and the administrator is able to verify the IP
+> addresses before those addresses are used.
+> 
+> More generally, no privilege boundary is crossed if a backend HTTP
+> server arbitrarily interferes with the intended behavior of the
+> externally offered web service.
+> 
+> There's a separate question of whether a privilege boundary is crossed
+> if a backend HTTP server can take control of the Varnish Cache server
+> machine. As far as we know, the Varnish Cache vendor has not directly
+> commented on that.
+> 
+> So, we expect that the outcome would be:
+> 
+>   - if the AddressSanitizer report corresponds to a buffer overflow or
+>     buffer over-read that we understand is exploitable only for a
+>     crash, then there won't be a CVE
+> 
+>   - if the AddressSanitizer report corresponds to a remote code
+>     execution vulnerability, then it's up to the vendor to clarify
+>     their perspective on trusting backend HTTP servers. If a system
+>     administrator decides to use a DNS domain name in a backend
+>     definition, and this results in reaching a wrong backend server,
+>     and that backend server launches a successful code-execution
+>     attack, this is perhaps sufficiently outside the bounds of
+>     expected or reasonable behavior that a CVE is required.
+> 
+> - -- 
+> CVE assignment team, MITRE CVE Numbering Authority
+> M/S M300
+> 202 Burlington Road, Bedford, MA 01730 USA
+> [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1.4.14 (SunOS)
+> 
+> iQEcBAEBAgAGBQJU/zWoAAoJEKllVAevmvmsEAIIAJXn5WTb28VWOJTx2rQTUNyf
+> rOAsm0IzgUYYDf0+061CwTzyZrNV3IjLYBs6P2/t+Qvh1Z9F2+sDcf1cWn7dJORo
+> 6cc7m6hUBBaFBbYItDKp4UvnBMiyEKeC3bMEnMPdB6Z/Ukev2tO8Go6RwJL0jnDP
+> Ry48HSNhiJMtBmMf+PXsq4rOFz3VSvJhL0iv105URg/h8hBM0WZqhjfVL0MGuGDu
+> jdvlz3GR3xl7rPgaPDsKN/jdVcDVkKKvsbjD6yeJ6G28WuSg29VRDVQZX+utm5LE
+> MwNZzEyTqffDtSJzx1nieTczLK7wcg+bD8wmb6rwFYf/Tsy0OZGOdyf6vaJsTPU=
+> =tBwy
+> -----END PGP SIGNATURE-----
