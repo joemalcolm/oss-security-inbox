@@ -1,22 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/04/11
-Message-ID: <alpine.BSF.2.11.1501041505420.58880@aneurin.horsfall.org>
-Date: Sun, 4 Jan 2015 15:06:51 +1100 (EST)
-From: Dave Horsfall <dave@...sfall.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/10/17
+Message-Id: <1D5C84D8-CB3B-44D2-9705-209F39C5CAFD@oracle.com>
+Date: Tue, 10 Mar 2015 20:44:05 +0000
+From: John Haxby <john.haxby@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request for illumos distributions
+Subject: Re: Another Python app (rhn-setup: rhnreg_ks) not checking hostnames in certs properly CVE-2015-1777
 Content-Type: text/plain; charset=utf-8
 
-On Sat, 3 Jan 2015, Christos Zoulas wrote:
 
-> | Use CVE-2014-9491.
+> On 10 Mar 2015, at 15:56, Kurt Seifried <kseifried@...hat.com> wrote:
 > 
-> Shouldn't we be using CVE-2015-XXXX by now?
+>> None of this, however, has anything to do with the matter at hand.  If
+>> no one from Red Hat is unwilling to cooperate in getting a single
+>> backward-compatible resolution to incorporating PEP-466 into the
+>> distro python versions then perhaps someone else is.
+> 
+> My experience is a lot of people propose a LOT of things on email lists,
+> but when it actually comes down to them doing the work, nothing happens
+> because quite often the people proposing the work don't have the
+> expertise or ability to do it. oss-security@ archives are littered with
+> such examples (e.g. the whole code audit thing).
+> 
+> So it's not that I'm unwilling, I simply don't see why you need massive
+> corporate/community buy in at this point, premature optimization and all
+> that. Build a solution, or more than one solution and try them out, then
+> report back to oss-security@ with what works/doesn't work. In general
+> the best way to determine what the best solution is for a problem is to
+> try several solutions out. Prototype code and experimental data is worth
+> 1000 meetings.
+> 
+> Come back to us with data/a working solution and then I'd be willing to
+> consider investing some time/energy into this, but until then this is
+> simply an experimental project that may not even be needed (who knows,
+> we don't because we're basically holding a useless meeting right now via
+> email).
 
-I'd rather see CVE-2015-XXXXX - look how close we came...
+You’re not interested, that’s fine.
 
-Is there a CVE for that?
-
--- 
-Dave Horsfall DTM (VK2KFU)  "Bliss is a MacBook with a FreeBSD server."
-http://www.horsfall.org/spam.html (and check the home page whilst you're there)
+jch
