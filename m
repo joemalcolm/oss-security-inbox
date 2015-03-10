@@ -1,55 +1,88 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/07/5
-Message-ID: <Pine.LNX.4.64.1502071208290.4091@beijing.mitre.org>
-Date: Sat, 7 Feb 2015 12:13:13 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/10/11
+Message-Id: <20150310171216.1144E42E048@smtpvbsrv1.mitre.org>
+Date: Tue, 10 Mar 2015 13:12:16 -0400 (EDT)
 From: cve-assign@...re.org
-To: Michal Zalewski <lcamtuf@...edump.cx>
-cc: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: Multiple vulnerabilities in LibTIFF and associated tools
+To: steevee.aka@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Instant v2.0 SQL Injection Vulnerability
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> http://lcamtuf.coredump.cx/afl/vulns/libtiff-cvs-1.tif
->
->  - uninitialized memory in putcontig8bitYCbCr21tile
->    Fixed in:
->
->      2014-12-29  Even Rouault  <even.rouault@...tialys.com>
->
->      * libtiff/tif_getimage.c: in OJPEG case, fix checks on strile width/height
->        in the putcontig8bitYCbCr42tile, putcontig8bitYCbCr41tile and
->        putcontig8bitYCbCr21tile cases.
->
->    I don't think this had a CVE number assigned yet.
->
-> http://lcamtuf.coredump.cx/afl/vulns/libtiff-cvs-2.tif
->
->  - uninitialized memory in NeXTDecode
->    Fixed in:
->
->      2014-12-29  Even Rouault  <even.rouault@...tialys.com>
->
->      * libtiff/tif_next.c: add new tests to check that we don't read outside of
->      the compressed input stream buffer.
->
->    I don't think this had a CVE number assigned yet.
->
+Are you able to identify this vulnerability within a specific download
+of open-source software?
 
-Use CVE-2014-9655 for these two issues related to access of uninitialized 
-memory, as demonstrated by libtiff-cvs-1.tif and libtiff-cvs-2.tif.
+What we've been able to find is:
 
+   http://web.archive.org/web/20081219100117/http://overcoffee.com/
+   http://web.archive.org/web/20050405113015/http://aura.overcoffee.com/
+   (previous version of web site)
 
-> http://lcamtuf.coredump.cx/afl/vulns/libtiff5.tif
->
->  - another use of uninitialized memory in NeXTDecode after fixing the
-> previous case.
->    I don't think this had a CVE number assigned yet.
+   http://web.archive.org/web/20100105143144/http://overcoffee.com/
+   (later version of web site)
 
+The above archived aura.overcoffee.com page suggests that web sites
+existed with "Powered By Instant v2.0 another OverCoffee production"
+in the footer.
 
-Use CVE-2015-1547 for this issue.
+The archived overcoffee.com page suggests that the company's goal was
+"packages of web development services and applications." Linked pages
+refer to "we provide all our clients with a log-in username and
+password to their own area of the SelfServe control panel" and "we
+partner with our clients from initial consultation through design,
+hosting, and management."
 
----
+This might mean that "Instant v2.0" was a web-design offering that
+typically resulted in a web site hosted and maintained by the vendor.
 
-CVE assignment team, MITRE CVE Numbering Authority M/S M300
+To obtain a CVE ID on the oss-security list, it's necessary to
+establish that the vendor has (currently or in the past) packaged the
+product in question as open source.
+
+To obtain a CVE ID at all, it's necessary to establish that there is
+or was a specific packaged product. A CVE ID is not assigned for "web
+development services" that create customer-specific sites/code, even
+if multiple customers happened to receive a specific file (such as
+product_cat.php) and a vulnerability is found in that file. Also, it's
+necessary to establish that customers are responsible for security
+updates of the specific packaged product. This is very often the case
+if different installations of a product are installed on servers
+controlled by different customers. In this situation, this seems
+perhaps unlikely because the six example sites do not all have unique
+IP addresses. (Admittedly, it's possible for a vendor to initially
+maintain its customers' web sites but then later announce that the
+customers need to start maintaining them on their own.)
+
+Also, note that this vendor (apparently from Iowa in the U.S.) is not
+the same as the InstantCMS vendor (see CVE-2013-6839), apparently
+located in Russia.
+
+To summarize:
+
+  - if you know that this is open source, you can send more
+    information about that to oss-security@...ts.openwall.com
+
+  - if you don't know whether it's open source but know that "Instant
+    v2.0" was shipped as a software package installable by arbitrary
+    customers, you can send more information about that to
+    cve-assign@...re.org (That address can be used, optionally, even
+    if it is open source. Please do not send to both addresses.)
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
 202 Burlington Road, Bedford, MA 01730 USA
 [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJU/yWAAAoJEKllVAevmvmsgGcH/jF05h+Dbiv/JA3V6fqh4LKQ
+3H3Be/s47jEMTwUJDs4Y3/b6E88C0BRJcHWEgPsFbeLCI3jRFmquEJbOlBr/nuTk
+qzYAtWz2EA+OaxkzpcLQJnhBknYrGFIZdEuBBtsYq32/1tvPbKOxu06tgRcktZr6
+N5x+giSLH2ziOGd1N+9R0Wg4Us1HKzu8XjpiC8u/1EOR7yHreEPd85lVbHNKDZJj
+pdjcULb33mTrEloTsjfH3gp7LzyoBdZn5QPE5DP6UKk5g5a+B22f2x9SZS+qr3mN
+bl0+vGmxUACF9F0OP60jnU9sJ/SlT+JfMKyapB4JHwlXNMmSLNPo0iv+mmBh7T8=
+=ixTb
+-----END PGP SIGNATURE-----
