@@ -1,25 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/23/2
-Message-ID: <54C1E0AB.6040703@redhat.com>
-Date: Thu, 22 Jan 2015 22:48:27 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>, report@...esecurity.io
-Subject: CVE requests for nodejs marked VBScript Content Injection and sequelize SQL Injection in Order
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/11/5
+Message-ID: <55006ABD.4040208@oracle.com>
+Date: Wed, 11 Mar 2015 16:18:05 +0000
+From: John Haxby <john.haxby@...cle.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Another Python app (rhn-setup: rhnreg_ks) not checking hostnames in certs properly CVE-2015-1777
 Content-Type: text/plain; charset=utf-8
 
-Can I get a CVE for:
+On 11/03/15 15:48, Kurt Seifried wrote:
+> On 03/10/2015 08:05 PM, Michael Samuel wrote:
+>> Hi Kurt,
+>> 
+>> Your corporate pissing match with Oracle is not helpful.
 
-https://nodesecurity.io/advisories/marked_vbscript_injection
+Indeed, please cut it out.  You're dealing with an individual, me,
+here.   I'm just someone who is trying to improve things in small but
+useful ways.   Someone who, incidentally, is personally hurt all of this.
 
-and for:
+> 
+> I think there's probably some cultural disconnect here that is
+> causing issues, a big part of Red Hat is "upstream first" and doing
+> things the open source way.
 
-https://nodesecurity.io/advisories/sequelize-sql-injection-order
+We're actually no different, whatever you might think.  (Obviously this
+does not apply to the large suite of closed or semi-closed applications
+that oracle produces; I'm only talking about the Linux group here.)
 
-Thanks
+[snip]
 
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+> However here's the cool thing. If Oracle thinks they have a good 
+> solution they can participate with upstreams, or simply try it.
+
+I think there's a misunderstanding here.  I was asking for cooperation
+to come up with a solution, participating with other people who, like,
+I assumed, Red Hat, have an interest in solving this specific problem
+without breaking existing (admitedly flawed) applications.  I know it's
+ not straightforward, if it was I'd've just produced a patch.  I'm still
+happy to work with anyone to sort this out.
+
+[snip]
+
+> I am actually working on something that will hopefully provide a
+> better solution (for values of speed and ease of fixing flaws) than
+> a traditional audit/code fix, (I'd rather address entire classes
+> of security flaw rather than one instance of the flaw at a time).
+> But like all things security infinite workload delays specific
+> projects.
+
+If this fixes the specific problem as a side effect that would be
+great.  Details are lacking though, and there's no obvious link here
+to making adapting PEP-466 for backwards compatibility (and I have
+absolutely no arguments with the rejected solutions for Python).
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+
+This is my last message on the list on the subject.
+
+jch
+
