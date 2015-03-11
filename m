@@ -1,58 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/31/1
-Message-ID: <CA+Qk1jbSf=8bHoQdw+qT7vGkRh-ZAbs4v2TLhDySUAtKeo0oEg@mail.gmail.com>
-Date: Sat, 31 Jan 2015 16:11:21 +0500
-From: Ammar Brohi <brohiammar@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/11/9
+Message-ID: <CACYkhxisoBR8jBDhvk8_eAJJ8iG1n5t2mnas_u_skwCtEbuf=w@mail.gmail.com>
+Date: Thu, 12 Mar 2015 10:44:58 +1100
+From: Michael Samuel <mik@...net.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: R: GHOST gethostbyname() heap overflow in glibc (CVE-2015-0235)
+Subject: Re: Another Python app (rhn-setup: rhnreg_ks) not checking hostnames in certs properly CVE-2015-1777
 Content-Type: text/plain; charset=utf-8
 
-I wonder how to detect this vulnerability? Any remote or local script to
-run?
+On 12 March 2015 at 02:48, Kurt Seifried <kseifried@...hat.com> wrote:
 
-Thanks,
+> Much like /tmp issues the solution that will save us is not to fix every
+> /tmp issue but rather do more intelligent things like poly instantiated
+> tmp or systemd per process tmp. Sadly I don't see such an easy
+> possibility with TLS/SSL, but if we have a decent test
+> framework/reproduction ability it will make finding, fixing and
+> verifying these things a whole lot easier long term.
 
-On Fri, Jan 30, 2015 at 3:54 PM, linkbc02 <linkbc02@...look.com> wrote:
+You can test for the common bugs extremely easily - you need two types of
+bogus certificate installed on the server:
+- A completely untrusted (eg. self-signed) certificate
+- A certificate signed by a trusted authority but for the wrong hostname
 
-> |If you try upgrading glibc and the issue goes away, _that_ would be a
-> |reason to suspect relevance.
->
-> Hi, already done
->
->
-> # rpm -q glibc
-> glibc-2.12-1.132.el6_5.2.x86_64
-> glibc-2.12-1.132.el6_5.2.i686
->
-> # yum update glibc
->
->
-> # rpm -q glibc
-> glibc-2.12-1.149.el6_6.5.x86_64
-> glibc-2.12-1.149.el6_6.5.i686
->
->
->
-> # /etc/init.d/dovecot restart
->
->
-> # telnet localhost 143
-> Trying 127.0.0.1...
-> Connected to localhost.
-> Escape character is '^]'.
-> * OK [CAPABILITY IMAP4rev1 LITERAL+ SASL-IR LOGIN-REFERRALS ID ENABLE IDLE
-> STARTTLS AUTH=PLAIN AUTH=LOGIN] IMAP ready.
-> 1 login
->
-> 00000000000000000000000000000000000000000000000000000000000000000000000000-c
-> utted-
->
->
-> BAD Error in IMAP command received by server.
->
-> * BAD Error in IMAP command received by server.
->
->
-> #dmesg doesn't show anymore segfault and core dump
->
+It's not too hard to test SSH connections in a similar manner (just regen the
+ssh host keys after the first connection).
 
+Alternatively, you could make your OpenSSL modules for various languages
+return client ctxs that verify by default - the topic of this discussion :)
+
+Regards,
+  Michael
