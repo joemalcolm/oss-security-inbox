@@ -1,75 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/17/2
-Message-ID: <54B9A71D.7090800@mantisbt.org>
-Date: Sat, 17 Jan 2015 01:04:45 +0100
-From: Damien Regad <dregad@...tisbt.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/11/3
+Message-ID: <420269753.1243110.1426076807630.JavaMail.zimbra@redhat.com>
+Date: Wed, 11 Mar 2015 08:26:47 -0400 (EDT)
+From: Siddharth Sharma <siddharth@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: advisory@...ridge.ch
-Subject: CVE-2014-9573: SQL Injection in manage_user_page.php
+Cc: cve-assign@...re.org
+Subject: Re: CVE request: spencer regexp
 Content-Type: text/plain; charset=utf-8
 
-Greetings,
+Hi,
 
-Please update CVE-2014-9573 with the information below
+Is there a CVE which was assigned to this flaw ?
 
+Regards,
+-------------------------------------------
+Siddharth Sharma / Red Hat Product Security
 
-Description:
+----- Original Message -----
+From: "Moritz Muehlenhoff" <jmm@...ian.org>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Sent: Monday, February 16, 2015 11:49:15 PM
+Subject: [oss-security] CVE request: spencer regexp
 
-The vulnerability can be used to manipulate existing SQL queries. An 
-attacker can obtain potentially sensitive data and use it to elevate 
-privileges within the application. It is also possible for certain 
-configurations to upload a backdoor and gain complete access to the 
-webserver or website.
+Hi,
+please assign a CVE ID for this:
 
-The vulnerability exists due to insufficient filtration of the 
-"MANTIS_MANAGE_USERS_COOKIE" HTTP COOKIE in "/manage_user_page.php" 
-script. A remote user with administrative privileges can inject and 
-execute arbitrary SQL code within the application’s database.
+http://www.kb.cert.org/vuls/id/695940
+https://guidovranken.wordpress.com/2015/02/04/full-disclosure-heap-overflow-in-h-spencers-regex-library-on-32-bit-systems/
 
-The exploit code below modifies the SQL query and injects malicious 
-"INTO OUTFILE" statement. As a result,current MySQL user login will be 
-written into the "/var/www/file.txt" file:
+This affects multiple source packages including local copies of the
+code. However, in many cases the code is only used when building for
+Android or Windows.
 
-GET /manage_user_page.php?hideinactive=0 HTTP/1.1
-Host: mantis
-Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
-Accept-Language: ru-RU,ru;q=0.8,en-US;q=0.5,en;q=0.3
-Accept-Encoding: gzip, deflate
-Cookie: 
-MANTIS_MANAGE_USERS_COOKIE=0%3Ausername%20INTO%20OUTFILE%20%27/var/www/file.txt%27%20--%20%3A1%3A0
-Connection: keep-alive
+Current WIP status for source packages in Debian:
+https://security-tracker.debian.org/tracker/TEMP-0778389-A8C6F9
 
-Successful exploitation requires that the MySQL account has FILE 
-privileges within the database.
-
-To exploit this vulnerability an attacker must create a specially 
-crafted cookie for the application administrator. This can be achieved 
-using XSS vulnerabilities
-
-
-Affected versions:
-- <= 1.2.19
-- <= 1.3.0-beta.1
-
-Fixed in versions:
-- 1.2.19 (not yet released)
-- 1.3.0-beta.2 (not yet released)
-
-Patch:
-See Github [1]
-
-Credit:
-This vulnerability was reported [2] by High-Tech Bridge Security 
-Research Lab (https://www.htbridge.com/), via advisory ID HTB23243 [3].
-The issue was fixed by Damien Regad (MantisBT Developer).
-
-References:
-Further details available in our issue tracker [4]
-
-[1] http://github.com/mantisbt/mantisbt/commit/69c2d28d (1.2.x)
-     http://github.com/mantisbt/mantisbt/commit/7cc4539f (1.3.x)
-[2] https://www.mantisbt.org/bugs/view.php?id=17937
-[3] https://www.htbridge.com/advisory/HTB23243
-[4] https://www.mantisbt.org/bugs/view.php?id=17940
-
-
+Cheers,
+        Moritz
