@@ -1,32 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/04/5
-Message-ID: <Pine.LNX.4.64.1501031908140.1923@beijing.mitre.org>
-Date: Sat, 3 Jan 2015 19:08:52 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/11/8
+Message-Id: <20150311171159.03DCA6C0002@smtpvmsrv1.mitre.org>
+Date: Wed, 11 Mar 2015 13:11:59 -0400 (EDT)
 From: cve-assign@...re.org
-To: Yury German <yury@...hnologysecure.com>
-cc: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: Re: mpg123 CVE Assignment?
+To: jmm@...ian.org, siddharth@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: spencer regexp
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> Did a CVE ever get assigned to mpg123 (Version 1.18.0) 
-> (http://mpg123.org/cgi-bin/news.cgi 
-> <http://mpg123.org/cgi-bin/news.cgi>). I have searched but can not find 
-> any, it is a regression bug, but I could not find any assigned to the 
-> original bug as well.
->
-> http://sourceforge.net/p/mpg123/bugs/201/
->
-> If none are assigned can we get one assigned?
->
-> === Text from Site ===
-> 2014-01-31 Thomas: mpg123 1.18.0 fixing regressions from 1.14.x
-> Regression fix: Ensure decoder reinitialization on combination of seek and resync (buffer overflow bug 201, introduced in 1.14.1).
+> http://www.kb.cert.org/vuls/id/695940
+> https://guidovranken.wordpress.com/2015/02/04/full-disclosure-heap-overflow-in-h-spencers-regex-library-on-32-bit-systems/
 
-Use CVE-2014-9497.
+http://openwall.com/lists/oss-security/2015/02/07/14 says "I have to
+admit we're having a hard time trying to think of a service that
+exposes regcomp(3) over the internet."
 
----
+http://openwall.com/lists/oss-security/2015/02/16/8 says "in many
+cases the code is only used when building for Android or Windows" and
+indirectly refers to multiple bugs such as:
 
-CVE assignment team, MITRE CVE Numbering Authority M/S M300
+  https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=778396
+  https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=778395
+
+For example:
+
+  Package: cups
+
+  The regex copy is only used when building on Windows. I double-checked
+  by removing the entire vcnet/regex directory and rebuilding cups.
+
+This is potentially ambiguous. We thought that "when building on
+Windows" would imply something like "if a user is following the steps
+in the CUPS INSTALL.txt file on a Windows machine, then that user is
+able to provide malicious input to the regcomp function during one of
+those steps." It now appears that what was meant was "The problematic
+regcomp function is present in a Windows build of CUPS. Any
+exploitation could occur only after the build has finished."
+
+In general, when one oss-security post suggests that an issue may not
+be realistically exploitable with untrusted input (e.g., "having a
+hard time trying to think of a service" above), and no other
+oss-security post suggests that the issue is realistically
+exploitable, then there might not be a CVE assignment.
+
+Here, we'll propose an exploitation scenario for comment. We think
+that this is (at least marginally) realistic, although it might not
+be. Unless there's an objection stating that no realistic exploitation
+scenario can exist, we'll assign a CVE ID for the original regcomp bug
+this week.
+
+Example:
+
+  Someone develops a new email filtering language as an alternative
+  to Sieve (RFC 5228). Like Sieve, the language's scripts are
+  intended to run on a mail server that does not permit arbitrary
+  code execution by ordinary mailbox owners. In the new language,
+  the match type of ":matches" is implemented with regcomp.
+  There is no limit on script size, and thus the 682 Mb requirement
+  from the regcomp bug report isn't a concern. It is plausible that
+  an ordinary mailbox owner can create a script that triggers the
+  bug and achieves remote code execution on the mail server.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
 202 Burlington Road, Bedford, MA 01730 USA
 [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJVAHbeAAoJEKllVAevmvmsucwIAJBGMGBHsZg1oKSFhEn2wCJ7
+el1LhsIHmAk0R4rQ1E5IAQFgfNvZ5dA0lagHA7V3prYCM5rgtgGzPTA6SE0Bljl7
+rTCcxZKxs9jXJKnQsV566sdqUcN86WX8ZKp/IqBLxMa9uufi+fbdDeSYGU5R4rF4
+JvrLoRWokvdwkOxB+M4mykKKeEV0+52hBmmC/xxUdVJPdwgTEvL+SL93q8XQlZNN
+BKaFoF6sczCxwWo50u/87qUY44hkwTonHIw6ABWELPH6f0+pgG6T5vlbYS1HVPfn
+XcY6Sz4iyYmtt5AElhwRHaMVuG9EYuHtILPz+Fd5H84ePf18LYe+VQAzZl4S3Jk=
+=7w/F
+-----END PGP SIGNATURE-----
