@@ -1,54 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/18/2
-Message-ID: <54BC0B0E.2000409@amacapital.net>
-Date: Sun, 18 Jan 2015 11:35:42 -0800
-From: Andy Lutomirski <luto@...capital.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/11/6
+Message-ID: <55006D13.4040002@redhat.com>
+Date: Wed, 11 Mar 2015 10:28:03 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: PIE bypass using VDSO ASLR weakness - Linux kernel
+Subject: Re: Another Python app (rhn-setup: rhnreg_ks) not checking hostnames in certs properly CVE-2015-1777
 Content-Type: text/plain; charset=utf-8
 
-On 01/09/2015 08:18 AM,
-cve-assign-AZamIotjMK3YtjvyW6yDsg@...lic.gmane.org wrote:
->>> Given that ASLR is not effective in VDSO and comes down to 11 quality bits
->>> as per pax test making return-to-vdso feasible even for PIE binary, whether
->>> this should be considered as a bug and CVE be assigned?
-> 
->> Yes, we can proceed to CVE assignment. The more recent discussion
->> hasn't been on oss-security with, for example:
-> 
->>    https://git.kernel.org/cgit/linux/kernel/git/luto/linux.git/commit/?h=x86/vdso&id=bc3b94c31d65e761ddfe150d02932c65971b74e2
->>    http://marc.info/?l=linux-kernel&m=141911002822659&w=2
-> 
->> This apparently mentions both the original discovery:
-> 
->>    The current algorithm is buggy: the vdso has about a 50%
->>    probability of being at the very end of a PMD.
-> 
-> Use CVE-2014-9585 for this vulnerability, which corresponds to a
-> portion of the above bc3b94c31d65e761ddfe150d02932c65971b74e2 patch.
-> 
-> (not yet available at
-> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/log/arch/x86/vdso/vma.c)
-> 
->> and a second discovery that was made separately:
-> 
->>    The current algorithm also has a decent chance of failing outright
->>    due to incorrect handling of the case where the top of the stack is
->>    near the top of its PMD.
-> 
->> Here, our question, for anyone, is: is there a security impact from
->> the "failing outright" outcome? Or is there only a performance impact
->> (e.g., any correctly written application will continue to work, but
->> will not benefit from any vDSO functionality)?
-> 
-> We haven't seen any responses. There is currently no CVE ID for this
-> "incorrect handling of the case where the top of the stack is near the
-> top of its PMD" issue. This incorrect-handling issue is not within the
-> scope of CVE-2014-9585.
+On 03/11/2015 10:18 AM, John Haxby wrote:
+> I think there's a misunderstanding here.  I was asking for cooperation
+> to come up with a solution, participating with other people who, like,
+> I assumed, Red Hat, have an interest in solving this specific problem
+> without breaking existing (admitedly flawed) applications.  I know it's
+>  not straightforward, if it was I'd've just produced a patch.  I'm still
+> happy to work with anyone to sort this out.
 
-The "failing outright" case causes the vdso randomization process to
-fail, resulting in the vdso being mapped at the top of mmap space.
-Given that the mmap space is itself usually randomized, this seems
-unlikely to be a security issue.
+Me too. But I trust Nick and he's smart. I don't stick my finger into
+every security pie because 1) I'm not an expert in all things and 2) I
+have a finite life span and need to sleep.
 
---Andy
+So again my advice is: work with upstream/the community. You don't need
+my input yet. Nick has spent far, far, far more time thinking about how
+to fix Python/SSL/TLS then I ever will. Once you have a definitive
+solution that you are pretty sure works, then please, by all means poke me.
+
+> 
+> [snip]
+> 
+>> I am actually working on something that will hopefully provide a
+>> better solution (for values of speed and ease of fixing flaws) than
+>> a traditional audit/code fix, (I'd rather address entire classes
+>> of security flaw rather than one instance of the flaw at a time).
+>> But like all things security infinite workload delays specific
+>> projects.
+> 
+> If this fixes the specific problem as a side effect that would be
+> great.  Details are lacking though, and there's no obvious link here
+> to making adapting PEP-466 for backwards compatibility (and I have
+> absolutely no arguments with the rejected solutions for Python).
+
+This is a different project and related to web interfaces (which are a
+growing pain point security wise).
+
+> 
+> This is my last message on the list on the subject.
+> 
+> jch
+> 
+
+-- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
