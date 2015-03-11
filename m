@@ -1,73 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/13/11
-Message-ID: <CALH-=7wYB-5XpRKoDH4i7VQ3u09nTDFPZ_DzPnD-xSYHsZ_8CA@mail.gmail.com>
-Date: Fri, 13 Feb 2015 17:06:12 +0100
-From: Steffen Rösemann <steffen.roesemann1986@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/11/7
+Message-Id: <5E84AA9B-F5E5-45B4-9936-59251A3B08C2@stufft.io>
+Date: Wed, 11 Mar 2015 12:37:17 -0400
+From: Donald Stufft <donald@...fft.io>
 To: oss-security@...ts.openwall.com
-Subject: CVE-Request -- Landsknecht Adminsystems v.4.0.1 (DEV, beta version) -- Reflecting XSS, unrestricted file-upload and underlaying CSRF
+Subject: Re: Another Python app (rhn-setup: rhnreg_ks) not checking hostnames in certs properly CVE-2015-1777
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve, Josh, vendors, list.
 
-I found reflecting XSS-vulnerabilities, a unrestricted file-upload and
-underlaying CSRF-vulnerabilities in CMS Landsknecht Adminsystems v. 4.0.1
-(DEV, beta version).
+> On Mar 11, 2015, at 12:28 PM, Kurt Seifried <kseifried@...hat.com> wrote:
+> 
+> On 03/11/2015 10:18 AM, John Haxby wrote:
+>> I think there's a misunderstanding here.  I was asking for cooperation
+>> to come up with a solution, participating with other people who, like,
+>> I assumed, Red Hat, have an interest in solving this specific problem
+>> without breaking existing (admitedly flawed) applications.  I know it's
+>> not straightforward, if it was I'd've just produced a patch.  I'm still
+>> happy to work with anyone to sort this out.
+> 
+> Me too. But I trust Nick and he's smart. I don't stick my finger into
+> every security pie because 1) I'm not an expert in all things and 2) I
+> have a finite life span and need to sleep.
+> 
+> So again my advice is: work with upstream/the community. You don't need
+> my input yet. Nick has spent far, far, far more time thinking about how
+> to fix Python/SSL/TLS then I ever will. Once you have a definitive
+> solution that you are pretty sure works, then please, by all means poke me.
+> 
+>> 
+>> [snip]
+>> 
+>>> I am actually working on something that will hopefully provide a
+>>> better solution (for values of speed and ease of fixing flaws) than
+>>> a traditional audit/code fix, (I'd rather address entire classes
+>>> of security flaw rather than one instance of the flaw at a time).
+>>> But like all things security infinite workload delays specific
+>>> projects.
+>> 
+>> If this fixes the specific problem as a side effect that would be
+>> great.  Details are lacking though, and there's no obvious link here
+>> to making adapting PEP-466 for backwards compatibility (and I have
+>> absolutely no arguments with the rejected solutions for Python).
+> 
+> This is a different project and related to web interfaces (which are a
+> growing pain point security wise).
+> 
+>> 
+>> This is my last message on the list on the subject.
+>> 
+>> jch
+>> 
+> 
+> --
+> Kurt Seifried -- Red Hat -- Product Security -- Cloud
+> PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-Technical details:
+If you want opt in better security, a little bit of monkey patching and
+a module on PyPI would fix that. The reason PEP 466 rejected something on
+PyPI is because it was opt in and we didn’t consider opt in to be a good
+enough fix for upstream Python.
 
-=======================
-Reflecting XSS-vulnerabilities
-=======================
-
-A reflecting XSS vulnerability can be found in the index.php and can be
-abused via the vulnerable "page"-parameter. See the following example,
-including exploit-example:
-
-http://
-{TARGET}/index.php?page=home%22%3E%3Cscript%3Ealert%28document.cookie%29%3C/script%3E&lang=de%27
-
-Another reflecting XSS vulnerability can be found in the system.php-file
-and can be exploited via the vulnerable "id" parameter:
-
-http://
-{TARGET}/asys/site/system.php?action=users_users&mode=edit&id=1%22%3E%3Cscript%3Ealert%281%29%3C/script%3E
-
-==================================
-Unrestricted file-upload / Underlaying CSRF
-==================================
-
-Registered users and administrators are able to upload arbitrary files via
-the following upload-form, located here:
-
-http://{TARGET}/asys/site/files.php?action=upload&path=/
-
-As there seems not be an existing permission-model, users can read/execute
-files  an administrator/user uploaded and vice versa.
-
-This issue includes an underlaying CSRF-vulnerability, as a user is able to
-upload a malicious file and trick another user or the administrator into
-visiting the link to the file.
-
-All files get uploaded here without being renamed:
-
-http://{TARGET}/upload/files/{UPLOADED_FILE}
+---
+Donald Stufft
+PGP: 7C6B 7C5D 5E2B 6356 A926 F04F 6E3C BCE9 3372 DCFA
 
 
-Can I please have a CVE-ID / CVE-IDs for this issue?
-
-Thank you very much.
-
-Greetings from Germany.
-
-Steffen Rösemann
-
-References:
-
-[1] https://github.com/kneecht/adminsystems
-[2] http://sroesemann.blogspot.de/2015/01/sroeadv-2015-14.html
-[3] https://github.com/kneecht/adminsystems/issues/1
-[4] https://github.com/sroesemann/adminsystems
-[5]
-http://sroesemann.blogspot.de/2015/02/report-for-advisory-sroeadv-2015-14.html
-[6] http://seclists.org/fulldisclosure/2015/Feb/50
-
+Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
