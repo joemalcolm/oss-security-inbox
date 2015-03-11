@@ -1,32 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/13/1
-Message-ID: <20150213070505.GC23507@oevtugenva.nrevsny.pk>
-Date: Fri, 13 Feb 2015 02:05:05 -0500
-From: Rich Felker <dalias@...c.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/11/2
+Message-ID: <1540854589.19728500.1426070730837.JavaMail.zimbra@redhat.com>
+Date: Wed, 11 Mar 2015 06:45:30 -0400 (EDT)
+From: Francisco Alonso <falonsoe@...hat.com>
 To: oss-security@...ts.openwall.com
 Cc: cve-assign@...re.org
-Subject: Re: Re: CVE request: sudo TZ issue
+Subject: Re: CVE Request: PHP 5.6.6 changelog
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Feb 11, 2015 at 10:20:03AM -0700, Todd C. Miller wrote:
-> > Depending on how other code is written, a TZ value could still be
-> > malicious even if it doesn't satisfy the definition of "unsafe" that
-> > you included. Should there be other CVEs for sudo if any such code is
-> > identified?
+Hi again,
+
+Please as upstream has not flagged these bugs as security. Just ask if the CVE identifiers have been requested before (It is not necessary to assign them yet).
+
+Thank you.
+
+Francisco Alonso / Red Hat Product Security
+PGP: 0xA026440E 0825 020C 7A5A 4F86 9038  B1C8 5562 688F A026 440E
+
+----- Original Message -----
+> From: "Francisco Alonso" <falonsoe@...hat.com>
+> To: oss-security@...ts.openwall.com
+> Cc: cve-assign@...re.org
+> Sent: Tuesday, March 10, 2015 10:16:26 AM
+> Subject: CVE Request: PHP 5.6.6 changelog
 > 
-> There are really two issues here: exposure of TZ parsing bugs and
-> access to arbitrary (potentially user-controlled) files.  I'm happy
-> to put the blame for TZ parsing bugs on libc or the application.
-> However, there is no real way for the application to tell that it
-> is being run by an unpriviliged user and that operations that would
-> otherwise be safe (opening a user-specified time zone file) may be
-> dangerous.
-
-Why does sudo run the target program with both effective and real ids
-set to root? Why not run with only the effective uid set to root? Then
-the program would know that it's being run by an unprivileged user
-with elevated privileges (and its libc would restrict or ignore
-environment variables for internal libc use). Does such invocation
-break too many programs?
-
-Rich
+> Hi,
+> 
+> Could a CVE be please assigned to the following issues? [3] (in case it was
+> not requested to MITRE before):
+> 
+> [1] PHP: heap buffer overflow in enchant_broker_request_dict() :
+> https://bugs.php.net/bug.php?id=68552
+> http://svn.php.net/viewvc/pecl/enchant/trunk/enchant.c?r1=317600&r2=335803
+> https://bugzilla.redhat.com/show_bug.cgi?id=1194737
+> 
+> 
+> [2] PHP: Double free with disabled ZMM:
+> https://bugs.php.net/bug.php?id=68827
+> http://git.php.net/?p=php-src.git;a=commit;h=91aa340180eccfc15d4a143b54d47b8120f898be
+> https://bugzilla.redhat.com/show_bug.cgi?id=1194741
+> 
+> 
+> [3] PHP: use after free in phar_object.c
+> https://bugs.php.net/bug.php?id=68901
+> http://git.php.net/?p=php-src.git;a=commit;h=b2cf3f064b8f5efef89bb084521b61318c71781b
+> https://bugzilla.redhat.com/show_bug.cgi?id=1194747
+> 
+> 
+> Thank you
+> 
+> Francisco Alonso / Red Hat Product Security
+> PGP: 0xA026440E 0825 020C 7A5A 4F86 9038  B1C8 5562 688F A026 440E
+> 
