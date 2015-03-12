@@ -1,34 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/23/10
-Message-ID: <20150223092740.GA19399@videolan.org>
-Date: Mon, 23 Feb 2015 10:27:40 +0100
-From: Jean-Baptiste Kempf <jb@...eolan.org>
-To: Florian Weimer <fweimer@...hat.com>
-Cc: oss-security@...ts.openwall.com, Assign a CVE Identifier <cve-assign@...re.org>, VideoLAN Security Team <security@...eolan.org>
-Subject: Re: CVE request: BD-J implementation in libbluray
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/12/14
+Message-Id: <20150312213758.C6F7972E115@smtpvbsrv1.mitre.org>
+Date: Thu, 12 Mar 2015 17:37:58 -0400 (EDT)
+From: cve-assign@...re.org
+To: fweimer@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: glibc scanf implementation crashes on certain inputs
 Content-Type: text/plain; charset=utf-8
 
-On 23 Feb, Florian Weimer wrote :
-> Missing Java Security Manager sandboxing mechanism / feature in the
-> org.videolan.BDJLoader class
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-The code corresponding to:
-https://bugzilla.redhat.com/show_bug.cgi?id=959433
+> https://sourceware.org/bugzilla/show_bug.cgi?id=13138
+> 
+> causes scanf and related functions to crash when processing certain
+> inputs. This happens with the numeric conversions (%d, %f and others),
+> and includes valid numbers (ISO C allows crashes or worse on invalid
+> inputs, but glibc is buggy even by this standard).
+>
+> The first glibc version which received the fix for this bug is 2.15.
 
-is gone from newer release. You should upgrade, since we don't support
-old releases.
+Use CVE-2011-5320 for the
+https://sourceware.org/bugzilla/show_bug.cgi?id=13138#c4 issue, i.e.,
+the "huge string of zeros" attack vector.
 
+The scope of this CVE does not include the original "5"x21000000 input
+string for a %i argument. As far as we can tell, Bug 13138 doesn't
+resolve the question of whether a crash is a permitted behavior for
+that input. It seems that the relevant standards perhaps should have
+specified that that results in an ERANGE error without a crash, but
+the published wordings are not precise enough to determine whether
+unexpected "5"x21000000 handling is a vulnerability.
 
-As for https://bugzilla.redhat.com/show_bug.cgi?id=959434
+Similarly, the scope of this CVE certainly does not include "string
+conversions that overflow the destination buffer" in the
+https://sourceware.org/bugzilla/show_bug.cgi?id=13138#c3 comment. In
+that case, undefined behavior is the documented outcome, so we feel
+that there isn't a vulnerability.
 
-"Fixing it would not change anything. Xlet (that requests the mount, or is
-being executed from the mount) could as well uncompress the files by self
-where it wants, even download other files from internet."
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-So, maybe you want to have a full Xlet sandboxing? Or is it something
-else?
-
--- 
-Jean-Baptiste Kempf
-http://www.jbkempf.com/ - +33 672 704 734
-Sent from my Electronic Device
+iQEcBAEBAgAGBQJVAgZmAAoJEKllVAevmvms/84H/0tjViMSuEM83gujKzVjRAB0
+ulmErPQSY5BmgSux5DeLA2SQiYLEkX/0wpacjwytuHa2R6PBEWEJEj6PpRw6zUpQ
+/FOGwUeekpL6gmanOb8jRETDvyFXaDYqlwkRf/+UbUzEqKccRoM6lcV6asscafQL
+WIeo/tsz54lsXiUudHS8ZVIrCbO+BVOEKHGZ5RTlBm9cGryllf7fcnDgp6IkahHZ
+2+nOAAtUq8gur0j/4HBDAoseUH+fvRkEJfC52wSrJAefV4SMF9JDrTqssnYgux1F
+xeQs0AZDDr2iGS5bkaxc2PZ14UcASex+mrYp6I0c7klvMcwDuWWQRZc3qTLJBPY=
+=RpzJ
+-----END PGP SIGNATURE-----
