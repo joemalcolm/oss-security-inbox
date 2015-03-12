@@ -1,71 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/27/17
-Message-ID: <Pine.LNX.4.64.1501271310560.11165@beijing.mitre.org>
-Date: Tue, 27 Jan 2015 13:14:04 -0500 (EST)
-From: cve-assign@...re.org
-To: Sebastian Pipping <sebastian@...ping.org>
-cc: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: Re: CVE or not: 2x grml-debootstrap
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/12/2
+Message-ID: <5500E32F.80006@internot.info>
+Date: Thu, 12 Mar 2015 11:51:59 +1100
+From: Joshua Rogers <oss@...ernot.info>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: CVE Request: PHP 5.6.6 changelog
 Content-Type: text/plain; charset=utf-8
 
+Reporter here of 2 bugs.
 
 
-> I recently ran into two bugs in grml-debootstrap, documented in detail
-> at the following GitHub issues.
->
->
-> 1) For the first
->
->  Issues with sourcing cmdlineopts.clp from current working directory
->  https://github.com/grml/grml-debootstrap/issues/59
->
-> I am rather clear about exploitability.
-> Please review the proposed approach for a fix.
-
-Use CVE-2015-1378.
-
->
-> 2) For the second
->
->  Lack of user input escaping / use of $!`"\ in passwords
->  https://github.com/grml/grml-debootstrap/issues/58
->
-> I still wonder about realistic exploitation scenarios.  Since the tool
-> is usually executed by root or using sudo, input from a non-root user
-> would need to make its way into the command line, unfiltered or filtered
-> insufficiently.
-
-A CVE will not be assigned at this time.
-
->  It could either be a service like
->
->  live-build
->  http://cgi.build.live-systems.org/cgi-bin/live-build
->
-> (they don't call grml-debootstrap, if the code is [2])
-> or a sudoers config like
->
->  user23 ALL=(ALL) NOPASSWD: /usr/sbin/grml-debootstrap \
->    --password * .....
->
-> though I am note sure how much of a likely setup that is.
->
-> Other ideas on scenarios?
-> Also, please review my proposal on escaping.
->
-> Thanks and best,
->
->
->
-> Sebastian
->
->
-> [1] https://github.com/grml/grml-debootstrap
-> [2] https://packages.debian.org/de/wheezy/live-build
+On 11/03/15 21:45, Francisco Alonso wrote:
+> > [2] PHP: Double free with disabled ZMM:
+> > https://bugs.php.net/bug.php?id=68827
+> > http://git.php.net/?p=php-src.git;a=commit;h=91aa340180eccfc15d4a143b54d47b8120f898be
+> > https://bugzilla.redhat.com/show_bug.cgi?id=1194741
+> > 
+Not a security vuln.
 
 
----
+> [3] PHP: use after free in phar_object.c
+> https://bugs.php.net/bug.php?id=68901
+> http://git.php.net/?p=php-src.git;a=commit;h=b2cf3f064b8f5efef89bb084521b61318c71781b
+> https://bugzilla.redhat.com/show_bug.cgi?id=1194747
+I'm going to be honest: I can't remember why I didn't get a CVE assigned
+for this.
 
-CVE assignment team, MITRE CVE Numbering Authority M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+
+Thanks,
+-- 
+-- Joshua Rogers <https://internot.info/>
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
