@@ -1,30 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/22/3
-Message-ID: <54E97D41.40601@redhat.com>
-Date: Sat, 21 Feb 2015 23:54:57 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Assign a CVE Identifier <cve-assign@...re.org>, jvn@....jp, squid3@...enet.co.nz
-Subject: Re: CVE-2015-0881
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/12/13
+Message-Id: <20150312202911.2627A3AE1F9@smtpvbsrv1.mitre.org>
+Date: Thu, 12 Mar 2015 16:29:11 -0400 (EDT)
+From: cve-assign@...re.org
+To: vkaigoro@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: novnc: session hijack through insecurely set session token cookies
 Content-Type: text/plain; charset=utf-8
 
-On 21/02/15 11:28 PM, C Peters wrote:
-> Amos Jeffries <squid3@...enet.co.nz> sent out the most recent
-> announcements.
-> http://lists.squid-cache.org/pipermail/squid-announce/2015-February/000012.html
-> ​
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+> noVNC prior to this patch:
+> https://github.com/kanaka/noVNC/commit/ad941faddead705cd611921730054767a0b32dcd
+> allows an attacker to steal insecurely set session token cookies,
+> hijacking active or inactive VNC sessions.
 > 
-> Hope it helps,
-> Chuck
+> https://bugzilla.redhat.com/show_bug.cgi?id=1193451
 
-It doesn't. I am talking about an issue fixed (reportedly) in 3.1.10,
-over 4 years ago but only reported last month. Adding to CC. If anyone
-has any information on this I would really appreciate it.
+> Adds support for secure attribute on token cookie
 
+> This patch adds support for the secure attribute on token
+> cookies (sent by nova-novncproxy). If the https is used
+> to transfer the cookie, the secure attribute is set thus
+> restricting server requestes to secure conections only.
+> This should prevent man-in-the-middle attacks.
 
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Use CVE-2013-7436. The "If the https is used to transfer the cookie"
+text in the commit seems somewhat confusing. As far as we can tell,
+the new code does not mean that the server looks for cookie
+transmission over https and then decides to use the secure attribute.
+Instead, the new code seems to have the "normal" behavior in which the
+server sets the secure attribute upon any use of an https session by
+the client.
 
+In other words, there isn't an incomplete fix in which the first
+cookie transmission over https lacks the secure attribute.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJVAfXlAAoJEKllVAevmvmspnYH/j1lH1Nm/160CaQWIPg3jWi0
+I2pBb6ITCQ53UNLnXOAHWjPbDBNtjJbznVzU9wXH3x+B1Ty3RSBrnQ8UdKXJQ908
+224P3JYl+BfRrNQh2p4Ds600THZijh5KC6ojk293Y5nN1Z3s6d4FvZVTosaRd+nf
+auK+aOzik32xo8gSRo296ktz0tEa7mdMx7484Zau6jubYhzBKq9mNTz96Fx9nNz0
+GX2m/7zId/PvoMSfH96QbhXOePPU4PJJIH58KXUQeWqCQM3rRuMsXNoIfg9eRsLW
+ki/dPQZidUWwYlSy0OwqFAUUfjX0gnGOSSdxGXUSuUXBQDKamvsLL09Xz+EoeGo=
+=rp9s
+-----END PGP SIGNATURE-----
