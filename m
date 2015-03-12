@@ -1,45 +1,94 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/15/7
-Message-ID: <Pine.LNX.4.64.1503151411050.4127@beijing.mitre.org>
-Date: Sun, 15 Mar 2015 14:11:39 -0400 (EDT)
-From: cve-assign@...re.org
-To: Moritz Mühlenhoff <jmm@...til.org>
-cc: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: Re: CVE Request: libarchive -- directory traversal in bsdcpio
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/12/1
+Message-ID: <5500D8D9.1020405@redhat.com>
+Date: Wed, 11 Mar 2015 18:07:53 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Another Python app (rhn-setup: rhnreg_ks) not checking hostnames in certs properly CVE-2015-1777
 Content-Type: text/plain; charset=utf-8
 
+On 03/11/2015 05:44 PM, Michael Samuel wrote:
+> On 12 March 2015 at 02:48, Kurt Seifried <kseifried@...hat.com> wrote:
+> 
+>> Much like /tmp issues the solution that will save us is not to fix every
+>> /tmp issue but rather do more intelligent things like poly instantiated
+>> tmp or systemd per process tmp. Sadly I don't see such an easy
+>> possibility with TLS/SSL, but if we have a decent test
+>> framework/reproduction ability it will make finding, fixing and
+>> verifying these things a whole lot easier long term.
+> 
+> You can test for the common bugs extremely easily - you need two types of
+> bogus certificate installed on the server:
+> - A completely untrusted (eg. self-signed) certificate
+> - A certificate signed by a trusted authority but for the wrong hostname
 
-On Thu, 5 Mar 2015, Moritz Mühlenhoff wrote:
+If only it were so simple. Seriously, life would be awesome.
 
-> On Sun, Feb 22, 2015 at 08:01:10PM +0100, Moritz Muehlenhoff wrote:
->> On Fri, Jan 16, 2015 at 06:19:21AM +0300, Alexander Cherepanov wrote:
->>> Hi!
->>>
->>> bsdcpio tool from libarchive bundle is susceptible to a directory traversal
->>> vulnerability via absolute paths.
->>>
->>> Initial discussion:
->>> http://www.openwall.com/lists/oss-security/2015/01/07/5
->>>
->>> Upstream report:
->>> https://groups.google.com/d/msg/libarchive-discuss/dN9y1VvE1Qk/Z9uerigjQn0J
->>>
->>> My proposed (minimal) fix (non-Windows):
->>> https://groups.google.com/group/libarchive-discuss/attach/a78932ecb50340ae/0001-Quick-n-dirty-fix-for-bsdcpio-directory-traversal-vu.patch?part=0.1
->>>
->>> Discussion is ongoing.
->>>
->>> Could CVE(s) please be assigned?
->>
->> This seems to have fallen through the cracks, explicitly adding cve-assign
->> to CC.
->
-> Now released as DSA 3180.
+What about expired certificates?
+What about certificates that are properly signed but not yet valid?
+What about a certificate signed for the correct hostname by a system
+trusted CA? (some apps are supposed to only trust a specific CA).
 
-Use CVE-2015-2304.
+These are all very common issues.
 
----
+But those would never happen right?
+http://www.cve.mitre.org/cgi-bin/cvekey.cgi?keyword=expired+certificate
 
-CVE assignment team, MITRE CVE Numbering Authority M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+But we're also dealing with bad guys right? If we assume they can man in
+the middle we have to assume they are at least semi competent (e.g. they
+know how to run Tapioca or nogotofail).
+
+So what about mangled certs that make the system go all wibbly wobbly?
+
+That never happens right?
+http://www.cve.mitre.org/cgi-bin/cvekey.cgi?keyword=invalid+certificate
+
+And then on the more complicated/operational side:
+
+What about intermediate certificate issues/chains/etc?
+What about weak protocols?
+What about weak ciphers?
+What about weak keys?
+What about specifically bad keys (https://wiki.debian.org/SSLkeys)?
+What about overly broad certs used by interceptors (like *.com, *.*)
+What about checking certificate constraints?
+
+http://www.cve.mitre.org/cgi-bin/cvekey.cgi?keyword=intermediate+certificate
+http://www.cve.mitre.org/cgi-bin/cvekey.cgi?keyword=certificate+constraints
+
+FREAK, etc.
+
+And those are just off the top of my head. There's a whole deep rabbit
+hole full of angry ... things. I don't know because I don't want to
+stick my head into it.
+
+Also we'll conveniently ignore the CA issues. Diginotar et al.
+
+Properly testing this even to a half hearted degree is very non trivial.
+
+And if you talk to people that actually know SSL/TLS (I just pretend to
+understand it) ... well if you've ever seen a train wreck in slow motion
+you know what it's like.
+
+> It's not too hard to test SSH connections in a similar manner (just regen the
+> ssh host keys after the first connection).
+
+Again if only it were so simple.
+http://www.cve.mitre.org/cgi-bin/cvekey.cgi?keyword=ssh+key
+
+> Alternatively, you could make your OpenSSL modules for various languages
+> return client ctxs that verify by default - the topic of this discussion :)
+
+Yeah, the problem is API/ABI compatibility. Again, Red Hat has to
+support software we have never seen, and will never see.
+
+> Regards,
+>   Michael
+> 
+
+-- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
