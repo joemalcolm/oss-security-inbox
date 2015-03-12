@@ -1,35 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/12/10
-Message-ID: <20150312164454.GD9830@mail.corp.redhat.com>
-Date: Thu, 12 Mar 2015 17:44:54 +0100
-From: Vasyl Kaigorodov <vkaigoro@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/12/5
+Message-ID: <CACYkhxiWLMMLdGmdLpvPdU7CKvhvQChcYY8HNrh5hNhN+hHgtA@mail.gmail.com>
+Date: Thu, 12 Mar 2015 16:41:19 +1100
+From: Michael Samuel <mik@...net.net>
 To: oss-security@...ts.openwall.com
-Cc: 774769@...s.debian.org
-Subject: CVE request: lftp saves unknown host's fingerprint in known_hosts without any prompt
+Subject: Re: Another Python app (rhn-setup: rhnreg_ks) not checking hostnames in certs properly CVE-2015-1777
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On 12 March 2015 at 15:43, Kurt Seifried <kseifried@...hat.com> wrote:
+> If your SSL/TLS implementation accepts expired certs as being ok, then
+> you have a problem.
 
-I did not see a CVE request for this yet - so here we go:
+Sure thing, test for it then if you like.  Just install an expired
+cert on a test
+server and connect.  But if I logged it against a RedHat product, I'd put it
+as a bug, not security issue.
 
-While connecting to an unknown host, lftp silently accepts it's
-fingerprint and adds it to the known_hosts file.
-This makes MitM attack possible.
+>>> What about a certificate signed for the correct hostname by a system
+>>> trusted CA? (some apps are supposed to only trust a specific CA).
+>>
+>> That's a policy bug too, not an easily exploitable security bug
+>> (unless one of your
+>> system CAs is compromised).  Does RedHat actually ship anything that
+>> does pinning?
+>
+> That's a real world bug. Logic error "trust properly signed cert" vs.
+> "trust specific CA signed cert".
 
-Upstream report...
-https://github.com/lavv17/lftp/issues/116
-...and the fix:
-https://github.com/lavv17/lftp/commit/bc7b476e782d77839765f56bbdb4cee9f36b54ec
+Ok, but if somebody's implemented this feature they've gone well beying
+the point of not verifying certificates at all, which is what pretty much every
+program I tested that ships with RHEL did until I logged bugs against them.
 
-References:
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=774769
-https://bugzilla.redhat.com/show_bug.cgi?id=1180209
+Apache still doesn't validate certificates for backend connections in RHEL
+(mod_proxy).
 
-Can a CVE be assigned to this please?
+> Uhm. Did you not look at any of the cve.mitre.org links I sent? These
+> are incredibly common failures. Hint: if some class of bug has a bunch
+> of CVE's you can multiply it by 100 or more for the number of affected
+> real world cases (and that's in English software alone).
 
-Thanks.
--- 
-Vasyl Kaigorodov | Red Hat Product Security
-PGP:  0xABB6E828 A7E0 87FF 5AB5 48EB 47D0 2868 217B F9FC ABB6 E828
+If you think they're common, ask your dev teams test for them before
+shipping.
 
-Content of type "application/pgp-signature" skipped
+> Anyways I think we're sufficiently off topic now.
+
+I think this is an important discussion to have, and I don't think we're at all
+off topic (for the list or thread).  I know TLS is hard, but we don't have to
+default to snake-oil bad.
+
+Regards,
+  Michael
