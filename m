@@ -1,47 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/09/8
-Message-ID: <54FE050A.5080901@redhat.com>
-Date: Mon, 09 Mar 2015 14:39:38 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/12/10
+Message-ID: <20150312164454.GD9830@mail.corp.redhat.com>
+Date: Thu, 12 Mar 2015 17:44:54 +0100
+From: Vasyl Kaigorodov <vkaigoro@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Another Python app (rhn-setup: rhnreg_ks) not checking hostnames in certs properly CVE-2015-1777
+Cc: 774769@...s.debian.org
+Subject: CVE request: lftp saves unknown host's fingerprint in known_hosts without any prompt
 Content-Type: text/plain; charset=utf-8
 
-On 09/03/15 12:52 PM, John Haxby wrote:
-> 
->> On 9 Mar 2015, at 16:47, Kurt Seifried <kseifried@...hat.com> wrote:
->>
->> If vendors want features in their rebranded RHEL they can add them. I
->> have no clue why you would need broad agreement from the community
->> including Red Hat to add a feature to Oracle Linux.
-> 
-> On the other hand, if two loosely compatible vendors want the same feature it makes sense to have the feature implemented in the same way.
-> 
-> For this python certificate validation, we could have as many different mechanisms as there are distros and chaos would rule.   Even worse, you might pick the mechanism from the wrong distro and it has no effect and we (people on this list) would be guilty of weakening security by confusion.
-> 
-> It’s not a question of lack of talent: all the distro vendors have talented people who can fix problems, it’s a question of doing the best by our joint customer base.
-> 
-> Does that make sense?
-> 
-> jch
-> 
+Hello,
 
-I find this really hard to believe based on the past. So you're saying
-Oracle is willing to work with Red Hat and the community in general now?
-Can we get access to the MySQL security bugs and test cases for example?
-This would be HUGELY helpful to the community.
+I did not see a CVE request for this yet - so here we go:
 
-I'll believe Oracle is willing to work with the community when I
-actually see Oracle participate and help the community. Until then it's
-just words from some random Oracle employee and most likely isn't
-official policy.
+While connecting to an unknown host, lftp silently accepts it's
+fingerprint and adds it to the known_hosts file.
+This makes MitM attack possible.
 
-So prove to us you want to work with us (e.g. by opening up the MySQL
-security bugs/test cases) and we can definitely look at future cooperation.
+Upstream report...
+https://github.com/lavv17/lftp/issues/116
+...and the fix:
+https://github.com/lavv17/lftp/commit/bc7b476e782d77839765f56bbdb4cee9f36b54ec
 
+References:
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=774769
+https://bugzilla.redhat.com/show_bug.cgi?id=1180209
+
+Can a CVE be assigned to this please?
+
+Thanks.
 -- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Vasyl Kaigorodov | Red Hat Product Security
+PGP:  0xABB6E828 A7E0 87FF 5AB5 48EB 47D0 2868 217B F9FC ABB6 E828
 
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Content of type "application/pgp-signature" skipped
