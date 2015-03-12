@@ -1,67 +1,115 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/24/11
-Message-id: <22B480B3-9777-4DCB-8334-CD7AD31862F3@me.com>
-Date: Sat, 24 Jan 2015 15:05:26 -0500
-From: "Larry W. Cashdollar" <larry0@...com>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: SEANux 1.0 remote back door
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/12/8
+Message-ID: <616418941.1711750.1426170192030.JavaMail.zimbra@redhat.com>
+Date: Thu, 12 Mar 2015 10:23:12 -0400 (EDT)
+From: Siddharth Sharma <siddharth@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: jmm@...ian.org, cve-assign@...re.org
+Subject: Re: Re: CVE request: spencer regexp
 Content-Type: text/plain; charset=utf-8
 
-Hello All,
-I thought you might be interested in this from by blog with screen shots http://www.vapid.dhs.org/blog/01-23-2015/ :
+Hi,
 
-SEANux 1.0 backdoor
+One more thing is that to trigger that any application have to be bad 
+enough to parse unsanitized regex. I think that sense it depends on how
+the application is written. 
 
-Larry W. Cashdollar
-1/23/2015
+-----------------------------------------------------------------
+Siddharth Sharma / Red Hat Product Security
 
+----- Original Message -----
+From: "Siddharth Sharma" <siddharth@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: jmm@...ian.org, cve-assign@...re.org
+Sent: Thursday, March 12, 2015 7:48:47 PM
+Subject: Re: [oss-security] Re: CVE request: spencer regexp
 
-SEANux 1.0 is a linux distribution Available here developed by the Syrian Electronic Army. It has an apache webserver listening on 0.0.0.0:80
-root@...ry-VirtualBox:/etc/mysql# netstat -an
-Active Internet connections (servers and established)
-Proto Recv-Q Send-Q Local Address           Foreign Address         State      
-tcp        0      0 127.0.0.1:6010          0.0.0.0:*               LISTEN     
-tcp        0      0 127.0.0.1:3306          0.0.0.0:*               LISTEN     
-tcp        0      0 127.0.1.1:53            0.0.0.0:*               LISTEN     
-tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN     
-tcp        0      0 127.0.0.1:631           0.0.0.0:*               LISTEN     
-tcp        0      0 192.168.0.33:22         192.168.0.22:53474      ESTABLISHED
-tcp6       0      0 ::1:6010                :::*                    LISTEN     
-tcp6       0      0 :::80                   :::*                    LISTEN     
-tcp6       0      0 :::22                   :::*                    LISTEN     
-tcp6       0      0 ::1:631                 :::*                    LISTEN     
-tcp6       1      0 ::1:57375               ::1:631                 CLOSE_WAIT 
-udp        0      0 0.0.0.0:68              0.0.0.0:*                          
-udp        0      0 0.0.0.0:52375           0.0.0.0:*                          
-udp        0      0 0.0.0.0:5353            0.0.0.0:*                          
-udp        0      0 0.0.0.0:41938           0.0.0.0:*                          
-udp        0      0 0.0.0.0:31229           0.0.0.0:*                          
-udp        0      0 127.0.1.1:53            0.0.0.0:*                          
-udp6       0      0 :::37598                :::*                               
-udp6       0      0 :::5353                 :::*                               
-udp6       0      0 :::12590                :::*                               
-udp6       0      0 :::52638                :::*                               
-udp6       0      0 :::546                  :::*                               
-Active UNIX domain sockets (servers and established)
+Hi,
 
-This apache server is a tool server hosting web based tools by the SEA
-One of the tools is a backdoor to the system
+That seems to be possible via php, using php_ereg(), php_ereg_replace() , php_ereg_split() 
+which might call regcomp() in backend.
 
-The path http://192.168.0.33/tools/sea.php is a back door for the SEA. 
-
-Here is a screen shot after logging in: 
-
-From lines 6-15 contain the credentials sea.php:
-     6 $user = 'SEA'; ^M
-     7 $pass = 'SEA'; ^M
-     8 $uselogin = 1;^M
-     9 $sh3llColor = "#0040FF";^M
-    10 ^M
-    11 # MySQL Info ---------^M
-    12 $DBhost = "localhost";^M
-    13 $DBuser = "root";^M
-    14 $DBpass = "root";^M
-    15 #---------------------^M
+Regards,
+-------------------------------------------
+Siddharth Sharma / Red Hat Product Security 
 
 
-So I thought this backdoor might allow root access to the mysql database running on port 3306. But the credentials are set for mysql during setup, and I don't see any other code to run sql queries on the system. Perhaps they just default to root root as that's a very common password combo for mysql installs?
+----- Original Message -----
+From: cve-assign@...re.org
+To: jmm@...ian.org, siddharth@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Sent: Wednesday, March 11, 2015 10:41:59 PM
+Subject: [oss-security] Re: CVE request: spencer regexp
+
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+> http://www.kb.cert.org/vuls/id/695940
+> https://guidovranken.wordpress.com/2015/02/04/full-disclosure-heap-overflow-in-h-spencers-regex-library-on-32-bit-systems/
+
+http://openwall.com/lists/oss-security/2015/02/07/14 says "I have to
+admit we're having a hard time trying to think of a service that
+exposes regcomp(3) over the internet."
+
+http://openwall.com/lists/oss-security/2015/02/16/8 says "in many
+cases the code is only used when building for Android or Windows" and
+indirectly refers to multiple bugs such as:
+
+  https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=778396
+  https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=778395
+
+For example:
+
+  Package: cups
+
+  The regex copy is only used when building on Windows. I double-checked
+  by removing the entire vcnet/regex directory and rebuilding cups.
+
+This is potentially ambiguous. We thought that "when building on
+Windows" would imply something like "if a user is following the steps
+in the CUPS INSTALL.txt file on a Windows machine, then that user is
+able to provide malicious input to the regcomp function during one of
+those steps." It now appears that what was meant was "The problematic
+regcomp function is present in a Windows build of CUPS. Any
+exploitation could occur only after the build has finished."
+
+In general, when one oss-security post suggests that an issue may not
+be realistically exploitable with untrusted input (e.g., "having a
+hard time trying to think of a service" above), and no other
+oss-security post suggests that the issue is realistically
+exploitable, then there might not be a CVE assignment.
+
+Here, we'll propose an exploitation scenario for comment. We think
+that this is (at least marginally) realistic, although it might not
+be. Unless there's an objection stating that no realistic exploitation
+scenario can exist, we'll assign a CVE ID for the original regcomp bug
+this week.
+
+Example:
+
+  Someone develops a new email filtering language as an alternative
+  to Sieve (RFC 5228). Like Sieve, the language's scripts are
+  intended to run on a mail server that does not permit arbitrary
+  code execution by ordinary mailbox owners. In the new language,
+  the match type of ":matches" is implemented with regcomp.
+  There is no limit on script size, and thus the 682 Mb requirement
+  from the regcomp bug report isn't a concern. It is plausible that
+  an ordinary mailbox owner can create a script that triggers the
+  bug and achieves remote code execution on the mail server.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJVAHbeAAoJEKllVAevmvmsucwIAJBGMGBHsZg1oKSFhEn2wCJ7
+el1LhsIHmAk0R4rQ1E5IAQFgfNvZ5dA0lagHA7V3prYCM5rgtgGzPTA6SE0Bljl7
+rTCcxZKxs9jXJKnQsV566sdqUcN86WX8ZKp/IqBLxMa9uufi+fbdDeSYGU5R4rF4
+JvrLoRWokvdwkOxB+M4mykKKeEV0+52hBmmC/xxUdVJPdwgTEvL+SL93q8XQlZNN
+BKaFoF6sczCxwWo50u/87qUY44hkwTonHIw6ABWELPH6f0+pgG6T5vlbYS1HVPfn
+XcY6Sz4iyYmtt5AElhwRHaMVuG9EYuHtILPz+Fd5H84ePf18LYe+VQAzZl4S3Jk=
+=7w/F
+-----END PGP SIGNATURE-----
