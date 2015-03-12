@@ -1,130 +1,85 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/20/10
-Message-Id: <E1YDdJy-00044x-Dz@xenbits.xen.org>
-Date: Tue, 20 Jan 2015 18:14:34 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 109 (CVE-2014-8594) - Insufficient restrictions on certain MMU update hypercalls
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/12/3
+Message-ID: <CACYkhxgfP37Jp9vD7WMDxxdBDQVQ6nSGNX1a+BMPVxjY111QUw@mail.gmail.com>
+Date: Thu, 12 Mar 2015 14:03:34 +1100
+From: Michael Samuel <mik@...net.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: Another Python app (rhn-setup: rhnreg_ks) not checking hostnames in certs properly CVE-2015-1777
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-             Xen Security Advisory CVE-2014-8594 / XSA-109
-                               version 4
+On 12 March 2015 at 11:07, Kurt Seifried <kseifried@...hat.com> wrote:
+>> You can test for the common bugs extremely easily - you need two types of
+>
+> If only it were so simple. Seriously, life would be awesome.
+>
+> What about expired certificates?
+> What about certificates that are properly signed but not yet valid?
 
-        Insufficient restrictions on certain MMU update hypercalls
+Sure, you could test these too, but I'd argue these are policy issues,
+not security bugs.
+Where is an attacker going to get the private key for an expired cert,
+but be unable to
+find the current one?
 
-UPDATES IN VERSION 4
-====================
+> What about a certificate signed for the correct hostname by a system
+> trusted CA? (some apps are supposed to only trust a specific CA).
 
-Impact on applicable affected systems is a privilege escalation, not
-just a denial of service.  (Because a PV guest can map something at 0,
-and its address space is visible while Xen is running, so a NULL
-pointer dereference can be made to do more than just crash.)
+That's a policy bug too, not an easily exploitable security bug
+(unless one of your
+system CAs is compromised).  Does RedHat actually ship anything that
+does pinning?
 
-Also add a caveat to the comments in Mitigation about restricted
-service domain images in radically disaggregated systems.
+> These are all very common issues.
 
-ISSUE DESCRIPTION
-=================
+Not nearly as common or exploitable as not checking the certificate at
+all, of which I've
+reported plenty of to RedHat and others over the past couple of years.
 
-MMU update operations targeting page tables are intended to be used on
-PV guests only. The lack of a respective check made it possible for
-such operations to access certain function pointers which remain NULL
-when the target guest is using Hardware Assisted Paging (HAP).
+> But we're also dealing with bad guys right? If we assume they can man in
+> the middle we have to assume they are at least semi competent (e.g. they
+> know how to run Tapioca or nogotofail).
+>
+> So what about mangled certs that make the system go all wibbly wobbly?
 
-IMPACT
-======
+Sure, but you're just making arguments for using common validation routines (as
+originally proposed), which can be easily checked.  Although I must admit I was
+surprised by NSS being vulnerable to a variant of Bleichenbacher's
+attack last year!
 
-Malicious or buggy stub domain kernels or tool stacks otherwise living
-outside of Domain0 can mount a denial of service or privilege
-escalation attack which, if successful, can affect the whole system.
+> And if you talk to people that actually know SSL/TLS (I just pretend to
+> understand it) ... well if you've ever seen a train wreck in slow motion
+> you know what it's like.
 
-Only PV domains with privilege over other guests can exploit this
-vulnerability; and only when those other guests are HVM using HAP, or
-PVH.  The vulnerability is therefore exposed to PV domains providing
-hardware emulation services to HVM guests.
+Sure thing.  As mentioned earlier on list and elsewhere, almost
+everything that copied
+nginx s3_srvr.c session ticket code (Apache, Nginx, ...) isn't
+checking the retval of
+RAND_pseudo_bytes(), so you might be sending stack/heap data as the IV of your
+session tickets instead of entropy.  But those are bugs.
 
-VULNERABLE SYSTEMS
-==================
+>> It's not too hard to test SSH connections in a similar manner (just regen the
+>> ssh host keys after the first connection).
+>
+> Again if only it were so simple.
+> http://www.cve.mitre.org/cgi-bin/cvekey.cgi?keyword=ssh+key
 
-Xen 4.0 and onward are vulnerable.
+Yes, I reported a few of those.  Also we could talk about how rhev
+sets up new hosts
+using small block-size CBC ciphers due to the crazy java SSH library
+it uses.  Again,
+bugs.
 
-Only x86 systems are vulnerable.  ARM systems are not vulnerable.
+>> Alternatively, you could make your OpenSSL modules for various languages
+>> return client ctxs that verify by default - the topic of this discussion :)
+>
+> Yeah, the problem is API/ABI compatibility. Again, Red Hat has to
+> support software we have never seen, and will never see.
 
-The vulnerability is only exposed to PV service domains for HVM or
-PVH guests which have privilege over the guest.  In a usual
-configuration that means only device model emulators (qemu-dm).
+I understand that.  Which is why I proposed that specific solution,
+instead of the one
+I prefer (what upstream python did).
 
-In the case of HVM guests whose device model is running in an
-unrestricted dom0 process, qemu-dm already has the ability to cause
-problems for the whole system.  So in that case the vulnerability is
-not applicable.
-
-The situation is more subtle for an HVM guest with a stub qemu-dm.
-That is, where the device model runs in a separate domain (in the case
-of xl, as requested by "device_model_stubdomain_override=1" in the xl
-domain configuration file).  The same applies with a qemu-dm in a dom0
-process subjected to some kind kernel-based process privilege
-limitation (eg the chroot technique as found in some versions of
-XCP/XenServer).
-
-In those latter situations this issue means that the extra isolation
-does not provide as good a defence as intended.  That is the essence
-of this vulnerability.
-
-However, the security is still better than with a qemu-dm running as
-an unrestricted dom0 process.  Therefore users with these
-configurations should not switch to an unrestricted dom0 qemu-dm.
-
-Finally, in a radically disaggregated system: where the HVM or PVH
-service domain software (probably, the device model domain image in the
-HVM case) is not always supplied by the host administrator, a malicious
-service domain administrator can exercise this vulnerability.
-
-MITIGATION
-==========
-
-Running only PV guests or HVM guests with shadow paging enabled will
-avoid this issue.
-
-In a radically disaggregated system, restricting HVM service domains
-to software images approved by the host administrator will avoid the
-vulnerability (so long as there isn't also a vulnerability in the
-service domain).
-
-CREDITS
-=======
-
-This issue was discovered by Roger Pau Monné of Citrix and Jan Beulich
-of SUSE.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa109.patch        xen-unstable, Xen 4.4.x, Xen 4.3.x
-xsa109-4.2.patch    Xen 4.2.x
-
-$ sha256sum xsa109*.patch
-759d1b8cb8c17e53d17ad045ab89c5aaf52cb85fd93eef07e7acbe230365c56d  xsa109-4.2.patch
-729b87c2b9979fbda47c96e934db6fcfaeb10e07b4cfd66bb1e9f746a908576b  xsa109.patch
-$
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQEcBAEBAgAGBQJUvpr0AAoJEIP+FMlX6CvZt4EIAMcSuRwP8++fs8QxhZ+pPqPk
-MDyFmZ0NmFu7j7qiPVWeRr66VoXU6oQzWXVKv0Gx3uxJLgmWNK13DKYdJc2xeBuF
-zUMZJimnCmpf7WTZjS6WHjNB5ei3+u5TGKhcLjH2E3iIsEmzLR6ckFVYeYopGHqu
-mWLi6nGVO6VkJ1OMGz4WvPCOYXHpZANIc00JhZot8VpULe6VktgnU0Uh/EgkayN/
-1rTAybiNB/b9vboVOWxsDbhbQgXhG9HuD/FFLTZ61zDIaIRAHf2xM/bfH05t1kk7
-9r4JHw70dKo37QH1LeRbla0xrCojaUiKWOglIsslmqGAD+qkUOJZ6D+KcEo8Fp0=
-=F4yJ
------END PGP SIGNATURE-----
-
-Download attachment "xsa109-4.2.patch" of type "application/octet-stream" (786 bytes)
-
-Download attachment "xsa109.patch" of type "application/octet-stream" (790 bytes)
+Regards,
+  Michael
