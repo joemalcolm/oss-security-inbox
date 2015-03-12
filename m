@@ -1,52 +1,105 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/12/5
-Message-ID: <CACYkhxiWLMMLdGmdLpvPdU7CKvhvQChcYY8HNrh5hNhN+hHgtA@mail.gmail.com>
-Date: Thu, 12 Mar 2015 16:41:19 +1100
-From: Michael Samuel <mik@...net.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: Another Python app (rhn-setup: rhnreg_ks) not checking hostnames in certs properly CVE-2015-1777
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/12/12
+Message-Id: <20150312181727.47D266C0055@smtpvmsrv1.mitre.org>
+Date: Thu, 12 Mar 2015 14:17:27 -0400 (EDT)
+From: cve-assign@...re.org
+To: carnil@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: Gtk2 Perl Module: incorrect memory management in Gtk2::Gdk::Display::list_devices
 Content-Type: text/plain; charset=utf-8
 
-On 12 March 2015 at 15:43, Kurt Seifried <kseifried@...hat.com> wrote:
-> If your SSL/TLS implementation accepts expired certs as being ok, then
-> you have a problem.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Sure thing, test for it then if you like.  Just install an expired
-cert on a test
-server and connect.  But if I logged it against a RedHat product, I'd put it
-as a bug, not security issue.
+> A new upstream version of the Gtk2 Perl module was released (1.2495)
+> fixing incorrect memory management in
+> Gtk2::Gdk::Display::list_devices. Upstream commit is at
+> 
+> https://git.gnome.org/browse/perl-Gtk2/commit/?id=4856da628ce37099b27b66a88141dc6daad693b0
+> 
+> References:
+> -----------
+>  - https://bugzilla.redhat.com/show_bug.cgi?id=1188219
+>  - https://mail.gnome.org/archives/gtk-perl-list/2015-January/msg00039.html
+>  - https://bugs.mageia.org/show_bug.cgi?id=15173
+>  - https://lwn.net/Vulnerabilities/633094/
 
->>> What about a certificate signed for the correct hostname by a system
->>> trusted CA? (some apps are supposed to only trust a specific CA).
->>
->> That's a policy bug too, not an easily exploitable security bug
->> (unless one of your
->> system CAs is compromised).  Does RedHat actually ship anything that
->> does pinning?
->
-> That's a real world bug. Logic error "trust properly signed cert" vs.
-> "trust specific CA signed cert".
+In this situation, we didn't immediately reach a conclusion about how
+to incorporate the perspective of the upstream vendor. Specifically,
+https://mail.gnome.org/archives/gtk-perl-list/2015-January/msg00042.html
+says 'Do you really need such an "official" and elaborate effort for
+this kind of bug fix? These kinds of fixes are done all over the place
+all the time without special announcements.'
 
-Ok, but if somebody's implemented this feature they've gone well beying
-the point of not verifying certificates at all, which is what pretty much every
-program I tested that ships with RHEL did until I logged bugs against them.
+The upstream fix removes a "g_list_free (devices);" with a comment of
+"Fix incorrect memory management in
+Gtk2::Gdk::Display::list_devices ... We do not own the returned list."
 
-Apache still doesn't validate certificates for backend connections in RHEL
-(mod_proxy).
+https://bugs.mageia.org/show_bug.cgi?id=15173#c3 says "Did not find
+any PoC."
 
-> Uhm. Did you not look at any of the cve.mitre.org links I sent? These
-> are incredibly common failures. Hint: if some class of bug has a bunch
-> of CVE's you can multiply it by 100 or more for the number of affected
-> real world cases (and that's in English software alone).
+Maybe the initial question is "do all changes of this type, in all
+products, always qualify for a CVE ID?"
 
-If you think they're common, ask your dev teams test for them before
-shipping.
+If, for example, the upstream vendor meant that "all over the place
+all the time" fixes are exclusively "fixes for issues that are known
+to be non-exploitable, not even for a crash," then we think there
+probably should not be a CVE ID. If nobody has any definitive
+information about an impact, then the answer is much less clear.
+Before assigning a CVE ID, we might (or might not) want to require
+further information, such as how is "devices" used after the
+g_list_free. A recent academic paper that tries to further categorize
+related issues is:
 
-> Anyways I think we're sufficiently off topic now.
+  http://www.cc.gatech.edu/~blee303/paper/dangnull.pdf
 
-I think this is an important discussion to have, and I don't think we're at all
-off topic (for the list or thread).  I know TLS is hard, but we don't have to
-default to snake-oil bad.
+The timeline seems to be:
 
-Regards,
-  Michael
+1. An incorrect g_list_free was found. There's perhaps no information
+   about how it was found. It might, for example, have been found
+   through an automated testing approach that has the potential of
+   discovering thousands of similar code problems.
+
+2. The fix was mentioned in an upstream announcement of a new release.
+
+3. One or more persons in the Linux vendor community noticed the new
+   release (possibly because of automated checking for new upstream
+   releases).
+
+4. Because the type of code problem is one that is sometimes (one may
+   argue "frequently") exploitable, multiple Linux vendors distributed
+   a fix.
+
+5. There doesn't seem to be a reference indicating that any analysis
+   of impact was done, or that otherwise tries to establish that this
+   specific code issue is best categorized as a vulnerability.
+
+6. Still, there is interest in a CVE ID because Linux vendors often
+   have a CVE mapping associated with a code change of this type.
+
+It's unclear to us exactly what should happen here. Should we be using
+a "per release" attribute as one aspect of deciding whether a CVE ID
+is needed? (Specifically, because this one code change was apparently
+the primary motivation for releasing 1.2495, does that increase the
+importance of having a CVE ID?) Is it sufficient that everybody agrees
+the code was wrong and that nobody has ruled out exploitability? If
+someone happens to enumerate the complete set of the "all over the
+place all the time" fixes that the upstream vendor mentioned, do they
+all need CVE IDs as well?
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJVAdeZAAoJEKllVAevmvmsjyQIAKlLxx+HppJjgtlQSYIIpugq
+rq+2HnNFsdMBzA6THF33tX8gUxXH7B3q7inZxdVFmGeqX0mYfw6pjZD77gYXFXP1
+dpra/sVxZF5HoQBFdoYDxbNn2RA2pNwSe4oxc9z3NivCQwEcpRYdUHVeLtBKCqrN
+kEjagGcb7rlDC/2uegNlbRdqbXbWUYfXQf4EW4GTci6jvzzifFw38IYLyQ+UO00S
+LtHd5kZfdJ5PZiC+PITsNYcjM3am41mJwggrHChOwzhN0+Dx1LsH0kUlrTBlCZBE
+vX8SHiIwZK0xoiF2lbPTZYhctWNbf8hS03/k0uCIgRbUbhBQ2xc92DwXj9S9jls=
+=uC8N
+-----END PGP SIGNATURE-----
