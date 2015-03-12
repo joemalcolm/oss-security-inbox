@@ -1,46 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/05/3
-Message-ID: <54F81196.9060004@gmail.com>
-Date: Thu, 05 Mar 2015 09:19:34 +0100
-From: Gsunde Orangen <gsunde.orangen@...il.com>
-To: fulldisclosure@...lists.org, oss-security@...ts.openwall.com
-Subject: Re: [FD] Java 8u40 released: why?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/12/4
+Message-ID: <5501198C.8060405@redhat.com>
+Date: Wed, 11 Mar 2015 22:43:56 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Another Python app (rhn-setup: rhnreg_ks) not checking hostnames in certs properly CVE-2015-1777
 Content-Type: text/plain; charset=utf-8
 
-I'd be interested in that, too.
-In case this out-of-band release is about an important security fix,
-then either this is something new (details still to be disclosed).
-Or it is associated with CVE-2014-6593 (e.g. incomplete or buggy fix in
-the January release)? The detais (named as "SKIP-TLS") had been
-disclosed just this week along with the "FREAK" attack (see
-https://www.smacktls.com/#skip). Former descriptions of CVE-2014-6593
-only indicated a failure to properly check the ChangeCipherSpec in the
-TLS connection handshake; but apparently - esp. on client side - much
-more could go wrong in former JSSE implemenations.
-
-Maybe someone involved in openJDK could tell more...
-
-Gsunde
-
-
-On 04.03.2015, 02:23 paul.szabo@...ney.edu.au wrote:
-> I notice that Java (JDK, JRE) update 8u40 has been released.
-> Though
->   http://www.oracle.com/technetwork/java/javase/downloads/index.html
-> says "this release includes important security fixes", the release notes
->   http://www.oracle.com/technetwork/java/javase/8u40-relnotes-2389089.html
-> says the "security baseline" is 1.8.0_31 (unchanged).
-> I do not notice any major "useability" issues fixed.
-> So: why this out-of-band release?
+On 03/11/2015 09:03 PM, Michael Samuel wrote:
+> Hi,
 > 
-> Thanks, Paul
+> On 12 March 2015 at 11:07, Kurt Seifried <kseifried@...hat.com> wrote:
+>>> You can test for the common bugs extremely easily - you need two types of
+>>
+>> If only it were so simple. Seriously, life would be awesome.
+>>
+>> What about expired certificates?
+>> What about certificates that are properly signed but not yet valid?
 > 
-> Paul Szabo   psz@...hs.usyd.edu.au   http://www.maths.usyd.edu.au/u/psz/
-> School of Mathematics and Statistics   University of Sydney    Australia
-> 
-> _______________________________________________
-> Sent through the Full Disclosure mailing list
-> https://nmap.org/mailman/listinfo/fulldisclosure
-> Web Archives & RSS: http://seclists.org/fulldisclosure/
-> 
+> Sure, you could test these too, but I'd argue these are policy issues,
+> not security bugs.
 
+If your SSL/TLS implementation accepts expired certs as being ok, then
+you have a problem.
+
+> Where is an attacker going to get the private key for an expired cert,
+> but be unable to
+> find the current one?
+
+By stealing it? Certificate revocation doesn't work. Otherwise we
+wouldn't have vendors shipping browser updates to invalidate known to be
+compromised certificates, we'd be relying on CRL/OCSP and not hacks like
+OCSP stapling.
+
+>> What about a certificate signed for the correct hostname by a system
+>> trusted CA? (some apps are supposed to only trust a specific CA).
+> 
+> That's a policy bug too, not an easily exploitable security bug
+> (unless one of your
+> system CAs is compromised).  Does RedHat actually ship anything that
+> does pinning?
+
+That's a real world bug. Logic error "trust properly signed cert" vs.
+"trust specific CA signed cert".
+
+>> These are all very common issues.
+> 
+> Not nearly as common or exploitable as not checking the certificate at
+> all, of which I've
+> reported plenty of to RedHat and others over the past couple of years.
+
+Uhm. Did you not look at any of the cve.mitre.org links I sent? These
+are incredibly common failures. Hint: if some class of bug has a bunch
+of CVE's you can multiply it by 100 or more for the number of affected
+real world cases (and that's in English software alone).
+
+>   Michael
+
+Anyways I think we're sufficiently off topic now.
+
+
+-- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
