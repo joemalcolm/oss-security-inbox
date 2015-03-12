@@ -1,161 +1,134 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/27/25
-Message-ID: <54C8032C.6040808@collabora.co.uk>
-Date: Tue, 27 Jan 2015 21:29:16 +0000
-From: Simon McVittie <simon.mcvittie@...labora.co.uk>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/12/11
+Message-ID: <20150312170627.GB23889@nef.pbox.org>
+Date: Thu, 12 Mar 2015 18:06:27 +0100
+From: Alistair Crooks <agc@...src.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2014-8156: freesmartphone.org stack configures D-Bus system bus to be insecure
+Cc: jmm@...ian.org, cve-assign@...re.org
+Subject: Re: Re: CVE request: spencer regexp
 Content-Type: text/plain; charset=utf-8
 
-Type of vulnerability: CWE-284 Improper Access Control
-Exploitable by: local users
-Impact: unknown, dependent on installed D-Bus system services; at least
-local denial of service
-Reporter: Simon McVittie, Collabora Ltd.
-Reported to vendor: 2015-01-13
+We looked at that in our initial assessment:
 
-While checking Debian for incorrect/dangerous D-Bus security policy
-files (found in /etc/dbus-1/system.d/*.conf) I found that the
-freesmartphone.org (fso) stack contains several problematic rules.
+from http://www.regular-expressions.info/php.html:
 
-Summary of modules confirmed to be affected:
+	PHP is an open source language for producing dynamic web pages.  PHP
+	has three sets of functions that allow you to work with regular
+	expressions.
 
-Debian package fso-gsmd version 0.12.0-3
-Debian package fso-usaged version 0.12.0-2
-Upstream cornucopia.git (fsoaudiod, fsodatad, fsodeviced, fsogsmd,
-fsonetworkd, fsotdld, fsousaged) git master on 2015-01-19
+	The most important set of regex functions start with preg.  These
+	functions are a PHP wrapper around the PCRE library (Perl-Compatible
+	Regular Expressions).  Anything said about the PCRE regex flavor in
+	the regular expressions tutorial on this website applies to PHP's preg
+	functions.  When the tutorial talks about PHP specifically, it assumes
+	you're using the preg functions.  You should use the preg functions
+	for all new PHP code that uses regular expressions.  PHP includes PCRE
+	by default as of PHP 4.2.0 (April 2002).
 
-Debian package fso-frameworkd version 0.9.5.9+git20110512-4
-Upstream framework.git version 0.10.1 and git master on 2015-01-19
+	The oldest set of regex functions are those that start with ereg. 
+	They implement POSIX Extended Regular Expressions, like the
+	traditional UNIX egrep command.  These functions are mainly for
+	backward compatibility with PHP 3.  They are officially deprecated as
+	of PHP 5.3.0.  Many of the more modern regex features such as lazy
+	quantifiers, lookaround and Unicode are not supported by the ereg
+	functions.  Don't let the "extended" moniker fool you.  The POSIX
+	standard was defined in 1986, and regular expressions have come a long
+	way since then.
 
-In addition, Debian packaging for one fso-related package, also
-available in Ubuntu and possibly other derivatives, has a similar flaw:
+So unsanitised remote regular expressions and using the deprecated
+ereg in old php?  Possible, but unlikely.  I'm not standing in the way
+of CVE assignment, but this is getting towards the theoretical end of
+the spectrum.
 
-Debian package phonefsod version 0.1+git20121018-1
-(Upstream code for phonefsod
-<http://git.shr-project.org/git/?p=phonefsod.git> was not vulnerable as
-of 2015-01-19)
+Alistair
 
-Other fso modules might be affected, I only scanned the ones available
-in Debian.
-
-Please see below for further technical details of the faulty security
-policies, and some advice on fixing them, which is applicable to any
-project with D-Bus security policy files. For further advice, please
-contact dbus@...ts.freedesktop.org (public mailing list) or
-dbus-security@...ts.freedesktop.org (non-public list for embargoed
-security vulnerabilities), and explain what security policy you intend
-your service to have.
-
-Category 1: send_path != "/"
-----------------------------
-
-This refers to configurations like this:
-
-    <policy context="default">
-        ...
-        <allow send_path="/org/freesmartphone/Framework"/>
-
-This allows every local user to send arbitrary D-Bus messages to the
-path /org/freesmartphone/Framework on *any* D-Bus system service (rough
-HTTP analogy: send a POST to http://server/org/freesmartphone/Framework
-on any server).
-
-At first glance, this might seem harmless, because why would a non-fso
-service have any functionality at that path? However, services that use
-a low-level binding like libdbus and implement their functionality via a
-message filter do not necessarily differentiate between paths.
-
-Notably, org.freedesktop.DBus, the pseudo-service provided by
-dbus-daemon, provides the same API at every object path (and is
-constrained to do so by backwards compatibility). dbus releases 1.8.14
-and 1.9.6 mitigate this by locking down functionality that is not
-intended to be public, so that it can only be accessed at the canonical
-path /org/freedesktop/DBus. However, in earlier dbus releases, this can
-be used to make the dbus-daemon consume arbitrary amounts of memory.
-
-It is possible that other system services have similar behaviour; the
-worst-case impact is arbitrary root code execution, although I do not
-know of a specific service where this would happen.
-
-Example files: etc/dbus-1/system.d/frameworkd.conf in fso-frameworkd,
-data/fsogsmd.conf in fso-gsmd, data/fsousaged.conf in fso-usaged
-
-In addition, while data/dbus-1/phonefsod.conf in
-phonefsod/0.1+git20121018-1 is not vulnerable, the Debian-specific
-version in debian/phonefsod.conf has the same issue.
-
-Category 2: send_path = "/"
----------------------------
-
-This is a variation of category 1 where the affected path is "/":
-
-    <policy context="default">
-        ...
-        <allow send_path="/"/>
-
-This is potentially more serious than category 1, because it affects any
-system service that either provides the same API on every object path,
-or specifically provides API at "/". Older versions of BlueZ are one
-example of a service that specifically uses "/".
-
-etc/dbus-1/system.d/frameworkd.conf in
-fso-frameworkd/0.9.5.9+git20110512-4 has this pattern.
-
-Fixing these vulnerabilities
-----------------------------
-
-Where possible, the recommended pattern is for the only <allow> rules to
-be <allow own="x.y.z"/> and/or <allow send_destination="x.y.z"/>.
-
-If it is necessary to control different object paths differently, either
-use Polkit/PolicyKit, or specify both in the same <allow> rule:
-
-    <allow send_destination="x.y.z" send_path="/a/b/c"/>
-
-This is treated as an "logical and" operation: the rule will only match
-sending messages that meet all the criteria. Similarly, you can combine
-send_destination with send_interface and/or send_member in the same
-<allow> or <deny> rule.
-
-The best practice is that every rule with <allow send_something> should
-have a send_destination attribute.
-
-If the destination will not own a well-known bus name (e.g. the "agent"
-pattern in which BlueZ calls out to agent processes running as GUI
-users) and so send_destination cannot be used, prefer <allow
-send_interface> instead of <allow send_path>, and only allow root (or a
-specific daemon user, if not root) to do this. For instance, this is
-acceptable:
-
-    <policy user="root">
-        <allow send_interface="com.example.MyAgent"/>
-    </policy>
-
-Parts of the fso D-Bus policy files indicate a misunderstanding of these
-files' syntax. If you write multiple <allow send_*> rules in the same
-<policy> block, that is effectively an "logical or" operation: each rule
-separately allows sending messages that match it.
-
-In particular, there is no functional difference between
-
-    <policy context="default">
-        <allow send_path="/x/y/z"/>
-        <allow send_destination="x.y.z"/>
-    </policy>
-
-and
-
-    <policy context="default">
-        <allow send_path="/x/y/z"/>
-    </policy>
-    <policy context="default">
-        <allow send_destination="x.y.z"/>
-    </policy>
-
-and the send_path rule is equally problematic in both spellings. The
-<policy> only controls who the rules apply to (everyone/a specific
-user/a specific group); it does not provide "logical and" semantics.
-
-    S
-
+On Thu, Mar 12, 2015 at 10:18:47AM -0400, Siddharth Sharma wrote:
+> Hi,
+> 
+> That seems to be possible via php, using php_ereg(), php_ereg_replace() , php_ereg_split() 
+> which might call regcomp() in backend.
+> 
+> Regards,
+> -------------------------------------------
+> Siddharth Sharma / Red Hat Product Security 
+> 
+> 
+> ----- Original Message -----
+> From: cve-assign@...re.org
+> To: jmm@...ian.org, siddharth@...hat.com
+> Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+> Sent: Wednesday, March 11, 2015 10:41:59 PM
+> Subject: [oss-security] Re: CVE request: spencer regexp
+> 
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+> 
+> > http://www.kb.cert.org/vuls/id/695940
+> > https://guidovranken.wordpress.com/2015/02/04/full-disclosure-heap-overflow-in-h-spencers-regex-library-on-32-bit-systems/
+> 
+> http://openwall.com/lists/oss-security/2015/02/07/14 says "I have to
+> admit we're having a hard time trying to think of a service that
+> exposes regcomp(3) over the internet."
+> 
+> http://openwall.com/lists/oss-security/2015/02/16/8 says "in many
+> cases the code is only used when building for Android or Windows" and
+> indirectly refers to multiple bugs such as:
+> 
+>   https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=778396
+>   https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=778395
+> 
+> For example:
+> 
+>   Package: cups
+> 
+>   The regex copy is only used when building on Windows. I double-checked
+>   by removing the entire vcnet/regex directory and rebuilding cups.
+> 
+> This is potentially ambiguous. We thought that "when building on
+> Windows" would imply something like "if a user is following the steps
+> in the CUPS INSTALL.txt file on a Windows machine, then that user is
+> able to provide malicious input to the regcomp function during one of
+> those steps." It now appears that what was meant was "The problematic
+> regcomp function is present in a Windows build of CUPS. Any
+> exploitation could occur only after the build has finished."
+> 
+> In general, when one oss-security post suggests that an issue may not
+> be realistically exploitable with untrusted input (e.g., "having a
+> hard time trying to think of a service" above), and no other
+> oss-security post suggests that the issue is realistically
+> exploitable, then there might not be a CVE assignment.
+> 
+> Here, we'll propose an exploitation scenario for comment. We think
+> that this is (at least marginally) realistic, although it might not
+> be. Unless there's an objection stating that no realistic exploitation
+> scenario can exist, we'll assign a CVE ID for the original regcomp bug
+> this week.
+> 
+> Example:
+> 
+>   Someone develops a new email filtering language as an alternative
+>   to Sieve (RFC 5228). Like Sieve, the language's scripts are
+>   intended to run on a mail server that does not permit arbitrary
+>   code execution by ordinary mailbox owners. In the new language,
+>   the match type of ":matches" is implemented with regcomp.
+>   There is no limit on script size, and thus the 682 Mb requirement
+>   from the regcomp bug report isn't a concern. It is plausible that
+>   an ordinary mailbox owner can create a script that triggers the
+>   bug and achieves remote code execution on the mail server.
+> 
+> - -- 
+> CVE assignment team, MITRE CVE Numbering Authority
+> M/S M300
+> 202 Burlington Road, Bedford, MA 01730 USA
+> [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1.4.14 (SunOS)
+> 
+> iQEcBAEBAgAGBQJVAHbeAAoJEKllVAevmvmsucwIAJBGMGBHsZg1oKSFhEn2wCJ7
+> el1LhsIHmAk0R4rQ1E5IAQFgfNvZ5dA0lagHA7V3prYCM5rgtgGzPTA6SE0Bljl7
+> rTCcxZKxs9jXJKnQsV566sdqUcN86WX8ZKp/IqBLxMa9uufi+fbdDeSYGU5R4rF4
+> JvrLoRWokvdwkOxB+M4mykKKeEV0+52hBmmC/xxUdVJPdwgTEvL+SL93q8XQlZNN
+> BKaFoF6sczCxwWo50u/87qUY44hkwTonHIw6ABWELPH6f0+pgG6T5vlbYS1HVPfn
+> XcY6Sz4iyYmtt5AElhwRHaMVuG9EYuHtILPz+Fd5H84ePf18LYe+VQAzZl4S3Jk=
+> =7w/F
+> -----END PGP SIGNATURE-----
