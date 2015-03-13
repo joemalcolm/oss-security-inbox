@@ -1,29 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/03/22
-Message-ID: <Pine.LNX.4.64.1501031857580.1923@beijing.mitre.org>
-Date: Sat, 3 Jan 2015 18:59:18 -0500 (EST)
-From: cve-assign@...re.org
-To: Vincent Danen <vdanen@...hat.com>
-cc: oss-security <oss-security@...ts.openwall.com>, cve-assign@...re.org
-Subject: Re: CVE request: denial of service flaw in firebird
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/13/15
+Message-ID: <371E240E6FC1D44DA5E51EE9DCDCB784012B9E42ED@NA-MBX-01.mgc.mentorg.com>
+Date: Fri, 13 Mar 2015 20:17:21 +0000
+From: "Mehaffey, John" <John_Mehaffey@...tor.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: RE: CVE request: Linux kernel: tty: kobject reference leakage in tty_open
 Content-Type: text/plain; charset=utf-8
 
+Hi Greg,
+To me, it is more of an issue of tracking products which were designed and sold in the vulnerable timeframe, and may still embed these flaws.
 
-> I've not seen a CVE for this; could one be assigned?  Thanks.
->
-> It was found that an unauthenticated remote attacker could send a malformed 
-> network packet to a firebird server, which would cause the server to crash.
->
-> http://www.firebirdsql.org/en/news/security-updates-for-v2-1-and-v2-5-series-66011/
-> http://tracker.firebirdsql.org/browse/CORE-4630
-> http://sourceforge.net/p/firebird/code/60331/
-> https://bugs.mageia.org/show_bug.cgi?id=14726
-> https://bugzilla.redhat.com/show_bug.cgi?id=1172445
+Most of the embedded market may not be vulnerable to this attack for other reasons, but a CVE would help to track it for the exceptions.  A GENIVI head unit that uses logins to implement the IVI user concept comes to mind.
 
-Use CVE-2014-9492.
+Sincerely,
+John Mehaffey
+Linux System Architect
+Mentor Graphics
 
----
+________________________________________
+From: P J P [ppandit@...hat.com]
+Sent: Friday, March 13, 2015 11:00 AM
+To: oss security list
+Subject: [oss-security] CVE request: Linux kernel: tty: kobject reference leakage in tty_open
 
-CVE assignment team, MITRE CVE Numbering Authority M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+   Hello,
+
+Linux kernel built with the virtual console support(CONFIG_VT) is vulnerable
+to a NULL pointer dereference issue. It could occur while accessing pseudo
+terminal device(/dev/pts/*) files.
+
+An unprivileged user could use this flaw to crash the system kernel resulting
+in DoS.
+
+Upstream fix:
+- -------------
+   -> https://git.kernel.org/linus/c290f8358acaeffd8e0c551ddcc24d1206143376
+
+
+Thank you.
+- --
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBAgAGBQJVAyW3AAoJEN0TPTL+WwQfOCAP/3z7CRPQj4glHgVFdkxuzk1/
+xlXwJJTRYlVDWe2F/lCbeP+jzQne37MzVl8Qma4OA2iAuySsRUQvjkc/6mMB6j+6
+9LVg0XV6hlZl0oFmxcWbQlNQLuhJsHOPja863aNvKoDZbh6mVIGi98BOaBjeMQUd
+Y81pGh5+BFYVk6hhcWPA2Zxok/MW+HN/JjvDqQReILsL5ApqRAxw0EBmZ3YpWBYL
+oxdRUT2FoRTKB5FFEgm6KAQdTSc9iqnH/QUTE4/s5wMCy20lb6j9bIk7pKkE6VmA
+XLwtioC/ttNR/Npe2kPXHm3KG4MH8Uftjd3IYdtJeJ7vjjgmPY3jAZZm/dBECWRZ
+Q9waGh9k8t6pEhaCz4jql21m1uoHLritnrLuAz56dOfh3R6TS46QEKqf7IgaqZ41
+psgQQKmX3gy9lyWoWdcWYgCvg5QJaW2lVotTTbCbSs/qfNmqJo2nMzTVL5UxTYic
+Adj0Y3KvrkIbAjEdyaNmwOMqH2pq8LUb87wDlD4DD7pRzZDFV6vzXA7wL5Za7VOr
+S8t3VvFfsMPUW+Y2zTdahWiGkgiQXxmFhaOC9KeSWFmgpxDQjJSPtdFdlRdu6gtX
+9ZXd7JSkwcFPujAFJ4SHI67ilo1rnqh3n6HZqOtaKTQCn6L7Mnn3ht/vumkxQpbF
+qjvQJOX+4OcFRe025MOM
+=ZQtV
+-----END PGP SIGNATURE-----
