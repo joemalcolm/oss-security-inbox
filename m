@@ -1,115 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/31/8
-Message-ID: <6a5d47317034484b3746f60913a28e13@tribut.de>
-Date: Sat, 31 Jan 2015 23:27:54 +0100
-From: Felix Eckhofer <felix@...but.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/13/10
+Message-ID: <55032291.50905@enovance.com>
+Date: Fri, 13 Mar 2015 13:46:57 -0400
+From: Tristan Cacqueray <tristan.cacqueray@...vance.com>
 To: oss-security@...ts.openwall.com
-Subject: RCE, XSS and HTTP header injection in fli4l web interface
+Subject: [OSSA 2015-005] Nova console Cross-Site WebSocket hijacking (CVE-2015-0259)
 Content-Type: text/plain; charset=utf-8
 
-== fli4l security advisory 
-====================================================
+==========================================================
+OSSA-2015-005: Nova console Cross-Site WebSocket hijacking
+==========================================================
 
-Package:    httpd
-Impact:     Root Compromise (Existing account for web administration 
-interface)
-             Cross-site Scripting
+:Date: March 13, 2015
+:CVE: CVE-2015-0259
 
-===============================================================================
 
-1. Summary:
+Affects
+~~~~~~~
+- Nova: up to 2014.1.3 and 2014.2 versions up to 2014.2.2
 
-Several vulnerabilities were discovered in the web administration 
-frontend for
-fli4l contained in the 'httpd' package.  These include arbitrary command
-execution, XSS vulnerabilities and HTTP header injection.
 
-2. Relevant releases:
+Description
+~~~~~~~~~~~
+Brian Manifold from Cisco and Paul McMillan from Nebula reported a
+vulnerability in Nova console websocket. By tricking an authenticated
+user into visiting a malicious URL, a remote attacker or a man in the
+middle may exploit a cross-site-websocket-hijacking vulnerability
+resulting in potential hijack of consoles where the user is still
+logged in. Only Nova setups with vnc or spice enabled are affected.
 
-Fli4l 3.x: All versions
-Fli4l 4.0: All tarballs up to 2015-01-23
 
-3. Description:
+Patches
+~~~~~~~
+- https://review.openstack.org/163035 (Icehouse)
+- https://review.openstack.org/163034 (Juno)
+- https://review.openstack.org/163033 (Kilo)
 
-The function show_tab_header provided by include/cgi-helper 
-insufficiently
-sanitized its input. An attacker could use this flaw to execute 
-arbitrary
-programs on the router as root. The affected scripts included with the 
-httpd
-package require the attacker to have a valid login for the web 
-administration
-interface.
 
-The script admin/pf.cgi insufficiently sanitized its input. An attacker 
-with at
-least "support:systeminfo" rights could use this flaw to execute 
-arbitrary
-programs on the router as root.
+Credits
+~~~~~~~
+- Brian Manifold from Cisco (CVE-2015-0259)
+- Paul McMillan from Nebula (CVE-2015-0259)
 
-The script admin/conntrack.cgi insufficiently escaped its output. An 
-attacker
-could use this flaw to perform a cross-site scripting (XSS) attack 
-against an
-authenticated user with at least "conntrack:view" rights.
 
-The script admin/index.cgi insufficiently escaped its output. An 
-attacker could
-use this flaw to perform a cross-site scripting (XSS) attack against any
-authenticated user.
+References
+~~~~~~~~~~
+- https://launchpad.net/bugs/1409142
+- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-0259
 
-The script admin/log_syslog.cgi insufficiently escaped its output. An 
-attacker
-could use this flaw to perform a cross-site scripting (XSS) attack 
-against an
-authenticated user with any rights within the "logs" realm.
 
-The script admin/problems.cgi insufficiently escaped its output. An 
-attacker
-could use this flaw to perform a cross-site scripting (XSS) attack 
-against any
-authenticated user.
+Notes
+~~~~~
+- This fix is included in 2014.1.4 (icehouse) release and it will be included
+  in the kilo-3 development milestone and in the future 2014.2.3 (juno)
+  release.
 
-The script admin/status.cgi insufficiently escaped its output. An 
-attacker
-could use this flaw to perform a cross-site scripting (XSS) attack 
-against an
-authenticated user with any rights within the "status" realm.
+--
+Tristan Cacqueray
+OpenStack Vulnerability Management Team
 
-The script admin/status_network.cgi insufficiently escaped its output. 
-An
-attacker could use this flaw to perform a cross-site scripting (XSS) 
-attack
-or inject HTTP headers into the response against an authenticated user 
-with at
-least "status:view" rights.
 
-The script admin/status_system.cgi insufficiently escaped its output. An
-attacker could use this flaw to perform a cross-site scripting (XSS) 
-attack
-against an authenticated user with at least "status:view" rights.
-
-We recommend all users to upgrade to the new package versions.
-
-4. Solution:
-
-These issues are fixed in fli4l Version 3.10.1 and tarballs of the 
-development
-branch 4.0 from 2015-01-30 and later.
-
-As a workaround, the web administration interface can be disabled (set
-OPT_HTTPD='no'). Alternatively, revoke access to the web interface for
-all untrusted users and only use the incognito mode of your browser to 
-access
-the web administration interface.
-
-5. Acknowledgments:
-
-These issues were discovered by Felix Eckhofer during an internal code 
-audit.
-
-6. Contact:
-
-The fli4l security team can be reached using security-team [at] fli4l 
-[dot] de.
-More information is available on http://www.fli4l.de/en/home/security/
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
