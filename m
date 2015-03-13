@@ -1,72 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/05/9
-Message-ID: <54F89F37.2040608@hlrs.de>
-Date: Thu, 05 Mar 2015 19:23:51 +0100
-From: Martin Hecht <hecht@...s.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/13/2
+message-id: <5502B46A.6010601@halfdog.net>
+Date: Fri, 13 Mar 2015 09:56:58 +0000
+From: halfdog <me@...fdog.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: Certificate pinning and the browser PKI
+Subject: Disabling reading of kernel log buffer reading for user
 Content-Type: text/plain; charset=utf-8
 
-Hi Florian,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On 03/05/2015 01:43 PM, Florian Weimer wrote:
-> I'm looking for suggestions how to implement certificate pinning.
->
-> Things are relatively straightforward if you are not in the browser PKI
-> because you can pin a long-term CA certificate instead, and not the
-> server certificate.  Same if you have a dedicated (sub-)CA in the
-> browser PKI.
->
-> But if your server has to be in the browser PKI, things get a bit messy.
->  Pinning the CA may not offer much protection (because you are still
-> exposed to RA failures at the CA).  
-If you implement it yourself, I think you can pin any certificate in the
-chain. The more you go up the chain the more you are at risk for RA
-failures, but on the other hand the more long-living the certificates
-will be. Even if you pin the root CA of the browser PKI, you are still
-better off pinning that one, than trusting all of the root CAs in the
-browser PKI.
+Hello List,
 
-> Pinning the server certificate is
-> problematic because the certificates are relatively short-lived, and the
-> rollovers have to be coordinated carefully.
->
-> So for the browser PKI case, it may make sense to pin the server public
-> key instead (n *and *e), not the entire certificate.  During regular
-> rollover, you can keep the public key, and you can have a pre-pinned
-> offline copy for emergency rollovers.
-It depends if the CA policies allow to re-use the server keys. To my
-understanding the concept of certificates with an expiration date is
-also based on the assumption that forcing the certificate holders to
-renew the certificate improves security (because the use of unnoticed
-stolen credentials gets stopped at least at some time). I'm not sure how
-many CAs force their clients to renew the keys when they replace the
-server certificate.
->
-> Or use SNI, a different endpoint name, and a separate certificate
-> outside browser PKI, and pin that.
->
-> Are there other options I'm missing?
-A mixture of all that? e.g. pin a hash over the root CA certificate and
-the subject(s) of the Sub-CAs in the chain. That would even allow the
-intermediate CAs to change their keys but you verify at least the path
-which you go down from the root CA.
-...and combine the pinning with crls or ocsp
->
-> The pinned certificate magically appears, thanks to the software update
-> infrastructure, so that's a solved problem.  It's just synchronizing
-> things within the update infrastructure to external events that can be
-> tricky, for various reasons.
-Well, as you already indicated, if the server certificates are exchanged
-quite shortly before they expire, it becomes a problem to propagate the
-information to the clients. If you start pinning somewhere higher up in
-the chain you usually have one life time of an intermediate CA
-certificate for communicating the new one to the clients. But still, for
-this time frame you have to trust both of them because you don't know
-when exactly the updates are are installed, and probably neither the
-exact time when the server certificate is exchanged.
+After years working on Linux, I just found out, that any user not only root can read the kernel log buffer - I never even considered that this could be the case.
 
-kind regards,
-Martin
+As this behavior is documented and expected, this is not a security vulnerability. But to avoid things like in [1], I would like to disable that on my machines.
+
+Questions:
+
+* What would be the side effects of making /dev/kmesg only root accessible? Maybe syslog not able to write kmessages to log?
+
+* Would it be safe to disable the syslog syscall for action SYSLOG_ACTION_READ_* and all users except root and syslog? Does someone have tested selinux config for that?
+
+hd
 
 
+[1] http://www.halfdog.net/Security/2015/HavingFunWithDmesg/
+
+- -- 
+http://www.halfdog.net/
+PGP: 156A AE98 B91F 0114 FE88  2BD8 C459 9386 feed a bee
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iEYEARECAAYFAlUCtGQACgkQxFmThv7tq+4FFQCeN4Txgu40/tDsWGSVaK2sm7La
+VusAnRUCtETL9IGmaeSyQUt2dyCQgCpV
+=Krnc
+-----END PGP SIGNATURE-----
