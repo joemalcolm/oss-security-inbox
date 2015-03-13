@@ -1,46 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/13/1
-Message-ID: <CAFJ0LnEqsX7a-gszgUUMKmK9n=WYiRF+=dAjFEGzeq7tocU_Og@mail.gmail.com>
-Date: Thu, 12 Mar 2015 20:31:42 -0700
-From: Nick Kralevich <nnk@...gle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/13/6
+Message-ID: <CANtF8NB7CmoLrvojivyfvzBcVS+eY5K2Ssq5hgw6tbQSHHwOVw@mail.gmail.com>
+Date: Fri, 13 Mar 2015 09:55:18 -0500
+From: Grandma Eubanks <tborland1@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: "CERT(R) Coordination Center" <cert@...t.org>
-Subject: Re: Vendor adoption of PIE INFO#934476 oss-security
+Subject: Re: Disabling reading of kernel log buffer reading for user
 Content-Type: text/plain; charset=utf-8
 
-I wanted to provide a followup on this year-old thread.
+Yeah, now comes the fun part. How to abuse services to bypass it?
+Also, have you checked what happens with KASLR? Where it writes where the
+new segments are?
 
-With the release of Android 5.0, Android has removed support for
-non-PIE binaries [1] [2]. Attempting to run a non-PIE binary will
-generate an error on Android. In this way, we ensure that all binaries
-take full advantage of Android's ASLR implementation.
+I have a bug ticket open with redhat for a while now on abusing a
+particular service that ends up dumping dmesg and chmod's it to any user
+privilege to navigate around dmesg_restrict.
 
-This is just one of the many security enhancements added in Android
-5.*, and one that I hope other Linux distributions will pick up.
+On Fri, Mar 13, 2015 at 7:44 AM, Jann Horn <jann@...jh.net> wrote:
 
-[1] https://source.android.com/devices/tech/security/enhancements/enhancements50.html
-[2] https://android.googlesource.com/platform/bionic/+/76e289c026f11126fc88841b3019fd5bb419bb67
-
--- Nick
-
-On Sun, Feb 16, 2014 at 11:54 AM, Nick Kralevich <nnk@...gle.com> wrote:
-> On Android, third party applications have always been compiled with
-> -fPIC, ever since the initial release of Android. As mentioned earlier
-> in this thread, the performance impacts of PIC and PIE are similar.
+> On Fri, Mar 13, 2015 at 09:56:58AM +0000, halfdog wrote:
+> > * What would be the side effects of making /dev/kmesg only root
+> accessible? Maybe syslog not able to write kmessages to log?
+> > * Would it be safe to disable the syslog syscall for action
+> SYSLOG_ACTION_READ_* and all users except root and syslog? Does someone
+> have tested selinux config for that?
 >
-> Starting in Android 4.1, all dynamically linked ARM [1] and x86 [2]
-> executables are compiled with PIE. Compiling with PIE on MIPS was
-> added in Android 4.3 [3]. Statically linked executables with PIE are
-> not supported today [4], although I'd love to see it in the future.
+> /proc/sys/kernel/dmesg_restrict can be used to restrict access to the log
+> buffer.
+> It looks like at least rsyslogd uses /proc/kmsg to read messages from the
+> log
+> buffer, and that file is only accessible for root anyway.
 >
-> I have yet to hear any complaint, on x86 or ARM, about any real world
-> performance impact of PIE on Android, even though the code has been
-> live and in user's hands for almost 2 years.
->
-> [1] https://android.googlesource.com/platform/build/+/026a85b129e4540a4d8d40aace47aa0c69f609da
-> [2] https://android.googlesource.com/platform/build/+/d9d2e7a42c18a997ae47e4174713b5e2942044b5
-> [3] https://android.googlesource.com/platform/build/+/f1e4df72651f38208f209f8c60ee18213a38d21d
-> [4] http://comments.gmane.org/gmane.comp.gnu.binutils/56324
 
--- 
-Nick Kralevich | Android Security | nnk@...gle.com | 650.214.4037
