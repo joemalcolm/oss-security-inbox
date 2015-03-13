@@ -1,44 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/03/11
-Message-ID: <Pine.LNX.4.64.1501031717560.1923@beijing.mitre.org>
-Date: Sat, 3 Jan 2015 17:19:16 -0500 (EST)
-From: cve-assign@...re.org
-To: Moritz Mühlenhoff <jmm@...til.org>
-cc: oss-security@...ts.openwall.com, cve-assign@...re.org, Fiedler Roman <Roman.Fiedler@....ac.at>, security@...ntu.com
-Subject: Re: parse_datetime() bug in coreutils
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/13/11
+Message-ID: <alpine.LFD.2.11.1503132328110.12380@wniryva>
+Date: Fri, 13 Mar 2015 23:30:23 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+Subject: CVE request: Linux kernel: tty: kobject reference leakage in tty_open
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On Mon, 29 Dec 2014, Moritz Mühlenhoff wrote:
+   Hello,
 
-> On Mon, Nov 24, 2014 at 06:47:24PM -0800, Seth Arnold wrote:
->> Hello,
->>
->> Fiedler Roman discovered that coreutils' parse_datetime() function
->> has some flaws that may be exploitable if the date(1), touch(1),
->> or potentially other programs, accept untrusted input for certain
->> parameters. While researching this issue, he discovered that it
->> was independantly discovered by Bertrand Jacquin and reported at
->> http://debbugs.gnu.org/cgi/bugreport.cgi?bug=16872
->>
->> $ touch '--date=TZ="123"345" @1'
->> Segmentation fault (core dumped)
->> $ date '--date=TZ="123"345" @1'
->> *** Error in `date': double free or corruption (out): 0x00007fffc9866c20 ***
->> Aborted (core dumped)
->> $
->>
->> The GNU bugtracker has this patch to fix the problem:
->> http://debbugs.gnu.org/cgi/bugreport.cgi?msg=11;filename=date-tz-crash.patch;att=1;bug=16872
->> and this patch to include the fix in coreutils and a small test case:
->> http://debbugs.gnu.org/cgi/bugreport.cgi?msg=19;filename=coreutils-date-crash.patch;att=1;bug=16872
->>
->> Can a CVE please be assigned for this issue.
+Linux kernel built with the virtual console support(CONFIG_VT) is vulnerable
+to a NULL pointer dereference issue. It could occur while accessing pseudo
+terminal device(/dev/pts/*) files.
 
-Use CVE-2014-9471.
+An unprivileged user could use this flaw to crash the system kernel resulting
+in DoS.
 
----
+Upstream fix:
+- -------------
+   -> https://git.kernel.org/linus/c290f8358acaeffd8e0c551ddcc24d1206143376
 
-CVE assignment team, MITRE CVE Numbering Authority M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+
+Thank you.
+- --
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBAgAGBQJVAyW3AAoJEN0TPTL+WwQfOCAP/3z7CRPQj4glHgVFdkxuzk1/
+xlXwJJTRYlVDWe2F/lCbeP+jzQne37MzVl8Qma4OA2iAuySsRUQvjkc/6mMB6j+6
+9LVg0XV6hlZl0oFmxcWbQlNQLuhJsHOPja863aNvKoDZbh6mVIGi98BOaBjeMQUd
+Y81pGh5+BFYVk6hhcWPA2Zxok/MW+HN/JjvDqQReILsL5ApqRAxw0EBmZ3YpWBYL
+oxdRUT2FoRTKB5FFEgm6KAQdTSc9iqnH/QUTE4/s5wMCy20lb6j9bIk7pKkE6VmA
+XLwtioC/ttNR/Npe2kPXHm3KG4MH8Uftjd3IYdtJeJ7vjjgmPY3jAZZm/dBECWRZ
+Q9waGh9k8t6pEhaCz4jql21m1uoHLritnrLuAz56dOfh3R6TS46QEKqf7IgaqZ41
+psgQQKmX3gy9lyWoWdcWYgCvg5QJaW2lVotTTbCbSs/qfNmqJo2nMzTVL5UxTYic
+Adj0Y3KvrkIbAjEdyaNmwOMqH2pq8LUb87wDlD4DD7pRzZDFV6vzXA7wL5Za7VOr
+S8t3VvFfsMPUW+Y2zTdahWiGkgiQXxmFhaOC9KeSWFmgpxDQjJSPtdFdlRdu6gtX
+9ZXd7JSkwcFPujAFJ4SHI67ilo1rnqh3n6HZqOtaKTQCn6L7Mnn3ht/vumkxQpbF
+qjvQJOX+4OcFRe025MOM
+=ZQtV
+-----END PGP SIGNATURE-----
