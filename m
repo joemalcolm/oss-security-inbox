@@ -1,33 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/18/4
-Message-ID: <54E47111.2030608@upv.es>
-Date: Wed, 18 Feb 2015 12:01:37 +0100
-From: Hector Marco <hecmargi@....es>
-To: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: CVE-Request: Linux ASLR mmap weakness: Reducing entropy by half
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/13/3
+Message-ID: <20150313113745.GA4135@odroid>
+Date: Fri, 13 Mar 2015 11:37:45 +0000
+From: Marek Kroemeke <kroemeke@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Disabling reading of kernel log buffer reading for user
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+http://lwn.net/Articles/414813/
 
-A bug in Linux ASLR implementation for versions prior to 3.19 has been 
-found. The issue is that the mmap area for processes is not properly 
-randomized on some architectures.
-
-Affected systems have reduced the mmap base area entropy of the 
-processes by half.
+echo 1 > /proc/sys/kernel/dmesg_restrict
 
 
-Details at:
-http://hmarco.org/bugs/linux-ASLR-reducing-mmap-by-half.html
-
-
-
-Could you please assign a CVE-ID for this?
-
-
-
-Hector Marco.
-http://hmarco.org
-
-Cyber-security researcher at
-http://cybersecurity.upv.es/
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+> 
+> Hello List,
+> 
+> After years working on Linux, I just found out, that any user not only root can read the kernel log buffer - I never even considered that this could be the case.
+> 
+> As this behavior is documented and expected, this is not a security vulnerability. But to avoid things like in [1], I would like to disable that on my machines.
+> 
+> Questions:
+> 
+> * What would be the side effects of making /dev/kmesg only root accessible? Maybe syslog not able to write kmessages to log?
+> 
+> * Would it be safe to disable the syslog syscall for action SYSLOG_ACTION_READ_* and all users except root and syslog? Does someone have tested selinux config for that?
+> 
+> hd
+> 
+> 
+> [1] http://www.halfdog.net/Security/2015/HavingFunWithDmesg/
+> 
+> - -- 
+> http://www.halfdog.net/
+> PGP: 156A AE98 B91F 0114 FE88  2BD8 C459 9386 feed a bee
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1
+> 
+> iEYEARECAAYFAlUCtGQACgkQxFmThv7tq+4FFQCeN4Txgu40/tDsWGSVaK2sm7La
+> VusAnRUCtETL9IGmaeSyQUt2dyCQgCpV
+> =Krnc
+> -----END PGP SIGNATURE-----
