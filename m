@@ -1,22 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/06/4
-Message-ID: <20150306080036.GC21378@kludge.henri.nerv.fi>
-Date: Fri, 6 Mar 2015 10:00:36 +0200
-From: Henri Salo <henri@...v.fi>
-To: cve-assign@...re.org
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE-Request: WeBid 1.1.1 Unrestricted File Upload Exploit
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/13/9
+Message-ID: <55031C24.2070501@gmail.com>
+Date: Fri, 13 Mar 2015 13:19:32 -0400
+From: Daniel Micay <danielmicay@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Vendor adoption of PIE INFO#934476 oss-security
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Mar 06, 2015 at 01:46:47PM +0700, Prathan Phongthiproek wrote:
-> Could you please help me to request the CVE-ID ?
+On 13/03/15 11:05 AM, Solar Designer wrote:
+> On Thu, Mar 12, 2015 at 08:31:42PM -0700, Nick Kralevich wrote:
+>> I wanted to provide a followup on this year-old thread.
 > 
-> http://www.exploit-db.com/exploits/36155/
+> Thank you!
 > 
-> PS. I already sent the CVE request to cve-assign@...re.org but they do not
-> have any response.
+>> With the release of Android 5.0, Android has removed support for
+>> non-PIE binaries [1] [2]. Attempting to run a non-PIE binary will
+>> generate an error on Android. In this way, we ensure that all binaries
+>> take full advantage of Android's ASLR implementation.
+>>
+>> This is just one of the many security enhancements added in Android
+>> 5.*, and one that I hope other Linux distributions will pick up.
+>>
+>> [1] https://source.android.com/devices/tech/security/enhancements/enhancements50.html
+>> [2] https://android.googlesource.com/platform/bionic/+/76e289c026f11126fc88841b3019fd5bb419bb67
 
-Adding MITRE to receivers. This issue has not been fixed yet.
+Sadly, PIE is much less useful on Android right now. Every app and many
+services are spawned from an initial zygote process without an exec, so
+nearly everything has the same ASLR bases. It is great to see progress
+in this space though. I hope to see the zygote process go away now that
+ART and modern hardware makes it much less necessary - especially if a
+process (or a pool) is pre-spawned during idle time.
 
--- 
-Henri Salo
+AFAIK, the change forbidding non-PIE binaries was backed out for the
+official 5.0 release
+(https://android.googlesource.com/platform/bionic/+/d81b3b275dff99561cbe5905ca63a1c72fa54a17).
+I guess that was fixed in 5.1? I haven't looked into it yet.
+
+> I brought this to Twitter, and here's a comment by Rich Felker:
+> 
+> <solardiz> Android 5.0 "has removed support for non-PIE binaries. Attempting to run a non-PIE binary will generate an error" http://www.openwall.com/lists/oss-security/2015/03/13/1
+> <@RichFelker> @solardiz Guess that means no emacs on Android...
+> <@solardiz> @RichFelker Why, can't one build Emacs as PIE?
+> <@RichFelker> @solardiz The whole dumper issue. The final emacs binary is a dump of an emacs with a lisp heap full of pointers and no relocation data.
+
+FWIW, I think various distributions are going to enable it once the PIE
+by default patches land:
+
+https://www.mail-archive.com/gcc-patches@gcc.gnu.org/msg105030.html
+
+There has been no luck getting someone to review them, so they missed
+the GCC 5 freeze deadline despite being ready before then.
+
+I proposed that we enable it by default on Arch via wrapper scripts, but
+it was rejected in favour of waiting for this patch to land. An OpenSUSE
+developer also voiced interest in the patches on the GCC mailing list.
+It just needs a committer who feels like reviewing it.
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
