@@ -1,65 +1,96 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/15/2
-Message-ID: <54B7E5B7.8090909@enovance.com>
-Date: Thu, 15 Jan 2015 11:07:19 -0500
-From: Tristan Cacqueray <tristan.cacqueray@...vance.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/13/13
+Message-ID: <CAFJ0LnH_tVeePx=TKO4kWFu0ym5L6XA9jMY5HYzuDrMWQ-HdYw@mail.gmail.com>
+Date: Fri, 13 Mar 2015 12:43:45 -0700
+From: Nick Kralevich <nnk@...gle.com>
 To: oss-security@...ts.openwall.com
-Subject: [OSSA 2015-002] Glance v2 API unrestricted path traversal through filesystem:// scheme
+Subject: Re: Vendor adoption of PIE INFO#934476 oss-security
 Content-Type: text/plain; charset=utf-8
 
-=====================================================================================
-OSSA-2015-002: Glance v2 API unrestricted path traversal through filesystem:// scheme
-=====================================================================================
+On Fri, Mar 13, 2015 at 10:19 AM, Daniel Micay <danielmicay@...il.com> wrote:
+> On 13/03/15 11:05 AM, Solar Designer wrote:
+>> On Thu, Mar 12, 2015 at 08:31:42PM -0700, Nick Kralevich wrote:
+>>> I wanted to provide a followup on this year-old thread.
+>>
+>> Thank you!
+>>
+>>> With the release of Android 5.0, Android has removed support for
+>>> non-PIE binaries [1] [2]. Attempting to run a non-PIE binary will
+>>> generate an error on Android. In this way, we ensure that all binaries
+>>> take full advantage of Android's ASLR implementation.
+>>>
+>>> This is just one of the many security enhancements added in Android
+>>> 5.*, and one that I hope other Linux distributions will pick up.
+>>>
+>>> [1] https://source.android.com/devices/tech/security/enhancements/enhancements50.html
+>>> [2] https://android.googlesource.com/platform/bionic/+/76e289c026f11126fc88841b3019fd5bb419bb67
+>
+> Sadly, PIE is much less useful on Android right now. Every app and many
+> services are spawned from an initial zygote process without an exec, so
+> nearly everything has the same ASLR bases. It is great to see progress
+> in this space though. I hope to see the zygote process go away now that
+> ART and modern hardware makes it much less necessary - especially if a
+> process (or a pool) is pre-spawned during idle time.
+>
+> AFAIK, the change forbidding non-PIE binaries was backed out for the
+> official 5.0 release
+> (https://android.googlesource.com/platform/bionic/+/d81b3b275dff99561cbe5905ca63a1c72fa54a17).
+> I guess that was fixed in 5.1? I haven't looked into it yet.
 
-:Date: January 15, 2015
-:CVE: Requested
+You are getting the dates of your patches out of order. There were
+three patches submitted in the following order:
+
+2014-05-08: Remove support for non-PIE executables
+https://android.googlesource.com/platform/bionic/+/2aebf5429bb1241a3298b5b642d38f73124c2026
+
+2014-06-19: Reenable support for non-PIE executables
+https://android.googlesource.com/platform/bionic/+/d81b3b275dff99561cbe5905ca63a1c72fa54a17
+
+2014-07-03: Revert "Reenable support for non-PIE executables"
+https://android.googlesource.com/platform/bionic/+/76e289c026f11126fc88841b3019fd5bb419bb67
+
+The last patch is definitely in Android 5.0, and was never backed out.
+
+  ~/aosp/bionic/linker$ git tag --contains
+76e289c026f11126fc88841b3019fd5bb419bb67
+  android-5.0.0_r1
+  android-5.0.0_r2
+  android-5.0.0_r3
+  android-5.0.0_r4
+  android-5.0.0_r5
+  android-5.0.0_r5.1
+  android-5.0.0_r6
+  android-5.0.0_r7
+  android-5.0.1_r1
+  android-5.0.2_r1
+  android-5.1.0_r1
+  android-l-preview_r2
+  android-wear-5.0.0_r1
 
 
-Affects
-~~~~~~~
-- Glance: up to 2014.1.3 and 2014.2 versions up to 2014.2.1
+>
+>> I brought this to Twitter, and here's a comment by Rich Felker:
+>>
+>> <solardiz> Android 5.0 "has removed support for non-PIE binaries. Attempting to run a non-PIE binary will generate an error" http://www.openwall.com/lists/oss-security/2015/03/13/1
+>> <@RichFelker> @solardiz Guess that means no emacs on Android...
+>> <@solardiz> @RichFelker Why, can't one build Emacs as PIE?
+>> <@RichFelker> @solardiz The whole dumper issue. The final emacs binary is a dump of an emacs with a lisp heap full of pointers and no relocation data.
+>
+> FWIW, I think various distributions are going to enable it once the PIE
+> by default patches land:
+>
+> https://www.mail-archive.com/gcc-patches@gcc.gnu.org/msg105030.html
+>
+> There has been no luck getting someone to review them, so they missed
+> the GCC 5 freeze deadline despite being ready before then.
+>
+> I proposed that we enable it by default on Arch via wrapper scripts, but
+> it was rejected in favour of waiting for this patch to land. An OpenSUSE
+> developer also voiced interest in the patches on the GCC mailing list.
+> It just needs a committer who feels like reviewing it.
+>
 
 
-Description
-~~~~~~~~~~~
-Jin Liu from EMC reported that path traversal vulnerabilities in
-Glance were not fully patched in OSSA 2014-041. By setting a malicious
-image location to a filesystem:// scheme an authenticated user can
-still download or delete any file on the Glance server for which the
-Glance process user has access to. Only setups using the Glance V2 API
-are affected by this flaw.
 
-
-Patches
-~~~~~~~
-- https://review.openstack.org/145974 (Icehouse)
-- https://review.openstack.org/145916 (Juno)
-- https://review.openstack.org/145640 (Kilo)
-
-
-Credits
-~~~~~~~
-- Jin Liu from EMC
-
-
-References
-~~~~~~~~~~
-- https://launchpad.net/bugs/1408663
-
-
-Notes
-~~~~~
-- This fix was included in the kilo-1 development milestone and will be
-  included in future 2014.2.2 (juno) and 2014.1.4 (icehouse) releases.
-- The OpenStack VMT recommends revoking all credentials stored in files
-  accessible by Glance as a precautionary measure.
-- A CVE has been requested for this issue, the OpenStack VMT will issue an
-  errata with the correct CVE number assigned once this information is
-  available.
-
---
-Tristan Cacqueray
-OpenStack Vulnerability Management Team
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+-- 
+Nick Kralevich | Android Security | nnk@...gle.com | 650.214.4037
