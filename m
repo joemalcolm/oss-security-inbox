@@ -1,42 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/21/5
-Message-Id: <20150221150739.5B0846C006F@smtpvmsrv1.mitre.org>
-Date: Sat, 21 Feb 2015 10:07:39 -0500 (EST)
-From: cve-assign@...re.org
-To: paul@...tisforge.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, dregad@...tisbt.org
-Subject: Re: CVE request: XSS in MantisBT
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/13/5
+Message-ID: <20150313124453.GA19584@pc.thejh.net>
+Date: Fri, 13 Mar 2015 13:44:53 +0100
+From: Jann Horn <jann@...jh.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: Disabling reading of kernel log buffer reading for user
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Fri, Mar 13, 2015 at 09:56:58AM +0000, halfdog wrote:
+> * What would be the side effects of making /dev/kmesg only root accessible? Maybe syslog not able to write kmessages to log?
+> * Would it be safe to disable the syslog syscall for action SYSLOG_ACTION_READ_* and all users except root and syslog? Does someone have tested selinux config for that?
 
-> I'm not actually sure what "types of attacks" are blocked
+/proc/sys/kernel/dmesg_restrict can be used to restrict access to the log buffer.
+It looks like at least rsyslogd uses /proc/kmsg to read messages from the log
+buffer, and that file is only accessible for root anyway.
 
-The vendor can expand on this if they wish. At present, the available
-information is this statement:
-
-  In 1.3, cabacdc2 + 3d0625d8 together form at least a *partial* fix
-
-in the http://openwall.com/lists/oss-security/2015/02/16/7 post. The
-concept of a code change with a "partial fix" ordinarily means that at
-least one attack vector is blocked by that code change, such as an
-attack vector that relied on a specific code path that was affected by
-the change.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJU6J6JAAoJEKllVAevmvmsDVIIAMVGqyQVahMFtcem3pOQym3z
-2u2WtvlwiAxQ9vvmFJvyuYzKWvjqXI17M30G4WhweriLtG/Xoqg2u4cQL5TC7hUP
-bVAD1yVnoGBEOOAUXZtsNg6Od79IMRkpOtdcdgKislsN7BZuwnXKkek8TNvjZtvz
-wL9lfwvjKkusoqohl7GSLZ9eErB5vY1tGAruzp4gzxnQZtZGGRMcvawwUe6ptuat
-UIoHZzglTRfMBEEgvMy7DdhHS3nc9YBuT3tK1C6a5h/UfMjKYvZjMEe0+hicL1kH
-WFFpYI7Cm451KgBs9JS5qVBlGLRFDa2Tt1sIZZ9q7+suYSSa6NjZOLLO0BMCpeg=
-=lsDW
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
