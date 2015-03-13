@@ -1,31 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/24/1
-Message-Id: <20150224033017.5F30672E002@smtpvbsrv1.mitre.org>
-Date: Mon, 23 Feb 2015 22:30:17 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/13/17
+Message-Id: <20150313232420.0AEDB6C0020@smtpvmsrv1.mitre.org>
+Date: Fri, 13 Mar 2015 19:24:20 -0400 (EDT)
 From: cve-assign@...re.org
-To: jmm@...ian.org
+To: ppandit@...hat.com
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: unace
+Subject: Re: CVE request: Linux kernel: tty: kobject reference leakage in tty_open
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=775003
+> Linux kernel built with the virtual console support(CONFIG_VT) is vulnerable
+> to a NULL pointer dereference issue. It could occur while accessing pseudo
+> terminal device(/dev/pts/*) files.
 > 
-> unace crashes when trying to test integrity of the attached file:
+> An unprivileged user could use this flaw to crash the system kernel resulting
+> in DoS.
 > 
-> gdb says it's an integer overflow, followed by buffer overflow:
-> 
-> #1  0x0000000000401558 in read_header (print_err=0) at unace.c:171
-> 171              memcpy(mhead.AV, tp, rd-(USHORT)(tp-readbuf));
-> (gdb) print rd-(USHORT)(tp-readbuf)
-> $1 = -27
-> 
-> This bug was found using American fuzzy lop:
-> https://packages.debian.org/experimental/afl
+> https://git.kernel.org/linus/c290f8358acaeffd8e0c551ddcc24d1206143376
 
-Use CVE-2015-2063.
+> TTY: drop driver reference in tty_open fail path
+> 
+> When tty_driver_lookup_tty fails in tty_open, we forget to drop a reference to the tty driver.
+> 
+> Fix that by adding tty_driver_kref_put to the fail path. 
+
+Use CVE-2011-5321.
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -35,11 +36,11 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJU6++4AAoJEKllVAevmvmsgwAIAIstNrDKMbTvgu6KWL4u+frE
-/glmgt4yTfcPiKbz9i54lmPTNva6xetiVxLT5A3s//u/AuWZEgMUArvEyK/sRTEf
-or9fwx8hW45j+z05ShzxXxNO92iXLZ9rCHV7ztlijapbiIQvyDW0TgRJ7m8VaEMq
-ak7zvfZCzDWdC/jhb2oLl2dfSDNlqRSJtq8YFNaz0pmBBsC77hwM/vqxbdVk4ite
-tu7QQ7nPPYHaVywOUXobZIhNRp+QogXAyQMGar/n5lgGFZPMDn/ItC4m4lBqFEA7
-jcosECnjPuj7JS7kizBUBz0K3Kc8DegyJjtLwOU2HQtnUbHHGsGbWoOw2L+IXn4=
-=lNTs
+iQEcBAEBAgAGBQJVA3DXAAoJEKllVAevmvmsFMIH/1Qme8WOCcx7UQK/pwkVuJum
+Fz040QuNKK+TWi6yWNpXNXsMYRlJVdtGqfQ5MtfyrpxtYs8YNVYVMpce/HTtVByR
+neYXaOLe1APB/xftf1ohGnzl5J3pYd6b9Rv3dSMLa/Ox/1b+xaUdq+l4r751hX0x
+NGETRMX/ZGjKn77MAKauSSf1ZnS7Mm19NSfLGXc/Of5VAFTwGJ/1HM7t+p0l2grA
+kQYTzUqlVs3bC2ff2ACCL9TnT5JmeiUwMYZPa1ahdAvL2c7kShKHo/44ctzgpQQI
+An3oD26zoSRQe4tqv8URe3bDCVdAyH89R23bsQDC3o8lj/v9Wep4jbTZwP50RJ4=
+=w+iT
 -----END PGP SIGNATURE-----
