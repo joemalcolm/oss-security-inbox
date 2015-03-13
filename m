@@ -1,22 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/30/17
-Message-ID: <20150130160339.GA3870@pisco.westfalen.local>
-Date: Fri, 30 Jan 2015 17:03:39 +0100
-From: Moritz Muehlenhoff <jmm@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/13/14
+Message-ID: <20150313194639.GA4645@kroah.com>
+Date: Fri, 13 Mar 2015 20:46:39 +0100
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org, abe@...ian.org
-Subject: CVE request: Xymon
+Subject: Re: CVE request: Linux kernel: tty: kobject reference leakage in tty_open
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-please assign a CVE ID for this buffer overflow in the Xymon
-network monitoring system:
+On Fri, Mar 13, 2015 at 11:30:23PM +0530, P J P wrote:
+>    Hello,
+> 
+> Linux kernel built with the virtual console support(CONFIG_VT) is vulnerable
+> to a NULL pointer dereference issue. It could occur while accessing pseudo
+> terminal device(/dev/pts/*) files.
+> 
+> An unprivileged user could use this flaw to crash the system kernel resulting
+> in DoS.
+> 
+> Upstream fix:
+> -------------
+>    -> https://git.kernel.org/linus/c290f8358acaeffd8e0c551ddcc24d1206143376
 
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=776007 
-http://sourceforge.net/p/xymon/code/7483/
+Digging up patches from 2011?  Why?  It should have long-ago been
+backported to all relevant kernel releases from any company that has a
+kernel that is still supported today that is older than the 3.2 release
+and newer than 2.6.28.
 
-Cheers,
-        Moritz
+And if you are a company that is ignoring stable kernel patches for
+their old kernel releases, well, that's just not very wise :)
 
+What does asking for a CVE for such an old issue help with?
 
+thanks,
 
+greg k-h
