@@ -1,41 +1,121 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/06/2
-Message-ID: <CAHQavwte5KFaBE4y9V+FPkhRaHEZ39o=H9aYidUTvUVAM8P9ig@mail.gmail.com>
-Date: Mon, 5 Jan 2015 09:56:24 -0800
-From: Korvin Szanto <Korvin@...tlandlabs.com>
-To: Henri Salo <henri@...v.fi>
-Cc: oss-security@...ts.openwall.com, cve-assign@...re.org, abuse@...crete5.org,  security@...crete5.org, Simo Ben youssef <simo@...xploit.com>
-Subject: Re: CVE request: Concrete5 XSS vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/13/4
+Message-Id: <E1YWNvV-00072K-Vq@xenbits.xen.org>
+Date: Fri, 13 Mar 2015 11:38:49 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 98 (CVE-2014-3969) - insufficient permissions checks accessing guest memory on ARM
 Content-Type: text/plain; charset=utf-8
 
-This has been fixed in 5.7.3 for some time
-https://github.com/concrete5/concrete5-5.7.0/commit/e3d47d2af88ddef36deaf754ef22f1f39b9b623b
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-We have a security disclosure program for this so any disclosure
-outside of our program is very irresponsible and unprofessional. You
-end up with outdated information and leave us unable to fix the issue
-in a secure way since we cannot see it until it's brought to our
-attention through our disclosure program.
+            Xen Security Advisory CVE-2014-3969 / XSA-98
+                              version 4
 
-On Fri, Jan 2, 2015 at 11:43 AM, Henri Salo <henri@...v.fi> wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
->
-> Can you assign CVE identifier for following vulnerability in Concrete5, thanks.
->
-> http://seclists.org/bugtraq/2014/Dec/53
-> http://osvdb.org/115633
-> http://osvdb.org/115634
->
-> ps. there is something wrong with http://www.openwall.com/lists/oss-security/ it
-> says "an error occurred while processing this directive"
->
-> - --
-> Henri Salo
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1.4.12 (GNU/Linux)
->
-> iEYEARECAAYFAlSm9P4ACgkQXf6hBi6kbk+bfQCgjF/EWeO4Wfs0SUSsq96LwNpE
-> AWAAn1yKEw9eDAlJ6cQczjzHZ7VGdXUp
-> =0mVH
-> -----END PGP SIGNATURE-----
+       insufficient permissions checks accessing guest memory on ARM
+
+UPDATES IN VERSION 4
+====================
+
+Supply an additional patch for arm64. The original patches had the
+permissions check backwards, meaning that a guest could read a
+write-only mapping and vice versa, rendering the original fix
+ineffective an inparticular not closing down the ability for a guest
+to write to a readonly page via the hypervisor.
+
+This issue was discussed on a public IRC channel and therefore it has
+been agreed with the discoverer that it should not subject to a new
+embargo.
+
+32-bit ARM systems are not affected by this mistake; the original fix
+remains correct for 32-bit.
+
+ISSUE DESCRIPTION
+=================
+
+When accessing guest memory Xen does not correctly perform permissions
+checks on the (possibly guest provided) virtual address: it only
+checks that the mapping is readable by the guest, even when writing on
+behalf of the guest.  This allows a guest to write to memory which
+it should only be able to read.
+
+A guest running on a vulnerable system is able to write to memory
+which should be read-only.  This includes supposedly read only foreign
+mappings established using the grant table mechanism.  Such read-only
+mappings are commonly used as part of the paravirtualised I/O drivers
+(such as guest disk write and network transmit).
+
+In order to exploit this vulnerability the guest must have a mapping
+of the memory; it does not allow access to arbitrary addresses.
+
+In the event that a guest executes code from a page which has been
+shared read-only with another guest it would be possible to mount a
+take over attack on that guest.
+
+IMPACT
+======
+
+A domain which is deliberately exchanging data with another,
+malicious, domain, may be vulnerable to privilege escalation.  The
+vulnerability depends on the precise behaviour of the victim domain.
+
+In a typical configuration this means that, depending on the behaviour
+of the toolstack or device driver domain, a malicious guest
+administrator might be able to escalate their privilege to that of the
+whole host.
+
+VULNERABLE SYSTEMS
+==================
+
+Both 32- and 64-bit ARM systems are vulnerable from Xen 4.4 onward.
+
+MITIGATION
+==========
+
+None.
+
+CREDITS
+=======
+
+This issue was discovered by Julien Grall.
+
+RESOLUTION
+==========
+
+Applying the appropriate pair of attached patches along with the
+additional update resolves this issue.
+
+xsa98-unstable-{01,02}.patch        xen-unstable
+xsa98-4.4-{01,02}.patch             Xen 4.4.x
+xsa98-update.patch                  Additional update for both unstable and 4.4
+
+$ sha256sum xsa98*.patch
+b8535aad5ae969675d59781a81ce0b24491f1abc01aaf36c3620fd7fb6cc84eb  xsa98-unstable-01.patch
+f5e8a93525a8905653da6377097f77681ff8121b973063ff6081e27547ceaa67  xsa98-unstable-02.patch
+6f63bc2e0a0a39bbd9137513a5d130ae2c78d1fd2ebf9172bf49456f73f0a67b  xsa98-4.4-01.patch
+b338472ecce3c31a55d1a936eebbd4e46cb3ad989b91a64d4b8c5d3ca80d875d  xsa98-4.4-02.patch
+8bb4a23174c0c9b1a23a41d4669900877483fd526d331d0c377c32845feb2eb8  xsa98-update.patch
+$
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQEcBAEBAgAGBQJVAswXAAoJEIP+FMlX6CvZHBQIAJGGvIhPc7ZKa1uVGvY/wpbX
+C3mjzLksdFVtIYfmMxTctuZytpA+s4DwrIRg2qfL1KA+2Qz/jjJP6HtzPM9Er8JJ
+zEz9UUFreccDNHVxZW2vmHxKJ4T3SIPlmx/E3dsr9kiHLGalW3XvKwCgRJ5ZceID
+nvasZuCPYK1zlTYnIQERQDjXVmUd2mipHBFI69o81dyZkLEtlB9OGXC+OZKPVE0A
+GdvkEXhca6GYSvdD3t1nEoDrpsqMwpi1bYpd0dPoQbSW6cY7DomzcT5f4zmOJRxB
+L/SYOqsl4SomH/FO0tYw1IrFQ1VVShmFlIre3EIeXWGa8LwAQUVt+qdYgvSPncc=
+=slo3
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa98-unstable-01.patch" of type "application/octet-stream" (5701 bytes)
+
+Download attachment "xsa98-unstable-02.patch" of type "application/octet-stream" (7913 bytes)
+
+Download attachment "xsa98-4.4-01.patch" of type "application/octet-stream" (5699 bytes)
+
+Download attachment "xsa98-4.4-02.patch" of type "application/octet-stream" (7800 bytes)
+
+Download attachment "xsa98-update.patch" of type "application/octet-stream" (954 bytes)
