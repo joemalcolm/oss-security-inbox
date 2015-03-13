@@ -1,33 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/15/5
-Message-ID: <20150116000650.6b0f3a05@pc>
-Date: Fri, 16 Jan 2015 00:06:50 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/13/7
+Message-ID: <20150313150524.GA690@openwall.com>
+Date: Fri, 13 Mar 2015 18:05:24 +0300
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-Request -- CMS b2evolution v.5.2.0 -- Reflecting XSS vulnerability in filemanager functionality
+Cc: "CERT(R) Coordination Center" <cert@...t.org>
+Subject: Re: Vendor adoption of PIE INFO#934476 oss-security
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 15 Jan 2015 16:44:39 -0500
-Daniel Kahn Gillmor <dkg@...thhorseman.net> wrote:
+On Thu, Mar 12, 2015 at 08:31:42PM -0700, Nick Kralevich wrote:
+> I wanted to provide a followup on this year-old thread.
 
-> Is a bit troubling, because it seems to rely on the Subject: line for
-> necessary context in interpreting the signed message.
+Thank you!
 
-There's probably no better evidence for the severe usability issues
-pgp-based mail has than people on a mailing list of IT security
-specialists explaining each other how to properly use it :-)
+> With the release of Android 5.0, Android has removed support for
+> non-PIE binaries [1] [2]. Attempting to run a non-PIE binary will
+> generate an error on Android. In this way, we ensure that all binaries
+> take full advantage of Android's ASLR implementation.
+> 
+> This is just one of the many security enhancements added in Android
+> 5.*, and one that I hope other Linux distributions will pick up.
+> 
+> [1] https://source.android.com/devices/tech/security/enhancements/enhancements50.html
+> [2] https://android.googlesource.com/platform/bionic/+/76e289c026f11126fc88841b3019fd5bb419bb67
 
-Having said that: I have a rough kind-of-proposal to fix exactly that
-problem. I think pgp not encrypting/signing the subject is one of its
-major usability fails.
-I'll send my ideas to the gpg dev list soon, will post a link here when
-done. Let's see if we can at least fix that.
+I brought this to Twitter, and here's a comment by Rich Felker:
 
--- 
-Hanno Böck
-http://hboeck.de/
+<solardiz> Android 5.0 "has removed support for non-PIE binaries. Attempting to run a non-PIE binary will generate an error" http://www.openwall.com/lists/oss-security/2015/03/13/1
+<@RichFelker> @solardiz Guess that means no emacs on Android...
+<@solardiz> @RichFelker Why, can't one build Emacs as PIE?
+<@RichFelker> @solardiz The whole dumper issue. The final emacs binary is a dump of an emacs with a lisp heap full of pointers and no relocation data.
 
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
-
-Content of type "application/pgp-signature" skipped
+Alexander
