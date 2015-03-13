@@ -1,34 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/23/1
-Message-ID: <54EA91C5.9050607@redhat.com>
-Date: Sun, 22 Feb 2015 19:34:45 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/13/12
+Message-ID: <CAFOKM3r5geYXHitFzrY7PjVcRGvdUS_XOsiCSHaubM9z+cYL3A@mail.gmail.com>
+Date: Fri, 13 Mar 2015 12:23:09 -0700
+From: Dean Pierce <pierce403@...il.com>
 To: oss-security@...ts.openwall.com
-CC: Assign a CVE Identifier <cve-assign@...re.org>, videolan@...eolan.org
-Subject: Re: older issues in libbluray
+Subject: catdoc has bugs
 Content-Type: text/plain; charset=utf-8
 
-With apologies, I tracked down the original report and added it to our
-BZs. I was also under the impression VideoLan had been contacted but
-just to ensure this is the case adding them to the CC.
+"catdoc" is a command line tool for extracting readable text from
+Microsoft office documents.  It is used by the command "less" when
+opening a .doc file, and if it's not installed, less will ask you to
+install it.  It's also listed as a forensics tool on certain websites.
+Catdoc has bugs.
 
-On 22/02/15 11:43 AM, Moritz Mühlenhoff wrote:
-> On Fri, Feb 06, 2015 at 04:21:20PM -0700, Kurt Seifried wrote:
->> https://bugzilla.redhat.com/show_bug.cgi?id=959434
->> https://bugzilla.redhat.com/show_bug.cgi?id=959433
->>
->> these may warrant a cve
-> 
-> Have these been reported to libbluray upstream? The
-> Bugzilla entries are rather scarce on details.
-> 
-> Cheers,
->         Moritz
-> 
+The attached* word documents were generated with American Fuzzy Lop.
+The first attached tarball contains 35 somewhat analyzed sample
+crashes.  I've also included the raw crash samples with 27 additional
+crashes that were generated between the initial disclosure time and
+right now.  AFL identified them as unique issues (presumably different
+code paths) though the offending code seems to be in the following
+places:
 
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+substmap.c:151 (crash)
+numutils.c:22 (some crash, some trigger ASAN)
+ole.c:108 (ASAN)
+ole.c:315 (ASAN)
 
+The ASAN crashes indicate memory corruptions, but there are some solid
+segfaults in substmap.c and numultils.c.  The crashes seem to be read
+violations, so non-trivial to exploit, and since DoS and memory
+disclosures aren't super interesting for document parers, it's
+unlikely that any of these deserve a CVE.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+There are likely more bugs, and catdoc also includes a ppt parser and
+an xls parser.
+
+* The attachments were too big (>200k), so I made this website instead
+: https://catdocbugs.neocities.org/
+
+  - DEAN
