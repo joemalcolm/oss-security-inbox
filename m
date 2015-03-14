@@ -1,55 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/12/13
-Message-Id: <20150312202911.2627A3AE1F9@smtpvbsrv1.mitre.org>
-Date: Thu, 12 Mar 2015 16:29:11 -0400 (EDT)
-From: cve-assign@...re.org
-To: vkaigoro@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: novnc: session hijack through insecurely set session token cookies
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/14/4
+Message-ID: <CAN-Kwu2avp1zjFAk5Wrbe-HNFrUtuCpXYJrLN89tYb+Aq98aeg@mail.gmail.com>
+Date: Sat, 14 Mar 2015 11:50:48 -0500
+From: Ian Cordasco <graffatcolmingov@...il.com>
+To: oss-security@...ts.openwall.com
+Cc: Cory Benfield <cory@...asa.co.uk>, Matthew Daley <mattd@...fuzz.com>, requests@...relist.org
+Subject: CVE Request for python-requests session fixation vulnerability
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Last night, Matthew Daley (CC'd on this email) privately disclosed to
+the requests project a vulnerability in requests which has now been
+fixed in requests v2.6.0
+(https://warehouse.python.org/project/requests/2.6.0/) by this commit:
+https://github.com/kennethreitz/requests/commit/3bd8afbff29e50b38f889b2f688785a669b9aafc.
 
-> noVNC prior to this patch:
-> https://github.com/kanaka/noVNC/commit/ad941faddead705cd611921730054767a0b32dcd
-> allows an attacker to steal insecurely set session token cookies,
-> hijacking active or inactive VNC sessions.
-> 
-> https://bugzilla.redhat.com/show_bug.cgi?id=1193451
+The following is the relevant excerpts from the description provided by Matthew:
 
-> Adds support for secure attribute on token cookie
+The issue occurs when Requests is handling a HTTP response that is a
+redirection and that also sets cookies without an explicit domain
+parameter. Instead of the cookies only being set for the domain which
+sent the HTTP response, they are also sent to the redirection target,
+regardless of its domain.
 
-> This patch adds support for the secure attribute on token
-> cookies (sent by nova-novncproxy). If the https is used
-> to transfer the cookie, the secure attribute is set thus
-> restricting server requestes to secure conections only.
-> This should prevent man-in-the-middle attacks.
+The issue could be exploited in the following ways:
+* If you are the redirection source (ie. you can make Requests hit
+your URL), you can make Requests perform a request to any third-party
+domain with cookies of your choosing. This may be useful in performing
+a session fixation attack.
+* If you are the redirection target (ie. you can make a third-party
+site redirect to your URL), you are able to steal any cookies set by
+the third-party redirection.
 
-Use CVE-2013-7436. The "If the https is used to transfer the cookie"
-text in the commit seems somewhat confusing. As far as we can tell,
-the new code does not mean that the server looks for cookie
-transmission over https and then decides to use the secure attribute.
-Instead, the new code seems to have the "normal" behavior in which the
-server sets the secure attribute upon any use of an https session by
-the client.
+The change that introduced this vulnerability was first included in
+version 2.1.0 of requests. As such every version since that version up
+to and including 2.5.3 are vulnerable to this attack.
 
-In other words, there isn't an incomplete fix in which the first
-cookie transmission over https lacks the secure attribute.
+Please assign an identifier for this.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJVAfXlAAoJEKllVAevmvmspnYH/j1lH1Nm/160CaQWIPg3jWi0
-I2pBb6ITCQ53UNLnXOAHWjPbDBNtjJbznVzU9wXH3x+B1Ty3RSBrnQ8UdKXJQ908
-224P3JYl+BfRrNQh2p4Ds600THZijh5KC6ojk293Y5nN1Z3s6d4FvZVTosaRd+nf
-auK+aOzik32xo8gSRo296ktz0tEa7mdMx7484Zau6jubYhzBKq9mNTz96Fx9nNz0
-GX2m/7zId/PvoMSfH96QbhXOePPU4PJJIH58KXUQeWqCQM3rRuMsXNoIfg9eRsLW
-ki/dPQZidUWwYlSy0OwqFAUUfjX0gnGOSSdxGXUSuUXBQDKamvsLL09Xz+EoeGo=
-=rp9s
------END PGP SIGNATURE-----
+Thank you,
+Ian Cordasco
