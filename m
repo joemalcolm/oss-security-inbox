@@ -1,24 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/04/5
-Message-ID: <20150204094039.GC13052@suse.de>
-Date: Wed, 4 Feb 2015 10:40:39 +0100
-From: Johannes Segitz <jsegitz@...e.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/14/3
+Message-ID: <me124c$4ga$1@ger.gmane.org>
+Date: Sat, 14 Mar 2015 11:22:04 +0100
+From: Damien Regad <dregad@...tisbt.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: NULL ptr deref in php
+Subject: Re: CVE-2014-6316: URL redirection issue in MantisBT
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On 2014-12-05 23:35, P Richards wrote:
+> "Paul Richards also found another redirection issue in permalink_page.php,
+ > which turned out to have the same root cause."
+>
+> And nik-picking here, but the issue that I identified in permalink_page.php
+ > I believe was a cross site scripting issue and not a URL redirection
+ > vulnerability so should probably be allocated a separate CVE
+ > identifier?
 
-couldn't find a CVE for https://bugs.php.net/bug.php?id=68545 fixed in
-http://git.php.net/?p=php-src.git;a=commitdiff;h=13f1c276ab72cf1a8a400fd013b9289d0018a340(1)
+For the record, you reported it to me as a redirection, in the PDF 
+document you sent by e-mail.
 
-Can a CVE please be assigned?
+Anyway, since I came upon this following up on another user's report for 
+the same issue, I'm setting things straight now with a CVE request for 
+the XSS:
 
-Johannes
---
-GPG Key E7C81FA0       EE16 6BCE AD56 E034 BFB3  3ADD 7BF7 29D5 E7C8 1FA0
-Subkey fingerprint:    250F 43F5 F7CE 6F1E 9C59  4F95 BC27 DD9D 2CC4 FD66
-SUSE LINUX GmbH        Maxfeldstraße 5            90409 Nürnberg, Germany
-GF: Felix Imendörffer, Jane Smithard, Jennifer Guild, Dilip Upmanyu, Graham Norton, HRB 21284 (AG Nürnberg)
+http://thread.gmane.org/gmane.comp.security.oss.general/16119
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+
