@@ -1,45 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/19/8
-Message-Id: <20150219182524.B8E5A6C0013@smtpvmsrv1.mitre.org>
-Date: Thu, 19 Feb 2015 13:25:24 -0500 (EST)
-From: cve-assign@...re.org
-To: tristan.cacqueray@...vance.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request for vulnerability in OpenStack Glance
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/14/2
+Message-ID: <me11dj$suh$1@ger.gmane.org>
+Date: Sat, 14 Mar 2015 11:09:55 +0100
+From: Damien Regad <dregad@...tisbt.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request: XSS issue in MantisBT permalink_page.php
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Greetings,
 
-> Title: Glance import task leaks image in backend
+Please assign a CVE ID for the following issue
 
->   https://review.openstack.org/#/c/122427/
->   Sep 18, 2014 ... an exception is raised and is not handled ...
->   the uploaded image file stays in a storage and clogs it
+Description:
 
-Use CVE-2014-9684.
+MantisBT's permalink_page.php builds a permanent link to a configured 
+filter. Using a crafted URL, an attacker can make this link execute 
+arbitrary javascript code in the user's browser.
+
+Affected versions:
+- >= 1.1.0a4
+- 1.3.0-beta.1
+
+Fixed in versions:
+- 1.2.19 (released 2015-01-25)
+- 1.3.0-beta.2 (not yet released)
+
+Patch:
+See Github [1]
+
+Credit:
+This vulnerability was originally discovered by Paul Richards in May 
+2014, with the first public report in [2] and also mentioned in [3], 
+although a CVE was never requested for it.
+It was recently reported a second time by Robert Foggia in [4], leading 
+to the present CVE request.
+The issue was fixed by Damien Regad (MantisBT Developer), as a 
+side-effect of addressing CVE-2015-1042, see [5].
+
+References:
+Further details will be available in our issue tracker [2] once this 
+goes public.
+
+[1] https://github.com/mantisbt/mantisbt/commit/d95f070d (1.2.x)
+     https://github.com/mantisbt/mantisbt/commit/e7e2b550 (1.3.x)
+[2] https://www.mantisbt.org/bugs/view.php?id=17362#c40613
+[3] http://article.gmane.org/gmane.comp.security.oss.general/15022
+[4] https://www.mantisbt.org/bugs/view.php?id=19493
+[5] https://www.mantisbt.org/bugs/view.php?id=17997
 
 
->   https://review.openstack.org/#/c/156553
->   Feb 17, 2015 ... Import task does not update the location
->   of the image ... Image data remains in backend for
->   deleted image
-
-Use CVE-2015-1881.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJU5in4AAoJEKllVAevmvms/QgH/0y9Fj40y8JICaidw34EI1yI
-u0tXYxFQAMoVp53K/p4ypgQX7MMAo6AuoaO4eddpZiSl9cQ1cQxKGsnB9a2WDj0C
-zfWAjRInS8npK5/r3FGrOujQMB4l1f8s6ZoOL09hzlAT4Lp7U7Cg0WJblpy7Zn9Y
-U/acaglORheKVylWuY2NIuS9mHcHq9Ohq85eZXSQ3pc1q5gaW/lI33AEmrKgydj8
-+kIT+Uu9PcoWE6NmXBswWQk9phmv3OPFDJLqQI+cch7UD+RP6D0I843b1wcLPt0U
-ryTmqy7UtIIw3fH7bdU6/q12176Pci0UjEVhR/WrmZf+CiP6kKJFgw62iPPCGfg=
-=+BQe
------END PGP SIGNATURE-----
