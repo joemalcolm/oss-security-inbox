@@ -1,29 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/03/18
-Message-ID: <Pine.LNX.4.64.1501031831560.1923@beijing.mitre.org>
-Date: Sat, 3 Jan 2015 18:32:26 -0500 (EST)
-From: cve-assign@...re.org
-To: Chris Cormack <chris@...ballofwax.co.nz>
-cc: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: Re: CVE request: XSS issues in Koha
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/14/5
+Message-ID: <20150314223525.GZ2456@yuggoth.org>
+Date: Sat, 14 Mar 2015 22:35:25 +0000
+From: Jeremy Stanley <fungi@...goth.org>
+To: OSS Security <oss-security@...ts.openwall.com>
+Cc: CVE Request <cve-assign@...re.org>, Etherpad Security <security@...erpad.org>, John McLear <John@...ear.co>, webzwo0i <webzwo0i@...2.de>, Stefan Müller <stefan@...fans-entwicklerecke.de>
+Subject: CVE Request for information leak in Etherpad exports
 Content-Type: text/plain; charset=utf-8
 
+A vulnerability was discovered in Etherpad (see below). In order to
+ensure full traceability, we need a CVE number assigned that we can
+attach to further notifications. This issue is already public.
 
-On Sat, 27 Dec 2014, Chris Cormack wrote:
+Title: Information leak in Etherpad exports
+Reporter: webzwo0i
+Versions: 1.5.0 through 1.5.1
 
-> As a current release maintainer for Koha I would like to request a CVE
-> number for an XSS vulnerability that has been address by Koha releases
-> 3.16.6 and 3.18.2
->
-> The bug fixed is
-> http://bugs.koha-community.org/bugzilla3/show_bug.cgi?id=13425
-> There is an xss vulnerability in 3.16, 3.18 and master in the opac and
-> intranet facets
+Description:
+webzwo0i reported a vulnerability in the export functionality of
+current Etherpad releases. When exporting a padID all pads for which
+the requested ID is a substring are also returned, regardless of
+access restriction, resulting in an information leak. This includes
+group pads created via the API.
 
-Use CVE-2014-9446.
+Notes:
+This bug was introduced in commit 1081156 which was initially
+included in the 1.5.0 release, and is fixed in commit a0fb652 which
+will appear in a future 1.5.2 release.
 
----
+References:
+https://github.com/ether/etherpad-lite/commit/a0fb652
 
-CVE assignment team, MITRE CVE Numbering Authority M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-- 
+Jeremy Stanley
+
+Download attachment "signature.asc" of type "application/pgp-signature" (950 bytes)
