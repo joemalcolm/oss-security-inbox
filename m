@@ -1,25 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/01/8
-Message-ID: <CAPC3xaq-ZcxbBdibGOz84r8inV3FiEpbvjoeKboHf_5a7Bxjbg@mail.gmail.com>
-Date: Sun, 1 Feb 2015 11:22:54 -0800
-From: Paul Pluzhnikov <ppluzhnikov@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: Joseph Myers <jsm28@....gnu.org>
-Subject: CVE request: heap buffer overflow in glibc swscanf
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/15/3
+Message-Id: <20150315012240.AC4BB3AE215@smtpvbsrv1.mitre.org>
+Date: Sat, 14 Mar 2015 21:22:40 -0400 (EDT)
+From: cve-assign@...re.org
+To: fungi@...goth.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, security@...erpad.org, John@...ear.co, webzwo0i@...2.de, stefan@...fans-entwicklerecke.de
+Subject: Re: CVE Request for information leak in Etherpad exports
 Content-Type: text/plain; charset=utf-8
 
-Greetings,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-https://sourceware.org/bugzilla/show_bug.cgi?id=16618
-is almost 1 year old, and still not fixed in glibc trunk.
+> When exporting a padID all pads for which the requested ID is a
+> substring are also returned, regardless of access restriction,
+> resulting in an information leak.
 
-I have verified that the test case from it fails with libc6
-2.19-0ubuntu6.5 and current trunk glibc.
+> https://github.com/ether/etherpad-lite/commit/a0fb65205c7d7ff95f00eb9fd88e93b300f30c3d
+> src/node/utils/ExportEtherpad.js
 
-Don't know if it's exploitable, but it seems like it could easily be.
+Use CVE-2015-2298.
 
-(I'll see if I can fix it in the mean time.)
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-Thanks,
--- 
-Paul Pluzhnikov
+iQEcBAEBAgAGBQJVBN5hAAoJEKllVAevmvmsIWYIAK2zmv2az2A9vdA6+kDMqzCs
+z3RLJsiRxb1TRSYN1TSrrIQ3+LAJhE+JxiFAWCp0jnkdOK86Z6p0hU08O2ZIMhQR
+gExq6WvmestmGJ/OIJ0qIBiFhlDTgHD43ZtrTduTMteTHt27W5fAFhg4xOsufHUw
+TSzODFHfgCCofq2ybOIufnMnovPEdSrSdbTwD+W1r8sIGOjjJj3+ZCXFXgkB/604
+yOaXXupyXizujecLqdHxTgs3DJfa9qhyEGoyEpQbAAa6Od0yJGeiO0pGMXG2EPSJ
+m+bqTdm9X9w2qWC5jiwCC5viOo8/xktIga4mIR99FbXY4z8bSP90odusYf1caxU=
+=G10F
+-----END PGP SIGNATURE-----
