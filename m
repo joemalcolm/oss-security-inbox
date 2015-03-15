@@ -1,21 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/29/29
-Message-ID: <87egqdb1c8.fsf@alice.fifthhorseman.net>
-Date: Thu, 29 Jan 2015 18:42:47 -0500
-From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: xchat/hexchat don't properly verify SSL certificates
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/15/1
+Message-Id: <20150315011442.06B013AE215@smtpvbsrv1.mitre.org>
+Date: Sat, 14 Mar 2015 21:14:42 -0400 (EDT)
+From: cve-assign@...re.org
+To: graffatcolmingov@...il.com
+Cc: cve-assign@...re.org, cory@...asa.co.uk, mattd@...fuzz.com, oss-security@...ts.openwall.com
+Subject: Re: CVE Request for python-requests session fixation vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On Thu 2015-01-29 18:04:52 -0500, Reed Loden wrote:
-> You're welcome to check the "Accept invalid SSL certificates" box in that
-> case, but the default should be that SSL/TLS certificates are correctly
-> validated. :)
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Agreed.  This is 2015.  The default stance for any network-facing tool
-that claims to use TLS should be to validate certificates.  Anything
-less is a vulnerability, and should be treated as such.
+> https://github.com/kennethreitz/requests/commit/3bd8afbff29e50b38f889b2f688785a669b9aafc
 
-    --dkg
+> Instead of the cookies only being set for the domain which sent the
+> HTTP response, they are also sent to the redirection target
 
-Download attachment "signature.asc" of type "application/pgp-signature" (949 bytes)
+Use CVE-2015-2296 for this one issue that has impacts of both
+session fixation and cookie stealing.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJVBNu0AAoJEKllVAevmvmsnf8H/2HJTi7OH++STszOmfMkHQTO
+t+LO8G44Ge9NwmMbZF3lXy7Yi71VJLcpNjrHs2+fPiUWZmYaP3+5d5tDOOz8au8c
+iuOdxoNucOBaJNvXIVUkzjeKqz640zlu2+RCzVwJ7GSLQ9wtj4adMU3hgQ1OtY6O
+9jtXnSW6L16NKTaegOn7Ay+0eCEVPDSKaeXSH9ITmwklsnome/HSav+co/KMy121
+pcUow+qForQGPkboy95HWAwN0IJycASwKxHpW6RmOSg8zYwjrpsDrufdTkKarl4T
+xi3LKLUp4k611XzPG2LZAcfs5Q4XARpbbp/TICQVx7E5VmKrdtGhObMJj8WgT9A=
+=VU7C
+-----END PGP SIGNATURE-----
