@@ -1,107 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/10/5
-Message-Id: <E1YVIqd-00033H-Pd@xenbits.xen.org>
-Date: Tue, 10 Mar 2015 12:01:19 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 123 (CVE-2015-2151) - Hypervisor memory corruption due to x86 emulator flaw
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/15/6
+Message-Id: <20150315173739.6DCCA6C0017@smtpvmsrv1.mitre.org>
+Date: Sun, 15 Mar 2015 13:37:39 -0400 (EDT)
+From: cve-assign@...re.org
+To: falonsoe@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, oss@...ernot.info
+Subject: Re: CVE Request: PHP 5.6.6 changelog
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-            Xen Security Advisory CVE-2015-2151 / XSA-123
-                              version 4
+> [1] PHP: heap buffer overflow in enchant_broker_request_dict()
+> https://bugs.php.net/bug.php?id=68552
+> http://svn.php.net/viewvc/pecl/enchant/trunk/enchant.c?r1=317600&r2=335803
+> https://bugzilla.redhat.com/show_bug.cgi?id=1194737
 
-         Hypervisor memory corruption due to x86 emulator flaw
+> AddressSanitizer: heap-buffer-overflow ...
+> WRITE of size 4
 
-UPDATES IN VERSION 4
-====================
+Use CVE-2014-9705.
 
-Public release.
 
-ISSUE DESCRIPTION
-=================
+> [3] PHP: use after free in phar_object.c
+> https://bugs.php.net/bug.php?id=68901
+> http://git.php.net/?p=php-src.git;a=commit;h=b2cf3f064b8f5efef89bb084521b61318c71781b
+> https://bugzilla.redhat.com/show_bug.cgi?id=1194747
 
-Instructions with register operands ignore eventual segment overrides
-encoded for them. Due to an insufficiently conditional assignment such
-a bogus segment override can, however, corrupt a pointer used
-subsequently to store the result of the instruction.
+The bug report refers to this version of the code:
 
-IMPACT
-======
+https://raw.githubusercontent.com/php/php-src/ad32e033274ea49d05164418241946d2f1798894/ext/phar/phar_object.c
 
-A malicious guest might be able to read sensitive data relating to
-other guests, or to cause denial of service on the host. Arbitrary code
-execution, and therefore privilege escalation, cannot be excluded.
+  newpath = oldpath;
+  goto its_ok;
 
-VULNERABLE SYSTEMS
-==================
+with
 
-Xen 3.2.x and later are vulnerable.
-Xen 3.1.x and earlier have not been inspected.
+  its_ok:
+  if (SUCCESS == php_stream_stat_path(newpath, &ssb)) {
+     efree(oldpath);
+     zend_throw_exception_ex(spl_ce_BadMethodCallException, 0, "phar \"%s\" exists and must be unlinked prior to conversion", newpath);
 
-Only x86 systems are vulnerable.  ARM systems are not vulnerable.
+Use CVE-2015-2301.
 
-MITIGATION
-==========
 
-There is no mitigation available for this issue.
+> [2] PHP: Double free with disabled ZMM
+> https://bugs.php.net/bug.php?id=68827
+> http://git.php.net/?p=php-src.git;a=commit;h=91aa340180eccfc15d4a143b54d47b8120f898be
+> https://bugzilla.redhat.com/show_bug.cgi?id=1194741
 
-CREDITS
-=======
+This apparently ended with:
 
-This issue was discovered by Felix Wilhelm of ERNW GmbH.
+  [2015-01-14 12:53 UTC] tony2001@....net
+    -Type: Security
+    +Type: Feature/Change Request 
 
-RESOLUTION
-==========
+There is no CVE ID. It is potentially confusing because the commit
+uses the original title of the bug report, but the "[2015-01-14 12:33
+UTC]" comment suggests that a double free is impossible.
 
-Applying the appropriate attached patch resolves this issue.
-
-xsa123.patch                 xen-unstable, Xen 4.5.x, Xen 4.4.x
-xsa123-4.3-4.2.patch         Xen 4.3.x, Xen 4.2.x
-
-$ sha256sum xsa123*.patch
-e6da3a2c35b50e163b15100ef28a48dca429160104f346fc82be4711fe60f64f  xsa123-4.3-4.2.patch
-994cf1487ec5c455fce4877168901e03283f0002062dcff8895a17ca30e010df  xsa123.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJU/tzZAAoJEIP+FMlX6CvZV64IAJOsaNqXoLZQ0sAdfJpE6lnv
-KtYzXixzTTrP87cWmkYfkLTcuQdMJKUNe00xRoEP2ES1I2XUC4dy9MrlaTpHOJ27
-hZ1OpDkiOOk6B8Scf1PI6pvXZXzpnoQITPRhxUgPawIBrtPW/OP8pdUbTeGsw3MJ
-hUjixTBT+Ok2Geq1U/Ki+aNe+lnLOjkuivH2nkZGsWYrRAm7Uypmtn9obQzZ4piB
-OGDAsuHSXtOPGgmtztj+NW8PJ+6oURkBi0ITtc12lUwJodQV9OIOsvqD3d+HW6OC
-4K1gkSor+coTS6jmoU2YU1UnPBMy4irgmg1XojwWZb+FC7lHQDD24wMSs1LVJ7c=
-=E2Oh
+iQEcBAEBAgAGBQJVBcL4AAoJEKllVAevmvmsEKgIAJCwBXEfUNPaaHiICHkgcd4h
+6Epeh3412VAiiDqtg8hbs8DKIpGvKdxP45mehyGO0mrEqcDwwT/+vTOJcWlVvoOp
+IzzFwjiTlrY8vdaWuaCw0V/n8ybHYIsocUhyLJiO067b7XPwmDSWZGT35dFAXyQD
+eAvPQEcgWxCDKuqCwixPse4s48wUCNwsVFSunPkNQRSeeeQW5Ou6exohmNmD6O07
+3n6BuikB9Z/iXrP650hxZSEaFJNBKpFx0mCsuRhKW975qa5Pa1qkE5O41N/PHLjL
+Z0isZ5r73GuLnO4ZUv5QVfnePhp+aHCPfaRh38DQgbarDmTSCjOX1o0mi2ubox0=
+=flzX
 -----END PGP SIGNATURE-----
-
-Download attachment "xsa123-4.3-4.2.patch" of type "application/octet-stream" (794 bytes)
-
-Download attachment "xsa123.patch" of type "application/octet-stream" (753 bytes)
