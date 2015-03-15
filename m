@@ -1,41 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/07/17
-Message-ID: <54D6A6C8.2000800@redhat.com>
-Date: Sat, 07 Feb 2015 16:59:04 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Assign a CVE Identifier <cve-assign@...re.org>, security@...illa.org, Dan Veditz <dveditz@...illa.com>
-Subject: Re: Mozilla: Use-after-free when doing multiple nesting using bad tags
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/15/4
+Message-Id: <20150315042616.DE2A46C0005@smtpvmsrv1.mitre.org>
+Date: Sun, 15 Mar 2015 00:26:16 -0400 (EDT)
+From: cve-assign@...re.org
+To: blinken@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: vulnerabilities in libcsoap
 Content-Type: text/plain; charset=utf-8
 
-On 07/02/15 04:31 PM, Reed Loden wrote:
-> https://bugzilla.mozilla.org/show_bug.cgi?id=679572#c2 states "The
-> addresses look like it's hit our \"frame-poisoning\" mitigation which would
-> make that an unmapped and unexploitable address but that's off the top of
-> my head and needs investigation.", so if true, it's only a DoS, which
-> Mozilla doesn't assign CVEs for since it's not exploitable.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Agreed.
+> * Remote null pointer dereference
+> A remote user can cause a null pointer dereference by sending a
+> malformed Authorization: header.
+> http://patrick.ld.net.au/libcsoap/nanohttp-nullp-1.patch
 
-> Check
-> http://robert.ocallahan.org/2010/10/mitigating-dangling-pointer-bugs-using_15.html
-> for more information about frame poisoning and how it works to make what
-> used to be always critical security bugs into just crash bugs.
-> 
-> Also, Mozilla is a CNA, so requests for CVEs for Mozilla products should be
-> directed to them. I've cc'd security@ and Dan Veditz to confirm the above,
-> however.
-
-Derp, sorry I should have cc'ed you guys.
-
-The good news is I'm basically done cleaning all the old embargoed cruft
-out of our BZ so no more surprises =)
+Use CVE-2015-2297 for (only) this null pointer dereference.
 
 
+> * Remote buffer overflow
+> If the server is misconfigured, a remote user can trigger a buffer
+> overflow by requesting a resource of a certain length.
+> http://patrick.ld.net.au/libcsoap/nanohttp-buffer-1.patch
 
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+First, this doesn't seem to be a new discovery.
+http://csoap.sourceforge.net/downloads.php links to
+http://csoap.sourceforge.net/downloads/libsoap-snapshot.tar.gz and
+this contains a libsoap-20070125 top-level directory with a
+nanohttp/nanohttp-server.c file dated 2007-01-01. This file apparently
+has the bug fixed in a (very) slightly different way:
 
+   char buffer[256];
+   snprintf(buffer, 256, "service '%s' is not registered properly (service function is NULL)", req->path);
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+More importantly, we haven't been able to find any indication that
+this issue is within the scope of CVE. As far as we can tell, building
+libcsoap does not create a sample HTTP server. If someone writes their
+own application to create an HTTP server, the "else" code path after
+"if (service->func != NULL)" should always be unreachable. If this
+code path is reachable, that's a bug in their application and
+therefore a site-specific problem. Unless the upstream vendor has
+stated something else, the behavior of the library is undefined if the
+application is wrong. If the actual behavior is a remote buffer
+overflow, that's within the bounds of undefined behavior. We don't
+feel that there are required security properties for a code path
+that's not reachable in any supported or reasonable use of a library.
+
+Also, we don't think it's especially likely that someone would write
+an application in which service->func can ever be NULL. For example,
+libsoap-20070125 has a nanohttp-admin.c file in which service->func is
+always the _httpd_admin_entry function.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJVBQjcAAoJEKllVAevmvmszCkH/Rcxdhsn/4nFu1YT/VJft2dH
+kowC3v3ryXUjsRTJJPcg+wi7MDwSYDPuywl0CFHnlkYoI5VoLDnQMt10FL/JP7QK
+5kasChItF2w+luT1Zm7UXZKXJ1w5CadfGyt8SCp4IZKDFxlVwFd0rcH/sVaOeVYg
+AbAM6HE9jwgKl+1P6azbr7NjxDbt5banwiXrRIL7ffmP/JcRxn6oAacQwJNRasrW
+rLO3MBhqwEpXJvs8ISZL7Kjcz5uZd7YPnZZBGcDEpvl9q6a3AittinNiXqP7lHUV
+CUOKGci3AehDvGf59CIVqAyLbcPF32tmwwfRKhuv5JqMyhp+xTmI1UGRx+8BPdw=
+=xgNk
+-----END PGP SIGNATURE-----
