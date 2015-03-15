@@ -1,14 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/07/13
-Message-ID: <CAAnPYQ5RfvZ+jiAs2EdSksiBpsOuRfds2g3c1zQq5b-7kYj6Tg@mail.gmail.com>
-Date: Sat, 07 Feb 2015 21:25:47 +0000
-From: Gynvael Coldwind <gynvael@...dwind.pl>
-To: oss-security@...ts.openwall.com, Kurt Seifried <kseifried@...hat.com>
-Cc: Assign a CVE Identifier <cve-assign@...re.org>
-Subject: Re: ghostscript double free and invalid read caused by embedded jbig2 data
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/15/2
+Message-Id: <20150315011726.DFCD16C0014@smtpvmsrv1.mitre.org>
+Date: Sat, 14 Mar 2015 21:17:26 -0400 (EDT)
+From: cve-assign@...re.org
+To: dregad@...tisbt.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: XSS issue in MantisBT permalink_page.php
 Content-Type: text/plain; charset=utf-8
 
-> (I think Gynvael is on this list, maybe he can comment on the state)
-Uh, sorry, I actually lost track of what was fixed in the end and I don't
-believe we re-fuzzed it again.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
+> MantisBT's permalink_page.php builds a permanent link to a configured
+> filter. Using a crafted URL, an attacker can make this link execute
+> arbitrary javascript code in the user's browser.
+> 
+> Affected versions:
+> - >= 1.1.0a4
+> - 1.3.0-beta.1
+> 
+> Fixed in versions:
+> - 1.2.19 (released 2015-01-25)
+> - 1.3.0-beta.2 (not yet released)
+
+> https://github.com/mantisbt/mantisbt/commit/d95f070db852614fa18ccca6a4f12f4bffede1fd
+> 
+> https://github.com/mantisbt/mantisbt/commit/e7e2b5503580e42db9d91e0d599d61d3ff03c27e
+
+> https://www.mantisbt.org/bugs/view.php?id=17362#c40613
+> 
+> 2014-05-21 18:16
+
+Use CVE-2014-9701.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJVBN1RAAoJEKllVAevmvmsemYIAMeVc3IXE/GbVtzoN7AQ9c2K
+GgGqnBMFR427pHAR6Y+2lroVTRDha+N2Nn2ojjXqGFqVpgBvjaZ2Bqjq71ZuFmiQ
+WAQtHsJoksvw1K0hQ+Nc4LDidvc8suRf2nmmHCJHE+/QpITP9LbcaB7oYfl+xkm0
+eNwLdR1ONYhS+Dwl8Tal6Z20hxKnnWiHqNdPZR5klh6oW5uxmBejYA2b7TDokoLf
++nWb1LbKdTxeLNSimhVCqak7AIbStPcDl2/Ep37fp4g17xuhX7slrbuPbjLF/A+l
+Q5jcaLtiUJTL4pV5JCCtHneeSJ/3EHdj7YYEJCFDc7jw62NiWuWKV5SR++lokS4=
+=EZhD
+-----END PGP SIGNATURE-----
