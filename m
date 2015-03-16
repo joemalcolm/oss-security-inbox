@@ -1,71 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/09/30/1
-Message-ID: <20150930044756.GA8645@oevtugenva.nrevsny.pk>
-Date: Wed, 30 Sep 2015 00:47:56 -0400
-From: Rich Felker <dalias@...c.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: s/party/hack like it's 1999
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/16/3
+Message-ID: <alpine.LFD.2.11.1503161306320.12457@wniryva>
+Date: Mon, 16 Mar 2015 13:16:22 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+Subject: Re: CVE request: Linux kernel: tty: kobject reference leakage in tty_open
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Sep 26, 2015 at 10:26:09PM +0000, David Holland wrote:
-> On Mon, Sep 21, 2015 at 09:02:27PM +0200, Florian Weimer wrote:
->  > >> I have been arguing for years (but without success) that vt bomb
->  > >> injection needs to be blocked in the tty driver. This problem
->  > >> (corruption of concurrent UTF-8 streams) needs to be too, as a matter
->  > >> of correctness and not even security.
->  > >
->  > > How exactly would a tty driver "block" anything like this?
->  > 
->  > Avoiding in-band signaling in the first place. :-/
-> 
-> Yes, that.
-> 
->  > > A tty driver never looks at the data stream in the kernel, as that
->  > > way lies madness...
->  > 
->  > Surely there is a way to prevent two writes from interleaving?  For
->  > writes to files in O_APPEND mode, this already happens, doesn't it?
-> 
-> Theoretically each write() call is supposed to be atomic; there are
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-This is only true for regular files and for pipes when the size is
-bounded by PIPE_BUF.
+   Hello Greg,
 
-> presumably some limits to that in practice, especially on ptys (like
-> PIPE_BUF is the limit for pipes) but this doesn't help if programs
-> emit partial characters, as is (in general) likely. Programs that use
-> stdio to write to stdout are ok because stdio line-buffers stdout when
-> it's a tty; but that doesn't help with stderr, or with programs that
++-- On Fri, 13 Mar 2015, Greg KH wrote --+
+| >    -> https://git.kernel.org/linus/c290f8358acaeffd8e0c551ddcc24d1206143376
+| Digging up patches from 2011?  Why?
 
-It also does not help for lines longer than the stdio buffer size.
+  Not digging up old patches, the issue was brought to our attention as RHEL-6 
+is affected.
 
-> ship text around in arbitrary-sized blocks, or programs in cbreak
-> mode, or if you're logged in across a network that hiccups
-> occasionally. (Or can be made to hiccup on purpose.)
-> 
-> ISTM that for safety the tty driver is going to have to know about
-> multibyte encodings and not let through partial characters; this is an
-> enormous can of worms.
+| What does asking for a CVE for such an old issue help with?
 
-This is not possible. Ttys are not terminals and do not deal in text.
-They are bidirectional byte-granularity IO devices. (Yes there's
-canonical mode which has some text interpretation but that's only at
-the endpoints and not always in use; it's not part of the actual data
-channel.)
+  Well, it helps in tracking the issue for later and letting wider audience 
+know about it. As there could be other distributions that are affected by it.
 
-> (but, let's not overreact; it's always been possible to blat out
-> sequences beginning with [ and hope that they'll be inserted right
-> after someone else's ESC.)
+Thank you.
+- --
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
 
-Well that's not going to happen if none of the writers are writing
-non-printable characters (ESC is non-printable). What's unique about
-the UTF-8 interleaving is that you can interleave _printable_
-characters and get a control character.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-But in general I agree that we should not be over-reacting. I think
-the simple, clean, non-invasive solution that won't break any
-real-world apps is just deprecating C1 controls once and for all --
-set them off by default in existing terminals that used to have them
-on by default, and don't implement them at all in new terminals.
-
-Rich
+iQIcBAEBAgAGBQJVBopOAAoJEN0TPTL+WwQfAsEQALBf/noehwQwzVH/9jrcc0un
+hRwBWvNCzOGuvAuZDb25v6mxd3adLYgz4FKQ89D0jDhAqmpf3M2nYhn7nVyT/JoO
+2nwyfqQp0k1dnGpLvCGDNi99BcP50thU23AbtOolyWYopEopcXqcCUCJkVfCj5N+
+ZANUE1pjIh/kPUEgCpKzbDgmrweC0ctjAzDlv57qPwUBXeFWbXt4HhQuAtxEoW3x
+VnNwgVNR3fSe67cBQ5ah/BKjRoQkHJZUjaOeVCBtrE2XtHVxLeUcRng3oxoHdP+z
+lxaCiBjBrbN+lrmsVM+OLDC73e97vnM2K35CGfIrKk7xiu2K8MaIPEMUnQ3E7AUR
+DQiJXuweLeIroYA0DVVa97dIdmxokHxdL4PuW3fDQ/4DaU6LTjzvocJbyWZudNOe
+hTn4lD2VwBvLiNB5tqdc55dbPs3KrjxopV7db3yY4IesDsSfuA89ndQYMHkT6wcE
+Mx3bYnF1CfnrdcLI35ZK7RMaDKgaKn3RUVb5/BguAven/gas8ntorojwaW6lLc2E
+Hm50/BeZNZRgs6kh48V3fdOWmlnjBgV1oY5X4hUv4NUFIXhUjtfGFgyr1Y9mdQ4V
+pYL3r9t0Wc1ptsglIYLbcEzKD0hrrjTOsv0k5egVPcL3ku2n2iSQB2WMcx2aKVwl
+FJ8ltd4qcSa+mhBrNamD
+=hyMr
+-----END PGP SIGNATURE-----
