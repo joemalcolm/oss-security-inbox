@@ -1,56 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/03/8
-Message-ID: <20150203142929.GL10104@suse.de>
-Date: Tue, 3 Feb 2015 15:29:29 +0100
-From: Marcus Meissner <meissner@...e.de>
-To: oss-security@...ts.openwall.com
-Cc: CVE Assignments MITRE <cve-assign@...re.org>
-Subject: Re: CVE Request: MySQL: MyISAM temporary file issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/16/5
+Message-Id: <20150316091820.E68986C004D@smtpvmsrv1.mitre.org>
+Date: Mon, 16 Mar 2015 05:18:20 -0400 (EDT)
+From: cve-assign@...re.org
+To: jmm@...ian.org, siddharth@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: spencer regexp
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Sep 10, 2014 at 06:00:08PM +0200, Salvatore Bonaccorso wrote:
-> Hi
-> 
-> The changes for MySQL 5.5.39[1] and 5.6.20[2] contain a reference to
-> the following issue, which could be exploited by a local user to run
-> arbitrary code in context of the mysqld server.
-> 
-> MyISAM temporary files could be used to mount a code-execution attack.
-> (Bug #18045646).
-> 
-> This is also tracked in[3] and [4] mentioning as relevant fix [5].
-> 
-> Was a CVE already requested for this issue? If not, could one be
-> assigned?
-> 
-> Regards,
-> Salvatore
-> 
->  [1] https://dev.mysql.com/doc/relnotes/mysql/5.5/en/news-5-5-39.html
->  [2] https://dev.mysql.com/doc/relnotes/mysql/5.6/en/news-5-6-20.html
->  [3] https://bugzilla.redhat.com/show_bug.cgi?id=1126271
->  [4] https://bugs.gentoo.org/show_bug.cgi?id=518718
->  [5] https://bazaar.launchpad.net/~mysql/mysql-server/5.5/revision/4638
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Hi folks.
+> http://www.kb.cert.org/vuls/id/695940
+> https://guidovranken.wordpress.com/2015/02/04/full-disclosure-heap-overflow-in-h-spencers-regex-library-on-32-bit-systems/
 
-By reviewing our mysql and mariadb issues we correlated this unknown issue
-to a bugreport submitted to us by an external researcher.
+Use CVE-2015-2305.
 
-CVE-2014-4274
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-https://bugzilla.suse.com/show_bug.cgi?id=857678
-
-The bugreport also has a reproducer.
-
-Stefan "nordi" Nordhausen reported this issue to both Oracle and to us on
-7th of January 2014.
-
-Oracle fixed it in their 2014oct CPU.
-MariaDB fixed it in 10.0.13 I think.
-
-
-We had sadly lacked disclosure timeline control on this issue and reactions on
-Oracle side were also, errm, delayed.
-
-Ciao, Marcus
+iQEcBAEBAgAGBQJVBp+GAAoJEKllVAevmvms3wcH/1uqqjT+PcJnDlLvZhl4TCG6
+G8Osx9Cvf742qsu3gHbZQStE2m/WjceQkvSCEhxVLnwQ8KjBEPrHo1Txf/miEkNl
+POxvjGRaE6E1vXz1yma22UdZ5yLSEPuQ5dQjpUo9ooIjU60kh8FvLlwxySwBzwXo
+sORdCWahBKP5x9dqx8DSxl4yW6MO08B3iFGyAvGWrsRjoIXh0eDd0SOEzTNr6xom
+P65A0ey9seAuqp6ag2491wXWueUN4mUY+91BQwgjkf6hH1esO+Q5dPiR+m/QTVWp
+5dYdj67hMdBIjUHMfqD9vC69Mp8OiPvuKh6PGQxytc2zkTWg1tX83p/xA6QvxsE=
+=Ewvb
+-----END PGP SIGNATURE-----
