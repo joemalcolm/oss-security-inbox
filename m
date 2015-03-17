@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["324" "Saturday" "17" "June" "2017" "11:40:34" "+0200" "Florian Weimer" "fweimer@redhat.com" "<0b51611b-36c2-3dc6-2a69-b9b49fdd2700@redhat.com>" "8" "Re: [oss-security] two vulns in uClibc-0.9.33.2" "^Date:" nil nil "6" "2017061709:40:34" "[oss-security] two vulns in uClibc-0.9.33.2" (number mark "        fweimer@redh Jun 17    8/324   " thread-indent "\"Re: [oss-security] two vulns in uClibc-0.9.33.2\"\n") "<alpine.GSO.2.20.1706162101560.12810@freddy.simplesystems.org>" ("<tencent_18C312B86EA079DA42B11D83@qq.com>" "<20170616204437.GC2269@hunt>" "<CALx_OUAtt5gbRP+imZfXJwvgfs+Y5hrYqdmLhJHS7SRN5z_VCQ@mail.gmail.com>" "<alpine.GSO.2.20.1706162101560.12810@freddy.simplesystems.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1933" "Tuesday" "17" "March" "2015" "15:24:19" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150317192419.46EF836E004@smtpvbsrv1.mitre.org>" "43" "[oss-security] Re: Incomplete data at nvd for CVE-2014-8159 (infiniband / verbs)" nil nil nil "3" "2015031719:24:19" "[oss-security] Re: Incomplete data at nvd for CVE-2014-8159 (infiniband / verbs)" (number mark "        cve-assign@m Mar 17   43/1933  " thread-indent "\"[oss-security] Re: Incomplete data at nvd for CVE-2014-8159 (infiniband / verbs)\"\n") "<20150317180241.387a715f@yaydoe>" ("<20150317180241.387a715f@yaydoe>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 7678 invoked by uid 550); 17 Jun 2017 09:40:50 -0000
+Received: (qmail 31780 invoked by uid 550); 17 Mar 2015 19:24:37 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,37 +11,56 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 7654 invoked from network); 17 Jun 2017 09:40:49 -0000
-DMARC-Filter: OpenDMARC Filter v1.3.2 mx1.redhat.com 4AF1E37E60
-Authentication-Results: ext-mx05.extmail.prod.ext.phx2.redhat.com; dmarc=none (p=none dis=none) header.from=redhat.com
-Authentication-Results: ext-mx05.extmail.prod.ext.phx2.redhat.com; spf=pass smtp.mailfrom=fweimer@redhat.com
-DKIM-Filter: OpenDKIM Filter v2.11.0 mx1.redhat.com 4AF1E37E60
-References: <tencent_18C312B86EA079DA42B11D83@qq.com>
- <20170616204437.GC2269@hunt>
- <CALx_OUAtt5gbRP+imZfXJwvgfs+Y5hrYqdmLhJHS7SRN5z_VCQ@mail.gmail.com>
- <alpine.GSO.2.20.1706162101560.12810@freddy.simplesystems.org>
-Message-ID: <0b51611b-36c2-3dc6-2a69-b9b49fdd2700@redhat.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.1.0
-MIME-Version: 1.0
-In-Reply-To: <alpine.GSO.2.20.1706162101560.12810@freddy.simplesystems.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.16
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.29]); Sat, 17 Jun 2017 09:40:37 +0000 (UTC)
-Date: Sat, 17 Jun 2017 11:40:34 +0200
-From: Florian Weimer <fweimer@redhat.com>
+Received: (qmail 30682 invoked from network); 17 Mar 2015 19:24:30 -0000
+In-Reply-To: <20150317180241.387a715f@yaydoe>
+Message-Id: <20150317192419.46EF836E004@smtpvbsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Tue, 17 Mar 2015 15:24:19 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] two vulns in uClibc-0.9.33.2
-To: oss-security@lists.openwall.com,
- Bob Friesenhahn <bfriesen@simple.dallas.tx.us>
+Subject: [oss-security] Re: Incomplete data at nvd for CVE-2014-8159 (infiniband / verbs)
+To: cap@nsc.liu.se
 
-On 06/17/2017 04:02 AM, Bob Friesenhahn wrote:
-> Uclibc is a C library like GNU libc.  Why would a JS engine not use it?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Javascript has 16-bit strings, like Java, Windows, and some UNIX
-variants.  GNU/Linux C libraries typically offer only 8-bit (multi-byte)
-or 32-bit (wchar_t) strings, so they are a poor match.
+Thanks very much for passing along a link to the affected
+drivers/infiniband/core/umem.c source code. This specific CVE wasn't
+previously announced on the oss-security list, but your message has
+important information about an open-source vulnerability.
 
-Florian
+> https://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2014-8159
+
+For a CVE assigned by Red Hat, it's their prerogative to make their
+initial announcement in a document that doesn't mention the related
+source-code change and doesn't state whether the document's
+information is applicable to upstream. Linux kernel CVEs published by
+MITRE (or NVD) normally don't mention fixed Red Hat package versions,
+but we do prefer to include some type of related version information
+if the upstream applicability is not (yet) known. This doesn't mean
+precisely expressing a single distribution's data when better
+information is likely to be released soon. This CVE's version
+information will be updated based on your report and other sources. In
+this case, 2.6.32-504.12.2 was the only actionable version information
+determined directly from Red Hat's document.
+
+The specific source-code change from
+https://community.mellanox.com/message/4402#4402 isn't in 3.19.1 or
+4.0-rc4.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJVCH6TAAoJEKllVAevmvmsRDQH/RMS7CVtwVniYTVBOad27vab
+hkfmtdUn8I4NwGpLTnyNzmAW+S+XGHDloAl4SeQ2BkTlOkXlWdl6ZGRCXVCDIeb9
+pY98S4wmYRGsbPA24HztcDRuljrnE/HBMSQri9c6TiecKEUURl/UqnwxKo7+7DZn
+CF3itTZgYI6okLvvgHc8sK2zDCQe9aWfcOdEHY3PCoph599BjURa67hr2/7DG6Fy
+kk7Py5xchPSa+mPtzOIl+hISx9AMhoEjPoDTwFPXqRZS5RTihkf9K6GI1OQSFpzM
+vVVRRHqBWs3MiW9tDiSycEaf4X/CXCMHZxmKZnp4AsB4QqL7feR+rcOf8B8xxew=
+=00es
+-----END PGP SIGNATURE-----
