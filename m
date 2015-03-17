@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["959" "Friday" "20" "October" "2017" "10:33:46" "+0700" "Tellier Benoit" "btellier@apache.org" "<1db0dc47-b5d8-bcfa-62c9-319a0b7d5249@apache.org>" "28" "[oss-security] Announce: Apache James 3.0.1 security release" nil nil nil "10" "2017102003:33:46" "[oss-security] Announce: Apache James 3.0.1 security release" (number mark "U       btellier@apa Oct 20   28/959   " thread-indent "\"[oss-security] Announce: Apache James 3.0.1 security release\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1814" "Tuesday" "17" "March" "2015" "03:00:05" "+0300" "Solar Designer" "solar@openwall.com" "<20150317000005.GA3041@openwall.com>" "47" "[oss-security] Fwd: [openssl-announce] Forthcoming OpenSSL releases" nil nil nil "3" "2015031700:00:05" "[oss-security] Fwd: [openssl-announce] Forthcoming OpenSSL releases" (number mark "        solar@openwa Mar 17   47/1814  " thread-indent "\"[oss-security] Fwd: [openssl-announce] Forthcoming OpenSSL releases\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 3728 invoked by uid 550); 20 Oct 2017 03:41:28 -0000
+Received: (qmail 7535 invoked by uid 550); 17 Mar 2015 00:00:13 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,46 +11,62 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 7473 invoked from network); 17 Mar 2015 00:00:09 -0000
+Message-ID: <20150317000005.GA3041@openwall.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.4.2.3i
+Date: Tue, 17 Mar 2015 03:00:05 +0300
+From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 31946 invoked from network); 20 Oct 2017 03:34:04 -0000
+Subject: [oss-security] Fwd: [openssl-announce] Forthcoming OpenSSL releases
 To: oss-security@lists.openwall.com
-From: Tellier Benoit <btellier@apache.org>
-Organization: Apache Foundation - James Project
-Message-ID: <1db0dc47-b5d8-bcfa-62c9-319a0b7d5249@apache.org>
-Date: Fri, 20 Oct 2017 10:33:46 +0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.3.0
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-Subject: [oss-security] Announce: Apache James 3.0.1 security release
 
-I, in the name of Apache James PMCs, am glad to announce you the release
-version 3.0.1 of Apache James server.
+I think the limited public info on this should be in here ASAP, hence
+the forward.  Another bit of public info so far is, off Twitter:
 
-It fixes vulnerability described in CVE-2017-12628. The JMX server, also
-used by the command line client is exposed to a java de-serialization
-issue, and thus can be used to execute arbitrary commands. As James
-exposes JMX socket by default only on local-host, this vulnerability can
-only be used for privilege escalation.
+<@solardiz> @joshbressers @hanno @iamamoose Maybe the posting could be worded better, if the "high" severity vuln affects only some of the versions.
+<@iamamoose> @solardiz @joshbressers @hanno right, the new High is 1.0.2 only, other versions new issues just Moderate and Low
 
-Release 3.0.1 upgrades the incriminated library.
+----- Forwarded message from Matt Caswell <matt@openssl.org> -----
 
-Note that you can take additional defensive steps in order to mitigate
-this vulnerability:
+Date: Mon, 16 Mar 2015 19:05:31 +0000
+From: Matt Caswell <matt@openssl.org>
+To: openssl-announce@openssl.org, openssl-users@openssl.org, 
+ openssl-dev@openssl.org
+Subject: [openssl-announce] Forthcoming OpenSSL releases
 
- - Ensure that you restrict the access to JMX only on local-host
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
- - Ensure that you are using a recent Java Run-time Environment. For
-instance OpenJDK 8 u111 is vulnerable but OpenJDK 8 u 141 is not.
 
- - You can additionally run James in a container to limit damages of
-potential exploits
+Forthcoming OpenSSL releases
+============================
 
- - And of course upgrade to the newest 3.0.1 version.
+The OpenSSL project team would like to announce the forthcoming release
+of OpenSSL versions 1.0.2a, 1.0.1m, 1.0.0r and 0.9.8zf.
 
-Best regards,
+These releases will be made available on 19th March. They will fix a
+number of security defects. The highest severity defect fixed by these
+releases is classified as "high" severity.
 
-Benoit Tellier
+Yours
 
+The OpenSSL Project Team
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBAgAGBQJVByl7AAoJENnE0m0OYESRm5MIAJV4ElRSS575QkYwPcOw7VTK
+8Ulc6TMHsy2s5UvTXl/THqEoy5n92v99Cm69Y69TSWOgK9FK8aV0BuKkVZVYp3Ko
+MYV4VMr8a7YiNh/16HctRLfEPH8bg5AkY76Y4RM5i1AXafSR6wMuwlJl21TmqMI+
+J+HA39UvlWZ9zI7Lzz0v1BMoGAXg0cr8//QRcrFFgZZuUVtscwRRA9nRS65+AJhX
+ogd3ncUPUI3YEzxqv0kDfUre/2XeUNOM+N+u9pyfjoXHaMVsSX3A1HtpmEAMyzhE
+DqF+kmhTEyK0HYCVLnl6PLnBdHpPKY3qNFYd8trFyC2hpB9U6Qsut4KeKNtAi2g=
+=Uwpw
+-----END PGP SIGNATURE-----
+_______________________________________________
+openssl-announce mailing list
+To unsubscribe: https://mta.openssl.org/mailman/listinfo/openssl-announce
+
+----- End forwarded message -----
