@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4049" "Tuesday" "28" "June" "2016" "08:57:03" "+0200" "Gustavo Grieco" "gustavo.grieco@gmail.com" "<CACn5sdQFwV6SfDa=pgey+CMFp2N0RBSh69UFMtXOr9j+aZsE+A@mail.gmail.com>" "104" "Re: [oss-security] Apache Xerces getLastExtEntityInfo Use-After-Free" nil nil nil "6" "2016062806:57:03" "[oss-security] Apache Xerces getLastExtEntityInfo Use-After-Free" (number mark "U       gustavo.grie Jun 28  104/4049  " thread-indent "\"Re: [oss-security] Apache Xerces getLastExtEntityInfo Use-After-Free\"\n") "<CAFkTriK-q3LdYd31Wj1VwV5d=Y5Qu=yP4tjpkSOKP2wu-C8XZA@mail.gmail.com>" ("<CAFkTriK-q3LdYd31Wj1VwV5d=Y5Qu=yP4tjpkSOKP2wu-C8XZA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3377" "Tuesday" "17" "March" "2015" "08:11:58" "-0700" "Alan Coopersmith" "alan.coopersmith@oracle.com" "<5508443E.401@oracle.com>" "91" "[oss-security] Fwd: [ANNOUNCE] X.Org Security Advisory: More BDF file parsing issues in libXfont" nil nil nil "3" "2015031715:11:58" "[oss-security] Fwd: [ANNOUNCE] X.Org Security Advisory: More BDF file parsing issues in libXfont" (number mark "        alan.coopers Mar 17   91/3377  " thread-indent "\"[oss-security] Fwd: [ANNOUNCE] X.Org Security Advisory: More BDF file parsing issues in libXfont\"\n") "<20150317150833.GA2934@also.us.oracle.com>" ("<20150317150833.GA2934@also.us.oracle.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 7376 invoked by uid 550); 28 Jun 2016 06:57:16 -0000
+Received: (qmail 20387 invoked by uid 550); 17 Mar 2015 15:12:32 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,145 +11,112 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7354 invoked from network); 28 Jun 2016 06:57:15 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=g3x8C8dvIGX3l1CBLsheU4N9A7Xz+7obOvl9uWCT/D4=;
-        b=aLBpqSlQvbRq3VHysNdM8lmp72xDzNsKPwrrWF1msyXJp88KYnW2+vP2iFQlkuo93g
-         VTBewK0oiBbT/Aw2QJnZABLTGXImBd6HxSlmbKynDd3HJmd9masPFvaeR7DTRVYvo8QR
-         QSx0PCKzb+WtjYOyjAYVYONEt3jGGqawA0VMrg6kjdA57t2nY6Dcoe58aR7A9aWYxqja
-         meFuFShG88X6/m4eLJflZrcREJYGNGL3ush5PLzxWO/AEsxVNm+JiYtGTA/JtTBjhbxX
-         Xzjjt10UYS0YBtGAYvJT4EwaVLUEEsDXMtSY7fAazf7qzuWVTvP8+fNyEZrn9TePjKwW
-         PoVw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:content-transfer-encoding;
-        bh=g3x8C8dvIGX3l1CBLsheU4N9A7Xz+7obOvl9uWCT/D4=;
-        b=e8e5WjedH2JSp6Znmlocc78Ve9JbMs7xmkvFXUNr4AO3Builzz2l8wpnGDFRkiRBDN
-         iRybLvAxgB0497eYLSAxc5BDFg4RCWP7+U0OY62YL3ZqqR4QBUaszkeq1Gyhl6TIcu/E
-         xUZPYMpV9n4Jbn7aCjc8qxNRLoVsL9wqjQQIJN17MPwnuDxUamjQupp2k4G6nx7ND2EJ
-         APLY28Ia76y7dBBJ7aNZ15U+Yo1bWFLqe8/+PZCP5uBHshT+qugFPWz13mOnK2Zh+CF4
-         sIV0g7HEy+86oPVgz+ILGB0w+3EMYgm8C5W/XChWdkhv6Q5/TnjqIYyRppfpjromvXnw
-         nCLg==
-X-Gm-Message-State: ALyK8tJ3m6WV2grABF9HyYhclrIPhM6wC+jTV644V3F3PGdEhxcw6KAL29PVHNZcxzidWhpIVNetcA0F3Uukqg==
-X-Received: by 10.36.57.199 with SMTP id l190mr13841701ita.5.1467097023624;
- Mon, 27 Jun 2016 23:57:03 -0700 (PDT)
+Received: (qmail 20345 invoked from network); 17 Mar 2015 15:12:26 -0000
+Message-ID: <5508443E.401@oracle.com>
+User-Agent: Mozilla/5.0 (X11; SunOS i86pc; rv:17.0) Gecko/20150125 Thunderbird/17.0.11
 MIME-Version: 1.0
-In-Reply-To: <CAFkTriK-q3LdYd31Wj1VwV5d=Y5Qu=yP4tjpkSOKP2wu-C8XZA@mail.gmail.com>
-References: <CAFkTriK-q3LdYd31Wj1VwV5d=Y5Qu=yP4tjpkSOKP2wu-C8XZA@mail.gmail.com>
-From: Gustavo Grieco <gustavo.grieco@gmail.com>
-Date: Tue, 28 Jun 2016 08:57:03 +0200
-Message-ID: <CACn5sdQFwV6SfDa=pgey+CMFp2N0RBSh69UFMtXOr9j+aZsE+A@mail.gmail.com>
+References: <20150317150833.GA2934@also.us.oracle.com>
+In-Reply-To: <20150317150833.GA2934@also.us.oracle.com>
+X-Forwarded-Message-Id: <20150317150833.GA2934@also.us.oracle.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Source-IP: acsinet22.oracle.com [141.146.126.238]
+CC: "X.Org Security Team" <xorg-security@lists.x.org>
+Date: Tue, 17 Mar 2015 08:11:58 -0700
+From: Alan Coopersmith <alan.coopersmith@oracle.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Fwd: [ANNOUNCE] X.Org Security Advisory: More BDF file parsing issues
+ in libXfont
 To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [oss-security] Apache Xerces getLastExtEntityInfo Use-After-Free
 
-Hi,
 
-Is it related with CVE-2016-2099 still unfixed in 3.1.3
-(https://issues.apache.org/jira/browse/XERCESC-2066) ?
 
-Thanks!
 
-2016-06-28 8:50 GMT+02:00 Marco Grassi <marco.gra@gmail.com>:
-> Hi,
->
-> the attached xml will trigger a UAF in xerces-c version 3.1.3 and the tru=
-nk
-> version
->
->
-> =E2=9E=9C  xml cat xerces_uaf | xerces-c-3.1.3/samples/StdInParse
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> =3D=3D16010=3D=3DERROR: AddressSanitizer: heap-use-after-free on address =
-0xf4a0dfcc
-> at pc 0x0836c7f4 bp 0xfff9a198 sp 0xfff9a188
-> READ of size 1 at 0xf4a0dfcc thread T0
->     #0 0x836c7f3 in
-> xercesc_3_1::ReaderMgr::getLastExtEntityInfo(xercesc_3_1::ReaderMgr::Last=
-ExtEntityInfo&)
-> const xercesc/internal/ReaderMgr.cpp:833
->     #1 0x83a42d4 in
-> xercesc_3_1::XMLScanner::emitError(xercesc_3_1::XMLErrs::Codes,
-> xercesc_3_1::XMLExcepts::Codes, unsigned short const*, unsigned short
-> const*, unsigned short const*, unsigned short const*)
-> xercesc/internal/XMLScanner.cpp:927
->     #2 0x8e40963 in
-> xercesc_3_1::IGXMLScanner::scanDocument(xercesc_3_1::InputSource const&)
-> xercesc/internal/IGXMLScanner.cpp:276
->     #3 0x84b4cca in xercesc_3_1::SAXParser::parse(xercesc_3_1::InputSource
-> const&) xercesc/parsers/SAXParser.cpp:575
->     #4 0x80533d6 in main src/StdInParse/StdInParse.cpp:186
->     #5 0xf6dd5636 in __libc_start_main (/lib32/libc.so.6+0x18636)
->     #6 0x80624f1
-> (/home/bob/VulnResearch/misc/xml/xerces-c-3.1.3/samples/StdInParse+0x8062=
-4f1)
->
-> 0xf4a0dfcc is located 44 bytes inside of 56-byte region
-> [0xf4a0dfa0,0xf4a0dfd8)
-> freed by thread T0 here:
->     #0 0xf7228034 in operator delete(void*)
-> (/usr/lib32/libasan.so.3+0xc5034)
->     #1 0x80992df in xercesc_3_1::XMemory::operator delete(void*)
-> xercesc/util/XMemory.cpp:89
->
-> previously allocated by thread T0 here:
->     #0 0xf72279b4 in operator new(unsigned int)
-> (/usr/lib32/libasan.so.3+0xc49b4)
->     #1 0x8357ad9 in xercesc_3_1::MemoryManagerImpl::allocate(unsigned int)
-> xercesc/internal/MemoryManagerImpl.cpp:40
->     #2 0x8099042 in xercesc_3_1::XMemory::operator new(unsigned int,
-> xercesc_3_1::MemoryManager*) xercesc/util/XMemory.cpp:68
->
-> SUMMARY: AddressSanitizer: heap-use-after-free
-> xercesc/internal/ReaderMgr.cpp:833 in
-> xercesc_3_1::ReaderMgr::getLastExtEntityInfo(xercesc_3_1::ReaderMgr::Last=
-ExtEntityInfo&)
-> const
-> Shadow bytes around the buggy address:
->   0x3e941ba0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
->   0x3e941bb0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
->   0x3e941bc0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
->   0x3e941bd0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
->   0x3e941be0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-> =3D>0x3e941bf0: fa fa fa fa fd fd fd fd fd[fd]fd fa fa fa fa fa
->   0x3e941c00: fd fd fd fd fd fd fd fa fa fa fa fa 00 00 00 00
->   0x3e941c10: 00 00 00 fa fa fa fa fa 00 00 00 00 00 00 00 00
->   0x3e941c20: fa fa fa fa 00 00 00 00 00 00 00 00 fa fa fa fa
->   0x3e941c30: 00 00 00 00 00 00 00 00 fa fa fa fa 00 00 00 00
->   0x3e941c40: 00 00 04 fa fa fa fa fa 00 00 00 00 00 00 04 fa
-> Shadow byte legend (one shadow byte represents 8 application bytes):
->   Addressable:           00
->   Partially addressable: 01 02 03 04 05 06 07
->   Heap left redzone:       fa
->   Heap right redzone:      fb
->   Freed heap region:       fd
->   Stack left redzone:      f1
->   Stack mid redzone:       f2
->   Stack right redzone:     f3
->   Stack partial redzone:   f4
->   Stack after return:      f5
->   Stack use after scope:   f8
->   Global redzone:          f9
->   Global init order:       f6
->   Poisoned by user:        f7
->   Container overflow:      fc
->   Array cookie:            ac
->   Intra object redzone:    bb
->   ASan internal:           fe
->   Left alloca redzone:     ca
->   Right alloca redzone:    cb
-> =3D=3D16010=3D=3DABORTING
->
->
->
-> Marco
->
-> https://marcograss.github.io/
+-------- Original Message --------
+Subject: [ANNOUNCE] X.Org Security Advisory: More BDF file parsing issues in 
+libXfont
+Date: Tue, 17 Mar 2015 08:08:33 -0700
+From: Alan Coopersmith <alan.coopersmith@oracle.com>
+To: xorg-announce@lists.x.org
+CC: William Robinet <william.robinet@conostix.com>, xorg@lists.x.org, 
+xorg-devel@lists.x.org, Ilja Van Sprundel <ivansprundel@ioactive.com>
+
+X.Org Security Advisory:  March 17, 2015
+More BDF file parsing issues in libXfont
+========================================
+
+Description:
+============
+
+Ilja van Sprundel, a security researcher with IOActive, has discovered an
+issue in the parsing of BDF font files by libXfont.  Additional testing by
+Alan Coopersmith and William Robinet with the American Fuzzy Lop (afl) tool
+uncovered two more issues in the parsing of BDF font files.
+
+As libXfont is used by the X server to read font files, and an unprivileged
+user with access to the X server can tell the X server to read a given font
+file from a path of their choosing, these vulnerabilities have the potential
+to allow unprivileged users to run code with the privileges of the X server
+(often root access).
+
+The vulnerabilities are:
+
+- CVE-2015-1802: bdfReadProperties: property count needs range check
+
+     The bdf parser reads a count for the number of properties defined in
+     a font from the font file, and allocates arrays with entries for each
+     property based on that count.  It never checked to see if that count
+     was negative, or large enough to overflow when multiplied by the size
+     of the structures being allocated, and could thus allocate the wrong
+     buffer size, leading to out of bounds writes.
+
+- CVE-2015-1803: bdfReadCharacters: bailout if a char's bitmap cannot be read
+
+     If the bdf parser failed to parse the data for the bitmap for any
+     character, it would proceed with an invalid pointer to the bitmap
+     data and later crash when trying to read the bitmap from that pointer.
+
+- CVE-2015-1804: bdfReadCharacters: ensure metrics fit into xCharInfo struct
+
+     The bdf parser read metrics values as 32-bit integers, but stored
+     them into 16-bit integers.  Overflows could occur in various operations
+     leading to out-of-bounds memory access.
+
+Affected Versions
+=================
+
+X.Org believes all prior versions of this library contain these flaws,
+dating back to its introduction in X11R5.
+
+
+Fixes
+=====
+
+Fixes are available in the patches for these libXfont git commits:
+       2deda9906480f9c8ae07b8c2a5510cc7e4c59a8e
+       78c2e3d70d29698244f70164428bd2868c0ab34c
+       2351c83a77a478b49cba6beb2ad386835e264744
+
+Which are now available from:
+       git://anongit.freedesktop.org/git/xorg/lib/libXfont
+       http://cgit.freedesktop.org/xorg/lib/libXfont/
+
+Fixes will also be included in the libXfont 1.5.1 & 1.4.9 module releases
+from X.Org.
+
+Thanks
+======
+
+X.Org thanks Ilja van Sprundel of IOActive, Alan Coopersmith of Oracle, and
+William Robinet of Conostix for reporting these issues to our security team
+and helping evaluate and test the fixes; and thanks Michal Zalewski and the
+American Fuzzy Lop community for providing their fuzz testing tool as an open
+source project we can all benefit from at http://lcamtuf.coredump.cx/afl/ .
+
+-- 
+	-Alan Coopersmith-              alan.coopersmith@oracle.com
+	  X.Org Security Response Team - xorg-security@lists.x.org
+
+
+
+
