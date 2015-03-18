@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2798" "Tuesday" "15" "December" "2015" "08:50:43" "+0100" "Hannes Frederic Sowa" "hannes@stressinduktion.org" "<566FC653.1070001@stressinduktion.org>" "67" "Re: [oss-security] Re: CVE request - Android kernel - IPv6 connect cause a denial of service" nil nil nil "12" "2015121507:50:43" "[oss-security] Re: CVE request - Android kernel - IPv6 connect cause a denial of service" (number mark "U       hannes@stres Dec 15   67/2798  " thread-indent "\"Re: [oss-security] Re: CVE request - Android kernel - IPv6 connect cause a denial of service\"\n") "<CAP145phM81D08ZaeKXXtWNQQktGSuXRR85TY_=jhQYcdruGTpA@mail.gmail.com>" ("<20151211164118.344948BC165@smtpvmsrv1.mitre.org>" "<566F35F9.4070106@stressinduktion.org>" "<CAP145phM81D08ZaeKXXtWNQQktGSuXRR85TY_=jhQYcdruGTpA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1519" "Wednesday" "18" "March" "2015" "11:17:47" "+0300" "Solar Designer" "solar@openwall.com" "<20150318081747.GA18610@openwall.com>" "33" "Re: [oss-security] Fwd: [openssl-announce] Forthcoming OpenSSL releases" nil nil nil "3" "2015031808:17:47" "[oss-security] Fwd: [openssl-announce] Forthcoming OpenSSL releases" (number mark "        solar@openwa Mar 18   33/1519  " thread-indent "\"Re: [oss-security] Fwd: [openssl-announce] Forthcoming OpenSSL releases\"\n") "<20150317000005.GA3041@openwall.com>" ("<20150317000005.GA3041@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 19772 invoked by uid 550); 15 Dec 2015 07:50:58 -0000
+Received: (qmail 19946 invoked by uid 550); 18 Mar 2015 08:17:51 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,105 +11,51 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 19927 invoked from network); 18 Mar 2015 08:17:50 -0000
+Message-ID: <20150318081747.GA18610@openwall.com>
+References: <20150317000005.GA3041@openwall.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20150317000005.GA3041@openwall.com>
+User-Agent: Mutt/1.4.2.3i
+Cc: Mark J Cox <mjc@redhat.com>
+Date: Wed, 18 Mar 2015 11:17:47 +0300
+From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 19754 invoked from network); 15 Dec 2015 07:50:57 -0000
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	stressinduktion.org; h=cc:content-transfer-encoding:content-type
-	:date:from:in-reply-to:message-id:mime-version:references
-	:subject:to:x-sasl-enc:x-sasl-enc; s=mesmtp; bh=+8vi214HJta5sdaG
-	tsg7pJGMxhM=; b=ckBNUL0fvpRQGT0QCMazrDwdscIYTKR+9bqynqrooACRKN/G
-	V7MgG2Nmdt4Fflr35qCX/R2lMo1NBUl76vdaH/VZSCmbnAVu/vrDow8x73cePrjB
-	nv2Qc1xv7n4mmoCsf/uHXEpZ39hD9/lmijPWB+56btK3qhrmHZ2bANfSjVQ=
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:date:from:in-reply-to:message-id:mime-version:references
-	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=+8vi214HJta5sda
-	Gtsg7pJGMxhM=; b=JSIKn8vW7fpWoh/PR+iSzB3QS2y33pDE/8tGyO3vLAZ1vx1
-	jMauWY5+2RKOk+fSeoq+CdexudFU/SKrjn9rII9QJaVE8hA1icqN7U9mAgywKXB1
-	LaE2BUQn9NLJywgiMvyVUwvNXqAPWsWY2Q77yiTF3b43SF55iM6tG1zVKgUs=
-X-Sasl-enc: rAGmg71ah8cXAFQzYpT//sILzvrLupj+CqdtuijwvC4K 1450165845
+Subject: Re: [oss-security] Fwd: [openssl-announce] Forthcoming OpenSSL releases
 To: oss-security@lists.openwall.com
-References: <20151211164118.344948BC165@smtpvmsrv1.mitre.org>
- <566F35F9.4070106@stressinduktion.org>
- <CAP145phM81D08ZaeKXXtWNQQktGSuXRR85TY_=jhQYcdruGTpA@mail.gmail.com>
-Cc: guoyonggang@360.cn, cve-assign@mitre.org
-From: Hannes Frederic Sowa <hannes@stressinduktion.org>
-X-Enigmail-Draft-Status: N1110
-Message-ID: <566FC653.1070001@stressinduktion.org>
-Date: Tue, 15 Dec 2015 08:50:43 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.4.0
-MIME-Version: 1.0
-In-Reply-To: <CAP145phM81D08ZaeKXXtWNQQktGSuXRR85TY_=jhQYcdruGTpA@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-Subject: Re: [oss-security] Re: CVE request - Android kernel - IPv6 connect
- cause a denial of service
 
-Hi,
+Mark -
 
-On 15.12.2015 04:48, Robert Święcki wrote:
->>> Use CVE-2015-8543 for the originally identified bug. We realize that,
->>> for example,
->>> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/log/net/ipv4/af_inet.c
->>> has not yet been changed. If Linux kernel developers determine that
->>> multiple independent bugs result in situations where
->>> sk->sk_prot->get_port is NULL above, then it is possible that
->>> additional CVE IDs will be assigned later.
->>
->> The following patch fixes this issue:
->>
->> https://git.kernel.org/cgit/linux/kernel/git/davem/net.git/commit/?id=79462ad02e861803b3840cc782248c7359451cd9
->>
->> It is queued up for -stable.
->>
-> 
-> Not sure if it's important for you, but the description of this diff
-> may not be exactly correct:
-> 
-> a) ... as root ..
-> 
-> If a given kernel supports CLONE_NEWUSER then everybody can create
-> SOCK_RAW sockets. And CLONE_NEWUSER seems to be enabled with most
-> modern Linux distros.
+It was suggested to me off-list that it'd be helpful to publicly specify
+not only the date, but also the time (and timezone) of the forthcoming
+OpenSSL releases.  Can you?
 
-Yep, that is true. You can create a new user namespace and a new
-net-namespace in which an ordinary user is allowed to use raw sockets.
+All -
 
-> b). .. could simply crash the kernel ..
-> 
-> It'll cause GPF in the supervisor mode, and it seems that with most of
-> supported CPU architectures under Linux, this will actually cause
-> SIGSEGV to be sent to the user-land counterpart of the kernel thread
-> which caused such GPF. So, it's not really crash of the kernel in most
-> cases (may depend on sysctl and CPU architecture in use though).
-> However, given that such GPF can happen when the socket struct seems
-> to be locked, this could potentially cause some kernel dead-locks with
-> subsequent accesses to sk (may result in unkillable processes and
-> similar artifacts)
+On Tue, Mar 17, 2015 at 03:00:05AM +0300, Solar Designer wrote:
+> I think the limited public info on this should be in here ASAP, hence
+> the forward.
 
-This is what I meant by simply crashing the kernel. :) In most kernel
-crashes we hold some locks or are in a rcu critical section, which makes
-the rest of kernel execution pretty much indeterministic.
+References to commits for CVE-2015-0209, CVE-2015-0285, CVE-2015-0288:
 
-Red Hat kernel always set panic_on_ooops because of this.
+https://twitter.com/Sh1bumi/status/577904223444168704
 
-> Also, it could be potentially turned into a privilege escalation
-> problem if there was a way to map the NULL page. Under x86/x86-64 I
-> reviewed the code (install_special_mapping() and friends from mmap.c)
-> and it seems to be correctly protected. But if anybody is using any
-> alternative CPU architecture, I'd suggest looking at their
-> arch-specific vdso/vvar mapping code. In case the address is
-> controllable by user, this could likely allow for mapping of the NULL
-> page and pwning the kernel.
+Mark's reply:
 
-Even on x86_64 a NULL address should be installable if you lower
-/proc/sys/vm/mmap_min_addr as root before. Some software might need this.
+<@iamamoose> @Sh1bumi those are all "low severity" classification, previously committed issues, which will be included in roll up on Thursday too.
 
-Thanks for the following up. Unfortunately I can't edit the commit
-anymore but it will be hopefully useful for the description of the CVE
-entry.
+<@iamamoose> @Sp1l As per the security policy, low severity issues (and some moderates) get fixed in public as and when -- those issues are known public
+<@iamamoose> @Sp1l CVE-2015-0285 is https://git.openssl.org/gitweb/?p=openssl.git;a=commit;h=e1b568dd2462f7cacf98f3d117936c34e2849a6b CVE-2015-0288 https://git.openssl.org/gitweb/?p=openssl.git;a=commit;h=28a00bcd8e318da18031b2ac8778c64147cd54f9
 
-Bye,
-Hannes
+On vendor notifications so far:
 
+<iamamoose> Per https://www.openssl.org/about/secpolicy.html we've provided details of the #openssl vulns to distros@ vendors on request, also now to LibreSSL.
+<@iamamoose> @iamamoose we've also provided details today to Apple and IBM who are not currently distros@ members #openssl
+
+BTW, OpenSSL Security Policy at
+https://www.openssl.org/about/secpolicy.html specifies what kind of
+issues the three severity classifications may correspond to.
+
+Alexander
