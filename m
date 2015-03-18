@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1850" "Sunday" "6" "March" "2016" "13:29:59" "+0300" "Solar Designer" "solar@openwall.com" "<20160306102959.GA26781@openwall.com>" "44" "Re: [oss-security] Concerns about CVE coverage shrinking - direct impact to researchers/companies" "^Date:" nil nil "3" "2016030610:29:59" "[oss-security] Concerns about CVE coverage shrinking - direct impact to researchers/companies" (number mark "        solar@openwa Mar  6   44/1850  " thread-indent "\"Re: [oss-security] Concerns about CVE coverage shrinking - direct impact to researchers/companies\"\n") "<20160306062700.GA25289@gremlin.ru>" ("<CANO=Ty3u964Yax4jMPkwDEiWj=S5TBQdGKarKyicVAk2Ec+Hxw@mail.gmail.com>" "<56D9DD1F.1030302@cert.org>" "<20160305172039.GA20796@openwall.com>" "<20160306062700.GA25289@gremlin.ru>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2575" "Wednesday" "18" "March" "2015" "14:22:52" "-0400" "Daniel Micay" "danielmicay@gmail.com" "<5509C27C.5010208@gmail.com>" "57" "Re: [oss-security] CVE Request: Linux kernel execution in the early microcode loader." nil nil nil "3" "2015031818:22:52" "[oss-security] CVE Request: Linux kernel execution in the early microcode loader." (number mark "        danielmicay@ Mar 18   57/2575  " thread-indent "\"Re: [oss-security] CVE Request: Linux kernel execution in the early microcode loader.\"\n") "<55097324.1070606@redhat.com>" ("<20150318122502.GA24063@chrystal.uk.oracle.com>" "<55097324.1070606@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 9388 invoked by uid 550); 6 Mar 2016 10:30:03 -0000
+Received: (qmail 7619 invoked by uid 550); 18 Mar 2015 18:23:13 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,61 +11,89 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 9360 invoked from network); 6 Mar 2016 10:30:02 -0000
-Message-ID: <20160306102959.GA26781@openwall.com>
-References: <CANO=Ty3u964Yax4jMPkwDEiWj=S5TBQdGKarKyicVAk2Ec+Hxw@mail.gmail.com> <56D9DD1F.1030302@cert.org> <20160305172039.GA20796@openwall.com> <20160306062700.GA25289@gremlin.ru>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20160306062700.GA25289@gremlin.ru>
-User-Agent: Mutt/1.4.2.3i
-Date: Sun, 6 Mar 2016 13:29:59 +0300
-From: Solar Designer <solar@openwall.com>
+Received: (qmail 7584 invoked from network); 18 Mar 2015 18:23:12 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:subject:references
+         :in-reply-to:content-type;
+        bh=VdkLVmUyMR60r5kTB6SIMtTwMrqA1WX9b13Z/p5tMEQ=;
+        b=mIVcyxuqG56SXFA65peJzLLTCstfK4Tuj47/O/tG0mqpX/ajqvDXWYmS9bPmsBfyvu
+         45nOk4HL3GXx2Yv8ikqNgI5RmOzzRjq3iEZ7QWfI3LlShApjOL+FyznQCotBiBOIy3dk
+         Mye/noVlRLaPKb7u5jzc/i7d96MQoskpDroWiXlVagvnKvY4bRSuTHzlo5oS52rUqfdv
+         yDi7/7g1PBarxp4XXsKYvz5Oq3nIFmdspSyvHCxwpLTN4tlRfwxUP+fqrWBVC0WMfL6f
+         ua+MinpYGnKj4LXHapwUTf9Aq3X/5MTK3OgIPjLK5+xrzJPqo2ny9iQJXt0eAXb3ruwH
+         40BQ==
+X-Received: by 10.43.16.196 with SMTP id pz4mr97527871icb.69.1426702980994;
+        Wed, 18 Mar 2015 11:23:00 -0700 (PDT)
+Message-ID: <5509C27C.5010208@gmail.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
+MIME-Version: 1.0
+References: <20150318122502.GA24063@chrystal.uk.oracle.com> <55097324.1070606@redhat.com>
+In-Reply-To: <55097324.1070606@redhat.com>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="RW9mLHIqtXAooTmqbHPSewE1R08GUm0gN"
+Date: Wed, 18 Mar 2015 14:22:52 -0400
+From: Daniel Micay <danielmicay@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Concerns about CVE coverage shrinking - direct impact to researchers/companies
+Subject: Re: [oss-security] CVE Request: Linux kernel execution in the early
+ microcode loader.
 To: oss-security@lists.openwall.com
 
-On Sun, Mar 06, 2016 at 09:27:00AM +0300, gremlin@gremlin.ru wrote:
-> On 2016-03-05 20:20:39 +0300, Solar Designer wrote:
->  > Problem solved:
->  > http://www.openwall.com/ove
-> 
-> Hmmm... sorry to say, but I've garbaged 21 IDs by simply visiting
-> this page and reloading it twice just to see what would happen :-)
+--RW9mLHIqtXAooTmqbHPSewE1R08GUm0gN
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: quoted-printable
 
-A few people said they felt sorry about that, but I think this is
-actually OK.
+On 18/03/15 08:44 AM, Florian Weimer wrote:
+> On 03/18/2015 01:25 PM, Quentin Casasnovas wrote:
+>> The attack vector could be from anyone between Intel and people
+>> shipping/packaging the microcode, or could potentially be used to get a
+>> resilient backdoor on system already compromised by sticking a tampered
+>> microcode on the initrd.  It would also allow root to get kernel executi=
+on
+>> by recreating the initrd.  I admit these are overly paranoid scenarios, =
+but
+>> I _think_ there's still a privilege crossing from root to kernel exec wh=
+ich
+>> could make sense on certain security model.
+>=20
+> Yes, Secure Boot separates root privileges from code execution in ring 0
+> (according to some interpretations of Secure Boot, in practice,
+> signatures on binaries allowing ring 0 code execution are not revoked,
+> so this new vulnerability does not alter the general picture).
 
-> So I'd suggest adding a BRB (Big Red Button) for those who actually
-> need an ID,
+Vanilla kernels don't have this separation even without vulnerabilities
+though, at without without using an LSM. Even with an LSM, I'm pretty
+sure there are ways around it unless you use seccomp too...
 
-I had thought of that and decided to do without it for now.  (Also
-considered captcha.)  I like to emphasize how very easy it is to obtain
-OVE IDs.  Not even having to click a button serves that goal well.
+Signed modules and kexec are a step towards that but are still just a
+pointless formality from a security perspective until the known holes in
+the CAP_SYS_RAWIO bucket and elsewhere are closed. You can search for
+CONFIG_GRKERNSEC_KMEM in the grsecurity patch for a list of the known
+culprits.
 
-I don't mind adding a button a bit later, though.  We'll see.
 
-> and displaying some statistics ("1234 IDs were assigned
-> today") for everyone else.
+--RW9mLHIqtXAooTmqbHPSewE1R08GUm0gN
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
-This is currently available through OVE IDs themselves - they are
-sequential, starting with 0001 at midnight UTC.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
 
->  > Having IDs is of some use even without or before all of that.
-> 
-> Yes. So prepare for the above link to become really popular.
+iQIcBAEBCAAGBQJVCcKDAAoJEPnnEuWa9fIqSBkQAIv6k213IGKO7HCPvJnKxjGU
+r5d25W5PBaRLLRbTsXB/jTTetVg+RTszHPZeV69cE9/8al5m/A7vgpUvAi6jeeyU
+XS43zcbzoYMk/D/DNGWXSp4MmVS11eNVjfMnwA4IqheYBpJ6UhR9a2GZA3UrZ7At
+MVqViZCPH+/5kN6TPQ3FMc9ZUDaHXzKQ71oaA9dLwXc0EgfLN1ON+0OA52Gz6adx
+ZwXgmyAkqvNT1M/apGD/1jRLljTf0t6YR3bjfKoN37tz6mwPqvUUOZYwzM3KWHWX
+5oxJ3UgiqwkqJToa6EO5ZY0t83BB7BUiyWPIpUqwPZvaJfGsPgTGwj0iEF3V1KoG
+bfa16IBhyrjRe8RE5JCvshQH8EetIxJZEbv3KicSIbHrZ4rea+hXWex60sS/N3TQ
+QJ3FcOy1F8Gz/WhZuRcQMCBH0fBsj+lWTZF2Z9nDn0vx5ke3281IABBmuquOF7jk
+j+qIX7jRG4DQE7rbH1NMOeAv327ZUxqhUEg6CQ6x7t9yVwuVssNxSNVuBjz5/qUI
+cfppW26fDI0zIfGQxRzlzKKwNulnYgtCKJtKlYMC11Movpyx/MsYr+rGOdOFw8RY
+gK1b+KaIefDjlGFYw6PLmDfqClb/jzEX0N7JxyCFt4yjQVWoCXQwr4KHMvDk4zOW
+5PRlZ6MeaN6V6H+s8AVG
+=dWiI
+-----END PGP SIGNATURE-----
 
-As it is, it should survive quite a few thousand of unique IPs per day
-(and yes, it temporarily records per IP address statistics, and it has
-per-IP and per-netblock limits), before (gradually) denying service for
-the rest of the day.  It might or might not survive a Slashdot-alike
-event, but even if not then waiting a day for the next batch of IDs is
-quicker than waiting weeks for CVE IDs.
-
-BTW, there is not a hard-coded limit of 9999.  There is logic in place
-to try and keep the daily IDs within 9999 (the service becomes less
-generous as the 4-digit space gets closer to being exhausted), but if
-the requests and unique IPs are too numerous this may be crossed anyway,
-resulting in 5- or 6-digit IDs (and going back to 4-digit the next day).
-
-Alexander
+--RW9mLHIqtXAooTmqbHPSewE1R08GUm0gN--
