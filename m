@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3410" "Friday" "7" "August" "2015" "13:04:19" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150807170419.E36E66C0166@smtpvmsrv1.mitre.org>" "76" "[oss-security] Re: CVE request: Froxlor - information leak" nil nil nil "8" "2015080717:04:19" "[oss-security] Re: CVE request: Froxlor - information leak" (number mark "        cve-assign@m Aug  7   76/3410  " thread-indent "\"[oss-security] Re: CVE request: Froxlor - information leak\"\n") "<55B8E8F5.5010003@demlak.de>" ("<55B8E8F5.5010003@demlak.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["446" "Thursday" "19" "March" "2015" "12:38:23" "+0100" "Florian Weimer" "fweimer@redhat.com" "<550AB52F.6090405@redhat.com>" "12" "Re: [oss-security] CVE Request: Linux kernel execution in the early microcode loader." nil nil nil "3" "2015031911:38:23" "[oss-security] CVE Request: Linux kernel execution in the early microcode loader." (number mark "        fweimer@redh Mar 19   12/446   " thread-indent "\"Re: [oss-security] CVE Request: Linux kernel execution in the early microcode loader.\"\n") "<5509C27C.5010208@gmail.com>" ("<20150318122502.GA24063@chrystal.uk.oracle.com>" "<55097324.1070606@redhat.com>" "<5509C27C.5010208@gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 26510 invoked by uid 550); 7 Aug 2015 17:04:32 -0000
+Received: (qmail 9341 invoked by uid 550); 19 Mar 2015 11:38:39 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,89 +11,31 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 26489 invoked from network); 7 Aug 2015 17:04:31 -0000
-In-Reply-To: <55B8E8F5.5010003@demlak.de>
-Message-Id: <20150807170419.E36E66C0166@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Fri,  7 Aug 2015 13:04:19 -0400 (EDT)
-From: cve-assign@mitre.org
+Received: (qmail 9317 invoked from network); 19 Mar 2015 11:38:38 -0000
+Message-ID: <550AB52F.6090405@redhat.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
+MIME-Version: 1.0
+References: <20150318122502.GA24063@chrystal.uk.oracle.com> <55097324.1070606@redhat.com> <5509C27C.5010208@gmail.com>
+In-Reply-To: <5509C27C.5010208@gmail.com>
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.23
+Date: Thu, 19 Mar 2015 12:38:23 +0100
+From: Florian Weimer <fweimer@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE request: Froxlor - information leak
-To: oss-security-list@demlak.de
+Subject: Re: [oss-security] CVE Request: Linux kernel execution in the early
+ microcode loader.
+To: oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On 03/18/2015 07:22 PM, Daniel Micay wrote:
 
-> An unauthenticated remote attacker is able to get the database password
-> via webaccess due to wrong file permissions of the /logs/ folder in
-> froxlor version 0.9.33.1 and earlier. The plain SQL password and
-> username may be stored in the /logs/sql-error.log file. This directory
-> is publicly reachable under the default configuration/setup.
-> 
-> The certain section looks like this:
-> 
-> /var/www/froxlor/lib/classes/database/class.Database.php(279):
-> PDO->__construct('mysql:host=127....', 'DATABASE_USER',
-> 'PLAIN_DATABASE_PW', Array)
+> Vanilla kernels don't have this separation even without
+> vulnerabilities though, at without without using an LSM. Even with
+> an LSM, I'm pretty sure there are ways around it unless you use
+> seccomp too...
 
-> - replace passwords even before logging:
-> 
-> https://github.com/Froxlor/Froxlor/commit/8558533a9148a2a0302c9c177abff8e4e4075b92
+Sure, but some downstreams ship modified kernels would probably treat
+this as a vulnerability (lack of enforcement of security controls etc.).
 
-Based on the code changes, it appears that the most important
-vulnerability is that the password was logged (regardless of where it
-was logged). Use CVE-2015-5959 for this issue.
-
->> $error_message = str_replace($sql['password'], 'DB_UNPRIV_PWD', $error_message);
-
-Presumably this is considered sufficient because a properly chosen
-password is unlikely to occur elsewhere in the error message.
-(Otherwise, it might be possible to determine the password by looking
-for any error message that contains the substring "DB_UNPRIV_PWD" more
-than once.)
-
-
-The use of syslog rather than logs/sql-error.log does not, by itself,
-seem to be an independent vulnerability fix because the documentation
-doesn't mention setting the permissions of the file that will store
-syslog LOG_LOCAL0 messages. Also, not using syslog was apparently
-intentional: lib/classes/database/class.Database.php says "log to a
-file, so we can actually ask people for the error (no one seems to
-find the stuff in the syslog)."
-
-> - log db errors to syslog instead of /logs/sql-error.log file:
-> 
-> https://github.com/Froxlor/Froxlor/commit/4ec376b29671593a50556630551e04e34bc83c1c
-
-If you are also reporting this as a vulnerability, please let us know
-and we can assign another CVE ID for the issue that the log was
-available remotely (regardless of whether it contained a password).
-
-
-[ Finally, it seems somewhat unusual that the security fix leads to
-the deletion of the existing logs/sql-error.log file, possibly without
-documenting that that will happen. This step is potentially useful in
-the sense that the password might already be present in that file. In
-some cases, a customer would prefer manual instructions for cleanup of
-an information leak, either because the logs/sql-error.log file has
-other useful information, or because the customer actually needs to
-know whether the password was ever present there. Typically, CVE IDs
-are not used for issues about whether, or how, a vulnerability fix
-attempts to address an already-triggered vulnerability. ]
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQEcBAEBCAAGBQJVxOTKAAoJEKllVAevmvmsM2EH/Rlms397iuOVH0d3Tdd5XASB
-yYVPQT8rUUMVKteAM+Zja8Xwdco0koGhf+htrxz5trmxSW8xOr+QtcUM6D5qy9N/
-7n+/nEdDNeXKQMq69Ui1pAeQW1p1cvhdHPDZymMEAvQDEfaLOjxjpNgWxggeSQ3+
-3GI+cIEMBLmqDt/NlnKjAExDGgZGYEyacZvhTUJwILfFr1w3ZNvhxysZagx6tRUt
-J+2O2pfXGez7gG21ehP44+HX0f9w8dWYHHDbZppqr2H338nDDez4z8DxBaH9z8Ip
-nfRxOFXmyUAsbAGXCZ2rKWrPXb2SG9O/G1jUTGE2pshKh0fR7SThGDBAB28Ui9Y=
-=I3Yv
------END PGP SIGNATURE-----
+-- 
+Florian Weimer / Red Hat Product Security
