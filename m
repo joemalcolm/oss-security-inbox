@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1870" "Friday" "25" "May" "2018" "16:59:11" "+0200" "Andrey Konovalov" "andreyknvl@gmail.com" "<CA+fCnZe0=2Kc1V6nbSs98rnX8VSbEzS5+35O=mF51UF_kp_NnQ@mail.gmail.com>" "43" "Re: [oss-security] CVE-2018-1130: Linux kernel: dccp: a null pointer dereference in net/dccp/output.c:dccp_write_xmit" nil nil nil "5" "2018052514:59:11" "[oss-security] CVE-2018-1130: Linux kernel: dccp: a null pointer dereference in net/dccp/output.c:dccp_write_xmit" (number mark "U       andreyknvl@g May 25   43/1870  " thread-indent "\"Re: [oss-security] CVE-2018-1130: Linux kernel: dccp: a null pointer dereference in net/dccp/output.c:dccp_write_xmit\"\n") "<CANO=Ty0pi9FsrUOBc_2zq2+aG+pLKC=1e9g0CXQTu-ncEHZ8rw@mail.gmail.com>" ("<982848644.28761175.1525953818635.JavaMail.zimbra@redhat.com>" "<1961715083.28767602.1525953956902.JavaMail.zimbra@redhat.com>" "<CA+fCnZfA=_nZfUQzS+r6ZbOqPFTLSzAEbh8EHHnvNsoDH+C87w@mail.gmail.com>" "<CANO=Ty1iLpdsxX+vcFRfJ4L7ZgG1NCPW-oOzxftbdzO0-XHuQA@mail.gmail.com>" "<CA+fCnZf2Dpv9BB4E3VUsZpeKkeqO6EDq5qJOz5tSsXru89POVA@mail.gmail.com>" "<CANO=Ty0pi9FsrUOBc_2zq2+aG+pLKC=1e9g0CXQTu-ncEHZ8rw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2693" "Thursday" "19" "March" "2015" "22:40:52" "+0000" "Cantor, Scott" "cantor.2@osu.edu" "<BC647880-CC09-46D9-B4D9-0411AA16A80B@osu.edu>" "45" "[oss-security] Xerces-C Security Advisory [CVE-2015-0252]" nil nil nil "3" "2015031922:40:52" "[oss-security] Xerces-C Security Advisory [CVE-2015-0252]" (number mark "        cantor.2@osu Mar 19   45/2693  " thread-indent "\"[oss-security] Xerces-C Security Advisory [CVE-2015-0252]\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 5407 invoked by uid 550); 25 May 2018 14:59:24 -0000
+Received: (qmail 23750 invoked by uid 550); 20 Mar 2015 00:06:42 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,91 +11,92 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5383 invoked from network); 25 May 2018 14:59:23 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=v0V8Pxi7N3qf/hOgh+UC+Ha0fKyEY2rIPGZ1HyWkpSs=;
-        b=KVV8HcKuNYYKjcIMwBHN7KzVBd9Vb5du2bpBHElZgNnugf/mXIgKIU+1PIempHi/lx
-         ycNk1nZUCs2fgESKG9OpcvS1Ltulvq23R6fXulhzRjCqzJvOMLybMta0vYBxtrwM2zUD
-         4/vOBHXLoiRCbEUIqUlE2+A+MNLKSrPKKv9HIKYySWkXqc3pEttrHl8GzqCETuiNZnc5
-         R6azi1IPueT7O92ZqAfc3a1WaykeCiZXeB9gR861sZ9xS76UaCSAotqNnvWdHJIccVC7
-         EdiDsq8tGLLeutrUneCg4mm0/iTony6puV6fapAe8iUx4P2sPIUpkacwqEFbUSEiovGu
-         sFuA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=v0V8Pxi7N3qf/hOgh+UC+Ha0fKyEY2rIPGZ1HyWkpSs=;
-        b=esRLKAMlIZZW/3vemjyWc0FX5dfgWePm14IalgwQ49Vq8UM5nZ7zFne8ELL6l1zf4S
-         UDsc6LJWSKsUtR2HPY5dEjWB29yl6PVf86UsVROjcuRxzFJO0XLgBN+wkacfh8sLXhO0
-         x2E+vxMAHqGZH+cZDE/mWBgbA24xJO4c+7ubZ34JXrAkHFecpOy/2jQteKseuIWFXYVZ
-         RGHPr6HV4s/xSMR5HdM50N28MB8UomjAOrV9oThKffpFGT/vqWsFvWhCxa1O9YO6rRd5
-         LSZzGTJ4urQ2Sp7IAPFtFOg/7l19nfa/2cSW8j+DpN/+cOoZIP+klibFDeJxbkiurdfF
-         ABsQ==
-X-Gm-Message-State: ALKqPwees0BcRSy/52fDrJgyITsNtZ98h+XyvCrbcd4WBMYkflB+eMFM
-	11dwYlba/RbonkVoTZWsuxrnq141D92vR4DV4mX0pEDN
-X-Google-Smtp-Source: ADUXVKL7n6Rh5dkyy5Aui6IEnr+KSwvhd6uAGiW88YecRPWkxRgz27KJECfRUq5vVi3gxznLpRysGv00jcfcAY1y8R0=
-X-Received: by 2002:a19:944f:: with SMTP id w76-v6mr1747092lfd.90.1527260351833;
- Fri, 25 May 2018 07:59:11 -0700 (PDT)
+Received: (qmail 1762 invoked from network); 19 Mar 2015 22:41:07 -0000
+Thread-Topic: Xerces-C Security Advisory [CVE-2015-0252]
+Thread-Index: AQHQYpXBsXWe1yHx10e4YtoSNMyHSQ==
+Message-ID: <BC647880-CC09-46D9-B4D9-0411AA16A80B@osu.edu>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+x-originating-ip: [140.254.59.88]
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <DA3CDB01D156E24FBAEA1802A57C64D3@osu.edu>
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-In-Reply-To: <CANO=Ty0pi9FsrUOBc_2zq2+aG+pLKC=1e9g0CXQTu-ncEHZ8rw@mail.gmail.com>
-References: <982848644.28761175.1525953818635.JavaMail.zimbra@redhat.com>
- <1961715083.28767602.1525953956902.JavaMail.zimbra@redhat.com>
- <CA+fCnZfA=_nZfUQzS+r6ZbOqPFTLSzAEbh8EHHnvNsoDH+C87w@mail.gmail.com>
- <CANO=Ty1iLpdsxX+vcFRfJ4L7ZgG1NCPW-oOzxftbdzO0-XHuQA@mail.gmail.com>
- <CA+fCnZf2Dpv9BB4E3VUsZpeKkeqO6EDq5qJOz5tSsXru89POVA@mail.gmail.com> <CANO=Ty0pi9FsrUOBc_2zq2+aG+pLKC=1e9g0CXQTu-ncEHZ8rw@mail.gmail.com>
-From: Andrey Konovalov <andreyknvl@gmail.com>
-Date: Fri, 25 May 2018 16:59:11 +0200
-Message-ID: <CA+fCnZe0=2Kc1V6nbSs98rnX8VSbEzS5+35O=mF51UF_kp_NnQ@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Cc: Vladis Dronov <vdronov@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Subject: Re: [oss-security] CVE-2018-1130: Linux kernel: dccp: a null pointer
- dereference in net/dccp/output.c:dccp_write_xmit
+X-EOPAttributedMessage: 0
+Received-SPF: Pass (protection.outlook.com: domain of osu.edu designates
+ 164.107.81.214 as permitted sender) receiver=protection.outlook.com;
+ client-ip=164.107.81.214; helo=cio-krc-pf07.osuad.osu.edu;
+Authentication-Results: spf=pass (sender IP is 164.107.81.214)
+ smtp.mailfrom=cantor.2@osu.edu; apache.org; dkim=none (message not signed)
+ header.d=none;
+X-Forefront-Antispam-Report:
+	CIP:164.107.81.214;CTRY:US;IPV:NLI;EFV:NLI;BMV:1;SFV:NSPM;SFS:(10019020)(6009001)(438002)(50944005)(54524002)(189002)(199003)(230783001)(106116001)(23676002)(62966003)(77156002)(5250100002)(47776003)(106466001)(92566002)(2501003)(36756003)(82746002)(93346002)(2900100001)(50466002)(46102003)(66066001)(50986999)(229853001)(54356999)(107886001)(88552001)(83716003)(19580395003)(6806004)(87936001)(2656002)(102836002)(86362001)(2420400003)(75432002)(109096001)(15975445007)(89122001)(575784001)(33656002)(104396002)(19627235001);DIR:OUT;SFP:1102;SCL:1;SRVR:BY2FFO11HUB064;H:cio-krc-pf07.osuad.osu.edu;FPR:;SPF:Pass;MLV:sfv;MX:1;A:1;LANG:en;
+X-Microsoft-Antispam: UriScan:;BCL:0;PCL:0;RULEID:;SRVR:BY2FFO11HUB064;
+X-Microsoft-Antispam-PRVS:
+	<BY2FFO11HUB064C7AF79100BDAC65C9222D0010@BY2FFO11HUB064.protection.gbl>
+X-Exchange-Antispam-Report-Test: UriScan:;
+X-Exchange-Antispam-Report-CFA-Test:
+	BCL:0;PCL:0;RULEID:(601004)(5002010)(5005006);SRVR:BY2FFO11HUB064;BCL:0;PCL:0;RULEID:;SRVR:BY2FFO11HUB064;
+X-Forefront-PRVS: 052017CAF1
+X-OriginatorOrg: osu.edu
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Mar 2015 22:40:54.3803
+ (UTC)
+X-MS-Exchange-CrossTenant-Id: b4d138ca-1815-4a9b-a3a7-130a33b1e692
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=b4d138ca-1815-4a9b-a3a7-130a33b1e692;Ip=[164.107.81.214];Helo=[cio-krc-pf07.osuad.osu.edu]
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY2FFO11HUB064
+Date: Thu, 19 Mar 2015 22:40:52 +0000
+From: "Cantor, Scott" <cantor.2@osu.edu>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Xerces-C Security Advisory [CVE-2015-0252]
+To: "security@apache.org" <security@apache.org>,
+	"oss-security@lists.openwall.com" <oss-security@lists.openwall.com>,
+	"bugtraq@securityfocus.com" <bugtraq@securityfocus.com>
 
-On Fri, May 25, 2018 at 3:49 PM, Kurt Seifried <kseifried@redhat.com> wrote:
-> On Fri, May 25, 2018 at 4:48 AM, Andrey Konovalov <andreyknvl@gmail.com>
-> wrote:
->> Hi Kurt,
->>
->> Perhaps I should've been more clear. I wasn't asking "what qualifies
->> for a CVE?", but rather "There are a 100 bugs that qualify for CVEs,
->> how do single out 10 of them to actually request CVEs for?".
->>
->
-> So if a security vulnerability qualifies for CVE INCLUSION (see
-> https://cve.mitre.org/cve/editorial_policies/counting_rules.html) the next
-> step is to SPLIT and MERGE the vulns as needed. Esentially what we want is
-> to end up with buckets where each bucket of vulnerability(s) is:
->
-> 1) unique to a specific code base
-> 2) unique to a specific version(s)(*)
-> 3) the same root cause (this is where you have to do homework)
->
-> * Note: the version thing, obviously the affected versions/commits for
-> these will be different in the Linux kernel and so by this rule, strictly
-> speaking each vuln would get it's own CVE, but in general if they all
-> affect the same broad version of the Linux Kernel they can be bucketed
-> together.
->
-> So assuming the homework is done of properly identifying and classifying
-> these security vulnerabilities then you can simply request CVE's for all of
-> them, the worst ones, or whatever you want. I would of course prefer that
-> all of them be identified/tracked but that's just me.
-
-Nevermind, you're missing the point of what I'm asking :)
-
->> In particular, the 100 bugs that I'm referring to are the bugs
->> reported by syzbot (perhaps there's even more:
->> https://syzkaller.appspot.com/?fixed=upstream) and the 10 bugs (or so)
->> are the ones Vladis announced on oss-security over the last few
->> months. I'm just curious how did he choose those 10 bugs out of that
->> 100+.
->>
->
-> You'd have to ask him.
-
-That's exactly what I did.
+LS0tLS1CRUdJTiBQR1AgU0lHTkVEIE1FU1NBR0UtLS0tLQ0KSGFzaDogU0hB
+NTEyDQoNCg0KQ1ZFLTIwMTUtMDI1MjogQXBhY2hlIFhlcmNlcy1DIFhNTCBQ
+YXJzZXIgQ3Jhc2hlcyBvbiBNYWxmb3JtZWQgSW5wdXQNCg0KU2V2ZXJpdHk6
+IEltcG9ydGFudA0KDQpWZW5kb3I6IFRoZSBBcGFjaGUgU29mdHdhcmUgRm91
+bmRhdGlvbg0KDQpWZXJzaW9ucyBBZmZlY3RlZDogQXBhY2hlIFhlcmNlcy1D
+IFhNTCBQYXJzZXIgbGlicmFyeSB2ZXJzaW9ucw0KcHJpb3IgdG8gVjMuMS4y
+DQoNCkRlc2NyaXB0aW9uOiBUaGUgWGVyY2VzLUMgWE1MIHBhcnNlciBtaXNo
+YW5kbGVzIGNlcnRhaW4ga2luZHMgb2YNCm1hbGZvcm1lZCBpbnB1dCBkb2N1
+bWVudHMsIHJlc3VsdGluZyBpbiBhIHNlZ21lbnRhdGlvbiBmYXVsdCBkdXJp
+bmcNCmEgcGFyc2Ugb3BlcmF0aW9uLiBUaGUgYnVnIGRvZXMgbm90IGFwcGVh
+ciB0byBhbGxvdyBmb3IgcmVtb3RlIGNvZGUNCmV4ZWN1dGlvbiwgYnV0IGlz
+IGEgZGVuaWFsIG9mIHNlcnZpY2UgYXR0YWNrIHRoYXQgaW4gbWFueSBhcHBs
+aWNhdGlvbnMNCm1heSBhbGxvdyBmb3IgYW4gdW5hdXRoZW50aWNhdGVkIGF0
+dGFja2VyIHRvIHN1cHBseSBtYWxmb3JtZWQgaW5wdXQNCmFuZCBjYXVzZSBh
+IGNyYXNoLg0KDQpNaXRpZ2F0aW9uOiBBcHBsaWNhdGlvbnMgdGhhdCBhcmUg
+dXNpbmcgbGlicmFyeSB2ZXJzaW9ucyBvbGRlciB0aGFuDQpWMy4xLjIgc2hv
+dWxkIHVwZ3JhZGUgYXMgc29vbiBhcyBwb3NzaWJsZS4gRGlzdHJpYnV0b3Jz
+IG9mIG9sZGVyIHZlcnNpb25zDQpzaG91bGQgYXBwbHkgdGhlIHBhdGNoZXMg
+ZnJvbSB0aGlzIHN1YnZlcnNpb24gcmV2aXNpb246DQoNCmh0dHA6Ly9zdm4u
+YXBhY2hlLm9yZy92aWV3dmM/dmlldz1yZXZpc2lvbiZyZXZpc2lvbj0xNjY3
+ODcwDQoNCkNyZWRpdDogVGhpcyBpc3N1ZSB3YXMgcmVwb3J0ZWQgaW5kZXBl
+bmRlbnRseSBieSBBbnRvbiBSYWdlciBhbmQgSm9uYXRoYW4NCkJyb3NzYXJk
+IGZyb20gdGhlIFNhbGVzZm9yY2UuY29tIFByb2R1Y3QgU2VjdXJpdHkgVGVh
+bSBhbmQgYnkgQmVuIExhdXJpZQ0Kb2YgR29vZ2xlLg0KDQpSZWZlcmVuY2Vz
+Og0KaHR0cDovL3hlcmNlcy5hcGFjaGUub3JnL3hlcmNlcy1jL3NlY2Fkdi9D
+VkUtMjAxNS0wMjUyLnR4dA0KDQoNCi0tLS0tQkVHSU4gUEdQIFNJR05BVFVS
+RS0tLS0tDQpWZXJzaW9uOiBHbnVQRyB2MQ0KDQppUUljQkFFQkNnQUdCUUpW
+Q3ptVkFBb0pFRGVMaEZRQ0ozbGlwUm9QL1JMcis2RXl5VUJwN1B4WGkzMXBI
+WWJ2DQp6N0UxR1pMWiszNDlCeWRtSSsyOHk2UVhTampRSWVVMVZYSGFSZEJD
+cGZOcXYyckllN24rcy9Qdm9qcHJkSEdaDQpPY3hnN2lQcyttUVR4dGtUSmh0
+MUpxVDFkNHM5NkJOK0RnUERSZjd2VXpNc3U3dTZtZjlFK0RzMllhamRkcWdo
+DQp6eG1zdjVZRkpscHBlQU9LRGJ5YVdQZml2SlM3dWJqREs3U1E4SWw1TjdY
+SFNtVmNkR01qR2gwWm1ibjBtbHprDQppVHAxM2FvRWtuWUkzTSs0T3BJZ3Rz
+ek9nYnNNUW5oUndPZ0FYKzBqQkh4cldrSzRNQk5sb3RZNm9QdHg2eld0DQpE
+ak0vSlJyOStWNTlCc1FLck5tRS9EMGNzb0VmNE9lQkVnZXFtTlRqcHk4RU8r
+Z09nVkhXTW93VVVBVlFrTXF1DQozN25qYzhJeVIvSlhTdGR0ekpwSHNqNEhP
+MlBFOVpFMVV5NjlEQ3FDREVlR1dsNjFxeDQrc2c3VWw3ODNkQWFiDQpoQ0F2
+QU8wekxpeVBna05keWRtQlFXR3ltSHNsZStuaXlkTkFpK0VHajQ3ckVKN2xE
+aEpobDlxVlEwenlNWHI0DQpPMS8vUXdWN0JVYVJjZ1FoY2J2ZDcxS2VEa1BC
+Qk52d3BZTEFYeElwRGtJMS8ycWpvOEFOSHh6dS9FTVA4d2VLDQpOK0tvSUV1
+Z0FhYit0MXMxcVdwZ25lWVhITHkzdUUzS3ZWZU52Yi9pSHNsNW56ekZWQmtQ
+ZSsyT0NaZldvZWRKDQp0N2dBWGFaMmh0ckYyQlFsNmcvNWhtMTMvNmFqbXJ0
+TmNYMGhCangyVkI0VkFDT3R0MGJxZXh0YVcvdzJWdmI0DQpBY3NvcGZOSE9H
+dlhMREozSmtIUw0KPWw5dkMNCi0tLS0tRU5EIFBHUCBTSUdOQVRVUkUtLS0t
+LQ0KDQo=
