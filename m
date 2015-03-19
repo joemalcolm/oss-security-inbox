@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1671" "Thursday" "29" "October" "2015" "13:05:50" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151029170550.C90446C0100@smtpvmsrv1.mitre.org>" "38" "[oss-security] Re: CVE request: xscreensaver aborts when unpluging second monitor cable when asking password" nil nil nil "10" "2015102917:05:50" "[oss-security] Re: CVE request: xscreensaver aborts when unpluging second monitor cable when asking password" (number mark "        cve-assign@m Oct 29   38/1671  " thread-indent "\"[oss-security] Re: CVE request: xscreensaver aborts when unpluging second monitor cable when asking password\"\n") "<562B9FE6.605@fedoraproject.org>" ("<562B9FE6.605@fedoraproject.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1228" "Thursday" "19" "March" "2015" "14:42:30" "+0000" "mancha" "mancha1@zoho.com" "<20150319144230.GA30392@zoho.com>" "35" "[oss-security] OpenSSL sec. advisory" nil nil nil "3" "2015031914:42:30" "[oss-security] OpenSSL sec. advisory" (number mark "        mancha1@zoho Mar 19   35/1228  " thread-indent "\"[oss-security] OpenSSL sec. advisory\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 15608 invoked by uid 550); 29 Oct 2015 17:06:03 -0000
+Received: (qmail 32474 invoked by uid 550); 19 Mar 2015 14:47:47 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,51 +11,58 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 15584 invoked from network); 29 Oct 2015 17:06:02 -0000
-In-Reply-To: <562B9FE6.605@fedoraproject.org>
-Message-Id: <20151029170550.C90446C0100@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Thu, 29 Oct 2015 13:05:50 -0400 (EDT)
-From: cve-assign@mitre.org
+Received: (qmail 32428 invoked from network); 19 Mar 2015 14:47:42 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; 
+  s=zapps768; d=zoho.com; 
+  h=date:from:to:subject:message-id:mime-version:content-type; 
+  b=vzXk9kEoutnTvlo0Qey7+nHd6Qv1XjdjKrnhtFnNdxgnby1ljtEmkqLClqlA5y0LTzK/0CqGBc2S
+    YSRPh1ETtK5f1/p7KqoG7PxySwh0UOr2HMqKtIuIoj4rnZ/LuJHa  
+Message-ID: <20150319144230.GA30392@zoho.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="DocE+STaALJfprDB"
+Content-Disposition: inline
+X-PGP-Key: http://hkps.pool.sks-keyservers.net/pks/lookup?op=vindex&search=0x25168eb24f0b22ac
+X-PGP-FP: 56B7 100E F4D5 811C 8FEF  ADD1 2516 8EB2 4F0B 22AC
+X-Zoho-Virus-Status: 1
+Date: Thu, 19 Mar 2015 14:42:30 +0000
+From: mancha <mancha1@zoho.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE request: xscreensaver aborts when unpluging second monitor cable when asking password
-To: mtasaka@fedoraproject.org
+Subject: [oss-security] OpenSSL sec. advisory
+To: oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--DocE+STaALJfprDB
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-> https://bugzilla.redhat.com/show_bug.cgi?id=1274452
-> https://twitter.com/Thaolia/status/656823859304398848
-> http://pkgs.fedoraproject.org/cgit/xscreensaver.git/diff/xscreensaver-5.33-0002-Modify-sigchld_hander-in_signal_hander_p-mechanism.patch?id=b57f59f3482fedf70ce7a3541094e2512290139f
-> https://www.jwz.org/blog/2015/10/xscreensaver-5-34/
+OpenSSL advisory for 13 new vulnerabilities here:
+https://openssl.org/news/secadv_20150319.txt.
 
-> xscreensaver-5.33/driver/subprocs.c
+Their site seems to be getting overwhelmed (timing out often for me).
+So, I've copied it here as well: https://dpaste.de/rTdM.
 
->> The proximate cause was that an internal consistency check failed
->> because I meant to be checking "am I running on the signal stack?" but
->> I was checking "is the SIGCHLD signal currently inhibited?" instead.
+--mancha
 
-Use CVE-2015-8025.
+--DocE+STaALJfprDB
+Content-Type: application/pgp-signature
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJWMlGVAAoJEL54rhJi8gl5cbsP/iOTyk0Dxi4iqiRckHQUOJTT
-PF15byPeuiGq2A1Hg1gGVjKztsAdkXVBp12wz2ABNWYP/1us976Sb4pHdGHI2dOc
-DAMOpZooBxcLl44xfdvQ4IBhFzQ82oFM4Udm8YuM1fzKvrCVuk25rKdravnhSqgs
-+5zXxSjiFJ8iHIAQB7RVVvK2vMCY9CR0OjZ6O9vo9ZMrmT75ERZ8obLDYnCVI7CI
-BTRz6/mp+JHjs51t+nuxD3n5t6j/hKIcmDDjeEwPOf6emCduJplrTLBN4Px53seT
-/zUZtK3JQeFSMuj+A/TR9RqCoUIAdrB38qs5wkOyRtzKGO/QcQYZ/n5G2ufx1BjX
-THGZDVEYyEz7YOUW3eMKGpeFM58JhrKWaL8F4fXgAZOfrdwuoNdh3YqPfYYkfKDk
-i4pHX/WWTV8tqo7Vz5cmoW4l74+xcTvP9TE0IbBZz9ZjT4runf17OktKrrJJKCkz
-y6WzY8MaX6Q5Ua2Zvl2CORLBCD3rIqsWkXFa2tdQimqKDxQ1+T5BDTrgP4P50drw
-5v9HcPtRKoTBKu0ovxKMC47/vOdHX39KKfvOXP7+NR5md3NcneGFEi5zAYPSc8qb
-gH2cxqcw0FslrZm+5n9ufJIBCc5rDkQewyUqtzv90pzL97FOfqjgVHuHZuoF/Dip
-WpYCibKW9zQ2/lFfnLRN
-=vSZ7
+iQIcBAEBCgAGBQJVCuBWAAoJEB4VYy8JqhaDonEQALQumWNDHD2Xi8xcO3C1JIC5
+UOtsEShRJyAf9hoNZTMh83pxSNasnZjaN7ysGxxta8ybUFbxwonyZ+uPUt7SJIMO
+SjPpfK4IRYw1QKqNJ1Wv7DoXLSsg8+S9T3uxuITOaR5uXm/Gsg81Y+3U3zdQWZbs
+UZEBscsjnqSXThWscNSBoRmQ4NySUuTWJddJDJxyWmojbjzifKZHVZLjysHvU9lZ
+mIVdsET87yG10G3cw7Mi3tv2ggZTos29TL1z979rB5NZLQtA3AOA4wLJczzY37+O
+nC6SOy+CLs9TjLFQ9uxhO4oAsEhYJzhGWP21nQ30pkogmeLcWGEfpWqqRargvmzC
+i23PBLs7xZaRvaZYsbPOaxZCsnyoa6bS9MOxIBtULR2/EuTMkgA45l5gokUhidai
+f4m0vNZWm90x7Hzsz3xLZZgefKsIgLhwAbWFrn9JuPj9rlvi9X33MfU/NDzW1Fhj
+Juh7KbzRde7NoG8QBSveH4PCzIWBg1nM9ZL+JdQC4ImCIoMTdhckUdmws6JGbsfE
+342auhBrl6h8aEE2RUlUmXdJpyfu7WFr1x2skveo/U8gnJ8ohnhop2iO9en2o9qG
+g7tyCCyqZ7fvr49Zrf4HuNhNT/jzAnSVMLRK+Tds4xzd8lf0xOmYiMSfWbyEV6sf
+85fD0NJes7/J6LJgLOtG
+=ffRo
 -----END PGP SIGNATURE-----
+
+--DocE+STaALJfprDB--
+
