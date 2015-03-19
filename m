@@ -1,4 +1,9 @@
-Received: (qmail 13917 invoked by uid 550); 7 Feb 2025 00:34:41 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2679" "Thursday" "19" "March" "2015" "14:01:04" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<550B2B00.6020302@redhat.com>" "64" "Re: [oss-security] cve-assign delays" nil nil nil "3" "2015031920:01:04" "[oss-security] cve-assign delays" (number mark "        kseifried@re Mar 19   64/2679  " thread-indent "\"Re: [oss-security] cve-assign delays\"\n") "<Pine.LNX.4.64.1503191517340.4141@beijing.mitre.org>" ("<Pine.LNX.4.64.1503191517340.4141@beijing.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 7816 invoked by uid 550); 19 Mar 2015 20:01:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,61 +11,84 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 2032 invoked from network); 6 Feb 2025 23:04:44 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1738883076; x=1739487876; darn=lists.openwall.com;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=hFEhj39b4l7Ri0zpQ/g3jH0aFcMFGxFsIvfyAk4wHPI=;
-        b=i8CS82skxzFkLSmKpGWqUiEekkeMyg6bR9bamNrV5Fjye/QJNozf4f+/ImRqZsUncn
-         H445pco+erZzV9t3KrhEm9wbYM1qXnCFv9QDYjCW0N9dx2B8HjKKeJbZ2DyG5s/n4VWd
-         oPztbMLm+G9aqgNCWXFYiXAcp6LNYvmwcXf4yLXjZC/ZCS06dc9ld7/gmhZtVz2DXts1
-         4CsXLi+jHkf1VKtDSytStAJaPZGPRuYBHR4tKJxrtZYivVIyNB7Go4q7ZgsvShvmtg4G
-         G3VUYS9L5npIrC7KVwETv1AG5jdsx6PllYg4ZTZEaQ2r5baUq6eJaxi+FAST4qvuf/zV
-         FR9w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738883076; x=1739487876;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=hFEhj39b4l7Ri0zpQ/g3jH0aFcMFGxFsIvfyAk4wHPI=;
-        b=TvZn1PMZUVIvlPflzPeK1Azu6lxzmFBlAB83EgpbYf8Xk2LULybTygwxlZr62atxzA
-         8IX+bD2XTAJV4/Jf1qEkUmm2CQkaajUcCqU95a8o0LHRRFtghkEAPo64zl8HAAxQqnDn
-         aNgJTUwUbAT2A8ZD+/Q1IaODxt7R8tNGRTPLirKGyK/SzNFfMX3HpTo+PFI1PTk3clJL
-         jTBX8IFxRr8J9Wfq7s+5q8GazuTDMUsLESAH3wWLQ/FVeflOaK/el5rpWdf7ntHlIktH
-         KLINl5tFFz439FDzZsaHIkxP+cjgFUKYBY5ifciGlK2A6LDAwVyweemM8faGkBavkv9b
-         CLqQ==
-X-Gm-Message-State: AOJu0YwyCwUMaax0uix6XoJwfzeq/5jHolDebZqxKNDLyWIlKKztq6Pd
-	YL87Tw3O1c3VDv6x3e6SwpHBbl0ALCSBC1UX98IMzGqevnoDeNZ7gZ3iF9bbBH30x8o1+9LVrqa
-	jPQrnY4qcRGd8muIMxJHNhMVlsazKhFnS
-X-Gm-Gg: ASbGnct0/8fqSpz/X5puQOQ1wd9iIos/OvJk8X+z8qcVQ47AaGUg4JGvIn3OE+lGe+N
-	9wKVkKhNYQv+TywEHGNToLMHnsmPmBzmS7q4EtPRU8sTqakVJRFh6+RyjKD273v9OJTWO+9605k
-	+Wo/9f5A/EYp3/wqv+6Naac3XfeCY=
-X-Google-Smtp-Source: AGHT+IEHDkAMYKLNntSnxZAAaiMKYtDwBm6pfnnb5lkFhl7238cBWbQUeBODeS+zYBmEbn+cHjpkFAY7mJJyOrOUgFM=
-X-Received: by 2002:a05:6402:1ec5:b0:5dc:545:40a7 with SMTP id
- 4fb4d7f45d1cf-5de45005b92mr1526767a12.12.1738883076176; Thu, 06 Feb 2025
- 15:04:36 -0800 (PST)
+Received: (qmail 7795 invoked from network); 19 Mar 2015 20:01:19 -0000
+Message-ID: <550B2B00.6020302@redhat.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.4.0
 MIME-Version: 1.0
-References: <Z5BYg9WPFBF7JBEB@thinkstation.cmpxchg8b.net> <Z5B2PA7DHTBbvbOq@itl-email>
- <Z5EUUMd1xkSSKAEM@thinkstation.cmpxchg8b.net> <20250204101028.GA20864@openwall.com>
- <32e961ce-1088-4e21-803a-3539a0ceaa3a@gmail.com>
-In-Reply-To: <32e961ce-1088-4e21-803a-3539a0ceaa3a@gmail.com>
-From: trinity pointard <trinity.pointard@gmail.com>
-Date: Fri, 7 Feb 2025 00:04:00 +0100
-X-Gm-Features: AWEUYZlbKS67Br5lYKVcxPMJSnqK-0A-nNNT0DE8DxvOxigh6hBi8cfoNDfxvCU
-Message-ID: <CANiTRwf0+j7AZGfURup2PqE-QG2WiWmKnmc0d8N8G7MAASPhiA@mail.gmail.com>
-To: oss-security@lists.openwall.com, "jcb62281@gmail.com" <jcb62281@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Subject: Re: [oss-security] AMD Microcode Signature Verification Vulnerability
+References: <Pine.LNX.4.64.1503191517340.4141@beijing.mitre.org>
+In-Reply-To: <Pine.LNX.4.64.1503191517340.4141@beijing.mitre.org>
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="tcuxs1pxJl6B52ORp7uvp4PRim0S5oAhO"
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.27
+CC: cve-assign@mitre.org
+Date: Thu, 19 Mar 2015 14:01:04 -0600
+From: Kurt Seifried <kseifried@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] cve-assign delays
+To: oss-security@lists.openwall.com
 
-> If an attacker is able to control the hypervisor (necessary to load
-> rogue microcode) and the processor microcode, how can the VM trust that
-> it is actually verifying that attestation and not being sent down a "oh
-> yes it is exactly what you want it to be" garden path?
+--tcuxs1pxJl6B52ORp7uvp4PRim0S5oAhO
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: quoted-printable
 
-Attestations are cryptographically signed by the cpu, and meant to be sent
-elsewhere and verified remotely. The key used to sign (VCEK) are dependent on
-the microcode version, so it shouldn't be possible to forge new-looking
-signature with old microcodes (i would hope this hold would someone be able to
-decrypt a microcode, though i couldn't find information on that subject).
+On 03/19/2015 01:18 PM, Steven M. Christey wrote:
+>=20
+> We recognize that some requesters have experienced delays, and
+> sometimes lengthy delays, in getting CVE IDs assigned. We apologize
+> for those delays.
+>=20
+> The number of cve-assign requests has been growing dramatically, as
+> has the number of unique and new requesters. Our goal is always to
+> provide reasonable response times, and we were caught by the spike in
+> requests.
+
+Volume is definitely a problem, and only going to get worse.
+
+> We are working to improve our responsiveness through a combination of
+> process changes, improved communications, and staffing shifts.
+>=20
+> We appreciate your understanding and expect that you will see positive
+> changes in the cve-assign response times over the coming weeks.
+>=20
+> Best regards,
+> Steve Christey Coley
+
+Has any consideration been given to maybe going with "Second class"
+CVEs? For example in a case where a security issue is obvious (a PHP app
+with XSS due to missing htmlspecialchars for example) and well
+documented (link to a github commit or similar) could Mitre just assigns
+the CVE, link it to the gihub commit or whatever the original source is
+and it never give it a "real" description? Most of these types of issues
+just need CVEs and an entry in the database with the source, I don't
+think anyone cares much beyond that.
+
+--=20
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+
+--tcuxs1pxJl6B52ORp7uvp4PRim0S5oAhO
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.22 (GNU/Linux)
+
+iQIcBAEBAgAGBQJVCysAAAoJEBYNRVNeJnmTOVsQAMEcdPisODb1BLcUugRjgwnL
+3uiVVcVqw+yA5P3DjGZLSrokba75+3gnP48vS9CSx0zm7KdCK8B3BkkbMQ82IgG9
+7esKa0Da9JWddrNS+KIKP9Fl9UIV5TGyA38w0snYzGZ8uiAfyvFhGGOUpdhb/XXh
+QUTOh4FLPdeROmLkWOL0ckYHNvhANUH3dj/+Yz9TRTUbuU3i1CjhpB8w3Og/CjBu
+hxuNHLl+zUeRKTe7oea0vcP5VNdPigCYNddLcGYNCgcruoDfyyp32XCad734AJYB
+o8qehhhD3YjxVI82GnXMXN0sdDaIjFXnFOf2QU09SjVyC3yXeAZLuGsMx3uT4dUy
+bEeFQDCY8RXM1PLye42pw1wmBz5CdyJ4u3358R9FjtK+slZxCvlxRMQqfPtuRkv0
+c3FJWVKLGr0lEcintbiwvaSxKwJfe87UGBDkBCYhOt8BYQEtrPOhPU8OoPfFMyu9
+u2eDg6M0RjXDsYmgMm9769BAFeOfPrtGKmMYE2u6mV13EY07hnoNq9ontSy5ph7P
+35mCvYA9uUldPlP8t0X72tHLbIPGmO8loAOH4HQ4NmvZGvQ2iumAX/Eq/XAyK3Bj
+kaQ0F8SCbhnND2xj9rW0ZD2wfq9rBbmL3m7MJSOyjhaYKYKTr+kRb1eRHhboJRF2
+74fwuOIOcAxncx8R2NZu
+=xcTa
+-----END PGP SIGNATURE-----
+
+--tcuxs1pxJl6B52ORp7uvp4PRim0S5oAhO--
