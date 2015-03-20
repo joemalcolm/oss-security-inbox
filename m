@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1597" "Friday" "20" "January" "2017" "09:24:38" "+0100" "Greg KH" "greg@kroah.com" "<20170120082438.GA28326@kroah.com>" "46" "Re: [oss-security] CVE Request - Samsung Exynos GPU driver OOB read" nil nil nil "1" "2017012008:24:38" "[oss-security] CVE Request - Samsung Exynos GPU driver OOB read" (number mark "U       greg@kroah.c Jan 20   46/1597  " thread-indent "\"Re: [oss-security] CVE Request - Samsung Exynos GPU driver OOB read\"\n") "<0b4f01d2726f$d3b693e0$7b23bba0$@gmail.com>" ("<CACCOJE3M1+PbtZgpvLXQjxMkKFirwu0=506OdZZuBUrTK5VqpA@mail.gmail.com>" "<CACCOJE3K5aEk_frgRr7_pt3T635=9OgnVagn+jOj-v1YetE74A@mail.gmail.com>" "<20170119143700.GA5132@kroah.com>" "<0b4f01d2726f$d3b693e0$7b23bba0$@gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1315" "Friday" "20" "March" "2015" "09:05:13" "-0700" "Anthony Liguori" "anthony@codemonkey.ws" "<CA+aC4ksvOSSjAqMsXbzG__vpUbHoy3LyyLtdRnGmsjoDwWs=sg@mail.gmail.com>" "30" "Re: [oss-security] membership request to the closed linux-distros security mailing list" nil nil nil "3" "2015032016:05:13" "[oss-security] membership request to the closed linux-distros security mailing list" (number mark "        anthony@code Mar 20   30/1315  " thread-indent "\"Re: [oss-security] membership request to the closed linux-distros security mailing list\"\n") "<20150320155553.GN15408@suse.de>" ("<550C19ED.9030901@enea.com>" "<20150320145413.GA10416@openwall.com>" "<CA+aC4kt54Z-17hjZ6JOLONFBeqRyFFUAn4+O7TL8fUrqrSeQ8g@mail.gmail.com>" "<20150320155026.GF3718@symphytum.spacehopper.org>" "<CA+aC4ktANtitip_dsvtwkuU6UEikdLzdH=prrhuXrcfL4LzQvA@mail.gmail.com>" "<20150320155553.GN15408@suse.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 22318 invoked by uid 550); 20 Jan 2017 08:24:58 -0000
+Received: (qmail 7916 invoked by uid 550); 20 Mar 2015 16:05:25 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,76 +11,65 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 22300 invoked from network); 20 Jan 2017 08:24:57 -0000
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to:x-me-sender
-	:x-me-sender:x-sasl-enc:x-sasl-enc; s=smtpout; bh=+/HklmEn9+Xnzj
-	2DoQY+PFuZnpY=; b=Q23CPEA8xlOSE4xNRMq5EjC+ONrfQ3+fCkjcz0XPZEdSGW
-	nyPWp13G6lDCtEfFKbupZqN6GspMvqhc7mtvMlYe0mPyQ53VF5tx4qFTW4CaCI/P
-	L0FcozYXcEgJX5nGqnYBosj6CLRRNDyekkWCLwF784EcTIOHt4bnhgfS082bQ=
-X-ME-Sender: <xms:TsmBWElbkNMoqSZQPfWm39nj1rmo5_7EA8Z9bYyZHhq9tY4LDuGjTA>
-X-Sasl-enc: qOVeYQ/JHUMAN8xM644knXCrE5WOgJJhP+4In7M8vhEQ 1484900685
-Date: Fri, 20 Jan 2017 09:24:38 +0100
-From: Greg KH <greg@kroah.com>
-To: oss-security@lists.openwall.com
-Cc: 'Anarcheuz Fritz' <anarcheuz@gmail.com>, cve-assign@mitre.org
-Message-ID: <20170120082438.GA28326@kroah.com>
-References: <CACCOJE3M1+PbtZgpvLXQjxMkKFirwu0=506OdZZuBUrTK5VqpA@mail.gmail.com>
- <CACCOJE3K5aEk_frgRr7_pt3T635=9OgnVagn+jOj-v1YetE74A@mail.gmail.com>
- <20170119143700.GA5132@kroah.com>
- <0b4f01d2726f$d3b693e0$7b23bba0$@gmail.com>
+Received: (qmail 7895 invoked from network); 20 Mar 2015 16:05:24 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:content-type;
+        bh=+GjufUe3j16/oN/hhiepecKdv4uXNRO442fWsWNFWUU=;
+        b=E6MS/SS4zez4hKvDW+ObtGcPwmXu/JuwQzUDtvS4wXcLTpsJ0M2NydGbJa8qNOgHuM
+         7SaBFyHpQtQihaJcirHKduKc7OJcN2Cg+jDgv4EmtEAfGrbvLpWz1YeTMXMMc4D3Kici
+         cOewD+XZaBPpT61EjfSvFTXm+2ThiyZnJ0tP+cPKflInW584zuqKJ8zYjvQ6ursSm02s
+         x9JTGJDYEkEvR5GvSwPrwvhoFXa4+v9VL8KpqURIRq7F+5N7RX0FXBWKJnjpTiQMj60H
+         MWAZtZ7lfZSp4GsiER5ivZ0pKZ0ly2AftYV2fBi0Sf+V4skqSMrCgnwcUYwHZZodlmBg
+         qH/g==
+X-Gm-Message-State: ALoCoQl7NUFBZvhp+iuca8wOJ17GxVJP+3NOTS53qk2+gE44frjihj5XZwf5KDs5ALurHJtlJwzt
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <0b4f01d2726f$d3b693e0$7b23bba0$@gmail.com>
-User-Agent: Mutt/1.7.2 (2016-11-26)
-Subject: Re: [oss-security] CVE Request - Samsung Exynos GPU driver OOB read
+X-Received: by 10.140.108.201 with SMTP id j67mr98834623qgf.86.1426867513104;
+ Fri, 20 Mar 2015 09:05:13 -0700 (PDT)
+In-Reply-To: <20150320155553.GN15408@suse.de>
+References: <550C19ED.9030901@enea.com>
+	<20150320145413.GA10416@openwall.com>
+	<CA+aC4kt54Z-17hjZ6JOLONFBeqRyFFUAn4+O7TL8fUrqrSeQ8g@mail.gmail.com>
+	<20150320155026.GF3718@symphytum.spacehopper.org>
+	<CA+aC4ktANtitip_dsvtwkuU6UEikdLzdH=prrhuXrcfL4LzQvA@mail.gmail.com>
+	<20150320155553.GN15408@suse.de>
+Message-ID: <CA+aC4ksvOSSjAqMsXbzG__vpUbHoy3LyyLtdRnGmsjoDwWs=sg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Date: Fri, 20 Mar 2015 09:05:13 -0700
+From: Anthony Liguori <anthony@codemonkey.ws>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] membership request to the closed linux-distros
+ security mailing list
+To: oss-security@lists.openwall.com
 
-On Fri, Jan 20, 2017 at 12:19:34AM +0800, idl3r wrote:
-> Unfortunately, there is no official git for tracking from Samsung, so I
-> can't give a pointer to the particular commit.
-> 
-> The bug itself resides in
-> <root>/drivers/gpu/arm/t7xx/r5p0/mali_kbase_core_linux.c of the src tree, in
-> function kbase_dispatch which is the main ioctl dispatcher of the driver:
+On Fri, Mar 20, 2015 at 8:55 AM, Marcus Meissner <meissner@suse.de> wrote:
+> On Fri, Mar 20, 2015 at 08:54:29AM -0700, Anthony Liguori wrote:
+>> On Fri, Mar 20, 2015 at 8:50 AM, Stuart Henderson <stu@spacehopper.org> wrote:
+>> > On 2015/03/20 08:16, Anthony Liguori wrote:
+>> >>
+>> >> I think the alternative is to formalize what already appears to be the
+>> >> existing practice: disclose distros@ on the existence of a
+>> >> vulnerability but require direct contact for the details of the
+>> >> vulnerability if the submitter/upstream thinks the impact is high.
+>> >
+>> > Are private lists even needed if this policy is taken?
+>>
+>> I think there's a lot of value in being able to just send a low-medium
+>> impact issue to a single list of groups that have gone through some
+>> level of vetting without needing to respond directly to individuals
+>> and making value judgements.
+>>
+>> I also think it's helpful to have a single point of contact so that an
+>> upstream isn't dealing with 10 different people from a single
+>> organization asking for details.
+>
+> Why not just publishing a low - medium impact vulnerability directly?
 
-Ah, so this isn't upstream in the main kernel tree, thanks for letting
-me know, that's what I was most concerned about.
+Upstreams are already free to do this, no?  If an upstream reporter
+sends to distros@ or another forum, they have already made that
+risk/reward trade-off.
 
-Hopefully Samsung figures a way to push this change out to all of their
-users... :)
+Regards,
 
-> static mali_error kbase_dispatch(struct kbase_context *kctx, void * const
-> args, u32 args_size)
-> {
-> ...
->     /* setup complete, perform normal operation */
-> 
->     switch (id) {
-> ...
-> 	case KBASE_FUNC_TMU_SKIP:
-> 		{
-> /* MALI_SEC_INTEGRATION */
-> #ifdef CONFIG_SENSORS_SEC_THERMISTOR
-> #ifdef CONFIG_USE_VSYNC_SKIP
-> 			struct kbase_uk_tmu_skip *tskip = args;
-> 			int thermistor = sec_therm_get_ap_temperature();
-> 			u32 i, t_index = tskip->num_ratiometer;
-> 
-> 			for (i = 0; i < tskip->num_ratiometer; i++)
-> <== missing of boundary check
-> 				if (thermistor >= tskip->temperature[i])
-> 					t_index = i;
-> 
-> tskip->temperature is a uint32 array of static size(10 elements) and
-> tskip->num_ratiometer a uint32 which is user controlled. Since the boundary
-> check is missing, OOB read may happen leading to possible memory corruption.
-
-It's "user controlled" through the drm interface?  Or something else?
-
-Anyway, no need for more details, this was great, thank you very much
-for the quick response.
-
-gre k-h
+Anthony Liguori
