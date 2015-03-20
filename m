@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4157" "Friday" "2" "November" "2018" "16:42:33" "+0200" "Billy Brumley" "bbrumley@gmail.com" "<CAFeDd5bLk0N4g3LP0FUgX+XH2QMaV+=d3ybagBE4K6pAHQAxHA@mail.gmail.com>" "95" "Re: [oss-security] CVE-2018-5407: new side-channel vulnerability on SMT/Hyper-Threading architectures" "^Date:" nil nil "11" "2018110214:42:33" "[oss-security] CVE-2018-5407: new side-channel vulnerability on SMT/Hyper-Threading architectures" (number mark "        bbrumley@gma Nov  2   95/4157  " thread-indent "\"Re: [oss-security] CVE-2018-5407: new side-channel vulnerability on SMT/Hyper-Threading architectures\"\n") "<20181102114655.GA2758@openwall.com>" ("<CAFeDd5Ya=q28T2b0v9Z2guTGjwccaq8AU_5OnybvuEVABWnFJA@mail.gmail.com>" "<20181102114655.GA2758@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2672" "Thursday" "19" "March" "2015" "20:45:09" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150320004509.C29C252E033@smtpvbsrv1.mitre.org>" "59" "[oss-security] Re: CVE requests for Drupal Core - Moderately Critical - Multiple Vulnerabilities - SA-CORE-2015-001" nil nil nil "3" "2015032000:45:09" "[oss-security] Re: CVE requests for Drupal Core - Moderately Critical - Multiple Vulnerabilities - SA-CORE-2015-001" (number mark "        cve-assign@m Mar 19   59/2672  " thread-indent "\"[oss-security] Re: CVE requests for Drupal Core - Moderately Critical - Multiple Vulnerabilities - SA-CORE-2015-001\"\n") "<CAMYtjAqttknkzUKC50cK1gGXQr+M=Gnjd2Sv3au56F9QDbN_Rw@mail.gmail.com>" ("<CAMYtjAqttknkzUKC50cK1gGXQr+M=Gnjd2Sv3au56F9QDbN_Rw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 6017 invoked by uid 550); 2 Nov 2018 14:42:57 -0000
+Received: (qmail 19601 invoked by uid 550); 20 Mar 2015 00:45:22 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,138 +11,72 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5991 invoked from network); 2 Nov 2018 14:42:57 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=hmiSroqChJy+6qMf3AB0UqnV56qLqP7KmPENGk7d7gs=;
-        b=vF/gP/rAhGyRK57mYPXhnpBECrXOJ8o+3v54iKhhcdROvnW7pv15g1v3l4b8N/Lx6m
-         49ReIEPq5eV9zVkCaFanOW7aPhUmtcx0OTRwHUAH5JxmyqS59bTO+tkPBfbxNzcgMb86
-         wtpbArlLtt0aLxDTgffnY4t8A/Td1ycLY76k14HslMVoJoYHiHa+3GIU6Ph3kPrE3x/m
-         uxuT6IfMwEZOkwziUfXYVc+oWSiAjBIFzy9z6S8uxqvXBS/DwLbnvQwY+fPDTU7LG3HL
-         +FSRSvY7YVi/GaiJ5CU0x/qPESHZ/6u1ZyVX18l25e/GQ0BDmbJi6XoP4YxykYxbHdyd
-         Q0BQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=hmiSroqChJy+6qMf3AB0UqnV56qLqP7KmPENGk7d7gs=;
-        b=fGZkpcLlVJJieF1JdBuYSezy9MhOSl+31nBXWr05DpGM+VJxmX/A4lCgMsySx3nYzf
-         lsakI3iUTwpbIz+V2S45+rUoTDrguBCoKda/ib7kkEygS2sl6FOPCeUX8KnTscKKWB/t
-         Xh2dggEjBuGiCTaZXQXvu+uok70fC4uGjtm3T7D0AxRvgjslKfIJqLZk6OuCugBuRwGH
-         31i+tL2XmqVwKls5o0PH85VX6fGoSm1/4v2b2Ja71P3XZFdxHGeIPd7N3gD7AGhx61MQ
-         Byqt83dlqXiXTFyS3Cq6NRzCMraVFBhehiwo3Q+w3qv+dg08qrmuPdL3R23oeJbjJ4tW
-         lLXw==
-X-Gm-Message-State: AGRZ1gIHajWR7FsmTC7sMGEWw8m4j1WZoYbu4l7FaHS1BLO4HDq1yA2f
-	1/O6PGdLJfXicXck4EgNfYDe7jCg3k573TXE2mCa+DE=
-X-Google-Smtp-Source: AJdET5cmMpmjyGPfPqzGbxC7a0SUJKwXD75YKmz6Wm6x6QuBVlKWkI7rxVk57M1dfeM+/MDXZfyvKC/f2RL4MrWGVkc=
-X-Received: by 2002:a1c:f514:: with SMTP id t20-v6mr145386wmh.129.1541169765209;
- Fri, 02 Nov 2018 07:42:45 -0700 (PDT)
-MIME-Version: 1.0
-References: <CAFeDd5Ya=q28T2b0v9Z2guTGjwccaq8AU_5OnybvuEVABWnFJA@mail.gmail.com>
- <20181102114655.GA2758@openwall.com>
-In-Reply-To: <20181102114655.GA2758@openwall.com>
-Message-ID: <CAFeDd5bLk0N4g3LP0FUgX+XH2QMaV+=d3ybagBE4K6pAHQAxHA@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Date: Fri, 2 Nov 2018 16:42:33 +0200
-From: Billy Brumley <bbrumley@gmail.com>
+Received: (qmail 19577 invoked from network); 20 Mar 2015 00:45:21 -0000
+In-Reply-To: <CAMYtjAqttknkzUKC50cK1gGXQr+M=Gnjd2Sv3au56F9QDbN_Rw@mail.gmail.com>
+Message-Id: <20150320004509.C29C252E033@smtpvbsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Thu, 19 Mar 2015 20:45:09 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE-2018-5407: new side-channel vulnerability on
- SMT/Hyper-Threading architectures
-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: CVE requests for Drupal Core - Moderately Critical - Multiple Vulnerabilities - SA-CORE-2015-001
+To: pere@orga.cat
 
-> However, I feel the blame might be misplaced here.  I think the
-> existence of this side-channel in SMT should be obvious to the extent
-> that it's not considered a vulnerability, but a fully expected by-design
-> property.  Maybe the problem is it wasn't documented as such.  Maybe we
-> should have put more effort into making it more obvious to everyone in
-> 2005, like it's finally done now.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-It's a fair comment.
+> Access bypass (Password reset URLs - Drupal 6 and 7)
+> Password reset URLs can be forged under certain circumstances,
+> allowing an attacker to gain access to another user's account without
+> knowing the account's password.
 
-I've been doing SCA a while now; L1 dcache timings (SMT), L1 icache
-timings (SMT), remote timings, bug attacks, Flush+Reload, etc. Outside
-of bug attacks (which are deterministic), this is the most
-reproducible vector I've ever seen. I feel like that's one reason
-holding back disabling SMT, because they are not trivial to reproduce.
+Based on the
+http://cgit.drupalcode.org/drupal/commit/?id=8e54eca05a65c6231b02510e1917af0c9191e549
+changes, we think that there is a single underlying issue in which the
+attack vector seems to be essentially expressed by:
 
-If you have the setup I described:
+  $attack_reset_url = str_replace("user/reset/{$user1->id()}",
+                                  "user/reset/{$user2->id()}", $reset_url);
 
-https://github.com/bbbrumley/portsmash
+regardless of the Drupal version -- i.e., 6.x, 7.x, or an unreleased
+8.x version. (For purposes of determining the correct number of CVE
+IDs, it is probably not relevant that 6.x and 7.x have different ways
+in which problematic accounts may have been created.)
 
-Pull the code, follow the instructions. You'll see the signals we used
-in the attack. No address dependencies, adapting to cache geometry,
-etc -- it just works out of the box.
+Use CVE-2015-2559.
 
-> Are you also releasing manuscript.pdf you had attached to your distros
-> list posting?  You must be.
 
-It's coming -- I promise. I submitted it as an IACR eprint yesterday
-("Port Contention for Fun and Profit") -- currently under moderation,
-but will eventually pop out here:
+> Open redirect (Several vectors including the "destination" URL
+> parameter - Drupal 6 and 7)
+> Under certain circumstances, malicious users can use the destination
+> URL parameter to construct a URL that will trick users into being
+> redirected to a 3rd party website, thereby exposing the users to
+> potential social engineering attacks.
 
-https://eprint.iacr.org/
+This one might be more complicated for CVE assignment. If a single
+change to a single piece of code addressed all of these open-redirect
+issues, then a single CVE ID may be possible. However, it appears that
+the situation might be a series of related problems that were found in
+different places (and possibly different versions) by different
+people. https://www.drupal.org/SA-CORE-2015-001 lists two external
+discoverers, as well as discoverers from the Drupal Security Team. As
+an example, suppose that there were three independent reports, and
+each report included three unique affected parameters: one of which
+existed only in 6.x, one of which existed only in 7.x, and one of
+which existed in both 6.x and 7.x. That would have 9 CVE IDs.
 
-(Side note: I have raised this issue several times with IACR. I can't
-get a permalink from them until I submit and it clears the mod queue.
-But I can't submit stuff that's still under embargo. It's a catch 22.
-Ofc there are technical solutions from IACR side but they won't
-address it. Share your opinion: @IACR_News current co-editor is
-@Leptan.)
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-> I only skimmed it, but as I understand the OpenSSL code in question
-> is branching upon a secret.  This is generally considered high-risk
-> even without SMT.  While it'd be harder and less practical to exploit
-> without SMT, the state of instruction cache changes in a way visible to
-> other processes that might be scheduled to run on the same core.
-> Perhaps it'd take orders of magnitude more observations since the OS
-> scheduler won't kick in very frequently, but eventually the secret
-> should be obtainable.
-
-The code in question certainly had lots of SCA issues :) I was the
-first to show it vulnerable with an L1 dcache SMT attack (ASIACRYPT
-2009). OpenSSL didn't respond during disclosure. Side note:
-openssl-security is so much better since HeartBleed. They're really on
-top of things, and being GitHub-based now the code is constantly
-improving. If you're reading, go contribute to the project!
-
-If there's something good about a vulnerability being unpatched for
-almost a decade: that code path sparked quite a lot of academic work
-in microarchitecture attacks.
-
-> I guess this commit is (part of?) the fix:
->
-> https://github.com/openssl/openssl/commit/5d92b853f6b875ba8d1a1b51b305f14df5adb8aa
-
-For the 1.1.0 branch, at
-
-https://github.com/openssl/openssl/commits/OpenSSL_1_1_0-stable/crypto/ec/ec_mult.c
-
-everything starting from aab7c770353b1dc4ba045938c8fb446dd1c4531e
-
-> In there, we see a ladder of function calls separated by "||", which in
-> C guarantees short-circuit evaluation.  This is data-dependent
-> branching, and it remains such after that commit.  Being unfamiliar with
-> ECC and with this code, I don't know whether the branching is (still) by
-> secret or not (anymore).  I'd appreciate your comments on this.
-
-Those branches are actually public; that is unofficial OpenSSL style
-guide to avoid lots of if / else if / goto statements to detect return
-errors from function calls.
-
-> > Upgrade to OpenSSL 1.1.1 (or >= 1.1.0i if you are looking for patches)
->
-> OpenSSL recently issued two security advisories suggesting a further
-> upgrade to 1.1.1a or 1.1.0j, but then mentioning that "a new side
-> channel attack was created" and listing commits with even further fixes
-> (not releases):
-...
-> Timing vulnerability in ECDSA signature generation (CVE-2018-0735)
-...
-> Timing vulnerability in DSA signature generation (CVE-2018-0734)
-...
-> I don't know to what extent this is related or not.
-
-These are unrelated, but you're certainly not the first to ask ;)
-
-BBB
+iQEcBAEBAgAGBQJVC20XAAoJEKllVAevmvmsY2UH/3H4RpFVSHhCL/TT1XA2aV9q
+IqXTfWqJb2CXDbb/zPFPyf5fWihmwB222+mLgIUfxuGIJ3QM2/rr39rYFQmMEvrG
+dkVOBiAb8napQy4hmpIOzcqav9PUBLIocRVM1Z+qDC8GM0HC55RgZyKVRKlp8UWF
+ljIyfMKJI22SR5SQNl/kyaf3NYx7cpSNq8G45mn12aegUgifrHL/HEiF+E1SerjQ
+N14t4HVCDoaIMCA5DIclIyLGeSJQrBuP4kvJsQA9P951ksk9K0GU5X06tlCQRRTg
+jN6uZ8a2LZ1zGydXsLdnk+EtY2Tf69Cdbs9xUJ4rd2W9vhhF3zWAoaviDxvEcKw=
+=bJNA
+-----END PGP SIGNATURE-----
