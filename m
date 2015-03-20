@@ -1,4 +1,9 @@
-Received: (qmail 11277 invoked by uid 550); 13 May 2025 18:34:15 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1138" "Friday" "20" "March" "2015" "16:55:54" "+0100" "Marcus Meissner" "meissner@suse.de" "<20150320155553.GN15408@suse.de>" "25" "Re: [oss-security] membership request to the closed linux-distros security mailing list" nil nil nil "3" "2015032015:55:54" "[oss-security] membership request to the closed linux-distros security mailing list" (number mark "        meissner@sus Mar 20   25/1138  " thread-indent "\"Re: [oss-security] membership request to the closed linux-distros security mailing list\"\n") "<CA+aC4ktANtitip_dsvtwkuU6UEikdLzdH=prrhuXrcfL4LzQvA@mail.gmail.com>" ("<550C19ED.9030901@enea.com>" "<20150320145413.GA10416@openwall.com>" "<CA+aC4kt54Z-17hjZ6JOLONFBeqRyFFUAn4+O7TL8fUrqrSeQ8g@mail.gmail.com>" "<20150320155026.GF3718@symphytum.spacehopper.org>" "<CA+aC4ktANtitip_dsvtwkuU6UEikdLzdH=prrhuXrcfL4LzQvA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 27906 invoked by uid 550); 20 Mar 2015 15:56:06 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,82 +11,51 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 32391 invoked from network); 13 May 2025 16:37:56 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=uni-hamburg.de;
-	s=rrzs003; t=1747154265;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=8IEHJerVBuE4dmYtZUOi799yJHuZ2bNcG8mjzM4My3M=;
-	b=fx6TBXvK0wIp/QNClcQ5S3q/TkslvLMC9kQHIxEEdpuma7k3F1atHNcsRun0QzOtiYtL7w
-	qhe490fQBQV2MlZ4NjiMxHrTNi/2hN924JebivrAoR56dNLZmqWSaInrMsEH0e2+d4oCth
-	8ftE+Y+ppOuI33LP/Vp8ovf6YEsh1MKZSdz4+lHFJTJiUD8CtN+CbocYPFoX5CFOtUPwWE
-	eGI8EYwgxRoCyOGaxxbdslmvUktud6n5DTzujFWW8AlyOFHM6X6Bgd0+HQj6TSXE7PTjKy
-	PHv8D6p5xU4QhMxptjxmRipDLEZ8loZMyF6PA/qfrs4nzMcDIN8zZpnN+Mkanw==
-Date: Tue, 13 May 2025 18:37:44 +0200
-From: "Dr. Thomas Orgis" <thomas.orgis@uni-hamburg.de>
-To: Matthias Gerstner <mgerstner@suse.de>
-CC: <oss-security@lists.openwall.com>
-Message-ID: <20250513183744.2c187967@plasteblaster>
-In-Reply-To: <20250513182106.414b569f@plasteblaster>
-References: <aCISrQTbLQjaxBZS@kasco.suse.de>
-	<20250513182106.414b569f@plasteblaster>
-Organization: =?UTF-8?B?VW5pdmVyc2l0w6R0?= Hamburg
-X-Mailer: Claws Mail 4.0.0 (GTK+ 3.24.33; x86_64-pc-linux-gnu)
+Received: (qmail 27888 invoked from network); 20 Mar 2015 15:56:06 -0000
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Message-ID: <20150320155553.GN15408@suse.de>
+References: <550C19ED.9030901@enea.com>
+ <20150320145413.GA10416@openwall.com>
+ <CA+aC4kt54Z-17hjZ6JOLONFBeqRyFFUAn4+O7TL8fUrqrSeQ8g@mail.gmail.com>
+ <20150320155026.GF3718@symphytum.spacehopper.org>
+ <CA+aC4ktANtitip_dsvtwkuU6UEikdLzdH=prrhuXrcfL4LzQvA@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-ClientProxiedBy: EX-S-MR06.uni-hamburg.de (134.100.84.89) To
- EX-S-MR06.uni-hamburg.de (134.100.84.89)
-Subject: Re: [oss-security] screen: Multiple Security Issues in Screen
- (mostly affecting release 5.0.0 and setuid-root installations)
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CA+aC4ktANtitip_dsvtwkuU6UEikdLzdH=prrhuXrcfL4LzQvA@mail.gmail.com>
+Organization: SUSE Linux GmbH, GF: =?iso-8859-1?Q?Felix_?=
+ =?iso-8859-1?Q?Imend=F6rffer=2C_Jane_Smithard=2C_Jennifer_Guild=2C_Dilip_?=
+ =?iso-8859-1?Q?Upmanyu=2C_Graham_Norton=2C_HRB_21284_=28AG_N=FCrnberg=29?=
+User-Agent: Mutt/1.5.21 (2010-09-15)
+Date: Fri, 20 Mar 2015 16:55:54 +0100
+From: Marcus Meissner <meissner@suse.de>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] membership request to the closed linux-distros
+ security mailing list
+To: oss-security@lists.openwall.com
 
-Correction about the configure call fix.
+On Fri, Mar 20, 2015 at 08:54:29AM -0700, Anthony Liguori wrote:
+> On Fri, Mar 20, 2015 at 8:50 AM, Stuart Henderson <stu@spacehopper.org> wrote:
+> > On 2015/03/20 08:16, Anthony Liguori wrote:
+> >>
+> >> I think the alternative is to formalize what already appears to be the
+> >> existing practice: disclose distros@ on the existence of a
+> >> vulnerability but require direct contact for the details of the
+> >> vulnerability if the submitter/upstream thinks the impact is high.
+> >
+> > Are private lists even needed if this policy is taken?
+> 
+> I think there's a lot of value in being able to just send a low-medium
+> impact issue to a single list of groups that have gone through some
+> level of vetting without needing to respond directly to individuals
+> and making value judgements.
+> 
+> I also think it's helpful to have a single point of contact so that an
+> upstream isn't dealing with 10 different people from a single
+> organization asking for details.
 
-Am Tue, 13 May 2025 18:21:06 +0200
-schrieb "Dr. Thomas Orgis" <thomas.orgis@uni-hamburg.de>:
+Why not just publishing a low - medium impact vulnerability directly?
 
->=20
-> $ ./configure --with-pty-mode=3D0620 --with-pty-group=3Dtty
-> [=E2=80=A6]
-> $ grep -e PTYMODE -e PTYGROUP config.h
->  * define PTYMODE if you do not like the default of 0622, which allows=20
->  * define PTYGROUP to some numerical group-id if you do not want the
-> #define PTYMODE 0620
-> #define PTYGROUP tty
+Embargoe handling alwas also has some overhead , which is not necessary in such cases.
 
-Of course that doesn't compile. A numeric value is expected.
-
-./configure --with-pty-mode=3D0620 --with-pty-group=3D$(getent group tty|cu=
-t -f 3 -d :)
-
-is closer to what also the default for screen-5.0.0 configure is.
-
-AC_ARG_WITH(pty-mode, AS_HELP_STRING([--with-pty-mode],
-            [set pty mode (default: 0622)]),
-            [with_pty_mode=3D$withval],
-            [with_pty_mode=3D0622])
-AC_ARG_WITH(pty-group, AS_HELP_STRING([--with-pty-group],
-            [set pty group (default: 5)]),
-            [with_pty_group=3D$withval],
-            [with_pty_group=3D5])
-
-
-Which brings me to the question if it is really smart to hardcode the
-numeric group ID. I observe wildly changing system user/group IDs in
-distros that create the accounts on the fly when installing packages.
-Maybe tty is always present on install images already =E2=80=A6 and happens=
- to
-always be numeric ID 5, everywhere?
-
-
-Alrighty then,
-
-Thomas
-
---=20
-Dr. Thomas Orgis
-HPC @ Universit=C3=A4t Hamburg
+Ciao, Marcus
