@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2090" "Tuesday" "26" "May" "2015" "13:56:13" "+0200" "Douwe Maan" "douwe@gitlab.com" "<etPan.55645f5d.19495cff.34b@Douwes-MacBook-Pro.local>" "70" "[oss-security] CVE Request: CSRF vulnerability in OmniAuth request phase" nil nil nil "5" "2015052611:56:13" "[oss-security] CVE Request: CSRF vulnerability in OmniAuth request phase" (number mark "U       douwe@gitlab May 26   70/2090  " thread-indent "\"[oss-security] CVE Request: CSRF vulnerability in OmniAuth request phase\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4736" "Saturday" "21" "March" "2015" "11:31:27" "+0100" "Quentin Casasnovas" "quentin.casasnovas@oracle.com" "<20150321103127.GI7053@chrystal.uk.oracle.com>" "97" "[oss-security] Re: CVE Request: Linux kernel unprivileged denial-of-service due to mis-protected xsave/xrstor instructions." nil nil nil "3" "2015032110:31:27" "[oss-security] Re: CVE Request: Linux kernel unprivileged denial-of-service due to mis-protected xsave/xrstor instructions." (number mark "        quentin.casa Mar 21   97/4736  " thread-indent "\"[oss-security] Re: CVE Request: Linux kernel unprivileged denial-of-service due to mis-protected xsave/xrstor instructions.\"\n") "<20150320232512.B11316DC005@smtpvmsrv1.mitre.org>" ("<20150318101405.GA19065@chrystal.uk.oracle.com>" "<20150320232512.B11316DC005@smtpvmsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 31857 invoked by uid 550); 26 May 2015 13:10:24 -0000
+Received: (qmail 3264 invoked by uid 550); 21 Mar 2015 10:29:32 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,99 +11,119 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7849 invoked from network); 26 May 2015 11:56:27 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:cc:message-id:subject:mime-version
-         :content-type;
-        bh=EwAQjOInNyxAm+4xkLsHi65WOWhF6VrR/StQfs1Oaps=;
-        b=YHoTUkQ1jq6rUx9vSKAWadBr/HsfoyE7HriAhJnJqOhdVtQWVugAWMo1MSHCmQ9Bny
-         BZG6mcjFCOXA78afIhBoQ8kePhHSiWUinyUUgszbXk2SGTRw/u1Ru4W7kWADctGcYC8+
-         /Ml1VXBjzwpTEaYo/5gfR/tSBgWaRawS8S7PjEUtvP0Ezxj6dKQuSFnQ3f+w2cFJqt2B
-         8iiwdKmhhlLrFYw/lFdt8BOAg9KMx47HRzjhfKKNa1/cCFHFQ7NfTbtamXmWKHN43Lze
-         VwUSfwQoXZ8dyXB1/jYb/+xRt9UCcBuCR2SoLCkV6duWlwVmeQ04W/TppLUTHV6uvCQO
-         wqdQ==
-X-Gm-Message-State: ALoCoQn4M2qDPtdZ7wssJ683cn6G3RwvPIuuIw6r9tx2IY8uxrO/WIcGkUu59bNvwDAQjG30YkJ1
-X-Received: by 10.194.82.167 with SMTP id j7mr7316695wjy.123.1432641376217;
-        Tue, 26 May 2015 04:56:16 -0700 (PDT)
-Date: Tue, 26 May 2015 13:56:13 +0200
-From: Douwe Maan <douwe@gitlab.com>
-To: oss-security@lists.openwall.com
-Cc: Erik Michaels-Ober <sferik@gmail.com>
-Message-ID: <etPan.55645f5d.19495cff.34b@Douwes-MacBook-Pro.local>
-X-Mailer: Airmail (286)
+Received: (qmail 3237 invoked from network); 21 Mar 2015 10:29:31 -0000
+Message-ID: <20150321103127.GI7053@chrystal.uk.oracle.com>
+References: <20150318101405.GA19065@chrystal.uk.oracle.com>
+ <20150320232512.B11316DC005@smtpvmsrv1.mitre.org>
 MIME-Version: 1.0
-Content-Type: multipart/alternative; boundary="55645f5d_2ae8944a_34b"
-Subject: [oss-security] CVE Request: CSRF vulnerability in OmniAuth request phase
-
---55645f5d_2ae8944a_34b
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
+In-Reply-To: <20150320232512.B11316DC005@smtpvmsrv1.mitre.org>
+User-Agent: Mutt/1.5.22 (2013-10-16)
+X-Source-IP: aserv0021.oracle.com [141.146.126.233]
+Cc: quentin.casasnovas@oracle.com, oss-security@lists.openwall.com,
+        jamie.iles@oracle.com, mr.a.xavier@gmail.com
+Date: Sat, 21 Mar 2015 11:31:27 +0100
+From: Quentin Casasnovas <quentin.casasnovas@oracle.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: CVE Request: Linux kernel unprivileged denial-of-service due to
+ mis-protected xsave/xrstor instructions.
+To: cve-assign@mitre.org
 
-Affected software:=C2=A0
-- Ruby gem (library) OmniAuth[0]
-- Gems that use OmniAuth, e.g. Devise[1]
+On Fri, Mar 20, 2015 at 07:25:12PM -0400, cve-assign@mitre.org wrote:
+> > a flaw in the way the xsave/xrstor (and their alternative
+> > instructions) were being protected against a fault in kernel space
+> 
+> We believe that this report can have at least one CVE ID for a fixed
+> issue.
+> 
+> Does anyone have a preference for two CVE IDs divided in this way:
 
-Type of vulnerability:=C2=A0
-Cross-Site Request Forgery
+I would personnaly prefer only one CVE since it is really one issue,
+exploitable in multiple different places where the vulnerable functions are
+inlined.  See the attachment unprotected_xsave_faults on my initial mail
+for an comprehensive list of those places.
 
-Original report by:=C2=A0
-Mohamed Abdelbaset Elnoby, Senior Information Security Analyst at Seekurity=
-.com[2]
-[The website Seekurity.com isn=E2=80=99t currently working.]
+> 
+>   - one CVE ID for the
+>     https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit?id=f31a9f7c71691569359fa7fb8b0acaa44bce0324
+>     change that was introduced in 3.17. Our incomplete understanding
+>     from http://openwall.com/lists/oss-security/2015/03/18/6 is that
+>     this change had security-relevant value even though it was later
+>     determined to be mis-protecting.
 
-Summary:
+The above commit is what introduced the vulnerability.
 
-OmniAuth is a library used in Ruby web applications to authenticate users u=
-sing=C2=A0
-external services, for example OAuth providers.=C2=A0
+Sorry if my initial report was not detailed enough to understand the
+problem, let me try again.
 
-The request phase of OmniAuth is vulnerable to Cross-Site Request Forgery. =
-This=C2=A0
-is the step that actually connects an external account (on a connected OAut=
-h=C2=A0
-provider) to an internal account (on the web application itself). This mean=
-s=C2=A0
-that when a client is signed into an account on the web application, and si=
-gned=C2=A0
-into an account on a connected OAuth provider, these two accounts can be=C2=
-=A0
-connected without user intent, user interaction or feedback to the user. Fr=
-om=C2=A0
-here on out, the external account can be used to sign into the web applicat=
-ion=C2=A0
-as the internal account.=C2=A0
+We have two different mecanisms in the kernel that are involved here:
 
-If the sign in action at a connected OAuth provider is vulnerable to CSRF, =
-an=C2=A0
-attacker can force the victim=E2=80=99s client to be logged into the extern=
-al service=C2=A0
-using an account beloning to the attacker, can then force this external acc=
-ount=C2=A0
-to be connected to the internal account, and can from here on out use their=
-=C2=A0
-account on the external service to log into the victim=E2=80=99s account on=
- the targeted=C2=A0
-application.
+ - the alternative instructions: it allows the Linux kernel to self-modify
+   its running code to use optimized instructions when they are available
+   on the host CPU.  The way it works is that the initial instruction in
+   .text is supported by all CPU variants and we add optimized version of
+   the instruction in the .altinstr_replacement section.  At boot, or when
+   loading a kernel module, the kernel will replace the instruction in
+   .text by its optimized version from .altinstr_replacement if the CPU
+   supports it, we can see it as something like this:
 
-We are aware of one large OAuth provider where the sign in action is or was=
-=C2=A0
-vulnerable to CSRF.
+     if (cpu_has_fexture_X())
+             memcpy(.text, .altinstr_replacement, sizeof(instruction));
 
-Issue report and patch:=C2=A0
-https://github.com/intridea/omniauth/pull/809
+   The CPU will never have its instruction pointer pointing in
+   .altinstr_replacement, this is just used as a memory source when
+   applying the alternative instructions.
 
-References:
-[0] https://github.com/intridea/omniauth
-[1] https://github.com/plataformatec/devise
-[2] https://twitter.com/symbiansymoh
+ - the ex_table entries: it allows the kernel to mark addresses where a
+   fault might occur but should not cause a panic.  It works by storing in
+   the __ex_table section a pair of addresses, the first one being the
+   address of the instruction which could fault, and the second is where
+   the execution should continue when that fault happens.  On page fault in
+   kernel space, the page fault handler will check if there is an ex_table
+   entry corresponding to where the fault happened, and if that's the case,
+   will restore the CPU context with RIP pointing to that second address.
+   This is how copy_from_user() does not panic the kernel when the userland
+   pointer given as argument is borked for example.
+
+Now, the xsave instruction (or its alternatives xsaveopt and xsaves) could
+fault for different reasons (unaligned memory operands, non-cannonical
+address memory operand, ...), so we want to have an ex_table entry pointing
+to the xsave instruction in .text so that if it faults, the kernel does not
+die but simply continue its normal flaw and return an error to the caller.
+
+The problem with the above commit is that it correctly added an ex_table
+entry to prevent this, but the pointer to the instruction which might fault
+was not pointing to .text but to .altinstr_replacement.  The effect is that
+if userspace manages to trigger the fault on xsave (which is in .text), the
+page fault handler will never find a corresponding ex_table entry and will
+consider this as an unhandled fault.  The fix is to make the ex_table entry
+properly point to .text and not to .altinstr_replacement so the kernel
+properly handles the fault and does not die.
+
+Hopefully that clears things up.
+
+> 
+>   - a second CVE id for the
+>     https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit?id=06c8173eb92bbfc03a0fe8bb64315857d0badd06
+>     change
+
+The above commit is the fix, not a security issue.
+
+> 
+> ? Otherwise, we will assign only the latter.
+> 
+> https://lkml.org/lkml/2015/3/17/462 is about "This is to prevent
+> future misuses of the __ex_table entry like there was for
+> xsaves/xrstors." Typically, code improvements for "prevent future
+> misuses" purposes would not lead to additional CVE IDs.
+
+Agreed, these are just hardening patches so we can sanity check every
+__ex_table entry at build time, making sure none of them points to a
+non-executable section nor to .altinstr_replacement - as we know the kernel
+will never be executing from there.  This should hopefully prevent the same
+type of vulnerability being re-introduced and might uncover the same kind
+of problems on other architectures.
 
 Thanks,
-
-Douwe Maan
-GitLab=
-
---55645f5d_2ae8944a_34b--
-
+Quentin
