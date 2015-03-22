@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1402" "Tuesday" "7" "February" "2017" "01:52:33" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<79a088b371714beb89209770a077002d@imshyb02.MITRE.ORG>" "37" "[oss-security] Re: mupdf: heap-based buffer overflow in fz_subsample_pixmap" nil nil nil "2" "2017020706:52:33" "[oss-security] Re: mupdf: heap-based buffer overflow in fz_subsample_pixmap" (number mark "U       cve-assign@m Feb  7   37/1402  " thread-indent "\"[oss-security] Re: mupdf: heap-based buffer overflow in fz_subsample_pixmap\"\n") "<5243964.BbMhzSCKag@blackgate>" ("<5243964.BbMhzSCKag@blackgate>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2012" "Sunday" "22" "March" "2015" "12:26:50" "+0100" "Florian Weimer" "fw@deneb.enyo.de" "<87twxdb7d1.fsf@mid.deneb.enyo.de>" "44" "Re: [oss-security] membership request  to the closed linux-distros security mailing list" nil nil nil "3" "2015032211:26:50" "[oss-security] membership request to the closed linux-distros security mailing list" (number mark "        fw@deneb.eny Mar 22   44/2012  " thread-indent "\"Re: [oss-security] membership request  to the closed linux-distros security mailing list\"\n") "<20150320145413.GA10416@openwall.com>" ("<550C19ED.9030901@enea.com>" "<20150320145413.GA10416@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 9422 invoked by uid 550); 7 Feb 2017 06:52:47 -0000
+Received: (qmail 18042 invoked by uid 550); 22 Mar 2015 11:27:02 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,52 +11,60 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9401 invoked from network); 7 Feb 2017 06:52:46 -0000
-From: <cve-assign@mitre.org>
-To: <ago@gentoo.org>
-CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
-In-Reply-To: <5243964.BbMhzSCKag@blackgate>
-Message-ID: <79a088b371714beb89209770a077002d@imshyb02.MITRE.ORG>
-Date: Tue, 7 Feb 2017 01:52:33 -0500
+Received: (qmail 18024 invoked from network); 22 Mar 2015 11:27:01 -0000
+References: <550C19ED.9030901@enea.com> <20150320145413.GA10416@openwall.com>
+In-Reply-To: <20150320145413.GA10416@openwall.com> (Solar Designer's message
+	of "Fri, 20 Mar 2015 17:54:13 +0300")
+Message-ID: <87twxdb7d1.fsf@mid.deneb.enyo.de>
 MIME-Version: 1.0
-Content-Type: text/plain
-Subject: [oss-security] Re: mupdf: heap-based buffer overflow in fz_subsample_pixmap
+Content-Type: text/plain; charset=us-ascii
+Date: Sun, 22 Mar 2015 12:26:50 +0100
+From: Florian Weimer <fw@deneb.enyo.de>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] membership request  to the closed linux-distros security mailing list
+To: oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+* Solar Designer:
 
-> https://bugs.ghostscript.com/show_bug.cgi?id=697515
-> 
-> AddressSanitizer: heap-buffer-overflow
-> READ of size 1
-> 
-> mupdf-1.10a-source/source/fitz/pixmap.c:1210:12 in fz_subsample_pixmap
+> Oh, and I need to announce that one distro left the list earlier this
+> month: the person previously subscribed for Android determined that "the
+> mail going to those lists hasn't been actionable" for Android.
 
-As far as we can tell, this buffer over-read issue affects the library
-(e.g., libmupdf.a), not exclusively the mutool command-line program.
+Well, this can mean basically anything.  Maybe they can't do embargoes
+at all, considering how fixed software is delivered to end users.
 
-Use CVE-2017-5896.
+> 3. Setup a separate list for primarily non-free software and primarily
+> non-software vendors.  Of the existing linux-distros members, maybe
+> Amazon Linux AMI, MontaVista, and Wind River should be moved there.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Huh?  Isn't Amazon Linux AMI just a piece of software?
 
-iQIcBAEBCAAGBQJYmW3+AAoJEHb/MwWLVhi2EuQQAIWqX8aA7zBTSSElX6o9D1hs
-Cjbeerdb/OMcIp1K1xVY2p1xfphKIqfcJHwxwrBylzACx3Vc4bQhRbUGMe/TUsY+
-njOnXPZBocipcYLd8wc/WW0Hb+0y8JlFNDR08G80hRBTttxPMzKeEEXFMaDDuH2x
-zPINFJMS18Vda+r0h6iyprtsN5A8aLoH4VqRDe0Ksi6QZXQoe6llCvIYd/dHaonR
-VVJM5sE3wmdHaSi7t+1ALu7dkdjq8T8CyJUf1xiGSuFvUMRmMc73F+HxvXQalJm8
-TgJenmdnwjYAali/Z6Q00D662hxLpEUxWOCLgcneHfM3engScCKMHXvRRQhD+N1X
-FcqAC+Ae4PKh450d0o1qiRBz7YQTLeIk8tH4m/0ljSEyou6kLVYvWky6yZgeJxEi
-upQ9ff/t4d5XGILwRCCHm1osi/VQZqXGuLEuKUynDgJsd1gaWiGP5t0e587VTIT/
-y/c0T230hbcwpNObiWPN6hly1vXSLQKWuvlFMzDhEfSx+7ZxRRIZ1KtCIjyr6PlW
-zJCXQmj2sFfcOK83JsqD67qnrq9hyNzakkDCrt4Z+t4mk2+O3U40ea6jURzCMZx4
-A38zUXHdTlo5i7Qs25wlPBTfZCPBxr22+sXLTRHZ4VrM1HX3ZX1fCQE7veykxxWU
-n88zzEgrKbo+6ytZ8at0
-=//bi
------END PGP SIGNATURE-----
+Montavista and Wind River are subsidies of Cavium and Intel, and the
+parent company product security teams should be on a
+(linux-)distros-type list anyway.
+
+> The idea behind such list is that we'd let people decide who they want
+> to notify: all distros (including this separate list) or just the more
+> free'ish subset (not including this separate list).
+
+Why would you give priority to a free-ish distributions?  What's the
+goal?  We are all on the same Internet, which is why I fail to see the
+benefit of distributing vulnerability information according based on
+this criterion.
+
+> And indeed, the separation between these sub-lists is unclear.  There
+> will always be doubts where a given vendor belongs.  For example, to me
+> Red Hat is free enough to be on the privileged sub-list, but someone
+> might disagree.
+
+Being commercial hopefully means that your security team members don't
+need an actual job that pays the bills, which may create additional
+obligations.  If the security team is just a bunch of volunteers, you
+have different potential for conflicts of interest (not sure what's
+worse, an additional job, or commercial pressures).
+
+> Comments?
+
+What's happening on the distros list these days?  Who are the primary
+contributors?  Are there discussions about technical details?  Or is
+it just CRD coordination?  Or do people just drop off pre-advisories?
