@@ -1,4 +1,9 @@
-Received: (qmail 7627 invoked by uid 550); 16 Jun 2025 17:14:39 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2209" "Sunday" "22" "March" "2015" "08:05:27" "-0400" "Daniel Micay" "danielmicay@gmail.com" "<550EB007.1030701@gmail.com>" "52" "Re: [oss-security] CVE for Kali Linux" nil nil nil "3" "2015032212:05:27" "[oss-security] CVE for Kali Linux" (number mark "        danielmicay@ Mar 22   52/2209  " thread-indent "\"Re: [oss-security] CVE for Kali Linux\"\n") "<87384xcmum.fsf@mid.deneb.enyo.de>" ("<550E21FA.6090704@redhat.com>" "<CAHZU0yRzjyO78Nan5jgf38Mqt3hPQDDhcsirdVmBFPmRZ=6k9g@mail.gmail.com>" "<550E289C.1060602@redhat.com>" "<550E33F1.4020007@gmail.com>" "<87fv8xd7zy.fsf@hope.eyrie.org>" "<550E4125.3070303@gmail.com>" "<550E441A.5040007@gmail.com>" "<87384xcmum.fsf@mid.deneb.enyo.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 21776 invoked by uid 550); 22 Mar 2015 12:05:46 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,111 +11,83 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 3299 invoked from network); 16 Jun 2025 15:33:59 -0000
+Received: (qmail 21758 invoked from network); 22 Mar 2015 12:05:45 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=maennchen.ch; s=google; t=1750088029; x=1750692829; darn=lists.openwall.com;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=KlBpc3WnHX0nbNjMKD9Xn89rMl9bylP6PcCnBrntmpw=;
-        b=SntzZA/ycpmhfAsCkLnLPjg5XIRQsMRsGfTdZ0UDaSjEqRCTglXDXnDSFlef3aYQys
-         SOfV8pFRotGcK0sgqf/RDwRrvTXHIpPOj2pv6LwFKM0ygW52gXVa+/PTB9TprFfDre6f
-         +1/GTI3/RZdWbajy2rKWgMr8KjRCaV6N3KZVEyvwX5yIlNYyV1G81KMJazZZKjjAStXj
-         qcpoTwSPnGclNsEOn4BuIE+2Xref0carM5GZYKCIsBWWGld3ClZU594EPKj25OK0pAWl
-         dA/Gkv10QKPsFM98xZJvi4SZC2ZTc0orrz5yCDSZazrN0wKm3Uqj3mIiomoM91kJL9uW
-         OR4Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750088029; x=1750692829;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=KlBpc3WnHX0nbNjMKD9Xn89rMl9bylP6PcCnBrntmpw=;
-        b=O/8CIRi/dKu3XGN357ppuf7H18vYkVdm0WPlF7MM/5dgEuwLPbxaAD54J1xGt66OPs
-         e5mmo3nLCj4shXVA5a/zjIERv/bAbXlHRINpVFxF2Pp5pVsB8+TV8hA2ibAbSiYqBASM
-         XnHNduIJTHy2LsHmvoxWc7tgzV3iPN9z26jSCXJgFmb6bhthmM7xEZucbs5h3LNV4NFZ
-         FXdKmPc4U9Bh5RKpENQNiwfEjC5KXBixHxp3YRFPx98ZpaknOC3v1i6fgJLsGHVZJUCl
-         19+kAFCaVU9JZCHqrCPfvs85H3p3Le88uSZb075EZPz1DlxGuoYNRkP31d0oxCgsqolj
-         1cJg==
-X-Gm-Message-State: AOJu0Yycxst7/GqauBO5rxwcy8lOGj9uGYaLplU6DaqyOl3AM2B57K9F
-	dmSfRdlFee+K6FttQbxEnPvn0qBBvNjc+hRloipT7AJDqBnitk45H/Dyl2DuItRZsf1NbXbWiuc
-	iphBbugeFoNWLPkkSVCY8guMqmh0V67zge/t7aPPXv3U83Ma+NDW/3FEpIw==
-X-Gm-Gg: ASbGncsd3mwWwQINX7WVuBozkUQ8g5WJrez80yVyH6xIjIu1XF85WEkXhruGq3fMdNR
-	UZFd9IAAigse8N+LhprPmLbt5Itf3elUYnWvLRdN2V3S3OEQ/4qlIKsTmP7A39kAvdBF4kgSZtb
-	Grne8MVNNJoY9hnM2KmpoKbqdOwhFSEWDvhGENaoYd/vaazQSvkzDPx4kVgHxnk4U12R7uUuVb
-X-Google-Smtp-Source: AGHT+IEy/PmmhAgWfbC2kBwqMlU7Tf5ICml8OZuKZjEf8Jh++ozrxxRlHUCUNl912lc56xL+0QO3f23wjZDi8zOX00w=
-X-Received: by 2002:a05:6a00:ac3:b0:736:89bd:ffb9 with SMTP id
- d2e1a72fcca58-7489cd5b5b2mr4592379b3a.0.1750088028859; Mon, 16 Jun 2025
- 08:33:48 -0700 (PDT)
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:subject:references
+         :in-reply-to:content-type;
+        bh=J0wJTC9Xq1rwvirGWNNksMiDqIfs2xsC5UUKRN/BAEY=;
+        b=y1JpZP4a0Y+gb5HEQxCIdNQuqUfn9sVcnyMUmCXWZpqeQ6Gb8LFY8p4v1myv8w+9Yh
+         cTox4fRrMC8P5hm5bhG/Fh9lmmYdABBddUShTSLg7W/fjEdQEjcNTtt+JHPvFRhUWxAJ
+         KWR5YZIOXKmIBKehGRpjGt+zXUWRrm4UsmUM+5jJHlPUXPCB/jG3zf+dX0XFjUcma1QY
+         OGQ9g/GFPpbYtMvgoWkF3nvPKsjLVagmacfgEUlimDtR78Znwt70DtUJfqXf69MpDD0d
+         Y+DNzsKVCz79RPNaA4JnZ/t+p5ch4h7Rri9j8Qwk21xBE/w3sAshpQvVR8z+N4g89S5m
+         ThXw==
+X-Received: by 10.42.184.199 with SMTP id cl7mr13971078icb.39.1427025934344;
+        Sun, 22 Mar 2015 05:05:34 -0700 (PDT)
+Message-ID: <550EB007.1030701@gmail.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
 MIME-Version: 1.0
-From: =?UTF-8?Q?Jonatan_M=C3=A4nnchen?= <jonatan@maennchen.ch>
-Date: Mon, 16 Jun 2025 17:33:37 +0200
-X-Gm-Features: AX0GCFskLGC2-qUS3x2sH0t9glVX3bWXPjsuuViGn-dB8efql5yMlfbZ40Qxr24
-Message-ID: <CACupubOH0Lbk0f001JiFmdCn6mCvgUZ14KR2RUrVXK--7fyffg@mail.gmail.com>
+References: <550E21FA.6090704@redhat.com>	<CAHZU0yRzjyO78Nan5jgf38Mqt3hPQDDhcsirdVmBFPmRZ=6k9g@mail.gmail.com>	<550E289C.1060602@redhat.com> <550E33F1.4020007@gmail.com>	<87fv8xd7zy.fsf@hope.eyrie.org> <550E4125.3070303@gmail.com>	<550E441A.5040007@gmail.com> <87384xcmum.fsf@mid.deneb.enyo.de>
+In-Reply-To: <87384xcmum.fsf@mid.deneb.enyo.de>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="fDu4e4FntveWDrwp7dHVbVhLMKuo6D6E0"
+Date: Sun, 22 Mar 2015 08:05:27 -0400
+From: Daniel Micay <danielmicay@gmail.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] CVE for Kali Linux
 To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
+
+--fDu4e4FntveWDrwp7dHVbVhLMKuo6D6E0
+Content-Type: text/plain; charset=windows-1252
 Content-Transfer-Encoding: quoted-printable
-Subject: [oss-security] =?UTF-8?Q?CVE=2D2025=2D4748=3A_Erlang=2FOTP_17=2E0=E2=80=9328=2E0=2E0_absolute=2Dpat?=
-	=?UTF-8?Q?h_traversal_in_zip=3Aunzip=2Fzip=3Aextract?=
 
-Hi all,
+On 22/03/15 07:06 AM, Florian Weimer wrote:
+> * Daniel Micay:
+>=20
+>> Is there actually a way for a Windows user to obtain it securely?
+>=20
+> I believe there are ideological objections to using an Authenticode
+> signature (same as with Tor).
 
-An absolute-path traversal flaw has been found in the Erlang/OTP
-standard-library ZIP routines `zip:unzip/1,2` and `zip:extract/1,2`.
-If the caller does **not** supply the `memory` option, archive entries whose
-file names start with "/" are written to disk verbatim. An attacker can
-therefore create or overwrite arbitrary files writable by the Erlang VM. The
-issue is tracked as **CVE-2025-4748**.
+Tor provides their download via HTTPS from the same domain and has both
+HSTS preloading and HPKP. They provide a link to a GPG signature for the
+tarball too, but that doesn't help most users unless their distro is
+using it in package sources. AFAICT they plan on doing Authenticode
+signing, but they're doing a good job without it.
 
-### Affected releases
+The problem with these Linux distro downloads is that it's consistently
+done via http. That's fine for packages because package signing takes
+care of it. It's fine if the download is done in a way that results in
+verification like a torrent, but otherwise the user needs to manually
+verify a hash or signature and that's rarely going to happen.
 
-* 17.0 up to 28.0.0 (fixed in 28.0.1)
-* 27.x up to 27.3.4 (fixed in 27.3.4.1)
-* 26.x up to 26.2.5 (fixed in 26.2.5.13)
+It's 2015 and Debian shouldn't have an HTTP download link for the ISO on
+their front page :P.
 
-### Impact
 
-When the zip module is used to extract files to disk and the archive is
-maliciously corrupted by including absolute file paths, the zip module would
-extract them as absolute paths instead of stripping the leading /, drive or
-device letter.
+--fDu4e4FntveWDrwp7dHVbVhLMKuo6D6E0
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
-This vulnerability is associated with program files `lib/stdlib/src/zip.erl=
-` and
-program routines `zip:unzip/1`, `zip:unzip/2`, `zip:extract/1`, `zip:extrac=
-t/2`
-unless the `memory` option is passed.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
 
-### Mitigation / Fix
+iQIcBAEBCAAGBQJVDrAHAAoJEPnnEuWa9fIqfRgP/3pFNgdxUWNC8kicHlK+yjp7
+vfFlcd4NHrlpf5/5PUCkZqwSfqDqrgYX7BhvSbeMjEVxGwODEp6Rd9t4lBv3Ya/p
+QIljd1RnYdGsUC18jPsokXtQWrt6LWSK7CRz3Q2emZw23E1z44IbsGmVJY1yfWGj
+HnYxTaGeKDabR8wZu+HL9BsanVzMdub/JJIYOgpyf7ewGl8lHHL6qGpWKRPfANWW
+zXnmYzDfOwUdS5P3yvuV4rf09tkOJu8BdFNx3APz7+FwhHfeCcOD+rZKJLhBnB3q
+Oe2lz/FBhPv8NmZZ1TTscS1l0WXDB4TGXEzkSK8RnQLEVDm/DO8B5TJavJEVNL0o
+lBUYFGpaI7EjGnhx77wx99KN7ISRAlQFHU/1v7npNfasS9AQ5wfFjxQL+0ayg6+u
+iiJUANWi0A0gbE4D/iETnlqJ5dNvpCliHBCHgduKunCRmTGB92cL7YRMqN5L/T5T
+QZWHJOLGItzpg6OYYo6+jdQjleIzMRGsHoVIFebRS6JNxXdIM+y1CZ7wR796FrCT
+VEmqo236Cu+JYxCJ1IyDcj81CwPkQWRQk8c6pR5l8UXgiVCGKHGVQsK76ov//pJP
+P0OgeKqRqzEpdZeuxQ/LS1XoNp1N2ZA62HiLzCJ85qnbkihsWcGW7PFrSv0kzDrU
+9uLEi10YrxOhzuGwJ9Pm
+=T6Mt
+-----END PGP SIGNATURE-----
 
-Upgrade to one of the fixed releases listed above, or cherry-pick the upstr=
-eam
-patch. The patch is available in unified diff form at:
-
-https://patch-diff.githubusercontent.com/raw/erlang/otp/pull/9941.patch
-
-Until you can upgrade, you have two work-arounds:
-
-1. Pass the `memory` option and perform your own validation before writing =
-files
-to disk.
-2. Call `zip:list_dir/1` first, reject archives that contain absolute paths,
-then proceed with extraction.
-
-### Credits
-
-* Reported by **Wander Nauta**
-* Patch by **Lukas Backstr=C3=B6m**
-* Reviewed by **Bj=C3=B6rn Gustavsson**
-
-### References
-
-* Vendior advisory:
-https://github.com/erlang/otp/security/advisories/GHSA-9g37-pgj9-wrhc
-* CNA Advisory: https://cna.erlef.org/cves/cve-2025-4748.html
-* CVE record: https://cve.org/CVERecord?id=3DCVE-2025-4748
-* Patch PR: https://github.com/erlang/otp/pull/9941
-
-Best Regards,
-Jonatan M=C3=A4nnchen
-CISO @ Erlang Ecosystem Foundation
+--fDu4e4FntveWDrwp7dHVbVhLMKuo6D6E0--
