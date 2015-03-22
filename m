@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3294" "Monday" "17" "April" "2017" "09:09:29" "+0200" "Greg KH" "gregkh@linuxfoundation.org" "<20170417070929.GB23282@kroah.com>" "50" "Re: [oss-security] Silently (or obliviously) partially-fixed CONFIG_STRICT_DEVMEM bypass" "^Date:" nil nil "4" "2017041707:09:29" "[oss-security] Silently (or obliviously) partially-fixed CONFIG_STRICT_DEVMEM bypass" (number mark "        gregkh@linux Apr 17   50/3294  " thread-indent "\"Re: [oss-security] Silently (or obliviously) partially-fixed CONFIG_STRICT_DEVMEM bypass\"\n") "<20170416202538.GA12165@grsecurity.net>" ("<20170416202538.GA12165@grsecurity.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1722" "Sunday" "22" "March" "2015" "09:49:12" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<550EE478.70005@redhat.com>" "48" "Re: [oss-security] CVE for Kali Linux" nil nil nil "3" "2015032215:49:12" "[oss-security] CVE for Kali Linux" (number mark "        kseifried@re Mar 22   48/1722  " thread-indent "\"Re: [oss-security] CVE for Kali Linux\"\n") "<877fu9cmxy.fsf@mid.deneb.enyo.de>" ("<550E21FA.6090704@redhat.com>" "<CAHZU0yRzjyO78Nan5jgf38Mqt3hPQDDhcsirdVmBFPmRZ=6k9g@mail.gmail.com>" "<550E289C.1060602@redhat.com>" "<877fu9cmxy.fsf@mid.deneb.enyo.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 30652 invoked by uid 550); 17 Apr 2017 08:25:07 -0000
+Received: (qmail 28343 invoked by uid 550); 22 Mar 2015 15:49:26 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,68 +11,67 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 17900 invoked from network); 17 Apr 2017 07:09:49 -0000
-Message-ID: <20170417070929.GB23282@kroah.com>
-References: <20170416202538.GA12165@grsecurity.net>
+Received: (qmail 28325 invoked from network); 22 Mar 2015 15:49:26 -0000
+Message-ID: <550EE478.70005@redhat.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.4.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20170416202538.GA12165@grsecurity.net>
-User-Agent: Mutt/1.8.1 (2017-04-11)
-Date: Mon, 17 Apr 2017 09:09:29 +0200
-From: Greg KH <gregkh@linuxfoundation.org>
+References: <550E21FA.6090704@redhat.com>	<CAHZU0yRzjyO78Nan5jgf38Mqt3hPQDDhcsirdVmBFPmRZ=6k9g@mail.gmail.com>	<550E289C.1060602@redhat.com> <877fu9cmxy.fsf@mid.deneb.enyo.de>
+In-Reply-To: <877fu9cmxy.fsf@mid.deneb.enyo.de>
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="vtHCqh4KEU46NUTbiVAHKVhdEEQ9TsXqC"
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
+Date: Sun, 22 Mar 2015 09:49:12 -0600
+From: Kurt Seifried <kseifried@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Silently (or obliviously) partially-fixed
- CONFIG_STRICT_DEVMEM bypass
+Subject: Re: [oss-security] CVE for Kali Linux
 To: oss-security@lists.openwall.com
 
-On Sun, Apr 16, 2017 at 04:25:38PM -0400, Brad Spengler wrote:
-> Hi all,
-> 
-> I wanted to provide some small notice of upstream kernel developers silently
-> or obliviously partially fixing a CONFIG_STRICT_DEVMEM bypass which explicitly has
-> never been possible in grsecurity in the past 15 years.  I say this because the commit
-> message makes no mention of this partially fixing a CONFIG_STRICT_DEVMEM bypass (and I
-> suppose a Secure Boot bypass, but what isn't these days?), and similarly makes no
-> mentions of the modifications it makes to the write side.  CONFIG_STRICT_DEVMEM exists
-> to prevent userland from directly modifying kernel memory, yet the kernel will happily
-> make slab allocations in allowed regions below 1MB.  CONFIG_STRICT_DEVMEM explicitly
-> allowed both reads and writes to these allocations.  As noted, the commit below doesn't
-> fix the mmap side.
-> 
-> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=a4866aa812518ed1a37d8ea0c881dc946409de94
-> 
-> Feel free to look at GRKERNSEC_KMEM code going back to 2002 in our 2.4.20
-> patch, or when it changed in 2003 for 2.4.21, or this explicit hunk, comment and
-> all, that's been around ever since CONFIG_STRICT_DEVMEM was added in 2008:
-> 
-> +#ifdef CONFIG_GRKERNSEC_KMEM
-> +       /* throw out everything else below 1MB */
-> +       if (pagenr <= 256)
-> +               return 0;
-> +#endif
-> 
-> <additional comments/details removed: b76e178e7b24f238ba0dd70104336298f493f0142056a1e5f35c27897369adc6>
-> 
-> While I'm here, some more VMAP_STACK fallout (DoS/potential memory corruption,
-> adding to the dozen or so posted earlier):
-> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=67b0503db9c29b04eadfeede6bebbfe5ddad94ef
-> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=606142af57dad981b78707234cfbd15f9f7b7125
-> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=3f190e3aec212fc8c61e202c51400afa7384d4bc
-> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=005145378c9ad7575a01b6ce1ba118fb427f583a
-> https://git.kernel.org/pub/scm/linux/kernel/git/davem/net.git/commit/?id=3b30460c5b0ed762be75a004e924ec3f8711e032
-> https://git.kernel.org/pub/scm/linux/kernel/git/davem/net.git/commit/?id=c919a3069c775c1c876bec55e00b2305d5125caa
-> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=c4baad50297d84bde1a7ad45e50c73adae4a2192
-> https://git.kernel.org/pub/scm/linux/kernel/git/davem/net.git/commit/?id=5593523f968bc86d42a035c6df47d5e0979b5ace
-> https://git.kernel.org/pub/scm/linux/kernel/git/davem/net.git/commit/?id=7926aff5c57b577ab0f43364ff0c59d968f6a414
-> https://git.kernel.org/pub/scm/linux/kernel/git/davem/net.git/commit/?id=2d6a0e9de03ee658a9adc3bfb2f0ca55dff1e478
-> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=7a7b5df84b6b4e5d599c7289526eed96541a0654
-> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=8e9faa15469ed7c7467423db4c62aeed3ff4cae3
+--vtHCqh4KEU46NUTbiVAHKVhdEEQ9TsXqC
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: quoted-printable
 
-Thanks a lot for the heads up, I'll work on queueing up the first commit
-you posted here for the next stable releases, and go through this list
-to ensure I caught all of these as well.
 
-Many thanks for letting us all know!
 
-greg k-h
+On 03/22/2015 05:04 AM, Florian Weimer wrote:
+> * Kurt Seifried:
+>=20
+>> So I guess we enter uncharted territory here.
+>=20
+> No, this is pretty much the same as bug 998:
+
+I meant from the CVE assignment perspective. This was back in 1999, it's
+only recently (e.g. the last 6 months or so?) that we've moved the
+security bar to:
+
+downloads of updates via HTTP with no other protection =3D=3D CVE
+
+--=20
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+
+--vtHCqh4KEU46NUTbiVAHKVhdEEQ9TsXqC
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.22 (GNU/Linux)
+
+iQIcBAEBAgAGBQJVDuR4AAoJEBYNRVNeJnmTFGMQAM+Zdw9UWcokjzOWfg6AjL9Y
+YQmxPNBgAfuerKCatJpwgxr1lUkDD4MbIjFjdF/2aw4fgosbbiG3uNUf1VQ805/g
+tbAeCWcLbq5a6CqvC3UDQxub+eBfiqLbBBFxF4gWRfEW6TbiJk7O4f8bq0NPgXTf
+in2Ne6XCwv1vSo6X6yFuoNfUOI9+KKFZB2h/V5fMt5LnUWa9vg2i2XfdkOk221VS
+6mF5y50pq22Tp2BLNRoYPvm7DCar/LDQgfPcLxHiWL6sSDwSlY67f7HF1M+KawHG
+etGstltkG9iO+xTe13PQAGpbpq8tY32qy1SyUYx9KwTJakAV4yENPyDcI4kY5lU6
+FHQBPAv5J+llsTCIVgSzuzqbu8kGh4hJOEYjO0UZHnuj5KIS+BkP1qpm4/qNogg9
+DuWhiQ5rLw7s0vOZDShiLycg5SINlRhlTTLDbUMoRX61rkvNNqMmdETx34BCrHqh
+/xU19JnWcC32fAD45OTsDL14IFhsZ7A1VYjgDMW4RwFMBaJ3LuU4tWmBLcX4xHmV
+IdBBHaqZXC66klL/KdqGH1S/8aeuMhSwgMWMH98HVTS8amXrVZsj8rjM+ebbd+WL
+1Q0tQF978k3zf0G1x+QTIxfbjp2DAr7GzM0FLPDwDje13t8WmOVnUHj1Dwz3iUGB
+1k+K6aFZMdS4cBptkDSz
+=Rf03
+-----END PGP SIGNATURE-----
+
+--vtHCqh4KEU46NUTbiVAHKVhdEEQ9TsXqC--
