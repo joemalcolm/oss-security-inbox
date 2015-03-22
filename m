@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1788" "Tuesday" "30" "June" "2015" "14:59:17" "-0700" "Seth Arnold" "seth.arnold@canonical.com" "<20150630215917.GC13944@hunt>" "49" "Re: [oss-security] Question about world readable config files and commented warnings" nil nil nil "6" "2015063021:59:17" "[oss-security] Question about world readable config files and commented warnings" (number mark "        seth.arnold@ Jun 30   49/1788  " thread-indent "\"Re: [oss-security] Question about world readable config files and commented warnings\"\n") "<20150630213006.GA2270@debian>" ("<559224EC.3080008@redhat.com>" "<20150630060358.GA24238@gremlin.ru>" "<5592A82C.2090301@redhat.com>" "<20150630213006.GA2270@debian>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1962" "Sunday" "22" "March" "2015" "12:44:37" "+0100" "Florian Weimer" "fw@deneb.enyo.de" "<87pp81b6je.fsf@mid.deneb.enyo.de>" "41" "Re: [oss-security] membership request to the closed linux-distros security mailing list" nil nil nil "3" "2015032211:44:37" "[oss-security] membership request to the closed linux-distros security mailing list" (number mark "        fw@deneb.eny Mar 22   41/1962  " thread-indent "\"Re: [oss-security] membership request to the closed linux-distros security mailing list\"\n") "<20150320155026.GF3718@symphytum.spacehopper.org>" ("<550C19ED.9030901@enea.com>" "<20150320145413.GA10416@openwall.com>" "<CA+aC4kt54Z-17hjZ6JOLONFBeqRyFFUAn4+O7TL8fUrqrSeQ8g@mail.gmail.com>" "<20150320155026.GF3718@symphytum.spacehopper.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 6079 invoked by uid 550); 30 Jun 2015 21:59:31 -0000
+Received: (qmail 3485 invoked by uid 550); 22 Mar 2015 11:44:49 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,72 +11,60 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 6055 invoked from network); 30 Jun 2015 21:59:31 -0000
-Message-ID: <20150630215917.GC13944@hunt>
-Mail-Followup-To: oss-security@lists.openwall.com
-References: <559224EC.3080008@redhat.com>
- <20150630060358.GA24238@gremlin.ru>
- <5592A82C.2090301@redhat.com>
- <20150630213006.GA2270@debian>
+Received: (qmail 3464 invoked from network); 22 Mar 2015 11:44:48 -0000
+References: <550C19ED.9030901@enea.com> <20150320145413.GA10416@openwall.com>
+	<CA+aC4kt54Z-17hjZ6JOLONFBeqRyFFUAn4+O7TL8fUrqrSeQ8g@mail.gmail.com>
+	<20150320155026.GF3718@symphytum.spacehopper.org>
+In-Reply-To: <20150320155026.GF3718@symphytum.spacehopper.org> (Stuart
+	Henderson's message of "Fri, 20 Mar 2015 15:50:26 +0000")
+Message-ID: <87pp81b6je.fsf@mid.deneb.enyo.de>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="rQ2U398070+RC21q"
-Content-Disposition: inline
-In-Reply-To: <20150630213006.GA2270@debian>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-Date: Tue, 30 Jun 2015 14:59:17 -0700
-From: Seth Arnold <seth.arnold@canonical.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Sun, 22 Mar 2015 12:44:37 +0100
+From: Florian Weimer <fw@deneb.enyo.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Question about world readable config files and
- commented warnings
+Subject: Re: [oss-security] membership request to the closed linux-distros security mailing list
 To: oss-security@lists.openwall.com
 
---rQ2U398070+RC21q
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+* Stuart Henderson:
 
-On Tue, Jun 30, 2015 at 11:30:06PM +0200, vladz wrote:
-> We all know that a better way to create the file would be to set the
-> adequate umask first.  But the above steps can be found in initialization
-> and installation scripts (I can share a non-exhaustive list if wished).  I
+> On 2015/03/20 08:16, Anthony Liguori wrote:
+>>=20
+>> I think the alternative is to formalize what already appears to be the
+>> existing practice: disclose distros@ on the existence of a
+>> vulnerability but require direct contact for the details of the
+>> vulnerability if the submitter/upstream thinks the impact is high.
+>
+> Are private lists even needed if this policy is taken?
 
-Probably we should get CVEs assigned for these, that's the best way to
-make sure they're not overlooked.
+Yes, it is.  Often, things are bad enough that just looking at the
+software for five minutes is sufficient to rediscover the
+vulnerability.  Or maybe a couple of different vulnerabilities with
+similar impact.
 
-> also wouldn't recommend the use of "-m 600" in the "install" command as it
-> has the same problem:
->=20
->     # touch f1
->     # strace install -m 600 f1 f2
->     [...]
->     open("f2", O_WRONLY|O_CREAT|O_EXCL, 0644) =3D 4 // here f2 is readable
->     chmod("f2", 0600)                         =3D 0
+There's also interaction with CVE assignment.  The current, working
+assignment process requires short embargoes at least.  And a certain
+subset of reporters cares about the CVE assignment above anything else
+because it's a widely-accepted metric for having found something,
+which in turn indicates that the reporters have done their job.  I
+think we can and should reduce the number of embargoes, but we'd have
+to address the CVE assignment process for public issues at the same
+time.
 
-The three-argument open() has been available for absolute ages:
+Reducing the number of embargoes would also help those
+quasi-proprietary vendors and show them that building upstream
+relationships and tracking their software portfolio are the key tasks,
+and not getting a few days advance notice for vulnerabilities.  Most
+GNU/Linux distributions can fix about anything that's fixable at all
+within two or three weeks (and that includes the analysis required to
+actually understand the bug).  Most quasi-proprietary vendors work on
+totally different time scales, and even if they do not have to do the
+analysis themselves, a few weeks is nothing to them.
 
-https://www.freebsd.org/cgi/man.cgi?query=3Dopen&apropos=3D0&sektion=3D2&ma=
-npath=3DFreeBSD+1.0-RELEASE&arch=3Ddefault&format=3Dhtml
+But here's another perspective.  Lior Kaplan writes, =E2=80=9CEven if the
+issue isn't severe, upstream should get a fair chance to fix issue
+before making them public.=E2=80=9D
 
-I'm surprised install hasn't been updated at some point in the last twenty
-years to use the mode correctly. It's probably also CVE-worthy.
-
-Thanks
-
---rQ2U398070+RC21q
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQEcBAEBAgAGBQJVkxE1AAoJEPMhclmdjS6XXlQH/2NMa6DoOlx2vkqFVFUxyvLq
-7YyxDzGhfSFjb/gjOliMb8JflfKgC6fu26tEkh1lN42NTW6pjJoVDdS77vRvUwy/
-jrIgCGq84y2iNahK5UhPfWk04QnSmSZukBcR8tQe+oKDuPmrJVxxQsXXVf7QUNBK
-UYE8bCenllVEzH/tfBGZGT6skFX0kFRIimoREo8GDM5JcV9XQSNbgitcSzyLYndd
-q4+hkcYfInHsGTOTMtbNdxNGh4/gLvD4ZOZKLQkGzSPil8cyAFeyqR96cr9cTsdO
-REFCbDmLCME+97iq/71rFcObPMuwccNEVkNdr/OJTXXITz7ZiNrZgZolG0KHLG0=
-=s8cn
------END PGP SIGNATURE-----
-
---rQ2U398070+RC21q--
+<https://liorkaplan.wordpress.com/2015/03/19/cve-assignment-without-upstrea=
+m-knowledge/>
