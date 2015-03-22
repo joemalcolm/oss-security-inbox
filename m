@@ -1,4 +1,9 @@
-Received: (qmail 26432 invoked by uid 550); 3 Dec 2025 21:35:53 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1614" "Saturday" "21" "March" "2015" "20:01:52" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<550E2290.2070207@redhat.com>" "43" "[oss-security] rsyslog/logs/1 minute off (another RISKS thing)" nil nil nil "3" "2015032202:01:52" "[oss-security] rsyslog/logs/1 minute off (another RISKS thing)" (number mark "        kseifried@re Mar 21   43/1614  " thread-indent "\"[oss-security] rsyslog/logs/1 minute off (another RISKS thing)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 10065 invoked by uid 550); 22 Mar 2015 02:02:06 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,91 +11,61 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 11288 invoked from network); 3 Dec 2025 21:33:49 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1764797620; x=1765402420; darn=lists.openwall.com;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=NQuLOjzu7QdqF8GCVSurtoj9moS5KLtSRPujtJWkRlI=;
-        b=nU0xEciyg6lVSxKgcpWx1S2aIHcDejaRNaEMOaA/Pbhjx6k4nISVyTluBPrA0udf9j
-         lqNXfCR6tyG61v9RtM9OXuqUNd/xiWQUIitH0P9e4pUBUeUU2anv1EsXd0E36aVgrgYL
-         jnHo3PSP2J3fmlfgaUybM2w849Cqskjg9nnBDPB9cVwJGasWF4/KNFZV4sGn5mpMsd8t
-         7nS6RYyxsoJmNDfVuVbTrRRNE65IOfM4/GRbkNOIgFXf76Q8hwO95N0cNc76XlncV4Ad
-         Rr4k9h7HNIXdMLlmBEdiy88MEf/0/JgfyWwAi1WnaWctOfhe7Brt7GTeLClkl6NUllRC
-         CvhA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764797620; x=1765402420;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=NQuLOjzu7QdqF8GCVSurtoj9moS5KLtSRPujtJWkRlI=;
-        b=bOGw74CuppA5UKQVde0QO08I3w2KxUn1CilmUPzql0cYkPNmjr7iNqS+yN4/fnQRmZ
-         B0lgLT4CSnH6Gh1NNGC/yIdDvUwUN2Xs2aYmCJvelSfY5dUkYKPSy2ENptx2cIUUiZGM
-         xtTFzyZxbqx+gSo43FdoPCcekS+tFGYo/CkhSUQguuMg2FuSDqb1zEO2ZPe7vPzrAqGL
-         MNab4xsB9iQKA9kktumdUTKmbgR64KP5pxbslop0WA1HyewCQHRCnnk9sf02Bwq9u1lQ
-         /lc3WYcim7xpnbIJAbD/lzyj69ngIpw64AgWJ3B94xdMAlpyYYs2zPXDQvqUG6pQeYC2
-         TzvQ==
-X-Gm-Message-State: AOJu0YyDBuDDFTK2v/Y9XwmK1CezdLVAoqEXfMOeRMVIX4dZVTcR/lzQ
-	55v/zUqTJtRFyNtW6vy0ZVGb4EXKXQJ2Pb6AEAq+BoxOwv9ODd4eUCrKS+3rJt0D3U4rAJPGLbV
-	WOavGsEwVcUBlBxgljiteXrd4RZZSD44=
-X-Gm-Gg: ASbGncu+ozwmL/jOv/kevKPkOzJP1eodrZTSo8SHlgfPanjHCw7FZb3MBef2BDEaOHJ
-	Qb3NL9cbR8u7VqVglzh836VOdanQlgUK4FQcI9ZE+skzfTHOFUW+p81GZiuxglsNCYQzcXdbR0Q
-	5yLUFo+9wacu3eptoEaU3pfGtkJmePcxHTHkg1YQTjcaMzLpAcrPJ3qPK3q2Y9tO972nqjzm7lL
-	lM+ZxaVUlzmuD30hXEPl/nLak8GucJ31SRzUBQAP9O0ENplzvcMjHcbpuvFHVxtdQmhr4YW84iZ
-	zHmMVr1afIzAJBvTCFowbwyuDv8NPGTRai4XgUYgPYQYMEyjLvt4Wwg=
-X-Google-Smtp-Source: AGHT+IHNzFXKr7j1o5mvxvrBO9n9p6aORKlulbu775hKtk1IrgjSinKpECtVQYNgtA6BqcEeLC4Hj+TqFFaeDnH7+Ds=
-X-Received: by 2002:a05:6808:1703:b0:450:4a1a:f2fe with SMTP id
- 5614622812f47-4536e171afemr2138337b6e.0.1764797620095; Wed, 03 Dec 2025
- 13:33:40 -0800 (PST)
+Received: (qmail 10047 invoked from network); 22 Mar 2015 02:02:05 -0000
+Message-ID: <550E2290.2070207@redhat.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.4.0
 MIME-Version: 1.0
-References: <CAAoVtZwksfG-MFfhdamHt2SazD-n-_1HuZwXcRpRAJe_g3NDKg@mail.gmail.com>
- <7e93b4f6-2ccd-4859-97b4-d51d61b95694@oracle.com>
-In-Reply-To: <7e93b4f6-2ccd-4859-97b4-d51d61b95694@oracle.com>
-From: Cosmin Truta <ctruta@gmail.com>
-Date: Wed, 3 Dec 2025 23:33:28 +0200
-X-Gm-Features: AWmQ_blZnqkTV-ENmjgSl6xtEJSlT64T2za3kNA5hRF876SjQ_npNeAlJNPylXY
-Message-ID: <CAAoVtZwm9yLRV_DgvVTmir8-eEfLxksUshTQ-EBpPf1Cz_Vf=A@mail.gmail.com>
-To: Alan Coopersmith <alan.coopersmith@oracle.com>
-Cc: oss-security@lists.openwall.com, Greg Roelofs <newt@pobox.com>
-Content-Type: multipart/alternative; boundary="0000000000003f0e18064512f7e8"
-Subject: Re: [oss-security] libpng 1.6.52: Out-of-bounds vulnerability fixed: CVE-2025-66293
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="IiLTMRGjP4gJeRbXj2SaFQPtQXWh5c587"
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.23
+Date: Sat, 21 Mar 2015 20:01:52 -0600
+From: Kurt Seifried <kseifried@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] rsyslog/logs/1 minute off (another RISKS thing)
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>,
+        Assign a CVE Identifier <cve-assign@mitre.org>
 
---0000000000003f0e18064512f7e8
-Content-Type: text/plain; charset="UTF-8"
+--IiLTMRGjP4gJeRbXj2SaFQPtQXWh5c587
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-[Cc-ing Greg Roelofs, who owns and maintains libpng.org]
+Date: Sat, 14 Mar 2015 00:41:14 +0800
+From: Dan Jacobson <jidanni@jidanni.org>
+Subject: Re: Timestamps (Newbury, RISKS-28.55)
 
-On Wed, Dec 3, 2025 at 11:09=E2=80=AFPM Alan Coopersmith <
-alan.coopersmith@oracle.com> wrote:
+I've submitted
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=3D780239
+[rsyslog] log timestamps could be off by a whole minute.
+I'm sure they will fix it in a jiffy.
 
-> Does this bug (and the recent bugs fixed in 1.6.51) not affect the older
-> branches of libpng, or is the statement that "libpng 1.2.x continues to
-get
-> security fixes, as has 1.0.x for well over a decade" on
-> https://libpng.org/pub/png/libpng.html no longer correct?
 
-The good news is this: neither this bug nor the ones in the previous
-v1.6.51 release affect those ancient libpng releases. What these bugs DO
-affect is a thing called "the simplified libpng API", which was added in
-libpng-1.6.0.
+--=20
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-The bad news is this:
 
-> https://libpng.org/pub/png/libpng.html
+--IiLTMRGjP4gJeRbXj2SaFQPtQXWh5c587
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
-I have seen that page a thousand times, and... yet... OOPSIE!!
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.22 (GNU/Linux)
 
-> Is the statement on https://libpng.sourceforge.io/index.html that the
-older
-> branches "ARE NO LONGER UPDATED" and were frozen in 2017 the correct one
-now?
+iQIcBAEBAgAGBQJVDiKQAAoJEBYNRVNeJnmTiJcP/1LgqVjvtwcSIW/0TYrkOyKQ
+uS8xkg8s6KJ3gOzV7sq3QixsBbPk3DxYNfY04JPFdzsel9QrlrEefc3t5af+KY82
+vSB1OJR/SQexggvzn+7rDhaqmocWVm8t1nahlgLYxUstOroI5/mN/AS9ijH0A1B6
+6LzhUbSc6Hc3KuecD/uymuKfnGP2/S4k8U3BdiWSy8EjTplwvt/G4EGoKUeIekUq
+MNcJALIfSvF3FZpWNrfghF54dxNcJV+PRsy3Y7iezPNauA+nrFNxIJ37cPqrvQK8
+Tb17rJg4Xao13rZ06rEyL4+F4stGURxgjZlTpjZ+7OFCHe1aDx6QGYPckaQb9LEE
+kOKfq7TIu6QFs7Q6YzxUjAhscYah0jVXi3QziRw6KqRrfWfY7P46vzhNPlbaBTug
+svGyWmMPawnj6IG6ug6IC3y+6HNQlcQPOITsGadqFqbucmN1NEfOxeyu1/uC2Oqy
+TiTH9s8LruKM8PsdphMRJzNMl2ciHgw1YFuFut+1WN5DNDVQsI+74u4hB+SKGNaB
+b39WwnILv4diBKMNe1aS6BIKbUyT89qd2PK0guk7+VLGFttq3jSlbYh1/SzGFMxb
+9jvbu+3JD3nolEKuyy7nEm9Y2dlkGX+Ghzk8GqZaQgGEOA3ehpb7sxbaURR1IAHg
+FMEnicbAYUpe3OrYMdIZ
+=e81p
+-----END PGP SIGNATURE-----
 
-Yes, that is correct.
-
-Sincerely,
-Cosmin
-
---0000000000003f0e18064512f7e8--
+--IiLTMRGjP4gJeRbXj2SaFQPtQXWh5c587--
