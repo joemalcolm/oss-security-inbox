@@ -1,4 +1,9 @@
-Received: (qmail 21844 invoked by uid 550); 4 Nov 2022 18:51:18 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2068" "Sunday" "22" "March" "2015" "00:24:58" "-0400" "Daniel Micay" "danielmicay@gmail.com" "<550E441A.5040007@gmail.com>" "51" "Re: [oss-security] CVE for Kali Linux" nil nil nil "3" "2015032204:24:58" "[oss-security] CVE for Kali Linux" (number mark "        danielmicay@ Mar 22   51/2068  " thread-indent "\"Re: [oss-security] CVE for Kali Linux\"\n") "<550E4125.3070303@gmail.com>" ("<550E21FA.6090704@redhat.com>" "<CAHZU0yRzjyO78Nan5jgf38Mqt3hPQDDhcsirdVmBFPmRZ=6k9g@mail.gmail.com>" "<550E289C.1060602@redhat.com>" "<550E33F1.4020007@gmail.com>" "<87fv8xd7zy.fsf@hope.eyrie.org>" "<550E4125.3070303@gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 5556 invoked by uid 550); 22 Mar 2015 04:25:14 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,121 +11,82 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21823 invoked from network); 4 Nov 2022 18:51:17 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	invisiblethingslab.com; h=cc:content-type:date:date:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:sender:subject:subject:to:to; s=fm3; t=1667587863; x=
-	1667674263; bh=Mkq2yWKUc+K507P/sPndCjRU1oG0II39wNHyK4Z8xMw=; b=P
-	uHyPpVOb9G5fhWOWlQ38kDcjiZ/yUM0s6+sNjm+zrFD8yqidnnHCFAjBBm9ynyMy
-	rl6yhVq8VSx6y1pFSVz+dxivxUqyArBMjnaaowVvFHZ632vDKqfXfghbGZtuU2kb
-	K+aeMJmhYp/fJWEU2E5ShwfVFJ5Qn9FR4Nsnsnq4C1XMYKH2PjFGJY81pOeJklVR
-	5o4fKN9of4SANPzSzod6pxzG8ZVUZ3Oc8cPgir1i8XWY2W51BVNPsVbRQiRbaTqY
-	B8Ttsp1qsWi9jH26lk7BwWZ2UaNn3aSTtcQ11Lga59CGbqbaIU+4933mrBSRGkbD
-	k2nJgpu+7OPQlS3BYNM/g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:date:date:feedback-id
-	:feedback-id:from:from:in-reply-to:in-reply-to:message-id
-	:mime-version:references:reply-to:sender:subject:subject:to:to
-	:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1667587863; x=1667674263; bh=Mkq2yWKUc+K507P/sPndCjRU1oG0
-	II39wNHyK4Z8xMw=; b=UcuWE66dkg6Kv9khCnY44sdSMBbsIIrOxWaEVN/c6DeD
-	lTuBF3m1Ks48AFdiOLpQE+B4RnVo7RCoirNa+ounPV7LWPxDDLQsT5OOHaGs6QvQ
-	dPG+jwGANbPbjp38LhHWROgAJ9kpS70o59FpLAprsotDqIsweHPkdVRsczS4G5SG
-	G8v84L7LZSwtFLSSc48C2ravjtZHFtT12KT/KJLul5BqZPdE33ixG93qjyDyQDHl
-	dD1k+LQ8EvDyaWfX4Ti8QM3ydXLgBVewVsLcM9VgliFWd29VaHtzAgp96OYdhhrX
-	xWOdhbVmvn1nII7EIsefad9A/xu6l3g0fyt3qpHlMA==
-X-ME-Sender: <xms:F19lY-Q4mITBEMtx8IDI0_lcE2mtY4einNu-t10Eggf-vZTdqLEaIw>
-    <xme:F19lYzwtE6pczTPIpadUMmMVQYk1MOqoemjojpiY4zgiKf8gUs4Ya-kXDiUVxa05D
-    g8AfSaXMpnkFf0>
-X-ME-Received: <xmr:F19lY72CfleYf4Kl6xsgJA-rIFu2kSTAT2XYZxcWhOwRJXc_TqeorUJqwYh1>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvgedrvddugdduudehucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesghdtre
-    ertddtvdenucfhrhhomhepffgvmhhiucforghrihgvucfqsggvnhhouhhruceouggvmhhi
-    sehinhhvihhsihgslhgvthhhihhnghhslhgrsgdrtghomheqnecuggftrfgrthhtvghrnh
-    epiefgieefvdfgjeelfeeifefgjedvvdefleegleeifeegfffhgffffeffhfeuudehnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepuggvmhhise
-    hinhhvihhsihgslhgvthhhihhnghhslhgrsgdrtghomh
-X-ME-Proxy: <xmx:F19lY6DkcpvHLBqY3QKBfxGK9lHlNz-o3C1c4A33l0mAzDCreCyO6g>
-    <xmx:F19lY3jcFinjNB0TrDtftIUluExR1rj1fIgHKkjp3LoMr3y3jDrH3A>
-    <xmx:F19lY2pLVtj_1UYcBNXTSbaDbYc_NcxMDkO_k-ra2s4k3HEX4oKLPw>
-    <xmx:F19lYytcOQS4dChK2R6po73D4CMNpJBzX8H6-M782Fw7Qc99G8ifWQ>
-Feedback-ID: iac594737:Fastmail
-Date: Fri, 4 Nov 2022 14:51:00 -0400
-From: Demi Marie Obenour <demi@invisiblethingslab.com>
-To: oss-security@lists.openwall.com
-Message-ID: <Y2VfFUipF21W5dBh@itl-email>
-References: <87a657nflj.fsf@v45346.1blu.de>
+Received: (qmail 5526 invoked from network); 22 Mar 2015 04:25:13 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:subject:references
+         :in-reply-to:content-type;
+        bh=LuBSB65/M4snQHdDTaws21CjHpBADvxzy6j+LBO8k0Y=;
+        b=Mgn1FQ7zxCQ5eTzoLmwCdjnoYzqTume9C/MjnMzMvSJ7arpVXlfiFvIYnDvf5lq9Jr
+         tsVm/XI1qNeFigLTBEH/LXfeJxuLzUC7zojxlhdMaspl19vR1CuVTmEO54dbLMMlncSJ
+         vjLSPixDYvUDhZ91I0c1Xuu8DQR7D5SLD0x24mQq6emFp48GH6mAFixQJ8qPcJooghxo
+         MyXCxc8+sg8VleapV13Rv4NCQo/qWWqfpIFB5ld5KY+ZBTMMc9Qf3U1dLCLW6wPR7GxF
+         mV1Hd4DaN1wDmQNCVrg8GI9BwRUzLRPPQu3EX/Z4HyXCt22MbWdEA9IP/v3NxDiSFIjU
+         zM4w==
+X-Received: by 10.42.199.193 with SMTP id et1mr12425623icb.75.1426998302213;
+        Sat, 21 Mar 2015 21:25:02 -0700 (PDT)
+Message-ID: <550E441A.5040007@gmail.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="2JFQjLmMZkmU7AJA"
-Content-Disposition: inline
-In-Reply-To: <87a657nflj.fsf@v45346.1blu.de>
-Subject: Re: [oss-security] CVE-2022-37865: Apache Ivy allow create/overwrite
- any file on the system
-
---2JFQjLmMZkmU7AJA
-Content-Type: text/plain; protected-headers=v1; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Date: Fri, 4 Nov 2022 14:51:00 -0400
-From: Demi Marie Obenour <demi@invisiblethingslab.com>
+References: <550E21FA.6090704@redhat.com>	<CAHZU0yRzjyO78Nan5jgf38Mqt3hPQDDhcsirdVmBFPmRZ=6k9g@mail.gmail.com>	<550E289C.1060602@redhat.com> <550E33F1.4020007@gmail.com> <87fv8xd7zy.fsf@hope.eyrie.org> <550E4125.3070303@gmail.com>
+In-Reply-To: <550E4125.3070303@gmail.com>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="WG5biBiWA88mM9HT7wJT5H20w7ARjMT2S"
+Date: Sun, 22 Mar 2015 00:24:58 -0400
+From: Daniel Micay <danielmicay@gmail.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] CVE for Kali Linux
 To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE-2022-37865: Apache Ivy allow create/overwrite
- any file on the system
 
-On Fri, Nov 04, 2022 at 12:06:48PM +0100, Stefan Bodewig wrote:
-> Severity: medium
->=20
-> Description:
->=20
-> With Apache Ivy 2.4.0 an optional packaging attribute has been
-> introduced that allows artifacts to be unpacked on the fly if they used
-> pack200 or zip packaging.
->=20
-> For artifacts using the "zip", "jar" or "war" packaging Ivy prior to
-> 2.5.1 doesn't verify the target path when extracting the archive. An
-> archive containing absolute paths or paths that try to traverse
-> "upwards" using ".." sequences can then write files to any location on
-> the local fie system that the user executing Ivy has write access to.
->=20
-> Mitigation:
->=20
-> Ivy users of version 2.4.0 to 2.5.0 should upgrade to Ivy 2.5.1.
->=20
-> Credit:
->=20
-> This issue was discovered by Kostya Kortchinsky of the Databricks Securit=
-y Team.
+--WG5biBiWA88mM9HT7wJT5H20w7ARjMT2S
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: quoted-printable
 
-FYI, you might want to rotate your OpenPGP key, or at least use a newer
-hash algorithm.  The signature I got uses SHA-1 which is no longer
-considered secure.
---=20
-Sincerely,
-Demi Marie Obenour (she/her/hers)
-Invisible Things Lab
+> Windows users are also left out without this: they don't have GPG, and
+> they don't have a secure way to obtain GPG.
 
---2JFQjLmMZkmU7AJA
+http://www.gpg4win.org/
+http://sourceforge.net/projects/msys2/
+
+Not even HTTPS *without* HSTS + HPKP. Gpg4win did get part of the way
+there but didn't grab a free certificate from GlobalSign or StartSSL.
+
+The official gnupg site uses ftp with... GPG signatures. I guess you're
+supposed to validate that the GPG installer you've downloaded is valid
+by running the GPG installer? :P
+
+https://www.gnupg.org/download/
+
+Is there actually a way for a Windows user to obtain it securely?
+
+GPG simply doesn't work here, even if you assume that users are going to
+take extra steps to verify the download. You have to rely on HTTPS (or
+HKPS) to obtain the GPG key anyway, so I don't see the point in pushing
+for it here. It's fantastic for package signing, sure :).
+
+
+--WG5biBiWA88mM9HT7wJT5H20w7ARjMT2S
 Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
 
-iQIzBAEBCgAdFiEEdodNnxM2uiJZBxxxsoi1X/+cIsEFAmNlXxQACgkQsoi1X/+c
-IsH0EBAAt5WHvxKguW7nWaXn8nc71SXGcBQSkptoGlVFbO/ofISl9cEfn08HeOZI
-OPUBU2a60hsp1bEy3hr5NIR7uy99RylYCJR3fHXSHHQxnbwtqq/lZ/9WaVOVnJvq
-LIEIgeHlKS9Gbm4M4iosi3BQ8Ai6kHGM2aniQEHN8zuj46MV+u+TANLBhmVZLG0n
-5HivdVS0tHpn30v7r3KNi1ACuYVy10EfpdJE40TIwJ5jKOfV+NFnyLXeqtPpWNFy
-bEkNdpil1BM0Tqjfhyo9dmMpYdNvWhpuMXVYtbvSWo7iNlAehNzzcfYK4iM8kRTy
-dpSFJYhGcOMwUkbskYEfQvqTwH4Ly7iEvKh5/UAOCtCdr66Epm3Au/w7e8BRgxfB
-G32ZmYnoUEEQK3gLuOTYVEbTmoQx5YRWYeCx7EdaTH0ALWT1Ao7+khXYogOP34m4
-Vbz7LxSYQdnaI4teeGSAd4l+HT4VIrQLXyMf2N7P2drJSi8gfXTOh9S76Mmwdkkz
-d2rYwB2TzqmEpXHxqD3z25dhk6jESMICrMElMAaoPYnjSyBGpcpaVWeykOzrotJZ
-fbF1zNmYpXWTJWgKUyMPRgo39nLj2LVGgjiZ+pg5sr6eQLhTkW5bb5MNDTxUJFn+
-I2T9Src4R1Te3Uif4cnAmkjICTkoLZcJQBSG0bgk1yvZkh2zvDk=
-=2TQU
+iQIcBAEBCAAGBQJVDkQaAAoJEPnnEuWa9fIq90oP/3r5KHF+viZ6KZ3TtY12iILa
+IlVt9vYazAjGUwqYsnZlDo8D31U4gKTaigZNUuBVSBIShaF49Kr1fZgFfCeoKbY6
+6EBa14AV/E86akcTScuyc8taet4GiQNEPP2UKy8XTlYgAcQhkAUOWQzYE0zXlEJD
+Qb3U4FTl39pORR/gkiKbWRMZTiODCzI/RL9I3gSSnhnHydXzT+CJAgPXL6l8+wgm
+Mcyltt/PPfNQ8KCgFJ4OU4C+b86ezQcTy6vVs+iyvwG0FOn6dfpMmywtTPS3ievk
+rEdq3/jqjW4doXp40NuTcmDVgQUCNhNMi8bWzplFjPUtvd840gWBJwM39uCjvnxP
+FiS2tVlorM2Id0csoSkfQYE5SZsAZYB636fXyrjGX5wdx7TsKd176M+vH8z6uBfC
+WAvxdBt0Sinj3xAqHYhAEFNPcUpmZNJm5vlDxR9vEYk0D/XmA3Qy9LVADCWSroVR
+j4mQ6gE6XWuppWPtjKK4QUPzYR3cX4OfW66uv9BxgDlhSJybO0wsZydDPo45j4YA
+vXVyC0Zh+6H/1X3zaeX1atNuTFb6IsFvR4vkloArWGs+GkInc9ElG6TVC1rkVO7H
+3lLzyQMcgbDKRslNR8gPLF/Z7APnfIBaKy4t3GLd44A8jlS9c1wjEUzYP9R+DgXe
+e26qIn+rwqWX7qbv5+t6
+=sL18
 -----END PGP SIGNATURE-----
 
---2JFQjLmMZkmU7AJA--
+--WG5biBiWA88mM9HT7wJT5H20w7ARjMT2S--
