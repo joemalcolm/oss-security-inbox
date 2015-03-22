@@ -1,4 +1,9 @@
-Received: (qmail 7338 invoked by uid 550); 26 Sep 2024 11:31:27 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["7070" "Sunday" "22" "March" "2015" "21:46:26" "+1300" "Amos Jeffries" "squid3@treenet.co.nz" "<550E8162.1040602@treenet.co.nz>" "142" "Re: [oss-security] CVE for Kali Linux" nil nil nil "3" "2015032208:46:26" "[oss-security] CVE for Kali Linux" (number mark "        squid3@treen Mar 22  142/7070  " thread-indent "\"Re: [oss-security] CVE for Kali Linux\"\n") "<550E4125.3070303@gmail.com>" ("<550E21FA.6090704@redhat.com>" "<CAHZU0yRzjyO78Nan5jgf38Mqt3hPQDDhcsirdVmBFPmRZ=6k9g@mail.gmail.com>" "<550E289C.1060602@redhat.com>" "<550E33F1.4020007@gmail.com>" "<87fv8xd7zy.fsf@hope.eyrie.org>" "<550E4125.3070303@gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 7952 invoked by uid 550); 22 Mar 2015 08:46:50 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,186 +11,159 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 28290 invoked from network); 26 Sep 2024 11:25:03 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=rub.de; s=mail-2017;
-	t=1727349894; bh=QkB04JHefnUISWVUtStv17Xk/vwsn0Ol6uv8n56AIM0=;
-	h=Date:Subject:To:References:From:In-Reply-To:From;
-	b=qq1PU8Enf9/QfU0My+RWb0lL7CC4MKqedrYq1OYEK+mouUyEsb1ak9a2bh9gHnTPl
-	 WkiJvs/pcdiIBO4pr0DWVSwSt0w6ICv6Hm96YD/3NIhp5/M2Zrc2iraY6m9fzCcT5/
-	 C4RE6Q40rqgQ38plykevJO+aVvKZYh6T+6e2dODY=
-X-Envelope-Sender: <fabian.baeumer@rub.de>
-X-RUB-Notes: Internal origin=IPv6:2a05:3e00:c:1001::8693:2aec
-X-Virus-Status: Clean
-X-Virus-Scanned: clamav-milter 1.0.7 at mx1.mail.ruhr-uni-bochum.de
-X-Virus-Status: Clean
-X-Virus-Scanned: clamav-milter 1.2.1 at mail2.mail.ruhr-uni-bochum.de
-Message-ID: <e24f1ae1-32d5-4ed4-ba82-19f11cdf460f@rub.de>
-Date: Thu, 26 Sep 2024 13:24:53 +0200
+Received: (qmail 7931 invoked from network); 22 Mar 2015 08:46:48 -0000
+Message-ID: <550E8162.1040602@treenet.co.nz>
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
+References: <550E21FA.6090704@redhat.com>	<CAHZU0yRzjyO78Nan5jgf38Mqt3hPQDDhcsirdVmBFPmRZ=6k9g@mail.gmail.com>	<550E289C.1060602@redhat.com> <550E33F1.4020007@gmail.com> <87fv8xd7zy.fsf@hope.eyrie.org> <550E4125.3070303@gmail.com>
+In-Reply-To: <550E4125.3070303@gmail.com>
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+Date: Sun, 22 Mar 2015 21:46:26 +1300
+From: Amos Jeffries <squid3@treenet.co.nz>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] CVE for Kali Linux
 To: oss-security@lists.openwall.com
-References: <16a2094c-dfa6-a448-b9c7-76ba2dc86f66@apache.org>
-Content-Language: en-GB, de-DE
-From: =?UTF-8?Q?Fabian_B=C3=A4umer?= <fabian.baeumer@rub.de>
-In-Reply-To: <16a2094c-dfa6-a448-b9c7-76ba2dc86f66@apache.org>
-Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg=sha-512; boundary="------------ms030206020600070104010606"
-Subject: Re: [oss-security] CVE-2024-40761: Apache Answer: Avatar URL leaked
- user email addresses
 
---------------ms030206020600070104010606
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
+On 22/03/2015 5:12 p.m., Daniel Micay wrote:
+> On 21/03/15 11:30 PM, Russ Allbery wrote:
+>> Daniel Micay writes:
+>>
+>>> It would be much better to provide the download via HTTPS from a domain
+>>> that's HSTS preloaded and ideally has some level of key pinning. We are
+>>> all well aware that few users are going to go through a manual process
+>>> on the command-line to verify the download, especially if they're on
+>>> Windows as they won't have the commands that are being used.
+>>
+>> Unless you do certificate pinning, I don't see how this adds much
+>> meaningful security.  Commercial CAs at the level of browser verification
+>> of server certificates are a bad joke.  You should assume that a
+>> moderately sophisticated attacker can get a valid brower-acceptable
+>> certificate for any web site they choose, particularly given the number of
+>> opportunities attackers have to insert new root CAs into the user's
+>> browser store.  (Sometimes even preinstalled on the factory-shipped
+>> computer.)
+> 
+> I fully agree that the PKI system is downright awful. HTTPS + HSTS is
+> still way better than nothing for the vast majority of users who aren't
+> going to validate the ISO download manually. Debian would have no issue
+> getting a certificate pinned in Chromium and Firefox, and I expect that
+> even much smaller distributions could get included.
 
-PiBVc2luZyB0aGUgTUQ1IHZhbHVlIG9mIGEgdXNlcidzIGVtYWlsIHRvIGFjY2VzcyBHcmF2YXRh
-ciBpcyBpbnNlY3VyZSBhbmQgY2FuIGxlYWQgdG8gdGhlIGxlYWthZ2Ugb2YgdXNlciBlbWFpbC4N
-ClllcywgYnV0IG9ubHkgdGhyb3VnaCBicnV0ZS1mb3JjZS4gVGhlIG9uZS13YXkgcHJvcGVydHkg
-b2YgTUQ1IGlzIHN0aWxsIA0KdW5icm9rZW4uDQoNCj4gVGhlIG9mZmljaWFsIHJlY29tbWVuZGF0
-aW9uIGlzIHRvIHVzZSBTSEEyNTYgaW5zdGVhZC4NClRoaXMgZG9lc24ndCBjaGFuZ2UgYSB0aGlu
-Zy4gWW91IG1heSBhcyB3ZWxsIGJydXRlLWZvcmNlIFNIQTI1NiB0aHVzIHRoZSANCmluZm9ybWF0
-aW9uIGxlYWthZ2UgcmVtYWlucyB0aGUgc2FtZS4NCg0KSSdkIHJlY29tbWVuZCB0byBzd2l0Y2gg
-dG8gdXNpbmcgSE1BQyAod2l0aCBTSEEyNTYgZm9yIGdvb2QgbWVhc3VyZSkgYXMgDQphIGtleWVk
-IHBzZXVkby1yYW5kb20gZnVuY3Rpb24gaGVyZS4gV2hlbiB0aGUgc2VjcmV0IGlzdCBrZXB0IC0g
-d2VsbCAtIA0Kc2VjcmV0LCBuZWdsaWdpYmxlIGluZm9ybWF0aW9uIGFib3V0IHRoZSB1c2VyJ3Mg
-ZW1haWwgYWRkcmVzcyBpcyBsZWFrZWQuIA0KUGVyZm9ybWluZyBicnV0ZS1mb3JjZSB3aXRob3V0
-IGtub3dsZWRnZSBvZiB0aGUgc2VjcmV0IGtleSBpcyBhbHNvIG5vdCANCnRyYWN0YWJsZS4NCg0K
-U2lkZSBub3RlOiBUaGlzIGNoYW5nZSBkb2VzIHRha2UgYXdheSBHcmF2YXRhcidzIGdsb2JhbCBw
-cm9wZXJ0eSAoaS5lLiANCmFjcm9zcyBtdWx0aXBsZSBzaXRlcykuIEkgY2FuJ3QgdGhpbmsgb2Yg
-YSBzdHJhaWdodGZvcndhcmQgd2F5IHRvIA0KYWNoaWV2ZSBnbG9iYWwgYXZhdGFycyB3aXRob3V0
-IGxlYWtpbmcgYW55IGluZm9ybWF0aW9uIGFib3V0IHRoZSB1c2VyLiANCkhvd2V2ZXIsIGlmIHRo
-ZSBnb2FsIGhlcmUgaXMgdG8gaGF2ZSBhIHNpbXBsZSBhdmF0YXIgcGljdHVyZSB0aGlzIHNob3Vs
-ZCANCmJlIGZpbmUuDQoNCk0uIFNjLiBGYWJpYW4gQsOkdW1lcg0KDQpDaGFpciBmb3IgTmV0d29y
-ayBhbmQgRGF0YSBTZWN1cml0eQ0KUnVociBVbml2ZXJzaXR5IEJvY2h1bQ0KVW5pdmVyc2l0w6R0
-c3N0ci4gMTUwLCBCdWlsZGluZyBNQyA0LzE0NQ0KNDQ3ODAgQm9jaHVtDQpHZXJtYW55DQoNCkFt
-IDI1LjA5LjI0IHVtIDA4OjI4IHNjaHJpZWIgRW54aW4gWGllOg0KPiBTZXZlcml0eTogbG93DQo+
-DQo+IEFmZmVjdGVkIHZlcnNpb25zOg0KPg0KPiAtIEFwYWNoZSBBbnN3ZXIgdGhyb3VnaCAxLjMu
-NQ0KPg0KPiBEZXNjcmlwdGlvbjoNCj4NCj4gSW5hZGVxdWF0ZSBFbmNyeXB0aW9uIFN0cmVuZ3Ro
-IHZ1bG5lcmFiaWxpdHkgaW4gQXBhY2hlIEFuc3dlci4NCj4NCj4gVGhpcyBpc3N1ZSBhZmZlY3Rz
-IEFwYWNoZSBBbnN3ZXI6IHRocm91Z2ggMS4zLjUuDQo+DQo+IFVzaW5nIHRoZSBNRDUgdmFsdWUg
-b2YgYSB1c2VyJ3MgZW1haWwgdG8gYWNjZXNzIEdyYXZhdGFyIGlzIGluc2VjdXJlIGFuZCBjYW4g
-bGVhZCB0byB0aGUgbGVha2FnZSBvZiB1c2VyIGVtYWlsLiBUaGUgb2ZmaWNpYWwgcmVjb21tZW5k
-YXRpb24gaXMgdG8gdXNlIFNIQTI1NiBpbnN0ZWFkLg0KPiBVc2VycyBhcmUgcmVjb21tZW5kZWQg
-dG8gdXBncmFkZSB0byB2ZXJzaW9uIDEuNC4wLCB3aGljaCBmaXhlcyB0aGUgaXNzdWUuDQo+DQo+
-IENyZWRpdDoNCj4NCj4g5byg5bKz54aZIChyZXBvcnRlcikNCj4NCj4gUmVmZXJlbmNlczoNCj4N
-Cj4gaHR0cHM6Ly9hbnN3ZXIuaW5jdWJhdG9yLmFwYWNoZS5vcmcNCj4gaHR0cHM6Ly93d3cuY3Zl
-Lm9yZy9DVkVSZWNvcmQ/aWQ9Q1ZFLTIwMjQtNDA3NjENCj4NCg==
+Cert pinning would increase the vulnerability footprint with regards to
+whether the browser being used was trusted, ANd whether the pinned cert
+database was tructworthy. Same as the issues already outlined for
+obtaining gpg and apt trust.
 
---------------ms030206020600070104010606
-Content-Type: application/pkcs7-signature; name="smime.p7s"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="smime.p7s"
-Content-Description: Kryptografische S/MIME-Signatur
+> 
+> The home page that users land on when they want to download the distro
+> is secured via HTTPS so you're relying on that to initiate the trust
+> model regardless of the better PGP-based model that's used for package
+> signing afterwards.
 
-MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgMFADCABgkqhkiG9w0BBwEAAKCCEeww
-ggUSMIID+qADAgECAgkA4wvV+K8l2YEwDQYJKoZIhvcNAQELBQAwgYIxCzAJBgNVBAYTAkRFMSsw
-KQYDVQQKDCJULVN5c3RlbXMgRW50ZXJwcmlzZSBTZXJ2aWNlcyBHbWJIMR8wHQYDVQQLDBZULVN5
-c3RlbXMgVHJ1c3QgQ2VudGVyMSUwIwYDVQQDDBxULVRlbGVTZWMgR2xvYmFsUm9vdCBDbGFzcyAy
-MB4XDTE2MDIyMjEzMzgyMloXDTMxMDIyMjIzNTk1OVowgZUxCzAJBgNVBAYTAkRFMUUwQwYDVQQK
-EzxWZXJlaW4genVyIEZvZXJkZXJ1bmcgZWluZXMgRGV1dHNjaGVuIEZvcnNjaHVuZ3NuZXR6ZXMg
-ZS4gVi4xEDAOBgNVBAsTB0RGTi1QS0kxLTArBgNVBAMTJERGTi1WZXJlaW4gQ2VydGlmaWNhdGlv
-biBBdXRob3JpdHkgMjCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAMtg1/9moUHN0vqH
-l4pzq5lN6mc5WqFggEcVToyVsuXPztNXS43O+FZsFVV2B+pG/cgDRWM+cNSrVICxI5y+NyipCf8F
-XRgPxJiZN7Mg9mZ4F4fCnQ7MSjLnFp2uDo0peQcAIFTcFV9Kltd4tjTTwXS1nem/wHdN6r1ZB+Ba
-L2w8pQDcNb1lDY9/Mm3yWmpLYgHurDg0WUU2SQXaeMpqbVvAgWsRzNI8qIv4cRrKO+KA3Ra0Z3qL
-NupOkSk9s1FcragMvp0049ENF4N1xDkesJQLEvHVaY4l9Lg9K7/AjsMeO6W/VRCrKq4Xl14zzsjz
-9AkH4wKGMUZrAcUQDBHHWekCAwEAAaOCAXQwggFwMA4GA1UdDwEB/wQEAwIBBjAdBgNVHQ4EFgQU
-k+PYMiba1fFKpZFK4OpL4qIMz+EwHwYDVR0jBBgwFoAUv1kgNgB5oKAia4zV8mHSuCzLgkowEgYD
-VR0TAQH/BAgwBgEB/wIBAjAzBgNVHSAELDAqMA8GDSsGAQQBga0hgiwBAQQwDQYLKwYBBAGBrSGC
-LB4wCAYGZ4EMAQICMEwGA1UdHwRFMEMwQaA/oD2GO2h0dHA6Ly9wa2kwMzM2LnRlbGVzZWMuZGUv
-cmwvVGVsZVNlY19HbG9iYWxSb290X0NsYXNzXzIuY3JsMIGGBggrBgEFBQcBAQR6MHgwLAYIKwYB
-BQUHMAGGIGh0dHA6Ly9vY3NwMDMzNi50ZWxlc2VjLmRlL29jc3ByMEgGCCsGAQUFBzAChjxodHRw
-Oi8vcGtpMDMzNi50ZWxlc2VjLmRlL2NydC9UZWxlU2VjX0dsb2JhbFJvb3RfQ2xhc3NfMi5jZXIw
-DQYJKoZIhvcNAQELBQADggEBAIcL/z4Cm2XIVi3WO5qYi3FP2ropqiH5Ri71sqQPrhE4eTizDnS6
-dl2e6BiClmLbTDPo3flq3zK9LExHYFV/53RrtCyD2HlrtrdNUAtmB7Xts5et6u5/MOaZ/SLick0+
-hFvu+c+Z6n/XUjkurJgARH5pO7917tALOxrN5fcPImxHhPalR6D90Bo0fa3SPXez7vTXTf/D6OWS
-T1k+kEcQSrCFWMBvf/iu7QhCnh7U3xQuTY+8npTD5+32GPg8SecmqKc22CzeIs2LgtjZeOJVEqM7
-h0S2EQvVDFKvaYwPBt/QolOLV5h7z/0HJPT8vcP9SpIClxvyt7bPZYoaorVyGTkwggWsMIIElKAD
-AgECAgcbY7rQHiw9MA0GCSqGSIb3DQEBCwUAMIGVMQswCQYDVQQGEwJERTFFMEMGA1UEChM8VmVy
-ZWluIHp1ciBGb2VyZGVydW5nIGVpbmVzIERldXRzY2hlbiBGb3JzY2h1bmdzbmV0emVzIGUuIFYu
-MRAwDgYDVQQLEwdERk4tUEtJMS0wKwYDVQQDEyRERk4tVmVyZWluIENlcnRpZmljYXRpb24gQXV0
-aG9yaXR5IDIwHhcNMTYwNTI0MTEzODQwWhcNMzEwMjIyMjM1OTU5WjCBjTELMAkGA1UEBhMCREUx
-RTBDBgNVBAoMPFZlcmVpbiB6dXIgRm9lcmRlcnVuZyBlaW5lcyBEZXV0c2NoZW4gRm9yc2NodW5n
-c25ldHplcyBlLiBWLjEQMA4GA1UECwwHREZOLVBLSTElMCMGA1UEAwwcREZOLVZlcmVpbiBHbG9i
-YWwgSXNzdWluZyBDQTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAJ07eRxH3h+Gy8Zp
-1xCeOdfZojDbchwFfylfS2jxrRnWTOFrG7ELf6Gr4HuLi9gtzm6IOhDuV+UefwRRNuu6cG1joL6W
-LkDh0YNMZj0cZGnlm6Stcq5oOVGHecwX064vXWNxSzl660Knl5BpBb+Q/6RAcL0D57+eGIgfn5mI
-TQ5HjUhfZZkQ0tkqSe3BuS0dnxLLFdM/fx5ULzquk1enfnjK1UriGuXtQX1TX8izKvWKMKztFwUk
-P7agCwf9TRqaA1KgNpzeJIdl5Of6x5ZzJBTN0OgbaJ4YWa52fvfRCng8h0uwN89Tyjo4EPPLR22M
-ZD08WkVKusqAfLjz56dMTM0CAwEAAaOCAgUwggIBMBIGA1UdEwEB/wQIMAYBAf8CAQEwDgYDVR0P
-AQH/BAQDAgEGMCkGA1UdIAQiMCAwDQYLKwYBBAGBrSGCLB4wDwYNKwYBBAGBrSGCLAEBBDAdBgNV
-HQ4EFgQUazqYi/nyU4na4K2yMh4JH+iqO3QwHwYDVR0jBBgwFoAUk+PYMiba1fFKpZFK4OpL4qIM
-z+EwgY8GA1UdHwSBhzCBhDBAoD6gPIY6aHR0cDovL2NkcDEucGNhLmRmbi5kZS9nbG9iYWwtcm9v
-dC1nMi1jYS9wdWIvY3JsL2NhY3JsLmNybDBAoD6gPIY6aHR0cDovL2NkcDIucGNhLmRmbi5kZS9n
-bG9iYWwtcm9vdC1nMi1jYS9wdWIvY3JsL2NhY3JsLmNybDCB3QYIKwYBBQUHAQEEgdAwgc0wMwYI
-KwYBBQUHMAGGJ2h0dHA6Ly9vY3NwLnBjYS5kZm4uZGUvT0NTUC1TZXJ2ZXIvT0NTUDBKBggrBgEF
-BQcwAoY+aHR0cDovL2NkcDEucGNhLmRmbi5kZS9nbG9iYWwtcm9vdC1nMi1jYS9wdWIvY2FjZXJ0
-L2NhY2VydC5jcnQwSgYIKwYBBQUHMAKGPmh0dHA6Ly9jZHAyLnBjYS5kZm4uZGUvZ2xvYmFsLXJv
-b3QtZzItY2EvcHViL2NhY2VydC9jYWNlcnQuY3J0MA0GCSqGSIb3DQEBCwUAA4IBAQCBeEWkTqR/
-DlXwCbFqPnjMaDWpHPOVnj/z+N9rOHeJLI21rT7H8pTNoAauusyosa0zCLYkhmI2THhuUPDVbmCN
-T1IxQ5dGdfBi5G5mUcFCMWdQ5UnnOR7Ln8qGSN4IFP8VSytmm6A4nwDO/afr0X9XLchMX9wQEZc+
-lgQCXISoKTlslPwQkgZ7nu7YRrQbtQMMONncsKk/cQYLsgMHM8KNSGMlJTx6e1du94oFOO+4oK4v
-9NsH1VuEGMGpuEvObJAaguS5Pfp38dIfMwK/U+d2+dwmJUFvL6Yb+qQTkPp8ftkLYF3sv8pBoGH7
-EUkp2KgtdRXYShjqFu9VNCIaE40GMIIHIjCCBgqgAwIBAgIMKEY6FiZdyM744mtLMA0GCSqGSIb3
-DQEBCwUAMIGNMQswCQYDVQQGEwJERTFFMEMGA1UECgw8VmVyZWluIHp1ciBGb2VyZGVydW5nIGVp
-bmVzIERldXRzY2hlbiBGb3JzY2h1bmdzbmV0emVzIGUuIFYuMRAwDgYDVQQLDAdERk4tUEtJMSUw
-IwYDVQQDDBxERk4tVmVyZWluIEdsb2JhbCBJc3N1aW5nIENBMB4XDTIzMDMzMTEwNTcxM1oXDTI2
-MDMzMDEwNTcxM1owgZoxCzAJBgNVBAYTAkRFMSEwHwYDVQQKDBhSdWhyLVVuaXZlcnNpdGFldCBC
-b2NodW0xLDAqBgNVBAsMI0NoYWlyIGZvciBOZXR3b3JrIGFuZCBEYXRhIFNlY3VyaXR5MRAwDgYD
-VQQEDAdCYWV1bWVyMQ8wDQYDVQQqDAZGYWJpYW4xFzAVBgNVBAMMDkZhYmlhbiBCYWV1bWVyMIIC
-IjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAtUXof3QfwCyKSjiHcwXSMnDhFiuJW24OoEiy
-77FbR0TMr6oJHCiVMnr9j/tSQEktkoLWOSOziyC38nc8/Bdr5goeZ5XBCsp5PmgGN8s+i17vQVV/
-5e6sRu39wImM0AFZ/b0/rxJ4RVhqknnxocxwDweMjGxWRolSy69wSh96kdW0UcBGXS3TTiA9p6xY
-UO9/VuF4uJIrzRrbwzhXqbDCIzTnthiOGnUzjQcALf/7omQy+A/x1OXSLi35gKXXALKWFbbHEJjW
-H4ION4bwGyHIw/MyqGbPeSf47X5M2Wu5jHqknhQogw+5oVYNmaoT7+Zw8KyNA4yeQ2wDTjwziiCg
-ENpK21oY1n/8klBvHw/qVXccOzYrOZYoQkBO1GpThbySbz1k0WCT/47bFfXupqPzBbKp5NqHdoxU
-ucR7n8He0e9liWi2xVIg4x9QH/6zm4NPcDNmprVtozZQ2/WBZMn1ungqtVeiBp1NseBgjJXCW41a
-CUH9EDdR6fto+5M5+SQWm6mGVWgaEXNudZ5b1Q5KnldMYFfwOciZJMPgDZYmP4cp3p++nYF80Axv
-F7AK8lo2y8Z+/EgB1XAqn7H0V8v41p1H2nbHNJwnLga2OiLQZmys+RZQwCuQNWFpV56X9mGD+NrF
-e9Z3i6PXAYQ8jb9Fw1P2mpyweHfT1liGw9pM8o8CAwEAAaOCAnEwggJtMD4GA1UdIAQ3MDUwDwYN
-KwYBBAGBrSGCLAEBBDAQBg4rBgEEAYGtIYIsAQEECzAQBg4rBgEEAYGtIYIsAgEECzAJBgNVHRME
-AjAAMA4GA1UdDwEB/wQEAwIF4DAdBgNVHSUEFjAUBggrBgEFBQcDAgYIKwYBBQUHAwQwHQYDVR0O
-BBYEFNYVlkZ24IxVgUdDwzqJo3NFXWTfMB8GA1UdIwQYMBaAFGs6mIv58lOJ2uCtsjIeCR/oqjt0
-MEMGA1UdEQQ8MDqBFWZhYmlhbi5iYWV1bWVyQHJ1Yi5kZYEhZmFiaWFuLmJhZXVtZXJAcnVoci11
-bmktYm9jaHVtLmRlMIGNBgNVHR8EgYUwgYIwP6A9oDuGOWh0dHA6Ly9jZHAxLnBjYS5kZm4uZGUv
-ZGZuLWNhLWdsb2JhbC1nMi9wdWIvY3JsL2NhY3JsLmNybDA/oD2gO4Y5aHR0cDovL2NkcDIucGNh
-LmRmbi5kZS9kZm4tY2EtZ2xvYmFsLWcyL3B1Yi9jcmwvY2FjcmwuY3JsMIHbBggrBgEFBQcBAQSB
-zjCByzAzBggrBgEFBQcwAYYnaHR0cDovL29jc3AucGNhLmRmbi5kZS9PQ1NQLVNlcnZlci9PQ1NQ
-MEkGCCsGAQUFBzAChj1odHRwOi8vY2RwMS5wY2EuZGZuLmRlL2Rmbi1jYS1nbG9iYWwtZzIvcHVi
-L2NhY2VydC9jYWNlcnQuY3J0MEkGCCsGAQUFBzAChj1odHRwOi8vY2RwMi5wY2EuZGZuLmRlL2Rm
-bi1jYS1nbG9iYWwtZzIvcHViL2NhY2VydC9jYWNlcnQuY3J0MA0GCSqGSIb3DQEBCwUAA4IBAQA2
-TUR/4UBApxuFbGVWzAkFxAfnGjlYUhVRhCext7xKms1E6tf6umVjXcSmdry1ELR2j0+6lbwrunNU
-mNud5kC8Q8qhzCoY7iWMdh4eO/evWOCG0sWqhvKfCpSG2FZz6xsd6+VK0OGZAGcsoZwqMLKS6gzs
-G3R37PIPwqPmjL1J5GuPguDVO/HCIyN2/+PDP/WLoYPii5Z93EDpxFXxQK9kC76WL6S3qejPgWqp
-FbLT8ADBgMFT40/JVUW49pRdu5TFNLc3QF6LdWIO3HU5fm4x1AwK/U1vsJnStXH9Ogsk6GusC61E
-52ZAQpGDClMQWBnRJoO9mi8SWKWmmSgvLuqpMYIGGDCCBhQCAQEwgZ4wgY0xCzAJBgNVBAYTAkRF
-MUUwQwYDVQQKDDxWZXJlaW4genVyIEZvZXJkZXJ1bmcgZWluZXMgRGV1dHNjaGVuIEZvcnNjaHVu
-Z3NuZXR6ZXMgZS4gVi4xEDAOBgNVBAsMB0RGTi1QS0kxJTAjBgNVBAMMHERGTi1WZXJlaW4gR2xv
-YmFsIElzc3VpbmcgQ0ECDChGOhYmXcjO+OJrSzANBglghkgBZQMEAgMFAKCCA0owGAYJKoZIhvcN
-AQkDMQsGCSqGSIb3DQEHATAcBgkqhkiG9w0BCQUxDxcNMjQwOTI2MTEyNDUzWjBPBgkqhkiG9w0B
-CQQxQgRAeLcK1sKbTPJYprPq6sXd8Ycclg4JeaCyXwpRdrQ9IJkzcvgecOT51RAAzm5/Gt9sCOlG
-hLS3XyIid0PwBAznhTCBrwYJKwYBBAGCNxAEMYGhMIGeMIGNMQswCQYDVQQGEwJERTFFMEMGA1UE
-Cgw8VmVyZWluIHp1ciBGb2VyZGVydW5nIGVpbmVzIERldXRzY2hlbiBGb3JzY2h1bmdzbmV0emVz
-IGUuIFYuMRAwDgYDVQQLDAdERk4tUEtJMSUwIwYDVQQDDBxERk4tVmVyZWluIEdsb2JhbCBJc3N1
-aW5nIENBAgwoRjoWJl3Izvjia0swgbEGCyqGSIb3DQEJEAILMYGhoIGeMIGNMQswCQYDVQQGEwJE
-RTFFMEMGA1UECgw8VmVyZWluIHp1ciBGb2VyZGVydW5nIGVpbmVzIERldXRzY2hlbiBGb3JzY2h1
-bmdzbmV0emVzIGUuIFYuMRAwDgYDVQQLDAdERk4tUEtJMSUwIwYDVQQDDBxERk4tVmVyZWluIEds
-b2JhbCBJc3N1aW5nIENBAgwoRjoWJl3Izvjia0swggFXBgkqhkiG9w0BCQ8xggFIMIIBRDALBglg
-hkgBZQMEASowCwYJYIZIAWUDBAECMAoGCCqGSIb3DQMHMA0GCCqGSIb3DQMCAgEFMA0GCCqGSIb3
-DQMCAgEFMAcGBSsOAwIHMA0GCCqGSIb3DQMCAgEFMAcGBSsOAwIaMAsGCWCGSAFlAwQCATALBglg
-hkgBZQMEAgIwCwYJYIZIAWUDBAIDMAsGCWCGSAFlAwQCBDALBglghkgBZQMEAgcwCwYJYIZIAWUD
-BAIIMAsGCWCGSAFlAwQCCTALBglghkgBZQMEAgowCwYJKoZIhvcNAQEBMAsGCSuBBRCGSD8AAjAI
-BgYrgQQBCwAwCAYGK4EEAQsBMAgGBiuBBAELAjAIBgYrgQQBCwMwCwYJK4EFEIZIPwADMAgGBiuB
-BAEOADAIBgYrgQQBDgEwCAYGK4EEAQ4CMAgGBiuBBAEOAzANBgkqhkiG9w0BAQEFAASCAgCMJihl
-EzRhIYvtuKYnStPx0u9SXgxHum+n1AK0NsIbR07SbJoAToPt7G8y8nLw7txzWr60xnAnIHFKZtyM
-FLcU/4r6iBcIVJoX+uwXeGV7AsUdMOACccNKOfuaiP45RX8M17iAn294Zb7skS5ZNMF+UehlQtPc
-0XzQ+eY5RDxIVhuk2HITzfzZFDRj7uyezNNERYYP3PI3XL+Hf+bP+5yt98sXFAAwTDQaoN7Im+Ov
-yhBea3ivLlFNzGoZXLKNKWNJW/jynTx9Fi48yWj8tbp7dcjZncVljEFwn/sVnkw2XuvGSYoNYaOw
-viaBn5T2DDehn+U/vmY0FdlPIBjocHJ+NHCFbEnzGPfxd4QmUv6Es4vDyveTnHY624RcDWxo58nE
-7+IPRnaQ3PAm9Ws9je4QaBorOfBh01GOElZniKdbz6lBAKxLymyfgh2aJb6KvHQKZa4xhZ+gc9T+
-3CQIsACctNOPzyhyI2PGw1khLdsikNO+XgYIrbFsbEtQW3eHTIfKWeYc/j2GUzZ0vIogOmnQD4tY
-peoiTdZw6V4KMFDCrS3tcbTg9wcHBvZoxQiHQtsYbrBJhP9UZmXuSJI+y8Z9W424EjX3XalYajSI
-yyuV2UGVKV5GbRtMpCqB/5KhaU21VZDIkBBYZ6UGj4uXuC9VrkufhPrpoDOCoL0iBa82iwAAAAAA
-AA==
+Look a bit closer, past the https://. Debian are using DANE (DNSSEC and
+TLSA records) to publish their HTTPS details in a way which avoids
+dependence on the browser organizations security and pinned certificate
+registry. Its also far more portable than browser pinning allows.
 
---------------ms030206020600070104010606--
+Unfortunately the browser vendors are letting us all down by refusing to
+implement DANE validation and going with their in-house developed
+mechanisms instead.
+
+> 
+>> I think the approach Debian takes here has some real merit, although it
+>> would still be a good idea to offer https downloads just for privacy
+>> reasons (it's hard to do so just because of the way the mirror network and
+>> the commercial CA world work).  Because the downloads are over HTTP,
+>> everyone goes "wait, what?" and looks for the *actual* security, which,
+>> provided you can get a good bootstrap of the initial public PGP keys, is
+>> quite a bit better than just TLS verification of the server.  As opposed
+>> to seeing TLS and assuming that adds meaningful verification of the
+>> server, which is dubious.
+>>
+>> And that approach has the significant advantage that, because it uses
+>> proper public key cryptography, anyone can mirror the packages and you
+>> don't have to care where you got the packages from or establishing a full
+>> trust chain for them.  You only have to do that for the published signing
+>> key, and then verify the signatures, which apt does for you.  This is a
+>> pretty huge advantage, since it means that large organizations can just
+>> mirror the repository with rsync, and any apt client can be pointed to the
+>> mirror without needing to configure any new keys and while getting the
+>> same level of security validation.
+>>
+>> The problem, of course, is how to do the bootstrap, and that's where the
+>> original post came in.  The ISO images presumably (like Debian's) include
+>> the pre-installed repository signing keys, so known-good ISO images are a
+>> way to bootstrap the security of subsequent downloads.  But this requires
+>> actually verifying the ISO signatures in some meaningful way, which is
+>> hard for the average user to do, since there isn't any pre-existing trust
+>> relationship that one can easily leverage.
+> 
+> I fully agree with what you're saying about package signing. It's what I
+> pointed out in my other email:
+> 
+> http://www.openwall.com/lists/oss-security/2015/03/22/6
+> 
+> It's a distinct issue from the initial download though, where the user
+> needs to obtain the PGP keyring in the first place. HTTPS + HSTS + HPKP
+> has a *lot* of value for bootstrapping the trust model. It provides a
+> high level of security for *all* users rather than just a tiny minority
+> willing to go through the trouble of manual verification.
+
+HTTPS as commonly implemented is a joke, which is how the channels get
+routinely hijacked.
+
+HSTS is a joke today due to the insecure channels - so your going to
+send a flag saying the content MUST be kept secure ... over the channel
+that just got hijacked. Yay.
+
+HPKP helps - but increases the footprint of things that have to be
+secured and thus trusted. And only covers the major browsers or
+implementers capable of developing their own registries for pinned certs
+- otherwise you are back to trusting the browser vendors X, Y, or Z
+registry again.
+
+With DANE the TLSA record is under control of the publisher, and DNSSEC
+ties it securely to both the origin server for the HTTPS channel, and to
+the keys of a mutually trusted upstream authority in a web-of-trust like
+model. Only the DNS root server key needs to be bootstrapped at some
+point down the chain.
+
+Single point of vulnerability with 0-24hr DNS TTL updates turnover when
+attacked,
+ vs.
+multiple points of vulnerability with weeks of turnaround to publish new
+browser updates plus all the time to get the user population upgraded.
+
+
+> 
+> You only need to provide the users with a torrent file securely and
+> you've done your job, as the torrent client will validate SHA1 hashes.
+> The mirrors work fine as web seeds. Note that this doesn't require the
+> user to take any additional *optional* steps to validate, because once
+> you do that you've failed the majority of users.
+
+You still have the bootstrap problem of how to validate the torrent
+client binary. Might as well use apt validation and avoid the complexity
+of torrent.
+
+> 
+> Windows users are also left out without this: they don't have GPG, and
+> they don't have a secure way to obtain GPG.
+> 
+
+Ironically the safest way to obtain GPG is probably to download it with
+Internet Explorer these days.
+
+Consider the signed boot loader validated by CPU itself, loading a
+signed OS, loading signed WUpdate binary, installing signed MSIE and
+certificates binaries, running the resulting signed browser to connect
+to a HTTPS download site for signed GPG installer - should (in theory at
+least) be signed from top to bottom.
+ Of course there are loopholes at the browser trusted-CA and cert
+pinning stages, browser not veryfing download signatures and side
+channel infections are an ever present problem. But then those are still
+issues if one uses a non-IE browser installed between the IE and GPG
+stages (at risk of more software ~= larger vulnerability footprint).
+
+AYJ
