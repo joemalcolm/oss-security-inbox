@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["8726" "Tuesday" "16" "February" "2021" "12:35:31" "+0000" "Xen.org security team" "security@xen.org" nil "201" "[oss-security] Xen Security Advisory 364 v3 (CVE-2021-26933) - arm: The cache may not be cleaned for newly allocated scrubbed pages" nil nil nil "2" nil nil (number mark "U       security@xen Feb 16  201/8726  " thread-indent "\"[oss-security] Xen Security Advisory 364 v3 (CVE-2021-26933) - arm: The cache may not be cleaned for newly allocated scrubbed pages\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Xen Security Advisory 364 v3 (CVE-2021-26933) - arm: The cache may not be cleaned for newly allocated scrubbed pages" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3297" "Saturday" "21" "March" "2015" "23:01:31" "-0400" "Daniel Micay" "danielmicay@gmail.com" "<550E308B.6080808@gmail.com>" "79" "Re: [oss-security] CVE for Kali Linux" nil nil nil "3" "2015032203:01:31" "[oss-security] CVE for Kali Linux" (number mark "        danielmicay@ Mar 21   79/3297  " thread-indent "\"Re: [oss-security] CVE for Kali Linux\"\n") "<550E21FA.6090704@redhat.com>" ("<550E21FA.6090704@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 24120 invoked by uid 550); 16 Feb 2021 12:35:52 -0000
+Received: (qmail 30185 invoked by uid 550); 22 Mar 2015 03:01:47 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,225 +11,110 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 24004 invoked from network); 16 Feb 2021 12:35:50 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=xen.org;
-	s=20200302mail; h=Date:Message-Id:Subject:CC:From:To:MIME-Version:
-	Content-Transfer-Encoding:Content-Type;
-	bh=IHjlcNqY9zVQG6xPpJPwS1esZBtm3kl4cjbgTTWsTRU=; b=Ww+Gi67omVf9Ru77k14K1xTV/Z
-	h3mTaS7e/r1khuCnYVxpZuOomlXQz+ykuTN4mO1X4xfDDy1ChAc4a4lwU0tVy4yIifF0tXvA7LxU7
-	/9uRxUDcrduK7p9U1CnLG9275u2h31jacTH0Yh+J7ZERTlYM9RfSGhAXQpMg7WMtrb+0=;
-Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
-Content-Transfer-Encoding: binary
+Received: (qmail 30164 invoked from network); 22 Mar 2015 03:01:47 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:subject:references
+         :in-reply-to:content-type;
+        bh=O2iskhCmqAKBjvkOKj5ZTm14FNATipxEM4qrQgOQ6sM=;
+        b=E+teDfX2ZVRxf67CPQhMP0+iAV3/95OHgk18mlOeKNriLE8RtDkTbKCRvVDtHodgzh
+         +jHSDyWr0TkMTFPgJrpMb0IENtZcatVrZ1f7LubN95bYpyj/fr5jcQalcrgyIzR4lnWf
+         LFkZH9ryroaKdnSjkgweaoc2y1g0B7KzZOtXSb4iGkaYAsVlKLNbZyK9jwF5ncWfel/Q
+         TqjhG4Fg3YcDzhNxG6+VP77PwFnSppta6hhh15DPFRRzwVCf9YUv57INlThZmvpgz3O2
+         MGVUZj2OFr3GyE4Uq0aHcjj/cYSQNoYDoYRmLoFj0VCmPos0KGyQdIM1A1NRSbL5q3hH
+         +CAA==
+X-Received: by 10.50.7.1 with SMTP id f1mr6271026iga.8.1426993295678;
+        Sat, 21 Mar 2015 20:01:35 -0700 (PDT)
+Message-ID: <550E308B.6080808@gmail.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
 MIME-Version: 1.0
-X-Mailer: MIME-tools 5.509 (Entity 5.509)
-To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
- xen-users@lists.xen.org, oss-security@lists.openwall.com
-From: Xen.org security team <security@xen.org>
-CC: Xen.org security team <security-team-members@xen.org>
-Message-Id: <E1lBzZj-0002cK-EW@xenbits.xenproject.org>
-Date: Tue, 16 Feb 2021 12:35:31 +0000
-Subject: [oss-security] Xen Security Advisory 364 v3 (CVE-2021-26933) - arm: The cache
- may not be cleaned for newly allocated scrubbed pages
+References: <550E21FA.6090704@redhat.com>
+In-Reply-To: <550E21FA.6090704@redhat.com>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="jEAVPE44lrmBTIn9lSh5QgcLqciwiOtwO"
+Date: Sat, 21 Mar 2015 23:01:31 -0400
+From: Daniel Micay <danielmicay@gmail.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] CVE for Kali Linux
+To: oss-security@lists.openwall.com
 
---=separator
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
-Content-Transfer-Encoding: 7bit
+--jEAVPE44lrmBTIn9lSh5QgcLqciwiOtwO
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On 21/03/15 09:59 PM, Kurt Seifried wrote:
+> From RISKS, looks like it needs a CVE
+>=20
+> Date: Tue, 17 Mar 2015 07:37:50 -0700
+> From: Henry Baker <hbaker1@pipeline.com>
+> Subject: Kali Linux security is a joke!
+>=20
+> FYI -- Your best chance to hack the hackers...
+>=20
+>   "Downloading Kali Linux"
+>=20
+>   "Alert!  Always make certain you are downloading Kali Linux from offici=
+al
+>   sources, as well as verifying md5sums against official values.  It would
+>   be easy for a malicious entity to modify a Kali install to contain
+>   malicious code, and host it unofficially."
+>   http://docs.kali.org/category/introduction
+>=20
+> ---
+>=20
+> No kidding!
+>=20
+> So how come whenever you do apt-get install in Kali Linux, it accesses
+> http://security.kali.org and http://http.kali.org ??
+>=20
+> Hasn't Kali heard about MITM attacks against http ??
 
-            Xen Security Advisory CVE-2021-26933 / XSA-364
-                               version 3
+Using HTTPS for package downloads would only make it harder to figure
+out which packages are installed on the system. A dedicated attacker
+could figure this out based on side channels over time and I'm not at
+all convinced that it's valuable information anyway. There are usually
+other ways of distinguishing between different client/server software
+and it's not like attacking Thunderbird with a mutt imap exploit is
+going to trigger any kind of alert...
 
- arm: The cache may not be cleaned for newly allocated scrubbed pages
+Community distributions like Debian and Arch rely heavily on completely
+untrusted third party mirrors. That's probably even true of many with
+commercial support. At some point, someone in the computer science club
+at $UNIVERSITY sets up a cron job on a machine that many people probably
+have access to anyway. The people who set up most of the mirrors
+probably don't even have access to them anymore. Is there really trust
+between the client and mirror that's worth securing?
 
-UPDATES IN VERSION 3
-====================
+> What's the point of verifying md5 sums against "official values", if Kali
+> can't even get the "official values" securely ??
 
-Public release.
+Obtaining the initial ISO is a different issue from the package security
+model. They seem to use SHA1 anyway. Perhaps they used MD5 some time ago
+and the summary on the main page was never updated.
 
-ISSUE DESCRIPTION
-=================
 
-On Arm, a guest is allowed to control whether memory access bypass the
-cache.  This means that Xen needs to ensure that all writes (such as
-the ones during scrubbing) have reached memory before handing over the
-page to a guest.
+--jEAVPE44lrmBTIn9lSh5QgcLqciwiOtwO
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
-Unfortunately the operation to clean the cache happens before checking
-if the page was scrubbed.  Therefore there is no guarantee when all
-the writes will reach the memory.
-
-IMPACT
-======
-
-A malicious guest may be able to read sensitive data from memory that
-previously belonged to another guest.
-
-VULNERABLE SYSTEMS
-==================
-
-Xen version 4.9 onwards are vulnerable. Only Arm systems are vulnerable.
-
-MITIGATION
-==========
-
-There is no known mitigation.
-
-CREDITS
-=======
-
-This issue was discovered by Julien Grall of Amazon.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-Note that patches for released versions are generally prepared to
-apply to the stable branches, and may not apply cleanly to the most
-recent release tarball.  Downstreams are encouraged to update to the
-tip of the stable branch before applying these patches.
-
-xsa364.patch           xen-unstable - 4.11
-
-$ sha256sum xsa364*
-c9dcb3052bb6ca4001e02b3ad889c70b4eebf1931bef83dfb7de86452851f3c8  xsa364.meta
-dc313c70bb07b4096bbc4612cbbc180589923277411dede2fda37f04ecc846d6  xsa364.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
 -----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
 
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmAru/UMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZT0UH/0Lzw4sShqmyO06n0HWcXyzXKx7Qh67tjBglmB0D
-XHKrlTKR0Cs1S2NR3GCSZCSPNKXcXU689qEXlvK07EpheO/xCUgpZNkt/Eab/JFK
-NngYbuev1z6+bGeCi70b6RItCXoWiwDWEJqLlLKROwBXMZaodwgjY7/o3GR2D8ZV
-Qyz2EcAdJUIYmMsLC3hJ7gTLXvdySp+0lZ9oO6qe4YYQ3CIwPJnlflWFTzcASfML
-D9lMVG6u6ratiqt4N1egE0gxBe3/QP8KoptSqiV+MDdwPnsK009g/G+0Ea430ZEh
-lviVSgCxhdELx2Tv+Q7qSSbnfMSdnibSHAxipcbyhvjiEJU=
-=mHyv
+iQIcBAEBCAAGBQJVDjCOAAoJEPnnEuWa9fIqJikP/i/5+/BzYV87vGLKBm9ZMYTs
+uHgkGehzM6+dj+daWiNFgKfTXrwzfX9Pf2QNvcozQxW2WhpDa3vaoMeGlxlxOYr2
+vzUI+wkgA1vFHCWAwbBWulysOM4AYg24Eblt969P8ehnfdTfYi5KCeMFoCh4dZ8s
+wpNJME9VTNJGcJ8K75R0YZ6pe44oG/p5TWkuLfPMDpZfaCQt9KutDK+aq98VdbT3
+J4MMGLSJASv23p9Egj/yKEK/yyXYvSu7RmcHoHMmO2PhDbKd0TEMinFRXanKYbdP
+/Yuhf9xYduXBbDTXZDf1/V+EGJdBh/UILpA7WivMFsduJ9U0vpv65g6SWFgBjAhV
+4pJE72boOCZHHxvFlj+0R8BjYLQoCwku9hO2MP+28LIw0KW7cTq9FbAjlByAmdBH
+AUba3R5YVf0DyvPTJ11ZftpXJt5CksKMEzhZ8UHJ0DXJsKT4kstPe7REuExdA30q
+r8sWnXsEIEQggmezXS+OYxz6xLsKEipW6e9k6G7/Tra/jewb2UKVUtSZcGpS5hQw
+c4px80ynI3v4HRAXiuAK45HuPEnPHgdhxV/U2gvWmmlQtm7qrBpnlZxzMNhvmcB5
+dvk8oArxYJmMRuPlA9jxmMz6Xz087QMdZNuyS9uLEC9+Ucmzj+SvyJrlRV5QD8h0
+fijsv/n9rku1iEv9xW2N
+=yPcY
 -----END PGP SIGNATURE-----
 
---=separator
-Content-Type: application/octet-stream; name="xsa364.meta"
-Content-Disposition: attachment; filename="xsa364.meta"
-Content-Transfer-Encoding: base64
-
-ewogICJYU0EiOiAzNjQsCiAgIlN1cHBvcnRlZFZlcnNpb25zIjogWwogICAg
-Im1hc3RlciIsCiAgICAiNC4xNCIsCiAgICAiNC4xMyIsCiAgICAiNC4xMiIs
-CiAgICAiNC4xMSIKICBdLAogICJUcmVlcyI6IFsKICAgICJ4ZW4iCiAgXSwK
-ICAiUmVjaXBlcyI6IHsKICAgICI0LjExIjogewogICAgICAiUmVjaXBlcyI6
-IHsKICAgICAgICAieGVuIjogewogICAgICAgICAgIlN0YWJsZVJlZiI6ICIz
-MTBhYjc5ODc1Y2I3MDVjYzJjN2RhZGRmZjQxMmI1YTQ4OTlmOGM5IiwKICAg
-ICAgICAgICJQcmVyZXFzIjogW10sCiAgICAgICAgICAiUGF0Y2hlcyI6IFsK
-ICAgICAgICAgICAgInhzYTM2NC5wYXRjaCIKICAgICAgICAgIF0KICAgICAg
-ICB9CiAgICAgIH0KICAgIH0sCiAgICAiNC4xMiI6IHsKICAgICAgIlJlY2lw
-ZXMiOiB7CiAgICAgICAgInhlbiI6IHsKICAgICAgICAgICJTdGFibGVSZWYi
-OiAiY2NlN2NiZDk4NmMxMjJhODY1ODJmZjM3NzViNmI1NTlkODc3NDA3YyIs
-CiAgICAgICAgICAiUHJlcmVxcyI6IFtdLAogICAgICAgICAgIlBhdGNoZXMi
-OiBbCiAgICAgICAgICAgICJ4c2EzNjQucGF0Y2giCiAgICAgICAgICBdCiAg
-ICAgICAgfQogICAgICB9CiAgICB9LAogICAgIjQuMTMiOiB7CiAgICAgICJS
-ZWNpcGVzIjogewogICAgICAgICJ4ZW4iOiB7CiAgICAgICAgICAiU3RhYmxl
-UmVmIjogImU0MTYxOTM4YjMxNWYzYjljNmExM2FkZTMwZDE2YzExNTA0YTJk
-MTYiLAogICAgICAgICAgIlByZXJlcXMiOiBbXSwKICAgICAgICAgICJQYXRj
-aGVzIjogWwogICAgICAgICAgICAieHNhMzY0LnBhdGNoIgogICAgICAgICAg
-XQogICAgICAgIH0KICAgICAgfQogICAgfSwKICAgICI0LjE0IjogewogICAg
-ICAiUmVjaXBlcyI6IHsKICAgICAgICAieGVuIjogewogICAgICAgICAgIlN0
-YWJsZVJlZiI6ICI0MTcwMjE4Y2I5NjU0NjQyNjY2NGU1YzFkMDBjNWE4NDhh
-MjZhZTllIiwKICAgICAgICAgICJQcmVyZXFzIjogW10sCiAgICAgICAgICAi
-UGF0Y2hlcyI6IFsKICAgICAgICAgICAgInhzYTM2NC5wYXRjaCIKICAgICAg
-ICAgIF0KICAgICAgICB9CiAgICAgIH0KICAgIH0sCiAgICAibWFzdGVyIjog
-ewogICAgICAiUmVjaXBlcyI6IHsKICAgICAgICAieGVuIjogewogICAgICAg
-ICAgIlN0YWJsZVJlZiI6ICI1ZTdhYTkwNDQwNWZhMmYyNjhjM2FmMjEzNTE2
-YmFlMjcxZGUzMjY1IiwKICAgICAgICAgICJQcmVyZXFzIjogW10sCiAgICAg
-ICAgICAiUGF0Y2hlcyI6IFsKICAgICAgICAgICAgInhzYTM2NC5wYXRjaCIK
-ICAgICAgICAgIF0KICAgICAgICB9CiAgICAgIH0KICAgIH0KICB9Cn0K
-
---=separator
-Content-Type: application/octet-stream; name="xsa364.patch"
-Content-Disposition: attachment; filename="xsa364.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbSBkYWRiNWI0YjIxYzkwNGNlNTkwMjRjNjg2ZWIxYzU1YmU4ZjQ2YzUy
-IE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBKdWxpZW4gR3JhbGwg
-PGpncmFsbEBhbWF6b24uY29tPgpEYXRlOiBUaHUsIDIxIEphbiAyMDIxIDEw
-OjE2OjA4ICswMDAwClN1YmplY3Q6IFtQQVRDSF0geGVuL3BhZ2VfYWxsb2M6
-IE9ubHkgZmx1c2ggdGhlIHBhZ2UgdG8gUkFNIG9uY2Ugd2Uga25vdyB0aGV5
-CiBhcmUgc2NydWJiZWQKCkF0IHRoZSBtb21lbnQsIGVhY2ggcGFnZSBhcmUg
-Zmx1c2hlZCB0byBSQU0ganVzdCBhZnRlciB0aGUgYWxsb2NhdG9yCmZvdW5k
-IHNvbWUgZnJlZSBwYWdlcy4gSG93ZXZlciwgdGhpcyBpcyBoYXBwZW5pbmcg
-YmVmb3JlIGNoZWNrIGlmIHRoZQpwYWdlIHdhcyBzY3J1YmJlZC4KCkFzIGEg
-Y29uc2VxdWVuY2UsIG9uIEFybSwgYSBndWVzdCBtYXkgYmUgYWJsZSB0byBh
-Y2Nlc3MgdGhlIG9sZCBjb250ZW50Cm9mIHRoZSBzY3J1YmJlZCBwYWdlcyBp
-ZiBpdCBoYXMgY2FjaGUgZGlzYWJsZWQgKGRlZmF1bHQgYXQgYm9vdCkgYW5k
-CnRoZSBjb250ZW50IGRpZG4ndCByZWFjaCB0aGUgUG9pbnQgb2YgQ29oZXJl
-bmN5LgoKVGhlIGZsdXNoIGlzIG5vdyBtb3ZlZCBhZnRlciB3ZSBrbm93IHRo
-ZSBjb250ZW50IG9mIHRoZSBwYWdlIHdpbGwgbm90CmNoYW5nZS4gVGhpcyBh
-bHNvIGhhcyB0aGUgYmVuZWZpdCB0byByZWR1Y2UgdGhlIGFtb3VudCBvZiB3
-b3JrIGhhcHBlbmluZwp3aXRoIHRoZSBoZWFwX2xvY2sgaGVsZC4KClRoaXMg
-aXMgWFNBLTM2NC4KCkZpeGVzOiAzMDdjM2JlM2NjYjIgKCJtbTogRG9uJ3Qg
-c2NydWIgcGFnZXMgd2hpbGUgaG9sZGluZyBoZWFwIGxvY2sgaW4gYWxsb2Nf
-aGVhcF9wYWdlcygpIikKU2lnbmVkLW9mZi1ieTogSnVsaWVuIEdyYWxsIDxq
-Z3JhbGxAYW1hem9uLmNvbT4KUmV2aWV3ZWQtYnk6IEphbiBCZXVsaWNoIDxq
-YmV1bGljaEBzdXNlLmNvbT4KLS0tCiB4ZW4vY29tbW9uL3BhZ2VfYWxsb2Mu
-YyB8IDE0ICsrKysrKysrKy0tLS0tCiAxIGZpbGUgY2hhbmdlZCwgOSBpbnNl
-cnRpb25zKCspLCA1IGRlbGV0aW9ucygtKQoKZGlmZiAtLWdpdCBhL3hlbi9j
-b21tb24vcGFnZV9hbGxvYy5jIGIveGVuL2NvbW1vbi9wYWdlX2FsbG9jLmMK
-aW5kZXggMDJhYzFmYTYxM2U3Li4xNzQ0ZTZmYWE1YzQgMTAwNjQ0Ci0tLSBh
-L3hlbi9jb21tb24vcGFnZV9hbGxvYy5jCisrKyBiL3hlbi9jb21tb24vcGFn
-ZV9hbGxvYy5jCkBAIC05MjQsNiArOTI0LDcgQEAgc3RhdGljIHN0cnVjdCBw
-YWdlX2luZm8gKmFsbG9jX2hlYXBfcGFnZXMoCiAgICAgYm9vbCBuZWVkX3Rs
-YmZsdXNoID0gZmFsc2U7CiAgICAgdWludDMyX3QgdGxiZmx1c2hfdGltZXN0
-YW1wID0gMDsKICAgICB1bnNpZ25lZCBpbnQgZGlydHlfY250ID0gMDsKKyAg
-ICBtZm5fdCBtZm47CiAKICAgICAvKiBNYWtlIHN1cmUgdGhlcmUgYXJlIGVu
-b3VnaCBiaXRzIGluIG1lbWZsYWdzIGZvciBub2RlSUQuICovCiAgICAgQlVJ
-TERfQlVHX09OKChfTUVNRl9iaXRzIC0gX01FTUZfbm9kZSkgPCAoOCAqIHNp
-emVvZihub2RlaWRfdCkpKTsKQEAgLTEwMjIsMTEgKzEwMjMsNiBAQCBzdGF0
-aWMgc3RydWN0IHBhZ2VfaW5mbyAqYWxsb2NfaGVhcF9wYWdlcygKICAgICAg
-ICAgcGdbaV0udS5pbnVzZS50eXBlX2luZm8gPSAwOwogICAgICAgICBwYWdl
-X3NldF9vd25lcigmcGdbaV0sIE5VTEwpOwogCi0gICAgICAgIC8qIEVuc3Vy
-ZSBjYWNoZSBhbmQgUkFNIGFyZSBjb25zaXN0ZW50IGZvciBwbGF0Zm9ybXMg
-d2hlcmUgdGhlCi0gICAgICAgICAqIGd1ZXN0IGNhbiBjb250cm9sIGl0cyBv
-d24gdmlzaWJpbGl0eSBvZi90aHJvdWdoIHRoZSBjYWNoZS4KLSAgICAgICAg
-ICovCi0gICAgICAgIGZsdXNoX3BhZ2VfdG9fcmFtKG1mbl94KHBhZ2VfdG9f
-bWZuKCZwZ1tpXSkpLAotICAgICAgICAgICAgICAgICAgICAgICAgICAhKG1l
-bWZsYWdzICYgTUVNRl9ub19pY2FjaGVfZmx1c2gpKTsKICAgICB9CiAKICAg
-ICBzcGluX3VubG9jaygmaGVhcF9sb2NrKTsKQEAgLTEwNjIsNiArMTA1OCwx
-NCBAQCBzdGF0aWMgc3RydWN0IHBhZ2VfaW5mbyAqYWxsb2NfaGVhcF9wYWdl
-cygKICAgICBpZiAoIG5lZWRfdGxiZmx1c2ggKQogICAgICAgICBmaWx0ZXJl
-ZF9mbHVzaF90bGJfbWFzayh0bGJmbHVzaF90aW1lc3RhbXApOwogCisgICAg
-LyoKKyAgICAgKiBFbnN1cmUgY2FjaGUgYW5kIFJBTSBhcmUgY29uc2lzdGVu
-dCBmb3IgcGxhdGZvcm1zIHdoZXJlIHRoZSBndWVzdAorICAgICAqIGNhbiBj
-b250cm9sIGl0cyBvd24gdmlzaWJpbGl0eSBvZi90aHJvdWdoIHRoZSBjYWNo
-ZS4KKyAgICAgKi8KKyAgICBtZm4gPSBwYWdlX3RvX21mbihwZyk7CisgICAg
-Zm9yICggaSA9IDA7IGkgPCAoMVUgPDwgb3JkZXIpOyBpKysgKQorICAgICAg
-ICBmbHVzaF9wYWdlX3RvX3JhbShtZm5feChtZm4pICsgaSwgIShtZW1mbGFn
-cyAmIE1FTUZfbm9faWNhY2hlX2ZsdXNoKSk7CisKICAgICByZXR1cm4gcGc7
-CiB9CiAKLS0gCjIuMTcuMQoK
-
---=separator--
+--jEAVPE44lrmBTIn9lSh5QgcLqciwiOtwO--
