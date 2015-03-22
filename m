@@ -1,4 +1,9 @@
-Received: (qmail 9814 invoked by uid 550); 21 Nov 2022 18:35:47 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1071" "Sunday" "22" "March" "2015" "14:16:09" "-0400" "David A. Wheeler" "dwheeler@dwheeler.com" "<E1YZkPx-0006Km-RX@rmm6prod02.runbox.com>" "25" "Re: [oss-security] CVE for Kali Linux" nil nil nil "3" "2015032218:16:09" "[oss-security] CVE for Kali Linux" (number mark "        dwheeler@dwh Mar 22   25/1071  " thread-indent "\"Re: [oss-security] CVE for Kali Linux\"\n") "<20150322172300.GA21110@openwall.com>" ("<20150322172300.GA21110@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 29906 invoked by uid 550); 22 Mar 2015 18:16:21 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,94 +11,42 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1074 invoked from network); 21 Nov 2022 18:12:45 -0000
-Authentication-Results: apache.org; auth=none
-X-Gm-Message-State: ANoB5pnLsvLGjJe4XyBkJhRlA126+p/70mvWnjC/0BlpHyUJmE9KDDxW
-	Rt6TaAYK9uwJuaImX4YpwkojbDame34F7Hf/IQ==
-X-Google-Smtp-Source: AA0mqf4/pfu/LCM+CP3V3Lmbwr37WS3ljWg67PDSgJu/E3grkb3kcYbskqExtr3p9sYURC4rx8TNprFaejY5ipq/OnE=
-X-Received: by 2002:a63:1d03:0:b0:46f:abcc:a793 with SMTP id
- d3-20020a631d03000000b0046fabcca793mr19471153pgd.234.1669054350643; Mon, 21
- Nov 2022 10:12:30 -0800 (PST)
-MIME-Version: 1.0
-From: David Smiley <dsmiley@apache.org>
-Date: Mon, 21 Nov 2022 13:12:19 -0500
-X-Gmail-Original-Message-ID: <CABEwPvGVFWS8gNrc4txih+axEh_zwds_aXYGn+PB8xkcABTWvA@mail.gmail.com>
-Message-ID: <CABEwPvGVFWS8gNrc4txih+axEh_zwds_aXYGn+PB8xkcABTWvA@mail.gmail.com>
-To: security <security@apache.org>, oss-security@lists.openwall.com, 
-	Andreas Hubold <andreas.hubold@coremedia.com>, users@solr.apache.org, dev@solr.apache.org
-Content-Type: multipart/alternative; boundary="000000000000ae5a8b05edfefff9"
-Subject: [oss-security] Apache Solr is vulnerable to CVE-2022-39135 via /sql handler
-
---000000000000ae5a8b05edfefff9
-Content-Type: text/plain; charset="UTF-8"
+Received: (qmail 29855 invoked from network); 22 Mar 2015 18:16:21 -0000
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+X-Mailer: RMM6
+In-Reply-To: <20150322172300.GA21110@openwall.com>
+Message-Id: <E1YZkPx-0006Km-RX@rmm6prod02.runbox.com>
+Date: Sun, 22 Mar 2015 14:16:09 -0400 (EDT)
+From: "David A. Wheeler" <dwheeler@dwheeler.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] CVE for Kali Linux
+To: "oss-security" <oss-security@lists.openwall.com>
 
-Vendor:
+On Sun, 22 Mar 2015 20:23:00 +0300, Solar Designer <solar@openwall.com> wro=
+te:
+> IMO, http vs. https is a red herring.  We shouldn't be focusing on
+> security of software downloads, but rather on authenticity of the
+> software.  If the distribution web server gets compromised, https
+> doesn't help.  Thus, GPG signatures and the like.
 
-  The Apache Software Foundation
+I agree with you in *principle*.  However, people almost never check signat=
+ures
+if that process is a separate step. HTTPS is far more secure than
+"HTTP plus signatures that are never checked" :-).
+Their switch from HTTP to HTTPS for executable downloads is an improvement =
+in *practice*.
+(All other downloads are checked with signatures and cryptographic hashes; =
+the
+challenge, as always, is getting started with a trust root.)
 
+We need to find ways to make checking essentially automatic in ways it's no=
+t today,
+preferably ways that don't create more monopoly control points.
+Yes, I'm aware that there many places where they *are* checked automaticall=
+y;
+I'm focusing on the areas where they are not.
 
-Versions Affected:
-
-  Solr 6.5 to 8.11.2
-
-  Solr 9.0
-
-
-Description:
-
-  Apache Calcite has a vulnerability, CVE-2022-39135, that is exploitable
-in Apache Solr in SolrCloud mode.  If an untrusted user can supply SQL
-queries to Solr=E2=80=99s =E2=80=9C/sql=E2=80=9D handler (even indirectly v=
-ia proxies / other
-apps), then the user could perform an XML External Entity (XXE) attack.  Th=
-is
-might have been exposed by some deployers of Solr in order for internal
-analysts to use JDBC based tooling, but would have unlikely been granted to
-wider audiences.
-
-
-Impact:
-
-  An XXE attack may lead to the disclosure of confidential data, denial of
-service, server side request forgery (SSRF), port scanning from the Solr
-node, and other system impacts.
-
-
-Mitigation:
-
-  Most Solr installations don=E2=80=99t make use of the SQL functionality. =
- For
-such users, the standard Solr security advice of using a firewall should be
-adequate.  Nonetheless, the functionality can be disabled.  As of Solr 9,
-it has been modularized and thus became opt-in, so nothing is needed for
-Solr 9 users that don=E2=80=99t use it.  Users *not* using SolrCloud can=E2=
-=80=99t use the
-functionality at all.  For other users that wish to disable it, you must
-register a request handler that masks the underlying functionality in
-solrconfig.xml like so:
-
-  <requestHandler name=3D"/sql" class=3D"solr.NotFoundRequestHandler"/>
-
-
-  Users needing this SQL functionality are forced to upgrade to Solr 9.1.
-If Solr 8.11.3 is released, then it will be an option as well.  Simply
-replacing Calcite and other JAR files may mostly work but could fail
-depending on the particulars of the query.  Users interested in this or in
-patching their own versions of Solr should examine SOLR-16421 for a source
-patch.
-
-
-Credit:
-
-  Andreas Hubold at CoreMedia GmbH
-
-
-References:
-
-https://nvd.nist.gov/vuln/detail/CVE-2022-39135
-
-https://issues.apache.org/jira/browse/SOLR-16421
-
---000000000000ae5a8b05edfefff9--
+--- David A. Wheeler
