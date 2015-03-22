@@ -1,4 +1,9 @@
-Received: (qmail 1067 invoked by uid 550); 23 Dec 2023 18:23:13 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6058" "Sunday" "22" "March" "2015" "14:33:01" "-0400" "Daniel Micay" "danielmicay@gmail.com" "<550F0ADD.5020800@gmail.com>" "135" "Re: [oss-security] CVE for Kali Linux" nil nil nil "3" "2015032218:33:01" "[oss-security] CVE for Kali Linux" (number mark "        danielmicay@ Mar 22  135/6058  " thread-indent "\"Re: [oss-security] CVE for Kali Linux\"\n") "<20150322172300.GA21110@openwall.com>" ("<550EE478.70005@redhat.com>" "<E1YZj9N-0003Th-Gn@rmm6prod02.runbox.com>" "<20150322172300.GA21110@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 23657 invoked by uid 550); 22 Mar 2015 18:33:18 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,179 +11,166 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 23594 invoked from network); 22 Mar 2015 18:33:17 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:subject:references
+         :in-reply-to:content-type;
+        bh=iTcA8VyLf4l4AxayvVm7KZkTn9mYdM5JIz526VFjHxA=;
+        b=ustLuEGLv9LDniX7G0/pv7RR4zy+K/VAlUas7WeuKK544J+Dv/KriO0Bf/nphxE02o
+         We+36cZbq38Our92MEH+LElJzzpjC13vBhEuv6xRgYvhfywNCatW1fz7v5ufmf+ipSON
+         LD2r4+gXyj4gTxQsjq6a8imzA6SpO4qRzeB4hc32GGndbN5UwmlmVzE7HccBKjl8UH/Y
+         FcCm9DEPj010ELsEcE5Cku8/Iv57Q+gGG559kVenB/hSXrhahvTwUb/o+y3CcS40xjL/
+         TQxZZ4qihjFrOS19yZlmiOsVmxH2PVD03UU+R51qxxajWsst7yzJ/n4yI2ZGwaYJH5gp
+         ncKA==
+X-Received: by 10.50.29.52 with SMTP id g20mr9924768igh.27.1427049185799;
+        Sun, 22 Mar 2015 11:33:05 -0700 (PDT)
+Message-ID: <550F0ADD.5020800@gmail.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
+MIME-Version: 1.0
+References: <550EE478.70005@redhat.com> <E1YZj9N-0003Th-Gn@rmm6prod02.runbox.com> <20150322172300.GA21110@openwall.com>
+In-Reply-To: <20150322172300.GA21110@openwall.com>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="SkUVIVQqguEaBwxcgiatnPxSWx2GtJpVr"
+Date: Sun, 22 Mar 2015 14:33:01 -0400
+From: Daniel Micay <danielmicay@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32693 invoked from network); 23 Dec 2023 18:23:07 -0000
-Date: Sat, 23 Dec 2023 19:16:36 +0100
-From: Solar Designer <solar@openwall.com>
+Subject: Re: [oss-security] CVE for Kali Linux
 To: oss-security@lists.openwall.com
-Message-ID: <20231223181636.GA8305@openwall.com>
-References: <ZSyUUSF_-3YbT14k@workstation> <20231016080850.GF10758@suse.de> <2023101612-snare-dart-c7cf@gregkh> <ZS1CSkbTjDYdGq8F@itl-email> <2023101622-imply-tidal-b6cf@gregkh> <ZS1UPsZo1VyHDAkV@itl-email> <CAMr=8w4N87t24jrRzw+hLHnhB9EoYDtjgic8yVPBqv6jJY_ZvA@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAMr=8w4N87t24jrRzw+hLHnhB9EoYDtjgic8yVPBqv6jJY_ZvA@mail.gmail.com>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] linux-distros membership application of openEuler
 
-Hi,
+--SkUVIVQqguEaBwxcgiatnPxSWx2GtJpVr
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: quoted-printable
 
-First of all, thank you to everyone who contributed to this thread (I
-include a summary at the end of this message, so please check that I got
-it right), and I'm sorry I did not publicly comment on this application
-for so long.
+On 22/03/15 01:23 PM, Solar Designer wrote:
+> On Sun, Mar 22, 2015 at 12:54:57PM -0400, David A. Wheeler wrote:
+>> On 2015-02-26 I reported to Cygwin that they had a similar man-in-the-mi=
+ddle issue.
+>> The Cygwin package manager (which downloaded all other packages) was unp=
+rotected
+>> and downloaded using http (as http://cygwin.com/setup-x86.exe or http://=
+cygwin.com/setup-x86_64.exe).
+>> They changed it to load with HTTPS, and later added HTTP Strict Transpor=
+t Security (HSTS).
+>=20
+> IMO, http vs. https is a red herring.  We shouldn't be focusing on
+> security of software downloads, but rather on authenticity of the
+> software.  If the distribution web server gets compromised, https
+> doesn't help.  Thus, GPG signatures and the like.
 
-I did not ignore it - there were a few off-list messages between Aron
-and me, and I've been thinking of how to approach the problem best.
+This works well for securing upstream <-> distribution <-> user because
+it's handled behind the scenes. The distribution verifies the upstream
+signature and then the packages produced from it are signed with a key
+trusted by the distro's keyring.
 
-I think the application (almost) meets our 9 criteria (once someone
-vouches for Aron), and if we judge solely by those then we'd need to
-accept openEuler.  However, as several people said, there are legal
-concerns, and even if the concerns are maybe unfounded, this would
-likely reduce usage of the linux-distros list.
+If the web server is compromised or the attacker can do a MITM, they can
+provide whatever instructions they want to the users. That's all it
+takes. The attacker could add a news item stating that there's a new GPG
+key because the dev's laptop was lost. How many users are really going
+to question that? This stuff happens all the time. The web of trust and
+key revoking works well in controlled situations but not for end users.
 
-Overall, given these concerns and us having an isolated one application
-like that so far, I think it's best if openEuler does not join
-linux-distros now.  However, I understand this might not work long-term,
-as similar concerns could arise in context of another application later.
-One approach is to wait and see, and revisit these concerns in a more
-general manner if and when that issue does come up.  Another approach is
-to bite the bullet and proceed with accepting openEuler now, then
-revisit and possibly generalize if related concerns arise in context of
-another application.
+HTTPS/HSTS/HPKP is important because it doesn't require that the user
+goes out of their way to validate the software (few do) and is needed to
+build the initial trust in the first place. How else do you get the GPG
+public key in the first place?
 
-Here are some things to (re)consider if and when we are about to accept
-a controversial member like this:
+----
 
-1. As suggested by others, we could seek statements by lawyers and/or
-relevant organizations such as the Linux Foundation.  We actually have
-much of this already, see below.
+Here's a case study: a user wants to install Debian. They are on some OS
+that's not Debian. They search for it and head to www.debian.org. It
+does not use HTTPS preloading, so they could now be seeing an HTTP page
+controlled by an attacker. Lets say they use HTTPS Everywhere so this
+can't happen if the attacker can't create a valid cert. Someone with
+control of a root certificate would be defeated by HPKP but of course
+that's far bigger thing to expect than just HSTS.
 
-2. We could setup a sub-list with only non-controversial members, or a
-super-list with extra members on it, technically in the same way we
-currently have distros (which includes non-Linux) vs. linux-distros.
-Given that existing separation, we'd end up with four lists/addresses,
-which would unfortunately be complicated and could be distracting and
-discouraging for issue reporters.
+They now click the network installer download in the top right of the
+main page. This uses HTTP, and there are no instructions to verify it in
+any way and no link to a signature. The page is HTTPS and there is no
+clear indication that this download was not - I would have assumed it
+was HTTPS because I trust Debian enough to have that expection.
 
-3. We could enforce delayed publication of the full private list
-content, not just vulnerability disclosures, to more obviously meet
-export regulations due to literally everything getting published.  Per
-other recent discussions, we already know this would discourage some
-people/projects from contributing/participating, but would at the same
-time be a welcome change for some others.
+If they had gone to either of these links to get the net install, it
+would not have been any different:
 
-4. Alternatively to the above, we could state that it's the senders'
-choice to publish everything they send to the list in case they're
-concerned about (otherwise possibly not) meeting the regulations (in
-their jurisdiction).  Being extra burden, this would discourage some
-people from contributing.
+https://www.debian.org/distrib/
+https://www.debian.org/distrib/netinst
 
-On Tue, Oct 17, 2023 at 12:15:30AM +0800, Aron Xu wrote:
-> Not matter what would be the outcome, I'd like recommend an article
-> from Linux Foundation which I think is a good read:
-> https://www.linuxfoundation.org/resources/publications/understanding-us-export-controls-with-open-source-projects
+The installation guide does *not* tell them to validate anything.
 
-Yes, it is, and specifically the "Be open and be public" section in it.
+If they headed to the CD page, they may have found the verification
+page. It's on the sidebar to the right and it's mentioned that they are
+signed:
 
-Even more specific is the statement Linux Foundation made on Huawei:
+https://www.debian.org/CD/
 
-https://www.linuxfoundation.org/blog/blog/linux-foundation-statement-on-huawei-entity-list-ruling
+The verification page tells them to use the Debian keyring, which they
+do not have:
 
-> I'm not a lawyer though, but here are a few cents:
-> 
-> 1) There is no general restrictions against Chinese organizations and nationals;
-> 2) Open source software (which is publicly available) is not subject
-> to EAR (Export Administration Regulation of the US);
-> 3) According to ?? 734.7[1] of EAR, "knowledge with the intention that
-> such information will be made publicly available if accepted" is
-> treated as "Published" and is considered publicly available.
-> 
-> If I understand correctly, distros list is targeted to open source
-> software issues with a policy[2] of "Please only use these lists to
-> report and discuss security issues that are not yet public (but that
-> are to be made public very soon)", then everyone could retain their
-> peace of mind.
+https://www.debian.org/CD/verify
 
-I am also not a lawyer.  As I'm aware, many countries, including the US,
-Canada, EU countries, and even e.g. Russia and India and many others,
-accepted the Wassenaar Arrangement.  My understanding is that the
-individual countries' export regulations are thus implementations of the
-Wassenaar Arrangement, perhaps with some local tweaks.  (Indeed, the
-classification codes mentioned in the EAR section you reference above
-match Wassenaar's.)
+There are no instructions on how to verify it anyway. However, lets say
+the user is already an experienced GPG user and either fetches these
+keys via the fingerprint or validates the fingerprint after using the
+keyd id to fetch. They download the signed hashes, validate the
+signature (why isn't the ISO itself signed anyway?) and validate that
+the ISO has the correct hash.
 
-So the focus on US vs. China seen in this thread here looks unjustified
-from a legal perspective.  However, it may be justified from a practical
-concern perspective.
+They then go on to install Debian and get the Debian keyring as part of
+the installation.
 
-Then there's the issue of "Huawei and its non-U.S. affiliates" being on
-the US sanctions "Entity List".  Reading the FAQ here:
+It was hard to discover the availability of signatures and the need to
+verify them was presented as just an unimportant optional task. It was
+not documented so it required prior experience / proactive research
+elsewhere. It relied on the existing HTTPS authentication to retrieve
+the correct keys.
 
-https://www.bis.doc.gov/index.php/documents/pdfs/2447-huawei-entity-listing-faqs
+At best, GPG offered *zero value* compared to checking a hash provided
+via HTTPS, grabbing a torrent file via HTTPS or downloading directly via
+HTTPS. However, I think it's pretty clear that few users would have gone
+through with this and all it did was maintain the same security offered
+by the HTTPS PKI.
 
-I don't see relevance to what we're doing.  Per my reading, this says
-that for items already subject to EAR, a specific license for exporting
-to Huawei is required and would likely be denied.  We assume (and LF
-agrees) that what we're doing is not subject to EAR (and if it were,
-we'd have problems with most international communication like this, not
-just with US vs. China or Huawei).  So again, the legal concern looks
-unjustified, but I understand that people are concerned in practice, and
-that's a problem on its own.
+The user obtained the keyring from the ISO as part of the installation
+and Debian's trust model works well from that point onwards.
 
-Here are specific quotes from the two LF publications referenced above:
+----
 
-> Be open and be public
-> 
-> First, communities should strive to keep their technical conversations open and public. If private technical conversations happen within communities, that's normal, but it is recommended to make the community decisions and outcomes publicly available. It is important for our projects to make information available transparently and publicly as the private exchange of technology or technical information may not meet the "publicly available" standard according to the EAR.
-> 
-> One question that has come up has to do with exchanges of information related to security issues under a security disclosure process. As a best practice, projects may want to consider making exchanges like this public upon the availability of fixes, and not limit this information to only a confidential disclosure list.
+Anyway, how is HTTPS not incredibly important here? Even an experienced
+Linux user is screwed in this model. This is also how things usually go
+when a user wants to obtain software that's not in the repos. In some
+cases, upstream happens to be something like the Tor project and they
+have HTTPS+HSTS+HPKP along with links to signatures right next to the
+downloads and a link to a clear explanation on how to use them.
 
-> Security Vulnerability Pre-Disclosure Lists
-> 
-> A few of the Linux Foundation's project communities use security vulnerability pre-disclosure lists to alert known implementers of the project's open source software about vulnerability fixes that will be disclosed by the developers and published publicly in the near future (typically within 2 weeks). In these situations, LF project communities are conveying knowledge, information and written software patches that will be made publicly available when accepted for publication by the committers on the project and such disclosures are permitted under 15 CFR 734.7(a)(5). [2]
-> 
-> [2] https://www.ecfr.gov/cgi-bin/text-idx?SID=fcba36d2f267c2fdecc5694c1e754aa7&mc=true&node=se15.2.734_17&rgn=div8
+Users who make use of the signatures will be more secure as a hack of
+the server won't compromise them, but the vast majority who don't do
+this still have authentication up to that point.
 
-Here's my summary of what was said in this thread so far:
 
-Marcus Meissner brought up the US vs. China concern.  Greg KH said
-things were not that bad, but kept suggesting to talk to lawyers, which
-Demi Marie Obenour found very discouraging.
+--SkUVIVQqguEaBwxcgiatnPxSWx2GtJpVr
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
-Demi Marie Obenour and Igor Seletskiy are concerned about the legal
-risks.  Demi Marie wants that "a trusted entity (such as the Linux
-Foundation) made a public, broadly applicable, and easily interpretable
-(by non-lawyers) statement stating that it would be okay for me to make
-such a post."  I think we have that above.  However, she also adds "And
-maybe not even then."  Igor brings up the Huawei concern.  I think LF's
-statement above addresses it.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
 
-This reads like 2 to 4 votes against accepting openEuler now.
+iQIcBAEBCAAGBQJVDwrdAAoJEPnnEuWa9fIqA+gP/0Ck/H5EdMNNofYHWxh3in3r
+++qkVk3/u+2bLI+IwyHPWPo9TRjszZ5Cbjx2FLM+YFqwawF+iFcw5u2YMhbJ06Bf
+X5ttlK5r5H1dT7yZ5ggaRe+W1abE1QC3sfC43AU5VsTEDBeBQY36msmLGGQXOZFl
+JpASEGowbJYllhBT0izT1L37P3C27O5rWf1oNYslR+1z8ZnBK51qsnXyEGvE4Z0w
+0fLE3Lgy+kMQkUgjH7zga2i9FYeRj20Ldv/YIzEpsJMJV6xcTWOh1FTISuWgQokE
+tAE0OLimaHPjscr5SdI0HfBNodwAvfU5dXLSfv3aUxPQ2FME6M3OjFAdrYjJVfqz
+jtWksX/C0/Dtb04/TKisaTfPVvgRejdCH9l5qYczKUfNVirm3b9YbY3+sTyPH4dp
+QXXtAaDTa3GpfoxbaafPZa0pyAihGA0v0eZcKK8Rd/a5krcFQC6YKAwxw+RflGBi
+yRT00jr1xwgip1hA3zEQyxAAEo+6nBBxxHwSuGYNQXpt4eL6tiE4LjN/n/5z1Oei
+hJuki4BoW2COA5Pa3IwXv2H+chSwv6EN99hmDszSV7QqdsKfPHt8viWS4zwgrAdt
+9xV+ZANt19DXj1lykEsAeLuzai1RliPFCo0AVMexf5KHihyiOBT6vDEsIteWF4ep
+C/KNgzHHkvlc5AKiyL1d
+=x+cL
+-----END PGP SIGNATURE-----
 
-Heiko Schlittermann and Steffen Nurpmeso are for us not considering
-"anything else than technical/security restrictions here."  In other
-words, for accepting openEuler now if it meets our usual criteria.
-
-Tianyu Chen brought up that there could already be subscribers from
-other sanctioned countries.
-
-W. Wadepohl expressed general unhappiness with linux-distros being
-non-free and not addressing IoT device security.
-
-This reads like 2 to 4 votes for accepting openEuler now.
-
-Alan Coopersmith commented on who typically posts to the distros list,
-and thus who would (not) be concerned about the legal risks.
-
-Per the above, there doesn't appear to be an obvious majority or
-obviously better reasoned opinion for or against accepting openEuler.
-
-If any of the people who commented previously have something different
-or more specific to say now (e.g., "my concerns are now sufficiently
-addressed" and/or "my preference is such-and-such"), please do.
-
-If anyone else has anything valuable to add, please do.
-
-Sorry for the lengthy message, and thanks again.
-
-Alexander
+--SkUVIVQqguEaBwxcgiatnPxSWx2GtJpVr--
