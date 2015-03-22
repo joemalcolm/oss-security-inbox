@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1654" "Wednesday" "24" "March" "2021" "19:38:11" "+0000" "Piotr Krysiuk" "piotras@gmail.com" nil "40" "[oss-security] Re: [CVE-2020-27171] Numeric error when restricting speculative pointer arithmetic allows unprivileged local users to leak content of kernel memory" nil nil nil "3" nil nil (number mark "U       piotras@gmai Mar 24   40/1654  " thread-indent "\"[oss-security] Re: [CVE-2020-27171] Numeric error when restricting speculative pointer arithmetic allows unprivileged local users to leak content of kernel memory\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Re: [CVE-2020-27171] Numeric error when restricting speculative pointer arithmetic allows unprivileged local users to leak content of kernel memory" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1126" "Sunday" "22" "March" "2015" "15:25:53" "+1100" "Michael Samuel" "mik@miknet.net" "<CACYkhxjb6ok=8bLcD9zUB0dYA6b84ane_kZy-5JhYyhSB++hOg@mail.gmail.com>" "27" "Re: [oss-security] CVE for Kali Linux" nil nil nil "3" "2015032204:25:53" "[oss-security] CVE for Kali Linux" (number mark "        mik@miknet.n Mar 22   27/1126  " thread-indent "\"Re: [oss-security] CVE for Kali Linux\"\n") "<550E289C.1060602@redhat.com>" ("<550E21FA.6090704@redhat.com>" "<CAHZU0yRzjyO78Nan5jgf38Mqt3hPQDDhcsirdVmBFPmRZ=6k9g@mail.gmail.com>" "<550E289C.1060602@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 6087 invoked by uid 550); 24 Mar 2021 19:39:19 -0000
+Received: (qmail 13841 invoked by uid 550); 22 Mar 2015 04:26:25 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,82 +11,67 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1951 invoked from network); 24 Mar 2021 19:38:33 -0000
+Received: (qmail 13822 invoked from network); 22 Mar 2015 04:26:24 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=S8cj/U8Gc9mj7DltPk+Fj9KUj//eXeAqzxK9J8m6O1g=;
-        b=ko02N7m8fDLw7MQmAhOnCbehEjsD37Idfm/mVbMu2rkYQhdykAtwgJ6avYxgVfHNSS
-         Tzq3VlCboaCKME6Ry2aSinnqXdX7MdbUi0ZkYtIvSQBwYhXIWf4bK6OAGQ++lGoDTYG1
-         l7vH0fC69qyfbo08gOMVP+CHkbxIB4tmuWtXbfZ61VrOQH0stUWf0ov0iimn8jrohEyZ
-         qoHWiw43OcnVtC3qJjs51Gb01OJH5O03SB4iu+/i7G8r5aoVGhcFTmPa+BjAyAf5PuZn
-         iZUYnXwkYxqEnQIzBtd407nRUTj0Qq8bOeJmb9E3jaV0UXSPmYQFUMkcj03ZpjsqCp2V
-         8V1Q==
+        d=miknet.net; s=google;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=+QCCJNW/qSyfrnq1ZuRpY/LK2yBYKk1n0zoikbuo2Ig=;
+        b=CmShcDts8STvVhYfCwQFT8ffBnID3q9iQB9jWyhUKdSbDfWvOetr/2hgf/tqPC9M0I
+         i46L0TY/fxnRV/g2uk/cTtcJCmY4mzWRWltKM1IOq1In8lRQlwoe0+LFTdhQPbNF31dM
+         ol7ObFjC972pIm1uIAyEdLc/H5qmq9NNJqLw4=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=S8cj/U8Gc9mj7DltPk+Fj9KUj//eXeAqzxK9J8m6O1g=;
-        b=CUYY1v47BxAQQXMASQl4ORbF3tgallTxdWZU1Vlb9Zu2ZL9MzzW/qr5WP463Vxh2RS
-         X/qrcThxrSnjbzbkwQYXNIklvNvh9pPHRdXjId8AjKRNaIdedyrUCrbCEgeb2x1fWPwz
-         mN1zSEVjuhS+qnr7GMahQzJlW8+8vpao8eHRLthq2yAFHqDlSRiCBx9K0ZA26hSD/C2t
-         zvU3cKDJit/TZoiqxqA0oWaOKD3iOr8wGXwC05aZfFHN6IA576qE2fH1kDdb3jTI6cbj
-         yb4IqRq6FD+xjlXWOgVW5tLnEQr52AcdzxQx1INzr2arQoU3lW0Awxn7fQleXO4OSeRO
-         byYA==
-X-Gm-Message-State: AOAM530LjPNXzBPTGN/4eOrk8eYQEf81409iJJ0jp6fsq708OIAi04OH
-	4KIjripP3M8pqDPwX82efEJ2iwxNJU2rtJNEzrCO3AM4USSDBA==
-X-Google-Smtp-Source: ABdhPJzBAFKgRcxf5tv0zMxnQBYryhvgiq3FYllul9MPPp186AWwW6TQSgjZ7ItTYOpXdA61PsQEGmZFsBy4iIWZjFE=
-X-Received: by 2002:a1c:df8a:: with SMTP id w132mr4448403wmg.53.1616614701770;
- Wed, 24 Mar 2021 12:38:21 -0700 (PDT)
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=+QCCJNW/qSyfrnq1ZuRpY/LK2yBYKk1n0zoikbuo2Ig=;
+        b=ZSS1iNNDX+5cjX9LIW5F7rfeDJz1Wg7p4lDTKnUp4KSiV/rzgnolWo6+ygE6LNuRU1
+         am6Y/oyl7dgz0OpTyx+bkz9f4tex6TnlnUI2PszcwiMmX6AFw5k0q8ajkIEV4zJl+KgH
+         2UUpsmKiiAL1FfqoUsqnyQrW5PPrInqJIo9vu/1UMHiNANscVM5GXmhHlWX7zO/O/Znf
+         hK5qkBxzi02qbksOC6qTDx+nVr/iK4Ub/opnKPlSzTF6+vZmmFT6cekqSu1cCBapJl1y
+         GaFAmh6avpZQLnnLVzGXHxo+XzsRothWY95RhPbpJnE7h2eG1lYFQcBEadsxaZq6N7IQ
+         QBCg==
+X-Gm-Message-State: ALoCoQnru983cALpVd8dAgeUmpE9muHL6lv+1M7zixtO7+jwxh744ao2vk1nx1uyFoHUvQS3nCm9
+X-Received: by 10.42.224.1 with SMTP id im1mr12819102icb.55.1426998373253;
+ Sat, 21 Mar 2015 21:26:13 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAFzhf4qsDm74NJYA2toWYAVxUvvJyP7dD9sPC88EPkHpxf+cag@mail.gmail.com>
-In-Reply-To: <CAFzhf4qsDm74NJYA2toWYAVxUvvJyP7dD9sPC88EPkHpxf+cag@mail.gmail.com>
-From: Piotr Krysiuk <piotras@gmail.com>
-Date: Wed, 24 Mar 2021 19:38:11 +0000
-Message-ID: <CAFzhf4p-q+Lf35mfjUQwdV-yqYHQUW06BEs9rJG9OO4LL2YoNQ@mail.gmail.com>
+X-Originating-IP: [202.147.141.11]
+In-Reply-To: <550E289C.1060602@redhat.com>
+References: <550E21FA.6090704@redhat.com> <CAHZU0yRzjyO78Nan5jgf38Mqt3hPQDDhcsirdVmBFPmRZ=6k9g@mail.gmail.com>
+ <550E289C.1060602@redhat.com>
+Message-ID: <CACYkhxjb6ok=8bLcD9zUB0dYA6b84ane_kZy-5JhYyhSB++hOg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Cc: Assign a CVE Identifier <cve-assign@mitre.org>
+Date: Sun, 22 Mar 2015 15:25:53 +1100
+From: Michael Samuel <mik@miknet.net>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] CVE for Kali Linux
 To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] Re: [CVE-2020-27171] Numeric error when restricting speculative
- pointer arithmetic allows unprivileged local users to leak content of kernel memory
 
-Some details of how CVE-2020-27171 could be exploited in practice were
-provided via linux-distros mailing list with 7 days embargo. This was
-intended to help any affected Linux distributions to assess the risk
-and decide about any appropriate actions.
+Hi,
 
-As the embargo expires today, I was asked to share these details
-publically on oss-security.
+On 22 March 2015 at 13:27, Kurt Seifried <kseifried@redhat.com> wrote:
+> So I guess we enter uncharted territory here. So my thought is this:
+>
+> Vendor has front page that recommends doing something completely insane
+> and insecure (http/md5s/etc.). On the back end (good lucking finding
+> this) vendor does something sort of secure (gpg signing of packages, no
+> clue if key distribution is secure) but this is not really documented well.
 
-The CVE-2020-27171 vulnerability has been successfully reproduced
-against Linux kernel v5.12-rc3 using the following logic for BPF
-program attached to a socket:
+Securely distributed md5 and sha1 hashes are just fine against third-party
+attackers unless you can think of a way in which an attacker could set up a
+collision ahead of time.
 
-    load pointer to our big array into BPF_REG_MAP_PTR,
-    load offset of data to leak into BPF_REG_OFFSET,
+There have been attacks against dpkg that work prior to GPG sig checks,
+as well as attacks against GPG itself.   But then again, TLS stacks aren't
+exactly bug-free.
 
-    BPF_MOV64_REG(BPF_REG_OOB_ADDRESS, BPF_REG_MAP_PTR),
+> Does this win a CVE or not? I personally think yes, yes it does.
 
-    // load any slowly-loaded value...
-    BPF_LDX_MEM(BPF_DW, BPF_REG_SLOW_CHECK, BPF_REG_MAP_PTR, 0x1200),
+If any of those circumstances come up, I expect CVEs to be assigned,
+but other than that any changes here are just hardening.  Something like
+http://www.w3.org/TR/SRI/#downloads-1 might be a good start, but I
+don't know what the browser takeup is.
 
-    // ... and turn it into known zero for verifier,
-    // while preserving slowly-loaded dependency for affected hardware
-    BPF_ALU64_IMM(BPF_AND, BPF_REG_SLOW_CHECK, 1),
-    BPF_ALU64_IMM(BPF_AND, BPF_REG_SLOW_CHECK, 2),
-
-    // speculatively bypassed offset check
-    BPF_JMP_REG(BPF_JNE, BPF_REG_OFFSET, BPF_REG_SLOW_CHECK,
-                skip_speculation),
-
-    // speculatively subtract masked BPF_REG_OFFSET from BPF_REG_OOB_ADDRESS,
-    // where incorrect mask value 0xffffffff is used due to integer underflow
-    BPF_ALU64_REG(BPF_SUB, BPF_REG_OOB_ADDRESS, BPF_REG_OFFSET),
-
-    // speculatively out-of-bounds load
-    BPF_LDX_MEM(BPF_B, BPF_REG_LEAKED_BYTE, BPF_REG_OOB_ADDRESS, 0),
-
-    transmit speculatively loaded BPF_REG_LEAKED_BYTE via side-channel,
-
-The full reproducers were shared with a number of Linux distributions
-for protection purposes.
+Regards,
+  Michael
