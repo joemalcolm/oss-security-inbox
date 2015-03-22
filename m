@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["692" "Monday" "15" "February" "2016" "22:13:30" "+0300" "gremlin@gremlin.ru" "gremlin@gremlin.ru" "<20160215191330.GA11450@gremlin.ru>" "20" "Re: [oss-security] Browser Security Tool: HTTPS Only (Why, How, Open Source, Python)" "^Date:" nil nil "2" "2016021519:13:30" "[oss-security] Browser Security Tool: HTTPS Only (Why, How, Open Source, Python)" (number mark "        gremlin@grem Feb 15   20/692   " thread-indent "\"Re: [oss-security] Browser Security Tool: HTTPS Only (Why, How, Open Source, Python)\"\n") "<CAAeBhPfv200duAxCKnYkABgyt-34u_cP_YrrRajPWZ-Md+H9GA@mail.gmail.com>" ("<CAAeBhPfv200duAxCKnYkABgyt-34u_cP_YrrRajPWZ-Md+H9GA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["816" "Monday" "23" "March" "2015" "02:57:30" "+0300" "Solar Designer" "solar@openwall.com" "<20150322235730.GA24910@openwall.com>" "17" "Re: [oss-security] CVE for Kali Linux" nil nil nil "3" "2015032223:57:30" "[oss-security] CVE for Kali Linux" (number mark "        solar@openwa Mar 23   17/816   " thread-indent "\"Re: [oss-security] CVE for Kali Linux\"\n") "<877fu8bnks.fsf@hope.eyrie.org>" ("<550EE478.70005@redhat.com>" "<E1YZj9N-0003Th-Gn@rmm6prod02.runbox.com>" "<20150322172300.GA21110@openwall.com>" "<550F2754.5060704@openwall.com>" "<877fu8bnks.fsf@hope.eyrie.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 17413 invoked by uid 550); 15 Feb 2016 19:13:44 -0000
+Received: (qmail 16046 invoked by uid 550); 22 Mar 2015 23:57:33 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,39 +11,34 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 16371 invoked from network); 15 Feb 2016 19:13:44 -0000
-Message-ID: <20160215191330.GA11450@gremlin.ru>
-References: <CAAeBhPfv200duAxCKnYkABgyt-34u_cP_YrrRajPWZ-Md+H9GA@mail.gmail.com>
+Received: (qmail 16028 invoked from network); 22 Mar 2015 23:57:33 -0000
+Message-ID: <20150322235730.GA24910@openwall.com>
+References: <550EE478.70005@redhat.com> <E1YZj9N-0003Th-Gn@rmm6prod02.runbox.com> <20150322172300.GA21110@openwall.com> <550F2754.5060704@openwall.com> <877fu8bnks.fsf@hope.eyrie.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=koi8-r
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAAeBhPfv200duAxCKnYkABgyt-34u_cP_YrrRajPWZ-Md+H9GA@mail.gmail.com>
-OpenPGP: id=8832FE9FA791F7968AC96E4E909DAC45EF3B1FA8
-X-PGP-PubKey: 0xEF3B1FA8
-X-PGP-Fingerprint: 8832 FE9F A791 F796 8AC9 6E4E 909D AC45 EF3B 1FA8
-Date: Mon, 15 Feb 2016 22:13:30 +0300
-From: gremlin@gremlin.ru
+In-Reply-To: <877fu8bnks.fsf@hope.eyrie.org>
+User-Agent: Mutt/1.4.2.3i
+Date: Mon, 23 Mar 2015 02:57:30 +0300
+From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Browser Security Tool: HTTPS Only (Why, How, Open Source, Python)
+Subject: Re: [oss-security] CVE for Kali Linux
 To: oss-security@lists.openwall.com
 
-On 2016-02-14 22:07:21 -0500, David Leo wrote:
+On Sun, Mar 22, 2015 at 04:48:51PM -0700, Russ Allbery wrote:
+> Alexander Cherepanov <ch3root@openwall.com> writes:
+> 
+> > There are some attacks even if you verify signatures, e.g. serving old,
+> > known-vulnerable versions. HTTPS can help here (until signatures start
+> > to be widely accompanied by expiring timestamps or something).
+> 
+> Debian is indeed moving in exactly that direction, using the Valid-Until
+> attribute of the archive metadata.  This currently isn't (yet?) enabled
+> for the main stable archive, but is for the unstable and testing archives,
+> the security archive, and the backports archive.
 
- > This tool completely locks browser - just HTTPS, nothing else.
+How do you handle the case when a given package build remains the
+recommended version in its branch beyond the signature's initial
+Valid-Until date?  Do you issue a new signature for it?
 
-That means, it causes effective DoS with "ssl_error_no_cypher_overlap"
-(as it's called by Firefox) for approx. 60% of all sites.
-
-In most cases, HTTPS is either misused or abused. But the ${subject}
-does both misuse and abuse: it forces HTTPS even for unauthenticated
-connections (are there any real reasons to use HTTPS instead of E2EE
-for protecting the information which is publicly available?), while
-not making any use of a clients' certificates.
-
-Ds: PoS
-Rp: >& /dev/null
-
-
--- 
-Alexey V. Vissarionov aka Gremlin from Kremlin
-GPG: 8832FE9FA791F7968AC96E4E909DAC45EF3B1FA8
+Alexander
