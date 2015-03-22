@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["764" "Tuesday" "17" "August" "2021" "16:17:38" "+0800" "butt3rflyh4ck" "butterflyhuangxx@gmail.com" nil "39" "Re: [oss-security] Linux kernel: nfc: null ptr dereference in llcp_sock_getname" nil nil nil "8" nil nil (number mark "U       butterflyhua Aug 17   39/764   " thread-indent "\"Re: [oss-security] Linux kernel: nfc: null ptr dereference in llcp_sock_getname\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Linux kernel: nfc: null ptr dereference in llcp_sock_getname" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2309" "Sunday" "22" "March" "2015" "19:35:21" "+0000" "Jeremy Stanley" "fungi@yuggoth.org" "<20150322193521.GA2456@yuggoth.org>" "53" "Re: [oss-security] CVE for Kali Linux" nil nil nil "3" "2015032219:35:21" "[oss-security] CVE for Kali Linux" (number mark "        fungi@yuggot Mar 22   53/2309  " thread-indent "\"Re: [oss-security] CVE for Kali Linux\"\n") "<550F15A4.8020904@sumptuouscapital.com>" ("<550EE478.70005@redhat.com>" "<E1YZj9N-0003Th-Gn@rmm6prod02.runbox.com>" "<20150322172300.GA21110@openwall.com>" "<550F01FF.1010208@redhat.com>" "<550F15A4.8020904@sumptuouscapital.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 5471 invoked by uid 550); 17 Aug 2021 09:19:57 -0000
+Received: (qmail 5870 invoked by uid 550); 22 Mar 2015 19:35:35 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,83 +11,79 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 8036 invoked from network); 17 Aug 2021 08:18:00 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=0iOnKfc5Wm8KHAKYB+XKrcxzkVRR2Hb7lv6ZdqtZs1M=;
-        b=I979JDFAsVQMvz1S5mzAS7HwTXqTOrIR6uhmYNhv3MoBqUck8HvgQ5pPYddJc8JIku
-         J0YRfTNVlr/m6enT6G3L7VVsYJSWf1kj+Vcb5GED/b8om+3+REv8Ch8YJZo6tM8Ig77b
-         5Drvu/iR2sp5KuwRD3LyxwTvD41ZbMJjTDcl9AqdSjyqpl9ixFCdV8WU78VkA7N0VLaQ
-         9Tj9t4LfX7ttbLToyeUixr8GMhVxlEcdN2FRWXamsXLVImVeosY0UGNDFBWe9FHWftiY
-         8YdDO1VdfhA7dWdLx79C8/a5UaicXIDsDslwpjzjSSswdUsXwaTCl37VSkCGMfb8ezsi
-         LJJg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=0iOnKfc5Wm8KHAKYB+XKrcxzkVRR2Hb7lv6ZdqtZs1M=;
-        b=gs00yh5jk0cGPc4LZoIvTJ+KNVyhY4q8uWpVctLvYO+zHW4ZWuT4dsZ3WfZ9D0iwWU
-         Pdl+LQTLp/jPwakD4fulmm5phhSD7kmT3vLVhHSaM5AhIilSWY6cGfO3Ak1swKusRwvH
-         onl4t+Ww7mPV2KxtjrnwAyltGhl+pQRNN2Xvqm5yxjgd+z2L0SnL0/Bz4q5Iy0SU6f9l
-         R7sCHaG0xwGIQtWyIFE+GPCYsQG0WliKMjosC4JbfslJVtNRVwjvhN8oMLTVzQ00655x
-         X+9yi67Ot2fIMHDdKMA3W4yNAYxn7c5Wrxdk9QWnSGoDwIxIBqMM8wDzhQjWgcaBiJw2
-         spdQ==
-X-Gm-Message-State: AOAM5329ROhb7GwAPyTNs6lo9xk6+QgKkTJqGnuR0EcApyJvsmpDGcqm
-	Yy0QCn8oSu4jc573NWNWRzScLNyCdUn+UsBo/mK7EKbVPvo=
-X-Google-Smtp-Source: ABdhPJwgFYFEEoQwu/+cUhDpP3SP+NZQlnq7dXKJTOEhcyiTTL+ZeXxXXgmrHj6rcYsNHNMO6pC6qK8ovIAnn9O+aKI=
-X-Received: by 2002:a05:6902:509:: with SMTP id x9mr3202373ybs.267.1629188268453;
- Tue, 17 Aug 2021 01:17:48 -0700 (PDT)
+Received: (qmail 5852 invoked from network); 22 Mar 2015 19:35:34 -0000
+Message-ID: <20150322193521.GA2456@yuggoth.org>
+References: <550EE478.70005@redhat.com>
+ <E1YZj9N-0003Th-Gn@rmm6prod02.runbox.com>
+ <20150322172300.GA21110@openwall.com>
+ <550F01FF.1010208@redhat.com>
+ <550F15A4.8020904@sumptuouscapital.com>
 MIME-Version: 1.0
-References: <CAFcO6XOFPEGiO_HwajTB3zA9d3jyhUwDX742huVhaNtQy0=TfQ@mail.gmail.com>
- <CAFcO6XP_-WSEzDB2E=r90Yk4sXwUjo6fRsY=E+ZoAYunpry=qw@mail.gmail.com> <CALJHwhSkYWmBk3u5nBnOZfSskksFPP6k9oFfWGdtDpbr1yVFAA@mail.gmail.com>
-In-Reply-To: <CALJHwhSkYWmBk3u5nBnOZfSskksFPP6k9oFfWGdtDpbr1yVFAA@mail.gmail.com>
-From: butt3rflyh4ck <butterflyhuangxx@gmail.com>
-Date: Tue, 17 Aug 2021 16:17:38 +0800
-Message-ID: <CAFcO6XOYL=EN3xkkyE72gR_tau+3=BhrgNub3NYtR1isr77MbA@mail.gmail.com>
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="88pBQ1/6ie/nQzMF"
+Content-Disposition: inline
+In-Reply-To: <550F15A4.8020904@sumptuouscapital.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-SA-Exim-Connect-IP: 2001:4802:7801:102:be76:4eff:fe20:63e0
+X-SA-Exim-Rcpt-To: oss-security@lists.openwall.com
+X-SA-Exim-Mail-From: fungi@yuggoth.org
+X-SA-Exim-Scanned: No (on azathoth.yuggoth.org); SAEximRunCond expanded to false
+Date: Sun, 22 Mar 2015 19:35:21 +0000
+From: Jeremy Stanley <fungi@yuggoth.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] CVE for Kali Linux
 To: oss-security@lists.openwall.com
-Cc: Wade Mealing <wmealing@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Subject: Re: [oss-security] Linux kernel: nfc: null ptr dereference in llcp_sock_getname
 
-Hi, MITRE has assigned CVE-2021-38208 to this issue,
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-38208
+--88pBQ1/6ie/nQzMF
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-The CVE-2021-3587 assigned by Redhat was 'RESERVED' now.
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-3587
+On 2015-03-22 20:19:00 +0100 (+0100), Kristian Fiskerstrand wrote:
+[...]
+> The package being signing using the same key over
+> time signifies that it is coming from authoritative source (unless
+> you've been MITMed a long time), the fingerprint of the OpenPGP key
+> should be included in email announcements and other documents that are
+> being mirrored by multiple sources, reducing the likelihood of a MITM
+> if corresponding information is the same in multiple archives over a
+> long time.
+[...]
 
-There was some confusion here, Maybe CVE-2021-3587 should be 'REJECT'.
+And the repository signing key is hopefully also published to a
+well-known keyserver network along with signatures from maintainers
+of the primary distribution repository, some of whom may be known
+(either directly or transitively via other key signatures) to the
+end user. And repository signing keys can be gradually replaced by
+generating new keys well in advance and signing them with the old
+keys as a transition, then adding them to the trust keyring long
+enough before the current key is retired that clients already have
+it once it starts to get used.
+--=20
+Jeremy Stanley
 
-Regards,
- butt3rflyh4ck.
+--88pBQ1/6ie/nQzMF
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-On Tue, Jun 8, 2021 at 11:45 AM Wade Mealing <wmealing@redhat.com> wrote:
->
-> Red Hat has assigned CVE-2021-3587 to this issue
->
-> Thank you!
->
->
-> --
->
-> Wade Mealing
->
-> Product Security - Kernel, RHCE
->
-> Red Hat
->
-> <https://www.redhat.com>
->
-> wmealing@redhat.com
-> <https://red.ht/sig>
-> TRIED. TESTED. TRUSTED. <https://redhat.com/trusted>
->
-> secalert@redhat.com for urgent response
+iQJ8BAEBCgBmBQJVDxl5XxSAAAAAAC4AKGlzc3Vlci1mcHJAbm90YXRpb25zLm9w
+ZW5wZ3AuZmlmdGhob3JzZW1hbi5uZXQ5N0FFNDk2RkMwMkRFQzlGQzM1M0IyRTc0
+OEY5OTYxMTQzNDk1ODI5AAoJEEj5lhFDSVgpUyQQANRz+rqL3Q67KhWDD8GnGj8v
+iKy2jnpStrJLkCtGLogr9f0lhI53vwPL6Ab1OVzXA3XHb+92fhhJSp6+4gmtSIYz
+LT7zkvfs2qa6RnrsoYVtX3an8JO4ND7VHZ+BZN/6d/En37vq1TygsPT9OwftUj8j
+e9zFF2btss6+/Bhm9SjawqGGvQ9Npi4WkHx4+DhhrVXoCYnY7t2voXGrHSAE8609
+zvVyW+WQynMoufSzQRP5qryT47UGxqGleCvL9o28aOpzJOe9j2RARdciMZvit5Yu
+qpP2+3JzfLzyUcdOS+mUBuJxPzWzML4pIYTDs8D3TfcA1hTQ/Zgb6z0dBEe0Jddh
+WVENK+W2F5znWajAJiyU9wEfrP7QW6Ttm34jP3TdFx69R6SqEHauUV5fhGBjuxyf
+tiUXSCFW4U6Q9lFc26NXXvenuFfml653dUCb4UfsT0whT/Dygfi1X6UM5jliKrmZ
+db6syh4xABAdGnu/deRnvBPLqkQo8IJQVxh35LKz09PVvT6dl0xwQB4G8QR1UBJE
+APQ1fSA6cMRTBsxoB3+5Mdxq5+c593G0B/f5tvQ+rwPBztUxcieObn59FmeRS3o3
+o6d+ljbrqqzGhUJT1DE7nFUVkxT0PQtLCbTEJuq7yKCo66FyZr2b/VV1XQftp7qg
+HRdlZiydjQsanDbaEsgH
+=1XLC
+-----END PGP SIGNATURE-----
 
-
-
--- 
-Active Defense Lab of Venustech
+--88pBQ1/6ie/nQzMF--
