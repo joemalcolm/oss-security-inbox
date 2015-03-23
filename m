@@ -1,4 +1,9 @@
-Received: (qmail 14085 invoked by uid 550); 17 May 2023 17:14:31 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1240" "Monday" "23" "March" "2015" "14:20:02" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150323182002.6120B6C002D@smtpvmsrv1.mitre.org>" "32" "[oss-security] Re: CVE Request: gd buffer read overflow in gd_gif_in.c" nil nil nil "3" "2015032318:20:02" "[oss-security] Re: CVE Request: gd buffer read overflow in gd_gif_in.c" (number mark "        cve-assign@m Mar 23   32/1240  " thread-indent "\"[oss-security] Re: CVE Request: gd buffer read overflow in gd_gif_in.c\"\n") "<1331942598.1357562.1427122763719.JavaMail.zimbra@redhat.com>" ("<1331942598.1357562.1427122763719.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 17868 invoked by uid 550); 23 Mar 2015 18:20:14 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,40 +11,45 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 17850 invoked from network); 23 Mar 2015 18:20:13 -0000
+In-Reply-To: <1331942598.1357562.1427122763719.JavaMail.zimbra@redhat.com>
+Message-Id: <20150323182002.6120B6C002D@smtpvmsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, security@php.net
+Date: Mon, 23 Mar 2015 14:20:02 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13807 invoked from network); 17 May 2023 17:14:01 -0000
-Date: Wed, 17 May 2023 19:13:51 +0200
-From: Solar Designer <solar@openwall.com>
-To: oss-security@lists.openwall.com
-Message-ID: <20230517171351.GA8234@openwall.com>
-References: <CAH8yC8kBFkWL1MRGv+z1wJ4Vj2KOmuK1xm63XGgQMJW+OB=Q9Q@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAH8yC8kBFkWL1MRGv+z1wJ4Vj2KOmuK1xm63XGgQMJW+OB=Q9Q@mail.gmail.com>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] IPv6 and Route of Death
+Subject: [oss-security] Re: CVE Request: gd buffer read overflow in gd_gif_in.c
+To: falonsoe@redhat.com
 
-Hi Jeffrey and all,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On Wed, May 17, 2023 at 10:02:31AM -0400, Jeffrey Walton wrote:
-> This seems to have been dropped as a 0-day. I have not seen a CVE
-> assigned to it.
+> gd: buffer read overflow in gd_gif_in.c
+> https://bitbucket.org/libgd/gd-libgd/commits/47eb44b2e90ca88a08dca9f9a1aa9041e9587f43
+> https://bugs.php.net/bug.php?id=68601
+> https://bugzilla.redhat.com/show_bug.cgi?id=1188639
 
-The "original writeup" you reference says this is CVE-2023-2156.
+> AddressSanitizer: stack-buffer-overflow on address
+> READ of size 1
 
-> I _think_ this is the original writeup:
-> 
->   * https://www.interruptlabs.co.uk//articles/linux-ipv6-route-of-death
+Use CVE-2014-9709. Presumably the relevant attack scenarios involve
+long-running processes that accept GIF files from untrusted sources
+and call gdImageCreateFromGif on them, and then potentially crash
+after the buffer over-read.
 
-Thank you for bringing this to oss-security.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-I'd appreciate it if you and/or others also post plain text extracts of
-such content, not only the links.  Anyone willing to do it this time?
-
-Also, this list isn't only about Linux, so when posting about
-Linux-specific issues let's state so in the Subject line.  In this case,
-the issue is in Linux kernel and it affects systems with enabled sysctl
-net.ipv6.conf.*.rpl_seg_enabled for at least some interface(s).
-
-Alexander
+iQEcBAEBAgAGBQJVEFjPAAoJEKllVAevmvmsaUgH/3vLIjJLwpKSH62aG0iLLauj
+beYgnlezQIo1ylSF0XYE9x9sbK706WQZ8clXfBwLNuRCdPPnrwqx0Tyk8YCVi/rv
+HBiOpfE5GNADjgaYbhocHHjYWe40KWe8zRLH1apHj4U59ptvnwIteoYHyrLwUlV8
+3w+w6f00lOo5Mgfo3qxdvFqDDmd3acYZSjRKWZ284UpyQlcAXQuPydkCK7F05zKy
+8t2x4okwS3SYzeV5lCzW8VjqzBLu+0Gu76INuA1HgGZwriYpwCsomdYEbvDVTSn5
+Frd6/1lZjZoTDqykrRRWYxZ3HrMAikWrlaqDuUCBpJ0zNHM8Sv1+qAsWbnJCwMo=
+=9B62
+-----END PGP SIGNATURE-----
