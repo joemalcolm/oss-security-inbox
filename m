@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["8616" "Wednesday" "4" "November" "2020" "15:10:32" "+0100" "Daniel Beck" "ml@beckweb.net" "<9185D043-96BC-4E0F-9B09-6EF97C4AF4C5@beckweb.net>" "240" "[oss-security] Multiple vulnerabilities in Jenkins plugins" nil nil nil "11" "2020110414:10:32" "[oss-security] Multiple vulnerabilities in Jenkins plugins" (number mark "U       ml@beckweb.n Nov  4  240/8616  " thread-indent "\"[oss-security] Multiple vulnerabilities in Jenkins plugins\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Multiple vulnerabilities in Jenkins plugins" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2956" "Sunday" "22" "March" "2015" "23:58:06" "-0400" "Daniel Micay" "danielmicay@gmail.com" "<550F8F4E.6040705@gmail.com>" "65" "Re: [oss-security] CVE for Kali Linux" nil nil nil "3" "2015032303:58:06" "[oss-security] CVE for Kali Linux" (number mark "        danielmicay@ Mar 22   65/2956  " thread-indent "\"Re: [oss-security] CVE for Kali Linux\"\n") "<20150322202332.5bfd0e4a@heffalump.sk2.org>" ("<550EE478.70005@redhat.com>" "<E1YZj9N-0003Th-Gn@rmm6prod02.runbox.com>" "<20150322172300.GA21110@openwall.com>" "<550F0ADD.5020800@gmail.com>" "<20150322202332.5bfd0e4a@heffalump.sk2.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 30281 invoked by uid 550); 4 Nov 2020 14:10:44 -0000
+Received: (qmail 7693 invoked by uid 550); 23 Mar 2015 03:58:25 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,258 +11,96 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 7667 invoked from network); 23 Mar 2015 03:58:24 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:subject:references
+         :in-reply-to:content-type;
+        bh=+1h1UH+SGwiptdEVkz9xouLlZQWm0GwTdNSyXIJQzjs=;
+        b=fsA91V6KKeESI7fWUbMdSjZReGmDC5OU2MhiFz35siER/f2aH3ePnwwYrrVc81Yym5
+         ubQy+P4ArDtd0k74fC8sydA/TRWXVrstdDDN0SoFWAgmf3MSpoVBQswK1oLoS7bvWQOw
+         oRXY8O6653wTmyqUpHxsypPhMJ8dHgfntgMzrinAUsGnO3wS8JxMh8JUO6raG8rVrXML
+         /nybEdwlEiLF/AOQsxTBheV3bhRMsJ4B5dSov6WAN4CMTmpnW+WXaTGECZwN71CEJLRn
+         xeW8CDiiZTpWxgZqOkNeiwwgoUonojwP9O6VLupQnS8KNAiqMswXBAKkgvhn01H3e+z0
+         Iftg==
+X-Received: by 10.43.39.208 with SMTP id tn16mr16930386icb.97.1427083092842;
+        Sun, 22 Mar 2015 20:58:12 -0700 (PDT)
+Message-ID: <550F8F4E.6040705@gmail.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
+MIME-Version: 1.0
+References: <550EE478.70005@redhat.com>	<E1YZj9N-0003Th-Gn@rmm6prod02.runbox.com>	<20150322172300.GA21110@openwall.com>	<550F0ADD.5020800@gmail.com> <20150322202332.5bfd0e4a@heffalump.sk2.org>
+In-Reply-To: <20150322202332.5bfd0e4a@heffalump.sk2.org>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="Q6u2tIamu5mRNt4G9DAUrlLgGUvHE3lNj"
+Date: Sun, 22 Mar 2015 23:58:06 -0400
+From: Daniel Micay <danielmicay@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30261 invoked from network); 4 Nov 2020 14:10:44 -0000
-From: Daniel Beck <ml@beckweb.net>
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.15\))
-Message-Id: <9185D043-96BC-4E0F-9B09-6EF97C4AF4C5@beckweb.net>
-Date: Wed, 4 Nov 2020 15:10:32 +0100
+Subject: Re: [oss-security] CVE for Kali Linux
 To: oss-security@lists.openwall.com
-X-Mailer: Apple Mail (2.3445.104.15)
-X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1604499043;af8f5794;
-X-HE-SMSGID: 1kaJUe-0001hF-Gb
-Subject: [oss-security] Multiple vulnerabilities in Jenkins plugins
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software.
-
-The following releases contain fixes for security vulnerabilities:
-
-* Active Directory Plugin 2.20
-* Ansible Plugin 1.1
-* AppSpider Plugin 1.0.13
-* AWS Global Configuration Plugin 1.6
-* Azure Key Vault Plugin 2.1
-* Kubernetes Plugin 1.27.4
-* Mercurial Plugin 2.12
-* SQLPlus Script Runner Plugin 2.0.13
-* Subversion Plugin 2.13.2
-* Visualworks Store Plugin 1.1.4
-
-Additionally, we announce unresolved security issues in the following
-plugins:
-
-* FindBugs Plugin
-* Mail Commander Plugin for Jenkins-ci Plugin
-* Static Analysis Utilities Plugin
-* VMware Lab Manager Slaves Plugin
-
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://www.jenkins.io/security/advisory/2020-11-04/
-
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
-
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://www.jenkins.io/security/#reporting-vulnerabilities
-
----
-
-SECURITY-2117 / CVE-2020-2299
-Active Directory Plugin implements two separate modes: Integration with
-ADSI on Windows, and an OS agnostic LDAP-based mode.
-
-The LDAP-based mode in Active Directory Plugin 2.19 and earlier shares code
-between user lookup and user authentication and distinguishes these
-behaviors through the use of a magic constant used in place of a real
-password. This allows attackers to log in as any user if the magic constant
-is used as the password in Active Directory Plugin 2.19 and earlier.
-
-
-SECURITY-2099 / CVE-2020-2300
-Active Directory Plugin implements two separate modes: Integration with
-ADSI on Windows, and an OS agnostic LDAP-based mode.
-
-The Windows/ADSI mode does not specifically prohibit use of empty passwords
-in Active Directory Plugin 2.19 and earlier. If the Active Directory server
-allows the unauthenticated bind operation, this allows attackers to log in
-to Jenkins as any user by providing an empty password.
-
-
-SECURITY-2123 / CVE-2020-2301
-Active Directory Plugin implements two separate modes: Integration with
-ADSI on Windows, and an OS agnostic LDAP-based mode. Optionally, to reduce
-lookup time, a cache can be configured to remember user lookups and user
-authentications.
-
-In Active Directory Plugin 2.19 and earlier, when run in Windows/ADSI mode,
-the provided password was not used when looking up an applicable cache
-entry. This allows attackers to log in as any user using any password while
-a successful authentication of that user is still in the cache.
-
-As a workaround for this issue, the cache can be disabled.
-
-
-SECURITY-1999 / CVE-2020-2302
-Active Directory Plugin 2.19 and earlier does not perform a permission
-check in an HTTP endpoint.
-
-This allows attackers with Overall/Read permission to access the domain
-health check diagnostic page.
-
-
-SECURITY-2126 / CVE-2020-2303
-Active Directory Plugin 2.19 and earlier does not require POST requests for
-multiple HTTP endpoints implementing connection and authentication tests,
-resulting in cross-site request forgery (CSRF) vulnerabilities.
-
-This vulnerability allows attackers to perform connection tests, connecting
-to attacker-specified or previously configured Active Directory servers
-using attacker-specified credentials.
-
-
-SECURITY-2145 / CVE-2020-2304
-Subversion Plugin 2.13.1 and earlier does not configure its XML parser to
-prevent XML external entity (XXE) attacks.
-
-This allows attackers able to control an agent process to have Jenkins
-parse a crafted changelog file that uses external entities for extraction
-of secrets from the Jenkins controller or server-side request forgery.
-
-
-SECURITY-2115 / CVE-2020-2305
-Mercurial Plugin 2.11 and earlier does not configure its XML changelog
-parser to prevent XML external entity (XXE) attacks.
-
-This allows attackers able to control an agent process to have Jenkins
-parse a crafted changelog file that uses external entities for extraction
-of secrets from the Jenkins controller or server-side request forgery.
-
-
-SECURITY-2104 / CVE-2020-2306
-Mercurial Plugin 2.11 and earlier does not perform a permission check in an
-HTTP endpoint.
-
-This allows attackers with Overall/Read permission to obtain a list of
-names of configured Mercurial installations.
-
-
-SECURITY-1646 / CVE-2020-2307
-Kubernetes Plugin 1.27.3 and earlier includes a feature to replace
-placeholders in pod template and container template fields with environment
-variable values.
-
-This feature allows low-privilege users to access possibly sensitive
-Jenkins controller environment variables.
-
-
-SECURITY-2102 / CVE-2020-2308
-Kubernetes Plugin 1.27.3 and earlier does not perform a permission check in
-an HTTP endpoint.
-
-This allows attackers with Overall/Read permission to list global pod
-template names.
-
-
-SECURITY-2103 / CVE-2020-2309
-Kubernetes Plugin 1.27.3 and earlier does not perform a permission check in
-an HTTP endpoint.
-
-This allows attackers with Overall/Read permission to enumerate credentials
-IDs of credentials stored in Jenkins. Those can be used as part of an
-attack to capture the credentials using another vulnerability.
-
-
-SECURITY-1943 / CVE-2020-2310
-Ansible Plugin 1.0 and earlier does not perform permission checks in
-methods implementing form validation.
-
-This allows attackers with Overall/Read permission to enumerate credentials
-IDs of credentials stored in Jenkins. Those can be used as part of an
-attack to capture the credentials using another vulnerability.
-
-
-SECURITY-2101 / CVE-2020-2311
-AWS Global Configuration Plugin 1.5 and earlier does not perform a
-permission check in an HTTP endpoint processing form submissions.
-
-This allows attackers with Overall/Read permission to replace the global
-AWS configuration.
-
-
-SECURITY-2129 / CVE-2020-2312
-SQLPlus Script Runner Plugin 2.0.12 and earlier prints the `sqlplus`
-command invocation to the build log.
-
-This log message does not redact a password provided as part of a command
-line argument. This password can be viewed by users with Item/Read
-permission.
-
-
-SECURITY-2110 / CVE-2020-2313
-Azure Key Vault Plugin 2.0 and earlier does not perform permission checks
-in several HTTP endpoints.
-
-This allows attackers with Overall/Read permission to enumerate credentials
-IDs of credentials stored in Jenkins. Those can be used as part of an
-attack to capture the credentials using another vulnerability.
-
-
-SECURITY-2058 / CVE-2020-2314
-AppSpider Plugin 1.0.12 and earlier stores a password unencrypted in its
-global configuration file `com.rapid7.jenkinspider.PostBuildScan.xml` on
-the Jenkins controller as part of its configuration.
-
-This password can be viewed by users with access to the Jenkins controller
-file system.
-
-
-SECURITY-1900 / CVE-2020-2315
-Visualworks Store Plugin 1.1.3 and earlier does not configure its XML
-parser to prevent XML external entity (XXE) attacks.
-
-This allows attackers with the ability to control the output of a script
-that run Visualworks with StoreCI, or able to control an agent process, to
-have Jenkins parse a crafted file that uses external entities for
-extraction of secrets from the Jenkins controller or server-side request
-forgery.
-
-
-SECURITY-1907 / CVE-2020-2316
-Static Analysis Utilities Plugin 1.96 and earlier does not escape the
-annotation message in tooltips.
-
-This results in a stored cross-site scripting (XSS) vulnerability
-exploitable by attackers with Job/Configure permission.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-1918 / CVE-2020-2317
-FindBugs Plugin 5.0.0 and earlier does not escape the annotation message in
-tooltips.
-
-This results in a stored cross-site scripting (XSS) vulnerability
-exploitable by attackers able to provide report files to FindBugs Plugin's
-post build step.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2085 / CVE-2020-2318
-Mail Commander Plugin for Jenkins-ci Plugin 1.0.0 and earlier stores
-passwords unencrypted in job `config.xml` files on the Jenkins controller
-as part of its configuration.
-
-These passwords can be viewed by users with Item/Extended Read permission
-or access to the Jenkins controller file system.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2084 / CVE-2020-2319
-VMware Lab Manager Slaves Plugin 0.2.8 and earlier stores a password
-unencrypted in the global `config.xml` file on the Jenkins controller as
-part of its configuration.
-
-This password can be viewed by users with access to the Jenkins controller
-file system.
-
-As of publication of this advisory, there is no fix.
-
-
+--Q6u2tIamu5mRNt4G9DAUrlLgGUvHE3lNj
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: quoted-printable
+
+On 22/03/15 03:23 PM, Stephen Kitt wrote:
+> On Sun, 22 Mar 2015 14:33:01 -0400, Daniel Micay <danielmicay@gmail.com>
+> wrote:
+> [...]
+>> At best, GPG offered *zero value* compared to checking a hash provided
+>> via HTTPS, grabbing a torrent file via HTTPS or downloading directly via
+>> HTTPS. However, I think it's pretty clear that few users would have gone
+>> through with this and all it did was maintain the same security offered
+>> by the HTTPS PKI.
+> [...]
+>=20
+> I don't have any objection to the rest of your argumentation, which seems
+> sensible to me; at the very least it's clear that all this needs to be ma=
+de
+> much easier, and (proper) HTTPS use should be encouraged.
+>=20
+> But I do believe that *at best*, GPG offers something that HTTPS doesn't:
+> signature validation with peer-to-peer trust via the web of trust. This is
+> "at best" because most users don't have a key in the strong set; but at l=
+east
+> for Debian, the archive keys are in the strong set, so any one else with a
+> key in the strong set has at least one trust path to the archive key.
+>=20
+> Of course that doesn't really help with the MITM scenario, since end users
+> would need to know that the archive key is supposed to be signed, and by
+> whom...
+
+An attacker only needs control over a few keys in the strong set to add
+any number of keys they want, which can then sign other keys. There's
+value in the GPG WoT but it's non-trivial to extract it. You could
+specifically find Debian devs and obtain their fingerprints securely
+from various other places. I think the numbers of users who are going to
+do this can probably be counted on a single hand. If there were actually
+instructions on this in the installation guide, it could be argued that
+a secure option is there.
+
+
+--Q6u2tIamu5mRNt4G9DAUrlLgGUvHE3lNj
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iQIcBAEBCAAGBQJVD49TAAoJEPnnEuWa9fIqinAP/ipjjyS8nssGq+NCSgZE2Ej8
+WdSgeqj9eim7ZHZCjvX/vVV2M8BNpgcr+CXEo251SZWp2Qh1pVhaLUaRbAdWJpzH
+wEyQE1xFc4vbtteDJ5x5FQzX/92DCkrZRm1wR4qyH+GD1wGoqgujDKAz9mfK+oOv
+X3JxDIoGHAI5YUVkizoks2tY1Th3XgkBQp2l5KllXPalDVdcRbk47JXM8dUPSOFD
+VRkaTIj/GjhZ4bfZ6oIb5Ntsi4ayLNGnQKBu3Re5r3TcKAi6inBL/eCIcwkR3ard
+IaTuK0AgxvZ7/5amvi02P5lHqft9bDjRabRgoxCXU4HIAGn3QB44orbbVAgWWRaZ
+SiiwsJstdUgiHQliRIMjGTNWTnVuo3OR5zVmbDVkaKpdDDs+QRuBV4ZpJUiTe1im
+uRtqGKTpH182YFWQ1TNx4LmJrofxLEegnhxqJKwwJ0jS+knNWP9B35XmChTOoc/n
+VbY/lWJ2AJq8Q+gbkWhMuqlOgeq0pu/70yne5AOymP2OYmH/Fv32TpW0YkXo8DHz
+9HTNXQuujeINQF0R6Izq0WO6IerOD6hqSQ9pze0qBMqKY32cjl3hdQ95CqzCNQ8V
+ZQXSQO0PjgXksy43bS+POQ80u7iaoy1qsefs03Oj0Wp/a8L9HlSOUK/6sJmqQ/1j
+BY6l3gH3GaTdMNZbHBLo
+=DSKv
+-----END PGP SIGNATURE-----
+
+--Q6u2tIamu5mRNt4G9DAUrlLgGUvHE3lNj--
