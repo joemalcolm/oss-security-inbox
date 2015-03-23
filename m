@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["11825" "Tuesday" "25" "May" "2021" "15:18:22" "+0800" "Mart111n" "mmmart11nnnnn@gmail.com" nil "308" "[oss-security] CVE-2021-3564 Linux Bluetooth device initialization implementation bug" nil nil nil "5" nil nil (number mark "U       mmmart11nnnn May 25  308/11825 " thread-indent "\"[oss-security] CVE-2021-3564 Linux Bluetooth device initialization implementation bug\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-3564 Linux Bluetooth device initialization implementation bug" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["450" "Monday" "23" "March" "2015" "10:59:23" "-0400" "Francisco Alonso" "falonsoe@redhat.com" "<1331942598.1357562.1427122763719.JavaMail.zimbra@redhat.com>" "16" "[oss-security] CVE Request: gd buffer read overflow in gd_gif_in.c" nil nil nil "3" "2015032314:59:23" "[oss-security] CVE Request: gd buffer read overflow in gd_gif_in.c" (number mark "        falonsoe@red Mar 23   16/450   " thread-indent "\"[oss-security] CVE Request: gd buffer read overflow in gd_gif_in.c\"\n") "<354882041.1349690.1427122247703.JavaMail.zimbra@redhat.com>" ("<354882041.1349690.1427122247703.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 31817 invoked by uid 550); 25 May 2021 09:23:40 -0000
+Received: (qmail 28390 invoked by uid 550); 23 Mar 2015 14:59:37 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,346 +11,36 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17460 invoked from network); 25 May 2021 07:18:50 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=BbNCePDut7m6su49AAWn10JYD4hC6dXwjY9O52pDtIg=;
-        b=UbUTR5TlE8OIWuEtaw9H3mDLFu7B/U6Uj7/ppTPk1aeA8zTvUk7ynnWcv4GPCuBhzE
-         16sdf6OwxnadrS0kZfxemdIRXHS6EPHmIOzvxpN2/lkzhkYryoY8S4iJUNkGVt1urNJI
-         +mWCr0WoOem67Dvd2HmpOFCHUEvuo13ZUGduIoDGUaIqGNLti2EhJJVIpMWeorX1jO0S
-         iX/ffRxcWVmsQwN6tf4sDuLqlDpZp/ONN/hBVJYZuhY7e3uvC3/qxrSr+juXJ8TfthfJ
-         g5WOuE7hxf2PI4xdbh5icNKtEPrNTzKFyBTfktu+6ciliRKFf3UMe+ycOumMgRLinkaf
-         SNOw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=BbNCePDut7m6su49AAWn10JYD4hC6dXwjY9O52pDtIg=;
-        b=fngKzTdkmB9JezDKFUYJUPGC0jlo27fkdLuqA/Ex60ZNiIRPoeKlhVzfZzaizgbHF7
-         /g562OShom928gSdh8kGnJg7GZC/c8LneY5xmgsBUxnOmgYwAnfwnAM7iiMv/VSuW6DY
-         ZiKX7dQ1iGeMWdge4/w9ihtfDH5YTvX7iyLaQNBWXHuPqj0/RIy/5AnreA6Y9/uSXorD
-         HWHyaRJ5ZKSgRZbL2WHduniGfY0f5veD7KadNTbSAWRWoGgvBqW0AglZ1MxHd/poxrxO
-         W97v9qTP+bjQdeyzuORLn/d66Lon6BST8ThMC1z6y9JH8Xat3+pGrHnrPf7VXfTCEHGR
-         WkmQ==
-X-Gm-Message-State: AOAM530VpKcbz2NYgYkuw7Dz9TieLrXtKFIde7WQX+Z5QrgIGNx2GvhL
-	afBsXmlVU1x8G8G2wU1xw8xI62Um9PcFjPFGkoyPLmQUdAAbzmzE
-X-Google-Smtp-Source: ABdhPJwx9YLNsoT4azbyWLLODJK3wEainByVrNzycplT76Ld8c29+1LoknkGfasMkrdmHNtkHRXgSU9bKY929S1J49c=
-X-Received: by 2002:a05:6402:1d3c:: with SMTP id dh28mr30475587edb.129.1621927118369;
- Tue, 25 May 2021 00:18:38 -0700 (PDT)
+Received: (qmail 28370 invoked from network); 23 Mar 2015 14:59:36 -0000
+Message-ID: <1331942598.1357562.1427122763719.JavaMail.zimbra@redhat.com>
+In-Reply-To: <354882041.1349690.1427122247703.JavaMail.zimbra@redhat.com>
 MIME-Version: 1.0
-From: Mart111n <mmmart11nnnnn@gmail.com>
-Date: Tue, 25 May 2021 15:18:22 +0800
-Message-ID: <CAMMGaruFZnpyZd958Lckk=eVPgMQHf+-Bhth_p2xTW=2bJcgig@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.36.116.75]
+X-Mailer: Zimbra 8.0.6_GA_5922 (ZimbraWebClient - GC42 (Linux)/8.0.6_GA_5922)
+Thread-Topic: CVE Request: gd buffer read overflow in gd_gif_in.c
+Thread-Index: w01Jp8Fy0msHQWFef1i664cgbf+lWw==
+Cc: cve-assign@mitre.org
+Date: Mon, 23 Mar 2015 10:59:23 -0400 (EDT)
+From: Francisco Alonso <falonsoe@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE Request: gd buffer read overflow in gd_gif_in.c
 To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="000000000000bdf81a05c32255a0"
-Subject: [oss-security] CVE-2021-3564 Linux Bluetooth device initialization implementation bug
 
---000000000000bdf81a05c32255a0
-Content-Type: text/plain; charset="UTF-8"
+Hi,
 
-Hello there,
+Could a CVE be please assigned to the following issue? (in case it was
+not requested to MITRE before):
 
-Our team (BlockSec) found an implementation bug that resides in the kernel
-BlueTooth subsystem when the HCI device initialization fails. It can lead
-to unexpected results, like double-free memory corruption vulnerability.
-
-=*=*=*=*=*=*=*=*=  BUG DETAILS  =*=*=*=*=*=*=*=*=
-
-This implementation bug is inside hci_dev_do_open() function.
-
-static int hci_dev_do_open(struct hci_dev *hdev)
-{
-...
-    } else {
-        /* Init failed, cleanup */
-        flush_work(&hdev->tx_work);
-        flush_work(&hdev->cmd_work);  // {1}
-        flush_work(&hdev->rx_work);   // {2}
-
-        skb_queue_purge(&hdev->cmd_q);
-        skb_queue_purge(&hdev->rx_q);
-
-        if (hdev->flush)
-          hdev->flush(hdev);
-
-        if (hdev->sent_cmd) {
-          kfree_skb(hdev->sent_cmd);
-          hdev->sent_cmd = NULL;
-        }
-...
-}
-
-The purpose of flush_work(struct work_struct *work) is to wait for the
-accomplishment of the work_struct. Hence, the accomplishment of the code
-flush_work(&hdev->cmd_work) {1} means the cmd_work is finished. However, we
-discover an implementation bug that can result in activating hci_cmd_work()
-even the hdev->cmd_work has already been flushed {2}.
-
-The process is as follows:
-hci_rx_work() -> hci_event_packet() -> hci_event_packet() ->
-hci_cmd_complete_evt() -> queue_work(hdev->workqueue, &hdev->cmd_work)
-
-We found this implementation bug can lead to double-free memory corruption,
-which resulted from a data race of the hdev->sent_cmd. Here is the code
-snippet for this race.
-
-static void hci_cmd_work(struct work_struct *work)
-{
-...
-    if (atomic_read(&hdev->cmd_cnt)) {
-        skb = skb_dequeue(&hdev->cmd_q);
-        if (!skb)
-            return;
-
-        kfree_skb(hdev->sent_cmd);
-
-        hdev->sent_cmd = skb_clone(skb, GFP_KERNEL);
-...
-}
+gd: buffer read overflow in gd_gif_in.c
+https://bitbucket.org/libgd/gd-libgd/commits/47eb44b2e90ca88a08dca9f9a1aa9041e9587f43
+https://bugs.php.net/bug.php?id=68601
+https://bugzilla.redhat.com/show_bug.cgi?id=1188639
 
 
-We use thread-A to represent hci_dev_do_open() function and the thread-B
-for hci_cmd_work().
-The normal sequence should be like this:
-
-----------------------------------------------------------------------------------------------------
-thread-A                               |  thread-B
-                                       |  kfree_skb(hdev->sent_cmd); (FREE)
-                                       |
-                                       |  hdev->sent_cmd = skb_clone(skb,
-GFP_KERNEL); (WRITE)
-if (hdev->sent_cmd) { (READ)           |
-                                       |
-kfree_skb(hdev->sent_cmd); (FREE)      |
-                                       |
-hdev->sent_cmd = NULL; (WRITE)         |
-                                       |
-----------------------------------------------------------------------------------------------------
-
-However, if the sequence is like this:
-
-----------------------------------------------------------------------------------------------------
-thread-A                               |  thread-B
-                                       |  kfree_skb(hdev->sent_cmd); (FREE)
-if (hdev->sent_cmd) { (READ)           |
-                                       |
-kfree_skb(hdev->sent_cmd); (FREE)      |
-                                       |  hdev->sent_cmd = skb_clone(skb,
-GFP_KERNEL); (WRITE)
-                                       |
-hdev->sent_cmd = NULL; (WRITE)         |
-                                       |
-----------------------------------------------------------------------------------------------------
-
-If the FREE operation in thread-A is before WRITE operation in thread-B, it
-can lead to double-free memory corruption in the kernel.
+Thank you
 
 
-=*=*=*=*=*=*=*=*=  BUG EFFECTS  =*=*=*=*=*=*=*=*=
-
-For now, we can successfully trigger the vulnerability to corrupt the
-kernel memory and thus crash the kernel. Although this bug is related to
-Bluetooth device initialization, the attacker can trigger it without extra
-privileges.
-
-That is because the Linux kernel does not ask for the privilege when
-attaching the HCI device as the attached device is default set to
-HCI_AUTO_OFF state. This bug is inside in the very first attaching
-procedure and requires no syscalls.
-
-The crash log is presented below.
-
-==================================================================
-[  500.906562] hci0 type 1 len 3
-[  500.904986] BUG: KASAN: use-after-free in kfree_skb+0x33/0x1c0
-[  500.904986] Read of size 4 at addr ffff888009d3599c by task
-kworker/u5:0/54
-[  500.904986]
-[  500.909997] CPU: 0 PID: 54 Comm: kworker/u5:0 Not tainted 5.11.11+ #16
-[  500.909997] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS
-1.13.0-1ubuntu1.1 04/01/2014
-[  500.909997] Workqueue: hci0 hci_power_on
-[  500.909997] Call Trace:
-[  500.909997]  dump_stack+0x16c/0x1be
-[  500.924511]  print_address_description+0x7b/0x3a0
-[  500.924511]  __kasan_report+0x14e/0x200
-[  500.924511]  ? kfree_skb+0x33/0x1c0
-[  500.924511]  ? skb_queue_purge+0x193/0x1c0
-[  500.924511]  kasan_report+0x47/0x60
-[  500.924511]  ? skb_queue_purge+0x193/0x1c0
-[  500.924511]  check_memory_region+0x2e2/0x330
-[  500.924511]  kfree_skb+0x33/0x1c0
-[  500.924511]  hci_dev_do_open+0x1008/0x1570
-[  500.924511]  ? printk+0x62/0x83
-[  500.924511]  hci_power_on+0x183/0x580
-[  500.924511]  ? strscpy+0x7f/0x240
-[  500.924511]  process_one_work+0x722/0x1150
-[  500.924511]  worker_thread+0xb5c/0x17d0
-[  500.924511]  ? process_one_work+0x1150/0x1150
-[  500.924511]  kthread+0x2fc/0x320
-[  500.924511]  ? process_one_work+0x1150/0x1150
-[  500.924511]  ? kthread_unuse_mm+0x1d0/0x1d0
-[  500.924511]  ret_from_fork+0x22/0x30
-[  500.924511]
-[  500.924511] Allocated by task 273:
-[  500.924511]  ____kasan_kmalloc+0xc6/0x100
-[  500.924511]  kmem_cache_alloc+0xfe/0x1f0
-[  500.924511]  skb_clone+0x1b5/0x360
-[  500.924511]  hci_cmd_work+0x15d/0x350
-[  500.924511]  process_one_work+0x722/0x1150
-[  500.924511]  worker_thread+0xb5c/0x17d0
-[  500.924511]  kthread+0x2fc/0x320
-[  500.924511]  ret_from_fork+0x22/0x30
-[  500.924511]
-[  500.924511] Freed by task 273:
-[  500.924511]  kasan_set_track+0x3d/0x70
-[  500.924511]  kasan_set_free_info+0x1f/0x40
-[  500.924511]  ____kasan_slab_free+0x10e/0x140
-[  500.924511]  kmem_cache_free+0xca/0x210
-[  500.924511]  hci_cmd_work+0x150/0x350
-[  500.924511]  process_one_work+0x722/0x1150
-[  500.924511]  worker_thread+0xb5c/0x17d0
-[  500.924511]  kthread+0x2fc/0x320
-[  500.924511]  ret_from_fork+0x22/0x30
-[  500.924511]
-[  500.924511] The buggy address belongs to the object at ffff888009d358c0
-[  500.924511]  which belongs to the cache skbuff_head_cache of size 232
-[  500.924511] The buggy address is located 220 bytes inside of
-[  500.924511]  232-byte region [ffff888009d358c0, ffff888009d359a8)
-[  500.924511] The buggy address belongs to the page:
-[  500.924511] page:00000000b691648a refcount:1 mapcount:0
-mapping:0000000000000000 index:0x0 pfn:0x9d35
-[  500.924511] flags: 0x100000000000200(slab)
-[  500.924511] raw: 0100000000000200 dead000000000100 dead000000000122
-ffff888006d64640
-[  500.924511] raw: 0000000000000000 00000000000c000c 00000001ffffffff
-0000000000000000
-[  500.924511] page dumped because: kasan: bad access detected
-[  500.924511]
-[  500.924511] Memory state around the buggy address:
-[  500.924511]  ffff888009d35880: fc fc fc fc fc fc fc fc fa fb fb fb fb fb
-fb fb
-[  500.924511]  ffff888009d35900: fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-fb fb
-[  500.924511] >ffff888009d35980: fb fb fb fb fb fc fc fc fc fc fc fc fc fc
-fc fc
-[  500.924511]                             ^
-[  500.924511]  ffff888009d35a00: fa fb fb fb fb fb fb fb fb fb fb fb fb fb
-fb fb
-[  500.924511]  ffff888009d35a80: fb fb fb fb fb fb fb fb fb fb fb fb fb fc
-fc fc
-[  500.924511]
-==================================================================
-[  500.924511] Disabling lock debugging due to kernel taint
-[  501.014277]
-==================================================================
-[  501.014929] BUG: KASAN: double-free or invalid-free in
-hci_dev_do_open+0x1008/0x1570
-[  501.014929]
-[  501.014929] CPU: 0 PID: 54 Comm: kworker/u5:0 Tainted: G    B
-  5.11.11+ #16
-[  501.014929] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS
-1.13.0-1ubuntu1.1 04/01/2014
-[  501.014929] Workqueue: hci0 hci_power_on
-[  501.014929] Call Trace:
-[  501.014929]  dump_stack+0x16c/0x1be
-[  501.014929]  ? hci_dev_do_open+0x1008/0x1570
-[  501.014929]  ? hci_dev_do_open+0x1008/0x1570
-[  501.014929]  print_address_description+0x7b/0x3a0
-[  501.014929]  ? hci_dev_do_open+0x1008/0x1570
-[  501.014929]  ? hci_dev_do_open+0x1008/0x1570
-[  501.014929]  kasan_report_invalid_free+0x54/0xd0
-[  501.014929]  ____kasan_slab_free+0xe7/0x140
-[  501.014929]  kmem_cache_free+0xca/0x210
-[  501.014929]  ? hci_dev_do_open+0x1008/0x1570
-[  501.014929]  hci_dev_do_open+0x1008/0x1570
-[  501.014929]  ? printk+0x62/0x83
-[  501.014929]  hci_power_on+0x183/0x580
-[  501.014929]  ? strscpy+0x7f/0x240
-[  501.014929]  process_one_work+0x722/0x1150
-[  501.014929]  worker_thread+0xb5c/0x17d0
-[  501.014929]  ? process_one_work+0x1150/0x1150
-[  501.014929]  kthread+0x2fc/0x320
-[  501.014929]  ? process_one_work+0x1150/0x1150
-[  501.014929]  ? kthread_unuse_mm+0x1d0/0x1d0
-[  501.014929]  ret_from_fork+0x22/0x30
-[  501.014929]
-[  501.014929] Allocated by task 273:
-[  501.014929]  ____kasan_kmalloc+0xc6/0x100
-[  501.014929]  kmem_cache_alloc+0xfe/0x1f0
-[  501.014929]  skb_clone+0x1b5/0x360
-[  501.014929]  hci_cmd_work+0x15d/0x350
-[  501.014929]  process_one_work+0x722/0x1150
-[  501.014929]  worker_thread+0xb5c/0x17d0
-[  501.014929]  kthread+0x2fc/0x320
-[  501.014929]  ret_from_fork+0x22/0x30
-[  501.014929]
-[  501.014929] Freed by task 273:
-[  501.014929]  kasan_set_track+0x3d/0x70
-[  501.066803]  kasan_set_free_info+0x1f/0x40
-[  501.066803]  ____kasan_slab_free+0x10e/0x140
-[  501.066803]  kmem_cache_free+0xca/0x210
-[  501.066803]  hci_cmd_work+0x150/0x350
-[  501.066803]  process_one_work+0x722/0x1150
-[  501.066803]  worker_thread+0xb5c/0x17d0
-[  501.066803]  kthread+0x2fc/0x320
-[  501.066803]  ret_from_fork+0x22/0x30
-[  501.066803]
-[  501.066803] The buggy address belongs to the object at ffff888009d358c0
-[  501.066803]  which belongs to the cache skbuff_head_cache of size 232
-[  501.066803] The buggy address is located 0 bytes inside of
-[  501.066803]  232-byte region [ffff888009d358c0, ffff888009d359a8)
-[  501.066803] The buggy address belongs to the page:
-[  501.066803] page:00000000b691648a refcount:1 mapcount:0
-mapping:0000000000000000 index:0x0 pfn:0x9d35
-[  501.066803] flags: 0x100000000000200(slab)
-[  501.066803] raw: 0100000000000200 dead000000000100 dead000000000122
-ffff888006d64640
-[  501.066803] raw: 0000000000000000 00000000000c000c 00000001ffffffff
-0000000000000000
-[  501.066803] page dumped because: kasan: bad access detected
-[  501.066803]
-[  501.066803] Memory state around the buggy address:
-[  501.066803]  ffff888009d35780: fa fb fb fb fb fb fb fb fb fb fb fb fb fb
-fb fb
-[  501.066803]  ffff888009d35800: fb fb fb fb fb fb fb fb fb fb fb fb fb fc
-fc fc
-[  501.066803] >ffff888009d35880: fc fc fc fc fc fc fc fc fa fb fb fb fb fb
-fb fb
-[  501.066803]                                            ^
-[  501.066803]  ffff888009d35900: fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-fb fb
-[  501.066803]  ffff888009d35980: fb fb fb fb fb fc fc fc fc fc fc fc fc fc
-fc fc
-[  501.066803]
-==================================================================
-
-=*=*=*=*=*=*=*=*=  Timeline  =*=*=*=*=*=*=*=*=
-
-2021-05-17: Bug reported to security () kernel org and linux-distros
-() vs openwall org
-
-2021-05-25: CVE-2021-3564 assigned
-
-We informed security@kernel.org on May 17, 2021. Now the 7-day embargo
-period is over, we are being asked to bring the issue to public.
-
-Since our patch has not been applied to upstream yet, we will release
-the POC later.
-
-=*=*=*=*=*=*=*=*=  Credit  =*=*=*=*=*=*=*=*=
-
-HaoXiong@BlockSec Team
-
-LinMa@Blocksec Team
-
-syzkaller
-
-
-
-Best regards.
-
-Mart111n
-
---000000000000bdf81a05c32255a0--
+Francisco Alonso / Red Hat Product Security
+PGP: 0xA026440E 0825 020C 7A5A 4F86 9038  B1C8 5562 688F A026 440E
