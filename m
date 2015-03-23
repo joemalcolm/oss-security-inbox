@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["447" "Monday" "12" "August" "2019" "09:46:55" "-0500" "Bob Friesenhahn" "bfriesen@simple.dallas.tx.us" "<alpine.GSO.2.20.1908120945250.19899@scrappy.simplesystems.org>" "10" "Re: [oss-security] ghostscript CVE-2019-10216: -dSAFER escape via .buildfont1" "^Date:" nil nil "8" "2019081214:46:55" "[oss-security] ghostscript CVE-2019-10216: -dSAFER escape via .buildfont1" (number mark "        bfriesen@sim Aug 12   10/447   " thread-indent "\"Re: [oss-security] ghostscript CVE-2019-10216: -dSAFER escape via .buildfont1\"\n") "<20190812132515.GA4647@cbuissar-ltop.localdomain>" ("<20190807065737.GA3930@cbuissar-ltop.localdomain>" "<20190812132515.GA4647@cbuissar-ltop.localdomain>") nil nil nil nil nil nil nil "Re: [oss-security] ghostscript CVE-2019-10216: -dSAFER escape via .buildfont1" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1660" "Monday" "23" "March" "2015" "22:40:14" "+0100" "Yves-Alexis Perez" "corsac@debian.org" "<1427146814.21027.4.camel@debian.org>" "47" "[oss-security] Re: CVE requests for shibboleth service provider" nil nil nil "3" "2015032321:40:14" "[oss-security] Re: CVE requests for shibboleth service provider" (number mark "        corsac@debia Mar 23   47/1660  " thread-indent "\"[oss-security] Re: CVE requests for shibboleth service provider\"\n") "<20150323174404.BDA286C0023@smtpvmsrv1.mitre.org>" ("<20150323174404.BDA286C0023@smtpvmsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 9867 invoked by uid 550); 12 Aug 2019 14:47:09 -0000
+Received: (qmail 15461 invoked by uid 550); 23 Mar 2015 21:40:33 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,29 +11,65 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 9844 invoked from network); 12 Aug 2019 14:47:08 -0000
-X-X-Sender: bfriesen@scrappy.simplesystems.org
-In-Reply-To: <20190812132515.GA4647@cbuissar-ltop.localdomain>
-Message-ID: <alpine.GSO.2.20.1908120945250.19899@scrappy.simplesystems.org>
-References: <20190807065737.GA3930@cbuissar-ltop.localdomain> <20190812132515.GA4647@cbuissar-ltop.localdomain>
-User-Agent: Alpine 2.20 (GSO 67 2015-01-07)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (smtp.simplesystems.org [65.66.246.90]); Mon, 12 Aug 2019 09:46:56 -0500 (CDT)
-Date: Mon, 12 Aug 2019 09:46:55 -0500 (CDT)
-From: Bob Friesenhahn <bfriesen@simple.dallas.tx.us>
+Received: (qmail 15442 invoked from network); 23 Mar 2015 21:40:33 -0000
+Message-ID: <1427146814.21027.4.camel@debian.org>
+In-Reply-To: <20150323174404.BDA286C0023@smtpvmsrv1.mitre.org>
+References: <20150323174404.BDA286C0023@smtpvmsrv1.mitre.org>
+Content-Type: multipart/signed; micalg="pgp-sha256";
+	protocol="application/pgp-signature"; boundary="=-jzH9YKaeiI8cHIeAPU2I"
+X-Mailer: Evolution 3.12.9-1+b1 
+Mime-Version: 1.0
+Cc: oss-security@lists.openwall.com, team@security.debian.org
+Date: Mon, 23 Mar 2015 22:40:14 +0100
+From: Yves-Alexis Perez <corsac@debian.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] ghostscript CVE-2019-10216: -dSAFER escape via
- .buildfont1
-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: CVE requests for shibboleth service provider
+To: cve-assign@mitre.org
 
-Is it known if this issue also impacts the PDF reader?  I see that the 
-involved code is Resource/Init/gs_type1.ps which is presumably related 
-to Postscript Type 1 fonts, which might be included in a PDF file.
+--=-jzH9YKaeiI8cHIeAPU2I
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Bob
--- 
-Bob Friesenhahn
-bfriesen@simple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
-GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
-Public Key,     http://www.simplesystems.org/users/bfriesen/public-key.txt
+On lun., 2015-03-23 at 13:44 -0400, cve-assign@mitre.org wrote:
+> > Recommendations
+> > -----------------
+> > Update to V2.5.4 or later of the Shibboleth SP software
+>=20
+> Use CVE-2015-2684 for this Shibboleth Service Provider issue. The
+> vendor's secadv_20150319.txt advisory is about this CVE in addition to
+> unrelated CVEs in two third-party components (Xerces-C and OpenSSL).
+>=20
+> > https://issues.shibboleth.net/jira/issues/?filter=3D10771
+>=20
+> We currently don't know whether CVE-2015-2684 is one of the above 24
+> issues on the "Shibboleth 2 SP 2.5.4 Fixes" list, or whether the
+> CVE-2015-2684 fix is separate from all of those.
+
+Thanks,
+
+as far as I can tell, the security vulnerability is not on that list.
+The upstream patch is
+http://svn.shibboleth.net/view/cpp-sp?view=3Drevision&revision=3D3894 and
+references SSPCPP-632 which is still not public.
+
+Regards,
+--=20
+Yves-Alexis
+
+--=-jzH9YKaeiI8cHIeAPU2I
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iQEcBAABCAAGBQJVEIg+AAoJEG3bU/KmdcCli4YH/A7pmxCWpvvqAjpjMaVvQYH/
+FYZw1HFAt12XJPvsbJihA8CdRthbv0ite0eOS8ivqygu42Z0G80j1OSAuuvA8vCj
+Cz2TpA7JLAm/Vc/FHtQ7SNlTo804l2OkQntfrvyd7f0osxQl7nuDwqRsaAkOp2if
+mG4ESGOnTM6TZ3Bl6BQcvG5rzXnFavfsSKeT0r6n25TZlYxpUG9lhfdN0Uyve6C8
+AV4XlOQ6WR12BGySzWGheUxDP4mwWYrjBYPSmlT1qWnmJg69Ae8AT3gjWw12UZz2
+U2eUFZq4pAx+iamZBkJwq6KloIwUmUyQLmVi9WfT1uKyeRn3P8LTtPQ3bRg4B3w=
+=162H
+-----END PGP SIGNATURE-----
+
+--=-jzH9YKaeiI8cHIeAPU2I--
