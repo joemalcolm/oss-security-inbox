@@ -1,4 +1,9 @@
-Received: (qmail 22343 invoked by uid 550); 16 Oct 2023 01:55:27 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["859" "Monday" "23" "March" "2015" "20:32:43" "+0100" "Florian Weimer" "fw@deneb.enyo.de" "<87oanjech0.fsf@mid.deneb.enyo.de>" "25" "[oss-security] CVE-2015-0841: off-by-one error in network code of monopd/libcapsinetwork" nil nil nil "3" "2015032319:32:43" "[oss-security] CVE-2015-0841: off-by-one error in network code of monopd/libcapsinetwork" (number mark "        fw@deneb.eny Mar 23   25/859   " thread-indent "\"[oss-security] CVE-2015-0841: off-by-one error in network code of monopd/libcapsinetwork\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 10124 invoked by uid 550); 23 Mar 2015 19:33:00 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,37 +11,39 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5228 invoked from network); 16 Oct 2023 01:52:15 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Charles Zhang <dockerzhang@apache.org>
-To: oss-security@lists.openwall.com
-Message-ID: <77cb8757-3c90-b60c-0eab-99870e4c7da4@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Mon, 16 Oct 2023 01:51:39 +0000
+Received: (qmail 10060 invoked from network); 23 Mar 2015 19:32:56 -0000
+Message-ID: <87oanjech0.fsf@mid.deneb.enyo.de>
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2023-43667: Apache InLong: Log Injection in Global functions 
+Content-Type: text/plain; charset=us-ascii
+Cc: Niko Tyni <ntyni@debian.org>
+Date: Mon, 23 Mar 2015 20:32:43 +0100
+From: Florian Weimer <fw@deneb.enyo.de>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE-2015-0841: off-by-one error in network code of monopd/libcapsinetwork
+To: oss-security@lists.openwall.com
 
-Severity: moderate
+Niko Tyni privately reported this to us, but we don't think it is
+exploitable with dlmalloc, so we skipped the embargo:
 
-Affected versions:
+| There's an off-by-one error in libcapsinetwork network handling code,
+| which was merged into monopd in version 0.9.4.
+| 
+| From src/listener.cpp, Listener::checkActivity():
+| 
+|   #define MAXLINE 1024
+| [...]
+|   char *readBuf = new char[MAXLINE];
+|   int n = read((*it)->fd(), readBuf, MAXLINE);
+|   if (n <= 0) // socket was closed
+|   {
+|           (*it)->setStatus(Socket::Closed);
+|           delete[] readBuf;
+|           return; // notification is (still) in earlier iteration
+|   }
+|   readBuf[n] = 0;
+| 
+| With an input line longer than 1023, this will write zero at readBuf[1024]
+| which is out of bounds.
 
-- Apache InLong 1.4.0 through 1.8.0
-
-Description:
-
-Improper Neutralization of Special Elements used in an SQL Command ('SQL In=
-jection') vulnerability in Apache InLong.This issue affects Apache InLong: =
-from 1.4.0 through 1.8.0, the attacker can create misleading or false recor=
-ds, making it harder to audit
-and trace malicious activities.=C2=A0Users are advised to upgrade to Apache=
- InLong's 1.8.0 or cherry-pick [1] to solve it.
-
-[1]  https://github.com/apache/inlong/pull/8628
-
-References:
-
-https://inlong.apache.org
-https://www.cve.org/CVERecord?id=3DCVE-2023-43667
-
+<https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=781043>
+<https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=781044>
