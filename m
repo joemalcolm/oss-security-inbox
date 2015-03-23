@@ -1,4 +1,9 @@
-Received: (qmail 12021 invoked by uid 550); 8 Sep 2023 17:34:47 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1070" "Monday" "23" "March" "2015" "17:35:19" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150323213519.DD9E352E068@smtpvbsrv1.mitre.org>" "27" "[oss-security] Re: CVE Request: Linux kernel: sys_sendto/sys_recvfrom does not validate the user provided ubuf pointer" nil nil nil "3" "2015032321:35:19" "[oss-security] Re: CVE Request: Linux kernel: sys_sendto/sys_recvfrom does not validate the user provided ubuf pointer" (number mark "        cve-assign@m Mar 23   27/1070  " thread-indent "\"[oss-security] Re: CVE Request: Linux kernel: sys_sendto/sys_recvfrom does not validate the user provided ubuf pointer\"\n") "<20150323172534.GH15316@dhcp-25-225.brq.redhat.com>" ("<20150323172534.GH15316@dhcp-25-225.brq.redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 5418 invoked by uid 550); 23 Mar 2015 21:35:32 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,186 +11,40 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 5400 invoked from network); 23 Mar 2015 21:35:31 -0000
+In-Reply-To: <20150323172534.GH15316@dhcp-25-225.brq.redhat.com>
+Message-Id: <20150323213519.DD9E352E068@smtpvbsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Mon, 23 Mar 2015 17:35:19 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11485 invoked from network); 8 Sep 2023 17:33:33 -0000
-Date: Fri, 8 Sep 2023 19:33:21 +0200
-From: Solar Designer <solar@openwall.com>
-To: Willy Tarreau <w@1wt.eu>
-Cc: oss-security@lists.openwall.com,
-	Vegard Nossum <vegard.nossum@oracle.com>,
-	Jiri Kosina <jkosina@suse.cz>, Donald Buczek <buczek@molgen.mpg.de>,
-	Greg KH <gregkh@linuxfoundation.org>
-Message-ID: <20230908173321.GA17366@openwall.com>
-References: <20230825222359.GA10424@openwall.com> <ZOuqk2+3EMBV3pPy@1wt.eu> <20230828180518.GA29293@openwall.com> <ZOzy5H/9go9KPfm3@1wt.eu> <20230830152633.GA6199@openwall.com> <20230904201426.GA3577@1wt.eu>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230904201426.GA3577@1wt.eu>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] linux-distros list policy and Linux kernel, again
+Subject: [oss-security] Re: CVE Request: Linux kernel: sys_sendto/sys_recvfrom does not validate the user provided ubuf pointer
+To: pmatouse@redhat.com
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I've just relaxed the policy on posting exploits.  It used to say:
+> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit?id=4de930efc23b92ddf88ce91c405ee645fe6e27ea
+> https://twitter.com/grsecurity/status/579050211605102592
+> https://twitter.com/grsecurity/status/579075689439059968
+> https://twitter.com/grsecurity/status/579060953477701632
+> http://grsecurity.net/~spender/viro.txt
 
-"If you shared exploit(s) that are not an essential part of the issue
-description, then at your option you may slightly delay posting them to
-oss-security but you must post the exploits to oss-security within at
-most 7 days of making the mandatory posting above."
+Use CVE-2015-2686.
 
-Now it says:
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-"If you shared exploit(s) that are not an essential part of the issue
-description, then at your option you may delay or withhold posting them
-to oss-security, and you're encouraged to post the exploits to
-oss-security in 1 to 30 days of making the mandatory posting above. The
-delay may reasonably match your estimate for independent development of
-such exploits."
-
-So it's no longer a requirement ("or withhold" is now an option), and
-the recommended delay is now 1 to 30 days (which covers the real-world
-range from the old Exim bug to the recent Linux StackRot bug).  I also
-added a sentence suggesting how to choose the delay.
-
-I made this change mainly because we cannot reasonably force a person to
-post exploits when they're threatened by their employer, an affected
-vendor, government officials, etc. - even if they originally intended to
-post.  Actually, the same issue can occur for the issue description as
-well, in which case we'll have to take over and make that posting
-ourselves.  We could also be doing that for exploits in such cases, but
-that's not so obviously the right thing to do.
-
-On Mon, Sep 04, 2023 at 10:14:26PM +0200, Willy Tarreau wrote:
-> On Wed, Aug 30, 2023 at 05:26:33PM +0200, Solar Designer wrote:
-> > This is in part a matter of resources - are we providing only
-> > the lists infrastructure and list members' best-effort volunteer
-> > contributions to issue handling, or are we providing any guaranteed
-> > service?  For the latter, perhaps list admin(s) (me) should always take
-> > over whenever the member distros don't handle that sort of
-> > contributing-back tasks on time.  Then we'll be able to provide a
-> > guarantee that all issues will be handled without the reporter having to
-> > stay on top of them.
-> > 
-> > A drawback is that this may encourage lower-quality or lower-relevance
-> > reports, including of issues that are not worth handling in private.  So
-> > it could end up wasting those extra resources allocated to this effort.
-> 
-> Absolutely. But I'm sensing something in the way you're presenting these
-> possibilities, it is that there is a perceived (by some?) guarantee of
-> service that implies that someone (possibly you) has to do the job for
-> others to consume the result of this work. If that's the case it can
-> mean the relation is significantly skewed and the person(s) willing to
-> make the efforts are indeed likely to get overwhelmed. At least on s@k.o
-> we're sufficient to share the effort depending on skills and availability,
-> and we can rely on maintainers' support.
-
-I think there isn't currently a perceived guarantee of service, but
-there would be under (your previously implied) suggestion that we (in my
-words) support the send-and-forget use case for reporters.  If we do
-that, I actually expect that the member distros would take care of it
-most of the time, but to have a guarantee that this is done every time
-and on time, someone specific would need to track all issues and take
-care of any that would fall through the cracks.  I may start doing that
-under the potential LF sponsorship, if it does materialize, at which
-point whether to announce this as a guaranteed service or not would be a
-matter of preference.
-
-> > > On Mon, Aug 28, 2023 at 08:05:18PM +0200, Solar Designer wrote:
-> > > > That said, can you share more detail on the specific issue you referred
-> > > > to above and its handling/disclosure timeline?  Was it ever brought to
-> > > > oss-security, and if not then why not?
-> > > 
-> > > I just checked and I'm not seeing any traces of it there. I don't even
-> > > know who normally notifies about such issues there.
-> > 
-> > If you worked on the issue, then perhaps you were the most appropriate
-> > person to notify oss-security about it?
-> 
-> Honestly, no, for multiple reasons: The first one being that I'm terrible
-> at dealing with processes and this becomes a big effort. The second one is
-> that it's already not easy to have participants available with enough time
-> to work on reports, to if we add to them as a punishment to have to do that
-> extra work, that's not going to be motivating to work on reports.
-
-What reports are you referring to, and if they exist anyway then can't
-they be posted to oss-security as-is?
-
-> The third
-> one is more related to some of my personal convictions: I'm personally not
-> convinced of the interest of encouraging distros to focus on a tiny subset
-> of all the fixes, because for one that passes via s@k.o, maybe 50-100 are
-> regularly merged and might be of similar or even higher importance. And it
-> is my belief that all fixes are needed, not just the ones that are reported
-> via discrete channels because the reporter is uncertain about the impacts
-> a public report could have. I know that some do not share this opinion (and
-> I don't want to debate this here). Finally my feeling is that if the person
-> that sent a first report was interested in reporting their findings, it's
-> probably up to the same person to advertise it everywhere they want (after
-> understanding the consequences, of course).
-
-> For me when a fix is merged I can flush
-> my mind on an issue (this makes it very hard for me to write changelogs
-> after series of bugfixes in other projects BTW).
-
-This is reasonable.  However, for certain other projects we're seeing
-their upstreams consistently disclose security vulnerabilities in here.
-
-> > Anyway, perhaps both of these should have been brought to oss-security
-> > at some point, but they were not?
-> 
-> But one could actually ask why just these ones and none of the numerous
-> other ones merged in the same stable kernels.
-
-I'd actually prefer all, and if there are ever too many for oss-security
-we could setup a sub-list for the Linux kernel.
-
-However, I think these two do stand out in that they're in designs and
-algorithms rather than code, and could thus be relevant beyond Linux,
-kernel, and TCP/IP stacks (e.g., randomness and non-repetitiveness
-preferences for TCP and UDP ports are very similar to those for DNS
-query IDs).  So we could potentially have fruitful discussions of the
-wider context (what other projects did when, and what is yet to do).
-
-> Actually I'm really wondering what the value of l-d is now,
-> if long embargoes are too much of a problem, short ones are too short for
-> developers to produce a fix, and bug reporters are progressively encouraged
-> to first contact projects then directly oss-sec, I feel like the value of
-> l-d becomes pretty low at this point in the process, but I could be
-> mistaken, of course. Maybe that's also why we're discussing here after all,
-> to find how to make it more useful to all parties.
-
-I think the value of (linux-)distros is similar to what it was at its
-inception - it's not declining.  Short embargoes are generally either
-after an initial upstream fix is ready (but before it's public, except
-for Linux kernel and curl) or are in fact sufficient to produce a fix.
-I never encouraged over-use of (linux-)distros even for issues that are
-best brought to oss-security right away - this isn't a new thing.
-
-> > We already use a somewhat obscure posting address and a required Subject
-> > prefix, although the latter is currently not enforced strictly (is
-> > mostly an anti-spam measure, so is bypassed by some other keywords
-> > contained in the headers and/or message).  I think part of the problem
-> > was that the kernel documentation gave these away directly, without
-> > people having to see our policy and instructions first.
-> 
-> I hadn't thought about this but it would be possible that some are lost
-> due to this. I've often wondered how people manage never to forget to
-> prepend "VS" there ;-)
-
-I did think of this when I first added the [vs] check because of spam,
-and indeed am worried that desirable messages may occasionally be lost.
-
-We're not dropping the messages silently, nor producing bounce messages.
-We're rejecting in response to SMTP DATA command, so there isn't a later
-bounce message that may itself be caught by the sender's spam filter,
-unless the sender is using a forwarding address.  So in most cases the
-sender would be aware.  Another mitigation is those additional keywords.
-
-> I do think that there's definitely something that needs to be worked
-> on regarding this specific point affecting what has to be published.
-
-OK, I hope today's policy change looks good to you.
-
-Thanks,
-
-Alexander
+iQEcBAEBAgAGBQJVEIavAAoJEKllVAevmvmsH1IIAIhjVDsVieka5DiAfpKuOi8m
+aXqH1baITFNLRws6oqWnA8pTVWUClnYxWTK3Ygd1OFNmJIn0JDbDXkhC1RA0u7xl
+3KKI7Hz2ZHvwlgSCFsXu7LiygBdyzL+YFtelNLx/tY9wDRr9g3XtahoFbzFZpzRi
+PpfkFaLdP8HFL1E5QsJ2O5jxKXzgHQG6ikTVc3+SREVnpLOnPfF4CJufhDyZiufJ
+4wdzze4aIDkV1j5QnUpspt9IHFbkoOMQKxHU0p593c5XV8Qu2nkk/d6dA++qIvWv
+FqiihJcfGfFV+GM7/EgM8y785HS4gHzmbpSB9xJ8f6XzZAi7r1n89WhO7TqIBek=
+=hB4D
+-----END PGP SIGNATURE-----
