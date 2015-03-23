@@ -1,4 +1,9 @@
-Received: (qmail 20252 invoked by uid 550); 27 May 2026 13:46:08 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5068" "Sunday" "22" "March" "2015" "21:29:24" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150323012924.0F2336C0018@smtpvmsrv1.mitre.org>" "99" "[oss-security] Re: CVE for Kali Linux" nil nil nil "3" "2015032301:29:24" "[oss-security] Re: CVE for Kali Linux" (number mark "        cve-assign@m Mar 22   99/5068  " thread-indent "\"[oss-security] Re: CVE for Kali Linux\"\n") "<550E21FA.6090704@redhat.com>" ("<550E21FA.6090704@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 11496 invoked by uid 550); 23 Mar 2015 01:29:36 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,167 +11,112 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 11478 invoked from network); 23 Mar 2015 01:29:35 -0000
+In-Reply-To: <550E21FA.6090704@redhat.com>
+Message-Id: <20150323012924.0F2336C0018@smtpvmsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Sun, 22 Mar 2015 21:29:24 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 20212 invoked from network); 27 May 2026 13:46:07 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=beckweb.net;
-	s=kas202605010123; t=1779889557;
-	bh=Lf1Hzc7hK1FEkP1fotL3O2kejzFQUrYeyd80oUmb3JE=;
-	h=From:Subject:Date:To:From;
-	b=E6MhaVT5H+of2gbMs20nISpzrmVNM26ah6URwzLQ64UmzY4hZM5UCHnDsE6PAq9hs
-	 xWc9aHhM73nYNwsQLW3B/nbLccUrRX83qQ3txz50XyBjETO6WIURM37MxxjaZcFR4s
-	 sPk7CwIQDAc90vOSq494J7ANWaFJoqpC6kxFiZ8BREQZ6fzhgmyZvYld8VGP3k6jKY
-	 Eay88fiGdJn9HsbS/y6mpOlgVHHbAUA43CrfIYCO7AAQiTvMWxHaMYfmpLqxCT29Pk
-	 ZgsXfcpmqYxlsju2jVKYAWsO9Qw3pdh4WAoxA651mzHdfvgYdSCws8J5NFk4ZZr335
-	 LDwtBneoqU7Tg==
-From: Daniel Beck <ml@beckweb.net>
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81.1.3\))
-Message-Id: <4929F803-BC44-4050-937B-91461A9C2E7A@beckweb.net>
-Date: Wed, 27 May 2026 15:45:47 +0200
-To: oss-security@lists.openwall.com
-X-Mailer: Apple Mail (2.3826.700.81.1.3)
-Subject: [oss-security] Multiple vulnerabilities in Jenkins plugins
+Subject: [oss-security] Re: CVE for Kali Linux
+To: kseifried@redhat.com
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-The following releases contain fixes for security vulnerabilities:
+We've read the "CVE for Kali Linux" messages and haven't yet found a
+real case that can have a CVE assignment. We also believe it's
+infeasible to make a comprehensive statement about every hypothetical
+case and whether a CVE assignment would occur.
 
-* Active Directory Plugin 2.41.1
-* AppSpider Plugin 1.0.18
-* Bitbucket OAuth Plugin 0.18
-* Credentials Binding Plugin 725.ve52b_2328a_fde
-* Email Extension Plugin 1933.1935.v276319e3cc47
-* GitHub Integration Plugin 0.7.4
-* Job Import Plugin 143.145.v48f9a_a_6ff384
-* LDAP Plugin 807.809.vd3a_4e5e4ec98
-* Multijob Plugin 669.v9d96a_d9c71b_0
-* Pipeline: Groovy Libraries Plugin 798.v5cc688825312
+A few general comments:
 
-Additionally, we announce unresolved security issues in the following
-plugins:
+1. http://openwall.com/lists/oss-security/2015/03/22/20 says:
 
-* buildgraph-view Plugin
+  it's only recently (e.g. the last 6 months or so?)
+  that we've moved the security bar to:
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://www.jenkins.io/security/advisory/2026-05-27/
+  downloads of updates via HTTP with no other protection == CVE
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
+We didn't understand this. The last paragraph of
+http://openwall.com/lists/oss-security/2015/03/03/10 suggests that
+"==" isn't the case. Some issues of this type will receive CVE IDs but
+others will not. For example,
+http://openwall.com/lists/oss-security/2015/03/03/10 is about an
+unusual case where people interested in file integrity had the option
+of paying $10 for https.
 
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://www.jenkins.io/security/#reporting-vulnerabilities
+2. For Kali Linux, users are apparently supposed to start at
+https://www.kali.org/downloads/ to obtain their initial set of
+software, including the package signing key. Packages apparently are
+later updated using http://security.kali.org with automatic signature
+verification before any installed software is replaced. The
+https://security.kali.org site doesn't exist and therefore there isn't
+an opportunity to "fix" anything with a one-character change. Even if
+there were widespread agreement that https://security.kali.org is
+required to meet their users' reasonable expectations, there still
+would not be a CVE because the issue is site-specific (a missing
+security property on a vendor-controlled server). Somewhat similarly,
+there could not be a CVE for the http://cygwin.com/setup-x86.exe case.
+Finally, if there is a need for extra security properties on
+https://www.kali.org (e.g., HSTS if it doesn't yet have it), there
+would again be no associated CVE or CVEs.
 
----
+3. We're typically uninterested in assigning CVE IDs based on a
+likelihood that users don't follow instructions. For example, suppose
+a community Linux distribution publishes complete open-source software
+for generating and operating a mirror site. These mirror sites offer
+an ISO with only an http URL, but with clear instructions to verify
+the ISO checksum against a sufficiently reliable checksum listing. One
+might argue that an https .iso URL would be better because many users
+actually won't ever visit that checksum listing. However, a
+counterargument is that the community Linux distribution might be
+trying to emphasize the concept that endpoint security on the mirror
+sites is unknown and unsupported. A person doing a download may not
+realize that the mirror sites are completely untrusted and some might
+be controlled by attackers. There might be persons who would have
+verified the checksum after an http download, but wouldn't bother to
+verify the checksum after an https download. In other words, depending
+on the psychological model of the users, http might be better if https
+provided a false sense of security.
 
-SECURITY-3654 / CVE-2026-48916 (SSRF) & CVE-2026-48917 (deserialization)
-LDAP Plugin 807.v7d7de30930cf and earlier follows LDAP referrals from the
-configured LDAP server. These can forward to an RMI URL that causes Jenkins
-to deserialize attacker-controlled data, resulting in Remote Code Execution
-(RCE) on the Jenkins controller if deserialization "gadgets" are available
-on the classpath.
+4. The Debian case is perhaps interesting:
+https://www.debian.org/distrib/ explicitly uses the http scheme in a
+link to a .iso file, and
+https://www.debian.org/releases/stable/amd64/ch03s01.html.en perhaps
+has a missing step "3a. Verify (somehow?) the file integrity of the
+installer software." If this actually is a security problem, it is
+site-specific and can't have a CVE ID. At the time that the
+documentation is used, the documentation isn't a file that has been
+distributed to the customer's system.
 
-This allows attackers able to control the configured LDAP server, or able
-to perform a machine-in-the-middle attack, to execute code on the Jenkins
-controller.
+5. http://openwall.com/lists/oss-security/2015/03/22/22 asks 'if a
+vendor explicitly tells people not to check them ("download over http
+and check sums published over http") is that CVE worthy?' The general
+answer is that there can be a CVE ID for a missing
+integrity-verification step, either a step that is missing in
+distributed documentation or a step that is missing in distributed
+code. As an example, if an integrity-verification step goes to an http
+checksum page but was intended to go to an https checksum page, and
+the root cause is that the author's keyboard had a bad 's' key, then
+that's a vulnerability and can have a CVE ID. If there's a new product
+and the root cause of skipping an integrity-verification step is that
+checksum generation is still being debugged and won't be live until
+the next release, then typically that would not have a CVE ID.
 
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-SECURITY-3659 / CVE-2026-48918 (SSRF) & CVE-2026-48919 (deserialization)
-Active Directory Plugin 2.41 and earlier follows LDAP referrals from the
-configured Active Directory server by default. These can forward to an RMI
-URL that causes Jenkins to deserialize attacker-controlled data, resulting
-in Remote Code Execution (RCE) on the Jenkins controller if deserialization
-"gadgets" are available on the classpath.
-
-This allows attackers able to control the configured Active Directory
-server, or able to perform a machine-in-the-middle attack, to execute code
-on the Jenkins controller.
-
-
-SECURITY-3705 / CVE-2026-48920
-Email Extension Plugin 1933.v45cec755423f and earlier includes a feature
-that allows inlining images as `base64` in email content by setting the
-`data-inline` attribute. No restrictions are placed on the image URLs that
-can be inlined.
-
-This allows attackers able to control the email content to specify `file:`
-URLs for images to read arbitrary files from the Jenkins controller
-filesystem.
-
-
-SECURITY-3727 / CVE-2026-48921
-Pipeline: Groovy Libraries Plugin 797.v90ea_a_9b_e45a_0 and earlier does
-not prohibit symbolic links in shared libraries.
-
-This allows attackers able to control the content of a library used by a
-Pipeline job to read arbitrary files on the Jenkins controller filesystem.
-
-
-SECURITY-3790 / CVE-2026-48922
-Credentials Binding Plugin 720.v3f6decef43ea_ and earlier does not properly
-sanitize file names for file and zip file credentials.
-
-This allows attackers able to provide credentials to a job to write files
-to arbitrary locations on the node filesystem. If Jenkins is configured to
-allow a low-privileged user to configure file or zip file credentials used
-for a job running on the built-in node, this can lead to remote code
-execution.
-
-
-SECURITY-3671 / CVE-2026-48923
-AppSpider Plugin 1.0.17 and earlier does not perform a permission check in
-a method implementing form validation.
-
-This allows attackers with Overall/Read permission to connect to an
-attacker-specified URL.
-
-
-SECURITY-3761 / CVE-2026-48924
-Bitbucket OAuth Plugin 0.17 and earlier does not restrict the redirect URL
-after login.
-
-This allows attackers to perform phishing attacks by having users go to a
-Jenkins URL that will forward them to a different site after successful
-authentication.
-
-
-SECURITY-3776 / CVE-2026-48925
-GitHub Integration Plugin 0.7.3 and earlier does not require POST requests
-for an HTTP endpoint, resulting in a cross-site request forgery (CSRF)
-vulnerability.
-
-This vulnerability allows attackers to trigger a build for a pull request.
-
-
-SECURITY-3781 / CVE-2026-9674
-Multijob Plugin 662.vd2e0001f6b_b_d and earlier does not require POST
-requests for an HTTP endpoint, resulting in a cross-site request forgery
-(CSRF) vulnerability.
-
-This vulnerability allows attackers to resume failed Multijob builds.
-
-
-SECURITY-3783 / CVE-2026-48926
-Job Import Plugin 143.v044a_2e819b_27 and earlier does not perform a
-permission check in an HTTP endpoint.
-
-This allows attackers with Overall/Read permission to enumerate credentials
-IDs of credentials stored in Jenkins. Those can be used as part of an
-attack to capture the credentials using another vulnerability.
-
-
-SECURITY-3486 / CVE-2026-48927
-buildgraph-view Plugin 1.8 and earlier does not escape the build URL.
-
-This results in a stored cross-site scripting (XSS) vulnerability
-exploitable by attackers able to configure jobs or views.
-
-As of publication of this advisory, there is no fix.
-
-
-
+iQEcBAEBAgAGBQJVD2t7AAoJEKllVAevmvms90QH/09Whael260L0jzRG4psYDOW
+bpk7Y6bLR20/ubWbKBZnkqlbHI/QBLz5IWVYYJk5T8gpFL1XdpgU9wxDvefmVXKE
+qFdE4P0M7kOv0bcROnawrAstHsU0oti5iU3k/KVrMKYuSYSPJ9S6+N2Sv10W7wWr
+m9zXucC1ICLqCaOLcCwWZsmJPz+09ysANVe83VNhs2S3BTv1rBoQZNWf65UcjZ10
+TBEmhbzzwwyCp4Obum3+GWe+3itYWPj61kKCOttPq05aOWo5XriHKVPXWGolUzvm
+agKdLy/zOIio/8LmIrNyhuLzKnz5TS/9bs8Jd9qrWXccpRTqeo4tB9nJ5uTNPGk=
+=c1gK
+-----END PGP SIGNATURE-----
