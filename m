@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2337" "Sunday" "3" "September" "2017" "18:30:18" "-0400" "Michael Orlitzky" "michael@orlitzky.com" "<5d143215-bf10-6f6a-e1f1-bf4264f8a10a@orlitzky.com>" "68" "[oss-security] CVE-2017-14102: MIMEDefang privilege escalation via PID file manipulation" "^Date:" nil nil "9" "2017090322:30:18" "[oss-security] CVE-2017-14102: MIMEDefang privilege escalation via PID file manipulation" (number mark "U       michael@orli Sep  3   68/2337  " thread-indent "\"[oss-security] CVE-2017-14102: MIMEDefang privilege escalation via PID file manipulation\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["519" "Tuesday" "24" "March" "2015" "00:13:06" "+0300" "Alexander Cherepanov" "ch3root@openwall.com" "<551081E2.8000607@openwall.com>" "15" "Re: [oss-security] CVE for Kali Linux" nil nil nil "3" "2015032321:13:06" "[oss-security] CVE for Kali Linux" (number mark "        ch3root@open Mar 24   15/519   " thread-indent "\"Re: [oss-security] CVE for Kali Linux\"\n") "<20150323103854.GA28211@suse.de>" ("<550EE478.70005@redhat.com>" "<E1YZj9N-0003Th-Gn@rmm6prod02.runbox.com>" "<20150322172300.GA21110@openwall.com>" "<550F2754.5060704@openwall.com>" "<20150323103854.GA28211@suse.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 25834 invoked by uid 550); 3 Sep 2017 23:58:22 -0000
+Received: (qmail 17913 invoked by uid 550); 23 Mar 2015 21:13:18 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,92 +11,31 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 26190 invoked from network); 3 Sep 2017 22:30:48 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=orlitzky.com; s=mail2;
-	t=1504477835; bh=yMDJgOrJCgxvd1ipskbIdbV5kXaQU2GKQhZZ8+0WNLc=;
-	h=To:From:Subject:Date;
-	b=MMxUjGVhWRaGeYTC0JQXsP3a5kiXuSOhbkUOMg4VCYQKasjFjf1ozQtPYIikurDUD
-	 L8LfEIu8V3svFwSeAZV8fkX/dghsQObjzaQKqf7DJvaJ5SFu3MVI/gx1W+VbHUMPxg
-	 LLLmnX3dego5yXOs9a9L9MDv9sj624Qyb+xilxdc=
-Message-ID: <5d143215-bf10-6f6a-e1f1-bf4264f8a10a@orlitzky.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.2.0
+Received: (qmail 17895 invoked from network); 23 Mar 2015 21:13:18 -0000
+Message-ID: <551081E2.8000607@openwall.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-Date: Sun, 3 Sep 2017 18:30:18 -0400
-From: Michael Orlitzky <michael@orlitzky.com>
+References: <550EE478.70005@redhat.com> <E1YZj9N-0003Th-Gn@rmm6prod02.runbox.com> <20150322172300.GA21110@openwall.com> <550F2754.5060704@openwall.com> <20150323103854.GA28211@suse.de>
+In-Reply-To: <20150323103854.GA28211@suse.de>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Date: Tue, 24 Mar 2015 00:13:06 +0300
+From: Alexander Cherepanov <ch3root@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE-2017-14102: MIMEDefang privilege escalation via PID file
- manipulation
+Subject: Re: [oss-security] CVE for Kali Linux
 To: oss-security@lists.openwall.com
 
-Product: MIMEDefang
-Versions-affected: 2.80 and earlier
-Fixed-in: Version 2.81
-Bug-report:
-http://lists.roaringpenguin.com/pipermail/mimedefang/2017-August/038077.html
-Author: Michael Orlitzky
-Acknowledgments: Dianne Skoll, who had an initial fix ready within
-  minutes of my report.
+On 2015-03-23 13:38, Marcus Meissner wrote:
+>> There are some attacks even if you verify signatures, e.g. serving
+>> old, known-vulnerable versions. HTTPS can help here (until
+>> signatures start to be widely accompanied by expiring timestamps or
+>> something).
+>
+> SUSE has added an expiry tag in the YUM metadata for such cases.
 
+It's nice to see progress in this area. Does SUSE guard against other 
+attacks from [1] too?
 
-== Summary ==
+[1] https://isis.poly.edu/~jcappos/papers/cappos_pmsec_tr08-02.pdf
 
-The MIMEDefang daemons should create their PID files before dropping
-privileges. This represents a minor security issue; additional factors
-are needed to make it exploitable.
-
-
-== Details ==
-
-The purpose of the PID file is to hold the PID of the running daemon,
-so that later it can be stopped, restarted, or otherwise signalled
-(many daemons reload their configurations in response to a SIGHUP).
-To fulfil that purpose, the contents of the PID file need to be
-trustworthy. If the PID file is writable by a non-root user, then he
-can replace its contents with the PID of a root process. Afterwards,
-any attempt to signal the PID contained in the PID file will instead
-signal a root process chosen by the non-root user (a vulnerability).
-
-This is commonly exploitable through init scripts that are run as root
-and which blindly trust the contents of their PID files. Examples of
-said init scripts can be found in the MIMEDefang source tree:
-
-  * examples/init-script.in
-  * redhat/mimedefang-init.in
-
-
-== Exploitation ==
-
-An example of a problematic scenario involving an init script would be,
-
-1. I run "/etc/init.d/mimedefang start" to start the daemon.
-
-2. mimedefang drops to the "defang" user.
-
-3. mimedefang writes its PID file, now owned by the "defang" user.
-
-4. Someone compromises the daemon.
-
-5. The attacker is generally limited in what he can do because the
-   daemon doesn't run as root. However, he can write "1" into the
-   PID file, and he does.
-
-6. I run "/etc/init.d/mimedefang stop" to stop the daemon while I
-   investigate the weird behavior resulting from the hack.
-
-7. The machine reboots, because I killed PID 1 (this is normally
-   restricted to root).
-
-
-== Resolution ==
-
-The problem is resolved in MIMEDefang 2.81 by creating the PID files as
-root before dropping privileges. The role of the lock files --
-previously played by the PID files -- is now played by a separate set of
-files (specified on the command-line with "-o").
-
-Init script authors should relocate their PID files to either /run or
-/var/run.
+-- 
+Alexander Cherepanov
