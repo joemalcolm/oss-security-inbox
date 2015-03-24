@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["461" "Thursday" "3" "February" "2022" "14:01:23" "-0600" "Justin Bertram" "jbertram@apache.org" nil "19" "[oss-security] ARTEMIS-3593: CVE-2022-23913: Apache ActiveMQ Artemis DoS" nil nil nil "2" nil nil (number mark "U       jbertram@apa Feb  3   19/461   " thread-indent "\"[oss-security] ARTEMIS-3593: CVE-2022-23913: Apache ActiveMQ Artemis DoS\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] ARTEMIS-3593: CVE-2022-23913: Apache ActiveMQ Artemis DoS" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1718" "Tuesday" "24" "March" "2015" "14:17:00" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150324181700.C0FA06C0048@smtpvmsrv1.mitre.org>" "52" "[oss-security] Re: CVE request: Two vulnerabilities in Tor" nil nil nil "3" "2015032418:17:00" "[oss-security] Re: CVE request: Two vulnerabilities in Tor" (number mark "        cve-assign@m Mar 24   52/1718  " thread-indent "\"[oss-security] Re: CVE request: Two vulnerabilities in Tor\"\n") "<20150323181327.GA3943@pisco.westfalen.local>" ("<20150323181327.GA3943@pisco.westfalen.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 26569 invoked by uid 550); 3 Feb 2022 20:26:57 -0000
+Received: (qmail 20242 invoked by uid 550); 24 Mar 2015 18:17:14 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,38 +11,65 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 20224 invoked from network); 24 Mar 2015 18:17:13 -0000
+In-Reply-To: <20150323181327.GA3943@pisco.westfalen.local>
+Message-Id: <20150324181700.C0FA06C0048@smtpvmsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, weasel@debian.org, carnil@debian.org
+Date: Tue, 24 Mar 2015 14:17:00 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15775 invoked from network); 3 Feb 2022 20:02:02 -0000
-X-Gm-Message-State: AOAM5337dtZh3XMNDsaoHmgeTBc2bxatRXTLgR+yGgTsUYUoBQoeaEK0
-	DdK2U1dbk9C4JXu0t/AG4+lu69ThLGx/AIf0Depijg==
-X-Google-Smtp-Source: ABdhPJxqjbVF3zEJq4gN+XDCyxoB/9hkgohSS/mcXrJOWucWxuViah29yB31/9SR+ZVvJjJqpVTbfRuKC/5Qx29skvk=
-X-Received: by 2002:a05:6402:190f:: with SMTP id e15mr36801413edz.195.1643918509228;
- Thu, 03 Feb 2022 12:01:49 -0800 (PST)
-MIME-Version: 1.0
-From: Justin Bertram <jbertram@apache.org>
-Date: Thu, 3 Feb 2022 14:01:23 -0600
-X-Gmail-Original-Message-ID: <CAF+kE=T04dwUSyQ5BMw2tC6-Z_R=uUUT=Bu3dKSNnwCkLbq7Hg@mail.gmail.com>
-Message-ID: <CAF+kE=T04dwUSyQ5BMw2tC6-Z_R=uUUT=Bu3dKSNnwCkLbq7Hg@mail.gmail.com>
-To: oss-security@lists.openwall.com, announce@apache.org
-Content-Type: multipart/alternative; boundary="000000000000c8580e05d7229a8a"
-Subject: [oss-security] ARTEMIS-3593: CVE-2022-23913: Apache ActiveMQ Artemis DoS
+Subject: [oss-security] Re: CVE request: Two vulnerabilities in Tor
+To: jmm@debian.org
 
---000000000000c8580e05d7229a8a
-Content-Type: text/plain; charset="UTF-8"
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Description:
+> https://lists.torproject.org/pipermail/tor-talk/2015-March/037281.html
 
-In Apache ActiveMQ Artemis prior to 2.20.0 or 2.19.1, an attacker could
-partially disrupt availability (DoS) through uncontrolled resource
-consumption of memory.
+> 2.
+> | A relay could crash with an assertion error if a buffer of
+> | exactly the wrong layout was passed to buf_pullup() at exactly the
+> | wrong time.
+> 
+> https://trac.torproject.org/projects/tor/ticket/15083
 
-Mitigation:
+Use CVE-2015-2688.
 
-Upgrade to Apache ActiveMQ Artemis 2.20.0 or 2.19.1 (if you're still using
-Java 8).
 
-References:
+> There is another one which was fixed in the same versions, and could
+> potentially get a CVE:
+> 
+> https://trac.torproject.org/projects/tor/ticket/14129
 
-https://lists.apache.org/thread/fjynj57rd99s814rdn5hzvmx8lz403q2
+Use CVE-2015-2689.
 
---000000000000c8580e05d7229a8a--
+
+> 1.
+> | Fix a remote denial-of-service opportunity caused by a bug in
+> | OSX's _strlcat_chk() function. Fixes bug 15205; bug first
+> | appeared in OSX 10.9.
+> 
+> https://trac.torproject.org/projects/tor/ticket/15205
+
+We need to ask Apple whether they are assigning a CVE ID to this as a
+vulnerability in their strlcat_chk.c code.
+https://trac.torproject.org/projects/tor/ticket/15205#comment:7 says
+"A kind soul has filed a bug report with apple. Thanks, Andreas!" --
+does anyone know what the Apple bug number is?
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJVEamJAAoJEKllVAevmvmsCvYIALISZLgBRHwQLCE3sWk1LnHC
+7Eqs6HjxOWuDtW8GDbKFbmhWB1DkiHEtfPfB5r7FHvZBPaEvXcivkRMJZU01J+ek
+7965dn95OvwuFbLz8eGssWI11TFev+w72kT0i61WdSCOql6sNnVeN943c3vqWFGh
+E60CdqvDLc58qGAhVqLhwWqSFIumNT7MSj6lFLyBsfGl2Kmrmov1f5hESsvuoYux
+Hcq7EXWjePo/0wIKcI5GPCh8CIHtGnl4T/VdVfWevz+eRqQ6p3F5z7kCM5dTIqWp
+FJgN7KvccbnLXsoTXX1SysdrjH+oapvJo0sIFC/YTxeVCDaTKnbl0o5ef/clLH8=
+=ZZmK
+-----END PGP SIGNATURE-----
