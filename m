@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6616" "Wednesday" "4" "May" "2016" "21:18:26" "-0400" "Stanislav Datskovskiy" "stas@loper-os.org" "<CAP9m6YeT=Vo1WQ4Jqn1QV-Cp6mBQ3EwWQ5p_=Rm4P3Na3aGcGw@mail.gmail.com>" "147" "Re: [oss-security] broken RSA keys" "^Date:" nil nil "5" "2016050501:18:26" "[oss-security] broken RSA keys" (number mark "        stas@loper-o May  4  147/6616  " thread-indent "\"Re: [oss-security] broken RSA keys\"\n") "<20160504172803.GA19393@openwall.com>" ("<20160504124248.GA15148@openwall.com>" "<20160504172803.GA19393@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1459" "Tuesday" "24" "March" "2015" "14:02:00" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.11.1503241359350.9901@wniryva>" "40" "[oss-security] CVE request Linux kernel: fs: btrfs: non-atomic xattr replace operation" nil nil nil "3" "2015032408:32:00" "[oss-security] CVE request Linux kernel: fs: btrfs: non-atomic xattr replace operation" (number mark "        ppandit@redh Mar 24   40/1459  " thread-indent "\"[oss-security] CVE request Linux kernel: fs: btrfs: non-atomic xattr replace operation\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 13811 invoked by uid 550); 5 May 2016 03:41:51 -0000
+Received: (qmail 26329 invoked by uid 550); 24 Mar 2015 08:32:26 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,191 +11,56 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 28454 invoked from network); 5 May 2016 01:18:37 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:content-transfer-encoding;
-        bh=6ziUU/xlUlAujRmFsbyS9E2IqN1CbpGH45udIAOCxdg=;
-        b=kZWKgroT6PVadRH4wj6q273H4d5aKO8ALvE4SzlboaKqydvcmVRNJLvFoICiYCJn8n
-         Okr7vcwCb9NgQ/62satp1C5snzh0MT3c6lb0ot+EQa8a4v8Mdf2n3qXmBHnEBRTtu9nS
-         jzHb6hkANqAIXd5nUssifr5FqpN4lrx2yAhGEAiJaukLNEfihRSbUirIXus2++vIXOgc
-         NvPHzf6QDCh/ORboHpSfzOVhH6aUhlV4jq1Wda4i9Ctm98x8MdcyLnhWc5dbDOXwpJFA
-         KnDNr6+F6wEIeimkpXhDM9q2Qeu/wNRo+Bxr/reGqT5+asQ6VGHdnzchAmzTHM5veLTV
-         avfg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:content-transfer-encoding;
-        bh=6ziUU/xlUlAujRmFsbyS9E2IqN1CbpGH45udIAOCxdg=;
-        b=XXaJMYWeSaKmjxq7UpVr5f6rZgRwJvVY/hM2HBvKJBNVMaXcT4IgYSQBLNqYgVY0B/
-         SUb6J4j796v6lQ0h3cy3VKYzbGJBSbWyAkR3bdp1gL5qnKu3ytR35wo3AQWKjnMgbVNb
-         eBQWz3miFb7A75nI0Kw0aFWRNmQYGOoEe3oRxVgCMGj3ntV7mLUvYcsBIU50s159g/1O
-         33Etw4AChaTGdQuSyKCd6ltFNRnwCa52WsDnOVaKx0PyB2ORh1Cau0I6AuKzcepDeIeG
-         GFest9xJL4+bltF/xxvyw5QQuZONG/FSysVxzK/AnYlXyenpIGGcU+T8TEpFh9t4USkI
-         B9cA==
-X-Gm-Message-State: AOPr4FWymdPJcxr1FBlcTXRxy3m3A/CWmqQ6qjIpVJbdYhjbYEIEJnW1h309kHfAx2X1yQN46PwxBqdcQdbeLA==
+Received: (qmail 26305 invoked from network); 24 Mar 2015 08:32:25 -0000
+X-X-Sender: pjp@javelin
+Message-ID: <alpine.LFD.2.11.1503241359350.9901@wniryva>
 MIME-Version: 1.0
-X-Received: by 10.195.31.130 with SMTP id km2mr10628208wjd.86.1462411106184;
- Wed, 04 May 2016 18:18:26 -0700 (PDT)
-In-Reply-To: <20160504172803.GA19393@openwall.com>
-References: <20160504124248.GA15148@openwall.com>
-	<20160504172803.GA19393@openwall.com>
-X-Google-Sender-Auth: pzwKSY5P_sbxpp6DPifd2brw-Fw
-Message-ID: <CAP9m6YeT=Vo1WQ4Jqn1QV-Cp6mBQ3EwWQ5p_=Rm4P3Na3aGcGw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Date: Wed, 4 May 2016 21:18:26 -0400
-From: Stanislav Datskovskiy <stas@loper-os.org>
+Content-Type: TEXT/PLAIN; format=flowed; charset=US-ASCII
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.26
+Date: Tue, 24 Mar 2015 14:02:00 +0530 (IST)
+From: P J P <ppandit@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Sender: datskovs@gmail.com
-Subject: Re: [oss-security] broken RSA keys
-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE request Linux kernel: fs: btrfs: non-atomic xattr replace
+ operation
+To: oss security list <oss-security@lists.openwall.com>
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+Hash: SHA1
 
-Author of Phuctor speaking.  I would like to point out that there is a
-'contact' button on the site, anyone who wishes can click and ask
-questions in real time.  Readers are encouraged to do this!
+    Hello,
 
-A few observations of possible interest to the folks on this list:
+Linux kernel built with the Btrfs Filesystem support(CONFIG_BTRFS_FS) is 
+vulnerable to a race condition which leaves the extended attribute(xattr) 
+empty for a short time window. This could be leveraged to bypass set ACLs and 
+potentially escalate user privileges.
 
-1) We presently know of 165 keys containing 'mirrored' moduli.
-They, and the process whereby they were found in an SKS dump, even
-prior to being properly 'phuctored', can be seen at
-http://trilema.com/2015/more-factored-rsa-keys-and-assorted-other-considera=
-tions
-=2E
+An unprivileged user could use this flaw to potentially escalate privileges on 
+a system.
 
-2) The list of affected persons and organizations includes a number of
-possibly 'politically interesting' targets, e.g., mathematicians, open
-source projects (Debian, a few others), plus a few other delicacies,
-such as 'Apple Product Security', 'PGP Corporation Update Signing
-Key', etc.
+Upstream fix:
+- -------------
+   -> https://git.kernel.org/linus/5f5bc6b1e2d5a6f827bc860ef2dc5b6f365d1339
 
-3) The 'mirrored' keys found thus far in no case have valid
-self-signatures. (A number of the remaining phuctored keys - do.) Thus
-it does not follow from the facts at hand that these particular keys
-were generated /by the people and organizations whose names appear in
-the user string/ !
 
-4) One parsimonious explanation for (1) given (2) and (3) is that the
-'mirrored' keys were generated by a malicious actor, who counted on
-the principle described at, e.g.,  https://evil32.com ,
-https://bugs.gnupg.org/gnupg/issue1579 - whereby older versions of GPG
-will regard the bottom 32 bits of a modulus as the 'fingerprint',
-rather than performing a hash.  The SKS network happily accepts such
-keys, and will list them as search results if the username associated
-with a genuine key is searched for.  PGP/GPG clients which do not
-check a key's self-signatures will happily encipher to a 'mirrored'
-key, and the adversary presumably counted on having access to the
-resulting ciphertext. A program which generates a 'mirrored'
-fraudulent key for any particular public key on SKS can be written
-trivially. (In the interest of not encouraging low-effort hooliganism,
-I have not posted this simple program publicly. It is left as an
-exercise for the reader.)
+Thank you.
+- --
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
 
-- -S
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
+Version: GnuPG v1
 
-iQEcBAEBCgAGBQJXKp8UAAoJELmCKKABq//HnLoH/jo5vxYhasg+7FgZtqQ44dh3
-cxUNit7w41DtIOT93LkEn3ZPw1z1Q8u0qD6RUJKHTUwxYDwkjE2jV9HVV0/n4Pdj
-+ma9q7K+1lHV5QOpMvuNl05oakHLTpc5P0iC0T+tULz7gC8Y1UwkUbGcYIunXQT6
-7fTi1z19emSxu9pJtLtfZoRX+7KEGdpdWmX4gIOCS8Gc7YJd2Oco/nzdXwEmpCfn
-Qr+kjGu4SkX4Iy34JDQ54Psy+sNiKP13rifvCKNoMKU4I2sEC/ilxGcj0wSSqvYX
-0J0ZWp9hlHOnonQUre2AyTPDO8hSlmoc2rcqOi7Y10HCpZZeihlT2cODbcbBrXc=3D
-=3Dw4Ox
+iQIcBAEBAgAGBQJVESEAAAoJEN0TPTL+WwQf4jEQAKz/fs8rptK2TOpN8sb3tjq/
+RaLXXcddHYRo5sHybzsM9WpBgnz3lHGtgf80990976G28SjR5n1qKRxywYr8Fzza
+XBfWR+eQ4BizIJ1Jv5jL4RJYFAePoba13edlB0cIhfNPHaFnW5aPswiDuTsfNcMX
+Y9jhEciePAvxc2P4inQi7A6d00StBkVq0K8nsIECf0fWjXJ7UkgVY4Uf7UPKr+eM
+JWPjRIjF07uqDZG8XkySkEQblEs9HD6xNS6hGlroiODMOqY0QWybRZhqQA9JvN5a
+p51VYW+c7GNyaxSeByqq7imjn6liaRnjk7j/G2lzT+PDm6ouw0krq5+MKAq6i6Qf
+Nl4r3mKy3F6MgyO5g5VUo++TsnP9+8Ru/NukUwfstSbQqvHZLR8xPq3kySMkaYdM
+QFUju7BlSSy8hc7sn/bRh3D8+34Dljn3s4LtWuxLyKN5Uh/xgwhyODQnqqILVv1K
+GNjmXQhrnV+LtY22+n2ywfrQFsZBF/A74zNDtMsc8V1/ptFyNCtWnjtdJNohunUE
+KQoixT7UDXzb9Wmv7blznsHLZtADcC2bZPleLU4nEPrckt/79sG0cw9X8SYjZBkc
+J+LpmMxGBdffq2T/O1Qwve1tWfyPZykxerFUrNdWmJmSYi11BZxSD9igMX/AdAk7
+L4Hm3L8rwKNFYgGgpKCM
+=To/S
 -----END PGP SIGNATURE-----
-
-
-On Wed, May 4, 2016 at 1:28 PM, Solar Designer <solar@openwall.com> wrote:
-> On Wed, May 04, 2016 at 03:42:48PM +0300, Solar Designer wrote:
->> Additionally, both Phuctor's list and Hanno Bock's list of GCDs include
->> many small factors that also exhibit 32-bit value duplication.  To me,
->> this speaks in favor of there being a bignum library bug like this.
->> A bug that not only duplicates the least significant 32 bits onto the
->> next 32 bits, but also keeps the rest of the limbs at all-zeroes.  There
->> are even weirder examples, though - e.g., one of Phuctor's factors is
->> 0x115CFF61CFECFF61BE9, where we see three 32-bit limbs satisfying:
->>
->> limb[1] =3D limb[0] + limb[2]
->>
->> and also limb[2] is small and thus likely didn't come from a CSPRNG, but
->> possibly from uninitialized memory.
->
-> While the 32-bit duplication of e is probably for real (or those keys
-> wouldn't validate... do they?), similar observations for factors are
-> probably a red herring: an artifact of the process used by these
-> factoring projects rather than part of how the keys were generated.
->
-> Specifically, the above 3-limb example came from this key:
->
-> http://phuctor.nosuchlabs.com/gpgkey/63016E43A530350EC983F09A74C50EC8E87F=
-EB92F3DEAC355BE2E64CA7985921
->
-> Its listed factors for:
->
-> 3099440630422433370508930102180881705326569160056574577946131919270048217=
-349934690146337332376083710109442229701558591490197515080815702584805552405=
-009966466681847440313804794892129791180967631588015119441798227174053211228=
-027656140606715058027283788946970407860362047460797390116841328432803677511=
-486000300624297803609311458145974229836864555772128383926655097574570623472=
-263652075127903109553098964478479457882013368910257394483098393202231047674=
-002769620463069328506501212412253323105390287646397791418340100112626149627=
-717051015362162867397803889781766159306322259349567968329109629983591255678=
-1797309445223969995
->
-> are:
->
-> 15010910703015
-> 5124733305108403985385
-> 149784613473514443594783892995
->
-> However, this modulus is also divisible by 3, 5, and thus by 15, etc.
-> So what we're seeing in databases like this are just some larger
-> non-prime factors that combine the smaller factors in specific ways.
-> I understand that's not how they were figured out (rather, they're
-> shared factors with other keys), but that's what they happen to be
-> composed of.  Moreover, the larger ones of the factors above are
-> divisible by the smaller ones of them:
->
-> 5124733305108403985385 / 15010910703015 =3D 341400559
-> 149784613473514443594783892995 / 5124733305108403985385 =3D 29227787
->
-> So these are pretty much arbitrary, process-dependent combinations of
-> smaller factors, and thus their bit patterns, etc. don't tell us much or
-> anything about the nature of bugs in key generation, if there were any.
-> (I say "if there were any" since the keys could as well have been
-> mangled later.)
->
-> BTW, had I not realized the above, I would now come up with an even more
-> complex conspiracy theory about 149784613473514443594783892995, which is
-> 0x1E3FAEDA6A4F093A7C0F5A603, so:
->
-> limb[0] =3D 0xC0F5A603
-> limb[1] =3D 0xA4F093A7
-> limb[2] =3D 0xE3FAEDA6
-> limb[3] =3D 1
->
-> which satisfies:
->
-> limb[1] =3D limb[0] + limb[2] + 2
->
-> No idea why it's "+ 2" here, unlike in the smaller factor's example, but
-> like I say this is just a conspiracy theory, and I think the simple
-> explanation is it's an artifact of the process rather than any inherent
-> property of the keys.
->
-> Thus, I think it makes sense to focus on searching for bugs producing
-> the 32-bit duplicated e's, after all.  And it also makes sense to
-> validate those keys - not merely rely on data already in these factoring
-> projects' databases.
->
-> Could it be that all of the broken e keys were generated by OpenSSL from
-> year 2000 or earlier?  Embedded copies in proprietary PGP implementations
-> that have since been rebuilt for 64-bit?  Doesn't sound very realistic,
-> but who knows.
->
-> Alexander
