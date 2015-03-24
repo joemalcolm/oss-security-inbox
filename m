@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["540" "Friday" "9" "October" "2020" "12:52:56" "-0700" "James Dailey" "jamespdailey@gmail.com" "<CANMpf843uQjY+oT8k-C7U_w9yfxNq9jyYDY7Xby3a4oO8RPVSg@mail.gmail.com>" "15" "[oss-security] CVE-2018-20243: Apache Fineract: password passed in URL, not via POST" nil nil nil "10" "2020100919:52:56" "[oss-security] CVE-2018-20243: Apache Fineract: password passed in URL, not via POST" (number mark "U       jamespdailey Oct  9   15/540   " thread-indent "\"[oss-security] CVE-2018-20243: Apache Fineract: password passed in URL, not via POST\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2018-20243: Apache Fineract: password passed in URL, not via POST" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1639" "Tuesday" "24" "March" "2015" "11:51:21" "+0100" "Marcus Meissner" "meissner@suse.de" "<20150324105121.GF23630@suse.de>" "40" "Re: [oss-security] CVE for Kali Linux" nil nil nil "3" "2015032410:51:21" "[oss-security] CVE for Kali Linux" (number mark "        meissner@sus Mar 24   40/1639  " thread-indent "\"Re: [oss-security] CVE for Kali Linux\"\n") "<20150323214101.GA23630@suse.de>" ("<550EE478.70005@redhat.com>" "<E1YZj9N-0003Th-Gn@rmm6prod02.runbox.com>" "<20150322172300.GA21110@openwall.com>" "<550F2754.5060704@openwall.com>" "<20150323103854.GA28211@suse.de>" "<551081E2.8000607@openwall.com>" "<20150323214101.GA23630@suse.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 17679 invoked by uid 550); 9 Oct 2020 20:01:32 -0000
+Received: (qmail 1957 invoked by uid 550); 24 Mar 2015 10:51:34 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,53 +11,67 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13802 invoked from network); 9 Oct 2020 19:53:20 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=MkDbbduaBXTURfpHrErSU1SI/Du1r18kMJe2SQgdE/U=;
-        b=CZK7OdXbbIbSD+11O2WFdn6t/Ljzdlg/8jaVEcfxneNa6atVtAv3lJnpV5859ZX+lj
-         fgQcTrEDAVgZpuNsgqnYKR2eZ0ElQQFIWIjPXCcoTRbybcpP5SKL0FPiZgxEtkXiB0SB
-         X6QJ8kGCQVg4CVdAUm+4DblanDiuwrWcXVbUW4aZIM6sjlq3S6YIn1Cdub0BW81tMmXC
-         i4HvQiRt07+xnI9NlHJhQSmLhNFySFW6SeXyrQs2vTjOs3sspC9shMy2oPUyU8BJ5QMI
-         dW7cGp10OqqkqfDTH1PeLTXxwNHbSu8tIMt0YG76pBUA7wi/6svcgOWNXf6RQ4cIJ1iz
-         qvpQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=MkDbbduaBXTURfpHrErSU1SI/Du1r18kMJe2SQgdE/U=;
-        b=bB2XmCq120VOhsKkeaKgSo0apbZxFSxQ8i6HSpzAekjwIEod81Q99uRadP91bbDJRi
-         k86xlPKYKKhjmTvUDbt2qD+Pd48CaNHtuB92KaRyzdcmoXQKZA8ypZ2/jvyEoHVF0Hcb
-         +7YZBU/HDmaqaVUzAt3WfmDkJlfan43E4Bba7OJtZpuOZ2PpCxYRjAtXUi+zHm6nejgM
-         aSXceeG8bICWY/PmJzdVpFfl0GM1sTsu7oXSrdc1g8EWgzczKih/McGtsv3KFnGpHa9c
-         Er5qP/NzbuZs3tsLq8laEeOpWGhafaz9qbg0j5sBXbJW6OYr6qMP4ocDBMIPo9sMKMVU
-         pXQg==
-X-Gm-Message-State: AOAM5312toGHuqJOIDtB7wtp3FJUCJwukekDzzBtE2o9xYpSRtCzCdaB
-	EVev1v2R0jy+0rgtn2IsakgoLDnAjHHyhSH1Ug+f2fDhrbNzZweo
-X-Google-Smtp-Source: ABdhPJwK1x8/esjahspy18WxtDnM1sRwlXDHko01FnDTPFBxyULTXsjdQtpV3yB0n8bpB3f/5V20+PSvTef5+eQEBHg=
-X-Received: by 2002:a4a:d622:: with SMTP id n2mr10212127oon.23.1602273188017;
- Fri, 09 Oct 2020 12:53:08 -0700 (PDT)
+Received: (qmail 1927 invoked from network); 24 Mar 2015 10:51:33 -0000
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Message-ID: <20150324105121.GF23630@suse.de>
+References: <550EE478.70005@redhat.com>
+ <E1YZj9N-0003Th-Gn@rmm6prod02.runbox.com>
+ <20150322172300.GA21110@openwall.com>
+ <550F2754.5060704@openwall.com>
+ <20150323103854.GA28211@suse.de>
+ <551081E2.8000607@openwall.com>
+ <20150323214101.GA23630@suse.de>
 MIME-Version: 1.0
-From: James Dailey <jamespdailey@gmail.com>
-Date: Fri, 9 Oct 2020 12:52:56 -0700
-Message-ID: <CANMpf843uQjY+oT8k-C7U_w9yfxNq9jyYDY7Xby3a4oO8RPVSg@mail.gmail.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20150323214101.GA23630@suse.de>
+Organization: SUSE Linux GmbH, GF: =?iso-8859-1?Q?Felix_?=
+ =?iso-8859-1?Q?Imend=F6rffer=2C_Jane_Smithard=2C_Jennifer_Guild=2C_Dilip_?=
+ =?iso-8859-1?Q?Upmanyu=2C_Graham_Norton=2C_HRB_21284_=28AG_N=FCrnberg=29?=
+User-Agent: Mutt/1.5.21 (2010-09-15)
+Date: Tue, 24 Mar 2015 11:51:21 +0100
+From: Marcus Meissner <meissner@suse.de>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] CVE for Kali Linux
 To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="00000000000034796805b1424c52"
-Subject: [oss-security] CVE-2018-20243: Apache Fineract: password passed in URL, not via POST
 
---00000000000034796805b1424c52
-Content-Type: text/plain; charset="UTF-8"
+On Mon, Mar 23, 2015 at 10:41:01PM +0100, Marcus Meissner wrote:
+> On Tue, Mar 24, 2015 at 12:13:06AM +0300, Alexander Cherepanov wrote:
+> > On 2015-03-23 13:38, Marcus Meissner wrote:
+> > >>There are some attacks even if you verify signatures, e.g. serving
+> > >>old, known-vulnerable versions. HTTPS can help here (until
+> > >>signatures start to be widely accompanied by expiring timestamps or
+> > >>something).
+> > >
+> > >SUSE has added an expiry tag in the YUM metadata for such cases.
+> > 
+> > It's nice to see progress in this area. Does SUSE guard against
+> > other attacks from [1] too?
+> > 
+> > [1] https://isis.poly.edu/~jcappos/papers/cappos_pmsec_tr08-02.pdf
+> 
+> Our statements from 2008 (7 years ago) still stand and our package
+> manager does the full repository signing since 2006 already.
+> 
+> https://lizards.opensuse.org/2008/07/16/package-management-security-on-opensuse/
+> 
+> "Endless Data Attack" is open, as it is hard to solve for openSUSE with
+> its public mirror system.
+> 
+> The expiry was something added a bit later after the paper to address
+> the downgrade and replay attacks.
 
-Passing the password in a URL parameter, instead of POST body, risked
-exposing the credentials e.g. in log files and HTTP intermediaries like
-proxies.
+Some more notes.
 
-*Release branch*: The fix is available at
-https://github.com/apache/fineract/tree/1.4.0. as of  Sept 18, 2020
+While the "Update Scenario" is well covered, we are of course facing issues of "bringing up a system".
 
-The dev list was notified on Oct 8, 2020
+Like discussed in the thread, how does the customer find a known good ISO image
+for download.
 
-https://lists.apache.org/thread.html/r040d46835aff3c192656b549ca82f62d87fb044ef9a9dd49408b49b4%40%3Cdev.fineract.apache.org%3E
+While our installer is protecting itself with GPG signatures, but there is need for
+the root of trust of the CD medium itself.
 
---00000000000034796805b1424c52--
+So for SUSE we publish SHA256 checksums on the https://download.suse.com/ website at least.
+For openSUSE the GPG/SHA and MD5 are on http://software.opensuse.org/132/de .
+
+Ciao, Marcus
