@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2031" "Friday" "3" "November" "2017" "02:56:47" "+0300" "Dmitry V. Levin" "ldv@altlinux.org" "<20171102235647.GA22038@altlinux.org>" "62" "Re: [oss-security] tftpd-hpa - insecure chroot()" nil nil nil "11" "2017110223:56:47" "[oss-security] tftpd-hpa - insecure chroot()" (number mark "U       ldv@altlinux Nov  3   62/2031  " thread-indent "\"Re: [oss-security] tftpd-hpa - insecure chroot()\"\n") "<20171102121654.GA5905@gremlin.ru>" ("<20171102121654.GA5905@gremlin.ru>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2340" "Tuesday" "24" "March" "2015" "12:51:00" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150324165100.E40C342E091@smtpvbsrv1.mitre.org>" "52" "[oss-security] Re: CVE request Linux kernel: fs: btrfs: non-atomic xattr replace operation" nil nil nil "3" "2015032416:51:00" "[oss-security] Re: CVE request Linux kernel: fs: btrfs: non-atomic xattr replace operation" (number mark "        cve-assign@m Mar 24   52/2340  " thread-indent "\"[oss-security] Re: CVE request Linux kernel: fs: btrfs: non-atomic xattr replace operation\"\n") "<alpine.LFD.2.11.1503241359350.9901@wniryva>" ("<alpine.LFD.2.11.1503241359350.9901@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 20342 invoked by uid 550); 3 Nov 2017 10:22:11 -0000
+Received: (qmail 17916 invoked by uid 550); 24 Mar 2015 16:51:13 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,79 +11,65 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 17889 invoked from network); 24 Mar 2015 16:51:12 -0000
+In-Reply-To: <alpine.LFD.2.11.1503241359350.9901@wniryva>
+Message-Id: <20150324165100.E40C342E091@smtpvbsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Tue, 24 Mar 2015 12:51:00 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 27835 invoked from network); 2 Nov 2017 23:56:58 -0000
-Date: Fri, 3 Nov 2017 02:56:47 +0300
-From: "Dmitry V. Levin" <ldv@altlinux.org>
-To: oss-security@lists.openwall.com
-Message-ID: <20171102235647.GA22038@altlinux.org>
-References: <20171102121654.GA5905@gremlin.ru>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="IS0zKkzwUGydFO0o"
-Content-Disposition: inline
-In-Reply-To: <20171102121654.GA5905@gremlin.ru>
-Subject: Re: [oss-security] tftpd-hpa - insecure chroot()
+Subject: [oss-security] Re: CVE request Linux kernel: fs: btrfs: non-atomic xattr replace operation
+To: ppandit@redhat.com
 
---IS0zKkzwUGydFO0o
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On Thu, Nov 02, 2017 at 03:16:55PM +0300, gremlin@gremlin.ru wrote:
-> Just look at this code and guess how it would be compiled on most
-> systems:
->=20
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
->     /* Chroot and drop privileges */
->     if (secure) {
->         if (chroot(".")) {
->             syslog(LOG_ERR, "chroot: %m");
->             exit(EX_OSERR);
->         }
-> #ifdef __CYGWIN__
->         chdir("/");             /* Cygwin chroot() bug workaround */
-> #endif
->     }
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
->=20
-> :-)
+> Linux kernel built with the Btrfs Filesystem support(CONFIG_BTRFS_FS) is
+> vulnerable to a race condition which leaves the extended attribute(xattr)
+> empty for a short time window. This could be leveraged to bypass set ACLs and
+> potentially escalate user privileges.
+> 
+> An unprivileged user could use this flaw to potentially escalate privileges on
+> a system.
+> 
+> https://git.kernel.org/linus/5f5bc6b1e2d5a6f827bc860ef2dc5b6f365d1339
 
-Sorry, why do you think that
+We would like to restate the security issue somewhat. The commit
+mentions two separate concerns: (1) "This leaves a time window where
+readers (getxattr, listxattrs) won't see any value for the xattr" and
+(2) "Deleting the old xattr value without verifying first if the new
+xattr will fit." In both cases, apparently the underlying problem is
+that the code is attempting to accomplish a transition between a
+previously acceptable state of an object and a new acceptable state of
+an object, but does this in a way that an intermediate state becomes
+visible. Because the intermediate state is, for a security-relevant
+reason, not known to be acceptable, the transition code has a
+vulnerability (related, in general, to CWE-371). We feel that (1) and
+(2) are therefore the same type of vulnerability, even though the
+attack methodology might rely on a race condition only in case (1).
 
-	chdir(dir) =3D=3D 0 && chroot(".") =3D=3D 0
+Use CVE-2014-9710 for this vulnerability involving improper management
+of xattr state.
 
-is any worse than
+> Returning -EEXIST when the flag XATTR_CREATE is given and the xattr
+> doesn't exist
 
-	chroot(dir) =3D=3D 0 && chdir("/") =3D=3D 0
+We don't know whether this third concern is a vulnerability. Presumably
+it would depend on what callers do after the -EEXIST.
 
-assuming that you have control over your signal handlers and can ensure
-they won't issue any chdir or chroot calls between these two calls?
-
-
---=20
-ldv
-
---IS0zKkzwUGydFO0o
-Content-Type: application/pgp-signature; name="signature.asc"
-
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-iQIcBAEBCAAGBQJZ+7C/AAoJEAVFT+BVnCUIBlUP/2YrhPZWT6CZLwSWwNzExwc7
-pqPO4De2n1B4+RFsWh6LqRLSMzSXgIi088ut78Zt5VVYpqv0+B4gDIy8BPulWX1x
-Shfo01NgpmuhjK+PBEq+tzjyIlldwRdRzDuq5kxC0ocLXtJYyr5XAdtulJf3Apn9
-g7IunZzyou636rVC3yIHmXD/L6NBRxm+nBmRPDbdTI0BwSTt4TlmsLi1rXSMhX+m
-hzvyar+k9qU3bWwEGRTy8NPyH6Ir1HnuK/twvg0lt6KgRUBXSoAFx0oQfURX8ZPT
-MgEpRoT6l4HqO6MksYaExspfaQrLPrOmUu5unfMT8R2J8bPJN/UjkO5YLSMpS1P0
-ZWjbynlgfuK7H2unr24f6A0Nnnl6Y02IaIixTYGHCvDqHODpPYL87JKqLwBgsAoj
-NPjXn3AcXxIJbkoVGECLwtgrevjdPidpxRF5F/gLKcLE9qFRx+SjtUwHijGlKCD8
-rx+JyY8HOd44HRI7hhzKPTCa1iih/lz7B7aPeKMBzSsRgbjA/liXOHl1LoSlw3hH
-73R1lSFN94LUPeOmWxhL4LCX37H7U5NKeAXdg4gfQREGqY8AXwmHFY5Y7KoAgm4f
-ZVvygpaEbVQcyMEkFBypkKKAlQYs5Zv6vLGwdkLHRJtoFjiGz1KNye8HyX2GET+d
-SeFHre7SpmAGH0MOB7sa
-=Tw7t
+iQEcBAEBAgAGBQJVEZW6AAoJEKllVAevmvmsk44IAKLgwGa2CnmZn+gN53zdhkSX
+3RguwbKRz4QbOri829ByHoqo5wpGfsNKi+KHfz77d895w0SbqEoosStqhgXErQy7
+bGCVxjf1PwDRthffptsDtwT+NrP2d8uWVcGM1U9dDlBD40VU4a7fRCzYxoReJaAp
+eyy1aA96gyxFoGZm1vENuMrgDJmMp6EajV3292Acg6cJ/UoPJ7QxNpPtYI8tua/V
+zXqMprms2jyba7v37+HW6zQ0zELDCWfzSeYkyCOAgGI5oBc1RsKeOyHfWpS1A3sr
+f5pqfNfUu75+38+xl0Ic+GKxO1reqCkZe6iFu9OkdGtAHXIMMkxLMHpQfP4J9v8=
+=op6Y
 -----END PGP SIGNATURE-----
-
---IS0zKkzwUGydFO0o--
