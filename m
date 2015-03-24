@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1238" "Sunday" "14" "August" "2016" "21:36:39" "+0200" "Sona Sarmadi" "sona.sarmadi@enea.com" "<b84b5a3f-9e85-e3f2-fbbd-95dac3a76518@enea.com>" "42" "Re: [oss-security] CVE-2016-5696: linux kernel - challange ack information leak." "^Date:" nil nil "8" "2016081419:36:39" "[oss-security] CVE-2016-5696: linux kernel - challange ack information leak." (number mark "        sona.sarmadi Aug 14   42/1238  " thread-indent "\"Re: [oss-security] CVE-2016-5696: linux kernel - challange ack information leak.\"\n") "<CALJHwhTAvhAB0DPe2m7h1X_uoz9R5adTOpr-YVXUd6pX3WVNyg@mail.gmail.com>" ("<CALJHwhTAvhAB0DPe2m7h1X_uoz9R5adTOpr-YVXUd6pX3WVNyg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2165" "Tuesday" "24" "March" "2015" "12:21:52" "+0000" "Jeremy Stanley" "jeremy@openstack.org" "<20150324122152.GN2457@openstack.org>" "50" "Re: [oss-security] Re: CVE request for OpenStack Compute (nova)" nil nil nil "3" "2015032412:21:52" "[oss-security] Re: CVE request for OpenStack Compute (nova)" (number mark "        jeremy@opens Mar 24   50/2165  " thread-indent "\"Re: [oss-security] Re: CVE request for OpenStack Compute (nova)\"\n") "<20150324073610.79BAF1BE1C3@smtpvbsrv1.mitre.org>" ("<5510E3BE.8030204@redhat.com>" "<20150324073610.79BAF1BE1C3@smtpvbsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 31871 invoked by uid 550); 14 Aug 2016 19:41:34 -0000
+Received: (qmail 22416 invoked by uid 550); 24 Mar 2015 12:22:06 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,72 +11,70 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 29772 invoked from network); 14 Aug 2016 19:36:53 -0000
-References: <CALJHwhTAvhAB0DPe2m7h1X_uoz9R5adTOpr-YVXUd6pX3WVNyg@mail.gmail.com>
-Message-ID: <b84b5a3f-9e85-e3f2-fbbd-95dac3a76518@enea.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.2.0
+Received: (qmail 22398 invoked from network); 24 Mar 2015 12:22:05 -0000
+X-Sender-Id: jeremy@openstack.org
+Message-ID: <20150324122152.GN2457@openstack.org>
+References: <5510E3BE.8030204@redhat.com>
+ <20150324073610.79BAF1BE1C3@smtpvbsrv1.mitre.org>
 MIME-Version: 1.0
-In-Reply-To: <CALJHwhTAvhAB0DPe2m7h1X_uoz9R5adTOpr-YVXUd6pX3WVNyg@mail.gmail.com>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [192.168.201.202]
-X-Outbound-IP: 192.36.1.72
-X-Env-From: sona.sarmadi@enea.com
-X-Proto: esmtps
-X-Revdns: mx-3.enea.com
-X-HELO: mx-3.enea.com
-X-TLS: TLSv1:AES128-SHA:128
-X-Authenticated_ID: 
-X-PolicySMART: 6551647
-X-Virus-Status: Scanned by VirusSMART (c)
-X-Virus-Status: Scanned by VirusSMART (s)
-Date: Sun, 14 Aug 2016 21:36:39 +0200
-From: Sona Sarmadi <sona.sarmadi@enea.com>
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="OpLPJvDmhXTZE4Lg"
+Content-Disposition: inline
+In-Reply-To: <20150324073610.79BAF1BE1C3@smtpvbsrv1.mitre.org>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+Date: Tue, 24 Mar 2015 12:21:52 +0000
+From: Jeremy Stanley <jeremy@openstack.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE-2016-5696: linux kernel - challange ack
- information leak.
-To: <oss-security@lists.openwall.com>
+Subject: Re: [oss-security] Re: CVE request for OpenStack Compute (nova)
+To: oss-security@lists.openwall.com, cve-assign@mitre.org
 
-Hi all,
+--OpLPJvDmhXTZE4Lg
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-This vulnerability is currently only fixed in mainline kernels (4.7 &
-4.8). Does anyone know if there is any work ongoing to backport this fix
-to the  older versions?
+On 2015-03-24 03:36:10 -0400 (-0400), cve-assign@mitre.org wrote:
+[...]
+> So, does the OpenStack VMT have a position on whether to choose this
+> latter scenario? In other words, if live migration fails because of a
+> disconnected physical network interface, is access control for volumes
+> intentionally undefined afterward?
 
-Thanks
-//Sona
+As a member of the OpenStack VMT, I have no opinion on this. We
+don't generally express an opinion on whether a bug report _can_
+have an associated CVE, only on whether the bug is associated with
+an attack scenario we deem likely enough to warrant the effort
+expended in discussing and fixing it under embargo, backporting to
+supported stable branches, then creating and publishing a formal
+security advisory. Of the many reports we initially receive as
+potential vulnerabilities, only a fraction actually end in an
+advisory as opposed to being considered a security hardening
+opportunity.
+--=20
+Jeremy Stanley
 
+--OpLPJvDmhXTZE4Lg
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
 
-On 2016-07-12 06:33, Wade Mealing wrote:
-> Gday,
->
-> Red Hat Product Security has been made aware of an important issue in
-> the Linux kernel's implementation of challenge ACKS as specified in
-> RFC 5961. An attacker which knows a connections client IP, server IP
-> and server port can abuse the challenge ACK mechanism
-> to determine the accuracy of a normally 'blind' attack on the client or server.
->
-> Successful exploitation of this flaw could allow a remote attacker to
-> inject or control a TCP stream contents in a connection between a
-> Linux device and its connected client/server.
->
-> * This does NOT mean that cryptographic information is exposed.
-> * This is not a Man in the Middle (MITM) attack.
->
-> This was reported to Red Hat by Yue Cao, part of the Cyber Security
-> Group in the University of California
->
-> Thanks,
->
-> Wade Mealing
-> Red Hat Product Security Team
->
-> Red Hat Bugzilla:
->
-> https://bugzilla.redhat.com/show_bug.cgi?id=1354708
->
-> Patch:
->
-> https://www.mail-archive.com/netdev@vger.kernel.org/msg118677.html
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
+iQJ8BAEBCgBmBQJVEVbgXxSAAAAAAC4AKGlzc3Vlci1mcHJAbm90YXRpb25zLm9w
+ZW5wZ3AuZmlmdGhob3JzZW1hbi5uZXQ5N0FFNDk2RkMwMkRFQzlGQzM1M0IyRTc0
+OEY5OTYxMTQzNDk1ODI5AAoJEEj5lhFDSVgp1ncP/1R2hts0I91xnr49ItvAvbQN
+SAvyUXrgnbvJvGBldsTaljhxq+OENFFp3mRjvQx6+pflAAriQgwDW+RMvUVwvfrb
+T50l6mEaoVnvLc8nhGLJ1AMzSfQCdAazvbd4Y1GxTpOBmD+25EMozvssDQ20QWcF
+0s9ZT489/FKw/lJcYUp7On5jj+uqFMpJBkr6po3vHmPB1RXkSJpPRYLI2qCd/+BG
+fgSoSu0P1Jh1Ulc4v9h7Kz5FsCzrdUpphHBdgD+tDpiRjJTTWIJ6Q4f5r6pDcjvJ
+iKhSOx76+RxFKqUDzkjjlrLh1Z7tRgEueqPFd4TgmrvlIpI9DnXuIuHbyVyzfWMO
+VqKpLOysDkMRFe49b5TIAwJIhOnMaUR8vZzf6+VQin3GQJ1zNK1zCuqhyeiH11Lk
+8ipRTvbbEZbvkySFPjZAQt/ntlHclxLS1DElPRuxyZH9NQ4FziJvUFdcMVgfwdzK
+tmy6XAmOtzicq9SKpF6qLaYWBEnbGI/tp28FqTBIG5xzxkOgHSL95BlrWdB/KZFx
+4OXYUvW5KHZDs5lh6/9zlLowCleuS9kkZy8hC4kzY8c2nukdTZQgtRnyacF5ODxk
+SzXRpxe9PRcJGWWNo559OVX+ePf2kn9CN+lWhXr77b3jgfIF5u9Sbsn0yv/fpy9F
+e1QEYliYn/P6d1SYf7X7
+=8+Ob
+-----END PGP SIGNATURE-----
+
+--OpLPJvDmhXTZE4Lg--
