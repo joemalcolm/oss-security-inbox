@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["804" "Thursday" "22" "February" "2018" "13:46:43" "-0800" "Anthony Baker" "abaker@apache.org" "<CAEwge-GQLV_9Y56psCejkhA-B3jx4amnQP5AoVwURbzn=DCZOw@mail.gmail.com>" "24" "[oss-security] [SECURITY] CVE-2017-15696 Apache Geode configuration request authorization vulnerability" "^Date:" nil nil "2" "2018022221:46:43" "[oss-security] [SECURITY] CVE-2017-15696 Apache Geode configuration request authorization vulnerability" (number mark "U       abaker@apach Feb 22   24/804   " thread-indent "\"[oss-security] [SECURITY] CVE-2017-15696 Apache Geode configuration request authorization vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["565" "Tuesday" "24" "March" "2015" "16:07:40" "+1100" "Dave Horsfall" "dave@horsfall.org" "<alpine.BSF.2.11.1503241604550.9777@aneurin.horsfall.org>" "14" "Re: [oss-security] CVE-2014-8166 cups: code execution via unescape ANSI escape sequences" nil nil nil "3" "2015032405:07:40" "[oss-security] CVE-2014-8166 cups: code execution via unescape ANSI escape sequences" (number mark "        dave@horsfal Mar 24   14/565   " thread-indent "\"Re: [oss-security] CVE-2014-8166 cups: code execution via unescape ANSI escape sequences\"\n") "<5510EB20.7020405@redhat.com>" ("<5510EB20.7020405@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 28460 invoked by uid 550); 22 Feb 2018 22:20:13 -0000
+Received: (qmail 7836 invoked by uid 550); 24 Mar 2015 05:24:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,45 +11,37 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 1979 invoked from network); 22 Feb 2018 21:46:58 -0000
-X-Gm-Message-State: APf1xPA9MEujJMM3wOB1JMIAevlGWVlZpPsFZHJbwCxIBCwcBMxL0kR+
-	2o1UuAHoPHVz1Bwx+rXW1KjbSBz6wM/vxs+dUpHy6w==
-X-Google-Smtp-Source: AH8x224J2fTxcwYDceffVuD0V4gJwv6zgzktqWytxPgvCVBCdrJRTnmQDH08Qimo7ANQBxltMYBAH8SRVjDlFgh+PVo=
-X-Received: by 10.31.201.133 with SMTP id z127mr6160472vkf.129.1519336003787;
- Thu, 22 Feb 2018 13:46:43 -0800 (PST)
+Received: (qmail 21891 invoked from network); 24 Mar 2015 05:07:57 -0000
+X-Authority-Analysis: v=2.0 cv=Os7NOlDt c=1 sm=1
+ a=4q38a75ucWZEoAuqF1Taiw==:17 a=IPki1kwjZaUA:10 a=wPDyFdB5xvgA:10
+ a=kj9zAlcOel0A:10 a=jl1WCCbAAAAA:8 a=emO1SXQWCLwA:10 a=DMIIG5XYO_xwi763NWYA:9
+ a=CjuIK1q_8ugA:10 a=oRGrlLRogwYA:10 a=4q38a75ucWZEoAuqF1Taiw==:117
+X-Authentication-Warning: aneurin.horsfall.org: dave owned process doing -bs
+In-Reply-To: <5510EB20.7020405@redhat.com>
+Message-ID: <alpine.BSF.2.11.1503241604550.9777@aneurin.horsfall.org>
+References: <5510EB20.7020405@redhat.com>
+User-Agent: Alpine 2.11 (BSF 23 2013-08-11)
+X-Witty-Saying: "chmod 666 the_mode_of_the_beast"
 MIME-Version: 1.0
-X-Gmail-Original-Message-ID: <CAEwge-GQLV_9Y56psCejkhA-B3jx4amnQP5AoVwURbzn=DCZOw@mail.gmail.com>
-Message-ID: <CAEwge-GQLV_9Y56psCejkhA-B3jx4amnQP5AoVwURbzn=DCZOw@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Date: Thu, 22 Feb 2018 13:46:43 -0800
-From: Anthony Baker <abaker@apache.org>
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Date: Tue, 24 Mar 2015 16:07:40 +1100 (EST)
+From: Dave Horsfall <dave@horsfall.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] [SECURITY] CVE-2017-15696 Apache Geode configuration request
- authorization vulnerability
-To: user@geode.apache.org, dev@geode.apache.org, 
-	asf-security <security@apache.org>, announce@apache.org, oss-security@lists.openwall.com
+Subject: Re: [oss-security] CVE-2014-8166 cups: code execution via unescape
+ ANSI escape sequences
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
 
-CVE-2017-15696 Apache Geode configuration request authorization vulnerability
+On Mon, 23 Mar 2015, Kurt Seifried wrote:
 
-Severity:  Important
+> So this one is pretty hard to cause exploitation without heavy social 
+> engineering/etc.
 
-Vendor: The Apache Software Foundation
+Back when I was fooling around with such things in the 80s, I found that 
+not only could I program the function keys on an emulator, I could also 
+execute them...  Dunno whether this is still the case.
 
-Versions Affected:  Apache Geode 1.0.0 through 1.3.0
+I seem to recall something like "FORMAT C: /YES" or similar.
 
-Description:
-The Geode configuration service does not properly authorize
-configuration requests.  This allows an unprivileged user who gains
-access to the Geode locator to extract configuration data and
-previously deployed application code.
-
-Mitigation:
-Users of the affected versions should upgrade to Apache Geode 1.4.0 or later.
-
-Credit:
-This issue was reported responsibly to the Apache Geode Security Team
-by Dan Smith from Pivotal.
-
-References:
-[1] https://issues.apache.org/jira/browse/GEODE-3962
-[2] https://cwiki.apache.org/confluence/display/GEODE/Release+Notes#ReleaseNotes-SecurityVulnerabilities
+-- 
+Dave Horsfall DTM (VK2KFU)   "Those who don't understand security will suffer."
+http://www.horsfall.org/spam.html (and check the home page whilst you're there)
