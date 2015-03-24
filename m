@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3472" "Monday" "15" "June" "2015" "10:32:37" "+0200" "Pierre Schweitzer" "pierre@reactos.org" "<557E8DA5.6080707@reactos.org>" "91" "Re: [oss-security] PostgreSQL - Predictable cancel key" nil nil nil "6" "2015061508:32:37" "[oss-security] PostgreSQL - Predictable cancel key" (number mark "        pierre@react Jun 15   91/3472  " thread-indent "\"Re: [oss-security] PostgreSQL - Predictable cancel key\"\n") "<20150613093351.GF11230@mail.waldi.eu.org>" ("<20150613093351.GF11230@mail.waldi.eu.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2535" "Monday" "23" "March" "2015" "22:42:08" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<5510EB20.7020405@redhat.com>" "59" "[oss-security] CVE-2014-8166 cups: code execution via unescape ANSI escape sequences" nil nil nil "3" "2015032404:42:08" "[oss-security] CVE-2014-8166 cups: code execution via unescape ANSI escape sequences" (number mark "        kseifried@re Mar 23   59/2535  " thread-indent "\"[oss-security] CVE-2014-8166 cups: code execution via unescape ANSI escape sequences\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 5455 invoked by uid 550); 15 Jun 2015 08:32:54 -0000
+Received: (qmail 9939 invoked by uid 550); 24 Mar 2015 04:42:22 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,108 +11,77 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5425 invoked from network); 15 Jun 2015 08:32:53 -0000
-Message-ID: <557E8DA5.6080707@reactos.org>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.7.0
+Received: (qmail 9911 invoked from network); 24 Mar 2015 04:42:21 -0000
+Message-ID: <5510EB20.7020405@redhat.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.4.0
 MIME-Version: 1.0
-References: <20150613093351.GF11230@mail.waldi.eu.org>
-In-Reply-To: <20150613093351.GF11230@mail.waldi.eu.org>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Date: Mon, 15 Jun 2015 10:32:37 +0200
-From: Pierre Schweitzer <pierre@reactos.org>
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="3VgSlJLwKQrXfnaLtB85lsbbPgIbVdxEc"
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.27
+Date: Mon, 23 Mar 2015 22:42:08 -0600
+From: Kurt Seifried <kseifried@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] PostgreSQL - Predictable cancel key
-To: Bastian Blank <waldi@debian.org>, oss-security@lists.openwall.com
+Subject: [oss-security] CVE-2014-8166 cups: code execution via unescape ANSI escape sequences
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>,
+        security@apple.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--3VgSlJLwKQrXfnaLtB85lsbbPgIbVdxEc
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Hi,
+So this one is pretty hard to cause exploitation without heavy social
+engineering/etc.
 
-How is it really exploitable?
+https://bugzilla.redhat.com/show_bug.cgi?id=3D1084577
 
-I had a look at glibc random implementation, they got rid of the old
-LCG they were using for a "nonlinear additive feedback" PRNG which
-uses a 31 numbers state. That means that knowing a number in the
-pseudo-random stream you cannot recover the whole generator state to
-compute the next PRN, as it was possible with a LCG.
+It was reported that ANSI escape sequences could be added to printer
+names in CUPS.  Becaue CUPS has a browsing feature that, when enabled,
+allows remote hosts to announce shared printers, a malicious host or
+user could send a specially-crafted UDP packet to a CUPS server
+announcing an arbitrary printer name that includes ANSI escape
+sequences.  Since the CUPS daemon does not remove these characters, a
+user on the targeted system could query the printer list (using 'lpstat
+-a', for example).  If this were done in a terminal that supported the
+ANSI escape sequences (like a terminal with support for color), then
+code execution could be possible as the terminal would interpret the
+ANSI escape sequences contained in the printer name.
 
-So, basically, if I'm right (correct otherwise!) knowing your cancel
-key and your PID makes it really hard to know which key belongs to
-other PIDs. Because you still lack two pieces of information: the
-initial state (deduced from the knowledge of the seed) and the state
-of the generator when it generated your key (or perhaps knowing just
-one state would be enough? Anyway, it's missing).
+A patch for this is available at
+https://bugzilla.redhat.com/attachment.cgi?id=3D916761
 
-So, I feel like that it's really hard for a PID to hijack another PID.
+My apologies, this issue has been sitting way to long and is certainly
+not worth a long embargo.
 
-But, for my reasoning, I used the hypothesis that random() is
-implemented with a robust PRNG. This is actually really libc quality
-dependent. I'm not sure if some implementations still rely on a LCG.
+I can't wait till I'm done cleaning house of all these embargoed issues
+that shouldn't be embargoed. I strongly urge other vendors to do the same.
 
-Correct me if I'm wrong or if I missed something.
-
-Cheers,
-
-On 06/13/2015 11:33 AM, Bastian Blank wrote:
-> Hi
-> 
-> PostgreSQL postmaster uses predictable random numbers from
-> random(). The PRNG is seeded once during its lifetime with
-> srandom().  The seed is generated as following, also zero is
-> explicitely excluded:
-> 
-> | random_seed = random_start_time.tv_usec ^ |
-> ((random_stop_time.tv_usec << 16) | |
-> ((random_stop_time.tv_usec >> 16) & 0xffff));
-> 
-> So we have at most 1,000,000 different seeds.
-> 
-> A so called cancel key is generated with random() for every new
-> backend used by client connections and for autovacuum childs.  This
-> key together with the PID is used for asynchronous cancelation of
-> queries in client backends.  This values are transmitted to the
-> client after successful authentication.
-> 
-> The information needed to cancel other queries is the (sequential,
-> at least on Linux) pid and a predicable (secret) key.
-> 
-> Another set of four calles to random() are used to generate the
-> salt for the md5-authentication.  This value is given to the client
-> before the authentication.  One call per byte is done, excluding
-> zero bytes:
-> 
-> | md5Salt[0] = (random() % 255) + 1; | md5Salt[1] = (random() %
-> 255) + 1; | md5Salt[2] = (random() % 255) + 1; | md5Salt[3] =
-> (random() % 255) + 1;
-> 
-> Timeline: - 2015-02-13: Reported upstream, considered no problem -
-> 2015-06-13: Published
-> 
-> Regards, Bastian
-> 
+--=20
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
 
-- -- 
-Pierre Schweitzer <pierre@reactos.org>
-System & Network Administrator
-Senior Kernel Developer
-ReactOS Deutschland e.V.
+--3VgSlJLwKQrXfnaLtB85lsbbPgIbVdxEc
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
+Version: GnuPG v2.0.22 (GNU/Linux)
 
-iQIcBAEBCAAGBQJVfo2lAAoJEHVFVWw9WFsLOxwQAIIYaB2zBVX9yhk7TZWz5z3p
-4c8LD7zzTSBBYVAKAIe8dMGDeUbQ6bDLkqFGOEd/GuiKchKFplR9UqB+IZUHQIMf
-Oze+8+vozOv04BGrERsZfpM3R2vw2XEea0IO1uMU+cQc5qsXwpMHBy2se6PUc3Lz
-LJeNczeZkumkNdeBGq2zVph2bwKxALoN5aLl5sLbXY8RseRvG2UTru2qH1Hvk+2T
-CGEacCRvOb3JYaMDtcutoCI3p2tYyPXKnXrMnS3wXCbp5yr2KnoVcGtsOJ+P/nnX
-56/bMwJjl26/CYBcELychSwN3RRnkTegy5zUhQyw6Hl3MyFaExsUCAn6QjtEMGq2
-gM0o9glXwaPr9mKcwohzyT7+4Dh4eQtPrRekGzu77oRWHK5hsqbKn/8nL/lsaamI
-xu3NCoh0RJRKCi/ngn1eHFicdsVM6iYRUHYG8B2dAoXtNTLsibgQIzM02aKwAObU
-ljWB94WPnJty3N37t+4kdekuoAcNkMoXCPDqsz0u1wEZH3x0YYCSOR9ZmYirytBK
-R3sjwbe5lUIJ2UAl1fvRtQbh7OQ/dI5EnmJncfS/taXCfIzXptzPodIZHiO77MJM
-Snn+/867rcDnmgEwXxJ0/zrpkd3mlBcdSxN3cKmqOfp0uaY51rD2An4XV9F5DhyU
-uCNVNGa8cLnxnxSAaVht
-=l/HC
+iQIcBAEBAgAGBQJVEOsgAAoJEBYNRVNeJnmTuz0P/AuiWMG5fCcxvq95oSA1l7XZ
++1jvf6eMCGwmbrPdyQiR2n3AcX6D5ThAqf9pe7E0g+cX5UqzoV6Loluh7em2Zspf
+Ev7PUCcQ+SqeiEgwcd4+nya36E3/fBVdGi66rDQn60AjpBn6C5KFI/B9sQhN+zWr
+DP9/st9W9wXu77NUiGC+SCzoaMge21MBbWWldSIdXffh5MH4ZQHrG2xcNfH0mMau
+oStNsSAIEoQ4h38VWpHIzexDOCETYXNCXe4Lqv0uu62+xPPskr2pGYSHtrVZiVi/
+R8aAZ8FMUfe3PVYiUXjVZ4IcXwke7L41TGNe6Vi2RC4zcp5hSoXfs6dyRWhxUwd4
+Y1ElIfGBwuiR5DBAdD/I56t6m/KSZk/HavoYGr++mdxmRaN+HEmTgN0meGnlnUhU
+jw5wSLcMlPF6IpaNDo0ucrhIfCDzWrxquSPg1jmW2zvl6OBQSNdi+k4+oWhV0ixd
+E8NXPAdz+uCR4NHx0sd5+xEN+bMjYMhfIMtsnDXZfv7mgiPvJUVSgmumhooAejjp
+eu/++BNacYq79V/Bm7R99AXa9p2gAACt2UvERbXRtq6kidAU9jwIlKIJlCnShv7R
+394e8hxBbhPXswYCeYfesCZJCcDyZuVcfO3fbIPzR/0rDLUa4CA92fHa3QAEcSNS
+c7W2gMAOo3foyc4zspaO
+=XC3M
 -----END PGP SIGNATURE-----
+
+--3VgSlJLwKQrXfnaLtB85lsbbPgIbVdxEc--
