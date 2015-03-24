@@ -1,4 +1,9 @@
-Received: (qmail 18238 invoked by uid 550); 2 Apr 2025 15:45:14 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2692" "Tuesday" "24" "March" "2015" "07:40:14" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<5511693E.4070608@redhat.com>" "77" "Re: [oss-security] CVE request: Two vulnerabilities in Tor" nil nil nil "3" "2015032413:40:14" "[oss-security] CVE request: Two vulnerabilities in Tor" (number mark "        kseifried@re Mar 24   77/2692  " thread-indent "\"Re: [oss-security] CVE request: Two vulnerabilities in Tor\"\n") "<5511071A.4010105@redhat.com>" ("<20150323181327.GA3943@pisco.westfalen.local>" "<20150324061559.GB16333@lorien.valinor.li>" "<5511071A.4010105@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 24546 invoked by uid 550); 24 Mar 2015 13:40:29 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,162 +11,96 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 9883 invoked from network); 2 Apr 2025 13:58:45 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=cloudbees.com; s=google; t=1743602314; x=1744207114; darn=lists.openwall.com;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=a8+YhujGUAvY8O1aRIs7jkYR7zS6fh57nj8tpKBLZuI=;
-        b=COUtqD9EQU/cEKrkHuxYk9+5IT7tIn53HE2uQYFtL8jSiJIgzJhv9rWn43sPNHtG2E
-         lArZ9MqzWZsFDrY/QsaOJTyqieJmawwe51j4TN0vyHts785FwycRPsf1U/6H7bApS9Gc
-         Gfltg+Ug/+yr6PMsUM6ZbRdefsL76aCHw5YEg=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743602314; x=1744207114;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=a8+YhujGUAvY8O1aRIs7jkYR7zS6fh57nj8tpKBLZuI=;
-        b=DZB8Z+3FyRP21Qz+/jF9Rh+oHOQL2IXtYvDCqdCsUYRhBx5P7tHiMzjlvN2M+WIOcp
-         V3OFN7w9AsocvWAKBqG+o/I5/PW4b56v2l7I8fBIEosn4AE3Am0ghpMR8dY/pYzQrEc/
-         358c14hNyavjMbFn+MZ3QxGUaBlCqKOvtTOOpNG8AQjFm8gmM2VR7K17BI83kzNwla53
-         LfzPdi+QR43H2O8AbejNT2ucz96cakuFYkiuYtD0JQAwYXA7d3HN0rbakK8uRQ5bDjEL
-         CLxHF7GW9ELs4Wk3/QwoN5GdxY9W4EB+D8SxyethZmFaFLWXHu0kkuHFsihcrhcfV6be
-         EGew==
-X-Gm-Message-State: AOJu0YxBGjTwIsunvmJ5LVyeWOJYCEtkv4KDzmU8ZuQ3GbfUe9+/Ak6r
-	87h9dHlaaT+0hD7QNEAxjwpWw2D3sFm0IOkQ7P5Rt4OxDNWmk82ck1R4+fIcaiUB2HR/kNY3+6E
-	kiziBdYUxgg2SqU4Zc1gY3MM74XzjpXzEnVYkkc3nzmmVr/HaxduqZ/mB
-X-Gm-Gg: ASbGncsHaQceDV6niuXJEmTMOVxpTQOG22tTDB7JEuazVxjJkbKtC0CGIrcO176bZcn
-	WJqc0I5VKiP2Gsx9TON4EA57rXOZ0lyOXnfSm+eyQsrP9/640w2OZ/cpwSl7gQFURo/FeRP6BIW
-	eEESdy09rfMKQAyxkfsR6x3gmfS0/TjSO/9XXxrYpeYg7hg1ImqfwCFNtS5BHYQvfnEKrH
-X-Google-Smtp-Source: AGHT+IEuhxY8ZTVjMVgaRNmuDW1BF0NMgR1/y331xO22stvif4YUuGLFK6yQqWu8Ik3ItQ2beh1e4jz97WVf1IuBBlE=
-X-Received: by 2002:a05:6e02:3499:b0:3cf:bac5:d90c with SMTP id
- e9e14a558f8ab-3d5e09cda05mr221661595ab.18.1743602314159; Wed, 02 Apr 2025
- 06:58:34 -0700 (PDT)
+Received: (qmail 24516 invoked from network); 24 Mar 2015 13:40:28 -0000
+Message-ID: <5511693E.4070608@redhat.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.4.0
 MIME-Version: 1.0
-From: Kevin Guerroudj <kguerroudj@cloudbees.com>
-Date: Wed, 2 Apr 2025 15:58:23 +0200
-X-Gm-Features: AQ5f1JqERVH16h82YVtOjyGKT0Jmaxz7QBsd1JPvzxLDv_5fMlsmoGs8aMzcM3I
-Message-ID: <CAKG2iZgXKEhr1_MQ1z9PxE=Q9hJ+fdGDm=CckapoGuUYb47Gxw@mail.gmail.com>
+References: <20150323181327.GA3943@pisco.westfalen.local> <20150324061559.GB16333@lorien.valinor.li> <5511071A.4010105@redhat.com>
+In-Reply-To: <5511071A.4010105@redhat.com>
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="rtPD9usgSF7DuqwWTFmHfS5uFqRlxWEQv"
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.24
+Date: Tue, 24 Mar 2015 07:40:14 -0600
+From: Kurt Seifried <kseifried@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] CVE request: Two vulnerabilities in Tor
 To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="00000000000090c9ac0631cc0cce"
-Subject: [oss-security] Multiple vulnerabilities in Jenkins and Jenkins plugins
 
---00000000000090c9ac0631cc0cce
-Content-Type: text/plain; charset="UTF-8"
+--rtPD9usgSF7DuqwWTFmHfS5uFqRlxWEQv
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: quoted-printable
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software.
+Sorry replied to the wrong email, was very late and wanted to go to bed.
 
-The following releases contain fixes for security vulnerabilities:
+On 03/24/2015 12:41 AM, Kurt Seifried wrote:
+> With apologies, I thought they had been unlocked in BZ, did so now (they
+> are public now).
+>=20
+> On 03/24/2015 12:15 AM, Salvatore Bonaccorso wrote:
+>> Hi all,
+>>
+>> On Mon, Mar 23, 2015 at 07:13:27PM +0100, Moritz Muehlenhoff wrote:
+>>> Hi,
+>>> please assign two CVE IDs for tor:
+>>>
+>>> The upstream announcement is here:
+>>> https://lists.torproject.org/pipermail/tor-talk/2015-March/037281.html
+>>>
+>>> 1.
+>>> | Fix a remote denial-of-service opportunity caused by a bug in
+>>> | OSX's _strlcat_chk() function. Fixes bug 15205; bug first
+>>> | appeared in OSX 10.9.
+>>>
+>>> https://trac.torproject.org/projects/tor/ticket/15205
+>>>
+>>> 2.
+>>> | A relay could crash with an assertion error if a buffer of
+>>> | exactly the wrong layout was passed to buf_pullup() at exactly the
+>>> | wrong  time.
+>>>
+>>> https://trac.torproject.org/projects/tor/ticket/15083
+>>>
+>>> The second issue has been addressed in DSA 3203:
+>>> https://lists.debian.org/debian-security-announce/2015/msg00088.html
+>>> (the first obviously not, since it's MacOS-specific)
+>>
+>> There is anothr one which was fixed in the same versions, and could
+>> potentially get a CVE:
+>>
+>> https://trac.torproject.org/projects/tor/ticket/14129
+>>
+>> Regards,
+>> Salvatore
+>>
+>=20
 
-* Jenkins 2.504
-* Jenkins LTS 2.492.3
-* Cadence vManager Plugin 4.0.1-286.v9e25a_740b_a_48
-* Simple Queue Plugin 1.4.7
-* Templating Engine Plugin 2.5.4
-
-Additionally, we announce unresolved security issues in the following
-plugins:
-
-* AsakusaSatellite Plugin
-* monitor-remote-job Plugin
-* Stack Hammer Plugin
-
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://www.jenkins.io/security/advisory/2025-04-02/
-
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
-
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://www.jenkins.io/security/#reporting-vulnerabilities
-
----
-
-SECURITY-3512 / CVE-2025-31720
-Jenkins 2.503 and earlier, LTS 2.492.2 and earlier does not perform a
-permission check in an HTTP endpoint.
-
-This allows attackers with Computer/Create permission but without
-Computer/Extended Read permission to copy an agent, gaining access to its
-configuration.
-
-
-SECURITY-3513 / CVE-2025-31721
-Jenkins 2.503 and earlier, LTS 2.492.2 and earlier does not perform a
-permission check in an HTTP endpoint.
-
-This allows attackers with Computer/Create permission but without
-Computer/Configure permission to copy an agent, gaining access to encrypted
-secrets in its configuration.
-
-
-SECURITY-3505 / CVE-2025-31722
-Templating Engine Plugin allows defining libraries both in the global
-configuration, as well as scoped to folders containing the pipelines using
-them. While libraries in the global configuration can only be set up by
-administrators and can therefore be trusted, libraries defined in folders
-can be configured by users with Item/Configure permission.
-
-In Templating Engine Plugin 2.5.3 and earlier, libraries defined in folders
-are not subject to sandbox protection. This vulnerability allows attackers
-with Item/Configure permission to execute arbitrary code in the context of
-the Jenkins controller JVM.
+--=20
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
 
-SECURITY-3469 / CVE-2025-31723
-Simple Queue Plugin 1.4.6 and earlier does not require POST requests for
-multiple HTTP endpoints, resulting in cross-site request forgery (CSRF)
-vulnerabilities.
+--rtPD9usgSF7DuqwWTFmHfS5uFqRlxWEQv
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
-These vulnerabilities allow attackers to change and reset the build queue
-order.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.22 (GNU/Linux)
 
+iQIcBAEBAgAGBQJVEWk+AAoJEBYNRVNeJnmTYCUP/jZ3hMJW+h0DpWgQOQqYfsvI
+NzWX0Sx7aSWz0JvciCFT08jgi2Gybe/9BL/X5EdM0sABdaEXVeEW4NuIO6yZMebs
+xGqnqu0fD+4fQHI7yxewx1/2b1EJ/Dk8dwR8v9/nhcLa31ht+kK+wBNAvvP4Wqdq
+LGOVAG5GNWyG/+WF1a7Sr0qSdslqZet10VHlI5mBg2o2x43Am7njS/tcZdHFtIJb
+KQsd54q0hxwJXrF9cGaYbUBdu8NWP2Ug3LeoxBc6eHPj5efA47y8N+32U91gO8WU
+oDz+4Ucc4qm+hsB0FMeK+vBfLF07A9y40uN0VI73d3cXVTmIbRKDr0FrJJVY7shO
+Md5EsGomhBvah4JNr6ks6H8lNh6MoZbhRWArhSxmdCxV3njhmoQm4Kasfy6Oqn9Y
+sWGlupD3Kg0TJuEF255CPR9vkojd6YHn2JzA5lJk8zyK4SDW7Wiio3tgYDeWZZWQ
+ctrlGmt3K2+A7KiwAe8E2ZjzSnz5+tOBDFtWtS3VNKA6m58ojI4etNIQpz/PudB7
+CPATa1ljEdxCq97t0S1Q6L8ctij6wbzHPkoVP/uddnX1YyR2+MKpleeGJ7036Jmv
+BXVn8UVPjAvPTtUySvGOwqaFqnujWXqiJucmRHVKFoQoxPoK75VXAB+iXJQXdMXW
+ozK2EbiWlBi8Nkeg5s+I
+=cSBB
+-----END PGP SIGNATURE-----
 
-SECURITY-3537 / CVE-2025-31724
-Cadence vManager Plugin 4.0.0-282.v5096a_c2db_275 and earlier stores
-Verisium Manager vAPI keys unencrypted in job `config.xml` files on the
-Jenkins controller as part of its configuration.
-
-These API keys can be viewed by users with Item/Extended Read permission or
-access to the Jenkins controller file system.
-
-
-SECURITY-3539 / CVE-2025-31725
-monitor-remote-job Plugin 1.0 stores passwords unencrypted in job
-`config.xml` files on the Jenkins controller as part of its configuration.
-
-These passwords can be viewed by users with Item/Extended Read permission
-or access to the Jenkins controller file system.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-3520 / CVE-2025-31726
-Stack Hammer Plugin 1.0.6 and earlier stores Stack Hammer API keys
-unencrypted in job `config.xml` files on the Jenkins controller as part of
-its configuration.
-
-These API keys can be viewed by users with Item/Extended Read permission or
-access to the Jenkins controller file system.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-3523 / CVE-2025-31727 (storage) & CVE-2025-31728 (masking)
-AsakusaSatellite Plugin 0.1.1 and earlier stores AsakusaSatellite API keys
-unencrypted in job `config.xml` files on the Jenkins controller as part of
-its configuration.
-
-These API keys can be viewed by users with Item/Extended Read permission or
-access to the Jenkins controller file system.
-
-Additionally, the job configuration form does not mask these API keys,
-increasing the potential for attackers to observe and capture them.
-
-As of publication of this advisory, there is no fix.
-
---00000000000090c9ac0631cc0cce--
+--rtPD9usgSF7DuqwWTFmHfS5uFqRlxWEQv--
