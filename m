@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6068" "Friday" "15" "May" "2020" "04:48:08" "+0000" "Singh, Balbir" "sblbir@amazon.com" "<640d9869f8e7ea0aedaca2e29ecc3efeb7dfc940.camel@amazon.com>" "100" "[oss-security] [test case][kunit] CVE-2020-10711 Kernel netLabel" nil nil nil "5" "2020051504:48:08" "[oss-security] [test case][kunit] CVE-2020-10711 Kernel netLabel" (number mark "U       sblbir@amazo May 15  100/6068  " thread-indent "\"[oss-security] [test case][kunit] CVE-2020-10711 Kernel netLabel\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [test case][kunit] CVE-2020-10711 Kernel netLabel" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1735" "Monday" "23" "March" "2015" "23:30:18" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<5510F66A.9030202@redhat.com>" "43" "[oss-security] 2 moderate (borderline low) docker flaws fixed in >=1.5 and possibly earlier" nil nil nil "3" "2015032405:30:18" "[oss-security] 2 moderate (borderline low) docker flaws fixed in >=1.5 and possibly earlier" (number mark "        kseifried@re Mar 23   43/1735  " thread-indent "\"[oss-security] 2 moderate (borderline low) docker flaws fixed in >=1.5 and possibly earlier\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 9416 invoked by uid 550); 15 May 2020 09:25:39 -0000
+Received: (qmail 17984 invoked by uid 550); 24 Mar 2015 05:30:32 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,142 +11,61 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17552 invoked from network); 15 May 2020 04:48:46 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
-  t=1589518126; x=1621054126;
-  h=from:to:cc:subject:date:message-id:content-id:
-   content-transfer-encoding:mime-version;
-  bh=+1/POJ8hplmy1Ck38WCMlCQwa3XlmS7qW6NVJqAxgBI=;
-  b=WuYD7e33DapOnrXAUKYniE2RW4xShr12p7ZkvY+X1FsAh1DFSNjg3EUD
-   mEgIePe3bC2sDIfr68P88G6f50JThMF19uYdCuoIGW28LCjugBVxsafTP
-   WWQL0Hq4M8bxk48xtp5EOYTXULLoQzCApxOOVWQeLYRM/qf2jw/uDitwJ
-   A=;
-IronPort-SDR: ZHYQpmcwwN1KYEnNWDo8ZREcucyhgf7DzP3ndaOE6Rub0/lc+KKq8QpY0l3BmypDF8/QSQSHlh
- hKJ76HbqteFg==
-X-IronPort-AV: E=Sophos;i="5.73,394,1583193600"; 
-   d="scan'208";a="30511559"
-From: "Singh, Balbir" <sblbir@amazon.com>
-To: "ppandit@redhat.com" <ppandit@redhat.com>,
-	"oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-CC: "matthew.sheets@gd-ms.com" <matthew.sheets@gd-ms.com>, "code@tyhicks.com"
-	<code@tyhicks.com>, "Mendoza-jonas, Samuel" <samjonas@amazon.com>,
-	"pabeni@redhat.com" <pabeni@redhat.com>
-Thread-Topic: [test case][kunit] CVE-2020-10711 Kernel netLabel
-Thread-Index: AQHWKnQHKEACZsRB9U29wz6BDgaKzw==
-Date: Fri, 15 May 2020 04:48:08 +0000
-Message-ID: <640d9869f8e7ea0aedaca2e29ecc3efeb7dfc940.camel@amazon.com>
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-exchange-messagesentrepresentingtype: 1
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [10.43.160.26]
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <AC61E8A236CA4A4D994BB9EF9A8A3ABE@amazon.com>
-Content-Transfer-Encoding: base64
+Received: (qmail 17966 invoked from network); 24 Mar 2015 05:30:31 -0000
+Message-ID: <5510F66A.9030202@redhat.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.4.0
 MIME-Version: 1.0
-Subject: [oss-security] [test case][kunit] CVE-2020-10711 Kernel netLabel
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="8BTJMkpf9J4Jg4cnVXS7bvIVANOfsKPJ9"
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.24
+Date: Mon, 23 Mar 2015 23:30:18 -0600
+From: Kurt Seifried <kseifried@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] 2 moderate (borderline low) docker flaws fixed in >=1.5 and possibly
+ earlier
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
 
-SSd2ZSBzcGVudCBzb21lIHRpbWUgd3JpdGluZyBhIGt1bml0IHRlc3QgY2Fz
-ZSBmb3IgQ1ZFLTIwMjAtMTA3MTEgdXNpbmcgdGhlDQpLVU5JVCBmcmFtZXdv
-cmsuIEkgYW0gYXR0YWNoaW5nIHRoZSBwYXRjaCBiZWxvdyBmb3IgcmVmZXJl
-bmNlLiBUaGUgcGF0Y2ggaXMNCmFnYWluc3QgdGhlIGxhdGVzdCBsaW51eC1u
-ZXh0LiBUaGUgZGV0YWlscyBhcmUgaW4gdGhlIHRlc3QgY2FzZSwgdGhlcmUN
-CmFyZSBzb21lIFRPRE9zOg0KDQoxLiBBZGQgdGVzdCBjYXNlcyBmb3IgdGhl
-IGlwdjYgdmFyaWFudA0KMi4gQWRkIGEgdGVzdCBjYXNlIGZvciBjaXBzb192
-NF9wYXJzZXRhZ19ycG0gdmFyaWFudA0KDQpQbGVhc2UgZmVlbCB0byBzdWdn
-ZXN0IGltcHJvdmVtZW50cyBvciBiZXR0ZXIgd2F5cyB0byB0ZXN0IHRoaXMs
-IHRoaXMgaXMNCmEgcm91Z2ggcGF0Y2gsIGJ1dCBJIHN0aWxsIHdhbnRlZCB0
-byBzaGFyZSBpdCBhbmQgc2VlIGlmIGl0IGhlbHBzIG90aGVycy8NCmdldCBj
-b21tZW50cyBvbiB0aGUgYXBwcm9hY2ggdG8gdGVzdGluZyBpdC4NCg0KUmVn
-YXJkcywNCkJhbGJpciBTaW5naA0KDQo4PC0tLS0tLS0tLS0tLS0tLS0tDQoN
-CkZyb20gZDY4MDFjNzBmOTA5NTExMzg4MTUxMGFiYWRiYmQ2Yjg4Y2NjN2M1
-NyBNb24gU2VwIDE3IDAwOjAwOjAwIDIwMDENCkZyb206IEJhbGJpciBTaW5n
-aCA8c2JsYmlyQGFtYXpvbi5jb20+DQpEYXRlOiBGcmksIDE1IE1heSAyMDIw
-IDE0OjA4OjUwICsxMDAwDQpTdWJqZWN0OiBbUEFUQ0hdIGt1bml0OiBCYXNp
-YyBmcmFtZXdvcmsgZm9yIG5ldGxhYmVsDQoNClRoaXMgaXMgYSBiYXNpYyB0
-ZXN0IGZvciBDVkUtMjAyMC0xMDcxMSwgaXQncyBpbnRydXNpdmUNCmFuZCBo
-YWNreSwgaW4gdGhlIHNlbnNlIHRoYXQgZnVuY3Rpb25zIGFyZSBjYWxsZWQg
-d2l0aA0KYXNzdW1wdGlvbnMgYW5kIHRoZSBkYXRhIHBhc3NlZCB0byBjaXBz
-b192NF9nZXRhdHRyKCkNCndhcyBjb29rZWQgdXAgdG8gaGl0IHRoZSBlcnJv
-ciBjb25kaXRpb24uDQoNClRoZSB0ZXN0IGNhc2VzIHRlc3QgdGhlIGZvbGxv
-d2luZyBzY2VuYXJpb3M6DQoNCjEuIGNpcHNvX3BhcnNldGFnX3JuZygpIHdp
-dGggY2F0X2hpZ2ggYW5kIGNhdF9sb3cgdGhhdCBjYXVzZXMNCnRoZSB0ZXN0
-IHRvIGZhaWwgd2l0aG91dCB0aGUgZml4IGFuZCBwYXNzIHdpdGggdGhlIGZp
-eA0KMi4gTlVMTCBQVFIgdGVzdCBmb3IgdGhlIG5ldF9jYXRtYXBfbG9uZygp
-IGlzc3VlDQoNCltzYmxiaXIgLSB3cm90ZSB0aGUgdGVzdCBjYXNlc10NClNp
-Z25lZC1vZmYtYnk6IFNhbXVlbCBNZW5kb3phLUpvbmFzIDxzYW1qb25hc0Bh
-bWF6b24uY29tPg0KU2lnbmVkLW9mZi1ieTogQmFsYmlyIFNpbmdoIDxzYmxi
-aXJAYW1hem9uLmNvbT4NCi0tLQ0KIG5ldC9uZXRsYWJlbC9LY29uZmlnICAg
-ICAgICAgIHwgIDQgKysNCiBuZXQvbmV0bGFiZWwvTWFrZWZpbGUgICAgICAg
-ICB8ICAyICsNCiBuZXQvbmV0bGFiZWwvbmV0bGFiZWxfa3VuaXQuYyB8IDcw
-ICsrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrDQogMyBmaWxl
-cyBjaGFuZ2VkLCA3NiBpbnNlcnRpb25zKCspDQogY3JlYXRlIG1vZGUgMTAw
-NjQ0IG5ldC9uZXRsYWJlbC9uZXRsYWJlbF9rdW5pdC5jDQoNCmRpZmYgLS1n
-aXQgYS9uZXQvbmV0bGFiZWwvS2NvbmZpZyBiL25ldC9uZXRsYWJlbC9LY29u
-ZmlnDQppbmRleCAwN2IwM2MzMDZmMjguLjY0MWNkNmI0ZTQyZiAxMDA2NDQN
-Ci0tLSBhL25ldC9uZXRsYWJlbC9LY29uZmlnDQorKysgYi9uZXQvbmV0bGFi
-ZWwvS2NvbmZpZw0KQEAgLTE3LDMgKzE3LDcgQEAgY29uZmlnIE5FVExBQkVM
-DQogCSAgICogaHR0cHM6Ly9naXRodWIuY29tL25ldGxhYmVsL25ldGxhYmVs
-X3Rvb2xzDQogDQogCSAgSWYgeW91IGFyZSB1bnN1cmUsIHNheSBOLg0KKw0K
-K2NvbmZpZyBORVRMQUJFTF9LVU5JVA0KKwlib29sICJLdW5pdCB0ZXN0cyBm
-b3IgTmV0TGFiZWwiDQorCWRlcGVuZHMgb24gTkVUTEFCRUwgJiYgS1VOSVQN
-CmRpZmYgLS1naXQgYS9uZXQvbmV0bGFiZWwvTWFrZWZpbGUgYi9uZXQvbmV0
-bGFiZWwvTWFrZWZpbGUNCmluZGV4IDVhNDYzODFhNjRlNy4uOTNmMjI5Yzk4
-N2IwIDEwMDY0NA0KLS0tIGEvbmV0L25ldGxhYmVsL01ha2VmaWxlDQorKysg
-Yi9uZXQvbmV0bGFiZWwvTWFrZWZpbGUNCkBAIC0xNCwzICsxNCw1IEBAIG9i
-ai15CSs9IG5ldGxhYmVsX21nbXQubw0KIG9iai15CSs9IG5ldGxhYmVsX3Vu
-bGFiZWxlZC5vDQogb2JqLXkJKz0gbmV0bGFiZWxfY2lwc29fdjQubw0KIG9i
-ai0kKHN1YnN0IG0seSwkKENPTkZJR19JUFY2KSkgKz0gbmV0bGFiZWxfY2Fs
-aXBzby5vDQorDQorb2JqLSQoQ09ORklHX05FVExBQkVMX0tVTklUKSArPSBu
-ZXRsYWJlbF9rdW5pdC5vDQpkaWZmIC0tZ2l0IGEvbmV0L25ldGxhYmVsL25l
-dGxhYmVsX2t1bml0LmMgYi9uZXQvbmV0bGFiZWwvbmV0bGFiZWxfa3VuaXQu
-Yw0KbmV3IGZpbGUgbW9kZSAxMDA2NDQNCmluZGV4IDAwMDAwMDAwMDAwMC4u
-N2IyMjUyMjliZjlkDQotLS0gL2Rldi9udWxsDQorKysgYi9uZXQvbmV0bGFi
-ZWwvbmV0bGFiZWxfa3VuaXQuYw0KQEAgLTAsMCArMSw3MCBAQA0KKyNpbmNs
-dWRlIDxrdW5pdC90ZXN0Lmg+DQorI2luY2x1ZGUgPG5ldC9uZXRsYWJlbC5o
-Pg0KKyNpbmNsdWRlICJuZXRsYWJlbF9tZ210LmgiDQorI2luY2x1ZGUgPG5l
-dC9jaXBzb19pcHY0Lmg+DQorDQorc3RhdGljIHZvaWQgbmV0bGFiZWxfY2lw
-c29fcm5nX3Rlc3Qoc3RydWN0IGt1bml0ICp0ZXN0KQ0KK3sNCisJc3RydWN0
-IG5ldGxibF9sc21fc2VjYXR0ciBzZWNhdHRyOw0KKwlzdHJ1Y3QgY2lwc29f
-djRfZG9pICpkb2lfZGVmID0gTlVMTDsNCisJc3RydWN0IG5ldGxibF9hdWRp
-dCBhdWRpdF9pbmZvOw0KKwlpbnQgaTsNCisJdW5zaWduZWQgY2hhciBjaXBz
-b1tdID0gezB4MCwgMTYsIDB4MCwgMHgwLCAweDAsIDB4MSwgMHg1LCAweDgs
-IDB4MCwgMHgwLCAweDAsIDB4MSwgMHgwLCAweDJ9Ow0KKwlpbnQgcmV0Ow0K
-Kw0KKwltZW1zZXQoJnNlY2F0dHIsIDAsIHNpemVvZihzZWNhdHRyKSk7DQor
-CWRvaV9kZWYgPSBrbWFsbG9jKHNpemVvZigqZG9pX2RlZiksIEdGUF9LRVJO
-RUwpOw0KKwlkb2lfZGVmLT50eXBlID0gQ0lQU09fVjRfTUFQX1BBU1M7DQor
-DQorCWRvaV9kZWYtPmRvaSA9IDE7IC8qIFRhZyAqLw0KKwlkb2lfZGVmLT50
-YWdzWzBdID0gNTsgLyogUmFuZ2UgKi8NCisNCisJZm9yIChpID0gMTsgaSA8
-IENJUFNPX1Y0X1RBR19NQVhDTlQ7IGkrKykNCisJCWRvaV9kZWYtPnRhZ3Nb
-aV0gPSBDSVBTT19WNF9UQUdfSU5WQUxJRDsNCisNCisJcmV0ID0gY2lwc29f
-djRfZG9pX2FkZChkb2lfZGVmLCAmYXVkaXRfaW5mbyk7DQorCWlmIChyZXQg
-PCAwKSB7DQorCQljaXBzb192NF9kb2lfZnJlZShkb2lfZGVmKTsNCisJCXBy
-X3dhcm4oIkZhaWxlZCB0byBhZGQgZG9pICVkXG4iLCByZXQpOw0KKwkJS1VO
-SVRfRkFJTCh0ZXN0LCAiRmFpbGVkIHRvIHNldHVwIGRvaV9kZWYgJWRcbiIs
-IHJldCk7DQorCQlyZXR1cm47DQorCX0NCisNCisJYXRvbWljX2luYygmbmV0
-bGFiZWxfbWdtdF9wcm90b2NvdW50KTsNCisNCisJc2VjYXR0ci5hdHRyLm1s
-cy5jYXQgPSBOVUxMOw0KKwlyZXQgPSBjaXBzb192NF9nZXRhdHRyKGNpcHNv
-LCAmc2VjYXR0cik7DQorCWlmIChyZXQgPCAwKSB7DQorCQlLVU5JVF9GQUlM
-KHRlc3QsICJnZXRhdHRyIGZhaWxlZCAlZFxuIiwgcmV0KTsNCisJCWdvdG8g
-ZG9uZTsNCisJfQ0KKw0KKwlLVU5JVF9FWFBFQ1RfVFJVRSh0ZXN0LCAhKHNl
-Y2F0dHIuZmxhZ3MgJiBORVRMQkxfU0VDQVRUUl9NTFNfQ0FUKSk7DQorZG9u
-ZToNCisJY2lwc29fdjRfZG9pX3JlbW92ZShkb2lfZGVmLT5kb2ksICZhdWRp
-dF9pbmZvKTsNCit9DQorDQorDQorLyoNCisgKiBXQVJOSU5HOiBUaGlzIHdp
-bGwgY2F1c2UgYSBOVUxMIFBUUiBkZXJlZg0KKyAqIGlmIGNhbGxlZCB3aXRo
-b3V0IHRoZSBmaXgNCisgKi8NCitzdGF0aWMgdm9pZCBuZXRsYWJlbF9iaXRt
-YXBfdGVzdF9jYXNlKHN0cnVjdCBrdW5pdCAqdGVzdCkNCit7DQorCXUzMiBv
-ZmZzZXQgPSAwOw0KKwluZXRsYmxfY2F0bWFwX2dldGxvbmcoTlVMTCwgJm9m
-ZnNldCwgTlVMTCk7DQorCUtVTklUX0VYUEVDVF9UUlVFKHRlc3QsIChvZmZz
-ZXQgPT0gKHUzMiktMSkpOw0KK30NCisNCitzdGF0aWMgc3RydWN0IGt1bml0
-X2Nhc2UgbmV0bGFiZWxfdGVzdF9jYXNlc1tdID0gew0KKwlLVU5JVF9DQVNF
-KG5ldGxhYmVsX2NpcHNvX3JuZ190ZXN0KSwNCisJS1VOSVRfQ0FTRShuZXRs
-YWJlbF9iaXRtYXBfdGVzdF9jYXNlKSwNCisJe30NCit9Ow0KKw0KK3N0YXRp
-YyBzdHJ1Y3Qga3VuaXRfc3VpdGUgbmV0bGFiZWxfdGVzdF9zdWl0ZSA9IHsN
-CisgICAgICAgLm5hbWUgPSAibmV0bGFiZWwtdGVzdHMiLA0KKyAgICAgICAu
-dGVzdF9jYXNlcyA9IG5ldGxhYmVsX3Rlc3RfY2FzZXMsDQorfTsNCisNCitr
-dW5pdF90ZXN0X3N1aXRlKG5ldGxhYmVsX3Rlc3Rfc3VpdGUpOw0KLS0gDQoy
-LjE3LjENCg0KDQoNCg0KDQoNCg==
+--8BTJMkpf9J4Jg4cnVXS7bvIVANOfsKPJ9
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+Another example of why embargoes are a bad idea, these issues have been
+fixed for ages by upstream but fell through the cracks, because embargo!
+
+https://bugzilla.redhat.com/show_bug.cgi?id=3D1063549
+https://bugzilla.redhat.com/show_bug.cgi?id=3D1063550
+
+tmp vulns and use of http for sensitive downloads like keys/executable
+content with no checks (especially when https is available and other
+ways to do it safely).
+
+--=20
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+
+--8BTJMkpf9J4Jg4cnVXS7bvIVANOfsKPJ9
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.22 (GNU/Linux)
+
+iQIcBAEBAgAGBQJVEPZqAAoJEBYNRVNeJnmTgxYQAKlRbpVZDqhgLok3L1yLGdcU
+Krd/E8ZzskPzSMdr27o089JLnMWhD+fOYjr0I/XkQ8g4ToLzU/HGIMINwIVH1JBt
+aZjjZFozkTQxunz7HejAPoBZ+c2t928klEBGrvkymjg9I1lhGZL1PFXyHYAIdfiQ
+jWsjMXDQAHnsHqDiDxac5HE9fKNyCBxDS3Vw9jfjW7ISDpgYT85xCphIaGs1K09p
+2tdbv30q7vUbU9KeaNX+fKDuNOyyvgxhZwivFiEmYY9VnD7wQTOi1RVAP7KjmPTU
+C0wUnMpeRbGWoEVXIKW5nhlaKf6Nh7QhyuMBLMBqjicP4M19EczrKZRAhR8aOv0x
+Jv7AxJYrfw+TVrJSos6VzSBQBHh6tcAJRxkgTnTdkqILVm651Up1xILcQ9AixqQe
+3WUPW7hFnsNHbsqINAYZyiGc7HrgbKCH1QnFOIKElBzwA9gEEYMdD5n+TWh9Suw5
+3sWKiWccI8PIq/VQv119+IHiF+r1PfMKMilrHJ+d3QcDDc2iC916yVEMRQzSJ9Il
+jPlOADxIDBg2VIXqapjuHZv0y1bQ/n4/mSWlINIklYca1EHPwl3mbusRl39Mb4td
+nvsMd32D1AFgztnZJjvwztb/X1bi92v8Whndr0huiEOyI1OlWqerA5pSrSO0lvU4
+SHLrrwCQJq25aR5sX2cP
+=pu0P
+-----END PGP SIGNATURE-----
+
+--8BTJMkpf9J4Jg4cnVXS7bvIVANOfsKPJ9--
