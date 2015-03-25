@@ -1,4 +1,9 @@
-Received: (qmail 3381 invoked by uid 550); 8 Apr 2024 12:33:41 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["424" "Wednesday" "25" "March" "2015" "13:42:27" "+1000" "Trevor Jay" "tjay@redhat.com" "<20150325034227.GL32568@katma.redhat.com>" "13" "Re: [oss-security] 2 moderate (borderline low) docker flaws fixed in >=1.5 and possibly earlier" nil nil nil "3" "2015032503:42:27" "[oss-security] 2 moderate (borderline low) docker flaws fixed in >=1.5 and possibly earlier" (number mark "        tjay@redhat. Mar 25   13/424   " thread-indent "\"Re: [oss-security] 2 moderate (borderline low) docker flaws fixed in >=1.5 and possibly earlier\"\n") "<CAAZDpLcguYi_qQNHopS5-25CXPU_6oSGoCbVQE+5UuNGYbAsgQ@mail.gmail.com>" ("<5510F66A.9030202@redhat.com>" "<871tke8ngu.fsf@mid.deneb.enyo.de>" "<5511AD55.8040006@redhat.com>" "<CAAZDpLcguYi_qQNHopS5-25CXPU_6oSGoCbVQE+5UuNGYbAsgQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 25722 invoked by uid 550); 25 Mar 2015 03:49:17 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,66 +11,35 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21828 invoked from network); 8 Apr 2024 00:31:48 -0000
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=sec.16bits.net;
-	s=ec2401; t=1712536299;
-	bh=hjh3yFUu6fnu0d4T4pR8McFYjmwT1lbo6Rm3KhRn1wU=;
-	h=Subject:From:To:Date:In-Reply-To:References:Content-Type:
-	 Content-Transfer-Encoding:MIME-Version;
-	b=2a8igCurgvXx8AeO+sx1XFiL2UNmGC+O1W1wtyHvc9zRSqTwdBUtOVWTAU70Uala9
-	 otxsFt+ZGjiK+aZWuS5Dw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sec.16bits.net;
-	s=rsa2401; t=1712536298;
-	bh=hjh3yFUu6fnu0d4T4pR8McFYjmwT1lbo6Rm3KhRn1wU=;
-	h=Subject:From:To:Date:In-Reply-To:References:Content-Type:
-	 Content-Transfer-Encoding:MIME-Version;
-	b=Hc9XdX89eRr/sCbRLpm2IZxDFF0o5sMtqDbLdjXAnRODeJSErK2z5k+At+jcg/waj
-	 7jbESyMMpfa/omkZIHinZqjO0rgwNp6p+wOMuevLtzMrVyeaNn7s++rFJgt5KxGVUi
-	 hcQPWv3QTu1pUwyBlMO4C2PhmSoQjg4m+R0H6mpLSXPGCa3xoAUh4xo3p4FiNwpr60
-	 r79YGrR67fIuJojbYZOzNrTZj3hDIxbFqMR6wJZw99ph62LL4+B0DgCHuPdHv0KG4l
-	 FXDwbEU7F74GmsAXNKPHRBsgg4yicomcgDLgRoBd3cdXzki0utdvOV6EtByBjjHC3S
-	 axOYumibS0spg==
-Message-ID: <42bf95dbef6e44d416c030ff6dad7b6806f54cbf.camel@sec.16bits.net>
-From: =?ISO-8859-1?Q?=C1ngel?= <oss-security@sec.16bits.net>
-To: oss-security@lists.openwall.com
-Date: Mon, 08 Apr 2024 02:31:38 +0200
-In-Reply-To: <loqt-RGEN6MMP_6J6pm7KJN3UgHgOBQ3NLoF3NsdmxQhyJrFIS0XYItBeLNZeSMliq69Lw8ogw3rnIW3BZEqCIHQQSFq307cqsyIt7dcocE=@proton.me>
-References: 
-	<loqt-RGEN6MMP_6J6pm7KJN3UgHgOBQ3NLoF3NsdmxQhyJrFIS0XYItBeLNZeSMliq69Lw8ogw3rnIW3BZEqCIHQQSFq307cqsyIt7dcocE=@proton.me>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Received: (qmail 22042 invoked from network); 25 Mar 2015 03:42:47 -0000
+Message-ID: <20150325034227.GL32568@katma.redhat.com>
+References: <5510F66A.9030202@redhat.com>
+ <871tke8ngu.fsf@mid.deneb.enyo.de>
+ <5511AD55.8040006@redhat.com>
+ <CAAZDpLcguYi_qQNHopS5-25CXPU_6oSGoCbVQE+5UuNGYbAsgQ@mail.gmail.com>
 MIME-Version: 1.0
-Subject: Re: [oss-security] xz backdoor prevention using hosts.deny?
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAAZDpLcguYi_qQNHopS5-25CXPU_6oSGoCbVQE+5UuNGYbAsgQ@mail.gmail.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+Cc: oss-security@lists.openwall.com
+Date: Wed, 25 Mar 2015 13:42:27 +1000
+From: Trevor Jay <tjay@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] 2 moderate (borderline low) docker flaws fixed in
+ >=1.5 and possibly earlier
+To: Eric Windisch <ewindisch@docker.com>
 
-On 2024-04-03 at 03:31 +0000, Nick Sal wrote:
-> Hi,
->=20
-> Assume we filter SSH access only to a public domain subnet using the
-> files hosts.{deny,allow} as seen below.
-> Would this prevent an attack if a malicious payload was *not* sent
-> from the allowed subnet?
-> Trying to figure out if an attack like this was still possible, for
-> the few days in March the backdoor was active and undetected in
-> rolling distros (e..g. debian testing).
->=20
-> /etc/hosts.deny:  sshd: ALL
-> /etc/hosts.allow: sshd: "a_subnet"
+On Tue, Mar 24, 2015 at 04:07:19PM -0400, Eric Windisch wrote:
+> Both of these reports precede the establishment of a focused security team
+> and process at Docker.
+> 
 
-If your sshd uses libwrap, blocking access except from that subnet
-(I would check it is indeed doing what you expect, by trying from an
-external ip) then yes, it would protect from that.
-The libwrap filtering happens before the exchange identification.
+Exactly. Both of these reports are vague because they described a *class* of problems in Docker before the sheriff came to town. :) 
 
+_Trevor
 
->=20
-> Moreover, allowing only public-key authentication for SSH does not
-> help, isn't this right?
-
-Right. It doesn't help in this case, since the backdoor happens at the
-preauth phase, when it would be validating the provided public key
-(certificate).
-
-Regards
-
-
+-- 
+Sent from my Amiga 500.
+(Trevor Jay) Red Hat Product Security
+gpg-key: https://ssl.montrose.is/chat/gpg-key
