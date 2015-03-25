@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["465" "Thursday" "21" "June" "2018" "12:22:28" "+0200" "Lukas Odzioba" "lukas.odzioba@gmail.com" "<CABob6iqkc7x7awz-aMAb-yOHWKdWgnQF0rkPYdporiUmGCkc5Q@mail.gmail.com>" "11" "Re: [oss-security] Intel hyper-threading security issues" "^Cc:" nil nil "6" "2018062110:22:28" "[oss-security] Intel hyper-threading security issues" (number mark "        lukas.odziob Jun 21   11/465   " thread-indent "\"Re: [oss-security] Intel hyper-threading security issues\"\n") "<20180621093754.GY53290@symphytum.spacehopper.org>" ("<CAOp4FwSEi=_bNCMoiK66r4Y2QQToJgZyBjUX74s0omQ+whCS-w@mail.gmail.com>" "<20180621045642.fy67joeaxu2n4j56@sivokote.iziade.m$>" "<20180621093754.GY53290@symphytum.spacehopper.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1714" "Wednesday" "25" "March" "2015" "13:05:32" "+0000" "Jeremy Stanley" "jeremy@openstack.org" "<20150325130531.GO2457@openstack.org>" "42" "[oss-security] Re: CVE request for OpenStack Compute (nova)" nil nil nil "3" "2015032513:05:32" "[oss-security] Re: CVE request for OpenStack Compute (nova)" (number mark "        jeremy@opens Mar 25   42/1714  " thread-indent "\"[oss-security] Re: CVE request for OpenStack Compute (nova)\"\n") "<20150325071340.0D1BB6C004C@smtpvmsrv1.mitre.org>" ("<20150324122152.GN2457@openstack.org>" "<20150325071340.0D1BB6C004C@smtpvmsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 11358 invoked by uid 550); 21 Jun 2018 10:24:33 -0000
+Received: (qmail 3355 invoked by uid 550); 25 Mar 2015 13:05:45 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,55 +11,63 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 7715 invoked from network); 21 Jun 2018 10:23:01 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=ht59Okbt5igb1UmVc9+08n7KgEjlSTAjdjOOYreR0eU=;
-        b=hMhfOinTrc2rgN4dUJZ1d3GQEMFJGf2HijUkmkR2VDBgIIqQxZhX05e4WM921TZsWg
-         JtGvQGKqsAjFrBmSPiP+m31mdlcHzV+BGo2sL6hiWYG5+l09Fe+X0SWulHcjoasjRDOR
-         NpdLLYqNNtO716updWcO5sfduGr2sESPvXKTMO8wRaTltsvz/uoSeuo509uNkG8AlJFY
-         /99eJAEC4DkX44/Nvw4bPxxBOx5Qo+EZufKbngukyUbI70DsMQkJGoZk2ZrpdLfvvwMS
-         YTnpX1Ze0rXmOWrMZ4dfgkyd3oamgaD47alM+ZRSgDP3/bwjG8FLwTBZWix7V9cwHHoQ
-         k4eg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=ht59Okbt5igb1UmVc9+08n7KgEjlSTAjdjOOYreR0eU=;
-        b=foIm3kbgRv4NWZtXYD471fL7rDLUxdapjFfx0UNTEx+Qqwbeuq9TsBu7cXtDhYoiw/
-         xLV4F3clsL6syKvCzFSvcdu7XXTZ7rdHuFo0jBQgnGX579OwN6tpdmgDOIPeGzCvnInI
-         ub5FanmScVsV1tYo/FCHXggGbmi3Ma7XnsGxiQXAmVQQTbSaXmezIyA52jfZoa5Tx5wM
-         R48j+OpV/zUQ0gqHNkiqTv9ssbtjNYv2wbG+eH63alxCc2kb05p/0PMa3L5uqryzA2Xw
-         kYr64cuaajMxeUPwj0LeLM9ZEId5SjhFUGRazHgz8XclynwMBDzqI4t2RTqTk/JO6D0e
-         OtQw==
-X-Gm-Message-State: APt69E2hrKd3NHjciz1uov2Fwo3uqxq8w7SzqHQGTxkO2vTPA0gwznMg
-	dLCh/br4yG+bf3Tc6WdwviJiJ508kdcikm/T3YDXXquf
-X-Google-Smtp-Source: ADUXVKITtuxXdbYcxqzz4LlNErBvgfoth1Ycm0bm2Fp1QO55bQRpwDGjF3tFJNTkgofS3sTdS5pwJEddzM+r9x596Kk=
-X-Received: by 2002:adf:b053:: with SMTP id g19-v6mr20939062wra.128.1529576569081;
- Thu, 21 Jun 2018 03:22:49 -0700 (PDT)
+Received: (qmail 3332 invoked from network); 25 Mar 2015 13:05:45 -0000
+X-Sender-Id: jeremy@openstack.org
+Message-ID: <20150325130531.GO2457@openstack.org>
+References: <20150324122152.GN2457@openstack.org>
+ <20150325071340.0D1BB6C004C@smtpvmsrv1.mitre.org>
 MIME-Version: 1.0
-In-Reply-To: <20180621093754.GY53290@symphytum.spacehopper.org>
-References: <CAOp4FwSEi=_bNCMoiK66r4Y2QQToJgZyBjUX74s0omQ+whCS-w@mail.gmail.com>
- <20180621045642.fy67joeaxu2n4j56@sivokote.iziade.m$> <20180621093754.GY53290@symphytum.spacehopper.org>
-Message-ID: <CABob6iqkc7x7awz-aMAb-yOHWKdWgnQF0rkPYdporiUmGCkc5Q@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Cc: secure@intel.com
-Date: Thu, 21 Jun 2018 12:22:28 +0200
-From: Lukas Odzioba <lukas.odzioba@gmail.com>
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="YhFoJY/gx7awiIuK"
+Content-Disposition: inline
+In-Reply-To: <20150325071340.0D1BB6C004C@smtpvmsrv1.mitre.org>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+Cc: cve-assign@mitre.org
+Date: Wed, 25 Mar 2015 13:05:32 +0000
+From: Jeremy Stanley <jeremy@openstack.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Intel hyper-threading security issues
+Subject: [oss-security] Re: CVE request for OpenStack Compute (nova)
 To: oss-security@lists.openwall.com
 
-2018-06-21 11:37 GMT+02:00 Stuart Henderson <stu@spacehopper.org>:
-> That isn't possible with some BIOS. For example, newer Lenovo machines
-> removed the option apparently due to perceived lack of demand...
+--YhFoJY/gx7awiIuK
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-If you feel like you really need that, on Linux you can dump SRAT ACPI
-table decompile it, remove APICID entries of "ht processors", compile
-it back and put into initrd.
-https://www.kernel.org/doc/Documentation/acpi/initrd_table_override.txt
+On 2015-03-25 03:13:40 -0400 (-0400), cve-assign@mitre.org wrote:
+[...]
+> Similarly, there's obviously no obligation to send a notification to
+> oss-security whenever a potential vulnerability has been evaluated.
 
-Thanks,
-Lukas
+Correct, and we don't in those situations. In this case it was
+brought to the list by a representative of a Linux distribution
+affected by the bug in a release we no longer support upstream,
+since they need to implement a fix for it in their product.
+--=20
+Jeremy Stanley
+
+--YhFoJY/gx7awiIuK
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQJ8BAEBCgBmBQJVErKbXxSAAAAAAC4AKGlzc3Vlci1mcHJAbm90YXRpb25zLm9w
+ZW5wZ3AuZmlmdGhob3JzZW1hbi5uZXQ5N0FFNDk2RkMwMkRFQzlGQzM1M0IyRTc0
+OEY5OTYxMTQzNDk1ODI5AAoJEEj5lhFDSVgpPtQP/21BLpOAIoZrnKWtVs64Jkin
+mS51rtlfai4O2Xp/UP+BB31pWg0yQ/DUwDv4CgdPa2KkM1ZUIBoHsbR93jVjWtdZ
+HBjkmhgEANtyaBEuMY4UmcMvFk+yyHjQasm/9mX94YR46EyyZPD9/PEeWpWLXcPd
+XvFWnTCl/zsz09tYuFF6rFh6E6cc1rC3k2o4NA/HwLxN5hhDyofPVqaBAfAeMzvH
+XVO4QSyyDmnyXubWb/Np6FGZ73ICxeqIh3uTCr5SaN/Q0uiI7C7X13kdj6gApic7
+lWe5Nq0TaOYeClcTIl8vibb0KyRIwxNK/aIlUMXiUZwtWZ3h4d8TvTcsWBojS+gu
+EqsKxyMGr/ZynA27NbeOZeVDpwZSR0yvxHcJ66OFqUC4G43w1jb6orJvr/OfZMu1
+olD5EW5sldN9LLq9Fbj7OMsENUk7mSuD249muUrgwimAqo4zbNpdWDRwkGCszcyM
++pX+D0t02PyD88K4xe7aOavZJNt/KRy+zohIpsFkI9H3jVhMlZqWAi++5Y2DmnK7
+8IqhsVt166KIX76z2DVvCYvH7DBPuvdLhHEDz0216uLiJxCnKvBgkUuGqE8iCOND
+DcWA9NdOQA7fQ3g1jHWDFq3Q++AtxlbXnVgjGo/uZF3VUWwJZoNL6DXmCJXdCCC3
++sneTMmcrGFpKG0Fbqfg
+=v7m0
+-----END PGP SIGNATURE-----
+
+--YhFoJY/gx7awiIuK--
