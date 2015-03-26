@@ -1,4 +1,9 @@
-Received: (qmail 15947 invoked by uid 550); 12 Nov 2024 15:00:58 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1060" "Thursday" "26" "March" "2015" "13:43:06" "+0530" "Huzaifa Sidhpurwala" "huzaifas@redhat.com" "<5513BF92.70406@redhat.com>" "35" "Re: [oss-security] Fwd: setroubleshoot root exploit (CVE-Request)" nil nil nil "3" "2015032608:13:06" "[oss-security] Fwd: setroubleshoot root exploit (CVE-Request)" (number mark "        huzaifas@red Mar 26   35/1060  " thread-indent "\"Re: [oss-security] Fwd: setroubleshoot root exploit (CVE-Request)\"\n") "<20150326070141.GA25037@suse.de>" ("<20150326070141.GA25037@suse.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 27779 invoked by uid 550); 26 Mar 2015 08:02:11 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,94 +11,53 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 27755 invoked from network); 26 Mar 2015 08:02:11 -0000
+Message-ID: <5513BF92.70406@redhat.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.4.0
+MIME-Version: 1.0
+References: <20150326070141.GA25037@suse.de>
+In-Reply-To: <20150326070141.GA25037@suse.de>
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.23
+Date: Thu, 26 Mar 2015 13:43:06 +0530
+From: Huzaifa Sidhpurwala <huzaifas@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 13329 invoked from network); 12 Nov 2024 14:58:56 -0000
-Date: Tue, 12 Nov 2024 15:58:53 +0100
-From: Solar Designer <solar@openwall.com>
+Subject: Re: [oss-security] Fwd: setroubleshoot root exploit (CVE-Request)
 To: oss-security@lists.openwall.com
-Message-ID: <20241112145853.GA6243@openwall.com>
-References: <AM9P192MB13169D3C23104FC22ECCFD3AD74B2@AM9P192MB1316.EURP192.PROD.OUTLOOK.COM> <95ddd38e-2e23-4dee-b03c-a376d8cb9814@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=koi8-r
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <95ddd38e-2e23-4dee-b03c-a376d8cb9814@gmail.com>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] CVE-2024-36905: Linux kernel: Divide-by-zero on shutdown of TCP_SYN_RECV sockets
 
-On Tue, Oct 29, 2024 at 09:09:01PM -0500, Jacob Bachmeyer wrote:
-> On 10/29/24 08:03, Joel GUITTET wrote:
-> >We would like to ask your advice about the CVE-2024-36905 (tcp shutdown
-> >vulnerability).
-> >NIST indicates a network vector while AWS and Red Hat indicates local
-> >attack vector.
-> >Our cybersecurity team has difficulties to justify that a local vector is
-> >appropriate here.
-> >Can you help us to understand this specific point for this CVE ? The
-> >hypothesis we have is that a TCP socket need to be open/closed quickly,
-> >and maybe it's not possible remotely ?
->
-> From my understanding of Git commit
-> 94062790aedb505bdda209b10bea47b294d6394f
-> (<URL:https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/commit/?id=94062790aedb505bdda209b10bea47b294d6394f>),
-> this appears to be a race condition where a program (running locally) calls
-> connect(2) and then shutdown(2) without actually attempting to transfer any
-> data, with a further constraint that certain packets (I am unsure precisely
-> what) must have been transferred such that the TCP connection is
-> half-opened.š It *might* be possible to cause this crash remotely if a
-> program attempts to set up a unidirectional TCP connection (achieved by
-> shutting down the undesired direction) but I am unsure if any such programs
-> are actually in use.
->
-> I would need to further study the Linux networking code to be sure, but
-> a comment updated in the patch seems to imply that this is an edge case
-> that was previously believed to be impossible to reach.š I suspect NIST
-> labeled it "network" because TCP is involved, but as of this writing
-> <URL:https://nvd.nist.gov/vuln/detail/CVE-2024-36905> says "This
-> vulnerability is currently awaiting analysis." so I would expect NIST's
-> indication to be revised after that analysis is completed.
+On 03/26/2015 12:31 PM, Sebastian Krahmer wrote:
+> 
+> As per list policy, here is the forward of the distros post. CRD was shifted
+> to today.
+> 
+> 
+> ----- Forwarded message from Sebastian Krahmer <krahmer@suse.de> -----
+> 
+> Date: Wed, 18 Mar 2015 09:46:10 +0100
+> From: Sebastian Krahmer <krahmer@suse.de>
+> To: distros@vs.openwall.org
+> subject: ***UNCHECKED*** [vs] setroubleshoot root exploit (CVE-Request)
+> X-Mailer: MIME-tools 5.501 (Entity 5.501)
+> 
+> Hi
+> 
+> I already sent this to upstream. Initially I thought this only
+> affects redhat, but it seems that ubuntu is also using setroubleshoot.
+> CRD is 24.3.
+> 
+> setroubleshoot tries to find out which rpm a particular
+> file belongs to when it finds SELinux access violation reports.
+> The idea is probably to have convenient reports for the admin
+> which type enforcement rules have to be relaxed. setroubleshoot
+> runs as root (although in its own domain). In util.py
+> we have:
+> 
+> 
+Previously CVE-2015-1815 as assigned on distros.
 
-NIST doesn't appear to provide their own CVSS vectors/scores lately.
-However, they republish (with attribution) some third-party ones, this
-time from CISA-ADP.  The CISA-ADP CVSS vector for this vulnerability
-specifies that it not only is network-reachable, but also that it has
-High impact not only on Availability, but also on Confidentiality and
-Integrity.  This results in a CVSSv3.1 score of 9.8.  Even merely
-correcting the vector not to claim any Confidentiality and Integrity
-impact (as a divide-by-zero generally does not have that) would bring
-the score down significantly.
 
-So a question for this list/thread may be - where/how may we dispute
-CISA-ADP analysis?  Maybe someone would reply with specific contact info
-for them, and Joel would proceed with that.
 
-Also, this bug existed since prehistoric times.  The commit referenced
-above says:
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-
-This is git commit from 2005, which says "Initial git repository build."
-
-If the issue were in fact network-reachable with low access complexity
-and no user interaction required (as the CISA-ADP CVSS vector claims),
-then we'd have had plenty of Linux systems on the Internet crashing with
-divide-by-zero in the kernel very often.  Since we didn't notice that,
-and since the bug doesn't involve e.g. any magic numbers, this disproves
-that it's easily triggerable over network in typical setups.
-
-> Again, this issue is probably only remotely exploitable if the host is
-> running a very unusual client program, but a local exploit can supply
-> the required oddly-behaving program.
-
-Joel wasn't subscribed to oss-security at the time, but has since
-subscribed and wanted to post a follow-up question, which I am doing to
-add it to the thread:
-
-"Thanks for your reply Jacob.
-Anyone able to comment about Red Hat or AWS justifications on this CVE ?"
-
-To me, the above is already that kind of comment, but perhaps Joel would
-like to hear specifically from Red Hat and AWS.
-
-Alexander
+-- 
+Huzaifa Sidhpurwala / Red Hat Product Security Team
