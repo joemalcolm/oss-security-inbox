@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4468" "Thursday" "28" "May" "2015" "14:41:24" "+0000" "Seaman, Chad" "cseaman@akamai.com" "<1432824084554.52187@akamai.com>" "101" "Re: [oss-security] Re: CVE Request, multiple WordPress plugins and themes" nil nil nil "5" "2015052814:41:24" "[oss-security] Re: CVE Request, multiple WordPress plugins and themes" (number mark "        cseaman@akam May 28  101/4468  " thread-indent "\"Re: [oss-security] Re: CVE Request, multiple WordPress plugins and themes\"\n") "<20150528115153.D4AA46C0032@smtpvmsrv1.mitre.org>" ("<20150528063540.GD27861@lakka.kapsi.fi>" "<20150528115153.D4AA46C0032@smtpvmsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3820" "Friday" "27" "March" "2015" "21:06:20" "+0100" "Pierre Schweitzer" "pierre@reactos.org" "<5515B83C.6080506@reactos.org>" "87" "[oss-security] Re: CVE request: denial of service in Quassel" nil nil nil "3" "2015032720:06:20" "[oss-security] Re: CVE request: denial of service in Quassel" (number mark "        pierre@react Mar 27   87/3820  " thread-indent "\"[oss-security] Re: CVE request: denial of service in Quassel\"\n") "<20150327181641.0B66134E00D@smtpvbsrv1.mitre.org>" ("<20150327181641.0B66134E00D@smtpvbsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 32491 invoked by uid 550); 28 May 2015 16:23:28 -0000
+Received: (qmail 8108 invoked by uid 550); 27 Mar 2015 20:06:33 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,128 +11,105 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 22405 invoked from network); 28 May 2015 14:41:37 -0000
-Thread-Topic: [oss-security] Re: CVE Request, multiple WordPress plugins and
- themes
-Thread-Index: AQHQmTy/SnqUb4k0H0qDtSVup2P1TJ2Rddzd
-Message-ID: <1432824084554.52187@akamai.com>
-References: <20150528063540.GD27861@lakka.kapsi.fi>,<20150528115153.D4AA46C0032@smtpvmsrv1.mitre.org>
-In-Reply-To: <20150528115153.D4AA46C0032@smtpvmsrv1.mitre.org>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [172.28.90.109]
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+Received: (qmail 8089 invoked from network); 27 Mar 2015 20:06:33 -0000
+Message-ID: <5515B83C.6080506@reactos.org>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
 MIME-Version: 1.0
-Date: Thu, 28 May 2015 14:41:24 +0000
-From: "Seaman, Chad" <cseaman@akamai.com>
+References: <20150327181641.0B66134E00D@smtpvbsrv1.mitre.org>
+In-Reply-To: <20150327181641.0B66134E00D@smtpvbsrv1.mitre.org>
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 8bit
+CC: oss-security@lists.openwall.com
+Date: Fri, 27 Mar 2015 21:06:20 +0100
+From: Pierre Schweitzer <pierre@reactos.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: CVE Request, multiple WordPress plugins and
- themes
-To: "henri@nerv.fi" <henri@nerv.fi>, "oss-security@lists.openwall.com"
-	<oss-security@lists.openwall.com>
-
-    * extended-catagories-widget [PLUGINS] + url:
-    https://wordpress.org/plugins/extended-categories-widget/ +
-    vuln found: :--|- post auth admin SQLi
-
-seems to map to this public issue:
-
-    https://wordpress.org/plugins/extended-categories-widget/changelog/
-       Last Updated: 2015-5-27
-       Version 4.0.1
-       Post-Auth SQL Injection Vulnerability
-       Only occurs for WordPress versions lower than 3.3
-
-Correct, authors of plugins were notified of these vulnerabilities yesterda=
-y, and as the date suggests, some have began pushing out fixes.
-
-________________________________________
-From: cve-assign@mitre.org <cve-assign@mitre.org>
-Sent: Thursday, May 28, 2015 7:51 AM
-To: henri@nerv.fi
-Cc: cve-assign@mitre.org; oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE Request, multiple WordPress plugins and the=
-mes
+Subject: [oss-security] Re: CVE request: denial of service in Quassel
+To: cve-assign@mitre.org
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> One email with all needed details for CVE request per plugin is better
-> way to get these assigned.
+Thanks for your detailed answer, please find my answers inlined.
 
-The MITRE CVE team currently prefers that this request not be re-sent
-as a separate message for each plugin.
+On 27/03/2015 19:16, cve-assign@mitre.org wrote:
+> 2
+>> Unlike what it replaces, the new splitting code is not recursive 
+>> and cannot cause stack overflows.
+> 
+> If an attacker sends a crafted message and this leads to excessive 
+> stack consumption in an IRC client, making the client crash or
+> hang, then that is relevant for a CVE. (We are expecting that it is
+> a "normal" IRC client that supports independent sessions with
+> messages from different channels or different persons.) However, 
+> b5e38970ffd55e2dd9f706ce75af9a8d7730b1b8 doesn't actually state
+> that the client would ever crash or hang.
 
-> https://github.com/RedHatProductSecurity/CVE-HOWTO#how-to-write-a-cve-req=
-uest
+This wouldn't affect the client. All the patch here only affects the
+core component, so the stack overflow would happen in the core.
 
-That document is directly applicable to CVE request responses by Kurt
-Seifried (including the ones he sent to oss-security up until 2013).
-Although the document contains a large amount of useful information,
-it is not a document that has been reviewed by the MITRE CVE team. For
-the specific topic of WordPress plugins, we would typically need to
-know what privileges are required to conduct each attack and -- in
-situations with more than one security issue for a single plugin --
-whether the vulnerabilities are independently exploitable.
+I'm indeed not sure about what would happen in case of a stack
+overflow. But, be it a crash or a hang, it would cause a denial of
+service for any client connected to core.
 
-> does not have enough information for CVE request
+> 3
+>> The first is garbage characters caused by accidentally splitting
+>> the string in the middle of a multibyte character. Since the new
+>> code splits at a character level instead of a byte level, this
+>> will no longer be an issue.
+> 
+> This one seems to be inherently about multibyte characters because 
+> it's an issue of string display (or string interpretation) if
+> whole characters aren't preserved. However, it doesn't seem to be
+> announced as a security issue. Although someone might be sending 
+> security-critical messages over IRC and would not want those
+> messages to be misinterpreted, that's generally too much of a leap
+> to have a CVE. If nobody else has other analysis, we will probably
+> treat this as a non-security bug.
 
-For the majority of the plugins, the amount of vulnerability detail is
-similar to the http://openwall.com/lists/oss-security/2015/05/22/4
-case that we discussed here last week. The situation isn't identical,
-so we'll try to clarify. As always, MITRE does not make decisions
-about the policies of the oss-security list. The current status is
-that nobody has objected to the message pattern starting with (for
-example) the http://openwall.com/lists/oss-security/2015/05/18/8 post,
-in which version information was originally included and the
-vulnerability had already been fixed. The
-http://openwall.com/lists/oss-security/2015/05/27/6 reporting pattern
-is not always the same. First, version information is not directly
-included. Second, some of the plugins apparently do not have a
-changelog entry indicating that any security problem was recently
-fixed. Putting all of this together, the most critical difference may
-be that some of these plugin reports are not about "Public security
-issues" and would potentially fall outside the scope of this list. So,
-our guess is that we can send a response here (with a CVE mapping) for
-a subset of this message, e.g.,
+I don't believe this is to be considered as a security bug.
+Especially, because due to the recursive, it would cause
+reinterpreting the left string. It's unlikely it would be something
+relevant that the core would dispatch to clients or server.
 
-    * extended-catagories-widget [PLUGINS] + url:
-    https://wordpress.org/plugins/extended-categories-widget/ +
-    vuln found: :--|- post auth admin SQLi
+> 4
+>> if it is unable to split a string, it will give up gracefully and
+>> not crash the core or cause a thread to run away.
+> 
+> As far as we can tell, this is about:
+> 
+> // If the QTBF fails to find a split point in Grapheme mode, we
+> give up. // This should never happen, but it should be handled
+> anyway. qWarning() << "Unexpected failure to split message!"; 
+> return msgsToSend;
+> 
+> in the patched code. If nobody else has other analysis, we will 
+> probably treat this as a defense-in-depth measure that doesn't
+> address any known vulnerability, and therefore has no CVE.
 
-seems to map to this public issue:
+I believe this is more about in the removed code:
+https://github.com/quassel/quassel/commit/b5e38970ffd55e2dd9f706ce75af9a8d7730b1b8#diff-2b819a1018ddf6b5fa4b750553df0742L801
 
-    https://wordpress.org/plugins/extended-categories-widget/changelog/
-       Last Updated: 2015-5-27
-       Version 4.0.1
-       Post-Auth SQL Injection Vulnerability
-       Only occurs for WordPress versions lower than 3.3
+But I'm not sure about how it could cause a crash, or a thread leak.
 
-but we must not send a response here (with a CVE mapping) for some of
-the other parts. If we have misinterpreted that, you can (among other
-options) send e-mail directly to only cve-assign@mitre.org to tell us.
-We will leave it at that for now. There are obviously open questions,
-e.g., if someone prefers to send a very large number of
-low-information but public WordPress plugin findings, is it still best
-to use oss-security.
-
-- --
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+- -- 
+Pierre Schweitzer <pierre at reactos.org>
+System & Network Administrator
+Senior Kernel Developer
+ReactOS Deutschland e.V.
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Version: GnuPG v2.0.22 (GNU/Linux)
 
-iQEcBAEBAgAGBQJVZwALAAoJEKllVAevmvmsNLUH/3sPYVAJdvAzrBsr5gA8I0Pi
-2KDWEA+nolK70uhf+fcGLJtw0HJY+q1C/gtWVVd2VaNCojsBwA0Xz5GyWqk8bzVx
-UZX5WgbFbyy5gOQE1Gp49NM5V2KvoZ8YJvLw7hds9XPmpX7lH3MbjXmzDy+p2e1Y
-BUlg2Js4noI0VjOBJBreaXNWVoHyI6YbSSRuJWXGEiMWah8dhTvh/i+Kkjr/tO1g
-t6kfThgZzdEErBQBbm/hjDxvy5zNRyZiePSRUnEYoTmD3Pj12B5/B861T/d5An8N
-BDT+JCb2hcXe5zEXEwu0QFXW3B41z/K0nNGIoD/ZS18rZza1hhY8WBnf3KkQ8Ns=3D
-=3DSw75
------END PGP SIGNATURE-----=
+iQIcBAEBAgAGBQJVFbg8AAoJEHVFVWw9WFsLpEQP+gJ8V1Z+i1RyQPuM6FiGNwqL
+FOkAX+wC2ijGKpJgUvX6Hbi3g2SZma1tcSbCVxOX6aisrrDaDAK6c5SYBCSP+1bf
+/8+1qIgbUd8kV16KdGLFDD2R9mrBxpIwUPGiBUK690B9GSec2Xl1ONo/FX4PXLdm
+mwdSrTeVBimE2F4EE9Q15HJHE4KPeObSoqB3DaozVRI+GPcVEsu5S03wBMG/9zxY
+DKxMpnR8WgTnW7wIXxSoiol8J3iDLj5PZ4NIRDu9k9SPwSGkR+61QaHUHlbew4mx
+HF1znvAMeogut7VLKpnB2+uJDz99zKlYZ5ndkBbWeCuRH8CHrsRwv2seuSInzKOC
+231xxtkrgg4RRuxGxMAo4r3fo0yERpe1r6n+swZy5Bpcgt1q96YCQjGF7iK12gcf
+1dYpmff35hI1FDXl3Jxz+uTZ3SZJPNX1Jp1mh22BEDHtcdHhlntujOtdQNe/pPtU
+GeTTv3l9CvbvWnh496Hn3QRw1u2S1Qntmn0OG2Y1v1JuUvhMxNWBTdQTZlI23Vzu
+E9q2yf1RlYtXcUJUhlQlsw90h9/V8dbKJob3p+cYkW/bMrE/Nh9FAJCPWpl+uYGu
+bFHIsmtPhk8qYp61mHIMipWE68iC0fTMjjXMLNkATQ2Vj3H6Ue8qACrM9aGaFmmI
+V4jfpn2tBe7/VDKU7PwA
+=k/fm
+-----END PGP SIGNATURE-----
