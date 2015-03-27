@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2157" "Sunday" "2" "February" "2020" "13:22:11" "+0100" "Solar Designer" "solar@openwall.com" "<20200202122211.GA10285@openwall.com>" "45" "Re: [oss-security] Linux kernel: user-triggerable read-after-free crash or 1-bit infoleak oracle in open(2)" "^Cc:" nil nil "2" "2020020212:22:11" "[oss-security] Linux kernel: user-triggerable read-after-free crash or 1-bit infoleak oracle in open(2)" (number mark "        solar@openwa Feb  2   45/2157  " thread-indent "\"Re: [oss-security] Linux kernel: user-triggerable read-after-free crash or 1-bit infoleak oracle in open(2)\"\n") "<20200128235022.GA30755@openwall.com>" ("<20200128214809.GA27151@openwall.com>" "<20200128235022.GA30755@openwall.com>") nil nil nil nil nil nil nil "Re: [oss-security] Linux kernel: user-triggerable read-after-free crash or 1-bit infoleak oracle in open(2)" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["905" "Friday" "27" "March" "2015" "13:11:41" "+0100" "Hector Marco" "hecmargi@upv.es" "<551548FD.8030700@upv.es>" "32" "[oss-security] CVE-Request: AMD Bulldozer Linux ASLR weakness: Reducing entropy by 87.5%." nil nil nil "3" "2015032712:11:41" "[oss-security] CVE-Request: AMD Bulldozer Linux ASLR weakness: Reducing entropy by 87.5%." (number mark "        hecmargi@upv Mar 27   32/905   " thread-indent "\"[oss-security] CVE-Request: AMD Bulldozer Linux ASLR weakness: Reducing entropy by 87.5%.\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 24199 invoked by uid 550); 2 Feb 2020 12:22:36 -0000
+Received: (qmail 7586 invoked by uid 550); 27 Mar 2015 12:12:02 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,68 +11,58 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 24081 invoked from network); 2 Feb 2020 12:22:20 -0000
-Message-ID: <20200202122211.GA10285@openwall.com>
-References: <20200128214809.GA27151@openwall.com> <20200128235022.GA30755@openwall.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200128235022.GA30755@openwall.com>
-User-Agent: Mutt/1.4.2.3i
-Cc: Al Viro <viro@zeniv.linux.org.uk>,
-	Salvatore Mesoraca <s.mesoraca16@gmail.com>,
-	Kees Cook <keescook@chromium.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Dan Carpenter <dan.carpenter@oracle.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Date: Sun, 2 Feb 2020 13:22:11 +0100
-From: Solar Designer <solar@openwall.com>
+Received: (qmail 7522 invoked from network); 27 Mar 2015 12:11:56 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=upv.es; s=default;
+	t=1427458304; bh=fXHVA36L4Co7jj8cByHoIB1kzJ7MdxQlEhqHXJiJLCM=;
+	h=Date:From:To:CC:Subject;
+	b=kFI4mrjYxJ9EnIYzbP88FusOtXse4B3+iXHUtBfp5Jmh+l1DwYbFeLO7vMzSKPuLP
+	 +1NPbjA7LKwRBl0hA+ao8XZg5RcHHIpkD+qLFnvijNqp5rcPcxyLvLAaLwJUl4l6o/
+	 Jmi2VAoaB9WMnIRLRETbe9nNePMpRte1yyFYaW9zZTt2NeVXR9Evd4X5nlAdN3wkrM
+	 2wmiJRir1Z0+RCeSxfRy815YWayZjj/+MNM6Rurfm1c1jbSwpw+BbRmcUuhpPv/KuZ
+	 Q07xCN4eTTZ7pkVECs1CK22zOGeVYc3rj6qR6jacmPiMXwKa3h3EmUL7kILRyFZly8
+	 4KucTjmxIwFxg==
+Message-ID: <551548FD.8030700@upv.es>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+CC: oss-security@lists.openwall.com, Ismael Ripoll <iripoll@disca.upv.es>
+Date: Fri, 27 Mar 2015 13:11:41 +0100
+From: Hector Marco <hecmargi@upv.es>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Linux kernel: user-triggerable read-after-free crash or 1-bit infoleak oracle in open(2)
-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE-Request: AMD Bulldozer Linux ASLR weakness: Reducing entropy
+ by 87.5%.
+To: Assign a CVE Identifier <cve-assign@mitre.org>
 
-On Wed, Jan 29, 2020 at 12:50:22AM +0100, Solar Designer wrote:
-> On Tue, Jan 28, 2020 at 10:48:10PM +0100, Solar Designer wrote:
-> > I intend to request a CVE ID and post it as a follow-up to this thread.
-> 
-> "Use CVE-2020-8428."
-> 
-> > Al Viro found and analyzed the security impact of and fixed a bug in
-> > Linux 4.19+ where open(2)'s eventual call to may_create_in_sticky() was
-> > "done when we already have dropped the reference to dir" and thus with
-> > dir (a "struct dentry" pointer) being potentially stale and potentially
-> > pointing to reused memory.
-> 
-> > The bug was introduced with commit 30aba6656f61 and first included in
-> > Linux 4.19.  Al fixed it with commit d0cb50185ae9 two days ago, and the
-> > fix is already in Linux 5.5 and Greg KH is getting it into stable.
+Hi,
 
-Turns out the fix in d0cb50185ae9 introduced a regression, now found
-with syzkaller and fixed:
+A bug in Linux ASLR implementation which affects some AMD processors has been 
+found. The issue affects to all Linux process even if they are not using shared 
+libraries (statically compiled). Grsecurity/PaX is also affected.
 
-https://syzkaller.appspot.com/bug?extid=190005201ced78a74ad6
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=6404674acd596de41fd3ad5f267b4525494a891a
+The total entropy for the VVAR/VDSO, mmapped files and libraries of a processes 
+are reduced by eight. The number of possible locations where the mapped areas 
+can be placed are reduced by 87.5%.
 
-If I understand correctly (but I'm not confident!), this time it's just
-a crash.  I am not going to request another CVE ID because the security
-impact is unclear to me (perhaps an Oops with some resources held?)
+On 32-bit systems, for example, the entropy for libraries is reduced from 28 to 
+25, which means that libraries only have 32 different places where they can be 
+loaded.
 
-My sentiment this time:
 
-While embarrassing, it's good to know that this sort of bug (unlike the
-previous one) is promptly detected by a fuzzer, and thus has a short
-lifetime.  While ideally there would be no bugs in the first place,
-realistically I wish more bugs would be discovered and fixed so quickly.
+Details at:
+http://hmarco.org/bugs/AMD-Bulldozer-linux-ASLR-weakness-reducing-mmaped-files-by-eight.html
 
-The kernel uses many complicated conventions these days (for performance
-reasons), up to the point where it's difficult even for the most active
-upstream developers to make bug-free changes and to review proposed
-changes.  A lot of context needs to be considered and a lot of potential
-pitfalls kept in mind.
 
-Thanks to @grsecurity for at-mentioning me on the tweet pointing to the
-above commit.  I was otherwise out of the loop this time.  That's fine,
-but since I did bring the previous set of issues in here, I felt I also
-needed to post this follow-up.
+Link patch submission:
+https://lkml.org/lkml/2015/3/27/252
 
-Alexander
+
+Could you please assign a CVE-ID for this?
+
+
+
+Hector Marco.
+http://hmarco.org
+
+Cyber-security researcher at
+http://cybersecurity.upv.es/
