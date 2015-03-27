@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["797" "Tuesday" "6" "June" "2017" "15:31:00" "-0700" "Qualys Security Advisory" "qsa@qualys.com" "<20170606223100.GD27224@localhost.localdomain>" "29" "Re: [oss-security] Arbitrary terminal access via sudo on Linux" "^Date:" nil nil "6" "2017060622:31:00" "[oss-security] Arbitrary terminal access via sudo on Linux" (number mark "        qsa@qualys.c Jun  6   29/797   " thread-indent "\"Re: [oss-security] Arbitrary terminal access via sudo on Linux\"\n") "<85f955b3d43c6455@courtesan.com>" ("<85f9558a0a5e1fa9@courtesan.com>" "<CANO=Ty2J67rVs2agjkgxQ65eGnAn=iUKXy16HpTrWay_XEQPPQ@mail.gmail.com>" "<85f955b3d43c6455@courtesan.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1330" "Friday" "27" "March" "2015" "08:35:16" "-0500" "Jodie Cunningham" "jodie.cunningham@gmail.com" "<CABfY0L1Y2CYFQ-Hd-kohtzLKDy9aFFKmQM_drwsiR3MpEZ+KJA@mail.gmail.com>" "36" "[oss-security] Re: CVE Request: Multiple vulnerabilities in freexl 1.0.0g" nil nil nil "3" "2015032713:35:16" "[oss-security] Re: CVE Request: Multiple vulnerabilities in freexl 1.0.0g" (number mark "        jodie.cunnin Mar 27   36/1330  " thread-indent "\"[oss-security] Re: CVE Request: Multiple vulnerabilities in freexl 1.0.0g\"\n") "<20150327065417.2BB7D6C00F9@smtpvmsrv1.mitre.org>" ("<CABfY0L0rR1xe+C7CjcoUEMfO8x7VajEFUE4RaEP6WBSi+WdEPA@mail.gmail.com>" "<20150327065417.2BB7D6C00F9@smtpvmsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 6124 invoked by uid 550); 6 Jun 2017 22:38:27 -0000
+Received: (qmail 26073 invoked by uid 550); 27 Mar 2015 13:35:27 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,73 +11,66 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 1432 invoked from network); 6 Jun 2017 22:31:19 -0000
+Received: (qmail 26053 invoked from network); 27 Mar 2015 13:35:27 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=qualys.com; s=google;
-        h=date:from:to:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=OcNmQgLhPJaCMZLC9PvpJWhggBp/Fnmg7oADiMA4Sm8=;
-        b=lkpU1L8Nt1s7NQ4yc/JQBeaJAp7eqMlwJOUwXDrRBsjVlVPi8C8JYcc40v5LvrcUGc
-         1syKGIAJmg07hNQvnu2Pu/ws+qf5lz+QCLoxpUAo1NIPC/eddfXtC3jrZqN4ZL7H9tnO
-         a8ZPv0ut/qvzdCFyIX/M5AxTiTWomSFcNdSYUkzGfGctBmhSsboF3OF92pa+0fYZGscc
-         0JBiA0S7IrAqcY/SZLgFfwZwbuqjhLmabz5qS6VZaby2Mh8Ah3sEeulj7X31ox+tp9QO
-         FizwfRYJVOu+yS76fvStrvyzwwcAqXHumXXo+OR+ROcJOhFmytjRomY3ko0+ARboqtLF
-         v83g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=OcNmQgLhPJaCMZLC9PvpJWhggBp/Fnmg7oADiMA4Sm8=;
-        b=qcOTkmBBn1Bh5DB8qXsKeTtFaPRA/KVYc/A4QL7JcX2LTTluJIaRwqf/3HEYDOhb+t
-         X+0Y9fSBDRdtZBiwvuyujb5jmdJkNCiPZ9RVL7wOWGwiOAn36dh6li2DS+IyyS4/fur2
-         143syOm3k0S9+vd3qdXByJAEVrahTGdzlgYCF+m9g/3tkV4mVudcSLjt0w20jpZc0ZSo
-         dXfF8uOR++fJscQbOhBFhfbyJ8oLlqZzLQZWH5e+CMfh3V5vkRIh/l/e5eJRkxkNrIXj
-         vr9iuCRonKJkQMWvGjkWCZTrbzgty3mIyMdsCJdtSpCNiGbhFWDpPfXQn9GmOsOIilHw
-         5kkg==
-X-Gm-Message-State: AODbwcByXF4/UHnvuj03l3DYL0XG0vCJmXIfd2PjKyh6TwyoH/crPFHp
-	liXUCop/S+259KQZebI=
-X-Received: by 10.98.197.130 with SMTP id j124mr15472367pfg.239.1496788267006;
-        Tue, 06 Jun 2017 15:31:07 -0700 (PDT)
-Message-ID: <20170606223100.GD27224@localhost.localdomain>
-References: <85f9558a0a5e1fa9@courtesan.com>
- <CANO=Ty2J67rVs2agjkgxQ65eGnAn=iUKXy16HpTrWay_XEQPPQ@mail.gmail.com>
- <85f955b3d43c6455@courtesan.com>
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=0FeJOxMO7rBVs7uEk5JM1OZ/ODZ74dN5Zi+pIymVQLU=;
+        b=e7lp5haT2q8QHFCGXVAn8rb/b6AvojJciCBmh12BynAJXmskHVaKkUbdjFzYqiK5Yd
+         Vfoq6us6Tp95X6mEA34hzdxT/Wg5656kpH9wXSga+uaG19psfFQAEfv1V6eFSpHDfOD/
+         +d5I0HVjY+J5IiQD8XNtnTQWf2sd/pxlzbLOOPaV/276U1IIO0Oz3uNvjBMTQWO2AwFE
+         abD6JqPrWb/FvkN7yPpTfLl8xIL03rwcBMP2ceptPJsfbRvZSNrGYR4RMuoV1CfjajYh
+         dcJMYNAMJZHYvfE1l56WATvAG4bDF7NYx32G2hWSchjiqjkba45vDlRo6mwIdRM6TyAT
+         8rAA==
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <85f955b3d43c6455@courtesan.com>
-Date: Tue, 6 Jun 2017 15:31:00 -0700
-From: Qualys Security Advisory <qsa@qualys.com>
+X-Received: by 10.112.146.129 with SMTP id tc1mr17518027lbb.27.1427463316138;
+ Fri, 27 Mar 2015 06:35:16 -0700 (PDT)
+In-Reply-To: <20150327065417.2BB7D6C00F9@smtpvmsrv1.mitre.org>
+References: <CABfY0L0rR1xe+C7CjcoUEMfO8x7VajEFUE4RaEP6WBSi+WdEPA@mail.gmail.com>
+	<20150327065417.2BB7D6C00F9@smtpvmsrv1.mitre.org>
+Message-ID: <CABfY0L1Y2CYFQ-Hd-kohtzLKDy9aFFKmQM_drwsiR3MpEZ+KJA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Cc: oss-security@lists.openwall.com
+Date: Fri, 27 Mar 2015 08:35:16 -0500
+From: Jodie Cunningham <jodie.cunningham@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Arbitrary terminal access via sudo on Linux
-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: CVE Request: Multiple vulnerabilities in freexl 1.0.0g
+To: cve-assign@mitre.org
 
-On Fri, Jun 02, 2017 at 12:55:10PM -0600, Todd C. Miller wrote:
-> However, the arbitrary tty access IS exploitable in 1.8.20p1.
+Firstly, a correction to my earlier statement about the fixed release:
+1.0.0i is the first release to include the patch.
 
-For example, against Sudo < 1.8.20p1:
 
-$ /usr/bin/sudo -l
-...
-User john may run the following commands on localhost:
-    (nobody) /usr/bin/sum
+On Fri, Mar 27, 2015 at 1:54 AM,  <cve-assign@mitre.org> wrote:
+>> #2:
+> Does this refer to the missing "== NULL" tests within the
+> allocate_cells function?
 
-$ ln -s /usr/bin/sudo '     1026 '
-(1026 is tty2, currently used by root)
+Yes
 
-$ ./'     1026 ' -r unconfined_r -u nobody /usr/bin/sum $'--\nHELLO\nWORLD\n'
-(this is written to root's tty2)
+> Is a NULL pointer dereference going to occur
+> before the code reaches a point where there can be stack corruption?
 
-Or, against Sudo = 1.8.20p1:
+I don't believe so. It looks like these are initialized as NULL, and
+if they are still NULL at this point in execution then we assume the
+input file was malformed and exit with the appropriate return code.
 
-$ ln -s /usr/bin/sudo $')     1026 \n'
-$ ./$')     1026 \n' -r unconfined_r -u nobody /usr/bin/sum $'--\nHELLO\nWORLD\n'
+> Or does it refer to the missing "> 1024 * 1024" test in the parse_SST
+> function?
+>> #4:
+> Does this refer to the change from the "return ret;" code to the
+> "errcode = ret; goto stop;" code?
+> Or does it refer to one of the two possibilities listed above for #2?
 
-CVE-2017-1000368 was assigned to this newline vulnerability:
+This vulnerability is related to the missing "> 1024 * 1024" test in
+the parse_SST function.  The workbook could be crafted with a bad
+shared strings table that could use up an excessive amount of memory
+resources on the target system. gdb/exploitable.py also indicated
+DestAvNearNull at the time of the crash.
 
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-1000368
+The retcode change should benefit #3 and #4, but I don't know that it
+has any role at all in preventing the vulnerabilities.
 
-With best regards,
-
--- 
-the Qualys Security Advisory team
+V/R,
+-Jodie
