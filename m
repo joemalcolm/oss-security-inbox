@@ -1,4 +1,9 @@
-Received: (qmail 14006 invoked by uid 550); 28 Apr 2025 19:40:52 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3550" "Friday" "27" "March" "2015" "02:54:17" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150327065417.2BB7D6C00F9@smtpvmsrv1.mitre.org>" "94" "[oss-security] Re: CVE Request: Multiple vulnerabilities in freexl 1.0.0g" nil nil nil "3" "2015032706:54:17" "[oss-security] Re: CVE Request: Multiple vulnerabilities in freexl 1.0.0g" (number mark "        cve-assign@m Mar 27   94/3550  " thread-indent "\"[oss-security] Re: CVE Request: Multiple vulnerabilities in freexl 1.0.0g\"\n") "<CABfY0L0rR1xe+C7CjcoUEMfO8x7VajEFUE4RaEP6WBSi+WdEPA@mail.gmail.com>" ("<CABfY0L0rR1xe+C7CjcoUEMfO8x7VajEFUE4RaEP6WBSi+WdEPA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 30429 invoked by uid 550); 27 Mar 2015 06:54:30 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,50 +11,107 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 30411 invoked from network); 27 Mar 2015 06:54:29 -0000
+In-Reply-To: <CABfY0L0rR1xe+C7CjcoUEMfO8x7VajEFUE4RaEP6WBSi+WdEPA@mail.gmail.com>
+Message-Id: <20150327065417.2BB7D6C00F9@smtpvmsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Fri, 27 Mar 2015 02:54:17 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 30504 invoked from network); 28 Apr 2025 19:19:59 -0000
-Authentication-Results: apache.org; auth=none
-Message-ID: <663abb59-5876-4f74-a929-8417f5ae8afa@apache.org>
-Date: Mon, 28 Apr 2025 20:18:09 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-GB
-To: oss-security@lists.openwall.com
-From: Mark Thomas <markt@apache.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] CVE-2025-31651: Apache Tomcat: Bypass of rules in Rewrite Valve
+Subject: [oss-security] Re: CVE Request: Multiple vulnerabilities in freexl 1.0.0g
+To: jodie.cunningham@gmail.com
 
-Severity: low
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Affected versions:
+> I found multiple issues in the library FreeXL 1.0.0g.
+> The vendor has corrected these issues in FreeXL 1.0.1 , and a diff for
+> the four issues is available here:
 
-- Apache Tomcat 11.0.0-M1 through 11.0.5
-- Apache Tomcat 10.1.0-M1 through 10.1.39
-- Apache Tomcat 9.0.0.M1 through 9.0.102
+We don't feel that this has information in a usable format for making
+all of the CVE assignments. Listing four flaw descriptions with four
+reproducers does not necessarily imply a specific number of CVE IDs.
+We are not going to run the product with the reproducers to gather
+additional information.
 
-Description:
+We have:
 
-Improper Neutralization of Escape, Meta, or Control Sequences 
-vulnerability in Apache Tomcat. For a subset of unlikely rewrite rule 
-configurations, it was possible
-for a specially crafted request to bypass some rewrite rules. If those
-rewrite rules effectively enforced security constraints, those
-constraints could be bypassed.
+  https://www.gaia-gis.it/fossil/freexl/fdiff?v1=2e167b337481dda3&v2=61618ce51a9b0c15&sbs=1
+  https://www.gaia-gis.it/fossil/freexl/artifact/61618ce51a9b0c15
 
-This issue affects Apache Tomcat: from 11.0.0-M1 through 11.0.5, from 
-10.1.0-M1 through 10.1.39, from 9.0.0.M1 through 9.0.102.
+> #1:  A flaw was found in the way FreeXL reads sectors from the input
+> file.  A specially crafted file could possibly result in stack
+> corruption near freexl.c:3752.
+> 
+> Reproducer: https://www.dropbox.com/s/3htzndywvtmomlx/freexl_9f74b0e8?dl=0
 
-Users are recommended to upgrade to version [FIXED_VERSION], which fixes 
-the issue.
+Here, it seems very likely that what is meant is the missing "if
+(workbook->sector_end <= (workbook->p_in - workbook->sector_buf))"
+test in the unpatched code. In other words, the product did not verify
+that the calculation of the unsigned "chunk" value occurred as
+expected.
 
-Credit:
+Use CVE-2015-2753.
 
-COSCO Shipping Lines DIC (finder)
 
-References:
 
-https://lists.apache.org/list.html?announce@tomcat.apache.org
-https://tomcat.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2025-31651
+> #3: A flaw was found in the way FreeXL handles a premature EOF. A
+> specially crafted input file could possibly result in stack corruption
+> near freexl.c:1131
+> 
+> Reproducer: https://www.dropbox.com/s/66srfory903w6cl/freexl_d7273f72?dl=0
+
+This refers to the missing "if ((workbook->p_in -
+workbook->fat->miniStream) + workbook->record_size > (int)
+workbook->size)" test in the unpatched code (i.e., the test with the
+"unexpected EOF" comment in the patched code).
+
+Use CVE-2015-2754.
+
+
+> #2: A flaw was found in the function allocate_cells(). A specially
+> crafted file with invalid workbook dimensions could possibly result in
+> stack corruption near freexl.c:1074
+> 
+> Reproducer: https://www.dropbox.com/s/dcnbbntf7lp03yn/freexl_c9be2aa7?dl=0
+
+Does this refer to the missing "== NULL" tests within the
+allocate_cells function? Is a NULL pointer dereference going to occur
+before the code reaches a point where there can be stack corruption?
+
+Or does it refer to the missing "> 1024 * 1024" test in the parse_SST
+function?
+
+
+> #4: FreeXL 1.0.0g did not properly check requests for workbook memory
+> allocation. A specially crafted input file could cause a Denial of
+> Service, or possibly write onto the stack.
+> 
+> Reproducer (ulimit -Sv 128000):
+> https://www.dropbox.com/s/gh61gzaf8jj30hj/freexl_6889d18b?dl=0
+
+Does this refer to the change from the "return ret;" code to the
+"errcode = ret; goto stop;" code?
+
+Or does it refer to one of the two possibilities listed above for #2?
+
+"check requests for workbook memory allocation" could also conceivably
+refer to tests of the return value of malloc, but no such tests were
+added in the patch.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJVFP2TAAoJEKllVAevmvmsEg0H/Ar1L1wjmjxYJNCLNEUCrVXG
+aAdaTbufStUIy3LSG66MPklDClK3xwlS73Sor04ZpOybMbR2NFdTipwGOlufFmk0
+GsgPvl9J7HgKtFNUyppvvdu+NCjBSuKhBKLuTcnIDLFborD8XHWlsl4fwIS+WpKM
+djAVpq9lT4X2gevZXU+yxbalpYSIlitOtkIdQuydaU4G/914A1o/CZre9Efn3jAZ
+sYXQr8aZLzkCjzj/y/pINlvySQ9zwzzYnG1VjYuNsv15+JdiTT0ZSHZB6it4UQ5k
+rZI1n0dH5gHrlv/Aq9kzr1OjBFwTienVH0nbSb79DKkGr1Rr49KYsRh56WbMNsw=
+=Vze4
+-----END PGP SIGNATURE-----
