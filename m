@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["133" "Saturday" "5" "November" "2016" "00:05:35" "-0700" "Michal Zalewski" "lcamtuf@coredump.cx" "<CALx_OUD7KH_ZyfsCePr7YXd-VR2OjrZySLM0Wx-g34eD2q41JQ@mail.gmail.com>" "5" "[oss-security] Re: [FD] [oss-security] CVE request:Lynx invalid URL parsing with '?'" nil nil nil "11" "2016110507:05:35" "[oss-security] Re: [FD] [oss-security] CVE request:Lynx invalid URL parsing with '?'" (number mark "U       lcamtuf@core Nov  5    5/133   " thread-indent "\"[oss-security] Re: [FD] [oss-security] CVE request:Lynx invalid URL parsing with '?'\"\n") "<20161104120722.GA10421@vmw-debian7-64.jexium-island.net>" ("<CAPGxrc_N_=z12njMyN2WrSO74A9=ioEnppxs2YGExMn0qd6MJA@mail.gmail.com>" "<20161104120722.GA10421@vmw-debian7-64.jexium-island.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1803" "Friday" "27" "March" "2015" "14:39:27" "+0100" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20150327143927.60a73799@pc1.fritz.box>" "53" "[oss-security] CVE request: Erlang POODLE TLS vulnerability" nil nil nil "3" "2015032713:39:27" "[oss-security] CVE request: Erlang POODLE TLS vulnerability" (number mark "        hanno@hboeck Mar 27   53/1803  " thread-indent "\"[oss-security] CVE request: Erlang POODLE TLS vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 12014 invoked by uid 550); 5 Nov 2016 11:42:45 -0000
+Received: (qmail 5311 invoked by uid 550); 27 Mar 2015 13:39:30 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,49 +11,68 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 5286 invoked from network); 27 Mar 2015 13:39:30 -0000
+Message-ID: <20150327143927.60a73799@pc1.fritz.box>
+X-Mailer: Claws Mail 3.11.1 (GTK+ 2.24.27; x86_64-pc-linux-gnu)
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512; protocol="application/pgp-signature"; boundary="=_zucker.schokokeks.org-16407-1427463558-0001-2"
+Cc: cve-assign@mitre.org
+Date: Fri, 27 Mar 2015 14:39:27 +0100
+From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17584 invoked from network); 5 Nov 2016 07:06:07 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=coredump-cx.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=KkVyiVDMx2MK60JyEBNOzVkAVt/AWJpj4mIlF9ibrio=;
-        b=gi5K1n4rADCySFOEmb4qDE7fLANAnF1g+uctUlNP8WuHwEqxC66vA6TBNF0hxkxZeV
-         sTMZ6/smzNQBJl70Ut7XaYvOtlegLCkR7arADHnY+eRQeZfoktKVzs/vF3Nr95TnzYob
-         /K62fr1Ov7rSLMa1r+SNC9WMGY4hIZKsa9ezv3wrijPxFqE5GwRrIhxV75f+9rHYVY2N
-         MZtBj2Fske6itJ65TY+gM5x2Vnu1H03j3rNV6L8gF1vhubtHOSpvH+MpzzX3ZJoDrUEn
-         eT/Ea1kqaNv83U5pKWOHsrBwZ1UNhoaUhENKzy4W8RO8aLnMN0S7QtgNAbfzuCqfSEg5
-         6fCQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=KkVyiVDMx2MK60JyEBNOzVkAVt/AWJpj4mIlF9ibrio=;
-        b=QT9dvyCC/oh56IJR8N/hoKZAyB5hCjEc48XjiK/6Gu8eG9EB1mDuAkR2t8qqsABCp9
-         Jkxh4r6Al0PwqcVIX0Vmptqb/Cj0ZtUfLZAFhRRlqL3DCSg5L0Q4HDPexIEiKaZEoG/Y
-         1ISrtw0PS4S6k7aNpzWOhmF390JzBlUigatDpFmS1Vburx4KsDDBn2JPR8EH0geZzM+V
-         aoCo/jrmVw/QSvtv1mOtDt+ZpwO7QsIZNIOV+XGRdYNRAH8A+idySS/YnvtGsaZPJZP0
-         OGWfFeiUJpD0h1mRb6rPvD45fgiIIWdRYZUw6R7bdMvmLnnHXPhdYizjNCR8Yezc/NXg
-         3nyg==
-X-Gm-Message-State: ABUngvejD6uPuT9jpM+LCPbmrCpWbltQ2+RNbIthjP1SCwcwmUSGV1fhi6J4H24AKiKOZxQ/JimuqaWlVtQimA==
-X-Received: by 10.28.125.136 with SMTP id y130mr578967wmc.112.1478329555826;
- Sat, 05 Nov 2016 00:05:55 -0700 (PDT)
-MIME-Version: 1.0
-In-Reply-To: <20161104120722.GA10421@vmw-debian7-64.jexium-island.net>
-References: <CAPGxrc_N_=z12njMyN2WrSO74A9=ioEnppxs2YGExMn0qd6MJA@mail.gmail.com>
- <20161104120722.GA10421@vmw-debian7-64.jexium-island.net>
-From: Michal Zalewski <lcamtuf@coredump.cx>
-Date: Sat, 5 Nov 2016 00:05:35 -0700
-Message-ID: <CALx_OUD7KH_ZyfsCePr7YXd-VR2OjrZySLM0Wx-g34eD2q41JQ@mail.gmail.com>
-To: dickey@his.com
-Cc: redrain root <rootredrain@gmail.com>, oss-security <oss-security@lists.openwall.com>, 
-	Assign a CVE Identifier <cve-assign@mitre.org>, 
-	"fulldisclosure@seclists.org" <fulldisclosure@seclists.org>
+Subject: [oss-security] CVE request: Erlang POODLE TLS vulnerability
+To: oss-security@lists.openwall.com
+
+--=_zucker.schokokeks.org-16407-1427463558-0001-2
 Content-Type: text/plain; charset=UTF-8
-Subject: [oss-security] Re: [FD] [oss-security] CVE request:Lynx invalid URL parsing with '?'
+Content-Transfer-Encoding: quoted-printable
 
-> Actually, it does parse correctly.  Go read RFC 1738.
+Hi,
 
-IIRC, RFC 3986 "fixes" that, and so does https://url.spec.whatwg.org/.
+=46rom the release notes of Erlang 18.0-rc1:
+http://www.erlang.org/news/85
+"ssl: Remove default support for SSL-3.0 and added padding check for
+TLS-1.0 due to the Poodle vulnerability."
 
-/mz
+This indicates that Erlang was vulnerable to the TLS-variant of the
+poodle vulnerability due to missing padding checks (see [1]).
+
+While disabling old protocols is maybe not something covered by CVEs,
+this clearly is an implementation error and thus should be considered a
+vuln.
+
+
+[1] https://www.imperialviolet.org/2014/12/08/poodleagain.html
+
+cu,
+--=20
+Hanno B=C3=B6ck
+http://hboeck.de/
+
+mail/jabber: hanno@hboeck.de
+GPG: BBB51E42
+
+--=_zucker.schokokeks.org-16407-1427463558-0001-2
+Content-Type: application/pgp-signature
+Content-Transfer-Encoding: 7bit
+Content-Description: OpenPGP digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iQIcBAEBCgAGBQJVFV2PAAoJEKWIAHK7tR5CTZUP/0BTndZpaw4/wG4eaiQ3+724
+5j8ruQ2bmhKnvlG3nXL8rUBKKqKAltGGw8XkvyLJ9BWF4QDlvf8IRLTS/nNh1e51
+0Qd/cGqI6hy90PNtq4cPVJIZ0sW/vsPwlAUmxcVrOgIlV1V6SEnu1n9mNnmwqEdv
+yHuh/PWx9f5LbLJfs+EHQD8UzGThQCz33a0bQeaHfpSOxc6lJwWqqxUdp3hjPg08
+K4fmRQ3544gT7miWvtNObWIOMIUkUzytlkjuUJVHeDoi7CbJ4VqZJlIFrnUjKV7M
+jLdfP5xTpSiTCVA4Xxd49h+47rniC2lbrPgCRHl8EJcdDmgmMbpXoWPxUOpq1lYu
++MbZaO/98eN9De/Sj/dW/x95xzTM8796dKRFnXPBFkWoS1sC5n/BNLhJK2NVL3xq
+1zCfuJp7RamsPJpfM276/KAKsx2kX2JbG+truY+Ga3ifz9jMegJAikuTS5UO1LfU
+pBLUc9mRIyJTMgQ8+Ii0mYTFjPvdbBUOGbyHb/yucpoXdGWMFI8DqtRXudpUrnG5
+NP7fVnWVghEmJQcNqreUmGdFhEGBj655otxhitfoLldPQfI30cdcTnv+TAMuibJd
+ZndE+O4wjOi7mQS7cOP1GT3q6sjNrbIDoRv1ieMo0wTT2E946oyX41KJtMoSDIO0
+2O+aS9kGCu0c0W61GVI1
+=eQfh
+-----END PGP SIGNATURE-----
+
+--=_zucker.schokokeks.org-16407-1427463558-0001-2--
