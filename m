@@ -1,4 +1,9 @@
-Received: (qmail 15806 invoked by uid 550); 17 Apr 2026 15:54:45 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2678" "Saturday" "28" "March" "2015" "01:47:03" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150328054703.17CEE72E218@smtpvbsrv1.mitre.org>" "67" "[oss-security] Re: Fwd: Insecure file upload in Berta CMS" nil nil nil "3" "2015032805:47:03" "[oss-security] Re: Fwd: Insecure file upload in Berta CMS" (number mark "        cve-assign@m Mar 28   67/2678  " thread-indent "\"[oss-security] Re: Fwd: Insecure file upload in Berta CMS\"\n") "<C6303836-0701-4577-A248-53800051FE45@surevine.com>" ("<C6303836-0701-4577-A248-53800051FE45@surevine.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 15922 invoked by uid 550); 28 Mar 2015 05:47:19 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,41 +11,80 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 15879 invoked from network); 28 Mar 2015 05:47:14 -0000
+In-Reply-To: <C6303836-0701-4577-A248-53800051FE45@surevine.com>
+Message-Id: <20150328054703.17CEE72E218@smtpvbsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Sat, 28 Mar 2015 01:47:03 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 9728 invoked from network); 17 Apr 2026 10:32:55 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Rahul Vats <rahulvats@apache.org>
-To: oss-security@lists.openwall.com
-Message-ID: <c485a7ad-e053-59d8-c6f3-72ff6c404979@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Fri, 17 Apr 2026 10:31:25 +0000
-MIME-Version: 1.0
-Subject: [oss-security] CVE-2026-32228: Apache Airflow: Users with asset materialization
- permisssions could trigger Dags they had no access to 
+Subject: [oss-security] Re: Fwd: Insecure file upload in Berta CMS
+To: simon.waters@surevine.com
 
-Severity: low=20
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Affected versions:
+> http://seclists.org/fulldisclosure/2015/Mar/155
 
-- Apache Airflow (apache-airflow) 3.0.0 before 3.2.0
+> We found that the file upload didn't require authentication.
 
-Description:
+> The berta-0.8.10b.zip file from: http://www.berta.me/download/
+> includes a fix that requires authentication to upload files.
 
-UI / API User with asset materialize permission could trigger dags they had=
- no access to.
-Users are advised to migrate to Airflow version 3.2.0 that fixes the issue.
+> https://github.com/berta-cms/berta/commit/518235d894049cc6235e7bdaa6a0e5ec033aac59
 
-Credit:
+Use CVE-2015-2780 for this "didn't require authentication" issue.
 
-Masamune - Unit515 OPSWAT (finder)
-Ahmad Abuzaid (finder)
-Pierre Jeambrun (remediation developer)
+> http://support.berta.me/kb/faq/whats-the-difference-between-hosted-and-downloaded-berta
 
-References:
+The above CVE ID only applies, of course, to the "Downloaded Berta"
+product, not the very similar "Hosted Berta" product.
 
-https://github.com/apache/airflow/pull/63338
-https://airflow.apache.org/
-https://www.cve.org/CVERecord?id=3DCVE-2026-32228
 
+> Images with a ".php" extension could be uploaded, and all that was
+> required is that they pass the PHP getimagesize() function and have
+> suitable dimensions.
+
+There is currently no CVE ID for this issue that apparently remains
+within the patched code: the issue that an authenticated user can
+upload a .php file. As far as we can tell, Berta implements only one
+account, and this account (for the Downloaded Berta product) is
+authorized to modify any file. For example, see the
+http://support.berta.me/discussions/questions/21957-comment-box and
+http://support.berta.me/discussions/questions/23756-php support
+questions.
+
+The ability to bypass image validation by using certain .php files
+that begin with a "GIF89" substring might be considered a bug, but is
+perhaps not a security bug. The getimagesize test may be present for
+functionality reasons, e.g.,
+
+  - Berta is typically used by non-experts who would simply
+    be confused if they uploaded a malformed file
+
+  - if getimagesize didn't succeed, then Berta probably wouldn't be
+    able to create a thumbnail or do other image scaling
+
+and not for security reasons.
+
+In any case, the vendor might decide to make an announcement that
+authenticated upload of .php files was actually not within the
+bounds of their security model, and in that case a second CVE ID
+would probably be assigned.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJVFj/9AAoJEKllVAevmvmsJjAH/1yn9CKyGn3Snjkj7c1pgpwL
+MTrlcq9+U9gYbzlfrdVfLeoP6na6fwqrsIfDyfxyH/AHccjaq0vRmHUY+ufj+8dj
+uhuTYxvEMggYi0ZczDW9irPnAneym3ImI8nn3jINnrWOXvwkyguo2ZUOl/o/FoY6
+3bv1DTEy6U4cA9Ge1mrhDnHj22dSgXXZro24BCohSnoNsPF3T/somhkz/LsmbV0H
+5Vly/dJJ2jfxx+6w9hcOnQkdLQM23dSUYWOTFmlcfctgfhtZ1jIB/38oOnbQmRhy
+vdc5ABVx8TyH6I7ejbfidyBQpNDpDRwjlg7P3VOc/6WQxc7V83y/3H0Q4rEyc4g=
+=qjgx
+-----END PGP SIGNATURE-----
