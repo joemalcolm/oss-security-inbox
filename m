@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["957" "Wednesday" "5" "May" "2021" "19:09:40" "+0200" "Mauro Matteo Cascella" "mcascell@redhat.com" nil "27" "[oss-security] CVE-2021-3527 QEMU: usb: unbounded stack allocation in usbredir" nil nil nil "5" nil nil (number mark "U       mcascell@red May  5   27/957   " thread-indent "\"[oss-security] CVE-2021-3527 QEMU: usb: unbounded stack allocation in usbredir\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-3527 QEMU: usb: unbounded stack allocation in usbredir" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["479" "Sunday" "29" "March" "2015" "19:43:57" "+0200" "Salvatore Bonaccorso" "carnil@debian.org" "<20150329174357.GA2881@eldamar.local>" "19" "Re: [oss-security] CVE request: XSS in roundcube before 1.1.0" nil nil nil "3" "2015032917:43:57" "[oss-security] CVE request: XSS in roundcube before 1.1.0" (number mark "        carnil@debia Mar 29   19/479   " thread-indent "\"Re: [oss-security] CVE request: XSS in roundcube before 1.1.0\"\n") "<20150329115206.34058db2@pc1.fritz.box>" ("<20150329115206.34058db2@pc1.fritz.box>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 11806 invoked by uid 550); 5 May 2021 17:11:23 -0000
+Received: (qmail 32693 invoked by uid 550); 29 Mar 2015 17:44:11 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,72 +11,53 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 10198 invoked from network); 5 May 2021 17:10:08 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1620234596;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type;
-	bh=EuqnvcKJFnJ04BIlXQbpcZTnGDw9c59uKEJn/kUMhcw=;
-	b=TKUNYsaDYUFs3RaMS7iyN7PRfw4Z64yroOI2RCawa+SYHaMLIH4YuSB6lnbJqysCZjOQfo
-	GEeOZgx7WuNK6G2est1umezjYhghxO7WbBDS4SZ2YaEE0+QqY8VNaeYVgh7eiVxrtHMQey
-	CAW8TJjTYjD/NTW/4HcSkgKVnMGx3xs=
-X-MC-Unique: 9tM69AHbNbqF9IZV3r-4hA-1
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=EuqnvcKJFnJ04BIlXQbpcZTnGDw9c59uKEJn/kUMhcw=;
-        b=oxWZmDw45yWO2mujv27xsbWIqh+DWYybG/kWkvWVwNw1Xdc7qo19CMarooGmDWvh5j
-         trYMiJB/WSatw0YPBUsYL+c+IELLGZTI3S4wZPdbrTKmHygnI5ygJ2IhrWuhiq2Ryezg
-         hgwPed8e/DL9CheSzAoKgfxv6wi7ddXl/FjNs1RoKW9rd1xGPGcamJTh+f3YfzvdqCQX
-         MNkmMAx0uhm0blpv6Br8EnpafSGC2v7Roz+phcfJ2LIuYrfmHfpzMI/+4kAJiXcicOeP
-         rAPFVCYVvINGcuTyzRtN6OjaqSoCsp1boEqCjBctnhMzDI+7/cmM5ov1MNLnVVE4leiR
-         zFDQ==
-X-Gm-Message-State: AOAM530lyHXm8SQVS6x/10beVGYLn4/NXmHX5oys89Gy6tY94elSExNa
-	qXyqODsvTFmzpJorOR+qkvljACC6sUJTskGSQQJdzDQK6uIzegZPvLOhciFVxB5tN6l4qrZ+GMT
-	d3j88D7cmFhF0DX76+TRwYHgn9AsOAcSuTtKFAcSFGgaU
-X-Received: by 2002:a17:90b:3615:: with SMTP id ml21mr12445709pjb.28.1620234591899;
-        Wed, 05 May 2021 10:09:51 -0700 (PDT)
-X-Google-Smtp-Source: ABdhPJz1yNEpiOxp0nw/WxOrGyq66RhwVlEiXTx2iYBvml5gF9C0iHdU172zhXKQbUJMVUaMr5s82GuX/kvUf098M9E=
-X-Received: by 2002:a17:90b:3615:: with SMTP id ml21mr12445681pjb.28.1620234591544;
- Wed, 05 May 2021 10:09:51 -0700 (PDT)
+Received: (qmail 32675 invoked from network); 29 Mar 2015 17:44:10 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=zJMiZxVR6/rEgOsrFdqmtans8GNMEongl7MAMy378+g=;
+        b=JF2RqBUKBzcCR27LFi56hAYs1Ry7tXPuCoUtnlptU4EGX7V6hp6znppuytg0mCKn7O
+         zRGq7Or4TMetnj7HpNf/fnwNkm9aoduL/vwgv4Cq5dE8tE0IXSoxnWM3Su2ROiYyTHfn
+         UBSR9G1ReGhFZXs7KAwQ5eNQnbq/8ZuXH6YH1KZKOEL9KxscdMb7Zw+2txv2jctY3WVv
+         T/qWotmBQsFH93Zzs0QW+mjqm9nqgu0AnOwiCpV9V9lwDvxF5jeq0huohWN7ePdERVB+
+         2npt4qG/OgddAeUfg7YsFn1e0PWwMTErsBraCmiRzPNpTSOSak70rcbCStl/KPei9kNu
+         z6Dw==
+X-Received: by 10.180.212.40 with SMTP id nh8mr15100527wic.86.1427651039391;
+        Sun, 29 Mar 2015 10:43:59 -0700 (PDT)
+Message-ID: <20150329174357.GA2881@eldamar.local>
+References: <20150329115206.34058db2@pc1.fritz.box>
 MIME-Version: 1.0
-From: Mauro Matteo Cascella <mcascell@redhat.com>
-Date: Wed, 5 May 2021 19:09:40 +0200
-Message-ID: <CAA8xKjUSqF7rMsSbUqsU_rr4me+Db+K-b0FH2HkmXkESkCbNrQ@mail.gmail.com>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20150329115206.34058db2@pc1.fritz.box>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+Cc: cve-assign@mitre.org
+Date: Sun, 29 Mar 2015 19:43:57 +0200
+From: Salvatore Bonaccorso <carnil@debian.org>
+Reply-To: oss-security@lists.openwall.com
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Subject: Re: [oss-security] CVE request: XSS in roundcube before 1.1.0
 To: oss-security@lists.openwall.com
-Cc: Remy Noel <remy.noel@blade-group.com>
-Authentication-Results: relay.mimecast.com;
-	auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=mcascell@redhat.com
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] CVE-2021-3527 QEMU: usb: unbounded stack allocation in usbredir
 
-Hello,
+Hi Hanno,
 
-A flaw was found in the USB redirector device (usb-redir) of QEMU.
-Small USB packets are combined into a single, large transfer request,
-to reduce the overhead and improve performance. The combined size of
-the bulk transfer is used to dynamically allocate a variable length
-array (VLA) on the stack without proper validation. Since the total
-size is not bounded, a malicious guest could use this flaw to
-influence the array length and cause the QEMU process to perform an
-excessive allocation on the stack, resulting in a denial of service.
+On Sun, Mar 29, 2015 at 11:52:06AM +0200, Hanno Böck wrote:
+> http://trac.roundcube.net/wiki/Changelog
+> Fix XSS issue in style attribute handling (#1490227)
+> 
+> Upstream Bug:
+> http://trac.roundcube.net/ticket/1490227
+> 
+> Commit:
+> http://trac.roundcube.net/changeset/786aa0725/github
+> 
+> It was not mentioned in the release notes...
 
-Note: in addition to usb-redir, the patchset below fixes other places
-in the code where stack-allocated VLAs were used (notably, usb/hid and
-usb/mtp).
+This seem to have already a CVE: CVE-2015-1433, from
+http://www.openwall.com/lists/oss-security/2015/01/31/6
 
-Upstream patchset:
-https://lists.nongnu.org/archive/html/qemu-devel/2021-05/msg00564.html
-
-Acknowledgements: Remy Noel (cc'd).
-CVE-2021-3527 assigned by Red Hat, Inc.
-
-Best regards.
--- 
-Mauro Matteo Cascella
-Red Hat Product Security
-PGP-Key ID: BB3410B0
-
+Regards,
+Salvatore
