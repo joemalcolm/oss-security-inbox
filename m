@@ -1,4 +1,9 @@
-Received: (qmail 7584 invoked by uid 550); 23 Dec 2022 08:17:41 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1730" "Sunday" "29" "March" "2015" "02:21:48" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150329062148.7E31113A8B6@smtpvmsrv1.mitre.org>" "42" "[oss-security] Re: CVE Request: arj: free on invalid pointer due to to buffer overflow" nil nil nil "3" "2015032906:21:48" "[oss-security] Re: CVE Request: arj: free on invalid pointer due to to buffer overflow" (number mark "        cve-assign@m Mar 29   42/1730  " thread-indent "\"[oss-security] Re: CVE Request: arj: free on invalid pointer due to to buffer overflow\"\n") "<20150328075139.GA16356@eldamar.local>" ("<20150328075139.GA16356@eldamar.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 9402 invoked by uid 550); 29 Mar 2015 06:22:01 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,87 +11,55 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 9381 invoked from network); 29 Mar 2015 06:22:00 -0000
+In-Reply-To: <20150328075139.GA16356@eldamar.local>
+Message-Id: <20150329062148.7E31113A8B6@smtpvmsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Sun, 29 Mar 2015 02:21:48 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7563 invoked from network); 23 Dec 2022 08:17:41 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1671783449; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=S+l1POQgm7Js9AQLkiDPe8IDCrbqo/Qg1EItXTpzyq4=;
-	b=Lc67JIjkta6DVpaBcGCd5hh0RIjSVfZC+QL167io5/6YNKGCjm1o9CSk6fXKTsYKm6sLFk
-	1cA31KhMrOTGvBEvxKxt5mWEiH2MZpUBdinLjDA+SL5Dp1fGfVyqColdIqdsTu1LCsSwYL
-	0V1m6qogXEdo9pGTqy5b5WywrybSZpI=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1671783449;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=S+l1POQgm7Js9AQLkiDPe8IDCrbqo/Qg1EItXTpzyq4=;
-	b=oQ+mU2VcmDpJL0/3KKBFCijTUFFRpPuuFX8gi52U11d938TDrXmhg/R/NIW81zaEp2w1eL
-	yQSITmyTJ0Kce7Bg==
-Date: Fri, 23 Dec 2022 09:17:28 +0100
-From: Marcus Meissner <meissner@suse.de>
-To: oss-security@lists.openwall.com
-Message-ID: <20221223081727.GB2404@suse.de>
-References: <CAKoP-y-rbU=xEowJGp6my0khWMSbE05+ncDiE3wtXTOWwvyScA@mail.gmail.com>
- <Y6TQ0HyCJOMkKSDn@netmeister.org>
- <Y6VTdO608VUE38Ke@kroah.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Y6VTdO608VUE38Ke@kroah.com>
-Organization: SUSE Software Solutions =?iso-8859-1?Q?Ger?=
- =?iso-8859-1?Q?many_GmbH=2C_Frankenstra=DFe_146=2C_90461_Nuernberg=2C_Ger?=
- =?iso-8859-1?Q?many=2C_GF=3A_Ivo_Totev=2C_Andrew_Myers=2C_Andrew_McDonald?=
- =?iso-8859-1?Q?=2C_Martje_Boudien_Moerman=2C_HRB_36809=2C_AG_N=FCrnberg?=
-User-Agent: Mutt/1.10.1 (2018-07-13)
-Subject: Re: [oss-security] Details on this supposed Linux Kernel ksmbd RCE
+Subject: [oss-security] Re: CVE Request: arj: free on invalid pointer due to to buffer overflow
+To: carnil@debian.org
 
-Hi folks,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-tldr: I requested 5 CVEs for the new ZDI issues Josh and Jan referenced.
-
-long form:
-
-Nice surprise 1 day before Christmas.
-
-On Fri, Dec 23, 2022 at 08:06:28AM +0100, Greg KH wrote:
-> On Thu, Dec 22, 2022 at 04:49:04PM -0500, Jan Schaumann wrote:
-> > Lastly, given that this is a coordinated disclosure,
-> > I don't know why there are no CVE IDs reserved for
-> > these.
+> Jakub Wilk reported arj crashing on a ARJ file in [1]. Guillem Jover
+> pointed out that the invalid pointer is due to a buffer overflow write
+> access initiated by a value which is under user control, see [2]. He
+> prepared as well a patch for this issue[3]. Could assign a CVE for
+> this issue?
 > 
-> The kernel developers do not work with CVEs at all as they are not all
-> that relevant for the most part for kernel issues.
+>  [1] https://bugs.debian.org/774015
+>  [2] https://bugs.debian.org/774015#11
+>  [3] http://git.hadrons.org/gitweb/?p=debian/pkgs/arj.git;a=blob_plain;f=debian/patches/security-afl.patch
 
-We know.
+For purposes of determining the number of CVE IDs,
+https://bugs.debian.org/774015#11 is considered a 2015 vulnerability
+announcement, and https://bugs.debian.org/774015#3 is not considered a
+vulnerability announcement at all.
 
-> MITRE agrees with us
-> will not even give them to us if we ask for them :)
+(There was another conceivable interpretation in which part of
+security-afl.patch fixed an issue discovered by Jakub Wilk in 2014,
+and another part of security-afl.patch fixed a second similar issue
+discovered by Guillem Jover in 2015, with two CVEs. We aren't doing
+that here.)
 
-Not sure why they do not like you, but to be very clear anyone else can
-requests CVEs for the kernel, (except the blacklisted drivers/staging/ area).
+Use CVE-2015-2782.
 
-> Some Linux companies still insist on assigning CVEs, but that's
-> primarily to help enable their internal engineering processes more than
-> anything else.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-The whole software industry operates with CVEs as primary identifiers at
-this time, so it is not just some "internal engineering processes".
-
-> As an alternative, please look at the GSD (Global Security Database,
-> https://globalsecuritydatabase.org/) for which the kernel does get ids
-> assigned for issues like this, and many many others.
-
-Perhaps this or any of the other ID spaces / databases will be taking
-off in the near future, but the main industry index is CVEs at this time.
-
-
-That said, I have just filed 5 CVE requests for the 5 ZDI issues cross-
-referencing the Linux kernel mainline commits.
-
-FWIW, they were fixed in mainline in July and no one had spotted them,
-which of course underlines Gregs point and that there are not enough
-watchers.
-
-Ciao, Marcus
+iQEcBAEBAgAGBQJVF5mQAAoJEKllVAevmvmsTmEH/ReeQDQTDs+tTkIjaKluhuwV
+0U2+fpmNTkKfkr2Gf8CWaQ891Topc/c+dIEMVmuIJuWMJVdYfJ3V8ifB0n4U8srO
+Jd4TYqgsWP4xoPBmQtEev5bxPk00/yhnlFv6xUF8Sic2iloLbzEKG+vnBaMCuvxr
+uUSu5/xOCPZhxwJAYww0FzS1ZrV4D12iDLtEobfpPq9EEdrQdgMa6n/luX7Lrowe
+tDiJTT2vG8I0ITIi5E7itAFTYqcjmWgQ8pt4qqYEeMdgDCsoTEwJz8k8U+JnrjQC
+CEVixkXwkY8xxvNzlQE1zArRM6869qWVzCDT2tiTcoMXcPYuDQwAG6VUBGp+XEQ=
+=+r+1
+-----END PGP SIGNATURE-----
