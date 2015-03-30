@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["974" "Friday" "29" "September" "2017" "15:12:18" "+0200" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20170929151218.0cfb25c2@pc1>" "28" "Re: [oss-security] The Internet Bug Bounty: Data Processing (hackerone.com)" "^Date:" nil nil "9" "2017092913:12:18" "[oss-security] The Internet Bug Bounty: Data Processing (hackerone.com)" (number mark "        hanno@hboeck Sep 29   28/974   " thread-indent "\"Re: [oss-security] The Internet Bug Bounty: Data Processing (hackerone.com)\"\n") "<CALPTtNWjgtc00AvQrdfUspAqx0U+-0aEPGL3aiP1j-im4XC+6w@mail.gmail.com>" ("<20170928182541.r7dzm3epg7txsplh@tunkki.bugs.fi>" "<CAO5O-EL=MsSrj39-A_yf9_NmE-m7hrF6YfC+SOFnAw41Ae4g8Q@mail.gmail.com>" "<CALPTtNWjgtc00AvQrdfUspAqx0U+-0aEPGL3aiP1j-im4XC+6w@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1565" "Monday" "30" "March" "2015" "00:01:25" "-0400" "Rich Felker" "dalias@libc.org" "<20150330040125.GA9622@brightrain.aerifal.cx>" "51" "[oss-security] Security advisory for musl libc - stack-based buffer overflow in ipv6 literal parsing [CVE-2015-1817]" nil nil nil "3" "2015033004:01:25" "[oss-security] Security advisory for musl libc - stack-based buffer overflow in ipv6 literal parsing [CVE-2015-1817]" (number mark "        dalias@libc. Mar 30   51/1565  " thread-indent "\"[oss-security] Security advisory for musl libc - stack-based buffer overflow in ipv6 literal parsing [CVE-2015-1817]\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 25687 invoked by uid 550); 29 Sep 2017 13:12:34 -0000
+Received: (qmail 24437 invoked by uid 550); 30 Mar 2015 04:01:47 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,48 +11,68 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 25659 invoked from network); 29 Sep 2017 13:12:34 -0000
-Message-ID: <20170929151218.0cfb25c2@pc1>
-In-Reply-To: <CALPTtNWjgtc00AvQrdfUspAqx0U+-0aEPGL3aiP1j-im4XC+6w@mail.gmail.com>
-References: <20170928182541.r7dzm3epg7txsplh@tunkki.bugs.fi>
-	<CAO5O-EL=MsSrj39-A_yf9_NmE-m7hrF6YfC+SOFnAw41Ae4g8Q@mail.gmail.com>
-	<CALPTtNWjgtc00AvQrdfUspAqx0U+-0aEPGL3aiP1j-im4XC+6w@mail.gmail.com>
-X-Mailer: Claws Mail 3.15.1-dirty (GTK+ 2.24.31; x86_64-pc-linux-gnu)
+Received: (qmail 24351 invoked from network); 30 Mar 2015 04:01:38 -0000
+Message-ID: <20150330040125.GA9622@brightrain.aerifal.cx>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Date: Fri, 29 Sep 2017 15:12:18 +0200
-From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
+Content-Type: multipart/mixed; boundary="zhXaljGHf11kAtnf"
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
+Date: Mon, 30 Mar 2015 00:01:25 -0400
+From: Rich Felker <dalias@libc.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] The Internet Bug Bounty: Data Processing
- (hackerone.com)
-To: oss-security@lists.openwall.com
+Sender: Rich Felker <dalias@aerifal.cx>
+Subject: [oss-security] Security advisory for musl libc - stack-based buffer overflow in
+ ipv6 literal parsing [CVE-2015-1817]
+To: musl@lists.openwall.com, oss-security@lists.openwall.com
 
-On Thu, 28 Sep 2017 23:13:22 -0700
-Reed Loden <reed@reedloden.com> wrote:
+--zhXaljGHf11kAtnf
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-> Separately, we're happy to announce that libav (
-> https://git.libav.org/?p=3Dlibav.git;a=3Dsummary) was added to the scope
-> earlier today.
+A stack-based buffer overflow has been found in musl libc's ipv6
+address literal parsing code. Programs which call the inet_pton or
+getaddrinfo function with AF_INET6 or AF_UNSPEC and untrusted address
+strings are affected. Successful exploitation yields control of the
+return address. Having enabled stack protector at the application
+level does not mitigate the issue. All users should patch or upgrade.
 
-I'm surprised by this. When I saw the ibb-data bounty I immediately
-wondered whether ffmpeg should be in there.
+Software: musl libc (http://www.musl-libc.org)
 
-Is there a reason libav is in and ffmpeg is not? Were there concerns by
-the ffmpeg devs? (I'm not taking a side in the libav/ffmpeg wars, but
-my impression is that many distros who had used libav for some time
-have switched back and ffmpeg is clearly the more widely used of the
-forks.)
+Severity: high
 
-Given that imagemagick+graphicsmagick are already in there I assume
-there's no general problem for IBB to support competing forks.
+Affected Versions: 0.9.15 - 1.0.4, 1.1.0 - 1.1.7.
 
-At the very least I'd recommend that you make sure all ibb-reports for
-libav get tested against ffmpeg.
+Bug introduced in commit: 78f889153167452de4cbced921f6428b3d4f663a
 
---=20
-Hanno B=C3=B6ck
-https://hboeck.de/
+Bug fixed in commit: fc13acc3dcb5b1f215c007f583a63551f6a71363
 
-mail/jabber: hanno@hboeck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+Patch: musl_dn_expand_overflow_fix.diff (attached) (fix+hardening)
+
+--zhXaljGHf11kAtnf
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: attachment; filename="musl_inet_pton_overflow_fix.diff"
+
+diff --git a/src/network/inet_pton.c b/src/network/inet_pton.c
+index 4496b47..d36c368 100644
+--- a/src/network/inet_pton.c
++++ b/src/network/inet_pton.c
+@@ -39,14 +39,15 @@ int inet_pton(int af, const char *restrict s, void *restrict a0)
+ 	for (i=0; ; i++) {
+ 		if (s[0]==':' && brk<0) {
+ 			brk=i;
+-			ip[i]=0;
++			ip[i&7]=0;
+ 			if (!*++s) break;
++			if (i==7) return 0;
+ 			continue;
+ 		}
+ 		for (v=j=0; j<4 && (d=hexval(s[j]))>=0; j++)
+ 			v=16*v+d;
+ 		if (j==0) return 0;
+-		ip[i] = v;
++		ip[i&7] = v;
+ 		if (!s[j] && (brk>=0 || i==7)) break;
+ 		if (i==7) return 0;
+ 		if (s[j]!=':') {
+
+--zhXaljGHf11kAtnf--
