@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["192" "Monday" "15" "April" "2019" "09:17:50" "-0400" "Vladis Dronov" "vdronov@redhat.com" "<1293109484.21742695.1555334270413.JavaMail.zimbra@redhat.com>" "6" "Re: [oss-security] Linux kernel < 4.8 local generic ASLR - CVE-ID" "^Date:" nil nil "4" "2019041513:17:50" "[oss-security] Linux kernel < 4.8 local generic ASLR - CVE-ID" (number mark "        vdronov@redh Apr 15    6/192   " thread-indent "\"Re: [oss-security] Linux kernel < 4.8 local generic ASLR - CVE-ID\"\n") "<d7f72dad06e6d0b63f8418529f265784@fc.up.pt>" ("<d7f72dad06e6d0b63f8418529f265784@fc.up.pt>") nil nil nil nil nil nil nil "Re: [oss-security] Linux kernel < 4.8 local generic ASLR - CVE-ID" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["577" "Monday" "30" "March" "2015" "19:02:08" "+0100" "Simon McVittie" "smcv@debian.org" "<55198FA0.5040606@debian.org>" "17" "Re: [oss-security] CVE Request: ikiwiki: cross-site scripting via openid_identifier" nil nil nil "3" "2015033018:02:08" "[oss-security] CVE Request: ikiwiki: cross-site scripting via openid_identifier" (number mark "        smcv@debian. Mar 30   17/577   " thread-indent "\"Re: [oss-security] CVE Request: ikiwiki: cross-site scripting via openid_identifier\"\n") "<20150330124019.GD29777@mail.corp.redhat.com>" ("<20150330124019.GD29777@mail.corp.redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 7703 invoked by uid 550); 15 Apr 2019 13:18:02 -0000
+Received: (qmail 5808 invoked by uid 550); 30 Mar 2015 18:02:21 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,27 +11,35 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 7661 invoked from network); 15 Apr 2019 13:18:02 -0000
-Message-ID: <1293109484.21742695.1555334270413.JavaMail.zimbra@redhat.com>
-In-Reply-To: <d7f72dad06e6d0b63f8418529f265784@fc.up.pt>
-References: <d7f72dad06e6d0b63f8418529f265784@fc.up.pt>
+Received: (qmail 5790 invoked from network); 30 Mar 2015 18:02:20 -0000
+Message-ID: <55198FA0.5040606@debian.org>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.5.0
 MIME-Version: 1.0
+References: <20150330124019.GD29777@mail.corp.redhat.com>
+In-Reply-To: <20150330124019.GD29777@mail.corp.redhat.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.40.5.168, 10.4.195.14]
-Thread-Topic: Linux kernel < 4.8 local generic ASLR - CVE-ID
-Thread-Index: Ewp8fucA93Ff3D930KWrfX3h9slJ6Q==
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.15
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.38]); Mon, 15 Apr 2019 13:17:50 +0000 (UTC)
-Date: Mon, 15 Apr 2019 09:17:50 -0400 (EDT)
-From: Vladis Dronov <vdronov@redhat.com>
+Date: Mon, 30 Mar 2015 19:02:08 +0100
+From: Simon McVittie <smcv@debian.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Linux kernel < 4.8 local generic ASLR - CVE-ID
+Subject: Re: [oss-security] CVE Request: ikiwiki: cross-site scripting via
+ openid_identifier
 To: oss-security@lists.openwall.com
 
-Just in case - this is CVE-2019-11190:
+On 30/03/15 13:40, Vasyl Kaigorodov wrote:
+> Cross-site scripting flaw in the handling of the openid_identifier
+> parameterhas been fixed in ikiwiki:
+> 
+> http://source.ikiwiki.branchable.com/?p=source.git;a=commit;h=18dfba868fe2fb9c64706b2123eb0b3a3ce66a77
+> 
+> References:
+> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=781483
+> https://bugzilla.redhat.com/show_bug.cgi?id=1207210
+> 
+> Can we have a CVE assigned to this please?
 
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-11190
+Please note that Salvatore Bonaccorso already requested a CVE ID for
+ikiwiki Debian bug 781483; this request covers the same issue.
 
-Best regards,
-Vladis Dronov | Red Hat, Inc. | Product Security | Senior Software Engineer
+    S
+
