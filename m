@@ -1,4 +1,9 @@
-Received: (qmail 21703 invoked by uid 550); 22 Sep 2022 08:26:25 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["599" "Sunday" "29" "March" "2015" "18:50:25" "-0700" "Javantea" "jvoss@altsci.com" "<20150330015025.24AB213859E@mail.altsci.com>" "16" "[oss-security] CVE Request: Remote Code Execution in Realms Wiki install.sh" nil nil nil "3" "2015033001:50:25" "[oss-security] CVE Request: Remote Code Execution in Realms Wiki install.sh" (number mark "        jvoss@altsci Mar 29   16/599   " thread-indent "\"[oss-security] CVE Request: Remote Code Execution in Realms Wiki install.sh\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 7419 invoked by uid 550); 30 Mar 2015 03:54:30 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,44 +11,30 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11345 invoked from network); 22 Sep 2022 08:07:54 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Arnout Engelen <engelen@apache.org>
-To: oss-security@lists.openwall.com
-Message-ID: <b6dccca1-9e43-d746-f832-6767ab0d3d03@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Thu, 22 Sep 2022 08:07:35 +0000
+Received: (qmail 26477 invoked from network); 30 Mar 2015 01:49:31 -0000
+Content-Type: text/plain; charset="us-ascii"
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2022-40705: Apache SOAP: XML External Entity Injection (XXE)
- allows unauthenticated users to read arbitrary files via HTTP 
+Content-Transfer-Encoding: 7bit
+Message-Id: <20150330015025.24AB213859E@mail.altsci.com>
+Date: Sun, 29 Mar 2015 18:50:25 -0700 (PDT)
+From: Javantea <jvoss@altsci.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE Request: Remote Code Execution in Realms Wiki install.sh
+To: oss-security@lists.openwall.com
 
-Severity: important
+Hello,
 
-Description:
+Realms Wiki install.sh is vulnerable to remote code execution. This is unpatched but the author has responded that he intends to fix the bugs when he has the time. At the same time I found a CSRF vulnerability which I asked for a separate CVE for.
 
-** UNSUPPORTED WHEN ASSIGNED ** An Improper Restriction of XML External Ent=
-ity Reference vulnerability in RPCRouterServlet of Apache SOAP allows an at=
-tacker to read arbitrary files over HTTP. This issue affects Apache SOAP ve=
-rsion 2.2 and later versions. It is unknown whether previous versions are a=
-lso affected.  NOTE: This vulnerability only affects products that are no l=
-onger supported by the maintainer.
+Product:  Realms Wiki
+Website:  http://realms.io/
+Github:   https://github.com/scragg0x/realms-wiki
+CVSS Score: 7.9 (AV:A/AC:M/Au:N/C:C/I:C/A:C)
 
-Mitigation:
+References:
+[1] http://seclists.org/fulldisclosure/2015/Mar/153
+[2] https://twitter.com/scragg0x/status/581602868802682881
 
-We do not expect to release a version that fixes this problem. Instead, we =
-recommend users to migrate to one of the other actively maintained web serv=
-ice stacks such as Apache CXF (https://cxf.apache.org) or Apache Axis (http=
-s://axis.apache.org).
+Could you allocate a CVE id for this?
 
-Apache SOAP is an archived project, with the last release published in 2003=
-. This means it is no longer maintained, does not receive updates, and we d=
-o not commit to publishing CVE's for security problems in this project. Thi=
-s advisory is published purely as a courtesy.
-
-Credit:
-
-Apache would like to thank TsungShu Chiu (CHT Security) for reporting this =
-issue
-
+Thank you and Regards, Javantea.
