@@ -1,4 +1,9 @@
-Received: (qmail 19568 invoked by uid 550); 1 Mar 2024 22:41:39 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["681" "Sunday" "29" "March" "2015" "18:47:57" "-0700" "Javantea" "jvoss@altsci.com" "<20150330014757.7099C13859E@mail.altsci.com>" "16" "[oss-security] CVE Request: CSRF in Realms Wiki" nil nil nil "3" "2015033001:47:57" "[oss-security] CVE Request: CSRF in Realms Wiki" (number mark "        jvoss@altsci Mar 29   16/681   " thread-indent "\"[oss-security] CVE Request: CSRF in Realms Wiki\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 6095 invoked by uid 550); 30 Mar 2015 03:54:26 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,44 +11,30 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 25613 invoked from network); 1 Mar 2024 10:27:13 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Ephraim Anierobi <ephraimanierobi@apache.org>
-To: oss-security@lists.openwall.com
-Message-ID: <997fb0a3-e9b6-7b55-00db-af69f1017420@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Fri, 01 Mar 2024 10:30:43 +0000
+Received: (qmail 25718 invoked from network); 30 Mar 2015 01:47:04 -0000
+Content-Type: text/plain; charset="us-ascii"
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2024-26280: Apache Airflow: Overly broad default permissions
- for Viewer/Ops (audit logs) 
+Content-Transfer-Encoding: 7bit
+Message-Id: <20150330014757.7099C13859E@mail.altsci.com>
+Date: Sun, 29 Mar 2015 18:47:57 -0700 (PDT)
+From: Javantea <jvoss@altsci.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE Request: CSRF in Realms Wiki
+To: oss-security@lists.openwall.com
 
-Severity: low
+Hello,
 
-Affected versions:
+Realms Wiki is vulnerable to Cross-Site Request Forgery on all posts. Especially of concern are New, Edit, and Revert. This is unpatched but the author has responded that he intends to fix the bugs when he has the time. At the same time I found a remote code execution vulnerability which I will be asking for a separate CVE for.
 
-- Apache Airflow before 2.8.2
-
-Description:
-
-Apache Airflow, versions before 2.8.2, has a vulnerability that allows auth=
-enticated Ops and Viewers users to view all information on audit logs, incl=
-uding dag names and usernames they were not permitted to view.=C2=A0With 2.=
-8.2 and newer, Ops and Viewer users do not have audit log permission by def=
-ault, they need to be explicitly granted permissions to see the logs. Only =
-admin users have audit log permission by default.
-
-Users of Apache Airflow are recommended to upgrade to version 2.8.2 or newe=
-r to mitigate the risk associated with this vulnerability
-
-Credit:
-
-Yusuf AYDIN (@h1_yusuf) (finder)
+Product:  Realms Wiki
+Website:  http://realms.io/
+Github:   https://github.com/scragg0x/realms-wiki
+CVSS Score: 7.8 (AV:N/AC:L/Au:N/C:N/I:C/A:N)
 
 References:
+[1] http://seclists.org/fulldisclosure/2015/Mar/152
+[2] https://twitter.com/scragg0x/status/581602868802682881
 
-https://github.com/apache/airflow/pull/37501
-https://airflow.apache.org/
-https://www.cve.org/CVERecord?id=3DCVE-2024-26280
+Could you allocate a CVE id for this?
 
+Thank you and Regards, Javantea.
