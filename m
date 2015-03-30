@@ -1,33 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/04/19
-Message-ID: <Pine.LNX.4.64.1501041748460.3184@beijing.mitre.org>
-Date: Sun, 4 Jan 2015 18:04:19 -0500 (EST)
-From: "Steven M. Christey" <coley@...re.org>
-To: oss-security@...ts.openwall.com
-cc: alan.coopersmith@...cle.com, gremlin@...mlin.ru, cve@...re.org
-Subject: Assignment of CVE IDs with 5 or more digits by January 13, 2015
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/30/3
+Message-ID: <20150330040125.GA9622@oevtugenva.nrevsny.pk>
+Date: Mon, 30 Mar 2015 00:01:25 -0400
+From: Rich Felker <dalias@...c.org>
+To: musl@...ts.openwall.com, oss-security@...ts.openwall.com
+Subject: Security advisory for musl libc - stack-based buffer overflow in ipv6 literal parsing [CVE-2015-1817]
 Content-Type: text/plain; charset=utf-8
 
+A stack-based buffer overflow has been found in musl libc's ipv6
+address literal parsing code. Programs which call the inet_pton or
+getaddrinfo function with AF_INET6 or AF_UNSPEC and untrusted address
+strings are affected. Successful exploitation yields control of the
+return address. Having enabled stack protector at the application
+level does not mitigate the issue. All users should patch or upgrade.
 
-Based on recent discussion on oss-security and general interest, I thought 
-it was important to clarify what is currently planned for issuing 5-digit 
-CVE IDs by the dealine of January 13, 2015.
+Software: musl libc (http://www.musl-libc.org)
 
-Currently, CVE-2014-9509 is our last allocated ID from 2014.  During 2015, 
-we will continue to issue CVE-2014-xxxx IDs for other issues that were 
-disclosed in 2014, but it is highly unlikely that we will cross the 
-5-digit threshold by January 13.
+Severity: high
 
-We will still issue at least one valid 5-digit CVE-2014-xxxxx ID, and 
-probably more, on January 13.  This is a one-time exception to our usual 
-sequential allocation process.  We are doing this as a final "test" to 
-ensure that CVE-using implementations can handle the syntax change.
+Affected Versions: 0.9.15 - 1.0.4, 1.1.0 - 1.1.7.
 
-We might also issue CVE IDs with more than 5 digits, since it is highly 
-likely that some implementations will make a 5-digit assumption, even 
-though an arbitrary number of digits is allowed by the syntax change, 
-which went into effect more than a year ago.
+Bug introduced in commit: 78f889153167452de4cbced921f6428b3d4f663a
 
+Bug fixed in commit: fc13acc3dcb5b1f215c007f583a63551f6a71363
 
-Steve Christey Coley
-CVE Editor
+Patch: musl_dn_expand_overflow_fix.diff (attached) (fix+hardening)
+
+View attachment "musl_inet_pton_overflow_fix.diff" of type "text/plain" (592 bytes)
