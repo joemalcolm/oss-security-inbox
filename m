@@ -1,4 +1,9 @@
-Received: (qmail 6122 invoked by uid 550); 18 Mar 2026 14:09:13 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1276" "Monday" "30" "March" "2015" "16:11:33" "-0400" "Dave" "snoopdave@gmail.com" "<CAF1aazCpJPNS42M5+8gAmyBQbcMBFcRe4g_e7O6U+rG8SjM6LA@mail.gmail.com>" "48" "[oss-security] Fwd: CVE-2015-0249: Apache Roller allows admin users to execute arbitrary Java code" nil nil nil "3" "2015033020:11:33" "[oss-security] Fwd: CVE-2015-0249: Apache Roller allows admin users to execute arbitrary Java code" (number mark "        snoopdave@gm Mar 30   48/1276  " thread-indent "\"[oss-security] Fwd: CVE-2015-0249: Apache Roller allows admin users to execute arbitrary Java code\"\n") "<CAF1aazAPWTduVhrPr7WiFaspFdsh21yf0YiSB3UmLjtDVGnfXw@mail.gmail.com>" ("<CAF1aazAPWTduVhrPr7WiFaspFdsh21yf0YiSB3UmLjtDVGnfXw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 16221 invoked by uid 550); 30 Mar 2015 20:15:24 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,62 +11,78 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 14109 invoked from network); 30 Mar 2015 20:11:45 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type;
+        bh=YWxzbDn/JoqqzUgJqX+/G5gOCS0oOGnEU2K3BwrtpZE=;
+        b=buuHOcSPceknaKYHbVULvRkm7clAmCZhowK6K/MwakjT7VROdpStBDIJF/qloGZRJk
+         MP8W3L4K8x4FZygkUVHfg5YcYbNEZsExK7Ne5XhWp7YQ0HFJXqcO6W9xeOG+vC3I4rwp
+         y9DLJAW8CpxoblhnoxAkHwO4TGWDzbODlrEm3J80/3fH5OmNX+QBs4+aG6vPEo4fieIN
+         IclXCDXjnT7YPzj6dXerHg8oxn1sdFR9iuDYlzldI69uAZEia+crBW8DgwNIpXnnk0NE
+         LxguXZltH0dY6LjW/wjM0gvom/mrEcVFuWdhJEBnpvGEI0q9fq/K5yvvKr4uAGWhbDPE
+         MdrQ==
+MIME-Version: 1.0
+X-Received: by 10.182.16.233 with SMTP id j9mr29206329obd.24.1427746293222;
+ Mon, 30 Mar 2015 13:11:33 -0700 (PDT)
+In-Reply-To: <CAF1aazAPWTduVhrPr7WiFaspFdsh21yf0YiSB3UmLjtDVGnfXw@mail.gmail.com>
+References: <CAF1aazAPWTduVhrPr7WiFaspFdsh21yf0YiSB3UmLjtDVGnfXw@mail.gmail.com>
+Message-ID: <CAF1aazCpJPNS42M5+8gAmyBQbcMBFcRe4g_e7O6U+rG8SjM6LA@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=001a11c30aa2a316b40512871606
+Date: Mon, 30 Mar 2015 16:11:33 -0400
+From: Dave <snoopdave@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 5560 invoked from network); 18 Mar 2026 14:09:01 -0000
-Date: Wed, 18 Mar 2026 15:08:59 +0100
-From: Solar Designer <solar@openwall.com>
-To: oss-security@lists.openwall.com
-Message-ID: <20260318140859.GA28877@openwall.com>
-References: <210c77d7-6b3a-45b3-8618-d18635efc5e6@canonical.com> <CAOcQRVW0Nestm-mMxnEzbb=cTEy_chVaoy8rm7Aqwc5OkadHVw@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAOcQRVW0Nestm-mMxnEzbb=cTEy_chVaoy8rm7Aqwc5OkadHVw@mail.gmail.com>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] OpenSSH GSSAPI keyex patch issue
+Subject: [oss-security] Fwd: CVE-2015-0249: Apache Roller allows admin users to execute
+ arbitrary Java code
+To: security@apache.org, oss-security@lists.openwall.com, 
+	bugtraq@securityfocus.com
 
-Hi Dmitry,
+--001a11c30aa2a316b40512871606
+Content-Type: text/plain; charset=UTF-8
 
-On Wed, Mar 18, 2026 at 09:14:31AM +0100, Dmitry Belyavskiy wrote:
-> Can we somehow establish some better coordination in case of widely used
-> downstream patches, especially for such an important, ubiquitous and
-> heavily patched component as OpenSSH?
+---------- Forwarded message ----------
+From: Dave <snoopdave@gmail.com>
+Date: Tue, Mar 24, 2015 at 7:22 PM
+Subject: CVE-2015-0249: Apache Roller allows admin users to execute
+arbitrary Java code
+To: "dev@roller.apache.org" <dev@roller.apache.org>, user@roller.apache.org
 
-This was brought to the distros list on March 5.  On March 6, I wrote:
 
-"Looks like Red Hat packages are also affected.  In particular, I looked
-at openssh-8.0p1-gssapi-keyex.patch from RHEL 9."
+Severity: Important
 
-so it's not like Red Hat could assume this was limited to Debian/Ubuntu.
+Vendor:
+   The Apache Software Foundation
 
-I now recall that something similar happened on a previous occasion,
-where you were not aware of a relevant issue until public disclosure.
+Versions Affected:
+   Roller 5.1.1
+   Roller 5.1
+   The unsupported pre-Roller 5.1 versions may also be affected
 
-So we seem to have a question to the Red Hat security team here - are
-you going to be informing your package maintainers of embargoed issues
-(which I consider fitting the need-to-know condition of the distros
-list), or are you deliberately handling them differently, or neither?
+Description:
 
-I suppose this could reasonably vary by package - security updates to be
-prepared by security team vs. by package maintainer.
+   A Roller user with Admin-level access to a weblog can edit a weblog
+   page template and use special Velocity syntax to execute Java code on
+   the server.
 
-Should I be taking care of notifying Dmitry for OpenSSH specifically,
-where we know that he's eager to prepare for these disclosures but is
-often left out of the loop?  IIRC, from the previous occasion I actually
-planned to start doing that, but I forgot, I'm sorry.
+Mitigation:
 
-Meanwhile, I see the Mitigation section in
-https://access.redhat.com/security/cve/cve-2026-3497 has been updated to
-correctly refer to GSSAPI key exchange rather than authentication, but
-it still seems to imply the default configuration is affected - which I
-think it is not, or is it?
+   There are several ways you can fix this vulnerability:
 
-I wasn't too concerned about this issue for the Rocky Linux SIG/Security
-package that I maintain because we build it without Kerberos and GSSAPI
-support since March 2024.  The patch is still applied, but the
-GSSAPIKeyExchange setting does not exist for real (is silently ignored
-via an extra patch for compatibility with FIPS configs that disable it),
-so it can't possibly be enabled there.  Ditto in CIQ's RLC Pro Hardened.
+   1) Upgrade to the latest version of Roller, which is now 5.1.2.
 
-Alexander
+   2) Or, add the following line to Roller's velocity.properties file:
+
+
+runtime.introspector.uberspect=org.apache.velocity.util.introspection.SecureUberspector
+
+   3) Or, disable template editing on your Roller system by un-checking
+      the Allow Custom Themes setting in the Server Admin -> Configuration
+page,
+      Theme Settings section.
+
+Credit:
+
+   This issue was discovered by Gregory Draperi.
+
+--001a11c30aa2a316b40512871606--
