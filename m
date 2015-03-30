@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3588" "Saturday" "10" "October" "2015" "20:55:52" "-0700" "Christine Dodrill" "me@christine.website" "<20151011035552.GA26094@fluttershy>" "104" "[oss-security] ircd-ratbox and Derivatives OOM by MONITOR Command" nil nil nil "10" "2015101103:55:52" "[oss-security] ircd-ratbox and Derivatives OOM by MONITOR Command" (number mark "U       me@christine Oct 10  104/3588  " thread-indent "\"[oss-security] ircd-ratbox and Derivatives OOM by MONITOR Command\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1950" "Monday" "30" "March" "2015" "14:00:44" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150330180044.1EB0F42E028@smtpvbsrv1.mitre.org>" "41" "[oss-security] Re: CVS-Request: realmd code execution/auth bypass" nil nil nil "3" "2015033018:00:44" "[oss-security] Re: CVS-Request: realmd code execution/auth bypass" (number mark "        cve-assign@m Mar 30   41/1950  " thread-indent "\"[oss-security] Re: CVS-Request: realmd code execution/auth bypass\"\n") "<20150330150021.GB23696@suse.de>" ("<20150330150021.GB23696@suse.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 3617 invoked by uid 550); 11 Oct 2015 04:26:26 -0000
+Received: (qmail 30060 invoked by uid 550); 30 Mar 2015 18:00:59 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,120 +11,54 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 30029 invoked from network); 30 Mar 2015 18:00:55 -0000
+In-Reply-To: <20150330150021.GB23696@suse.de>
+Message-Id: <20150330180044.1EB0F42E028@smtpvbsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Mon, 30 Mar 2015 14:00:44 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 22162 invoked from network); 11 Oct 2015 03:56:07 -0000
-Date: Sat, 10 Oct 2015 20:55:52 -0700
-From: Christine Dodrill <me@christine.website>
-To: oss-security@lists.openwall.com
-Message-ID: <20151011035552.GA26094@fluttershy>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="fUYQa+Pmc3FrFX/N"
-Content-Disposition: inline
-User-Agent: Mutt/1.5.23 (2014-03-12)
-Subject: [oss-security] ircd-ratbox and Derivatives OOM by MONITOR Command
+Subject: [oss-security] Re: CVS-Request: realmd code execution/auth bypass
+To: krahmer@suse.de
 
---fUYQa+Pmc3FrFX/N
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Elemental-IRCd Security Release: 2015-10-07
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+The availability of new software from upstream doesn't determine
+whether a CVE ID can be assigned. If the old software had a behavior
+that matched the documentation and was consistent with a possibly
+useful security model, then typically no CVE ID is assigned when a
+vendor chooses to announce a cutover to a different security model.
 
-CVE-2015-5290
+> it should "somehow" be ensured that the legit AD servers are used.
 
-Elemental-IRCd reference code: e50b0d59-f3c5-4472-a3cd-e2e07731417c
+A possibly intended use case is network environments that do not have
+any untrusted devices and do not have any rogue ADs. To the extent
+that the product is used on arbitrary networks, many types of
+improvements might be helpful. For example, apparently the default is
+to use a realm name sent by a DHCP server. One might argue that an
+improvement would be dropping DHCP support on the basis that it's an
+unsafe way to determine a realm name. Or, one might argue that the
+realm-name string should be displayed to the client user for
+confirmation before proceeding. We don't necessarily want to have CVEs
+for these types of improvements. The automatic-join issue is more of a
+borderline issue but may be best categorized as a natural evolution of
+a security model for a better match with real-life use cases and
+real-life threats.
 
-Permanent link: http://elemental-ircd.com/security/e50b0d59-f3c5-4472-a3cd-=
-e2e07731417c
-
-Distribution of this document is unlimited and encouraged as long as it
-remains unchanged.
-
-## Summary
-
-Elemental-IRCd is an Internet Relay Chat (IRC / RFC 1459) daemon intended
-for stable, secure deployments for both private and public-facing users. It
-provides quick messaging across servers, even when deployed on a global
-scale. One of the recent goals of the project has been to limit memory
-leaks and test functionality to ensure quality for all users.
-
-While looking for resource leaks and other things to test inside
-Elemental-IRCd git master, we stumbled on an unfortunate programming error
-in how the MONITOR command was handled that can lead to a system
-out-of-memory event if an attacker hammers at the MONITOR command over and
-over.
-
-## Affected Daemons
-
-In our testing, the following IRC daemons were affected:
-
-ircd-ratbox 3.0.8, SVN trunk and older
-charybdis 3.5-dev and older
-ircd-seven 1.1.3 and older
-Elemental-IRCd 6.6.2 and older
-Other derivatives of these daemons will be affected as well unless for some
-reason they came across and fixed that issue before this release.
-
-## Vulnerability Information
-
-Public release date: 2015-10-07
-CVE: CVE-2015-5290
-CVSS v3:
-CVSS:3.0/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H/E:H/RL:W/RC:C/CR:H/IR:L/AR:H/M=
-AV:N/MAC:L/MPR:N/MUI:N/MC:L/MI:N/MA:H
-CVSS score: 8.8 / 8.6 / 9.5
-Attack complexity: Trivial (less than 30 lines of code)
-
-## Notes
-
-If applying these patches is somehow impossible, the attack can be
-completely mitigated by unloading the m_monitor.so module using the
-following command provided you have permission to load and unload modules:
-
-    /MODUNLOAD m_monitor.so
-
-The required privilege to do this is defined as the admin flag inside the
-flags section of the relevant operator{} block in the configuration
-(OLD:O:Line).
-
-This patch can be applied at runtime and will automatically garbage-collect
-any memory that has been leaked in the past.
-
-A full set of technical details will be released as soon as it is confirmed
-that major IRC networks affected by this have been patched.
-
----
-
-Please see the above permanent link for more information, including the
-links to patches for your preferred daemon.
-
---=20
-
-            Christine Dodrill <me@christine.website>
-       CF54 AAE3 62BF 9C9F B79F  AA18 799F 9134 8118 1111
-                 https://christine.website
-
-   "No matter where you are... everyone is always connected."
-                        =E3=82=8C=E3=81=84=E3=82=93 =E3=81=84=E3=82=8F=E3=
-=81=8F=E3=82=89
-
---fUYQa+Pmc3FrFX/N
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJWGd3IAAoJEOkDe2d85VAEm+EH/jMz9Ftw/qTom8sINUkSrzRa
-Ez9JGrlhB2evvaLOlQGtmCd7EDe8n2qr5CGkgapQBcWSUNleN8cNNI1Hgiu60GWW
-IK3b+e/8Jn7Vt3cVnBdJ+OORVOnnw+mmVZt7n1Cw1tAcA3nWdVJPbD6eKJTxIBMg
-IRfjiCIT/gKIRqE7kw0kRccCW9/xkmqq2bOagARpLrgcjTMtTaqFZ7+j8qSXjCC5
-BFyUqpupJMTeVdPtnLqDtlfla22OYYhlfF6LAT40/WaVzDmjqLaW1AMQXT3SLPcp
-ZXwExJjgceO69ulAoL01Vja7Z/0WktB2Voar+0q9e0CQep+GRKuf8Htk57Q4SKY=
-=YTb7
+iQEcBAEBAgAGBQJVGY6EAAoJEKllVAevmvmsbkQH/R9UUBJ5q0zGJzOUdL4i4E3a
+ZMk15+zBbvKov5NSYFFNL1TI5O9TlVHZFWb9NZoasnHb4RcFlv3byelYOGNRTdLD
+rJNnD7Jy7bnIwrniKe/gb7DnKfbLIeB4BarjKPRbBz3O7zWYYhLJArdod62PgD0i
+bBkQsJgIAPR0Rlb29zYKvrWBpAtxSI1KE4lJKH6/JxCWOXy23BG5aBDlEF4oGmSR
+8hyJ2ZKRw1gEmdeSH8E1TUkbYukADf8GANC2AEqRiHNtAwjJRkkMWQuTzPjzHCZU
+yldzKONImW9CXMAnWpNGBonQ2+FWhalQePLdumkFwTAsfG1CMrQK0EKN+aCiEXQ=
+=zxlx
 -----END PGP SIGNATURE-----
-
---fUYQa+Pmc3FrFX/N--
