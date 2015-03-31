@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1911" "Tuesday" "3" "May" "2016" "18:36:50" "+0200" "Gustavo Grieco" "gustavo.grieco@gmail.com" "<CACn5sdQe0-qg68k+Zb5XtTk9Q2z1j38akrPxbAQQu_4Qf+g3Lw@mail.gmail.com>" "48" "[oss-security] CVE request: out-of-bounds read parsing an XML in libxml2 using recover mode" nil nil nil "5" "2016050316:36:50" "[oss-security] CVE request: out-of-bounds read parsing an XML in libxml2 using recover mode" (number mark "U       gustavo.grie May  3   48/1911  " thread-indent "\"[oss-security] CVE request: out-of-bounds read parsing an XML in libxml2 using recover mode\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1193" "Tuesday" "31" "March" "2015" "09:32:25" "+0300" "Lior Kaplan" "kaplanlior@gmail.com" "<CAEsznC75pwsZfO4WpFiDCjqNXAA-y2C_S4yrrKci=7Rw6S8OSA@mail.gmail.com>" "40" "Re: [oss-security] CVE Request: PHP SoapClient's __call() type confusion through unserialize()" nil nil nil "3" "2015033106:32:25" "[oss-security] CVE Request: PHP SoapClient's __call() type confusion through unserialize()" (number mark "        kaplanlior@g Mar 31   40/1193  " thread-indent "\"Re: [oss-security] CVE Request: PHP SoapClient's __call() type confusion through unserialize()\"\n") "<20150330224953.GC6329@boyd>" ("<550C769F.5010801@truel.it>" "<20150330234201.410bcbb8@redhat.com>" "<20150330224953.GC6329@boyd>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 1877 invoked by uid 550); 3 May 2016 16:37:02 -0000
+Received: (qmail 20372 invoked by uid 550); 31 Mar 2015 06:42:19 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,85 +11,72 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1856 invoked from network); 3 May 2016 16:37:01 -0000
+Received: (qmail 15552 invoked from network); 31 Mar 2015 06:32:37 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to;
-        bh=BETc7WHuvQuj/cgC89uuL6ebKMKbRsy/aQNYlD5KJ/M=;
-        b=dRHN45wxCM0NIPN++D5zEkHqi3EGSzOcFD4ooyRjkg4iUUUrTX0Jpm9IcO+U+o8Gtk
-         tkQgZ0mN8LZzfKqzfXRNz8PmkSDpDv7N9THB77/PsWAaBtZiHAKEfLFYtT5mD5hAA/zG
-         qxitkSHMA7tgEFgAh+H1iGxb+iEBX2Qw+P0wpjBiFfpJCEYff0sWDc6ByU0KyP75cFNX
-         ILxkEy04AYhIkO4f45bX0w1LEANblCccmXWD+fyF8Guj3UKoCXQW2M6pJ24Q+M+KvzL1
-         I329GB2qLwzH/oOhVGYRuupzKGZxyB1NWNY4x5C9uAATpm+ikgTLrv4M8ng1kHcRwYCW
-         q6HA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to;
-        bh=BETc7WHuvQuj/cgC89uuL6ebKMKbRsy/aQNYlD5KJ/M=;
-        b=jdgKyoExgWnC0fB5e2a77WRXMlqq4M4M2VhLfztzUOJetM2b5Ft9n2Ysvsedj2pDpl
-         c358uqOfqts5BXC0Q9EHi+/81Yo1gp3/V8RACtTuHfpe8v1AaxlglPSEK26HAC7Gb66m
-         Zl//tLBNcphWYILsaC+I0b+OWIe0vW0P4wUcrn8q8kZEOKVuZBGKIBbce0pHM6UYj9RX
-         bA9JJ40kUrnBZ/G0iuagBELPyT7oaXkVFkul2TtoxshSza764C8fK0pYxTtXihYNWfS3
-         Q8PojYtFbgeDvy5PtukV97U/XEZolGXKFBJ+PgIzaKN13ruyxZbphWG7lX7E7SetgFsW
-         1c6A==
-X-Gm-Message-State: AOPr4FXhxKdoftCYWgxmpSXTXos4wg3GZk0PVQFTn8glCNCxSUDqpSKhos/NtU+7ylWlaSrZfXhm+7gfLGM+4g==
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=ttGtRpZCS+9TbV6SfgD09i/+YIhGdajR6cxa3N655cg=;
+        b=tMfmsD6LeapeO9PZbjuQC5LBUPIj00xg4RdK9X1L1HHQIaxUAF5VycRqqQCz4M4Qp2
+         aMK1eOkGf0LCjMW9+wQrzTOMQ/MDrt5j3+ssO7PZXx3RKvNKbCWl3e2Z+p+DEXnoLvoe
+         HE4DIg66MFCa5Zt3qiRq6hZ4zcsIBNqIYWcDf+UVFXrOVkLuatX7llhTb6xPy2L283nk
+         /OZXTIEg7f9dos2T/QQOXKNh78YqT0bp/30XhK5TXz2Wst8GMViLhvwIP1e66qanF1YX
+         sANDt+I8xJgZI0oYj9+GXyyKUyq3y+URPH6Iy6V0MACMApgrz0uPKM/d/abwYEbYKyyO
+         asTg==
 MIME-Version: 1.0
-X-Received: by 10.112.141.71 with SMTP id rm7mr1735489lbb.56.1462293410483;
- Tue, 03 May 2016 09:36:50 -0700 (PDT)
-Date: Tue, 3 May 2016 18:36:50 +0200
-Message-ID: <CACn5sdQe0-qg68k+Zb5XtTk9Q2z1j38akrPxbAQQu_4Qf+g3Lw@mail.gmail.com>
-From: Gustavo Grieco <gustavo.grieco@gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary=001a11c33b1c4a17c60531f2b794
-Subject: [oss-security] CVE request: out-of-bounds read parsing an XML in libxml2 using
- recover mode
+X-Received: by 10.60.123.83 with SMTP id ly19mr30895733oeb.8.1427783545097;
+ Mon, 30 Mar 2015 23:32:25 -0700 (PDT)
+In-Reply-To: <20150330224953.GC6329@boyd>
+References: <550C769F.5010801@truel.it>
+	<20150330234201.410bcbb8@redhat.com>
+	<20150330224953.GC6329@boyd>
+Message-ID: <CAEsznC75pwsZfO4WpFiDCjqNXAA-y2C_S4yrrKci=7Rw6S8OSA@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=047d7b5d549805920f05128fc317
+Cc: oss-security@lists.openwall.com, "security@php.net" <security@php.net>
+Date: Tue, 31 Mar 2015 09:32:25 +0300
+From: Lior Kaplan <kaplanlior@gmail.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] CVE Request: PHP SoapClient's __call() type
+ confusion through unserialize()
+To: Tyler Hicks <tyhicks@canonical.com>
 
---001a11c33b1c4a17c60531f2b794
+--047d7b5d549805920f05128fc317
 Content-Type: text/plain; charset=UTF-8
 
- Hi,
+On Tue, Mar 31, 2015 at 1:49 AM, Tyler Hicks <tyhicks@canonical.com> wrote:
 
-We found an out-of-bounds read parsing a specially crafted xml in libxml2
-if recover mode is used. It affects all versions.  It was discovered before
-by another guy but for some reason, never reported or fixed. Since upstream
-is not responding, i think it is a good time to publish some details here.
+> On 2015-03-30 23:42:01, Tomas Hoger wrote:
+> > On Fri, 20 Mar 2015 20:35:59 +0100 Andrea Palazzo wrote:
+> >
+> > > I'd like to request a CVE for the PHP Sec Bug #69085.
+> > >
+> > > Description:
+> > > SoapClient's __call() method is prone to a type confusion
+> > > vulnerability which can be used to gain remote code execution through
+> > > unsafe unserialize() calls.
+> > >
+> > > Info:
+> > > https://bugs.php.net/bug.php?id=69085
+> >
+> > There is another unserialize issue fixed in 5.6.7, 5.5.23 and 5.4.39
+> > and currently listed on PHP 5 Changelog page:
+> >
+> > http://php.net/ChangeLog-5.php
+> >
+> > Fixed bug #68976 (Use After Free Vulnerability in unserialize()).
+> (CVE-2015-0231)
+> > https://bugs.php.net/68976
+>
+> I believe that the ChangeLog-5.php page contains a typo since NVD claims
+> that CVE-2015-2787 corresponds to PHP bug #68976:
+>
+>  https://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2015-2787
+>
+>
+We weren't aware of this CVE assignment... Thanks.
 
-$ xmllint -recover ohizsmaase.xml.-6355798974422201279
-...
-==2994== ERROR: AddressSanitizer: heap-buffer-overflow on address
-0x60040000d5d3 at pc 0x73320a bp 0x7fffffffc1e0 sp 0x7fffffffc1d8
-READ of size 1 at 0x60040000d5d3 thread T0
-...
-0x60040000d5d3 is located 0 bytes to the right of 3-byte region
-[0x60040000d5d0,0x60040000d5d3)
+The bug & changelog updated.
 
-And backtrace is here:
+Kaplan
 
-...
-#7  0x000000000073320a in xmlBufAttrSerializeTxtContent
-(buf=0x600c0000a7c0, doc=0x601e0000ef50, attr=0x601000007ea0,
-string=0x60040000d5d0 <incomplete sequence \341>) at xmlsave.c:2057
-#8  0x000000000072af0b in xmlAttrSerializeContent (buf=0x600c0000a820,
-attr=0x601000007ea0) at xmlsave.c:443
-#9  0x000000000072c36c in xmlAttrDumpOutput (ctxt=0x601c0000ca60,
-cur=0x601000007ea0) at xmlsave.c:780
-#10 0x000000000072c3b2 in xmlAttrListDumpOutput (ctxt=0x601c0000ca60,
-cur=0x601000007ea0) at xmlsave.c:797
-#11 0x000000000072dc22 in xmlNodeDumpOutputInternal (ctxt=0x601c0000ca60,
-cur=0x60180000b440) at xmlsave.c:1055
-#12 0x000000000072ef8a in xmlDocContentDumpOutput (ctxt=0x601c0000ca60,
-cur=0x601e0000ef50) at xmlsave.c:1234
-#13 0x000000000073246c in xmlSaveDoc (ctxt=0x601c0000ca60,
-doc=0x601e0000ef50) at xmlsave.c:1936
-#14 0x000000000040a238 in parseAndPrintFile (filename=0x7fffffffe759
-"ohizsmaase.xml.-6355798974422201279", rectxt=0x0) at xmllint.c:2689
-#15 0x000000000040fe5e in main (argc=3, argv=0x7fffffffe4a8) at
-xmllint.c:3739
-
-A reproducer is available upon request. Please assign a CVE if necesary.
-
-Regards,
-Gustavo.
-
---001a11c33b1c4a17c60531f2b794--
+--047d7b5d549805920f05128fc317--
