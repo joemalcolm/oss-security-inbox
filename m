@@ -1,4 +1,9 @@
-Received: (qmail 25913 invoked by uid 550); 27 Oct 2022 07:36:46 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1359" "Tuesday" "31" "March" "2015" "20:40:55" "+0200" "Florian Weimer" "fw@deneb.enyo.de" "<87d23prow8.fsf@mid.deneb.enyo.de>" "29" "Re: [oss-security] 2 moderate (borderline low) docker flaws fixed in >=1.5 and possibly earlier" nil nil nil "3" "2015033118:40:55" "[oss-security] 2 moderate (borderline low) docker flaws fixed in >=1.5 and possibly earlier" (number mark "        fw@deneb.eny Mar 31   29/1359  " thread-indent "\"Re: [oss-security] 2 moderate (borderline low) docker flaws fixed in >=1.5 and possibly earlier\"\n") "<5511AD55.8040006@redhat.com>" ("<5510F66A.9030202@redhat.com>" "<871tke8ngu.fsf@mid.deneb.enyo.de>" "<5511AD55.8040006@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 21983 invoked by uid 550); 31 Mar 2015 18:41:08 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,65 +11,46 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15574 invoked from network); 26 Oct 2022 22:42:02 -0000
-Content-Type: multipart/alternative;
- boundary="------------nWluHlx9aoNd8iCrcxFJi0Kr"
-Message-ID: <b3783d0c-19d9-4381-41b2-66747da55c05@openssl.org>
-Date: Thu, 27 Oct 2022 09:41:42 +1100
+Received: (qmail 21965 invoked from network); 31 Mar 2015 18:41:07 -0000
+References: <5510F66A.9030202@redhat.com> <871tke8ngu.fsf@mid.deneb.enyo.de>
+	<5511AD55.8040006@redhat.com>
+In-Reply-To: <5511AD55.8040006@redhat.com> (Kurt Seifried's message of "Tue,
+	24 Mar 2015 12:30:45 -0600")
+Message-ID: <87d23prow8.fsf@mid.deneb.enyo.de>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.0
-Content-Language: en-US
-To: Matan Giladi <matangi@checkpoint.com>,
- "openssl-users@openssl.org" <openssl-users@openssl.org>,
- "openssl-announce@openssl.org" <openssl-announce@openssl.org>,
- "openssl-project@openssl.org" <openssl-project@openssl.org>,
- "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-References: <f6d07458-3515-4f79-c013-440d27278554@openssl.org>
- <4a324f40d90b4cb5a6ceab5623615ed8@checkpoint.com>
-From: Dr Paul Dale <pauli@openssl.org>
-Organization: OpenSSL
-In-Reply-To: <4a324f40d90b4cb5a6ceab5623615ed8@checkpoint.com>
-Subject: [oss-security] Re: Forthcoming OpenSSL Bug Fix Release
+Content-Type: text/plain; charset=us-ascii
+Date: Tue, 31 Mar 2015 20:40:55 +0200
+From: Florian Weimer <fw@deneb.enyo.de>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] 2 moderate (borderline low) docker flaws fixed in >=1.5 and possibly earlier
+To: oss-security@lists.openwall.com
 
---------------nWluHlx9aoNd8iCrcxFJi0Kr
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+* Kurt Seifried:
 
-1.1.1 is not susceptible to the CVE that is being fixed in 3.0:
+> On 03/24/2015 08:44 AM, Florian Weimer wrote:
+>> * Kurt Seifried:
+>> 
+>>> Another example of why embargoes are a bad idea, these issues have been
+>>> fixed for ages by upstream but fell through the cracks, because embargo!
+>> 
+>> There is no hard information in those bug reports.  It's not clear
+>> what, precisely, they are about, and so it is impossible to tell if
+>> they actually have been fixed.  I appreciate that you clean out old
+>> stuff, but doing it this way makes it seem you suddenly have developed
+>> a policy for secrecy around security issues.
+>
+> tjay@  (our docker guy) verified they were fixed as you can see from his
+> comments in the bugs.
+>
+> This is an example of why we need to clean these old things out. Nobody
+> really cares about them, and in all likelihood they got fixed by upstream.
 
-    /the forthcoming release of OpenSSL version 1.1.1s that is a *bug
-    fix* release/.
+Well, it's been an interesting experience to be on the other side of
+the information deficit for once.  Usually, it's us who complain about
+certain upstreams who say that they have fixed some vulnerabilities in
+a new release (along with tons of other fixes), list a few CVEs, but
+without any details what was actually fixed.
 
-(highlight added).
-
-
-Dr Paul Dale
-
-On 26/10/22 22:17, Matan Giladi wrote:
-> Does 1.1.1s is going to include any security fix?
-> Can you please confirm that the critical issue found in 3.0.6 version is irrelevant for 1.1.1?
->
-> -----Original Message-----
-> From: openssl-announce<openssl-announce-bounces@openssl.org>  On Behalf Of Ing. Martin Koci, MBA
-> Sent: Tuesday, October 25, 2022 21:36
-> To:openssl-announce@openssl.org;openssl-users@openssl.org;openssl-project@openssl.org;oss-security@lists.openwall.com
-> Subject: Forthcoming OpenSSL Bug Fix Release
->
-> Hello,
->
-> In addition to the already announced 3.0.7 release, the OpenSSL project team would like to announce the forthcoming release of OpenSSL version 1.1.1s that is a bug fix release.
->
-> This bug fix release will be made available on Tuesday 1st November 2022 between 1300-1700 UTC too.
->
-> Yours
-> The OpenSSL Project Team
->
->
-> Email secured by Check Point
-> Report Phishing:https://mta-cnf.iaas.checkpoint.com/mta_feedback?id=b3dc9e6004806fac5adb86a1a47504d00416eb2590b631502621736f0652d7ea&ck=3D4CC6C8CB55;48DE55E160E5;C5CEAA199888;&v=m
->
-> Email secured by Check Point
-
---------------nWluHlx9aoNd8iCrcxFJi0Kr--
+In any case, my immediate need for this information is gone.  Debian
+jessie will not release with the docker.io package.  (Previously, it
+was at version 1.3.3, which is why I was a bit concerned.)
