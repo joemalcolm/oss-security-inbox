@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4636" "Wednesday" "2" "January" "2019" "20:49:08" "+1300" "Amos Jeffries" "squid3@treenet.co.nz" "<fd484723-0f96-16e6-94e8-13e96b342cbb@treenet.co.nz>" "118" "Re: [oss-security] wget / chromium: URL metadata and potential password leaks via extended filesystem attributes" "^Date:" nil nil "1" "2019010207:49:08" "[oss-security] wget / chromium: URL metadata and potential password leaks via extended filesystem attributes" (number mark "        squid3@treen Jan  2  118/4636  " thread-indent "\"Re: [oss-security] wget / chromium: URL metadata and potential password leaks via extended filesystem attributes\"\n") "<20190101111540.20e73fbc@computer>" ("<20190101111540.20e73fbc@computer>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["8369" "Tuesday" "31" "March" "2015" "12:10:07" "+0000" "Xen.org security team" "security@xen.org" "<E1Ycuzf-0005TY-Ao@xenbits.xen.org>" "199" "[oss-security] Xen Security Advisory 127 (CVE-2015-2751) - Certain domctl operations may be abused to lock up the host" nil nil nil "3" "2015033112:10:07" "[oss-security] Xen Security Advisory 127 (CVE-2015-2751) - Certain domctl operations may be abused to lock up the host" (number mark "        security@xen Mar 31  199/8369  " thread-indent "\"[oss-security] Xen Security Advisory 127 (CVE-2015-2751) - Certain domctl operations may be abused to lock up the host\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 7556 invoked by uid 550); 2 Jan 2019 08:18:21 -0000
+Received: (qmail 1444 invoked by uid 550); 31 Mar 2015 12:10:51 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,182 +11,217 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 14249 invoked from network); 2 Jan 2019 07:49:33 -0000
-References: <20190101111540.20e73fbc@computer>
-Openpgp: preference=signencrypt
-Autocrypt: addr=squid3@treenet.co.nz; prefer-encrypt=mutual; keydata=
- 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
-Message-ID: <fd484723-0f96-16e6-94e8-13e96b342cbb@treenet.co.nz>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.4.0
+Received: (qmail 30577 invoked from network); 31 Mar 2015 12:10:26 -0000
+Message-Id: <E1Ycuzf-0005TY-Ao@xenbits.xen.org>
+Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
+Content-Transfer-Encoding: binary
 MIME-Version: 1.0
-In-Reply-To: <20190101111540.20e73fbc@computer>
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature";
- boundary="th6YomqGFV2JIvN6Ap5p0gUDrOI1BhlY3"
-Date: Wed, 2 Jan 2019 20:49:08 +1300
-From: Amos Jeffries <squid3@treenet.co.nz>
+X-Mailer: MIME-tools 5.428 (Entity 5.428)
+CC: Xen.org security team <security@xen.org>
+Date: Tue, 31 Mar 2015 12:10:07 +0000
+From: Xen.org security team <security@xen.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] wget / chromium: URL metadata and potential
- password leaks via extended filesystem attributes
-To: oss-security@lists.openwall.com
+Subject: [oss-security] Xen Security Advisory 127 (CVE-2015-2751) - Certain domctl
+ operations may be abused to lock up the host
+To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
+ xen-users@lists.xen.org, oss-security@lists.openwall.com
 
---th6YomqGFV2JIvN6Ap5p0gUDrOI1BhlY3
-Content-Type: multipart/mixed; boundary="1Tjgxmd1LV9XDVGZqDD3dVG1JXTIa1iJQ";
- protected-headers="v1"
-From: Amos Jeffries <squid3@treenet.co.nz>
-To: oss-security@lists.openwall.com
-Message-ID: <fd484723-0f96-16e6-94e8-13e96b342cbb@treenet.co.nz>
-Subject: Re: [oss-security] wget / chromium: URL metadata and potential
- password leaks via extended filesystem attributes
-References: <20190101111540.20e73fbc@computer>
-In-Reply-To: <20190101111540.20e73fbc@computer>
+--=separator
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+Content-Transfer-Encoding: 7bit
 
---1Tjgxmd1LV9XDVGZqDD3dVG1JXTIa1iJQ
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On 1/01/19 11:15 pm, Hanno B=C3=B6ck wrote:
-> Hi,
->=20
-> Via some twitter discussions [1] I recently learned about a worrying
-> behavior of wget and Chromium / Chrome.
->=20
-> The URL of downloads gets stored via filesystem attributes on systems
-> that support Unix extended attributes.
->=20
-> You can see these attributes on Linux systems by running
-> getfattr -d [filename]
-> (The download URL is stored in a variable "user.xdg.origin.url")
->=20
-> This is worrying for a number of reasons:
-> * In combination with HTTP authentication a username and password can
->   be part of the URL (HTTP authentication can be accessed via an URL of
->   the form https://[username]:[password]@[hostname]/).
+            Xen Security Advisory CVE-2015-2751 / XSA-127
+                              version 2
 
-FYI: Since RFC 2616 the userinfo@ portion of generic URI has been
-deprecated in http: and https: scheme URLs. The current standard RFC
-7230 added a requirement of UI tools to treat such URLs as errors
-instead of fetching.
- Agents may still choose to accept/tolerate URLs with userinfo@, but are
-then required to erase and ignore the userinfo@ octets before any other
-processing of the URL.
+     Certain domctl operations may be abused to lock up the host
 
-It has this status due to the well-known security problems with
-credentials existing in URL.
+UPDATES IN VERSION 2
+====================
 
-So IMO this reason would be CVE-worthy if the userinfo@ was preserved in
-that stored form of the URLs. But if they were filtering it away this
-reason would not be relevant.
+CVE assigned.
 
+Public release.
 
-> * Sometimes URLs may contain secret tokens, e.g. private file shares on
->   a file hosting service.
+ISSUE DESCRIPTION
+=================
 
-This is a bigger security problem IMHO. It is created by developers
-choice to place secrets in the URL and has no real solution other than
-stopping people doing that behaviour entirely.
+XSA-77 put the majority of the domctl operations on a list excepting
+them from having security advisories issued for them if any effects
+their use might have could hamper security. Subsequently some of them
+got declared disaggregation safe, but for a small subset this was not
+really correct: Their (mis-)use may result in host lockups.
 
-UI applications cannot be reasonably expected to know every possible
-combination of octets that are secrets.
+As a result, the potential security benefits of toolstack
+disaggregation are not always fully realised.
 
+IMPACT
+======
 
-> * In general storing metadata at unexpected places should be avoided.
->=20
+Domains deliberately given partial management control may be able to
+deny service to the entire host.
 
-That depends on ones expectations.
+As a result, in a system designed to enhance security by radically
+disaggregating the management, the security may be reduced.  But, the
+security will be no worse than a non-disaggregated design.
 
-In HTTP environment the URL is the objects canonical name. That thing
-humans call a "filename" is the metadata which may or may not exist.
+VULNERABLE SYSTEMS
+==================
 
-In FS terms the extended attributes *are* the expected place to store
-metadata of an object. That is the purpose of the extensions.
+Xen versions 4.3 onwards are vulnerable.
+Xen versions 4.2 and earlier do not have the described disaggregation
+functionality and hence are not vulnerable.
 
+MITIGATION
+==========
 
+The issues discussed in this advisory are themselves bugs in features
+used for a security risk mitigation.
 
-I expect wget accepted the CVE and added option to control the behaviour
-since that tool can be used to store D/L object anywhere in the FS.
+There is no further mitigation available, beyond general measures to
+try to avoid parts of the system management becoming controlled by
+attackers.  Those are the kind of measures which we expect any users
+of radical disaggregation to have already deployed.
 
+Switching from disaggregated to a non-disaggregated operation does NOT
+mitigate these vulnerabilities.  Rather, it simply recategorises the
+vulnerability to hostile management code, regarding it "as designed";
+thus it merely reclassifies these issues as "not a bug".
 
-Chrome on the other hand uses FS areas clearly dedicated to D/L object
-storage. So object in that area should be fully expected to possibly be
-associated with metadata *somewhere* containing secrets, the closer that
-somewhere is tied to the FS object the better its security properties.
+Users and vendors of disaggregated systems should not change their
+configuration.  The robustness benefits of disaggregation are
+unaffected, and (depending on system design) security benefits are
+likely to remain despite the vulnerabilities.
 
-For example; the extended attributes are erased when an object in
-Downloads/ folder/directory is deleted manually by non-Chrome FS tools.
-This is better for security than some separate cache of metadata holding
-onto the URL + secrets for possibly years after the object is deleted by
-a user.
+CREDITS
+=======
 
+This issue was discovered by Andrew Cooper of Citrix.
 
-AYJ
+RESOLUTION
+==========
 
+Applying the appropriate attached patch resolves this issue.
 
---1Tjgxmd1LV9XDVGZqDD3dVG1JXTIa1iJQ--
+xsa127-unstable.patch        xen-unstable
+xsa127-4.x.patch             Xen 4.5.x, Xen 4.4.x, Xen 4.3.x
 
---th6YomqGFV2JIvN6Ap5p0gUDrOI1BhlY3
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
+$ sha256sum xsa127*.patch
+5b98280738a205c40f56d0a7feb6ea6cd867da7ac1e0d9f4fc4620bae2c09171  xsa127.patch
+e5fd3c126ae10fe45283e6eb1a4216b75057f1772d869d2b3a26398b0984c7bd  xsa127-4.x.patch
+$
 
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
 -----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-iQIzBAEBCgAdFiEEAimzwkzOwlQSfJUyANhjZ5QgvdMFAlwsbPQACgkQANhjZ5Qg
-vdOnEA/9FlXaqXiwFLWNUBGw06drbQMWS4ZBemiIoqdaEspM9xNyatzkMx8IWTNW
-6kJijztJviDcg5X+eII8zje+61jzHsWjJ3yVdI9Vlt02trIUiQWnNpgJHwmvJbJz
-TiCVgGgnFFUgYnOtqS0yD8msIrs30z08l3ul+ehKTbgn+EqzGRMnbDhbZCOzFhDV
-gjMGEh3oYmnx6DZZdotzpn8WP89T2qqFjU2wHgVNjeNkHRDbQqbK+de/rOokgmTM
-zdJmt/Zxcffe+IGOIpb44nM6yiM3xXuJoWqPKFrT6vOemyQYv1iqYAILOZKtcTLZ
-Mjr/r5RMuEx2Sm6Xks6VXPbtSRqxZc6IvLrOUWuj2eA7U6jzfc1tN7a31fQTh7jl
-sjf1SKLdUlGquL9IvhzHH5X6sM8JWckVbcJX8wucsfZV11mC+wl28XruqRnoz0UV
-PkMPLWPXx+Em6/4H0KgSRJdRnH8E0y5v3HmpR41K5Lqc00L8jVQjBr5H7OWIBeYW
-a+UbsdoBxJDwmliuoiv9YDQYDycFcPBWpSH94JGevAsACPFlw84Ih9R9DsH9sV4D
-+DSAYQQMrdk1Rw4GIYFAwzrK1eu0Nd/91jXw/pqSw1//R7JbAWuKIK1CMeEXIjpS
-PMqWECEC0CmBvUWKrOo1V5/0Pt5R/4oBCi3fyyAgx1HBlYAi8Kg=
-=zYnw
+iQEcBAEBAgAGBQJVGo5PAAoJEIP+FMlX6CvZMhoH/0zH/JpvOk+dTQHVBN5uYjDB
+hkW5+/K4NfqRpnxQmTNJ6F5j0gcjbPCusf1yjdwjsAkToX2Y3TmqQAulpzkpT1z2
+vvnIl8nYvD92fL1C8U9EBAXj62QmxN/IoX8rSl+g8byhoSO4WmUkbqseOb6LlcV3
+wq/H15ZFfE6FjDQQGaFasbYyDOgBQiWFEmrBo2Zx7Qkendv5lt0YV/6/j3m1R8Hm
+D9fEchB07zKO49YkKnRrucDSf/9JTJI8W8M4Hmm9ykXncdUVI7xTSa66/XDOegcL
+ArBl9aXvuN9jMETS/JJBkEwqvULTQMy+Ac4NxBJE2W0allkKZxCcHMq50oSq3t0=
+=qqy0
 -----END PGP SIGNATURE-----
 
---th6YomqGFV2JIvN6Ap5p0gUDrOI1BhlY3--
+--=separator
+Content-Type: application/octet-stream; name="xsa127.patch"
+Content-Disposition: attachment; filename="xsa127.patch"
+Content-Transfer-Encoding: base64
+
+ZG9tY3RsOiBkb24ndCBhbGxvdyBhIHRvb2xzdGFjayBkb21haW4gdG8gY2Fs
+bCBkb21haW5fcGF1c2UoKSBvbiBpdHNlbGYKClRoZXNlIERPTUNUTCBzdWJv
+cHMgd2VyZSBhY2NpZGVudGFsbHkgZGVjbGFyZWQgc2FmZSBmb3IgZGlzYWdn
+cmVnYXRpb24KaW4gdGhlIHdha2Ugb2YgWFNBLTc3LgoKVGhpcyBpcyBYU0Et
+MTI3LgoKU2lnbmVkLW9mZi1ieTogQW5kcmV3IENvb3BlciA8YW5kcmV3LmNv
+b3BlcjNAY2l0cml4LmNvbT4KUmV2aWV3ZWQtYnk6IEphbiBCZXVsaWNoIDxq
+YmV1bGljaEBzdXNlLmNvbT4KQWNrZWQtYnk6IElhbiBDYW1wYmVsbCA8aWFu
+LmNhbXBiZWxsQGNpdHJpeC5jb20+CgotLS0gYS94ZW4vYXJjaC94ODYvZG9t
+Y3RsLmMKKysrIGIveGVuL2FyY2gveDg2L2RvbWN0bC5jCkBAIC04ODQsNiAr
+ODg0LDEwIEBAIGxvbmcgYXJjaF9kb19kb21jdGwoCiAgICAgewogICAgICAg
+ICB4ZW5fZ3Vlc3RfdHNjX2luZm9fdCBpbmZvOwogCisgICAgICAgIHJldCA9
+IC1FSU5WQUw7CisgICAgICAgIGlmICggZCA9PSBjdXJyZW50LT5kb21haW4g
+KSAvKiBubyBkb21haW5fcGF1c2UoKSAqLworICAgICAgICAgICAgYnJlYWs7
+CisKICAgICAgICAgZG9tYWluX3BhdXNlKGQpOwogICAgICAgICB0c2NfZ2V0
+X2luZm8oZCwgJmluZm8udHNjX21vZGUsCiAgICAgICAgICAgICAgICAgICAg
+ICAgICAmaW5mby5lbGFwc2VkX25zZWMsCkBAIC04OTksNiArOTAzLDEwIEBA
+IGxvbmcgYXJjaF9kb19kb21jdGwoCiAKICAgICBjYXNlIFhFTl9ET01DVExf
+c2V0dHNjaW5mbzoKICAgICB7CisgICAgICAgIHJldCA9IC1FSU5WQUw7Cisg
+ICAgICAgIGlmICggZCA9PSBjdXJyZW50LT5kb21haW4gKSAvKiBubyBkb21h
+aW5fcGF1c2UoKSAqLworICAgICAgICAgICAgYnJlYWs7CisKICAgICAgICAg
+ZG9tYWluX3BhdXNlKGQpOwogICAgICAgICB0c2Nfc2V0X2luZm8oZCwgZG9t
+Y3RsLT51LnRzY19pbmZvLmluZm8udHNjX21vZGUsCiAgICAgICAgICAgICAg
+ICAgICAgICBkb21jdGwtPnUudHNjX2luZm8uaW5mby5lbGFwc2VkX25zZWMs
+Ci0tLSBhL3hlbi9jb21tb24vZG9tY3RsLmMKKysrIGIveGVuL2NvbW1vbi9k
+b21jdGwuYwpAQCAtNTMxLDcgKzUzMSwxMCBAQCBsb25nIGRvX2RvbWN0bChY
+RU5fR1VFU1RfSEFORExFX1BBUkFNKHhlCiAgICAgICAgIGJyZWFrOwogCiAg
+ICAgY2FzZSBYRU5fRE9NQ1RMX3Jlc3VtZWRvbWFpbjoKLSAgICAgICAgZG9t
+YWluX3Jlc3VtZShkKTsKKyAgICAgICAgaWYgKCBkID09IGN1cnJlbnQtPmRv
+bWFpbiApIC8qIG5vIGRvbWFpbl9wYXVzZSgpICovCisgICAgICAgICAgICBy
+ZXQgPSAtRUlOVkFMOworICAgICAgICBlbHNlCisgICAgICAgICAgICBkb21h
+aW5fcmVzdW1lKGQpOwogICAgICAgICBicmVhazsKIAogICAgIGNhc2UgWEVO
+X0RPTUNUTF9jcmVhdGVkb21haW46Cg==
+
+--=separator
+Content-Type: application/octet-stream; name="xsa127-4.x.patch"
+Content-Disposition: attachment; filename="xsa127-4.x.patch"
+Content-Transfer-Encoding: base64
+
+ZG9tY3RsOiBkb24ndCBhbGxvdyBhIHRvb2xzdGFjayBkb21haW4gdG8gY2Fs
+bCBkb21haW5fcGF1c2UoKSBvbiBpdHNlbGYKClRoZXNlIERPTUNUTCBzdWJv
+cHMgd2VyZSBhY2NpZGVudGFsbHkgZGVjbGFyZWQgc2FmZSBmb3IgZGlzYWdn
+cmVnYXRpb24KaW4gdGhlIHdha2Ugb2YgWFNBLTc3LgoKVGhpcyBpcyBYU0Et
+MTI3LgoKU2lnbmVkLW9mZi1ieTogQW5kcmV3IENvb3BlciA8YW5kcmV3LmNv
+b3BlcjNAY2l0cml4LmNvbT4KUmV2aWV3ZWQtYnk6IEphbiBCZXVsaWNoIDxq
+YmV1bGljaEBzdXNlLmNvbT4KQWNrZWQtYnk6IElhbiBDYW1wYmVsbCA8aWFu
+LmNhbXBiZWxsQGNpdHJpeC5jb20+CgotLS0gYS94ZW4vYXJjaC94ODYvZG9t
+Y3RsLmMKKysrIGIveGVuL2FyY2gveDg2L2RvbWN0bC5jCkBAIC04ODgsNiAr
+ODg4LDEwIEBAIGxvbmcgYXJjaF9kb19kb21jdGwoCiAgICAgewogICAgICAg
+ICB4ZW5fZ3Vlc3RfdHNjX2luZm9fdCBpbmZvOwogCisgICAgICAgIHJldCA9
+IC1FSU5WQUw7CisgICAgICAgIGlmICggZCA9PSBjdXJyZW50LT5kb21haW4g
+KSAvKiBubyBkb21haW5fcGF1c2UoKSAqLworICAgICAgICAgICAgYnJlYWs7
+CisKICAgICAgICAgZG9tYWluX3BhdXNlKGQpOwogICAgICAgICB0c2NfZ2V0
+X2luZm8oZCwgJmluZm8udHNjX21vZGUsCiAgICAgICAgICAgICAgICAgICAg
+ICAgICAmaW5mby5lbGFwc2VkX25zZWMsCkBAIC05MDMsNiArOTA3LDEwIEBA
+IGxvbmcgYXJjaF9kb19kb21jdGwoCiAKICAgICBjYXNlIFhFTl9ET01DVExf
+c2V0dHNjaW5mbzoKICAgICB7CisgICAgICAgIHJldCA9IC1FSU5WQUw7Cisg
+ICAgICAgIGlmICggZCA9PSBjdXJyZW50LT5kb21haW4gKSAvKiBubyBkb21h
+aW5fcGF1c2UoKSAqLworICAgICAgICAgICAgYnJlYWs7CisKICAgICAgICAg
+ZG9tYWluX3BhdXNlKGQpOwogICAgICAgICB0c2Nfc2V0X2luZm8oZCwgZG9t
+Y3RsLT51LnRzY19pbmZvLmluZm8udHNjX21vZGUsCiAgICAgICAgICAgICAg
+ICAgICAgICBkb21jdGwtPnUudHNjX2luZm8uaW5mby5lbGFwc2VkX25zZWMs
+Ci0tLSBhL3hlbi9jb21tb24vZG9tY3RsLmMKKysrIGIveGVuL2NvbW1vbi9k
+b21jdGwuYwpAQCAtNTIyLDggKzUyMiwxMCBAQCBsb25nIGRvX2RvbWN0bChY
+RU5fR1VFU1RfSEFORExFX1BBUkFNKHhlCiAKICAgICBjYXNlIFhFTl9ET01D
+VExfcmVzdW1lZG9tYWluOgogICAgIHsKLSAgICAgICAgZG9tYWluX3Jlc3Vt
+ZShkKTsKLSAgICAgICAgcmV0ID0gMDsKKyAgICAgICAgaWYgKCBkID09IGN1
+cnJlbnQtPmRvbWFpbiApIC8qIG5vIGRvbWFpbl9wYXVzZSgpICovCisgICAg
+ICAgICAgICByZXQgPSAtRUlOVkFMOworICAgICAgICBlbHNlCisgICAgICAg
+ICAgICBkb21haW5fcmVzdW1lKGQpOwogICAgIH0KICAgICBicmVhazsKIAo=
+
+--=separator--
