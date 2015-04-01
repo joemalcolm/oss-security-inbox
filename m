@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1370" "Wednesday" "11" "May" "2016" "11:43:58" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160511154358.8C88E3AE008@smtpvbsrv1.mitre.org>" "33" "[oss-security] Re: CVE request: libksba out-of-bouds read remote DOS issue fixed in 1.3.4" nil nil nil "5" "2016051115:43:58" "[oss-security] Re: CVE request: libksba out-of-bouds read remote DOS issue fixed in 1.3.4" (number mark "U       cve-assign@m May 11   33/1370  " thread-indent "\"[oss-security] Re: CVE request: libksba out-of-bouds read remote DOS issue fixed in 1.3.4\"\n") "<52abc457-86a6-6349-aeca-0b0d591c3b3d@suse.com>" ("<52abc457-86a6-6349-aeca-0b0d591c3b3d@suse.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3334" "Tuesday" "31" "March" "2015" "18:34:21" "-0700" "Chris Steipp" "csteipp@wikimedia.org" "<CAKcmtDzP7GhQWdTNb2XaVD1dzfDPXzyjWRhoYaKPrZy+NALygA@mail.gmail.com>" "74" "[oss-security] CVE request: MediaWiki 1.24.2/1.23.9/1.19.24" nil nil nil "3" "2015040101:34:21" "[oss-security] CVE request: MediaWiki 1.24.2/1.23.9/1.19.24" (number mark "        csteipp@wiki Mar 31   74/3334  " thread-indent "\"[oss-security] CVE request: MediaWiki 1.24.2/1.23.9/1.19.24\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 11547 invoked by uid 550); 11 May 2016 15:44:11 -0000
+Received: (qmail 32465 invoked by uid 550); 1 Apr 2015 01:34:34 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,46 +11,108 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 32440 invoked from network); 1 Apr 2015 01:34:33 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=wikimedia.org; s=google;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=1Vh/ySonQchghqgDCIAiC9y4uGYiXaWTsby/Xn50lbQ=;
+        b=ee/N2gJbX4tMvc0SvqbeH6Wq4MVCs6m0SXNeW5BgWfh+ZXj4pwtf3ZHgw6lSvEMPwE
+         hgekFZdyCz/tDBFyOP0bun4oAyiGC9y3gFW+Lo/JJmxNl7KCLbDGWc6vkPWpQrrS56Dn
+         yeZ8eqf2Z8EgaEXEPg7DU92nsrzY1d8cJyQaA=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
+         :content-type;
+        bh=1Vh/ySonQchghqgDCIAiC9y4uGYiXaWTsby/Xn50lbQ=;
+        b=b1WMLrdF/HYg5Sk1cyEK622vJ+K2DW5bL/LAo+9CuLqND0sHPLwApzbWGVrm7yCz5X
+         E5RQyT0ScjVWa1cUGsEqqMe3N/DXriPLD9152eFU1fWi9uEdgY9j7xAbZkMimuH27I2A
+         9grYFrdg4HZSMtP4dVF9M5ulji743//LfODM21wL147k/hLtbwGoJFXzoDXTMHoZkq1M
+         gIYcugmQyZp+0YfNjGlVq/ODyds73sneDdKB8W7VoBXi4XTo56dLJJ5IgmSfBPfIVB2T
+         MhzPdE6Xvq7p4DLRRepS50bkYM1EJkFvuHqPgU7UJ2ux1K2D+uwmJeQDLre11EfZKdkh
+         f+Kg==
+X-Gm-Message-State: ALoCoQnUPyJeAHiAB8hJ586UIOGHmjMrHDSL1MDITfI9/9myaZq9cbjW77qbkLdjSMK/T42/KWdf
+MIME-Version: 1.0
+X-Received: by 10.141.18.131 with SMTP id u125mr35369153qhd.78.1427852061190;
+ Tue, 31 Mar 2015 18:34:21 -0700 (PDT)
+Message-ID: <CAKcmtDzP7GhQWdTNb2XaVD1dzfDPXzyjWRhoYaKPrZy+NALygA@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=001a113ecbc2e63d2205129fb6c1
+Date: Tue, 31 Mar 2015 18:34:21 -0700
+From: Chris Steipp <csteipp@wikimedia.org>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11525 invoked from network); 11 May 2016 15:44:10 -0000
-From: cve-assign@mitre.org
-To: astieger@suse.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <52abc457-86a6-6349-aeca-0b0d591c3b3d@suse.com>
-Message-Id: <20160511154358.8C88E3AE008@smtpvbsrv1.mitre.org>
-Date: Wed, 11 May 2016 11:43:58 -0400 (EDT)
-Subject: [oss-security] Re: CVE request: libksba out-of-bouds read remote DOS issue fixed in 1.3.4
+Subject: [oss-security] CVE request: MediaWiki 1.24.2/1.23.9/1.19.24
+To: oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--001a113ecbc2e63d2205129fb6c1
+Content-Type: text/plain; charset=ISO-8859-1
 
-> http://git.gnupg.org/cgi-bin/gitweb.cgi?p=libksba.git;a=commit;h=a7eed17a0b2a1c09ef986f3b4b323cd31cea2b64
+Hi, we patched several security issues in MediaWiki today. Could we get
+CVE's assigned?
 
-> The returned length of the object from _ksba_ber_parse_tl (ti.length)
-> was not always checked against the actual buffer length, thus leading
-> to a read access after the end of the buffer
+* iSEC Partners discovered a way to circumvent the SVG MIME blacklist for
+embedded resources (iSEC-WMF1214-11). This allowed an attacker to embed
+JavaScript in the SVG. The issue was additionally identified by Mario
+Heiderich / Cure53. MIME types are now whitelisted.
+<https://phabricator.wikimedia.org/T85850>
 
-Use CVE-2016-4579.
+* MediaWiki user Bawolff pointed out that the SVG filter to prevent
+injecting JavaScript using animate elements was incorrect.
+<https://phabricator.wikimedia.org/T86711>
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+* MediaWiki user Bawolff reported a stored XSS vulnerability due to the way
+attributes were expanded in MediaWiki's Html class, in combination with
+LanguageConverter substitutions.
+<https://phabricator.wikimedia.org/T73394>
 
-iQIcBAEBCAAGBQJXM1LfAAoJEHb/MwWLVhi2N10P/0+rxmJVD8dNcnKtGuVt4lUc
-R3TTBT9/FzmRzBOqe2sn/2GCgiZVuV1tBKvem16qrQI9wM8tndw8q1Osi+sYcN9q
-bZetnnk0Upi0ix/Zbyx01D8ENCoUTXShhIf5rU4tSZKSInD79KxyzqKWbxCG5Ecd
-5ncqcTApwWdSpmwDJRbZDZ4K38nT8QCAp6DrLUKaMmnOtuYsgdsx/Yc2bZ1gWdIQ
-Jgk7dTrIchh7d88igd6nWRewwmh2WX8dh+iSegs9x6xrEJallqCdqBzWs7kU3edJ
-04jNhqaJIMZcHJrxLV6ozyEA9PdWyMc3+WDaOEQ+T2aPfrnm3+VQl6xRf3vNjins
-eNmYLneyYPAGjJvRL+mzchcb5SOLspNO+GUcN/814RWM90st3U6OTVxl8A6LmAtF
-4ARmrKWClz1vBYAZrXDFIZaECWR2GnkAOO0pEPtn1/WCu/Nq+/h0KAFxH9LQObtG
-EtrbOs04/66Ny2TR0yw2TWnlqJoI5vzXuSE3ofpOxDX6ComyCypURsqIzO3xP/xg
-8WxCuMDaD5ZRqSPavsKXnvPrYvCTr2P+tysqfwc50wiNKBmE7cj3ZmRB3jWQE79w
-4T8k6H7h+8SYwHkmfhV0m8yA8slKYXfOK6+TaVf6ZmCIySpb7WcdHa7Xk2mz2ric
-0myN/q9o1w35t7c230xx
-=UcFl
------END PGP SIGNATURE-----
+* Internal review discovered that MediaWiki's SVG filtering could be
+bypassed with entity encoding under the Zend interpreter. This could be
+used to inject JavaScript. This issue was also discovered by Mario Gomes /
+Beyond Security.
+<https://phabricator.wikimedia.org/T88310>
+
+* iSEC Partners discovered a way to bypass the style filtering for SVG
+files (iSEC-WMF1214-3) to load external resource. This could violate the
+anonymity of users viewing the SVG.
+<https://phabricator.wikimedia.org/T85349>
+
+* Internal review and iSEC Partners discovered (iSEC-WMF1214-1) that
+MediaWiki versions using PBKDF2 for password hashing (the default since
+1.24) are vulnerable to DoS attacks using extremely long passwords.
+<https://phabricator.wikimedia.org/T64685>
+
+* Internal review found that MediaWiki is vulnerable to "Quadratic Blowup"
+DoS attacks, under both HHVM and Zend PHP.
+<https://phabricator.wikimedia.org/T71210>
+
+* iSEC Partners reported that the MediaWiki feature allowing a user to
+preview another user's custom JavaScript could be abused for privilege
+escalation (iSEC-WMF1214-10). This feature has been removed.
+<https://phabricator.wikimedia.org/T85855>
+
+* Extension:Scribunto - MediaWiki user Jackmcbarn discovered that function
+names were sanitized in Lua error backtraces, which could lead to XSS.
+<https://phabricator.wikimedia.org/T85113>
+
+* Extension:CheckUser - iSEC Partners discovered that the CheckUser
+extension did not prevent CSRF attacks on the form allowing checkusers to
+look up sensitive information about other users (iSEC-WMF1214-6). Since the
+use of CheckUser is logged, the CSRF could be abused to defame a trusted
+user or flood the logs with noise.
+<https://phabricator.wikimedia.org/T85858>
+
+
+These next issues came up because of the difference in how HHVM handles PHP
+code vs Zend. I'm not sure if CVE's are assigned for specific runtime
+configurations? For MediaWiki, we say that HHVM support is experimental,
+although we do run Wikipedia on it.
+
+* iSEC Partners discovered a XSS vulnerability in the way api errors were
+reflected under HHVM versions before 3.6.1 (iSEC-WMF1214-8). MediaWiki now
+detects and mitigates this issue on older versions of HHVM.
+<https://phabricator.wikimedia.org/T85851>
+
+* iSEC Partners discovered that MediaWiki's SVG and XMP parsing running
+under HHVM was susceptible to "Billion Laughs" DoS attacks
+(iSEC-WMF1214-13).
+<https://phabricator.wikimedia.org/T85848>
+
+--001a113ecbc2e63d2205129fb6c1--
