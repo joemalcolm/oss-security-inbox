@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2322" "Tuesday" "7" "April" "2020" "14:19:48" "+0200" "Daniel Beck" "ml@beckweb.net" nil "66" nil nil nil nil "4" nil nil (number mark "U       ml@beckweb.n Apr  7   66/2322  " thread-indent "\"[oss-security] Multiple vulnerabilities in Jenkins plugins\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Multiple vulnerabilities in Jenkins plugins" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["606" "Wednesday" "1" "April" "2015" "10:34:19" "+0200" "William Robinet" "william.robinet@conostix.com" "<20150401083419.GS18273@zorglub.office.conostix.com>" "25" "[oss-security] CVE-2015-1845, CVE-2015-1846 - unzoo - Buffer overflow & Infinite loop" nil nil nil "4" "2015040108:34:19" "[oss-security] CVE-2015-1845, CVE-2015-1846 - unzoo - Buffer overflow & Infinite loop" (number mark "        william.robi Apr  1   25/606   " thread-indent "\"[oss-security] CVE-2015-1845, CVE-2015-1846 - unzoo - Buffer overflow & Infinite loop\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 22182 invoked by uid 550); 7 Apr 2020 12:20:00 -0000
+Received: (qmail 20366 invoked by uid 550); 1 Apr 2015 08:34:54 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,84 +11,41 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 20325 invoked from network); 1 Apr 2015 08:34:50 -0000
+X-Virus-Scanned: Debian amavisd-new at conostix.com
+Message-ID: <20150401083419.GS18273@zorglub.office.conostix.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Date: Wed, 1 Apr 2015 10:34:19 +0200
+From: William Robinet <william.robinet@conostix.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 22161 invoked from network); 7 Apr 2020 12:20:00 -0000
-From: Daniel Beck <ml@beckweb.net>
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.14\))
-Message-Id: <998BFA97-3645-4239-9DB9-99919CB5606D@beckweb.net>
-Date: Tue, 7 Apr 2020 14:19:48 +0200
+Subject: [oss-security] CVE-2015-1845, CVE-2015-1846 - unzoo - Buffer overflow & Infinite
+ loop
 To: oss-security@lists.openwall.com
-X-Mailer: Apple Mail (2.3445.104.14)
-X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1586262000;0464c89d;
-X-HE-SMSGID: 1jLnCm-00038y-HF
-Subject: [oss-security] Multiple vulnerabilities in Jenkins plugins
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software.
+Dear oss-security list,
 
-The following releases contain fixes for security vulnerabilities:
+Two issues have been fixed in the "unzoo" package from Fedora EPEL.
 
-* AWSEB Deployment Plugin 0.3.20
-* Code Coverage API Plugin 1.1.5
-* FitNesse Plugin 1.33
-* Gatling Plugin 1.3.0
-* useMango Runner Plugin 1.5
+CVE-2015-1845 unzoo:
+    Buffer overflow in EntrReadArch()
+    https://bugzilla.redhat.com/show_bug.cgi?id=1207645
+
+CVE-2015-1846 unzoo:
+    Infinite loop due to incorrect pointers handling in ExtrArch()/ListArch()
+    https://bugzilla.redhat.com/show_bug.cgi?id=1207647
 
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://jenkins.io/security/advisory/2020-04-07/
+William
+(Please note I'm not a member of the list)
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
+-- 
+GPG Key ID/Fingerprint:
+    74C7A949/B509 4137 1353 A3FC 6A87  AA06 003F A3DF 74C7 A949
 
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://jenkins.io/security/#reporting-vulnerabilities
-
----
-
-SECURITY-1699 / CVE-2020-2172
-Code Coverage API Plugin 1.1.4 and earlier does not configure its XML
-parser to prevent XML external entity (XXE) attacks. This allows a user
-able to control the input files for the "Publish Coverage Report"
-post-build step to have Jenkins parse a crafted file that uses external
-entities for extraction of secrets from the Jenkins master or server-side
-request forgery.
-
-
-SECURITY-1633 / CVE-2020-2173
-Gatling Plugin 1.2.7 and earlier serves Gatling reports in a manner that
-bypasses the `Content-Security-Policy` protection introduced in Jenkins
-1.641 and 1.625.3. This results in a cross-site scripting (XSS)
-vulnerability exploitable by users able to change report content.
-
-
-SECURITY-1769 / CVE-2020-2174
-AWSEB Deployment Plugin 0.3.19 and earlier does not escape various values
-printed as part of form validation output.
-
-This results in a reflected cross-site scripting (XSS) vulnerability.
-
-
-SECURITY-1801 / CVE-2020-2175
-FitNesse Plugin 1.31 and earlier does not correctly escape report contents
-before showing them on the Jenkins UI.
-
-This results in a stored cross-site scripting (XSS) vulnerability
-exploitable by users able to control the XML input files processed by the
-plugin.
-
-
-SECURITY-1780 / CVE-2020-2176
-Multiple form validation endpoints in useMango Runner Plugin 1.4 and
-earlier do not escape values received from the useMango service.
-
-This results in a cross-site scripting (XSS) vulnerability exploitable by
-users able to control the values returned from the useMango service.
-
-
-
+Conostix S.A.
+4, Rue d'Arlon
+L-8399 Windhof (Koerich)
+T. +352 26 10 30 61
+F. +352 26 10 30 62
