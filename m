@@ -1,4 +1,9 @@
-Received: (qmail 21955 invoked by uid 550); 7 May 2026 19:14:21 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1150" "Wednesday" "1" "April" "2015" "09:43:43" "-0400" "Jake Luciani" "jake@apache.org" "<CALamADJu4yo=cO8HgA6NpgFc1wQN_VNqpkMn-3SZwhPq9foLBw@mail.gmail.com>" "32" "[oss-security] [SECURITY ANNOUNCEMENT] CVE-2015-0225" nil nil nil "4" "2015040113:43:43" "[oss-security] [SECURITY ANNOUNCEMENT] CVE-2015-0225" (number mark "        jake@apache. Apr  1   32/1150  " thread-indent "\"[oss-security] [SECURITY ANNOUNCEMENT] CVE-2015-0225\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 14096 invoked by uid 550); 1 Apr 2015 13:56:09 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,98 +11,62 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 21913 invoked from network); 7 May 2026 19:14:21 -0000
-Date: Thu, 7 May 2026 21:14:11 +0200
-From: Christian Brabandt <cb@256bit.org>
-To: oss-security@lists.openwall.com
-Message-ID: <afzkg48dgcKJF/6E@256bit.org>
+Received: (qmail 7379 invoked from network); 1 Apr 2015 13:44:16 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:from:date:message-id:subject:to:cc:content-type;
+        bh=OgsgLkzhu9muy+zfapitvNiRNiFUu92B6Gu4knkxboE=;
+        b=ps6d/1+o9CmqWX46kjnJ9aUk54F5yeBQ3A7TcQ3owOf4qv1arYkVVbEvWy56ZlKU07
+         rpoxv7SjL+x6JrgkCnpjP52fIAH+sDpdWbXlaebILcAvfOyXK81iazBQC5cGRCvqFLkp
+         WKtV7jVRjB75WrgZRrT0yhu9U/xBIBW8OrgzP5NIJq9azqxOdWa6gNOWquEKlREXy4Ve
+         vbKFPdRc7NFu3+1NnwFyctjbPOC18+8qylruijr8TruB/xtwlkGqmgte1ITIutcEPcY4
+         zZ+OatA2UOWxmhgh1Bl610RRFNOQK8DLc26q8bx8kwWQMMZ1spgQ35PZzu0K79/by3D6
+         GcFA==
+X-Received: by 10.68.224.69 with SMTP id ra5mr46182143pbc.161.1427895844113;
+ Wed, 01 Apr 2015 06:44:04 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: cb@256bit.org
-X-SA-Exim-Scanned: No (on 256bit.org); SAEximRunCond expanded to false
-Subject: [oss-security] [vim-security] Heap Buffer Overflow in spell file loading affects
- Vim < 9.2.0450
+X-Google-Sender-Auth: w5QZ3Y211wzgnKPNT_ZfEFEFvwo
+Message-ID: <CALamADJu4yo=cO8HgA6NpgFc1wQN_VNqpkMn-3SZwhPq9foLBw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Cc: georgi.geshev@mwrinfosecurity.com, security@apache.org, 
+	oss-security@lists.openwall.com, bugtraq@securityfocus.com
+Date: Wed, 1 Apr 2015 09:43:43 -0400
+From: Jake Luciani <jake@apache.org>
+Reply-To: oss-security@lists.openwall.com
+Sender: jakers@gmail.com
+Subject: [oss-security] [SECURITY ANNOUNCEMENT] CVE-2015-0225
+To: user <user@cassandra.apache.org>, 
+	"dev@cassandra.apache.org" <dev@cassandra.apache.org>
 
-Heap Buffer Overflow in spell file loading affects Vim < 9.2.0450
-=================================================================
-Date: 07.05.2026
-Severity: Medium
-CVE: *requested, not yet assigned*
-CWE: Integer Overflow or Wraparound (CWE-190) leading to Heap-based Buffer Overflow (CWE-122)
+CVE-2015-0225: Apache Cassandra remote execution of arbitrary code
 
-## Summary
-A heap buffer overflow exists in `read_compound()` in `src/spellfile.c`
-when loading a crafted spell file (`.spl`) with UTF-8 encoding active.
-An attacker-controlled length field in the spell file's compound section
-overflows a 32-bit signed integer multiplication, causing a small buffer
-to be allocated for a write loop that runs many iterations, overflowing
-the heap.  Because the `'spelllang'` option can be set from a modeline,
-a text file modeline can trigger spell file loading if a malicious
-`.spl` file has been planted on the runtimepath.
+Severity: Important
 
-## Description
-In `read_compound()` (`src/spellfile.c`), the buffer size for the regex
-pattern `pat` is computed from the attacker-controlled `sectionlen`
-field of an `SN_COMPOUND` section.  Both `todo` and the size variable
-`c` are declared as `int`:
+Vendor:
+The Apache Software Foundation
 
-    c = todo * 2 + 7;
-    if (enc_utf8)
-        c += todo * 2;
-    pat = alloc(c);
+Versions Affected:
+Cassandra 1.2.0 to 1.2.19
+Cassandra 2.0.0 to 2.0.13
+Cassandra 2.1.0 to 2.1.3
 
-When `todo` is sufficiently large (e.g. `0x40000005`), the multiplication
-`todo * 4 + 7` overflows the 32-bit signed integer and wraps to a small
-positive value (e.g. 27).  `alloc(27)` succeeds, but the subsequent loop
-iterates `todo` (~1 billion) times, writing bytes into the 27-byte
-buffer and corrupting adjacent heap memory.
+Description:
+Under its default configuration, Cassandra binds an unauthenticated
+JMX/RMI interface to all network interfaces.  As RMI is an API for the
+transport and remote execution of serialized Java, anyone with access
+to this interface can execute arbitrary code as the running user.
 
-The overflow only manifests when UTF-8 encoding is active (`enc_utf8`).
-Without it, the intermediate value remains negative, sign-extends to a
-huge `size_t`, and `alloc()` returns NULL harmlessly.  UTF-8 is the
-default on virtually all modern Linux and macOS systems.
+Mitigation:
+1.2.x has reached EOL, so users of <= 1.2.x are recommended to upgrade
+to a supported version of Cassandra, or manually configure encryption
+and authentication of JMX,
+(seehttps://wiki.apache.org/cassandra/JmxSecurity).
+2.0.x users should upgrade to 2.0.14
+2.1.x users should upgrade to 2.1.4
+Alternately, users of any version not wishing to upgrade can
+reconfigure JMX/RMI to enable encryption and authentication according
+to https://wiki.apache.org/cassandra/JmxSecurityor
+http://docs.oracle.com/javase/7/docs/technotes/guides/management/agent.html
 
-A modeline in an unrelated text file can set `'spelllang'` and enable
-`'spell'`, causing Vim to load a spell file under the attacker's control
-if one has been planted on the runtimepath (e.g. `~/.vim/spell/`).
-
-## Impact
-The vulnerability allows a heap buffer overflow of approximately 75
-bytes with partially attacker-controlled content when Vim loads a
-crafted spell file under UTF-8 encoding.  The practical impact is a
-crash of the Vim process (denial of service).
-
-Exploitation requires a malicious `.spl` file to be present on the
-runtimepath and the victim to either:
-
-- explicitly enable spell checking with the matching language, or
-- open any text file containing a modeline that sets `'spelllang'`
-  and enables `'spell'`, while `'modeline'` is enabled.
-
-The severity is rated Medium because exploitation requires both a
-planted spell file and a separate triggering action by the victim, and
-the practical outcome is a crash rather than code execution.
-
-## Acknowledgements
-The Vim project would like to thank Daniel Cervera (@daniel-msft) of
-Microsoft Security Engineering for reporting and analyzing the issue and
-suggesting a fix.
-
-## References
-The issue has been fixed as of Vim patch [v9.2.0450](https://github.com/vim/vim/releases/tag/v9.2.0450).
-- [Commit](https://github.com/vim/vim/commit/92993329178cb1f72d700fff45ca86e1c2d369f8)
-- [Github Security Advisory](https://github.com/vim/vim/security/advisories/GHSA-q4jv-r9gj-6cwv)
-
-
-
-Best,
-Christian
--- 
-Man soll die Wahrheit mehr als sich selbst lieben, aber seinen
-Nächsten mehr als die Wahrheit.
-		-- Romain Rolland
+Credit:
+This issue was discovered by Georgi Geshev of MWR InfoSecurity
