@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["709" "Tuesday" "11" "October" "2016" "17:01:03" "+0200" "Greg KH" "greg@kroah.com" "<20161011150103.GA4569@kroah.com>" "17" "Re: [oss-security] linux kernel do_blockdev_direct_IO invalid memory access" nil nil nil "10" "2016101115:01:03" "[oss-security] linux kernel do_blockdev_direct_IO invalid memory access" (number mark "U       greg@kroah.c Oct 11   17/709   " thread-indent "\"Re: [oss-security] linux kernel do_blockdev_direct_IO invalid memory access\"\n") "<20161011144645.GB3606@kroah.com>" ("<CAFkTriL_sGQ=0ym3ALDXjWMYNJxKC3UH02Lx7v9Zj_CsX9NOiA@mail.gmail.com>" "<20161011144645.GB3606@kroah.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3568" "Thursday" "2" "April" "2015" "18:35:06" "+0200" "Yann Droneaud" "ydroneaud@opteya.com" "<1427992506.22575.80.camel@opteya.com>" "97" "[oss-security] Re: CVE-2014-8159 kernel: infiniband: uverbs: unprotected physical memory access" nil nil nil "4" "2015040216:35:06" "[oss-security] Re: CVE-2014-8159 kernel: infiniband: uverbs: unprotected physical memory access" (number mark "        ydroneaud@op Apr  2   97/3568  " thread-indent "\"[oss-security] Re: CVE-2014-8159 kernel: infiniband: uverbs: unprotected physical memory access\"\n") "<551D5DC8.6070909@mellanox.com>" ("<AM3PR05MB0935AABF569F15EA846B8E72DC000@AM3PR05MB0935.eurprd05.prod.outlook.com>" "<1427969085.17020.5.camel@opteya.com>" "<AM3PR05MB0935AA4898B4B519D2DAA3C4DCF20@AM3PR05MB0935.eurprd05.prod.outlook.com>" "<1427981431.22575.21.camel@opteya.com>" "<551D5DC8.6070909@mellanox.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 32685 invoked by uid 550); 11 Oct 2016 15:01:07 -0000
+Received: (qmail 22082 invoked by uid 550); 2 Apr 2015 16:35:48 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,45 +11,130 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 21589 invoked from network); 2 Apr 2015 16:35:39 -0000
+Message-ID: <1427992506.22575.80.camel@opteya.com>
+In-Reply-To: <551D5DC8.6070909@mellanox.com>
+References: 
+	<AM3PR05MB0935AABF569F15EA846B8E72DC000@AM3PR05MB0935.eurprd05.prod.outlook.com>
+	 <1427969085.17020.5.camel@opteya.com>
+	 <AM3PR05MB0935AA4898B4B519D2DAA3C4DCF20@AM3PR05MB0935.eurprd05.prod.outlook.com>
+	 <1427981431.22575.21.camel@opteya.com> <551D5DC8.6070909@mellanox.com>
+Organization: OPTEYA
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.12.11 (3.12.11-1.fc21) 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 37.163.136.85
+X-SA-Exim-Mail-From: ydroneaud@opteya.com
+X-SA-Exim-Version: 4.2.1 (built Mon, 26 Dec 2011 16:24:06 +0000)
+X-SA-Exim-Scanned: Yes (on ou.quest-ce.net)
+Cc: Shachar Raindel <raindel@mellanox.com>, Sagi Grimberg
+ <sagig@mellanox.com>,  "oss-security@lists.openwall.com"
+ <oss-security@lists.openwall.com>, "<linux-rdma@vger.kernel.org>
+ (linux-rdma@vger.kernel.org)" <linux-rdma@vger.kernel.org>,
+ "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+ "stable@vger.kernel.org" <stable@vger.kernel.org>
+Date: Thu, 02 Apr 2015 18:35:06 +0200
+From: Yann Droneaud <ydroneaud@opteya.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32664 invoked from network); 11 Oct 2016 15:01:07 -0000
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to:x-sasl-enc
-	:x-sasl-enc; s=smtpout; bh=7+u33TEyVhRS2AThjUMTx+FfF7w=; b=Gxi0H
-	3wPAkMXmq8YDgTKjZueTYcVSXlYzhIHs0r32CW6wQybuAEej/rPPt7U82mglMoAT
-	AHZOnSTSsxSAPh1V3jlaSAA5VzKJphQEshSebLgyal+wXxe2U3JtmYXZgVc4Usxi
-	xhfkGFp09NsxuYjYFI1rWrAFD45lhiRvj7ItaA=
-X-Sasl-enc: esH2oAUIUAWY0M5fnq08CFIuvhkrG0qkqUSVfWolQlrC 1476198055
-Date: Tue, 11 Oct 2016 17:01:03 +0200
-From: Greg KH <greg@kroah.com>
-To: oss-security@lists.openwall.com
-Cc: cve-assign@mitre.org
-Message-ID: <20161011150103.GA4569@kroah.com>
-References: <CAFkTriL_sGQ=0ym3ALDXjWMYNJxKC3UH02Lx7v9Zj_CsX9NOiA@mail.gmail.com>
- <20161011144645.GB3606@kroah.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20161011144645.GB3606@kroah.com>
-User-Agent: Mutt/1.7.1 (2016-10-04)
-Subject: Re: [oss-security] linux kernel do_blockdev_direct_IO invalid memory
- access
+Subject: [oss-security] Re: CVE-2014-8159 kernel: infiniband: uverbs: unprotected physical
+ memory access
+To: Haggai Eran <haggaie@mellanox.com>
 
-On Tue, Oct 11, 2016 at 04:46:45PM +0200, Greg KH wrote:
-> On Tue, Oct 11, 2016 at 10:22:48PM +0800, Marco Grassi wrote:
-> > Hello,
+Hi Haggai,
+
+Le jeudi 02 avril 2015 à 18:18 +0300, Haggai Eran a écrit :
+> On 02/04/2015 16:30, Yann Droneaud wrote:
+> > Hi,
 > > 
-> > I posted this to ask feedback on security at kernel dot org, but I think my
-> > mail got bounced back. Not sure if from the mailing list or from some
-> > single recipient.
+> > Le jeudi 02 avril 2015 à 10:52 +0000, Shachar Raindel a écrit :
+> >>> -----Original Message-----
+> >>> From: Yann Droneaud [mailto:ydroneaud@opteya.com]
+> >>> Sent: Thursday, April 02, 2015 1:05 PM
+> >>> Le mercredi 18 mars 2015 à 17:39 +0000, Shachar Raindel a écrit :
+> > 
+> >>>> +	/*
+> >>>> +	 * If the combination of the addr and size requested for this
+> >>> memory
+> >>>> +	 * region causes an integer overflow, return error.
+> >>>> +	 */
+> >>>> +	if ((PAGE_ALIGN(addr + size) <= size) ||
+> >>>> +	    (PAGE_ALIGN(addr + size) <= addr))
+> >>>> +		return ERR_PTR(-EINVAL);
+> >>>> +
+> >>>
+> >>> Can access_ok() be used here ?
+> >>>
+> >>>          if (!access_ok(writable ? VERIFY_WRITE : VERIFY_READ,
+> >>>                         addr, size))
+> >>>                   return ERR_PTR(-EINVAL);
+> >>>
+> >>
+> >> No, this will break the current ODP semantics.
+> >>
+> >> ODP allows the user to register memory that is not accessible yet.
+> >> This is a critical design feature, as it allows avoiding holding
+> >> a registration cache. Adding this check will break the behavior,
+> >> forcing memory to be all accessible when registering an ODP MR.
+> >>
+> > 
+> > Where's the check for the range being in userspace memory space,
+> > especially for the ODP case ?
+> > 
+> > For non ODP case (eg. plain old behavior), does get_user_pages()
+> > ensure the requested pages fit in userspace region on all 
+> > architectures ? I think so.
 > 
-> It got there, you could have given us a few more hours to respond,
-> especially as most of the USA was still asleep, and others of us were in
-> a conference during the day in Europe. :(
+> Yes, get_user_pages will return a smaller amount of pages than requested
+> if it encounters an unmapped region (or a region without write
+> permissions for write requests). If this happens, the loop in
+> ib_umem_get calls get_user_pages again with the next set of pages, and
+> this time if it the first page still cannot be mapped an error is returned.
+> 
+> > 
+> > In ODP case, I'm not sure such check is ever done ?
+> 
+> In ODP, we also call get_user_pages, but only when a page fault occurs
+> (see ib_umem_odp_map_dma_pages()). This allows the user to pre-register
+> a memory region that contains unmapped virtual space, and then mmap
+> different files into that area without needing to re-register.
+> 
 
-To be specific, you only gave us one hour advance notice.  Now normally
-the kernel security team is fast, but expecting a response that quickly
-is a bit disingenuous...
+OK, thanks for the description.
 
-greg "even I sleep sometimes" k-h
+> > (Aside, does it take special mesure to protect shared mapping from
+> > being read and/or *written* ?)
+> 
+> I'm not sure I understand the question. Shared mappings that the process
+> is allowed to read or write are also allowed for the HCA (specifically,
+> to local and remote operations the same process performs using the HCA),
+> provided the application has registered their virtual address space as a
+> memory region.
+> 
+
+I was refering to description of get_user_pages():
+
+http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/tree/mm/gup.c?id=v4.0-rc6#n765
+
+ * @force:	whether to force access even when user mapping is currently
+ *		protected (but never forces write access to shared mapping).
+
+But since ib_umem_odp_map_dma_pages() use get_user_pages() with force
+argument set to 0, it's OK.
+
+Another related question: as the large memory range could be registered 
+by user space with ibv_reg_mr(pd, base, size, IB_ACCESS_ON_DEMAND), 
+what's prevent the kernel to map a file as the result of mmap(0, ...)
+in this  region, making it available remotely through IBV_WR_RDMA_READ /
+IBV_WR_RDMA_WRITE ?
+
+Again, thanks for the information I was missing to understand how ODP is
+checking the memory ranges.
+
+Regards.
+
+-- 
+Yann Droneaud
+OPTEYA
+
+
