@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2025" "Monday" "10" "July" "2017" "18:28:37" "-0700" "Seth Arnold" "seth.arnold@canonical.com" "<20170711012837.GE2012@hunt>" "48" "Re: [oss-security] mpg123: global buffer overflow in III_i_stereo (layer3.c)" "^Date:" nil nil "7" "2017071101:28:37" "[oss-security] mpg123: global buffer overflow in III_i_stereo (layer3.c)" (number mark "        seth.arnold@ Jul 10   48/2025  " thread-indent "\"Re: [oss-security] mpg123: global buffer overflow in III_i_stereo (layer3.c)\"\n") "<20170710114253.44fc7ac0@cortex.rrz.uni-hamburg.de>" ("<801547.452199401-sendEmail@localhost>" "<20170710114253.44fc7ac0@cortex.rrz.uni-hamburg.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2017" "Thursday" "2" "April" "2015" "16:43:57" "-0700" "Seth Arnold" "seth.arnold@canonical.com" "<20150402234357.GB9941@hunt>" "53" "Re: [oss-security] membership request  to the closed linux-distros security mailing list" nil nil nil "4" "2015040223:43:57" "[oss-security] membership request to the closed linux-distros security mailing list" (number mark "        seth.arnold@ Apr  2   53/2017  " thread-indent "\"Re: [oss-security] membership request  to the closed linux-distros security mailing list\"\n") "<550C19ED.9030901@enea.com>" ("<550C19ED.9030901@enea.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 17945 invoked by uid 550); 11 Jul 2017 01:28:51 -0000
+Received: (qmail 13608 invoked by uid 550); 2 Apr 2015 23:44:13 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,69 +11,76 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 17924 invoked from network); 11 Jul 2017 01:28:51 -0000
-Message-ID: <20170711012837.GE2012@hunt>
-Mail-Followup-To: oss-security@lists.openwall.com
-References: <801547.452199401-sendEmail@localhost>
- <20170710114253.44fc7ac0@cortex.rrz.uni-hamburg.de>
+Received: (qmail 13575 invoked from network); 2 Apr 2015 23:44:12 -0000
+Message-ID: <20150402234357.GB9941@hunt>
+Mail-Followup-To: Sona Sarmadi <sona.sarmadi@enea.com>,
+	oss-security@lists.openwall.com,
+	Solar Designer <solar@openwall.com>
+References: <550C19ED.9030901@enea.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="wchHw8dVAp53YPj8"
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="mxv5cy4qt+RJ9ypb"
 Content-Disposition: inline
-In-Reply-To: <20170710114253.44fc7ac0@cortex.rrz.uni-hamburg.de>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-Date: Mon, 10 Jul 2017 18:28:37 -0700
+In-Reply-To: <550C19ED.9030901@enea.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+Cc: oss-security@lists.openwall.com, Solar Designer <solar@openwall.com>
+Date: Thu, 2 Apr 2015 16:43:57 -0700
 From: Seth Arnold <seth.arnold@canonical.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] mpg123: global buffer overflow in III_i_stereo
- (layer3.c)
-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] membership request  to the closed linux-distros
+ security mailing list
+To: Sona Sarmadi <sona.sarmadi@enea.com>
 
---wchHw8dVAp53YPj8
+--mxv5cy4qt+RJ9ypb
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 
-On Mon, Jul 10, 2017 at 11:42:53AM +0200, Dr. Thomas Orgis wrote:
-> Is this really worth a CVE, though? So far I was only able to see a
-> crash triggered by the AddressSanitizer. Never from a normal build. So
+On Fri, Mar 20, 2015 at 02:00:29PM +0100, Sona Sarmadi wrote:
+> On behalf of Enea  Software AB, I would like to request membership to
+> the closed linux-distros security mailing list.
 
-It is common to assign CVEs for issues discovered via fuzzers and
-sanitizers even if the consequences aren't visible without them: perhaps
-the consequences aren't visible to users only by accident.
+Speaking strictly for myself, I'm still somewhat skeptical; the security
+announce archives http://mail.lists.enea.com/pipermail/security-announce/
+do show some security updates, but (guessing) 15% of the actual patch
+links I tried to follow no longer exist.
 
-Some people only accept a vulnerability report if there's an exploit that
-goes along with it but developing even a proof of concept is difficult
-and error-prone. Lack of an exploit doesn't prove that an issue can safely
-be ignored. (There's always someone more dedicated to writing an exploit.)
+Furthermore, the advisories all suggest downloading patches via http and
+offer no mechanism to validate the patches before applying them. Consider
+this recent advisory:
+http://mail.lists.enea.com/pipermail/security-announce/20150326/000064.html
 
-Assigning a CVE number makes downstream consumers aware of the issue and
-each can prioritize a fix as they see fit based on their own threat models.
+- there's no gpg signature on this advisory
+- there's no cryptographic checksums in the advisory to authenticate
+  the patch even if the advisory were signed
+- there's no ascii-armored signatures in the patches
+- there's no detached signatures at
+  http://linux.enea.com/5.0-beta-m400/patches/
+  or at
+  http://linux.enea.com/4.0/patches/
 
-> every build of mpg123 in the wild, except for extremely hardened
-> distros that build everything with GCC's sanitizers enabled for daily
-> use, is not affected. Are people running binaries in production with
-> the sanitizers on?
+If downloading patches and applying them by hand is really the
+distribution model Enea has chosen, then it feels like the provenance
+of updates is seriously lacking.
 
-I believe the general consensus is that only the UBSAN sanitizer is safe
-for 'daily use'; the others aren't themselves security hardened and in
-fact have lead to exploits. This thread has more discussion:
-http://www.openwall.com/lists/oss-security/2016/02/18/1
+In my opinion, until some more of the security basics are covered,
+joining linux-distros@ is premature.
 
 Thanks
 
---wchHw8dVAp53YPj8
+--mxv5cy4qt+RJ9ypb
 Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQEcBAEBCgAGBQJZZCnFAAoJEPMhclmdjS6XUksIAJ4yAKLqbk8LR3+u9c4GjE6R
-lFnHrp4EIev6K28YDT1qzuVyoTI89mB4Oyf3Pk++O6d2ezDTXNYqGACLq5tJ3nre
-qIbqgBqT+NaQ1i8ZLPnFhxLRhz/xSeWrCgcTtbu0soUOhgKC3yl5LwCOrdbibqhD
-FdKL2sfcJ/6eCJIV+KnhZG1PYbZ7BzZcnywtt/fnWRqsKTN107tkBBB9LWVPvYp9
-zeI5cwAfEHqJ6C5Qc5zGaw/ApW6GKjAC1ErccN2eGRcTe9VpLpbodiRJ4SZd64ba
-lUniMYTC3wHAbP4HiRQWOmTwKOqsA8fGSr5cpTzfIFyzSeUwl7lqiO4SGVxOTME=
-=nR+n
+iQEcBAEBAgAGBQJVHdQ9AAoJEPMhclmdjS6XWFgH/A4wfMrpI1sHnwjblHrHEMY5
+aF8fI/1P1pME/BaMIlzaruk8PVc2/ve6zH/tqBH6cSMBgCRCliuRllCu5sV0hbwH
+wglDGDXS/NcvkRByHArZ9ngDQRU/YcBxuaMCbHd1AodTAZb714bVZ4+u5w7Vk1zh
+829D5z0orOjtBDKArSj/MOedUtChuQ134t+iWebw52B/y4yz0AhsGEXJkedFU+nK
+7g6yDwXufkyBMbPjQevT7jCGtUtON7zXRYY0UE+FusoaMVkcByFhBF924Zrgl9bP
+yiG7YFkOAJw6h75Qjnq/IXiUmtqSH3obDW/Ak0M1P1jKQWlwvCoKBI7OPNzNDfk=
+=RKze
 -----END PGP SIGNATURE-----
 
---wchHw8dVAp53YPj8--
+--mxv5cy4qt+RJ9ypb--
