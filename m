@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3534" "Sunday" "26" "August" "2018" "14:00:58" "+0200" "Solar Designer" "solar@openwall.com" "<20180826120058.GA7071@openwall.com>" "70" "Re: [oss-security] About OpenSSH \"user enumeration\" / CVE-2018-15473" "^Date:" nil nil "8" "2018082612:00:58" "[oss-security] About OpenSSH \"user enumeration\" / CVE-2018-15473" (number mark "        solar@openwa Aug 26   70/3534  " thread-indent "\"Re: [oss-security] About OpenSSH \"user enumeration\" / CVE-2018-15473\"\n") "<alpine.BSO.2.21.1808261758080.76507@haru.mindrot.org>" ("<alpine.BSO.2.21.1808241046220.67512@haru.mindrot.org>" "<20180824182942.GA932@openwall.com>" "<alpine.BSO.2.21.1808251030060.32421@haru.mindrot.org>" "<20180825100149.GA2596@openwall.com>" "<alpine.BSO.2.21.1808261758080.76507@haru.mindrot.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2143" "Friday" "3" "April" "2015" "13:57:02" "+0400" "Loganaden Velvindron" "loganaden@gmail.com" "<CAOp4FwRaCkVWVeDtX-hy22Gm8xB=SMbz=fxWkwz4QqgvLU8ayw@mail.gmail.com>" "73" "Re: [oss-security] CVE Request : IPv6 Hop limit lowering via RA messages" nil nil nil "4" "2015040309:57:02" "[oss-security] CVE Request : IPv6 Hop limit lowering via RA messages" (number mark "        loganaden@gm Apr  3   73/2143  " thread-indent "\"Re: [oss-security] CVE Request : IPv6 Hop limit lowering via RA messages\"\n") "<CAO0vwOV33zHW=z4FDHq91yX5UHxnDKtXnzqzkYCrR+koxh1d9g@mail.gmail.com>" ("<CAO0vwOXOPSGb8xWiutn+r+rXhSQc3SwC8-S2bkpRZuRAvDOyHw@mail.gmail.com>" "<CAF6rxgk6e1rT3prS3SS4FthshnVQdSrrE+bB65ps6Tx30UznAA@mail.gmail.com>" "<942E0C08-E883-429E-9F27-22715C00B684@netgate.com>" "<CAO0vwOV33zHW=z4FDHq91yX5UHxnDKtXnzqzkYCrR+koxh1d9g@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 9605 invoked by uid 550); 26 Aug 2018 12:03:45 -0000
+Received: (qmail 30128 invoked by uid 550); 3 Apr 2015 09:57:15 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,87 +11,107 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5319 invoked from network); 26 Aug 2018 12:01:09 -0000
-Message-ID: <20180826120058.GA7071@openwall.com>
-References: <alpine.BSO.2.21.1808241046220.67512@haru.mindrot.org> <20180824182942.GA932@openwall.com> <alpine.BSO.2.21.1808251030060.32421@haru.mindrot.org> <20180825100149.GA2596@openwall.com> <alpine.BSO.2.21.1808261758080.76507@haru.mindrot.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <alpine.BSO.2.21.1808261758080.76507@haru.mindrot.org>
-User-Agent: Mutt/1.4.2.3i
-Date: Sun, 26 Aug 2018 14:00:58 +0200
-From: Solar Designer <solar@openwall.com>
+Received: (qmail 30087 invoked from network); 3 Apr 2015 09:57:14 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=Mm0593gYOMoF6mhevP+2akcfvk/u93/DEKaVqtzSbUg=;
+        b=mUKXzsSMWgnCtaKfZYasR0itWw10MzLfT5O+XwU9kOnFAZ796AtkN1ytvBKUAp24TA
+         zoIPBQJ8a2yQc8YQrUeMQkP9vjkNlGpEyG7RSACl8I7uomk8+BW2G7sAPYvbu3o6UAwJ
+         emlZqDJUqPkFUaxceFBMWaC2kMtXrvQL7mMFS/3mZUejz0Nbuu/Pj/lza35pnoAwUFas
+         Ud8QJdNs28bYxEOAQL9k7/jt8cM/RF3UEFPZg9lwPaqBstdpvs+wanhqajMP2yISeLTG
+         Uta3A+Q+0DQrPOZAB8zVXPDiT1Wm9H2vNLfU78l2Vrq8NbZ1TSwQna7KN5bp1/l42+6r
+         VHGw==
+MIME-Version: 1.0
+X-Received: by 10.43.14.199 with SMTP id pr7mr2839801icb.3.1428055023008; Fri,
+ 03 Apr 2015 02:57:03 -0700 (PDT)
+In-Reply-To: <CAO0vwOV33zHW=z4FDHq91yX5UHxnDKtXnzqzkYCrR+koxh1d9g@mail.gmail.com>
+References: <CAO0vwOXOPSGb8xWiutn+r+rXhSQc3SwC8-S2bkpRZuRAvDOyHw@mail.gmail.com>
+	<CAF6rxgk6e1rT3prS3SS4FthshnVQdSrrE+bB65ps6Tx30UznAA@mail.gmail.com>
+	<942E0C08-E883-429E-9F27-22715C00B684@netgate.com>
+	<CAO0vwOV33zHW=z4FDHq91yX5UHxnDKtXnzqzkYCrR+koxh1d9g@mail.gmail.com>
+Message-ID: <CAOp4FwRaCkVWVeDtX-hy22Gm8xB=SMbz=fxWkwz4QqgvLU8ayw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Cc: Jim Thompson <jim@netgate.com>, Eitan Adler <lists@eitanadler.com>, 
+	FreeBSD Security Team <secteam@freebsd.org>, "freebsd-net@freebsd.org" <net@freebsd.org>
+Date: Fri, 3 Apr 2015 13:57:02 +0400
+From: Loganaden Velvindron <loganaden@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] About OpenSSH "user enumeration" / CVE-2018-15473
+Subject: Re: [oss-security] CVE Request : IPv6 Hop limit lowering via RA messages
 To: oss-security@lists.openwall.com
 
-On Sun, Aug 26, 2018 at 06:04:50PM +1000, Damien Miller wrote:
-> On Sat, 25 Aug 2018, Solar Designer wrote:
-> 
-> > This could mean an extra getpwnam(3) call, which is a slightly greater
-> > timing leak than what's present in one call. That may be further
-> > mitigated by always doing two calls. Of course, this won't be anywhere
-> > near timing-safe anyway.
-> >
-> > Now, it can be tricky to pick a specific fallback username in
-> > OpenSSH-portable that we'd be OK with all non-existent usernames to
-> > behave similarly to. "root" may somewhat likely have unusual password
-> > hash (like it historically did on OpenBSD); "nobody" likely has its
-> > password locked (but maybe that's OK - it is in fact common for SSH
-> > users to have only public keys setup, and no passwords). Maybe there
-> > should be a way to override this dummy username in sshd_config.
-> 
-> That sounds like a fair amount of complexity in return for scant
-> benefit:
+On Fri, Apr 3, 2015 at 1:54 PM, D.S. Ljungmark <ljungmark@modio.se> wrote:
+> On Fri, Apr 3, 2015 at 6:06 AM, Jim Thompson <jim@netgate.com> wrote:
+>> have you considered that there might not be a relevant patch because Fre=
+eBSD=E2=80=99s implementation isn=E2=80=99t affected?
+>
+> sys/netinet6/nd6_rtr.c
+>
+>     300         if (nd_ra->nd_ra_curhoplimit)
+>     301                 ndi->chlim =3D nd_ra->nd_ra_curhoplimit;
+>
+> The only "OUT" in that function I see are tests for:
+>   Not accepting RA
+>   hoplimit on current packet !=3D 255
+>   not link-local
+>   No extended ipv6 header
 
-Thank you for sharing your opinion.
+It is vulnerable. Harrison Grundy and I worked on a patch, and sent it
+to secteam@.
 
-To me, it sounds like greater complexity of the resulting code, but it's
-also a simpler change (higher level, easier to reason about) than your
-previously discussed commit.  (And it avoids the need for further
-reviews/changes dealing with maybe remaining worse-than-timing behavior
-differences for existing vs. non-existent usernames, except for users
-with non-default authentication settings - e.g., with authorized_keys
-files or on DenyUsers.)
 
-> at best you dodge a few (IMO uninteresting) bugs, but now you
-> are guaranteed to have all your authz code exposed to a the attacker.
+>
+>
+> Based on previous testing ( early March 2015), and reading of the
+> source, I say that FreeBSD is vulnerable.
+>
+>
+> Regards,
+>   D.S. Ljungmark
+>
+>
+>>
+>> Jim
+>>
+>>> On Apr 2, 2015, at 9:15 PM, Eitan Adler <lists@eitanadler.com> wrote:
+>>>
+>>> + FreeBSD lists since I haven't seen any relevant patches (although I
+>>> might have missed them).
+>>>
+>>> ---------- Forwarded message ----------
+>>> From: D.S. Ljungmark <ljungmark@modio.se>
+>>> Date: 2 April 2015 at 10:19
+>>> Subject: [oss-security] CVE Request : IPv6 Hop limit lowering via RA me=
+ssages
+>>> To: oss-security@lists.openwall.com
+>>>
+>>>
+>>> An unprivileged user on a local network can use IPv6 Neighbour
+>>> Discovery ICMP to broadcast a non-route with a low hop limit, this
+>>> causing machines to lower the hop limit on existing IPv6 routes.
+>>>
+>>> Linux Patch: http://www.spinics.net/lists/netdev/msg322361.html
+>>> Redhat bugzilla: https://bugzilla.redhat.com/show_bug.cgi?id=3D1203712
+>>>
+>>> Projects impacted:  Linux kernel,  NetworkManager, FreeBSD Kernel
+>>>
+>>>
+>>> Regards,
+>>>  D.S. Ljungmark
+>>>
+>>>
+>>> --
+>>> Eitan Adler
+>>> _______________________________________________
+>>> freebsd-net@freebsd.org mailing list
+>>> http://lists.freebsd.org/mailman/listinfo/freebsd-net
+>>> To unsubscribe, send any mail to "freebsd-net-unsubscribe@freebsd.org"
+>>
 
-This sounds like a misunderstanding.  With the approach I suggested,
-no extra pre-existing code would be exposed to any attacker (only very
-few newly added lines of code would be), because all of that code would
-have been reachable under the fallback username anyway.
 
-> Moreover, using a "real fake" account gives a timing / system behaviour
-> baseline too.
 
-I'm not sure if that's what you meant, but yes it could be possible to
-see that the response time for non-existent users is nearly the same,
-whereas for other usernames it would vary slightly.  This is similar to
-other (currently possible) attacks on getpwnam(3) not being timing-safe.
-
-Your recent "global 5ms minimum plus an additional per-user 0-4ms delay
-derived from a host secret" time for failed authentication should help
-mitigate this.  [A further (yet still imperfect) mitigation would be to
-replace the nanosleep() with a busy wait (which would be a closer match
-to a system function taking longer to do its work, but still not exactly
-the same in terms of effect e.g. on concurrent authentication attempts).
-I am not sure if this further imperfect improvement is a good trade-off.
-With nanosleep(), we conserve server resources and energy.]
-
-> It might be harder to discern, but techniques for making
-> remote observations of subtle system side-channels are scarily well-
-> developed, and I'm sure that it would be pretty easy to spot if people
-> applied them.
-
-Right.  It's unrealistic to fully prevent such attacks given the
-existing non-timing-safe system interfaces.
-
-Anyway, I don't insist on any specific approach (nor would my preference
-matter all that much), especially now that you've already made relevant
-changes in the way you did.  I merely wanted to point out that the
-attack surface increase was not certain (maybe that code was already
-exposed under other usernames, also pre-authentication) and could have
-been avoided with greater confidence using that other approach.
-
-Alexander
+--=20
+This message is strictly personal and the opinions expressed do not
+represent those of my employers, either past or present.
