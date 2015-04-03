@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1883" "Wednesday" "28" "October" "2015" "00:57:16" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151028045716.D2ADB8BC010@smtpvmsrv1.mitre.org>" "44" "[oss-security] Re: CVE-2015-6937 - Linux kernel - NULL pointer dereference in net/rds/connection.c" nil nil nil "10" "2015102804:57:16" "[oss-security] Re: CVE-2015-6937 - Linux kernel - NULL pointer dereference in net/rds/connection.c" (number mark "        cve-assign@m Oct 28   44/1883  " thread-indent "\"[oss-security] Re: CVE-2015-6937 - Linux kernel - NULL pointer dereference in net/rds/connection.c\"\n") "<20151027083712.GA1560@chrystal.uk.oracle.com>" ("<20151027083712.GA1560@chrystal.uk.oracle.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1775" "Friday" "3" "April" "2015" "11:54:01" "+0200" "D.S. Ljungmark" "ljungmark@modio.se" "<CAO0vwOV33zHW=z4FDHq91yX5UHxnDKtXnzqzkYCrR+koxh1d9g@mail.gmail.com>" "61" "Re: [oss-security] CVE Request : IPv6 Hop limit lowering via RA messages" nil nil nil "4" "2015040309:54:01" "[oss-security] CVE Request : IPv6 Hop limit lowering via RA messages" (number mark "        ljungmark@mo Apr  3   61/1775  " thread-indent "\"Re: [oss-security] CVE Request : IPv6 Hop limit lowering via RA messages\"\n") "<942E0C08-E883-429E-9F27-22715C00B684@netgate.com>" ("<CAO0vwOXOPSGb8xWiutn+r+rXhSQc3SwC8-S2bkpRZuRAvDOyHw@mail.gmail.com>" "<CAF6rxgk6e1rT3prS3SS4FthshnVQdSrrE+bB65ps6Tx30UznAA@mail.gmail.com>" "<942E0C08-E883-429E-9F27-22715C00B684@netgate.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 3911 invoked by uid 550); 28 Oct 2015 04:57:33 -0000
+Received: (qmail 17938 invoked by uid 550); 3 Apr 2015 09:54:13 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,57 +11,96 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3860 invoked from network); 28 Oct 2015 04:57:28 -0000
-In-Reply-To: <20151027083712.GA1560@chrystal.uk.oracle.com>
-Message-Id: <20151028045716.D2ADB8BC010@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Wed, 28 Oct 2015 00:57:16 -0400 (EDT)
-From: cve-assign@mitre.org
+Received: (qmail 17918 invoked from network); 3 Apr 2015 09:54:12 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=KTF0xwZrEgIVvNeHlB9fXgiEmVevYWiW//A3lq9kU2U=;
+        b=gZMsneNb0Kgdgg9ttZHyITnjiubrt+h92r01Zk5xyCZMg+qKdTrjPxqE9q9aMxVrlh
+         Lr8drI/Aq0UGcfd0fBGwmA0uvpBT3uiACtbJFlraa9u9FKoBdX0SSFROJeXD3Xt9vWYJ
+         xMT8yonRDpCbu7ZFBnaYC4aTHpxowmEBdVIkNmyI9WqbIPX0AqG/RMn3oQEHEiO9g6uR
+         63u6BJj8ijr1e74FrWzSEMClpGCBUNOC6vJGQ/y/NQp+C3ksToU2WK+xNsI/8/470C1Y
+         5DPrNXznS0OfNMpkbLtI15XhWt0TrbwlENlwVfJ+hJieW8sMZGwzBOYEINr7gX9xF6ud
+         6r/g==
+X-Gm-Message-State: ALoCoQmrUY8aXarN+Jy578OY4WUsubj5LGp7Ndenr0uvnsC7sH+DVTyqrxhDmFdOwblf05iAHLGW
+MIME-Version: 1.0
+X-Received: by 10.182.125.130 with SMTP id mq2mr2036134obb.52.1428054841071;
+ Fri, 03 Apr 2015 02:54:01 -0700 (PDT)
+In-Reply-To: <942E0C08-E883-429E-9F27-22715C00B684@netgate.com>
+References: <CAO0vwOXOPSGb8xWiutn+r+rXhSQc3SwC8-S2bkpRZuRAvDOyHw@mail.gmail.com>
+	<CAF6rxgk6e1rT3prS3SS4FthshnVQdSrrE+bB65ps6Tx30UznAA@mail.gmail.com>
+	<942E0C08-E883-429E-9F27-22715C00B684@netgate.com>
+Message-ID: <CAO0vwOV33zHW=z4FDHq91yX5UHxnDKtXnzqzkYCrR+koxh1d9g@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Cc: Eitan Adler <lists@eitanadler.com>, FreeBSD Security Team <secteam@freebsd.org>, 
+	"freebsd-net@freebsd.org" <net@freebsd.org>, oss-security@lists.openwall.com
+Date: Fri, 3 Apr 2015 11:54:01 +0200
+From: "D.S. Ljungmark" <ljungmark@modio.se>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE-2015-6937 - Linux kernel - NULL pointer dereference in net/rds/connection.c
-To: quentin.casasnovas@oracle.com
+Subject: Re: [oss-security] CVE Request : IPv6 Hop limit lowering via RA messages
+To: Jim Thompson <jim@netgate.com>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Fri, Apr 3, 2015 at 6:06 AM, Jim Thompson <jim@netgate.com> wrote:
+> have you considered that there might not be a relevant patch because Free=
+BSD=E2=80=99s implementation isn=E2=80=99t affected?
 
->> CVE-2015-6937 has been assigned to this issue that is exploitable "on
->> sockets that weren't properly bound before attempting to send a
->> message":
+sys/netinet6/nd6_rtr.c
+
+    300         if (nd_ra->nd_ra_curhoplimit)
+    301                 ndi->chlim =3D nd_ra->nd_ra_curhoplimit;
+
+The only "OUT" in that function I see are tests for:
+  Not accepting RA
+  hoplimit on current packet !=3D 255
+  not link-local
+  No extended ipv6 header
+
+
+Based on previous testing ( early March 2015), and reading of the
+source, I say that FreeBSD is vulnerable.
+
+
+Regards,
+  D.S. Ljungmark
+
+
+>
+> Jim
+>
+>> On Apr 2, 2015, at 9:15 PM, Eitan Adler <lists@eitanadler.com> wrote:
 >>
->>   https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=74e98eb085889b0d2d4908f59f6e00026063014f
- 
-> The above fix is incomplete and still allows to trigger a NULL pointer
-> dereference when sending a message.  The root cause of this problem is a
-> race condition when checking that the socket is bound in rds_sendmsg(),
-> more information and a complete fix can be found here:
-> 
->   https://lkml.org/lkml/2015/10/16/530
-> 
-> It should hit Linus' tree soon but since distributions already started
-> shipping the incomplete fix, ...
-
-Use CVE-2015-7990 for the vulnerability that remains present after the
-74e98eb085889b0d2d4908f59f6e00026063014f commit.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJWMFSAAAoJEL54rhJi8gl5uLsQALnjDW0KqA0GdufltOgGh5oy
-HhFSvZirdqBkB+tSGn2J18yHKSB0wmcdlnGHMOVjCMTIAQCK5LYR/PsBoSid4rn+
-xCUnmh8+OoZEt8d5ukMVlOT6iQ6p/aqyoCnjMdRmEsK+lxVNb2Ew1OFAOvyYehWw
-Lf3QK7CO66IRbcxAtHn+3AEVcA8mEJv/0fskIdiAEi3BVZ0u+V1SKjdwRivYmxV8
-4yWi8EW/SVtZ7YEx64uOdWw8vJwo95YC4gVrkRBU4SYLF0W/b59+H/J2BRMzUHwG
-N6JUUrvDA00yx4wOqJidqR1IVY/LaqohoF6AWBaQ8hczBK/mnUuObnPBBAjS3NxH
-f/9g+E9R5QNBvFgzEImrC0fOYaKOmJqkb3zzIxrWAqMLcYiAehwpqp8NATEIhcQy
-GoxqZIlUIkIZcLBFvmRoLX0fF5ZLuwCJSh9r91oOlNjVKPYSa2ZVSSbN6x2m8Sn8
-/RyQBtxeFMgeymzF1XPCXJh17HCwpt4zYrZJf0Co6sbuatHw6FjyXLSnhNZ9DcLx
-qgfqAVQwHw+xqquEioRhKlzRld/+xz6tgtseTTHk/Tcawx3slH9zTy2slQW745Rl
-AcSLLCvlthPfhx3kNXjITaQ3WKaGTVsCHTuvhkxC2fyC6cAMYdPBDnuLMhZg6gKT
-HCjDdydb6XKjWdCO12pV
-=w9IK
------END PGP SIGNATURE-----
+>> + FreeBSD lists since I haven't seen any relevant patches (although I
+>> might have missed them).
+>>
+>> ---------- Forwarded message ----------
+>> From: D.S. Ljungmark <ljungmark@modio.se>
+>> Date: 2 April 2015 at 10:19
+>> Subject: [oss-security] CVE Request : IPv6 Hop limit lowering via RA mes=
+sages
+>> To: oss-security@lists.openwall.com
+>>
+>>
+>> An unprivileged user on a local network can use IPv6 Neighbour
+>> Discovery ICMP to broadcast a non-route with a low hop limit, this
+>> causing machines to lower the hop limit on existing IPv6 routes.
+>>
+>> Linux Patch: http://www.spinics.net/lists/netdev/msg322361.html
+>> Redhat bugzilla: https://bugzilla.redhat.com/show_bug.cgi?id=3D1203712
+>>
+>> Projects impacted:  Linux kernel,  NetworkManager, FreeBSD Kernel
+>>
+>>
+>> Regards,
+>>  D.S. Ljungmark
+>>
+>>
+>> --
+>> Eitan Adler
+>> _______________________________________________
+>> freebsd-net@freebsd.org mailing list
+>> http://lists.freebsd.org/mailman/listinfo/freebsd-net
+>> To unsubscribe, send any mail to "freebsd-net-unsubscribe@freebsd.org"
+>
