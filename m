@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4042" "Tuesday" "19" "November" "2019" "13:19:10" "+0100" "Morten Linderud" "morten@linderud.pw" "<20191119121910.g6tc5zwbmbdiuiuh@anathema>" "109" "Re: [oss-security] Mitigating malicious packages in gnu/linux" "^Date:" nil nil "11" "2019111912:19:10" "[oss-security] Mitigating malicious packages in gnu/linux" (number mark "U       morten@linde Nov 19  109/4042  " thread-indent "\"Re: [oss-security] Mitigating malicious packages in gnu/linux\"\n") "<CAGUWgD8LDusq3PyWeMd-RoDhOtfiebVtKKV_39GhG+8c0QYFYg@mail.gmail.com>" ("<CAGUWgD8LDusq3PyWeMd-RoDhOtfiebVtKKV_39GhG+8c0QYFYg@mail.gmail.com>") nil nil nil nil nil nil nil "Re: [oss-security] Mitigating malicious packages in gnu/linux" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2203" "Friday" "3" "April" "2015" "13:07:17" "+0200" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20150403130717.47fe512d@pc1.railnet.train>" "62" "[oss-security] Palinopsia bug" nil nil nil "4" "2015040311:07:17" "[oss-security] Palinopsia bug" (number mark "        hanno@hboeck Apr  3   62/2203  " thread-indent "\"[oss-security] Palinopsia bug\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 9595 invoked by uid 550); 19 Nov 2019 12:21:06 -0000
+Received: (qmail 7308 invoked by uid 550); 3 Apr 2015 11:07:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,133 +11,76 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 8113 invoked from network); 19 Nov 2019 12:19:25 -0000
-X-Spam-BL-Results: 
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linderud.pw; s=mail;
-	t=1574165953; bh=2HSLP9e5RFLFsN1M6VHauNNTi3hOuIUTkAawyO8Pd3U=;
-	h=Date:From:To:Subject:References:In-Reply-To;
-	b=gUkmfB5To1BSbjZkyzTsfIZ54hyEm901IpCM8zXcNxZAk22yCDhuSNziC3N11UOS5
-	 6l7BJUla+SUmWkrDJkwC8XtKM3bomoKeMsrKxtS5CZlmLadR4VJEY/y3PXLaSM3/3H
-	 YcRxOVmDfEYdic3CVDzT5/yklSaisyhEHsZpemes=
-Message-ID: <20191119121910.g6tc5zwbmbdiuiuh@anathema>
-References: <CAGUWgD8LDusq3PyWeMd-RoDhOtfiebVtKKV_39GhG+8c0QYFYg@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="rcepwu5kf2aqlbl7"
-Content-Disposition: inline
-In-Reply-To: <CAGUWgD8LDusq3PyWeMd-RoDhOtfiebVtKKV_39GhG+8c0QYFYg@mail.gmail.com>
-Date: Tue, 19 Nov 2019 13:19:10 +0100
-From: Morten Linderud <morten@linderud.pw>
+Received: (qmail 7276 invoked from network); 3 Apr 2015 11:07:16 -0000
+Message-ID: <20150403130717.47fe512d@pc1.railnet.train>
+X-Mailer: Claws Mail 3.11.1 (GTK+ 2.24.27; x86_64-pc-linux-gnu)
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512; protocol="application/pgp-signature"; boundary="=_zucker.schokokeks.org-14693-1428059225-0001-2"
+Date: Fri, 3 Apr 2015 13:07:17 +0200
+From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Mitigating malicious packages in gnu/linux
+Subject: [oss-security] Palinopsia bug
 To: oss-security@lists.openwall.com
 
---rcepwu5kf2aqlbl7
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+--=_zucker.schokokeks.org-14693-1428059225-0001-2
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Nov 19, 2019 at 01:33:48PM +0200, Georgi Guninski wrote:
-> As end user and contributor of gnu/linux, I am concerned about malicious
-> packages (either hostile developers or hacked developers or another reaso=
-n)
-> and have two questions:
->=20
-> * What do linux vendors to avoid malicious packages?
->=20
-> * As end user what can I do to mitigate malicious packages?
+Hi,
 
-Yo!
+As far as I can see this hasn't been posted here yet:
+https://hsmr.cc/palinopsia/
 
-The answer to this is complicated. Different distributions has widely diffe=
-rent
-threat models and supply chains for dealing with packages. This can be from=
- the
-perspective of developers uploading pre-built binary packages to a reposito=
-ry,
-then distributed. Another factor is distributions where source packages are
-uploaded to a centralized builder, then distributed.
+tl;dr It may be possible to read out parts of previous screen states
+from the buffer of your graphics card. This can leak data across users,
+VMs and survives reboots.
 
-You also got source-based distributions, such as Gentoo and probably NixOS,
-where the problem domain is a bit more complicated as the users might be
-building the packages themselves.
+I'd say these are vulnerabilities in the graphics drivers.
+It is to be expected that on a multi user system data is not leaked
+from one account to another (however there are other situations where
+this also happens, e.g. the fact that on vanilla linux users can see
+other users processes). A device driver should not leak data across
+users.
 
-Some attack vector are:
+(and yes, I know this is not new and has been pointed out before - even
+more reason to fix it)
 
-* A malicious build server
-* Compromised source tarballs
-* Compromised packagers
-* Compromised mirrors/repositories
+Redhat bug:
+https://bugzilla.redhat.com/show_bug.cgi?id=3D1076240
 
+Haven't found any infos on fixes yet. I think people of affected GPUs
+(mine isn't) should report these issues as security vulnerabilities to
+their graphics driver developers.
 
-There is not a definitive solution here. But there are multiple efforts and
-research going on. The most important one, in my opinion, is the reproducib=
-le
-builds project [1]. We need to ensure we are not inserting random or
-non-deterministic data into our build artifacts. This stretches from upstre=
-am
-developers providing tarballs, to pre-compiled sources and packages from
-distributions. There is no distribution today that has full reproducible bu=
-ilds,
-but there are many projects that work towards this and work on reproducible
-builds.
-
-Arch Linux has recently been trying to get the core repository 100%
-reproducible, and we have done a lot of effort towards this just the past w=
-eek
-[2]. I have also written up a blog post describing the effort that has gone=
- into
-this [3].
-
-There are also other efforts, like Benjamin Hof which has done work attempt=
-ing
-to provide transparency logs for Debian package repositories. This can work=
- as a
-guard detecting compromised signing keys. Either from build servers or pack=
-agers [4].
-
-The current status quo is a bit grim. You can't protect yourself against
-malicious packages. You need to trust the source and build the packages
-yourself, preferably write your own package files.
-
-As long as we use distributions we are bound to trusting the packagers and
-believe they are doing the right thing. However, reproducible builds will a=
-llow
-users to verify the work done by packagers in the future.
-
-
-I hope this gives some insight and answers parts of your question :)
-
-
-[1]: https://reproducible-builds.org/
-[2]: https://lists.archlinux.org/pipermail/arch-dev-public/2019-November/02=
-9721.html
-[3]: https://linderud.dev/blog/reproducible-arch-linux-packages/
-[4]: https://debconf18.debconf.org/talks/104-software-transparency-package-=
-security-beyond-signatures-and-reproducible-builds/
-
+cu,
 --=20
-Morten Linderud
-PGP: 9C02FF419FECBE16
+Hanno B=C3=B6ck
+http://hboeck.de/
 
---rcepwu5kf2aqlbl7
-Content-Type: application/pgp-signature; name="signature.asc"
+mail/jabber: hanno@hboeck.de
+GPG: BBB51E42
+
+--=_zucker.schokokeks.org-14693-1428059225-0001-2
+Content-Type: application/pgp-signature
+Content-Transfer-Encoding: 7bit
+Content-Description: OpenPGP digital signature
 
 -----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
 
-iQIzBAABCgAdFiEEktnGzemaICTWkKdu50JoO6CMsv8FAl3T3b4ACgkQ50JoO6CM
-sv90ZA//ci++pBkkqdJ3pouwIx8aUcowFS8/LlKzXOoHkJXZUjT0ZrB9ycQ1JcwL
-NsBq7lze0H92hMTFId9bXT/y+2gRhWs2+0/oT5/42ibo2rLYlsFkl5oY0XiUraJv
-zhrSGE+QweWlERwjNviVo3WonVGtZP6QRsSNWd+iw/eEXQuVch75k6ZOktC2RE2B
-7acUngSjM10QCWZsvLINnhrOHoSl8K/SeRdFYLce6esLybnoKZxLsxRLo8P9Zg5h
-5dUg/n5o01NHvwJXdcAlVOEG9TxaDu/bfDzbQ7oU/d3AIviQg2FPoTJ7HNlnsDIF
-cgY3bBHYvNc4i41YRiSMmlkkaUR1GOxkDx5JpeXSH4Ot3FAa7X9CLlFhtvAnOx70
-bAg7Lt2KArsua3i6Fz81p8pMGbgv5Mo5X2iefwUJpWqcQSaMS7YNsFYv7rHjo+Dg
-ohc9BzMDAdLudgwnDr64Q7WOHcv3o8yHrbq+cdGDdcTE74lFURGNEgjhy3InCLK0
-c5qmk33WNnb9/6fK+Kb2XrKIrUQ0efcNML8BfgQJERre5+/+mvUJGS66IHPPIuv0
-ZOpkOxf3dObFc2MIQi9c4eYJ8q7YMm0GC8NwMEnGfNRord1cJqmCFpPU0RH5kHTQ
-gSj7Tcd5nXFK6SH+2hJtN9PN/e5WqSNRlPjwLdjxvRu4mj9twdI=
-=9+ch
+iQIcBAEBCgAGBQJVHnRlAAoJEKWIAHK7tR5CbqQQAJGIDzNH2k4UmY1NVdxM3KmG
+0TQXaVY+O60lTyH8VtBF3SLOupqrWZFEE9ryxizZWcn0rzfhG55nurqR7DqYWeZC
+kIvSjaRSCNGe1FH3ZZR0L1U4faAy7eXGR/00tjvEzM3fzuF9UkigvZ6P3MOfqK71
+dQjzLBg733g1uiJCDJNd0TKaPhfG6LLmZ4NzbUgNABl63dpLyxOXxh5VjvqlS2Na
+M+s0lDI98x+ZZjIhgN0DRi/TdkT9772OwZ6VK9UdgmIJhGowck6RR1T15H7sV6WB
+TaFVti4dqx6hQqkOTbw8mw/8+5OkwsStkjENtpgLYIYJYmcl8TWrZdff2yGhXi8e
+Elq/LPb3dUf1V4+fCZ041NUvHab6GSGRoe+d2AOq+qNKaSnLnJ54viT7KQX7z5HG
+hUDecMO6+nGj+WUaIzYcOWF7+2UviSbefmTN9Ajr4w47an6sUBANCKldNMbsXMYt
+UI4KA31K06/CEWiWFcqy9UStKdQo68bzt5EhC3A9X0ABgvRxLo2tnHoWJUJcWKPg
+7GKI2UCWLTqr3hyH12CdY+Klnq+nWAFY3CgibTkvrQjFftePd5oGy7RDPjSzvZZA
+MXiN3MhPlifzatLmtgt0i2MFVok9JW9ow6SvYE6ktApjP7oKqPqB7WwCCXfWPk8i
+H1zwPDIaU+VNMuUW0S4w
+=5wsE
 -----END PGP SIGNATURE-----
 
---rcepwu5kf2aqlbl7--
+--=_zucker.schokokeks.org-14693-1428059225-0001-2--
