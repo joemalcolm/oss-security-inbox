@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["670" "Tuesday" "26" "September" "2017" "10:26:27" "+0530" "P J P" "ppandit@redhat.com" "<nycvar.YSQ.7.76.1709261022090.10045@wniryva>" "20" "[oss-security] CVE-2017-12154 Kernel: kvm: nVMX: L2 guest could access hardware(L0) CR8 register" nil nil nil "9" "2017092604:56:27" "[oss-security] CVE-2017-12154 Kernel: kvm: nVMX: L2 guest could access hardware(L0) CR8 register" (number mark "U       ppandit@redh Sep 26   20/670   " thread-indent "\"[oss-security] CVE-2017-12154 Kernel: kvm: nVMX: L2 guest could access hardware(L0) CR8 register\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2363" "Friday" "3" "April" "2015" "19:29:04" "+0000" "Mike Gabriel" "mike.gabriel@das-netzwerkteam.de" "<20150403192904.Horde.0NaAyaOcNQwGpQMQtHT27w1@mail.das-netzwerkteam.de>" "71" "[oss-security] CVE request: Caja / MATE Desktop Environment: caja automounts USB flash drives and CD/DVD drives while session is locked" nil nil nil "4" "2015040319:29:04" "[oss-security] CVE request: Caja / MATE Desktop Environment: caja automounts USB flash drives and CD/DVD drives while session is locked" (number mark "        mike.gabriel Apr  3   71/2363  " thread-indent "\"[oss-security] CVE request: Caja / MATE Desktop Environment: caja automounts USB flash drives and CD/DVD drives while session is locked\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 11598 invoked by uid 550); 26 Sep 2017 04:56:48 -0000
+Received: (qmail 17772 invoked by uid 550); 3 Apr 2015 19:31:35 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,41 +11,93 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11576 invoked from network); 26 Sep 2017 04:56:48 -0000
-DMARC-Filter: OpenDMARC Filter v1.3.2 mx1.redhat.com 5E70580469
-Authentication-Results: ext-mx04.extmail.prod.ext.phx2.redhat.com; dmarc=none (p=none dis=none) header.from=redhat.com
-Authentication-Results: ext-mx04.extmail.prod.ext.phx2.redhat.com; spf=fail smtp.mailfrom=ppandit@redhat.com
-Date: Tue, 26 Sep 2017 10:26:27 +0530 (IST)
-From: P J P <ppandit@redhat.com>
-X-X-Sender: pjp@javelin
-To: oss security list <oss-security@lists.openwall.com>
-cc: Jim Mattson <jmattson@google.com>
-Message-ID: <nycvar.YSQ.7.76.1709261022090.10045@wniryva>
+Received: (qmail 16315 invoked from network); 3 Apr 2015 19:29:16 -0000
+X-Virus-Scanned: Debian amavisd-new at grimnir.das-netzwerkteam.de
+Message-ID: <20150403192904.Horde.0NaAyaOcNQwGpQMQtHT27w1@mail.das-netzwerkteam.de>
+User-Agent: Internet Messaging Program (IMP) H5 (6.2.2)
+Accept-Language: de,en
+Organization: DAS-NETZWERKTEAM
+X-Originating-IP: 80.129.92.130
+X-Remote-Browser: Mozilla/5.0 (X11; Linux x86_64; rv:32.0) Gecko/20100101
+ Firefox/32.0 Iceweasel/32.0
+Content-Type: multipart/signed; boundary="=_3ChLtlDSO7-ZiClsRNNtqA1";
+ protocol="application/pgp-signature"; micalg=pgp-sha1
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.16
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.28]); Tue, 26 Sep 2017 04:56:36 +0000 (UTC)
-Subject: [oss-security] CVE-2017-12154 Kernel: kvm: nVMX: L2 guest could access hardware(L0)
- CR8 register
+Date: Fri, 03 Apr 2015 19:29:04 +0000
+From: Mike Gabriel <mike.gabriel@das-netzwerkteam.de>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE request: Caja / MATE Desktop Environment: caja automounts USB
+ flash drives and CD/DVD drives while session is locked
+To: oss-security@lists.openwall.com
 
-   Hello,
+--=_3ChLtlDSO7-ZiClsRNNtqA1
+Content-Type: text/plain; charset=UTF-8; format=flowed; DelSp=Yes
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Linux kernel built with the KVM virtualisation support(CONFIG_KVM), with 
-nested virtualisation(nVMX) feature enabled(nested=1), is vulnerable to a 
-crash due to disabled external interrupts. As L2 guest could access(r/w) 
-hardware CR8 register of the host(L0).
+Application: Caja (file browser of the MATE desktop environment)
+Upstream-Source: https://github.com/mate-desktop/caja
+Vulnerability type: auto-run drive-by attack [1]
 
-In a nested virtualisation setup, L2 guest user could use this flaw to 
-potentially crash the host(L0) resulting in DoS.
+Description: caja automounts USB flash drives and CD/DVD drives while=20=20
+session is locked
 
-Upstream patch
---------------
-   -> https://git.kernel.org/linus/51aa68e7d57e3217192d88ce90fd5b8ef29ec94f
+Abstract:
+  To avoid auto-run drive-by attacks by a physically proximate attacker on
+  the system from USB auto-mounting screen is locked, the desktop should
+  delay automounting until the screen is unlocked (to not interfere with
+  the case of sitting back down at your system, plugging in a device,
+  and then unlocking your screen).
 
-This issue was reported by Jim Mattson of Google.com.
+Affected versions: all known versions
+Upstream bug report: https://github.com/mate-desktop/caja/issues/398
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+To my knowledge, no CVE has been requested, so far.
+
+The issue was first reported on Debian BTS:
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=3D781608#5
+
+Mike
+
+
+[1] http://www.net-security.org/secworld.php?id=3D10544
+
+
+--=20
+
+DAS-NETZWERKTEAM
+mike gabriel, herweg 7, 24357 fleckeby
+fon: +49 (1520) 1976 148
+
+GnuPG Key ID 0x25771B31
+mail: mike.gabriel@das-netzwerkteam.de, http://das-netzwerkteam.de
+
+freeBusy:
+https://mail.das-netzwerkteam.de/freebusy/m.gabriel%40das-netzwerkteam.de.x=
+fb
+
+--=_3ChLtlDSO7-ZiClsRNNtqA1
+Content-Type: application/pgp-signature
+Content-Description: Digitale PGP-Signatur
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIbBAABAgAGBQJVHun/AAoJEJr0azAldxsxyWEP9RvPGB8mkaGFWUtz+QN8y88o
+ZbZhH7wqkMPVz2udfrafZf6lxxg2BFi1mcyve5dF2N24OzdDY9dCCOnQ0823hZb9
+hLoBYDkRsC2dzQn/nAzVy6Z1g40zL037iZjziYRZH+PXKuZjZX/28BZL4sDac/8H
+zhtgWGAGOFTGSDVmiJQyBUGFSvs3lUwbKEf9ieogALR6POUpYcfE/Q5vAvfVXjvm
+nViR9XmyOBOKQrkyG69Od4TG7J3CFwZjxevQsqvJMNrRt20SR/YAjfJtC/+OvdHA
+k0YufnWiDltma41ykxDoJ0YHDvLhFZ56k3bqzSGTMM2tfucLGVLWs0V/Tl/eBcHl
+rGrSUJisAoZUnd4cx2hRZ22eKJIBxvx9pKf5jnjh9Gq74XlJpJijnYmFHojngwL6
+TfA/+lbpKA438+zYX2D3igZ7AfMyI2rM71xILEtDPrk6N65rKMOsbOGa9OkprmJ3
+VF1IRvOrqnzGz33tZNXG2bfxId4FF8CZnnPKu9bzWDtWhF1F6ltNOkpePLxTmI6c
+J8VSSzvuFQdeJlJN4O5YYJneWA/CylrYJwLEATmvqZaPU2kvzONNnIX9RxPxPVp9
+Fub0QtAXUx1P/LvKm0rW7Cz2W0cDG+mzIcKRVo4SG4x7UAb+NAKGZcfJB5T1tGMJ
+c/OGZBOp2860/iPVnMg=
+=QfWm
+-----END PGP SIGNATURE-----
+
+--=_3ChLtlDSO7-ZiClsRNNtqA1--
+
