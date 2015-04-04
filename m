@@ -1,4 +1,9 @@
-Received: (qmail 28484 invoked by uid 550); 22 May 2022 19:21:25 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2647" "Saturday" "4" "April" "2015" "14:54:34" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150404185434.6F84B6C0048@smtpvmsrv1.mitre.org>" "59" "[oss-security] Re: Linux namespaces: It is possible to escape from bind mounts" nil nil nil "4" "2015040418:54:34" "[oss-security] Re: Linux namespaces: It is possible to escape from bind mounts" (number mark "        cve-assign@m Apr  4   59/2647  " thread-indent "\"[oss-security] Re: Linux namespaces: It is possible to escape from bind mounts\"\n") "<20150403105802.GA21110@pc.thejh.net>" ("<20150403105802.GA21110@pc.thejh.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 19889 invoked by uid 550); 4 Apr 2015 18:54:57 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,90 +11,72 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 19841 invoked from network); 4 Apr 2015 18:54:46 -0000
+In-Reply-To: <20150403105802.GA21110@pc.thejh.net>
+Message-Id: <20150404185434.6F84B6C0048@smtpvmsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Sat,  4 Apr 2015 14:54:34 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28401 invoked from network); 22 May 2022 19:21:15 -0000
-Date: Sun, 22 May 2022 21:19:52 +0200
-From: Solar Designer <solar@openwall.com>
-To: oss-security@lists.openwall.com
-Message-ID: <20220522191951.GA21330@openwall.com>
-References: <20220515162740.GA20526@openwall.com> <YoKiGWAX4E/mbGWB@kroah.com> <1be21670-921c-9f0a-d99c-a9f6fd02b9b2@oracle.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1be21670-921c-9f0a-d99c-a9f6fd02b9b2@oracle.com>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] linux-distros list policy and Linux kernel
+Subject: [oss-security] Re: Linux namespaces: It is possible to escape from bind mounts
+To: jann@thejh.net
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Thank you all for the helpful replies in this thread.  Here's my summary
-of what was said so far:
+> http://permalink.gmane.org/gmane.linux.kernel.containers/29173
+> http://permalink.gmane.org/gmane.linux.kernel.containers/29177
 
-As seen from replies by Jason and Greg, I didn't make the distinction
-between my suggested options 0 and 2 clear enough.  They were:
-
-> 0. Do nothing specific - let things work or fail on their own.
-
-> 2. Strictly enforce the policy as it is - and be in conflict with Linux
-> kernel security team, and handle fewer issues via linux-distros.
-
-Let me clarify.  As I wrote, after the disagreement in February, "the
-handling was hectic - indeed, people felt discouraged from enforcing the
-policy."  So by option 0 I referred to the loose (non-)enforcement we've
-had since February until now, and by option 2 to enforcement at least as
-strict as we had before February.
-
-Although I wouldn't necessarily have the list's future decided by a
-majority vote, I counted something like 4.5 votes for relaxing the list
-policy to accommodate (at least) Linux kernel community's workflow:
-
-Igor Seletskiy
-> My vote would be for #1
-
-Anthony Liguori
-> make this policy specific to changes under security@vger.kernel.org embargo
-
-Greg KH
-> So if you all could just modify the rules to be something like,
-> "embargos are not broken when changes are posted in public, or accepted
-> into public trees, unless the changes or discussions around them turn
-> out to disclose the security related issue."
-
-Dan Carpenter
-> What I wish we had is a private way to tell maintainers "You may want to
-> pick up a patch."  It has to be private.
-
-Vegard Nossum
-> As a distribution, our preference is to see sources/patches and binaries
-> released simultaneously by both upstream and distributions. [...]
+> Containers on Linux normally use bind mounts to restrict how much
+> of the filesystem is visible for processes inside the container.
+> However, if an attacker can gain capabilities within such a
+> container or can create another user and mount namespace within
+> the existing container, he can do something similar to a
+> double-chroot attack to break out of the bind mount and gain
+> access to the full filesystem to which the bind mount refers:
 > 
-> However, barring that option, our preference would be to adjust the
-> linux-distros list policy as proposed (option 1/Greg KH's proposal).
+> Create folders /A, /A/B, /C, /D inside the namespace.
+> Bind-mount the /A inside the namespace to /D.
+> Let a process chdir to /D/B.
+> Move /D/B over into /C.
+> The process which chdir'ed to /D/B is now in /C/B, but at the
+> same time it is in a bind mount with /D as root. It can then
+> traverse upwards, past what looks like / inside the namespace.
 
-and 1 vote for preserving the current policy:
+Our understanding so far is that the underlying problem is that the
+original design didn't fully consider the ability of an attacker to
+rename. Because of this, the rename implementation has been changed so
+that it detects a violation of the intended security properties and
+puts a countermeasure in place. This has been done in the fs/dcache.c
+__d_move function. There is no commit available yet at
 
-Jason A. Donenfeld
-> So I think maybe your option (0) makes sense? Enforce the policy, which
-> has worked well enough for a long while now.
+  http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/log/fs/dcache.c
 
-A few of you also said the linux-distros list is still valuable, and no
-one said otherwise.
+Use CVE-2015-2925 for this issue.
 
-I think now we need to come up with a specific edit to the policy, and I
-think the exception should ideally be limited to Linux kernel issues
-currently/recently handled with the kernel's security team involved.
-Ideally, we'd also manage to simplify rather than further complicate the
-policy - a goal inconsistent with granting only a limited exception?
+As far as we can tell, the patches don't address a separate scenario
+in which a ".." attack can occur but the underlying problem is
+something other than rename handling. So, we don't think a second CVE
+ID is needed.
 
-A number of other related issues were brought up as well, including by
-Jason A. Donenfeld, Seth Arnold, Thadeu Lima de Souza Cascardo, and
-Vegard Nossum.  From a practical perspective, it looks like Vegard
-Nossum and maybe Thadeu Lima de Souza Cascardo intend to propose changes
-to the kernel's Documentation/admin-guide/security-bugs.rst:
+(For purposes of CVE, a set of "possible to escape from bind mounts"
+discoveries could have multiple IDs if the root cause of one issue
+were the acceptability of the ".." syntax in a certain context, and
+the root cause of another issue were unrelated to this.)
 
-On Fri, May 20, 2022 at 10:14:07AM +0200, Vegard Nossum wrote:
-> I'll respond a bit later with a slightly more detailed option that also
-> includes potential modifications to the in-kernel documentation as
-> displayed on kernel.org.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-Alexander
+iQEcBAEBAgAGBQJVIDIRAAoJEKllVAevmvmsw7YIAJjYr1bQr1YxTISGoFlx40Z3
+NE6Y6icrOwqwj2SBhDx2U7i/t5PSIz9bqAL+dsHRKgYumYr5wYHnwBofqkhOsw0u
+bXhh3R+5xWVHHhcYgAkIUPr7L4D+jN8qp9IpvM7Z4wpgXwdr2HIpKE8sKdKwvqLR
+oaUkqrvZi5QEcW8sWONIi65FJmG2l9YcHQ5wpM7E3wN7HIoFK005er40882mMimC
+zJpLiBt1/SMqplGLUCFaMQ64SnC90EBJE3r8rGPWBaDGaS8mW6yRV5h++2t3K4dM
+axFwwkOrJcpcrbjGeBowte44XJ/1W2wgq9t/6NXFzuPxmE+JyTa/tv5xF795lLI=
+=vO4b
+-----END PGP SIGNATURE-----
