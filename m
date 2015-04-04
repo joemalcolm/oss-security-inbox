@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6519" "Wednesday" "3" "January" "2018" "22:34:42" "+0000" "Xen.org security team" "security@xen.org" "<E1eWrcQ-0000Bf-HN@xenbits.xenproject.org>" "166" "[oss-security] Xen Security Advisory 254 (CVE-2017-5753,CVE-2017-5715,CVE-2017-5754) - Information leak via side effects of speculative execution" nil nil nil "1" "2018010322:34:42" "[oss-security] Xen Security Advisory 254 (CVE-2017-5753,CVE-2017-5715,CVE-2017-5754) - Information leak via side effects of speculative execution" (number mark "U       security@xen Jan  3  166/6519  " thread-indent "\"[oss-security] Xen Security Advisory 254 (CVE-2017-5753,CVE-2017-5715,CVE-2017-5754) - Information leak via side effects of speculative execution\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5106" "Friday" "3" "April" "2015" "22:06:09" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150404020609.3DD176C0030@smtpvmsrv1.mitre.org>" "122" "[oss-security] Re: Request CVE for LinuxNode - DoS vulnerability" nil nil nil "4" "2015040402:06:09" "[oss-security] Re: Request CVE for LinuxNode - DoS vulnerability" (number mark "        cve-assign@m Apr  3  122/5106  " thread-indent "\"[oss-security] Re: Request CVE for LinuxNode - DoS vulnerability\"\n") "<20150403172223.GA5593@shiftout.net>" ("<20150403172223.GA5593@shiftout.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 30094 invoked by uid 550); 3 Jan 2018 22:35:02 -0000
+Received: (qmail 32749 invoked by uid 550); 4 Apr 2015 02:06:41 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,184 +11,135 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 32469 invoked from network); 4 Apr 2015 02:06:21 -0000
+In-Reply-To: <20150403172223.GA5593@shiftout.net>
+Message-Id: <20150404020609.3DD176C0030@smtpvmsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Fri,  3 Apr 2015 22:06:09 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30054 invoked from network); 3 Jan 2018 22:35:01 -0000
-Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
-Content-Transfer-Encoding: binary
-MIME-Version: 1.0
-X-Mailer: MIME-tools 5.505 (Entity 5.505)
-To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
- xen-users@lists.xen.org, oss-security@lists.openwall.com
-From: Xen.org security team <security@xen.org>
-CC: Xen.org security team <security-team-members@xen.org>
-Message-Id: <E1eWrcQ-0000Bf-HN@xenbits.xenproject.org>
-Date: Wed, 03 Jan 2018 22:34:42 +0000
-Subject: [oss-security] Xen Security Advisory 254 (CVE-2017-5753,CVE-2017-5715,CVE-2017-5754)
- - Information leak via side effects of speculative execution
-
---=separator
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
-Content-Transfer-Encoding: 7bit
+Subject: [oss-security] Re: Request CVE for LinuxNode - DoS vulnerability
+To: irl@fsfe.org
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hash: SHA1
 
- Xen Security Advisory CVE-2017-5753,CVE-2017-5715,CVE-2017-5754 / XSA-254
-                              version 2
+> https://bugs.debian.org/777013
 
-        Information leak via side effects of speculative execution
+> our package ax25-node
 
-UPDATES IN VERSION 2
-====================
+Here are some comments that may help to determine the correct number
+of CVE IDs for this report.
 
-Added CVEs.
+> The SIGQUIT routine fails to close the app leaving the IP sockets open and in
+> some cases DDOS the remote site if a user "ctrl-]+q" out of a telnet session.
+> Also the app fails to close and more can be spawned by a crafty malicious user
+> thus bringing the system to a point of no memory available.
 
-ISSUE DESCRIPTION
-=================
+We found this within the node 0.3.2 download:
 
-Processors give the illusion of a sequence of instructions executed
-one-by-one.  However, in order to most efficiently use cpu resources,
-modern superscalar processors actually begin executing many
-instructions in parallel.  In cases where instructions depend on the
-result of previous instructions or checks which have not yet
-completed, execution happens based on guesses about what the outcome
-will be.  If the guess is correct, execution has been sped up.  If the
-guess is incorrect, partially-executed instructions are cancelled and
-architectural state changes (to registers, memory, and so on)
-reverted; but the whole process is no slower than if no guess had been
-made at all.  This is sometimes called "speculative execution".
+  Node is intended to be called from ax25d or inetd.
 
-Unfortunately, although architectural state is rolled back, there are
-other side effects, such as changes to TLB or cache state, which are
-not rolled back.  These side effects can subsequently be detected by
-an attacker to determine information about what happened during the
-speculative execution phase.  If an attacker can cause speculative
-execution to access sensitive memory areas, they may be able to infer
-what that sensitive memory contained.
+  /etc/inetd.conf could have something like this in it:
 
-Furthermore, these guesses can often be 'poisoned', such that attacker
-can cause logic to reliably 'guess' the way the attacker chooses.
-This advisory discusses three ways to cause speculative execution to
-access sensitive memory areas (named here according to the
-discoverer's naming scheme):
+    # Set up LinuxNode to listen at telnet port
+    telnet  stream  tcp     nowait  root    /usr/bin/node     node
 
-SP1, "Bounds-check bypass": Poison the branch predictor, such that
-operating system or hypervisor code is speculatively executed past
-boundary and security checks.  This would allow an attacker to, for
-instance, cause speculative code in the normal hypercall / emulation
-path to execute with wild array indexes.
+As far as we can tell, "if a user "ctrl-]+q" out of a telnet session"
+means that the client side is attempting to close the TCP connection
+in an unsupported way (the supported way is the "bye" command). We
+think that "leaving the IP sockets open" means that the TCP connection
+transitions to CLOSE_WAIT for a while, and thus TCP data is still
+being transmitted outbound. (The specific TCP state isn't critical -
+the continued data transmission is what is of interest.) For node
+(unlike, say, a generic telnetd), this is a relatively important
+vulnerability because a TCP connection usually occurs over a very
+low-bandwidth radio path. We think "DDOS the remote site" does not
+really mean DDOS, and instead means "occasionally sends TCP packets
+from one source IP address to one destination IP address." Also, for
+purposes of defining the vulnerability, it isn't a self-DoS in which
+the client can omit the bye command and thereby suffer a loss of
+bandwidth that the client otherwise could have used for something
+else. Instead, the client has an "attacker" role in which it can omit
+the bye command and thereby cause the server to waste bandwidth that
+the server otherwise could have used for something else.
 
-SP2, "Branch Target Injection": Poison the branch predictor.
-Well-abstracted code often involves calling function pointers via
-indirect branches; reading these function pointers may involve a
-(slow) memory access, so the CPU attempts to guess where indirect
-branches will lead.  Poisoning this enables an attacker to
-speculatively branch to any code that exists in the hypervisor.
+777013 adds "Found this was the situation in ALL linux-based ax25 node
+packages. Patched this in URONode and informed ax25-node upstream in
+2007." As far as we can tell, there are no independent codebases, and
+thus any CVE ID would be shared among all related packages. The
+SIGQUIT routine in node ends up doing:
 
-SP3, "Rogue Data Load": On some processors, certain pagetable
-permission checks only happen when the instruction is retired;
-effectively meaning that speculative execution is not subject to
-pagetable permission checks.  On such processors, an attacker can
-speculatively execute arbitrary code in userspace with, effectively,
-the highest privilege level.
+  void logout(char *reason)
+  {
+          axio_end_all();
+          logout_user();
+          ipc_close();
+          log(L_LOGIN, "%s @ %s logged out: %s", User.call, User.ul_name, reason);
+          free_cmdlist(Nodecmds);
+          Nodecmds = NULL;
+          exit(0);
+  }
 
-More information is available here:
-  https://meltdownattack.com/
-  https://spectreattack.com/
+whereas the SIGQUIT routine in URONode ends up doing:
 
-Additional Xen-specific background:
+  void node_logout(char *reason)
+  {
+    axio_flush(NodeIo);
+    axio_end_all();
+    logout_user();
+    ipc_close();
+    node_log(LOGLVL_LOGIN, "%s @ %s logged out", User.call, User.ul_name);
+    node_log(LOGLVL_LOGIN, "%s %s", NodeId, reason);
+    free_cmdlist(Nodecmds);
+    Nodecmds = NULL;
+    exit(0);
+  }
 
-64-bit Xen hypervisors on systems with less than 5TiB of RAM map all
-of physical RAM, so code speculatively executed in a hypervisor
-context can read all of system RAM.
+showing that "derivative work" is a reasonable conclusion.
 
-When running PV guests, the guest and the hypervisor share the address
-space; guest kernels run in a lower privilege level, and Xen runs in
-the highest privilege level.  (HVM and PVH guests run in a separate
-address space to the hypervisor.)  However, only 64-bit PV guests can
-generate addresses large enough to point to hypervisor memory.
+The only problem being reported in the SIGQUIT routine is that it is
+implemented incorrectly in a way that causes TCP connections to spend
+too much time in an undesired state, such as CLOSE_WAIT. The report is
+not about other issues in the signal handler such as
+https://cwe.mitre.org/data/definitions/479.html issues.
 
-IMPACT
-======
+The remaining concern is "more can be spawned by a crafty malicious
+user thus bringing the system to a point of no memory available." This
+suggests that there was an intended protection mechanism within node
+itself for cases where multiple clients wished to connect at the same
+time. (In other words, node was not letting inetd take responsibility
+for controlling the number of simultaneous invocations of the
+service.) Also, "crafty malicious user" suggests that there was an
+unstated way to bypass this protection mechanism. If so, then this
+would need a different CVE ID than the one for the
+bandwidth-consumption problem.
 
-Xen guests may be able to infer the contents of arbitrary host memory,
-including memory assigned to other guests.
+So, the questions are:
 
-An attacker's choice of code to speculatively execute (and thus the
-ease of extracting useful information) goes up with the numbers.  For
-SP1, or SP2 on systems where SMEP (supervisor mode execute protection)
-is enabled: an attacker is limited to windows of code after bound
-checks of user-supplied indexes.  For SP2 without SMEP, or SP3, an
-attacker can write arbitrary code to speculatively execute.
+1. Is the above reasonable, i.e., there was (at one time) a single
+vulnerability affecting both node and URONode in which a client could
+use "quit" within telnet, and thereby cause the server to waste
+network bandwidth on a radio path?
 
-NOTE ON TIMING
-==============
+2. If the "crafty malicious user" attack could occur separately, are
+there any available details about what "crafty" action would occur?
+Also, did this issue affect at least one older version of URONode in
+addition to node?
 
-This vulnerability was originally scheduled to be made public on 9
-January.  It was accelerated at the request of the discloser due to
-one of the issues being made public.
-
-VULNERABLE SYSTEMS
-==================
-
-Systems running all versions of Xen are affected.
-
-For SP1 and SP2, both Intel and AMD are vulnerable.
-
-For SP3, only Intel processors are vulnerable. Furthermore, only
-64-bit PV guests can exploit SP3 against Xen.  PVH and 32-bit PV
-guests cannot exploit SP3.
-
-We believe that ARM is affected, but unfortunately due to the
-accelerated schedule, we haven't been able to get concrete input from
-ARM.  We are asking ARM and will publish more information when it is
-available.
-
-MITIGATION
-==========
-
-There is no mitigation for SP1 and SP2.
-
-SP3 can be mitigated by running guests in HVM or PVH mode.
-
-For guests with legacy PV kernels which cannot be run in HVM mode, we
-have developed a "shim" hypervisor that allows PV guests to run in PVH
-mode.  Unfortunately, due to the accelerated schedule, this is not yet
-ready to release.  We expect to have it ready for 4.10, as well as PVH
-backports to 4.9 and 4.8, available over the next few days.
-
-RESOLUTION
-==========
-
-There is no available resolution for SP1 or SP3.
-
-We are working on patches which mitigate SP2 but these are not
-currently available.  Given that the vulnerabilities are now public,
-these will be developed and published in public, initially via
-xen-devel.
-
-When we have useful information we will send an update.
-
-NOTE ON LACK OF EMBARGO
-=======================
-
-The timetable and process were set by the discloser.
-
-After the intensive initial response period for these vulnerabilities
-is over, we will prepare and publish a full timeline, as we have done
-in a handful of other cases of significant public interest where we
-saw opportunities for process improvement.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBCAAGBQJaTVp4AAoJEIP+FMlX6CvZTcwH/2DpfLGwINA0C3V0zy6WcJAu
-zxj7oqjorODWMIZbyR+gdSJHX82PKEJVgAdH/wtzb/GSdFJ+D3Q+zwZQSq1hxCZr
-g9Otd+u6PyACsrQRK8mIoahYKUgPjTQdK2mzkKTO8SF9dQB5MSFht1vLdjXXGaWn
-ifMfzNXgr3UCs5fOhQga/f2UdkbLal/qi0H2mxPyXCgalb6MGpMWEgMcmoAlFqnM
-7aRmgYWrGaPKRHw4wwePWty+KEoryzPdF1vtURw8k/wdEDjzWYGZbhyBcHTd1BG7
-or/J7mIsfs8SO7vua/6+msTfHnsmyWgZPweM4dzcO1AUEHDN0dYz6TOqaFwJuew=
-=pwaX
+iQEcBAEBAgAGBQJVH0ZAAAoJEKllVAevmvmsPMwIALD5TDUbZvz1fQZzO+pu2ZYa
+yGRXXHFtOgz1x3jKsjX9dBkUvzJH7HRZAqRb83ysuzo+Guxh11pw7aZGWCCHch3m
+Bh9uSxOygCm0nicdCKZ5Bc36YFxBEkCpi+Bz5Xcen+/plMb0ZFcZfslW5IG5r7zL
+Spea+4sG1jseiFM194KY5BGMvduRhtDqxjKcZGC9xQGC1+vq+33evQa0fIKUrRxj
+IfL4xPuwCS+kA8oypw/zoyoieDvyiuAmxO5jXPVZw6ouCrhagMZZZhVBLTbJii/T
+KuQKKanqzKrmomPPzXAEpWIae/J83AJCTFoIV6DE+e1wj6syzAu6vrX7POWdLhQ=
+=PJ/W
 -----END PGP SIGNATURE-----
-
---=separator--
