@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3518" "Sunday" "4" "December" "2016" "22:22:50" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<02ce68e5bcd74bd18aa952eb5cc10432@imshyb02.MITRE.ORG>" "99" "[oss-security] Re: gstreamer multiple issues" nil nil nil "12" "2016120503:22:50" "[oss-security] Re: gstreamer multiple issues" (number mark "U       cve-assign@m Dec  4   99/3518  " thread-indent "\"[oss-security] Re: gstreamer multiple issues\"\n") "<20161201112459.78cbf764@pc1>" ("<20161201112459.78cbf764@pc1>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1990" "Monday" "6" "April" "2015" "19:57:16" "+0200" "Salvatore Bonaccorso" "carnil@debian.org" "<20150406175716.GA26491@eldamar.local>" "47" "[oss-security] CVE Request: tor: new upstream releases (0.2.6.7, 0.2.5.12 and 0.2.4.27) fixing security issues" nil nil nil "4" "2015040617:57:16" "[oss-security] CVE Request: tor: new upstream releases (0.2.6.7, 0.2.5.12 and 0.2.4.27) fixing security issues" (number mark "        carnil@debia Apr  6   47/1990  " thread-indent "\"[oss-security] CVE Request: tor: new upstream releases (0.2.6.7, 0.2.5.12 and 0.2.4.27) fixing security issues\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 20229 invoked by uid 550); 5 Dec 2016 03:23:04 -0000
+Received: (qmail 17681 invoked by uid 550); 6 Apr 2015 17:57:30 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,114 +11,79 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 20203 invoked from network); 5 Dec 2016 03:23:01 -0000
-From: <cve-assign@mitre.org>
-To: <hanno@hboeck.de>
-CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
-In-Reply-To: <20161201112459.78cbf764@pc1>
-Message-ID: <02ce68e5bcd74bd18aa952eb5cc10432@imshyb02.MITRE.ORG>
-Date: Sun, 4 Dec 2016 22:22:50 -0500
+Received: (qmail 17657 invoked from network); 6 Apr 2015 17:57:30 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:date:from:to:cc:subject:message-id:mime-version:content-type
+         :content-disposition:user-agent;
+        bh=lIzhzAtQcl3mtFcwjs47jAh11cXL00jNk/cl33RMk4w=;
+        b=nrsZjxCk0lPZ+Alpl9tyI/Zze0QGGUeBQTRrbDydsbHPPulDfXd6ERFnPZRqC/f800
+         qY+0pdUUulYSAke5s07yf8Pe+sddTxg0k7yNSOd4ASWWBiPDenbhlR+vwfaQ8Un5XAdk
+         UGsnKHj925owJHT1EoZlai4b+bWv4ZANcZ9qd29qFznhx6LnWzJq6hf1b2Qrp5gxUlof
+         GgDGbHcgCgOr8bARx63onvvoSoyTjDlRs+m1R01oNS3aud5iMVWuFO4pMCE360z5mhnL
+         nJc5T3oKBwXJEO4F9EnMpxtR/YrFA753KC98RBinxMlU0k1LbFGPlPv1wPd0uXV/Djai
+         yo/w==
+X-Received: by 10.180.73.111 with SMTP id k15mr31647970wiv.34.1428343038153;
+        Mon, 06 Apr 2015 10:57:18 -0700 (PDT)
+Message-ID: <20150406175716.GA26491@eldamar.local>
 MIME-Version: 1.0
-Content-Type: text/plain
-Subject: [oss-security] Re: gstreamer multiple issues
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.5.23 (2014-03-12)
+Cc: CVE Assignments MITRE <cve-assign@mitre.org>, team@security.debian.org,
+	weasel@debian.org
+Date: Mon, 6 Apr 2015 19:57:16 +0200
+From: Salvatore Bonaccorso <carnil@debian.org>
+Reply-To: oss-security@lists.openwall.com
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Subject: [oss-security] CVE Request: tor: new upstream releases (0.2.6.7, 0.2.5.12 and
+ 0.2.4.27) fixing security issues
+To: OSS Security Mailinglist <oss-security@lists.openwall.com>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi
 
-> https://bugzilla.gnome.org/show_bug.cgi?id=774859
-> https://cgit.freedesktop.org/gstreamer/gst-plugins-good/commit/?id=153a8ae752c90d07190ef45803422a4f71ea8bff 
+New versions of tor were released (0.2.6.7, 0.2.5.12 and 0.2.4.27)
+fixing denial of service vulnerabilities, the changelog for 0.2.6.7
+lists the ones below. Could you assign CVE identifiers for those? (I
+guess the first and second might deserve one? Not sure about the third
+and last item):
 
-> Invalid memory read in flx_decode_chunks (gst-plugins-good)
->> AddressSanitizer: SEGV on unknown address
->> flx_decode_chunks ... gstreamer/gst-plugins-good/gst/flx/gstflxdec.c:255:9
+> Changes in version 0.2.6.7 - 2015-04-06
+>   Tor 0.2.6.7 fixes two security issues that could be used by an
+>   attacker to crash hidden services, or crash clients visiting hidden
+>   services. Hidden services should upgrade as soon as possible; clients
+>   should upgrade whenever packages become available.
+> 
+>   This release also contains two simple improvements to make hidden
+>   services a bit less vulnerable to denial-of-service attacks.
+> 
+>   o Major bugfixes (security, hidden service):
+>     - Fix an issue that would allow a malicious client to trigger an
+>       assertion failure and halt a hidden service. Fixes bug 15600;
+>       bugfix on 0.2.1.6-alpha. Reported by "disgleirio".
 
-Use CVE-2016-9807.
+https://trac.torproject.org/projects/tor/ticket/15600
 
+>     - Fix a bug that could cause a client to crash with an assertion
+>       failure when parsing a malformed hidden service descriptor. Fixes
+>       bug 15601; bugfix on 0.2.1.5-alpha. Found by "DonnchaC".
 
-> It also fixes the second flic
-> bug reported by Chris Evans described here:
-> https://scarybeastsecurity.blogspot.com/2016/11/0day-poc-incorrect-fix-for-gstreamer.html
+https://trac.torproject.org/projects/tor/ticket/15601
+> 
+>   o Minor features (DoS-resistance, hidden service):
+>     - Introduction points no longer allow multiple INTRODUCE1 cells to
+>       arrive on the same circuit. This should make it more expensive for
+>       attackers to overwhelm hidden services with introductions.
+>       Resolves ticket 15515.
 
->> the format permits multiple skip and count pairs per canvas line. And
->> the skip counts are considered individually rather than cumulatively.
->> Therefore, it.s possible to get the skip + count check to pass while
->> still writing off the end of the line.
+https://trac.torproject.org/projects/tor/ticket/15515
 
-Use CVE-2016-9808 for this Chris Evans discovery. (As far as we can
-tell, this "second flic bug" exists because of an incomplete fix for
-CVE-2016-9635.)
+>     - Decrease the amount of reattempts that a hidden service performs
+>       when its rendezvous circuits fail. This reduces the computational
+>       cost for running a hidden service under heavy load. Resolves
+>       ticket 11447.
 
+https://trac.torproject.org/projects/tor/ticket/11447
 
-> The fix is a larger rewrite of the affected code paths and probably
-> fixed a bunch of other issues on the way.
-
-There isn't a CVE ID that applies to the entirety of
-153a8ae752c90d07190ef45803422a4f71ea8bff. If anyone has discovered
-other vulnerabilities that were already fixed in
-153a8ae752c90d07190ef45803422a4f71ea8bff, and requires additional CVE
-IDs for them, please let us know specifically what was found.
-
-
-> https://bugzilla.gnome.org/show_bug.cgi?id=774896
-> h264: one byte heap off by one read in gst_h264_parse_set_caps
-> (gst-plugins-bad)
->> This doesn't crash gstreamer
-
-Use CVE-2016-9809.
-
-
-> https://bugzilla.gnome.org/show_bug.cgi?id=774897
-> Invalid memory read in glib caused by one invalid unref call in the
-> flxdec decoder. (gst-plugins-good)
->> Don't unref() parent in the chain function
->> ... We don't own the reference here, it is owned by the caller
-
-Use CVE-2016-9810.
-
-
-> https://bugzilla.gnome.org/show_bug.cgi?id=774902
-> 4 byte heap out of bounds read in windows_icon_typefind
-> (gst-plugins-base)
-
-Use CVE-2016-9811.
-
-
-> https://bugzilla.gnome.org/show_bug.cgi?id=775048
-> 2 byte heap out of bounds read in gst_mpegts_section_new
-> (gst-plugins-bad).
->> The smallest section ever needs to be at least 3 bytes (i.e. just the short
->> header).
->> Non-short headers need to be at least 11 bytes long
-
-Use CVE-2016-9812.
-
-
-> https://bugzilla.gnome.org/show_bug.cgi?id=775120
-> null pointer deref (segfault) in mpegts decoder / _parse_pat
-> (gst-plugins-bad)
-
-Use CVE-2016-9813.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYRNj9AAoJEHb/MwWLVhi2zFoP/05dkTQfY310j9qyhOcY4sh9
-MjZxlRg24s+vJLMIf5+c9u6FCkCKtlu3Su8e2eli+HKMIEGhY9uTihI/L+yDpJ7J
-SJitxtmWgdq4BpiMi0HUxZE2j8aMbwKUk8rSBqH7ykAulmnDKiE40OE57uh1cl3k
-srPYvHzMxJJJ75Z4XE2URpJ9xQ6Qs1DtcW9CbKGA8vx6iTRvDVwW1//QJ9mTTwXl
-GhXXr8rewljBujD8WewQ00PppODsuqaCpnLEDYHYESxj/59g+shdyTL6mBbhhPN4
-81DNXDj0X3QI3l+x0I5VWJb9VSb1QIsfVRQxFIzu20FS4boMX4kHozESFTs1yM5U
-d2MgUdE3BGmVvqhHE23GtITlOQuk26DCUJ0XbbfiFMwjklIjSWIm85jmCX9vRn3w
-XQjExsxo3q4vrdNKyWIMusYAiIK9JhksZFv+pM2JjaQ748aBbIIiN42bHTXFbs01
-Bg3r2s4LhEAMaLxLKN2N0MqP3zEbVJB+qrSqKIbx/tc7RWQmXmY/Lz66bxzedqoo
-nPhZc1VVQ5wgKVRp8XEpFyt3/Eoia/71baWD+woGweEqLx2SKf+TUGgJi1ITNMdH
-KNVz12t1BX4aF4WkJLK5n4IQ7VnXUOfkcdNxlz62FMafRFGpJVHo/iDxAQRwsNuS
-oSlUKYsfGeUSG/DejAQk
-=1SLG
------END PGP SIGNATURE-----
+Regards,
+Salvatore
