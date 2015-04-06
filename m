@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2777" "Saturday" "11" "February" "2017" "21:01:24" "+0100" "Solar Designer" "solar@openwall.com" "<20170211200124.GA2784@openwall.com>" "52" "[oss-security] Re: posting without being subscribed" "^Cc:" nil nil "2" "2017021120:01:24" "[oss-security] Re: posting without being subscribed" (number mark "U       solar@openwa Feb 11   52/2777  " thread-indent "\"[oss-security] Re: posting without being subscribed\"\n") "<201702112015.20098@pali>" ("<201702111846.24604@pali>" "<201702111846.47434@pali>" "<20170211181452.GA2514@openwall.com>" "<201702112015.20098@pali>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1615" "Monday" "6" "April" "2015" "16:29:32" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150406202932.7AB9272E09C@smtpvbsrv1.mitre.org>" "42" "[oss-security] Re: Linux namespaces: It is possible to escape from bind mounts" nil nil nil "4" "2015040620:29:32" "[oss-security] Re: Linux namespaces: It is possible to escape from bind mounts" (number mark "        cve-assign@m Apr  6   42/1615  " thread-indent "\"[oss-security] Re: Linux namespaces: It is possible to escape from bind mounts\"\n") "<5522E40B.4030506@kernel.org>" ("<5522E40B.4030506@kernel.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 23968 invoked by uid 550); 11 Feb 2017 20:02:19 -0000
+Received: (qmail 16120 invoked by uid 550); 6 Apr 2015 20:29:49 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,70 +11,55 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 23621 invoked from network); 11 Feb 2017 20:01:29 -0000
-Message-ID: <20170211200124.GA2784@openwall.com>
-References: <201702111846.24604@pali> <201702111846.47434@pali> <20170211181452.GA2514@openwall.com> <201702112015.20098@pali>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <201702112015.20098@pali>
-User-Agent: Mutt/1.4.2.3i
-Cc: oss-security@lists.openwall.com
-Date: Sat, 11 Feb 2017 21:01:24 +0100
-From: Solar Designer <solar@openwall.com>
+Received: (qmail 16088 invoked from network); 6 Apr 2015 20:29:44 -0000
+In-Reply-To: <5522E40B.4030506@kernel.org>
+Message-Id: <20150406202932.7AB9272E09C@smtpvbsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, jann@thejh.net
+Date: Mon,  6 Apr 2015 16:29:32 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: posting without being subscribed
-To: pali@cpan.org
+Subject: [oss-security] Re: Linux namespaces: It is possible to escape from bind mounts
+To: luto@kernel.org
 
-I think this is no longer of sufficient relevance to oss-security
-subscribers for us to continue this sub-thread CC'ing the list, so it's
-probably/hopefully the last message one of us sends on this in here.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On Sat, Feb 11, 2017 at 08:14:50PM +0100, pali@cpan.org wrote:
-> On Saturday 11 February 2017 19:14:52 Solar Designer wrote:
-> > Another issue is that now that you brought the reply back to the
-> > list, you almost broke the thread.  I fixed that by manually editing
-> > the headers on your message before approving it (as a list admin).
-> > Sometimes I do that, although I don't consider it to be part of my
-> > "job".  If a co-moderator were to approve your message first, then
-> > your message would have started a new thread rather than being added
-> > to the existing thread.  That's not great.
-> 
-> Hm... breaking thread should not happen... at least with non-broken 
-> email clients. If everybody in discussion correctly set In-Reply-To 
-> header then whole thread (correctly tree) will be preserved. And if 
-> everybody correctly set References header then even missing emails does 
-> not break threading visualization. Information from References headers 
-> provide transitive closure of thread tree from which original tree can 
-> be reconstructed... But if somebody does not fill References or In-
-> Reply-To headers then thread will be broken independently of 
-> subscription to list.
-> 
-> Now I see that message to which I replied was without In-Reply-To and 
-> also without References headers. So thread was already broken.
-> 
-> I understand that breaking threading is bad and cause problems, but in 
-> lot of times it is problem of broken email clients which do not fill 
-> needed headers :-(
+> Do you have a specific scenario in mind?
 
-There are several issues here (besides those you mention):
+We think your question is based on a misinterpretation of what we
+wrote. To avoid that, we shouldn't have started a sentence with "As
+far as we can tell, the patches don't address."
 
-1. Threads get broken when someone forwards an e-mail, rather than
-replies.  In a sense, I am at fault for forwarding you Simon's reply,
-instead of "replying" to his reply, over-quoting it, and CC'ing you on
-that.  I'd introduce an extra layer of quoting (unless I were to undo
-it prior to sending), but at least the References headers could have a
-chance of maintaining the thread.
+> As far as we can tell, the patches don't address a separate scenario
+> in which a ".." attack can occur but the underlying problem is
+> something other than rename handling. So, we don't think a second CVE
+> ID is needed.
 
-2. The blists software we use for the official oss-security archives
-currently only uses In-Reply-To or one entry from References; it does
-not fully parse the References.  And fixing this in the code amounts to
-more than just parsing that header more fully.
+wasn't intended to mean:
 
-What this means is that to maintain the thread I should have probably
-CC'ed you _and_ the list on that "reply" to Simon's message, where I'd
-merely quote the entire message for you.  That's not great indeed, but
-since Simon's message was such that I could reasonably have expected you
-wanting to reply to the list, maybe I should have done that.
+  The patches are inadequate because a separate scenario exists,
+  and that separate scenario is not addressed by the patches.
 
-Alexander
+Instead, it was intended to mean:
+
+  We are not disputing that the patches are adequate. Also, in our
+  current understanding, all attack scenarios ultimately depend on the
+  previously incorrect handling of renames. Because there isn't a
+  second type of scenario, there isn't a second CVE ID.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJVIuvxAAoJEKllVAevmvmsIdQH/1WSCy4MpOVBZGJYDTaEbg7E
+ZSwMKLzYq8cz3WCUXXOiZE+sWNmOW1hIeXQ6yqncP0wjHnkcvx0b9HIsB6IZVXWw
+iat281etggs1DLogyp1loG91N8xVjIGQM4Vvno0ciiEh3/hrNzc9J8Pyf6M6k/ec
+mC26mdQZAg8LHfL14iPDr8AzTAKEpV3TN9nzA+aSmz6TMF5PqVSLy9QGSl8IteVa
+HIF6lG3g7jyUWX3LZa9iEQK9V5JO+BIbwuIQNW7+lDJdpZpPXcv2MsZ4avkPe/MB
+OtviouuopAMIVjmHCYLXo5NPE5drcZshmU4rjesGMpqmsSt+36vHKidDgjEFMYs=
+=HorD
+-----END PGP SIGNATURE-----
