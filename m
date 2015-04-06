@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1617" "Monday" "19" "April" "2021" "12:15:59" "-0600" "Ariadne Conill" "ariadne@dereferenced.org" nil "37" "Re: [oss-security] xscreensaver package caps gets raw socket" nil nil nil "4" nil nil (number mark "U       ariadne@dere Apr 19   37/1617  " thread-indent "\"Re: [oss-security] xscreensaver package caps gets raw socket\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] xscreensaver package caps gets raw socket" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2270" "Monday" "6" "April" "2015" "12:29:05" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150406162905.A1E646C0077@smtpvmsrv1.mitre.org>" "56" "[oss-security] Re: Request CVE for LinuxNode - DoS vulnerability" nil nil nil "4" "2015040616:29:05" "[oss-security] Re: Request CVE for LinuxNode - DoS vulnerability" (number mark "        cve-assign@m Apr  6   56/2270  " thread-indent "\"[oss-security] Re: Request CVE for LinuxNode - DoS vulnerability\"\n") "<20150404202314.1CED63AE023@smtpvbsrv1.mitre.org>" ("<20150404202314.1CED63AE023@smtpvbsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 24312 invoked by uid 550); 19 Apr 2021 18:18:06 -0000
+Received: (qmail 7421 invoked by uid 550); 6 Apr 2015 16:29:22 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,63 +11,69 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 7382 invoked from network); 6 Apr 2015 16:29:17 -0000
+In-Reply-To: <20150404202314.1CED63AE023@smtpvbsrv1.mitre.org>
+Message-Id: <20150406162905.A1E646C0077@smtpvmsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Mon,  6 Apr 2015 12:29:05 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 23831 invoked from network); 19 Apr 2021 18:16:12 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=dereferenced.org;
-	s=mailbun; t=1618856159;
-	bh=8COms30UU/XFFwYpDDRqlomEwTCF8/v9MWTSA5HrR8A=;
-	h=Date:From:To:cc:Subject:In-Reply-To:References;
-	b=VcxqKxcCHnPcDDV/2bjV6Tve7YJOEibouuFD1MYSVKVUF8SDu8dZ97KKJSWJIkNVJ
-	 IRlug1XJ7A/NST+Y8ZFtdO776yfly4rQRCPi14Ld5f+hIYnGBlsgxCk6+MEDl5s6lL
-	 v1f6bOVsBXjy1iCCCFIsT7zXLyKtDfs3mmYxSn7banhatFncZYAYeDenBOnbO7xW7m
-	 w4P/MddPRuB/aIsSjq30eOS62TKChOD/YQ50Dk66qO1YXskPHtgiqc/3yUV3hXAvBh
-	 lzu2TwHkh6X9DuetzWkFaxTgNdRRmfJZXz4oLV173mIumJqL06xl/osCoZcQTgEqmk
-	 q7BMOSHEqb4Nw==
-Date: Mon, 19 Apr 2021 12:15:59 -0600 (MDT)
-From: Ariadne Conill <ariadne@dereferenced.org>
-To: oss-security@lists.openwall.com
-cc: security@debian.org
-In-Reply-To: <93DB9621-4F4E-492B-94E9-EB86E5D09CE0@dwheeler.com>
-Message-ID: <7b5533cb-2b98-ce2e-20ba-bef0fb133e3@dereferenced.org>
-References: <YHwlS06UV25JUeqh@momentum.pseudorandom.co.uk> <CEA32CF0-DCF5-4746-9BDB-5AF9CEA1118A@dwheeler.com> <fba0d965-fe1-a7af-bda3-5871ba9450d6@dereferenced.org> <93DB9621-4F4E-492B-94E9-EB86E5D09CE0@dwheeler.com>
-MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="0-398445581-1618856160=:15938"
-Subject: Re: [oss-security] xscreensaver package caps gets raw socket
+Subject: [oss-security] Re: Request CVE for LinuxNode - DoS vulnerability
+To: irl@fsfe.org
 
---0-398445581-1618856160=:15938
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8BIT
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Hello,
+> So, the questions are:
+> 
+> 1. Is the above reasonable, i.e., there was (at one time) ...
 
-On Mon, 19 Apr 2021, David A. Wheeler wrote:
+irl@fsfe.org sent us a confirmation without a Cc to oss-security.
 
->>> On Apr 18, 2021, at 8:25 AM, Simon McVittie <smcv@debian.org> wrote:
->>> Scraping is undesirable, but sometimes needed. If this is a common need, a
->>> long-term solution might be to create an option on ping to generate a standard
->>> format that’s easier to machine-parse.
->>
->> On Apr 19, 2021, at 1:35 PM, Ariadne Conill <ariadne@dereferenced.org> wrote:
->> This already exists as fping(1), for example:
->
-> The problem for application developers is that “ping” exists practically everywhere,
-> while fping does not.
+The CVE mapping is:
 
-Absolutely true, but fping is packaged in most Linux distributions, as 
-well as all of the BSDs, due to its use by various network monitoring 
-programs such as smokeping and nagios, so it seems like a reasonable 
-dependency for cases like these.
+> a single
+> vulnerability affecting both node and URONode in which a client could
+> use "quit" within telnet, and thereby cause the server to waste
+> network bandwidth on a radio path
 
-IMO, it's better that programs declare something like fping as a 
-dependency, so that we don't have to deal with yet another program years 
-from now having elevated privileges and being abused to run tcpdump... :)
+Use CVE-2015-2927. The known affected version of node (aka LinuxNode)
+is 0.3.2 (for Debian, the "ax25-node" package name is associated with
+the "node" source-package name). Within the URONode changelog, the
+relevant entry is apparently "21/05/08 v1.0.5r3 ... I added a
+quit_handler routine in the main loop which now will execute a
+node_logout(), flush out the IPCs, log the event to syslog, and close
+out the application properly."
 
-Seriously, if anyone on this list ever finds themselves writing a program 
-where they need to fire off some pings, instead of making their program 
-SUID or granting it cap_net_raw, just use fping instead.  At the very 
-least, you'll be happier because you don't have to write your own ping 
-code, and the distribution maintainers of the world will be happier 
-because you *didn't* write your own ping code.
 
-Ariadne
---0-398445581-1618856160=:15938--
+> app fails to close and more can be spawned by a crafty malicious
+> user thus bringing the system to a point of no memory available.
+
+This does not have a CVE ID. The node software was not attempting to
+defend against a scenario in which a single client user causes
+arbitrarily many node processes to run on the server simultaneously.
+The node software runs as a service under inetd (or a similar
+program), and any related restrictions would ordinarily be part of the
+inetd configuration. Lack of restrictions is a site-specific problem.
+
+("crafty malicious user" means, for example: if a client were allowed
+to have 100 simultaneous node processes, the malicious user could
+choose a request timing that ensured that 100 processes were always
+running.)
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJVIrO0AAoJEKllVAevmvmsbXgIAJQdYhkCyxks3Js0ZhDkYkoJ
+3ITLnWgGp92m/hcL92K/oRL3ZvZj2Ik7kwf/7YsllhQBgVjVwoPjr/c7MA40nbgo
+1n/NFeFzrS3PM3ZivBk2wt9Gnc7mLG59P3Z9cR9oAGqhXqKOEodlRSaE1q8fHMFG
+qm5Sj9AgHqhc4MDCIo+y/R/pSL0Ayiqzr3J8U9B+R+ls6JsY0co45r9OTtCShl+i
+jazf4xFwNpkYo7VEx4zIIVd2DBUQm3XSqZT5kVdRp3pSf8MkM34E92POlptwKjNJ
+PiXKMazkLspMwLs9j1WywFuub+XdrFWCWxXl9b83LqoTWcMGU7k3OcUZUqRNrFc=
+=Jv34
+-----END PGP SIGNATURE-----
