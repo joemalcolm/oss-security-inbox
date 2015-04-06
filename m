@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1313" "Friday" "23" "April" "2021" "01:02:36" "+0200" "Jan Engelhardt" "jengelh@inai.de" nil "28" "Re: [oss-security] Malicious commits to Linux kernel as part of university study" nil nil nil "4" nil nil (number mark "U       jengelh@inai Apr 23   28/1313  " thread-indent "\"Re: [oss-security] Malicious commits to Linux kernel as part of university study\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Malicious commits to Linux kernel as part of university study" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1902" "Monday" "6" "April" "2015" "12:52:43" "-0700" "Andy Lutomirski" "luto@kernel.org" "<5522E40B.4030506@kernel.org>" "43" "[oss-security] Re: Linux namespaces: It is possible to escape from bind mounts" nil nil nil "4" "2015040619:52:43" "[oss-security] Re: Linux namespaces: It is possible to escape from bind mounts" (number mark "        luto@kernel. Apr  6   43/1902  " thread-indent "\"[oss-security] Re: Linux namespaces: It is possible to escape from bind mounts\"\n") "<20150404185434.6F84B6C0048@smtpvmsrv1.mitre.org>" ("<20150403105802.GA21110@pc.thejh.net>" "<20150404185434.6F84B6C0048@smtpvmsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 12036 invoked by uid 550); 23 Apr 2021 08:01:03 -0000
+Received: (qmail 32118 invoked by uid 550); 6 Apr 2015 20:12:52 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,46 +11,62 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 16021 invoked from network); 22 Apr 2021 23:02:48 -0000
-Date: Fri, 23 Apr 2021 01:02:36 +0200 (CEST)
-From: Jan Engelhardt <jengelh@inai.de>
-To: oss-security@lists.openwall.com
-In-Reply-To: <4DCB6EF3-73EE-4038-8437-FEB339F20F90@dwheeler.com>
-Message-ID: <659r691-on94-p2nq-p9p4-845811pnn7q6@vanv.qr>
-References: <20210422065959.GI13079@scully.more-magic.net> <CAEo4CePqice09K5PPhmxwwF3jg=USrqRqM5FgVX_jCB8sZfDeA@mail.gmail.com> <20210422095945.GA2495@scully.more-magic.net> <4DCB6EF3-73EE-4038-8437-FEB339F20F90@dwheeler.com>
-User-Agent: Alpine 2.24 (LSU 510 2020-10-10)
+Received: (qmail 14165 invoked from network); 6 Apr 2015 19:52:58 -0000
+Message-ID: <5522E40B.4030506@kernel.org>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
-Subject: Re: [oss-security] Malicious commits to Linux kernel as part of
- university study
+References: <20150403105802.GA21110@pc.thejh.net> <20150404185434.6F84B6C0048@smtpvmsrv1.mitre.org>
+In-Reply-To: <20150404185434.6F84B6C0048@smtpvmsrv1.mitre.org>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Virus-Scanned: ClamAV using ClamSMTP
+CC: cve-assign@mitre.org
+Date: Mon, 06 Apr 2015 12:52:43 -0700
+From: Andy Lutomirski <luto@kernel.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: Linux namespaces: It is possible to escape from bind mounts
+To: oss-security@lists.openwall.com, jann@thejh.net
 
-
-On Thursday 2021-04-22 17:02, David A. Wheeler wrote:
->Peter Bex:
->> The university of Minnesota has been banned from making any commits to
->> the Linux kernel after it was found out they'd been submitting bogus
->> patches to the LKML to knowingly introduce security issues:
->> https://lore.kernel.org/linux-nfs/YH%2FfM%2FTsbmcZzwnX@kroah.com/
+On 04/04/2015 11:54 AM, 
+cve-assign-AZamIotjMK3YtjvyW6yDsg@public.gmane.org wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
 >
->I support research, but I personally think this work goes way beyond
->any ethical boundaries. While I don’t know if it’s *illegal* (I’m
->not a lawyer!), it seems clear to me that these U of MN researchers
->were conducting experiments on people without their prior consent.
+>> http://permalink.gmane.org/gmane.linux.kernel.containers/29173
+>> http://permalink.gmane.org/gmane.linux.kernel.containers/29177
+>
+>> Containers on Linux normally use bind mounts to restrict how much
+>> of the filesystem is visible for processes inside the container.
+>> However, if an attacker can gain capabilities within such a
+>> container or can create another user and mount namespace within
+>> the existing container, he can do something similar to a
+>> double-chroot attack to break out of the bind mount and gain
+>> access to the full filesystem to which the bind mount refers:
+>>
+>> Create folders /A, /A/B, /C, /D inside the namespace.
+>> Bind-mount the /A inside the namespace to /D.
+>> Let a process chdir to /D/B.
+>> Move /D/B over into /C.
+>> The process which chdir'ed to /D/B is now in /C/B, but at the
+>> same time it is in a bind mount with /D as root. It can then
+>> traverse upwards, past what looks like / inside the namespace.
+>
+> Our understanding so far is that the underlying problem is that the
+> original design didn't fully consider the ability of an attacker to
+> rename. Because of this, the rename implementation has been changed so
+> that it detects a violation of the intended security properties and
+> puts a countermeasure in place. This has been done in the fs/dcache.c
+> __d_move function. There is no commit available yet at
+>
+>    http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/log/fs/dcache.c
+>
+> Use CVE-2015-2925 for this issue.
+>
+> As far as we can tell, the patches don't address a separate scenario
+> in which a ".." attack can occur but the underlying problem is
+> something other than rename handling. So, we don't think a second CVE
+> ID is needed.
 
-If you alert the crowd that something is about to happen, you can no 
-longer observe how the crowd acts in an unalerted state, dooming the 
-research effort.
+Do you have a specific scenario in mind?
 
-Not to encourage UMN's conduct, but I'd find that the prank shows on TV 
-(let alone Youtube) are a much more severe intrusion, but somehow those 
-shows still run.
-
-
-What's more, with the pitchfork way this incident is being responded to, 
-future researchers may choose to operate more stealthily; no more 
-mailings from an edu mail address, more elaborate internet avatars (did 
-we ever prove who George Spelvin was?), up to the point that the 
-identities become indistinguishable from a foreign malignent elite 
-hacker group.
+--Andy
