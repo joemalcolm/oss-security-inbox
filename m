@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["478" "Friday" "20" "January" "2017" "17:04:22" "+0800" "idl3r" "idler1984@gmail.com" "<000701d272fc$329c12e0$97d438a0$@gmail.com>" "18" "RE: [oss-security] CVE Request - Samsung Exynos GPU driver OOB read" nil nil nil "1" "2017012009:04:22" "[oss-security] CVE Request - Samsung Exynos GPU driver OOB read" (number mark "U       idler1984@gm Jan 20   18/478   " thread-indent "\"RE: [oss-security] CVE Request - Samsung Exynos GPU driver OOB read\"\n") "<20170120082438.GA28326@kroah.com>" ("<CACCOJE3M1+PbtZgpvLXQjxMkKFirwu0=506OdZZuBUrTK5VqpA@mail.gmail.com>" "<CACCOJE3K5aEk_frgRr7_pt3T635=9OgnVagn+jOj-v1YetE74A@mail.gmail.com>" "<20170119143700.GA5132@kroah.com>" "<0b4f01d2726f$d3b693e0$7b23bba0$@gmail.com>" "<20170120082438.GA28326@kroah.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2227" "Tuesday" "7" "April" "2015" "10:49:21" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<55240A91.8010506@redhat.com>" "61" "Re: [oss-security] ntp security release today" nil nil nil "4" "2015040716:49:21" "[oss-security] ntp security release today" (number mark "        kseifried@re Apr  7   61/2227  " thread-indent "\"Re: [oss-security] ntp security release today\"\n") "<20150407154845.GE23958@suse.de>" ("<20150407154845.GE23958@suse.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 1632 invoked by uid 550); 20 Jan 2017 10:15:33 -0000
+Received: (qmail 16267 invoked by uid 550); 7 Apr 2015 16:49:36 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,66 +11,80 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32434 invoked from network); 20 Jan 2017 09:04:41 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:references:in-reply-to:subject:date:message-id
-         :mime-version:content-transfer-encoding:thread-index
-         :content-language;
-        bh=fgi7Wa00vNLt0myOn7qwr7viybxxdIm3Hfu9dzni4gw=;
-        b=oTwKidZfHI9qSkeiYVWyhI2OzSVHcbPkw3kqi4FZEX1HZ8tnpcHxoGWJs3HvQOxCaj
-         DeHLX2y/uNRFRxzecOGimQSSVPY6JodkdmRcjclsBpeUDYLcVR8VY6gyp0at5t1OeOpk
-         BDiDm7WrWLMtiyFQidCGxTxEsYtiNcS0tPVbnEzkqeZ6Yo5wua/75/r2HaOgSSUjP8eM
-         tgyMyhfdBSRhulQqm3GWYjykQ3umN+4MKc3X6bHS/ddBO0slbeOtanTA7ZDt6l3WtmVk
-         HKVq7rYPCj6ybXtuXu1b7SlRbhGQmhCy15jEdy36q9ZIGU26Dq0mA+hsO5JUEU65m9na
-         x8kw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:references:in-reply-to:subject:date
-         :message-id:mime-version:content-transfer-encoding:thread-index
-         :content-language;
-        bh=fgi7Wa00vNLt0myOn7qwr7viybxxdIm3Hfu9dzni4gw=;
-        b=uJnTYRA2oiM+ry6vcMAe14WoW8Ett8eK0+HMv3Jp1XCGQmtzfOXuApijsoS7wvXJHq
-         W1mp81gQCqlBQuzabKoWW9zOBsURt9BJOiCjEypJLjkywTrfH5E6bq5xgvwpe3OM7wBZ
-         JmAtysTRNtC8KCoUrI+LvEsgXwzoFnsno1AX+hoiNS6KEYo0RZmnCkl2QgNxp5UAsRGT
-         CcLCauApCmMvn5Lv/eXzhFVXNpcqPI+ztRfN38ZUJYs2BHxKAAdmuoNSr8OREa/bbZVF
-         +PFGECK6xDgnd1on5jy4Gp5Z+IHUiVe8C0IyiUQUYYbZpMsTT/lVB59aeBbcn3pYOkgg
-         cc0g==
-X-Gm-Message-State: AIkVDXLSuGtDMPEsibYnTBZuF/OiZFRPN4NMO7H/MFuNcv07R8q3TxCrCnzinJ87Y1UGrw==
-X-Received: by 10.99.147.81 with SMTP id w17mr15593887pgm.111.1484903069790;
-        Fri, 20 Jan 2017 01:04:29 -0800 (PST)
-From: "idl3r" <idler1984@gmail.com>
-To: <oss-security@lists.openwall.com>
-Cc: "'Anarcheuz Fritz'" <anarcheuz@gmail.com>
-References: <CACCOJE3M1+PbtZgpvLXQjxMkKFirwu0=506OdZZuBUrTK5VqpA@mail.gmail.com> <CACCOJE3K5aEk_frgRr7_pt3T635=9OgnVagn+jOj-v1YetE74A@mail.gmail.com> <20170119143700.GA5132@kroah.com> <0b4f01d2726f$d3b693e0$7b23bba0$@gmail.com> <20170120082438.GA28326@kroah.com>
-In-Reply-To: <20170120082438.GA28326@kroah.com>
-Date: Fri, 20 Jan 2017 17:04:22 +0800
-Message-ID: <000701d272fc$329c12e0$97d438a0$@gmail.com>
+Received: (qmail 16238 invoked from network); 7 Apr 2015 16:49:35 -0000
+Message-ID: <55240A91.8010506@redhat.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.4.0
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 15.0
-Thread-Index: AQIp6CLm9uCR12d1apbojhB5sppgTwHmPVGhAjfDo4ECk9yuXgFIuEaCoFJSuYA=
-Content-Language: en-us
-Subject: RE: [oss-security] CVE Request - Samsung Exynos GPU driver OOB read
+References: <20150407154845.GE23958@suse.de>
+In-Reply-To: <20150407154845.GE23958@suse.de>
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="0DvCXoNLbL7kIw0Ro9BT9C22VaFbQflva"
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.23
+Date: Tue, 07 Apr 2015 10:49:21 -0600
+From: Kurt Seifried <kseifried@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] ntp security release today
+To: oss-security@lists.openwall.com
 
-> Ah, so this isn't upstream in the main kernel tree, thanks for letting me
-know,
-> that's what I was most concerned about.
-> 
-> Hopefully Samsung figures a way to push this change out to all of their
-> users... :)
+--0DvCXoNLbL7kIw0Ro9BT9C22VaFbQflva
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: quoted-printable
 
-You are welcome :) Hope they can learn faster from other vendors.
+On 04/07/2015 09:48 AM, Marcus Meissner wrote:
+> Hi,
+>=20
+> ntp.org has released ntp advisories today, CVE-2015-1798 and CVE-2015-179=
+9, CERT VU#374268
+>=20
+> http://support.ntp.org/bin/view/Main/SecurityNotice#Recent_Vulnerabilities
+>=20
+> CVE-2015-1798 seems version limited to
+> Affects: All NTP4 releases starting with ntp-4.2.5p99 up to but not inclu=
+ding ntp-4.2.8p2 where the installation uses symmetric keys to authenticate=
+ remote associations. .
+>=20
+> Ciao, Marcus
 
-> It's "user controlled" through the drm interface?  Or something else?
+Was just about to post a note about this, you beat me to it =3D)
 
-The affected mali driver is not using drm interface yet, still the
-traditional vendor defined interface.
+These issues were discovered by Miroslav Lichv=E1r of Red Hat, more info
+in our BZ's:
 
-Thanks,
-James
+https://bugzilla.redhat.com/show_bug.cgi?id=3DCVE-2015-1798
+https://bugzilla.redhat.com/show_bug.cgi?id=3DCVE-2015-1799
+
+Also note that CVE-2015-1799 also affects chrony, different code base so
+different CVE:
+
+https://bugzilla.redhat.com/show_bug.cgi?id=3DCVE-2015-1853
+
+--=20
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
 
+--0DvCXoNLbL7kIw0Ro9BT9C22VaFbQflva
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.22 (GNU/Linux)
+
+iQIcBAEBAgAGBQJVJAqRAAoJEBYNRVNeJnmTOBgP/0Za0dLa5KqbYRuzY6RKgcYH
+lq/2Zv38mfos1gcE4KoBb9oj6u+Ludp/CXtZTPgJtI+sS+57e/OGloI0uKhjkrMP
+XSuyI8X9uoBd/ndAXosOxKb6yMFL4i8zwDcBdKFKZQ9A3DrG5IcmdbCZF7Fye2qI
+DPwZtLfEnOCtdgfL//72M0ngCCUwvBiwRPW+TZ9RQrt5zcmFY66wdv+QG36bknxo
+SqZhvd3PvPbxoIfhdlvs6X4haJlLOI5j5ILBaIVMt0KGG/YpXdVgIZCa1qnYl6rW
+6SMYNxr0MHqJ7zBE+FtZ/orLpiLfrZEtvN2cQrQM2sbaVWHVc+YyN4Ar+yJVWkXV
+YeuEol+jh9R4IpkAOo0rKLyg7tFA2sUkOYbpmbJPDF/GZYGFNoBITe2kWKzMKl3O
+G8qiq6EX5doEDSxL46HPE8/wxrkov6Ym3D6T60Ywxz6NqilXagWQ5vx/YVmxz81g
+ArKjgN7Mn+K5omG/FZw//MBFonLtwWYUMPJRzinUizZ+qadYtwg2zycTbEo+szuq
+AYdJO0iOLbauZWPQxuwSL3CiipC1RoGQgQ8dwOVsTxvUpUb8MZaSERhn0pwVGqFy
+pZUjhH3kp9RKSqAaXh8p6C3rO4n1Kr6hY/8XMaOEA76P0a2mTJwDB/kXGr3ErZKL
++Ri2xr95R1RQ4xzOR3gk
+=g0uL
+-----END PGP SIGNATURE-----
+
+--0DvCXoNLbL7kIw0Ro9BT9C22VaFbQflva--
