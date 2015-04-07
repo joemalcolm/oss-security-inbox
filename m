@@ -1,9 +1,10 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2170" "Tuesday" "1" "September" "2015" "14:27:48" "+0530" "Dis close" "disclose@cybersecurityworks.com" "<CAMWaY3MZ3WiKhLaKyz2ehmFHwL5N+u8JP3kXT4QafDQFU09MRQ@mail.gmail.com>" "103" "[oss-security] Re: CVE Request - LFI/Path Traversal in NextGen Gallery WordPress Plugin." nil nil nil "9" "2015090108:57:48" "[oss-security] Re: CVE Request - LFI/Path Traversal in NextGen Gallery WordPress Plugin." (number mark "U       disclose@cyb Sep  1  103/2170  " thread-indent "\"[oss-security] Re: CVE Request - LFI/Path Traversal in NextGen Gallery WordPress Plugin.\"\n") "<CAMWaY3OZfnQ=yBQT9kDSaUvozzxOOX6wnMDBw9+djpdD8Hsccg@mail.gmail.com>" ("<CAMWaY3M07iTMoOswVgZR172J-4PB6UN6Xt0TsoZXKsUGSwdNxw@mail.gmail.com>" "<CAMWaY3OZfnQ=yBQT9kDSaUvozzxOOX6wnMDBw9+djpdD8Hsccg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2740" "Monday" "6" "April" "2015" "23:52:09" "-0500" "John Lightsey" "john@nixnuts.net" "<55236279.8060709@nixnuts.net>" "69" "[oss-security] CVE request: Module::Signature before 0.75 - multiple vulnerabilities" nil nil nil "4" "2015040704:52:09" "[oss-security] CVE request: Module::Signature before 0.75 - multiple vulnerabilities" (number mark "        john@nixnuts Apr  6   69/2740  " thread-indent "\"[oss-security] CVE request: Module::Signature before 0.75 - multiple vulnerabilities\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 3591 invoked by uid 550); 1 Sep 2015 11:07:16 -0000
+X-Quarantine-ID: <Uw3RrSYrr6KX>
+Received: (qmail 17723 invoked by uid 550); 7 Apr 2015 04:52:38 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,134 +12,108 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32724 invoked from network); 1 Sep 2015 08:58:00 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=UPkujm8emxQ0Oz5kJ/rJqkZSSS4Dr4NveTpAREqOAdU=;
-        b=exVUkhyb7uuOiyOKpfk8NWlsQNxjY4+tPCFsM4U+RfDWYkqAUGwzh4eNoJY5vmWar+
-         l5Q29hRw19BfUneU2xfwcuG6bYEnXoiKp7Xmbl8mE6X8pibE67zXTwFCGvSU51bLaRAD
-         OZemhbNzXqHO8yi+V0HfdXwEi6De806JuCSb9uwQ/Vwl2Gzjw9JiiFJpvuV/ah6BkmL1
-         9Dnu2NINAOMHpiblde6g695Wptmw94qbAaXkT3sd2030c6+OeKaWJv0e3KF6Opg9tPiD
-         4tbjdJ/TtEaCHB2sz9Z2iQtfXTlPW5Ql6PZlqsfBFNT35kLCaYSjCVctsblS0GvHhsco
-         L8OA==
-X-Gm-Message-State: ALoCoQnaJQzisOHvdBNQFIQ3yLVeX3Z81wvt1+PgGnF8xD96Tq9rS5xoffbTHUNDJF3mox6vv99A
+Received: (qmail 17696 invoked from network); 7 Apr 2015 04:52:37 -0000
+Message-ID: <55236279.8060709@nixnuts.net>
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
 MIME-Version: 1.0
-X-Received: by 10.107.37.12 with SMTP id l12mr26841312iol.92.1441097868735;
- Tue, 01 Sep 2015 01:57:48 -0700 (PDT)
-In-Reply-To: <CAMWaY3OZfnQ=yBQT9kDSaUvozzxOOX6wnMDBw9+djpdD8Hsccg@mail.gmail.com>
-References: <CAMWaY3M07iTMoOswVgZR172J-4PB6UN6Xt0TsoZXKsUGSwdNxw@mail.gmail.com>
-	<CAMWaY3OZfnQ=yBQT9kDSaUvozzxOOX6wnMDBw9+djpdD8Hsccg@mail.gmail.com>
-Date: Tue, 1 Sep 2015 14:27:48 +0530
-Message-ID: <CAMWaY3MZ3WiKhLaKyz2ehmFHwL5N+u8JP3kXT4QafDQFU09MRQ@mail.gmail.com>
-From: Dis close <disclose@cybersecurityworks.com>
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature";
+ boundary="wHHcTL8DWL0GxpxHvRlbON0FEcgtwg5KJ"
+X-Spam_score: -1.5
+X-Spam_score_int: -14
+X-Spam_bar: -
+X-Spam_report: Spam detection software, running on the system "nixnuts.net", has
+ identified this incoming email as possible spam.  The original message
+ has been attached to this so you can view it (if it isn't spam) or label
+ similar future email.  If you have any questions, see
+ the administrator of that system for details.
+ Content preview:  Hi there, A new version of Module::Signature, was released
+    to fix multiple vulnerabilities. Module::Signature is used by most CPAN clients
+    to validate PAUSE GPG signature files on the CPAN mirrors and GPG signature
+    files inside individual Perl module tarballs. [...] 
+ Content analysis details:   (-1.5 points, 3.0 required)
+  pts rule name              description
+ ---- ---------------------- --------------------------------------------------
+ -1.0 ALL_TRUSTED            Passed through trusted hosts only via SMTP
+ -0.5 BAYES_00               BODY: Bayes spam probability is 0 to 1%
+                             [score: 0.0000]
+  0.0 URIBL_BLOCKED          ADMINISTRATOR NOTICE: The query to URIBL was blocked.
+                             See
+                             http://wiki.apache.org/spamassassin/DnsBlocklists#dnsbl-block
+                              for more information.
+                             [URIs: metacpan.org]
+Date: Mon, 06 Apr 2015 23:52:09 -0500
+From: John Lightsey <john@nixnuts.net>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE request: Module::Signature before 0.75 - multiple vulnerabilities
 To: oss-security@lists.openwall.com
-Cc: cve-assign@mitre.org
-Content-Type: multipart/alternative; boundary=001a1141b24e8d9429051eabbec7
-Subject: [oss-security] Re: CVE Request - LFI/Path Traversal in NextGen Gallery WordPress Plugin.
 
---001a1141b24e8d9429051eabbec7
-Content-Type: text/plain; charset=UTF-8
+--wHHcTL8DWL0GxpxHvRlbON0FEcgtwg5KJ
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Hi List:
+Hi there,
 
+A new version of Module::Signature, was released to fix multiple
+vulnerabilities. Module::Signature is used by most CPAN clients to
+validate PAUSE GPG signature files on the CPAN mirrors and GPG signature
+files inside individual Perl module tarballs.
 
-"Correction in the information."
+The changelog for the 0.75 version is here:
 
-The vulnerability is still not fixed even in the latest version 2.1.9. It
-can still be exploited.
+https://metacpan.org/changes/distribution/Module-Signature
 
-On 1 September 2015 at 13:00, Dis close <disclose@cybersecurityworks.com>
-wrote:
+This commit fixes three flaws:
 
-> Hi List:
->
->
-> After the vulnerability was disclosed in public the vendor has fixed the
-> issue on the same day 28-08-2015 in the latest version i.e NextGen Gallery
-> 2.1.9. (https://wordpress.org/plugins/nextgen-gallery/) .
->
-> Please let us know the status for the CVE.
->
->
-> On 28 August 2015 at 15:50, Dis close <disclose@cybersecurityworks.com>
-> wrote:
->
->> Hi List:
->>
->>
->> We are requesting CVE for the below mentioned security issue in NextGen
->> Gallery Plugin:
->>
->>
->> Plugin Details:
->> ==============
->> Plugin Name: NextGen Gallery
->> Version: 2.1.7
->> Homepage: https://wordpress.org/plugins/nextgen-gallery/
->>
->>
->>
->> Description
->> ===============
->> NextGEN Gallery is most popular *WordPress Gallery Plugin *with over 13
->> millions downloads.
->>
->> Vulnerability
->> ===============
->> The plugin fails to validate user input in one of the variables, which
->> allows a  log-in user to access system files and other unauthorized files
->> on the server.
->>
->> POC Video Link: https://www.youtube.com/watch?v=KkPVMxubUis
->>
->>
->> Proof of Concept
->> ================
->>
->> Accessing the POST request http://localhost/wordpress/?photocrati_ajax=1
->> and modifying the *dir* variable with ../../../ input user can traverse
->> file system and access files even outside the application directory.
->>
->>
->> Disclosure Timeline
->> ==================
->>
->> 17-02-2015: Reported to WP Plugins
->> 18-02-2015: Acknowledged by WP Plugin, saying that vendor will be
->> informed. But till now no response from WP plugin or vendor.
->>
->>
->> Discovered by ( Please provide credit to following)
->> =====================================
->>
->> Sathish Kumar
->> Cyber Security Works Pvt Ltd.
->>
->>
->> ----------
->> Cheers !!!
->>
->> Team CSW
->>
->
->
->
-> --
-> ----------
-> Cheers !!!
->
-> Team CSW
->
+https://github.com/audreyt/module-signature/commit/8a9164596fa5952d4fbcde5a=
+a1c7d1c7bc85372f
+
+- Module::Signature could be tricked into interpreting the unsigned
+portion of a SIGNATURE file as the signed portion due to faulty parsing
+of the PGP signature boundaries.
+
+- When verifying the contents of a CPAN module, Module::Signature
+ignored some files in the extracted tarball that were not listed in the
+signature file. This included some files in the t/ directory that would
+execute automatically during "make test"
+
+- When generating checksums from the signed manifest, Module::Signature
+used two argument open() calls to read the files. This allowed embedding
+arbitrary shell commands into the SIGNATURE file that would execute
+during the signature verification process.
+
+This commit fixes one more flaw:
+
+https://github.com/audreyt/module-signature/commit/c41e8885b862b9fce2719449=
+bc9336f0bea658ef
+
+- Several modules were loaded at runtime inside the extracted module
+directory. Modules like Text::Diff are not guaranteed to be available on
+all platforms and could be added to a malicious module so that they
+would load from the '.' path in @INC.
 
 
+--wHHcTL8DWL0GxpxHvRlbON0FEcgtwg5KJ
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
--- 
-----------
-Cheers !!!
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
 
-Team CSW
+iQIcBAEBCgAGBQJVI2KFAAoJEORPgBbTYw+JitoQANdYbkl2hrT0fYVJGItK30BY
+I6NpqSPC3ClWXEWol7TrArp6MCK1hTDijEFBUycPtrWLuCUUG9b/KUGUL2LEN+Hm
+Nlb9wGcKP6YCf8aFm4DIZ0nNTDH/TxE9UoJVeCtFQiujGC3mZs19dgmKrVLPL6/Z
+OMoXieZu/jjpBMG0TC5eD80skyXIxORNSM1HQN5YtaFdoh8puGv9ra8mgyw6IUNb
+6WfDf0bY3fqp2HQ51XkwEZIXiZcGTKS7uDu9zY1tlPcWChUljte32j8cqWTEtkCQ
+5AoAZbtCgTzQZRzTnYXKuUQYNlKyont94E35WycWKhq5x/K+t2yPlG/s2hV+mxU/
+8UIafMcD0yh4dNy06taDE5vN7vJ5eYuxZewPsIYvBPysb43eP1Kx7YZmbs52MD4B
+UGvelFMmkikvViSwT0GzOcca4h0aDL+pfb9Ug9uoUYbdOlychR9n6bauL9RYESI4
+H0unmZbhn3wd430vz8os6PQpNTwxCH5Eb0q4yXA7xpU2blzHmc2RWpNpVrnJwtuh
+RFEBUqhINWGCPX0quwrxEQTeAEEFpRLuSjVkArpYB90DBuRup22iMgPp0rzutDbP
+RFxWyeCvo1+rGnomxf3irOGOi3u+ctLG9jHGwjjSwpiA5wRtbhengbCaHa2KnfY2
+zTjCsU4iyKUUkKZsS/uJ
+=mU+0
+-----END PGP SIGNATURE-----
 
---001a1141b24e8d9429051eabbec7--
+--wHHcTL8DWL0GxpxHvRlbON0FEcgtwg5KJ--
