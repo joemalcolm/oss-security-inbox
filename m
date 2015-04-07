@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1896" "Thursday" "24" "December" "2015" "11:32:30" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151224163230.DA9476C00A6@smtpvmsrv1.mitre.org>" "49" "[oss-security] Re: CVE request Qemu: acpi: heap based buffer overrun during VM migration" nil nil nil "12" "2015122416:32:30" "[oss-security] Re: CVE request Qemu: acpi: heap based buffer overrun during VM migration" (number mark "U       cve-assign@m Dec 24   49/1896  " thread-indent "\"[oss-security] Re: CVE request Qemu: acpi: heap based buffer overrun during VM migration\"\n") "<alpine.LFD.2.20.1512241145360.17815@wniryva>" ("<alpine.LFD.2.20.1512241145360.17815@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1671" "Tuesday" "7" "April" "2015" "14:59:18" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<55244526.7020901@redhat.com>" "46" "[oss-security] chrony security release as well" nil nil nil "4" "2015040720:59:18" "[oss-security] chrony security release as well" (number mark "        kseifried@re Apr  7   46/1671  " thread-indent "\"[oss-security] chrony security release as well\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 27819 invoked by uid 550); 24 Dec 2015 16:32:43 -0000
+Received: (qmail 23933 invoked by uid 550); 7 Apr 2015 20:59:32 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,62 +11,63 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 23915 invoked from network); 7 Apr 2015 20:59:32 -0000
+Message-ID: <55244526.7020901@redhat.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.4.0
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="vmhO6aKWeqP3GCGTemuEbj1gq4G6iH3ks"
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.27
+Date: Tue, 07 Apr 2015 14:59:18 -0600
+From: Kurt Seifried <kseifried@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 27801 invoked from network); 24 Dec 2015 16:32:43 -0000
-From: cve-assign@mitre.org
-To: ppandit@redhat.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <alpine.LFD.2.20.1512241145360.17815@wniryva>
-Message-Id: <20151224163230.DA9476C00A6@smtpvmsrv1.mitre.org>
-Date: Thu, 24 Dec 2015 11:32:30 -0500 (EST)
-Subject: [oss-security] Re: CVE request Qemu: acpi: heap based buffer overrun during VM migration
+Subject: [oss-security] chrony security release as well
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--vmhO6aKWeqP3GCGTemuEbj1gq4G6iH3ks
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-> Qemu emulator built with the Q35 chipset based pc system emulator is
-> vulnerable to a heap based buffer overflow. It occurs during VM guest
-> migration, as more(16 bytes) data is moved into allocated(8 bytes) memory
-> area.
-> 
-> A privileged guest user could use this issue to corrupt the VM guest image,
-> potentially leading to a DoS. This issue affects q35 machine types.
-> 
-> http://git.qemu.org/?p=qemu.git;a=commit;h=d9a3b33d2c9f996537b7f1d0246dee2d0120cefb
-> https://bugzilla.redhat.com/show_bug.cgi?id=1283722
+Miroslav Lichvar has been busy:
 
->> acpi: fix buffer overrun on migration
->> 
->> ich calls acpi_gpe_init with length ICH9_PMIO_GPE0_LEN so
->> ICH9_PMIO_GPE0_LEN/2 bytes are allocated, but then the full
->> ICH9_PMIO_GPE0_LEN bytes are migrated.
->> 
->> As a quick work-around, allocate twice the memory.
+http://chrony.tuxfamily.org/News.html
 
->> hw/acpi/core.c
->> acpi_gpe_init
+This addresses:
 
-Use CVE-2015-8666.
+https://bugzilla.redhat.com/show_bug.cgi?id=3DCVE-2015-1853
+https://bugzilla.redhat.com/show_bug.cgi?id=3DCVE-2015-1821
+https://bugzilla.redhat.com/show_bug.cgi?id=3DCVE-2015-1822
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+luckily 1821/1822 both require admin access, but can result in potential
+code exec.
+
+--=20
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+
+--vmhO6aKWeqP3GCGTemuEbj1gq4G6iH3ks
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Version: GnuPG v2.0.22 (GNU/Linux)
 
-iQIcBAEBCAAGBQJWfB2rAAoJEL54rhJi8gl5/J0P/3CqoLcu92grUe81eRh8zES6
-tRXOHEjXrnfA79WBMkhi+7c125T94okEN5BbMuIt0aa4hfKNXs4PLXxJs0eG8Wi9
-WvknYU1WY3oGRWqqkngyo53wXt82gW5vMK5hw2EuDFUYKFKqWfEJynsZLfjVwxUS
-5MNSXN5hJB3i20I6PxCi3doK5CT52kIuAdZOXpLupWo2MJn3SlXXpFQqFUtjs8jg
-Nxrvtt1M2WQdBUF+2XJ/pGrLqkIs7Id8DUIztuGr4KcsW1/m/8T5GyqeVHwGOx43
-nOz9TqDJJAWFExuDPPrUVbqCTBfv8sDlBbnm2vEE0y/Gc7/MRKthGDHVsJ/cz0rQ
-uTpmjLUkH4HXO/xwQckIdJFabHQAqspchW8zNFPbD0Ac9QKRy8P7YrnnGlLDttGN
-ZcDvWsptm+vCpoiRS735k5nGz+5t/7yAXbyi88QZGnmij9zCm6UkiqKNMvORRqF0
-Pe/3CLjLM3bArI+XqSSBIU6B+EJM8yF+ojxyLyJnt2CJMt6qU1LIAKIVgnowqYNo
-d+Qc7w6p1CDwyn11nnX1k0YyQJCYpi5rpFGaAQxDN/a8AMc90O01rUeGPYqolpiN
-A8Mk9cxe8ZFVo398vNxwtNYZnCYpZ9//1vvwP+ic70yHJlgQQ71in1rZpF1G6FAU
-PmbQEbUM+SmgETo5TDn7
-=2knV
+iQIcBAEBAgAGBQJVJEUnAAoJEBYNRVNeJnmTIfsP+gO8uQbxD9V8dFS7cQ4Slbtj
+A2J72lep6QaDxFcTIfZtyUWfmL+i+gLfIAY6CB7jK08phta/FVJS9c8Su7wIx31r
+aoQaMEuQYSmnf7zAFc1ojVj0QdGssH/HSe75TCwO6Kc6vh6fY7KWA2vT5VLjjdZ+
++mSp3rBwUnMDk7dMdTDj03Ep/Ew3ehLAiOq876RWepSBVnakV869T6TduorLmMmt
+yUs8113YH3JRG39oVcB/LIA1g/z5c0A9I/sLldeI7Uw1DHwkHPGQQRmoNrA2bi2A
+34hNp6w5q23SLIeTga03cGRIM03kljeD+COSgHRCLUIzJB7YapYDL2kP0oc7S92v
+4VueZW4hkehh8kIZS43zzUg8D/wQHAHlkKhJWBlDk0vd2VgKoiD2KqFlGSPsHBl+
+pV706wIpxLXU27mjRDWEp3xUeuoCBb4/ZTe246SLZ7f1xsN+Wvfsudgd1rWGQi66
+SbZ76RvPLPEnFrHvSFxdgHHGO0ztJcfKJgVihQk6WxJbRBok8mRyPf1FGD1JzMYl
+0X/sRrpaRhPQNTp6tuLWHstJAsoLF/MoZHZssVvCw+xCZ3Ji5ixqqZl9hUHRrDLX
+KJIR1wN9HeVxdPaF/lqCAfwG3vWMTV+pHhJnztqt+i632CzOYMtuxLibPO0eVZLR
+gcJeX0rOJPj1xr4qj0bQ
+=EI9G
 -----END PGP SIGNATURE-----
+
+--vmhO6aKWeqP3GCGTemuEbj1gq4G6iH3ks--
