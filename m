@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["829" "Saturday" "11" "April" "2015" "21:31:54" "+1200" "Matthew Daley" "mattd@bugfuzz.com" "<CAD3Cand-BMAZvKPWt7VORYxzZGemmYPqdKmp2F-m1b2izT4_6g@mail.gmail.com>" "19" "[oss-security] CVE request / Advisory: Floating Social Bar (Wordpress plugin) 1.0.1 - 1.1.6" nil nil nil "4" "2015041109:31:54" "[oss-security] CVE request / Advisory: Floating Social Bar (Wordpress plugin) 1.0.1 - 1.1.6" (number mark "        mattd@bugfuz Apr 11   19/829   " thread-indent "\"[oss-security] CVE request / Advisory: Floating Social Bar (Wordpress plugin) 1.0.1 - 1.1.6\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2507" "Tuesday" "7" "April" "2015" "07:20:40" "+0200" "Marcus Meissner" "meissner@suse.de" "<20150407052040.GF5345@suse.de>" "72" "Re: [oss-security] Re: CVE Request : IPv6 Hop limit lowering via RA messages" nil nil nil "4" "2015040705:20:40" "[oss-security] Re: CVE Request : IPv6 Hop limit lowering via RA messages" (number mark "        meissner@sus Apr  7   72/2507  " thread-indent "\"Re: [oss-security] Re: CVE Request : IPv6 Hop limit lowering via RA messages\"\n") "<20150404072749.B0AF66C0033@smtpvmsrv1.mitre.org>" ("<CAO0vwOXOPSGb8xWiutn+r+rXhSQc3SwC8-S2bkpRZuRAvDOyHw@mail.gmail.com>" "<20150404072749.B0AF66C0033@smtpvmsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 3214 invoked by uid 550); 11 Apr 2015 09:32:06 -0000
+Received: (qmail 7282 invoked by uid 550); 7 Apr 2015 05:20:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,48 +11,96 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3194 invoked from network); 11 Apr 2015 09:32:06 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to:cc
-         :content-type;
-        bh=kG+cIvJU65bMddXulTE+mOzzn0DbGuVN7otD+3t/+J8=;
-        b=AfzJz1pmwR7Kw/Tg+dw9o0LNiWmALG0cTAngqC5DDh69sbFvLCl/t5uAL0s93TJLrQ
-         jQQs5IslOrQHfGBHqyj13dHdvLWqKbB0zxvU+tdxfjP+Q3/N/NSM2ZVC/atOxiX4A4d/
-         7rdbprYmYsAd2QRC43xVMHtEWjefcghwOuKWG+i4Eu/swCn3hqOu9AIAJpq97Lxxt+lf
-         mL0GdoqM8KDODopZMuunIcN2wGq93Wr4EgTUYp+fCjYVZstb0LTRIEuMzbr7tDjCTpWU
-         pBpi7c9Xt5yls9aqP0kZPJdqBVzTne2hIRBTcDqCG7SU+MsbCukzkDX/MOj4c2kTzeCL
-         1IHA==
-X-Gm-Message-State: ALoCoQmWTTsJiwK26n8B2omrmbC8eljXmfruElDWPxJEGYyLpwBeF9N87zMpVECIOviLHcx5i8zx
+Received: (qmail 7261 invoked from network); 7 Apr 2015 05:20:53 -0000
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Message-ID: <20150407052040.GF5345@suse.de>
+References: <CAO0vwOXOPSGb8xWiutn+r+rXhSQc3SwC8-S2bkpRZuRAvDOyHw@mail.gmail.com>
+ <20150404072749.B0AF66C0033@smtpvmsrv1.mitre.org>
 MIME-Version: 1.0
-X-Received: by 10.180.82.100 with SMTP id h4mr4846839wiy.84.1428744714921;
- Sat, 11 Apr 2015 02:31:54 -0700 (PDT)
-Message-ID: <CAD3Cand-BMAZvKPWt7VORYxzZGemmYPqdKmp2F-m1b2izT4_6g@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Cc: cve-assign@mitre.org
-Date: Sat, 11 Apr 2015 21:31:54 +1200
-From: Matthew Daley <mattd@bugfuzz.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20150404072749.B0AF66C0033@smtpvmsrv1.mitre.org>
+Organization: SUSE Linux GmbH, GF: =?iso-8859-1?Q?Felix_?=
+ =?iso-8859-1?Q?Imend=F6rffer=2C_Jane_Smithard=2C_Jennifer_Guild=2C_Dilip_?=
+ =?iso-8859-1?Q?Upmanyu=2C_Graham_Norton=2C_HRB_21284_=28AG_N=FCrnberg=29?=
+User-Agent: Mutt/1.5.21 (2010-09-15)
+Cc: ljungmark@modio.se, cve-assign@mitre.org
+Date: Tue, 7 Apr 2015 07:20:40 +0200
+From: Marcus Meissner <meissner@suse.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE request / Advisory: Floating Social Bar (Wordpress plugin) 1.0.1
- - 1.1.6
+Subject: Re: [oss-security] Re: CVE Request : IPv6 Hop limit lowering via RA
+ messages
 To: oss-security@lists.openwall.com
 
-I'd like to request a CVE ID for this issue. This is the first such
-request; this message serves as an advisory as well.
+Hi,
 
-Affected software: Floating Social Bar (Wordpress plugin)
-Affected versions: 1.0.1 - 1.1.6
-Website: https://wordpress.org/plugins/floating-social-bar/
-Reported by: Matthew Daley
+This is CERT VU#711516.
 
-Description: One of the plugin's unauthenticated AJAX action handlers
-is vulnerable to a stored cross-site scripting vulnerability. By
-invoking the action with certain parameters, it is possible for
-unauthenticated attackers to force the persistent injection of
-arbitrary script across the site's post pages.
+(The IPv6 gurus might disagree on CVE worthyness .. Rogue L2 nodes
+ in a IPv6 network can do more damage even.)
 
-Fixed version: 1.1.7
-Fix: https://plugins.trac.wordpress.org/changeset/1129648/floating-social-bar/trunk
-Changelog: https://plugins.trac.wordpress.org/changeset/1129648/floating-social-bar/trunk#file5
-
-- Matthew Daley
+Ciao, Marcus
+On Sat, Apr 04, 2015 at 03:27:49AM -0400, cve-assign@mitre.org wrote:
+> > An unprivileged user on a local network can use IPv6 Neighbour
+> > Discovery ICMP to broadcast a non-route with a low hop limit, this
+> > causing machines to lower the hop limit on existing IPv6 routes.
+> 
+> > Projects impacted:  Linux kernel,  NetworkManager, FreeBSD Kernel
+> 
+> > https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=6fd99094de2b83d1d4c8457f2c83483b2828e75a
+> 
+> Use CVE-2015-2922 for the Linux kernel vulnerability.
+> 
+> 
+> > https://lists.freebsd.org/pipermail/freebsd-net/2015-April/041934.html
+> 
+> Use CVE-2015-2923 for the FreeBSD vulnerability.
+> 
+> 
+> > ,  NetworkManager
+> 
+> This might refer to
+> http://cgit.freedesktop.org/NetworkManager/NetworkManager/tree/src/rdisc/nm-lndp-rdisc.c
+> 
+>   hop_limit = ndp_msgra_curhoplimit (msgra);
+>   if (rdisc->hop_limit != hop_limit) {
+>           rdisc->hop_limit = hop_limit;
+>           changed |= NM_RDISC_CONFIG_HOP_LIMIT;
+> 
+> however, the MITRE CVE team is not directly familiar with this part of
+> the NetworkManager code and has not researched any changes to the
+> "rdisc->hop_limit != hop_limit" test. There is apparently no commit
+> available yet at:
+> 
+>   http://cgit.freedesktop.org/NetworkManager/NetworkManager/log/src/rdisc/nm-lndp-rdisc.c
+> 
+> but, again, we don't know whether changes would need to occur there.
+> 
+> Use CVE-2015-2924 for the NetworkManager vulnerability.
+> 
+> 
+> Also, note that
+> 
+>   http://patchwork.ozlabs.org/patch/453995/
+> 
+> refers to affected closed-source products. (CVE IDs for closed-source
+> products would be announced elsewhere.) It also refers to Android. We
+> don't know whether Android was listed only because of a
+> shared-codebase issue, e.g.,
+> 
+>   https://android.googlesource.com/kernel/common/+/android-3.18/net/ipv6/ndisc.c
+> 
+> (there is no commit at
+> https://android.googlesource.com/kernel/common/+log/android-3.18/net/ipv6/ndisc.c
+> currently)
+> 
+> or whether Android is affected in other ways. Unless there is
+> incorrect hop_limit processing in code that is specific to Android,
+> Android would not have a unique CVE ID.
+> 
+> -- 
+> CVE assignment team, MITRE CVE Numbering Authority
+> M/S M300
+> 202 Burlington Road, Bedford, MA 01730 USA
+> [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+> 
