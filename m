@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["19629" "Monday" "9" "May" "2016" "08:29:40" "-0500" "Bob Friesenhahn" "bfriesen@simple.dallas.tx.us" "<alpine.GSO.2.20.1605090828220.23612@freddy.simplesystems.org>" "360" "[oss-security] GraphicsMagick Response To \"ImageTragick\"" "^Date:" nil nil "5" "2016050913:29:40" "[oss-security] GraphicsMagick Response To \"ImageTragick\"" (number mark "        bfriesen@sim May  9  360/19629 " thread-indent "\"[oss-security] GraphicsMagick Response To \"ImageTragick\"\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1604" "Tuesday" "7" "April" "2015" "13:27:40" "-0700" "Michal Zalewski" "lcamtuf@coredump.cx" "<CALx_OUBFvik8Yyvs9kj=S2JLVKHem7aD9Ttg7pw7GWSydadC9A@mail.gmail.com>" "35" "Re: [oss-security] Hanno Boeck found Heartbleed using afl + ASan!" nil nil nil "4" "2015040720:27:40" "[oss-security] Hanno Boeck found Heartbleed using afl + ASan!" (number mark "        lcamtuf@core Apr  7   35/1604  " thread-indent "\"Re: [oss-security] Hanno Boeck found Heartbleed using afl + ASan!\"\n") "<E1YfZfw-0006NA-Md@rmm6prod02.runbox.com>" ("<E1YfZfw-0006NA-Md@rmm6prod02.runbox.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 5215 invoked by uid 550); 9 May 2016 13:29:59 -0000
+Received: (qmail 19789 invoked by uid 550); 7 Apr 2015 20:28:13 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,377 +11,64 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5156 invoked from network); 9 May 2016 13:29:52 -0000
-X-X-Sender: bfriesen@freddy.simplesystems.org
-Message-ID: <alpine.GSO.2.20.1605090828220.23612@freddy.simplesystems.org>
-User-Agent: Alpine 2.20 (GSO 67 2015-01-07)
+Received: (qmail 19765 invoked from network); 7 Apr 2015 20:28:12 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:content-type;
+        bh=RhihC01QC1Cm3pkpzW44x+DxfOJxg1d35pVPjhVAgiQ=;
+        b=fn7JpLPl35E1L4B99z9LWnKgORl+QyaSdFpDabRB98ACxSCLRGvpYIY2z/KDGYwKS2
+         cXTdSkrwdCI5Fa9D/iGy7/fuWCBcdQSNIEJR2QfVQ1r8hlas7rcMiwBs9h55sb/STSNG
+         ib1JSMw1HxmZHIDjkiXHR3cZOfGKFBRGenlqKs4LULUDWSPi212m+dgxrZNPaJTaD9Vd
+         w8+5m0vnogj8f/7LNqEXiNoHBwuRYgJTcghO6YHhIezKfhnQc5ENYpCxttj+D+qXEhOT
+         hx95aDA3XycjoP1OPNvNscibSHk210PsOxcch6nSbU9C6r9sj37T7ncWbD5ezRYdGFnJ
+         byDQ==
+X-Gm-Message-State: ALoCoQnIXShFHkI42xVIl593NWFWY+xwQ2PZkxyptadUOjviNNEZR2q57gzv4cpIBZSM+8RVov3x
+X-Received: by 10.68.176.3 with SMTP id ce3mr39560122pbc.122.1428438480959;
+ Tue, 07 Apr 2015 13:28:00 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="-559023410-1753497658-1462754093=:23612"
-Content-ID: <alpine.GSO.2.20.1605090828221.23612@freddy.simplesystems.org>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (smtp.simplesystems.org [65.66.246.90]); Mon, 09 May 2016 08:29:40 -0500 (CDT)
-Date: Mon, 9 May 2016 08:29:40 -0500 (CDT)
-From: Bob Friesenhahn <bfriesen@simple.dallas.tx.us>
+In-Reply-To: <E1YfZfw-0006NA-Md@rmm6prod02.runbox.com>
+References: <E1YfZfw-0006NA-Md@rmm6prod02.runbox.com>
+Message-ID: <CALx_OUBFvik8Yyvs9kj=S2JLVKHem7aD9Ttg7pw7GWSydadC9A@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Date: Tue, 7 Apr 2015 13:27:40 -0700
+From: Michal Zalewski <lcamtuf@coredump.cx>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] GraphicsMagick Response To "ImageTragick"
-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Hanno Boeck found Heartbleed using afl + ASan!
+To: oss-security <oss-security@lists.openwall.com>
 
----559023410-1753497658-1462754093=:23612
-Content-Type: text/plain; FORMAT=flowed; CHARSET=US-ASCII
-Content-ID: <alpine.GSO.2.20.1605090828222.23612@freddy.simplesystems.org>
+You know... on some level, I'm happy - but on another, I'm always
+trying to be skeptical when such claims are made for other projects.
+It's only fair not to treat this case differently.
 
-[ This is a re-post of what was sent to the GM announcements list ]
+It's worth remembering that the authors of several static analysis or
+symbolic execution frameworks have also claimed that their products
+would have found Heartbleed. IIRC, their experiments were far more
+convoluted than Hanno's, but the bottom line is that when you're
+trying to "discover" a bug you already know about, it's almost
+impossible to avoid subconsciously optimizing for the expected
+outcome.
 
-This the GraphicsMagick project response to the unfortunate list of
-ImageMagick exploits listed on the web site at
-https://imagetragick.com/.  While GraphicsMagick forked from
-ImageMagick in 2002, it is reasonable to expect that much of the
-internal operation and architecture is still similar.  In fact, some
-of the claimed exploits (or similar) are relevant to GraphicsMagick.
+So, I always urge people to ask a simple question: would someone think
+of running the tool this particular way and on this particular code
+before we knew about the bug? And if yes, why haven't they?=)
 
-Based on the current issues described, this is how GraphicsMagick
-fares:
+The answer I've always heard from commercial software vendors is that
+"they had no time to work on open source projects", but that's about
+as unconvincing as it gets. I bet they would love to be credited for
+this or any comparably serious find. Today, I'm asking myself the same
+question about AFL. Was it too counterintuitive to set this up? Were
+there other barriers to entry? Can I fix this now?
 
-1. CVE-2016-3714 - Insufficient shell characters filtering
+Cheers,
+/mz
 
-    GraphicsMagick is not susceptible to remote code execution except
-    if gnuplot is installed (because gnuplot executes shell commands).
-    Gnuplot-shell based shell exploits are possible without a gnuplot
-    file being involved although gnuplot invokes the shell.  To fix
-    this, the "gplt" entry in the delegates.mgk file must be removed.
-
-2. CVE-2016-3718 - SSRF
-
-    GraphicsMagick has always supported HTTP and FTP URL requests from
-    the context of the executing process if it is linked with libxml2.
-    There is no sandboxing or policy to determine which HTTP and FTP
-    URLs should be allowed/denied because they should only be available
-    from outside the system, or in the public space outside
-    a "firewall".
-
-3. CVE-2016-3715 - File deletion
-
-    While the syntax is different from ImageMagick, GraphicsMagick does
-    support a file specification syntax "tmp:" which causes the input
-    file to be deleted after it is read.  This has limited use to hand
-    off responsibility for a temporary file to another process in order
-    to assure that the temporary file will be deleted once it is no
-    longer needed.  This feature will removed since it is not actually
-    necessary any more.
-
-4. CVE-2016-3716 - File moving
-
-     This is a two-factor attack and is actually file copying.  It is
-     not successful using GraphicsMagick.  MSL is an XML-based "script"
-     format which should never be allowed to be submitted and invoked
-     by an untrusted party.
-
-5. CVE-2016-3717 - Local file read
-
-     GraphicsMagick supports a "txt:" file specification syntax which
-     enables rendering all the lines of a text file as an image.  There
-     is also a "label:" file specification syntax which is capable of
-     rendering only the first line of a file.  Files ending with
-     extension ".txt" are automatically rendered into an image.  The
-     main concern with this is that sensitive data in a text file might
-     become rendered as an image on a web site.
-
-     Using an uploaded manual page with file extension ".man" or by
-     reading with "man:filename", the 'man' delegate can be used to
-     render any file on the system into Postscript if 'groff' is
-     installed.
-
-To resolve these concerns, several patches which should apply across
-most GraphicsMagick 1.3.XX releases have been developed and are
-attached:
-
-1. Remove automatic detection/execution of MVG based on file header or
-    file extension. [disable-mvg-ext.patch]
-
-2. Remove the ability to cause an input file to be deleted based on a
-    filename specification. [disable-tmp-magick-prefix.patch]
-
-3. Improve the safety of delegates.mgk by removing gnuplot support,
-    removing manual page support, and by adding -dSAFER to all
-    ghostscript invocations. [delegates-safer.patch]
-
-4. Sanity check the MVG image primitive filename argument to assure
-    that "magick:" prefix strings will not be interpreted.  Please note
-    that this patch will break intentional uses of magick prefix
-    strings in MVG and so some MVG scripts may fail.  We will search
-    for a more flexible solution. [image-sanity-check.patch]
-
-Please address any concerns to me (Bob Friesenhahn
-<bfriesen@simple.dallas.tx.us>).
-
--- 
-Bob Friesenhahn
-bfriesen@simple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
-GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
----559023410-1753497658-1462754093=:23612
-Content-Type: text/plain; CHARSET=US-ASCII; NAME=delegates-safer.patch
-Content-Transfer-Encoding: BASE64
-Content-ID: <alpine.GSO.2.20.1605081934530.23612@freddy.simplesystems.org>
-Content-Description: 
-Content-Disposition: ATTACHMENT; FILENAME=delegates-safer.patch
-
-ZGlmZiAtciAzMzIwMGZjNjQ1ZjYgY29uZmlnL2RlbGVnYXRlcy5tZ2suaW4N
-Ci0tLSBhL2NvbmZpZy9kZWxlZ2F0ZXMubWdrLmluCVNhdCBOb3YgMDcgMTQ6
-NDk6MTYgMjAxNSAtMDYwMA0KKysrIGIvY29uZmlnL2RlbGVnYXRlcy5tZ2su
-aW4JU3VuIE1heSAwOCAxODoyMzowNCAyMDE2IC0wNTAwDQpAQCAtNzgsMjgg
-Kzc4LDI3IEBADQogICA8ZGVsZWdhdGUgZGVjb2RlPSJkdmkiIGNvbW1hbmQ9
-JyJARFZJRGVjb2RlRGVsZWdhdGVAIiAtcSAtbyAiJW8iICIlaSInIC8+DQog
-ICA8ZGVsZWdhdGUgZGVjb2RlPSJlZGl0IiBzdGVhbHRoPSJUcnVlIiBjb21t
-YW5kPSciQEVkaXRvckRlbGVnYXRlQCIgLXRpdGxlICJFZGl0IEltYWdlIENv
-bW1lbnQiIC1lIHZpICIlbyInIC8+DQogICA8ZGVsZWdhdGUgZGVjb2RlPSJl
-bWYiIGNvbW1hbmQ9JyJAV01GRGVjb2RlRGVsZWdhdGVAIiAtbyAiJW8iICIl
-aSInIC8+DQotICA8ZGVsZWdhdGUgZGVjb2RlPSJlcHMiIGVuY29kZT0icGRm
-IiBtb2RlPSJiaSIgY29tbWFuZD0nIkBQU0RlbGVnYXRlQCIgLXEgLWRCQVRD
-SCAtZE1heEJpdG1hcD01MDAwMDAwMCAtZE5PUEFVU0UgLXNERVZJQ0U9QEdT
-UERGRGV2aWNlQCAiLXNPdXRwdXRGaWxlPSVvIiAtLSAiJWkiIC1jIHF1aXQn
-IC8+DQotICA8ZGVsZWdhdGUgZGVjb2RlPSJlcHMiIGVuY29kZT0icHMiIG1v
-ZGU9ImJpIiBjb21tYW5kPSciQFBTRGVsZWdhdGVAIiAtcSAtZEJBVENIIC1k
-TWF4Qml0bWFwPTUwMDAwMDAwIC1kTk9QQVVTRSAtc0RFVklDRT1AR1NQU0Rl
-dmljZUAgIi1zT3V0cHV0RmlsZT0lbyIgLS0gIiVpIiAtYyBxdWl0JyAvPg0K
-KyAgPGRlbGVnYXRlIGRlY29kZT0iZXBzIiBlbmNvZGU9InBkZiIgbW9kZT0i
-YmkiIGNvbW1hbmQ9JyJAUFNEZWxlZ2F0ZUAiIC1xIC1kQkFUQ0ggLWRTQUZF
-UiAtZE1heEJpdG1hcD01MDAwMDAwMCAtZE5PUEFVU0UgLXNERVZJQ0U9QEdT
-UERGRGV2aWNlQCAiLXNPdXRwdXRGaWxlPSVvIiAtLSAiJWkiIC1jIHF1aXQn
-IC8+DQorICA8ZGVsZWdhdGUgZGVjb2RlPSJlcHMiIGVuY29kZT0icHMiIG1v
-ZGU9ImJpIiBjb21tYW5kPSciQFBTRGVsZWdhdGVAIiAtcSAtZEJBVENIIC1k
-U0FGRVIgLWRNYXhCaXRtYXA9NTAwMDAwMDAgLWROT1BBVVNFIC1zREVWSUNF
-PUBHU1BTRGV2aWNlQCAiLXNPdXRwdXRGaWxlPSVvIiAtLSAiJWkiIC1jIHF1
-aXQnIC8+DQogICA8ZGVsZWdhdGUgZGVjb2RlPSJmaWciIGNvbW1hbmQ9JyJA
-RklHRGVjb2RlRGVsZWdhdGVAIiAtTCBwcyAiJWkiICIlbyInIC8+DQotICA8
-ZGVsZWdhdGUgZGVjb2RlPSJncGx0IiBjb21tYW5kPSciQEVjaG9EZWxlZ2F0
-ZUAiICJzZXQgc2l6ZSAxLjI1LDAuNjI7IHNldCB0ZXJtaW5hbCBwb3N0c2Ny
-aXB0IHBvcnRyYWl0IGNvbG9yIHNvbGlkOyBzZXQgb3V0cHV0IFwiJW9cIjsg
-bG9hZCBcIiVpXCIiID4gIiV1IjsgIkBHbnVwbG90RGVjb2RlRGVsZWdhdGVA
-IiAiJXUiJyAvPg0KIA0KICAgPCEtLSBSZWFkIG1vbm9jaHJvbWUgUG9zdHNj
-cmlwdCwgRVBTLCBhbmQgUERGICAtLT4NCi0gIDxkZWxlZ2F0ZSBkZWNvZGU9
-ImdzLW1vbm8iIHN0ZWFsdGg9IlRydWUiIGNvbW1hbmQ9JyJAUFNEZWxlZ2F0
-ZUAiIC1xIC1kQkFUQ0ggLWRNYXhCaXRtYXA9NTAwMDAwMDAgLWROT1BBVVNF
-IC1zREVWSUNFPUBHU01vbm9EZXZpY2VAIC1kVGV4dEFscGhhQml0cz0ldSAt
-ZEdyYXBoaWNzQWxwaGFCaXRzPSV1IC1yJXMgJXMgIi1zT3V0cHV0RmlsZT0l
-cyIgLS0gIiVzIiAtYyBxdWl0JyAvPg0KKyAgPGRlbGVnYXRlIGRlY29kZT0i
-Z3MtbW9ubyIgc3RlYWx0aD0iVHJ1ZSIgY29tbWFuZD0nIkBQU0RlbGVnYXRl
-QCIgLXEgLWRCQVRDSCAtZFNBRkVSIC1kTWF4Qml0bWFwPTUwMDAwMDAwIC1k
-Tk9QQVVTRSAtc0RFVklDRT1AR1NNb25vRGV2aWNlQCAtZFRleHRBbHBoYUJp
-dHM9JXUgLWRHcmFwaGljc0FscGhhQml0cz0ldSAtciVzICVzICItc091dHB1
-dEZpbGU9JXMiIC0tICIlcyIgLWMgcXVpdCcgLz4NCiANCiAgIDwhLS0gUmVh
-ZCBncmF5c2NhbGUgUG9zdHNjcmlwdCwgRVBTLCBhbmQgUERGICAtLT4NCi0g
-IDxkZWxlZ2F0ZSBkZWNvZGU9ImdzLWdyYXkiIHN0ZWFsdGg9IlRydWUiIGNv
-bW1hbmQ9JyJAUFNEZWxlZ2F0ZUAiIC1xIC1kQkFUQ0ggLWRNYXhCaXRtYXA9
-NTAwMDAwMDAgLWROT1BBVVNFIC1zREVWSUNFPUBHU0dyYXlEZXZpY2VAIC1k
-VGV4dEFscGhhQml0cz0ldSAtZEdyYXBoaWNzQWxwaGFCaXRzPSV1IC1yJXMg
-JXMgIi1zT3V0cHV0RmlsZT0lcyIgLS0gIiVzIiAtYyBxdWl0JyAvPg0KKyAg
-PGRlbGVnYXRlIGRlY29kZT0iZ3MtZ3JheSIgc3RlYWx0aD0iVHJ1ZSIgY29t
-bWFuZD0nIkBQU0RlbGVnYXRlQCIgLXEgLWRCQVRDSCAtZFNBRkVSIC1kTWF4
-Qml0bWFwPTUwMDAwMDAwIC1kTk9QQVVTRSAtc0RFVklDRT1AR1NHcmF5RGV2
-aWNlQCAtZFRleHRBbHBoYUJpdHM9JXUgLWRHcmFwaGljc0FscGhhQml0cz0l
-dSAtciVzICVzICItc091dHB1dEZpbGU9JXMiIC0tICIlcyIgLWMgcXVpdCcg
-Lz4NCiANCiAgIDwhLS0gUmVhZCBjb2xvcm1hcHBlZCBQb3N0c2NyaXB0LCBF
-UFMsIGFuZCBQREYgIC0tPg0KLSAgPGRlbGVnYXRlIGRlY29kZT0iZ3MtcGFs
-ZXR0ZSIgc3RlYWx0aD0iVHJ1ZSIgY29tbWFuZD0nIkBQU0RlbGVnYXRlQCIg
-LXEgLWRCQVRDSCAtZE1heEJpdG1hcD01MDAwMDAwMCAtZE5PUEFVU0UgLXNE
-RVZJQ0U9QEdTUGFsZXR0ZURldmljZUAgLWRUZXh0QWxwaGFCaXRzPSV1IC1k
-R3JhcGhpY3NBbHBoYUJpdHM9JXUgLXIlcyAlcyAiLXNPdXRwdXRGaWxlPSVz
-IiAtLSAiJXMiIC1jIHF1aXQnIC8+DQorICA8ZGVsZWdhdGUgZGVjb2RlPSJn
-cy1wYWxldHRlIiBzdGVhbHRoPSJUcnVlIiBjb21tYW5kPSciQFBTRGVsZWdh
-dGVAIiAtcSAtZEJBVENIIC1kU0FGRVIgLWRNYXhCaXRtYXA9NTAwMDAwMDAg
-LWROT1BBVVNFIC1zREVWSUNFPUBHU1BhbGV0dGVEZXZpY2VAIC1kVGV4dEFs
-cGhhQml0cz0ldSAtZEdyYXBoaWNzQWxwaGFCaXRzPSV1IC1yJXMgJXMgIi1z
-T3V0cHV0RmlsZT0lcyIgLS0gIiVzIiAtYyBxdWl0JyAvPg0KIA0KICAgPCEt
-LSBSZWFkIGNvbG9yIFBvc3RzY3JpcHQsIEVQUywgYW5kIFBERiAgLS0+DQot
-ICA8ZGVsZWdhdGUgZGVjb2RlPSJncy1jb2xvciIgc3RlYWx0aD0iVHJ1ZSIg
-Y29tbWFuZD0nIkBQU0RlbGVnYXRlQCIgLXEgLWRCQVRDSCAtZE1heEJpdG1h
-cD01MDAwMDAwMCAtZE5PUEFVU0UgLXNERVZJQ0U9QEdTQ29sb3JEZXZpY2VA
-IC1kVGV4dEFscGhhQml0cz0ldSAtZEdyYXBoaWNzQWxwaGFCaXRzPSV1IC1y
-JXMgJXMgIi1zT3V0cHV0RmlsZT0lcyIgLS0gIiVzIiAtYyBxdWl0JyAvPg0K
-KyAgPGRlbGVnYXRlIGRlY29kZT0iZ3MtY29sb3IiIHN0ZWFsdGg9IlRydWUi
-IGNvbW1hbmQ9JyJAUFNEZWxlZ2F0ZUAiIC1xIC1kQkFUQ0ggLWRTQUZFUiAt
-ZE1heEJpdG1hcD01MDAwMDAwMCAtZE5PUEFVU0UgLXNERVZJQ0U9QEdTQ29s
-b3JEZXZpY2VAIC1kVGV4dEFscGhhQml0cz0ldSAtZEdyYXBoaWNzQWxwaGFC
-aXRzPSV1IC1yJXMgJXMgIi1zT3V0cHV0RmlsZT0lcyIgLS0gIiVzIiAtYyBx
-dWl0JyAvPg0KIA0KICAgPCEtLSBSZWFkIGNvbG9yK2FscGhhIFBvc3RzY3Jp
-cHQsIEVQUywgYW5kIFBERiAgLS0+DQotICA8ZGVsZWdhdGUgZGVjb2RlPSJn
-cy1jb2xvcithbHBoYSIgc3RlYWx0aD0iVHJ1ZSIgY29tbWFuZD0nIkBQU0Rl
-bGVnYXRlQCIgLXEgLWRCQVRDSCAtZE1heEJpdG1hcD01MDAwMDAwMCAtZE5P
-UEFVU0UgLXNERVZJQ0U9QEdTQ29sb3JBbHBoYURldmljZUAgLWRUZXh0QWxw
-aGFCaXRzPSV1IC1kR3JhcGhpY3NBbHBoYUJpdHM9JXUgLXIlcyAlcyAiLXNP
-dXRwdXRGaWxlPSVzIiAtLSAiJXMiIC1jIHF1aXQnIC8+DQorICA8ZGVsZWdh
-dGUgZGVjb2RlPSJncy1jb2xvcithbHBoYSIgc3RlYWx0aD0iVHJ1ZSIgY29t
-bWFuZD0nIkBQU0RlbGVnYXRlQCIgLXEgLWRCQVRDSCAtZFNBRkVSIC1kTWF4
-Qml0bWFwPTUwMDAwMDAwIC1kTk9QQVVTRSAtc0RFVklDRT1AR1NDb2xvckFs
-cGhhRGV2aWNlQCAtZFRleHRBbHBoYUJpdHM9JXUgLWRHcmFwaGljc0FscGhh
-Qml0cz0ldSAtciVzICVzICItc091dHB1dEZpbGU9JXMiIC0tICIlcyIgLWMg
-cXVpdCcgLz4NCiANCiAgIDwhLS0gUmVhZCBDTVlLIFBvc3RzY3JpcHQsIEVQ
-UywgYW5kIFBERiAgLS0+DQotICA8ZGVsZWdhdGUgZGVjb2RlPSJncy1jbXlr
-IiBzdGVhbHRoPSJUcnVlIiBjb21tYW5kPSciQFBTRGVsZWdhdGVAIiAtcSAt
-ZEJBVENIIC1kTWF4Qml0bWFwPTUwMDAwMDAwIC1kTk9QQVVTRSAtc0RFVklD
-RT1AR1NDTVlLRGV2aWNlQCAtZFRleHRBbHBoYUJpdHM9JXUgLWRHcmFwaGlj
-c0FscGhhQml0cz0ldSAtciVzICVzICItc091dHB1dEZpbGU9JXMiIC0tICIl
-cyIgLWMgcXVpdCcgLz4NCisgIDxkZWxlZ2F0ZSBkZWNvZGU9ImdzLWNteWsi
-IHN0ZWFsdGg9IlRydWUiIGNvbW1hbmQ9JyJAUFNEZWxlZ2F0ZUAiIC1xIC1k
-QkFUQ0ggLWRTQUZFUiAtZE1heEJpdG1hcD01MDAwMDAwMCAtZE5PUEFVU0Ug
-LXNERVZJQ0U9QEdTQ01ZS0RldmljZUAgLWRUZXh0QWxwaGFCaXRzPSV1IC1k
-R3JhcGhpY3NBbHBoYUJpdHM9JXUgLXIlcyAlcyAiLXNPdXRwdXRGaWxlPSVz
-IiAtLSAiJXMiIC1jIHF1aXQnIC8+DQogDQogICA8ZGVsZWdhdGUgZGVjb2Rl
-PSJocGciIGNvbW1hbmQ9JyJASFBHTERlY29kZURlbGVnYXRlQCIgLXEgLW0g
-ZXBzIC1mIGBiYXNlbmFtZSAiJW8iYCAiJWkiICYmIG12IC1mIGBiYXNlbmFt
-ZSAiJW8iYCAiJW8iJyAvPg0KICAgPGRlbGVnYXRlIGRlY29kZT0iaHBnbCIg
-Y29tbWFuZD0nIkBIUEdMRGVjb2RlRGVsZWdhdGVAIiAtcSAtbSBlcHMgLWYg
-YGJhc2VuYW1lICIlbyJgICIlaSIgJiYgbXYgLWYgYGJhc2VuYW1lICIlbyJg
-ICIlbyInIC8+DQpAQCAtMTA4LDE2ICsxMDcsMTQgQEANCiAgIDwhLS0gUmVh
-ZCBIVE1MIGZpbGUgIC0tPg0KICAgPGRlbGVnYXRlIGRlY29kZT0iaHRtbCIg
-Y29tbWFuZD0nIkBIVE1MRGVjb2RlRGVsZWdhdGVAIiAtVSAtbyAiJW8iICIl
-aSInIC8+DQogICA8ZGVsZWdhdGUgZGVjb2RlPSJpbGJtIiBjb21tYW5kPSci
-QElMQk1EZWNvZGVEZWxlZ2F0ZUAiICIlaSIgPiAiJW8iJyAvPg0KLSAgPCEt
-LSBSZWFkIFVOSVggbWFudWFsIHBhZ2UgIC0tPg0KLSAgPGRlbGVnYXRlIGRl
-Y29kZT0ibWFuIiBjb21tYW5kPSciQE1BTkRlbGVnYXRlQCIgLW1hbiAtVHBz
-ICIlaSIgPiAiJW8iJyAvPg0KICAgPCEtLSBSZWFkIE1QRUcgZmlsZSB1c2lu
-ZyBtcGVnMmRlY29kZSAgLS0+DQogICA8ZGVsZWdhdGUgZGVjb2RlPSJtcGVn
-IiBjb21tYW5kPSciQE1QRUdEZWNvZGVEZWxlZ2F0ZUAiIC1xIC1iICIlaSIg
-LWYgLW8zICIldSUlMDVkIjsgQEdNRGVsZWdhdGVAIGNvbnZlcnQgLXRlbXBv
-cmFyeSAiJXUqLnBwbSIgIm1pZmY6JW8iIDsgcm0gLWYgIiV1IioucHBtICcg
-Lz4NCiAgIDwhLS0gV3JpdGUgTVBFRyBmaWxlIHVzaW5nIG1wZWcyZW5jb2Rl
-IC0tPg0KICAgPGRlbGVnYXRlIGVuY29kZT0ibXBlZy1lbmNvZGUiIHN0ZWFs
-dGg9IlRydWUiIGNvbW1hbmQ9JyJATVBFR0VuY29kZURlbGVnYXRlQCIgIiVp
-IiAiJW8iJyAvPg0KICAgPCEtLSBDb252ZXJ0IFBERiB0byBFbmNhcHN1bGF0
-ZWQgUG9zY3JpcHQgdXNpbmcgR2hvc3RzY3JpcHQgLS0+DQotICA8ZGVsZWdh
-dGUgZGVjb2RlPSJwZGYiIGVuY29kZT0iZXBzIiBtb2RlPSJiaSIgY29tbWFu
-ZD0nIkBQU0RlbGVnYXRlQCIgLXEgLWRCQVRDSCAtZE1heEJpdG1hcD01MDAw
-MDAwMCAtZE5PUEFVU0UgLXNERVZJQ0U9QEdTRVBTRGV2aWNlQCAiLXNPdXRw
-dXRGaWxlPSVvIiAtLSAiJWkiIC1jIHF1aXQnIC8+DQorICA8ZGVsZWdhdGUg
-ZGVjb2RlPSJwZGYiIGVuY29kZT0iZXBzIiBtb2RlPSJiaSIgY29tbWFuZD0n
-IkBQU0RlbGVnYXRlQCIgLXEgLWRCQVRDSCAtZFNBRkVSIC1kTWF4Qml0bWFw
-PTUwMDAwMDAwIC1kTk9QQVVTRSAtc0RFVklDRT1AR1NFUFNEZXZpY2VAICIt
-c091dHB1dEZpbGU9JW8iIC0tICIlaSIgLWMgcXVpdCcgLz4NCiAgIDwhLS0g
-Q29udmVydCBQREYgdG8gUG9zdGNyaXB0IHVzaW5nIEdob3N0c2NyaXB0IC0t
-Pg0KLSAgPGRlbGVnYXRlIGRlY29kZT0icGRmIiBlbmNvZGU9InBzIiBtb2Rl
-PSJiaSIgY29tbWFuZD0nIkBQU0RlbGVnYXRlQCIgLXEgLWRCQVRDSCAtZE1h
-eEJpdG1hcD01MDAwMDAwMCAtZE5PUEFVU0UgLXNERVZJQ0U9QEdTUFNEZXZp
-Y2VAICItc091dHB1dEZpbGU9JW8iIC0tICIlaSIgLWMgcXVpdCcgLz4NCisg
-IDxkZWxlZ2F0ZSBkZWNvZGU9InBkZiIgZW5jb2RlPSJwcyIgbW9kZT0iYmki
-IGNvbW1hbmQ9JyJAUFNEZWxlZ2F0ZUAiIC1xIC1kQkFUQ0ggLWRTQUZFUiAt
-ZE1heEJpdG1hcD01MDAwMDAwMCAtZE5PUEFVU0UgLXNERVZJQ0U9QEdTUFNE
-ZXZpY2VAICItc091dHB1dEZpbGU9JW8iIC0tICIlaSIgLWMgcXVpdCcgLz4N
-CiAgIDwhLS0gQ29udmVydCBQTk0gZmlsZSB0byBJTEJNIGZvcm1hdCB1c2lu
-ZyBwcG10b2lsYm0gLS0+DQogICA8ZGVsZWdhdGUgZGVjb2RlPSJwbm0iIGVu
-Y29kZT0iaWxibSIgbW9kZT0iZW5jb2RlIiBjb21tYW5kPSciQElMQk1FbmNv
-ZGVEZWxlZ2F0ZUAiIC0yNGlmICIlaSIgPiAiJW8iJyAvPg0KICAgPGRlbGVn
-YXRlIGRlY29kZT0icG5tIiBlbmNvZGU9ImxhdW5jaCIgbW9kZT0iZW5jb2Rl
-IiBjb21tYW5kPSciQExhdW5jaERlbGVnYXRlQCIgIiVpIicgLz4NCkBAIC0x
-MjUsOCArMTIyLDggQEANCiAgIDwhLS0gUmVhZCBQZXJzaXN0YW5jZSBPZiBW
-aXNpb24gZmlsZSB1c2luZyBwb3ZyYXkgIC0tPg0KICAgPGRlbGVnYXRlIGRl
-Y29kZT0icG92IiBjb21tYW5kPSdAUE9WRGVsZWdhdGVAICIraSIlaSIiICtv
-IiVvIiArZm4lcSArdyV3ICtoJWggK2EgLXE5IC1rZmkiJXMiIC1rZmYiJW4i
-DQogICAgICJAR01EZWxlZ2F0ZUAiIGNvbnZlcnQgLWFkam9pbiAiJW8qLnBu
-ZyIgIiVvIicgLz4NCi0gIDxkZWxlZ2F0ZSBkZWNvZGU9InBzIiBlbmNvZGU9
-ImVwcyIgbW9kZT0iYmkiIGNvbW1hbmQ9JyJAUFNEZWxlZ2F0ZUAiIC1xIC1k
-QkFUQ0ggLWRNYXhCaXRtYXA9NTAwMDAwMDAgLWROT1BBVVNFIC1zREVWSUNF
-PUBHU0VQU0RldmljZUAgIi1zT3V0cHV0RmlsZT0lbyIgLS0gIiVpIiAtYyBx
-dWl0JyAvPg0KLSAgPGRlbGVnYXRlIGRlY29kZT0icHMiIGVuY29kZT0icGRm
-IiBtb2RlPSJiaSIgY29tbWFuZD0nIkBQU0RlbGVnYXRlQCIgLXEgLWRCQVRD
-SCAtZE1heEJpdG1hcD01MDAwMDAwMCAtZE5PUEFVU0UgLXNERVZJQ0U9QEdT
-UERGRGV2aWNlQCAiLXNPdXRwdXRGaWxlPSVvIiAtLSAiJWkiIC1jIHF1aXQn
-IC8+DQorICA8ZGVsZWdhdGUgZGVjb2RlPSJwcyIgZW5jb2RlPSJlcHMiIG1v
-ZGU9ImJpIiBjb21tYW5kPSciQFBTRGVsZWdhdGVAIiAtcSAtZEJBVENIIC1k
-U0FGRVIgLWRNYXhCaXRtYXA9NTAwMDAwMDAgLWROT1BBVVNFIC1zREVWSUNF
-PUBHU0VQU0RldmljZUAgIi1zT3V0cHV0RmlsZT0lbyIgLS0gIiVpIiAtYyBx
-dWl0JyAvPg0KKyAgPGRlbGVnYXRlIGRlY29kZT0icHMiIGVuY29kZT0icGRm
-IiBtb2RlPSJiaSIgY29tbWFuZD0nIkBQU0RlbGVnYXRlQCIgLXEgLWRCQVRD
-SCAtZFNBRkVSIC1kTWF4Qml0bWFwPTUwMDAwMDAwIC1kTk9QQVVTRSAtc0RF
-VklDRT1AR1NQREZEZXZpY2VAICItc091dHB1dEZpbGU9JW8iIC0tICIlaSIg
-LWMgcXVpdCcgLz4NCiAgIDxkZWxlZ2F0ZSBkZWNvZGU9InBzIiBlbmNvZGU9
-InByaW50IiBtb2RlPSJlbmNvZGUiIGNvbW1hbmQ9JyJAUHJpbnREZWxlZ2F0
-ZUAiICIlaSInIC8+DQogICA8IS0tIFJlYWQgUmFkaWFuY2UgZmlsZSB1c2lu
-ZyByYV9wcG0gLS0+DQogICA8ZGVsZWdhdGUgZGVjb2RlPSJyYWQiIGNvbW1h
-bmQ9JyJAUkFERGVjb2RlRGVsZWdhdGVAIiAtZyAxLjAgIiVpIiAiJW8iJyAv
-Pg0KQEAgLTE0MSw1ICsxMzgsNSBAQA0KICAgPGRlbGVnYXRlIGRlY29kZT0i
-dHh0IiBlbmNvZGU9InBzIiBtb2RlPSJiaSIgY29tbWFuZD0nIkBUWFREZWxl
-Z2F0ZUAiIC1vICIlbyIgIiVpIicgLz4NCiAgIDwhLS0gUmVuZGVyIFdNRiBm
-aWxlIHVzaW5nIHdtZjJlcHMgKGZhbGxiYWNrIGluIGNhc2UgbGlid21mIG5v
-dCBhdmFpbGFibGUpIC0tPg0KICAgPGRlbGVnYXRlIGRlY29kZT0id21mIiBj
-b21tYW5kPSciQFdNRkRlY29kZURlbGVnYXRlQCIgLW8gIiVvIiAiJWkiJyAv
-Pg0KLSAgPGRlbGVnYXRlIGVuY29kZT0ic2hvdyIgc3RlYWx0aD0iVHJ1ZSIg
-Y29tbWFuZD0nIkBHTURlbGVnYXRlQCIgZGlzcGxheSAtaW1tdXRhYmxlIC1k
-ZWxheSAwIC13aW5kb3dfZ3JvdXAgJWcgLXRpdGxlICIlbCBvZiAlZiIgInRt
-cDolbyIgJicgLz4NCisgIDxkZWxlZ2F0ZSBlbmNvZGU9InNob3ciIHN0ZWFs
-dGg9IlRydWUiIGNvbW1hbmQ9JyJAR01EZWxlZ2F0ZUAiIGRpc3BsYXkgLWlt
-bXV0YWJsZSAtZGVsYXkgMCAtd2luZG93X2dyb3VwICVnIC10aXRsZSAiJWwg
-b2YgJWYiICIlbyIgJicgLz4NCiA8L2RlbGVnYXRlbWFwPg0K
-
----559023410-1753497658-1462754093=:23612
-Content-Type: text/plain; CHARSET=US-ASCII; NAME=disable-mvg-ext.patch
-Content-Transfer-Encoding: BASE64
-Content-ID: <alpine.GSO.2.20.1605081934531.23612@freddy.simplesystems.org>
-Content-Description: 
-Content-Disposition: ATTACHMENT; FILENAME=disable-mvg-ext.patch
-
-ZGlmZiAtciAzMzIwMGZjNjQ1ZjYgY29kZXJzL212Zy5jDQotLS0gYS9jb2Rl
-cnMvbXZnLmMJU2F0IE5vdiAwNyAxNDo0OToxNiAyMDE1IC0wNjAwDQorKysg
-Yi9jb2RlcnMvbXZnLmMJU2F0IE1heSAwNyAyMDoxMTo1NCAyMDE2IC0wNTAw
-DQpAQCAtMjM0LDYgKzIzNCw3IEBADQogICBlbnRyeS0+c2Vla2FibGVfc3Ry
-ZWFtPVRydWU7DQogICBlbnRyeS0+ZGVzY3JpcHRpb249Ik1hZ2ljayBWZWN0
-b3IgR3JhcGhpY3MiOw0KICAgZW50cnktPm1vZHVsZT0iTVZHIjsNCisgIGVu
-dHJ5LT5leHRlbnNpb25fdHJlYXRtZW50PUlnbm9yZUV4dGVuc2lvblRyZWF0
-bWVudDsNCiAgICh2b2lkKSBSZWdpc3Rlck1hZ2lja0luZm8oZW50cnkpOw0K
-IH0NCiAMDQo=
-
----559023410-1753497658-1462754093=:23612
-Content-Type: text/plain; CHARSET=US-ASCII; NAME=disable-tmp-magick-prefix.patch
-Content-Transfer-Encoding: BASE64
-Content-ID: <alpine.GSO.2.20.1605081934532.23612@freddy.simplesystems.org>
-Content-Description: 
-Content-Disposition: ATTACHMENT; FILENAME=disable-tmp-magick-prefix.patch
-
-ZGlmZiAtciAzMzIwMGZjNjQ1ZjYgbWFnaWNrL2ltYWdlLmMNCi0tLSBhL21h
-Z2ljay9pbWFnZS5jCVNhdCBOb3YgMDcgMTQ6NDk6MTYgMjAxNSAtMDYwMA0K
-KysrIGIvbWFnaWNrL2ltYWdlLmMJU2F0IE1heSAwNyAyMDoxMjo1NyAyMDE2
-IC0wNTAwDQpAQCAtMjc4MCw5ICsyNzgwLDYgQEANCiAgICAgICAgICAgICAg
-ICh2b2lkKSBzdHJsY3B5KGltYWdlX2luZm8tPm1hZ2ljayxtYWdpYyxNYXhU
-ZXh0RXh0ZW50KTsNCiAgICAgICAgICAgICAgIGlmIChMb2NhbGVDb21wYXJl
-KG1hZ2ljLCJUTVAiKSAhPSAwKQ0KICAgICAgICAgICAgICAgICBpbWFnZV9p
-bmZvLT5hZmZpcm09TWFnaWNrVHJ1ZTsNCi0gICAgICAgICAgICAgIGVsc2UN
-Ci0gICAgICAgICAgICAgICAgLyogaW5wdXQgZmlsZSB3aWxsIGJlIGF1dG9t
-YXRpY2FsbHkgcmVtb3ZlZCAqLw0KLSAgICAgICAgICAgICAgICBpbWFnZV9p
-bmZvLT50ZW1wb3Jhcnk9TWFnaWNrVHJ1ZTsNCiAgICAgICAgICAgICB9DQog
-ICAgICAgICB9DQogICAgIH0NCg==
-
----559023410-1753497658-1462754093=:23612
-Content-Type: text/plain; CHARSET=US-ASCII; NAME=image-sanity-check.patch
-Content-Transfer-Encoding: BASE64
-Content-ID: <alpine.GSO.2.20.1605081934533.23612@freddy.simplesystems.org>
-Content-Description: 
-Content-Disposition: ATTACHMENT; FILENAME=image-sanity-check.patch
-
-ZGlmZiAtciAzMzIwMGZjNjQ1ZjYgbWFnaWNrL3JlbmRlci5jDQotLS0gYS9t
-YWdpY2svcmVuZGVyLmMJU2F0IE5vdiAwNyAxNDo0OToxNiAyMDE1IC0wNjAw
-DQorKysgYi9tYWdpY2svcmVuZGVyLmMJU3VuIE1heSAwOCAxODoyMTo0NyAy
-MDE2IC0wNTAwDQpAQCAtNDA5Niw2ICs0MDk2LDI0IEBADQogICAgICAgICAg
-ICZpbWFnZS0+ZXhjZXB0aW9uKTsNCiAgICAgICBlbHNlDQogICAgICAgICB7
-DQorICAgICAgICAgIC8qDQorICAgICAgICAgICAgU2FuaXR5IGNoZWNrIFVS
-TC9wYXRoIGJlZm9yZSBwYXNzaW5nIGl0IHRvIFJlYWRJbWFnZSgpDQorDQor
-ICAgICAgICAgICAgVGhpcyBpcyBhIHRlbXBvcmFyeSBmaXggdW50aWwgc3Vp
-dGFibGUgZmxhZ3MgY2FuIGJlIHBhc3NlZA0KKyAgICAgICAgICAgIHRvIGtl
-ZXAgU2V0SW1hZ2VJbmZvKCkgZnJvbSBkb2luZyBwb3RlbnRpYWxseSBkYW5n
-ZXJvdXMNCisgICAgICAgICAgICBtYWdpY2sgdGhpbmdzLg0KKyAgICAgICAg
-ICAqLw0KKyNkZWZpbmUgVkFMSURfUFJFRklYKHN0cix1cmwpIChMb2NhbGVO
-Q29tcGFyZShzdHIsdXJsLHNpemVvZihzdHIpLTEpID09IDApDQorICAgICAg
-ICAgIGlmICghVkFMSURfUFJFRklYKCJodHRwOi8vIiwgcHJpbWl0aXZlX2lu
-Zm8tPnRleHQpICYmDQorICAgICAgICAgICAgICAhVkFMSURfUFJFRklYKCJo
-dHRwczovLyIsIHByaW1pdGl2ZV9pbmZvLT50ZXh0KSAmJg0KKyAgICAgICAg
-ICAgICAgIVZBTElEX1BSRUZJWCgiZnRwOi8vIiwgcHJpbWl0aXZlX2luZm8t
-PnRleHQpICAmJg0KKyAgICAgICAgICAgICAgIShJc0FjY2Vzc2libGVOb0xv
-Z2dpbmcocHJpbWl0aXZlX2luZm8tPnRleHQpKQ0KKyAgICAgICAgICAgICAg
-KQ0KKyAgICAgICAgICAgIHsNCisgICAgICAgICAgICAgIFRocm93RXhjZXB0
-aW9uKCZpbWFnZS0+ZXhjZXB0aW9uLEZpbGVPcGVuRXJyb3IsVW5hYmxlVG9P
-cGVuRmlsZSxwcmltaXRpdmVfaW5mby0+dGV4dCk7DQorICAgICAgICAgICAg
-ICBzdGF0dXM9TWFnaWNrRmFpbDsNCisgICAgICAgICAgICAgIGJyZWFrOw0K
-KyAgICAgICAgICAgIH0NCiAgICAgICAgICAgKHZvaWQpIHN0cmxjcHkoY2xv
-bmVfaW5mby0+ZmlsZW5hbWUscHJpbWl0aXZlX2luZm8tPnRleHQsDQogICAg
-ICAgICAgICAgTWF4VGV4dEV4dGVudCk7DQogICAgICAgICAgIGNvbXBvc2l0
-ZV9pbWFnZT1SZWFkSW1hZ2UoY2xvbmVfaW5mbywmaW1hZ2UtPmV4Y2VwdGlv
-bik7DQo=
-
----559023410-1753497658-1462754093=:23612--
+On Tue, Apr 7, 2015 at 1:00 PM, David A. Wheeler <dwheeler@dwheeler.com> wrote:
+> FYI:
+> Hanno Boeck found Heartbleed using american fuzzy lop combined with Address Sanitizer (ASan):
+> https://blog.hboeck.de/archives/868-How-Heartbleed-couldve-been-found.html
+>
+> I've posted a few additional comments here:
+> http://www.dwheeler.com/blog/2015/04/07/#heartbleed-afl-asan
+>
+> --- David A. Wheeler
