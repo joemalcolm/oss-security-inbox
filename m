@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["647" "Tuesday" "28" "November" "2017" "23:32:37" "+0530" "P J P" "ppandit@redhat.com" "<nycvar.YSQ.7.76.1711282327100.6216@wniryva>" "21" "[oss-security] CVE-2017-15119 Qemu: DoS via large option request" nil nil nil "11" "2017112818:02:37" "[oss-security] CVE-2017-15119 Qemu: DoS via large option request" (number mark "U       ppandit@redh Nov 28   21/647   " thread-indent "\"[oss-security] CVE-2017-15119 Qemu: DoS via large option request\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["492" "Tuesday" "7" "April" "2015" "22:44:01" "-0400" "Marc Deslauriers" "marc.deslauriers@canonical.com" "<552495F1.6000709@canonical.com>" "20" "[oss-security] CVE Request: libX11: buffer overflow in  MakeBigReq macro" nil nil nil "4" "2015040802:44:01" "[oss-security] CVE Request: libX11: buffer overflow in MakeBigReq macro" (number mark "        marc.deslaur Apr  7   20/492   " thread-indent "\"[oss-security] CVE Request: libX11: buffer overflow in  MakeBigReq macro\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 15363 invoked by uid 550); 28 Nov 2017 18:02:57 -0000
+Received: (qmail 28152 invoked by uid 550); 8 Apr 2015 02:44:15 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,38 +11,36 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 14313 invoked from network); 28 Nov 2017 18:02:56 -0000
-Date: Tue, 28 Nov 2017 23:32:37 +0530 (IST)
-From: P J P <ppandit@redhat.com>
-X-X-Sender: pjp@javelin
-To: oss security list <oss-security@lists.openwall.com>
-cc: Eric Blake <eblake@redhat.com>
-Message-ID: <nycvar.YSQ.7.76.1711282327100.6216@wniryva>
+Received: (qmail 28134 invoked from network); 8 Apr 2015 02:44:14 -0000
+Message-ID: <552495F1.6000709@canonical.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.12
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.25]); Tue, 28 Nov 2017 18:02:44 +0000 (UTC)
-Subject: [oss-security] CVE-2017-15119 Qemu: DoS via large option request
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+CC: cve-assign@mitre.org
+Date: Tue, 07 Apr 2015 22:44:01 -0400
+From: Marc Deslauriers <marc.deslauriers@canonical.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE Request: libX11: buffer overflow in  MakeBigReq macro
+To: oss-security@lists.openwall.com
 
-   Hello,
+Hello,
 
-Quick Emulator(Qemu) built with the Network Block Device(NBD) server support 
-is vulnerable to a denial-of-service issue. It could occur if a client sent 
-large option requests, making server waste CPU time on reading up to 4G bytes.
+The MakeBigReq macro in libX11 contained a 4-byte buffer overflow:
 
-A client could use this flaw to keep the NBD server from serving other 
-requests, resulting in DoS.
+https://bugs.freedesktop.org/show_bug.cgi?id=56508
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2017-11/msg05044.html
+Fixed by the following commit in libX11 1.5.99.901:
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1516925
+http://cgit.freedesktop.org/xorg/lib/libX11/commit/?id=39547d600a13713e15429f49768e54c3173c828d
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+Could a CVE please be assigned to this issue? (needs a CVE-2013)
+
+Thanks,
+
+Marc.
+
+-- 
+Marc Deslauriers
+Ubuntu Security Engineer     | http://www.ubuntu.com/
+Canonical Ltd.               | http://www.canonical.com/
