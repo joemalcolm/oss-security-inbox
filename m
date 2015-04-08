@@ -1,4 +1,9 @@
-Received: (qmail 11797 invoked by uid 550); 9 May 2026 04:23:12 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["824" "Tuesday" "7" "April" "2015" "20:38:21" "-0400" "Wade Mealing" "wmealing@redhat.com" "<158444692.10419768.1428453501546.JavaMail.zimbra@redhat.com>" "25" "[oss-security] CVE request netfilter connection tracking accounting." nil nil nil "4" "2015040800:38:21" "[oss-security] CVE request netfilter connection tracking accounting." (number mark "        wmealing@red Apr  7   25/824   " thread-indent "\"[oss-security] CVE request netfilter connection tracking accounting.\"\n") "<799394835.10419174.1428452967519.JavaMail.zimbra@redhat.com>" ("<799394835.10419174.1428452967519.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 32676 invoked by uid 550); 8 Apr 2015 00:38:35 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,79 +11,45 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 5609 invoked from network); 8 May 2026 12:22:48 -0000
-Authentication-Results: apache.org; auth=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=apache.org; s=mail;
-	t=1778242958; bh=jQ2gU9BWGRhAQZa8zAZ969/7+Gzi9nURJy2/Iq0P8hg=;
-	h=Date:To:From:Reply-To:Subject:From;
-	b=vfUWFEHXgRLBMe3c7DmfhhWsEfPJT+ZmdrImoT8OJYB1UzpMlhn84lxlJpR0Sd+7m
-	 b1icfM8C0inPJFuWFiqH22CfXjYbPWMoE7X7CNuu/TetGbFc4SrkvRAgqhjRm3Kyty
-	 z5rziQiPo14/VXBGJCh8Gr5ZAs5Q3DDuDcSnWY40sbeEd72808LJsu/BAylPOzK5Za
-	 7vCzkJkqICsaQgIn59AyMk2BvWUkSjrWgwh8FF64xnh5IFTu08cI+giJUA8BDwlUTA
-	 W5OmPsXP/oQX5r5BNYXlkIzmrBg1dxg1krFhjYVn53n4A3j5xHcnaB42n4SKpupkHL
-	 mIk9masUsEOFA==
-Message-ID: <59b3a1d7-b7e5-445a-b8e9-45fd55a8f36b@apache.org>
-Date: Fri, 8 May 2026 14:22:37 +0200
+Received: (qmail 32655 invoked from network); 8 Apr 2015 00:38:34 -0000
+Message-ID: <158444692.10419768.1428453501546.JavaMail.zimbra@redhat.com>
+In-Reply-To: <799394835.10419174.1428452967519.JavaMail.zimbra@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: oss-security@lists.openwall.com
-From: "Piotr P. Karwasz" <pkarwasz@apache.org>
-Content-Language: en-US
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
-Subject: [oss-security] CVE-2026-25199: Apache CloudStack: Proxmox Extension Allows
- Unauthorized Cross-Tenant Instance Access
+X-Originating-IP: [10.64.50.24]
+X-Mailer: Zimbra 8.0.6_GA_5922 (ZimbraWebClient - GC41 (Mac)/8.0.6_GA_5922)
+Thread-Topic: CVE request netfilter connection tracking accounting.
+Thread-Index: qGJ9LzfgcUq/l9Oaf640Nn3vJ7i+4g==
+Cc: cve-assign@mitre.org
+Date: Tue, 7 Apr 2015 20:38:21 -0400 (EDT)
+From: Wade Mealing <wmealing@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE request netfilter connection tracking accounting.
+To: OSS Security List <oss-security@lists.openwall.com>
 
-Severity: moderate
+Gday,
 
-Affected versions:
+I'd like to request a CVE for an issue posted to netfilter-devel 
+( http://marc.info/?l=netfilter-devel&m=140112364215200&w=2 ).
+ 
+This issue can be classified as a denial of service.
 
-- Apache CloudStack 4.21.0 through 4.22.0
+>From the bug report:
 
-Description:
+"I got the following OOPS with kernel 3.14.4 (debian backport for wheezy) on our 
+internet gateway while trying to establish a new PPTP tunnel from a NAT-ed host.
+Seems it's 100% reproductible"
 
-Instances deployed via the Proxmox extension allow unauthorized access
-to instances belonging to other tenants.
+The issue appears to be within netfilter connection tracking accounting, not specific
+to PPTP or other helper protocols.
 
+The flaw was introduced on Linux 3.6 and fixed on 3.15. The upstream fix is available ( See reference 1 )
 
+Thank you.
 
-
-This issue affects Apache CloudStack: from 4.21.0.0 through 4.22.0.0.
-
-
-
-
-The Proxmox extension for CloudStack improperly uses a user-editable
-instance setting, proxmox_vmid, to associate CloudStack instances with
-Proxmox virtual machines. Because this value is not restricted or
-validated against tenant ownership and Proxmox VM IDs are predictable, a
-non-privileged attacker can modify the setting to reference a VM
-belonging to another account. This allows unauthorized cross-tenant
-access and enables full control over the targeted VM, including
-starting, stopping, and destroying the virtual machine.
-
-
-
-
-Users are recommended to upgrade to version 4.22.0.1, which fixes this
-issue.
-
-
-
-
-As a workaround for the existing installations, editing of the
-proxmox_vmid instance detail by users can be prevented by adding this
-detail name to the global configuration parameter - user.vm.denied.details.
-
-Credit:
-
-Sander Grendelman <sander.grendelman@axians.com> (reporter)
+Wade Mealing -- Red Hat Product Security
 
 References:
 
-https://lists.apache.org/thread/n8mt5b7wkpysstb8w7rr9f02kc5cq2xm
-https://cloudstack.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-25199
-
+1) http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=223b02d923ecd7c84cf9780bb3686f455d279279
