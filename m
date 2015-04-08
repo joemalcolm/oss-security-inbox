@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1348" "Tuesday" "27" "July" "2021" "10:46:14" "+1000" "Michael Ellerman" "mpe@ellerman.id.au" nil "37" "[oss-security] Re: Linux kernel: powerpc: KVM guest to host memory corruption" nil nil nil "7" nil nil (number mark "U       mpe@ellerman Jul 27   37/1348  " thread-indent "\"[oss-security] Re: Linux kernel: powerpc: KVM guest to host memory corruption\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Re: Linux kernel: powerpc: KVM guest to host memory corruption" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3019" "Wednesday" "8" "April" "2015" "14:19:28" "+0200" "Yann Droneaud" "ydroneaud@opteya.com" "<1428495568.22575.172.camel@opteya.com>" "74" "[oss-security] Re: CVE-2014-8159 kernel: infiniband: uverbs: unprotected physical memory access" nil nil nil "4" "2015040812:19:28" "[oss-security] Re: CVE-2014-8159 kernel: infiniband: uverbs: unprotected physical memory access" (number mark "        ydroneaud@op Apr  8   74/3019  " thread-indent "\"[oss-security] Re: CVE-2014-8159 kernel: infiniband: uverbs: unprotected physical memory access\"\n") "<AM2PR05MB0929EDC60BBE5DAAAD4AB1B4DCF20@AM2PR05MB0929.eurprd05.prod.outlook.com>" ("<AM3PR05MB0935AABF569F15EA846B8E72DC000@AM3PR05MB0935.eurprd05.prod.outlook.com>" "<1427969085.17020.5.camel@opteya.com>" "<AM3PR05MB0935AA4898B4B519D2DAA3C4DCF20@AM3PR05MB0935.eurprd05.prod.outlook.com>" "<1427987752.22575.65.camel@opteya.com>" "<AM2PR05MB0929EDC60BBE5DAAAD4AB1B4DCF20@AM2PR05MB0929.eurprd05.prod.outlook.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 15708 invoked by uid 550); 27 Jul 2021 10:10:41 -0000
+Received: (qmail 28116 invoked by uid 550); 8 Apr 2015 12:24:33 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,63 +11,107 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 25625 invoked from network); 8 Apr 2015 12:19:48 -0000
+Message-ID: <1428495568.22575.172.camel@opteya.com>
+In-Reply-To: <AM2PR05MB0929EDC60BBE5DAAAD4AB1B4DCF20@AM2PR05MB0929.eurprd05.prod.outlook.com>
+References: 
+	<AM3PR05MB0935AABF569F15EA846B8E72DC000@AM3PR05MB0935.eurprd05.prod.outlook.com>
+	 <1427969085.17020.5.camel@opteya.com>
+	 <AM3PR05MB0935AA4898B4B519D2DAA3C4DCF20@AM3PR05MB0935.eurprd05.prod.outlook.com>
+	 <1427987752.22575.65.camel@opteya.com>
+	 <AM2PR05MB0929EDC60BBE5DAAAD4AB1B4DCF20@AM2PR05MB0929.eurprd05.prod.outlook.com>
+Organization: OPTEYA
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.12.11 (3.12.11-1.fc21) 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 37.163.236.228
+X-SA-Exim-Mail-From: ydroneaud@opteya.com
+X-SA-Exim-Version: 4.2.1 (built Mon, 26 Dec 2011 16:24:06 +0000)
+X-SA-Exim-Scanned: Yes (on ou.quest-ce.net)
+Cc: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>, 
+	"<linux-rdma@vger.kernel.org> (linux-rdma@vger.kernel.org)"
+	 <linux-rdma@vger.kernel.org>, "linux-kernel@vger.kernel.org"
+	 <linux-kernel@vger.kernel.org>, "stable@vger.kernel.org"
+	 <stable@vger.kernel.org>
+Date: Wed, 08 Apr 2015 14:19:28 +0200
+From: Yann Droneaud <ydroneaud@opteya.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1317 invoked from network); 27 Jul 2021 00:46:31 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ellerman.id.au;
-	s=201909; t=1627346779;
-	bh=9Ngvnk/KaSiH9PtAbbUjpuSC8Mf0FxRg7kOKlrs9ZOI=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
-	b=ire/ZMXQ31CRLukuxOOp1Lir5CBQxP+hTYJo5zUe+FxZ2lvE8jEVtVgbPXFQLZxb1
-	 pi5uSsy9DuKAIn6ohaHIFBLFSNWGoqICdSKt2pj8QOml5HG5iddB/4h1PK6xTV9iGI
-	 vlBI9tgvc6ntet5ieZkJXSXC48B3iRcII8qFSE0YurDGV2XXTGyhRzYxvM3E/6G5I4
-	 Pg2X6FBSswzuTvDRhgANrhrIMSLwtSBRwnzNR9/yPnSNDGQoMK2Rm9p7JiZSufD7WC
-	 1zlSeQMR5ar9aTm3q4jBQqriUqiS/wrC7uDIPhumJvsVrpKIXR9p7877XmbGTFwdoW
-	 7L/a6jsxI8Opw==
-From: Michael Ellerman <mpe@ellerman.id.au>
-To: oss-security@lists.openwall.com
-Cc: linuxppc-dev@lists.ozlabs.org
-In-Reply-To: <87im0x1lqi.fsf@mpe.ellerman.id.au>
-References: <87im0x1lqi.fsf@mpe.ellerman.id.au>
-Date: Tue, 27 Jul 2021 10:46:14 +1000
-Message-ID: <87eebk1t49.fsf@mpe.ellerman.id.au>
-MIME-Version: 1.0
-Content-Type: text/plain
-Subject: [oss-security] Re: Linux kernel: powerpc: KVM guest to host memory corruption
+Subject: [oss-security] Re: CVE-2014-8159 kernel: infiniband: uverbs: unprotected physical
+ memory access
+To: Shachar Raindel <raindel@mellanox.com>
 
-Michael Ellerman <mpe@ellerman.id.au> writes:
-> The Linux kernel for powerpc since v3.10 has a bug which allows a malicious KVM guest to
-> corrupt host memory.
->
-> In the handling of the H_RTAS hypercall, args.rets is made to point into the args.args
-> buffer which is located on the stack:
->
-> 	args.rets = &args.args[be32_to_cpu(args.nargs)];
->
-> However args.nargs has not been range checked. That allows the guest to point args.rets
-> anywhere up to +16GB from args.args.
->
-> The guest does not have control of what is written to args.rets, it is always (u32)-3,
-> because subsequent code does check nargs. Additionally the guest will be killed as a
-> result of the nargs being out of range, so a given guest only has a single shot at
-> corrupting memory.
->
-> Only machines using Linux as the hypervisor, aka. KVM or bare metal, are affected by the
-> bug.
->
-> The bug was introduced in:
->
->     8e591cb72047 ("KVM: PPC: Book3S: Add infrastructure to implement kernel-side RTAS calls")
->
-> Which was first released in v3.10.
->
-> The upstream fix is:
->
->   f62f3c20647e ("KVM: PPC: Book3S: Fix H_RTAS rets buffer overflow")
->
->   https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=f62f3c20647ebd5fb6ecb8f0b477b9281c44c10a
->
-> Which will be included in the v5.14 release.
+Hi,
 
-This has been assigned CVE-2021-37576.
+Le jeudi 02 avril 2015 à 16:34 +0000, Shachar Raindel a écrit :
+> > -----Original Message-----
+> > From: Yann Droneaud [mailto:ydroneaud@opteya.com]
+> > Sent: Thursday, April 02, 2015 6:16 PM
+> > Le jeudi 02 avril 2015 à 10:52 +0000, Shachar Raindel a écrit :
+> > > > -----Original Message-----
+> > > > From: Yann Droneaud [mailto:ydroneaud@opteya.com]
+> > > > Sent: Thursday, April 02, 2015 1:05 PM
+> > > > Le mercredi 18 mars 2015 à 17:39 +0000, Shachar Raindel a écrit :
+> > ...
+> > > > > +	/*
+> > > > > +	 * If the combination of the addr and size requested for this
+> > > > memory
+> > > > > +	 * region causes an integer overflow, return error.
+> > > > > +	 */
+> > > > > +	if ((PAGE_ALIGN(addr + size) <= size) ||
+> > > > > +	    (PAGE_ALIGN(addr + size) <= addr))
+> > > > > +		return ERR_PTR(-EINVAL);
+> > > > > +
+> > > >
+> > > > Can access_ok() be used here ?
+> > > >
+> > > >          if (!access_ok(writable ? VERIFY_WRITE : VERIFY_READ,
+> > > >                         addr, size))
+> > > >                   return ERR_PTR(-EINVAL);
+> > > >
+> > >
+> > > No, this will break the current ODP semantics.
+> > >
+> > > ODP allows the user to register memory that is not accessible yet.
+> > > This is a critical design feature, as it allows avoiding holding
+> > > a registration cache. Adding this check will break the behavior,
+> > > forcing memory to be all accessible when registering an ODP MR.
+> > >
+> > 
+> > Failed to notice previously, but since this would break ODP, and ODP is
+> > only available starting v3.19-rc1, my proposed fix might be applicable
+> > for older kernel (if not better).
+> > 
+> 
+> Can you explain how this proposed fix is better than the existing patch?
+> Why do we want to push to the stable tree a patch that is not in the
+> upstream? There is an existing, tested, patch that is going to the tip
+> of the development. It even applies cleanly on every kernel version around.
+> 
 
-cheers
+access_ok() check for overflow *and* that the region is the memory range
+for the current process. The later check is not done in your proposed 
+fix (but it should not be needed as get_user_pages() will be called 
+to validate the whole region for non-ODP memory registration).
+
+Anyway, AFAIK access_ok() won't check for address being not NULL and
+size not being 0, and I've noticed your proposed fix also ensure address
+is not equal to NULL and, more important, that size is not equal to 0:
+before v3.15-rc1 and commit eeb8461e36c9 ("IB: Refactor umem to use
+linear SG table"), calling ib_umem_get() with size equal to 0 would 
+succeed with any arbitrary address ... who knows what might happen in 
+the lowlevel drivers (aka. providers) if they got an umem for a 0-sized
+memory region.
+This part of the changes was not detailled in your commit message: it's
+an issue not related to overflow which is addressed by your patch.
+
+So I agree my proposed patch is no better than yours: I've missed the
+0-sized memory region issue and didn't take care of NULL address.
+
+Regards.
+
+-- 
+Yann Droneaud
+OPTEYA
+
+
