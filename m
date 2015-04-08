@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1622" "Sunday" "26" "November" "2017" "23:16:23" "+0100" "Heiko Schlittermann" "hs@schlittermann.de" "<20171126221623.szugrgtkizvdez3a@jumper.schlittermann.de>" "48" "Re: [oss-security] RCE in Exim reported" nil nil nil "11" "2017112622:16:23" "[oss-security] RCE in Exim reported" (number mark "U       hs@schlitter Nov 26   48/1622  " thread-indent "\"Re: [oss-security] RCE in Exim reported\"\n") "<20171126203749.GA6487@jasmine.lan>" ("<20171125035912.GA20323@breadbox.private.spodhuis.org>" "<20171125235030.GA24195@breadbox.private.spodhuis.org>" "<20171126203749.GA6487@jasmine.lan>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1075" "Wednesday" "8" "April" "2015" "16:02:40" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150408200240.0DEC46C00B0@smtpvmsrv1.mitre.org>" "29" "[oss-security] Re: CVE Request for Icecast 2.3.3, 2.4.0, 2.4.1, fixed in 2.4.2" nil nil nil "4" "2015040820:02:40" "[oss-security] Re: CVE Request for Icecast 2.3.3, 2.4.0, 2.4.1, fixed in 2.4.2" (number mark "        cve-assign@m Apr  8   29/1075  " thread-indent "\"[oss-security] Re: CVE Request for Icecast 2.3.3, 2.4.0, 2.4.1, fixed in 2.4.2\"\n") "<5525271C.6080907@ruecker.fi>" ("<5525271C.6080907@ruecker.fi>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 15952 invoked by uid 550); 26 Nov 2017 22:19:55 -0000
+Received: (qmail 18362 invoked by uid 550); 8 Apr 2015 20:02:52 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,84 +11,42 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 18344 invoked from network); 8 Apr 2015 20:02:52 -0000
+In-Reply-To: <5525271C.6080907@ruecker.fi>
+Message-Id: <20150408200240.0DEC46C00B0@smtpvmsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Wed,  8 Apr 2015 16:02:40 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15424 invoked from network); 26 Nov 2017 22:16:34 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=schlittermann.de; s=dd201504; h=In-Reply-To:Content-Type:MIME-Version:
-	Message-ID:Subject:To:From:Date:Cc:Content-Description:Content-ID:
-	Content-Transfer-Encoding:References::Resent-Cc:Resent-To;
-	bh=34cIZ8VvseI5nOBK0BT1bHRjORaasDj/I6dEqqqc7ig=; b=dEFSvC8j0xTAumJSn/QE1znbsh
-	rQsOI3NiUgYjsI+JL8Dh1W9FN4LfG/vldd4Td6iFEkZaE9gEmynLsRiHR577ndTFUEnWT04xQeDmO
-	Ukjh8cJkiqD82Ma+TZ0Gn/250NB8uYEfC7UVEb5EJGQmWEdc5NGSmVaDbQX37T5Bqids=;
-Date: Sun, 26 Nov 2017 23:16:23 +0100
-From: Heiko Schlittermann <hs@schlittermann.de>
-To: oss-security@lists.openwall.com
-Message-ID: <20171126221623.szugrgtkizvdez3a@jumper.schlittermann.de>
-References: <20171125035912.GA20323@breadbox.private.spodhuis.org>
- <20171125235030.GA24195@breadbox.private.spodhuis.org>
- <20171126203749.GA6487@jasmine.lan>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="3a77otfs5aubpq2o"
-Content-Disposition: inline
-In-Reply-To: <20171126203749.GA6487@jasmine.lan>
-Organization: schlittermann -- internet & unix support
-X-Face: =y#&-VlCH8uT|8#-#JE_^c<:+qPbYxFD`}8`m)xjyA$93tpwm-vKsa(V,0?906(2VIVNQbU
- QzD%zhE+~-AA?\v-v.HY6]ebO4_$vY`l|||Q!EZT5*Xx/>Fj{8E_a.;;#<4S$>&T%n5()2Yt=R5FSC
- y:Na&@T{Rf`kPq^'ffPFA%`mP~>%-LU$d*]]{-%>j={&MsMND.">]H)&#AoSI~(U8Jk;v*;,Pf+l85
- X?H&`
-X-Telegram: @HeikoSchlittermann
-X-Phone: +49.172.7909055
-X-GPG-Fingerprint: E5CA 331D 44AB 8E4C 806F  DBEE 2610 1B62 F693 76CE
-X-GPG-Key-ID: F69376CE
-User-Agent: NeoMutt/20170113 (1.7.2)
-Subject: Re: [oss-security] RCE in Exim reported
+Subject: [oss-security] Re: CVE Request for Icecast 2.3.3, 2.4.0, 2.4.1, fixed in 2.4.2
+To: thomas@ruecker.fi
 
---3a77otfs5aubpq2o
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Leo Famulari <leo@famulari.name> (So 26 Nov 2017 21:37:49 CET):
-> >=20
-> >   https://git.exim.org/exim.git/shortlog/refs/heads/exim-4_89+fixes
->=20
-> FYI, clicking on the commits from this page just gives the error
-> message:
->=20
-> 400 - Invalid hash parameter
->=20
-> But the commit in question can be viewed here:
->=20
-> https://git.exim.org/exim.git/commit/4090d62a4b25782129cc1643596dc2f6e8f6=
-3bde
+> Proof of concept:
+> curl "http://example.org:8000/admin/killsource?mount=/test.ogg"
 
-This entrypoint works:
+> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=782120
+> https://trac.xiph.org/ticket/2191
+> http://lists.xiph.org/pipermail/icecast-dev/2015-April/002460.html
+> https://trac.xiph.org/changeset/27abfbbd688df3e3077b535997330aa06603250f/icecast-server
 
-  https://git.exim.org/exim.git/shortlog/refs/heads/exim-4_89%2bfixes
+Use CVE-2015-3026.
 
-    Best regards from Dresden/Germany
-    Viele Gr=C3=BC=C3=9Fe aus Dresden
-    Heiko Schlittermann
---=20
- SCHLITTERMANN.de ---------------------------- internet & unix support -
- Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
- gnupg encrypted messages are welcome --------------- key ID: F69376CE -
- ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
-
---3a77otfs5aubpq2o
-Content-Type: application/pgp-signature; name="signature.asc"
-
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-iQEzBAABCgAdFiEE0L/WueylaUpvFJ3Or0zGdqa2wUIFAlobPSoACgkQr0zGdqa2
-wUJv7gf+JaljQYjOwhhLbMOmm6WjJpujO5tAQf0RlDoC0aDJJ+6KzhlP9MBjZNby
-sc951KZbfEGCOL6OrnfjeDksY/22x+Rjfr6b8KrFYC3gV0gf/BJ8aazmHYiwrJWA
-VFINNAXPaxEObsNaKou8GTrduA215Po2lveJN6U8rQfioi29eK6i47S0Cg1hfhQN
-3x0/nhXwv7toDvLgXFjFhQRi3P1/9y7q0mvH46F7XRIPSlvHZ5UxtC8xLutpFkBF
-tQf0VTDzmSPaaonJGyV2VfT+tpCJu+bM5BEK0WxyCOqIj+dWhLgsrxJ1IhbELaVR
-jqxGIyqTNke5uXArfHQecFrp+mkKXg==
-=6G8E
+iQEcBAEBAgAGBQJVJYi2AAoJEKllVAevmvms858IAI8wg3JmqdfCvZxkAxnR6F15
+pcYt1qveLRqwK33Y3Og7ZGfGsO1xaKdY/af1RbTzklvYA1SrnZjmjqdF8R8+fZwe
+lCKWOhlHSxmEuEJo4XyMt2ZWP9LZ5h2MwqVNAwFqQ4/BfTesEWB0beV37jzmWejQ
+bVVg6irkB8kHvoXCcCwhtj/Gc5cSrAdQHuep8wz2PnYyv1aH9FMtrBIQlX1ujwC3
+EUYgpVUpckvPK7EEmyMwQq7nKU3h+JsSHaJJAPfffre//7WF4BTcqT0R1Bfw6ekK
+cLaRbSgQwq/mknq28bq0BGq3ihtMVoH/bfmqWPcVaCbtDRTjGZ7EIRQs7GKQvT0=
+=5Sv4
 -----END PGP SIGNATURE-----
-
---3a77otfs5aubpq2o--
