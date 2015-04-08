@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3876" "Thursday" "1" "October" "2015" "18:57:26" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151001225726.9EF7AB2E0A6@smtpvbsrv1.mitre.org>" "89" "[oss-security] Re: CVE request for wget" nil nil nil "10" "2015100122:57:26" "[oss-security] Re: CVE request for wget" (number mark "        cve-assign@m Oct  1   89/3876  " thread-indent "\"[oss-security] Re: CVE request for wget\"\n") "<CACC5Q1eQ8jf-nxub=viXgnSt6pZGzSzbV=RD2YXV76NVHw7WTQ@mail.gmail.com>" ("<CACC5Q1eQ8jf-nxub=viXgnSt6pZGzSzbV=RD2YXV76NVHw7WTQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2751" "Wednesday" "8" "April" "2015" "14:06:20" "+0000" "=?UTF-8?B?IlRob21hcyBCLiBSw7xja2VyIg==?=" "thomas@ruecker.fi" "<552535DC.5010605@ruecker.fi>" "88" "Re: [oss-security] CVE Request for Icecast 2.3.3, 2.4.0, 2.4.1, fixed in 2.4.2" nil nil nil "4" "2015040814:06:20" "[oss-security] CVE Request for Icecast 2.3.3, 2.4.0, 2.4.1, fixed in 2.4.2" (number mark "        thomas@rueck Apr  8   88/2751  " thread-indent "\"Re: [oss-security] CVE Request for Icecast 2.3.3, 2.4.0, 2.4.1, fixed in 2.4.2\"\n") "<5525271C.6080907@ruecker.fi>" ("<5525271C.6080907@ruecker.fi>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 10134 invoked by uid 550); 1 Oct 2015 22:57:39 -0000
+Received: (qmail 13796 invoked by uid 550); 8 Apr 2015 14:06:36 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,102 +11,106 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 10110 invoked from network); 1 Oct 2015 22:57:38 -0000
-In-Reply-To: <CACC5Q1eQ8jf-nxub=viXgnSt6pZGzSzbV=RD2YXV76NVHw7WTQ@mail.gmail.com>
-Message-Id: <20151001225726.9EF7AB2E0A6@smtpvbsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Thu,  1 Oct 2015 18:57:26 -0400 (EDT)
-From: cve-assign@mitre.org
+Received: (qmail 13778 invoked from network); 8 Apr 2015 14:06:36 -0000
+Message-ID: <552535DC.5010605@ruecker.fi>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
+MIME-Version: 1.0
+References: <5525271C.6080907@ruecker.fi>
+In-Reply-To: <5525271C.6080907@ruecker.fi>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+Date: Wed, 08 Apr 2015 14:06:20 +0000
+From: =?UTF-8?B?IlRob21hcyBCLiBSw7xja2VyIg==?= <thomas@ruecker.fi>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE request for wget
-To: austinenglish@gmail.com
+Subject: Re: [oss-security] CVE Request for Icecast 2.3.3, 2.4.0, 2.4.1, fixed
+ in 2.4.2
+To: oss-security@lists.openwall.com
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hash: SHA1
 
->>                                                 ... We know that a
->> design goal of Tails is to prevent Internet servers from discovering
->> the IP address of a machine running Tails. Possibly it's a design
->> requirement of Tails that a developer needs to "torify" every piece of
->> Internet client software before it can be shipped with the Tails
->> distribution, and that a failure of a torify step is, by definition, a
->> Tails vulnerability.
+[resending as it seems Thunderbird/Enigmail breaks my signature]
 
-> That's a reasonable position, please instead issue a CVE for Tails.
+A new version of Icecast was released, following the discovery of a
+remote denial of service vulnerability by Juliane Holzt earlier today.
 
-Use CVE-2015-7665 for the Tails vulnerability corresponding to the
-http://git.savannah.gnu.org/cgit/wget.git/commit/?id=075d7556964f5a871a73c22ac4b69f5361295099
-commit.
+Affected Icecast versions:
+2.3.3(first release with stream_auth)
+2.4.0
+2.4.1
 
-If there is any additional Tails vulnerability related to this,
-another CVE ID may be needed. For example,
+Fix released in:
+2.4.2
 
-  https://lists.gnu.org/archive/html/bug-wget/2015-08/msg00050.html
+We do not release fixes for:
+2.3.3: EOL
+2.4.0: not necessary, as 2.4.1 was a bugfix release for 2.4.0.
 
-says
 
-  to be 100% sure, you should add --passive-ftp to your command line.
-  If you don't do that, your /etc/wgetrc or ~/.wgetrc could include
-  --no-passive-ftp (or passiveftp = off).
+On 04/08/2015 12:52 PM, "Thomas B. Rücker" wrote:
+>
+> Today we became aware of a bug in the Icecast code handling source
+> client URL-authentication and are releasing a security fix.
+> The bug was discovered by Juliane Holzt, who we'd like to thank for
+> bringing this to our attention and providing us with further details.
+[...]
+> The bug can only be triggered if "stream_auth" is being used,
+> for example:
+> <mount>
+>   <mount-name>/test.ogg</mount-name>
+>   <authentication type="url">
+>     <option name="stream_auth" value="http://localhost/auth"/>
+>   </authentication>
+> </mount>
+>
+> This means, that all installations that use a default configuration are
+> NOT affected.The default configuration only uses <source-password>.
+> Neither are simple mountpoints affected that use <password>.
+>
+> A workaround, if installing an updated package is not possible, is to
+> disable "stream_auth"and use <password> instead.
+>
+> As far as we understand the bug only leads to a simple remote denial of
+> service. The underlying issue is a null pointer dereference. For
+> clarity: No remote code execution should be possible, server just
+> segfaults.
+>
+> Proof of concept:
+> curl "http://example.org:8000/admin/killsource?mount=/test.ogg"
+> If the server is configured as above, then it will segfault.A source
+> client does not need to be connected to that mount point.
+> As Juliane points out: "This only happens when making a request WITHOUT
+> login credentials."
+> This means, that sadly exploiting this does not require any
+> authentication, just the knowledge of a mount point configured with
+> stream_auth.
+>
+> Original Debian bug report:
+> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=782120
+>
+> Xiph.org ticket:
+> https://trac.xiph.org/ticket/2191
+>
+> Sources:
+> http://downloads.xiph.org/releases/icecast/icecast-2.4.2.tar.gz
+> SHA256 aa1ae2fa364454ccec61a9247949d19959cb0ce1b044a79151bf8657fd673f4f
+> git-tag: release-2.4.2
+[...]
+> We are requesting a CVE ID through oss-security and I will update the
+> ticket once we have received it.
 
-If Tails is supposed to try to ensure that, perhaps there's a
-requirement to have something like:
 
-  alias wget="wget --passive-ftp"
+Thanks in advance
 
-in a system-wide location (possibly /etc/bash.bashrc). The concept of
-CVE IDs for "failure of a torify step" issues is new, and we aren't
-sure of the best approach.
 
-Responding to:
+Thomas B. Ruecker
 
-> From: Andreas Stieger <astieger@suse.com>
-> Date: Tue, 29 Sep 2015 13:12:37 +0200
-
->> We really don't understand what set of expectations led to this
->> becoming a CVE request for a vulnerability in wget.
-
-> Possibly assignments for CWE-200 including CVE-2000-0649, CVE-2002-0422
-> relating to exposure if an internal IP address of a communication partner.
-
-The difference here is that sending the client IP address within the
-TCP application data is inherently a part of the FTP protocol. That's
-why we've been reluctant to consider this a vulnerability in the
-upstream wget distribution.
-
-This is also a situation in which the need to torify may be different
-with IPv6 than with IPv4. IPv4 NAT environments are sometimes set up
-so that clients cannot successfully use FTP in active mode. Perhaps
-because of this, it is currently common for FTP clients to use passive
-mode by default. With IPv6, it is probably more likely that a client
-can successfully use FTP in active mode. There might be, now or in the
-near future, FTP clients that try active mode for IPv6 FTP servers.
-Thus, when Tor is used, there may be information disclosure in EPRT
-commands even when there hadn't been information disclosure in PORT
-commands. (Of course, a PORT command may be sent even when active mode
-is ultimately going to fail. The point is that, for communication
-between a normal FTP client and a normal IPv4 FTP server, active mode
-will often never be attempted.)
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+Icecast maintainer
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJWDboGAAoJEL54rhJi8gl5WzwP/3vIX0WkQy2KIhjGgI+4dhcZ
-lPT9GynzMKGCG5U4Fnqez5lfMammTAmyU6kRCohUSWLfxPkDNDZM5kf5fbnBcgPr
-ebq0awx7oj9y506x0YHMw9zYtd1C1uaY18BEdVsZcTs8E2+nBMayAW8+T+o9OVyo
-bqImRG5lIj+c68VJuY6mmePDRpqXohOZ4I+Vv5pzBim4cNKcYA28upErh5mZwYYj
-rFct5GV3Jc//yAJPhtZMhRIaf+bXcKYoyL3bze+bFLPnLUQSJV/8ezcB2WWE4+Uu
-1G4iYD0ZOrmHmbZfJs32ZF2QHdoWMRQzNNN0JQk60iB/4nWuP5Ns28QH3Vu2CRw1
-XqyAnaChCEX+Xead71z5Db5ugdIOgTo1hPZ5DaUlU1EJ3T+SYCiwJCCPIELXcGgN
-unlml3il98COee1E7tOFudguGlHq0PwHGPixlQVMtZSAHIbuec+Vh4LAbsEE5rTC
-Hrsp3xRtUgQNKHiuYgDNNH03fh5e7A75RR6CPaIuTPKjMRCxVPtTzqyhrQYAkc/f
-4kEQioiLK/2obNO7EuiitWBaQQGZHZgbFxWnz8F08ZGagg0hQj2QtYeN0SBp+iqY
-CEqfUoihoZharTag3XPLf3xA2C8w4GGkWUI6LcyUtrlzoVoSaj0nB6Mt6tWaq6cT
-QD/3LlAZGdgiRu5bEuld
-=9V0C
+iEYEARECAAYFAlUlNZIACgkQfkVKO9VkYGnSegCaAyvKVDcNyp1tNROYstDD5cuB
+4KcAnil31ZFpwYLKoiAm9AwJdgtknjPn
+=cj1f
 -----END PGP SIGNATURE-----
+
