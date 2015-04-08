@@ -1,4 +1,9 @@
-Received: (qmail 3462 invoked by uid 550); 2 May 2025 08:23:16 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3276" "Wednesday" "8" "April" "2015" "13:03:24" "+0000" "=?UTF-8?B?IlRob21hcyBCLiBSw7xja2VyIg==?=" "thomas@ruecker.fi" "<5525271C.6080907@ruecker.fi>" "105" "[oss-security] CVE Request for Icecast 2.3.3, 2.4.0, 2.4.1, fixed in 2.4.2" nil nil nil "4" "2015040813:03:24" "[oss-security] CVE Request for Icecast 2.3.3, 2.4.0, 2.4.1, fixed in 2.4.2" (number mark "        thomas@rueck Apr  8  105/3276  " thread-indent "\"[oss-security] CVE Request for Icecast 2.3.3, 2.4.0, 2.4.1, fixed in 2.4.2\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 1902 invoked by uid 550); 8 Apr 2015 13:05:55 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,51 +11,120 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 31763 invoked from network); 2 May 2025 07:25:56 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Gang Wu <gangwu@apache.org>
-To: oss-security@lists.openwall.com
-Message-ID: <bf42edf5-a9e1-dc94-6926-8a6f9d2164c2@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Fri, 02 May 2025 07:24:12 +0000
+Received: (qmail 32726 invoked from network); 8 Apr 2015 13:03:42 -0000
+Message-ID: <5525271C.6080907@ruecker.fi>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2025-46762: Apache Parquet Java: Potential malicious code
- execution from trusted packages in the parquet-avro module when reading an
- Avro schema from a Parquet file metadata 
+Content-Type: multipart/alternative;
+ boundary="------------000101090604000704090404"
+Date: Wed, 08 Apr 2015 13:03:24 +0000
+From: =?UTF-8?B?IlRob21hcyBCLiBSw7xja2VyIg==?= <thomas@ruecker.fi>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE Request for Icecast 2.3.3, 2.4.0, 2.4.1, fixed in 2.4.2
+To: oss-security@lists.openwall.com
 
-Affected versions:
+--------------000101090604000704090404
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-- Apache Parquet Java through 1.15.1
 
-Description:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Schema parsing in the parquet-avro module of Apache Parquet 1.15.0 and prev=
-ious versions allows bad actors to execute arbitrary code.
 
-While 1.15.1 introduced a fix to restrict untrusted packages, the default s=
-etting of trusted packages still allows malicious classes from these packag=
-es to be executed.
+A new version of Icecast was released, following the discovery of a
+remote denial of service vulnerability by Juliane Holzt earlier today.
 
-The exploit is only applicable if the client code of parquet-avro uses the =
-"specific" or the "reflect" models deliberately for reading Parquet files. =
-("generic" model is not impacted)
+Affected Icecast versions:
+2.3.3(first release with stream_auth)
+2.4.0
+2.4.1
 
-Users are recommended to upgrade to 1.15.2 or set the system property "org.=
-apache.parquet.avro.SERIALIZABLE_PACKAGES" to an empty string on 1.15.1. Bo=
-th are sufficient to fix the issue.
+Fix released in:
+2.4.2
 
-Credit:
+We do not release fixes for:
+2.3.3: EOL
+2.4.0: not necessary, as 2.4.1 was a bugfix release for 2.4.0.
 
-Andrew Pikler (reporter)
-David Handermann (reporter)
-N=C3=A1ndor Koll=C3=A1r (reporter)
 
-References:
+On 04/08/2015 12:52 PM, "Thomas B. Rücker" wrote:
+>
+> Today we became aware of a bug in the Icecast code handling source
+> client URL-authentication and are releasing a security fix.
+> The bug was discovered by Juliane Holzt, who we'd like to thank for
+> bringing this to our attention and providing us with further details.
+>
+[...]
+> The bug can only be triggered if "stream_auth" is being used, for example:
+> <mount>
+>   <mount-name>/test.ogg</mount-name>
+>   <authentication type="url">
+>     <option name="stream_auth" value="http://localhost/auth"/>
+>   </authentication>
+> </mount>
+>
+> This means, that all installations that use a default configuration are
+> NOT affected.The default configuration only uses <source-password>.
+> Neither are simple mountpoints affected that use <password>.
+>
+> A workaround, if installing an updated package is not possible, is to
+> disable "stream_auth"and use <password> instead.
+>
+> As far as we understand the bug only leads to a simple remote denial of
+> service. The underlying issue is a null pointer dereference. For
+> clarity: No remote code execution should be possible, server just
+segfaults.
+>
+> Proof of concept:
+> curl "http://example.org:8000/admin/killsource?mount=/test.ogg"
+> If the server is configured as above, then it will segfault.A source
+> client does not need to be connected to that mount point.
+> As Juliane points out: "This only happens when making a request WITHOUT
+> login credentials."
+> This means, that sadly exploiting this does not require any
+> authentication, just the knowledge of a mount point configured with
+> stream_auth.
+>
+> Original Debian bug report:
+> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=782120
+>
+> Xiph.org ticket:
+> https://trac.xiph.org/ticket/2191
+>
+> Sources:
+> http://downloads.xiph.org/releases/icecast/icecast-2.4.2.tar.gz
+> SHA256 aa1ae2fa364454ccec61a9247949d19959cb0ce1b044a79151bf8657fd673f4f
+> git-tag: release-2.4.2
+>
+> As usual there are up to date packages available for most mainstream
+> distributions. We've moved from my personal project to an official
+> Xiph.org project on openSUSE OBS:
+> https://build.opensuse.org/package/show/multimedia:xiph/icecast
+> Individual repositories are here:
+>
+> A copy of the openSUSE OBS multimedia signing key is here:
+> http://icecast.org/multimedia-obs.key
+>
+> The Windows version will be updated later today.
+>
+[...]
+> We are requesting a CVE ID through oss-security and I will update the
+> ticket once we have received it.
 
-https://lists.apache.org/thread/vr1h7dnr4jp2f1xhzzkwzcw49qgfgsyl
-https://parquet.apache.org/
-https://www.cve.org/CVERecord?id=3DCVE-2025-46762
+Thanks in advance
 
+
+Thomas B. Ruecker
+
+Icecast maintainer
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iEYEARECAAYFAlUlJxsACgkQfkVKO9VkYGno+QCeMgppXgELGbuU8asfEKUH+yn2
+XZkAnAx2j9qJPTNOb8+FMnMe5TwLWdYI
+=f+Dp
+-----END PGP SIGNATURE-----
+
+
+--------------000101090604000704090404--
