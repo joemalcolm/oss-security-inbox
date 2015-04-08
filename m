@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1339" "Friday" "8" "July" "2016" "11:16:33" "+0300" "Paul Wouters" "pwouters@redhat.com" "<e97fc0b3-06b5-41af-8379-111486ab1a0c@redhat.com>" "22" "Re: [oss-security] CVE Request: IKEv1 protocol is vulnerable to DoS amplification attack" nil nil nil "7" "2016070808:16:33" "[oss-security] CVE Request: IKEv1 protocol is vulnerable to DoS amplification attack" (number mark "U       pwouters@red Jul  8   22/1339  " thread-indent "\"Re: [oss-security] CVE Request: IKEv1 protocol is vulnerable to DoS amplification attack\"\n") "<026336DF-456D-4D42-80B3-A36C74177F72@akamai.com>" ("<20160613144048.9BBA942E034@smtpvbsrv1.mitre.org>" "<f24b7778-0446-c5d1-4905-e75a580fcbc4@redhat.com>" "<026336DF-456D-4D42-80B3-A36C74177F72@akamai.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3366" "Wednesday" "8" "April" "2015" "14:44:03" "+0200" "Yann Droneaud" "ydroneaud@opteya.com" "<1428497043.22575.176.camel@opteya.com>" "81" "[oss-security] Re: CVE-2014-8159 kernel: infiniband: uverbs: unprotected physical memory access" nil nil nil "4" "2015040812:44:03" "[oss-security] Re: CVE-2014-8159 kernel: infiniband: uverbs: unprotected physical memory access" (number mark "        ydroneaud@op Apr  8   81/3366  " thread-indent "\"[oss-security] Re: CVE-2014-8159 kernel: infiniband: uverbs: unprotected physical memory access\"\n") "<1428495568.22575.172.camel@opteya.com>" ("<AM3PR05MB0935AABF569F15EA846B8E72DC000@AM3PR05MB0935.eurprd05.prod.outlook.com>" "<1427969085.17020.5.camel@opteya.com>" "<AM3PR05MB0935AA4898B4B519D2DAA3C4DCF20@AM3PR05MB0935.eurprd05.prod.outlook.com>" "<1427987752.22575.65.camel@opteya.com>" "<AM2PR05MB0929EDC60BBE5DAAAD4AB1B4DCF20@AM2PR05MB0929.eurprd05.prod.outlook.com>" "<1428495568.22575.172.camel@opteya.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 15876 invoked by uid 550); 8 Jul 2016 08:16:48 -0000
+Received: (qmail 17529 invoked by uid 550); 8 Apr 2015 12:48:12 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,47 +11,115 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15858 invoked from network); 8 Jul 2016 08:16:47 -0000
-To: oss-security@lists.openwall.com
-References: <20160613144048.9BBA942E034@smtpvbsrv1.mitre.org>
- <f24b7778-0446-c5d1-4905-e75a580fcbc4@redhat.com>
- <026336DF-456D-4D42-80B3-A36C74177F72@akamai.com>
-Cc: "huzaifas@redhat.com" <huzaifas@redhat.com>,
-        "cve-assign@mitre.org" <cve-assign@mitre.org>
-From: Paul Wouters <pwouters@redhat.com>
-Message-ID: <e97fc0b3-06b5-41af-8379-111486ab1a0c@redhat.com>
-Date: Fri, 8 Jul 2016 11:16:33 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.1.0
-MIME-Version: 1.0
-In-Reply-To: <026336DF-456D-4D42-80B3-A36C74177F72@akamai.com>
-Content-Type: text/plain; charset=windows-1252
+Received: (qmail 15534 invoked from network); 8 Apr 2015 12:44:24 -0000
+Message-ID: <1428497043.22575.176.camel@opteya.com>
+In-Reply-To: <1428495568.22575.172.camel@opteya.com>
+References: 
+	<AM3PR05MB0935AABF569F15EA846B8E72DC000@AM3PR05MB0935.eurprd05.prod.outlook.com>
+	 <1427969085.17020.5.camel@opteya.com>
+	 <AM3PR05MB0935AA4898B4B519D2DAA3C4DCF20@AM3PR05MB0935.eurprd05.prod.outlook.com>
+	 <1427987752.22575.65.camel@opteya.com>
+	 <AM2PR05MB0929EDC60BBE5DAAAD4AB1B4DCF20@AM2PR05MB0929.eurprd05.prod.outlook.com>
+	 <1428495568.22575.172.camel@opteya.com>
+Organization: OPTEYA
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.12.11 (3.12.11-1.fc21) 
+Mime-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.25]); Fri, 08 Jul 2016 08:16:35 +0000 (UTC)
-Subject: Re: [oss-security] CVE Request: IKEv1 protocol is vulnerable to DoS
- amplification attack
+X-SA-Exim-Connect-IP: 37.163.236.228
+X-SA-Exim-Mail-From: ydroneaud@opteya.com
+X-SA-Exim-Version: 4.2.1 (built Mon, 26 Dec 2011 16:24:06 +0000)
+X-SA-Exim-Scanned: Yes (on ou.quest-ce.net)
+Cc: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>, 
+	"<linux-rdma@vger.kernel.org> (linux-rdma@vger.kernel.org)"
+	 <linux-rdma@vger.kernel.org>, "linux-kernel@vger.kernel.org"
+	 <linux-kernel@vger.kernel.org>, "stable@vger.kernel.org"
+	 <stable@vger.kernel.org>
+Date: Wed, 08 Apr 2015 14:44:03 +0200
+From: Yann Droneaud <ydroneaud@opteya.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: CVE-2014-8159 kernel: infiniband: uverbs: unprotected physical
+ memory access
+To: Shachar Raindel <raindel@mellanox.com>
 
-On 07/07/2016 07:27 PM, Seaman, Chad wrote:
-> Hi All,
+Hi,
+
+Le mercredi 08 avril 2015 à 14:19 +0200, Yann Droneaud a écrit :
+> Le jeudi 02 avril 2015 à 16:34 +0000, Shachar Raindel a écrit :
+> > > -----Original Message-----
+> > > From: Yann Droneaud [mailto:ydroneaud@opteya.com]
+> > > Sent: Thursday, April 02, 2015 6:16 PM
+> > > Le jeudi 02 avril 2015 à 10:52 +0000, Shachar Raindel a écrit :
+> > > > > -----Original Message-----
+> > > > > From: Yann Droneaud [mailto:ydroneaud@opteya.com]
+> > > > > Sent: Thursday, April 02, 2015 1:05 PM
+> > > > > Le mercredi 18 mars 2015 à 17:39 +0000, Shachar Raindel a écrit :
+> > > ...
+> > > > > > +	/*
+> > > > > > +	 * If the combination of the addr and size requested for this
+> > > > > memory
+> > > > > > +	 * region causes an integer overflow, return error.
+> > > > > > +	 */
+> > > > > > +	if ((PAGE_ALIGN(addr + size) <= size) ||
+> > > > > > +	    (PAGE_ALIGN(addr + size) <= addr))
+> > > > > > +		return ERR_PTR(-EINVAL);
+> > > > > > +
+> > > > >
+> > > > > Can access_ok() be used here ?
+> > > > >
+> > > > >          if (!access_ok(writable ? VERIFY_WRITE : VERIFY_READ,
+> > > > >                         addr, size))
+> > > > >                   return ERR_PTR(-EINVAL);
+> > > > >
+> > > >
+> > > > No, this will break the current ODP semantics.
+> > > >
+> > > > ODP allows the user to register memory that is not accessible yet.
+> > > > This is a critical design feature, as it allows avoiding holding
+> > > > a registration cache. Adding this check will break the behavior,
+> > > > forcing memory to be all accessible when registering an ODP MR.
+> > > >
+> > > 
+> > > Failed to notice previously, but since this would break ODP, and ODP is
+> > > only available starting v3.19-rc1, my proposed fix might be applicable
+> > > for older kernel (if not better).
+> > > 
+> > 
+> > Can you explain how this proposed fix is better than the existing patch?
+> > Why do we want to push to the stable tree a patch that is not in the
+> > upstream? There is an existing, tested, patch that is going to the tip
+> > of the development. It even applies cleanly on every kernel version around.
+> > 
 > 
-> I�m Chad Seaman @ Akamai, the researcher who found, researched, and wrote the paper on the IKEv1 and IKEv2 flaws that could lead to amplification attacks.
+> access_ok() check for overflow *and* that the region is the memory range
+> for the current process. The later check is not done in your proposed 
+> fix (but it should not be needed as get_user_pages() will be called 
+> to validate the whole region for non-ODP memory registration).
 > 
-> The opening e-mail states that IKEv2 is not believed to be affected, I can confirm that in some cases some implementations are indeed affected.
+> Anyway, AFAIK access_ok() won't check for address being not NULL and
+> size not being 0, and I've noticed your proposed fix also ensure address
+> is not equal to NULL and, more important, that size is not equal to 0
+
+It only check address not being 0 if size is already PAGE_SIZE aligned,
+and it only check size not being 0 if address is already PAGE_SIZE
+aligned.
+
+> before v3.15-rc1 and commit eeb8461e36c9 ("IB: Refactor umem to use
+> linear SG table"), calling ib_umem_get() with size equal to 0 would 
+> succeed with any arbitrary address ... who knows what might happen in 
+> the lowlevel drivers (aka. providers) if they got an umem for a 0-sized
+> memory region.
+> This part of the changes was not detailled in your commit message: it's
+> an issue not related to overflow which is addressed by your patch.
 > 
-> There was some doubts about IKEv2 being affected and I was contacted by a Cisco engineer as well as one of the RFC authors, we constructed multiple IKEv2
-> probe payloads and did a series of secondary scans that specifically targeted IKEv2 hosts to confirm these results.
-> 
-> Where hosts should respond once based on IKEv2 RFC specs, hundreds of thousands reply multiple times, roughly 110,000 reply 21 times or more per single
-> probe, some of the worst offenders responded thousands of times.
+> So I agree my proposed patch is no better than yours: I've missed the
+> 0-sized memory region issue and didn't take care of NULL address.
 > 
 
-Are you sure those replies did not come from IKEv1 servers that do not implement IKEv2 ? A bunch of implementations just copy the incoming header
-to construct the outgoing header. You can detect this by sending an bogus IKEv3 packet and see if they reply the same to that.
+Regards.
 
-Can you confirm your test actually got a valid IKE_INIT reply that was re-send multiple times? If so, can you detect the vendor behind it? I can probably help
-fingerprint that to determine.
+-- 
+Yann Droneaud
+OPTEYA
 
-Paul
 
