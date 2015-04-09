@@ -1,4 +1,9 @@
-Received: (qmail 21925 invoked by uid 550); 22 May 2025 19:48:13 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1843" "Thursday" "9" "April" "2015" "22:11:54" "+0200" "Robert Scheck" "robert@fedoraproject.org" "<20150409201154.GA23755@hurricane.linuxnetz.de>" "51" "[oss-security] CVE request: Incorrect default permissions in Zarafa (zarafa-search-plus)" nil nil nil "4" "2015040920:11:54" "[oss-security] CVE request: Incorrect default permissions in Zarafa (zarafa-search-plus)" (number mark "        robert@fedor Apr  9   51/1843  " thread-indent "\"[oss-security] CVE request: Incorrect default permissions in Zarafa (zarafa-search-plus)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 29846 invoked by uid 550); 9 Apr 2015 20:12:10 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,129 +11,71 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 7206 invoked from network); 22 May 2025 17:11:26 -0000
-Date: Thu, 22 May 2025 19:11:17 +0200
-From: Vincent Lefevre <vincent@vinc17.net>
-To: oss-security@lists.openwall.com
-Message-ID: <20250522171117.GA603991@cventin.lip.ens-lyon.fr>
-Mail-Followup-To: oss-security@lists.openwall.com
+Received: (qmail 29828 invoked from network); 9 Apr 2015 20:12:10 -0000
+Message-ID: <20150409201154.GA23755@hurricane.linuxnetz.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="opJtzjQTFsWo+cga"
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-X-Mailer-Info: https://www.vinc17.net/mutt/
-User-Agent: Mutt/2.2.13+86 (bb2064ae) vl-169878 (2025-02-08)
-Subject: [oss-security] Perl 5.40 dir dup bug with threading: security consequences
+X-GnuPG-Key: 0xCE3E1F56, available at http://pgp.uni-mainz.de/
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Scanned-By: MIMEDefang 2.76 on 127.0.0.1
+Cc: CVE assignment team <cve-assign@mitre.org>
+Date: Thu, 9 Apr 2015 22:11:54 +0200
+From: Robert Scheck <robert@fedoraproject.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE request: Incorrect default permissions in Zarafa
+ (zarafa-search-plus)
+To: Open Source Security Mailing List <oss-security@lists.openwall.com>
 
-Hi,
+--opJtzjQTFsWo+cga
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-In February, I reported the following bug in perl:
+Good evening,
 
-  https://github.com/Perl/perl5/issues/23010
+it was discovered that zarafa-search-plus (part of Zarafa >=3D 7.2.0) creat=
+es
+the directory /var/lib/zarafa/search/ read- and writable for world, as well
+as all sub-directories and files it creates afterwards:
 
-The issue is that under some conditions, perl temporarily changes
-the current working directory at a thread creation, which affects
-the other threads as a consequence: file accesses related to the
-current working directory may actually be done related to another
-directory.
+ - https://forums.zarafa.com/showthread.php?11304-Zarafa-7-2-Problems-Bugs-=
+with-the-new-search
+ - https://bugzilla.redhat.com/show_bug.cgi?id=3D1206838
+ - https://jira.zarafa.com/browse/ZCP-13160
 
-Perl 5.40 and various earlier versions are affected; the bug was
-introduced in 2010.
+In difference to the ZCP-13160 ("change this to the same permissions as the
+other folders in the directory") the thus proposed 755 is not enough, it
+must be e.g. 750, otherwise data is still readable for local system users.
 
-In the corresponding Debian bug
+As I unfortunately wasn't aware of the forum posting when I did my analysis
+I also cross-checked releases before the rewrite (thanks Martin Prpi=C4=8D)=
+. The
+predecessors of zarafa-search-plus are creating the /var/lib/zarafa/search/
+or /var/lib/zarafa/index/ directory with the correct permissions, however
+some of the sub-directories and files (also created by the search daemon)
+are world-readable (see comment #2 of RHBZ#1206838 for details) through. I
+am not sure how this should be treated, given that all Zarafa search/index
+daemons do not seem to have built-in permission checks (like e.g. fetchmail
+has) and thus also accept an existing directory with incorrect permissions.
 
-  https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1098226
 
-the perl maintainer thinks that this is not regarded as a serious
-security issue by upstream.
+With kind regards
 
-The following test shows that arbitrary code execution is a possible
-consequence.
+Robert Scheck
+--=20
+Fedora Project * Fedora Ambassador * Fedora Mentor * Fedora Packager
 
-------------------------------------------------------------------------
-#!/usr/bin/env perl
+--opJtzjQTFsWo+cga
+Content-Type: application/pgp-signature
 
-use strict;
-use threads;
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-@ARGV == 1 || @ARGV == 2 or die "Usage: $0 <dir> [ <maxthreads> ]\n";
-my ($dir,$maxthreads) = @ARGV;
+iEYEARECAAYFAlUm3QoACgkQUwMgnc4+H1aYJgCfcucPaOYjSDG4z4ThJlEQsMZN
+sncAn22fkCs5RM+vId1r0+JvSIq80K3/
+=cjvu
+-----END PGP SIGNATURE-----
 
--d $dir or die "$0: $dir is not a directory\n";
-
-if (defined $maxthreads)
-  {
-    $maxthreads =~ /^\d+$/ && $maxthreads >= 1 && $maxthreads <= 32
-      or die "$0: maxthreads must be an integer between 1 and 32\n";
-  }
-else
-  {
-    $maxthreads = 2;
-  }
-
-my $nthreads = 0;
-
-sub join_threads () {
-  my @thr;
-  0 until @thr = threads->list(threads::joinable);
-  foreach my $thr (@thr)
-    { $thr->join(); }
-  $nthreads -= @thr;
-}
-
-opendir DIR, $dir or die "$0: opendir failed ($!)\n";
-while (1)
-  {
-    $nthreads < $maxthreads or join_threads;
-    $nthreads++ < $maxthreads or die "$0: internal error\n";
-    threads->create(sub { do "./dir-dup-do" for (1..30) });
-  }
-closedir DIR or die "$0: closedir failed ($!)\n";
-join_threads while $nthreads;
-------------------------------------------------------------------------
-
-Copy the above script to a directory regarded as trusted (i.e.
-you control what's in it), and there, create a file "dir-dup-do",
-which can contain just the integer 1 (simple Perl code that does
-nothing). Then run this script with a directory name as the first
-argument. Type Ctrl-C (intr key) to interrupt the script.
-
-What happens is that perl sometimes tries to execute the dir-dup-do
-code from the directory passed in argument (temporarily the current
-working directory, internally) instead of the expected directory.
-
-For instance:
-
-$ ./dir-dup-test /
-do "./dir-dup-do" failed, '.' is no longer in @INC; did you mean do "././dir-dup-do"? at ./dir-dup-test line 43.
-do "./dir-dup-do" failed, '.' is no longer in @INC; did you mean do "././dir-dup-do"? at ./dir-dup-test line 43.
-do "./dir-dup-do" failed, '.' is no longer in @INC; did you mean do "././dir-dup-do"? at ./dir-dup-test line 43.
-[...]
-
-Here, the dir-dup-do file does not exist in /, so that one just gets
-an error message. But if a file /tmp/dir-dup-do with contents
-
-  warn "Err\n";
-
-(code that an attacker could write) is created, one gets with /tmp
-passed in argument:
-
-$ ./dir-dup-test /tmp
-Err
-Err
-Err
-[...]
-
-Note: it is possible to increase the number of threads by providing
-the maximum number of worker threads as a second argument (the bug
-is not visible with only 1 worker thread), in case the issue would
-otherwise not be visible on some machines.
-
-Any comment?
-
--- 
-Vincent Lefèvre <vincent@vinc17.net> - Web: <https://www.vinc17.net/>
-100% accessible validated (X)HTML - Blog: <https://www.vinc17.net/blog/>
-Work: CR INRIA - computer arithmetic / Pascaline project (LIP, ENS-Lyon)
+--opJtzjQTFsWo+cga--
