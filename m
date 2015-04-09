@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2011" "Thursday" "22" "October" "2015" "14:08:10" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151022180810.411D8ABC008@smtpvmsrv1.mitre.org>" "46" "[oss-security] Re: CVE Request: invalid curve attack on bouncycastle" nil nil nil "10" "2015102218:08:10" "[oss-security] Re: CVE Request: invalid curve attack on bouncycastle" (number mark "U       cve-assign@m Oct 22   46/2011  " thread-indent "\"[oss-security] Re: CVE Request: invalid curve attack on bouncycastle\"\n") "<20151022102512.GA23523@home.ouaza.com>" ("<20151022102512.GA23523@home.ouaza.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1924" "Thursday" "9" "April" "2015" "17:52:26" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150409215226.A662B42E024@smtpvbsrv1.mitre.org>" "44" "[oss-security] Re: CVE Request: libX11: buffer overflow in  MakeBigReq macro" nil nil nil "4" "2015040921:52:26" "[oss-security] Re: CVE Request: libX11: buffer overflow in MakeBigReq macro" (number mark "        cve-assign@m Apr  9   44/1924  " thread-indent "\"[oss-security] Re: CVE Request: libX11: buffer overflow in  MakeBigReq macro\"\n") "<55265E1D.4050404@redhat.com>" ("<55265E1D.4050404@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 8181 invoked by uid 550); 22 Oct 2015 18:08:22 -0000
+Received: (qmail 30318 invoked by uid 550); 9 Apr 2015 21:52:39 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,39 +11,43 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 8162 invoked from network); 22 Oct 2015 18:08:21 -0000
-From: cve-assign@mitre.org
-To: hertzog@debian.org
+Received: (qmail 30297 invoked from network); 9 Apr 2015 21:52:38 -0000
+In-Reply-To: <55265E1D.4050404@redhat.com>
+Message-Id: <20150409215226.A662B42E024@smtpvbsrv1.mitre.org>
 Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <20151022102512.GA23523@home.ouaza.com>
-Message-Id: <20151022180810.411D8ABC008@smtpvmsrv1.mitre.org>
-Date: Thu, 22 Oct 2015 14:08:10 -0400 (EDT)
-Subject: [oss-security] Re: CVE Request: invalid curve attack on bouncycastle
+Date: Thu,  9 Apr 2015 17:52:26 -0400 (EDT)
+From: cve-assign@mitre.org
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: CVE Request: libX11: buffer overflow in  MakeBigReq macro
+To: fweimer@redhat.com
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hash: SHA1
 
-> bouncycastle versions older than 1.51 are vulnerable to an
-> invalid curve attack as described in this article:
-> http://web-in-security.blogspot.ca/2015/09/practical-invalid-curve-attacks.html
-> 
-> The attack allows to extract private keys used in elliptic curve
-> cryptography with a few thousands queries.
-> 
-> According to upstream developer Peter Dettman, the issue has been fixed
-> with those two commits:
-> https://github.com/bcgit/bc-java/commit/5cb2f0578e6ec8f0d67e59d05d8c4704d8e05f83
-> https://github.com/bcgit/bc-java/commit/e25e94a046a6934819133886439984e2fecb2b04
+> Does this assignment cover application code which has to be recompiled
+> because it included an expansion of broken macro?
 
-Use CVE-2015-7940.
+It might be worthwhile to answer this in two ways.
 
-A Bouncy Castle product intentionally has a unique CVE ID because of its
-independent codebase. However, as noted in
-the practical-invalid-curve-attacks.html posting, the issue is related
-to CVE-2015-2613. The MITRE CVE team plans to update
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-2613 to
-reflect the additional information from Juraj Somorovsky.
+First, the scope of the CVE-2013-7439 assignment does cover
+application code that was built with this macro, in the sense that
+applications cannot have their own unique CVE IDs for the same
+problem. In other words, if building with this macro is what is
+calling an application's security into question, then there wouldn't
+be a separate CVE ID for that application.
+
+Second, if an application's vendor wants to publish a security
+advisory mapping to CVE-2013-7439, then it is preferable for the
+vendor to verify that the existence of the macro actually has a
+security impact for that application. However, there is no reasonable
+way for the MITRE CVE team to require that. An application's vendor
+might not have the resources or expertise. For example, the
+application's vendor optionally could decide to map to CVE-2013-7439
+based only on noticing that the macro is used.
+
+In any case, the information posted by others in this thread would be
+very useful for risk-assessment questions that go beyond "how can this
+CVE ID be used."
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -51,19 +55,13 @@ M/S M300
 202 Burlington Road, Bedford, MA 01730 USA
 [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Version: GnuPG v1.4.14 (SunOS)
 
-iQIcBAEBCAAGBQJWKSUrAAoJEL54rhJi8gl532EP/i5pdcg7gnrde6hmPBG0i4p1
-hiw0AHUkbXOZQi7X8Em7xdfRgZ4/jGVQFovQDfoB2DyDna5wgcdVgICp3cWrKDIG
-v/E6UniIV1ksn7IXgY6SWEHBNoAO8NeIpeYJVXAZiQRquOv07efVbDq3UpUBF1lx
-DqeN81DnnM0G7w/c39HsKsBYhgTbMK1uAQuwi0eH9X02P1DNkUB8Ppbs94TtnmFL
-q8zlFEawj3XZxOL1Q/6Sxf/UnCD3l1rUilZI+etQgaDUZwBrMSR2Owcx4UD9zZPd
-nyc8gL0yUSxfFz+svLcivCVq2ORFMpxpDJ4d5yTLb9dFQm2wwQN68zS/qUL9cJ8x
-3VrRDdWsu2cPBfl1HPAt2th3aFNe8OKy4r4hXWWED1YfMKZsFr//hMOrrmOO197I
-dm4tX42VTH2lg+nHzdts8bOVi7hIHy6+46mdEtB381cvDCKzs6af8KZU0CsvXeyH
-a1S493BioNjt15jfn2MLQJx584kvaO5VLI+tGLgWksOX9aMjBMEXRk1Lnslt/fO7
-K2e8NM101U0ff5+7eDr/o2EOCpIhY3uZFy5Bu2ZHPG2gi9+D8yAdx5ZyqI/KeMwO
-yPQe0A3rxboxtPzJ/p3sMlPmADP8yNLxNdQINgOG3ZpzfTscmbmeDITVLsSAj1Gu
-9adfN/uWSq8ehtoCeB3s
-=p0IO
+iQEcBAEBAgAGBQJVJvNSAAoJEKllVAevmvmsCdIH/A9SWB+8BaxQhyasFAXKz8Qg
+0ikGPGWFOraNdbr46sLC4MhYfE80fNzcurlmTemEsN7xmnmnhRbLjmCPQifYHJ+7
+PMs8eFQxVi91gNCptVn7YWpmtdwI+AzcQeJvezXvWwVsrVktf0/7KvXH5F9zeQ3l
+jk9z2nXTt42e/Kk8JcpIKixS1Em1oNt/YKHBIOz79ufjbCiM1UxAE1aMo2e04YKA
+YCYoPNgMB4eKUiHazTo2HBtm+6u+E2+/+lb008/mnh6fRl+XhVm3gPURpsGgJM+7
+njrDI0eeO5iU6XFSR6pf/Qp+OHNts8hb0U2DKuKlxfMaUZvswlNAZsJHOcl1u/U=
+=DjB/
 -----END PGP SIGNATURE-----
