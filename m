@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["951" "Thursday" "9" "February" "2017" "15:02:50" "+0100" "Agostino Sarubbo" "ago@gentoo.org" "<9786871.DjNlDLY9Ns@blackgate>" "28" "[oss-security] A note about the multiple crashes in zziplib" nil nil nil "2" "2017020914:02:50" "[oss-security] A note about the multiple crashes in zziplib" (number mark "U       ago@gentoo.o Feb  9   28/951   " thread-indent "\"[oss-security] A note about the multiple crashes in zziplib\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2267" "Thursday" "9" "April" "2015" "17:38:34" "+0200" "Andreas Stieger" "astieger@suse.de" "<55269CFA.1090406@suse.de>" "64" "[oss-security] CVE Request for ceph-deploy world-readable keyring permissions" nil nil nil "4" "2015040915:38:34" "[oss-security] CVE Request for ceph-deploy world-readable keyring permissions" (number mark "        astieger@sus Apr  9   64/2267  " thread-indent "\"[oss-security] CVE Request for ceph-deploy world-readable keyring permissions\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 5850 invoked by uid 550); 9 Feb 2017 14:03:10 -0000
+Received: (qmail 9254 invoked by uid 550); 9 Apr 2015 15:39:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,43 +11,83 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5795 invoked from network); 9 Feb 2017 14:03:07 -0000
-From: Agostino Sarubbo <ago@gentoo.org>
-To: oss-security@lists.openwall.com
-Date: Thu, 09 Feb 2017 15:02:50 +0100
-Message-ID: <9786871.DjNlDLY9Ns@blackgate>
-User-Agent: KMail/4.14.10 (Linux/4.4.39-gentoo; KDE/4.14.24; x86_64; ; )
+Received: (qmail 7796 invoked from network); 9 Apr 2015 15:38:56 -0000
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Message-ID: <55269CFA.1090406@suse.de>
+Organization: SUSE Linux GmbH
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"
-Subject: [oss-security] A note about the multiple crashes in zziplib
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature";
+ boundary="x9pcDTlavRt5XRTm7hhkmUK2MqBKRrdhR"
+CC: cve-assign@mitre.org
+Date: Thu, 09 Apr 2015 17:38:34 +0200
+From: Andreas Stieger <astieger@suse.de>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE Request for ceph-deploy world-readable keyring permissions
+To: oss-security@lists.openwall.com
 
-Hello all,
+--x9pcDTlavRt5XRTm7hhkmUK2MqBKRrdhR
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-I posted several crashes about zziplib.
+Hello,
 
-The latest release was done ~5 years ago and the upstream bugs place seems to 
-be dead. However, I will forward them on their website.
+ceph-deploy 1.5.23 fixes an issue with world-readable permissions on a
+keyring containing private key material.
 
-I didn't receive any type of feedback from the maintainer so I don't know if 
-some of them are duplicates.
-In any case there are problems where the same codebase was used in more 
-places, e.g.:
+The 1.5.23 changelog states:
+"Fix an issue where keyring permissions were world readable"
 
-http://blogs.gentoo.org/ago/2017/02/09/zziplib-null-pointer-dereference-in-main-unzzipcat-c/ shows a null ptr at: unzzipcat.c:94
+The problem was that the keyring file would be created with 644 mode. If
+ceph-deploy was run as a dedicated non-root admin user, the keys would
+be readable to all other (non-admin) users of the same group, thus
+leaking authentication credentials.
 
-and
+The upstream pull request and commits are:
+https://github.com/ceph/ceph-deploy/pull/272
+https://github.com/ceph/ceph-deploy/commit/eee56770393bf19ed2dd5389226c6190=
+c08dee3f
 
-https://blogs.gentoo.org/ago/2017/02/09/zziplib-null-pointer-dereference-in-main-unzzipcat-mem-c/ shows a null ptr at: unzzipcat-mem.c:94
+References:
+https://github.com/ceph/ceph-deploy/pull/272
+https://github.com/ceph/ceph-deploy/commit/eee56770393bf19ed2dd5389226c6190=
+c08dee3f
+https://bugzilla.suse.com/show_bug.cgi?id=3D920926
 
-Both C file have the same code at line 94:
-printf ("%s\n", name);
+Could I get a CVE ID assigned please?
 
-So, while in the past, sometimes, we saw that one 'change' in the code was 
-able to fix more than one issue, in this case, the issue is the same but it 
-duplicate in more '.c' file
+Thanks
+Andreas Stieger
 
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+--=20
+Andreas Stieger <astieger@suse.de>
+Project Manager Security
+SUSE Linux GmbH, GF: Felix Imend=C3=B6rffer, Jane Smithard, Jennifer Guild,=
+ Dilip Upmanyu, Graham Norton, HRB 21284 (AG N=C3=BCrnberg)=20
+
+
+
+--x9pcDTlavRt5XRTm7hhkmUK2MqBKRrdhR
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIcBAEBCgAGBQJVJpz6AAoJECzWqVXhWUVG40sP/2GEMFk+drc5/ol+ZXAuagoY
+I12R9Mlkws+NaFp3k5EI/BqHGjSv/boWvQjl+8mZPoMjLmGEwVUzqonwSgfIMGr6
+D7xQ+Pb+UZ+f7OuaN1xu63alYok4vkWDM9d24fwZr2ZwH56JLIIFc4vJ4ZTawks4
+u8Btn7nYhRdDebmq0M07ML62V5dyWgLMJqvitP5QMt5qDrYxcN2/iaBzDJxJKa8d
+8WW0rPYd8q139TFmofphJJbldBhoOWMgd5i8eHP7NuUpItcclnYH0QQpnv/rx22s
+PbkcOhFz5r5OhG9ojkPUU9G0DYHV08v2127viPmtNDKyGt8B5gU80BvpwTEXf+lV
+JU/l9qx2TO5VwdqocaDbH7AzqphDGqRJ+lIaykiMCa7YNUI81T5klnqWDzWVUU+f
+OBXG2iCBnJUagBgHfDyzOTvAdTEEGXefNrKOkLMMrmDiZtY2b0Gc/+YxlMg7HhK4
+06ReT+Eyvbn+eDaUEXgHchf39+7y4JQsjQ20tNkVOWFqtJ+j9QatRjbGVP7nuL2z
+V/ZcYMvyHfsnvImbNXG5B3N3RSJyQf2u6jMW7vZR1MRs8zaIiy8oC+9CEvbLlH8q
+Nm0NflwMXQkvRPRib4E4J5gMtI8V0+5IDyOeLqy5GT++pkushZBTef3Hthb62ThE
+uLqVn/18nHNDHCKUJYDC
+=zW3+
+-----END PGP SIGNATURE-----
+
+--x9pcDTlavRt5XRTm7hhkmUK2MqBKRrdhR--
