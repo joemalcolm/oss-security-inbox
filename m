@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6477" "Monday" "18" "December" "2017" "10:58:43" "-0500" "Daniel Kahn Gillmor" "dkg@fifthhorseman.net" "<87tvwoowng.fsf@fifthhorseman.net>" "137" "Re: [oss-security] Recommendations GnuPG-2 replacement" "^Date:" nil nil "12" "2017121815:58:43" "[oss-security] Recommendations GnuPG-2 replacement" (number mark "        dkg@fifthhor Dec 18  137/6477  " thread-indent "\"Re: [oss-security] Recommendations GnuPG-2 replacement\"\n") "<2172-1513501568.968862@pLoG.Le7g.f3CQ>" ("<20171207210134.GA7079@openwall.com>" "<2172-1513501568.968862@pLoG.Le7g.f3CQ>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1334" "Friday" "10" "April" "2015" "18:46:47" "+1000" "Joshua Rogers" "oss@internot.info" "<55278DF7.10701@internot.info>" "38" "[oss-security] CVE Request: MySQL Null Pointer Dereference" nil nil nil "4" "2015041008:46:47" "[oss-security] CVE Request: MySQL Null Pointer Dereference" (number mark "        oss@internot Apr 10   38/1334  " thread-indent "\"[oss-security] CVE Request: MySQL Null Pointer Dereference\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 13926 invoked by uid 550); 18 Dec 2017 16:00:03 -0000
+Received: (qmail 14182 invoked by uid 550); 10 Apr 2015 08:47:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,153 +11,54 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 13900 invoked from network); 18 Dec 2017 16:00:02 -0000
-In-Reply-To: <2172-1513501568.968862@pLoG.Le7g.f3CQ>
-References: <20171207210134.GA7079@openwall.com> <2172-1513501568.968862@pLoG.Le7g.f3CQ>
-Message-ID: <87tvwoowng.fsf@fifthhorseman.net>
-MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
-	micalg=pgp-sha512; protocol="application/pgp-signature"
-Date: Mon, 18 Dec 2017 10:58:43 -0500
-From: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
+Received: (qmail 14162 invoked from network); 10 Apr 2015 08:47:04 -0000
+Message-ID: <55278DF7.10701@internot.info>
+Organization: Internot IT
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="ktFKdT37oT3riOpkxqSxoLHoqCGgjnB8t"
+Date: Fri, 10 Apr 2015 18:46:47 +1000
+From: Joshua Rogers <oss@internot.info>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Recommendations GnuPG-2 replacement
-To: halfdog <me@halfdog.net>, oss-security@lists.openwall.com
+Subject: [oss-security] CVE Request: MySQL Null Pointer Dereference
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
 
---=-=-=
-Content-Type: text/plain
+--ktFKdT37oT3riOpkxqSxoLHoqCGgjnB8t
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-On Sun 2017-12-17 09:06:08 +0000, halfdog wrote:
-> Solar Designer writes:
->> On Thu, Dec 07, 2017 at 06:32:11AM +0000, halfdog wrote:
->> > After getting gpg and agent running, I noticed, that not reliably
->> > stopping the gpg-agent on initrd would introduce a private key
->> > data leak via /proc from early boot process to running system
->> > when stopping fails.
->>=20
->> Can you elaborate on this, please?
->
-> As the agent process stays alive and initrd PID namespace is the
-> same as final init-process PID namespace, the agent will stay
-> via /proc and traceable by root using PTRACE.
+Hi,
 
-I think what you're saying is basically that the key (or its passphrase)
-remains in RAM while the agent is running.
+Could I get a CVE-ID assigned for this bug?:
+https://bugs.mysql.com/bug.php?id=3D75372
 
-This is also true for things like ssh-agent.
+Thanks,
+--=20
+-- Joshua Rogers <https://internot.info/>
 
-Keeping the key in RAM enables convenient, simple reuse -- this is a
-security benefit, because it means it is possible to do things like read
-a series of encrypted e-mails without entering your password for each
-message.  Without this, reading encrypted mail is an extreme nuisance
-(esp. at the rate at which some people send and receive mail), and it
-encourages people to just revert to cleartext mail in the first place.
 
->> Personally, I intend to stay with GnuPG 1 for now.
->
-> As Debian marked the packages with "gnupg1 - GNU privacy guard -
-> a PGP implementation (deprecated "classic" version)" I wanted to
-> anticipate the changes now, giving me more time to evaluate the
-> changes and to find alternatives when needed.
-
-Hi!  I'm the person who marked gpg1 "deprecated" in debian.  i consider
-it deprecated for several reasons, including:
-
- * upstream is not devoting much time to it, especially as compared to
-   the "modern" branch.  Upstream has (like all of us) limited time and
-   energy, and i want to encourage them to stay focused.
-
- * gpg1 does not support any of the newer cryptographic primitives,
-   which people are now starting to use in the wild.  You will not be
-   able to verify elliptic-curve signatures, nor will you be able to
-   encrypt to people who have encryption-capable keys using ECDH.  gpg1
-   will *never* support these primitives.
-
- * gpg1's network interaction is entirely one-shot, and doesn't make use
-   of any cached information, which makes it inefficient (sometimes
-   retrying things it just tried and found to be failing).  It also
-   lacks convenient "use-tor" options for network access (gpg2's network
-   daemon both retains and makes use of cached history about network
-   access, and offers use-tor)
-
- * gpg1 always holds private key material in-process. it can be PTRACE'd
-   by the user themselves (not just as root) for full recovery of the
-   secret key.  gpg2 never sees the private key material, since it
-   delegates that task to the agent.  This process separation means it's
-   possible to create gpg-agent backend processes that run in isolated
-   namespaces, that hook into hardware, that store keys in the kernel,
-   etc.  While these steps haven't been taken yet, they will only be
-   possible with gpg2, since gpg1 expects to handle the private keys
-   directly.
-
- * gpg1 retains and provides backward compatibility for known-broken
-   formats, like PGP-2, and will likely never effectively drop them.
-   Modern gnupg has taken steps to avoid this, and is intended to be a
-   safe tool for users to pick up and use without doing a lot of
-   fiddling to turn off the dangerous features.
-
-Alexander, i encourage you to switch to the modern GnuPG suite, and
-would be happy to talk with you about any remaining concerns that you
-might have.
-
-> Done that, but still fighting how to use "gpg2john" with the new
-> gpgv2 "private-keys-v1.d" key format. Exporting the private keys
-> using gpgv2 does not help as that requires the passphrase already,
-> thus removing the gpgv2-encryption, we want to test.
-
-This is a distinct question, and should probably be broken out from this
-thread.  the AES keywrapping used in "private-keys-v1.d" is indeed not
-related to OpenPGP.  private-keys-v1.d/ is used to store private keys
-for CMS (S/MIME) and SSH, as well as OpenPGP, and it uses a single
-common format for encrypting the key (usually -- there's an exception
-for recently-imported keys that were ingested in batch mode, which
-retain their original wrapping).
-
-the current canonical format is a gcrypt s-expression, where some of the
-elements are key-wrapped blobs (noted as "protected-private-key")
-
-The best place to discuss this particular format is on
-gnupg-devel@gnupg.org, but note that upstream makes no claims of
-stability of this format -- it is strictly internal, not covered by the
-public API boundary offered by gpg-agent, so any code that tries to deal
-with these files directly may break if there is a gpg-agent upgrade.
-
-> Just FYI: your releases on Openwall are still signed with the old
-> openwall-key, according to http://www.openwall.com/signatures/ the
-> key is "Old Openwall offline signing key (no longer used)". Apart
-> from that, gnupgv2 cannot read it any more anyway. (gpg man page
-> "You only need  to  use  GnuPG  1.x  if  your  platform
-> doesn't  support  GnuPG 2.x, or you need support for some features that
-> GnuPG 2.x has deprecated, e.g.,  decrypting  data  created  with  PGP-2
-> keys."
-
-Please, please please stop using PGP-2 keys.  It's about to be 2018,
-let's use a format with reasonable defaults, plausibly functional
-fingerprints and digest algorithms, and keys that were generated in this
-decade :)
-
-All the best,
-
-          --dkg
-
---=-=-=
+--ktFKdT37oT3riOpkxqSxoLHoqCGgjnB8t
 Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-iQIzBAEBCgAdFiEEOCdgUepHf6PklTkyFJitxsGSMjcFAlo35bQACgkQFJitxsGS
-Mje2BRAAoqKoWIHroJDZNmoDp0bzh55x6F3ZYCHHZEeXPQoP4Z9HxdjnHxLlWwAF
-P6bYs6RitT51yibju/XB3chXFax8mjxSF/H+FaygKVQnOxu72Q3UnuWqOlmc7z3n
-AdXsdiRPDNSwDpF5Yh/TpZtVc0Kc12Y7gsAgjOn55y6b/H7DOxBnkHWZF8G1VlEp
-R/DEDXKcHscB32Mm7WFjPzADMDGyebYXlqpEQHXVf/H6/5alj0DYm1HkU5yiiyXV
-lNw/4RTD/gnb3BZEzz65tWhWfueyXRc/6Q2rsOJuGCgGmJsWkUhOWxKtLOgqSD2i
-z6OQg2DRpsdilW0MnZWGjGerAnnRQyk29df6l2bVnV7yZEe2xzEAhWlS7ifYLo9U
-fQTmDv379mNvpKkoSv3yKQzjE8xiRbvsnGJkgAc84+KRpJ3UHFYAr1VvhGAth2XO
-XiL+vxBTRohDTj9TvxwD+zD3O07DuJhANLZiTjWZKCQTIAs6JNCqExww3fnT+NCw
-UxNz8sClnTlKU3WXOXZdS29HS712BFdUeyx1xjlrPwkfcmeVHMSTwm7CjJk0ISPJ
-PpSlqLu/exYNe+O+pEzhqBLaR1tajNJjxifNwQGisuXSVzN4cJZb+1OamH+LMC8w
-eY+80dvgeVen3JWZ2KCdYNfzPwKnZ7ZtYxmEPTD3i3/OHKoIePs=
-=JmJ2
+iQIcBAEBAgAGBQJVJ433AAoJEJCcj5QpbmADpRsQAIDcFTf5b7VOfWRoXlAlFyur
+9SfoilYen9FvnJO07Y/OvRmEbfIWkBKxfKjDKLL1dl78ZL3JACKXRBehMqS5PzZF
+yLPCteEoLfgogbYorxCuJJQC+i+FaBifphQiQkRo1SCtJCkDQdkWyl7cd9S4O8TF
+Gdo+azXF7e1n6N1s5Lz8ok9p1PZ1JkY2ldxs6TqkrSfo32eeDgCzOMlI/bJ4I+ua
+FyyDY/GX4zHQ1Fl8gkKIbROhRTl4UnEeaVUhxSCUybAPu1/lwl6/HxgcVmgvjVrI
+yuAq0ZjBgeLY/KypKX7Y0M7KdGbzy4A0tb04LuZ2IikDK/6Cw8j5bxzNUGSzBGJD
+aQ71xcKvUCRaGxKEDSXp0zj9iWSDUz10toIIkRxsQcMne7lDevBwvy1T4oDj26zF
+fuJ1Aza+L+X5FJ+JmdIhaTxWf+zBbx820lUX0B244Qex1Te441w+AY+5xDG+N9VD
+vXliYSiYdb6ekn76fcN+ccqThRtIjEpvgjd/vXmSdn0fv+18dYsB6o3vhcpL46aL
+LzU+Zj2mQfY6dPDe3/yscMyLfMKnZJ7VErEVvGMV3IVE3ICQf/L8tgw4xooyeOU4
+PU4oxHqmZtBxkbdamnmjF1MEbbFt8dqT3n6anLSPzMHAKrtrw1nJy7RRucaAv2va
+lukorgPVP19Nh7vtIMUx
+=MRyF
 -----END PGP SIGNATURE-----
---=-=-=--
+
+--ktFKdT37oT3riOpkxqSxoLHoqCGgjnB8t--
