@@ -1,4 +1,9 @@
-Received: (qmail 17952 invoked by uid 550); 2 Oct 2025 14:34:40 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1725" "Friday" "10" "April" "2015" "10:18:57" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<5527F7F1.9000100@redhat.com>" "41" "[oss-security] REJECT CVE-2015-1861" nil nil nil "4" "2015041016:18:57" "[oss-security] REJECT CVE-2015-1861" (number mark "        kseifried@re Apr 10   41/1725  " thread-indent "\"[oss-security] REJECT CVE-2015-1861\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 19475 invoked by uid 550); 10 Apr 2015 16:19:12 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,81 +11,58 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 17925 invoked from network); 2 Oct 2025 14:34:40 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kroah.com; h=cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1759415669; x=1759502069; bh=iBRyAn490G
-	J98LRD+Ya+NXNz5XWwIAf3GsFPXwvC+Bc=; b=AyUFu1ZhV/gzC2+crDSyvZccu9
-	e6l6Ws+TrrhfvuoqVa9AgUhjVp8xl3is3w5GBabLv1SdggI7o49THeEP+e+iQ7ci
-	FC9gNJdZUST7kFWFRBBn58hmOwMZWJd+4SDgqm63/5vl3SYcxs3/ClPI5TVST+U6
-	oRPPT7qSQF59fsaLnRrxGuvd1eXBG4NSamV2j+dM4yi3OPVoE85siTfga/QY2Ofh
-	hE120COFGFXHLvVnfmK5aJZjo3Zh39aaO58PLzl4VyfVRjitnjqqLzGKg3MPCcVG
-	gMosQJjwpX5+JT9gDQ6nW0lY81wVSIqc2dDIF4oqsbTeHeZoEZyTEtQnKSHQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1759415669; x=1759502069; bh=iBRyAn490GJ98LRD+Ya+NXNz5XWwIAf3GsF
-	PXwvC+Bc=; b=tzxuk5rFPgHmzpY3BMq0dyvwhqRAcrjGcm3lrGEqepOJamHdQds
-	YCEKJT/edwFzc+EeyGtD9yszs2vIvWZHNEjhdeLll6TEsMThwSeh+3qLzz7GoG5W
-	Xg8Z9E5FLCyfxk5bdxcasXPJzHn8MCRm0wLHg83t94+S5/5oWCgxRiqpcNhPudsm
-	SshTM0y92KzbZzjRHkPmstKa/Ihk0w0pFpb2Mlg1l9yJTDgWQD/tgIcxHrwdXhla
-	REop1COKG4A+RNQ1c50aJ0kNLL5xv9JZCvuYz7xZCFAClS8hqqi7TyqBUyU57Ke3
-	gX4g0nnxQhE8oElai8iHvYhyrR9LdyS1A0Q==
-X-ME-Sender: <xms:dY3eaO_W-H8zbuHgPcK-0U0XnGldGFU_42lzso1v68Ys1tFtpsj2Cw>
-    <xme:dY3eaMqGPJyLkZatTSB1RWg4NgdlTNNzBe0XiQht2-yLAPUvGvE1p8p0eYoivcNeu
-    qtuI_mZkb5vvBRgKRLSkcvQyEUHOAyCV2wvgBKwPFdhss_Upg>
-X-ME-Received: <xmr:dY3eaLld3T7pzI10wxduyW_0IeWl3A-oabCqlYa2lThzHrocZWFJTY2ovi17c0u3Lma15OSVl2okMjyADixwNn32xS5ke84H9hZhAQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdekiedvjecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfhfgggtuggjsehttdertddttd
-    dvnecuhfhrohhmpefirhgvghcumffjuceoghhrvghgsehkrhhorghhrdgtohhmqeenucgg
-    tffrrghtthgvrhhnpeevueehjefgfffgiedvudekvdektdelleelgefhleejieeugeegve
-    euuddukedvteenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhr
-    ohhmpehgrhgvgheskhhrohgrhhdrtghomhdpnhgspghrtghpthhtohepvddpmhhouggvpe
-    hsmhhtphhouhhtpdhrtghpthhtohepohhsshdqshgvtghurhhithihsehlihhsthhsrdho
-    phgvnhifrghllhdrtghomh
-X-ME-Proxy: <xmx:dY3eaDIJmRgZuJV_xRjWFa8NeGHfj5RolNcovx7tCA2TbxIjcYQYEw>
-    <xmx:dY3eaAyJGKktLAI6PfThNIllJ-mU9KX9a-Y9LW4t0VmHGMv5sMuDEQ>
-    <xmx:dY3eaLsZdXsukqBBUPo24NkVlxxv0urZjNOGQKt1nIrREDw1pJSoRA>
-    <xmx:dY3eaPv-29yfUottFL78uepUUoFhAni2GXFYTIT-gsTJLvAJd-OhVQ>
-    <xmx:dY3eaLWceApwvDWuT1CH0X5t4vZn4i5xIWnm1v4zHINwP-aVENSRyyRr>
-Feedback-ID: i787e41f1:Fastmail
-Date: Thu, 2 Oct 2025 16:34:26 +0200
-From: Greg KH <greg@kroah.com>
-To: oss-security@lists.openwall.com
-Message-ID: <2025100255-cage-squall-f003@gregkh>
-References: <07bdaddb-1414-492b-a178-93b38f8ac3a0@gmail.com>
- <2025060713-aloe-decency-a74c@gregkh>
- <40b4dd6d-eb00-4076-8f38-546a1c3589a1@gmail.com>
+Received: (qmail 18430 invoked from network); 10 Apr 2015 16:19:11 -0000
+Message-ID: <5527F7F1.9000100@redhat.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.4.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <40b4dd6d-eb00-4076-8f38-546a1c3589a1@gmail.com>
-Subject: Re: [oss-security] Re: Re: Linux kernel: HFS+ filesystem
- implementation, issues, exposure in distros
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="9DG7BHGwgBAit6tHfdXklD7Jr9KjNrUCv"
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.23
+Date: Fri, 10 Apr 2015 10:18:57 -0600
+From: Kurt Seifried <kseifried@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] REJECT CVE-2015-1861
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
 
-On Thu, Oct 02, 2025 at 03:11:17PM +0200, Attila Szasz wrote:
-> 
-> For the sake of product security folks who rely on consistency: the Linux
-> CNA recently registered a batch of HFS/HFS+ CVEs that require manipulating
-> malformed filesystems as a first step. This seems inconsistent with how
-> similar cases were previously handled.
+--9DG7BHGwgBAit6tHfdXklD7Jr9KjNrUCv
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-If you feel the Linux CNA has issued CVEs in an inconsistent way, please
-contact them and the people there will be glad to research the issue and
-get back to you.  They are issuing, on average, 13 CVEs a day, and so
-stuff like this easily gets lost in the firehose.
+Please REJECT CVE-2015-1861. Reason: Someone found something and sent it
+to the distros list, I assigned a CVE, turns out this was a
+re-discovery, it was already assigned a CVE previously by the vendor
+(the vendor was also on distros, but this happened late at night).
 
-The Linux CNA is also currently "backfilling" many old CVE entries that
-previously came from the GSD database, and perhaps the issues you are
-referring to came from there.  If so, again, please contact them and
-they will be glad to discuss it.
+Because this CVE has been widely sent out in private I think it's safer
+to REJECT rather then hope nobody accidentally used it somewhere.
 
-thanks,
+--=20
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-greg k-h
+
+--9DG7BHGwgBAit6tHfdXklD7Jr9KjNrUCv
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.22 (GNU/Linux)
+
+iQIcBAEBAgAGBQJVJ/fxAAoJEBYNRVNeJnmTH3kQAMx88ssCuhpvgKpbcVOAAMAX
+W7asd71fqjRwBUdVpeZ5/cPTzftovtGzQb8Nen4r4blfn65cJjrzp5io+E2jiH72
+2X1j1PVB2lZyNNgnCgam+usE7J/tmH96d5r2ZhdRXYXVxkJ6LvsCEJJ+X/edI0oj
+KCXnKhwOIF1O3gjSoWSsrPGJuPeq9mGRqbokG52iJNl3PYtHegYeTWZNMKZiNvx0
+1SMLVaaQwQR1qx8L1xwFstkLv3xCFb9O5Kvmu62P4DVw7m6CSqsiueVIgrF789h+
+1P8BOuNBRFrlG4B95qXLK/t59bqoNId9odw1b1YYbqZS2Hg1dYACvosghr+mhR0R
+tnucnkDkc1wDO9gsD5z/ymAt7XROXn10Y9cklB66oz80zCcP5HRp0bStBja49A0G
+oHaKjgf0BITjOsUvF2aBW+hIRwPvRPUT163mxOupWG/499oCKgK14h8rrMnguKeT
+SxRzAeGSTl9D6dQx2qvclOCBHhTNQKV4cnt5JYV37rDOLlMultxLsCgkoyp+MuCl
+mFDLDt3lrAknxILWmZq2Y8OK3trytWq8YsmItnmgSuJXshPwVQIm7REk3fhLha2H
+YWs8lQ1aKtWtFmurU+43GpMQEv6hSgQhBbpSgtrQqrxZ493zx/xWfKIMISz2Ds2T
+b0sd63d7AUGWP+Tu5jou
+=G3yi
+-----END PGP SIGNATURE-----
+
+--9DG7BHGwgBAit6tHfdXklD7Jr9KjNrUCv--
