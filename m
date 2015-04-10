@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3042" "Tuesday" "30" "August" "2016" "17:44:45" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160830214445.7AB4C8BC454@smtpvmsrv1.mitre.org>" "68" "[oss-security] Re: CVE request: Qemu: 9p: directory traversal flaw in 9p virtio backend" "^Cc:" nil nil "8" "2016083021:44:45" "[oss-security] Re: CVE request: Qemu: 9p: directory traversal flaw in 9p virtio backend" (number mark "        cve-assign@m Aug 30   68/3042  " thread-indent "\"[oss-security] Re: CVE request: Qemu: 9p: directory traversal flaw in 9p virtio backend\"\n") "<alpine.LFD.2.20.1608301244260.2278@wniryva>" ("<alpine.LFD.2.20.1608301244260.2278@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4058" "Friday" "10" "April" "2015" "19:28:55" "+0200" "Andrew Shadura" "andrew@shadura.me" "<20150410192855.59f7c8c5@ileemo>" "113" "[oss-security] CVE-2015-0276: Kallithea: Lack of CSRF attack protection enables gaining unauthorised access to users' accounts" nil nil nil "4" "2015041017:28:55" "[oss-security] CVE-2015-0276: Kallithea: Lack of CSRF attack protection enables gaining unauthorised access to users' accounts" (number mark "        andrew@shadu Apr 10  113/4058  " thread-indent "\"[oss-security] CVE-2015-0276: Kallithea: Lack of CSRF attack protection enables gaining unauthorised access to users' accounts\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 26151 invoked by uid 550); 30 Aug 2016 21:44:57 -0000
+Received: (qmail 7913 invoked by uid 550); 10 Apr 2015 17:29:14 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,81 +11,132 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 26133 invoked from network); 30 Aug 2016 21:44:57 -0000
-In-Reply-To: <alpine.LFD.2.20.1608301244260.2278@wniryva>
-Message-Id: <20160830214445.7AB4C8BC454@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, fwilhelm@ernw.de
-Date: Tue, 30 Aug 2016 17:44:45 -0400 (EDT)
-From: cve-assign@mitre.org
+Received: (qmail 7854 invoked from network); 10 Apr 2015 17:29:08 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=shadura.me; s=a;
+	h=Content-Type:MIME-Version:Message-ID:Subject:To:From:Date; bh=prMRZAKquqUR/bLLxzmuJVVf9o0uZnMYYTSA7nhfLxM=;
+	b=FTSykz+YK/Gommbj55Xhorh+A4OOMc9AQyFS8gkpWQlb1aE+gy2fXlvKo51If6TgbUfvMnKUezFhBocVa3kqyT8pqkbG08wmQ+uv2rYtIxZkUQBIJ9PY8c08o0mZwlYtLTAUinTl0f+wSIyyCiFSc4jf4KKG8YLTbSNXnAKqAV8=;
+Message-ID: <20150410192855.59f7c8c5@ileemo>
+X-Mailer: Claws Mail 3.11.1 (GTK+ 2.24.25; i586-pc-linux-gnu)
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ boundary="Sig_/esvvW8kejs9rFdQh7zqsEL2"; protocol="application/pgp-signature"
+Date: Fri, 10 Apr 2015 19:28:55 +0200
+From: Andrew Shadura <andrew@shadura.me>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE request: Qemu: 9p: directory traversal flaw in 9p virtio backend
-To: ppandit@redhat.com
+Subject: [oss-security] CVE-2015-0276: Kallithea: Lack of CSRF attack protection enables
+ gaining unauthorised access to users' accounts
+To: oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--Sig_/esvvW8kejs9rFdQh7zqsEL2
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: quoted-printable
 
-> Quick Emulator(Qemu) built with the VirtFS, host directory sharing via Plan 9
-> File System(9pfs) support, is vulnerable to a directory/path traversal issue.
-> It could occur while creating or accessing files on a shared host directory.
-> 
-> A privileged user inside guest could use this flaw to access undue files on
-> the host.
-> 
-> https://lists.gnu.org/archive/html/qemu-devel/2016-08/msg03917.html
-> https://lists.gnu.org/archive/html/qemu-devel/2016-08/msg04231.html
+Hello,
 
-Use CVE-2016-7116 for the issue fixed by the
-http://git.qemu.org/?p=qemu.git;a=commit;h=56f101ecce0eafd09e2daf1c4eeb1377d6959261
-commit.
+We have recently discovered a security issue in Kallithea [0].
+API key of repository's creator is exposed by get_repo API method.
 
-We feel that it is possible that there are related issues that are
-also vulnerabilities.
+Synopsis
+=3D=3D=3D=3D=3D=3D=3D=3D
 
-http://git.qemu.org/?p=qemu.git;a=commit;h=fff39a7ad09da07ef490de05c92c91f22f8002f2
-mentions "Empty path components don't make sense for most commands and
-may cause undefined behavior, depending on the backend." The patch
-blocks these empty strings. Would it be best to consider this a
-vulnerability fix (i.e., because the undefined behavior might be
-security-relevant)?
+A vulnerability has been found in Kallithea, allowing attackers to gain
+unauthorised access to account of a logged in user.
 
-http://git.qemu.org/?p=qemu.git;a=commit;h=fff39a7ad09da07ef490de05c92c91f22f8002f2
-also makes a change to forbid '/' characters, with the rationale that
-the specification requires clients to send individual path components,
-not full path strings or substrings containing a '/' character. Does
-this also fix a vulnerability?
+Description
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
 
-http://git.qemu.org/?p=qemu.git;a=commit;h=805b5d98c649d26fc44d2d7755a97f18e62b438a
-prevents creating files named "." and ".." (just those two specific
-filenames, not all pathnames containing those characters). Does this
-also fix a vulnerability?
+Pages presentings forms to the user and accepting user's input don't
+provide synchronisation tokens to prevent cross-site request forgery.
 
-It is possible that up to three additional CVE IDs are needed.
+It is possible to change an email address of a user by tricking them
+into clicking a link that initiates the following HTTP request:
 
-Finally, if fixing the directory traversal itself requires both
-http://git.qemu.org/?p=qemu.git;a=commit;h=56f101ecce0eafd09e2daf1c4eeb1377d6959261
-and
-http://git.qemu.org/?p=qemu.git;a=commit;h=fff39a7ad09da07ef490de05c92c91f22f8002f2
-(for '/' characters), please let us know.
+    POST /_admin/my_account HTTP/1.1
+    Host: <DELETED>
+    User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:35.0)
+    Gecko/20100101 Firefox/35.0 Accept:
+    text/html,application/xhtml+xml,application/xml;q=3D0.9,*/*;q=3D0.8
+    Accept-Language: en-US,en;q=3D0.5 Accept-Encoding: gzip, deflate
+    Referer: http://burp/show/1
+    Cookie: kallithea=3D<DELETED>
+    Connection: keep-alive
+    Content-Type: application/x-www-form-urlencoded
+    Content-Length: 146
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
+    username=3DmyAccount&extern_name=3Dkallithea&extern_type=3Dkallithea&fi=
+rstname=3DmyFirstname&lastname=3DmyLastname&email=3DemailAddress%40example.=
+com&save=3DSave
+
+After this, the attacker can request a password reset, the link is then
+sent to their new email address. Then the attacker changes the email
+address back to the original, and doesn't log out, saving the cookie.
+
+At this point, the attacker has full access to the user's account. The
+user can't login (the password has changed), but might think that he
+forgot their password, has an account lockout, or an expired account.
+The user does a password reset, but the attacker still has the access.
+
+Impact
+=3D=3D=3D=3D=3D=3D
+
+The vulnerability allows attacker to steal account of an active user by
+using social engineering techniques. In the case the user also has
+administrator rights, it is possible for the attacker to gain full
+administrator access to the Kallithea instance.
+
+Resolution
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Kallithea project has fixed this issue by adding CSRF checks to the form
+generation code. Before the fix, there none of the forms had CSRF
+protection, with the fix, all POST forms are protected against CSRF.
+
+There's no fix as a standalone patch, however; instead, it is
+recommended to upgrade to the latest 0.2 release which includes lots of
+other changes and improvements.
+
+Affected versions
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+The issue is currenly present in all Kallithea versions before 0.2.
+
+References
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+[0] Kallithea Project
+    <https://kallithea-scm.org/>
+
+[1] CVE-2015-0276
+    <http://cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2015-0276>
+
+[2] Kallithea: Security Notice CVE-2015-0276
+    <https://kallithea-scm.org/security/cve-2015-0276.html>
+
+--=20
+Cheers,
+  Andrew Shadura
+  on behalf of Kallithea Security Team
+
+--Sig_/esvvW8kejs9rFdQh7zqsEL2
+Content-Type: application/pgp-signature
+Content-Description: OpenPGP digital signature
+
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJXxf2eAAoJEHb/MwWLVhi22MMP/im48rJglD7qNjob6Mqfim9G
-Kcl2QF4HSkV0XvgqAq8NUd2s4UHhI+iuRLSkpGW7DCKMTQjmN/xi8IV5WUo696rj
-OD09I4svi10o9WZIxnaNlAGsib1tPcutONQS+ul0j2MbVqIp8b9wnzeCNhSYyHXp
-KVTiquivOQPxb+tFtNRD/YM0ph1hIoEHKWhpPq2ZC8eqlLP8i5qjw9AHBPL/uTxY
-rMippuJCUrnzaZM7cQe2hr5Jf7HKScpct/DeZiU5uhZDYzwwSHa6vMVClN9xbvud
-nMbar9BKJIscSgSTJqmmSLlDinCGANsO6voEM3vpdr0u/ABy6mHfJCqgGFltesa/
-/pHBBDzYYHDzTCZ0FyvloRVPSkCRyoOa+5MUZ26d9b7/xApPCGrQDF3P+QIC1Qv1
-eEC+dTHHzxNzsFlvmlcPE4VPcRTg3tR6iLBGxwIRATs2JPgPREyuiJeo+jROAMxJ
-ivQfZos9O3Sxat/JfsFS9Dsu3fYKqQFBI2NNX03GK6Cj/MRKCGk4W+MPCyvLk3lV
-ArWo4yKI8/Rck4ufFOQ+Xe9vq8aqwPwKICX5yrzwOAwUvSgk1xL4BeanUKKWNYuK
-0DcHzhmdeG5/XfPUdTjFHkb4eJXQ5JwgEjfgG/gD+mt9SngzUwX54b5piaY3BdTI
-ARsgi+SnlhEpKAfzmkeJ
-=KDIm
+iQIcBAEBCAAGBQJVKAhXAAoJEG6k0jEaLSaNlm0P/0HfSuFMSKzmUtoslhXZJF1s
+kNX82W0xhRzXfVupRlwd17ZKvetCfhNVq4yumB2cgl+S9y+1eub5lOwowUaduY6y
+5AoiL0J/OX9fJLyd9XUu6jCLbm8MRtJFlga6SgVC8UbDhEkdonJZbQRAPuq96L5x
+OKzgGvIc1IhpiUVYUr3CuMTLjAp2kVZHdU0DelNtEt+8o58drEv/b8pDbC7xK8fN
+iAMm5+0O/XudPu3QPWSFgJhxgCb1zhBJTZKpBB1wU+JCHgIrCE5mfOvgIUvL/+EL
+FHDfCAULTwXRNXHsfR0QPARav/UkwXfpPjMi+ohcWEGcri2SGVdjzVXfAK+Y54Us
+Q1iTP8kN6QEe/idO/3CLNAl3qn8XNWSq5fMDPHfXfT17dIsZWwymVJiLW246km0S
+rFLv3a1+LbRlu/VufhZ9lUYQeBk3gIySTS6mzGwDVzTF6X4Ncah9TptEvHCws3Hk
+nkcAHrdoLxrHd9d2aW3qlyZ2Si+D1jd52TdXk1YALjMHTU7v6OUefJAEEB1SrMK0
+yZbGC/aXVqPswYk+IZokC9EtaZ8S8UaMiFuIGpTKteI0k2qdU6H9IawGypTMEf9C
+0xb0nywt3kc7XwHc10466fWRggs9lhSAhVeG8+sFhpCKhkRU09GGW+VthDeGg+sb
+rijjigeQrGS5CCv9QGRe
+=8Q1/
 -----END PGP SIGNATURE-----
+
+--Sig_/esvvW8kejs9rFdQh7zqsEL2--
