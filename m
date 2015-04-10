@@ -1,4 +1,9 @@
-Received: (qmail 14023 invoked by uid 550); 8 Aug 2024 12:56:48 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["933" "Friday" "10" "April" "2015" "11:29:14" "+1000" "Shubham Shah" "admin@shubh.am" "<CAG8UnYPgP+J9KvtXCEv+2JdRx5OTC0D=Ehg1VR6cy7nOre6G7w@mail.gmail.com>" "28" "[oss-security] CVE request - NodeBB Persistent XSS through Markdown" nil nil nil "4" "2015041001:29:14" "[oss-security] CVE request - NodeBB Persistent XSS through Markdown" (number mark "        admin@shubh. Apr 10   28/933   " thread-indent "\"[oss-security] CVE request - NodeBB Persistent XSS through Markdown\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 3315 invoked by uid 550); 10 Apr 2015 05:00:03 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,206 +11,56 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3392 invoked from network); 7 Aug 2024 23:49:31 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=korelogic.com;
-	s=mail; t=1723074564;
-	bh=txbE2yiCV7eiwfQqOglaURSnFK8iC855Ns+5Kw+g6S8=;
-	h=Date:To:From:Subject;
-	b=SfICBUQ6bBVfwDWThESZb5b5MfxIfRzHdBXWjwIseskuvKVit1DTtG5dSeVJpNsU/
-	 dc3g0xUH81UEyMKDsTAecW+FSmtrvG1vI+yGd/6jX3yXkjdCJau8YwYrym342dNzkV
-	 wxM2hAfJPs+c0xBc6AI+RRlsYn2fMsipSmwnN7lM=
-X-Virus-Status: Clean
-X-Virus-Scanned: clamav-milter 0.103.11 at mail.korelogic.com
-Message-ID: <87af73b2-eeeb-4861-9620-be7d7e895b88@korelogic.com>
-Date: Wed, 7 Aug 2024 18:49:23 -0500
+Received: (qmail 28558 invoked from network); 10 Apr 2015 01:29:25 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
+         :content-type;
+        bh=YtYchkunIBUzBpwhLLx9H3cILH+KzO+DtbT+h2a9Hz8=;
+        b=fC4YZ6XrbBEMuxNmNhga4DU5JVCmJAEbpo5FqpCSRTTSe4/uOzyIsu7MEGmN6+LJdy
+         5KBGx/im6J7Qn9/ezUrcsA8nB2tjO9T1wbkNb8/Tap8893nNzkHU4vc44d+Szvnxc9EL
+         hJkZ/21SgSSOQwPh2Q/ChZUxWnbz7m0KFUzOTc/DO2bVc/DUTD5pZaxnnGGJXCsPeAC1
+         Jlrm4PmwKWGoLazENx/7rQC9jLLCtA4ebHeP5w2tXPn58h08YtJHSt9Bl+ErqKMuZBVs
+         IY9wWI34kNcHKA0HSDA7oZaSvYAiIKNfTlphDcQr31TbN4lZwnq9jpk/lpxdLxFfaHrR
+         juwA==
+X-Gm-Message-State: ALoCoQmU+ofOvDEJDy+1LuahzgCIIo6XkbLf/p3xKzc2mGKV8y/oB0NxbmH7NEjGgo1u/dAyHHk+
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
-To: fulldisclosure@seclists.org, oss-security@lists.openwall.com
-From: KoreLogic Disclosures <disclosures@korelogic.com>
-Autocrypt: addr=disclosures@korelogic.com; keydata=
- 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
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------Intez2YTDs0VgDEOlLapjRvq"
-Subject: [oss-security] KL-001-2024-006: Open WebUI Arbitrary File Upload + Path Traversal
+X-Received: by 10.180.73.111 with SMTP id k15mr502081wiv.34.1428629354684;
+ Thu, 09 Apr 2015 18:29:14 -0700 (PDT)
+X-Originating-IP: [122.107.120.72]
+Message-ID: <CAG8UnYPgP+J9KvtXCEv+2JdRx5OTC0D=Ehg1VR6cy7nOre6G7w@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=f46d043894af33b539051354b19e
+Date: Fri, 10 Apr 2015 11:29:14 +1000
+From: Shubham Shah <admin@shubh.am>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE request - NodeBB Persistent XSS through Markdown
+To: oss-security@lists.openwall.com
 
---------------Intez2YTDs0VgDEOlLapjRvq
-Content-Type: multipart/mixed; boundary="------------MzvJGoGmO7p5Oi5TaXe4NJMo";
- protected-headers="v1"
-From: KoreLogic Disclosures <disclosures@korelogic.com>
-To: fulldisclosure@seclists.org, oss-security@lists.openwall.com
-Message-ID: <87af73b2-eeeb-4861-9620-be7d7e895b88@korelogic.com>
-Subject: KL-001-2024-006: Open WebUI Arbitrary File Upload + Path Traversal
+--f46d043894af33b539051354b19e
+Content-Type: text/plain; charset=UTF-8
 
---------------MzvJGoGmO7p5Oi5TaXe4NJMo
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
+Hi,
 
-S0wtMDAxLTIwMjQtMDA2OiBPcGVuIFdlYlVJIEFyYml0cmFyeSBGaWxlIFVwbG9hZCArIFBhdGgg
-VHJhdmVyc2FsDQoNClRpdGxlOiBPcGVuIFdlYlVJIEFyYml0cmFyeSBGaWxlIFVwbG9hZCArIFBh
-dGggVHJhdmVyc2FsDQpBZHZpc29yeSBJRDogS0wtMDAxLTIwMjQtMDA2DQpQdWJsaWNhdGlvbiBE
-YXRlOiAyMDI0LjA4LkQwNg0KUHVibGljYXRpb24gVVJMOiBodHRwczovL2tvcmVsb2dpYy5jb20v
-UmVzb3VyY2VzL0Fkdmlzb3JpZXMvS0wtMDAxLTIwMjQtMDA2LnR4dA0KDQoNCjEuIFZ1bG5lcmFi
-aWxpdHkgRGV0YWlscw0KDQogwqDCoMKgwqAgQWZmZWN0ZWQgVmVuZG9yOiBPcGVuIFdlYlVJDQog
-wqDCoMKgwqAgQWZmZWN0ZWQgUHJvZHVjdDogT3BlbiBXZWJVSQ0KIMKgwqDCoMKgIEFmZmVjdGVk
-IFZlcnNpb246IDAuMS4xMDUNCiDCoMKgwqDCoCBQbGF0Zm9ybTogRGViaWFuIDEyDQogwqDCoMKg
-wqAgQ1dFIENsYXNzaWZpY2F0aW9uOiBDV0UtMjI6IEltcHJvcGVyIExpbWl0YXRpb24gb2YgYSBQ
-YXRobmFtZSB0byBhDQogwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgIFJlc3RyaWN0ZWQgRGlyZWN0b3J5ICgnUGF0aCBUcmF2ZXJzYWwnKSwNCiDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgQ1dFLTQzNDogVW5yZXN0
-cmljdGVkIFVwbG9hZCBvZiBGaWxlIHdpdGggRGFuZ2Vyb3VzDQogwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIFR5cGUNCiDCoMKgwqDCoCBDVkUgSUQ6IENW
-RS0yMDI0LTY3MDcNCg0KDQoyLiBWdWxuZXJhYmlsaXR5IERlc2NyaXB0aW9uDQoNCiDCoMKgwqDC
-oCBBdHRhY2tlciBjb250cm9sbGVkIGZpbGVzIGNhbiBiZSB1cGxvYWRlZCB0byBhcmJpdHJhcnkN
-CiDCoMKgwqDCoCBsb2NhdGlvbnMgb24gdGhlIHdlYiBzZXJ2ZXIncyBmaWxlc3lzdGVtIGJ5IGFi
-dXNpbmcgYQ0KIMKgwqDCoMKgIHBhdGggdHJhdmVyc2FsIHZ1bG5lcmFiaWxpdHkuDQoNCg0KMy4g
-VGVjaG5pY2FsIERlc2NyaXB0aW9uDQoNCiDCoMKgIFdoZW4gYXR0YWNoaW5nIGZpbGVzIHRvIGEg
-cHJvbXB0IGJ5IGNsaWNraW5nIHRoZQ0KIMKgwqAgcGx1cyBzaWduICgrKSBvbiB0aGUgbGVmdCBv
-ZiB0aGUgbWVzc2FnZSBpbnB1dCBib3gNCiDCoMKgIHdoZW4gdXNpbmcgdGhlIE9wZW4gV2ViVUkg
-SFRUUCBpbnRlcmZhY2UsIHRoZSBmaWxlDQogwqDCoCBpcyB1cGxvYWRlZCB0byBhIHN0YXRpYyB1
-cGxvYWQgZGlyZWN0b3J5Lg0KDQogwqDCoCBUaGUgbmFtZSBvZiB0aGUgZmlsZSBpcyBkZXJpdmVk
-IGZyb20gdGhlIG9yaWdpbmFsDQogwqDCoCBIVFRQIHVwbG9hZCByZXF1ZXN0IGFuZCBpcyBub3Qg
-dmFsaWRhdGVkIG9yIHNhbml0aXplZC4NCiDCoMKgIFRoaXMgYWxsb3dzIGZvciB1c2VycyB0byB1
-cGxvYWQgZmlsZXMgd2l0aCBuYW1lcw0KIMKgwqAgY29udGFpbmluZyBkb3Qtc2VnbWVudHMgaW4g
-dGhlIGZpbGUgcGF0aCBhbmQgdHJhdmVyc2UNCiDCoMKgIG91dCBvZiB0aGUgaW50ZW5kZWQgdXBs
-b2FkcyBkaXJlY3RvcnkuIEVmZmVjdGl2ZWx5LCB1c2Vycw0KIMKgwqAgY2FuIHVwbG9hZCBmaWxl
-cyBhbnl3aGVyZSBvbiB0aGUgZmlsZXN5c3RlbSB0aGUNCiDCoMKgIHVzZXIgcnVubmluZyB0aGUg
-d2ViIHNlcnZlciBoYXMgcGVybWlzc2lvbi4NCg0KIMKgwqAgVGhpcyBjYW4gYmUgdmlzdWFsaXpl
-ZCBieSBleGFtaW5pbmcgdGhlIHB5dGhvbiBjb2RlDQogwqDCoCBmb3IgdGhlICIvcmFnL2FwaS92
-MS9kb2MiIEFQSSByb3V0ZToNCg0KIMKgwqDCoMKgwqAgQGFwcC5wb3N0KCIvZG9jIikNCiDCoMKg
-wqDCoMKgIGRlZiBzdG9yZV9kb2MoDQogwqDCoMKgwqDCoMKgwqDCoMKgIGNvbGxlY3Rpb25fbmFt
-ZTogT3B0aW9uYWxbc3RyXSA9IEZvcm0oTm9uZSksDQogwqDCoMKgwqDCoMKgwqDCoMKgIGZpbGU6
-IFVwbG9hZEZpbGUgPSBGaWxlKC4uLiksDQogwqDCoMKgwqDCoMKgwqDCoMKgIHVzZXI9RGVwZW5k
-cyhnZXRfY3VycmVudF91c2VyKSwNCiDCoMKgwqDCoMKgICk6DQogwqDCoMKgwqDCoMKgwqDCoMKg
-ICMgImh0dHBzOi8vd3d3Lmd1dGVuYmVyZy5vcmcvZmlsZXMvMTcyNy8xNzI3LWgvMTcyNy1oLmh0
-bSINCg0KIMKgwqDCoMKgwqDCoMKgwqDCoCBwcmludChmaWxlLmNvbnRlbnRfdHlwZSkNCiDCoMKg
-wqDCoMKgwqDCoMKgwqAgdHJ5Og0KIMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIGZpbGVuYW1l
-ID0gZmlsZS5maWxlbmFtZQ0KIMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIGZpbGVfcGF0aCA9
-IGYie1VQTE9BRF9ESVJ9L3tmaWxlbmFtZX0iDQogwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAg
-Y29udGVudHMgPSBmaWxlLmZpbGUucmVhZCgpDQogwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAg
-d2l0aCBvcGVuKGZpbGVfcGF0aCwgIndiIikgYXMgZjoNCiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgIGYud3JpdGUoY29udGVudHMpDQogwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoCBmLmNsb3NlKCkNCg0KIMKgwqAgVGhlICJmaWxlIiB2YXJpYWJsZSBpcyBhIHJl
-cHJlc2VudGF0aW9uIG9mIHRoZSBtdWx0aXBhcnQNCiDCoMKgIGZvcm0gZGF0YSBjb250YWluZWQg
-d2l0aGluIHRoZSBIVFRQIFBPU1QgcmVxdWVzdC4gVGhlDQogwqDCoCAiZmlsZW5hbWUiIHZhcmlh
-YmxlIGlzIGRlcml2ZWQgZnJvbSB0aGUgdXBsb2FkZWQgZmlsZSBuYW1lDQogwqDCoCBhbmQgaXMg
-bm90IHZhbGlkYXRlZCBiZWZvcmUgd3JpdGluZyB0aGUgZmlsZSBjb250ZW50cw0KIMKgwqAgdG8g
-ZGlzay4NCg0KIMKgwqDCoCBUaGlzIGNhbiBiZSB1c2VkIHRvIHVwbG9hZCBtYWxpY2lvdXMgbW9k
-ZWxzLiBUaGVzZSBtb2RlbHMNCiDCoMKgwqAgYXJlIG9mdGVuIGRpc3RyaWJ1dGVkIGFzIHBpY2ts
-ZWQgcHl0aG9uIG9iamVjdHMgYW5kIGNhbg0KIMKgwqDCoCBiZSBsZXZlcmFnZWQgdG8gZXhlY3V0
-ZSBhcmJpdHJhcnkgcHl0aG9uIGJ5dGVjb2RlIG9uY2UNCiDCoMKgwqAgZGVzZXJpYWxpemVkLiBB
-bHRlcm5hdGl2ZWx5LCBhbiBhdHRhY2tlciBjYW4gbGV2ZXJhZ2UgZXhpc3RpbmcNCiDCoMKgwqAg
-c2VydmljZXMsIHN1Y2ggYXMgU1NILCB0byB1cGxvYWQgYW4gYXR0YWNrZXIgY29udHJvbGxlZA0K
-IMKgwqDCoCAiYXV0aG9yaXplZF9rZXlzIiBmaWxlIHRvIHJlbW90ZWx5IGNvbm5lY3QgdG8gdGhl
-IG1hY2hpbmUuDQoNCg0KNC4gTWl0aWdhdGlvbiBhbmQgUmVtZWRpYXRpb24gUmVjb21tZW5kYXRp
-b24NCg0KIMKgwqDCoMKgIFRoaXMgaXNzdWUgd2FzIHJlbWVkaWF0ZWQgaW4gT3BlbiBXZWJVSSBy
-ZWxlYXNlIHYwLjEuMTE3IG9uIDIwMjQuMDQuMDMuDQoNCg0KNS4gQ3JlZGl0DQoNCiDCoMKgwqDC
-oCBUaGlzIHZ1bG5lcmFiaWxpdHkgd2FzIGRpc2NvdmVyZWQgYnkgSmFnZ2FyIEhlbnJ5IGFuZCBT
-ZWFuDQogwqDCoMKgwqAgU2VncmV0aSBvZiBLb3JlTG9naWMsIEluYy4NCg0KDQo2LiBEaXNjbG9z
-dXJlIFRpbWVsaW5lDQoNCiDCoMKgwqDCoCAyMDI0LjAzLjA1IC0gS29yZUxvZ2ljIHJlcXVlc3Rz
-IHNlY3VyZSBjb21tdW5pY2F0aW9ucyBjaGFubmVsIGFuZCBwb2ludA0KIMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqAgb2YgY29udGFjdCBmcm9tIE9wZW5XZWJVSS5jb20gdmlhIGVt
-YWlsLg0KIMKgwqDCoMKgIDIwMjQuMDMuMTIgLSBLb3JlTG9naWMgc3VibWl0cyB2dWxuZXJhYmls
-aXR5IGRldGFpbHMgYW5kIHN1Z2dlc3RlZCBwYXRjaA0KIMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqAgdG8gbWFpbnRhaW5lciB2aWEgR2l0aHViIFNlY3VyaXR5ICdSZXBvcnQgYSB2
-dWxuZXJhYmlsaXR5Jw0KIMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgd2ViIGZv
-cm0uDQogwqDCoMKgwqAgMjAyNC4wNC4wMSAtIEtvcmVMb2dpYyBvcGVucyBEaXNjdXNzaW9uICMx
-Mzg1IHZpYSBHaXRIdWIgdG8gcmVxdWVzdCBhbg0KIMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqAgdXBkYXRlIGZyb20gdGhlIG1haW50YWluZXIuDQogwqDCoMKgwqAgMjAyNC4wNC4w
-MSAtIE1haW50YWluZXIgb3BlbnMgYSBwcml2YXRlIGZvcmsgYW5kIG1lcmdlcyBLb3JlTG9naWMn
-cyBwYXRjaC4NCiDCoMKgwqDCoCAyMDI0LjA0LjAzIC0gTWFpbnRhaW5lciByZWxlYXNlcyB2MC4x
-LjExNy4NCiDCoMKgwqDCoCAyMDI0LjA4LjA2IC0gS29yZUxvZ2ljIHB1YmxpYyBkaXNjbG9zdXJl
-Lg0KDQoNCjcuIFByb29mIG9mIENvbmNlcHQNCg0KIMKgwqAgRXhlY3V0ZSB0aGUgZm9sbG93aW5n
-IGNVUkwgY29tbWFuZDoNCg0KIMKgwqDCoMKgwqAgVEFSR0VUX1VSST0naHR0cHM6Ly9yZWRhY3Rl
-ZC5jb20nOyBKV1Q9J3JlZGFjdGVkJzsgTE9DQUxfRklMRT0nL3RtcC9maWxlX3RvX3VwbG9hZC50
-eHQnXA0KIMKgwqDCoMKgwqAgY3VybCAtSCAiQXV0aG9yaXphdGlvbjogQmVhcmVyICRKV1QiIC1G
-ICJmaWxlPSRMT0NBTF9GSUxFO2ZpbGVuYW1lPS4uLy4uLy4uLy4uLy4uLy4uLy4uLy4uLy4uLy4u
-L3RtcC9wd25lZC50eHQiIA0KIiRUQVJHRVRfVVJJL3JhZy9hcGkvdjEvZG9jIg0KDQogwqDCoCBW
-ZXJpZnkgdGhlIGZpbGUgInB3bmVkLnR4dCIgZXhpc3RzIGluIHRoZSAvdG1wLyBkaXJlY3Rvcnkg
-b24NCiDCoMKgIHRoZSBtYWNoaW5lIGhvc3RpbmcgdGhlIHdlYiBzZXJ2ZXI6DQoNCiDCoMKgwqDC
-oMKgIG9sbGFtYUB3ZWJzZXJ2ZXI6fiQgY2F0IC90bXAvcHduZWQudHh0DQogwqDCoMKgwqDCoCBr
-b3JlbG9naWMNCiDCoMKgwqDCoMKgIG9sbGFtYUB3ZWJzZXJ2ZXI6fiQNCg0KDQpUaGUgY29udGVu
-dHMgb2YgdGhpcyBhZHZpc29yeSBhcmUgY29weXJpZ2h0KGMpIDIwMjQNCktvcmVMb2dpYywgSW5j
-LiBhbmQgYXJlIGxpY2Vuc2VkIHVuZGVyIGEgQ3JlYXRpdmUgQ29tbW9ucw0KQXR0cmlidXRpb24g
-U2hhcmUtQWxpa2UgNC4wIChVbml0ZWQgU3RhdGVzKSBMaWNlbnNlOg0KaHR0cDovL2NyZWF0aXZl
-Y29tbW9ucy5vcmcvbGljZW5zZXMvYnktc2EvNC4wLw0KDQpLb3JlTG9naWMsIEluYy4gaXMgYSBm
-b3VuZGVyLW93bmVkIGFuZCBvcGVyYXRlZCBjb21wYW55IHdpdGggYQ0KcHJvdmVuIHRyYWNrIHJl
-Y29yZCBvZiBwcm92aWRpbmcgc2VjdXJpdHkgc2VydmljZXMgdG8gZW50aXRpZXMNCnJhbmdpbmcg
-ZnJvbSBGb3J0dW5lIDUwMCB0byBzbWFsbCBhbmQgbWlkLXNpemVkIGNvbXBhbmllcy4gV2UNCmFy
-ZSBhIGhpZ2hseSBza2lsbGVkIHRlYW0gb2Ygc2VuaW9yIHNlY3VyaXR5IGNvbnN1bHRhbnRzIGRv
-aW5nDQpieS1oYW5kIHNlY3VyaXR5IGFzc2Vzc21lbnRzIGZvciB0aGUgbW9zdCBpbXBvcnRhbnQg
-bmV0d29ya3MgaW4NCnRoZSBVLlMuIGFuZCBhcm91bmQgdGhlIHdvcmxkLiBXZSBhcmUgYWxzbyBk
-ZXZlbG9wZXJzIG9mIHZhcmlvdXMNCnRvb2xzIGFuZCByZXNvdXJjZXMgYWltZWQgYXQgaGVscGlu
-ZyB0aGUgc2VjdXJpdHkgY29tbXVuaXR5Lg0KaHR0cHM6Ly93d3cua29yZWxvZ2ljLmNvbS9hYm91
-dC1rb3JlbG9naWMuaHRtbA0KDQpPdXIgcHVibGljIHZ1bG5lcmFiaWxpdHkgZGlzY2xvc3VyZSBw
-b2xpY3kgaXMgYXZhaWxhYmxlIGF0Og0KaHR0cHM6Ly9rb3JlbG9naWMuY29tL0tvcmVMb2dpYy1Q
-dWJsaWMtVnVsbmVyYWJpbGl0eS1EaXNjbG9zdXJlLVBvbGljeQ0KDQo=
+Could I please get a CVE for a Persistent XSS flaw found in NodeBB versions
+< 0.70. The Github repository for this project can be found here:
+https://github.com/NodeBB/NodeBB.
 
---------------MzvJGoGmO7p5Oi5TaXe4NJMo--
+The vulnerability allows for an attacker to insert malicious links within
+forum posts and threads - that lead to the execution of attacker-defined
+JavaScript on click. This vulnerability not only affects NodeBB but also
+affects any project which uses the markdown-it project before 4.1.0.
 
---------------Intez2YTDs0VgDEOlLapjRvq
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature.asc"
+The commits leading to the fix for this flaw can be found here:
 
------BEGIN PGP SIGNATURE-----
+NodeBB -
+https://github.com/julianlam/nodebb-plugin-markdown/commit/ab7f2684750882f7baefbfa31db8d5aac71e6ec3
 
-wsF5BAABCAAjFiEEB12WYZwbVwYTJ/b2DKLsCTlWkekFAma0CAMFAwAAAAAACgkQDKLsCTlWkeky
-bA/9F+MUzQBJ+7FE7NumGUJSLPhtYjI0jmHo+ju97ql1+4ar63JUhKyF56t/3/acr9y+M+shCJmu
-zcSq0Pa5o6RW3lUiaXNN/HmrbG1uPOAqyyjoWQxMazxs7aguKKYQgNWNzpzo9f/TrshwLUFImnAy
-za8mSjDR7izKPBV8FD7THRLfH3fDGkmP5/WBbnzDOFf44CArwqnnsRdGegUr/rdHHHyU0Ceo5lco
-k1r3lf9aFqdB/oZJHTscZ4fQvcrt51uMB0uGN3/aoSsFgk1iGD+XVhKVWmKzo+wAIpn4wTiPHdYM
-oiiLpXU/D9obsWF7n0Fa5xw/xI9mMzGxnq8+LD0MbxyyAr50siRSpjN9b1K91ymgkLBLXV35CPax
-musdasVPUXFITL/IDTD96lP6HgaCcCj7yklcuqPIrVNlxSfl3UGgl7PJ7UJk1lSOpQ15L2ASXidu
-Vq+GjErnrqUZDBJ4kS92fEelf+AgQGHQi3hq6af2NkhEosOizqnKZkHZrKkl5TXxOCF38u7jFyW1
-Yx32JnuvCjJzlGyyd7JFuIaj8gNS6m4usdxwkhgfUMr4qp2Nebv1bYCHvPXocUihHiaJes+FIkch
-qa1YSjVh1yKlqXCX/vsyQYIqSlSWAeWsWw7jeldUYIrO8RU7yiH200PqZk90MDcB+wceF/kBucuh
-+3I=
-=wwts
------END PGP SIGNATURE-----
+Markdown-it -
+https://github.com/markdown-it/markdown-it/commit/f76d3beb46abd121892a2e2e5c78376354c214e3
 
---------------Intez2YTDs0VgDEOlLapjRvq--
+If any more details are required, please let me know.
+
+Thank you,
+Shubham
+
+--f46d043894af33b539051354b19e--
