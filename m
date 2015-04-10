@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["656" "Friday" "3" "June" "2016" "13:50:40" "-0400" "Marc Deslauriers" "marc.deslauriers@canonical.com" "<5751C370.1010802@canonical.com>" "24" "[oss-security] CVE Request: Dnsmasq denial of service" nil nil nil "6" "2016060317:50:40" "[oss-security] CVE Request: Dnsmasq denial of service" (number mark "U       marc.deslaur Jun  3   24/656   " thread-indent "\"[oss-security] CVE Request: Dnsmasq denial of service\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6042" "Friday" "10" "April" "2015" "17:38:41" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150410213841.D3FF26C000C@smtpvmsrv1.mitre.org>" "134" "[oss-security] Re: CVE request - NodeBB Persistent XSS through Markdown" nil nil nil "4" "2015041021:38:41" "[oss-security] Re: CVE request - NodeBB Persistent XSS through Markdown" (number mark "        cve-assign@m Apr 10  134/6042  " thread-indent "\"[oss-security] Re: CVE request - NodeBB Persistent XSS through Markdown\"\n") "<CAG8UnYPgP+J9KvtXCEv+2JdRx5OTC0D=Ehg1VR6cy7nOre6G7w@mail.gmail.com>" ("<CAG8UnYPgP+J9KvtXCEv+2JdRx5OTC0D=Ehg1VR6cy7nOre6G7w@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 21923 invoked by uid 550); 3 Jun 2016 17:50:54 -0000
+Received: (qmail 14212 invoked by uid 550); 10 Apr 2015 21:38:54 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,40 +11,147 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 14191 invoked from network); 10 Apr 2015 21:38:53 -0000
+In-Reply-To: <CAG8UnYPgP+J9KvtXCEv+2JdRx5OTC0D=Ehg1VR6cy7nOre6G7w@mail.gmail.com>
+Message-Id: <20150410213841.D3FF26C000C@smtpvmsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Fri, 10 Apr 2015 17:38:41 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21902 invoked from network); 3 Jun 2016 17:50:54 -0000
-From: Marc Deslauriers <marc.deslauriers@canonical.com>
-To: oss-security@lists.openwall.com
-Message-ID: <5751C370.1010802@canonical.com>
-Date: Fri, 3 Jun 2016 13:50:40 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.8.0
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-Subject: [oss-security] CVE Request: Dnsmasq denial of service
+Subject: [oss-security] Re: CVE request - NodeBB Persistent XSS through Markdown
+To: admin@shubh.am
 
-Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I don't believe this issue has a CVE:
+> Could I please get a CVE for a Persistent XSS flaw found in NodeBB versions
+> < 0.70. The Github repository for this project can be found here:
+> https://github.com/NodeBB/NodeBB.
+> 
+> The vulnerability allows for an attacker to insert malicious links within
+> forum posts and threads - that lead to the execution of attacker-defined
+> JavaScript on click. This vulnerability not only affects NodeBB but also
+> affects any project which uses the markdown-it project before 4.1.0.
 
- Fix crash when an A or AAAA record is defined locally,
- in a hosts file, and an upstream server sends a reply
- that the same name is empty. Thanks to Edwin Török for
- the patch.
+We have done a limited amount of research on this, and currently feel
+that the last sentence above doesn't precisely describe the situation.
+Instead, we feel that there are two independent vulnerabilities.
 
-http://lists.thekelleys.org.uk/pipermail/dnsmasq-discuss/2016q2/010479.html
-http://thekelleys.org.uk/gitweb/?p=dnsmasq.git;a=commit;h=41a8d9e99be9f2cc8b02051dd322cb45e0faac87
-https://bugs.launchpad.net/ubuntu/+source/dnsmasq/+bug/1581181
+> NodeBB -
+> https://github.com/julianlam/nodebb-plugin-markdown/commit/ab7f2684750882f7baefbfa31db8d5aac71e6ec3
+
+It appears that, in this single commit, NodeBB had both of these changes:
+
+  1. the Markdown component was changed from remarkable to markdown-it
+
+  2. a workaround was added for the markdown-it vulnerability involving
+     data: URLs
+
+Based on references such as:
+
+  https://www.reddit.com/r/javascript/comments/2qa0hp/markdown_parser_done_right_100_commonmark_support/
+  http://stackoverflow.com/questions/1690601/markdown-and-xss
+
+we think the situation is:
+
+  A. A possibly prevailing opinion is that there is no requirement
+     that an implementation of the Markdown language have any
+     functionality related to preventing XSS attacks. The rationale is
+     that XSS prevention is arguably a responsibility of a code layer
+     than occurs after Markdown is converted to HTML.
+
+  B. remarkable is an implementation of the Markdown language that, by
+     design, intentionally chose not to try to prevent XSS. Therefore,
+     there cannot be a CVE ID for XSS in remarkable.
+
+  C. markdown-it is another implementation of the Markdown language
+     that has a substantial amount of code in common with remarkable.
+     (For purposes of this CVE request, the reasons behind the similar
+     and/or dissimilar code are not really relevant.)
+
+  D. markdown-it made a choice to try to prevent some types of XSS
+     attacks, e.g., by blocking javascript: URLs. This might be
+     considered an advertised security property. Then, it was reported
+     that roughly similar types of attacks with data: URLs were not
+     prevented. This can be considered an incomplete list of dangerous
+     protocols. The markdown-it maintainer made a commit that might be
+     considered a required security update. Thus, it's at least
+     plausible that an associated CVE should exist.
+
+  E. The markdown-it maintainer also added a comment suggesting that
+     XSS prevention was not intended to cover all cases ("This
+     validator does not pretent to functionality of full weight
+     sanitizers. It's a tradeoff between default security, simplicity
+     and usability. If you need different setup - override validator
+     method as you wish. Or replace it with dummy function and use
+     external sanitizer."). This potentially can become a major
+     complication for CVE assignment. Specifically, if the vendor is
+     specifically documenting that XSS prevention is intentionally
+     incomplete, we do not think that every future XSS report can have
+     a CVE ID. This raises the question of: if there may not be CVE ID
+     assignments in the future, is it actually useful to have a CVE ID
+     assignment for the data: issue.
+
+  F. Regardless of the status of markdown-it CVEs, there is a
+     vulnerability in versions of NodeBB before
+     ab7f2684750882f7baefbfa31db8d5aac71e6ec3, because these versions
+     apparently omitted both of these:
+
+     -- a Markdown language implementation that was capable of
+        preventing XSS with either javascript: URLs or data: URLs
+
+     -- a secondary code layer that was capable of preventing XSS with
+        either javascript: URLs or data: URLs
+
+Our decision, at least for now, is to have one CVE ID for D and one
+CVE ID for F. Specifically:
+
+  - item D
+    
+    fix: https://github.com/markdown-it/markdown-it/commit/f76d3beb46abd121892a2e2e5c78376354c214e3
+
+    short description: an earlier version of markdown-it blocked
+                       javascript: but not data:
+
+    Use CVE-2015-3295. Note that this CVE is not applicable to any
+    version of NodeBB. There was never a version of NodeBB that used
+    markdown-it with javascript: blocking and no data: blocking.
+
+ 
+  - item F
+
+    fix: https://github.com/julianlam/nodebb-plugin-markdown/commit/ab7f2684750882f7baefbfa31db8d5aac71e6ec3
+
+    short description: an earlier version of NodeBB had no
+                       protection against either javascript: or data:
+                       XSS attacks
+
+    Use CVE-2015-3296.
 
 
-Could a CVE please be assigned to it?
+It's possible that other NodeBB XSS issues will be reported in the
+future, and will have other CVE IDs. NodeBB is ultimately responsible
+for an XSS prevention strategy, regardless of whether it involves
+incorporating different third-party HTML sanitization components or
+their own unique code. In other words, we don't feel that the NodeBB
+security policy could be "we block only the types of XSS attacks that
+happen to be covered by markdown-it." At the moment, we have not heard
+of any NodeBB XSS attack that isn't addressed by the
+ab7f2684750882f7baefbfa31db8d5aac71e6ec3 patch.
 
-Thanks,
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-Marc.
-
--- 
-Marc Deslauriers
-Ubuntu Security Engineer     | http://www.ubuntu.com/
-Canonical Ltd.               | http://www.canonical.com/
+iQEcBAEBAgAGBQJVKEGJAAoJEKllVAevmvms+FoH/R3yE8vdw8RIy2d9G/qSHvQo
+bpL3W/U4a/gehD7j6VuDS1az5zbwBVBz/zC+k2QmsQf3PcdJqj/FJB1XOtIiQ8kS
+5ln6wOuKWqai0tQFJwKnujX2erZEDlevrGxF+iF/FGm+91H+lWkk40iWfZ9C4Glz
+bmc2HEKmmJhKNLSDjP1714peFJx8tfgJGo1u9Fxo1oo7JngMmEzINzG5U1C+tqCT
+4iZPfFS8k3+OtcxNO6VdsOLvb6QfQapbndQ9DjseBX3LGWMxi1bImb2StzFkG6Hk
+znb19grc2HgWjvQJ/ZC/lsYweNjfktgZKS8TDG7iHHZwOiGPoqV0VE+Pv3iqwmg=
+=fP1z
+-----END PGP SIGNATURE-----
