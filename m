@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1651" "Thursday" "13" "August" "2015" "21:53:42" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150814015342.4DE6F6C008C@smtpvmsrv1.mitre.org>" "43" "[oss-security] Re: Duplicate Wireshark CVEs?" nil nil nil "8" "2015081401:53:42" "[oss-security] Re: Duplicate Wireshark CVEs?" (number mark "        cve-assign@m Aug 13   43/1651  " thread-indent "\"[oss-security] Re: Duplicate Wireshark CVEs?\"\n") "<87bnef1kxg.fsf@redhat.com>" ("<87bnef1kxg.fsf@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1923" "Friday" "10" "April" "2015" "23:29:36" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<5528B140.9080708@redhat.com>" "53" "Re: [oss-security] Re: [CVE Requests] rsync and librsync collisions" nil nil nil "4" "2015041105:29:36" "[oss-security] Re: [CVE Requests] rsync and librsync collisions" (number mark "        kseifried@re Apr 10   53/1923  " thread-indent "\"Re: [oss-security] Re: [CVE Requests] rsync and librsync collisions\"\n") "<CACYkhxjCZOq_yxpn2C9PHRdZVxfs7HMM5K2Af4k-zURqTfeydw@mail.gmail.com>" ("<540E7816.90001@redhat.com>" "<20140912183958.D1DA96C000A@smtpvmsrv1.mitre.org>" "<CACYkhxhmU74Xsi4H_tBYxY17Y0ovHDdrPfn1pLp1hW6OY6U8dw@mail.gmail.com>" "<CAOp4FwTAFW816AHSE8xZHvVXTYEtArDTNPzTiU+5sOYdEw4efA@mail.gmail.com>" "<CACYkhxjxuCUj0b5VzicAzKgq42xFU2Rdk736yETPY1d11h5xcw@mail.gmail.com>" "<20150410092652.GA27909@blema.cz>" "<CACYkhxi5OpJ_RBHMC8Eyx514Pd_DuhNUr3pkWB3DjVG=Jx6XNA@mail.gmail.com>" "<552897A1.7040504@redhat.com>" "<CACYkhxjCZOq_yxpn2C9PHRdZVxfs7HMM5K2Af4k-zURqTfeydw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 5718 invoked by uid 550); 14 Aug 2015 01:53:55 -0000
+Received: (qmail 7779 invoked by uid 550); 11 Apr 2015 05:29:51 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,56 +11,72 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5696 invoked from network); 14 Aug 2015 01:53:54 -0000
-In-Reply-To: <87bnef1kxg.fsf@redhat.com>
-Message-Id: <20150814015342.4DE6F6C008C@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Thu, 13 Aug 2015 21:53:42 -0400 (EDT)
-From: cve-assign@mitre.org
+Received: (qmail 7755 invoked from network); 11 Apr 2015 05:29:50 -0000
+Message-ID: <5528B140.9080708@redhat.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
+MIME-Version: 1.0
+References: <540E7816.90001@redhat.com> <20140912183958.D1DA96C000A@smtpvmsrv1.mitre.org> <CACYkhxhmU74Xsi4H_tBYxY17Y0ovHDdrPfn1pLp1hW6OY6U8dw@mail.gmail.com> <CAOp4FwTAFW816AHSE8xZHvVXTYEtArDTNPzTiU+5sOYdEw4efA@mail.gmail.com> <CACYkhxjxuCUj0b5VzicAzKgq42xFU2Rdk736yETPY1d11h5xcw@mail.gmail.com> <20150410092652.GA27909@blema.cz> <CACYkhxi5OpJ_RBHMC8Eyx514Pd_DuhNUr3pkWB3DjVG=Jx6XNA@mail.gmail.com> <552897A1.7040504@redhat.com> <CACYkhxjCZOq_yxpn2C9PHRdZVxfs7HMM5K2Af4k-zURqTfeydw@mail.gmail.com>
+In-Reply-To: <CACYkhxjCZOq_yxpn2C9PHRdZVxfs7HMM5K2Af4k-zURqTfeydw@mail.gmail.com>
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="O2Xh09HSl9XvmJJXjod1D5pOBMF5J6Kjd"
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.23
+Date: Fri, 10 Apr 2015 23:29:36 -0600
+From: Kurt Seifried <kseifried@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: Duplicate Wireshark CVEs?
-To: mprpic@redhat.com, siddharth@redhat.com
+Subject: Re: [oss-security] Re: [CVE Requests] rsync and librsync collisions
+To: oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--O2Xh09HSl9XvmJJXjod1D5pOBMF5J6Kjd
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-> Any information available on why both Wireshark CVEs
-> CVE-2015-3811 CVE-2015-2188 point to one fix ?
+On 04/10/2015 11:07 PM, Michael Samuel wrote:
+> Hi Kurt,
+>=20
+> Murray McAllister handled the response to this when I reported it to seca=
+lert@
+> but it's currently languishing in BZ#1126713
 
-These two URLs:
+Murray is sadly no longer with Red Hat (he didn't die, he just moved on
+to another company).
 
-  http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-3811
-  http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-2188
+> If you want I can send my patch as a starting point - it got really
+> nasty because
+> nobody considered that strong sums would be >16 bytes when writing rsync.
 
-currently do not point to the same fix, and never have pointed to the
-same fix. The first URL has existed since May, and the second has
-existed since March.
+Please do. So one caveat: Red Hat Enterprise Linux is generally
+committed to API/ABI stability, however Fedora is not. Just saying.
 
->> Is there a reason two CVEs were assigned for this
+> Regards,
+>   Michael
 
-The two CVEs were assigned to two different issues.
+--=20
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-Our perspective is that multiple sources, including the upstream
-vendor, currently have an error in which wnpa-sec-2015-14 refers to
-bug number 10844, and that the intended bug number for
-wnpa-sec-2015-14 (after that error is corrected) is 10978. We will
-check with the upstream vendor and see whether they can confirm that
-bug number 10978 actually does refer to a non-identical security
-problem that was addressed months after 10844.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+--O2Xh09HSl9XvmJJXjod1D5pOBMF5J6Kjd
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Version: GnuPG v2.0.22 (GNU/Linux)
 
-iQEcBAEBCAAGBQJVzUkhAAoJEKllVAevmvmsblIIAJUpf8g7W9D+WJmD0AGgTqaO
-Wb0K7n1q8GwLcR+kucLqAyMruXu0hqliuc0lZGkylIqllL6h/yPbDAjE3TxYCavf
-GPquPCJyV5SenrIjJLNq7tNAMA4MDUZF23UoR3wI1a/SEpVLzLXgadMpsGZ1Q4CZ
-pydcttGTgnQGX9oc//PCMahIAMzA/lJcvASu4XnqlSayZ6yVvzKogF51nsqFK+zD
-sQzSI0Vhrv/p9Ycn7FVcJYI7LRbw+yM5tS+TibgjPM6p7OKPrNJzVzSnpDs+UhkZ
-EWOaOl8Qdy/+aWsagMWSCz52Kqo0jJ2LMsW8ulhqgyL2JfmKdWL1ZBx5N0+9cyk=
-=eI8T
+iQIcBAEBAgAGBQJVKLFBAAoJEBYNRVNeJnmT9yUP/RU7teNwK2V5+7NgQBKePm1t
+n3J3YaT5Y3Ia04cIwbxoic1W0I1jgIAB15B/2egQlVS15oaQQvDExhVgLXEevw2f
+IS3riAHleyNRKaHqxfUE5cM6Q6GNMEJXWOd7hJsn9/qg80EsSimL5udDNavtZZ5I
+7c7fQnx1h265cEf4ZbKgMbyzjoiYojy55Gmym4pOLksWNy8olJvGrKz0Upx+Rdln
+34O5OyEVSvCAKPN8N9DHr2nIEH5aBNDNSPPn/WX+5wCjV/3Kl3VBhrdy8ERTFMe/
+Bzjv1FM2EICtmRNirVlInG6cOAH7hLnmA4khBmFnri5SZs2xQsl60RJ9bGsLuvAs
+8FH2CwnjoYG4TMlECDiQWeqTNTEIlJBmw3BdiQUatF80HFLr5tfpM/HRVR/FIZ08
+fPsfMVgYbuJUjBCFzkkOvumqSYRzTvMEfuxryZygLNcTlRQaXEQBsGjQrYB97H4o
+1QXhSpiVVK2jmH5aj9PkijWTV8q4Edsl6mfzO7S6bVux8ZdOGMkhFH9f/nnv+gff
+XdoG/8lgOp6qk09ZKXjPfa5Ip7FNSDcdaSQnjV+d2ftDcAz/Fih3PeHIPBzj/uks
+u5kMP49esMb381G74mcUy885o1/eTrkE//lZOB1B2OhEQ1pq2iTbmS4U456LWfRw
+qVOwI044hTMiCAWTJ8tg
+=IujZ
 -----END PGP SIGNATURE-----
+
+--O2Xh09HSl9XvmJJXjod1D5pOBMF5J6Kjd--
