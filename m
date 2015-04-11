@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["916" "Saturday" "1" "August" "2015" "07:00:50" "+0200" "Salvatore Bonaccorso" "carnil@debian.org" "<20150801050050.GA24937@eldamar.local>" "22" "[oss-security] CVE Request: devscripts: licensecheck: arbitrary shell command injection" nil nil nil "8" "2015080105:00:50" "[oss-security] CVE Request: devscripts: licensecheck: arbitrary shell command injection" (number mark "        carnil@debia Aug  1   22/916   " thread-indent "\"[oss-security] CVE Request: devscripts: licensecheck: arbitrary shell command injection\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1166" "Saturday" "11" "April" "2015" "15:07:35" "+1000" "Michael Samuel" "mik@miknet.net" "<CACYkhxjCZOq_yxpn2C9PHRdZVxfs7HMM5K2Af4k-zURqTfeydw@mail.gmail.com>" "43" "Re: [oss-security] Re: [CVE Requests] rsync and librsync collisions" nil nil nil "4" "2015041105:07:35" "[oss-security] Re: [CVE Requests] rsync and librsync collisions" (number mark "        mik@miknet.n Apr 11   43/1166  " thread-indent "\"Re: [oss-security] Re: [CVE Requests] rsync and librsync collisions\"\n") "<552897A1.7040504@redhat.com>" ("<540E7816.90001@redhat.com>" "<20140912183958.D1DA96C000A@smtpvmsrv1.mitre.org>" "<CACYkhxhmU74Xsi4H_tBYxY17Y0ovHDdrPfn1pLp1hW6OY6U8dw@mail.gmail.com>" "<CAOp4FwTAFW816AHSE8xZHvVXTYEtArDTNPzTiU+5sOYdEw4efA@mail.gmail.com>" "<CACYkhxjxuCUj0b5VzicAzKgq42xFU2Rdk736yETPY1d11h5xcw@mail.gmail.com>" "<20150410092652.GA27909@blema.cz>" "<CACYkhxi5OpJ_RBHMC8Eyx514Pd_DuhNUr3pkWB3DjVG=Jx6XNA@mail.gmail.com>" "<552897A1.7040504@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 30009 invoked by uid 550); 1 Aug 2015 05:01:04 -0000
+Received: (qmail 19860 invoked by uid 550); 11 Apr 2015 05:08:08 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,53 +11,86 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 29988 invoked from network); 1 Aug 2015 05:01:03 -0000
+Received: (qmail 19839 invoked from network); 11 Apr 2015 05:08:07 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:date:from:to:cc:subject:message-id:mime-version:content-type
-         :content-disposition:user-agent;
-        bh=6cQp7RrnhbO5kkT27CripzhRK2IL3fufYLGaYGwmB4M=;
-        b=u6vBeNbQik5trRW2LoFpP4WnDnHpSXW8xLYkqPe4thy7nPm/lkC/bLWP03XhObpmRx
-         qq8w3sL+qp1pbvePdofzvJEnKlcY3ShrPhMSD+JWTVVdpsJYq43yQwNIPKA1P/azh+jm
-         Lzes6etIYuvCYgOGxyGunQMw+qUvDmZAEAcuiYUN0RCQjCUzHpAvEt2Z9APE0c5b3q7w
-         uSOPQzQztAq8FiV+BEIqvOx4kZbPdgS7HWFQiNNPxpbd4vEErXH5Pa8uLJVIS197xkw1
-         /WZEfcg4TfcppviLhtvf5fxCIL7fILCqpuS+CYiEIyT2hPgW638LCZma6nG6OCg9C+aK
-         VwvQ==
-X-Received: by 10.180.103.69 with SMTP id fu5mr13065068wib.95.1438405252288;
-        Fri, 31 Jul 2015 22:00:52 -0700 (PDT)
-Message-ID: <20150801050050.GA24937@eldamar.local>
+        d=miknet.net; s=google;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :content-type;
+        bh=nARx1X4c4gNTXA3hEsvKDAs75zkiirDjn7itjk6rBxQ=;
+        b=MDxBv7fLGx5WmAh4qsI0hzneO6VTVFBfxVxDDTAG877PuChJz+xCZT/fW3DSXxCrQu
+         lmjcycEv+pw2EM8m6SrOjp2DyJ+6ruHpCa5o8MV0A5sZnZVGo5QnJT5s+Q5hwDriyqB7
+         Tt6U0aq3cZyLYZ4fGjCDLHFtdsqlu6fWb9++c=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:content-type;
+        bh=nARx1X4c4gNTXA3hEsvKDAs75zkiirDjn7itjk6rBxQ=;
+        b=Fso7l5FULysuzyFfglhd40yqJRhZguyInak+ZS2DoOzs68VLTq3I+xZpt/RtlbcF1J
+         hRc+e9j8P7/j8QcjJUWJYfEWMP2CYgvVZAsAJfKSmOB/SKVv8lx9gadUVIeP7hso7w3R
+         7rpmP1tWg+5nNmnLxHmurBoJYEKVFwa13tN6c2XpyrC5nnL35k9HplWPMnadr2B5QQha
+         7Wpcc/E+y2kwwpc9TfahaGIAqXVgK9mINPyrbt2jySmJoqKoxMARK9JjMfafv+ar4Oki
+         hwhfah160NOHsh5U5QLCQqTD1WpKs9hWgsrgTDGE64s465K7pc3S0zwvKAmtqMCYNr/o
+         Yv+w==
+X-Gm-Message-State: ALoCoQlrhzirf3YrKaBk8VqvS7yJfQ6s1QTMc9e8EjQSFjAQMHFrChaPIscYineWAz3ZGMZsnQKx
+X-Received: by 10.42.224.1 with SMTP id im1mr7779818icb.55.1428728876073; Fri,
+ 10 Apr 2015 22:07:56 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.5.23 (2014-03-12)
-Cc: CVE Assignments MITRE <cve-assign@mitre.org>
-Date: Sat, 1 Aug 2015 07:00:50 +0200
-From: Salvatore Bonaccorso <carnil@debian.org>
+X-Originating-IP: [202.147.141.11]
+In-Reply-To: <552897A1.7040504@redhat.com>
+References: <540E7816.90001@redhat.com> <20140912183958.D1DA96C000A@smtpvmsrv1.mitre.org>
+ <CACYkhxhmU74Xsi4H_tBYxY17Y0ovHDdrPfn1pLp1hW6OY6U8dw@mail.gmail.com>
+ <CAOp4FwTAFW816AHSE8xZHvVXTYEtArDTNPzTiU+5sOYdEw4efA@mail.gmail.com>
+ <CACYkhxjxuCUj0b5VzicAzKgq42xFU2Rdk736yETPY1d11h5xcw@mail.gmail.com>
+ <20150410092652.GA27909@blema.cz> <CACYkhxi5OpJ_RBHMC8Eyx514Pd_DuhNUr3pkWB3DjVG=Jx6XNA@mail.gmail.com>
+ <552897A1.7040504@redhat.com>
+Message-ID: <CACYkhxjCZOq_yxpn2C9PHRdZVxfs7HMM5K2Af4k-zURqTfeydw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Date: Sat, 11 Apr 2015 15:07:35 +1000
+From: Michael Samuel <mik@miknet.net>
 Reply-To: oss-security@lists.openwall.com
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Subject: [oss-security] CVE Request: devscripts: licensecheck: arbitrary shell command
- injection
-To: OSS Security Mailinglist <oss-security@lists.openwall.com>
+Subject: Re: [oss-security] Re: [CVE Requests] rsync and librsync collisions
+To: oss-security@lists.openwall.com
 
-Hi
+Hi Kurt,
 
-devscripts[0,1] contains a utility licensecheck, a simple license
-checker for source files. It is as well included at least in Ubuntu
-and Fedora[2].
+Murray McAllister handled the response to this when I reported it to secalert@
+but it's currently languishing in BZ#1126713
 
-Jonas Smedegaard[3] (and Jakub Wilk with a follow-up message) reported
-that licensecheck is prone to arbitrary shell command injection via
-shell metacharacters in filenames. The issue was introduced in
-devscripts v2.15.5[4] and fixed in v2.15.7[5].
-
-Could you please assign a CVE to identify this issue?
+If you want I can send my patch as a starting point - it got really
+nasty because
+nobody considered that strong sums would be >16 bytes when writing rsync.
 
 Regards,
-Salvatore
+  Michael
 
- [0] https://packages.debian.org/devscripts
- [1] https://anonscm.debian.org/cgit/collab-maint/devscripts.git/
- [2] http://pkgs.fedoraproject.org/cgit/devscripts.git/
- [3] https://bugs.debian.org/794260
- [4] https://anonscm.debian.org/cgit/collab-maint/devscripts.git/commit/?id=025ad4ea8ba92d32bd698a83149f782c17f78bf0 
- [5] https://anonscm.debian.org/cgit/collab-maint/devscripts.git/commit/?id=c0687bcde23108dd42e146573c368b6905e6b8e8
+On 11 April 2015 at 13:40, Kurt Seifried <kseifried@redhat.com> wrote:
+> If you'd like Red Hat can:
+>
+> 1) handle disclosure coordination (like we do for OpenSSL)
+>
+> and/or
+>
+> 2) handle patching/etc, we ship rsync so this is obviously of interest
+> to us.
+>
+> Contact secalert@redhat.com if you want and either myself or a coworker
+> will handle this. Thanks!
+>
+> On 04/10/2015 08:06 PM, Michael Samuel wrote:
+>> Hi,
+>>
+>> On 10 April 2015 at 19:26, Vitezslav Cizek <civ@blema.cz> wrote:
+>>
+>>> Was there any further progress with the rsync upstream?
+>>> Are they planning to address this issue or is there no interest?
+>>
+>> No further progress with upstream, it's possible that rsync is abandoned.
+>>
+>> Regards,
+>>   Michael
+>>
+>
+> --
+> Kurt Seifried -- Red Hat -- Product Security -- Cloud
+> PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+>
