@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3816" "Thursday" "8" "September" "2016" "12:00:56" "+0000" "Xen.org security team" "security@xen.org" "<E1bhy0m-0000vj-TN@xenbits.xenproject.org>" "115" "[oss-security] Xen Security Advisory 188 (CVE-2016-7154) - use after free in FIFO event channel code" nil nil nil "9" "2016090812:00:56" "[oss-security] Xen Security Advisory 188 (CVE-2016-7154) - use after free in FIFO event channel code" (number mark "U       security@xen Sep  8  115/3816  " thread-indent "\"[oss-security] Xen Security Advisory 188 (CVE-2016-7154) - use after free in FIFO event channel code\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1961" "Friday" "10" "April" "2015" "21:40:17" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<552897A1.7040504@redhat.com>" "59" "Re: [oss-security] Re: [CVE Requests] rsync and librsync collisions" nil nil nil "4" "2015041103:40:17" "[oss-security] Re: [CVE Requests] rsync and librsync collisions" (number mark "        kseifried@re Apr 10   59/1961  " thread-indent "\"Re: [oss-security] Re: [CVE Requests] rsync and librsync collisions\"\n") "<CACYkhxi5OpJ_RBHMC8Eyx514Pd_DuhNUr3pkWB3DjVG=Jx6XNA@mail.gmail.com>" ("<540E7816.90001@redhat.com>" "<20140912183958.D1DA96C000A@smtpvmsrv1.mitre.org>" "<CACYkhxhmU74Xsi4H_tBYxY17Y0ovHDdrPfn1pLp1hW6OY6U8dw@mail.gmail.com>" "<CAOp4FwTAFW816AHSE8xZHvVXTYEtArDTNPzTiU+5sOYdEw4efA@mail.gmail.com>" "<CACYkhxjxuCUj0b5VzicAzKgq42xFU2Rdk736yETPY1d11h5xcw@mail.gmail.com>" "<20150410092652.GA27909@blema.cz>" "<CACYkhxi5OpJ_RBHMC8Eyx514Pd_DuhNUr3pkWB3DjVG=Jx6XNA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 28271 invoked by uid 550); 8 Sep 2016 12:01:19 -0000
+Received: (qmail 21507 invoked by uid 550); 11 Apr 2015 03:40:35 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,133 +11,78 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28172 invoked from network); 8 Sep 2016 12:01:17 -0000
-Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
-Content-Transfer-Encoding: binary
+Received: (qmail 20461 invoked from network); 11 Apr 2015 03:40:34 -0000
+Message-ID: <552897A1.7040504@redhat.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.4.0
 MIME-Version: 1.0
-X-Mailer: MIME-tools 5.505 (Entity 5.505)
-To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
- xen-users@lists.xen.org, oss-security@lists.openwall.com
-From: Xen.org security team <security@xen.org>
-CC: Xen.org security team <security@xen.org>
-Message-Id: <E1bhy0m-0000vj-TN@xenbits.xenproject.org>
-Date: Thu, 08 Sep 2016 12:00:56 +0000
-Subject: [oss-security] Xen Security Advisory 188 (CVE-2016-7154) - use after free in
- FIFO event channel code
+References: <540E7816.90001@redhat.com> <20140912183958.D1DA96C000A@smtpvmsrv1.mitre.org> <CACYkhxhmU74Xsi4H_tBYxY17Y0ovHDdrPfn1pLp1hW6OY6U8dw@mail.gmail.com> <CAOp4FwTAFW816AHSE8xZHvVXTYEtArDTNPzTiU+5sOYdEw4efA@mail.gmail.com> <CACYkhxjxuCUj0b5VzicAzKgq42xFU2Rdk736yETPY1d11h5xcw@mail.gmail.com> <20150410092652.GA27909@blema.cz> <CACYkhxi5OpJ_RBHMC8Eyx514Pd_DuhNUr3pkWB3DjVG=Jx6XNA@mail.gmail.com>
+In-Reply-To: <CACYkhxi5OpJ_RBHMC8Eyx514Pd_DuhNUr3pkWB3DjVG=Jx6XNA@mail.gmail.com>
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="T8LahmFrIXOgABUm9BcS93janGcAgo5U7"
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.26
+Date: Fri, 10 Apr 2015 21:40:17 -0600
+From: Kurt Seifried <kseifried@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Re: [CVE Requests] rsync and librsync collisions
+To: oss-security@lists.openwall.com, Vitezslav Cizek <civ@blema.cz>
 
---=separator
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
-Content-Transfer-Encoding: 7bit
+--T8LahmFrIXOgABUm9BcS93janGcAgo5U7
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+If you'd like Red Hat can:
 
-            Xen Security Advisory CVE-2016-7154 / XSA-188
-                              version 3
+1) handle disclosure coordination (like we do for OpenSSL)
 
-               use after free in FIFO event channel code
+and/or
 
-UPDATES IN VERSION 3
-====================
+2) handle patching/etc, we ship rsync so this is obviously of interest
+to us.
 
-Public release.
+Contact secalert@redhat.com if you want and either myself or a coworker
+will handle this. Thanks!
 
-ISSUE DESCRIPTION
-=================
+On 04/10/2015 08:06 PM, Michael Samuel wrote:
+> Hi,
+>=20
+> On 10 April 2015 at 19:26, Vitezslav Cizek <civ@blema.cz> wrote:
+>=20
+>> Was there any further progress with the rsync upstream?
+>> Are they planning to address this issue or is there no interest?
+>=20
+> No further progress with upstream, it's possible that rsync is abandoned.
+>=20
+> Regards,
+>   Michael
+>=20
 
-When the EVTCHNOP_init_control operation is called with a bad guest
-frame number, it takes an error path which frees a control structure
-without also clearing the corresponding pointer.  Certain subsequent
-operations (EVTCHNOP_expand_array or another EVTCHNOP_init_control),
-upon finding the non-NULL pointer, continue operation assuming it
-points to allocated memory.
+--=20
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-IMPACT
-======
 
-A malicious guest administrator can crash the host, leading to a DoS.
-Arbitrary code execution (and therefore privilege escalation), and
-information leaks, cannot be excluded.
+--T8LahmFrIXOgABUm9BcS93janGcAgo5U7
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
-VULNERABLE SYSTEMS
-==================
-
-Only Xen 4.4 is vulnerable.  Xen versions 4.5 and later as well as Xen
-versions 4.3 and earlier are not vulnerable.
-
-MITIGATION
-==========
-
-There is no mitigation available.
-
-CREDITS
-=======
-
-This issue was discovered by Mikhail Gorobets of Advanced Threat
-Research, Intel Security.
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue.
-
-xsa188.patch           Xen 4.4.x
-
-$ sha256sum xsa188*
-9f374c2e1437ad71369f41275e7b333e7b7691a783ba693ee567c899bd78c722  xsa188.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Version: GnuPG v2.0.22 (GNU/Linux)
 
-iQEcBAEBAgAGBQJX0VLuAAoJEIP+FMlX6CvZNjYH/RVxqYegZpfj0aiT5pai/a0i
-PgPSoMccGoSSVTXzivXUTZS3fTIqfTpd4SQHu2Q2dUqbb6zcPqd3NzF7Jl9IMwLk
-JHZwPYXOsZ0D6thFAMYFpjHOWXv7+1Mw7Np82PaA2yAUad+kxUORiJeL1RAE6zG/
-xsAR7PTl2mK1Ae9lqDtKLijn0cnicAYoKiSlta8M0T5Sp79CT3xsfHiBbaWUBCcI
-gmOW76RUbfOwn2kmhFJ4X5bwSzEhM93pQu7hJCmuwAADc8ezEEFv2lsUm5W8hkmW
-a8V2nuqM+prbxY8JI3XbKJm5YrmHQpnX4FiBn13DZeUsaukT4Q1EltP1z/XvJto=
-=jzF5
+iQIcBAEBAgAGBQJVKJehAAoJEBYNRVNeJnmTybMP/3DWo6jalgRZfeMbUgMmxkWP
+x061rGGhT/TUylD7MWqbXfOAXqYdxJcKq9kxY9vw36FQYFCemx3UFjGzuR0m/hOD
+Xar7cywx5ks3gilPV97BBdgdxdDGUToHHAuTc6bOI0tzVhuKxdUhMaqnMcvYoi62
+giI9dWZJXfy6GdZjkZWf/nsMCGn1FdGqjBSispmnRDEXZ98RWlIePldYLjxT8yMH
+L6sUZhfqb4Tqo7QOj5vDE/0VDGCiro+Hz5cVyz9tTFh4kME48gCpXAMk0//Y7JnL
+zMi5hDCl1wNT1qm095Jt2pv8uCwgKqI5bgKw0PkD/c+n5KGqHod3OsWzuXv/GHaC
+4JKY9G36W9lO2LG87C8VUhdcCHfuoToAZkP7ynHYEhe5/UvcNbw7BJtKvfPR1IGd
+zR8MD+mLDLyZr6htgbBciUVsMqqXnwOktUZV3Cbs1KMh6U/jhTyhXqRGJGEtka9Q
+/AO3Cuf98RHiJPzlpRvVuLTnYSEiLrWiuARVNOz/GFGBsFGtGhSs5WvzwATa8g2K
+hQeCmRepxGK6VbiGqD+Q8N7stZVo0hi7UC/PL629gDdzkBLZiL/kF6cX0xhKIeI3
+jWB7DhhxpMw+J5HGdubIGL0YXbmjtax9Z+DSEJML8nOpA9jr1oW0T/GIT+XPGFnM
+UBRuPuSoYq57JaVmqM/c
+=4ssd
 -----END PGP SIGNATURE-----
 
---=separator
-Content-Type: application/octet-stream; name="xsa188.patch"
-Content-Disposition: attachment; filename="xsa188.patch"
-Content-Transfer-Encoding: base64
-
-ZXZ0Y2huLWZpZm86IHByZXZlbnQgdXNlIGFmdGVyIGZyZWUKCmV2dGNobl9m
-aWZvX2luaXRfY29udHJvbCgpIGNhbGxzIGV2dGNobl9maWZvX2Rlc3Ryb3ko
-KSBvbiBhbiBlcnJvcgpwYXRoLCBsZWFkaW5nIHRvIGNsZWFudXBfZXZlbnRf
-YXJyYXkoKSB3aGljaCBmcmVlcyBkLT5ldnRjaG5fZmlmbwp3aXRob3V0IGFs
-c28gY2xlYXJpbmcgdGhlIHBvaW50ZXIuIE90b2ggdGhlIGJ1bGsgb2YKZXZ0
-Y2huX2ZpZm9faW5pdF9jb250cm9sKCkgaXMgZGVwZW5kZW50IG9uIGQtPmV2
-dGNobl9maWZvIGJlaW5nIE5VTEwuCgpUaGlzIGlzIFhTQS0xODguCgpSZXBv
-cnRlZC1ieTogTWlraGFpbCBWIEdvcm9iZXRzIDxtaWtoYWlsLnYuZ29yb2Jl
-dHNAaW50ZWwuY29tPgpTdWdnZXN0ZWQtYnk6IE1pa2hhaWwgViBHb3JvYmV0
-cyA8bWlraGFpbC52Lmdvcm9iZXRzQGludGVsLmNvbT4KU2lnbmVkLW9mZi1i
-eTogSmFuIEJldWxpY2ggPGpiZXVsaWNoQHN1c2UuY29tPgoKLS0tIGEveGVu
-L2NvbW1vbi9ldmVudF9maWZvLmMKKysrIGIveGVuL2NvbW1vbi9ldmVudF9m
-aWZvLmMKQEAgLTQ4Miw2ICs0ODIsNyBAQCBzdGF0aWMgdm9pZCBjbGVhbnVw
-X2V2ZW50X2FycmF5KHN0cnVjdCBkCiAgICAgZm9yICggaSA9IDA7IGkgPCBF
-VlRDSE5fRklGT19NQVhfRVZFTlRfQVJSQVlfUEFHRVM7IGkrKyApCiAgICAg
-ICAgIHVubWFwX2d1ZXN0X3BhZ2UoZC0+ZXZ0Y2huX2ZpZm8tPmV2ZW50X2Fy
-cmF5W2ldKTsKICAgICB4ZnJlZShkLT5ldnRjaG5fZmlmbyk7CisgICAgZC0+
-ZXZ0Y2huX2ZpZm8gPSBOVUxMOwogfQogCiBzdGF0aWMgdm9pZCBzZXR1cF9w
-b3J0cyhzdHJ1Y3QgZG9tYWluICpkKQo=
-
---=separator--
+--T8LahmFrIXOgABUm9BcS93janGcAgo5U7--
