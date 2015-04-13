@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3276" "Wednesday" "8" "April" "2015" "13:03:24" "+0000" "=?UTF-8?B?IlRob21hcyBCLiBSw7xja2VyIg==?=" "thomas@ruecker.fi" "<5525271C.6080907@ruecker.fi>" "105" "[oss-security] CVE Request for Icecast 2.3.3, 2.4.0, 2.4.1, fixed in 2.4.2" nil nil nil "4" "2015040813:03:24" "[oss-security] CVE Request for Icecast 2.3.3, 2.4.0, 2.4.1, fixed in 2.4.2" (number mark "        thomas@rueck Apr  8  105/3276  " thread-indent "\"[oss-security] CVE Request for Icecast 2.3.3, 2.4.0, 2.4.1, fixed in 2.4.2\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["500" "Monday" "13" "April" "2015" "10:17:27" "-0500" "Mark Felder" "feld@feld.me" "<1428938247.1254338.253090497.164C53F0@webmail.messagingengine.com>" "15" "Re: [oss-security] CVE request: freebsd/sh stack overflow vulnerability" nil nil nil "4" "2015041315:17:27" "[oss-security] CVE request: freebsd/sh stack overflow vulnerability" (number mark "        feld@feld.me Apr 13   15/500   " thread-indent "\"Re: [oss-security] CVE request: freebsd/sh stack overflow vulnerability\"\n") "<CAEQi4beSswmoiqOsGHDH8U6rqWDXtyNgHnMmKrYsh+PhZ9PxMw@mail.gmail.com>" ("<CAEQi4beSswmoiqOsGHDH8U6rqWDXtyNgHnMmKrYsh+PhZ9PxMw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 1902 invoked by uid 550); 8 Apr 2015 13:05:55 -0000
+Received: (qmail 32317 invoked by uid 550); 13 Apr 2015 15:17:40 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,120 +11,47 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 32726 invoked from network); 8 Apr 2015 13:03:42 -0000
-Message-ID: <5525271C.6080907@ruecker.fi>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
+Received: (qmail 32298 invoked from network); 13 Apr 2015 15:17:39 -0000
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=feld.me; h=
+	content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-sasl-enc
+	:x-sasl-enc; s=mesmtp; bh=liGDy2jCeYiRUCuClehxcCo6NWU=; b=Zz8VMY
+	/dW9/DTtYpnZwzdOp7ggio12gS1cwYV93U3BFYmKkRnWpll4EU5q7FYqwjdg1VGV
+	x2CwnJmVKigTIOEuCp8N9nFXIwwv4aXfdGKIZBBP9Lj5byV6MYgBUE2tK1ADfz26
+	3QITrpVlou5YNHYJiY3uku+K5vh/qrA+7Pf4o=
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=content-transfer-encoding:content-type
+	:date:from:in-reply-to:message-id:mime-version:references
+	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=liGDy2jCeYiRUCu
+	ClehxcCo6NWU=; b=QJEjMOz7gw/ydjkBoaXYqqjcWaOPCoo8s1jehtYINEzd91A
+	GV8AtAt6QTU5UkKEQ6dOnz0uf26HwT+kZicQFw5OJSTMVVM0GxfHrHNgIgcJfOMr
+	SrcMd8ISg5Rv+/LlusCNgyGVVIaZxH4ax7XBidinId+0Q+sBUAdTwKqvpKio=
+Message-Id: <1428938247.1254338.253090497.164C53F0@webmail.messagingengine.com>
+X-Sasl-Enc: Yy0w1HwFVk+i/fijimwfmHjlhkuMH7iZAlY3C3M/nbpZ 1428938247
 MIME-Version: 1.0
-Content-Type: multipart/alternative;
- boundary="------------000101090604000704090404"
-Date: Wed, 08 Apr 2015 13:03:24 +0000
-From: =?UTF-8?B?IlRob21hcyBCLiBSw7xja2VyIg==?= <thomas@ruecker.fi>
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+X-Mailer: MessagingEngine.com Webmail Interface - ajax-0b3c2300
+In-Reply-To: <CAEQi4beSswmoiqOsGHDH8U6rqWDXtyNgHnMmKrYsh+PhZ9PxMw@mail.gmail.com>
+References: <CAEQi4beSswmoiqOsGHDH8U6rqWDXtyNgHnMmKrYsh+PhZ9PxMw@mail.gmail.com>
+Date: Mon, 13 Apr 2015 10:17:27 -0500
+From: Mark Felder <feld@feld.me>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE Request for Icecast 2.3.3, 2.4.0, 2.4.1, fixed in 2.4.2
+Subject: Re: [oss-security] CVE request: freebsd/sh stack overflow vulnerability
 To: oss-security@lists.openwall.com
 
---------------000101090604000704090404
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
 
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Tue, Mar 31, 2015, at 05:42, wzt wzt wrote:
+> hi=EF=BC=9A
+>     I found sh have a stack overflow bug on freebsd(9.0-10.0),  it may be
+> triggered on all freebsd systems, but i have not tested yet. the poc
+> below
+> is tested on freebsd10.0 amd64 arch:
+>=20
 
+I brought this to the attention of jilles@, the current sh(1) maintainer
+in FreeBSD. He responded:
 
-A new version of Icecast was released, following the discovery of a
-remote denial of service vulnerability by Juliane Holzt earlier today.
-
-Affected Icecast versions:
-2.3.3(first release with stream_auth)
-2.4.0
-2.4.1
-
-Fix released in:
-2.4.2
-
-We do not release fixes for:
-2.3.3: EOL
-2.4.0: not necessary, as 2.4.1 was a bugfix release for 2.4.0.
-
-
-On 04/08/2015 12:52 PM, "Thomas B. Rücker" wrote:
->
-> Today we became aware of a bug in the Icecast code handling source
-> client URL-authentication and are releasing a security fix.
-> The bug was discovered by Juliane Holzt, who we'd like to thank for
-> bringing this to our attention and providing us with further details.
->
-[...]
-> The bug can only be triggered if "stream_auth" is being used, for example:
-> <mount>
->   <mount-name>/test.ogg</mount-name>
->   <authentication type="url">
->     <option name="stream_auth" value="http://localhost/auth"/>
->   </authentication>
-> </mount>
->
-> This means, that all installations that use a default configuration are
-> NOT affected.The default configuration only uses <source-password>.
-> Neither are simple mountpoints affected that use <password>.
->
-> A workaround, if installing an updated package is not possible, is to
-> disable "stream_auth"and use <password> instead.
->
-> As far as we understand the bug only leads to a simple remote denial of
-> service. The underlying issue is a null pointer dereference. For
-> clarity: No remote code execution should be possible, server just
-segfaults.
->
-> Proof of concept:
-> curl "http://example.org:8000/admin/killsource?mount=/test.ogg"
-> If the server is configured as above, then it will segfault.A source
-> client does not need to be connected to that mount point.
-> As Juliane points out: "This only happens when making a request WITHOUT
-> login credentials."
-> This means, that sadly exploiting this does not require any
-> authentication, just the knowledge of a mount point configured with
-> stream_auth.
->
-> Original Debian bug report:
-> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=782120
->
-> Xiph.org ticket:
-> https://trac.xiph.org/ticket/2191
->
-> Sources:
-> http://downloads.xiph.org/releases/icecast/icecast-2.4.2.tar.gz
-> SHA256 aa1ae2fa364454ccec61a9247949d19959cb0ce1b044a79151bf8657fd673f4f
-> git-tag: release-2.4.2
->
-> As usual there are up to date packages available for most mainstream
-> distributions. We've moved from my personal project to an official
-> Xiph.org project on openSUSE OBS:
-> https://build.opensuse.org/package/show/multimedia:xiph/icecast
-> Individual repositories are here:
->
-> A copy of the openSUSE OBS multimedia signing key is here:
-> http://icecast.org/multimedia-obs.key
->
-> The Windows version will be updated later today.
->
-[...]
-> We are requesting a CVE ID through oss-security and I will update the
-> ticket once we have received it.
-
-Thanks in advance
-
-
-Thomas B. Ruecker
-
-Icecast maintainer
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-
-iEYEARECAAYFAlUlJxsACgkQfkVKO9VkYGno+QCeMgppXgELGbuU8asfEKUH+yn2
-XZkAnAx2j9qJPTNOb8+FMnMe5TwLWdYI
-=f+Dp
------END PGP SIGNATURE-----
-
-
---------------000101090604000704090404--
+"Since unset command is equivalent to unset -v command in our sh, this
+is equivalent to sh -c 'f() { f; }; f', and not a vulnerability."
