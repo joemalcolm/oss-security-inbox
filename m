@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2586" "Wednesday" "4" "March" "2020" "06:55:28" "-0800" "Igor Seletskiy" "i@cloudlinux.com" "<CA+-XxSFy2dV24pSUDTcWX3-yoEipaqH+8GbGWEqCE_GyUCi=RA@mail.gmail.com>" "66" "Re: [oss-security] CoreOS leaving distros/linux-distros on May 26, handing off responsibilities" "^Date:" nil nil "3" "2020030414:55:28" "[oss-security] CoreOS leaving distros/linux-distros on May 26, handing off responsibilities" (number mark "        i@cloudlinux Mar  4   66/2586  " thread-indent "\"Re: [oss-security] CoreOS leaving distros/linux-distros on May 26, handing off responsibilities\"\n") "<CAF=P+=6oF_93xq7VwdiDXu-K19NkVTx7B5c0pwr8-q14jQ2UTg@mail.gmail.com>" ("<CAF=P+=6oF_93xq7VwdiDXu-K19NkVTx7B5c0pwr8-q14jQ2UTg@mail.gmail.com>") nil nil nil nil nil nil nil "Re: [oss-security] CoreOS leaving distros/linux-distros on May 26, handing off responsibilities" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1750" "Monday" "13" "April" "2015" "20:02:40" "+1200" "Matthew Daley" "mattd@bugfuzz.com" "<CAD3CaneMq33seETYz_2OkntNNBgLkas438ULApSOCbGzUxHkNw@mail.gmail.com>" "42" "[oss-security] Re: CVE request / Advisory: Floating Social Bar (Wordpress plugin) 1.0.1 - 1.1.6" nil nil nil "4" "2015041308:02:40" "[oss-security] Re: CVE request / Advisory: Floating Social Bar (Wordpress plugin) 1.0.1 - 1.1.6" (number mark "        mattd@bugfuz Apr 13   42/1750  " thread-indent "\"[oss-security] Re: CVE request / Advisory: Floating Social Bar (Wordpress plugin) 1.0.1 - 1.1.6\"\n") "<20150413062510.A338D1BE0A6@smtpvbsrv1.mitre.org>" ("<CAD3Cand-BMAZvKPWt7VORYxzZGemmYPqdKmp2F-m1b2izT4_6g@mail.gmail.com>" "<20150413062510.A338D1BE0A6@smtpvbsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 9228 invoked by uid 550); 4 Mar 2020 15:02:09 -0000
+Received: (qmail 9782 invoked by uid 550); 13 Apr 2015 08:02:52 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,108 +11,74 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5953 invoked from network); 4 Mar 2020 14:56:17 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=cloudlinux-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=DhAz+7cN6sfMvHSmt/2hjzrAAI1NyMWCmolwE4RhYlw=;
-        b=yBspUNPQP4moM9YYub17rJbfEgK1X4YC1e9M2qe+tJGdggSoH1E1haMtlbtRKkWxJ4
-         Y0EcGlXGv7qM8DpaO168pi4YHPWjdGA+ly5k0SWSKiMC5WcNlLfspxMOm972eIftSxx8
-         Z5CjNN1elYY6iLfUkmT98o/Juz1QiE4hoJViHuZNRso6nRoRwvL9zsU8q0DTs2aZommy
-         l5aXbLLk2Kb7dFgeQh9B7VpGjT//lPYeK+ol3BtVx6wujnN1QeaqGuKmzMqULiA0LwLv
-         E2xjl9eBeFyDNkvZU4W3bO9MOvE6Bx4hOScHrxxEL5Dlb9jZ7ii5CEgVqxmmGKhK7NVp
-         o6qA==
+Received: (qmail 9763 invoked from network); 13 Apr 2015 08:02:51 -0000
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=DhAz+7cN6sfMvHSmt/2hjzrAAI1NyMWCmolwE4RhYlw=;
-        b=IYdhnPpJA36Myy8diV940Nf8rTi/l8B16c2IkQKNJwDWHWxE8H/i2tDIMC9LaTdr0r
-         Qa//rSI4bfh2+rb+yaNRlL9CM+vd7P2+z5Tgv+CqD3CVBdAHib06KdQSox40MTqd/0ZQ
-         7tfjbDhSpyBjcwga7q/E3eazBgeBlnLRUbCd5vhoB9TtZpavCZeBPDoZcWCK+YFgf+Y4
-         os+A+BDyd31Zqond3IcRpQPeRLjsKhGV7vH42RzU09clLHD7ePkZXf5W/ZDPZm2PfEvV
-         8sT5iGAvxGoqFlnmlKrI+5r0PNOLlBXahy8bLUuS83LVagzsYdn2w/NBnN8SWMITJphu
-         1/dA==
-X-Gm-Message-State: ANhLgQ1j8s8DYMFlRTKypBmmB6x7xnJXfHciQbdkQmANZO8U8CIoSBZL
-	YWBLHq5q0IsxM9/Dq1hrk2SJjM/rYqBFnqyFgCvDmUFF
-X-Google-Smtp-Source: ADFU+vtTZcRnLSgYCSf9OmEffGOr9SsFNMCLWvkT1aGpw2LD0uQrVChfZVUGpGMJZ5TSlAaRZ5QVcaHySZTblH5SXMc=
-X-Received: by 2002:ac2:47ec:: with SMTP id b12mr2268240lfp.106.1583333765459;
- Wed, 04 Mar 2020 06:56:05 -0800 (PST)
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=PA2cjOMxMOtNP7Ag6fUar2peJhDI24KGT2V1RiIseIA=;
+        b=LByhSni1l1kf/bI/2aC0w+P1JQ5C4SNXXhvKeiElTi6847WS8MXuL8aqJiLKTkOE5e
+         ak4yD4x67lENLXZv/zerQqaTmyUZ3NheT/8ZqFO84AHZTHvTxrx55uol9F4S4ELdd07c
+         B7KkNdi5CLawhXS8qNI/WC5Snxpyp0/H/j5nxWvsF/oidbTo4GAgYuBPIYFszFiaaenS
+         Ifxq9KORh4zDfvKDfhFnacfrjVZA6xNFEIw/3JVp6vM3x1CF1BJo6ZyCEcNKiFlwfOvT
+         3spKVqIWHFsGwNzrxQIFxXbTtAU33vv8wLulZTAi+jCiUsC8GfruTJ8VHa43Rg/W3VkX
+         k3Ew==
+X-Gm-Message-State: ALoCoQllm/5176L0e1dTiRvz5+yQPMzOosWJOSzVI+yUxJ0kvTgEwzz/y3cUw2Iwskc+9VPUS9sr
 MIME-Version: 1.0
-References: <CAF=P+=6oF_93xq7VwdiDXu-K19NkVTx7B5c0pwr8-q14jQ2UTg@mail.gmail.com>
-In-Reply-To: <CAF=P+=6oF_93xq7VwdiDXu-K19NkVTx7B5c0pwr8-q14jQ2UTg@mail.gmail.com>
-Message-ID: <CA+-XxSFy2dV24pSUDTcWX3-yoEipaqH+8GbGWEqCE_GyUCi=RA@mail.gmail.com>
-Content-Type: multipart/alternative; boundary="000000000000a6e09805a0089e19"
-Date: Wed, 4 Mar 2020 06:55:28 -0800
-From: Igor Seletskiy <i@cloudlinux.com>
+X-Received: by 10.180.96.200 with SMTP id du8mr19692963wib.54.1428912160336;
+ Mon, 13 Apr 2015 01:02:40 -0700 (PDT)
+In-Reply-To: <20150413062510.A338D1BE0A6@smtpvbsrv1.mitre.org>
+References: <CAD3Cand-BMAZvKPWt7VORYxzZGemmYPqdKmp2F-m1b2izT4_6g@mail.gmail.com>
+	<20150413062510.A338D1BE0A6@smtpvbsrv1.mitre.org>
+Message-ID: <CAD3CaneMq33seETYz_2OkntNNBgLkas438ULApSOCbGzUxHkNw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Cc: oss-security@lists.openwall.com
+Date: Mon, 13 Apr 2015 20:02:40 +1200
+From: Matthew Daley <mattd@bugfuzz.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CoreOS leaving distros/linux-distros on May 26,
- handing off responsibilities
-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: CVE request / Advisory: Floating Social Bar (Wordpress plugin)
+ 1.0.1 - 1.1.6
+To: cve-assign@mitre.org
 
---000000000000a6e09805a0089e19
-Content-Type: text/plain; charset="UTF-8"
+On 13 April 2015 at 18:25,  <cve-assign@mitre.org> wrote:
+>> I'd like to request a CVE ID for this issue. This is the first such
+>> request; this message serves as an advisory as well.
+>>
+>> Affected software: Floating Social Bar (Wordpress plugin)
+>> Affected versions: 1.0.1 - 1.1.6
+>> Website: https://wordpress.org/plugins/floating-social-bar/
+>>
+>> Description: One of the plugin's unauthenticated AJAX action handlers
+>> is vulnerable to a stored cross-site scripting vulnerability. By
+>> invoking the action with certain parameters, it is possible for
+>> unauthenticated attackers to force the persistent injection of
+>> arbitrary script across the site's post pages.
+>>
+>> Fixed version: 1.1.7
+>> Fix: https://plugins.trac.wordpress.org/changeset/1129648/floating-social-bar/trunk
+>> Changelog: https://plugins.trac.wordpress.org/changeset/1129648/floating-social-bar/trunk#file5
+>
+> Use CVE-2015-3299 for the specific issue in your "Description" section
+> above. It seems conceivable that 1129648 also fixed something else,
+> e.g.,
+>
+>   1. Maybe the
+>      "-     add_action( 'wp_ajax_nopriv_fsb_save_order', array( $this, 'save_order' ) );"
+>
+>      code change means that wp_ajax_nopriv_fsb_save_order allowed
+>      bypassing intended access control, even if the attacker did not
+>      supply an XSS payload.
 
-CloudLinux is OK with this plan.
+Yes. It wasn't intended for non-administrators to be able to adjust
+the services by executing the action.
 
-Regards,
-Igor Seletskiy |  CEO
-CloudLinux OS <https://cloudlinux.com/cloudlinuxos>   |   KernelCare
-<https://www.cloudlinux.com/kernelcare>   |   Imunify360
-<http://imunify360.com/>
+>
+>   2. Maybe the patched code can help to prevent a CSRF attack against
+>      an authenticated action handler.
 
-Get 24/7 free, exceptionally good support at cloudlinux.zendesk.com
-Follow us on twitter for technical updates: @CloudLinuxOS
-<https://twitter.com/cloudlinuxos>
+Again, yes. Administrators could be forced to execute the action with
+an attacker's parameters via a CSRF attack. Nonces have been added to
+stop this.
 
-
-On Tue, Mar 3, 2020 at 3:42 AM Benjamin Gilbert <benjamin.gilbert@coreos.com>
-wrote:
-
-> Hi all,
 >
-> Red Hat recently announced [1] that CoreOS Container Linux will reach
-> end-of-life on May 26.  The Container Linux team will be leaving the
-> distros lists on that date, and will need to hand off our maintenance
-> responsibilities to other distros.  We're currently handling [2]:
->
-> Administrative-1: Promptly review new issue reports for meeting the
-> list's requirements and confirm receipt of the report and, when
-> necessary, inform the reporter of any issues with their report (e.g.,
-> obviously not actionable by the distros) and request and/or propose
-> any required yet missing information (most notably, a tentative public
-> disclosure date/time) - primary: CoreOS, backup: Oracle
->
-> Administrative-2: If the proposed public disclosure date is not within
-> list policy, insist on getting this corrected and propose a suitable
-> earlier date - primary: CoreOS, backup: CloudLinux
->
-> Administrative-6: If multiple issues are reported at once, see if any
-> of them can reasonably be made public sooner than the rest, and if so
-> help untangle them and stay on top of their disclosure process -
-> primary: CoreOS, backup: CloudLinux
->
->
-> Oracle isn't signed up for any other tasks, so it seems natural for
-> them to move up to primary on #1.  In addition to being backup on #2
-> and #6, CloudLinux is primary on Administrative-3 (evaluate if the
-> issue is already public).  In my experience it makes sense to handle
-> #1 and #2 together, so: Oracle, would you be willing to take primary
-> on #1 and #2, and CloudLinux, what would you think of moving up to
-> primary on #6?
->
-> It'd also be good to get volunteers for the backup slots.  Any takers?
->
-> We plan to continue executing our current responsibilities until May
-> 26, but if other distros want to take over our roles sooner for ease
-> of bookkeeping, we're open to that.
->
-> Best,
-> --Benjamin Gilbert
->
-> [1]: https://coreos.com/os/eol/
-> [2]:
-> https://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
->
-
---000000000000a6e09805a0089e19--
+> If so, then additional CVE IDs would be needed.
