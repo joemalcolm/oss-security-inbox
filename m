@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4008" "Monday" "18" "March" "2019" "22:45:09" "+0100" "Erik Winkels" "erik.winkels@open-xchange.com" "<543049085.1124.1552945509406@appsuite-guard.open-xchange.com>" "71" "[oss-security] PowerDNS Security Advisory 2019-03" nil nil nil "3" "2019031821:45:09" "[oss-security] PowerDNS Security Advisory 2019-03" (number mark "U       erik.winkels Mar 18   71/4008  " thread-indent "\"[oss-security] PowerDNS Security Advisory 2019-03\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] PowerDNS Security Advisory 2019-03" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1667" "Tuesday" "14" "April" "2015" "21:24:19" "+0100" "Ben Hutchings" "ben@decadent.org.uk" "<1429043059.3211.58.camel@decadent.org.uk>" "47" "[oss-security] TCP Fast Open local DoS in some Linux stable branches" nil nil nil "4" "2015041420:24:19" "[oss-security] TCP Fast Open local DoS in some Linux stable branches" (number mark "        ben@decadent Apr 14   47/1667  " thread-indent "\"[oss-security] TCP Fast Open local DoS in some Linux stable branches\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 5257 invoked by uid 550); 18 Mar 2019 22:10:31 -0000
+Received: (qmail 3339 invoked by uid 550); 14 Apr 2015 20:30:50 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,99 +11,66 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 30099 invoked from network); 14 Apr 2015 20:24:41 -0000
+Message-ID: <1429043059.3211.58.camel@decadent.org.uk>
+Content-Type: multipart/signed; micalg="pgp-sha512";
+	protocol="application/pgp-signature"; boundary="=-MWPrnU1FmI+Zjw7thT5L"
+X-Mailer: Evolution 3.12.9-1+b1 
+Mime-Version: 1.0
+X-SA-Exim-Connect-IP: 192.168.4.249
+X-SA-Exim-Mail-From: ben@decadent.org.uk
+X-SA-Exim-Scanned: No (on shadbolt.decadent.org.uk); SAEximRunCond expanded to false
+Cc: 782515@bugs.debian.org
+Date: Tue, 14 Apr 2015 21:24:19 +0100
+From: Ben Hutchings <ben@decadent.org.uk>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 14020 invoked from network); 18 Mar 2019 21:45:21 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=open-xchange.com;
-	s=201705; t=1552945509;
-	bh=FXoXQ3n/xoU49RjGlbhpHoMQBSgHon55IF2zRztsd7w=;
-	h=Date:From:Reply-To:To:Subject:From;
-	b=q2onR6hRQt4xAkPlVHrCBXG7w+DZ3IIpRi/m04zTmL2zJ01njSGok4tKEo4cIeXYG
-	 gEtL9CC+yTb+kOoj10WphJuTK2hTiQdgE1LipfzqmodAeMVXzTCmfPT6m8EFNOr7Xz
-	 3HwAR72BNRh+VlwvLSXIuMsVeQ9hzhqKAty9yP43H7aenoVkRbduYqc3OsQrl8ZMRB
-	 9ZCGFddrY4ytEswx5K14HO2nvUv+7A//z+/4XQ5Vc0oNbFs773sjpkrR7b51GzZUgK
-	 43wzQia/0u46QJx8YkMLh1y3JcjahjkKjTylFsiZ41ORIVbFi/GTf3+DqR8f60Sw6F
-	 cZzgScuK4h04g==
-Date: Mon, 18 Mar 2019 22:45:09 +0100 (CET)
-From: Erik Winkels <erik.winkels@open-xchange.com>
-To: oss-security@lists.openwall.com
-Message-ID: <543049085.1124.1552945509406@appsuite-guard.open-xchange.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; 
-	boundary="----=_Part_1123_1904121797.1552945509404"
-X-Priority: 3
-Importance: Medium
-X-Mailer: Open-Xchange Mailer v7.10.1-Rev9
-X-Originating-Client: open-xchange-appsuite
-Subject: [oss-security] PowerDNS Security Advisory 2019-03
+Subject: [oss-security] TCP Fast Open local DoS in some Linux stable branches
+To: oss-security <oss-security@lists.openwall.com>
 
-------=_Part_1123_1904121797.1552945509404
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+--=-MWPrnU1FmI+Zjw7thT5L
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi all,
+There is a local DoS triggered by use of the TCP Fast Open option,
+specific to Linux stable branches, as a result of an incompletely
+backported bug fix:
 
-Today we released PowerDNS Authoritative Server 4.1.7 and 4.0.7, fixing an important security issue in the HTTP remote backend that has recently been reported to us [1].
+https://bugs.debian.org/782515
+http://thread.gmane.org/gmane.linux.network/359588
 
-The issue is that PowerDNS Authoritative Server, when the HTTP remote backend is used in RESTful mode (without post=1 set), can be tricked by a remote user into connecting to an attacker-specified HTTP server instead of the configured one, via a crafted DNS query.
+The 3.16.7-ckt stable branch is definitely affected, and I believe but
+haven't tested that the 3.10, 3.12, 3.13.11-ckt and 3.14 branches are
+also affected.
 
-This can be used to cause a denial of service by preventing the remote backend from getting a response, content spoofing if the attacker can time its own query so that subsequent queries will use an attacker-controlled HTTP server instead of the configured one, and possibly information disclosure if the Authoritative Server has access to internal servers.
+Please assign a CVE ID for this.
 
-This issue has been assigned CVE-2019-3871.
+Ben.
 
-PowerDNS Authoritative up to and including 4.1.6 is affected.
-Please note that at the time of writing, PowerDNS Authoritative 3.4 and below are no longer supported, as described in [2].
+--=20
+Ben Hutchings
+Editing code like this is akin to sticking plasters on the bleeding stump
+of a severed limb. - me, 29 June 1999
 
-The full security advisory is provided below, and can also be found at [3].
-
-We would like to thank Adam Dobrawy, Frederico Silva and GregoryBrzeski from HyperOne.com for finding and subsequently reporting this issue!
-
-Minimal patches are available at [4].
-
-[1]: https://github.com/PowerDNS/pdns/issues/7573
-[2]: https://doc.powerdns.com/authoritative/appendices/EOL.html
-[3]: https://docs.powerdns.com/authoritative/security-advisories/powerdns-advisory-2019-03.html
-[4]: https://downloads.powerdns.com/patches/2019-03/
-
-Best regards,
-Erik Winkels
-
-PowerDNS Security Advisory 2019-03: Insufficient validation in the HTTP remote backend
-======================================================================================
--  CVE: CVE-2019-3871
--  Date: March 18th 2019
--  Affects: PowerDNS Authoritative up to and including 4.1.6
--  Not affected: 4.1.7, 4.0.7
--  Severity: High
--  Impact: Denial of Service, Information Disclosure, Content spoofing
--  Exploit: This problem can be triggered via crafted queries
--  Risk of system compromise: No
--  Solution: Upgrade to a non-affected version
-
-An issue has been found in PowerDNS Authoritative Server when the HTTP remote backend is used in RESTful mode (without post=1 set), allowing a remote user to cause the HTTP backend to connect to an attacker-specified host instead of the configured one, via a crafted DNS query.
-This can be used to cause a denial of service by preventing the remote backend from getting a response, content spoofing if the attacker can time its own query so that subsequent queries will use an attacker-controlled HTTP server instead of the configured one, and possibly information disclosure if the Authoritative Server has access to internal servers.
-
-This issue has been assigned CVE-2019-3871.
-
-PowerDNS Authoritative up to and including 4.1.6 is affected.
-Please note that at the time of writing, PowerDNS Authoritative 3.4 and below are no longer supported, as described in https://doc.powerdns.com/authoritative/appendices/EOL.html .
-
-We would like to thank Adam Dobrawy, Frederico Silva and Gregory Brzeski from HyperOne.com for finding and subsequently reporting this issue!
-
-------=_Part_1123_1904121797.1552945509404
-Content-Type: application/pgp-signature
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment; filename=signature.asc
+--=-MWPrnU1FmI+Zjw7thT5L
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
 
 -----BEGIN PGP SIGNATURE-----
-Version: BCPG v1.60
+Version: GnuPG v2
 
-iQEcBAABCgAGBQJckBFlAAoJEG/8M0ObDQTf38IH/3WClLYSYS8LYkiSCFzIMBwd
-eu3+9ovbAK2pVS1YjY2Ru+6oJCGMxRlQIiKwpUW364h+PMReydIOqpg9mbTY3Uam
-7cg3AtLtHQlmRDkNMhdASf7ai9/SJJVskzyLn0jYKW0nnqeJcarh/hKKc5tHOYAe
-2AUFYSwbA1TKfl9r3Wxjhd2KoGSYX8yR4+mmdI8Fr3RnRfAwA1Pv3dHnBNTQmk0g
-DElzSDKPSYfJiXYCnopKAhDFRiIEWk9UL5ZLgH3LDtjVt1PAxZ6WU1dJ7qccNWZW
-K8KQeIAhcuW76vXVN4v+k/iFkSWSdxKhOTKUPphJHbBPMdN2+0ZjsJ8hV0uw14Q=
-=oQYu
+iQIVAwUAVS13d+e/yOyVhhEJAQq54RAAzlLm8l7LtFuqym0O4a80b0bpn0MDozV/
+Nacu1clcpmBlz89cQ0hgsrDFZJV+pa5HWzRxKSnlcgUc1HjZjpag7q573bnOyRGx
+k4c9UE9S+b8bWEbBLNxzY7gfeid2wu6MDxdyjDN4ujbaRrgJQNlkjBCaK4cAMuTi
+fIre6pDK/AQA3n17L9uWh1OuvHOsThe5/8Nn+0NabVB3eyjWga6LbFrWQLIV5RNv
+tKDAAj7O1Tc7r04i+ZTpdZq4Abm/jsPWwCFuYrIRwDyuBYLIb5Xv8jkmn6kjFEGQ
+s03Yfj0aqf923VGyJxMBxCRpHL8dGlsPXrLcHjfRhgO0xqKjdoovzySFhqti0OnN
+aO0LHhZ1Rd8MVNGp0EImlS5p7Kc1pUMOonk13UrbcyhtI3qwJcBT0+k7I3kxqNCz
+FGmybBaUX6Ayf0WoksWNRIFrVJgZQwj1YT0AouNBzaxm2tvEY9BoJVNp0UMuhhSY
+k363SYys86FcSSm/dQcxCQskXub+yf50d4yv/pZ8+/+GgqZpUqMgC0a5XlXccQ7l
+9wO4JJE0l9TU3HdGTh/jUzcZqncg7+3JmCkd0K8V0dNuXFEa3aYpymhfTl7BdHV4
+r5m73RIrNYSU1DjIvQ52vOiItK6OHC1pneu1kFG9DoTWh9VKRWhVAqIF36uc8I97
+L4NUc+/9OxI=
+=iua7
 -----END PGP SIGNATURE-----
 
-------=_Part_1123_1904121797.1552945509404--
+--=-MWPrnU1FmI+Zjw7thT5L--
