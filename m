@@ -1,4 +1,9 @@
-Received: (qmail 27748 invoked by uid 550); 4 Nov 2025 18:01:18 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["13998" "Tuesday" "14" "April" "2015" "14:51:13" "-0400" "Matthew Beale" "mbeale@nestlabs.com" "<0EAF80F9-DDC6-44EE-BBAE-C98EC703B564@nestlabs.com>" "423" "[oss-security] [CVE-2015-1866] Ember.js XSS Vulnerability With {{view \"select\"}} Options" nil nil nil "4" "2015041418:51:13" "[oss-security] [CVE-2015-1866] Ember.js XSS Vulnerability With {{view \"select\"}} Options" (number mark "        mbeale@nestl Apr 14  423/13998 " thread-indent "\"[oss-security] [CVE-2015-1866] Ember.js XSS Vulnerability With {{view \"select\"}} Options\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 3184 invoked by uid 550); 14 Apr 2015 19:21:28 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,65 +11,460 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 28525 invoked from network); 4 Nov 2025 17:59:40 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-	s=protonmail3; t=1762279171; x=1762538371;
-	bh=srE8OgkUXZSh2O3kAxpgUYBwz661FpFsCKNBkWdBNBw=;
-	h=Date:To:From:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=wS2CAIlw79SE4HIgJRDxYyzxGz0m/SLhzRgBD0Q9LBSPR1JyGR0B0R+MFuOTXNgEB
-	 b+pbrpQmH+3XUczRGn4jIIS9kYPy0korViVB4i6OCBTU+0YIhITO4kfW04cYqTzgR7
-	 VIXk3iiU9Z0PkQ0JHfLSbQs0/KKIfOgAmeQF4OqvRlbCYU6nZLErcH/vgrmWDYXnuC
-	 UOfNpQ/uAAA8xbIOGkpW1mOsUbUxyaOUKjpdmdzM+6dSKAeQUB013pN5MJXci7zagf
-	 Khh9voYKzW/QHKHx5MoV/ttFBxY7MsBEYh+6+cw0DbSGx1oyLl6FK407vxuTlGD4XK
-	 zfCmynhzOevvw==
-Date: Tue, 04 Nov 2025 17:59:26 +0000
-To: oss-security@lists.openwall.com
-From: Art Manion <zmanion@protonmail.com>
-Message-ID: <b72f8f12-623a-4fc5-a7b6-001fa85d965c@protonmail.com>
-In-Reply-To: <86CF08FC-173D-42AE-B0FD-451FBCA0A724@edvina.net>
-References: <aP_msOoiyHJ_M4Yx@mertle> <20251027163220.8c7ede47-6b3a-4190-ad4b-e52761b341de@korelogic.com> <20251028014909.GA6430@openwall.com> <76f8e74c-d9cc-4f20-8061-488598f85fe7@protonmail.com> <20251101030054.GA3031@openwall.com> <007B59A3-903D-48C6-8295-764499DA5190@edvina.net> <aafcc993-868d-4bd7-90da-de0505c24bd8@protonmail.com> <86CF08FC-173D-42AE-B0FD-451FBCA0A724@edvina.net>
-Feedback-ID: 39015149:user:proton
-X-Pm-Message-ID: 049c7a8251bbeb9187b8ef3b500d041518dde3be
+Received: (qmail 29997 invoked from network); 14 Apr 2015 18:51:46 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=nestlabs.com; s=google;
+        h=from:to:subject:date:message-id:mime-version:content-type;
+        bh=iuCOEw3LNgWixH/qI8iZyyV4GDRuarQT0Wlmw2JMILw=;
+        b=Lz8h9adSSHrddOjmB9cavqfz4L+wdioCVLvCKwTxCVMX4DoASPYRZQslptXX8zz4ei
+         2Tgd5tGe3Y389yzeHzbw3l1TWETbqNxdTqK2FHBfp1Lk9KEwDNrqhhvgVOaEDtManqMa
+         SU5gzLNJ+5fHmUk74MbNQG2O/LdG87nwqYzcI=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
+         :content-type;
+        bh=iuCOEw3LNgWixH/qI8iZyyV4GDRuarQT0Wlmw2JMILw=;
+        b=Gl2E7ZG6ClN4/A/igkXt+D3EpwP7bterFgoj1GNE85KP3myU8j5HgXDVY79vEwdDz1
+         BEiN+SIcBPhbd5Cs5305LSZIIk4RURDJUMFLXM36nZTlvFZyaK2GTvRaOz0GvPoiRWM1
+         DQKPY9nmeSN/SYJyHLN1UihjfqEW5Ds5pTroNCFtI0rWQFIt4yh+NPdOKmzYOpttNDMP
+         BB5p/clKdmOR8pHAOO4afn2WHsOhW5HTnCQ7UyGJbPFpIf4n4IRKijQX/x44oq24M+GW
+         UsvCNsJdhG9OEMYifRIuNwOBQ62Oizj0MYfkToyq70/a9LNlLKSwGw2cEtHPhJJJNYxc
+         lV8Q==
+X-Gm-Message-State: ALoCoQnjsuyuzeAk1hHWMPc4Urvv8TzyvdbMpURU2/BjCMO74IHzgtgGQPtQMZFPHW94OZFDoByh
+X-Received: by 10.140.148.216 with SMTP id 207mr27892520qhu.62.1429037485110;
+        Tue, 14 Apr 2015 11:51:25 -0700 (PDT)
+Message-ID: <0EAF80F9-DDC6-44EE-BBAE-C98EC703B564@nestlabs.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [oss-security] Questionable CVE's reported against dnsmasq
+Content-Type: multipart/mixed;
+ boundary="=_MailMate_10ECB29D-3C4C-428A-98AA-DE21152FA492_="
+X-Mailer: MailMate (1.9.1r5084)
+Date: Tue, 14 Apr 2015 14:51:13 -0400
+From: "Matthew Beale" <mbeale@nestlabs.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] [CVE-2015-1866] Ember.js XSS Vulnerability With {{view "select"}}
+ Options
+To: ember-security@googlegroups.com, oss-security@lists.openwall.com
 
-On 2025-11-04 04:03, Olle E. Johansson wrote:
+--=_MailMate_10ECB29D-3C4C-428A-98AA-DE21152FA492_=
+Content-Type: text/plain; format=flowed
 
->> On 3 Nov 2025, at 19:07, Art Manion <zmanion@protonmail.com> wrote:
+[CVE-2015-1866] Ember.js XSS Vulnerability With {{view "select"}} 
+Options
 
->>>> CVEs against dnsmasq (CVE-2025-12198, CVE-2025-12199, CVE-2025-12200)
->>>> and Kamailio (CVE-2025-12204, CVE-2025-12205, CVE-2025-12206, and
->>>> CVE-2025-12207) mentioned in this thread are not yet disputed and have
->>>> no comments of this sort in their descriptions.
->>
->> I asked VulDB to mark the dnsmasq CVE IDs as disputed.
+Data passed as the label of select options may not be escaped before 
+being passed to the browser.
 
-The VulDB CNA decided to reject the dnsmasq CVE IDs.
+* Versions Affected: 1.10.0, 1.11.0, 1.11.1, 1.12.0 beta
+* Not affected: Versions prior to 1.10.0
+* Fixed Versions: 1.10.1, 1.11.2
 
->>> As part of the Kamailio project I can say that we did just become aware
->>> of these CVEs in your email. They do not make sense. Trying to get to
->>> the report, the config files used to provoke the issue can=E2=80=99t be=
- downloaded.
+Impact
+-------
 
-> We=E2=80=99ve gone back and this was our core developer=E2=80=99s reactio=
-n to the mail we got earlier to our security address:
->=20
-> "This is clearly spam, imo: vague/generic reporting, no explicit naming
-> of Kamailio ... the email was not sent from the vuldb.com server
-> but from mc20a2201.dnh.net ([185.46.57.114]) -- I would suggest to not
-> clink on the links, they might lead to malware, etc...
+In general, Ember.js escapes or strips any user-supplied content before 
+inserting it in strings that will be sent to innerHTML.  However, a 
+change made to the implementation of the select view means that any 
+user-supplied data bound to an option's label will not be escaped 
+correctly.
 
-I understand both sides of this problem.  Would it have helped if the VulDB
-notification included details such as these (from CVE-2025-12207)?
+In applications that use Ember's select view and pass user-supplied 
+content to the label, a specially-crafted payload could execute 
+arbitrary JavaScript in the context of the current domain ("XSS").
 
-  https://shimo.im/docs/vVqRMVMlrycMO63y/read
+All users running an affected release and binding user-supplied data to 
+the select options should either upgrade or use one of the workarounds 
+immediately.
 
- - Art
+Releases
+--------
+
+Releases are available on emberjs.com/builds/#/tagged
+
+Workarounds
+-----------
+
+Ensure that you escape any user-supplied value that you bind to an 
+option label. For example, if you bind a label:
+
+    {{view 'select' content=people optionLabelPath='content.name'}}
+
+Ensure that you escape the `name` value of each item `people` using 
+Ember.Handlebars.Utils.escapeExpression:
+
+    var people = this.get('people');
+    var peopleForSelect = people.map(function(person){
+      var newPerson = Object.create(person);
+      newPerson.name = Ember.Handlebars.escapeExpression(person.name);
+      return newPerson;
+    });
+    this.set('peopleForSelect', peopleForSelect);
+
+Credits
+-------
+
+This vulnerability was reported to us by Phillip Haines of Zestia. Many 
+thanks for working with us on identifying the issue and on the advisory 
+process.
+
+Best,
+
+-Matthew (Ember.js Core Team member)
+
+http://madhatted.com :: @mixonic
+
+diff --git a/packages/ember-htmlbars/lib/templates/select-option.hbs b/pa=
+ckages/ember-htmlbars/lib/templates/select-option.hbs
+new file mode 100644
+index 0000000..6471e4e
+--- /dev/null
++++ b/packages/ember-htmlbars/lib/templates/select-option.hbs
+@@ -0,0 +1 @@
++{{~view.label~}}
+diff --git a/packages/ember-views/lib/views/select.js b/packages/ember-vi=
+ews/lib/views/select.js
+index a68b58b..6a203ac 100644
+--- a/packages/ember-views/lib/views/select.js
++++ b/packages/ember-views/lib/views/select.js
+@@ -20,25 +20,12 @@ import { computed } from "ember-metal/computed";
+ import { A as emberA } from "ember-runtime/system/native_array";
+ import { observer } from "ember-metal/mixin";
+ import { defineProperty } from "ember-metal/properties";
+-import run from "ember-metal/run_loop";
+ =
+
+ import htmlbarsTemplate from "ember-htmlbars/templates/select";
++import selectOptionDefaultTemplate from "ember-htmlbars/templates/select=
+-option";
+ =
+
+ var defaultTemplate =3D htmlbarsTemplate;
+ =
+
+-var selectOptionDefaultTemplate =3D {
+-  isHTMLBars: true,
+-  render: function(context, env, contextualElement) {
+-    var lazyValue =3D context.getStream('view.label');
+-
+-    lazyValue.subscribe(context._wrapAsScheduled(function() {
+-      run.scheduleOnce('render', context, 'rerender');
+-    }));
+-
+-    return lazyValue.value();
+-  }
+-};
+-
+ var SelectOption =3D View.extend({
+   instrumentDisplay: 'Ember.SelectOption',
+ =
+
+diff --git a/packages/ember-views/tests/views/select_test.js b/packages/e=
+mber-views/tests/views/select_test.js
+index 0452770..53762db 100644
+--- a/packages/ember-views/tests/views/select_test.js
++++ b/packages/ember-views/tests/views/select_test.js
+@@ -4,6 +4,7 @@ import run from "ember-metal/run_loop";
+ import jQuery from "ember-views/system/jquery";
+ import { map } from "ember-metal/enumerable_utils";
+ import EventDispatcher from "ember-views/system/event_dispatcher";
++import SafeString from 'htmlbars-util/safe-string';
+ =
+
+ var trim =3D jQuery.trim;
+ =
+
+@@ -133,6 +134,44 @@ test("can specify the property path for an option's =
+label and value", function()
+   deepEqual(map(select.$('option').toArray(), function(el) { return jQue=
+ry(el).attr('value'); }), ["1", "2"], "Options should have values");
+ });
+ =
+
++QUnit.test("XSS: does not escape label value when it is a SafeString", f=
+unction() {
++  select.set('content', Ember.A([
++    { id: 1, firstName: new SafeString('<p>Yehuda</p>') },
++    { id: 2, firstName: new SafeString('<p>Tom</p>') }
++  ]));
++
++  select.set('optionLabelPath', 'content.firstName');
++  select.set('optionValuePath', 'content.id');
++
++  append();
++
++  equal(select.$('option').length, 2, "Should have two options");
++  equal(select.$('option[value=3D1] b').length, 1, "Should have child el=
+ements");
++
++  // IE 8 adds whitespace
++  equal(trim(select.$().text()), "YehudaTom", "Options should have conte=
+nt");
++  deepEqual(map(select.$('option').toArray(), function(el) { return jQue=
+ry(el).attr('value'); }), ["1", "2"], "Options should have values");
++});
++
++QUnit.test("XSS: escapes label value content", function() {
++  select.set('content', Ember.A([
++    { id: 1, firstName: '<p>Yehuda</p>' },
++    { id: 2, firstName: '<p>Tom</p>' }
++  ]));
++
++  select.set('optionLabelPath', 'content.firstName');
++  select.set('optionValuePath', 'content.id');
++
++  append();
++
++  equal(select.$('option').length, 2, "Should have two options");
++  equal(select.$('option[value=3D1] b').length, 0, "Should have no child=
+ elements");
++
++  // IE 8 adds whitespace
++  equal(trim(select.$().text()), "<p>Yehuda</p><p>Tom</p>", "Options sho=
+uld have content");
++  deepEqual(map(select.$('option').toArray(), function(el) { return jQue=
+ry(el).attr('value'); }), ["1", "2"], "Options should have values");
++});
++
+ test("can retrieve the current selected option when multiple=3Dfalse", f=
+unction() {
+   var yehuda =3D { id: 1, firstName: 'Yehuda' };
+   var tom =3D { id: 2, firstName: 'Tom' };
 
 
+diff --git a/packages/ember-htmlbars/lib/templates/select-option.hbs b/pa=
+ckages/ember-htmlbars/lib/templates/select-option.hbs
+new file mode 100644
+index 0000000..6471e4e
+--- /dev/null
++++ b/packages/ember-htmlbars/lib/templates/select-option.hbs
+@@ -0,0 +1 @@
++{{~view.label~}}
+diff --git a/packages/ember-views/lib/views/select.js b/packages/ember-vi=
+ews/lib/views/select.js
+index 721da86..3583904 100644
+--- a/packages/ember-views/lib/views/select.js
++++ b/packages/ember-views/lib/views/select.js
+@@ -21,26 +21,12 @@ import { computed } from "ember-metal/computed";
+ import { A as emberA } from "ember-runtime/system/native_array";
+ import { observer } from "ember-metal/mixin";
+ import { defineProperty } from "ember-metal/properties";
+-import run from "ember-metal/run_loop";
+ =
+
+ import htmlbarsTemplate from "ember-htmlbars/templates/select";
++import selectOptionDefaultTemplate from "ember-htmlbars/templates/select=
+-option";
+ =
+
+ var defaultTemplate =3D htmlbarsTemplate;
+ =
+
+-var selectOptionDefaultTemplate =3D {
+-  isHTMLBars: true,
+-  revision: 'Ember@VERSION_STRING_PLACEHOLDER',
+-  render: function(context, env, contextualElement) {
+-    var lazyValue =3D context.getStream('view.label');
+-
+-    lazyValue.subscribe(context._wrapAsScheduled(function() {
+-      run.scheduleOnce('render', context, 'rerender');
+-    }));
+-
+-    return lazyValue.value();
+-  }
+-};
+-
+ var SelectOption =3D View.extend({
+   instrumentDisplay: 'Ember.SelectOption',
+ =
+
+diff --git a/packages/ember-views/tests/views/select_test.js b/packages/e=
+mber-views/tests/views/select_test.js
+index eda11bd..8150e31 100644
+--- a/packages/ember-views/tests/views/select_test.js
++++ b/packages/ember-views/tests/views/select_test.js
+@@ -4,6 +4,7 @@ import run from "ember-metal/run_loop";
+ import jQuery from "ember-views/system/jquery";
+ import { map } from "ember-metal/enumerable_utils";
+ import EventDispatcher from "ember-views/system/event_dispatcher";
++import SafeString from 'htmlbars-util/safe-string';
+ =
+
+ var trim =3D jQuery.trim;
+ =
+
+@@ -133,6 +134,44 @@ QUnit.test("can specify the property path for an opt=
+ion's label and value", func
+   deepEqual(map(select.$('option').toArray(), function(el) { return jQue=
+ry(el).attr('value'); }), ["1", "2"], "Options should have values");
+ });
+ =
+
++QUnit.test("XSS: does not escape label value when it is a SafeString", f=
+unction() {
++  select.set('content', Ember.A([
++    { id: 1, firstName: new SafeString('<p>Yehuda</p>') },
++    { id: 2, firstName: new SafeString('<p>Tom</p>') }
++  ]));
++
++  select.set('optionLabelPath', 'content.firstName');
++  select.set('optionValuePath', 'content.id');
++
++  append();
++
++  equal(select.$('option').length, 2, "Should have two options");
++  equal(select.$('option[value=3D1] b').length, 1, "Should have child el=
+ements");
++
++  // IE 8 adds whitespace
++  equal(trim(select.$().text()), "YehudaTom", "Options should have conte=
+nt");
++  deepEqual(map(select.$('option').toArray(), function(el) { return jQue=
+ry(el).attr('value'); }), ["1", "2"], "Options should have values");
++});
++
++QUnit.test("XSS: escapes label value content", function() {
++  select.set('content', Ember.A([
++    { id: 1, firstName: '<p>Yehuda</p>' },
++    { id: 2, firstName: '<p>Tom</p>' }
++  ]));
++
++  select.set('optionLabelPath', 'content.firstName');
++  select.set('optionValuePath', 'content.id');
++
++  append();
++
++  equal(select.$('option').length, 2, "Should have two options");
++  equal(select.$('option[value=3D1] b').length, 0, "Should have no child=
+ elements");
++
++  // IE 8 adds whitespace
++  equal(trim(select.$().text()), "<p>Yehuda</p><p>Tom</p>", "Options sho=
+uld have content");
++  deepEqual(map(select.$('option').toArray(), function(el) { return jQue=
+ry(el).attr('value'); }), ["1", "2"], "Options should have values");
++});
++
+ QUnit.test("can retrieve the current selected option when multiple=3Dfal=
+se", function() {
+   var yehuda =3D { id: 1, firstName: 'Yehuda' };
+   var tom =3D { id: 2, firstName: 'Tom' };
+
+
+diff --git a/packages/ember-htmlbars/lib/templates/select-option.hbs b/pa=
+ckages/ember-htmlbars/lib/templates/select-option.hbs
+new file mode 100644
+index 0000000..6471e4e
+--- /dev/null
++++ b/packages/ember-htmlbars/lib/templates/select-option.hbs
+@@ -0,0 +1 @@
++{{~view.label~}}
+diff --git a/packages/ember-views/lib/views/select.js b/packages/ember-vi=
+ews/lib/views/select.js
+index f5de69d..191e813 100644
+--- a/packages/ember-views/lib/views/select.js
++++ b/packages/ember-views/lib/views/select.js
+@@ -21,26 +21,12 @@ import { computed } from "ember-metal/computed";
+ import { A as emberA } from "ember-runtime/system/native_array";
+ import { observer } from "ember-metal/mixin";
+ import { defineProperty } from "ember-metal/properties";
+-import run from "ember-metal/run_loop";
+ =
+
+ import htmlbarsTemplate from "ember-htmlbars/templates/select";
++import selectOptionDefaultTemplate from "ember-htmlbars/templates/select=
+-option";
+ =
+
+ var defaultTemplate =3D htmlbarsTemplate;
+ =
+
+-var selectOptionDefaultTemplate =3D {
+-  isHTMLBars: true,
+-  revision: 'Ember@VERSION_STRING_PLACEHOLDER',
+-  render(context, env, contextualElement) {
+-    var lazyValue =3D context.getStream('view.label');
+-
+-    lazyValue.subscribe(context._wrapAsScheduled(function() {
+-      run.scheduleOnce('render', context, 'rerender');
+-    }));
+-
+-    return lazyValue.value();
+-  }
+-};
+-
+ var SelectOption =3D View.extend({
+   instrumentDisplay: 'Ember.SelectOption',
+ =
+
+diff --git a/packages/ember-views/tests/views/select_test.js b/packages/e=
+mber-views/tests/views/select_test.js
+index d9fb500..af50933 100644
+--- a/packages/ember-views/tests/views/select_test.js
++++ b/packages/ember-views/tests/views/select_test.js
+@@ -4,6 +4,7 @@ import run from "ember-metal/run_loop";
+ import jQuery from "ember-views/system/jquery";
+ import { map } from "ember-metal/enumerable_utils";
+ import EventDispatcher from "ember-views/system/event_dispatcher";
++import SafeString from 'htmlbars-util/safe-string';
+ =
+
+ var trim =3D jQuery.trim;
+ =
+
+@@ -133,6 +134,44 @@ QUnit.test("can specify the property path for an opt=
+ion's label and value", func
+   deepEqual(map(select.$('option').toArray(), function(el) { return jQue=
+ry(el).attr('value'); }), ["1", "2"], "Options should have values");
+ });
+ =
+
++QUnit.test("XSS: does not escape label value when it is a SafeString", f=
+unction() {
++  select.set('content', Ember.A([
++    { id: 1, firstName: new SafeString('<p>Yehuda</p>') },
++    { id: 2, firstName: new SafeString('<p>Tom</p>') }
++  ]));
++
++  select.set('optionLabelPath', 'content.firstName');
++  select.set('optionValuePath', 'content.id');
++
++  append();
++
++  equal(select.$('option').length, 2, "Should have two options");
++  equal(select.$('option[value=3D1] b').length, 1, "Should have child el=
+ements");
++
++  // IE 8 adds whitespace
++  equal(trim(select.$().text()), "YehudaTom", "Options should have conte=
+nt");
++  deepEqual(map(select.$('option').toArray(), function(el) { return jQue=
+ry(el).attr('value'); }), ["1", "2"], "Options should have values");
++});
++
++QUnit.test("XSS: escapes label value content", function() {
++  select.set('content', Ember.A([
++    { id: 1, firstName: '<p>Yehuda</p>' },
++    { id: 2, firstName: '<p>Tom</p>' }
++  ]));
++
++  select.set('optionLabelPath', 'content.firstName');
++  select.set('optionValuePath', 'content.id');
++
++  append();
++
++  equal(select.$('option').length, 2, "Should have two options");
++  equal(select.$('option[value=3D1] b').length, 0, "Should have no child=
+ elements");
++
++  // IE 8 adds whitespace
++  equal(trim(select.$().text()), "<p>Yehuda</p><p>Tom</p>", "Options sho=
+uld have content");
++  deepEqual(map(select.$('option').toArray(), function(el) { return jQue=
+ry(el).attr('value'); }), ["1", "2"], "Options should have values");
++});
++
+ QUnit.test("can retrieve the current selected option when multiple=3Dfal=
+se", function() {
+   var yehuda =3D { id: 1, firstName: 'Yehuda' };
+   var tom =3D { id: 2, firstName: 'Tom' };
+
+--=_MailMate_10ECB29D-3C4C-428A-98AA-DE21152FA492_=--
