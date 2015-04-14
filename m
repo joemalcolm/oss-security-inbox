@@ -1,4 +1,9 @@
-Received: (qmail 7533 invoked by uid 550); 25 Feb 2026 00:38:35 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1739" "Tuesday" "14" "April" "2015" "14:10:12" "-0700" "Tavis Ormandy" "taviso@google.com" "<CAJ_zFkLA=Qn_exvDW8Rym1jx_jS0vo=vuTJ7ON71qk8BSB=1dw@mail.gmail.com>" "49" "Re: [oss-security] Re: Problems in automatic crash analysis frameworks" nil nil nil "4" "2015041421:10:12" "[oss-security] Re: Problems in automatic crash analysis frameworks" (number mark "        taviso@googl Apr 14   49/1739  " thread-indent "\"Re: [oss-security] Re: Problems in automatic crash analysis frameworks\"\n") "<CAJ_zFk+7eV52Ui1+aV+BKhc68zKi3pmPsgPmFoOsw8Qg6dHPAQ@mail.gmail.com>" ("<20150414155515.BFCAD6C0075@smtpvmsrv1.mitre.org>" "<552D3A20.8040909@canonical.com>" "<CAJ_zFkLtZteX-ge_=9jE8KHxDmKZ=7cwWUmwkHwGHbnCpiQWZA@mail.gmail.com>" "<CAJ_zFk+7eV52Ui1+aV+BKhc68zKi3pmPsgPmFoOsw8Qg6dHPAQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 7502 invoked by uid 550); 14 Apr 2015 21:11:29 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,95 +11,92 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 32432 invoked from network); 25 Feb 2026 00:22:48 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=risingedge.co.za; s=xneelo; h=Content-Transfer-Encoding:Content-Type:
-	Message-ID:References:In-Reply-To:Subject:Cc:To:From:Date:MIME-Version:
-	reply-to:sender:bcc; bh=73OQ1krLLhuNySQKE875KcxQ8SjO6Y3t0PRxvQV6jVo=; b=ip+i9
-	YLFjaIElK0NZ53kGTdoMhL55NmTG/KzlHcuhtmK6sTo1OHeMEyJpIjfXkZ+2k3PX+F0qeDMnTnMbV
-	XOGsqmfLH6LHOjnAEYBjGqJyTukXvxdN+FoRDDp0v7k4z3EaIVr2jTp0bAWdHuiNgB7ztvn4XQYBr
-	E4koNasYiaHEySMjA7VNWuzdI2htINHwwrf/sHo6wh/XT7leCTWFtp4SxfDvNeGfsvV3jYNeXz3tm
-	sbhaoF1PilWYl1djd6yxaklG+cMFJbg+jfXexcP9OpG0zW5npZ+Qyek3IfhmHj2ZiI1KurS1/7URl
-	Cvq8djTsNh8FnVtLuxwmJMn42ClUg==;
+Received: (qmail 7482 invoked from network); 14 Apr 2015 21:11:29 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=o4nG9UKsV/R3mxzH5eL52rLA4aOgqnHjJSDtl+wdGlA=;
+        b=f4/4MP8UlkZL3A5pY87kx2aCGsXmIRI1O7ngagstGUPM/dVzU256tNZOIAmh0PY+c6
+         UzuSqGqD8yABkA5NM1aMA/SKz00dOA24D4qej6JR9NpeVilfeJbGa3/UuAAV7VHdiMwb
+         ZKZcOXlobnQ147I+GS13tJYsyNpdpcfA9iKlku9jjG/7M2OV5B18rs/CZA3eoa4fxNt8
+         AuUc1Igpi/VbLuKgHw7lETfkVFUB3PVg3BH+iWNROPBziIN9P+6I+ErM1DjwLe7l+Ill
+         bKkhSpKGnJfXAYqT+ySXf7Fxb2tHcOn6qHeoC/Ya7hI8fh4Tqp1okQ28EOAUN5J1nieK
+         KUzA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=o4nG9UKsV/R3mxzH5eL52rLA4aOgqnHjJSDtl+wdGlA=;
+        b=MIENYfTSxZk55giLFloz6obhOGQwHOJnSJwR4LIGtihW/Y63BuXKhACXigwcKeJK9Q
+         NGLZtlq8/d9v3rT/q/CKjF5MaudxTmKk1yZyv9hYP/Ka0k42Ciz3stl4cYaokLbqI4Pj
+         7n87PW1jrloTykOe2xV32YRmi27PYOjPKnu/zkTjGbugmasWRBjcb09ClWdCroN/1afM
+         gddHj7qnSELqOn9cKKBPHsTW9CiEeY4EZpPd6+uApmfMZk4uCeyR3ZqXbFh6G6rzJ5S9
+         uyEfEptwboZ8tjB6GRxRJSNVXesQnS+3gTG4PWt1q9wsADWcbCuZ7ywxingklhZMoSE9
+         lUNA==
+X-Gm-Message-State: ALoCoQkIfURhSfcl0fgHEGQHQYuE6Sn1+WIiFrqccOJIbletMd2+7y/zFBr4dTi3Ob+2WLppEB7A
+X-Received: by 10.55.33.94 with SMTP id h91mr44799052qkh.69.1429045846254;
+ Tue, 14 Apr 2015 14:10:46 -0700 (PDT)
 MIME-Version: 1.0
-Date: Wed, 25 Feb 2026 02:22:34 +0200
-From: Justin Swartz <justin.swartz@risingedge.co.za>
-To: Eddie Chapman <eddie@ehuk.net>
-Cc: oss-security@lists.openwall.com, Solar Designer <solar@openwall.com>,
- kf503bla@duck.com, bug-inetutils@gnu.org, ron.benyizhak@safebreach.com,
- simon@josefsson.org, auerswal@unix-ag.uni-kl.de
-In-Reply-To: <ae76aeaf-88e5-459d-95ca-fcab8de948e2@ehuk.net>
-References: <CAB1hGqQwnSzEqtrefwqAxD+rWGu_EXVDmu-btMrNYqMzkzc9Kw@mail.gmail.com>
- <20260206172730.GA12303@unix-ag.uni-kl.de> <877bso8mhf.fsf@josefsson.org>
- <20260224011702.27987-1-justin.swartz@risingedge.co.za>
- <B72B4221-75D0-4C28-840F-9CF7B1A53E66.1@smtp-inbound1.duck.com>
- <27E138FE-A205-4EDD-9A9B-1F84BFAEC100.1@smtp-inbound1.duck.com>
- <20260224203337.GA17345@openwall.com>
- <ae76aeaf-88e5-459d-95ca-fcab8de948e2@ehuk.net>
-Message-ID: <1dc55356fb2f927bb5152bb43619e139@risingedge.co.za>
-X-Sender: justin.swartz@risingedge.co.za
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-X-Authenticated-Sender: justin.swartz@risingedge.co.za
-X-Virus-Scanned: Clear
-X-Originating-IP: 188.40.1.173
-X-SpamExperts-Domain: risingedge.co.za
-X-SpamExperts-Username: 
-Authentication-Results: host-h.net; auth=pass (login) smtp.auth=@risingedge.co.za
-X-SpamExperts-Outgoing-Class: ham
-X-SpamExperts-Outgoing-Evidence: Combined (0.10)
-X-Recommended-Action: accept
-X-Filter-ID: 9kzQTOBWQUFZTohSKvQbgI7ZDo5ubYELi59AwcWUnuUsLnF/X1h2Kt5MVVArOJl4dtKfs9aGCWG3
- gTVBBhpLdiu2SmbhJN1U9FKs8X3+Nt0Io1idSgCc/506nnISAkPANvJkKIxakGlbxi+ggiqZlxxH
- xN7wu8yGEPLNcyeaFThuxjKdZfFisSqg48EyZjtlBMmyNbDn7R5kilAhwr3KtFb3AgNUGvQRnUF+
- Lycvfx+SVUSshQka8VpEeqGYZUq9Zamk/MP3PZ/WkSX8ijpi24hSnw9YyoGHx/ukuag1WKBLWDaO
- GAC1PCRtpOZuVuRfKVFCXTS2zVmMeFsPQMyMp5ya4EnB7foI3WDAWEIqQR42kI22V3+6/8VpCe4k
- l4rBro7NG5FMnAx+YiDY2J/czJYIiHqfCgG4wrA3w4/kQTaLfhXaMgiD0j3v6Ie9X8yyNtozlB2x
- wyC50sLzTDZuM8Oz/JTg+1/ga9ggJRQPDrVPSiBnQw3y7nuz0gOu+r9gJYzhtLM07FfENZ8RHU+B
- Uxl67PQIId8OXsKczIob6qtK6/lfqo5MoGrKUPnw+YqRfA0d+Rs3Uq/nM+NDDOdDwD/XN7NbNDnI
- jCBzEQFB4gnRRu0QB+650zpUaf5MyhpSiDvb7SqvbsgB1qmGf8LAf1Ai/pmySFAbn0/BOOXyjZ0D
- 2HRnF2MhJFDJ09LUDuB4WmwJmD2M/naFRDU0FFZnaWLqvXFqjhE0c5w2G/KrnsI8qbgUYWVY3rpU
- uu8D+5eT17NirEYyqwqMBGrw8ELiqKoNTh6xnDA20Na4SQaMK72yaki2jY7gk7Z/HWAi40eCmfGA
- qpB337hY6C0XnEWaYFO14TPTJLZuY5RQ9yt1qlp8bucaxyqfdDMQ/+5f74V7zIu/Y00I5kTRFMMU
- ropF3Dp9Uolv3sMwGo8dvAnSLUQp1BAK7+jS9NczHabWZb5kaE/dYdoYqEw0Q/v4CRmrs3fK48+5
- XIBng/2XaUL6rQHHbSbAFucYtV59kuiA+7JU5tFIie8nIjro7TRlzINDTHTU3v/uGxuRh78fJF0G
- eipDOjqPH696SEBPk7q9MTcQri/B6GVLMwa6t4bld4JAfnqwNaQ767mY32c3h8d5ughR3kZCEQgH
- tcCN5kns5C9DnYJdkzciEeKUmoi8aR6XmHyhu2LuIwZXMzMdS+Y0iutDk/NJu/7c62gwZVdXeSuW
- 2Ny5UbkAItgqYdjyvkX5H0hV5wwtKgVwwkcjJjZMGv/362Aa51zgdDx20A+nIDJwuTNa7IVsbMNf
- 4F0zLZ5qoZsxeCmVCJvNl3WrxEQx23AlfSvAgySTO/p2rh6beoUF
-X-Report-Abuse-To: spam@antispamquarantine.host-h.net
-X-Complaints-To: abuse@antispammaster.host-h.net
-Subject: Re: [oss-security] Telnetd Vulnerability Report
+In-Reply-To: <CAJ_zFk+7eV52Ui1+aV+BKhc68zKi3pmPsgPmFoOsw8Qg6dHPAQ@mail.gmail.com>
+References: <20150414155515.BFCAD6C0075@smtpvmsrv1.mitre.org>
+ <552D3A20.8040909@canonical.com> <CAJ_zFkLtZteX-ge_=9jE8KHxDmKZ=7cwWUmwkHwGHbnCpiQWZA@mail.gmail.com>
+ <CAJ_zFk+7eV52Ui1+aV+BKhc68zKi3pmPsgPmFoOsw8Qg6dHPAQ@mail.gmail.com>
+Message-ID: <CAJ_zFkLA=Qn_exvDW8Rym1jx_jS0vo=vuTJ7ON71qk8BSB=1dw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Cc: Assign a CVE Identifier <cve-assign@mitre.org>, security <security@ubuntu.com>
+Date: Tue, 14 Apr 2015 14:10:12 -0700
+From: Tavis Ormandy <taviso@google.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Re: Problems in automatic crash analysis frameworks
+To: oss-security@lists.openwall.com
 
-On 2026-02-25 01:18, Eddie Chapman wrote:
-> On 24/02/2026 20:33, Solar Designer wrote:
->> On Tue, Feb 24, 2026 at 05:05:58AM -0500, kf503bla@duck.com wrote:
->>> Who uses telnet anyway? It's deprecated. Everyone uses ssh for any 
->>> kind of remote access.
->> 
->> Indeed.  Yet:
->> 
->> Quite many people surely do still use a telnet client to access 
->> various
->> older/smaller devices
-> 
-> Yes. I would hazard a guess that the largest cohort of devices running 
-> a telnet server are enterprise switches, gateways & routers. So many 
-> times over the years I've been surprised to find a switch I'm 
-> configuring has a telnet as well as the obligatory http(s) server 
-> available for the admin to login via.
-> 
-> Albeit to a lesser extent these days, and more likely BusyBox telnetd 
-> than InetUtils. But switches are one of the most likely pieces of kit 
-> to be forgotten about and left running for 10+ years in a closet 
-> without a firmware update. There are a LOT of old switches running out 
-> there.
+On Tue, Apr 14, 2015 at 2:08 PM, Tavis Ormandy <taviso@google.com> wrote:
+> On Tue, Apr 14, 2015 at 1:35 PM, Tavis Ormandy <taviso@google.com> wrote:
+>> On Tue, Apr 14, 2015 at 9:02 AM, Marc Deslauriers
+>> <marc.deslauriers@canonical.com> wrote:
+>>> Hi,
+>>>
+>>> On 2015-04-14 11:55 AM, cve-assign@mitre.org wrote:
+>>>> This is mostly a question for the persons who assigned CVE-2015-1318
+>>>> and CVE-2015-1862. Should these CVE assignments be interpreted to
+>>>> mean:
+>>>>
+>>>>   CVE-2015-1318 - in Apport, an unprivileged user can use a
+>>>>                   namespace-based attack because there is an execve by
+>>>>                   root after a chroot into a user-specified directory
+>>>
+>>> Yes, I assigned CVE-2015-1318 to that specific issue in Apport.
+>>>
+>>> Marc.
+>>
+>> It looks like this is the patch for Apport:
+>>
+>> http://bazaar.launchpad.net/~apport-hackers/apport/trunk/revision/2943#data/apport
+>>
+>> It's far more complicated than I expected, and not obviously correct.
+>> It could probably use some review, I'll think about it today.
+>>
+>> Tavis.
+>
+> Wait, my first thought is that it's not obvious to me that
+> /proc/net/unix is guaranteed to be newline delimited, newline is a
+> perfectly valid name in a filename, no?
+>
+>>>> import socket
+>>>> socket.socket(socket.AF_UNIX, socket.SOCK_STREAM).bind('test\ntest')
+>>>> sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+>>>> sock.bind('/tmp/foo\nbar')
+>>>> sock.listen(1)
+>
+> $ grep -A1 foo /proc/net/unix
+> 0000000000000000: 00000002 00000000 00010000 0001 01 4772228 /tmp/foo
+> bar
 
-There're also serial port concentrators, programmable automation 
-controllers, remote telemetry units, protocol gateways, data 
-aggregators, and PXI/LXI instrumentation out there that run some of 
-telnet daemon - and you can be sure that it's not always busybox's 
-telnetd implementation.
+And with complete control over this line, it seems like it's game over.
+
+                container = lxc.Container(path[-2], real_path)
+
+I'm calling this re-broken.
+
+Tavis.
