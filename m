@@ -1,4 +1,9 @@
-Received: (qmail 13847 invoked by uid 550); 6 Feb 2024 15:17:56 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["863" "Tuesday" "14" "April" "2015" "13:35:20" "-0700" "Tavis Ormandy" "taviso@google.com" "<CAJ_zFkLtZteX-ge_=9jE8KHxDmKZ=7cwWUmwkHwGHbnCpiQWZA@mail.gmail.com>" "25" "Re: [oss-security] Re: Problems in automatic crash analysis frameworks" nil nil nil "4" "2015041420:35:20" "[oss-security] Re: Problems in automatic crash analysis frameworks" (number mark "        taviso@googl Apr 14   25/863   " thread-indent "\"Re: [oss-security] Re: Problems in automatic crash analysis frameworks\"\n") "<552D3A20.8040909@canonical.com>" ("<20150414155515.BFCAD6C0075@smtpvmsrv1.mitre.org>" "<552D3A20.8040909@canonical.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 15765 invoked by uid 550); 14 Apr 2015 20:36:23 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,127 +11,66 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9380 invoked from network); 6 Feb 2024 15:15:42 -0000
+Received: (qmail 15744 invoked from network); 14 Apr 2015 20:36:23 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1707232692; x=1707837492; darn=lists.openwall.com;
-        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=B+LzQIJaZ/Kw7xuXX/2yVO1Nqvyh2K3Cgw+W2gbG7ww=;
-        b=JIRzShfsHAG91BR6x3ebedMov3Ho8tFRPwTtduToCowiN5QYTgoTHRQN272R7UYr42
-         zCK0ZmjXqEwfo/wIrVfNJ/b9/L3SjtXvW357ZjXqM99JqThr/7Mw4wI+qGEa5fhzilop
-         VhPi0wSio1C/zBOniQYLKD9LDOSaeSA4fRb5RhIkJDD9Mmd1JMYyWkU6DC0zC6HU5eEC
-         /Q2a9Sir4KMKb76JgeHvdFBB8/VjYFi2eJHaLBRCRV4uG/evVZtXNWymXLf8i7gx6WNI
-         tEhYj71eqIwoETxzi0oDODCOW+j8XvwkDhUM4MRN8vW9glQe6VRz1ngbb2H0+2PB6b6g
-         UL+A==
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=M57Q8vtuRn1IpE3gLyHq3+gYD3QwjlFLXMfJid7D2zQ=;
+        b=C7IRw4zWpRYJE8h3kRlAinUbZ582MoG4pCJnOUQRpuXzbu+HwWp5y/P5vppn+Cp5OB
+         dUFEyn3YB3B6p9Isa6jq44lgy9RosuQF/gH8s+LK4BiYeUGySD1iKK6uLriHQ7zdaUo7
+         fJaFQhVWCcppANcE452cNWfoCIS21/Y/9gG7JX7VPX4beuibjKhcrF+5TChLTEqI+6YR
+         4WPb1/G/2jBQ7+jv6l24MQA0hBA293l0JfdGUJiddigRLqothiY2JOH7Ww8a2z2AkyyS
+         SM3RdEnAXmkX/HD6I3TLM6ZolW+3L51aoq4k/2zTF3FEv+0rBddQdPw5xuQy2tX9Zvt3
+         cOMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707232692; x=1707837492;
-        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=B+LzQIJaZ/Kw7xuXX/2yVO1Nqvyh2K3Cgw+W2gbG7ww=;
-        b=YxrhIA+IxpujNXz5tHu3wu/7p4qqpio0/oCt83zHVoUGBN8g6kj31ZykJhDVfPeL/R
-         u9WaYjDqw4RbDkbWGZeR2PJJEOyMryM18UYAtnNrROBbgj816u7iAgOqOFrB0a6yD7/l
-         HmVCdFjSm4jcbyiTuLBRkjSqfCXGIcRDh4QGBWihOfIoDN5ioXRpbYgLZgjahXTF8Jhl
-         hwoBqDECxvhKcdnae6vtLcNtMuBquMYoVt4BuF0v2+9sexEaegKQDqr04bCXFgM948co
-         JK2TPXHzlZ5aQ2+tr2xJe+N0hwqUeAfIh5rKe+hGhHESVvkwzA9aEDwaSCWqphve6mdp
-         7TsQ==
-X-Gm-Message-State: AOJu0YxL9R79jkJ3YvgcKPT8RIeEOt0W34x7Vx5e/TQSlO1ABYOrZpJ6
-	rw944o5wWRAEJBNJGs/5agubL970igwJ2EXF0oG1e/4poLX5imfWHSUs0okM/YfzSXAN9M92IGr
-	AdwESUJlYxDsHPVtU37zQlNfEKiyrBm3x9+I=
-X-Google-Smtp-Source: AGHT+IENSUGxdbHFDeRpmRY0a33WxWPAkuZgQYu5+Jd2dTZSwWhQJ6m/DaQZZ0pwAsRTvuX4/yFlQMNdlGDr/ni8G/g=
-X-Received: by 2002:a17:902:e751:b0:1d9:727d:e84f with SMTP id
- p17-20020a170902e75100b001d9727de84fmr2258456plf.47.1707232692033; Tue, 06
- Feb 2024 07:18:12 -0800 (PST)
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=M57Q8vtuRn1IpE3gLyHq3+gYD3QwjlFLXMfJid7D2zQ=;
+        b=WkWNFW509sOeK4cXti6NIoH0vAQ6yD0u8WA1ZpzB0odC/CGcSIqwr2Wu9/5tlipYRD
+         cnVTKfoOnOHB6psuO8ZwQo7hbS8mugPz3FvIL+VXJN5dnqsYSmBYgp7wwJNJqmW1sc7Z
+         5Zg7rCI2sy58dDozjy4S0KhfY9lSgY9iIpd9QA3bi4zyiXwCCBXcWg+VWokJN0dTuB61
+         qaXg4qWd1LHztpI9IFJT+Svf40Pp/8Fz+wFpUJJnxKnVIr5HPV/wP3zY0KFELkGnt2Pz
+         bGgwCoRhuGNWMOx9yB2I2VSBvynqJT1r0LDVWFdAkl7kdwDXOSvAXBhumUSHnPnzljkj
+         mETA==
+X-Gm-Message-State: ALoCoQku2Taea/8f1Jx0hL174V0WDptG41jM7xI5ajU+8483u+p/ZE+YM2fIiG0jko087Rz00C64
+X-Received: by 10.55.21.139 with SMTP id 11mr44641520qkv.19.1429043741292;
+ Tue, 14 Apr 2015 13:35:41 -0700 (PDT)
 MIME-Version: 1.0
-From: Natalia Bidart <nataliabidart@gmail.com>
-Date: Tue, 6 Feb 2024 12:18:00 -0300
-Message-ID: <CA+fOnFbJq9+DURjyO=wPRnmQhV62eQHgT2TKmXjTS4oikgvHrw@mail.gmail.com>
+In-Reply-To: <552D3A20.8040909@canonical.com>
+References: <20150414155515.BFCAD6C0075@smtpvmsrv1.mitre.org> <552D3A20.8040909@canonical.com>
+Message-ID: <CAJ_zFkLtZteX-ge_=9jE8KHxDmKZ=7cwWUmwkHwGHbnCpiQWZA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Cc: Assign a CVE Identifier <cve-assign@mitre.org>
+Date: Tue, 14 Apr 2015 13:35:20 -0700
+From: Tavis Ormandy <taviso@google.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Re: Problems in automatic crash analysis frameworks
 To: oss-security@lists.openwall.com
-Cc: Django Security Team <security@djangoproject.com>
-Content-Type: multipart/alternative; boundary="0000000000002869d60610b8163f"
-Subject: [oss-security] Django CVE-2024-24680: Potential denial-of-service in intcomma
- template filter
 
---0000000000002869d60610b8163f
-Content-Type: text/plain; charset="UTF-8"
+On Tue, Apr 14, 2015 at 9:02 AM, Marc Deslauriers
+<marc.deslauriers@canonical.com> wrote:
+> Hi,
+>
+> On 2015-04-14 11:55 AM, cve-assign@mitre.org wrote:
+>> This is mostly a question for the persons who assigned CVE-2015-1318
+>> and CVE-2015-1862. Should these CVE assignments be interpreted to
+>> mean:
+>>
+>>   CVE-2015-1318 - in Apport, an unprivileged user can use a
+>>                   namespace-based attack because there is an execve by
+>>                   root after a chroot into a user-specified directory
+>
+> Yes, I assigned CVE-2015-1318 to that specific issue in Apport.
+>
+> Marc.
 
-From: https://www.djangoproject.com/weblog/2024/feb/06/security-releases/
+It looks like this is the patch for Apport:
 
-In accordance with `our security release policy
-<https://docs.djangoproject.com/en/dev/internals/security/>`_, the Django
-team
-is issuing
-`Django 5.0.2 <https://docs.djangoproject.com/en/dev/releases/5.0.2/>`_,
-`Django 4.2.10 <https://docs.djangoproject.com/en/dev/releases/4.2.10/>`_,
-and
-`Django 3.2.24 <https://docs.djangoproject.com/en/dev/releases/3.2.24/>`_.
-These releases address the security issue detailed below. We encourage all
-users of Django to upgrade as soon as possible.
+http://bazaar.launchpad.net/~apport-hackers/apport/trunk/revision/2943#data/apport
 
-CVE-2024-24680: Potential denial-of-service in ``intcomma`` template filter
-===========================================================================
+It's far more complicated than I expected, and not obviously correct.
+It could probably use some review, I'll think about it today.
 
-The ``intcomma`` template filter was subject to a potential
-denial-of-service
-attack when used with very long strings.
-
-Affected supported versions
-===========================
-
-* Django main branch
-* Django 5.0
-* Django 4.2
-* Django 3.2
-
-Resolution
-==========
-
-Patches to resolve the issue have been applied to Django's main branch and
-the
-5.0, 4.2, and 3.2 stable branches. The patches may be obtained from the
-following changesets:
-
-* On the `main branch <
-https://github.com/django/django/commit/55519d6cf8998fe4c8f5c8abffc2b10a7c3d14e9
->`__
-* On the `5.0 release branch <
-https://github.com/django/django/commit/16a8fe18a3b81250f4fa57e3f93f0599dc4895bc
->`__
-* On the `4.2 release branch <
-https://github.com/django/django/commit/572ea07e84b38ea8de0551f4b4eda685d91d09d2
->`__
-* On the `3.2 release branch <
-https://github.com/django/django/commit/c1171ffbd570db90ca206c30f8e2b9f691243820
->`__
-
-The following releases have been issued:
-
-* Django 5.0.2 (`download Django 5.0.2 <
-https://www.djangoproject.com/m/releases/5.0/Django-5.0.2.tar.gz>`_ |
-`5.0.2 checksums <
-https://www.djangoproject.com/m/pgp/Django-5.0.2.checksum.txt>`_)
-* Django 4.2.10 (`download Django 4.2.10 <
-https://www.djangoproject.com/m/releases/4.2/Django-4.2.10.tar.gz>`_ |
-`4.2.10 checksums <
-https://www.djangoproject.com/m/pgp/Django-4.2.10.checksum.txt>`_)
-* Django 3.2.24 (`download Django 3.2.24 <
-https://www.djangoproject.com/m/releases/3.2/Django-3.2.24.tar.gz>`_ |
-`3.2.24 checksums <
-https://www.djangoproject.com/m/pgp/Django-3.2.24.checksum.txt>`_)
-
-The PGP key ID used for this release is Natalia Bidart: `2EE82A8D9470983E <
-https://github.com/nessita.gpg>`_
-
-General notes regarding security reporting
-==========================================
-
-As always, we ask that potential security issues be reported via private
-email
-to ``security@djangoproject.com``, and not via Django's Trac instance, nor
-via
-the Django Forum, nor via the django-developers list. Please see `our
-security
-policies <https://www.djangoproject.com/security/>`_ for further
-information.
-
---0000000000002869d60610b8163f--
+Tavis.
