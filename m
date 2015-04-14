@@ -1,4 +1,9 @@
-Received: (qmail 30665 invoked by uid 550); 26 Aug 2023 21:49:41 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3761" "Tuesday" "14" "April" "2015" "02:21:41" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150414062141.CE1CE6C4009@smtpvmsrv1.mitre.org>" "85" "[oss-security] Re: Kernel oops on 32 bits arch" nil nil nil "4" "2015041406:21:41" "[oss-security] Re: Kernel oops on 32 bits arch" (number mark "        cve-assign@m Apr 14   85/3761  " thread-indent "\"[oss-security] Re: Kernel oops on 32 bits arch\"\n") "<5527EA22.2000702@reactos.org>" ("<5527EA22.2000702@reactos.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 3833 invoked by uid 550); 14 Apr 2015 06:22:06 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,165 +11,98 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 3770 invoked from network); 14 Apr 2015 06:21:53 -0000
+In-Reply-To: <5527EA22.2000702@reactos.org>
+Message-Id: <20150414062141.CE1CE6C4009@smtpvmsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Tue, 14 Apr 2015 02:21:41 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30511 invoked from network); 26 Aug 2023 21:49:25 -0000
-Date: Sat, 26 Aug 2023 23:49:14 +0200
-From: Solar Designer <solar@openwall.com>
-To: oss-security@lists.openwall.com
-Message-ID: <20230826214914.GA18442@openwall.com>
-References: <20230825222359.GA10424@openwall.com> <20230826023129.GA2930052@millbarge>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230826023129.GA2930052@millbarge>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] linux-distros list policy and Linux kernel, again
+Subject: [oss-security] Re: Kernel oops on 32 bits arch
+To: pierre@reactos.org
 
-Hi Seth,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Thank you very much for your feedback.  I wouldn't have guessed you feel
-that way about some of this.
-
-On Sat, Aug 26, 2023 at 02:31:29AM +0000, Seth Arnold wrote:
-> On Sat, Aug 26, 2023 at 12:23:59AM +0200, Solar Designer wrote:
-> > I'd appreciate any well-reasoned votes and constructive suggestions.
-> > Maybe there are good ideas that didn't cross my mind yet.
+> This bug report has been brought to my attention [1] where under high
+> load a server can be oopsed, be it grsec or vanilla kernel.
 > 
-> I think we'd all be better served to wait until next year before we try to
-> make changes. Some additional space would probably do everyone some good.
-
-Yet you suggest specific changes below.  Do you mean waiting until next
-year before making written policy changes yet changing the way we
-actually work sooner, or do you intend your suggestions for next year?
-
-> For my own part, I was frustrated getting a dozen emails about the policy
-> and deadlines and folks saying "we don't even have a fix yet please back
-> off" etc over and over and over again. There were usually more emails
-> about the policy than about the issue.
-
-Usually, maybe - for less important issues such as most of the syzkaller
-stuff you mention.  However, for StackRot there were so many messages on
-the actual issue that even the significant number of messages on the
-policy was relatively much smaller.  Of course, it could still be
-annoying when people were working hard on getting the issue fixed.
-
-> I can't speak for the others but
-> perhaps if we, as a group, were less vocal about the policies on every
-> single bug report it might have been easier to work together.
-
-Yes, that would make it easier to work together.  However, it wouldn't
-work well for the kinds of disclosures we were getting to linux-distros
-so far unless we decide and state in advance that Linux kernel issues
-are exempt from our policies.
-
-On the other hand, with the Linux kernel documentation edit, maybe we'll
-start seeing linux-distros notified after s@k.o has fixes ready, and
-maybe this will work well, and if so we can keep our policies.  Perhaps
-in that case we won't need to remind the reporters of the policies in so
-many messages because there would be a lot less coordination left to do.
-
-Waiting until next year to see how it goes makes sense to me.
-
-> For every security issue in the kernel that gets a CVE and The Whole
-> Process, I'm sure there's five or ten more that go unnoticed by the
-> wider world. Trying to do The Security Process on the ones that come to
-> light feels silly when there's far more issues that may allow privilege
-> escalation that never get the theater treatment. While we can (and should)
-> try to bring more of these to light we might also reduce the friction on
-> the ones that do come to light.
+> Apparently, it's due to a partial fix that would have only be deployed
+> to 64 bits Linux [2].
 > 
-> I was also annoyed with the endless stream of "I found a security bug in
-> the kernel, give me a CVE!" that are a mangled syzkaller reproducer and
-> no work to diagnose the problem or propose a patch.
-
-I agree that following the process so strictly makes little sense when
-it's just an arbitrary subset of the actual issues being found and
-(hopefully) fixed (unfortunately, in other cases silently).
-
-> If every syzkaller
-> issue received a CVE automatically, we'd immediately remove the most
-> noisome posts.
-
-Is every syzkaller issue a vulnerability?
-
-> Here's what I think would help the most, if we in the future try to get
-> copied on reports "like the old days":
+> Has anyone more info on this? Like why there was only a 64 bits fix?
+> Was a CVE assigned for this?
 > 
-> - No replies from distros@ subscribers about list policies. None. distros@
->   subscribers can and should feel free to engage about the bug, about
->   testing, about concerns, etc. But none about the list policies.
-> 
->   We all know that the kernel developers don't just sit on reports for
->   six months before they're forced to take action by public posts. They
->   want fixes in a timely fashion and they're doing the work to deliver
->   fixes in a timely fashion.
-> 
->   They publish their patches in public very soon after the work is
->   complete which addresses your concern about the inboxes and mail
->   servers being a jackpot of private vulnerabilities.
-> 
->   We shouldn't harangue them about the policies.
+> [1]: https://bugs.gentoo.org/show_bug.cgi?id=536040
+> [2]: https://lkml.org/lkml/2014/4/29/497
 
-However, the current policies require certain things from the reporter.
-If we don't notify the reporter of this early on, we rely on them having
-carefully read and understood the policies on their own, or else our
-last-moment enforcement may come as a big unpleasant surprise to them.
+As far as we can tell, https://lkml.org/lkml/2014/4/29/497 ultimately
+resulted in the
+http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=d5c9fde3dae750889168807038243ff36431d276
+commit.
 
-Alternatively, we'd have to give up on the enforcement altogether.
+https://bugs.gentoo.org/show_bug.cgi?id=536040#c20 says
 
-I think a less unreasonable alternative to the above two options would
-be (like I wrote above) to decide and state in advance that Linux kernel
-issues are exempt from our policies.
+  so we think it's an upstream bug https://lkml.org/lkml/2014/4/29/497
+  that was fixed only on 64 bit archs. on 32 bit archs the function in
+  question uses a 32 bit type (unsigned long) instead of u64 and
+  therefore the trunction issue mentioned in the thread can very well
+  happen.
 
-> - Make it clear to all that distributions can apply fixes to their kernels
->   as soon as patches are in publicly visible trees or mail lists. Trying
->   to coordinate dates didn't work well: The kernel people don't want
->   to hold off on publishing fixes for an arbitrary reason. The distro
->   people have their own cycles for integrating patches, performing quality
->   control, preferences to not publish updates on important holidays or
->   weekends, etc.
-> 
->   Let's just let the kernel developers work on fixes on their own schedule
->   and whenever they go public, just go with it.
-> 
->   We shouldn't try to coordinate dates.
+This suggests that the same source code is used on all platforms, but
+the code with the d5c9fde3dae750889168807038243ff36431d276 patch is
+correct if the size of "unsigned long" is 8, but incorrect if the size
+of "unsigned long" is 4. (There isn't a patch offered for the latter
+case, although the implication seems to be that the code is inherently
+incorrect, and isn't affected by any compiler bug.) If so, then
+conceivably there could be at least two CVE IDs, i.e.,
 
-The problem with this is that Linux kernel patches appearing "in
-publicly visible trees or mail lists" tend not to have their security
-relevance documented yet, and deliberately so, whereas "distributions
-can apply fixes to their kernels" typically only along with documenting
-the security relevance.  Surely distributions can start "integrating
-patches, performing quality control" as soon as the fixes are available
-and privately known to them as being important to integrate ASAP, but
-they'd have to delay publication of the update packages.  This is how
-it's been lately.  Are you suggesting that distributions start to ignore
-the kernel maintainers' preference on not disclosing the security
-relevance publicly for a while?  I doubt it, but then I don't see what
-other change you might be suggesting.  Please clarify.
+  First issue: reachable "divide by zero" in versions before 3.14.6 on
+  64-bit platforms
+  (https://www.kernel.org/pub/linux/kernel/v3.x/ChangeLog-3.14.6)
 
-> - Ask Red Hat's CNA to consider setting up an automatic CVE assignment
->   process for syzkaller issues. (Red Hat's CNA is now serving as a Root
->   CNA for FOSS issues in general, so it feels like a plausible place to
->   put this process. Google runs syzkaller and has four CNAs, perhaps
->   one of them would be a better fit. Maybe the Linux Foundation could
->   run a CNA for this purpose. I'm not picky.)
+  Second issue: reachable "divide by zero" in these versions and newer
+  versions on 32-bit platforms
 
-This is an interesting suggestion.  I think we'd first need to determine
-whether this can be automated at all without ending up with CVEs
-assigned in cases where they shouldn't have been per MITRE's guidelines
-(e.g., when no security boundary is crossed in proper documented usage).
+[ there hasn't been a report of a security impact for the
+  "incorrect value when (setpoint - limit) exceeds 2^32" issue ]
 
->   We shouldn't indulge the very-low-effort-researchers who aren't putting
->   in much effort but trying to get CVEs.
+The available information about the attack vector for the second issue
+is "unspecified traffic to an Apache HTTP Server 2.x that leads to a
+substantial amount of disk I/O to an ext4 filesystem." There is no
+available information about an attack vector for the first issue.
 
-On one hand, I agree.  On the other, if it were not just an arbitrary
-subset of issues, what would matter most isn't the researchers' effort
-nor intent, but the nature of the issues - are they in fact security
-issues, are they important, are they actionable by distros within days.
-"No" to any of these means the issue is best not handled in private, but
-first it takes effort to determine this.  Yes, it wastes our resources.
+We don't know whether there are other attack vectors involving FUSE.
+The comments in page-writeback.c refer to the effects of "mistrusted
+filesystems" on the number of dirty pages, and possibly such a
+filesystem could make it easier to reach a case with a
+pos_ratio_polynom bug.
 
-I do not have a solution I'd be entirely happy with, which is a reason
-why we're having this discussion.
+In general, the two issues listed above are ones that often would not
+have CVE IDs because the attack methodology is underspecified, or
+because too little is known about the relationship between an attack
+and the bug. However, it seems very likely that the untrusted HTTP
+traffic is, indirectly, causing the bug to be triggered much more
+often than it otherwise would have been. So, it does seem valid for
+the issues to have CVE IDs, if the CVE IDs are useful to someone.
 
-Alexander
+Was "Was a CVE assigned for this?" intended to mean that a CVE ID is
+useful, i.e., you would actually use a CVE ID to track an OOPS issue
+in the management of dirty pages?
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJVLLFFAAoJEKllVAevmvmst+QH/jF6SuBJAtxYZX+WYpWkcSwu
+f8h4dGncGX947++aB0NWVVmD2AlckRkZOdIYL2r2JE9M/2yrHHNq72cAPylYQD//
+m55DggeJ6mia756FWng9JSV3qf48tNqZq5nAFFZH8OsIG9dlNV4esCqLS0qsYtAo
+To6LixAVrcFpofzi+q7U8ON0IxfBoix+J1eQoT3ITyRJ+NwnvWX/jLm6jOk/lbSS
+Q4Wh61+/EQEpxIga3CJ2J3g0pHM20wrSNxMV9Tpgl7vFwWSP9csNsc+XPp4HUZB7
+XYwAf6FQWAdYC0WyhzYxqEZP2YIkrd0uhVp0KJdvcj8pRow20/MhCN7Rl7Q8vto=
+=/Ro0
+-----END PGP SIGNATURE-----
