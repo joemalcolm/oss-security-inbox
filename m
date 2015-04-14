@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5874" "Tuesday" "8" "December" "2015" "12:02:16" "+0000" "Xen.org security team" "security@xen.org" "<E1a6GyG-0003nX-Mh@xenbits.xen.org>" "152" "[oss-security] Xen Security Advisory 159 (CVE-2015-8339,CVE-2015-8340) - XENMEM_exchange error handling issues" nil nil nil "12" "2015120812:02:16" "[oss-security] Xen Security Advisory 159 (CVE-2015-8339,CVE-2015-8340) - XENMEM_exchange error handling issues" (number mark "U       security@xen Dec  8  152/5874  " thread-indent "\"[oss-security] Xen Security Advisory 159 (CVE-2015-8339,CVE-2015-8340) - XENMEM_exchange error handling issues\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2534" "Tuesday" "14" "April" "2015" "10:25:19" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<552D3F6F.1050502@redhat.com>" "59" "Re: [oss-security] Re: Problems in automatic crash analysis frameworks" nil nil nil "4" "2015041416:25:19" "[oss-security] Re: Problems in automatic crash analysis frameworks" (number mark "        kseifried@re Apr 14   59/2534  " thread-indent "\"Re: [oss-security] Re: Problems in automatic crash analysis frameworks\"\n") "<20150414155515.BFCAD6C0075@smtpvmsrv1.mitre.org>" ("<20150414155515.BFCAD6C0075@smtpvmsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 22473 invoked by uid 550); 8 Dec 2015 12:03:00 -0000
+Received: (qmail 7624 invoked by uid 550); 14 Apr 2015 16:25:34 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,170 +11,79 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 20383 invoked from network); 8 Dec 2015 12:02:37 -0000
-Date: Tue, 08 Dec 2015 12:02:16 +0000
-Message-Id: <E1a6GyG-0003nX-Mh@xenbits.xen.org>
-Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
-Content-Transfer-Encoding: binary
+Received: (qmail 7604 invoked from network); 14 Apr 2015 16:25:33 -0000
+Message-ID: <552D3F6F.1050502@redhat.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
 MIME-Version: 1.0
-X-Mailer: MIME-tools 5.428 (Entity 5.428)
-To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
- xen-users@lists.xen.org, oss-security@lists.openwall.com
-From: Xen.org security team <security@xen.org>
-CC: Xen.org security team <security@xen.org>
-Subject: [oss-security] Xen Security Advisory 159 (CVE-2015-8339,CVE-2015-8340) -
- XENMEM_exchange error handling issues
+References: <20150414155515.BFCAD6C0075@smtpvmsrv1.mitre.org>
+In-Reply-To: <20150414155515.BFCAD6C0075@smtpvmsrv1.mitre.org>
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="MisdANo7dQr2ucnIc0kXFFToI7CFsKoKW"
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
+CC: cve-assign@mitre.org
+Date: Tue, 14 Apr 2015 10:25:19 -0600
+From: Kurt Seifried <kseifried@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Re: Problems in automatic crash analysis frameworks
+To: oss-security@lists.openwall.com
 
---=separator
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
-Content-Transfer-Encoding: 7bit
+--MisdANo7dQr2ucnIc0kXFFToI7CFsKoKW
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: quoted-printable
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 04/14/2015 09:55 AM, cve-assign@mitre.org wrote:
+> This is mostly a question for the persons who assigned CVE-2015-1318
+> and CVE-2015-1862. Should these CVE assignments be interpreted to
+> mean:
+>=20
+>   CVE-2015-1318 - in Apport, an unprivileged user can use a
+>                   namespace-based attack because there is an execve by
+>                   root after a chroot into a user-specified directory
+>=20
+>   CVE-2015-1862 - in ABRT, an unprivileged user can use a
+>                   namespace-based attack because there is an execve by
+>                   root after a chroot into a user-specified directory
+>=20
+> with "Furthermore, Abrt suffers from numerous race conditions and
+> symlink problems" not yet mapped to any CVE IDs? (CVE-2012-5660 is a
 
-     Xen Security Advisory CVE-2015-8339,CVE-2015-8340 / XSA-159
-                              version 4
+Because I asked Taviso to report them publicly, rather than play
+whack-a-mole and do it slowly on distros, I'd rather do this out in the
+open and all at once =3D).
 
-                 XENMEM_exchange error handling issues
-
-UPDATES IN VERSION 4
-====================
-
-Public release.
-
-ISSUE DESCRIPTION
-=================
-
-Error handling in the operation may involve handing back pages to
-the domain. This operation may fail when in parallel the domain gets
-torn down. So far this failure unconditionally resulted in the host
-being brought down due to an internal error being assumed. This is
-CVE-2015-8339.
-
-Furthermore error handling so far wrongly included the release of a
-lock. That lock, however, was either not acquired or already released
-on all paths leading to the error handling sequence. This is
-CVE-2015-8340.
-
-IMPACT
-======
-
-A malicious guest administrator may be able to deny service by
-crashing the host or causing a deadlock.
-
-VULNERABLE SYSTEMS
-==================
-
-All Xen versions from at least 3.2 onwards are vulnerable.  Older
-versions have not been inspected.
-
-MITIGATION
-==========
-
-The vulnerability can be avoided if the guest kernel is controlled by
-the host rather than guest administrator, provided that further steps
-are taken to prevent the guest administrator from loading code into
-the kernel (e.g. by disabling loadable modules etc) or from using
-other mechanisms which allow them to run code at kernel privilege.  In
-Xen HVM, controlling the guest's kernel would involve locking down the
-bootloader.
-
-CREDITS
-=======
-
-This issue was discovered by Julien Grall of Citrix and
-Jan Beulich of SUSE.
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue.
-
-xsa159.patch      xen-unstable, Xen 4.6.x, Xen 4.5.x, Xen 4.4.x, Xen 4.3.x
-
-$ sha256sum xsa159*
-05c35871c1430e9cfdbee049411b23fca6c64c5bc9f112d7508afe5cbd289cef  xsa159.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
+> similar but older issue.) These additional ABRT issues would seem to
+> be, for example, independently relevant on a system where the kernel
+> was built without namespaces support. However, the raceabrt.c
+> attachment says "This is a race condition exploit for CVE-2015-1862."
 
 
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
+--=20
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
+
+--MisdANo7dQr2ucnIc0kXFFToI7CFsKoKW
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+Version: GnuPG v2.0.22 (GNU/Linux)
 
-iQEcBAEBAgAGBQJWZr8HAAoJEIP+FMlX6CvZXp8IAMNhe/G7435bJNiwMbWIT6vt
-8piJPArKxhd3yohEiAx0wG7BXTQ7ockAKFCjdSL8ZGPQuaxwuYrdm4wH14ucxRY6
-wgHyU2766g5VuP1bJ1eU/XxZpNGWCqDQaaMzbwQLKVO7rhsZc14txY2nYFZ5cvLT
-nMDR8rfcNSeGMSCzg9vrdnFhmmslT797fgRXrCnZ2+bEDerTiYu5nDlS+aIZPiSt
-WwKbiYN/RJLIo4EThvYfPdbm9SPeSdNYNUws2MVkl50x2h4hm33eqKDNxAtUMgDq
-CZzHQGCMjAtrhK/64AQePiXRHO4SHYbX4FmeO9Yrkbgf971PqpEYed79UJ2a0SA=
-=sIvq
+iQIcBAEBAgAGBQJVLT9wAAoJEBYNRVNeJnmTSDoP/RFHACB1JYLD/gJapEpPBQEn
+jTIoC+yQE7uz9kkKw6oKWGTHrf0XH872ed8jJawX/l7niRzf+uO+ZTexgqxVmuMZ
+eLrGKLZHSMdDyhjOd8igtf1bhGrY7hB2GaarE0bIdM5H05BidQWqaG1rAX8srnqr
+ijaqeFCWfRDKYeqbi2iDNKZQSqvpVlLBJYPG2MyWUn/q4QvLrr6nZvRGWRCVYhdQ
+TUD2Ffyb+f2R0QwIVV9SPH5j+BIW+7MOaLeoR5Iu1Vw9jERhr+DKGyuTtdcXYguH
+8AqypXlEWqMkrvdGkfQHDaxY+8vHLj5g3TU3kwUpUVxQ4l+hOQ7tuCeAfXkNozbe
+cVk1fN92TWZdI5T5vMb+ruOPPnEYki5IlaEztti3WW0ighLBlzca5rHdmHnGthVK
+QhSxj+in5Dppaii0nCGuR72egrldL3dOqLuH7YYI2f7LEM9CtRvj6QeyiSi5fyMO
+NG/epUNBT3gzbgAZ8eiCJujqNYtc9Bl1WK45rCzbC+T7/5651VhuNG3z5zr8oWWQ
+cG58oTnXyvbP2hKUA1YBdW2k3+MYOkZKkMiVpg1VkqPhWvoNtQc+2RGJxuYyTTXN
+PN3fC4iWbJfvdPLJmF1MZGz9Y8i29KLlrCVd5wY2sVVa7wKpeNlD0h/CSLK7Cqne
+ie9XBN5oa4LG6ShaTsHz
+=8yEc
 -----END PGP SIGNATURE-----
 
---=separator
-Content-Type: application/octet-stream; name="xsa159.patch"
-Content-Disposition: attachment; filename="xsa159.patch"
-Content-Transfer-Encoding: base64
-
-bWVtb3J5OiBmaXggWEVOTUVNX2V4Y2hhbmdlIGVycm9yIGhhbmRsaW5nCgph
-c3NpZ25fcGFnZXMoKSBjYW4gZmFpbCBkdWUgdG8gdGhlIGRvbWFpbiBnZXR0
-aW5nIGtpbGxlZCBpbiBwYXJhbGxlbCwKd2hpY2ggc2hvdWxkIG5vdCByZXN1
-bHQgaW4gYSBoeXBlcnZpc29yIGNyYXNoLgoKQWxzbyBkZWxldGUgYSByZWR1
-bmRhbnQgcHV0X2dmbigpIC0gYWxsIHJlbGV2YW50IHBhdGhzIGxlYWRpbmcg
-dG8gdGhlCiJmYWlsIiBsYWJlbCBhbHJlYWR5IGRvIHRoaXMgKGFuZCB0aGVy
-ZSBhcmUgYWxzbyBwYXRocyB3aGVyZSBpdCB3YXMKcGxhaW4gd3JvbmcpLiBB
-bGwgb2YgdGhlIHB1dF9nZm4oKS1zIGdvdCBpbnRyb2R1Y2VkIGJ5IDUxMDMy
-Y2EwNTgKKCJNb2RpZnkgbmFtaW5nIG9mIHF1ZXJpZXMgaW50byB0aGUgcDJt
-IiksIGluY2x1ZGluZyB0aGUgb3RoZXJ3aXNlCnVubmVlZGVkIGluaXRpYWxp
-emVyIGZvciBrICh3aXRoIGV2ZW4gYSBraW5kIG9mIG1pc2xlYWRpbmcgY29t
-bWVudCAtCnRoZSBjb21waWxlciB3YXJuaW5nIGNvdWxkIGFjdHVhbGx5IGhh
-dmUgc2VydmVkIGFzIGEgaGludCB0aGF0IHRoZSB1c2UKaXMgd3JvbmcpLgoK
-VGhpcyBpcyBYU0EtMTU5LgoKUmVwb3J0ZWQtYnk6IEp1bGllbiBHcmFsbCA8
-anVsaWVuLmdyYWxsQGNpdHJpeC5jb20+ClNpZ25lZC1vZmYtYnk6IEphbiBC
-ZXVsaWNoIDxqYmV1bGljaEBzdXNlLmNvbT4KQWNrZWQtYnk6IElhbiBDYW1w
-YmVsbCA8aWFuLmNhbXBiZWxsQGNpdHJpeC5jb20+CgotLS0gYS94ZW4vY29t
-bW9uL21lbW9yeS5jCisrKyBiL3hlbi9jb21tb24vbWVtb3J5LmMKQEAgLTMz
-NCw3ICszMzQsNyBAQCBzdGF0aWMgbG9uZyBtZW1vcnlfZXhjaGFuZ2UoWEVO
-X0dVRVNUX0hBCiAgICAgUEFHRV9MSVNUX0hFQUQob3V0X2NodW5rX2xpc3Qp
-OwogICAgIHVuc2lnbmVkIGxvbmcgaW5fY2h1bmtfb3JkZXIsIG91dF9jaHVu
-a19vcmRlcjsKICAgICB4ZW5fcGZuX3QgICAgIGdwZm4sIGdtZm4sIG1mbjsK
-LSAgICB1bnNpZ25lZCBsb25nIGksIGosIGsgPSAwOyAvKiBnY2MgLi4uICov
-CisgICAgdW5zaWduZWQgbG9uZyBpLCBqLCBrOwogICAgIHVuc2lnbmVkIGlu
-dCAgbWVtZmxhZ3MgPSAwOwogICAgIGxvbmcgICAgICAgICAgcmMgPSAwOwog
-ICAgIHN0cnVjdCBkb21haW4gKmQ7CkBAIC01NzIsMTEgKzU3MiwxMiBAQCBz
-dGF0aWMgbG9uZyBtZW1vcnlfZXhjaGFuZ2UoWEVOX0dVRVNUX0hBCiAgZmFp
-bDoKICAgICAvKiBSZWFzc2lnbiBhbnkgaW5wdXQgcGFnZXMgd2UgbWFuYWdl
-ZCB0byBzdGVhbC4gKi8KICAgICB3aGlsZSAoIChwYWdlID0gcGFnZV9saXN0
-X3JlbW92ZV9oZWFkKCZpbl9jaHVua19saXN0KSkgKQotICAgIHsKLSAgICAg
-ICAgcHV0X2dmbihkLCBnbWZuICsgay0tKTsKICAgICAgICAgaWYgKCBhc3Np
-Z25fcGFnZXMoZCwgcGFnZSwgMCwgTUVNRl9ub19yZWZjb3VudCkgKQotICAg
-ICAgICAgICAgQlVHKCk7Ci0gICAgfQorICAgICAgICB7CisgICAgICAgICAg
-ICBCVUdfT04oIWQtPmlzX2R5aW5nKTsKKyAgICAgICAgICAgIGlmICggdGVz
-dF9hbmRfY2xlYXJfYml0KF9QR0NfYWxsb2NhdGVkLCAmcGFnZS0+Y291bnRf
-aW5mbykgKQorICAgICAgICAgICAgICAgIHB1dF9wYWdlKHBhZ2UpOworICAg
-ICAgICB9CiAKICBkeWluZzoKICAgICByY3VfdW5sb2NrX2RvbWFpbihkKTsK
-
---=separator--
+--MisdANo7dQr2ucnIc0kXFFToI7CFsKoKW--
