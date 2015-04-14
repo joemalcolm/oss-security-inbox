@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1224" "Friday" "15" "June" "2018" "16:43:51" "+0200" "Marcus Brinkmann" "marcus.brinkmann@ruhr-uni-bochum.de" "<e7583e33-54d9-6548-d55e-531f3fc4a040@ruhr-uni-bochum.de>" "28" "Re: [oss-security] CVE-2018-12356 Breaking signature verification in pass (Simple Password Store)" "^Date:" nil nil "6" "2018061514:43:51" "[oss-security] CVE-2018-12356 Breaking signature verification in pass (Simple Password Store)" (number mark "        marcus.brink Jun 15   28/1224  " thread-indent "\"Re: [oss-security] CVE-2018-12356 Breaking signature verification in pass (Simple Password Store)\"\n") "<20180614222021.6jguso4l7vqbjqyk@jwilk.net>" ("<c0e1a287-f18b-252e-3509-131db823264c@ruhr-uni-bochum.de>" "<20180614222021.6jguso4l7vqbjqyk@jwilk.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1118" "Tuesday" "14" "April" "2015" "08:55:36" "+0200" "Gsunde Orangen" "gsunde.orangen@gmail.com" "<552CB9E8.2010601@gmail.com>" "45" "Re: [oss-security] CVE request for some NTP stuff" nil nil nil "4" "2015041406:55:36" "[oss-security] CVE request for some NTP stuff" (number mark "        gsunde.orang Apr 14   45/1118  " thread-indent "\"Re: [oss-security] CVE request for some NTP stuff\"\n") "<54D2A541.7090904@gmail.com>" ("<54D29C33.70900@redhat.com>" "<54D2A541.7090904@gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 1952 invoked by uid 550); 15 Jun 2018 15:24:05 -0000
+Received: (qmail 26349 invoked by uid 550); 14 Apr 2015 06:52:04 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,61 +11,75 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 32630 invoked from network); 15 Jun 2018 14:44:04 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ruhr-uni-bochum.de;
-	s=mail-2017; t=1529073835;
-	bh=k4iUcdZnALF58se8Mou2VTgW1zNGKBnhE8PKLvaNPG0=;
-	h=Subject:To:References:From:Date:In-Reply-To:From;
-	b=DagAd8aAzKMfSlssK40uSzSSgc1/BvN6UcQaFCSpg6//txBRkpNict46TNC2J6mBZ
-	 G8L6YqSzYMDrUSPStcOuIl21MIbCoMa+0OoLhXMTn3KCORq3WS4jvTTWGqxxiU3Drc
-	 //3M9dbMxekoaJ0tdxI62X6cSCVjqtEGi6awRQHc=
-X-Envelope-Sender: <marcus.brinkmann@ruhr-uni-bochum.de>
-X-RUB-Notes: Internal origin=134.147.42.227
-References: <c0e1a287-f18b-252e-3509-131db823264c@ruhr-uni-bochum.de>
- <20180614222021.6jguso4l7vqbjqyk@jwilk.net>
-Openpgp: preference=signencrypt
-Message-ID: <e7583e33-54d9-6548-d55e-531f3fc4a040@ruhr-uni-bochum.de>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.8.0
+Received: (qmail 26331 invoked from network); 14 Apr 2015 06:52:04 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:subject:references
+         :in-reply-to:content-type:content-transfer-encoding;
+        bh=dRZuiillSpe9n2BenPVHfpp/yb+03lq1dSmZH/05GEM=;
+        b=R+WzQhPwjEjQXt1TQEufXLCvWkdM1vvF7qjUg1Sd5q7y5wdtwUwbbvC8xcQIdnpHNy
+         OIMROQ/8rt4l7qQ76MwEPY7pjHzKgdVcdeScEJXjQDsrqhaNVCWci/9aMF9N9uUF1FXF
+         CzVQyJXytE7QkmZ3xU9faZIA3Md/QU3eKewz4GGZvQTY95gnTdYK5giFcvwetRmsSTob
+         8xlIEzVdS2vVO2kAhiXsM2yqiJbtd9Ave38AkeCRC+Lo5ZHrvRBjukXtXhqDQG5NkF2o
+         fsY6Qb7yDDG4kcihUpctrydeLho9zfRfypeWYdmY84tz9FXagcqM87xwipr556GN5Sea
+         vhhQ==
+X-Received: by 10.180.104.66 with SMTP id gc2mr28945706wib.34.1428994312862;
+        Mon, 13 Apr 2015 23:51:52 -0700 (PDT)
+Message-ID: <552CB9E8.2010601@gmail.com>
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
 MIME-Version: 1.0
-In-Reply-To: <20180614222021.6jguso4l7vqbjqyk@jwilk.net>
+References: <54D29C33.70900@redhat.com> <54D2A541.7090904@gmail.com>
+In-Reply-To: <54D2A541.7090904@gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-X-Virus-Scanned: clamav-milter 0.99.4 at mail1.mail.ruhr-uni-bochum.de
-X-Virus-Status: Clean
-Date: Fri, 15 Jun 2018 16:43:51 +0200
-From: Marcus Brinkmann <marcus.brinkmann@ruhr-uni-bochum.de>
+Date: Tue, 14 Apr 2015 08:55:36 +0200
+From: Gsunde Orangen <gsunde.orangen@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE-2018-12356 Breaking signature verification in
- pass (Simple Password Store)
+Subject: Re: [oss-security] CVE request for some NTP stuff
 To: oss-security@lists.openwall.com
 
-On 06/15/2018 12:20 AM, Jakub Wilk wrote:
-> * Marcus Brinkmann <marcus.brinkmann@ruhr-uni-bochum.de>, 2018-06-14,
-> 23:46:
->> CVE-2018-12356: An issue was discovered in password-store.sh in pass
->> in Simple Password Store 1.7 through 1.7.1. The signature verification
->> routine parses the output of GnuPG with an incomplete regular
->> expression, which allows remote attackers to spoof file signatures on
->> configuration files and extensions scripts
-> [...]
->> https://neopg.io/blog/pass-signature-spoof/
+This is just a "cleanup" notice for those two ntp vulnerabilities that
+were resolved on Feb 4th:
+
+On 2015-02-05, 00:03 Gsunde Orangen wrote:
+> Hi Kurt,
 > 
-> In the blog post you write that the fixed regexp is "^[GNUPG:]", but
-> that would be really bad. :) I think you meant "^\[GNUPG:\]".
+> On 2015-02-04, 23:24 Kurt Seifried wrote:
+>> I haven't seen any CVE's for these yet:
+> 
+>> http://bugs.ntp.org/show_bug.cgi?id=2671 vallen is not validated,
+>> leading to potential info leak
+> CVE-2014-9297 (according to 
+> http://support.ntp.org/bin/view/Main/SecurityNotice#Recent_Vulnerabilities)
+>
+>
+>
+>
+> 
+> 
+>> http://bugs.ntp.org/show_bug.cgi?id=2655 Multiple vulnerabilities
+>> in ntpd
+> This bug lists 8 different bugs, Bugs #1 - #7 are tracked in 
+> different ids (#7 is the one above: id=2671) The remaining bug #8 
+> is defined as CVE-2014-9298 as in 
+> http://support.ntp.org/bin/view/Main/SecurityNotice#Recent_Vulnerabilities
+>
+>
+>
+>
+> Note however, that the Cert VNDB 
+> (http://www.kb.cert.org/vuls/id/852879) uses the same CVEs for
+> bugs #7 and #8, but mutually exchanged! Either ntp.org or cert.org
+> is wrong...
 
-Thanks, fixed.
+cert.org was wrong but had apparently fixed it immediately after that
+notice.
 
-> There's apparently more software that uses unachored "\[GNUPG:\]":
-> https://codesearch.debian.net/search?q=%5B%5E%5E%5D%5C%5C%5C%5BGNUPG%3A%5C%5C%5C%5D
+> 
+> 
+>> Thanks.
+> 
+> You're welcome ;-)
+> 
+> 
 
-Yes. I did two weeks of due diligence on the important package managers,
-Git, and anything I could think of that is critical. But I am not saying
-what I looked at, because there might be something I missed, and I want
-everybody to join in and have a fresh look. It is too much for a single
-person.
-
-I didn't know about Debian code search, so thanks for the tip.
-
-You reporting these? If not, I can do it.
