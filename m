@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4132" "Wednesday" "1" "February" "2017" "22:35:13" "+0100" "Daniel Beck" "ml@beckweb.net" "<78766452-8905-45F1-84C0-A3894F81F423@beckweb.net>" "115" "[oss-security] Multiple vulnerabilities in Jenkins" "^Date:" nil nil "2" "2017020121:35:13" "[oss-security] Multiple vulnerabilities in Jenkins" (number mark "        ml@beckweb.n Feb  1  115/4132  " thread-indent "\"[oss-security] Multiple vulnerabilities in Jenkins\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2781" "Tuesday" "14" "April" "2015" "16:04:05" "-0400" "Tristan Cacqueray" "tristan.cacqueray@enovance.com" "<552D72B5.2010809@enovance.com>" "83" "[oss-security] [OSSA 2015-007] S3Token TLS cert verification option not honored (CVE-2015-1852)" nil nil nil "4" "2015041420:04:05" "[oss-security] [OSSA 2015-007] S3Token TLS cert verification option not honored (CVE-2015-1852)" (number mark "        tristan.cacq Apr 14   83/2781  " thread-indent "\"[oss-security] [OSSA 2015-007] S3Token TLS cert verification option not honored (CVE-2015-1852)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 29864 invoked by uid 550); 1 Feb 2017 21:35:25 -0000
+Received: (qmail 32061 invoked by uid 550); 14 Apr 2015 20:04:01 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,132 +11,101 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 29846 invoked from network); 1 Feb 2017 21:35:25 -0000
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <78766452-8905-45F1-84C0-A3894F81F423@beckweb.net>
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-X-Mailer: Apple Mail (2.3124)
-X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1485984925;02113b91;
-X-HE-SMSGID: 1cZ2Yc-0003f1-5c
-Date: Wed, 1 Feb 2017 22:35:13 +0100
-From: Daniel Beck <ml@beckweb.net>
+Received: (qmail 31901 invoked from network); 14 Apr 2015 20:03:54 -0000
+X-Virus-Scanned: amavisd-new at enovance.com
+Message-ID: <552D72B5.2010809@enovance.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="Cp069B57064HCxDqavX6N9aNfitGGnhdx"
+Date: Tue, 14 Apr 2015 16:04:05 -0400
+From: Tristan Cacqueray <tristan.cacqueray@enovance.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Multiple vulnerabilities in Jenkins
+Subject: [oss-security] [OSSA 2015-007] S3Token TLS cert verification option not honored
+ (CVE-2015-1852)
 To: oss-security@lists.openwall.com
 
-The Jenkins project published updates today with fixes for multiple=20
-vulnerabilities. Users should upgrade to the versions below:
+--Cp069B57064HCxDqavX6N9aNfitGGnhdx
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-* Jenkins (weekly) 2.44
-* Jenkins (LTS) 2.32.2
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+OSSA-2015-007: S3Token TLS cert verification option not honored
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://wiki.jenkins-ci.org/display/SECURITY/Jenkins+Security+Advisory+2017=
--02-01
+:Date: April 14, 2015
+:CVE: CVE-2015-1852
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
 
-If you find security vulnerabilities in Jenkins, please report them as
-described here:
-https://jenkins.io/security/#reporting-vulnerabilities
+Affects
+~~~~~~~
+- python-keystoneclient: versions through 1.3.0
+- keystonemiddleware: versions through 1.5.0
 
----
 
-SECURITY-304 / CVE-2017-2598
-Jenkins stored encrypted secrets on disk using AES ECB block cipher mode=20
-without IV.
+Description
+~~~~~~~~~~~
+Brant Knudson from IBM reported a vulnerability in keystonemiddleware
+(formerly shipped as python-keystoneclient). When the 'insecure'
+option is set in a S3Token paste configuration file its value is
+effectively ignored and instead assumed to be true. As a result
+certificate verification will be disabled, leaving TLS connections
+open to MITM attacks. Note that it's unusual to explicitly add this
+option and then set it to false, so the impact of this bug is thought
+to be limited. All versions of s3_token middleware with TLS settings
+configured are affected by this flaw.
 
-SECURITY-321 / CVE-2017-2599
-An insufficient permission check allowed users with the permission to creat=
-e=20
-new items (e.g. jobs) to overwrite existing items they don't have access to,
-and access some of their data
 
-SECURITY-343 / CVE-2017-2600
-Overall/Read permission was sufficient to access node monitor data via the
-remote API. These included system configuration and runtime information of
-these nodes.
+Patches
+~~~~~~~
+- https://review.openstack.org/173378 (python-keystoneclient) (Icehouse)
+- https://review.openstack.org/173376 (keystonemiddleware)    (Juno)
+- https://review.openstack.org/173377 (python-keystoneclient) (Juno)
+- https://review.openstack.org/173365 (keystonemiddleware)    (Kilo)
+- https://review.openstack.org/173370 (python-keystoneclient) (Kilo)
 
-SECURITY-349 / CVE-2011-4969
-Possible cross-site scripting vulnerability in jQuery bundled with timeline
-widget.
 
-SECURITY-353 / CVE-2017-2601
-Users with the permission to configure jobs were able to inject JavaScript
-into parameter names and descriptions.
+Credits
+~~~~~~~
+- Brant Knudson from IBM (CVE-2015-1852)
 
-SECURITY-354 / CVE-2015-0886
-Jenkins bundled an outdated version of jbcrypt that was affected by
-CVE-2015-0886.
 
-SECURITY-358 / CVE-2017-2602
-Pipeline metadata files not blacklisted in agent-to-master security subsyst=
-em
+References
+~~~~~~~~~~
+- https://launchpad.net/bugs/1411063
+- http://cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2015-1852
 
-SECURITY-362 / CVE-2017-2603
-Agents that were disconnected by users contained the disconnecting user's=20
-User object in serialized form in the config.xml remote API output.
 
-SECURITY-371 / CVE-2017-2604
-Low privilege users were able to act on some administrative monitors due to
-insufficient permission checks.
+Notes
+~~~~~
+- This fix will be included in keystonemiddleware 1.6.0 release and
+  python-keystoneclient 1.4.0 release.
 
-SECURITY-376 / CVE-2017-2605
-The re-key admin monitor was introduced in Jenkins 1.498 and re-encrypted a=
-ll
-secrets in JENKINS_HOME with a new key. It also created a backup directory
-with all old secrets, and the key used to encrypt them. These backups were
-world-readable and not removed afterwards.
+--
+Tristan Cacqueray
+OpenStack Vulnerability Management Team
 
-SECURITY-380 / CVE-2017-2606
-The method Jenkins#getItems() included a performance optimization that wron=
-gly
-returned inaccessible items when the 'Logged in users can do anything'
-authorization strategy was used, even when no access was granted to anonymo=
-us
-users
 
-SECURITY-382 / CVE-2017-2607
-Jenkins users, or users with SCM access, could configure jobs or modify bui=
-ld
-scripts such that they print serialized console notes that perform cross-si=
-te
-scripting attacks on Jenkins users viewing the build logs.
+--Cp069B57064HCxDqavX6N9aNfitGGnhdx
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
-SECURITY-383 / CVE-2017-2608
-XStream-based APIs in Jenkins (e.g. /createItem URLs, or POST config.xml
-remote API) were vulnerable to a remote code execution vulnerability involv=
-ing
-the deserialization of various types in the javax.imageio package.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
 
-SECURITY-385 / CVE-2017-2609
-The autocompletion for the search box provided the names of views the curre=
-nt
-user does not have access to in its suggestions.
+iQEcBAEBAgAGBQJVLXK1AAoJECK5oFySXMXYqxQIAJ1geUDIl6OkXCxJD+sfk0c7
+ZDEqhCJf2XL5FBc/OKZ6w/wadsaIK+F9azVi1WUZ3vzXuSTY06aFKmrTevzHdQFv
+4JKXF4DFu7ovg2Cp9yHSCMNF+rsTnn2KNJTDc1kpb3K/nEGkNxOxHZiNC23SMK3Q
+RY9DD3l0CAPbJbiF8AIKdV98vfpAcIZ4edbQSywPV/L29UgQ70caB/C+LQ7nTV1u
+5CGznZ626fDgiIEEvDM5H2zKiMw1fFlTd3nap1PWc9dimnmRCIGdjlblGAR36il7
+e3k46yp+Mm0XaVbx1X0nf+fWvPMHnfJDsoaSnF0zShzI6557jC231H1zik7/EZs=
+=/Pjg
+-----END PGP SIGNATURE-----
 
-SECURITY-388 / CVE-2017-2610
-User display names with less-than and greater-than were not escaped when
-displaying search suggestions, resulting in a cross-site scripting
-vulnerability.
-
-SECURITY-389 / CVE-2017-2611
-The URLs /workspaceCleanup and /fingerprintCleanup did not perform permissi=
-on
-checks, allowing users with read access to Jenkins to trigger these backgro=
-und
-processes (that are otherwise performed daily).
-
-SECURITY-392 / CVE-2017-2612
-Users with read access to Jenkins were able to override Oracle JDK download
-credentials, resulting in future builds possibly failing to download a JDK.
-
-SECURITY-406 / CVE-2017-2613
-When administrators accessed a URL like /user/example via HTTP GET, a user
-with the ID 'example' was created if it did not exist. While this user reco=
-rd
-was only retained until restart in most cases, administrators' web browsers
-could be manipulated to create a large number of user records.
-
+--Cp069B57064HCxDqavX6N9aNfitGGnhdx--
