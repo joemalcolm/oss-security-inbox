@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1738" "Tuesday" "10" "January" "2017" "22:41:20" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<f361a068cd454d81a00f00b0ed6bbd1b@imshyb02.MITRE.ORG>" "54" "[oss-security] Re: CVE Request: two security fixes in libgit2 0.25.1, 0.24.6" "^CC:" nil nil "1" "2017011103:41:20" "[oss-security] Re: CVE Request: two security fixes in libgit2 0.25.1, 0.24.6" (number mark "        cve-assign@m Jan 10   54/1738  " thread-indent "\"[oss-security] Re: CVE Request: two security fixes in libgit2 0.25.1, 0.24.6\"\n") "<8c1cd983-c3ec-c821-0e11-b8dd6bed1387@suse.com>" ("<8c1cd983-c3ec-c821-0e11-b8dd6bed1387@suse.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["737" "Wednesday" "15" "April" "2015" "05:45:44" "-0400" "Jakub Filak" "jfilak@redhat.com" "<1996357174.366899.1429091144055.JavaMail.zimbra@redhat.com>" "18" "[oss-security] Re: Problems in automatic crash analysis frameworks" nil nil nil "4" "2015041509:45:44" "[oss-security] Re: Problems in automatic crash analysis frameworks" (number mark "        jfilak@redha Apr 15   18/737   " thread-indent "\"[oss-security] Re: Problems in automatic crash analysis frameworks\"\n") "<263211786.321777.1429090662008.JavaMail.zimbra@redhat.com>" ("<263211786.321777.1429090662008.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 22336 invoked by uid 550); 11 Jan 2017 03:41:32 -0000
+Received: (qmail 19973 invoked by uid 550); 15 Apr 2015 20:35:27 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,69 +11,37 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 22318 invoked from network); 11 Jan 2017 03:41:32 -0000
-In-Reply-To: <8c1cd983-c3ec-c821-0e11-b8dd6bed1387@suse.com>
-Message-ID: <f361a068cd454d81a00f00b0ed6bbd1b@imshyb02.MITRE.ORG>
+Received: (qmail 17487 invoked from network); 15 Apr 2015 09:45:56 -0000
+Message-ID: <1996357174.366899.1429091144055.JavaMail.zimbra@redhat.com>
+In-Reply-To: <263211786.321777.1429090662008.JavaMail.zimbra@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>, <cmn@dwim.me>
-Date: Tue, 10 Jan 2017 22:41:20 -0500
-From: <cve-assign@mitre.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.34.24.140]
+X-Mailer: Zimbra 8.0.6_GA_5922 (ZimbraWebClient - FF31 (Linux)/8.0.6_GA_5922)
+Thread-Topic: Problems in automatic crash analysis frameworks
+Thread-Index: Wsxy9DXu5UlpQl03mqsMRRX/qyi3bg==
+Date: Wed, 15 Apr 2015 05:45:44 -0400 (EDT)
+From: Jakub Filak <jfilak@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE Request: two security fixes in libgit2 0.25.1, 0.24.6
-To: <astieger@suse.com>
+Subject: [oss-security] Re: Problems in automatic crash analysis frameworks
+To: oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hello,
 
-> https://github.com/libgit2/libgit2/commit/66e3774d279672ee51c3b54545a79d20d1ada834
+I have a question regarding the ABRT vulnerabilities. I don't particularly understand how an attacker can use /proc/pid/exe symlink to force ABRT to read an arbitrary file if the symlink cannot be changed and kernel refuses to create the process if the symlink's target is not executable.
 
-Use CVE-2016-10128.
+> This code trusts the /proc/pid/exe symlink, even though it is possible
+> to link it anywhere you want.
+>
+> https://github.com/abrt/abrt/blob/master/src/hooks/abrt-hook-ccpp.c#L368
+>
+>        sprintf(buf, "/proc/%lu/exe", (long)pid);
+>        int src_fd_binary = open(buf, O_RDONLY); /* might fail and
+>                                                    return -1, it's ok */
 
-
-> https://github.com/libgit2/libgit2/commit/2fdef641fd0dd2828bd948234ae86de75221a11a
-
-Use CVE-2016-10129.
-
-
-> https://github.com/libgit2/libgit2/commit/9a64e62f0f20c9cf9b2e1609f037060eb2d8eb22
-
-Use CVE-2016-10130.
+Thank you for clarifying this for me.
 
 
-> https://github.com/libgit2/libgit2/commit/98d66240ecb7765e191da19b535c75c92ccc90fe
-
-Use CVE-2017-5338.
-
-
-> https://github.com/libgit2/libgit2/commit/3829ba2e710553893faf6336cc6b2f3fc17a293e
-
-Use CVE-2017-5339.
-
-
-> https://github.com/libgit2/libgit2/commit/2ac57aa89bde788173b54bd153430369deec64c0
-
-This has no CVE ID; it does not seem to be a vulnerability fix.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYdacwAAoJEHb/MwWLVhi2/EEP/jH+BS08ezRAbMvZW5v27rQp
-L3cbsZDrrydTfV65nR7CoKtT+IVNt6ZBgK7S2npMwv+LFcWwe/1U3kOEb3bwduRD
-LSZCIX0b3437Q+wS83Ohz3U88R3LUECzaU9YP+sW+hRGxi9Lu1hfGkaOThxMKznE
-5wxqr7/85G42J+yWQRQx46mHyvS0h5Ogj7FqkeDenpp7qucfW/CqfWggtzQw2/Sm
-SDLVVF0l3/rKDGicyO0+451wbhoWKL3CFE3q11FHgU6Isn2HQ9qu3litcSAtCXN1
-q37xCAyMuPrVYLVvEgBgT43icxAg0rDwNh521XN0aHIy+NVdhaknOSLLWkntCG42
-yRExjFOYSReYIiFnAGDsn+ujPlUe1a/GbZ/WlOOZw0abY1T9OTiuqDBywEVk5WxJ
-26fKFUHPoBhN21En9V4/0d5tIdpUV8jYscritWJhxcoMNMBpnVfuTANPy9GNXaGU
-w+FjXC2S+OYNxirBlRQlw3aECAsvkLk6PKLZZnoMkM8x+HIBimk8/1+HvNOrTiwX
-GtYGJroUYspNmFLfDixpfZlSO5RO9MqQZKKCDYkfqmVGeLCcGilOd084CwlrLXvG
-jYkjJvyw6E0kzLTM3x1Q3Fp3rkBkSl8pyR3Xmts/0seY9EMnDy00aqEIug/xczz1
-okCatyYGVFaf+kJltyv3
-=tboo
------END PGP SIGNATURE-----
+Kind regards,
+Jakub
