@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5788" "Thursday" "18" "February" "2021" "11:47:16" "+0000" "Xen.org security team" "security@xen.org" nil "148" "[oss-security] Xen Security Advisory 366 v1 - missed flush in XSA-321 backport" nil nil nil "2" nil nil (number mark "U       security@xen Feb 18  148/5788  " thread-indent "\"[oss-security] Xen Security Advisory 366 v1 - missed flush in XSA-321 backport\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Xen Security Advisory 366 v1 - missed flush in XSA-321 backport" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["557" "Wednesday" "15" "April" "2015" "10:29:16" "+1000" "Michael Samuel" "mik@miknet.net" "<CACYkhxipofcN=sdyjAVY1LmFcts3s9KzG4dABHX0DDBi1zCkEw@mail.gmail.com>" "18" "Re: [oss-security] Re: Problems in automatic crash analysis frameworks" nil nil nil "4" "2015041500:29:16" "[oss-security] Re: Problems in automatic crash analysis frameworks" (number mark "        mik@miknet.n Apr 15   18/557   " thread-indent "\"Re: [oss-security] Re: Problems in automatic crash analysis frameworks\"\n") "<CAJ_zFk+7eV52Ui1+aV+BKhc68zKi3pmPsgPmFoOsw8Qg6dHPAQ@mail.gmail.com>" ("<20150414155515.BFCAD6C0075@smtpvmsrv1.mitre.org>" "<552D3A20.8040909@canonical.com>" "<CAJ_zFkLtZteX-ge_=9jE8KHxDmKZ=7cwWUmwkHwGHbnCpiQWZA@mail.gmail.com>" "<CAJ_zFk+7eV52Ui1+aV+BKhc68zKi3pmPsgPmFoOsw8Qg6dHPAQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 26174 invoked by uid 550); 18 Feb 2021 11:47:35 -0000
+Received: (qmail 17908 invoked by uid 550); 15 Apr 2015 00:29:48 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,171 +11,58 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26144 invoked from network); 18 Feb 2021 11:47:34 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=xen.org;
-	s=20200302mail; h=Date:Message-Id:Subject:CC:From:To:MIME-Version:
-	Content-Transfer-Encoding:Content-Type;
-	bh=qAwJ86xNj6iy18bFGlL0Zzk4WSB6wYKH7ThjA2nJMbc=; b=bcGgWZH0tqptJxUlJZbVCtjYcp
-	LFW4FUt251tKzjm4otY0GBQoMCyB8XyeeY6drDkaC+tshsCnldctbYVNIh9loeP0DKpWCDANAOodX
-	G0/IwRq008RCT+2y99kvrhTMeWI2hWWfildC8sQFJigWFEOPpQoZPIOGc06X1dkvPXD8=;
-Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
-Content-Transfer-Encoding: binary
+Received: (qmail 17890 invoked from network); 15 Apr 2015 00:29:48 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=miknet.net; s=google;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :content-type;
+        bh=IPImlJFY6gFBIL45iGQg8+sYJvJlOh401h7VmzqJq9c=;
+        b=i+F7+1IF4GlA2SDZs1T4Xc6yZdcvW0d/NLRY44jjhe9Rgn7o8HP8o4i5HYuEvOa8BU
+         e0hLUtVBMz8naqKHNaA3IfKslt6tpBZiCCo7WIT4BFKQzCVZY2wSv3gAGAOOL5Oqgtid
+         vW+bAf1pRSrypJZeQUu6fnp8GRSBkUo8aW/K0=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:content-type;
+        bh=IPImlJFY6gFBIL45iGQg8+sYJvJlOh401h7VmzqJq9c=;
+        b=fFdU7PEJfcpSy4yfQCE+I4eUG+tRFZs/bGZ18H8f8hI6TQy4gOk8gtfwl7NiRZOpLM
+         qLk56s02kPhV5EoTic9jj99qsBKwXIyiduGjprxkUlTwadBdckZ00U2dbOSRhpnkaSWL
+         GnUHI/F6J4uIYKfGnkcsBoS56weNCCSx6RIfryGHJOIcmnVG8RPvgIJURl0Dn/Kp3uPg
+         pn0iBBdMd5w6uijrpDbX2KoBfEGMdaJ77kmKUL0lhh0UKRlnNwLK0EZk3mQSsqb9TVDp
+         zO0z6jLplS0TodLyB3bPY1TXekDEtZZJZCijIwx0F8HTRcEMMOAWYEsz3ftY9tpxcslm
+         s+1A==
+X-Gm-Message-State: ALoCoQk5XLEv+NOxc85yq+zUy2GYxVmpcK2CImZ0oN9w6j8N7zdmMc3OpPjj1fofXlgEX6E+WS3/
+X-Received: by 10.107.12.93 with SMTP id w90mr33289428ioi.10.1429057776466;
+ Tue, 14 Apr 2015 17:29:36 -0700 (PDT)
 MIME-Version: 1.0
-X-Mailer: MIME-tools 5.509 (Entity 5.509)
-To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
- xen-users@lists.xen.org, oss-security@lists.openwall.com
-From: Xen.org security team <security@xen.org>
-CC: Xen.org security team <security-team-members@xen.org>
-Message-Id: <E1lChm8-0008V9-8E@xenbits.xenproject.org>
-Date: Thu, 18 Feb 2021 11:47:16 +0000
-Subject: [oss-security] Xen Security Advisory 366 v1 - missed flush in XSA-321 backport
+X-Originating-IP: [202.147.129.34]
+In-Reply-To: <CAJ_zFk+7eV52Ui1+aV+BKhc68zKi3pmPsgPmFoOsw8Qg6dHPAQ@mail.gmail.com>
+References: <20150414155515.BFCAD6C0075@smtpvmsrv1.mitre.org>
+ <552D3A20.8040909@canonical.com> <CAJ_zFkLtZteX-ge_=9jE8KHxDmKZ=7cwWUmwkHwGHbnCpiQWZA@mail.gmail.com>
+ <CAJ_zFk+7eV52Ui1+aV+BKhc68zKi3pmPsgPmFoOsw8Qg6dHPAQ@mail.gmail.com>
+Message-ID: <CACYkhxipofcN=sdyjAVY1LmFcts3s9KzG4dABHX0DDBi1zCkEw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Date: Wed, 15 Apr 2015 10:29:16 +1000
+From: Michael Samuel <mik@miknet.net>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Re: Problems in automatic crash analysis frameworks
+To: oss-security@lists.openwall.com
 
---=separator
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
-Content-Transfer-Encoding: 7bit
+On 15 April 2015 at 07:08, Tavis Ormandy <taviso@google.com> wrote:
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+>>>> import socket
+>>>> socket.socket(socket.AF_UNIX, socket.SOCK_STREAM).bind('test\ntest')
+>>>> sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+>>>> sock.bind('/tmp/foo\nbar')
+>>>> sock.listen(1)
+>
+> $ grep -A1 foo /proc/net/unix
+> 0000000000000000: 00000002 00000000 00010000 0001 01 4772228 /tmp/foo
+> bar
 
-                    Xen Security Advisory XSA-366
+This is a Linux kernel flaw/bug right?  It's a machine-readable
+newline-delimited
+/proc file, so it needs to escape newlines if they're valid data.
 
-                   missed flush in XSA-321 backport
-
-ISSUE DESCRIPTION
-=================
-
-An oversight was made when backporting XSA-320, leading entries in the
-IOMMU not being properly updated under certain circumstances.
-
-IMPACT
-======
-
-A malicious guest may be able to retain read/write DMA access to
-frames returned to Xen's free pool, and later reused for another
-purpose.  Host crashes (leading to a Denial of Service) and privilege
-escalation cannot be ruled out.
-
-VULNERABLE SYSTEMS
-==================
-
-Xen versions up to 4.11, from at least 3.2 onwards, are affected.  Xen
-versions 4.12 and newer are not affected.
-
-Only x86 Intel systems are affected.  x86 AMD as well as Arm systems are
-not affected.
-
-Only x86 HVM guests using hardware assisted paging (HAP), having a
-passed through PCI device assigned, and having page table sharing
-enabled can leverage the vulnerability.  Note that page table
-sharing will be enabled (by default) only if Xen considers IOMMU and
-CPU large page size support compatible.
-
-MITIGATION
-==========
-
-Suppressing the use of page table sharing will avoid the vulnerability
-(command line option "iommu=no-sharept").
-
-Suppressing the use of large HAP pages will avoid the vulnerability
-(command line options "hap_2mb=no hap_1gb=no").
-
-Not passing through PCI devices to HVM guests will avoid the
-vulnerability.
-
-CREDITS
-=======
-
-This issue was reported as a bug by M. Vefa Bicakci, and recognized as
-a security issue by Roger Pau Monne of Citrix.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-Note that patches for released versions are generally prepared to
-apply to the stable branches, and may not apply cleanly to the most
-recent release tarball.  Downstreams are encouraged to update to the
-tip of the stable branch before applying these patches.
-
-xsa366-4.11.patch      Xen 4.11.x
-
-$ sha256sum xsa366*
-3131c9487b9446655e2e21df4ccf1e003bec471881396d7b2b1a0939f5cbae96  xsa366.meta
-8c8c18ca8425e6167535c3cf774ffeb9dcb4572e81c8d2ff4a73fefede2d4d94  xsa366-4.11.patch
-$
-
-NOTE REGARDING LACK OF EMBARGO
-==============================
-
-This was reported and debugged publicly, before the security
-implications were apparent.
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmAuU5EMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZMCkIAKq1dU6xOMN3lFqY6LeIV+Pn+JQDvJKhDT+lJT9b
-KAP+a44ks5bHHSD6CPyiq5boU5APE7yqiyJnXBycXVDLH6GGjh7uBvc6A00YkeHU
-y08l8jxa6/FAyrvCj5P0pYItALwH0NZDtfUE57ueloYUu3KJnyBRtl9icvx/sCa9
-CUkpKDpS0te+Rk+G57UPDjGvSPwpIh01vphJ5tyf+2Lrk8rsHTJYWQ7eD8A09jCr
-DtSD6FylzEuGGY30vPGLUzXgOm8Nji/WgnXnmmbILCEo8PQs3CcoxN53/F8cYvr6
-NRERHKZFhHoLmUUCImoFcApxzzdt11USDnCdEXiAkrEOYsk=
-=w9OA
------END PGP SIGNATURE-----
-
---=separator
-Content-Type: application/octet-stream; name="xsa366.meta"
-Content-Disposition: attachment; filename="xsa366.meta"
-Content-Transfer-Encoding: base64
-
-ewogICJYU0EiOiAzNjYsCiAgIlN1cHBvcnRlZFZlcnNpb25zIjogWwogICAg
-IjQuMTEiCiAgXSwKICAiVHJlZXMiOiBbCiAgICAieGVuIgogIF0sCiAgIlJl
-Y2lwZXMiOiB7CiAgICAiNC4xMSI6IHsKICAgICAgIlJlY2lwZXMiOiB7CiAg
-ICAgICAgInhlbiI6IHsKICAgICAgICAgICJTdGFibGVSZWYiOiAiODBjYWQ1
-ODRmYjRjMjU5OWFlMTc0MjI2ZTJjOTEzYmIyM2RmM2JmYSIsCiAgICAgICAg
-ICAiUHJlcmVxcyI6IFtdLAogICAgICAgICAgIlBhdGNoZXMiOiBbCiAgICAg
-ICAgICAgICJ4c2EzNjYtNC4xMS5wYXRjaCIKICAgICAgICAgIF0KICAgICAg
-ICB9CiAgICAgIH0KICAgIH0KICB9Cn0=
-
---=separator
-Content-Type: application/octet-stream; name="xsa366-4.11.patch"
-Content-Disposition: attachment; filename="xsa366-4.11.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbTogUm9nZXIgUGF1IE1vbm5lIDxyb2dlci5wYXVAY2l0cml4LmNvbT4K
-U3ViamVjdDogeDg2L2VwdDogZml4IG1pc3NpbmcgSU9NTVUgZmx1c2ggaW4g
-YXRvbWljX3dyaXRlX2VwdF9lbnRyeQoKQmFja3BvcnQgb2YgWFNBLTMyMSBt
-aXNzZWQgYSBmbHVzaCBpbiBhdG9taWNfd3JpdGVfZXB0X2VudHJ5IHdoZW4K
-bGV2ZWwgd2FzIGRpZmZlcmVudCB0aGFuIDAuIFN1Y2ggb21pc3Npb24gd2ls
-bCB1bmRlcm1pbmUgdGhlIGZpeCBmb3IKWFNBLTMyMSwgYmVjYXVzZSBwYWdl
-IHRhYmxlIGVudHJpZXMgY2FjaGVkIGluIHRoZSBJT01NVSBjYW4gZ2V0IG91
-dApvZiBzeW5jIGFuZCBjb250YWluIHN0YWxlIGVudHJpZXMuCgpGaXggdGhp
-cyBieSBzbGlnaHRseSByZS1hcnJhbmdpbmcgdGhlIGNvZGUgdG8gcHJldmVu
-dCB0aGUgZWFybHkgcmV0dXJuCndoZW4gbGV2ZWwgaXMgZGlmZmVyZW50IHRo
-YXQgMC4gTm90ZSB0aGF0IHRoZSBlYXJseSByZXR1cm4gaXMganVzdCBhbgpv
-cHRpbWl6YXRpb24gYmVjYXVzZSBmb3JlaWduIGVudHJpZXMgY2Fubm90IGhh
-dmUgbGV2ZWwgPiAwLgoKVGhpcyBpcyBYU0EtMzY2LgoKUmVwb3J0ZWQtYnk6
-IE0uIFZlZmEgQmljYWtjaSA8bS52LmJAcnVuYm94LmNvbT4KU2lnbmVkLW9m
-Zi1ieTogUm9nZXIgUGF1IE1vbm7DqSA8cm9nZXIucGF1QGNpdHJpeC5jb20+
-ClJldmlld2VkLWJ5OiBKYW4gQmV1bGljaCA8amJldWxpY2hAc3VzZS5jb20+
-Ci0tLQogeGVuL2FyY2gveDg2L21tL3AybS1lcHQuYyB8IDcgKy0tLS0tLQog
-MSBmaWxlIGNoYW5nZWQsIDEgaW5zZXJ0aW9uKCspLCA2IGRlbGV0aW9ucygt
-KQoKZGlmZiAtLWdpdCBhL3hlbi9hcmNoL3g4Ni9tbS9wMm0tZXB0LmMgYi94
-ZW4vYXJjaC94ODYvbW0vcDJtLWVwdC5jCmluZGV4IDAzNjc3MWY0M2MuLmZk
-ZTJmNWY3ZTMgMTAwNjQ0Ci0tLSBhL3hlbi9hcmNoL3g4Ni9tbS9wMm0tZXB0
-LmMKKysrIGIveGVuL2FyY2gveDg2L21tL3AybS1lcHQuYwpAQCAtNTMsMTIg
-KzUzLDcgQEAgc3RhdGljIGludCBhdG9taWNfd3JpdGVfZXB0X2VudHJ5KGVw
-dF9lbnRyeV90ICplbnRyeXB0ciwgZXB0X2VudHJ5X3QgbmV3LAogICAgIGJv
-b2xfdCBjaGVja19mb3JlaWduID0gKG5ldy5tZm4gIT0gZW50cnlwdHItPm1m
-biB8fAogICAgICAgICAgICAgICAgICAgICAgICAgICAgIG5ldy5zYV9wMm10
-ICE9IGVudHJ5cHRyLT5zYV9wMm10KTsKIAotICAgIGlmICggbGV2ZWwgKQot
-ICAgIHsKLSAgICAgICAgQVNTRVJUKCFpc19lcHRlX3N1cGVycGFnZSgmbmV3
-KSB8fCAhcDJtX2lzX2ZvcmVpZ24obmV3LnNhX3AybXQpKTsKLSAgICAgICAg
-d3JpdGVfYXRvbWljKCZlbnRyeXB0ci0+ZXB0ZSwgbmV3LmVwdGUpOwotICAg
-ICAgICByZXR1cm4gMDsKLSAgICB9CisgICAgQVNTRVJUKCFsZXZlbCB8fCAh
-aXNfZXB0ZV9zdXBlcnBhZ2UoJm5ldykgfHwgIXAybV9pc19mb3JlaWduKG5l
-dy5zYV9wMm10KSk7CiAKICAgICBpZiAoIHVubGlrZWx5KHAybV9pc19mb3Jl
-aWduKG5ldy5zYV9wMm10KSkgKQogICAgIHsK
-
---=separator--
+Regards,
+  Michael
