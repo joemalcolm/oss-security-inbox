@@ -1,4 +1,9 @@
-Received: (qmail 1927 invoked by uid 550); 16 Jul 2024 12:00:40 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["827" "Wednesday" "15" "April" "2015" "03:51:24" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150415075124.009826FC001@smtpvmsrv1.mitre.org>" "24" "[oss-security] Re: proftpd: Unauthenticated copying of files via SITE CPFR/CPTO allowed by mod_copy" nil nil nil "4" "2015041507:51:24" "[oss-security] Re: proftpd: Unauthenticated copying of files via SITE CPFR/CPTO allowed by mod_copy" (number mark "        cve-assign@m Apr 15   24/827   " thread-indent "\"[oss-security] Re: proftpd: Unauthenticated copying of files via SITE CPFR/CPTO allowed by mod_copy\"\n") "<20150415023901.19ca4e5e@pc1.fritz.box>" ("<20150415023901.19ca4e5e@pc1.fritz.box>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 30003 invoked by uid 550); 15 Apr 2015 07:51:40 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,170 +11,37 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 29934 invoked from network); 15 Apr 2015 07:51:36 -0000
+In-Reply-To: <20150415023901.19ca4e5e@pc1.fritz.box>
+Message-Id: <20150415075124.009826FC001@smtpvmsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Wed, 15 Apr 2015 03:51:24 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1903 invoked from network); 16 Jul 2024 12:00:40 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=xen.org;
-	s=20200302mail; h=Date:Message-Id:Subject:CC:From:To:MIME-Version:
-	Content-Transfer-Encoding:Content-Type;
-	bh=jBqT5J8VwiTbmzsqgceP4IWvsu1bh07Z7+ZRyPwcv04=; b=vqTyEUoXboHjsbz3rgWsn6oexc
-	ETcbzOg0pzznRPuXcqWNomY2rCqoyuc3JdRiupp+3NpMdOF6SseUaEKTPwFrahalzcZ0O03+wz+Q1
-	y0qICRtQWfkKF++qIsBvnQoHFRCLHqYMxa5yT09GWd7LSGTjPBGqEiNQ5hkwEtb8On/0=;
-Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
-Content-Transfer-Encoding: binary
-MIME-Version: 1.0
-X-Mailer: MIME-tools 5.509 (Entity 5.509)
-To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
- xen-users@lists.xen.org, oss-security@lists.openwall.com
-From: Xen.org security team <security@xen.org>
-CC: Xen.org security team <security-team-members@xen.org>
-Message-Id: <E1sTgqz-0008JB-EB@xenbits.xenproject.org>
-Date: Tue, 16 Jul 2024 12:00:21 +0000
-Subject: [oss-security] Xen Security Advisory 458 v2 (CVE-2024-31143) - double unlock in
- x86 guest IRQ handling
-
---=separator
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
-Content-Transfer-Encoding: 7bit
+Subject: [oss-security] Re: proftpd: Unauthenticated copying of files via SITE CPFR/CPTO allowed by mod_copy
+To: hanno@hboeck.de
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hash: SHA1
 
-            Xen Security Advisory CVE-2024-31143 / XSA-458
-                               version 2
+> https://github.com/proftpd/proftpd/pull/109
+> http://bugs.proftpd.org/show_bug.cgi?id=4169
 
-                double unlock in x86 guest IRQ handling
+Use CVE-2015-3306.
 
-UPDATES IN VERSION 2
-====================
-
-Public release.
-
-ISSUE DESCRIPTION
-=================
-
-An optional feature of PCI MSI called "Multiple Message" allows a
-device to use multiple consecutive interrupt vectors.  Unlike for MSI-X,
-the setting up of these consecutive vectors needs to happen all in one
-go.  In this handling an error path could be taken in different
-situations, with or without a particular lock held.  This error path
-wrongly releases the lock even when it is not currently held.
-
-IMPACT
-======
-
-Denial of Service (DoS) affecting the entire host, crashes, information
-leaks, or elevation of privilege all cannot be ruled out.
-
-VULNERABLE SYSTEMS
-==================
-
-Xen versions 4.4 and newer are vulnerable.  Xen versions 4.3 and older
-are not vulnerable.
-
-Only x86 guest which have a multi-vector MSI capable device passed
-through to them can leverage the vulnerability.
-
-MITIGATION
-==========
-
-Not passing through multi-vector MSI capable devices to x86 guests will
-avoid the vulnerability.
-
-CREDITS
-=======
-
-This issue was discovered by Jan Beulich of SUSE.
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue.
-
-Note that patches for released versions are generally prepared to
-apply to the stable branches, and may not apply cleanly to the most
-recent release tarball.  Downstreams are encouraged to update to the
-tip of the stable branch before applying these patches.
-
-xsa458.patch           xen-unstable - Xen 4.16.x
-
-$ sha256sum xsa458*
-22dd1071755b1fd6b4ea3ce18a200f626ee796e77b7e7d93a3a5b33d2a896706  xsa458.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patch described above (or others which are
-substantially similar) is permitted during the embargo, even on
-public-facing systems with untrusted guest users and administrators.
-
-HOWEVER, deployment of the mitigation is NOT permitted (except where
-all the affected systems and VMs are administered and used only by
-organisations which are members of the Xen Project Security Issues
-Predisclosure List).  Specifically, deployment on public cloud systems
-is NOT permitted.
-
-This is because removing/replacing of pass-through devices or their
-replacement by emulated devices is a guest visible configuration
-change, which may lead to re-discovery of the issue.
-
-Deployment of this mitigation is permitted only AFTER the embargo ends.
-
-AND: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmaWYKoMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZKLgH/1uXqtha34XUX2xCayPYMss6yIwXDuugw4Z/F8Ap
-tb+p65idTw5s2X0BXLpCcvhBZNY151DQXi0BZhTMewO8+JxrdjKPLthNSkGtF+/W
-issUCQ9cuSj84n7n5AeMq1WDqVBYMnqNlgrsv9oiKAQ5g+9Rf8Mpu7RG1NrNcTCs
-CfeDgMTOQcBuYG2xW2+46SXHVXKLA28uq6w4nIns4JpPF63DUJQKDDdypky1CSf1
-9Z81Axi3cpk3NPvTw7TW2csO1C04XBVJvVVHJtUF1FVUhe0NboQy/zbh2te3QdJ8
-KPXsQ55p0AZm3x8K2qM+Lsm1DqYhG5/ORMGC/+bXWc2H/nU=
-=ZqmX
+iQEcBAEBAgAGBQJVLhgVAAoJEKllVAevmvmsKHUH+waJx8nbkGoipax0DRtUXvOM
+HEbdUkDVEwWge3J58tqU9SJErELAOV4oSk20RyRw6dyqVgnn0fxUihppBO/7g5bt
+VP3wQODxp/QqROVynu913YeAUWEJhs+gyInfvpf5/HoPQzQBe6zegcGyRjUP7UsR
+LMERS9msQbz+idq5pN8XGn49FeVJ1C0Tj55KY3t/e1gMDpe0c8Y2zl4JVPGHF7+5
+EPCRvq5uc20ZldfbwrG/ctO1Sw87JKZjP6OXdTAXA4v9239E+mnX4TPFWSyueWCy
+0q9sYBy1hCLgKxmcqr47FCs/7kJwf1gsM+z6yXRjOTBgnazX70ihq0G2IqbTcZs=
+=OrPd
 -----END PGP SIGNATURE-----
-
---=separator
-Content-Type: application/octet-stream; name="xsa458.patch"
-Content-Disposition: attachment; filename="xsa458.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbTogSmFuIEJldWxpY2ggPGpiZXVsaWNoQHN1c2UuY29tPgpTdWJqZWN0OiB4ODYvSVJROiBh
-dm9pZCBkb3VibGUgdW5sb2NrIGluIG1hcF9kb21haW5fcGlycSgpCgpGb3JldmVyIHNpbmNlIGl0
-cyBpbnRyb2R1Y3Rpb24gdGhlIG1haW4gbG9vcCBpbiB0aGUgZnVuY3Rpb24gZGVhbGluZwp3aXRo
-IG11bHRpLXZlY3RvciBNU0kgaGFkIGVycm9yIGV4aXQgcG9pbnRzICgiYnJlYWsiKSB3aXRoIGRp
-ZmZlcmVudApwcm9wZXJ0aWVzOiBJbiBvbmUgY2FzZSBubyBJUlEgZGVzY3JpcHRvciBsb2NrIGlz
-IGJlaW5nIGhlbGQuCk5ldmVydGhlbGVzcyB0aGUgc3Vic2VxdWVudCBlcnJvciBjbGVhbnVwIHBh
-dGggYXNzdW1lZCBzdWNoIGEgbG9jayB3b3VsZAp1bmlmb3JtbHkgbmVlZCByZWxlYXNpbmcuIElk
-ZW50aWZ5IHRoZSBjYXNlIGJ5IHNldHRpbmcgImRlc2MiIHRvIE5VTEwsCnRodXMgYWxsb3dpbmcg
-dGhlIHVubG9jayB0byBiZSBza2lwcGVkIGFzIG5lY2Vzc2FyeS4KClRoaXMgaXMgQ1ZFLTIwMjQt
-MzExNDMgLyBYU0EtNDU4LgoKQ292ZXJpdHkgSUQ6IDE2MDUyOTgKRml4ZXM6IGQxYjZkMGEwMjQ4
-OSAoIng4NjogZW5hYmxlIG11bHRpLXZlY3RvciBNU0kiKQpTaWduZWQtb2ZmLWJ5OiBKYW4gQmV1
-bGljaCA8amJldWxpY2hAc3VzZS5jb20+ClJldmlld2VkLWJ5OiBSb2dlciBQYXUgTW9ubsOpIDxy
-b2dlci5wYXVAY2l0cml4LmNvbT4KCi0tLSBhL3hlbi9hcmNoL3g4Ni9pcnEuYworKysgYi94ZW4v
-YXJjaC94ODYvaXJxLmMKQEAgLTIyNzMsNiArMjI3Myw3IEBAIGludCBtYXBfZG9tYWluX3BpcnEo
-CiAKICAgICAgICAgICAgIHNldF9kb21haW5faXJxX3BpcnEoZCwgaXJxLCBpbmZvKTsKICAgICAg
-ICAgICAgIHNwaW5fdW5sb2NrX2lycXJlc3RvcmUoJmRlc2MtPmxvY2ssIGZsYWdzKTsKKyAgICAg
-ICAgICAgIGRlc2MgPSBOVUxMOwogCiAgICAgICAgICAgICBpbmZvID0gTlVMTDsKICAgICAgICAg
-ICAgIGlycSA9IGNyZWF0ZV9pcnEoTlVNQV9OT19OT0RFLCB0cnVlKTsKQEAgLTIzMDgsNyArMjMw
-OSw5IEBAIGludCBtYXBfZG9tYWluX3BpcnEoCiAKICAgICAgICAgaWYgKCByZXQgKQogICAgICAg
-ICB7Ci0gICAgICAgICAgICBzcGluX3VubG9ja19pcnFyZXN0b3JlKCZkZXNjLT5sb2NrLCBmbGFn
-cyk7CisgICAgICAgICAgICBpZiAoIGRlc2MgKQorICAgICAgICAgICAgICAgIHNwaW5fdW5sb2Nr
-X2lycXJlc3RvcmUoJmRlc2MtPmxvY2ssIGZsYWdzKTsKKwogICAgICAgICAgICAgcGNpX2Rpc2Fi
-bGVfbXNpKG1zaV9kZXNjKTsKICAgICAgICAgICAgIGlmICggbnIgKQogICAgICAgICAgICAgewo=
-
---=separator--
