@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1670" "Tuesday" "17" "November" "2015" "17:51:17" "+0100" "Peter Bex" "peter@more-magic.net" "<20151117165117.GB2631@more-magic.net>" "46" "[oss-security] CVE request for path traversal / info leak bug in Spiffy web server" nil nil nil "11" "2015111716:51:17" "[oss-security] CVE request for path traversal / info leak bug in Spiffy web server" (number mark "U       peter@more-m Nov 17   46/1670  " thread-indent "\"[oss-security] CVE request for path traversal / info leak bug in Spiffy web server\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1891" "Wednesday" "15" "April" "2015" "18:55:01" "+0100" "Ben Hutchings" "ben@decadent.org.uk" "<1429120501.3211.88.camel@decadent.org.uk>" "51" "[oss-security] Re: TCP Fast Open local DoS in some Linux stable branches" nil nil nil "4" "2015041517:55:01" "[oss-security] Re: TCP Fast Open local DoS in some Linux stable branches" (number mark "        ben@decadent Apr 15   51/1891  " thread-indent "\"[oss-security] Re: TCP Fast Open local DoS in some Linux stable branches\"\n") "<1429043059.3211.58.camel@decadent.org.uk>" ("<1429043059.3211.58.camel@decadent.org.uk>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 19466 invoked by uid 550); 17 Nov 2015 16:51:26 -0000
+Received: (qmail 13838 invoked by uid 550); 15 Apr 2015 17:55:29 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,64 +11,72 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 13746 invoked from network); 15 Apr 2015 17:55:23 -0000
+Message-ID: <1429120501.3211.88.camel@decadent.org.uk>
+In-Reply-To: <1429043059.3211.58.camel@decadent.org.uk>
+References: <1429043059.3211.58.camel@decadent.org.uk>
+Content-Type: multipart/signed; micalg="pgp-sha512";
+	protocol="application/pgp-signature"; boundary="=-7ZT062y0JUM9w3ol9ox/"
+X-Mailer: Evolution 3.12.9-1+b1 
+Mime-Version: 1.0
+X-SA-Exim-Connect-IP: 192.168.4.249
+X-SA-Exim-Mail-From: ben@decadent.org.uk
+X-SA-Exim-Scanned: No (on shadbolt.decadent.org.uk); SAEximRunCond expanded to false
+Cc: 782515@bugs.debian.org
+Date: Wed, 15 Apr 2015 18:55:01 +0100
+From: Ben Hutchings <ben@decadent.org.uk>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 18417 invoked from network); 17 Nov 2015 16:51:25 -0000
-Date: Tue, 17 Nov 2015 17:51:17 +0100
-From: Peter Bex <peter@more-magic.net>
-To: Open Source Security <oss-security@lists.openwall.com>
-Message-ID: <20151117165117.GB2631@more-magic.net>
-Mail-Followup-To: Open Source Security <oss-security@lists.openwall.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="xXmbgvnjoT4axfJE"
-Content-Disposition: inline
-X-PGP-Key: http://www.more-magic.net/peter-bex.asc
-User-Agent: Mutt/1.5.21 (2010-09-15)
-Subject: [oss-security] CVE request for path traversal / info leak bug in Spiffy web server
+Subject: [oss-security] Re: TCP Fast Open local DoS in some Linux stable branches
+To: oss-security <oss-security@lists.openwall.com>
 
---xXmbgvnjoT4axfJE
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+--=-7ZT062y0JUM9w3ol9ox/
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hello all,
+On Tue, 2015-04-14 at 21:24 +0100, Ben Hutchings wrote:
+> There is a local DoS triggered by use of the TCP Fast Open option,
+> specific to Linux stable branches, as a result of an incompletely
+> backported bug fix:
+>=20
+> https://bugs.debian.org/782515
+> http://thread.gmane.org/gmane.linux.network/359588
+>=20
+> The 3.16.7-ckt stable branch is definitely affected, and I believe but
+> haven't tested that the 3.10, 3.12, 3.13.11-ckt and 3.14 branches are
+> also affected.
+>=20
+> Please assign a CVE ID for this.
 
-I would like to request a CVE for a path traversal vulnerability in
-Spiffy, the web server written in CHICKEN Scheme.  The bug allows
-one to request arbitrary files due to a problem in the handling of
-backslashes in URI path components.
+As mitigation, TCP Fast Open can be disabled by setting sysctl
+net.ipv4.tcp_fastopen=3D0.  It was disabled by default before Linux 3.13.
 
-In principle, the bug only affects Windows, but unfortunately due
-to another bug in CHICKEN core that causes backslashes to be converted
-to slashes, *nix platforms are equally affected.
+Ben.
 
-A workaround to simply block all requests containing backslashes in
-path components has been implemented in Spiffy 5.4, and a proper
-solution (allowing backslashes on UNIX in CHICKEN versions where
-it's safe to do so) will be implemented in a later version, pending
-the fix in CHICKEN core.
+--=20
+Ben Hutchings
+Editing code like this is akin to sticking plasters on the bleeding stump
+of a severed limb. - me, 29 June 1999
 
-In other words, the bug applies to all versions of Spiffy prior to 5.4.
-
-The original announcement can be found here:
-http://lists.gnu.org/archive/html/chicken-announce/2015-11/msg00000.html
-
-Kind regards,
-Peter Bex
-
---xXmbgvnjoT4axfJE
+--=-7ZT062y0JUM9w3ol9ox/
 Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
+Content-Description: This is a digitally signed message part
 
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+Version: GnuPG v2
 
-iQEcBAEBAgAGBQJWS1sFAAoJEBEdufnLRYmwZikH/jIQ3ndNTeWsieKdJ7uHx6GD
-L0KWonY6bquvoOjk8/hr/Eowe1LlGOeIVvbpn11Fpu1KsQVtB7ff3rHGhXLv6oZ1
-7jk3letPjShuXygXq2OEb5JbHZB6TRbGkw2Px7XBfK3OhNCz9qae+OmP/arFoLtz
-3jbJFkse3tWdmRFqOFL4nfHIvFyxIOEvQUlK7M3QfTX5Nu9uk02Mc7hsvt53/Gax
-5a8d/+Gd/cEtl7B/5apuiNaG+QKAuy+Vzjgf5SQuEACTgzwGHYGvxD5cUvClrsXG
-XhlxfZUzo8Pknd0NFVYZzKSacMVS0NNuL2aKs1VFA7pp63MK7yS1/1ZGe+6rAQk=
-=6A2D
+iQIVAwUAVS6l+ue/yOyVhhEJAQpJyRAAs+VZxZrIXSb6zZZB7At6ncvEEBkAavpg
+2+BZtBwy6j1z8vBIRjLPo/Jhl13m4jnSidPBKMFqLICfUI+N3FN3acHb/D1JTd2g
+kN+ibXDvDJ2jVE215cmtKoa3bFrgxH1wx+Jp2h3QdLFEWBZAARaCqS9y8qzbLIt4
+7QAcvXT9/OU+AqZCv0MBAHDdLRwMOiQSCOszxJuczNnU1rQte0bXoOb4HlQZuZ1k
+jWVnUMtLQzSzGd9MmeSejYlCZ307DWj/kXXICSgFiy7e7HM7cYga8QZSV/YPI3yd
+ZaXZBq0kE3h81acPNVt9oLlTN8reOCD/aNKekOxw9Tol6V+a307kbl8HmXSIDMKh
+i0P7EYiArymXoTCtHdke4/2115spiWtI5OARHIuN36qcwXEMAWlnLbMyy+ZPemE/
+lfP6Y/pfb/5CsohZ4939xU5hxYN4s8COas833PqmSFgAHcYO1Opg8Mq2Cl81GN73
+5UfkRVPgIu1c97EGRVDoCUYdTlBbrq9fDPoYBKJ/sCyp/UXry2uUa8clnYwVz0XI
+1PvBBd9nKPyJ6MtV+AZ4w4nRk38a7pT7ONjHHevlb0iztE0jx2dkjrHt0MS/Q0Np
+ed/RBJXlHcgDWTGEQuMQtFD/gUUbtpzpMQowzAXB0836Yk8jWU4MYZknbph2hAys
+XxCVNV5qh1g=
+=POTJ
 -----END PGP SIGNATURE-----
 
---xXmbgvnjoT4axfJE--
+--=-7ZT062y0JUM9w3ol9ox/--
