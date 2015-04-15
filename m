@@ -1,4 +1,9 @@
-Received: (qmail 25686 invoked by uid 550); 21 Jan 2026 13:09:25 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["979" "Wednesday" "15" "April" "2015" "17:29:59" "+0200" "Florian Weimer" "fweimer@redhat.com" "<552E83F7.9070704@redhat.com>" "22" "Re: [oss-security] Re: Problems in automatic crash analysis frameworks" nil nil nil "4" "2015041515:29:59" "[oss-security] Re: Problems in automatic crash analysis frameworks" (number mark "        fweimer@redh Apr 15   22/979   " thread-indent "\"Re: [oss-security] Re: Problems in automatic crash analysis frameworks\"\n") "<20150414155515.BFCAD6C0075@smtpvmsrv1.mitre.org>" ("<20150414155515.BFCAD6C0075@smtpvmsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 27715 invoked by uid 550); 15 Apr 2015 15:30:13 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,56 +11,41 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 25655 invoked from network); 21 Jan 2026 13:09:25 -0000
-Authentication-Results:garm.ovh; auth=pass (GARM-98R0027b690a10-e8be-4415-86df-2bfd92b92b30,
-                    D5D127BDDEA1D3972C6917FEE641D96ED74D0DB7) smtp.auth=jwilk@jwilk.net
-X-OVh-ClientIp:31.0.178.54
-Date: Wed, 21 Jan 2026 14:09:03 +0100
-From: Jakub Wilk <jwilk@jwilk.net>
-To: oss-security@lists.openwall.com
-Message-ID: <20260121130903.ydfe42j5ovq2lnte@jwilk.net>
-Mail-Followup-To: oss-security@lists.openwall.com
-References: <87h5sg9yfs.fsf@josefsson.org>
- <aXAM3Sn3-xw28o-Z@gxis.de>
+Received: (qmail 27691 invoked from network); 15 Apr 2015 15:30:12 -0000
+Message-ID: <552E83F7.9070704@redhat.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <aXAM3Sn3-xw28o-Z@gxis.de>
-X-Ovh-Tracer-Id: 14986572188869733585
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: 0
-X-VR-SPAMCAUSE: dmFkZTGQ1corhzqBelpQ3LHAojup8HkezRfpBnHyjrGOSaBZaWm0tyNN1ISji2jK+bhMf3y4yKoEuM9JWq37h0cpxEFggSFq2VctbiASvywPkVYqn9zEPjnned2wNeSJPMb0DFRiQ/Tce/LGI81dQpPWX4Gm6ukLErW1QVblo3HN4IBzH6TCjITjRsFr6ctB3xBa7OrSwXUkMqJ6QZWXZzXCbhWhk4Y7aP+g2cxyQuHUT3dWNhC3JQ61EaoHx4FEHjJhGLhYDoLiX4cZdIw9sm0O9W2IcVZU7lEWyvFQJClvTXQQ9fXX8rnbwxOsNnr8wZADKErishpV7cWdRNwsFH6NQ+aLOe96qurbbckAuHCISPcMUYBjqzzZhSwZtKDpDJGO9o7YWjFxLpGnor3zFlYyiSuyx3FyaOaGpgjToZEn2QxftQGZeBW9juRKqZsCdmjpY448Nofm8s4EYx0HuZd4IQBB1tVhbydTVN0eouHIv0EjMDUjXlO1VbaVocWEIz+a2L/l5pffwf07l4gkSqoDZBVA7kkVrfbLsNygNLpo0gwPqaOoRCRM87uN8pjfS4FGxXqkyvfU/he9zqi9tN+U0DFbYP6rgeada4VUwkqGWcyVnqZtwzznrnB+ovScOWaqNv6bWNrlrWKIIoeB4Dm/SXINjZcMjn1KbmeoAXUC+2VI+w
-DKIM-Signature: a=rsa-sha256; bh=scY25rTFjSjSWQixgAh73jKmmWgImtKKKd+j5IPdSjs=;
- c=relaxed/relaxed; d=jwilk.net; h=From; s=ovhmo917968-selector1;
- t=1769000955; v=1;
- b=sFSKYkEA52DJq7deWfjs/2Dm405uq+dJyr9EL1pdv4LDrCbXcBlI7VDSYOhZkdGfj9w/dnbY
- aT87NQppSp6FQvglBoyfzNJ9qnw9DrthapZ7ZwfrAREZZkSV1gI+kttYBVq9rypAQ4VEC1jnEFX
- YYPqLuzOs7BDrq3G96StXNMxG4tx4OEREJStAUajzLREp4UYQXDfXe+Y1SlWCXDNZ6Dc9oxFmuU
- /f+JktJPVwOMkDyxPCSVEUWafvvSLS7/cstiSUK9GLFPtLPvr0kUMRKUprYAYQy/K5EiO8Qn0Am
- XNDNYzi+MQu6Py6NBK/APhHRQpcTVIlI2/mcDpSfD2RZw==
-Subject: Re: [oss-security] GNU InetUtils Security Advisory: remote
- authentication by-pass in telnetd
+References: <20150414155515.BFCAD6C0075@smtpvmsrv1.mitre.org>
+In-Reply-To: <20150414155515.BFCAD6C0075@smtpvmsrv1.mitre.org>
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.26
+CC: cve-assign@mitre.org
+Date: Wed, 15 Apr 2015 17:29:59 +0200
+From: Florian Weimer <fweimer@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Re: Problems in automatic crash analysis frameworks
+To: oss-security@lists.openwall.com
 
-* Alexander Bochmann <ab@lists.gxis.de>, 2026-01-21 00:16:
->...on 2026-01-20 15:00:07, Simon Josefsson wrote:
->
->>Vulnerable versions: GNU InetUtils since version 1.9.3 up to and 
->>including version 2.7.
->
->Looking at Debian, this gets even more hilarious... Their
->changelog for inetutils has:
->
->>inetutils (2:1.9.4-7) unstable; urgency=medium
->>[..]
->> * Take several patches from upstream git master:
->>[..]
->>   - 0028-telnetd-Scrub-USER-from-environment.patch
+On 04/14/2015 05:55 PM, cve-assign@mitre.org wrote:
+> This is mostly a question for the persons who assigned CVE-2015-1318
+> and CVE-2015-1862. Should these CVE assignments be interpreted to
+> mean:
+> 
+>   CVE-2015-1318 - in Apport, an unprivileged user can use a
+>                   namespace-based attack because there is an execve by
+>                   root after a chroot into a user-specified directory
+> 
+>   CVE-2015-1862 - in ABRT, an unprivileged user can use a
+>                   namespace-based attack because there is an execve by
+>                   root after a chroot into a user-specified directory
+> 
+> with "Furthermore, Abrt suffers from numerous race conditions and
+> symlink problems" not yet mapped to any CVE IDs?
 
-I think this is unrelated.
-
-The bug is reproducible with inetutils-telnetd 2:1.9.4-7 too.
+Yes, that's how most of us assumed how the assignments were made, but
+there is quite a bit of confusion about CVE-2015-1862 because Tavis and
+others associated it with the raceabrt.c exploit.
 
 -- 
-Jakub Wilk
+Florian Weimer / Red Hat Product Security
