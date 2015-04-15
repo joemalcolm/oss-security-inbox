@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1056" "Friday" "26" "June" "2015" "19:59:14" "+0200" "Stefan Cornelius" "scorneli@redhat.com" "<20150626195914.6809395a@redhat.com>" "34" "Re: [oss-security] CVE-2015-3258 cups-filters: texttopdf heap-based buffer overflow" nil nil nil "6" "2015062617:59:14" "[oss-security] CVE-2015-3258 cups-filters: texttopdf heap-based buffer overflow" (number mark "U       scorneli@red Jun 26   34/1056  " thread-indent "\"Re: [oss-security] CVE-2015-3258 cups-filters: texttopdf heap-based buffer overflow\"\n") "<20150626184326.6b7309a8@redhat.com>" ("<20150626184326.6b7309a8@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1442" "Wednesday" "15" "April" "2015" "17:23:59" "+0200" "Florian Weimer" "fweimer@redhat.com" "<552E828F.9020600@redhat.com>" "40" "Re: [oss-security] Problems in automatic crash analysis frameworks" nil nil nil "4" "2015041515:23:59" "[oss-security] Problems in automatic crash analysis frameworks" (number mark "        fweimer@redh Apr 15   40/1442  " thread-indent "\"Re: [oss-security] Problems in automatic crash analysis frameworks\"\n") "<CAJ_zFkJw7hNxGp0PNmQbH0suVwfkgzbCsvs2Sv1OdxD+UBiraw@mail.gmail.com>" ("<CAJ_zFkJw7hNxGp0PNmQbH0suVwfkgzbCsvs2Sv1OdxD+UBiraw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 25721 invoked by uid 550); 26 Jun 2015 17:59:32 -0000
+Received: (qmail 11740 invoked by uid 550); 15 Apr 2015 15:24:14 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,52 +11,58 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 25700 invoked from network); 26 Jun 2015 17:59:31 -0000
-Date: Fri, 26 Jun 2015 19:59:14 +0200
-From: Stefan Cornelius <scorneli@redhat.com>
-To: oss-security@lists.openwall.com
-Message-ID: <20150626195914.6809395a@redhat.com>
-In-Reply-To: <20150626184326.6b7309a8@redhat.com>
-References: <20150626184326.6b7309a8@redhat.com>
+Received: (qmail 11719 invoked from network); 15 Apr 2015 15:24:13 -0000
+Message-ID: <552E828F.9020600@redhat.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
-Subject: Re: [oss-security] CVE-2015-3258 cups-filters: texttopdf heap-based
- buffer overflow
+References: <CAJ_zFkJw7hNxGp0PNmQbH0suVwfkgzbCsvs2Sv1OdxD+UBiraw@mail.gmail.com>
+In-Reply-To: <CAJ_zFkJw7hNxGp0PNmQbH0suVwfkgzbCsvs2Sv1OdxD+UBiraw@mail.gmail.com>
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.26
+Date: Wed, 15 Apr 2015 17:23:59 +0200
+From: Florian Weimer <fweimer@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Problems in automatic crash analysis frameworks
+To: oss-security@lists.openwall.com
 
-On Fri, 26 Jun 2015 18:43:26 +0200
-Stefan Cornelius <scorneli@redhat.com> wrote:
+On 04/14/2015 03:30 PM, Tavis Ormandy wrote:
 
-> Hi,
+> This code trusts the /proc/pid/exe symlink, even though it is possible
+> to link it anywhere you want.
 > 
-> A heap-based buffer overflow was discovered in the way the texttopdf
-> utility of cups-filters processed print jobs with a specially crafted
-> line size. An attacker being able to submit print jobs could exploit
-> this flaw to crash texttopdf or, possibly, execute arbitrary code.
+> https://github.com/abrt/abrt/blob/master/src/hooks/abrt-hook-ccpp.c#L368
 > 
-> This was discovered by Petr Sklenar of Red Hat.
-> 
-> This is fixed in cups-filters 1.0.70.
-> 
-> Patch:
-> http://bzr.linuxfoundation.org/loggerhead/openprinting/cups-filters/revision/7363
-> 
-> Minor note on the side: The commit thanks me for the patch. The patch
-> was created by Tim Waugh of Red Hat, I've merely forwarded it.
-> 
-> Red Hat bug:
-> https://bugzilla.redhat.com/show_bug.cgi?id=1235385
-> 
-> Thanks,
+>         sprintf(buf, "/proc/%lu/exe", (long)pid);
+>         int src_fd_binary = open(buf, O_RDONLY); /* might fail and
+> return -1, it's ok */
 
-Hi again,
+Does opening /proc/PID/exe really perform symlink resolution?  Or does
+the kernel create temporary /proc/PID entries for non-executable file?
+But how would this trigger the
 
-I think there's a possible problem with the patch that I failed to catch
-earlier in the process, so you may want to hold packaging for a bit
-until this is fully investigated.
+This feature is supposedly disabled by default.  As far as I can see, it
+can disclose the program text of execute-only binaries to users, which
+has been treated as a vulnerability in the past.
 
-Sorry for the inconvenience.
+
+Upstream has posted patches for some of the vulnerabilities:
+
+  <https://github.com/abrt/abrt/pull/950>
+  <https://github.com/abrt/libreport/pull/343>
+
+There's still some debate how to best address the creation of the
+user-owned directory.  My proposal is to change from root:root to
+user:abrt as late as possible.
+
+(The Hotspot crash dump copying is disabled in the sources, so no patch
+for that is planned right now.)
+
+We also need to move off the /var/tmp/abrt directory (the code for
+creating the directory looks racy), back to /var/spool/abrt.
+
+I have not looked at how directory creation is handled for the other
+crash handlers (say Python).
+
 -- 
-Stefan Cornelius / Red Hat Product Security
+Florian Weimer / Red Hat Product Security
