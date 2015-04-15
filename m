@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2391" "Monday" "10" "April" "2017" "07:10:44" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<542373.786305205-sendEmail@localhost>" "63" "[oss-security] libtiff: divide-by-zero in JPEGSetupEncode (tiff_jpeg.c)" nil nil nil "4" "2017041007:10:44" "[oss-security] libtiff: divide-by-zero in JPEGSetupEncode (tiff_jpeg.c)" (number mark "U       ago@gentoo.o Apr 10   63/2391  " thread-indent "\"[oss-security] libtiff: divide-by-zero in JPEGSetupEncode (tiff_jpeg.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1746" "Wednesday" "15" "April" "2015" "09:04:47" "-0700" "Tavis Ormandy" "taviso@google.com" "<CAJ_zFkL=xJagH5Fv+V0aZTHOKH8z1_HuQwV6nOVfExOV7fbi-Q@mail.gmail.com>" "45" "Re: [oss-security] Problems in automatic crash analysis frameworks" nil nil nil "4" "2015041516:04:47" "[oss-security] Problems in automatic crash analysis frameworks" (number mark "        taviso@googl Apr 15   45/1746  " thread-indent "\"Re: [oss-security] Problems in automatic crash analysis frameworks\"\n") "<552E828F.9020600@redhat.com>" ("<CAJ_zFkJw7hNxGp0PNmQbH0suVwfkgzbCsvs2Sv1OdxD+UBiraw@mail.gmail.com>" "<552E828F.9020600@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 9500 invoked by uid 550); 10 Apr 2017 07:11:04 -0000
+Received: (qmail 30149 invoked by uid 550); 15 Apr 2015 16:05:52 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,76 +11,86 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9469 invoked from network); 10 Apr 2017 07:11:02 -0000
-Message-ID: <542373.786305205-sendEmail@localhost>
-From: "Agostino Sarubbo" <ago@gentoo.org>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Date: Mon, 10 Apr 2017 07:10:44 +0000
+Received: (qmail 30130 invoked from network); 15 Apr 2015 16:05:51 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :content-type;
+        bh=OeCT9EeUfeHyjZaGjMTZjZCLtaEJ9zocpNk09ZazG5U=;
+        b=ZGt4jvmEh20H2UTws/evvsOxnr168chzVIN3tuQiyszeR557/qkj3yPolijihw0f+m
+         B4vppT/Uu0+xQUupXes/CZuguXLDK6tKVEJ0xW9540yIA8hbWyUMHQ5LcS78POTPa/Nb
+         DumGpRGLkFRHcmfNx9jGhjOZzyiqLStk5Kx3ulTCVmzwXhnerqKinfe784xcFrsdbDue
+         GkX2cvrWT+iy1SVmYWA0XRVS/4tGkRo5wmHoB447/IdzbeAph710LTlzxxQUVps+5xOT
+         Biw0fPMlmS0K02e8vv/yDM2a53srxFdIDwvZmGWbEk68ASfKbI5k4kbNpZ28mM3rpvn0
+         fo4Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:content-type;
+        bh=OeCT9EeUfeHyjZaGjMTZjZCLtaEJ9zocpNk09ZazG5U=;
+        b=cmE1Q0n81gglh2ddB4McHRjAlgBeNCROiJ5xqNdViPGNtXcj8NP1o60wXjT7K9VU96
+         +wqWXLf5VSghfsenb8TnvpIWmJQqdC3a87NB8NuvB7upHxrRJEzk7CDjk3kN7ZfhaFF4
+         S/Z+j3bzI4qoRMF36H6+oJ0/PBBILpLq5rFjzHWiGgJdPc68yBacGbNAYPzJt53VxRGm
+         n32NPgdX7kbmM1duv17jvVUW0Y0ICf7wF7E+lgfOlGBN0tOBpQqOiD54aWApjOEAvpQ7
+         rSIGCwvYVK/2kayAFZfijXT8mD4NSY+cHj260Exdx17Wngt+ItmNidFYszsqWg7LLZIM
+         t0Pg==
+X-Gm-Message-State: ALoCoQlvdsaJv8nI382T4nsPimFGz7+G09hut4gTzQ6tw3wZ6mQyo2R+H1OHflmK6bFLweqGXgE6
+X-Received: by 10.55.21.139 with SMTP id 11mr53204173qkv.19.1429113907576;
+ Wed, 15 Apr 2015 09:05:07 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-617608.459972875"
-Subject: [oss-security] libtiff: divide-by-zero in JPEGSetupEncode (tiff_jpeg.c)
+In-Reply-To: <552E828F.9020600@redhat.com>
+References: <CAJ_zFkJw7hNxGp0PNmQbH0suVwfkgzbCsvs2Sv1OdxD+UBiraw@mail.gmail.com>
+ <552E828F.9020600@redhat.com>
+Message-ID: <CAJ_zFkL=xJagH5Fv+V0aZTHOKH8z1_HuQwV6nOVfExOV7fbi-Q@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Date: Wed, 15 Apr 2015 09:04:47 -0700
+From: Tavis Ormandy <taviso@google.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Problems in automatic crash analysis frameworks
+To: oss-security@lists.openwall.com
 
-------MIME delimiter for sendEmail-617608.459972875
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 7bit
+On Wed, Apr 15, 2015 at 8:23 AM, Florian Weimer <fweimer@redhat.com> wrote:
+> On 04/14/2015 03:30 PM, Tavis Ormandy wrote:
+>
+>> This code trusts the /proc/pid/exe symlink, even though it is possible
+>> to link it anywhere you want.
+>>
+>> https://github.com/abrt/abrt/blob/master/src/hooks/abrt-hook-ccpp.c#L368
+>>
+>>         sprintf(buf, "/proc/%lu/exe", (long)pid);
+>>         int src_fd_binary = open(buf, O_RDONLY); /* might fail and
+>> return -1, it's ok */
+>
+> Does opening /proc/PID/exe really perform symlink resolution?  Or does
+> the kernel create temporary /proc/PID entries for non-executable file?
+>
+> This feature is supposedly disabled by default.  As far as I can see, it
+> can disclose the program text of execute-only binaries to users, which
+> has been treated as a vulnerability in the past.
 
-Description:
-Libtiff is a software that provides support for the Tag Image File Format (TIFF), a widely used format for storing image data.
+Ack, I knew /proc/pid/exe was magic, but for some reason I thought
+when it was marked deleted symlink resolution did work.
 
-A crafted tiff can crash the library.
+I tested it and I think you're correct, it's just the execute-only disclosure.
 
-The complete ASan output:
-
-# tiffcp -i $FILE /tmp/out
-==28692==ERROR: AddressSanitizer: FPE on unknown address 0x7f03239af35b (pc 0x7f03239af35b bp 0x7ffc7923f730 sp 0x7ffc7923f600 T0)
-    #0 0x7f03239af35a in JPEGSetupEncode /tmp/portage/media-libs/tiff-4.0.7/work/tiff-4.0.7/libtiff/tif_jpeg.c:1687:26
-    #1 0x7f0323a00312 in TIFFWriteEncodedTile /tmp/portage/media-libs/tiff-4.0.7/work/tiff-4.0.7/libtiff/tif_write.c:446:8     
-    #2 0x510f06 in writeBufferToContigTiles /tmp/portage/media-libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiffcp.c:1539:8     
-    #3 0x50f1ce in cpImage /tmp/portage/media-libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiffcp.c:1236:14   
-    #4 0x50dc1b in cpContigTiles2ContigTiles /tmp/portage/media-libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiffcp.c:1673:9    
-    #5 0x50c5b6 in tiffcp /tmp/portage/media-libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiffcp.c:815:15     
-    #6 0x50c5b6 in main /tmp/portage/media-libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiffcp.c:304    
-    #7 0x7f0322a4661f in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289  
-    #8 0x419f18 in _init (/usr/bin/tiffcp+0x419f18)    
- 
-AddressSanitizer can not provide additional info.
-SUMMARY: AddressSanitizer: FPE /tmp/portage/media-libs/tiff-4.0.7/work/tiff-4.0.7/libtiff/tif_jpeg.c:1687:26 in JPEGSetupEncode 
-Affected version:
-4.0.7
-
-Fixed version:
-N/A
-
-Commit fix:
-https://github.com/vadz/libtiff/commit/47f2fb61a3a64667bce1a8398a8fcb1b348ff122
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-CVE-2017-7595
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00123-libtiff-fpe-JPEGSetupEncode
-
-Timeline:
-2017-01-04: bug discovered and reported to upstream
-2017-01-11: upstream released a patch
-2017-04-01: blog post about the issue
-2017-04-09: CVE assigned
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/04/01/libtiff-divide-by-zero-in-jpegsetupencode-tiff_jpeg-c/
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
-
-
-------MIME delimiter for sendEmail-617608.459972875--
-
+>
+> Upstream has posted patches for some of the vulnerabilities:
+>
+>   <https://github.com/abrt/abrt/pull/950>
+>   <https://github.com/abrt/libreport/pull/343>
+>
+> There's still some debate how to best address the creation of the
+> user-owned directory.  My proposal is to change from root:root to
+> user:abrt as late as possible.
+>
+> (The Hotspot crash dump copying is disabled in the sources, so no patch
+> for that is planned right now.)
+>
+> We also need to move off the /var/tmp/abrt directory (the code for
+> creating the directory looks racy), back to /var/spool/abrt.
+>
+> I have not looked at how directory creation is handled for the other
+> crash handlers (say Python).
+>
+> --
+> Florian Weimer / Red Hat Product Security
