@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1866" "Thursday" "15" "December" "2016" "12:02:19" "+0200" "Henri Salo" "henri@nerv.fi" "<20161215100219.GA32322@tunkki>" "68" "[oss-security] CVE request: PT-2013-46 Local File Include in Nagios Looking Glass" nil nil nil "12" "2016121510:02:19" "[oss-security] CVE request: PT-2013-46 Local File Include in Nagios Looking Glass" (number mark "U       henri@nerv.f Dec 15   68/1866  " thread-indent "\"[oss-security] CVE request: PT-2013-46 Local File Include in Nagios Looking Glass\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["741" "Wednesday" "15" "April" "2015" "19:22:01" "+0200" "Salvatore Bonaccorso" "carnil@debian.org" "<20150415172201.GA8061@eldamar.local>" "22" "Re: [oss-security] CVE request: 2 issues in inspircd" nil nil nil "4" "2015041517:22:01" "[oss-security] CVE request: 2 issues in inspircd" (number mark "        carnil@debia Apr 15   22/741   " thread-indent "\"Re: [oss-security] CVE request: 2 issues in inspircd\"\n") "<20150329122044.GX1846@frisco.mine.nu>" ("<20150329122044.GX1846@frisco.mine.nu>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 24348 invoked by uid 550); 15 Dec 2016 10:02:36 -0000
+Received: (qmail 19526 invoked by uid 550); 15 Apr 2015 17:22:14 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,85 +11,56 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 24327 invoked from network); 15 Dec 2016 10:02:35 -0000
-X-Virus-Scanned: Debian amavisd-new at mango.nerv.fi
-Date: Thu, 15 Dec 2016 12:02:19 +0200
-From: Henri Salo <henri@nerv.fi>
-To: oss-security@lists.openwall.com, cve-assign@mitre.org
-Cc: contact@ptsecurity.ru
-Message-ID: <20161215100219.GA32322@tunkki>
+Received: (qmail 19485 invoked from network); 15 Apr 2015 17:22:14 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=idBk6sVXbVY0CLidC7PZxwWvhZEvrFgeXQtcvjs+iGI=;
+        b=yNUG/RR2eQf/u7//QHNQJwI7pwEdMbORaW4kBI2fYzbs7JEbaLZg+DRYN5wz1pIRNf
+         kyfpDq5ZskriFSIX7M67l4Fba9KioPBNfPlhxwSfknN8S3t4BPi6klwzIb/Ojt+lfuOQ
+         HiaJV7IcNSFhJnIWnPdKxMtkL1r6nXj+0H3wCfsiip4Cdvuxau8QfWpG3kHQOHcjSyX5
+         JBDmtcm2ZA6oWjAtMKJaKU4lxNIdRdhqqPYswAJyJicEjB6x6LGIHYuYEVb/5NVdivOr
+         0mzQIyqFT0irvHiun5jBSYP/1JQ5K8G+B/uCTnNWVLwQPMbP7rwYskSoPxrsqHq5icTZ
+         pchQ==
+X-Received: by 10.180.91.76 with SMTP id cc12mr45179494wib.67.1429118523067;
+        Wed, 15 Apr 2015 10:22:03 -0700 (PDT)
+Message-ID: <20150415172201.GA8061@eldamar.local>
+References: <20150329122044.GX1846@frisco.mine.nu>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20150329122044.GX1846@frisco.mine.nu>
 User-Agent: Mutt/1.5.23 (2014-03-12)
-Subject: [oss-security] CVE request: PT-2013-46 Local File Include in Nagios Looking Glass
+Cc: cve-assign@mitre.org
+Date: Wed, 15 Apr 2015 19:22:01 +0200
+From: Salvatore Bonaccorso <carnil@debian.org>
+Reply-To: oss-security@lists.openwall.com
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Subject: Re: [oss-security] CVE request: 2 issues in inspircd
+To: oss-security@lists.openwall.com
 
-Could you assign 2013 CVE identifier for Local File Include vulnerability in
-Nagios Looking Glass, thanks.
+Hi,
 
-Advisory below
-==============
+On Sun, Mar 29, 2015 at 02:20:44PM +0200, Sébastien Delafond wrote:
+> Hi,
+> 
+> the Debian Security Team is requesting 2 CVEs for inspircd.
+> 
+>   * the fix that was included in Debian for CVE-2012-1836 is incomplete,
+>     and does not solve the original remote code execution problem. See:
+> 
+>       https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=780880#5
+> 
+>   * a DoS can be triggered by invalid DNS packets. See:
+> 
+>       https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=780880#5
+>       https://github.com/inspircd/inspircd/commit/58c893e834ff20495d007709220881a3ff13f423
 
------------------------------------------------------------
-  (PT-2013-46) Positive Technologies Security Advisory
-      Local File Include in Nagios Looking Glass
------------------------------------------------------------
+For reference, this has been fixed via DSA-3226-1 in Debian:
+https://lists.debian.org/debian-security-announce/2015/msg00114.html
 
----[ Vulnerable software ]
-
-Nagios Looking Glass
-Version: 1.1.0 beta 2 and earlier
-
-Link:
-http://exchange.nagios.org/directory/Addons/Frontends-(GUIs-and-CLIs)/Web-Interfaces/Nagios-Looking-Glass/details
-
----[ Severity level ]
-
-Severity level: High
-Impact: Files Reading
-Access Vector:  Remote
-CVSS v2:
-Base Score: 7.8
-Vector: (AV:N/AC:L/Au:N/C:C/I:N/A:N)
-
-CVE: not assigned
-
----[ Software description ]
-
-Nagios Looking Glass (NLG) is a web-based interface for Nagios that allows you
-to show at-a-glance, real-time server status to 3rd parties without giving them
-direct access to Nagios.
-
----[ Vulnerability description ]
-
-The specialists of the Positive Research center have detected a Local File
-Include vulnerability in Nagios Looking Glass.
-
-Application don't validates input data. That allows attackers to read config
-file. To exploit this vulnerability remote attacker shouldn't have privileges in
-Nagios Looking Glass.
-Vulnerability exists in server/s3_download.php.
-
----[ How to fix ]
-
-No solution
-
----[ Advisory status ]
-
-19.07.2013 - Vendor gets vulnerability details
-13.08.2013 - Vulnerability details were sent to CERT
-28.10.2013 - Public disclosure
-
----[ Credits ]
-
-The vulnerability was detected by Vyacheslav Egoshin, Positive Research Center
-(Positive Technologies Company)
-
----[ References ]
-
-http://en.securitylab.ru/lab/PT-2013-46
-Reports on the vulnerabilities previously discovered by Positive Research:
-
-http://www.ptsecurity.com/research/advisory/
-http://en.securitylab.ru/lab/
+Regards,
+Salvatore
