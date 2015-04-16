@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["8245" "Monday" "21" "March" "2016" "14:32:15" "+0800" "Marina Glancy" "marina@moodle.com" "<CAB_jSYwVGQrFsH6syD=az8-4Moazj5de0xvRrYnAiRuhaG=Tgw@mail.gmail.com>" "183" "[oss-security] moodle security release" nil nil nil "3" "2016032106:32:15" "[oss-security] moodle security release" (number mark "U       marina@moodl Mar 21  183/8245  " thread-indent "\"[oss-security] moodle security release\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1715" "Wednesday" "15" "April" "2015" "20:05:30" "-0700" "Tavis Ormandy" "taviso@google.com" "<CAJ_zFk+-9p4GH3-Z4qcyrURbMA9oMphOXZOE43PXVMLOCdpW1w@mail.gmail.com>" "48" "Re: [oss-security] Re: Problems in automatic crash analysis frameworks" nil nil nil "4" "2015041603:05:30" "[oss-security] Re: Problems in automatic crash analysis frameworks" (number mark "        taviso@googl Apr 15   48/1715  " thread-indent "\"Re: [oss-security] Re: Problems in automatic crash analysis frameworks\"\n") "<CAJ_zFkLAM+5DpyS4L6aqiyKT4AZY7fbW+5M7+=rBYNcE-Cr6aw@mail.gmail.com>" ("<20150414155515.BFCAD6C0075@smtpvmsrv1.mitre.org>" "<552D3A20.8040909@canonical.com>" "<CAJ_zFkLtZteX-ge_=9jE8KHxDmKZ=7cwWUmwkHwGHbnCpiQWZA@mail.gmail.com>" "<CAJ_zFk+7eV52Ui1+aV+BKhc68zKi3pmPsgPmFoOsw8Qg6dHPAQ@mail.gmail.com>" "<CAJ_zFkLA=Qn_exvDW8Rym1jx_jS0vo=vuTJ7ON71qk8BSB=1dw@mail.gmail.com>" "<20150414221607.GA5795@boyd>" "<CAJ_zFkLHirkfhNbHGne8V_n2RJ_kS_LL7MLA8_Sw3Tp-Q85T8Q@mail.gmail.com>" "<CAJ_zFkLAM+5DpyS4L6aqiyKT4AZY7fbW+5M7+=rBYNcE-Cr6aw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 24408 invoked by uid 550); 21 Mar 2016 06:32:32 -0000
+Received: (qmail 11872 invoked by uid 550); 16 Apr 2015 03:06:03 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,216 +11,96 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 24371 invoked from network); 21 Mar 2016 06:32:26 -0000
+Received: (qmail 11849 invoked from network); 16 Apr 2015 03:06:02 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=moodle.com; s=google;
-        h=mime-version:date:message-id:subject:from:to;
-        bh=bx6Nvlr1f956SOxgMPothfvVdPEAWyhTGUu9axN7J5E=;
-        b=WswzOAjLWea9OILP6B9fNPUB8PwIdnKJJ7WQZTFPjqQH1Z4qRhdKS8o/wmSJh/Bkta
-         uAkqy3wyIjzabIhQVYzMok/kXh5zjqN85WhNgvRalmi8T4AMUyCNwS5dmP835tt4+4u4
-         gx4rjEYh+4Gn3gQCjYdEzZALZ8w3Mkwg3K5Nw=
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=wd8D5LZrLFEGGamL48PABQl2oGxJjhUS/f0OfyW9bxY=;
+        b=LUYx3OV3MQ0oA2t1TEo4FPnMuICEWobZWBehYkE4D/zo2CaVL7DOEyTX1nJKeh+HSh
+         ig3gWGnkwnWKi0aABUJMSrFTevTh+XYC3MocS/eNRc02gMIKiCCGPSWkwyU5SYy/ggOK
+         KhhWYgvCHGCW/moKulD14kTxc/JtleylS9p9gTOAVBhE+kkUb8Mqx9/zWSuRRCHLgiXi
+         f3svM8ff5hobtMm8BAD6lv0PklBV0l//0vYJ51IB0P3C3diF76pEW8uh9XhOqwJBSPuy
+         H00Av66QljNeffYDKD7MFuIbx3/Ustl2XzbzMLscmAKApkY5Jyo/8Up59Ty1FFU1K9W0
+         2n9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to;
-        bh=bx6Nvlr1f956SOxgMPothfvVdPEAWyhTGUu9axN7J5E=;
-        b=LisnFtP9AKiqJuXuEGq6So2abFJwcnli4mJFgccwtMODELs0umNt13q/UYYoOOZjDb
-         qfJqJVPBl6PlqcMeiNYs2VEWfE4GudA5OdifEbLr9ESQS8WTrAPqTXsuTD0JbS5tfpMh
-         Ob0ZX9P9zybaiAhimiNJiS3ZhgqGBh43ecQaxiBhjL1stu6gg9GYf+OXNihNVeTbz9cj
-         IMSJQLNfzHz7Kw96HS+89WN7kmQOA63dAvDwVLGAlL39TDUcJ5eM/qhJ91HNDONhsfbX
-         wv+L3hx5Yq5XDkxw601h6SaqyVU+St29hJHPIopo2Vh6LnPyZEArrHifrB5r1WJtg9q6
-         8gkg==
-X-Gm-Message-State: AD7BkJIyfJ40lXP42+eKnBjR4vzvo2N8ldKto4ZTjazF+/x5buVpSoFa2qHJfr4Ttx2j5iVsbRAyLtQf+vIo3wFk
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=wd8D5LZrLFEGGamL48PABQl2oGxJjhUS/f0OfyW9bxY=;
+        b=Zm06uJ2DBSOa/yX0NyXjQJ0vIgtaSyvgzGVAV7bV7qf+E+Y7aI0mmTrWhgDFGYnlyL
+         RDFif1ASqZ2I/12TKUladl6rqpu+kBoMo0yWc7wF7bZqMq6fRK6AoHtYgyrumdwFgLs6
+         oh5/fLPDbgMOtMaMlUOkExu+CS+vjT7g4RKxQfQq8/5w15IF66uzCk0WqqZWEJ1huQTa
+         HiTku2IbxrRTm4TKNnoA3l3OLAChfVfKwr0zozlEJ3YKuDqsLMW/m+d0FB1EqSpyJHbC
+         Ed3A4LiDXbF4u8SKze7tY4FTyZTVReL/sBqhPWF7BJQhRKtv6Ze4/Ufp07QEviLgpQzX
+         sSVA==
+X-Gm-Message-State: ALoCoQmtfxo5FSB0sacQex3EhkB+0+Sfp271gkiAGs5owqowM77UWNAbbzuU52GCh9m66VPfsbFc
+X-Received: by 10.55.33.94 with SMTP id h91mr58552670qkh.69.1429153550965;
+ Wed, 15 Apr 2015 20:05:50 -0700 (PDT)
 MIME-Version: 1.0
-X-Received: by 10.31.44.77 with SMTP id s74mr30105897vks.4.1458541935286; Sun,
- 20 Mar 2016 23:32:15 -0700 (PDT)
-Date: Mon, 21 Mar 2016 14:32:15 +0800
-Message-ID: <CAB_jSYwVGQrFsH6syD=az8-4Moazj5de0xvRrYnAiRuhaG=Tgw@mail.gmail.com>
-From: Marina Glancy <marina@moodle.com>
-To: oss-security@lists.openwall.com
+In-Reply-To: <CAJ_zFkLAM+5DpyS4L6aqiyKT4AZY7fbW+5M7+=rBYNcE-Cr6aw@mail.gmail.com>
+References: <20150414155515.BFCAD6C0075@smtpvmsrv1.mitre.org>
+ <552D3A20.8040909@canonical.com> <CAJ_zFkLtZteX-ge_=9jE8KHxDmKZ=7cwWUmwkHwGHbnCpiQWZA@mail.gmail.com>
+ <CAJ_zFk+7eV52Ui1+aV+BKhc68zKi3pmPsgPmFoOsw8Qg6dHPAQ@mail.gmail.com>
+ <CAJ_zFkLA=Qn_exvDW8Rym1jx_jS0vo=vuTJ7ON71qk8BSB=1dw@mail.gmail.com>
+ <20150414221607.GA5795@boyd> <CAJ_zFkLHirkfhNbHGne8V_n2RJ_kS_LL7MLA8_Sw3Tp-Q85T8Q@mail.gmail.com>
+ <CAJ_zFkLAM+5DpyS4L6aqiyKT4AZY7fbW+5M7+=rBYNcE-Cr6aw@mail.gmail.com>
+Message-ID: <CAJ_zFk+-9p4GH3-Z4qcyrURbMA9oMphOXZOE43PXVMLOCdpW1w@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
-Subject: [oss-security] moodle security release
+Cc: oss-security@lists.openwall.com, 
+	Assign a CVE Identifier <cve-assign@mitre.org>, security <security@ubuntu.com>, 
+	=?UTF-8?Q?St=C3=A9phane_Graber?= <stgraber@ubuntu.com>
+Date: Wed, 15 Apr 2015 20:05:30 -0700
+From: Tavis Ormandy <taviso@google.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Re: Problems in automatic crash analysis frameworks
+To: Tyler Hicks <tyhicks@canonical.com>
 
-The following security notifications have now been made public. Thanks
-to OSS members for their cooperation.
+On Wed, Apr 15, 2015 at 12:55 PM, Tavis Ormandy <taviso@google.com> wrote:
+> On Wed, Apr 15, 2015 at 11:48 AM, Tavis Ormandy <taviso@google.com> wrote:
+>> FWIW, I verified this is exploitable.
+>>
+>
+> Here's the script I used to verify, it should create the file
+> /etc/rootfiletest. By using the partial trick or creating parse
+> errors, this is easy to turn into a root shell.
 
-Marina Glancy
-Development Process Manager
-e: marina@moodle.com
-p: +61 8 9467 4167 w: moodle.com
+It looks like there's a new patch here:
+https://launchpadlibrarian.net/203416094/apport.diff
 
-==============================================================================
-MSA-16-0003: Incorrect capability check when displaying users emails in
-Participants list
+In get_parentns_pid code, it looks like it has the same problem as
+before in that there's no guarantee ppid isn't recycled (possibly by
+root). Also, you can easily get an untrusted process reparented to
+init. If you're not convinced of this, try this:
 
-Description:       Teachers who otherwise were not supposed to see students'
-                   emails could see them in the participants list
-Issue summary:     Incorrect capability check when displaying users emails in
-                   Participants list
-Severity/Risk:     Minor
-Versions affected: 3.0 to 3.0.2, 2.9 to 2.9.4, 2.8 to 2.8.10, 2.7 to 2.7.12
-                   and earlier unsupported versions
-Versions fixed:    3.0.3, 2.9.5, 2.8.11 and 2.7.13
-Reported by:       Matt Jenner
-Issue no.:         MDL-52433
-CVE identifier:    CVE-2016-2151
-Changes (master):
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-52433
+$ bash -c 'sleep 600 & echo $!; disown -ah'
+28396
+$ egrep '(PPid|Name):' /proc/28396/status
+Name: sleep
+PPid: 1
 
-==============================================================================
-MSA-16-0004: XSS from profile fields from external db
+I'm almost certain it's not possible for the core_patten handler to
+perform any meaningful analysis on the parent process.
 
-Description:       Moodle traditionally trusted content from external DB
-                   however it was decided that external datasources may not be
-                   aware of web security practices and data could cause
-                   problems after importing to Moodle
-Issue summary:     XSS from profile fields from external db
-Severity/Risk:     Minor
-Versions affected: 3.0 to 3.0.2, 2.9 to 2.9.4, 2.8 to 2.8.10, 2.7 to 2.7.12
-                   and earlier unsupported versions
-Versions fixed:    3.0.3, 2.9.5, 2.8.11 and 2.7.13
-Reported by:       Jay Knight
-Issue no.:         MDL-50705
-CVE identifier:    CVE-2016-2152
-Changes (master):
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-50705
+This code is definitely not sufficient:
 
-==============================================================================
-MSA-16-0005: Reflected XSS in mod_data advanced search
+        os.chdir("/proc/%s/" % ppid)
+        ...
+        with open("status", "r") as fd:
+        ....
+                            if line.startswith("Uid:"):
 
-Description:       User with higher permissions could be tricked into clicking
-                   a link which would result in XSS attack
-Issue summary:     Reflected XSS in mod_data advanced search
-Severity/Risk:     Minor
-Versions affected: 3.0 to 3.0.2, 2.9 to 2.9.4, 2.8 to 2.8.10, 2.7 to 2.7.12
-                   and earlier unsupported versions
-Versions fixed:    3.0.3, 2.9.5, 2.8.11 and 2.7.13
-Reported by:       Ian Song
-Issue no.:         MDL-52727
-Workaround:        Educate staff to always use only modern browsers that block
-                   such attacks by default
-CVE identifier:    CVE-2016-2153
-Changes (master):
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-52727
 
-==============================================================================
-MSA-16-0006: Hidden courses are shown to students in Event Monitor
+Because you can just wait for ppid to be recycled before the chdir().
+The UDS inode validation is a neat idea, but I don't think it works -
+the obvious case is reparenting to init and then using one of the
+inode numbers init uses, but even if you special-case init, pid
+recycling is possible.
 
-Description:       Users without capability to view hidden courses but with
-                   capability to subscribe to Event Monitor rules could see
-                   the names of hidden courses
-Issue summary:     Hidden courses are shown to students in Event Monitor
-Severity/Risk:     Minor
-Versions affected: 3.0 to 3.0.2, 2.9 to 2.9.4, 2.8 to 2.8.10
-Versions fixed:    3.0.3, 2.9.5 and 2.8.11
-Reported by:       Roger
-Issue no.:         MDL-51167
-Workaround:        Revoke capability to subscribe to Event Monitor rules from
-                   regular users
-CVE identifier:    CVE-2016-2154
-Changes (master):
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-51167
+I saw the duplicate inode checks, but that doesn't work....it's racy,
+and you can just use a netlink socket or similar.
 
-==============================================================================
-MSA-16-0007: Non-Editing Instructor role can edit exclude checkbox in Single
-View
+Once you've passed this check, it's a controlled lxc.Container() and
+you can use my previous PoC to verify that is exploitable.
 
-Description:       Incorrect capability check in Single View grade report
-                   could result in giving a teacher extra permission
-Issue summary:     Non-Editing Instructor role can edit exclude checkbox in
-                   Single View
-Severity/Risk:     Minor
-Versions affected: 3.0 to 3.0.2, 2.9 to 2.9.4, 2.8 to 2.8.10
-Versions fixed:    3.0.3, 2.9.5 and 2.8.11
-Reported by:       Mark McKay
-Issue no.:         MDL-52378
-CVE identifier:    CVE-2016-2155
-Changes (master):
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-52378
-
-==============================================================================
-MSA-16-0008: External function get_calendar_events return events that pertains
-to hidden activities
-
-Description:       Users without capability to view hidden acitivites could
-                   still see associated calendar events via web services
-Issue summary:     External function get_calendar_events return events that
-                   pertains to hidden activities
-Severity/Risk:     Minor
-Versions affected: 3.0 to 3.0.2, 2.9 to 2.9.4, 2.8 to 2.8.10, 2.7 to 2.7.12
-                   and earlier unsupported versions
-Versions fixed:    3.0.3, 2.9.5, 2.8.11 and 2.7.13
-Reported by:       Juan Leyva
-Issue no.:         MDL-52808
-CVE identifier:    CVE-2016-2156
-Changes (master):
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-52808
-
-==============================================================================
-MSA-16-0009: CSRF in Assignment plugin management page
-
-Description:       CSRF possible on admin page, however exploit unlikely
-                   benefit anybody and can easily be reversed
-Issue summary:     CSRF in Assignment plugin management page
-Severity/Risk:     Minor
-Versions affected: 3.0 to 3.0.2, 2.9 to 2.9.4, 2.8 to 2.8.10, 2.7 to 2.7.12
-                   and earlier unsupported versions
-Versions fixed:    3.0.3, 2.9.5, 2.8.11 and 2.7.13
-Reported by:       Paul Holden
-Issue no.:         MDL-53031
-CVE identifier:    CVE-2016-2157
-Changes (master):
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-53031
-
-==============================================================================
-MSA-16-0010: Enumeration of category details possible without authentication
-
-Description:       Despite force login setting guests could still access
-                   course category details
-Issue summary:     Enumeration of category details possible without
-                   authentication
-Severity/Risk:     Minor
-Versions affected: 3.0 to 3.0.2, 2.9 to 2.9.4, 2.8 to 2.8.10, 2.7 to 2.7.12
-                   and earlier unsupported versions
-Versions fixed:    3.0.3, 2.9.5, 2.8.11 and 2.7.13
-Reported by:       Krista Koivisto
-Issue no.:         MDL-52774
-CVE identifier:    CVE-2016-2158
-Changes (master):
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-52774
-
-==============================================================================
-MSA-16-0011: Add no referrer to links with _blank target attribute
-
-Description:       Improve security when following external links that were
-                   added with _blank target
-Issue summary:     Add no referrer to links with _blank target attribute
-Severity/Risk:     Minor
-Versions affected: 3.0 to 3.0.2, 2.9 to 2.9.4, 2.8 to 2.8.10, 2.7 to 2.7.12
-                   and earlier unsupported versions
-Versions fixed:    3.0.3, 2.9.5, 2.8.11 and 2.7.13
-Reported by:       Hugh Davenport
-Issue no.:         MDL-52651
-CVE identifier:    CVE-2016-2190
-Changes (master):
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-52651
-
-==============================================================================
-MSA-16-0012: External function mod_assign_save_submission does not check due
-dates
-
-Description:       Students were able to add assignment submissions after the
-                   due date through web service
-Issue summary:     External function mod_assign_save_submission does not check
-                   due dates
-Severity/Risk:     Minor
-Versions affected: 3.0 to 3.0.2, 2.9 to 2.9.4, 2.8 to 2.8.10, 2.7 to 2.7.12
-                   and earlier unsupported versions
-Versions fixed:    3.0.3, 2.9.5, 2.8.11 and 2.7.13
-Reported by:       Juan Leyva
-Issue no.:         MDL-52901
-CVE identifier:    CVE-2016-2159
-Changes (master):
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-52901
-
-==============================================================================
+Tavis.
