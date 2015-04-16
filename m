@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1113" "Saturday" "16" "May" "2015" "17:08:22" "-0700" "Luca Carettoni" "luca.carettoni@ikkisoft.com" "<CAFThDPGYiVLj3ZBVTQKYA+yMVMsDruCjCQEyGTjTeoGjXAfKDg@mail.gmail.com>" "35" "[oss-security] =?UTF-8?B?TmV0dHkvUGxheSdzIFNlY3VyaXR5IFVwZGF0ZXMgKENWRcKtLTIwMTXCrS0yMTU2KQ==?=" nil nil nil "5" "2015051700:08:22" "[oss-security] =?UTF-8?B?TmV0dHkvUGxheSdz?= =?UTF-8?B?U2VjdXJpdHk=?= =?UTF-8?B?VXBkYXRlcw==?= =?UTF-8?B?KENWRcKtLTIwMTXCrS0yMTU2KQ==?=" (number mark "        luca.caretto May 16   35/1113  " thread-indent "\"[oss-security] =?UTF-8?B?TmV0dHkvUGxheSdzIFNlY3VyaXR5IFVwZGF0ZXMgKENWRcKtLTIwMTXCrS0yMTU2KQ==?=\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1305" "Thursday" "16" "April" "2015" "02:41:35" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150416064135.641191BE0BF@smtpvbsrv1.mitre.org>" "34" "[oss-security] Re: double-free in gnutls (CRL distribution points parsing)" nil nil nil "4" "2015041606:41:35" "[oss-security] Re: double-free in gnutls (CRL distribution points parsing)" (number mark "        cve-assign@m Apr 16   34/1305  " thread-indent "\"[oss-security] Re: double-free in gnutls (CRL distribution points parsing)\"\n") "<CAP145pgvJEy056DEoeThaJxrg06eugxj10ar4jkiZwixwhMwQw@mail.gmail.com>" ("<CAP145pgvJEy056DEoeThaJxrg06eugxj10ar4jkiZwixwhMwQw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 3101 invoked by uid 550); 17 May 2015 00:08:38 -0000
+Received: (qmail 23691 invoked by uid 550); 16 Apr 2015 06:41:51 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,63 +11,47 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 2047 invoked from network); 17 May 2015 00:08:33 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
-         :content-type;
-        bh=NbHtZNUP0Y9doUYdYs6lsSHBr5Xz4E+1c+1dUqoImDs=;
-        b=mdJiWEoUtA8PbGCiLVqad+ILOwz30hwi+7D0ajY9Ewz+B8ECGhr+9AadZcEJ+3zKsR
-         mUlqf4jcw6PmwvLpptBaCsDiekAo9tzVn/39US5rcK3AAdyDmyEnhHOvmZYq9jZVqRX/
-         4MYGHd0WQY9GL0wJA4QQOBTUCwM8COA9L1Abo4c4Gk6KpDARNIvaQuAbj85YR0kqP7pT
-         lWwtRNJzyyLKdQnNho8JC7g39GE3Q8hSCmsMhoVkCght6AjBPzxgspE7N0AxUqb6ijxN
-         DfzWtU8aILBGIMLMi3GEcGIO9PoRuobTO9Syr/HJTMhY3UHJ97O8UDFIOEOmpzgyo2Ip
-         DoJg==
-X-Gm-Message-State: ALoCoQmEdJ3K/QZbH96vlGpolRgBt/n3D8hW1hydBRNR9f+9RGQXNjNSdqsQsEI6+0xIb9/vSVCT
-MIME-Version: 1.0
-X-Received: by 10.194.89.70 with SMTP id bm6mr29543398wjb.146.1431821302438;
- Sat, 16 May 2015 17:08:22 -0700 (PDT)
-X-Originating-IP: [162.234.3.32]
-Message-ID: <CAFThDPGYiVLj3ZBVTQKYA+yMVMsDruCjCQEyGTjTeoGjXAfKDg@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=089e010d89e21d33af05163be09a
-Date: Sat, 16 May 2015 17:08:22 -0700
-From: Luca Carettoni <luca.carettoni@ikkisoft.com>
+Received: (qmail 23644 invoked from network); 16 Apr 2015 06:41:47 -0000
+In-Reply-To: <CAP145pgvJEy056DEoeThaJxrg06eugxj10ar4jkiZwixwhMwQw@mail.gmail.com>
+Message-Id: <20150416064135.641191BE0BF@smtpvbsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Thu, 16 Apr 2015 02:41:35 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] =?UTF-8?B?TmV0dHkvUGxheSdzIFNlY3VyaXR5IFVwZGF0ZXMgKENWRcKtLTIwMTXCrS0yMTU2KQ==?=
-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: double-free in gnutls (CRL distribution points parsing)
+To: robert@swiecki.net
 
---089e010d89e21d33af05163be09a
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-During a recent assessment, we discovered a security flaw within Netty=E2=
-=80=99s
-cookie parsing code which leads to a universal HttpOnly bypass in Play
-Framework and potentially other frameworks using Netty as a dependency.
+> gnutls 3.3.14 fixes a double-free in parsing CRL distribution points.
+> 
+> It will affect applications which parse CRL distribution points or
+> print contents of certificates with gnutls-provided functions (e.g.
+> gnutls_x509_crt_print())
+> 
+> Usually a DoS under modern mem allocators, but creating something more
+> interesting using double-free exploitation techniques is not out of
+> the question
+> 
+> https://gitlab.com/gnutls/gnutls/commit/d6972be33264ecc49a86cd0958209cd7363af1e9
+> https://gitlab.com/gnutls/gnutls/commit/053ae65403216acdb0a4e78b25ad66ee9f444f02
 
-The issue has been fixed in Netty 3.9.8.Final, 3.10.3.Final, Netty
-4.1.0.Beta5, Netty 4.0.28.Final and Play Framework 2.3.9.
+Use CVE-2015-3308.
 
-http://netty.io/news/2015/05/08/3-9-8-Final-and-3.html
-https://www.playframework.com/security/vulnerability/CVE-2015-2156-HttpOnly=
-Bypass
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-Technical details of the vulnerability:
-http://engineering.linkedin.com/security/look-netty%E2%80%99s-recent-securi=
-ty-update-cve%C2%AD-2015%C2%AD-2156
-
-Many other projects using Netty may be vulnerable to similar
-"side=C2=AD-effects" of the incorrect cookies parsing routine. We recommend=
- that
-every project relying on Netty=E2=80=99s CookieDecoder method should mitiga=
-te the
-potential risk by upgrading to the latest version.
-
-Cheers,
-Luca
-
---=20
-
-Luca Carettoni
-
---089e010d89e21d33af05163be09a--
+iQEcBAEBAgAGBQJVL1kCAAoJEKllVAevmvmswcUH/i6RzwB5lEC9WJmOCWMDJiPu
+D0gnjKKlvgZs4P+/WzaW/gfvhs3gojdOFJKQ1hxb9wo4tB3Lo1TExtoWKkBlBzH5
+utp7/P2xqRhLMoOCW8QGbfCAF2oaP2AshnitNkru9XPb9I8sWgNRRevTzURnGJQE
+Vac7pmThHnOtxJ9sy9k3F3wiFSn/d2SoLZkEo8hQMBtxgr/9dQpEPJobOOlrRuNE
+PxabnOMgAnGBmT2qzQXwARdeswkJ/jL6BGsicWuLDMmGD2I/L+fqtP1jr84uUgFM
+5ACjRX0Hg4+elY9GYpw3EhKJaj19XIUW4HA867EtJyJpwLbiGIYPGwu0em8d/X4=
+=9Vb/
+-----END PGP SIGNATURE-----
