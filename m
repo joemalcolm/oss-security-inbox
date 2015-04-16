@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5096" "Monday" "10" "April" "2017" "07:41:09" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<695122.498876543-sendEmail@localhost>" "110" "[oss-security] elfutils: heap-based buffer overflow in check_sysv_hash (elflint.c)" nil nil nil "4" "2017041007:41:09" "[oss-security] elfutils: heap-based buffer overflow in check_sysv_hash (elflint.c)" (number mark "U       ago@gentoo.o Apr 10  110/5096  " thread-indent "\"[oss-security] elfutils: heap-based buffer overflow in check_sysv_hash (elflint.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1130" "Thursday" "16" "April" "2015" "10:08:54" "+0200" "Martin Prpic" "mprpic@redhat.com" "<87bnio4hrd.fsf@redhat.com>" "39" "[oss-security] Potential CVE request: flaw in comment handling " nil nil nil "4" "2015041608:08:54" "[oss-security] Potential CVE request: flaw in comment handling" (number mark "        mprpic@redha Apr 16   39/1130  " thread-indent "\"[oss-security] Potential CVE request: flaw in comment handling \"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 31856 invoked by uid 550); 10 Apr 2017 07:41:27 -0000
+Received: (qmail 32219 invoked by uid 550); 16 Apr 2015 08:09:09 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,123 +11,55 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 31838 invoked from network); 10 Apr 2017 07:41:26 -0000
-Message-ID: <695122.498876543-sendEmail@localhost>
-From: "Agostino Sarubbo" <ago@gentoo.org>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Date: Mon, 10 Apr 2017 07:41:09 +0000
+Received: (qmail 32192 invoked from network); 16 Apr 2015 08:09:08 -0000
+User-agent: mu4e 0.9.9.5; emacs 24.3.1
+Message-ID: <87bnio4hrd.fsf@redhat.com>
 MIME-Version: 1.0
-Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-711606.391313584"
-Subject: [oss-security] elfutils: heap-based buffer overflow in check_sysv_hash (elflint.c)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.27
+Date: Thu, 16 Apr 2015 10:08:54 +0200
+From: Martin Prpic <mprpic@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Potential CVE request: flaw in comment handling 
+To: "oss-security\@lists.openwall.com" <oss-security@lists.openwall.com>
 
-------MIME delimiter for sendEmail-711606.391313584
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 7bit
+Hi, we were notified of a flaw in the way Apache's mod_access_compat and
+mod_authz_host handled comments in configuration files. When a comment
+was defined on the same line that contained an "Allow" directive,
+any potential IP ranges in that comment were also allowed to access
+a resource.
 
-Description:
-elfutils is a set of libraries/utilities to handle ELF objects (drop in replacement for libelf).
+This flaw was fixed in:
 
-A fuzz on eu-elflint showed an heap overflow.
+https://github.com/apache/httpd/commit/5e1affc271a429f267198eee61fce2b209a83c66
 
-The complete ASan output:
+The docs do specify that comments are not allowed on the same line:
 
-# eu-elflint -d $FILE
-==14428==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x60b00000aff4 at pc 0x00000040b36b bp 0x7ffe1e25ef20 sp 0x7ffe1e25ef18
-READ of size 4 at 0x60b00000aff4 thread T0
-    #0 0x40b36a in check_sysv_hash /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:2020
-    #1 0x40b36a in check_hash /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:2315
-    #2 0x422e73 in check_sections /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:4118
-    #3 0x42961f in process_elf_file /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:4697
-    #4 0x42961f in process_file /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:242
-    #5 0x402d33 in main /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:175
-    #6 0x7f7a318a878f in __libc_start_main (/lib64/libc.so.6+0x2078f)
-    #7 0x403498 in _start (/usr/bin/eu-elflint+0x403498)
+"There must be no other characters or white space between the backslash and the end of the line."
+[https://httpd.apache.org/docs/2.2/configuring.html#syntax]
 
-0x60b00000aff7 is located 0 bytes to the right of 103-byte region [0x60b00000af90,0x60b00000aff7)
-allocated by thread T0 here:
-    #0 0x7f7a32f95288 in malloc (/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/libasan.so.3+0xc2288)
-    #1 0x7f7a32bf1b46 in convert_data /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libelf/elf_getdata.c:166
-    #2 0x7f7a32bf1b46 in __libelf_set_data_list_rdlock /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libelf/elf_getdata.c:434
-    #3 0x7f7a32bf2662 in __elf_getdata_rdlock /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libelf/elf_getdata.c:541
-    #4 0x7f7a32bf2776 in elf_getdata /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libelf/elf_getdata.c:559
-    #5 0x7f7a32c1e035 in elf32_getchdr /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libelf/elf32_getchdr.c:72
-    #6 0x7f7a32c1e55c in gelf_getchdr /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libelf/gelf_getchdr.c:52
-    #7 0x420edf in check_sections /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:3911
-    #8 0x42961f in process_elf_file /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:4697
-    #9 0x42961f in process_file /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:242
-    #10 0x402d33 in main /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:175
-    #11 0x7f7a318a878f in __libc_start_main (/lib64/libc.so.6+0x2078f)
+MITRE, does this qualify for a CVE?
 
-SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:2020 in check_sysv_hash
-Shadow bytes around the buggy address:
-  0x0c167fff95a0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c167fff95b0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c167fff95c0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c167fff95d0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c167fff95e0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-=>0x0c167fff95f0: fa fa 00 00 00 00 00 00 00 00 00 00 00 00[07]fa
-  0x0c167fff9600: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c167fff9610: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c167fff9620: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c167fff9630: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c167fff9640: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Heap right redzone:      fb
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack partial redzone:   f4
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==14428==ABORTING
-Affected version:
-0.168
-
-Fixed version:
-0.169 (not released atm)
-
-Commit fix:
-https://sourceware.org/ml/elfutils-devel/2017-q1/msg00131.html
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-CVE-2017-7612
 
 Reproducer:
-https://github.com/asarubbo/poc/blob/master/00235-elfutils-heapoverflow-check_sysv_hash
 
-Timeline:
-2017-03-27: bug discovered and reported to upstream
-2017-04-04: blog post about the issue
-2017-04-09: CVE assigned
+$ sudo yum -y install httpd
 
-Note:
-This bug was found with American Fuzzy Lop.
+$ echo hest123 | sudo tee /var/www/html/secret.txt
 
-Permalink:
-https://blogs.gentoo.org/ago/2017/04/03/elfutils-heap-based-buffer-overflow-in-check_sysv_hash-elflint-c/
+$ echo '<Location "/secret.txt">
+> Order allow,deny
+> Allow from 127.0.0.1 # not 10
+> </Location>' | sudo tee -a /etc/httpd/conf/httpd.conf
+sudo service httpd restart
 
---
-Agostino Sarubbo
-Gentoo Linux Developer
+client on 10.x.x.x:
+$ HEAD servername.com/secret.txt
+200 OK
 
+The security implications of this flaw were discovered by Espen
+Fjellvaer Olsen from Basefarm AS.
 
-------MIME delimiter for sendEmail-711606.391313584--
-
+-- 
+Martin Prpič / Red Hat Product Security
