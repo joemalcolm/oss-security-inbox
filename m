@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["619" "Tuesday" "23" "February" "2016" "11:11:36" "-0700" "Kurt Seifried" "kseifried@redhat.com" "<CANO=Ty05gsBU3rX==c8L6V8OAQrUKStOasxfdpZk5ygCH=EKWg@mail.gmail.com>" "20" "[oss-security] libssh/libssh2 bits and bytes confusion" "^Date:" nil nil "2" "2016022318:11:36" "[oss-security] libssh/libssh2 bits and bytes confusion" (number mark "        kseifried@re Feb 23   20/619   " thread-indent "\"[oss-security] libssh/libssh2 bits and bytes confusion\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["651" "Friday" "17" "April" "2015" "14:50:32" "-0700" "Tavis Ormandy" "taviso@google.com" "<CAJ_zFkKibZ5LixkHx5PB6L3H5Xc6rJSSniFHo39Ewxwt=UGjqw@mail.gmail.com>" "21" "[oss-security] Problems in automatic crash analysis frameworks" nil nil nil "4" "2015041721:50:32" "[oss-security] Problems in automatic crash analysis frameworks" (number mark "        taviso@googl Apr 17   21/651   " thread-indent "\"[oss-security] Problems in automatic crash analysis frameworks\"\n") "<CANtF8NBuiE+1F65+cLp0CXivZUiYxyJcZK2Yhz9J1qu0hCdC9w@mail.gmail.com>" ("<CAJ_zFkJw7hNxGp0PNmQbH0suVwfkgzbCsvs2Sv1OdxD+UBiraw@mail.gmail.com>" "<55315C2B.6050207@redhat.com>" "<CANtF8NBuiE+1F65+cLp0CXivZUiYxyJcZK2Yhz9J1qu0hCdC9w@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 15513 invoked by uid 550); 23 Feb 2016 18:11:49 -0000
+Received: (qmail 3896 invoked by uid 550); 17 Apr 2015 21:50:45 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,47 +11,63 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 15495 invoked from network); 23 Feb 2016 18:11:48 -0000
+Received: (qmail 3874 invoked from network); 17 Apr 2015 21:50:44 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type;
+        bh=d65+SwSwGpdnyY8+MSH4fb4+NzT+hovIaynEl6OC/DQ=;
+        b=CpTlpxZw/qQd4cOA8mw/cCiW2qe1ptugqoY+WMbDe5o8gPd9s0tw5w8nKNEMfvyVSp
+         C5JqgG33tVwpARPY4E2zgEeToLoGYob43KAjR1uEJMSntcMrDgQKn0cL6WnSrreELzO8
+         29HzSIZGmHldZWM5qKwAw54sBqIbKt24P9oa7vBt6vq7CzmUH1o30Lg3ZJrfE0yxqFy9
+         cscQkgawlfy1StbWftHkSFJM90PWQ9dDb8HHj8b44iy82w6Zbf0mDlY0tJ614tZ4bSJc
+         FdEKI1WoHrloZwgA80/a3KJ1dUa71cmX/UpnijYWxYc70cStf6hnRh8v8BgMA0k6RpbM
+         r+9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
-         :content-type;
-        bh=GikShGySHoMY9uNNDydx3EfmHlyFBX4VZpYg1EOCcu4=;
-        b=kgPWiXHOdwqhuTD3EEEJ5EQzDtOdcsQbddWD2hkRvwFOZoENuyN9QYuVsm3hwNE+RQ
-         s6qIr+5R1R4lW7yHMbcyfekNVRpXv8q98sVYlYZqpmTTqZEidwuCuQS1Uk5c35HJlyv5
-         MtRrRSC2+1CgS8mSNMk60FXjBZthnMqdxJMdLZFVjE0y1GVBNTperI21L+ll7j8Vhy1Y
-         //BEfsiINOs9l6Zspo90wbCWfHfdEJW+PCDaAfpVOep3TVGMPoPslDWN2dVaef8On+6C
-         z0+zVytmew1oPIZTJLSEiKqm9eh78c6j+LqKPeO64+h6KAfvdtDs8YUvEvaCnZFZ+y39
-         8+Nw==
-X-Gm-Message-State: AG10YOQDpVbypnHnn7AmmHdVeOsCGIMr90tZgH5Tu0APlkc58X+P3y+e0obOvPLcZrTb01LGO3k7Xk5VaDZbAqme
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:content-type;
+        bh=d65+SwSwGpdnyY8+MSH4fb4+NzT+hovIaynEl6OC/DQ=;
+        b=MBkFUp70+iamatf+/5fMjDBNahlH2V5XMbSAfSqSvMMkg7mcN4CYwwZkk9Qa7aZZb7
+         K/dNS8OcHh+rVXCq017fRhPW+po5GpnVctS/W+Ema116D77/o7iqGChJEIhiEgX684Vh
+         /7mGLQhSc4QcwHApEBrG9ZPzx85vPRRNGTU/UWsdg6/8nE79KRigxRccpWTJlVLpGuI7
+         zUHJynvO8DIrR1z5jhCyC6kzOPWdurrIxwPIP/7Ys4eFXx7EbLV4cm7R1QwB4iDE92FY
+         7yMamXNq1/zyvqnpVmz+NXU49tKxApzBupFdQelZOH2UYdzisHcFYEsZQqoqejKld6Xp
+         qr8Q==
+X-Gm-Message-State: ALoCoQktGFOsj2EBZeheysf/W3WsfNkGLdQhW5oq/sgMeczzvTrJIyhQ+GbpszwgKDiMiYS1zBak
 MIME-Version: 1.0
-X-Received: by 10.13.241.199 with SMTP id a190mr19122495ywf.47.1456251096988;
- Tue, 23 Feb 2016 10:11:36 -0800 (PST)
-Message-ID: <CANO=Ty05gsBU3rX==c8L6V8OAQrUKStOasxfdpZk5ygCH=EKWg@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=94eb2c03272057339f052c73e131
-Date: Tue, 23 Feb 2016 11:11:36 -0700
-From: Kurt Seifried <kseifried@redhat.com>
+X-Received: by 10.55.53.137 with SMTP id c131mr9723309qka.102.1429307432728;
+ Fri, 17 Apr 2015 14:50:32 -0700 (PDT)
+In-Reply-To: <CANtF8NBuiE+1F65+cLp0CXivZUiYxyJcZK2Yhz9J1qu0hCdC9w@mail.gmail.com>
+References: <CAJ_zFkJw7hNxGp0PNmQbH0suVwfkgzbCsvs2Sv1OdxD+UBiraw@mail.gmail.com>
+	<55315C2B.6050207@redhat.com>
+	<CANtF8NBuiE+1F65+cLp0CXivZUiYxyJcZK2Yhz9J1qu0hCdC9w@mail.gmail.com>
+Message-ID: <CAJ_zFkKibZ5LixkHx5PB6L3H5Xc6rJSSniFHo39Ewxwt=UGjqw@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=001a11476f56cdb0770513f291a1
+Date: Fri, 17 Apr 2015 14:50:32 -0700
+From: Tavis Ormandy <taviso@google.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] libssh/libssh2 bits and bytes confusion
-To: oss-security <oss-security@lists.openwall.com>
+Subject: [oss-security] Problems in automatic crash analysis frameworks
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
 
---94eb2c03272057339f052c73e131
+--001a11476f56cdb0770513f291a1
 Content-Type: text/plain; charset=UTF-8
 
-CVE-2016-0739 libssh: Diffie-Hellman bits/bytes confusion bug
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2016-0739
+On Fri, Apr 17, 2015 at 1:54 PM, Grandma Eubanks <tborland1@gmail.com>
+wrote:
+> Just to enter into the fray, I reported a simple dmesg_restrict bypass and
+> found a lot of these recent more recent 'information' disclosures a while
+> ago with minimal changes:
+>
+> https://bugzilla.redhat.com/show_bug.cgi?id=1128400
+>
 
-CVE-2016-0787 libssh2: Diffie-Hellman bits/bytes confusion bug
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2016-0787
+Ugh, definitely needs to be fixed.
 
-TL;DR: bits/bytes confusion resulted in truncated Diffie-Hellman secret
-length in certain configs.
+I've been waiting for some commits before I look any further, as I don't
+know if each issue is going to be addressed individually or if some
+rearchitecturing will resolve everything.
 
--- 
+Tavis.
 
---
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@redhat.com
-
---94eb2c03272057339f052c73e131--
+--001a11476f56cdb0770513f291a1--
