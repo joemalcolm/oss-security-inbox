@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2627" "Sunday" "25" "December" "2016" "17:41:40" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<c057cd5bc2774a72a39e851772c10aed@imshyb02.MITRE.ORG>" "61" "[oss-security] Re: tqdm: insecure use of git" nil nil nil "12" "2016122522:41:40" "[oss-security] Re: tqdm: insecure use of git" (number mark "U       cve-assign@m Dec 25   61/2627  " thread-indent "\"[oss-security] Re: tqdm: insecure use of git\"\n") "<20161225204743.vflt7rkcu55bqqgt@jwilk.net>" ("<20161225204743.vflt7rkcu55bqqgt@jwilk.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1083" "Friday" "17" "April" "2015" "16:39:57" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150417203957.A1C81132F27E@smtpvbsrv1.mitre.org>" "29" "[oss-security] Re: [CVE Request] Multiple vulnerabilities in PHP's Phar handling" nil nil nil "4" "2015041720:39:57" "[oss-security] Re: [CVE Request] Multiple vulnerabilities in PHP's Phar handling" (number mark "        cve-assign@m Apr 17   29/1083  " thread-indent "\"[oss-security] Re: [CVE Request] Multiple vulnerabilities in PHP's Phar handling\"\n") "<CA+KTh2zmMqVO7g6W9Fkiy9q6ruyeD5+Bgt-mSehz0TTsxwiimw@mail.gmail.com>" ("<CA+KTh2zmMqVO7g6W9Fkiy9q6ruyeD5+Bgt-mSehz0TTsxwiimw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 18138 invoked by uid 550); 25 Dec 2016 22:41:55 -0000
+Received: (qmail 13756 invoked by uid 550); 17 Apr 2015 20:40:09 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,76 +11,42 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 13738 invoked from network); 17 Apr 2015 20:40:09 -0000
+In-Reply-To: <CA+KTh2zmMqVO7g6W9Fkiy9q6ruyeD5+Bgt-mSehz0TTsxwiimw@mail.gmail.com>
+Message-Id: <20150417203957.A1C81132F27E@smtpvbsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, security@php.net
+Date: Fri, 17 Apr 2015 16:39:57 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 18103 invoked from network); 25 Dec 2016 22:41:53 -0000
-From: <cve-assign@mitre.org>
-To: <jwilk@jwilk.net>
-CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
-In-Reply-To: <20161225204743.vflt7rkcu55bqqgt@jwilk.net>
-Message-ID: <c057cd5bc2774a72a39e851772c10aed@imshyb02.MITRE.ORG>
-Date: Sun, 25 Dec 2016 17:41:40 -0500
-MIME-Version: 1.0
-Content-Type: text/plain
-Subject: [oss-security] Re: tqdm: insecure use of git
+Subject: [oss-security] Re: [CVE Request] Multiple vulnerabilities in PHP's Phar handling
+To: emmanuel.law@gmail.com
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hash: SHA1
 
-> But cwd might be a part of an unrelated git repository
+> There is a stack based buffer overflow when opening tar, zip or phar
+> archives through the Phar extension. An attacker and exploit this to run
+> arbitrary code.
+> Affected versions: PHP < 5.6.8RC1
+> Bug Report: https://bugs.php.net/bug.php?id=69441
+> Patch:
+> http://git.php.net/?p=php-src.git;a=commit;h=f59b67ae50064560d7bfcdb0d6a8ab284179053c
 
-Can you clarify the threat model for this? Our understanding is
-that .git/config is not really a part of a repository that is
-controlled by a remote party, e.g., see the second paragraph of the
-https://git-blame.blogspot.com/2014/12/git-1856-195-205-214-and-221-and.html
-post.
-
-Is either (or both) of these a valid interpretation of your report?
-
-1. You are suggesting that there is a security problem in git because
-the risks of an attacker-controlled config file are not documented
-carefully enough. In other words, you want documentation such as
-https://www.kernel.org/pub/software/scm/git/docs/git-config.html to
-tell the user that they must not use a "repository specific
-configuration file" that is writable by an untrusted local user.
-
-2. You are suggesting that there is a security problem in tqdm because
-the victim is not explicitly being told that they are executing a git
-command, and thus they do not realize that there is a need to verify
-that they have a safe cwd before proceeding.
-
-If the latter, then do you mean that:
-
-A. Anyone planning to explicitly enter "git log" from a shell prompt
-is responsible for first verifying that the cwd is safe. It is a known
-property of git that the cwd is critical to security.
-
-B. No third-party product should ever be executing "git log" in an
-unexpected context. Either the user must somehow be aware that a "git
-log" may be executed, or else the product must somehow force the use
-of a safe local directory. Otherwise, a CVE is needed for each such
-product.
-
-?
+Use CVE-2015-3329.
 
 - -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Version: GnuPG v1.4.14 (SunOS)
 
-iQIcBAEBCAAGBQJYYEqXAAoJEHb/MwWLVhi2hgYP/1z6ZHZTku8bMw+PFzkNfVtV
-0xBjr9/4d4gvzZQfMgs4fLvKAvmTFf/vc8aTEJWpsCHnwEI+tHsoP6eVOTjW/+Kq
-8OG6O01xjKHClrEAIpGM+aYCiSlk1NQSwE8kb9gANJk25rV0LNLrMF20o529WTIL
-c7MciM5vnWPK8pyw5oQTfONCdjuGk7ATQ8TM8UjgNaW48Kk595rUAroD46Dx5zl5
-S/S7I4AxB8p5xZVJIl0tif3FxRWCsd+Or+NigpyFkCXp09Xz4wNGJjh6DR7q5Ppg
-Aw8Vg6OG1mmGbXl2qt7MDYpRiVoXMQH6wbg9tcOmv8HUabc7WucABADw05WArbHv
-DP/CXIrfYiWD1xKP3anqwGb0zx1v4+2N7bWCIMktIO3RoIm579UTNATA/EH5Gk7r
-XFYnA77DzevJ9ulQX+4Ryx2oiS4Fb0GBrx0tUsGM9gsXvOZtnfdSSXLg3dl5Y0mh
-QrcnnSAgvS13so3nGeKWYrjGVLb/eqEhGFBNrjBGr3F+EbcxGh1+0ES2D2o6WUjj
-dTFdyGsP2Pkdh02OgvLNf+Fj5ELBR+jCg05FQs5hJ7OdBYQA5gmKpELHeDPTOj7A
-i8sYwn61WhuMg1Lg8ClHKCNc7pqMG1C52jDIOUhUBOt3tUfCpOyQY2+s4y2EklIo
-jis4UzxON4HtAOu6x/Ae
-=4l/s
+iQEcBAEBAgAGBQJVMW7RAAoJEKllVAevmvms5ikH/RSwRGs1lZ26NaiOjkwXWolc
+1F7M3IE/s5C5/lrzWN63Y+hjta/MJfnY0S5wJDXlwpYNLAO59oDQ341/Qgd8IRK7
+NfVR9Mu8dpsKpdexqw7G0/ns0p/p/Q9eJiYSqRrbJPKdFbz//SYOEV6mKkRnabFz
+ShiboS53+Onia5EeFHjsN3AdUEFlQW4jsArxxsHsz8Gu5JBCAKmtEOnp5o0QD9o8
+B0bliLqcUmmvlb3yPn1hPgUXZbUmdZ16ix3qE3vsFln/9Qhf3c4zT8Hsyp5fSq/C
+DWlyaPRXOOj3/op+TQPdgu60DCwhpAlj1go1VPxAqO1J9nwKz6Z9f9fnxe3VAD4=
+=C34M
 -----END PGP SIGNATURE-----
