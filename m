@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1833" "Wednesday" "12" "October" "2016" "00:07:37" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20161012040737.9D9D152E019@smtpvbsrv1.mitre.org>" "44" "[oss-security] Re: CVE request: GNU Guile <= 2.0.12: Thread-unsafe umask modification" nil nil nil "10" "2016101204:07:37" "[oss-security] Re: CVE request: GNU Guile <= 2.0.12: Thread-unsafe umask modification" (number mark "U       cve-assign@m Oct 12   44/1833  " thread-indent "\"[oss-security] Re: CVE request: GNU Guile <= 2.0.12: Thread-unsafe umask modification\"\n") "<878ttvw0ds.fsf@gnu.org>" ("<878ttvw0ds.fsf@gnu.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2350" "Saturday" "18" "April" "2015" "00:12:34" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150418041234.B966642E012@smtpvbsrv1.mitre.org>" "57" "[oss-security] Re: USERNS allows circumventing MNT_LOCKED - Linux kernel" nil nil nil "4" "2015041804:12:34" "[oss-security] Re: USERNS allows circumventing MNT_LOCKED - Linux kernel" (number mark "        cve-assign@m Apr 18   57/2350  " thread-indent "\"[oss-security] Re: USERNS allows circumventing MNT_LOCKED - Linux kernel\"\n") "<CAAZDpLd86UzwsK-9QK2HNvubj2qPb97UxKiiVFO2cnWJVRzykA@mail.gmail.com>" ("<CAAZDpLd86UzwsK-9QK2HNvubj2qPb97UxKiiVFO2cnWJVRzykA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 14147 invoked by uid 550); 12 Oct 2016 04:07:50 -0000
+Received: (qmail 12161 invoked by uid 550); 18 Apr 2015 04:12:50 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,57 +11,70 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 14129 invoked from network); 12 Oct 2016 04:07:49 -0000
+Received: (qmail 12129 invoked from network); 18 Apr 2015 04:12:46 -0000
+In-Reply-To: <CAAZDpLd86UzwsK-9QK2HNvubj2qPb97UxKiiVFO2cnWJVRzykA@mail.gmail.com>
+Message-Id: <20150418041234.B966642E012@smtpvbsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Sat, 18 Apr 2015 00:12:34 -0400 (EDT)
 From: cve-assign@mitre.org
-To: ludo@gnu.org
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, wingo@pobox.com, mhw@netris.org
-In-Reply-To: <878ttvw0ds.fsf@gnu.org>
-Message-Id: <20161012040737.9D9D152E019@smtpvbsrv1.mitre.org>
-Date: Wed, 12 Oct 2016 00:07:37 -0400 (EDT)
-Subject: [oss-security] Re: CVE request: GNU Guile <= 2.0.12: Thread-unsafe umask modification
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: USERNS allows circumventing MNT_LOCKED - Linux kernel
+To: eric@windisch.us
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hash: SHA1
 
-> The mkdir procedure of GNU Guile, an implementation of the Scheme
-> programming language, temporarily changed the process' umask to zero.
-> During that time window, in a multithreaded application, other threads
-> could end up creating files with insecure permissions. For example,
-> mkdir without the optional mode argument would create directories
-> as 0777.
+> In October 2014, Andrey Vagin reported[1] to the Linux Containers list that
+> it would be possible to use user namespaces to circumvent MNT_LOCKED and
+> allow unprivileged users to access the directory structure underneath of
+> mounts. A PoC was also produced and is public.
 > 
-> This can be worked around by always passing the optional mode argument
-> to Guile's mkdir procedure.
+> Patches are now available and proposed to Linus[2].
 > 
-> This will be fixed in Guile 2.0.13, to be released shortly.
-> 
-> Patch: http://git.savannah.gnu.org/cgit/guile.git/commit/?h=stable-2.0&id=245608911698adb3472803856019bdd5670b6614
-> Upstream bug report: http://bugs.gnu.org/24659
+> [1] https://groups.google.com/forum/#!topic/linux.kernel/HnegnbXk0Vs
+> [2] http://www.spinics.net/lists/linux-containers/msg30786.html
 
->> changes the process' umask globally for a short duration
+Use CVE-2014-9717 for the
 
-Use CVE-2016-8605.
+  "The semantics of MNT_LOCKED are that you aren't allowed to see what
+   is beneath. So if you can get under there even by unsharing the mount
+   namespace it is an implementation bug in MNT_LOCKED."
+
+issue in the http://marc.info/?l=linux-kernel&m=141271552117745&w=2
+post.
+
+The scope of CVE-2014-9717 does not include the entire set of issues
+discussed in the msg30786.html post. In particular, a different part
+of that msg30786.html page already has a CVE mapping in the
+http://openwall.com/lists/oss-security/2015/04/04/4 post.
+
+There currently isn't a CVE ID for the
+
+   "While investigating this issue I also found an issue with
+    __detach_mounts. The code was unnecessarily and incorrectly
+    triggering mount propagation. Resulting in too many mounts going
+    away when a directory is deleted, and too many cpu cycles are
+    burned while doing that."
+
+finding (which seems to be in the
+http://www.spinics.net/lists/linux-containers/msg30789.html post). If
+an unprivileged user could have launched a worthwhile attack by
+deleting a directory in certain circumstances, then we can assign a
+separate CVE ID for that issue.
 
 - -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Version: GnuPG v1.4.14 (SunOS)
 
-iQIcBAEBCAAGBQJX/baaAAoJEHb/MwWLVhi2DcYQAKDqyMz9vFBIQlUp04fqGCLm
-+2Edb5JItWj6y0x7F8rt+LM/jfxTHFq+HxH7pRQS59rERvAbhhUFU2Q+AhUeZRM9
-mpzxr0bGwlDGatdSLQbgrD5+BGCi/FrtIg3ggQxoGXMaKLWu6yjNg7c+l6Bp37ic
-h/XZ5Ur2M4dfaDnn1WGWdtAbcLbBKevglzKpbYcrgU4mokPiZ/Axzhp4zuxbvXP4
-uVKgVQTOeFcp2NstpDdzhomSvIdya1owA6DJd1HsiTgCtV1oKJ6Qy0T5uQ5sUplX
-6/ecG+gbebj1M52AFsmYMFuG3r6Ho9u1NB4CCzW27yuwmZU9w8gAHrMBlNxu8EZl
-M/xCgLr8JO8ve5zxwvdNdfadBtsXUgS2n0HgEMHQXOn+a2wrC+fBTG41OvC3qre4
-x3GkXOdC8IhAVXO2OVxUl7oo57nahSKct7Q8+Mh3BQ5PnzC2IqpYdN0riC6G/pCy
-YXS1ySEYB1nzQGdP+5VCLCOu0jKpQ2Bp/byOBljKHTc7mv/s1HEpke3n8/FNwuFq
-1nxFlNU0WzmpEpzYhAd7S2CxeDBhO2HVKeg9eCAdnMmRpytlQhKQN/S5wwRxcZOr
-3QCwcJldiufM7wv2D0jmiUR05AbWsG6Hj1femNoP3rxgOQIoYjwdEFpsDFKcSEMq
-DtztboX+z/tA/saF7SWP
-=ZBNv
+iQEcBAEBAgAGBQJVMdexAAoJEKllVAevmvmsYEYH/RP6wqZ1QxfWEGPAhk7uPXOl
+6RQePUIzYXzMSPG5dHO4VgSwLwW+PGs6/muJ7DsXTdue+PykD2LRIxu6ycQIxogy
+xavEzRJGSZNTtS1X6sVIhdiMuWQQTdNGwEnH4qp5lamVzJQjKcTDRJbSHVpZVydA
+0n4Qw6U505KloFVX2Rjk/mvSyHg2COKaBbbkXRa3vV3J9QVlUp1SZgyetQkvMpee
+XkpQ6yXsuDM5WsViip41tLqy9ch8JSGFSOdP0uwK0MicWeGIOk7ItS6mQFlTYPvi
+pM1eWFrYhU4vfECPcQsG/ATWD0ylZWrydEbk8Qaw6GGOEpEPAjWMAOqa2t4bR5U=
+=xBBT
 -----END PGP SIGNATURE-----
