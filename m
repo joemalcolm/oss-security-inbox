@@ -1,4 +1,9 @@
-Received: (qmail 13622 invoked by uid 550); 14 Mar 2026 00:56:37 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1549" "Saturday" "18" "April" "2015" "00:07:22" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150418040722.6B003132F2BB@smtpvbsrv1.mitre.org>" "38" "[oss-security] Re: Buffer overruns in Linux kernel RFC4106 implementation using AESNI" nil nil nil "4" "2015041804:07:22" "[oss-security] Re: Buffer overruns in Linux kernel RFC4106 implementation using AESNI" (number mark "        cve-assign@m Apr 18   38/1549  " thread-indent "\"[oss-security] Re: Buffer overruns in Linux kernel RFC4106 implementation using AESNI\"\n") "<1429044392.3211.72.camel@decadent.org.uk>" ("<1429044392.3211.72.camel@decadent.org.uk>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 28052 invoked by uid 550); 18 Apr 2015 04:07:38 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,76 +11,51 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 28017 invoked from network); 18 Apr 2015 04:07:34 -0000
+In-Reply-To: <1429044392.3211.72.camel@decadent.org.uk>
+Message-Id: <20150418040722.6B003132F2BB@smtpvbsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, 782561@bugs.debian.org
+Date: Sat, 18 Apr 2015 00:07:22 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 23554 invoked from network); 14 Mar 2026 00:15:23 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773447314; x=1774052114; darn=lists.openwall.com;
-        h=mime-version:user-agent:message-id:date:references:in-reply-to
-         :subject:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=GpLpXfM285QPt2w8l/iHP9W7UHYcf17EprC+3h8vi2E=;
-        b=XrNbWpUjVRUrRdMU1gYTHw20rb/WkXlNcErE0IVKoMzJq36uL+/aq5FOpwVITEHYzW
-         2rE91Hsdbe7fXBSdh+Po9zbVLkf68OmpgVtuDPlaJ91Oc3KkukMnIuV0A/LwMKVLApbQ
-         H0dqLMRlFe2mb05PP7KnlpsZrRs7gmqOULm/ijw5gxsJbKHFeS1tLDZIQC7HXi+BpI6+
-         q4InXS+W9sN+JEC4/yyiJLm3QRHfXz5LD78lZLjcqTDn7N9UEe5ilS3R3G7rFdtUu5wk
-         W8BsqqcL83Cy5pgCQN3uVTPaPLTJ02nkq+T4Hu1in/gxaJ3orGws9M6Rli4PbiDm1Q+3
-         o77A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773447314; x=1774052114;
-        h=mime-version:user-agent:message-id:date:references:in-reply-to
-         :subject:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=GpLpXfM285QPt2w8l/iHP9W7UHYcf17EprC+3h8vi2E=;
-        b=UK7uHcj2laohHXOFfS1m2o0VC68lYhJMffsz0Lw1j4xGjiKUzZHxzCQcRIj9hl/0Xo
-         CNA928TTEDNzrfN9zhjuOVKe2AQy3k/XFoSm/bcqqTl4Yfw0gtaAbtB2wWQ2z9idS2lT
-         XJyyvsk+lFkzpq9gNYs3ZNGHbiytXrEM+p84WT92Jq/7Wv833/GB4r0TYrRjW0nMmtTz
-         huUisFnepRy9mZaSI3tpbbAEHRDRtmqtbF/pluX0ghVdu+pRyDo6hFh/AhCxkASn+lWV
-         KAob+G/hHWxd3/wgC0kf6/l8udHtF5+mqRpLeMsxsGNZQ/krb4VYVAIwCl16qMn2C76M
-         +4VA==
-X-Gm-Message-State: AOJu0Yw+j2iWDYHJ7Ctzf820cB1YpkWiicYQ/MZ4oaRWmtOH9E2BYG3t
-	HhI86ZuDsJArylA1aYNtnpqXWphyQCI549VTRwvdhUX19sWT1VR/fum7XD/S6Q==
-X-Gm-Gg: ATEYQzyXMoXbmwKScUKFmDD0dtYTUG6nFII1eBTdrY9sa87RQO+MxqbRvK2G2VaBV3a
-	elEhXYC64d26ZMyOzJJrPwokFuKy55w00OTGPxJ73B5Z+M2nj/Y31h4DB9A5H29R9Zh4qSxj6s6
-	6V6PKrZsQMck/gzWD9HZyM9xx4TDaWs12omSy2/oR/RV/eWkE5Xc8qpdow9OTlCXYU/kIw0b/Rq
-	MEf+gmcwFxkaeRe+GO3tT2s2QKjiB4nA9UmFynV5qswRCiX1FAqaBryEL0GcJ3cMHFhzBQdJr4J
-	nO4EaLqjQJMXwe8xKU15jrWs6qUpssD6yHLv+KFCzu7TmkEMfhV6L0dhoUPb2Tjj2/uFMCwG+Ef
-	seCjH/hKArhVXcuGryq/kA6wsWzIxYLNJc6jjClnzFr3tLw+Ilc66yIZN9S9Sssfl9MhN9qBJGQ
-	7Kc7Oaw9nY+xPRkyJST7XRhDxNfoj7zGquI4fcHxQD61HQwiRmKPbfc1AH3hx9+60=
-X-Received: by 2002:a05:7300:a144:b0:2ae:51fa:b7ec with SMTP id 5a478bee46e88-2bea54eee8cmr2393481eec.25.1773447313964;
-        Fri, 13 Mar 2026 17:15:13 -0700 (PDT)
-From: Collin Funk <collin.funk1@gmail.com>
-To: oss-security@lists.openwall.com
-In-Reply-To: <6d90b416fd9f2e4e8483885a480b390d@risingedge.co.za>
-References: <6d90b416fd9f2e4e8483885a480b390d@risingedge.co.za>
-Date: Fri, 13 Mar 2026 17:15:12 -0700
-Message-ID: <874imj5krz.fsf@gmail.com>
-User-Agent: Gnus/5.13 (Gnus v5.13)
-MIME-Version: 1.0
-Content-Type: text/plain
-Subject: Re: [oss-security] Remote Pre-Auth Buffer Overflow in GNU Inetutils
- telnetd (LINEMODE SLC)
+Subject: [oss-security] Re: Buffer overruns in Linux kernel RFC4106 implementation using AESNI
+To: ben@decadent.org.uk
 
-Justin Swartz <justin.swartz@risingedge.co.za> writes:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> Greetings,
->
-> I would like to draw the community's attention to the following
-> vulnerability [1], summarized as "Remote Pre-Auth Buffer Overflow
-> in GNU Inetutils telnetd (LINEMODE SLC)", which was reported to
-> the bug-inetutils mailing list recently.
->
-> I am not affiliated with the researchers, inetutils, nor GNU/FSF.
->
-> Regards,
-> Justin
->
-> ---
->
-> [1]
-> https://lists.gnu.org/archive/html/bug-inetutils/2026-03/msg00031.html
+> Linux kernel commit ccfe8c3f7e52 ("crypto: aesni - fix memory usage in
+> GCM decryption") fixes two bugs in pointer arithmetic that lead to
+> buffer overruns (even with valid parameters!):
+> 
+> https://git.kernel.org/linus/ccfe8c3f7e52ae83155cb038753f4c75b774ca8a
+> https://bugs.debian.org/782561
+> 
+> These are described as resulting in DoS (local or remote), but are
+> presumably also exploitable for privilege escalation.
 
-This was assigned CVE-2026-32746 by MITRE [1].
+> As the destination buffer for decryption only needs to hold the
+> plaintext memory but cryptlen references the input buffer holding
+> (ciphertext || authentication tag), the assumption of the destination
+> buffer length in RFC4106 GCM operation leads to a too large size. ...
+> In addition, ... cryptlen already includes the size of the tag. Thus,
+> the tag does not need to be added.
 
-Collin
+Use CVE-2015-3331.
 
-[1] https://nvd.nist.gov/vuln/detail/CVE-2026-32746
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJVMdeRAAoJEKllVAevmvmsidIH/i/kj781LmDCrwkAoGRREwKE
+Bw8eKCM7Rb5u5om8T+wfX93UBvXQEm9sms3B4LAhpvhQ+hE64M8ETsQq8/Y2J5b3
+gz5UQDd57TxIiBUkKuSA6CTQxUw5m+SRd2tlZckgpBjRRWYfKZvaPj/KqI/Uztq+
+/WwFU0hXDzAq650mMFGluduwpKpeDIXxtYaNajbFHJdDDhVL0eUiJv2SxUsc3cse
+Okx2fFoAKXmyf7YfXN6bgZKE4A4w2LWq175/TvcDTsVzUdct3ramDPVRNBE2LCYx
+JXkLV4vuoFxkCScPH6zUPOgaqC+obqCWN0XBjkXx064on9BAM/34aZgZfX5TCf0=
+=KYnV
+-----END PGP SIGNATURE-----
