@@ -1,4 +1,9 @@
-Received: (qmail 30609 invoked by uid 550); 23 Jul 2024 19:24:59 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1423" "Saturday" "18" "April" "2015" "00:09:28" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150418040928.240A273C020@smtpvmsrv1.mitre.org>" "40" "[oss-security] Re: TCP Fast Open local DoS in some Linux stable branches - Linux kernel" nil nil nil "4" "2015041804:09:28" "[oss-security] Re: TCP Fast Open local DoS in some Linux stable branches - Linux kernel" (number mark "        cve-assign@m Apr 18   40/1423  " thread-indent "\"[oss-security] Re: TCP Fast Open local DoS in some Linux stable branches - Linux kernel\"\n") "<1429043059.3211.58.camel@decadent.org.uk>" ("<1429043059.3211.58.camel@decadent.org.uk>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 3792 invoked by uid 550); 18 Apr 2015 04:09:43 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,109 +11,53 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 3757 invoked from network); 18 Apr 2015 04:09:39 -0000
+In-Reply-To: <1429043059.3211.58.camel@decadent.org.uk>
+Message-Id: <20150418040928.240A273C020@smtpvmsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, 782515@bugs.debian.org
+Date: Sat, 18 Apr 2015 00:09:28 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28140 invoked from network); 23 Jul 2024 19:23:23 -0000
-Date: Tue, 23 Jul 2024 21:23:10 +0200
-From: Solar Designer <solar@openwall.com>
-To: oss-security@lists.openwall.com
-Message-ID: <20240723192310.GA23154@openwall.com>
-References: <Zo61nFk8VulWf7_J@michel-fedora-PC198L6J> <Zo7mU_N9joNTZ4gV@itl-email> <Zo759RRNseuva6zO@aeon> <Zo8fJWNFia9y2BS8@michel-fedora-PC198L6J>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Zo8fJWNFia9y2BS8@michel-fedora-PC198L6J>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] linux-distros application for CentOS Project's Hyperscale SIG
+Subject: [oss-security] Re: TCP Fast Open local DoS in some Linux stable branches - Linux kernel
+To: ben@decadent.org.uk
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I've finally reviewed the links and re-read the thread.  Looks like
-we're OK to proceed with adding CentOS Project's Hyperscale SIG as a
-linux-distros member.
-
-Michel, please e-mail me off-list with PGP keys for all of you who need
-to be subscribed for Hyperscale.  I also need to know who will be
-managing this subscription on your end (informing me of any changes in
-who's to stay subscribed).
-
-On Wed, Jul 10, 2024 at 06:54:13PM -0500, Michel Lind wrote:
-> All three of us are Fedora developers - but AIUI, we will not and can not use
-> membership here to contribute Fedora patches - until the embargo is
-> over.
+> There is a local DoS triggered by use of the TCP Fast Open option,
+> specific to Linux stable branches, as a result of an incompletely
+> backported bug fix:
 > 
-> For Hyperscale itself we plan to use the head start to have local builds
-> ready to go, and commit and do a public build as soon as the embargo is
-> over; if it needs collaboration we can use private Git repos and E2EE
-> private chats to discuss the fix among ourselves.
+> https://bugs.debian.org/782515
+> http://thread.gmane.org/gmane.linux.network/359588
+
+> The BUG() at the top of
+> tcp_transmit_skb() fires as tcp_skb_pcount(skb) == 0.
 > 
-> This is, to the best of my knowledge, similar to how AlmaLinux handles
-> embargoed security issues - the fix is ready to go but is only made
-> available once the embargo is lifted.
+> tcp_send_syn_data() does:
 > 
-> Now - wearing our Fedora hats, we certainly would try and help get this
-> fixed in Fedora once the embargo is over (as we've done before) - and
-> knowing a CVE is going to be made public would certainly help (e.g.
-> trying to make sure one of us is around) - but we won't be participating
-> in the list wearing our Fedora hat, or discuss embargoed issues with
-> people not on the list.
-
-This understanding is correct.  The membership and embargoed info is
-only for the specific distro "except with the reporter's explicit
-approval".  This exception means that you may occasionally ask whoever
-reported the issue to linux-distros for permission to use the
-information e.g. also for preparing a fix for Fedora even though you're
-subscribed for Hyperscale.  To avoid miscoordination, please keep such
-requests also CC'ed to the list.  Uses of this exception have been very
-rare so far, and it is expected that you wouldn't use it often, or else
-it'd make more sense to discuss the additional distro becoming a member.
-
-> > I am curious what this could mean for Fedora Asahi Remix [0], as the
-> > applicants maintain both distros.
-> > 
-> > Is there interest in the Asahi SIG applying as well?
-> > 
-> > I heartily endorse the applicants membership request and appreciate
-> > their work. Hooray for ARM \o/
+>         memcpy(syn_data->cb, syn->cb, sizeof(syn->cb));
 > 
-> So... if this works for Hyperscale, we could potentially discuss with
-> other Fedora developers about having Fedora itself be represented in
-> linux-distros. Something to bring up at Flock! There's already some
-> discussion of this in the Fedora Security Matrix room w.r.t. last week's
-> OpenSSH CVE.
+> Since commit cd7d8498c9a5 ("tcp: change tcp_skb_pcount() location") this
+> is sufficient to set the GSO segment count correctly. But in older
+> branches (< 3.18) the GSO segment count in skb_shared_info is used and
+> is no longer copied by tcp_send_syn_data().
 
-FWIW, Fedora's fix for CVE-2024-6387 was quite timely as-is:
+Use CVE-2015-3332.
 
-commit dcbca7b947cf82c30d6f477a26efd2f765204fe6
-Author:     Gordon Messmer <gordon.messmer@gmail.com>
-AuthorDate: Mon Jul 1 20:49:16 2024 -0700
-Commit:     Gordon Messmer <gordon.messmer@gmail.com>
-CommitDate: Tue Jul 2 00:48:16 2024 -0700
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-    Patch 9.6p1 for CVE-2024-6387
-
-* Mon Jul 01 2024 Gordon Messmer <gordon.messmer@gmail.com> - 9.6p1-12
-- Patch 9.6p1 for CVE-2024-6387
-
-On one hand, this confirms that Fedora cares.  On the other, for an
-issue with a trivial patch, I don't know if Fedora could have done much
-or anything more to prepare.
-
-OpenSSH 9.8 released on July 1 also fixed "Logic error in ssh(1)
-ObscureKeystrokeTiming", which became CVE-2024-39894 by July 3:
-
-https://www.openwall.com/lists/oss-security/2024/07/03/6
-
-Per upstream, this issue affects "9.5 through 9.7 (inclusive)", so I
-guess Fedora's package based on 9.6p1 is vulnerable.  There doesn't
-appear to be a fix in the package yet.  I see this is being tracked in:
-
-https://bugzilla.redhat.com/show_bug.cgi?id=2295615
-
-which is assigned to Dmitry Belyavskiy, who is also the maintainer of
-the OpenSSH package in RHEL and CentOS Stream.  RHEL is not affected and
-the issue is low severity, so will probably take a long while to fix in
-Fedora via Red Hat.  Maybe something the community could do quicker?
-This is not directly related to possible linux-distros membership; this
-issue wasn't even on linux-distros.
-
-Alexander
+iQEcBAEBAgAGBQJVMdepAAoJEKllVAevmvmsVrkH/iNnxP700a67dCy7XLx2Lbab
+BUwWqUMJlupC0QSNW3cHsr4HVi2uHvzGI9vP/B/f6d+XRA8oh5tAanK+51JoPXr8
+6YitBjxjC7FR1/yUDMkoDPYvPxIv9WayieY4iAPZsjDsLf3MouIK9Zf0uW2z7+cs
+JPRuTVDaQeT58WIin2/ZX/bpQGZgshbGn9jx/8H7AEU/dvkQxb9DyxhCTqXze08I
+7vXjd8ZglspFbp6I3el5Z3wdqC1Q+Rrv6VQaZ4xtrSDhOB6o3A/y6aLpZif7HUui
+iAsRfnSWkegmutRDR0qgDrFPnA45CJoSWD+J+c2Ium6sR+DDDEq9hQ0YMgoxbAo=
+=tWXA
+-----END PGP SIGNATURE-----
