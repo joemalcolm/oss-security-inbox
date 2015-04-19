@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1950" "Monday" "30" "March" "2015" "14:00:44" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150330180044.1EB0F42E028@smtpvbsrv1.mitre.org>" "41" "[oss-security] Re: CVS-Request: realmd code execution/auth bypass" nil nil nil "3" "2015033018:00:44" "[oss-security] Re: CVS-Request: realmd code execution/auth bypass" (number mark "        cve-assign@m Mar 30   41/1950  " thread-indent "\"[oss-security] Re: CVS-Request: realmd code execution/auth bypass\"\n") "<20150330150021.GB23696@suse.de>" ("<20150330150021.GB23696@suse.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1238" "Sunday" "19" "April" "2015" "12:43:30" "-0400" "Scott Arciszewski" "scott@paragonie.com" "<CAKws9z0BcFuXDWcbnonSG=R8=KoDoS8TPDb-bPhimLM0Vox3xA@mail.gmail.com>" "34" "[oss-security] Pharaoh - PHAR Comparison Tool" nil nil nil "4" "2015041916:43:30" "[oss-security] Pharaoh - PHAR Comparison Tool" (number mark "        scott@parago Apr 19   34/1238  " thread-indent "\"[oss-security] Pharaoh - PHAR Comparison Tool\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 30060 invoked by uid 550); 30 Mar 2015 18:00:59 -0000
+Received: (qmail 20146 invoked by uid 550); 19 Apr 2015 16:45:45 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,54 +11,62 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 30029 invoked from network); 30 Mar 2015 18:00:55 -0000
-In-Reply-To: <20150330150021.GB23696@suse.de>
-Message-Id: <20150330180044.1EB0F42E028@smtpvbsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Mon, 30 Mar 2015 14:00:44 -0400 (EDT)
-From: cve-assign@mitre.org
+Received: (qmail 19580 invoked from network); 19 Apr 2015 16:43:42 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
+         :content-type;
+        bh=d8KCqv4ZivuU0BPCA6yT7vnBXeRSM7vTryTm+w/CYvY=;
+        b=kHWLkCLG5liSf1FmfyqTqUz+1kiEYBg6ZNaLZHkviolnN1E1PZiC4Vq1kqYd8KZBRR
+         xzYG3mNzf1k1TnluqVfMHGU7hlYqxiAWwpCslMdV06iZisEXGrMXNR2k3tUIKXrF6Y5n
+         Oygzj2KqCDJwl+XM9Yl9Et1d8Ol4gSA3gGpGdBy+r3Ch+g2buSU4QZFoMF0EKA36kuro
+         M3v2XWXTLtBGIwBY3Jrxk1yQQ0dofRyq8hQH3R8Kpr+AaLeS16i4PS5b1QuicwO00QDW
+         JoxNdftbtm4tdWtrrnsGqpFNrnHhjcTELHtJIurIpuvAn0YwMn9C+QFyZOjg4YSaDqWs
+         wyzQ==
+X-Gm-Message-State: ALoCoQmfo8fOLwQl0VuArABIMTqpu7hsroiGTeFg+zl0YDZJuRvYh3AoOkSuISshehl0CLFtDMyM
+MIME-Version: 1.0
+X-Received: by 10.140.132.80 with SMTP id 77mr14244021qhe.36.1429461810886;
+ Sun, 19 Apr 2015 09:43:30 -0700 (PDT)
+X-Originating-IP: [71.47.14.165]
+Message-ID: <CAKws9z0BcFuXDWcbnonSG=R8=KoDoS8TPDb-bPhimLM0Vox3xA@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=001a11c07daa7551be05141683a0
+Date: Sun, 19 Apr 2015 12:43:30 -0400
+From: Scott Arciszewski <scott@paragonie.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVS-Request: realmd code execution/auth bypass
-To: krahmer@suse.de
+Subject: [oss-security] Pharaoh - PHAR Comparison Tool
+To: oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+--001a11c07daa7551be05141683a0
+Content-Type: text/plain; charset=UTF-8
 
-The availability of new software from upstream doesn't determine
-whether a CVE ID can be assigned. If the old software had a behavior
-that matched the documentation and was consistent with a possibly
-useful security model, then typically no CVE ID is assigned when a
-vendor chooses to announce a cutover to a different security model.
+Hi everyone,
 
-> it should "somehow" be ensured that the legit AD servers are used.
+We developed a tool to compare executable PHP Archives (.phar files), which
+you may find at https://github.com/paragonie/pharaoh
 
-A possibly intended use case is network environments that do not have
-any untrusted devices and do not have any rogue ADs. To the extent
-that the product is used on arbitrary networks, many types of
-improvements might be helpful. For example, apparently the default is
-to use a realm name sent by a DHCP server. One might argue that an
-improvement would be dropping DHCP support on the basis that it's an
-unsafe way to determine a realm name. Or, one might argue that the
-realm-name string should be displayed to the client user for
-confirmation before proceeding. We don't necessarily want to have CVEs
-for these types of improvements. The automatic-join issue is more of a
-borderline issue but may be best categorized as a natural evolution of
-a security model for a better match with real-life use cases and
-real-life threats.
+Previously, there wasn't a tool available that specifically worked with
+.phar files, which differ from just a .zip or .tar in that they have an
+executable stub which allows you to do something like this:
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+    <?php
+    include "vendor/acme/deliverable.phar";
+    $foo = \Acme\Deliverable\Foo();
+    $bar->process($foo);
 
-iQEcBAEBAgAGBQJVGY6EAAoJEKllVAevmvmsbkQH/R9UUBJ5q0zGJzOUdL4i4E3a
-ZMk15+zBbvKov5NSYFFNL1TI5O9TlVHZFWb9NZoasnHb4RcFlv3byelYOGNRTdLD
-rJNnD7Jy7bnIwrniKe/gb7DnKfbLIeB4BarjKPRbBz3O7zWYYhLJArdod62PgD0i
-bBkQsJgIAPR0Rlb29zYKvrWBpAtxSI1KE4lJKH6/JxCWOXy23BG5aBDlEF4oGmSR
-8hyJ2ZKRw1gEmdeSH8E1TUkbYukADf8GANC2AEqRiHNtAwjJRkkMWQuTzPjzHCZU
-yldzKONImW9CXMAnWpNGBonQ2+FWhalQePLdumkFwTAsfG1CMrQK0EKN+aCiEXQ=
-=zxlx
------END PGP SIGNATURE-----
+Pharaoh is useful for open source projects that distribute a .phar
+(phpunit, composer, etc.). Since many of these projects do not sign their
+.phar, if their server gets hacked it would be trivial to slip in a bit of
+extra code in the stub (add a public key to ~/.ssh/authorized_keys, etc).
+
+The idea is that someone can download the .phar from their website, build
+the same one from source, then use Pharaoh to compare them and detect this
+malicious tampering. (And then, hopefully, blow the whistle to disrupt the
+campaign.)
+
+We hope that someone finds this useful.
+
+Scott Arciszewski
+Chief Development Officer
+Paragon Initiative Enterprises <https://paragonie.com>
+
+--001a11c07daa7551be05141683a0--
