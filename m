@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3360" "Thursday" "15" "June" "2017" "16:40:50" "+0200" "Solar Designer" "solar@openwall.com" "<20170615144050.GA25094@openwall.com>" "81" "Re: [oss-security] Berkeley DB reads DB_CONFIG from cwd" "^Date:" nil nil "6" "2017061514:40:50" "[oss-security] Berkeley DB reads DB_CONFIG from cwd" (number mark "        solar@openwa Jun 15   81/3360  " thread-indent "\"Re: [oss-security] Berkeley DB reads DB_CONFIG from cwd\"\n") "<20170610220613.mfmmpjey2l4aptcj@jwilk.net>" ("<20170610220613.mfmmpjey2l4aptcj@jwilk.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["488" "Sunday" "19" "April" "2015" "19:41:25" "+0200" "Salvatore Bonaccorso" "carnil@debian.org" "<20150419174125.GB17666@eldamar.local>" "16" "Re: [oss-security] Remote file inclusion in django-markupfield" nil nil nil "4" "2015041917:41:25" "[oss-security] Remote file inclusion in django-markupfield" (number mark "        carnil@debia Apr 19   16/488   " thread-indent "\"Re: [oss-security] Remote file inclusion in django-markupfield\"\n") "<20150419163519.GA16209@leliel.pault.ag>" ("<20150419163519.GA16209@leliel.pault.ag>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 28237 invoked by uid 550); 15 Jun 2017 14:41:19 -0000
+Received: (qmail 30199 invoked by uid 550); 19 Apr 2015 17:41:38 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,98 +11,47 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 28044 invoked from network); 15 Jun 2017 14:40:55 -0000
-Message-ID: <20170615144050.GA25094@openwall.com>
-References: <20170610220613.mfmmpjey2l4aptcj@jwilk.net>
-Mime-Version: 1.0
+Received: (qmail 30181 invoked from network); 19 Apr 2015 17:41:38 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:date:from:to:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=wUD3O+5/SmSWawe8KjPHNKqqr/vVWz2iMyUYE17/ons=;
+        b=UBeVFeNIRCwP6upt5yVgGtejNBP/YGO5Zlp46Kgw9OjFz21UlsSMrPqBweFiu9AsbS
+         hGRobTxBcQJ4x+S6eCV0f0rYmQiUpTd56LM/cSiPhs42Q4QIcn2ZzLQvqCMvTpapilp/
+         yppPC+LrEXGgFVNQobCBoMrZiXX51biH160ibY/a9TV+vdSjjeW20EpT2MpYZ4F4ClZq
+         bt4JOK2uEiu0xPVQlmgfVQlHqWAiLDRiTSbMyXc/nM1UpuQJmqfd2evU7FiD9oVKCjqc
+         QPhScBmYYJnG9mitMhP5WXNG/+hTTMR0F2cfoR9/SoWYvYNGhCKk968sjdmLH1SOed02
+         c8QA==
+X-Received: by 10.180.103.231 with SMTP id fz7mr18398305wib.35.1429465286960;
+        Sun, 19 Apr 2015 10:41:26 -0700 (PDT)
+Message-ID: <20150419174125.GB17666@eldamar.local>
+References: <20150419163519.GA16209@leliel.pault.ag>
+MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20170610220613.mfmmpjey2l4aptcj@jwilk.net>
-User-Agent: Mutt/1.4.2.3i
-Date: Thu, 15 Jun 2017 16:40:50 +0200
-From: Solar Designer <solar@openwall.com>
+In-Reply-To: <20150419163519.GA16209@leliel.pault.ag>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+Date: Sun, 19 Apr 2015 19:41:25 +0200
+From: Salvatore Bonaccorso <carnil@debian.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Berkeley DB reads DB_CONFIG from cwd
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Subject: Re: [oss-security] Remote file inclusion in django-markupfield
 To: oss-security@lists.openwall.com
 
-On Sun, Jun 11, 2017 at 12:06:13AM +0200, Jakub Wilk wrote:
-> Apparently Berkeley DB reads the DB_CONFIG configuration file from the 
-> current working directory by default[*]. This is surprising and AFAICT 
-> undocumented.
+Hi,
+
+On Sun, Apr 19, 2015 at 12:35:19PM -0400, Paul Tagliamonte wrote:
+> Hey folks,
 > 
-> Here's how to exploit it against pam_ccreds:
+> An arbitrary file inclusion bug was discovered in django-markupfield.
 > 
->    $ cat /etc/shadow
->    cat: /etc/shadow: Permission denied
->    $ ln -sf /etc/shadow DB_CONFIG
->    $ /sbin/ccreds_chkpwd moo < /dev/null
->    BDB1584 line 1: 
->    root:$1$QRCEVRMX$sPppjXE42AZnUPuEWf87D.:17327:0:99999:7:::: incorrect 
->    name-value pair
-> 
-> (The above was tested on Debian jessie.)
-> 
-> In the past, nss_db was also exploitable:
-> CVE-2010-0826
-> 
-> 
-> [*] More precisely, this seem to happen when you call db_create() with 
-> dbenv=NULL; or if you use the dbm_open() function.
+> A CVE was issued from Debian, CVE-2015-0846, but the commit is public in
+> the upstream repo, so this mail is to avoid deduplication of this issue.
 
-Besides possibly updating Postfix, what are distros going to do about
-this?  What is upstream going to do?  Have they been contacted?
+For reference: This is the corresponding upstream commit:
 
-In the source code, it isn't necessarily as simple as commenting out the
-undocumented functionality.  There doesn't appear to be any code
-specific to the undocumented functionality, since it is documented that
-the DB_CONFIG file is read from the environment's home directory and the
-code is there primarily for that purpose.  Problems arise when the
-environment is uninitialized, and it is unclear to me whether this was
-possibly meant to imply the environment's home directory is the current
-directory (but even if so, this behavior is dangerous and needs to go).
+https://github.com/jamesturk/django-markupfield/commit/b45734ea1d206abc1ed2a90bdc779708066d49f3
 
-At first, I tried checking for dbenv being NULL in __dbenv_config(),
-which is where the hard-coded DB_CONFIG file name is found.  However, at
-least when testing with Postfix' postmap program (without the recent
-workaround), dbenv is non-NULL there, and per strace postmap does indeed
-try to open DB_CONFIG in the current directory.  Thus, for now I opted
-for this patch checking for and curing the symptom:
-
---- db-4.3.29/env/env_open.c.orig       2004-12-23 02:58:21 +0000
-+++ db-4.3.29/env/env_open.c    2017-06-15 13:59:43 +0000
-@@ -500,7 +500,7 @@ __dbenv_config(dbenv, db_home, flags)
-        if (p == NULL)
-                fp = NULL;
-        else {
--               fp = fopen(p, "r");
-+               fp = strcmp(p, "DB_CONFIG") ? fopen(p, "r") : NULL;
-                __os_free(dbenv, p);
-        }
-
-This passes the postmap test for me (postmap no longer tries to open the
-file), but I wonder if it possibly broke db's own tests.  I can't easily
-run the tests as --enable-test says it needs TCL, which we don't
-package.
-
-While at it, I found that rep/rep_backup.c has a comment saying it skips
-DB_CONFIG, but the code actually skips DB_CONFIG* (that is, any filename
-starting with DB_CONFIG) due to use of strncmp():
-
-                /*
-                 * Skip DB-owned files: ., ..,  __db*, DB_CONFIG, log*
-                 */
-                if (strcmp(names[i], ".") == 0)
-                        continue;
-                if (strcmp(names[i], "..") == 0)
-                        continue;
-                if (strncmp(names[i], "__db", 4) == 0)
-                        continue;
-                if (strncmp(names[i], "DB_CONFIG", 9) == 0)
-                        continue;
-                if (strncmp(names[i], "log", 3) == 0)
-                        continue;
-
-Either the comment or the code is wrong (I think the code is wrong), but
-this is unimportant.
-
-Alexander
+Regards,
+Salvatore
