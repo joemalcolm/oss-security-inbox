@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3571" "Friday" "27" "January" "2017" "23:53:29" "+0100" "pali@cpan.org" "pali@cpan.org" "<201701272353.40452@pali>" "78" "[oss-security] Use after free in libmysqlclient.so" nil nil nil "1" "2017012722:53:29" "[oss-security] Use after free in libmysqlclient.so" (number mark "U       pali@cpan.or Jan 27   78/3571  " thread-indent "\"[oss-security] Use after free in libmysqlclient.so\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1239" "Sunday" "19" "April" "2015" "10:15:41" "-0700" "Michal Zalewski" "lcamtuf@coredump.cx" "<CALx_OUD3cMU9-do-SW6mHVSTyKN1c0x6VbMa2wHQakN7LRagRw@mail.gmail.com>" "35" "Re: [oss-security] libxml2 issue: out-of-bounds memory access when parsing an unclosed HTML comment" nil nil nil "4" "2015041917:15:41" "[oss-security] libxml2 issue: out-of-bounds memory access when parsing an unclosed HTML comment" (number mark "        lcamtuf@core Apr 19   35/1239  " thread-indent "\"Re: [oss-security] libxml2 issue: out-of-bounds memory access when parsing an unclosed HTML comment\"\n") "<CALPTtNW6v=fPnjNj5ra9vGfqMFo4bUKyb+a+415MNjsR-5hKjQ@mail.gmail.com>" ("<CALPTtNW6v=fPnjNj5ra9vGfqMFo4bUKyb+a+415MNjsR-5hKjQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 3487 invoked by uid 550); 28 Jan 2017 07:05:56 -0000
+Received: (qmail 13555 invoked by uid 550); 19 Apr 2015 17:16:14 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,95 +11,65 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 29795 invoked from network); 27 Jan 2017 22:53:53 -0000
-X-Envelope-From: pali@cpan.org
-From: pali@cpan.org
-To: oss-security@lists.openwall.com
-Date: Fri, 27 Jan 2017 23:53:29 +0100
-User-Agent: KMail/1.13.7 (Linux/3.13.0-107-generic; KDE/4.14.2; x86_64; ; )
+Received: (qmail 13534 invoked from network); 19 Apr 2015 17:16:13 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:content-type;
+        bh=TKZJvT17h8kHaAMtedYdZ/dNNSrct5iAqxbKEsvLOho=;
+        b=XYIj3cS3DqCQ4QG9MQDLY5aLIiidaoztRzgKq4i15oju6Ir6wu0GOHEuPO9RqO94b0
+         NoB2es91vKJFLmJgEPpmS0W0+k7aqKBiDRcdVrOcd6vuaQdDPaHj17LPt1p/M6R3nU3M
+         6V2wAAhjo+KJ9Gc8RmbOVZq+SWIgmLGP2pJ7Z2B92l6YTF+DK8m+9I9JneMZg5KzFDbY
+         l/eeKtJUtc4XlKZH6FAnZTiVBN/zmYGG46vZORAR3OFTImupjOmZHcQ1YeVFlaNYN+Un
+         DF6gPSuJrh3uB2nG1rkI/OSEUW8vc82jasFj/pQsx4RvCXhfbVp2XrmtUzFFuXdwpLxc
+         1alg==
+X-Gm-Message-State: ALoCoQmBDS2y/SuUJbNDH3G8OOaraKHsCFRcu50wyAEjMsXwIHA/HG0KWgVNamkzxUu7xKNJeYPs
+X-Received: by 10.66.144.201 with SMTP id so9mr13145111pab.78.1429463761669;
+ Sun, 19 Apr 2015 10:16:01 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: Text/Plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Message-Id: <201701272353.40452@pali>
-Subject: [oss-security] Use after free in libmysqlclient.so
+In-Reply-To: <CALPTtNW6v=fPnjNj5ra9vGfqMFo4bUKyb+a+415MNjsR-5hKjQ@mail.gmail.com>
+References: <CALPTtNW6v=fPnjNj5ra9vGfqMFo4bUKyb+a+415MNjsR-5hKjQ@mail.gmail.com>
+Message-ID: <CALx_OUD3cMU9-do-SW6mHVSTyKN1c0x6VbMa2wHQakN7LRagRw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Date: Sun, 19 Apr 2015 10:15:41 -0700
+From: Michal Zalewski <lcamtuf@coredump.cx>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] libxml2 issue: out-of-bounds memory access when
+ parsing an unclosed HTML comment
+To: oss-security <oss-security@lists.openwall.com>
 
-Hello, I would like to report problem related to MySQL/MariaDB and 
-possibly asking for assigning CVE if this list is the right place.
+Uh, so I guess we could also mention this one:
 
-C client library for MySQL (libmysqlclient.so) has use-after-free defect 
-which can cause crash of applications using that MySQL client.
+https://bugzilla.gnome.org/show_bug.cgi?id=744980
 
-Defect occurs by calling mysql_close() function from libmysqlclient.so. 
-If mysql_close() is called before calling all mysql_stmt_close() (for 
-all allocated stmts), then following mysql_stmt_close() call try to 
-write to already released memory. mysql_close() let dangling pointer 
-exist for prepared statements. Real problem is in function 
-mysql_prune_stmt_list() which incorrectly iterate over elements. 
-Function list_add() overwrite ->next pointer of current element which 
-overwrite next element for iteration.
+I wasn't sure it would ever cause anything serious / interesting,
+though. Perhaps for some exotic uses?
 
-Basically it is just wrong usage of linked list structure.
+/mz
 
-Languages in which is not guaranteed order of executing destructor of 
-created objects have a big problem as such writing to memory pointed by 
-dangling can cause crash of whole application.
 
-E.g. libmysqlclient.so used by perl DBD::mysql driver cause crash of 
-whole perl process with simple script:
-
-perl -MDBI -e '
-$dbh = DBI->connect("dbi:mysql:", "root", undef,
-                    {RaiseError => 1, mysql_server_prepare => 1});
-$sth1 = $dbh->prepare("SELECT 1");
-$sth2 = $dbh->prepare("USE mysql");
-$dbh->disconnect;
-$dbh = undef;
-'
-Segmentation fault
-
-Tested on amd64 Ubuntu 12.04 LTS with perl 5.14.2. To reproduce change 
-username, password and host where is running mysql server. Valgrind can 
-prove that memory corruption really occurs.
-
-This defect was fixed in MySQL 5.6.21 and MySQL 5.7.5 releases. But is 
-present in all MySQL 5.5 versions (and also older) and appropriate older 
-5.6 and 5.7 versions. MySQL 5.5 is still used, supported and included in 
-lot of linux distributions.
-
-Moreover this defect is present also in MariaDB releases. I tested all 
-last major versions 10.2.3, 10.1.21, 10.0.29, 5.5.54 and all those are 
-affected.
-
-MySQL and MariaDB provides also standalone package with only C client 
-library libmysqlclient.so (without server) under name "Connector/C" and 
-so appropriate versions of it are affected too. 
-
-I found that this defected was fixed in MySQL git repository by commit:
-https://github.com/mysql/mysql-server/commit/4797ea0b772d5f4c5889bc552424132806f46e93
-
-That commit can be easily applied to last MySQL 5.5.54 version and fixes 
-this defect.
-
-Looks like problem was already reported and is publically available in 
-MySQL bug tracker, see more details on links:
-https://bugs.mysql.com/bug.php?id=70429
-https://bugs.mysql.com/bug.php?id=63363
-(tickets are closed despite fact that MySQL 5.5 and older are not fixed)
-
----
-
-I reported this problem to Oracle secalert_us@oracle.com two months ago, 
-but they did absolutely nothing for fixing it in MySQL 5.5. Instead they 
-started resending this problem to some random people with @cpan.org 
-address for unknown reason. And told me to not disclose information 
-about this defect. Resending does not look like normal handling of 
-security related problem! Therefore I suggest other people to not 
-wasting time reporting problems to Oracle for open source applications.
-
-As two months is really long time to fix such problem which was already 
-fixed in new versions; it is already publically disclosed in MySQL bug 
-tracker; fix available in public git; problem is in major MariaDB 
-versions; fix is small; and this is open source product included in many 
-linux distributions I decided to send information to oss-security.
+On Sun, Apr 19, 2015 at 10:11 AM, Reed Loden <reed@reedloden.com> wrote:
+> (saw this randomly today on Twitter, so figured I'd send it on to make sure
+> it gets a CVE and actually gets fixed)
+>
+> https://hackerone.com/reports/57125#activity-384861
+>
+> """
+> This is an out-of-bounds memory access in libxml2. By entering a unclosed
+> html comment such as <!-- the libxml2 parser didn't stop parsing at the end
+> of the buffer, causing random memory to be included in the parsed comment
+> that was returned to ruby. In Shopify, this caused ruby objects from
+> previous http requests to be disclosed in the rendered page.
+>
+> Link to the issue in libxml2's bugtracker:
+> https://bugzilla.gnome.org/show_bug.cgi?id=746048
+>
+> A patched version of nokogiri (which uses a embedded libxml2) is available
+> here:
+> https://github.com/Shopify/nokogiri/compare/1b1fcad8bd64ab70256666c38d2c998e86ade8c0...master
+>
+> This bug is still not patched upstream, but both libxml2 and nokogiri
+> developers are aware of the issue.
+> """
+>
+> ~reed
