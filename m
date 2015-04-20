@@ -1,4 +1,9 @@
-Received: (qmail 26136 invoked by uid 550); 30 May 2025 21:31:25 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1194" "Monday" "20" "April" "2015" "12:22:48" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150420162248.9249E3321E6@smtpvbsrv1.mitre.org>" "31" "[oss-security] Re: Linux: chown() was racy relative to execve() - Linux kernel" nil nil nil "4" "2015042016:22:48" "[oss-security] Re: Linux: chown() was racy relative to execve() - Linux kernel" (number mark "        cve-assign@m Apr 20   31/1194  " thread-indent "\"[oss-security] Re: Linux: chown() was racy relative to execve() - Linux kernel\"\n") "<20150420003456.GA16052@pc.thejh.net>" ("<20150420003456.GA16052@pc.thejh.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 26110 invoked by uid 550); 20 Apr 2015 16:23:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,85 +11,44 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 26048 invoked from network); 20 Apr 2015 16:23:00 -0000
+In-Reply-To: <20150420003456.GA16052@pc.thejh.net>
+Message-Id: <20150420162248.9249E3321E6@smtpvbsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Mon, 20 Apr 2015 12:22:48 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 19979 invoked from network); 30 May 2025 12:29:43 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stig.io; s=MBO0001;
-	t=1748608171;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type;
-	bh=8e3b6RsJkgUdxbrQo5Nrc569xuC5WHv25Oe7Rk8ppcc=;
-	b=zYyDj82tIbwgvBruKy+xf+Qg3o3clFVd6m2JjCTV/yHVzdkWuIGfZD5jzYGOXirjiJmCa+
-	tTXFMf7bM/BPkWlwT0LsJgwHpuR87rHPXlbDfPWyAyTa5s3y1TEqL1PdTrwajGo8sQTZ9X
-	PPvp4aHBrCrQBB8mF2WM2FRzluPs/76dk5LByysYHbR0kLxwZD9wSSi2CYzTvYVea8dLLA
-	FunCZX9zAQxEGqtbf0e8Y7tGSkojz9bOy3zxtraZPcDld8BuT8SKwJWqi8n91aMe5v9Iih
-	rpkmg72fCwx66RHPJ9ODSqCUQWFfNhqHBNPRf41Uh4iFNqNg5YnlKwWoT9bjlg==
-Date: Fri, 30 May 2025 14:29:29 +0200
-From: Stig Palmquist <stig@stig.io>
-To: oss-security@lists.openwall.com
-Message-ID: <omnnpezilawlern5txh6xnng26fmenimxl7ijy6oykuxlurfbg@yo2pvsq3q6v6>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Subject: [oss-security] CVE-2025-40909: Perl threads have a working directory race condition
- where file operations may target unintended paths
+Subject: [oss-security] Re: Linux: chown() was racy relative to execve() - Linux kernel
+To: jann@thejh.net
 
-========================================================================
-CVE-2025-40909                                       CPAN Security Group
-========================================================================
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-        CVE ID:  CVE-2025-40909
-  Distribution:  perl
-      Versions:  from 5.13.6 before 5.41.13
+> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=8b01fc86b9f425899f8a3a8fc1c47d73c2c20543
 
-      MetaCPAN:  https://metacpan.org/dist/perl
-      VCS Repo:  https://github.com/perl/perl5
+Use CVE-2015-3339.
 
 
-Perl threads have a working directory race condition where file
-operations may target unintended paths
+> Two programs for which this could be relevant are procmail and vsftpd.
 
-Description
------------
-Perl threads have a working directory race condition where file
-operations may target unintended paths.
+If the procmail vendor or the vsftpd vendor decides to announce a
+required security update to make their product safe on affected Linux
+versions (i.e., possibly some type of workaround in their code), then
+that vendor should have its own CVE ID for its own product.
 
-If a directory handle is open at thread creation, the process-wide
-current working directory is temporarily changed in order to clone that
-handle for the new thread, which is visible from any third (or more)
-thread already running. 
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-This may lead to unintended operations such as loading code or
-accessing files from unexpected locations, which a local attacker may
-be able to exploit.
-
-The bug was introduced in commit
-11a11ecf4bea72b17d250cfb43c897be1341861e and released in Perl version
-5.13.6
-
-Problem types
--------------
-CWE-362 Concurrent Execution using Shared Resource with Improper
-Synchronization ('Race Condition')
-CWE-426 Untrusted Search Path
-
-Solutions
----------
-Update perl to an unaffected version, or apply the patch provided in
-the references section.
-
-
-References
-----------
-https://github.com/Perl/perl5/commit/918bfff86ca8d6d4e4ec5b30994451e0bd74aba9.patch
-https://www.openwall.com/lists/oss-security/2025/05/22/2
-https://github.com/Perl/perl5/issues/23010
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1098226
-https://github.com/Perl/perl5/issues/10387
-https://perldoc.perl.org/5.14.0/perl5136delta#Directory-handles-not-copied-to-threads
-https://github.com/Perl/perl5/commit/11a11ecf4bea72b17d250cfb43c897be1341861e
-
-Credits
--------
-Vincent Lefevre, finder
-
+iQEcBAEBAgAGBQJVNScmAAoJEKllVAevmvmsqekIAJ7/XIgShCbUKsG6+NnmoQAh
+b+EW9BhPxjoqhgHHr2ItFgXY9Dfh1qWUlorpM9EPNdphuMVsUZWs/nwGNvNvLFfy
+rPlHt1v2lmg+pKNnqrC4QcfLfRYa2iAVFqk9GO81PW4Jq4GCkKYnL08oOXaW1pSa
+Hu9GYu56jp8GQinKbn3vX+MYmwwUy1gsSbB3AN2jM6QbGBldcctZFKzcfy5rJ3Cj
+2ukvi3j15fZr8JTMoPtc8IocGZmGG/FuDNzo6sQp9ZFV9vyCnGpuRUVXECOCDk++
+rD/Y+VQD3YBvrwLOFdqE9ILVCc6HZJUghoj7THW7T//Ugzk8N68jCwxPdcgZ6+g=
+=7cGX
+-----END PGP SIGNATURE-----
