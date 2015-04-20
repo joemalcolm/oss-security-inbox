@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2160" "Tuesday" "6" "October" "2015" "01:41:51" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151006054151.E0A2F6C000E@smtpvmsrv1.mitre.org>" "51" "[oss-security] Re: CVE request for vulnerability in OpenStack Nova" nil nil nil "10" "2015100605:41:51" "[oss-security] Re: CVE request for vulnerability in OpenStack Nova" (number mark "        cve-assign@m Oct  6   51/2160  " thread-indent "\"[oss-security] Re: CVE request for vulnerability in OpenStack Nova\"\n") "<5612BF77.9070403@redhat.com>" ("<5612BF77.9070403@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2171" "Monday" "20" "April" "2015" "12:34:23" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150420163423.0823A6C4020@smtpvmsrv1.mitre.org>" "48" "[oss-security] Re: CVE request - illumos" nil nil nil "4" "2015042016:34:23" "[oss-security] Re: CVE request - illumos" (number mark "        cve-assign@m Apr 20   48/2171  " thread-indent "\"[oss-security] Re: CVE request - illumos\"\n") "<93B50930-3327-4BCA-86C1-3768F27C7490@omniti.com>" ("<93B50930-3327-4BCA-86C1-3768F27C7490@omniti.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 19661 invoked by uid 550); 6 Oct 2015 05:42:04 -0000
+Received: (qmail 21991 invoked by uid 550); 20 Apr 2015 16:34:35 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,44 +11,47 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 19637 invoked from network); 6 Oct 2015 05:42:03 -0000
-In-Reply-To: <5612BF77.9070403@redhat.com>
-Message-Id: <20151006054151.E0A2F6C000E@smtpvmsrv1.mitre.org>
+Received: (qmail 21973 invoked from network); 20 Apr 2015 16:34:34 -0000
+In-Reply-To: <93B50930-3327-4BCA-86C1-3768F27C7490@omniti.com>
+Message-Id: <20150420163423.0823A6C4020@smtpvmsrv1.mitre.org>
 Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Tue,  6 Oct 2015 01:41:51 -0400 (EDT)
+Date: Mon, 20 Apr 2015 12:34:23 -0400 (EDT)
 From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE request for vulnerability in OpenStack Nova
-To: tdecacqu@redhat.com
+Subject: [oss-security] Re: CVE request - illumos
+To: danmcd@omniti.com
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hash: SHA1
 
->  Title: Nova network security group changes are not applied to running
->         instances
->  https://launchpad.net/bugs/1491307
->  https://launchpad.net/bugs/1484738
-
-> https://bugs.launchpad.net/nova/+bug/1491307/comments/5
+> Illumos bug #5853 (https://www.illumos.org/issues/5853), now fixed, can
+> be exploited to escalate privilege. It's not easy to do so, but it is
+> enough to cause concern and ask for a CVE number.
 > 
-> The db instance dict doesn't have the keys in 'metas' because in
-> trigger_rules_refresh() the sec groups are got from db by joining on
-> the instances column, but it doesn't join on the
-> metadata/system_metadata fields. This again causes 'KeyError' because
-> when db instance dict is converted to the Instance object, it expects
-> fields that aren't in the dict.
+> At least two distros already have this fix in place. I'd appreciate a
+> CVE number (and if possible a way to request these on a non-public
+> list... sorry if I missed the FAQ).
 
-> https://bugs.launchpad.net/nova/+bug/1484738/comments/20
-> 
-> the instance passed to refresh_instance_security_rules
-> comes from the call to get the security group(s) which joins on the
-> instances column, but that doesn't join on the metadata/system_metadata
-> fields for the instances. So when the instances get to object_compat in
-> the compute manager and the db instance dict is converted to the
-> Instance object, it expects fields that aren't in the dict and we get
-> the KeyError.
+Yes, there can be a CVE mapping for this. However, because there's
+additional information in https://www.illumos.org/issues/5853 that's
+not discussed in your message, we don't know whether one or two CVE
+IDs is the correct number.
 
-Use CVE-2015-7713.
+If each of the two observations of "default error is negative one.
+However, callers are expecting errnos or zero." and "we're supposed to
+be checking the alignment of two different offsets, pfr_loff and
+pfr_ioff, but end up checking pfr_loff twice" could be independently
+exploitable, then there will be two CVE IDs. If only one is
+exploitable, or if exploitation requires both, then there will be one
+CVE ID.
+
+The cve-assign@mitre.org address can be used for non-public requests
+for illumos CVEs. There may be other options for the open-source
+parts, but we think that not all of illumos is open source.
+http://wiki.illumos.org/display/illumos/illumos+FAQs says "There still
+remain some binary-only, closed source components that we inherited
+from Oracle." If the component also affects an Oracle product, then
+Oracle could assign the CVE ID.
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -56,19 +59,13 @@ M/S M300
 202 Burlington Road, Bedford, MA 01730 USA
 [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Version: GnuPG v1.4.14 (SunOS)
 
-iQIcBAEBCAAGBQJWE16qAAoJEL54rhJi8gl5cQoP/R0rm6Y1GsnrrsjiNu7P++Gb
-D65ez/8UbNQbppouKIrcjULGtFYHn5CRc2nkrEFDTB9pbuQk6ghFjj3SJqn44mwb
-YsUxxly1S2UGKXrbmxX6nOR3DkqwvQSFb8FvmxqnwgdPLKAlsXffCkLOtzIEGGGI
-6jWwOrSDPj6BbANNUJ3/SyYHKPowMPVwGZvWbWZbLVm8JvoVvrausJqa/hG3O+DJ
-tmHlSZTEB5127tUG5abcf6MuCZDOCO1HiNbT1F3JXf4A/LL3VPMjKCN3TL0NYvce
-UhnbGpFoIWB8Eqly5Uz6tAlMi7podtPQ3IWbvlJJ1ogX6FjO11mhMSasRwsr4bW5
-fAOPFRQy9m7xv6FT/WnR8pdRmv0GhE4WbCD1FtzaSc+9yv/9YGPvobBG6EsBFSpr
-tnWBLCdZv3fTHfq6oHV/hnftU58QEFYk722UF3e3famuknaHayUx3gfDJxbUIVp4
-4mybiLCebrWd/IaDk1QdKMrn25G03T7II+wxmT0YJswAOC6/Y29sfYMpB0pJe+YX
-LtKN6X0rFyt/Cdlmrp5bTlSnLQsTsKwsgEjbnubgo/5bs0DB9PRPvYfdhqa2PObJ
-LFSW+zSPzmZNyQb9m9Q1Ke5ieEpySsXnPBKnhKyhTLjc1T/jbhzCcVtimH8R+18n
-SHKld5vgqyyXvA9nIQV7
-=Rpze
+iQEcBAEBAgAGBQJVNSoVAAoJEKllVAevmvmsdNUH/i2pmI4pWlW/hREqWhMt15HG
+tjkozI17nMUh3RRGp0eYcc0lHUVMlvSTcEZI/4XNhtSh5RaUlHSEYEolvE767WY8
+odgLDuQK8yvDTpXA0rxvmnYiBy4ZR+kZrmx2ejtJfSeR7df7UwjpMwSJYyoirffa
+wbfqxv1Pniww9tN1GfZyPIg9Hf6+9ib+QB/CZhzW5nF/7XLlvcttRzPeO5lxEN5V
+y/0b5i73N0KD1QfF7ubNG4hIa3foXkz4v2UplAy5XYt/Zw6la4v9XNKNReP+bLRj
+MxTuluANPV5U62wSy5h27QpzfZaHKoJjCoYNurl3BYfribv6hoNa7Wle4ZCJKsg=
+=d2+H
 -----END PGP SIGNATURE-----
