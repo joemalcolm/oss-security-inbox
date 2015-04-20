@@ -1,4 +1,9 @@
-Received: (qmail 14057 invoked by uid 550); 11 Apr 2026 01:11:34 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6398" "Monday" "20" "April" "2015" "17:10:59" "+0000" "Xen.org security team" "security@xen.org" "<E1YkFDn-0002ye-1J@xenbits.xen.org>" "159" "[oss-security] Xen Security Advisory 132 - Information leak through XEN_DOMCTL_gettscinfo" nil nil nil "4" "2015042017:10:59" "[oss-security] Xen Security Advisory 132 - Information leak through XEN_DOMCTL_gettscinfo" (number mark "        security@xen Apr 20  159/6398  " thread-indent "\"[oss-security] Xen Security Advisory 132 - Information leak through XEN_DOMCTL_gettscinfo\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 29741 invoked by uid 550); 20 Apr 2015 17:11:26 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,197 +11,177 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 32568 invoked from network); 10 Apr 2026 23:05:38 -0000
-ARC-Seal: i=1; a=rsa-sha256; t=1775862329; cv=none;
-        d=google.com; s=arc-20240605;
-        b=YgauJJTJcloQNWERMbkuU9sTVMN0/XkVTSQmCkOCRnhqTqKR1RsRAvMGnpvh7pBZpU
-         FrvMSJhzAhu5C/XQx0ZpkDznrxx+OUDtSXiQM2hod2U31TBx33MysP5faAx31yF4JBGo
-         hWojFuwFQhtfk8nf18/vvarC9mZy0p9twgTGO5NbY6Yt0eAAZdS2zo4RDGiu3AHwft5D
-         o168iMbQwoWqEQXeN/vbK0QqjnH3BHvrWfNPg2s7ZAxhRuFmIfQlmb9DkjP8eQoZGHL8
-         AaFnq5NuC0Cny3cxB4M6UTx0/KplHPqaq0mDeDYbHUfIfl6/qxpIESagjy85VDrZ2JhV
-         TakQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=to:subject:message-id:date:from:mime-version:dkim-signature;
-        bh=CTXffv+DGVK539OHo+Dxw+FapmD1gNQumMUllFAHsYg=;
-        fh=9jsPTyo6edd9xvAeG+KFFrRrXMmgB/RdwUKOrvy9dcA=;
-        b=Ff2LCYEUcptuI7FTGzzf9MWIMD2/5CuD3fDxXIfPEy9lJpaprYA7yrmLKfqTue9gN/
-         eqACmG++m7uVWQvE/CRBRaypisukFNqqIlu/iKGnOLVgdee9BDW+fffXYOiT0Z+TOBFo
-         vdhQlewtOawL/RMVgPymroSrZtM9X+nAvL+txUVW6eUajAbHcskjUaPfN2LO1Qo4i7Ae
-         kOeAZMG59pPvw3R6kyEYd7EA67zfblwcJHYjcEwR8ezCLE+veeFJEKwN/ZfspkFl21i1
-         UYSUv/KgU7lfb150cnvKubcwfVNeL7RQ3kbkOG19pIjjxQDMilzbTZW07PIurY93oglu
-         WytA==;
-        darn=lists.openwall.com
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1775862329; x=1776467129; darn=lists.openwall.com;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=CTXffv+DGVK539OHo+Dxw+FapmD1gNQumMUllFAHsYg=;
-        b=Y/XmNfHJjO7hCzE11T7sHQVsGEYUBX+NlSFxmaOHeIS/ikXPNrZXLYB3ZS5aXMdxQd
-         XYqqdivKAdj+Lfoykv2Hm5I1XPrGrmHGhCPzR9PzTxITfB6JURb6pT/DoaWkiIqaBpJW
-         48nFFdwtnWOHq/MvSCENZjYlg6KVstSCMUGiOZaKGDiSMoQQJEi6CIL+yExQuWOE+X5i
-         /eTyYXzvMskgBOLpFUS26BB4orKf3yQMdJfcfqrkkHFtb59Ou+oIFzT/eoSiBNTCX5aP
-         cUXhbyogPnqhkTc2dgRvdSyIRIcnDMWnpG9UFdxfYybN3PXh/F7BvH7sGyGfk4g142Cs
-         WTxw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775862329; x=1776467129;
-        h=to:subject:message-id:date:from:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=CTXffv+DGVK539OHo+Dxw+FapmD1gNQumMUllFAHsYg=;
-        b=KJ7IsDeB5Y+REgUDlmF6DBFUhmEkFg/5J3O+tdY0Iz/fE7r9WYeXXV1pPsV52onH88
-         0GmdDAiJjj4/E8FYhrijC18waoT6iluYv4J3MUWvvj13yVrkxVRjPdG+EyPlF3g61piL
-         b7bbAdkKx6WwSbAeuUiK5Xyph6/CvGUeL9g21CVkXLpZVsDCBDvYLsizQ5ANrStNffYw
-         Q1ll0bBFRzOlk52FidV/DTKklgLnBPoE2XFI3OtHH69ccRtIr0YcBO3kr9cC+ZgC1WCF
-         Xtr3ji+07xV+JMD6jNcOmUSTkXGw/dWaMsJA2cCmfMfgOXz7iSJCqpsYDUWxYN8KltOb
-         N5bw==
-X-Gm-Message-State: AOJu0Yyi4zhg0LXiFxcVZyRDwClpNYPw/aJfb1upGel+SXRO22xfm3SE
-	iQ5ZN0dTcD/OG4VDtkMqCMZd9aA0V+K8xSVgSPx1m/WeDdnq7HPxUqGs+YhE8vTwu7F2BChBSqx
-	ZU8YhttxHKcLd0oFvvmH2/iHtUj5xcYgTtN8xUJ1iBA==
-X-Gm-Gg: AeBDietLTjXjsIGDZFG/FB24wghcgD+um+oghVc6KnJQBqIgZxnSE1ClQ3s6ieYcOUn
-	6IMUqr+iw57Sb6XhGUUQYG1jZSnVlMy4n++QZJg670AsjiDF26G/jh5IIzjdBBZ3w1YyTm5HEEB
-	kRZxdo4wKJNepe7Muxl9D9497VcftB278V4g47eDK0ox8ynHuWi6Zr7eTNXDneD6SJtVBDBi59U
-	2FSKG/8pwUbKli6wY5M/b742HffEPx3oZWpTk32VNERkl9+OKQvFGBrrwA58vTqznmBZBSUIXdh
-	j6WyuewShA==
-X-Received: by 2002:a05:6820:61d:b0:689:5094:a2d7 with SMTP id
- 006d021491bc7-68a6a5b9d3fmr4363126eaf.22.1775862329089; Fri, 10 Apr 2026
- 16:05:29 -0700 (PDT)
+Received: (qmail 28612 invoked from network); 20 Apr 2015 17:11:19 -0000
+Message-Id: <E1YkFDn-0002ye-1J@xenbits.xen.org>
+Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
+Content-Transfer-Encoding: binary
 MIME-Version: 1.0
-From: Vinayak Goyal <vinayakankugoyal@gmail.com>
-Date: Fri, 10 Apr 2026 19:05:17 -0400
-X-Gm-Features: AQROBzAoZkY6CE3c_2VntsyBBBDZY5Jdm5ZrYalhaomCG4rf88b-SF2vmN870cI
-Message-ID: <CAH02z484+in9inWQ0KEcDoij9KK5=Q5Q1gcJx0TP7GDLn9F4Bw@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="0000000000004ba428064f232b0f"
-Subject: [oss-security] [kubernetes] CVE-2026-3865: CSI Driver for SMB path traversal via
- subDir may delete unintended directories on the SMB server
+X-Mailer: MIME-tools 5.428 (Entity 5.428)
+CC: Xen.org security team <security@xen.org>
+Date: Mon, 20 Apr 2015 17:10:59 +0000
+From: Xen.org security team <security@xen.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Xen Security Advisory 132 - Information leak through
+ XEN_DOMCTL_gettscinfo
+To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
+ xen-users@lists.xen.org, oss-security@lists.openwall.com
 
---0000000000004ba428064f232b0f
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+--=separator
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+Content-Transfer-Encoding: 7bit
 
-Hello Kubernetes Community,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
+                    Xen Security Advisory XSA-132
 
-A vulnerability was identified in the Kubernetes CSI Driver for SMB where
-insufficient validation of the subDir parameter in volume identifiers could
-allow path traversal. A malicious user with the ability to create a
-PersistentVolume referencing the SMB CSI driver could craft a volumeHandle
-containing traversal sequences (for example ../). When the driver performs
-cleanup operations during volume deletion, these sequences may cause the
-driver to operate on unintended directories on the SMB server.
+             Information leak through XEN_DOMCTL_gettscinfo
 
+ISSUE DESCRIPTION
+=================
 
-An attacker exploiting this flaw could cause deletion or modification of
-directories outside the intended managed subdirectory within the SMB export.
+The handler for XEN_DOMCTL_gettscinfo failed to initialize a padding
+field subsequently copied to guest memory.
 
+A similar leak existed in XEN_SYSCTL_getdomaininfolist, which is being
+addressed here regardless of that operation being declared unsafe for
+disaggregation by XSA-77.
 
-This issue has been rated Medium (6.5) with
-CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:N/I:H/A:H
-<https://www.first.org/cvss/calculator/3-1#CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U=
-/C:N/I:H/A:H>
-and assigned CVE-2026-3865.
+IMPACT
+======
 
+Malicious or buggy stub domain kernels or tool stacks otherwise living
+outside of Domain0 may be able to read sensitive data relating to the
+hypervisor or other guests not under the control of that domain.
 
+VULNERABLE SYSTEMS
+==================
 
-Am I vulnerable?
+Xen 4.0.x and later are vulnerable.
 
+Only x86 systems are vulnerable.  ARM systems are not vulnerable.
 
-You may be vulnerable if:
+The vulnerability is only exposed to service domains with privilege over
+another guest.  In a usual configuration that means only device model
+emulators (qemu-dm) when these are running in a separate domain.
 
-   -
+In the case of HVM guests whose device model is running in an
+unrestricted dom0 process, qemu-dm already has the ability to cause
+problems for the whole system.  So in that case the vulnerability is
+not applicable.
 
-   You run the CSI Driver for SMB (smb.csi.k8s.io)
-   -
+This vulnerability is applicable for an HVM guest with a stub qemu-dm.
+That is, where the device model runs in a separate domain (in the case
+of xl, as requested by "device_model_stubdomain_override=1" in the xl
+domain configuration file).  In this case a guest which has already
+exploited another vulnerability, to gain control of the device model,
+would be able to exercise the information leak.
 
-   Your cluster allows users to create PersistentVolumes referencing the
-   SMB CSI driver
-   -
+However, the security of a system with qemu-dm running in a stub domain
+is still better than with a qemu-dm running as an unrestricted dom0
+process.  Therefore users with these configurations should not switch
+to an unrestricted dom0 qemu-dm.
 
-   Your CSI driver version does not validate traversal sequences in the
-   subDir field
+Finally, in a radically disaggregated system, where the service domain
+software (probably, the device model domain image in the HVM case) is
+not always supplied by the host administrator, a malicious service
+domain administrator can exercise this vulnerability.
 
+MITIGATION
+==========
 
-Affected Versions
+There is no mitigation available.
 
-   -
+In a radically disaggregated system, restricting HVM service domains
+to software images approved by the host administrator will avoid the
+vulnerability (so long as there isn't also a vulnerability in the
+service domain).
 
-   All versions of the CSI Driver for SMB prior to the v1.20.1 release
-   containing the fix for traversal validation are affected.
+NOTE REGARDING LACK OF EMBARGO
+==============================
 
-How do I mitigate this vulnerability?
+The fix for this bug was publicly posted on xen-devel, before it was
+appreciated that there was a security problem.
 
+CREDITS
+=======
 
-This issue can be mitigated by:
+This issue was recognized as security issue by Jan Beulich of SUSE.
 
-   -
+RESOLUTION
+==========
 
-   Upgrading the CSI Driver for SMB to a patched version
-   -
+Applying the appropriate attached patch resolves this issue.
 
-   Restricting PersistentVolume creation privileges to trusted
-   administrators
-   -
+xsa132-unstable.patch        xen-unstable, Xen 4.5.x, Xen 4.4.x, Xen 4.3.x
+xsa132-4.2.patch             Xen 4.2.x
 
-   Reviewing SMB exports to ensure only intended directories are writable
-   by the driver
+$ sha256sum xsa132*.patch
+3a28eb33c02360ec22c51824e469b1cf6be87941256d0b3aa34a5bd1d7735328  xsa132-4.2.patch
+329d4edf1e1133795ece41f2fc8887c5f4cc06b42ced63c810c610b17bcee46d  xsa132.patch
+$
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
 
+iQEcBAEBAgAGBQJVNTMVAAoJEIP+FMlX6CvZ5gIH/iMl92WIuN+lJhnU4J4syaMm
+vQ6B2yPXPnaTHOOLvnFUvzvv+iavyF8m0BVtRCKweS1x4Y1LtzUdE0WSMMxbu673
+YGYX9Dplze9iR21+wAugrQ1hoh+na+oOrr+MHeQdNlbxF2+NHv9VtZ17XE3bFsHy
+gUn4NnUzdWsaJYJTncBryj5hXDTlhPy6CWY/4oOrF4s1pwwv9f+AEEObXPPu8kGk
+fIhMMBz8b9Pcc7Zn8ALemqApGzVKnimHTwDdPWLy6Cfyzq0ttDpOJHcM4citn5DK
+GqN/0ebzdswxqnzhztq/FiUn4Tvzxw1T+qr00Q4y+f24s8OO1W/Np08t3JiUMaI=
+=8POv
+-----END PGP SIGNATURE-----
 
-As a best practice, untrusted users should not be granted permission to
-create arbitrary PersistentVolumes referencing external storage drivers.
+--=separator
+Content-Type: application/octet-stream; name="xsa132-4.2.patch"
+Content-Disposition: attachment; filename="xsa132-4.2.patch"
+Content-Transfer-Encoding: base64
 
-Fixed Versions
+ZG9tY3RsL3N5c2N0bDogZG9uJ3QgbGVhayBoeXBlcnZpc29yIHN0YWNrIHRv
+IHRvb2xzdGFja3MKClRoaXMgaXMgWFNBLTEzMi4KClNpZ25lZC1vZmYtYnk6
+IEFuZHJldyBDb29wZXIgPGFuZHJldy5jb29wZXIzQGNpdHJpeC5jb20+ClJl
+dmlld2VkLWJ5OiBKYW4gQmV1bGljaCA8amJldWxpY2hAc3VzZS5jb20+Cgot
+LS0gYS94ZW4vYXJjaC94ODYvZG9tY3RsLmMKKysrIGIveGVuL2FyY2gveDg2
+L2RvbWN0bC5jCkBAIC0xMjAwLDcgKzEyMDAsNyBAQCBsb25nIGFyY2hfZG9f
+ZG9tY3RsKAogICAgIGNhc2UgWEVOX0RPTUNUTF9nZXR0c2NpbmZvOgogICAg
+IHsKICAgICAgICAgc3RydWN0IGRvbWFpbiAqZDsKLSAgICAgICAgeGVuX2d1
+ZXN0X3RzY19pbmZvX3QgaW5mbzsKKyAgICAgICAgeGVuX2d1ZXN0X3RzY19p
+bmZvX3QgaW5mbyA9IHsgMCB9OwogCiAgICAgICAgIHJldCA9IC1FU1JDSDsK
+ICAgICAgICAgZCA9IHJjdV9sb2NrX2RvbWFpbl9ieV9pZChkb21jdGwtPmRv
+bWFpbik7Ci0tLSBhL3hlbi9jb21tb24vc3lzY3RsLmMKKysrIGIveGVuL2Nv
+bW1vbi9zeXNjdGwuYwpAQCAtOTUsNyArOTUsNyBAQCBsb25nIGRvX3N5c2N0
+bChYRU5fR1VFU1RfSEFORExFX1BBUkFNKHhlCiAgICAgY2FzZSBYRU5fU1lT
+Q1RMX2dldGRvbWFpbmluZm9saXN0OgogICAgIHsgCiAgICAgICAgIHN0cnVj
+dCBkb21haW4gKmQ7Ci0gICAgICAgIHN0cnVjdCB4ZW5fZG9tY3RsX2dldGRv
+bWFpbmluZm8gaW5mbzsKKyAgICAgICAgc3RydWN0IHhlbl9kb21jdGxfZ2V0
+ZG9tYWluaW5mbyBpbmZvID0geyAwIH07CiAgICAgICAgIHUzMiBudW1fZG9t
+YWlucyA9IDA7CiAKICAgICAgICAgcmN1X3JlYWRfbG9jaygmZG9tbGlzdF9y
+ZWFkX2xvY2spOwo=
 
-   -
+--=separator
+Content-Type: application/octet-stream; name="xsa132.patch"
+Content-Disposition: attachment; filename="xsa132.patch"
+Content-Transfer-Encoding: base64
 
-   CSI Driver for SMB versions >=3D v1.20.1
+ZG9tY3RsL3N5c2N0bDogZG9uJ3QgbGVhayBoeXBlcnZpc29yIHN0YWNrIHRv
+IHRvb2xzdGFja3MKClRoaXMgaXMgWFNBLTEzMi4KClNpZ25lZC1vZmYtYnk6
+IEFuZHJldyBDb29wZXIgPGFuZHJldy5jb29wZXIzQGNpdHJpeC5jb20+ClJl
+dmlld2VkLWJ5OiBKYW4gQmV1bGljaCA8amJldWxpY2hAc3VzZS5jb20+Cgot
+LS0gYS94ZW4vYXJjaC94ODYvZG9tY3RsLmMKKysrIGIveGVuL2FyY2gveDg2
+L2RvbWN0bC5jCkBAIC04ODQsNyArODg0LDcgQEAgbG9uZyBhcmNoX2RvX2Rv
+bWN0bCgKIAogICAgIGNhc2UgWEVOX0RPTUNUTF9nZXR0c2NpbmZvOgogICAg
+IHsKLSAgICAgICAgeGVuX2d1ZXN0X3RzY19pbmZvX3QgaW5mbzsKKyAgICAg
+ICAgeGVuX2d1ZXN0X3RzY19pbmZvX3QgaW5mbyA9IHsgMCB9OwogCiAgICAg
+ICAgIHJldCA9IC1FSU5WQUw7CiAgICAgICAgIGlmICggZCA9PSBjdXJyZW50
+LT5kb21haW4gKSAvKiBubyBkb21haW5fcGF1c2UoKSAqLwotLS0gYS94ZW4v
+Y29tbW9uL3N5c2N0bC5jCisrKyBiL3hlbi9jb21tb24vc3lzY3RsLmMKQEAg
+LTc2LDcgKzc2LDcgQEAgbG9uZyBkb19zeXNjdGwoWEVOX0dVRVNUX0hBTkRM
+RV9QQVJBTSh4ZQogICAgIGNhc2UgWEVOX1NZU0NUTF9nZXRkb21haW5pbmZv
+bGlzdDoKICAgICB7IAogICAgICAgICBzdHJ1Y3QgZG9tYWluICpkOwotICAg
+ICAgICBzdHJ1Y3QgeGVuX2RvbWN0bF9nZXRkb21haW5pbmZvIGluZm87Cisg
+ICAgICAgIHN0cnVjdCB4ZW5fZG9tY3RsX2dldGRvbWFpbmluZm8gaW5mbyA9
+IHsgMCB9OwogICAgICAgICB1MzIgbnVtX2RvbWFpbnMgPSAwOwogCiAgICAg
+ICAgIHJjdV9yZWFkX2xvY2soJmRvbWxpc3RfcmVhZF9sb2NrKTsK
 
-Detection
-
-To determine if your cluster may be affected:
-
-   -
-
-   Inspect PersistentVolumes using the SMB CSI driver and review the
-   volumeHandle field.
-   -
-
-   Look for traversal sequences such as: `../`
-   -
-
-   Review CSI controller logs for unexpected directory operations. e.g.
-   =E2=80=9CRemoving subPath: /tmp/mount-uuid/legitimate/../../../exports/s=
-ubdir=E2=80=9D
-
-
-If you find evidence that this vulnerability has been exploited, please
-contact security@kubernetes.io
-
-Additional Details
-
-See the GitHub issue for more details:
-https://github.com/kubernetes/kubernetes/issues/138319
-
-
-Acknowledgements
-
-
-This vulnerability was reported by @Shaul Ben Hai, Senior Staff Security
-Researcher from SentinelOne.
-
-
-The issue was fixed by the CSI Driver for SMB maintainers and the
-Kubernetes Security Response Committee.
-
-
-Andy Zhang @andyzhangx
-
-Vinayak Goyal @vinayakankugoyal
-
-
-Thank You,
-
-Vinayak Goyal on behalf of the Kubernetes Security Response Committee
-
---0000000000004ba428064f232b0f--
+--=separator--
