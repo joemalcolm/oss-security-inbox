@@ -1,4 +1,9 @@
-Received: (qmail 3412 invoked by uid 550); 30 Apr 2024 22:58:50 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2964" "Monday" "20" "April" "2015" "12:26:29" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150420162629.CBFB4B2E066@smtpvbsrv1.mitre.org>" "62" "[oss-security] Re: redcarpet <=3.2.2 (and related ruby gems) allow for possible XSS via autolinking of untrusted markdown" nil nil nil "4" "2015042016:26:29" "[oss-security] Re: redcarpet <=3.2.2 (and related ruby gems) allow for possible XSS via autolinking of untrusted markdown" (number mark "        cve-assign@m Apr 20   62/2964  " thread-indent "\"[oss-security] Re: redcarpet <=3.2.2 (and related ruby gems) allow for possible XSS via autolinking of untrusted markdown\"\n") "<CALPTtNXNV1db_gPgPZgwvFWGReUZiBDouXE+CoWa1au1h1xJbg@mail.gmail.com>" ("<CALPTtNXNV1db_gPgPZgwvFWGReUZiBDouXE+CoWa1au1h1xJbg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 3351 invoked by uid 550); 20 Apr 2015 16:26:50 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,87 +11,75 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 3295 invoked from network); 20 Apr 2015 16:26:41 -0000
+In-Reply-To: <CALPTtNXNV1db_gPgPZgwvFWGReUZiBDouXE+CoWa1au1h1xJbg@mail.gmail.com>
+Message-Id: <20150420162629.CBFB4B2E066@smtpvbsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Mon, 20 Apr 2015 12:26:29 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 12083 invoked from network); 30 Apr 2024 22:48:32 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sdaoden.eu;
- s=citron; t=1714517305; x=1715183971; h=date:author:from:to:subject:
-  message-id:in-reply-to:references:mail-followup-to:openpgp:blahblahblah:
-  author:from:subject:date:to:cc:resent-date:resent-from:resent-to:
-  resent-cc:in-reply-to:references:mime-version:content-type:
-  content-transfer-encoding:message-id:mail-followup-to:openpgp:
-  blahblahblah; bh=dQ+UVcUlMv1k56nNV+5nXqX/QqDE1+lOvD9d0Rc5cmQ=;
- b=VTLDxeWnxH20Ho6HffH61SeWRJA0F6Jf40xP7A4kJGeNKyRw6enBU7SzYYRlqX/HFI7Y7TFi
-  0sw/ybeAEAHJ8C/bEzvFp86WAEtD8iiZY2t4iJMOyi/lCkZYfiDP5zj2wOGdoUVEI4xCHbzFEY
-  voTcbzKl09RvLDWhW+6isWDg/Ht460VqoApPWGsDWll1JGxuWoLwK5jqZjNWwnx2D/MJmW0Kld
-  6Rml2006M5qKlYB+F9cnGfuFqnkRo1FrgcJ2nFsnY8/qO6hQJsiFstkwCvQeBBjyfM7TF4bT7t
-  lLXMvX6YChF8pJRFkl/p1sicxx3ie4zC6jL3exsu7rXl9mkw==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=sdaoden.eu;
- s=orange; t=1714517305; x=1715183971; h=date:author:from:to:subject:
-  message-id:in-reply-to:references:mail-followup-to:openpgp:blahblahblah:
-  author:from:subject:date:to:cc:resent-date:resent-from:resent-to:
-  resent-cc:in-reply-to:references:mime-version:content-type:
-  content-transfer-encoding:message-id:mail-followup-to:openpgp:
-  blahblahblah; bh=dQ+UVcUlMv1k56nNV+5nXqX/QqDE1+lOvD9d0Rc5cmQ=;
- b=NkfV4PdHObdzPlEqGxnxYAan7KYJAJzOJDSPgc/yUVTLY09VkeIsSDyPgqBPx6Rs9eekrNu0
-  qXXRb1OWRPvKBw==
-Date: Wed, 01 May 2024 00:48:23 +0200
-Author: Steffen Nurpmeso <steffen@sdaoden.eu>
-From: Steffen Nurpmeso <steffen@sdaoden.eu>
-To: oss-security@lists.openwall.com
-Message-ID: <20240430224823.uA8Nr1Cp@steffen%sdaoden.eu>
-In-Reply-To: <ZjBHOEHylGAaIo57@moon>
-References: <20231221143630.GD14101@suse.de> <ZjBHOEHylGAaIo57@moon>
-Mail-Followup-To: oss-security@lists.openwall.com
-User-Agent: s-nail v14.9.24-621-g0d1e55f367
-OpenPGP: id=EE19E1C1F2F7054F8D3954D8308964B51883A0DD;
- url=https://ftp.sdaoden.eu/steffen.asc; preference=signencrypt
-BlahBlahBlah: Any stupid boy can crush a beetle. But all the professors in
- the world can make no bugs.
-Subject: Re: [oss-security] New SMTP smuggling attack
+Subject: [oss-security] Re: redcarpet <=3.2.2 (and related ruby gems) allow for possible XSS via autolinking of untrusted markdown
+To: reed@reedloden.com
 
-Mark Esler wrote in
- <ZjBHOEHylGAaIo57@moon>:
- |To mitigate future end-of-data sequence attacks, like SMTP Smuggling, MTAs
- |should comply with RFC 5321 section 4.1.1.4 [0] to strip control
- |characters other than <SP>, <HT>, <CR>, and <LF> in the DATA section of
- |SMTP messages.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Given that RFC 733 is from 1977 and RFC 822 is from 1982 i feel
-this entire thread is exaggerating.
+> https://github.com/vmg/redcarpet/commit/e5a10516d07114d582d13b9125b733008c61c242
+> http://danlec.com/blog/bug-in-sundown-and-redcarpet
+> https://hackerone.com/reports/46916
 
-The smuggling problem solely was rooted in the LF / CRLF "wars"
-from at minimum the early 70s (Unix and more), with terminal
-drivers doing auto-translation on-the-fly etc etc etc.
-The internet history list may be worthwhile for this, or examining
-the history of Unix programs.  Ie, in January i also (funny)
-talked to John Klensin on an IETF list saying
+This appears to be a complex situation because of the various codebase
+relationships, including the relationship between the
+Sundown/Redcarpet codebase and the site-specific codebase for the
+hackerone.com website.
 
-  [.]The CR/LF "problem" seems to have been "addressed" in
-  UNIX as early as 1972, ie "6/12/72 STTY (II)" gives
+There's no doubt that there was an interesting bug found (i.e., the
+"rewind into previous inline" bug) and that the bug had a real-world
+impact on some Redcarpet users. However, that's not necessarily enough
+to have a CVE ID.
 
-    020  map CR into LF; echo LF or CR as LF-CR
-    ...
-    Mode 020 causes input carriage returns to be turned into new-lines;
-    input of either CR or LF causes LF-CR both to be echoed
-    (used for GE TermiNet 300's and other terminals without the
-    newline function).
+One issue in question is "in the meantime we've hardened our HTML
+postprocessor, which also eliminates this bug" in the
+https://hackerone.com/reports/46916#activity-357722 post. This is
+perhaps similar to what was mentioned about remarkable in the
+http://openwall.com/lists/oss-security/2015/04/10/10 post.
 
-  In 1974 it became
+Basically, we're not convinced that anyone should have been relying on
+Redcarpet as having the security property that it would prevent XSS
+attacks. In that sense, the "rewind into previous inline" bug would
+not be categorized as a vulnerability. Apparently hackerone.com had an
+unspecified HTML postprocessor that might be interpreted as having
+either some responsibility or all responsibility for preventing XSS
+attacks. Similarly, in the case of a PHP-based site elsewhere, the
+overall site design might include both a Markdown implementation and
+also HTML Purifier. Also,
+https://github.com/vmg/redcarpet/blob/master/CHANGELOG.md didn't
+announce 3.2.3 as a security update. We realize that Redcarpet has a
+:filter_html flag, but the level of focus toward addressing XSS seems
+small compared to something like HTML Purifier, suggesting different
+design goals.
 
-    -nl allow carriage return for new-line,
-        and output CR-LF for carriage return or new-line
-    nl  accept only new-line to end lines
+So, at this point, the available information suggests categorizing
+https://hackerone.com/reports/46916 as a site-specific problem on
+hackerone.com and on other sites that were relying on Redcarpet in
+ways that went beyond the Redcarpet design goals. If there is other
+information suggesting that the only reasonable interpretation is that
+it is a Redcarpet vulnerability that must have a CVE assigned against
+the Sundown/Redcarpet codebase, please let us know.
 
-  Which makes me *think* that "Houston, we have a problem" was
-  ACKnowledged, and in order not to be a crook something would have
-  been done about it, saving even a byte per line.  But i do not
-  know, this was all military and other high sphere academics by
-  then.  Interesting, by the way, that "so many" expensive decisions
-  were deemed necessary[.]
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
---steffen
-|
-|Der Kragenbaer,                The moon bear,
-|der holt sich munter           he cheerfully and one by one
-|einen nach dem anderen runter  wa.ks himself off
-|(By Robert Gernhardt)
+iQEcBAEBAgAGBQJVNShAAAoJEKllVAevmvmskmQH/1t19aXHmosS8wHgXMwAqJjj
+X8NcrZSscNZ3uEM8x5MsigwtoBYOJNGHsQjy06dtse/bNi8EtNiK+e0Kjq6TKMTL
++39dI728sBPgstqpSWl8+kKiwe4qysdL/SP+aCp+PO7P36eOpaFGMtg2OE6T1YmO
+9cBbR5NzcNTsBG+6+EuHcPm3JJPgZpim5M3tnHc4kO1oq9nC5mlx86f8mPvQZG2c
+EBi+j5sSt3WodHecTxu8LkCjWdVk0TBkPhx4GuvlyXdt/f/cXxAbLvx4JpM3/DHd
+efBs+nApiB6ycA7oxZohBEneZaGXL8fgrD+hhQioyZgoth8KcRovV+fqDHLSIl8=
+=nvFY
+-----END PGP SIGNATURE-----
