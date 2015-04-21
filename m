@@ -1,4 +1,9 @@
-Received: (qmail 28107 invoked by uid 550); 11 May 2023 15:20:38 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1554" "Tuesday" "21" "April" "2015" "15:10:18" "+0800" "=?UTF-8?B?572X5aSn6b6Z?=" "luodalongde@gmail.com" "<CAPcZBq5ZM0GASw41B7kcDLoeHEz=gBvL+K+=KrWTZ5Z_ZMTQGQ@mail.gmail.com>" "59" "Re: [oss-security] net-snmp snmp_pdu_parse() function incompletely initializaition vulnerability" nil nil nil "4" "2015042107:10:18" "[oss-security] net-snmp snmp_pdu_parse() function incompletely initializaition vulnerability" (number mark "        luodalongde@ Apr 21   59/1554  " thread-indent "\"Re: [oss-security] net-snmp snmp_pdu_parse() function incompletely initializaition vulnerability\"\n") "<CAPcZBq4ZVAJUMMJh+Hoa0BJWgES6eKF48Wj21tLwRR2ORjS2VA@mail.gmail.com>" ("<CAPcZBq7YrwpZDJNZ58yQjcYHTZ43qoQWCoUAet9Eb7Dn2sruBQ@mail.gmail.com>" "<5535003B.3040905@syscall.eu>" "<CAPcZBq4ZVAJUMMJh+Hoa0BJWgES6eKF48Wj21tLwRR2ORjS2VA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 29957 invoked by uid 550); 21 Apr 2015 17:35:37 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,56 +11,91 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28089 invoked from network); 11 May 2023 15:20:38 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1683818426;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=IJEU53Ws5eOjyBLXe3P+zXfwcnXOVGtj4EzqJfZMR2g=;
-	b=fd3g3brNA1gmnIbuO8rVFC9RTec4rC34WSOlSvz4IPXVcKBIXRBusX8WxOs5OkQlYpnZR3
-	37XRMGinAeZkkNW7IelCEYYOPorbV1C7ZEB5Hy6yfpvz9a+5oJh/6BAf/4zFc06EcqZlnr
-	jm/FmcelkSDR4ngmuWlLpGPqKwi5ZXk=
-X-MC-Unique: 5q7Gdx02OduiHbdiY7B2Tw-1
-From: Florian Weimer <fweimer@redhat.com>
-To: Tobias Heider <tobias.heider@canonical.com>
-Cc: oss-security@lists.openwall.com,  Turritopsis Dohrnii Teo En Ming
- <tdtemccnp@gmail.com>,  ceo@teo-en-ming-corp.com,  Piotr Krysiuk
- <piotras@gmail.com>
-References: <CAD3upLvuttgu3i6qZyB2LLY2CPcTvMdhQQLKdAYV2eoPD5Wjjg@mail.gmail.com>
-	<20230510165545.GA25380@openwall.com>
-	<ZFvuu+PpS3BO2T/t@quatroqueijos.cascardo.eti.br>
-	<CAARv3RQS-sV4JCkRCJ1EOgfi+9MR0G8MsiS-xT9gXNjddqmJ-A@mail.gmail.com>
-Date: Thu, 11 May 2023 17:20:20 +0200
-In-Reply-To: <CAARv3RQS-sV4JCkRCJ1EOgfi+9MR0G8MsiS-xT9gXNjddqmJ-A@mail.gmail.com>
-	(Tobias Heider's message of "Wed, 10 May 2023 23:52:27 +0200")
-Message-ID: <87a5yahp3f.fsf@oldenburg3.str.redhat.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+Received: (qmail 5139 invoked from network); 21 Apr 2015 07:10:30 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type;
+        bh=a9hJvK9oexn/inyi3X8Fe4ql0u7YB69Zg9NP3UYdEN8=;
+        b=ixYzhxBAL5jZDEVBxq4nCZYnIdVgU0bwILMGRNDoh78agzfj4bnmzRQSffTZ9AFg49
+         ++uVclmJkJao8ponIN8oseQ95OsAhJ0AWeR1+4yE8IASP4mdHLWtQPeDbM4znf6nxR84
+         yymzJunmWP0907K4n2D19oT97Oyw7E3EVOhe1Cri+rb8nNWqeSKbPRS/+UVbQtEOFWxt
+         QxO1sg0MAB4Ku3BF8oDD0ck40jAWY724CPCKOHkIG3CehW2P2sJPgY3cu+AZd0pJ/l0T
+         1kg/a6Qhtcf8GNPnMMrsYAqo3QqdNAMg95sb1RjEpZt6IHkujgPd8mAh3oXAy+Nc03Dt
+         O5pA==
 MIME-Version: 1.0
-X-Scanned-By: MIMEDefang 3.1 on 10.11.54.7
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain
-Subject: Re: [oss-security] New Linux kernel NetFilter flaw gives attackers
- root privileges
+X-Received: by 10.180.9.78 with SMTP id x14mr2993968wia.69.1429600218742; Tue,
+ 21 Apr 2015 00:10:18 -0700 (PDT)
+In-Reply-To: <CAPcZBq4ZVAJUMMJh+Hoa0BJWgES6eKF48Wj21tLwRR2ORjS2VA@mail.gmail.com>
+References: <CAPcZBq7YrwpZDJNZ58yQjcYHTZ43qoQWCoUAet9Eb7Dn2sruBQ@mail.gmail.com>
+	<5535003B.3040905@syscall.eu>
+	<CAPcZBq4ZVAJUMMJh+Hoa0BJWgES6eKF48Wj21tLwRR2ORjS2VA@mail.gmail.com>
+Message-ID: <CAPcZBq5ZM0GASw41B7kcDLoeHEz=gBvL+K+=KrWTZ5Z_ZMTQGQ@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=001a11c236583585a4051436bd2c
+Date: Tue, 21 Apr 2015 15:10:18 +0800
+From: =?UTF-8?B?572X5aSn6b6Z?= <luodalongde@gmail.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] net-snmp snmp_pdu_parse() function incompletely
+ initializaition vulnerability
+To: =?UTF-8?Q?Rapha=C3=ABl_Rigo?= <ml-oss@syscall.eu>, 
+	oss-security@lists.openwall.com
 
-* Tobias Heider:
+--001a11c236583585a4051436bd2c
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-> Another thing worth mentioning is that the apparmor team has done some very
-> interesting work on providing finer control over unprivileged user namespaces
-> on a per application basis:
-> https://gitlab.com/apparmor/apparmor/-/wikis/unprivileged_userns_restriction
+Detail info=EF=BC=9A
+https://sourceforge.net/p/net-snmp/bugs/2615/
+
+2015-04-21 14:59 GMT+08:00 =E7=BD=97=E5=A4=A7=E9=BE=99 <luodalongde@gmail.c=
+om>:
+
+> Hi
+>    I using snmp v3 protocol , and these crash info are about client.
+>    Net-snmp software had ensure this vulnerability , and I will forward
+> the message to you .
 >
-> This would allow having opt-in unprivileged userns support only for
-> confined and explicitly permitted applications and could hopefully
-> drastically reduce the impact of similar bugs in the future.
+> 2015-04-20 21:33 GMT+08:00 Rapha=C3=ABl Rigo <ml-oss@syscall.eu>:
+>
+>> Hello,
+>>
+>> On 13/04/2015 07:44, =E7=BD=97=E5=A4=A7=E9=BE=99 wrote:
+>> > Greeting! This is Qinghao Tang from QIHU 360  company, China. I am a
+>> > security researcher there.
+>> >
+>> > I'm writing to apply for a CVE ID, for a 0day vulnerability in net-snm=
+p.
+>> > Please refer to below report.
+>> >
+>> Thank you for your report, it is very interesting.
+>> I'm currently trying to understand the possible impact in one product we
+>> are using. I tried to reproduce the crashed but I could not.
+>>
+>>
+>> Would you mind sharing information regarding how you managed to get
+>> those crashes ? :
+>>
+>> > [crash info from /var/log/messages]
+>> >
+>> > sprint_realloc_integer
+>> >
+>> > snmpget:0x290a3
+>> >
+>> > overview:Feb 22 11:37:48 localhost kernel: snmpget[24260]: segfault at
+>> 0 ip
+>> > 00007f00cbff20a3 sp 00007fff7bf08620 error 4 in
+>> > libnetsnmp.so.30.0.3[7f00cbfc9000+ac000]
+>> >
+>> [...]
+>>
+>> Is it using SNMPv3 or v1 ?
+>>
+>> Or is it in the client ?
+>>
+>> Regards,
+>> Rapha=C3=ABl Rigo
+>>
+>>
+>
 
-Doesn't unprivileged chroot need user namespace support?  So a side
-effect of disabling it might be to force applications to switch to
-userspace emulation of pathname lookup.  That doesn't seem like a good
-tradeoff?
-
-Thanks,
-Florian
-
+--001a11c236583585a4051436bd2c--
