@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1455" "Tuesday" "22" "November" "2016" "19:18:36" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<fe5751f9e5494448b7b92dce806bcf49@imshyb02.MITRE.ORG>" "37" "[oss-security] Re: imagemagick: null pointer must never be null (tiff.c)" nil nil nil "11" "2016112300:18:36" "[oss-security] Re: imagemagick: null pointer must never be null (tiff.c)" (number mark "U       cve-assign@m Nov 22   37/1455  " thread-indent "\"[oss-security] Re: imagemagick: null pointer must never be null (tiff.c)\"\n") "<1975740.FIEDfIgEBD@arcadia>" ("<1975740.FIEDfIgEBD@arcadia>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["994" "Tuesday" "21" "April" "2015" "23:32:23" "+0200" "Pere Orga" "pere@orga.cat" "<CAMYtjAp2RbrRnqug5McfpkFw6bZNM5jsqwAEbDDVzeb8SuJ_Lg@mail.gmail.com>" "31" "Re: [oss-security] Re: CVEs for Drupal contributed modules - January 2015" nil nil nil "4" "2015042121:32:23" "[oss-security] Re: CVEs for Drupal contributed modules - January 2015" (number mark "        pere@orga.ca Apr 21   31/994   " thread-indent "\"Re: [oss-security] Re: CVEs for Drupal contributed modules - January 2015\"\n") "<Pine.LNX.4.64.1504211351080.15902@beijing.mitre.org>" ("<CAMYtjAopk9B-oHykyodXr3OpD_rUKmsTPk7Tuu2ZthtPa7rCgg@mail.gmail.com>" "<CAMYtjAqVfa_QgM5WjvG+gD5snNKp2p5RuGWn340XiGdT-D1AAg@mail.gmail.com>" "<Pine.LNX.4.64.1504211351080.15902@beijing.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 11650 invoked by uid 550); 23 Nov 2016 00:18:50 -0000
+Received: (qmail 21506 invoked by uid 550); 21 Apr 2015 21:32:58 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,52 +11,65 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11590 invoked from network); 23 Nov 2016 00:18:48 -0000
-From: <cve-assign@mitre.org>
-To: <ago@gentoo.org>
-CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
-In-Reply-To: <1975740.FIEDfIgEBD@arcadia>
-Message-ID: <fe5751f9e5494448b7b92dce806bcf49@imshyb02.MITRE.ORG>
-Date: Tue, 22 Nov 2016 19:18:36 -0500
+Received: (qmail 20457 invoked from network); 21 Apr 2015 21:32:58 -0000
+X-Received: by 10.180.90.169 with SMTP id bx9mr113975wib.50.1429651964199;
+ Tue, 21 Apr 2015 14:32:44 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-Subject: [oss-security] Re: imagemagick: null pointer must never be null (tiff.c)
+In-Reply-To: <Pine.LNX.4.64.1504211351080.15902@beijing.mitre.org>
+References: <CAMYtjAopk9B-oHykyodXr3OpD_rUKmsTPk7Tuu2ZthtPa7rCgg@mail.gmail.com>
+ <CAMYtjAqVfa_QgM5WjvG+gD5snNKp2p5RuGWn340XiGdT-D1AAg@mail.gmail.com> <Pine.LNX.4.64.1504211351080.15902@beijing.mitre.org>
+Message-ID: <CAMYtjAp2RbrRnqug5McfpkFw6bZNM5jsqwAEbDDVzeb8SuJ_Lg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - gator3111.hostgator.com
+X-AntiAbuse: Original Domain - lists.openwall.com
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - orga.cat
+X-BWhitelist: no
+X-Source-IP: 209.85.212.172
+X-Exim-ID: 1Ykfmf-0006Ei-ST
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: (mail-wi0-f172.google.com) [209.85.212.172]:33428
+X-Source-Auth: pere@orga.cat
+X-Email-Count: 2
+X-Source-Cap: bmV0b2w7bmV0b2w7Z2F0b3IzMTExLmhvc3RnYXRvci5jb20=
+Cc: oss-security@lists.openwall.com
+Date: Tue, 21 Apr 2015 23:32:23 +0200
+From: Pere Orga <pere@orga.cat>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Re: CVEs for Drupal contributed modules - January 2015
+To: cve-assign@mitre.org
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Tue, Apr 21, 2015 at 7:52 PM,  <cve-assign@mitre.org> wrote:
+>
 
-> https://blogs.gentoo.org/ago/2016/11/19/imagemagick-null-pointer-must-never-be-null-tiff-c
+[...]
 
-> coders/tiff.c:655:39: runtime error: null pointer passed as argument 2, which
-> is declared to never be null
-> MagickCore/string_.h:76:23: note: nonnull attribute specified here
+>> SA-CONTRIB-2015-033 - Certify - Access bypass
+>> SA-CONTRIB-2015-033 - Certify - Information disclosure
+>> https://www.drupal.org/node/2415947
+>
+>
+> It is not clear whether there should be a single CVE or multiple CVEs.
+>
+> Both "Access bypass" and "Information Disclosure" are mentioned in
+> <font color="FF0000"><i>SA-CONTRIB-2015-033, along with the phrase "Multiple
+> vulnerabilities."
+> However, SA-CONTRIB-2015-033 also says that "The module does not
+> sufficiently check node access when showing (and creating) the PDF
+> certificates. This can lead to users seeing certificates they should
+> not have access to."  This suggests a single root cause - lack of node
+> access checks - which could lead to information disclosure.  If so,
+> then from the CVE perspective, this would be one vulnerability and one
+> ID would be assigned.
+>
 
-> https://github.com/ImageMagick/ImageMagick/commit/b61d35eaccc0a7ddeff8a1c3abfcd0a43ccf210b
+Yes, that sounds right.
 
-> coders/tiff.c
+Thank you for all these assignments.
 
-Use CVE-2016-9559.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYNN51AAoJEHb/MwWLVhi2ZScP/3pbrqd7rGuodBIYCs3g/wPt
-8vUfmVszGR1XLLyp6pZ4rWCsndukXim4ZLCDNa/Pru6KzVZiwhwv09/veXn7mD78
-DVYe9Br+bO1h8nP+y3pd1uIOzuDXpIdJYZrNXPkYAE6o4CNEUG6vgL/eC4dHjvtq
-6s8usKsLFULmTlUvQNJoM56mXDn1w3VnOBadMAF6dMlbbn4gyGmW9wwL9d4ebzS+
-tvcWFaU5hUv5qztFNc/vNyNTkziPGU1jRiTkJu2N608ftMGHbMVaMZ90ZuZgOWrA
-234HQE0horOikxFmRDZ/CBCTiV0PO2PzGfPkTFsBChTRzvDa05cF+e5xFhZly5R6
-YiaEFZiGoqrfbwkiIpjAQCKK81YzmRt388GVY7sTxhT+swmoXs5xK2ZhC4tbwad3
-OdCT8ZKvclDRsRJ9aMZDgQrqBPTh/IcwVbq/T0Y5m7r3gw5qbopNwZFlxhLV0X2t
-uWowOUDGHyoRtY1/XjBuuWwNyb7EoNbRWI1bov08UMvfiv47A7mjatsr+qceM7Zo
-shUMkSjsOygvmhd8zgeI7Eubq5BHrsGP1jRLmaaomRQr93CcB+/Wx8VLKxiG0vXw
-lZlfj/tb7r2f48P/h3++VOIm9ew6nbqYD34RL94OJhkxuqwl/2DWD7gIcbfRoMGM
-qbRlEBSoO/ByBIBnigXK
-=CmvN
------END PGP SIGNATURE-----
+Regards
+Pere
