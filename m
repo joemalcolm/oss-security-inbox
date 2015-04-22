@@ -1,10 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["7836" "Monday" "20" "September" "2021" "16:04:13" "-0700" "Oleksandr Tymoshenko" "gonzo@bluezbox.com" nil "191" "Re: [oss-security] Containers-optimized OS (COS) membership in the linux-distros list" nil nil nil "9" nil nil (number mark "U       gonzo@bluezb Sep 20  191/7836  " thread-indent "\"Re: [oss-security] Containers-optimized OS (COS) membership in the linux-distros list\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Containers-optimized OS (COS) membership in the linux-distros list" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1575" "Wednesday" "22" "April" "2015" "12:49:27" "+0200" "Pablo Neira Ayuso" "pablo@netfilter.org" "<20150422104927.GA3547@salvia>" "43" "[oss-security] Re: use-after-free in src/libnetfilter_cthelper.c" nil nil nil "4" "2015042210:49:27" "[oss-security] Re: use-after-free in src/libnetfilter_cthelper.c" (number mark "        pablo@netfil Apr 22   43/1575  " thread-indent "\"[oss-security] Re: use-after-free in src/libnetfilter_cthelper.c\"\n") "<20150421025710.GA24209@hunt>" ("<20150421025710.GA24209@hunt>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-X-Quarantine-ID: <aEo1cXwkuw8V>
-Received: (qmail 21765 invoked by uid 550); 21 Sep 2021 10:13:07 -0000
+Received: (qmail 17786 invoked by uid 550); 22 Apr 2015 11:00:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,222 +11,68 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30511 invoked from network); 20 Sep 2021 23:04:27 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=bluezbox.com; s=mail; h=In-Reply-To:Content-Transfer-Encoding:Content-Type:
-	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=j7XeVKsIhAIeuDPqV5BgClX6DbjHUqlTd5xMfTGGntY=; b=XqQ9kUPia7r9qcNSmfij2c3ZYJ
-	1WlUPbWN85ClBcuBACgElhFUH9x5cDWzr9wtcqaepyBmhPSGSYhqUamWOC6m3HEqBzs80kemZ6xxE
-	+P+VXvR0jt07Yz+dZ1MjMk5G0KfhcL0LcqzloxLO0FCTlKxAmDGER0+CWwQsi3DGEJQs=;
-X-Authentication-Warning: id.bluezbox.com: gonzo set sender to gonzo@bluezbox.com using -f
-Date: Mon, 20 Sep 2021 16:04:13 -0700
-From: Oleksandr Tymoshenko <gonzo@bluezbox.com>
-To: Solar Designer <solar@openwall.com>
-Cc: oss-security@lists.openwall.com, Kees Cook <keescook@chromium.org>
-Message-ID: <20210920230413.GA50332@bluezbox.com>
-References: <CACGj0Cg_OgsYUAw8R6cbHr+ihPjfrKUJw0RjVewzuWYVi8tXpg@mail.gmail.com>
- <20210917161848.GB9168@openwall.com>
+Received: (qmail 8010 invoked from network); 22 Apr 2015 10:45:14 -0000
+X-Qmail-Scanner-Diagnostics: from 127.0.0.1 by antivirus6 (envelope-from <pneira@us.es>, uid 501) with qmail-scanner-2.10 
+ (clamdscan: 0.98.6/20359. spamassassin: 3.4.0.  
+ Clear:RC:1(127.0.0.1):SA:0(-103.2/7.5):. 
+ Processed in 2.102208 secs); 22 Apr 2015 10:45:00 -0000
+X-Spam-ASN: AS12715 87.216.0.0/16
+X-Envelope-From: pneira@us.es
+X-Virus-Status: clean(F-Secure/fsigk_smtp/412/antivirus6)
+Message-ID: <20150422104927.GA3547@salvia>
+References: <20150421025710.GA24209@hunt>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="cNdxnHkX5QqsyA0e"
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20210917161848.GB9168@openwall.com>
-X-Operating-System: FreeBSD/11.2-RELEASE-p10 (amd64)
-Subject: Re: [oss-security] Containers-optimized OS (COS) membership in the
- linux-distros list
+In-Reply-To: <20150421025710.GA24209@hunt>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+Date: Wed, 22 Apr 2015 12:49:27 +0200
+From: Pablo Neira Ayuso <pablo@netfilter.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: use-after-free in src/libnetfilter_cthelper.c
+To: oss-security@lists.openwall.com, security@ubuntu.com
 
-Solar Designer (solar@openwall.com) wrote:
-> Hello Oleksandr,
-> 
-> You posted this from @google.com, which probably means many subscribers
-> didn't receive the message because of that domain's strict DMARC policy.
-> So I fully quote your message below for others to possibly comment.
-> 
-> BTW, you will similarly need to be posting from another domain (e.g.,
-> gmail.com) to the linux-distros list.
- 
-Sorry, I wasn't aware about the problem with @google.com. Replying
-from the email address I use for my OSS communications (supposedly
-has DKIM and SPF configured). If this one is OK, I'll use it instead.
+--cNdxnHkX5QqsyA0e
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> Overall, your proposal looks reasonable to me at first glance.
-> 
-> Please also propose which specific contributing-back task(s) your team
-> would like to help with.
+On Mon, Apr 20, 2015 at 07:57:10PM -0700, Seth Arnold wrote:
+> Hello Pablo, all,
+>=20
+> I noticed a use-after-free in src/libnetfilter_cthelper.c:
 
-I think we can help with the following tasks:
+Someone else noticed already and this is already fixed in master:
 
-Help ensure that each message posted to oss-security contains the most
-essential information (e.g., vulnerability detail and/or exploit)
-directly in the message itself (and in plain text) rather than only by
-reference to an external resource, and add the missing information
-(e.g., in your own words, by quoting with proper attribution, and/or
-by creating and attaching a properly attributed text/plain export of a
-previously referenced web page) and remind the original sender of this
-requirement (for further occasions) in a “reply” posting when
-necessary
+commit d48012fa7718195e3f897b01a36e4ba249aa6dfc
+Author: Christopher Horler <cshorler@googlemail.com>
+Date:   Mon Dec 8 20:04:31 2014 +0000
 
-Determine if the reported issues are Linux-specific, and if so help
-ensure that (further) private discussion goes on the linux-distros
-sub-list only (thus, not spamming and unnecessarily disclosing to the
-non-Linux distros) 
+    src: fix use after free
+=20=20=20=20
+    Fixes: https://bugzilla.netfilter.org/show_bug.cgi?id=3D990
 
-Promptly review new issue reports for meeting the list's requirements
-and confirm receipt of the report and, when necessary, inform the
-reporter of any issues with their report (e.g., obviously not actionable
-by the distros) and request and/or propose any required yet missing
-information (most notably, a tentative public disclosure date/time) 
+--cNdxnHkX5QqsyA0e
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
 
- 
-> Thanks,
-> 
-> Alexander
-> 
-> On Thu, Sep 16, 2021 at 11:12:21PM -0700, Oleksandr Tymoshenko wrote:
-> > Hello,
-> > 
-> > 
-> > I???d like to propose Container-Optimized OS (COS)  for membership in
-> > linux-distros. Text below addresses items listed in the ???Membership
-> > criteria??? section of
-> > https://oss-security.openwall.org/wiki/mailing-lists/distros
-> > 
-> > 
-> > > 1. Be an actively maintained Unix-like operating system distro with
-> > > substantial use of Open Source components
-> > 
-> > 
-> > Container-Optimized OS (COS) s a Chromium OS based
-> > server operating system. Google distributes COS as a pre-built cloud image,
-> > but also provides sources for users to customize and build their own
-> > specialized versions of the OS.
-> > 
-> > 
-> > URL: https://cloud.google.com/container-optimized-os
-> > 
-> > 
-> > Source code:  https://cos.googlesource.com
-> > Build instructions:
-> > https://cloud.google.com/container-optimized-os/docs/how-to/building-from-open-source
-> > 
-> > 
-> > COS has a 6-month major release cadence and 3 LTS branches with their own
-> > 3-month refresh cadence. Critical security vulnerabilities addressed in
-> > patch releases, independently from the release/refresh cycle.
-> > 
-> > 
-> > Release notes: https://cloud.google.com/container-optimized-os/docs/release-notes
-> > 
-> > 
-> > > 2. Have a user base not limited to your own organization
-> > 
-> > 
-> > COS is available directly to external customers as a base VM image for the
-> > Google Compute Engine and indirectly as a base OS for managed services such
-> > as Google Kubernetes Engine (GKE), CloudSQL, Google Cloud Filestore.
-> > Overall usage of COS adds up to millions of cloud instances.
-> > 
-> > 
-> > > 3. Have a publicly verifiable track record, dating back at least 1 year and
-> > > continuing to present day, of fixing security issues (including some that
-> > > had been handled on (linux-)distros, meaning that membership would have
-> > > been relevant to you) and releasing the fixes within 10 days (and
-> > > preferably much less than that) of the issues being made public (if it
-> > > takes you ages to fix an issue, your users wouldn't substantially benefit
-> > > from the additional time, often around 7 days and sometimes up to 14 days,
-> > > that list membership could give you)
-> > 
-> > 
-> > Some of the examples of COS reacting quickly (less than 7 days) to CVEs
-> > with high impact:
-> > 
-> > 
-> > CVE-2021-33909(Sequoia):
-> > https://cloud.google.com/container-optimized-os/docs/release-notes/m85#cos-85-13310-1308-6
-> > 
-> > 
-> > CVE-2020-14308, CVE-2020-14311, CVE-2020-15705 (GRUB2):
-> > https://cloud.google.com/container-optimized-os/docs/release-notes/m81#cos-81-12871-1185-0
-> > 
-> > 
-> > CVE-2020-14386:
-> > https://cloud.google.com/container-optimized-os/docs/release-notes/m81#cos-81-12871-1196-0
-> > 
-> > 
-> > Having access to embargoed CVEs would have helped us to plan and prepare
-> > for patch releases in a more proactive way.
-> > 
-> > 
-> > > 4. Not be (only) downstream or a rebuild of another distro (or else we need
-> > > convincing additional justification of how the list membership would enable
-> > > you to release fixes sooner, presumably not relying on the upstream distro
-> > > having released their fixes first?)
-> > 
-> > 
-> > Although COS is derived from Chromium OS we switched to maintaining our own
-> > kernel package that tracks more recent versions of the Linux kernel. We
-> > make an effort to keep it as close to the upstream kernel as possible. We
-> > also track releases of other open-source packages relevant for our use
-> > cases independently from Chromium OS or Gentoo.
-> > 
-> > 
-> > > 5. Be a participant and preferably an active contributor in relevant public
-> > > communities (most notably, if you're not watching for issues being made
-> > > public on oss-security, which are a superset of those that had been handled
-> > > on (linux-)distros, then there's no valid reason for you to be on
-> > > (linux-)distros)
-> > 
-> > 
-> > We are actively monitoring multiple sources of information about
-> > vulnerabilities but haven???t contributed much directly because we didn't
-> > have anything to add to discussions.  We contributed to OSTIF Linux Kernel
-> > Vuln Reporting/Remediation Practices review, and also monitor the
-> > oss-security indirectly via ChromeOS.
-> > 
-> > 
-> > 
-> > 
-> > > 6. Accept the list policy:
-> > > http://oss-security.openwall.org/wiki/mailing-lists/distros#list-policy-and-instructions-for-members
-> > 
-> > 
-> > Please consider this note as acceptance of the list policy.
-> > 
-> > 
-> > > 7. Be able and willing to contribute back, preferably in specific ways
-> > > announced in advance (so that you're responsible for a specific area and so
-> > > that we know what to expect from which member), and demonstrate actual
-> > > contributions once you've been a member for a while:
-> > > http://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
-> > 
-> > 
-> > Our team can perform administrative tasks that benefit the wider community
-> > and also can draw upon Google???s internal kernel expertise if required (on
-> > the need-to-know basis, maintaining confidentiality).
-> > 
-> > 
-> > > 8. Be able and willing to handle PGP-encrypted e-mail
-> > 
-> > 
-> > We???ll provide relevant GPG keys separately if our membership is accepted.
-> > 
-> > 
-> > > 9. Have someone already on the private list, or at least someone else who
-> > > has been active on oss-security for years but is not affiliated with your
-> > > distro nor your organization, vouch for at least one of the people
-> > > requesting membership on behalf of your distro (then that one vouched-for
-> > > person will be able to vouch for others on your team, in case you'd like
-> > > multiple people subscribed)
-> > 
-> > 
-> > Kees Cook (Cc-ed) can vouch for the proposed candidates.
-> > 
-> > 
-> > Thank you
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
 
--- 
-gonzo
+iQIcBAEBAgAGBQJVN3y3AAoJENRkgb0u2ZAZvoAQAK/K4N0wyfKuVkDkMoqiE8qM
+/7Gc2orOpLAR+guOxPqoBLJ/P62K0ksAVCXzkGpx32ctey01YBQvl3xOo8nmrbka
+p0Aem/uvbqzzjQinA/t4X7ZOUNeRY5VvyTDJAwYHstVdmnhK7ML6hVk8o8d8Ain/
+9o0HIERAvzmTL3HPvFX8m6lUINIvqbNZNz5EjvS6943zQNmxgttPd/JqNOFFWv6s
+azAAN11Ja7uRPCKdch1pabgsv6U7HBjlO8mO5HYF9t4EYZk9IvwZR5u4dovcer0R
+bQ2AFMLoP5wE3PerAM6/0FPUYTuQu5L9kmDKu2MyVFzBsGGX913GplV6T4FjmAZ6
+QXkOowwL5r7IBDF8M7Mh4iWvOVRCoisYtnHF3hMgAXflmlLEC9vaf3RRs4P8vjoT
+UC9G093eva3uII1z6JHXgwGPqOqh/o8bkNh1yviRRmou8u+aabEFlOGI9bhfRd6P
+xuG42bO6qKYMdBbGnF0UOrQuJv5Djs8DnfWe9MPjH0euvhjrA09o5OwH10CzStqn
+o+e6Kk70S7n0NMlTPvV6CybZWMeGQCzXzp8xN9MXD6IBeD4IXFedtTHB6yqFVkrw
+XVysInswi0b6SyFJoj+F+aZpQcn2zUqWgd4OA6z7SfNuLUXQL7NKUUFlPKO1eJv8
+CVvOAPw3HjTXFRKn8Kzd
+=QoqQ
+-----END PGP SIGNATURE-----
+
+--cNdxnHkX5QqsyA0e--
