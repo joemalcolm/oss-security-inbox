@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2394" "Thursday" "22" "August" "2019" "12:56:53" "-0700" "Greg KH" "greg@kroah.com" "<20190822195653.GA25735@kroah.com>" "50" "Re: [oss-security] Linux kernel: multiple vulnerabilities in the USB subsystem x2" "^Date:" nil nil "8" "2019082219:56:53" "[oss-security] Linux kernel: multiple vulnerabilities in the USB subsystem x2" (number mark "        greg@kroah.c Aug 22   50/2394  " thread-indent "\"Re: [oss-security] Linux kernel: multiple vulnerabilities in the USB subsystem x2\"\n") "<20190822165914.GA29435@grsecurity.net>" ("<CA+fCnZfz=Y41rkacwG6z0d_d6WV=iSkU2R1L-JzxfRKYHnSN9w@mail.gmail.com>" "<C1E053CF-5359-43A3-8572-BE6CDFDCC2B1@oracle.com>" "<20190822093122.GQ6086@suse.de>" "<ECC3E425-3E0F-4671-AC2B-CA5FD8958FBD@oracle.com>" "<CA+fCnZfpGc0qK9MRp-BQJkLPrZhf-Md-UYCOtPi0RhbwJqmAHQ@mail.gmail.com>" "<20190822162000.GA1670@kroah.com>" "<20190822165914.GA29435@grsecurity.net>") nil nil nil nil nil nil nil "Re: [oss-security] Linux kernel: multiple vulnerabilities in the USB subsystem x2" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6504" "Wednesday" "22" "April" "2015" "13:21:20" "+0000" "Xen.org security team" "security@xen.org" "<E1Ykuae-0001bB-4K@xenbits.xen.org>" "165" "[oss-security] Xen Security Advisory 132 (CVE-2015-3340) - Information leak through XEN_DOMCTL_gettscinfo" nil nil nil "4" "2015042213:21:20" "[oss-security] Xen Security Advisory 132 (CVE-2015-3340) - Information leak through XEN_DOMCTL_gettscinfo" (number mark "        security@xen Apr 22  165/6504  " thread-indent "\"[oss-security] Xen Security Advisory 132 (CVE-2015-3340) - Information leak through XEN_DOMCTL_gettscinfo\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 32355 invoked by uid 550); 22 Aug 2019 19:57:11 -0000
+Received: (qmail 17812 invoked by uid 550); 22 Apr 2015 13:21:47 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,107 +11,183 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 32331 invoked from network); 22 Aug 2019 19:57:10 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kroah.com; h=
-	date:from:to:subject:message-id:references:mime-version
-	:content-type:in-reply-to; s=fm1; bh=qJfPxKdUKaAGSJuzG85WqNTCedH
-	c3TvEApKIyPM8H3U=; b=evjt7xaU4u8PqlF5wrmJ3qSmEmApsVit9MB0wUjmX1F
-	ZWyUbLtyUvzcxMZ+XqEVZT+9qnQ4UxLySMuRmoblTpb8S02oMdGsKuOasTjZM11c
-	6DGsNIFg1W5fK9nUmAMVH7e/A4muEPd2lsLgzYvh2xN0x59HktIuYIr0SvvrLmTo
-	nuwgMlQcyGdR8ZxZDiODj4BBn95FwaNWaGYWXBjSVJS3jZnDLeAqT6yfWEwwJxuh
-	KkswEYspCgRECrKHafSF/8tshAeIClLmKGpZbnJsKJELfR/IRjETh2RMwzUTOpJj
-	VS1dpVt9XFmj4JxJa3uPG6fZPMneA3ISE3BzsP3ZmWg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to:x-me-proxy
-	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=qJfPxK
-	dUKaAGSJuzG85WqNTCedHc3TvEApKIyPM8H3U=; b=QJf0tX+x5+7Vch+mp+x7Sb
-	Jr+zat9MzNNstj78kHeIl5At4SxCT8k8tU+ccdfvy9w7fUitQF6FJzRwxtIssjzO
-	FrPQPE0uA6A02UZomQjxnmtBfmItbFsL/L37YCBDmqdiSV5SGj8Swic1KzF+7N16
-	oSPv1eYU6Ywfw3L33Txf18mHpvVSI2oamAx3d3tnj3aw2Srrh3TmJ00RzeUP6jY8
-	oy9zrOADlwo4joMhfMEt19GnR5kNCweJVIZCkhL1RruUG7uXL2rNZ2QIJWivatUg
-	futIlNar0rnSL//UByA0IZrz26O9qb6tXd4FgM/RXjQ84RvrkSWStL/btmGOxF7Q
-	==
-X-ME-Sender: <xms:h_NeXQ1_KZelvuvh3a86EPzt6w80IcsjZO-nuXdEoO3slNuMUMRXWg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduvddrudegiedgleelucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucgoufhprghmkfhpqdhouhhtucdlhedttddmnecujf
-    gurhepfffhvffukfhfgggtuggjfgesthdtredttdervdenucfhrhhomhepifhrvghgucfm
-    jfcuoehgrhgvgheskhhrohgrhhdrtghomheqnecuffhomhgrihhnpehsphhinhhitghsrd
-    hnvghtpdhophgvnhifrghllhdrtghomhenucfkphepudekgedrudekkedrfeeirddvnecu
-    rfgrrhgrmhepmhgrihhlfhhrohhmpehgrhgvgheskhhrohgrhhdrtghomhenucevlhhush
-    htvghrufhiiigvpedt
-X-ME-Proxy: <xmx:h_NeXeFmOJDLiH910sdDt08zQ7uXfstIZh1Lg3C4qrM23qI8WW0LNw>
-    <xmx:h_NeXeGIq44AjlZCiFPh8wrfmP5XwUaLgsBpvAcymiMsE_JxPqCbSA>
-    <xmx:h_NeXegwsffMn2sCvCjykDZGZMiFEG1nB_1IW9A8GNWl8Xsx5CBIZQ>
-    <xmx:h_NeXT_NhiXh85gQRM329JTZ1vQ1moqRJ-ALv6biz2VBRdgyjwzkfvoqZnw>
-Message-ID: <20190822195653.GA25735@kroah.com>
-References: <CA+fCnZfz=Y41rkacwG6z0d_d6WV=iSkU2R1L-JzxfRKYHnSN9w@mail.gmail.com>
- <C1E053CF-5359-43A3-8572-BE6CDFDCC2B1@oracle.com>
- <20190822093122.GQ6086@suse.de>
- <ECC3E425-3E0F-4671-AC2B-CA5FD8958FBD@oracle.com>
- <CA+fCnZfpGc0qK9MRp-BQJkLPrZhf-Md-UYCOtPi0RhbwJqmAHQ@mail.gmail.com>
- <20190822162000.GA1670@kroah.com>
- <20190822165914.GA29435@grsecurity.net>
+Received: (qmail 17762 invoked from network); 22 Apr 2015 13:21:41 -0000
+Message-Id: <E1Ykuae-0001bB-4K@xenbits.xen.org>
+Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
+Content-Transfer-Encoding: binary
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190822165914.GA29435@grsecurity.net>
-User-Agent: Mutt/1.12.1 (2019-06-15)
-Date: Thu, 22 Aug 2019 12:56:53 -0700
-From: Greg KH <greg@kroah.com>
+X-Mailer: MIME-tools 5.428 (Entity 5.428)
+CC: Xen.org security team <security@xen.org>
+Date: Wed, 22 Apr 2015 13:21:20 +0000
+From: Xen.org security team <security@xen.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Linux kernel: multiple vulnerabilities in the USB
- subsystem x2
-To: oss-security@lists.openwall.com
+Subject: [oss-security] Xen Security Advisory 132 (CVE-2015-3340) - Information leak
+ through XEN_DOMCTL_gettscinfo
+To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
+ xen-users@lists.xen.org, oss-security@lists.openwall.com
 
-On Thu, Aug 22, 2019 at 12:59:14PM -0400, Brad Spengler wrote:
-> Sorry, a little too much marketing coming out of this camp these days, and
-> this one demands a response.
-> 
-> On Thu, Aug 22, 2019 at 09:20:00AM -0700, Greg KH wrote:
-> > On Thu, Aug 22, 2019 at 05:16:03PM +0200, Andrey Konovalov wrote:
-> > > On a side note, currently there's an issue with many Linux kernel bugs
-> > > being fixed, but not backported to distro kernels. Those bugs might
-> > > have security implications, but there's no way to know that, unless
-> > > someone specifically spends time to assess them in that regard.
-> > > Requesting CVEs for those bugs is a way to get the fixes into distro
-> > > kernels (even though that doesn't always work promptly [1] :).
-> > > 
-> > > [1] https://www.openwall.com/lists/oss-security/2018/10/30/2
-> > 
-> > Note, I am scraping the logs for anything that says it is fixed due do a
-> > syzbot find or report and backporting them to the stable kernel
-> > branches.  So those distros that do follow the LTS/stable kernel
-> > releases do get these fixes.
-> 
-> All of the fixes, Greg?
+--=separator
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+Content-Transfer-Encoding: 7bit
 
-All of the ones that say they are found by the syzbot, yes.  If I have
-missed any, please let me know, I am only human.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> You'd also need to explain very easy to find examples like this:
-> https://www.spinics.net/lists/stable/msg317698.html
-> of random LTS kernels not receiving security fixes.  This particular issue was
-> public since April (which is when we backported fixes for it to 4.4/4.14).
-> It's now 4 months later and your 4.4 6-year "supported" LTS kernel still
-> doesn't contain the fixes.
+            Xen Security Advisory CVE-2015-3340 / XSA-132
+                              version 2
 
-I don't track CVEs nor care about them at all, and rely on others who
-depend on those older kernels to provide complex backports as they can
-test them the best.  Nothing new at all, it's always been that way.
+             Information leak through XEN_DOMCTL_gettscinfo
 
-If you know of specific fixes that I have missed, I am glad to accept
-backports.  Right now we are averaging about 22 patches a day in the
-latest stable release, and 19 in the latest LTS release.  That's a tiny
-5.5% of the number of patches that are being developed and merged
-upstream, which means that we know we are missing stuff and we rely on
-people to point out where we have done so.
+UPDATES IN VERSION 2
+====================
 
-We take patches from all distros and companies and users where they
-notice that we have missed things, I would love to take anything that
-you have noticed that I missed.
+CVE assigned.
 
-thanks!
+ISSUE DESCRIPTION
+=================
 
-greg k-h
+The handler for XEN_DOMCTL_gettscinfo failed to initialize a padding
+field subsequently copied to guest memory.
+
+A similar leak existed in XEN_SYSCTL_getdomaininfolist, which is being
+addressed here regardless of that operation being declared unsafe for
+disaggregation by XSA-77.
+
+IMPACT
+======
+
+Malicious or buggy stub domain kernels or tool stacks otherwise living
+outside of Domain0 may be able to read sensitive data relating to the
+hypervisor or other guests not under the control of that domain.
+
+VULNERABLE SYSTEMS
+==================
+
+Xen 4.0.x and later are vulnerable.
+
+Only x86 systems are vulnerable.  ARM systems are not vulnerable.
+
+The vulnerability is only exposed to service domains with privilege over
+another guest.  In a usual configuration that means only device model
+emulators (qemu-dm) when these are running in a separate domain.
+
+In the case of HVM guests whose device model is running in an
+unrestricted dom0 process, qemu-dm already has the ability to cause
+problems for the whole system.  So in that case the vulnerability is
+not applicable.
+
+This vulnerability is applicable for an HVM guest with a stub qemu-dm.
+That is, where the device model runs in a separate domain (in the case
+of xl, as requested by "device_model_stubdomain_override=1" in the xl
+domain configuration file).  In this case a guest which has already
+exploited another vulnerability, to gain control of the device model,
+would be able to exercise the information leak.
+
+However, the security of a system with qemu-dm running in a stub domain
+is still better than with a qemu-dm running as an unrestricted dom0
+process.  Therefore users with these configurations should not switch
+to an unrestricted dom0 qemu-dm.
+
+Finally, in a radically disaggregated system, where the service domain
+software (probably, the device model domain image in the HVM case) is
+not always supplied by the host administrator, a malicious service
+domain administrator can exercise this vulnerability.
+
+MITIGATION
+==========
+
+There is no mitigation available.
+
+In a radically disaggregated system, restricting HVM service domains
+to software images approved by the host administrator will avoid the
+vulnerability (so long as there isn't also a vulnerability in the
+service domain).
+
+NOTE REGARDING LACK OF EMBARGO
+==============================
+
+The fix for this bug was publicly posted on xen-devel, before it was
+appreciated that there was a security problem.
+
+CREDITS
+=======
+
+This issue was recognized as security issue by Jan Beulich of SUSE.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa132-unstable.patch        xen-unstable, Xen 4.5.x, Xen 4.4.x, Xen 4.3.x
+xsa132-4.2.patch             Xen 4.2.x
+
+$ sha256sum xsa132*.patch
+3a28eb33c02360ec22c51824e469b1cf6be87941256d0b3aa34a5bd1d7735328  xsa132-4.2.patch
+329d4edf1e1133795ece41f2fc8887c5f4cc06b42ced63c810c610b17bcee46d  xsa132.patch
+$
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQEcBAEBAgAGBQJVN6AYAAoJEIP+FMlX6CvZ6R8H/Rq4H94uwp/c8mYM/DHFJf1S
+YXWGD7jtYYAArAKwG+b3mDYQVzaDhsUR76jS6lssoSWQbSHmqzAKWjZ01Rd5EQDW
+PqLNwtmIkj9hXCxJdpNubxbr12j0TWzIAOpsUj5alDoy7TaNVMNLG7zSj+jOyNzp
+uCgIo7TGwWu6OS1xBYZay18oTjv8rEifQgJ8CBRUZHG+xezm94Gbz0iJaonm4bY3
+Rjl7U3hfk0O74ncthHOJM5bVTXyDefxeZsR1xkRIWk15GSZ9FXguwfny/m0NQC7Y
+7OfGyOyOT27AbxYTOnn30XYwmPAzhw1jrEpdbAwSjxvzRe9iKoxwhezrzgXQ+Q0=
+=1c8S
+-----END PGP SIGNATURE-----
+
+--=separator
+Content-Type: application/octet-stream; name="xsa132-4.2.patch"
+Content-Disposition: attachment; filename="xsa132-4.2.patch"
+Content-Transfer-Encoding: base64
+
+ZG9tY3RsL3N5c2N0bDogZG9uJ3QgbGVhayBoeXBlcnZpc29yIHN0YWNrIHRv
+IHRvb2xzdGFja3MKClRoaXMgaXMgWFNBLTEzMi4KClNpZ25lZC1vZmYtYnk6
+IEFuZHJldyBDb29wZXIgPGFuZHJldy5jb29wZXIzQGNpdHJpeC5jb20+ClJl
+dmlld2VkLWJ5OiBKYW4gQmV1bGljaCA8amJldWxpY2hAc3VzZS5jb20+Cgot
+LS0gYS94ZW4vYXJjaC94ODYvZG9tY3RsLmMKKysrIGIveGVuL2FyY2gveDg2
+L2RvbWN0bC5jCkBAIC0xMjAwLDcgKzEyMDAsNyBAQCBsb25nIGFyY2hfZG9f
+ZG9tY3RsKAogICAgIGNhc2UgWEVOX0RPTUNUTF9nZXR0c2NpbmZvOgogICAg
+IHsKICAgICAgICAgc3RydWN0IGRvbWFpbiAqZDsKLSAgICAgICAgeGVuX2d1
+ZXN0X3RzY19pbmZvX3QgaW5mbzsKKyAgICAgICAgeGVuX2d1ZXN0X3RzY19p
+bmZvX3QgaW5mbyA9IHsgMCB9OwogCiAgICAgICAgIHJldCA9IC1FU1JDSDsK
+ICAgICAgICAgZCA9IHJjdV9sb2NrX2RvbWFpbl9ieV9pZChkb21jdGwtPmRv
+bWFpbik7Ci0tLSBhL3hlbi9jb21tb24vc3lzY3RsLmMKKysrIGIveGVuL2Nv
+bW1vbi9zeXNjdGwuYwpAQCAtOTUsNyArOTUsNyBAQCBsb25nIGRvX3N5c2N0
+bChYRU5fR1VFU1RfSEFORExFX1BBUkFNKHhlCiAgICAgY2FzZSBYRU5fU1lT
+Q1RMX2dldGRvbWFpbmluZm9saXN0OgogICAgIHsgCiAgICAgICAgIHN0cnVj
+dCBkb21haW4gKmQ7Ci0gICAgICAgIHN0cnVjdCB4ZW5fZG9tY3RsX2dldGRv
+bWFpbmluZm8gaW5mbzsKKyAgICAgICAgc3RydWN0IHhlbl9kb21jdGxfZ2V0
+ZG9tYWluaW5mbyBpbmZvID0geyAwIH07CiAgICAgICAgIHUzMiBudW1fZG9t
+YWlucyA9IDA7CiAKICAgICAgICAgcmN1X3JlYWRfbG9jaygmZG9tbGlzdF9y
+ZWFkX2xvY2spOwo=
+
+--=separator
+Content-Type: application/octet-stream; name="xsa132.patch"
+Content-Disposition: attachment; filename="xsa132.patch"
+Content-Transfer-Encoding: base64
+
+ZG9tY3RsL3N5c2N0bDogZG9uJ3QgbGVhayBoeXBlcnZpc29yIHN0YWNrIHRv
+IHRvb2xzdGFja3MKClRoaXMgaXMgWFNBLTEzMi4KClNpZ25lZC1vZmYtYnk6
+IEFuZHJldyBDb29wZXIgPGFuZHJldy5jb29wZXIzQGNpdHJpeC5jb20+ClJl
+dmlld2VkLWJ5OiBKYW4gQmV1bGljaCA8amJldWxpY2hAc3VzZS5jb20+Cgot
+LS0gYS94ZW4vYXJjaC94ODYvZG9tY3RsLmMKKysrIGIveGVuL2FyY2gveDg2
+L2RvbWN0bC5jCkBAIC04ODQsNyArODg0LDcgQEAgbG9uZyBhcmNoX2RvX2Rv
+bWN0bCgKIAogICAgIGNhc2UgWEVOX0RPTUNUTF9nZXR0c2NpbmZvOgogICAg
+IHsKLSAgICAgICAgeGVuX2d1ZXN0X3RzY19pbmZvX3QgaW5mbzsKKyAgICAg
+ICAgeGVuX2d1ZXN0X3RzY19pbmZvX3QgaW5mbyA9IHsgMCB9OwogCiAgICAg
+ICAgIHJldCA9IC1FSU5WQUw7CiAgICAgICAgIGlmICggZCA9PSBjdXJyZW50
+LT5kb21haW4gKSAvKiBubyBkb21haW5fcGF1c2UoKSAqLwotLS0gYS94ZW4v
+Y29tbW9uL3N5c2N0bC5jCisrKyBiL3hlbi9jb21tb24vc3lzY3RsLmMKQEAg
+LTc2LDcgKzc2LDcgQEAgbG9uZyBkb19zeXNjdGwoWEVOX0dVRVNUX0hBTkRM
+RV9QQVJBTSh4ZQogICAgIGNhc2UgWEVOX1NZU0NUTF9nZXRkb21haW5pbmZv
+bGlzdDoKICAgICB7IAogICAgICAgICBzdHJ1Y3QgZG9tYWluICpkOwotICAg
+ICAgICBzdHJ1Y3QgeGVuX2RvbWN0bF9nZXRkb21haW5pbmZvIGluZm87Cisg
+ICAgICAgIHN0cnVjdCB4ZW5fZG9tY3RsX2dldGRvbWFpbmluZm8gaW5mbyA9
+IHsgMCB9OwogICAgICAgICB1MzIgbnVtX2RvbWFpbnMgPSAwOwogCiAgICAg
+ICAgIHJjdV9yZWFkX2xvY2soJmRvbWxpc3RfcmVhZF9sb2NrKTsK
+
+--=separator--
