@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3226" "Friday" "25" "March" "2016" "09:55:41" "+1100" "James Morris" "jmorris@namei.org" "<alpine.LRH.2.20.1603250947150.31257@namei.org>" "118" "[oss-security] [ANNOUNCE] Linux Security Summit 2016 - CFP" "^cc:" nil nil "3" "2016032422:55:41" "[oss-security] [ANNOUNCE] Linux Security Summit 2016 - CFP" (number mark "U       jmorris@name Mar 25  118/3226  " thread-indent "\"[oss-security] [ANNOUNCE] Linux Security Summit 2016 - CFP\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3488" "Thursday" "23" "April" "2015" "17:37:48" "+0200" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20150423173748.2c2a53d2@pc1.fritz.box>" "91" "[oss-security] tlsdate havoc ahead - default host randomizes tls timestamps" nil nil nil "4" "2015042315:37:48" "[oss-security] tlsdate havoc ahead - default host randomizes tls timestamps" (number mark "        hanno@hboeck Apr 23   91/3488  " thread-indent "\"[oss-security] tlsdate havoc ahead - default host randomizes tls timestamps\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 13819 invoked by uid 550); 25 Mar 2016 19:09:50 -0000
+Received: (qmail 32135 invoked by uid 550); 23 Apr 2015 15:37:41 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,139 +11,105 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 4092 invoked from network); 24 Mar 2016 22:56:01 -0000
-Message-ID: <alpine.LRH.2.20.1603250947150.31257@namei.org>
-User-Agent: Alpine 2.20 (LRH 67 2015-01-07)
-MIME-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="1665246916-1935272454-1458860143=:31257"
-cc: linux-kernel@vger.kernel.org, lwn@lwn.net, fedora-selinux-list@redhat.com,
-        selinux@tycho.nsa.gov, ubuntu-hardened@lists.ubuntu.com,
-        Linux Security Summit Program Committee <lss-pc@lists.linuxfoundation.org>,
-        netfilter-devel@vger.kernel.org, linux-crypto@vger.kernel.org,
-        Audit-ML <linux-audit@redhat.com>, gentoo-hardened@gentoo.org,
-        keyrings@linux-nfs.org, tpmdd-devel@lists.sourceforge.net,
-        kernel-hardening@lists.openwall.com, oss-security@lists.openwall.com
-Date: Fri, 25 Mar 2016 09:55:41 +1100 (AEDT)
-From: James Morris <jmorris@namei.org>
+Received: (qmail 32067 invoked from network); 23 Apr 2015 15:37:36 -0000
+Message-ID: <20150423173748.2c2a53d2@pc1.fritz.box>
+X-Mailer: Claws Mail 3.11.1 (GTK+ 2.24.27; x86_64-pc-linux-gnu)
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512; protocol="application/pgp-signature"; boundary="=_zucker.schokokeks.org-4187-1429803444-0001-2"
+Date: Thu, 23 Apr 2015 17:37:48 +0200
+From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] [ANNOUNCE] Linux Security Summit 2016 - CFP
-To: linux-security-module@vger.kernel.org
+Subject: [oss-security] tlsdate havoc ahead - default host randomizes tls timestamps
+To: oss-security@lists.openwall.com
 
---1665246916-1935272454-1458860143=:31257
-Content-Type: text/plain; charset=ISO-8859-7
-Content-Transfer-Encoding: 8BIT
+--=_zucker.schokokeks.org-4187-1429803444-0001-2
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-==========================================================================
-                 ANNOUNCEMENT AND CALL FOR PARTICIPATION
+Hi,
 
-                       LINUX SECURITY SUMMIT 2016
-                              25-26 AUGUST
-                            TORONTO, CANADA
-                           
-==========================================================================
+It was pointed out to me that tlsdate behaved strangely for a couple of
+people. The reason is that www.ptb.de - the default tls host
+pre-configured in tlsdate - now seems to use randomized TLS timestamps.
 
+Background: tlsdate is a replacement for timesetting tools like
+ntpd/rdate that doesn't use ntp, instead it sets the time based on a
+TLS timestamp.
 
-DESCRIPTION
-
-  The Linux Security Summit (LSS) is a technical forum for collaboration
-  between Linux developers, researchers, and end users.  Its primary aim
-  is to foster community efforts in analyzing and solving Linux security
-  challenges.
-
-  The format of the summit will be:
-  
-    * Refereed presentations
-    * Discussion topics
-    * Subsystem reports
-    * Breakout development sessions 
+However it became recently popular to hide the TLS timestamp to make
+fingerprinting harder and not expose the time of servers. There are
+plans to remove the TLS timestamp.
 
 
-WEB SITE
-
-  http://events.linuxfoundation.org/events/linux-security-summit
-
-
-TWITTER
-
-  For event updates and announcements, follow:
-
-  https://twitter.com/LinuxSecSummit
+Anyway: It seems yesterday or today the operators of www.ptb.de (a
+german government institution operating atomic clocks) decided to do
+that on their servers. This means all default installations of tlsdate
+may set the system time to random values.
 
 
-DATES / LOCATION
+Some distributions (e.g. Gentoo) have changed the default to
+www.google.com, which seems wise (although I recently objected to
+this change... always wiser afterwards). Google itself is using
+tlsdate in chromeos, so they are probably aware of this problem and
+won't randomize the timestamps.
+Another alternative is to use tlsdate with http header timestamps
+instead.
 
-  The Linux Security Summit for 2016 will be held  August 25th and 26th
-  in Toronto, Canada.  It will be co-located with LinuxCon.
+I urge all distributions to check what their implementations do and
+patch them to use www.google.com (or do something else to fix it) as
+soon as possible. I know Debian and Ubuntu have a problem. I haven't
+checked others. I have recommended tlsdate as a safer alternative to
+ntp in the past a lot.
 
-  The Linux Security Summit CFP is now open, and will close on June 10th.
-  
-  Accepted speakers will be notified by June 17th.
-
-
-WHO SHOULD ATTEND
-
-  We're seeking a diverse range of attendees, and welcome participation
-  by people involved in Linux security development, operations, and research.
-
-  The LSS is a unique global event which provides the opportunity to present
-  and discuss your work or research with key Linux security community
-  members and maintainers.  It¢s also useful for those who wish to keep up
-  with the latest in Linux security development, and to provide input to
-  the development process.
+Please note that there are two places where tlsdate has www.ptb.de
+preconfigured - one in the default config for tlsdated and one
+hardcoded into the tlsdate binary itself.
 
 
-CALL FOR PARTICIPATION
+In other news: There's some interesting development going on in terms
+of secure time. openntpd (the openbsd thing) has some nice solution
+using tls timestamps as a boundary for ntp timesetting. This combines
+the security of tlsdate with the precision of ntp.
 
-  The program committee currently seeks proposals for:
+And there is some work done in the IETF to create a secure version of
+ntp:
 
-  * Refereed Presentations:
-      45 minutes in length, including at least 10 minutes of discussion.
-      One-page abstracts are encouraged.
-
-  * Discussion Topics:
-      30 minutes in length.
- 
-  Topic areas include, but are not limited to:
-  
-    * Kernel self-protection
-    * Access control
-    * Cryptography and key management
-    * Integrity control
-    * Hardware security
-    * Trust systems
-    * Storage and file systems
-    * Virtualization and containers
-    * Case studies
-    * Identity management
-    * Code analysis
-    * Security analytics
-    * Secure development and operational practices
-    * Emerging technologies, threats & techniques 
-    
-  Proposals should be submitted via the event web site:
-
-    http://events.linuxfoundation.org/events/linux-security-summit/program/cfp
+https://tools.ietf.org/html/draft-ietf-ntp-network-time-security-08
+https://tools.ietf.org/html/draft-ietf-ntp-cms-for-nts-message-03
+https://tools.ietf.org/html/draft-ietf-ntp-using-nts-for-ntp-00
 
 
-PROGRAM COMMITTEE
+[1] https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=3D783174
 
-  The Linux Security Summit for 2016 is organized by:
+cu,
+--=20
+Hanno B=C3=B6ck
+http://hboeck.de/
 
-    * James Morris, Oracle
-    * Serge Hallyn, Canonical
-    * Paul Moore, Red Hat
-    * Stephen Smalley, NSA
-    * Elena Reshetova, Intel
-    * Herbert Xu, Red Hat
-    * John Johansen, Canonical
-    * Kees Cook, Google
-    * Casey Schaufler, Intel
-    * Mimi Zohar, IBM
+mail/jabber: hanno@hboeck.de
+GPG: BBB51E42
 
-  The program committee may be contacted as a group via email:
+--=_zucker.schokokeks.org-4187-1429803444-0001-2
+Content-Type: application/pgp-signature
+Content-Transfer-Encoding: 7bit
+Content-Description: OpenPGP digital signature
 
-    lss-pc@lists.linuxfoundation.org
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
 
-   
+iQIcBAEBCgAGBQJVORHMAAoJEKWIAHK7tR5CchwP/2Mu/6aayPm78OFQzzfpNBw6
+YdZuKgEWRrGbEcKObiiQgbBNvZpvsRExRQ7AAPx8oz/0+3/3I/aqfYmYKqZ7PjqP
+rT8b9F7kUwwXjQHE1krHOa3NAM3SDXG+LPdUyJ3CZFn4iXHbxW/sFWW7AbkdYw/z
+QZoMHjskqHaqSfL6v+YHrhuFGEMQ8S6I4j8/VCxsnU+mRHhQlM2F50V5Alu8svz7
+liLRYFNPNzzg9R7+G+AZ020vjSNYAJvVfhGCe8u2Pu2Ilz9n6MY17A0qS6dGrq+D
+VzlKl/amA+zNcWU9kMNrc43N3m2OD2Z6EMSV27VV+OUcPFeOJT94TeBdLM5JEXC9
+Pu+5TwKkP/7k1JE/pJi0EoBpsOQqFma6o4jIGC2byTtsCadfh/LI6dcmB4XGpT0Z
+fmMaP5qMSy5tewHlc72Ex7XW6TDiGA1tzn1Un7o+doZjOokAbI2aCWEJHWMt+nOZ
+OFTH4sj7GsOYypbqDLKvZxbur+XwMBohNu3EM2+Bd89PVV4mCYqEYpZcc84qiEEC
+btv/Bxd8eYvR1G7Kn33Io9BbQbh51daFauJ8vQRmkkgZwf346gscWXW7M6XLiqks
+xD6UIYXZkLb0VOE5PJMs8nO+sv1qac+RlV5/7EECOPeSMKqkuJySPyZRJXZKa5/C
+8qvtKv9vJ2gAYnrgRH4y
+=0EWN
+-----END PGP SIGNATURE-----
 
---1665246916-1935272454-1458860143=:31257--
+--=_zucker.schokokeks.org-4187-1429803444-0001-2--
