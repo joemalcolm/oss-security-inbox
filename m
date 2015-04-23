@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["806" "Wednesday" "26" "October" "2016" "17:09:42" "+0200" "Cedric Buissart" "cbuissar@redhat.com" "<CAKG8Do6j938c8Qkdp0MfqyYwOfdTt9FAgPs251cWVu5Bq65cCw@mail.gmail.com>" "32" "[oss-security] CVE-2016-4455: subscription-manager: incorrect permisions in /var/lib/rhsm/" nil nil nil "10" "2016102615:09:42" "[oss-security] CVE-2016-4455: subscription-manager: incorrect permisions in /var/lib/rhsm/" (number mark "U       cbuissar@red Oct 26   32/806   " thread-indent "\"[oss-security] CVE-2016-4455: subscription-manager: incorrect permisions in /var/lib/rhsm/\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1928" "Wednesday" "22" "April" "2015" "22:34:44" "-0400" "Marc Deslauriers" "marc.deslauriers@canonical.com" "<55385A44.2030509@canonical.com>" "44" "Re: [oss-security] Re: USBCreator D-Bus service" nil nil nil "4" "2015042302:34:44" "[oss-security] Re: USBCreator D-Bus service" (number mark "        marc.deslaur Apr 22   44/1928  " thread-indent "\"Re: [oss-security] Re: USBCreator D-Bus service\"\n") "<CAJ_zFk+xFe+BoS-gGabAhkzcbqNxaJF6=S78vn9PfZY+6sq3XA@mail.gmail.com>" ("<CAJ_zFk+imjcZZTm8KwOZia0McwHZ2iQawpXoijRpejM9jt3PGA@mail.gmail.com>" "<20150423000423.GA31439@openwall.com>" "<20150423002746.GD3854@hunt>" "<CAJ_zFk+xFe+BoS-gGabAhkzcbqNxaJF6=S78vn9PfZY+6sq3XA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 18305 invoked by uid 550); 26 Oct 2016 15:11:17 -0000
+Received: (qmail 6132 invoked by uid 550); 23 Apr 2015 02:34:59 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,58 +11,61 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 18285 invoked from network); 26 Oct 2016 15:11:17 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=52C5o5q9SrF1xypzWsvDNDu0AR9O6Dvi4qLlZ2HyAas=;
-        b=OKuvvxbqyid1qbP+0nrNcfb9Gvw7QMd7eLcjhoGXjSV4VNpzoMPEgLYQvV32jG+jht
-         6ipjXPObOFi7vMYTMX0yqdRwhyWomz5Mxx+0mwpqQEDrIkz4/tk5KGz7kvvIJ3phyVjN
-         4P726/8N/5T53jbv+DMn8I29rqDSVxuDwm6K3j0NiuU18ebkPD70wzpBukSonCDtcvbH
-         BmY5EuIqDAJOYB+ufkRIFYyXnCeFP3+eZ/uLic336+GgfizkURtIZAF9Bi9LgoM4ac5+
-         uuiK1x/yqxQpljXdVENV6b4QvpqM/RnM8VGgrRhg8dh4ErLuFYYK4abih0NSAopSXzN5
-         XCHg==
-X-Gm-Message-State: ABUngvdj3I64Yf8FTb3VZPASGC6a7TFc8dIi0/XlDoS4mEbsFxdDekA1i9R44ESomM6C1byDZZKLPuU5qh8k2qsQ
-X-Received: by 10.107.157.14 with SMTP id g14mr3342424ioe.70.1477494603033;
- Wed, 26 Oct 2016 08:10:03 -0700 (PDT)
+Received: (qmail 6111 invoked from network); 23 Apr 2015 02:34:58 -0000
+Message-ID: <55385A44.2030509@canonical.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
 MIME-Version: 1.0
-From: Cedric Buissart <cbuissar@redhat.com>
-Date: Wed, 26 Oct 2016 17:09:42 +0200
-Message-ID: <CAKG8Do6j938c8Qkdp0MfqyYwOfdTt9FAgPs251cWVu5Bq65cCw@mail.gmail.com>
+References: <CAJ_zFk+imjcZZTm8KwOZia0McwHZ2iQawpXoijRpejM9jt3PGA@mail.gmail.com>	<20150423000423.GA31439@openwall.com>	<20150423002746.GD3854@hunt> <CAJ_zFk+xFe+BoS-gGabAhkzcbqNxaJF6=S78vn9PfZY+6sq3XA@mail.gmail.com>
+In-Reply-To: <CAJ_zFk+xFe+BoS-gGabAhkzcbqNxaJF6=S78vn9PfZY+6sq3XA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+Date: Wed, 22 Apr 2015 22:34:44 -0400
+From: Marc Deslauriers <marc.deslauriers@canonical.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Re: USBCreator D-Bus service
 To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary=001a11409920f8f3de053fc60498
-Subject: [oss-security] CVE-2016-4455: subscription-manager: incorrect permisions in /var/lib/rhsm/
 
---001a11409920f8f3de053fc60498
-Content-Type: text/plain; charset=UTF-8
+On 2015-04-22 08:50 PM, Tavis Ormandy wrote:
+> On Wednesday, April 22, 2015, Seth Arnold <seth.arnold@canonical.com> wrote:
+>> On Thu, Apr 23, 2015 at 03:04:23AM +0300, Solar Designer wrote:
+>>> Either way, it sounds weird to keep a low severity issue private.  Low
+>>> severity usually means not needing an embargo in the first place.  But I
+>>> guess it was the vendor's preference?
+>>
+>> In this case, no, Ubuntu would have preferred several days embargo for
+>> this issue. Hypothetically speaking, Monday would have been ideal, as
+>> we prefer to not release updates on Friday, Saturday, or Sunday.
+>>
+>> We treat local root escalation vulnerabilities with a high priority[1].
+> 
+> I wish you had spoken up during the previous discussion. It was my
+> impression that embargoes for local privilege escalations were universally
+> considered deprecated.
 
-Hi,
+Nonsense, embargoes for local or remote privilege escalations are still
+considered to be high priority and should be handled with an embargo.
 
-This is to disclose the following CVE:
+Making this type of information public without giving the vendor a chance to
+publish updates within a reasonable timeframe is a great disservice to users and
+exposes them to great risk.
 
-CVE-2016-4455: subscription-manager: incorrect permissions in /var/lib/rhsm/
-Description :
+> 
+>> Please do inform us privately of further local root escalations in the
+>> future, either via security@ubuntu.com or filing "private security"
+>> bugs against the corresponding package in Launchpad.
+>>
+>> Thanks
+> 
+> Embargoes tend to make things worse, see your apport patch developed during
+> embargo or shellshock for examples. However, if you're sure, I'm willing to
+> do so for Ubuntu specific bugs in future.
 
-It was found that subscription-manager assigned incorrect permissions to
-content in /var/lib/rhsm/, causing an information disclosure flaw. An
-unprivileged local attacker could use this flaw to access sensitive data
-that could later be used for a social engineering attack.
+No they don't. They allow vendors time to develop a proper fix without exposing
+users to unneeded risk. Yes, sometimes the fix is inadequate and needs to be
+fixed, but publishing an exploit without a few days notice just makes matters
+unbearable for users and encourages vendors to keep security issues secret.
 
-Upstream patch :
-https://github.com/candlepin/subscription-manager/commit/9dec31
-
-Impact : Low
-CVSSv2 scoring : 1.7 - AV:L/AC:L/Au:S/C:P/I:N/A:N
-CVSSv3 scoring : 3.3 - AV:L/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:N
-
-Reported by : Robert Scheck
-
-Best regards,
+Marc.
 
 
--- 
-Cedric Buissart,
-Product Security
 
---001a11409920f8f3de053fc60498--
