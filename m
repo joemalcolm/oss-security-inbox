@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["954" "Tuesday" "30" "May" "2017" "09:02:13" "-0400" "Daniel Micay" "danielmicay@gmail.com" "<1496149333.941.1.camel@gmail.com>" "21" "Re: [oss-security] Linux kernel: stack buffer overflow with controlled payload in get_options() function" "^Cc:" nil nil "5" "2017053013:02:13" "[oss-security] Linux kernel: stack buffer overflow with controlled payload in get_options() function" (number mark "        danielmicay@ May 30   21/954   " thread-indent "\"Re: [oss-security] Linux kernel: stack buffer overflow with controlled payload in get_options() function\"\n") "<3f12105e-11d8-abe6-762b-c5b762cf6b31@redhat.com>" ("<EBDB967B-92F8-47B9-AC79-CBF338A835F2@gmail.com>" "<20170530114138.jpcppn4j67niqhyb@perpetual.pseudorandom.co.uk>" "<1496145073.1459.1.camel@gmail.com>" "<3f12105e-11d8-abe6-762b-c5b762cf6b31@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2228" "Thursday" "23" "April" "2015" "03:03:00" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150423070300.497C93320B1@smtpvbsrv1.mitre.org>" "55" "[oss-security] Re: CVE request: ntp-keygen may generate non-random symmetric keys on big-endian systems" nil nil nil "4" "2015042307:03:00" "[oss-security] Re: CVE request: ntp-keygen may generate non-random symmetric keys on big-endian systems" (number mark "        cve-assign@m Apr 23   55/2228  " thread-indent "\"[oss-security] Re: CVE request: ntp-keygen may generate non-random symmetric keys on big-endian systems\"\n") "<87oamxjwrc.fsf@redhat.com>" ("<87oamxjwrc.fsf@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 21793 invoked by uid 550); 30 May 2017 13:02:27 -0000
+Received: (qmail 14130 invoked by uid 550); 23 Apr 2015 07:03:24 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,69 +11,68 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 21770 invoked from network); 30 May 2017 13:02:26 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:subject:from:to:cc:date:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=96ZFOEPl8JDilaONwV53wHQRFNWFo+KT9ss29hUFAsU=;
-        b=MB50Rq0LYdqAoeMMJjOZmin3T8wzT9hMZyJQY5Rpkg8PP1Gm336rtjI/HlSVLILy5d
-         FdAuIe8LySsWWMJ3/LxtF/TbRYjVxuh2CFGTKf9yPn1wiInlkMvIp2kadSmLedUePChB
-         4NYMGGDgx6I+0Id1j2SL4/eP4VsFy80LCHFEDLHnzdTbaRynfFfHBaZGwpVxFVkvrFJz
-         GuTPvnDyfpFh23BamfLWCneZqSDjS7IKzvoZfbFrhCYU61i5uh2jyYIck3NdgX8LE6to
-         aVmAZ+K+no2IlJi7AWtpN6Uul/PoDfp+JCLccYD8Qhg06zFqXIhD2pjyfe1q9+tcsnOT
-         1YzQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=96ZFOEPl8JDilaONwV53wHQRFNWFo+KT9ss29hUFAsU=;
-        b=ucfi3ASRnno7Ozyb5KkH5H0KfkbC4+2TxQY9hbg1EfcLG/JOLp7zFvChxuC7MTUxBb
-         qlRG7iIxAEIlwpzD/euekjts6709KgG232d24N083DYo9S0n8tqykr/JB5x4Ym+p/zDF
-         dnxpmOtVAHYTd8+eyhFm3SGdz8qyGL/qObQ5qi9MRWyR31QhcYktZaHOvLEM1QrccN44
-         l7OOBpjSY8J/lHfDQZK+yTRXpaYkVO3wwMF9s8K8bZT/xva0y0Feo7XKONsfXvpGw1pD
-         DXXTSiWrnBlS6pYfcERNnVfIZ/gdrUHJ8KQQOGmerAcHWRt6ssBBSJTyJTWq0LOvs73l
-         tCag==
-X-Gm-Message-State: AODbwcA3+gMkco3QJxvCMKFOD58wvAyL9Fwt2JGCNWsL7sVJq539BYOC
-	yNxE3qKnQxQNqQ==
-X-Received: by 10.107.165.148 with SMTP id o142mr17217178ioe.179.1496149335052;
-        Tue, 30 May 2017 06:02:15 -0700 (PDT)
-Message-ID: <1496149333.941.1.camel@gmail.com>
-In-Reply-To: <3f12105e-11d8-abe6-762b-c5b762cf6b31@redhat.com>
-References: <EBDB967B-92F8-47B9-AC79-CBF338A835F2@gmail.com>
-	 <20170530114138.jpcppn4j67niqhyb@perpetual.pseudorandom.co.uk>
-	 <1496145073.1459.1.camel@gmail.com>
-	 <3f12105e-11d8-abe6-762b-c5b762cf6b31@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.24.2 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Cc: Roee Hay <roeehay@gmail.com>
-Date: Tue, 30 May 2017 09:02:13 -0400
-From: Daniel Micay <danielmicay@gmail.com>
+Received: (qmail 14064 invoked from network); 23 Apr 2015 07:03:12 -0000
+In-Reply-To: <87oamxjwrc.fsf@redhat.com>
+Message-Id: <20150423070300.497C93320B1@smtpvbsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Thu, 23 Apr 2015 03:03:00 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Linux kernel: stack buffer overflow with
- controlled payload in get_options() function
-To: Florian Weimer <fweimer@redhat.com>, oss-security@lists.openwall.com
+Subject: [oss-security] Re: CVE request: ntp-keygen may generate non-random symmetric keys on big-endian systems
+To: mprpic@redhat.com
 
-On Tue, 2017-05-30 at 14:52 +0200, Florian Weimer wrote:
-> On 05/30/2017 01:51 PM, Daniel Micay wrote:
-> > It's unreasonable to consider the kernel line untrusted. A CVE being
-> > issued for one of these issues didn't make sense.
-> 
-> It's a potential Secure Boot bypass, so it matters in some theoretical
-> sense to some downstreams which carry those Secure Boot patches.
-> 
-> (Although I have yet to see anyone to revoke a signature on a kernel
-> with known root-to-ring-0 escalations, so the practical impact isn't
-> large because an attack could still downgrade to a kernel with an
-> exploitable vulnerability.)
-> 
-> Florian
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-How is it a secure boot bypass? If the secure boot implementation
-doesn't cover the kernel line it's already broken.
+> * [Bug 2797] ntp-keygen trapped in endless loop for MD5 keys on big-endian machines.
+> https://bugs.ntp.org/show_bug.cgi?id=2797
+> 
+> Patch: http://bk1.ntp.org/ntp-stable/?PAGE=patch&REV=55199296N2gFqH1Hm5GOnhrk9Ypygg
 
-The provided example was treated as a verified boot vulnerability by
-Google and fixed. It isn't supposed to be possible to set the kernel
-line with a locked bootloader on Nexus/Pixel devices. It was a bug.
+> While the endless loop is not a security flaw per se
+
+The unstated rationale here seems to be "ntp-keygen is a command-line
+program that is not normally exposed in a way that crosses privilege
+boundaries."
+
+The documentation mentions:
+
+  After setting up the environment it is advisable to update certificates
+  from time to time, if only to extend the validity interval.
+  Simply run
+  @code{ntp-keygen}
+  with the same flags as before to generate new certificates
+
+It seems plausible that some sites may have created a web interface so
+that operations staff can occasionally do a certificate update (maybe
+with a new key), but these staff don't have login access to the
+machine running NTP. The flaw would give them the new ability to
+(sometimes) launch a CPU consumption attack. However, we have not
+actually heard of anyone with a web-based ntp-keygen arrangement, so
+we currently don't want to assign a CVE ID for that.
+
+> the fact that
+> ntp-keygen generates non-random keys is. If the lowest byte of the temp
+> variable happens to be between 0x20 and 0x7f and not #, the generated
+> MD5 key will consist of 20 identical characters, meaning only 93
+> possible keys can be generated.
+
+Use CVE-2015-3405 for this code error that results in a key space
+that's much smaller than expected.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJVOJgkAAoJEKllVAevmvmsSUMH/3wjdFZGeR9ubvEm6Yb0tq9q
+lbbGuZSawcdPL/F45VYB+u75VTIjlJx6I693Rn+UwIvHYadOCARkk0/JBmf7GUyL
+ANPAxy8RW0QnvB9eByTgiX2SREtGVkIusRSgOB37mZf5+rsjNZTbcEojBO0rIOO3
+6PeslrWHMehqnp3rN8phCZWArinLCBaI/f+ohLLA0uYjpNM7MNvA1ULn9F0tuuic
+ZOPMTCLynPDm9gGXS0yv7HWuE5Jni05ngq6+NcAI7xeCqpJQQ2uBB1JmJrg12e/R
+yS/JSn+s7BFGb59/WPtg1fvIFiv2EAKU4DhhwP0vawzNCZcnZqESLF1umaQKsDs=
+=yDz2
+-----END PGP SIGNATURE-----
