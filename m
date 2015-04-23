@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["905" "Sunday" "18" "June" "2017" "01:20:31" "+0200" "Sebastian Pipping" "sebastian@pipping.org" "<e499fcaf-3255-5db3-7b3e-43261bbf8a9d@pipping.org>" "28" "[oss-security] Expat 2.2.1 security fixes" "^Date:" nil nil "6" "2017061723:20:31" "[oss-security] Expat 2.2.1 security fixes" (number mark "        sebastian@pi Jun 18   28/905   " thread-indent "\"[oss-security] Expat 2.2.1 security fixes\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["555" "Thursday" "23" "April" "2015" "03:04:23" "+0300" "Solar Designer" "solar@openwall.com" "<20150423000423.GA31439@openwall.com>" "17" "Re: [oss-security] USBCreator D-Bus service" nil nil nil "4" "2015042300:04:23" "[oss-security] USBCreator D-Bus service" (number mark "        solar@openwa Apr 23   17/555   " thread-indent "\"Re: [oss-security] USBCreator D-Bus service\"\n") "<CAJ_zFk+imjcZZTm8KwOZia0McwHZ2iQawpXoijRpejM9jt3PGA@mail.gmail.com>" ("<CAJ_zFk+imjcZZTm8KwOZia0McwHZ2iQawpXoijRpejM9jt3PGA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 24417 invoked by uid 550); 17 Jun 2017 23:20:45 -0000
+Received: (qmail 15584 invoked by uid 550); 23 Apr 2015 00:04:27 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,46 +11,34 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 24382 invoked from network); 17 Jun 2017 23:20:43 -0000
-Message-ID: <e499fcaf-3255-5db3-7b3e-43261bbf8a9d@pipping.org>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.1.1
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-Df-Sender: aGFydHdvcmtAYmluZXJhLmRl
-Date: Sun, 18 Jun 2017 01:20:31 +0200
-From: Sebastian Pipping <sebastian@pipping.org>
+Received: (qmail 15563 invoked from network); 23 Apr 2015 00:04:26 -0000
+Message-ID: <20150423000423.GA31439@openwall.com>
+References: <CAJ_zFk+imjcZZTm8KwOZia0McwHZ2iQawpXoijRpejM9jt3PGA@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAJ_zFk+imjcZZTm8KwOZia0McwHZ2iQawpXoijRpejM9jt3PGA@mail.gmail.com>
+User-Agent: Mutt/1.4.2.3i
+Date: Thu, 23 Apr 2015 03:04:23 +0300
+From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Expat 2.2.1 security fixes
+Subject: Re: [oss-security] USBCreator D-Bus service
 To: oss-security@lists.openwall.com
 
-Hi!
+Hi Tavis,
 
+On Wed, Apr 22, 2015 at 04:50:08PM -0700, Tavis Ormandy wrote:
+> [as-per previous discussion on the vendors list, skipping closed
+> discussion of low-severity issue]
 
-Expat 2.2.1 has been released.  The change log has more details [2] than
-this mail, including commit SHA1s.
-For a quick overview of the security fixes and CVEs, we have:
+What "vendors list" do you mean?  Do you possibly mean "vendor's" rather
+than "vendors" - that is, upstream's list?  (I do not recall seeing this
+on the linux-distros list.)
 
-   CVE-2017-9233  External entity infinite loop DoS [1]
-  (CVE-2016-9063) Integer overflow (re-fix)
-             n/a  More integer overflow fixes
-  (CVE-2016-0718) Fix regression bugs from 2.2.0's fix to CVE-2016-0718
-  (CVE-2016-5300) Use os-specific entropy sources like getrandom
-             n/a  No longer leak parser pointer information
-             n/a  Prevent use of uninitialised variables
-             n/a  Add missing API parameter validation (NULL, len<0)
-  (CVE-2012-0876) Counter hash flooding with SipHash
+Either way, it sounds weird to keep a low severity issue private.  Low
+severity usually means not needing an embargo in the first place.  But I
+guess it was the vendor's preference?
 
-If you control copies of Expat somewhere, please get them updated.
+Thanks,
 
-Best
-
-
-
-Sebastian
-
-
-[1] https://libexpat.github.io/doc/cve-2017-9233/
-[2] https://github.com/libexpat/libexpat/blob/master/expat/Changes
+Alexander
