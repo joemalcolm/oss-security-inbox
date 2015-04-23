@@ -1,4 +1,9 @@
-Received: (qmail 26099 invoked by uid 550); 2 Nov 2023 22:55:03 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1021" "Thursday" "23" "April" "2015" "18:36:09" "+0200" "Sven Kieske" "svenkieske@gmail.com" "<55391F79.8030809@gmail.com>" "35" "Re: [oss-security] tlsdate havoc ahead - default host randomizes tls timestamps" nil nil nil "4" "2015042316:36:09" "[oss-security] tlsdate havoc ahead - default host randomizes tls timestamps" (number mark "        svenkieske@g Apr 23   35/1021  " thread-indent "\"Re: [oss-security] tlsdate havoc ahead - default host randomizes tls timestamps\"\n") "<20150423173748.2c2a53d2@pc1.fritz.box>" ("<20150423173748.2c2a53d2@pc1.fritz.box>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 15847 invoked by uid 550); 23 Apr 2015 16:36:29 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,133 +11,66 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 15826 invoked from network); 23 Apr 2015 16:36:28 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:subject:references
+         :in-reply-to:content-type:content-transfer-encoding;
+        bh=ANcq5nJx8LaPQ3GElOEK2SgBqxs0U5bGrL0V65cDV+U=;
+        b=UkxTADPkj23U6UfvYS9Tj8BsBUXCgkCNN1yQueLfzoANZrwj3b2Bx6lbd4g8o0KgVC
+         5Kv3AESWqbB1qkftAkmfzzm5IjtP9Rf7Uc6rc0P4RCWkWu0q/s7yZG+Jme3zlP5DGWih
+         p+eyfvrbnszKheRms4ygTkuAIWULy564jZsARlVpH7CnJp2WxbCoD06Rv6v8Yo8VwTL/
+         kWi5yy+NKJXNHfKJDSJCucskzmmWdOnIqAYl5fhHLt5XFbSKUa+iDZWxPqJDaOiPsmAk
+         8LC/qtsCeRoQE60W9Z9Xo5k68eONAY0razUkfZgt+7DkhrS2npYQ2Yj+VATAbOhqmbCJ
+         +TKg==
+X-Received: by 10.194.9.161 with SMTP id a1mr7142198wjb.39.1429806977579;
+        Thu, 23 Apr 2015 09:36:17 -0700 (PDT)
+Message-ID: <55391F79.8030809@gmail.com>
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
+MIME-Version: 1.0
+References: <20150423173748.2c2a53d2@pc1.fritz.box>
+In-Reply-To: <20150423173748.2c2a53d2@pc1.fritz.box>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Date: Thu, 23 Apr 2015 18:36:09 +0200
+From: Sven Kieske <svenkieske@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 25831 invoked from network); 2 Nov 2023 22:54:42 -0000
-Date: Thu, 2 Nov 2023 23:54:34 +0100
-From: Solar Designer <solar@openwall.com>
+Subject: Re: [oss-security] tlsdate havoc ahead - default host randomizes
+ tls timestamps
 To: oss-security@lists.openwall.com
-Cc: David =?iso-8859-1?Q?Sch=F6gler?= <david.schoegler@gmail.com>,
-	security@bluez.org
-Message-ID: <20231102225434.GA13082@openwall.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-User-Agent: Mutt/1.4.2.3i
-Subject: [oss-security] Bluez, Intel wireless devices: Bluetooth Low Energy stuck in unresponsive state after repeated out of order transmission of packets
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-The below was brought to linux-distros back in March.  Due to the nature
-of the not-yet-researched issue, it was not actionable for distros,
-especially not within a 14 days embargo.  So was not a suitable thing to
-bring to linux-distros.  A linux-distros member promptly replied with:
+This shows imho
+that tlsdate is also not a very good idea.
 
-> Have you already notified the BlueZ Security group (security@bluez.org)? If not, please do so.
+I also don't get why it was invented, you jump from:
 
-and then we did not track this, so it was not noticed again until I
-started retroactively producing distros list statistics for 2023.  When
-I did, we tried asking David about it, and he provided this additional
-detail on October 24:
+"hey our old timekeeping protocol
+is totally insecure"
+to:
+"let's use this random protocol
+which was never designed for timekeeping
+but at least it's secure"
 
-> I redirected this problem to intel directly as it effects all distros and
-> windows as the problem is the network card reseting(which should not) which
-> is not handled correctly by the bluetooth stack under linux therefore the
-> weird behavior.
+turns out this does not work.
 
-We also tried contacting security@bluez.org on October 19 (and keeping
-them CC'ed later) and security@intel.com on October 24 (after David's
-reply above), but we haven't heard back from either.  I also got a
-couple of bounces for a specific person on security@bluez.org, where
-e-mail forwarding was failing authentication checks; I resent those
-messages to the forwarding target address directly, but also haven't
-heard back.  This makes me wonder if security@bluez.org works at all.
+kind regards
 
-David's message below included PNG images and pcap network capture files
-attached.  I do not re-attach them here because the PNGs are too large
-and I guess the pcaps could reveal David's internal network properties
-(e.g., MAC addresses), which he might not have intended to be public.
-David, please feel free to add tiny files (up to ~100 KiB _total_) in a
-reply if you feel any are relevant and suitable for this public posting.
+Sven
 
-Thanks,
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
 
-Alexander
-
------ Forwarded message from David Schögler <david.schoegler@gmail.com> -----
-
-From: David Schögler <david.schoegler@gmail.com>
-To: linux-distros
-Subject: [vs-plain] Bluetooth Low Energy stuck in unresponsive state after
- repeated out of order transmission of packets
-Date: Fri, 10 Mar 2023 19:07:51 +0100
-
-
-Hello, I would like to report a flaw in the implementation I found.
-
-I have seen the problem with the following cards:
-
-- Intel Wireless-AC 8265
-- Intel AX200
-Bluez 5.64 and Bluez 5.65 on arch Linux and kali Linux (keeping them
-at the newest state since finding) in both virtual machines on windows
-and native Linux.
-
-With the prerequisite:
-
-- We have an active advertising connectable Bluetooth Low Energy
-Service (Simple BLE UART from Bluez examples)
-
-Information about the attacker's hardware and intentions:
-- Used Nrf52840
-- Firmware is completely self-written
-- Goal of my research was to use automata learning to learn the state
-machine used in BLE implementations of different manufacturers and use
-this to find flaws/fingerprint hardware.
-
-
-I managed to bring the device to a state where nothing, but packets
-defined in the link layer of BLE will receive a response.
-Shown in the Wireshark pcaps(marked with "_attack") we can observe
-that the same input sequence of packets on the
-device will respond differently before and after we brought the device
-in this state. In the "before.png" and "after.png".
-We can observe that the system still sends the packets to the device
-but never receives any Number of Completed Packets Events.
-
-I was not able to pin point the problem inside the Linux kernel.
-
-To reproduce this behavior a repeated out-of-order transmission of
-packets is required:
-
-We had 2 types of queries consisting of:
-
-1) A secure pairing out of order:
-- CON_REQUEST() always with a unique mac address.
-- SM_Pairing_REQ with authentication=0x9,iocap=0x0
-- ATT_EXCHANGE_MTU_REQ()
-- SM_Public_Key()
-- FEAT_RSP()
-- LENGTH_REQ()
-- TERM_INDICATION()
-2) A just works pairing request out of order
-- CON_REQUEST() always with a unique mac address.
-- SM_Pairing_REQ with authentication=0x0,iocap=0x0
-- ATT_EXCHANGE_MTU_REQ()
-- FEAT_RSP()
-- LENGTH_REQ()
-- TERM_INDICATION()
-
-The behavior is reached by repeatedly mixing the 2 queries (maybe even
-in other situations but this process has brought me there).
-After a few tries, I could 100% reach this state where the card would
-not send any packets beyond BLE link layer packets.
-And it was only after resetting the controller that I got the correct
-behavior again.
-
-I hope I explained it clearly if there is any question I am happy to elaborate.
-
-Best Regards,
-David Sch??gler
-
------ End forwarded message -----
+iQGcBAEBCAAGBQJVOR94AAoJEAq0kGAWDrqlE3UMAJkIXR2V4ezhqFXQZ2CjaAlp
+EvI4CQ5ax5769bAtX+rYbMK0/4xJZple6vO60miaWJjzRxXl8i+twyZgixTyDgpy
+wvvDJOzHX0EVlCg04HhXOREdSCtKovtiwZAL51qXYiIVgX8MbvZh1lLGrEOmak5x
+l4e26PgO7HVP+8J/FVXVXMB/Zge8Zz8agGM/klaqxiQKSvhfiy+w+kLsFNoXsQa0
+v1JyQCGkRFuDRfGryOfgQk2f5wouby59aCHroIx0eV+BWR1mDnD8y/fksgzdMZWX
+4/Llo+xzrGDmNwyN0X7t9I55kvceN+DcKrtQPaBiHUAJoyixAh9OqTjQnq3CGDw5
+CfaIrJnQzJcrhmHtP8hmbiG93JyAOCnirwuCJUiam1db7nCcGiqhcavz6vymD1e3
+UVbLX1wN74EzlFidOed8vmk3IzGKe7D4SPysW+WLIuYaOiqryYd1eKd38rZ+U/dz
+8NqEAkEYbTw7OO2EzmqzQ0KEn/1XgXrNE5bPEXzZUQ==
+=bmuJ
+-----END PGP SIGNATURE-----
