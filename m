@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["922" "Tuesday" "26" "September" "2017" "16:53:53" "+0200" "Alex R" "alexr@apache.org" "<CAPNiXbGAjOKHZH02R+T5HbtXs0F8OLbPz=SZrG4G+ZqgX--wBA@mail.gmail.com>" "33" "[oss-security] CVE-2017-9790: Libprocess might crash when decoding an HTTP request with absent path." nil nil nil "9" "2017092614:53:53" "[oss-security] CVE-2017-9790: Libprocess might crash when decoding an HTTP request with absent path." (number mark "U       alexr@apache Sep 26   33/922   " thread-indent "\"[oss-security] CVE-2017-9790: Libprocess might crash when decoding an HTTP request with absent path.\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2507" "Wednesday" "22" "April" "2015" "23:20:04" "-0700" "Kurt Seifried" "kseifried@redhat.com" "<55388F14.6030903@redhat.com>" "61" "Re: [oss-security] Re: USBCreator D-Bus service" nil nil nil "4" "2015042306:20:04" "[oss-security] Re: USBCreator D-Bus service" (number mark "        kseifried@re Apr 22   61/2507  " thread-indent "\"Re: [oss-security] Re: USBCreator D-Bus service\"\n") "<55385A44.2030509@canonical.com>" ("<CAJ_zFk+imjcZZTm8KwOZia0McwHZ2iQawpXoijRpejM9jt3PGA@mail.gmail.com>" "<20150423000423.GA31439@openwall.com>" "<20150423002746.GD3854@hunt>" "<CAJ_zFk+xFe+BoS-gGabAhkzcbqNxaJF6=S78vn9PfZY+6sq3XA@mail.gmail.com>" "<55385A44.2030509@canonical.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 32071 invoked by uid 550); 26 Sep 2017 15:09:11 -0000
+Received: (qmail 5574 invoked by uid 550); 23 Apr 2015 06:20:24 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,55 +11,80 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32462 invoked from network); 26 Sep 2017 14:54:16 -0000
-X-Gm-Message-State: AHPjjUinRvZdwNGVp+Aw0HoFpIwW9QosMN2mbLpGryJ3VHUDUcf8XsIq
-	CPGkrCDwaMNrE05SWZ5DNWG+Cr0UrjIEKIshX74=
-X-Google-Smtp-Source: AOwi7QARIDncZvYlQEwtS1FZ0QbRn3Z4OhjPVW4C/eSivlzBYaJZtT4HXTsPiqxEtarwm79Ql1jPpAsk8PuVDhdcCGo=
-X-Received: by 10.176.85.94 with SMTP id u30mr10385148uaa.117.1506437633896;
- Tue, 26 Sep 2017 07:53:53 -0700 (PDT)
+Received: (qmail 5553 invoked from network); 23 Apr 2015 06:20:23 -0000
+Message-ID: <55388F14.6030903@redhat.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
 MIME-Version: 1.0
-From: Alex R <alexr@apache.org>
-Date: Tue, 26 Sep 2017 16:53:53 +0200
-X-Gmail-Original-Message-ID: <CAPNiXbGAjOKHZH02R+T5HbtXs0F8OLbPz=SZrG4G+ZqgX--wBA@mail.gmail.com>
-Message-ID: <CAPNiXbGAjOKHZH02R+T5HbtXs0F8OLbPz=SZrG4G+ZqgX--wBA@mail.gmail.com>
-To: dev <dev@mesos.apache.org>, user <user@mesos.apache.org>, 
-	Amon Flair <amon@nandynarwhals.org>, Lyon Yang <lyon.yang.s@gmail.com>, 
-	security <security@apache.org>, oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="f403045dd9740b776a055a18d813"
-Subject: [oss-security] CVE-2017-9790: Libprocess might crash when decoding an HTTP request
- with absent path.
+References: <CAJ_zFk+imjcZZTm8KwOZia0McwHZ2iQawpXoijRpejM9jt3PGA@mail.gmail.com>	<20150423000423.GA31439@openwall.com>	<20150423002746.GD3854@hunt> <CAJ_zFk+xFe+BoS-gGabAhkzcbqNxaJF6=S78vn9PfZY+6sq3XA@mail.gmail.com> <55385A44.2030509@canonical.com>
+In-Reply-To: <55385A44.2030509@canonical.com>
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="PmncpfdTlXx6f3CE0nEMp3Jm2FEuD6AFU"
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
+Date: Wed, 22 Apr 2015 23:20:04 -0700
+From: Kurt Seifried <kseifried@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Re: USBCreator D-Bus service
+To: oss-security@lists.openwall.com
 
---f403045dd9740b776a055a18d813
-Content-Type: text/plain; charset="UTF-8"
+--PmncpfdTlXx6f3CE0nEMp3Jm2FEuD6AFU
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Severity: Important
+On 04/22/2015 07:34 PM, Marc Deslauriers wrote:
+> On 2015-04-22 08:50 PM, Tavis Ormandy wrote:
+>> On Wednesday, April 22, 2015, Seth Arnold <seth.arnold@canonical.com> wr=
+ote:
+>>> On Thu, Apr 23, 2015 at 03:04:23AM +0300, Solar Designer wrote:
+>>>> Either way, it sounds weird to keep a low severity issue private.  Low
+>>>> severity usually means not needing an embargo in the first place.  But=
+ I
+>>>> guess it was the vendor's preference?
+>>>
+>>> In this case, no, Ubuntu would have preferred several days embargo for
+>>> this issue. Hypothetically speaking, Monday would have been ideal, as
+>>> we prefer to not release updates on Friday, Saturday, or Sunday.
+>>>
+>>> We treat local root escalation vulnerabilities with a high priority[1].
+>>
+>> I wish you had spoken up during the previous discussion. It was my
+>> impression that embargoes for local privilege escalations were universal=
+ly
+>> considered deprecated.
+>=20
+> Nonsense, embargoes for local or remote privilege escalations are still
+> considered to be high priority and should be handled with an embargo.
 
-Vendor:
-The Apache Software Foundation
+Please note that this is Ubuntu/Canonical speaking for themselves and
+not on behalf of the entire distros list.
 
-Versions Affected:
-Apache Mesos 1.1.0 to 1.3.0
-The unsupported Apache Mesos 1.0.x as well as 0.x versions may be also
-affected.
 
-Description:
-When handling a libprocess message wrapped in an HTTP request, libprocess
-crashes if the request path is empty, because the parser assumes the request
-path always starts with '/'. A malicious actor can therefore cause a denial
-of service of Mesos masters rendering the Mesos-controlled cluster
-inoperable.
+--=20
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-Mitigation:
-pre-1.1.x users should upgrade to at least 1.1.3
-1.1.x users should upgrade to 1.1.3
-1.2.x users should upgrade to 1.2.2
-1.3.0 users should upgrade to 1.3.1
-1.4.0-dev users should obtain Mesos 1.4.0
 
-Credit:
-This issue was discovered by Lyon Yang and Jeremy Heng
+--PmncpfdTlXx6f3CE0nEMp3Jm2FEuD6AFU
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
-Alex on behalf of Mesos PMC
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.22 (GNU/Linux)
 
---f403045dd9740b776a055a18d813--
+iQIcBAEBAgAGBQJVOI8UAAoJEBYNRVNeJnmTm5QQAJeENbHHBAXGvRevZ5raa7pG
+7g6TngrY/mMKydVr/wZaXxGo2aMxUwjg+NZ2XHAX4+6dAoj+2JKvuAhNhurrWMbQ
+DE/emdJICz5gOwXRwFLYsS54nochvzGVkCei7md5xrrHTFZzwfhvMCFNiGcvjBUw
+zVufnxxSkCg4UUOc89LfFpwt0zc6/glszw0PG/7OtkIQe29/2zJ7ePNaGWX/uuu1
+ymlZxYp+n2Jb8k2o6aHDRavnbFoGVcSEmss8c4GJji5hH9Ps3UR7ZjC6c/tmjTd3
+B9p9W5BFnpsHLv94tvsc16JghjpSGoniGGps51j3dtkAxnjIusLVgPtdcs4qF7SW
+B9a7iS4EgYAegvsTUdoWdJ5dguijBhHezuY6hDrDGbFpB3HTRigKds7X9bHVQFZB
+Fok71wrWNxqengBPQTAZIkJXXtOd6tm5iZNDvfn6vfH+8Go7X8ON/ZzIyd6EKG0V
+QKo7WtXDW5uZBXDlX5BFkn7aOD9d/3u7AYwAqGSNVpO0saRha6viW7rm3mIGouJI
+CnfablHgVynCPLhl8/IFliynj8monoUrQWJPAAk+9Cl5E0JaOh9OMEhDwNY+cGiV
+iZwHnBBoMkpvPVG7OupYYefvPNX1Hrd3IG6Td7fK3xSlQHeK7u2B3v3L2eJ3CHdk
+kignc+dkdYp/da07vKuQ
+=1HUq
+-----END PGP SIGNATURE-----
+
+--PmncpfdTlXx6f3CE0nEMp3Jm2FEuD6AFU--
