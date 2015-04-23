@@ -1,4 +1,9 @@
-Received: (qmail 28250 invoked by uid 550); 9 Apr 2026 15:26:50 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2325" "Wednesday" "22" "April" "2015" "23:22:33" "-0700" "Kurt Seifried" "kseifried@redhat.com" "<55388FA9.2090401@redhat.com>" "60" "Re: [oss-security] USBCreator D-Bus service" nil nil nil "4" "2015042306:22:33" "[oss-security] USBCreator D-Bus service" (number mark "        kseifried@re Apr 22   60/2325  " thread-indent "\"Re: [oss-security] USBCreator D-Bus service\"\n") "<20150423024947.GA753@openwall.com>" ("<CAJ_zFk+imjcZZTm8KwOZia0McwHZ2iQawpXoijRpejM9jt3PGA@mail.gmail.com>" "<20150423000423.GA31439@openwall.com>" "<20150423002746.GD3854@hunt>" "<CAJ_zFk+xFe+BoS-gGabAhkzcbqNxaJF6=S78vn9PfZY+6sq3XA@mail.gmail.com>" "<20150423024947.GA753@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 14191 invoked by uid 550); 23 Apr 2015 06:23:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,46 +11,79 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 23849 invoked from network); 9 Apr 2026 06:11:14 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=debian.org;
-	s=smtpauto.stravinsky; h=X-Debian-User:In-Reply-To:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=q8p9PohkszMGWvPveWzOO2gBCA2n2PoJUEv9e/K4myg=; b=rFBoBIE6PQrAqMIaqu9BakvKEh
-	xqjlG5F4hWVbj8k0il9IYLWw304B7sJZA/qJinJuMfKMTvkyYIZ1IdBBblbnnfsN4A9jDn4rulsx4
-	AdKGRi11LP/dIDGwJFcy95EP5K5JWNvwwBaMyggySH+on3yhUvsLmvsTyB4SwONsvwStbcFJdYxJN
-	724lt1Hfqf4zx1iSm4tJBPAxH2K1uByk4syaGJOfsj2fwEPYFY60k7tl1px0JBqWvagEaeACqGOQB
-	QvEpQnZiQo53z1hJjkbP6O9ej8ZQ2Mti5ID8G5aViXAY07ahF/S0OpecnJrP5w1if3Hl16orpxJlm
-	RhdINneA==;
-Date: Thu, 9 Apr 2026 08:11:03 +0200
-From: Salvatore Bonaccorso <carnil@debian.org>
-To: oss-security@lists.openwall.com
-Cc: adrelanos@whonix.org, arraybolt3@gmail.com
-Message-ID: <addC9yTFAPYQnzpi@eldamar.lan>
-References: <20260407200906.14b9bcc0@riseup.net>
+Received: (qmail 14164 invoked from network); 23 Apr 2015 06:23:04 -0000
+Message-ID: <55388FA9.2090401@redhat.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260407200906.14b9bcc0@riseup.net>
-X-Debian-User: carnil
-Subject: Re: [oss-security] systemd-journald in systemd 259 does not escape
- characters in emerg messages that are wall'd to other user's terminals
+References: <CAJ_zFk+imjcZZTm8KwOZia0McwHZ2iQawpXoijRpejM9jt3PGA@mail.gmail.com> <20150423000423.GA31439@openwall.com> <20150423002746.GD3854@hunt> <CAJ_zFk+xFe+BoS-gGabAhkzcbqNxaJF6=S78vn9PfZY+6sq3XA@mail.gmail.com> <20150423024947.GA753@openwall.com>
+In-Reply-To: <20150423024947.GA753@openwall.com>
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="oSNsshKXRDqSf64ChL7sdHtGCDESgCV8J"
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
+Date: Wed, 22 Apr 2015 23:22:33 -0700
+From: Kurt Seifried <kseifried@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] USBCreator D-Bus service
+To: oss-security@lists.openwall.com
 
-Hi Aaron,
+--oSNsshKXRDqSf64ChL7sdHtGCDESgCV8J
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Apr 07, 2026 at 08:09:06PM -0400, Aaron Rainbolt wrote:
-[...]
-> I discovered this while doing work for the Kicksecure and Whonix
-> projects. This bug was reported privately to upstream on December 23,
-> 2025. As per Kicksecure's Vulnerability Disclosure Policy [1], we're
-> disclosing it publicly on April 7, 2026, 90 days + a 14-day grace
-> period later. An upstream bug report can be seen at [2].
+On 04/22/2015 07:49 PM, Solar Designer wrote:
+> On Wed, Apr 22, 2015 at 05:50:35PM -0700, Tavis Ormandy wrote:
+>> On Wednesday, April 22, 2015, Seth Arnold <seth.arnold@canonical.com> wr=
+ote:
+>>> We treat local root escalation vulnerabilities with a high priority[1].
+>>
+>> I wish you had spoken up during the previous discussion. It was my
+>> impression that embargoes for local privilege escalations were universal=
+ly
+>> considered deprecated.
+>=20
+> I think Kurt's comment (in the linux-distros discussion) on not needing
+> further vulnerability reports embargoed applied solely to ABRT.
+>=20
+> I can see how this can appear as extending to any local root issues, for
+> users who have ABRT installed and enabled.
+>=20
+> Kurt might want to clarify this.
+>=20
+> Alexander
 
-JFYI, the reference to the issue: It currently say: "This issue has been
-deleted.". Is the issue reference correct, was it really deleted or is
-there a typo?
+Clarification won't be possible for a bit, I'm actually meeting with
+Tavis tomorrow to discuss this and other things (this was scheduled some
+time ago, it seems I was right in assuming this would become a bigger
+issue =3D).
 
-Regards,
-Salvatore
+
+--=20
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+
+--oSNsshKXRDqSf64ChL7sdHtGCDESgCV8J
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.22 (GNU/Linux)
+
+iQIcBAEBAgAGBQJVOI+pAAoJEBYNRVNeJnmT0JkP/0F4eRtjXK3+ekXWMXfV4cdN
+FmI3pIsIniCFuw+Hro43Mi4Fj2yQ4iVGcTYvKk4qCI6ppzo9vg3TgvJhMWidRcBv
+TdjEGllN+76tPxS7KIgK01tJd/CSAxXLzqT2XHdft10OLMbopOhdKXyTEDzs8S0q
+7wQeqrDu0v5xUaekD4+CRxblATM4cw5n+10DB56Bqxx7fDiXBVmyTmN3+kSOtSj4
+rnhtsid4jOYOv7I41H00EB+6Ya4zYdB9CEYQrj+2i1TMOApkJEACoYeq8xVrUBjX
+5WHRsGkHw0L0DdDLP3MsKvaRg3f+/B4cX/tfsjva9Gsq/wGMhyHVdWZomt82fZF/
+zp5YZQQzirYGDU2PvYo1Ifes7mkXlQXqUoQvkYVT1sZ7b5L0UM2QHjOk+UUxMRLg
+5CmhFk91F1/34hNdSK/PBQEG0z53IdA5tgTm52pWHBJvqS5nEs+ZXyWt6fCedbx5
+3+k+WgYve4wsaeNOz0xcHEprcJZPpfHmdCciG3Zl8UYuwa/Vm/CCSYyUVyqrOTN0
+AlaakrXURB60q95dXiune+A9fioguk6Kltub7uCoumZyNtL96hB7ghN7swQlgNTw
+MZ+xeeNpUJnqfxn5T08l3HPe3FOI3QkvSmgrOwM/8y2a+HZ56xmGSELFAO9+AmAo
+YCWucw9LfKrgr/3PXqCw
+=I/H6
+-----END PGP SIGNATURE-----
+
+--oSNsshKXRDqSf64ChL7sdHtGCDESgCV8J--
