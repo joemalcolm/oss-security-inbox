@@ -1,4 +1,9 @@
-Received: (qmail 1115 invoked by uid 550); 25 Jul 2023 17:06:15 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["669" "Friday" "24" "April" "2015" "09:50:11" "+0200" "Florian Weimer" "fweimer@redhat.com" "<5539F5B3.8090501@redhat.com>" "18" "Re: [oss-security] tlsdate havoc ahead - default host randomizes tls timestamps" nil nil nil "4" "2015042407:50:11" "[oss-security] tlsdate havoc ahead - default host randomizes tls timestamps" (number mark "        fweimer@redh Apr 24   18/669   " thread-indent "\"Re: [oss-security] tlsdate havoc ahead - default host randomizes tls timestamps\"\n") "<20150423173748.2c2a53d2@pc1.fritz.box>" ("<20150423173748.2c2a53d2@pc1.fritz.box>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 23886 invoked by uid 550); 24 Apr 2015 07:50:26 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,48 +11,37 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26563 invoked from network); 25 Jul 2023 16:54:31 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Junkai Xue <jxue@apache.org>
-To: oss-security@lists.openwall.com
-Message-ID: <d8fb0f6d-4865-c82f-91b7-d18788aaa16e@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 25 Jul 2023 16:54:17 +0000
+Received: (qmail 23868 invoked from network); 24 Apr 2015 07:50:25 -0000
+Message-ID: <5539F5B3.8090501@redhat.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2023-38647: Apache Helix: Deserialization vulnerability in
- Helix workflow and REST 
+References: <20150423173748.2c2a53d2@pc1.fritz.box>
+In-Reply-To: <20150423173748.2c2a53d2@pc1.fritz.box>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.24
+Date: Fri, 24 Apr 2015 09:50:11 +0200
+From: Florian Weimer <fweimer@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] tlsdate havoc ahead - default host randomizes
+ tls timestamps
+To: oss-security@lists.openwall.com
 
-Severity: important
+On 04/23/2015 05:37 PM, Hanno Böck wrote:
 
-Affected versions:
+> And there is some work done in the IETF to create a secure version of
+> ntp:
+> 
+> https://tools.ietf.org/html/draft-ietf-ntp-network-time-security-08
+> https://tools.ietf.org/html/draft-ietf-ntp-cms-for-nts-message-03
+> https://tools.ietf.org/html/draft-ietf-ntp-using-nts-for-ntp-00
 
-- Apache Helix through 1.2.0
+I've been arguing to replace the custom security protocol they have
+invented with DTLS.  The discussion is happening on the IETF NTP working
+group mailing list: <http://lists.ntp.org/listinfo/ntpwg>  (Note:
+somewhat unusual for IETF lists, it's moderated, for first-time posters
+at least.)
 
-Description:
 
-An attacker can use SnakeYAML to deserialize java.net.URLClassLoader and ma=
-ke it load a JAR from a specified URL, and then deserialize javax.script.Sc=
-riptEngineManager to load code using that ClassLoader. This unbounded deser=
-ialization can likely lead to remote code execution.=C2=A0The code can be r=
-un in Helix REST start and Workflow creation.
-
-Affect all the versions lower and include 1.2.0.
-
-Affected products: helix-core, helix-rest
-
-Mitigation: Short term, stop using any YAML based configuration and workflo=
-w creation.
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 Long term, a=
-ll Helix version bumping up to 1.3.0
-
-Credit:
-
-Qing Xu (reporter)
-
-References:
-
-https://helix.apache.org/
-https://www.cve.org/CVERecord?id=3DCVE-2023-38647
-
+-- 
+Florian Weimer / Red Hat Product Security
