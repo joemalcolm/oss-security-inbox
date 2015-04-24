@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["674" "Tuesday" "31" "May" "2016" "12:58:58" "+0200" "Stefan Cornelius" "scorneli@redhat.com" "<20160531125858.2a44a2f3@redhat.com>" "23" "[oss-security] ImageMagick CVEs" nil nil nil "5" "2016053110:58:58" "[oss-security] ImageMagick CVEs" (number mark "U       scorneli@red May 31   23/674   " thread-indent "\"[oss-security] ImageMagick CVEs\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["306" "Friday" "24" "April" "2015" "17:43:20" "+0200" "Florian Weimer" "fweimer@redhat.com" "<553A6498.1070406@redhat.com>" "11" "Re: [oss-security] Abusing TZ for fun (and little profit)" nil nil nil "4" "2015042415:43:20" "[oss-security] Abusing TZ for fun (and little profit)" (number mark "        fweimer@redh Apr 24   11/306   " thread-indent "\"Re: [oss-security] Abusing TZ for fun (and little profit)\"\n") "<20141214162028.GA5669@jwilk.net>" ("<20141015223532.GA4625@jwilk.net>" "<20141214162028.GA5669@jwilk.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 18068 invoked by uid 550); 31 May 2016 10:59:20 -0000
+Received: (qmail 19774 invoked by uid 550); 24 Apr 2015 15:43:34 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,40 +11,29 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 18046 invoked from network); 31 May 2016 10:59:19 -0000
-Date: Tue, 31 May 2016 12:58:58 +0200
-From: Stefan Cornelius <scorneli@redhat.com>
-To: oss-security@lists.openwall.com
-Cc: cve-assign@mitre.org
-Message-ID: <20160531125858.2a44a2f3@redhat.com>
+Received: (qmail 19753 invoked from network); 24 Apr 2015 15:43:33 -0000
+Message-ID: <553A6498.1070406@redhat.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+References: <20141015223532.GA4625@jwilk.net> <20141214162028.GA5669@jwilk.net>
+In-Reply-To: <20141214162028.GA5669@jwilk.net>
+Content-Type: text/plain; charset=windows-1252
 Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.24
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.26]); Tue, 31 May 2016 10:59:07 +0000 (UTC)
-Subject: [oss-security] ImageMagick CVEs
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
+Date: Fri, 24 Apr 2015 17:43:20 +0200
+From: Florian Weimer <fweimer@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Abusing TZ for fun (and little profit)
+To: oss-security@lists.openwall.com
 
-Hi,
+On 12/14/2014 05:20 PM, Jakub Wilk wrote:
 
-Can I have some CVEs for some ImageMagick issues:
+> Oh, and the glibc's tzfile parser is apparently not very robust:
+> https://bugs.debian.org/772705
 
-1) tga processing issue:
-https://github.com/ImageMagick/ImageMagick/commit/4f68e9661518463fca523c9726bb5d940a2aa6d8
+This should be addressed by this glibc commit:
 
-2) pict/icon processing issues:
-https://github.com/ImageMagick/ImageMagick/commit/0f6fc2d5bf8f500820c3dbcf0d23ee14f2d9f734
+  <https://sourceware.org/git/gitweb.cgi?p=glibc.git;h=42261ad731>
 
-Partial previous request:
-http://seclists.org/oss-sec/2015/q4/45
-
-3) ImageMagick,GraphicsMagick: Gnuplot delegate vulnerability allowing
-command injection
-http://git.imagemagick.org/repos/ImageMagick/commit/70a2cf326ed32bedee144b961005
-
-4) various other issues, previous request:
-http://seclists.org/oss-sec/2016/q1/398
-
-Thanks,
 -- 
-Stefan Cornelius / Red Hat Product Security
+Florian Weimer / Red Hat Product Security
