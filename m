@@ -1,4 +1,9 @@
-Received: (qmail 14206 invoked by uid 550); 29 Nov 2022 15:38:42 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["505" "Friday" "24" "April" "2015" "17:00:22" "+0200" "Marcus Meissner" "meissner@suse.de" "<20150424150022.GC25205@suse.de>" "15" "[oss-security] CVE request: X server crash by client" nil nil nil "4" "2015042415:00:22" "[oss-security] CVE request: X server crash by client" (number mark "        meissner@sus Apr 24   15/505   " thread-indent "\"[oss-security] CVE request: X server crash by client\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 25982 invoked by uid 550); 24 Apr 2015 15:00:36 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,131 +11,36 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13965 invoked from network); 29 Nov 2022 15:38:22 -0000
-Date: Tue, 29 Nov 2022 16:38:03 +0100
-From: Solar Designer <solar@openwall.com>
-To: Julien Pivotto <roidelapluie@prometheus.io>
-Cc: oss-security@lists.openwall.com
-Message-ID: <20221129153803.GA27229@openwall.com>
-References: <Y4X5opwfosliZ7+N@nixos>
-Mime-Version: 1.0
+Received: (qmail 25959 invoked from network); 24 Apr 2015 15:00:35 -0000
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Message-ID: <20150424150022.GC25205@suse.de>
+MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <Y4X5opwfosliZ7+N@nixos>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] CVE-2022-46146 in Prometheus' exporter toolkit: bypass basic authentication
+Organization: SUSE Linux GmbH, GF: =?iso-8859-1?Q?Felix_?=
+ =?iso-8859-1?Q?Imend=F6rffer=2C_Jane_Smithard=2C_Jennifer_Guild=2C_Dilip_?=
+ =?iso-8859-1?Q?Upmanyu=2C_Graham_Norton=2C_HRB_21284_=28AG_N=FCrnberg=29?=
+User-Agent: Mutt/1.5.21 (2010-09-15)
+Cc: cve-assign@mitre.org
+Date: Fri, 24 Apr 2015 17:00:22 +0200
+From: Marcus Meissner <meissner@suse.de>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE request: X server crash by client
+To: OSS Security List <oss-security@lists.openwall.com>,
+	xorg_security@x.org
 
-On Tue, Nov 29, 2022 at 01:22:58PM +0100, Julien Pivotto wrote:
-> The exporter toolkit is a go library intended at Prometheus exporters.
-> It provides some features that are useful for Prometheus exporters,
-> which work by exposing HTTP servers to be exposed by the Prometheus
-> server.
-> 
-> One of those features is basic authentication. To achieve this,
-> Prometheus requires you to store a bcrypt hash into a file, web.yml.
-> 
-> While bcrypt is fine, it takes by design a lot of time and resources to
-> compare a password with a hash. To limit this impact, we have a built-in
-> cache that caches the good and bad answers.
-> 
-> Once a request comes, we check it against the cache and decide whether
-> to allow the request. We also check that the user is valid. However, the
-> key for that cache is predictable:
-> 
-> hex(username + hashed password + input password)
-> 
-> If you know the bcrypted password, you can poison the cache and use that
-> cached positive value in a subsequent query:
-> 
-> Request 1:
-> 
-> username = username+hashed password
-> password = "fakepassword"
-> 
-> Request 2:
-> 
-> username = username
-> password = bcrypt(fakepassword)+"fakepassword"
-> 
-> "fakepassword" is used as bcrypted password when a user does not exist.
-> 
-> The fact that we save unhappy tentatives and that we validate
-> non-existing users against "fakepassword" is to prevent side channel
-> attacks that could reveal if a user exists in a system or not.
-> 
-> Prometheus 2.37.4 and 2.40.4 are out, with this fix. We recommend all
-> the exporters that depend on the repository to upgrade.
-> 
-> CVE-2022-46146 was assigned to this security report in our exporter
-> toolkit:
-> https://github.com/prometheus/exporter-toolkit/security/advisories/GHSA-7rg2-cxvp-9p7p
-> 
-> We would like to thank Lei Wan for the responsible disclosure of this
-> bug.
+Hi,
 
-The above describes the issue, but not the fix.  This left me curious.
+We got notified that the fix for CVE-2014-8092 introduced the possibility
+of a division by 0 when the "height" for the PutImage call is 0, leading
+to X server abort.
 
-The fix commit appears to be this:
+https://bugzilla.novell.com/show_bug.cgi?id=928520
 
-https://github.com/prometheus/exporter-toolkit/commit/5b1eab34484ddd353986bce736cd119d863e4ff5
+This was already fixed in January in X git.
+http://cgit.freedesktop.org/xorg/xserver/commit/?id=dc777c346d5d452a53b13b917c45f6a1bad2f20b
 
-It makes two changes:
+As this is a local denial of service, but might be triggerable by images with 0 height
+supplied externally, it might need a CVE.
 
-1. Rather than concatenate the original strings to produce the cache
-key, the 3 individual components are first hex-encoded and are then
-concatenated with colons as separators.
-
-2. Cache records for authentication against non-existent users with
-"fakepassword" no longer indicate that authentication passed.
-
-This appears sufficient to address the described issue.
-
-The caching is controversial.  A comment in cache.go says:
-
-// newCache returns a cache that contains a mapping of plaintext passwords
-// to their hashes (with random eviction). This can greatly improve the
-// performance of traffic-heavy servers that use secure password hashing
-// algorithms, with the downside that plaintext passwords will be stored in
-// memory for a longer time (this should not be a problem as long as your
-// machine is not compromised, at which point all bets are off, since basicauth
-// necessitates plaintext passwords being received over the wire anyway).
-
-IMO, storage of plaintext passwords in memory for longer doesn't become
-a non-issue just because plaintext passwords are also available during
-authentication.  A compromise might be short-lived and not every user
-who had logged in before would necessarily log in again while the server
-is compromised, so storage of plaintext passwords that might have been
-used a long time ago does make things worse and partially defeats the
-purpose of password hashing.  OTOH, in a persistent Go service they're
-likely to stay around anyway.
-
-Another (minor) concern is that the cache is indexed by password-derived
-material, making the password a bit more susceptible to local CPU cache
-timing attacks (after a leak of bcrypt's random salts to the attacker).
-bcrypt itself also does such indexing, but that's part of why it turned
-out to be relatively inefficient on GPUs, so it can be viewed as
-justified risk.  Is the risk from the cache also justified, by it saving
-computing resources (not under deliberate DoS, though)?  Maybe.
-Alternative designs of the cache are possible, but involve other
-non-trivial trade-offs and subtle detail.  If Go uses keyed hashing for
-its maps (does it? I don't know), that also provides a mitigation (while
-the random key is not leaked/inferred).
-
-Further, perhaps Go maps internally compare the provided key against
-some stored keys (within one hash bucket?), and that can probably
-involve a byte-by-byte comparison, kind of leaking the length of matched
-substring even to the remote client and potentially allowing to probe
-candidate passwords character-by-character (when hitting the same hash
-bucket).  This is mitigated by such probing also thrashing the cache and
-triggering the much slower bcrypt computation.
-
-To clarify, I am not suggesting that any changes to the code be made -
-they could as well introduce new issues, and would need a new review.
-Dropping of the cache is a pretty obvious change to make, but maybe the
-risks involved are no big deal for this specific service.
-
-I was just curious and I thought some others in here would be as well,
-so I am sharing observations and thoughts.
-
-Alexander
+Ciao, Marcus
