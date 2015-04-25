@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["880" "Saturday" "21" "January" "2017" "22:25:38" "-0800" "Alan Coopersmith" "alan.coopersmith@oracle.com" "<01becbfa-72eb-838e-4cfa-0891c392326f@oracle.com>" "30" "[oss-security] Re: [tigervnc-announce] TigerVNC 1.7.1" nil nil nil "1" "2017012206:25:38" "[oss-security] Re: [tigervnc-announce] TigerVNC 1.7.1" (number mark "U       alan.coopers Jan 21   30/880   " thread-indent "\"[oss-security] Re: [tigervnc-announce] TigerVNC 1.7.1\"\n") "<51f32d01-f8ef-889c-1fac-6f6d06ddab76@cendio.se>" ("<51f32d01-f8ef-889c-1fac-6f6d06ddab76@cendio.se>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["808" "Saturday" "25" "April" "2015" "16:40:10" "+0200" "Marcus Meissner" "meissner@suse.de" "<20150425144010.GC28124@suse.de>" "23" "Re: [oss-security] Re: CVE request: X server crash by client" nil nil nil "4" "2015042514:40:10" "[oss-security] Re: CVE request: X server crash by client" (number mark "        meissner@sus Apr 25   23/808   " thread-indent "\"Re: [oss-security] Re: CVE request: X server crash by client\"\n") "<20150425032220.EB99F6C0032@smtpvmsrv1.mitre.org>" ("<20150424150022.GC25205@suse.de>" "<20150425032220.EB99F6C0032@smtpvmsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 14277 invoked by uid 550); 22 Jan 2017 06:26:02 -0000
+Received: (qmail 14234 invoked by uid 550); 25 Apr 2015 14:40:23 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,50 +11,46 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 14244 invoked from network); 22 Jan 2017 06:26:00 -0000
-To: Pierre Ossman <ossman@cendio.se>, tigervnc-devel@googlegroups.com
-References: <51f32d01-f8ef-889c-1fac-6f6d06ddab76@cendio.se>
-Cc: oss-security@lists.openwall.com
-From: Alan Coopersmith <alan.coopersmith@oracle.com>
-Message-ID: <01becbfa-72eb-838e-4cfa-0891c392326f@oracle.com>
-Date: Sat, 21 Jan 2017 22:25:38 -0800
-User-Agent: Mozilla/5.0 (X11; SunOS i86pc; rv:45.0) Gecko/20100101
- Thunderbird/45.3.0
+Received: (qmail 14210 invoked from network); 25 Apr 2015 14:40:22 -0000
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Message-ID: <20150425144010.GC28124@suse.de>
+References: <20150424150022.GC25205@suse.de>
+ <20150425032220.EB99F6C0032@smtpvmsrv1.mitre.org>
 MIME-Version: 1.0
-In-Reply-To: <51f32d01-f8ef-889c-1fac-6f6d06ddab76@cendio.se>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Source-IP: userv0021.oracle.com [156.151.31.71]
-Subject: [oss-security] Re: [tigervnc-announce] TigerVNC 1.7.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20150425032220.EB99F6C0032@smtpvmsrv1.mitre.org>
+Organization: SUSE Linux GmbH, GF: =?iso-8859-1?Q?Felix_?=
+ =?iso-8859-1?Q?Imend=F6rffer=2C_Jane_Smithard=2C_Jennifer_Guild=2C_Dilip_?=
+ =?iso-8859-1?Q?Upmanyu=2C_Graham_Norton=2C_HRB_21284_=28AG_N=FCrnberg=29?=
+User-Agent: Mutt/1.5.21 (2010-09-15)
+Cc: cve-assign@mitre.org, xorg_security@x.org
+Date: Sat, 25 Apr 2015 16:40:10 +0200
+From: Marcus Meissner <meissner@suse.de>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Re: CVE request: X server crash by client
+To: oss-security@lists.openwall.com
 
-Is there a CVE assigned to this issue that we should use when passing this
-fix through to our packages/distros?  I don't see one mentioned in the commit
-or pull requests:
+On Fri, Apr 24, 2015 at 11:22:20PM -0400, cve-assign@mitre.org wrote:
+> > We got notified that the fix for CVE-2014-8092 introduced the possibility
+> > of a division by 0 when the "height" for the PutImage call is 0, leading
+> > to X server abort.
+> > 
+> > This was already fixed in January in X git.
+> > http://cgit.freedesktop.org/xorg/xserver/commit/?id=dc777c346d5d452a53b13b917c45f6a1bad2f20b
+> > 
+> > As this is a local denial of service, but might be triggerable by images with 0 height
+> > supplied externally, it might need a CVE.
+> 
+> Use CVE-2015-3418.
 
-https://github.com/TigerVNC/tigervnc/commit/18c020124ff1b2441f714da2017f63dba50720ba
-https://github.com/TigerVNC/tigervnc/pull/399
+thanks!
 
-Thanks,
+> > https://bugzilla.novell.com/show_bug.cgi?id=928520
+> 
+> This currently doesn't seem to be a public bug - we don't know whether
+> that's intentional.
 
-	-alan-
+opened it... was not open as it was under another product before.
 
-On 01/20/17 01:00 AM, Pierre Ossman wrote:
-> This is a security update for TigerVNC 1.7.0 which fixes a memory overflow issue
-> via the RRE decoder. A malicious server could possibly use this issue to take
-> control of the TigerVNC viewer.
->
-> Users are advised to upgrade as soon as possible.
->
-> Binaries are available from bintray:
->
-> https://bintray.com/tigervnc/stable/tigervnc/1.7.1
->
-> Regards
-> The TigerVNC Developers
->
-
-
--- 
-	-Alan Coopersmith-              alan.coopersmith@oracle.com
-	 Oracle Solaris Engineering - http://blogs.oracle.com/alanc
+Ciao, Marcus
