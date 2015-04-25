@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6457" "Friday" "14" "December" "2018" "17:45:18" "+0100" "Solar Designer" "solar@openwall.com" "<20181214164518.GA25363@openwall.com>" "133" "Re: [oss-security] Linux kernel: userfaultfd bypasses tmpfs file permissions (CVE-2018-18397; since 4.11; fixed in 4.14.87 and 4.19.7)" "^Cc:" nil nil "12" "2018121416:45:18" "[oss-security] Linux kernel: userfaultfd bypasses tmpfs file permissions (CVE-2018-18397; since 4.11; fixed in 4.14.87 and 4.19.7)" (number mark "        solar@openwa Dec 14  133/6457  " thread-indent "\"Re: [oss-security] Linux kernel: userfaultfd bypasses tmpfs file permissions (CVE-2018-18397; since 4.11; fixed in 4.14.87 and 4.19.7)\"\n") "<CAG48ez0FUckA3EfwRM5ha3u7PiA_b2NbQw-sE5oq4iuORBgr8A@mail.gmail.com>" ("<CAG48ez37UKxsRzpkxa8HbrWGAXWQ7H9OYjGzkaZgEmzY+QOF2Q@mail.gmail.com>" "<20181212142415.GA11037@openwall.com>" "<CAG48ez0FUckA3EfwRM5ha3u7PiA_b2NbQw-sE5oq4iuORBgr8A@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["488" "Saturday" "25" "April" "2015" "19:49:54" "+0100" "=?UTF-8?B?UMOhZHJhaWMgQnJhZHk=?=" "padraic.brady@gmail.com" "<CALwr1Gm-U0HojTKS3sZaZjjddCY7TT99QokJWpqcOBKEJsst=Q@mail.gmail.com>" "14" "[oss-security] Insufficient TLS Protection in Composer (PHP)" nil nil nil "4" "2015042518:49:54" "[oss-security] Insufficient TLS Protection in Composer (PHP)" (number mark "        padraic.brad Apr 25   14/488   " thread-indent "\"[oss-security] Insufficient TLS Protection in Composer (PHP)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 16111 invoked by uid 550); 14 Dec 2018 16:46:23 -0000
+Received: (qmail 22209 invoked by uid 550); 25 Apr 2015 19:20:55 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,153 +11,41 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 15697 invoked from network); 14 Dec 2018 16:45:26 -0000
-Message-ID: <20181214164518.GA25363@openwall.com>
-References: <CAG48ez37UKxsRzpkxa8HbrWGAXWQ7H9OYjGzkaZgEmzY+QOF2Q@mail.gmail.com> <20181212142415.GA11037@openwall.com> <CAG48ez0FUckA3EfwRM5ha3u7PiA_b2NbQw-sE5oq4iuORBgr8A@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAG48ez0FUckA3EfwRM5ha3u7PiA_b2NbQw-sE5oq4iuORBgr8A@mail.gmail.com>
-User-Agent: Mutt/1.4.2.3i
-Cc: Greg KH <greg@kroah.com>, Yves-Alexis Perez <corsac@debian.org>,
-	Brad Spengler <spender@grsecurity.net>,
-	Jann Horn <jannh@google.com>
-Date: Fri, 14 Dec 2018 17:45:18 +0100
-From: Solar Designer <solar@openwall.com>
+Received: (qmail 21544 invoked from network); 25 Apr 2015 18:50:05 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        bh=RXztLR0T9mcmIFfnfz+2xu43OAP4mqkg4sDqgKYooyM=;
+        b=gdU87Ki6gAc6nj8H0mD6Syu23o4RII8Z1ymP31rS8ujhlC+4dy9+Fzt7hY3XNK2pC3
+         ynbjAoHc+wP+xB5WqZixDvRMtIJUL0Ky7FQSzPIid54axS7yrbJgoTRn57NHCZ5mmlxY
+         Jm3xpfx1KswV5R8I4ULaAMrn7kyolugHCwwSrTBE/8BruUZfHtoNHoPz7RVheWMsnEgK
+         h/wVtEAGGPfQmN3oXVUwcTeh8apYsHEjg3a2D9srp1eEER8yp5i36UC6w6vFLmZ94OXt
+         64KzBr3zxCj2/jwGAQNmB4V9GPpHJFPBWaEV4e/hwzPf5x75Z1oxN7hO9MzQl15tx3tS
+         t5aw==
+MIME-Version: 1.0
+X-Received: by 10.194.185.229 with SMTP id ff5mr8235711wjc.30.1429987794217;
+ Sat, 25 Apr 2015 11:49:54 -0700 (PDT)
+Message-ID: <CALwr1Gm-U0HojTKS3sZaZjjddCY7TT99QokJWpqcOBKEJsst=Q@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Date: Sat, 25 Apr 2015 19:49:54 +0100
+From: =?UTF-8?Q?P=C3=A1draic_Brady?= <padraic.brady@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Linux kernel: userfaultfd bypasses tmpfs file permissions (CVE-2018-18397; since 4.11; fixed in 4.14.87 and 4.19.7)
+Subject: [oss-security] Insufficient TLS Protection in Composer (PHP)
 To: oss-security@lists.openwall.com
 
-On Fri, Dec 14, 2018 at 03:14:54PM +0100, Jann Horn wrote:
-> I think one additional aspect here is the kernel config.
+My I request a CVE ID for the following, which is a publicly disclosed
+unpatched vulnerability on Composer's issue tracker since 2012.
+Composer is an open source package manager for PHP. The specific issue
+pertaining to this request is a failure to perform TLS peer
+verification on remote requests when making any API request or
+retrieving any file, i.e. there is a singular client class.
 
-Definitely.  But relatively few people build their own per-machine
-kernels.  For many Linux distros, it's a choice of which base kernel to
-use and maintain, and then they enable plenty of features that are in
-any demand at all.
+Ref: https://github.com/composer/composer/issues/1074
 
-> From what
-> I've seen, distros tend to turn on all the config options because they
-> probably have some user, somewhere, who wants to use that feature; and
-> if you use that strategy for your kernel config, then yes, new
-> releases probably add new features and attack surface.
-> 
-> But since you're able to use a 3.10 kernel, evidently you don't need
-> those features. So I think it makes sense to, instead of comparing a
-> 3.10 distro kernel and a 4.19 distro kernel, look at an old and a new
-> kernel with the same feature set enabled.
+Kind regards,
+Paddy
 
-For someone doing their own kernel builds and bothering to spend time
-deciding on every option, yes.  This was slightly time-consuming in the
-2.0.x days.  Much more so later.  Probably unaffordable for most now.
-
-> Looking at the public Linux kernel bugs I filed in our bugtracker
-> (which, of course, are a very small number of bugs and probably not
-> very representative):
-
-Thank you for this impressive list!
-
-It starts Apr 25 2016, which is before I'd have considered RHEL7 kernels
-mature enough for purposes of this discussion.  Although it gets close.
-
-I started to comment on some of these, but I don't want us to be
-splitting hairs over old bugs that I don't have a perfect understanding
-of, so I deleted my comments and will instead summarize:
-
-In my first message in this thread I was focusing on issues
-that are: high or critical overall severity (not all of yours are),
-affect x86-64 kernel builds (although I didn't say so), and are fully
-exposed in a typical distro.  A weird fs type isn't sufficiently exposed
-even if compiled in, or if it is then I think that's a distro issue to
-be fixed.  I assume it normally takes at least plugging in a USB thumb
-drive or having privileges to be able to mount a rogue filesystem.
-
-> So by my count, that's roughly:
-> 
-> A) 5 bugs that were already in 3.10 (reiserfs, coredump leak, W+X
-> bypass, ARM64 perf_event_open(), perf_event_open()/execve() race)
-
-That's 3 low or medium severity, one non-x86-64, and one high+ severity
-but slightly before my time range (let's say, latest one year).
-
-> B) 3 additional bugs that were already in 3.10, and where the bug was
-> worse in old kernels than in the affected one (UAF via late TLB flush;
-> infoleak from the stack), or where modern kernels would mitigate the
-> issue (stack overflow)
-
-That's 1 high+ severity (UAF via late TLB flush).  The other two feel
-lower severity either because of lower impact (infoleak from the stack)
-or obscure prerequisites (stack overflow via ecryptfs).
-
-> C) 8 bugs that are gated behind config flags that you won't have set
-> if you haven't enabled new features after 3.10 (BPF and userfaultfd)
-> D) 9 bugs that are newer than 3.10 and that might be compiled in even
-> if you haven't enabled new features since 3.10 (user namespaces, VMA
-> UAF, kernel read into dmesg, TLB race, percpu refcounts, ext4, compat
-> adjtimex, RNG issues, mincore heap leak)
-
-(Un)fortunately, RHEL7 has backports of some of these features - IIRC,
-eBPF since RHEL 7.6, userfaultfd for a long time, user namespaces for a
-long time but disabled by default.
-
-If a feature is backported after it's had those bugs already found and
-fixed upstream, then those bugs don't count against that distro kernel.
-
-I could be wrong about some of the detail.  I mention it to illustrate
-how non-trivial it is to consider even a small set of bugs like this wrt
-different kernel versions and builds.
-
-This also means that my analysis of Kees' data was relatively easy only
-due to lack of detail (no vulnerability detail with that data, and no
-"3.10 RHEL7" kernel in the illustration).
-
-When each new high+ severity issue is found, what matters is whether it
-affects the kernel (in the chosen branch or distro) patched against the
-previous such issue or not.  We have no illustration on that.
-
-> I think it might be helpful to ensure that kernels used in
-> environments where you care about security are not configured with the
-> maximum amount of features possible, but instead adjusted to actual
-> requirements via kernel config and sysctls. Examples:
-> 
-> Regarding the specific bug that started this thread: userfaultfd is
-> enabled by distro kernels, but the only current usecase I'm aware of
-> is reduction of downtime for QEMU live migration. You probably don't
-> need it.
-> You might not need compat support.
-> You probably don't need support for every single filesystem Linux knows about.
-> eBPF is useful for some networking and performance tracing stuff, but
-> you probably don't actually need it to be available for non-root, even
-> if you do have a use for it.
-> 
-> This should let you avoid many bugs that are introduced as part of new
-> features; but of course, it doesn't do much against bugs introduced by
-> performance optimizations and such.
-> 
-> It sucks that distros shipping binary kernels kinda have to do the
-> opposite of this in order to fulfill their users' needs, at least for
-> config options where "build as a module" isn't an option. :( If
-> distros want to use a single kernel image for everything, perhaps
-> having more sysctls to lock down new features, in addition to the
-> kernel config, would help...
-
-Sure.  You and others should feel encouraged to identify such features
-that are currently compile-time only but could be made possible to
-enable/disable via sysctls and such, and contribute patches under KSPP
-or otherwise.  Then maybe we'll see distros enable fewer questionable
-features by default or/and more systems will have those features
-disabled by sysadmins.
-
-> > P.S. I guess Jann's message did not reach subscribers who are on Gmail
-> > and such because of google.com's DMARC policy.  So I made sure to quote
-> > all of it above.
-> 
-> Bleeh... I guess maybe I should use a @googlemail.com account for that...
-
-google.com has "p=reject", googlemail.com has "p=quarantine\;
-sp=quarantine", gmail.com has "p=none\; sp=quarantine\".  I know that
-mail from @gmail.com has been getting through via the list to recipients
-on Gmail fine.  I don't yet know if @googlemail.com will work just as
-well or not.  I hope it will.
-
-Alexander
+--
+P=C3=A1draic Brady
