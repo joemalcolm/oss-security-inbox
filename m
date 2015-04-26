@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1244" "Thursday" "8" "December" "2016" "16:03:16" "+0800" "Huawei PSIRT" "psirt@huawei.com" "<00fe01d25129$88fc70c0$9af55240$@com>" "42" "[oss-security] Re: CVE request Qemu: display: cirrus_vga: a divide by zero in cirrus_do_copy" nil nil nil "12" "2016120808:03:16" "[oss-security] Re: CVE request Qemu: display: cirrus_vga: a divide by zero in cirrus_do_copy" (number mark "U       psirt@huawei Dec  8   42/1244  " thread-indent "\"[oss-security] Re: CVE request Qemu: display: cirrus_vga: a divide by zero in cirrus_do_copy\"\n") "<alpine.LFD.2.20.1612081258430.26257@wniryva>" ("<alpine.LFD.2.20.1612081258430.26257@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1574" "Sunday" "26" "April" "2015" "13:30:00" "+0200" "Salvatore Bonaccorso" "carnil@debian.org" "<20150426112844.GA8340@eldamar.local>" "40" "[oss-security] Possible CVE Request: Wordpress 4.1.2 security release" nil nil nil "4" "2015042611:30:00" "[oss-security] Possible CVE Request: Wordpress 4.1.2 security release" (number mark "        carnil@debia Apr 26   40/1574  " thread-indent "\"[oss-security] Possible CVE Request: Wordpress 4.1.2 security release\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 13522 invoked by uid 550); 8 Dec 2016 14:25:14 -0000
+Received: (qmail 31944 invoked by uid 550); 26 Apr 2015 11:30:15 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,67 +11,70 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26600 invoked from network); 8 Dec 2016 08:03:42 -0000
-From: Huawei PSIRT <psirt@huawei.com>
-To: <ppandit@redhat.com>, <oss-security@lists.openwall.com>
-CC: <liq3ea@gmail.com>, <jiangxin1@huawei.com>,
-        Huawei PSIRT
-	<PSIRT@huawei.com>,
-        "Wanglijun (PSIRT)" <wanglijun.wanglijun@huawei.com>
-References: <alpine.LFD.2.20.1612081258430.26257@wniryva>
-In-Reply-To: <alpine.LFD.2.20.1612081258430.26257@wniryva>
-Date: Thu, 8 Dec 2016 16:03:16 +0800
-Message-ID: <00fe01d25129$88fc70c0$9af55240$@com>
+Received: (qmail 31924 invoked from network); 26 Apr 2015 11:30:14 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:date:from:to:cc:subject:message-id:mime-version:content-type
+         :content-disposition:user-agent;
+        bh=Rzc3WWCBFs/IhfellEKgB7gu+QQLgpXkqD4QzHMOmWo=;
+        b=FBbDOl55JYw2CiTCQJEuVenEJTXXrPcPQTBNSAQndpjP8rJZYNi94JQpNq219u6y9O
+         J97vfuzbe8d+UeyoBRQ6Oodf4gHxKx2lUMpezao14bPt1khp35yjBeu/Cj2r95jbJWdC
+         Bm6Iai6X810NHk/M9XSe4YjYlGzhwlVfYYSnZKGTzkuZ/EnbyNctkkwbiB+IauifivYf
+         tJ0NO/uBzvc3dPTIqbewZ9Y5FSYhFgOZ1lYMHFHLCj6w6oAcGZ7ObsVrsXRJ9K3BTMfd
+         u/L/sV52DmtQl5Wcl3UF/5XEcMfd93A85dTMcl0F5g2QxD/DhF+gcFCpxmFGxhnNVntR
+         5qHQ==
+X-Received: by 10.180.211.2 with SMTP id my2mr11792183wic.78.1430047803110;
+        Sun, 26 Apr 2015 04:30:03 -0700 (PDT)
+Message-ID: <20150426112844.GA8340@eldamar.local>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="gb2312"
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Office Outlook 12.0
-Thread-Index: AdJRJTYSGgbIY/QMTK+84OmKdP0g5AAAvYNg
-Content-Language: zh-cn
-X-Originating-IP: [10.111.192.85]
-X-CFilter-Loop: Reflected
-Subject: [oss-security] Re: CVE request Qemu: display: cirrus_vga: a divide by zero in cirrus_do_copy
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.5.23 (2014-03-12)
+Cc: CVE Assignments MITRE <cve-assign@mitre.org>
+Date: Sun, 26 Apr 2015 13:30:00 +0200
+From: Salvatore Bonaccorso <carnil@debian.org>
+Reply-To: oss-security@lists.openwall.com
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Subject: [oss-security] Possible CVE Request: Wordpress 4.1.2 security release
+To: OSS Security Mailinglist <oss-security@lists.openwall.com>
 
-Dear,
+Hi
 
-Could you please change the reporter information from PSIRTeam of Huawei Inc
-to Jiangxin <jiangxin1@huawei.com> of Huawei Inc. Thank you.
+I have not seen a request for CVEs for the issues fixed in the recent
+WordPress security release:
 
-Best regards,
-Huawei PSIRT
+https://wordpress.org/news/2015/04/wordpress-4-1-2/
 
------=D3=CA=BC=FE=D4=AD=BC=FE-----
-=B7=A2=BC=FE=C8=CB: P J P [mailto:ppandit@redhat.com]=20
-=B7=A2=CB=CD=CA=B1=BC=E4: 2016=C4=EA12=D4=C28=C8=D5 15:32
-=CA=D5=BC=FE=C8=CB: oss security list
-=B3=AD=CB=CD: liq3ea@gmail.com; psirt@huawei.com
-=D6=F7=CC=E2: CVE request Qemu: display: cirrus_vga: a divide by zero in
-cirrus_do_copy
+> WordPress 4.1.2 is now available. This is a critical security release
+> for all previous versions and we strongly encourage you to update your
+> sites immediately.
+> 
+> WordPress versions 4.1.1 and earlier are affected by a critical cross-
+> site scripting vulnerability, which could enable anonymous users to
+> compromise a site. This was reported by Cedric Van Bockhaven and fixed
+> by Gary Pendergast, Mike Adams, and Andrew Nacin of the WordPress
+> security team.
+> 
+> We also fixed three other security issues:
+> 
+>  * In WordPress 4.1 and higher, files with invalid or unsafe names
+>    could be uploaded. Discovered by Michael Kapfer and Sebastian
+>    Kraemer of HSASec.
+>  * In WordPress 3.9 and higher, a very limited cross-site scripting
+>    vulnerability could be used as part of a social engineering attack.
+>    Discovered by Jakub Zoczek.
+>  * Some plugins were vulnerable to an SQL injection vulnerability.
+>    Discovered by Ben Bidner of the WordPress security team.
+> 
+> We also made four hardening changes, discovered by J.D. Grimes, Divyesh
+> Prajapati, Allan Collins, Marc-Alexandre Montpas and Jeff Bowen.
+> 
+> We appreciated the responsible disclosure of these issues directly to
+> our security team. For more information, see the release notes or
+> consult the list of changes.
 
-   Hello,
+Could you please assign CVEs to identify the issues fixed by the
+latest WordPress release?
 
-Quick emulator(Qemu) built with the Cirrus CLGD 54xx VGA Emulator support is
-vulnerable to a divide by zero issue. It could occur while copying VGA data
-when cirrus graphics mode was set to be VGA.
-
-A privileged user inside guest could use this flaw to crash the Qemu process
-instance on the host, resulting in DoS.
-
-Upstream patch
---------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2016-12/msg00442.html
-
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=3D1334398
-
-This issue was independently reported by Qinghao Tang, Li Qiang of Qihoo
-360.cn Inc. and PSIRTeam of Huawei Inc.
-
-
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
-
+Regards,
+Salvatore
