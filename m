@@ -1,4 +1,9 @@
-Received: (qmail 16209 invoked by uid 550); 9 Feb 2024 17:34:05 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1138" "Sunday" "26" "April" "2015" "16:56:48" "+1000" "Shubham Shah" "admin@shubh.am" "<CAG8UnYPVfOtdRd4G7wcUQtJdRZYJS04AcpMadL0EPj0M_wUKHA@mail.gmail.com>" "33" "[oss-security] CVE request - TelescopeJS Information Leakage: User BCrypt password hash post-authentication" nil nil nil "4" "2015042606:56:48" "[oss-security] CVE request - TelescopeJS Information Leakage: User BCrypt password hash post-authentication" (number mark "        admin@shubh. Apr 26   33/1138  " thread-indent "\"[oss-security] CVE request - TelescopeJS Information Leakage: User BCrypt password hash post-authentication\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 5331 invoked by uid 550); 26 Apr 2015 06:57:00 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,60 +11,62 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 22404 invoked from network); 9 Feb 2024 17:18:27 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Houston Putman <houston@apache.org>
-To: oss-security@lists.openwall.com
-Message-ID: <7d5d3a96-7f33-e282-06b1-3bc28b8da908@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Fri, 09 Feb 2024 17:20:43 +0000
+Received: (qmail 5313 invoked from network); 26 Apr 2015 06:57:00 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
+         :content-type;
+        bh=tJxPJ0Dge4/smVXKgmMljWKp/c/pxu+8iwqOnz8hm3M=;
+        b=T0nzgBym6RSpVejw+fy+gVNqTAIlb+EsvRol7HLyDHsZ0eqM6TSAUKboRDGN8B6t2+
+         zFo1GzALzFUuGuuA0t791IM2S8pQ5873hjcfszk0crmuVPbi6LHH/YWz4XVxyRS0ROot
+         xDx+ojHtnoYFIunsqBAoxAuviuqvRKE3LYwGVkSVUHNlqBxgbGXo3gg/ZYEWlKH3WPHf
+         Rr848r1CI0JH9UAgHJTjgiGbe3RBxTCiqzjEJz6f/rHh4FkW90f5nKBFhxumP8YTa52E
+         w6v3fmKZ9faGeNB0lVue/BmfkKCp3IuP4ihOFgWBmYK88X/kr+8GWaTI3O1/Sk8/9Tzj
+         Sc3A==
+X-Gm-Message-State: ALoCoQldMKLAcmjEaMvw5i9ujP1J4aT7iFXIO7FGtdhmQpFWLadKCPZCk1cSrckPle7gTWGseHZo
 MIME-Version: 1.0
-Subject: [oss-security] =?UTF-8?Q?CVE-2023-50292=3A_Apache_Solr=3A_Solr_Sc?=
- =?UTF-8?Q?hema_Designer_blindly_=22trusts=22_all_c?=
- =?UTF-8?Q?onfigsets=2C_possibly_leading_to_RCE_by_?=
- =?UTF-8?Q?unauthenticated_users=20?=
+X-Received: by 10.180.211.102 with SMTP id nb6mr10611496wic.32.1430031408713;
+ Sat, 25 Apr 2015 23:56:48 -0700 (PDT)
+X-Originating-IP: [122.107.120.72]
+Message-ID: <CAG8UnYPVfOtdRd4G7wcUQtJdRZYJS04AcpMadL0EPj0M_wUKHA@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=001a11c38ab222635605149b225e
+Date: Sun, 26 Apr 2015 16:56:48 +1000
+From: Shubham Shah <admin@shubh.am>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE request - TelescopeJS Information Leakage: User BCrypt password
+ hash post-authentication
+To: oss-security@lists.openwall.com
 
-Severity: critical
+--001a11c38ab222635605149b225e
+Content-Type: text/plain; charset=UTF-8
 
-Affected versions:
+Hi,
 
-- Apache Solr 8.10.0 through 8.11.2
-- Apache Solr 9.0.0 before 9.3.0
+TelescopeJS leaks the users BCrypt password hash in incoming websocket
+messages once the user has authenticated. Due to the fact that TelescopeJS
+is an expressjs web application, it uses the model of storing session
+information in the browsers localStorage.
 
-Description:
+This means that if an attacker is able to find a single cross-site
+scripting flaw in MeteorJS, they would then be able to extract the users
+password hash from incoming websocket messages. This hash could then be
+cracked.
 
-Incorrect Permission Assignment for Critical Resource, Improper Control of =
-Dynamically-Managed Code Resources vulnerability in Apache Solr.
+The bcrypt hash is sent in incoming websocket messages every time the user
+object is needed by the application.
 
-This issue affects Apache Solr: from 8.10.0 through 8.11.2, from 9.0.0 befo=
-re 9.3.0.
+This vulnerability affects TelescopeJS installations below version 0.15.
 
-The Schema Designer was introduced to allow users to more easily configure =
-and test new Schemas and configSets.
-However, when the feature was created, the "trust" (authentication) of thes=
-e configSets was not considered.
-External library loading is only available to configSets that are "trusted"=
- (created by authenticated users), thus non-authenticated users are unable =
-to perform Remote Code Execution.
-Since the Schema Designer loaded configSets without taking their "trust" in=
-to account, configSets that were created by unauthenticated users were allo=
-wed to load external libraries when used in the Schema Designer.
+A discussion about these issues can be found here:
+https://github.com/TelescopeJS/Telescope/issues/838
 
-Users are recommended to upgrade to version 9.3.0, which fixes the issue.
+The commits leading to the fix for this flaw can be found here:
 
-This issue is being tracked as SOLR-16777=20
+https://github.com/TelescopeJS/Telescope/blob/dd6130637c00a8166cc4647153b441cb32b7ca61/lib/publications.js#L29-L31
 
-Credit:
+If any more details are required, please let me know.
 
-Skay (reporter)
+Thank you,
+Shubham
 
-References:
-
-https://solr.staged.apache.org/security.html#cve-2023-50298-apache-solr-can=
--expose-zookeeper-credentials-via-streaming-expressions
-https://solr.apache.org
-https://www.cve.org/CVERecord?id=3DCVE-2023-50292
-https://issues.apache.org/jira/browse/SOLR-16777
-
+--001a11c38ab222635605149b225e--
