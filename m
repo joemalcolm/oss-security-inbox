@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["604" "Tuesday" "20" "December" "2016" "18:18:03" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1612201815510.29699@wniryva>" "19" "[oss-security] CVE request Qemu: display: virtio-gpu-3d: OOB access while reading virgl capabilities" nil nil nil "12" "2016122012:48:03" "[oss-security] CVE request Qemu: display: virtio-gpu-3d: OOB access while reading virgl capabilities" (number mark "U       ppandit@redh Dec 20   19/604   " thread-indent "\"[oss-security] CVE request Qemu: display: virtio-gpu-3d: OOB access while reading virgl capabilities\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1379" "Monday" "27" "April" "2015" "11:16:06" "+0200" "Pierre Schweitzer" "pierre@reactos.org" "<553DFE56.3030102@reactos.org>" "37" "[oss-security] CVE request: incomplete fix for CVE-2013-4422" nil nil nil "4" "2015042709:16:06" "[oss-security] CVE request: incomplete fix for CVE-2013-4422" (number mark "        pierre@react Apr 27   37/1379  " thread-indent "\"[oss-security] CVE request: incomplete fix for CVE-2013-4422\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 22305 invoked by uid 550); 20 Dec 2016 12:48:26 -0000
+Received: (qmail 11624 invoked by uid 550); 27 Apr 2015 09:16:19 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,37 +11,53 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 22287 invoked from network); 20 Dec 2016 12:48:25 -0000
-Date: Tue, 20 Dec 2016 18:18:03 +0530 (IST)
-From: P J P <ppandit@redhat.com>
-X-X-Sender: pjp@javelin
-To: oss security list <oss-security@lists.openwall.com>
-cc: Zhenhao Hong <zhenhaohong@gmail.com>
-Message-ID: <alpine.LFD.2.20.1612201815510.29699@wniryva>
+Received: (qmail 11606 invoked from network); 27 Apr 2015 09:16:19 -0000
+Message-ID: <553DFE56.3030102@reactos.org>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.6.0
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.27
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.25]); Tue, 20 Dec 2016 12:48:13 +0000 (UTC)
-Subject: [oss-security] CVE request Qemu: display: virtio-gpu-3d: OOB access while reading
- virgl capabilities
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Date: Mon, 27 Apr 2015 11:16:06 +0200
+From: Pierre Schweitzer <pierre@reactos.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE request: incomplete fix for CVE-2013-4422
+To: OSS Security List <oss-security@lists.openwall.com>, 
+ cve-assign@mitre.org
 
-   Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Quick Emulator(Qemu) built with the Virtio GPU Device emulator support is 
-vulnerable to an out of bounds memory access issue. It could occur while 
-processing 'VIRTIO_GPU_CMD_GET_CAPSET' command.
+Dear all,
 
-A guest user/process could use this flaw to crash the Qemu process instance on 
-a host, resulting in DoS.
+It's been found that in Quassel, the CVE-2013-4422 was incorrectly
+fixed and that core was still vulnerable to SQL injection on reconnection.
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2016-12/msg01903.html
+This has been fixed with commit:
+https://github.com/quassel/quassel/commit/6605882f41331c80f7ac3a6992650a702ec71283
 
-This issue was reported by Zhenhao Hong, Marvel Team of 360.cn Inc.
+The incomplete bugfix had been released with Quassel 0.9.1:
+http://quassel-irc.org/node/120
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+With my best regards,
+- -- 
+Pierre Schweitzer <pierre@reactos.org>
+System & Network Administrator
+Senior Kernel Developer
+ReactOS Deutschland e.V.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iQIcBAEBCAAGBQJVPf5WAAoJEHVFVWw9WFsLidQP+QFVN33rAzw1OC7NRF1MW1yW
+uKo11iRnjt2F+WRl+0MlJR2ev5b3VirlDs19pfyD/JVJCI13FKnr8LtqKcLFvGQ/
+1XjQSKOPzoGttr2wvL84QkixjnsD4S6uVRwJvFyo8GoEbs5FTIGDLS8Jn8JqZaqG
+HRX9apwYiKwYzThPAMkbAS8v8VTmNhYiUfjmLBZzncJiRbJCGd3GSe6Znjsx7Zj5
+/Ge85szRnDrl/QFoW1G0w+Kcs4eyTtNaWoZftoblUqSNwe2/Wn77DKePOyQzClgh
+efuzFZy/8X728AsywI8O0UlxcyBTe0xjXUoxPuflUVzX18ZVrFdkWTqUisSxtl9a
+tCsm6TsXH3rSc/+fkgYvGUNADnv8koc5ej0KWHF/8LAkKhE8HwaehDHp2zVdfCnu
+czDy62DKJc6AW8X1aqAccXA1CpSzH/s+fBA7SZeS4w8h2cpsLaOIGHmgxvHxApzo
+NApdhDiv4LjooDyiAVaptGmT4w6S4XieuCnAz58J7f/hHgx1CPPSrrzCYVAFeIAK
+Seeyl45LoqyTkxK0uKs5savmhHHSNiTSo4tbpYoZ6nPwOzJorhWCxB2ozxNNu8V4
+jHpgh9gOCDV/ZcMIVSzQlhVZZdpZ9hVevYIPVk/ZQSZ2ZoY0cfxcT6y9KPudaqFY
++fKtOm4enoBnQWsjvJUz
+=Xd5Y
+-----END PGP SIGNATURE-----
