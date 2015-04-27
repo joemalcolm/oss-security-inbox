@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["8510" "Tuesday" "14" "August" "2018" "17:16:15" "+0000" "Xen.org security team" "security@xen.org" "<E1fpcvX-0005fq-35@xenbits.xenproject.org>" "214" "[oss-security] Xen Security Advisory 273 v1 (CVE-2018-3620,CVE-2018-3646) - L1 Terminal Fault speculative side channel" nil nil nil "8" "2018081417:16:15" "[oss-security] Xen Security Advisory 273 v1 (CVE-2018-3620,CVE-2018-3646) - L1 Terminal Fault speculative side channel" (number mark "U       security@xen Aug 14  214/8510  " thread-indent "\"[oss-security] Xen Security Advisory 273 v1 (CVE-2018-3620,CVE-2018-3646) - L1 Terminal Fault speculative side channel\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["935" "Monday" "27" "April" "2015" "21:34:28" "+0200" "Salvatore Bonaccorso" "carnil@debian.org" "<20150427193428.GA14638@eldamar.local>" "28" "Re: [oss-security] WordPress 4.2.1 security  update - CVE please" nil nil nil "4" "2015042719:34:28" "[oss-security] WordPress 4.2.1 security update - CVE please" (number mark "        carnil@debia Apr 27   28/935   " thread-indent "\"Re: [oss-security] WordPress 4.2.1 security  update - CVE please\"\n") "<20150427192901.GA20909@kronk.local>" ("<553E845E.4070503@redhat.com>" "<20150427190844.GA10378@eldamar.local>" "<20150427192901.GA20909@kronk.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 32542 invoked by uid 550); 14 Aug 2018 17:16:36 -0000
+Received: (qmail 3539 invoked by uid 550); 27 Apr 2015 19:34:41 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,232 +11,62 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32524 invoked from network); 14 Aug 2018 17:16:35 -0000
-Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
-Content-Transfer-Encoding: binary
+Received: (qmail 3515 invoked from network); 27 Apr 2015 19:34:41 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:date:from:to:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=qD/gH0lroVkdQMBN+Rkzz0Po7nP5fjcf3mD05OEwDIs=;
+        b=qgCImYFtJavF36lli0FQ6wFcoxt9n4LIkvpl86aoLaARYrDMtyXNCXpSip4s0BLxC7
+         U1/1q6H6xpd0YQozfTLwfvsSOtQ5Gq5B9bzqVMQYMJVdDjd2IqVifq7yPT+uzp96qrAa
+         520GVmmoQ41dc5XmnzbctUiXC0KizQV0DMrMHW1m+gX6zDkWKDLKTiJE84KMbrndEo4N
+         5C5CQwI1UcjHZkxnyzpqPNEdg1Pi3xlulv5qPsrHChBYU6OhVu4C3r6NGpQ+j0CYyWp0
+         CR6V4mGACdPbHIC3XaC3OTLM2dq85huLycwZHk07bkAQHAKJuVCOgv/fpALy3EHZb5GA
+         /oqw==
+X-Received: by 10.180.74.208 with SMTP id w16mr23450706wiv.31.1430163270009;
+        Mon, 27 Apr 2015 12:34:30 -0700 (PDT)
+Message-ID: <20150427193428.GA14638@eldamar.local>
+References: <553E845E.4070503@redhat.com>
+ <20150427190844.GA10378@eldamar.local>
+ <20150427192901.GA20909@kronk.local>
 MIME-Version: 1.0
-X-Mailer: MIME-tools 5.508 (Entity 5.508)
-To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
- xen-users@lists.xen.org, oss-security@lists.openwall.com
-From: Xen.org security team <security@xen.org>
-CC: Xen.org security team <security-team-members@xen.org>
-Message-Id: <E1fpcvX-0005fq-35@xenbits.xenproject.org>
-Date: Tue, 14 Aug 2018 17:16:15 +0000
-Subject: [oss-security] Xen Security Advisory 273 v1 (CVE-2018-3620,CVE-2018-3646) - L1
- Terminal Fault speculative side channel
-
---=separator
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 7bit
+In-Reply-To: <20150427192901.GA20909@kronk.local>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+Date: Mon, 27 Apr 2015 21:34:28 +0200
+From: Salvatore Bonaccorso <carnil@debian.org>
+Reply-To: oss-security@lists.openwall.com
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Subject: Re: [oss-security] WordPress 4.2.1 security  update - CVE please
+To: oss-security@lists.openwall.com, nacin@wordpress.org,
+	Assign a CVE Identifier <cve-assign@mitre.org>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi,
 
-     Xen Security Advisory CVE-2018-3620,CVE-2018-3646 / XSA-273
+On Mon, Apr 27, 2015 at 09:29:01PM +0200, Alessandro Ghedini wrote:
+> On Mon, Apr 27, 2015 at 09:08:44PM +0200, Salvatore Bonaccorso wrote:
+> > Hi Kurt,
+> > 
+> > On Mon, Apr 27, 2015 at 12:47:58PM -0600, Kurt Seifried wrote:
+> > > http://codex.wordpress.org/Version_4.2.1
+> > > 
+> > > Version 4.2.1 addressed a security issue.	For more information, see the
+> > > release notes.
+> > > 
+> > > From the announcement post, WordPress 4.2.1 fixes a critical cross-site
+> > > scripting (XSS) vulnerability, which could enable commenters to
+> > > compromise a site.
+> > 
+> > Had requested CVEs for this in
+> > http://www.openwall.com/lists/oss-security/2015/04/26/2 .
+> 
+> Note that this and your request are about two different wordpress releases (at
+> first I got confused too by the version numbers, 4.1.2 != 4.2.1).
 
-               L1 Terminal Fault speculative side channel
+Yes you right, sorry for the confusion (I mixed up 4.1.2 and 4.2.1).
 
-ISSUE DESCRIPTION
-=================
+Thanks for the correction.
 
-In x86 nomenclature, a Terminal Fault is a pagetable walk which aborts
-due to the page being not present (e.g. paged out to disk), or because
-of reserved bits being set.
-
-Architecturally, such a memory access will result in a page fault
-exception, but some processors will speculatively compute the physical
-address and issue an L1D lookup.  If data resides in the L1D cache, it
-may be forwarded to dependent instructions, and may be leaked via a side
-channel.
-
-Furthermore:
-  * SGX protections are not applied
-  * EPT guest to host translations are not applied
-  * SMM protections are not applied
-
-This issue is split into multiple CVEs depending on circumstance.  The
-CVEs which apply to Xen are:
-  * CVE-2018-3620 - Operating Systems and SMM
-  * CVE-2018-3646 - Hypervisors
-
-For more details, see:
-  https://www.intel.com/content/www/us/en/security-center/advisory/intel-sa-00161.html
-
-IMPACT
-======
-
-An attacker can potentially read arbitrary host RAM.  This includes data
-belonging to Xen, data belonging to other guests, and data belonging to
-different security contexts within the same guest.
-
-An attacker could be a guest kernel (which can manipulate the pagetables
-directly), or could be guest userspace either directly (e.g. with
-mprotect() or similar system call) or indirectly (by gaming the guest
-kernel's paging subsystem).
-
-VULNERABLE SYSTEMS
-==================
-
-Systems running all versions of Xen are affected.
-
-Only x86 processors are vulnerable.  ARM processors are not known to be
-affected.
-
-Only Intel Core based processors (from at least Merom onwards) are
-potentially affected.  Other processor designs (Intel Atom/Knights
-range), and other manufacturers (AMD) are not known to be affected.
-
-x86 PV guests fall into the CVE-2018-3620 (OS and SMM) category.  x86
-HVM and PVH guests fall into the CVE-2018-3646 (Hypervisors) category.
-
-MITIGATION
-==========
-
-This issue can be mitigated with a combination of software and firmware
-changes.
-
-Switching guests to being HVM with shadow paging enabled (hap=0 in
-xl.cfg) is believed to mitigate the vulnerability on systems which don't
-have terabytes of RAM.  However the performance impact of shadow paging
-in combination with in-guests Meltdown mitigations (KPTI, KVAS, etc)
-will most likely make this option prohibitive to use.
-
-RESOLUTION
-==========
-
-New microcode, and possibly a new firmware image is required to prevent
-SMM data from being leaked with this vulnerability.  Consult your
-hardware vendor.
-
-Software updates to Xen (details below) are required to prevent guests
-from being able to leak data belonging to Xen or to other guests in the
-system.
-
-Guest kernel software updates are required to prevent guest userspace
-from being able to leak data belonging to the kernel or other processes
-within the same guest.  Consult your OS vendors.
-
-1) For PV guests (which fall into the CVE-2018-3620 - OS/SMM case),
-   leakage of data from Xen or other guests can be prevented entirely
-   with software changes in Xen.
-
-   If the PV guest tries to write an L1TF-vulnerable PTE (for current
-   kernels, very likely when paging data out to disk), shadow paging is
-   activated and forced upon the guest.  Alternatively, if shadow paging
-   is compiled out, the guest is crashed instead.
-
-   Shadowing comes with a workload-dependent performance hit to the
-   guest.  Once the guest kernel software updates have been applied, a
-   well behaved guest will not write vulnerable PTEs, and will therefore
-   avoid the performance penalty (or crash) entirely.
-
-   This behaviour is active by default for guests on affected hardware
-   (controlled by `pv-l1tf=`), but is disabled by default for dom0.
-   Dom0's exemption is because of instabilities when being shadowed,
-   which are under investigation, but dom0 kernel updates should still
-   be taken to mitigate the userspace aspect.
-
-2) For HVM and PVH guests running with Hardware Assisted Paging (which fall
-   into the CVE-2018-3646 - Hypervisors case), leakage of data from Xen or
-   other guests can only be prevented entirely by disabling
-   SMT/Hyper-threading (if available and active in the BIOS), and by using the
-   L1D_FLUSH feature (available in the new microcode) on every VMEntry.
-
-   On affected hardware, L1D_FLUSH is enabled by default (controlled by
-   `spec-ctrl=[no-]l1d-flush`), subject to microcode availability.
-
-   However, SMT/Hyper-threading is not disabled by default, because Xen does
-   not have enough information to choose an appropriate default.  Safety can
-   be arranged in a number of ways by the toolstack, including with finer
-   granularity than simply on or off.
-
-   Therefore, users are expected to perform a risk assessment of their
-   deployment, and explicitly chose a default (`smt=<bool>`).  See the RISK
-   ASSESSMENT section below.  Xen will issue a warning at boot on vulnerable
-   hardware when no explicit smt choice has been set.
-
-There are ongoing experimentation and development efforts to find lower
-overhead mitigations for the HVM case.
-
-
-We are not supplying separate patches because the changes have many
-complicated prerequisites.  To get the fixes, it is necessary to
-update to the latest Xen applicable staging-XX branch.
-
-The relevant git commit object ids are as follows:
-
-d757c29ffe2e31b15397e43cd58da88b6318b654 staging-4.11
-13e85a6dbc1eeda4f95c0d3afcd205579eab5909 staging-4.10
-14f90aaef8d441cbdece5b74829e85e767fb196c staging-4.9
-d95b5bb31e6d4361e356f0ff0853b6bb172a8b6a staging-4.8
-9b8375a272ad02d8d0c229b3e3e7989e852734d8 staging-4.7
-e1b03b03b199bd206c81286b4f51b6a681123eda staging-4.6
-aa67b97ed34279c43a43d9ca46727b5746caa92e staging          # xen-unstable
-
-In each case the tip commit is "xl.conf: Add global affinity masks".
-
-
-RISK ASSESSMENT OF SMT/HYPER-THREADING
-======================================
-
-1) If hyper-threading is unavailable, or already disabled in the BIOS, no
-   further action is necessary.
-
-2) If you are using exclusively PV or HVM Shadow guests, hyper-threading has
-   no impact on security, and is safe to remain enabled.
-
-3) If an HVM guest kernel is trusted (i.e. under host admin control), and has
-   been updated to include the OS vendor mitigations, then it is probably safe
-   to be scheduled with hyper-threading active.
-
-4) If an HVM guest kernel is untrusted (i.e. not under host admin control), it
-   is probably not safe to be scheduled with hyper-threading active.
-
-FINER GRAINED SMT/HYPER-THREADING CONTROL WITH TOOLSTACK SETTINGS
-=================================================================
-
-New options (vm.cpumask, vm.hvm.cpumask and vm.pv.cpumask) have been
-added in the xl/libxl toolstack to provide global control over CPU
-hard affinity settings.  The global masks are applied when a guest is
-created or when a vcpu is pinned.
-
-Sketch of how to use the new options:
-  1. Livepatch the hypervisor.
-  2. Identify all sibling threads and partition them with the new
-     options in xl.conf.
-  3. For each DomU, run `xl vcpu-pin $DOM all all`, which should
-     cause the global masks to be applied to all vcpus of a DomU.
-  4. Verify the required affinity has taken effect by running `xl
-     vcpu-list`.
-
-The default behaviour of xl is to always apply global masks unless
-`--ignore-global-affinity-masks` is specified.  Please refer to
-xl.conf(5) for details.
-
-NOTE CONCERNING CVE-2018-3615
-=============================
-
-CVE-2018-3615 covers the interaction of L1TF and Intel SGX.  Xen has
-no support for enclaves in any currently released version, so no Xen
-systems are affected.
-
-NOTE REGARDING LACK OF EMBARGO
-==============================
-
-Despite an attempt to organise predisclosure, the discoverers ultimately
-did not authorise a predisclosure.
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQEcBAEBCAAGBQJbcw4zAAoJEIP+FMlX6CvZZ0AIAMqgsxv05j191DxrphhMPgLT
-9LybN7bCQU4z5bhufI0DQdppVU/WmAqhlVHL/Q9OJO1nnlTuGI0demuaObTnL6q0
-HSNeC5ZArKT24qunr9hSzysG8LS5HI9lsIxYYz4FOSFOK6kn5MuQj5Z+ZdID/XTx
-9/S21UfDvZPLhbxyqXmLfENzVkVOf+6NA/Ebl+0//sfbq/QtZAA0k63t3ZWatTPV
-1heFGkb3Agmq5D/wtoKfcVbCmg2CU41/T9kXk4j1ADmIRc0FLjV/bXP16PC/XByP
-a+HmSG+nIWkYBpqYhDBu9M6lXeZb9bi2Oeh16FRuF5l28BbZcp3Zk19VUoSkgi4=
-=NRkR
------END PGP SIGNATURE-----
-
---=separator--
+Regards,
+Salvatore
