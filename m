@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2342" "Tuesday" "14" "March" "2017" "16:33:34" "-0400" "Larry W. Cashdollar" "larry0@me.com" "<59CD5258-22E2-46F1-83AF-EE4B78EFD88D@me.com>" "54" "[oss-security] Arbitrary file download vulnerability in Wordpress Plugin Membership Simplified v1.58" "^Date:" nil nil "3" "2017031420:33:34" "[oss-security] Arbitrary file download vulnerability in Wordpress Plugin Membership Simplified v1.58" (number mark "U       larry0@me.co Mar 14   54/2342  " thread-indent "\"[oss-security] Arbitrary file download vulnerability in Wordpress Plugin Membership Simplified v1.58\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2566" "Monday" "27" "April" "2015" "21:29:01" "+0200" "Alessandro Ghedini" "alessandro@ghedini.me" "<20150427192901.GA20909@kronk.local>" "70" "Re: [oss-security] WordPress 4.2.1 security  update - CVE please" nil nil nil "4" "2015042719:29:01" "[oss-security] WordPress 4.2.1 security update - CVE please" (number mark "        alessandro@g Apr 27   70/2566  " thread-indent "\"Re: [oss-security] WordPress 4.2.1 security  update - CVE please\"\n") "<20150427190844.GA10378@eldamar.local>" ("<553E845E.4070503@redhat.com>" "<20150427190844.GA10378@eldamar.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 9373 invoked by uid 550); 14 Mar 2017 20:33:49 -0000
+Received: (qmail 26097 invoked by uid 550); 27 Apr 2015 19:29:14 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,85 +11,92 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 9355 invoked from network); 14 Mar 2017 20:33:48 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=me.com; s=4d515a;
-	t=1489523616; bh=9KhqytiDrJxSf+c05pUkL8KaCvB7GotOKTXOHoIkR2A=;
-	h=From:Content-type:Subject:Message-id:Date:To:MIME-version;
-	b=ROLbHDpCm8r59202896bBbKDbtOBNKYmgQRbp6O8+XwjpeDZ+VZ/VAuYRS6kJjD/H
- rCED0To+cIXv6jNxOFFmIXbmfHpc/8ThvlSc/LBO57nSZWklRy/rgPcgmc9nzRCmW1
- bWBkDV0Ype9+e1gS15prBVx+u0Rl/YXpRWEEn42Tehh+jErBnyESX0atXThuxF7at8
- TOJuh1vu03F7Or2MYu1oyYhjjYXJyBPe+5ZwWUW7j8fs5+Bjf1VC67pqFOq3N8gqV4
- BHiDZJwQVYuIuogf9yS05RhyElbk5t/5IPq+oCho3BQ5dc7IWrAEoAQbSy91CdKKrh
- 3/Ll6Hxhi4JfA==
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:,,
- definitions=2017-03-14_11:,, signatures=0
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
- clxscore=1034 suspectscore=0 malwarescore=0 phishscore=0 adultscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.0.1-1701120000 definitions=main-1703140157
-Content-type: text/plain; charset=utf-8
-Content-transfer-encoding: quoted-printable
-Message-id: <59CD5258-22E2-46F1-83AF-EE4B78EFD88D@me.com>
-MIME-version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-X-Mailer: Apple Mail (2.3124)
-Date: Tue, 14 Mar 2017 16:33:34 -0400
-From: "Larry W. Cashdollar" <larry0@me.com>
+Received: (qmail 26076 invoked from network); 27 Apr 2015 19:29:13 -0000
+Message-ID: <20150427192901.GA20909@kronk.local>
+Mail-Followup-To: oss-security@lists.openwall.com, nacin@wordpress.org,
+	Assign a CVE Identifier <cve-assign@mitre.org>
+References: <553E845E.4070503@redhat.com>
+ <20150427190844.GA10378@eldamar.local>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="sdtB3X0nJg68CQEu"
+Content-Disposition: inline
+In-Reply-To: <20150427190844.GA10378@eldamar.local>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+Cc: nacin@wordpress.org, Assign a CVE Identifier <cve-assign@mitre.org>
+Date: Mon, 27 Apr 2015 21:29:01 +0200
+From: Alessandro Ghedini <alessandro@ghedini.me>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Arbitrary file download vulnerability in Wordpress Plugin Membership
- Simplified v1.58
-To: Open Source Security <oss-security@lists.openwall.com>
+Subject: Re: [oss-security] WordPress 4.2.1 security  update - CVE please
+To: oss-security@lists.openwall.com
 
-Title: Arbitrary file download vulnerability in Wordpress Plugin Membership=
- Simplified v1.58
-Author: Larry W. Cashdollar, @_larry0
-Date: 2017-03-13
-CVE-ID:[CVE-2017-1002008]
-Download Site: https://wordpress.org/plugins/membership-simplified-for-oap-=
-members-only
-Vendor: https://profiles.wordpress.org/williamdeangelis/
-Vendor Notified: 2017-03-13
-Vendor Contact: plugins@wordpress.org
-Advisory: http://www.vapidlabs.com/advisory.php?v=3D187
-Description: Membership Simplified allows you to generate membership lesson=
-s with templated content to create a unified look and feel throughout your =
-courses.
-Vulnerability:
-The file download code located membership-simplified-for-oap-members-only/d=
-ownload.php does check whether a user is logged in and has download privled=
-ges, the code on line 5 that checks the path can be defeated by using a ...=
-/./ pattern to get the desired ../ after being passed through the str_repla=
-ce() function:
+--sdtB3X0nJg68CQEu
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
- 3 $path =3D substr(getcwd(), 0, -50). "uploads/membership-simplified-for-o=
-ap-members-only/"; // change the path to fit your websites document structu=
-re
-  4 $fullPath =3D $path.$_GET['download_file'];
-  5 $fullPath =3D str_replace("../","",$fullPath);
-  6=20
-  7 if ($fd =3D fopen($fullPath, "r")) {
-  8     $fsize =3D filesize($fullPath);
-  9     $path_parts =3D pathinfo($fullPath);
- 10     $ext =3D strtolower($path_parts["extension"]);
- 11     switch ($ext) {
- 12         case "pdf":
- 13         header("Content-type: application/pdf"); // add here more heade=
-rs for d    iff. extensions
- 14         header("Content-Disposition: attachment; filename=3D\"".$path_p=
-arts["base    name"]."\""); // use 'attachment' to force a download
- 15         break;
- 16         default;
- 17         header("Content-type: application/octet-stream");
- 18         header("Content-Disposition: filename=3D\"".$path_parts["basena=
-me"]."\"")    ;
- 19     }
- 20     header("Content-length: $fsize");
- 21     header("Cache-control: private"); //use this to open files directly
- 22     while(!feof($fd)) {
- 23         $buffer =3D fread($fd, 2048);
- 24         echo $buffer;
+On Mon, Apr 27, 2015 at 09:08:44PM +0200, Salvatore Bonaccorso wrote:
+> Hi Kurt,
+>=20
+> On Mon, Apr 27, 2015 at 12:47:58PM -0600, Kurt Seifried wrote:
+> > http://codex.wordpress.org/Version_4.2.1
+> >=20
+> > Version 4.2.1 addressed a security issue.	For more information, see the
+> > release notes.
+> >=20
+> > From the announcement post, WordPress 4.2.1 fixes a critical cross-site
+> > scripting (XSS) vulnerability, which could enable commenters to
+> > compromise a site.
+>=20
+> Had requested CVEs for this in
+> http://www.openwall.com/lists/oss-security/2015/04/26/2 .
 
-Exploit Code:
-	=E2=80=A2 $ curl http://example.com/wordpress/wp-content/plugins/membershi=
-p-simplified-for-oap-members-only/download.php?download_file=3D..././..././=
-..././..././..././..././..././..././etc/passwd
-	=E2=80=A2=20=20=
+Note that this and your request are about two different wordpress releases =
+(at
+first I got confused too by the version numbers, 4.1.2 !=3D 4.2.1).
+
+> But there is as well a different stored XSS reported
+> http://klikki.fi/adv/wordpress2.html which seems to affect as well the
+> latest wordpress versions (not verified myself).
+
+This blog post seems to be about the same issue fixed in 4.2.1: it talks ab=
+out
+comments length when inserted in the database, which is what commit [0] see=
+ms
+to fix (basically the only commit in the 4.2.1 release [1]). Also, both the
+wordpress announce and the blog post credit the vulnerability discovery to =
+the
+same person.
+
+(All this to say that we need CVEs for both the 4.1.2 and the 4.2.1 release=
+s:
+they fix different issues).
+
+Cheers
+
+[0] https://core.trac.wordpress.org/changeset/32307/branches/4.2
+[1] https://core.trac.wordpress.org/log/branches/4.2
+
+--sdtB3X0nJg68CQEu
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCgAGBQJVPo36AAoJEK+lG9bN5XPLWyIP/0XVmYEpsbXk7+vmO2bwvSIa
+3w0+KD/kv1lQqHwCMeC6LGWMBFYKY3pd1vRL1ay6BkXr7KMY6CTxATrI/cLHBwO6
+JX67tTFcZ334w/8bHsU/1TgUm8E+jT31KupvnoHi2rP8CW61Rp+AAVZA4cyO7/pj
+cEtim4OXdpNhjQnGw5lBOMWUGxB1SwwfjtoqHU5t+ZGmOBaQRB83uZDdCXrpaz81
+fJPif1RYP3kceOKHJEWDgpAdu1k9tpkBQTE4YiP8VG1JpPOZclDceJhILCY8BjXg
+cUvRlJyK9NYjp1ZnC1zaDKhRSJ1liMV57Xw0hL6CLmWQ2OstmxRhnLJ8hSqhC3AE
+Pbqxs6beloZDD4sC8/RQqLtUJNsY1VgNhr0TPkDxNtxOdUcEgMGoimqj3v5dywc+
+0JTKBKrfipxfeyBdL7QZOmweyCiTvIkoSSg5Ne+HQ2iQrQICEg1l2s2Xw3hgnx4l
+YSld9S1Lh9NugoJ9LFXEbsTX3XPn00hiNMa3O9vQeJ+Jwc+v+5BHI/CH9wYcyzxp
+wg4GZjsYMPxu/IktdaKtL9up5vWpulH5JUK8n678ukPbhxBsdF9xRo3Qm7/Epeeq
+eV3iiMD0xyqWyl51Vrm+EIewqitCYIHX9H5Oy2fOkeLCJF+429SDUsPCuOW+QBUZ
+S98SUTzolejgCuo8SA31
+=MGQA
+-----END PGP SIGNATURE-----
+
+--sdtB3X0nJg68CQEu--
