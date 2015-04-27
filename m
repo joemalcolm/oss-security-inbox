@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1750" "Monday" "5" "October" "2015" "12:28:06" "+0200" "Andreas Stieger" "astieger@suse.com" "<561250B6.9070102@suse.com>" "50" "Re: [oss-security] CVE request: Heap overflow with a gif file in gdk-pixbuf < 2.32.1" nil nil nil "10" "2015100510:28:06" "[oss-security] CVE request: Heap overflow with a gif file in gdk-pixbuf < 2.32.1" (number mark "U       astieger@sus Oct  5   50/1750  " thread-indent "\"Re: [oss-security] CVE request: Heap overflow with a gif file in gdk-pixbuf < 2.32.1\"\n") "<CACn5sdTCA42QQcgRzw4u6jSVAyXovch8qgG4oAgMm3G0in=hPQ@mail.gmail.com>" ("<CACn5sdTCA42QQcgRzw4u6jSVAyXovch8qgG4oAgMm3G0in=hPQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["658" "Monday" "27" "April" "2015" "21:08:44" "+0200" "Salvatore Bonaccorso" "carnil@debian.org" "<20150427190844.GA10378@eldamar.local>" "21" "Re: [oss-security] WordPress 4.2.1 security  update - CVE please" nil nil nil "4" "2015042719:08:44" "[oss-security] WordPress 4.2.1 security update - CVE please" (number mark "        carnil@debia Apr 27   21/658   " thread-indent "\"Re: [oss-security] WordPress 4.2.1 security  update - CVE please\"\n") "<553E845E.4070503@redhat.com>" ("<553E845E.4070503@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 26339 invoked by uid 550); 5 Oct 2015 10:28:47 -0000
+Received: (qmail 11273 invoked by uid 550); 27 Apr 2015 19:08:58 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,71 +11,53 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26283 invoked from network); 5 Oct 2015 10:28:46 -0000
-To: oss-security@lists.openwall.com
-References: <CACn5sdTCA42QQcgRzw4u6jSVAyXovch8qgG4oAgMm3G0in=hPQ@mail.gmail.com>
-From: Andreas Stieger <astieger@suse.com>
-Organization: SUSE Linux GmbH
-Message-ID: <561250B6.9070102@suse.com>
-Date: Mon, 5 Oct 2015 12:28:06 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.3.0
+Received: (qmail 10228 invoked from network); 27 Apr 2015 19:08:57 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=K7ACF75WZOVkVwLiYKlOsZVjDcHeWaaFIXs/V4PiH0I=;
+        b=n7ziRxEbrYMPDJFwp6MUrIOK81/fhltHSncoAOmyp+9rXsa3SkVDLSzjtbS7FSpO6Q
+         XGDR7xDeZydeK6uCj26zXF4XpZQSg1Mfx0ZR7UEKk3nG8UzH0wTM7at7eZ6WgQ04QHr6
+         sz38fU/KWQxEwD5L4ZleHNBDQRltN4bz3T3WB6M26mS50w139OUPD1GwoHztRQFQ2Cmd
+         nCDVgwdEU0LtK/TBBtLvR5mdXGdAQQrwWjLr1SilssG76yVeMtJQpnAoz1iPU6FSoROO
+         7LF/MeLvcMFNced+RmKfK3N1YZC6vXXgI0YgW0j9JNNQRU21Kj7W/90YdyilNMiXlnRm
+         wESA==
+X-Received: by 10.180.73.202 with SMTP id n10mr14232055wiv.0.1430161726203;
+        Mon, 27 Apr 2015 12:08:46 -0700 (PDT)
+Message-ID: <20150427190844.GA10378@eldamar.local>
+References: <553E845E.4070503@redhat.com>
 MIME-Version: 1.0
-In-Reply-To: <CACn5sdTCA42QQcgRzw4u6jSVAyXovch8qgG4oAgMm3G0in=hPQ@mail.gmail.com>
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature";
- boundary="EBwVNg2DSuFCaODnBQTaP6wKud8Wh3rhs"
-Subject: Re: [oss-security] CVE request: Heap overflow with a gif file in
- gdk-pixbuf < 2.32.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <553E845E.4070503@redhat.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+Cc: nacin@wordpress.org, Assign a CVE Identifier <cve-assign@mitre.org>
+Date: Mon, 27 Apr 2015 21:08:44 +0200
+From: Salvatore Bonaccorso <carnil@debian.org>
+Reply-To: oss-security@lists.openwall.com
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Subject: Re: [oss-security] WordPress 4.2.1 security  update - CVE please
+To: oss-security@lists.openwall.com
 
---EBwVNg2DSuFCaODnBQTaP6wKud8Wh3rhs
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Hi Kurt,
 
-Hello,
+On Mon, Apr 27, 2015 at 12:47:58PM -0600, Kurt Seifried wrote:
+> http://codex.wordpress.org/Version_4.2.1
+> 
+> Version 4.2.1 addressed a security issue.	For more information, see the
+> release notes.
+> 
+> From the announcement post, WordPress 4.2.1 fixes a critical cross-site
+> scripting (XSS) vulnerability, which could enable commenters to
+> compromise a site.
 
-On 10/01/2015 03:03 PM, Gustavo Grieco wrote:
-> We found a heap overflow in the gdk-pixbuf implementation triggered by the
-> scaling of gif file.These issues are only fixed in the recent release of
-> gdk-pixbuf 2.32.1 but affects older versions (we tested it in a fully
-> updated Ubuntu 14.04).
->
-> These issues were found using QuickFuzz.
+Had requested CVEs for this in
+http://www.openwall.com/lists/oss-security/2015/04/26/2 .
 
-Could you please share you fuzzed sample?
+But there is as well a different stored XSS reported
+http://klikki.fi/adv/wordpress2.html which seems to affect as well the
+latest wordpress versions (not verified myself).
 
-Thanks,
-Andreas
-
---=20
-Andreas Stieger <astieger@suse.com>
-Project Manager Security
-SUSE Linux GmbH, GF: Felix Imend=C3=B6rffer, Jane Smithard, Graham Norton, =
-HRB 21284 (AG N=C3=BCrnberg)
-
-
-
---EBwVNg2DSuFCaODnBQTaP6wKud8Wh3rhs
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIcBAEBCgAGBQJWElC2AAoJECzWqVXhWUVGILYQAJv8I7nDImwsL6zWF9HBz0qh
-uf+6mlDvRd6tnPVd5SChkRMa+vGocMDKEpvPSqB3SIhUGWf/Q1vEL8KtKgkm3YcB
-d6QMs37JYwSLIsn8YRvKzdQ1somD0Rs9ZN1TWzBgJjkd9ec87hLn0uN61THGbv/d
-tNQsYYrj7jL3yq46UiRIBBJcgb8kc/AdBrdKRRPrgzVXggcHqqkc0lqVreNFULe2
-AisLogxVVSZNnxSQ7eOUrXTyN4g87T+DcledWuWO1Eby198Lp5+CoZvSbrlp669U
-xddT9Rc5KLFVW7jgk0euFU06UwVtN4wN0i2RGqVPAJn5bAR1LybUJdB6A6NbxSDx
-vNkxB7KZnSt64YubAnK5Q+lXBnrO1sK99pjASRo25oVlhqjN0e4D4YBDqT/T5UQW
-LGw8r4QEZnWG+IsmIwoPfgoX29Cih0z6YpT4i2X18a/7UPOjkhX14OIk6xAvQy2F
-7mGo114CS7B2Ij57/1TKp9M3gd5RiEFumXHShpmWSsVjCzYt/vUXaTxPDG3s+Dj+
-+/DjhQ00zsOocw/JyPJrvol+CcfPEt4tALWpTNUvUoLS19jot3gKOYAyXa6+sckm
-6livQL3fUH3oxdkNGvddCEoteE8wTa21DKz4Ns1f+rLUMu6vgwDVNUfAAnnTm6/e
-ptz0QaDwBcO5PF6uZHGU
-=kQxA
------END PGP SIGNATURE-----
-
---EBwVNg2DSuFCaODnBQTaP6wKud8Wh3rhs--
+Regards,
+Salvatore
