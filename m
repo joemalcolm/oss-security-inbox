@@ -1,4 +1,9 @@
-Received: (qmail 1166 invoked by uid 550); 28 Apr 2026 00:39:41 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["606" "Monday" "27" "April" "2015" "22:02:10" "-0400" "Wade Mealing" "wmealing@redhat.com" "<802401219.7793841.1430186530208.JavaMail.zimbra@redhat.com>" "20" "[oss-security] CVE request: kernel overestimates the available entropy in random pools" nil nil nil "4" "2015042802:02:10" "[oss-security] CVE request: kernel overestimates the available entropy in random pools" (number mark "        wmealing@red Apr 27   20/606   " thread-indent "\"[oss-security] CVE request: kernel overestimates the available entropy in random pools\"\n") "<1516477121.7790170.1430184468415.JavaMail.zimbra@redhat.com>" ("<1516477121.7790170.1430184468415.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 30542 invoked by uid 550); 28 Apr 2015 02:02:24 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,41 +11,41 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 5805 invoked from network); 28 Apr 2026 00:06:38 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Jens Geyer <jensg@apache.org>
-To: oss-security@lists.openwall.com
-Message-ID: <36634a4e-bee1-3bb2-2f63-852727299f0d@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 28 Apr 2026 00:01:06 +0000
+Received: (qmail 30521 invoked from network); 28 Apr 2015 02:02:23 -0000
+Message-ID: <802401219.7793841.1430186530208.JavaMail.zimbra@redhat.com>
+In-Reply-To: <1516477121.7790170.1430184468415.JavaMail.zimbra@redhat.com>
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2026-41602: Apache Thrift: Go TFramedTransport uint32 overflow
- 
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.64.50.203]
+X-Mailer: Zimbra 8.0.6_GA_5922 (ZimbraWebClient - GC42 (Mac)/8.0.6_GA_5922)
+Thread-Topic: CVE request: kernel overestimates the available entropy in random pools
+Thread-Index: r+YvXPc/neUoL/6VDv+YYS4g4NohVA==
+Cc: cve-assign@mitre.org
+Date: Mon, 27 Apr 2015 22:02:10 -0400 (EDT)
+From: Wade Mealing <wmealing@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE request: kernel overestimates the available entropy in random
+ pools
+To: oss-security@lists.openwall.com
 
-Severity: important=20
+Gday All,
 
-Affected versions:
+I'm chasing up a CVE number for an issue that was discovered/brought to
+light by H. Peter Anvin, on LKML ( see https://lkml.org/lkml/2013/4/24/5 )
 
-- Apache Thrift before 0.23.0
+To quote:
 
-Description:
+"When we write entropy into a non-empty pool, we currently don't
+account at all for the fact that we will probabilistically overwrite
+some of the entropy in that pool.  This means that unless the pool is
+fully empty, we are currently *guaranteed* to overestimate the amount
+of entropy in the pool!"
 
-Integer Overflow or Wraparound vulnerability in Apache Thrift TFramedTransp=
-ort Go language implementation
+The impact of this issue could be to a downgrade the kernels true
+RNG to a pseudo-RNG. 
 
-This issue affects Apache Thrift: before 0.23.0.
+Thanks,
 
-Users are recommended to upgrade to version 0.23.0, which fixes the issue.
-
-Credit:
-
-=EA=B9=80=EB=B2=94=EC=88=98 (finder)
-
-References:
-
-https://thrift.apache.org/
-https://www.cve.org/CVERecord?id=3DCVE-2026-41602
-
+Wade Mealing
+Red Hat Product Security
