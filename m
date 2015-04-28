@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["7340" "Sunday" "18" "February" "2018" "19:09:45" "+0100" "Solar Designer" "solar@openwall.com" "<20180218180945.GA22931@openwall.com>" "151" "[oss-security] LibVNCServer rfbserver.c: rfbProcessClientNormalMessage() case rfbClientCutText doesn't sanitize msg.cct.length" "^Date:" nil nil "2" "2018021818:09:45" "[oss-security] LibVNCServer rfbserver.c: rfbProcessClientNormalMessage() case rfbClientCutText doesn't sanitize msg.cct.length" (number mark "        solar@openwa Feb 18  151/7340  " thread-indent "\"[oss-security] LibVNCServer rfbserver.c: rfbProcessClientNormalMessage() case rfbClientCutText doesn't sanitize msg.cct.length\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4383" "Tuesday" "28" "April" "2015" "15:27:03" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150428192703.4F86E52E01D@smtpvbsrv1.mitre.org>" "104" "[oss-security] Re: Possible CVE Request: Wordpress 4.1.2 security release" nil nil nil "4" "2015042819:27:03" "[oss-security] Re: Possible CVE Request: Wordpress 4.1.2 security release" (number mark "        cve-assign@m Apr 28  104/4383  " thread-indent "\"[oss-security] Re: Possible CVE Request: Wordpress 4.1.2 security release\"\n") "<20150426112844.GA8340@eldamar.local>" ("<20150426112844.GA8340@eldamar.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 11446 invoked by uid 550); 18 Feb 2018 18:10:21 -0000
+Received: (qmail 23762 invoked by uid 550); 28 Apr 2015 19:27:16 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,166 +11,117 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 10225 invoked from network); 18 Feb 2018 18:10:01 -0000
-Message-ID: <20180218180945.GA22931@openwall.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.4.2.3i
-Date: Sun, 18 Feb 2018 19:09:45 +0100
-From: Solar Designer <solar@openwall.com>
+Received: (qmail 23741 invoked from network); 28 Apr 2015 19:27:15 -0000
+In-Reply-To: <20150426112844.GA8340@eldamar.local>
+Message-Id: <20150428192703.4F86E52E01D@smtpvbsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Tue, 28 Apr 2015 15:27:03 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] LibVNCServer rfbserver.c: rfbProcessClientNormalMessage() case rfbClientCutText doesn't sanitize msg.cct.length
-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: Possible CVE Request: Wordpress 4.1.2 security release
+To: carnil@debian.org
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I've just created the below GitHub issue, and I'm also posting its
-description in here.  This applies at least to LibVNCServer versions
-0.9.9 (RHEL7) to latest in the GitHub repo as of this writing (and thus
-probably including latest release, which is 0.9.11, but I didn't check
-the release specifically).
+Here are CVE IDs for some of the vulnerabilities fixed in either 4.1.2
+or 4.2.1.
 
-https://github.com/LibVNC/libvncserver/issues/218
 
-While I consider this a security-relevant issue, I feel there's no
-overall benefit from reporting it under an embargo, so here goes.
+> http://codex.wordpress.org/Version_4.1.2
+> https://wordpress.org/news/2015/04/wordpress-4-1-2/
 
-libvncserver/rfbserver.c: rfbProcessClientNormalMessage() contains the
-following code:
+> WordPress versions 4.1.1 and earlier are affected by a critical
+> cross-site scripting vulnerability, which could enable anonymous users
+> to compromise a site. This was reported by Cedric Van Bockhaven and
+> fixed by Gary Pendergast, Mike Adams, and Andrew Nacin of the
+> WordPress security team.
 
-    case rfbClientCutText:
+Use CVE-2015-3438. We don't know whether this is related to, for
+example, the https://core.trac.wordpress.org/changeset/32167 change.
+Our expectation is that this is not related to the
+https://core.trac.wordpress.org/changeset/32176 change, because the
+4.1.2 announcement says "Four hardening changes, including better
+validation of post titles within the Dashboard." (There are currently
+no CVE IDs being assigned for the "Four hardening changes.")
 
-        if ((n = rfbReadExact(cl, ((char *)&msg) + 1,
-                           sz_rfbClientCutTextMsg - 1)) <= 0) {
-            if (n != 0)
-                rfbLogPerror("rfbProcessClientNormalMessage: read");
-            rfbCloseClient(cl);
-            return;
-        }
 
-        msg.cct.length = Swap32IfLE(msg.cct.length);
+> In WordPress 4.1 and higher, files with invalid or unsafe names could
+> be uploaded. Discovered by Michael Kapfer and Sebastian Kraemer of
+> HSASec.
 
-        str = (char *)malloc(msg.cct.length);
-        if (str == NULL) {
-                rfbLogPerror("rfbProcessClientNormalMessage: not enough memory");
-                rfbCloseClient(cl);
-                return;
-        }
+We feel that there isn't yet enough information available to determine
+the correct number of CVE IDs. This could possibly be related to
+https://core.trac.wordpress.org/changeset/32172 (if wp_check_filetype
+had been using a problematic regular expression that resulted in
+incorrect conclusions about safe file extensions), or
+https://core.trac.wordpress.org/changeset/32169 (if the issue was in
+the Plupload codebase), or both.
 
-        if ((n = rfbReadExact(cl, str, msg.cct.length)) <= 0) {
-            if (n != 0)
-                rfbLogPerror("rfbProcessClientNormalMessage: read");
-            free(str);
-            rfbCloseClient(cl);
-            return;
-        }
-        rfbStatRecordMessageRcvd(cl, msg.type, sz_rfbClientCutTextMsg+msg.cct.length, sz_rfbClientCutTextMsg+msg.cct.length);
-        if(!cl->viewOnly) {
-            cl->screen->setXCutText(str, msg.cct.length, cl);
-        }
-        free(str);
 
-        return;
+> In WordPress 3.9 and higher, a very limited cross-site scripting
+> vulnerability could be used as part of a social engineering attack.
+> Discovered by Jakub Zoczek.
 
-This passes the client-provided 32-bit message length field's value
-directly into malloc(), reads up to this many bytes from the client, and
-then passes the full value to the library-user-provided setXCutText()
-callback (where the value might be higher than the number of bytes
-actually read - with uninitialized and potentially sensitive data
-afterwards - and it might also be too high for the callback's
-implementation to handle safely).  There may also be integer overflow in
-the addition of sz_rfbClientCutTextMsg (which is 8) to the value in the
-call to rfbStatRecordMessageRcvd(); I did not look into what
-consequences this might have.
+Use CVE-2015-3439. We don't know whether this is related to, for
+example, the https://core.trac.wordpress.org/changeset/32167 change.
 
-I first found the issue during Openwall's security audit of the
-Virtuozzo 7 product, which uses a RHEL7-derived package of
-LibVNCServer-0.9.9 from its prl-vzvncserver component.  A corresponding
-Virtuozzo 7 fix is:
 
-https://src.openvz.org/projects/OVZ/repos/prl-vzvncserver/commits/1204a8872d90c78a2be404dd4b025124bb01b2c5
+> Some plugins were vulnerable to an SQL injection vulnerability.
+> Discovered by Ben Bidner of the WordPress security team.
 
-which hardens prl-vzvncserver's setXCutText() callback - but the rest of
-the issue needs to be fixed in LibVNCServer itself, hence the (belated)
-report to them and in here.
+We feel that there isn't yet enough information available to determine
+the correct number of CVE IDs. This could possibly be related to the
+https://core.trac.wordpress.org/changeset/32165 and
+https://core.trac.wordpress.org/changeset/32163 changes. In general,
+it seems possible that one change to the validation of SQL statements
+resolved SQL injection vulnerabilities affecting the use of plugins in
+one set of WordPress versions, and another change to the validation of
+SQL statements resolved SQL injection vulnerabilities affecting the
+use of plugins in a different set of WordPress versions.
 
-We would like to thank the Virtuozzo company for funding the effort.
 
-Included below is the relevant excerpt from our Virtuozzo 7 report:
+> https://make.wordpress.org/plugins/2015/04/20/fixing-add_query_arg-and-remove_query_arg-usage/
 
---- cut ---
-01090, PSBM-58099: prl-vzvncserver and LibVNCServer integer overflows, unlimited memory allocations, and unchecked malloc()
-Severity: medium
-Thread: 20161226 "prl-vzvncserver"
+> Due to a now-fixed ambiguity in the documentation for the
+> add_query_arg() and remove_query_arg() functions, many plugins were
+> using them incorrectly, allowing for potential XSS attack vectors in
+> their code.
 
-A particular combination of these 3 problems is demonstrated by sending the
-output of "echo -e "RFB 003.003\n\001\006\0\0\0\xff\xff\xff\xff"" to
-prl-vzvncserver's TCP port, when prl-vzvncserver is running without password.
-(When running with password, authentication would be needed before the specific
-vulnerable code can be reached, and the string to send would accordingly be
-longer.)  This first causes LibVNCServer to allocate 4 GiB of address space and
-then to hand out this uninitialized memory to the prl-vzvncserver/console.c:
-vcSetXCutTextProc() callback, which would attempt to make another similar
-allocation and make a copy of the data.  Unfortunately, this LibVNCServer API,
-as well as many others, is defined to use "int" rather than "size_t" for data
-sizes, and indeed prl-vzvncserver uses "int" too.  For this particular request,
-this results in a zero byte allocation with malloc(), which succeeds, and then
-in a memcpy() of (size_t)-1 bytes to it.  With a range of other similar
-requests, malloc() may instead be made to fail (for trying to allocate a
-ridiculous amount of address space, sign-extended to 64-bit), in which case the
-memcpy() more reliably fails on a NULL pointer dereference.  Either way, the
-service crashes.  Finally, it is possible to have the process actually write to
-(and thus allocate for real) almost 4 GiB of memory with one request, by making
-the length field just below 2 GiB.  If no data is sent, then 2 GiB would be
-written from the uninitialized memory (likely mostly read-as-zero) to the
-memory allocated by prl-vzvncserver's callback.  If the data is actually sent,
-then first it is written to memory by LibVNCServer and then is copied by the
-callback, for 4 GiB total.  Exploitability of this specific issue into
-something worse than these varying possibilities is highly doubtful (although
-exploitation of unlimited size memcpy() is not unheard of), but all 3 of these
-issues are prevalent in prl-vzvncserver and LibVNCServer code in general, so
-maybe the impact of another similar issue would more obviously be worse.
+We feel that this documentation ambiguity isn't necessarily a
+vulnerability in the WordPress product itself. There seems to be
+related documentation of add_query_arg within the
+wp-includes/functions.php file. If the vendor decides to change the
+documentation at
+https://core.trac.wordpress.org/browser/trunk/src/wp-includes/functions.php
+and wants a CVE ID for that, then we would assign one.
 
-We recommend that sanity checks be introduced into LibVNCServer so that it
-doesn't try to allocate unreasonable amounts of memory and pass unsafe sizes to
-callbacks.  We also recommend prl-vzvncserver to sanity-check its inputs
-(including received from LibVNCServer) and in this way avoid integer overflows
-and unreasonably large allocations.  Finally, it is good practice to check
-whether a malloc() succeeded before writing to the memory.  The function
-vcSetXCutTextProc() came from LibVNCServer-0.9.9/vncterm/VNConsole.c, so its
-shortcomings also need to be reported to LibVNCServer upstream.
 
-Fix: Some aspects of this issue, most importantly covering prl-vzvncserver's
-vcSetXCutTextProc() callback, have been addressed with commit
-1204a8872d90c78a2be404dd4b025124bb01b2c5 on 20170130.
+> http://codex.wordpress.org/Version_4.2.1
+> https://wordpress.org/news/2015/04/wordpress-4-2-1/
+> https://core.trac.wordpress.org/changeset/32299
 
-Related:
-https://googleprojectzero.blogspot.com/2015/03/taming-wild-copy-parallel-thread.html
-http://www.giac.org/paper/gcih/361/port-80-apache-http-daemon-exploit/103818
---- cut ---
+> a cross-site scripting vulnerability, which could enable commenters to
+> compromise a site. The vulnerability was discovered by Jouko Pynnonen.
 
-LibVNCServer-0.9.9/vncterm/VNConsole.c mentioned above is not currently
-part of the libvncserver repo, hence is not otherwise included in
-description of this issue.  However, vncterm exists as a separate repo,
-so I might report its issues in there: https://github.com/LibVNC/vncterm
+> WPDB: Sanity check that any strings being stored in the DB are not too
+> long to store correctly.
 
-Timeline:
+Use CVE-2015-3440.
 
-201612xx - issue found while auditing prl-vzvncserver
-20161226 - report to Virtuozzo with a focus on prl-vzvncserver specifics
-20170130 - a relevant prl-vzvncserver fix committed in Virtuozzo
-20180218 - public report to LibVNCServer and oss-security
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-The ridiculous delay in making this report to LibVNCServer and
-oss-security is unintentional.  I just didn't get around to doing this
-sooner, and I'm sorry about that.
-
-In case anyone cares and would have asked, no, I did not request CVE
-ID(s) for this, and I don't intend to do so.  I also don't know if this
-is CVE-worthy.  Please feel free to track the LibVNCServer issue(s)
-described here (rfbClientCutText's lack of sanity-checking of the length
-field, passing of the full specified rather than actual read byte count
-to other functions, and the +8 integer overflow) as OVE-20180218-0001.
-
-Alexander
+iQEcBAEBAgAGBQJVP929AAoJEKllVAevmvmsU+sH/2iJF4qrDkW1QY27QFktZSvg
+YF/zQR7jVLHs+74UPyWHMlAgBMxx4y54GUgukvnytE6lI8LMuz6aMJOjbSg+5jWT
+jZ2mSSbPceH8Bm4cmh4/2dStBDgxFJxFvRm1Lr/9zNpcS4IYRWkZuaKtJbNkBs2X
+/j+rMdzmtYY2B+naNOkHtGjRloRZE5apd1zRRtS559fho/l6kFSrXMa0uNbdL1eu
+eG3+BnkRDj6v/zKRpqLW9FXVmiQWu+VW1TIqqCuliD2vjTbSRqEvAtm9GsmUOUhk
+fJujPRPZbLXLCbZmsJQ/D5tk0VRkXjGi47xhqb7chV5D5JvHDmxVFZuG+duCmQQ=
+=GzWO
+-----END PGP SIGNATURE-----
