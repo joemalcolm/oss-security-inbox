@@ -1,4 +1,9 @@
-Received: (qmail 19904 invoked by uid 550); 16 Oct 2023 01:49:45 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4251" "Thursday" "30" "April" "2015" "11:50:25" "-0400" "Jon Oberheide" "jon@oberheide.org" "<CAFHQe1eXiKoQSj7EZz-XFGpkQSSN3nDmumvhuawi_731Ks6Axg@mail.gmail.com>" "135" "Re: [oss-security] [oCERT-2015-003] MySQL SSL/TLS downgrade" nil nil nil "4" "2015043015:50:25" "[oss-security] [oCERT-2015-003] MySQL SSL/TLS downgrade" (number mark "        jon@oberheid Apr 30  135/4251  " thread-indent "\"Re: [oss-security] [oCERT-2015-003] MySQL SSL/TLS downgrade\"\n") "<20150429140058.GH23142@core.inversepath.com>" ("<20150429140058.GH23142@core.inversepath.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 19813 invoked by uid 550); 30 Apr 2015 15:50:38 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,161 +11,173 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 14182 invoked from network); 16 Oct 2023 01:39:46 -0000
+Received: (qmail 19788 invoked from network); 30 Apr 2015 15:50:37 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1697420373; x=1698025173; darn=lists.openwall.com;
-        h=content-disposition:mime-version:message-id:subject:to:from:date
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=BzWTehqLgSCJnLS0hYq+BojO/q1e95XxA7+g1e33Xhs=;
-        b=lCvyuNzM+rwoO57Xh1kuVu3I2ryEBU+RCPfciD3HA47VK+ro92hzyJtrCqr8Y71RkH
-         GMRYJefaB4cEEQXQybIKqyX902Js0kqrfLSFdFmvVQh4UoL5RLduSHPWWtiq1xi1K722
-         xuJqatwMj/VWN17I8pghcveJ7uuRRtCnX/K3ijMUG+ODZjqKwVAXqKdNsGzMwq6lqIsg
-         tD618NJJmEaKjfeDm97K5bm+a0r+3BsubcKkDwUB33PJzQvRyeU5tScb5XkqieXopGoC
-         8bhd07s99pan9fopvJE3nQSbwHP9Mqk8iRRPDxnjIyJt8JMwQmmnRrjSFH0lKTsahFwR
-         PoaA==
+        d=oberheide.org; s=google;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=SffG3/TC/wHAlFEj6siSdd92N3Ge2xjJ6IzZUk7oEkM=;
+        b=w8bfND4IrJIlSELL6ubA4y1UxembrqQOwvhRzPlsKpyuDFZTVx3ARk8PqW+Sk2Vn0Q
+         J3ehRRIHA+VxU9ySru0a02T2gdewAF9ST0osvKhlsfZOsTOylyEN3beQUhX+NWRo37/J
+         w87ldOCBSPSajoZyjfcsHOtKiCZQWvb6bsJkk=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697420373; x=1698025173;
-        h=content-disposition:mime-version:message-id:subject:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=BzWTehqLgSCJnLS0hYq+BojO/q1e95XxA7+g1e33Xhs=;
-        b=VHYnkmfROaPjugcwhqe0fQCymKLt4kGHnLjmSvexWdHMZUuxuoOn03hiY1HfubjBxH
-         m8479HBqRUniGFLo1FyMne1ycn5FuEqzZPyaxddILw7bL3WeuSe4d74DP3J11Z6gGZh5
-         6uKXmKyqkbs6IkrCbj6Vt9e+0PypTgbZ26MtPAGwMh+8ZtxKb5D0ptpgBqOhBGzp5s4T
-         0yQ+jhDp4wDwAGuIzKzgOzc9VzMmaldKWfcnWiAWw1fuyGiGZLByi9XqJrRPoDEOvlEl
-         HnvIM/A0NzTyh+sW+5MV8itNWxTH/05f1P2dYowlqONvaTJn4oVc+rH9YoD2IdbGpLs2
-         Oi1w==
-X-Gm-Message-State: AOJu0YzJKHfm1Wm5MWODGuOd9Mduon4FIogyL13pGBDOvWbPQM+i5ljW
-	Rrs90k8KY/9S9yt7jFzD2TxoEq7ao2Y1Ew==
-X-Google-Smtp-Source: AGHT+IGfjNKuHet+OVA+SuMFON/0to73vGAXM1/sY8gb8RH+G5o/OBaD2XjuGHgSPoqPEQ7gs8WSiQ==
-X-Received: by 2002:a05:6359:6e8e:b0:164:96fb:cb0d with SMTP id ti14-20020a0563596e8e00b0016496fbcb0dmr19085557rwb.29.1697420373389;
-        Sun, 15 Oct 2023 18:39:33 -0700 (PDT)
-Date: Mon, 16 Oct 2023 09:39:29 +0800
-From: Aron Xu <happyaron.xu@gmail.com>
-To: oss-security@lists.openwall.com
-Message-ID: <ZSyUUSF_-3YbT14k@workstation>
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=SffG3/TC/wHAlFEj6siSdd92N3Ge2xjJ6IzZUk7oEkM=;
+        b=mzHYIrqGggcldLYjvNKsib3EgPKMQmQQb6NnFUqWUW/77HQYPyujblnWMcHj12dmRr
+         wnvlvvcH8QgCcaxZWlR+Mu9v3JbBUfWArbDYPmqKXyPM0kK+08qYkaBSzgsFNKDsI6gQ
+         0F7WfFm6EFUcGJ9+W4OBEgKWsXYtN7IwQjw+GvtS47AhKHGCCG1TD6D2J4q2gZmj+oIm
+         a0iY6bMiUdtSPak9iLOaha2/+Du+Rl9Wmzxa3UJ1iT4cE6V0VQyhHNCrrj0aJtprmjsF
+         GGjJEFU5T3vS36oMZClDdKaZ4lI0qwOQ9ZIzmbnT7mLeGTOslYZjntGkDv20wmCkNo51
+         SrPQ==
+X-Gm-Message-State: ALoCoQmAxSg+0EHKizv8XMd6Kkn1AS0QNc0jVW/svao7RuZNXe7hlSYb/8MqMLVhPrMNXA+5W4Az
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="2M+rr1o8FmqgBa7M"
-Content-Disposition: inline
-X-PGP-Key-ID: C38E8160A17841FE
-Subject: [oss-security] linux-distros membership application of openEuler
+X-Received: by 10.107.133.225 with SMTP id p94mr6583322ioi.40.1430409025071;
+ Thu, 30 Apr 2015 08:50:25 -0700 (PDT)
+In-Reply-To: <20150429140058.GH23142@core.inversepath.com>
+References: <20150429140058.GH23142@core.inversepath.com>
+Message-ID: <CAFHQe1eXiKoQSj7EZz-XFGpkQSSN3nDmumvhuawi_731Ks6Axg@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=001a113ecca0d2d49e0514f30dd1
+Cc: ocert-announce@lists.ocert.org, bugtraq@securityfocus.com
+Date: Thu, 30 Apr 2015 11:50:25 -0400
+From: Jon Oberheide <jon@oberheide.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] [oCERT-2015-003] MySQL SSL/TLS downgrade
+To: oss-security@lists.openwall.com
 
---2M+rr1o8FmqgBa7M
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+--001a113ecca0d2d49e0514f30dd1
+Content-Type: text/plain; charset=UTF-8
 
-Hi,
+Some additional silly links related to the vulnerability:
 
-I'm requesting linux-distros mailing list membership on behalf of
-openEuler[1], a Linux distro that's actively maintained since 2020. It is
-hosted by OpenAtom Foundation[2] with many forms of support available from
-Huawei, Kylin, UnionTech, etc. It is publicly available, free to use and op=
-en
-to contribution.
+http://backronym.fail/
+https://www.duosecurity.com/blog/backronym-mysql-vulnerability
 
-Here are the responses to the membership criteria:
+And actually one useful link from Todd Farmer:
 
-> 1. Be an actively maintained Unix-like operating system distro with
->    substantial use of Open Source components
-> 2. Have a userbase not limited to your own organization
+http://mysqlblog.fivefarmers.com/2015/04/29/ssltls-in-5-6-and-5-5-ocert-advisory/
 
-The distro and its commercial derivatives have more than 4.5 million accumu=
-lated
-deployments on bare metal (since 2020), and even more if considering public=
- and
-private cloud instances. Joining linux-distros will make a real difference =
-for
-patching important issues for users.
+On Wed, Apr 29, 2015 at 10:00 AM, Andrea Barisani <lcars@ocert.org> wrote:
 
-> 3. Have a publicly verifiable track record, dating back at least 1 year
->    and continuing to present day, of fixing security issues (including
->    some that had been handled on (linux-)distros, meaning that membership
->    would have been relevant to you) and releasing the fixes within 10 days
->    (and preferably much less than that) of the issues being made public
->    (if it takes you ages to fix an issue, your users wouldn't
->    substantially benefit from the additional time, often around 7 days and
->    sometimes up to 14 days, that list membership could give you)
+>
+> #2015-003 MySQL SSL/TLS downgrade
+>
+> Description:
+>
+> The MySQL project is an open source relational database management system.
+>
+> A vulnerability has been reported concerning the impossibility for MySQL
+> users
+> (with any major stable version) to enforce an effective SSL/TLS connection
+> that would be immune from man-in-the-middle (MITM) attacks performing a
+> malicious downgrade.
+>
+> While the issue has been addressed in MySQL preview release 5.7.3 in
+> December
+> 2013, it is perceived that the majority of MySQL users are not aware of
+> this
+> limitation and that the issue should be treated as a vulnerability.
+>
+> The vulnerability lies within the behaviour of the '--ssl' client option,
+> which on affected versions it is being treated as "advisory". Therefore
+> while
+> the option would attempt an SSL/TLS connection to be initiated towards a
+> server, it would not actually require it. This allows a MITM attack to
+> transparently "strip" the SSL/TLS protection.
+>
+> The issue affects the ssl client option whether used directly or triggered
+> automatically by the use of other ssl options ('--ssl-xxx') that imply
+> '--ssl'.
+>
+> Such behavior is clearly indicated in MySQL reference manual as follows:
+>
+>   For the server, this option specifies that the server permits but does
+> not require
+>   SSL connections.
+>
+>   For a client program, this option permits but does not require the
+> client to
+>   connect to the server using SSL. Therefore, this option is not
+> sufficient in
+>   itself to cause an SSL connection to be used. For example, if you
+> specify this
+>   option for a client program but the server has not been configured to
+> permit
+>   SSL connections, an unencrypted connection is used.
+>
+> In a similar manner to the new '--ssl' option behaviour, users of the MySQL
+> client library (Connector/C, libmysqlclient), as of MySQL 5.7.3, can take
+> advantage of the MYSQL_OPT_SSL_ENFORCE option to enforce SSL/TLS
+> connections.
+>
+> The vulnerability also affects the MySQL forks MariaDB and Percona Server,
+> as
+> the relevant 5.7.3 patch has not been pulled, at the time of this
+> advisory, in
+> their respective stable versions.
+>
+> Affected version:
+>
+> MySQL <= 5.7.2
+>
+> MySQl Connector/C (libmysqlclient) < 6.1.3
+>
+> Percona Server, all versions
+>
+> MariaDB, all versions
+>
+> Fixed version:
+>
+> MySQL >= 5.7.3
+>
+> MySQl Connector/C (libmysqlclient) >= 6.1.3
+>
+> Percona Server, N/A
+>
+> MariaDB, N/A
+>
+> Credit: vulnerability report from Adam Goodman, Principal Security
+> Architect
+> at Duo Security.
+>
+> CVE: CVE-2015-3152 (MariaDB, Percona)
+>
+> Timeline:
+>
+> 2015-03-20: vulnerability report received
+> 2015-03-23: contacted Oracle Security
+> 2015-04-04: oCERT sets embargo date to April 29th
+> 2015-04-20: reporter confirms MariaDB is affected
+> 2015-04-22: contacted MariaDB and affected vendors, assigned CVEs
+> 2015-04-23: contacted Percona
+> 2015-04-29: advisory release
+>
+> References:
+>
+> https://github.com/mysql/mysql-server/commit/3bd5589e1a5a93f9c224badf983cd65c45215390
+> http://mysqlblog.fivefarmers.com/2014/04/02/redefining-ssl-option
+> http://dev.mysql.com/doc/relnotes/mysql/5.7/en/news-5-7-3.html
+> https://mariadb.atlassian.net/browse/MDEV-7937
+> https://bugs.launchpad.net/percona-server/+bug/1447527
+>
+> Permalink:
+> http://www.ocert.org/advisories/ocert-2015-003.html
+>
+> --
+> Andrea Barisani |                Founder & Project Coordinator
+>           oCERT | OSS Computer Security Incident Response Team
+>
+> <lcars@ocert.org>                         http://www.ocert.org
+>  0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
+>         "Pluralitas non est ponenda sine necessitate"
+>
 
-The distribution has a complete public record of security fixes[3]. Although
-there is no defined policy on enforcing release time of security patches
-(yet), the actual timeline in execution is 7 days for high impact issues and
-14 days for medium ones.
-
-> 4. Not be (only) downstream or a rebuild of another distro (or else we
->    need convincing additional justification of how the list membership
->    would enable you to release fixes sooner, presumably not relying on the
->    upstream distro having released their fixes first?)
-
-The distribution is not a downstream or a rebuild of another distro. There
-are confusions on this question (especially Wikipedia pages) because before
-the project existed, there is an internal-only distro named "Euler OS" which
-is RHEL-based. When openEuler project is found the distribution is rebuilt =
-and
-maintained from scratch, and there are also a few flavors of kernel packages
-with different patchsets. There are also a few commercial and/or community
-downstream distros of openEuler, too.
-
-> 5. Be a participant and preferably an active contributor in relevant
->    public communities (most notably, if you're not watching for issues
->    being made public on oss-security, which are a superset of those that
->    had been handled on (linux-)distros, then there's no valid reason for
->    you to be on (linux-)distros)
-
-openEuler has been actively working on patching upstream issues and there i=
-s a
-complete tracking and triaging of all issues with a CVE number[4]. The team
-is following oss-security's information closely, although weren't actively
-participating in discussions.
-
-> 6. Accept the list policy (see above)
-> 7. Be able and willing to contribute back (see above), preferably in
->    specific ways announced in advance (so that you're responsible for a
->    specific area and so that we know what to expect from which member),
->    and demonstrate actual contributions once you've been a member for a
->    while
-
-Yes we accept the list policy and are willing to contribute back in ways we
-are able to.
-
-> 8. Be able and willing to handle PGP-encrypted e-mail
-> 9. Have someone already on the private list, or at least someone else who
->    has been active on oss-security for years but is not affiliated with
->    your distro nor your organization, vouch for at least one of the people
->    requesting membership on behalf of your distro (then that one
->    vouched-for person will be able to vouch for others on your team, in
->    case you'd like multiple people subscribed)
-
-Besides my role at openEuler, I=E2=80=99m also a part of the Debian Securit=
-y Team,
-though I=E2=80=99m not subscribed to linux-distros since there are already =
-people
-representing. If this application is accepted, I would like to step up to be
-the representative of openEuler.
 
 
-Regards,
-Aron
+-- 
+Jon Oberheide <jon@oberheide.org>
+GnuPG Key: 4096R/52961381
+Fingerprint: 964B 79EF 47D4 D7D0 CF73 D456 97FF B9D2 5296 1381
 
-[1]https://www.openeuler.org/
-[2]https://www.openatom.org/
-[3]https://www.openeuler.org/en/security/security-bulletins/
-[4]https://www.openeuler.org/en/security/cve
-
---2M+rr1o8FmqgBa7M
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCAAdFiEEhhz+aYQl/Bp4OTA7O1LKKgqv2VQFAmUslFEACgkQO1LKKgqv
-2VReJwf+OFqsnymfIoXBe3szIN5adSUUUv7KLLTPBwkLISshzwoSPoV+cS0V/iyo
-Ajjj79Shu3nv86ztb8zpTXmLSMIUbh+lJ2B8lD7/+kQtyl3ZTEhdk3pDWsOx6s4d
-wz1o95P1MOSqw+h5omx/EbdbVW+vH97RXoyrxMPKmebFA+ODaE1Rxo/kOpv0whTt
-rGbcloKGH6jBG1qol1Bo+HaDs3M7cNxUNQujaWd/xXdK/rW7ir5UBV/9Ap7yM9Jk
-LsT9EjRJH6MR2iGkFGMj1mpBTDD5XNfodHDR2c6rwBe/ppBmAyYYt2mikn27kuxV
-CcELLqH7BaslrykOeoiZdBDCvVwZPA==
-=fTTH
------END PGP SIGNATURE-----
-
---2M+rr1o8FmqgBa7M--
+--001a113ecca0d2d49e0514f30dd1--
