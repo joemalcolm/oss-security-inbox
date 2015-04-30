@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["995" "Friday" "23" "March" "2018" "21:50:00" "-0500" "Daniel Ruggeri" "druggeri@apache.org" "<E1ezZFo-00031Q-45@romulus.home.bitnebula.com>" "31" "[oss-security] CVE-2018-1283: Tampering of mod_session data for CGI applications" nil nil nil "3" "2018032402:50:00" "[oss-security] CVE-2018-1283: Tampering of mod_session data for CGI applications" (number mark "U       druggeri@apa Mar 23   31/995   " thread-indent "\"[oss-security] CVE-2018-1283: Tampering of mod_session data for CGI applications\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1198" "Thursday" "30" "April" "2015" "14:07:52" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150430180752.E03F342E117@smtpvbsrv1.mitre.org>" "33" "[oss-security] Re: Heap overflow / invalid read in Libtasn1 before 4.5 (TFPA 005/2015)" nil nil nil "4" "2015043018:07:52" "[oss-security] Re: Heap overflow / invalid read in Libtasn1 before 4.5 (TFPA 005/2015)" (number mark "        cve-assign@m Apr 30   33/1198  " thread-indent "\"[oss-security] Re: Heap overflow / invalid read in Libtasn1 before 4.5 (TFPA 005/2015)\"\n") "<20150430144642.54356798@pc1>" ("<20150430144642.54356798@pc1>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 21956 invoked by uid 550); 24 Mar 2018 11:24:22 -0000
+Received: (qmail 25736 invoked by uid 550); 30 Apr 2015 18:08:09 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,43 +11,46 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 25680 invoked from network); 30 Apr 2015 18:08:04 -0000
+In-Reply-To: <20150430144642.54356798@pc1>
+Message-Id: <20150430180752.E03F342E117@smtpvbsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Thu, 30 Apr 2015 14:07:52 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 24390 invoked from network); 24 Mar 2018 02:50:15 -0000
-To: announce@httpd.apache.org, oss-security@lists.openwall.com,
-    security@httpd.apache.org
-From: Daniel Ruggeri <druggeri@apache.org>
-Message-Id: <E1ezZFo-00031Q-45@romulus.home.bitnebula.com>
-Date: Fri, 23 Mar 2018 21:50:00 -0500
-Subject: [oss-security] CVE-2018-1283: Tampering of mod_session data for CGI applications
+Subject: [oss-security] Re: Heap overflow / invalid read in Libtasn1 before 4.5 (TFPA 005/2015)
+To: hanno@hboeck.de
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-CVE-2018-1283: Tampering of mod_session data for CGI applications.
+> https://blog.fuzzing-project.org/9-Heap-overflow-invalid-read-in-Libtasn1-TFPA-0052015.html
+> 
+> heap overflow happens in the function _asn1_extract_der_octet
 
-Severity: Medium
+> http://git.savannah.gnu.org/gitweb/?p=libtasn1.git;a=commit;h=f979435823a02f842c41d49cd41cc81f25b5d677
 
-Vendor: The Apache Software Foundation
+> prevent past of boundary access
 
-Versions Affected:
-httpd 2.4.0 to 2.4.29
+> https://lists.gnu.org/archive/html/help-libtasn1/2015-04/msg00000.html
 
-Description:
+> Corrected an invalid memory access in octet string decoding
 
-When mod_session is configured to forward its session data to CGI
-applications (SessionEnv on, not the default), a remote user may influence
-their content by using a "Session" header. This comes from the "HTTP_SESSION"
-variable name used by mod_session to forward its data to CGIs, since the
-prefix "HTTP_" is also used by the Apache HTTP Server to pass HTTP header
-fields, per CGI specifications.
+Use CVE-2015-3622 for this over-read issue.
 
-The severity is set to Medium because "SessionEnv on" is not a default nor
-common configuration, it should be considered High when this is the case
-though, because of the possible remote exploitation.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-Mitigation:
-All httpd users should upgrade to 2.4.30 or later.
-
-Credit:
-The issue was discovered internally by the Apache HTTP Server team.
-
-References:
-https://httpd.apache.org/security/vulnerabilities_24.html
+iQEcBAEBAgAGBQJVQm7sAAoJEKllVAevmvmscVMIAMeKu9qlLfKaRe/bKDvOi/rW
+WpIx9K/DpdgUwUMdmgLqLD8maV5JOkK4oFAcMYvK6G+UppsfespcpKnZ0pcR7O41
+On+tIrmlWm6JyucB2sB1V8bdIynwWGbBjqgGDSAjV2cABbzEGj0XhrhpcWpsRSVo
++EGHKsGE2JR5Nn6PhMXpYnEV94l3EGEmlVfMYFAjRq6CUfNa6GMppQNeTpcylxfn
+H0HqaYGZIbw2ilT4xlhJmrK6282lkRleCF6U8e2eYkluIFmGE/0GX0MvAuxSIlke
+bqBetn8Itj4bLtlqnalg6dCs6Ekn9sAOFtiFUytHNw19k+/cXxhieT7ZK13oPeQ=
+=qmH3
+-----END PGP SIGNATURE-----
