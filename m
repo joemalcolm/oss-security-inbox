@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2124" "Monday" "8" "May" "2017" "20:32:21" "+0200" "Florian Weimer" "fweimer@redhat.com" "<34774b80-6941-d562-fb5f-710c8f9b9cb8@redhat.com>" "56" "Re: [oss-security] rpcbomb: remote rpcbind denial-of-service" nil nil nil "5" "2017050818:32:21" "[oss-security] rpcbomb: remote rpcbind denial-of-service" (number mark "U       fweimer@redh May  8   56/2124  " thread-indent "\"Re: [oss-security] rpcbomb: remote rpcbind denial-of-service\"\n") "<20170507184739.c4tdfs6zaywbgbdr@eldamar.local>" ("<CAO5O-EKoyVe5oxT3nx6pOYsHwhvp9SxcezkV-m5pnpw4Q_4j8A@mail.gmail.com>" "<20170504005520.GD12174@hunt>" "<20170505092258.GF25854@suse.de>" "<756cef1f-ab04-dbc3-a80a-67fbae7e4cab@redhat.com>" "<20170507184739.c4tdfs6zaywbgbdr@eldamar.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1579" "Thursday" "30" "April" "2015" "00:54:53" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150430045453.A4BC642E0BA@smtpvbsrv1.mitre.org>" "44" "[oss-security] Re: CVE request: Perl XML::LibXML" nil nil nil "4" "2015043004:54:53" "[oss-security] Re: CVE request: Perl XML::LibXML" (number mark "        cve-assign@m Apr 30   44/1579  " thread-indent "\"[oss-security] Re: CVE request: Perl XML::LibXML\"\n") "<8BB9CA6B6B0D854E91889283C9B54C75DAF38EAB@xing-exchsvr04.xing.hh>" ("<8BB9CA6B6B0D854E91889283C9B54C75DAF38EAB@xing-exchsvr04.xing.hh>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 13777 invoked by uid 550); 8 May 2017 18:32:35 -0000
+Received: (qmail 14163 invoked by uid 550); 30 Apr 2015 04:55:06 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,84 +11,57 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 14145 invoked from network); 30 Apr 2015 04:55:05 -0000
+In-Reply-To: <8BB9CA6B6B0D854E91889283C9B54C75DAF38EAB@xing-exchsvr04.xing.hh>
+Message-Id: <20150430045453.A4BC642E0BA@smtpvbsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Thu, 30 Apr 2015 00:54:53 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13753 invoked from network); 8 May 2017 18:32:35 -0000
-DMARC-Filter: OpenDMARC Filter v1.3.2 mx1.redhat.com 0EF818124F
-Authentication-Results: ext-mx01.extmail.prod.ext.phx2.redhat.com; dmarc=none (p=none dis=none) header.from=redhat.com
-Authentication-Results: ext-mx01.extmail.prod.ext.phx2.redhat.com; spf=pass smtp.mailfrom=fweimer@redhat.com
-DKIM-Filter: OpenDKIM Filter v2.11.0 mx1.redhat.com 0EF818124F
-To: oss-security@lists.openwall.com, Salvatore Bonaccorso <carnil@debian.org>
-References: <CAO5O-EKoyVe5oxT3nx6pOYsHwhvp9SxcezkV-m5pnpw4Q_4j8A@mail.gmail.com>
- <20170504005520.GD12174@hunt> <20170505092258.GF25854@suse.de>
- <756cef1f-ab04-dbc3-a80a-67fbae7e4cab@redhat.com>
- <20170507184739.c4tdfs6zaywbgbdr@eldamar.local>
-From: Florian Weimer <fweimer@redhat.com>
-Message-ID: <34774b80-6941-d562-fb5f-710c8f9b9cb8@redhat.com>
-Date: Mon, 8 May 2017 20:32:21 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.1.0
-MIME-Version: 1.0
-In-Reply-To: <20170507184739.c4tdfs6zaywbgbdr@eldamar.local>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.15
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.25]); Mon, 08 May 2017 18:32:23 +0000 (UTC)
-Subject: Re: [oss-security] rpcbomb: remote rpcbind denial-of-service
+Subject: [oss-security] Re: CVE request: Perl XML::LibXML
+To: tilmann.haak@xing.com
 
-On 05/07/2017 08:47 PM, Salvatore Bonaccorso wrote:
-> Hi
-> 
-> On Fri, May 05, 2017 at 11:52:49AM +0200, Florian Weimer wrote:
->> On 05/05/2017 11:22 AM, Marcus Meissner wrote:
->>> On Wed, May 03, 2017 at 05:55:20PM -0700, Seth Arnold wrote:
->>>> On Wed, May 03, 2017 at 08:55:23PM +0200, Guido Vranken wrote:
->>>>> This vulnerability allows an attacker to allocate any amount of bytes
->>>>> (up to 4 gigabytes per attack) on a remote rpcbind host, and the
->>>>> memory is never freed unless the process crashes or the administrator
->>>>> halts or restarts the rpcbind service.
->>>>> [...]
->>>>> An extensive write-up can be found here:
->>>>> https://guidovranken.wordpress.com/2017/05/03/rpcbomb-remote-rpcbind-denial-of-service-patches/
->>>>>
->>>>> Exploit + patches: https://github.com/guidovranken/rpcbomb/
->>>>
->>>> Hello Guido, nice find. Have CVE numbers been requested for this issue
->>>> yet? Have you investigated if ntirpc is affected too? Much of the code
->>>> looks similar:
->>>>
->>>> http://sources.debian.net/src/ntirpc/1.4.3-3/src/rpc_generic.c/#L728
->>>
->>> We also saw glibc affected.
->>>
->>> https://bugzilla.suse.com/show_bug.cgi?id=1037559#c7
->>>
->>> That said, your reproducer allocates virtual memory, and on systems with overcommit
->>> there is only neglible impact on overall memory pressure.
->>>
->>> The rpc service will however likely crash at some point though when there is no virtual
->>> address space left for it.
->>
->> Thanks, I filed it upstream as well:
->>
->> https://sourceware.org/bugzilla/show_bug.cgi?id=21461
->>
->> Looks like both xdr_bytes and xdr_string have a similar bug.
->>
->> I'd appreciate some guidance on reusing or not reusing CVE IDs here.
-> 
-> A separate CVE should be used for this issue as clarified with MITRE.
-> 
-> It was assigned CVE-2017-8804.
-> 
-> https://sourceware.org/bugzilla/show_bug.cgi?id=21461
-> 
-> Patch posted at
-> https://sourceware.org/ml/libc-alpha/2017-05/msg00105.html by Florian
-> Weimer.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Note that we have a bit of a dispute here whether whether this is 
-actually a vulnerability in the XDR code, or whether the caller is to blame.
+> XEE vulnerability in Perl's XML::LibXML
+> 
+> The output of XEE-XML-LibXML-demo.pl should not contain external
+> entities, but "expand_entities" is ignored.
+> 
+> Using "$XML_DOC = XML::LibXML->load_xml" works as documented, using 
+> $parser = XML::LibXML->new and $XML_DOC = $parser->load_xml does not.
+> 
+> The vulnerability is fixed in version 2.0119.
+> 
+> https://bitbucket.org/shlomif/perl-xml-libxml/commits/5962fd067580767777e94640b129ae8930a68a30
+> 
+> http://cpansearch.perl.org/src/SHLOMIF/XML-LibXML-2.0119/Changes
 
-Thanks,
-Florian
+> LibXML.pm
+> 
+> $new->{XML_LIBXML_PARSER_OPTIONS} = $self->{XML_LIBXML_PARSER_OPTIONS};
+
+> 2.0119  2015-04-23
+>     - Preserve unset options after a _clone() call (e.g: in load_xml()).
+>         - This caused expand_entities(0) to not be preserved/etc.
+>         - Thanks to Tilmann Haak from xing.com for the report.
+
+Use CVE-2015-3451.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJVQbTrAAoJEKllVAevmvmsNSwIAIDOfW0/Xl/RNoF0HcUmeheL
+U18aIX75+PcsFCkL01Zc25JgpYEjXfVqyH0reFrmOM2vzK2k92VKN86k8S83bEYJ
+/V81+C0iBNBe/mgk2Eg01lbtlrZEpODIr1peYjZjQ1cx6rLGhgYlMrQrblRXkhFn
+MJ6Hko+TbzDc8rUEpw9vgBFgmrhsXIq+/OA6xuBrafv6aBp43TDreX97/UYZtW7G
+QERMz2mHf3rYLv58MlR8IpZOrs/EkV4O/KuA3g0RahiuQjArXX0BCHr4Qo+rEnDd
+HxshKFuuvr19yTNO2oJiWc/n0qi/4exQWkgBZXMkgz9FWsX8AxuMkk+onfnA+mw=
+=ECuO
+-----END PGP SIGNATURE-----
