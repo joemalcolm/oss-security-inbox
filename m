@@ -1,4 +1,9 @@
-Received: (qmail 7584 invoked by uid 550); 30 Apr 2024 20:16:08 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2254" "Thursday" "30" "April" "2015" "14:46:42" "+0200" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20150430144642.54356798@pc1>" "60" "[oss-security] Heap overflow / invalid read in Libtasn1 before 4.5 (TFPA 005/2015)" nil nil nil "4" "2015043012:46:42" "[oss-security] Heap overflow / invalid read in Libtasn1 before 4.5 (TFPA 005/2015)" (number mark "        hanno@hboeck Apr 30   60/2254  " thread-indent "\"[oss-security] Heap overflow / invalid read in Libtasn1 before 4.5 (TFPA 005/2015)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 16104 invoked by uid 550); 30 Apr 2015 12:50:57 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,144 +11,75 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 16046 invoked from network); 30 Apr 2015 12:50:50 -0000
+Message-ID: <20150430144642.54356798@pc1>
+X-Mailer: Claws Mail 3.11.1 (GTK+ 2.24.27; x86_64-pc-linux-gnu)
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512; protocol="application/pgp-signature"; boundary="=_zucker.schokokeks.org-14941-1430398238-0001-2"
+Date: Thu, 30 Apr 2015 14:46:42 +0200
+From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 19726 invoked from network); 30 Apr 2024 19:43:07 -0000
-Date: Tue, 30 Apr 2024 21:42:43 +0200
-From: Erik Auerswald <auerswal@unix-ag.uni-kl.de>
-To: oss-security@lists.openwall.com
-Cc: Mark Esler <mark.esler@canonical.com>,
-        Bastien =?iso-8859-1?Q?Roucari=E8s?= <rouca@debian.org>
-Message-ID: <20240430194243.GA28076@unix-ag.uni-kl.de>
-References: <20231221143630.GD14101@suse.de>
- <ZjBHOEHylGAaIo57@moon>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <ZjBHOEHylGAaIo57@moon>
-Author: Erik Auerswald <auerswal@unix-ag.uni-kl.de>
-Subject: Re: [oss-security] New SMTP smuggling attack
+Subject: [oss-security] Heap overflow / invalid read in Libtasn1 before 4.5 (TFPA 005/2015)
+To: oss-security@lists.openwall.com, fulldisclosure@seclists.org,
+  cve-assign@mitre.org
 
-Hi Mark,
+--=_zucker.schokokeks.org-14941-1430398238-0001-2
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Apr 29, 2024 at 08:19:52PM -0500, Mark Esler wrote:
-> 
-> To mitigate future end-of-data sequence attacks, like SMTP Smuggling,
-> MTAs should comply with RFC 5321 section 4.1.1.4 [0] to strip control
-> characters other than <SP>, <HT>, <CR>, and <LF> in the DATA section
-> of SMTP messages.
+https://blog.fuzzing-project.org/9-Heap-overflow-invalid-read-in-Libtasn1-T=
+FPA-0052015.html
 
-This is an interesting interpretation of RFC 5321, but I do not think
-it follows the contents of said RFC.
+While fuzzing GnuTLS I discovered a malformed certificate input sample
+that would cause a heap overflow read of 99 bytes in the DER decoding
+functions of Libtasn1. The heap overflow happens in the function
+_asn1_extract_der_octet().
 
-> > 4.1.1.4.  DATA (DATA)
-> >
-> >    The receiver normally sends a 354 response to DATA, and then treats
-> >    the lines (strings ending in <CRLF> sequences, as described in
-> >    Section 2.3.7) following the command as mail data from the sender.
-> >    This command causes the mail data to be appended to the mail
-> >    data buffer.  The mail data may contain any of the 128 ASCII
-> >    character codes, although experience has indicated that use
-> >    of control characters other than SP, HT, CR, and LF may cause
-> >    problems and SHOULD be avoided when possible.
-> 
-> e.g., `\r\n\x00.\r\n` _SHOULD_ become `\r\n.\r\n` and then (as per
-> RFC 5321 section 4.5.2 [1]) dot-stuff the _forbidden_ sequences.
+This issue was reported to the Libtasn1 developer on 16th April. A fix
+was committed on 20th April and is part of the Libtasn1 4.5 release.
+This issue was found with american fuzzy lop and address sanitizer.
 
-Well, my reading of the RFC does not forbid this sequence.  RFC 5321
-clearly does not require transforming this sequence into another sequence.
+http://git.savannah.gnu.org/gitweb/?p=3Dlibtasn1.git;a=3Dcommitdiff;h=3Df97=
+9435823a02f842c41d49cd41cc81f25b5d677
+Git commit / fix
 
-> As per RFC 2119 section 3 [2], the word *SHOULD* implies *MUST*
-> unless you have a valid reason not to--which is never the case for
-> these _forbidden_ sequences in DATA. This is why RFC 5321 4.1.1.4's
-> _SHOULD avoid_ implies _needs to strip_.
+https://lists.gnu.org/archive/html/help-libtasn1/2015-04/msg00000.html
+Libtasn1 4.5 release notes
 
-RFC 5321 section 4.1.1.4 (DATA (DATA)) states:
+https://crashes.fuzzing-project.org/TFPA-2015-005-libtasn1-4.4-heap-overflo=
+w.crt
+Sample malformed certificate exposing heap overflow (test with
+certtool -i --inder --infile=3D[sample] and address sanitizer or
+valgrind)
 
-    "The mail data may contain any of the 128 ASCII character codes"
+--=20
+Hanno B=C3=B6ck
+http://hboeck.de/
 
-RFC 5321 section 4.5.2 (Transparency) states:
+mail/jabber: hanno@hboeck.de
+GPG: BBB51E42
 
-    "The mail data may contain any of the 128 ASCII characters."
+--=_zucker.schokokeks.org-14941-1430398238-0001-2
+Content-Type: application/pgp-signature
+Content-Transfer-Encoding: 7bit
+Content-Description: OpenPGP digital signature
 
-One might think that there is some inconsistency with the "SHOULD"
-in section 4.1.1.4.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
 
-One could also understand the text as allowing any ASCII character
-(including NUL), but advising against the use of known problematic ones
-(e.g., NUL) by cautious systems.
+iQIcBAEBCgAGBQJVQiQyAAoJEKWIAHK7tR5C5bkQAKPIECpn8RnxQTwDZg4Ly91P
+8VxPW4qfojIyWxxTPBlXp8XFTiI9x8lggdY4gI2PYMeNNgS0lOGXMK5pplT3VXhJ
+rurARhoVtKzOE2a03Sgm6tXE71sA0xbUr1imRr7/4CEGBv+Come0SaKWWqO8zh6n
+AWQxg/MPc2dPIFo6tZ0JlvmpDU1wWeZ5FB/bAWjPVQsjPIHQbiIkWemtAs+Z6GDR
+G9bkxi6UX5gQR+DKkf1ZHLEfv3U6wj7uiw2O2rrN0zaZrMs9HIa8CNWXWLyvESV6
+zuBJ4hOFPSb4dFEu2Q24EWxFwSwH0nhqmJFy0uRBHs8WybsfqgFX4eWz2GTdcJ8B
+yEqUO9DJC249yBLtINfrZiSuTwp5POKrEa0og22vZ6xRWpKNh3NyMbDd4CuG5VLO
+oEDvYKcQYEEW7oUdx/UzVF7KZD6+H8Jq8CPyYhpzwF3MJklye0nxtb3XQkq63k+h
+7/eySA93Zsr5rRQJLhidNlTDFXf/tReWRp+RHtQl6KJnlMndr9vMRcsLh45+3r4l
+k7w6oGir/MXhxllr+Of/N37FId3O8FtzQXcCg529kYjIAjOKKnHG3tT3tWmxbZoe
+mwp8D9nm+j0rYU7TdHqcBUkE4Isu9rsrExP+VmNfRuGZ3eG+N5ZBVmGWxZRqFWZJ
+v5PuyH04PCgE7V3cNU9B
+=GNNB
+-----END PGP SIGNATURE-----
 
-To put this differently: control characters are _not_ forbidden.
-They are _explicitly_ allowed.
-
-> Also note that RFC 5321 section 3.6.3 [3] and section 6.4 [4] do not give
-> the OK to send along NUL or other control characters. These sections are
-> about _adding_ missing information, not preserving messages with
-> potentially damaging garbage.
-
-RFC 5321 section 3.6.3 does not pertain to DATA contents.  RFC
-5321 section 6.4 mentions the problem of inconsistent handling of
-"irregularities", i.e., shall malformed messages be rejected, "repaired",
-or delivered as-is insofar possible.
-
-You to seem to advocate for "repair".  The "repair" strategy makes Cisco's
-ESA vulnerable.  I would argue that rejecting messages is less insecure.
-
-> Cheers to Pete Resnick for this clarification and explanation of
-> RFC 5321.
-> 
-> This particular issue was first noted in SEC Consult's analysis of
-> SMTP Smuggling [5]:
-> > During the research we've also discovered some exotic
-> > inbound SMTP servers that interpret end-of-data sequences like
-> > <CR><LF>\x00.<CR><LF>, with "\x00" representing a null byte. With
-> > proprietary SMTP components and lots of different e-mail services
-> > intertwined it's hard to tell what is possible until an e-mail
-> > reaches its final destination.
-> >
-> > Even though SMTP smuggling might still be hiding in some places,
-> > we hopefully eliminated some big targets.
-> 
-> Stripping NUL and other control characters could have unforeseen
-> consequences. MTAs which errantly rely on non-compliant control
-> characters would break. Major MTAs are therefore sensibly resistant
-> to enforcing RFC 5321 section 4.1.1.4.
-
-Use of control characters is compliant, even though it may be problematic.
-
-> What is the real world HAM:SPAM ratio of emails which include NUL? Would
-> it be safe to configure sendmail to `O RejectNUL=True` (which would
-> break RFC 2822 section 4 [6] by rejecting email which include NUL)?
-> 
-> What are the benefits and risks of stripping ASCII NUL and other
-> control characters from SMTP DATA?
-
-Interesting questions.  Perhaps you could perform an experiment and
-report on the results?
-
-Perhaps email specifications can be improved to reject known problematic
-content elements, e.g., NUL bytes?
-
-Rejecting email for arbitrary reasons is common practice currently.
-Rejecting email for containing unwanted characters or character sequences
-might thus be acceptable.  Rewriting email contents seems to me to be
-more problematic, but even that is routinely done nowadays (e.g., to
-mark external messages).
-
-> Feedback appreciated,
-
-I would suggest to be rather careful when automatically rewriting
-messages in new and unsuspected ways.
-
-> Mark Esler and Bastien Roucariès
-> 
-> [0] https://datatracker.ietf.org/doc/html/rfc5321#section-4.1.1.4
-> [1] https://datatracker.ietf.org/doc/html/rfc5321#section-4.5.2
-> [2] https://datatracker.ietf.org/doc/html/rfc2119#section-3
-> [3] https://datatracker.ietf.org/doc/html/rfc5321#section-3.6.3
-> [4] https://datatracker.ietf.org/doc/html/rfc5321#section-6.4
-> [5] https://sec-consult.com/blog/detail/smtp-smuggling-spoofing-e-mails-worldwide/
-> [6] https://datatracker.ietf.org/doc/html/rfc2822#section-4
-
-Best regards,
-Erik
+--=_zucker.schokokeks.org-14941-1430398238-0001-2--
