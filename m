@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1734" "Tuesday" "10" "May" "2016" "10:43:27" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<CANO=Ty3x2M-OqiUoQssjW4WjuamLyjpVeFckCH2GuZVVeh5xLg@mail.gmail.com>" "59" "Re: [oss-security] BitKeeper /tmp vulns" nil nil nil "5" "2016051016:43:27" "[oss-security] BitKeeper /tmp vulns" (number mark "U       kseifried@re May 10   59/1734  " thread-indent "\"Re: [oss-security] BitKeeper /tmp vulns\"\n") "<20160510162457.GA30154@sisay.ephaone.org>" ("<CANO=Ty0jMX=XhW5D71G4__tqtHwHY5iFX-YKZO71skbgin5U8w@mail.gmail.com>" "<20160510162457.GA30154@sisay.ephaone.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1888" "Friday" "1" "May" "2015" "23:41:22" "+0000" "mancha" "mancha1@zoho.com" "<20150501234122.GC18039@zoho.com>" "49" "Re: [oss-security] On sanctioned MITMs" nil nil nil "5" "2015050123:41:22" "[oss-security] On sanctioned MITMs" (number mark "        mancha1@zoho May  1   49/1888  " thread-indent "\"Re: [oss-security] On sanctioned MITMs\"\n") "<20150501225815.GA628@openwall.com>" ("<20150501191522.GA18039@zoho.com>" "<20150501225815.GA628@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 13554 invoked by uid 550); 10 May 2016 16:43:40 -0000
+Received: (qmail 23930 invoked by uid 550); 1 May 2015 23:41:46 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,89 +11,75 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13536 invoked from network); 10 May 2016 16:43:39 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to;
-        bh=3KoWJp+N3hF5l7nCO1QIMcemEhMzK/8vWU1zpB7+Hnk=;
-        b=LYirZkfEWnsopUSAJ60c4ufvgilRacBjUlTlSDz/LfO+3kZHmV/TyvCBebYEsu6/9e
-         2QQtiCelqIUzSxA7NybgwYM7FFauhTWpVHasvsiaCucIb15VJ5PhRoYHrC9HOEKOz5VO
-         x5R7LJ9vUXdOCIbbUnsJKA7e2m4lMEyDjQ+q+JMDsdt1b+Q9bil0Ml+qnTcv0QWJqD8y
-         refiqdNpyJINo/VN75nt4vYbmOuIUxIktxCHSglh0Z6tV+Sz9GZ2P4wGRxGzVLujXiHP
-         XZIjivg8fxKY5jjjj8S/H83cFjhmXbJU49/Cv1TFiNMxPEDfrpnXrIqi0eL5m8pez1ip
-         Ogdw==
-X-Gm-Message-State: AOPr4FV0VNYGy4ePN37eiA4CvJ5bdonuuw8Ac0ACIWpFZo5CkMtBFxKI8W1qc9CT4BTmfb01VjBKx07co9qDSgQW
+Received: (qmail 23906 invoked from network); 1 May 2015 23:41:45 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; 
+  s=zapps768; d=zoho.com; 
+  h=date:from:to:subject:message-id:references:mime-version:content-type:in-reply-to; 
+  b=U6PiijBKTHeaEdN6c06Bs7uobOu5uvefDrCSaU7U9lIsH82WxS8rE4TlD4oiYxte4DghDr5bTlex
+    xA6Q8PWsKmUr+wnNRLbk/hSiW7hFbCf9P2i0g5K/DfQDhgi45Zn9  
+Message-ID: <20150501234122.GC18039@zoho.com>
+References: <20150501191522.GA18039@zoho.com>
+ <20150501225815.GA628@openwall.com>
 MIME-Version: 1.0
-X-Received: by 10.37.208.75 with SMTP id h72mr4408349ybg.137.1462898607898;
- Tue, 10 May 2016 09:43:27 -0700 (PDT)
-In-Reply-To: <20160510162457.GA30154@sisay.ephaone.org>
-References: <CANO=Ty0jMX=XhW5D71G4__tqtHwHY5iFX-YKZO71skbgin5U8w@mail.gmail.com>
-	<20160510162457.GA30154@sisay.ephaone.org>
-Date: Tue, 10 May 2016 10:43:27 -0600
-Message-ID: <CANO=Ty3x2M-OqiUoQssjW4WjuamLyjpVeFckCH2GuZVVeh5xLg@mail.gmail.com>
-From: Kurt Seifried <kseifried@redhat.com>
-To: oss-security <oss-security@lists.openwall.com>, security@bitkeeper.com
-Content-Type: multipart/alternative; boundary=94eb2c055492de0c8705327f9fbf
-Subject: Re: [oss-security] BitKeeper /tmp vulns
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="ILuaRSyQpoVaJ1HG"
+Content-Disposition: inline
+In-Reply-To: <20150501225815.GA628@openwall.com>
+X-PGP-Key: http://hkps.pool.sks-keyservers.net/pks/lookup?op=vindex&search=0x25168eb24f0b22ac
+X-PGP-FP: 56B7 100E F4D5 811C 8FEF  ADD1 2516 8EB2 4F0B 22AC
+X-Zoho-Virus-Status: 1
+Date: Fri, 1 May 2015 23:41:22 +0000
+From: mancha <mancha1@zoho.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] On sanctioned MITMs
+To: oss-security@lists.openwall.com
 
---94eb2c055492de0c8705327f9fbf
-Content-Type: text/plain; charset=UTF-8
+--ILuaRSyQpoVaJ1HG
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Hopefully security@bitkeeper.com (it doesn't bounce so I assume it's valid)
-will review/address these.
+On Sat, May 02, 2015 at 01:58:15AM +0300, Solar Designer wrote:
+> Hi,
+>=20
+> I feel that this is borderline off-topic for oss-security because of
+> no specific relevance to Open Source, unless the discussion is somehow
+> refocused on aspects that are directly Open Source relevant - e.g.,
+> "should we block these CDNs (and how) in Open Source software's
+> SSL/TLS certificate validity checks because of those specific risks" -
+> that's just an example of what would bring the discussion on-topic for
+> this list, not an actual suggestion (I think such blocking would be
+> bad).
 
-On Tue, May 10, 2016 at 10:24 AM, Michael Scherer <misc@zarb.org> wrote:
+Hi.
 
-> On Tue, May 10, 2016 at 09:31:27AM -0600, Kurt Seifried wrote:
-> > Not found by me, mentioned on HackerNews:
-> >
-> > https://github.com/bitkeeper-scm/bitkeeper/blob/master/src/bk.sh#L485
->
-> Just to clarify, the vuln was not mentioned on HN, just the new about it
-> being
-> under a free license. Then I did a git clone, and grep /tmp and pointed on
-> internal
-> IRC that, as usual, there is a ton of /tmp issue (and then Kurt did see
-> and asked where I did see it,
-> and answered on HN (to the question "bk is now opensource").
->
-> > BitKeeper is under Apache license so here it is.
-> >
-> > Also a quick look at the source shows a ton of other potential /tmp/
-> vulns,
-> > CC'ing bitkeeper security
->
-> for example:
->
-> https://github.com/bitkeeper-scm/bitkeeper/blob/master/src/utils/bk_version#L1563
->
-> There is also a few here:
->
-> https://github.com/bitkeeper-scm/bitkeeper/blob/master/src/utils/extractor.c
->
-> but that's the installation script, so unlikely to be exploitable.
->
-> Or in apply-patch, etc.
->
-> But there is also a few projects that are bundled (like zlib), and a few
-> scripts that
-> are used only at installation and/or build time, so classifying everything
-> is more
-> work than what I have time to devote for the project.
->
-> --
-> Michael Scherer
->
+Yes, that might not have been clear because I didn't say so explicitly.
+But, implicit in my post was a question of how infosec and its
+intersection with OSS (i.e. security policies in FF/Chromium/etc.)
+should consider this situation and its implications.
 
+--mancha
 
+--ILuaRSyQpoVaJ1HG
+Content-Type: application/pgp-signature
 
--- 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
---
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@redhat.com
+iQIcBAEBCgAGBQJVRA8iAAoJEB4VYy8JqhaDrO8P+wdob8v8oXLC9KZB5qL4ypjy
+ED1EfVXl7XclhZyfbYMOYRSPWXm9qGBLpMy5F9E0VmtDGzO49lC4uMhZcEUoBT+9
+BgHjAOxnduUUH38+m22Uw8lfUMSd7dRWmWPcq13lMAs2ztjtmEY8xJtbdIKc4q8M
+EocflYbMu9eX0gtkPdfURK5+MyzDx+FBlzt3e0d4hFsTbhQF77hyem1DdX/YKI3e
+LDCqUzxO0LcvGQK+o29zpn3F5EbUSCHmP7dVdfmQWgyxoT67Acx+qbF3e4yDxFCR
+68nUBpyd4DZ/5XN1vcnbuuvY6/g9XKj1EO3b2ARWA0tF+zlaWirRbaWrmUj/ldGQ
+nxqeHLx9DauAeHdzQzRgKic/TR1XTBpTOkOBs+X2PDfTn15cSq/FBo9xFLQKrMBN
+kFMn1l+VQbsMpL3pDMPWHX5JsuII4tBul9yVtYg+9hJ+Kot7F2yRNzG3ffVCeymS
+p5ZDxZxQavVS++lfMR7oj+za+zqzGq2Nq5bQyAyBkXM7FsvSXJaNqgmwQjNLBQNM
+6gKRPGJuvKwn3RygCOssi+upUC4xzzAyGYih/YQ1f5mBPjfqp2Ow7p+s38q2JHQR
+DTaXc0waNjKDNgAdJX1Zl6GXay+a35UfejGAyl0EtPDT1j8nCZwkqkUCuHncmY64
+MxcVwQTnzyJ0Up9LBF+Z
+=Oqxi
+-----END PGP SIGNATURE-----
 
---94eb2c055492de0c8705327f9fbf--
+--ILuaRSyQpoVaJ1HG--
+
