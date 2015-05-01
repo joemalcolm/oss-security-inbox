@@ -1,4 +1,9 @@
-Received: (qmail 32245 invoked by uid 550); 14 Dec 2025 19:25:41 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1646" "Saturday" "2" "May" "2015" "10:51:24" "+1200" "Matthew Daley" "mattd@bugfuzz.com" "<CAD3Canf5OopQ-TNrP7GWfw1TbOVyOQzsqTn0EDsAFApKUCo7mA@mail.gmail.com>" "35" "[oss-security] CVE request / Advisory: Slideshow (Wordpress plugin) - Wordpress option value disclosure" nil nil nil "5" "2015050122:51:24" "[oss-security] CVE request / Advisory: Slideshow (Wordpress plugin) - Wordpress option value disclosure" (number mark "        mattd@bugfuz May  2   35/1646  " thread-indent "\"[oss-security] CVE request / Advisory: Slideshow (Wordpress plugin) - Wordpress option value disclosure\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 12120 invoked by uid 550); 1 May 2015 22:51:36 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,107 +11,64 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 32204 invoked from network); 14 Dec 2025 19:25:41 -0000
-Date: Sun, 14 Dec 2025 14:25:31 -0500
-From: Jan Schaumann <jschauma@netmeister.org>
-To: oss-security@lists.openwall.com
-Message-ID: <aT8PK9bEf9dQ2Mus@netmeister.org>
-References: <aTCH8VcNK_Lz9Rli@netmeister.org>
+Received: (qmail 12102 invoked from network); 1 May 2015 22:51:35 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to:cc
+         :content-type;
+        bh=wQu+NnL4wqeV4LRbU9q0N3/pZ7OFxqHuCJdj6ML+/FE=;
+        b=VMyEhwAstRtwTew21Al9qjfX1ghcqhpZw3LK5NN0YKdWhK2Yi7YXbrjqTjfEew/7bT
+         mvIWdaXPA8v9bxVWd7ySt91tPZTH0/QHX3fCtQGjcv0DvurY9ZpIi+ZHgJwfW+pe7rI7
+         2RnVR9IE6Ty/iF4xuoOijcczgMEiDV7NgNvAQd1KbTTHgoyP4hjIvJimc2oWKvmE3dFf
+         JsioH3u2gOAEGptKevK6653eUusnSaHMVQotZCGHv+qokozrFub8bRDDxbiyZERsgNx5
+         yHoe6OsZ6b+B/dwTHcmewpLGz794qgt6PAhHURw1rOdAWlwbjzocE7iH5cvoNLumvJHI
+         aP8g==
+X-Gm-Message-State: ALoCoQnN5nJpwRh20kJLrcv7Qxu+uViGs88bVMAMUmsTNfY2y/4a0V80Hh1gfYDLgiv3LyVbgBcz
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <aTCH8VcNK_Lz9Rli@netmeister.org>
-Subject: [oss-security] additional React vulnerabilities (CVE-2025-55183, CVE-2025-55184,
- CVE-2025-67779)
-X-Spam: Yes
+X-Received: by 10.194.23.66 with SMTP id k2mr21250740wjf.18.1430520684444;
+ Fri, 01 May 2015 15:51:24 -0700 (PDT)
+Message-ID: <CAD3Canf5OopQ-TNrP7GWfw1TbOVyOQzsqTn0EDsAFApKUCo7mA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Cc: cve-assign@mitre.org
+Date: Sat, 2 May 2015 10:51:24 +1200
+From: Matthew Daley <mattd@bugfuzz.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE request / Advisory: Slideshow (Wordpress plugin) - Wordpress
+ option value disclosure
+To: oss-security@lists.openwall.com
 
-Just noticed these hadn't been posted to this list
-yet:
+I'd like to request a CVE ID for this issue. This is the first such
+request; this message serves as an advisory as well.
 
-Following up on the "React2Shell" vulnerability
-(CVE-2025-55182) from a few days ago, two additional
-vulnerabilities were discovered:
+Affected software: Slideshow (Wordpress plugin)
+Affected versions: 2.2.8 - 2.2.21
+Website: https://wordpress.org/plugins/slideshow-jquery-image-gallery/
+Reported by: Matthew Daley
 
-Denial of Service - High Severity: CVE-2025-55184 and CVE-2025-67779 (CVSS 7.5)
+Description:
 
-(CVE-2025-55184 was incompletely fixed, leading to the
-full fixes being tracked under CVE-2025-67779.)
+The SlideshowPluginSlideshowStylesheet::loadStylesheetByAJAX function,
+accessible by unauthenticated users as an AJAX action, can be abused
+to force the disclosure of arbitrary Wordpress option values.
 
-"Security researchers have discovered that a malicious
-HTTP request can be crafted and sent to any Server
-Functions endpoint that, when deserialized by React,
-can cause an infinite loop that hangs the server
-process and consumes CPU. Even if your app does not
-implement any React Server Function endpoints it may
-still be vulnerable if your app supports React Server
-Components.
+The function is intended to return the content of a user-specified
+slideshow stylesheet, whether it be an administrator-created custom
+one or a default one included with the plugin. Custom stylesheets are
+stored as Wordpress option values, so the function first looks for an
+option matching the user-specified stylesheet name. If a matching
+option is found, its value is returned as the stylesheet content.
 
-This creates a vulnerability vector where an attacker
-may be able to deny users from accessing the product,
-and potentially have a  performance impact on the
-server environment."
+However, the function does not validate the user-specified stylesheet
+name before this option lookup is performed (apart from sanitizing
+certain characters using the filter_input function). Hence, it is
+possible to specify any option name in place of an actual custom
+stylesheet name, regardless of whether the option is for the Slideshow
+plugin, another plugin, a theme, or Wordpress itself. Doing so will
+cause the function to retrieve the value of the user-specified option
+and output it to the user.
 
+Fixed version: 2.2.22
+Fix: https://github.com/Boonstra/Slideshow/commit/cac505e593cbe70a4d8af5b639f5385d4cc7aa04
+Changelog: https://wordpress.org/plugins/slideshow-jquery-image-gallery/changelog/
 
-Source Code Exposure - Medium Severity: CVE-2025-55183 (CVSS 5.3)
-
-"A security researcher has discovered that a malicious
-HTTP request sent to a vulnerable Server Function may
-unsafely return the source code of any Server
-Function. Exploitation requires the existence of a
-Server Function which explicitly or implicitly exposes
-a stringified argument:
-
-```
-'use server';
-
-export async function serverFunction(name) {
-  const conn = db.createConnection('SECRET KEY');
-  const user = await conn.createUser(name); //
-implicitly stringified, leaked in db
-
-  return {
-   id: user.id,
-   message: `Hello, ${name}!` // explicitly stringified, leaked in reply
-  }}
-```
-
-An attacker may be able to leak the following:
-
-```
-0:{"a":"$@1","f":"","b":"Wy43RxUKdxmr5iuBzJ1pN"}
-1:{"id":"tva1sfodwq","message":"Hello, async function(a){console.log(\"serverFunction\");let b=i.createConnection(\"SECRET KEY\");return{id:(await b.createUser(a)).id,message:`Hello, ${a}!`}}!"}
-```
-
-Quoting the React advisory[1]:
-
-"These vulnerabilities are present in the same packages
-and versions as CVE-2025-55182.
-
-This includes versions 19.0.0, 19.0.1, 19.0.2, 19.1.0,
-19.1.1, 19.1.2, 19.1.2, 19.2.0, 19.2.1 and 19.2.2 of:
-
-    react-server-dom-webpack
-    react-server-dom-parcel
-    react-server-dom-turbopack
-
-Fixes were backported to versions 19.0.3, 19.1.4, and
-19.2.3. If you are using any of the above packages
-please upgrade to any of the fixed versions
-immediately.
-
-As before, if your app’s React code does not use a
-server, your app is not affected by these
-vulnerabilities. If your app does not use a framework,
-bundler, or bundler plugin that supports React Server
-Components, your app is not affected by these
-vulnerabilities."
-
-For Next.js specific impact, see [2].
-
-
-[1] https://react.dev/blog/2025/12/11/denial-of-service-and-source-code-exposure-in-react-server-components
-
-[2] https://nextjs.org/blog/security-update-2025-12-11
+- Matthew Daley
