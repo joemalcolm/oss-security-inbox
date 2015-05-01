@@ -1,4 +1,9 @@
-Received: (qmail 1292 invoked by uid 550); 5 May 2026 00:00:20 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2152" "Friday" "1" "May" "2015" "21:34:05" "+0200" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20150501213405.2b2aca2a@pc1>" "55" "Re: [oss-security] On sanctioned MITMs" nil nil nil "5" "2015050119:34:05" "[oss-security] On sanctioned MITMs" (number mark "        hanno@hboeck May  1   55/2152  " thread-indent "\"Re: [oss-security] On sanctioned MITMs\"\n") "<20150501191522.GA18039@zoho.com>" ("<20150501191522.GA18039@zoho.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 21764 invoked by uid 550); 1 May 2015 19:33:48 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,75 +11,72 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 21746 invoked from network); 1 May 2015 19:33:48 -0000
+Message-ID: <20150501213405.2b2aca2a@pc1>
+In-Reply-To: <20150501191522.GA18039@zoho.com>
+References: <20150501191522.GA18039@zoho.com>
+X-Mailer: Claws Mail 3.11.1 (GTK+ 2.24.27; x86_64-pc-linux-gnu)
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512; protocol="application/pgp-signature"; boundary="=_zucker.schokokeks.org-28092-1430508816-0001-2"
+Cc: oss-security@lists.openwall.com
+Date: Fri, 1 May 2015 21:34:05 +0200
+From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 8112 invoked from network); 4 May 2026 23:45:00 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=riseup.net; s=squak;
-	t=1777938291; bh=VRitl5AlYzYQeUFJ6uQRqUQSPphCA3yw2np7cEGP1NM=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=RetdNc5326mA4a5CbWyx4EFsmqy8EQvdyonj04alBSlPAg9JG9Rk6tB5JpEkED5i0
-	 iUKIazr8XZX3Hs/0N8Ca490rnKpp2Rx1Wdpfy7+IK3vJNcyDOpIMdRtKizzVFun4h0
-	 x0fdxTJW8vsLyB4T7BvbW6sjsM3yuGwzUhxCPD70=
-X-Riseup-User-ID: 579611A71CECA403C2D0159C05141DE32D414F82932A50B5A5FB5B65E4039721
-Date: Mon, 4 May 2026 19:44:47 -0400
-From: Aaron Rainbolt <arraybolt3@riseup.net>
-To: oss-security@lists.openwall.com
-Cc: adrelanos@whonix.org, arraybolt3@gmail.com
-Message-ID: <20260504194400.76c91ed7@riseup.net>
-In-Reply-To: <20260407200906.14b9bcc0@riseup.net>
-References: <20260407200906.14b9bcc0@riseup.net>
-MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="Sig_/X5e0FtRIGrPgQIMOR01xBrL";
- protocol="application/pgp-signature"; micalg=pgp-sha512
-Subject: [oss-security] Re: systemd-journald in systemd 259 does not escape characters in
- emerg messages that are wall'd to other user's terminals
+Subject: Re: [oss-security] On sanctioned MITMs
+To: mancha <mancha1@zoho.com>
 
---Sig_/X5e0FtRIGrPgQIMOR01xBrL
-Content-Type: text/plain; charset=US-ASCII
+--=_zucker.schokokeks.org-28092-1430508816-0001-2
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, 7 Apr 2026 20:09:06 -0400
-Aaron Rainbolt <arraybolt3@riseup.net> wrote:
+My quick take on this:
+It is very common that when you run any kind of IT infrastructure that
+you outsource some technical parts to third parties. Your security
+relies on the question how trustworthy these third parties are.
 
-> Going over this semi-briefly:
->=20=20=20
-> * systemd-journald is configured with the `ForwardToWall=3Dyes` and
->   `MaxWallLevel=3Demerg` settings by default in Ubuntu 26.04 pre-release
->   images and Arch Linux. (I think this is because these are enabled by
->   default in systemd upstream but haven't tried to verify this.) In my
->   testing, this will result in systemd-journald copying emerg-level
->   log messages to all logged-in TTYs and at least some root-owned PTYs
->   (if any exist).
-> * Any user on the system can write an emerg-level log message using
->   `logger -p emerg 'msg...'`.
-> * Potentially dangerous character sequences in log messages (like ANSI
->   escape sequences) are not sanitized by systemd-journald before it
->   prints those messages to other user's terminals.
-> * Therefore, one can use systemd-journald to write malicious things to
->   other people's terminals, which can be used to exploit terminal
->   emulator vulnerabilities. There have been vulnerabilities in
->   terminal emulators like XTerm in the past that would allow this to
->   be used to execute arbitrary code as root if someone is unlucky
->   enough to have a PTY to a root shell open in a vulnerable terminal
->   when an attacker writes their malicious log message.
+I don't see anything special here with outsourcing your server's TLS
+handling. Or anything special about cloudflare. When you outsource IT
+infrastructure you trust someone.
 
-Someone (not sure who) did the kind service of getting a CVE assigned
-for this: https://www.cve.org/CVERecord?id=3DCVE-2026-40228 To whoever
-that was, thank you :)
+Just a thought experiment that has nothing to do with CDNs or TLS: Most
+medium or small Web services don't have their own datacenters. They have
+servers - either rented or their own - in a datacenter run by someone
+else. With physical access to the machine basically you can own them
+completely. There's almost nothing you can do to secure a machine where
+non-trustworthy people have physical access.
 
---
-Aaron
+So I don't deny there are potential problems. But I don't see them as
+new or special.
 
---Sig_/X5e0FtRIGrPgQIMOR01xBrL
+
+--=20
+Hanno B=C3=B6ck
+http://hboeck.de/
+
+mail/jabber: hanno@hboeck.de
+GPG: BBB51E42
+
+--=_zucker.schokokeks.org-28092-1430508816-0001-2
 Content-Type: application/pgp-signature
+Content-Transfer-Encoding: 7bit
 Content-Description: OpenPGP digital signature
 
 -----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
 
-iHUEARYKAB0WIQS8QsiCjFi4DcDBX+Q5rdye4jrrCAUCafkvbwAKCRA5rdye4jrr
-CDSVAQCMW6SZafl6VA2ulWUSKLZWMSQNQG43B2qr8AkkpbGYhQEAoHT033MsT7hi
-xDMQqNFQ/UD27tloHe1MSCmUz9B2QwQ=
-=L8lI
+iQIcBAEBCgAGBQJVQ9UtAAoJEKWIAHK7tR5CS7kP/0082jTH3ZxI+l51aavvbrrr
+VTz1vPu7rDvAVkBFfLdIQXaX3KKSEad23Zc80PCkH1YFKfmK/Uet7Pt3o1tT8TlN
+IoLbMuwUBuoG/HwlLXB7GkmDVXUzfQb+vwBuQWIrNbHHQlXoOy2epryQWLFA//oO
+ZUwNohkIBQnclRtC63Ktx8cHQ9qOWi+/Cc4ROI3h+YT9zfw78rTB8F2faf50QbvC
+0QkFHT5sv1MjsqdUquXSZR4ulO0ybJuBqPBDbFDNt32Th/xL997WX7we2BngW6uN
+dYeYFo/2l8AkKmISlFhIA2YbFd4FEiDdTjrVDzkeUmmy6h3W32zrXjsVidBFEl4p
+g9s8uKfSb4eSekra5XhFTPx2f+B0EdOG3+SJH4kIluodKjSxn46XEQXsYJL5vDaI
+W+4wpyS3gOajT3/k4udn2qPPqCFyby3ywlWvZSiFKLru9Ow7GtGLj5aVydr2KUno
+ZOpIghpziujtA/ZOZ0SEk+KAF0GwVuqAqb5aw+RyKRfkcMTkEs7v+ElCvOytMUDH
+NeghQjdcZajngeSrKHAS96NkQpIDs+uKZdALiHobdubmzdrrRu5S8tQCNoA3dRHD
+4cv/dDg+A73jW+7g4W+hBA7c0enKvpluZvRKJYzKTV1EjVQ5WgmLoO+A/YjP2kks
+vcslFUeHInJJc9cgOSzb
+=ifMb
 -----END PGP SIGNATURE-----
 
---Sig_/X5e0FtRIGrPgQIMOR01xBrL--
+--=_zucker.schokokeks.org-28092-1430508816-0001-2--
