@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1042" "Friday" "26" "June" "2015" "02:10:40" "-0700" "Reed Loden" "reed@reedloden.com" "<CALPTtNXj5LEpieVXE=bByJCjiQ3pxTQd=CHVpAEGBFV7atEs-g@mail.gmail.com>" "27" "[oss-security] rubygems <2.4.8 vulnerable to DNS request hijacking (CVE-2015-3900 and CVE-2015-4020)" nil nil nil "6" "2015062609:10:40" "[oss-security] rubygems <2.4.8 vulnerable to DNS request hijacking (CVE-2015-3900 and CVE-2015-4020)" (number mark "U       reed@reedlod Jun 26   27/1042  " thread-indent "\"[oss-security] rubygems <2.4.8 vulnerable to DNS request hijacking (CVE-2015-3900 and CVE-2015-4020)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6108" "Saturday" "2" "May" "2015" "04:25:15" "+1200" "Amos Jeffries" "squid3@treenet.co.nz" "<5543A8EB.9080307@treenet.co.nz>" "184" "[oss-security] CVE-2015-3455 - SQUID-2015:1 Incorrect X509 server certificate validation" nil nil nil "5" "2015050116:25:15" "[oss-security] CVE-2015-3455 - SQUID-2015:1 Incorrect X509 server certificate validation" (number mark "        squid3@treen May  2  184/6108  " thread-indent "\"[oss-security] CVE-2015-3455 - SQUID-2015:1 Incorrect X509 server certificate validation\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 15646 invoked by uid 550); 26 Jun 2015 09:11:55 -0000
+Received: (qmail 13744 invoked by uid 550); 1 May 2015 16:25:47 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,63 +11,199 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 15415 invoked from network); 26 Jun 2015 09:11:11 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=reedloden.com; s=google;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=vRfxS3iIK6GsO8DFiCYz8yfKh1VV4l1Gaa4D001jLt8=;
-        b=GTXVWdtj/rFCpncDlMF/Fb3xlClMB+BWnS3T2bNE7IAhK1MI5J//E530sGoIWreFV7
-         vjINpV0IbkfgV5+3310acr77qMEXJ/r+f0QmYzZWiUJUhawzHdvryvQSv8yZ6ve34p5V
-         GBgty1TZVODox496JxFjg481lTByyMbLpYQOo=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
-         :content-type;
-        bh=vRfxS3iIK6GsO8DFiCYz8yfKh1VV4l1Gaa4D001jLt8=;
-        b=D9mlvTNZmaXXgv6hMIMd53Do3v9JA9Jrobsx6sUl6BMXIatAAwrqblq67j0yigsK7+
-         bN6z92Ss5JR0RH4gjrLK2SreJYZ4hzWzRD4/SYxvp+gj3X3Lf7VuF9zfh6e0rTlaI6w/
-         LC/Am1Jo6I3sxshYKpZjVre2PI5LYJVUNGPEx/ExvESUXwnnxhCFxajeM2WJBo71DHqy
-         1UsonR4Cxrnp9HxHHEDZ4l1DCUGAlW4E/A5Bj1+TIarQ/R/C/Hp2QPf1xHnmiSUQfjXs
-         MMa9kLaVS1WU2Isex+4r906+HI2+DhY7taUisBvUK/xoMWlQCZB+cFZedxkRoH25zfUb
-         ZlSg==
-X-Gm-Message-State: ALoCoQmYLK8c8FlZDjYSs3H3uCtVSMTvgH31NTvGoG3FSCCJPdR8864F+DyPDpDO/B/EdSBScAyo
-X-Received: by 10.153.5.2 with SMTP id ci2mr654920lad.28.1435309860088; Fri,
- 26 Jun 2015 02:11:00 -0700 (PDT)
+Received: (qmail 13682 invoked from network); 1 May 2015 16:25:36 -0000
+Message-ID: <5543A8EB.9080307@treenet.co.nz>
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
 MIME-Version: 1.0
-Message-ID: <CALPTtNXj5LEpieVXE=bByJCjiQ3pxTQd=CHVpAEGBFV7atEs-g@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=001a11349ff25a83660519681e47
-Date: Fri, 26 Jun 2015 02:10:40 -0700
-From: Reed Loden <reed@reedloden.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Date: Sat, 02 May 2015 04:25:15 +1200
+From: Amos Jeffries <squid3@treenet.co.nz>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] rubygems <2.4.8 vulnerable to DNS request hijacking (CVE-2015-3900
- and CVE-2015-4020)
-To: rubysec-announce <rubysec-announce@googlegroups.com>, ruby-security-ann@googlegroups.com, 
-	oss-security@lists.openwall.com
+Subject: [oss-security] CVE-2015-3455 - SQUID-2015:1 Incorrect X509 server certificate validation
+To: oss-security@lists.openwall.com
 
---001a11349ff25a83660519681e47
-Content-Type: text/plain; charset=UTF-8
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-A bit old news, but I didn't see anybody post about this, so figured I'd
-pass it on so folks know to update. Haven't seen updates by the distros
-either.
+__________________________________________________________________
 
-MITRE's summary (updated):
-"""
-RubyGems 2.0.x before 2.0.16, 2.2.x before 2.2.5, and 2.4.x before 2.4.8
-does not validate the hostname when fetching gems or making API request,
-which allows remote attackers to redirect requests to arbitrary domains via
-a crafted DNS SRV record, aka a "DNS hijack attack."
-"""
+    Squid Proxy Cache Security Update Advisory SQUID-2015:1
+__________________________________________________________________
 
-References:
-*
-https://www.trustwave.com/Resources/SpiderLabs-Blog/Attacking-Ruby-Gem-Security-with-CVE-2015-3900/
-* http://blog.rubygems.org/2015/05/14/CVE-2015-3900.html
-* http://blog.rubygems.org/2015/06/08/2.4.8-released.html
-* http://blog.rubygems.org/2015/06/08/2.2.5-released.html
-*
-https://www.trustwave.com/Resources/Security-Advisories/Advisories/TWSL2015-007/?fid=6356
-*
-https://www.trustwave.com/Resources/Security-Advisories/Advisories/TWSL2015-009/?fid=6478
+Advisory ID:            SQUID-2015:1
+Date:                   May 01, 2015
+Summary:                Incorrect X509 server certificate validation
+Affected versions:      Squid 3.2 -> 3.2.13
+                        Squid 3.3 -> 3.3.13
+                        Squid 3.4 -> 3.4.12
+                        Squid 3.5 -> 3.5.3
+Fixed in version:       Squid 3.5.4, 3.4.13, 3.3.14, 3.2.14
+__________________________________________________________________
 
---001a11349ff25a83660519681e47--
+    http://www.squid-cache.org/Advisories/SQUID-2015_1.txt
+    http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-3455
+__________________________________________________________________
+
+Problem Description:
+
+ Squid configured with client-first SSL-bump does not correctly
+ validate X509 server certificate domain / hostname fields.
+
+__________________________________________________________________
+
+Severity:
+
+ The bug is important because it allows remote servers to bypass
+ client certificate validation. Some attackers may also be able
+ to use valid certificates for one domain signed by a global
+ Certificate Authority to abuse an unrelated domain.
+
+ However, the bug is exploitable only if you have configured
+ Squid to perform SSL Bumping with the "client-first" or "bump"
+ mode of operation.
+
+ Sites that do not use SSL-Bump are not vulnerable.
+
+__________________________________________________________________
+
+Updated Packages:
+
+ This bug is fixed by Squid version 3.5.4, 3.4.13, 3.3.14, and
+ 3.2.14.
+
+ In addition, patches addressing this problem for stable releases
+ can be found in our patch archives:
+
+Squid 3.2:
+http://www.squid-cache.org/Versions/v3/3.2/changesets/squid-3.2-11836.pa
+tch
+
+Squid 3.3:
+http://www.squid-cache.org/Versions/v3/3.3/changesets/squid-3.3-12690.pa
+tch
+
+Squid 3.4:
+http://www.squid-cache.org/Versions/v3/3.4/changesets/squid-3.4-13222.pa
+tch
+
+Squid 3.5:
+http://www.squid-cache.org/Versions/v3/3.5/changesets/squid-3.5-13817.pa
+tch
+
+ If you are using a prepackaged version of Squid then please refer
+ to the package vendor for availability information on updated
+ packages.
+
+__________________________________________________________________
+
+Determining if your version is vulnerable:
+
+ All Squid-2.x, 3.0 and 3.1 are not vulnerable to the problem.
+
+
+1) Run "squid -v" to determine if SSL support is enabled.
+
+ All Squid built without SSL support are not vulnerable to the
+ problem.
+
+
+2) Run "squid -k parse 2>&1 | grep ssl_bump" to determine if
+SSL-Bump is being used.
+
+ All Squid-3.2, 3.3, 3.4, and 3.5 operating with ssl_bump omitted
+ from squid.conf are not vulnerable to the problem.
+
+ All unpatched Squid-3.x operating with "ssl_bump client-first"
+ in squid.conf are vulnerable to the problem.
+
+ All unpatched Squid-3.x operating with "ssl_bump bump" in
+ squid.conf are vulnerable to the problem.
+
+__________________________________________________________________
+
+Workaround:
+
+ There is no workaround for Squid-3.2.
+
+ For Squid-3.3 and 3.4, upgrade the squid.conf settings to use
+ "ssl_bump server-first".
+
+ For Squid-3.5, upgrade the squid.conf settings to use a
+ "ssl_bump peek" operation before the "bump" operation.
+
+  NOTE that these workarounds do not resolve the vulnerability,
+  but allow Squid to relay (or mimic) the invalid certificate to
+  clients and depends on validation in the client.
+
+
+Or,
+
+ Disable SSL-Bump. Which may be done in the following ways:
+
+ * Build Squid-3.2, 3.3, or 3.4 with ./configure --disable-ssl
+
+ * Build Squid-3.5 with ./configure --without-openssl
+
+ * Remove from squid.conf (and include'd files) any ssl_bump
+   directives.
+
+__________________________________________________________________
+
+Contact details for the Squid project:
+
+ For installation / upgrade support on binary packaged versions
+ of Squid: Your first point of contact should be your binary
+ package vendor.
+
+ If you install and build Squid from the original Squid sources
+ then the squid-users@squid-cache.org mailing list is your primary
+ support point. For subscription details see
+ http://www.squid-cache.org/Support/mailing-lists.html.
+
+ For reporting of non-security bugs in the latest release
+ the squid bugzilla database should be used
+ http://bugs.squid-cache.org/.
+
+ For reporting of security sensitive bugs send an email to the
+ squid-bugs@squid-cache.org mailing list. It's a closed list
+ (though anyone can post) and security related bug reports are
+ treated in confidence until the impact has been established.
+
+__________________________________________________________________
+
+Credits:
+
+ The vulnerability was discovered and reported by a contributor
+ who wishes to remain anonymous.
+
+ The vulnerability was fixed and tested by
+  Amos Jeffries, Treehouse Networks Ltd. and
+  Christos Tsantilas, The Measurement Factory.
+
+__________________________________________________________________
+
+Revision history:
+
+ 2015-04-29 01:35 GMT Initial Report
+ 2015-05-01 13:49 GMT CVE Assignment
+ 2015-05-01 12:50 GMT Patches and Packages Released
+__________________________________________________________________
+END
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.22 (MingW32)
+
+iQIcBAEBAgAGBQJVQ6jqAAoJEGvSOzfXE+nLE0IP/i/mOlx0qBpCXoTwPDwW+Uqu
+dC9OwLxH5uLl04YYYVHW3FFInewvrQHTJzEiFVIkIo+HSPLnhsaISEIaMzrzHvE3
+0Vuv8iyd9xoZDIfVHudLl9pI2fZvgYjGeuJf+Cyzmgb5UbTd80+fdfcJmd/sEnAL
+yRTdhjvonfPwI3KLbXDwT82l+8gmgMJRenlgtln8hUugEKfEXOv8qqPcI2RppcdB
+4/Wzy9TPiEOVDs4MVANKrgJw2qafwEj/tjjp0ndVEutMTecj09vwbeveElNvbOS7
+oY7vot5Y9xsFMdj2yKNpJF5yrC97P9mhXiI9X0PN1nuLndHhSxoIuxqFX3vgZ2SW
+s7YssV1AIRSQUhVfPJRDWdVIrLcuxWhPQCevBdLn9OfBZSGmr68VNDtIwXe4vMh+
+H+Rj6AiLB218jGNQ2t96H+DYROZhozqGh8umvAmbGkBRZmHjmCMX+DkXdEUq7q7A
+L0phrjN8A8bNK3lt+rkN5L5p7IDTqBu6YALDKRHmGYSTGiDgO1OcnbioVbRshGr/
+gcKVDi/SB9ix5PDNp12daaSf8w1jcB7gdRJnwH7Q41EDw3yu9VtRRTjPLLmozi/X
+7eVf+sBwzgeGXSGKZSEoHCx+TV95oDRHLTXdWKgVwrryZ3mqmfbHmR5CHk0e5RQ2
+2VTOkGz9fN6cta30Rt1b
+=/qom
+-----END PGP SIGNATURE-----
