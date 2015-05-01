@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2428" "Wednesday" "18" "August" "2021" "10:26:12" "-0500" "Eric Blake" "eblake@redhat.com" nil "49" "Re: [oss-security] STARTTLS vulnerabilities" "^Date:" nil nil "8" nil nil (number mark "        eblake@redha Aug 18   49/2428  " thread-indent "\"Re: [oss-security] STARTTLS vulnerabilities\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] STARTTLS vulnerabilities" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3274" "Friday" "1" "May" "2015" "14:10:29" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<5543DDB5.7030900@redhat.com>" "80" "Re: [oss-security] On sanctioned MITMs" nil nil nil "5" "2015050120:10:29" "[oss-security] On sanctioned MITMs" (number mark "        kseifried@re May  1   80/3274  " thread-indent "\"Re: [oss-security] On sanctioned MITMs\"\n") "<20150501191522.GA18039@zoho.com>" ("<20150501191522.GA18039@zoho.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 9255 invoked by uid 550); 18 Aug 2021 15:26:30 -0000
+Received: (qmail 18204 invoked by uid 550); 1 May 2015 20:10:46 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,88 +11,99 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 9237 invoked from network); 18 Aug 2021 15:26:30 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1629300378;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=NtT/e7jbsPggXw0MOZZbVo3kIGLizk6/A/WfY+/4E0s=;
-	b=eewcNKsXRbFDXOwLsg+DZUj4E7S6+j7B21/knbG443HwdeMXPrnRhTzgqawOcT4bWT1SPA
-	z6/ErbNWQt9OUECc8ph2gxZRAXgibPd0BFPmsWewHZUiR9o1z/0JdD7I3+jdd5tAXrP1GB
-	4VUbAw2vGgVDQiKJhV0vH+BjtUFjO28=
-X-MC-Unique: wF8F7sYXMUC4sdDdLQlIdw-1
-Message-ID: <20210818152612.5v3noomg4xt4a6pi@redhat.com>
-References: <20210810122113.3fe65cc9@computer>
- <20210810134156.GF1599104@hal>
- <20210811081634.15143171@computer>
- <20210811153158.gt6uk4qqaqw7lzo2@redhat.com>
- <20210811180235.65375940@computer>
- <20210816190406.fmt3myvwvycywfv4@redhat.com>
+Received: (qmail 18186 invoked from network); 1 May 2015 20:10:45 -0000
+Message-ID: <5543DDB5.7030900@redhat.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
 MIME-Version: 1.0
-In-Reply-To: <20210816190406.fmt3myvwvycywfv4@redhat.com>
-User-Agent: NeoMutt/20210205-719-68949a
-X-Scanned-By: MIMEDefang 2.84 on 10.5.11.22
-Authentication-Results: relay.mimecast.com;
-	auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=eblake@redhat.com
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-Date: Wed, 18 Aug 2021 10:26:12 -0500
-From: Eric Blake <eblake@redhat.com>
+References: <20150501191522.GA18039@zoho.com>
+In-Reply-To: <20150501191522.GA18039@zoho.com>
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="uuteJ3dJXI3CFCMKgSeOpCeRCfOs8EWEp"
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.26
+Date: Fri, 01 May 2015 14:10:29 -0600
+From: Kurt Seifried <kseifried@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] STARTTLS vulnerabilities
+Subject: Re: [oss-security] On sanctioned MITMs
 To: oss-security@lists.openwall.com
 
-On Mon, Aug 16, 2021 at 02:04:06PM -0500, Eric Blake wrote:
-> On Wed, Aug 11, 2021 at 06:02:35PM +0200, Hanno Böck wrote:
-> > On Wed, 11 Aug 2021 10:31:58 -0500
-> > Eric Blake <eblake@redhat.com> wrote:
-> > 
-> > > Not mentioned in that list was ndb, but as far as I can tell, that
-> > > project has already documented the ramifications of opportunistic
-> > > encryption as being a security risk, and all known implementations
-> > > (both servers and clients) with TLS support have a mode of execution
-> > > that ensures the connection is dropped if a downgrade attack is
-> > > attempted:
-> > 
-> > I should point out that our research is not on simple downgrade attacks.
-> > These are kinda obvious by the design of STARTTLS if you implement it
-> > in an opportunistic way.
-> > 
-> > The buffering vulnerabilities we found are in STARTTLS implementations
-> > that have the expectation to enforce a secure connection, but suffer
-> > from various vulnerabilities in the implementation.
-> 
-> Thank you for persisting.  As a result, I have found a security bug in
-> nbdkit, which improperly cached the result of NBD_OPT_STRUCTURED_REPLY
-> from a plaintext MitM attacker prior to acting on NBD_OPT_STARTTLS, to
-> the potential confusion of a client that does not expect structured
-> replies.  I will follow up again when I have a CVE number.
-> 
-> https://listman.redhat.com/archives/libguestfs/2021-August/msg00077.html
+--uuteJ3dJXI3CFCMKgSeOpCeRCfOs8EWEp
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: quoted-printable
 
-Now designated as CVE-2021-3716, affecting nbdkit versions 1.12
-through 1.26.4; fixed nbdkit 1.26.5 will be released later today.
+On 05/01/2015 01:15 PM, mancha wrote:
+> Though Hushmail email credentials, for example, can't be sniffed in the
+> segment connecting the client to CloudFlare, they are available to
+> CloudFlare's infrastucture. Moreoever, there is no way for the client to
+> verify that the segment connecting CloudFlare to the destination server
+> is similarly encrypted (i.e. it might be in the clear as would be the
+> case when using CloudFlare's "Flexible SSL" product).=20=20
+>=20
+> Hushmail's CloudFlare usage serves as an example that brings me to my
+> general point.
+>=20
+> How should the security community view this growing use of sanctioned
+> MITM in light of the ever-increasing amount of sensitive content sent
+> over SSL/TLS encrypted channels (e.g. email, electronic banking, medical
+> records, etc.)?
 
-Mitigating factors: the bug is only possible when nbdkit is used in
-opportunistic mode (--tls=on); you can avoid it by requesting that
-nbdkit use forced tls mode (--tls=require on the command line).
-Furthermore, all impacted nbdkit versions give successful replies to
-repeated NBD_OPT_STRUCTURED_REPLY requests even though the NBD
-protocol did not mandate that, so any client that requests structured
-replies after STARTTLS will not see any change in behavior in spite of
-the MitM injection.  In short, the bug will only impact really old
-clients that understand TLS but not structured replies (at this point,
-I'm aware of qemu 2.6 through 2.10, where most distros have moved to
-newer versions of qemu; and all versions of nbd-client 3.15 to the
-present).
+This is me speaking personally:
 
--- 
-Eric Blake, Principal Software Engineer
-Red Hat, Inc.           +1-919-301-3266
-Virtualization:  qemu.org | libvirt.org
+This is nothing new. Front end load balancers that handle SSL/TLS and
+then do HTTP on the backend have been around for decades. This is simply
+outsourcing it to a trusted (hopefully, because I use them!) party
+rather than doing it in house.
 
+We have had outsourcing of far more sensitive things for literally
+centuries, e.g. legal and accounting firms, my lawyer and accountant
+both have literally all my personal info and could easily destroy me
+financially if they wanted to. But they don't because we have contracts,
+and more importantly contract enforcement in the form of a civil legal
+system (as does most of the world). The same applies for CloudFlare,
+Google (my email), and so on.
+
+So in my opinion this is really nothing new, like any outsourced
+activity pick your partners carefully.
+
+This is me speaking on behalf of the Cloud Security Alliance:
+
+Make your partners/vendors/etc. fill out at least the self attestation
+level of STARS, which is free:
+
+https://cloudsecurityalliance.org/star/self-assessment/
+
+If they refuse to do so that might be a good hint as to how secure they
+really are.
+
+> --mancha
+
+
+--=20
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+
+--uuteJ3dJXI3CFCMKgSeOpCeRCfOs8EWEp
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.22 (GNU/Linux)
+
+iQIcBAEBAgAGBQJVQ923AAoJEBYNRVNeJnmT+2QP/3yg00Xuo9jquPAWlUKH1yD0
+OjTM8VNNxY578i7Z0kv6+I8WxiRXIkvkoZt/xMQ3g2ijbYqIfJZLecUaXE6tz5ql
+rVTZjpLhBDXvZCc3TXPFQXa2jlX+WFSxMLPbR2U+VJx3UOJkCHS8q8bqhzNI8H4e
+rG+4hpX/jkJ/PJ1kaKMCegIXhFI8tjrgFpN+YI7c5QBo8fL0coTNJXGbSLDQhzWo
+YwFEs+0h7qPZY/c6VHpqgtBdBAm2FjBQjbJCUD/SQl83loEeAWYGtI7Z7icjW3GG
+qGTlyVt/vAqWee9PHWlOYwhDpyKCP+KxAji0KzlcF+U5WOND97p6hfs5Jzo0rKZ0
+rWWxezrHRSfcLO6yXGppNu7Q/x1Bk97cmPps/Swvagal1eh8NaMnVMqDgFZcMSHr
+l27Sa3gK6iE3h8mUzDtZdtqXJ+W+DFRE4ZsJHIGAtiSUKHUfaFzyR1lFcW/o2EZm
+Es8wCBArZm9Hb+AE4QLyie0mkbTlVmOZqUnWf0ioTCwNwATFyPq8vRCLLEjwtY6f
+v7Eeq89fx77eV3Qb7p+G39h8o5RHXiUBzw9RXMM98xqve4N4MKxF1oUYZpH1nmhC
+JVlqaa8HkBEnNDU/73jMhGmEP8XeN3tgucwUuKvgs+mVztzguy4+Q+J4/fC6j8ic
+f5O7cEc/zeH7JItSiqPn
+=I6z5
+-----END PGP SIGNATURE-----
+
+--uuteJ3dJXI3CFCMKgSeOpCeRCfOs8EWEp--
