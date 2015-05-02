@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5196" "Tuesday" "9" "May" "2017" "08:22:55" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<999555.97808318-sendEmail@localhost>" "112" "[oss-security] lrzip: heap-based buffer overflow write in read_1g (stream.c)" nil nil nil "5" "2017050908:22:55" "[oss-security] lrzip: heap-based buffer overflow write in read_1g (stream.c)" (number mark "U       ago@gentoo.o May  9  112/5196  " thread-indent "\"[oss-security] lrzip: heap-based buffer overflow write in read_1g (stream.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3193" "Friday" "1" "May" "2015" "19:40:51" "-0700" "Lyndon Nerenberg" "lyndon@orthanc.ca" "<E1868BE4-F7FC-406B-8DBD-4720F7F67A1F@orthanc.ca>" "72" "Re: [oss-security] On sanctioned MITMs" nil nil nil "5" "2015050202:40:51" "[oss-security] On sanctioned MITMs" (number mark "        lyndon@ortha May  1   72/3193  " thread-indent "\"Re: [oss-security] On sanctioned MITMs\"\n") "<20150501233935.GB18039@zoho.com>" ("<20150501191522.GA18039@zoho.com>" "<5543DDB5.7030900@redhat.com>" "<20150501233935.GB18039@zoho.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 18009 invoked by uid 550); 9 May 2017 08:23:13 -0000
+Received: (qmail 30681 invoked by uid 550); 2 May 2015 02:41:07 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,125 +11,88 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 30654 invoked from network); 2 May 2015 02:41:06 -0000
+Content-Type: multipart/signed; boundary="Apple-Mail=_073EBFE4-B208-49E5-9A75-383D82E8FD0B"; protocol="application/pgp-signature"; micalg=pgp-sha1
+Message-Id: <E1868BE4-F7FC-406B-8DBD-4720F7F67A1F@orthanc.ca>
+Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.6\))
+References: <20150501191522.GA18039@zoho.com> <5543DDB5.7030900@redhat.com> <20150501233935.GB18039@zoho.com>
+In-Reply-To: <20150501233935.GB18039@zoho.com>
+X-Mailer: Apple Mail (2.1878.6)
+Date: Fri, 1 May 2015 19:40:51 -0700
+From: Lyndon Nerenberg <lyndon@orthanc.ca>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17941 invoked from network); 9 May 2017 08:23:12 -0000
-Message-ID: <999555.97808318-sendEmail@localhost>
-From: "Agostino Sarubbo" <ago@gentoo.org>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Date: Tue, 9 May 2017 08:22:55 +0000
-MIME-Version: 1.0
-Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-463561.487224982"
-Subject: [oss-security] lrzip: heap-based buffer overflow write in read_1g (stream.c)
+Subject: Re: [oss-security] On sanctioned MITMs
+To: oss-security@lists.openwall.com
 
-------MIME delimiter for sendEmail-463561.487224982
+--Apple-Mail=_073EBFE4-B208-49E5-9A75-383D82E8FD0B
+Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain;
-        charset="UTF-8"
+	charset=us-ascii
+
+>> On 05/01/2015 01:15 PM, mancha wrote:
+>>> Though Hushmail email credentials, for example, can't be sniffed in
+>>> the segment connecting the client to CloudFlare, they are available
+>>> to CloudFlare's infrastucture. Moreoever, there is no way for the
+>>> client to verify that the segment connecting CloudFlare to the
+>>> destination server is similarly encrypted (i.e. it might be in the
+>>> clear as would be the case when using CloudFlare's "Flexible SSL"
+>>> product).=20=20
+>>>=20
+>>> Hushmail's CloudFlare usage serves as an example that brings me to
+>>> my general point.
+>>>=20
+>>> How should the security community view this growing use of
+>>> sanctioned MITM in light of the ever-increasing amount of sensitive
+>>> content sent over SSL/TLS encrypted channels (e.g. email, electronic
+>>> banking, medical records, etc.)?
+
+But also ask why they might use it.  E.g., in the presence of a DDOS attack=
+, many companies rely on infrastructure such as what Cloudflare provides in=
+ order to keep their services running.  By their nature, those mitigation s=
+ervices have to bust the SSL pipe to do what they do.
+
+What I am not hearing anywhere in this conversation is a proposal for how C=
+loudflare can provide the service they do, but in a manner that doesn't req=
+uire busting the SSL pipe in the middle.  There are MANY people begging for=
+ an answer to that.  Do you have it?  If not, are you prepared to see the s=
+ervices you "need" go offline when someone decides to DDOS the provider?
+
+That's not a rhetorical question.  For some people, the answer is 'yes'.  B=
+ut for most, it is 'no'.
+
+In the specific Hushmail example, would it alleviate peoples concerns if th=
+e Cloudflare MITM-busting behaviour took place entirely inside Canada?  If =
+not, how do you propose an alternative?  And what, exactly, is the attack v=
+ector you are trying to close down?  Is it the only one?  How do they inter=
+act?
+
+--lyndon
+
+
+
+--Apple-Mail=_073EBFE4-B208-49E5-9A75-383D82E8FD0B
 Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+	filename=signature.asc
+Content-Type: application/pgp-signature;
+	name=signature.asc
+Content-Description: Message signed with OpenPGP using GPGMail
 
-Description:
-lrzip is a compression utility that excels at compressing large files.
+-----BEGIN PGP SIGNATURE-----
 
-The complete ASan output of the issue:
+iQIcBAEBAgAGBQJVRDkzAAoJEG8PnXiV/JnUqnoP/1/LMHW/AZlfVsfcVprwNPYe
+aOEnxZZ1NZ5ghglLKSJzcu7y108qcDJNxQ27NdHm6BY74EQufMgNWDoOD+yE5v9Q
+Xairtvltd34jkAvGqd1vvumXpj986QWR07+GJCYq8qT1HXGhcmsqT833GO2InXy/
+EYhOX3+P9pgZ7cIr/5B6LJDLcCybjfk6VRKl7vdMod2RZIKbpjF/QXFTrdBW4GrZ
+tSysXvy7+Gcw/hcIoaU9AHawmfJz0EVGat+fnH/oEaC1qzwlFiVoSPLwEo6M6ocU
+4kxSShmiQYxyU0woaz17lCNCUK1wQPB5+wUgzpHJPYTL5BuIlYWOGZFtBQCKn9sL
+ioL1x0XEL0ggQ9D68TBVLStZAiCLCsQ0Hy2VuNTHGl0F4PG8qmEj1U+PUv38YX8k
+LOESeQw4ibaxGN+k50IWv40S0XZpq03ygJZUbzTNg7JynNGq1XDL/lRiM3kzy8Ng
+Ygc/BinpVdOwpgf7p1ScVq5vABrVPVVrcGj3drrXYjpYTRMqhmtPKk+05W3zVZHf
+BgD22RQNMEq5e7ucBe+DIFBK3OyP30uLEnMkjkFBmdMjchSgpKvQXDUEBmUS7D1S
+YaDvIBi3bgyFRrcGBKT3KA1AUKqPQwUCZzzJcNIP53sWwm6UI64+/T+Ikg+Os9Wk
+XpLLEBW7nsWzYfrbNBhY
+=iaMG
+-----END PGP SIGNATURE-----
 
-# lrzip -t $FILE
-==25584==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x60200000ef33 at pc 0x00000045246e bp 0x7ffd881d4970 sp 0x7ffd881d4120
-WRITE of size 8 at 0x60200000ef33 thread T0
-    #0 0x45246d in read /tmp/portage/sys-devel/llvm-3.9.1-r1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/../sanitizer_common/sanitizer_common_interceptors.inc:765
-    #1 0x537ce1 in read_1g /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/stream.c:731:9
-    #2 0x53e349 in read_buf /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/stream.c:774:8
-    #3 0x53e349 in fill_buffer /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/stream.c:1648
-    #4 0x53e349 in read_stream /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/stream.c:1755
-    #5 0x5307fc in read_vchars /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/runzip.c:79:6
-    #6 0x5307fc in unzip_match /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/runzip.c:208
-    #7 0x5307fc in runzip_chunk /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/runzip.c:329
-    #8 0x5307fc in runzip_fd /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/runzip.c:382
-    #9 0x519b41 in decompress_file /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/lrzip.c:826:6
-    #10 0x511074 in main /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/main.c:669:4
-    #11 0x7f02ed48f78f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #12 0x41abf8 in _init (/usr/bin/lrzip+0x41abf8)
-
-0x60200000ef33 is located 0 bytes to the right of 3-byte region [0x60200000ef30,0x60200000ef33)
-allocated by thread T0 here:
-    #0 0x4d39b8 in malloc /tmp/portage/sys-devel/llvm-3.9.1-r1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:64
-    #1 0x53e2ab in fill_buffer /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/stream.c:1643:10
-    #2 0x53e2ab in read_stream /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/stream.c:1755
-    #3 0x5307fc in read_vchars /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/runzip.c:79:6
-    #4 0x5307fc in unzip_match /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/runzip.c:208
-    #5 0x5307fc in runzip_chunk /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/runzip.c:329
-    #6 0x5307fc in runzip_fd /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/runzip.c:382
-    #7 0x519b41 in decompress_file /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/lrzip.c:826:6
-    #8 0x511074 in main /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/main.c:669:4
-    #9 0x7f02ed48f78f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
-
-SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/portage/sys-devel/llvm-3.9.1-r1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/../sanitizer_common/sanitizer_common_interceptors.inc:765 in read
-Shadow bytes around the buggy address:
-  0x0c047fff9d90: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff9da0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff9db0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff9dc0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff9dd0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-=>0x0c047fff9de0: fa fa fa fa fa fa[03]fa fa fa fd fd fa fa fd fa
-  0x0c047fff9df0: fa fa fd fd fa fa 04 fa fa fa 03 fa fa fa 05 fa
-  0x0c047fff9e00: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff9e10: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff9e20: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff9e30: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Heap right redzone:      fb
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack partial redzone:   f4
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==25584==ABORTING
-
-Affected version:
-0.631
-
-Fixed version:
-N/A
-
-Commit fix:
-N/A
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-CVE-2017-8844
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00232-lrzip-heapoverflow-read_1g
-
-Timeline:
-2017-03-24: bug discovered and reported to upstream
-2017-05-07: blog post about the issue
-2017-05-08: CVE assigned
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/05/07/lrzip-heap-based-buffer-overflow-write-in-read_1g-stream-c/
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
-
-
-------MIME delimiter for sendEmail-463561.487224982--
-
+--Apple-Mail=_073EBFE4-B208-49E5-9A75-383D82E8FD0B--
