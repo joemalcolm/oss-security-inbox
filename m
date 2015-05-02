@@ -1,4 +1,9 @@
-Received: (qmail 22387 invoked by uid 550); 18 Aug 2025 20:14:36 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4684" "Saturday" "2" "May" "2015" "15:53:30" "+0300" "Solar Designer" "solar@openwall.com" "<20150502125329.GA6820@openwall.com>" "126" "Re: [oss-security] CVE request for a fixed bug existed in all versions of linux kernel from KeenTeam" nil nil nil "5" "2015050212:53:30" "[oss-security] CVE request for a fixed bug existed in all versions of linux kernel from KeenTeam" (number mark "        solar@openwa May  2  126/4684  " thread-indent "\"Re: [oss-security] CVE request for a fixed bug existed in all versions of linux kernel from KeenTeam\"\n") "<CADOUnBK=jW36v6X2Q6EXLL35Wxqait7cWJR-adCFwRaMJtucPQ@mail.gmail.com>" ("<CADOUnBK=jW36v6X2Q6EXLL35Wxqait7cWJR-adCFwRaMJtucPQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 15536 invoked by uid 550); 2 May 2015 12:53:44 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,59 +11,144 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 15511 invoked from network); 2 May 2015 12:53:43 -0000
+Message-ID: <20150502125329.GA6820@openwall.com>
+References: <CADOUnBK=jW36v6X2Q6EXLL35Wxqait7cWJR-adCFwRaMJtucPQ@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CADOUnBK=jW36v6X2Q6EXLL35Wxqait7cWJR-adCFwRaMJtucPQ@mail.gmail.com>
+User-Agent: Mutt/1.4.2.3i
+Cc: oss-security@lists.openwall.com, Vasily Kulikov <segoon@openwall.com>
+Date: Sat, 2 May 2015 15:53:30 +0300
+From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 16155 invoked from network); 18 Aug 2025 20:07:51 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Arnout Engelen <engelen@apache.org>
-To: oss-security@lists.openwall.com
-Message-ID: <a7884e28-206f-833a-0b7c-6541996bc091@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Mon, 18 Aug 2025 20:07:24 +0000
-MIME-Version: 1.0
-Subject: [oss-security] CVE-2025-53192: Apache Commons OGNL: Expression Injection leading
- to RCE 
+Subject: Re: [oss-security] CVE request for a fixed bug existed in all versions of linux kernel from KeenTeam
+To: Wen Xu <hotdog3645@gmail.com>
 
-Severity: moderate=20
+Hi,
 
-Affected versions:
+I expect MITRE will assign a CVE ID.
 
-- Apache Commons OGNL: all versions
+On Sat, May 02, 2015 at 06:31:12PM +0800, Wen Xu wrote:
+> Recently we found a use-after-free bug which can lead to kernel arbitrary
+> execution in Linux kernel.
+> The bug was reported to the linux security group and it has been fixed.(commit
+> a134f083e79f ("ipv4: Missing sk_nulls_node_init() in ping_unhash()"). You
+> can find the fix commit here:
+> https://github.com/torvalds/linux/commit/6c3c1eb3c35e8856d6dcb01b412316a676f58bbe
 
-Description:
+More specifically:
 
-** UNSUPPORTED WHEN ASSIGNED ** Improper Neutralization of Expression/Comma=
-nd Delimiters vulnerability in Apache Commons OGNL.
+https://github.com/torvalds/linux/commit/a134f083e79fb4c3d0a925691e732c56911b4326
 
-This issue affects Apache Commons OGNL: all versions.
+> The bug exists in all versions of linux kernel.
 
+"All" as in "all upstream versions that contain the feature at all
+(3.0+), and likely some backports".  It appears the bug got introduced
+in Vasily's forward-porting of the functionality to newer 2.6.x kernels
+before it finally got merged in this thread:
 
+https://lkml.org/lkml/2011/5/13/382
 
-When using the API Ognl.getValue=E2=80=8B, the OGNL engine parses and evalu=
-ates the provided expression with powerful capabilities, including accessin=
-g and invoking related methods,
- etc. Although OgnlRuntime attempts to restrict certain dangerous classes a=
-nd methods (such as java.lang.Runtime) through a blocklist, these restricti=
-ons are not comprehensive.=20
-Attackers may be able to bypass the restrictions by leveraging class object=
-s that are not covered by the blocklist and potentially achieve arbitrary c=
-ode execution.
+Vasily's patch against RHEL5 kernels that we still use in Owl looks
+unaffected.  It has:
 
-As this project is retired, we do not plan to release a version that fixes =
-this issue. Users are recommended to find an alternative or restrict access=
- to the instance to trusted users.
++               write_lock_bh(&ping_table.lock);
++               sk_del_node_init(sk);
++               sock_put(sk);
 
+where sk_del_node_init() calls sk_node_init(), which does
+"node->pprev = NULL;"  I'd like Vasily to double-check this, though.
 
-NOTE: This vulnerability only affects products that are no longer supported=
- by the maintainer.
+> And the credit is to Wen Xu and wushi of KeenTeam.
 
-Credit:
+Cool!  How did you find this bug?  Did/do you actively search for more
+bugs with usage of these and similar kernel interfaces?  (I think
+someone should!)
 
-yyjLF (finder)
+Do you have a reproducer (non-weaponized exploit) that you could post?
 
-References:
+Is my understanding correct that to trigger the bug you need direct
+access to a ping socket, not indirect via the ping utility (if that is
+enabled at all)?  By default, access to ping sockets is disabled:
 
-https://commons.apache.org/
-https://www.cve.org/CVERecord?id=3DCVE-2025-53192
+	/*
+	 * Sane defaults - nobody may create ping sockets.
+	 * Boot scripts should set this to distro-specific group.
+	 */
+	net->ipv4.ping_group_range.range[0] = make_kgid(&init_user_ns, 1);
+	net->ipv4.ping_group_range.range[1] = make_kgid(&init_user_ns, 0);
 
+and distros are supposed to enable it selectively - e.g., on Owl we
+enable it for group _icmp only:
+
+_icmp:x:111:
+
+# Range of group IDs permitted to access non-raw (datagram) ICMP sockets.
+#
+# These are an Openwall extension to the Linux kernel.  Our ping(1) program is
+# able to use these sockets, which enables it to start and run without
+# requiring root privileges nor a capability.  Access to these sockets is
+# restricted at all primarily in order to reduce direct exposure of the added
+# kernel code to potential attacks.  In other words, we gain privilege
+# separation due to keeping this access restricted and installing ping(1) SGID.
+#
+net.ipv4.ping_group_range = 111 111
+
+and install ping as:
+
+-rwx--s--x 1 root _icmp 34336 Aug 14  2012 /bin/ping
+
+So there's a layer of privsep here.
+
+I'd like us to learn something useful from this.  Maybe it's "don't add
+more code to the kernel, even if it's for security" - but we knew that,
+and this is why there's the layer of privsep mentioned above (to make
+things no worse than before even in presence of bugs in the new code).
+
+Are there distros that enable access to ping sockets for all users by
+default?
+
+Then, perhaps we should harden the poison pointers to be either below
+typical mmap_min_addr or in an unmapped portion of kernel space?  Do I
+understand correctly that, short of possible mmap_min_addr bypasses in
+general (if relevant), this would mitigate the issue?
+
+Right now, they are:
+
+/*
+ * These are non-NULL pointers that will result in page faults
+ * under normal circumstances, used to verify that nobody uses
+ * non-initialized list entries.
+ */
+#define LIST_POISON1  ((void *) 0x00100100 + POISON_POINTER_DELTA)
+#define LIST_POISON2  ((void *) 0x00200200 + POISON_POINTER_DELTA)
+
+I'd change them to e.g.:
+
+#define LIST_POISON1  ((void *) 0x00000100 + POISON_POINTER_DELTA)
+#define LIST_POISON2  ((void *) 0x00000200 + POISON_POINTER_DELTA)
+
+where POISON_POINTER_DELTA would normally be 0 on 32-bit x86, so they'd
+be below mmap_min_addr on that arch.  Meanwhile, a mitigation appears to
+be to set mmap_min_addr higher than 0x00200200 (slightly over 2 MB), but
+that's not great as it leaves significantly less ASCII-armored space for
+libraries.
+
+BTW, it appears that on x86_64 POISON_POINTER_DELTA is
+0xdead000000000000 by default, which I guess would hit an unmapped page
+even with the current LIST_POISON2 value?  If so, is the bug at worst a
+kernel Oops on x86_64 unless someone changed POISON_POINTER_DELTA in
+their build?
+
+config ILLEGAL_POINTER_VALUE
+	hex
+	default 0 if X86_32
+	default 0xdead000000000000 if X86_64
+
+Regardless, as a supporter of that kernel patch, I am embarrassed!
+
+Thanks,
+
+Alexander
