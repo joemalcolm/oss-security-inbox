@@ -1,4 +1,9 @@
-Received: (qmail 9548 invoked by uid 550); 31 Oct 2023 14:57:43 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1389" "Saturday" "2" "May" "2015" "18:31:12" "+0800" "Wen Xu" "hotdog3645@gmail.com" "<CADOUnBK=jW36v6X2Q6EXLL35Wxqait7cWJR-adCFwRaMJtucPQ@mail.gmail.com>" "42" "[oss-security] CVE request for a fixed bug existed in all versions of linux kernel from KeenTeam" nil nil nil "5" "2015050210:31:12" "[oss-security] CVE request for a fixed bug existed in all versions of linux kernel from KeenTeam" (number mark "        hotdog3645@g May  2   42/1389  " thread-indent "\"[oss-security] CVE request for a fixed bug existed in all versions of linux kernel from KeenTeam\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 26390 invoked by uid 550); 2 May 2015 11:20:58 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,102 +11,68 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5239 invoked from network); 31 Oct 2023 14:52:18 -0000
+Received: (qmail 31850 invoked from network); 2 May 2015 10:31:43 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=synadia.com; s=google; t=1698763926; x=1699368726; darn=lists.openwall.com;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=lfL+QFb0Uo/FaaDrESlEK3uNMd/Dqbu+dwTKerL7D90=;
-        b=N5HPymTAezpKPXECRLLuEJf4jIKuiZkw3rR6p88U8TvKQ9vheqba0jyJx6NHezOk4u
-         rjEC8fAVjL2PRCKmDvjmDJqjLCDF3/kyVQY6egQzsO0slhnFQNWm0wL/EMyYcBHTWjnT
-         FVQ/XzBZ0EjiiJcP0PEZ/MTY8JHH1RMZoRxoTQiXDXDjMw1cRWf9CuvQZHVKuTdM5N81
-         H/ZWyWQe0X+mjAXYvs/aTPxvDbaoQICDA/IMeiIqGXmC+5veb1c1Y6iu3+mwjj9yavFW
-         dMBfnO8YONyjvfl0GRPxwtaVS+l7casq5saG6ce5roUCovzz0bLA7+0L0lJIPgc/Pl6J
-         G3cg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698763926; x=1699368726;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=lfL+QFb0Uo/FaaDrESlEK3uNMd/Dqbu+dwTKerL7D90=;
-        b=rEDDBa5vyKGh0Qebpvk29pdFDwxAmhi9TVmEqyjQ34k5LJ286Af+C4dyCo+9gSi0a2
-         nVpCtk+FW2rg25b6JznQSCVicrGppE+8W9e6YQtj6/RCEtsJ745oqVI8eX/SMVGZwfYH
-         i3PnN+ACRuYDjfwLSv9dJKlMT79SnlkRxTtZ5qHtiHRs9TVr5H+qbi+J7CmGx9K5uooI
-         dcaavJcTxghAz/jEmUeTRpU5jFUr4DXB3HFt/upR1WztZSwsdd7qFWdEH4rFLyCbCBrr
-         x8ehvpGhPOQQ6f73lO2lS9CGv5/EcOV3zySPAuyF1e1qpwxqAl1gGXRWaEY4XooYNnxe
-         HRGw==
-X-Gm-Message-State: AOJu0Yx06ikfb62Uv2jdVoWxQMY1JvQsznOdpi9L3COtnUnZ4DACyQhb
-	siCButJjBZ7caDeiU27gFeHT/SSUf0bANVC5NIfFgLayOcZgbA0KnSU=
-X-Google-Smtp-Source: AGHT+IHcoA7Ct80vzEM+tJjZjhDYVwcK6OZyNWoFt6njVjTxLyZ18dM9ctsdFhfLoh4c39k1+4VsWYTT+OAeDXMJfpM=
-X-Received: by 2002:a05:651c:327:b0:2c5:15a5:826a with SMTP id
- b7-20020a05651c032700b002c515a5826amr9216602ljp.19.1698763926152; Tue, 31 Oct
- 2023 07:52:06 -0700 (PDT)
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=nSmrOfEdnqS+9YrkDFGW/udv/NRcycIFpnCNqVA1qi0=;
+        b=JUUGyrLO3tCcYKASXCsS3ZjDehvNy+9YmRdLHVE1w5AvqAhpiztvl4uDdQsDNX1SZd
+         yEEz+1woclaCEk15k4oz1GvAkj4Nv8KbuxiDfB87oAanvlfhxce1yGCEY7ImDIIQapc8
+         fW9W0iwfbVZGAalyZXt9mdI4TuNDcdXWM0dlsRcSxYo6o2aSZHfyJQJwb5JCgPt+RV/n
+         lgJjf+db7hniX3zBoltPHNc+8ukTeK/NUVvs7viUXPXzRTkr7eYFrqnQuHr1VVtnKqpY
+         lkwV0MTzIeqVZr+aQ2nIh5AaJuHK53DTFT9p5mIfP1mRC2SSaIAGfkrHP5NNj54yVdWC
+         4VIA==
+X-Received: by 10.107.10.79 with SMTP id u76mr17216549ioi.79.1430562692319;
+ Sat, 02 May 2015 03:31:32 -0700 (PDT)
 MIME-Version: 1.0
-From: Byron Ruth <byron@synadia.com>
-Date: Tue, 31 Oct 2023 10:51:55 -0400
-Message-ID: <CAPS+KmmW-6ar9R-8g93sUs2j4FTr6j9Euff1h-Bp=G9=Wd6Evw@mail.gmail.com>
+Message-ID: <CADOUnBK=jW36v6X2Q6EXLL35Wxqait7cWJR-adCFwRaMJtucPQ@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=001a113ee1701ad8b3051516d53d
+Date: Sat, 2 May 2015 18:31:12 +0800
+From: Wen Xu <hotdog3645@gmail.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE request for a fixed bug existed in all versions of linux kernel
+ from KeenTeam
 To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] NATS: 2023-02: nkeys: xkeys Seal encryption used fixed key for all encryption
 
-NATS-advisory-ID: 2023-02
-Aliases: CVE-2023-46129, GHSA-mr45-rx8q-wcm9
-Date: 2023-10-26
-Fixed-In: nkeys 0.4.6; nats-server 2.10.4
+--001a113ee1701ad8b3051516d53d
+Content-Type: text/plain; charset=UTF-8
 
-Background:
+Hi,
+Recently we found a use-after-free bug which can lead to kernel arbitrary
+execution in Linux kernel.
+The bug was reported to the linux security group and it has been fixed.(commit
+a134f083e79f ("ipv4: Missing sk_nulls_node_init() in ping_unhash()"). You
+can find the fix commit here:
+https://github.com/torvalds/linux/commit/6c3c1eb3c35e8856d6dcb01b412316a676f58bbe
+The bug exists in all versions of linux kernel. And the credit is to Wen Xu
+and wushi of KeenTeam.
+I am looking forward to your reply.
 
-NATS.io is a high performance open source pub-sub distributed communication
-technology, built for the cloud, on-premise, IoT, and edge computing.
+Thanks,
+Wen Xu @ Keen Team
 
-The cryptographic key handling library, nkeys, recently gained support
-for encryption, not just for signing/authentication.  This is used
-in nats-server 2.10 (Sep 2023) and newer for authentication callouts.
 
-Problem Description:
 
-The nkeys library's "xkeys" encryption handling logic mistakenly
-passed an array by value into an internal function, where the function
-mutated that buffer to populate the encryption key to use.  As a result,
-all encryption was actually to an all-zeros key.
+---------- Forwarded message ----------
+From: Willy Tarreau <w@1wt.eu>
+Date: 2015-05-02 15:43 GMT+08:00
+Subject: Re: Socket Vulnerability Report (Lead to kernel arbitrary
+execution) from KeenTeam
+To: Wen Xu <hotdog3645@gmail.com>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>, David Miller <
+davem@davemloft.net>, "security@kernel.org" <security@kernel.org>
 
-This affects encryption only, not signing.
-All usage of nkeys prior to the January 2023 0.4.0 release was
-signing-only.
 
-Within the nats-server, the encryption is used for the Auth
-Callouts feature, introduced with 2.10.0 (September 2023).
-The Auth Callout request includes the supplied user password.
-These messages are sent within NATS, and should typically be in a
-dedicated NATS Account used for callouts, but this is not required.
-Thus in scenarios where the Callouts are in an account shared with
-untrusted users or where the callout responders connect without TLS,
-this may lead to user credential exposure.
+On Sat, May 02, 2015 at 02:50:32PM +0800, Wen Xu wrote:
+> Many thanks, we've already seen the patch commit ;)
+> By the way, as security researchers, if we want a CVE number for this ping
+> socket bug, where could we request for? What's the routine process for
+this?
 
-Affected versions:
+Now that the fix is public, you should ask oss-security, someone there
+should provide you with one.
 
-nkeys Go library:
- * 0.4.0 up to and including 0.4.5
- * Fixed with nats-io/nkeys: 0.4.6
-NATS Server:
- * 2.10.0 up to and including 2.10.3
- * Fixed with nats-io/nats-server: 2.10.4
+Thanks,
+Willy
 
-Workarounds:
-
-None available.
-
-Solution:
-
-Upgrade the nats-server.
-For any application handling auth callouts in Go, if using the nkeys
-library, update the dependency, recompile and deploy that in lockstep.
-
-Credits:
-
-Problem reported by Quentin Matillat (GitHub @tinou98).
-
-References:
-
- * GitHub Security Advisory for nkeys & nats-server:
-   <https://github.com/nats-io/nkeys/security/advisories/GHSA-mr45-rx8q-wcm9>
+--001a113ee1701ad8b3051516d53d--
