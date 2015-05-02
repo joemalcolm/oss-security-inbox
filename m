@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4087" "Wednesday" "7" "June" "2017" "12:55:26" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<752768.651672767-sendEmail@localhost>" "66" "[oss-security] ytnef: memory allocation failure in TNEFFillMapi (ytnef.c)" "^Date:" nil nil "6" "2017060712:55:26" "[oss-security] ytnef: memory allocation failure in TNEFFillMapi (ytnef.c)" (number mark "        ago@gentoo.o Jun  7   66/4087  " thread-indent "\"[oss-security] ytnef: memory allocation failure in TNEFFillMapi (ytnef.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4544" "Saturday" "2" "May" "2015" "22:25:46" "+0000" "mancha" "mancha1@zoho.com" "<20150502222546.GA23148@zoho.com>" "102" "Re: [oss-security] On sanctioned MITMs" nil nil nil "5" "2015050222:25:46" "[oss-security] On sanctioned MITMs" (number mark " r      mancha1@zoho May  2  102/4544  " thread-indent "\"Re: [oss-security] On sanctioned MITMs\"\n") "<E1868BE4-F7FC-406B-8DBD-4720F7F67A1F@orthanc.ca>" ("<20150501191522.GA18039@zoho.com>" "<5543DDB5.7030900@redhat.com>" "<20150501233935.GB18039@zoho.com>" "<E1868BE4-F7FC-406B-8DBD-4720F7F67A1F@orthanc.ca>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0003
 X-Mozilla-Status2: 00000000
-Received: (qmail 3508 invoked by uid 550); 7 Jun 2017 12:55:45 -0000
+Received: (qmail 16304 invoked by uid 550); 2 May 2015 22:26:11 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,79 +11,131 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3259 invoked from network); 7 Jun 2017 12:55:42 -0000
-Message-ID: <752768.651672767-sendEmail@localhost>
+Received: (qmail 16286 invoked from network); 2 May 2015 22:26:10 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; 
+  s=zapps768; d=zoho.com; 
+  h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; 
+  b=Wk9n3gaRLlAj222mENax54uLZUNWWSUIx+Ci4ZlaFFP08Zr8peO+lAd3z5Y7zoJa48WefiTlxCLX
+    ryrZb9kWbqCErFslyfzXl+wTnKwyeovGx8F4hFijDf4+YiEAdW4h  
+Message-ID: <20150502222546.GA23148@zoho.com>
+References: <20150501191522.GA18039@zoho.com>
+ <5543DDB5.7030900@redhat.com>
+ <20150501233935.GB18039@zoho.com>
+ <E1868BE4-F7FC-406B-8DBD-4720F7F67A1F@orthanc.ca>
 MIME-Version: 1.0
-Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-363338.398587988"
-Date: Wed, 7 Jun 2017 12:55:26 +0000
-From: "Agostino Sarubbo" <ago@gentoo.org>
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="fdj2RfSjLxBAspz7"
+Content-Disposition: inline
+In-Reply-To: <E1868BE4-F7FC-406B-8DBD-4720F7F67A1F@orthanc.ca>
+X-PGP-Key: http://hkps.pool.sks-keyservers.net/pks/lookup?op=vindex&search=0x25168eb24f0b22ac
+X-PGP-FP: 56B7 100E F4D5 811C 8FEF  ADD1 2516 8EB2 4F0B 22AC
+X-Zoho-Virus-Status: 1
+Cc: lyndon@orthanc.ca
+Date: Sat, 2 May 2015 22:25:46 +0000
+From: mancha <mancha1@zoho.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] ytnef: memory allocation failure in TNEFFillMapi (ytnef.c)
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Subject: Re: [oss-security] On sanctioned MITMs
+To: oss-security@lists.openwall.com
 
-------MIME delimiter for sendEmail-363338.398587988
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 7bit
+--fdj2RfSjLxBAspz7
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Description:
-ytnef is Yeraze’s TNEF Stream Reader – for winmail.dat files.
+On Fri, May 01, 2015 at 07:40:51PM -0700, Lyndon Nerenberg wrote:
+> >> On 05/01/2015 01:15 PM, mancha wrote:
+> >>> Though Hushmail email credentials, for example, can't be sniffed
+> >>> in the segment connecting the client to CloudFlare, they are
+> >>> available to CloudFlare's infrastucture. Moreoever, there is no
+> >>> way for the client to verify that the segment connecting
+> >>> CloudFlare to the destination server is similarly encrypted (i.e.
+> >>> it might be in the clear as would be the case when using
+> >>> CloudFlare's "Flexible SSL" product).=20=20
+> >>>=20
+> >>> Hushmail's CloudFlare usage serves as an example that brings me to
+> >>> my general point.
+> >>>=20
+> >>> How should the security community view this growing use of
+> >>> sanctioned MITM in light of the ever-increasing amount of
+> >>> sensitive content sent over SSL/TLS encrypted channels (e.g.
+> >>> email, electronic banking, medical records, etc.)?
 
-The complete ASan output of the issue:
+> But also ask why they might use it.  E.g., in the presence of a DDOS
+> attack, many companies rely on infrastructure such as what Cloudflare
+> provides in order to keep their services running.  By their nature,
+> those mitigation services have to bust the SSL pipe to do what they
+> do.
 
-# ytnefprint $FILE
-==11998==AddressSanitizer CHECK failed: /tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.0/work/compiler-rt-4.0.0.src/lib/sanitizer_common/sanitizer_common.cc:120 "((0 && "unable to mmap")) != (0)" (0x0, 0x0)
-    #0 0x4d95cf in __asan::AsanCheckFailed(char const*, int, char const*, unsigned long long, unsigned long long) /tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.0/work/compiler-rt-4.0.0.src/lib/asan/asan_rtl.cc:69
-    #1 0x4f4335 in __sanitizer::CheckFailed(char const*, int, char const*, unsigned long long, unsigned long long) /tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.0/work/compiler-rt-4.0.0.src/lib/sanitizer_common/sanitizer_termination.cc:79
-    #2 0x4e3962 in __sanitizer::ReportMmapFailureAndDie(unsigned long, char const*, char const*, int, bool) /tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.0/work/compiler-rt-4.0.0.src/lib/sanitizer_common/sanitizer_common.cc:120
-    #3 0x4ed265 in __sanitizer::MmapOrDie(unsigned long, char const*, bool) /tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.0/work/compiler-rt-4.0.0.src/lib/sanitizer_common/sanitizer_posix.cc:132
-    #4 0x424c6a in __sanitizer::LargeMmapAllocator::Allocate(__sanitizer::AllocatorStats*, unsigned long, unsigned long) /tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.0/work/compiler-rt-4.0.0.src/lib/asan/../sanitizer_common/sanitizer_allocator_secondary.h:41
-    #5 0x424c6a in __sanitizer::CombinedAllocator<__sanitizer::SizeClassAllocator64, __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64 >, __sanitizer::LargeMmapAllocator >::Allocate(__sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64 >*, unsigned long, unsigned long, bool, bool) /tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.0/work/compiler-rt-4.0.0.src/lib/asan/../sanitizer_common/sanitizer_allocator_combined.h:70
-    #6 0x424c6a in __asan::Allocator::Allocate(unsigned long, unsigned long, __sanitizer::BufferedStackTrace*, __asan::AllocType, bool) /tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.0/work/compiler-rt-4.0.0.src/lib/asan/asan_allocator.cc:407
-    #7 0x41f1fb in __asan::Allocator::Calloc(unsigned long, unsigned long, __sanitizer::BufferedStackTrace*) /tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.0/work/compiler-rt-4.0.0.src/lib/asan/asan_allocator.cc:605
-    #8 0x41f1fb in __asan::asan_calloc(unsigned long, unsigned long, __sanitizer::BufferedStackTrace*) /tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.0/work/compiler-rt-4.0.0.src/lib/asan/asan_allocator.cc:786
-    #9 0x4cf7ba in calloc /tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.0/work/compiler-rt-4.0.0.src/lib/asan/asan_malloc_linux.cc:75
-    #10 0x7fe45c3e4e53 in TNEFFillMapi /tmp/ytnef-1.9.2/lib/ytnef.c:424:19
-    #11 0x7fe45c3e1384 in TNEFMapiProperties /tmp/ytnef-1.9.2/lib/ytnef.c:396:7
-    #12 0x7fe45c3f6b47 in TNEFParse /tmp/ytnef-1.9.2/lib/ytnef.c:1184:15
-    #13 0x7fe45c3f59d3 in TNEFParseFile /tmp/ytnef-1.9.2/lib/ytnef.c:1042:10
-    #14 0x508814 in main /tmp/ytnef-1.9.2/ytnefprint/main.c:80:9
-    #15 0x7fe45b50b78f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #16 0x419c38 in _start (/usr/bin/ytnefprint+0x419c38)
+I kicked off my post mentioning DDoS mitigation was one of the reasons
+services contract with CDNs such as CloudFlare.
 
-Affected version:
-1.9.2
+> What I am not hearing anywhere in this conversation is a proposal for
+> how Cloudflare can provide the service they do, but in a manner that
+> doesn't require busting the SSL pipe in the middle.  There are MANY
+> people begging for an answer to that.  Do you have it?  If not, are
+> you prepared to see the services you "need" go offline when someone
+> decides to DDOS the provider?
+>=20
+> That's not a rhetorical question.  For some people, the answer is
+> 'yes'.  But for most, it is 'no'.
 
-Fixed version:
-N/A
+I agree achieving end-to-end (E2E) security with interposition is an
+interesting security research area. In fact, it would be great if as a
+result of this thread more members of the infosec and oss communities
+were motivated to tackle that.=20
 
-Commit fix:
-N/A
+> In the specific Hushmail example, would it alleviate peoples concerns
+> if the Cloudflare MITM-busting behaviour took place entirely inside
+> Canada?  If not, how do you propose an alternative?
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
+Dean Pierce points out that outsourcing across national borders can have
+legal implications but this is outside of my area of expertise.
 
-CVE:
-CVE-2017-9473
+> And what, exactly, is the attack vector you are trying to close down?
+> Is it the only one?  How do they interact?
+>=20
+> --lyndon
 
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00246-ytnef-memallocfailures
+I've already alluded to the general security issues that arise in MITM
+setups. More specifically, breaking E2E security with interposition adds
+well-known complications/issues: rogue employees at the interposing
+service, increased attack surfaces, more points of failure, inability to
+verify path integrity, inability to verify content integrity,
+misconstruing of communications as E2E-secure by non-experts, among many
+others.=20
 
-Timeline:
-2017-03-27: bug discovered and reported to upstream
-2017-05-24: blog post about the issue
-2017-06-07: CVE assigned
+As you said, lots of people are interested in ways of achieving E2E
+security with intermediation - precisely because there is recognition
+current TLS interposition models are not satisfactory.=20
 
-Note:
-This bug was found with American Fuzzy Lop.
+My specific interest is how OSS projects (e.g. browsers, TLS stacks,
+etc.) can address security issues that arise from SSL/TLS interposition.
+Also of interest is leveraging the intersection of infosec/oss/crypto to
+develop related innovations (e.g. interposition that coexists with
+uncompromised E2E security).=20
 
-Permalink:
-https://blogs.gentoo.org/ago/2017/05/24/ytnef-memory-allocation-failure-in-tneffillmapi-ytnef-c/
+--mancha
 
---
-Agostino Sarubbo
-Gentoo Linux Developer
+--fdj2RfSjLxBAspz7
+Content-Type: application/pgp-signature
 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-------MIME delimiter for sendEmail-363338.398587988--
+iQIcBAEBCgAGBQJVRU7qAAoJEB4VYy8JqhaDePsP/iYAlJv4MJL603/Pp86KXqid
+J1Nn1TKpGv3GQJHuPpadlN+ykpIiqS1ZxKzYLpsKE2s4gAxhVmzhdBJKy5WphWLl
+EMKr/cWyHz1CYXFgsc1x1PeiA7REDqMvLZVoJVIkVSL1irafMGJiqcQ1REKgc/ee
+Cni9om03Dgw8LDdlHj+oAwI9kVlwcZBD22iT437M+Eu057izFkKLghIJUKTzgYYZ
+FPX/mKjhgO3wfNX3Ptd7rStkc/zAgbmbS8eYaS9dqIDYv7sIME8RP6PoeGjmcyVq
+KKy4xYgz5+oNbRbXxtBJyjB4Rq8NmMRnJkSdWgL3YOkS5g2AFRmN1LA5H8HM/i8M
+d9yOT72nvXYj9Olz/Z+IoJWYpH3Q8yQdB2TfP01/QUBvGT72jOhfXRCUn/+mDb8N
+YmLMX8EuHxm8s4lofJFbSUun8wzklZEFejUIt2K0q/kadlyzEl8ySvmpltBoVYGs
+U7PG/U7xS3xhLRf22Afe/N2Uq93l1IcIIMSdUP8apZ9+kZ9Ounc6tI0AXpE1Tmbq
+JsgN2KSSNv8ZmGFc88koQ9nScZbB/Yn9wTgw4EbakedgEAm4rvOYvVI1CpmS7jGl
+Eoo07XzTbjDcWA6sMRIG27bOvEmc/a1I6yZblI0MyzjWwCV8E6drADFSOQhEnPPu
+uTWqW+sGKKBDPG2foarQ
+=chDv
+-----END PGP SIGNATURE-----
+
+--fdj2RfSjLxBAspz7--
 
