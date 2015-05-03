@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1567" "Tuesday" "30" "October" "2018" "09:14:52" "-0400" "Mike Dalessio" "mike.dalessio@gmail.com" "<CAGJbjKb8Ccxyv-JYrvXxeiyq4BvFesM4PEdgwndDxYA7KTQPiA@mail.gmail.com>" "62" "[oss-security] [CVE-2018-16468] Loofah XSS Vulnerability" nil nil nil "10" "2018103013:14:52" "[oss-security] [CVE-2018-16468] Loofah XSS Vulnerability" (number mark "U       mike.dalessi Oct 30   62/1567  " thread-indent "\"[oss-security] [CVE-2018-16468] Loofah XSS Vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["835" "Sunday" "3" "May" "2015" "18:24:00" "+0200" "Sebastian Andrzej Siewior" "cve-announce@ml.breakpoint.cc" "<20150503162400.GA2083@breakpoint.cc>" "18" "[oss-security] CVE-2015-2221: clamav: infinite loop condition on crafted y0da cryptor file" nil nil nil "5" "2015050316:24:00" "[oss-security] CVE-2015-2221: clamav: infinite loop condition on crafted y0da cryptor file" (number mark "        cve-announce May  3   18/835   " thread-indent "\"[oss-security] CVE-2015-2221: clamav: infinite loop condition on crafted y0da cryptor file\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 7414 invoked by uid 550); 30 Oct 2018 14:10:06 -0000
+Received: (qmail 16013 invoked by uid 550); 3 May 2015 16:24:35 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,101 +11,34 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5334 invoked from network); 30 Oct 2018 13:15:16 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=Qa2EGteSsWHfdQiddTVPHPuI0KihO6GCkCwyv1X6LTE=;
-        b=TDQAEiGKDkB3TUYb/4BuRIdkOEYbiMtj3mPeOrS95VC8y4WOnAYpapLnij6N8FTMPu
-         qfnZupYfIJJOkaMzdutZgaQ19d+JI+YtpdKH8s/c+vJpYGEknsF9rhydQNVLw1GfOFlH
-         ys5gvBqZuPSt40nHX+22Uwc2bptJjUDrx112cD+eltD/rYM8kPLKQsZjEq+43uGuGORD
-         74wDjqKPY+2w3DSSE4GOSw1xdvmkCecOrqFz86wOvXUGspi0D/h20VHysZ8tGvYvaTV5
-         1Spg1FqMcQYH39YDWahpRnIXUePL6IEl9+Lo3Nx6q+M7lX/Hcdqg9ZuUt/ABHC9i/Mfc
-         w+3w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=Qa2EGteSsWHfdQiddTVPHPuI0KihO6GCkCwyv1X6LTE=;
-        b=AWjuV+RN8L1mgUuUEdOK+I/PuGvXlCndTG9TWQaK48W8hYE2IGBj7/1mcuqLG0VA/B
-         PN6dKC/K50B4GwDlJY1vtLCbCuyQ+EKsqkmxrKYtl05YHQW2BvnwSDVzX4Bu+8EVIhsy
-         7+7jf3MgnJ7fYlON8VMDgjmMwxMWEfSkBliRzfU15wA9hrnPtl2JaxzE5wwA416+YEL8
-         f2F1EKZZrjUE7XIP4xuK6nD+LjBSjxWM9kmoe6niKMyCE7slN+dlI1NrzPryTpz6LJz6
-         MAFkmb+z0fvS6cEfq77h8rQ4Qt/ICCJRKpbrRvdAQaaF3+wSFMftrzyloMpT0zRY+FKc
-         z9PA==
-X-Gm-Message-State: AGRZ1gLAUb4l54xDpZsbWrYlZEyrhMbQvdJ5r02vNgrAszwbP84xeADO
-	yBfm2B/fGpgGCOfzWjFB+V/zMpSJRb/DsqHk8bo=
-X-Google-Smtp-Source: AJdET5fGRBPqrGdvYj7DRErTunGJe08/f39csf0b1YP0n9gZjeNdaQgTuroAd37WHjsnbjvUW5PXatuziO9FZpQb4zc=
-X-Received: by 2002:a63:1c1b:: with SMTP id c27-v6mr18141192pgc.351.1540905304345;
- Tue, 30 Oct 2018 06:15:04 -0700 (PDT)
+Received: (qmail 13969 invoked from network); 3 May 2015 16:24:13 -0000
+Message-ID: <20150503162400.GA2083@breakpoint.cc>
 MIME-Version: 1.0
-From: Mike Dalessio <mike.dalessio@gmail.com>
-Date: Tue, 30 Oct 2018 09:14:52 -0400
-Message-ID: <CAGJbjKb8Ccxyv-JYrvXxeiyq4BvFesM4PEdgwndDxYA7KTQPiA@mail.gmail.com>
-To: ruby-security-ann@googlegroups.com, rubyonrails-security@googlegroups.com, 
-	oss-security@lists.openwall.com, loofah-talk@googlegroups.com
-Content-Type: multipart/alternative; boundary="0000000000004c4f0e057971f938"
-Subject: [oss-security] [CVE-2018-16468] Loofah XSS Vulnerability
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.5.23 (2014-03-12)
+Date: Sun, 3 May 2015 18:24:00 +0200
+From: Sebastian Andrzej Siewior <cve-announce@ml.breakpoint.cc>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE-2015-2221: clamav: infinite loop condition on crafted y0da
+ cryptor file
+To: oss-security@lists.openwall.com
 
---0000000000004c4f0e057971f938
-Content-Type: text/plain; charset="UTF-8"
+Y0da cryptor / protector is a PE file encryptor - the executable file is
+decrypted on start up. Clamav [0] is able to decrypt such files in order to
+scan them. As part of the decryptor there is an op code emulator. A special
+crafted file may contain a jump op code to a position that already has been
+interpreted - which leads to an endless loop. This leads to an endless loop in
+clamav itself.
 
-Hello all,
+This has been fixed by [1] and the loop limit has been increased in [2]. This
+change is part of the 0.98.7 release.
 
-A *medium* severity vulnerability has been identified and patched in Loofah
-v2.2.3, which is a dependency of `rails-html-sanitizer`. This issue has
-been assigned CVE-2018-16468.
+This bug has been discovered by AFL [3], american fuzzy lop.
 
-The public notice can be found here:
+[0] http://www.clamav.net/
+[1] https://github.com/vrtadmin/clamav-devel/commit/0844d0cfe118b4041ed8e2ee49ff18bfbca8eaa5
+[2] https://github.com/vrtadmin/clamav-devel/commit/26b19809fb3b940cb0fda0422d685fff02a53b5f
+[3] http://lcamtuf.coredump.cx/afl/
 
-    https://github.com/flavorjones/loofah/issues/154
-
-To save you a click, I've reproduced the contents of the announcement here.
-
------
-
-*# CVE-2018-16468 - Loofah XSS Vulnerability*
-
-This issue has been created for public disclosure of an XSS vulnerability
-that was responsibly reported (independently) by [Shubham Pathak](
-https://hackerone.com/hackedbrain) and @yasinS (Yasin Soliman).
-
-I'd like to thank [HackerOne](https://hackerone.com/loofah) for providing a
-secure, responsible mechanism for reporting, and for providing their
-fantastic service to the Loofah maintainers.
-
-
-*## Severity*
-
-Loofah maintainers have evaluated this as [Medium (CVSS3 6.4)](
-https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:L/UI:N/S:C/C:N/I:L/A:L
-).
-
-
-*## Description*
-
-In the Loofah gem, through v2.2.2, unsanitized JavaScript may occur in
-sanitized output when a crafted SVG element is republished.
-
-
-*## Affected Versions*
-
-Loofah < v2.2.3.
-
-
-*## Mitigation*
-
-Upgrade to Loofah v2.2.3.
-
-
-*## References*
-
-* [HackerOne report](https://hackerone.com/reports/429267)
-
-
-*## History of this public disclosure*
-
-2018-10-27: disclosure created, all information is embargoed
-2018-10-30: embargo ends, full information made available
-
---0000000000004c4f0e057971f938--
+Sebastian
