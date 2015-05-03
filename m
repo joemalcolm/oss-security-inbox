@@ -1,4 +1,9 @@
-Received: (qmail 11641 invoked by uid 550); 20 Aug 2024 16:46:20 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["706" "Sunday" "3" "May" "2015" "18:22:59" "+0200" "Sebastian Andrzej Siewior" "cve-announce@ml.breakpoint.cc" "<20150503162259.GA2068@breakpoint.cc>" "16" "[oss-security] CVE-2015-2170: clamav: crash on crafted upx packed file" nil nil nil "5" "2015050316:22:59" "[oss-security] CVE-2015-2170: clamav: crash on crafted upx packed file" (number mark "        cve-announce May  3   16/706   " thread-indent "\"[oss-security] CVE-2015-2170: clamav: crash on crafted upx packed file\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 7901 invoked by uid 550); 3 May 2015 16:23:16 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,46 +11,31 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32220 invoked from network); 20 Aug 2024 16:40:32 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Junkai Xue <jxue@apache.org>
-To: oss-security@lists.openwall.com
-Message-ID: <bebed778-75f1-b671-01e3-03055c6c9efb@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 20 Aug 2024 16:40:21 +0000
+Received: (qmail 7863 invoked from network); 3 May 2015 16:23:12 -0000
+Message-ID: <20150503162259.GA2068@breakpoint.cc>
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2024-22281: Apache Helix Front (UI): Helix front hard-coded
- secret in the express-session 
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.5.23 (2014-03-12)
+Date: Sun, 3 May 2015 18:22:59 +0200
+From: Sebastian Andrzej Siewior <cve-announce@ml.breakpoint.cc>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE-2015-2170: clamav: crash on crafted upx packed file
+To: oss-security@lists.openwall.com
 
-Severity: important
+UPX [0] is a executable file compressor which is able to compress various
+executable formats including PE and ELF files. Clamav [1] is a virus scanning
+tool which is able to unpack such files during scanning.
 
-Affected versions:
+During unpacking there are two range checks which are implemented "manually".
+Those checks lack the detection of overflows which are considered by the
+CLI_ISCONTAINED() macro. This has been fixed [2] and is part of the 0.98.7
+release.
+This bug has been discovered by AFL [3], american fuzzy lop.
 
-- Apache Helix Front (UI): all versions
+[0] http://upx.sourceforge.net/
+[1] http://www.clamav.net/
+[2] https://github.com/vrtadmin/clamav-devel/commit/625f5a9b8f008b8714850e4aa064dee1de06e534
+[3] http://lcamtuf.coredump.cx/afl/
 
-Description:
-
-** UNSUPPORTED WHEN ASSIGNED ** The Apache Helix Front (UI) component conta=
-ined a hard-coded secret, allowing an attacker to spoof sessions by generat=
-ing their own fake cookies.
-
-This issue affects Apache Helix Front (UI): all versions.
-
-As this project is retired, we do not plan to release a version that fixes =
-this issue. Users are recommended to find an alternative or restrict access=
- to the instance to trusted users.
-
-NOTE: This vulnerability only affects products that are no longer supported=
- by the maintainer.
-
-Credit:
-
-Jonathan Leitschuh (finder)
-
-References:
-
-https://helix.apache.org/
-https://www.cve.org/CVERecord?id=3DCVE-2024-22281
-
+Sebastian
