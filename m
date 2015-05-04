@@ -1,4 +1,9 @@
-Received: (qmail 20056 invoked by uid 550); 1 Jul 2024 08:10:17 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1963" "Monday" "4" "May" "2015" "01:43:48" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150504054348.90CC272E083@smtpvbsrv1.mitre.org>" "53" "[oss-security] Re: USBCreator D-Bus service" nil nil nil "5" "2015050405:43:48" "[oss-security] Re: USBCreator D-Bus service" (number mark "        cve-assign@m May  4   53/1963  " thread-indent "\"[oss-security] Re: USBCreator D-Bus service\"\n") "<CAJ_zFk+imjcZZTm8KwOZia0McwHZ2iQawpXoijRpejM9jt3PGA@mail.gmail.com>" ("<CAJ_zFk+imjcZZTm8KwOZia0McwHZ2iQawpXoijRpejM9jt3PGA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 25887 invoked by uid 550); 4 May 2015 05:44:08 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,284 +11,66 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 25770 invoked from network); 4 May 2015 05:44:00 -0000
+In-Reply-To: <CAJ_zFk+imjcZZTm8KwOZia0McwHZ2iQawpXoijRpejM9jt3PGA@mail.gmail.com>
+Message-Id: <20150504054348.90CC272E083@smtpvbsrv1.mitre.org>
+Cc: cve-assign@mitre.org
+Date: Mon,  4 May 2015 01:43:48 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 19994 invoked from network); 1 Jul 2024 08:10:17 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=selector1; bh=MIaP4NpKHE
-	YbdfqZ2lsV+oJ97Gh6hBx4R2FZwoM6kMA=; h=subject:to:date:from;
-	d=openbsd.org; b=226Mb9ZJu4iceKkMOXDmCb+P0v6dRwZDFXjdek+fpc9A4s3yjjXnx
-	wNuz4OjX24yRzFuCykaWvysuchZSySZY9MXcPC105GS9sHo4dRxVfPWJyowSusuBERfEv1
-	8TBgZu64KW9K35e6OaUl/Ok7AqNbaD5zu0ra78XfrbcXzhEBRyyPMiyFm+pz+uAKZbvtmf
-	JCAUvD2KD0fmXwwycecXyAn2IL4hKuCpY4kQIfmxn/PC8hxx5rZl2+tpjf9iQltD2RTNbJ
-	eHN/092kdR4kdv0UNw9KRJSLnbW6FTt0j3jjFDa61jFh0cjENc/dpZ2ogFi95w7aISsXl6
-	3WjCjurwQ==
-From: Damien Miller <djm@cvs.openbsd.org>
-Date: Mon, 1 Jul 2024 02:10:04 -0600 (MDT)
+Subject: [oss-security] Re: USBCreator D-Bus service
 To: oss-security@lists.openwall.com
-Message-ID: <d2ed9e542682bf82@cvs.openbsd.org>
-Subject: [oss-security] Announce: OpenSSH 9.8 released
 
-OpenSSH 9.8 has just been released. It will be available from the
-mirrors listed at https://www.openssh.com/ shortly.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-OpenSSH is a 100% complete SSH protocol 2.0 implementation and
-includes sftp client and server support.
+> http://openwall.com/lists/oss-security/2015/04/22/12
 
-Once again, we would like to thank the OpenSSH community for their
-continued support of the project, especially those who contributed
-code or patches, reported bugs, tested snapshots or donated to the
-project. More information on donations may be found at:
-https://www.openssh.com/donations.html
+> On my Ubuntu VM, I have a D-Bus service listening on
+> com.ubuntu.USBCreator. As far as I can tell, this is installed by
+> default.
 
-Security
-========
+> It looks like the author intended for all the methods to call
+> check_polkit, but KVMTest doesn't.
 
-This release contains fixes for two security problems, one critical
-and one minor.
+> the following appears to work
+> on my machine:
 
-1) Race condition in sshd(8)
+> dbus-send --print-reply --system --dest=com.ubuntu.USBCreator
+> /com/ubuntu/USBCreator com.ubuntu.USBCreator.KVMTest ...
+> dict:string:string:DISPLAY,"foo",XAUTHORITY,"foo",LD_PRELOAD,"/tmp/test.so"
 
-A critical vulnerability in sshd(8) was present in Portable OpenSSH
-versions 8.5p1 and 9.7p1 (inclusive) that may allow arbitrary code
-execution with root privileges.
+As far as we know, this affects only Ubuntu, and although people from
+Ubuntu discussed the announcement here, apparently nobody from Ubuntu
+sent a message here stating that they concluded it was a single
+vulnerability that didn't yet have a CVE ID. We found that that's the
+state by reading:
 
-Successful exploitation has been demonstrated on 32-bit Linux/glibc
-systems with ASLR. Under lab conditions, the attack requires on
-average 6-8 hours of continuous connections up to the maximum the
-server will accept. Exploitation on 64-bit systems is believed to be
-possible but has not been demonstrated at this time. It's likely that
-these attacks will be improved upon.
+  http://bazaar.launchpad.net/~usb-creator-hackers/usb-creator/trunk/revision/470
 
-Exploitation on non-glibc systems is conceivable but has not been
-examined. Systems that lack ASLR or users of downstream Linux
-distributions that have modified OpenSSH to disable per-connection
-ASLR re-randomisation (yes - this is a thing, no - we don't
-understand why) may potentially have an easier path to exploitation.
-OpenBSD is not vulnerable.
+Use CVE-2015-3643.
 
-We thank the Qualys Security Advisory Team for discovering, reporting
-and demonstrating exploitability of this problem, and for providing
-detailed feedback on additional mitigation measures.
 
-2) Logic error in ssh(1) ObscureKeystrokeTiming
+> http://openwall.com/lists/oss-security/2015/04/24/5
 
-In OpenSSH version 9.5 through 9.7 (inclusive), when connected to an
-OpenSSH server version 9.5 or later, a logic error in the ssh(1)
-ObscureKeystrokeTiming feature (on by default) rendered this feature
-ineffective - a passive observer could still detect which network
-packets contained real keystrokes when the countermeasure was active
-because both fake and real keystroke packets were being sent
-unconditionally.
+As far as we can tell, this followup post doesn't announce an
+additional vulnerability. Apparently, the goal of that post was to
+describe how to check for some of the exploitation preconditions, and
+suggest the possibility of bypassing a precondition.
 
-This bug was found by Philippos Giavridis and also independently by
-Jacky Wei En Kung, Daniel Hugenroth and Alastair Beresford of the
-University of Cambridge Computer Lab.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-Worse, the unconditional sending of both fake and real keystroke
-packets broke another long-standing timing attack mitigation. Since
-OpenSSH 2.9.9 sshd(8) has sent fake keystoke echo packets for
-traffic received on TTYs in echo-off mode, such as when entering a
-password into su(8) or sudo(8). This bug rendered these fake
-keystroke echoes ineffective and could allow a passive observer of
-a SSH session to once again detect when echo was off and obtain
-fairly limited timing information about keystrokes in this situation
-(20ms granularity by default).
-
-This additional implication of the bug was identified by Jacky Wei
-En Kung, Daniel Hugenroth and Alastair Beresford and we thank them
-for their detailed analysis.
-
-This bug does not affect connections when ObscureKeystrokeTiming
-was disabled or sessions where no TTY was requested.
-
-Future deprecation notice
-=========================
-
-OpenSSH plans to remove support for the DSA signature algorithm in
-early 2025. This release disables DSA by default at compile time.
-
-DSA, as specified in the SSHv2 protocol, is inherently weak - being
-limited to a 160 bit private key and use of the SHA1 digest. Its
-estimated security level is only 80 bits symmetric equivalent.
-
-OpenSSH has disabled DSA keys by default since 2015 but has retained
-run-time optional support for them. DSA was the only mandatory-to-
-implement algorithm in the SSHv2 RFCs, mostly because alternative
-algorithms were encumbered by patents when the SSHv2 protocol was
-specified.
-
-This has not been the case for decades at this point and better
-algorithms are well supported by all actively-maintained SSH
-implementations. We do not consider the costs of maintaining DSA
-in OpenSSH to be justified and hope that removing it from OpenSSH
-can accelerate its wider deprecation in supporting cryptography
-libraries.
-
-This release, and its deactivation of DSA by default at compile-time,
-marks the second step in our timeline to finally deprecate DSA. The
-final step of removing DSA support entirely is planned for the first
-OpenSSH release of 2025.
-
-DSA support may be re-enabled in OpenBSD by setting "DSAKEY=yes"
-in Makefile.inc. To enable DSA support in portable OpenSSH, pass
-the "--enable-dsa-keys" option to configure.
-
-Potentially-incompatible changes
---------------------------------
-
- * all: as mentioned above, the DSA signature algorithm is now
-   disabled at compile time.
-
- * sshd(8): the server will now block client addresses that
-   repeatedly fail authentication, repeatedly connect without ever
-   completing authentication or that crash the server. See the
-   discussion of PerSourcePenalties below for more information.
-   Operators of servers that accept connections from many users, or
-   servers that accept connections from addresses behind NAT or
-   proxies may need to consider these settings.
-
- * sshd(8): the server has been split into a listener binary, sshd(8),
-   and a per-session binary "sshd-session". This allows for a much
-   smaller listener binary, as it no longer needs to support the SSH
-   protocol. As part of this work, support for disabling privilege
-   separation (which previously required code changes to disable) and
-   disabling re-execution of sshd(8) has been removed. Further
-   separation of sshd-session into additional, minimal binaries is
-   planned for the future.
-
- * sshd(8): several log messages have changed. In particular, some
-   log messages will be tagged with as originating from a process
-   named "sshd-session" rather than "sshd".
-
- * ssh-keyscan(1): this tool previously emitted comment lines
-   containing the hostname and SSH protocol banner to standard error.
-   This release now emits them to standard output, but adds a new
-   "-q" flag to silence them altogether.
-
- * sshd(8): (portable OpenSSH only) sshd will no longer use argv[0]
-   as the PAM service name. A new "PAMServiceName" sshd_config(5)
-   directive allows selecting the service name at runtime. This
-   defaults to "sshd". bz2101
-
- * (portable OpenSSH only) Automatically-generated files, such as
-   configure, config.h.in, etc will now be checked in to the portable
-   OpenSSH git release branch (e.g. V_9_8). This should ensure that
-   the contents of the signed release branch exactly match the
-   contents of the signed release tarball.
-
-Changes since OpenSSH 9.7
-=========================
-
-This release contains mostly bugfixes.
-
-New features
-------------
-
- * sshd(8): as described above, sshd(8) will now penalise client
-   addresses that, for various reasons, do not successfully complete
-   authentication. This feature is controlled by a new sshd_config(5)
-   PerSourcePenalties option and is on by default.
-
-   sshd(8) will now identify situations where the session did not
-   authenticate as expected. These conditions include when the client
-   repeatedly attempted authentication unsucessfully (possibly
-   indicating an attack against one or more accounts, e.g. password
-   guessing), or when client behaviour caused sshd to crash (possibly
-   indicating attempts to exploit bugs in sshd).
-
-   When such a condition is observed, sshd will record a penalty of
-   some duration (e.g. 30 seconds) against the client's address. If
-   this time is above a minimum configurable threshold, then all
-   connections from the client address will be refused (along with any
-   others in the same PerSourceNetBlockSize CIDR range) until the
-   penalty expire.
-
-   Repeated offenses by the same client address will accrue greater
-   penalties, up to a configurable maximum. Address ranges may be
-   fully exempted from penalties, e.g. to guarantee access from a set
-   of trusted management addresses, using the new sshd_config(5)
-   PerSourcePenaltyExemptList option.
-
-   We hope these options will make it significantly more difficult for
-   attackers to find accounts with weak/guessable passwords or exploit
-   bugs in sshd(8) itself. This option is enabled by default.
-
- * ssh(8): allow the HostkeyAlgorithms directive to disable the
-   implicit fallback from certificate host key to plain host keys.
-
-Bugfixes
---------
-
- * misc: fix a number of inaccuracies in the PROTOCOL.*
-   documentation files. GHPR430 GHPR487
-
- * all: switch to strtonum(3) for more robust integer parsing in most
-   places.
-
- * ssh(1), sshd(8): correctly restore sigprocmask around ppoll()
-
- * ssh-keysign(8): stricter validation of messaging socket fd GHPR492
-
- * sftp(1): flush stdout after writing "sftp>" prompt when not using
-   editline. GHPR480
-
- * sftp-server(8): fix home-directory extension implementation, it
-   previously always returned the current user's home directory
-   contrary to the spec. GHPR477
-
- * ssh-keyscan(1): do not close stdin to prevent error messages when
-   stdin is read multiple times. E.g.
-   echo localhost | ssh-keyscan -f - -f -
-
- * regression tests: fix rekey test that was testing the same KEX
-   algorithm repeatedly instead of testing all of them. bz3692
-
- * ssh_config(5), sshd_config(5): clarify the KEXAlgorithms directive
-   documentation, especially around what is supported vs available.
-   bz3701.
-
-Portability
------------
-
- * sshd(8): expose SSH_AUTH_INFO_0 always to PAM auth modules
-   unconditionally. The previous behaviour was to expose it only when
-   particular authentication methods were in use.
-
- * build: fix OpenSSL ED25519 support detection. An incorrect function
-   signature in configure.ac previously prevented enabling the recently
-   added support for ED25519 private keys in PEM PKCS8 format.
-
- * ssh(1), ssh-agent(8): allow the presence of the WAYLAND_DISPLAY
-   environment variable to enable SSH_ASKPASS, similarly to the X11
-   DISPLAY environment variable. GHPR479
-
- * build: improve detection of the -fzero-call-used-regs compiler
-   flag. bz3673.
-
- * build: relax OpenSSL version check to accept all OpenSSL 3.x
-   versions.
-
- * sshd(8): add support for notifying systemd on server listen and
-   reload, using a standalone implementation that doesn't depend on
-   libsystemd. bz2641
-
-Checksums:
-==========
-
- - SHA1 (openssh-9.8.tar.gz) = bc45cedae7f70b41e9922ef4c9f56e74b9a659b7
- - SHA256 (openssh-9.8.tar.gz) = Dnc69VLWFBFdiaz8wySPlvHjb7wZfh/kblQ8ISuQr1Y=
-
- - SHA1 (openssh-9.8p1.tar.gz) = a0bb501b11349f5c5c33a269351be091dc2c2727
- - SHA256 (openssh-9.8p1.tar.gz) = 3YvQAqN5tdSZ37BQ3R+pr4Ap6ARh9LtsUjxJlz9aOfM=
-
-Please note that the SHA256 signatures are base64 encoded and not
-hexadecimal (which is the default for most checksum tools). The PGP
-key used to sign the releases is available from the mirror sites:
-https://cdn.openbsd.org/pub/OpenBSD/OpenSSH/RELEASE_KEY.asc
-
-Reporting Bugs:
-===============
-
-- Please read https://www.openssh.com/report.html
-  Security bugs should be reported directly to openssh@openssh.com
-
-
+iQEcBAEBAgAGBQJVRwacAAoJEKllVAevmvms1VoIAJnDJUPom/68ET3hv2D0+qfs
+BUFj/DXxIXDM19x4ayME7eCh9kauLK79qxFwV2bfsvE/qKEd+2YKmFp3BkveJdE/
+gpNIaxOpLL6/D+LkjMAeEgekVA2ScEhU3TZYsHAiYUQvivfDKbYbwfSQsYc6qKit
+F6fG0Hyg7ic5Au9pH6faIHmQbBKWCFQQ2QfaiKNOOXBObCq9aCwo5YfWjoGdeH10
+H0CJ8ePZ49oIBrYymQRnQ4aEaH974g/N3rii/R9kVhTTrFmHoFs8mgnGlwleB9my
+6bysckwfVPXUlNw44ugnz6fu+AxuoKdAnOCtXAIf9oIy8GOhc9sVqdXU5blx2og=
+=gCRz
+-----END PGP SIGNATURE-----
