@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1232" "Friday" "5" "June" "2015" "17:34:23" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.11.1506051728280.15797@wniryva>" "33" "Re: [oss-security] Re: CVE request Linux kernel: ns: user namespaces panic" nil nil nil "6" "2015060512:04:23" "[oss-security] Re: CVE request Linux kernel: ns: user namespaces panic" (number mark "        ppandit@redh Jun  5   33/1232  " thread-indent "\"Re: [oss-security] Re: CVE request Linux kernel: ns: user namespaces panic\"\n") "<20150604135744.3617A6C0050@smtpvmsrv1.mitre.org>" ("<20150604135744.3617A6C0050@smtpvmsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1446" "Monday" "4" "May" "2015" "12:55:11" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150504165511.4E92A6C005F@smtpvmsrv1.mitre.org>" "39" "[oss-security] Re: CVE request for vulnerability in OpenStack Keystone" nil nil nil "5" "2015050416:55:11" "[oss-security] Re: CVE request for vulnerability in OpenStack Keystone" (number mark "        cve-assign@m May  4   39/1446  " thread-indent "\"[oss-security] Re: CVE request for vulnerability in OpenStack Keystone\"\n") "<5547989E.5020802@enovance.com>" ("<5547989E.5020802@enovance.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 31893 invoked by uid 550); 5 Jun 2015 12:04:46 -0000
+Received: (qmail 28145 invoked by uid 550); 4 May 2015 16:55:24 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,52 +11,52 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 31871 invoked from network); 5 Jun 2015 12:04:44 -0000
-X-X-Sender: pjp@javelin
-In-Reply-To: <20150604135744.3617A6C0050@smtpvmsrv1.mitre.org>
-Message-ID: <alpine.LFD.2.11.1506051728280.15797@wniryva>
-References: <20150604135744.3617A6C0050@smtpvmsrv1.mitre.org>
-MIME-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
-cc: cve-assign@mitre.org, "Eric W. Biederman" <ebiederm@xmission.com>
-Date: Fri, 5 Jun 2015 17:34:23 +0530 (IST)
-From: P J P <ppandit@redhat.com>
+Received: (qmail 28123 invoked from network); 4 May 2015 16:55:23 -0000
+In-Reply-To: <5547989E.5020802@enovance.com>
+Message-Id: <20150504165511.4E92A6C005F@smtpvmsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Mon,  4 May 2015 12:55:11 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: CVE request Linux kernel: ns: user namespaces
- panic
-To: oss security list <oss-security@lists.openwall.com>
+Subject: [oss-security] Re: CVE request for vulnerability in OpenStack Keystone
+To: tristan.cacqueray@enovance.com
 
-+-- On Thu, 4 Jun 2015, cve-assign@mitre.org wrote --+
-| >> From: ebiederm@xmission.com (Eric W. Biederman)
-| >> 
-| >> The core issue is that a unprivileged user could call umount(MNT_DETACH)
-| >> and in the right circumstances gain access to every file on essentially
-| >> any filesystem in the mount namespace.
-| >> 
-| >> e0c9c0afd2fc958ffa34b697972721d81df8a56f mnt: Update detach_mounts to leave mounts connected
-| >> is the real bug fix that fixes a fairly scary issue.
-| >>
-| >> So I believe cd4a40174b71acd021877341684d8bb1dc8ea4ae prevents a
-| >> difficult to trigger crash if you have
-| >> e0c9c0afd2fc958ffa34b697972721d81df8a56f applied.
-| >>
-|
-| Use CVE-2015-4176 for the issue fixed in
-| e0c9c0afd2fc958ffa34b697972721d81df8a56f. This code change is present
-| in 4.0.2.
-| 
-| Use CVE-2015-4177 for the issue fixed in
-| cd4a40174b71acd021877341684d8bb1dc8ea4ae. This code change is not
-| present in 4.0.2.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-  Ie IIUC, existence of CVE-2015-4177 depends on CVE-2015-4176 being fixed, 
-which in turn depends on commit
+> Title: Potential Keystone cache backend password leak in log
+> Affects: versions through 2014.1.4, and 2014.2 versions through 2014.2.3
 
-  -> https://git.kernel.org/linus/ce07d891a0891d3c0d0c2d73d577490486b809e1
+> The
+> backend_argument configuration option content is being logged, and it
+> may contain sensitive information for specific backends (like a password
+> for MongoDB). An attacker with read access to Keystone logs may
+> therefore obtain sensitive data
 
-being present. (...Eric?)
+> https://launchpad.net/bugs/1443598
 
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+> there are other backends provided by dogpile that support
+> authentication through "arguments" (which keystone exposes as
+> "backend_arguments"):
+
+> In addition, custom cache backend implementations could also utilize
+> backend_arguments. All of those would be affected as well.
+
+Use CVE-2015-3646.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJVR6IJAAoJEKllVAevmvms/qkH/3xbAcGsfGXCxlscmRmfInDR
+3LoP1RjtJrn3NSYhUTBj8dNXT5qnD0W7uf2WtUh5l1nRQ4O1qWJvMGizNTHZVtfi
+dkONWWk33bYg8nNwmlrS1Famy4i7i7yCFRbcpOTaYXad668dzSp0xLq4gcrTlR2A
+uXySvJ/ohW8fSzbAtD6yh03JEB6iZ5yV1aYYJHiLc+DIq7ptymOEQ4DRbUqb8EAT
+WL12gOTrL/cAPZsX/s5REnEJ10gYwif7Bpl3lRKELLK4tCPw2mIcZHfih+0HJCw3
+ntqJg1T8KEYUkgrWnoiQOig1lPQBq2UeFdPB+eYvpPShJHLjqtwEum1XDlkR1fI=
+=/tHl
+-----END PGP SIGNATURE-----
