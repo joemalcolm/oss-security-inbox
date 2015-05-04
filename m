@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1293" "Thursday" "5" "May" "2016" "14:21:14" "+0300" "Solar Designer" "solar@openwall.com" "<20160505112114.GA25313@openwall.com>" "33" "Re: [oss-security] broken RSA keys" "^Date:" nil nil "5" "2016050511:21:14" "[oss-security] broken RSA keys" (number mark "        solar@openwa May  5   33/1293  " thread-indent "\"Re: [oss-security] broken RSA keys\"\n") "<20160505130336.7557b73b@pc1>" ("<20160504124248.GA15148@openwall.com>" "<20160504172803.GA19393@openwall.com>" "<CAP9m6YeT=Vo1WQ4Jqn1QV-Cp6mBQ3EwWQ5p_=Rm4P3Na3aGcGw@mail.gmail.com>" "<20160505103405.GA25044@openwall.com>" "<20160505130336.7557b73b@pc1>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1680" "Monday" "4" "May" "2015" "07:41:38" "+0200" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20150504074138.606524ab@pc1>" "47" "Re: [oss-security] CVE request: libarchive: Out of bounds read using malformed cpio archive" nil nil nil "5" "2015050405:41:38" "[oss-security] CVE request: libarchive: Out of bounds read using malformed cpio archive" (number mark "        hanno@hboeck May  4   47/1680  " thread-indent "\"Re: [oss-security] CVE request: libarchive: Out of bounds read using malformed cpio archive\"\n") "<20150504053551.GA10559@eldamar.local>" ("<20150504053551.GA10559@eldamar.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 11935 invoked by uid 550); 5 May 2016 11:21:16 -0000
+Received: (qmail 14168 invoked by uid 550); 4 May 2015 05:41:19 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,50 +11,66 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 11915 invoked from network); 5 May 2016 11:21:16 -0000
-Message-ID: <20160505112114.GA25313@openwall.com>
-References: <20160504124248.GA15148@openwall.com> <20160504172803.GA19393@openwall.com> <CAP9m6YeT=Vo1WQ4Jqn1QV-Cp6mBQ3EwWQ5p_=Rm4P3Na3aGcGw@mail.gmail.com> <20160505103405.GA25044@openwall.com> <20160505130336.7557b73b@pc1>
+Received: (qmail 14143 invoked from network); 4 May 2015 05:41:19 -0000
+Message-ID: <20150504074138.606524ab@pc1>
+In-Reply-To: <20150504053551.GA10559@eldamar.local>
+References: <20150504053551.GA10559@eldamar.local>
+X-Mailer: Claws Mail 3.11.1 (GTK+ 2.24.27; x86_64-pc-linux-gnu)
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20160505130336.7557b73b@pc1>
-User-Agent: Mutt/1.4.2.3i
-Date: Thu, 5 May 2016 14:21:14 +0300
-From: Solar Designer <solar@openwall.com>
+Content-Type: multipart/signed; micalg=pgp-sha512; protocol="application/pgp-signature"; boundary="=_zucker.schokokeks.org-5397-1430718067-0001-2"
+Cc: OSS Security Mailinglist <oss-security@lists.openwall.com>,
+  CVE Assignments MITRE <cve-assign@mitre.org>
+Date: Mon, 4 May 2015 07:41:38 +0200
+From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] broken RSA keys
-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] CVE request: libarchive: Out of bounds read
+ using malformed cpio archive
+To: Salvatore Bonaccorso <carnil@debian.org>
 
-On Thu, May 05, 2016 at 01:03:36PM +0200, Hanno B??ck wrote:
-> On Thu, 5 May 2016 13:34:05 +0300 Solar Designer <solar@openwall.com> wrote:
-> > On Wed, May 04, 2016 at 09:18:26PM -0400, Stanislav Datskovskiy wrote:
-> > > older versions of GPG
-> > > will regard the bottom 32 bits of a modulus as the 'fingerprint',
-> > > rather than performing a hash.
-> > 
-> > Are you sure?
-> 
-> https://tools.ietf.org/html/rfc4880
-> 
-> "V3 keys are deprecated.  They contain three weaknesses.  First, it is
-> relatively easy to construct a V3 key that has the same Key ID as any
-> other key because the Key ID is simply the low 64 bits of the public
-> modulus."
+--=_zucker.schokokeks.org-5397-1430718067-0001-2
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-Thanks.  I guess when I imported a PGP 2.6 key to GPG, I just did not
-notice this detail, and GPG continued to use the V3 format key for me.
+On Mon, 4 May 2015 07:35:51 +0200
+Salvatore Bonaccorso <carnil@debian.org> wrote:
 
-Also from the RFC above:
+> Could a CVE be assigned for the following issue in libarchive:
 
-"  For a V3 key, the eight-octet Key ID consists of the low 64 bits of
-   the public modulus of the RSA key.
+I've lately reported ~15 different memory access issues in libarchive.
+Not sure, do you want to assign CVEs for all of them?
 
-   The fingerprint of a V3 key is formed by hashing the body (but not
-   the two-octet length) of the MPIs that form the key material (public
-   modulus n, followed by exponent e) with MD5.  Note that both V3 keys
-   and MD5 are deprecated."
+Wanted to wait till everything is fixed and make a big announcement
+then, but given that this seems to take longer than expected I don't
+know...
 
-So key id was not part of the fingerprint.  That's not how I remember
-it, but I'll trust the RFC over my memory.
+--=20
+Hanno B=C3=B6ck
+http://hboeck.de/
 
-Alexander
+mail/jabber: hanno@hboeck.de
+GPG: BBB51E42
+
+--=_zucker.schokokeks.org-5397-1430718067-0001-2
+Content-Type: application/pgp-signature
+Content-Transfer-Encoding: 7bit
+Content-Description: OpenPGP digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iQIcBAEBCgAGBQJVRwaSAAoJEKWIAHK7tR5CXfkQALu/wmINqXqKcXdfTMsBlwYG
+qPA2KJnn+DKQ5TRXrJFXtxgTgHTO2tw8hfSZlTVHgJKwH6jkTDQAriAR/cKiHdDi
+IkX1vlZSc+FIMS0Gl8hLJg/lcSxImWo0peQLtD30dNi32VBdWZO4T4RsekivrqAk
+dhXKHOAqUFcslL4/AybleS0dSCj/u9vUzdPUnRu4ex28YOF+gueCbV01Bf3PtKUQ
+7M+SvurPptoLZP/B2tAWbKMZ8FMeusB3TLgHgk01gDqHe25/ZdJj0axYKfYkx/dC
+8qu1vDvmNeECITzc9foXYarb+bgCUbc0mG6STEQwQtwqef7Zfys6PiF2o1MVAIDn
+fep7sLvYiJlUIx84DWiuNzHS8FqObbRo9a+OMGGBYSa7YkFFYmQdK41Fb5dDXPS9
+uELcSNuS+NOvKaWJ/dhNGQRuBqGfFDWWXqgadlTp/3YIqncEhUvDpe10eSusjQ6E
+wzGuPUjPosJCYOg4EEw5yMurjekSTult1vW+yRiB2a30ibzYmrbprdTTq7Y35BlN
+zFhMZGwKX8BPEJuLB2EbebaRgsZvnRIOmDe0v0SYMxxvyHMwzbkPM9BqnYSoMR/v
+Z30Cwl644HiCNUJ7tAjkGOaG9ioK8++gvUqQ7Pz660yhoAW+0/t7UmFHpmcpPEsf
+e/vwjBXUBNitkZxyzRqn
+=qjoV
+-----END PGP SIGNATURE-----
+
+--=_zucker.schokokeks.org-5397-1430718067-0001-2--
