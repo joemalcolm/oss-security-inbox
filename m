@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["875" "Monday" "22" "May" "2017" "18:51:12" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<b2da8b9c-d1f3-ff80-971f-86f8f032544c@redhat.com>" "22" "Re: [oss-security] How to request a CVE for open source projects" "^Cc:" nil nil "5" "2017052300:51:12" "[oss-security] How to request a CVE for open source projects" (number mark "        kseifried@re May 22   22/875   " thread-indent "\"Re: [oss-security] How to request a CVE for open source projects\"\n") "<903f93ca-afdc-cdce-66af-dab09b0136ca@framasoft.org>" ("<1495476334.15944.2@mail.igalia.com>" "<CANO=Ty2o9kXFFMmnDJu3hsY3G84CyJmA_Tnt3dR2-vHyxsdMfw@mail.gmail.com>" "<903f93ca-afdc-cdce-66af-dab09b0136ca@framasoft.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1780" "Monday" "4" "May" "2015" "12:04:46" "-0400" "Tristan Cacqueray" "tristan.cacqueray@enovance.com" "<5547989E.5020802@enovance.com>" "50" "[oss-security] CVE request for vulnerability in OpenStack Keystone" nil nil nil "5" "2015050416:04:46" "[oss-security] CVE request for vulnerability in OpenStack Keystone" (number mark "        tristan.cacq May  4   50/1780  " thread-indent "\"[oss-security] CVE request for vulnerability in OpenStack Keystone\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 17470 invoked by uid 550); 23 May 2017 00:51:21 -0000
+Received: (qmail 14058 invoked by uid 550); 4 May 2015 16:04:40 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,60 +11,68 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 17449 invoked from network); 23 May 2017 00:51:20 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:reply-to:subject:to:cc:references:from
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-transfer-encoding:content-language;
-        bh=MNvEv8mORB3z1b6sRXyLMY1c7+MPXPQpun4h+1pgiYU=;
-        b=JDOUgDZcVgcwXqudMEnkThpEk/qoBTiEnoFAjByMvLMCelEp8cuxqjlT0+SjK0I3Qw
-         wkl2EeIXgZpbA8SMLjGTQuFDSXvauLVAqTJIHHgwKZM+diGGJVbW+k1gjpJfGU3j/1KD
-         d5rQ24XKGru7lhgUHkABOzRSZpgJKZLV3mJJCJZ1/cGhDmaRfquGMYJjddLH9Mi9meN3
-         i4ZYP6Xq41dqX3g951lfYxz5OJxkjzZ+v0OGgWnu9rd8O3AuXS56vQk2lc+LpvpN8mgV
-         FiKnkBXfDvDDQRH+Nb77h1sexFG2oL8V/5V9Y+MAgAf7oxNTl3L1Iiu1oML+obYfPZJ6
-         s2rg==
-X-Gm-Message-State: AODbwcAQIDVaL6WEDFtWFXi1cCF3UP/vyyeRSWw/hq27u7G5LnexnEuo
-	LcuG3IBmiYw4FT35zJOKsw==
-X-Received: by 10.107.26.144 with SMTP id a138mr22846887ioa.72.1495500668629;
-        Mon, 22 May 2017 17:51:08 -0700 (PDT)
-References: <1495476334.15944.2@mail.igalia.com>
- <CANO=Ty2o9kXFFMmnDJu3hsY3G84CyJmA_Tnt3dR2-vHyxsdMfw@mail.gmail.com>
- <903f93ca-afdc-cdce-66af-dab09b0136ca@framasoft.org>
-Message-ID: <b2da8b9c-d1f3-ff80-971f-86f8f032544c@redhat.com>
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:52.0)
- Gecko/20100101 Thunderbird/52.1.1
+Received: (qmail 14040 invoked from network); 4 May 2015 16:04:40 -0000
+X-Virus-Scanned: amavisd-new at enovance.com
+Message-ID: <5547989E.5020802@enovance.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
 MIME-Version: 1.0
-In-Reply-To: <903f93ca-afdc-cdce-66af-dab09b0136ca@framasoft.org>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Content-Language: en-GB
-Cc: oss-security@lists.openwall.com
-Date: Mon, 22 May 2017 18:51:12 -0600
-From: Kurt Seifried <kseifried@redhat.com>
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="8GG2leOBFRnC3CSUEgG9MV4wWjahF1kUN"
+CC: cve-assign@mitre.org
+Date: Mon, 04 May 2015 12:04:46 -0400
+From: Tristan Cacqueray <tristan.cacqueray@enovance.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] How to request a CVE for open source projects
-To: Martin <martin.gubri@framasoft.org>
+Subject: [oss-security] CVE request for vulnerability in OpenStack Keystone
+To: oss-security@lists.openwall.com
+
+--8GG2leOBFRnC3CSUEgG9MV4wWjahF1kUN
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+A vulnerability was discovered in OpenStack (see below). In order to
+ensure full traceability, we need a CVE number assigned that we can
+attach to further notifications. This issue is already public, although
+an advisory was not sent yet.
+
+Title: Potential Keystone cache backend password leak in log
+Reporter: Eric Brown (VMware)
+Products: Keystone
+Affects: versions through 2014.1.4, and 2014.2 versions through 2014.2.3
+
+Description:
+Eric Brown from VMware reported a vulnerability in Keystone. The
+backend_argument configuration option content is being logged, and it
+may contain sensitive information for specific backends (like a password
+for MongoDB). An attacker with read access to Keystone logs may
+therefore obtain sensitive data about certain backends. All Keystone
+setups are potentially impacted.
+
+References:
+https://launchpad.net/bugs/1443598
+
+Thanks in advance,
+
+--
+Tristan Cacqueray
+OpenStack Vulnerability Management Team
 
 
+--8GG2leOBFRnC3CSUEgG9MV4wWjahF1kUN
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
-On 2017-05-22 2:21 PM, Martin wrote:
-> On 22/05/2017 at 15:16, Kurt Seifried wrote:
->
->> Ah, I recently did a large number of CVE assignments, I haven't emailed out
->> to the sequesters yet, yours was
->> https://github.com/distributedweaknessfiling/DWF-CVE-2017-1000000/blob/f2e15ac3468dd382d9ffa3d5acc032c106f3248c/CVE-2017-1000025.json
->> I believe.
-> I was in the same situation than Michael. I found mine now.
-> Is it normal that these CVE aren't accessible on MITRE?
-> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-1000025
->
-We (MITRE, the CVE board and various CNAs) ar working on making that
-faster (read: automated). So yeah, it's bormal, but hopefully as time
-goes on it'll get better.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
 
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@redhat.com
+iQEcBAEBAgAGBQJVR5iiAAoJECK5oFySXMXYWrYH/3VSM+YGqUpRJQbg+RUXhL0I
+GUd+jIzfVshFx/wD1E5DQ7uXcaMOm1aFawSMMjvcsyLjIx+vk8yhGGro5vPp+dBL
+0T4mSNxViYdmG9TunU6dXKmq4zC5EqzM1AfCsnU8B4ekmvjJ01PgVe1/y9OCsXMV
+MHCwIcQMbNECpLBMbJG0e3sGue1zMjA8doSyIOXBnh8OxwBDw6ZyEbXodI1pdnXy
+2Y+P4RVuUac8I+r/wOSZ1MQnr69mO1w44a7qtBlAtIfMGd+4wxcP8kSiA6Gyac5i
+/9c7HnnbTDXFOt7nZ5ONyJNQ7r8OKGnibdnnhsGYt4z4Q4bicgnDWcr2PpnlSJI=
+=Bxcv
+-----END PGP SIGNATURE-----
 
+--8GG2leOBFRnC3CSUEgG9MV4wWjahF1kUN--
