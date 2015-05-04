@@ -1,4 +1,9 @@
-Received: (qmail 25749 invoked by uid 550); 20 Apr 2023 17:55:40 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1420" "Monday" "4" "May" "2015" "13:23:01" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<5547C715.8000607@redhat.com>" "36" "[oss-security] Please REJECT CVE-2015-3168, I failed to notice that CVE-2015-3164 was already assigned." nil nil nil "5" "2015050419:23:01" "[oss-security] Please REJECT CVE-2015-3168, I failed to notice that CVE-2015-3164 was already assigned." (number mark "        kseifried@re May  4   36/1420  " thread-indent "\"[oss-security] Please REJECT CVE-2015-3168, I failed to notice that CVE-2015-3164 was already assigned.\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 14047 invoked by uid 550); 4 May 2015 19:23:17 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,64 +11,55 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1369 invoked from network); 20 Apr 2023 16:05:41 -0000
-Authentication-Results: apache.org; auth=none
-X-Gm-Message-State: AAQBX9c+ImMCAFrZuWJ+Y+e2ZCTtPduxmw71w80vRf2rA7ZtmDrBvGUG
-	S+7KUbrUG1zKqRBPrlL5o5Nu+a2Pk6g7pPouzeM=
-X-Google-Smtp-Source: AKy350amzahK7gTUWO8CrpNkk5+eL9taU8I37o2DhAiTCIXD1GWnw0JKwumuoohXIUYZBlYDuXlJV9IWiPl+OGhRhog=
-X-Received: by 2002:aa7:c74e:0:b0:502:1cae:8b11 with SMTP id
- c14-20020aa7c74e000000b005021cae8b11mr2424267eds.23.1682006726101; Thu, 20
- Apr 2023 09:05:26 -0700 (PDT)
+Received: (qmail 14026 invoked from network); 4 May 2015 19:23:15 -0000
+Message-ID: <5547C715.8000607@redhat.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
 MIME-Version: 1.0
-From: Huajie Wang <benjobs@apache.org>
-Date: Fri, 21 Apr 2023 00:05:14 +0800
-X-Gmail-Original-Message-ID: <CAKYehMbX4+vq2adrfE0wpK0uGoORMOeewXB2F=8h1EWzp14h-A@mail.gmail.com>
-Message-ID: <CAKYehMbX4+vq2adrfE0wpK0uGoORMOeewXB2F=8h1EWzp14h-A@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Cc: dev <dev@streampark.apache.org>
-Content-Type: multipart/alternative; boundary="0000000000006b537005f9c6b575"
-Subject: [oss-security] CVE-2022-45801: Apache StreamPark (incubating): LDAP Injection Vulnerability
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="XGJi7tx8VUTiEVh6De4CbemPHogs5TH9W"
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.24
+Date: Mon, 04 May 2015 13:23:01 -0600
+From: Kurt Seifried <kseifried@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Please REJECT CVE-2015-3168, I failed to notice that CVE-2015-3164
+ was already assigned.
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>,
+        Assign a CVE Identifier <cve-assign@mitre.org>
 
---0000000000006b537005f9c6b575
-Content-Type: text/plain; charset="UTF-8"
+--XGJi7tx8VUTiEVh6De4CbemPHogs5TH9W
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Apache StreamPark (incubating): LDAP Injection Vulnerability
+Please REJECT CVE-2015-3168, I failed to notice that CVE-2015-3164 was
+already assigned for the issue.
 
-
-Severity: Moderate
-
-Versions Affected:
-
-Apache StreamPark 1.0.0 before 2.0.0
-
-
-Description:
-
-Apache StreamPark 1.0.0 to 2.0.0 have a LDAP injection vulnerability.
-LDAP Injection is an attack used to exploit web based applications
-that construct LDAP statements based on user input. When an
-application fails to properly sanitize user input, it's possible to
-modify LDAP statements through techniques similar to SQL Injection.
-LDAP injection attacks could result in the granting of permissions to
-unauthorized queries, and content modification inside the LDAP tree.
-This risk may only occur when the user logs in with ldap, and the user
-name and password login will not be affected, Users of the affected
-versions should upgrade to Apache StreamPark 2.0.0 or later
+--=20
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
 
-Mitigation:
+--XGJi7tx8VUTiEVh6De4CbemPHogs5TH9W
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
-Users of the affected versions should apply one of the following
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.22 (GNU/Linux)
 
-- Upgrade to Apache StreamPark 2.0.0 or later
+iQIcBAEBAgAGBQJVR8cWAAoJEBYNRVNeJnmTaAoP/2s9S5oUigL7unQn20BH7AXW
+eUlbFYaWGhTZnrV0aJu+3+/vZlwUpr7yp8eSawxkPF/97dV9H9H7VX9sI8GlpXOo
+6L2TpREgVpfqkkRcOo3RmkUzT6Kelyna5a0ApjRa4YMvNFVPd4wQ2bI481C95Fxk
+T/Xbcs+/9x3IY3N/dHVf3cyaaRMr9TN7DOkqtTnAl4Z2FsECYlRTPiCctfAoYkGl
+2PMq7R6F4W5DM3TWFBeicP7+yvKtwNnn09KAz1WySnGmG2QqKY5qTrIVjyxW0t/9
+gGQbbIjVeD1B7CPmXD/WdJyPhS0vvOpTaY5Rii8XldnyLZYkrELmTDhhfw5uCFvJ
+8+mTRofBgCdl9YaMCW8Fy09PHciXeVAUYQnUcGADk5aTnp2lNuWWJA/tsn7tJSjU
++Y5BeBJLgr55RBA2auTpaPhI211lMwutVGy/TKwUctapKr/4rcqD9TTUVuHRzz8K
+UgfnVVTgPLLR7XEeri6Y6zYccWxFINfQDes5eoY4760hUx0yySTtH8cKf0Ldl2KS
+VxgDJVGK84f4WDVOOi1aVYkxsFMg8Gd55dnWa3RUCISKgiRxnorfr1ctyFgAvmIH
+HuTuDg8jdV9Zfqo8Dhh+8FcsfEF2AzrkWV+vOZ8r5CCGQIaB2256NV8eeAeQg7NI
+4mT03KPY2FhTT5H1G6px
+=rC44
+-----END PGP SIGNATURE-----
 
-References:
-https://streampark.incubator.apache.orghttps://www.cve.org/CVERecord?id=CVE-2022-45801
-
-
-
-Best,
-Huajie Wang
-
---0000000000006b537005f9c6b575--
+--XGJi7tx8VUTiEVh6De4CbemPHogs5TH9W--
