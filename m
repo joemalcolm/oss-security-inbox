@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2409" "Monday" "9" "October" "2017" "13:11:18" "+0200" "Fabian Keil" "fk@fabiankeil.de" "<20171009131118.7d95c501@fabiankeil.de>" "59" "Re: [oss-security] Linux kernel CVEs not mentioned on oss-security" "^Cc:" nil nil "10" "2017100911:11:18" "[oss-security] Linux kernel CVEs not mentioned on oss-security" (number mark "        fk@fabiankei Oct  9   59/2409  " thread-indent "\"Re: [oss-security] Linux kernel CVEs not mentioned on oss-security\"\n") "<CANO=Ty1M0XZw6DT39Lg7oa3sewknn3_WGWoFO3swMQf1UF3CvQ@mail.gmail.com>" ("<EB502BBD-AA97-4FC5-A0E7-D148B0E33FF7@lanl.gov>" "<alpine.GSO.2.20.1709261217310.12755@scrappy.simplesystems.org>" "<CANO=Ty21NECXP_c4SiJ0ajbvi7wQFyA1RnyWeS0qu9e=sPQuYQ@mail.gmail.com>" "<4174873.rEhhimjYuO@wanheda>" "<CANO=Ty1M0XZw6DT39Lg7oa3sewknn3_WGWoFO3swMQf1UF3CvQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1028" "Tuesday" "5" "May" "2015" "08:53:42" "+0200" "Florian Weimer" "fweimer@redhat.com" "<554868F6.1070305@redhat.com>" "22" "Re: [oss-security] PHP and some == wonkiness" nil nil nil "5" "2015050506:53:42" "[oss-security] PHP and some == wonkiness" (number mark "        fweimer@redh May  5   22/1028  " thread-indent "\"Re: [oss-security] PHP and some == wonkiness\"\n") "<CALwr1GnxttdqOssUd82R4P8wzEd-UhuWWVY3xpkqgt09UmgBuw@mail.gmail.com>" ("<55479C75.3070000@redhat.com>" "<CALwr1GnxttdqOssUd82R4P8wzEd-UhuWWVY3xpkqgt09UmgBuw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 27784 invoked by uid 550); 9 Oct 2017 11:39:25 -0000
+Received: (qmail 17788 invoked by uid 550); 5 May 2015 06:53:59 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,81 +11,40 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 29894 invoked from network); 9 Oct 2017 11:11:29 -0000
-Message-ID: <20171009131118.7d95c501@fabiankeil.de>
-In-Reply-To: <CANO=Ty1M0XZw6DT39Lg7oa3sewknn3_WGWoFO3swMQf1UF3CvQ@mail.gmail.com>
-References: <EB502BBD-AA97-4FC5-A0E7-D148B0E33FF7@lanl.gov>
- <alpine.GSO.2.20.1709261217310.12755@scrappy.simplesystems.org>
- <CANO=Ty21NECXP_c4SiJ0ajbvi7wQFyA1RnyWeS0qu9e=sPQuYQ@mail.gmail.com>
- <4174873.rEhhimjYuO@wanheda>
- <CANO=Ty1M0XZw6DT39Lg7oa3sewknn3_WGWoFO3swMQf1UF3CvQ@mail.gmail.com>
+Received: (qmail 17768 invoked from network); 5 May 2015 06:53:59 -0000
+Message-ID: <554868F6.1070305@redhat.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- boundary="Sig_/JGSi31gNUm1sXctdJumImlF"; protocol="application/pgp-signature"
-X-Df-Sender: MTgwOTA5
-Cc: Kurt Seifried <kseifried@redhat.com>
-Date: Mon, 9 Oct 2017 13:11:18 +0200
-From: Fabian Keil <fk@fabiankeil.de>
+References: <55479C75.3070000@redhat.com> <CALwr1GnxttdqOssUd82R4P8wzEd-UhuWWVY3xpkqgt09UmgBuw@mail.gmail.com>
+In-Reply-To: <CALwr1GnxttdqOssUd82R4P8wzEd-UhuWWVY3xpkqgt09UmgBuw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.23
+Date: Tue, 05 May 2015 08:53:42 +0200
+From: Florian Weimer <fweimer@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Linux kernel CVEs not mentioned on oss-security
+Subject: Re: [oss-security] PHP and some == wonkiness
 To: oss-security@lists.openwall.com
 
---Sig_/JGSi31gNUm1sXctdJumImlF
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: quoted-printable
+On 05/04/2015 08:34 PM, Pádraic Brady wrote:
 
-Kurt Seifried <kseifried@redhat.com> wrote:
+> It all boils down to PHP loose typing/type juggling for == and strict
+> type comparison for ===. The first option will trigger a set of rules
+> capable of converting strings into floats or integers, based on
+> whether both strings are representative of a float (i.e. your
+> example), or where one of the values being compared is already an
+> integer/float. Unfortunately, it is indeed a common weakness to not
+> use strict comparisons in security related code. For example, Laravel
+> had a recent issue in comparing CSRF tokens where passing in a zero
+> always passed the check from this mistake,
 
-> If you see this: PLEASE SUBMIT THE URL AS AN UPDATE TO THE CVE USING THE
-> CVE FORM (yes, I am shouting).
->=20
-> https://cveform.mitre.org
+Oh.
 
-As you seem to be "shouting" a lot lately, I just like to point out
-that using the MITRE(!) form requires the execution of non-free and
-unsigned software from various sources.
+But the current case apparently needs a string from a very specific set.
+ Do we know the digests which trigger this?  If it has to be "0e"
+followed by only digits on both sides, it is somewhat unlikely that you
+have a reference string with this property, especially if SHA-1 is used
+(around 6.84×10¯¹¹, if I'm not mistaken).
 
-Some people don't consider this a problem, others do.
-
-> Choose "Request an update to an existing CVE entry" and then for "Type of
-> update requested" choose "Update References" and then eneter the CVE #,
-> the ifo and URL and hit "Submit Request"
-
-... trust your browser's "sandbox" to work as advertised for a change
-and ignore the fact that you're running proprietary software that may
-or may not be customised just for your system and can't be easily
-audited in advance.
-
-> TL;DR: Everyone wants the cat to wear a bell, and in past I'll admit we
-> (the CVE community) didn't make it easy to contribute. Well now we have
-> made it easy to contribute, so please do.
-
-TL;DR: Not everyone wants to allow remote code execution just to
-request a CVE. Some people are sufficiently satisfied when security
-issues are found and fixed in time. While CVE number are sometimes
-nice to have, other identifiers work just as well (for some).
-
-Fabian
-
---Sig_/JGSi31gNUm1sXctdJumImlF
-Content-Type: application/pgp-signature
-Content-Description: OpenPGP digital signature
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEETzbBfzgWkTZUoehQaRgikYuiNxwFAlnbWVYACgkQaRgikYui
-NxySfQ//T4Z4NCJw7B0/436Zx11ZJMENYnYYkVN50KvExKfZKUCNuP3p/r1pKfbh
-VATCfp1B9U2MA0DckUgQFMOBZYeT/mx9fgfzuDY3j/engX/Mgt/eHYViGK8ZzmbY
-Dc6ZUAwmx03tKGY32CWVatbGO8pHjJufSlLfFcv1WovxWGGF2ScPikKCtIbWuqFe
-euMCGN9gPFIHuTT3zBAr5Wdd2VHeEzwEhnLjhK7KRSEwPFKF1GpLbuUXGI/JIIql
-+I+PMWz4W8uLWgzrfZ38Tbk6nnzs4lYg8ovoCKuffC91WEu8XZZV+DnvrXwirENZ
-VKb6zUnIN6/soU2l4YjmVhdd2ctTLxQI9+b7zJj5U6q0xfhCzyZLUPbQ94q19hwl
-43lEMqeDfIKbRKeVaVtK0hH7xSP7W+kzBl+6hAjC7nnsnK78C9Q2qyJGmIKm0t+O
-j4wOq0rsKj/qEZopA6MaS5oC8DQeBW9w5oI1sivFjatvG5QWMCbKYxCpAEBYm84x
-Q0IvEM2F0On6NoJZzX2xhEbCjgPI0hf11t2wYB7wh3zIHpCqliRYQlF0qc777W2A
-DEYAPYTqe3bBItCLTSZeTibTrLGiZWOyeGZaytr74Bw2wZfRTyQlwFUDZcH2SuLm
-AtXPSdZziiaF8WWhwW4ufNizD19DzxHni1QIZb0syQeh6Sh5EFo=
-=vn+2
------END PGP SIGNATURE-----
-
---Sig_/JGSi31gNUm1sXctdJumImlF--
+-- 
+Florian Weimer / Red Hat Product Security
