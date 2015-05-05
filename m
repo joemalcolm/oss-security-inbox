@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3315" "Thursday" "2" "March" "2017" "16:37:11" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<633036.383983807-sendEmail@localhost>" "69" "[oss-security] podofo: NULL pointer dereference in PoDoFo::PdfColorGray::~PdfColorGray (PdfColor.cpp)" nil nil nil "3" "2017030216:37:11" "[oss-security] podofo: NULL pointer dereference in PoDoFo::PdfColorGray::~PdfColorGray (PdfColor.cpp)" (number mark "U       ago@gentoo.o Mar  2   69/3315  " thread-indent "\"[oss-security] podofo: NULL pointer dereference in PoDoFo::PdfColorGray::~PdfColorGray (PdfColor.cpp)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2320" "Tuesday" "5" "May" "2015" "08:22:13" "-0400" "Tristan Cacqueray" "tristan.cacqueray@enovance.com" "<5548B5F5.4060906@enovance.com>" "74" "[oss-security] [OSSA 2015-008] Potential Keystone cache backend password leak in log (CVE-2015-3646)" nil nil nil "5" "2015050512:22:13" "[oss-security] [OSSA 2015-008] Potential Keystone cache backend password leak in log (CVE-2015-3646)" (number mark "        tristan.cacq May  5   74/2320  " thread-indent "\"[oss-security] [OSSA 2015-008] Potential Keystone cache backend password leak in log (CVE-2015-3646)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 1548 invoked by uid 550); 2 Mar 2017 16:37:32 -0000
+Received: (qmail 10139 invoked by uid 550); 5 May 2015 12:22:10 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,82 +11,92 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32707 invoked from network); 2 Mar 2017 16:37:28 -0000
-Message-ID: <633036.383983807-sendEmail@localhost>
-From: "Agostino Sarubbo" <ago@gentoo.org>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Date: Thu, 2 Mar 2017 16:37:11 +0000
+Received: (qmail 10098 invoked from network); 5 May 2015 12:22:05 -0000
+X-Virus-Scanned: amavisd-new at enovance.com
+Message-ID: <5548B5F5.4060906@enovance.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
 MIME-Version: 1.0
-Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-127828.297511773"
-Subject: [oss-security] podofo: NULL pointer dereference in PoDoFo::PdfColorGray::~PdfColorGray (PdfColor.cpp)
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="RQv8FuRJ20a8ANPIoUjOxdVnUIXdncjSS"
+Date: Tue, 05 May 2015 08:22:13 -0400
+From: Tristan Cacqueray <tristan.cacqueray@enovance.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] [OSSA 2015-008] Potential Keystone cache backend password leak in
+ log (CVE-2015-3646)
+To: oss-security@lists.openwall.com
 
-------MIME delimiter for sendEmail-127828.297511773
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 7bit
+--RQv8FuRJ20a8ANPIoUjOxdVnUIXdncjSS
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Description:
-podofo is a C++ library to work with the PDF file format.
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+OSSA-2015-008: Potential Keystone cache backend password leak in log
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
 
-A fuzz on it discovered a null pointer dereference. The upstream project denies me to open a new ticket. So, I just will forward this on the -users mailing list.
-
-The complete ASan output:
-
-# podofocolor dummy $FILE foo
-==5815==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 0x7f025d243787 bp 0x7ffe33517c50 sp 0x7ffe33517be0 T0)
-==5815==The signal is caused by a READ memory access.
-==5815==Hint: address points to the zero page.
-    #0 0x7f025d243786 in PoDoFo::PdfColorGray::~PdfColorGray() /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/src/base/PdfColor.cpp:435:1
-    #1 0x52c9b2 in GraphicsStack::TGraphicsStackElement::~TGraphicsStackElement() /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/tools/podofocolor/graphicsstack.h:29:11
-    #2 0x52c9b2 in __gnu_cxx::new_allocator::destroy(GraphicsStack::TGraphicsStackElement*) /usr/lib/gcc/x86_64-pc-linux-gnu/4.9.3/include/g++-v4/ext/new_allocator.h:133
-    #3 0x52c9b2 in std::deque<GraphicsStack::TGraphicsStackElement, std::allocator >::_M_pop_back_aux() /usr/lib/gcc/x86_64-pc-linux-gnu/4.9.3/include/g++-v4/bits/deque.tcc:515
-    #4 0x52c9b2 in std::deque<GraphicsStack::TGraphicsStackElement, std::allocator >::pop_back() /usr/lib/gcc/x86_64-pc-linux-gnu/4.9.3/include/g++-v4/bits/stl_deque.h:1459
-    #5 0x52c9b2 in std::stack<GraphicsStack::TGraphicsStackElement, std::deque<GraphicsStack::TGraphicsStackElement, std::allocator > >::pop() /usr/lib/gcc/x86_64-pc-linux-gnu/4.9.3/include/g++-v4/bits/stl_stack.h:218
-    #6 0x52c9b2 in GraphicsStack::Pop() /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/tools/podofocolor/graphicsstack.cpp:48
-    #7 0x522031 in ColorChanger::ReplaceColorsInPage(PoDoFo::PdfCanvas*) /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/tools/podofocolor/colorchanger.cpp:190:35
-    #8 0x51ed8e in ColorChanger::start() /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/tools/podofocolor/colorchanger.cpp:120:15
-    #9 0x51c06d in main /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/tools/podofocolor/podofocolor.cpp:116:12
-    #10 0x7f025bd2e61f in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
-    #11 0x428718 in _start (/usr/bin/podofocolor+0x428718)
-
-AddressSanitizer can not provide additional info.
-SUMMARY: AddressSanitizer: SEGV /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/src/base/PdfColor.cpp:435:1 in PoDoFo::PdfColorGray::~PdfColorGray()
-==5815==ABORTING
-
-Affected version:
-0.9.4
-
-Fixed version:
-N/A
-
-Commit fix:
-N/A
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-N/A
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00175-podofo-nullptr-PoDoFo-PdfColorGray-PdfColorGray
-
-Timeline:
-2017-02-13: bug discovered
-2017-03-02: bug reported to upstream
-2017-03-02: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/03/02/podofo-null-pointer-dereference-in-podofopdfcolorgraypdfcolorgray-pdfcolor-cpp
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
+:Date: May 04, 2015
+:CVE: CVE-2015-3646
 
 
-------MIME delimiter for sendEmail-127828.297511773--
+Affects
+~~~~~~~
+- Keystone: versions through 2014.1.4,
+            and 2014.2 versions through 2014.2.3
 
+
+Description
+~~~~~~~~~~~
+Eric Brown from VMware reported a vulnerability in Keystone. The
+backend_argument configuration option content is being logged, and it
+may contain sensitive information for specific backends (like a
+password for MongoDB). An attacker with read access to Keystone logs
+may therefore obtain sensitive data about certain backends. All
+Keystone setups are potentially impacted.
+
+
+Patches
+~~~~~~~
+- https://review.openstack.org/175519 (Icehouse)
+- https://review.openstack.org/173116 (Juno)
+
+
+Credits
+~~~~~~~
+- Eric Brown from VMware (CVE-2015-3646)
+
+
+References
+~~~~~~~~~~
+- https://launchpad.net/bugs/1443598
+- http://cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2015-3646
+
+
+Notes
+~~~~~
+- This fix will be included in future 2014.1.5 (icehouse) and 2014.2.4
+  (juno) releases.
+- The 2015.1.0 (kilo) release is not affected.
+
+
+--RQv8FuRJ20a8ANPIoUjOxdVnUIXdncjSS
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iQEcBAEBAgAGBQJVSLX1AAoJECK5oFySXMXYGGIH/jCSCcoMHUcgm5v0DORKpfJW
+5wvuPRE8icBpI/pkrAvHA7+QFA5e66gcCcrN3AHES7kbcWMy9F0DcWtRajY2pbzJ
+Z8LcJ+/h8TihyKUMuLq6GFiSS4zK1xDdpiAkFO0Fd4FNIRLe64aRXHazdSzNEXmb
+X3Rg4aDp7AGElZl0Us8YcTEKIm2LVZLl4d2u0Ujyj6wk+I5Fe3UCMesC4qmWoNw2
+vTa3Lk8vwsduLomibbEWmXaGatYyv4WAcFQ3tztL84mZp3HIiLgIEKS8/DiudQwz
+eCpX3q0YL0IcKb0pOjsLEdOYTHMZphnuDjDFAkEZ6GdHvqtN2pC5DN084IBUOtU=
+=hzAZ
+-----END PGP SIGNATURE-----
+
+--RQv8FuRJ20a8ANPIoUjOxdVnUIXdncjSS--
