@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5009" "Thursday" "7" "December" "2017" "22:01:34" "+0100" "Solar Designer" "solar@openwall.com" "<20171207210134.GA7079@openwall.com>" "108" "Re: [oss-security] Recommendations GnuPG-2 replacement" "^Date:" nil nil "12" "2017120721:01:34" "[oss-security] Recommendations GnuPG-2 replacement" (number mark "        solar@openwa Dec  7  108/5009  " thread-indent "\"Re: [oss-security] Recommendations GnuPG-2 replacement\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["976" "Tuesday" "5" "May" "2015" "12:01:50" "-0700" "Tavis Ormandy" "taviso@google.com" "<CAJ_zFkJ+o3cYy+BTcetvJ+HCP-DXChWS04MXejbXZ=qLWLXdHw@mail.gmail.com>" "26" "Re: [oss-security] Problems in automatic crash analysis frameworks" nil nil nil "5" "2015050519:01:50" "[oss-security] Problems in automatic crash analysis frameworks" (number mark "        taviso@googl May  5   26/976   " thread-indent "\"Re: [oss-security] Problems in automatic crash analysis frameworks\"\n") "<5548B4DC.4080305@redhat.com>" ("<CAJ_zFkJw7hNxGp0PNmQbH0suVwfkgzbCsvs2Sv1OdxD+UBiraw@mail.gmail.com>" "<55315C2B.6050207@redhat.com>" "<553943C3.5060704@redhat.com>" "<5548B4DC.4080305@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 21610 invoked by uid 550); 7 Dec 2017 21:02:09 -0000
+Received: (qmail 24126 invoked by uid 550); 5 May 2015 19:02:23 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,123 +11,67 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 20379 invoked from network); 7 Dec 2017 21:01:44 -0000
-Message-ID: <20171207210134.GA7079@openwall.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.4.2.3i
-Date: Thu, 7 Dec 2017 22:01:34 +0100
-From: Solar Designer <solar@openwall.com>
+Received: (qmail 24102 invoked from network); 5 May 2015 19:02:23 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :content-type;
+        bh=eTaMtZzLbkyl5U1mg9nB3affpWE61ThvVrrwq5wQOBA=;
+        b=H40wa7xJWbwIskfDOQl4vVXGpQ00E0mF61SgCduHpyi/DtDyEi26bcGQGDxXmhJI1L
+         ebf9bPy4cqRgTktRxVYHpkfxI/Rj/7+NgfnWRd1ppyfu3d5S3/pXhR8dvvo+P0iDuhOd
+         gPcLdaTpkSF7OTdYfQAykTh+Zn/Z/K3vXe/hsi9L7MM9V5CRhfqJmdF/daWukFSQZ1/5
+         HTYJzFYhgTFPWo3fq+lyQ8b6mwb9XqGorDy7xYR1jx6cdtcKyVmzUQPsgtcVABG3Vsio
+         zoav04m7Ckmpbpev4bFUiwthUPUofSidi/NBNwmA1ZzBH81bbqVjX5vjkaCZsmt8QqgH
+         H3Wg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:content-type;
+        bh=eTaMtZzLbkyl5U1mg9nB3affpWE61ThvVrrwq5wQOBA=;
+        b=DjJn8+jpg3AHKZlcWlPQt4Bkpv3QIDS636aHjlJbM+2RRIhTk15VutHSbkaoZhmuJa
+         tLaHkYLMdt1J2vi+82Ki3B/CoVToxkxLK5o8iUi/vI++w1fV0mD1SPYUwjLGJZFVXZdU
+         0EJuJowiHt/se7ZPtX2n3PnX77MJOEKmTrWwlD9LTPI/Z4M0Zp8j+6+r9GuLo6/pd8Z0
+         l0uITgjygAvnGYcl4Bdh9XnWVUn4kQqr3yOYl6xtjJsCfaP8I376JQVGrQAf5nx20JvK
+         LhgN8u3l0QJ+OIMtVHmL4K++q8wn3YhAQmXE8cY89rH3mh6MktFKggsmK7pm6kTl+34o
+         ELgQ==
+X-Gm-Message-State: ALoCoQniEl3/VxbFbP6dAHHep6d99UUyLEqewqq/e0XmtSx1MY8hNcccc4VdLgt66fwiSsPed/PJ
+X-Received: by 10.141.19.7 with SMTP id v7mr38169403qhd.94.1430852531458; Tue,
+ 05 May 2015 12:02:11 -0700 (PDT)
+MIME-Version: 1.0
+In-Reply-To: <5548B4DC.4080305@redhat.com>
+References: <CAJ_zFkJw7hNxGp0PNmQbH0suVwfkgzbCsvs2Sv1OdxD+UBiraw@mail.gmail.com>
+ <55315C2B.6050207@redhat.com> <553943C3.5060704@redhat.com> <5548B4DC.4080305@redhat.com>
+Message-ID: <CAJ_zFkJ+o3cYy+BTcetvJ+HCP-DXChWS04MXejbXZ=qLWLXdHw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Date: Tue, 5 May 2015 12:01:50 -0700
+From: Tavis Ormandy <taviso@google.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Recommendations GnuPG-2 replacement
+Subject: Re: [oss-security] Problems in automatic crash analysis frameworks
 To: oss-security@lists.openwall.com
 
-On Thu, Dec 07, 2017 at 06:32:11AM +0000, halfdog wrote:
-> After getting gpg and agent running, I noticed, that not reliably
-> stopping the gpg-agent on initrd would introduce a private key
-> data leak via /proc from early boot process to running system
-> when stopping fails.
+On Tue, May 5, 2015 at 5:17 AM, Florian Weimer <fweimer@redhat.com> wrote:
+> On 04/23/2015 09:10 PM, Florian Weimer wrote:
+>> On 04/17/2015 09:16 PM, Florian Weimer wrote:
+>>> A quick update on the abrt situation.
+>>
+>> Another update.  We now have a public tracking bug listing the issues:
+>>
+>>   <https://bugzilla.redhat.com/show_bug.cgi?id=1214172>
+>
+>
+> There is a public build (against EPEL7) of the consolidated fixes,
+> available as a Copr repository:
+>
+>   <http://copr.fedoraproject.org/coprs/jfilak/abrt-hardened/>
+>
+> This also includes the consolidated fixes.
+>
+> At this stage, we'd appreciate additional comments/reviews.
 
-Can you elaborate on this, please?
+Thanks Florian, this looks great. I'm just looking at the new ccpp, Is
+it intentional that os-release and so on are still copied from the
+process root? I realize now the dump directory is owned by root, so
+there's no direct way to read it, but it seems like asking for trouble
+to have a copy of /etc/shadow in there or something.
 
-> Thus the Debian switch from gpg1 to gpg2 just introduced efforts
-> fiddling with functionality I do not need and cannot disable,
-> provides a keymanagement that cannot be configured easily to
-> protect against the threats it should mitigate (theft of key material)
-> and creating additional attack surface without any recognizable
-> benefit.
-
-I think the benefit is being on a version upstream intends to maintain
-to a greater extent and for a longer time.  For example, when yet
-another side-channel leak was reported against GnuPG 1 & 2 recently,
-upstream officially patched it for GnuPG 2 only and said that GnuPG 1
-probably contains many other side-channel leaks anyway:
-
-http://openwall.com/lists/oss-security/2017/07/06/8
-
-Of course, it's best to use GnuPG in an environment where side-channels
-within the same host would not matter anyway.
-
-Personally, I intend to stay with GnuPG 1 for now.
-
-> "--s2k-count" parameter, which specifies the number of rounds
-> of key deriviation function to unlock the private key,
-
-Fun fact: it never actually specified the number of rounds (including
-not in RFC 4880), but rather the number of bytes passed through SHA-1:
-
-http://www.openwall.com/lists/john-dev/2015/04/12/7
-
-As I wrote there:
-
-"I think GnuPG documentation is wrong, and should be revised.  Both
-texinfo and man.  Would you care to report this to GnuPG, perhaps along
-with a documentation patch?"
-
-but I think we never reported it to GnuPG.  So please feel free.  Also,
-I think the man page is generated from the texinfo source, so would not
-need to be revised separately.
-
-> has changed
-> from gpgv1 to gpgv2, so that it is ignored in gpg2 but does not
-> cause any warning or error. Thus previous audited procedures continue
-> to work but do not produce the same results any more. Of course,
-> I could have compared documentation of all parameters of (at least
-> security-related) programs after Jessie to Stretch upgrade, but
-> I assumed, that security critical parameters would not change
-> their meaning without any noticable effect - so just my fault.
-
-Are you saying "--s2k-count" option to "gpg2" is ignored, and moreover
-that this is documented?  gnupg-2.1.23/doc/gpg.texi says (formatted):
-
-`--s2k-count `n''
-     Specify how many times the passphrase mangling is repeated.  This
-     value may range between 1024 and 65011712 inclusive.  The default
-     is inquired from gpg-agent.  Note that not all values in the
-     1024-65011712 range are legal and if an illegal value is selected,
-     GnuPG will round up to the nearest legal value.  This option is
-     only meaningful if `--s2k-mode' is 3.
-
-This doesn't say the option is ignored - only that "the default is
-inquired from gpg-agent."  Is the option in fact ignored?  That would be
-a bug in either code or documentation.
-
-> Still, this would just be a minor mishap, but what reduced my
-> trust in GPG, was the comment of a developer: it was assumed,
-> that they know better, where there software will be run without
-> specifying that "where" in the documentation. Also his replies
-> matched that picture, e.g. "(gpg-agent will) ... calibrate the
-> S2K count to match the current machine", assuming that this is
-> good reason to change "--s2k-count" meaning and ignore the parameter.
-
-I see no problem with gpg-agent providing a calibrated default, if that
-default can be overridden.  If it can't be, and especially if that's in
-conflict with the documentation, that's problematic.
-
-> PS: I do not know, how much the gpg-agent calibration under
-> increased system load reduced the KDF complexity, as I failed
-> to extract the KDF rounds value from the gpg data structures,
-> but the value seems to be at least below 70ms due to total time
-> measurements for gpg-agent (math, interprocess communication,
-> filesystem) to unlock a key on an idle system.
-
-You may process the private key file with gpg2john, then try to crack it
-with john.  This will output the actual value, as well as show you the
-speed at which passphrases can be tested against that key on your system
-and with that version of JtR.  To use a GPU, add "--format=gpg-opencl".
-Please use latest bleeding-jumbo off GitHub for all of this.
-
-On Thu, Dec 07, 2017 at 03:15:06PM +0000, Jeremy Stanley wrote:
-> Sounds like my use case is likely not your use case, so perhaps you
-> should look at the signify utility OpenBSD developed for this
-> purpose instead? It's included in Debian since Stretch under the
-> package name "signify-openbsd" and seems to work well; I've used it
-> semi-regularly as I tend to do a lot of cross-platform things in a
-> mixed Debian/OpenBSD environment.
-
-There's also asignify:
-
-https://github.com/vstakhov/asignify
-
-Alexander
+Tavis.
