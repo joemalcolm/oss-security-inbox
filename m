@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1961" "Monday" "11" "December" "2017" "14:05:03" "+0100" "Remi Gacogne" "remi.gacogne@powerdns.com" "<eea09ad4-34aa-5702-774a-9c6ad22e61a7@powerdns.com>" "55" "[oss-security] Re: PowerDNS Security Advisory 2017-08" nil nil nil "12" "2017121113:05:03" "[oss-security] Re: PowerDNS Security Advisory 2017-08" (number mark "U       remi.gacogne Dec 11   55/1961  " thread-indent "\"[oss-security] Re: PowerDNS Security Advisory 2017-08\"\n") "<d664369b-77c6-b0e3-7d40-5d8ef912ee3d@powerdns.com>" ("<d664369b-77c6-b0e3-7d40-5d8ef912ee3d@powerdns.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2676" "Tuesday" "5" "May" "2015" "12:07:02" "-0500" "Grandma Eubanks" "tborland1@gmail.com" "<CANtF8NCvJ0sDKF3FUsFSZMeHRHkr+4q18-LEQPh9SQagR601yw@mail.gmail.com>" "77" "Re: [oss-security] PHP and some == wonkiness" nil nil nil "5" "2015050517:07:02" "[oss-security] PHP and some == wonkiness" (number mark "        tborland1@gm May  5   77/2676  " thread-indent "\"Re: [oss-security] PHP and some == wonkiness\"\n") "<20150505090109.GC14223@zoho.com>" ("<55479C75.3070000@redhat.com>" "<CALwr1GnxttdqOssUd82R4P8wzEd-UhuWWVY3xpkqgt09UmgBuw@mail.gmail.com>" "<554868F6.1070305@redhat.com>" "<20150505072248.GA14223@zoho.com>" "<554874C0.509@redhat.com>" "<20150505082442.GB14223@zoho.com>" "<20150505090109.GC14223@zoho.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 20161 invoked by uid 550); 11 Dec 2017 13:05:17 -0000
+Received: (qmail 14069 invoked by uid 550); 5 May 2015 17:07:14 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,72 +11,111 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 20127 invoked from network); 11 Dec 2017 13:05:17 -0000
-From: Remi Gacogne <remi.gacogne@powerdns.com>
-To: oss-security@lists.openwall.com
-References: <d664369b-77c6-b0e3-7d40-5d8ef912ee3d@powerdns.com>
-Message-ID: <eea09ad4-34aa-5702-774a-9c6ad22e61a7@powerdns.com>
-Date: Mon, 11 Dec 2017 14:05:03 +0100
+Received: (qmail 14049 invoked from network); 5 May 2015 17:07:14 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type;
+        bh=Dx9xajnxTLHkgorEGY2wfEvkQpKEhJvEFBAk7kigHeg=;
+        b=0aan4lu5Q6cwqONP4iOhZjag/IeFFBFs6169iomVzmoWkKcXYPTzTGCe2zoj5fvfrU
+         elwAwsrWOcluMHJBF/gW/EzzfsCkNNURk9LoAwoMEBIthGpsgrpIu0PZUThN1M2c8ycZ
+         KDq0p+jxQ7aCXFbTlX3+DxaF2v/eRSdsKdxCu4sbX+CUV1bKTHkGCbSGSg/vBBCR+BKa
+         17I5y1Tm3rjHcrK+tXKqrEub/IbxMmIKZKT4HTCmHijQUgDyHMIJMQx+9wTVE5o0ZkAX
+         hr4FFQ8Mi6DuBHxgvLiT2gS0E5C8Ww88N5XkqfMU0148+pCBau3iEaVv49XIhFasV3Tw
+         6tFg==
 MIME-Version: 1.0
-In-Reply-To: <d664369b-77c6-b0e3-7d40-5d8ef912ee3d@powerdns.com>
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature";
- boundary="PJcI34sbRIVdtHTrFreQTJB24Bj8q5wK6"
-Subject: [oss-security] Re: PowerDNS Security Advisory 2017-08
-
---PJcI34sbRIVdtHTrFreQTJB24Bj8q5wK6
-Content-Type: multipart/mixed; boundary="CvkXRGdqc8mO8HUGGnrWnH8V2aDb53qWE";
- protected-headers="v1"
-From: Remi Gacogne <remi.gacogne@powerdns.com>
+X-Received: by 10.50.176.137 with SMTP id ci9mr3107811igc.2.1430845622300;
+ Tue, 05 May 2015 10:07:02 -0700 (PDT)
+In-Reply-To: <20150505090109.GC14223@zoho.com>
+References: <55479C75.3070000@redhat.com>
+	<CALwr1GnxttdqOssUd82R4P8wzEd-UhuWWVY3xpkqgt09UmgBuw@mail.gmail.com>
+	<554868F6.1070305@redhat.com>
+	<20150505072248.GA14223@zoho.com>
+	<554874C0.509@redhat.com>
+	<20150505082442.GB14223@zoho.com>
+	<20150505090109.GC14223@zoho.com>
+Message-ID: <CANtF8NCvJ0sDKF3FUsFSZMeHRHkr+4q18-LEQPh9SQagR601yw@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=089e0111e0da0bb50b051558b5b1
+Date: Tue, 5 May 2015 12:07:02 -0500
+From: Grandma Eubanks <tborland1@gmail.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] PHP and some == wonkiness
 To: oss-security@lists.openwall.com
-Message-ID: <eea09ad4-34aa-5702-774a-9c6ad22e61a7@powerdns.com>
-Subject: Re: PowerDNS Security Advisory 2017-08
-References: <d664369b-77c6-b0e3-7d40-5d8ef912ee3d@powerdns.com>
-In-Reply-To: <d664369b-77c6-b0e3-7d40-5d8ef912ee3d@powerdns.com>
 
---CvkXRGdqc8mO8HUGGnrWnH8V2aDb53qWE
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
+--089e0111e0da0bb50b051558b5b1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
 
-On 12/11/2017 01:34 PM, Remi Gacogne wrote:
-> We just released PowerDNS Recursor 4.0.8, fixing a security issue
-> (CVE-2017-15120) affecting PowerDNS Recursor from 4.0.0 up to and
-> including 4.0.7. PowerDNS Recursor 3.7.4 and 4.1.0 are not affected. The
-> full security advisory can be found below and at
-> https://doc.powerdns.com/authoritative/security-advisories/powerdns-advis=
-ory-2017-08.html
+http://turbochaos.blogspot.com/2013/08/exploiting-exotic-bugs-php-type-jugg=
+ling.html
 
-The correct link is:
+Your examples are seen often, and the md5 comparison example was exploited
+in SMF as my public exploit shows in the above link.
 
-https://doc.powerdns.com/recursor/security-advisories/powerdns-advisory-201=
-7-08.html
+if (empty($_POST['code']) || substr($realCode, 0, 10) !=3D
+substr(md5($_POST['code']), 0, 10)) [4]
+        {
+                // Stop brute force attacks like this.
+                validatePasswordFlood($_POST['u'], $flood_value, false); [5]
 
-Sorry!
+There's also other interesting oddities with their juggling system. I
+provide several links to how you can see them, but one of my favorites is:
 
---=20
-Remi Gacogne
-PowerDNS.COM BV - https://www.powerdns.com/
+if ($input < "30") {
+        print("$input < 30\t");
+        print((int)$input);
+}
 
+You can see how this is bypassed under the "Math is Crazy" section and then
+think on how this can be extrapolated.
 
---CvkXRGdqc8mO8HUGGnrWnH8V2aDb53qWE--
+On Tue, May 5, 2015 at 4:01 AM, mancha <mancha1@zoho.com> wrote:
 
---PJcI34sbRIVdtHTrFreQTJB24Bj8q5wK6
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
+> On Tue, May 05, 2015 at 08:24:42AM +0000, mancha wrote:
+> > On Tue, May 05, 2015 at 09:44:00AM +0200, Florian Weimer wrote:
+> > > On 05/05/2015 09:26 AM, mancha wrote:
+> > >
+> > > > Taking sha1 as our reference hash and "=3D=3D" as our equivalence
+> > > > relation:
+> > > >
+> > > > All [a-f][0-9a-f]{39} are in equivalence class A.
+> > > >
+> > > > All 42[a-f][0-9a-f]{37} are in equivalence class B.
+> > > >
+> > > > Note: those regexes aren't representative of the full equivalence
+> > > > classes because prepending 0s doesn't alter the value (i.e.
+> > > > 0[a-f][0-9a-f]{38} is in equivalence class "A" as well..
+> > >
+> > > I cannot reproduce this.  Or you use =E2=80=9Cequivalence class=E2=80=
+=9D in a
+> > > non-standard way.
+> > >
+> > > -- Florian Weimer / Red Hat Product Security
+> >
+> > I was using "equivalence class" in a standard way but mis-understood
+> > PHP's casting rules when comparing strings so never mind that comment.
+> >
+> > To raise the SNR back up, I agree with your assessment if we account
+> > for prepended 0s. So out of the 16^40 total hashes, I believe
+> > 10^38+10^37+...+10^1 of them will evaluate to float(0). A bit higher
+> > than your estimate (which only considered 10^38 of them). Same order
+> > of magnitude though.
+> >
+> > --mancha
+>
+> That has a small off-by-one because 40 0s will be cast to float(0) when
+> compared to those.
+>
+> Also, we have equivalence classes such as:
+>
+> 2e00000000000000000000000000000000000001
+> 02e0000000000000000000000000000000000001
+> ...
+> 0000000000000000000000000000000000002e01
+> 00000000000000000000000000000000000002e1
+> 0000000000000000000000000000000000000020
+>
+> --mancha
+>
 
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEE1jAMq8v0abvjkuUDogjtT4r1hEYFAlougn8ACgkQogjtT4r1
-hEZqMwf/aG1TTImiomojBa7ugN73RDdqmrTDPpZdx9Rwe4hlHBBwIXK9ZXUzJtwO
-x5U3wU82YSsOXwVWeDWdPTPTVt/H+LMbHziKWKIL1K/wiNP07q8rlWFNL8R+U2Z6
-zEFuhgiOK8ZmlzHsE7XGAUdcDTYYVh1jFll0KECmuyekXDQXfFq64CaqO6e27RQ3
-NNQtSS8Xp0D5Ts+37120e5dibvEq2qx3rqver8CTvnDPYxap8iwzx7ZLoIo8o8Hc
-mdMrAqMEcWMJpsZ8kk3DSp8hcUEyCKEWsAzBFijzJzAJFibdirax/OX34Y7ALl78
-3PKyTm7hyqfD4mItwJfMm2clQnxovg==
-=ojQz
------END PGP SIGNATURE-----
-
---PJcI34sbRIVdtHTrFreQTJB24Bj8q5wK6--
+--089e0111e0da0bb50b051558b5b1--
