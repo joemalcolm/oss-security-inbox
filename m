@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2118" "Tuesday" "30" "May" "2017" "21:12:21" "+0200" "Andrey Konovalov" "andreyknvl@google.com" "<CAAeHK+zP+B4b=qDFBcivEt4O7ruLcE3rfSrSXs_9ZbixmX-FqQ@mail.gmail.com>" "45" "[oss-security] Linux kernel: memory corruptions in IPv4/IPv6 TCP/SCTP/DCCP sockets" "^Cc:" nil nil "5" "2017053019:12:21" "[oss-security] Linux kernel: memory corruptions in IPv4/IPv6 TCP/SCTP/DCCP sockets" (number mark "U       andreyknvl@g May 30   45/2118  " thread-indent "\"[oss-security] Linux kernel: memory corruptions in IPv4/IPv6 TCP/SCTP/DCCP sockets\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1798" "Thursday" "7" "May" "2015" "16:49:08" "+0200" "Alessandro Ghedini" "alessandro@ghedini.me" "<20150507144908.GA1677@kronk.local>" "53" "[oss-security] CVE Request: zeromq downgrade attack" nil nil nil "5" "2015050714:49:08" "[oss-security] CVE Request: zeromq downgrade attack" (number mark "        alessandro@g May  7   53/1798  " thread-indent "\"[oss-security] CVE Request: zeromq downgrade attack\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 27926 invoked by uid 550); 30 May 2017 19:12:38 -0000
+Received: (qmail 17684 invoked by uid 550); 7 May 2015 14:49:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,84 +11,72 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 27863 invoked from network); 30 May 2017 19:12:34 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=ZlTNvUvtC6Pud7FFHWwjVxvWDLf9WW/6HSdGBMhPE2E=;
-        b=qGlon4usENXBp4oHVgef9Ted25EaFST45FaaKhPZMAtuRpGa8m081bfQEvl7TCEcyM
-         OL/wdmaUNx1w3EfHSX5b63trXdkl/0lIM2SrwB430ddrNWbrrLwvJQyoNJxWMFr8HsAP
-         9aZYwFcS+RaPnj9X4T2dL7GpeJqAl/SWQh1Yqq6gJVrJsImQi8+HfNga2LhhjIZYhqEa
-         WrXd96VTzM4PXcR5w4qBZKkIKB5s+CFd+SqAp/i9+q5M5YXau7QiFHJmcq2IB/lQxyuc
-         PjOCcyf7evfsdmzTJS2feA7UpQkFJPaJxTUAIRS/kx/xzRKIMG8vG64R+lTY9I7eeuKZ
-         e2uA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=ZlTNvUvtC6Pud7FFHWwjVxvWDLf9WW/6HSdGBMhPE2E=;
-        b=J65K/Ow6FstnZnABxvz+6lbctXroaIAoqpu5rs2Yq6aLxaCsU9XQ+IIST14e3sMIEa
-         t4/jZsIyxCi71Bf1kyRhoTD96fxHniUf9gGdcrNzWUZD6XZKS0wLF8PWDe/3XatJhj6M
-         RFKaS9l675v4tT3WgnNK6sFo8OpodBytKS470SmGIph4GL7Zg/0I4injAbV2EnzPMk4e
-         9rR4vQFEYeHVDqCsHmBeOEUUo7FIN96XURifxqXQSh6bTPVrSl0JkQvdZn68kiAK63dI
-         35/NP8Y5NUE2TZrAry8wH5Lxi2RkqAC4kPBO/TdXlC4yZRMjusCGSjrAKGDtY0ifMyVg
-         PJiQ==
-X-Gm-Message-State: AODbwcBcLNOpjgkOBCT4GE/FqYK314rlbcr0eDUZBbfGFB76OuQDGtgC
-	hLYF1Dax0oNiRcvQ0QTATdH0FdCffVUU
-X-Received: by 10.37.192.130 with SMTP id c124mr14582910ybf.67.1496171542246;
- Tue, 30 May 2017 12:12:22 -0700 (PDT)
+Received: (qmail 17666 invoked from network); 7 May 2015 14:49:20 -0000
+Message-ID: <20150507144908.GA1677@kronk.local>
+Mail-Followup-To: oss-security@lists.openwall.com,
+	zeromq-dev@lists.zeromq.org
 MIME-Version: 1.0
-Message-ID: <CAAeHK+zP+B4b=qDFBcivEt4O7ruLcE3rfSrSXs_9ZbixmX-FqQ@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Cc: Pray3r <pray3r.z@gmail.com>, Dmitry Vyukov <dvyukov@google.com>, 
-	Kostya Serebryany <kcc@google.com>
-Date: Tue, 30 May 2017 21:12:21 +0200
-From: Andrey Konovalov <andreyknvl@google.com>
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="EVF5PPMfhYS0aIcm"
+Content-Disposition: inline
+User-Agent: Mutt/1.5.23 (2014-03-12)
+Cc: zeromq-dev@lists.zeromq.org
+Date: Thu, 7 May 2015 16:49:08 +0200
+From: Alessandro Ghedini <alessandro@ghedini.me>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Linux kernel: memory corruptions in IPv4/IPv6 TCP/SCTP/DCCP sockets
+Subject: [oss-security] CVE Request: zeromq downgrade attack
 To: oss-security@lists.openwall.com
 
-A few CVEs were assigned for similar bugs causing kernel memory
-corruption (use-after-free followed by a double-free) in IPv4/IPv6
-TCP/SCTP/DCCP sockets. The details are below.
+--EVF5PPMfhYS0aIcm
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-The bugs were found with syzkaller.
+[ CCing upstream mailing list ]
 
-* CVE-2017-8890
+Hello,
 
-The inet_csk_clone_lock function in net/ipv4/inet_connection_sock.c in
-the Linux kernel through 4.10.15 allows attackers to cause a denial of
-service (double free) or possibly have unspecified other impact by
-leveraging use of the accept system call.
+=46rom https://github.com/zeromq/libzmq/issues/1273 :
 
-CVE: https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-8890
-Fix: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=657831ffc38e30092a2d5f03d385d710eb88b09a
+> It is easy to bypass the security mechanism in 4.1.0 and 4.0.5 by sending=
+ a
+> ZMTP v2 or earlier header. The library accepts such connections without
+> applying its security mechanism.
+>=20
+> Solution: if security is defined on a socket, reject all V2 and earlier
+> connections, unconditionally.
 
-* CVE-2017-9075
+A patch for the zeromq 4.0.x stable series is available at
+https://github.com/zeromq/zeromq4-x/commit/b6e3e0f601e2c1ec1f3aac880ed6a3fe=
+63043e51
 
-The sctp_v6_create_accept_sk function in net/sctp/ipv6.c in the Linux
-kernel through 4.11.1 mishandles inheritance, which allows local users
-to cause a denial of service or possibly have unspecified other impact
-via crafted system calls, a related issue to CVE-2017-8890.
+AFAICT no CVE has been assigned (or requested) for this, and the issue has
+been public since December of last year.
 
-CVE: https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-9075
-Fix: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=fdcee2cbb8438702ea1b328fb6e0ac5e9a40c7f8
+Could a CVE be assigned please?
 
-* CVE-2017-9076
+Cheers
 
-The dccp_v6_request_recv_sock function in net/dccp/ipv6.c in the Linux
-kernel through 4.11.1 mishandles inheritance, which allows local users
-to cause a denial of service or possibly have unspecified other impact
-via crafted system calls, a related issue to CVE-2017-8890.
+--EVF5PPMfhYS0aIcm
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
 
-CVE: https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-9076
-Fix: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=83eaddab4378db256d00d295bda6ca997cd13a52
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-* CVE-2017-9077
+iQIcBAEBCgAGBQJVS3thAAoJEK+lG9bN5XPLPccQAIvYsuyCFmdcWJLyx0KAfRbN
+Y/9eRF2Rvg+usjIxu3g07U5lZYfIJ1mRUL9riwHusvgaw7mtVOyOOw9eSRyUcuej
+40k9owelGzgK6/TM9wPRTOmaUZenGMM2UXQW6hXVBqyCp+iapzEdS5XeHYsAt3Qf
+aZO9KupWzlY5oHq3/ZZ/dD+LC0fQxp1ad5gNT/jWu/cFaXjt080Q8oH3zdmyim4C
+P/afbq+6F27BiQx4589WXfXokT3SiyX0DQx7ENcm4roarZNMrCPV0wK+Byti41la
+F4bvMqKuGYywSe2HUx1KG+D4Fxp8XXmvofviVEEtOoG9Jw+dnJA3+UrQ7RqgHWW3
+x7eFZ1vwlXmBGAp4jxf83hDc2eJX3w11J0Zs0NN1prRH+pNwyWZ+Pf/GLwct39An
+x2PLR7h1Aba7xcnlXtq6B4PJ7NWV1QkAhHG5hdH4AnaOEBnggtySFE3HF4FV1R6j
+eSfPoGjaXU0Hu1i+AYZh9LUaljVr3dJxyM4zNsNhwp32hl7zBWonkxA9Dt05Nc/v
+6yqrso2Bo1jsS/KDjrcSZsZn7yQZ9obgpYxmc5Srr+Sc4TT5eh7zXzcVszd3l5dm
+D8bKcy4A3ysZp0At0ZAKVElwmuyKU35tOP+NHQNvIRsX5o5Fd+2P5/2FsaLcvNAS
+GDEYLd8hP6GHhnIXxypU
+=YIV6
+-----END PGP SIGNATURE-----
 
-The tcp_v6_syn_recv_sock function in net/ipv6/tcp_ipv6.c in the Linux
-kernel through 4.11.1 mishandles inheritance, which allows local users
-to cause a denial of service or possibly have unspecified other impact
-via crafted system calls, a related issue to CVE-2017-8890.
-
-CVE: https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-9077
-Fix: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=83eaddab4378db256d00d295bda6ca997cd13a52
+--EVF5PPMfhYS0aIcm--
