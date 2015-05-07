@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5564" "Saturday" "1" "April" "2017" "14:16:28" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<960903.260248841-sendEmail@localhost>" "107" "[oss-security] podofo: heap-based buffer overflow in PoDoFo::PdfPainter::ExpandTabs (PdfPainter.cpp)" nil nil nil "4" "2017040114:16:28" "[oss-security] podofo: heap-based buffer overflow in PoDoFo::PdfPainter::ExpandTabs (PdfPainter.cpp)" (number mark "U       ago@gentoo.o Apr  1  107/5564  " thread-indent "\"[oss-security] podofo: heap-based buffer overflow in PoDoFo::PdfPainter::ExpandTabs (PdfPainter.cpp)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5626" "Thursday" "7" "May" "2015" "17:41:09" "-0400" "Eric Windisch" "ewindisch@docker.com" "<CAFmghwx3=9vwk==YKv0ULRViijTh9y5XV4ufF2L=QWQuvpOoxg@mail.gmail.com>" "132" "[oss-security] Docker 1.6.1 - Security Advisory [150507]" nil nil nil "5" "2015050721:41:09" "[oss-security] Docker 1.6.1 - Security Advisory [150507]" (number mark "        ewindisch@do May  7  132/5626  " thread-indent "\"[oss-security] Docker 1.6.1 - Security Advisory [150507]\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 32317 invoked by uid 550); 1 Apr 2017 14:16:48 -0000
+Received: (qmail 29963 invoked by uid 550); 7 May 2015 21:41:29 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,120 +11,159 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32287 invoked from network); 1 Apr 2017 14:16:47 -0000
-Message-ID: <960903.260248841-sendEmail@localhost>
-From: "Agostino Sarubbo" <ago@gentoo.org>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Date: Sat, 1 Apr 2017 14:16:28 +0000
+Received: (qmail 29920 invoked from network); 7 May 2015 21:41:20 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
+         :content-type;
+        bh=sVpegbmrjRn52hCrZWcBkbp3NgO173pT+fLqEdoCHsg=;
+        b=DjlRgwHrSbn66BXi4F0YMAr0Q98qpiRGw1VG3Tq56R+yg3XXAbMCXStiylrVE5AKt3
+         oV2Trh6j2NKUEGzVYOS3KpPkJk6KyRl0zwnWh+b4HLESX7jFutvN6kAC2ebdHcXskUZe
+         bVLhsM/1KDWTDA5q5X4HQ1knx5drq827Yi8mXXeADAohqpyKnxUymsIYm0m1OxAyDLBT
+         qBy3/f/T0Cb/iQDtQTv2zkpsAmr4JphgfSPWLR2L4awAci8MrffBUafcRefT+rOUtcZN
+         22Lt06Lda2ebajPescaTEcX4D0y54P4JFPINw4simwvul9bqsuPnLjTRIIlhUQU3CknQ
+         UHoQ==
+X-Gm-Message-State: ALoCoQlOxnVKpuehFnBKac1c7SasmoWW82VDD3uHpTNHo9VGDNQJrubqosR+gh3YnPcfg6TFFR3x
 MIME-Version: 1.0
-Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-571539.97391379"
-Subject: [oss-security] podofo: heap-based buffer overflow in PoDoFo::PdfPainter::ExpandTabs (PdfPainter.cpp)
+X-Received: by 10.194.11.73 with SMTP id o9mr1215460wjb.116.1431034869444;
+ Thu, 07 May 2015 14:41:09 -0700 (PDT)
+Message-ID: <CAFmghwx3=9vwk==YKv0ULRViijTh9y5XV4ufF2L=QWQuvpOoxg@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=047d7b4507e00e0daa051584c56d
+Date: Thu, 7 May 2015 17:41:09 -0400
+From: Eric Windisch <ewindisch@docker.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Docker 1.6.1 - Security Advisory [150507]
+To: oss-security@lists.openwall.com
 
-------MIME delimiter for sendEmail-571539.97391379
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 7bit
+--047d7b4507e00e0daa051584c56d
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-Description:
-podofo is a C++ library to work with the PDF file format.
+Docker Engine version 1.6.1 has been released to address several
+vulnerabilities and is immediately available for all supported platforms.
+Users are advised to upgrade existing installations of the Docker Engine
+and use 1.6.1 for new installations.
 
-A fuzz on it through the podofotxt2pdf command line tool reavealed an heap overflow. This post will be forwarded on the upstream mailing list.
+It should be noted that each of the vulnerabilities allowing privilege
+escalation may only be exploited by a malicious Dockerfile or image.  Users
+are advised to run their own images and/or images built by trusted parties,
+such as those in the official images library.
 
-The complete ASan output:
-
-# podofotxt2pdf $FILE out.pdf
-==12524==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x607000001178 at pc 0x7f44ebaa5c89 bp 0x7ffce55aac90 sp 0x7ffce55aac88
-READ of size 2 at 0x607000001178 thread T0
-    #0 0x7f44ebaa5c88 in PoDoFo::PdfPainter::ExpandTabs(PoDoFo::PdfString const&, long) const /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/src/doc/PdfPainter.cpp:1945:26
-    #1 0x7f44eba95942 in PoDoFo::PdfPainter::DrawText(double, double, PoDoFo::PdfString const&, long) /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/src/doc/PdfPainter.cpp:755:31
-    #2 0x519755 in draw(char*, PoDoFo::PdfDocument*, bool, char const*) /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/tools/podofotxt2pdf/podofotxt2pdf.cpp:94:25
-    #3 0x51aa52 in init(char const*, char const*, bool, char const*) /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/tools/podofotxt2pdf/podofotxt2pdf.cpp:165:5
-    #4 0x51c253 in main /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/tools/podofotxt2pdf/podofotxt2pdf.cpp:212:7
-    #5 0x7f44e9a3878f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #6 0x41ccb8 in _start (/usr/bin/podofotxt2pdf+0x41ccb8)
-
-0x607000001178 is located 0 bytes to the right of 72-byte region [0x607000001130,0x607000001178)
-allocated by thread T0 here:
-    #0 0x514870 in operator new(unsigned long) /tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.0/work/compiler-rt-4.0.0.src/lib/asan/asan_new_delete.cc:82
-    #1 0x7f44eb460304 in PoDoFo::PdfRefCountedBuffer::ReallyResize(unsigned long) /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/src/base/PdfRefCountedBuffer.cpp:161:21
-    #2 0x7f44eb21212d in PoDoFo::PdfRefCountedBuffer::Resize(unsigned long) /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/src/base/PdfRefCountedBuffer.h:307:9
-    #3 0x7f44eb47a466 in PoDoFo::PdfRefCountedBuffer::PdfRefCountedBuffer(unsigned long) /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/src/base/PdfRefCountedBuffer.h:227:11
-    #4 0x7f44eb47a466 in PoDoFo::PdfString::Init(char const*, long) /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/src/base/PdfString.cpp:570
-    #5 0x7f44eb47c24c in PoDoFo::PdfString::PdfString(char const*, PoDoFo::PdfEncoding const*) /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/src/base/PdfString.cpp:109:9
-    #6 0x519718 in draw(char*, PoDoFo::PdfDocument*, bool, char const*) /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/tools/podofotxt2pdf/podofotxt2pdf.cpp:94:43
-    #7 0x51aa52 in init(char const*, char const*, bool, char const*) /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/tools/podofotxt2pdf/podofotxt2pdf.cpp:165:5
-    #8 0x51c253 in main /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/tools/podofotxt2pdf/podofotxt2pdf.cpp:212:7
-    #9 0x7f44e9a3878f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
-
-SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/src/doc/PdfPainter.cpp:1945:26 in PoDoFo::PdfPainter::ExpandTabs(PoDoFo::PdfString 
-const&, long) const
-Shadow bytes around the buggy address:
-  0x0c0e7fff81d0: fa fa 00 00 00 00 00 00 00 00 00 00 fa fa fa fa
-  0x0c0e7fff81e0: 00 00 00 00 00 00 00 00 00 fa fa fa fa fa fd fd
-  0x0c0e7fff81f0: fd fd fd fd fd fd fd fa fa fa fa fa 00 00 00 00
-  0x0c0e7fff8200: 00 00 00 00 00 fa fa fa fa fa 00 00 00 00 00 00
-  0x0c0e7fff8210: 00 00 00 fa fa fa fa fa fd fd fd fd fd fd fd fd
-=>0x0c0e7fff8220: fd fa fa fa fa fa 00 00 00 00 00 00 00 00 00[fa]
-  0x0c0e7fff8230: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c0e7fff8240: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c0e7fff8250: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c0e7fff8260: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c0e7fff8270: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==12524==ABORTING
-
-Affected version:
-0.9.5
-
-Fixed version:
-N/A
-
-Commit fix:
-N/A
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-CVE-2017-7378
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00248-podofo-heapoverflow-PdfPainter_cpp
-
-Timeline:
-2017-03-31: bug discovered and reported to upstream
-2017-03-31: blog post about the issue
-2017-03-31: CVE assigned
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/03/31/podofo-heap-based-buffer-overflow-in-podofopdfpainterexpandtabs-pdfpainter-cpp
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
+Please send any questions to security@docker.com.
 
 
-------MIME delimiter for sendEmail-571539.97391379--
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
 
+[CVE-2015-3629] Symlink traversal on container respawn allows local
+privilege escalation
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Libcontainer version 1.6.0 introduced changes which facilitated a mount
+namespace breakout upon respawn of a container. This allowed malicious
+images to write files to the host system and escape containerization.
+
+Libcontainer and Docker Engine 1.6.1 have been released to address this
+vulnerability. Users running untrusted images are encouraged to upgrade
+Docker Engine.
+
+Discovered by T=C3=B5nis Tiigi.
+
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+[CVE-2015-3627] Insecure opening of file-descriptor 1 leading to privilege
+escalation
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+The file-descriptor passed by libcontainer to the pid-1 process of a
+container has been found to be opened prior to performing the chroot,
+allowing insecure open and symlink traversal. This allows malicious
+container images to trigger a local privilege escalation.
+
+Libcontainer and Docker Engine 1.6.1 have been released to address this
+vulnerability. Users running untrusted images are encouraged  to upgrade
+Docker Engine.
+
+Discovered by T=C3=B5nis Tiigi.
+
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+[CVE-2015-3630] Read/write proc paths allow host modification & information
+disclosure
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Several paths underneath /proc were writable from containers, allowing
+global system manipulation and configuration. These paths included
+/proc/asound, /proc/timer_stats, /proc/latency_stats, and /proc/fs.
+
+By allowing writes to /proc/fs, it has been noted that CIFS volumes could
+be forced into a protocol downgrade attack by a root user operating inside
+of a container. Machines having loaded the timer_stats module were
+vulnerable to having this mechanism enabled and consumed by a container.
+
+We are releasing Docker Engine 1.6.1 to address this vulnerability. All
+versions up to 1.6.1 are believed vulnerable. Users running untrusted
+images are encouraged to upgrade.
+
+Discovered by Eric Windisch of the Docker Security Team.
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+[CVE-2015-3631] Volume mounts allow LSM profile escalation
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+By allowing volumes to override files of /proc within a mount namespace, a
+user could specify arbitrary policies for Linux Security Modules, including
+setting an unconfined policy underneath AppArmor, or a docker_t policy for
+processes managed by SELinux. In all versions of Docker up until 1.6.1, it
+is possible for malicious images to configure volume mounts such that files
+of proc may be overridden.
+
+We are releasing Docker Engine 1.6.1 to address this vulnerability. All
+versions up to 1.6.1 are believed vulnerable. Users running untrusted
+images are encouraged to upgrade.
+
+Discovered by Eric Windisch of the Docker Security Team.
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+AppArmor policy improvements
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+The 1.6.1 release also marks preventative additions to the AppArmor policy.
+Recently, several CVEs against the kernel have been reported whereby mount
+namespaces could be circumvented through the use of the sys_mount syscall
+from inside of an unprivileged Docker container. In all reported cases, the
+AppArmor policy included in libcontainer and shipped with Docker has been
+sufficient to deflect these attacks. However, we have deemed it prudent to
+proactively tighten the policy further by outright denying the use of the
+sys_mount syscall.
+
+Because this addition is preventative, no CVE-ID is requested.
+
+--=20
+Regards,
+Eric Windisch
+Docker Security Team
+
+--047d7b4507e00e0daa051584c56d--
