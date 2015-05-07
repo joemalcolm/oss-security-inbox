@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2439" "Wednesday" "29" "March" "2017" "16:43:28" "-0500" "Tyler Hicks" "tyhicks@canonical.com" "<f7bff499-47e8-c5f2-e867-eb7f7bf329d8@canonical.com>" "60" "[oss-security] CVE-2017-7184: kernel: Local privilege escalation in XFRM framework" nil nil nil "3" "2017032921:43:28" "[oss-security] CVE-2017-7184: kernel: Local privilege escalation in XFRM framework" (number mark "U       tyhicks@cano Mar 29   60/2439  " thread-indent "\"[oss-security] CVE-2017-7184: kernel: Local privilege escalation in XFRM framework\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2081" "Thursday" "7" "May" "2015" "10:39:06" "+0200" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20150507103906.117b4304@pc1>" "57" "Re: [oss-security] CVE request: Dovecot remote DoS on TLS connections" nil nil nil "5" "2015050708:39:06" "[oss-security] CVE request: Dovecot remote DoS on TLS connections" (number mark "        hanno@hboeck May  7   57/2081  " thread-indent "\"Re: [oss-security] CVE request: Dovecot remote DoS on TLS connections\"\n") "<554B1F35.9080600@mittwald.de>" ("<20150426203114.7f951c77@pc1.fritz.box>" "<554B1F35.9080600@mittwald.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 11540 invoked by uid 550); 29 Mar 2017 21:43:58 -0000
+Received: (qmail 7630 invoked by uid 550); 7 May 2015 08:38:46 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,78 +11,75 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 7612 invoked from network); 7 May 2015 08:38:46 -0000
+Message-ID: <20150507103906.117b4304@pc1>
+In-Reply-To: <554B1F35.9080600@mittwald.de>
+References: <20150426203114.7f951c77@pc1.fritz.box>
+	<554B1F35.9080600@mittwald.de>
+X-Mailer: Claws Mail 3.11.1 (GTK+ 2.24.27; x86_64-pc-linux-gnu)
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512; protocol="application/pgp-signature"; boundary="=_zucker.schokokeks.org-24334-1430987914-0001-2"
+Date: Thu, 7 May 2015 10:39:06 +0200
+From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11520 invoked from network); 29 Mar 2017 21:43:57 -0000
-From: Tyler Hicks <tyhicks@canonical.com>
+Subject: Re: [oss-security] CVE request: Dovecot remote DoS on TLS
+ connections
 To: oss-security@lists.openwall.com
-Cc: "security@ubuntu.com" <security@ubuntu.com>
-Message-ID: <f7bff499-47e8-c5f2-e867-eb7f7bf329d8@canonical.com>
-Date: Wed, 29 Mar 2017 16:43:28 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.7.0
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature";
- boundary="4WhIVLtmgimjMmisCkx2rosXqdErgLsMk"
-Subject: [oss-security] CVE-2017-7184: kernel: Local privilege escalation in XFRM framework
 
---4WhIVLtmgimjMmisCkx2rosXqdErgLsMk
-Content-Type: multipart/mixed; boundary="alfu21VJcF0TAWJ3gPgvpMNe8w9MnFlRE";
- protected-headers="v1"
-From: Tyler Hicks <tyhicks@canonical.com>
-To: oss-security@lists.openwall.com
-Cc: "security@ubuntu.com" <security@ubuntu.com>
-Message-ID: <f7bff499-47e8-c5f2-e867-eb7f7bf329d8@canonical.com>
-Subject: CVE-2017-7184: kernel: Local privilege escalation in XFRM framework
-
---alfu21VJcF0TAWJ3gPgvpMNe8w9MnFlRE
-Content-Type: text/plain; charset=utf-8
+--=_zucker.schokokeks.org-24334-1430987914-0001-2
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
 
-A security issue was reported by ZDI, on behalf of Chaitin Security
-Research Lab, against the Linux kernel in Ubuntu. It also affected the
-upstream kernel.
+On Thu, 7 May 2015 10:15:49 +0200
+Sven Kieske <s.kieske@mittwald.de> wrote:
 
-Chaitin Security Research Lab discovered that xfrm_replay_verify_len(),
-as called by xfrm_new_ae(), did not verify that the user-specified
-replay_window was within the replay state buffer.
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>=20
+> On 26/04/15 20:31, Hanno B=C3=B6ck wrote:
+> > The current Dovecot (2.2.16) imap/pop3 server has an issue that=20
+> > handshake failures will lead to a crash of the login process.
+>=20
+> Do you happen to know in which version this vulnerability got
+> introduced?
 
-This allowed for out-of-bounds reads and writes of kernel memory.
-Chaitin Security showed that this can lead to local privilege escalation
-by using user namespaces in order to configure XFRM. XFRM configuration
-requires CAP_NET_ADMIN so this issue is mitigated in kernels which do
-not enable user namespaces by default.
+2.2.14.
+But things are comlicated: There was some breakage in 2.2.13 regarding
+TLS so some distros (I know this from Gentoo) backported some TLS
+related patches to 2.2.13, therefore you could also see it there.
 
-Fixes:
-- https://git.kernel.org/linus/677e806da4d916052585301785d847c3b3e6186a
-- https://git.kernel.org/linus/f843ee6dd019bcece3e74e76ad9df0155655d0df
+Also, you'll probably only see this with SSLv3 disabled. (at least
+that's the only situation where this particular crash in openssl can be
+triggered, but there may be other codepaths affected by that problem)
 
-Tyler
+--=20
+Hanno B=C3=B6ck
+http://hboeck.de/
 
+mail/jabber: hanno@hboeck.de
+GPG: BBB51E42
 
-
---alfu21VJcF0TAWJ3gPgvpMNe8w9MnFlRE--
-
---4WhIVLtmgimjMmisCkx2rosXqdErgLsMk
-Content-Type: application/pgp-signature; name="signature.asc"
+--=_zucker.schokokeks.org-24334-1430987914-0001-2
+Content-Type: application/pgp-signature
+Content-Transfer-Encoding: 7bit
 Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
 
-iQIcBAEBCgAGBQJY3CqAAAoJENaSAD2qAscKnJEQAMD/cn+VKbK2zWXEohHE7Ewp
-uVK9Uri29DJsDMBWuLvOjfhqiBfWCBg08UnQ53barFuFtZGP03PF8MYphp+PA7AN
-7HLcReyGiU8CVwmMg8bViwLT3l/jiEl5ieqgObDTv01BqC7qBl4/DUg2oVdatkab
-Ehbth8g9LwrGo0NmWjtgdjFM/tGye17JPnaxorZD7t0u3zg0fD1i4drZZIZiqEJ9
-FlPxzGSpfOHaWUQ1amMVeChqpSYfyYX+wn0rObbfI6A+L9oX2/6TsX9xt+hMuLzf
-P9yr3mFM91Lxa/HFNoZtghGVnEVFzEweUrVV0ktYFgjnCergzu7qK5wDL2b7lf/h
-tVSNTqI8hSU6c6tBPvgUDyJZwnsV4r3gSAKPofjfsK6m7jbFSneGEM1h2cAhJb7g
-hqJx+Cb9kima2ZUSRlAdj1+WhZqff6j697k9yEADBU7tsg00lJMZQaxzon+jubNl
-hWFIb2IOSmnKzmMOW02HoFIDLLJ+LmrRYbgdmpohpz14MyGT7uk5CloGOtIYsDxV
-RFGagqksKKReF4HO7YaxdZ/8RhvcthY4lphl7SoBhWr7NVQYpI9+6jwOZtTXzIkM
-03Bo4DbDJ/S4Dt0f60VfvRuK6K/C5NoyYJiseM7ApOUYKZ9FysXeRraafRC1uIiw
-7SDk+uzzQJ1C796UL+iL
-=D8Ch
+iQIcBAEBCgAGBQJVSySqAAoJEKWIAHK7tR5C6PIQAJtq/JllxajwFMI6dy4ZPJ7Q
+y8kxwz6J9Sl8jBJ3A5fMww56hLLEK16OrSGMbSXRF5/sG8C5tbodrnLEBLSKQkkA
+iEECnGVhxGCb+EoGUIZPFs1bVXusVIQ93+W5dvVBq3yY4F7aAKp4e7MreUfKwMuU
+RCBZZsZ1nim6PAR62SrvdRq1YXHFG5CtWvpseZn87bMcAn1bgDzjctNusxEqPajH
+1hswAo7xwzu3cTKZPDBEdolKxeA2BmkSeqt5LS2ivKH8mCQB0eBGIXH8j4dNXEdy
+RDamTRW96pZ1iAUgYaWuV7o7/T0LNRrQQMlUP8forLApIK2OHq1JT4g+088VqsnV
+zqDnrp1T8GpNTlawpGuIKZ777UHAMMKWIsiOSXIsbu+kWP8v6kv3viYsSvR8njvT
+pyF3xTbv0aJNJ3w1HUdN1wuyqFjqgjGgDNQMid1UnTOfdHVdvptArcZf45vqeVih
+C+VtWXuu0auOZ9W6dDcFAdxBKgblU+O+HGltNJmAAmsBa7R4Ra8/ZuOWPjxpFfc4
+4/ypOq8Q4DR2FOXArjWqv44XQmoQuNAErhog6Y69ABaTtVA3fFboGmIEMwf8kL5a
+9Sl5p4Z9DBAqrhouHCTHtYJ40aWUQdcaVEdyZDgBbpNRDXyBXSA2SW+bWCiZc62M
+fq83na9ImkMv7ClVhQzY
+=R5DP
 -----END PGP SIGNATURE-----
 
---4WhIVLtmgimjMmisCkx2rosXqdErgLsMk--
+--=_zucker.schokokeks.org-24334-1430987914-0001-2--
