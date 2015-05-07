@@ -1,4 +1,9 @@
-Received: (qmail 12210 invoked by uid 550); 4 Nov 2025 23:23:22 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5873" "Thursday" "7" "May" "2015" "12:36:39" "+0300" "Vasily Kulikov" "segoon@openwall.com" "<20150507093639.GA4522@cachalot>" "157" "[oss-security] Linux kernel pointer poisoning (was: CVE request for a fixed bug existed in all versions of linux kernel from KeenTeam)" nil nil nil "5" "2015050709:36:39" "[oss-security] Linux kernel pointer poisoning (was: CVE request for a fixed bug existed in all versions of linux kernel from KeenTeam)" (number mark "        segoon@openw May  7  157/5873  " thread-indent "\"[oss-security] Linux kernel pointer poisoning (was: CVE request for a fixed bug existed in all versions of linux kernel from KeenTeam)\"\n") "<20150502125329.GA6820@openwall.com>" ("<CADOUnBK=jW36v6X2Q6EXLL35Wxqait7cWJR-adCFwRaMJtucPQ@mail.gmail.com>" "<20150502125329.GA6820@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 7357 invoked by uid 550); 7 May 2015 09:36:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,88 +11,192 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 12165 invoked from network); 4 Nov 2025 23:23:22 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kroah.com; h=cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1762298593; x=1762384993; bh=66u4NzDZAO
-	X/rKOWgCeapKzXjzxRjeSOPmmFOqVdKNo=; b=ewreCLR7etYdQmdIGX7LeTfpDe
-	1os2TBrSou9k5kSvlGNEG7OqGf0v0VR8A94tl8Fonoc4l9soojV+2vPhHaeRFHxs
-	J4LriELXXgZ+80mtxz8PcpboFFis4CB38B4foeh+Eayp/4RlgO1Mcn+soqncX1Hx
-	eUv26MD6g80U9BycwcJ/DjCd+LU0NWZh6K3/CWUSVC7pwL6QgPamkop7GM98cQ5y
-	1gvSENu2n7kaM+4Pq0GDrLr2dVq70EYog2SebsSY1k7JWYBm9R7WKXgz5hpmbvTY
-	k/DBsYPY+pSNK9NDsOorEVVbdeIwGGSskN8qvxCJy8Wrnkvd+4YogVbpRAFw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1762298593; x=1762384993; bh=66u4NzDZAOX/rKOWgCeapKzXjzxRjeSOPmm
-	FOqVdKNo=; b=fay8uhq1dfI66e1nC4OIX022Pxo+vbeLTnzzs7eZqxa5YZrNrIC
-	Hauti3zxbLl4C5XAdtTA2s74OI3Z21N4WJDdXGSuSOfYGSn3CF8T4g+yb8tRAA2+
-	Z2SgiVxvAcBsCnDwnXnFuX4pIC2JhnKuiy1LJcHtesW+0amtry19qmlj/RLXB3Cn
-	snxGFfbj3fJ3pJe7aYVH60WMU/2rT06BK6CpSpyd1r5CrR/3ByfVVZ4oyW5OPA3b
-	i+x3EEig65AavPvp8t9nKlsu4Vnlvlg0A4fbtqTKejz3AeqMOurcbm0nLE3VMul0
-	mxebvwM7uLer5jqim6EePKz6jD6HHCYS/3g==
-X-ME-Sender: <xms:4YoKadcA4zf2LOiH_V74VhhTEe9CxBt5dKrZG3cF5fkLiBkOxAFIzw>
-    <xme:4YoKaZLOdh5SG7zoipnRWXsxVwSBBb1HF0vUYHdK8ScbknJPd8MUHjh9mi4kXbLGj
-    vo3Ww_Imzg1y3MdRNFk0CgfW-Rvsm239Qq43SeboaGpmjhE1w>
-X-ME-Received: <xmr:4YoKaeGdi6r3iTehzd13oRz9ppfnah_14nrJR-rlANEzhUDCB8ZK8J4>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddukedvfeefucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesthdtredttd
-    dtvdenucfhrhhomhepifhrvghgucfmjfcuoehgrhgvgheskhhrohgrhhdrtghomheqnecu
-    ggftrfgrthhtvghrnhepffffhfdvtdfhudefhfeukeeitdetvdekffeileehtddufefgtd
-    efudegveehfefgnecuffhomhgrihhnpehophgvnhhsshhfrdhorhhgnecuvehluhhsthgv
-    rhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhrvghgsehkrhhorghhrd
-    gtohhmpdhnsggprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
-    pehoshhsqdhsvggtuhhrihhthieslhhishhtshdrohhpvghnfigrlhhlrdgtohhm
-X-ME-Proxy: <xmx:4YoKaTpKTlQU1FzFLXaL0nI_yAWDjabW7m2vf9GrKeLv0u4W3FixLQ>
-    <xmx:4YoKaXRpEtFluInliMvLrgmrI3ktr7I_XVSVWpTQCxnXYSZNp3PnuA>
-    <xmx:4YoKaQMWVxDBGVywq3FvdI5jzpwvEIOQarZPXypU-Pgv7Xc9l1Gudw>
-    <xmx:4YoKaaMZHUz5JOzI3BfKNhZbRupYpYZUO8rk7OlASCN-LHkcgQvRDQ>
-    <xmx:4YoKad02V9ABDNf9Nfu7ckQ6F9aYTmcHCNmgc3rLTax7tMkwOAAxsJPg>
-Feedback-ID: i787e41f1:Fastmail
-Date: Wed, 5 Nov 2025 08:23:09 +0900
-From: Greg KH <greg@kroah.com>
-To: oss-security@lists.openwall.com
-Message-ID: <2025110538-probation-thickness-0517@gregkh>
-References: <CAHjsZGZvy3zeN3st9-Ya4Hxu+29My68sXc9WJnZw_Pd2c_AF6Q@mail.gmail.com>
+Received: (qmail 7305 invoked from network); 7 May 2015 09:36:52 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=59nYlAsoVR1DrOfzPBHJrrJLNiXLRSrkt+n7VjH7xxc=;
+        b=LuwKBxdZaxjIM2rsRc9CMvIKiXJfpE9Gj7OZsDp+ZF6SeNW3YVMXuPkdEcEUXaPaK4
+         ydm/LtxS61CEOFvdd/WZ6Z0YUTh1zXEJaFS2QTNybPZpJ+O0Aw60TFDmwve136iwxSX6
+         6dMdJZC2ytsVC0QyIId8a8yn3djA5F72Rzl9v8iw9dRGOmmL7jAOmtksixfVt6sj7/fN
+         5hk8Pp6PzltY8bVRw2jEf4u8TJddYc+zgPGGUntVDqdZy5vntdZTEU0puxQBRtTEKyh6
+         kKBPnEHO8cYM0mRNsSZ4jGPlPXASc3/VsQ1NDV4y3uhFVieTNAZEJB1DSlGgZ2KottH2
+         Nfjg==
+X-Received: by 10.152.238.43 with SMTP id vh11mr2327270lac.45.1430991401023;
+        Thu, 07 May 2015 02:36:41 -0700 (PDT)
+Message-ID: <20150507093639.GA4522@cachalot>
+References: <CADOUnBK=jW36v6X2Q6EXLL35Wxqait7cWJR-adCFwRaMJtucPQ@mail.gmail.com>
+ <20150502125329.GA6820@openwall.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAHjsZGZvy3zeN3st9-Ya4Hxu+29My68sXc9WJnZw_Pd2c_AF6Q@mail.gmail.com>
-Subject: Re: [oss-security] Becoming a CVE Naming Authority for your project
+In-Reply-To: <20150502125329.GA6820@openwall.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+Cc: Wen Xu <hotdog3645@gmail.com>, oss-security@lists.openwall.com,
+	kernel-hardening@lists.openwall.com
+Date: Thu, 7 May 2015 12:36:39 +0300
+From: Vasily Kulikov <segoon@openwall.com>
+Reply-To: oss-security@lists.openwall.com
+Sender: Vasiliy Kulikov <segooon@gmail.com>
+Subject: [oss-security] Linux kernel pointer poisoning (was: CVE request for a fixed bug
+ existed in all versions of linux kernel from KeenTeam)
+To: Solar Designer <solar@openwall.com>
 
-On Tue, Nov 04, 2025 at 08:47:35AM -0300, Rodrigo Freire wrote:
-> Open Source Project Maintainers,
+[cc'ed kernel-hardening@]
+
+On Sat, May 02, 2015 at 15:53 +0300, Solar Designer wrote:
+> Then, perhaps we should harden the poison pointers to be either below
+> typical mmap_min_addr or in an unmapped portion of kernel space?  Do I
+> understand correctly that, short of possible mmap_min_addr bypasses in
+> general (if relevant), this would mitigate the issue?
 > 
-> Managing security vulnerabilities is currently a significant pain,
-> especially with the recent increase in dubious CVE reports due to AI
-> assistants. The discussion around questionable CVEs reported against
-> projects like dnsmasq, curl highlights a growing concern within the
-> open source community.
+> Right now, they are:
 > 
-> One effective way to combat the influx of bogus CVEs and ensure
-> accurate vulnerability reporting is for open source projects to become
-> their own CVE Numbering Authority (CNA). As a CNA, your project gains
-> control over the CVE assignment process.
+> /*
+>  * These are non-NULL pointers that will result in page faults
+>  * under normal circumstances, used to verify that nobody uses
+>  * non-initialized list entries.
+>  */
+> #define LIST_POISON1  ((void *) 0x00100100 + POISON_POINTER_DELTA)
+> #define LIST_POISON2  ((void *) 0x00200200 + POISON_POINTER_DELTA)
 > 
-> Taking ownership of your project's as a CNA ensures that you are in
-> control of the CVE assignment. There will be some requirements to it,
-> sure thing. Check
-> https://openssf.org/blog/2023/11/27/openssf-introduces-guide-to-becoming-a-cve-numbering-authority-as-an-open-source-project/
+> I'd change them to e.g.:
+> 
+> #define LIST_POISON1  ((void *) 0x00000100 + POISON_POINTER_DELTA)
+> #define LIST_POISON2  ((void *) 0x00000200 + POISON_POINTER_DELTA)
+> 
+> where POISON_POINTER_DELTA would normally be 0 on 32-bit x86, so they'd
+> be below mmap_min_addr on that arch.  Meanwhile, a mitigation appears to
+> be to set mmap_min_addr higher than 0x00200200 (slightly over 2 MB), but
+> that's not great as it leaves significantly less ASCII-armored space for
+> libraries.
+> 
+> BTW, it appears that on x86_64 POISON_POINTER_DELTA is
+> 0xdead000000000000 by default, which I guess would hit an unmapped page
+> even with the current LIST_POISON2 value?  If so, is the bug at worst a
+> kernel Oops on x86_64 unless someone changed POISON_POINTER_DELTA in
+> their build?
+> 
+> config ILLEGAL_POINTER_VALUE
+> 	hex
+> 	default 0 if X86_32
+> 	default 0xdead000000000000 if X86_64
+> 
+> Regardless, as a supporter of that kernel patch, I am embarrassed!
 
-I totally agree that all "major" open source projects should become a
-CNA, and strongly recommend taking back control over stuff like this.
+Besides setting current poison pointer constant to sane values we should
+also think of API clearness and usability.  I'd want to also slightly
+change the macros in question to ease common kernel developer to
+introduce new poison pointer constants for new subsystems.
 
-But, for "smaller" open source projects, it would be _great_ if a root
-CNA could become the default for all of open source so that we don't
-have the problem where any CNA can assign CVEs against any random
-software without any repercussions.
+What do we want from the API?
 
-thanks,
+1) poisoned pointer base must be non-mmap'able
+2) all poisoned pointers (i.e. base+offset) must be non-mmap'able
+3) a small offset relative to poisoned pointers must be non-mmap'able
+4) poisoned pointers from different subsystems should be different
 
-greg k-h
+A kernel developer might want to pass a subsystem id to a macro instead
+of explicit math, like in the following patch:
+
+diff --git a/include/linux/poison.h b/include/linux/poison.h
+index 7b2a7fc..5cdff6b 100644
+--- a/include/linux/poison.h
++++ b/include/linux/poison.h
+@@ -1,40 +1,54 @@
+ #ifndef _LINUX_POISON_H
+ #define _LINUX_POISON_H
++#include <linux/bug.h>
+ 
+ /********** include/linux/list.h **********/
+ 
+ /*
+  * Architectures might want to move the poison pointer offset
+  * into some well-recognized area such as 0xdead000000000000,
+- * that is also not mappable by user-space exploits:
++ * that is also not mappable by user-space exploits,
++ * by adjusting CONFIG_ILLEGAL_POINTER_VALUE:
+  */
+ #ifdef CONFIG_ILLEGAL_POINTER_VALUE
+ # define POISON_POINTER_DELTA _AC(CONFIG_ILLEGAL_POINTER_VALUE, UL)
+ #else
+ # define POISON_POINTER_DELTA 0
+ #endif
++/* 
++ * Poisoned pointers of different subsystems should be different
++ * but must not move far away from POISON_POINTER_DELTA.
++ * Otherwise poisoned pointer might be mmap'able on some architectures.
++ */
++#define POISON_AREA_SIZE 0x1000
++#define POISON_POINTER(x) \
++	({ \
++		BUILD_BUG_ON(x >= POISON_AREA_SIZE); \
++       	((void *)(x) + POISON_POINTER_DELTA);})
+ 
+ /*
+  * These are non-NULL pointers that will result in page faults
+  * under normal circumstances, used to verify that nobody uses
+  * non-initialized list entries.
+  */
+-#define LIST_POISON1  ((void *) 0x00100100 + POISON_POINTER_DELTA)
+-#define LIST_POISON2  ((void *) 0x00200200 + POISON_POINTER_DELTA)
++#define LIST_POISON1  POISON_POINTER(0x0100)
++#define LIST_POISON2  POISON_POINTER(0x0200)
+ 
+ /********** include/linux/timer.h **********/
+ /*
+  * Magic number "tsta" to indicate a static timer initializer
+  * for the object debugging code.
+  */
+-#define TIMER_ENTRY_STATIC	((void *) 0x74737461)
++#define TIMER_ENTRY_STATIC	((void*)0x0300 + POISON_POINTER_DELTA)
++// FIXME
++//#define TIMER_ENTRY_STATIC	POISON_POINTER(0x0300)
+ 
+ /********** mm/debug-pagealloc.c **********/
+ #define PAGE_POISON 0xaa
+ 
+ /********** mm/page_alloc.c ************/
+ 
+-#define TAIL_MAPPING	((void *) 0x01014A11 + POISON_POINTER_DELTA)
++#define TAIL_MAPPING	POISON_POINTER(0x0400)
+ 
+ /********** mm/slab.c **********/
+ /*
+
+
+
+POISON_POINTER() checks whether an offset argument is sane.  If it is
+not, it leads to a build failure:
+
+  CC      mm/page_alloc.o
+  mm/page_alloc.c: In function 'free_pages_prepare':
+  mm/page_alloc.c:840:23: error: call to '__compiletime_assert_840' declared with attribute error: BUILD_BUG_ON failed: 0x0111400 >= POISON_AREA_SIZE
+  mm/page_alloc.c: In function 'prep_compound_page':
+  mm/page_alloc.c:447:16: error: call to '__compiletime_assert_447' declared with attribute error: BUILD_BUG_ON failed: 0x0111400 >= POISON_AREA_SIZE
+  make[1]: *** [mm/page_alloc.o] Error 1
+  make: *** [mm] Error 2
+
+
+Two questions here:
+
+a) how to fairy use arch-specific non-mmap'able zone to resolve (2) and
+(3)?  Current 0x1000 is a hardcoded copy-pasted default value of
+DEFAULT_MMAP_MIN_ADDR.  Using DEFAULT_MMAP_MIN_ADDR instead of 0x1000
+might not be a solution -- we don't want a build to fail in this case,
+user must be able to use DEFAULT_MMAP_MIN_ADDR=0 too.
+
+b) how to check for an insane POISON_POINTER() arg in case of
+TIMER_ENTRY_STATIC (and such)?  The current implementation of
+POISON_POINTER() fails as following:
+
+mm/page_alloc.c: In function 'free_pages_prepare':
+mm/page_alloc.c:840:23: error: call to '__compiletime_assert_840' declared with attribute error: BUILD_BUG_ON failed: 0x0111400 >= POISON_AREA_SIZE
+
+
+Thanks,
+
+-- 
+Vasily Kulikov
+http://www.openwall.com - bringing security into open computing environments
