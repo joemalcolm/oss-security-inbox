@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1348" "Thursday" "20" "January" "2022" "20:41:24" "+0100" "Kim Alvefur" "zash@zash.se" nil "38" "Re: [oss-security] Prosody XMPP server advisory 2022-01-13 (Remote Unauthenticated Denial of Service) (CVE-2022-0217)" "^Date:" nil nil "1" nil nil (number mark "        zash@zash.se Jan 20   38/1348  " thread-indent "\"Re: [oss-security] Prosody XMPP server advisory 2022-01-13 (Remote Unauthenticated Denial of Service) (CVE-2022-0217)\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Prosody XMPP server advisory 2022-01-13 (Remote Unauthenticated Denial of Service) (CVE-2022-0217)" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1527" "Thursday" "7" "May" "2015" "10:15:49" "+0200" "Sven Kieske" "s.kieske@mittwald.de" "<554B1F35.9080600@mittwald.de>" "44" "Re: [oss-security] CVE request: Dovecot remote DoS on TLS connections" nil nil nil "5" "2015050708:15:49" "[oss-security] CVE request: Dovecot remote DoS on TLS connections" (number mark "        s.kieske@mit May  7   44/1527  " thread-indent "\"Re: [oss-security] CVE request: Dovecot remote DoS on TLS connections\"\n") "<20150426203114.7f951c77@pc1.fritz.box>" ("<20150426203114.7f951c77@pc1.fritz.box>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 15876 invoked by uid 550); 20 Jan 2022 19:42:56 -0000
+Received: (qmail 22339 invoked by uid 550); 7 May 2015 08:16:02 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,66 +11,64 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 15632 invoked from network); 20 Jan 2022 19:41:45 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=zash.se; s=2021;
-	t=1642707692; bh=/je3UKHOUxJlNc9h48YWtMlbWRALmTJYEpsj2m1QwCc=;
-	h=Date:From:To:Subject:References:In-Reply-To:From;
-	b=ObQdooNwQSd6hy7AgCa4pkyL/dA9xQzZmloikSeXlUYU1X95E0mNwS3watf1peGk9
-	 XU0eisxWiAtD7PUNHdP2TAZ/20zGB5MhLLsofnAsfy2jxWehktAxY5XmNVMGNTKDWF
-	 3ZIZ5oHvfZBryEVpQNMlNBJcsshlOWt1TSRZg+4JgkhpNKbqTASf8DCzbe7UcA5PaF
-	 8/aGEeAEwLEA2rfXDKCv6BJZ6fwfJtdgzfvIQOAh1vwlmD1xptyt36kj7VNFxAAKgE
-	 PwoICN9GE4rk2vJzM+VB2f5BQ/bl07zf8X6gVpLfpaV4+Fgt7zfJNS6AM3eipg0/Qf
-	 WMmGiIuFbr9mw==
-Message-ID: <Yem60C2ibSoIyAMt@carcharodon.zash.se>
-References: <2193597.LkMCQtBBq3@sinistra>
- <5010537.PsH9TYb4DV@sinistra>
+Received: (qmail 22318 invoked from network); 7 May 2015 08:16:01 -0000
+X-Virus-Scanned: Debian amavisd-new at ac02.mittwald.de
+Message-ID: <554B1F35.9080600@mittwald.de>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="5DEcSs1hcLcinORQ"
-Content-Disposition: inline
-In-Reply-To: <5010537.PsH9TYb4DV@sinistra>
-Date: Thu, 20 Jan 2022 20:41:24 +0100
-From: Kim Alvefur <zash@zash.se>
+X-Authenticated-mymxserver.com: Yes
+References: <20150426203114.7f951c77@pc1.fritz.box>
+In-Reply-To: <20150426203114.7f951c77@pc1.fritz.box>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [192.168.111.70]
+Date: Thu, 7 May 2015 10:15:49 +0200
+From: Sven Kieske <s.kieske@mittwald.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Prosody XMPP server advisory 2022-01-13 (Remote
- Unauthenticated Denial of Service) (CVE-2022-0217)
-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] CVE request: Dovecot remote DoS on TLS connections
+To: <oss-security@lists.openwall.com>
 
---5DEcSs1hcLcinORQ
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Hi,
+On 26/04/15 20:31, Hanno Böck wrote:
+> The current Dovecot (2.2.16) imap/pop3 server has an issue that 
+> handshake failures will lead to a crash of the login process.
 
-The fix for this issue introduced a regression in the from of a memory
-leak (of the unintentional reference variety, not a true leak).
+Do you happen to know in which version this vulnerability got
+introduced?
 
-A fix for can be found in this commit:
-https://hg.prosody.im/trunk/rev/e5e0ab93d7f4
+- -- 
+Mit freundlichen Grüßen / Regards
 
---=20
-Regards,
-Kim "Zash" Alvefur
+Sven Kieske
 
---5DEcSs1hcLcinORQ
-Content-Type: application/pgp-signature; name="signature.asc"
-
+Systemadministrator
+Mittwald CM Service GmbH & Co. KG
+Königsberger Straße 6
+32339 Espelkamp
+T: +49-5772-293-100
+F: +49-5772-293-333
+https://www.mittwald.de
+Geschäftsführer: Robert Meyer
+St.Nr.: 331/5721/1033, USt-IdNr.: DE814773217, HRA 6640, AG Bad Oeynhaus
+en
+Komplementärin: Robert Meyer Verwaltungs GmbH, HRB 13260, AG Bad
+Oeynhausen
 -----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.22 (GNU/Linux)
 
-iQIzBAABCgAdFiEEPlIRnvhTxZZ4279rre2ad7Z60ykFAmHpuuQACgkQre2ad7Z6
-0ylPUA/+Jl70ctLXvJPTTVoIy4b/YJ5+O+2nb3WfJqmh2Gw6qAzybl0Je9lRFOUL
-hER8FTjTr9ouwYAJt2Rz5dcERA+yn77IJg+l6GWjTPlx9L33/raFC6gwZd5T/r1T
-3waszcyJKEk2gCbJZtye8UfTysv6e7cKWjzQZ2HynQXJCoDZNONFR4TN5vGFUOBU
-rnpdi4LAG74IqOh5pPzkBDVtj2zbKfFgz/TmmURt1osUvSMH1Oxh4/klXSJt2l/i
-JNTMRnsAfcJzwZ82xCbXFG1x8MyWCAqqNpgHhAfRcwk6nTINPrJjgfqLqRcbamNZ
-E4DE5OkOFTnVvbeDwYNkwZ+aeGVpo8yFYVk7NFqHmB322KCKIhct22G9wv1XlaKT
-KW9I04OkWCnoulKpoYPRH39qBNKeQMNsmBBbWFWlaqxIi+HESYelBkZJ4ZCsnYkR
-CcaCEh22r0fYNWRe8WNc5ZB/+aPYcN3EvFoRR3xhbStamVXA6LfRvQ4iqqNMgGgY
-8vh1vm9HwuuGlExAuZfx54Nmlb+AYVC0lSP6PGhnFBfBdHcgv2S4UJNmc99flBp3
-DS8tz6tOx4jhUmwnCQRnZOp0JW6Ed1BlgAgYjmUOIfzUn/hEc7ogfcBOtm6nHdo7
-/GIzkw+tpEWfDVB42CO3bJALMUn/EbZuG7oF+8gFCjXF/NIjvtY=
-=9NaB
+iQIcBAEBAgAGBQJVSx81AAoJEMby9TMDAbQRBLAP/jhwqHR9VBZ0skgmYDEULwl5
+aov5Y8ZZo+cDpWlC9cbn9lSav+cJFRfnCppX92W57d7hR/A7JhqFHvm69SFq3gBt
+HWlBZ2olY9BFvYBDaPt+cde1P2CCiNr7ehNwa6/Pj0LIsfb8cBjLZKRw2pcxDx6Q
+cAHbltVEMCbn0zCbSI9LJCpnCOVIiURLGW7o2PSyBELSi6uij08kmpiqpB+W99nw
+SpRNAbLcWCmq4O+53b2SLocxx/2K6N2EmZA8F7SfxNWZmx0q5uhcXdQr/Q70KZwg
+JVPbx5YjcqvvEJME0N3rrFUMnb4c7nUzeA1Ak5Esyf0h+WnXdAFArcgs9Fckn+qF
+FQ0NafhiEsUQuUo4CvYaJt28PtQJkhBv3dUxM/6HodrVx7bRCGnkOVpyEBoHSQsU
+jzVS1jRnTCuQiPAZmAnJZ2y1de3Oa59NVcCYEjcf0cfrQsvn719lPR1Hs+uxwpi9
+2siXIq4KLZEVMM1UNtNFoZ/ncb4K/k7QdiQwvdJOrjRgWOv6/KmPuBfg0H8aekj9
+ThwdxNScLUDGhp0cepZ/BVm9WOkIrDwx6FJf7FQy0DcukplqverOG1+o/J89Soou
+I17KsSADZ1l/YpVKMYOHsUjpS3PUey4hEfrGwEpDv9qZ+agSPn10EPL4boVKnycE
+aejxFxnblpr6gI6jKSr1
+=bi65
 -----END PGP SIGNATURE-----
-
---5DEcSs1hcLcinORQ--
