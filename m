@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2020" "Thursday" "10" "June" "2021" "19:18:55" "+0200" "Christophe JAILLET" "christophe.jaillet@wanadoo.fr" nil "52" "Re: [oss-security] CVE-2021-31618: Apache httpd: NULL pointer dereference on specially crafted HTTP/2 request" nil nil nil "6" nil nil (number mark "U       christophe.j Jun 10   52/2020  " thread-indent "\"Re: [oss-security] CVE-2021-31618: Apache httpd: NULL pointer dereference on specially crafted HTTP/2 request\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] CVE-2021-31618: Apache httpd: NULL pointer dereference on specially crafted HTTP/2 request" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2246" "Saturday" "9" "May" "2015" "21:20:36" "+0300" "Jouni Malinen" "j@w1.fi" "<20150509182036.GB9017@w1.fi>" "64" "[oss-security] CVE request: hostapd/wpa_supplicant - Integer underflow in AP mode WMM Action frame processing" nil nil nil "5" "2015050918:20:36" "[oss-security] CVE request: hostapd/wpa_supplicant - Integer underflow in AP mode WMM Action frame processing" (number mark "        j@w1.fi      May  9   64/2246  " thread-indent "\"[oss-security] CVE request: hostapd/wpa_supplicant - Integer underflow in AP mode WMM Action frame processing\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 1453 invoked by uid 550); 10 Jun 2021 18:45:04 -0000
+Received: (qmail 24482 invoked by uid 550); 9 May 2015 18:20:49 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,77 +11,80 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7486 invoked from network); 10 Jun 2021 17:19:07 -0000
-X-ME-Helo: [192.168.1.18]
-X-ME-Auth: Y2hyaXN0b3BoZS5qYWlsbGV0QHdhbmFkb28uZnI=
-X-ME-Date: Thu, 10 Jun 2021 19:18:56 +0200
-X-ME-IP: 86.243.172.93
-To: oss-security@lists.openwall.com, John Helmert III <jchelmert3@posteo.net>
-References: <1622544226.KAPKHQKN@httpd.apache.org>
- <YMIj1mZsQrmj6PBA@sol.nexus.lan>
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Message-ID: <8feb8989-3b53-a97a-4421-ef8e47cce53d@wanadoo.fr>
-Date: Thu, 10 Jun 2021 19:18:55 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+Received: (qmail 24453 invoked from network); 9 May 2015 18:20:48 -0000
+Message-ID: <20150509182036.GB9017@w1.fi>
 MIME-Version: 1.0
-In-Reply-To: <YMIj1mZsQrmj6PBA@sol.nexus.lan>
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-Subject: Re: [oss-security] CVE-2021-31618: Apache httpd: NULL pointer
- dereference on specially crafted HTTP/2 request
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
+Date: Sat, 9 May 2015 21:20:36 +0300
+From: Jouni Malinen <j@w1.fi>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE request: hostapd/wpa_supplicant - Integer underflow in AP mode
+ WMM Action frame processing
+To: oss-security@lists.openwall.com
+
+Could a CVE please be assigned for following?
 
 
-Le 10/06/2021 à 16:38, John Helmert III a écrit :
-> On Wed, Jun 09, 2021 at 11:11:00PM +0200, Christophe JAILLET wrote:
->> CVE-2021-31618: NULL pointer dereference on specially crafted HTTP/2 request
->>
->> Severity: important
->>
->> Vendor: The Apache Software Foundation
->>
->> Versions Affected:
->> 2.4.47
->> httpd
->> Description:
->> Apache HTTP Server 2.4.47
->> Apache HTTP Server protocol handler for the HTTP/2 protocol checks received request headers against the size limitations as configured for the server and used for the HTTP/1 protocol as well. On violation of these restrictions and HTTP response is sent to the client with a status code indicating why the request was rejected.
->>
->> This rejection response was not fully initialised in the HTTP/2 protocol handler if the offending header was the very first one received or appeared in a a footer. This led to a NULL pointer dereference on initialised memory, crashing reliably the child process. Since such a triggering HTTP/2 request is easy to craft and submit, this can be exploited to DoS the server.
->>
->> This affected versions prior to 2.4.47
-> The announcement on the website indicates the affected versions for
-> CVE-2021-31618 are <2.4.48 and in the below table it indicates <=2.4.48
-> are affected. Both of these are different from the mail advisory, can
-> you clarify the affected versions, please?
+Integer underflow in AP mode WMM Action frame processing
 
-Hi,
-
-in fact it was fixed in 2.4.47, BUT this version was never announced and 
-has never been visible from the httpd.apache.org website.
-
-So from an end-user point of view if was really fixed in 2.4.48 (and 
-2.4.47 does not exist).
-
-We'll clarify internally how we should proceed in such cases to avoid 
-such questions.
-The information should be consistent wherever you look for it.
-
-Hope this clarify the situation.
-
-Best regards,
-
-CJ
+Published: May 4, 2015
+Latest version available from: http://w1.fi/security/2015-3/
 
 
->> Mitigation:
->> none
->>
->> Credit:
->> Apache HTTP server would like to thank  LI ZHI XIN from NSFocus for reporting this.
->>
->> References:
->> https://httpd.apache.org/security/vulnerabilities_24.html
->>
+Vulnerability
+
+A vulnerability was found in WMM Action frame processing in a case where
+hostapd or wpa_supplicant is used to implement AP mode MLME/SME
+functionality (i.e., Host AP driver of a mac80211-based driver on
+Linux).
+
+The AP mode WMM Action frame parser in hostapd/wpa_supplicant goes
+through the variable length information element part with the length of
+this area calculated by removing the header length from the total length
+of the frame. The frame length is previously verified to be large enough
+to include the IEEE 802.11 header, but the couple of additional bytes
+after this header are not explicitly verified and as a result of this,
+there may be an integer underflow that results in the signed integer
+variable storing the length becoming negative. This negative value is
+then interpreted as a very large unsigned integer length when parsing
+the information elements. This results in a buffer read overflow and
+process termination.
+
+This vulnerability can be used to perform denial of service attacks by
+an attacker that is within radio range of the AP that uses hostapd of
+wpa_supplicant for MLME/SME operations.
+
+
+Vulnerable versions/configurations
+
+hostapd v0.5.5-v2.4 with CONFIG_DRIVER_HOSTAP=y or
+CONFIG_DRIVER_NL80211=y in the build configuration (hostapd/.config).
+
+wpa_supplicant v0.7.0-v2.4 with CONFIG_AP=y or CONFIG_P2P=y and
+CONFIG_DRIVER_HOSTAP=y or CONFIG_DRIVER_NL80211=y in the build
+configuration (wpa_supplicant/.config) and AP (including P2P GO) mode
+used at runtime.
+
+
+Acknowledgments
+
+Thanks to Kostya Kortchinsky of Google Security Team for discovering and
+reporting this issue.
+
+
+Possible mitigation steps
+
+- Merge the following commit and rebuild hostapd/wpa_supplicant:
+
+  AP WMM: Fix integer underflow in WMM Action frame parser
+
+  This patch is available from http://w1.fi/security/2015-3/
+
+- Update to hostapd/wpa_supplicant v2.5 or newer, once available
+
+- wpa_supplicant: Do not enable AP mode or P2P GO operation at runtime
+
+-- 
+Jouni Malinen                                            PGP id EFC895FA
