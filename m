@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["741" "Friday" "23" "October" "2015" "23:53:04" "+0200" "Florian Weimer" "fweimer@redhat.com" "<562AAC40.4000002@redhat.com>" "18" "Re: [oss-security] Re: Duplicate CVE: CVE-2015-7703 in NTP" nil nil nil "10" "2015102321:53:04" "[oss-security] Re: Duplicate CVE: CVE-2015-7703 in NTP" (number mark "        fweimer@redh Oct 23   18/741   " thread-indent "\"Re: [oss-security] Re: Duplicate CVE: CVE-2015-7703 in NTP\"\n") "<CANO=Ty1DejyNjY5SHGSpbADx+Ece9B6+N837HqTkzecJaABKvQ@mail.gmail.com>" ("<874mhidqhp.fsf@redhat.com>" "<20151023160608.06B6D52E093@smtpvbsrv1.mitre.org>" "<CANO=Ty1DejyNjY5SHGSpbADx+Ece9B6+N837HqTkzecJaABKvQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4298" "Sunday" "10" "May" "2015" "12:09:32" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150510160932.68C193321CE@smtpvbsrv1.mitre.org>" "89" "[oss-security] Re: CVE for Jentu" nil nil nil "5" "2015051016:09:32" "[oss-security] Re: CVE for Jentu" (number mark "        cve-assign@m May 10   89/4298  " thread-indent "\"[oss-security] Re: CVE for Jentu\"\n") "<554EA1F5.4060805@tripleback.net>" ("<554EA1F5.4060805@tripleback.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 1932 invoked by uid 550); 23 Oct 2015 21:53:19 -0000
+Received: (qmail 9759 invoked by uid 550); 10 May 2015 16:10:02 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,39 +11,102 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 1912 invoked from network); 23 Oct 2015 21:53:19 -0000
-References: <874mhidqhp.fsf@redhat.com>
- <20151023160608.06B6D52E093@smtpvbsrv1.mitre.org>
- <CANO=Ty1DejyNjY5SHGSpbADx+Ece9B6+N837HqTkzecJaABKvQ@mail.gmail.com>
-Message-ID: <562AAC40.4000002@redhat.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.2.0
-MIME-Version: 1.0
-In-Reply-To: <CANO=Ty1DejyNjY5SHGSpbADx+Ece9B6+N837HqTkzecJaABKvQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
-Date: Fri, 23 Oct 2015 23:53:04 +0200
-From: Florian Weimer <fweimer@redhat.com>
+Received: (qmail 9673 invoked from network); 10 May 2015 16:09:44 -0000
+In-Reply-To: <554EA1F5.4060805@tripleback.net>
+Message-Id: <20150510160932.68C193321CE@smtpvbsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Sun, 10 May 2015 12:09:32 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: Duplicate CVE: CVE-2015-7703 in NTP
-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: CVE for Jentu
+To: kash@tripleback.net
 
-On 10/23/2015 06:39 PM, Kurt Seifried wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> I'm going to also ensure we communicate our CVE's to upstreams, I could
-> swear we did in this case but I can't find a specific artifact (e.g. sent
-> email) of doing so from myself (but quite often I just assign the CVE and
-> other people are handling the issue so that wouldn't be to abnormal) so I'm
-> going to go on the assumption we failed to do so properly and update our
-> process as well to ensure we do.
+> There are multiple vulnerabilities:
 
-This is not the case.  <security@ntp.org> was notified on 2015-08-20.
-As the flaws were of low impact and there was no reaction, we disclosed
-the issues here:
+> * Client servers do not do certificate validation against the Jentu server
 
-  <http://openwall.com/lists/oss-security/2015/08/25/3>
+Often this is a vulnerability that can have a CVE, but not always. Can
+you explain more about this, e.g., does one server confirm the
+integrity of another server's data in a different way, making
+certificate validation unnecessary? Is it plausible that "client
+servers" and "the Jentu server" communicate over an untrusted network?
+Are the terms "client servers" and "the Jentu server" related to
+anything on the jentu.net web site, e.g., "master server" and "slave
+servers"?
 
-I don't know what else we can do to avoid duplicates.
 
-Florian
+> * The web UI connection to the client server is restricted to only allow
+> "localhost" to connect, however, forged packets will allow an attacker
+> to execute arbitrary code as the www-data user on Linux (or www user on
+> FreeBSD). Because lighttpd is operating with sudo access to your entire
+> ZFS pool, the amount of damage that can be caused is huge.
+
+Why is this a vulnerability in the Jentu product? Would this issue
+normally be addressed by a host-based firewall that drops packets with
+(for example) 127.0.0.0/8 source IP addresses if they arrive from a
+non-localhost interface? Is the threat only from local users on a
+"client server" machine, e.g., are you suggesting that use of IP is
+inherently wrong and a different choice (such as a UNIX domain socket)
+should have been adopted instead?
+
+
+> * Jentu uses ZFS on Linux that currently lacks a working "zfs allow"
+> security interface, requiring lighttpd to have root access to certain
+> ZFS binaries with little (if any) command sanitization.
+
+Do you mean that the system architecture was designed on the basis
+that privilege escalation to root (from the account under which
+lighttpd is running) is not a threat that is intended to be addressed?
+Or do you mean that command sanitization is either partially
+implemented, or at least implied by documentation, but that the
+command sanitization was done incompletely?
+
+
+> * DNS rebinding attacks are possible against the client server, causing
+> DoS or even privilege escalation when combined with local iSCSI station
+> exploits: As the user browses to http://hackedsite.com which requests an
+> AJAX call to http://defaultgateway/clone.php?mac=00-11-22-33-44-55 where
+> 00-11-22-33-44-55 is the MAC of the victim machine.
+
+It is often difficult to assign CVE IDs based on an "attacks are
+possible" report. Is there a specific vulnerability in the Jentu code
+that is being reported here? For example, do you mean that it is
+impossible to use Jentu safely because validating the Host HTTP header
+was a design requirement, and this requirement was never implemented?
+Or do you mean that Jentu should have shipped with a deployment note
+about the DNS rebinding risk, perhaps stating that Jentu be deployed
+with internal IP addresses, and a DNS architecture that prevents a
+user from encountering a mapping from an arbitrary DNS name (such as
+hackedsite.com) to one of these internal IP addresses?
+
+
+> * The local iSCSI server, iscsitarget (iet) runs in "permissive" mode
+> that allows any one of the iSCSI systems on the network to connect to
+> and manipulate any other iSCSI target for unrelated systems.
+
+Is this an implementation flaw, e.g., use of "permissive" mode was
+completely unnecessary and the Jentu product should have been shipped
+with a different mode? Or are you suggesting that this, although often
+unsafe, is an inherent part of the design -- in other words, the
+documentation failed to mention an expectation of mutual trust among
+the iSCSI systems on the network?
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJVT4ISAAoJEKllVAevmvmsUZcH/Au0szO94oYvUy0yIzsU+8mf
+Fzdi44gxq2+AhjNYAQKau1XO+sHSvWUSHs6EULKnk4KsCz3v+9ZEWPD7T04Vys05
+Y362oTQbphLNl2oKx06nmO7eZGAPmygr258OLF1wzV9zcmsfNM8lLSO3fBCrhDsq
+I645I+TdnipAK/iTbFwChS9gYw26PfFz+SzG31ViVAxzzzTCzl+/7p1olOfrVpEM
++AeRCcGeUP/DB0oZognWXMNZA5cTuMWPEVjZ7A85OyYTpF+LRDBWhKu1/N3qsv7s
+d3ZsaitZkeudA8gS1wwNdzJPjs2aBy/opAyky+l3VS4qHuaNK1NIhU40DE2jqL8=
+=BCyv
+-----END PGP SIGNATURE-----
