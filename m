@@ -1,4 +1,9 @@
-Received: (qmail 1432 invoked by uid 550); 23 Dec 2024 21:43:57 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1919" "Saturday" "9" "May" "2015" "20:10:29" "-0400" "Kash Pande" "kash@tripleback.net" "<554EA1F5.4060805@tripleback.net>" "49" "[oss-security] CVE for Jentu" nil nil nil "5" "2015051000:10:29" "[oss-security] CVE for Jentu" (number mark "        kash@tripleb May  9   49/1919  " thread-indent "\"[oss-security] CVE for Jentu\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 19508 invoked by uid 550); 10 May 2015 00:10:32 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,62 +11,64 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 9939 invoked from network); 23 Dec 2024 19:33:50 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1734982422; x=1735587222; darn=lists.openwall.com;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=9rnJrcspC2TKwjsgOgBvRNOlnhFYJzckRXx+vq1jgqI=;
-        b=e4fKpa+cLm9dvkTez4bVABambZ9DtVbWV1CRdUL2y3LHgsJLDFPQsXkesdmfCcUF4c
-         84RUqisr96qC4Rp71eiIzMi/RK1hyjZ9ZC2S4aiyHJTJDFGFXFIwQKiwrlb/qPe95rdP
-         Iwax/PwTOLlJT6K/hu7SF33+Wh4CVkwTfAbDrazdicMwmNwx2HsFnGXujkFhKgufA9oH
-         a5Kfwcp4cIdi+GVdUPzhHrXR+uXEwCgA3xMbMMch063n61CO487yiWYt+e/RiKHkWwvL
-         aFBuCw55RlfgtVOMtokp0tBaYM4J+DYKkc2icsW1/a7YyPInnRfdgoUu/dqBSr0yw4PY
-         EjRA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734982422; x=1735587222;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=9rnJrcspC2TKwjsgOgBvRNOlnhFYJzckRXx+vq1jgqI=;
-        b=siwQVxL9Wsqo5vw6weaAjWGjI74mdp4Fs0KbdgxOEotOGHbouEFSHINa86KCdjzMvT
-         sH0NCls3GV6aborfgdbohz5jds+NyCN7BD1iXpUJU7BDP3ozk6ulf2vHoaxOVQz6vFnp
-         GyyVyF3zu54UQ9mQEI1zajKKLihZHPWIOkL3CMEy1Q/8+GPxLtUPE989bGoisZ0DBsdF
-         Np7xDl4fVX2m3i1i7WbTiKCa7I7XUaJpSDdgDXUoUGQWLXHNo3+SfWEoveYRR+XjO7Gy
-         JdQBBPU3SjufzWU5sdNRrEMgjUnRUDUDg2sr6LdWxZpy6m0a1nkWG207DaeEzQbVloJ3
-         MkOw==
-X-Gm-Message-State: AOJu0YzgIqInSuz0VoyMRgctoPipJu8KYVkuvya96KkXdwawMRk2QKYm
-	2knohfW5vGwUekc5R+ZsXFm2T+GqHqxPoV3VCpnkQRvXPtuDkMlsCEYIvaPUpPslvwCGAY6Gu/F
-	rfy8PVBbpra8qzNtgfVq437a9Xnx0tg==
-X-Gm-Gg: ASbGnctqG/ITRLeIqpL8Cyjs6ByZknaPa77f6wtwI/3yhKkeettr/NEw0ZrK44tNMYh
-	mYcgxf0+fA6046rYIxfk5eahPTF9oHuhJVsR3IVk=
-X-Google-Smtp-Source: AGHT+IHF9LNuE+V1y8a/VQOL065UeihOqj/fEmtZfVd3fzq/qS3GUpk3mIOMWEFaM4TPlsYDCqGfokfeSJ2RaYoPY0I=
-X-Received: by 2002:a05:6402:430e:b0:5d0:8664:9f56 with SMTP id
- 4fb4d7f45d1cf-5d81dd8fab5mr12131535a12.11.1734982422214; Mon, 23 Dec 2024
- 11:33:42 -0800 (PST)
+Received: (qmail 19467 invoked from network); 10 May 2015 00:10:24 -0000
+Message-ID: <554EA1F5.4060805@tripleback.net>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
 MIME-Version: 1.0
-References: <CAJOtW+5UMd0=ADz6cZdCo_zFaJrkQjzbNQ7N7CZr_UmL1f+sqw@mail.gmail.com>
- <87zfkmmgvc.fsf@oldenburg.str.redhat.com>
-In-Reply-To: <87zfkmmgvc.fsf@oldenburg.str.redhat.com>
-From: Yuri Gribov <tetra2005@gmail.com>
-Date: Mon, 23 Dec 2024 22:33:31 +0300
-Message-ID: <CAJOtW+6vveBkwzYhzLonwUppsZvSy6c5K35ys8dxCA6U0i0sAA@mail.gmail.com>
-To: Florian Weimer <fweimer@redhat.com>
-Cc: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [oss-security] Re: Out-of-bounds read & write in the glibc's qsort()
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Date: Sat, 09 May 2015 20:10:29 -0400
+From: Kash Pande <kash@tripleback.net>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE for Jentu
+To: oss-security@lists.openwall.com
 
-On Mon, Dec 23, 2024 at 8:47=E2=80=AFPM Florian Weimer <fweimer@redhat.com>=
- wrote:
-> It's a bit odd that you disable reflexivity checks by default, but quite
-> a few of the issues reported are in this category.
+Hello,
 
-I think back then I wanted to make default settings free of false
-positives. Often sorted arrays may only contain unique elements and in
-such cases reflexivity checks are useless.
 
--Y
+Jentu is an iSCSI diskless management suite that uses a web-hosted
+interface for managing ZFS servers - I am the one developer who wrote
+all of its code.. *hangs head*
+
+Though the web panel is proprietary/closed-source, the client source is
+open and widely distributed.
+
+There are multiple vulnerabilities:
+
+* Client servers do not do certificate validation against the Jentu server
+
+* The web UI connection to the client server is restricted to only allow
+"localhost" to connect, however, forged packets will allow an attacker
+to execute arbitrary code as the www-data user on Linux (or www user on
+FreeBSD). Because lighttpd is operating with sudo access to your entire
+ZFS pool, the amount of damage that can be caused is huge.
+
+* Jentu uses ZFS on Linux that currently lacks a working "zfs allow"
+security interface, requiring lighttpd to have root access to certain
+ZFS binaries with little (if any) command sanitization.
+
+* DNS rebinding attacks are possible against the client server, causing
+DoS or even privilege escalation when combined with local iSCSI station
+exploits: As the user browses to http://hackedsite.com which requests an
+AJAX call to http://defaultgateway/clone.php?mac=00-11-22-33-44-55 where
+00-11-22-33-44-55 is the MAC of the victim machine.
+
+* The local iSCSI server, iscsitarget (iet) runs in "permissive" mode
+that allows any one of the iSCSI systems on the network to connect to
+and manipulate any other iSCSI target for unrelated systems. This is the
+biggest one of the bunch, as Jentu is being sold to users as THE secure
+platform (aside from just unplugging your systems).
+
+
+
+There were potential fixes for all of these issues but they were not
+implemented because of development time and backwards compatibility
+problems with pre-existing client networks. So this platform remains
+vulnerable. I feel there should be CVE to use for tracking these issues.
+
+
+
+-- 
+
+Kash Pande
+
