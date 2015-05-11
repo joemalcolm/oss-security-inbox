@@ -1,4 +1,9 @@
-Received: (qmail 25942 invoked by uid 550); 19 May 2025 16:13:45 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1776" "Monday" "11" "May" "2015" "15:59:55" "+0200" "Andrea Barisani" "lcars@ocert.org" "<20150511135955.GJ6507@core.inversepath.com>" "65" "[oss-security] [oCERT-2015-006] dcraw input sanitization errors" nil nil nil "5" "2015051113:59:55" "[oss-security] [oCERT-2015-006] dcraw input sanitization errors" (number mark "        lcars@ocert. May 11   65/1776  " thread-indent "\"[oss-security] [oCERT-2015-006] dcraw input sanitization errors\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 11356 invoked by uid 550); 11 May 2015 14:00:11 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,251 +11,83 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 21659 invoked from network); 19 May 2025 14:30:54 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=digikod.net;
-	s=20191114; t=1747665045;
-	bh=VmW3Uae9gL3Ir1OJ5Nyr/nXEhqgrdEVkTD0Yg6sxjhQ=;
-	h=Date:From:To:Cc:Subject:From;
-	b=f9PSzPuJaMC3UVLFsmXbPS7WXUYyCsASrEBBNClrzjtYQTZHfhxzb9NTz/FcaGkdm
-	 2Gi0AE9ACH5Nn2y4Uta+fPwtwYzJ8fyibdfo7VU47ABKXBpFmhv3ePADAdZ2+aD/Cx
-	 n2ZPt/mRKNcTAA/Ieow9cind2Nc3IKOmgpAaGJjg=
-Date: Mon, 19 May 2025 16:30:40 +0200
-From: =?utf-8?Q?Micka=C3=ABl_Sala=C3=BCn?= <mic@digikod.net>
-To: landlock@lists.linux.dev
-Cc: =?utf-8?Q?G=C3=BCnther?= Noack <gnoack@google.com>, 
-	Tahera Fahimi <fahimitahera@gmail.com>, Mikhail Ivanov <ivanov.mikhail1@huawei-partners.com>, 
-	Ryan Sullivan <rysulliv@redhat.com>, lwn@lwn.net, linux-security-module@vger.kernel.org, 
-	oss-security@lists.openwall.com
-Message-ID: <20250519.ceihohf6a3uT@digikod.net>
+Received: (qmail 11303 invoked from network); 11 May 2015 14:00:06 -0000
+Message-ID: <20150511135955.GJ6507@core.inversepath.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-X-Infomaniak-Routing: alpha
-Subject: [oss-security] Landlock news #5
-
-Here is the fifth Landlock newsletter!
-
-Official website: https://landlock.io
-Previews newsletter:
-https://lore.kernel.org/landlock/20240716.yui4Iezai8ae@digikod.net/
-
-TL;DR: Check your sandboxed programs with Linux 6.15, review the audit
-logs, and update the sandbox policy if you see any Landlock events.
-
-Kernel features
-===============
-
-Restricting signals and abstract UNIX sockets
----------------------------------------------
-
-Linux 6.12 (Landlock ABI 6) introduces IPC scoping with a new ruleset
-"scoped" field, thanks to Tahera Fahimi.  This field accepts a set of
-flags: the LANDLOCK_SCOPE_ABSTRACT_UNIX_SOCKET flag denies connections
-to abstract UNIX sockets created outside the current scoped domain, and
-the LANDLOCK_SCOPE_SIGNAL flag denies sending signals to processes
-outside the current scoped domain.
-
-These restrictions also apply to nested domains according to their
-scope.  Both features have been requested to help isolate untrusted
-processes, making it easier to protect against related threats.  These
-changes will also be useful for supporting other kinds of IPC isolation.
-
-See user space documentation:
-https://docs.kernel.org/userspace-api/landlock.html#scope-flags
-
-Audit logging for denied access requests
-----------------------------------------
-
-Linux 6.15 (Landlock ABI 7) adds the ability to log denied requests with
-audit.  This provides visibility into why access requests are denied,
-including the origin of the security policy, missing access rights, and
-object descriptions.
-
-The logging system is designed to minimize log spam while still alerting
-about unexpected blocked access.  Being able to see what is denied, and
-more importantly why, is a crucial feature for any security mechanism.
-The default behavior alerts about unexpected access requests (i.e.,
-attacks) while ignoring noise from programs unaware they are sandboxed.
-Tailored sandboxing can adjust this behavior with the three new
-LANDLOCK_RESTRICT_SELF_LOG_* flags, though this should not be necessary
-in most cases.
-
-This new Landlock capability is the most significant change since
-Landlock was merged into mainline: +46% SLOC for the kernel and +23%
-SLOC for kselftests.  See sysadmin and user space documentation:
-https://docs.kernel.org/admin-guide/LSM/landlock.html#audit
-https://docs.kernel.org/userspace-api/landlock.html#c.sys_landlock_restrict_self
-
-Kernel fixes
-============
-
-All stable kernels supporting Landlock now also provide a new interface
-to probe for user-visible fixes.  This may be required by some Landlock
-libraries to safely expose more Landlock features on up-to-date kernels.
-This improvement in the quality of the Landlock specification should not
-be noticed by most users.
-
-The first issue fixed by an erratum is related to TCP socket
-identification.  Mikhail Ivanov fixed an issue where IPv4 and IPv6
-stream sockets (e.g., SMC, MPTCP, or SCTP) were incorrectly restricted
-by TCP access rights during bind(2) and connect(2) operations.  This
-change ensures that only TCP sockets are subject to TCP access rights,
-allowing other protocols to operate without unnecessary restrictions.
-
-The second erratum is related to scoped signal handling.  This fix
-addresses an issue where signal scoping was overly restrictive,
-preventing sandboxed threads from signaling other threads within the
-same process if they belonged to different domains.  Because threads are
-not security boundaries, user space might assume that all thread within
-the same process can send signals between themselves (see nptl(7) and
-libpsx(3)).  Consistent with ptrace(2) behavior, direct interaction
-between threads of the same process should always be allowed.  This
-change ensures that any thread is allowed to send signals to any other
-thread within the same process, regardless of their domain.
-
-Landlock libraries
-==================
-
-The Landlock crate and Go library have been updated, bringing support
-for the latest Landlock features, improved documentation, and better
-tests:
-https://github.com/landlock-lsm/rust-landlock/blob/main/CHANGELOG.md#v042
-
-Go-Landlock is now packaged in Debian:
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1096137
-
-Please update your dependencies and use the latest Landlock ABI version
-for improved sandboxing.
-
-Landlock logo
-=============
-
-Landlock now has a logo!  Guess what it means.  ;)
-Feel free to use it to illustrate Landlock.
-https://github.com/landlock-lsm/landlock-logo
-
-Talks and articles
-==================
-
-Günther Noack gave a talk at the Linux Security Summit Europe titled
-"Update On Landlock IOCTL Support":
-https://lsseu2024.sched.com/event/1ebVW
-He explains how Landlock works and why it was designed this way.  He
-then discusses the challenges of implementing a useful and practical
-IOCTL control, and finally introduces ongoing work to improve Landlock.
-
-I gave a talk at the Open Source Summit Europe on "Linux Sandboxing with
-Landlock": https://osseu2024.sched.com/event/1ej3a
-This was an introduction to Landlock, including why and how it should be
-used to secure user environments.
-
-Tahera Fahimi participated in a panel discussion at the Open Source
-Summit Europe, where she talked about her Outreachy internship working
-on Landlock:
-https://osseu2024.sched.com/event/1ej1w
-
-I also gave a talk at FOSDEM about Sandbox IDs with Landlock:
-https://fosdem.org/2025/schedule/event/fosdem-2025-6071-sandbox-ids-with-landlock/
-This talk explains the properties of Landlock IDs, how they are used in
-audit, and how they could be used to identify a set of processes, such
-as a container.
-
-I updated the Landlock workshop to demonstrate sandboxing with
-ImageMagick:
-https://github.com/landlock-lsm/workshop-imagemagick
-https://landlock.io/talks/2025-01-29_landlock-workshop.pdf
-
-I was invited to present Landlock at the Compartmentalization Community
-meeting:
-https://drive.google.com/drive/folders/129kNPaTriApmdRU4OFwl3KwDYJlIXLEH
-(see Eval & Benchmarking meeting of 2025-04-24)
-
-An interesting article about sandboxing was published on the Emilua (Lua
-runtime) blog:
-https://blog.emilua.org/2025/01/12/software-sandboxing-basics/
-
-Rémi Gacogne will give a talk at Pass the Salt about sandboxing Pacman:
-https://cfp.pass-the-salt.org/pts2025/talk/FUL7LS/
-
-Documentation and examples
-==========================
-
-Günther Noack is writing documentation with use cases for Landlock.
-We'll move this documentation to the official website when ready but in
-the meantime it's worth a read!
-https://wiki.gnoack.org/UsingLandlock
-https://github.com/gnoack/landlock-examples
-
-New Linux distributions support
-===============================
-
-GNOME OS's kernel has Landlock enabled by default (it's been a while,
-but we missed it):
-https://gitlab.gnome.org/GNOME/gnome-build-meta/-/merge_requests/2559
-
-Flatcar's kernel has had Landlock enabled by default since last year:
-https://github.com/flatcar/scripts/pull/2158
-
-Red Hat Enterprise Linux 9.6.0 (RHEL) has enabled Landlock by default
-and also backported features up to Landlock ABI 5, thanks to Ryan
-Sullivan and Red Hat reviewers:
-https://gitlab.com/redhat/centos-stream/src/kernel/centos-stream-9/-/commit/9039cec1ed523025381bdbc62cb924601be5059b
-It is available since kernel-5.14.0-568.el9:
-https://gitlab.com/redhat/centos-stream/src/kernel/centos-stream-9/-/commit/5ba435c29b4704e87af1a0fd291ea6610ff5af92
-CentOS Stream, Rocky Linux, and other RHEL alternatives should also gain
-the same support: https://bugs.rockylinux.org/view.php?id=7987
-
-New Landlock user space support
-===============================
-
-GNOME's tracker-extract is now sandboxed with Landlock (it's been a
-while, but it wasn't mentioned in a previous newsletter):
-https://gitlab.gnome.org/GNOME/localsearch/-/merge_requests/499
-Support was merged in GNOME 46:
-https://gitlab.gnome.org/Teams/Websites/release.gnome.org/-/issues/37
-There were some interesting compatibility issues that have since been
-fixed:
-https://gitlab.gnome.org/GNOME/localsearch/-/issues/319#note_2046228
-All these issues can be avoided by using a Landlock library with
-best-effort support (Rust or Go for now).
-
-HashiCorp's Nomad can now run sandboxed processes with Landlock:
-https://developer.hashicorp.com/nomad/plugins/drivers/exec2
-
-Unblob 24.12.4 has gained support for Landlock:
-https://github.com/onekey-sec/unblob/pull/1022
-
-dosemu2 has gained support for Landlock:
-https://github.com/dosemu2/dosemu2/pull/2344
-
-wireproxy 1.0.8 has gained support for Landlock:
-https://github.com/pufferffish/wireproxy/pull/108
-
-Landrun is a new sandboxing tool leveraging Landlock:
-https://github.com/Zouuup/landrun
-https://news.ycombinator.com/item?id=43445662
-
-Ongoing work
-============
-
-Ongoing kernel work can be tracked here:
-https://github.com/orgs/landlock-lsm/projects/1
-
-It would be good to have guidelines to help developers sandbox their
-applications.  OpenSSF Working Groups could be a good place for that:
-https://github.com/ossf/wg-best-practices-os-developers/issues/631
-Any help would be appreciated.
-
-We are working on a Landlock configuration format to empower all Linux
-users to sandbox their applications with Landlock:
-https://github.com/landlock-lsm/landlockconfig
-A new tool will make this library easy to use.
+X-GPG-Key: 0x864C9B9E
+X-GPG-Fingerprint: 0A76 074A 02CD E989 CE7F  AC3F DA47 578E 864C 9B9E
+User-Agent: Mutt/1.5.20 (2009-06-14)
+Date: Mon, 11 May 2015 15:59:55 +0200
+From: Andrea Barisani <lcars@ocert.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] [oCERT-2015-006] dcraw input sanitization errors
+To: oss-security@lists.openwall.com, ocert-announce@lists.ocert.org,
+        bugtraq@securityfocus.com
 
 
-Thanks to all contributors!
+#2015-006 dcraw input sanitization errors
 
-Regards,
- Mickaël
+Description:
+
+The dcraw photo decoder is an open source project for raw image parsing.
+
+The dcraw tool, as well as several other projects re-using its code, suffers
+from an integer overflow condition which lead to a buffer overflow. The
+vulnerability concerns the 'len' variable, parsed without validation from
+opened images, used in the ljpeg_start() function.
+
+A maliciously crafted raw image file can be used to trigger the vulnerability,
+causing a Denial of Service condition.
+
+Affected version:
+
+   dcraw >= 7.00
+   UFRaw >= 0.5
+   LibRaw <= 0.16.0, 0.17-Alpha2
+   RawTherapee >= 3.0
+   CxImage >= 6.00
+   Rawstudio >= 0.1
+   Kodi >= 10.0
+   ExactImage >= 0.1.0
+
+Fixed version:
+
+   dcraw, N/A
+   UFRaw, N/A
+   LibRaw >= 0.16.1, 0.17-Alpha3
+   RawTherapee, N/A
+   CxImage, N/A
+   Rawstudio, N/A
+   Kodi, N/A
+   ExactImage, N/A
+
+Credit: vulnerability report from Eduardo Castellanos <guayin [at] gmail [dot]
+com>.
+
+CVE: N/A
+
+Timeline:
+
+2015-04-24: vulnerability report received
+2015-04-27: contacted dcraw maintainer
+2015-04-30: patch provided by maintainer
+2015-05-04: reporter confirms patch
+2015-05-11: contacted additional affected vendors
+2015-05-11: advisory release
+
+References:
+https://github.com/LibRaw/LibRaw/commit/4606c28f494a750892c5c1ac7903e62dd1c6fdb5
+https://github.com/rawstudio/rawstudio/commit/983bda1f0fa5fa86884381208274198a620f006e
+
+Permalink:
+http://www.ocert.org/advisories/ocert-2015-006.html
+
+-- 
+Andrea Barisani |                Founder & Project Coordinator
+          oCERT | OSS Computer Security Incident Response Team
+
+<lcars@ocert.org>                         http://www.ocert.org
+ 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
+        "Pluralitas non est ponenda sine necessitate"
