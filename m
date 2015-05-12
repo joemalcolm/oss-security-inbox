@@ -1,4 +1,9 @@
-Received: (qmail 24362 invoked by uid 550); 22 May 2023 11:00:23 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1656" "Tuesday" "12" "May" "2015" "10:55:59" "+0200" "Alessandro Ghedini" "alessandro@ghedini.me" "<20150512085559.GA9611@kronk.local>" "50" "[oss-security] CVE Request: phpbb open redirect" nil nil nil "5" "2015051208:55:59" "[oss-security] CVE Request: phpbb open redirect" (number mark "        alessandro@g May 12   50/1656  " thread-indent "\"[oss-security] CVE Request: phpbb open redirect\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 7448 invoked by uid 550); 12 May 2015 08:56:12 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,59 +11,68 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 24241 invoked from network); 22 May 2023 10:10:54 -0000
-Authentication-Results: apache.org; auth=none
-Message-ID: <39593cc9-e019-a735-c17f-1b5cb25e280c@apache.org>
-Date: Mon, 22 May 2023 11:10:05 +0100
+Received: (qmail 7428 invoked from network); 12 May 2015 08:56:12 -0000
+Message-ID: <20150512085559.GA9611@kronk.local>
+Mail-Followup-To: oss-security@lists.openwall.com, cve-assign@mitre.org
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-From: Mark Thomas <markt@apache.org>
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="FL5UXtIhxfXey3p5"
+Content-Disposition: inline
+User-Agent: Mutt/1.5.23 (2014-03-12)
+Cc: cve-assign@mitre.org
+Date: Tue, 12 May 2015 10:55:59 +0200
+From: Alessandro Ghedini <alessandro@ghedini.me>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE Request: phpbb open redirect
 To: oss-security@lists.openwall.com
-Content-Language: en-US
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] CVE-2023-28709 Apache Tomcat - Fix for CVE-2023-24998 was
- incomplete
 
-CVE-2023-28709 Apache Tomcat - Fix for CVE-2023-24998 was incomplete
+--FL5UXtIhxfXey3p5
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Severity: Moderate
+Hello,
 
-Vendor: The Apache Software Foundation
+from the phpbb 3.0.14 release highlight:
 
-Versions Affected:
-Apache Tomcat 11.0.0-M2 to 11.0.0-M4
-Apache Tomcat 10.1.5 to 10.1.7
-Apache Tomcat 9.0.71 to 9.0.73
-Apache Tomcat 8.5.85 to 8.5.87
+> Security: An insufficient check allowed users of the Google Chrome browse=
+r to
+> be redirected to external domains (e.g. on login). Thanks to Mathias Karl=
+sson
+> (avlidienbrunn) for bringing this to our attention.
 
-Description:
-The fix for CVE-2023-24998 was incomplete. If non-default HTTP connector 
-settings were used such that the maxParameterCount could be reached 
-using query string parameters and a request was submitted that supplied 
-exactly maxParameterCount parameters in the query string, the limit for 
-uploaded request parts could be bypassed with the potential for a denial 
-of service to occur.
+https://wiki.phpbb.com/Release_Highlights/3.0.14
 
-Mitigation:
-Users of the affected versions should apply one of the following
-mitigations:
-- Upgrade to Apache Tomcat 11.0.0-M5 or later
-- Upgrade to Apache Tomcat 10.1.8 or later
-- Upgrade to Apache Tomcat 9.0.74 or later
-- Upgrade to Apache Tomcat 8.5.88 or later
+The patch seems to be this one:
+https://github.com/phpbb/phpbb/commit/1a3350619f428d9d69d196c52128727e27ef2=
+f04
 
-Credit:
-This issue was identified by Chenwei Jiang, Chenfeng Nie and Yue Yang 
-from the Huawei Nebula Security Lab
+Honestly, there doesn't seem to be much information publicly available, but=
+ can
+a CVE be assigned for this please?
 
-History:
-2023-05-22 Original advisory
+Thanks
 
-References:
-[1] https://tomcat.apache.org/security-11.html
-[2] https://tomcat.apache.org/security-10.html
-[3] https://tomcat.apache.org/security-9.html
-[4] https://tomcat.apache.org/security-8.html
+--FL5UXtIhxfXey3p5
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCgAGBQJVUcAcAAoJEK+lG9bN5XPL1XQP/3EBCbuLPoNkVgEufKNAotDy
+Qd+Bk4KOUJwkKGBhgvv/wp6FRua6o67LIiP6SIEQM2TG0T+2rj17XcpJszUoeCyi
+fJzSBDRGVCiJAj6t62bx+mWq4Bzx2MQFKyntn2Ra7P9fdJePcLPyx6rnnHM09Gw8
+oGWD8caVijSKczTPZtDy1IVad3yd3Q1n9MogbJ3RbVMkaecSapaFGb2YEmIFgBPZ
+BaU75/1fH0OH/glPPj4Yq5MLdj5XvK9yIbeS1DCGfa7F4uVnGoA+mDiVpinh1Bf7
+9Ec1vyLLQwrqJTttLN466m472AqDQpW6BYxGgwcyE7daM7KCmVKXL+SpYfJT7gbN
+VUpRTjZsTLm2mo7aOOIBJrnKUcoDHIOzufmEWXm11eK7PJuH9XINOP8JGsH1KCIM
+zX58v1FmvdVzRm2TtdlDSBZfBldZ96nb8zW5ny99JV0hG8b9+pcJOOI+vLlpxg9p
+wLg3tmtahW1f0Thmiiq18IxPWOqufOdhD3V1Gv+NgvmyKu/bQ2UApT/Et2jT0Kcm
+mlotsRJ8HZM0Vgqdhpu79BmWnlzXs2AXuoYmJ7CWSt2SoRYo9T4IHBYPHihy4QBE
+y9HD5TXsm83QGLSF0AMh6cml+xjzJb4vn8idjYZ3/ZOLtPhRunNC0sTP7NB9VtQu
+c2LzZya/OoLzLPpQ/fnZ
+=+c7E
+-----END PGP SIGNATURE-----
+
+--FL5UXtIhxfXey3p5--
