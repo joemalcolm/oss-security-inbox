@@ -1,4 +1,9 @@
-Received: (qmail 28049 invoked by uid 550); 6 Jul 2022 13:08:34 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1159" "Tuesday" "12" "May" "2015" "14:33:55" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150512183355.76334B2E0A0@smtpvbsrv1.mitre.org>" "29" "[oss-security] Re: [oCERT-2015-006] dcraw input sanitization errors" nil nil nil "5" "2015051218:33:55" "[oss-security] Re: [oCERT-2015-006] dcraw input sanitization errors" (number mark "        cve-assign@m May 12   29/1159  " thread-indent "\"[oss-security] Re: [oCERT-2015-006] dcraw input sanitization errors\"\n") "<20150511135955.GJ6507@core.inversepath.com>" ("<20150511135955.GJ6507@core.inversepath.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 13765 invoked by uid 550); 12 May 2015 18:34:12 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,42 +11,42 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 13721 invoked from network); 12 May 2015 18:34:07 -0000
+In-Reply-To: <20150511135955.GJ6507@core.inversepath.com>
+Message-Id: <20150512183355.76334B2E0A0@smtpvbsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Tue, 12 May 2015 14:33:55 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 22070 invoked from network); 6 Jul 2022 12:52:02 -0000
-Content-Type: text/plain; charset=utf-8
-From: Matt Juntunen <mattjuntunen@apache.org>
-To: oss-security@lists.openwall.com
-Message-ID: <9d586031-2bef-83a8-e50c-04eec1ea4755@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Wed, 06 Jul 2022 12:51:49 +0000
-MIME-Version: 1.0
-Subject: [oss-security] CVE-2022-33980: Apache Commons Configuration insecure
- interpolation defaults 
+Subject: [oss-security] Re: [oCERT-2015-006] dcraw input sanitization errors
+To: lcars@ocert.org
 
-Severity: Moderate
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Description:
+> an integer overflow condition which lead to a buffer overflow. The
+> vulnerability concerns the 'len' variable, parsed without validation from
+> opened images, used in the ljpeg_start() function.
 
-Apache Commons Configuration performs variable interpolation, allowing prop=
-erties to be dynamically evaluated and expanded. The standard format for in=
-terpolation is "${prefix:name}", where "prefix" is used to locate an instan=
-ce of org.apache.commons.configuration2.interpol.Lookup that performs the i=
-nterpolation. Starting with version 2.4 and continuing through 2.7, the set=
- of default Lookup instances included interpolators that could result in ar=
-bitrary code execution or contact with remote servers. These lookups are:
-- "script" - execute expressions using the JVM script execution engine (jav=
-ax.script)
-- "dns" - resolve dns records
-- "url" - load values from urls, including from remote servers
+> https://github.com/LibRaw/LibRaw/commit/4606c28f494a750892c5c1ac7903e62dd1c6fdb5
+> https://github.com/rawstudio/rawstudio/commit/983bda1f0fa5fa86884381208274198a620f006e
+> http://www.ocert.org/advisories/ocert-2015-006.html
 
-Applications using the interpolation defaults in the affected versions may =
-be vulnerable to remote code execution or unintentional contact with remote=
- servers if untrusted configuration values are used.
+Use CVE-2015-3885.
 
-Users are recommended to upgrade to Apache Commons Configuration 2.8.0, whi=
-ch disables the problematic interpolators by default.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-Mitigation:
-
-Upgrade to version Apache Commons Configuration 2.8.0
-
+iQEcBAEBAgAGBQJVUkc+AAoJEKllVAevmvmsyYwH/13dB8lcpUnYyyuswusPp7XA
+mrfbvB2SO7vuDDSrf3ppdtiFtlzsOtbhDoBE7b4AHz3w+cbp8fBOED543gVTBRni
+oGTwMb4enGL3a7l/nTytWqqerlyY5gK7EUq2nHEGE/RbZgeTOsGV0Qp90mIChwTz
+g19zhl3lKK6JCbxI5jhMqiU32KACInFvmJ0+ueN5Pbr7noTC71xIj6ZXpiIOWHEH
+5m/O4qti0iOwDvtqiapoUABwkPAwj81kWwdeIsE8gu0+Qjd29VZorpi/yP9sMqLQ
+BMFcRgDTzV+e3an/l0BOo+myuc9wRyw80ZzbfofF3GDxO4t2ZZLsZfYm+XoHZUI=
+=+nnf
+-----END PGP SIGNATURE-----
