@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1990" "Monday" "14" "September" "2015" "15:37:07" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150914193707.999F472E128@smtpvbsrv1.mitre.org>" "46" "[oss-security] Re: CVE Request: Linux x86_64 NT flag issue - Linux kernel" nil nil nil "9" "2015091419:37:07" "[oss-security] Re: CVE Request: Linux x86_64 NT flag issue - Linux kernel" (number mark "        cve-assign@m Sep 14   46/1990  " thread-indent "\"[oss-security] Re: CVE Request: Linux x86_64 NT flag issue - Linux kernel\"\n") "<CALCETrUvVMBAK-uWR28u4CzJZYo=mKsqoqd+y84L=GdgwAQJVA@mail.gmail.com>" ("<CALCETrUvVMBAK-uWR28u4CzJZYo=mKsqoqd+y84L=GdgwAQJVA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1406" "Tuesday" "12" "May" "2015" "08:44:06" "+0200" "Philipp Kern" "pkern@debian.org" "<20150512064406.GA4254@home.philkern.de>" "41" "[oss-security] CVE request: libinfinity did not correctly check certificates for validity" nil nil nil "5" "2015051206:44:06" "[oss-security] CVE request: libinfinity did not correctly check certificates for validity" (number mark "        pkern@debian May 12   41/1406  " thread-indent "\"[oss-security] CVE request: libinfinity did not correctly check certificates for validity\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 11804 invoked by uid 550); 14 Sep 2015 19:37:20 -0000
+Received: (qmail 18042 invoked by uid 550); 12 May 2015 06:59:55 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,59 +11,61 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 11742 invoked from network); 14 Sep 2015 19:37:19 -0000
-In-Reply-To: <CALCETrUvVMBAK-uWR28u4CzJZYo=mKsqoqd+y84L=GdgwAQJVA@mail.gmail.com>
-Message-Id: <20150914193707.999F472E128@smtpvbsrv1.mitre.org>
-Cc: cve-assign@mitre.org
-Date: Mon, 14 Sep 2015 15:37:07 -0400 (EDT)
-From: cve-assign@mitre.org
+Received: (qmail 9710 invoked from network); 12 May 2015 06:44:19 -0000
+Message-ID: <20150512064406.GA4254@home.philkern.de>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="r5Pyd7+fXNt84Ff3"
+Content-Disposition: inline
+Organization: The Debian Project (http://www.debian.org)
+X-Debbugs-No-Ack: yes
+User-Agent: Mutt/1.5.23 (2014-03-12)
+Cc: armin@arbur.net
+Date: Tue, 12 May 2015 08:44:06 +0200
+From: Philipp Kern <pkern@debian.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE Request: Linux x86_64 NT flag issue - Linux kernel
+Subject: [oss-security] CVE request: libinfinity did not correctly check certificates for
+ validity
 To: oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--r5Pyd7+fXNt84Ff3
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
->> Use CVE-2015-6666.
+Hi,
 
-> I think this may be a false alarm.  SDM Volume 3 6.12.1.2 says:
-> 
-> On calls to exception and interrupt handlers, the processor also
-> clears the VM, RF, and NT flags in the EFLAGS register, after
-> they are saved on the stack.
-> 
-> So if an interrupt or page fault happened while NT was incorrectly
-> set, the NT flag would still be clear when context switching and would
-> therefore never leak. (This wouldn't have been the case before 3.19,
-> when we could context switch by calling schedule() directly while NT
-> was set, but those kernels manually saved and restored flags across
-> context switches.)
+Debian bug #783601[1] reported that Gobby - a collaborative text editor
+- silently accepted expired certificates. The upstream bug report is
+[2]. The bug is actually in libinfinity and the fix is available on [2].
 
-We have not seen any further discussion of this. Our understanding is
-that this "might be able to leak NT into an unrelated task" security
-impact was not found to affect any version of the Linux kernel. Unless
-there is other information, we will move CVE-2015-6666 into the
-"rejected" state later this week.
+libinfinity does support certificate pinning and hence contains the
+ability to disable some checks like trusted issuer and hostname
+verification. However the catch-all validity check was in the wrong
+location.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+Please assign a CVE ID for this.
+
+Kind regards and thanks
+Philipp Kern
+
+[1] https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=783601
+[2] https://github.com/gobby/gobby/issues/61
+[3] https://github.com/gobby/libinfinity/commit/c97f870f5ae13112988d9f8ad464b4f679903706
+
+--r5Pyd7+fXNt84Ff3
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJV9x+yAAoJEL54rhJi8gl517kP/0veNuawDhSguGeXOrtzKv/k
-d6+CJJZq4YUUAhOJ5ZdWL0TeLqN0FRaDsAhcs6SgmCNjKTWtq4diZcGPI3dElNfC
-bLjmrsvJ3cWF2mk1JRUHgLhOnNj4pCOTbLQGknKKORZbBV3nH55WZhLNicqahkJL
-qrUnPC05yRxI/xHmKLWu8Ic7W4s2jhz74F1se64t5qgdlekhQc9VqrXMvuzJhq+t
-SAODGrf6c4fwjhhPT/XPXDq2aqa0wGkvF4usS8Kxgp2g6cBuH39UZ54e5istzV79
-v1k8lwS+AnG6/W7od8sVzE3QahRr/ia7EDnurvUEC9AbkLF7qWr2+zhkvgsbx9UU
-r6jPWpQbNkrZMZdVEH3lwDNsMGOiuB6E1W+2BTXJB+HSo/4IBd8JuF9JOP07E3ye
-p5hb5u34P/WSXa3D+B3HukRB5aYK3KnoY0F9Fu0RT/f/v/OFZnwzyfrmAzLGI44c
-dlw3kjQXEayFi8V6816YODZnKQHk4z2EwvrK7Jeu0bP1wnn/xvToWapVVLIaQ0wK
-ojsATC/5KxLTJzc888++/aIlgpomGlmDBZVgpEImAc9Hr50V3gm5u1QZeAcGy4h6
-Um6f1USBtnmDiebA8N2ITF3Vh55AzsmyX2vRKg382soaw8TKWVygXLwLrPE/1VXh
-PvwowWLecM0VCnO6nqoT
-=N5KU
+iQEcBAEBCAAGBQJVUaE2AAoJEERuJUU10FbsBT4IALhWuZX6INkidamxE3wzknYV
+oetuEEAzpMXD98hy+6pry0UGQuY5QbPo1wAXK5IziEgoptcSxI9Z0EKhpIeJx6Jq
+2c1DbN0OKgd0FxCkmsAT9+e27A5+p0qA+xZ7K7L46f6riYUzoa0fcXKrhrgq5Rix
+nCAMZcS8Sv/U1PaEMGOLqP78lxUxvDo9GyBiLaMfhQ6dmLDoBj66SzYYDafUIqHc
+4GWw2HOLJZS3rczPO1iyE0my0BLZU5zS5SSq5ECTjKTu8/wqXEkUdiWdMz3zwVck
+03DwynLxVE/018f7GrslHDScz/nNQNpxZLCR97Hs4fD6F8/v5/1+kjDSa5pSmXA=
+=Sw5C
 -----END PGP SIGNATURE-----
+
+--r5Pyd7+fXNt84Ff3--
