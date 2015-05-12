@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2417" "Wednesday" "29" "November" "2017" "10:34:22" "+0100" "Daniel Stenberg" "daniel@haxx.se" "<alpine.DEB.2.20.1711280939500.30591@tvnag.unkk.fr>" "84" "[oss-security] [SECURITY ADVISORY] curl: FTP wildcard out of bounds read" nil nil nil "11" "2017112909:34:22" "[oss-security] [SECURITY ADVISORY] curl: FTP wildcard out of bounds read" (number mark "U       daniel@haxx. Nov 29   84/2417  " thread-indent "\"[oss-security] [SECURITY ADVISORY] curl: FTP wildcard out of bounds read\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3029" "Tuesday" "12" "May" "2015" "14:15:22" "+0200" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20150512141522.3ae38635@pc1>" "80" "[oss-security] Two invalid read errors / heap overflows in SQLite (TFPA 006/2015)" nil nil nil "5" "2015051212:15:22" "[oss-security] Two invalid read errors / heap overflows in SQLite (TFPA 006/2015)" (number mark "        hanno@hboeck May 12   80/3029  " thread-indent "\"[oss-security] Two invalid read errors / heap overflows in SQLite (TFPA 006/2015)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 32376 invoked by uid 550); 29 Nov 2017 09:34:37 -0000
+Received: (qmail 30023 invoked by uid 550); 12 May 2015 12:15:04 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,104 +11,95 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 29983 invoked from network); 12 May 2015 12:14:59 -0000
+Message-ID: <20150512141522.3ae38635@pc1>
+X-Mailer: Claws Mail 3.11.1 (GTK+ 2.24.27; x86_64-pc-linux-gnu)
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512; protocol="application/pgp-signature"; boundary="=_zucker.schokokeks.org-18227-1431432887-0001-2"
+Date: Tue, 12 May 2015 14:15:22 +0200
+From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32269 invoked from network); 29 Nov 2017 09:34:36 -0000
-X-Authentication-Warning: giant.haxx.se: dast owned process doing -bs
-Date: Wed, 29 Nov 2017 10:34:22 +0100 (CET)
-From: Daniel Stenberg <daniel@haxx.se>
-X-X-Sender: dast@giant.haxx.se
-To: curl security announcements -- curl users <curl-users@cool.haxx.se>,
-        curl-announce@cool.haxx.se,
-        libcurl hacking <curl-library@cool.haxx.se>,
-        oss-security@lists.openwall.com
-Message-ID: <alpine.DEB.2.20.1711280939500.30591@tvnag.unkk.fr>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-fromdanielhimself: yes
-MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-Subject: [oss-security] [SECURITY ADVISORY] curl: FTP wildcard out of bounds read
+Subject: [oss-security] Two invalid read errors / heap overflows in SQLite (TFPA 006/2015)
+To: oss-security@lists.openwall.com, cve-assign@mitre.org,
+  fulldisclosure@seclists.org
 
-FTP wildcard out of bounds read
-===============================
+--=_zucker.schokokeks.org-18227-1431432887-0001-2
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-Project curl Security Advisory, November 29th 2017 -
-[Permalink](https://curl.haxx.se/docs/adv_2017-ae72.html)
+https://blog.fuzzing-project.org/10-Two-invalid-read-errors-heap-overflows-=
+in-SQLite-TFPA-0062015.html
 
-VULNERABILITY
--------------
+While fuzzing SQLite I discovered two read heap overflow errors. One is
+in the database file parser, one in the sql command parser. Both issues
+are present in SQLite 3.8.9 and are fixed in SQLite 3.8.10.1. These
+bugs can be seen with either valgrind or address sanitizer.
 
-libcurl contains a read out of bounds flaw in the FTP wildcard function.
+Passing the command ".\" will cause a one byte heap overflow in the
+function resolve_backslashes().
 
-libcurl's FTP wildcard matching feature, which is enabled with the
-`CURLOPT_WILDCARDMATCH` option can use a built-in wildcard function or a user
-provided one. The built-in wildcard function has a flaw that makes it not
-detect the end of the pattern string if it ends with an open bracket (`[`) but
-instead it will continue reading the heap beyond the end of the URL buffer
-that holds the wildcard.
+https://crashes.fuzzing-project.org/TFPA-2015-006-sqlite-heapoverflow-resol=
+ve_backslashes.sql
+Sample input file (test with sqlite3 < [inputfile])
 
-For applications that use HTTP(S) URLs, allow libcurl to handle redirects and
-have FTP wildcards enabled, this flaw can be triggered by malicious servers
-that can redirect clients to a URL using such a wildcard pattern.
+https://www.sqlite.org/cgi/src/info/e018f4bf1f27f783
+Upstream commit / patch
 
-We are not aware of any exploit of this flaw.
+Parsing a malformed database file will cause a heap overflow of several
+bytes in the function sqlite3VdbeExec(). This only matters if your
+attack scenario involves parsing untrusted database files.
 
-INFO
-----
+https://crashes.fuzzing-project.org/TFPA-2015-006-sqlite-heapoverflow-sqlit=
+e3VdbeExec.sqlite
+Sample input file (test with sqlite3 [inputfile] .dump)
 
-This bug was introduced in commit
-[0825cd80a62c](https://github.com/curl/curl/commit/0825cd80a62c), May 2010.
+https://www.sqlite.org/cgi/src/info/f71053cf658b3260
+Upstream commit / patch
 
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2017-8817 to this issue.
+Please also note:
+http://lcamtuf.blogspot.de/2015/04/finding-bugs-in-sqlite-easy-way.html
+Finding bugs in SQLite, the easy way - Michal Zalewski fuzzed SQLite
+with a dictionary - most of these were already fixed in 3.8.9, the
+version I was testing.
 
-AFFECTED VERSIONS
------------------
+https://www.sqlite.org/testing.html#aflfuzz
+SQL Fuzz Using The American Fuzzy Lop Fuzzer -
+SQLite developers themselve now use regular fuzz testing to find
+further bugs.
 
-- Affected versions: libcurl 7.21.0 to and including 7.56.1
-- Not affected versions: libcurl < 7.21.0 and >= 7.57.0
+https://sqlite.org/releaselog/3_8_10_1.html
+SQLite 3.8.10.1 release notes mention fixes for "many
+obscure problems discovered while SQL fuzzing", so there are likely
+more fixes than the two I mentioned above.
 
-curl is used by many applications, but not always advertised as such.
+--=20
+Hanno B=C3=B6ck
+http://hboeck.de/
 
-THE SOLUTION
-------------
+mail/jabber: hanno@hboeck.de
+GPG: BBB51E42
 
-In libcurl version 7.57.0, there's a better check for the end of the
-string. Additionally, the wildcard feature is turned off if the URL passed to
-libcurl is not using FTP(S), so a redirect to an FTP URL cannot trigger
-wildcard functionality.
+--=_zucker.schokokeks.org-18227-1431432887-0001-2
+Content-Type: application/pgp-signature
+Content-Transfer-Encoding: 7bit
+Content-Description: OpenPGP digital signature
 
-A [patch for CVE-2017-8817](https://curl.haxx.se/CVE-2017-8817.patch) is
-available.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
 
-RECOMMENDATIONS
----------------
+iQIcBAEBCgAGBQJVUe7aAAoJEKWIAHK7tR5CD4MQAMSjejMbAVa/740E4M6MIjQN
+3JfUX+o3ztkmHS+hFK8L3R9j8YgxODeO67Z7DBEMVX1iL1/Qg7E47RBOVpURe9qP
+L/ebnJW8jXROGA8kpFsgemnsfbXSyeOD8cTnBP0qv04sI+tLLN2jEMGYX44eC6Cp
+AyY7QqWXRmHuKEaZzcgwfDC/d695lN2mIC791nXiZ2ibQHZvVU1m8183BCcRc3fr
+bfHCNUZZEaEKzRPQt5sjJbpWP9U3EnAeHCztzEMKXOrLtU5YYsJA7P4RsCAI9cew
+Vg9LjYJXqcVvFsVft59o4ZNmMFAQojekNTVwuee4Uta7D2iYApT0egBQyOgINFgY
+PKSVLQ902T8hF8tqnFwDz/so6cFAs/Fm5p/NefO7kHRQVbUMO0AR+SINJVa2D1Px
+Sacmz5FTbpLtOrxq4/lidrxvlLhit/4shFr+KvvRI0312ujUvJO/gD7sx7VQEfUk
+Fj0PnAODGIpdYqvqRZ5hjU5yeTgAk6aXJC3Bbwkjfi9YuiXOxBbEnxkGC1DfPxod
+wvxSPVNfjJWdfVoPFnzJAGtUZ6NVFCqJGTUMqYSg3mHN2oNwxO4vdixYtri0bXI9
+KccUzzDjMqyADtqzjEgdvt2o7MnzeBaiLuIdJNEjSl3VagSk49kBY8QDPBEKQsEC
+EaRoYQeRH1wkrmNn1Hyj
+=x/To
+-----END PGP SIGNATURE-----
 
-We suggest you take one of the following actions immediately, in order of
-preference:
-
-  A - Upgrade curl to version 7.57.0
-
-  B - Apply the patch to your version and rebuild
-
-  C - Do not use `CURLOPT_WILDCARDMATCH` without carfully verifying the
-      patterns used.
-
-TIME LINE
----------
-
-It was reported to the curl project on November 10, 2017.  We contacted
-distros@openwall on November 21.
-
-curl 7.57.10 was released on November 29 2017, coordinated with the
-publication of this advisory.
-
-CREDITS
--------
-
-Reported by OSS-Fuzz. Researched by Max Dymond. Patch by Daniel Stenberg.
-
-Thanks a lot!
-
--- 
-
-  / daniel.haxx.se
+--=_zucker.schokokeks.org-18227-1431432887-0001-2--
