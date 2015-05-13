@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1652" "Friday" "18" "November" "2016" "18:57:21" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<5fba1477d08e4f3481f6f65080897a24@imshyb02.MITRE.ORG>" "36" "[oss-security] Re: CVE-2016-9297 LibTIFF regression" nil nil nil "11" "2016111823:57:21" "[oss-security] Re: CVE-2016-9297 LibTIFF regression" (number mark "U       cve-assign@m Nov 18   36/1652  " thread-indent "\"[oss-security] Re: CVE-2016-9297 LibTIFF regression\"\n") "<20161118150524.GA16744@tunkki>" ("<20161118150524.GA16744@tunkki>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2594" "Wednesday" "13" "May" "2015" "19:18:23" "+0300" "Solar Designer" "solar@openwall.com" "<20150513161823.GA17176@openwall.com>" "45" "Re: [oss-security] VENOM - CVE-2015-3456" nil nil nil "5" "2015051316:18:23" "[oss-security] VENOM - CVE-2015-3456" (number mark "        solar@openwa May 13   45/2594  " thread-indent "\"Re: [oss-security] VENOM - CVE-2015-3456\"\n") "<ba24ac6088a34b9d97fd721591f1e922@casmbox01.crowdstrike.sys>" ("<ba24ac6088a34b9d97fd721591f1e922@casmbox01.crowdstrike.sys>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 24069 invoked by uid 550); 18 Nov 2016 23:57:33 -0000
+Received: (qmail 11630 invoked by uid 550); 13 May 2015 16:18:39 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,51 +11,63 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 11578 invoked from network); 13 May 2015 16:18:38 -0000
+Message-ID: <20150513161823.GA17176@openwall.com>
+References: <ba24ac6088a34b9d97fd721591f1e922@casmbox01.crowdstrike.sys>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ba24ac6088a34b9d97fd721591f1e922@casmbox01.crowdstrike.sys>
+User-Agent: Mutt/1.4.2.3i
+Cc: oss-security@lists.openwall.com
+Date: Wed, 13 May 2015 19:18:23 +0300
+From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 24029 invoked from network); 18 Nov 2016 23:57:32 -0000
-From: <cve-assign@mitre.org>
-To: <henri@nerv.fi>
-CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
-In-Reply-To: <20161118150524.GA16744@tunkki>
-Message-ID: <5fba1477d08e4f3481f6f65080897a24@imshyb02.MITRE.ORG>
-Date: Fri, 18 Nov 2016 18:57:21 -0500
-MIME-Version: 1.0
-Content-Type: text/plain
-Subject: [oss-security] Re: CVE-2016-9297 LibTIFF regression
+Subject: Re: [oss-security] VENOM - CVE-2015-3456
+To: Jason Geffner <jason@crowdstrike.com>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+All -
 
-> CVE-2016-9297 vulnerability reported in http://bugzilla.maptools.org/show_bug.cgi?id=2590 had a
-> regression, which is fixed in http://bugzilla.maptools.org/show_bug.cgi?id=2593
-> 
->         * libtiff/tif_dirread.c: in TIFFFetchNormalTag(), do not dereference
->         NULL pointer when values of tags with TIFF_SETGET_C16_ASCII /
->         TIFF_SETGET_C32_ASCII access are 0-byte arrays.
->         Fixes http://bugzilla.maptools.org/show_bug.cgi?id=2593 (regression
->         introduced by previous fix done on 2016-11-11 for CVE-2016-9297).
+JFYI, Jason first brought this issue to the distros list on April 30.
 
-Use CVE-2016-9448 for the vulnerability fixed in 2593.
+Jason -
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Thank you for making this mandatory oss-security posting, but ...
 
-iQIcBAEBCAAGBQJYL5SIAAoJEHb/MwWLVhi2AzYP/2SarSYSo50EUpN0P21HbPSO
-IEulwCp/UJ8S4Uu+0SlXs3vhBzi9OMJGjAAT73dqekzmvuWzXwwmXdTVdPhXYRQN
-YrqK3K1QIn/gbFzAAbV6uzntktABhReJi0Rx57/kkfWbRHsIclD+nAJfY+yQWmkK
-h1NS3DgBPcIffswM2EtbRU6hWWkdEHoxeiezIrk5o/hSHFt9AFP5yVNmcid63Hgp
-rSgFfGIghkOrWQ3YSh9+bqCGC0dxHoBpvGR+yu0VEFFaLsh/EIjcy7kj1RBBAZWT
-MpiSu0gTq2UMn8r/6H6Citxq79Iva+pafL8afCTsaAl8fMJ5aNsTj5JKEzcm83Hr
-6riZMZv3AjizN+8x1lDFWcL1uN7Z+wilUU22/n7Qi1RGjzq74Vrs9Dabj0YoRZFV
-9ukCOGqhpfGGwUrsVkwva26LvFei8nbP+P7f46AN8752HEugxt+uQhKixgco/ijf
-25AYLDdBR3gIVMjJ44bSxKdHPBrFPMLMhU21huPD0w0upWTj220Sz7phvlF5oE8R
-eogTOcNdDjMODtO8LHgSNviHQxc2Am03G0B6H/xm2NV7V2UQgvYHUOyQGU6jmJyY
-BMwT6zaSALNs+g2WbKY6a/AuPnpUoKaabRtWNabAdd36o+lHsw7bliMyfDr9K4Lr
-J6Cf8vBaL2h6W4whAQR7
-=Jmyq
------END PGP SIGNATURE-----
+On Wed, May 13, 2015 at 12:22:19PM +0000, Jason Geffner wrote:
+> VENOM, CVE-2015-3456, is a security vulnerability in the virtual floppy drive code used by many computer virtualization platforms. This vulnerability may allow an attacker to escape from the confines of an affected virtual machine (VM) guest and potentially obtain code-execution access to the host. Absent mitigation, this VM escape could open access to the host system and all other VMs running on that host, potentially giving adversaries significant elevated access to the host's local network and adjacent systems.
+
+This is way too little technical detail.  Your distros list posting
+included a 4-page PDF file that actually contained some technical
+detail.  Ideally, you'd post a text-only advisory with at least similar
+level of detail in here.  Can you do that, please?
+
+> Exploitation of the VENOM vulnerability can expose access to corporate intellectual property (IP), in addition to sensitive and personally identifiable information (PII), potentially impacting the thousands of organizations and millions of end users that rely on affected VMs for the allocation of shared computing resources, as well as connectivity, storage, security, and privacy.
+
+This paragraph is purely PR.  Not appropriate content for oss-security.
+
+> Please see http://venom.crowdstrike.com/ for further details.
+
+While links to external resources are acceptable, ideally you'd include
+the technical detail right in your oss-security posting as well.
+
+Anyway, going to that URL I see only a FAQ that is lacking on technical
+detail, and download links for the graphics.  There isn't even a
+download link for the pretty PDF you had ready 2 weeks ago, or did I
+miss it?  Maybe add it now?  Once again, ideally the content should be
+right here and in text form rather than only on CrowdStrike website and
+"in graphics" or in PDF, but making that PDF available for download is a
+step in the right direction.
+
+I am sorry for the criticism.  I actually appreciate your discovery and
+handling of this vulnerability.  But you can clearly do better in the
+ways I mentioned above, and clearly people are now wondering whether the
+vulnerability is actually exploitable or just hype.  For example,
+questions and concerns and sarcasm of this sort have appeared multiple
+times on my Twitter timeline today.
+
+I'd appreciate it if you release more information to the general public.
+
+Thanks,
+
+Alexander
