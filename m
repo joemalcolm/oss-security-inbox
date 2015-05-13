@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2228" "Thursday" "23" "April" "2015" "03:03:00" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150423070300.497C93320B1@smtpvbsrv1.mitre.org>" "55" "[oss-security] Re: CVE request: ntp-keygen may generate non-random symmetric keys on big-endian systems" nil nil nil "4" "2015042307:03:00" "[oss-security] Re: CVE request: ntp-keygen may generate non-random symmetric keys on big-endian systems" (number mark "        cve-assign@m Apr 23   55/2228  " thread-indent "\"[oss-security] Re: CVE request: ntp-keygen may generate non-random symmetric keys on big-endian systems\"\n") "<87oamxjwrc.fsf@redhat.com>" ("<87oamxjwrc.fsf@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["982" "Wednesday" "13" "May" "2015" "21:44:04" "+0200" "Jason A. Donenfeld" "Jason@zx2c4.com" "<CAHmME9rAevBkp4cE=zRML0PZrDP98SZFAVBXjGVhk0Q-bcBEcg@mail.gmail.com>" "31" "[oss-security] CVE requests: Remote packet-of-death vulnerabilities in Linux Kernel ozwpan driver" nil nil nil "5" "2015051319:44:04" "[oss-security] CVE requests: Remote packet-of-death vulnerabilities in Linux Kernel ozwpan driver" (number mark "        Jason@zx2c4. May 13   31/982   " thread-indent "\"[oss-security] CVE requests: Remote packet-of-death vulnerabilities in Linux Kernel ozwpan driver\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 14130 invoked by uid 550); 23 Apr 2015 07:03:24 -0000
+Received: (qmail 14039 invoked by uid 550); 13 May 2015 19:44:18 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,68 +11,55 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 14064 invoked from network); 23 Apr 2015 07:03:12 -0000
-In-Reply-To: <87oamxjwrc.fsf@redhat.com>
-Message-Id: <20150423070300.497C93320B1@smtpvbsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Thu, 23 Apr 2015 03:03:00 -0400 (EDT)
-From: cve-assign@mitre.org
+Received: (qmail 14011 invoked from network); 13 May 2015 19:44:17 -0000
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
+	:date:message-id:subject:from:to:content-type; s=mail; bh=CHIOfa
+	t3he4xuMq2LNZOY00nI0M=; b=vftyGNEnZ8rXgr+e97OBBuwx1KZqUY0ef6pzQV
+	d9qvqNt3aUIxXZOXvVixDa0aGv1APjCHKVMJxfBb5X+S57a1XyQ4DgGGHWYwdl9m
+	ecs0Rvo7hrcWS663RGwabFABO2vCiZR5muTaBg/yJtN0Hi/8ESMoYI/yn9dkpzIi
+	lGqQA4CCtiLWfWZMsk+MKbD/ambQZ7tjPseqlVUU+hTe59MKVf6XliiA1IQ8N6AQ
+	sSie1ezQDdtIZOePoIO2yAftiNbaXGfSpiDqFEWguW74oD6MjuWNFAGsPr4+YEtu
+	fCXBQwriHsvoqYm5YtcSjhtxPzLZQ+BWSpzYPE6GHcawD40Q==
+MIME-Version: 1.0
+X-Received: by 10.152.37.201 with SMTP id a9mr381947lak.120.1431546244304;
+ Wed, 13 May 2015 12:44:04 -0700 (PDT)
+Message-ID: <CAHmME9rAevBkp4cE=zRML0PZrDP98SZFAVBXjGVhk0Q-bcBEcg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Date: Wed, 13 May 2015 21:44:04 +0200
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE request: ntp-keygen may generate non-random symmetric keys on big-endian systems
-To: mprpic@redhat.com
+Subject: [oss-security] CVE requests: Remote packet-of-death vulnerabilities in Linux Kernel
+ ozwpan driver
+To: oss-security <oss-security@lists.openwall.com>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi folks,
 
-> * [Bug 2797] ntp-keygen trapped in endless loop for MD5 keys on big-endian machines.
-> https://bugs.ntp.org/show_bug.cgi?id=2797
-> 
-> Patch: http://bk1.ntp.org/ntp-stable/?PAGE=patch&REV=55199296N2gFqH1Hm5GOnhrk9Ypygg
+A variety of issues have been found in Linux's ozwpan driver.
 
-> While the endless loop is not a security flaw per se
+1. A remote packet can be sent, resulting in funny subtractions of
+signed integers, which causes a memcpy(kernel_heap,
+network_user_buffer, -network_user_provided_length).
 
-The unstated rationale here seems to be "ntp-keygen is a command-line
-program that is not normally exposed in a way that crosses privilege
-boundaries."
+There are two different conditions that can lead to this:
+https://lkml.org/lkml/2015/5/13/740
+https://lkml.org/lkml/2015/5/13/744
+You may want to give two CVEs or just one CVE for these two issues.
 
-The documentation mentions:
+2. A remote packet can be sent, resulting in divide-by-zero in
+softirq, causing hard crash:
+https://lkml.org/lkml/2015/5/13/741
 
-  After setting up the environment it is advisable to update certificates
-  from time to time, if only to extend the validity interval.
-  Simply run
-  @code{ntp-keygen}
-  with the same flags as before to generate new certificates
+3. A remote packet can be sent, resulting in a funny subtraction,
+causing an insanely big loop to lock up the kernel:
+https://lkml.org/lkml/2015/5/13/742
 
-It seems plausible that some sites may have created a web interface so
-that operations staff can occasionally do a certificate update (maybe
-with a new key), but these staff don't have login access to the
-machine running NTP. The flaw would give them the new ability to
-(sometimes) launch a CPU consumption attack. However, we have not
-actually heard of anyone with a web-based ntp-keygen arrangement, so
-we currently don't want to assign a CVE ID for that.
+4. Multiple out-of-bounds reads, resulting in possible information
+leakage, explained in the last paragraph of the introductory email
+here:
+https://lkml.org/lkml/2015/5/13/739
 
-> the fact that
-> ntp-keygen generates non-random keys is. If the lowest byte of the temp
-> variable happens to be between 0x20 and 0x7f and not #, the generated
-> MD5 key will consist of 20 identical characters, meaning only 93
-> possible keys can be generated.
 
-Use CVE-2015-3405 for this code error that results in a key space
-that's much smaller than expected.
+Please assign CVEs so that these can be properly tracked.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJVOJgkAAoJEKllVAevmvmsSUMH/3wjdFZGeR9ubvEm6Yb0tq9q
-lbbGuZSawcdPL/F45VYB+u75VTIjlJx6I693Rn+UwIvHYadOCARkk0/JBmf7GUyL
-ANPAxy8RW0QnvB9eByTgiX2SREtGVkIusRSgOB37mZf5+rsjNZTbcEojBO0rIOO3
-6PeslrWHMehqnp3rN8phCZWArinLCBaI/f+ohLLA0uYjpNM7MNvA1ULn9F0tuuic
-ZOPMTCLynPDm9gGXS0yv7HWuE5Jni05ngq6+NcAI7xeCqpJQQ2uBB1JmJrg12e/R
-yS/JSn+s7BFGb59/WPtg1fvIFiv2EAKU4DhhwP0vawzNCZcnZqESLF1umaQKsDs=
-=yDz2
------END PGP SIGNATURE-----
+Regards,
+Jason
