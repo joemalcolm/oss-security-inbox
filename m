@@ -1,4 +1,9 @@
-Received: (qmail 14234 invoked by uid 550); 28 Nov 2024 17:35:08 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["15816" "Wednesday" "13" "May" "2015" "11:16:02" "+0000" "Xen.org security team" "security@xen.org" "<E1YsUdu-0008EI-DZ@xenbits.xen.org>" "324" "[oss-security] Xen Security Advisory 133 (CVE-2015-3456) - Privilege escalation via emulated floppy disk drive" nil nil nil "5" "2015051311:16:02" "[oss-security] Xen Security Advisory 133 (CVE-2015-3456) - Privilege escalation via emulated floppy disk drive" (number mark "        security@xen May 13  324/15816 " thread-indent "\"[oss-security] Xen Security Advisory 133 (CVE-2015-3456) - Privilege escalation via emulated floppy disk drive\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 26579 invoked by uid 550); 13 May 2015 11:16:28 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,55 +11,342 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 11350 invoked from network); 28 Nov 2024 16:21:35 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Dewey Dunnington <paleolimbot@apache.org>
-To: oss-security@lists.openwall.com
-Message-ID: <e1b7db91-ab63-8e45-b00b-c72111846618@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Thu, 28 Nov 2024 16:20:39 +0000
+Received: (qmail 26521 invoked from network); 13 May 2015 11:16:21 -0000
+Message-Id: <E1YsUdu-0008EI-DZ@xenbits.xen.org>
+Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
+Content-Transfer-Encoding: binary
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2024-52338: Apache Arrow R package: Arbitrary code execution
- when loading a malicious data file 
+X-Mailer: MIME-tools 5.428 (Entity 5.428)
+CC: Xen.org security team <security@xen.org>
+Date: Wed, 13 May 2015 11:16:02 +0000
+From: Xen.org security team <security@xen.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Xen Security Advisory 133 (CVE-2015-3456) - Privilege escalation
+ via emulated floppy disk drive
+To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
+ xen-users@lists.xen.org, oss-security@lists.openwall.com
 
-Severity: critical
+--=separator
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+Content-Transfer-Encoding: 7bit
 
-Affected versions:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-- Apache Arrow R package 4.0.0 through 16.1.0
+            Xen Security Advisory CVE-2015-3456 / XSA-133
+                              version 2
 
-Description:
+          Privilege escalation via emulated floppy disk drive
 
-Deserialization of untrusted data in IPC and Parquet readers in the Apache =
-Arrow R package versions=C2=A04.0.0 through 16.1.0 allows arbitrary code ex=
-ecution. An application is vulnerable if it=20
-reads Arrow IPC, Feather or Parquet data from untrusted sources (for=20
-example, user-supplied input files). This vulnerability only affects the ar=
-row R package, not other Apache Arrow=20
-implementations or bindings unless those bindings are specifically used via=
- the R package (for example, an R application that embeds a Python interpre=
-ter and uses PyArrow to read files from untrusted sources is still vulnerab=
-le if the arrow R package is an affected version). It is recommended that u=
-sers of the arrow R package upgrade to 17.0.0 or later. Similarly, it
- is recommended that downstream libraries upgrade their dependency=20
-requirements to arrow 17.0.0 or later. If using an affected
-version of the package, untrusted data can read into a Table and its intern=
-al to_data_frame() method can be used as a workaround (e.g., read_parquet(.=
-.., as_data_frame =3D FALSE)$to_data_frame()).
+UPDATES IN VERSION 2
+====================
 
+Public release.
 
-This issue affects the Apache Arrow R package: from 4.0.0 through 16.1.0.
+ISSUE DESCRIPTION
+=================
 
+The code in qemu which emulates a floppy disk controller did not
+correctly bounds check accesses to an array and therefore was
+vulnerable to a buffer overflow attack.
 
-Users are recommended to upgrade to version 17.0.0, which fixes the issue.
+IMPACT
+======
 
-References:
+A guest which has access to an emulated floppy device can exploit this
+vulnerability to take over the qemu process elevating its privilege to
+that of the qemu process.
 
-https://github.com/apache/arrow/commit/801de2fbcf5bcbce0c019ed4b35ff3fc863b=
-141b
-https://arrow.apache.org/
-https://www.cve.org/CVERecord?id=3DCVE-2024-52338
+VULNERABLE SYSTEMS
+==================
 
+All Xen systems running x86 HVM guests without stubdomains are
+vulnerable to this depending on the specific guest configuration. The
+default configuration is vulnerable.
+
+Guests using either the traditional "qemu-xen" or upstream qemu device
+models are vulnerable.
+
+Guests using a qemu-dm stubdomain to run the device model are only
+vulnerable to takeover of that service domain.
+
+Systems running only x86 PV guests are not vulnerable.
+
+ARM systems are not vulnerable.
+
+MITIGATION
+==========
+
+Enabling stubdomains will mitigate this issue, by reducing the
+escalation to only those privileges accorded to the service domain.
+
+qemu-dm stubdomains are only available with the traditional "qemu-xen"
+version.
+
+CREDITS
+=======
+
+This issue was discovered by Jason Geffner, Senior Security Researcher
+at CrowdStrike.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa133-qemuu.patch           qemu-upstream-unstable, Xen 4.5.x, Xen 4.4.x
+xsa133-qemuu-4.3-4.2.patch   qemu-upstream-unstable, Xen 4.3.x, Xen 4.2.x
+xsa133-qemut.patch           qemu-xen-unstable, Xen 4.5.x, Xen 4.4.x, Xen 4.3.x, Xen 4.2.x
+
+$ sha256sum xsa133*.patch
+e7ca0106a9d4bfe472b3b52bbed8646b47305634ff16c3e17ed6185296a7e7ff  xsa133-qemut.patch
+0cbc0415ef63bc195a0338441f3770d9fe6741e894879e35d1a6609ad028e42f  xsa133-qemuu.patch
+cf735c1ecb6a40ca57d408e5c01725eca5b9b0a14b1d31b4362dc3f036bdeb28  xsa133-qemuu-4.3-4.2.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches described above (or others which are
+substantially similar) is permitted during the embargo, even on
+public-facing systems with untrusted guest users and administrators.
+
+But: Deployment of the mitigation by enabling stubdomains is NOT
+permitted (except on systems used and administered only by
+organisations which are members of the Xen Project Security Issues
+Predisclosure List).  Specifically, deployment on public cloud systems
+is NOT permitted.  This is because this configuration change may be
+visible to the guest.
+
+Also, distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQEcBAEBAgAGBQJVUzJdAAoJEIP+FMlX6CvZnJcH/iszFBI+ltmOGxfCtSmnnkdu
+6GZUFCVimeVG2ZfDCe1Bvw63ZMeB8AMUr2KmFrg0pOfC7m1Mc/4UhczpqeY9G1i0
+kPCcNiK37Ju0otFN1AODHaYGhu6pgfTM+QV1muFVXHf9QibmH+vEy7HEN34Mtv/2
+gGRmxLJnkHFME2sISuqhDsxIMf5QWN28I412/QqK8/mJMuvCJHqbLs/fv9f0uj9g
+sgAVCb3gsqNS7SSK1v49PqK+lQV+BkPR8pi8ODdL301iZWfu8PbVpYa5A84LVQF0
+4ZnlVfWqeKXF7GlsuviinhQIoUIvSktf9tg65fM48Thk0UUp+MyHVkh4GkT/+Eo=
+=rN8t
+-----END PGP SIGNATURE-----
+
+--=separator
+Content-Type: application/octet-stream; name="xsa133-qemut.patch"
+Content-Disposition: attachment; filename="xsa133-qemut.patch"
+Content-Transfer-Encoding: base64
+
+RnJvbSBhYzdkZGJlMzQyZDdhYTIzMDNjMzljYTczMWNjNjIyOWRiYmQ3Mzli
+IE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBQZXRyIE1hdG91c2Vr
+IDxwbWF0b3VzZUByZWRoYXQuY29tPgpEYXRlOiBXZWQsIDYgTWF5IDIwMTUg
+MDk6NDg6NTkgKzAyMDAKU3ViamVjdDogW1BBVENIXSBmZGM6IGZvcmNlIHRo
+ZSBmaWZvIGFjY2VzcyB0byBiZSBpbiBib3VuZHMgb2YgdGhlIGFsbG9jYXRl
+ZCBidWZmZXIKCkR1cmluZyBwcm9jZXNzaW5nIG9mIGNlcnRhaW4gY29tbWFu
+ZHMgc3VjaCBhcyBGRF9DTURfUkVBRF9JRCBhbmQKRkRfQ01EX0RSSVZFX1NQ
+RUNJRklDQVRJT05fQ09NTUFORCB0aGUgZmlmbyBtZW1vcnkgYWNjZXNzIGNv
+dWxkCmdldCBvdXQgb2YgYm91bmRzIGxlYWRpbmcgdG8gbWVtb3J5IGNvcnJ1
+cHRpb24gd2l0aCB2YWx1ZXMgY29taW5nCmZyb20gdGhlIGd1ZXN0LgoKRml4
+IHRoaXMgYnkgbWFraW5nIHN1cmUgdGhhdCB0aGUgaW5kZXggaXMgYWx3YXlz
+IGJvdW5kZWQgYnkgdGhlCmFsbG9jYXRlZCBtZW1vcnkuCgpUaGlzIGlzIENW
+RS0yMDE1LTM0NTYuCgpTaWduZWQtb2ZmLWJ5OiBQZXRyIE1hdG91c2VrIDxw
+bWF0b3VzZUByZWRoYXQuY29tPgpSZXZpZXdlZC1ieTogSm9obiBTbm93IDxq
+c25vd0ByZWRoYXQuY29tPgotLS0KIGh3L2ZkYy5jIHwgMTcgKysrKysrKysr
+KystLS0tLS0KIDEgZmlsZSBjaGFuZ2VkLCAxMSBpbnNlcnRpb25zKCspLCA2
+IGRlbGV0aW9ucygtKQoKZGlmZiAtLWdpdCBhL2h3L2ZkYy5jIGIvaHcvZmRj
+LmMKaW5kZXggYjAwYTRlYy4uYWJhMDJlNCAxMDA2NDQKLS0tIGEvaHcvZmRj
+LmMKKysrIGIvaHcvZmRjLmMKQEAgLTEzMTgsNyArMTMxOCw3IEBAIHN0YXRp
+YyB1aW50MzJfdCBmZGN0cmxfcmVhZF9kYXRhIChmZGN0cmxfdCAqZmRjdHJs
+KQogewogICAgIGZkcml2ZV90ICpjdXJfZHJ2OwogICAgIHVpbnQzMl90IHJl
+dHZhbCA9IDA7Ci0gICAgaW50IHBvczsKKyAgICB1aW50MzJfdCBwb3M7CiAK
+ICAgICBjdXJfZHJ2ID0gZ2V0X2N1cl9kcnYoZmRjdHJsKTsKICAgICBmZGN0
+cmwtPmRzciAmPSB+RkRfRFNSX1BXUkRPV047CkBAIC0xMzI3LDggKzEzMjcs
+OCBAQCBzdGF0aWMgdWludDMyX3QgZmRjdHJsX3JlYWRfZGF0YSAoZmRjdHJs
+X3QgKmZkY3RybCkKICAgICAgICAgcmV0dXJuIDA7CiAgICAgfQogICAgIHBv
+cyA9IGZkY3RybC0+ZGF0YV9wb3M7CisgICAgcG9zICU9IEZEX1NFQ1RPUl9M
+RU47CiAgICAgaWYgKGZkY3RybC0+bXNyICYgRkRfTVNSX05PTkRNQSkgewot
+ICAgICAgICBwb3MgJT0gRkRfU0VDVE9SX0xFTjsKICAgICAgICAgaWYgKHBv
+cyA9PSAwKSB7CiAgICAgICAgICAgICBpZiAoZmRjdHJsLT5kYXRhX3BvcyAh
+PSAwKQogICAgICAgICAgICAgICAgIGlmICghZmRjdHJsX3NlZWtfdG9fbmV4
+dF9zZWN0KGZkY3RybCwgY3VyX2RydikpIHsKQEAgLTE2NzMsMTAgKzE2NzMs
+MTMgQEAgc3RhdGljIHZvaWQgZmRjdHJsX2hhbmRsZV9vcHRpb24gKGZkY3Ry
+bF90ICpmZGN0cmwsIGludCBkaXJlY3Rpb24pCiBzdGF0aWMgdm9pZCBmZGN0
+cmxfaGFuZGxlX2RyaXZlX3NwZWNpZmljYXRpb25fY29tbWFuZCAoZmRjdHJs
+X3QgKmZkY3RybCwgaW50IGRpcmVjdGlvbikKIHsKICAgICBmZHJpdmVfdCAq
+Y3VyX2RydiA9IGdldF9jdXJfZHJ2KGZkY3RybCk7CisgICAgdWludDMyX3Qg
+cG9zOwogCi0gICAgaWYgKGZkY3RybC0+Zmlmb1tmZGN0cmwtPmRhdGFfcG9z
+IC0gMV0gJiAweDgwKSB7CisgICAgcG9zID0gZmRjdHJsLT5kYXRhX3BvcyAt
+IDE7CisgICAgcG9zICU9IEZEX1NFQ1RPUl9MRU47CisgICAgaWYgKGZkY3Ry
+bC0+Zmlmb1twb3NdICYgMHg4MCkgewogICAgICAgICAvKiBDb21tYW5kIHBh
+cmFtZXRlcnMgZG9uZSAqLwotICAgICAgICBpZiAoZmRjdHJsLT5maWZvW2Zk
+Y3RybC0+ZGF0YV9wb3MgLSAxXSAmIDB4NDApIHsKKyAgICAgICAgaWYgKGZk
+Y3RybC0+Zmlmb1twb3NdICYgMHg0MCkgewogICAgICAgICAgICAgZmRjdHJs
+LT5maWZvWzBdID0gZmRjdHJsLT5maWZvWzFdOwogICAgICAgICAgICAgZmRj
+dHJsLT5maWZvWzJdID0gMDsKICAgICAgICAgICAgIGZkY3RybC0+Zmlmb1sz
+XSA9IDA7CkBAIC0xNzcxLDcgKzE3NzQsNyBAQCBzdGF0aWMgdWludDhfdCBj
+b21tYW5kX3RvX2hhbmRsZXJbMjU2XTsKIHN0YXRpYyB2b2lkIGZkY3RybF93
+cml0ZV9kYXRhIChmZGN0cmxfdCAqZmRjdHJsLCB1aW50MzJfdCB2YWx1ZSkK
+IHsKICAgICBmZHJpdmVfdCAqY3VyX2RydjsKLSAgICBpbnQgcG9zOworICAg
+IHVpbnQzMl90IHBvczsKIAogICAgIC8qIFJlc2V0IG1vZGUgKi8KICAgICBp
+ZiAoIShmZGN0cmwtPmRvciAmIEZEX0RPUl9uUkVTRVQpKSB7CkBAIC0xODE3
+LDcgKzE4MjAsOSBAQCBzdGF0aWMgdm9pZCBmZGN0cmxfd3JpdGVfZGF0YSAo
+ZmRjdHJsX3QgKmZkY3RybCwgdWludDMyX3QgdmFsdWUpCiAgICAgfQogCiAg
+ICAgRkxPUFBZX0RQUklOVEYoIiVzOiAlMDJ4XG4iLCBfX2Z1bmNfXywgdmFs
+dWUpOwotICAgIGZkY3RybC0+Zmlmb1tmZGN0cmwtPmRhdGFfcG9zKytdID0g
+dmFsdWU7CisgICAgcG9zID0gZmRjdHJsLT5kYXRhX3BvcysrOworICAgIHBv
+cyAlPSBGRF9TRUNUT1JfTEVOOworICAgIGZkY3RybC0+Zmlmb1twb3NdID0g
+dmFsdWU7CiAgICAgaWYgKGZkY3RybC0+ZGF0YV9wb3MgPT0gZmRjdHJsLT5k
+YXRhX2xlbikgewogICAgICAgICAvKiBXZSBub3cgaGF2ZSBhbGwgcGFyYW1l
+dGVycwogICAgICAgICAgKiBhbmQgd2lsbCBiZSBhYmxlIHRvIHRyZWF0IHRo
+ZSBjb21tYW5kCg==
+
+--=separator
+Content-Type: application/octet-stream; name="xsa133-qemuu.patch"
+Content-Disposition: attachment; filename="xsa133-qemuu.patch"
+Content-Transfer-Encoding: base64
+
+RnJvbSBhYzdkZGJlMzQyZDdhYTIzMDNjMzljYTczMWNjNjIyOWRiYmQ3Mzli
+IE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBQZXRyIE1hdG91c2Vr
+IDxwbWF0b3VzZUByZWRoYXQuY29tPgpEYXRlOiBXZWQsIDYgTWF5IDIwMTUg
+MDk6NDg6NTkgKzAyMDAKU3ViamVjdDogW1BBVENIXSBmZGM6IGZvcmNlIHRo
+ZSBmaWZvIGFjY2VzcyB0byBiZSBpbiBib3VuZHMgb2YgdGhlIGFsbG9jYXRl
+ZCBidWZmZXIKCkR1cmluZyBwcm9jZXNzaW5nIG9mIGNlcnRhaW4gY29tbWFu
+ZHMgc3VjaCBhcyBGRF9DTURfUkVBRF9JRCBhbmQKRkRfQ01EX0RSSVZFX1NQ
+RUNJRklDQVRJT05fQ09NTUFORCB0aGUgZmlmbyBtZW1vcnkgYWNjZXNzIGNv
+dWxkCmdldCBvdXQgb2YgYm91bmRzIGxlYWRpbmcgdG8gbWVtb3J5IGNvcnJ1
+cHRpb24gd2l0aCB2YWx1ZXMgY29taW5nCmZyb20gdGhlIGd1ZXN0LgoKRml4
+IHRoaXMgYnkgbWFraW5nIHN1cmUgdGhhdCB0aGUgaW5kZXggaXMgYWx3YXlz
+IGJvdW5kZWQgYnkgdGhlCmFsbG9jYXRlZCBtZW1vcnkuCgpUaGlzIGlzIENW
+RS0yMDE1LTM0NTYuCgpTaWduZWQtb2ZmLWJ5OiBQZXRyIE1hdG91c2VrIDxw
+bWF0b3VzZUByZWRoYXQuY29tPgpSZXZpZXdlZC1ieTogSm9obiBTbm93IDxq
+c25vd0ByZWRoYXQuY29tPgotLS0KIGh3L2Jsb2NrL2ZkYy5jIHwgMTcgKysr
+KysrKysrKystLS0tLS0KIDEgZmlsZSBjaGFuZ2VkLCAxMSBpbnNlcnRpb25z
+KCspLCA2IGRlbGV0aW9ucygtKQoKZGlmZiAtLWdpdCBhL2h3L2Jsb2NrL2Zk
+Yy5jIGIvaHcvYmxvY2svZmRjLmMKaW5kZXggZjcyYTM5Mi4uZDhhOGVkZCAx
+MDA2NDQKLS0tIGEvaHcvYmxvY2svZmRjLmMKKysrIGIvaHcvYmxvY2svZmRj
+LmMKQEAgLTE0OTcsNyArMTQ5Nyw3IEBAIHN0YXRpYyB1aW50MzJfdCBmZGN0
+cmxfcmVhZF9kYXRhKEZEQ3RybCAqZmRjdHJsKQogewogICAgIEZEcml2ZSAq
+Y3VyX2RydjsKICAgICB1aW50MzJfdCByZXR2YWwgPSAwOwotICAgIGludCBw
+b3M7CisgICAgdWludDMyX3QgcG9zOwogCiAgICAgY3VyX2RydiA9IGdldF9j
+dXJfZHJ2KGZkY3RybCk7CiAgICAgZmRjdHJsLT5kc3IgJj0gfkZEX0RTUl9Q
+V1JET1dOOwpAQCAtMTUwNiw4ICsxNTA2LDggQEAgc3RhdGljIHVpbnQzMl90
+IGZkY3RybF9yZWFkX2RhdGEoRkRDdHJsICpmZGN0cmwpCiAgICAgICAgIHJl
+dHVybiAwOwogICAgIH0KICAgICBwb3MgPSBmZGN0cmwtPmRhdGFfcG9zOwor
+ICAgIHBvcyAlPSBGRF9TRUNUT1JfTEVOOwogICAgIGlmIChmZGN0cmwtPm1z
+ciAmIEZEX01TUl9OT05ETUEpIHsKLSAgICAgICAgcG9zICU9IEZEX1NFQ1RP
+Ul9MRU47CiAgICAgICAgIGlmIChwb3MgPT0gMCkgewogICAgICAgICAgICAg
+aWYgKGZkY3RybC0+ZGF0YV9wb3MgIT0gMCkKICAgICAgICAgICAgICAgICBp
+ZiAoIWZkY3RybF9zZWVrX3RvX25leHRfc2VjdChmZGN0cmwsIGN1cl9kcnYp
+KSB7CkBAIC0xODUyLDEwICsxODUyLDEzIEBAIHN0YXRpYyB2b2lkIGZkY3Ry
+bF9oYW5kbGVfb3B0aW9uKEZEQ3RybCAqZmRjdHJsLCBpbnQgZGlyZWN0aW9u
+KQogc3RhdGljIHZvaWQgZmRjdHJsX2hhbmRsZV9kcml2ZV9zcGVjaWZpY2F0
+aW9uX2NvbW1hbmQoRkRDdHJsICpmZGN0cmwsIGludCBkaXJlY3Rpb24pCiB7
+CiAgICAgRkRyaXZlICpjdXJfZHJ2ID0gZ2V0X2N1cl9kcnYoZmRjdHJsKTsK
+KyAgICB1aW50MzJfdCBwb3M7CiAKLSAgICBpZiAoZmRjdHJsLT5maWZvW2Zk
+Y3RybC0+ZGF0YV9wb3MgLSAxXSAmIDB4ODApIHsKKyAgICBwb3MgPSBmZGN0
+cmwtPmRhdGFfcG9zIC0gMTsKKyAgICBwb3MgJT0gRkRfU0VDVE9SX0xFTjsK
+KyAgICBpZiAoZmRjdHJsLT5maWZvW3Bvc10gJiAweDgwKSB7CiAgICAgICAg
+IC8qIENvbW1hbmQgcGFyYW1ldGVycyBkb25lICovCi0gICAgICAgIGlmIChm
+ZGN0cmwtPmZpZm9bZmRjdHJsLT5kYXRhX3BvcyAtIDFdICYgMHg0MCkgewor
+ICAgICAgICBpZiAoZmRjdHJsLT5maWZvW3Bvc10gJiAweDQwKSB7CiAgICAg
+ICAgICAgICBmZGN0cmwtPmZpZm9bMF0gPSBmZGN0cmwtPmZpZm9bMV07CiAg
+ICAgICAgICAgICBmZGN0cmwtPmZpZm9bMl0gPSAwOwogICAgICAgICAgICAg
+ZmRjdHJsLT5maWZvWzNdID0gMDsKQEAgLTE5NTUsNyArMTk1OCw3IEBAIHN0
+YXRpYyB1aW50OF90IGNvbW1hbmRfdG9faGFuZGxlclsyNTZdOwogc3RhdGlj
+IHZvaWQgZmRjdHJsX3dyaXRlX2RhdGEoRkRDdHJsICpmZGN0cmwsIHVpbnQz
+Ml90IHZhbHVlKQogewogICAgIEZEcml2ZSAqY3VyX2RydjsKLSAgICBpbnQg
+cG9zOworICAgIHVpbnQzMl90IHBvczsKIAogICAgIC8qIFJlc2V0IG1vZGUg
+Ki8KICAgICBpZiAoIShmZGN0cmwtPmRvciAmIEZEX0RPUl9uUkVTRVQpKSB7
+CkBAIC0yMDA0LDcgKzIwMDcsOSBAQCBzdGF0aWMgdm9pZCBmZGN0cmxfd3Jp
+dGVfZGF0YShGREN0cmwgKmZkY3RybCwgdWludDMyX3QgdmFsdWUpCiAgICAg
+fQogCiAgICAgRkxPUFBZX0RQUklOVEYoIiVzOiAlMDJ4XG4iLCBfX2Z1bmNf
+XywgdmFsdWUpOwotICAgIGZkY3RybC0+Zmlmb1tmZGN0cmwtPmRhdGFfcG9z
+KytdID0gdmFsdWU7CisgICAgcG9zID0gZmRjdHJsLT5kYXRhX3BvcysrOwor
+ICAgIHBvcyAlPSBGRF9TRUNUT1JfTEVOOworICAgIGZkY3RybC0+Zmlmb1tw
+b3NdID0gdmFsdWU7CiAgICAgaWYgKGZkY3RybC0+ZGF0YV9wb3MgPT0gZmRj
+dHJsLT5kYXRhX2xlbikgewogICAgICAgICAvKiBXZSBub3cgaGF2ZSBhbGwg
+cGFyYW1ldGVycwogICAgICAgICAgKiBhbmQgd2lsbCBiZSBhYmxlIHRvIHRy
+ZWF0IHRoZSBjb21tYW5kCi0tIAoyLjEuMAoKCg==
+
+--=separator
+Content-Type: application/octet-stream; name="xsa133-qemuu-4.3-4.2.patch"
+Content-Disposition: attachment; filename="xsa133-qemuu-4.3-4.2.patch"
+Content-Transfer-Encoding: base64
+
+RnJvbSBhYzdkZGJlMzQyZDdhYTIzMDNjMzljYTczMWNjNjIyOWRiYmQ3Mzli
+IE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBQZXRyIE1hdG91c2Vr
+IDxwbWF0b3VzZUByZWRoYXQuY29tPgpEYXRlOiBXZWQsIDYgTWF5IDIwMTUg
+MDk6NDg6NTkgKzAyMDAKU3ViamVjdDogW1BBVENIXSBmZGM6IGZvcmNlIHRo
+ZSBmaWZvIGFjY2VzcyB0byBiZSBpbiBib3VuZHMgb2YgdGhlIGFsbG9jYXRl
+ZCBidWZmZXIKCkR1cmluZyBwcm9jZXNzaW5nIG9mIGNlcnRhaW4gY29tbWFu
+ZHMgc3VjaCBhcyBGRF9DTURfUkVBRF9JRCBhbmQKRkRfQ01EX0RSSVZFX1NQ
+RUNJRklDQVRJT05fQ09NTUFORCB0aGUgZmlmbyBtZW1vcnkgYWNjZXNzIGNv
+dWxkCmdldCBvdXQgb2YgYm91bmRzIGxlYWRpbmcgdG8gbWVtb3J5IGNvcnJ1
+cHRpb24gd2l0aCB2YWx1ZXMgY29taW5nCmZyb20gdGhlIGd1ZXN0LgoKRml4
+IHRoaXMgYnkgbWFraW5nIHN1cmUgdGhhdCB0aGUgaW5kZXggaXMgYWx3YXlz
+IGJvdW5kZWQgYnkgdGhlCmFsbG9jYXRlZCBtZW1vcnkuCgpUaGlzIGlzIENW
+RS0yMDE1LTM0NTYuCgpTaWduZWQtb2ZmLWJ5OiBQZXRyIE1hdG91c2VrIDxw
+bWF0b3VzZUByZWRoYXQuY29tPgpSZXZpZXdlZC1ieTogSm9obiBTbm93IDxq
+c25vd0ByZWRoYXQuY29tPgotLS0KIGh3L2ZkYy5jIHwgMTcgKysrKysrKysr
+KystLS0tLS0KIDEgZmlsZSBjaGFuZ2VkLCAxMSBpbnNlcnRpb25zKCspLCA2
+IGRlbGV0aW9ucygtKQoKZGlmZiAtLWdpdCBhL2h3L2ZkYy5jIGIvaHcvZmRj
+LmMKaW5kZXggZjcyYTM5Mi4uZDhhOGVkZCAxMDA2NDQKLS0tIGEvaHcvZmRj
+LmMKKysrIGIvaHcvZmRjLmMKQEAgLTE0OTcsNyArMTQ5Nyw3IEBAIHN0YXRp
+YyB1aW50MzJfdCBmZGN0cmxfcmVhZF9kYXRhKEZEQ3RybCAqZmRjdHJsKQog
+ewogICAgIEZEcml2ZSAqY3VyX2RydjsKICAgICB1aW50MzJfdCByZXR2YWwg
+PSAwOwotICAgIGludCBwb3M7CisgICAgdWludDMyX3QgcG9zOwogCiAgICAg
+Y3VyX2RydiA9IGdldF9jdXJfZHJ2KGZkY3RybCk7CiAgICAgZmRjdHJsLT5k
+c3IgJj0gfkZEX0RTUl9QV1JET1dOOwpAQCAtMTUwNiw4ICsxNTA2LDggQEAg
+c3RhdGljIHVpbnQzMl90IGZkY3RybF9yZWFkX2RhdGEoRkRDdHJsICpmZGN0
+cmwpCiAgICAgICAgIHJldHVybiAwOwogICAgIH0KICAgICBwb3MgPSBmZGN0
+cmwtPmRhdGFfcG9zOworICAgIHBvcyAlPSBGRF9TRUNUT1JfTEVOOwogICAg
+IGlmIChmZGN0cmwtPm1zciAmIEZEX01TUl9OT05ETUEpIHsKLSAgICAgICAg
+cG9zICU9IEZEX1NFQ1RPUl9MRU47CiAgICAgICAgIGlmIChwb3MgPT0gMCkg
+ewogICAgICAgICAgICAgaWYgKGZkY3RybC0+ZGF0YV9wb3MgIT0gMCkKICAg
+ICAgICAgICAgICAgICBpZiAoIWZkY3RybF9zZWVrX3RvX25leHRfc2VjdChm
+ZGN0cmwsIGN1cl9kcnYpKSB7CkBAIC0xODUyLDEwICsxODUyLDEzIEBAIHN0
+YXRpYyB2b2lkIGZkY3RybF9oYW5kbGVfb3B0aW9uKEZEQ3RybCAqZmRjdHJs
+LCBpbnQgZGlyZWN0aW9uKQogc3RhdGljIHZvaWQgZmRjdHJsX2hhbmRsZV9k
+cml2ZV9zcGVjaWZpY2F0aW9uX2NvbW1hbmQoRkRDdHJsICpmZGN0cmwsIGlu
+dCBkaXJlY3Rpb24pCiB7CiAgICAgRkRyaXZlICpjdXJfZHJ2ID0gZ2V0X2N1
+cl9kcnYoZmRjdHJsKTsKKyAgICB1aW50MzJfdCBwb3M7CiAKLSAgICBpZiAo
+ZmRjdHJsLT5maWZvW2ZkY3RybC0+ZGF0YV9wb3MgLSAxXSAmIDB4ODApIHsK
+KyAgICBwb3MgPSBmZGN0cmwtPmRhdGFfcG9zIC0gMTsKKyAgICBwb3MgJT0g
+RkRfU0VDVE9SX0xFTjsKKyAgICBpZiAoZmRjdHJsLT5maWZvW3Bvc10gJiAw
+eDgwKSB7CiAgICAgICAgIC8qIENvbW1hbmQgcGFyYW1ldGVycyBkb25lICov
+Ci0gICAgICAgIGlmIChmZGN0cmwtPmZpZm9bZmRjdHJsLT5kYXRhX3BvcyAt
+IDFdICYgMHg0MCkgeworICAgICAgICBpZiAoZmRjdHJsLT5maWZvW3Bvc10g
+JiAweDQwKSB7CiAgICAgICAgICAgICBmZGN0cmwtPmZpZm9bMF0gPSBmZGN0
+cmwtPmZpZm9bMV07CiAgICAgICAgICAgICBmZGN0cmwtPmZpZm9bMl0gPSAw
+OwogICAgICAgICAgICAgZmRjdHJsLT5maWZvWzNdID0gMDsKQEAgLTE5NTUs
+NyArMTk1OCw3IEBAIHN0YXRpYyB1aW50OF90IGNvbW1hbmRfdG9faGFuZGxl
+clsyNTZdOwogc3RhdGljIHZvaWQgZmRjdHJsX3dyaXRlX2RhdGEoRkRDdHJs
+ICpmZGN0cmwsIHVpbnQzMl90IHZhbHVlKQogewogICAgIEZEcml2ZSAqY3Vy
+X2RydjsKLSAgICBpbnQgcG9zOworICAgIHVpbnQzMl90IHBvczsKIAogICAg
+IC8qIFJlc2V0IG1vZGUgKi8KICAgICBpZiAoIShmZGN0cmwtPmRvciAmIEZE
+X0RPUl9uUkVTRVQpKSB7CkBAIC0yMDA0LDcgKzIwMDcsOSBAQCBzdGF0aWMg
+dm9pZCBmZGN0cmxfd3JpdGVfZGF0YShGREN0cmwgKmZkY3RybCwgdWludDMy
+X3QgdmFsdWUpCiAgICAgfQogCiAgICAgRkxPUFBZX0RQUklOVEYoIiVzOiAl
+MDJ4XG4iLCBfX2Z1bmNfXywgdmFsdWUpOwotICAgIGZkY3RybC0+Zmlmb1tm
+ZGN0cmwtPmRhdGFfcG9zKytdID0gdmFsdWU7CisgICAgcG9zID0gZmRjdHJs
+LT5kYXRhX3BvcysrOworICAgIHBvcyAlPSBGRF9TRUNUT1JfTEVOOworICAg
+IGZkY3RybC0+Zmlmb1twb3NdID0gdmFsdWU7CiAgICAgaWYgKGZkY3RybC0+
+ZGF0YV9wb3MgPT0gZmRjdHJsLT5kYXRhX2xlbikgewogICAgICAgICAvKiBX
+ZSBub3cgaGF2ZSBhbGwgcGFyYW1ldGVycwogICAgICAgICAgKiBhbmQgd2ls
+bCBiZSBhYmxlIHRvIHRyZWF0IHRoZSBjb21tYW5kCi0tIAoyLjEuMAoKCg==
+
+--=separator--
