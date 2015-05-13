@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4488" "Tuesday" "30" "March" "2021" "12:52:09" "+0200" "Daniel Beck" "ml@beckweb.net" nil "120" "[oss-security] Multiple vulnerabilities in Jenkins plugins" nil nil nil "3" nil nil (number mark "U       ml@beckweb.n Mar 30  120/4488  " thread-indent "\"[oss-security] Multiple vulnerabilities in Jenkins plugins\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Multiple vulnerabilities in Jenkins plugins" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2550" "Wednesday" "13" "May" "2015" "20:33:30" "+0200" "Jason A. Donenfeld" "Jason@zx2c4.com" "<1431542014-3239-1-git-send-email-Jason@zx2c4.com>" "57" "[oss-security] [PATCH 0/4] ozwpan: Four remote packet-of-death vulnerabilities" nil nil nil "5" "2015051318:33:30" "[oss-security] [PATCH 0/4] ozwpan: Four remote packet-of-death vulnerabilities" (number mark "        Jason@zx2c4. May 13   57/2550  " thread-indent "\"[oss-security] [PATCH 0/4] ozwpan: Four remote packet-of-death vulnerabilities\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 26082 invoked by uid 550); 30 Mar 2021 10:52:21 -0000
+Received: (qmail 5903 invoked by uid 550); 13 May 2015 18:35:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,138 +11,81 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 3751 invoked from network); 13 May 2015 18:34:35 -0000
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=from:to:cc
+	:subject:date:message-id; s=mail; bh=tQMfaRbcY2s9tCo1IcAcYNLNhbo
+	=; b=UtXPKTUElwqLTvexiANfZKmiXPBmMnMcsd0V8xm6KtYvG1neBbHb4JjsUbA
+	LTnu2lCciU2XbQrea6u+rIdrOeMqYbostPjAheqJ9wldOrY0NPE1de9/4HjZMxHU
+	bDyT8s6jLlZlqSzIEEokUn9qKWn8Ac8ltwetHXnjqchpiI//MW/THLVxJA5nzL1d
+	jrP6KjIFSl8zsp7Iu7DkVaqyQEnCQ/xAqPGYLM8CDJjRPP9+M+X//wSsx6wmy9ON
+	Itx12uYAVfLcMnT1CF7fvBKcbkMXE4PvS9F8QsIUBqL3nO6DTsYHlULp7TiS3+xK
+	fLQ9TxiZNYiTs+K1AFQhPc/HRdA==
+Message-Id: <1431542014-3239-1-git-send-email-Jason@zx2c4.com>
+X-Mailer: git-send-email 2.3.6
+Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Wed, 13 May 2015 20:33:30 +0200
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26050 invoked from network); 30 Mar 2021 10:52:21 -0000
-From: Daniel Beck <ml@beckweb.net>
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.15\))
-Message-Id: <53E5A455-9A38-4A00-9D2C-E12BFA7EE5B0@beckweb.net>
-Date: Tue, 30 Mar 2021 12:52:09 +0200
-To: oss-security@lists.openwall.com
-X-Mailer: Apple Mail (2.3445.104.15)
-X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1617101541;2da466cf;
-X-HE-SMSGID: 1lRByj-0007xt-FS
-Subject: [oss-security] Multiple vulnerabilities in Jenkins plugins
+Subject: [oss-security] [PATCH 0/4] ozwpan: Four remote packet-of-death vulnerabilities
+To: shigekatsu.tateno@atmel.com,
+	linux-kernel@vger.kernel.org,
+	netdev@vger.kernel.org,
+	oss-security@lists.openwall.com
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software.
+The ozwpan driver accepts network packets, parses them, and converts
+them into various USB functionality. There are numerous security
+vulnerabilities in the handling of these packets. Two of them result in
+a memcpy(kernel_buffer, network_packet, -length), one of them is a
+divide-by-zero, and one of them is a loop that decrements -1 until it's
+zero.
 
-The following releases contain fixes for security vulnerabilities:
+I've written a very simple proof-of-concept for each one of these
+vulnerabilities to aid with detecting and fixing them. The general
+operation of each proof-of-concept code is:
 
-* Build With Parameters Plugin 1.5.1
-* Cloud Statistics Plugin 0.27
-* Extra Columns Plugin 1.23
-* Jabber (XMPP) notifier and control Plugin 1.42
-* OWASP Dependency-Track Plugin 3.1.1
-* REST List Parameter Plugin 1.3.1
+  - Load the module with:
+    # insmod ozwpan.ko g_net_dev=eth0
+  - Compile the PoC with ozprotocol.h from the kernel tree:
+    $ cp /path/to/linux/drivers/staging/ozwpan/ozprotocol.h ./
+    $ gcc ./poc.c -o ./poc
+  - Run the PoC:
+    # ./poc eth0 [mac-address]
 
-Additionally, we announce unresolved security issues in the following
-plugins:
+These PoCs should also be useful to the maintainers for testing out
+constructing and sending various other types of malformed packets against
+which this driver should be hardened.
 
-* Team Foundation Server Plugin
-
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://www.jenkins.io/security/advisory/2021-03-30/
-
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
-
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://www.jenkins.io/security/#reporting-vulnerabilities
-
----
-
-SECURITY-2231 / CVE-2021-21628
-Build With Parameters Plugin 1.5 and earlier does not escape parameter
-names and descriptions.
-
-This results in a stored cross-site scripting (XSS) vulnerability
-exploitable by attackers with Job/Configure permission.
+Please assign CVEs for these vulnerabilities. I believe the first two
+patches of this set can receive one CVE for both, and the remaining two
+can receive one CVE each.
 
 
-SECURITY-2257 / CVE-2021-21629
-Build With Parameters Plugin 1.5 and earlier does not require POST requests
-for its form submission endpoint, resulting in a cross-site request forgery
-(CSRF) vulnerability.
+On a slightly related note, there are several other vulnerabilities in
+this driver that are worth looking into. When ozwpan receives a packet,
+it casts the packet into a variety of different structs, based on the
+value of type and length parameters inside the packet. When making these
+casts, and when reading bytes based on this length parameter, the actual
+length of the packet in the socket buffer is never actually consulted. As
+such, it's very likely that a packet could be sent that results in the
+kernel reading memory in adjacent buffers, resulting in an information
+leak, or from unpaged addresses, resulting in a crash. In the former case,
+it may be possible with certain message types to actually send these
+leaked adjacent bytes back to the sender of the packet. So, I'd highly
+recommend the maintainers of this driver go branch-by-branch from the
+initial rx function, adding checks to ensure all reads and casts are
+within the bounds of the socket buffer.
 
-This vulnerability allows attackers to build a project with
-attacker-specified parameters.
+Jason A. Donenfeld (4):
+  ozwpan: Use proper check to prevent heap overflow
+  ozwpan: Use unsigned ints to prevent heap overflow
+  ozwpan: divide-by-zero leading to panic
+  ozwpan: unchecked signed subtraction leads to DoS
 
+ drivers/staging/ozwpan/ozhcd.c     |  8 ++++----
+ drivers/staging/ozwpan/ozusbif.h   |  4 ++--
+ drivers/staging/ozwpan/ozusbsvc1.c | 11 +++++++++--
+ 3 files changed, 15 insertions(+), 8 deletions(-)
 
-SECURITY-2222 / CVE-2021-21630
-Extra Columns Plugin 1.22 and earlier does not escape parameter values in
-the build parameters column.
+-- 
+2.3.6
 
-This results in a stored cross-site scripting (XSS) vulnerability
-exploitable by attackers with Job/Configure permission. Additionally, a
-view containing such a job needs to be configured with the build parameters
-column, or the attacker also needs View/Configure permission.
-
-
-SECURITY-2246 / CVE-2021-21631
-Cloud Statistics Plugin 0.26 and earlier does not perform a permission
-check in an HTTP endpoint.
-
-This allows attackers with Overall/Read permission and knowledge of random
-activity IDs to view related provisioning exception error messages.
-
-
-SECURITY-2250 / CVE-2021-21632 (permission check) & CVE-2021-21633 (CSRF)
-OWASP Dependency-Track Plugin 3.1.0 and earlier does not perform permission
-checks in several HTTP endpoints.
-
-This allows attackers with Overall/Read permission to connect to an
-attacker-specified URL using attacker-specified credentials IDs obtained
-through another method, capturing "Secret text" credentials stored in
-Jenkins. If no credentials ID is specified, the globally configured
-credential is used, if set up, and can likewise be captured.
-
-Additionally, these HTTP endpoints do not require POST requests, resulting
-in a cross-site request forgery (CSRF) vulnerability.
-
-
-SECURITY-2162 / CVE-2021-21634
-Jabber (XMPP) notifier and control Plugin 1.41 and earlier stores passwords
-unencrypted in its global configuration file
-`hudson.plugins.jabber.im.transport.JabberPublisher.xml` on the Jenkins
-controller as part of its configuration.
-
-These passwords can be viewed by users with access to the Jenkins
-controller file system.
-
-
-SECURITY-2261 / CVE-2021-21635
-REST List Parameter Plugin 1.3.0 and earlier does not escape a parameter
-name reference in embedded JavaScript.
-
-This results in a stored cross-site scripting (XSS) vulnerability
-exploitable by attackers with Job/Configure permission.
-
-
-SECURITY-2283 (1) / CVE-2021-21636
-Team Foundation Server Plugin 5.157.1 and earlier does not perform a
-permission check in an HTTP endpoint.
-
-This allows attackers with Overall/Read permission to enumerate credentials
-IDs of credentials stored in Jenkins. Those can be used as part of an
-attack to capture the credentials using another vulnerability.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2283 (2) / CVE-2021-21637 (permission check) & CVE-2021-21638 (CSRF)
-Team Foundation Server Plugin 5.157.1 and earlier does not perform a
-permission check in an HTTP endpoint.
-
-This allows attackers with Overall/Read permission to connect to an
-attacker-specified URL using attacker-specified credentials IDs obtained
-through another method, capturing credentials stored in Jenkins.
-
-Additionally, this HTTP endpoint does not require POST requests, resulting
-in a cross-site request forgery (CSRF) vulnerability.
-
-As of publication of this advisory, there is no fix.
