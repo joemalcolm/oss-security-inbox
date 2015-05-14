@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1647" "Friday" "2" "October" "2015" "13:14:48" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151002171448.077C752E0B4@smtpvbsrv1.mitre.org>" "39" "[oss-security] Re: CVE request: Heap overflow with a gif file in gdk-pixbuf < 2.32.1" nil nil nil "10" "2015100217:14:48" "[oss-security] Re: CVE request: Heap overflow with a gif file in gdk-pixbuf < 2.32.1" (number mark "        cve-assign@m Oct  2   39/1647  " thread-indent "\"[oss-security] Re: CVE request: Heap overflow with a gif file in gdk-pixbuf < 2.32.1\"\n") "<CACn5sdTCA42QQcgRzw4u6jSVAyXovch8qgG4oAgMm3G0in=hPQ@mail.gmail.com>" ("<CACn5sdTCA42QQcgRzw4u6jSVAyXovch8qgG4oAgMm3G0in=hPQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1837" "Thursday" "14" "May" "2015" "13:53:56" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150514175356.6DF79B2E201@smtpvbsrv1.mitre.org>" "43" "[oss-security] Re: Potential issue in NTP -A option" nil nil nil "5" "2015051417:53:56" "[oss-security] Re: Potential issue in NTP -A option" (number mark "        cve-assign@m May 14   43/1837  " thread-indent "\"[oss-security] Re: Potential issue in NTP -A option\"\n") "<5554CB76.3070509@redhat.com>" ("<5554CB76.3070509@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 20244 invoked by uid 550); 2 Oct 2015 17:15:01 -0000
+Received: (qmail 24313 invoked by uid 550); 14 May 2015 17:54:09 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,32 +11,42 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 20210 invoked from network); 2 Oct 2015 17:15:01 -0000
-In-Reply-To: <CACn5sdTCA42QQcgRzw4u6jSVAyXovch8qgG4oAgMm3G0in=hPQ@mail.gmail.com>
-Message-Id: <20151002171448.077C752E0B4@smtpvbsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Fri,  2 Oct 2015 13:14:48 -0400 (EDT)
+Received: (qmail 24292 invoked from network); 14 May 2015 17:54:08 -0000
+In-Reply-To: <5554CB76.3070509@redhat.com>
+Message-Id: <20150514175356.6DF79B2E201@smtpvbsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, stenn@ntp.org
+Date: Thu, 14 May 2015 13:53:56 -0400 (EDT)
 From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE request: Heap overflow with a gif file in gdk-pixbuf < 2.32.1
-To: gustavo.grieco@gmail.com
+Subject: [oss-security] Re: Potential issue in NTP -A option
+To: kseifried@redhat.com
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hash: SHA1
 
-> We found a heap overflow in the gdk-pixbuf implementation triggered by the
-> scaling of gif file. These issues are only fixed in the recent release of
-> gdk-pixbuf 2.32.1
-> 
-> fixed in 2.32.1 with this commit:
-> https://git.gnome.org/browse/gdk-pixbuf/commit/?id=e9a5704edaa9aee9498f1fbf6e1b70fcce2e55aa
+> the documentation seems to conflict slightly
 
-Use CVE-2015-7674. Apparently the cause of the issue was that the
-integer data type was incompatible with the details of how bitwise
-shifts were used.
+We do not feel that a CVE is required; however, Harlan can choose to
+have a CVE ID if the undocumented risky behavior is going to be
+announced as a vulnerability.
 
-The entry in the 2.32.1 changelog is shown in:
-https://git.gnome.org/browse/gdk-pixbuf/commit/?id=044bdb059a26608fa8178e16a8505eb7ef56dfd0
+More specifically, it appears that mode 7 itself is, in some sense,
+deprecated (e.g., "mode7 ... Enables processing of NTP mode 7
+implementation-specific requests which are used by the deprecated
+ntpdc program" on the
+http://www.eecis.udel.edu/~mills/ntp/html/miscopt.html page and
+"functionally deprecating ntpdc" on the
+http://support.ntp.org/bin/view/Main/SoftwareDownloads page). If so,
+then we do not feel that there is a requirement for the documentation
+to precisely specify the effect of a command-line option on a
+deprecated feature. The -A documentation doesn't directly make a false
+statement about authentication within mode 7; it simply does not
+discuss mode 7.
+
+If mode 7 itself isn't deprecated, and there is a supported use case
+in which the user may choose to enable both mode 7 and the -A option,
+then announcing the behavior/documentation mismatch as a vulnerability
+is probably more useful.
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -44,19 +54,13 @@ M/S M300
 202 Burlington Road, Bedford, MA 01730 USA
 [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Version: GnuPG v1.4.14 (SunOS)
 
-iQIcBAEBCAAGBQJWDro8AAoJEL54rhJi8gl5Y90P/3Bn9Ju1jDuWjFyI0icQQKH+
-17XiOgVKl58CZ35G28g7lp5lhvF+QbuFNenS/bZFKl4/6NN3ODs2x9pnO/horMNQ
-pIY5WhJS8z50VfS2Kr6EWlWsUgiB7N/+FPn4F/1mcH+Gg+P6OupZaF/76MmxECVU
-/YXo0OOgN6qkbvy+Z4l9ZL+htV3ojTU8+Q8k0JxWGTmMp8rfHKIfJ6b/J1yMzWhN
-Ljjf+7F55yL/YwyICf3Ww7D2vjXesTS90EE9+kNA3w0qcaoQuooYaSdl5CIwFXtm
-iIFbWDJIzRbZsmjEf6v9E9DyOt20jI2zShiBoDs697WHrcguNAJIKKTPWChkm0GV
-EGh8qm2RxZnjXnAcHYX6qNcs2kWerQ9gLWmMCyZaSqq4opSDekEosM+pTUmWJyV4
-cLEIEFsMeKD4+aIRckNa958LUeuEbN2TjluSJ6NsA6PTXDAefGMctoyG/aFSLOQu
-qkpkreA7gm0oC96y4E6kF+ltcc3HeUmNbMGMqDNk9/sv05NeKd+YB6u/VcNeuxmF
-Mi6yMNviVGmMr4wW1QvUlnA2skhTkd0Jx2IRm74Mb8IqRGxQ6EUJ6abDFDl0fKx6
-IoRzKBtcLRGHLRumpMMh9Cqq88c6rMzMkNjmynr3DE5svuK/JE+2QwSQs5u1btz0
-JyGSFmwiUakdpxmydN2X
-=h2vy
+iQEcBAEBAgAGBQJVVOBzAAoJEKllVAevmvmsy4oH/REWyDXtOBOoJL5lYtj6zroV
+DATBhEgJTGSK7m7zc5Z1sqGGEGXNthghS8VGysc4T1vbkgKVO0hpATMzHdZb6L6R
+rNGggnTpHxoubpKRt+flURxCBzMta0w9brQb2vXxUvh4RYy+6MklDqGQofQA3ELB
+9rZW6wkMK3KYms00HJGrGkIutxcVe+1/1At6htLGlQo3wEuY5ORHdlxmUxHaXBos
+99fyRa1rR8ZzrN1EKWgh62WUhetvauqASFlYXdhNcqUgySlzIfMrAlFpLUyvTIGn
+TjTYgf+XAvlQLmnPjKV48IeY/g2BE8MHO61loTCX5fBeYMT3lzyl2PVDx6sIN9s=
+=MpGY
 -----END PGP SIGNATURE-----
