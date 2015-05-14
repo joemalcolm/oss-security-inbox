@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1002" "Wednesday" "1" "May" "2019" "14:02:58" "-0400" "Lou DeGenaro" "lou.degenaro@gmail.com" nil "34" nil "^Cc:" nil nil "5" nil nil (number mark "U       lou.degenaro May  1   34/1002  " thread-indent "\"[oss-security] [ANNOUNCE] CVE-2018-8035: Apache UIMA DUCC webserver cross-site scripting (XSS) vulnerability fix\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [ANNOUNCE] CVE-2018-8035: Apache UIMA DUCC webserver cross-site scripting (XSS) vulnerability fix" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["392" "Thursday" "14" "May" "2015" "19:16:24" "-0400" "Kash Pande" "kashpande@gmail.com" "<55552CC8.7030804@gmail.com>" "13" "Re: [oss-security] re: CVE for Jentu" nil nil nil "5" "2015051423:16:24" "[oss-security] re: CVE for Jentu" (number mark "        kashpande@gm May 14   13/392   " thread-indent "\"Re: [oss-security] re: CVE for Jentu\"\n") "<20150514200001.GA7130@openwall.com>" ("<5554F54C.7040101@gmail.com>" "<20150514200001.GA7130@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 17592 invoked by uid 550); 1 May 2019 18:14:19 -0000
+Received: (qmail 24013 invoked by uid 550); 14 May 2015 23:16:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,74 +11,44 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3870 invoked from network); 1 May 2019 18:03:21 -0000
+Received: (qmail 23994 invoked from network); 14 May 2015 23:16:19 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=n6+04DDVmLwbH3OvLMZ2rKyMsJPhG+Qp67PH9L4fjgY=;
-        b=IWUz76RppsiCV++G1vWphMnftXVxw1WP4Pz9UtaWgHoiR97qr4NCwjbUslEBa6FkcO
-         KydhdvnSH7oUfy2PzJ1p2JRlYy1GZZFo/A+gqwJ8Mm2HIOHqn2UXxqCr+/oajBVwp1+J
-         1k2kMs0946b8/xwDI6VLvfNQ+hlFlXRmD6lNPp5d/RfBBq4TX7DveA02cROiBfi/mvtC
-         zssDxsGI0/uJDJZvk1GQj2f2N8jqBs+Hygs5tpQT6EJKIse8jTIoAV9TjaDzgEfaNgpK
-         z9FDFcAl4URG3NRuTHuQ83gx10o5ayd1XDh/V9QesUpw3R2+jB2hXPOTOcDNUEXBqZC3
-         Ye4Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=n6+04DDVmLwbH3OvLMZ2rKyMsJPhG+Qp67PH9L4fjgY=;
-        b=elOx3m3nrFcI2k5vy9HAJUCLo7S/lCsRMBWPSUPmdeWUANPZBjDZFFvY8Y8gFW1HW9
-         iRnWruO3UJDEt2gbSDBWfC681cM77WWHHLi0F7m+ZtWz+0g8MFSCnECMvjhUxeZNIOd8
-         vDJgN+4e/qk9N2cPqiQT3wbtpLjLQ0uoirlAZTFd4m3svobDEyiQyhAcSM6osF3+DHCg
-         6Fxats1JQVgNj/BOi1r7X/TF3lO9OjtSqbBchSwX2Mg2xFF0Z2EGf3lJLQkfxfcLv6OI
-         KK3O0C/lTd4i5XvtYHVlxCabjn6yjSEGgC9ELxaduHfKFcbPpfxZ6RBhLqHZrZiEFGdd
-         zLew==
-X-Gm-Message-State: APjAAAVZSmH+yCjIsCvlKVsWk4V8/Q/uYduZVfez55/A7WdH1sT9Vf43
-	c/wm8cCQlpAS5DSCrx715Y7m9ocdRHBMUadUPcpj19czq+g=
-X-Google-Smtp-Source: APXvYqwaPJJRDgrLeMQo6XH93Qmhllq/91eCEwNMXXh9gcM8LnMgmkj1aeoIKkttdOHByrzeASRpa8OvbYhek2O/WFc=
-X-Received: by 2002:a17:906:13c8:: with SMTP id g8mr5857142ejc.183.1556733789410;
- Wed, 01 May 2019 11:03:09 -0700 (PDT)
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=X6+E7BMlp7ZNCUOPP/eJ6SfQzZYZ29nVxHLp+tAFoL0=;
+        b=BUjBuOspo2pp2hI4s+wOvGrU2LvFU1wLJin+9Wt/1Jk4eL8kSa3/R406f4U5bvfz/X
+         FnldC2cG13pejc4Vat3xXwCk3woEY8Uwy7Ci1V4FcC3fZnWeh8aTmi7rzkTnwVDIR27r
+         1ZUZ0t978bVTfi6V5kRxmT/CYa71rpruqsf71tbzo+YEsH20N3lXqEHmEiX9KfaxIQEU
+         9wRgTAoDAXR4pgO2lyLlGrpqKT4dAvcLDh/oeSJMRFykGi/+3N7e4u1OTywd8FXezcKV
+         3UtNZblqfEti7PTcaf4L/x35s9V38lmGqP4zEJeoWIZanGSjicgEhBR+Qq3TyrSvDkK8
+         aX3g==
+X-Received: by 10.229.252.201 with SMTP id mx9mr9131132qcb.1.1431645367869;
+        Thu, 14 May 2015 16:16:07 -0700 (PDT)
+Message-ID: <55552CC8.7030804@gmail.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
 MIME-Version: 1.0
-Message-ID: <CA+W_RZia02oGCMn7wGk_WFSrwv72BfRiiC2UEZnytL=P0mVNQw@mail.gmail.com>
-Content-Type: multipart/alternative; boundary="000000000000871f2e0587d754a9"
-Cc: uima-dev@apache.org
-Date: Wed, 1 May 2019 14:02:58 -0400
-From: Lou DeGenaro <lou.degenaro@gmail.com>
+References: <5554F54C.7040101@gmail.com> <20150514200001.GA7130@openwall.com>
+In-Reply-To: <20150514200001.GA7130@openwall.com>
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+CC: oss-security@lists.openwall.com, cve-assign@mitre.org
+Date: Thu, 14 May 2015 19:16:24 -0400
+From: Kash Pande <kashpande@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] [ANNOUNCE] CVE-2018-8035: Apache UIMA DUCC webserver cross-site
- scripting (XSS) vulnerability fix
-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] re: CVE for Jentu
+To: Solar Designer <solar@openwall.com>
 
---000000000000871f2e0587d754a9
-Content-Type: text/plain; charset="UTF-8"
+On 14/05/15 04:00 PM, Solar Designer wrote:
+> On Thu, May 14, 2015 at 03:19:40PM -0400, Kash Pande wrote:
+>> what was the decision on a CVE?
+> See http://www.openwall.com/lists/oss-security/2015/05/10/4
+>
+> Alexander
 
-CVE-2018-8035: Apache UIMA DUCC webserver cross-site scripting (XSS)
-vulnerability due to unintended execution of user supplied javascript code.
 
-Severity: Important
+Thanks - I had made an off-list reply to MITRE about this with some
+clarifications. Hopefully they will respond to me via this thread or the
+CC will get picked up :-)
 
-Vendor:
-The Apache Software Foundation
-
-Versions Affected:
-   - Apache UIMA DUCC releases including and prior to 2.2.2
-
-Description.
-The details of this vulnerability were reported to the Apache UIMA
-Private mailing list.
-
-This  vulnerability relates to the user's browser processing of DUCC web
-page input data.
-
-The javascript comprising Apache UIMA DUCC which runs in the user's
-browser does not sufficiently filter user supplied inputs, which may
-result in unintended execution of user supplied javascript code.
-
-Mitigation:
-Users are advised to upgrade these UIMA components to the following levels:
-   - Apache UIMA DUCC: upgrade to 3.0.0 or later
-
-Credit: Marshall Schor
-
-Lou DeGenaro, on behalf of the Apache UIMA Team
-
---000000000000871f2e0587d754a9--
+Kash
