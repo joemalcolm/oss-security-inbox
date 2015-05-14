@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2101" "Monday" "22" "June" "2015" "23:06:52" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150623030652.CBA40B2E50D@smtpvbsrv1.mitre.org>" "49" "[oss-security] Re: CVE request: Linux kernel - bpf jit optimization flaw can panic kenrel." nil nil nil "6" "2015062303:06:52" "[oss-security] Re: CVE request: Linux kernel - bpf jit optimization flaw can panic kenrel." (number mark "U       cve-assign@m Jun 22   49/2101  " thread-indent "\"[oss-security] Re: CVE request: Linux kernel - bpf jit optimization flaw can panic kenrel.\"\n") "<1828271780.19122892.1435025594570.JavaMail.zimbra@redhat.com>" ("<1828271780.19122892.1435025594570.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1976" "Thursday" "14" "May" "2015" "10:39:42" "+0300" "DaKnOb" "daknob.mac@gmail.com" "<8F31836E-B883-469C-A4D4-54A1C91DA217@gmail.com>" "55" "Re: [oss-security] Request 2 CVE-IDs for Zeus Voting System" nil nil nil "5" "2015051407:39:42" "[oss-security] Request 2 CVE-IDs for Zeus Voting System" (number mark "        daknob.mac@g May 14   55/1976  " thread-indent "\"Re: [oss-security] Request 2 CVE-IDs for Zeus Voting System\"\n") "<20150514071347.GE889@lakka.kapsi.fi>" ("<63E299CE-40BE-4F1D-BFC0-5278B8E51C57@gmail.com>" "<20150514071347.GE889@lakka.kapsi.fi>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 5356 invoked by uid 550); 23 Jun 2015 03:07:05 -0000
+Received: (qmail 22226 invoked by uid 550); 14 May 2015 07:39:58 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,62 +11,87 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 22199 invoked from network); 14 May 2015 07:39:57 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=content-type:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=6IGA2WQq5Kg6W3eIsViowMC25WvItJZjrtNm/CJfNx4=;
+        b=Z+pS7V4Klpdu7UEzrN93K0x8El4s/GiRFk6Yekmsr/ej8HeFI0prseVS8BgqgIV6oy
+         NO8erKzDpyc5/Vw37LzyW/Sj5Gn3cnJAvWoOimMACykylMIurwvwLQHoIIgGkOMVQTt2
+         yMaMaDkN8gIoX7EC+ffEtMNymakaYDQAs8/rnOEPwT440/D2WsHyfdpWuuLLUXsB/Q56
+         BYaUj8aEK1F/25bd/bDJ6cepSZBVzj/jsBQzGWImbzeeC5ytOddT7qEmeZGt2RgFpN+3
+         e2+bSgTqKtJULrbfhaidaJl6TnfzgVgGx6Lx9/AywZ6PHaG7LZD9zPffgeQ2bX9V1XfK
+         iPsg==
+X-Received: by 10.180.37.101 with SMTP id x5mr21637596wij.74.1431589186096;
+        Thu, 14 May 2015 00:39:46 -0700 (PDT)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (1.0)
+X-Mailer: iPhone Mail (12B440)
+In-Reply-To: <20150514071347.GE889@lakka.kapsi.fi>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <8F31836E-B883-469C-A4D4-54A1C91DA217@gmail.com>
+References: <63E299CE-40BE-4F1D-BFC0-5278B8E51C57@gmail.com> <20150514071347.GE889@lakka.kapsi.fi>
+Cc: OSS Security List <oss-security@lists.openwall.com>
+Date: Thu, 14 May 2015 10:39:42 +0300
+From: DaKnOb <daknob.mac@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5317 invoked from network); 23 Jun 2015 03:07:04 -0000
-From: cve-assign@mitre.org
-To: wmealing@redhat.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <1828271780.19122892.1435025594570.JavaMail.zimbra@redhat.com>
-Message-Id: <20150623030652.CBA40B2E50D@smtpvbsrv1.mitre.org>
-Date: Mon, 22 Jun 2015 23:06:52 -0400 (EDT)
-Subject: [oss-security] Re: CVE request: Linux kernel - bpf jit optimization flaw can panic kenrel.
+Subject: Re: [oss-security] Request 2 CVE-IDs for Zeus Voting System
+To: Henri Salo <henri@nerv.fi>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Thank you for your interest, replies inline.=20
 
-> In the problematic case, the compiler fails to optimise a set
-> of specially crafted instructions. This creates a problem when this faulty
-> instruction list is used during filtering and the CPU can execute an invalid
-> instruction (in receive_pkt).
-> 
-> This can be triggered as an non-root user, as they can start a server on a
-> ephemeral port and the packet filter with a specially crafted filter.
-> 
-> These incorrect instructions will run when the server receives a packet and execute
-> the buggy instructions.
+Antonios A. Chariton
 
-> https://git.kernel.org/cgit/linux/kernel/git/davem/net.git/commit/?id=3f7352bf21f8fd7ba3e2fcef9488756f188e12be
+> On 14 =CE=9C=CE=B1=CE=90 2015, at 10:13, Henri Salo <henri@nerv.fi> wrote:
+>=20
+>> On Wed, May 13, 2015 at 07:09:49PM +0300, DaKnOb wrote:
+>> Zeus (https://github.com/grnet/zeus) is a fork of Helios that is actively
+>> developed by GRNET (http://www.grnet.gr/) and is considered to be used in
+>> Greek Elections (starts with small and rolls out to larger elections).
+>=20
+> Really? They are seriously considering open source application in the ele=
+ctions?
 
-> x86: bpf_jit: fix compilation of large bpf programs
->
-> x86 has variable length encoding. x86 JIT compiler is trying to pick
-> the shortest encoding for given bpf instruction. While doing so the
-> jump targets are changing, so JIT is doing multiple passes over the
-> program. Typical program needs 3 passes. Some very short programs
-> converge with 2 passes. Large programs may need 4 or 5. But specially
-> crafted bpf programs may hit the pass limit and if the program
-> converges on the last iteration the JIT compiler will be producing an
-> image full of 'int 3' insns. Fix this corner case by doing final
-> iteration over bpf program.
-> 
-> - for (pass = 0; pass < 10; pass++) {
-> + for (pass = 0; pass < 10 || image; pass++) {
+Yes, the prime minister rejected the software but their argument is that it=
+'s open source and anyone can verify the code.=20
 
-Use CVE-2015-4700.
+> Is there english news about this?
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+I will try to find some. So far the software was used in the university ele=
+ctions (across Greece for important decisions, within universities for dean=
+ / ...)
 
-iQEcBAEBAgAGBQJViMx/AAoJEKllVAevmvmszzcH/1ohdtc1XTzmN0ZMTkRXLPT3
-N2RFIEzSfUNtr3rwG28gUd7mfddN/1ANJ3d634LT0fS7Nw/OZIeaZEdQI89TZYwJ
-tNhg+JvCLBLtCmqExFaG7Et3PiYSRGETfDUIYQFAZgcgXfu7nhLnvoJPkx6UMl+7
-MY07c84T7pFYaJif8frMTzjQ9DQxcpacIUOA7dyyvBxKnoI0eJX8OtGeMffjmwtl
-5UWnZrIYrmeYrlnacIaPUha7qOrjVn118dBUSm5ZvZsk83meHcogka9V5fI7lUPp
-ORHq7GwiuCiaYv9B52TxrH845z2+C/FmT8zWPXsVamPHgFC+OgrhyN0uNweVN8Y=
-=7y5J
------END PGP SIGNATURE-----
+> Have they ordered or requested real security
+> audits for this product?
+
+Of course not, their argument is that "It is mathematically proven that nob=
+ody can alter the votes" yet they forget the huge stack from processor erro=
+rs all the way up to code errors (as I have proved to exist).
+
+> Do you know if there is official contact person who I
+> could give my (free) services to get this codebase secured.
+
+I believe in the website https://zeus.grnet.gr/ there are emails but since =
+it's Open Source and you offer your services for free, I believe it is a lo=
+t better if you do this on GitHub repo because:
+
+1. Everybody can see that you have contributed to this.
+2. Everybody can see your findings and do not use this software unless all =
+bugs are closed.=20
+3. They are easily trackable and assignable to their developers.=20
+4. If they don't do it, people can fork the code and use your opened issues=
+ to make a secure copy of it.
+5. [...]
+
+> I have some
+> resources from our company, which I probably can assign to audit this for=
+ a few
+> days.
+
+I believe that would be great!
+
+>=20
+> --=20
+> Henri Salo
