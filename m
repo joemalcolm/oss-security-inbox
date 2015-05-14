@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["663" "Tuesday" "18" "August" "2015" "01:38:29" "-0400" "Wade Mealing" "wmealing@redhat.com" "<1385098753.10178920.1439876309298.JavaMail.zimbra@redhat.com>" "22" "[oss-security] CVE request - Linux kernel - perf on ppp64 - unbounded checks in perf_callchain_user_64 denial of service." nil nil nil "8" "2015081805:38:29" "[oss-security] CVE request - Linux kernel - perf on ppp64 - unbounded checks in perf_callchain_user_64 denial of service." (number mark "        wmealing@red Aug 18   22/663   " thread-indent "\"[oss-security] CVE request - Linux kernel - perf on ppp64 - unbounded checks in perf_callchain_user_64 denial of service.\"\n") "<1321721814.8923718.1439602966890.JavaMail.zimbra@redhat.com>" ("<1321721814.8923718.1439602966890.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1818" "Thursday" "14" "May" "2015" "19:55:08" "+0300" "DaKnOb" "daknob.mac@gmail.com" "<22512F4A-315E-40A6-825C-C61DEC4FC14E@gmail.com>" "43" "[oss-security] Re: Request 2 CVE-IDs for Zeus Voting System" nil nil nil "5" "2015051416:55:08" "[oss-security] Re: Request 2 CVE-IDs for Zeus Voting System" (number mark "        daknob.mac@g May 14   43/1818  " thread-indent "\"[oss-security] Re: Request 2 CVE-IDs for Zeus Voting System\"\n") "<63E299CE-40BE-4F1D-BFC0-5278B8E51C57@gmail.com>" ("<63E299CE-40BE-4F1D-BFC0-5278B8E51C57@gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 32192 invoked by uid 550); 18 Aug 2015 05:38:42 -0000
+Received: (qmail 24203 invoked by uid 550); 14 May 2015 16:55:29 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,43 +11,72 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 32170 invoked from network); 18 Aug 2015 05:38:41 -0000
-Message-ID: <1385098753.10178920.1439876309298.JavaMail.zimbra@redhat.com>
-In-Reply-To: <1321721814.8923718.1439602966890.JavaMail.zimbra@redhat.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.64.48.179]
-X-Mailer: Zimbra 8.0.6_GA_5922 (ZimbraWebClient - GC44 (Mac)/8.0.6_GA_5922)
-Thread-Topic: CVE request - Linux kernel - perf on ppp64 - unbounded checks in perf_callchain_user_64 denial of service.
-Thread-Index: vM4OhtiJRkXxsp2Vmn1a2GOJ1bgODQ==
-Cc: cve-assign@mitre.org
-Date: Tue, 18 Aug 2015 01:38:29 -0400 (EDT)
-From: Wade Mealing <wmealing@redhat.com>
+Received: (qmail 24138 invoked from network); 14 May 2015 16:55:22 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:content-type:message-id:mime-version:subject:date:references
+         :to:in-reply-to;
+        bh=wTWwKcc63zHsyhpC49hC3uh7665hyxusapKswprjeAY=;
+        b=iRRzslRpXj0+bgsqPLvZkJt21ZAVorDW2brAJQoSZhBG+8CywUPRFqlH8Et7S9cvHJ
+         j3BLTsgxyZbfFW/R6Y60oPqUa2eZ5dAd6Np2nURYuAfjUAZB/wZiccYJomY1oZK2xtvD
+         sq9exS/xXEU1D4SeSyt6r3KVBcSm1J8E/X56KbLUki0FYLVkY/pxhBzFwWcqg13DUhZ+
+         iEqv5J/r5sCjeUliH0PZR89ZhMZ52Mxcc4WxSwk1IEd7zOYPBm8gXseHq5ZOInYfKVSf
+         eQuE2Rjh7oRORHoQxyZ7TxJpnI157zxxv/cH/B6ZB3YVG2A9qHgLsNN0O6sfgxlUWstI
+         o5IA==
+X-Received: by 10.180.78.65 with SMTP id z1mr8684053wiw.14.1431622511083;
+        Thu, 14 May 2015 09:55:11 -0700 (PDT)
+Content-Type: multipart/alternative; boundary="Apple-Mail=_31BA3057-52E6-479C-A086-BBA8322520D0"
+Message-Id: <22512F4A-315E-40A6-825C-C61DEC4FC14E@gmail.com>
+Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.6\))
+References: <63E299CE-40BE-4F1D-BFC0-5278B8E51C57@gmail.com>
+In-Reply-To: <63E299CE-40BE-4F1D-BFC0-5278B8E51C57@gmail.com>
+X-Mailer: Apple Mail (2.1878.6)
+Date: Thu, 14 May 2015 19:55:08 +0300
+From: DaKnOb <daknob.mac@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE request - Linux kernel - perf on ppp64 - unbounded checks in
- perf_callchain_user_64 denial of service.
+Subject: [oss-security] Re: Request 2 CVE-IDs for Zeus Voting System
 To: OSS Security List <oss-security@lists.openwall.com>
 
-Gday,
+--Apple-Mail=_31BA3057-52E6-479C-A086-BBA8322520D0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=windows-1252
 
-A malicious user could create a special stack layout that fools
-the perf_callchain_user_64 function (called by perf record) into 
-an infinite loop, tying up that particular CPU and the process 
-can not be killed.
+I would like to update the topic below on some information I got.
+I admit that it was a mistake of me saying that the developers said some th=
+ings, mainly because I read really quickly a related blog post somewhere by=
+ a person working in the same company, so after a talk with the blog post a=
+uthor and the development team of Zeus, I=92d like to let you know that Zeu=
+s development team does not consider the mathematical proof of the technolo=
+gy the same as the implementation and additionally:
 
-A kernel patch was committed upstream capping the maximum user-level
-stacktrace collected by perf to PERF_MAX_STACK_DEPTH on 64bit powerpc
-architectures. This affects ppc64 kernels that support perf.
+=93We have not requested real security audits because there are not funds f=
+or Zeus, so no money to pay for the auditor. Of course we welcome work pro =
+bono. Our argument is that you can have verifiable elections by using stron=
+g cryptography, but of course algorithms may be perfect but systems are not=
+, and humans even less so=94.
 
-Thanks,
+Additionally, the two XSS vulnerabilities have been patched in the master b=
+ranch in less than 24 hours.
 
-Wade Mealing
+Sincerely,
+Antonios A. Chariton
 
-Upstream fix
-------------
-- https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=9a5cbce421a283e6aea3c4007f141735bf9da8c3
+On May 13, 2015, at 19:09, DaKnOb <daknob.mac@gmail.com> wrote:
 
-Red Hat Bugzilla:
-- https://bugzilla.redhat.com/show_bug.cgi?id=1218454
+> Zeus (https://github.com/grnet/zeus) is a fork of Helios that is actively=
+ developed by GRNET (http://www.grnet.gr/) and is considered to be used in =
+Greek Elections (starts with small and rolls out to larger elections).=20
+>=20
+> Two XSS vulnerabilities that allow JavaScript Execution have been found, =
+one of which has a PoC running JavaScript / Modifying HTML in the voter=92s=
+ browser during the voting process.
+>=20
+> XSS #1 - https://github.com/grnet/zeus/issues/28
+> XSS #2 - https://github.com/grnet/zeus/issues/29
+>=20
+> Thank you,
+> Antonios A. Chariton
 
+
+--Apple-Mail=_31BA3057-52E6-479C-A086-BBA8322520D0--
