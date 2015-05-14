@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3961" "Thursday" "21" "April" "2016" "09:12:21" "+0100" "Sysdream Labs" "labs@sysdream.com" "<57188B65.4080501@sysdream.com>" "126" "[oss-security] Wordpress iThemes Security (Better WP Security) Insecure Backup/Logfile Generation (access rights)" nil nil nil "4" "2016042108:12:21" "[oss-security] Wordpress iThemes Security (Better WP Security) Insecure Backup/Logfile Generation (access rights)" (number mark "U       labs@sysdrea Apr 21  126/3961  " thread-indent "\"[oss-security] Wordpress iThemes Security (Better WP Security) Insecure Backup/Logfile Generation (access rights)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1942" "Thursday" "14" "May" "2015" "17:31:41" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150514213141.4416F42E062@smtpvbsrv1.mitre.org>" "46" "[oss-security] Re: CVE request for vulnerability in OpenStack Horizon" nil nil nil "5" "2015051421:31:41" "[oss-security] Re: CVE request for vulnerability in OpenStack Horizon" (number mark "        cve-assign@m May 14   46/1942  " thread-indent "\"[oss-security] Re: CVE request for vulnerability in OpenStack Horizon\"\n") "<5552486F.4090707@enovance.com>" ("<5552486F.4090707@enovance.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 18305 invoked by uid 550); 21 Apr 2016 16:17:58 -0000
+Received: (qmail 17985 invoked by uid 550); 14 May 2015 21:31:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,145 +11,59 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 17965 invoked from network); 14 May 2015 21:31:52 -0000
+In-Reply-To: <5552486F.4090707@enovance.com>
+Message-Id: <20150514213141.4416F42E062@smtpvbsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Thu, 14 May 2015 17:31:41 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 2001 invoked from network); 21 Apr 2016 08:12:35 -0000
-X-Virus-Scanned: amavisd-new at sysdream.com
-To: oss-security@lists.openwall.com, fulldisclosure@seclists.org
-From: Sysdream Labs <labs@sysdream.com>
-Message-ID: <57188B65.4080501@sysdream.com>
-Date: Thu, 21 Apr 2016 09:12:21 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.7.0
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="V0WPiuepdguePdtbmAJVb20Cs7mhO5Iff"
-Subject: [oss-security] Wordpress iThemes Security (Better WP Security) Insecure
- Backup/Logfile Generation (access rights)
+Subject: [oss-security] Re: CVE request for vulnerability in OpenStack Horizon
+To: tristan.cacqueray@enovance.com
 
---V0WPiuepdguePdtbmAJVb20Cs7mhO5Iff
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Wordpress iThemes Security (Better WP Security) Insecure Backup/Logfile Gen=
-eration (access rights)
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> Title: Persistent XSS in Horizon metadata dashboard
+> Affects: version 2015.1.0
 
+> a persistent XSS in
+> Horizon. An authenticated user may conduct a persistent XSS attack by
+> setting a malicious metadata to a Glance image, a Nova flavor or a Host
+> Aggregate and tricking an administrator to load the update metadata
+> page. Once executed in a legitimate context this attack may result in a
+> privilege escalation.
+> 
+> https://launchpad.net/bugs/1449260
 
-Description
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+We are assigning only one CVE ID for this. Use CVE-2015-3988.
 
-A vulnerability has been found in iThemes Security backup function that may=
- allow attackers to gain access to backup/log files.
+It appears that 1449260 became a public security bug on 2015-05-01 in
+https://bugs.launchpad.net/horizon/+bug/1449260/comments/6 and then an
+additional attack vector (Host Aggregates) was first mentioned in
+https://bugs.launchpad.net/horizon/+bug/1449260/comments/10 on
+2015-05-04. However, there would apparently be no reasonable way to
+independently address only the attack vectors that were identified
+earlier. Also, apparently the completely general description of
+vectors came in from IBM (e.g., "all the other things that have
+metadata" in
+https://bugs.launchpad.net/horizon/+bug/1449260/comments/9 on
+2015-05-04). Accordingly, it doesn't appear that an additional CVE ID
+could be useful to anyone.
 
-
-By default, when using the "database backup on filesystem" feature, iThemes=
- Security saves the backup files in a world-readable directory :
-
-wp-content/uploads/ithemes-security/backups
-
-The .htaccess file is generated during the plugin initial setup/update, onl=
-y if the wp-content/uploads/ithemes-security/backups exists (or wp-content/=
-uploads/ithemes-security/logs). Note that it does *NOT* exists by default.
-
-When running a backup, the ITSEC_Backup class creates the directory but *wi=
-thout* any .htaccess file inside.
-The same thing happens with log saving.
-
-If the webserver has directory listing enabled, then anybody can download t=
-he complete database backup or view the log files.
-
-
-**Access Vector**: remote
-
-**Security Risk**: high
-
-**Vulnerability**: CWE-219
-
-**CVSS Base Score**: 7.5
-
----------------
-Vulnerable code
----------------
-
-The vulnerable code is located in core/modules/backup/class-itsec-backup.ph=
-p, line 246 :
-
-    if ( ! is_dir( $itsec_globals['ithemes_backup_dir'] ) ) {
-        @mkdir( trailingslashit( $itsec_globals['ithemes_dir'] ) . 'backups=
-' );
-    }
-
-And in core/class-itsec-logger.php, line 31 :
-
-    //Make sure the logs directory was created
-    if ( ! is_dir( $itsec_globals['ithemes_log_dir'] ) ) {
-            @mkdir( trailingslashit( $itsec_globals['ithemes_dir'] ) . 'log=
-s' );
-    }
-
-The application creates the backup/log directory, but *not* the .htaccess/i=
-ndex file inside.
-
---------
-Solution
---------
-
-Add a default index file file inside the backup folder when creating the di=
-rectory or store the backups outside of the web root.
-
-Update iThemes Security to version >=3D 5.3.1
-
-Timeline (dd/mm/yyyy)
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-* 26/02/2016 : Initial contact with iThemes.
-* 26/02/2016 : iThemes confirms the vulnerabilities.
-* 29/02/2016 : iThemes publishes a new version (5.3.1) of iThemes Security =
-that fixes the vulnerabilities.
-
-Credits
-=3D=3D=3D=3D=3D=3D=3D
-
-* Nicolas CHATELAIN, Sysdream (n.chatelain -at- sysdream -dot- com)
-
-
-
---=20
-SYSDREAM Labs <labs@sysdream.com>
-
-GPG :
-47D1 E124 C43E F992 2A2E
-1551 8EB4 8CD9 D5B2 59A1
-
-* Website: https://sysdream.com/
-* Twitter: @sysdream
-
-
---V0WPiuepdguePdtbmAJVb20Cs7mhO5Iff
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
+Version: GnuPG v1.4.14 (SunOS)
 
-iQIcBAEBCAAGBQJXGItlAAoJEI60jNnVslmhGOgQAIPKMEvz2pX58tuVcWmfrduy
-SkMewsK+UO4GcUlCbBp98VkGJ1D6sHn7cRFTTbGFKW7RF6OfXeCoMyKvvStGup0Q
-w67jgy7KgEPKlP0cDwQuuMdqofFTRUhYVT+g7JzjQ7cc92aC9aWANmJPia+dPaFF
-WkDC9gVjibnk1BdUQF+BRbKTjsOGl8WKgq86mCMDy0W6BKW2YBQYwj0YtWVgr+z8
-00QZsF87sHCUs38onuTmDefV5DWc73Wvkz96tz5vFgHFKgUQfBP2RjVsMc/BKamc
-/d/Ykvd3YaXEW9sIxsJq+6m9s3tSBJ4mq2d5QENzByKze4A3aAHMf4gxEf1X97B3
-J3eG/0jsoHqmYEXpKNXZraOK5d3ONdJldJtoAz/xjriBR/73xXaPXNQGh4Nm130M
-4spB0zw0xRcN+08eF9oI4Wn8FFZaZc8KrgigBt3hTEBriiqBl2WAL3JOAL1Zxz+H
-V5IkP2W/DhbLmW0fqVQjUbqIc/T6hYqYgUeQNCBn3Am885KK3u6YaUHID6ahNN+u
-vakCquQvA+mB2hxLF2F1NC12B0o1w4V8qyNqUtpvFgZjE2z8D7V404ptrQgXlop0
-MsO1nfGSPPUAcTCcEOdnInxl0kr0KhP7tzqSgJa4dlGxlE6qjZfOPL/TyZkL5Jje
-Pa4jNFj2F2tvbzi1fmqr
-=5lEx
+iQEbBAEBAgAGBQJVVRPAAAoJEKllVAevmvmsHP4H+KZ48Z7iwRixSwry6qAWuSw9
+IW7TpU8mFfqxXyBSq4FQnILX6LReqcUnsehRVnxW4yWIOLlgiyD722ec67gVScbN
+yUwrW/MPOh2ka0RBfva1YWJIyJ8qzMXgLNBlZD/aLmSpI+bSuLI4tXH0r2pxKto+
+3tbXM8nCRLPcBtRkDJ5QloKBGE8Nkhd3CfKuIsfqHBTOtjBXisd6DbkNnRUULT5i
+RuzzeVaugkZWZa91etRu7qCsTxD9k5N5F5rcPTbr7A1WO6Yu9Ro73pEkJ5bxDCfd
+zTCpOMGbjhuhDD0LlggNVIHOxDOQsxt8L51h40D6+8bEZm7MhbUAZ0psYf9U1w==
+=+K3/
 -----END PGP SIGNATURE-----
-
---V0WPiuepdguePdtbmAJVb20Cs7mhO5Iff--
