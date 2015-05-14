@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3488" "Tuesday" "2" "June" "2015" "18:01:34" "+1200" "Matthew Daley" "mattd@bugfuzz.com" "<CAD3CandbSkBH-MZwPH2uKpYR9SMBcT68Si5ZMPLhiDsu9WyDpA@mail.gmail.com>" "86" "[oss-security] Re: CVE requests / Advisory: phpMyBackupPro" nil nil nil "6" "2015060206:01:34" "[oss-security] Re: CVE requests / Advisory: phpMyBackupPro" (number mark "        mattd@bugfuz Jun  2   86/3488  " thread-indent "\"[oss-security] Re: CVE requests / Advisory: phpMyBackupPro\"\n") "<CAD3CanfvEFLMpKbLaqfAX7b-q76yS63c95t+=J5hcNFjNdwYcA@mail.gmail.com>" ("<CAD3Canczf0QMBQUJdP_BdbN0nFE-ZgzSwBGXyJJZ4qES=y5_cA@mail.gmail.com>" "<20150504061430.6B87013A562@smtpvmsrv1.mitre.org>" "<CAD3CanfvEFLMpKbLaqfAX7b-q76yS63c95t+=J5hcNFjNdwYcA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1500" "Thursday" "14" "May" "2015" "14:40:57" "-0700" "Kevin McArthur" "kevin@stormtide.ca" "<55551669.5060308@stormtide.ca>" "47" "Re: [oss-security] CVE Request: Insufficient TLS Protection in Composer (PHP)" nil nil nil "5" "2015051421:40:57" "[oss-security] CVE Request: Insufficient TLS Protection in Composer (PHP)" (number mark "        kevin@stormt May 14   47/1500  " thread-indent "\"Re: [oss-security] CVE Request: Insufficient TLS Protection in Composer (PHP)\"\n") "<CALwr1G=mfjVLrsYN0Yi33UV82F3520Nsm0CpFbFx-AB1J5D+rA@mail.gmail.com>" ("<CALwr1G=mfjVLrsYN0Yi33UV82F3520Nsm0CpFbFx-AB1J5D+rA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 15632 invoked by uid 550); 2 Jun 2015 06:01:46 -0000
+Received: (qmail 11699 invoked by uid 550); 14 May 2015 22:06:56 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,118 +11,88 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 15613 invoked from network); 2 Jun 2015 06:01:45 -0000
+Received: (qmail 30106 invoked from network); 14 May 2015 21:41:11 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=stormtide.ca; s=google-stormtide;
+        h=message-id:date:from:user-agent:mime-version:to:subject:references
+         :in-reply-to:content-type:content-transfer-encoding;
+        bh=IBz//pY9msyIlD5yH+RiezPLfvhrQ8x2Pq2xK+ajhKo=;
+        b=bXFhhnJ8TDUO24arPRYvxEsBM1KdNGvV/nu/HpYIxzh/C0HWBwuE/Sodx6wuHgkbrN
+         bHhX8phJh8yE/BJ5aIDlO/z2HNV2KV/YLrjB3PxDaLUVi9kd+KvSwrolHkRO38ybWXEp
+         DRCzAz7dxZKoCW3I3yHAZTSpg31Oi1ZzCJ3fY=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=hRs1z8Bcx1cMbn3rKK3VLkSl+yXxqOTTPAHeuz3kmMY=;
-        b=DMWKFyGlC8Fuzx9xob8livJizRNmubDCg22hhWsG8vgNKeX/sXHVb0D8auoOF4hShV
-         iVNdw2Jdtn6NZ3HM6g9TMQKKFccLf6cF8jpUo+0ELcmYSBGGH/Nnd37qg1lVKIHruYrb
-         MwtYu1SlgNxxk1pAaSWESvLIsw8yNCAA8EIZ+BdXIBH5908JoE+LHw51meY34S9mWDHU
-         z8QDSeaflt2H0DewmWEriO1SHiGqWWVztqylXjtcqoY4rNgNfRrtP3/kYAzbK7tkDam1
-         mAtVgfq+kIrelA2fE6bJxnZSydClKGUfHrf9pWdepESq7SPkbBSwVIIEE1vikRVDQjOQ
-         cprQ==
-X-Gm-Message-State: ALoCoQnLkULfj7QQFfEqTl/xFKvoRn7qptFz015401v1muocps+Dj21Og8IDD+A1cz3cKY6ySz6+
+        h=x-gm-message-state:message-id:date:from:user-agent:mime-version:to
+         :subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=IBz//pY9msyIlD5yH+RiezPLfvhrQ8x2Pq2xK+ajhKo=;
+        b=gzt7VgtDF0/dTwmqGSQP+ouW+wgchUC9qSSUUShlmZnE4PrP2zBmKg3G4fgrNJV9E8
+         sT3FBE3VzfsRqVIfOIMleK6bYXkN8fCjg3l/KVxvf4tzPdm1mhKSmVg7d21EgYCt0v7U
+         cqVEl605TBYOFmCmReo6ApVA8TlaPX1nSSZj8TXNSEfXlofIBe3SicY078V3rfJ+pzKE
+         Hy57kRORIIKx0N5ibFpavfZ9ch4cslfsss/sdXgc7j+k/IzKtMDWizAzyNf+MYEwmasf
+         5Sxiuy+nOvphZtFyFF+zR11UfIZghimxWElOc1we61+qQvBimUvFFooj+ugocwrHKmyI
+         P5fw==
+X-Gm-Message-State: ALoCoQkAQhTHcqkseKiadRLTLu2k39X3jhey1Co3gdZ/uYv25Q52/fSFnnyGLpL0OCjgyG3cO1uX
+X-Received: by 10.70.40.164 with SMTP id y4mr11935176pdk.25.1431639659564;
+        Thu, 14 May 2015 14:40:59 -0700 (PDT)
+Message-ID: <55551669.5060308@stormtide.ca>
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
 MIME-Version: 1.0
-X-Received: by 10.194.110.100 with SMTP id hz4mr48347001wjb.6.1433224894161;
- Mon, 01 Jun 2015 23:01:34 -0700 (PDT)
-In-Reply-To: <CAD3CanfvEFLMpKbLaqfAX7b-q76yS63c95t+=J5hcNFjNdwYcA@mail.gmail.com>
-References: <CAD3Canczf0QMBQUJdP_BdbN0nFE-ZgzSwBGXyJJZ4qES=y5_cA@mail.gmail.com>
-	<20150504061430.6B87013A562@smtpvmsrv1.mitre.org>
-	<CAD3CanfvEFLMpKbLaqfAX7b-q76yS63c95t+=J5hcNFjNdwYcA@mail.gmail.com>
-Message-ID: <CAD3CandbSkBH-MZwPH2uKpYR9SMBcT68Si5ZMPLhiDsu9WyDpA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Cc: oss-security@lists.openwall.com
-Date: Tue, 2 Jun 2015 18:01:34 +1200
-From: Matthew Daley <mattd@bugfuzz.com>
+References: <CALwr1G=mfjVLrsYN0Yi33UV82F3520Nsm0CpFbFx-AB1J5D+rA@mail.gmail.com>
+In-Reply-To: <CALwr1G=mfjVLrsYN0Yi33UV82F3520Nsm0CpFbFx-AB1J5D+rA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+Date: Thu, 14 May 2015 14:40:57 -0700
+From: Kevin McArthur <kevin@stormtide.ca>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE requests / Advisory: phpMyBackupPro
-To: cve-assign@mitre.org
+Subject: Re: [oss-security] CVE Request: Insufficient TLS Protection in Composer
+ (PHP)
+To: oss-security@lists.openwall.com
 
-Ping.
+Thanks Padraic for applying for a CVE on this one. As it doesn't appear
+its going to get patched, a CVE is probably the right way to go.
 
-On 4 May 2015 at 21:24, Matthew Daley <mattd@bugfuzz.com> wrote:
-> On 4 May 2015 at 18:14,  <cve-assign@mitre.org> wrote:
->> The final concern is Issue #3. We believe it's valuable to search for
->> duplicate CVEs, but there was no comment about whether CVE-2009-4050
->> is the same issue. If that 2009 issue was fixed and then reintroduced
->> between versions 2.1 and 2.5, then there can be two new CVE IDs for
->> the 2015 report.
+Not sure if its just getting lost in the shuffle, but, this
+remote-code-execution vulnerability in Composer is widely deployed and
+trivially exploited.
+
+I can give it a name/branding if it'll help speed up the CVE issuance.
+
+-- 
+
+Kevin McArthur
+
+
+On 2015-05-11 12:03 PM, Pádraic Brady wrote:
+> Hi all,
 >
-> Huh, didn't stumble across that CVE.
+> A brief update to clarify this is a CVE request in the subject line
+> and copy the guys at MITRE. Also to clarify that this vulnerability
+> occurs from relying the PHP openssl extensions default configuration.
+> That default configuration disables peer verification on PHP versions
+> less than PHP 5.6 (when it was significantly reworked to be more
+> secure by default).
 >
->> If that 2009 issue was never fixed, then there was a duplicate
->> discovery. We believe that CVE-2009-4050 applies to the larger
->> problem: an attacker could use any number of "../" sequences after the
->> "get_file.php?view=" part of the URI, including zero "../" sequences.
->> There would then be one additional CVE ID for the behavior in 2.5,
->> because that behavior represents an incomplete fix for CVE-2009-4050.
+> On 25 April 2015 at 19:49, Pádraic Brady <padraic.brady@gmail.com> wrote:
+>> My I request a CVE ID for the following, which is a publicly disclosed
+>> unpatched vulnerability on Composer's issue tracker since 2012.
+>> Composer is an open source package manager for PHP. The specific issue
+>> pertaining to this request is a failure to perform TLS peer
+>> verification on remote requests when making any API request or
+>> retrieving any file, i.e. there is a singular client class.
 >>
->> By default, we would use the second interpretation for Issue #3. In
->> other words, unless someone can establish that CVE-2009-4050 was fixed
->> in 2.2, 2.3, or 2.4, we'll conclude that Issue #3 is a duplicate
->> discovery, and we'll send the one ID for the "incomplete fix" CVE.
+>> Ref: https://github.com/composer/composer/issues/1074
+>>
+>> Kind regards,
+>> Paddy
+>>
+>> --
+>> Pádraic Brady
+> Kind regards,
+> Paddy
 >
-> So, a disclosure for CVE-2009-4050 is at
-> <https://www.exploit-db.com/exploits/10169/>. Looking at it, there's a
-> relevant snippet of (presumably) 2.1's code:
+> --
+> Pádraic Brady
 >
-> --- 8< ---
-> // show the requested file
-> if (isset($_GET['view']) && file_exists($_GET['view'])) {
->         if (isset($_GET['download'])) {
->                 header("Content-Type: application/octet-stream");
->                 header("Content-Disposition: attachment;
-> filename=".basename($_GET['view']));
->                 readfile($_GET['view']);
->         } else {
->                 ...
->         }
-> --- 8< ---
->
-> The equivalent code in 2.4 is:
->
-> --- 8< ---
-> // show the requested file
-> if (isset ($_GET['view']) && file_exists($_GET['view'])) {
->
->         $ext4 = substr($_GET['view'],-4);
->         $ext5 = substr($_GET['view'],-5);
->         $ext7 = substr($_GET['view'],-7);
->         $ext8 = substr($_GET['view'],-8);
->         if ($ext4 != ".php" && $ext5 != ".html" && $ext4 != ".htm" &&
-> $ext5 != ".php3" && $ext4 != ".sql" && $ext8 != ".sql.zip" && $ext7 !=
-> ".sql.gz") {
->                 echo GF_INVALID_EXT . "!";
->         } else {
->                 if (isset ($_GET['download'])) {
->                         header("Content-Type: application/octet-stream");
->                         header("Content-Disposition: attachment;
-> filename=" . basename($_GET['view']));
->                         readfile($_GET['view']);
->                 } else {
->                         ...
->                 }
->         }
-> --- 8< ---
->
-> So it appears that the attempted fix to CVE-2009-4050 was to add a
-> file extension whitelist (.php, .html, .php3, ...). However, directory
-> traversal was still possible after this fix, and the whitelisted file
-> extensions still allow "interesting" files to be retrieved, namely the
-> config PHP file.
->
-> In response to my bug report, in 2.5 a filename suffix blacklist was
-> added to attempt to fix the latter issue, but it can still be bypassed
-> (by adding a /x/../ sequence to the last part of the path).
->
-> So, I would suggest:
->
-> * CVE-2009-4050 = original fully-arbitrary file download
-> * New 2009 CVE = incomplete fix in 2.2(?) (adding a file extension whitelist)
-> * New 2015 CVE = incomplete fix in 2.5 (adding a filename suffix blacklist)
->
-> HTH,
->
-> - Matthew
+> http://blog.astrumfutura.com
+
