@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["774" "Thursday" "23" "February" "2017" "17:31:42" "+0100" "=?UTF-8?B?QsOhbGludCBSw6ljemV5?=" "balint@balintreczey.hu" "<CAK0OdpxiQO7Mt6TCSn-92D+nwnj3iJCwU4OTiuZ1=Kn5Rx_-xg@mail.gmail.com>" "23" "Re: [oss-security] util-linux 2.29.2 fixes CVE-2017-2616" nil nil nil "2" "2017022316:31:42" "[oss-security] util-linux 2.29.2 fixes CVE-2017-2616" (number mark "U       balint@balin Feb 23   23/774   " thread-indent "\"Re: [oss-security] util-linux 2.29.2 fixes CVE-2017-2616\"\n") "<20170223170848.17d43fb3@pc1>" ("<20170223074630.GB26098@suse.de>" "<20170223104054.42060545@pc1>" "<20170223100148.GA23394@suse.de>" "<D7FFF88A-2AA9-432A-9830-0DF662E32524@gmail.com>" "<20170223170848.17d43fb3@pc1>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4893" "Saturday" "16" "May" "2015" "12:58:12" "+0200" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20150516125812.22c2523d@pc1>" "127" "[oss-security] about this openssh heap overflow" nil nil nil "5" "2015051610:58:12" "[oss-security] about this openssh heap overflow" (number mark "        hanno@hboeck May 16  127/4893  " thread-indent "\"[oss-security] about this openssh heap overflow\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 19820 invoked by uid 550); 23 Feb 2017 16:32:15 -0000
+Received: (qmail 23606 invoked by uid 550); 16 May 2015 10:57:52 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,69 +11,141 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 23568 invoked from network); 16 May 2015 10:57:47 -0000
+Message-ID: <20150516125812.22c2523d@pc1>
+X-Mailer: Claws Mail 3.11.1 (GTK+ 2.24.27; x86_64-pc-linux-gnu)
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512; protocol="application/pgp-signature"; boundary="=_zucker.schokokeks.org-32552-1431773855-0001-2"
+Date: Sat, 16 May 2015 12:58:12 +0200
+From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 19800 invoked from network); 23 Feb 2017 16:32:14 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:reply-to:sender:in-reply-to:references:from:date
-         :message-id:subject:to:content-transfer-encoding;
-        bh=VxuTtkAF6mZQT82bNCot3ChBfnmZaWToh0O+OMpdjVg=;
-        b=jLO6sgIHVCdeEB2OGBZtAwjydFJnR9FTkMfrzKjsWiISJdiNqD0DYUU4IZOGMlp/7/
-         Agk2HydSyB6Nx/sYsVKOH3hOu8kE/fh+Rd/qtIF4Pzq4amMr4T+TnmH+eCRHPk2LCtoc
-         WNTSoNq3CxS44lSySmsZyxdsyueM8qqqsCnwNEddsMYMGF1HQuFBU7zmO+j87InE69HZ
-         V0JxcLZxCTm7D3kQl5j1vPDeblhLywop5ztPC6RqqZ3yJG1dUoSOqyhx+yEaChNpEEee
-         JfmihL+Hcb4JQzrYvqTB5NvKyBxTWVvDSg8PFK09142YrZJoUFrqcvdZigip2SFvdqqS
-         7U6A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:sender:in-reply-to
-         :references:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=VxuTtkAF6mZQT82bNCot3ChBfnmZaWToh0O+OMpdjVg=;
-        b=P9LPcJ+Fbvo5wdA5BgTS34ZgFLRjXA6/2wU4LbrGAhhY03GzApIVn7WLvtitceBLIp
-         Uvlj0d99A+BH+CF7cDjblkgGJ/pDQN+saEgCdciig0AaFVFp4AWG+iTMYGnTjY0YdQGJ
-         +ZMFMd6KDPdMFgRweXBA8nqTCW17wBOyPBubpTB335qoZ3Sbjvgcm1aUDU3aihNSd7BH
-         XndK4mC5GWiVCxVPx2QVu82z/A3xNuL4vxv8mksR2awcVYh73972gXEKGsUzYUO9dsIh
-         hkDlgRnXVJ2zB1BGTf+z2fY5Tipw7ZQwEOVrkBSsIn0B5MsoOXqOcdWdpK3G5YH8saR7
-         thrQ==
-X-Gm-Message-State: AMke39mDWNPskoRb39sUcHqilil/JMsNZhYRGQk+Yi0OYDPf9ulHDdKI/qon7jHqvEp7LDTFIBGeU+9qNfwp1A==
-X-Received: by 10.223.165.138 with SMTP id g10mr31217993wrc.105.1487867522586;
- Thu, 23 Feb 2017 08:32:02 -0800 (PST)
-MIME-Version: 1.0
-Sender: rbalint@gmail.com
-In-Reply-To: <20170223170848.17d43fb3@pc1>
-References: <20170223074630.GB26098@suse.de> <20170223104054.42060545@pc1>
- <20170223100148.GA23394@suse.de> <D7FFF88A-2AA9-432A-9830-0DF662E32524@gmail.com>
- <20170223170848.17d43fb3@pc1>
-From: =?UTF-8?B?QsOhbGludCBSw6ljemV5?= <balint@balintreczey.hu>
-Date: Thu, 23 Feb 2017 17:31:42 +0100
-X-Google-Sender-Auth: G4IrUIKtbxY-BaUxtCyr4kilC0A
-Message-ID: <CAK0OdpxiQO7Mt6TCSn-92D+nwnj3iJCwU4OTiuZ1=Kn5Rx_-xg@mail.gmail.com>
+Subject: [oss-security] about this openssh heap overflow
 To: oss-security@lists.openwall.com
+
+--=_zucker.schokokeks.org-32552-1431773855-0001-2
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-Subject: Re: [oss-security] util-linux 2.29.2 fixes CVE-2017-2616
 
 Hi,
 
-2017-02-23 17:08 GMT+01:00 Hanno B=C3=B6ck <hanno@hboeck.de>:
-> On Thu, 23 Feb 2017 07:56:51 -0500
-> Assaf Gordon <assafgordon@gmail.com> wrote:
->
->> GNU Coreutils stopped installing 'su' by default in 2007,
->> and completely removed 'su' (including the 'su.c' source file)
->> in 2012.
->
-> That's good to know, so now there are only 2 competing versions of su
-> instead of 3 in major packages :-)
->
-> Anyone have a good idea who is using shadow vs. util-linux su? Do they
-> have specific advantages/disadvantages, would it be reasonable to try
-> to get all distros to use them same one?
+Quick background story: I started a while ago to develop a solution to
+use american fuzzy lop with networking input. I did so by creating a
+library to be preloaded with LD_PRELOAD that would intercept some
+functions to simulate a network connection and pass data from a file.
 
-In Debian we are looking into switching to util-linux from shadow for
-commands provided by both packages:
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=3D833256
+This is trickier than it sounds and doesn't really work yet, but I
+managed to use this to fuzz the ssh client handshake. In combination
+with address sanitizer this turned up a read heap overflow. I reported
+this to openssh's damien miller. He considered it not security relevant
+and committed the fix to the public repo:
+https://anongit.mindrot.org/openssh.git/commit/?id=3D77199d6ec8986d470487e6=
+6f8ea8f4cf43d2e20c
 
-Cheers,
-Balint
+With that it was public, but nobody noticed. Until today someone
+proposed a very similar approach to network fuzzing on the afl mailing
+list and I answered that I was working on this and briefly mentioned
+the ssh overflow:
+https://groups.google.com/d/msg/afl-users/gahT13i4zG4/I2jdwpyG3W4J
+
+Now this is making rounds on twitter, so I thought I'd publish all
+details. I just pasted below what I reported to openssh.
+
+As this is only a read overflow it likely is not exploitable in any
+way, but itsec history has shown that often enough when people think
+something is not exploitable they were wrong.
+
+If this makes you nervous apply the patch linked above (which will just
+remove the length argument from the function) or this shorter patch
+which will just fix the wrong function cal:
+
+--- openssh-6.8p1/compat.c	2015-03-17 06:49:20.000000000 +0100
++++ openssh-6.8p1-fix/compat.c	2015-05-03 17:51:32.251293388 +0200
+@@ -229,7 +229,7 @@
+ 	buffer_init(&b);
+ 	tmp =3D orig_prop =3D xstrdup(proposal);
+ 	while ((cp =3D strsep(&tmp, ",")) !=3D NULL) {
+-		if (match_pattern_list(cp, filter, strlen(cp), 0) !=3D 1) {
++		if (match_pattern_list(cp, filter, strlen(filter), 0) !=3D 1) {
+ 			if (buffer_len(&b) > 0)
+ 				buffer_append(&b, ",", 1);
+ 			buffer_append(&b, cp, strlen(cp));
+
+
+
+-------------------------------
+
+I think I found a bug in ssh, maybe security relevant.
+
+It's surprisingly easy to reproduce:
+* Compile latest openssh 6.8p1 with address sanitizer (./configure
+  CFLAGS=3D"-fsanitize=3Daddress" LDFLAGS=3D"-fsanitize=3Daddress"; make)
+* Run this netcat-command:
+echo "SSH-2.0-OpenSSH_6.5"|nc -l -p 22
+* ssh to it: ./ssh 127.0.0.1
+
+I'm not entirely sure when and why this is triggered, doesn't work
+against a real ssh server (I assume something with the version number
+and not answering after the inital banner to the client)
+
+However, here is why it causes an invalid memory access:
+In combat.c there is this call for the function match_pattern_list in
+line 232:
+		if (match_pattern_list(cp, filter, strlen(cp), 0) !=3D 1)
+{
+
+The function definition (match.c, line 120):
+match_pattern_list(const char *string, const char *pattern, u_int len,
+
+Looking at the function (match.c, line 141/142) we have this:
+		for (subi =3D 0;
+		    i < len && subi < sizeof(sub) - 1 && pattern[i] !=3D
+',';
+
+		    subi++, i++)
+
+It will iterate over pattern with length len. pattern is the second
+parameter passed. But in the function call len is given as the length
+of the first parameter. So they don't match and this will cause a
+buffer overflow if cp is longer than filter.
+
+So the function call really should be:
+		if (match_pattern_list(cp, filter, strlen(filter), 0) !=3D
+1) {
+
+Right? (Not 100% sure if I got everything what's happening here...)
+See attached patch. Will also attach an address sanitizer stack trace
+(for reasons unknown to me this stack trace only appears if I compile
+openssh with afl + asan, not with asan alone)
+
+
+--=20
+Hanno B=C3=B6ck
+http://hboeck.de/
+
+mail/jabber: hanno@hboeck.de
+GPG: BBB51E42
+
+--=_zucker.schokokeks.org-32552-1431773855-0001-2
+Content-Type: application/pgp-signature
+Content-Transfer-Encoding: 7bit
+Content-Description: OpenPGP digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iQIcBAEBCgAGBQJVVyLEAAoJEKWIAHK7tR5CbiQQAJwuQd2xpFyEkrsLGBa9+bgP
+Y5gwUGsvZ4zZrXBq58vi2Vn+ZsSpfCXtaJbbgHvzaJBVbAbBvPDvpRu6/Nqu4DS2
+l8v6ufaqBzMI0abxrVMOhA8y8y8KI1CMhfjEd5J7uxO/uj1nA5M47Ol5qaBH1mbe
+I0YuhMJQg7G8n7RiWy0YurKXqkTSZsL5v6+HbIpW4X1r63otbnhxjzsAFnIDXgAb
+UJtKDF5/ak1CBH0BtPDWWGRztDg4gCrwHKEGZAeL9WShKWV5JkxaBwb09LREk9uC
+sDMjBs1cMi3dlEsbOwJZ6Ej/eSnQ+1BZ49S5cTc3IwfOG3Gef8cJctOMblOhlEVI
+yFSkNFSAhXl7q3wosswtwnIFQoXXYsalzd655JBXLePDea64XSUi1v3Xu0oKgg9m
+zeh4Ez7L5UliQBlCKsnKGmJh24Wtqngp8K13kU9NNWRHKjAPCm618jjsLaeJcZxl
+PnolYXZlZVRv3fhXdb854b168qQFoccaLJMaQ4Ht76KvvSubZp49ZGYmyApIg9QQ
+QAmdx30jnRiKNq4F/x+dTV5DD2XRBvcpxQ9XVNDP4Ja14tw29L7C2GZwVIhe7rDv
+mlP/FTTK6pqoUBB+iUaf2jI98eHzhFuvb1Y0zfE4kdxwe7pewsz5l80HKqL5jlbd
+dmvOnSydIXi2CEN5A947
+=RynS
+-----END PGP SIGNATURE-----
+
+--=_zucker.schokokeks.org-32552-1431773855-0001-2--
