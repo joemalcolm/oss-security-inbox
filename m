@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2133" "Monday" "21" "November" "2016" "12:26:02" "-0600" "Michael Babker" "michael.babker@gmail.com" "<CANvqVdr4d8C_04Php5iP78eMfZOtat2a6LuCoqVXHojB1HE5yw@mail.gmail.com>" "39" "Re: [oss-security] WordPress (all versions): SPOF, RCE, and Negligence" "^Date:" nil nil "11" "2016112118:26:02" "[oss-security] WordPress (all versions): SPOF, RCE, and Negligence" (number mark "        michael.babk Nov 21   39/2133  " thread-indent "\"Re: [oss-security] WordPress (all versions): SPOF, RCE, and Negligence\"\n") "<CABMkiz5wp5gA=7vV6QAkV4HWUooun3-CcxjqOYqxTLLdBxwwVQ@mail.gmail.com>" ("<CAKws9z3H+VFO6kO-bEPMtyomuyyumx69+hzB7UUAxpg2o6dT8A@mail.gmail.com>" "<CABMkiz5wp5gA=7vV6QAkV4HWUooun3-CcxjqOYqxTLLdBxwwVQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2392" "Monday" "18" "May" "2015" "10:13:34" "+1200" "Emmanuel Law" "emmanuel.law@gmail.com" "<CA+KTh2x_FjdUwfKJo9c7QakRLa5tmZmeR189UUuxZV0BZ3FRwg@mail.gmail.com>" "55" "[oss-security] [CVE Request/Advisory] Multiple vulnerabilities in PHP's handling of Phar files" nil nil nil "5" "2015051722:13:34" "[oss-security] [CVE Request/Advisory] Multiple vulnerabilities in PHP's handling of Phar files" (number mark "        emmanuel.law May 18   55/2392  " thread-indent "\"[oss-security] [CVE Request/Advisory] Multiple vulnerabilities in PHP's handling of Phar files\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 28450 invoked by uid 550); 21 Nov 2016 18:44:57 -0000
+Received: (qmail 17923 invoked by uid 550); 17 May 2015 22:13:47 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,79 +11,82 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 19863 invoked from network); 21 Nov 2016 18:26:14 -0000
+Received: (qmail 17896 invoked from network); 17 May 2015 22:13:46 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
-        bh=8I2K8YeVkketPjOPJNe5uZ6eaAZOaJTpw4Tg2u7017o=;
-        b=bG+Bql/d8vOu64UZ6R5kNWbxhDRDoIPvGwo9v2d2xHxXrWebohHywX7/1m+lqjX660
-         riFQgNN39gHJc8twJoCghxy60CL3T69sUm9hObsZleUEkKtyb1JXVtDcvDjauHufRkyw
-         Own4FHBgSy6zuaoHgUqoDDbTGx8sNt10v+Go4jO6u1HC+yl/1LW+RpJgPthqorVEzP7z
-         8dbp7mm6lehWCm58ZZB17GJ3RsMkiCpWQTd2iJ4B+EhsqtgyZVrAs0osyjR++9rSef7x
-         cXaI82nrQaIlHuzZi/vohaMJZck74nv699Rc7dklp4WfmYNN+qJroGOTrbbUkbMWMZuj
-         aOBQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to;
-        bh=8I2K8YeVkketPjOPJNe5uZ6eaAZOaJTpw4Tg2u7017o=;
-        b=WuH1egFATjA93H/EK+ymYUd+9gAR2yflZ38odLMKeAlR1h8uu6FuwHIM8Vfhay042Q
-         vsDuq/EtNr8lvbcGrnkP0POXcsJS2Z17OYypn86+PT2MVHtwcKGb7LjDUvesSQfLQfqi
-         P0kEYtyTaAaOn3MkipBPj8noPCnvWaKMweb8dkjE3FDOWyfBrn1hGoqNM1DZAL/WWqZu
-         cXsAWfiqkG37bRofEJaWmAPVciOG2uhpYMtDLPSdOEmfv4Z5WN+jo1o5p436l68sy9lp
-         8keTJshmEvnCAU82raFx5NKeFriWXPK9CUV/SIBRYzWiaMYUT5ALO+gaaqbdcR4T+pVg
-         /KUg==
-X-Gm-Message-State: AKaTC03C8JSXb46HYUXYs1zyAApnhtpwEQ1GgOAHoxq77Y6/9cWIY4SaX/5pFbvm+RsNmV1ulncSwSnU0ZMN3A==
-X-Received: by 10.129.85.9 with SMTP id j9mr14573922ywb.283.1479752763151;
- Mon, 21 Nov 2016 10:26:03 -0800 (PST)
+        h=mime-version:date:message-id:subject:from:to:cc:content-type;
+        bh=TgJ4JQY7mxywvA3GsxVyRHfWT0WkDrdfeSEn5XzjgfU=;
+        b=XNubBJCDcn1NavFf37BslfWAbXJ4a0uucsN/1dyiuxWdGXL+xhVom1X0cH+nmA5zj+
+         vfRdxDWU+FRuU92N/7YO436hRHwvkrnjMbKVKyZVHxskx33yQTS+k/G7OUQekPeaxvAS
+         isyJIQqr+GqkQfZewDjKto8ztB53wJg7ZlPdutY0VWFYy67SbuIGAyafVwQvCblz3x2M
+         5de3Q6qoeMMumqL7LWkYLgICCfiuqLZrrlL5UanAVndbuX3ISCK8ISpauMOJ7ij8FpBa
+         EesQzMQNlNhUgUtHfce77LcUF1lmivs/3UOF0NZE2HFK926C51QJ+VK4uo72vNkEkGKs
+         s+fA==
 MIME-Version: 1.0
-In-Reply-To: <CABMkiz5wp5gA=7vV6QAkV4HWUooun3-CcxjqOYqxTLLdBxwwVQ@mail.gmail.com>
-References: <CAKws9z3H+VFO6kO-bEPMtyomuyyumx69+hzB7UUAxpg2o6dT8A@mail.gmail.com>
- <CABMkiz5wp5gA=7vV6QAkV4HWUooun3-CcxjqOYqxTLLdBxwwVQ@mail.gmail.com>
-Message-ID: <CANvqVdr4d8C_04Php5iP78eMfZOtat2a6LuCoqVXHojB1HE5yw@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=001a113f16d6cd9ec70541d3c9bc
-Date: Mon, 21 Nov 2016 12:26:02 -0600
-From: Michael Babker <michael.babker@gmail.com>
+X-Received: by 10.107.132.223 with SMTP id o92mr25910802ioi.49.1431900814279;
+ Sun, 17 May 2015 15:13:34 -0700 (PDT)
+Message-ID: <CA+KTh2x_FjdUwfKJo9c7QakRLa5tmZmeR189UUuxZV0BZ3FRwg@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=001a113ebc086389a605164e63d5
+Cc: security@php.net
+Date: Mon, 18 May 2015 10:13:34 +1200
+From: Emmanuel Law <emmanuel.law@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] WordPress (all versions): SPOF, RCE, and Negligence
-To: oss-security@lists.openwall.com
+Subject: [oss-security] [CVE Request/Advisory] Multiple vulnerabilities in PHP's handling of
+ Phar files
+To: oss-security@lists.openwall.com, cve-assign@mitre.org
 
---001a113f16d6cd9ec70541d3c9bc
+--001a113ebc086389a605164e63d5
 Content-Type: text/plain; charset=UTF-8
 
-On Mon, Nov 21, 2016 at 11:32 AM, Ben Tasker <ben@bentasker.co.uk> wrote:
+Hi
 
-> There was a similar issue a while back where Joomla! decided to run a
-> version check to ensure PHP version was >= 5.3.10. It broke a number of
-> sites, and the most common fix seems to have been a core-hack to disable
-> that check. The logic for inserting that check was reasonable, but lacked
-> consideration of who the market actually is.
+--------Background---------
+PHP has the built-in Phar & PharData functionality since 5.3.0. It allows
+developers to use them to manipulate the following archive types: tar, zip,
+phar. Serveral vulnerabilities were found in the Phar extenion.
 
 
-While I can somewhat understand why the Linux distributions choose the
-model they use for their "long term support" packages, it honestly does a
-disservice to those of us who now have to defensively code around it.  We
-can no longer rely on a package's version to accurately represent the state
-of the code base.
 
-I was Joomla's release lead at the time this decision was made.  We did not
-arbitrarily choose a PHP version number, arbitrarily locking out vendor
-modified PHP builds distributed with the LTS distros, just because we
-wanted to.  We first attempted to implement bcrypt password hashing using
-feature detection, after hacking the polyfill library to lower its PHP
-minimum from 5.3.7 (which blocked some of its checks) to be able to try and
-support the PHP 5.3.3 build the distros have elected to stabilize on and
-modify.  This effort failed catastrophically, and our project collectively
-decided we could not revert support for bcrypt hashed passwords and could
-not try to support this feature using feature detection mechanisms; it was
-too unreliable and we elected therefore to lock on a version number which
-we knew would satisfy all of our requirements natively.  We could have
-locked to 5.3.7 but elected to bump to 5.3.10 due to the security issues
-fixed between those releases and at that point Ubuntu's LTS was at that
-version so it helped us to make a logical choice.
+[1: CVE Request - Memory Corruption in phar_parse_tarfile when entry
+filename starts with null ]
+ Description: ------------ This is a single byte memory corruption
+vulnerability. It is triggered when a tar entry->filename starts with a
+null byte. On a x86 machine, it has the potential to corrupt the heap chunk
+metadata.On x64 machine, it has the potential to corrupt 1 byte at the
+offset entry.filename+0xFFFFFFFF Affected versions: PHP <= 5.6.8 Bug
+Report: https://bugs.php.net/bug.php?id=69453 Patch:
+http://git.php.net/?p=php-src.git;a=commit;h=c27f012b7a447e59d4a704688971cbfa7dddaa74
 
-While I understand where you are coming from, to be quite frank, I don't
-believe the PHP ecosystem and its major players can continue to cater to
-these modified PHP builds as might have been expected in years past.
+Can a CVE be assign for this please?
 
---001a113f16d6cd9ec70541d3c9bc--
+
+[2: CVE-2015-3307 - Heap metadata corruption when parsing tar file in
+phar_tar_process_metadata()] Description: ------------ This is a
+vulnerability whereby the Heap header gets misaligned resulting in the
+corruption of the heap chunk's metadata. A heap chunk is allocated in
+ext/phar/tar.c:167 metadata = (char *) safe_emalloc(1,
+entry->uncompressed_filesize, 1); A reference to this heap chunk is passed
+into phar_parse_metadata() at ext/phar/tar.c:176 if
+(phar_parse_metadata(&metadata, &entry->metadata,
+entry->uncompressed_filesize TSRMLS_CC) == FAILURE) { The following gets
+called within phar_parse_metadata:611 when zip_metadata_len==0
+PHAR_GET_32(*buffer, buf_len); This moves the pointer referencing the heap
+chunk by 4bytes. When the heap chunk gets freeed at at tar.c:177:
+efree(metadata); The heap chunk is now misaligned by 4 bytes. In
+otherwords: ZEND_MM_HEADER_OF(metadata).info._size is now
+ZEND_MM_HEADER_OF(metadata).info._prev and
+ZEND_MM_HEADER_OF(metadata).info._prev is tained with the body's data.
+Affected versions: PHP <= 5.6.8RC1 Bug Report:
+https://bugs.php.net/bug.php?id=69443&edit=2 Patch:
+http://git.php.net/?p=php-src.git;a=commit;h=17cbd0b5b78a7500f185b3781a2149881bfff8ae
+This patch was for CVE-2015-2783, but it inadvertently resolved this
+vulnerability as well. The vulnerable line that was removed was on
+ext/phar/phar.c:611
+
+PHAR_GET_32(*buffer, buf_len);
+
+
+
+Thanks.
+
+--001a113ebc086389a605164e63d5--
