@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["938" "Wednesday" "16" "May" "2018" "11:39:14" "+0200" "Yves-Alexis Perez" "corsac@debian.org" "<e7d7bccd3a2ed7776390f89a003fcd0d17bb9d7f.camel@debian.org>" "31" "Re: [oss-security] PGP/MIME and S/MIME mail clients vulnerabilities" nil nil nil "5" "2018051609:39:14" "[oss-security] PGP/MIME and S/MIME mail clients vulnerabilities" (number mark "U       corsac@debia May 16   31/938   " thread-indent "\"Re: [oss-security] PGP/MIME and S/MIME mail clients vulnerabilities\"\n") "<87zi10u5kl.fsf@mid.deneb.enyo.de>" ("<6770b401c944860c2288ebf7738f40010d938b33.camel@debian.org>" "<20180514102951.GD18567@256bit.org>" "<87zi10u5kl.fsf@mid.deneb.enyo.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1461" "Monday" "18" "May" "2015" "17:01:06" "-0600" "Colton Myers" "colton@saltstack.com" "<CAOmmiAymBk6Er6uPPZm0qSsCQb+bgkAkyfyDaVpf42Qx53Fhfg@mail.gmail.com>" "54" "[oss-security] Re: [saltstack-security] CVE Request / Saltstack SSL verification disabling for alibabab cloud module" nil nil nil "5" "2015051823:01:06" "[oss-security] Re: [saltstack-security] CVE Request / Saltstack SSL verification disabling for alibabab cloud module" (number mark "        colton@salts May 18   54/1461  " thread-indent "\"[oss-security] Re: [saltstack-security] CVE Request / Saltstack SSL verification disabling for alibabab cloud module\"\n") "<20150502021045.GA29705@sisay.ephaone.org>" ("<20150502021045.GA29705@sisay.ephaone.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 5268 invoked by uid 550); 16 May 2018 09:39:31 -0000
+Received: (qmail 23712 invoked by uid 550); 19 May 2015 04:40:17 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,49 +11,85 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 31745 invoked from network); 18 May 2015 23:01:38 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=QLQMRhan15CRq88bq6yCNkMMSF09gG2VopkeGsbtOgk=;
+        b=DE+ODRcePxJos2hV1GqeQxQ6AjcHrpdy2Le1eZ4lYZGuFPp6VDy3fVrHmgGf1a2Qxv
+         7c3Nl3GCqLfSzk1TUsxnG9IUniIo+fFBBSkXBlFkwGT+xyraCEoaJwusmSiPoSC9LNS4
+         SI4/ZnTY9Ywu72KD9RAW58m7+Ev4QLrG8d9DnYP3gR3/ckFNcwclWf+fQFX3PoL7XaCg
+         mRwHgRS6IUg60AZvJa3HsVRwPeMqRpHn7qzpAm5SjnEYBnrZqcmzK91g+o7Hg/DQ7wi1
+         +wRXY6NRFxjHR63EXIY18WOAYEY1Dj9sO2Kfc2g53EtVhtHiaJEk7jkQrWg9V5M/0x0V
+         xg+Q==
+X-Gm-Message-State: ALoCoQkU6STmIpTyLNkczonq6ZN36CqfpQh/zpNM1Rxgwl8tR+gWgpWiO5jvNECjKfrhEO6CpUCt
+X-Received: by 10.60.129.166 with SMTP id nx6mr2108449oeb.38.1431990087060;
+ Mon, 18 May 2015 16:01:27 -0700 (PDT)
+MIME-Version: 1.0
+In-Reply-To: <20150502021045.GA29705@sisay.ephaone.org>
+References: <20150502021045.GA29705@sisay.ephaone.org>
+Message-ID: <CAOmmiAymBk6Er6uPPZm0qSsCQb+bgkAkyfyDaVpf42Qx53Fhfg@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=047d7b4148ea7625a00516632c46
+Cc: oss-security@lists.openwall.com, security@saltstack.com
+Date: Mon, 18 May 2015 17:01:06 -0600
+From: Colton Myers <colton@saltstack.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5242 invoked from network); 16 May 2018 09:39:31 -0000
-Message-ID: <e7d7bccd3a2ed7776390f89a003fcd0d17bb9d7f.camel@debian.org>
-From: Yves-Alexis Perez <corsac@debian.org>
-To: oss-security@lists.openwall.com, Christian Brabandt <cb@256bit.org>
-Date: Wed, 16 May 2018 11:39:14 +0200
-In-Reply-To: <87zi10u5kl.fsf@mid.deneb.enyo.de>
-References: <6770b401c944860c2288ebf7738f40010d938b33.camel@debian.org>
-	 <20180514102951.GD18567@256bit.org> <87zi10u5kl.fsf@mid.deneb.enyo.de>
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.28.2-1 
-Mime-Version: 1.0
-Subject: Re: [oss-security] PGP/MIME and S/MIME mail clients vulnerabilities
+Subject: [oss-security] Re: [saltstack-security] CVE Request / Saltstack SSL verification
+ disabling for alibabab cloud module
+To: Michael Scherer <misc@zarb.org>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--047d7b4148ea7625a00516632c46
+Content-Type: text/plain; charset=UTF-8
 
-On Tue, 2018-05-15 at 20:39 +0200, Florian Weimer wrote:
-> * Christian Brabandt:
->=20
-> > Looks like details have just been published:
-> > https://efail.de/
->=20
-> I don't see any discussion of cid: URLs.  Are vendors planning to fix
-> vectors related to those as well?
+CVE was assigned off list:
 
-Hi Florian,
+CVE-2015-4017 -- Certificates are not verified when connecting to server in
+the Aliyun and Proxmox modules
 
-I might have missed something, but I'm not sure what you're referring to he=
-re?
+And fixed in the just-released 2014.7.6:
 
-Regards,
-- --=20
-Yves-Alexis
------BEGIN PGP SIGNATURE-----
+https://groups.google.com/forum/#!topic/salt-users/8Kv1bytGD6c
 
-iQEzBAEBCAAdFiEE8vi34Qgfo83x35gF3rYcyPpXRFsFAlr7/EIACgkQ3rYcyPpX
-RFvDSgf/b1WKcQCdUA3NfbXbltR79jJruH+ycKtMEvFCRNKP2hu8UNDswrUQBs+4
-DBmeXF6FTuCbum8fd7hjUvHQ0CjDpTqvdcixRwL93dtnxbJ4cMUTgCoVwyyx5co/
-sXCWeb96cz8zQucAD/ftSIaAEab4CwgAITYvRT4VFUeLywyW1iTEiarPAyd/8UQI
-iFQY23fgQ76kDWoq0e9X2aVGySt8R4JnT4QbrAY+X8wDwuEvNXPlx9vKM+OyiDH9
-lU0AoyPNSY4pTBRn+fAuDOSUuWI++iI2txWtb86qu4K0s1gNWVKvB/de8vKRlHvd
-r4mVqFVlt/a/0pvS9lA/6Y75v1b75A=3D=3D
-=3DLCzc
------END PGP SIGNATURE-----
+The splunk module vulnerability was not in a released version of salt, so
+there is no CVE for that module. It was fixed before the 2015.5.0 release.
+
+Please note that we have a responsible disclosure policy, and would
+appreciate it if it were followed in the future:
+
+http://docs.saltstack.com/en/latest/security/index.html#disclosure
+
+--
+Colton Myers
+Platform Engineer, SaltStack
+@basepi on Twitter/Github/IRC
+
+On Fri, May 1, 2015 at 8:10 PM, Michael Scherer <misc@zarb.org> wrote:
+
+> Hi,
+>
+> Could a CVE be assigned for this problem :
+>
+> Saltstack do not verify certificate when connecting to Aliyun (Alibaba
+> cloud service)
+> API on HTTPS
+>
+> https://github.com/saltstack/salt/blob/develop/salt/cloud/clouds/aliyun.py#L724
+>
+>
+> The same issue exist for the proxmox module :
+>
+> https://github.com/saltstack/salt/blob/develop/salt/cloud/clouds/proxmox.py#L115
+>
+> And splunk:
+>
+> https://github.com/saltstack/salt/blob/develop/salt/modules/splunk_search.py#L168
+>
+>
+> This was found by running bandit on the source code
+> ( https://wiki.openstack.org/wiki/Security/Projects/Bandit )
+> --
+> Michael Scherer
+>
+
+--047d7b4148ea7625a00516632c46--
