@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1624" "Wednesday" "20" "November" "2019" "09:06:57" "-0800" "Russ Allbery" "eagle@eyrie.org" "<87wobumq8e.fsf@hope.eyrie.org>" "30" "Re: [oss-security] Mitigating malicious packages in gnu/linux" "^Date:" nil nil "11" "2019112017:06:57" "[oss-security] Mitigating malicious packages in gnu/linux" (number mark "        eagle@eyrie. Nov 20   30/1624  " thread-indent "\"Re: [oss-security] Mitigating malicious packages in gnu/linux\"\n") "<20191120124425.GA25554@openwall.com>" ("<CAGUWgD8LDusq3PyWeMd-RoDhOtfiebVtKKV_39GhG+8c0QYFYg@mail.gmail.com>" "<20191120124425.GA25554@openwall.com>") nil nil nil nil nil nil nil "Re: [oss-security] Mitigating malicious packages in gnu/linux" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["931" "Monday" "18" "May" "2015" "15:43:54" "-0700" "Stanislav Malyshev" "smalyshev@gmail.com" "<555A6B2A.1020205@gmail.com>" "21" "[oss-security] Re: CVE Request + Advisory: PHP str_repeat() sign mismatch based memory corruption" nil nil nil "5" "2015051822:43:54" "[oss-security] Re: CVE Request + Advisory: PHP str_repeat() sign mismatch based memory corruption" (number mark "        smalyshev@gm May 18   21/931   " thread-indent "\"[oss-security] Re: CVE Request + Advisory: PHP str_repeat() sign mismatch based memory corruption\"\n") "<5559AA5A.3050705@truel.it>" ("<5559A053.6090004@truel.it>" "<5559A43F.7040606@gmail.com>" "<5559AA5A.3050705@truel.it>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 24187 invoked by uid 550); 20 Nov 2019 17:07:11 -0000
+Received: (qmail 1950 invoked by uid 550); 18 May 2015 22:44:18 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,49 +11,53 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 24169 invoked from network); 20 Nov 2019 17:07:11 -0000
-In-Reply-To: <20191120124425.GA25554@openwall.com> (Solar Designer's message
-	of "Wed, 20 Nov 2019 13:44:25 +0100")
-Organization: The Eyrie
-References: <CAGUWgD8LDusq3PyWeMd-RoDhOtfiebVtKKV_39GhG+8c0QYFYg@mail.gmail.com>
-	<20191120124425.GA25554@openwall.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
-Message-ID: <87wobumq8e.fsf@hope.eyrie.org>
+Received: (qmail 1932 invoked from network); 18 May 2015 22:44:18 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=F9VroaWG4UckowflSZCn8Gb0GdifDum07b4Z2kAccRc=;
+        b=fLfBKZ9oRgGK37yYylA0BpfeR//Q+Z6g1g0bjnpILK3p3qSlQjPg0JMjXNMTNV8psP
+         /9GipYndFBCDK4OpNa8N6oB1slVdaRC+Ui3bUMAZBJ8D7cKGXNiHwHqTq4iaerBQBH2N
+         m65u1hdXTrUEWPg2dfoSIKdEnBrPJqNR5uz7nntgKQahhfL2Lzh+qJOu/9lZ74kcJD2W
+         52UVkUwUzw6QjAePZqppH8TYmbA9eOrctFq1bZ9QqpfRecrKK8xALb4X7kEhaNaVIBgM
+         IV+kgOHvfdHSdTBhP7Em1Iyjf9q7/7YX0b5aSiKUmaeOAl5qx9ExxOZUCPLDCq8ruhU0
+         drMg==
+X-Received: by 10.67.7.199 with SMTP id de7mr34140943pad.107.1431989046325;
+        Mon, 18 May 2015 15:44:06 -0700 (PDT)
+Message-ID: <555A6B2A.1020205@gmail.com>
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
 MIME-Version: 1.0
-Content-Type: text/plain
-Date: Wed, 20 Nov 2019 09:06:57 -0800
-From: Russ Allbery <eagle@eyrie.org>
+References: <5559A053.6090004@truel.it> <5559A43F.7040606@gmail.com> <5559AA5A.3050705@truel.it>
+In-Reply-To: <5559AA5A.3050705@truel.it>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+CC: oss-security@lists.openwall.com, security@php.net
+Date: Mon, 18 May 2015 15:43:54 -0700
+From: Stanislav Malyshev <smalyshev@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Mitigating malicious packages in gnu/linux
-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: CVE Request + Advisory: PHP str_repeat() sign mismatch based
+ memory corruption
+To: Andrea Palazzo <andrea.palazzo@truel.it>
 
-Solar Designer <solar@openwall.com> writes:
+Hi!
 
-> Contrary to traditional best practices, update only what and when needs
-> to be updated.  (Of course, you take responsibility to watch for any
-> relevant security updates, or accept the risk if you neglect to do that.
-> You also miss silent security fixes, but on the other hand you similarly
-> miss newly introduced vulnerabilities.)
+> About code execution, I haven't had the chance to focus on actual
+> exploitation yet (I surely will in the near future), but as you can see
+> from the original report (https://bugs.php.net/bug.php?id=69403), I
+> pointed out several cases in which working on a so-crafted zval would
+> lead to invalid memory access (with user controlled values as well), so
+> I am pretty confident it is achievable.
 
-I'm very reluctant to give this advice, not because it's wrong, but
-because the failure mode is misaligned for most people.
-
-The average user of a distribution (personal or professional) is at much
-greater risk of a compromise due to an unpatched security vulnerability
-than due to malicious code introduced in the distribution package update
-stream.  Both are *possible*, but one of them is far more common (I would
-even say by orders of magnitude).  Determining which updates are security
-updates is tedious and requires a lot of discipline; it's something that
-humans are generally bad at, and the failure mode is usually to not apply
-the update.  Many security updates are not explicitly flagged as such (see
-all the recent discussions on this list about CVEs).
-
-The average user is therefore best served by applying all distribution
-updates.  Choosing not to update to reduce your risk of a supply chain
-attack is a very advanced technique, and I would tell people to think very
-hard about whether they want to sign up for the necessary cognitive load
-and disciplined decision-making required to identify relevant security
-updates that they need to apply.
+These examples all seem to require specific code (like
+'md5(str_repeat("a", 4294967294-1));') to be run. The probability that
+applications would contain this specific code with str_repeat argument
+controlled by remote user seems to be pretty low. However, if you can
+show exploiting this on a code of an application that is not specially
+crafted to demonstrate this issue, or at least resembles code that is
+likely to be deployed in a real application, I will gladly change my
+opinion.
 
 -- 
-Russ Allbery (eagle@eyrie.org)             <https://www.eyrie.org/~eagle/>
+Stas Malyshev
+smalyshev@gmail.com
