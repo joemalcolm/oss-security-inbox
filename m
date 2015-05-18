@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1908" "Saturday" "24" "September" "2016" "15:44:19" "+0200" "Salvatore Bonaccorso" "carnil@debian.org" "<20160924134419.2wc6wvb3i5tnzd6c@eldamar.local>" "68" "[oss-security] CVE Request: irssi: information disclosure vulnerabilit in buf.pl" nil nil nil "9" "2016092413:44:19" "[oss-security] CVE Request: irssi: information disclosure vulnerabilit in buf.pl" (number mark "U       carnil@debia Sep 24   68/1908  " thread-indent "\"[oss-security] CVE Request: irssi: information disclosure vulnerabilit in buf.pl\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1517" "Monday" "18" "May" "2015" "18:46:38" "-0500" "Dennis" "shr3kst3r@gmail.com" "<CAOupQd1kV1ZCb=0whBLx0rAV6v_8PCAW3pu+EyicAh+mGN2rnQ@mail.gmail.com>" "38" "Re: [oss-security] Re: CVE Request + Advisory: PHP str_repeat() sign mismatch based memory corruption" nil nil nil "5" "2015051823:46:38" "[oss-security] Re: CVE Request + Advisory: PHP str_repeat() sign mismatch based memory corruption" (number mark "        shr3kst3r@gm May 18   38/1517  " thread-indent "\"Re: [oss-security] Re: CVE Request + Advisory: PHP str_repeat() sign mismatch based memory corruption\"\n") "<555A6B2A.1020205@gmail.com>" ("<5559A053.6090004@truel.it>" "<5559A43F.7040606@gmail.com>" "<5559AA5A.3050705@truel.it>" "<555A6B2A.1020205@gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 14328 invoked by uid 550); 24 Sep 2016 13:44:33 -0000
+Received: (qmail 30232 invoked by uid 550); 19 May 2015 15:02:06 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,111 +11,70 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 14310 invoked from network); 24 Sep 2016 13:44:32 -0000
+Received: (qmail 25841 invoked from network); 18 May 2015 23:46:50 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:date:from:to:subject:message-id:mime-version
-         :content-disposition:content-transfer-encoding:user-agent;
-        bh=gba9W+jrsEr031AA/ILt33CmykEYpYxm8w9Nob4FpeM=;
-        b=S/j4kamTmi4MTnmk9atNBJtzC7I6EcKH1lJk72FzB7rSnvyzH63bDYsM3cVhWbdzWF
-         eM/CoQU5xeTIe1jqkGTowhErPUFn+As9Dbo3hAUS+CPA2InefeyjNm91ds4W2Z8xmpZX
-         +/AdtO8L/1qQ3fMKAYM2mLJ912qUlDWfB52SN8R/l4sW9ftxM1Cewh4FAlIjXrek5frr
-         xeAQABmF/IbuMEg97bd287cnxFC4blCBU4aewU3VmpCUmnhi2WgsnR4b+3ffQhC85atU
-         5evYR4mo7DikvsgWi3b6HZaRPrajB1JKNEEJKLcX48Ge0XGGh7Ri1fkyb/3Q1RopSvff
-         qyRg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:sender:date:from:to:subject:message-id
-         :mime-version:content-disposition:content-transfer-encoding
-         :user-agent;
-        bh=gba9W+jrsEr031AA/ILt33CmykEYpYxm8w9Nob4FpeM=;
-        b=GG9bqiPzdMeHBJBC3ocHm1RSc2b9kIO8U2I/rpsiMkxO+UP1sFjbmt6GA0knBerYiP
-         syWJskug5fRPj9MmEI7v6oulztBz7CL/CG61ODp06diFdnXVk8AQuC/J+UIGLyDhi1WZ
-         lrSMReZCinImtt4jG2T397gGHK7d05dtnoEocYxfkd59qLyWBKG3G4k4EqGAaFePEjif
-         L6rlR5GUTiHoy7XWzbC0HIAbptz2i9lqX3lljVRFWE2gLY4jWZX4CiqlrFWSYF8u2Luj
-         9P5XZoY+WLJTUMlAKwKfsI7W4DbjeabBDoZRGOzENv+WvJ0YRz3E0fOn0JhZS7MR8l36
-         QlXg==
-X-Gm-Message-State: AE9vXwMFKpbSpqSpv62WOZscw+xtd5B1FaK9p7nrwrw42fPBnoRmF4BjpHsGDr+7pjk9Hw==
-X-Received: by 10.194.234.69 with SMTP id uc5mr10859296wjc.76.1474724660856;
-        Sat, 24 Sep 2016 06:44:20 -0700 (PDT)
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Date: Sat, 24 Sep 2016 15:44:19 +0200
-From: Salvatore Bonaccorso <carnil@debian.org>
-To: OSS Security Mailinglist <oss-security@lists.openwall.com>
-Message-ID: <20160924134419.2wc6wvb3i5tnzd6c@eldamar.local>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type;
+        bh=WDLiH54A+YglwRtrW8xjUkCJNiuEOmrnUcWctSXkC/o=;
+        b=sSIiYM4XBEW07dZkbvtl9pMCn3XHlIDQrUJJFNZsYF+x336v2TrHr7tjmXOWV2Bie1
+         reUO7x/zAQJeTLgLZ7uNBMa9dWUXPQysFPFNNaZVQ2z6FJ3+slDB4Wx3Ofbc2T5KItqT
+         rAjg6YiRsRE/+cFy7QvEIPvBkEsuvb0R4E1tRPmOEJEUIEiXbgOmKPpgoEX7XSo7RxeE
+         iSbsiW5vIkb2ooVUlXaIcilWJbGL1Op2iStqDkIWDjXl9tQ0e/zdAKgx/WMNA+G0nM4O
+         RLqGSoou3m/2GsoHPbuQI9kpnpnPelpUenbASTKP+Qfu5mle0szD7Xg5almRdnXym32H
+         RnNg==
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-User-Agent: NeoMutt/20160910 (1.7.0)
-Subject: [oss-security] CVE Request: irssi: information disclosure vulnerabilit in buf.pl
+X-Received: by 10.140.150.198 with SMTP id 189mr8648592qhw.88.1431992798887;
+ Mon, 18 May 2015 16:46:38 -0700 (PDT)
+In-Reply-To: <555A6B2A.1020205@gmail.com>
+References: <5559A053.6090004@truel.it>
+	<5559A43F.7040606@gmail.com>
+	<5559AA5A.3050705@truel.it>
+	<555A6B2A.1020205@gmail.com>
+Message-ID: <CAOupQd1kV1ZCb=0whBLx0rAV6v_8PCAW3pu+EyicAh+mGN2rnQ@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=001a113569e21944db051663ceb0
+Date: Mon, 18 May 2015 18:46:38 -0500
+From: Dennis <shr3kst3r@gmail.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Re: CVE Request + Advisory: PHP str_repeat() sign
+ mismatch based memory corruption
+To: oss-security@lists.openwall.com
 
-Hi
+--001a113569e21944db051663ceb0
+Content-Type: text/plain; charset=UTF-8
 
-An information disclosure vulnerability in the buf.pl script provided
-by irssi, a terminal based IRC client has been found. Quoting the
-advisory at:
+At companies that host php for customers and use apparmor to jail the
+customers, this type of attack would allow a customer to possibly take off
+their apparmor hat and gain elevated privileges.  That is, being able to
+execute arbitrary code outside of the php runtime in the context of the
+apache process would allow the attacker to call change_hat().
 
-https://irssi.org/2016/09/22/buf.pl-update/
+- D
 
-                  ]
-> buf.pl update available
-> 
-> Posted on September 22^nd 2016
-> 
-> An information disclosure vulnerability was found, reported and fixed
-> in the buf.pl script by its author.
-> 
-> CWE Classification: CWE-732, CWE-538
-> 
-> Impact
-> 
-> Other users on the same machine may be able to retrieve the whole
-> window contents after /UPGRADE when the buf.pl script is loaded.
-> Furthermore, this dump of the windows contents is never removed
-> afterwards.
-> 
-> Since buf.pl is also an Irssi core script and we recommended its use
-> to retain your window content, many people could potentially be
-> affected by this.
-> 
-> Remote users may be able to retrieve these contents when combined with
-> other path traversal vulnerabilities in public facing services on that
-> machine.
-> 
-> Detailed analysis
-> 
-> buf.pl restores the scrollbuffer between “/upgrade”s by writing the
-> contents to a file, and reading that after the new process was
-> spawned. Through that file, the contents of (private) chat
-> conversations may leak to other users.
-> 
-> Mitigating facts
-> 
-> Careful users with a limited umask (e.g. 077) are not affected by this
-> bug.  However, most Linux systems default to a umask of 022, meaning
-> that files written without further restricting the permissions, are
-> readable by any user.
-> 
-> Affected versions
-> 
-> All up to 2.13
-> 
-> Fixed versions
-> 
-> buf.pl 2.20
-> 
-> Resolution
-> 
-> Update the buf.pl script with the latest version from scripts.irssi.org.
+On Mon, May 18, 2015 at 5:43 PM, Stanislav Malyshev <smalyshev@gmail.com>
+wrote:
 
-Upstream fix:
-https://github.com/irssi/scripts.irssi.org/commit/f1b1eb154baa684fad5d65bf4dff79c8ded8b65a
+> Hi!
+>
+> > About code execution, I haven't had the chance to focus on actual
+> > exploitation yet (I surely will in the near future), but as you can see
+> > from the original report (https://bugs.php.net/bug.php?id=69403), I
+> > pointed out several cases in which working on a so-crafted zval would
+> > lead to invalid memory access (with user controlled values as well), so
+> > I am pretty confident it is achievable.
+>
+> These examples all seem to require specific code (like
+> 'md5(str_repeat("a", 4294967294-1));') to be run. The probability that
+> applications would contain this specific code with str_repeat argument
+> controlled by remote user seems to be pretty low. However, if you can
+> show exploiting this on a code of an application that is not specially
+> crafted to demonstrate this issue, or at least resembles code that is
+> likely to be deployed in a real application, I will gladly change my
+> opinion.
+>
+> --
+> Stas Malyshev
+> smalyshev@gmail.com
+>
 
-Debian Bug report: https://bugs.debian.org/838762
-
-Could a CVE be assigned for this issue?
-
-Regards,
-Salvatore
+--001a113569e21944db051663ceb0--
