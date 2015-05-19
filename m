@@ -1,4 +1,9 @@
-Received: (qmail 12251 invoked by uid 550); 1 Oct 2023 12:21:33 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["882" "Tuesday" "19" "May" "2015" "11:05:59" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150519150559.D592E6CC002@smtpvmsrv1.mitre.org>" "25" "[oss-security] Re: CVE reject request CVE-2015-8146/8147 (was: [CVE-2014-8146/8147] - ICU heap and integer overflows / I-C-U-FAIL)" nil nil nil "5" "2015051915:05:59" "[oss-security] Re: CVE reject request CVE-2015-8146/8147 (was: [CVE-2014-8146/8147] - ICU heap and integer overflows / I-C-U-FAIL)" (number mark "        cve-assign@m May 19   25/882   " thread-indent "\"[oss-security] Re: CVE reject request CVE-2015-8146/8147 (was: [CVE-2014-8146/8147] - ICU heap and integer overflows / I-C-U-FAIL)\"\n") "<20150519090559.56944c45@redhat.com>" ("<20150519090559.56944c45@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 9794 invoked by uid 550); 19 May 2015 15:06:12 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,50 +11,38 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 9762 invoked from network); 19 May 2015 15:06:11 -0000
+In-Reply-To: <20150519090559.56944c45@redhat.com>
+Message-Id: <20150519150559.D592E6CC002@smtpvmsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Tue, 19 May 2015 11:05:59 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 4072 invoked from network); 1 Oct 2023 11:04:01 -0000
-Date: Sun, 1 Oct 2023 13:03:46 +0200
-From: Erik Auerswald <auerswal@unix-ag.uni-kl.de>
-To: oss-security@lists.openwall.com
-Message-ID: <20231001110346.GA25232@unix-ag.uni-kl.de>
-References: <bd99e07a-8d8c-4652-9089-7c0fc2e86409@oracle.com>
- <ZRXlPoozp5n+cWv1@itl-email>
- <22398fb96f04bf431b3ed0e4778e1cfcd64046ea.camel@orlitzky.com>
- <7f60d2e7-59ca-13cd-9da1-473bd70dd5bb@juniper.net>
- <3708d220187cfe4a2f03f53067edfd15f1cbf8b5.camel@orlitzky.com>
- <ZRdyaYEi9YOZUXAg@codewreck.org>
- <ZRhUF9yHctTj5DhO@itl-email>
- <36a25f2467809ee727239db10684e147e7440326.camel@orlitzky.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <36a25f2467809ee727239db10684e147e7440326.camel@orlitzky.com>
-Author: Erik Auerswald <auerswal@unix-ag.uni-kl.de>
-Subject: Re: [oss-security] Haskell programs in distributions (was: Rust
- programs in distrbutions (Was: CVE-2023-5217: Heap buffer overflow in vp8
- encoding in libvpx))
+Subject: [oss-security] Re: CVE reject request CVE-2015-8146/8147 (was: [CVE-2014-8146/8147] - ICU heap and integer overflows / I-C-U-FAIL)
+To: thoger@redhat.com
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On Sat, Sep 30, 2023 at 07:28:46PM -0400, Michael Orlitzky wrote:
-> On Sat, 2023-09-30 at 13:00 -0400, Demi Marie Obenour wrote:
-> > It is also worth noting that Rust-the-language supports dynamic linking.
-> > Once Cargo supports this and downstreams (like Fedora) obtain sufficient
-> > build capacity, it will be possible to use dynamic linking by performing
-> > automatic cascading rebuilds whenever a package is upgraded.  Arch
-> > already does this for Haskell IIUC.
-> 
-> We do it for Haskell in Gentoo, too, but we have a dark secret: it only
-> works because Haskell became unpopular. There are basically only two
-> Haskell programs, and everything works for n = 2.
+> I assume it's still prudent
+> to consider 2015 ids for rejection, it's likely they have not been
+> allocated yet.
 
-I am curious, what two prgrams do you think of?
+Yes, CVE-2015-8146 and CVE-2015-8147 are rejected.
 
-I know of two Haskell programs I regularly use, Pandoc and ShellCheck.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-Best regards,
-Erik
--- 
-[T]he most dangerous enemy of a better solution is an existing codebase
-that is just good enough.
-                        -- Eric S. Raymond
+iQEcBAEBAgAGBQJVW1DXAAoJEKllVAevmvmsho8IAIxGNp0JGST9k2EEEGufhMLW
+gKvPlW+eTdO1c/1Rn319rIjwrtsIPF854MmxGi1y/0FB1DVMKFiVogocz+OcUqCV
+Ca/Ec4/8B8FvIOFoUcuygrmue24JZihW2PcgOj37Xs287uyMk/VzWa4F8K6e8dXh
+rNjRPB8fkIcB5z1/GzfO0v1MqOxb7kmh3wIcDNfFxy2XKC68xad4T4UFdKl/YhK8
+31OGI5HzTBUBzKr5YS8juIqHSyOfK9t096eZ/cuWQrM62ZrWnSJRjEDJkDyUkH5r
+Fex1erjTssWeNtmtjGzh0XV0+opdOvDQXFFW9xo/y96qxoTzRPazBcz/RHh+mJI=
+=7eT8
+-----END PGP SIGNATURE-----
