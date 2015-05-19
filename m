@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["703" "Thursday" "22" "April" "2021" "14:18:39" "-0400" "Michael Orlitzky" "michael@orlitzky.com" nil "21" "Re: [oss-security] Malicious commits to Linux kernel as part of university study" nil nil nil "4" nil nil (number mark "U       michael@orli Apr 22   21/703   " thread-indent "\"Re: [oss-security] Malicious commits to Linux kernel as part of university study\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Malicious commits to Linux kernel as part of university study" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1104" "Tuesday" "19" "May" "2015" "07:33:19" "-0400" "Marc Deslauriers" "marc.deslauriers@canonical.com" "<555B1F7F.5000902@canonical.com>" "36" "Re: [oss-security] CVE reject request CVE-2015-8146/8147" nil nil nil "5" "2015051911:33:19" "[oss-security] CVE reject request CVE-2015-8146/8147" (number mark "        marc.deslaur May 19   36/1104  " thread-indent "\"Re: [oss-security] CVE reject request CVE-2015-8146/8147\"\n") "<20150519090559.56944c45@redhat.com>" ("<CAEDdjHdR4LYTL_3BUibrYbiBfB2==aJXXLF0RKxcHQgep_SNSw@mail.gmail.com>" "<20150519090559.56944c45@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 19578 invoked by uid 550); 22 Apr 2021 18:18:52 -0000
+Received: (qmail 5729 invoked by uid 550); 19 May 2015 11:33:34 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,50 +11,54 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 19557 invoked from network); 22 Apr 2021 18:18:52 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=orlitzky.com; s=mail2;
-	t=1619115520; bh=BEEgixfWEpMeW38rDzbNoIIWOc+exi04eLwwbcX0eR4=;
-	h=Subject:From:To:Date:In-Reply-To:References;
-	b=QxP0YFYra7Xx9Hl/lxHCR0fqla1QHdypjv7DKzpXMlvIY5wtRj1Rs/VaOOS/tGqar
-	 jZ2o7IqtJzrZ/SLjVai7ocI/5cJ/eDvoMOJqtIeFRRFm06IQLe4a51gJQDCIN17lNN
-	 5ys0phf7QmE0HM8pZ2az7oxwJDf4aHkgELdFyGgg=
-Message-ID: <dccb1d817eee4171cb99263fc059fac660cdb223.camel@orlitzky.com>
-From: Michael Orlitzky <michael@orlitzky.com>
-To: oss-security@lists.openwall.com
-Date: Thu, 22 Apr 2021 14:18:39 -0400
-In-Reply-To: <CAPyX2neD99tn_FY3FZ9WO5HaB2WXSgvSOejOiOE_9QHxqRjpdA@mail.gmail.com>
-References: <20210422065959.GI13079@scully.more-magic.net>
-	 <CAEo4CePqice09K5PPhmxwwF3jg=USrqRqM5FgVX_jCB8sZfDeA@mail.gmail.com>
-	 <20210422095945.GA2495@scully.more-magic.net>
-	 <4DCB6EF3-73EE-4038-8437-FEB339F20F90@dwheeler.com>
-	 <627170ea-4e1e-1a3d-8291-494eac38c9b@dereferenced.org>
-	 <CAPyX2neD99tn_FY3FZ9WO5HaB2WXSgvSOejOiOE_9QHxqRjpdA@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.38.4 
+Received: (qmail 5702 invoked from network); 19 May 2015 11:33:33 -0000
+Message-ID: <555B1F7F.5000902@canonical.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [oss-security] Malicious commits to Linux kernel as part of
- university study
+References: <CAEDdjHdR4LYTL_3BUibrYbiBfB2==aJXXLF0RKxcHQgep_SNSw@mail.gmail.com> <20150519090559.56944c45@redhat.com>
+In-Reply-To: <20150519090559.56944c45@redhat.com>
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+CC: Pedro Ribeiro <pedrib@gmail.com>
+Date: Tue, 19 May 2015 07:33:19 -0400
+From: Marc Deslauriers <marc.deslauriers@canonical.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] CVE reject request CVE-2015-8146/8147
+To: oss-security@lists.openwall.com, cve-assign@mitre.org
 
-On Thu, 2021-04-22 at 18:49 +0100, Mark Steward wrote:
+On 2015-05-19 03:05 AM, Tomas Hoger wrote:
+> On Tue, 5 May 2015 09:19:20 +0100 Pedro Ribeiro wrote:
 > 
+>> tl;dr heap and integer overflows in ICU, many packages affected,
+>> unknown if these can be exploited or not - everyone names vulns
+>> nowadays, so I name these I-C-U-FAIL.
 > 
-> This looks like a good guess to me, and if correct, means none of the
-> submissions in the paper were successful:
+> ...
 > 
->   https://lore.kernel.org/linux-nfs/YIEqt8iAPVq8sG+t@sol.localdomain/
+>> #1 Vulnerability: Heap overflow
+>> CVE-2014-8146
+> 
+> ...
+> 
+>> #2 Vulnerability: Integer overflow
+>> CVE-2014-8147
+> 
+> Apparently a typo was made when fixing these issues in Ubuntu and
+> subsequently in Debian when ids with year 2015 were used instead of
+> 2014.  Incorrect ids are used in patch names and changelogs, but e.g.
+> USN-2605-1 was released with correct ids.  I assume it's still prudent
+> to consider 2015 ids for rejection, it's likely they have not been
+> allocated yet.
+> 
+> http://www.ubuntu.com/usn/usn-2605-1/
+> https://launchpad.net/ubuntu/+source/icu/52.1-3ubuntu0.3
+> https://launchpad.net/ubuntu/+source/icu/52.1-6ubuntu0.3
+> https://launchpad.net/ubuntu/+source/icu/52.1-8ubuntu0.1
+> 
+> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=784773
 > 
 
-If you believe them, the researchers never intended to allow the bad
-commits into the kernel:
+Ah, crud. Sorry about that.
 
-  https://www-users.cs.umn.edu/~kjlu/papers/clarifications-hc.pdf
-
-On the one hand, they're wasting everyone's time to report a
-vulnerability that everyone knows exists already and finding
-conclusions that are all obvious and/or useless. But on the other hand,
-they don't sound quite as daft as the headlines make them seem. Overly
-naive for sure.
-
+Marc.
 
