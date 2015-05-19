@@ -1,4 +1,9 @@
-Received: (qmail 22100 invoked by uid 550); 8 Mar 2026 02:58:41 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1934" "Tuesday" "19" "May" "2015" "16:20:15" "+0200" "Andrea Palazzo" "andrea.palazzo@truel.it" "<555B469F.30800@truel.it>" "41" "[oss-security] Re: CVE Request + Advisory: PHP str_repeat() sign mismatch based memory corruption" nil nil nil "5" "2015051914:20:15" "[oss-security] Re: CVE Request + Advisory: PHP str_repeat() sign mismatch based memory corruption" (number mark "        andrea.palaz May 19   41/1934  " thread-indent "\"[oss-security] Re: CVE Request + Advisory: PHP str_repeat() sign mismatch based memory corruption\"\n") "<555A6B2A.1020205@gmail.com>" ("<5559A053.6090004@truel.it>" "<5559A43F.7040606@gmail.com>" "<5559AA5A.3050705@truel.it>" "<555A6B2A.1020205@gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 9570 invoked by uid 550); 19 May 2015 14:20:31 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,258 +11,69 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 9541 invoked from network); 19 May 2015 14:20:29 -0000
+Message-ID: <555B469F.30800@truel.it>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
+MIME-Version: 1.0
+References: <5559A053.6090004@truel.it> <5559A43F.7040606@gmail.com> <5559AA5A.3050705@truel.it> <555A6B2A.1020205@gmail.com>
+In-Reply-To: <555A6B2A.1020205@gmail.com>
+Content-Type: multipart/alternative;
+ boundary="------------000308000103020702000907"
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - srv-hp9.netsons.net
+X-AntiAbuse: Original Domain - lists.openwall.com
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - truel.it
+X-Get-Message-Sender-Via: srv-hp9.netsons.net: authenticated_id: info@truel.it
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+CC: oss-security@lists.openwall.com, security@php.net
+Date: Tue, 19 May 2015 16:20:15 +0200
+From: Andrea Palazzo <andrea.palazzo@truel.it>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 18064 invoked from network); 8 Mar 2026 02:57:57 -0000
-Date: Sun, 8 Mar 2026 03:57:45 +0100
-From: Solar Designer <solar@openwall.com>
-To: Justin Swartz <justin.swartz@risingedge.co.za>
-Cc: oss-security@lists.openwall.com, bug-inetutils@gnu.org,
-	ron.benyizhak@safebreach.com, simon@josefsson.org,
-	auerswal@unix-ag.uni-kl.de
-Message-ID: <20260308025745.GA24992@openwall.com>
-References: <20260224011702.27987-1-justin.swartz@risingedge.co.za> <20260224052943.GA13045@openwall.com> <20260224064351.GA14779@openwall.com> <20260307002011.18141-1-justin.swartz@risingedge.co.za>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260307002011.18141-1-justin.swartz@risingedge.co.za>
-User-Agent: Mutt/1.4.2.3i
-Subject: [oss-security] Re: Telnetd Vulnerability Report
+Subject: [oss-security] Re: CVE Request + Advisory: PHP str_repeat() sign mismatch based
+ memory corruption
+To: Stanislav Malyshev <smalyshev@gmail.com>
 
-On Sat, Mar 07, 2026 at 02:20:11AM +0200, Justin Swartz wrote:
-> WHITELISTING
-> 
-> The obsolete blacklist, implemented by scrub_env(), has been removed.
-> The daemon now clears the inherited environment and enforces a default
-> whitelist (USER, LOGNAME, TERM, LANG, and LC_*) for all NEW_ENVIRON
-> values.
+--------------000308000103020702000907
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Makes sense to me.
+Hi again!
 
-Note that this list is different from Linux NetKit's, which is:
+My point is: once you get to have a corrupted zval, there are tons of 
+functions that would result in memory errors if working on it.
+A str_repeat() with user-supplied arguments is not so common at all, but 
+let's say you have it (e.g. 
+http://phpcrossref.com/xref/jpegmeta/EXIF.php.html, 
+https://code.google.com/p/zimbra-api-php/, 
+http://phpcrossref.com/xref/jpegmeta/XML.php.html) it is really likely 
+that it would end up processed by one of these functions (string 
+concatenation, for example).
 
-    /*
-     * Allow only these variables.
-     */
-    if (!strcmp(varp, "TERM")) return 1;
-    if (!strcmp(varp, "DISPLAY")) return 1;
-    if (!strcmp(varp, "USER")) return 1;
-    if (!strcmp(varp, "LOGNAME")) return 1;
-    if (!strcmp(varp, "POSIXLY_CORRECT")) return 1;
+$makernote  <http://phpcrossref.com/xref/jpegmeta/_variables/makernote.html>  .=str_repeat  <http://phpcrossref.com/xref/jpegmeta/_functions/str_repeat.html>("\x00",($tiff_data  <http://phpcrossref.com/xref/jpegmeta/_variables/tiff_data.html>[ 'Makernote_Tag' ][ 'Offset' ] - 8 ) );
 
-I also checked the major *BSDs.  telnetd was removed from OpenBSD in
-2005, so I didn't look further.  It was removed from FreeBSD in 2022:
 
-https://cgit.freebsd.org/src/commit/?id=d701f45aba19f232ce7817085935f33dd609ed8b
 
-where it used this at time of removal:
+On 19/05/2015 00:43, Stanislav Malyshev wrote:
+> Hi!
+>
+>> About code execution, I haven't had the chance to focus on actual
+>> exploitation yet (I surely will in the near future), but as you can see
+>> from the original report (https://bugs.php.net/bug.php?id=69403), I
+>> pointed out several cases in which working on a so-crafted zval would
+>> lead to invalid memory access (with user controlled values as well), so
+>> I am pretty confident it is achievable.
+> These examples all seem to require specific code (like
+> 'md5(str_repeat("a", 4294967294-1));') to be run. The probability that
+> applications would contain this specific code with str_repeat argument
+> controlled by remote user seems to be pretty low. However, if you can
+> show exploiting this on a code of an application that is not specially
+> crafted to demonstrate this issue, or at least resembles code that is
+> likely to be deployed in a real application, I will gladly change my
+> opinion.
+>
 
-	static const char *acc[] = {
-		"XAUTH=", "XAUTHORITY=", "DISPLAY=",
-		"TERM=",
-		"EDITOR=",
-		"PAGER=",
-		"LOGNAME=",
-		"POSIXLY_CORRECT=",
-		"PRINTER=",
-		NULL
-	};
 
-Curiously, there was CVE-2009-0641 where FreeBSD 7.x would accept even
-LD_PRELOAD, but I couldn't quickly find where the bug was exactly:
-
-https://lists.openwall.net/full-disclosure/2009/02/14/1
-
-Message-ID: <72f8221d0902131846h6c77a8d1t90c3352f978b8732@mail.gmail.com>
-Date: Sat, 14 Feb 2009 03:46:07 +0100
-From: Kingcope Kingcope <kcope2@...glemail.com>
-To: full-disclosure@...ts.grok.org.uk
-Subject: FreeBSD zeroday
-
-https://www.freebsd.org/security/advisories/FreeBSD-SA-09:05.telnetd.asc
-
-"recent changes in FreeBSD's environment-handling code rendered
-telnetd's scrubbing inoperative"
-
-We could want to find the detail in order to avoid the same pitfall.
-
-NetBSD still has telnetd:
-
-https://cvsweb.netbsd.org/bsdweb.cgi/src/libexec/telnetd/
-
-and in sys_term.c it has:
-
-/*
- * scrub_env()
- *
- * We only accept the environment variables listed below.
- */
-
-void
-scrub_env(void)
-{
-	static const char *reject[] = {
-		"TERMCAP=/",
-		NULL
-	};
-
-	static const char *acceptstr[] = {
-		"XAUTH=", "XAUTHORITY=", "DISPLAY=",
-		"TERM=",
-		"EDITOR=",
-		"PAGER=",
-		"LOGNAME=",
-		"POSIXLY_CORRECT=",
-		"TERMCAP=",
-		"PRINTER=",
-		NULL
-	};
-
-	char **cpp, **cpp2;
-	const char **p;
-
-	for (cpp2 = cpp = environ; *cpp; cpp++) {
-		int reject_it = 0;
-
-		for(p = reject; *p; p++)
-			if(strncmp(*cpp, *p, strlen(*p)) == 0) {
-				reject_it = 1;
-				break;
-			}
-		if (reject_it)
-			continue;
-
-		for(p = acceptstr; *p; p++)
-			if(strncmp(*cpp, *p, strlen(*p)) == 0)
-				break;
-		if(*p != NULL)
-			*cpp2++ = *cpp;
-	}
-	*cpp2 = NULL;
-}
-
-I'm not saying you should revise the list in any way - just sharing what
-others have.  It may well be that allowing those other env vars by
-default is obsolete since use cases for telnet are now more specialized,
-and maybe allowing LANG and LC_* is desirable for current use cases.
-
-Separately note that I didn't check the *BSDs telnet _client_ (which I
-think is still present in all *BSDs) for being (hopefully not) willing
-to export arbitrary env vars.  The maintainers could want to check this.
-And you could want to check the telnet client in InetUtils, now that we
-know this package missed telnet[d] security fixes in general.  This was
-CVE-2005-0488 (and CVE-2005-1205 on Windows).
-
-"Certain BSD-based Telnet clients, including those used on Solaris and
-SuSE Linux, allow remote malicious Telnet servers to read sensitive
-environment variables via the NEW-ENVIRON option with a SEND ENV_USERVAR
-command."
-
-> TELOPT_TTYPE INTERCEPTION
-> 
-> The whitelist validation has been extended, in the second version of the
-> patch set, to intercept raw terminal type negotiations (aka TELOPT_TTYPE),
-> to prevent questionable TERM payloads from bypassing the NEW_ENVIRON
-> filter. 
-
-Good idea.
-
-> The daemon now clears the inherited environment (preserving PATH
-> and TERM, respectively, if present) before calling telnetd_setup().
-
-Inherited from inetd or the like?  It's supposed to be trusted input and
-env vars in there may be set on purpose, so dropping them is unexpected.
-I think e.g. sshd doesn't do that, why would telnetd?  Think things like
-LD_PRELOAD=/lib64/libhardened_malloc.so (although /etc/ld.so.preload is
-a more reliable way to do this when practical to do it globally).
-
-> +++ b/telnetd/state.c
-> @@ -1495,10 +1495,18 @@ suboption (void)
->  	      case NEW_ENV_VAR:
->  	      case ENV_USERVAR:
->  		*cp = '\0';
-> -		if (valp)
-> -		  setenv (varp, valp, 1);
-> -		else
-> -		  unsetenv (varp);
-> +		if (is_env_var_allowed (varp, valp))
-> +		  {
-> +		    if (valp)
-> +		      {
-> +		        if (valp && *valp != 0)
-> +		          setenv (varp, valp, 1);
-> +		      }
-> +		    else
-> +		      {
-> +		          unsetenv (varp);
-> +		      }
-> +		  }
->  		cp = varp = (char *) subpointer;
->  		valp = 0;
->  		break;
-> @@ -1514,10 +1522,18 @@ suboption (void)
->  	      }
->  	  }
->  	*cp = '\0';
-> -	if (valp)
-> -	  setenv (varp, valp, 1);
-> -	else
-> -	  unsetenv (varp);
-> +	if (is_env_var_allowed (varp, valp))
-> +	  {
-> +	    if (valp)
-> +	      {
-> +	        if (valp && *valp != 0)
-> +	          setenv (varp, valp, 1);
-> +	      }
-> +	    else
-> +	      {
-> +	        unsetenv (varp);
-> +	      }
-> +	  }
->  	break;
->        }				/* end of case TELOPT_NEW_ENVIRON */
-
-Some code duplication here.  Not new with these changes, but could be
-worth moving to a new function e.g. set_env_var_if_allowed().
-
-> +/* A default whitelist for environment variables. */
-> +static const char *allowed_env_vars[] = {
-> +  "USER",
-> +  "LOGNAME",
-> +  "TERM",
-> +  "LANG",
-> +  "LC_*",
-> +  NULL
-> +};
-
-Can make not only the strings but also the pointers const:
-
-static const char * const allowed_env_vars[] = {
-
-so that both may end up in a read-only section.
-
-> +int
-> +is_env_var_allowed (const char *var, const char *val)
-> +{
-> +  const char **p;
-> +  int allowed = 0;
-> +
-> +  for (p = allowed_env_vars; *p; p++)
-> +    {
-> +      if (fnmatch (*p, var, FNM_NOESCAPE) == 0)
-> +        {
-> +          allowed = 1;
-> +          break;
-> +        }
-> +    }
-> +
-> +  if (!allowed)
-> +    return 0;
-
-You didn't strictly need the "allowed" variable, you could check *p
-after the loop.  But maybe it's more readable the way you wrote it.
-
-My review above isn't in full context - I only looked at the patches.
-
-Alexander
+--------------000308000103020702000907--
