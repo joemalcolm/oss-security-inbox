@@ -1,4 +1,9 @@
-Received: (qmail 29742 invoked by uid 550); 7 Apr 2025 15:10:45 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1585" "Tuesday" "19" "May" "2015" "15:36:54" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150519193654.29FC1B2E0CC@smtpvbsrv1.mitre.org>" "41" "[oss-security] Re: coreutils sort heap overflow" nil nil nil "5" "2015051919:36:54" "[oss-security] Re: coreutils sort heap overflow" (number mark "        cve-assign@m May 19   41/1585  " thread-indent "\"[oss-security] Re: coreutils sort heap overflow\"\n") "<5555403F.3060502@draigBrady.com>" ("<5555403F.3060502@draigBrady.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 15408 invoked by uid 550); 19 May 2015 19:37:09 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,50 +11,54 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 15364 invoked from network); 19 May 2015 19:37:05 -0000
+In-Reply-To: <5555403F.3060502@draigBrady.com>
+Message-Id: <20150519193654.29FC1B2E0CC@smtpvbsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Tue, 19 May 2015 15:36:54 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 15964 invoked from network); 7 Apr 2025 15:08:19 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=aosc.io; s=default;
-	t=1744038488; bh=CnDL8WcNQ2pyVr5yi5IPx3+F48LQ+w+YbYLmoEuqDpQ=;
-	h=Date:Subject:To:References:From:In-Reply-To:From;
-	b=WyzFcJnA92xyxZC8qVyIWgwX+Gp3LDD7q7KNEkvXboUp3EJt4ht+z5dv4A5/BuSgr
-	 Yilyc8RfYpv7vtDeFKbC9/nemlacVpIjcbZ6llg7uifQp7MM+VR2KBKcRj24tO97q3
-	 H657x2/gJ+YRnLpM1nU1HuVJ/pzTb5cD8bjKGQGU=
-Message-ID: <9a8b4efc-2322-475b-81ba-939d0f9c6878@aosc.io>
-Date: Mon, 7 Apr 2025 23:07:55 +0800
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: oss-security@lists.openwall.com
-References: <c91c769394051f886c25f8bf895ec770dce36a73.04827fe8.a43c.41dd.9fe9.7f451462d2d9@feishu.cn>
-Content-Language: en-US
-From: Mingcong Bai <jeffbai@aosc.io>
-In-Reply-To: <c91c769394051f886c25f8bf895ec770dce36a73.04827fe8.a43c.41dd.9fe9.7f451462d2d9@feishu.cn>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Subject: Re: [oss-security] CVE-2025-31344: giflib: The giflib open-source
- component has a buffer overflow vulnerability.
+Subject: [oss-security] Re: coreutils sort heap overflow
+To: P@draigBrady.com
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-在 2025/4/7 21:15, 李亚杰 写道:
-> Affected Versions:
-> - giflib 5.2.2 and below
-> 
-> Description:
-> In the function DumpScreen2RGB of the giflib software, an attempt is made to access the color map through ColorMapEntry. The size of ColorMap is 6 bytes (from 0x602000000030 to 0x602000000036). However, when accessing ColorMap->Colors[GifRow[j]], the value of GifRow[j] exceeds the actual number of colors stored. The address pointed to by ColorMapEntry, 0x602000000039, goes beyond the allocated memory range for color data. As a result, accessing ColorMapEntry->Red leads to out-of-bounds access, causing a heap-buffer-overflow.
+> a heap overflow can be triggered in sort(1) as per:
+> https://bugzilla.suse.com/show_bug.cgi?id=928749
+> https://github.com/pixelb/coreutils/commit/bea5e36cc876ed627bb5e0eca36fdfaa6465e940
 
-Thanks for the disclosure, but any pointer to potential fixes or maybe a 
-new release? I'm confused (because we distributions should now be 
-working to mitigate, as it is now disclosed)...
+> src/sort.c (keycompare_mb) ... The current implementation is character
+> based, so we allocate the worst case size for the conversion buffer,
+> which is MB_CUR_MAX for each input byte.
 
-Best Regards,
-Mingcong Bai>
-> Credits:
-> JiaXuan Song(m202372152@hust.edu.cn)
-> bale.cen(cenxianlong@huawei.com)
-> 
-> Best Regards,
-> Yajie Li
-> 
-> 
+This appears to be caused by performing a size calculation without
+properly considering the number of bytes occupied by multibyte
+characters. Use CVE-2015-4041.
 
+
+> https://github.com/pixelb/coreutils/commit/bea5e36cc876ed627bb5e0eca36fdfaa6465e940
+
+> There is also a theoretical buffer overflow with data around
+> SIZE_MAX/2.
+
+This appears to be related to the new "SIZE_MAX - lenb - 2 < lena"
+test, which is not specifically associated with use of multibyte
+characters. Use CVE-2015-4042.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJVW5B2AAoJEKllVAevmvmsTCYIALr2h2N45b4ENpHrfUechDFZ
+q2cJqpoDUJ3B4PSendkoh9BeH7fwwVVgSwXJpVtU0vaJOh0SXsioNahkuCpp0eA1
+1v39Lki0eW5/ZDxDzqDcv7m9oLGmI4LjrShqUG11UJhsNQ+6lEJAtz7+VJllW/V4
+NV1ixrRW/pCOpwX1Lp57KO1VSihbb+Iol+gWSTAFaJjn8DqrWrbWBVkVVk1rv3dW
+skkco5SKFUWJBdzPb/PkmEQ71kxXrlsEKBG5wrHHOKjIdQEj9fjnJ/HXo7AoEg1+
+SLq0CV2nVZltIQXvPvxIBvO8a1tM9g+bLoDuCDhyfYG+rCDMkOEBN4nvXyc1+Mw=
+=BJHX
+-----END PGP SIGNATURE-----
