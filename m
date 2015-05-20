@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1184" "Wednesday" "29" "July" "2015" "14:32:51" "+0100" "Kiall Mac Innes" "kiall@macinnes.ie" "<55B8D603.6070007@macinnes.ie>" "45" "Re: [oss-security] Re: CVE Request - OpenStack Designate mDNS DoS through incorrect handling of large RecordSets" nil nil nil "7" "2015072913:32:51" "[oss-security] Re: CVE Request - OpenStack Designate mDNS DoS through incorrect handling of large RecordSets" (number mark "        kiall@macinn Jul 29   45/1184  " thread-indent "\"Re: [oss-security] Re: CVE Request - OpenStack Designate mDNS DoS through incorrect handling of large RecordSets\"\n") "<20150728210918.BEF2372E041@smtpvbsrv1.mitre.org>" ("<20150728210918.BEF2372E041@smtpvbsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4671" "Wednesday" "20" "May" "2015" "14:29:39" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150520182939.388A76C0029@smtpvmsrv1.mitre.org>" "99" "[oss-security] CVE-2015-4000 - TLS does not properly convey server's ciphersuite choice" nil nil nil "5" "2015052018:29:39" "[oss-security] CVE-2015-4000 - TLS does not properly convey server's ciphersuite choice" (number mark "        cve-assign@m May 20   99/4671  " thread-indent "\"[oss-security] CVE-2015-4000 - TLS does not properly convey server's ciphersuite choice\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 22299 invoked by uid 550); 29 Jul 2015 13:33:09 -0000
+Received: (qmail 18088 invoked by uid 550); 20 May 2015 18:29:59 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,69 +11,111 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 22279 invoked from network); 29 Jul 2015 13:33:08 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=macinnes.ie;
-	s=default; t=1438176773;
-	bh=zwCjrHbf4qvWcMJYrn9NRa/BDBOJIpz6CbHFOL9Rrl0=;
-	h=Date:From:To:Subject:References:In-Reply-To;
-	b=Emhj4/sjXzO/w/8n2NodiCBp4MIdHVESJJeHtDmyZSWdE97wI8339+aa3JRUfyUbR
-	 XQr8Ob1fWHAEdAwuuCxKMeT9Qz1Dtl3SAZL46bykQxxpEn+XfmTjvaozlqb8r6rK+g
-	 M60/aNdiAfO0rMb9Vp5Ysb12/hSju4w7aYmFkj5E=
-Message-ID: <55B8D603.6070007@macinnes.ie>
-MIME-Version: 1.0
-References: <20150728210918.BEF2372E041@smtpvbsrv1.mitre.org>
-In-Reply-To: <20150728210918.BEF2372E041@smtpvbsrv1.mitre.org>
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-Date: Wed, 29 Jul 2015 14:32:51 +0100
-From: Kiall Mac Innes <kiall@macinnes.ie>
+Received: (qmail 18044 invoked from network); 20 May 2015 18:29:51 -0000
+Message-Id: <20150520182939.388A76C0029@smtpvmsrv1.mitre.org>
+Cc: cve-assign@mitre.org
+Date: Wed, 20 May 2015 14:29:39 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: CVE Request - OpenStack Designate mDNS DoS
- through incorrect handling of large RecordSets
+Subject: [oss-security] CVE-2015-4000 - TLS does not properly convey server's ciphersuite choice
 To: oss-security@lists.openwall.com
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hash: SHA1
 
-On 28/07/15 22:09, cve-assign@mitre.org wrote:
->>> https://launchpad.net/bugs/1471161
-> 
->>> Designate does not enforce the DNS protocol limit concerning
->>> record set sizes
-> 
->>> As a result, the rendering loop in desginate-mdns can does not
->>> make progress
-> 
->>> https://bugs.launchpad.net/designate/+bug/1471161/comments/5
-> 
->>> 1: Quotas were being bypassed as part of the v1 API.
-> 
->> two CVE IDs:
-> 
->> one for the original "does not enforce the DNS protocol limit 
->> concerning record set sizes" issue
-> 
-> Use CVE-2015-5694.
-> 
-> 
->> one for the "Quotas were being bypassed" issue.
-> 
-> Use CVE-2015-5695.
-> 
-> 
+CVE-2015-4000 has been assigned to this vulnerability in the TLS
+protocol that was disclosed in section 3.2 of the
+https://weakdh.org/imperfect-forward-secrecy.pdf paper:
 
-Great, Thank you.
+   "a flaw in the way TLS composes DHE and DHE_EXPORT. When a
+   server selects DHE_EXPORT for a handshake, it proceeds by
+   issuing a signed ServerKeyExchange message containing a
+   512-bit p512, but the structure of this message is identical
+   to the message sent during standard DHE ciphersuites.
+   Critically, the signed portion of the server's message fails
+   to include any indication of the specific ciphersuite that
+   the server has chosen."
 
-Thanks,
-Kiall
+(This is the TLS protocol problem associated with the Logjam attack.)
+
+There are some other vulnerabilities mentioned on the weakdh.org web
+site that can have individual CVE IDs for each affected codebase, if
+any researcher (or a vendor) identifies a specific available codebase
+(i.e., not one organization's in-house code). Also, there are security
+issues mentioned on the weakdh.org web site that can have individual
+CVE IDs for each affected codebase, if the author of the code requires
+a CVE ID for announcing the issue to customers. Finally, there are
+other issues mentioned on the weakdh.org web site that should not have
+CVE IDs, but for which it is possible that someone is considering
+using CVE IDs. Here are some examples of this distinction.
+
+
+section 3.5 - "some servers in our scans used Java's DSA primes as p,
+but mistakenly used the DSA group order q in the place of the
+generator g ... This substitution of q for g is likely due to a
+usability problem: the canonical ASN.1 representation of
+Diffie-Hellman key exchange parameters (coming from PKCS#3) is a
+sequence (p, g), while that of DSA parameters (coming from PKIX) is
+(p, q, g); we conjecture that the confusion between these formats led
+to a simple programming error."
+
+[ So, for example, if someone identifies a specific open-source
+product that has this programming error, a CVE ID can be assigned,
+even if the vendor's perspective is unknown. ]
+
+
+section 3.2 footnote - "Safari allowed groups as small as 16 bits"
+
+[ It seems that there's a high probability that this was unintentional
+behavior, and thus a CVE ID from Apple may be forthcoming. ]
+
+
+section 3 - "for both normal and export-grade Diffie-Hellman, the vast
+majority of servers use a handful of common groups"
+
+[ This is a type of issue that typically does not have a CVE ID
+because it is associated with the concept of third-party configuration
+data. Although we don't currently have complete documentation on what
+"third-party configuration data" means within CVE, the important
+points in this situation are:
+
+1. Use of a common group obtained from a third party was not a
+choice that would have been anticipated to be unreasonable.
+
+2. Avoiding use of a common group is not really equivalent to
+correcting a software mistake; it could typically involve improving a
+software product by adding new functionality or documentation, such as
+adding a call to "openssl dhparam" at installation time.
+
+3. Existence of a common group across different customers' deployments
+of a product is not independently exploitable; there is no attack that
+depends exclusively on knowing the group used by a victim.
+
+For example, it seems likely and appropriate that multiple vendors
+from the https://weakdh.org/sysadmin.html Common Server Products list,
+and a large number of other vendors, will adjust their own
+documentation (or installation process) to incorporate the general
+concept of "generate a new, unique Diffie-Hellman group." However, we
+don't feel that there should be CVE IDs to, in effect, track each
+vendor's progress toward this, or to criticize a vendor's choices
+(e.g., putting it only in documentation, with no new installation
+functionality). Instead, it can probably be treated as another
+important security improvement that becomes available to persons who
+pick up newer versions. ]
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
+Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBCAAGBQJVuNYCAAoJEHuWgzsGpgIasHEIAJlxDqvKFfZTQA0Nuoqr9jPP
-+V+oZIjg4bGQTSrFi11Jq8D3fmyoqRCb47E/XC/8VPZkBk/lPJ6BcBiDcOu9flst
-zw1J4qmcbxMeT9hCLmutcSZXI8KTWmpTczI3MN+RrgeDi4D2IEnkv+658b7mrOix
-7JMW56pkOLWLCf5QNDRTWHHTpac6hA0C2svp3Jwv5uMh+UWMcjD4ob6SM0tlG59w
-1ZRpGf/zE3UoabwJADXtNLewyb5CbI2qVUkvco/JeIZdFF0I/I8oRG7yxxotHYkg
-6MvwDVN6cLCvwe28vo/Mm0rvVw9uf4hqVIfYwE3rGCfN4zlTRu0ncPwRuHg865I=
-=S6kC
+iQEcBAEBAgAGBQJVXNGiAAoJEKllVAevmvmsDlMH/3UC62GsmkO9BL7neAr9AkbX
+sh/MtvC99+HOdIdiMKPAcQiojR4MazFCaQNr6qQ+UCV7lXfa1iHeJ4xi95U1Gdf3
+EC5SQfwKSfbvIv7dROHIa43MaS6MSSvshLcRfivpbyeYHfAU7Kj3AptIZ2LGsPTW
+YMeZX0aEduNTE4QQJfk0xXsS5gW6mPNaqQm4MSggbzejR1B/wdcALjT2xOhhAxwQ
+rjsx/xoMz6SWHx+J6gyOSIsTQ4B1ZwFszC22/3iXABJ/ZkYSuV/hQTa4AGXE/oKL
+Qa11zenkraRvYmMLVynZWQkXsPrWUQ9A1gCjEllu0yDuNUBh2Y8+q3WA9oshhMM=
+=2qz6
 -----END PGP SIGNATURE-----
