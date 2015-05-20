@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["444" "Friday" "6" "November" "2015" "13:50:33" "-0500" "Timothy Bish" "tabish121@gmail.com" "<563CF679.40603@gmail.com>" "18" "[oss-security] [ANNOUNCE] CVE-2014-3576 - Apache ActiveMQ vulnerabilities" nil nil nil "11" "2015110618:50:33" "[oss-security] [ANNOUNCE] CVE-2014-3576 - Apache ActiveMQ vulnerabilities" (number mark "U       tabish121@gm Nov  6   18/444   " thread-indent "\"[oss-security] [ANNOUNCE] CVE-2014-3576 - Apache ActiveMQ vulnerabilities\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1588" "Tuesday" "19" "May" "2015" "19:38:13" "-0700" "Seth Arnold" "seth.arnold@canonical.com" "<20150520023813.GB18594@hunt>" "51" "[oss-security] CVE Request: ipsec-tools" nil nil nil "5" "2015052002:38:13" "[oss-security] CVE Request: ipsec-tools" (number mark "        seth.arnold@ May 19   51/1588  " thread-indent "\"[oss-security] CVE Request: ipsec-tools\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 6013 invoked by uid 550); 6 Nov 2015 19:16:19 -0000
+Received: (qmail 7782 invoked by uid 550); 20 May 2015 02:38:31 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,49 +11,70 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 22175 invoked from network); 6 Nov 2015 18:50:46 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=to:from:subject:message-id:date:user-agent:mime-version
-         :content-type:content-transfer-encoding;
-        bh=5DG4LbuXuX2WF+H66hrdfifLuzE+RT9I02r5BS9W23k=;
-        b=yDJWXP9f4yCbQ78YSadBgiJsGI6MLAqAWqz4SX4VKhHZtvJyA/UpYnIugjSDClT0Bv
-         LM8djR4chvR87FjDiFCVoH9LQwjDpNqWh8WIfy6cXPUKWaYHJSKSq58Rg5T1t6H1QcUA
-         LE7kIhFF3aYdjVG/naRguT/P1+X+IhqGL/v/vgT03Q8PJlUI7KG0nqU99kGWNvqsL3xO
-         WbI4YHFUJe30CLODkVKFe73p6+Fpa0oFyxf/hI79IOoKnUPR5pIzbRJvQPrhViL4xU1x
-         RHDqZvRRXtmNQvF9tRYRB9JL3mfwxXUZguLz0tYWMeiSiPZBm9boeMv2eZgo2iK4/ZNe
-         TGBA==
-X-Received: by 10.55.56.130 with SMTP id f124mr14350634qka.79.1446835834516;
-        Fri, 06 Nov 2015 10:50:34 -0800 (PST)
-To: dev@activemq.apache.org, users@activemq.apache.org, security@apache.org,
- oss-security@lists.openwall.com, bugtraq@securityfocus.com
-From: Timothy Bish <tabish121@gmail.com>
-X-Enigmail-Draft-Status: N1110
-Message-ID: <563CF679.40603@gmail.com>
-Date: Fri, 6 Nov 2015 13:50:33 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.3.0
+Received: (qmail 7747 invoked from network); 20 May 2015 02:38:30 -0000
+Message-ID: <20150520023813.GB18594@hunt>
+Mail-Followup-To: oss-security@lists.openwall.com, security@ubuntu.com,
+	cve-assign@mitre.org
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="hQiwHBbRI9kgIhsi"
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
+Cc: security@ubuntu.com, cve-assign@mitre.org
+Date: Tue, 19 May 2015 19:38:13 -0700
+From: Seth Arnold <seth.arnold@canonical.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE Request: ipsec-tools
+To: oss-security@lists.openwall.com
+
+--hQiwHBbRI9kgIhsi
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
-Subject: [oss-security] [ANNOUNCE] CVE-2014-3576 - Apache ActiveMQ vulnerabilities
 
-There following security vulnerability was reported against Apache
-ActiveMQ 5.10.0 and older versions.
+Hello,
 
-Please check the following document and see if you=E2=80=99re affected by t=
-he issue.
+Javantea reports a null pointer dereference in the ipsec-tools package on
+the full-disclosure mail list:
+http://seclists.org/fulldisclosure/2015/May/81
 
-http://activemq.apache.org/security-advisories.data/CVE-2014-3576-announcem=
-ent.txt
+Christos Zoulas proposed a fix on the same list:
+http://seclists.org/fulldisclosure/2015/May/83
 
-Apache ActiveMQ 5.11.0 and newer with appropriate fixes was released and
-available for upgrade.
+--- gssapi.c    9 Sep 2006 16:22:09 -0000       1.4
++++ gssapi.c    19 May 2015 15:16:00 -0000      1.6
+@@ -192,6 +192,11 @@
+        gss_name_t princ, canon_princ;
+        OM_uint32 maj_stat, min_stat;
+=20
++       if (iph1->rmconf =3D=3D NULL) {
++               plog(LLV_ERROR, LOCATION, NULL, "no remote config\n");
++               return -1;
++       }
++
+        gps =3D racoon_calloc(1, sizeof (struct gssapi_ph1_state));
+        if (gps =3D=3D NULL) {
+                plog(LLV_ERROR, LOCATION, NULL, "racoon_calloc failed\n");
 
---=20
-Tim Bish
-RedHat Inc.
-tim.bish@redhat.com | www.redhat.com=20
+Please allocate a CVE for this issue.
+
+Thanks
 
 
+--hQiwHBbRI9kgIhsi
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBAgAGBQJVW/OVAAoJEPMhclmdjS6Xn9sH/jbfp1+dgEJ3NKDaS0URbQeh
+wBpthI/NlNmR1fMSuSLe+hcfv/tOBkpjgbosu+YpK5/ukcoEbVd79WfCrIr0GTMa
++X7457T48lg2HN+tgg+9vOkSjwWdyUySWEYLawBQlP0qvMHAIjnkQbh2rham0w42
+RZE5f4Ip9O3XX7D7u4BOSjozTg50QIzV/jqRsPqJFbRmv+0uoPjP1IxnQ926qR+G
+wEjrpbUEEWM//DqjurukzeQ2xxDolkmaAXSXWw6TGLHXoLNbQUMhu6O4gnSWNsrV
+QBTrpB1nmn8t15XoKVfLo2Tfc+XFrXwFF2rmklGvzVNgpk5VOcxSphbB7i4iNXA=
+=1Xb7
+-----END PGP SIGNATURE-----
+
+--hQiwHBbRI9kgIhsi--
