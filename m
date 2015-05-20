@@ -1,4 +1,9 @@
-Received: (qmail 5336 invoked by uid 550); 24 Jun 2023 21:09:05 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["736" "Wednesday" "20" "May" "2015" "16:50:18" "+0200" "Florian Weimer" "fweimer@redhat.com" "<555C9F2A.4020207@redhat.com>" "19" "[oss-security] JSON-based SQL query construction (Sequelize as an example)" nil nil nil "5" "2015052014:50:18" "[oss-security] JSON-based SQL query construction (Sequelize as an example)" (number mark "        fweimer@redh May 20   19/736   " thread-indent "\"[oss-security] JSON-based SQL query construction (Sequelize as an example)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 29919 invoked by uid 550); 20 May 2015 14:50:33 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,31 +11,35 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 29898 invoked from network); 20 May 2015 14:50:32 -0000
+Message-ID: <555C9F2A.4020207@redhat.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.27
+Date: Wed, 20 May 2015 16:50:18 +0200
+From: Florian Weimer <fweimer@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3823 invoked from network); 24 Jun 2023 21:08:11 -0000
-Date: Sat, 24 Jun 2023 23:08:05 +0200
-From: Solar Designer <solar@openwall.com>
+Subject: [oss-security] JSON-based SQL query construction (Sequelize as an example)
 To: oss-security@lists.openwall.com
-Message-ID: <20230624210805.GA16950@openwall.com>
-References: <CAGUWgD83Q_Sce+Zcwni33yjcx9bzFv=XUhKPJK1_v226Odj1ZA@mail.gmail.com> <20230623102833.GA6568@openwall.com> <B8655473-CC69-403E-BB35-5F233EF95D1A@dwheeler.com> <L14GKS6NenAaizYfAL1_wfSb0GYF9nnxQCUc5bB29pkHaIKrtWCn4qtCAXr8sxuo1GOtG2yiH2zsHOV7iSizWFi8yaEt6O0mGfTh02j2xU4=@proton.me>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <L14GKS6NenAaizYfAL1_wfSb0GYF9nnxQCUc5bB29pkHaIKrtWCn4qtCAXr8sxuo1GOtG2yiH2zsHOV7iSizWFi8yaEt6O0mGfTh02j2xU4=@proton.me>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] Opinion: Governments don't want IT security, they want to have cyber weapons
 
-On Sat, Jun 24, 2023 at 11:23:18AM +0000, cbf0001@proton.me wrote:
-> I agree with Solar and David, please stop lowering the bar with content that is not relevant to the distro subscribers.
+We came across an issue which could deserve some wider attention: JSON
+injection altering the structure of queries in certain ORM tools.
 
-Thanks for the feedback.  Subscribers to oss-security are by far not
-only distros, though.
 
-I also received 5 off-list replies (as I had asked for).  All of them
-were against somewhat off-topic content like Georgi's recent postings
-getting through to the list on further occasions.  So the list will be
-moderated more strictly accordingly.
+<https://securityblog.redhat.com/2015/05/20/json-homoiconicity-and-database-access/>
 
-No need for further replies to this thread, please.
+Already in July 2014, Kazuho Oku described a JSON injection issue in the
+SQL::Maker Perl package, discovered by his colleague Toshiharu Sugiyama:
 
-Alexander
+
+<http://blog.kazuhooku.com/2014/07/the-json-sql-injection-vulnerability.html>
+
+Additional SQL frameworks could be affected if they implement such
+queries and are used with JSON frameworks which produce dict/hash
+objects native to the programming language (so that they are
+indistinguishable from query expressions).
+
+-- 
+Florian Weimer / Red Hat Product Security
