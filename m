@@ -1,4 +1,9 @@
-Received: (qmail 18265 invoked by uid 550); 3 Nov 2022 16:08:46 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4987" "Thursday" "21" "May" "2015" "11:22:04" "+0200" "Marcel Reutegger" "mreutegg@apache.org" "<CAGHSmueUwzQbmn9Dk7h+6PB534YuWXaKFDD-kH5XJGX5BPyz+g@mail.gmail.com>" "124" "[oss-security] [ANNOUNCE] Apache Jackrabbit 2.10.1 released" nil nil nil "5" "2015052109:22:04" "[oss-security] [ANNOUNCE] Apache Jackrabbit 2.10.1 released" (number mark "        mreutegg@apa May 21  124/4987  " thread-indent "\"[oss-security] [ANNOUNCE] Apache Jackrabbit 2.10.1 released\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 7544 invoked by uid 550); 21 May 2015 15:09:16 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,42 +11,142 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 23796 invoked from network); 3 Nov 2022 15:37:10 -0000
-X-Injected-Via-Gmane: http://gmane.org/
-To: oss-security@lists.openwall.com
-From: Tavis Ormandy <taviso@gmail.com>
-Date: Thu, 3 Nov 2022 15:36:51 -0000 (UTC)
-Message-ID: <tk0n6j$10pr$1@ciao.gmane.io>
-References: <20221101170833.GA10470@openwall.com>
- <20221102150921.3ab3f2d0@computer> <Y2K1yOB7748iGI2P@wopr>
-Mime-Version: 1.0
+Received: (qmail 7597 invoked from network); 21 May 2015 09:22:20 -0000
+MIME-Version: 1.0
+X-Received: by 10.180.85.42 with SMTP id e10mr49371456wiz.17.1432200124811;
+ Thu, 21 May 2015 02:22:04 -0700 (PDT)
+Message-ID: <CAGHSmueUwzQbmn9Dk7h+6PB534YuWXaKFDD-kH5XJGX5BPyz+g@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-User-Agent: slrn/pre1.0.4-5 (Linux)
-Subject: [oss-security] Re: OpenSSL X.509 Email Address 4-byte Buffer Overflow
- (CVE-2022-3602), X.509 Email Address Variable Length Buffer Overflow
- (CVE-2022-3786)
+Date: Thu, 21 May 2015 11:22:04 +0200
+From: Marcel Reutegger <mreutegg@apache.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] [ANNOUNCE] Apache Jackrabbit 2.10.1 released
+To: announce@apache.org, announce@jackrabbit.apache.org, 
+	Jackrabbit Developers <dev@jackrabbit.apache.org>, Jackrabbit Users <users@jackrabbit.apache.org>, 
+	0ang3el 0ang3el <0ang3el@gmail.com>, security@apache.org, oss-security@lists.openwall.com, 
+	bugtraq@securityfocus.com
 
-On 2022-11-02, Kurt H Maier wrote:
-> On Wed, Nov 02, 2022 at 03:09:21PM +0100, Hanno Böck wrote:
->> FWIW it only takes a basically trivial fuzz target on the affected
->> function to find this bug with libfuzzer.
->
-> I'm not sure what the value is of all this Monday-morning
-> quarterbacking.
+The Apache Jackrabbit community is pleased to announce the release of
+Apache Jackrabbit 2.10.1. This release fixes an important security issue in
+the jackrabbit-webdav module reported by Mikhail Egorov.
 
-Hanno and I have contributed months of programmer time on openssl
-research and produced a ton of CRITICAL/HIGH issues over the years, not
-to mention nss, gnutls, etc. What you're looking at isn't Monday-morning
-quarterbacking on an unrelated list - this is active prolific opensource
-security researchers discussing their opensource security work on the
-opensource security mailing list :)
+The release is available for download at:
 
-Tavis.
+ http://jackrabbit.apache.org/downloads.html
 
--- 
- _o)            $ lynx lock.cmpxchg8b.com
- /\\  _o)  _o)  $ finger taviso@sdf.org
-_\_V _( ) _( )  @taviso
+See the full release notes below for details about this release.
 
+Release Notes -- Apache Jackrabbit -- Version 2.10.1
+
+Introduction
+------------
+
+This is Apache Jackrabbit(TM) 2.10.1, a fully compliant implementation of the
+Content Repository for Java(TM) Technology API, version 2.0 (JCR 2.0) as
+specified in the Java Specification Request 283 (JSR 283).
+
+Apache Jackrabbit 2.10.1 is a patch release that contains fixes and
+improvements over Jackrabbit 2.10. Jackrabbit 2.10.x releases are considered
+stable and targeted for production use.
+
+Security advisory (JCR-3883 / CVE-2015-1833)
+--------------------------------------------
+
+This release fixes an important security issue in the jackrabbit-webdav module
+reported by Mikhail Egorov.
+
+When processing a WebDAV request body containing XML, the XML parser can be
+instructed to read content from network resources accessible to the host,
+identified by URI schemes such as "http(s)" or  "file". Depending on the
+WebDAV request, this can not only be used to trigger internal network
+requests, but might also be used to insert said content into the request,
+potentially exposing it to the attacker and others (for instance, by inserting
+said content in a WebDAV property value using a PROPPATCH request). See also
+IETF RFC 4918, Section 20.6.
+
+Users of the jackrabbit-webdav module are advised to immediately update the
+module to this release or disable WebDAV access to the repository. Users
+on earlier versions of Jackrabbit who are unable to upgrade to 2.10.1 should
+apply the fix to the corresponding 2.x branch or disable WebDAV access until
+official releases of those earlier versions are available. Patches for 2.x
+branches are attached to the JIRA issue.
+
+Changes since Jackrabbit 2.10.0
+-------------------------------
+
+Bug fixes
+
+  [JCR-3853] JCR2SPI: Load ac provider resource
+  [JCR-3871] POI Vulnerabilities
+  [JCR-3872] Config DTD does not declare ProtectedItemImporter elements
+  [JCR-3873] CachingDataStore not safe against crashes, corrupted
+uploads file will prevent system startup
+  [JCR-3876] POM dependency to jackrabbit-data test-jar is not test-scoped
+  [JCR-3878] Fix test case failure in jackrabbit-data
+  [JCR-3883] Jackrabbit WebDAV bundle susceptible to XXE/XEE attack
+
+Improvements
+
+  [JCR-3864] CachingDatastore -cache file sizes to save remote call to
+remote datastore( S3DS)
+  [JCR-3868] Adapt TestCaseBase.java to test for FileDatastore
+  [JCR-3869] CachingDataStore for SAN or NFS mounted storage
+  [JCR-3879] Remove contention in AsyncUploadCache to improve performance
+  [JCR-3881] Change CachingFDS configuration properties
+
+New Features
+
+  [JCR-3836] Allow to get an Authorizable of a given type
+
+Sub-tasks
+
+  [JCR-3837] Add AuthorizableTypeException in user security API package
+
+In addition to the above-mentioned changes, this release contains
+all the changes included up to the Apache Jackrabbit 2.10.0 release.
+
+For more detailed information about all the changes in this and other
+Jackrabbit releases, please see the Jackrabbit issue tracker at
+
+    https://issues.apache.org/jira/browse/JCR
+
+Release Contents
+----------------
+
+This release consists of a single source archive packaged as a zip file.
+The archive can be unpacked with the jar tool from your JDK installation.
+See the README.txt file for instructions on how to build this release.
+
+The source archive is accompanied by SHA1 and MD5 checksums and a PGP
+signature that you can use to verify the authenticity of your download.
+The public key used for the PGP signature can be found at
+https://svn.apache.org/repos/asf/jackrabbit/dist/KEYS.
+
+About Apache Jackrabbit
+-----------------------
+
+Apache Jackrabbit is a fully conforming implementation of the Content
+Repository for Java Technology API (JCR). A content repository is a
+hierarchical content store with support for structured and unstructured
+content, full text search, versioning, transactions, observation, and
+more.
+
+For more information, visit http://jackrabbit.apache.org/
+
+About The Apache Software Foundation
+------------------------------------
+
+Established in 1999, The Apache Software Foundation provides organizational,
+legal, and financial support for more than 140 freely-available,
+collaboratively-developed Open Source projects. The pragmatic Apache License
+enables individual and commercial users to easily deploy Apache software;
+the Foundation's intellectual property framework limits the legal exposure
+of its 3,800+ contributors.
+
+For more information, visit http://www.apache.org/
+
+Trademarks
+----------
+
+Apache Jackrabbit, Jackrabbit, Apache, the Apache feather logo, and the Apache
+Jackrabbit project logo are trademarks of The Apache Software Foundation.
