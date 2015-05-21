@@ -1,4 +1,9 @@
-Received: (qmail 3217 invoked by uid 550); 22 Apr 2024 13:29:23 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2707" "Thursday" "21" "May" "2015" "14:46:50" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150521184650.AFDABB2E2B0@smtpvbsrv1.mitre.org>" "54" "[oss-security] Re: CVE request: ssl.match_hostname(): sub string wildcard should not match IDNA prefix" "^Cc:" nil nil "5" "2015052118:46:50" "[oss-security] Re: CVE request: ssl.match_hostname(): sub string wildcard should not match IDNA prefix" (number mark "        cve-assign@m May 21   54/2707  " thread-indent "\"[oss-security] Re: CVE request: ssl.match_hostname(): sub string wildcard should not match IDNA prefix\"\n") "<87iobqdzot.fsf@redhat.com>" ("<87iobqdzot.fsf@redhat.com>") nil nil nil nil nil nil nil "[oss-security] Re: CVE request: ssl.match_hostname(): sub string wildcard should not match IDNA prefix" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 11305 invoked by uid 550); 21 May 2015 18:47:04 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,51 +11,67 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 11287 invoked from network); 21 May 2015 18:47:03 -0000
+In-Reply-To: <87iobqdzot.fsf@redhat.com>
+Message-Id: <20150521184650.AFDABB2E2B0@smtpvbsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Thu, 21 May 2015 14:46:50 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 22425 invoked from network); 22 Apr 2024 07:39:40 -0000
-Authentication-Results: apache.org; auth=none
-X-Gm-Message-State: AOJu0YyQJS/POOaLTuTr3XyRMAUlphC8eDNN/vmtLQtbNTmYCW/i8yeg
-	9I67HfMtgf2dD3LL4rpsSdmkpFFPQBLpLELEU1p5BUJYXOfXoXH1F2cgB7XOInnWxMl25ayHeDL
-	VZHEHB099qyLYYz2QsNlmntq396s=
-X-Google-Smtp-Source: AGHT+IEzeQGTI+U8o/AFEgdgRJZwLzEjo4+aV7f2VjquUpIaRFxHV1du7CXziFTLjwOyUa+lMGqZKfj/xMpeif/OjBg=
-X-Received: by 2002:ad4:4a0a:0:b0:69b:51b7:b1ce with SMTP id
- m10-20020ad44a0a000000b0069b51b7b1cemr8541355qvz.21.1713771470149; Mon, 22
- Apr 2024 00:37:50 -0700 (PDT)
-MIME-Version: 1.0
-References: <CA+th4M+hZFd+u7zGbHhJ9acv0WFnOs95JiDek0ZWocCw+fN_5g@mail.gmail.com>
-In-Reply-To: <CA+th4M+hZFd+u7zGbHhJ9acv0WFnOs95JiDek0ZWocCw+fN_5g@mail.gmail.com>
-From: Imba Jin <jin@apache.org>
-Date: Mon, 22 Apr 2024 15:37:38 +0800
-X-Gmail-Original-Message-ID: <CA+th4MLqu7Fb+XM_RZxBcFMJJAnhoPqKWMMmWGCCg1j_YA2x8A@mail.gmail.com>
-Message-ID: <CA+th4MLqu7Fb+XM_RZxBcFMJJAnhoPqKWMMmWGCCg1j_YA2x8A@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] CVE-2024-27348: Apache HugeGraph-Server: Command execution in gremlin
+Subject: [oss-security] Re: CVE request: ssl.match_hostname(): sub string wildcard should not match IDNA prefix
+To: mprpic@redhat.com
 
-Severity: important
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Affected versions:
+> https://bugs.python.org/issue17997
+> https://hg.python.org/cpython/rev/10d0edadbcdd/
 
-- Apache HugeGraph-Server 1.0.0 before 1.3.0
+Our perspective on issue17997 is that the "multiple wildcards" issue
+can have a CVE ID but the "IDNA prefix" issue probably cannot.
 
-Description:
+RFC 2818 says "Names may contain the wildcard character * which is
+considered to match any single domain name component or component
+fragment. E.g., *.a.com matches foo.a.com but not bar.foo.a.com.
+f*.com matches foo.com but not bar.com." It isn't completely clear
+whether multiple instances of '*' such as *.*.com were considered
+valid. Also, https://bugs.python.org/msg194950 says "For security
+reasons matching rules like *.*.com should be not supported." Use
+CVE-2013-7440 for this issue.
 
-RCE-Remote Command Execution vulnerability in Apache
-HugeGraph-Server.This issue affects Apache HugeGraph-Server: from
-1.0.0 before 1.3.0 in Java8 & Java11
+The IDNA report seems to be about wanting to change the specification
+from RFC 2818 to RFC 6125. https://bugs.python.org/msg189454 mentions
+that the old behavior 'can result into false positive matches for a
+rule like "x*.example.de"' but, in practice, it seems unlikely that
+anyone would have a need for rules beginning with x* or xn* or xn-*
+(these are essentially the only three cases). It seems more likely
+that someone would have created a rule for xn--*.example.de because
+they specifically wanted to match all IDNA names but did not want to
+match www.example.de (which might be separately administered). In
+other words, the IDNA aspect of 10d0edadbcdd doesn't seem to be a
+vulnerability fix; it seems to be a policy change that, relative to
+existing deployments, sometimes strengthens security and sometimes
+weakens security. The policy change (i.e., adopting a more recent RFC)
+does, of course, seem appropriate for new deployments. Similarly,
+https://bugs.python.org/msg227895 says "I won't apply this for 3.2
+since at this point a behavior change might do more harm than good."
+In any case, because RFC 2818 was intended when the code was written,
+we feel that 'false positive matches for a rule like "x*.example.de"'
+is not a vulnerability and should not have a CVE.
 
-Users are recommended to upgrade to version 1.3.0 with Java11 & enable
-the Auth system, which fixes the issue.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-Also you could enable the "Whitelist-IP/port" function to improve the
-security of RESTful-API execution
-
-Credit:
-
-6right of moresec (reporter)
-
-References:
-
-https://hugegraph.apache.org/docs/config/config-authentication/#configure-user-authentication
-https://hugegraph.apache.org/docs/download/download/
-https://www.cve.org/CVERecord?id=CVE-2024-27348
+iQEcBAEBAgAGBQJVXielAAoJEKllVAevmvmsOiAH/ihqkIzpYITVkDisLMRfcvyz
+M3NxEbB2l7PozcWTmupMQ7CSyG6lSPjzB/eBA7sJgzDkPnbJRQu6OD0YHLsQ7H9O
+DUMq77w9utEy+KbrMOKaYqu4uRAWY8s7zmRlumqO6nJ8YTMhqbHj+laaVJK/VIon
+7Yr83n8H6BLSse67n9khcxmmxyhwPaQRMNVg5Bpk4A3S2E6jpPQUXiSTSreHGwfU
+jemrbYn9bPosy0Ga7zl8HUzWVHFkEP1zexXcI3Ruk/lRVqhRlcwOEKXHsz0RpfAx
+vrF70GHR3kGg+lPi6DGZGW4rmEkk4shemg/fCy55j7p2YxxDnufIxClaUJmDmoE=
+=68Zt
+-----END PGP SIGNATURE-----
