@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2241" "Thursday" "23" "July" "2015" "03:30:08" "+0200" "Solar Designer" "solar@openwall.com" "<20150723013008.GA2017@openwall.com>" "48" "Re: [oss-security] Linux x86_64 NMI security issues" nil nil nil "7" "2015072301:30:08" "[oss-security] Linux x86_64 NMI security issues" (number mark "        solar@openwa Jul 23   48/2241  " thread-indent "\"Re: [oss-security] Linux x86_64 NMI security issues\"\n") "<CALCETrXViSiMG79NtqN79NauDN9B2k9nOQN18496h9pJg+78+g@mail.gmail.com>" ("<CALCETrXViSiMG79NtqN79NauDN9B2k9nOQN18496h9pJg+78+g@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2113" "Friday" "22" "May" "2015" "08:42:47" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150522124247.65E976C005F@smtpvmsrv1.mitre.org>" "51" "[oss-security] Re: CVE request: Multiple SQL injection vulnerabilities in GigPress - WordPress plugins." nil nil nil "5" "2015052212:42:47" "[oss-security] Re: CVE request: Multiple SQL injection vulnerabilities in GigPress - WordPress plugins." (number mark "        cve-assign@m May 22   51/2113  " thread-indent "\"[oss-security] Re: CVE request: Multiple SQL injection vulnerabilities in GigPress - WordPress plugins.\"\n") "<CAEhYM0Yo=OQHMGXGwxn7z+-c18rdXcOd8+O134M03CMswGSOyQ@mail.gmail.com>" ("<CAEhYM0Yo=OQHMGXGwxn7z+-c18rdXcOd8+O134M03CMswGSOyQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 30681 invoked by uid 550); 23 Jul 2015 01:30:30 -0000
+Received: (qmail 21504 invoked by uid 550); 22 May 2015 12:42:59 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,65 +11,64 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 30656 invoked from network); 23 Jul 2015 01:30:29 -0000
-Message-ID: <20150723013008.GA2017@openwall.com>
-References: <CALCETrXViSiMG79NtqN79NauDN9B2k9nOQN18496h9pJg+78+g@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CALCETrXViSiMG79NtqN79NauDN9B2k9nOQN18496h9pJg+78+g@mail.gmail.com>
-User-Agent: Mutt/1.4.2.3i
-Date: Thu, 23 Jul 2015 03:30:08 +0200
-From: Solar Designer <solar@openwall.com>
+Received: (qmail 20459 invoked from network); 22 May 2015 12:42:59 -0000
+In-Reply-To: <CAEhYM0Yo=OQHMGXGwxn7z+-c18rdXcOd8+O134M03CMswGSOyQ@mail.gmail.com>
+Message-Id: <20150522124247.65E976C005F@smtpvmsrv1.mitre.org>
+Cc: cve-assign@mitre.org
+Date: Fri, 22 May 2015 08:42:47 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Linux x86_64 NMI security issues
+Subject: [oss-security] Re: CVE request: Multiple SQL injection vulnerabilities in GigPress - WordPress plugins.
 To: oss-security@lists.openwall.com
 
-Andy et al.,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-First of all, thank you for your hard work on these issues!
+> Multiple SQL injection vulnerabilities in GigPress (WordPress plugin)
+> I request a CVE for the same.
 
-On Wed, Jul 22, 2015 at 11:12:00AM -0700, Andy Lutomirski wrote:
-> +++++ CVE-2015-3291 +++++
-> +++++ CVE-2015-5157 +++++
-> +++++ NMI bug, no CVE assigned +++++
-> +++++ CVE-2015-3290 +++++
+Yes, MITRE is able to provide a CVE ID. (We will do this soon,
+regardless of the outcome below.)
 
-Red Hat folks, and Petr in particular - please post to this thread when
-you have statements on which RHEL kernels are affected by which of these
-issues.  RHEL kernels are upstream for several other distros/projects.
+What apparently occurred in the previous case this week was that the
+WordPress plugin changelog URL was sent here, then the CVE ID was sent
+here, and then the CVE ID was used on fulldisclosure, i.e.,
 
-Finally, I'm afraid I have to remind you Andy that we have a policy in
-here to avoid CC'ing other mailing lists on oss-security postings (and
-vice versa), and especially not to do that with LKML:
+  http://openwall.com/lists/oss-security/2015/05/18/8
+  http://openwall.com/lists/oss-security/2015/05/18/10
+  http://seclists.org/fulldisclosure/2015/May/75
 
-http://oss-security.openwall.org/wiki/mailing-lists/oss-security#list-content-guidelines
+The MITRE CVE project is currently willing to follow that pattern for
+some number of WordPress plugin disclosures. A possible advantage for
+other people is receiving notification of security-relevant plugin
+changelogs earlier. A possible disadvantage for other people is three
+times as many public messages per disclosure. If this disadvantage is
+very important, you can (among other options) send e-mail directly to
+only cve-assign@mitre.org to tell us. As far as we know, the list
+guidelines at
+http://oss-security.openwall.org/wiki/mailing-lists/oss-security would
+imply that all of:
 
-"Please don't cross-post messages to oss-security and other mailing
-lists at once, especially not to high-volume lists such as LKML and
-netdev, as this tends to result in threads that wander partially or
-fully off-topic (e.g., Linux kernel coding style detail may end up being
-discussed in comments to a patch posted to LKML, but it would be
-off-topic for oss-security).  If you feel that something needs to be
-posted to oss-security and to another list, please make separate
-postings.  You may mention the other posting(s) in your oss-security
-posting, and even link to other lists' archives."
+  http://openwall.com/lists/oss-security/2015/05/18/8
+  http://openwall.com/lists/oss-security/2015/05/20/6
+  http://openwall.com/lists/oss-security/2015/05/22/2
 
-The threads on linux-distros (where Andy first brought one of these
-issues on July 13) were very interesting, but they'd be beyond what all
-but very few oss-security subscribers need.  It would be "unaffordable"
-for most subscribers to read a hundred of messages in a few days on x86
-NMI specifics and Linux kernel internals.  I guess your CC'ing LKML
-won't result in a similar thread being CC'ed in here, but it might, and
-if it does it'd be really tough for oss-security moderators to handle it
-well (accepting all such messages would be bad, and rejecting some also
-bad since it breaks the thread).
+are "Public security issues" that oss-security subscribers might want
+to know about.
 
-That said, the detail level of your posting is just right for this list,
-and I am looking forward to seeing you add more detail later as you
-wrote you intend to.  I am only worried about the uncontrolled CC's of
-future postings from the LKML side.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-Thanks again,
-
-Alexander
+iQEcBAEBAgAGBQJVXyPDAAoJEKllVAevmvmsu3AH/RSc8NVcuW77TXcpl3JiOygW
+pTDrmSoF8bXfXpGA5OCDzwCZKXh4o3L/fgy/BaJYXaYi6s3d4M1I/k5nJaJ59p0R
+XY1RC75Ow0Hbwi/6TkK0Tj+Ix4X8QMekdh+pfzPQ1AgZSQlgGvqDhkCzIViwVWtp
+WrzSAV3mCWkA+RVBKbbhco1ruDfSGbtUY/MF+XgefQHKErB3+6H4vwEI0j27Il+I
+noDqElpaztpz5CyqoUMnu+vQWQwHIj1MyBXNb9gLvTpm/YMXD5nab9SkJtVfp8/6
+/YB3o4O22t643LFdHZJWNaWQA9pq2xCD+5u+J/8/F26/cMDrMOpcR9EGHXLLy44=
+=S50W
+-----END PGP SIGNATURE-----
