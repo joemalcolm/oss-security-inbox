@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["648" "Tuesday" "30" "May" "2017" "10:29:32" "-0400" "Daniel Micay" "danielmicay@gmail.com" "<1496154572.941.11.camel@gmail.com>" "12" "Re: [oss-security] Linux kernel: stack buffer overflow with controlled payload in get_options() function" "^Cc:" nil nil "5" "2017053014:29:32" "[oss-security] Linux kernel: stack buffer overflow with controlled payload in get_options() function" (number mark "        danielmicay@ May 30   12/648   " thread-indent "\"Re: [oss-security] Linux kernel: stack buffer overflow with controlled payload in get_options() function\"\n") "<1496153035.941.9.camel@gmail.com>" ("<EBDB967B-92F8-47B9-AC79-CBF338A835F2@gmail.com>" "<20170530114138.jpcppn4j67niqhyb@perpetual.pseudorandom.co.uk>" "<1496145073.1459.1.camel@gmail.com>" "<3f12105e-11d8-abe6-762b-c5b762cf6b31@redhat.com>" "<1496149333.941.1.camel@gmail.com>" "<099ea9a5-1f74-b837-bcae-aaba2c109a02@redhat.com>" "<1496150738.941.5.camel@gmail.com>" "<ab7a4164-1faf-67c2-deb7-f74998ae1dd6@redhat.com>" "<1496153035.941.9.camel@gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2287" "Friday" "22" "May" "2015" "11:46:02" "+0200" "Alessandro Ghedini" "alessandro@ghedini.me" "<20150522094602.GB7977@kronk.local>" "60" "[oss-security] Re: CVE Request: zeromq downgrade attack" nil nil nil "5" "2015052209:46:02" "[oss-security] Re: CVE Request: zeromq downgrade attack" (number mark "        alessandro@g May 22   60/2287  " thread-indent "\"[oss-security] Re: CVE Request: zeromq downgrade attack\"\n") "<20150521141653.0EB24B2E24E@smtpvbsrv1.mitre.org>" ("<20150507144908.GA1677@kronk.local>" "<20150521141653.0EB24B2E24E@smtpvbsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 13672 invoked by uid 550); 30 May 2017 14:29:47 -0000
+Received: (qmail 21952 invoked by uid 550); 22 May 2015 09:46:18 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,65 +11,81 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 13654 invoked from network); 30 May 2017 14:29:47 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:subject:from:to:cc:date:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=mx+/PiOW6txXBm6L82VUBo7KxV+b7FXq73/ZedtmqA8=;
-        b=IBhXcRngWskkyX3DqaHp+VSIZ4gbQ51NTbLwHXsCrcnHq/coV2sl6mh6/sy5l/gVj3
-         YteZihETalEMTl7fecaVhHg6FxoHvyjs/XOfXl5GHCwIT1Z2Xa7JKKH9L2UjHEyKdd5o
-         qWYgAKxbVySFcFm0AigfSt0m1tkGI7fpPNuWj2KvixjwUpIF4t6Aw1NxoyW+N8haNBMU
-         uZGyUYsgil4zhjwsPDKWEn4Nz6HjYAPGsgF4cCCcDSdZxI9tciBL+VTG6eNc5GFC0u+U
-         wDjDxnNyNAHY9dwWgoojk+fS4Jy5EKz9XQsukxYr9IorCVx2B2TfY2z1OdOoJINSExrY
-         Ht7A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=mx+/PiOW6txXBm6L82VUBo7KxV+b7FXq73/ZedtmqA8=;
-        b=EN24cWVQA4iR/wd7tCdPs1hfmUJXD9WNmdCmAV59mcgxin5VWp7IIgfsCafnpl59Dg
-         QPIZesb4zklF+P1fmeuOyhqfpEx8hFktlEitn1jQ9qI9Pcj7NR9YLEcBdXvl5UpZuiY0
-         rXR7SH9qc0D2swz4Se9EBuBry+qPlrxAv4UnL1q0lVe/Q+4ylff4sLR4+dqG+na7h3D0
-         AM3pnCKXT069CRXN7o8PUhqoLvC/Aq10DVabZFtaVOs8igkLIehB5NbU2eUP49z0Ir/d
-         GgHbkKZ3YW8enFgNFZlEFyCGSDoBHUpIg5rE+8jCzyweMBBlgJvO677NYeY4O+TIoG4P
-         gr7A==
-X-Gm-Message-State: AODbwcBuubyy+WfJyvz+4KxlVlMyn09/5CARgomwbxCDbhUsctdt5XZ0
-	NWSetDZJtXeMEQ==
-X-Received: by 10.36.0.86 with SMTP id 83mr2325237ita.63.1496154575362;
-        Tue, 30 May 2017 07:29:35 -0700 (PDT)
-Message-ID: <1496154572.941.11.camel@gmail.com>
-In-Reply-To: <1496153035.941.9.camel@gmail.com>
-References: <EBDB967B-92F8-47B9-AC79-CBF338A835F2@gmail.com>
-	 <20170530114138.jpcppn4j67niqhyb@perpetual.pseudorandom.co.uk>
-	 <1496145073.1459.1.camel@gmail.com>
-	 <3f12105e-11d8-abe6-762b-c5b762cf6b31@redhat.com>
-	 <1496149333.941.1.camel@gmail.com>
-	 <099ea9a5-1f74-b837-bcae-aaba2c109a02@redhat.com>
-	 <1496150738.941.5.camel@gmail.com>
-	 <ab7a4164-1faf-67c2-deb7-f74998ae1dd6@redhat.com>
-	 <1496153035.941.9.camel@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.24.2 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Cc: Roee Hay <roeehay@gmail.com>
-Date: Tue, 30 May 2017 10:29:32 -0400
-From: Daniel Micay <danielmicay@gmail.com>
+Received: (qmail 21934 invoked from network); 22 May 2015 09:46:17 -0000
+Message-ID: <20150522094602.GB7977@kronk.local>
+Mail-Followup-To: cve-assign@mitre.org, oss-security@lists.openwall.com
+References: <20150507144908.GA1677@kronk.local>
+ <20150521141653.0EB24B2E24E@smtpvbsrv1.mitre.org>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="kORqDWCi7qDJ0mEj"
+Content-Disposition: inline
+In-Reply-To: <20150521141653.0EB24B2E24E@smtpvbsrv1.mitre.org>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+Cc: oss-security@lists.openwall.com
+Date: Fri, 22 May 2015 11:46:02 +0200
+From: Alessandro Ghedini <alessandro@ghedini.me>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Linux kernel: stack buffer overflow with
- controlled payload in get_options() function
-To: Florian Weimer <fweimer@redhat.com>, oss-security@lists.openwall.com
+Subject: [oss-security] Re: CVE Request: zeromq downgrade attack
+To: cve-assign@mitre.org
 
-init=/bin/bash -- arguments for bash running as real root
+--kORqDWCi7qDJ0mEj
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-If a memory corruption bug via a kernel line option is a vulnerability,
-so is this. It's a vulnerability in the verified boot implementation if
-there's attacker control over the kernel line to this extent.
+On Thu, May 21, 2015 at 10:16:53AM -0400, cve-assign@mitre.org wrote:
+> > // Is the peer using ZMTP/1.0 with no revision number?
+> > if (greeting_recv [0] !=3D 0xff || !(greeting_recv [9] & 0x01)) {
+> >     if (session->zap_enabled ()) {
+> >         // Reject ZMTP 1.0 connections if ZAP is enabled
+> >         error ();
+> >=20
+> > if (greeting_recv [revision_pos] =3D=3D ZMTP_1_0) {
+> >     if (session->zap_enabled ()) {
+> >         // Reject ZMTP 1.0 connections if ZAP is enabled
+> >         error ();
+> >=20
+> > if (greeting_recv [revision_pos] =3D=3D ZMTP_2_0) {
+> >     if (session->zap_enabled ()) {
+> >         // Reject ZMTP 1.0 connections if ZAP is enabled
+> >         error ();
+>=20
+> We think there is essentially only one vulnerability, and it was fixed
+> by that commit, but it is somewhat confusing because of an apparent
+> typo in a comment. Shouldn't the "=3D=3D ZMTP_2_0" test have a "Reject
+> ZMTP 2.0" comment?
 
-Even if we're going to treat memory corruption specially, you can
-corrupt memory simply via crazy configuration on the kernel command
-line... that is parsed properly, but then breaks at runtime. You can
-also happily disable features like rodata to make your life easier,
-since... you control the kernel line. I can't understand what kind of
-threat model considers these valid CVEs.
+Yes, I think that was due to a copy-paste error when backporting the patche=
+s.
+
+The current git version has the correct comment [0].
+
+Cheers
+
+[0] https://github.com/zeromq/libzmq/blob/f03a78bbfc205e12591a256914c6d53cc=
+57e9023/src/stream_engine.cpp#L609
+
+--kORqDWCi7qDJ0mEj
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCgAGBQJVXvrXAAoJEK+lG9bN5XPLZQYP/1DYRBUYpbZQiNy35ecqp71+
+2vF5tWPTP+ju0EkVFiVFPqD8uKV1ehTjaLewk1EGhjgGOAOvktbJVDVIM2mXlK/7
+ROHEGCQ0kv4A24x/wCTRcnsKW6wfpQb9D0t+OAxw5kXY42OIYkD6cnUX8MlpcppM
+pJBqMK8RNuSxvcc4vDZxBXA8jr0yIo6bbmVbZ1doWO2Y3hsD44ppvDjtUobjvAZc
+v3RuObjX5sF1IkdPhthSEV6oc5rB/9rRUJG3m7fQKuBL8xQn2zPx/3XBFS+dC329
+40O0aTKs8UQCxGPPh9sR7Bp8pmYb7IIBkm0DkfEWMv31viNTQ3lTCW1nbsjE/GiU
+nvVloYNHIL76IpS1mlkjDYxv/ec7GgJaK85iHXYwn6bOxWZyzdTqxEnw5+XPEB80
+WwB+l6jl9LBaSMcKBBiyxVs2d1ibfvjtpsaHwtDFanqqyf5p1mGB3CnpfhoB4qgz
+m3z1YmHZv5F+s3aNU+1tu2Ho9U0DqE/h26egiDhXvQAGWBGkIqGei4OF+EwHLP1t
+083nxVm0+z2Pu7/ofCS6YcloadeKl60H830HPAJAIOULbubinRr9EGJPdR4luaRL
+kBRh8YLmh6WJ3W3McaGtTKt00uc/4qHILaFQqVHnjQh7+qGyl32ymJU29LJpMXfs
+K4DTEolsuMeK7+mg7CA4
+=UrsA
+-----END PGP SIGNATURE-----
+
+--kORqDWCi7qDJ0mEj--
