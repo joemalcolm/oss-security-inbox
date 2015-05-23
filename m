@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["558" "Friday" "12" "August" "2016" "06:44:29" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1608120639040.19256@wniryva>" "19" "[oss-security] CVE request: Qemu net: vmxnet3: use after free while writing" nil nil nil "8" "2016081201:14:29" "[oss-security] CVE request: Qemu net: vmxnet3: use after free while writing" (number mark "U       ppandit@redh Aug 12   19/558   " thread-indent "\"[oss-security] CVE request: Qemu net: vmxnet3: use after free while writing\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1232" "Saturday" "23" "May" "2015" "19:40:12" "+0000" "Jeremy Stanley" "fungi@yuggoth.org" "<20150523194011.GY2731@yuggoth.org>" "33" "Re: [oss-security] Re: CVE Request for read-only directory traversal in Etherpad frontend tests" nil nil nil "5" "2015052319:40:12" "[oss-security] Re: CVE Request for read-only directory traversal in Etherpad frontend tests" (number mark "        fungi@yuggot May 23   33/1232  " thread-indent "\"Re: [oss-security] Re: CVE Request for read-only directory traversal in Etherpad frontend tests\"\n") "<20150411201731.GX2456@yuggoth.org>" ("<20150411201731.GX2456@yuggoth.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 3994 invoked by uid 550); 12 Aug 2016 01:14:47 -0000
+Received: (qmail 28569 invoked by uid 550); 23 May 2015 19:40:27 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,36 +11,56 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3976 invoked from network); 12 Aug 2016 01:14:46 -0000
-Date: Fri, 12 Aug 2016 06:44:29 +0530 (IST)
-From: P J P <ppandit@redhat.com>
-X-X-Sender: pjp@javelin
-To: oss security list <oss-security@lists.openwall.com>
-cc: Li Qiang <liqiang6-s@360.cn>
-Message-ID: <alpine.LFD.2.20.1608120639040.19256@wniryva>
+Received: (qmail 28542 invoked from network); 23 May 2015 19:40:26 -0000
+Message-ID: <20150523194011.GY2731@yuggoth.org>
+References: <20150411201731.GX2456@yuggoth.org>
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.24
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.29]); Fri, 12 Aug 2016 01:14:35 +0000 (UTC)
-Subject: [oss-security] CVE request: Qemu net: vmxnet3: use after free while writing
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20150411201731.GX2456@yuggoth.org>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-SA-Exim-Connect-IP: 2001:4802:7801:102:be76:4eff:fe20:63e0
+X-SA-Exim-Rcpt-To: oss-security@lists.openwall.com, cve-assign@mitre.org
+X-SA-Exim-Mail-From: fungi@yuggoth.org
+X-SA-Exim-Scanned: No (on azathoth.yuggoth.org); SAEximRunCond expanded to false
+Cc: CVE Request <cve-assign@mitre.org>
+Date: Sat, 23 May 2015 19:40:12 +0000
+From: Jeremy Stanley <fungi@yuggoth.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Re: CVE Request for read-only directory traversal
+ in Etherpad frontend tests
+To: OSS Security <oss-security@lists.openwall.com>
 
-   Hello,
+On 2015-04-11 20:17:31 +0000 (+0000), Jeremy Stanley wrote:
+> A vulnerability was discovered in Etherpad (see below). In order to
+> ensure full traceability, we need a CVE number assigned that we can
+> attach to further notifications. This issue is already public.
+> 
+> Title: Read-only directory traversal in Etherpad frontend tests
+> Reporter: Tom Hunkapiller
+> Versions: 1.2.0 through 1.5.3
+> 
+> Description:
+> Tom Hunkapiller reported a vulnerability in the frontend tests of
+> previous Etherpad releases, which are enabled by default. Parent
+> directory references were not correctly sanitized in frontend test
+> URLs of HTTP API calls, allowing an attacker to remotely read
+> arbitrary files on the server's filesystem with the privileges of
+> the account running the service.
+> 
+> Notes:
+> This bug was introduced in commit ba4ebbb which was initially
+> included in the 1.2.0 release, and is fixed in commit 5409eb3 which
+> appears in the 1.5.4 release.
+> 
+> References:
+> https://github.com/ether/etherpad-lite/commit/5409eb3
+> 
+> -- 
+> Jeremy Stanley
 
-Quick Emulator(Qemu) built with the VMWARE VMXNET3 NIC device support is 
-vulnerable to a use-after-free issue. It could occur while writing to the 
-device once it's disabled.
-
-A privileged user inside guest could use this issue to crash the Qemu 
-instance resulting in DoS.
-
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2016-08/msg01602.html
-
-This issue was reported by Li Qiang of 360.cn Inc.
-
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+I can't find where MITRE ever replied on the request above. Was a
+CVE assigned for this and I just missed it, or is the request still
+pending followup?
+-- 
+Jeremy Stanley
