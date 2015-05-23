@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1057" "Friday" "23" "November" "2018" "09:17:43" "-0800" "Ian Zimmerman" "itz@very.loosely.org" "<20181123171743.vcwfvbfds7ozhmse@matica.foolinux.mooo.com>" "22" "[oss-security] Re: Crashes and memory safety bugs in dcraw" "^Date:" nil nil "11" "2018112317:17:43" "[oss-security] Re: Crashes and memory safety bugs in dcraw" (number mark "        itz@very.loo Nov 23   22/1057  " thread-indent "\"[oss-security] Re: Crashes and memory safety bugs in dcraw\"\n") "<20181123092217.7e4a0f84@computer>" ("<20181123092217.7e4a0f84@computer>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1220" "Friday" "22" "May" "2015" "22:25:15" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150523022515.A3FC4B2E334@smtpvbsrv1.mitre.org>" "48" "[oss-security] Re: CVE request: Multiple vulnerabilities in some WordPress plugins: NewStatPress & WordPress Landing Pages." nil nil nil "5" "2015052302:25:15" "[oss-security] Re: CVE request: Multiple vulnerabilities in some WordPress plugins: NewStatPress & WordPress Landing Pages." (number mark "        cve-assign@m May 22   48/1220  " thread-indent "\"[oss-security] Re: CVE request: Multiple vulnerabilities in some WordPress plugins: NewStatPress & WordPress Landing Pages.\"\n") "<CAEhYM0ZC2yGjHUNuR63twE_WfWxj-o7Gn2-dC7A_vR0t2W-DLw@mail.gmail.com>" ("<CAEhYM0ZC2yGjHUNuR63twE_WfWxj-o7Gn2-dC7A_vR0t2W-DLw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 5501 invoked by uid 550); 23 Nov 2018 17:32:25 -0000
+Received: (qmail 32133 invoked by uid 550); 23 May 2015 02:25:28 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,40 +11,61 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5469 invoked from network); 23 Nov 2018 17:32:25 -0000
-Message-ID: <20181123171743.vcwfvbfds7ozhmse@matica.foolinux.mooo.com>
-References: <20181123092217.7e4a0f84@computer>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20181123092217.7e4a0f84@computer>
-User-Agent: NeoMutt/20180716-7-037281
-Date: Fri, 23 Nov 2018 09:17:43 -0800
-From: Ian Zimmerman <itz@very.loosely.org>
+Received: (qmail 32112 invoked from network); 23 May 2015 02:25:27 -0000
+In-Reply-To: <CAEhYM0ZC2yGjHUNuR63twE_WfWxj-o7Gn2-dC7A_vR0t2W-DLw@mail.gmail.com>
+Message-Id: <20150523022515.A3FC4B2E334@smtpvbsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Fri, 22 May 2015 22:25:15 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: Crashes and memory safety bugs in dcraw
-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: CVE request: Multiple vulnerabilities in some WordPress plugins: NewStatPress & WordPress Landing Pages.
+To: adrimf85@gmail.com
 
-On 2018-11-23 09:22, Hanno Böck wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> dcraw is a tool to process raw images from digital cameras.
-> It easily crashes with various issues (tested version 9.28.0). This was
-> very shallow testing (afl fuzzing with random inputs, not starting with
-> valid images), I assume there's much more. I reported those a long time
-> ago to its author, he didn't seem interested in fixing such issues.
-> 
-> Some applications use dcraw automatically to parse images (gthumb,
-> kphotoalbum, kde thumbnailers, gwenview).
+> - Multiple vulnerabilities in WordPress plugin "NewStatPress"
+> * vulnerable version: 0.9.8
+> * patched version: 0.9.9
+> * changelog: https://wordpress.org/plugins/newstatpress/changelog/
 
-An important side note: because dcraw intentionally doesn't provide a
-library, only an executable, code from it is bundled in at least some
-applications that use it; thus updating the dcraw package in a distro
-will not by itself be the end of this problem for the distro.  One such
-application : RawTherapee
+> SQLi
 
--- 
-Please don't Cc: me privately on mailing lists and Usenet,
-if you also post the followup to the list or newsgroup.
-To reply privately _only_ on Usenet and on broken lists
-which rewrite From, fetch the TXT record for no-use.mooo.com.
+Use CVE-2015-4062.
+
+
+> XSS
+
+Use CVE-2015-4063.
+
+
+> - Multiple vulnerabilities in WordPress plugin "WordPress Landing Pages"
+> * vulnerable version: 1.8.4
+> * patched version: 1.8.5
+> * changelog: https://wordpress.org/plugins/landing-pages/changelog/
+
+> SQLi
+
+Use CVE-2015-4064.
+
+
+> XSS
+
+Use CVE-2015-4065.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJVX+QTAAoJEKllVAevmvmsC04H/iVkGWEDHkaaqhTNpAUM7Dvo
+itWHZ9rVHPGpRNEPIyNUBCsDEuhJftghsr0nHlZWe6bLC76zSHfuGUR1rU03q8FI
+ci9P74q2v03uHPIFLPMPoPPc9qFsqFXCkI05MqB4+3/4wC/eAgpjbPRFZy1PpIIP
+rA+vdcyk+AWpk39gZglS5qiV37fj9YLxV4drONopbWOZwNZ5lrmgldV8quNw5Ebw
+8nDiob6HLP3LyRm+vEE7aILU30QP9DucOgbr3uPHcRnL9pvjJVexIGQd58xgphlQ
+Znl9XdlaxCY1pXnaTFra9wUT+LN+Aj/faA/xmqlRLgSCfW0YO1VYYWIoblFKyyM=
+=q7v0
+-----END PGP SIGNATURE-----
