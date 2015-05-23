@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1419" "Wednesday" "1" "April" "2015" "14:51:29" "-0700" "Andrew Lutomirski" "luto@kernel.org" "<CAObL_7Hkuoz12CkEfMwpwPqjAxRqEWNMYw8QSNL+Zs6geMEUfw@mail.gmail.com>" "31" "[oss-security] CVE Request: Linux mishandles int80 fork from 64-bit tasks" nil nil nil "4" "2015040121:51:29" "[oss-security] CVE Request: Linux mishandles int80 fork from 64-bit tasks" (number mark "        luto@kernel. Apr  1   31/1419  " thread-indent "\"[oss-security] CVE Request: Linux mishandles int80 fork from 64-bit tasks\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["967" "Friday" "22" "May" "2015" "22:28:01" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150523022801.B3FA16C000C@smtpvmsrv1.mitre.org>" "29" "[oss-security] Re: CVE request: Multiple SQL injection vulnerabilities in GigPress - WordPress plugins." nil nil nil "5" "2015052302:28:01" "[oss-security] Re: CVE request: Multiple SQL injection vulnerabilities in GigPress - WordPress plugins." (number mark "        cve-assign@m May 22   29/967   " thread-indent "\"[oss-security] Re: CVE request: Multiple SQL injection vulnerabilities in GigPress - WordPress plugins.\"\n") "<CAEhYM0Yo=OQHMGXGwxn7z+-c18rdXcOd8+O134M03CMswGSOyQ@mail.gmail.com>" ("<CAEhYM0Yo=OQHMGXGwxn7z+-c18rdXcOd8+O134M03CMswGSOyQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 21665 invoked by uid 550); 2 Apr 2015 05:20:10 -0000
+Received: (qmail 9397 invoked by uid 550); 23 May 2015 02:28:14 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,58 +11,42 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 29811 invoked from network); 1 Apr 2015 21:52:01 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:from:date:message-id:subject:to:content-type;
-        bh=rpbL7jn+/yXnZVsi8TxspyvLYlakmIhT6U5YItOlQgU=;
-        b=m9Vls4T7jG1adOpnOkPLHiLeZtTwwWrXsl2PBLK3+85H3VGpNuKoZnT1twB2NSIRJQ
-         uUVv6rRVnnxOJNzHM5K8hwkFOo1iI+x8EntCW0LY9ItcvPbxGqF2SBOGXKH80EJEhNks
-         ic0xT2JQnB2p7mW2LXZ87LG5tyL3I1p4nVnRxj9X1Dmw5epoPaz+Zb2tF8TTmqeDhR5J
-         BXdTyNSBrjNZSvO4flsQ8K6dV4iIYLmWfQoExmmeL/XKG4W91pnjW0yNGjmhjTAZsGaP
-         RQ/I3LP6iB5+lWvmVKIGswMu8oeq9RMx+8NuBotkD+JBb/ybjmdWW7eE4mKcH0HOlWys
-         jubg==
-X-Received: by 10.107.15.129 with SMTP id 1mr3311566iop.20.1427925109414; Wed,
- 01 Apr 2015 14:51:49 -0700 (PDT)
-MIME-Version: 1.0
-X-Google-Sender-Auth: 9TZKBsjhblrEn-ryVAx61Sn9Bgw
-Message-ID: <CAObL_7Hkuoz12CkEfMwpwPqjAxRqEWNMYw8QSNL+Zs6geMEUfw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Date: Wed, 1 Apr 2015 14:51:29 -0700
-From: Andrew Lutomirski <luto@kernel.org>
+Received: (qmail 9373 invoked from network); 23 May 2015 02:28:13 -0000
+In-Reply-To: <CAEhYM0Yo=OQHMGXGwxn7z+-c18rdXcOd8+O134M03CMswGSOyQ@mail.gmail.com>
+Message-Id: <20150523022801.B3FA16C000C@smtpvmsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Fri, 22 May 2015 22:28:01 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Sender: amluto@gmail.com
-Subject: [oss-security] CVE Request: Linux mishandles int80 fork from 64-bit tasks
-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: CVE request: Multiple SQL injection vulnerabilities in GigPress - WordPress plugins.
+To: adrimf85@gmail.com
 
-On unpatched x86_64 Linux with 32-bit emulation enabled, calling
-fork(2) or close(2) using int $0x80 in a 64-bit task could return back
-to user space in the new task using ret_from_sys_call.  That's
-inappropriate for an int80 entry, and, if nothing else forced a
-slow-path syscall return, the kernel would execute SYSRETL.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-That would likely break the calling process, since it would
-incorrectly return in long mode (i.e. CS would have the wrong value).
-This particular failure has no security implications.
+> * Multiple SQL injection vulnerabilities in GigPress.
+> * vulnerable version: 2.3.8
+> * patched version: 2.3.9
 
-There's another problem, though: setup_thread_stack would propagate
-TS_COMPAT (i.e. the indication that the task is in a 32-bit syscall)
-to the child, and nothing would clear that bit.  This violates a
-general invariant that tasks executing in user mode never have
-TS_COMPAT set.
+> * changelog: https://wordpress.org/plugins/gigpress/changelog/
 
-The user task could then do a normal 64-bit syscall, and
-is_compat_task() would incorrectly return true.  I don't see any
-direct way to escalate privileges as a result, but Ingo Molnar pointed
-out that this affects syscall_get_arch.  As a result, both seccomp and
-audit could misinterpret the offending syscall, with possibly
-dangerous results depending on configuration.
+>> Fixed SQL injection vulnerability in handlers.php
 
-I suspect that this could be used to break out of certain seccomp
-sandboxes on kernels older than 3.16.
+Use CVE-2015-4066.
 
-The upstream fix is here:
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=956421fbb74c3a6261903f3836c0740187cf038b
-
---Andy
+iQEcBAEBAgAGBQJVX+NGAAoJEKllVAevmvmsuOMH/2AvzaZe1qBb8v+yj/wQUMQM
+/Amy9dCBwBj58VwACPzM2mM9VJFSt6U0m2QtceVGt0NCY1+bfz6Pn0Hn5GXNx0zi
+Lt3DvM8JCDin2igmLY0Xy0X+fZGCqQwvE4HcVHuER0fncfibJXXXkx05QGb02h2O
+4m4P/PFwsjcKvrzEGnCCNgq4FHRBcOr6Nolp750h6GCTtTFBd8eIgqsw1iBEfo3C
+3H5CiKBwgRIZhhUYeJ7ehy1m1gs3JLsKJnWahxI1Tw0hIctVRrqzdFUNc6bFzjzD
+HhuPkd13zvZjkIOUNJtqP3h9A9hYXmnv7HKnesf1waPfeT4IdCMg6X4Jm1pPrvc=
+=e5Pr
+-----END PGP SIGNATURE-----
