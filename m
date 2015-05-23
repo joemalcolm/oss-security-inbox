@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["644" "Wednesday" "30" "November" "2016" "19:10:43" "+1100" "Wade Mealing" "wmealing@redhat.com" "<CALJHwhQQb3HXqR35yb7bjQPbUpN1vHH_=ETEyMq7LQ+6VLbkHA@mail.gmail.com>" "20" "[oss-security] cve-request: linux kernel - memory leak in xfs attribute mechanism." nil nil nil "11" "2016113008:10:43" "[oss-security] cve-request: linux kernel - memory leak in xfs attribute mechanism." (number mark "U       wmealing@red Nov 30   20/644   " thread-indent "\"[oss-security] cve-request: linux kernel - memory leak in xfs attribute mechanism.\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2054" "Saturday" "23" "May" "2015" "11:40:46" "+0000" "Nitin Venkatesh" "venkatesh.nitin@gmail.com" "<CAARZ5vqVxSgMZ+c+RwBBrwXN-xTNSSccj_Ggy3CeB1PQDgJPVw@mail.gmail.com>" "55" "[oss-security] Re: Wordpress Roomcloud plugin v1.1(rev @1115307) XSS vulnerability" nil nil nil "5" "2015052311:40:46" "[oss-security] Re: Wordpress Roomcloud plugin v1.1(rev @1115307) XSS vulnerability" (number mark "        venkatesh.ni May 23   55/2054  " thread-indent "\"[oss-security] Re: Wordpress Roomcloud plugin v1.1(rev @1115307) XSS vulnerability\"\n") "<20150522190405.D4E026FC00C@smtpvmsrv1.mitre.org>" ("<CAARZ5vpRu9sgev=p9M+zbxagBjbGRWBHrA-yUO9a2V7vpyVfRA@mail.gmail.com>" "<20150522190405.D4E026FC00C@smtpvmsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 30525 invoked by uid 550); 30 Nov 2016 08:10:56 -0000
+Received: (qmail 15897 invoked by uid 550); 23 May 2015 11:43:59 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,46 +11,85 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30507 invoked from network); 30 Nov 2016 08:10:55 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=zxztGR6pu0m970UGwCr4Ujp8oNSLz5fB0u3neoQTXqw=;
-        b=HuaBMGXqIUlMO8tbOXIT4Q/yizFWl5NBtK0a1oa6NcE4KxCQ2SkLwumVzt8GB1eE6G
-         uPrm24S9USrqRy+4qntn5jHpQBl+cPqWk48Ph6kMNueXd/O1xSUH+2z9Z/yo7RVmyMHr
-         bT8gxfgtECKV4wJUAyyng3eiDyWd1O91CQs1rhZpO7Y4HmKGvw7UoHeMwIKD9KtFuXy9
-         Vs2btbhBKnkvLtavoAngX67wrcX4NOpvRhZamAIM7vRQy/zGWIcN6vpK1TlD56PEalj5
-         aF7+Cddg1NW6NfqhKYFBuJAtXeACQBnJo+BnzPR98+eKI9ppdWyk4tIDyc53j4S0AxL7
-         I8gA==
-X-Gm-Message-State: AKaTC02cdL+4MZQJh9F/HabuC/3UyZ/Wp6mWFwvXyuQbEcigUnaRaAe5WGjNGGj/t800MLXXdMGzOUbqGH35KPCz
-X-Received: by 10.36.222.85 with SMTP id d82mr28085395itg.102.1480493444054;
- Wed, 30 Nov 2016 00:10:44 -0800 (PST)
+Received: (qmail 14011 invoked from network); 23 May 2015 11:40:59 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=kvR4yd9/2XHP/2U7CSjUSS2AocW7UrfcDJDUFf5EAPQ=;
+        b=gSWv/CszIL+qRPQ+jaqD2TT9/dtIJmufqtOb+N+mNZsahF4Xxq4wEE2HW6yFiDpEQs
+         zftX3fOq0zad6jSLG+fz5fEj1dwRSF4vo0G/8S+xkRujqxIuPe+lOI2QHMv/86PCmW96
+         gXpXvseWe+CwuxHeAuEMKdy0Ydc+t8xMHUUuVfBAPoeMYvXAT5Da/hjwA7WaJYrQRELC
+         lI1ga/4g8SUT7hpUYtKs3YEy9ZPgJofTA+KsmeNA2gxsdYLKrlyc+JRF3f32z4bKwNjA
+         6Wa+9Y6OSdjzpkbjHPyRsVLtjxkt0RlMHOVVRo86neWKS3nUzRIz8un5E5LIh47ivthA
+         uUzQ==
+X-Received: by 10.42.85.147 with SMTP id q19mr14323313icl.96.1432381247338;
+ Sat, 23 May 2015 04:40:47 -0700 (PDT)
 MIME-Version: 1.0
-From: Wade Mealing <wmealing@redhat.com>
-Date: Wed, 30 Nov 2016 19:10:43 +1100
-Message-ID: <CALJHwhQQb3HXqR35yb7bjQPbUpN1vHH_=ETEyMq7LQ+6VLbkHA@mail.gmail.com>
-To: oss-security@lists.openwall.com, CVE ID Requests <cve-assign@mitre.org>
+References: <CAARZ5vpRu9sgev=p9M+zbxagBjbGRWBHrA-yUO9a2V7vpyVfRA@mail.gmail.com>
+ <20150522190405.D4E026FC00C@smtpvmsrv1.mitre.org>
+In-Reply-To: <20150522190405.D4E026FC00C@smtpvmsrv1.mitre.org>
+Message-ID: <CAARZ5vqVxSgMZ+c+RwBBrwXN-xTNSSccj_Ggy3CeB1PQDgJPVw@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=20cf30334a8b6e3ebf0516be3f25
+Cc: oss-security@lists.openwall.com
+Date: Sat, 23 May 2015 11:40:46 +0000
+From: Nitin Venkatesh <venkatesh.nitin@gmail.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: Wordpress Roomcloud plugin v1.1(rev @1115307) XSS vulnerability
+To: cve-assign@mitre.org
+
+--20cf30334a8b6e3ebf0516be3f25
 Content-Type: text/plain; charset=UTF-8
-Subject: [oss-security] cve-request: linux kernel - memory leak in xfs attribute mechanism.
 
-Gday,
+Hi team,
 
-I'd like to request a CVE for the following flaw found in the XFS
-attribute management code where over-eager error handling could create
-a memory leak (not in information leak) and perhaps with enough
-dedication and patience a local attacker could eventually leak
-available system memory, creating a DOS attack.
+Thank you for CVE-2015-3904.
 
-As this same flaw style appears in two functions, this could have one
-or two CVE's, I'll leave it up to the fine assigners at mitre to
-decide that.
+Just wanted to update that the developer has now bumped up the version
+number and updated the changelog to reflect the changes. Please note that
+the patched version now is v1.3 and the changelog can be found here -
+https://wordpress.org/plugins/roomcloud/changelog/
 
-Thanks,
+On Sat, 23 May 2015 at 00:34 <cve-assign@mitre.org> wrote:
 
-Wade Mealing
-Red Hat Product Security
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>
+> > http://seclists.org/fulldisclosure/2015/May/40
+> > https://plugins.trac.wordpress.org/changeset/1117499
+>
+> > # Affected Versions: Tested on v1.1 (revision @1115307)
+> > # Fixed Version: v1.1 (revision @1117499)
+>
+> (The https://wordpress.org/plugins/roomcloud/changelog/ page does not
+> currently list this issue. Note that a download labeled 1.1 could
+> potentially be either a vulnerable version or a fixed version.)
+>
+> > Unsantized POST parameters are susceptible to XSS in the roomcloud.php
+> file
+> > viz., (1)pin, (2)start_day, (3)start_month, (4)start_year, (5)end_day,
+> > (6)end_month, (7)end_year, (8)lang, (9)adults, (10)children
+>
+> The implication seems to be that potential hotel guests, who obviously
+> do not have administrative access to the hotel web site, can make the
+> POST request. Use CVE-2015-3904.
+>
+> - --
+> CVE assignment team, MITRE CVE Numbering Authority
+> M/S M300
+> 202 Burlington Road, Bedford, MA 01730 USA
+> [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1.4.14 (SunOS)
+>
+> iQEcBAEBAgAGBQJVX30nAAoJEKllVAevmvms6Q8H/0pXtn2l5nEy3dTh1S3YH7xD
+> capTFDit0z8L4SzFR4BrJx0YEpEgOujsZdLRZkJzZbT3gw3Sgk3H3sELl82DHu3Q
+> oHx+K+Gg3MptO+yVinivPkWyKdGn63UxVKwCX58nU3JA7b3FHnxlyRiC/wihyxyx
+> KBu0RZ+3gW9+jiJTyLs00SJ/NTAG+HjivhBbMqUP+suOvExhlnNgF1EUeB5LftGF
+> LppAP17wYYKvy1m+upk+JdlmzBA4K7uxPpklkfSXdcQbOxN7GnNrBB31uzFrff88
+> 6P8AMpwGJOscJ3VjTnI7XIyzyn2I9sWCd5y1FhIexyMse73rJt+aGjMQZGYKf/w=
+> =WA80
+> -----END PGP SIGNATURE-----
+>
 
-Upstream:
-
-https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=2e83b79b2d6c78bf1b4aa227938a214dcbddc83f
+--20cf30334a8b6e3ebf0516be3f25--
