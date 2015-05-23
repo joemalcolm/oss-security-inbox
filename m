@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1873" "Monday" "21" "November" "2016" "11:58:29" "+0100" "Cedric Buissart" "cbuissar@redhat.com" "<1935548.nJNUl5RvF6@cbuissar-ltop>" "60" "[oss-security] CVE-2016-8638 ipsilon: DoS via logging out all open SAML2 sessions" "^Date:" nil nil "11" "2016112110:58:29" "[oss-security] CVE-2016-8638 ipsilon: DoS via logging out all open SAML2 sessions" (number mark "U       cbuissar@red Nov 21   60/1873  " thread-indent "\"[oss-security] CVE-2016-8638 ipsilon: DoS via logging out all open SAML2 sessions\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2503" "Saturday" "23" "May" "2015" "11:43:40" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150523154340.83C436C000E@smtpvmsrv1.mitre.org>" "57" "[oss-security] Re: QEMU 2.3.0 tmp vulns CVE request" nil nil nil "5" "2015052315:43:40" "[oss-security] Re: QEMU 2.3.0 tmp vulns CVE request" (number mark "        cve-assign@m May 23   57/2503  " thread-indent "\"[oss-security] Re: QEMU 2.3.0 tmp vulns CVE request\"\n") "<55537A9D.70306@redhat.com>" ("<55537A9D.70306@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 26016 invoked by uid 550); 21 Nov 2016 10:59:06 -0000
+Received: (qmail 28189 invoked by uid 550); 23 May 2015 15:44:01 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,77 +11,70 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 25998 invoked from network); 21 Nov 2016 10:59:05 -0000
-Message-ID: <1935548.nJNUl5RvF6@cbuissar-ltop>
-Organization: Red Hat
-User-Agent: KMail/5.3.2 (Linux/4.7.9-200.fc24.x86_64; KDE/5.27.0; x86_64; ; )
-MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="nextPart1780561.xZePTIi76E"; micalg="pgp-sha512"; protocol="application/pgp-signature"
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.27
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.25]); Mon, 21 Nov 2016 10:58:54 +0000 (UTC)
-Date: Mon, 21 Nov 2016 11:58:29 +0100
-From: Cedric Buissart <cbuissar@redhat.com>
+Received: (qmail 28165 invoked from network); 23 May 2015 15:44:00 -0000
+In-Reply-To: <55537A9D.70306@redhat.com>
+Message-Id: <20150523154340.83C436C000E@smtpvmsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Sat, 23 May 2015 11:43:40 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE-2016-8638 ipsilon: DoS via logging out all open SAML2 sessions
-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: QEMU 2.3.0 tmp vulns CVE request
+To: kseifried@redhat.com
 
---nextPart1780561.xZePTIi76E
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Hi,
+> So some suspicious looking tmp usage in qemu ...
 
-This is to inform you of the following CVE:
+> Additionally there will no doubt be further QEMU issues found in the
+> next few days/weeks as people start looking ...
 
-CVE-2016-8638 ipsilon: DoS via logging out all open SAML2 sessions
+We do not know of any further discussion of this, so it seems
+best to assign a CVE ID only for the net/slirp.c issue in
+the slirp_smb function:
 
-Description :
-A vulnerability in ipsilon was found that allows attacker to log out active
-sessions of other users. This issue is related to how it tracks sessions, and
-allows an unauthenticated attacker to view and terminate active sessions from
-other users.
+>     snprintf(s->smb_dir, sizeof(s->smb_dir), "/tmp/qemu-smb.%ld-%d",
+>              (long)getpid(), instance++);
+>     if (mkdir(s->smb_dir, 0700) < 0) {
+>         error_report("could not create samba server dir '%s'", s->smb_dir);
+>         return -1;
 
-Note: this bug can also be triggered accidentally.
+The simplest attack would be a DoS in which someone creates
+/tmp/qemu-smb.*-* files to prevent the legitimate creation of
+s->smb_dir (mkdir will not follow a symlink).
 
-Upstream patch : 
-https://pagure.io/ipsilon/c/511fa8b7001c2f9a42301aa1d4b85aaf170a461c
+Use CVE-2015-4037.
 
-Vulnerable versions: 
-All versions of Ipsilon 2.0 before 2.0.2 are vulnerable.
-All versions of Ipsilon 1.2 before 1.2.1 are vulnerable.
-All versions of Ipsilon 1.1 before 1.1.2 are vulnerable.
-All versions of Ipsilon 1.0 before 1.0.3 are vulnerable.
+Michael Tokarev commented on most of the other issues. For
+/tmp/pci.ids in niclist.pl (apparently maintained at
+https://git.ipxe.org/ipxe.git/blob/HEAD:/src/util/niclist.pl), the
+question is whether there's a requirement for a script of this type to
+be within the scope of CVE. As far as we can tell, niclist.pl is not
+executed in any default or configurable use of the product, and the
+documentation doesn't mention executing it. Of course, some people do
+execute it (it is sometimes mentioned in the product's forum such as
+on the http://forum.ipxe.org/printthread.php?tid=6813 page). If
+someone needs a CVE mapping to track the use of /tmp/pci.ids, please
+specify what vulnerabilities exist. For example, if niclist.pl runs
+"wget -O /tmp/pci.ids" and this follows a symlink from /tmp/pci.ids,
+is this best considered a vulnerability in iPXE rather than a
+vulnerability in wget? If /tmp/pci.ids is a plain file owned by
+someone else, and isn't overwritten by niclist.pl, then is there an
+XSS issue in format_nic_list_html?
 
-Impact: Important
-CVSS3 scoring : 8.2 AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:H
-
-Reported by: Patrick Uiterwijk (Red Hat) and Howard Johnson
-
-Reference :
-https://ipsilon-project.org/advisory/CVE-2016-8638.txt
-
-Best Regards,
-
---
-Cedric Buissart
-Red Hat Product Security
------------------------------------------
---nextPart1780561.xZePTIi76E
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part.
-Content-Transfer-Encoding: 7Bit
-
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
+Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAABCgAGBQJYMtNVAAoJECISsYvaK7kIhMwH/AxrS4mQeHGeAb3bvBgqEfNH
-ok+nWHvAJwDVaNZdj9woMFBBYCOr5QwZXhYldy7jY03BrbuF/YSljnBhCRjJMi70
-5YQIFy7Jy7iB5yL2UPlewQPYy+jGUj8VLUzBXq6vMt9/K58qNJFqgyZ87wp9c1vC
-GkW+bdE7jh+OO7wPuKHJURC6gXIO4MXsgrU9UJasnxTXKITh2e9cLz3d1BbjMJY3
-PBzqPjPtot8DLE7bkNkW4tHKV/fAo0Om50jKKQMLVZanNypI+U4+/XaG2He9lkXf
-KOzI1Tt68ilGPSVG66oop6h5sLtdp8miUoW5qbN27xUKWgJk1wEmktAwdkdaLWA=
-=6sfK
+iQEcBAEBAgAGBQJVYJ+cAAoJEKllVAevmvmsvcMIAMP1KWPYdFTbDYN+CJfxmVWR
+MUwwcLyV43n59bmihGKIG+K+kD+4SNEegRbph9NEtN/XJ8DjDPzdMrcIx6rIkwDR
++tgUewL6Er2+KPFUSLNozne9GDTqaQJDsD4FZsLmX/m+30Wd9DP2PCWwHWatKb9M
+NerlWH03BFBKqV22bAA3EA2aBuCHt+QJODQrMvGt9m/DYVk/XFn21k6SE0qWiwlY
+G+U06txLjxQ/KENG4Nro/6geYPZJMGUlFbLwcX87YVen9gRrEIcTlzdJjRRNz9DS
+jXH1IdGhxVVya/CPNTS224/y7J2nKvfVpSe3GQM3eFUQFahkFFzb9GVDc2ZEAXI=
+=LNB0
 -----END PGP SIGNATURE-----
-
---nextPart1780561.xZePTIi76E--
-
