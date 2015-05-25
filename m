@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2831" "Friday" "24" "August" "2018" "10:58:20" "+1000" "Damien Miller" "djm@mindrot.org" "<alpine.BSO.2.21.1808241046220.67512@haru.mindrot.org>" "54" "[oss-security] About OpenSSH \"user enumeration\" / CVE-2018-15473" "^cc:" nil nil "8" "2018082400:58:20" "[oss-security] About OpenSSH \"user enumeration\" / CVE-2018-15473" (number mark "        djm@mindrot. Aug 24   54/2831  " thread-indent "\"[oss-security] About OpenSSH \"user enumeration\" / CVE-2018-15473\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2318" "Monday" "25" "May" "2015" "09:48:55" "-0700" "Tristan Cacqueray" "tristan.cacqueray@enovance.com" "<55635277.6000006@enovance.com>" "77" "[oss-security] [OSSA 2015-009] Persistent XSS in Horizon metadata dashboard (CVE-2015-3988)" nil nil nil "5" "2015052516:48:55" "[oss-security] [OSSA 2015-009] Persistent XSS in Horizon metadata dashboard (CVE-2015-3988)" (number mark "        tristan.cacq May 25   77/2318  " thread-indent "\"[oss-security] [OSSA 2015-009] Persistent XSS in Horizon metadata dashboard (CVE-2015-3988)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 3407 invoked by uid 550); 24 Aug 2018 09:23:35 -0000
+Received: (qmail 18415 invoked by uid 550); 25 May 2015 16:48:52 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,72 +11,94 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 27679 invoked from network); 24 Aug 2018 00:58:38 -0000
-Message-ID: <alpine.BSO.2.21.1808241046220.67512@haru.mindrot.org>
-User-Agent: Alpine 2.21 (BSO 202 2017-01-01)
+Received: (qmail 18379 invoked from network); 25 May 2015 16:48:47 -0000
+X-Virus-Scanned: amavisd-new at enovance.com
+Message-ID: <55635277.6000006@enovance.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Scanned-By: MIMEDefang 2.73 on UQ Mailhub
-X-Scanned-By: MIMEDefang 2.75 on 130.102.60.17
-X-UQ-FilterTime: 1535072304
-cc: oss-security@lists.openwall.com
-Date: Fri, 24 Aug 2018 10:58:20 +1000 (AEST)
-From: Damien Miller <djm@mindrot.org>
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="IhTv0fTvF72rb4djkBKXqJFK9M8NNT6EH"
+Date: Mon, 25 May 2015 09:48:55 -0700
+From: Tristan Cacqueray <tristan.cacqueray@enovance.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] About OpenSSH "user enumeration" / CVE-2018-15473
-To: openssh-unix-dev@mindrot.org
+Subject: [oss-security] [OSSA 2015-009] Persistent XSS in Horizon metadata dashboard (CVE-2015-3988)
+To: oss-security@lists.openwall.com
 
-Hi,
+--IhTv0fTvF72rb4djkBKXqJFK9M8NNT6EH
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Regarding CVE-2018-15473: a few people have asked why we just committed
-a fix for this without any secrecy or treating it as a security
-problem. The reason is that I and the other OpenSSH developers don't
-consider this class of bug a significant vulnerability - it's a partial
-disclosure of non-sensitive information.
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D
+OSSA-2015-009: Persistent XSS in Horizon metadata dashboard
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D
 
-We have and will continue to fix bugs like this when we are made aware
-of them and when the costs of doing so aren't too high, but we aren't
-going to get excited about them enough to apply for CVEs or do security
-releases to fix them. The following explains our reasoning.
+:Date: May 25, 2015
+:CVE: CVE-2015-3988
 
-First, this isn't "user enumeration" because it doesn't yield the
-ability to enumerate or list accounts. It's an oracle; allowing an
-attacker to make brute-force guesses of account names and verify whether
-they exist on the target system. Each guess is moderately expensive,
-requiring 1 x TCP connection and a cryptographic key exchange, limited
-in concurrency by sshd's MaxStartups limit.
 
-Second, very little else in the Unix ecosystem tries to prevent this
-style of information disclosure. Many network daemons will still happily
-return "user not found" style messages, but more importantly: system
-libraries are simply not designed to consider this as a threat. They
-don't consider it a threat because usernames have long been considered
-the non-secret part of user identity, of limited use without actual
-authentication credentials.
+Affects
+~~~~~~~
+- Horizon: 2014.2 versions through 2014.2.3 and version 2015.1.0
 
-In the absence of the underlying system stack being designed with this
-in mind, the best applications like sshd can do is try to paper over
-the most obvious differences by avoiding behaviour divergences in our
-own code and adding some prophylactic timing delays, but it's a losing
-battle.
 
-Does getpwnam() offer invariant behaviour? How about libpam? And all the
-modules PAM invokes? How about libgssapi? (etc. ad nauseam). AFAIK few,
-if any of these, have been engineered to avoid behaviour differences
-between existing and non-existing users. I'm not just talking about
-gross timing differences, but any access patterns that can be discerned
-at a distance, including CPU usage or filesystem access. If someone
-brought the cryptanalyist's arsenal to bear against username validity
-then all these are on the table.
+Description
+~~~~~~~~~~~
+Sunil Yadav from IBM Security Services reported a persistent XSS in
+Horizon. An authenticated user may conduct a persistent XSS attack by
+setting a malicious metadata to a Glance image, a Nova flavor or a
+Host Aggregate and tricking an administrator to load the update
+metadata page. Once executed in a legitimate context this attack may
+result in a privilege escalation. All Horizon setups are affected.
 
-Finally, and perhaps most importantly: there's a fundamental tradeoff
-between attack surface and fixing this class of bug. As a concrete
-example, fixing this one added about 150 lines of code to our
-pre-authentication attack surface. In this case, we were willing to do
-this because we had confidence in the additional parsing, mostly because
-it's been reviewed several times and we've conducted a decent amount of
-fuzzing on it. But, given the choice between leaving a known account
-validity oracle or exposing something we don't trust, we'll choose the
-former every time.
 
--d
+Patches
+~~~~~~~
+- https://review.openstack.org/183659 (Juno)
+- https://review.openstack.org/183656 (Kilo)
+- https://review.openstack.org/179429 (Liberty)
+
+
+Credits
+~~~~~~~
+- Sunil Yadav from IBM (CVE-2015-3988)
+
+
+References
+~~~~~~~~~~
+- https://launchpad.net/bugs/1449260
+- http://cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2015-3988
+
+
+Notes
+~~~~~
+- This fix will be included in future 2014.2.4 (juno) and 2015.1.1
+  (kilo) releases.
+
+--
+Tristan Cacqueray
+OpenStack Vulnerability Management Team
+
+
+--IhTv0fTvF72rb4djkBKXqJFK9M8NNT6EH
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iQEcBAEBAgAGBQJVY1J3AAoJECK5oFySXMXYJnsH/0iYa6G/H7l4+eEFK9hQkPhf
+f4SZzaNUHeVa0hyhI6bz4lchpZgW+Daq36Cgaw+JKtU9MDCF8hnRIqM0ngOzutDV
+DPzaAkbG1H0q3l8QpQam+lwehBF4jEeBYs84CwUlm8YcVwO1V+QHcafj3o+pMiXQ
+3lkJAKfS6zLCE0OT9kbge9Pz2RNFROEEYHwApz2JMARSbYbnmsxCaIbqG6pVp9Rr
+L/iPjRIiJqFOECgE7T0L1W+DT3QXErlK6P8pAChOPY+9/4aXXNfE+kQ3cJDlTQ+0
+MefALKINd54VfZjY7kzKHtnSEL3EjTRLwtsJ64IEU0ISas1O3I7+JhEGFphWQGI=
+=iuOk
+-----END PGP SIGNATURE-----
+
+--IhTv0fTvF72rb4djkBKXqJFK9M8NNT6EH--
