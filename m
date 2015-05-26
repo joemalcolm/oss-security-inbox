@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4152" "Monday" "2" "November" "2015" "08:24:10" "-0300" "Gustavo Grieco" "gustavo.grieco@gmail.com" "<CACn5sdQxv1xrLWNJi4eiS=mN3ZkXvaGQOzbNGw4HZqr3Dfg=Fw@mail.gmail.com>" "86" "[oss-security] CVE request: DoS in libxml2 if xz is enabled" nil nil nil "11" "2015110211:24:10" "[oss-security] CVE request: DoS in libxml2 if xz is enabled" (number mark "        gustavo.grie Nov  2   86/4152  " thread-indent "\"[oss-security] CVE request: DoS in libxml2 if xz is enabled\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2819" "Tuesday" "26" "May" "2015" "23:21:49" "+0100" "Stephane Chazelas" "stephane.chazelas@gmail.com" "<20150526222149.GB4292@chaz.gmail.com>" "87" "[oss-security] Re: Re: hwclock(8) SUID privilege escalation" nil nil nil "5" "2015052622:21:49" "[oss-security] Re: Re: hwclock(8) SUID privilege escalation" (number mark "        stephane.cha May 26   87/2819  " thread-indent "\"[oss-security] Re: Re: hwclock(8) SUID privilege escalation\"\n") "<20150526173040.54227agdaxfauco4@webmail.alunos.dcc.fc.up.pt>" ("<20150526173040.54227agdaxfauco4@webmail.alunos.dcc.fc.up.pt>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 5542 invoked by uid 550); 2 Nov 2015 11:24:23 -0000
+Received: (qmail 21796 invoked by uid 550); 26 May 2015 22:25:25 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,111 +11,107 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5511 invoked from network); 2 Nov 2015 11:24:21 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=fYgks78uZP4xfo/mHHp5UPz/uX3aAFCZMWzZApRygIM=;
-        b=tZWxrzu60MWjz2yypV08usgP1XbrIcC9+/S5o0vo5AbZV3S7+UdWQIX27D8VJkx6Df
-         1f5wnX1RcuSBzW0SYE2PKqfkNfLaWtf0XJiUBywWdJvrgNoZ13Sj6uCDozCxCSEwdxib
-         6l+cdOl51r382m8g00UCOcosZoPsdB7ATY01UPqXKVgcB+R45BwmmWHJ7tWgWmHgCl1D
-         VwP9s+qVYdzH37FRVDvxdI2qkFHebLGOXLj8n+ShtFO7sbnVf24H4TkKQY4NUK2Tl3Zd
-         E/ZXbw6JbJPt4IoBea+mcxeZPDICBE1M3oVq9+waeonBNpxVFul/24L4SO7OkKhCKb69
-         KLQw==
-MIME-Version: 1.0
-X-Received: by 10.112.236.8 with SMTP id uq8mr10010064lbc.116.1446463450352;
- Mon, 02 Nov 2015 03:24:10 -0800 (PST)
-Message-ID: <CACn5sdQxv1xrLWNJi4eiS=mN3ZkXvaGQOzbNGw4HZqr3Dfg=Fw@mail.gmail.com>
-Content-Type: multipart/mixed; boundary=001a11c3bffc23bbb005238d044b
-Date: Mon, 2 Nov 2015 08:24:10 -0300
-From: Gustavo Grieco <gustavo.grieco@gmail.com>
+Received: (qmail 21742 invoked from network); 26 May 2015 22:25:21 -0000
+X-Injected-Via-Gmane: http://gmane.org/
+Message-ID: <20150526222149.GB4292@chaz.gmail.com>
+References: <20150526173040.54227agdaxfauco4@webmail.alunos.dcc.fc.up.pt>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: 05448b1b.skybroadband.com
+Content-Disposition: inline
+In-Reply-To: <20150526173040.54227agdaxfauco4@webmail.alunos.dcc.fc.up.pt>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+Date: Tue, 26 May 2015 23:21:49 +0100
+From: Stephane Chazelas <stephane.chazelas@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE request: DoS in libxml2 if xz is enabled
+Subject: [oss-security] Re: Re: hwclock(8) SUID privilege escalation
 To: oss-security@lists.openwall.com
 
---001a11c3bffc23bbb005238d044b
-Content-Type: multipart/alternative; boundary=001a11c3bffc23bbaa05238d0449
+2015-05-26 17:30:40 +0200, up201407890@alunos.dcc.fc.up.pt:
+[...]
+> >No, bash does NOT drop privileges if ruid != euid when called as
+> >sh either . If it were, it would break those commands that use
+> >system()/popen() from suid/sgid executables (which arguably they
+> >shouldn't be doing) and expect the euid/egid to be preserved.
+[...]
+> I'm talking about this:
+> 
+> # gcc -xc - -otest <<< 'main(int argc, char *argv[]){system(argv[1]);}'
+> # chmod +s test
+> # exit
+> $ ls -l ./test /bin/sh
+> lrwxrwxrwx. 1 root root 9 May 24 11:58 /bin/sh -> /bin/bash
+> -rwsrwsr-x. 1 root root 8497 May 26 15:36 test
+> $ ./test /bin/sh
+> $ whoami
+> saken
+> 
+> $ su
+> Password:
+> # ln -sf /bin/dash /bin/sh
+> # exit
+> $ ./test /bin/sh
+> # whoami
+> root
 
---001a11c3bffc23bbaa05238d0449
-Content-Type: text/plain; charset=UTF-8
+I do get "root" with both dash and bash, but after
+investigation, that's because I'm on a Debian based system. So
+we're both right, but my version is only true on Debian.
 
-Hello,
+Since 1999, Debian (and derivatives) does disable the dropping
+of privileged when called as sh.
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=52586
 
-We found a denegation of service parsing a specially crafted xml in libxml2
-if xz support is enabled. It affects version 2.9.1 and probably others.
-Find attached a xml that never finishes the parsing process:
+$ cat bash-4.3/debian/patches/privmode.diff
+# DP: XXX missing description
+# DP:
+# DP: Comment from Chet Ramey <chet@nike.ins.cwru.edu>:
+# DP:
+# DP: Nope.  This will allow setuid scripts if not called as `sh' and not
+# DP: called with the -p option.  I won't install this.
 
-gdb --quiet --args xmllint /tmp/test.xz
-Reading symbols from xmllint...(no debugging symbols found)...done.
-(gdb) run
-Starting program: /usr/bin/xmllint /tmp/test.xz
-^C
-Program received signal SIGINT, Interrupt.
-0xb7f3e63c in xz_decomp (state=state@entry=0x8001cff0) at ../../xzlib.c:509
-509 ../../xzlib.c: No such file or directory.
-(gdb) bt
-#0  0xb7f3e63c in xz_decomp (state=state@entry=0x8001cff0) at
-../../xzlib.c:509
-#1  0xb7f3ea25 in xz_make (state=<optimized out>) at ../../xzlib.c:603
-#2  0xb7f3f3e7 in __libxml2_xzread (file=file@entry=0x8001cff0,
-buf=buf@entry=0x8001d190, len=len@entry=4000) at ../../xzlib.c:694
-#3  0xb7e87dfb in xmlXzfileRead (context=0x8001cff0, buffer=0x8001d190 "",
-len=4000) at ../../xmlIO.c:1421
-#4  0xb7e89aaa in xmlParserInputBufferGrow__internal_alias (in=0x8001d140,
-len=4000, len@entry=250) at ../../xmlIO.c:3317
-#5  0xb7e5af21 in xmlParserInputGrow__internal_alias (in=0x8001f198,
-len=len@entry=250) at ../../parserInternals.c:320
-#6  0xb7e60581 in xmlGROW (ctxt=ctxt@entry=0x8001c258) at
-../../parser.c:2075
-#7  0xb7e72d49 in xmlParseDocument__internal_alias (ctxt=ctxt@entry=0x8001c258)
-at ../../parser.c:10672
-#8  0xb7e731a0 in xmlDoRead (ctxt=0x8001c258, URL=0x0, encoding=0x0,
-options=4259840, reuse=0) at ../../parser.c:15242
-#9  0x80009fc8 in ?? ()
-#10 0x80006887 in main ()
 
-Upstream is working to fix this issue. This test case was found using afl.
-Thanks!
+--- a/shell.c
++++ b/shell.c
+@@ -492,7 +492,7 @@
+   if (dump_translatable_strings)
+     read_but_dont_execute = 1;
 
---001a11c3bffc23bbaa05238d0449
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+-  if (running_setuid && privileged_mode == 0)
++  if (running_setuid && privileged_mode == 0 && act_like_sh == 0)
+     disable_priv_mode ();
 
-<div dir=3D"ltr"><div><div>Hello,<br><br>We found a denegation of service p=
-arsing a specially crafted xml in libxml2 if xz support is enabled. It affe=
-cts version 2.9.1 and probably others. Find attached a xml that never finis=
-hes the parsing process:<br><br>gdb --quiet --args xmllint /tmp/test.xz<br>=
-Reading symbols from xmllint...(no debugging symbols found)...done.<br>(gdb=
-) run<br>Starting program: /usr/bin/xmllint /tmp/test.xz<br>^C<br>Program r=
-eceived signal SIGINT, Interrupt.<br>0xb7f3e63c in xz_decomp (state=3Dstate=
-@entry=3D0x8001cff0) at ../../xzlib.c:509<br>509 ../../xzlib.c: No such fil=
-e or directory.<br>(gdb) bt<br>#0 =C2=A00xb7f3e63c in xz_decomp (state=3Dst=
-ate@entry=3D0x8001cff0) at ../../xzlib.c:509<br>#1 =C2=A00xb7f3ea25 in xz_m=
-ake (state=3D&lt;optimized out&gt;) at ../../xzlib.c:603<br>#2 =C2=A00xb7f3=
-f3e7 in __libxml2_xzread (file=3Dfile@entry=3D0x8001cff0, buf=3Dbuf@entry=
-=3D0x8001d190, len=3Dlen@entry=3D4000) at ../../xzlib.c:694<br>#3 =C2=A00xb=
-7e87dfb in xmlXzfileRead (context=3D0x8001cff0, buffer=3D0x8001d190 &quot;&=
-quot;, len=3D4000) at ../../xmlIO.c:1421<br>#4 =C2=A00xb7e89aaa in xmlParse=
-rInputBufferGrow__internal_alias (in=3D0x8001d140, len=3D4000, len@entry=3D=
-250) at ../../xmlIO.c:3317<br>#5 =C2=A00xb7e5af21 in xmlParserInputGrow__in=
-ternal_alias (in=3D0x8001f198, len=3Dlen@entry=3D250) at ../../parserIntern=
-als.c:320<br>#6 =C2=A00xb7e60581 in xmlGROW (ctxt=3Dctxt@entry=3D0x8001c258=
-) at ../../parser.c:2075<br>#7 =C2=A00xb7e72d49 in xmlParseDocument__intern=
-al_alias (ctxt=3Dctxt@entry=3D0x8001c258) at ../../parser.c:10672<br>#8 =C2=
-=A00xb7e731a0 in xmlDoRead (ctxt=3D0x8001c258, URL=3D0x0, encoding=3D0x0, o=
-ptions=3D4259840, reuse=3D0) at ../../parser.c:15242<br>#9 =C2=A00x80009fc8=
- in ?? ()<br>#10 0x80006887 in main ()<br><br></div>Upstream is working to =
-fix this issue. This test case was found using afl.<br></div>Thanks!<br></d=
-iv>
+   /* Need to get the argument to a -c option processed in the
 
---001a11c3bffc23bbaa05238d0449--
+(looks like from the comment, Chet misinterpreted the patch. It
+will allow setuid scripts if called as sh with or without -p.
+When not called as sh, you need -p to allow setuid (not drop
+privileges)).
 
---001a11c3bffc23bbb005238d044b
-Content-Type: application/x-xz; name="test.xz"
-Content-Disposition: attachment; filename="test.xz"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_ighuwp1b0
+[...]
+> I believe that's what setuid()/seteuid()/setreuid() are for if you
+> really want to execute stuff as another user.
+> 
+> Setting setuid(0) before the system() call on my test and executing
+> /bin/sh (which is linked to bash) would drop me into a root shell.
+> This doesn't happen if there is no setuid(0) call.
+> The same doesn't happen when /bin/sh is linked to dash, there is no
+> need for setuid(0), it will drop me instantly into a root shell.
+[...]
 
-CwACAAAAAAAAQAAAAAAQEBAQEBAQEAAA//8AAA==
+But then if you do that, the shell can no longer detect it is
+called as setuid and cannot enter the privileged mode (which
+disables export functions importing, BASH_ENV...).
 
---001a11c3bffc23bbb005238d044b--
+You'd need to call sh with -p, but system()/popen() won't do
+that for you.
+
+IOW, to work around that security restriction in non-Debian
+bash, one could end up doing something less safe (not only call
+system() in a setuid command, but also do it in a way that
+prevents the shell from taking precautions).
+
+-- 
+Stephane
+
