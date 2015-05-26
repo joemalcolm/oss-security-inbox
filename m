@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1203" "Monday" "5" "June" "2017" "21:32:11" "-0400" "Jeffrey Walton" "noloader@gmail.com" "<CAH8yC8mSj_StFpa8P3kAVAd+cUrQXqcOpLibd9cX2rON1LMzSw@mail.gmail.com>" "30" "[oss-security] Crypto++ and invalid read in decompressor class" "^Date:" nil nil "6" "2017060601:32:11" "[oss-security] Crypto++ and invalid read in decompressor class" (number mark "        noloader@gma Jun  5   30/1203  " thread-indent "\"[oss-security] Crypto++ and invalid read in decompressor class\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1837" "Tuesday" "26" "May" "2015" "02:18:53" "-0400" "Wade Mealing" "wmealing@redhat.com" "<435842836.3987672.1432621133397.JavaMail.zimbra@redhat.com>" "45" "[oss-security] CVE request: vulnerability in the kernel tty subsystem." nil nil nil "5" "2015052606:18:53" "[oss-security] CVE request: vulnerability in the kernel tty subsystem." (number mark "        wmealing@red May 26   45/1837  " thread-indent "\"[oss-security] CVE request: vulnerability in the kernel tty subsystem.\"\n") "<926476450.3946717.1432609079414.JavaMail.zimbra@redhat.com>" ("<926476450.3946717.1432609079414.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 6119 invoked by uid 550); 6 Jun 2017 07:11:06 -0000
+Received: (qmail 27969 invoked by uid 550); 26 May 2015 06:19:07 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,68 +11,65 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 20025 invoked from network); 6 Jun 2017 01:32:24 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=IS/c4y/0E5tzlOFR1ekbW5QEwABekMGI/dFRD4mqpjw=;
-        b=SpCPYiirZAqEE8p6ppEN+wLt8ryekqvOw/yejDG3eOQGUjVqVrQBaD9s5n6Kmt7KA0
-         UmFTgOQb+P+lufTf/cv7IIRMzD9tRAKrWoh+EtT92e02ncFSsQMgeRtEvTHWgFMOj81B
-         CSQEPJUUKSp4/4PthGgC0PiWOrRRowRhBOorEL5sYcimna5JEA8rlmhSUMQZhsc+LvFU
-         XSPyiT7oGej4FLtpr4TjggN3+HjeXZ0JiZGQk5SybX/ol987jptLgtWQGraydCpLzCNG
-         6nNj2Cxxizxx7ZdJ8zMlAQZw5d08MPPk6m+2+zuCzuvHpGznXSSTxdjN+MJ/xm0GrhL3
-         NCeQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=IS/c4y/0E5tzlOFR1ekbW5QEwABekMGI/dFRD4mqpjw=;
-        b=ITeEYktA1YvNSuO6xRPBq/00VnKebD8FNcFBwlEcCkKdSiTO2d0t3s26Rsdi5FlpEu
-         aDREuswQGHfAmp09TqUj4fq5Is8WPYp7ljBCrpNCEbuRlXLthdV5/JgjHSgpKLirKjqv
-         XMg7yEVpMowFXjJVqC6Z7VRSzwTYIbTjU3k2OgoG9FHr7Pk5naOS1fFtWAYfiSRdDhv8
-         k9CEurCCpcUm+cm2xr66gQFfo0o/xNNciyLOPPj3zsU+SIdTQQLiBeZNtzSRaTcLpWtk
-         ppN3oBcetnQoBbeqCMUXf1+XrQ7s9LRaGO0Uj8KhQUvRCdFdcLcDPzfqnNAMoSSzMRFz
-         S+6A==
-X-Gm-Message-State: AODbwcA/zNGGIeDKfqOssP07ZruqgEJjTldRhjW1mDW1ISmdGU4pe850
-	W/5/f50oierPGq+Xdp3UOCWNygJzkvAxCQE=
-X-Received: by 10.202.217.4 with SMTP id q4mr11238318oig.87.1496712732058;
- Mon, 05 Jun 2017 18:32:12 -0700 (PDT)
+Received: (qmail 27951 invoked from network); 26 May 2015 06:19:06 -0000
+Message-ID: <435842836.3987672.1432621133397.JavaMail.zimbra@redhat.com>
+In-Reply-To: <926476450.3946717.1432609079414.JavaMail.zimbra@redhat.com>
 MIME-Version: 1.0
-Message-ID: <CAH8yC8mSj_StFpa8P3kAVAd+cUrQXqcOpLibd9cX2rON1LMzSw@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Date: Mon, 5 Jun 2017 21:32:11 -0400
-From: Jeffrey Walton <noloader@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.64.51.240]
+X-Mailer: Zimbra 8.0.6_GA_5922 (ZimbraWebClient - GC43 (Mac)/8.0.6_GA_5922)
+Thread-Topic: CVE request: vulnerability in the kernel tty subsystem.
+Thread-Index: Q0TdDZxuGNj9dL+QUSECJV6PkHbuvQ==
+Cc: cve-assign@mitre.org
+Date: Tue, 26 May 2015 02:18:53 -0400 (EDT)
+From: Wade Mealing <wmealing@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Crypto++ and invalid read in decompressor class
-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE request: vulnerability in the kernel tty subsystem.
+To: OSS Security List <oss-security@lists.openwall.com>
 
-Hi Everyone,
+Gday,
 
-Crypto++'s (https://www.cryptopp.com/) is a free and open source
-library of cryptographic schemes originally written by Wei Dai. Smart
-fuzzing revealed Crypto++'s Zinflate class, used by classes like
-Gunzip and Inflator, could perform an out-of-bounds read when
-decompressing data.
+An issue was discovered in the linux kernel's tty subsystem handling during shutdown. The
+flaw was that a new tty thread could hold a reference to the ldisc lock used during
+the shutdown phase in the original thread and create a deadlock.
 
-The out-of-bounds read occurs on a table with 30 elements. The table
-is static and its storage is allocated in initialized memory. The
-attacker can craft a ZIP file that allows a read of the last two
-non-existent elements. We believe an attacker can only read 0-bytes
-due to the storage allocation. We were not able to escalate it to a
-write. We believe its a low risk finding.
+This race occurs on hangup of tty.  It races and hangs on ldsem_down_write on a semaphore 
+that is being aquired by a new reader(CPU 1).  The new reader/writer is sleeping
+in ldsem_down_read() and the hangup is sleeping in ldsem_down_write().
 
-We were not able to induce failures in other classes using the
-techniques. Other classes include those that are related, like
-compressors; and those which are unrelated, like public and private
-keys.
+The deadlock can occur under these conditions.
 
-The issue is being tracked by the library at
-https://github.com/weidai11/cryptopp/issues/414. The Gentoo folks
-assigned CVE-2017-9434 to track the issue.
+   CPU 0                                   |  CPU 1
+					   |
+_raw_spin_unlock_irq                       | _raw_spin_unlock_irq+0x24/0x26
+down_write_failed                          | down_read_failed+0xe3/0x1b9
+ldsem_down_write <-- here                  | ldsem_down_read  <--- here
+tty_ldisc_lock_pair_timeout                | tty_ldisc_ref_wait
+tty_ldisc_lock_pair_timeout                | tty_write
+tty_ldisc_hangup                           | redirected_tty_write
+__tty_hangup                               | tty_write
+disassociate_ctty                          | o_loop_readv_writev
+do_exit                                    | do_readv_writev
+                                           | SyS_writev
 
-The fix is available in Master. It is also available for several
-versions of the library at
-https://github.com/weidai11/cryptopp/issues/414#issuecomment-300671740
-.
 
-Jeff
+This section of code was re-written upstream by creating a read/write semaphore to
+specially to handle ldisc, ldsem ( 4898e640caf03fdbaf2122d5a33949bf3e4a5b34 ).  
+
+This issue was reproduced on a system under load when testing the reproducer for
+CVE-2014-0196, on a system that already has this issue fixed.  No root permissions
+are required to recreate the deadlock.
+
+I would like to request a CVE for this issue.
+
+Thanks,
+
+Wade Mealing
+Red Hat Product Security
+
+
+References:
+
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-0196
+https://bugzilla.redhat.com/show_bug.cgi?id=1218879
