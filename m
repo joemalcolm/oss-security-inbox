@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["533" "Tuesday" "10" "September" "2019" "11:34:34" "+0400" "Ilya Matveychikov" "matvejchikov@gmail.com" "<F8EB26DC-CA65-4511-9D60-5A8ED0F4980F@gmail.com>" "20" "Re: [oss-security] Telegram privacy fails again." "^Date:" nil nil "9" "2019091007:34:34" "[oss-security] Telegram privacy fails again." (number mark "        matvejchikov Sep 10   20/533   " thread-indent "\"Re: [oss-security] Telegram privacy fails again.\"\n") "<CAG8b5tQVkcbRqFNk0GhJRCs-kdRPYnkL0E9=mbGMikCOdi7g+w@mail.gmail.com>" ("<CAG8b5tQVkcbRqFNk0GhJRCs-kdRPYnkL0E9=mbGMikCOdi7g+w@mail.gmail.com>") nil nil nil nil nil nil nil "Re: [oss-security] Telegram privacy fails again." nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3191" "Tuesday" "26" "May" "2015" "08:53:43" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<556488F7.9030708@redhat.com>" "86" "[oss-security] FreeRDP tmp flaws" nil nil nil "5" "2015052614:53:43" "[oss-security] FreeRDP tmp flaws" (number mark "        kseifried@re May 26   86/3191  " thread-indent "\"[oss-security] FreeRDP tmp flaws\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 18255 invoked by uid 550); 10 Sep 2019 11:31:14 -0000
+Received: (qmail 23554 invoked by uid 550); 26 May 2015 14:53:57 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,65 +11,104 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 32711 invoked from network); 10 Sep 2019 07:34:49 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:content-transfer-encoding:mime-version:subject:date:references
-         :to:in-reply-to:message-id;
-        bh=RZpdo1z1ep7v9BmsV7OcKbIvwvNovK6farbwzE3cDC8=;
-        b=uyyQ2WJTbZrOYkn7ZyYEL7D865Qm9Z3a+00nlwzt4nKxxm4HsSU1wvDCFBk2bOdz3f
-         Enx0QL91wl4OAa402nbrD90w/wJ1x824JXmMlLaZXCiGkSRUbI7thWMHnjoj0ct9xLWq
-         FdB9Heo/Xj1zjuVRLxNl/DXv4S0XCHnDb15O768uWZsa09FRxaP9sWKkJFFTIl1QHfJL
-         m0D1HdmIbRCT3iwMkTiByEPr5fxzRHMR5LxKZsORSksBTj/ECNpcKWW9YybZFNLi0MTl
-         cqJD5sabU/22+iGs4h48X98KU6Jqn38hUIjOSdxo3PDXg1bmhs6yHHs3evSdGZsGqw/y
-         NOFA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:content-transfer-encoding:mime-version
-         :subject:date:references:to:in-reply-to:message-id;
-        bh=RZpdo1z1ep7v9BmsV7OcKbIvwvNovK6farbwzE3cDC8=;
-        b=Xk8fppnljhjsCLahNhPeLpnfKhCNM4mqaOBF9kxqshTQ+L21PKkLSKGndK3m/3fYIf
-         r8YPWYCce1MjBO76gNB3OvsM7NipVctAoA8eD6EjPy9xuDqhUo8M/YWffI9uyL/GfDpl
-         z8LZMws/BjfQFYRWECaToyk3AZu3ccb6i7oq1clQ5L3szzBmIYaTVAkO9rsFAsuynfWi
-         yFEQJcX8meGFkFenzML+Osm7h2tpcuXdd5nEswvEdupaXZy8P6NvFQJ5cfPzqcVFodIo
-         e9OF7ApDQzU0BWg+j7kvo4vYmZvp81xJzGIfD4QuF5iPtL4J3mI8B07LPhWGObNNpCBg
-         rVrQ==
-X-Gm-Message-State: APjAAAXo1F3W3G8rq9sL5xBfkuR9gQsLUI/aV1vm60KqX8AWns4G3Ojw
-	g/Y0QgzRSHfesR4OYUbzMBFue1h2vOk=
-X-Google-Smtp-Source: APXvYqwOmIs7WLTmFtZxMGWNC6qKU7RJWSnnBJ9JU+jr86enCR94pAO2EdxRu9i10yWEUJq7z3uUQQ==
-X-Received: by 2002:a5d:6192:: with SMTP id j18mr3085534wru.336.1568100877455;
-        Tue, 10 Sep 2019 00:34:37 -0700 (PDT)
-Content-Type: text/plain;
-	charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.11\))
-References: <CAG8b5tQVkcbRqFNk0GhJRCs-kdRPYnkL0E9=mbGMikCOdi7g+w@mail.gmail.com>
-In-Reply-To: <CAG8b5tQVkcbRqFNk0GhJRCs-kdRPYnkL0E9=mbGMikCOdi7g+w@mail.gmail.com>
-Message-Id: <F8EB26DC-CA65-4511-9D60-5A8ED0F4980F@gmail.com>
-X-Mailer: Apple Mail (2.3445.104.11)
-Date: Tue, 10 Sep 2019 11:34:34 +0400
-From: Ilya Matveychikov <matvejchikov@gmail.com>
+Received: (qmail 22473 invoked from network); 26 May 2015 14:53:56 -0000
+Message-ID: <556488F7.9030708@redhat.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="vUgBqwK2kb14asvnHvBIWLQO7Lg8DJk2C"
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
+Date: Tue, 26 May 2015 08:53:43 -0600
+From: Kurt Seifried <kseifried@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Telegram privacy fails again.
-To: oss-security@lists.openwall.com
+Subject: [oss-security] FreeRDP tmp flaws
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>,
+        Assign a CVE Identifier <cve-assign@mitre.org>
+
+--vUgBqwK2kb14asvnHvBIWLQO7Lg8DJk2C
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+This may need 2 CVE's because different versions are affected.
+
+Upstream has no security address I can find, filing a GitHUB issue (what
+their wiki says to do) which is public so also posting here.
+
+This is in the RHEL 7 version and upstream:
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D
+./channels/drdynvc/tsmf/tsmf_media.c:			snprintf(buf, sizeof(buf),
+"/tmp/FreeRDP_Frame_%d.ppm", frame_id);
+                /* Dump a .ppm image for every 30 frames. Assuming the
+frame is in YUV format, we
+                   extract the Y values to create a grayscale image. */
+                static int frame_id =3D 0;
+                char buf[100];
+                FILE * fp;
+                if ((frame_id % 30) =3D=3D 0)
+                {
+                        snprintf(buf, sizeof(buf),
+"/tmp/FreeRDP_Frame_%d.ppm", frame_id);
+                        fp =3D fopen(buf, "wb");
+                        fwrite("P5\n", 1, 3, fp);
+                        snprintf(buf, sizeof(buf), "%d %d\n",
+sample->stream->width, sample->stream->height);
+                        fwrite(buf, 1, strlen(buf), fp);
+                        fwrite("255\n", 1, 4, fp);
+                        fwrite(sample->data, 1, sample->stream->width *
+sample->stream->height, fp);
+                        fflush(fp);
+                        fclose(fp);
+                }
+                frame_id++;
+#endif
+        }
+}
+
+This is in the RHEL 7 version, not in upstream currently:
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+./libfreerdp-gdi/gdi.c:			sprintf(tile_bitmap, "/tmp/rfx/tile_%d.bmp",
+tilenum++);
+
+int tilenum =3D 0;
+
+
+#ifdef DUMP_REMOTEFX_TILES
+                        sprintf(tile_bitmap, "/tmp/rfx/tile_%d.bmp",
+tilenum++);
+                        freerdp_bitmap_write(tile_bitmap,
+gdi->tile->bitmap->data, 64, 64, 32);
+#endif
 
 
 
-> On Sep 9, 2019, at 11:16 PM, Dhiraj Mishra <mishra.dhiraj95@gmail.com> wr=
-ote:
-
-[ ... ]
-
->=20
-> Assume a scenario where Bob sends a message which is a confidential image
-> and was mistakenly sent to Alice, Bob proceeds to utilize a feature of
-> Telegram known as "*Also delete for Alice*" which would essentially delete
-> the message for Alice.
+--=20
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
 
-> ... Bob (!!!) sends (!!!) a message which is a confidential (!!!) image a=
-nd
-> was mistakenly (!!!) sent (!!!) to Alice ...
+--vUgBqwK2kb14asvnHvBIWLQO7Lg8DJk2C
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
-"Telegram privacy fails again=E2=80=9D, sure, sure.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.22 (GNU/Linux)
 
+iQIcBAEBAgAGBQJVZIj3AAoJEBYNRVNeJnmT06EQANUNkOnsamc/X5E30St756XX
+4C4nmpgRNHq3TMozer9LpySlQKDxiNaxLekHuymsy+f/yTH9lpaAI0Y9csd4JfC5
+GAeV+xyq+OoCfJXgRZUMz68GO3yZ4Si35EXvVZmf5TTYSK5mSSZdgVwgixvY7UcG
+49HXGQOkOmdsvqeNLKOI9yTtijMoH1OgDo4QW5bsa7gDvH9udtF6l9MirCFhENAR
+gO9pDILHVOGHYm35JejSjx/wrFLfVGzJZpeFTFXfMUqiAPMdsV927EWzm1K9g+lN
+6Fz93xbkaUzn47WpVuT0jg2hTPjtCBucf/ZsKp6TxLtRxrlDlFdjBZl9UalZ2kfo
+BazeZxggGUYWVtuiVaOBCkrU/sSUVBfoo2QqxSKjzr3iin59yviB4ras3rVl1Ex8
+/tjHDScSjW43pZSWaJ5RnoeSPZ3FYd+Mq5Vs/60IFgDJAIrik3tyYwvAXJlINqQI
+Kzq0DPZEHT3A7py3gtRWzfzfkyvm5eZn0Me1pkay4igV/Ai4tWkXQd59MmX65gDN
+OX0kmnbwgvz9GsipHqIqWddypDTMMbXQ1bBQcxhzOO2N63VksnuC7AiCUWLW1ecM
+ROvdb3WOrb1sQrqEbpAxJLm/WKlDiV7cqmt7Z0u6vQCvgkg0b55xUVTms6/DlgsF
+pM0465zUlmK5f1A6HHwG
+=ySbE
+-----END PGP SIGNATURE-----
+
+--vUgBqwK2kb14asvnHvBIWLQO7Lg8DJk2C--
