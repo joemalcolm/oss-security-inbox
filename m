@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["822" "Wednesday" "19" "December" "2018" "05:08:07" "-0500" "Vladis Dronov" "vdronov@redhat.com" "<110923674.56846830.1545214087115.JavaMail.zimbra@redhat.com>" "23" "[oss-security] CVE-2018-16884: Linux kernel: nfs: use-after-free in svc_process_common()" nil nil nil "12" "2018121910:08:07" "[oss-security] CVE-2018-16884: Linux kernel: nfs: use-after-free in svc_process_common()" (number mark "U       vdronov@redh Dec 19   23/822   " thread-indent "\"[oss-security] CVE-2018-16884: Linux kernel: nfs: use-after-free in svc_process_common()\"\n") "<2133698682.56846374.1545213761527.JavaMail.zimbra@redhat.com>" ("<2133698682.56846374.1545213761527.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["946" "Tuesday" "26" "May" "2015" "15:21:20" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150526192120.7C2426C002C@smtpvmsrv1.mitre.org>" "30" "[oss-security] Re: CVE Request for WP Fastest Cache plugin" nil nil nil "5" "2015052619:21:20" "[oss-security] Re: CVE Request for WP Fastest Cache plugin" (number mark "        cve-assign@m May 26   30/946   " thread-indent "\"[oss-security] Re: CVE Request for WP Fastest Cache plugin\"\n") "<CAN6thH4u+tRjwgKw0EAo6GnbctqTojku69M6c0=EvURf8Vxspw@mail.gmail.com>" ("<CAN6thH4u+tRjwgKw0EAo6GnbctqTojku69M6c0=EvURf8Vxspw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 26245 invoked by uid 550); 19 Dec 2018 10:08:20 -0000
+Received: (qmail 11659 invoked by uid 550); 26 May 2015 19:21:34 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,44 +11,43 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 11641 invoked from network); 26 May 2015 19:21:34 -0000
+In-Reply-To: <CAN6thH4u+tRjwgKw0EAo6GnbctqTojku69M6c0=EvURf8Vxspw@mail.gmail.com>
+Message-Id: <20150526192120.7C2426C002C@smtpvmsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Tue, 26 May 2015 15:21:20 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26224 invoked from network); 19 Dec 2018 10:08:19 -0000
-Date: Wed, 19 Dec 2018 05:08:07 -0500 (EST)
-From: Vladis Dronov <vdronov@redhat.com>
-To: oss-security@lists.openwall.com
-Message-ID: <110923674.56846830.1545214087115.JavaMail.zimbra@redhat.com>
-In-Reply-To: <2133698682.56846374.1545213761527.JavaMail.zimbra@redhat.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.67.112.35, 10.4.195.19]
-Thread-Topic: CVE-2018-16884: Linux kernel: nfs: use-after-free in svc_process_common()
-Thread-Index: wW0GGwkx7Lp7l67b9oMvUo/J70ko4w==
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.12
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.27]); Wed, 19 Dec 2018 10:08:07 +0000 (UTC)
-Subject: [oss-security] CVE-2018-16884: Linux kernel: nfs: use-after-free in
- svc_process_common()
+Subject: [oss-security] Re: CVE Request for WP Fastest Cache plugin
+To: 0pc0defr@gmail.com
 
-Heololo,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-A flaw was found in the Linux kernel in the NFS4 subsystem. NFS41+ shares mounted
-in different network namespaces at the same time can make bc_svc_process() use wrong
-back-channel id and cause a use-after-free. Thus a malicious container user can cause
-a host kernel memory corruption and a system panic. Due to the nature of the flaw,
-privilege escalation cannot be fully ruled out.
+> CSRF vulnerability was found in WP Fastest Cache 0.8.3.4 plugin.
+> 
+> The vuln is found in admin.php:
 
-The CVE-2018-16884 id was assigned to this flaw and proposed to MITRE. We would like
-to suggest to use this id in public communications regarding this flaw.
+> $this->saveOption();
+> $this->deleteCache();
+> $this->deleteCssAndJsCache();
+> $this->addCacheTimeout();
 
-A proposed patchset and a discussion:
+Use CVE-2015-4089.
 
-https://patchwork.kernel.org/cover/10733767/
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-https://patchwork.kernel.org/patch/10733769/
-
-References:
-
-https://bugzilla.redhat.com/show_bug.cgi?id=1660375
-
-Best regards,
-Vladis Dronov | Red Hat, Inc. | Product Security Engineer
+iQEcBAEBAgAGBQJVZMdTAAoJEKllVAevmvms0mcIAIQ3YiRYDVzMQ4yRzaVcJUjf
+VsH+cPTThrOU8OOLPsnYccFeyrBciiz4XUtX4AQX2tIF1DCK0+QL+UB32pdYnLLl
+zwHLMOS2dpT7tsRoIkVYDb9cZxFCbZ4FCv5RLlaj2nHo57YyhVrNUmqsaNzmfJlb
+Wd6Tot38eiMjFJnQxyUwAVHGwh5vJkZeJSqc8jauLJIZZn9qa8NcuB51BtZqiQ9/
+B1Z1vi1HJpMqvrqeyA3cDGCF5zA2oBNbPfLYjTKfTbEC2FKy8NjEJYYmR9s4Jc87
+AJ26GrIX41skoJMnnxvvMBCABE2x5z3KEOWsJmS0xzJehJHOppMZ/UtKYwdH81w=
+=taMN
+-----END PGP SIGNATURE-----
