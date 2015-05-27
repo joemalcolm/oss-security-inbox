@@ -1,4 +1,9 @@
-Received: (qmail 6064 invoked by uid 550); 16 Apr 2026 19:35:00 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1499" "Wednesday" "27" "May" "2015" "20:03:40" "+0000" "Joe Bowser" "bowserj@gmail.com" "<CAOBL_k5Urg=4CcANUOpqdfFk4x5V8=LmK0xL3AKcsNmhf7wNtw@mail.gmail.com>" "41" "[oss-security] CVE-2015-1835: Remote exploit of secondary configuration variables in Apache Cordova on Android" nil nil nil "5" "2015052720:03:40" "[oss-security] CVE-2015-1835: Remote exploit of secondary configuration variables in Apache Cordova on Android" (number mark "        bowserj@gmai May 27   41/1499  " thread-indent "\"[oss-security] CVE-2015-1835: Remote exploit of secondary configuration variables in Apache Cordova on Android\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 1789 invoked by uid 550); 27 May 2015 20:09:35 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,42 +11,69 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 28388 invoked from network); 27 May 2015 20:03:53 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=HXquNR6fdL+v3fB170tVar0uyW6t89zMolSYsmx5+NE=;
+        b=W0wgx2oNn6SeXnmMEuZgTPyn5QPYQ8uATwhfMJI2tSdhtAbigaT1/MtZ6fHp6JM8A1
+         Jk2/SwChOVqEGQylZtHRsfMKCOJ6c+NHlFQbDPZ1qE59jaK/R+FU0dZJyX5rlCleY2AD
+         nSyE1/GoDQnG7uHGwPwbf1e4QnD09EhiFGD+DfMVItKPPEJ1jp0X5P8Ty/H/G8yKV8F1
+         KKKCYvDymZIFp4fiF8fdFJLoirHURdxfZARroacWXY6H2RnNSdm3L7ZWyy+hmS/MeaXW
+         DC8TIx1tVfixzAtbKD8q5iO4bmj6emsa9jHRxwGVD/Lce96Qo2W97xTubJDG2ULT3agb
+         TV9A==
+X-Received: by 10.60.39.136 with SMTP id p8mr4909285oek.45.1432757021452; Wed,
+ 27 May 2015 13:03:41 -0700 (PDT)
+MIME-Version: 1.0
+Message-ID: <CAOBL_k5Urg=4CcANUOpqdfFk4x5V8=LmK0xL3AKcsNmhf7wNtw@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=089e0160bd105030be051715bd8a
+Date: Wed, 27 May 2015 20:03:40 +0000
+From: Joe Bowser <bowserj@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 5874 invoked from network); 16 Apr 2026 19:34:55 -0000
-Date: Thu, 16 Apr 2026 21:34:51 +0200
-From: Solar Designer <solar@openwall.com>
-To: yangjincheng1998@gmail.com
-Cc: oss-security@lists.openwall.com, alan.coopersmith@oracle.com
-Message-ID: <20260416193451.GA20893@openwall.com>
-References: <69e0d549.170a0220.2844e6.1a9b@mx.google.com> <7ddbe893-6bf2-4142-bbcd-c382a21dbed8@oracle.com> <69e13713.170a0220.289f9f.6db1@mx.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <69e13713.170a0220.289f9f.6db1@mx.google.com>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] Apache Kvrocks affected by CVE-2024-31449 and CVE-2025-49844 (Redis Lua); fixed but no formal advisory
+Subject: [oss-security] CVE-2015-1835: Remote exploit of secondary configuration variables in
+ Apache Cordova on Android
+To: "private@cordova.apache.org" <private@cordova.apache.org>, 
+	"seven_shen@trendmicro.com.cn" <seven_shen@trendmicro.com.cn>, "security@apache.org" <security@apache.org>, 
+	oss-security@lists.openwall.com, bugtraq@securityfocus.com
 
-Hi,
+--089e0160bd105030be051715bd8a
+Content-Type: text/plain; charset=UTF-8
 
-Disclaimer: I'm replying based on limited context, without looking into
-the actual issues.
+=====================================================
+CVE-2015-1835: Remote exploit of secondary configuration variables in
+Apache Cordova on Android
 
-On Thu, Apr 16, 2026 at 12:22:59PM -0700, yangjincheng1998@gmail.com wrote:
-> Good catch -- sorry for the confusion. The "Duplicate - please ignore"
-> titles on #3433 and #3434 are my own housekeeping rename, done on
-> 2026-04-11, AFTER the Kvrocks maintainers had already closed both
-> issues on 2026-04-09 via a single fix PR. The original bodies were
-> the actual vulnerability reports.
+Severity:
+High
 
-What you did is very confusing.  It looks like you created the issues on
-2026-04-08, so I don't see why having them fixed a day later would make
-them "duplicate" or "submitted in error".  Maybe it was your attempt to
-hide the vulnerability reports until proper publication?  If so, I think
-that was a bad idea.  I suggest that you restore your original titles
-and content of these issues.  The original content is seen in the edits
-history anyway, it's just harder to find now.
+Vendor:
+The Apache Software Foundation
 
-Thanks,
+Versions Affected:
+Cordova Android up to 4.0.1 (3.7.2 excluded)
 
-Alexander
+Description:
+Android applications built with the Cordova framework that don't have
+explicit values set in Config.xml can have undefined configuration
+variables set by Intent.  This can cause unwanted dialogs appearing in
+applications and changes in the application behaviour that can include the
+app force-closing.
+
+The latest release of Cordova Android entirely removes the ability of
+configuration parameters to be set by intents.  This change is an API
+change in the platform, and third-party plugins that use values set in the
+config.xml should make sure that they use the preferences API instead of
+relying on the Intent bundle, whcih can be manipulated in this case.
+
+Upgrade path:
+Developers who are concerned about this should rebuild their applications
+with either Cordova Android 4.0.2, or Cordova 3.7.4 if they are unable to
+upgrade to Cordova 4.0.2. Developers should also make sure that variables
+that they wish to have protected are specified in their config.xml.
+
+Credit:
+This issue was discovered by Seven Shen of Trend Micro Mobile Threat
+Research Team
+==================================================
+
+--089e0160bd105030be051715bd8a--
