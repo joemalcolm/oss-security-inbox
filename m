@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1999" "Monday" "17" "April" "2017" "13:35:26" "-0700" "Kenton Varda" "kenton@cloudflare.com" "<CAJouXQmLpm3-cdy--hUjNy70XXGmQ=Rnuwr0W+FQJkWA4BuX4w@mail.gmail.com>" "59" "Re: [oss-security] Re: CVE Request: Cap'n Proto: Bounds check elided by compiler optimization" "^Cc:" nil nil "4" "2017041720:35:26" "[oss-security] Re: CVE Request: Cap'n Proto: Bounds check elided by compiler optimization" (number mark "        kenton@cloud Apr 17   59/1999  " thread-indent "\"Re: [oss-security] Re: CVE Request: Cap'n Proto: Bounds check elided by compiler optimization\"\n") "<20170417180728.GA31692@openwall.com>" ("<CAJouXQ=FM1XBV3p8Yn_yrhJyLv98hEChuGFgKuLUhFoGXAgsrg@mail.gmail.com>" "<CAJouXQntfKK9r8T5HtxHCeVGhdYjwW_Wk_SSa4n-KsbM5qAFZA@mail.gmail.com>" "<20170417180728.GA31692@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1573" "Wednesday" "27" "May" "2015" "11:26:45" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150527152645.6482242E0B4@smtpvbsrv1.mitre.org>" "39" "[oss-security] Re: Question about tmp flaws in non-default build options (e.g. Kerberos DEBUG_ASN1)" nil nil nil "5" "2015052715:26:45" "[oss-security] Re: Question about tmp flaws in non-default build options (e.g. Kerberos DEBUG_ASN1)" (number mark "        cve-assign@m May 27   39/1573  " thread-indent "\"[oss-security] Re: Question about tmp flaws in non-default build options (e.g. Kerberos DEBUG_ASN1)\"\n") "<5564A227.3030608@redhat.com>" ("<5564A227.3030608@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 17776 invoked by uid 550); 17 Apr 2017 20:39:47 -0000
+Received: (qmail 18131 invoked by uid 550); 27 May 2015 15:26:58 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,100 +11,52 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5325 invoked from network); 17 Apr 2017 20:36:18 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=cloudflare.com; s=google;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=t2WPTqU0DkmjSCFawQI+1hbh3EooGEy3Eqh8YRz8cAQ=;
-        b=jxPTvXa0WJRbju3AoVrfAW117wrWh39QVncMYszMXS2zt+SpXMUUuMXIhZqVr7kpGZ
-         SHyC59LFYgLq6TY/qnZT2ySVsIPMI60IXTsJSTYk+iLL3YQvlYUFrPAXPxSHDFV3mu/p
-         UA3uiqH7CCBai+1ME9qBCUTUYwFM+p8LsI6UQ=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=t2WPTqU0DkmjSCFawQI+1hbh3EooGEy3Eqh8YRz8cAQ=;
-        b=nGJKyey9q4+vOwnFewJeeIGd7AfuOjaogjMDT2KxHOB4maqpyxYz5NVN+aOl0IeVab
-         AMGyMWvygyZ8LdsM+4/cdfjSJ5LDk0alhjO60ye6R2rBTtstdQM/LHea86MnU71e2HQK
-         OkOVWo6kpTbRxknCGIFgdjwKDN5vIIz0NbwY2MO6wAuaRu2HPAEBdlxmIh6NzNKE/0pu
-         tD2jiyUFPrmqjqbGlWy38a+31pEsGCzHBnd366H5v6yCX9PlXl5hpvXEaqMT7i3DtZQD
-         k22aQn6QSNLYCkoQOt2eS6E/vWovCIWaJ0m3htzutRdttJy0v/JyaOmz7zCl3TXi2hzP
-         pz1A==
-X-Gm-Message-State: AN3rC/7DDtutlF6xwqhdYfU+PjuBfyAEfci/XxV7B8prPeFG5BfhJU6X
-	jWe19aKtIHIWzTTEw06tJsp9+py6Q4ea
-X-Received: by 10.36.6.67 with SMTP id 64mr11676116itv.123.1492461366520; Mon,
- 17 Apr 2017 13:36:06 -0700 (PDT)
-MIME-Version: 1.0
-In-Reply-To: <20170417180728.GA31692@openwall.com>
-References: <CAJouXQ=FM1XBV3p8Yn_yrhJyLv98hEChuGFgKuLUhFoGXAgsrg@mail.gmail.com>
- <CAJouXQntfKK9r8T5HtxHCeVGhdYjwW_Wk_SSa4n-KsbM5qAFZA@mail.gmail.com> <20170417180728.GA31692@openwall.com>
-Message-ID: <CAJouXQmLpm3-cdy--hUjNy70XXGmQ=Rnuwr0W+FQJkWA4BuX4w@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=001a11449dbe97c593054d62bd8b
-Cc: oss-security@lists.openwall.com, Tom Lee <debian@tomlee.co>
-Date: Mon, 17 Apr 2017 13:35:26 -0700
-From: Kenton Varda <kenton@cloudflare.com>
+Received: (qmail 18111 invoked from network); 27 May 2015 15:26:57 -0000
+In-Reply-To: <5564A227.3030608@redhat.com>
+Message-Id: <20150527152645.6482242E0B4@smtpvbsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Wed, 27 May 2015 11:26:45 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: CVE Request: Cap'n Proto: Bounds check elided
- by compiler optimization
-To: Solar Designer <solar@openwall.com>
+Subject: [oss-security] Re: Question about tmp flaws in non-default build options (e.g. Kerberos DEBUG_ASN1)
+To: kseifried@redhat.com
 
---001a11449dbe97c593054d62bd8b
-Content-Type: text/plain; charset=UTF-8
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Hi,
+> only exist if you build with DEBUG_ASN1
 
-This has been assigned: CVE-2017-7892
+As suggested in the
+http://openwall.com/lists/oss-security/2014/01/29/10 post, unsafe
+programming practices reachable in non-default builds are not within
+the scope of CVE simply because the code exists. There must be
+documentation indicating that an end user may wish to have the
+applicable non-default build.
 
-Apologies for failing to follow the list guidelines.
+As far as we know, MIT Kerberos 5 does not document DEBUG_ASN1 for use
+by end users. It seems reasonable to expect that those code sections
+are only intended for use during development, and that there's a
+cost/benefit tradeoff to addressing all possible risks to their
+developers' machines. There won't be a CVE mapping for this DEBUG_ASN1
+report unless the upstream vendor requests one.
 
-Thanks,
--Kenton
+> To: ... CVE ID Change <cve-id-change@mitre.org>
 
-On Mon, Apr 17, 2017 at 11:07 AM, Solar Designer <solar@openwall.com> wrote:
+This report doesn't relate to the cve-id-change@mitre.org list.
 
-> On Mon, Apr 17, 2017 at 10:35:51AM -0700, Kenton Varda wrote:
-> > Whoops, apparently I'm supposed to use the web form now. Sorry!
->
-> Yes, but many of us in here care(d) about being notified of security
-> issues much more than about CVEs, hence as a moderator I approved your
-> posting anyway.  Once you've obtained the CVE ID from MITRE, please post
-> it to this same thread as a "reply".
->
-> > On Mon, Apr 17, 2017 at 10:32 AM, Kenton Varda <kenton@cloudflare.com>
-> wrote:
-> > > Full details and fix covered here: https://github.com/sandstorm-i
-> > > o/capnproto/blob/master/security-advisories/2017-04-17-0-
-> > > apple-clang-elides-bounds-check.md
->
-> The lack of detail in your posting goes against published oss-security
-> guidelines, which are:
->
-> http://oss-security.openwall.org/wiki/mailing-lists/oss-
-> security#list-content-guidelines
->
-> "At least the most essential part of your message (e.g., vulnerability
-> detail and/or exploit) should be directly included in the message itself
-> (and in plain text), rather than only included by reference to an
-> external resource.  Posting links to relevant external resources as well
-> is acceptable, but posting only links is not.  Your message should
-> remain valuable even with all of the external resources gone."
->
-> Here's the "unbroken" GitHub URL:
->
-> https://github.com/sandstorm-io/capnproto/blob/master/
-> security-advisories/2017-04-17-0-apple-clang-elides-bounds-check.md
->
-> and I've attached to this message the "raw" (text) version from:
->
-> https://raw.githubusercontent.com/sandstorm-io/capnproto/
-> master/security-advisories/2017-04-17-0-apple-clang-elides-bounds-check.md
->
-> as text/plain.
->
-> Thanks,
->
-> Alexander
->
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
---001a11449dbe97c593054d62bd8b--
+iQEcBAEBAgAGBQJVZeEwAAoJEKllVAevmvmsDj0H/R/JnY+GcIJkOvuq0qvJGqLm
+lgF5zU/AJ/CObyajMW7ELgdM6vcljix8WR0e8wtE87Hn1Feov1e7WzrP0gk0HaXr
+BTWzNmhkNj0wI65wYjhJ3QN4odQBl0I4lhnzjfJsADLEUuCeC/UqgGUokl4f7atB
+YlWgET5uHXhMTjrjFZT0Qgxzda03lC951bXX93pD1Z6c8uAjM0O2HFrAV1pdfO8D
+yxje1wh8jcPCJL74x9K2cuWa9Wrs/h/AA4ZS1naNb7yNnyHvEuE+uCRI82E3RgGe
+iqW7MlEqKJHTo4Vcgp7gCTF+oMW3OWRdbbg6OcK+0BXTGdxYknXKK24olk7e9Hc=
+=MUye
+-----END PGP SIGNATURE-----
