@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3480" "Friday" "20" "December" "2019" "13:11:08" "+0530" "Mohammad Tausif Siddiqui" "msiddiqu@redhat.com" nil "115" nil "^Date:" nil nil "12" nil nil (number mark "        msiddiqu@red Dec 20  115/3480  " thread-indent "\"Re: [oss-security] CVE requests: three vulnerabilities in ImageMagick\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] CVE requests: three vulnerabilities in ImageMagick" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2151" "Wednesday" "27" "May" "2015" "11:28:29" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150527152829.7D3B042E0BD@smtpvbsrv1.mitre.org>" "55" "[oss-security] Re: FreeRDP tmp flaws" nil nil nil "5" "2015052715:28:29" "[oss-security] Re: FreeRDP tmp flaws" (number mark "        cve-assign@m May 27   55/2151  " thread-indent "\"[oss-security] Re: FreeRDP tmp flaws\"\n") "<556488F7.9030708@redhat.com>" ("<556488F7.9030708@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 5544 invoked by uid 550); 20 Dec 2019 13:54:34 -0000
+Received: (qmail 26542 invoked by uid 550); 27 May 2015 15:28:41 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,160 +11,68 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 18300 invoked from network); 20 Dec 2019 07:41:36 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1576827684;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=IyDxeYAFkrwgmxYpVlZ1KESG3zldzoRCBAidbzqzsac=;
-	b=IrSa5U1FdLQgSo8FlPt3MYtI5odnLeAAgun7/Oiy/zBhTcHz/QPUn4cFwwfZCw+/Ws7pNC
-	hR5LHZE049Dr/X1qTVNVNLLmP1/ZrihQFd7jdXQbakp3Yy9UVk1yHKL4xZI9900qhBrpMl
-	Lw3BMpUlMsP4GaL02c7jM+ZzwjIk0hA=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=vL4jCCdBugbT59fAtYS/HNV6vxe0eqV4rAxXSvk5MGg=;
-        b=fDhdgHaMY6eJwd/eEjF9n82LUsDIjoubcjAXrS32B9pnATvWbtbxPBCrQWTDfXDUNH
-         DrV5raWzrMJiEZGf3MtBJ7M/Pe5XushWF/UvoHfZmYl7OpJUfU3MYtG8pPSHWAxl1K6f
-         kThC34+ZxsR/p3DBKJkgOFFwH1Gs5a4LJybj1Fz6q9NtT6wdX+Rblda3Iy3ZItxWAw3K
-         xlsjZzvIkPPvpIe5gd/hIXczbFC8etfI+UkV6rsaJThriUsWInKcxZeCve2tf2WluqDT
-         ir8UPZ5OKWcyKLyYYYSFV1+g4M2/Mnnf5LXqp58JGEIptylbQ1u2uZSleXbAAjvv/HG9
-         scpA==
-X-Gm-Message-State: APjAAAU76Y/ZtbKMLgirTgrlgugTm1VEpmHr6RTvBFQ8ZFE/Z03ntY3l
-	mCMquF3UomTXuDf9b3oyG/LJwCUphoGgKwvtDn39xpTX8ihmjV53e5Zi07bJh+Z2fPYY44GbWX6
-	f91RMtgkBIojvAJ7sG5uJwDU6OhAE58APTLlGKb1y46g8
-X-Received: by 2002:a05:6830:ce:: with SMTP id x14mr951928oto.289.1576827680181;
-        Thu, 19 Dec 2019 23:41:20 -0800 (PST)
-X-Google-Smtp-Source: APXvYqzUlFcU11OOWKZYxU2HB7xBLOtLfPVD7Jd8jId9qmbzknLjGqa+XLnV1Y1q3UWiQeRbReNY8UM5kCuPEkkb8HQ=
-X-Received: by 2002:a05:6830:ce:: with SMTP id x14mr951897oto.289.1576827679667;
- Thu, 19 Dec 2019 23:41:19 -0800 (PST)
-MIME-Version: 1.0
-References: <CADh9TwLptrnPz_4vjkvJWmH8wOWhqD0brLPQmvizzQ1QvFP56A@mail.gmail.com>
-In-Reply-To: <CADh9TwLptrnPz_4vjkvJWmH8wOWhqD0brLPQmvizzQ1QvFP56A@mail.gmail.com>
-Message-ID: <CAC5HUDw-PAELT_0woSyyfuO=CEf+B16VG=gCd+emgR==1VkrKA@mail.gmail.com>
-X-MC-Unique: YMU-_gk_PpGKw27D3xSvDw-1
-X-Mimecast-Spam-Score: 0
-Content-Type: multipart/alternative; boundary="000000000000b859f9059a1dcdfe"
-Date: Fri, 20 Dec 2019 13:11:08 +0530
-From: Mohammad Tausif Siddiqui <msiddiqu@redhat.com>
+Received: (qmail 26517 invoked from network); 27 May 2015 15:28:41 -0000
+In-Reply-To: <556488F7.9030708@redhat.com>
+Message-Id: <20150527152829.7D3B042E0BD@smtpvbsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Wed, 27 May 2015 11:28:29 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE requests: three vulnerabilities in ImageMagick
-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: FreeRDP tmp flaws
+To: kseifried@redhat.com
 
---000000000000b859f9059a1dcdfe
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Hi Galycannon,
+> This may need 2 CVE's
 
-Whom did you request the CVE ? Please follow this:
-https://cve.mitre.org/cve/request_id.html
+We think there should be zero CVEs because the report is apparently
+about a developer's debugging code that was never shipped.
 
-On Thu, Dec 19, 2019 at 5:14 PM GalyCannon <galycannon@gmail.com> wrote:
+> ./channels/drdynvc/tsmf/tsmf_media.c
+> "/tmp/FreeRDP_Frame_%d.ppm"
 
-> Hi,
->    I have found three vulnerabilities in ImageMagick and all this have
-> patched by ImageMagick developer team. However, I requested cve ids for
-> these vulveribilities and get no any response. How should I  request CVE
-> ids for vulnerilities I found in ImageMagick now? Which CNA should I
-> contact with to assign CVE ids for open source software such as
-> imagemagick?
->    The three vulnerabilities details as below.
->     1. heap-buffer-overflow in WritePNGImage of png.c
-> [Suggested description]
-> In ImageMagick  7.0.8-43  and ImageMagick6  6.9.10-43, there is a
-> heap-buffer-overflow overflow in the function WritePNGImage of png.c ,
-> which allows remote attackers to cause  arbitrary code execution, denial =
-of
-> service or possibly have unspecified other impact via a crafted image file
-> .
-> [Vendor of Product]
-> https://imagemagick.org
-> [Affected Component]
-> function WritePNGImage of png.c
-> [Attack Type]
-> Remote
-> [Attack Vectors]
-> magick convert $poc ./test.png
-> [Reference]
-> https://github.com/ImageMagick/ImageMagick/issues/1561
->
-> https://github.com/ImageMagick/ImageMagick6/commit/34adc98afd5c7e7fb774d2=
-ebdaea39e831c24dce
->
->
-> https://github.com/ImageMagick/ImageMagick/commit/d17c047f7bff7c0edbf3044=
-70cd2ab9d02fbf617
->
-> [Discoverer]
-> galycannon of JDCloud Security Team
->
->    2. heap-buffer-overflow in WriteSGIImage of coders/sgi.c
-> [Suggested description]
-> In ImageMagick  7.0.8-43  and ImageMagick6  6.9.10-43, there is a
-> heap-buffer-overflow overflow in the function WriteSGIImage of coders/sgi=
-.c
-> , which allows remote attackers to cause  arbitrary code execution, denial
-> of service or possibly have unspecified other impact via a crafted image
-> file  .
-> [Vendor of Product]
-> https://imagemagick.org
-> [Affected Component]
-> function WriteSGIImage of coders/sgi.c
-> [Attack Type]
-> Remote
-> [Attack Vectors]
-> magick convert $poc ./test.sgi
-> [Reference]
-> https://github.com/ImageMagick/ImageMagick/issues/1562
->
-> https://github.com/ImageMagick/ImageMagick/commit/6ae32a9038e360b3491969d=
-5d03d490884f02b4c
->
->
-> https://github.com/ImageMagick/ImageMagick6/commit/9e7db22f8c374301db3f96=
-8757f0d08070fd4e54
->
-> [Discoverer]
-> galycannon of JDCloud Security Team
->
->  3. heap-use-after-free in MngInfoDiscardObject of coders/png.c
-> [Suggested description]
-> In ImageMagick   7.0.9-7, there is a heap-use-after-free in function
-> MngInfoDiscardObject of coders/png.c , which allows remote attackers to
-> cause  arbitrary code execution, denial of service or possibly have
-> unspecified other impact via a crafted image file  .
-> [Vendor of Product]
-> https://imagemagick.org
-> [Affected Component]
-> function MngInfoDiscardObject of coders/png.c
-> [Attack Type]
-> Remote
-> [Attack Vectors]
-> magick convert $poc /dev/null
-> [Reference]
-> https://github.com/ImageMagick/ImageMagick/issues/1791
->
-> https://github.com/ImageMagick/ImageMagick/commit/916d7bbd2c66a286d379dbd=
-94bc6035c8fab937c
->
-> [Discoverer]
-> galycannon of JDCloud Security Team
->
-> Regards,
-> galycannon
->
+As far as we can tell, this code has been in an "#if 0" starting from
+when the code was originally added to FreeRDP in:
 
+  https://github.com/FreeRDP/FreeRDP/commit/dadb94a1e343648503949094a50053d81212a153
 
---=20
+In other words, we don't think this code would ever have been
+reachable by an end user. The "#if 0" also apparently exists in the
+freerdp-1.0.2.tar.gz that's included in the
+freerdp-1.0.2-5.el7.src.rpm file.
 
-Tausif Siddiqui
+> ./libfreerdp-gdi/gdi.c
+> #ifdef DUMP_REMOTEFX_TILES
+>                        sprintf(tile_bitmap, "/tmp/rfx/tile_%d.bmp",
 
-Red Hat Product Security
+As far as we can tell, there is no build option for
+DUMP_REMOTEFX_TILES or documentation recommending that an end user
+define DUMP_REMOTEFX_TILES, either in the upstream distribution or in
+a source RPM.
 
-0EE1 F6BF 8991 9A65 0A79  A0A7 5849 60EC 88B8 2C71
+> Actually it looks like upstream fixed both of them already so one CVE
+> can do (I don't think it's important enough to SPLIT/MERGE properly).
 
---000000000000b859f9059a1dcdfe--
+Even if there were a different SPLIT/MERGE process for less important
+cases, a single CVE ID for issues reported in different versions would
+be among the harder process changes because it affects whether (or
+how) the CVE ID could be used on the cve.mitre.org web site, and
+complicates some types of patch-based remediation.
 
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJVZeE3AAoJEKllVAevmvms720H/3OH+XF1lBCs6kikJbS2NQHo
+eNKWfDgTyme6hFXcE1/qtQ06ct/8+kPf2QkKg7/QvSLBdVYwjqOqTsj08PtTnOqU
+XaRgoEAwB8rEvaH4f56hKT41XI4tF6lrERSMPeunktVV1vcvj57BG1QxK+4WPqQv
+OPyJRQjzu0om6BRwU3gViF4LhkTBUkHpL8ehEwYyxs8AIBA0lz/NKYwfAfKmA0F0
+2+i+Tc/wc6JGBoP6AfqrITaHAI3SV/mRnjcB1ZQdx3jENdUnZ2Pod08OFGreaVG2
+84SgeIR/IWnEpOgGYglw5qDwa7/EVhICLRbtz9QAFmaVV1FHKuXy3w/GCE3YQE0=
+=s9NW
+-----END PGP SIGNATURE-----
