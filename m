@@ -1,4 +1,9 @@
-Received: (qmail 27890 invoked by uid 550); 13 Oct 2022 10:11:07 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6240" "Wednesday" "27" "May" "2015" "18:54:55" "+0000" "Seaman, Chad" "cseaman@akamai.com" "<1432752895846.10669@akamai.com>" "106" "[oss-security] Re: CVE Request, multiple WordPress plugins and themes" nil nil nil "5" "2015052718:54:55" "[oss-security] Re: CVE Request, multiple WordPress plugins and themes" (number mark "        cseaman@akam May 27  106/6240  " thread-indent "\"[oss-security] Re: CVE Request, multiple WordPress plugins and themes\"\n") "<1432752795980.1810@akamai.com>" ("<1432752795980.1810@akamai.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 22494 invoked by uid 550); 27 May 2015 20:13:15 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,70 +11,131 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 27855 invoked from network); 13 Oct 2022 10:11:07 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1665655855; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type;
-	bh=oncSTjomQkWu3Y7SLrxrIeZG7agNMzjgLAVj2VQKZmI=;
-	b=qrC+WEdSR8QTuoCLh+uGvVzYl7SOHUzSoWhBhkXvCuur+sK4jSsDBqcLwBnMGtef0aGJBp
-	+CEXBVy544ahlaXbhAMQBWnYfD6076ZB/4LDuyQ8LJomqHqfgNfiAzXwx5JZOYwBOktPH2
-	fBCBvN7Ns3n3n526edm9bK2Hwx2tFvY=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1665655855;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type;
-	bh=oncSTjomQkWu3Y7SLrxrIeZG7agNMzjgLAVj2VQKZmI=;
-	b=628zeWl9lbkJnB9QrXMlolRUttGDsl6NJywQgc8R4jgQnfKgXZSWiuXralWdiBmrs3mOPr
-	2Wbvtw2nTnqmqHCA==
-Date: Thu, 13 Oct 2022 12:10:54 +0200
-From: Marcus Meissner <meissner@suse.de>
-To: oss-security@lists.openwall.com, shuster@seemoo.tu-darmstadt.de
-Message-ID: <20221013101046.GB20615@suse.de>
+Received: (qmail 23599 invoked from network); 27 May 2015 18:55:09 -0000
+Thread-Topic: CVE Request, multiple WordPress plugins and themes
+Thread-Index: AQHQmJhCdM72yoEmUUC+CGJWxthR5J2QK9mF
+Message-ID: <1432752895846.10669@akamai.com>
+References: <1432752795980.1810@akamai.com>
+In-Reply-To: <1432752795980.1810@akamai.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [172.28.90.109]
+Content-Type: multipart/alternative;
+	boundary="_000_143275289584610669akamaicom_"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Organization: SUSE Software Solutions =?iso-8859-1?Q?Ger?=
- =?iso-8859-1?Q?many_GmbH=2C_Frankenstra=DFe_146=2C_90461_Nuernberg=2C_Ger?=
- =?iso-8859-1?Q?many=2C_GF=3A_Ivo_Totev=2C_Andrew_Myers=2C_Andrew_McDonald?=
- =?iso-8859-1?Q?=2C_Martje_Boudien_Moerman=2C_HRB_36809=2C_AG_N=FCrnberg?=
-User-Agent: Mutt/1.10.1 (2018-07-13)
-Subject: [oss-security] Various Linux Kernel WLAN security issues (RCE/DOS) found
+CC: "cve-assign@mitre.org" <cve-assign@mitre.org>
+Date: Wed, 27 May 2015 18:54:55 +0000
+From: "Seaman, Chad" <cseaman@akamai.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: CVE Request, multiple WordPress plugins and themes
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
 
-Hi folks,
+--_000_143275289584610669akamaicom_
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 
-Security Researcher Soenke Huster from Tu Darmstadt (
-shuster@seemoo.tu-darmstadt.de ) emailed SUSE with a buffer overwrite in
-the Linux Kernel mac80211 framework triggered by WLAN frames.
+VGhlc2UgdHdvIGhhZCB0aGVpciBmb3JtYXR0aW5nIG1hbmdsZWQsIHNvcnJ5
+IGFib3V0IHRoYXQuDQoNCg0KICAqIHdwLWZhc3Rlc3QtY2FjaGUgW1BMVUdJ
+Tl0NCiAgICArIHVybDogaHR0cHM6Ly93b3JkcHJlc3Mub3JnL3BsdWdpbnMv
+d3AtZmFzdGVzdC1jYWNoZS8NCiAgICArIHZ1bG4gZm91bmQ6DQogICAgOi0t
+fC0gWFNTDQoNCiAgKiBsZWFmbGV0LW1hcHMtbWFya2VyIFtQTFVHSU5dDQog
+ICAgKyB1cmw6IGh0dHBzOi8vd29yZHByZXNzLm9yZy9wbHVnaW5zL2xlYWZs
+ZXQtbWFwcy1tYXJrZXIvDQogICAgKyB2dWxuIGZvdW5kOg0KICAgIDotLXwt
+IFhTUyB4IDINCg0KDQoNCg0KDQpfX19fX19fX19fX19fX19fX19fX19fX19f
+X19fX19fXw0KRnJvbTogU2VhbWFuLCBDaGFkDQpTZW50OiBXZWRuZXNkYXks
+IE1heSAyNywgMjAxNSAyOjUzIFBNDQpUbzogb3NzLXNlY3VyaXR5QGxpc3Rz
+Lm9wZW53YWxsLmNvbQ0KQ2M6IGN2ZS1hc3NpZ25AbWl0cmUub3JnDQpTdWJq
+ZWN0OiBDVkUgUmVxdWVzdCwgbXVsdGlwbGUgV29yZFByZXNzIHBsdWdpbnMg
+YW5kIHRoZW1lcw0KDQoNCuKAiw0KDQrigItJJ20gbm90IHN1cmUgaWYgdGhl
+c2Ugc2hvdWxkIGJlIGJyb2tlbiBkb3duIGJ5IGluZGl2aWR1YWwgdnVsbmVy
+YWJpbGl0eSBvciBsdW1wZWQgcGVyIHBsdWdpbi90aGVtZSwgdGhlcmUgYXJl
+IDIxIHBsdWdpbnMvdGhlbWVzIGFmZmVjdGVkIGluIHRvdGFsLg0KDQoNCiAg
+KiBncmFuZC1tZWRpYSBbUExVR0lOXQ0KICAgICsgdXJsOiBodHRwczovL3dv
+cmRwcmVzcy5vcmcvcGx1Z2lucy9ncmFuZC1tZWRpYS8NCiAgICArIHZ1bG4g
+Zm91bmQ6DQogICAgOi0tfC0gWFNTDQogICAgOg0KICAgIDotLXwtIExGSQ0K
+ICAgIDogICAgfC0gbm90ZTogb25seSB0cnVseSBleHBsb2l0YWJsZSBpZiB1
+c2VyIHNldHMgQUxMT1dfTk9fRVhUID09IHRydWUNCiAgICA6DQogICAgOi0t
+fC0gRG9TDQogICAgOiAgICB8LSBub3RlOiBmb3JjZSB0byByZWN1cnNpdmVs
+eSBjYWxsIGl0c2VsZiB2aWEgcmVtb3RlIDMwMSByZWRpcmVjdHMsIGNyaXBw
+bGVzIHBocC1mcG0gdy8gbmdpbngNCiAgICA6DQogICAgOi0tfC0gT3BlbiBw
+cm94eQ0KDQoNCg0KICAqIHdwLW1vYmlsZS1lZGl0aW9uIFtQTFVHSU5dDQog
+ICAgKyB1cmw6IGh0dHBzOi8vd29yZHByZXNzLm9yZy9wbHVnaW5zL3dwLW1v
+YmlsZS1lZGl0aW9uLw0KICAgICsgdnVsbiBmb3VuZDoNCiAgICA6LS18LSBM
+RkkNCiAgICA6ICAgIHwtIG5vdGU6IHByZSBQSFAgNS4zIGlzIGxpa2VseSAo
+dW5jb25maXJtZWQpIHN1c3BlY3RpYmxlIHRvIG51bGxieXRlIGluamVjdGlv
+biwgbWVhbmluZyBhbnkgZmlsZSBjYW4gYmUgcmVhZA0KICAgIDoNCiAgICA6
+LS18LSBPcGVuUHJveHkNCiAgICA6DQogICAgOi0tfC0gRG9TDQogICAgOiAg
+ICB8LSBub3RlOiB3aWxsIHByb2Nlc3MgbGlzdCBvZiBmaWxlcyBpbiBmb3Ig
+bG9vcCwgYWlkaW5nIERvUyBjYXBhYmlsaXRpZXMNCiAgICA6ICAgIHwtIG5v
+dGU6IGZvbGxvd3MgMzAxIHJlZGlyZWN0cywgY2FuIGJlIHVzZWQgdG8gcmVj
+dXJzaXZlbHkgY2FsbCBpdHNlbGYgdG8gZXhoYXVzdGlvbiwg4oCLY3JpcHBs
+ZXMgcGhwLWZwbSB3LyBuZ2lueA0KICAgIDoNCiAgICA6LS18LSBlLW1haWwg
+aGVhZGVyIGluamVjdGlvbiAoc3BhbSBzYW5kd2ljaCkNCiAgICA6ICAgIHwt
+IG5vdGU6IHdpbGwgdGhyb3cgZmF0YWwgZXJyb3IsIGJ1dCB3aWxsIHNlbmQg
+ZS1tYWlsIGJlZm9yZSBkb2luZyBzby4NCiAgICA6DQogICAgOi0tfC0gTXVs
+dGlwbGUgWFNTIHZ1bG5zDQoNCg0KKiB3cC1mYXN0ZXN0LWNhY2hlIFtQTFVH
+SU5dICsgdXJsOiBodHRwczovL3dvcmRwcmVzcy5vcmcvcGx1Z2lucy93cC1m
+YXN0ZXN0LWNhY2hlLyArIHZ1bG4gZm91bmQ6IDotLXwtIFhTUyAqIGxlYWZs
+ZXQtbWFwcy1tYXJrZXIgW1BMVUdJTl0gKyB1cmw6IGh0dHBzOi8vd29yZHBy
+ZXNzLm9yZy9wbHVnaW5zL2xlYWZsZXQtbWFwcy1tYXJrZXIvICsgdnVsbiBm
+b3VuZDogOi0tfC0gWFNTIHggMiAqIGxhbmRpbmctcGFnZXMgW1BMVUdJTl0g
+KyB1cmw6IGh0dHBzOi8vd29yZHByZXNzLm9yZy9wbHVnaW5zL2xhbmRpbmct
+cGFnZXMvICsgdnVsbiBmb3VuZDogOi0tfC0gWFNTIGludG8gYWRtaW4gc2Vz
+c2lvbiAqIGV4dGVuZGVkLWNhdGFnb3JpZXMtd2lkZ2V0IFtQTFVHSU5TXSAr
+IHVybDogaHR0cHM6Ly93b3JkcHJlc3Mub3JnL3BsdWdpbnMvZXh0ZW5kZWQt
+Y2F0ZWdvcmllcy13aWRnZXQvICsgdnVsbiBmb3VuZDogOi0tfC0gcG9zdCBh
+dXRoIGFkbWluIFNRTGkNCg0KICAqIGdhbGxlcnktaW1hZ2VzIFtQTFVHSU5T
+XSAmJiBnYWxsZXJ5LXZpZGVvIFtQTFVHSU5TXQ0KICAgICsgdXJsOiBodHRw
+czovL3dvcmRwcmVzcy5vcmcvcGx1Z2lucy9nYWxsZXJ5LWltYWdlcy8NCiAg
+ICArIHVybDogaHR0cHM6Ly93b3JkcHJlc3Mub3JnL3BsdWdpbnMvZ2FsbGVy
+eS12aWRlby8NCiAgICArIHZ1bG4gZm91bmQ6DQogICAgOi0tfC0gWFNTIGlu
+dG8gYWRtaW4gc2Vzc2lvbiAoaW1hZ2UgYW5kIHZpZGVvIGdhbGxlcnkgYXJl
+IGJvdGggYWZmZWN0ZWQpDQoNCg0KICAqIGVhc3ktZ29vZ2xlLWZvbnRzIFtQ
+TFVHSU5dDQogICAgKyB1cmw6IGh0dHBzOi8vd29yZHByZXNzLm9yZy9wbHVn
+aW5zL2Vhc3ktZ29vZ2xlLWZvbnRzLw0KICAgICsgdnVsbiBmb3VuZDoNCiAg
+ICA6LS18LSBYU1MgaW50byBhZG1pbiBzZXNzaW9uDQoNCg0KICAqIGN0YSBb
+UExVR0lOXQ0KICAgICsgdXJsOiBodHRwczovL3dvcmRwcmVzcy5vcmcvcGx1
+Z2lucy9jdGEvDQogICAgKyB2dWxuIGZvdW5kOg0KICAgIDotLXwtIENTUkYg
+JiBwZXJzaXN0ZW50IFhTUyBhdHRhY2sgaW50byBhZG1pbiBzZXNzaW9uLCBh
+bmQgc2l0ZS13aWRlIGZvciB2aXNpdG9ycw0KDQoNCiAgKiBjb25zdGFudC1j
+b250YWN0LWFwaSBbUExVR0lOXQ0KICAgICsgdXJsOiBodHRwczovL3dvcmRw
+cmVzcy5vcmcvcGx1Z2lucy9jb25zdGFudC1jb250YWN0LWFwaS8NCiAgICAr
+IHZ1bG4gZm91bmQ6DQogICAgOi0tfC0gWFNTIHggMg0KDQoNCiAgKiB6ZXJp
+Zi1saXRlIFtUSEVNRV0NCiAgICArIHVybDogaHR0cHM6Ly93b3JkcHJlc3Mu
+b3JnL3RoZW1lcy96ZXJpZi1saXRlLw0KICAgICsgdnVsbiBmb3VuZDoNCiAg
+ICA6LS18LSBYU1MNCg0KDQogICogY29sb3J3YXkgW1RIRU1FXQ0KICAgICsg
+dXJsOiBodHRwczovL3dvcmRwcmVzcy5vcmcvdGhlbWVzL2NvbG9yd2F5Lw0K
+ICAgICsgdnVsbiBmb3VuZDoNCiAgICA6LS18LSBlLW1haWwgaGVhZGVyIGlu
+amVjdGlvbiAoc3BhbSBzYW5kd2ljaCkNCiAgICA6DQogICAgOi0tfC0gWFNT
+IHggMw0KDQoNCiAgKiBjaGFyaXRhcy1saXRlIFtUSEVNRV0NCiAgICArIHVy
+bDogaHR0cHM6Ly93b3JkcHJlc3Mub3JnL3RoZW1lcy9jaGFyaXRhcy1saXRl
+Lw0KICAgICsgdnVsbiBmb3VuZDoNCiAgICA6LS18LSBlLW1haWwgaGVhZGVy
+IGluamVjdGlvbiAoc3BhbSBzYW5kd2ljaCkNCg0KICAqIGFyaXdvbyBbVEhF
+TUVdDQogICAgKyB1cmw6IGh0dHBzOi8vd29yZHByZXNzLm9yZy90aGVtZXMv
+YXJpd29vLw0KICAgICsgdnVsbiBmb3VuZDoNCiAgICA6LS18LSBlLW1haWwg
+aGVhZGVyIGluamVjdGlvbiAoc3BhbSBzYW5kd2ljaCkNCiAgICA6DQogICAg
+Oi0tfC0gWFNTIHggMw0KDQoNCiAgKiBrYWdlLWdyZWVuIFtUSEVNRV0NCiAg
+ICArIHVybDogaHR0cHM6Ly93b3JkcHJlc3Mub3JnL3RoZW1lcy9rYWdlLWdy
+ZWVuLw0KICAgICsgdnVsbiBmb3VuZDoNCiAgICA6LS18LSBYU1MNCg0KDQog
+ICogaW50dWl0aW9uIFtUSEVNRV0NCiAgICArIHVybDogaHR0cHM6Ly93b3Jk
+cHJlc3Mub3JnL3RoZW1lcy9pbnR1aXRpb24vDQogICAgKyB2dWxuIGZvdW5k
+Og0KICAgIDotLXwtIFhTUw0KDQoNCiAgKiBpbWFnLW1hZyBbVEhFTUVdDQog
+ICAgKyB1cmw6IGh0dHBzOi8vd29yZHByZXNzLm9yZy90aGVtZXMvaW1hZy1t
+YWcvDQogICAgKyB2dWxuIGZvdW5kOg0KICAgIDotLXwtIFhTUw0KDQogICog
+ZmFzdG5ld3MtbGlnaHQgW1RIRU1FXQ0KICAgICsgdXJsOiBodHRwczovL3dv
+cmRwcmVzcy5vcmcvdGhlbWVzL2Zhc3RuZXdzLWxpZ2h0Lw0KICAgICsgdnVs
+biBmb3VuZDoNCiAgICA6LS18LSBYU1MNCg0KDQogICogYnVzaW5lc3MtZGly
+ZWN0b3J5IFtUSEVNRV0NCiAgICArIHVybDogaHR0cHM6Ly93b3JkcHJlc3Mu
+b3JnL3RoZW1lcy9idXNpbmVzcy1kaXJlY3RvcnkvDQogICAgKyB2dWxuIGZv
+dW5kOg0KICAgIDotLXwtIFhTUw0KDQoNCiAgKiBib290LXN0b3JlIFtUSEVN
+RV0NCiAgICArIHVybDogaHR0cHM6Ly93b3JkcHJlc3Mub3JnL3RoZW1lcy9i
+b290LXN0b3JlLw0KICAgICsgZGVwczogVGhlQ2FydFByZXNzIChodHRwczov
+L3dvcmRwcmVzcy5vcmcvcGx1Z2lucy90aGVjYXJ0cHJlc3MvKQ0KICAgICsg
+bm90ZTogdGhlbWUgbXVzdCBiZSBwcmVzZW50LCBwbHVnaW4gbXVzdCBiZSBw
+cmVzZW50LCB1c2VyIG11c3Qgbm90IGJlIGxvZ2dlZCBpbi4NCiAgICArIHZ1
+bG4gZm91bmQ6DQogICAgOi0tfC0gWFNTDQoNCg0KDQoNCg==
 
-We delegated the issue to the kernel security folks, and Soenke and
-Johannes Berg from Intel evaluated and worked on this issue.
-
-During their research they found multiple more problems in the WLAN
-stack, exploitable over the air.
-
-The patchset has been posted to the netdev list just now and will be
-merged in the next hours/days:
-
-	https://lore.kernel.org/netdev/20221013100522.46346-1-johannes@sipsolutions.net/T/#u
-
-I have requested 5 CVE from Mitre, they are referenced in the commits.
-
-Note that some patches did not get CVEs, as these were not showing any
-relevant security impact but only warning messages or UBSAN shift overflow
-messages.
-
-CVE-2022-41674: fix u8 overflow in cfg80211_update_notlisted_nontrans
-	(max 256 byte overwrite) (RCE)
-CVE-2022-42719: wifi: mac80211: fix MBSSID parsing use-after-free
-	use after free condition (RCE)
-CVE-2022-42720: wifi: cfg80211: fix BSS refcounting bugs
-	ref counting use-after-free possibilities (RCE)
-CVE-2022-42721: wifi: cfg80211: avoid nontransmitted BSS list corruption
-	list corruption, according to Johannes will however just make it endless loop (DOS)
-CVE-2022-42722: wifi: mac80211: fix crash in beacon protection for P2P-device
-	NULL ptr dereference crash (DOS)
-
-Soenke will post additional details as followup to this email.
-
-Ciao, Marcus
+--_000_143275289584610669akamaicom_--
