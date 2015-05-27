@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1596" "Wednesday" "4" "September" "2019" "12:46:49" "+0200" "Heiko Schlittermann" "hs@schlittermann.de" nil "45" nil "^Date:" nil nil "9" nil nil (number mark "        hs@schlitter Sep  4   45/1596  " thread-indent "\"Re: [oss-security] CVE-2019-15846: Exim - local or remote attacker can execute programs with root privileges.\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] CVE-2019-15846: Exim - local or remote attacker can execute programs with root privileges." nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1135" "Wednesday" "27" "May" "2015" "16:45:15" "+0200" "Jason A. Donenfeld" "Jason@zx2c4.com" "<CAHmME9p4DmgLcA0+JkT7bH3WGP5bOY2wmd=a6sy76vwjnVEPjw@mail.gmail.com>" "34" "[oss-security] CVE Request: Linux Kernel Ozwpan Driver - Remote packet-of-death vulnerabilities" nil nil nil "5" "2015052714:45:15" "[oss-security] CVE Request: Linux Kernel Ozwpan Driver - Remote packet-of-death vulnerabilities" (number mark "        Jason@zx2c4. May 27   34/1135  " thread-indent "\"[oss-security] CVE Request: Linux Kernel Ozwpan Driver - Remote packet-of-death vulnerabilities\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 11813 invoked by uid 550); 4 Sep 2019 11:19:30 -0000
+Received: (qmail 11305 invoked by uid 550); 27 May 2015 18:45:03 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,85 +11,58 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 20382 invoked from network); 4 Sep 2019 10:47:02 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=schlittermann.de; s=dd201504; h=In-Reply-To:Content-Type:MIME-Version:
-	References:Message-ID:Subject:To:From:Date:Cc:Content-Description:Content-ID:
-	Content-Transfer-Encoding:Resent-Cc:Resent-To;
-	bh=Vt3CP6qIwbtBquQbcOO7bBsngwiKs/I7DG5xywa+Cyg=; b=AmV8jKLRqh1qpSYsbaxOqaNP4O
-	fCUC9rfxmgXQchDts97Fb4poHYNi7tx0v9sTo5PP1/duOQR4Pd9sYg0mRI11tpxpSy0/dCHZMYI45
-	UwIlX4BczI/pNsdLe6SLsGYH+hy9YUYnh3VqMDnQqQwoWjxBYJVe5wrsGEcmJVizEsf0=;
-Message-ID: <20190904104649.GR3837@jumper.schlittermann.de>
-Mail-Followup-To: oss-security@lists.openwall.com,
-	Exim Users <exim-users@exim.org>,
-	Exim Announce <exim-announce@exim.org>
-References: <20190904092248.GQ3837@jumper.schlittermann.de>
+Received: (qmail 30389 invoked from network); 27 May 2015 14:55:56 -0000
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
+	:date:message-id:subject:from:to:cc:content-type; s=mail; bh=NxE
+	jQFoIsvX49n60fT/AxlYnZEM=; b=u+N5N6i6fx7M8Gx4m0uKU2Wd8lPSva5mvP5
+	GOJtMdGrVc1D92pnJgIahDET5/UiQyswJMZmDVy8kcWycfFebNkCJv4QgFBsAU7D
+	p72AYYUWZKUZT2S7g9aK0U4MtIYYBbRqXaThcbtPRDjtr0G+mWkIODF8WZXRvAq8
+	vF8vvJiJqURuaTw0xfZzhjTqxs6R6TCDteFDWfyOCC07axtNaVgoULsl3ob2YE9/
+	z7DSKqp4qbJXGXpFUVUCksAOLhY8d8GqqFTKodFyTrq+hVO0PTGwtbUWe7VyeCII
+	9k66U4si00BAL1y5gfj3AyAeF8iXk0KXCKjL9IbBvrl5hM72x6A==
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="bFUYW7mPOLJ+Jd2A"
-Content-Disposition: inline
-In-Reply-To: <20190904092248.GQ3837@jumper.schlittermann.de>
-Organization: schlittermann -- internet & unix support
-X-Face: =y#&-VlCH8uT|8#-#JE_^c<:+qPbYxFD`}8`m)xjyA$93tpwm-vKsa(V,0?906(2VIVNQbU
- QzD%zhE+~-AA?\v-v.HY6]ebO4_$vY`l|||Q!EZT5*Xx/>Fj{8E_a.;;#<4S$>&T%n5()2Yt=R5FSC
- y:Na&@T{Rf`kPq^'ffPFA%`mP~>%-LU$d*]]{-%>j={&MsMND.">]H)&#AoSI~(U8Jk;v*;,Pf+l85
- X?H&`
-X-Telegram: @HeikoSchlittermann
-X-Threema: T5RPWMSS
-X-Phone: +49.172.7909055
-X-GPG-Fingerprint: E5CA 331D 44AB 8E4C 806F  DBEE 2610 1B62 F693 76CE
-X-GPG-Key-ID: F69376CE
-User-Agent: Mutt/1.10.1 (2018-07-13)
-Date: Wed, 4 Sep 2019 12:46:49 +0200
-From: Heiko Schlittermann <hs@schlittermann.de>
+X-Received: by 10.112.204.72 with SMTP id kw8mr28336344lbc.88.1432737915307;
+ Wed, 27 May 2015 07:45:15 -0700 (PDT)
+Message-ID: <CAHmME9p4DmgLcA0+JkT7bH3WGP5bOY2wmd=a6sy76vwjnVEPjw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Cc: cve-assign@mitre.org
+Date: Wed, 27 May 2015 16:45:15 +0200
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE-2019-15846: Exim - local or remote attacker
- can execute programs with root privileges.
-To: oss-security@lists.openwall.com, Exim Users <exim-users@exim.org>,
-	Exim Announce <exim-announce@exim.org>
+Subject: [oss-security] CVE Request: Linux Kernel Ozwpan Driver - Remote packet-of-death vulnerabilities
+To: oss-security <oss-security@lists.openwall.com>
 
---bFUYW7mPOLJ+Jd2A
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Hi folks,
 
-Heiko Schlittermann <hs@nodmarc.schlittermann.de> (Mi 04 Sep 2019 11:22:48 =
-CEST):
-> *** Note: EMBARGO is still in effect!       ***
-> *** Distros must not publish any detail yet ***
+This is a resend, as the other request seems to have gotten lost in the mix.
 
-As I saw blocked accesses to our security repo:
+A variety of issues have been found in Linux's ozwpan driver.
 
-If you're entitled to access our non-public security repository, please
-update your "remote". The git URL is now:
+1. A remote packet can be sent, resulting in funny subtractions of
+signed integers, which causes a memcpy(kernel_heap,
+network_user_buffer, -network_user_provided_length).
 
-    ssh://git@git.exim.org/exim-security
-    ssh://git@git.exim.org/exim-packages-security
+There are two different conditions that can lead to this:
+https://lkml.org/lkml/2015/5/13/740
+https://lkml.org/lkml/2015/5/13/744
+You may want to give two CVEs or just one CVE for these two issues.
 
-(We addedd the -security suffix.)
+2. A remote packet can be sent, resulting in divide-by-zero in
+softirq, causing hard crash:
+https://lkml.org/lkml/2015/5/13/741
 
-    Best regards from Dresden/Germany
-    Viele Gr=C3=BC=C3=9Fe aus Dresden
-    Heiko Schlittermann
---
- SCHLITTERMANN.de ---------------------------- internet & unix support -
- Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
- gnupg encrypted messages are welcome --------------- key ID: F69376CE -
- ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
+3. A remote packet can be sent, resulting in a funny subtraction,
+causing an insanely big loop to lock up the kernel:
+https://lkml.org/lkml/2015/5/13/742
 
---bFUYW7mPOLJ+Jd2A
-Content-Type: application/pgp-signature; name="signature.asc"
+4. Multiple out-of-bounds reads, resulting in possible information
+leakage, explained in the last paragraph of the introductory email
+here:
+https://lkml.org/lkml/2015/5/13/739
 
------BEGIN PGP SIGNATURE-----
 
-iQEzBAABCgAdFiEE0L/WueylaUpvFJ3Or0zGdqa2wUIFAl1vlhgACgkQr0zGdqa2
-wULWOwf8C8LLYBWGCr6RxuK55Dj4vdKSfZEYW6Xbod1Yd3H5Yl8duKQfj2zMriYf
-UKxURtjXvbFKz9ACpVG1BOMwNxHWCeoK78hAtBIEn2TQL1QdfQOQ5NBESRMpQEl1
-FHuUcQbpHfzQHDfrP7kwVc2HeQ3+ziAV62QUQo5ixaV941S0zzRUhltdsEtpnUie
-VKs6pXV3RLXBo3mviuSUWJAihq/sdx4wtWmPVQTHID9W2/A1TZss6OFa30arTTTW
-c5tGGhNOg8Z2SeMxjZePcdzZ2ocvEaH30THyPi1CwgtyRJOHyMOC7442aMFaE/si
-bZTmKURXjV+JzHuZnyqZybiIcJKnVQ==
-=v+EJ
------END PGP SIGNATURE-----
+Please assign CVEs so that these can be properly tracked. I've been
+told the v2 of these patches are in the merging queue.
 
---bFUYW7mPOLJ+Jd2A--
+Regards,
+Jason Donenfeld
