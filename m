@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2571" "Wednesday" "9" "December" "2015" "20:26:42" "+0000" "Evans, Jonathan L." "jevans@mitre.org" "<DM2PR09MB027022D8FA55B820E2975AF0CCE80@DM2PR09MB0270.namprd09.prod.outlook.com>" "43" "[oss-security] RE: CVE for git issue - please use CVE-2015-7545" "^CC:" nil nil "12" "2015120920:26:42" "[oss-security] RE: CVE for git issue - please use CVE-2015-7545" (number mark "        jevans@mitre Dec  9   43/2571  " thread-indent "\"[oss-security] RE: CVE for git issue - please use CVE-2015-7545\"\n") "<CANO=Ty2buv0k_vfSBuQGKV60NmJM6T=VjUgmh7EvqisKyRHGng@mail.gmail.com>" ("<CANO=Ty2buv0k_vfSBuQGKV60NmJM6T=VjUgmh7EvqisKyRHGng@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4468" "Thursday" "28" "May" "2015" "14:41:24" "+0000" "Seaman, Chad" "cseaman@akamai.com" "<1432824084554.52187@akamai.com>" "101" "Re: [oss-security] Re: CVE Request, multiple WordPress plugins and themes" nil nil nil "5" "2015052814:41:24" "[oss-security] Re: CVE Request, multiple WordPress plugins and themes" (number mark "        cseaman@akam May 28  101/4468  " thread-indent "\"Re: [oss-security] Re: CVE Request, multiple WordPress plugins and themes\"\n") "<20150528115153.D4AA46C0032@smtpvmsrv1.mitre.org>" ("<20150528063540.GD27861@lakka.kapsi.fi>" "<20150528115153.D4AA46C0032@smtpvmsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 7737 invoked by uid 550); 9 Dec 2015 20:27:05 -0000
+Received: (qmail 32491 invoked by uid 550); 28 May 2015 16:23:28 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,87 +11,128 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 7717 invoked from network); 9 Dec 2015 20:27:04 -0000
-Thread-Topic: CVE for git issue - please use CVE-2015-7545
-Thread-Index: AQHRMcdprYKHXU7AgEqiMXlWUlUnXp7DGHLg
-Message-ID: <DM2PR09MB027022D8FA55B820E2975AF0CCE80@DM2PR09MB0270.namprd09.prod.outlook.com>
-References: <CANO=Ty2buv0k_vfSBuQGKV60NmJM6T=VjUgmh7EvqisKyRHGng@mail.gmail.com>
-In-Reply-To: <CANO=Ty2buv0k_vfSBuQGKV60NmJM6T=VjUgmh7EvqisKyRHGng@mail.gmail.com>
+Received: (qmail 22405 invoked from network); 28 May 2015 14:41:37 -0000
+Thread-Topic: [oss-security] Re: CVE Request, multiple WordPress plugins and
+ themes
+Thread-Index: AQHQmTy/SnqUb4k0H0qDtSVup2P1TJ2Rddzd
+Message-ID: <1432824084554.52187@akamai.com>
+References: <20150528063540.GD27861@lakka.kapsi.fi>,<20150528115153.D4AA46C0032@smtpvmsrv1.mitre.org>
+In-Reply-To: <20150528115153.D4AA46C0032@smtpvmsrv1.mitre.org>
 Accept-Language: en-US
 Content-Language: en-US
 X-MS-Has-Attach:
 X-MS-TNEF-Correlator:
-authentication-results: spf=none (sender IP is )
- smtp.mailfrom=jevans@mitre.org; 
-x-originating-ip: [192.160.51.89]
-x-microsoft-exchange-diagnostics: 1;DM2PR09MB0382;5:uLJL4IvXgyP05NU4iKJtT8BItf1gTWW1j1HWk0aJLjdhetQozHlxp3wAhMAz/s3QvaL9Ynjk2iDc39JDtYzFbx/+Kh51+vpkBfBupYL3ASZsgcg2SCyC8czC7P33Kt4RSRfpJcpNSwP8l5Ht8YG5hw==;24:8RBbk91nHPLh0R4oZPPjtMw8fjkP79ea5tfdgn+hkwQWxUtVdsEcT6OjTeg6gh5EOyZVUchegsoNL5Bh5NXEbLpRdWVkaTLsdNROLfSeBNY=
-x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:;SRVR:DM2PR09MB0382;
-x-microsoft-antispam-prvs: <DM2PR09MB0382DC9F220E589A44B6BC84CCE80@DM2PR09MB0382.namprd09.prod.outlook.com>
-x-exchange-antispam-report-test: UriScan:;
-x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(601004)(2401047)(520078)(8121501046)(5005006)(10201501046)(3002001);SRVR:DM2PR09MB0382;BCL:0;PCL:0;RULEID:;SRVR:DM2PR09MB0382;
-x-forefront-prvs: 0785459C39
-x-forefront-antispam-report: SFV:NSPM;SFS:(10009020)(6009001)(189002)(54524002)(199003)(3846002)(586003)(5004730100002)(102836003)(106116001)(6116002)(87936001)(575784001)(86362001)(10400500002)(1220700001)(4001430100002)(1096002)(106356001)(105586002)(230783001)(2950100001)(5001770100001)(99286002)(97736004)(2900100001)(74316001)(92566002)(15975445007)(76176999)(54356999)(77096005)(50986999)(122556002)(5008740100001)(40100003)(5003600100002)(5001960100002)(189998001)(107886002)(5002640100001)(33656002)(66066001)(81156007)(101416001)(19580395003)(76576001)(19627235001);DIR:OUT;SFP:1101;SCL:1;SRVR:DM2PR09MB0382;H:DM2PR09MB0270.namprd09.prod.outlook.com;FPR:;SPF:None;PTR:InfoNoRecords;MX:1;A:1;LANG:en;
-received-spf: None (protection.outlook.com: mitre.org does not designate
- permitted sender hosts)
-spamdiagnosticoutput: 1:23
-spamdiagnosticmetadata: NSPM
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [172.28.90.109]
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-originalarrivaltime: 09 Dec 2015 20:26:42.5256
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: c620dc48-1d50-4952-8b39-df4d54d74d82
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM2PR09MB0382
-X-OriginatorOrg: mitre.org
-CC: CVE ID Requests <cve-assign@mitre.org>
-Date: Wed, 9 Dec 2015 20:26:42 +0000
-From: "Evans, Jonathan L." <jevans@mitre.org>
+Date: Thu, 28 May 2015 14:41:24 +0000
+From: "Seaman, Chad" <cseaman@akamai.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] RE: CVE for git issue - please use CVE-2015-7545
-To: Kurt Seifried <kseifried@redhat.com>, oss-security
+Subject: Re: [oss-security] Re: CVE Request, multiple WordPress plugins and
+ themes
+To: "henri@nerv.fi" <henri@nerv.fi>, "oss-security@lists.openwall.com"
 	<oss-security@lists.openwall.com>
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkVEIE1FU1NBR0UtLS0tLQ0KSGFzaDogU0hB
-MQ0KDQpXZSBhcmUgbm90IGNlcnRhaW4gaWYgdGhlIGFzc2lnbm1lbnQgb2Yg
-Q1ZFLTIwMTUtNzU0NSBpcyBjb3JyZWN0LiAgVGhlIHZlbmRvcg0KbWF5IG5v
-dCBvZmZpY2lhbGx5IHN1cHBvcnQgdGhlICJibGluZGx5IGVuYWJsZSByZWN1
-cnNpdmUgZmV0Y2giIHNjZW5hcmlvLCBpLmUuDQp0aGUgdXNlciBpcyBleHBl
-Y3RlZCB0byBhY2NlcHQgdGhlIHJpc2sgb2YgZXhlY3V0aW5nIGEgcmVjdXJz
-aXZlIGZldGNoIGZyb20gYW4NCnVudHJ1c3RlZCBzb3VyY2UsIGFuZCB0aGUg
-Y2hhbmdlIHNob3VsZCBiZSBjb25zaWRlcmVkIGEgc2VjdXJpdHkgaGFyZGVu
-aW5nDQpmZWF0dXJlIGZvciB0aGUgY29udmVuaWVuY2Ugb2YgdGhlaXIgdXNl
-cnMuDQoNCk1JVFJFIGhhcyBiZWVuIGFjdGl2ZWx5IHdvcmtpbmcgd2l0aCB0
-aGUgdXBzdHJlYW0gdmVuZG9yIHRvIGRldGVybWluZSB0aGUNCmFwcHJvcHJp
-YXRlIG51bWJlciBvZiBDVkVzIGZvciB0aGUgdnVsbmVyYWJpbGl0aWVzLiAg
-VGhlcmUgd2FzIG5vIG9zcy1zZWN1cml0eQ0KcG9zdCBmcm9tIHVzIGJlY2F1
-c2UgdGhlIGNvbnRleHQgb2YgTUlUUkUncyB3b3JrIHdhcyByZWxhdGVkIHRv
-IHByZXZpb3VzIHByaXZhdGUNCmNvbW11bmljYXRpb24gZnJvbSBhbmQgdG8g
-dGhlIHVwc3RyZWFtIHZlbmRvci4NCg0KSW4gdGhlIGZ1dHVyZSwgd2UgcGxh
-biB0byByZXNwb25kIHF1aWNrbHkgdG8gcmVxdWVzdHMgbGlrZSB0aGUgaW5p
-dGlhbCBvbmUsDQphc2tpbmcgdGhlIHJlcXVlc3RlciBmb3IgdGhlIGFwcHJv
-cHJpYXRlIGluZm9ybWF0aW9uIG5lZWRlZCB0byBhc3NpZ24gYSBDVkUgSUQu
-DQoNCi0gLS0NCkpvbmF0aGFuIEV2YW5zDQpDVkUgYXNzaWdubWVudCB0ZWFt
-LCBNSVRSRSBDVkUgTnVtYmVyaW5nIEF1dGhvcml0eSBNL1MgTTMwMA0KMjAy
-IEJ1cmxpbmd0b24gUm9hZCwgQmVkZm9yZCwgTUEgMDE3MzAgVVNBIFsgUEdQ
-IGtleSBhdmFpbGFibGUgdGhyb3VnaA0KaHR0cDovL2N2ZS5taXRyZS5vcmcv
-Y3ZlL3JlcXVlc3RfaWQuaHRtbCBdDQotLS0tLUJFR0lOIFBHUCBTSUdOQVRV
-UkUtLS0tLQ0KVmVyc2lvbjogR251UEcgdjENCg0KaVFJY0JBRUJBZ0FHQlFK
-V2FJNUtBQW9KRUw1NHJoSmk4Z2w1V0RzUUFMMWtoclZaa1B4amd4YXV5TGhh
-YVBLQQ0KK3pRb2dtcUx6Sm1BbHg2Sk5qNWVoS052U2tQRlg5SjRUeko3SXlZ
-ZEVpVmFlb1V2YldKSHUrQ0NOZm1zaUVYdg0Kam1NRENmTU9UZUhVaEhCaTBE
-YWVBa2xzcHpOMTFhNzhtK3k0TFYxaXhCMi83NVBSSGFwTlIzNkZmMk9MQjZM
-MA0KUERDVzNLd2wwUUJSV2crZXpGNFNlT2ZKTnFDWVVhYXQ2b1cxNndnTDMz
-YjFOVFB2ZVA3SW9wMElOSHdiL2ViZA0KVUVhazN2WlRlSG93VDBJUDAvNXdi
-VXlxRW1ZWE9OdlV1WGZSdkx1UVF6VkwycWZWYWxBTjZLTWJGcTJtallFbQ0K
-U2VHajl1TlRCZjE2QVRGL0Jib04zSVdFbEJ0R0xmSXdZM1JsZXU4TnRNbUty
-dVI4ckVQOXRxRFpLZG5aSTUwSw0KK2M2UzNzZHFsZnpjOEYybTk5ZEdFNUZ1
-WGUvcVkwV2ZBTG84dkRnTnM1OHpSNXVoMjNySUlHWndnVTR6eGwzMg0KVjcx
-c3NRci9oYmZ4ZW44dTNaSjI1OGJSVm1oaDhTRnl5a0t6bllkQzBpcTFaZjU4
-b0l3bVVnamE1QWJOTmtxSQ0KMzlqZUJlQVZyZG1tTUlNcnJ3K2hZRFJSRmNS
-WEhSa0dNOTVnTUNTakJTSFk2OC9kdUtmTitHM0NJUm50eHRlaw0KL0N1M0lJ
-eTUwRnliT2ZPRVJkeStOQnNRVjh5SzJMUitQWFdYTW1pazBKZ1lNUlhrd0g2
-elNmNW9wYndHRFdRYg0KMG5JK0hJS1NVWGRtakdIeVZFOFlxZ2VGY2I1Mlc5
-K0ViZHlidVJrZGJacTA5clVXVXI5NEZQalI3M1ZOQThZag0KNzU1bW9ZU1BK
-S3VPTFBKSzMzcGkNCj1JVjF2DQotLS0tLUVORCBQR1AgU0lHTkFUVVJFLS0t
-LS0NCg==
+    * extended-catagories-widget [PLUGINS] + url:
+    https://wordpress.org/plugins/extended-categories-widget/ +
+    vuln found: :--|- post auth admin SQLi
+
+seems to map to this public issue:
+
+    https://wordpress.org/plugins/extended-categories-widget/changelog/
+       Last Updated: 2015-5-27
+       Version 4.0.1
+       Post-Auth SQL Injection Vulnerability
+       Only occurs for WordPress versions lower than 3.3
+
+Correct, authors of plugins were notified of these vulnerabilities yesterda=
+y, and as the date suggests, some have began pushing out fixes.
+
+________________________________________
+From: cve-assign@mitre.org <cve-assign@mitre.org>
+Sent: Thursday, May 28, 2015 7:51 AM
+To: henri@nerv.fi
+Cc: cve-assign@mitre.org; oss-security@lists.openwall.com
+Subject: [oss-security] Re: CVE Request, multiple WordPress plugins and the=
+mes
+
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+> One email with all needed details for CVE request per plugin is better
+> way to get these assigned.
+
+The MITRE CVE team currently prefers that this request not be re-sent
+as a separate message for each plugin.
+
+> https://github.com/RedHatProductSecurity/CVE-HOWTO#how-to-write-a-cve-req=
+uest
+
+That document is directly applicable to CVE request responses by Kurt
+Seifried (including the ones he sent to oss-security up until 2013).
+Although the document contains a large amount of useful information,
+it is not a document that has been reviewed by the MITRE CVE team. For
+the specific topic of WordPress plugins, we would typically need to
+know what privileges are required to conduct each attack and -- in
+situations with more than one security issue for a single plugin --
+whether the vulnerabilities are independently exploitable.
+
+> does not have enough information for CVE request
+
+For the majority of the plugins, the amount of vulnerability detail is
+similar to the http://openwall.com/lists/oss-security/2015/05/22/4
+case that we discussed here last week. The situation isn't identical,
+so we'll try to clarify. As always, MITRE does not make decisions
+about the policies of the oss-security list. The current status is
+that nobody has objected to the message pattern starting with (for
+example) the http://openwall.com/lists/oss-security/2015/05/18/8 post,
+in which version information was originally included and the
+vulnerability had already been fixed. The
+http://openwall.com/lists/oss-security/2015/05/27/6 reporting pattern
+is not always the same. First, version information is not directly
+included. Second, some of the plugins apparently do not have a
+changelog entry indicating that any security problem was recently
+fixed. Putting all of this together, the most critical difference may
+be that some of these plugin reports are not about "Public security
+issues" and would potentially fall outside the scope of this list. So,
+our guess is that we can send a response here (with a CVE mapping) for
+a subset of this message, e.g.,
+
+    * extended-catagories-widget [PLUGINS] + url:
+    https://wordpress.org/plugins/extended-categories-widget/ +
+    vuln found: :--|- post auth admin SQLi
+
+seems to map to this public issue:
+
+    https://wordpress.org/plugins/extended-categories-widget/changelog/
+       Last Updated: 2015-5-27
+       Version 4.0.1
+       Post-Auth SQL Injection Vulnerability
+       Only occurs for WordPress versions lower than 3.3
+
+but we must not send a response here (with a CVE mapping) for some of
+the other parts. If we have misinterpreted that, you can (among other
+options) send e-mail directly to only cve-assign@mitre.org to tell us.
+We will leave it at that for now. There are obviously open questions,
+e.g., if someone prefers to send a very large number of
+low-information but public WordPress plugin findings, is it still best
+to use oss-security.
+
+- --
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJVZwALAAoJEKllVAevmvmsNLUH/3sPYVAJdvAzrBsr5gA8I0Pi
+2KDWEA+nolK70uhf+fcGLJtw0HJY+q1C/gtWVVd2VaNCojsBwA0Xz5GyWqk8bzVx
+UZX5WgbFbyy5gOQE1Gp49NM5V2KvoZ8YJvLw7hds9XPmpX7lH3MbjXmzDy+p2e1Y
+BUlg2Js4noI0VjOBJBreaXNWVoHyI6YbSSRuJWXGEiMWah8dhTvh/i+Kkjr/tO1g
+t6kfThgZzdEErBQBbm/hjDxvy5zNRyZiePSRUnEYoTmD3Pj12B5/B861T/d5An8N
+BDT+JCb2hcXe5zEXEwu0QFXW3B41z/K0nNGIoD/ZS18rZza1hhY8WBnf3KkQ8Ns=3D
+=3DSw75
+-----END PGP SIGNATURE-----=
