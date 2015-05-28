@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3102" "Thursday" "13" "December" "2018" "15:53:29" "-0600" "Michael Catanzaro" "mcatanzaro@igalia.com" "<1544738009.80391.0@mail.igalia.com>" "77" "[oss-security] WebKitGTK+ and WPE WebKit Security Advisory WSA-2018-0009" "^Cc:" nil nil "12" "2018121321:53:29" "[oss-security] WebKitGTK+ and WPE WebKit Security Advisory WSA-2018-0009" (number mark "U       mcatanzaro@i Dec 13   77/3102  " thread-indent "\"[oss-security] WebKitGTK+ and WPE WebKit Security Advisory WSA-2018-0009\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1758" "Thursday" "28" "May" "2015" "09:35:40" "+0300" "Henri Salo" "henri@nerv.fi" "<20150528063540.GD27861@lakka.kapsi.fi>" "42" "Re: [oss-security] CVE Request, multiple WordPress plugins and themes" nil nil nil "5" "2015052806:35:40" "[oss-security] CVE Request, multiple WordPress plugins and themes" (number mark "        henri@nerv.f May 28   42/1758  " thread-indent "\"Re: [oss-security] CVE Request, multiple WordPress plugins and themes\"\n") "<1432752795980.1810@akamai.com>" ("<1432752795980.1810@akamai.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 5431 invoked by uid 550); 13 Dec 2018 21:57:19 -0000
+Received: (qmail 15370 invoked by uid 550); 28 May 2015 06:35:56 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,96 +11,62 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 1197 invoked from network); 13 Dec 2018 21:54:01 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com; s=20170329;
-	h=Content-Type:MIME-Version:Message-Id:Cc:To:Subject:From:Date; bh=MxY7VkFudE6NdDLdzskRduJUN/TB+u/e2w55aIEMOaM=;
-	b=I0ibPhh5R+X3LAHG5sgSt8n22KPXJk4bOye7/JYse1tNHlF0Y3og4c6hrBJGBjR1+jyscHXFwiFNQc/xrWv8UxLAmKQSq9+3+oqKGvWiaR4MQjtdxiMzUfaGBFznru4aT1ghnJgKNhLFbN0kM3Y7QR7ZYvEWf8BjeD+ZNbUkBEuYHEjNJ0elqiW7zirzUNMDcc3gmDcy1NQ5k/xTXOMVCi/qYb3G+JqRzESWe1Z7rj/eUTIkblXtgsG20PzLtusHyDSmA9m5kQ8uynlChhgEGDg7tNYkTjmyvdJrk4O1X4+JcMpxhTMDbRUgGadl6QMEo5QnzpQLFzh9k6ENveqEYg==;
-Message-Id: <1544738009.80391.0@mail.igalia.com>
-X-Mailer: geary/0.12.4
+Received: (qmail 14328 invoked from network); 28 May 2015 06:35:56 -0000
+Message-ID: <20150528063540.GD27861@lakka.kapsi.fi>
+References: <1432752795980.1810@akamai.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Cc: security@webkit.org, distributor-list@gnome.org,
-	oss-security@lists.openwall.com, bugtraq@securityfocus.com
-Date: Thu, 13 Dec 2018 15:53:29 -0600
-From: Michael Catanzaro <mcatanzaro@igalia.com>
+Content-Type: text/plain; charset=us-ascii; x-action=pgp-signed
+In-Reply-To: <1432752795980.1810@akamai.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-SA-Exim-Connect-IP: 2001:1bc8:1004::1
+X-SA-Exim-Mail-From: fgeek@kapsi.fi
+X-SA-Exim-Scanned: No (on mail.kapsi.fi); SAEximRunCond expanded to false
+Cc: oss-security@lists.openwall.com
+Date: Thu, 28 May 2015 09:35:40 +0300
+From: Henri Salo <henri@nerv.fi>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] WebKitGTK+ and WPE WebKit Security Advisory WSA-2018-0009
-To: webkit-gtk@lists.webkit.org, webkit-wpe@lists.webkit.org
+Subject: Re: [oss-security] CVE Request, multiple WordPress plugins and themes
+To: "Seaman, Chad" <cseaman@akamai.com>
 
-------------------------------------------------------------------------
-WebKitGTK+ and WPE WebKit Security Advisory                WSA-2018-0009
-------------------------------------------------------------------------
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Date reported           : December 13, 2018
-Advisory ID             : WSA-2018-0009
-WebKitGTK+ Advisory URL : 
-https://webkitgtk.org/security/WSA-2018-0009.html
-WPE WebKit Advisory URL : 
-https://wpewebkit.org/security/WSA-2018-0009.html
-CVE identifiers         : CVE-2018-4437, CVE-2018-4438, CVE-2018-4441,
-                          CVE-2018-4442, CVE-2018-4443, CVE-2018-4464.
+On Wed, May 27, 2015 at 06:53:16PM +0000, Seaman, Chad wrote:
+> I'm not sure if these should be broken down by individual vulnerability or
+> lumped per plugin/theme, there are 21 plugins/themes affected in total.
 
-Several vulnerabilities were discovered in WebKitGTK+ and WPE WebKit.
+Hard to read and does not have enough information for CVE request. One email
+with all needed details for CVE request per plugin is better way to get these
+assigned.
 
-CVE-2018-4437
-    Versions affected: WebKitGTK+ before 2.22.5 and WPE WebKit before
-    2.22.3.
-    Credit to HyungSeok Han, DongHyeon Oh, and Sang Kil Cha of KAIST
-    Softsec Lab, Korea.
-    Processing maliciously crafted web content may lead to arbitrary
-    code execution. Multiple memory corruption issues were addressed
-    with improved memory handling.
+https://github.com/RedHatProductSecurity/CVE-HOWTO#how-to-write-a-cve-request
 
-CVE-2018-4438
-    Versions affected: WebKitGTK+ before 2.22.3 and WPE WebKit before
-    2.22.1.
-    Credit to lokihardt of Google Project Zero.
-    Processing maliciously crafted web content may lead to arbitrary
-    code execution. A logic issue existed resulting in memory
-    corruption. This was addressed with improved state management.
+Could you list affected versions?
+Could you provide proof-of-concept code or what file and parameter/function is
+affected?
+Have you reported these issues to plugins@wordpress.org?
 
-CVE-2018-4441
-    Versions affected: WebKitGTK+ before 2.22.3 and WPE WebKit before
-    2.22.1.
-    Credit to lokihardt of Google Project Zero.
-    Processing maliciously crafted web content may lead to arbitrary
-    code execution. A memory corruption issue was addressed with
-    improved memory handling.
+There are plenty of good CVE requests for WordPress plugins in list archive. For
+example: http://www.openwall.com/lists/oss-security/2014/08/19/3
 
-CVE-2018-4442
-    Versions affected: WebKitGTK+ before 2.22.3 and WPE WebKit before
-    2.22.1.
-    Credit to lokihardt of Google Project Zero.
-    Processing maliciously crafted web content may lead to arbitrary
-    code execution. A memory corruption issue was addressed with
-    improved memory handling.
+If you need any help please reply or contact me off-list for support.
 
-CVE-2018-4443
-    Versions affected: WebKitGTK+ before 2.22.3 and WPE WebKit before
-    2.22.1.
-    Credit to lokihardt of Google Project Zero.
-    Processing maliciously crafted web content may lead to arbitrary
-    code execution. A memory corruption issue was addressed with
-    improved memory handling.
+- -- 
+Henri Salo
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-CVE-2018-4464
-    Versions affected: WebKitGTK+ and WPE WebKit before 2.22.0.
-    Credit to HyungSeok Han, DongHyeon Oh, and Sang Kil Cha of KAIST
-    Softsec Lab, Korea.
-    Processing maliciously crafted web content may lead to arbitrary
-    code execution. Multiple memory corruption issues were addressed
-    with improved memory handling.
-
-
-We recommend updating to the latest stable versions of WebKitGTK+ and
-WPE WebKit. It is the best way to ensure that you are running safe
-versions of WebKit. Please check our websites for information about the
-latest stable releases.
-
-Further information about WebKitGTK+ and WPE WebKit security advisories
-can be found at: https://webkitgtk.org/security.html or
-https://wpewebkit.org/security/.
-
-The WebKitGTK+ and WPE WebKit team,
-December 13, 2018
-
+iQIcBAEBAgAGBQJVZrc7AAoJECet96ROqnV0jMsP/2QfWuxz5XMQsAmM5VPB93DN
+GYAtxIauKT1vGBSFC7Zx+CfKW+SAIVwCsdmy51lBTFtm83idfnD+v3R6Mc670nR0
+WZrETrIYuKlrqoc0XUwTNmZp4nfyPPgOjCB3ulPIr2mQD5uFP9aoPukP+Z48SdN5
+GQXgUJu3ppiUX83saEYYe9i5r4nC3Hdu4/a3vF2+4hI1muhVtwSXAvmbQFJd+i64
+xy7vH1nMTbfCt0ccnCmoUSS+z9lZJalZcIqB92XMpl11GtgtNJmYJJ0Hpt/lVbpi
+w37nrm22oXfbOvQmEiYL6MNyANjPyMS8atq8ktmP2NL/yr8bC+lxCbY1aK37aCrM
+gGXPipBdRkYrZde6rC6oCt5bR3m1KRBAljGTjTMA6UiGcjyvRHMv0UrlXKDWxAH3
+9SUyCmjL6Z74+VPxODH/lle5/jMFeVaVELMYuMy2s7SB/zDbiiDcq00cMmGdloKR
+r10bf1GdkXvg7+PJIZxfwD4IKR4k0F8GPF93AQ8tYfD8NFJgjwqSLWVAqGs5KVNu
+tVwExTS4bnXNEEsM57rZDydqp7mMbldMK7qrZi5ZelkU0WuqDmBxtTlX0P1hsmgd
+rE46egFDO3cgYG/Kwt81srXqeO77TOT4RxUdaW6+3rTLuvXox2cLCFybQILOUPK4
+6jDYXRBLxyVAF0ECb1K5
+=w2CS
+-----END PGP SIGNATURE-----
