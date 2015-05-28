@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4132" "Tuesday" "7" "March" "2017" "00:04:44" "+0100" "Summer of Pwnage" "lists@securify.nl" "<6ce499a4-c9bb-ad62-aa85-4a67f77b2a19@securify.nl>" "87" "[oss-security] WordPress audio playlist functionality is affected by Cross-Site Scripting" nil nil nil "3" "2017030623:04:44" "[oss-security] WordPress audio playlist functionality is affected by Cross-Site Scripting" (number mark "U       lists@securi Mar  7   87/4132  " thread-indent "\"[oss-security] WordPress audio playlist functionality is affected by Cross-Site Scripting\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3613" "Thursday" "28" "May" "2015" "07:51:53" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150528115153.D4AA46C0032@smtpvmsrv1.mitre.org>" "77" "[oss-security] Re: CVE Request, multiple WordPress plugins and themes" nil nil nil "5" "2015052811:51:53" "[oss-security] Re: CVE Request, multiple WordPress plugins and themes" (number mark "        cve-assign@m May 28   77/3613  " thread-indent "\"[oss-security] Re: CVE Request, multiple WordPress plugins and themes\"\n") "<20150528063540.GD27861@lakka.kapsi.fi>" ("<20150528063540.GD27861@lakka.kapsi.fi>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 32506 invoked by uid 550); 6 Mar 2017 23:04:59 -0000
+Received: (qmail 9500 invoked by uid 550); 28 May 2015 11:52:08 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,106 +11,90 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 9476 invoked from network); 28 May 2015 11:52:06 -0000
+In-Reply-To: <20150528063540.GD27861@lakka.kapsi.fi>
+Message-Id: <20150528115153.D4AA46C0032@smtpvmsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Thu, 28 May 2015 07:51:53 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32450 invoked from network); 6 Mar 2017 23:04:56 -0000
-X-Virus-Scanned: amavisd-new at edge1.intern.zimbra-login.net
-From: Summer of Pwnage <lists@securify.nl>
-To: oss-security@lists.openwall.com
-Organization: Securify B.V.
-Message-ID: <6ce499a4-c9bb-ad62-aa85-4a67f77b2a19@securify.nl>
-Date: Tue, 7 Mar 2017 00:04:44 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.7.0
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] WordPress audio playlist functionality is affected by Cross-Site
- Scripting
+Subject: [oss-security] Re: CVE Request, multiple WordPress plugins and themes
+To: henri@nerv.fi
 
-------------------------------------------------------------------------
-WordPress audio playlist functionality is affected by Cross-Site
-Scripting
-------------------------------------------------------------------------
-Yorick Koster, July 2016
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-------------------------------------------------------------------------
-Abstract
-------------------------------------------------------------------------
-Two Cross-Site Scripting vulnerabilities exists in the playlist
-functionality of WordPress. These issues can be exploited by convincing
-an Editor or Administrator into uploading a malicious MP3 file. Once
-uploaded the issues can be triggered by a Contributor or higher using
-the playlist shortcode.
+> One email with all needed details for CVE request per plugin is better
+> way to get these assigned.
 
-------------------------------------------------------------------------
-OVE ID
-------------------------------------------------------------------------
-OVE-20160717-0003
+The MITRE CVE team currently prefers that this request not be re-sent
+as a separate message for each plugin.
 
-------------------------------------------------------------------------
-Tested versions
-------------------------------------------------------------------------
-This issue was successfully tested on the WordPress [2] version 4.5.3.
+> https://github.com/RedHatProductSecurity/CVE-HOWTO#how-to-write-a-cve-request
 
-------------------------------------------------------------------------
-Fix
-------------------------------------------------------------------------
-These issues are resolved in WordPress version 4.7.3. [3]
+That document is directly applicable to CVE request responses by Kurt
+Seifried (including the ones he sent to oss-security up until 2013).
+Although the document contains a large amount of useful information,
+it is not a document that has been reviewed by the MITRE CVE team. For
+the specific topic of WordPress plugins, we would typically need to
+know what privileges are required to conduct each attack and -- in
+situations with more than one security issue for a single plugin --
+whether the vulnerabilities are independently exploitable.
 
-------------------------------------------------------------------------
-Introduction
-------------------------------------------------------------------------
-WordPress is web software you can use to create a website, blog, or
-app. Two Cross-Site Scripting vulnerabilities exists in the playlist
-functionality of WordPress. These issues can be exploited by convincing
-an Editor or Administrator into uploading a malicious MP3 file. Once
-uploaded the issues can be triggered by a Contributor or higher using
-the playlist shortcode.
+> does not have enough information for CVE request
 
-------------------------------------------------------------------------
-Details
-------------------------------------------------------------------------
-It was discovered that meta information (ID3) stored in audio files are
-not properly sanitized in case they are uploaded by a user with the
-unfiltered_html (generally an Editor or Administrator).
+For the majority of the plugins, the amount of vulnerability detail is
+similar to the http://openwall.com/lists/oss-security/2015/05/22/4
+case that we discussed here last week. The situation isn't identical,
+so we'll try to clarify. As always, MITRE does not make decisions
+about the policies of the oss-security list. The current status is
+that nobody has objected to the message pattern starting with (for
+example) the http://openwall.com/lists/oss-security/2015/05/18/8 post,
+in which version information was originally included and the
+vulnerability had already been fixed. The
+http://openwall.com/lists/oss-security/2015/05/27/6 reporting pattern
+is not always the same. First, version information is not directly
+included. Second, some of the plugins apparently do not have a
+changelog entry indicating that any security problem was recently
+fixed. Putting all of this together, the most critical difference may
+be that some of these plugin reports are not about "Public security
+issues" and would potentially fall outside the scope of this list. So,
+our guess is that we can send a response here (with a CVE mapping) for
+a subset of this message, e.g.,
 
-The first Cross-Site Scripting vulnerability exists in the function that
-processes the playlist shortcode, which is done in the
-wp_playlist_shortcode() method (/wp-includes/media.php). This method
-creates a <noscript> block for users with JavaScript disabled.
+    * extended-catagories-widget [PLUGINS] + url:
+    https://wordpress.org/plugins/extended-categories-widget/ +
+    vuln found: :--|- post auth admin SQLi
 
-https://www.securify.nl/advisory/SFY20160742/noscript_unfiltered_html.png
+seems to map to this public issue:
 
-The method wp_get_attachment_link() does not perform any output encoding
-on the link text. Meta information from the audio file is used in the
-link text, rendering wp_playlist_shortcode() vulnerable to Cross-Site
-Scripting.
+    https://wordpress.org/plugins/extended-categories-widget/changelog/
+       Last Updated: 2015-5-27
+       Version 4.0.1
+       Post-Auth SQL Injection Vulnerability
+       Only occurs for WordPress versions lower than 3.3
 
-The second Cross-Site Scripting issue is DOM-based and exists in the
-JavaScript file /wp-includes/js/mediaelement/wp-playlist.js (or
-/wp-includes/js/mediaelement/wp-playlist.min.js). The WPPlaylistView
-object is used to render a audio player client side. The method
-renderTracks() uses the meta information from the audio file in a call
-to jQuery's append() method. No output encoding is used on the meta
-information, resulting in a Cross-Site Scripting vulnerability.
+but we must not send a response here (with a CVE mapping) for some of
+the other parts. If we have misinterpreted that, you can (among other
+options) send e-mail directly to only cve-assign@mitre.org to tell us.
+We will leave it at that for now. There are obviously open questions,
+e.g., if someone prefers to send a very large number of
+low-information but public WordPress plugin findings, is it still best
+to use oss-security.
 
-https://www.securify.nl/advisory/SFY20160742/renderTracks-dom-based_xss.png
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-------------------------------------------------------------------------
-Proof of concept
-------------------------------------------------------------------------
-The following MP3 file can be used to reproduce this issue:
-
-https://www.securify.nl/advisory/SFY20160742/xss.mp3
-
-1) upload MP3 file to the Media Library (as Editor or Administrator).
-2) Insert an Audio Playlist in a Post containing this MP3 (Create Audio
-Playlist).
-------------------------------------------------------------------------
-References
-------------------------------------------------------------------------
-[1] 
-https://sumofpwn.nl/advisory/2016/wordpress_audio_playlist_functionality_is_affected_by_cross_site_scripting.html
-[2] https://wordpress.org/
-[3] 
-https://wordpress.org/news/2017/03/wordpress-4-7-3-security-and-maintenance-release/
+iQEcBAEBAgAGBQJVZwALAAoJEKllVAevmvmsNLUH/3sPYVAJdvAzrBsr5gA8I0Pi
+2KDWEA+nolK70uhf+fcGLJtw0HJY+q1C/gtWVVd2VaNCojsBwA0Xz5GyWqk8bzVx
+UZX5WgbFbyy5gOQE1Gp49NM5V2KvoZ8YJvLw7hds9XPmpX7lH3MbjXmzDy+p2e1Y
+BUlg2Js4noI0VjOBJBreaXNWVoHyI6YbSSRuJWXGEiMWah8dhTvh/i+Kkjr/tO1g
+t6kfThgZzdEErBQBbm/hjDxvy5zNRyZiePSRUnEYoTmD3Pj12B5/B861T/d5An8N
+BDT+JCb2hcXe5zEXEwu0QFXW3B41z/K0nNGIoD/ZS18rZza1hhY8WBnf3KkQ8Ns=
+=Sw75
+-----END PGP SIGNATURE-----
