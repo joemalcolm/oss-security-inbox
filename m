@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["129" "Tuesday" "9" "February" "2016" "23:26:32" "+0100" "Albert Astals Cid" "aacid@kde.org" "<4879177.l6fT5WhknG@xps>" "5" "[oss-security] KDE Plasma vulnerability: need CVE" nil nil nil "2" "2016020922:26:32" "[oss-security] KDE Plasma vulnerability: need CVE" (number mark "U       aacid@kde.or Feb  9    5/129   " thread-indent "\"[oss-security] KDE Plasma vulnerability: need CVE\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1834" "Saturday" "30" "May" "2015" "00:36:19" "+0300" "Henri Salo" "henri@nerv.fi" "<20150529213619.GE24340@lakka.kapsi.fi>" "40" "Re: [oss-security] CVE request: vulnerability in the kernel tty subsystem." nil nil nil "5" "2015052921:36:19" "[oss-security] CVE request: vulnerability in the kernel tty subsystem." (number mark "        henri@nerv.f May 30   40/1834  " thread-indent "\"Re: [oss-security] CVE request: vulnerability in the kernel tty subsystem.\"\n") "<20150526145247.GB23156@kroah.com>" ("<926476450.3946717.1432609079414.JavaMail.zimbra@redhat.com>" "<435842836.3987672.1432621133397.JavaMail.zimbra@redhat.com>" "<20150526145247.GB23156@kroah.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 11709 invoked by uid 550); 9 Feb 2016 22:26:46 -0000
+Received: (qmail 12036 invoked by uid 550); 29 May 2015 21:36:33 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,47 +11,64 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11689 invoked from network); 9 Feb 2016 22:26:45 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:date:message-id:user-agent:mime-version
-         :content-transfer-encoding:content-type;
-        bh=E6ljIVtDPkC99RFaB/wA6WBo1ta8fEoEnSFwTLVEbNk=;
-        b=cIxYSBztznzFPCJG2RJXoNq8uhAzx9rf+N5IJ7JUy3DnCaScx5tMsagchSfXWHuiEs
-         Z2g2JfLExF8O5klWKskfyvDiGVn3R+nryFOyrbmEI5/ds2JnLweY81rVQmsG3f0h04Wq
-         w6yyZvGjzE9G8tPYNIZaergOL8bF5UFh9MRamH4orlyFLWPAYXMrKkKqvAvlEPGcJxWe
-         ZHYIoBdr2B6BliG/iwb7WnKFg8myPXO1N5R1fcnlLddLWtnhx54s5sOu1EAhyje8i3Cl
-         qod2LjdFCtA9v1LJxOcw3NONjKv4tMobIAbHAVy7Ds2k6gMO1pjSo8kB6MAfvRyTFxbM
-         Pulg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
-         :user-agent:mime-version:content-transfer-encoding:content-type;
-        bh=E6ljIVtDPkC99RFaB/wA6WBo1ta8fEoEnSFwTLVEbNk=;
-        b=Cz8yAleWS/fAoYFFp8DN+gW+pZ2uXeTnnAWlSwM4HzZ2cYblXpmpdaeAjOabcSxPTx
-         rWawQHIEKHqxtCBFTA9jw9BDmjzXqcESvGkzjjMoC5bH3f0ov+ygcbcXlq7d+wg1vGqw
-         LvigcXaDjyV6ILyJ0SmTCuSLBs4Dkt8sMpCNCP5rub4IoyYV3Rj+3qYU6TxK2Mx2tLzb
-         5fiWfuJFRZAvVhC5fZT1GrOBsHb6O170o3GYs5sl2jjgGnKTlGGM8iQdg2er3yUvLdE1
-         7t0m6XAmjImdh4axchKQO5Ow0L4GRg8xsnXhRvmnvI2DgcFa3AT8ajNd32Uv2Qm/PgoW
-         /Lgg==
-X-Gm-Message-State: AG10YORJl/gf1S0CgxRRZ0ua2Vv64zVAWTVRYIiE0fuD4+t9K+COvmf2xHsV53tSrCbNiQ==
-X-Received: by 10.28.4.216 with SMTP id 207mr7058082wme.20.1455056794092;
-        Tue, 09 Feb 2016 14:26:34 -0800 (PST)
-Sender: Albert Astals Cid <tsdgeos@gmail.com>
-From: Albert Astals Cid <aacid@kde.org>
-To: OSS Security Mailinglist <oss-security@lists.openwall.com>
-Cc: CVE Assignments MITRE <cve-assign@mitre.org>, security@kde.org
-Date: Tue, 09 Feb 2016 23:26:32 +0100
-Message-ID: <4879177.l6fT5WhknG@xps>
-User-Agent: KMail/5.0.2 (Linux/4.4.0-2-generic; KDE/5.15.0; x86_64; ; )
+Received: (qmail 12013 invoked from network); 29 May 2015 21:36:33 -0000
+Message-ID: <20150529213619.GE24340@lakka.kapsi.fi>
+References: <926476450.3946717.1432609079414.JavaMail.zimbra@redhat.com>
+ <435842836.3987672.1432621133397.JavaMail.zimbra@redhat.com>
+ <20150526145247.GB23156@kroah.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
-Subject: [oss-security] KDE Plasma vulnerability: need CVE
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20150526145247.GB23156@kroah.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-SA-Exim-Connect-IP: 2001:1bc8:1004::1
+X-SA-Exim-Mail-From: fgeek@kapsi.fi
+X-SA-Exim-Scanned: No (on mail.kapsi.fi); SAEximRunCond expanded to false
+Cc: oss-security@lists.openwall.com, cve-assign@mitre.org
+Date: Sat, 30 May 2015 00:36:19 +0300
+From: Henri Salo <henri@nerv.fi>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] CVE request: vulnerability in the kernel tty
+ subsystem.
+To: Greg KH <greg@kroah.com>
 
-Hi, Albert from KDE, can we get a CVEs assigned for 
-https://www.kde.org/info/security/advisory-20160209-1.txt
+Please correct me if I am wrong somewhere in this email. I just want to
+understand why you said this.
 
-Thanks,
-  Albert
+On Tue, May 26, 2015 at 07:52:47AM -0700, Greg KH wrote:
+> For a 2 year old bugfix?
+
+Age does not matter for CVE assigment as far as I can tell.
+
+> I know you all like to try to track bugs for old and obsolete products,
+> but really, there's no end of CVEs you could request if you wish to do
+> this.  Heck, I could start asking for multiple CVEs for every single
+> stable kernel release I do, which would just be pointless.
+> Please just mark this as a "oh look, a bug was fixed years ago and we
+> need to backport it because we have old kernels out in the wild and our
+> customers don't like to upgrade" type issue.
+> Don't force CVEs to play by the odd enterprise rules that you all wish
+> perpetuate.
+
+CVE is defined as "common identifiers for publicly known information-security
+vulnerabilities in publicly released software packages".
+
+How is it pointless to request CVE identifier for security issue in kernel or
+other software if that software is released and used by some distro or other
+entity? How do you calculate how many users are using some kernel if it is
+released in public website? Please note that this might be easier for kernel
+than some other software like web-application project in GitHub.
+
+One reason I could think of for not requesting CVEs for issues is that it
+creates workload to MITRE or other CNA (and in some cases users of CVE when they
+are tracking issues). If that is the case could you or MITRE tell me where
+should that line be drawn?
+
+Or if this is not the case do you mean that "vulnerability in the kernel tty
+subsystem" is not critical enough for CVE? If that is the case how is that
+calculated?
+
+Or even "vulnerability in the kernel tty subsystem" is not a security issue?
+
+-- 
+Henri Salo
