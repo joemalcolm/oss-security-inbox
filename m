@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2919" "Saturday" "21" "March" "2015" "23:16:01" "-0400" "Daniel Micay" "danielmicay@gmail.com" "<550E33F1.4020007@gmail.com>" "71" "Re: [oss-security] CVE for Kali Linux" nil nil nil "3" "2015032203:16:01" "[oss-security] CVE for Kali Linux" (number mark "        danielmicay@ Mar 21   71/2919  " thread-indent "\"Re: [oss-security] CVE for Kali Linux\"\n") "<550E289C.1060602@redhat.com>" ("<550E21FA.6090704@redhat.com>" "<CAHZU0yRzjyO78Nan5jgf38Mqt3hPQDDhcsirdVmBFPmRZ=6k9g@mail.gmail.com>" "<550E289C.1060602@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4663" "Friday" "29" "May" "2015" "15:04:30" "-0700" "Greg KH" "greg@kroah.com" "<20150529220430.GA3210@kroah.com>" "99" "Re: [oss-security] CVE request: vulnerability in the kernel tty subsystem." nil nil nil "5" "2015052922:04:30" "[oss-security] CVE request: vulnerability in the kernel tty subsystem." (number mark "U       greg@kroah.c May 29   99/4663  " thread-indent "\"Re: [oss-security] CVE request: vulnerability in the kernel tty subsystem.\"\n") "<20150529213619.GE24340@lakka.kapsi.fi>" ("<926476450.3946717.1432609079414.JavaMail.zimbra@redhat.com>" "<435842836.3987672.1432621133397.JavaMail.zimbra@redhat.com>" "<20150526145247.GB23156@kroah.com>" "<20150529213619.GE24340@lakka.kapsi.fi>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 12262 invoked by uid 550); 22 Mar 2015 03:16:14 -0000
+Received: (qmail 28306 invoked by uid 550); 29 May 2015 22:04:49 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,102 +11,129 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 12236 invoked from network); 22 Mar 2015 03:16:14 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:subject:references
-         :in-reply-to:content-type;
-        bh=JS8bFcmqyePsfYl0UdJ2Hp4outlagPOGCgYpjjZUufA=;
-        b=sNy9KsheyI9GrecjPEQBDCxclw2Soka5llVSuXtrmTOI1f9xdpQAkohVOYnZM6son9
-         yjUAuaVN3WOYjBqfkiwvTQ60Z/xHIKsQBNK78ZX06YulDPHe536TZt/Adc1LoIZTcotz
-         NtqQxxsY/uJKpyv5gTjOTP457e3pTmKHEXvMj7NjL32wGtvpqaLVaPojGXsh4Pz/SCbw
-         DvrcO6beaXNbO2sslly3rOKdRx8n5YMEER5SVun9S+3nm8Ddw/cECNgGHKK7+8KwG2JK
-         byiBVC9jQzh00nps1imjjruXUrPptr+CphnKtuhOpZYDDgvwGi1x8MNygb59uon5/07h
-         /cew==
-X-Received: by 10.50.79.229 with SMTP id m5mr6226434igx.23.1426994162528;
-        Sat, 21 Mar 2015 20:16:02 -0700 (PDT)
-Message-ID: <550E33F1.4020007@gmail.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
-MIME-Version: 1.0
-References: <550E21FA.6090704@redhat.com> <CAHZU0yRzjyO78Nan5jgf38Mqt3hPQDDhcsirdVmBFPmRZ=6k9g@mail.gmail.com> <550E289C.1060602@redhat.com>
-In-Reply-To: <550E289C.1060602@redhat.com>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="FqfUahHDfG2vsl4C8vI3vVvX0Ca69k6en"
-Date: Sat, 21 Mar 2015 23:16:01 -0400
-From: Daniel Micay <danielmicay@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE for Kali Linux
-To: oss-security@lists.openwall.com
+Received: (qmail 28288 invoked from network); 29 May 2015 22:04:49 -0000
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-sasl-enc
+	:x-sasl-enc; s=smtpout; bh=Uk8ajao0brBY7Bf4Ia6w3hd2DaM=; b=XNudd
+	x1IICIw+aXl0SitD30l5A/nMXHv0HuKyXyadLlJ2SWMH6+X+sPjZCIdf1tosfppA
+	/GVWUjB2EQZnrPvn43Ug70LfZhvqbVj5ut6yvhf7M6Bb0vvpIt2MhLMtsGC9yjoN
+	wmlF+x7RFEtA/Dwvuo+BVAi5ypD07sIkXpnbc0=
+X-Sasl-enc: 5Bx43D+QGOhE4hBSHc0CXpJyoFwmtNLq9CVKMJkKNIBb 1432937076
+Date: Fri, 29 May 2015 15:04:30 -0700
+From: Greg KH <greg@kroah.com>
+To: Henri Salo <henri@nerv.fi>
+Cc: oss-security@lists.openwall.com, cve-assign@mitre.org
+Message-ID: <20150529220430.GA3210@kroah.com>
+References: <926476450.3946717.1432609079414.JavaMail.zimbra@redhat.com>
+ <435842836.3987672.1432621133397.JavaMail.zimbra@redhat.com>
+ <20150526145247.GB23156@kroah.com>
+ <20150529213619.GE24340@lakka.kapsi.fi>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20150529213619.GE24340@lakka.kapsi.fi>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+Subject: Re: [oss-security] CVE request: vulnerability in the kernel tty
+ subsystem.
 
---FqfUahHDfG2vsl4C8vI3vVvX0Ca69k6en
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+On Sat, May 30, 2015 at 12:36:19AM +0300, Henri Salo wrote:
+> Please correct me if I am wrong somewhere in this email. I just want to
+> understand why you said this.
+> 
+> On Tue, May 26, 2015 at 07:52:47AM -0700, Greg KH wrote:
+> > For a 2 year old bugfix?
+> 
+> Age does not matter for CVE assigment as far as I can tell.
 
-On 21/03/15 10:27 PM, Kurt Seifried wrote:
-> On 03/21/2015 08:04 PM, Justin Steven wrote:
->> Kali, like its upstream (Debian), signs packages using gpg.
->>
->> https://wiki.debian.org/SecureApt
->>
->> Kali provides sha1sums over https at their site to verify the .iso
->> download, as well as providing gpg signatures for .iso files
->>
->> --
->> Justin
->=20
-> So I guess we enter uncharted territory here. So my thought is this:
->=20
-> Vendor has front page that recommends doing something completely insane
-> and insecure (http/md5s/etc.). On the back end (good lucking finding
-> this) vendor does something sort of secure (gpg signing of packages, no
-> clue if key distribution is secure) but this is not really documented wel=
-l.
->=20
-> Does this win a CVE or not? I personally think yes, yes it does.
->=20
-> Mitre as always is the final arbiter of what is cool. I mean what is a CV=
-E.
+Sweet, who is going to go and start asking for CVEs for all bugs that we
+have fixed in the past 10 years in the Linux kernel?  Should I just to
+flood the list of CVEs and see if people's tools can really handle the
+extra number problem when parsing them?  :)
 
-Fedora and Kali both provide their ISO download via HTTP.
+What good would it be to do such a thing?
 
-Fedora asks the user to validate the download via a signed SHA256 hash
-file obtaining via HTTPS. Kali asks the user to validate the download
-via a signed SHA1 hash file obtained via HTTPS (that blurb on the front
-page is out-of-date, there are no MD5 sums)
+> > I know you all like to try to track bugs for old and obsolete products,
+> > but really, there's no end of CVEs you could request if you wish to do
+> > this.  Heck, I could start asking for multiple CVEs for every single
+> > stable kernel release I do, which would just be pointless.
+> > Please just mark this as a "oh look, a bug was fixed years ago and we
+> > need to backport it because we have old kernels out in the wild and our
+> > customers don't like to upgrade" type issue.
+> > Don't force CVEs to play by the odd enterprise rules that you all wish
+> > perpetuate.
+> 
+> CVE is defined as "common identifiers for publicly known information-security
+> vulnerabilities in publicly released software packages".
+> 
+> How is it pointless to request CVE identifier for security issue in kernel or
+> other software if that software is released and used by some distro or other
+> entity? How do you calculate how many users are using some kernel if it is
+> released in public website? Please note that this might be easier for kernel
+> than some other software like web-application project in GitHub.
 
-I don't think the difference between SHA1 and SHA256 is very important
-right now, so the only significant difference is that Fedora has the
-HTTPS domain in browser HSTS preload lists.
+The issue is, where do you draw the line?  I know systems still using
+2.x kernels, in supported configurations.  Those were released a very
+long time ago, do we assign CVEs for bugs fixed from the past 10 years
+till 5 years ago just to make it easy for the company that is
+maintaining that kernel to justify to their customers the reason they
+should be updating their kernels?
 
-It would be much better to provide the download via HTTPS from a domain
-that's HSTS preloaded and ideally has some level of key pinning. We are
-all well aware that few users are going to go through a manual process
-on the command-line to verify the download, especially if they're on
-Windows as they won't have the commands that are being used.
+And that's it, it's not a "we need to track this", for such old bugs
+(and by "old" I would classify anything older than a year for the kernel
+as old, as that's hundreds of thousands of patches ago)?  It's the job
+of companies that insist on using such old software, to maintain and
+keep them up to date, it's not the job of the "community" here to have
+to deal with assigning issues to things that are really old and already
+fixed.
 
+> One reason I could think of for not requesting CVEs for issues is that it
+> creates workload to MITRE or other CNA (and in some cases users of CVE when they
+> are tracking issues). If that is the case could you or MITRE tell me where
+> should that line be drawn?
 
---FqfUahHDfG2vsl4C8vI3vVvX0Ca69k6en
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
+It's not up to me to tell other people what to work on or spend
+resources on.  If MITRE wishes to track things in really old releases,
+that's their business.  But from a community point of view, that seems
+foolish and wasteful as the only thing you are catering to here are
+people who somehow only wish to update if they see a "CVE" number
+assigned to that update.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
+And that's the issue here I think.  Otherwise, why ask for CVEs for old
+releases that no one in the community is supporting anymore?  What good
+is it for except for the customers of the companies that wish to do that
+support for them?
 
-iQIcBAEBCAAGBQJVDjPxAAoJEPnnEuWa9fIqznMP/3zD24oA3Gp5rRNjc0f2rf6+
-P9S73nxd2357785QF24JFNMiltRRxBGBe0xnKOFXf1/reoFyGH67bhW5Bcl2bbGt
-qhU4qfzmuYO/EH3fCQcOmNTmp/I26PqHaeOCRw3wG+dfYCxQ+mIUAKlGHSNGiyPO
-srPDrzGrs80QnBUUG+LmavUMahQBVHBufQKAY0FiOei4SJVocjMl61tui3wDdxDK
-4sgUwgJqQ8YyNXuvtzDz4uV+0MJkF/ifhhGZNw6FyNq/hkvIpiez9WpS6ldD0fs+
-nPN46z5vNPWMEWEIu4QLmXVbcTXX1F/hajOsAxX0a7ox4gaFLk6F0ru3+eKsm+gu
-p4+gjZkNlQmcXRnQeWrEZvqM4KHfjwT0pIinZaTqP0v9WRtMiOwGhAiEKfrqA6zS
-xVN6TBv2jtFI/3RNfHy2Sj35uo4xLLB9BPPsBKpZ+wJcgIidvY6JqygPvK8cepH9
-peUlFT5+9WMua2mT7pMb0rAt88X5Pjr6WwfiNANwrRgZ0vn4RKR2XZlHHf++zpzQ
-1KpNtlrtMJ/5ltNjot67lX8NhszvzNxvFlpV/ozoFAd/aRtQW3Ymonm6bXwNlqwf
-MjjqGtNxgQsZtUfqtQERxVvubb57u7VKFkBg2RHQmrZF0UWiZHKv9NbE72iG1Kf4
-ZE+y5MorvJ8xem9fEf89
-=yymp
------END PGP SIGNATURE-----
+> Or if this is not the case do you mean that "vulnerability in the kernel tty
+> subsystem" is not critical enough for CVE? If that is the case how is that
+> calculated?
 
---FqfUahHDfG2vsl4C8vI3vVvX0Ca69k6en--
+As the maintainer of the tty subsystem, I'm not going to judge what is
+and what is not "critical enough" for a CVE, as I personally think the
+whole thing is a joke for old bugs like this.
+
+Maybe for newly found things, it makes sense to be able to track across
+releases what has and what has not been applied.  But when it comes to
+older things like this, I seriously fail to see the point.
+
+> Or even "vulnerability in the kernel tty subsystem" is not a security issue?
+
+Define "vulnerability"?  :)
+
+We fix things that cause kernel crashes every single day.  Do you see us
+asking for CVEs for everyone of those?  No, because that would be
+foolish.
+
+Although, it would point out the foolishness of the whole system if I
+were to start doing that.  Call it "performance art", that might be fun
+to do for a few months if for no other reason than to enjoy the show :)
+
+tl;dr
+	I feel that CVEs for old kernels / releases that are not being
+	maintained by the upstream project, and have been fixed for a
+	long time in those upstream maintained releases, are pointless.
+
+thanks,
+
+greg k-h
