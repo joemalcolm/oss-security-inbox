@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1867" "Monday" "12" "September" "2016" "06:09:10" "-0300" "Dawid Golunski" "dawid@legalhackers.com" "<CADSYzstomCU7KFOqX1u30Cej=OG3-FjCMpHPvsoCysHPoen1jw@mail.gmail.com>" "50" "[oss-security] CVE-2016-6662 - MySQL Remote Root Code Execution / Privilege Escalation ( 0day )" nil nil nil "9" "2016091209:09:10" "[oss-security] CVE-2016-6662 - MySQL Remote Root Code Execution / Privilege Escalation ( 0day )" (number mark "U       dawid@legalh Sep 12   50/1867  " thread-indent "\"[oss-security] CVE-2016-6662 - MySQL Remote Root Code Execution / Privilege Escalation ( 0day )\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["9186" "Friday" "29" "May" "2015" "22:48:04" "+0500" "Alexander E. Patrakov" "patrakov@gmail.com" "<5568A654.7020703@gmail.com>" "130" "[oss-security] StrongSwan VPN client for Android leaks username to rouge server" nil nil nil "5" "2015052917:48:04" "[oss-security] StrongSwan VPN client for Android leaks username to rouge server" (number mark "        patrakov@gma May 29  130/9186  " thread-indent "\"[oss-security] StrongSwan VPN client for Android leaks username to rouge server\"\n") "<md5:fMhkBS7qmAbL0iMu8xkv5g==>" ("<md5:fMhkBS7qmAbL0iMu8xkv5g==>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 23962 invoked by uid 550); 12 Sep 2016 10:12:12 -0000
+Received: (qmail 29948 invoked by uid 550); 29 May 2015 17:48:31 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,87 +11,162 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 23598 invoked from network); 12 Sep 2016 09:09:22 -0000
+Received: (qmail 29828 invoked from network); 29 May 2015 17:48:19 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=legalhackers-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=KlGG1/Mku+hGjHdCE/DImalqDxnen9qufpcARXD0Cic=;
-        b=bogiBf3MR1BrQu6dlcfAd5Zl1WQ2Z0XGWkUzH6GYKaMHeRRilMMO0Lppt0Mv3roLyq
-         iQBuN3w8uOuMun/izyBk1M2o2+PpPKWhu3G2dEoIH7V67aQ8S2T9OMSv9WV5Wt4S/xDD
-         8+hgIQuRH8pqDnYxzIP7CDBEAvaHgmRS+fO+riND5yMGFRYqHunZT/M0W6dfPiOBRHGR
-         a+lBnE/LXa93wApCBwzScIgL3yUy8vp5OIwNJ00f0x6zz7mCZMmWCNIXlKWavVi2DoCT
-         GdEb9um8hiz0iMaUCZ1DPpt6nsofme5vadEHuulsbWb5O0refwIIBk37tHIl6QBdHDXN
-         qoIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=KlGG1/Mku+hGjHdCE/DImalqDxnen9qufpcARXD0Cic=;
-        b=MNeFPHmW5kH/doJLmiWWHYXV3d/evBP6RHQVtWvyEs7I1JfIqMnLD9AUON0+w9kZOD
-         CsFiTGUWD0cHKOasYuUjJyHko2daoKjIbbilyzyOhrtoZ+pCzZJPV0lSGI3NZMjd9fJ2
-         cgss3hDjG686e0EVJ23dp1irE8cR9BTjldONSl7FP/vreUu5loJLRpNZL7UV1S2QqN2l
-         S5fwGRQtzdf1tScWmtOgbf2qo8dr5JEXgSnJDG664YY+VxUm8KhM5QQxqqop8vghxmJB
-         WoY3fotzxspiBpI3l9BVrf3FWtqec16Ke7D8MZfZulJI3dtkeacScJ5ULu728OkK5KHU
-         9qnQ==
-X-Gm-Message-State: AE9vXwNuDVF/VSZQiSDA6D1/tVhQK63mpUemtinYimH6PFiCN++p9tBBozCVwlS5LDkRe1ETHBzrL4gH45jGEw==
-X-Received: by 10.31.134.65 with SMTP id i62mr584029vkd.21.1473671350755; Mon,
- 12 Sep 2016 02:09:10 -0700 (PDT)
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=2uNBUtH73iFymkNi4yOHaj54dGAzWa0M7TPU6RH9Lak=;
+        b=TIPDlDaZDbjPFVS48Mp6Wg2wdhkUQA7xmNHyXSCc1vyDh69+SiA9WNs1dWaGIjILBe
+         Ki8GQyYEoK0UAwlTkqOIFyi5mjJHAWa+il0+1uM+EV9rdiVA8wxdy/W2gTr6J+mw9q5B
+         DusxXweHXl2OqqYN7YBYLgeMU/WZQherbY+QCzi8p6rJsdD+8gyP2PBg6GEswm9+F1pz
+         QWm76Sowp3hFlmUQjrTHjNF9LQ9jlGfgES14RtbkuuPmR+EaaTXHwLJLd14BoO+1bzzl
+         ultbmPSW25oy1QyVoUogJRUUF1CWQY/0xlF9xzFIkPD+3MSnrMWdRYu+heY82aYeBXbs
+         JXWQ==
+X-Received: by 10.181.27.131 with SMTP id jg3mr8483546wid.89.1432921688300;
+        Fri, 29 May 2015 10:48:08 -0700 (PDT)
+Message-ID: <5568A654.7020703@gmail.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
 MIME-Version: 1.0
-From: Dawid Golunski <dawid@legalhackers.com>
-Date: Mon, 12 Sep 2016 06:09:10 -0300
-Message-ID: <CADSYzstomCU7KFOqX1u30Cej=OG3-FjCMpHPvsoCysHPoen1jw@mail.gmail.com>
+References: <md5:fMhkBS7qmAbL0iMu8xkv5g==>
+In-Reply-To: <md5:fMhkBS7qmAbL0iMu8xkv5g==>
+X-Forwarded-Message-Id: <md5:fMhkBS7qmAbL0iMu8xkv5g==>
+Content-Type: text/plain; charset=windows-1251; format=flowed
+Content-Transfer-Encoding: 7bit
+CC: android@strongswan.org
+Date: Fri, 29 May 2015 22:48:04 +0500
+From: "Alexander E. Patrakov" <patrakov@gmail.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] StrongSwan VPN client for Android leaks username to rouge server
 To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset=UTF-8
-Subject: [oss-security] CVE-2016-6662 - MySQL Remote Root Code Execution / Privilege
- Escalation ( 0day )
 
-Vulnerability: MySQL Remote Root Code Execution / Privilege Escalation 0day
-CVE: CVE-2016-6662
-Severity: Critical
-Affected MySQL versions (including the latest):
-<= 5.7.15
-<= 5.6.33
-<= 5.5.52
+Hello.
 
-Discovered by:
-Dawid Golunski
-http://legalhackers.com
+I found that, in the event of DNS spoofing, StrongSwan VPN client for 
+Android can leak the username and the MSCHAPv2 authentication value to a 
+rogue server if it has any valid X.509 certificate. Unless I 
+misunderstand something about X.509 certificates and their use for 
+confirming IKEv2 identities, and unless this is already known, this 
+might use a CVE ID.
 
-An independent research has revealed multiple severe MySQL vulnerabilities.
-This advisory focuses on a critical vulnerability with a CVEID of CVE-2016-6662.
-The vulnerability affects MySQL servers in all version branches
-(5.7, 5.6, and 5.5) including the latest versions, and could be exploited by
-both local and remote attackers.
-Both the authenticated access to MySQL database (via network
-connection or web interfaces such as phpMyAdmin) and SQL Injection
-could be used as exploitation vectors.
+The client that I am talking about is this Android application:
 
-Successful exploitation could allow attackers to execute arbitrary code with
-root privileges which would then allow them to fully compromise the server on
-which an affected version of MySQL is running.
+https://play.google.com/store/apps/details?id=org.strongswan.android
 
-This advisory provides a (limited) Proof-Of-Concept MySQL exploit
-which demonstrates how Remote Root Code Execution could be achieved by
-attackers.
-Full PoC (which works on default installations without the need for
-the attacker to find writable config files) will be provided later on
-to give users a chance to react to this advisory as the issue has not
-been patched by all the
-affected vendors yet despite efforts.
+In the example below, the client was supposed to connect to vpn.xorp.ru 
+using username "alice" and a password. The server identity is validated 
+by a CA-issued certificate that ultimately chains to something in the 
+default trust store. However, a hacker has spoofed the DNS (well, in the 
+example, that's actually a deliberate misconfiguration by me) so that 
+vpn.xorp.ru points to his server (185.48.56.74 in this example) instead. 
+On that server, he (legitimately) has a valid certificate for 
+vpn.armority.ru.
 
-The exploitation is interesting in the way that it involves an
-oldschool LD_PRELOAD environment variable and that it targets a
-service that doesn't
-serve requests as root but could still be tricked to get root RCE when
-restarted.
-Might give you strange feelings when restarting mysql service the next time ;)
+The settings on the client are:
 
-The advisory is available at:
+Profile Name: VPN
+Gateway: vpn.xorp.ru
+Type: IKEv2 EAP (Login/Password)
+Login: alice
+Password: <hidden>
+CA Certificate: Choose automatically
 
-http://legalhackers.com/advisories/MySQL-Exploit-Remote-Root-Code-Execution-Privesc-CVE-2016-6662.html
+And here is the log.
 
+> May 27 21:39:23 00[DMN] Starting IKE charon daemon (strongSwan 5.2.1dr1, Linux 3.4.5-CM-gb461bba, armv7l)
+> May 27 21:39:23 00[KNL] kernel-netlink plugin might require CAP_NET_ADMIN capability
+> May 27 21:39:23 00[LIB] loaded plugins: androidbridge charon android-log openssl fips-prf random nonce pubkey pkcs1 pkcs8 pem xcbc hmac socket-default kernel-netlink eap-identity eap-mschapv2 eap-md5 eap-gtc eap-tls
+> May 27 21:39:23 00[LIB] unable to load 9 plugin features (9 due to unmet dependencies)
+> May 27 21:39:23 00[JOB] spawning 16 worker threads
+> May 27 21:39:23 07[IKE] initiating IKE_SA android[3] to 185.48.56.74
+> May 27 21:39:23 07[ENC] generating IKE_SA_INIT request 0 [ SA KE No N(NATD_S_IP) N(NATD_D_IP) N(FRAG_SUP) ]
+> May 27 21:39:23 07[NET] sending packet: from 192.168.1.237[42224] to 185.48.56.74[500] (996 bytes)
+> May 27 21:39:23 11[NET] received packet: from 185.48.56.74[500] to 192.168.1.237[42224] (553 bytes)
+> May 27 21:39:23 11[ENC] parsed IKE_SA_INIT response 0 [ SA KE No N(NATD_S_IP) N(NATD_D_IP) CERTREQ N(FRAG_SUP) N(MULT_AUTH) ]
+> May 27 21:39:24 11[IKE] local host is behind NAT, sending keep alives
+> May 27 21:39:24 11[IKE] remote host is behind NAT
+> May 27 21:39:24 11[IKE] received cert request for "C=SE, O=AddTrust AB, OU=AddTrust External TTP Network, CN=AddTrust External CA Root"
+> May 27 21:39:24 11[IKE] received cert request for "C=GB, ST=Greater Manchester, L=Salford, O=COMODO CA Limited, CN=COMODO ECC Certification Authority"
+> May 27 21:39:24 11[IKE] received 3 cert requests for an unknown ca
+> May 27 21:39:24 11[IKE] sending cert request for "C=US, ST=UT, L=Salt Lake City, O=The USERTRUST Network, OU=http://www.usertrust.com, CN=UTN-USERFirst-Hardware"
+> May 27 21:39:24 11[IKE] sending cert request for "C=US, O=GeoTrust Inc., CN=GeoTrust Global CA"
+<many more "sending cert request" messages go here>
+> May 27 21:39:24 11[IKE] sending cert request for "C=EE, O=AS Sertifitseerimiskeskus, CN=EE Certification Centre Root CA, E=pki@sk.ee"
+> May 27 21:39:24 11[IKE] establishing CHILD_SA android
+> May 27 21:39:24 11[ENC] generating IKE_AUTH request 1 [ IDi N(INIT_CONTACT) CERTREQ CPRQ(ADDR ADDR6 DNS DNS6) N(ESP_TFC_PAD_N) SA TSi TSr N(MOBIKE_SUP) N(ADD_6_ADDR) N(ADD_6_ADDR) N(ADD_6_ADDR) N(ADD_6_ADDR) N(ADD_6_ADDR) N(ADD_6_ADDR) N(MULT_AUTH) N(EAP_ONLY) ]
+> May 27 21:39:24 11[ENC] splitting IKE message with length of 3660 bytes into 3 fragments
+> May 27 21:39:24 11[ENC] generating IKE_AUTH request 1 [ EF ]
+> May 27 21:39:24 11[ENC] generating IKE_AUTH request 1 [ EF ]
+> May 27 21:39:24 11[ENC] generating IKE_AUTH request 1 [ EF ]
+> May 27 21:39:24 11[NET] sending packet: from 192.168.1.237[54739] to 185.48.56.74[4500] (1360 bytes)
+> May 27 21:39:24 11[NET] sending packet: from 192.168.1.237[54739] to 185.48.56.74[4500] (1360 bytes)
+> May 27 21:39:24 11[NET] sending packet: from 192.168.1.237[54739] to 185.48.56.74[4500] (1072 bytes)
+> May 27 21:39:24 12[NET] received packet: from 185.48.56.74[4500] to 192.168.1.237[54739] (544 bytes)
+> May 27 21:39:24 12[ENC] parsed IKE_AUTH response 1 [ EF ]
+> May 27 21:39:24 12[ENC] received fragment #1 of 5, waiting for complete IKE message
+> May 27 21:39:24 13[NET] received packet: from 185.48.56.74[4500] to 192.168.1.237[54739] (544 bytes)
+> May 27 21:39:24 13[ENC] parsed IKE_AUTH response 1 [ EF ]
+> May 27 21:39:24 13[ENC] received fragment #2 of 5, waiting for complete IKE message
+> May 27 21:39:24 14[NET] received packet: from 185.48.56.74[4500] to 192.168.1.237[54739] (544 bytes)
+> May 27 21:39:24 14[ENC] parsed IKE_AUTH response 1 [ EF ]
+> May 27 21:39:24 14[ENC] received fragment #3 of 5, waiting for complete IKE message
+> May 27 21:39:24 16[NET] received packet: from 185.48.56.74[4500] to 192.168.1.237[54739] (544 bytes)
+> May 27 21:39:24 16[ENC] parsed IKE_AUTH response 1 [ EF ]
+> May 27 21:39:24 16[ENC] received fragment #4 of 5, waiting for complete IKE message
+> May 27 21:39:24 08[NET] received packet: from 185.48.56.74[4500] to 192.168.1.237[54739] (176 bytes)
+> May 27 21:39:24 08[ENC] parsed IKE_AUTH response 1 [ EF ]
+> May 27 21:39:24 08[ENC] received fragment #5 of 5, reassembling fragmented IKE message
+> May 27 21:39:24 08[ENC] parsed IKE_AUTH response 1 [ IDr CERT CERT AUTH EAP/REQ/ID ]
+> May 27 21:39:24 08[IKE] received end entity cert "OU=Domain Control Validated, OU=PositiveSSL, CN=vpn.armority.ru"
+> May 27 21:39:24 08[IKE] received issuer cert "C=GB, ST=Greater Manchester, L=Salford, O=COMODO CA Limited, CN=COMODO ECC Domain Validation Secure Server CA"
+> May 27 21:39:24 08[CFG]   using certificate "OU=Domain Control Validated, OU=PositiveSSL, CN=vpn.armority.ru"
+> May 27 21:39:24 08[CFG]   using untrusted intermediate certificate "C=GB, ST=Greater Manchester, L=Salford, O=COMODO CA Limited, CN=COMODO ECC Domain Validation Secure Server CA"
+> May 27 21:39:24 08[CFG]   using trusted ca certificate "C=GB, ST=Greater Manchester, L=Salford, O=COMODO CA Limited, CN=COMODO ECC Certification Authority"
+> May 27 21:39:24 08[CFG]   reached self-signed root ca with a path length of 1
+> May 27 21:39:24 08[IKE] authentication of 'vpn.armority.ru' with ECDSA-256 signature successful
+
+Wait... we are supposed to connect to vpn.xorp.ru!
+
+> May 27 21:39:24 08[IKE] server requested EAP_IDENTITY (id 0x00), sending 'alice'
+
+Oops... the server admin now knows a valid login at vpn.xorp.ru.
+
+> May 27 21:39:24 08[ENC] generating IKE_AUTH request 2 [ EAP/RES/ID ]
+> May 27 21:39:24 08[NET] sending packet: from 192.168.1.237[54739] to 185.48.56.74[4500] (76 bytes)
+> May 27 21:39:24 09[NET] received packet: from 185.48.56.74[4500] to 192.168.1.237[54739] (108 bytes)
+> May 27 21:39:24 09[ENC] parsed IKE_AUTH response 2 [ EAP/REQ/MSCHAPV2 ]
+> May 27 21:39:24 09[IKE] server requested EAP_MSCHAPV2 authentication (id 0xAD)
+> May 27 21:39:24 09[ENC] generating IKE_AUTH request 3 [ EAP/RES/MSCHAPV2 ]
+> May 27 21:39:24 09[NET] sending packet: from 192.168.1.237[54739] to 185.48.56.74[4500] (140 bytes)
+
+Now he has an authentication value and can mount an offline dictionary 
+attack. I don't know if he could offer something worse than EAP_MSCHAPv2 
+here for easier password cracking, or maybe convince the client to 
+reveal a plaintext password.
+
+> May 27 21:39:25 10[NET] received packet: from 185.48.56.74[4500] to 192.168.1.237[54739] (140 bytes)
+> May 27 21:39:25 10[ENC] parsed IKE_AUTH response 3 [ EAP/REQ/MSCHAPV2 ]
+> May 27 21:39:25 10[IKE] EAP-MS-CHAPv2 succeeded: 'Welcome2strongSwan'
+> May 27 21:39:25 10[ENC] generating IKE_AUTH request 4 [ EAP/RES/MSCHAPV2 ]
+> May 27 21:39:25 10[NET] sending packet: from 192.168.1.237[54739] to 185.48.56.74[4500] (76 bytes)
+> May 27 21:39:25 07[NET] received packet: from 185.48.56.74[4500] to 192.168.1.237[54739] (76 bytes)
+> May 27 21:39:25 07[ENC] parsed IKE_AUTH response 4 [ EAP/SUCC ]
+> May 27 21:39:25 07[IKE] EAP method EAP_MSCHAPV2 succeeded, MSK established
+> May 27 21:39:25 07[IKE] authentication of 'alice' (myself) with EAP
+> May 27 21:39:25 07[ENC] generating IKE_AUTH request 5 [ AUTH ]
+> May 27 21:39:25 07[NET] sending packet: from 192.168.1.237[54739] to 185.48.56.74[4500] (92 bytes)
+> May 27 21:39:25 11[NET] received packet: from 185.48.56.74[4500] to 192.168.1.237[54739] (236 bytes)
+> May 27 21:39:25 11[ENC] parsed IKE_AUTH response 5 [ AUTH CPRP(ADDR DNS) SA TSi TSr N(AUTH_LFT) N(MOBIKE_SUP) N(NO_ADD_ADDR) ]
+> May 27 21:39:25 11[IKE] authentication of 'vpn.armority.ru' with EAP successful
+> May 27 21:39:25 11[CFG] constraint check failed: identity 'vpn.xorp.ru' required
+
+Dear StrongSwan VPN client, you were supposed to notice this hostname 
+mismatch earlier.
+
+> May 27 21:39:25 11[CFG] selected peer config 'android' inacceptable: constraint checking failed
+> May 27 21:39:25 11[CFG] no alternative config found
+> May 27 21:39:25 11[ENC] generating INFORMATIONAL request 6 [ N(AUTH_FAILED) ]
+> May 27 21:39:25 11[NET] sending packet: from 192.168.1.237[54739] to 185.48.56.74[4500] (76 bytes)
 
 -- 
-Regards,
-Dawid Golunski
-http://legalhackers.com
+Alexander E. Patrakov
