@@ -1,4 +1,9 @@
-Received: (qmail 15705 invoked by uid 550); 14 Nov 2023 17:19:40 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1302" "Sunday" "31" "May" "2015" "21:49:45" "+0800" "=?ISO-8859-1?Q?wen=5Fguanxing?=" "wen_guanxing@venustech.com.cn" "<tencent_058744537B69DAA079F09F5B@qq.com>" "27" "[oss-security] CVE Request: PCRE Library Stack Overflow Vulnerability" nil nil nil "5" "2015053113:49:45" "[oss-security] CVE Request: PCRE Library Stack Overflow Vulnerability" (number mark "U       wen_guanxing May 31   27/1302  " thread-indent "\"[oss-security] CVE Request: PCRE Library Stack Overflow Vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 3903 invoked by uid 550); 31 May 2015 14:45:31 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,140 +12,66 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11407 invoked from network); 14 Nov 2023 17:15:16 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1699982105; x=1700586905; darn=lists.openwall.com;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=16YwMSS+5XMGjbLlrz5xoB+ftjfO9SSMeH2aDXtRN+o=;
-        b=I2ilUS9+mx7IEYya4vqUpnT/KzuRQN7B6kx0J72zc+Spm17iMd36tH4UAs43bSD6hm
-         2aMUlEPBoyzFIROAmViDdjjp82WPYWM15jwho7mc+K4P8/Vlmgc4AZpkKO1v/fIW+L5v
-         wpnTqhZQsvgNqB4FTyGTedmUpmj2VQEbe1ZvrluBid2N/zhIOUH0FhprTyjYN8sxZNfg
-         qxwLVMsY0gGOz8iClc0/AgpHkgpOrM0NdOdOpa8fwixzjlKuwJkEmC/XmYSXURb3EpJw
-         UO7YRwXOh7sUdDBwkF7uNaCldcWAym42o+dVArp0fhNC+i1TNL+BACV3zb6grdFen5Xr
-         i+2A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699982105; x=1700586905;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=16YwMSS+5XMGjbLlrz5xoB+ftjfO9SSMeH2aDXtRN+o=;
-        b=ifesnIjPdixFQFsDk5jikLSp9RRrVZNxOP2V1k8o7H284fcACx1iZ4uFveDxcwwitH
-         HspAF/+km4+zfDDTDCe2DRf08ld7MIEd4XaSp4H7SLn6J8kPP4AMvYbT1p76EnBULAvx
-         l1cFYS8p0wkzNYmNPYS8ZviOK6MWDiK5KntZR26pJS+6Sx22OJHUGZgYNEjP6rFNf/j4
-         am62OoqgHVVlsI0N0yg7krrbCXMxdMkpknlWpaOqE6i+Ej5k4BNc9pBAa4Kish8G40Zg
-         11O7IMx4KWazcSTKBUfKkg6E4yrTEFATt56nP5W2WbfJvK2jvTt3v52xKcrK4gJcmfkg
-         /UJg==
-X-Gm-Message-State: AOJu0YydKVM8J98zzysfmvKnns8X1XkJc6q0T5g+dCKlCU/O7O8AB82u
-	piegDswheAlT7jBY7s0Vtjco/Y+WmAQDSLTn2jPMwjpYRo9sNljMajHdnsEs
-X-Google-Smtp-Source: AGHT+IEmNKl/1PcLdcj4B+pBQDlZ3mugC2Xl0IePo4CojMkQC6CvCGUsoaUOEBvxH22BbTmcCBy11YaMS97FlQRFhVg=
-X-Received: by 2002:a05:600c:3c91:b0:40a:483f:f828 with SMTP id
- bg17-20020a05600c3c9100b0040a483ff828mr157976wmb.4.1699982104498; Tue, 14 Nov
- 2023 09:15:04 -0800 (PST)
-MIME-Version: 1.0
-From: Craig Ingram <cjingram@google.com>
-Date: Tue, 14 Nov 2023 12:14:53 -0500
-Message-ID: <CAHXwHVwMqiEU0cP0Zjjrjnb-7uyNXqR3i9BZzBV=-j1NKUEz3A@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="00000000000076f145060a1fed18"
-Subject: [oss-security] [kubernetes] CVE-2023-5528: Insufficient input sanitization in
- in-tree storage plugin leads to privilege escalation on Windows nodes
+Received: (qmail 30476 invoked from network); 31 May 2015 13:50:08 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=venustech.com.cn;
+	 h=x-mailer:message-id:date:date:content-transfer-encoding
+	:content-type:content-type:mime-version:subject:subject:to:from
+	:from; s=dkim; t=1433079985; x=1433943986; bh=E3xpTyjdHVjePekoTL
+	vczzKFXjrd+XEecP5KFF1E9H8=; b=Cm8hYgKGbd9hk8GQxEOAYN/UoFtJFPUKPT
+	EsSg1BmE0oeVqYOExevZmQS5NuK+8l9HClGfMkobZilP8DdNZVvv6bG77mhcJhw+
+	aOsZTIMqfNLwzqlDHFh22FsoCzKlyqxHt65+rocGSt35Cs8N7CObNocKO1oXjU5b
+	Yi3k7qvOs=
+X-QQ-FEAT: DQhWakk72O9A/peqOFCjMvVBvqNstd1O7LWU0Co9yQ2FL4sTkJCPeXBs50jJ1
+	HR0ZvxnkZzbSdj30zjZLzdnlyDxfoaL7VOpm5PgUJDE6tRKMNeKQ74Koj3+TjmaQCd4NNyo
+	027BxvqtdNJpXV1euWc1Rd2oINNI9MW4f182E32MJBpGYi1jtFRvtnUnzpU+VDHVawwc66X
+	+PTk4xnU0IQ==
+X-QQ-SSF: 00000000000000F000000000000000N
+X-HAS-ATTACH: no
+X-QQ-BUSINESS-ORIGIN: 2
+X-Originating-IP: 60.250.146.74
+X-QQ-STYLE: 
+X-QQ-mid: webmail802t1433080185t181095
+From: "=?ISO-8859-1?B?d2VuX2d1YW54aW5n?=" <wen_guanxing@venustech.com.cn>
+To: "=?ISO-8859-1?B?b3NzLXNlY3VyaXR5?=" <oss-security@lists.openwall.com>
+Mime-Version: 1.0
+Content-Type: multipart/alternative;
+	boundary="----=_NextPart_556B1179_09028568_7773C8FD"
+Content-Transfer-Encoding: 8Bit
+Date: Sun, 31 May 2015 21:49:45 +0800
+X-Priority: 3
+Message-ID: <tencent_058744537B69DAA079F09F5B@qq.com>
+X-QQ-MIME: TCMime 1.0 by Tencent
+X-Mailer: QQMail 2.x
+X-QQ-Mailer: QQMail 2.x
+X-QQ-SENDSIZE: 520
+X-QQ-FName: F613D81FDA024B8BBF66B6BA282EDB72
+X-QQ-LocalIP: 58.250.134.100
+Subject: [oss-security] CVE Request: PCRE Library Stack Overflow Vulnerability
 
---00000000000076f145060a1fed18
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+------=_NextPart_556B1179_09028568_7773C8FD
+Content-Type: text/plain;
+	charset="ISO-8859-1"
+Content-Transfer-Encoding: base64
 
-Hello Kubernetes Community,
+SGVsbG8sDQoNCg0KUENSRSBpcyBhIHJlZ3VsYXIgZXhwcmVzc2lvbiBDIGxp
+YnJhcnkgaW5zcGlyZWQgYnkgdGhlIHJlZ3VsYXIgZXhwcmVzc2lvbiBjYXBh
+YmlsaXRpZXMgaW4gdGhlIFBlcmwgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2UuIFRo
+ZSBQQ1JFIGxpYnJhcnkgaXMgaW5jb3Jwb3JhdGVkIGludG8gYSBudW1iZXIg
+b2YgcHJvbWluZW50IHByb2dyYW1zLCBzdWNoIGFzIHRoZSBBZG9iZSBGbGFz
+aCwgQXBhY2hlLCBOZ2lueCBhbmQgUEhQLiANCg0KDQpQQ1JFIGxpYnJhcnkg
+aXMgcHJvbmUgdG8gYSB2dWxuZXJhYmlsaXR5IHdoaWNoIGxlYWRzIHRvIFN0
+YWNrIE92ZXJmbG93LiBXaXRob3V0IGVub3VnaCBib3VuZCBjaGVja2luZyBp
+bnNpZGUgY29tcGlsZV9yZWdleCgpLCB0aGUgc3RhY2sgbWVtb3J5IGNvdWxk
+IGJlIG92ZXJmbG93ZWQgdmlhIGEgY3JhZnRlZCByZWd1bGFyIGV4cHJlc3Np
+b24uIFNpbmNlIFBDUkUgbGlicmFyeSBpcyB3aWRlbHkgdXNlZCwgdGhpcyB2
+dWxuZXJhYmlsaXR5IHNob3VsZCBhZmZlY3QgbWFueSBhcHBsaWNhdGlvbnMu
+IEFuIGF0dGFja2VyIG1heSBleHBsb2l0IHRoaXMgaXNzdWUgdG8gZXhlY3V0
+ZSBhcmJpdHJhcnkgY29kZSBpbiB0aGUgY29udGV4dCBvZiB0aGUgdXNlciBy
+dW5uaW5nIHRoZSBhZmZlY3RlZCBhcHBsaWNhdGlvbi4gDQoNCg0KSW5mbyAm
+IGZpeGVkOg0KaHR0cHM6Ly9idWdzLmV4aW0ub3JnL3Nob3dfYnVnLmNnaT9p
+ZD0xNTAzDQoNCg0KQ291bGQgYSBDVkUgcGxlYXNlIGJlIGFzc2lnbmVkIHRv
+IHRoaXMgaXNzdWU/DQoNCg0KVGhhbmtzLA0KDQoNCldlbiBHdWFueGluZw0K
+RnJvbSBWZW51c3RlY2ggQURMQUI=
 
-A security issue was discovered in Kubernetes where a user that can create
-pods and persistent volumes on Windows nodes may be able to escalate to
-admin privileges on those nodes. Kubernetes clusters are only affected if
-they are using an in-tree storage plugin for Windows nodes.
+------=_NextPart_556B1179_09028568_7773C8FD--
 
-This issue has been rated High (CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:H
-<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U=
-/C:H/I:H/A:H>),
-and assigned CVE-2023-5528.
-
-Am I vulnerable?
-
-Any kubernetes environment with Windows nodes is impacted.  Run kubectl get
-nodes -l kubernetes.io/os=3Dwindows to see if any Windows nodes are in use.
-
-Affected Versions
-
-- kubelet >=3D v1.8.0 (including all later minor versions)
-
-How do I mitigate this vulnerability?
-
-The provided patch fully mitigates the vulnerability.
-
-Outside of applying the patch, there are no known mitigations to this
-vulnerability.
-
-Fixed Versions
-
-- kubelet v1.28.4
-
-- kubelet v1.27.8
-
-- kubelet v1.26.11
-
-- kubelet v1.25.16
-
-These releases will be published over the course of today, November 14,
-2023.
-
-To upgrade, refer to the documentation:
-
-https://kubernetes.io/docs/tasks/administer-cluster/cluster-management/#upg=
-rading-a-cluster
-
-Detection
-
-Kubernetes audit logs can be used to detect if this vulnerability is being
-exploited. Persistent Volume create events with local path fields
-containing special characters are a strong indication of exploitation.
-
-If you find evidence that this vulnerability has been exploited, please
-contact security@kubernetes.io
-
-Additional Details
-
-See the GitHub issue for more details:
-https://github.com/kubernetes/kubernetes/issues/121879
-
-Acknowledgements
-
-This vulnerability was reported by Tomer Peled @tomerpeled92
-
-The issue was fixed and coordinated by the fix team:
-
-James Sturtevant @jsturtevant
-
-Mark Rossetti @marosset
-
-Michelle Au @msau42
-
-Jan =C5=A0afr=C3=A1nek @jsafrane
-
-Mo Khan @enj
-
-Rita Zhang @ritazh
-
-Micah Hausler @micahhausler
-
-Sri Saran Balaji @SaranBalaji90
-
-Craig Ingram @cji
-
-and release managers:
-
-Jeremy Rickard @jeremyrickard
-
-Marko Mudrini=C4=87 @xmudrii
-
-Thank You,
-
-Craig Ingram on behalf of the Kubernetes Security Response Committee
-
---00000000000076f145060a1fed18--
