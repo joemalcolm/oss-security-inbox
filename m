@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3274" "Friday" "1" "May" "2015" "14:10:29" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<5543DDB5.7030900@redhat.com>" "80" "Re: [oss-security] On sanctioned MITMs" nil nil nil "5" "2015050120:10:29" "[oss-security] On sanctioned MITMs" (number mark "        kseifried@re May  1   80/3274  " thread-indent "\"Re: [oss-security] On sanctioned MITMs\"\n") "<20150501191522.GA18039@zoho.com>" ("<20150501191522.GA18039@zoho.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3362" "Sunday" "31" "May" "2015" "14:37:43" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150531183743.509626C0070@smtpvmsrv1.mitre.org>" "78" "[oss-security] Re: CVE request: vulnerability in wpa_supplicant and hostapd" nil nil nil "5" "2015053118:37:43" "[oss-security] Re: CVE request: vulnerability in wpa_supplicant and hostapd" (number mark "        cve-assign@m May 31   78/3362  " thread-indent "\"[oss-security] Re: CVE request: vulnerability in wpa_supplicant and hostapd\"\n") "<20150509170659.GA8826@w1.fi>" ("<20150509170659.GA8826@w1.fi>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 18204 invoked by uid 550); 1 May 2015 20:10:46 -0000
+Received: (qmail 11286 invoked by uid 550); 31 May 2015 18:37:55 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,99 +11,91 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 18186 invoked from network); 1 May 2015 20:10:45 -0000
-Message-ID: <5543DDB5.7030900@redhat.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
-MIME-Version: 1.0
-References: <20150501191522.GA18039@zoho.com>
-In-Reply-To: <20150501191522.GA18039@zoho.com>
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="uuteJ3dJXI3CFCMKgSeOpCeRCfOs8EWEp"
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.26
-Date: Fri, 01 May 2015 14:10:29 -0600
-From: Kurt Seifried <kseifried@redhat.com>
+Received: (qmail 11265 invoked from network); 31 May 2015 18:37:54 -0000
+In-Reply-To: <20150509170659.GA8826@w1.fi>
+Message-Id: <20150531183743.509626C0070@smtpvmsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Sun, 31 May 2015 14:37:43 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] On sanctioned MITMs
-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: CVE request: vulnerability in wpa_supplicant and hostapd
+To: j@w1.fi
 
---uuteJ3dJXI3CFCMKgSeOpCeRCfOs8EWEp
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: quoted-printable
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On 05/01/2015 01:15 PM, mancha wrote:
-> Though Hushmail email credentials, for example, can't be sniffed in the
-> segment connecting the client to CloudFlare, they are available to
-> CloudFlare's infrastucture. Moreoever, there is no way for the client to
-> verify that the segment connecting CloudFlare to the destination server
-> is similarly encrypted (i.e. it might be in the clear as would be the
-> case when using CloudFlare's "Flexible SSL" product).=20=20
->=20
-> Hushmail's CloudFlare usage serves as an example that brings me to my
-> general point.
->=20
-> How should the security community view this growing use of sanctioned
-> MITM in light of the ever-increasing amount of sensitive content sent
-> over SSL/TLS encrypted channels (e.g. email, electronic banking, medical
-> records, etc.)?
+>> There are currently 5 sets of advisories+patches at:
+>> http://w1.fi/security/
 
-This is me speaking personally:
+> No CVE has been requested for 2015-[234] prior to this
 
-This is nothing new. Front end load balancers that handle SSL/TLS and
-then do HTTP on the backend have been around for decades. This is simply
-outsourcing it to a trusted (hopefully, because I use them!) party
-rather than doing it in house.
+2015-2 has one CVE ID, 2015-3 has one CVE ID, and 2015-4 has four CVE
+IDs, for a total of six. See below.
 
-We have had outsourcing of far more sensitive things for literally
-centuries, e.g. legal and accounting firms, my lawyer and accountant
-both have literally all my personal info and could easily destroy me
-financially if they wanted to. But they don't because we have contracts,
-and more importantly contract enforcement in the form of a civil legal
-system (as does most of the world). The same applies for CloudFlare,
-Google (my email), and so on.
+> http://w1.fi/security/2015-2/wps-upnp-http-chunked-transfer-encoding.txt
+> http://w1.fi/security/2015-2/0001-WPS-Fix-HTTP-chunked-transfer-encoding-parser.patch
+> Vulnerable versions ... hostapd v0.7.0-v2.4 ... wpa_supplicant v0.7.0-v2.4
 
-So in my opinion this is really nothing new, like any outsourced
-activity pick your partners carefully.
+> The HTTP implementation used for the UPnP operations uses a signed
+> integer for storing the length of a HTTP chunk when the chunked
+> transfer encoding and may end up using a negative value
 
-This is me speaking on behalf of the Cloud Security Alliance:
-
-Make your partners/vendors/etc. fill out at least the self attestation
-level of STARS, which is free:
-
-https://cloudsecurityalliance.org/star/self-assessment/
-
-If they refuse to do so that might be a good hint as to how secure they
-really are.
-
-> --mancha
+Use CVE-2015-4141.
 
 
---=20
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+> http://w1.fi/security/2015-3/integer-underflow-in-ap-mode-wmm-action-frame.txt
+> http://w1.fi/security/2015-3/0001-AP-WMM-Fix-integer-underflow-in-WMM-Action-frame-par.patch
+> Vulnerable versions ... hostapd v0.5.5-v2.4 ... wpa_supplicant v0.7.0-v2.4
+
+> The frame length is previously verified to be large enough to include
+> the IEEE 802.11 header, but the couple of additional bytes after this
+> header are not explicitly verified and as a result of this, there may
+> be an integer underflow
+
+Use CVE-2015-4142.
 
 
---uuteJ3dJXI3CFCMKgSeOpCeRCfOs8EWEp
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
+> http://w1.fi/security/2015-4/eap-pwd-missing-payload-length-validation.txt
+> Vulnerable versions ... hostapd v1.0-v2.4 ... wpa_supplicant v1.0-v2.4
 
+Use CVE-2015-4143 for the "The length of the received Commit and
+Confirm message payloads was not checked before reading them. This
+could result in a buffer read overflow when processing an invalid
+message." issues in both
+0001-EAP-pwd-peer-Fix-payload-length-validation-for-Commi.patch and
+0002-EAP-pwd-server-Fix-payload-length-validation-for-Com.patch.
+
+Use CVE-2015-4144 for "The remaining number of bytes in the message
+could be smaller than the Total-Length field size, so the length needs
+to be explicitly checked prior to reading the field and decrementing
+the len variable. This could have resulted in the remaining length
+becoming negative and interpreted as a huge positive integer." in both
+0003-EAP-pwd-peer-Fix-Total-Length-parsing-for-fragment-r.patch and
+0004-EAP-pwd-server-Fix-Total-Length-parsing-for-fragment.patch.
+
+Use CVE-2015-4145 for "check that there is no already started fragment
+in progress before allocating a new buffer for reassembling fragments.
+This avoid a potential memory leak when processing invalid message."
+in both
+0003-EAP-pwd-peer-Fix-Total-Length-parsing-for-fragment-r.patch and
+0004-EAP-pwd-server-Fix-Total-Length-parsing-for-fragment.patch.
+
+Use CVE-2015-4146 for
+0005-EAP-pwd-peer-Fix-asymmetric-fragmentation-behavior.patch.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.22 (GNU/Linux)
+Version: GnuPG v1.4.14 (SunOS)
 
-iQIcBAEBAgAGBQJVQ923AAoJEBYNRVNeJnmT+2QP/3yg00Xuo9jquPAWlUKH1yD0
-OjTM8VNNxY578i7Z0kv6+I8WxiRXIkvkoZt/xMQ3g2ijbYqIfJZLecUaXE6tz5ql
-rVTZjpLhBDXvZCc3TXPFQXa2jlX+WFSxMLPbR2U+VJx3UOJkCHS8q8bqhzNI8H4e
-rG+4hpX/jkJ/PJ1kaKMCegIXhFI8tjrgFpN+YI7c5QBo8fL0coTNJXGbSLDQhzWo
-YwFEs+0h7qPZY/c6VHpqgtBdBAm2FjBQjbJCUD/SQl83loEeAWYGtI7Z7icjW3GG
-qGTlyVt/vAqWee9PHWlOYwhDpyKCP+KxAji0KzlcF+U5WOND97p6hfs5Jzo0rKZ0
-rWWxezrHRSfcLO6yXGppNu7Q/x1Bk97cmPps/Swvagal1eh8NaMnVMqDgFZcMSHr
-l27Sa3gK6iE3h8mUzDtZdtqXJ+W+DFRE4ZsJHIGAtiSUKHUfaFzyR1lFcW/o2EZm
-Es8wCBArZm9Hb+AE4QLyie0mkbTlVmOZqUnWf0ioTCwNwATFyPq8vRCLLEjwtY6f
-v7Eeq89fx77eV3Qb7p+G39h8o5RHXiUBzw9RXMM98xqve4N4MKxF1oUYZpH1nmhC
-JVlqaa8HkBEnNDU/73jMhGmEP8XeN3tgucwUuKvgs+mVztzguy4+Q+J4/fC6j8ic
-f5O7cEc/zeH7JItSiqPn
-=I6z5
+iQEcBAEBAgAGBQJVa1RZAAoJEKllVAevmvmsb4EIAKreo8c4uu04HwgAZLyRAHy5
+yUnVt5iFEmEtyhK1rs58oKYEx0oEX9hgcPLUcdPyo49PFBtOCyrXgMap1KlW5YCD
+5EryeqRLbnOinjGPBoRWrpGN+/zQleCSeMmZq9y1groeIFQpLFdJxOKMwDxOnuf5
+LiDhxr/PeRyed9qttCZEVExLNY/HsoZPm6bAcUuGmDpy4ES49ge2vslLtOs7xfBx
+NzzGuNGELtr2h7uEIXHA/glXE42A3h9y4IzznfPb0c2yURKU3TQ7ljkdpv/hYK8u
+bWN3186dkvTgi6FiKQojM7m9DNEt/V6grPGhbu9/m19IdMW6apCwG9BHbkeqYL8=
+=TOs/
 -----END PGP SIGNATURE-----
-
---uuteJ3dJXI3CFCMKgSeOpCeRCfOs8EWEp--
