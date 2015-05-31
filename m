@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2544" "Saturday" "21" "March" "2015" "20:07:50" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150322000750.AD0606C0045@smtpvmsrv1.mitre.org>" "54" "[oss-security] Re: CVE Request: Linux kernel unprivileged denial-of-service due to mis-protected xsave/xrstor instructions." nil nil nil "3" "2015032200:07:50" "[oss-security] Re: CVE Request: Linux kernel unprivileged denial-of-service due to mis-protected xsave/xrstor instructions." (number mark "        cve-assign@m Mar 21   54/2544  " thread-indent "\"[oss-security] Re: CVE Request: Linux kernel unprivileged denial-of-service due to mis-protected xsave/xrstor instructions.\"\n") "<20150321103127.GI7053@chrystal.uk.oracle.com>" ("<20150321103127.GI7053@chrystal.uk.oracle.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1253" "Sunday" "31" "May" "2015" "21:45:16" "+0800" "=?ISO-8859-1?Q?wen=5Fguanxing?=" "wen_guanxing@venustech.com.cn" "<tencent_3EBD05065B16F9C558FFDA02@qq.com>" "26" "[oss-security] CVE Request:PCRE Call Stack Overflow Vulnerability" nil nil nil "5" "2015053113:45:16" "[oss-security] CVE Request:PCRE Call Stack Overflow Vulnerability" (number mark "U       wen_guanxing May 31   26/1253  " thread-indent "\"[oss-security] CVE Request:PCRE Call Stack Overflow Vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 1480 invoked by uid 550); 22 Mar 2015 00:08:03 -0000
+Received: (qmail 3596 invoked by uid 550); 31 May 2015 14:45:26 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,67 +11,64 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 1457 invoked from network); 22 Mar 2015 00:08:02 -0000
-In-Reply-To: <20150321103127.GI7053@chrystal.uk.oracle.com>
-Message-Id: <20150322000750.AD0606C0045@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, jamie.iles@oracle.com, mr.a.xavier@gmail.com
-Date: Sat, 21 Mar 2015 20:07:50 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE Request: Linux kernel unprivileged denial-of-service due to mis-protected xsave/xrstor instructions.
-To: quentin.casasnovas@oracle.com
+Received: (qmail 28338 invoked from network); 31 May 2015 13:45:34 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=venustech.com.cn;
+	 h=x-mailer:message-id:date:date:content-transfer-encoding
+	:content-type:content-type:mime-version:subject:subject:to:from
+	:from; s=dkim; t=1433079709; x=1433943710; bh=4stFGf9j2z+bWjphCI
+	Q6rNG7MkkujgSnzzSHGoD2/Ik=; b=P5+//4sF1z9hQ/N5k8gedXREg0yH/8Rblw
+	7LCnIHlulfqMlE6NKvq1joDq/U/9MIEeowh+UBh2o0R4zgQJTCQqtNQPoHxnjY82
+	/8h8PWrmWUVTQ9CT02/OsfDr3QoWYUraGT8Gp8AT6ObrrxVviCexTM4DItHph2UA
+	03gLrx1Dg=
+X-QQ-FEAT: rWqXZWhp0qB4iLBQRgK0CTitHbAheDz0K5wKqlMTsLO8veEx78hSIUbQhNqGR
+	G5R9dygUxfSSmT2/xLshd0uC/we5JRTBZ80lDUANvHhBvqllt1Gi3mG41Dv3iuaXl9G/+O0
+	5KfnAJH+poc0aUYwT2g7OYsTBqZAQ0dmo3psn+Ai6Pnjhwi3xjdeBQCCC2gEOFkSuV8YEDL
+	0FBv9W2UTEA==
+X-QQ-SSF: 00000000000000F000000000000000N
+X-HAS-ATTACH: no
+X-QQ-BUSINESS-ORIGIN: 2
+X-Originating-IP: 60.250.146.74
+X-QQ-STYLE: 
+X-QQ-mid: webmail802t1433079916t8671702
+From: "=?ISO-8859-1?B?d2VuX2d1YW54aW5n?=" <wen_guanxing@venustech.com.cn>
+To: "=?ISO-8859-1?B?b3NzLXNlY3VyaXR5?=" <oss-security@lists.openwall.com>
+Mime-Version: 1.0
+Content-Type: multipart/alternative;
+	boundary="----=_NextPart_556B106C_08DE12A8_2817A6C8"
+Content-Transfer-Encoding: 8Bit
+Date: Sun, 31 May 2015 21:45:16 +0800
+X-Priority: 3
+Message-ID: <tencent_3EBD05065B16F9C558FFDA02@qq.com>
+X-QQ-MIME: TCMime 1.0 by Tencent
+X-Mailer: QQMail 2.x
+X-QQ-Mailer: QQMail 2.x
+X-QQ-SENDSIZE: 520
+Subject: [oss-security] CVE Request:PCRE Call Stack Overflow Vulnerability
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+------=_NextPart_556B106C_08DE12A8_2817A6C8
+Content-Type: text/plain;
+	charset="ISO-8859-1"
+Content-Transfer-Encoding: base64
 
-Use CVE-2015-2672 for the vulnerability fixed by the
-https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit?id=06c8173eb92bbfc03a0fe8bb64315857d0badd06
-commit.
+SGVsbG8sDQoNCg0KUENSRSBpcyBhIHJlZ3VsYXIgZXhwcmVzc2lvbiBDIGxp
+YnJhcnkgaW5zcGlyZWQgYnkgdGhlIHJlZ3VsYXIgZXhwcmVzc2lvbiBjYXBh
+YmlsaXRpZXMgaW4gdGhlIFBlcmwgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2UuIFRo
+ZSBQQ1JFIGxpYnJhcnkgaXMgaW5jb3Jwb3JhdGVkIGludG8gYSBudW1iZXIg
+b2YgcHJvbWluZW50IHByb2dyYW1zLCBzdWNoIGFzIHRoZSBBZG9iZSBGbGFz
+aCwgQXBhY2hlLCBOZ2lueCBhbmQgUEhQLiANCg0KDQpQQ1JFIGxpYnJhcnkg
+aXMgcHJvbmUgdG8gYSB2dWxuZXJhYmlsaXR5IHdoaWNoIGxlYWRzIHRvIFN0
+YWNrIE92ZXJmbG93LiBXaXRob3V0IGVub3VnaCBib3VuZCBjaGVja2luZyBp
+bnNpZGUgY29tcGlsZV9yZWdleCgpLCB0aGUgc3RhY2sgbWVtb3J5IGNvdWxk
+IGJlIG92ZXJmbG93ZWQgdmlhIGEgY3JhZnRlZCByZWd1bGFyIGV4cHJlc3Np
+b24uIFNpbmNlIFBDUkUgbGlicmFyeSBpcyB3aWRlbHkgdXNlZCwgdGhpcyB2
+dWxuZXJhYmlsaXR5IHNob3VsZCBhZmZlY3QgbWFueSBhcHBsaWNhdGlvbnMu
+IEFuIGF0dGFja2VyIG1heSBleHBsb2l0IHRoaXMgaXNzdWUgdG8gRE9TIHRo
+ZSB1c2VyIHJ1bm5pbmcgdGhlIGFmZmVjdGVkIGFwcGxpY2F0aW9uLiANCg0K
+DQpJbmZvICYgZml4ZWQ6DQpodHRwczovL2J1Z3MuZXhpbS5vcmcvc2hvd19i
+dWcuY2dpP2lkPTE1MTUNCg0KDQpDb3VsZCBhIENWRSBwbGVhc2UgYmUgYXNz
+aWduZWQgdG8gdGhpcyBpc3N1ZT8NCg0KDQpUaGFua3MsDQoNCg0KV2VuIEd1
+YW54aW5nDQpGcm9tIFZlbnVzdGVjaCBBRExBQg==
 
-The rest of this message can probably be skipped unless someone cares
-about the details of why
-http://openwall.com/lists/oss-security/2015/03/20/17 was sent.
+------=_NextPart_556B106C_08DE12A8_2817A6C8--
 
-We had previously proposed
-"https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit?id=f31a9f7c71691569359fa7fb8b0acaa44bce0324 ...
-had security-relevant value even though it was later determined to be
-mis-protecting." This was based on your earlier phrase of "ends up
-protecting the .altinstr_replacement from faulting." We now understand
-that "ends up protecting the .altinstr_replacement from faulting"
-actually does not ever protect anything. If the "pointer to the
-instruction which might fault" points to .altinstr_replacement, this
-is completely useless for preventing denial-of-service attacks. More
-generally, having the "pointer to the instruction which might fault"
-point to .altinstr_replacement results in absolutely zero
-security-relevant value. Thus, there isn't a second CVE ID.
-
->>   - a ... CVE id for the
->>     https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit?id=06c8173eb92bbfc03a0fe8bb64315857d0badd06
->>     change
->
-> The above commit is the fix, not a security issue.
-
-This was just a question of commonly used, but imprecise, terminology.
-In typical usage on the oss-security list, stating that a CVE ID is
-for a commit means that the CVE ID is associated with the
-vulnerability that the commit fixed. This imprecise terminology can
-work poorly in situations where a commit fixed one security problem
-but introduced a different security problem, or situations in which
-there is a possible misinterpretation that that had happened.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJVDgb9AAoJEKllVAevmvmsV38H/jILrMlC9sxqt4pKuP1TBTlO
-sOx2AVPI5CAOFOI4L65NBUS5KeA1KF4sUczAoY/0ekR0ikT7PUxY9jOkqGnlqdEi
-Y+b7+0obYvn4l6r0UUSYrGk00WEphSBq2rUw/aFZTgrYHJfahMshnUcP+wlIVcZZ
-hS2b2ApAgt/Hp4lrVOfiGX1+DlquK/FM4+jWnguzwXFErykC2xuC4B966a/MsW8F
-j5FJrkuet5GGVfmkXlGh8qEhGqNdKKF77XnzXoBKYYWfvYF52nyV2+G16UncMwLT
-CAYtKcnlp7vyaoih9QlJwzkypeR73NTVNMH+SE6fh1IbRy98UGzCQHQWktQRjKc=
-=ughl
------END PGP SIGNATURE-----
