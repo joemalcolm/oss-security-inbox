@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1962" "Saturday" "10" "September" "2016" "21:00:11" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<CANO=Ty3puYF=K=ZicQvBiVyXVUgt7UM5FBqLF_KZGNk+op42sQ@mail.gmail.com>" "48" "[oss-security] Possible CVE request for Redis docker container" "^Date:" nil nil "9" "2016091103:00:11" "[oss-security] Possible CVE request for Redis docker container" (number mark "U       kseifried@re Sep 10   48/1962  " thread-indent "\"[oss-security] Possible CVE request for Redis docker container\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["9098" "Monday" "1" "June" "2015" "21:25:24" "+0800" "=?ISO-8859-1?Q?wen=5Fguanxing?=" "wen_guanxing@venustech.com.cn" "<tencent_04AA4B6777E925FE18737D03@qq.com>" "155" "[oss-security] CVE-2015-3210: PCRE Library Heap Overflow Vulnerability" nil nil nil "6" "2015060113:25:24" "[oss-security] CVE-2015-3210: PCRE Library Heap Overflow Vulnerability" (number mark "        wen_guanxing Jun  1  155/9098  " thread-indent "\"[oss-security] CVE-2015-3210: PCRE Library Heap Overflow Vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 30680 invoked by uid 550); 11 Sep 2016 03:00:25 -0000
+Received: (qmail 31856 invoked by uid 550); 1 Jun 2015 13:25:57 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,74 +11,193 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 30662 invoked from network); 11 Sep 2016 03:00:24 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=YFAD+0c5mo6bvrtttv5CHrVHeIfWKjI+rQxIKmp+AvM=;
-        b=EX305febqKyVdNag6OHTkV/mY/vnLmRVo63vsy1YDFcyDIAJp7lnURGJYgehzlLMHC
-         Mp+MSair9tGv80uF5dqmlPSQ9YmbM/cVAfANbie/+hJylWT/7zy4DuwBKNVUXqlDpAoD
-         N7k61aCtNDsJlx8yh0SFxYeXNVmJyVlTjJw0tary2VRDIh9A1+YA22w5TUJoyqkXAFIf
-         YOy+gNMNDC+hwcz62s9Kqz5BRTuZMweiVsICcuX7z1iFU2IXgS4XTVYOdULLGqNfzQkA
-         Mo33B3cRYVTlbQfJfck+81zkyusAIbgsLckHxmDGlSXqcC6x+Eo3ZTrWFTB7iGqyeQFr
-         5e8g==
-X-Gm-Message-State: AE9vXwPdi3AdrTiApnMuzyswgDFeXlIx+rocl4s5pux4/CDp6Hlk3SEcQ4qrUjZJGeRShHOjM1fcRQSiG5sVIFlZ
-X-Received: by 10.202.53.132 with SMTP id c126mr17161816oia.3.1473562812066;
- Sat, 10 Sep 2016 20:00:12 -0700 (PDT)
-MIME-Version: 1.0
-Message-ID: <CANO=Ty3puYF=K=ZicQvBiVyXVUgt7UM5FBqLF_KZGNk+op42sQ@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=001a113cf3e6f7cb09053c3293c3
-Date: Sat, 10 Sep 2016 21:00:11 -0600
-From: Kurt Seifried <kseifried@redhat.com>
+Received: (qmail 31794 invoked from network); 1 Jun 2015 13:25:38 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=venustech.com.cn;
+	 h=x-mailer:message-id:date:date:content-transfer-encoding
+	:content-type:content-type:mime-version:subject:subject:to:from
+	:from; s=dkim; t=1433164915; x=1434028916; bh=brTzFUutqweAdDS8ck
+	zS0XFWRX4RLkn0i37IS65PxMs=; b=KGs8mA3NybgJxprpVMIBZcaAsMVgqoKrIH
+	IDMr0FDFTYBfEExz3X1hoa6xCO7gIlylVBvnicFIhAvteC3BPgjFlYDqLb5vYWED
+	fEIQAzstwfwGd3H5dF7cBs/RBhwKY27uspFRUk/jxnq7fRK2llIrFBXlT/gvQVQz
+	jJXcNLEqU=
+X-QQ-FEAT: 8ljHHSIBPRykjrOYglVSIIMrTL9x+4LdLsPcWPnOjg1/ThciBF/IVhusJ9xWp
+	/8IAd6ohXqfipnlEQK4GdxvNsWcDDyeNWbs/NAUG12/185wmtJazZliHlfFXwD+gNQboxmO
+	slpuPlrYZnnpRifMJ/DUBy+sJys+cTSuJjqah9H86L8A0jTreWL/kL3PiqjRCUbjlvwnqJw
+	Z7BsHrnfaXw==
+X-QQ-SSF: 00000000000000F000000000000000N
+X-HAS-ATTACH: no
+X-QQ-BUSINESS-ORIGIN: 2
+X-Originating-IP: 111.197.192.60
+X-QQ-STYLE: 
+X-QQ-mid: webmail802t1433165124t6219679
+Mime-Version: 1.0
+Content-Type: multipart/alternative;
+	boundary="----=_NextPart_556C5D44_08675610_169F91C3"
+Content-Transfer-Encoding: 8Bit
+X-Priority: 3
+Message-ID: <tencent_04AA4B6777E925FE18737D03@qq.com>
+X-QQ-MIME: TCMime 1.0 by Tencent
+X-Mailer: QQMail 2.x
+X-QQ-Mailer: QQMail 2.x
+X-QQ-SENDSIZE: 520
+Date: Mon, 1 Jun 2015 21:25:24 +0800
+From: "=?ISO-8859-1?B?d2VuX2d1YW54aW5n?=" <wen_guanxing@venustech.com.cn>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Possible CVE request for Redis docker container
-To: oss-security <oss-security@lists.openwall.com>
+Subject: [oss-security] CVE-2015-3210: PCRE Library Heap Overflow Vulnerability
+To: "=?ISO-8859-1?B?b3NzLXNlY3VyaXR5?=" <oss-security@lists.openwall.com>
 
---001a113cf3e6f7cb09053c3293c3
-Content-Type: text/plain; charset=UTF-8
+------=_NextPart_556C5D44_08675610_169F91C3
+Content-Type: text/plain;
+	charset="ISO-8859-1"
+Content-Transfer-Encoding: base64
 
-So we have this:
+UENSRSBMaWJyYXJ5IEhlYXAgT3ZlcmZsb3cgVnVsbmVyYWJpbGl0eSAtLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0gSS4gU3VtbWFyeSBQQ1JFIGlzIGEgcmVndWxh
+ciBleHByZXNzaW9uIEMgbGlicmFyeSBpbnNwaXJlZCBieSB0aGUgcmVndWxh
+ciBleHByZXNzaW9uIGNhcGFiaWxpdGllcyBpbiB0aGUgUGVybCBwcm9ncmFt
+bWluZyBsYW5ndWFnZS4gVGhlIFBDUkUgbGlicmFyeSBpcyBpbmNvcnBvcmF0
+ZWQgaW50byBhIG51bWJlciBvZiBwcm9taW5lbnQgcHJvZ3JhbXMsIHN1Y2gg
+YXMgQWRvYmUgRmxhc2gsIEFwYWNoZSwgTmdpbngsIFBIUC4gUENSRSBsaWJy
+YXJ5IGlzIHByb25lIHRvIGEgdnVsbmVyYWJpbGl0eSB3aGljaCBsZWFkcyB0
+byBIZWFwIE92ZXJmbG93LiBEdXJpbmcgdGhlIGNvbXBpbGF0aW9uIG9mIGEg
+bWFsZm9ybWVkIHJlZ3VsYXIgZXhwcmVzc2lvbiwgbW9yZSBkYXRhIGlzIHdy
+aXR0ZW4gb24gdGhlIG1hbGxvY2VkIGJsb2NrIHRoYW4gdGhlIGV4cGVjdGVk
+IHNpemUgb3V0cHV0IGJ5IGNvbXBpbGVfcmVnZXguIEV4cGxvaXRzIHdpdGgg
+YWR2YW5jZWQgSGVhcCBGZW5nc2h1aSB0ZWNobmlxdWVzIG1heSBhbGxvdyBh
+biBhdHRhY2tlciB0byBleGVjdXRlIGFyYml0cmFyeSBjb2RlIGluIHRoZSBj
+b250ZXh0IG9mIHRoZSB1c2VyIHJ1bm5pbmcgdGhlIGFmZmVjdGVkIGFwcGxp
+Y2F0aW9uLiAtLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0gSUkuIERlc2NyaXB0aW9u
+IExhdGVzdCB2ZXJzaW9uIG9mIFBDUkUgaXMgcHJvbmUgdG8gYSBIZWFwIE92
+ZXJmbG93IHZ1bG5lcmFiaWxpdHkgd2hpY2ggY291bGQgY2F1c2VkIGJ5IHRo
+ZSBmb2xsb3dpbmcgcmVndWxhciBleHByZXNzaW9uLiAvXig/UD1CKSgoP1A9
+QikoP0o6KD9QPEI+YykoP1A8Qj5hKD9QPUIpKSk+V0dYQ1JFRElUUykvIFRv
+IHJlcHJvZHVjZSB0aGUgcHJvYmxlbSwgd2UgY291bGQgdXNlIHBjcmV0ZXN0
+IHByb3ZpZGUgYnkgUENSRSBsaWJyYXJ5IG9yIGFwcGxpY2F0aW9ucyB3aGlj
+aCBpcyB3cmFwcGVkIHdpdGggUENSRSBzdWNoIGFzIFBIUC4gRm9yIHBjcmV0
+ZXN0LCBzaW1wbHkgdHlwZSB0aGUgcmVndWxhciBleHByZXNzaW9uIGFmdGVy
+IHRoZSByZT4gRm9yIFBIUCwgbGF0ZXN0IHZlcnNpb24gb2YgUEhQIDUuNi45
+ICh3cmFwcGVkIHdpdGggUENSRSA4LjM3KSBjb3VsZCBiZSB0cmlnZ2VyZWQg
+YnkgZm9sbG93aW5nIGNvZGUgc25pcHBldDogPD9waHAgcHJlZ19tYXRjaCgi
+L14oP1A9QikoKD9QPUIpKD9KOig/UDxCPmMpKD9QPEI+YSg/UD1CKSkpPldH
+WENSRURJVFMpLyIsIkFETEFCIiwkYXJyKTsgPz4gRmlyc3QsIHBjcmVfY29t
+cGlsZTIgaW52b2tlIGNvbXBpbGVfcmVnZXgoKSB0byBjYWx1Y2F0ZSB0aGUg
+c2l6ZSBvZiBtZW1vcnkgdGhhdCBpcyB1c2VkIHRvIHNhdmUgdGhlIHJlZ3Vs
+YXIgZXhwcmVzc2lvbi4gcmUgdGhlbiBwb2ludHMgdG8gdGhlIG5ldyBhbGxv
+Y2F0ZWQgbWVtb3J5IHdpdGggdGhlIHNpemUgYWJvdmUuIE5leHQsIHBjcmVf
+Y29tcGlsZTIgaW52b2tlIGNvbXBpbGVfcmVnZXgoKSBhZ2FpbiB0byBmaWxs
+IHRoZSByZWd1bGFyIGV4cHJlc3Npb24gaW50byB0aGUgYWxsb2NhdGVkIG1l
+bW9yeS4gVGhlIHByb2JsZW0gaGVyZSBpcyB0aGF0IG1vcmUgZGF0YSBpcyB3
+cml0dGVuIHRoZW4gZXhwZWN0ZWQuIEZvbGxvd2luZyB0ZXN0IGlzIGNvbnZl
+eWVkIHVuZGVyIEthbGkgTGludXggKGJhc2VkIG9uIERlYmlhbiB4NjQpIHdp
+dGggcGhwIDUuNi45OiA9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PSBnZGIgcGhwIHBvYy5w
+aHAgOTIxNyAgICByZSA9IChSRUFMX1BDUkUgKikoUFVCTChtYWxsb2MpKShz
+aXplKTsgKGdkYikgeC8xMGkgJHJpcCA9PiAweDQ2ZjNjYiA8cGhwX3BjcmVf
+Y29tcGlsZTIrMjE4Nz46ICAgbW92ICAgIHJkaSxyYnAgICAgMHg0NmYzY2Ug
+PHBocF9wY3JlX2NvbXBpbGUyKzIxOTA+OiAgIGNhbGwgICBRV09SRCBQVFIg
+W3JheF0gKGdkYikgeCAkcmJwICAgIDB4OTc6ICAgICAgICBDYW5ub3QgYWNj
+ZXNzIG1lbW9yeSBhdCBhZGRyZXNzIDB4OTcgPT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0g
+U28gdGhlIGV4cGVjdGVkIHNpemUgb2YgdGhlIGFib3ZlIHJlZ3VsYXIgZXhw
+cmVzc2lvbiBpcyAweDk3ID0gMTUxLiBBbmQgdGhlIGJhc2UgYWRkcmVzcyBv
+ZiBhbGxvY2F0ZWQgbWVtb3J5IGlzIDB4MTAwNzQ4MC4gSGVyZSBpcyB0aGUg
+bGF5b3V0IG9mIDB4MTAwNzQ4MCBqdXN0IGJlZm9yZSB0aGUgc2Vjb25kIGNv
+bXBpbGVfcmVnZXhwOiA9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PSAoZ2RiKSB4LzE2MHgg
+MHgxMDA3NDgwIDB4MTAwNzQ4MDogICAgIFsweDQ1ICAgIDB4NTIgICAgMHg0
+MyAgICAweDUwICAgIDB4OTcgICAgMHgwMCAgICAweDAwICAgIDB4MDAgMHgx
+MDA3NDg4OiAgICAgIDB4MDAgICAgMHgwMCAgICAweDAwICAgIDB4MDAgICAg
+MHgwMCAgICAweDA0ICAgIDB4MDAgICAgMHgwMCAweDEwMDc0OTA6ICAgICAg
+MHhmZiAgICAweGZmICAgIDB4ZmYgICAgMHhmZiAgICAweGZmICAgIDB4ZmYg
+ICAgMHhmZiAgICAweGZmIDB4MTAwNzQ5ODogICAgICAweDAwICAgIDB4MDAg
+ICAgMHgwMCAgICAweDAwICAgIDB4MDAgICAgMHgwMCAgICAweDAwICAgIDB4
+MDAgMHgxMDA3NGEwOiAgICAgIDB4MDAgICAgMHgwMCAgICAweDQwICAgIDB4
+MDAgICAgMHgwNCAgICAweDAwICAgIDB4MDIgICAgMHgwMCAweDEwMDc0YTg6
+ICAgICAgMHgwMCAgICAweDAwICAgIDB4MDAgICAgMHgwMCAgICAweDAwICAg
+IDB4MDAgICAgMHgwMCAgICAweDAwIDB4MTAwNzRiMDogICAgICAweGQwICAg
+IDB4N2EgICAgMHgwMCAgICAweDAxICAgIDB4MDAgICAgMHgwMCAgICAweDAw
+ICAgIDB4MDAgMHgxMDA3NGI4OiAgICAgIDB4MDAgICAgMHgwMCAgICAweDAw
+ICAgIDB4MDAgICAgMHgwMCAgICAweDAwICAgIDB4MDAgICAgMHgwMCAweDEw
+MDc0YzA6ICAgICAgMHgwMCAgICAweDAyICAgIDB4NDIgICAgMHgwMCAgICAw
+eDAwICAgIDB4MDMgICAgMHg0MiAgICAweDAwIDB4MTAwNzRjODogICAgICAw
+eDgzICAgIDB4MDAgICAgMHgwMCAgICAweDAwICAgIDB4MDAgICAgMHgwMCAg
+ICAweDAwICAgIDB4MDAgMHgxMDA3NGQwOiAgICAgIDB4MDAgICAgMHgwMCAg
+ICAweDAwICAgIDB4MDAgICAgMHgwMCAgICAweDAwICAgIDB4MDAgICAgMHgw
+MCAweDEwMDc0ZDg6ICAgICAgMHgwMCAgICAweDAwICAgIDB4MDAgICAgMHgw
+MCAgICAweDAwICAgIDB4MDAgICAgMHgwMCAgICAweDAwIDB4MTAwNzRlMDog
+ICAgICAweDAwICAgIDB4MDAgICAgMHgwMCAgICAweDAwICAgIDB4MDAgICAg
+MHgwMCAgICAweDAwICAgIDB4MDAgMHgxMDA3NGU4OiAgICAgIDB4ODAgICAg
+MHg0OCAgICAweGQ4ICAgIDB4ZjYgICAgMHhmZiAgICAweDdmICAgIDB4MDAg
+ICAgMHgwMCAweDEwMDc0ZjA6ICAgICAgMHhmZiAgICAweGZmICAgIDB4ZmYg
+ICAgMHhmZiAgICAweDAwICAgIDB4MDAgICAgMHgwMCAgICAweDAwIDB4MTAw
+NzRmODogICAgICAweDAwICAgIDB4MDAgICAgMHgwMCAgICAweDAwICAgIDB4
+MDAgICAgMHgwMCAgICAweDAwICAgIDB4MDAgMHgxMDA3NTAwOiAgICAgIDB4
+MDAgICAgMHgwMCAgICAweDAwICAgIDB4MDAgICAgMHgwMCAgICAweDAwICAg
+IDB4MDAgICAgMHgwMCAweDEwMDc1MDg6ICAgICAgMHg2MCAgICAweDc1ICAg
+IDB4MDAgICAgMHgwMSAgICAweDAwICAgIDB4MDAgICAgMHgwMCAgICAweDAw
+IDB4MTAwNzUxMDogICAgICAweGZmICAgIDB4ZmYgICAgMHhmZiAgICAweGZm
+ICAgIDB4ZmYgICAgMHhmZiAgICAweGZmXSAgIDB4ZmYgMHgxMDA3NTE4OiAg
+ICAgIDB4YTEgICAgMHgwMSAgICAweDAwICAgIDB4MDAgICAgMHgwMCAgICAw
+eDAwICAgIDB4MDAgICAgMHgwMCA9PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PSBBZnRlciB0
+aGUgc2Vjb25kIGNvbXBpbGVfcmVnZXhwOiA9PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PSAo
+Z2RiKSB4LzE2MHggMHgxMDA3NDgwIDB4MTAwNzQ4MDogICAgIFsweDQ1ICAg
+IDB4NTIgICAgMHg0MyAgICAweDUwICAgIDB4OTcgICAgMHgwMCAgICAweDAw
+ICAgIDB4MDAgMHgxMDA3NDg4OiAgICAgIDB4MDAgICAgMHgwMCAgICAweDAw
+ICAgIDB4MDAgICAgMHgwMCAgICAweDA0ICAgIDB4MDAgICAgMHgwMCAweDEw
+MDc0OTA6ICAgICAgMHhmZiAgICAweGZmICAgIDB4ZmYgICAgMHhmZiAgICAw
+eGZmICAgIDB4ZmYgICAgMHhmZiAgICAweGZmIDB4MTAwNzQ5ODogICAgICAw
+eDAwICAgIDB4MDAgICAgMHgwMCAgICAweDAwICAgIDB4MDAgICAgMHgwMCAg
+ICAweDAwICAgIDB4MDAgMHgxMDA3NGEwOiAgICAgIDB4MDAgICAgMHgwMCAg
+ICAweDQwICAgIDB4MDAgICAgMHgwNCAgICAweDAwICAgIDB4MDIgICAgMHgw
+MCAweDEwMDc0YTg6ICAgICAgMHgwMCAgICAweDAwICAgIDB4MDAgICAgMHgw
+MCAgICAweDAwICAgIDB4MDAgICAgMHgwMCAgICAweDAwIDB4MTAwNzRiMDog
+ICAgICAweGQwICAgIDB4N2EgICAgMHgwMCAgICAweDAxICAgIDB4MDAgICAg
+MHgwMCAgICAweDAwICAgIDB4MDAgMHgxMDA3NGI4OiAgICAgIDB4MDAgICAg
+MHgwMCAgICAweDAwICAgIDB4MDAgICAgMHgwMCAgICAweDAwICAgIDB4MDAg
+ICAgMHgwMCAweDEwMDc0YzA6ICAgICAgMHgwMCAgICAweDAyICAgIDB4NDIg
+ICAgMHgwMCAgICAweDAwICAgIDB4MDMgICAgMHg0MiAgICAweDAwIDB4MTAw
+NzRjODogICAgICAweDgzICAgIDB4MDAgICAgMHg1MSAgICAweDFiICAgIDB4
+NzMgICAgMHgwMCAgICAweDAwICAgIDB4MDAgMHgxMDA3NGQwOiAgICAgIDB4
+MDIgICAgMHg4NSAgICAweDAwICAgIDB4NDUgICAgMHgwMCAgICAweDAxICAg
+IDB4NzMgICAgMHgwMCAweDEwMDc0ZDg6ICAgICAgMHgwMCAgICAweDAwICAg
+IDB4MDIgICAgMHg4MyAgICAweDAwICAgIDB4MjIgICAgMHg4NSAgICAweDAw
+IDB4MTAwNzRlMDogICAgICAweDA3ICAgIDB4MDAgICAgMHgwMiAgICAweDFk
+ICAgIDB4NjMgICAgMHg3OCAgICAweDAwICAgIDB4MDcgMHgxMDA3NGU4OiAg
+ICAgIDB4ODEgICAgMHgwMCAgICAweDEyICAgIDB4ODUgICAgMHgwMCAgICAw
+eDBjICAgIDB4MDAgICAgMHgwMyAweDEwMDc0ZjA6ICAgICAgMHgxZCAgICAw
+eDYxICAgIDB4NzMgICAgMHgwMCAgICAweDAwICAgIDB4MDAgICAgMHgwMiAg
+ICAweDc4IDB4MTAwNzRmODogICAgICAweDAwICAgIDB4MGMgICAgMHg3OCAg
+ICAweDAwICAgIDB4MTIgICAgMHg3OCAgICAweDAwICAgIDB4MjIgMHgxMDA3
+NTAwOiAgICAgIDB4MWQgICAgMHgzZSAgICAweDFkICAgIDB4NTcgICAgMHgx
+ZCAgICAweDQ3ICAgIDB4MWQgICAgMHg1OCAweDEwMDc1MDg6ICAgICAgMHgx
+ZCAgICAweDQzICAgIDB4MWQgICAgMHg1MiAgICAweDFkICAgIDB4NDUgICAg
+MHgxZCAgICAweDQ0IDB4MTAwNzUxMDogICAgICAweDFkICAgIDB4NDkgICAg
+MHgxZCAgICAweDU0ICAgIDB4MWQgICAgMHg1MyAgICAweDc4XSAgKjB4MDAg
+MHgxMDA3NTE4OiAgICAgKjB4NDUgICAqMHg3OCAgICoweDAwICAgKjB4NTEg
+ICAgMHgwMCAgICAweDAwICAgIDB4MDAgICAgMHgwMCA9PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PSBPYnZpb3VzbHksIDUgbW9yZSBieXRlcyBpcyB3cml0dGVuIG9uIHRo
+ZSBoZWFwIGluIHRoaXMgY2FzZS4gVGhpcyBvdmVyZmxvdyBjYW4gYmUgdXNl
+ZCB0byBtb2RpZnkgYWRqYWNlbnQgbGVuZ3RoIGZpZWxkIG9mIGFycmF5L3Zl
+Y3Rvci9zdHJpbmcsIGdhaW5pbmcgdGhlIGF0dGFja2VyIHRoZSBhYmlsaXR5
+IHRvIHJlYWQvd3JpdGUgdGhlIHdob2xlIG1lbW9yeSAgaW4gdGhlIGNvbnRl
+eHQgb2YgdGhlIGFmZmVjdGVkIGFwcGxpY2F0aW9uIChUaGUgc2FtZSB0cmlj
+ayBhcyBDVkUtMjAxMy0wNjM0KS4gLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tIElJ
+SS4gSW1wYWN0IEhlYXAgT3ZlcmZsb3cgLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+IElWLiBBZmZlY3RlZCBQQ1JFIHZlcnNpb24gPiA4LjMzICg4LjM0LCA4LjM1
+LCA4LjM2LCA4LjM3IGFyZSBjb25maXJtZWQgdG8gYmUgdnVsbmVyYWJsZSku
+IFBDUkUyIDEwLjEwIGlzIGFsc28gY29uZmlybWVkIHRvIGJlIHZ1bG5lcmFi
+bGUuICBPdGhlciBhcHBsaWNhdGlvbnMgbWF5IGFsc28gYmUgYWZmZWN0ZWQu
+IC0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLSBWLiBDcmVkaXQgV2VuIEd1YW54aW5n
+IGZyb20gVmVudXN0ZWNoIEFETEFCIGlzIGNyZWRpdGVkIGZvciB0aGlzIHZ1
+bG5lcmFiaWxpdHku
 
-https://github.com/dxa4481/Damn-Vulnerable-Redis-Container
+------=_NextPart_556C5D44_08675610_169F91C3--
 
-I wanted to run it by the OSS-Security community first to gather other
-points of view/feedback before going to the CVE board.
-
-So:
-
-1) Currently services that don't require auth don't get a CVE for that
-specifically (e/g. memcached), so as long as it is clearly stated as such
-(no auth supported, use something else to control access), however what
-about implementations of these services (e.g. VM appliances, docker
-containers) that don't explicitly warn, and fail to implement any
-protection, should they continue to not get CVEs?
-
-I'm inclined to say "it depends", e.g. if the appliance/container only
-includes a vulnerable service (say a memcached container) and nothing else
-then no CVE, but if a container/appliance is part of a larger composed
-product (e.g. a webserver, web app and memcached), and it can result in a
-security vulnerability then I would expect a CVE to be issued.
-
-
-2) Services that are capable of authentication but do not have it enabled.
-Same reasoning as above. On it's own you're expected to set it up properly.
-If it's part of a larger composed product I would expect it to be setup
-properly.
-
-So in the case of https://github.com/dxa4481/Damn-Vulnerable-Redis-Container
- I'm inclined to say no CVE for the redis only container, but if a product
-uses this container then it may be getting a CVE if it exposes it.
-
-But then practically speaking we end up with N+1 CVEs for "X uses redis
-container in insecure manner" rather then a single blanket CVE for "redis
-container is insecure". So like I said, I'd like to get some community
-feedback before I take this to the CVE board.
-
--- 
-
---
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@redhat.com
-
---001a113cf3e6f7cb09053c3293c3--
