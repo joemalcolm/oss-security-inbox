@@ -1,4 +1,9 @@
-Received: (qmail 16313 invoked by uid 550); 12 Jul 2023 14:10:57 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1655" "Monday" "1" "June" "2015" "21:47:54" "+0000" "mancha" "mancha1@zoho.com" "<20150601214754.GA3491@zoho.com>" "49" "[oss-security] MITRE delays persist" nil nil nil "6" "2015060121:47:54" "[oss-security] MITRE delays persist" (number mark "        mancha1@zoho Jun  1   49/1655  " thread-indent "\"[oss-security] MITRE delays persist\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 15832 invoked by uid 550); 1 Jun 2015 21:48:23 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,267 +11,72 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 15793 invoked from network); 1 Jun 2015 21:48:18 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; 
+  s=zapps768; d=zoho.com; 
+  h=date:from:to:subject:message-id:mime-version:content-type; 
+  b=IKm2SY7gWqMNkS6wAISw2e4x5mDTL3tLF2qwWOLmRUDwi9snT0T/8H9pepeOfrLhLrJAofKa5ouR
+    vgAG56rFUQSnvk9X+81NYKbWg4K2tp3dk57oXjhRsHtOSUnWDRRH  
+Message-ID: <20150601214754.GA3491@zoho.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="T4sUOijqQbZv57TR"
+Content-Disposition: inline
+X-PGP-Key: http://hkps.pool.sks-keyservers.net/pks/lookup?op=vindex&search=0x25168eb24f0b22ac
+X-PGP-FP: 56B7 100E F4D5 811C 8FEF  ADD1 2516 8EB2 4F0B 22AC
+X-Zoho-Virus-Status: 1
+Date: Mon, 1 Jun 2015 21:47:54 +0000
+From: mancha <mancha1@zoho.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 16283 invoked from network); 12 Jul 2023 14:10:56 -0000
-From: Daniel Beck <ml@beckweb.net>
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3696.120.41.1.3\))
-Message-Id: <C710E6BF-A7C7-4ADF-95A5-8C6A920601C1@beckweb.net>
-Date: Wed, 12 Jul 2023 16:10:45 +0200
-To: oss-security@lists.openwall.com
-X-Mailer: Apple Mail (2.3696.120.41.1.3)
-X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1689171056;13f14026;
-X-HE-SMSGID: 1qJaYH-0005VK-Ah
-Subject: [oss-security] Multiple vulnerabilities in Jenkins plugins 
+Subject: [oss-security] MITRE delays persist
+To: oss-security@lists.openwall.com, coley@mitre.org
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software.
+--T4sUOijqQbZv57TR
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-The following releases contain fixes for security vulnerabilities:
+Hello Steve.
 
-* Active Directory Plugin 2.30.1
-* Datadog Plugin 5.4.2
-* External Monitor Job Type Plugin 207.v98a_a_37a_85525
-* mabl Plugin 0.0.47
-* OpenShift Login Plugin 1.1.0.230.v5d7030b_f5432
-* Oracle Cloud Infrastructure Compute Plugin 1.0.17
-* Orka by MacStadium Plugin 1.34
-* SAML Single Sign On(SSO) Plugin 2.3.1
+Back in mid-March you wrote an email addressing the CVE assignment
+delays people had been experiencing. [1]
 
-Additionally, we announce unresolved security issues in the following
-plugins:
+I was relieved when I received your email because I had several
+outstanding requests and was wondering why they were being held up.
 
-* Assembla Auth Plugin
-* Benchmark Evaluator Plugin
-* ElasticBox CI Plugin
-* MathWorks Polyspace Plugin
-* Pipeline restFul API Plugin
-* Rebuilder Plugin
-* Sumologic Publisher Plugin
-* Test Results Aggregator Plugin
+Unfortunately, almost 11 weeks has passed since your email and my
+pending requests have yet to be addressed.
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://www.jenkins.io/security/advisory/2023-07-12/
+Would you please provide an update on the steps MITRE is taking to
+become more responsive and provide a hard timeline on clearing of the
+existing backlog?
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
+For example, I have pending requests dating back to mid-February.
 
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://www.jenkins.io/security/#reporting-vulnerabilities
+Thank you.
 
----
+[1] http://marc.info/?l=oss-security&m=142679274522902&w=2
 
-SECURITY-3133 / CVE-2023-37942
-External Monitor Job Type Plugin 206.v9a_94ff0b_4a_10 and earlier does not
-configure its XML parser to prevent XML external entity (XXE) attacks.
 
-This allows attackers with Item/Build permission to have Jenkins parse a
-crafted HTTP request with XML data that uses external entities for
-extraction of secrets from the Jenkins controller or server-side request
-forgery.
+--T4sUOijqQbZv57TR
+Content-Type: application/pgp-signature
 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-SECURITY-3059 / CVE-2023-37943
-Active Directory Plugin allows testing a new, unsaved configuration by
-performing a connection test (the button labeled "Test Domain").
+iQIcBAEBCgAGBQJVbNMJAAoJEB4VYy8JqhaDpeEP/RHTIMjBgZgKTadMkrYvHU1F
+m9WVEn0PjFWd8f1FpkrUe5NhJ4E/Bd0DZTUwBbBYPsS/K4ckxAPzX9BPnSx3Chfu
+bnDNst5rRHF/tVaS4/TKOJvdO6jbIZYwveheTcFW7AC64eqXAc1nUCvRV6lmxjOG
+jZmEbUN+p/ttb6MoJ13pM3aPU438oOgGQlUl81ddPVTDHKrA2/vlWhSE0BFA1ZK1
+9iQ2l1bhLFGmTgWxDfhZ3zlJE9tDg/f7rgNoIvP/bO8hISDS4ACpsZqLWgKkKHSM
+Q/xccAnoL+OrwPFgmfS6MSjvmCRxrLL8/glsbhkA1vK3J8B0su7CwZ7h6m6fH0oZ
+GxuM5slZdTlPnatnbH1zIZULOEgc57ZKkXREuyvr760kwPacW3yohJ3JEzGvPuOg
+2NwslBvCYi4sMdsWXd7YCI8+u3ivtiPy6GwI+bEfrcNskN7d2r5eAc4y+veB9spz
+tL1c/A2QDX+bMuhnhXBNgaymIVX62KNzGWsD4aKC+fFYYSZeg0+mIu/I0smklfPP
+bFvjX8qJvvUgXeXTDDEyzYTicSD7niXhmAj/+j4IzPFS59t/bMURCnM+G+MSpLPf
+xcGgkq+d34b7ABBRj9bVx6gxDXUbgUfloFm8XDMLCrT938h9XiZA4lqIT4FAgyQp
+6vO139KrOa94EsT36a6S
+=3Su4
+-----END PGP SIGNATURE-----
 
-Active Directory Plugin 2.30 and earlier ignores the "Require TLS" and
-"StartTls" options and always performs the connection test to Active
-directory unencrypted. This allows attackers able to capture network
-traffic between the Jenkins controller and Active Directory servers to
-obtain Active Directory credentials.
-
-NOTE: This only affects the connection test. Connections established during
-the login process are encrypted if the corresponding TLS option is enabled.
-
-
-SECURITY-3130 / CVE-2023-37944
-Datadog Plugin 5.4.1 and earlier does not perform a permission check in an
-HTTP endpoint.
-
-This allows attackers with Overall/Read permission to connect to an
-attacker-specified URL using attacker-specified credentials IDs obtained
-through another method, capturing credentials stored in Jenkins.
-
-
-SECURITY-3164 / CVE-2023-37945
-SAML Single Sign On(SSO) Plugin 2.3.0 and earlier does not perform a
-permission check in an HTTP endpoint.
-
-This allows attackers with Overall/Read permission to download a string
-representation of the current security realm (Java `Object#toString()`),
-which potentially includes sensitive information.
-
-
-SECURITY-2998 / CVE-2023-37946
-OpenShift Login Plugin 1.1.0.227.v27e08dfb_1a_20 and earlier does not
-invalidate the existing session on login.
-
-This allows attackers to use social engineering techniques to gain
-administrator access to Jenkins.
-
-
-SECURITY-2999 / CVE-2023-37947
-OpenShift Login Plugin 1.1.0.227.v27e08dfb_1a_20 and earlier improperly
-determines that a redirect URL after login is legitimately pointing to
-Jenkins.
-
-This allows attackers to perform phishing attacks by having users go to a
-Jenkins URL that will forward them to a different site after successful
-authentication.
-
-
-SECURITY-3044 / CVE-2023-37948
-Oracle Cloud Infrastructure Compute Plugin 1.0.16 and earlier does not
-perform SSH host key validation when connecting to OCI clouds.
-
-This lack of validation could be abused using a man-in-the-middle attack to
-intercept these connections to OCI clouds.
-
-
-SECURITY-3128 / CVE-2023-37949
-Orka by MacStadium Plugin 1.33 and earlier does not perform a permission
-check in an HTTP endpoint.
-
-This allows attackers with Overall/Read permission to connect to an
-attacker-specified URL using attacker-specified credentials IDs obtained
-through another method, capturing credentials stored in Jenkins.
-
-
-SECURITY-3137 (1) / CVE-2023-37950
-mabl Plugin 0.0.46 and earlier does not perform a permission check in an
-HTTP endpoint.
-
-This allows attackers with Overall/Read permission to enumerate credentials
-IDs of credentials stored in Jenkins. Those can be used as part of an
-attack to capture the credentials using another vulnerability.
-
-
-SECURITY-3137 (2) / CVE-2023-37951
-mabl Plugin 0.0.46 and earlier does not set the appropriate context for
-credentials lookup, allowing the use of System-scoped credentials otherwise
-reserved for the global configuration.
-
-This allows attackers with Item/Configure permission to access and capture
-credentials they are not entitled to.
-
-
-SECURITY-3127 / CVE-2023-37952 (CSRF) & CVE-2023-37953 (missing permission =
-check)
-mabl Plugin 0.0.46 and earlier does not perform permission checks in
-several HTTP endpoints.
-
-This allows attackers with Overall/Read permission to connect to an
-attacker-specified URL using attacker-specified credentials IDs obtained
-through another method, capturing credentials stored in Jenkins.
-
-Additionally, these HTTP endpoints do not require POST requests, resulting
-in a cross-site request forgery (CSRF) vulnerability.
-
-
-SECURITY-3033 / CVE-2023-37954
-Rebuilder Plugin 320.v5a_0933a_e7d61 and earlier does not require POST
-requests for an HTTP endpoint, resulting in a cross-site request forgery
-(CSRF) vulnerability.
-
-This vulnerability allows attackers to rebuild a previous build.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-3122 / CVE-2023-37955 (CSRF) & CVE-2023-37956 (missing permission =
-check)
-Test Results Aggregator Plugin 1.2.13 and earlier does not perform a
-permission check in an HTTP endpoint implementing form validation.
-
-This allows attackers with Overall/Read permission to connect to an
-attacker-specified URL using attacker-specified username and password.
-
-Additionally, this HTTP endpoint does not require POST requests, resulting
-in a cross-site request forgery (CSRF) vulnerability.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-3126 / CVE-2023-37957
-Pipeline restFul API Plugin 0.11 and earlier does not require POST requests
-for an HTTP endpoint, resulting in a cross-site request forgery (CSRF)
-vulnerability.
-
-This vulnerability allows attackers to have Jenkins connect to an
-attacker-specified URL, capturing a newly generated JCLI token that allows
-impersonating the victim.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-3117 / CVE-2023-37958 (CSRF) & CVE-2023-37959 (missing permission =
-check)
-Sumologic Publisher Plugin 2.2.1 and earlier does not perform a permission
-check in a method implementing form validation.
-
-This allows attackers with Overall/Read permission to connect to an
-attacker-specified URL.
-
-Additionally, this form validation method does not require POST requests,
-resulting in a cross-site request forgery (CSRF) vulnerability.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-3124 / CVE-2023-37960
-MathWorks Polyspace Plugin 1.0.5 and earlier does not restrict the path of
-the attached files in Polyspace Notification post-build step.
-
-This allows attackers with Item/Configure permission to send emails with
-arbitrary files from the Jenkins controller file system.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2988 / CVE-2023-37961
-Assembla Auth Plugin 1.14 and earlier does not implement a state parameter
-in its OAuth flow, a unique and non-guessable value associated with each
-authentication request.
-
-This vulnerability allows attackers to trick users into logging in to the
-attacker's account.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-3119 / CVE-2023-37962 (CSRF) & CVE-2023-37963 (missing permission =
-check)
-Benchmark Evaluator Plugin 1.0.1 and earlier does not perform a permission
-check in a method implementing form validation.
-
-This allows attackers with Overall/Read permission to connect to an
-attacker-specified URL and to check for the existence of directories,
-`.csv`, and `.ycsb` files on the Jenkins controller file system.
-
-Additionally, this form validation method does not require POST requests,
-resulting in a cross-site request forgery (CSRF) vulnerability.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-3131 / CVE-2023-37964 (CSRF) & CVE-2023-37965 (missing permission =
-check)
-ElasticBox CI Plugin 5.0.1 and earlier does not perform permission checks
-in several HTTP endpoints.
-
-This allows attackers with Overall/Read permission to connect to an
-attacker-specified URL using attacker-specified credentials IDs obtained
-through another method, capturing credentials stored in Jenkins.
-
-Additionally, these HTTP endpoints do not require POST requests, resulting
-in a cross-site request forgery (CSRF) vulnerability.
-
-As of publication of this advisory, there is no fix.
-
-
+--T4sUOijqQbZv57TR--
 
