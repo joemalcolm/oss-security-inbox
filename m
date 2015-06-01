@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["795" "Thursday" "14" "July" "2016" "07:45:00" "+0900" "Greg KH" "greg@kroah.com" "<20160713224500.GD12156@kroah.com>" "23" "Re: [oss-security] Re: cve request: local DoS by overflowing kernel mount table using shared bind mount" nil nil nil "7" "2016071322:45:00" "[oss-security] Re: cve request: local DoS by overflowing kernel mount table using shared bind mount" (number mark "U       greg@kroah.c Jul 14   23/795   " thread-indent "\"Re: [oss-security] Re: cve request: local DoS by overflowing kernel mount table using shared bind mount\"\n") "<20160713165940.E24C88BCE32@smtpvmsrv1.mitre.org>" ("<1929364718.4484556.1468421564523.JavaMail.zimbra@redhat.com>" "<20160713165940.E24C88BCE32@smtpvmsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["8951" "Monday" "1" "June" "2015" "21:11:32" "+0800" "=?ISO-8859-1?Q?wen=5Fguanxing?=" "wen_guanxing@venustech.com.cn" "<tencent_6A242535557CA1EC0DED28C3@qq.com>" "152" "[oss-security] CVE-2015-3210: PCRE Library Heap Overflow Vulnerability" nil nil nil "6" "2015060113:11:32" "[oss-security] CVE-2015-3210: PCRE Library Heap Overflow Vulnerability" (number mark "        wen_guanxing Jun  1  152/8951  " thread-indent "\"[oss-security] CVE-2015-3210: PCRE Library Heap Overflow Vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 22382 invoked by uid 550); 13 Jul 2016 22:45:25 -0000
+Received: (qmail 18377 invoked by uid 550); 1 Jun 2015 13:12:07 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,51 +11,190 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 18339 invoked from network); 1 Jun 2015 13:12:01 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=venustech.com.cn;
+	 h=x-mailer:message-id:date:date:content-transfer-encoding
+	:content-type:content-type:mime-version:subject:subject:to:from
+	:from; s=dkim; t=1433164090; x=1434028091; bh=/vZRNxillg+xFVOch9
+	mLtcxFtgEqlgstGKwFHXxfYNE=; b=MHLHYX6w1XusWdvQY20TSJoNwicSgnKPpc
+	j3ZLhbLullGaYxVmYTN3kq5i1V1P2CR/sCwUoikbyCGe1LAP9hWtWxDiW86drQ6c
+	UGjo4wSgQOa0rCrmD+ggeqX4/MsKk/tTGpWa5tyU5khS+gwTm4Rje7zQCr8spV9K
+	AOA4+nHJs=
+X-QQ-FEAT: pJFHdIvhWwPwUd/oyQQAYkTwxkDoIb8V+HL+DfUTCV2wTGLg7mOUKI1DSMKlA
+	5+E53eZG+KUiXNSJvBZ+hLZXfJ7eCePTThQSG5+dgxQS1RDNYDQXM6r2QztUdeIvnRRrBSU
+	cQ65L/djvbY0cLS4cdlXLs/7OUImjvY7aKjhqNxbEi03QKioEmX5rVKW21M6gHsVICa7wZ/
+	CK0f+30AhzQ==
+X-QQ-SSF: 00000000000000F000000000000000N
+X-HAS-ATTACH: no
+X-QQ-BUSINESS-ORIGIN: 2
+X-Originating-IP: 111.197.192.60
+X-QQ-STYLE: 
+X-QQ-mid: webmail802t1433164292t9539606
+Mime-Version: 1.0
+Content-Type: multipart/alternative;
+	boundary="----=_NextPart_556C5A04_0923FFB8_3FA8583B"
+Content-Transfer-Encoding: 8Bit
+X-Priority: 3
+Message-ID: <tencent_6A242535557CA1EC0DED28C3@qq.com>
+X-QQ-MIME: TCMime 1.0 by Tencent
+X-Mailer: QQMail 2.x
+X-QQ-Mailer: QQMail 2.x
+X-QQ-SENDSIZE: 520
+Date: Mon, 1 Jun 2015 21:11:32 +0800
+From: "=?ISO-8859-1?B?d2VuX2d1YW54aW5n?=" <wen_guanxing@venustech.com.cn>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 22360 invoked from network); 13 Jul 2016 22:45:25 -0000
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to:x-sasl-enc
-	:x-sasl-enc; s=smtpout; bh=jiXwYy1rf0COkR6tE9ivPmli39o=; b=SRIQP
-	4OsWSCUVSyChrjqbfccsDOIH+KFnsmHG5s81/V8Tze7gmna4ORJgF9C81kIhQcdz
-	rgQZ0tPlGVTbr2meEXfiNXmG6OfUCzZ1mRoSalUTKo+Rjo8eTncX3CdcB0Zm4Vg2
-	McED8/ictFbU8vxtoTBBLEeccQXSYxv/i4Zt/k=
-X-Sasl-enc: zHtnZCTr4TuxC7M1AXI5idfMGBF1fc0UqUhvXcNUxntt 1468449912
-Date: Thu, 14 Jul 2016 07:45:00 +0900
-From: Greg KH <greg@kroah.com>
-To: oss-security@lists.openwall.com
-Cc: caiqian@redhat.com, cve-assign@mitre.org
-Message-ID: <20160713224500.GD12156@kroah.com>
-References: <1929364718.4484556.1468421564523.JavaMail.zimbra@redhat.com>
- <20160713165940.E24C88BCE32@smtpvmsrv1.mitre.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20160713165940.E24C88BCE32@smtpvmsrv1.mitre.org>
-User-Agent: Mutt/1.6.2 (2016-07-01)
-Subject: Re: [oss-security] Re: cve request: local DoS by overflowing kernel
- mount table using shared bind mount
+Subject: [oss-security] CVE-2015-3210: PCRE Library Heap Overflow Vulnerability
+To: "=?ISO-8859-1?B?b3NzLXNlY3VyaXR5?=" <oss-security@lists.openwall.com>
 
-On Wed, Jul 13, 2016 at 12:59:40PM -0400, cve-assign@mitre.org wrote:
-> > It was reported that the mount table expands by a power-of-two
-> > with each bind mount command.
-> 
-> > If the system is configured in the way that a non-root user
-> > allows bind mount even if with limit number of bind mount
-> > allowed, a non-root user could cause a local DoS by quickly
-> > overflow the mount table.
-> 
-> > it will cause a deadlock for the whole system,
-> 
-> >> form of unlimited memory consumption that is causing the problem
-> 
-> Use CVE-2016-6213.
+------=_NextPart_556C5A04_0923FFB8_3FA8583B
+Content-Type: text/plain;
+	charset="ISO-8859-1"
+Content-Transfer-Encoding: base64
 
-A CVE for an "improperly configured system"?  Huh?  What distro has such
-a configuration set by default?  This isn't a kernel bug, so what is
-this CVE classified as being "against"?  It better not be against the
-Linux kernel...
+SS4gU3VtbWFyeSBQQ1JFIGlzIGEgcmVndWxhciBleHByZXNzaW9uIEMgbGli
+cmFyeSBpbnNwaXJlZCBieSB0aGUgcmVndWxhciBleHByZXNzaW9uIGNhcGFi
+aWxpdGllcyBpbiB0aGUgUGVybCBwcm9ncmFtbWluZyBsYW5ndWFnZS4gVGhl
+IFBDUkUgbGlicmFyeSBpcyBpbmNvcnBvcmF0ZWQgaW50byBhIG51bWJlciBv
+ZiBwcm9taW5lbnQgcHJvZ3JhbXMsIHN1Y2ggYXMgQWRvYmUgRmxhc2gsIEFw
+YWNoZSwgTmdpbngsIFBIUC4gUENSRSBsaWJyYXJ5IGlzIHByb25lIHRvIGEg
+dnVsbmVyYWJpbGl0eSB3aGljaCBsZWFkcyB0byBIZWFwIE92ZXJmbG93LiBE
+dXJpbmcgdGhlIGNvbXBpbGF0aW9uIG9mIGEgbWFsZm9ybWVkIHJlZ3VsYXIg
+ZXhwcmVzc2lvbiwgbW9yZSBkYXRhIGlzIHdyaXR0ZW4gb24gdGhlIG1hbGxv
+Y2VkIGJsb2NrIHRoYW4gdGhlIGV4cGVjdGVkIHNpemUgb3V0cHV0IGJ5IGNv
+bXBpbGVfcmVnZXguIEV4cGxvaXRzIHdpdGggYWR2YW5jZWQgSGVhcCBGZW5n
+c2h1aSB0ZWNobmlxdWVzIG1heSBhbGxvdyBhbiBhdHRhY2tlciB0byBleGVj
+dXRlIGFyYml0cmFyeSBjb2RlIGluIHRoZSBjb250ZXh0IG9mIHRoZSB1c2Vy
+IHJ1bm5pbmcgdGhlIGFmZmVjdGVkIGFwcGxpY2F0aW9uLiAtLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0gSUkuIERlc2NyaXB0aW9uIExhdGVzdCB2ZXJzaW9uIG9m
+IFBDUkUgaXMgcHJvbmUgdG8gYSBIZWFwIE92ZXJmbG93IHZ1bG5lcmFiaWxp
+dHkgd2hpY2ggY291bGQgY2F1c2VkIGJ5IHRoZSBmb2xsb3dpbmcgcmVndWxh
+ciBleHByZXNzaW9uLiAvXig/UD1CKSgoP1A9QikoP0o6KD9QPEI+YykoP1A8
+Qj5hKD9QPUIpKSk+V0dYQ1JFRElUUykvIFRvIHJlcHJvZHVjZSB0aGUgcHJv
+YmxlbSwgd2UgY291bGQgdXNlIHBjcmV0ZXN0IHByb3ZpZGUgYnkgUENSRSBs
+aWJyYXJ5IG9yIGFwcGxpY2F0aW9ucyB3aGljaCBpcyB3cmFwcGVkIHdpdGgg
+UENSRSBzdWNoIGFzIFBIUC4gRm9yIHBjcmV0ZXN0LCBzaW1wbHkgdHlwZSB0
+aGUgcmVndWxhciBleHByZXNzaW9uIGFmdGVyIHRoZSByZT4gRm9yIFBIUCwg
+bGF0ZXN0IHZlcnNpb24gb2YgUEhQIDUuNi45ICh3cmFwcGVkIHdpdGggUENS
+RSA4LjM3KSBjb3VsZCBiZSB0cmlnZ2VyZWQgYnkgZm9sbG93aW5nIGNvZGUg
+c25pcHBldDogPD9waHAgcHJlZ19tYXRjaCgiL14oP1A9QikoKD9QPUIpKD9K
+Oig/UDxCPmMpKD9QPEI+YSg/UD1CKSkpPldHWENSRURJVFMpLyIsIkFETEFC
+IiwkYXJyKTsgPz4gRmlyc3QsIHBjcmVfY29tcGlsZTIgaW52b2tlIGNvbXBp
+bGVfcmVnZXgoKSB0byBjYWx1Y2F0ZSB0aGUgc2l6ZSBvZiBtZW1vcnkgdGhh
+dCBpcyB1c2VkIHRvIHNhdmUgdGhlIHJlZ3VsYXIgZXhwcmVzc2lvbi4gcmUg
+dGhlbiBwb2ludHMgdG8gdGhlIG5ldyBhbGxvY2F0ZWQgbWVtb3J5IHdpdGgg
+dGhlIHNpemUgYWJvdmUuIE5leHQsIHBjcmVfY29tcGlsZTIgaW52b2tlIGNv
+bXBpbGVfcmVnZXgoKSBhZ2FpbiB0byBmaWxsIHRoZSByZWd1bGFyIGV4cHJl
+c3Npb24gaW50byB0aGUgYWxsb2NhdGVkIG1lbW9yeS4gVGhlIHByb2JsZW0g
+aGVyZSBpcyB0aGF0IG1vcmUgZGF0YSBpcyB3cml0dGVuIHRoZW4gZXhwZWN0
+ZWQuIEZvbGxvd2luZyB0ZXN0IGlzIGNvbnZleWVkIHVuZGVyIEthbGkgTGlu
+dXggKGJhc2VkIG9uIERlYmlhbiB4NjQpIHdpdGggcGhwIDUuNi45OiA9PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PSBnZGIgcGhwIHBvYy5waHAgOTIxNyAgICByZSA9IChS
+RUFMX1BDUkUgKikoUFVCTChtYWxsb2MpKShzaXplKTsgKGdkYikgeC8xMGkg
+JHJpcCA9PiAweDQ2ZjNjYiA8cGhwX3BjcmVfY29tcGlsZTIrMjE4Nz46ICAg
+bW92ICAgIHJkaSxyYnAgICAgMHg0NmYzY2UgPHBocF9wY3JlX2NvbXBpbGUy
+KzIxOTA+OiAgIGNhbGwgICBRV09SRCBQVFIgW3JheF0gKGdkYikgeCAkcmJw
+ICAgIDB4OTc6ICAgICAgICBDYW5ub3QgYWNjZXNzIG1lbW9yeSBhdCBhZGRy
+ZXNzIDB4OTcgPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT0gU28gdGhlIGV4cGVjdGVkIHNp
+emUgb2YgdGhlIGFib3ZlIHJlZ3VsYXIgZXhwcmVzc2lvbiBpcyAweDk3ID0g
+MTUxLiBBbmQgdGhlIGJhc2UgYWRkcmVzcyBvZiBhbGxvY2F0ZWQgbWVtb3J5
+IGlzIDB4MTAwNzQ4MC4gSGVyZSBpcyB0aGUgbGF5b3V0IG9mIDB4MTAwNzQ4
+MCBqdXN0IGJlZm9yZSB0aGUgc2Vjb25kIGNvbXBpbGVfcmVnZXhwOiA9PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PSAoZ2RiKSB4LzE2MHggMHgxMDA3NDgwIDB4MTAwNzQ4
+MDogICAgIFsweDQ1ICAgIDB4NTIgICAgMHg0MyAgICAweDUwICAgIDB4OTcg
+ICAgMHgwMCAgICAweDAwICAgIDB4MDAgMHgxMDA3NDg4OiAgICAgIDB4MDAg
+ICAgMHgwMCAgICAweDAwICAgIDB4MDAgICAgMHgwMCAgICAweDA0ICAgIDB4
+MDAgICAgMHgwMCAweDEwMDc0OTA6ICAgICAgMHhmZiAgICAweGZmICAgIDB4
+ZmYgICAgMHhmZiAgICAweGZmICAgIDB4ZmYgICAgMHhmZiAgICAweGZmIDB4
+MTAwNzQ5ODogICAgICAweDAwICAgIDB4MDAgICAgMHgwMCAgICAweDAwICAg
+IDB4MDAgICAgMHgwMCAgICAweDAwICAgIDB4MDAgMHgxMDA3NGEwOiAgICAg
+IDB4MDAgICAgMHgwMCAgICAweDQwICAgIDB4MDAgICAgMHgwNCAgICAweDAw
+ICAgIDB4MDIgICAgMHgwMCAweDEwMDc0YTg6ICAgICAgMHgwMCAgICAweDAw
+ICAgIDB4MDAgICAgMHgwMCAgICAweDAwICAgIDB4MDAgICAgMHgwMCAgICAw
+eDAwIDB4MTAwNzRiMDogICAgICAweGQwICAgIDB4N2EgICAgMHgwMCAgICAw
+eDAxICAgIDB4MDAgICAgMHgwMCAgICAweDAwICAgIDB4MDAgMHgxMDA3NGI4
+OiAgICAgIDB4MDAgICAgMHgwMCAgICAweDAwICAgIDB4MDAgICAgMHgwMCAg
+ICAweDAwICAgIDB4MDAgICAgMHgwMCAweDEwMDc0YzA6ICAgICAgMHgwMCAg
+ICAweDAyICAgIDB4NDIgICAgMHgwMCAgICAweDAwICAgIDB4MDMgICAgMHg0
+MiAgICAweDAwIDB4MTAwNzRjODogICAgICAweDgzICAgIDB4MDAgICAgMHgw
+MCAgICAweDAwICAgIDB4MDAgICAgMHgwMCAgICAweDAwICAgIDB4MDAgMHgx
+MDA3NGQwOiAgICAgIDB4MDAgICAgMHgwMCAgICAweDAwICAgIDB4MDAgICAg
+MHgwMCAgICAweDAwICAgIDB4MDAgICAgMHgwMCAweDEwMDc0ZDg6ICAgICAg
+MHgwMCAgICAweDAwICAgIDB4MDAgICAgMHgwMCAgICAweDAwICAgIDB4MDAg
+ICAgMHgwMCAgICAweDAwIDB4MTAwNzRlMDogICAgICAweDAwICAgIDB4MDAg
+ICAgMHgwMCAgICAweDAwICAgIDB4MDAgICAgMHgwMCAgICAweDAwICAgIDB4
+MDAgMHgxMDA3NGU4OiAgICAgIDB4ODAgICAgMHg0OCAgICAweGQ4ICAgIDB4
+ZjYgICAgMHhmZiAgICAweDdmICAgIDB4MDAgICAgMHgwMCAweDEwMDc0ZjA6
+ICAgICAgMHhmZiAgICAweGZmICAgIDB4ZmYgICAgMHhmZiAgICAweDAwICAg
+IDB4MDAgICAgMHgwMCAgICAweDAwIDB4MTAwNzRmODogICAgICAweDAwICAg
+IDB4MDAgICAgMHgwMCAgICAweDAwICAgIDB4MDAgICAgMHgwMCAgICAweDAw
+ICAgIDB4MDAgMHgxMDA3NTAwOiAgICAgIDB4MDAgICAgMHgwMCAgICAweDAw
+ICAgIDB4MDAgICAgMHgwMCAgICAweDAwICAgIDB4MDAgICAgMHgwMCAweDEw
+MDc1MDg6ICAgICAgMHg2MCAgICAweDc1ICAgIDB4MDAgICAgMHgwMSAgICAw
+eDAwICAgIDB4MDAgICAgMHgwMCAgICAweDAwIDB4MTAwNzUxMDogICAgICAw
+eGZmICAgIDB4ZmYgICAgMHhmZiAgICAweGZmICAgIDB4ZmYgICAgMHhmZiAg
+ICAweGZmXSAgIDB4ZmYgMHgxMDA3NTE4OiAgICAgIDB4YTEgICAgMHgwMSAg
+ICAweDAwICAgIDB4MDAgICAgMHgwMCAgICAweDAwICAgIDB4MDAgICAgMHgw
+MCA9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PSBBZnRlciB0aGUgc2Vjb25kIGNvbXBpbGVf
+cmVnZXhwOiA9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PSAoZ2RiKSB4LzE2MHggMHgxMDA3
+NDgwIDB4MTAwNzQ4MDogICAgIFsweDQ1ICAgIDB4NTIgICAgMHg0MyAgICAw
+eDUwICAgIDB4OTcgICAgMHgwMCAgICAweDAwICAgIDB4MDAgMHgxMDA3NDg4
+OiAgICAgIDB4MDAgICAgMHgwMCAgICAweDAwICAgIDB4MDAgICAgMHgwMCAg
+ICAweDA0ICAgIDB4MDAgICAgMHgwMCAweDEwMDc0OTA6ICAgICAgMHhmZiAg
+ICAweGZmICAgIDB4ZmYgICAgMHhmZiAgICAweGZmICAgIDB4ZmYgICAgMHhm
+ZiAgICAweGZmIDB4MTAwNzQ5ODogICAgICAweDAwICAgIDB4MDAgICAgMHgw
+MCAgICAweDAwICAgIDB4MDAgICAgMHgwMCAgICAweDAwICAgIDB4MDAgMHgx
+MDA3NGEwOiAgICAgIDB4MDAgICAgMHgwMCAgICAweDQwICAgIDB4MDAgICAg
+MHgwNCAgICAweDAwICAgIDB4MDIgICAgMHgwMCAweDEwMDc0YTg6ICAgICAg
+MHgwMCAgICAweDAwICAgIDB4MDAgICAgMHgwMCAgICAweDAwICAgIDB4MDAg
+ICAgMHgwMCAgICAweDAwIDB4MTAwNzRiMDogICAgICAweGQwICAgIDB4N2Eg
+ICAgMHgwMCAgICAweDAxICAgIDB4MDAgICAgMHgwMCAgICAweDAwICAgIDB4
+MDAgMHgxMDA3NGI4OiAgICAgIDB4MDAgICAgMHgwMCAgICAweDAwICAgIDB4
+MDAgICAgMHgwMCAgICAweDAwICAgIDB4MDAgICAgMHgwMCAweDEwMDc0YzA6
+ICAgICAgMHgwMCAgICAweDAyICAgIDB4NDIgICAgMHgwMCAgICAweDAwICAg
+IDB4MDMgICAgMHg0MiAgICAweDAwIDB4MTAwNzRjODogICAgICAweDgzICAg
+IDB4MDAgICAgMHg1MSAgICAweDFiICAgIDB4NzMgICAgMHgwMCAgICAweDAw
+ICAgIDB4MDAgMHgxMDA3NGQwOiAgICAgIDB4MDIgICAgMHg4NSAgICAweDAw
+ICAgIDB4NDUgICAgMHgwMCAgICAweDAxICAgIDB4NzMgICAgMHgwMCAweDEw
+MDc0ZDg6ICAgICAgMHgwMCAgICAweDAwICAgIDB4MDIgICAgMHg4MyAgICAw
+eDAwICAgIDB4MjIgICAgMHg4NSAgICAweDAwIDB4MTAwNzRlMDogICAgICAw
+eDA3ICAgIDB4MDAgICAgMHgwMiAgICAweDFkICAgIDB4NjMgICAgMHg3OCAg
+ICAweDAwICAgIDB4MDcgMHgxMDA3NGU4OiAgICAgIDB4ODEgICAgMHgwMCAg
+ICAweDEyICAgIDB4ODUgICAgMHgwMCAgICAweDBjICAgIDB4MDAgICAgMHgw
+MyAweDEwMDc0ZjA6ICAgICAgMHgxZCAgICAweDYxICAgIDB4NzMgICAgMHgw
+MCAgICAweDAwICAgIDB4MDAgICAgMHgwMiAgICAweDc4IDB4MTAwNzRmODog
+ICAgICAweDAwICAgIDB4MGMgICAgMHg3OCAgICAweDAwICAgIDB4MTIgICAg
+MHg3OCAgICAweDAwICAgIDB4MjIgMHgxMDA3NTAwOiAgICAgIDB4MWQgICAg
+MHgzZSAgICAweDFkICAgIDB4NTcgICAgMHgxZCAgICAweDQ3ICAgIDB4MWQg
+ICAgMHg1OCAweDEwMDc1MDg6ICAgICAgMHgxZCAgICAweDQzICAgIDB4MWQg
+ICAgMHg1MiAgICAweDFkICAgIDB4NDUgICAgMHgxZCAgICAweDQ0IDB4MTAw
+NzUxMDogICAgICAweDFkICAgIDB4NDkgICAgMHgxZCAgICAweDU0ICAgIDB4
+MWQgICAgMHg1MyAgICAweDc4XSAgKjB4MDAgMHgxMDA3NTE4OiAgICAgKjB4
+NDUgICAqMHg3OCAgICoweDAwICAgKjB4NTEgICAgMHgwMCAgICAweDAwICAg
+IDB4MDAgICAgMHgwMCA9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PSBPYnZpb3VzbHksIDUg
+bW9yZSBieXRlcyBpcyB3cml0dGVuIG9uIHRoZSBoZWFwIGluIHRoaXMgY2Fz
+ZS4gVGhpcyBvdmVyZmxvdyBjYW4gYmUgdXNlZCB0byBtb2RpZnkgYWRqYWNl
+bnQgbGVuZ3RoIGZpZWxkIG9mIGFycmF5L3ZlY3Rvci9zdHJpbmcsIGdhaW5p
+bmcgdGhlIGF0dGFja2VyIHRoZSBhYmlsaXR5IHRvIHJlYWQvd3JpdGUgdGhl
+IHdob2xlIG1lbW9yeSAgaW4gdGhlIGNvbnRleHQgb2YgdGhlIGFmZmVjdGVk
+IGFwcGxpY2F0aW9uIChUaGUgc2FtZSB0cmljayBhcyBDVkUtMjAxMy0wNjM0
+KS4gLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tIElJSS4gSW1wYWN0IEhlYXAgT3Zl
+cmZsb3cgLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tIElWLiBBZmZlY3RlZCBQQ1JF
+IHZlcnNpb24gPiA4LjMzICg4LjM0LCA4LjM1LCA4LjM2LCA4LjM3IGFyZSBj
+b25maXJtZWQgdG8gYmUgdnVsbmVyYWJsZSkuIFBDUkUyIDEwLjEwIGlzIGFs
+c28gY29uZmlybWVkIHRvIGJlIHZ1bG5lcmFibGUuICBPdGhlciBhcHBsaWNh
+dGlvbnMgbWF5IGFsc28gYmUgYWZmZWN0ZWQuIC0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLSBWLiBDcmVkaXQgV2VuIEd1YW54aW5nIGZyb20gVmVudXN0ZWNoIEFE
+TEFCIGlzIGNyZWRpdGVkIGZvciB0aGlzIHZ1bG5lcmFiaWxpdHku
 
-confused,
+------=_NextPart_556C5A04_0923FFB8_3FA8583B--
 
-greg k-h
