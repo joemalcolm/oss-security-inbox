@@ -1,4 +1,9 @@
-Received: (qmail 13405 invoked by uid 550); 20 Feb 2026 04:44:01 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5124" "Monday" "1" "June" "2015" "03:06:57" "-0500" "=?UTF-8?B?RmVybmFuZG8gTXXDsW96?=" "fernando@null-life.com" "<CAEr-gPFc1eriF6FA4vHq2quDsLr6L2ZPEL6yPDjNazR84iNkCw@mail.gmail.com>" "113" "[oss-security] CVE-2015-0848 - Heap overflow on libwmf0.2-7" nil nil nil "6" "2015060108:06:57" "[oss-security] CVE-2015-0848 - Heap overflow on libwmf0.2-7" (number mark "        fernando@nul Jun  1  113/5124  " thread-indent "\"[oss-security] CVE-2015-0848 - Heap overflow on libwmf0.2-7\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 16120 invoked by uid 550); 1 Jun 2015 08:12:43 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,178 +11,141 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 13378 invoked from network); 20 Feb 2026 04:44:00 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771562632; x=1772167432; darn=lists.openwall.com;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=YCHCHrTg1cfhXy6ibGWnj1THRxvSaVdgHUrsyE8bK4Q=;
-        b=LuzpVFPGmAfxAPi+dTWcUSUIspabE8/35Tq6fFrVlEOgLdqNePRu03UO5GGrtpBf1J
-         2k+skVLsCscr69gnCIKz3AfJqK7IDayWxJu2sQjN9xEXIM+PFH+iJ5ThCP5ax0dDpBL5
-         WSpdildZzakwkNSglR70UmQXOZH9jDuIxWU2EeJuXwhXNubSgmkp+a2Y762IapKKrSd+
-         oUEIbX8HC+hk7UbJhcUMNizezAfFNuSYX8xaR+IFGWto4MgiopKKfcJNj99FUfgPgbM9
-         g/05xkE/e3JleY/8kDZ1oJ7plu5cXRVxGOUF6cq2GLLP5qz61w8IOvbDfpj04e/zdSqj
-         6FoQ==
+Received: (qmail 13698 invoked from network); 1 Jun 2015 08:07:09 -0000
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771562632; x=1772167432;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=YCHCHrTg1cfhXy6ibGWnj1THRxvSaVdgHUrsyE8bK4Q=;
-        b=Ic/FoZBKyaxIaTNYTzPxGIWKUurY5bMjAGmMc4msenk8L/LBq/gjd2wGViup0ZKu/1
-         Lc9BS/g2KRkemSdIKaDmO0XXF5p8eiviKkkpRGgyUPFOsjIW6bIMh7WYGOhYnS5tW/gX
-         G8ur9tDzHxgHjGIM7vEGi8k8rP89qKfAj2K9vWwknJ39Y2gfUElHFJR6dNqv5Ag137uK
-         1vcIkuI9aTETUwDC3hjNC60JTmznRbDQg2+NptGDKzqZYK/cEIUi9HYzEKeINNF4rt4J
-         EX1ciXTyaUeG8RhS18qDC26+s3v4LNu26RJ/jgU2pdlKY93P/UfgaQNrMJIhjMZpCA0Z
-         UEcQ==
-X-Gm-Message-State: AOJu0Yy2WhabcniVKiiy3zpBx1l7iGUpUIuinIfsp8lU6e1u0AAwdgFw
-	YJMQmxAcIkiuZc7jf8ID9dNUmVBALBf6UL7NGrgQiypPYzZB72S1A9O5
-X-Gm-Gg: AZuq6aIqE+0wF5p1+lCrL3kxca7zBhh72LvAaMR5WPqUlrn1r6fcGlPmpHc+l6bvOh+
-	zgmKnlzclo87VwCtcogT+N+mZJmLWwYAod+qSdtccv8/dxT661Uedm7OOS0l7PovaQIoh6/4Rip
-	G0L2S475mTkFXm8HK0qjG4zfsB6EXeuwlcWYrFWnthweRV/wzAGnMbTMW4+jpE3PoTYJqe05GED
-	Lr8mxOz6u154+7JzPHJUr81IfCdc4JTP/FqYBRPzmjSw1QQ639ZsOPfaDTkJG555MPWJSOP/LZW
-	am92sc/3v5Sk40Xhfql+Hflm730V2zOEQK1xXB0LRUdE7N/8kq3X9qw2G1H4krcsay71VrPwdOV
-	leXFg8qP/kc6/5EezA3ozHO8n+4augewHkkz2aHiEM+Jxi0aUefedJblnZmHeZSYzbnba0W6uJt
-	WcHfl4o27hwzbKha4Snw==
-X-Received: by 2002:a05:6830:4122:b0:7c6:cd24:6392 with SMTP id 46e09a7af769-7d5237df1bbmr257787a34.34.1771562631935;
-        Thu, 19 Feb 2026 20:43:51 -0800 (PST)
-Message-ID: <4460495c-2f91-40f9-a27c-5b09eeed920a@gmail.com>
-Date: Thu, 19 Feb 2026 22:43:48 -0600
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
+         :content-type;
+        bh=txqt6EFGSsYgdx0cyhAVPJ/H0fkGIcxOMEbj0kKoPbs=;
+        b=mqY9oeead8TnBqjx+u/IG6lO0kD+A11TSGfWyOrRsv/i6g5xfC6O6pOrnmWNG9gj2p
+         ED+30YVw26tp7qIAAM+HRktVuYUzSlIf5yB0eD+Vk5yVit2701DhCajIPd8n2JIlLg8H
+         VpwhI0F4WbNW2kWuKW94B4K9mejVS6tKhloXc00y7feKe/GSNkyTl1lMzMqnqAvQONe9
+         37tv8HZjJwsJrjqNelbZOiiBod5TtW5uypS5SLD001OObnkRyT5kf5PQ3Wl7tkC/LeW8
+         5sNYSpEiKPKDs1iXQtlkQH0ZKpKGQaCl7PoPLe/dc4ilu9aSzXjO13nybueC54aQGV8y
+         rbIg==
+X-Gm-Message-State: ALoCoQnnp43WO1o556Lw4Af5vbEs4gMDwGZ1gDF0sX402biP3dkXAHxGEnnWlFL1/SZFKCMjY+5s
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: Russ Allbery <eagle@eyrie.org>
-Cc: oss-security@lists.openwall.com
-References: <20260219011438.GA17271@openwall.com>
- <c9af5be5-fc3f-4ef9-bcb4-140a1d1fe1c2@gmail.com>
- <87wm08xyrc.fsf@hope.eyrie.org>
- <dc5a9c05-ab0c-4922-9f8e-d0ce2e6a53b1@gmail.com>
- <87ikbsf62y.fsf@hope.eyrie.org>
-Content-Language: en-US
-From: Jacob Bachmeyer <jcb62281@gmail.com>
-In-Reply-To: <87ikbsf62y.fsf@hope.eyrie.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Subject: Re: [oss-security] MIT/Heimdal Kerberos credentials cache type FILE
- risks
+X-Received: by 10.43.76.195 with SMTP id zf3mr27159596icb.62.1433146017725;
+ Mon, 01 Jun 2015 01:06:57 -0700 (PDT)
+X-Originating-IP: [181.50.56.230]
+Message-ID: <CAEr-gPFc1eriF6FA4vHq2quDsLr6L2ZPEL6yPDjNazR84iNkCw@mail.gmail.com>
+Content-Type: multipart/mixed; boundary=001a113321ee4c936a0517704f11
+Date: Mon, 1 Jun 2015 03:06:57 -0500
+From: =?UTF-8?Q?Fernando_Mu=C3=B1oz?= <fernando@null-life.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE-2015-0848 - Heap overflow on libwmf0.2-7
+To: oss-security@lists.openwall.com
 
-On 2/19/26 21:26, Russ Allbery wrote:
-> Jacob Bachmeyer <jcb62281@gmail.com> writes:
->> On 2/19/26 14:29, Russ Allbery wrote:
->>> My understanding is that the context of this report is services running
->>> with Kerberos credentials. [...]
->> That is an interesting way of looking at it.  The report seemed to me to
->> be describing hijacking user accounts after cracking a service.
-> That's also possible for services that accept usernames and passwords and
-> validate them with Kerberos (common for POP and IMAP servers), although of
-> course best practices in those cases is to immediately discard the
-> resulting ticket after authentication.
+--001a113321ee4c936a0517704f11
+Content-Type: text/plain; charset=UTF-8
 
-I would that think in such a scenario, the client should be presenting a 
-Kerberos service ticket to the POP/IMAP server.
+libwmf is affected by a heap overflow on the function that decodes BMP images.
 
-> It is true that some methods of doing that will result in a ticket cache
-> stored in /tmp. For example, if the service uses PAM to validate the
-> user's password, some PAM Kerberos modules will write a ticket cache to
-> /tmp as part of that process. (There is a long and unfortunately
-> complicated story here why it is sometimes not possible to defer creating
-> the ticket cache to the PAM session stack, which generally doesn't need to
-> be called by servers although may be depending on how the service works.)
-> Such servers should take some care to clean up those temporary ticket
-> caches and not leave them lying around.
+WMF files may contain both vector graphics and bitmap components. With
+the attached WMF file, the issue can be reproduced, an overflow
+happens because image_size gets a value of 32, that space is used to
+allocate data->image
 
-If PAM is creating the ticket cache when the session is opened, then PAM 
-should also be destroying the ticket cache when the session is closed.
+src/ipa/ipa/bmp.h, function ReadBMPImage:
 
-> Of course, one should also ideally stop using authentication methods that
-> send passwords over the network to a server, and lack of attention to
-> cleaning up ticket caches is not a Kerberos problem. It may at most be a
-> problem with a specific PAM implementation or service implementation.
+1129    image_size = bytes_per_line * bmp->height;
+1131    data->image = (unsigned char*) wmf_malloc (API,image_size);
+1147        DecodeImage (API,bmp,src,(unsigned int)
+bmp_info.compression,data->image);
 
-If the server is opening PAM sessions, but never closing them, then that 
-is a bug in the server, not Kerberos.
+Inside DecodeImage we have:
 
->>> I think the concern here is that the web application has its own
->>> tickets, which necessarily must be accessible to the web application.
->>> Therefore, if there is a vulnerability in the web application, that can
->>> be used to exfiltrate the Kerberos tickets for the web application.
->> This does not necessarily give the attacker a ticket with a "~10-hour
->> TTL" (as claimed in the report)
-> Not necessarily, but it probably does. That's a very typical ticket
-> lifetime (I think it's the default in both MIT and Heimdal). Unless an
-> administrator took special precautions to limit an application's
-> credentials to a shorter lifetime, I would be very unsurprised by that
-> result.
+DecodeImage (wmfAPI* API,wmfBMP* bmp,BMPSource* src,unsigned int
+compression,unsigned char* pixels)
 
-I was thinking that it also depends on when the service last renewed its 
-TGT vs. when Mallory purloins the file, although Mallory could simply 
-wait for the service to next renew its ticket before purloining it again 
-and starting the "main" attack.
+874     for (u = 0; u < ((U32) bmp->width * (U32) bmp->height); u++)
+pixels[u] = 0;
 
-Fair enough:  Mallory can get a maximum-lifetime TGT.
+But bmp->width * bmp->height has a value of 64, and a write out of
+bounds takes place.
 
-> [...]
->> and the KDC admins should notice if the "web server" suddenly starts
->> asking for interactive login sessions, for example.
-> You are probably overestimating the sophistication of incident detection
-> and response capabilities at a lot of sites running Kerberos. :)
+$ wmf2svg --wmf-fontdir=/usr/share/fonts/type1/gsfonts bmpoverflow.wmf
+<partial svg output>
+*** Error in `wmf2svg': free(): invalid next size (fast): 0x091584b8 ***
 
-Admitted, but the "web server" also should simply not have access to 
-most resources.
+ASAN enabled libwmf/wmf2svg shows the problem:
 
->> However, a service's authentication tickets should be bound to the known
->> server addresses,
-> Binding Kerberos tickets to IP addresses was a mostly failed experiment
-> that, at least in my experience, most sites have abandoned. Trying to make
-> this work is a HUGE operational headache. In a modern networking
-> environment, there are innumerable reasons why the apparent IP address of
-> a service from the perspective of some other service doesn't match the
-> service's own conception of its IP address.
+$ ./src/convert/wmf2svg --wmf-fontdir=/usr/share/fonts/type1/gsfonts
+bmpoverflow.wmf
+<partial svg output>
+==3400==ERROR: AddressSanitizer: heap-buffer-overflow on address
+0xb5c268b0 at pc 0x807093e bp 0xbfc3cee8 sp 0xbfc3ced8
+WRITE of size 1 at 0xb5c268b0 thread T0
+    #0 0x807093d in DecodeImage ../../src/ipa/ipa/bmp.h:874
+    #1 0x807093d in ReadBMPImage ../../src/ipa/ipa/bmp.h:1147
+    #2 0x807093d in wmf_ipa_bmp_read ../../src/ipa/ipa/bmp.h:477
+    #3 0x815f013 in meta_dib_brush player/meta.h:2187
+    #4 0x815f013 in WmfPlayMetaFile
+/home/fmunozs/wmf/libwmf-0.2.8.4/src/player.c:922
+    #5 0x81a5ff5 in wmf_play /home/fmunozs/wmf/libwmf-0.2.8.4/src/player.c:323
+    #6 0x804c583 in wmf2svg_draw
+/home/fmunozs/wmf/libwmf-0.2.8.4/src/convert/wmf2svg.c:208
+    #7 0x804f2c5 in wmf2svg_file
+/home/fmunozs/wmf/libwmf-0.2.8.4/src/convert/wmf2svg.c:439
+    #8 0x804ad78 in main
+/home/fmunozs/wmf/libwmf-0.2.8.4/src/convert/wmf2svg.c:458
+    #9 0xb6efc72d in __libc_start_main (/lib/i386-linux-gnu/libc.so.6+0x1872d)
+    #10 0x804b46e
+(/home/fmunozs/wmf/libwmf-0.2.8.4/src/convert/wmf2svg+0x804b46e)
 
-Across the open Internet is one thing, but I would expect (perhaps 
-naively) that communications between web servers and the KDC would be on 
-a secure internal network.
+0xb5c268b0 is located 0 bytes to the right of 32-byte region
+[0xb5c26890,0xb5c268b0)
+allocated by thread T0 here:
+    #0 0xb72d718c in __interceptor_malloc
+(/usr/lib/i386-linux-gnu/libasan.so.1+0x5118c)
+    #1 0x80d74a8 in wmf_malloc /home/fmunozs/wmf/libwmf-0.2.8.4/src/api.c:482
 
-> I know there are people who have gotten this to work, but I don't think
-> it's common. It's spectacularly annoying to try to keep configured
-> correctly, particularly since in a lot of compromise scenarios the
-> attacker has RCE anyway and can act directly from the server, so the
-> amount of security benefit you get from the work is debatable.
+This causes a Denial of Service, or could cause code execution since
+the DecodeImage writes the data of the run-length decoded image to
+data->image.
 
-It stops the use of a stolen ticket in the report's scenario of a web 
-service leaking files from /tmp.  :-)
+The attached file was fuzzed with lcamtuf's afl fuzzer.
 
-> [...]
->
-> There is some variation here, depending on whether the site is doing
-> tricky things with TGTs, but my impression was that people generally just
-> let all the lifetimes default to the same since the tickets are generally
-> all stored in the same place. If you manage to get someone's service
-> tickets, you generally get their TGT at the same time, so doing work to
-> make the service tickets less powerful doesn't have a great effort to
-> reward ratio.
->
->>> No, this is not correct: If you have possession of the service ticket,
->>> you can authenticate as the user to that specific service. You do not
->>> need the TGT. Otherwise, limited ticket forwarding would not work.
->> Then I misremembered that detail.  So the cache stores the decrypted
->> session key needed to use the ticket in all cases?
-> Yes, so far as I know. Maybe there's some new ticket cache that does some
-> sort of encryption, but I'm not sure what the practical benefit would be
-> given that the TGT is generally right there in the same file.
+--001a113321ee4c936a0517704f11
+Content-Type: application/x-gzip; name="bmpoverflow.wmf.gz"
+Content-Disposition: attachment; filename="bmpoverflow.wmf.gz"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_iadlzrbr0
 
-Aha!  I did not know if the Kerberos cache stored tickets in separate 
-files or all together.
+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
 
-If they are all stored in one file, along with the session keys needed 
-to use them, then yes, distinctions between service tickets and TGTs are 
-useless:  an attacker who steals a usable service ticket will also get a 
-usable TGT, outside of very specialized scenarios where the service 
-ticket endures after the TGT expires.
-
-
--- Jacob
-
+--001a113321ee4c936a0517704f11--
