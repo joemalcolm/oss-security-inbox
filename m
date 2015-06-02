@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5522" "Sunday" "26" "February" "2017" "11:46:23" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<869975.355078594-sendEmail@localhost>" "112" "[oss-security] audiofile: heap-based buffer overflow in readValue (FileHandle.cpp)" "^Date:" nil nil "2" "2017022611:46:23" "[oss-security] audiofile: heap-based buffer overflow in readValue (FileHandle.cpp)" (number mark "U       ago@gentoo.o Feb 26  112/5522  " thread-indent "\"[oss-security] audiofile: heap-based buffer overflow in readValue (FileHandle.cpp)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["23408" "Tuesday" "2" "June" "2015" "14:04:40" "+0000" "Xen.org security team" "security@xen.org" "<E1Yzmo4-0001nH-5B@xenbits.xen.org>" "452" "[oss-security] Xen Security Advisory 128 (CVE-2015-4103) - Potential unintended writes to host MSI message data field via qemu" nil nil nil "6" "2015060214:04:40" "[oss-security] Xen Security Advisory 128 (CVE-2015-4103) - Potential unintended writes to host MSI message data field via qemu" (number mark "        security@xen Jun  2  452/23408 " thread-indent "\"[oss-security] Xen Security Advisory 128 (CVE-2015-4103) - Potential unintended writes to host MSI message data field via qemu\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 10040 invoked by uid 550); 26 Feb 2017 11:46:41 -0000
+Received: (qmail 1944 invoked by uid 550); 2 Jun 2015 14:05:31 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,126 +11,470 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 9961 invoked from network); 26 Feb 2017 11:46:40 -0000
-Message-ID: <869975.355078594-sendEmail@localhost>
-X-Mailer: sendEmail-1.56
+Received: (qmail 1761 invoked from network); 2 Jun 2015 14:05:00 -0000
+Message-Id: <E1Yzmo4-0001nH-5B@xenbits.xen.org>
+Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
+Content-Transfer-Encoding: binary
 MIME-Version: 1.0
-Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-124607.380786077"
-Date: Sun, 26 Feb 2017 11:46:23 +0000
-From: "Agostino Sarubbo" <ago@gentoo.org>
+X-Mailer: MIME-tools 5.428 (Entity 5.428)
+CC: Xen.org security team <security@xen.org>
+Date: Tue, 02 Jun 2015 14:04:40 +0000
+From: Xen.org security team <security@xen.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] audiofile: heap-based buffer overflow in readValue (FileHandle.cpp)
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Subject: [oss-security] Xen Security Advisory 128 (CVE-2015-4103) - Potential unintended
+ writes to host MSI message data field via qemu
+To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
+ xen-users@lists.xen.org, oss-security@lists.openwall.com
 
-------MIME delimiter for sendEmail-124607.380786077
-Content-Type: text/plain;
-        charset="UTF-8"
+--=separator
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
 Content-Transfer-Encoding: 7bit
 
-Description:
-audiofile is a C-based library for reading and writing audio files in many common formats.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-A fuzz with a wav file as input produced an heap overflow.
+            Xen Security Advisory CVE-2015-4103 / XSA-128
+                              version 2
 
-The complete ASan output:
+    Potential unintended writes to host MSI message data field via qemu
 
-# sfinfo $FILE
-==6051==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x61a00001f708 at pc 0x0000004513de bp 0x7ffc71379b20 sp 0x7ffc713792d0
-WRITE of size 2 at 0x61a00001f708 thread T0
-    #0 0x4513dd in read /tmp/portage/sys-devel/llvm-3.9.1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/../sanitizer_common/sanitizer_common_interceptors.inc:765
-    #1 0x7fd944373b2c in bool readValue(File*, short*) /tmp/portage/media-libs/audiofile-0.3.6-r3/work/audiofile-0.3.6/libaudiofile/FileHandle.cpp:353:12
-    #2 0x7fd944373b2c in bool readSwap(File*, short*, int) /tmp/portage/media-libs/audiofile-0.3.6-r3/work/audiofile-0.3.6/libaudiofile/FileHandle.cpp:375
-    #3 0x7fd944373b2c in _init /tmp/portage/media-libs/audiofile-0.3.6-r3/work/audiofile-0.3.6/libaudiofile/FileHandle.cpp:397
-    #4 0x7fd94439ce2f in WAVEFile::parseFormat(Tag const&, unsigned int) /tmp/portage/media-libs/audiofile-0.3.6-r3/work/audiofile-0.3.6/libaudiofile/WAVE.cpp:289:5
-    #5 0x7fd9443a1568 in WAVEFile::readInit(_AFfilesetup*) /tmp/portage/media-libs/audiofile-0.3.6-r3/work/audiofile-0.3.6/libaudiofile/WAVE.cpp:733:13
-    #6 0x7fd9443b4fb9 in _afOpenFile(int, File*, char const*, _AFfilehandle**, _AFfilesetup*) 
-/tmp/portage/media-libs/audiofile-0.3.6-r3/work/audiofile-0.3.6/libaudiofile/openclose.cpp:356:15
-    #7 0x7fd9443b6331 in afOpenFile /tmp/portage/media-libs/audiofile-0.3.6-r3/work/audiofile-0.3.6/libaudiofile/openclose.cpp:217:6
-    #8 0x50a278 in printfileinfo /tmp/portage/media-libs/audiofile-0.3.6-r3/work/audiofile-0.3.6/sfcommands/printinfo.c:45:22
-    #9 0x509f98 in main /tmp/portage/media-libs/audiofile-0.3.6-r3/work/audiofile-0.3.6/sfcommands/sfinfo.c:113:4
-    #10 0x7fd94347f78f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #11 0x419b68 in _init (/usr/bin/sfinfo+0x419b68)
+UPDATES IN VERSION 2
+====================
 
-0x61a00001f708 is located 0 bytes to the right of 1160-byte region [0x61a00001f280,0x61a00001f708)
-allocated by thread T0 here:
-    #0 0x4d2928 in malloc /tmp/portage/sys-devel/llvm-3.9.1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:64
-    #1 0x7fd942ede687 in operator new(unsigned long) (/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/libstdc++.so.6+0xb2687)
-    #2 0x7fd9443b4d63 in _afOpenFile(int, File*, char const*, _AFfilehandle**, _AFfilesetup*) 
-/tmp/portage/media-libs/audiofile-0.3.6-r3/work/audiofile-0.3.6/libaudiofile/openclose.cpp:337:15
-    #3 0x7fd9443b6331 in afOpenFile /tmp/portage/media-libs/audiofile-0.3.6-r3/work/audiofile-0.3.6/libaudiofile/openclose.cpp:217:6
-    #4 0x50a278 in printfileinfo /tmp/portage/media-libs/audiofile-0.3.6-r3/work/audiofile-0.3.6/sfcommands/printinfo.c:45:22
-    #5 0x509f98 in main /tmp/portage/media-libs/audiofile-0.3.6-r3/work/audiofile-0.3.6/sfcommands/sfinfo.c:113:4
-    #6 0x7fd94347f78f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+Public release.
 
-SUMMARY: AddressSanitizer: heap-buffer-overflow 
-/tmp/portage/sys-devel/llvm-3.9.1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/../sanitizer_common/sanitizer_common_interceptors.inc:765 in read
-Shadow bytes around the buggy address:
-  0x0c347fffbe90: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c347fffbea0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c347fffbeb0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c347fffbec0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c347fffbed0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-=>0x0c347fffbee0: 00[fa]fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c347fffbef0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c347fffbf00: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c347fffbf10: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c347fffbf20: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c347fffbf30: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Heap right redzone:      fb
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack partial redzone:   f4
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==6051==ABORTING
+CVE assigned.
 
-Affected version:
-0.3.6
+ISSUE DESCRIPTION
+=================
 
-Fixed version:
-N/A
+Logic is in place to avoid writes to certain host config space fields
+when the guest must nevertheless be able to access their virtual
+counterparts.  A bug in how this logic deals with accesses spanning
+multiple fields allows the guest to write to the host MSI message data
+field.
 
-Commit fix:
-N/A
+While generally the writes write back the values previously read,
+their value in config space may have got changed by the host between
+the qemu read and write.  In such a case host side interrupt handling
+could become confused, possibly losing interrupts or allowing spurious
+interrupt injection into other guests.
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
+IMPACT
+======
 
-CVE:
-N/A
+Certain untrusted guest administrators may be able to confuse host
+side interrupt handling, leading to a Denial of Service.
 
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00135-audiofile-heapoverflow-readValue
+VULNERABLE SYSTEMS
+==================
 
-Timeline:
-2017-01-30: bug discovered and reported to upstream
-2017-02-20: blog post about the issue
+Xen versions 3.3 and onwards are vulnerable due to supporting PCI
+pass-through.
 
-Note:
-This bug was found with American Fuzzy Lop.
+Only x86 systems are vulnerable.  ARM systems are not vulnerable.
 
-Permalink:
-https://blogs.gentoo.org/ago/2017/02/20/audiofile-heap-based-buffer-overflow-in-readvalue-filehandle-cpp
+Only HVM guests with their device model run in Dom0 can take advantage
+of this vulnerability.
 
---
-Agostino Sarubbo
-Gentoo Linux Developer
+Only HVM guests which have been granted access to physical PCI devices
+(`PCI passthrough') can take advantage of this vulnerability.
 
+Furthermore, the vulnerability is only applicable when the
+passed-through PCI devices are MSI-capable.  (Most modern devices
+are.)
 
-------MIME delimiter for sendEmail-124607.380786077--
+MITIGATION
+==========
 
+This issue can be avoided by not assigning MSI capable PCI devices to
+untrusted HVM guests.
+
+This issue can also be avoided by only using PV guests.
+
+It can also be avoided by configuring HVM guests with their device
+model run in a separate (stub) domain.  (When using xl, this can be
+requested with "device_model_stubdomain_override=1" in the domain
+configuration file.)
+
+CREDITS
+=======
+
+This issue was discovered by Jan Beulich of SUSE.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa128-qemuu.patch           qemu-upstream-unstable, Xen 4.5.x, Xen 4.4.x
+xsa128-qemuu-4.3.patch       Xen 4.3.x
+xsa128-qemut.patch           qemu-xen-unstable, Xen 4.5.x, Xen 4.4.x, Xen 4.3.x, Xen 4.2.x
+
+$ sha256sum xsa128*.patch
+68b85a4c7d531d343d7fac2e92dbec3677bc2e4a83de75d78d7f605a2fc8ad3f  xsa128-qemut.patch
+2ec657a6f22cac922854548c9d83698656ab7a36634ad05de7f14439cc4405bc  xsa128-qemuu-4.3.patch
+104cf2e2816d253cc1eca3084f6ea9b6007f7773a88bda245bab00539e08b359  xsa128-qemuu.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQEcBAEBAgAGBQJVbbdOAAoJEIP+FMlX6CvZEPUIAIti0HdxCX4JNy5MKqNFxHRB
+KtGibssSaoGcPmkhLDqtOQ+8BwTUe/owezKlX799Jf0Jqn1bVXejCLyh0e6cyauq
+pPoyQd+zblIpTFw3ByqVzicLajmVfY5v8yGGBAnSpuvfVEd3K5qWZCvFx+rEJ4AB
+JI8jQdMAn2oFGtLbYDysRUpSjg/OtqIC6o3a4yfVnPDcduPq9XFpnxcdHHVfrklS
+SeY1MGLbJtrNzya+zX1GZxFh5kuZnF/qSY3o60LF+2ZpK9nyH8toX1flvW9lXa86
+9r1zxgy6qE1iWOHo4E1HjlK3lUUqW0XgkB/3zj+2LtX1uTwOhPtATn5/Neje0GY=
+=4I3/
+-----END PGP SIGNATURE-----
+
+--=separator
+Content-Type: application/octet-stream; name="xsa128-qemut.patch"
+Content-Disposition: attachment; filename="xsa128-qemut.patch"
+Content-Transfer-Encoding: base64
+
+eGVuOiBwcm9wZXJseSBnYXRlIGhvc3Qgd3JpdGVzIG9mIG1vZGlmaWVkIFBD
+SSBDRkcgY29udGVudHMKClRoZSBvbGQgbG9naWMgZGlkbid0IHdvcmsgYXMg
+aW50ZW5kZWQgd2hlbiBhbiBhY2Nlc3Mgc3Bhbm5lZCBtdWx0aXBsZQpmaWVs
+ZHMgKGZvciBleGFtcGxlIGEgMzItYml0IGFjY2VzcyB0byB0aGUgbG9jYXRp
+b24gb2YgdGhlIE1TSSBNZXNzYWdlCkRhdGEgZmllbGQgd2l0aCB0aGUgaGln
+aCAxNiBiaXRzIG5vdCBiZWluZyBjb3ZlcmVkIGJ5IGFueSBrbm93biBmaWVs
+ZCkuClJlbW92ZSBpdCBhbmQgZGVyaXZlIHdoaWNoIGZpZWxkcyBub3QgdG8g
+d3JpdGUgdG8gZnJvbSB0aGUgYWNjZXNzZWQKZmllbGRzJyBlbXVsYXRpb24g
+bWFza3M6IFdoZW4gdGhleSdyZSBhbGwgb25lcywgdGhlcmUncyBubyBwb2lu
+dCBpbgpkb2luZyBhbnkgaG9zdCB3cml0ZS4KClRoaXMgZml4ZXMgYSBzZWNv
+bmRhcnkgaXNzdWUgYXQgb25jZTogV2Ugb2J2aW91c2x5IHNob3VsZG4ndCBt
+YWtlIGFueQpob3N0IHdyaXRlIGF0dGVtcHQgd2hlbiBhbHJlYWR5IHRoZSBo
+b3N0IHJlYWQgZmFpbGVkLgoKVGhpcyBpcyBYU0EtMTI4LgoKU2lnbmVkLW9m
+Zi1ieTogSmFuIEJldWxpY2ggPGpiZXVsaWNoQHN1c2UuY29tPgpSZXZpZXdl
+ZC1ieTogU3RlZmFubyBTdGFiZWxsaW5pIDxzdGVmYW5vLnN0YWJlbGxpbmlA
+ZXUuY2l0cml4LmNvbT4KCi0tLSBhL2h3L3Bhc3MtdGhyb3VnaC5jCisrKyBi
+L2h3L3Bhc3MtdGhyb3VnaC5jCkBAIC00NTQsNyArNDU0LDcgQEAgc3RhdGlj
+IHN0cnVjdCBwdF9yZWdfaW5mb190YmwgcHRfZW11X3JlZwogICAgICAgICAu
+b2Zmc2V0ICAgICA9IFBDSV9JTlRFTF9PUFJFR0lPTiwKICAgICAgICAgLnNp
+emUgICAgICAgPSA0LAogICAgICAgICAuaW5pdF92YWwgICA9IDAsCi0gICAg
+ICAgIC5ub193YiAgICAgID0gMSwKKyAgICAgICAgLmVtdV9tYXNrICAgPSAw
+eEZGRkZGRkZGLAogICAgICAgICAudS5kdy5yZWFkICAgPSBwdF9pbnRlbF9v
+cHJlZ2lvbl9yZWFkLAogICAgICAgICAudS5kdy53cml0ZSAgPSBwdF9pbnRl
+bF9vcHJlZ2lvbl93cml0ZSwKICAgICAgICAgLnUuZHcucmVzdG9yZSAgPSBO
+VUxMLApAQCAtNjU3LDcgKzY1Nyw2IEBAIHN0YXRpYyBzdHJ1Y3QgcHRfcmVn
+X2luZm9fdGJsIHB0X2VtdV9yZWcKICAgICAgICAgLmluaXRfdmFsICAgPSAw
+eDAwMDAwMDAwLAogICAgICAgICAucm9fbWFzayAgICA9IDB4MDAwMDAwMDMs
+CiAgICAgICAgIC5lbXVfbWFzayAgID0gMHhGRkZGRkZGRiwKLSAgICAgICAg
+Lm5vX3diICAgICAgPSAxLAogICAgICAgICAuaW5pdCAgICAgICA9IHB0X2Nv
+bW1vbl9yZWdfaW5pdCwKICAgICAgICAgLnUuZHcucmVhZCAgPSBwdF9sb25n
+X3JlZ19yZWFkLAogICAgICAgICAudS5kdy53cml0ZSA9IHB0X21zZ2FkZHIz
+Ml9yZWdfd3JpdGUsCkBAIC02NzAsNyArNjY5LDYgQEAgc3RhdGljIHN0cnVj
+dCBwdF9yZWdfaW5mb190YmwgcHRfZW11X3JlZwogICAgICAgICAuaW5pdF92
+YWwgICA9IDB4MDAwMDAwMDAsCiAgICAgICAgIC5yb19tYXNrICAgID0gMHgw
+MDAwMDAwMCwKICAgICAgICAgLmVtdV9tYXNrICAgPSAweEZGRkZGRkZGLAot
+ICAgICAgICAubm9fd2IgICAgICA9IDEsCiAgICAgICAgIC5pbml0ICAgICAg
+ID0gcHRfbXNnYWRkcjY0X3JlZ19pbml0LAogICAgICAgICAudS5kdy5yZWFk
+ICA9IHB0X2xvbmdfcmVnX3JlYWQsCiAgICAgICAgIC51LmR3LndyaXRlID0g
+cHRfbXNnYWRkcjY0X3JlZ193cml0ZSwKQEAgLTY4Myw3ICs2ODEsNiBAQCBz
+dGF0aWMgc3RydWN0IHB0X3JlZ19pbmZvX3RibCBwdF9lbXVfcmVnCiAgICAg
+ICAgIC5pbml0X3ZhbCAgID0gMHgwMDAwLAogICAgICAgICAucm9fbWFzayAg
+ICA9IDB4MDAwMCwKICAgICAgICAgLmVtdV9tYXNrICAgPSAweEZGRkYsCi0g
+ICAgICAgIC5ub193YiAgICAgID0gMSwKICAgICAgICAgLmluaXQgICAgICAg
+PSBwdF9tc2dkYXRhX3JlZ19pbml0LAogICAgICAgICAudS53LnJlYWQgICA9
+IHB0X3dvcmRfcmVnX3JlYWQsCiAgICAgICAgIC51Lncud3JpdGUgID0gcHRf
+bXNnZGF0YV9yZWdfd3JpdGUsCkBAIC02OTYsNyArNjkzLDYgQEAgc3RhdGlj
+IHN0cnVjdCBwdF9yZWdfaW5mb190YmwgcHRfZW11X3JlZwogICAgICAgICAu
+aW5pdF92YWwgICA9IDB4MDAwMCwKICAgICAgICAgLnJvX21hc2sgICAgPSAw
+eDAwMDAsCiAgICAgICAgIC5lbXVfbWFzayAgID0gMHhGRkZGLAotICAgICAg
+ICAubm9fd2IgICAgICA9IDEsCiAgICAgICAgIC5pbml0ICAgICAgID0gcHRf
+bXNnZGF0YV9yZWdfaW5pdCwKICAgICAgICAgLnUudy5yZWFkICAgPSBwdF93
+b3JkX3JlZ19yZWFkLAogICAgICAgICAudS53LndyaXRlICA9IHB0X21zZ2Rh
+dGFfcmVnX3dyaXRlLApAQCAtMTUyNCw3ICsxNTIwLDcgQEAgc3RhdGljIHZv
+aWQgcHRfcGNpX3dyaXRlX2NvbmZpZyhQQ0lEZXZpYwogICAgIHVpbnQzMl90
+IGZpbmRfYWRkciA9IGFkZHJlc3M7CiAgICAgdWludDMyX3QgcmVhbF9vZmZz
+ZXQgPSAwOwogICAgIHVpbnQzMl90IHZhbGlkX21hc2sgPSAweEZGRkZGRkZG
+OwotICAgIHVpbnQzMl90IHJlYWRfdmFsID0gMDsKKyAgICB1aW50MzJfdCBy
+ZWFkX3ZhbCA9IDAsIHdiX21hc2s7CiAgICAgdWludDhfdCAqcHRyX3ZhbCA9
+IE5VTEw7CiAgICAgaW50IGVtdWxfbGVuID0gMDsKICAgICBpbnQgaW5kZXgg
+PSAwOwpAQCAtMTU5Nyw3ICsxNTkzLDEwIEBAIHN0YXRpYyB2b2lkIHB0X3Bj
+aV93cml0ZV9jb25maWcoUENJRGV2aWMKICAgICB7CiAgICAgICAgIFBUX0xP
+RygiRXJyb3I6IHBjaV9yZWFkX2Jsb2NrIGZhaWxlZC4gcmV0dXJuIHZhbHVl
+WyVkXS5cbiIsIHJldCk7CiAgICAgICAgIG1lbXNldCgodWludDhfdCAqKSZy
+ZWFkX3ZhbCwgMHhmZiwgbGVuKTsKKyAgICAgICAgd2JfbWFzayA9IDA7CiAg
+ICAgfQorICAgIGVsc2UKKyAgICAgICAgd2JfbWFzayA9IDB4RkZGRkZGRkYg
+Pj4gKCg0IC0gbGVuKSA8PCAzKTsKIAogICAgIC8qIHBhc3MgZGlyZWN0bHkg
+dG8gbGlicGNpIGZvciBwYXNzdGhyb3VnaCB0eXBlIHJlZ2lzdGVyIGdyb3Vw
+ICovCiAgICAgaWYgKHJlZ19ncnBfZW50cnkgPT0gTlVMTCkKQEAgLTE2MjAs
+NiArMTYxOSwxMSBAQCBzdGF0aWMgdm9pZCBwdF9wY2lfd3JpdGVfY29uZmln
+KFBDSURldmljCiAgICAgICAgICAgICB2YWxpZF9tYXNrID0gKDB4RkZGRkZG
+RkYgPj4gKCg0IC0gZW11bF9sZW4pIDw8IDMpKTsKICAgICAgICAgICAgIHZh
+bGlkX21hc2sgPDw9ICgoZmluZF9hZGRyIC0gcmVhbF9vZmZzZXQpIDw8IDMp
+OwogICAgICAgICAgICAgcHRyX3ZhbCA9ICgodWludDhfdCAqKSZ2YWwgKyAo
+cmVhbF9vZmZzZXQgJiAzKSk7CisgICAgICAgICAgICBpZiAocmVnLT5lbXVf
+bWFzayA9PSAoMHhGRkZGRkZGRiA+PiAoKDQgLSByZWctPnNpemUpIDw8IDMp
+KSkgeworICAgICAgICAgICAgICAgIHdiX21hc2sgJj0gfigocmVnLT5lbXVf
+bWFzaworICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPj4gKChmaW5k
+X2FkZHIgLSByZWFsX29mZnNldCkgPDwgMykpCisgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgIDw8ICgobGVuIC0gZW11bF9sZW4pIDw8IDMpKTsKKyAg
+ICAgICAgICAgIH0KIAogICAgICAgICAgICAgLyogZG8gZW11bGF0aW9uIGRl
+cGVuZCBvbiByZWdpc3RlciBzaXplICovCiAgICAgICAgICAgICBzd2l0Y2gg
+KHJlZy0+c2l6ZSkgewpAQCAtMTY3Nyw4ICsxNjgxLDE5IEBAIHN0YXRpYyB2
+b2lkIHB0X3BjaV93cml0ZV9jb25maWcoUENJRGV2aWMKICAgICB2YWwgPj49
+ICgoYWRkcmVzcyAmIDMpIDw8IDMpOwogCiBvdXQ6Ci0gICAgaWYgKCEocmVn
+ICYmIHJlZy0+bm9fd2IpKSB7ICAvKiB1bmtub3duIHJlZ3MgYXJlIHBhc3Nl
+ZCB0aHJvdWdoICovCi0gICAgICAgIHJldCA9IHBjaV93cml0ZV9ibG9jayhw
+Y2lfZGV2LCBhZGRyZXNzLCAodWludDhfdCAqKSZ2YWwsIGxlbik7CisgICAg
+Zm9yIChpbmRleCA9IDA7IHdiX21hc2s7IGluZGV4ICs9IGxlbikgeworICAg
+ICAgICAvKiB1bmtub3duIHJlZ3MgYXJlIHBhc3NlZCB0aHJvdWdoICovCisg
+ICAgICAgIHdoaWxlICghKHdiX21hc2sgJiAweGZmKSkgeworICAgICAgICAg
+ICAgaW5kZXgrKzsKKyAgICAgICAgICAgIHdiX21hc2sgPj49IDg7CisgICAg
+ICAgIH0KKyAgICAgICAgbGVuID0gMDsKKyAgICAgICAgZG8geworICAgICAg
+ICAgICAgbGVuKys7CisgICAgICAgICAgICB3Yl9tYXNrID4+PSA4OworICAg
+ICAgICB9IHdoaWxlICh3Yl9tYXNrICYgMHhmZik7CisgICAgICAgIHJldCA9
+IHBjaV93cml0ZV9ibG9jayhwY2lfZGV2LCBhZGRyZXNzICsgaW5kZXgsCisg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAodWludDhfdCAqKSZ2YWwg
+KyBpbmRleCwgbGVuKTsKIAogICAgICAgICBpZiAoIXJldCkKICAgICAgICAg
+ICAgIFBUX0xPRygiRXJyb3I6IHBjaV93cml0ZV9ibG9jayBmYWlsZWQuIHJl
+dHVybiB2YWx1ZVslZF0uXG4iLCByZXQpOwotLS0gYS9ody9wYXNzLXRocm91
+Z2guaAorKysgYi9ody9wYXNzLXRocm91Z2guaApAQCAtMzcyLDggKzM3Miw2
+IEBAIHN0cnVjdCBwdF9yZWdfaW5mb190YmwgewogICAgIHVpbnQzMl90IHJv
+X21hc2s7CiAgICAgLyogcmVnIGVtdWxhdGUgZmllbGQgbWFzayAoT046ZW11
+LCBPRkY6cGFzc3Rocm91Z2gpICovCiAgICAgdWludDMyX3QgZW11X21hc2s7
+Ci0gICAgLyogbm8gd3JpdGUgYmFjayBhbGxvd2VkICovCi0gICAgdWludDMy
+X3Qgbm9fd2I7CiAgICAgLyogZW11bCByZWcgaW5pdGlhbGl6ZSBtZXRob2Qg
+Ki8KICAgICBjb25mX3JlZ19pbml0IGluaXQ7CiAgICAgdW5pb24gewo=
+
+--=separator
+Content-Type: application/octet-stream; name="xsa128-qemuu-4.3.patch"
+Content-Disposition: attachment; filename="xsa128-qemuu-4.3.patch"
+Content-Transfer-Encoding: base64
+
+eGVuOiBwcm9wZXJseSBnYXRlIGhvc3Qgd3JpdGVzIG9mIG1vZGlmaWVkIFBD
+SSBDRkcgY29udGVudHMKClRoZSBvbGQgbG9naWMgZGlkbid0IHdvcmsgYXMg
+aW50ZW5kZWQgd2hlbiBhbiBhY2Nlc3Mgc3Bhbm5lZCBtdWx0aXBsZQpmaWVs
+ZHMgKGZvciBleGFtcGxlIGEgMzItYml0IGFjY2VzcyB0byB0aGUgbG9jYXRp
+b24gb2YgdGhlIE1TSSBNZXNzYWdlCkRhdGEgZmllbGQgd2l0aCB0aGUgaGln
+aCAxNiBiaXRzIG5vdCBiZWluZyBjb3ZlcmVkIGJ5IGFueSBrbm93biBmaWVs
+ZCkuClJlbW92ZSBpdCBhbmQgZGVyaXZlIHdoaWNoIGZpZWxkcyBub3QgdG8g
+d3JpdGUgdG8gZnJvbSB0aGUgYWNjZXNzZWQKZmllbGRzJyBlbXVsYXRpb24g
+bWFza3M6IFdoZW4gdGhleSdyZSBhbGwgb25lcywgdGhlcmUncyBubyBwb2lu
+dCBpbgpkb2luZyBhbnkgaG9zdCB3cml0ZS4KClRoaXMgZml4ZXMgYSBzZWNv
+bmRhcnkgaXNzdWUgYXQgb25jZTogV2Ugb2J2aW91c2x5IHNob3VsZG4ndCBt
+YWtlIGFueQpob3N0IHdyaXRlIGF0dGVtcHQgd2hlbiBhbHJlYWR5IHRoZSBo
+b3N0IHJlYWQgZmFpbGVkLgoKVGhpcyBpcyBYU0EtMTI4LgoKU2lnbmVkLW9m
+Zi1ieTogSmFuIEJldWxpY2ggPGpiZXVsaWNoQHN1c2UuY29tPgpSZXZpZXdl
+ZC1ieTogU3RlZmFubyBTdGFiZWxsaW5pIDxzdGVmYW5vLnN0YWJlbGxpbmlA
+ZXUuY2l0cml4LmNvbT4KCi0tLSBhL2h3L3hlbl9wdC5jCisrKyBiL2h3L3hl
+bl9wdC5jCkBAIC0yMzQsNyArMjM0LDcgQEAgc3RhdGljIHZvaWQgeGVuX3B0
+X3BjaV93cml0ZV9jb25maWcoUENJRAogICAgIGludCBpbmRleCA9IDA7CiAg
+ICAgWGVuUFRSZWdHcm91cCAqcmVnX2dycF9lbnRyeSA9IE5VTEw7CiAgICAg
+aW50IHJjID0gMDsKLSAgICB1aW50MzJfdCByZWFkX3ZhbCA9IDA7CisgICAg
+dWludDMyX3QgcmVhZF92YWwgPSAwLCB3Yl9tYXNrOwogICAgIGludCBlbXVs
+X2xlbiA9IDA7CiAgICAgWGVuUFRSZWcgKnJlZ19lbnRyeSA9IE5VTEw7CiAg
+ICAgdWludDMyX3QgZmluZF9hZGRyID0gYWRkcjsKQEAgLTI3MSw2ICsyNzEs
+OSBAQCBzdGF0aWMgdm9pZCB4ZW5fcHRfcGNpX3dyaXRlX2NvbmZpZyhQQ0lE
+CiAgICAgaWYgKHJjIDwgMCkgewogICAgICAgICBYRU5fUFRfRVJSKGQsICJw
+Y2lfcmVhZF9ibG9jayBmYWlsZWQuIHJldHVybiB2YWx1ZTogJWQuXG4iLCBy
+Yyk7CiAgICAgICAgIG1lbXNldCgmcmVhZF92YWwsIDB4ZmYsIGxlbik7Cisg
+ICAgICAgIHdiX21hc2sgPSAwOworICAgIH0gZWxzZSB7CisgICAgICAgIHdi
+X21hc2sgPSAweEZGRkZGRkZGID4+ICgoNCAtIGxlbikgPDwgMyk7CiAgICAg
+fQogCiAgICAgLyogcGFzcyBkaXJlY3RseSB0byB0aGUgcmVhbCBkZXZpY2Ug
+Zm9yIHBhc3N0aHJvdWdoIHR5cGUgcmVnaXN0ZXIgZ3JvdXAgKi8KQEAgLTI5
+OCw2ICszMDEsMTEgQEAgc3RhdGljIHZvaWQgeGVuX3B0X3BjaV93cml0ZV9j
+b25maWcoUENJRAogCiAgICAgICAgICAgICB2YWxpZF9tYXNrIDw8PSAoZmlu
+ZF9hZGRyIC0gcmVhbF9vZmZzZXQpIDw8IDM7CiAgICAgICAgICAgICBwdHJf
+dmFsID0gKHVpbnQ4X3QgKikmdmFsICsgKHJlYWxfb2Zmc2V0ICYgMyk7Cisg
+ICAgICAgICAgICBpZiAocmVnLT5lbXVfbWFzayA9PSAoMHhGRkZGRkZGRiA+
+PiAoKDQgLSByZWctPnNpemUpIDw8IDMpKSkgeworICAgICAgICAgICAgICAg
+IHdiX21hc2sgJj0gfigocmVnLT5lbXVfbWFzaworICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgPj4gKChmaW5kX2FkZHIgLSByZWFsX29mZnNldCkg
+PDwgMykpCisgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDw8ICgobGVu
+IC0gZW11bF9sZW4pIDw8IDMpKTsKKyAgICAgICAgICAgIH0KIAogICAgICAg
+ICAgICAgLyogZG8gZW11bGF0aW9uIGJhc2VkIG9uIHJlZ2lzdGVyIHNpemUg
+Ki8KICAgICAgICAgICAgIHN3aXRjaCAocmVnLT5zaXplKSB7CkBAIC0zNTAs
+MTAgKzM1OCwxOSBAQCBzdGF0aWMgdm9pZCB4ZW5fcHRfcGNpX3dyaXRlX2Nv
+bmZpZyhQQ0lECiAgICAgbWVtb3J5X3JlZ2lvbl90cmFuc2FjdGlvbl9jb21t
+aXQoKTsKIAogb3V0OgotICAgIGlmICghKHJlZyAmJiByZWctPm5vX3diKSkg
+eworICAgIGZvciAoaW5kZXggPSAwOyB3Yl9tYXNrOyBpbmRleCArPSBsZW4p
+IHsKICAgICAgICAgLyogdW5rbm93biByZWdzIGFyZSBwYXNzZWQgdGhyb3Vn
+aCAqLwotICAgICAgICByYyA9IHhlbl9ob3N0X3BjaV9zZXRfYmxvY2soJnMt
+PnJlYWxfZGV2aWNlLCBhZGRyLAotICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgKHVpbnQ4X3QgKikmdmFsLCBsZW4pOworICAgICAgICB3
+aGlsZSAoISh3Yl9tYXNrICYgMHhmZikpIHsKKyAgICAgICAgICAgIGluZGV4
+Kys7CisgICAgICAgICAgICB3Yl9tYXNrID4+PSA4OworICAgICAgICB9Cisg
+ICAgICAgIGxlbiA9IDA7CisgICAgICAgIGRvIHsKKyAgICAgICAgICAgIGxl
+bisrOworICAgICAgICAgICAgd2JfbWFzayA+Pj0gODsKKyAgICAgICAgfSB3
+aGlsZSAod2JfbWFzayAmIDB4ZmYpOworICAgICAgICByYyA9IHhlbl9ob3N0
+X3BjaV9zZXRfYmxvY2soJnMtPnJlYWxfZGV2aWNlLCBhZGRyICsgaW5kZXgs
+CisgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAodWludDhf
+dCAqKSZ2YWwgKyBpbmRleCwgbGVuKTsKIAogICAgICAgICBpZiAocmMgPCAw
+KSB7CiAgICAgICAgICAgICBYRU5fUFRfRVJSKGQsICJwY2lfd3JpdGVfYmxv
+Y2sgZmFpbGVkLiByZXR1cm4gdmFsdWU6ICVkLlxuIiwgcmMpOwotLS0gYS9o
+dy94ZW5fcHQuaAorKysgYi9ody94ZW5fcHQuaApAQCAtMTA1LDggKzEwNSw2
+IEBAIHN0cnVjdCBYZW5QVFJlZ0luZm8gewogICAgIHVpbnQzMl90IHJvX21h
+c2s7CiAgICAgLyogcmVnIGVtdWxhdGUgZmllbGQgbWFzayAoT046ZW11LCBP
+RkY6cGFzc3Rocm91Z2gpICovCiAgICAgdWludDMyX3QgZW11X21hc2s7Ci0g
+ICAgLyogbm8gd3JpdGUgYmFjayBhbGxvd2VkICovCi0gICAgdWludDMyX3Qg
+bm9fd2I7CiAgICAgeGVuX3B0X2NvbmZfcmVnX2luaXQgaW5pdDsKICAgICAv
+KiByZWFkL3dyaXRlIGZ1bmN0aW9uIHBvaW50ZXIKICAgICAgKiBmb3IgZG91
+YmxlX3dvcmQvd29yZC9ieXRlIHNpemUgKi8KLS0tIGEvaHcveGVuX3B0X2Nv
+bmZpZ19pbml0LmMKKysrIGIvaHcveGVuX3B0X2NvbmZpZ19pbml0LmMKQEAg
+LTEyODEsNyArMTI4MSw2IEBAIHN0YXRpYyBYZW5QVFJlZ0luZm8geGVuX3B0
+X2VtdV9yZWdfbXNpW10KICAgICAgICAgLmluaXRfdmFsICAgPSAweDAwMDAw
+MDAwLAogICAgICAgICAucm9fbWFzayAgICA9IDB4MDAwMDAwMDMsCiAgICAg
+ICAgIC5lbXVfbWFzayAgID0gMHhGRkZGRkZGRiwKLSAgICAgICAgLm5vX3di
+ICAgICAgPSAxLAogICAgICAgICAuaW5pdCAgICAgICA9IHhlbl9wdF9jb21t
+b25fcmVnX2luaXQsCiAgICAgICAgIC51LmR3LnJlYWQgID0geGVuX3B0X2xv
+bmdfcmVnX3JlYWQsCiAgICAgICAgIC51LmR3LndyaXRlID0geGVuX3B0X21z
+Z2FkZHIzMl9yZWdfd3JpdGUsCkBAIC0xMjkzLDcgKzEyOTIsNiBAQCBzdGF0
+aWMgWGVuUFRSZWdJbmZvIHhlbl9wdF9lbXVfcmVnX21zaVtdCiAgICAgICAg
+IC5pbml0X3ZhbCAgID0gMHgwMDAwMDAwMCwKICAgICAgICAgLnJvX21hc2sg
+ICAgPSAweDAwMDAwMDAwLAogICAgICAgICAuZW11X21hc2sgICA9IDB4RkZG
+RkZGRkYsCi0gICAgICAgIC5ub193YiAgICAgID0gMSwKICAgICAgICAgLmlu
+aXQgICAgICAgPSB4ZW5fcHRfbXNnYWRkcjY0X3JlZ19pbml0LAogICAgICAg
+ICAudS5kdy5yZWFkICA9IHhlbl9wdF9sb25nX3JlZ19yZWFkLAogICAgICAg
+ICAudS5kdy53cml0ZSA9IHhlbl9wdF9tc2dhZGRyNjRfcmVnX3dyaXRlLApA
+QCAtMTMwNSw3ICsxMzAzLDYgQEAgc3RhdGljIFhlblBUUmVnSW5mbyB4ZW5f
+cHRfZW11X3JlZ19tc2lbXQogICAgICAgICAuaW5pdF92YWwgICA9IDB4MDAw
+MCwKICAgICAgICAgLnJvX21hc2sgICAgPSAweDAwMDAsCiAgICAgICAgIC5l
+bXVfbWFzayAgID0gMHhGRkZGLAotICAgICAgICAubm9fd2IgICAgICA9IDEs
+CiAgICAgICAgIC5pbml0ICAgICAgID0geGVuX3B0X21zZ2RhdGFfcmVnX2lu
+aXQsCiAgICAgICAgIC51LncucmVhZCAgID0geGVuX3B0X3dvcmRfcmVnX3Jl
+YWQsCiAgICAgICAgIC51Lncud3JpdGUgID0geGVuX3B0X21zZ2RhdGFfcmVn
+X3dyaXRlLApAQCAtMTMxNyw3ICsxMzE0LDYgQEAgc3RhdGljIFhlblBUUmVn
+SW5mbyB4ZW5fcHRfZW11X3JlZ19tc2lbXQogICAgICAgICAuaW5pdF92YWwg
+ICA9IDB4MDAwMCwKICAgICAgICAgLnJvX21hc2sgICAgPSAweDAwMDAsCiAg
+ICAgICAgIC5lbXVfbWFzayAgID0gMHhGRkZGLAotICAgICAgICAubm9fd2Ig
+ICAgICA9IDEsCiAgICAgICAgIC5pbml0ICAgICAgID0geGVuX3B0X21zZ2Rh
+dGFfcmVnX2luaXQsCiAgICAgICAgIC51LncucmVhZCAgID0geGVuX3B0X3dv
+cmRfcmVnX3JlYWQsCiAgICAgICAgIC51Lncud3JpdGUgID0geGVuX3B0X21z
+Z2RhdGFfcmVnX3dyaXRlLAo=
+
+--=separator
+Content-Type: application/octet-stream; name="xsa128-qemuu.patch"
+Content-Disposition: attachment; filename="xsa128-qemuu.patch"
+Content-Transfer-Encoding: base64
+
+eGVuOiBwcm9wZXJseSBnYXRlIGhvc3Qgd3JpdGVzIG9mIG1vZGlmaWVkIFBD
+SSBDRkcgY29udGVudHMKClRoZSBvbGQgbG9naWMgZGlkbid0IHdvcmsgYXMg
+aW50ZW5kZWQgd2hlbiBhbiBhY2Nlc3Mgc3Bhbm5lZCBtdWx0aXBsZQpmaWVs
+ZHMgKGZvciBleGFtcGxlIGEgMzItYml0IGFjY2VzcyB0byB0aGUgbG9jYXRp
+b24gb2YgdGhlIE1TSSBNZXNzYWdlCkRhdGEgZmllbGQgd2l0aCB0aGUgaGln
+aCAxNiBiaXRzIG5vdCBiZWluZyBjb3ZlcmVkIGJ5IGFueSBrbm93biBmaWVs
+ZCkuClJlbW92ZSBpdCBhbmQgZGVyaXZlIHdoaWNoIGZpZWxkcyBub3QgdG8g
+d3JpdGUgdG8gZnJvbSB0aGUgYWNjZXNzZWQKZmllbGRzJyBlbXVsYXRpb24g
+bWFza3M6IFdoZW4gdGhleSdyZSBhbGwgb25lcywgdGhlcmUncyBubyBwb2lu
+dCBpbgpkb2luZyBhbnkgaG9zdCB3cml0ZS4KClRoaXMgZml4ZXMgYSBzZWNv
+bmRhcnkgaXNzdWUgYXQgb25jZTogV2Ugb2J2aW91c2x5IHNob3VsZG4ndCBt
+YWtlIGFueQpob3N0IHdyaXRlIGF0dGVtcHQgd2hlbiBhbHJlYWR5IHRoZSBo
+b3N0IHJlYWQgZmFpbGVkLgoKVGhpcyBpcyBYU0EtMTI4LgoKU2lnbmVkLW9m
+Zi1ieTogSmFuIEJldWxpY2ggPGpiZXVsaWNoQHN1c2UuY29tPgpSZXZpZXdl
+ZC1ieTogU3RlZmFubyBTdGFiZWxsaW5pIDxzdGVmYW5vLnN0YWJlbGxpbmlA
+ZXUuY2l0cml4LmNvbT4KCi0tLSBhL2h3L3hlbi94ZW5fcHQuYworKysgYi9o
+dy94ZW4veGVuX3B0LmMKQEAgLTIzNCw3ICsyMzQsNyBAQCBzdGF0aWMgdm9p
+ZCB4ZW5fcHRfcGNpX3dyaXRlX2NvbmZpZyhQQ0lECiAgICAgaW50IGluZGV4
+ID0gMDsKICAgICBYZW5QVFJlZ0dyb3VwICpyZWdfZ3JwX2VudHJ5ID0gTlVM
+TDsKICAgICBpbnQgcmMgPSAwOwotICAgIHVpbnQzMl90IHJlYWRfdmFsID0g
+MDsKKyAgICB1aW50MzJfdCByZWFkX3ZhbCA9IDAsIHdiX21hc2s7CiAgICAg
+aW50IGVtdWxfbGVuID0gMDsKICAgICBYZW5QVFJlZyAqcmVnX2VudHJ5ID0g
+TlVMTDsKICAgICB1aW50MzJfdCBmaW5kX2FkZHIgPSBhZGRyOwpAQCAtMjcx
+LDYgKzI3MSw5IEBAIHN0YXRpYyB2b2lkIHhlbl9wdF9wY2lfd3JpdGVfY29u
+ZmlnKFBDSUQKICAgICBpZiAocmMgPCAwKSB7CiAgICAgICAgIFhFTl9QVF9F
+UlIoZCwgInBjaV9yZWFkX2Jsb2NrIGZhaWxlZC4gcmV0dXJuIHZhbHVlOiAl
+ZC5cbiIsIHJjKTsKICAgICAgICAgbWVtc2V0KCZyZWFkX3ZhbCwgMHhmZiwg
+bGVuKTsKKyAgICAgICAgd2JfbWFzayA9IDA7CisgICAgfSBlbHNlIHsKKyAg
+ICAgICAgd2JfbWFzayA9IDB4RkZGRkZGRkYgPj4gKCg0IC0gbGVuKSA8PCAz
+KTsKICAgICB9CiAKICAgICAvKiBwYXNzIGRpcmVjdGx5IHRvIHRoZSByZWFs
+IGRldmljZSBmb3IgcGFzc3Rocm91Z2ggdHlwZSByZWdpc3RlciBncm91cCAq
+LwpAQCAtMjk4LDYgKzMwMSwxMSBAQCBzdGF0aWMgdm9pZCB4ZW5fcHRfcGNp
+X3dyaXRlX2NvbmZpZyhQQ0lECiAKICAgICAgICAgICAgIHZhbGlkX21hc2sg
+PDw9IChmaW5kX2FkZHIgLSByZWFsX29mZnNldCkgPDwgMzsKICAgICAgICAg
+ICAgIHB0cl92YWwgPSAodWludDhfdCAqKSZ2YWwgKyAocmVhbF9vZmZzZXQg
+JiAzKTsKKyAgICAgICAgICAgIGlmIChyZWctPmVtdV9tYXNrID09ICgweEZG
+RkZGRkZGID4+ICgoNCAtIHJlZy0+c2l6ZSkgPDwgMykpKSB7CisgICAgICAg
+ICAgICAgICAgd2JfbWFzayAmPSB+KChyZWctPmVtdV9tYXNrCisgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICA+PiAoKGZpbmRfYWRkciAtIHJlYWxf
+b2Zmc2V0KSA8PCAzKSkKKyAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+PDwgKChsZW4gLSBlbXVsX2xlbikgPDwgMykpOworICAgICAgICAgICAgfQog
+CiAgICAgICAgICAgICAvKiBkbyBlbXVsYXRpb24gYmFzZWQgb24gcmVnaXN0
+ZXIgc2l6ZSAqLwogICAgICAgICAgICAgc3dpdGNoIChyZWctPnNpemUpIHsK
+QEAgLTM1MCwxMCArMzU4LDE5IEBAIHN0YXRpYyB2b2lkIHhlbl9wdF9wY2lf
+d3JpdGVfY29uZmlnKFBDSUQKICAgICBtZW1vcnlfcmVnaW9uX3RyYW5zYWN0
+aW9uX2NvbW1pdCgpOwogCiBvdXQ6Ci0gICAgaWYgKCEocmVnICYmIHJlZy0+
+bm9fd2IpKSB7CisgICAgZm9yIChpbmRleCA9IDA7IHdiX21hc2s7IGluZGV4
+ICs9IGxlbikgewogICAgICAgICAvKiB1bmtub3duIHJlZ3MgYXJlIHBhc3Nl
+ZCB0aHJvdWdoICovCi0gICAgICAgIHJjID0geGVuX2hvc3RfcGNpX3NldF9i
+bG9jaygmcy0+cmVhbF9kZXZpY2UsIGFkZHIsCi0gICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAodWludDhfdCAqKSZ2YWwsIGxlbik7Cisg
+ICAgICAgIHdoaWxlICghKHdiX21hc2sgJiAweGZmKSkgeworICAgICAgICAg
+ICAgaW5kZXgrKzsKKyAgICAgICAgICAgIHdiX21hc2sgPj49IDg7CisgICAg
+ICAgIH0KKyAgICAgICAgbGVuID0gMDsKKyAgICAgICAgZG8geworICAgICAg
+ICAgICAgbGVuKys7CisgICAgICAgICAgICB3Yl9tYXNrID4+PSA4OworICAg
+ICAgICB9IHdoaWxlICh3Yl9tYXNrICYgMHhmZik7CisgICAgICAgIHJjID0g
+eGVuX2hvc3RfcGNpX3NldF9ibG9jaygmcy0+cmVhbF9kZXZpY2UsIGFkZHIg
+KyBpbmRleCwKKyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICh1aW50OF90ICopJnZhbCArIGluZGV4LCBsZW4pOwogCiAgICAgICAgIGlm
+IChyYyA8IDApIHsKICAgICAgICAgICAgIFhFTl9QVF9FUlIoZCwgInBjaV93
+cml0ZV9ibG9jayBmYWlsZWQuIHJldHVybiB2YWx1ZTogJWQuXG4iLCByYyk7
+Ci0tLSBhL2h3L3hlbi94ZW5fcHQuaAorKysgYi9ody94ZW4veGVuX3B0LmgK
+QEAgLTEwNSw4ICsxMDUsNiBAQCBzdHJ1Y3QgWGVuUFRSZWdJbmZvIHsKICAg
+ICB1aW50MzJfdCByb19tYXNrOwogICAgIC8qIHJlZyBlbXVsYXRlIGZpZWxk
+IG1hc2sgKE9OOmVtdSwgT0ZGOnBhc3N0aHJvdWdoKSAqLwogICAgIHVpbnQz
+Ml90IGVtdV9tYXNrOwotICAgIC8qIG5vIHdyaXRlIGJhY2sgYWxsb3dlZCAq
+LwotICAgIHVpbnQzMl90IG5vX3diOwogICAgIHhlbl9wdF9jb25mX3JlZ19p
+bml0IGluaXQ7CiAgICAgLyogcmVhZC93cml0ZSBmdW5jdGlvbiBwb2ludGVy
+CiAgICAgICogZm9yIGRvdWJsZV93b3JkL3dvcmQvYnl0ZSBzaXplICovCi0t
+LSBhL2h3L3hlbi94ZW5fcHRfY29uZmlnX2luaXQuYworKysgYi9ody94ZW4v
+eGVuX3B0X2NvbmZpZ19pbml0LmMKQEAgLTEyODEsNyArMTI4MSw2IEBAIHN0
+YXRpYyBYZW5QVFJlZ0luZm8geGVuX3B0X2VtdV9yZWdfbXNpW10KICAgICAg
+ICAgLmluaXRfdmFsICAgPSAweDAwMDAwMDAwLAogICAgICAgICAucm9fbWFz
+ayAgICA9IDB4MDAwMDAwMDMsCiAgICAgICAgIC5lbXVfbWFzayAgID0gMHhG
+RkZGRkZGRiwKLSAgICAgICAgLm5vX3diICAgICAgPSAxLAogICAgICAgICAu
+aW5pdCAgICAgICA9IHhlbl9wdF9jb21tb25fcmVnX2luaXQsCiAgICAgICAg
+IC51LmR3LnJlYWQgID0geGVuX3B0X2xvbmdfcmVnX3JlYWQsCiAgICAgICAg
+IC51LmR3LndyaXRlID0geGVuX3B0X21zZ2FkZHIzMl9yZWdfd3JpdGUsCkBA
+IC0xMjkzLDcgKzEyOTIsNiBAQCBzdGF0aWMgWGVuUFRSZWdJbmZvIHhlbl9w
+dF9lbXVfcmVnX21zaVtdCiAgICAgICAgIC5pbml0X3ZhbCAgID0gMHgwMDAw
+MDAwMCwKICAgICAgICAgLnJvX21hc2sgICAgPSAweDAwMDAwMDAwLAogICAg
+ICAgICAuZW11X21hc2sgICA9IDB4RkZGRkZGRkYsCi0gICAgICAgIC5ub193
+YiAgICAgID0gMSwKICAgICAgICAgLmluaXQgICAgICAgPSB4ZW5fcHRfbXNn
+YWRkcjY0X3JlZ19pbml0LAogICAgICAgICAudS5kdy5yZWFkICA9IHhlbl9w
+dF9sb25nX3JlZ19yZWFkLAogICAgICAgICAudS5kdy53cml0ZSA9IHhlbl9w
+dF9tc2dhZGRyNjRfcmVnX3dyaXRlLApAQCAtMTMwNSw3ICsxMzAzLDYgQEAg
+c3RhdGljIFhlblBUUmVnSW5mbyB4ZW5fcHRfZW11X3JlZ19tc2lbXQogICAg
+ICAgICAuaW5pdF92YWwgICA9IDB4MDAwMCwKICAgICAgICAgLnJvX21hc2sg
+ICAgPSAweDAwMDAsCiAgICAgICAgIC5lbXVfbWFzayAgID0gMHhGRkZGLAot
+ICAgICAgICAubm9fd2IgICAgICA9IDEsCiAgICAgICAgIC5pbml0ICAgICAg
+ID0geGVuX3B0X21zZ2RhdGFfcmVnX2luaXQsCiAgICAgICAgIC51LncucmVh
+ZCAgID0geGVuX3B0X3dvcmRfcmVnX3JlYWQsCiAgICAgICAgIC51Lncud3Jp
+dGUgID0geGVuX3B0X21zZ2RhdGFfcmVnX3dyaXRlLApAQCAtMTMxNyw3ICsx
+MzE0LDYgQEAgc3RhdGljIFhlblBUUmVnSW5mbyB4ZW5fcHRfZW11X3JlZ19t
+c2lbXQogICAgICAgICAuaW5pdF92YWwgICA9IDB4MDAwMCwKICAgICAgICAg
+LnJvX21hc2sgICAgPSAweDAwMDAsCiAgICAgICAgIC5lbXVfbWFzayAgID0g
+MHhGRkZGLAotICAgICAgICAubm9fd2IgICAgICA9IDEsCiAgICAgICAgIC5p
+bml0ICAgICAgID0geGVuX3B0X21zZ2RhdGFfcmVnX2luaXQsCiAgICAgICAg
+IC51LncucmVhZCAgID0geGVuX3B0X3dvcmRfcmVnX3JlYWQsCiAgICAgICAg
+IC51Lncud3JpdGUgID0geGVuX3B0X21zZ2RhdGFfcmVnX3dyaXRlLAo=
+
+--=separator--
