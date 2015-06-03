@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3797" "Friday" "17" "July" "2015" "10:09:48" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150717140948.49FE46C0802@smtpvmsrv1.mitre.org>" "103" "[oss-security] Re: Squid HTTP proxy CVE request" nil nil nil "7" "2015071714:09:48" "[oss-security] Re: Squid HTTP proxy CVE request" (number mark "        cve-assign@m Jul 17  103/3797  " thread-indent "\"[oss-security] Re: Squid HTTP proxy CVE request\"\n") "<559A65F3.80103@treenet.co.nz>" ("<559A65F3.80103@treenet.co.nz>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["590" "Wednesday" "3" "June" "2015" "07:35:11" "-0500" "Dennis" "shr3kst3r@gmail.com" "<CAOupQd3ikV8aKBR-w2YRo4x93=YA-x-LY1cK4rMYRxWEoa7z5Q@mail.gmail.com>" "17" "[oss-security] CVE Request: mime-support" nil nil nil "6" "2015060312:35:11" "[oss-security] CVE Request: mime-support" (number mark "        shr3kst3r@gm Jun  3   17/590   " thread-indent "\"[oss-security] CVE Request: mime-support\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 11509 invoked by uid 550); 17 Jul 2015 14:10:00 -0000
+Received: (qmail 24503 invoked by uid 550); 3 Jun 2015 14:42:42 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,116 +11,42 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 11486 invoked from network); 17 Jul 2015 14:10:00 -0000
-In-Reply-To: <559A65F3.80103@treenet.co.nz>
-Message-Id: <20150717140948.49FE46C0802@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Fri, 17 Jul 2015 10:09:48 -0400 (EDT)
-From: cve-assign@mitre.org
+Received: (qmail 15589 invoked from network); 3 Jun 2015 12:35:22 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=SwG2TERLsONH98T1OaVnviy4be9MDZnGyrYDAFChN8g=;
+        b=FKkJ0ggnOLsjlAZZSb0au9AMJaE59TSKciRosgHqAmVUJi0TnDLjLgB1C14vxnI9Ha
+         ECtadLZelZePBR5rMT7edEX0gXwTPudY9nu2iFg7pAWVDy1w9v6dRtIx3j987SieFL9Q
+         YJ4tV0KmlfdC87vlAOQtviFRBMtoWVVKd/VaMUR2QU5uTbq1ucjo1ooizj6edSUuhNJI
+         QLdWIh5j+vP5I1/0LvI/OxIci10yE4SaL4iQqyP6JBZUm4p5G052R4RQdyD6b6NhR9eL
+         qiyPiJXVdDKUglMU8fEQYRCfhWolfBN3WS+vcksSVeStc8hnOUwiOEwc0RKsmQBbFJrf
+         FTxw==
+MIME-Version: 1.0
+X-Received: by 10.55.26.165 with SMTP id l37mr57089040qkh.88.1433334911332;
+ Wed, 03 Jun 2015 05:35:11 -0700 (PDT)
+Message-ID: <CAOupQd3ikV8aKBR-w2YRo4x93=YA-x-LY1cK4rMYRxWEoa7z5Q@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=001a1142dc1a3bfafc05179c4aeb
+Date: Wed, 3 Jun 2015 07:35:11 -0500
+From: Dennis <shr3kst3r@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: Squid HTTP proxy CVE request
-To: squid3@treenet.co.nz
+Subject: [oss-security] CVE Request: mime-support
+To: oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+--001a1142dc1a3bfafc05179c4aeb
+Content-Type: text/plain; charset=UTF-8
 
-> Due to incorrect handling of peer responses in a hierarchy of 2 or
-> more proxies remote clients (or scripts run on a client) are able to
-> gain unrestricted access through a gateway proxy to its backend proxy.
+Hi,
 
-Use CVE-2015-5400.
+This bug https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=589384 deserves
+a CVE.  Basically, in the default configuration of apache + mod_php +
+mod_mime, files like test.php.blah will be executed as PHP code.  The
+expected behavior is that only test.php will be executed as PHP.  Yes, it
+was fixed 5 years ago, but I am seeing it actively utilized against Ubuntu
+12.04 (which did not get the fix), specifically against Wordpress plugins
+that allow file uploads.
 
+Thanks,
+Dennis
 
-> This months release of Squid HTTP proxy, version 3.5.6, contains fixes
-> for two security issues.
-
-> Squid up to and including 3.5.5 are apparently vulnerable to DoS
-> attack from malicious clients using repeated TLS renegotiation
-> messages.
-
-We have a few questions about this.
-
-First, we probably don't understand your build process. The only
-mentions of the substring "renegotiate" in squid-3.5.6.tar.bz2 are:
-
-    - TLS: Disable client-initiated renegotiation
-  
-  #if defined(TLSEXT_TYPE_renegotiate)
-              TLSEXT_TYPE_renegotiate,
-  #endif
-  
-  #if defined(SSL3_FLAGS_NO_RENEGOTIATE_CIPHERS)
-  static void
-  ssl_info_cb(const SSL *ssl, int where, int ret)
-  [ ... ]
-  #endif
-  
-  configureSslContext
-  ...
-  #if defined(SSL3_FLAGS_NO_RENEGOTIATE_CIPHERS)
-      SSL_CTX_set_info_callback(sslContext, ssl_info_cb);
-  #endif
-  
-  sslCreateClientContext
-  ...
-  #if defined(SSL3_FLAGS_NO_RENEGOTIATE_CIPHERS)
-      SSL_CTX_set_info_callback(sslContext, ssl_info_cb);
-  #endif
-
-The only mention of the substring "renegotiate" in squid-3.5.5.tar.bz2
-is:
-
-  #if defined(TLSEXT_TYPE_renegotiate)
-              TLSEXT_TYPE_renegotiate,
-  #endif
-
-http://wiki.squid-cache.org/SquidFaq/CompilingSquid doesn't seem to
-mention the change.
-
-How do these 3.5.6 changes disable anything, or serve as one of two
-"fixes for two security issues"? Are you just providing a (not widely
-documented) build option so that a repackager or end user could define
-SSL3_FLAGS_NO_RENEGOTIATE_CIPHERS if desired?
-
-In that situation, we don't believe there should be a CVE ID for the
-official Squid distribution, because the change is about adding
-functionality in the form of a new, non-default option. If a
-repackager decided to build with SSL3_FLAGS_NO_RENEGOTIATE_CIPHERS and
-then announce their 3.5.6 renegotiation change as a required security
-update for their customers, then the repackager could have a CVE ID.
-
-Second, we don't know what you mean by "CVE-2009-3555 ... was clearly
-assigned for server-initiated renegotiation." This statement is,
-however, not critical to CVE assignment, so we won't try to start a
-discussion of that. The principal reason that CVE-2009-3555 can't be
-correct is that CVE-2009-3555 isn't about resource-consumption DoS.
-
-> CVE-2011-1473 which is for the library itself and disputed
-
-Right, in a case where there should be a CVE ID, we feel that the
-vulnerable product would be specific server-side code, not a
-general-purpose library.
-
-To conclude, if the position of the Squid developers is that
-client-initiated renegotiation must be denied (e.g., because it can
-lead to resource-consumption DoS, and there aren't any supported Squid
-use cases where you feel it's important to let a client renegotiate),
-and you have changed your code to take this position by default, then
-you can have a CVE ID. Otherwise, we think not.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJVqQvwAAoJEKllVAevmvmsKM0H/3NFKlaW2JsWkkbS0w72I/nB
-7Me13orID9RNAObpG8uvErgYddBxlSQ2tNaswogWGEqnZXBONIDoka5ED5e+vc2J
-mQ8NTElkelNidzeeGpeUzDo4AH1WuHI8QOO1jEhODwPWrFfhOUJhCCvngnyrQ324
-yzg3Z3e5uMqR8mLv908JBYele/ggrZZ5cVQW5bAUqWH6yeVvbGlAAoY5xsUVPirw
-nlSEgZ3YtmXh5sj6IFnkoNwmjlPq5d4qg3d67J8Fwg2rqXnTNmvlSbM5bu2BsuSx
-svWrbI8KfKDkSez8pKP3DFUUMh9D2hZW10hoisXYscbxun7omNukzBAtEIwIyz4=
-=w9Eq
------END PGP SIGNATURE-----
+--001a1142dc1a3bfafc05179c4aeb--
