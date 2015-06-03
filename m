@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4903" "Monday" "2" "December" "2019" "10:14:18" "+0100" "Carlton Gibson" "carlton.gibson@gmail.com" "<6F59DA1C-360A-482F-911A-CF2587E12562@gmail.com>" "118" "[oss-security] Django 2.2.8 and 2.1.15: CVE-2019-19118: Privilege escalation in the Django admin." "^Date:" nil nil "12" "2019120209:14:18" "[oss-security] Django 2.2.8 and 2.1.15: CVE-2019-19118: Privilege escalation in the Django admin." (number mark "U       carlton.gibs Dec  2  118/4903  " thread-indent "\"[oss-security] Django 2.2.8 and 2.1.15: CVE-2019-19118: Privilege escalation in the Django admin.\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Django 2.2.8 and 2.1.15: CVE-2019-19118: Privilege escalation in the Django admin." nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["7106" "Wednesday" "3" "June" "2015" "20:04:25" "+1200" "Matthew Daley" "mattd@bugfuzz.com" "<CAD3CanenHhNaYu6koiNheG0w=n31ybLFw0hZt+bZar1nkkBgfA@mail.gmail.com>" "146" "[oss-security] CVE requests / Advisory: Codestyling Localization (Wordpress plugin) - multiple RCE via CSRF, multiple XSS" nil nil nil "6" "2015060308:04:25" "[oss-security] CVE requests / Advisory: Codestyling Localization (Wordpress plugin) - multiple RCE via CSRF, multiple XSS" (number mark "        mattd@bugfuz Jun  3  146/7106  " thread-indent "\"[oss-security] CVE requests / Advisory: Codestyling Localization (Wordpress plugin) - multiple RCE via CSRF, multiple XSS\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 3203 invoked by uid 550); 2 Dec 2019 10:41:38 -0000
+Received: (qmail 22006 invoked by uid 550); 3 Jun 2015 08:04:37 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,159 +11,174 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5986 invoked from network); 2 Dec 2019 09:14:32 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:mime-version:subject:message-id:date:to;
-        bh=SwKRyuiQqMHcfLM7MRu7H5QS+C2sss397Cx2tQKzM8w=;
-        b=Gy9Sa9tQYGN03UYWGuk+FBf/IUrX/9BnE1LbEGNhmpUOTih/d6z/AyfzHJZlGlh+kJ
-         QIme+Kcz8HROghypLpySADudQcWkUlFelscY/jsccDk9FwCIrbimDrpehwfkJ8HwROa5
-         RHgIg2s+uHPnK1RUq4uKmJ5YAEf4mldcOKLy5Hi6RQrIqpl5gSG+I7BDh5aJwvlYSZMg
-         z1QLxd8wZMRDFqdeWgi2nILwPa76Zt9h3q9H4CuLqBOkXrV6++EK3lxU+9DHBLjQhJWu
-         d+sDJ43HtXuV8hGmK5viRE2FAwQqJTcOQ8cjrQsT8oexiYDYwqs5Ncm1Zr3rBydj0Xv/
-         MgVQ==
+Received: (qmail 21988 invoked from network); 3 Jun 2015 08:04:36 -0000
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:mime-version:subject:message-id:date:to;
-        bh=SwKRyuiQqMHcfLM7MRu7H5QS+C2sss397Cx2tQKzM8w=;
-        b=izTIU9Vy6rlkGsN8/tPAF6Qn0eWl90PbpCl9K4H8LEqizwDvLX7DaZcKvDmiiHhDHt
-         BLawJ1pWoUEUNvHA9wcgcVrgcbFdI+OD+rwBf07cd3BNFpTkSkYyq5+LL9Q1EQlGXDxZ
-         JRXGHRhYuNIgnqApHC5Mn1q1VEuQDnrHyT9YBiypzYSeHDnDsDhEFTFxRlR471lW5FXf
-         j6crKHWLF1L/E6zfDXXiUnLovfwWsbsf8JUsM/ldcLLhqPPDKIVioWMp/fVpuGQMMdh7
-         KHO/5KUuczIO51nNDP6Of+iEYD105C9LvOAGy4repM1NA9LoN3pMP0koZrypplGGhorS
-         gpZA==
-X-Gm-Message-State: APjAAAVqN4DZgpJIW9A+iPvZVQveXN4F9qiPqUhU51dKwabkeQ1FAi0U
-	inX/LQp69P6Zyac4myoUxzqOvRTc
-X-Google-Smtp-Source: APXvYqzX4eojtcEbcoYK0z4YH2yffNKBTL2OejkPvyLK0iacrCYv8AcwtVSW7c3m9sMpSyjE2alDfw==
-X-Received: by 2002:adf:fa46:: with SMTP id y6mr8366604wrr.263.1575278060646;
-        Mon, 02 Dec 2019 01:14:20 -0800 (PST)
-Content-Type: multipart/alternative;
-	boundary="Apple-Mail=_46C63644-D20D-4AC3-A7F4-86AE8D0D2A25"
-Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.11\))
-Message-Id: <6F59DA1C-360A-482F-911A-CF2587E12562@gmail.com>
-X-Mailer: Apple Mail (2.3445.104.11)
-Date: Mon, 2 Dec 2019 10:14:18 +0100
-From: Carlton Gibson <carlton.gibson@gmail.com>
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
+         :content-type;
+        bh=vhOq1rerz52oJrgHNlxPa9UF+7L/ISq7MKjVpCcBffg=;
+        b=EEErLd2mh3/U7j600Q4hTEe5HTfhqwKQovJGsxNH5r59ZVp27V0laOgY1vSapfS/Qb
+         WKgiNV7GsgtK1B7SgntlBOqSBa7r73EbTEJwVs/X+o72T1XbQ58+aSf0uUljfzokoi8q
+         2baIA3qR8muFDJQiel0O8PPdqQTJyX4n0NcNFg9WlVzLKkFJ5UgtBJsfiWX9sXZu1vcu
+         d3KCBTvg7q8ehgSs/+nXNKN32gB5R1J7miW0ziVNAvRAKVSwDcbOTg3MRDIo9oZwMZ8x
+         MoSkVc9ZMHzLe9dMF0IeolnS6wtWvUzow7vY+cYiUEOZXwKhcOWIl2OCS+5MopMjRzub
+         YFoQ==
+X-Gm-Message-State: ALoCoQmILOCX0u3j9sTTkH4O3ZO3IUmxkGN/yYKbzjNRRX0r0HNhE0ZAhjg9KfhKdmythF8G1KiT
+MIME-Version: 1.0
+X-Received: by 10.180.82.6 with SMTP id e6mr39525037wiy.84.1433318665137; Wed,
+ 03 Jun 2015 01:04:25 -0700 (PDT)
+Message-ID: <CAD3CanenHhNaYu6koiNheG0w=n31ybLFw0hZt+bZar1nkkBgfA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Date: Wed, 3 Jun 2015 20:04:25 +1200
+From: Matthew Daley <mattd@bugfuzz.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Django 2.2.8 and 2.1.15: CVE-2019-19118: Privilege escalation in the
- Django admin.
-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE requests / Advisory: Codestyling Localization (Wordpress plugin)
+ - multiple RCE via CSRF, multiple XSS
+To: oss-security@lists.openwall.com, cve-assign@mitre.org
 
---Apple-Mail=_46C63644-D20D-4AC3-A7F4-86AE8D0D2A25
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=us-ascii
+Affected software: Codestyling Localization (Wordpress plugin)
+Affected versions: ? -> 1.99.30
+Website: http://www.code-styling.de/english/development/wordpress-plugin-codestyling-localization-en
+Website: https://wordpress.org/plugins/codestyling-localization/ (now gone)
+Reported by: Matthew Daley
 
-https://www.djangoproject.com/weblog/2019/dec/02/security-releases/ <https:=
-//www.djangoproject.com/weblog/2019/dec/02/security-releases/>
+I'd like to request CVE IDs for these issues. This is the first such
+request; this message serves as an advisory as well.
 
-In accordance with `our security release policy <https://docs.djangoproject=
-.com/en/dev/internals/security/>`_, the Django team is issuing `Django 2.2.=
-8 <https://docs.djangoproject.com/en/dev/releases/2.2.8/>`_ and `Django 2.1=
-.15 <https://docs.djangoproject.com/en/dev/releases/2.1.15/>`_. These relea=
-se addresses the security issue detailed below. We encourage all users of D=
-jango to upgrade as soon as possible.
+I have received no response from the plugin author since 2015-04-03,
+hence there are no vendor fixes for the below issues.
 
-CVE-2019-19118: Privilege escalation in the Django admin.
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D
-
-Since Django 2.1, a Django model admin displaying a parent model with relat=
-ed
-model inlines, where the user has view-only permissions to a parent model b=
-ut
-edit permissions to the inline model, would display a read-only view of the
-parent model but editable forms for the inline.
-
-Submitting these forms would not allow direct edits to the parent model, but
-would trigger the parent model's ``save()`` method, and cause pre and post-=
-save
-signal handlers to be invoked. This is a privilege escalation as a user who
-lacks permission to edit a model should not be able to trigger its save-rel=
-ated
-signals.
-
-To resolve this issue, the permission handling code of the Django admin
-interface has been changed. Now, if a user has only the "view" permission f=
-or a
-parent model, the entire displayed form will not be editable, even if the u=
-ser
-has permission to edit models included in inlines.
-
-This is a backwards-incompatible change, and the Django security team is aw=
-are
-that some users of Django were depending on the ability to allow editing of
-inlines in the admin form of an otherwise view-only parent model.
-
-Given the complexity of the Django admin, and in-particular the permissions
-related checks, it is the view of the Django security team that this change=
- was
-necessary: that it is not currently feasible to maintain the existing behav=
-ior
-whilst escaping the potential privilege escalation in a way that would avoi=
-d a
-recurrence of similar issues in the future, and that would be compatible wi=
-th
-Django's *safe by default* philosophy.
-
-For the time being, developers whose applications are affected by this chan=
-ge
-should replace the use of inlines in read-only parents with custom forms and
-views that explicitly implement the desired functionality. In the longer te=
-rm,
-adding a documented, supported, and properly-tested mechanism for
-partially-editable multi-model forms to the admin interface may occur in Dj=
-ango
-itself.
-
-Thank you to Shen Ying for reporting this issue.
-
-Affected supported versions
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D
-
-* Django master branch
-* Django 3.0 (which will be released in a separate blog post later today)
-* Django 2.2
-* Django 2.1
-
-Resolution
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-Patches to resolve the issue have been applied to Django's master branch and
-the 3.0, 2.2, and 2.1 release branches. The patches may be obtained from th=
-e following changesets:
-
-* On the `master branch <https://github.com/django/django/commit/11c5e0609b=
-cc0db93809de2a08e0dc3d70b393e4>`__
-* On the `3.0 release branch <https://github.com/django/django/commit/092cd=
-66cf3c3e175acce698d6ca2012068d878fa>`__
-* On the `2.2 release branch <https://github.com/django/django/commit/36f58=
-0a17f0b3cb087deadf3b65eea024f479c21>`__
-* On the `2.1 release branch <https://github.com/django/django/commit/103eb=
-e2b5ff1b2614b85a52c239f471904d26244>`__
-
-The following releases have been issued:
-
-* Django 2.2.8 (`download Django 2.2.8 <https://www.djangoproject.com/m/rel=
-eases/2.2/Django-2.2.8.tar.gz>`_ | `2.2.8 checksums <https://www.djangoproj=
-ect.com/m/pgp/Django-2.2.8.checksum.txt>`_)
-* Django 2.1.15 (`download Django 2.1.15 <https://www.djangoproject.com/m/r=
-eleases/2.1/Django-2.1.15.tar.gz>`_ | `2.1.15 checksums <https://www.django=
-project.com/m/pgp/Django-2.1.15.checksum.txt>`_)
-
-The PGP key ID used for these releases is Carlton Gibson: E17DF5C82B4F9D00.
-
-General notes regarding security reporting
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-As always, we ask that potential security issues be reported via
-private email to ``security@djangoproject.com``, and not via Django's
-Trac instance or the django-developers list. Please see `our security
-policies <https://www.djangoproject.com/security/>`_ for further
-information.
+The plugin has since been removed from the Wordpress plugin directory,
+so I don't have the ability to easily link to source code. FWIW, line
+references in this advisory refer to what was the latest version of
+the plugin, 1.99.30.
 
 
---Apple-Mail=_46C63644-D20D-4AC3-A7F4-86AE8D0D2A25--
+Description:
+
+The plugin contains multiple AJAX actions that, while having the
+necessary permission checks, do not have anti-CSRF protection (ie.
+nonces). Hence, attackers can, with the usual victim interaction
+that's required to trigger a CSRF attack, force logged-in victims with
+the "manage_options" capability (ie. Super Admins or Administrators)
+to perform a number of administrative actions.
+
+Furthermore, some of these administrative actions use user-provided
+input in an unsafe way and can be exploited in order to gain remote
+code execution on the victim's Wordpress installation or to perform
+reflected XSS attacks.
+
+
+* Issue #1: RCE via CSRF in AJAX action "csp_po_scan_source_file":
+
+This action is designed to add in translatable strings from one or
+more PHP files into an existing Portable Object (PO) file (just as
+`xgettext` would in 'join' mode).
+
+The issue with this action is that the user-specified PO and PHP file
+paths are not validated in any way. It is possible to abuse the action
+by executing it with the following user-specified parameters:
+
+- Set "pofile", the file to read and write as a PO-format file, to the
+location of a writable, web-accessible PHP file on the system. For
+example, "/var/www/wordpress/wp-includes/ID3/module.audio.dts.php".
+(This file is unlikely to be executed often by WordPress in normal
+functioning and so is a good choice for being overwritten entirely.)
+- Set "php", the list of files to extract translatable strings from,
+to include the location of a crafted file that contains a translatable
+string with embedded PHP code in it. For example, the contents of this
+file could be "<?php __('<?php echo `id` ?>') ?>", which would allow
+the remote execution of the `id` command. Assuming that the
+"allow_url_fopen" PHP configuration setting is enabled, this file can
+be retrieved over a FTP connection to an attacker-controlled server,
+which allows the file to contain whatever the attacker desires.
+- Set "num" to 0 and "cnt" to 1 (indicating that 0 PHP files have been
+processed so far and that there is a total of 1 to process)
+
+Executing the action with these parameters will cause the file
+specified in "pofile" (a writable, web-accessible PHP file) to be
+overwritten with the PO-format output. One of the translatable strings
+in this output will contain the PHP code, unescaped, from the file
+specified in "php". Hence, the attacker then only needs to access the
+overwritten "pofile" file remotely (by requesting it directly by URL)
+for the attacker's code to then be executed by the server.
+
+I have written a simple POC (not given here) to test this. It takes
+the form of a Python script that hosts dummy FTP and HTTP servers that
+serve the required payloads in order for this attack to function. The
+attacker would then induce the victim, who is logged into the
+Wordpress administration interface, to navigate to the script's HTTP
+server. The payloads served by the script's HTTP server will cause the
+victim to send a CSRF-forced request to the csp_po_scan_source_file
+action with the necessary parameters (as described above). The
+csp_po_scan_source_file action will connect back to the script's FTP
+server in order to retrieve the PHP file to scan for translatable
+strings, one of which contains the attacker-specified PHP code to be
+remotely executed. Finally, the script watches the content of the
+target file that is to be overwritten; when it sees that it has been,
+it shows the result of the attacker-specified code's execution.
+
+A sample run:
+
+$ ./csrf-rce-csp_po_ajax_handle_scan_source_file.py
+http://[redacted]/wordpress/ /var/www/wordpress id
+[redacted] - - [03/Apr/2015 11:02:52] "GET / HTTP/1.1" 200 -
+Pre-CSRF payload sent
+[redacted] - - [03/Apr/2015 11:02:53] "GET /csrf HTTP/1.1" 200 -
+CSRF payload sent
+Input payload sent
+uid=33(www-data) gid=33(www-data) groups=33(www-data)
+
+The final line in the above output shows the script's result, namely
+the output of running `id` on the victim's server.
+
+
+* Issue #2: RCE via CSRF in AJAX action "csp_po_save_catalog_entry":
+
+This action is similar in functioning to the previous action, except
+that it takes its translated string inputs directly from
+user-specified parameters instead of extracting them from a
+user-specified file.
+
+The action can therefore be exploited in a similar fashion, with one
+caveat: the writable, web-accessible PHP file that is to be
+overwritten with PO-format output ("path" and "file" POST parameters)
+needs to appear to have at least one translatable string in it when it
+is treated as a PO-format file. One of the ways that this can occur is
+for a quotation-mark surrounded string literal to be alone on a single
+line in the file (ignoring whitespace). Lines like this are parsed by
+the PO-format parser as translatable strings. Hence, there will be at
+least one translatable string extracted from the file that can then be
+overwritten by the user-specified translatable string before it's
+written out again to the writable, web-accessible PHP file.
+
+I have written a simple POC (not given here) to test this. It takes
+the form of an HTML file which sends the required POST parameters for
+the vulnerability to be triggered. Once the victim has navigated to
+the POC and the CSRF has been performed, the attacker can request the
+target file remotely via URL and have their code executed, similarly
+to the previous vulnerability.
+
+(The benefit of this vulnerability is that the "allow_url_fopen" PHP
+configuration setting does not need to be enabled in order for this
+attack to function. However, the possible choices for the target file
+are reduced; the file needs to appear to have a translatable string
+when treated as a PO-format file, which the previous vulnerability
+does not require.)
+
+
+* Other issues: Multiple XSS in various AJAX actions
+
+These XSS are all due to reflected unescaped POST parameters in
+certain AJAX actions' responses. The actions and parameters are:
+
+* Action "csp_self_protection_result": parameter "data[php][]"
+* Action "csp_po_dlg_delete": parameters "language", "name",
+"numlangs", "path", "row", "subpath"
+* Action "csp_po_dlg_rescan": parameter "language"
+* Action "csp_po_generate_mo_file": parameter "pofile"
+* Action "csp_po_save_catalog_entry": parameter "file"
+* Action "csp_po_scan_source_file": parameter "pofile"
+
+
+- Matthew Daley
