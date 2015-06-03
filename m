@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["796" "Monday" "22" "February" "2016" "21:20:28" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1602222116400.26144@wniryva>" "24" "[oss-security] CVE request Qemu: usb: integer overflow in remote NDIS control message handling" "^cc:" nil nil "2" "2016022215:50:28" "[oss-security] CVE request Qemu: usb: integer overflow in remote NDIS control message handling" (number mark "U       ppandit@redh Feb 22   24/796   " thread-indent "\"[oss-security] CVE request Qemu: usb: integer overflow in remote NDIS control message handling\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1556" "Wednesday" "3" "June" "2015" "13:58:34" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150603175834.4FC0D6C004F@smtpvmsrv1.mitre.org>" "38" "[oss-security] Re: CVE request Linux kernel: ns: user namespaces panic" nil nil nil "6" "2015060317:58:34" "[oss-security] Re: CVE request Linux kernel: ns: user namespaces panic" (number mark "        cve-assign@m Jun  3   38/1556  " thread-indent "\"[oss-security] Re: CVE request Linux kernel: ns: user namespaces panic\"\n") "<alpine.LFD.2.11.1505292156260.17180@wniryva>" ("<alpine.LFD.2.11.1505292156260.17180@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 29808 invoked by uid 550); 22 Feb 2016 15:50:52 -0000
+Received: (qmail 29810 invoked by uid 550); 3 Jun 2015 17:58:47 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,41 +11,51 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 29790 invoked from network); 22 Feb 2016 15:50:51 -0000
-X-X-Sender: pjp@javelin
-Message-ID: <alpine.LFD.2.20.1602222116400.26144@wniryva>
-MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.27
-cc: Qinghao Tang <luodalongde@gmail.com>
-Date: Mon, 22 Feb 2016 21:20:28 +0530 (IST)
-From: P J P <ppandit@redhat.com>
+Received: (qmail 29786 invoked from network); 3 Jun 2015 17:58:46 -0000
+In-Reply-To: <alpine.LFD.2.11.1505292156260.17180@wniryva>
+Message-Id: <20150603175834.4FC0D6C004F@smtpvmsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Wed,  3 Jun 2015 13:58:34 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE request Qemu: usb: integer overflow in remote NDIS control
- message handling
-To: oss security list <oss-security@lists.openwall.com>
+Subject: [oss-security] Re: CVE request Linux kernel: ns: user namespaces panic
+To: ppandit@redhat.com
 
-   Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Qemu emulator built with the USB Net device emulation support is vulnerable to 
-an integer overflow issue. It could occur while processing remote NDIS control 
-message packets. As the incoming informationBufferOffset & Length combination 
-could cross the integer range.
+> Linux kernel built with the user namespaces support(CONFIG_USER_NS) is
+> vulnerable to a NULL pointer dereference flaw. It could occur when users in
+> user namespaces do unmount mounts.
+> 
+> An unprivileged user could use this flaw to crash the system resulting in DoS.
+> 
+> Upstream fixes:
+> ---------------
+>    -> https://git.kernel.org/linus/820f9f147dcce2602eefd9b575bbbd9ea14f0953
+>    -> https://git.kernel.org/linus/cd4a40174b71acd021877341684d8bb1dc8ea4ae
 
-A privileged user inside guest could use this flaw to leak host memory bytes 
-to guest or crash the Qemu process instance resulting in DoS.
+We feel that this is best covered by two CVE IDs. The
+cd4a40174b71acd021877341684d8bb1dc8ea4ae issue seems to be about lack of
+state identification (i.e., the state is whether the path is
+mounted or unmounted), whereas the 820f9f147dcce2602eefd9b575bbbd9ea14f0953
+issue seems to be about lack of internal consistency of a data structure.
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2016-02/msg03658.html
+We will send the two CVE IDs soon.
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1303120
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-This issue was discovered by Qinghao Tang of 360.cn Marvel Team, China.
-
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+iQEcBAEBAgAGBQJVbz/9AAoJEKllVAevmvmsPxQIAJBdaqPsp21s2Z3yzWem8/Jn
+s8wC/BTA2XuVshILGaTSdxy97M73r+KEMO7KdVL/V8hrtz6h9F2WJobZOyWEI/UM
+pDqzCVspGjeeP0V//otnFfO4nry7Hwz+ZyMz7GLw9xPv0oMuV/We5aSrWzeC1aoc
+UKMP8lO3Rua4KvhJKPEzOwyBiQELe7oPUc2VoIcHtec0EPftGvldZXe62yrNXliC
+8CYEdCqNF9Q1kHI8fbCknRZupwmOrWtKbYVowoPBOpReObdoEvCWTSGr4xHp+/kY
+CBOTi/Pfw5RhyzY9d8pMIKcrRKc+bhgRh6b3bWdVzFHrKB8H80KaLN851LyYsOU=
+=xXo+
+-----END PGP SIGNATURE-----
