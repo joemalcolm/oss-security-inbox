@@ -1,4 +1,9 @@
-Received: (qmail 14080 invoked by uid 550); 11 Oct 2023 12:15:03 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["813" "Wednesday" "3" "June" "2015" "07:42:05" "-0500" "Dennis" "shr3kst3r@gmail.com" "<CAOupQd1AL9UfANeEFwuHnW8=cG84xM0ybcm31NEFgp7F=eKqkQ@mail.gmail.com>" "25" "[oss-security] Re: CVE Request: mime-support" nil nil nil "6" "2015060312:42:05" "[oss-security] Re: CVE Request: mime-support" (number mark "        shr3kst3r@gm Jun  3   25/813   " thread-indent "\"[oss-security] Re: CVE Request: mime-support\"\n") "<CAOupQd3ikV8aKBR-w2YRo4x93=YA-x-LY1cK4rMYRxWEoa7z5Q@mail.gmail.com>" ("<CAOupQd3ikV8aKBR-w2YRo4x93=YA-x-LY1cK4rMYRxWEoa7z5Q@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 26040 invoked by uid 550); 3 Jun 2015 14:42:47 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,54 +11,53 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 22374 invoked from network); 11 Oct 2023 11:50:31 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Andor Molnar <andor@apache.org>
-To: oss-security@lists.openwall.com
-Message-ID: <1f492976-2168-3281-af17-ff8d26d071d1@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Wed, 11 Oct 2023 11:49:52 +0000
+Received: (qmail 18344 invoked from network); 3 Jun 2015 12:42:17 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type;
+        bh=zN41QQ3V/coPhIY+2CkjVSBBiPqe1a0de+xBMAfTfVY=;
+        b=F47L/1bgqksUkVchaWoc4FZD/BElX4TYTDE1X9C6SdrOa2eWCPMIPtKzapyKKq530d
+         qAJ7Xug6Tx4B49tWk2WscC05JZGmWbR/m7ImagNpTZQx9XVLiv1G3lKJnBfhu1HGlM/z
+         vRwOfFuMpeXoUmDtNFlz+gQDm083qgyObWvRChtJtc1upXoYZ8qyK3iHfQ+nlVP2feOR
+         zqnyVe8u6QODQFuSHUFwvLstOc8rZjGyGhqWINxt5Qk0bS0DUkWcyktNxYej5XNldNEA
+         CwBcTUcumlTw88XFmT91bETHioJBt5dPpAcDWmpmjv3H8T85wPTeR6j+aZUBcxtBCBrZ
+         Kplg==
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2023-44981: Apache ZooKeeper: Authorization bypass in SASL
- Quorum Peer Authentication 
+X-Received: by 10.55.16.165 with SMTP id 37mr58015379qkq.76.1433335325426;
+ Wed, 03 Jun 2015 05:42:05 -0700 (PDT)
+In-Reply-To: <CAOupQd3ikV8aKBR-w2YRo4x93=YA-x-LY1cK4rMYRxWEoa7z5Q@mail.gmail.com>
+References: <CAOupQd3ikV8aKBR-w2YRo4x93=YA-x-LY1cK4rMYRxWEoa7z5Q@mail.gmail.com>
+Message-ID: <CAOupQd1AL9UfANeEFwuHnW8=cG84xM0ybcm31NEFgp7F=eKqkQ@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=001a113acec2ea89a505179c6227
+Date: Wed, 3 Jun 2015 07:42:05 -0500
+From: Dennis <shr3kst3r@gmail.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: CVE Request: mime-support
+To: oss-security@lists.openwall.com
 
-Severity: critical
+--001a113acec2ea89a505179c6227
+Content-Type: text/plain; charset=UTF-8
 
-Affected versions:
+Sorry, I should have put an affected version in the request: Debian
+derivatives running mime-support less then 3.52-1.
 
-- Apache ZooKeeper 3.9.0
-- Apache ZooKeeper 3.8.0 through 3.8.2
-- Apache ZooKeeper 3.7.0 through 3.7.1
-- Apache ZooKeeper before 3.7.0
+-- Dennis
 
-Description:
+On Wed, Jun 3, 2015 at 7:35 AM, Dennis <shr3kst3r@gmail.com> wrote:
 
-Authorization Bypass Through User-Controlled Key vulnerability in Apache Zo=
-oKeeper. If SASL Quorum Peer authentication is enabled in ZooKeeper (quorum=
-.auth.enableSasl=3Dtrue), the authorization is done by verifying that the i=
-nstance part in SASL authentication ID is listed in zoo.cfg server list. Th=
-e instance part in SASL auth ID is optional and if it's missing, like 'eve@=
-EXAMPLE.COM', the authorization check will be skipped.=C2=A0As a result an =
-arbitrary endpoint could join the cluster and begin propagating counterfeit=
- changes to the leader, essentially giving it complete read-write access to=
- the data tree.=C2=A0Quorum Peer authentication is not enabled by default.
+> Hi,
+>
+> This bug https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=589384
+> deserves a CVE.  Basically, in the default configuration of apache +
+> mod_php + mod_mime, files like test.php.blah will be executed as PHP code.
+> The expected behavior is that only test.php will be executed as PHP.  Yes,
+> it was fixed 5 years ago, but I am seeing it actively utilized against
+> Ubuntu 12.04 (which did not get the fix), specifically against Wordpress
+> plugins that allow file uploads.
+>
+> Thanks,
+> Dennis
+>
 
-Users are recommended to upgrade to version 3.9.1, 3.8.3, 3.7.2, which fixe=
-s the issue.
-
-Alternately ensure the ensemble election/quorum communication is protected =
-by a firewall as this will mitigate the issue.
-
-See the documentation for more details on correct cluster administration.
-
-Credit:
-
-Damien Diederen <ddiederen@apache.org> (reporter)
-
-References:
-
-https://zookeeper.apache.org/
-https://www.cve.org/CVERecord?id=3DCVE-2023-44981
-
+--001a113acec2ea89a505179c6227--
