@@ -1,4 +1,9 @@
-Received: (qmail 13753 invoked by uid 550); 17 Jun 2025 21:24:38 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1831" "Wednesday" "3" "June" "2015" "14:01:25" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150603180125.9E00C6DC002@smtpvmsrv1.mitre.org>" "41" "[oss-security] Re: CVE request Linux kernel: fs: udf heap overflow in __udf_adinicb_readpage" nil nil nil "6" "2015060318:01:25" "[oss-security] Re: CVE request Linux kernel: fs: udf heap overflow in __udf_adinicb_readpage" (number mark "        cve-assign@m Jun  3   41/1831  " thread-indent "\"[oss-security] Re: CVE request Linux kernel: fs: udf heap overflow in __udf_adinicb_readpage\"\n") "<alpine.LFD.2.11.1506022332310.14742@wniryva>" ("<alpine.LFD.2.11.1506022332310.14742@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 13658 invoked by uid 550); 3 Jun 2015 18:01:37 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,71 +11,54 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 13634 invoked from network); 3 Jun 2015 18:01:37 -0000
+In-Reply-To: <alpine.LFD.2.11.1506022332310.14742@wniryva>
+Message-Id: <20150603180125.9E00C6DC002@smtpvmsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Wed,  3 Jun 2015 14:01:25 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 3815 invoked from network); 17 Jun 2025 21:17:51 -0000
-Authentication-Results: apache.org; auth=none
-X-Gm-Message-State: AOJu0YzfDFKWL2+olGErZJVq4LiEg/Yk4NzxyUV83fkyCT1kUUIZJr7v
-	xGcKKNSWt1w2B6tEIZjY11RBpjrpNnb4wet9v2hVfTrH+IpxU1PTB7VcHrEEjAHyrk2n8nDHkf4
-	1z54YKnLkz41b4PNUZlBc+tTkEhbSvJs=
-X-Google-Smtp-Source: AGHT+IE2PnzU7EY4cEdpTLV8+uSLUe2vi+ecfOivi1aI8ZPdIUl4uY88en9Ry7NHIGeo1KncM2pht+6KX8t/T4dBLPA=
-X-Received: by 2002:a17:90b:17ca:b0:315:6f2b:ce5a with SMTP id
- 98e67ed59e1d1-3156f2bd09bmr821070a91.11.1750195039929; Tue, 17 Jun 2025
- 14:17:19 -0700 (PDT)
-MIME-Version: 1.0
-From: Masakazu Kitajo <maskit@apache.org>
-Date: Tue, 17 Jun 2025 15:17:07 -0600
-X-Gmail-Original-Message-ID: <CAGjw+kNpwn6Hpk5n6WBgLbma7LeabiTuvc1X98e_nO82PG_XHw@mail.gmail.com>
-X-Gm-Features: AX0GCFtxNgVN-ClJB2-Uw2bFVkrDQTN872RZ8x5SoPreAsmUhsj_jL9xhIzv7g8
-Message-ID: <CAGjw+kNpwn6Hpk5n6WBgLbma7LeabiTuvc1X98e_nO82PG_XHw@mail.gmail.com>
-To: announce@trafficserver.apache.org, Dev <dev@trafficserver.apache.org>, 
-	users <users@trafficserver.apache.org>, security@trafficserver.apache.org
-Cc: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="000000000000a48e810637cb09df"
-Subject: [oss-security] [ANNOUNCE] Apache Traffic Server has an ACL issue, and also has a
- vulnerability in ESI processing
+Subject: [oss-security] Re: CVE request Linux kernel: fs: udf heap overflow in __udf_adinicb_readpage
+To: ppandit@redhat.com
 
---000000000000a48e810637cb09df
-Content-Type: text/plain; charset="UTF-8"
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Description:
-Apache Traffic Server has an ACL issue, and also has a vulnerability in ESI
-processing
+> Linux kernel built with the UDF file system(CONFIG_UDF_FS) support is
+> vulnerable to a crash. It could occur while reading from a corrupted/malicious
+> udf file system image.
+> 
+> An unprivileged user could use this flaw to crash the kernel resulting in DoS.
+> 
+> Upstream fixes:
+> ---------------
+>    -> https://git.kernel.org/linus/e159332b9af4b04d882dbcfe1bb0117f0a6d4b58
+>    -> https://git.kernel.org/linus/e237ec37ec154564f8690c5bd1795339955eeef9
+>    -> https://git.kernel.org/linus/a1d47b262952a45aae62bd49cfaf33dd76c11a2c
 
-CVE:
-CVE-2025-31698 - Client IP address from PROXY protocol is not used for ACL
-CVE-2025-49763 - Remote DoS via memory exhaustion in ESI Plugin
+We feel that this is best covered by three CVE IDs, although not with
+a one-to-one mapping. The "length can be too long" problems addressed
+in all three commits are assigned CVE-2014-9728.
+e159332b9af4b04d882dbcfe1bb0117f0a6d4b58 is also about a separate
+data-structure consistency issue (the "iinfo->i_lenAlloc !=
+inode->i_size" issue): this is assigned CVE-2014-9729. Finally,
+e237ec37ec154564f8690c5bd1795339955eeef9 is also about a separate
+state-identification issue ("properly ignore component length for
+component types that do not use it"): this is assigned CVE-2014-9730.
 
-Reported By:
-Masakazu Kitajo (CVE-2025-31698)
-Yohann Sillam (CVE-2025-49763)
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-Vendor:
-The Apache Software Foundation
-
-Version Affected:
-ATS 9.0.0 to 9.2.10
-ATS 10.0.0 to 10.0.5
-
-Mitigation:
-9.x users should upgrade to 9.2.11 or later versions
-10.x users should upgrade to 10.0.6 or later versions
-
-Please note that the new versions only provide settings to mitigate issues.
-Users are expected to configure those settings to mitigate the issues if
-necessary.
-
-Users who configure Apache Traffic Server to accept PROXY protocol can use
-a new setting (proxy.config.acl.subjects) to choose which IP addresses to
-use for the ACL configured by ip_allow.config and remap.config. Please
-refer to the documentation for the detail.
-
-Users who use the ESI plugin can use a new setting for the plugin
-(--max-inclusion-depth) to limit the maximum inclusion depth. The default
-value is 3 and it prevents infinite inclusion at a minimum.
-
-CVE:
-https://www.cve.org/CVERecord?id=CVE-2025-31698
-https://www.cve.org/CVERecord?id=CVE-2025-49763
-
---000000000000a48e810637cb09df--
+iQEcBAEBAgAGBQJVb0ALAAoJEKllVAevmvmsOIAIAMI+XxEFI9Kv13jINfdgBMwR
+jVgVlsl6ySo75fKDFAraEY6tUcLrm/01nP8iwCidDEt9HfBgToyut7V/1VZU57aK
+S68LRGXfhjD8jSNzTP7pmJXY4PPE5R/9gmVQ+Yu4QKNPsrpJHl4O813T3qrYRKtM
+hzinIacPhjoWkktra1QMWQBCOCfdP9Sz6fYRc+bTylgIz4sAzm2ftGIo+c1dvT5b
+fPS1WqdiUWj9nxjEf/gaLqaYo6Aj2jNicS8vhl2VU/vMOswumf2A+kkM0xUsfS1B
+vwoQ6Ebsa5fkPQ/rGg1nCHaT4jYMCF6o/R/SqyMx+4Jgv5euRwVZchOoenUzWTA=
+=Glix
+-----END PGP SIGNATURE-----
