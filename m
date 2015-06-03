@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1075" "Wednesday" "8" "April" "2015" "16:02:40" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150408200240.0DEC46C00B0@smtpvmsrv1.mitre.org>" "29" "[oss-security] Re: CVE Request for Icecast 2.3.3, 2.4.0, 2.4.1, fixed in 2.4.2" nil nil nil "4" "2015040820:02:40" "[oss-security] Re: CVE Request for Icecast 2.3.3, 2.4.0, 2.4.1, fixed in 2.4.2" (number mark "        cve-assign@m Apr  8   29/1075  " thread-indent "\"[oss-security] Re: CVE Request for Icecast 2.3.3, 2.4.0, 2.4.1, fixed in 2.4.2\"\n") "<5525271C.6080907@ruecker.fi>" ("<5525271C.6080907@ruecker.fi>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["430" "Thursday" "4" "June" "2015" "00:39:38" "+0800" "=?ISO-8859-1?Q?Hhjack?=" "82100840@qq.com" "<tencent_541347B179D560AA50AB7FFB@qq.com>" "15" "[oss-security] Re: Re: CVE-2015-3217: PCRE Library Call Stack Overflow Vulnerability in match()" nil nil nil "6" "2015060316:39:38" "[oss-security] Re: Re: CVE-2015-3217: PCRE Library Call Stack Overflow Vulnerability in match()" (number mark "        82100840@qq. Jun  4   15/430   " thread-indent "\"[oss-security] Re: Re: CVE-2015-3217: PCRE Library Call Stack Overflow Vulnerability in match()\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 18362 invoked by uid 550); 8 Apr 2015 20:02:52 -0000
+Received: (qmail 21531 invoked by uid 550); 3 Jun 2015 16:48:22 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,42 +11,52 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 18344 invoked from network); 8 Apr 2015 20:02:52 -0000
-In-Reply-To: <5525271C.6080907@ruecker.fi>
-Message-Id: <20150408200240.0DEC46C00B0@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Wed,  8 Apr 2015 16:02:40 -0400 (EDT)
-From: cve-assign@mitre.org
+Received: (qmail 13846 invoked from network); 3 Jun 2015 16:39:55 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201307;
+	t=1433349579; bh=HEby2ZY2T91gZyG4r6MVGyCoTV43f3p7Rpn2QcefLdQ=;
+	h=From:To:Subject:Mime-Version:Content-Type:Content-Transfer-Encoding:Date:Message-ID;
+	b=pPO8LXrUPNjDE49UxrwVPuwDswAs3vizWw3FDmQEgP9s6uQF4r7OpMGrUf38r9bv6
+	 qmc/zJHrr6RaVUfy8MP84/QTZPAD+SddhZA0lsXZ2oh94yokVGRk3rYCZ2MvmyYe9L
+	 F7GZ6T/BBsj266jKTdgBnqZpsNQ37QMNhgJByxps=
+X-QQ-FEAT: oHiIVEz9/LF/SL+waIW81LhGEOqGViNCNbpPB+NgPYrDsGHucUsePpBOE/SnW
+	ADuqm5bmnPYjQX+qt0HIoKdGzKBXkal/xksukFVRdeT/MQU+j/Oa2BAYeh/2uCtEhTT2w4R
+	xhsKj0u2lVu4GvxQ1sS6rKu+IOPlgif0MJXmEeMTPh4FOMW+3nAgfquSSdS/vCO25PD1O4U
+	SL2mDJmeCMQ==
+X-QQ-SSF: 00000000000000F000000000000000N
+X-HAS-ATTACH: no
+X-QQ-BUSINESS-ORIGIN: 2
+X-Originating-IP: 114.253.94.64
+X-QQ-STYLE: 
+X-QQ-mid: webmail802t1433349578t7621796
+Mime-Version: 1.0
+Content-Type: multipart/alternative;
+	boundary="----=_NextPart_556F2DCA_0A27E408_51EFC191"
+Content-Transfer-Encoding: 8Bit
+X-Priority: 3
+Message-ID: <tencent_541347B179D560AA50AB7FFB@qq.com>
+X-QQ-MIME: TCMime 1.0 by Tencent
+X-Mailer: QQMail 2.x
+X-QQ-Mailer: QQMail 2.x
+X-QQ-SENDSIZE: 520
+X-QQ-Bgrelay: 1
+Date: Thu, 4 Jun 2015 00:39:38 +0800
+From: "=?ISO-8859-1?B?SGhqYWNr?=" <82100840@qq.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE Request for Icecast 2.3.3, 2.4.0, 2.4.1, fixed in 2.4.2
-To: thomas@ruecker.fi
+Subject: [oss-security] Re: Re: CVE-2015-3217: PCRE Library Call Stack Overflow Vulnerability in match()
+To: "=?ISO-8859-1?B?b3NzLXNlY3VyaXR5?=" <oss-security@lists.openwall.com>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+------=_NextPart_556F2DCA_0A27E408_51EFC191
+Content-Type: text/plain;
+	charset="ISO-8859-1"
+Content-Transfer-Encoding: base64
 
-> Proof of concept:
-> curl "http://example.org:8000/admin/killsource?mount=/test.ogg"
+QXMgZmFyIGFzIEkgdGVzdGVkLCA4LjMzLCA4LjM0LCA4LjM1LCA4LjM2LCA4
+LjM3IHdlcmUgY29uZmlybWVkIHRvIGJlIGFmZmVjdGVkLg0KUENSRTIgMTAu
+MTAgaXMgYWxzbyBjb25maXJtZWQgdG8gYmUgdnVsbmVyYWJsZS4NCk90aGVy
+IHZlcnNpb24gbWF5IGFsc28gYmUgYWZmZWN0ZWQuDQoNCg0KQ2hlZXJzLCAN
+Cldlbg==
 
-> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=782120
-> https://trac.xiph.org/ticket/2191
-> http://lists.xiph.org/pipermail/icecast-dev/2015-April/002460.html
-> https://trac.xiph.org/changeset/27abfbbd688df3e3077b535997330aa06603250f/icecast-server
+------=_NextPart_556F2DCA_0A27E408_51EFC191--
 
-Use CVE-2015-3026.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJVJYi2AAoJEKllVAevmvms858IAI8wg3JmqdfCvZxkAxnR6F15
-pcYt1qveLRqwK33Y3Og7ZGfGsO1xaKdY/af1RbTzklvYA1SrnZjmjqdF8R8+fZwe
-lCKWOhlHSxmEuEJo4XyMt2ZWP9LZ5h2MwqVNAwFqQ4/BfTesEWB0beV37jzmWejQ
-bVVg6irkB8kHvoXCcCwhtj/Gc5cSrAdQHuep8wz2PnYyv1aH9FMtrBIQlX1ujwC3
-EUYgpVUpckvPK7EEmyMwQq7nKU3h+JsSHaJJAPfffre//7WF4BTcqT0R1Bfw6ekK
-cLaRbSgQwq/mknq28bq0BGq3ihtMVoH/bfmqWPcVaCbtDRTjGZ7EIRQs7GKQvT0=
-=5Sv4
------END PGP SIGNATURE-----
