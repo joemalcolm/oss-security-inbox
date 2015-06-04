@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1131" "Monday" "29" "October" "2018" "16:11:34" "+0100" "Jann Horn" "jannh@google.com" "<CAG48ez2OYD-9P-YSozYs08Xx0TdmWjwYB0GEm=ztLnEfL8dmow@mail.gmail.com>" "26" "[oss-security] Linux kernel: TLB flush happens too late on mremap (CVE-2018-18281; fixed in 4.9.135, 4.14.78, 4.18.16, 4.19)" nil nil nil "10" "2018102915:11:34" "[oss-security] Linux kernel: TLB flush happens too late on mremap (CVE-2018-18281; fixed in 4.9.135, 4.14.78, 4.18.16, 4.19)" (number mark "U       jannh@google Oct 29   26/1131  " thread-indent "\"[oss-security] Linux kernel: TLB flush happens too late on mremap (CVE-2018-18281; fixed in 4.9.135, 4.14.78, 4.18.16, 4.19)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["574" "Thursday" "4" "June" "2015" "08:58:10" "+0800" "=?ISO-8859-1?Q?wen=5Fguanxing?=" "wen_guanxing@venustech.com.cn" "<tencent_323A2A4F3543CA8C5DA2E0E7@qq.com>" "15" "[oss-security] Re: Re: Re: Re: CVE-2015-3217: PCRE Library Call Stack Overflow Vulnerability in match()" nil nil nil "6" "2015060400:58:10" "[oss-security] Re: Re: Re: Re: CVE-2015-3217: PCRE Library Call Stack Overflow Vulnerability in match()" (number mark "        wen_guanxing Jun  4   15/574   " thread-indent "\"[oss-security] Re: Re: Re: Re: CVE-2015-3217: PCRE Library Call Stack Overflow Vulnerability in match()\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 1186 invoked by uid 550); 29 Oct 2018 15:27:21 -0000
+Received: (qmail 16071 invoked by uid 550); 4 Jun 2015 00:58:34 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,65 +11,53 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 16035 invoked from network); 4 Jun 2015 00:58:29 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=venustech.com.cn;
+	 h=x-mailer:message-id:date:date:content-transfer-encoding
+	:content-type:content-type:mime-version:subject:subject:to:from
+	:from; s=dkim; t=1433379280; x=1434243281; bh=EwpRhuslp7hQ5H9gy/
+	vq85UKM2bIKNJ7/E7+nxNHFbA=; b=lUxZZ3UFD7aiuDU+v10sQZDKih054z4YRv
+	8d9JZix2QX28aBN+I+fbVjfCeyXLKxZkCAVYzuWc3OYjbQAAuPvZWx+tMcGEnazc
+	Bfur1IB2rDuyAsXKsaxK4/u06TbvuwF9yuiB28w2FX0ic/o4+144zBPeY4WlIi8G
+	1UWsCODvw=
+X-QQ-FEAT: 0IrakC4z2PRC7BhtlllP9d6Vv7rUQdBfuxpohU8NjPLlKYLMGsJNKM962nvM0
+	sRBxkvu/Ov9Z0VpyYgdCLaT0Ogi0xyI0/xUpPEGYHFeSx3KfUYLb+Ilf4Io8S4geP0cWvEx
+	nAzqz00z5VMzGkLfOIyisk9Xhs3kzOznwSvSZDG/eSVE1+G3+zXS+KCkzwujrvQyOz9G1SF
+	VYwPg76gMDg==
+X-QQ-SSF: 00000000000000F000000000000000N
+X-HAS-ATTACH: no
+X-QQ-BUSINESS-ORIGIN: 2
+X-Originating-IP: 114.253.94.64
+X-QQ-STYLE: 
+X-QQ-mid: webmail802t1433379490t5967174
+Mime-Version: 1.0
+Content-Type: multipart/alternative;
+	boundary="----=_NextPart_556FA2A2_0910A468_483A005C"
+Content-Transfer-Encoding: 8Bit
+X-Priority: 3
+Message-ID: <tencent_323A2A4F3543CA8C5DA2E0E7@qq.com>
+X-QQ-MIME: TCMime 1.0 by Tencent
+X-Mailer: QQMail 2.x
+X-QQ-Mailer: QQMail 2.x
+X-QQ-SENDSIZE: 520
+Date: Thu, 4 Jun 2015 08:58:10 +0800
+From: "=?ISO-8859-1?B?d2VuX2d1YW54aW5n?=" <wen_guanxing@venustech.com.cn>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 19949 invoked from network); 29 Oct 2018 15:12:13 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=lf6ot9CvMmtdele3rd3RVaapyFQsx9XmfS5PxnLTx24=;
-        b=koQCQ1p/KAGWNK/5/6RUna1FviCgcZHSfdEIglq6deQSJfIXH9lGh6m1rUo+2Eqh94
-         IgrwbYNETsU+Bl5ZkqH91cmy9fo7S2ZgbTAFRro04DUMJ55RoqwoDn+RwIi9yIITca7Z
-         Q8jxDYWkWFJr1tbzc0eBV6ftjH34mwPqdnd/E/sYtYU9lJLgFN4tkYsORIeGPapsBWV9
-         Dt3ut0YFs9BMgKoiXwihkQZO0j8gZIRiQRolTaB0n1qEZdioLgnj8vnOwx9oT1eyuqGx
-         hWWMftOSGxGnVby6XlsQmLaYJmO52/brno0auLmPCAclYAwn3fUIagJN/kOx1hVED3Pq
-         DmNg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=lf6ot9CvMmtdele3rd3RVaapyFQsx9XmfS5PxnLTx24=;
-        b=VjvudiSKjQfFyaUY00OzMwbdZ/LM/OQqc+atsXu6d0FiSU1+l7+6DNLsPvpjvgcb7M
-         gYRTpBKj54SaO57cAIuGbtZv/XDyrvJUP57JPoK+ms4q+SxssGh8Onp5ZNy4AU5tkRGV
-         /KziH4cjT+V0RHLZXn3E5qro/Nb99l3/hJoncyvxz+PXOzS+cc9QqpP4cX/HpxQnbotn
-         UoyFWRUXXycs3vo3OzrBMS2SXFVXwerhcrOFtUw6J8r8y3FwLboVDDjTbrW0nbWfBZ/Z
-         iJP/uuu4H52W6BQVzjMuQn3d/qOTeoKOKTdiTUBPg3+Ziu1YelJAESMuPxW95xtkX9/V
-         7tnA==
-X-Gm-Message-State: AGRZ1gKnkLpkp0PtaxS8eBsumTsH7sIIxoTelduGuAIF/cIThqSUMXl8
-	ivhvWAo71G23iWqqj+rZnii3s7Mtf3dBm13ax2YlXIf01JZjaA==
-X-Google-Smtp-Source: AJdET5dHVQ1eg1chM62jMShKvTbf6T99xsCxgWo1iJ0izx3ZhufLZ1ICT/+puJaaCRIeXZg7gd3j1wPImsam7wl1i1o=
-X-Received: by 2002:a9d:2117:: with SMTP id i23mr8433202otb.230.1540825920528;
- Mon, 29 Oct 2018 08:12:00 -0700 (PDT)
-MIME-Version: 1.0
-From: Jann Horn <jannh@google.com>
-Date: Mon, 29 Oct 2018 16:11:34 +0100
-Message-ID: <CAG48ez2OYD-9P-YSozYs08Xx0TdmWjwYB0GEm=ztLnEfL8dmow@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] Linux kernel: TLB flush happens too late on mremap (CVE-2018-18281;
- fixed in 4.9.135, 4.14.78, 4.18.16, 4.19)
+Subject: [oss-security] Re: Re: Re: Re: CVE-2015-3217: PCRE Library Call Stack Overflow Vulnerability in match()
+To: "=?ISO-8859-1?B?b3NzLXNlY3VyaXR5?=" <oss-security@lists.openwall.com>
 
-NOTE: I have requested a CVE identifier, and I'm sending this message,
-to make tracking of the fix easier; however, to avoid missing security
-fixes without CVE identifiers, you should *NOT* be cherry-picking a
-specific patch in response to a notification about a kernel security
-bug.
+------=_NextPart_556FA2A2_0910A468_483A005C
+Content-Type: text/plain;
+	charset="ISO-8859-1"
+Content-Transfer-Encoding: base64
 
-Since Linux kernel version 3.2, the mremap() syscall performs TLB
-flushes after dropping pagetable locks. If a syscall such as
-ftruncate() removes entries from the pagetables of a task that is in
-the middle of mremap(), a stale TLB entry can remain for a short time
-that permits access to a physical page after it has been released back
-to the page allocator and reused.
+QWx0aG91Z2ggUEhQIGlzIG5vdCBzZXR0aW5nIHRoZSBtYXRjaF9saW1pdF9y
+ZWN1cnNpb24gY29ycmVjdGx5LCB0aGlzIHBhdHRlcm4gcmV2ZWFsZWQgYSBi
+dWcgaW4gdGhlIHplcm8gbGVuZ3RoIHJlY3Vyc2lvbiBkZXRlY3Rvci5SdW5u
+aW5nIHRoZSBwYXR0ZXJuIHdpdGggcGNyZXRlc3QsIHRoZSBwcm9jZXNzIHdp
+bGwgYWxzbyBoYW5nLg0KSXQncyBmYWlyIHRvIHNheSB0aGF0IGJvdGggUEhQ
+IGFuZCBQQ1JFIGhhcyBtYWRlIGEgbWlzdGFrZS4NCkkgd2lsbCByZXBvcnQg
+dGhpcyBsYXRlciB0byBQSFAgbGF0ZXIu
 
-This is CVE-2018-18281.
+------=_NextPart_556FA2A2_0910A468_483A005C--
 
-This is fixed in the following kernel versions:
-4.9.135
-4.14.78
-4.18.16
-4.19
-
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=eb66ae030829605d61fbef1909ce310e29f78821
-https://cdn.kernel.org/pub/linux/kernel/v4.x/ChangeLog-4.9.135
-https://cdn.kernel.org/pub/linux/kernel/v4.x/ChangeLog-4.14.78
-https://cdn.kernel.org/pub/linux/kernel/v4.x/ChangeLog-4.18.16
-https://bugs.chromium.org/p/project-zero/issues/detail?id=1695
