@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["726" "Tuesday" "25" "July" "2017" "20:04:33" "+0200" "Solar Designer" "solar@openwall.com" "<20170725180432.GA4946@openwall.com>" "16" "Re: [oss-security] accepting new members to (linux-)distros lists" "^Date:" nil nil "7" "2017072518:04:33" "[oss-security] accepting new members to (linux-)distros lists" (number mark "        solar@openwa Jul 25   16/726   " thread-indent "\"Re: [oss-security] accepting new members to (linux-)distros lists\"\n") "<430b7126-01a4-0b15-cee2-4bd1a34945de@oracle.com>" ("<20170628200239.GA25525@openwall.com>" "<CA+aC4kuUKG4CndFjbT=+LSctTXL=Xfrfze6ZE3ZCp7XCHM5OQg@mail.gmail.com>" "<20170702224421.GA19376@openwall.com>" "<7b91f9d5-153b-d265-3bb0-ecc11437c469@oracle.com>" "<20170703181857.GA24978@openwall.com>" "<9CBECC6C-8428-4C2C-B3F6-CB6768B9C706@oracle.com>" "<430b7126-01a4-0b15-cee2-4bd1a34945de@oracle.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1825" "Thursday" "4" "June" "2015" "17:56:09" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150604215609.811EC42E102@smtpvbsrv1.mitre.org>" "41" "[oss-security] Re: CVE Request: redis Lua sandbox escape and arbitrary code execution" nil nil nil "6" "2015060421:56:09" "[oss-security] Re: CVE Request: redis Lua sandbox escape and arbitrary code execution" (number mark "        cve-assign@m Jun  4   41/1825  " thread-indent "\"[oss-security] Re: CVE Request: redis Lua sandbox escape and arbitrary code execution\"\n") "<20150604134618.GA1613@kronk.local>" ("<20150604134618.GA1613@kronk.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 3869 invoked by uid 550); 25 Jul 2017 18:05:03 -0000
+Received: (qmail 21713 invoked by uid 550); 4 Jun 2015 21:56:21 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,33 +11,54 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3691 invoked from network); 25 Jul 2017 18:04:42 -0000
-Message-ID: <20170725180432.GA4946@openwall.com>
-References: <20170628200239.GA25525@openwall.com> <CA+aC4kuUKG4CndFjbT=+LSctTXL=Xfrfze6ZE3ZCp7XCHM5OQg@mail.gmail.com> <20170702224421.GA19376@openwall.com> <7b91f9d5-153b-d265-3bb0-ecc11437c469@oracle.com> <20170703181857.GA24978@openwall.com> <9CBECC6C-8428-4C2C-B3F6-CB6768B9C706@oracle.com> <430b7126-01a4-0b15-cee2-4bd1a34945de@oracle.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <430b7126-01a4-0b15-cee2-4bd1a34945de@oracle.com>
-User-Agent: Mutt/1.4.2.3i
-Date: Tue, 25 Jul 2017 20:04:33 +0200
-From: Solar Designer <solar@openwall.com>
+Received: (qmail 21689 invoked from network); 4 Jun 2015 21:56:21 -0000
+In-Reply-To: <20150604134618.GA1613@kronk.local>
+Message-Id: <20150604215609.811EC42E102@smtpvbsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Thu,  4 Jun 2015 17:56:09 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] accepting new members to (linux-)distros lists
-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: CVE Request: redis Lua sandbox escape and arbitrary code execution
+To: alessandro@ghedini.me
 
-On Tue, Jul 25, 2017 at 04:46:19PM +0100, John Haxby wrote:
-> However, put me down as backup for "1. Promptly review new issue reports
-> for meeting the list's requirements and confirm receipt..."
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-OK, although I'd rather have the old-timers choose trickier tasks.
+> redis 3.0.2 and 2.8.21 have been released
 
-> I do expect that we (I) will become more active on linux-distros as
-> well.   Speaking of which, has it been unusually quiet or do I need to
-> beat up the mail admin people again?   I haven't seen anything since
-> Bastille Day (14 July).
+> https://groups.google.com/forum/#!msg/redis-db/4Y6OqK8gEyk/Dg-5cejl-eUJ
+> http://benmmurphy.github.io/blog/2015/06/04/redis-eval-lua-sandbox-escape/
+> https://github.com/antirez/redis/commit/fdf9d455098f54f7666c702ae464e6ea21e25411
 
-It has been unusually quiet.  (And this is totally unrelated to the
-travel and vacations that Henri mentioned.  If anything is sent to the
-(linux-)distros list, it should get through without a delay anyway.)
+The Ben Murphy advisory has a long discussion of many software and
+deployment issues. Do you have a specific viewpoint about what the CVE
+ID should be for? In particular, is the essence of the request that
+the Redis upstream vendor believes that loading Lua bytecode was, by
+itself, inherently an implementation mistake in Redis, and is now
+fixed by the
+https://github.com/antirez/redis/commit/fdf9d455098f54f7666c702ae464e6ea21e25411
+change?
 
-Alexander
+By way of background: we have previously tried to gather information
+for assigning CVE IDs to the underlying bytecode security concerns in
+Lua (see the http://openwall.com/lists/oss-security/2014/08/27/2
+post), but this was unsuccessful. If the currently needed CVE ID should
+be only about Redis, as mentioned in the above paragraph, then we will
+not be revisiting those Lua issues now.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJVcMkAAAoJEKllVAevmvmshgoH/0d6gd3qhLrK615YkgfLRCnU
+bAuBrbBRf3aCO4qQWfdvdluSDb4pf8Uc2ECC9c1eHJfqRNIvkWgq+9MYWV0S1Jgz
+O1WjYgJ5QbamqgECPUluj3yrZdefLwIVNxKRjfzIa5uZS/e4zbWyYcWPEuXsU6YD
+7PiFDRx0S6k1OUpw1/051uV9p/Q06PZcPKtQq4qIH2gjcZO1MQn/C8T0y+tNVNKq
+iUyG84esvBK04AjakUNppHSYTiBcW7dGEWhwd7cvdvXWnF+g3s/PBZNve3B5czIZ
+klk0DqXHtTaYvSF4ERY2cjMKU3GBJWq4dQ2kkfXBDjm28oqG2Nit8APETMWpNHU=
+=J2bY
+-----END PGP SIGNATURE-----
