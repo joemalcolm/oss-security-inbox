@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4834" "Thursday" "7" "April" "2016" "07:39:43" "+0000" "=?gb2312?B?zfXDtw==?=" "wangmei@360.cn" "<BD973AA6-4933-4527-951F-0AEE2273D2C3@360.cn>" "83" "[oss-security] CVE-2016-3621 libtiff: Out-of-bounds Read in the bmp2tiff tool" nil nil nil "4" "2016040707:39:43" "[oss-security] CVE-2016-3621 libtiff: Out-of-bounds Read in the bmp2tiff tool" (number mark "U       wangmei@360. Apr  7   83/4834  " thread-indent "\"[oss-security] CVE-2016-3621 libtiff: Out-of-bounds Read in the bmp2tiff tool\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["596" "Thursday" "4" "June" "2015" "09:11:28" "-0300" "Felipe Pena" "felipensp@gmail.com" "<CA+5g0SLU4C2ma_otHorNKQ+u52N6yOYYmJ7sXcG7FvYKAgC3bg@mail.gmail.com>" "15" "Re: [oss-security] Re: Re: Re: Re: CVE-2015-3217: PCRE Library Call Stack Overflow Vulnerability in match()" nil nil nil "6" "2015060412:11:28" "[oss-security] Re: Re: Re: Re: CVE-2015-3217: PCRE Library Call Stack Overflow Vulnerability in match()" (number mark "        felipensp@gm Jun  4   15/596   " thread-indent "\"Re: [oss-security] Re: Re: Re: Re: CVE-2015-3217: PCRE Library Call Stack Overflow Vulnerability in match()\"\n") "<tencent_323A2A4F3543CA8C5DA2E0E7@qq.com>" ("<tencent_323A2A4F3543CA8C5DA2E0E7@qq.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 24413 invoked by uid 550); 7 Apr 2016 07:59:22 -0000
+Received: (qmail 22012 invoked by uid 550); 4 Jun 2015 12:12:00 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,104 +11,44 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 8190 invoked from network); 7 Apr 2016 07:39:55 -0000
-From: =?gb2312?B?zfXDtw==?= <wangmei@360.cn>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Thread-Topic: CVE-2016-3621 libtiff: Out-of-bounds Read in the bmp2tiff tool
-Thread-Index: AQHRkKCmeT50YoqT9kik+CdwnSmDAQ==
-Date: Thu, 7 Apr 2016 07:39:43 +0000
-Message-ID: <BD973AA6-4933-4527-951F-0AEE2273D2C3@360.cn>
-Accept-Language: zh-CN, en-US
-Content-Language: zh-CN
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-x-originating-ip: [10.18.25.162]
-Content-Type: multipart/alternative;
-	boundary="_000_BD973AA649334527951F0AEE2273D2C3360cn_"
+Received: (qmail 21989 invoked from network); 4 Jun 2015 12:12:00 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :content-type;
+        bh=xpKFC/8iq3FpIV54f3M/BXpHNUkjUTdntSXGjrDHjbo=;
+        b=PCj2UmfmnGmhaowCzcnubuapbgT7HBxK0ztAR1OVE/ungbg7ybf8B1E0Aq8ct6vcKf
+         8OBcmDI2gMUKI8JvC4dvuY/Eq2FW7oJvB+eYgcM9l9pi8Vl+6GtOjU68Kc1qyHu+ozxb
+         h7gKXeIeoORc9AydhnUXvOOkFk1B2gDQj37If5SPJRHI5a5sGLK7eMPxZtRFjRZm05BV
+         mFuGb9b+Bngogrj+x4Xx/cDGqr4rhheFqUA2aoEocdBj8sJmWBQoPm9n2au5L6VxYjst
+         /e/YcYyminDkdXS0nduvoS7wBRgmRkKvw4OKZeML+jGdtw1FhaZseIFVfv8aQ0ibcd/M
+         sj9g==
+X-Received: by 10.152.29.6 with SMTP id f6mr2945355lah.85.1433419908831; Thu,
+ 04 Jun 2015 05:11:48 -0700 (PDT)
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2016-3621 libtiff: Out-of-bounds Read in the bmp2tiff tool
+In-Reply-To: <tencent_323A2A4F3543CA8C5DA2E0E7@qq.com>
+References: <tencent_323A2A4F3543CA8C5DA2E0E7@qq.com>
+Message-ID: <CA+5g0SLU4C2ma_otHorNKQ+u52N6yOYYmJ7sXcG7FvYKAgC3bg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Date: Thu, 4 Jun 2015 09:11:28 -0300
+From: Felipe Pena <felipensp@gmail.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Re: Re: Re: Re: CVE-2015-3217: PCRE Library Call
+ Stack Overflow Vulnerability in match()
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
 
---_000_BD973AA649334527951F0AEE2273D2C3360cn_
-Content-Type: text/plain; charset="gb2312"
-Content-Transfer-Encoding: base64
+On Wed, Jun 3, 2015 at 9:58 PM, wen_guanxing
+<wen_guanxing@venustech.com.cn> wrote:
+> Although PHP is not setting the match_limit_recursion correctly, this pattern revealed a bug in the zero length recursion detector.Running the pattern with pcretest, the process will also hang.
+> It's fair to say that both PHP and PCRE has made a mistake.
+> I will report this later to PHP later.
 
-RGV0YWlscw0KPT09PT09PQ0KDQpQcm9kdWN0OiBsaWJ0aWZmDQpBZmZlY3Rl
-ZCBWZXJzaW9uczogPD0gNC4wLjYNClZ1bG5lcmFiaWxpdHkgVHlwZTogT3V0
-LW9mLWJvdW5kcyBSZWFkDQpWZW5kb3IgVVJMOiBodHRwOi8vd3d3LmxpYnRp
-ZmYub3JnLw0KQ1ZFIElEOiBDVkUtMjAxNi0zNjIxDQpDcmVkaXQ6IE1laSBX
-YW5nIG9mIHRoZSBDbG91ZCBTZWN1cml0eSBUZWFtLCBRaWhvbyAzNjANCg0K
-SW50cm9kdWN0aW9uDQo9PT09PT09PT09PT0NCg0KTFpXRW5jb2RlIGZ1bmN0
-aW9uIGluIHRpZl9sencuYyBpbiBibXAydGlmZiBhbGxvd3MgYXR0YWNrZXJz
-IHRvIGNhdXNlIGEgZGVuaWFsIG9mIHNlcnZpY2UgKE91dC1vZi1ib3VuZHMg
-UmVhZCkgdmlhIGEgY3JhZnRlZCBibXAgaW1hZ2Ugd2l0aCBwYXJhbSAtYyBs
-encuDQoNCg0KbGlidGlmZi1tYXN0ZXIvbGlidGlmZi90aWZfbHp3LmM6OTE1
-DQoNCjkxMCAgKi8NCjkxMSBQdXROZXh0Q29kZShvcCwgQ09ERV9DTEVBUik7
-DQo5MTIgZW50ID0gKmJwKys7IGNjLS07IGluY291bnQrKzsNCjkxMyB9DQo5
-MTQgd2hpbGUgKGNjID4gMCkgew0KOTE1IGMgPSAqYnArKzsgY2MtLTsgaW5j
-b3VudCsrOw0KOTE2IGZjb2RlID0gKChsb25nKWMgPDwgQklUU19NQVgpICsg
-ZW50Ow0KOTE3IGggPSAoYyA8PCBIU0hJRlQpIF4gZW50OyAvKiB4b3IgaGFz
-aGluZyAqLw0KDQoNCi4vYm1wMnRpZmYgIC1jIGx6dyAgLi9zYW1wbGUvYm1w
-MnRpZmZfbHp3LmJtcCAxLnRpZg0KDQo9PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PQ0K
-PT0xMDQ1NT09IEVSUk9SOiBBZGRyZXNzU2FuaXRpemVyOiBoZWFwLWJ1ZmZl
-ci1vdmVyZmxvdyBvbiBhZGRyZXNzIDB4N2ZiY2QwNmQxYzAwIGF0IHBjIDB4
-NDgyN2FhIGJwIDB4N2ZmZWY4MTc0MWQwIHNwIDB4N2ZmZWY4MTc0MWMwDQpS
-RUFEIG9mIHNpemUgMSBhdCAweDdmYmNkMDZkMWMwMCB0aHJlYWQgVDANCiAg
-ICAjMCAweDQ4MjdhOSBpbiBMWldFbmNvZGUgL2hvbWUvZGF6aHVhbmcvYXNh
-bi9saWJ0aWZmLW1hc3Rlci9saWJ0aWZmL3RpZl9sencuYzo5MTUNCiAgICAj
-MSAweDQ1NjY1ZSBpbiBUSUZGV3JpdGVTY2FubGluZSAvaG9tZS9kYXpodWFu
-Zy9hc2FuL2xpYnRpZmYtbWFzdGVyL2xpYnRpZmYvdGlmX3dyaXRlLmM6MTcz
-DQogICAgIzIgMHg0MDQ1MGYgaW4gbWFpbiAvaG9tZS9kYXpodWFuZy9hc2Fu
-L2xpYnRpZmYtbWFzdGVyL3Rvb2xzL2JtcDJ0aWZmLmM6Nzc1DQogICAgIzMg
-MHg3ZmJjY2NjOTJhZjQgaW4gX19saWJjX3N0YXJ0X21haW4gKC9saWI2NC9s
-aWJjLnNvLjYrMHgyMWFmNCkNCiAgICAjNCAweDQwMTlhOCBpbiBfc3RhcnQg
-KC9ob21lL2Rhemh1YW5nL2FzYW4vbGlidGlmZi1tYXN0ZXIvdG9vbHMvYm1w
-MnRpZmYrMHg0MDE5YTgpDQoweDdmYmNkMDZkMWMwMCBpcyBsb2NhdGVkIDAg
-Ynl0ZXMgdG8gdGhlIHJpZ2h0IG9mIDE1NzM4ODgtYnl0ZSByZWdpb24gWzB4
-N2ZiY2QwNTUxODAwLDB4N2ZiY2QwNmQxYzAwKQ0KYWxsb2NhdGVkIGJ5IHRo
-cmVhZCBUMCBoZXJlOg0KICAgICMwIDB4N2ZiY2NkNTYzMTI5ICgvbGliNjQv
-bGliYXNhbi5zby4wKzB4MTYxMjkpDQogICAgIzEgMHg0NWI3NjEgaW4gX1RJ
-RkZtYWxsb2MgL2hvbWUvZGF6aHVhbmcvYXNhbi9saWJ0aWZmLW1hc3Rlci9s
-aWJ0aWZmL3RpZl91bml4LmM6MzE2DQogICAgIzIgMHg0MDM3YzMgaW4gbWFp
-biAvaG9tZS9kYXpodWFuZy9hc2FuL2xpYnRpZmYtbWFzdGVyL3Rvb2xzL2Jt
-cDJ0aWZmLmM6Njc4DQogICAgIzMgMHg3ZmJjY2NjOTJhZjQgaW4gX19saWJj
-X3N0YXJ0X21haW4gKC9saWI2NC9saWJjLnNvLjYrMHgyMWFmNCkNClNVTU1B
-Ulk6IEFkZHJlc3NTYW5pdGl6ZXI6IGhlYXAtYnVmZmVyLW92ZXJmbG93IC9o
-b21lL2Rhemh1YW5nL2FzYW4vbGlidGlmZi1tYXN0ZXIvbGlidGlmZi90aWZf
-bHp3LmM6OTE1IExaV0VuY29kZQ0KU2hhZG93IGJ5dGVzIGFyb3VuZCB0aGUg
-YnVnZ3kgYWRkcmVzczoNCiAgMHgwZmY4MWEwZDIzMzA6IDAwIDAwIDAwIDAw
-IDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAwDQogIDB4MGZm
-ODFhMGQyMzQwOiAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAw
-MCAwMCAwMCAwMCAwMA0KICAweDBmZjgxYTBkMjM1MDogMDAgMDAgMDAgMDAg
-MDAgMDAgMDAgMDAgMDAgMDAgMDAgMDAgMDAgMDAgMDAgMDANCiAgMHgwZmY4
-MWEwZDIzNjA6IDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAw
-IDAwIDAwIDAwIDAwDQogIDB4MGZmODFhMGQyMzcwOiAwMCAwMCAwMCAwMCAw
-MCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMA0KPT4weDBmZjgx
-YTBkMjM4MDpbZmFdZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEg
-ZmEgZmEgZmEgZmENCiAgMHgwZmY4MWEwZDIzOTA6IGZhIGZhIGZhIGZhIGZh
-IGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhDQogIDB4MGZmODFh
-MGQyM2EwOiBmYSBmYSBmYSBmYSBmYSBmYSBmYSBmYSBmYSBmYSBmYSBmYSBm
-YSBmYSBmYSBmYQ0KICAweDBmZjgxYTBkMjNiMDogZmEgZmEgZmEgZmEgZmEg
-ZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmENCiAgMHgwZmY4MWEw
-ZDIzYzA6IGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZh
-IGZhIGZhIGZhDQogIDB4MGZmODFhMGQyM2QwOiBmYSBmYSBmYSBmYSBmYSBm
-YSBmYSBmYSBmYSBmYSBmYSBmYSBmYSBmYSBmYSBmYQ0KU2hhZG93IGJ5dGUg
-bGVnZW5kIChvbmUgc2hhZG93IGJ5dGUgcmVwcmVzZW50cyA4IGFwcGxpY2F0
-aW9uIGJ5dGVzKToNCiAgQWRkcmVzc2FibGU6ICAgICAgICAgICAwMA0KICBQ
-YXJ0aWFsbHkgYWRkcmVzc2FibGU6IDAxIDAyIDAzIDA0IDA1IDA2IDA3DQog
-IEhlYXAgbGVmdCByZWR6b25lOiAgICAgZmENCiAgSGVhcCByaWdoIHJlZHpv
-bmU6ICAgICBmYg0KICBGcmVlZCBIZWFwIHJlZ2lvbjogICAgIGZkDQogIFN0
-YWNrIGxlZnQgcmVkem9uZTogICAgZjENCiAgU3RhY2sgbWlkIHJlZHpvbmU6
-ICAgICBmMg0KICBTdGFjayByaWdodCByZWR6b25lOiAgIGYzDQogIFN0YWNr
-IHBhcnRpYWwgcmVkem9uZTogZjQNCiAgU3RhY2sgYWZ0ZXIgcmV0dXJuOiAg
-ICBmNQ0KICBTdGFjayB1c2UgYWZ0ZXIgc2NvcGU6IGY4DQogIEdsb2JhbCBy
-ZWR6b25lOiAgICAgICAgZjkNCiAgR2xvYmFsIGluaXQgb3JkZXI6ICAgICBm
-Ng0KICBQb2lzb25lZCBieSB1c2VyOiAgICAgIGY3DQogIEFTYW4gaW50ZXJu
-YWw6ICAgICAgICAgZmUNCj09MTA0NTU9PSBBQk9SVElORw0KDQpSZWZlcmVu
-Y2VzOg0KWzFdIGh0dHA6Ly93d3cucmVtb3Rlc2Vuc2luZy5vcmcvbGlidGlm
-Zi8NClsyXSBodHRwOi8vYnVnemlsbGEubWFwdG9vbHMub3JnL2J1Z2xpc3Qu
-Y2dpP3Byb2R1Y3Q9bGlidGlmZg0KDQoNClRoYW5rIHlvdSENCkJlc3QgUmVn
-YXJkcywNCg0KDQpNZWkNCg0K
+AFAIK this is not a bug on PHP at all, this is a long time known issue
+on PCRE lib instead.
+Check the documentation for futher details:
+http://pcre.org/current/doc/html/pcre2stack.html
 
---_000_BD973AA649334527951F0AEE2273D2C3360cn_--
+
+-- 
+Regards,
+Felipe Pena
