@@ -1,4 +1,9 @@
-Received: (qmail 3774 invoked by uid 550); 13 May 2025 19:14:13 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4504" "Friday" "5" "June" "2015" "17:29:22" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150605212922.123888BC10A@smtpvmsrv1.mitre.org>" "108" "[oss-security] Re: CVE Request: Linux Kernel Ozwpan Driver - Remote packet-of-death vulnerabilities" nil nil nil "6" "2015060521:29:22" "[oss-security] Re: CVE Request: Linux Kernel Ozwpan Driver - Remote packet-of-death vulnerabilities" (number mark "        cve-assign@m Jun  5  108/4504  " thread-indent "\"[oss-security] Re: CVE Request: Linux Kernel Ozwpan Driver - Remote packet-of-death vulnerabilities\"\n") "<CAHmME9opocVgo-EpALxnAYc4HoRWo1TVE12Tbn3QarYyYu+2qg@mail.gmail.com>" ("<CAHmME9opocVgo-EpALxnAYc4HoRWo1TVE12Tbn3QarYyYu+2qg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 1608 invoked by uid 550); 5 Jun 2015 21:29:34 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,48 +11,121 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 1584 invoked from network); 5 Jun 2015 21:29:33 -0000
+In-Reply-To: <CAHmME9opocVgo-EpALxnAYc4HoRWo1TVE12Tbn3QarYyYu+2qg@mail.gmail.com>
+Message-Id: <20150605212922.123888BC10A@smtpvmsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Fri,  5 Jun 2015 17:29:22 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 3744 invoked from network); 13 May 2025 19:14:12 -0000
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=spacehopper.org;
-	s=s3e; t=1747163643; h=from:from:subject:subject:date:date:message-id:message-id:
-	 in-reply-to:in-reply-to:references:references;
-	bh=KK03wgrhWz9vwseJrALSPbj385SsUEfcIpqxQ1MgQy4=;
-	b=mKFvw+xBndwTzJjZvpD5e02Enq7GbuyejTBuAaRJs/V+UAB6Wap0zuOgOeSYIBKI+NEnOO
-	J/YyBUAPeLju56DQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=spacehopper.org;
-	s=s3; t=1747163643; h=from:from:subject:subject:date:date:message-id:message-id:
-	 in-reply-to:in-reply-to:references:references;
-	bh=KK03wgrhWz9vwseJrALSPbj385SsUEfcIpqxQ1MgQy4=;
-	b=VpjtIItoMbhSkDmfcrclKkcxwAdrRToGrPmzfYraiEvGRd68FQjB69WyvdcHmwSuoJO/As
-	BWHzRI6bC2AzROvvh8XS/2hPM4MCaVOVfheQ5jcIirWu+WhvikriV5VhdnTgKI39k1ZFVb
-	QClSqrl3YupnPA2yUJsf0QPaa0ZmeUBvztBBQZCrqeSGcOvhe8lkbzOTmmHeyJV8GunZK1
-	ngOtj7h10NmkDIb/pCMVDScJMsdaaPj3iCcQXXF0a2XjUFa4IlhNeKF/qdT4d0tui8rrwb
-	Plskgx+GcUPLM/oA7+Qx/1Gbh6QUl3w9iQLQH9BBBj5+Mm6PQWnkdmqxuDeESA==
-Date: Tue, 13 May 2025 20:14:03 +0100
-From: Stuart Henderson <stu@spacehopper.org>
-To: oss-security@lists.openwall.com
-Message-ID: <sko4t7okzipikk7b3lwj3qgml5h7uc5t62tkj44wlu37zz27ja@mpse257ps566>
-References: <A398F21D-1899-4061-A56A-8CDD5A31904E@graemef.net>
- <3f3dottw366msbyl7vknhxldyftyvkdz2an2iw5i5rdk24fc6k@drfe7sruxmtc>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <3f3dottw366msbyl7vknhxldyftyvkdz2an2iw5i5rdk24fc6k@drfe7sruxmtc>
-Subject: Re: [oss-security] EU Vulnerability Database
+Subject: [oss-security] Re: CVE Request: Linux Kernel Ozwpan Driver - Remote packet-of-death vulnerabilities
+To: Jason@zx2c4.com
 
-On 2025/05/13 20:01, Stuart Henderson wrote:
-> On 2025/05/13 19:43, Graeme Fowler wrote:
-> > EUVD is in beta testing - given all the shenanigans with MITRE and CVE, it might be worth checking out.
-> > 
-> > https://euvd.enisa.europa.eu/about
-> > 
-> > Graeme
-> 
-> what a helpful website:
-> 
-> 403 Forbidden
-> Microsoft-Azure-Application-Gateway/v2
-> 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Hmm. Works after clearing cookies for europa.eu...
+> Two of them result in
+> a memcpy(kernel_buffer, network_packet, -length), one of them is a
+> divide-by-zero, and one of them is a loop that decrements -1 until it's
+> zero.
+> 
+> Please assign CVEs for these vulnerabilities. I believe the first two
+> patches of this set can receive one CVE for both, and the remaining two
+> can receive one CVE each.
+
+Determining the right number of CVE IDs is typically not based on
+looking at the number of impacts. We have reorganized your request to
+account for that.
+
+
+> 1. A remote packet can be sent, resulting in funny subtractions of
+> signed integers, which causes a memcpy(kernel_heap,
+> network_user_buffer, -network_user_provided_length).
+>
+> https://lkml.org/lkml/2015/5/13/744
+> https://git.kernel.org/cgit/linux/kernel/git/gregkh/staging.git/commit/?id=b1bb5b49373b61bf9d2c73a4d30058ba6f069e4c
+
+In this case, the primary problem was using the wrong integer data
+type. No code needed to be added; the only change was from signed to
+unsigned. Use CVE-2015-4001.
+
+
+> 1. A remote packet can be sent, resulting in funny subtractions of
+> signed integers, which causes a memcpy(kernel_heap,
+> network_user_buffer, -network_user_provided_length).
+>
+> https://lkml.org/lkml/2015/5/13/740
+> https://git.kernel.org/cgit/linux/kernel/git/gregkh/staging.git/commit/?id=d114b9fe78c8d6fc6e70808c2092aa307c36dc8e
+
+> 3. A remote packet can be sent, resulting in a funny subtraction,
+> causing an insanely big loop to lock up the kernel:
+>
+> https://lkml.org/lkml/2015/5/13/742
+> https://git.kernel.org/cgit/linux/kernel/git/gregkh/staging.git/commit/?id=9a59029bc218b48eff8b5d4dde5662fd79d3e1a8
+
+In these two cases, the primary problem was lack of a check for
+whether a length value (elt->length or len) was too small. (A
+secondary factor is that the data types needed to be changed to
+implement this check.) The nature of the later code results in two
+different types of impacts, but the two issues can still share the
+same CVE ID. Use CVE-2015-4002.
+
+
+> 2. A remote packet can be sent, resulting in divide-by-zero in
+> softirq, causing hard crash:
+> https://lkml.org/lkml/2015/5/13/741
+> https://git.kernel.org/cgit/linux/kernel/git/gregkh/staging.git/commit/?&id=04bf464a5dfd9ade0dda918e44366c2c61fce80b
+
+Use CVE-2015-4003.
+
+
+> 4. Multiple out-of-bounds reads, resulting in possible information
+> leakage, explained in the last paragraph of the introductory email
+> here:
+> https://lkml.org/lkml/2015/5/13/739
+
+> The maintainer has not yet written a patch to fix this issue, so it
+> remains an open case.
+
+> When ozwpan receives a packet,
+> it casts the packet into a variety of different structs, based on the
+> value of type and length parameters inside the packet. When making these
+> casts, and when reading bytes based on this length parameter, the actual
+> length of the packet in the socket buffer is never actually consulted. As
+> such, it's very likely that a packet could be sent that results in the
+> kernel reading memory in adjacent buffers, resulting in an information
+> leak, or from unpaged addresses, resulting in a crash.
+
+The "actual length ... is never actually consulted" issues are
+essentially what is described on the
+http://cwe.mitre.org/data/definitions/130.html page. Use CVE-2015-4004
+for all of these CWE-130 issues. An issue can, of course, have an
+out-of-bounds read impact but not be a CWE-130 issue.
+
+
+> So, I'd highly
+> recommend the maintainers of this driver go branch-by-branch from the
+> initial rx function, adding checks to ensure all reads and casts are
+> within the bounds of the socket buffer.
+
+If the maintainers (or any researcher) decide to disclose a
+security-relevant out-of-bounds read issue that is outside the defined
+scope of CVE-2015-4004, then they're certainly welcome to ask for
+their own CVE ID.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJVchQ8AAoJEKllVAevmvmsDikH/2bokNcp2iLCX6V+hudRyavo
+te5PksfYBRHVRUPoboMx3nchFIAHU4o4ZxTpSvbdt6/WNr2xTRra0tL7hl1tXDA3
+RoFOxQtzjE5R80E/yWkxphvnsVMLDEUJKNt0ojI9xjGiFGD/XgyOGHnrZU26/Z9V
+hrjezTzAqLH8pN43byarVHBDv8QyB7e5vKljWvIKW6zWldnpUnPX8HRnIILxBDsK
+AkvjPLFGekPo0YfLNN9s1DgKg/Bjp+fHbK+1XckbA73furworOiI4z5O8yCzDhi5
+Ee4vzJBGlcCJU6YcoLO0Gz8nnozH89JvJXecCqDihGk1jrMHfVHFN3HMzu/Cel4=
+=ge8R
+-----END PGP SIGNATURE-----
