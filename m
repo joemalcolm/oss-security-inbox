@@ -1,4 +1,9 @@
-Received: (qmail 25916 invoked by uid 550); 10 Apr 2024 22:51:45 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1962" "Friday" "5" "June" "2015" "12:04:11" "+0200" "Alessandro Ghedini" "alessandro@ghedini.me" "<20150605100411.GA6837@kronk.local>" "51" "[oss-security] Re: CVE Request: redis Lua sandbox escape and arbitrary code execution" nil nil nil "6" "2015060510:04:11" "[oss-security] Re: CVE Request: redis Lua sandbox escape and arbitrary code execution" (number mark "        alessandro@g Jun  5   51/1962  " thread-indent "\"[oss-security] Re: CVE Request: redis Lua sandbox escape and arbitrary code execution\"\n") "<20150604215609.811EC42E102@smtpvbsrv1.mitre.org>" ("<20150604134618.GA1613@kronk.local>" "<20150604215609.811EC42E102@smtpvbsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 9857 invoked by uid 550); 5 Jun 2015 10:04:26 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,100 +11,87 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 9816 invoked from network); 5 Jun 2015 10:04:24 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=date:from:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=pTEJxvO1zMcG0Y8uNvNu1voqSy6jotmAKjM29HLdpMk=;
+        b=EuwjRONnpwU+mAdPz6dVglL7ZoRtK+71BUpjBs2FSF6xpN0asxoJ8TRVeTBKDbHsbe
+         mafQ75yMZW2JKs0sn7sRTLRL/P8p2gOxkvAElgmLyG6tIPwJ4zqmuupnOhMfH/dUolUn
+         A+IsGU/Km/oDOpLykx8AIzH1hyksWUYlcYNHDzTOCLeWShaHtD6vImMgeeaO4C7XhPOB
+         SqtNWofHPJCLyBOg41LdE3G9l1a+vwr0fgO6HhvjJ4c137JrXUJq97WJVjtcQ2pl1pEh
+         HsrIrf5XUJm7ha0qKj5HVhvZUGgS3TfFOdiB66Sd0oQPJDs8zdSRjK+ZFiNc9UCbwWQN
+         zn9w==
+X-Received: by 10.194.5.74 with SMTP id q10mr3832217wjq.27.1433498652808;
+        Fri, 05 Jun 2015 03:04:12 -0700 (PDT)
+Message-ID: <20150605100411.GA6837@kronk.local>
+Mail-Followup-To: cve-assign@mitre.org, oss-security@lists.openwall.com
+References: <20150604134618.GA1613@kronk.local>
+ <20150604215609.811EC42E102@smtpvbsrv1.mitre.org>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="/9DWx/yDrRhgMJTb"
+Content-Disposition: inline
+In-Reply-To: <20150604215609.811EC42E102@smtpvbsrv1.mitre.org>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+Cc: oss-security@lists.openwall.com
+Date: Fri, 5 Jun 2015 12:04:11 +0200
+From: Alessandro Ghedini <alessandro@ghedini.me>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 24451 invoked from network); 10 Apr 2024 22:51:22 -0000
-Date: Thu, 11 Apr 2024 00:51:13 +0200
-From: Solar Designer <solar@openwall.com>
-To: oss-security@lists.openwall.com
-Message-ID: <20240410225113.GA21187@openwall.com>
-Mime-Version: 1.0
+Subject: [oss-security] Re: CVE Request: redis Lua sandbox escape and arbitrary code
+ execution
+To: cve-assign@mitre.org
+
+--/9DWx/yDrRhgMJTb
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-User-Agent: Mutt/1.4.2.3i
-Subject: [oss-security] CVE-2024-1086: Linux: nf_tables: use-after-free vulnerability in the nft_verdict_init() function
+Content-Transfer-Encoding: quoted-printable
 
-Hi,
+On Thu, Jun 04, 2015 at 05:56:09PM -0400, cve-assign@mitre.org wrote:
+> > redis 3.0.2 and 2.8.21 have been released
+>=20
+> > https://groups.google.com/forum/#!msg/redis-db/4Y6OqK8gEyk/Dg-5cejl-eUJ
+> > http://benmmurphy.github.io/blog/2015/06/04/redis-eval-lua-sandbox-esca=
+pe/
+> > https://github.com/antirez/redis/commit/fdf9d455098f54f7666c702ae464e6e=
+a21e25411
+>=20
+> The Ben Murphy advisory has a long discussion of many software and
+> deployment issues. Do you have a specific viewpoint about what the CVE
+> ID should be for? In particular, is the essence of the request that
+> the Redis upstream vendor believes that loading Lua bytecode was, by
+> itself, inherently an implementation mistake in Redis, and is now
+> fixed by the
+> https://github.com/antirez/redis/commit/fdf9d455098f54f7666c702ae464e6ea2=
+1e25411
+> change?
 
-Quoting the CVE description:
+Yes, that was the idea.
 
-A use-after-free vulnerability in the Linux kernel's netfilter:
-nf_tables component can be exploited to achieve local privilege
-escalation. The nft_verdict_init() function allows positive values as
-drop error within the hook verdict, and hence the nf_hook_slow()
-function can cause a double free vulnerability when NF_DROP is issued
-with a drop error which resembles NF_ACCEPT.
+Cheers
 
-Introduced in February 2014:
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=e0abdadcc6e1
+--/9DWx/yDrRhgMJTb
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
 
-Fixed in January 2024:
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=f342de4e2f33e0e39165d8639387aa6c19dff660
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-This is old news, but it's still relevant.  Out of major distros,
-notably RHEL 9.3 (and most rebuilds) is still not fixed, and Notselwyn's
-exploit that just works all the way to a root shell was recently widely
-publicized:
+iQIcBAEBCgAGBQJVcXQYAAoJEK+lG9bN5XPLzSQP/R5xIqAq0JhrjyZCmBvsoAnC
+MEMQjZc4wpnhNmQiVq6wWumZXp7IZmDP5PsfeffBU76/6/KKBHdb6i8waQR2UYcx
+hhXsl3P1Hw7RIqk54Chamjj6NHDO9OZZmW8RUs5ZGOqNP0QHVUq3/tE0XIrVtmEQ
+3wlGQv2x3GmLNw8kakze3RukdObQ6wS053UfhAUfW3XYPDocqB7PKeLtPeXwS/v6
+zJemscCWkDzb4R6quSeKkiOAxw6N9BBg6JsXPPu8bwUhos4AN3TdtGEAdqTPto9v
+eFN8WZLHU9ecnSTVq2d/rSDtOzrSX9dTbcKiJK5betaLeyr3lIov16dLB92QRoZR
+kvhlx4a50c6eXVu3YOqunl3kIUf7t7prg3WN0CJ0gS/TQ9WfGlkw2R54AlXPkMUP
+C4/UIif4gc5z8ML4ZsiMPev9tQMUfIx51UmdDe6QX9TU4IIhDahmySuEaHPCvimG
+h5Go9+IypJOaq3mANniAmEeM9vlG0wdwWnVfIweIfISfLdS0jhdqFQ8bpmQ40S9I
+hymAdPu6s/hbNRA4AwWyalnUM9LOqYtQ6bMGLVZa58q1gkih6+x1Nmrri9Tgy0et
+psG9uAoi27PDrGOHKFaRHkZY1pDk/NbVhKrOmX4FAFb8ZEaE0n4Py+J8brgS8D1U
+cfOVZLPv3aAEELGsV1ci
+=61bz
+-----END PGP SIGNATURE-----
 
-https://github.com/Notselwyn/CVE-2024-1086
-
-There are known mitigations: blacklist the nf_tables kernel module if
-unused, disallow access to user namespaces if containers are not used,
-load Jonathan Wright's unofficial AlmaLinux kpatch (link below), or/and
-load LKRG (kills the published exploit at its last stage, leaving the
-system unstable).
-
-https://jonathanspw.com/posts/2024-03-31-dealing-with-cve-2024-1086/
-
-$ sha256sum AlmaLinux-9--5-14-0-362--CVE-2024-1086-Patch.ko
-446a2f0a78f92a5530c45d443680171536888c4e6f6a3edaff95a412ca1aafbe  AlmaLinux-9--5-14-0-362--CVE-2024-1086-Patch.ko
-
-The above exploit's author Notselwyn also wrote an extensive blog post
-on March 26:
-
-https://pwning.tech/nftables/
-
-Its title and abstract are:
-
-"Flipping Pages: An analysis of a new Linux vulnerability in nf_tables
-and hardened exploitation techniques
-
-A tale about exploiting KernelCTF Mitigation, Debian, and Ubuntu
-instances with a double-free in nf_tables in the Linux kernel, using
-novel techniques like Dirty Pagedirectory. All without even having to
-recompile the exploit for different kernel targets once."
-
-I asked and was hoping Notselwyn would bring this to oss-security
-directly, but since that's not happening I am posting this relatively
-brief message now.  I understand it'd be a lot of work to process the
-whole blog post into a plain text message.
-
-Another reason for me to post this is that a somewhat obscure public
-GitHub repo link (0 forks, 0 stars) for a different reproducer (crashing
-the kernel) for what turned out to be the same bug was brought to
-linux-distros (and wrongly also to distros) on March 29 (asking for a
-CVE assignment).  By linux-distros policy we need to have the underlying
-vulnerability, once it's public, brought up on oss-security.
-
-As the reporter wouldn't communicate with linux-distros any further, we
-ended up directly bringing this to s@k.o and found out the reporter did
-also bring the issue to there.  What happened next highlighted what may
-be a gap in report handling by s@k.o.  Due to the reproducer being on a
-public GitHub repo, s@k.o merely redirected the reporter to take it to
-the normal developer mailing lists.  Which the reporter neglected to do.
-When a "public" issue enters this state, it's apparently not tracked by
-s@k.o anymore.  So if it were not for linux-distros, I think the report
-would just fall through the cracks and remain uninvestigated.  Which
-means if the bug were not already fixed, it'd remain unfixed until maybe
-rediscovered.  Via linux-distros, we pinged s@k.o further, and Greg got
-the Netfilter maintainers involved, who determined it's the fixed bug
-above.  Luckily, this did not matter (the bug is already known and fixed
-anyway), but for some other bug it could.
-
-Incidentally, that reporter in question is the same person accused of
-exploit plagiarism in the other Linux kernel oss-security posting today.
-So you can find their reproducer by following links from there to their
-other repo.  I don't want to directly promote it here (no need given the
-real exploit is so public, plus s@k.o previously expressed they dislike
-publication of reproducers), but perhaps it's somewhat more visible now.
-
-Alexander
+--/9DWx/yDrRhgMJTb--
