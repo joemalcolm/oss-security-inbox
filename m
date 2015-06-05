@@ -1,4 +1,9 @@
-Received: (qmail 19824 invoked by uid 550); 23 Jul 2022 12:50:50 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1566" "Friday" "5" "June" "2015" "12:31:23" "-0500" "Eric W. Biederman" "ebiederm@xmission.com" "<87r3pq2has.fsf@x220.int.ebiederm.org>" "44" "Re: [oss-security] Re: CVE request Linux kernel: ns: user namespaces panic" nil nil nil "6" "2015060517:31:23" "[oss-security] Re: CVE request Linux kernel: ns: user namespaces panic" (number mark "        ebiederm@xmi Jun  5   44/1566  " thread-indent "\"Re: [oss-security] Re: CVE request Linux kernel: ns: user namespaces panic\"\n") "<alpine.LFD.2.11.1506051728280.15797@wniryva>" ("<20150604135744.3617A6C0050@smtpvmsrv1.mitre.org>" "<alpine.LFD.2.11.1506051728280.15797@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 32686 invoked by uid 550); 5 Jun 2015 17:36:42 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,70 +11,79 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13798 invoked from network); 23 Jul 2022 12:35:58 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:content-language:from:to
-         :subject:content-transfer-encoding;
-        bh=GZKHo+Q0OhDqcaVM4hKBfNpOaNkaAxca65VA0nQ9/ok=;
-        b=NBtOO6Oa1DJKIO2lYk6lBNLGLf3hu/8b3CC5IgkIIBo9Yk33F9R+XlFMK7yF80mSmg
-         z/M2aBbBPoFUEgFXcoFUI77bDLAxTUrcFy48TynljKMuxUGyEivZ9BBC9RTIH7M7jySj
-         jSpvvl8WwyL5nb0at9jSreZXQQgy1oWbQ/8rdJ1ZEnRGIeTB0LhQSL1dRqKule9i7r8X
-         II7DkapPVkMH+l2eXHoq6X3WRqoZxdv2I1ewZ7R//U4JLFpGdlbiwIRBievGkc9NZC+4
-         7JvL6aXchUUEv/xGpCP8P587QDSlu82ckZCFG/VY6gb1aWrhyzYMC5uSvuWtib+Y9Ogn
-         6zXQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent
-         :content-language:from:to:subject:content-transfer-encoding;
-        bh=GZKHo+Q0OhDqcaVM4hKBfNpOaNkaAxca65VA0nQ9/ok=;
-        b=eIsQGcmBV+WnU3tGDjW4H5sFDVy5Az6If7KzmnHhIf6D0ZIAYKTRtyA9viw6mvuw3Q
-         EjQ9061lYs4WhZaMxwpu3tckg1WZwhRawFrZNVLjemE8X0cHjfJh+JgnXLc2f9wZOrdt
-         qzX6BiK78f8rinEe7RST0a9l2FuanaS2E1laAB9a2aBu8vlcZJN1KFGGQuKMwBdu+EUk
-         e5i8jP915z6SjuiuOrIIthlpEbWgQ9d5eqJBXl2s+gtOEaW47GSCzBk5rNMJYIHJOKpv
-         Z2pbSNTPhnmPVnltezVD4jzZN2XS0VoerZdx2yGbUiMMdlcNff05uqydGvO2jbIfySVY
-         md6g==
-X-Gm-Message-State: AJIora+hqP03ldRcBi8BPrUoe/yJMWz1ST8s3AC0iKxCsBoWWSg+pa1f
-	WNWbseGiNbrYRlW90cWWhHtfjSo9eDD8Xg==
-X-Google-Smtp-Source: AGRyM1tWqU2o5AZFYpl4gQgqtB5NjAHon0oddYCM0xEKQKqNSqLH16KSWMQIWmBlydjR7D2NIX6gww==
-X-Received: by 2002:a17:902:cf11:b0:16b:e1a5:aee with SMTP id i17-20020a170902cf1100b0016be1a50aeemr4374031plg.132.1658579745552;
-        Sat, 23 Jul 2022 05:35:45 -0700 (PDT)
-Message-ID: <6ae481de-39c2-c4a9-5274-59c2bcdb2dd6@gmail.com>
-Date: Sat, 23 Jul 2022 19:35:42 +0700
+Received: (qmail 32663 invoked from network); 5 Jun 2015 17:36:41 -0000
+References: <20150604135744.3617A6C0050@smtpvmsrv1.mitre.org>
+	<alpine.LFD.2.11.1506051728280.15797@wniryva>
+In-Reply-To: <alpine.LFD.2.11.1506051728280.15797@wniryva> (P. J. P.'s message
+	of "Fri, 5 Jun 2015 17:34:23 +0530 (IST)")
+Message-ID: <87r3pq2has.fsf@x220.int.ebiederm.org>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Content-Language: en-GB
-From: Pedro Ribeiro <pedrib@gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] CVE Request: heap buffer overflow in gdk-pixbuf
+Content-Type: text/plain
+X-XM-AID: U2FsdGVkX1/CraT+9PlnR5mPZldirT5wlAUhrKFkYfU=
+X-SA-Exim-Connect-IP: 67.3.205.90
+X-SA-Exim-Mail-From: ebiederm@xmission.com
+X-Spam-DCC: XMission; sa05 1397; Body=1 Fuz1=1 Fuz2=1 
+X-Spam-Combo: ***;P J P <ppandit@redhat.com>
+X-Spam-Relay-Country: 
+X-Spam-Timing: total 351 ms - load_scoreonly_sql: 0.04 (0.0%),
+	signal_user_changed: 4.2 (1.2%), b_tie_ro: 2.9 (0.8%), parse: 1.24 (0.4%),
+	extract_message_metadata: 19 (5.5%), get_uri_detail_list: 2.7 (0.8%),
+	tests_pri_-1000: 5 (1.5%), tests_pri_-950: 0.97 (0.3%), tests_pri_-900: 0.77
+	(0.2%), tests_pri_-400: 22 (6.2%), check_bayes: 21 (5.9%), b_tokenize: 3.8
+	(1.1%), b_tok_get_all: 8 (2.2%), b_comp_prob: 1.95 (0.6%), b_tok_touch_all:
+	4.9 (1.4%), b_finish: 0.81 (0.2%), tests_pri_0: 290 (82.7%), tests_pri_500:
+	4.3 (1.2%), rewrite_mail: 0.00 (0.0%)
+X-SA-Exim-Version: 4.2.1 (built Wed, 24 Sep 2014 11:00:52 -0600)
+X-SA-Exim-Scanned: Yes (on in02.mta.xmission.com)
+Cc: oss security list <oss-security@lists.openwall.com>,  cve-assign@mitre.org
+Date: Fri, 05 Jun 2015 12:31:23 -0500
+From: ebiederm@xmission.com (Eric W. Biederman)
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Re: CVE request Linux kernel: ns: user namespaces panic
+To: P J P <ppandit@redhat.com>
 
-Hi,
+P J P <ppandit@redhat.com> writes:
 
-A year ago I found and submitted a vulnerability to the gdk-pixbuf tracker:
-https://gitlab.gnome.org/GNOME/gdk-pixbuf/-/issues/190
+> +-- On Thu, 4 Jun 2015, cve-assign@mitre.org wrote --+
+> | >> From: ebiederm@xmission.com (Eric W. Biederman)
+> | >> 
+> | >> The core issue is that a unprivileged user could call umount(MNT_DETACH)
+> | >> and in the right circumstances gain access to every file on essentially
+> | >> any filesystem in the mount namespace.
+> | >> 
+> | >> e0c9c0afd2fc958ffa34b697972721d81df8a56f mnt: Update detach_mounts to leave mounts connected
+> | >> is the real bug fix that fixes a fairly scary issue.
+> | >>
+> | >> So I believe cd4a40174b71acd021877341684d8bb1dc8ea4ae prevents a
+> | >> difficult to trigger crash if you have
+> | >> e0c9c0afd2fc958ffa34b697972721d81df8a56f applied.
+> | >>
+> |
+> | Use CVE-2015-4176 for the issue fixed in
+> | e0c9c0afd2fc958ffa34b697972721d81df8a56f . This code change is present
+> | in 4.0.2.
+> | 
+> | Use CVE-2015-4177 for the issue fixed in
+> | cd4a40174b71acd021877341684d8bb1dc8ea4ae. This code change is not
+> | present in 4.0.2.
+>
+>   Ie IIUC, existence of CVE-2015-4177 depends on CVE-2015-4176 being fixed, 
+> which in turn depends on commit
+>
+>   -> https://git.kernel.org/linus/ce07d891a0891d3c0d0c2d73d577490486b809e1
+>
+> being present. (...Eric?)
 
-It's a heap buffer overflow using a crafted GIF, which is likely 
-exploitable in 32 bit systems. Full details are in the link above in the 
-bug tracker.
+There are no dependencies between
+e0c9c0afd2fc958ffa34b697972721d81df8a56f and
+cd4a40174b71acd021877341684d8bb1dc8ea4ae
 
-This was patched and the fix was merged 8 months ago as seen here:
-https://gitlab.gnome.org/GNOME/gdk-pixbuf/-/merge_requests/121
+Neither commit (cec9c... or cd4a4017...) missing is a problem unless
+ce07d891a0891d3c0d0c2d73d577490486b809e1 is present.
 
-The issue is now public, but since no CVE was attributed, it probably is 
-not being considered as a problem for downstream users of the package.
+Commits (cec9c... and cd4a4017...) are harmless on their own.
 
-As of today, the latest Debian stable package is affected by this 
-vulnerability. Using a GNOME file system browser and browsing to that 
-folder will cause a crash, as will opening it up in a GNOME image viewer 
-and even attempting to load it in Chromium (should have submitted to 
-them for a bounty :D).
+I hope that clarifies things.
 
-Hence I'd like to get a CVE to raise awareness for this issue, so that 
-downstream users of the package can get patched.
-
-Thanks and regards,
-Pedro Ribeiro
+Eric
