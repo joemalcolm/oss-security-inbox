@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2140" "Wednesday" "14" "March" "2018" "07:55:11" "+0100" "Daniel Stenberg" "daniel@haxx.se" "<alpine.DEB.2.20.1803132310150.29869@tvnag.unkk.fr>" "80" "[oss-security] [SECURITY ADVISORY] curl: RTSP RTP buffer over-read" nil nil nil "3" "2018031406:55:11" "[oss-security] [SECURITY ADVISORY] curl: RTSP RTP buffer over-read" (number mark "U       daniel@haxx. Mar 14   80/2140  " thread-indent "\"[oss-security] [SECURITY ADVISORY] curl: RTSP RTP buffer over-read\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2912" "Saturday" "6" "June" "2015" "12:03:50" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150606160350.CAD816C016E@smtpvmsrv1.mitre.org>" "69" "[oss-security] Re: CVE Request: bson-ruby DoS and possible injection" nil nil nil "6" "2015060616:03:50" "[oss-security] Re: CVE Request: bson-ruby DoS and possible injection" (number mark "U       cve-assign@m Jun  6   69/2912  " thread-indent "\"[oss-security] Re: CVE Request: bson-ruby DoS and possible injection\"\n") "<CAMyKfL1EXnYhyaDrg6q2jQaFMd-u4roh2a8MhYJ9Fr7+KSHnuw@mail.gmail.com>" ("<CAMyKfL1EXnYhyaDrg6q2jQaFMd-u4roh2a8MhYJ9Fr7+KSHnuw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 1682 invoked by uid 550); 14 Mar 2018 06:55:25 -0000
+Received: (qmail 3833 invoked by uid 550); 6 Jun 2015 16:04:03 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,100 +11,82 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 3808 invoked from network); 6 Jun 2015 16:04:02 -0000
+In-Reply-To: <CAMyKfL1EXnYhyaDrg6q2jQaFMd-u4roh2a8MhYJ9Fr7+KSHnuw@mail.gmail.com>
+Message-Id: <20150606160350.CAD816C016E@smtpvmsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Sat,  6 Jun 2015 12:03:50 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1481 invoked from network); 14 Mar 2018 06:55:24 -0000
-X-Authentication-Warning: giant.haxx.se: dast owned process doing -bs
-Date: Wed, 14 Mar 2018 07:55:11 +0100 (CET)
-From: Daniel Stenberg <daniel@haxx.se>
-X-X-Sender: dast@giant.haxx.se
-To: curl security announcements -- curl users <curl-users@cool.haxx.se>,
-        curl-announce@cool.haxx.se,
-        libcurl hacking <curl-library@cool.haxx.se>,
-        oss-security@lists.openwall.com
-Message-ID: <alpine.DEB.2.20.1803132310150.29869@tvnag.unkk.fr>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-fromdanielhimself: yes
-MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-Subject: [oss-security] [SECURITY ADVISORY] curl: RTSP RTP buffer over-read
+Subject: [oss-security] Re: CVE Request: bson-ruby DoS and possible injection
+To: phillmv@state.io
 
-RTSP RTP buffer over-read
-=========================
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Project curl Security Advisory, March 14th 2018 -
-[Permalink](https://curl.haxx.se/docs/adv_2018-b047.html)
+> http://sakurity.com/blog/2015/06/04/mongo_ruby_regexp.html
 
-VULNERABILITY
--------------
+As far as we can tell, this requires three CVE IDs because there were
+three independent mistakes.
 
-curl can be tricked into copying data beyond end of its heap based buffer.
+CVE-2015-4410 is for original 2012-01-23 implementation of legal?
+using the ^[0-9a-f]{24}$ regular expression.
 
-When asked to transfer an RTSP URL, curl could calculate a wrong data length
-to copy from the read buffer. The memcpy call would copy data from the heap
-following the buffer to a storage area that would subsequently be delivered to
-the application (if it didn't cause a crash). We've managed to get it to reach
-several hundreds bytes out of range.
+CVE-2015-4411 is for the bernerdschaefer 2012-04-17 commit in which
+legal? began using the \A\h{24}\Z regular expression. The
+mongo_ruby_regexp.html blog post describes this as "proper" but later
+explains that it was problematic, in at least one context, because of
+a minor DoS that would have been avoided if the correct \A\h{24}\z
+(lowercase 'z') had been used instead.
 
-This could lead to information leakage or a denial of service for the
-application if the server offering the RTSP data can trigger this.
+CVE-2015-4412 is for the durran 2013-04-07 commit in which the
+\A\h{24}\Z regular expression was changed to the ^[0-9a-f]{24}$
+regular expression.
 
-We are not aware of any exploit of this flaw.
+The copying of the original ^[0-9a-f]{24}$ mistake from Moped::BSON to
+one or more other codebases doesn't require additional CVE IDs.
 
-INFO
-----
+Similarly, the copying of the \A\h{24}\Z mistake or the second
+^[0-9a-f]{24}$ mistake to one or more other codebases doesn't require
+additional CVE IDs. (It's quite possible that no such copying ever
+occurred.)
 
-This bug was introduced in January 2010 in [this
-commit](https://github.com/curl/curl/commit/bc4582b68a673d3) when RTSP support
-was first added.
+The claim in
+http://homakov.blogspot.ru/2012/05/saferweb-injects-in-various-ruby.html
+of:
 
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2018-1000122 to this issue.
+  Regexp are just like cars - they should work as same and similar as
+  it's possible. Breaking standard behavior by purpose and telling
+  people "It's not a bug, it's a feature" looks so disgusting to me.
+  It's not a feature, it's a vulnerability.
 
-CWE-126: Buffer Over-read
+is not accepted as a Ruby vulnerability by the CVE project. There is
+no CVE ID for the observation that Ruby regular-expression semantics
+can be considered different from regular-expression semantics seen
+elsewhere.
 
-AFFECTED VERSIONS
------------------
+If there are other products (that otherwise qualify for CVE IDs) with
+incorrect and security-relevant uses of ^$ in Ruby code, then there
+can be additional CVE IDs for each independent codebase. For example,
+referring to the "Showcases time" section of the
+saferweb-injects-in-various-ruby.html page, there can't be a CVE ID
+for GitHub.com (because it could be site-specific code) but there
+could be a CVE ID if the issue affected a 2012 version (if one
+existed) of the GitHub Enterprise product.
 
-- Affected versions: curl 7.20.0 to and including curl 7.58.0
-- Not affected versions: curl < 7.20.0 and curl >= 7.59.0
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-libcurl is used by many applications, but not always advertised as such.
-
-THE SOLUTION
-------------
-
-In curl version 7.59.0, curl makes sure that this code never gets told to copy
-more data than it is allowed to read from the buffer.
-
-A [patch for CVE-2018-1000122](https://curl.haxx.se/CVE-2018-1000122.patch) is available.
-
-RECOMMENDATIONS
----------------
-
-We suggest you take one of the following actions immediately, in order of
-preference:
-
-  A - Upgrade curl to version 7.59.0
-
-  B - Apply the patch to your version and rebuild
-
-TIME LINE
----------
-
-It was reported to the curl project on February 20, 2018
-
-We contacted distros@openwall on March 8, 2018.
-
-curl 7.59.0 was released on March 14 2018, coordinated with the publication of
-this advisory.
-
-CREDITS
--------
-
-Detected by OSS-fuzz. Assisted by Max Dymond. Patch by Daniel Stenberg.
-
-Thanks a lot!
-
--- 
-
-  / daniel.haxx.se
+iQEcBAEBAgAGBQJVcxluAAoJEKllVAevmvmsrrcH/iywyYQPmcd+Bn6gkRKfxUsx
+9TmAgV6lCztWgVR0kqTrBZC5GcACcZWV2jVEg/3RD3/fXH23ulqTvKZEZrbTVIHv
+mDMH5WId3gimyNdy2IkNZqsKeeJxNi6rtWyg+QLD8M1+fLW9vrmRPYKN7VPcHWZX
+ZTEauEFN0Gq+23hM01DUnXpnV1sErtGWceIXnvVKP1skyitgJYhz6SRmyL2+FQpc
+iUAqTJUMeUlEvM40WxQPbX2Q7PeH0dIoNN4UmC2VE/RmzysIDhtaZQwsaFcMDpA3
+wS8Lva/Ici4klxNUxdZsMEKxg1V7y1djlvRDbUlVpqHvrMZbTTkJraf8cbbZJik=
+=o3AI
+-----END PGP SIGNATURE-----
