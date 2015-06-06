@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["782" "Tuesday" "10" "April" "2018" "03:53:17" "-0400" "Gordo Lowrey" "gordo@zeneval.com" "<1523346797.16686.6@smtp.gmail.com>" "25" "Re: [oss-security] Terminal Control Chars" nil nil nil "4" "2018041007:53:17" "[oss-security] Terminal Control Chars" (number mark "U       gordo@zeneva Apr 10   25/782   " thread-indent "\"Re: [oss-security] Terminal Control Chars\"\n") "<20180305175024.16801hoj775zje4g@webmail.alunos.dcc.fc.up.pt>" ("<20180305175024.16801hoj775zje4g@webmail.alunos.dcc.fc.up.pt>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4263" "Saturday" "6" "June" "2015" "14:30:57" "+0300" "Solar Designer" "solar@openwall.com" "<20150606113057.GA23470@openwall.com>" "91" "[oss-security] CVE-2015-1805 Linux kernel: pipe: iovec overrun leading to memory corruption" nil nil nil "6" "2015060611:30:57" "[oss-security] CVE-2015-1805 Linux kernel: pipe: iovec overrun leading to memory corruption" (number mark "        solar@openwa Jun  6   91/4263  " thread-indent "\"[oss-security] CVE-2015-1805 Linux kernel: pipe: iovec overrun leading to memory corruption\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 12154 invoked by uid 550); 10 Apr 2018 08:57:33 -0000
+Received: (qmail 4072 invoked by uid 550); 6 Jun 2015 11:31:24 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,64 +11,106 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 4019 invoked from network); 6 Jun 2015 11:31:18 -0000
+Message-ID: <20150606113057.GA23470@openwall.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.4.2.3i
+Date: Sat, 6 Jun 2015 14:30:57 +0300
+From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32370 invoked from network); 10 Apr 2018 07:53:31 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=zeneval.com; s=google;
-        h=date:from:subject:to:message-id:in-reply-to:references:mime-version;
-        bh=lOGesZ1UzahhpCTnLxK7UIKE0lwhH3lgWjKr08MkBjA=;
-        b=RnejGeUSyieXUxqKLKt/8pHCv/KMyBvuxUknNA5tmrkfmWxMjR/mPDIy6jrIEsL6YS
-         EhMaLixFUpmUvz7592SckXEvv81UMuMMWTi8/N6uP8I4O4UtoECkQWVUI6RN2fqhzz3K
-         ehfkeJWWLrr8Og9T3FPXd8cP21wvoxu1oCikc=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:subject:to:message-id:in-reply-to
-         :references:mime-version;
-        bh=lOGesZ1UzahhpCTnLxK7UIKE0lwhH3lgWjKr08MkBjA=;
-        b=tGL1c7MT/x8NKcAKFq4ulEgoF03gT0NA3TQNxYZGEEJtm8BJc1QsA/Zl57crAqGiy1
-         1Bb95pRO0wdF5coloecKL4PP4r/4ybOshKATsxUrFF9uBNJRP70q8V1QYs4e9Sv4Qpzx
-         xm5LPxFjWHavFZpAhrKx8I2zj8W7Z6t6NGUhvxGqvfhKIT9q8wC4rbZSR10GqJy05HIu
-         vugUA7KzEMdnpZpv3HCMzj0cEfwbrGwsZm5v9qiMBKMiU5J4+Ll12tmjguHKSngmd6k+
-         qA/psV/VgmGbnARv08MwzmP2Q1bsxF9dWX2poyWxmOhCrnXwEE02Ur5k0xuRUlJb0S6m
-         99rg==
-X-Gm-Message-State: ALQs6tD/Jxt6kXu1WxpDVfawYuIG40In3hDk2zGFHbgwQ9OfghOe63TG
-	jmmHRodUXqDPDN/Pptp4Kl9fsBfYijo=
-X-Google-Smtp-Source: AIpwx49XMRDFEOnTOP0SI212GtJ47bQcq+SIOD1WDTq8NmrWyYzOy6ax1yrICRpKO3sCKLpntUXiVw==
-X-Received: by 10.200.51.215 with SMTP id d23mr56275252qtb.338.1523346799608;
-        Tue, 10 Apr 2018 00:53:19 -0700 (PDT)
-Date: Tue, 10 Apr 2018 03:53:17 -0400
-From: Gordo Lowrey <gordo@zeneval.com>
+Subject: [oss-security] CVE-2015-1805 Linux kernel: pipe: iovec overrun leading to memory corruption
 To: oss-security@lists.openwall.com
-Message-Id: <1523346797.16686.6@smtp.gmail.com>
-In-Reply-To: <20180305175024.16801hoj775zje4g@webmail.alunos.dcc.fc.up.pt>
-References: <20180305175024.16801hoj775zje4g@webmail.alunos.dcc.fc.up.pt>
-X-Mailer: geary/0.12.1
-MIME-Version: 1.0
-Content-Type: multipart/alternative; boundary="=-azwmSd7U1WtT4u7o4s/i"
-Subject: Re: [oss-security] Terminal Control Chars
 
---=-azwmSd7U1WtT4u7o4s/i
-Content-Type: text/plain; charset=us-ascii; format=flowed
+Hi,
 
-On Mon, Mar 5, 2018 at 11:50 AM, up201407890@alunos.dcc.fc.up.pt wrote:
-> The correct solution would be to disallow the pasting of certain 
-> control characters.
+This is a Linux kernel bug fixed upstream about a year ago, with its
+security impact discovered by Red Hat recently:
 
-I'm just gonna go out on a limb here, and say this is an unfounded 
-assertion.
+https://bugzilla.redhat.com/show_bug.cgi?id=1202855
 
-Perhaps the correct solution would be to prevent the browser from 
-copying invisible characters.
+Per Red Hat's own statement, all of RHEL 5, 6, and 7 are affected, and
+so far only an update for RHEL5 has been released:
 
-If you're going to break some basic mechanic of human computer 
-interaction, at least don't break my damn terminal (not that I use VTE, 
-it doesn't support OSC 52, among others), but the principle stands... 
-Instead of worrying about sanitizing what is pasted, why not worry 
-about sanitizing what is copied instead?
+https://rhn.redhat.com/errata/RHSA-2015-1042.html
 
-Thanks.
+Also per Red Hat, this is a "high" severity issue, and the fix is
+"Important".
 
+There's also a "testing" update for OpenVZ/RHEL5:
 
+https://openvz.org/Download/kernel/rhel5-testing/028stab119.1
 
---=-azwmSd7U1WtT4u7o4s/i--
+The OpenVZ/RHEL5 branch was previously EOL'ed in Feb 2015, but its EOL
+appears to have been updated to Feb 2018 (a smart move, given the easy
+to include yet critical security fixes still coming from Red Hat):
 
+https://openvz.org/Releases
+
+(If they didn't do it, I would likely be porting the fix myself now.)
+
+Reviewing the upstream commits:
+
+http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=f0d1bec9d58d4c038d0ac958c9af82be6eb18045
+http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=637b58c2887e5e57850865839cc75f59184b23d1
+
+it appears that the issue is that pipe_iov_copy_from_user() and
+pipe_iov_copy_to_user() updated iov->iov_base and iov->iov_len, as well
+as a local variable called len, yet the caller maintained its own
+variables offset + addr and chars, which weren't similarly updated
+between retries.  (Also, it appears that the code will retry at most
+once, and as non-atomic, but maybe this makes sense if it assumes the
+caller is at fault for the fault.)
+
+In pipe_write(), this appears to allow for a read of wrong-offset data
+and an over-read of data from userspace.  This may have security impact
+if the condition is triggerable by other than the caller (and other than
+the caller's other threads, which are trusted).  I don't immediately see
+how this may be the case, or what else I might have overlooked.
+
+In pipe_read(), this similarly appears to allow for a write of
+wrong-offset data and an out of bounds write to the userspace buffer.
+This may similarly have (worse?) security impact if the condition is
+triggerable by other than the caller or their threads, but again it's
+unclear to me whether that is the case.
+
+In both cases, the out of bounds data accesses appear to be to userspace
+addresses, and going via copy_from_user() / copy_to_user().  So impact
+looks limited, and it is unclear if the issue is at all triggerable by a
+party untrusted by the one attacked.  This aspect might be non-security.
+
+However, it's trickier than that, since iov traverses over the multiple
+struct iovec's and may eventually be what wasn't actually a struct iovec
+in the caller.  This requires that iov->iov_len become exactly zero at
+least one extra time.  If iov->iov_len becomes zero on
+"iov->iov_len -= copy;" then pipe_iov_copy_to_user() either returns
+success or proceeds to the next iteration of the loop.  In the former
+case, there's no fault at this time.  In the latter case, there might be
+a fault on the next iteration, in which case the caller will retry
+pipe_iov_copy_to_user() with the original iov pointer.  The function
+will then hit an extra !iov->iov_len (that's been zeroed by its previous
+invocation) and perform iov++ an extra time.
+
+The possibility of "struct iovec *iov" going out of range and the
+subsequent out of bounds metadata accesses feel much more severe than
+the out of bounds accesses to actual data in the userspace.
+"iov->iov_base += copy;" and "iov->iov_len -= copy;" might then be
+corrupting kernel memory.  It feels relatively unimportant what the
+resulting values of iov_base and iov_len will be for their intended
+purpose, since we use copy_from_user() / copy_to_user() on them anyway.
+It feels more important that these "+=" and "-=" operators directly
+modify individual words in kernel memory, albeit only slightly(?) out of
+bounds of the original iov array.  So maybe it's this risk that needs
+to be evaluated further.
+
+I have quite possibly overlooked the elephant.
+
+Red Hat's description includes the usual wording:
+
+"A local, unprivileged user could use this flaw to crash the system
+or, potentially, escalate their privileges on the system."
+
+I'd like to know how.  "Crash the system" will do.  Thanks.
+
+Alexander
