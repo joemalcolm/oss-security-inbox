@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3662" "Wednesday" "28" "June" "2017" "08:58:26" "+0200" "Dominique Martinet" "asmadeus@codewreck.org" "<20170628065826.GA4865@nautica>" "107" "Re: [oss-security] CoreOS membership to linux-distros" "^Date:" nil nil "6" "2017062806:58:26" "[oss-security] CoreOS membership to linux-distros" (number mark "        asmadeus@cod Jun 28  107/3662  " thread-indent "\"Re: [oss-security] CoreOS membership to linux-distros\"\n") "<CY4PR11MB1592EFB766E40EEBE5D9F749DADD0@CY4PR11MB1592.namprd11.prod.outlook.com>" ("<e2ec939c-1fa5-8619-7771-d68ee2bff13c@coreos.com>" "<CANO=Ty1Py6iabbmct=ic55=sNRaRdUxDnucZjftb=B==56NzCw@mail.gmail.com>" "<13697db2-497e-e64a-5a6f-e66100e2dc22@coreos.com>" "<CY4PR11MB1592EFB766E40EEBE5D9F749DADD0@CY4PR11MB1592.namprd11.prod.outlook.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1090" "Sunday" "7" "June" "2015" "12:25:31" "-0500" "Eric W. Biederman" "ebiederm@xmission.com" "<87pp57v3as.fsf@x220.int.ebiederm.org>" "34" "Re: [oss-security] Re: CVE request Linux kernel: ns: user namespaces panic" nil nil nil "6" "2015060717:25:31" "[oss-security] Re: CVE request Linux kernel: ns: user namespaces panic" (number mark "        ebiederm@xmi Jun  7   34/1090  " thread-indent "\"Re: [oss-security] Re: CVE request Linux kernel: ns: user namespaces panic\"\n") "<alpine.LFD.2.11.1506072243170.5813@wniryva>" ("<20150604135744.3617A6C0050@smtpvmsrv1.mitre.org>" "<alpine.LFD.2.11.1506051728280.15797@wniryva>" "<87r3pq2has.fsf@x220.int.ebiederm.org>" "<alpine.LFD.2.11.1506072243170.5813@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 24574 invoked by uid 550); 28 Jun 2017 09:55:35 -0000
+Received: (qmail 32370 invoked by uid 550); 7 Jun 2015 17:30:51 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,127 +11,71 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 25648 invoked from network); 28 Jun 2017 06:58:53 -0000
-Message-ID: <20170628065826.GA4865@nautica>
-References: <e2ec939c-1fa5-8619-7771-d68ee2bff13c@coreos.com>
- <CANO=Ty1Py6iabbmct=ic55=sNRaRdUxDnucZjftb=B==56NzCw@mail.gmail.com>
- <13697db2-497e-e64a-5a6f-e66100e2dc22@coreos.com>
- <CY4PR11MB1592EFB766E40EEBE5D9F749DADD0@CY4PR11MB1592.namprd11.prod.outlook.com>
+Received: (qmail 32344 invoked from network); 7 Jun 2015 17:30:50 -0000
+References: <20150604135744.3617A6C0050@smtpvmsrv1.mitre.org>
+	<alpine.LFD.2.11.1506051728280.15797@wniryva>
+	<87r3pq2has.fsf@x220.int.ebiederm.org>
+	<alpine.LFD.2.11.1506072243170.5813@wniryva>
+In-Reply-To: <alpine.LFD.2.11.1506072243170.5813@wniryva> (P. J. P.'s message
+	of "Sun, 7 Jun 2015 22:51:38 +0530 (IST)")
+Message-ID: <87pp57v3as.fsf@x220.int.ebiederm.org>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="h31gzZEtNLTqOjlF"
-Content-Disposition: inline
-In-Reply-To: <CY4PR11MB1592EFB766E40EEBE5D9F749DADD0@CY4PR11MB1592.namprd11.prod.outlook.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-Date: Wed, 28 Jun 2017 08:58:26 +0200
-From: Dominique Martinet <asmadeus@codewreck.org>
+Content-Type: text/plain
+X-XM-AID: U2FsdGVkX1+q5l6hLomuznD1o7MzdLxli/tblU7colI=
+X-SA-Exim-Connect-IP: 67.3.205.90
+X-SA-Exim-Mail-From: ebiederm@xmission.com
+X-Spam-DCC: XMission; sa04 1397; Body=1 Fuz1=1 Fuz2=1 
+X-Spam-Combo: **;P J P <ppandit@redhat.com>
+X-Spam-Relay-Country: 
+X-Spam-Timing: total 235 ms - load_scoreonly_sql: 0.06 (0.0%),
+	signal_user_changed: 4.7 (2.0%), b_tie_ro: 3.3 (1.4%), parse: 1.20 (0.5%),
+	extract_message_metadata: 14 (5.9%), get_uri_detail_list: 1.33 (0.6%),
+	tests_pri_-1000: 5 (2.2%), tests_pri_-950: 1.14 (0.5%), tests_pri_-900: 0.93
+	(0.4%), tests_pri_-400: 16 (6.6%), check_bayes: 15 (6.2%), b_tokenize: 4.0
+	(1.7%), b_tok_get_all: 4.4 (1.9%), b_comp_prob: 1.72 (0.7%), b_tok_touch_all:
+	2.5 (1.1%), b_finish: 0.70 (0.3%), tests_pri_0: 183 (77.8%), tests_pri_500: 6
+	(2.7%), rewrite_mail: 0.00 (0.0%)
+X-SA-Exim-Version: 4.2.1 (built Wed, 24 Sep 2014 11:00:52 -0600)
+X-SA-Exim-Scanned: Yes (on in02.mta.xmission.com)
+Cc: oss security list <oss-security@lists.openwall.com>,  cve-assign@mitre.org
+Date: Sun, 07 Jun 2015 12:25:31 -0500
+From: ebiederm@xmission.com (Eric W. Biederman)
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CoreOS membership to linux-distros
-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Re: CVE request Linux kernel: ns: user namespaces panic
+To: P J P <ppandit@redhat.com>
 
---h31gzZEtNLTqOjlF
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+P J P <ppandit@redhat.com> writes:
 
-Sven Dowideit wrote on Wed, Jun 28, 2017:
-> I'm responsible for RancherOS, and think that both I, and my users
-> would prefer that I had access to the embargoed information earlier,
-> so preparing a response would have been less of a rush.
+>   Hello Eric,
+>
+> +-- On Fri, 5 Jun 2015, Eric W. Biederman wrote --+
+> | There are no dependencies between
+> | e0c9c0afd2fc958ffa34b697972721d81df8a56f and
+> | cd4a40174b71acd021877341684d8bb1dc8ea4ae
+>
+>   Sorry if I misunderstood; I was referring to
+>
+> || >> From: ebiederm@xmission.com (Eric W. Biederman)
+> || >> So I believe cd4a40174b71acd021877341684d8bb1dc8ea4ae prevents a
+> || >> difficult to trigger crash if you have
+> || >> e0c9c0afd2fc958ffa34b697972721d81df8a56f applied.
+> |
+>
+>   And also that, commit 'e0c9c0afd2' improvises upon 'ce07d891a089'; So unless 
+> 'ce07d891a089' is present, 'e0c9c0afd2' would not apply cleanly.
+>
+> | Neither commit (cec9c... or cd4a4017...) missing is a problem unless
+> | ce07d891a0891d3c0d0c2d73d577490486b809e1 is present.
+> | 
+> | Commits (cec9c... and cd4a4017...) are harmless on their own.
+> | 
+> | I hope that clarifies things.
+>
+>   Did you mean commit 'e0c9c0afd2'? (couldn't find commit 'cec9c...')
 
-I can relate to the rush feeling, even with few users/"private" distro
-here, having a custom kernel makes this kind of fixes annoying...
-But given the delayed exploit release I'd say it does not really matter
-if you take a few days for this, especially in this case with the low
-success rate on 64bit linux. As soon as reasonably possible does not
-necessarily mean rush.
+Yes.  I was referrig to one of the two commits you called out. Typos are
+wonderful.
 
-As a rhel/centos spin-off though we would have liked the bug brought up
-here ( https://bugzilla.redhat.com/show_bug.cgi?id=1463241 ) to have its
-fix published faster though, it's apparently been ready for a week but
-not been published... I don't mind bugs, but if it's fixed it's annoying
-to keep it behind closed doors.
+Eric
 
-
-> One of the things that would have made my last week less worrying, is
-> to have some access to exploit code - so as to verify the changes
-> actually had a useful effect.
-
-You don't need an actual exploit to test this. You're not the first
-person who have told me this so I actually took some time this morning
-to whip up a "tester" -- it's probably far from perfect but will run
-successfully on older debian/rhel and crash with a patched kernel as
-expected, and is as inoffensive as it can get.
-
-I'm sure there are other better testers online, I didn't try looking as
-I don't get much chance to play with this kind of stuff :)
-
-
-Qualys gave a lot of details in their report (kudos to well written
-advisories like that!), I agree having everything on a golden plate is
-better but it really isn't much work left for smaller distros if you
-trust the big ones or even just upstream, once bugs got steamed out.
-
--- 
-Asmadeus | Dominique Martinet
-
---h31gzZEtNLTqOjlF
-Content-Type: text/x-csrc; charset=utf-8
-Content-Disposition: attachment; filename="teststackclash.c"
-
-/** Stack Clash kernel "stack gap" patch tester
- *
- * WTFPLv2 - do whatever the fuck you want with this
- * Dominique Martinet <asmadeus@codewreck.org>
- *
- * gcc -o teststackclash teststackclash.c && ./teststackclash
- */
-
-#include <stdio.h>
-#include <sys/mman.h>
-#include <alloca.h>
-#include <unistd.h>
-#include <errno.h>
-#include <inttypes.h>
-
-#define MMAP_OFFSET (1024*1024)
-
-int main(int argc, char argv[]) {
-	void *stackedge, *stackaddr, *mmapaddr;
-	char ispresent;
-
-	printf("Address within stack: %p, looking for stack start edge...\n", &stackedge);
-
-	stackedge = (void*)((uintptr_t)&stackedge & 0xfffffffffffff000);
-       	while (mincore(stackedge, 1, &ispresent) == 0)
-		stackedge -= 4096;
-
-	if (errno != ENOMEM) {
-		printf("unexpected mincore errno: %d\n", errno);
-		return -1;
-	}
-
-	printf("Stack starts here: %p, doing mmap largely before it (%p)\n", stackedge+4096, stackedge-MMAP_OFFSET);
-	errno = 0;
-
-
-	mmapaddr = mmap(stackedge-MMAP_OFFSET, 4096, PROT_WRITE, MAP_ANONYMOUS | MAP_PRIVATE | MAP_FIXED, 0, 0); 
-	if (mmapaddr == MAP_FAILED) {
-		printf("mmap failed: %d\n", errno);
-		return -1;
-	}
-
-	if (mmapaddr != stackedge - MMAP_OFFSET) {
-		printf("mmap ok, but didn't respect MAP_FIXED hint: %p\n", mmapaddr);
-		return -1;
-	}
-
-	printf("mmap ok, allocating within stack until it grows (should crash with that mmap)\n");
-	while ((stackaddr = alloca(4096)) > stackedge);
-
-
-	// ((char*)mmapaddr)[0] = 1; // actually didn't even need to write in map
-	printf("Didn't crash, stack gap guard <1MB or didn't care about our map\n");
-
-	return 0;
-}
-
---h31gzZEtNLTqOjlF--
