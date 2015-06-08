@@ -1,4 +1,9 @@
-Received: (qmail 1876 invoked by uid 550); 30 Apr 2026 13:48:30 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1774" "Monday" "8" "June" "2015" "16:06:18" "-0400" "Colin Walters" "walters@verbum.org" "<1433793978.2356598.290097129.7DC53180@webmail.messagingengine.com>" "42" "[oss-security] Re: CVE request for polkit" nil nil nil "6" "2015060820:06:18" "[oss-security] Re: CVE request for polkit" (number mark "        walters@verb Jun  8   42/1774  " thread-indent "\"[oss-security] Re: CVE request for polkit\"\n") "<20150608194405.113338BC0D4@smtpvmsrv1.mitre.org>" ("<20150608194405.113338BC0D4@smtpvmsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 13388 invoked by uid 550); 9 Jun 2015 07:02:02 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,81 +11,69 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 1846 invoked from network); 30 Apr 2026 13:48:30 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kroah.com; h=cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1777556899;
-	 x=1777643299; bh=+5HSxgPHZ6rldzlPnenCRZJ+YqvDnhEmI7yqtJW2s4c=; b=
-	DzxzvTxiVyvR8gNi9CwUX/nZWRuXNyxK9kIzHmssmifdsF+DbXiVEZFwCY/WND6q
-	0vLsMAAlQ7E6vt9QTAxMKaoLQVmSOe74HgiV8Vun29LwVenvmGeWqQMFM88sJ6Ou
-	iZkBTeJpEP1HXY+4VuDmB3h8E0qdRUu/7HhIzbV4c5QPjIHcs254x6quLsRr8Uxg
-	tXzLaKJn+WnZYom7lnJfPgNYwH1NeJ4FuxG68640VLN1jEuXeNd/1EV0mHLdHWaR
-	ylfd9arNDe8luEO+gGgEJ4NCd+HBvuBiqKW1vjnKZfF8Mlksw2eNdRWTcPl1xZrY
-	mEca6iqqO/gtNtJtoNSKjQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+Received: (qmail 6032 invoked from network); 8 Jun 2015 20:06:30 -0000
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm2; t=1777556899; x=1777643299; bh=+
-	5HSxgPHZ6rldzlPnenCRZJ+YqvDnhEmI7yqtJW2s4c=; b=XsZzDRnSfq4X6PCoy
-	WO1nxIleof9m0NsooK6hdJ4Dco1ndmUwApKJYu+2Xo1fGANRP1Ejv/IgY7Easm4k
-	8gx83QaDY6GbIs2Mj/vKWkjnc0QgIbrz5gxRv62nRhjmXYYCB2+is+Wa5iZoMami
-	Jb04kLPAumIibiBCjMgy6rpf+QgzmghSjQ7o7kDKSpdDbAPE5nfavmM4ZGdyqvHx
-	i8hTTlicekpOAmP8VEAYDQu1Wl9O+N/s9HC1lA4aJ6qS4PrKGv8nb9HU/ACDFetX
-	k0je5ogorOxqYkVlOKeau4m5rfmTVzYYm1pnI3Bp9BIKaQDsCYoOpaxAingvCw8+
-	6P6fA==
-X-ME-Sender: <xms:o13zaRbvu9BGB9CKxqdO3ifka7sCXWvxfXFgWt76sJC8O6B092OnWQ>
-    <xme:o13zaWXZ9FxXJUHWMGhP-_PJTxg5At1urY0lOLpG9WRZmF6c7obVSdwnARMZGE7b8
-    cr7SNw-QWDOOkT2S1EwHJ0_3zAnn8unAMCfuq0FD3P2c6hU0g>
-X-ME-Received: <xmr:o13zabjLc3ikll-Wm4EbxJvY4QKTzqLxQN8oz6-WtCZFCfwOdovWpwiYyyEhFPxkclh3xVE-2LV5gbzFhboh_NUp6g>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdekjeegkecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfhfgggtugfgjgesthekredttd
-    dtjeenucfhrhhomhepifhrvghgucfmjfcuoehgrhgvgheskhhrohgrhhdrtghomheqnecu
-    ggftrfgrthhtvghrnhepueehkeehlefffeeiudetfeekjeffvdeuheejjeffheeludfgte
-    ekvdelkeduuddvnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhf
-    rhhomhepghhrvghgsehkrhhorghhrdgtohhmpdhnsggprhgtphhtthhopedvpdhmohguvg
-    epshhmthhpohhuthdprhgtphhtthhopehoshhsqdhsvggtuhhrihhthieslhhishhtshdr
-    ohhpvghnfigrlhhlrdgtohhm
-X-ME-Proxy: <xmx:o13zacX4jE3lErXpO6cDpehqERxUP20Q-39O3ssKNTPJzkgW6CvkWQ>
-    <xmx:o13zaaOct7Pg3ww02C2x_fyoGOgkbms0j1b8bexzN2_jSX3IRT4Ljw>
-    <xmx:o13zaQYb_u1IzkPb31k0uYyXoM-Yet6yxTg9M-OamFSwBDmwmlazEA>
-    <xmx:o13zaertfvP_1PIeGKMZeXHGRCuQb2dL635xr4rNA6ifSqmVZ1cDJQ>
-    <xmx:o13zaXSIEk4wTJWT7XhJm7S9dyi7_gIPn83pDllpcxzDAB0aDL7qNKy3>
-Feedback-ID: i787e41f1:Fastmail
-Date: Thu, 30 Apr 2026 15:48:17 +0200
-From: Greg KH <greg@kroah.com>
-To: oss-security@lists.openwall.com
-Message-ID: <2026043030-unpinned-grafted-38eb@gregkh>
-References: <afDLFWVMK-r70PB0@yuggoth.org>
- <521d0295-6a93-4a28-be55-332d663ec457@gmail.com>
- <3CD03E7B-92A9-4C32-AC58-E811FB8A43A6@redhat.com>
+	:date:from:in-reply-to:message-id:mime-version:references
+	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=Xgl1rDXGqNrGoA/
+	1WeRHs+gVgtA=; b=c8EtSd7kPRXZpKWBT7AURVWCvPIoiveMLxkaZDR5vBQoagi
+	lAnnu0E/S3o102+gN95TQhT0EnAQ1mJfxITGUh/ws5WwNXIQX2OWQaQbRwE6srpr
+	VhDDCXEPv+ZVeuy5xtX0fWIDyo0qafJPh25NNhVyjeHmEH+vVvR4A7z484uY=
+Message-Id: <1433793978.2356598.290097129.7DC53180@webmail.messagingengine.com>
+X-Sasl-Enc: aJqy7VRYYGqxRaGvhauVrrGP7dLXuXZTODa734W9Y9cs 1433793978
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <3CD03E7B-92A9-4C32-AC58-E811FB8A43A6@redhat.com>
-Subject: Re: [oss-security] Coordinated Disclosure in the LLM Age
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Mailer: MessagingEngine.com Webmail Interface - ajax-b076c697
+In-Reply-To: <20150608194405.113338BC0D4@smtpvmsrv1.mitre.org>
+References: <20150608194405.113338BC0D4@smtpvmsrv1.mitre.org>
+Cc: oss-security@lists.openwall.com,
+ =?utf-8?Q?Miloslav=20Trma=C4=8D?= <mitr@redhat.com>
+Date: Mon, 08 Jun 2015 16:06:18 -0400
+From: Colin Walters <walters@verbum.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: CVE request for polkit
+To: cve-assign@mitre.org
 
-On Wed, Apr 29, 2026 at 08:52:14PM +0200, Clemens Lang wrote:
-> Hi,
+On Mon, Jun 8, 2015, at 03:44 PM, cve-assign@mitre.org wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
 > 
-> > On 29. Apr 2026, at 05:18, Jacob Bachmeyer <jcb62281@gmail.com> wrote:
-> > 
-> >> I'm sorely tempted, both due to the increased volume and the risk of premature disclosure, to just assume that any vulnerability reported as a result of research using an LLM is trivially discoverable by others, and give up trying to pretend there's any point to working it under embargo.
-> > 
-> > You are correct here:  you should assume that any LLM will give a similar result to another person who asks a similar question.  In other words, LLM-discovered vulnerabilities should be considered already publicly known.
+> Your message seems to be about various security analysis posted to a
+> mailing-list thread with about 10 messages, accompanied by at least
+> two bug reports:
 > 
-> As a further data point backing up this theory: We’re seeing duplicate reports of the same issue found by multiple independent groups that use LLMs, within the embargo period.
+>   https://bugs.freedesktop.org/show_bug.cgi?id=90837
+>   https://bugs.freedesktop.org/show_bug.cgi?id=90832
 
-We (on the kernel) are seeing duplicate reports of the same issue from
-different groups within the time period it takes to get a fix merged
-(i.e. just within a few days).
+These two bugs I would describe as fixing the *same* problem
+in two different ways.
+ 
+> The original 2015-05-29 message seems to be about clients whereas the
+> first 2015-06-03 message seems to be about users or uids. Is there any
+> polkit documentation that suggests that two clients are allowed to
+> interfere with each other as long as they have the same uid? (This is
+> in the general case where at least one of the two clients is executing
+> with substantial restrictions.)
 
-thanks,
+By "substantial restrictions" you're thinking of things like SELinux policy
+domains?  Currently, polkit is not ready to perform compartmentalization
+of that form - it treats equal uids as equal security domains.
 
-greg k-h
+(Most importantly, uid 0 is treated as privileged, even if it's in a confined
+ domain)
+
+> For purposes of CVE, we may be able to model this as a situation in
+> which the (realistically exploitable) counter wraparound is a clear
+> implementation error and can have a CVE ID, but the concept of uid
+> matching is a design change that is essentially outside the scope of
+> CVE. Would that be OK?
+
+That sounds right to me.  I see uid matching as a fix for the wraparound.
+The default authority already restricts agents to only be able to
+register for subjects of matching uid.  Or to turn it around, polkit
+in many places matches uids, this adds another one to fix a bug
+with cookie handling.
+
+
+
