@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["909" "Thursday" "1" "October" "2015" "08:04:12" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<CANO=Ty2QZBvdct3rx3+NdDV0CYf5eTu2V-tP5gsU8b0jH0bBmQ@mail.gmail.com>" "33" "Re: [oss-security] CVE request: Heap overflow and DoS with a tga file in gdk-pixbuf < 2.32.1" nil nil nil "10" "2015100114:04:12" "[oss-security] CVE request: Heap overflow and DoS with a tga file in gdk-pixbuf < 2.32.1" (number mark "        kseifried@re Oct  1   33/909   " thread-indent "\"Re: [oss-security] CVE request: Heap overflow and DoS with a tga file in gdk-pixbuf < 2.32.1\"\n") "<CACn5sdR_PnnzeTT921B2mu2o1ceaC5qzKsKCuqHpK0FVp5OKng@mail.gmail.com>" ("<CACn5sdR_PnnzeTT921B2mu2o1ceaC5qzKsKCuqHpK0FVp5OKng@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1151" "Monday" "8" "June" "2015" "17:44:45" "-0500" "Michael Catanzaro" "mcatanzaro@igalia.com" "<1433803485.16305.3.camel@igalia.com>" "30" "[oss-security] Re: CVE Request: WebKitGTK+ performs DNS prefetch when a proxy is configured" nil nil nil "6" "2015060822:44:45" "[oss-security] Re: CVE Request: WebKitGTK+ performs DNS prefetch when a proxy is configured" (number mark "        mcatanzaro@i Jun  8   30/1151  " thread-indent "\"[oss-security] Re: CVE Request: WebKitGTK+ performs DNS prefetch when a proxy is configured\"\n") "<20150608213455.CB1E7B2E059@smtpvbsrv1.mitre.org>" ("<20150608213455.CB1E7B2E059@smtpvbsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 26484 invoked by uid 550); 1 Oct 2015 14:04:25 -0000
+Received: (qmail 30028 invoked by uid 550); 8 Jun 2015 22:45:23 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,63 +11,54 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 26454 invoked from network); 1 Oct 2015 14:04:24 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:content-type;
-        bh=e69sMGcInbwkujCEBBUA8ZJz5bQJjonmwkhq6Z7MupM=;
-        b=LEHUVqeje8pE91SdM1mqf8rX7+SjkC0JKxmG47fSuc6EEWIYq6V+/siWk+5DeG/8fA
-         PB0czkUPMAUhP23wMzXbFhN3zgZsVT7itiQFx2Fbp63LPN71O91va6VhkFUbtB0mu5zE
-         rodDygzrS4Wxm8AdThqUEr6qJMi8iECa7+OgZ+Ieads74aGoK7Q7h7ByXEBbtdLTOExW
-         MM1Pwsl1sjtPkKVmU1niVdP4f6ItEGEexWMvSj7FYD9dNmVSjTGrq6LLMcKb5vmPF3tp
-         eeNzKBLc3IG/tKXt7xPd3R/Z+BmIy4MAjoT1xvJmtL7Wlxfe2HMnrWvIamlvkqUOYmDu
-         81cw==
-X-Gm-Message-State: ALoCoQlQcI1n0kNMwrdlm9gc2tqKEs5fod1cBTNuGcsETxWwm4tbDtpFzAvPn6RlTSxWFdAlKV9W
-MIME-Version: 1.0
-X-Received: by 10.170.78.65 with SMTP id u62mr8269561yku.118.1443708252346;
- Thu, 01 Oct 2015 07:04:12 -0700 (PDT)
-In-Reply-To: <CACn5sdR_PnnzeTT921B2mu2o1ceaC5qzKsKCuqHpK0FVp5OKng@mail.gmail.com>
-References: <CACn5sdR_PnnzeTT921B2mu2o1ceaC5qzKsKCuqHpK0FVp5OKng@mail.gmail.com>
-Message-ID: <CANO=Ty2QZBvdct3rx3+NdDV0CYf5eTu2V-tP5gsU8b0jH0bBmQ@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=001a113974108a99fc05210b85fa
-Date: Thu, 1 Oct 2015 08:04:12 -0600
-From: Kurt Seifried <kseifried@redhat.com>
+Received: (qmail 30010 invoked from network); 8 Jun 2015 22:45:22 -0000
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AkoFALgadlVbdWOb/2dsb2JhbABcgxCBMoMewzgCgTFMAQEBAQEBgQuEIgEBAQECASNWBQsLGAICJgICVxmIJQgEAaoEpAABAQEBBgIBH4EhgSyIdoUGBxaCUoFFBYxNjXSEF41LihIkYYM0UYJHAQEB
+X-IPAS-Result: AkoFALgadlVbdWOb/2dsb2JhbABcgxCBMoMewzgCgTFMAQEBAQEBgQuEIgEBAQECASNWBQsLGAICJgICVxmIJQgEAaoEpAABAQEBBgIBH4EhgSyIdoUGBxaCUoFFBYxNjXSEF41LihIkYYM0UYJHAQEB
+X-IronPort-AV: E=Sophos;i="5.13,576,1427752800"; 
+   d="scan'208";a="366037676"
+Message-ID: <1433803485.16305.3.camel@igalia.com>
+In-Reply-To: <20150608213455.CB1E7B2E059@smtpvbsrv1.mitre.org>
+References: <20150608213455.CB1E7B2E059@smtpvbsrv1.mitre.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.16.2.1 (3.16.2.1-1.fc22) 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Cc: oss-security@lists.openwall.com
+Date: Mon, 08 Jun 2015 17:44:45 -0500
+From: Michael Catanzaro <mcatanzaro@igalia.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE request: Heap overflow and DoS with a tga file
- in gdk-pixbuf < 2.32.1
-To: oss-security <oss-security@lists.openwall.com>
+Subject: [oss-security] Re: CVE Request: WebKitGTK+ performs DNS prefetch when a proxy is
+ configured
+To: cve-assign@mitre.org
 
---001a113974108a99fc05210b85fa
-Content-Type: text/plain; charset=UTF-8
+On Mon, 2015-06-08 at 17:34 -0400, cve-assign@mitre.org wrote:
+> 
+> We're not sure that this can be considered a vulnerability fix; it
+> seems more like a feature addition. The
+> platformProxyIsEnabledInSystemPreferences "return false" code seems 
+> to
+> mean that the the product's development status was that ascertaining 
+> a
+> proxy setting was an unimplemented capability, and therefore any
+> proxy-specific DNS behavior was an unimplemented feature.
 
-Can you please post more details, I know on our end there was some
-confusion as to whether or not this is the same flaw or closely related to
-https://www.mozilla.org/en-US/security/advisories/mfsa2015-88/
+Yes, but it should have been a "return true" to fail-safe instead.
 
-On Thu, Oct 1, 2015 at 6:59 AM, Gustavo Grieco <gustavo.grieco@gmail.com>
-wrote:
+> Admittedly, never making direct DNS queries during proxy use may be
+> the new preferred behavior in this product. However, sometimes people
+> want to make direct DNS queries during proxy use.
 
-> Hello,
->
-> We found a heap overflow and a DoS in the gdk-pixbuf implementation
-> triggered by the scaling of tga file. These issues are only fixed in the
-> recent release of gdk-pixbuf 2.32.1 but affects older versions (we tested
-> it in a fully updated Ubuntu 14.04).
->
-> These issues were found using QuickFuzz.
->
-> Regards,
-> Gustavo.
->
+I don't think we intend to support this level of configurability.
 
+> There could be a CVE ID if a product were specifically trying to
+> detect a proxy setting (in order to avoid direct DNS in that case) 
+> but
+> failing because of a coding error. There typically can't be a CVE ID
+> for addition of new code to satisfy a requested behavior change.
 
+OK, no need for a CVE then.
 
--- 
+Thanks for the good response and the links,
 
---
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@redhat.com
-
---001a113974108a99fc05210b85fa--
+Michael
