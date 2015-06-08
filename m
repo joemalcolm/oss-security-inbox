@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2440" "Friday" "20" "October" "2017" "15:37:58" "-0700" "Seth Arnold" "seth.arnold@canonical.com" "<20171020223757.GA28323@hunt>" "61" "Re: [oss-security] CVE-2017-8805: Unsafe symlinks not filtered in Debian mirror script ftpsync" "^Date:" nil nil "10" "2017102022:37:58" "[oss-security] CVE-2017-8805: Unsafe symlinks not filtered in Debian mirror script ftpsync" (number mark "        seth.arnold@ Oct 20   61/2440  " thread-indent "\"Re: [oss-security] CVE-2017-8805: Unsafe symlinks not filtered in Debian mirror script ftpsync\"\n") "<CAOfWR+H_UbXfxh=oECSqUEcLmAh+RZciH61q0E5LqskWSOYWKA@mail.gmail.com>" ("<20171017162507.e7lx6fbnleugoxxa@waldi.eu.org>" "<CAOfWR+EHYftu3Hqbu0qGvk_kk3au-Gkj_WEH95syC3n-QuNnxg@mail.gmail.com>" "<CABMkiz5UkRvC7FRFQ_9nAfG=+gqGXTb-67faWu=s4n=mXghZtA@mail.gmail.com>" "<CAOfWR+GW8oR8+uSKeETF3+mzhhzH5-GiRuJr2sGOnhodefHRaQ@mail.gmail.com>" "<20171019194428.GK20315@hunt>" "<CAOfWR+H_UbXfxh=oECSqUEcLmAh+RZciH61q0E5LqskWSOYWKA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2779" "Monday" "8" "June" "2015" "17:34:55" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150608213455.CB1E7B2E059@smtpvbsrv1.mitre.org>" "61" "[oss-security] Re: CVE Request: WebKitGTK+ performs DNS prefetch when a proxy is configured" nil nil nil "6" "2015060821:34:55" "[oss-security] Re: CVE Request: WebKitGTK+ performs DNS prefetch when a proxy is configured" (number mark "        cve-assign@m Jun  8   61/2779  " thread-indent "\"[oss-security] Re: CVE Request: WebKitGTK+ performs DNS prefetch when a proxy is configured\"\n") "<1433781982.9986.17.camel@igalia.com>" ("<1433781982.9986.17.camel@igalia.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 17814 invoked by uid 550); 20 Oct 2017 22:38:12 -0000
+Received: (qmail 17537 invoked by uid 550); 8 Jun 2015 21:35:08 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,86 +11,74 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 17796 invoked from network); 20 Oct 2017 22:38:11 -0000
-Message-ID: <20171020223757.GA28323@hunt>
-Mail-Followup-To: oss-security@lists.openwall.com
-References: <20171017162507.e7lx6fbnleugoxxa@waldi.eu.org>
- <CAOfWR+EHYftu3Hqbu0qGvk_kk3au-Gkj_WEH95syC3n-QuNnxg@mail.gmail.com>
- <CABMkiz5UkRvC7FRFQ_9nAfG=+gqGXTb-67faWu=s4n=mXghZtA@mail.gmail.com>
- <CAOfWR+GW8oR8+uSKeETF3+mzhhzH5-GiRuJr2sGOnhodefHRaQ@mail.gmail.com>
- <20171019194428.GK20315@hunt>
- <CAOfWR+H_UbXfxh=oECSqUEcLmAh+RZciH61q0E5LqskWSOYWKA@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="J2SCkAp4GZ/dPZZf"
-Content-Disposition: inline
-In-Reply-To: <CAOfWR+H_UbXfxh=oECSqUEcLmAh+RZciH61q0E5LqskWSOYWKA@mail.gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-Date: Fri, 20 Oct 2017 15:37:58 -0700
-From: Seth Arnold <seth.arnold@canonical.com>
+Received: (qmail 17514 invoked from network); 8 Jun 2015 21:35:07 -0000
+In-Reply-To: <1433781982.9986.17.camel@igalia.com>
+Message-Id: <20150608213455.CB1E7B2E059@smtpvbsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Mon,  8 Jun 2015 17:34:55 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE-2017-8805: Unsafe symlinks not filtered in
- Debian mirror script ftpsync
-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: CVE Request: WebKitGTK+ performs DNS prefetch when a proxy is configured
+To: mcatanzaro@igalia.com
 
---J2SCkAp4GZ/dPZZf
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On Thu, Oct 19, 2017 at 08:32:55PM +0000, Robert Watson wrote:
-> Scripts depend on the underlying functionality of the various utilities
-> like rsync that they call. I'm having trouble understanding how a script
-> could ever be deserving of a CVE. Maybe I'm wrong. I wish to be educated.
+> https://bugs.webkit.org/show_bug.cgi?id=145542
 
-I'm not sure what 'script' vs 'not-script' has to do with anything.
-'Script' really just means "interpreted programming language" and says
-nothing about the threat model in use.
+> Complaint: "Apparently it seems that even when configured to use Tor
+> as proxy, epiphany is so "smart" to send DNS queries directly to the
+> wire, thus making any effort of Tor useless."
 
-This ftpsync script and similar scripts are the primary tool for mirroring
-Debian, Ubuntu, and other derived Linux distributions, to the mirror
-networks that support many millions of computers.
+> Note: This is not really exploitable per se and it's public in three
+> downstream bugtrackers, so no point in trying to hide this -> public
+> intentionally.
 
-Probably other programs use rsync without --safe-links when they should.
-I didn't know the option existed until this thread was started (seriously,
-rsync(1) is a HUGE manpage) so I'm grateful to the original reporter
-for sending it along.
+> All reviewed patches have been landed.
 
-> We are overwhelmed with more vulnerabilities than can be fixed quickly
-> already.
+We're not sure that this can be considered a vulnerability fix; it
+seems more like a feature addition. The
+platformProxyIsEnabledInSystemPreferences "return false" code seems to
+mean that the the product's development status was that ascertaining a
+proxy setting was an unimplemented capability, and therefore any
+proxy-specific DNS behavior was an unimplemented feature.
 
-Yes.
+Admittedly, never making direct DNS queries during proxy use may be
+the new preferred behavior in this product. However, sometimes people
+want to make direct DNS queries during proxy use. For example,
+suppose that a company requires all outbound HTTP requests to go
+through a proxy server at the company's headquarters office. However,
+branch offices can make outbound DNS queries from their own networks,
+possibly in other countries. Some DNS servers respond with different A
+records based on an estimate of the geographical location of the DNS
+client (or did historically). These different A records may ultimately
+be useful in obtaining HTTP responses that are more geographically
+appropriate for a branch office.
 
-> Are "just to be safer" type things really a wise use of our resources?
+Some web pages possibly related to how DNS should work with a proxy:
 
-Yes. I think we all wish to see software that's less likely to fail.
+  https://www.chromium.org/developers/design-documents/network-stack/socks-proxy
+  https://bugzilla.mozilla.org/show_bug.cgi?id=134105
+  https://trac.torproject.org/projects/tor/ticket/5741
 
-> Does a proliferation of a large number of low-caliber problems make
-> monitoring these lists more trouble than it's worth? Does it cause
-> high-impact problems to be lost amongst low-impact ones?
+There could be a CVE ID if a product were specifically trying to
+detect a proxy setting (in order to avoid direct DNS in that case) but
+failing because of a coding error. There typically can't be a CVE ID
+for addition of new code to satisfy a requested behavior change.
 
-It's up to you how you prioritize your time. For this issue, I updated my
-own personal mirroring script and a co-worker updated our wiki page:
-https://wiki.ubuntu.com/Mirrors/Scripts
-These steps took a few minutes and are unlikely to cause problems so it
-was an easy choice. Filing for a CVE for a wiki page feels like a waste of
-time so I'm not going to bother. The page is fixed and users can adopt the
-change if they wish.
-
-Thanks
-
---J2SCkAp4GZ/dPZZf
-Content-Type: application/pgp-signature; name="signature.asc"
-
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBCgAGBQJZ6nrFAAoJEPMhclmdjS6XB30H/00tqyB9MkxBhQ5YvltxQraE
-6FPKdsbc2cd4QvgIYM5l3DY8ENLX6dAtopieuAKTUA13sKYbKeps1XMahoDIHQiM
-CBtEzYooupZoo7DvZfUBGIIfLaBv0X50P8JmoFaMQDTlU684cG0aoHmOjVQVLauk
-0F2KVgR0oOWVErMYVgndCND1vqe7B7ANN97YFRDiF0wBKszZ8OBesjqUmLZwBL1Q
-HZEL2Wu8nqI74Bay+Bh9/QLxbJ/cTbcjzgcLm02iIeHbotQHnAfB0zxdRrLFrMoL
-ICaDIO2UktU6dTNxw4m2EoDUB3qyOhZyfXQrFaQ9JGXMqEu6GNH/O0enbOUaG6c=
-=JHgu
+iQEcBAEBAgAGBQJVdgk1AAoJEKllVAevmvmsaCcH/0fjW1seLtzPcRTOXVSWOsUO
+rzlRBh+ci0g+GTdQTHsCmEQAIbvs0s582TblHh6ks4deNR5rNGDR81W63leQxSi0
+PBNclQMnHbJCTN5AjJy89OIxzx++lwcCnazccfWdXEZcSGtm1vA1TJptP17Cb9LQ
+w+2ZfzhLKVPJ90zL+LiEN/VaHo8FzFFUWfLvzJnKQFRQMiWfTByQS/J4yezWsRE+
+cqEsr+5ZLxcDlpQSQFlhNG/BEKKt/byzJrkUzXz6OKGwnbwamMalv9CuCa7fcPQT
+/ukwm7sG1x/xucaMKVVTz7WGZ89vA1fxS/VxLyJCaxbqGBrqhvSmaKSdegLU9ic=
+=Mg5H
 -----END PGP SIGNATURE-----
-
---J2SCkAp4GZ/dPZZf--
