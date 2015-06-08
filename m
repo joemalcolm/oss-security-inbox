@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3075" "Thursday" "25" "July" "2019" "08:31:29" "-0400" "Vladis Dronov" "vdronov@redhat.com" "<613396710.4527654.1564057889289.JavaMail.zimbra@redhat.com>" "72" "[oss-security] CVE-2019-10207: linux kernel: bluetooth: hci_uart: 0x0 address execution as nonprivileged user" nil nil nil "7" "2019072512:31:29" "[oss-security] CVE-2019-10207: linux kernel: bluetooth: hci_uart: 0x0 address execution as nonprivileged user" (number mark "U       vdronov@redh Jul 25   72/3075  " thread-indent "\"[oss-security] CVE-2019-10207: linux kernel: bluetooth: hci_uart: 0x0 address execution as nonprivileged user\"\n") "<470270831.4241339.1563979659491.JavaMail.zimbra@redhat.com>" ("<470270831.4241339.1563979659491.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil "[oss-security] CVE-2019-10207: linux kernel: bluetooth: hci_uart: 0x0 address execution as nonprivileged user" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["798" "Sunday" "7" "June" "2015" "23:09:49" "-0400" "Scott Arciszewski" "scott@paragonie.com" "<CAKws9z35H5vzm3rEA5AbiT97S7BSwEPpiiFQ9kwP=EKnz1-OYg@mail.gmail.com>" "24" "[oss-security] Suggestions Sought for Appsec Reading List" nil nil nil "6" "2015060803:09:49" "[oss-security] Suggestions Sought for Appsec Reading List" (number mark "U       scott@parago Jun  7   24/798   " thread-indent "\"[oss-security] Suggestions Sought for Appsec Reading List\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 28377 invoked by uid 550); 25 Jul 2019 12:31:42 -0000
+Received: (qmail 17642 invoked by uid 550); 8 Jun 2015 03:10:06 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,94 +11,52 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28357 invoked from network); 25 Jul 2019 12:31:41 -0000
-Date: Thu, 25 Jul 2019 08:31:29 -0400 (EDT)
-From: Vladis Dronov <vdronov@redhat.com>
-To: oss-security@lists.openwall.com
-Message-ID: <613396710.4527654.1564057889289.JavaMail.zimbra@redhat.com>
-In-Reply-To: <470270831.4241339.1563979659491.JavaMail.zimbra@redhat.com>
-References: <470270831.4241339.1563979659491.JavaMail.zimbra@redhat.com>
+Received: (qmail 17597 invoked from network); 8 Jun 2015 03:10:02 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
+         :content-type;
+        bh=mhDxc30Cls2bf8YFTAUl62iu37+/uUW22hdu7JZAbTc=;
+        b=iBJpVUMP6GGxxNB5cz+xBGPkUa9akuWNqv2EJ+a/RBoinBuBAQOH0SEt1oMavcT3Nw
+         E8tob6/bttImVN7WRgK+HckEnyCtVLX+EQdvN7Sf0OxwmwQpKT4SRFenIPZzS0zwYBaE
+         sBvHieJR59Em6MCE3xvSgnyV/vR9K4xtOnTGT4EHHnKtxtT/UInRg1Nf4NS3/mp1558N
+         qg7qkw9h/2zVWwV/V7Pz1PuKdZ6kjBjeWz49L1yb2JgdNvzQ9qjZThf6ck3U+mrch1kd
+         2+BhV9rShe8FG8As56m4XNPqUVz1Wx2+18ruEvXHSxxWTmognZ/bQMjr7HZrNZBYlCGD
+         bs8Q==
+X-Gm-Message-State: ALoCoQmTY8QA5wkx8itWFBMOI/Je/gEyY7AtjdBe8031niYdBvivRvYqEPzMO9ZZoq8mvgxyexcf
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.43.2.29, 10.4.195.6]
-Thread-Topic: bluetooth: hci_uart: 0x0 address execution as nonprivileged user
-Thread-Index: nQ2NW4PMqDCIyYMsAp+X/R9JmEkJkMZhkuUh
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.12
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.44]); Thu, 25 Jul 2019 12:31:29 +0000 (UTC)
-Subject: [oss-security] CVE-2019-10207: linux kernel: bluetooth: hci_uart: 0x0 address
- execution as nonprivileged user
+X-Received: by 10.229.59.132 with SMTP id l4mr17863633qch.9.1433732989988;
+ Sun, 07 Jun 2015 20:09:49 -0700 (PDT)
+X-Originating-IP: [71.47.14.165]
+Message-ID: <CAKws9z35H5vzm3rEA5AbiT97S7BSwEPpiiFQ9kwP=EKnz1-OYg@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=001a11c25800924f3e0517f8f9e3
+Date: Sun, 7 Jun 2015 23:09:49 -0400
+From: Scott Arciszewski <scott@paragonie.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Suggestions Sought for Appsec Reading List
+To: oss-security@lists.openwall.com
 
-Hello,
+--001a11c25800924f3e0517f8f9e3
+Content-Type: text/plain; charset=UTF-8
 
-It was found (by the syzkaller initially) that a 0x0 address execution is
-possible as nonprivileged user in the latest Linux kernel (considering
-protection measures like SMEP, vm.mmap_min_addr, etc are disabled).
+Hi oss-sec readers!
 
-The Linux kernel must have any of following config options enabled:
+Earlier this year, we decided to start a curated list for learning about
+application security and host it on Github.
 
-CONFIG_BT_HCIUART_MRVL (easy to hit)
-CONFIG_BT_HCIUART_QCA (hard to hit)
-CONFIG_BT_HCIUART_BCM
-CONFIG_BT_HCIUART_INTEL
-CONFIG_BT_HCIUART_ATH3K
+Currently, we have a good spread of general topics and PHP-specific
+security pitfalls, but we'd like to gather more resources to help
+developers with experience in a particular language learn how to build more
+resilient applications.
 
-The suggested fix is posted at:
+https://github.com/paragonie/awesome-appsec
 
-https://lore.kernel.org/linux-bluetooth/20190725120909.31235-1-vdronov@redhat.com/T/#u
+The list lives at that URL, please send pull requests. It's as easy as
+creating a .json file somewhere appropriately within the data/ directory;
+I'll take care of the rest.
 
-The bug and the reproducer are public, as they were found by the syzcaller
-several months ago:
+Scott Arciszewski
+Chief Development Officer
+Paragon Initiative Enterprises <https://paragonie.com>
 
-https://syzkaller.appspot.com/bug?id=1b42faa2848963564a5b1b7f8c837ea7b55ffa50
-
-CVE-2019-10207 was assigned to this bug.
-
-$ id
-uid=1000(vladis) gid=1000(vladis) groups=1000(vladis)
-$ uname -r
-5.2.0
-$ ./hci-proto-crash 11
-proto = 11
-ioctl(SET_HCI_UART_PROTO): Success
-[   99.894572] BUG: kernel NULL pointer dereference, address: 0000000000000000
-[   99.897287] #PF: supervisor instruction fetch in kernel mode
-[   99.897863] #PF: error_code(0x0010) - not-present page
-[   99.898389] PGD 0 P4D 0
-[   99.899036] Oops: 0010 [#1] SMP
-[   99.899795] CPU: 2 PID: 691 Comm: kworker/u17:0 Not tainted 5.2.0 #23
-[   99.900836] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996)
-[   99.902912] Workqueue: hci0 hci_power_on
-[   99.903673] RIP: 0010:0x0
-[   99.904416] Code: Bad RIP value.
-[   99.905137] RSP: 0018:ffff92d8822c7d98 EFLAGS: 00010246
-[   99.906014] RAX: ffffffff97e7a3e0 RBX: ffff8af7b5dd9e00 RCX: 00000000000010b2
-[   99.907075] RDX: 00000000ffffffff RSI: ffff92d8822c7d44 RDI: ffff8af7b46c0400
-[   99.908127] RBP: ffff8af7b46c0400 R08: 0000000000000000 R09: 000000000001cb00
-[   99.909232] R10: 000000000000001e R11: 000000000001b900 R12: ffff8af7b45d4000
-[   99.910332] R13: ffff8af7b45d4a08 R14: 0000000000000000 R15: 0ffff8af7b167ad0
-[   99.911452] FS:  0000000000000000(0000) GS:ffff8af7b7880000(0000) knlGS:0000000000000000
-[   99.912709] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[   99.913682] CR2: ffffffffffffffd6 CR3: 000000007060a003 CR4: 00000000001606e0
-[   99.914764] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-[   99.915830] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-[   99.916877] Call Trace:
-[   99.917538]  hci_uart_set_flow_control+0x149/0x1b0
-[   99.918441]  mrvl_setup+0xe/0x70
-[   99.919209]  hci_dev_do_open+0x1eb/0x690
-[   99.920013]  ? sched_clock+0x5/0x10
-[   99.920784]  hci_power_on+0x45/0x250
-[   99.921549]  ? __wake_up_common_lock+0x87/0xc0
-[   99.922399]  process_one_work+0x1c4/0x3a0
-[   99.923230]  worker_thread+0x45/0x3c0
-[   99.924019]  kthread+0xf3/0x130
-[   99.924735]  ? trace_event_raw_event_workqueue_execute_start+0xb0/0xb0
-[   99.925755]  ? kthread_park+0x80/0x80
-[   99.926546]  ret_from_fork+0x1f/0x30
-[   99.927399] Modules linked in:
-[   99.928152] CR2: 0000000000000000
-[   99.928882] ---[ end trace 577d1af3066a9585 ]---
-
-Best regards,
-Vladis Dronov | Red Hat, Inc. | The Core Kernel | Senior Software Engineer
+--001a11c25800924f3e0517f8f9e3--
