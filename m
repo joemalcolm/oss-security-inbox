@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1305" "Wednesday" "29" "July" "2015" "16:53:41" "+0200" "oss-security-list@demlak.de" "oss-security-list@demlak.de" "<55B8E8F5.5010003@demlak.de>" "45" "[oss-security] CVE request: Froxlor - information leak" nil nil nil "7" "2015072914:53:41" "[oss-security] CVE request: Froxlor - information leak" (number mark "        oss-security Jul 29   45/1305  " thread-indent "\"[oss-security] CVE request: Froxlor - information leak\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1842" "Monday" "8" "June" "2015" "15:44:05" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150608194405.113338BC0D4@smtpvmsrv1.mitre.org>" "43" "[oss-security] Re: CVE request for polkit" nil nil nil "6" "2015060819:44:05" "[oss-security] Re: CVE request for polkit" (number mark "        cve-assign@m Jun  8   43/1842  " thread-indent "\"[oss-security] Re: CVE request for polkit\"\n") "<1433766290.956011.289650937.2219DE8D@webmail.messagingengine.com>" ("<1433766290.956011.289650937.2219DE8D@webmail.messagingengine.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 21780 invoked by uid 550); 29 Jul 2015 15:57:15 -0000
+Received: (qmail 15814 invoked by uid 550); 8 Jun 2015 19:44:17 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,61 +11,56 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 26269 invoked from network); 29 Jul 2015 14:53:57 -0000
-Message-ID: <55B8E8F5.5010003@demlak.de>
-User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:38.0) Gecko/20100101
- Thunderbird/38.0.1
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Date: Wed, 29 Jul 2015 16:53:41 +0200
-From: oss-security-list@demlak.de
+Received: (qmail 15784 invoked from network); 8 Jun 2015 19:44:17 -0000
+In-Reply-To: <1433766290.956011.289650937.2219DE8D@webmail.messagingengine.com>
+Message-Id: <20150608194405.113338BC0D4@smtpvmsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Mon,  8 Jun 2015 15:44:05 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE request: Froxlor - information leak
-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: CVE request for polkit
+To: walters@verbum.org
 
-Hello,
-Please assign a CVE-ID for the following 'Information Leak':
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Affects
-=====
-- Froxlor 0.9.33.1 and earlier
+Your message seems to be about various security analysis posted to a
+mailing-list thread with about 10 messages, accompanied by at least
+two bug reports:
 
-Fixed
-====
-- Froxlor 0.9.33.2
+  https://bugs.freedesktop.org/show_bug.cgi?id=90837
+  https://bugs.freedesktop.org/show_bug.cgi?id=90832
 
-Summary
-========
-An unauthenticated remote attacker is able to get the database password 
-via webaccess due to wrong file permissions of the /logs/ folder in 
-froxlor version 0.9.33.1 and earlier. The plain SQL password and 
-username may be stored in the /logs/sql-error.log file. This directory 
-is publicly reachable under the default configuration/setup.
+with a total of about 15 comments. In this situation, we're not sure
+that there's any practical way for us to distill that into a consensus
+statement of what the CVE or CVEs would be for.
 
-Notes
-=====
-Some default URLs are:
-http://website.tld/froxlor/logs/sql-error.log
-http://cp.website.tld/logs/sql-error.log
-http://froxlor.website.tld/logs/sql-error.log
+The original 2015-05-29 message seems to be about clients whereas the
+first 2015-06-03 message seems to be about users or uids. Is there any
+polkit documentation that suggests that two clients are allowed to
+interfere with each other as long as they have the same uid? (This is
+in the general case where at least one of the two clients is executing
+with substantial restrictions.)
 
-The certain section looks like this:
+For purposes of CVE, we may be able to model this as a situation in
+which the (realistically exploitable) counter wraparound is a clear
+implementation error and can have a CVE ID, but the concept of uid
+matching is a design change that is essentially outside the scope of
+CVE. Would that be OK?
 
-/var/www/froxlor/lib/classes/database/class.Database.php(279): 
-PDO->__construct('mysql:host=127....', 'DATABASE_USER', 
-'PLAIN_DATABASE_PW', Array)
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-Please note that the password in the logfile is truncated to 15 chars, 
-therefore passwords longer than 15 chars are not fully visible to an 
-attacker.
-
-
-Patches
-======
-- log db errors to syslog instead of /logs/sql-error.log file:
- 
-https://github.com/Froxlor/Froxlor/commit/4ec376b29671593a50556630551e04e34bc83c1c
-- replace passwords even before logging:
- 
-https://github.com/Froxlor/Froxlor/commit/8558533a9148a2a0302c9c177abff8e4e4075b92
+iQEcBAEBAgAGBQJVdfACAAoJEKllVAevmvmsm30H/2mgnbGvu8dH39DeFuAGHNZz
+UB7F680kDYPQr8onOQU9vBvLqxmEUFg9JA08EtnMeuKomcvH6UD8w9cQEv8TVtFw
+b9vDEYkrMKlY8V8sWvhebpnqOURUa9oy8wockAwq/ZAUlz1P9leaQ1N4w9emMvhj
+l4PheYuFb1OuIz8kUzhkq1adPeLKMFnjd8abVckHNFtSFhch8A/Lrl56qmJ26MGw
+0Rgng4e3gziN1QDT4WsEqm0haehPitJefa61sEuWMcDh+aJjOKzBYScdGCk9A01d
+91EFwwZMDq9QPYM1y3UlbvBuypSSafpgZEsJDIyBUeCSVBIAnWqJeJSYQvupyiM=
+=+9Uv
+-----END PGP SIGNATURE-----
