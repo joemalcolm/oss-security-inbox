@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2131" "Saturday" "4" "February" "2017" "21:35:41" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<b44c7133952c41e598c801ee468cf44c@imshyb01.MITRE.ORG>" "54" "[oss-security] Re: Local DoS: Linux Kernel EXT4 Memory Corruption / SLAB-Out-of-Bounds Read" nil nil nil "2" "2017020502:35:41" "[oss-security] Re: Local DoS: Linux Kernel EXT4 Memory Corruption / SLAB-Out-of-Bounds Read" (number mark "U       cve-assign@m Feb  4   54/2131  " thread-indent "\"[oss-security] Re: Local DoS: Linux Kernel EXT4 Memory Corruption / SLAB-Out-of-Bounds Read\"\n") "<CALJHwhTW6d4uVqQDvDkn80AWvLSGXGsXT-9RE_ORyBXz59NNHA@mail.gmail.com>" ("<CALJHwhTW6d4uVqQDvDkn80AWvLSGXGsXT-9RE_ORyBXz59NNHA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1657" "Tuesday" "9" "June" "2015" "14:39:12" "+0200" "Secure SocketFunneling" "ssf.developer@gmail.com" "<CAGBYo7weL-_SJ4qkR7_P+jE7DYOMJBtSP4mV6X7dKuGBNJnRig@mail.gmail.com>" "37" "[oss-security] Secure Socket Funneling: a new network tool" nil nil nil "6" "2015060912:39:12" "[oss-security] Secure Socket Funneling: a new network tool" (number mark "        ssf.develope Jun  9   37/1657  " thread-indent "\"[oss-security] Secure Socket Funneling: a new network tool\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 14045 invoked by uid 550); 5 Feb 2017 02:35:54 -0000
+Received: (qmail 3531 invoked by uid 550); 9 Jun 2015 12:43:21 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,69 +11,62 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 14019 invoked from network); 5 Feb 2017 02:35:53 -0000
-From: <cve-assign@mitre.org>
-To: <wmealing@redhat.com>
-CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
-In-Reply-To: <CALJHwhTW6d4uVqQDvDkn80AWvLSGXGsXT-9RE_ORyBXz59NNHA@mail.gmail.com>
-Message-ID: <b44c7133952c41e598c801ee468cf44c@imshyb01.MITRE.ORG>
-Date: Sat, 4 Feb 2017 21:35:41 -0500
+Received: (qmail 1419 invoked from network); 9 Jun 2015 12:39:23 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=lR6kZLhjuo1MWPB9u0w9zH0YQEB9ZECaoqBw7ZLTzJA=;
+        b=FYTo2k1ZkXUpqRjlevYfg9huFcErcIP5CEQPLNhTeU+XnM9QHc0gE1yRYvUCy/pHlA
+         xO7JFHJo/GaM7pcRJreHKOyFsTsWWtLQjYILNAFm+oHB8LKxYdNeI7krR2gESAQRKV30
+         QPmkxw9bGoFRlc9FfISKee+oPgIA+8SHFZkCLFHGbEtT/NJujgZD3dSRNPoIomlRmGeI
+         PLesPsALik+NZ5t6EWBpq1FqK1Hy7Fvoaa2bSpOp14ZGzTwS9P5I3U73s9V8bN6s3yWo
+         X8nMXNaBT9QwUX1VxHUbknB/dOmAr+f/+SdQs+aZ541MVgGf2+o6tORf8nXzxC1M6grT
+         c/LA==
 MIME-Version: 1.0
-Content-Type: text/plain
-Subject: [oss-security] Re: Local DoS: Linux Kernel EXT4 Memory Corruption / SLAB-Out-of-Bounds Read
+X-Received: by 10.52.165.230 with SMTP id zb6mr41481088vdb.0.1433853552190;
+ Tue, 09 Jun 2015 05:39:12 -0700 (PDT)
+Message-ID: <CAGBYo7weL-_SJ4qkR7_P+jE7DYOMJBtSP4mV6X7dKuGBNJnRig@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=001a11c224d2a368c80518150bcf
+Date: Tue, 9 Jun 2015 14:39:12 +0200
+From: Secure SocketFunneling <ssf.developer@gmail.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Secure Socket Funneling: a new network tool
+To: oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--001a11c224d2a368c80518150bcf
+Content-Type: text/plain; charset=UTF-8
 
-> http://seclists.org/fulldisclosure/2016/Nov/75
-> https://bugzilla.redhat.com/show_bug.cgi?id=1332503
+Secure Socket Funneling (SSF) is a network tool and toolkit.
+The main purpose was initially to extend SSH network features and solve
+some performance issues we had while using SSH on high bandwidth networks.
 
->> OS-S Security Advisory 2016-22
+Currently, it is difficult to forward DNS, VoIP and other widely used UDP
+based protocols. Moreover, we often needed a simple way to relay traffic
+over multiple nodes to comply with security policies while administrating
+medium size networks.
 
-> I'd like to ask for a CVE for the flaw the EXT4 filesystem as described as:
-> 
-> Mounting a crafted EXT4 image read-only leads to a memory corruption and
-> SLAB-Out-of-Bounds Reads (according to KASAN).  Since the mounting
-> procedure is a privileged operation, an attacker is probably not able
-> to trigger this vulnerability on the commandline.
-> Instead the automatic mounting feature of the GUI via a crafted
-> USB-device is required.
+These are two of the main features of SSF. It allows simple automatic
+traffic relay and UDP forwarding through encrypted tunnels. Of course, SSF
+also provides basic SSH network features like TCP forwarding and remote
+forwarding, SOCKS proxying (and remote proxying which is not provided by
+SSH). SSF command line is similar to SSH so that DevOps can benefit from
+performance and security enhancements without the learning curve of a new
+tool.
 
-> https://bugzilla.suse.com/show_bug.cgi?id=1023377
-> 
-> https://bugzilla.redhat.com/show_bug.cgi?id=1395190
-> http://www.spinics.net/lists/linux-ext4/msg54572.html
-> 
-> Introduced in:
-> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=952fc18ef9ec707ebdc16c0786ec360295e5ff15
-> (first in v3.6-rc1...)
-> 
-> Fix:
-> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=3a4b77cd47bb837b8557595ec7425f281f2ca1fe
-> (first in v4.10-rc1)
+To ensure the best performances, SSF takes advantage of the multicore,
+multithreaded architectures by using modern asynchronous APIs based on
+Boost.asio.
 
-Use CVE-2016-10208.
+The project provides an easy to use build system which automatically builds
+third-party libraries (Boost, OpenSSL and GoogleTest). Moreover, the code
+is 100% compatible with C++11 which made it portable over many platforms.
+Currently, the build has been tested against Windows, MacOS X and Linux.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+SSF is using latest OpenSSL version with perfect forward secrecy enabled by
+default.
 
-iQIcBAEBCAAGBQJYlo4JAAoJEHb/MwWLVhi22rMP/RUDRCffQOyJu3QkMjLn/ow6
-1prWa6Sf1M9nNsrSobp/QcKFqQv39lFImxKmZMf0k5LGS0l6oZvMvHNo2h+4WznY
-KopRkP4iivAJHP60IKv9QxaVqHuxy3jeOj+HZSro/pH7gAfVg9uv0V+V0aFZq3Lf
-CdoQ5WUwsfIvRnIWnJE3AIv7iWc92WBqIdhC1Dg5bxPR8y9zT124yr1Cob9sH7oK
-DkmqS/gTpmj7i1W6gtM5ZAtuC4teSNXDkg+ejA73CO7hDja1vN+JpD3iYQX+c1vr
-MJHcOUYfYJBg9zbJ+SunDUbLlTkNoTuL/8HYX4vK5VszV+Hw6jf2Axx22KSbL43I
-Y+QR3w/AAEatVjY28RKEYqjSF+eB3ta8s2cIZcLYbsCN2EK4vDzOnd04/agjuPi6
-73vplncZVAz4KziKW5+nu1dNNXD7AKXm/vBnlW0t8n2YZvEGeAHilueljGh8NeI8
-BibqPpHQHUbrnX8+z5hFUb77DbZnz5CKUjvv5FU/wPbtEaHAW97uuDJ92H7Fyi7L
-M5aVys6Q7Q5mkg9mj/lfHvJ2ypORgSp1+WnDld5lbleb9rLliS/jCxS+pFMXFwId
-MpwHyLrm5jiMG5Wn4y2l/aDwZV5cqrqo5G9RihPK2Jdf+HN4gxC1jeE2DH77htP8
-rXarPPmuW69GO+jmJtZz
-=ZWjb
------END PGP SIGNATURE-----
+More information: https://securesocketfunneling.github.io/ssf/
+
+Feel free to fork, review and comment the project.
+
+--001a11c224d2a368c80518150bcf--
