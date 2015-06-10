@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1660" "Friday" "18" "November" "2016" "19:00:55" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<5ec374c5124440d5ae0dea13583cddab@imshyb02.MITRE.ORG>" "41" "[oss-security] Re: CVE Request: libtiff: Out-of-bounds Write memcpy and less bound check in tiff2pdf" nil nil nil "11" "2016111900:00:55" "[oss-security] Re: CVE Request: libtiff: Out-of-bounds Write memcpy and less bound check in tiff2pdf" (number mark "U       cve-assign@m Nov 18   41/1660  " thread-indent "\"[oss-security] Re: CVE Request: libtiff: Out-of-bounds Write memcpy and less bound check in tiff2pdf\"\n") "<46B49944-E27F-410E-A3BE-93A46F51B001@topsec.com.cn>" ("<46B49944-E27F-410E-A3BE-93A46F51B001@topsec.com.cn>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1055" "Wednesday" "10" "June" "2015" "10:34:33" "-0700" "Justin Burke" "jburke@tanium.com" "<CAAJTn3-JmLhNpdW8WtBu6rq3-o7AmwWfB8CiPgNaCXugLEsPug@mail.gmail.com>" "33" "[oss-security] Re: CVE=2015-1234 disambiguation" nil nil nil "6" "2015061017:34:33" "[oss-security] Re: CVE=2015-1234 disambiguation" (number mark "        jburke@taniu Jun 10   33/1055  " thread-indent "\"[oss-security] Re: CVE=2015-1234 disambiguation\"\n") "<20150610150749.GB18203@mail.corp.redhat.com>" ("<20150610150749.GB18203@mail.corp.redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 13360 invoked by uid 550); 19 Nov 2016 00:01:06 -0000
+Received: (qmail 17463 invoked by uid 550); 10 Jun 2015 21:32:52 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,56 +11,71 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13342 invoked from network); 19 Nov 2016 00:01:06 -0000
-From: <cve-assign@mitre.org>
-To: <chenqin@topsec.com.cn>
-CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
-In-Reply-To: <46B49944-E27F-410E-A3BE-93A46F51B001@topsec.com.cn>
-Message-ID: <5ec374c5124440d5ae0dea13583cddab@imshyb02.MITRE.ORG>
-Date: Fri, 18 Nov 2016 19:00:55 -0500
+Received: (qmail 32756 invoked from network); 10 Jun 2015 17:34:45 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=tanium.com; s=google;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=PEZa/gXC7ZHVDFeWFbo2U2ScHxAEita/FfQvne9W9ss=;
+        b=pPPRSpuCbwNe6yxeET2m0Lv8Tq8F/B0br9f0oXJMWGQ78y1BJ/R5uCimj0yQ79cR9A
+         EIYNWdwSQw5wtytR+kqlm2bNSMrcKpXIb5nvWHB5FISLbTs33/mT03D2UcshUg0JNu5B
+         e3tIIbf/8XyCa6qhoZsXr27cz3kPB4JujMWd4=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=PEZa/gXC7ZHVDFeWFbo2U2ScHxAEita/FfQvne9W9ss=;
+        b=l4A8H4wP5VCvdn7t+cO/mbpP7m8BkLVLUj9qcaVUyifD8qvlG7ld05io44oAXeDURJ
+         7h0gZl+90kXlGhGvMBoBrz970lnX2HUi4gCDT90TcbbQ+IQiP1cJLmFYiruatMpwUroh
+         peSjolhlefWe3kK9lK03X3rP8VEeYLO7CTtnTeYgHzmzRmGPZF914W/Ztyn7erUVjkyU
+         GVhrjZNcaQ2M0vIQZ01SlyGgB4l86z/Kpd3nIEmKChHgKhE4odieE0DcG/SvKGMwwtH2
+         icMgCCwTjjPz6cuvJ1SbtOiP0KHINGFos1OtuiUmHM1hlVvdHTFfbbZiLoyLPPzZHBpf
+         MaJw==
+X-Gm-Message-State: ALoCoQlWUFoqceK5JzL7FfPYu4M6mLq94UWmld1S3RIUVUX7odNCH4WR/rmG13JHxpRPCGNFnRXO
 MIME-Version: 1.0
-Content-Type: text/plain
-Subject: [oss-security] Re: CVE Request: libtiff: Out-of-bounds Write memcpy and less bound check in tiff2pdf
+X-Received: by 10.170.121.137 with SMTP id n131mr5638750ykb.64.1433957673533;
+ Wed, 10 Jun 2015 10:34:33 -0700 (PDT)
+In-Reply-To: <20150610150749.GB18203@mail.corp.redhat.com>
+References: <20150610150749.GB18203@mail.corp.redhat.com>
+Message-ID: <CAAJTn3-JmLhNpdW8WtBu6rq3-o7AmwWfB8CiPgNaCXugLEsPug@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=001a1137b250c11fcf05182d49af
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Wed, 10 Jun 2015 10:34:33 -0700
+From: Justin Burke <jburke@tanium.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: CVE=2015-1234 disambiguation
+To: Vasyl Kaigorodov <vkaigoro@redhat.com>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--001a1137b250c11fcf05182d49af
+Content-Type: text/plain; charset=UTF-8
 
-> http://bugzilla.maptools.org/show_bug.cgi?id=2579
-> 
-> tools/tiff2pdf.c: fix read -largely- outsize of buffer in
->        t2p_readwrite_pdf_image_tile(), causing crash, when reading a
->        JPEG compressed image with TIFFTAG_JPEGTABLES length being one.
->        Reported as MSVR 35101 by Axel Souchet and Vishal Chauhan from
->        the MSRC Vulnerabilities & Mitigations team.
+Vasyl, I suspect the original reporter self-generated the CVE number.
 
->> Out-of-bounds Write Caused by memcpy and no bound check.
+Justin
+On Jun 10, 2015 7:54 AM, "Vasyl Kaigorodov" <vkaigoro@redhat.com> wrote:
 
->> will cause illegal write. An attacker may control the write address and/or
->> value
->> to result in denial-of-service or command execution.
+> Hello,
+>
+> I've spotted this on fulldisclosure mailing list today:
+> http://seclists.org/fulldisclosure/2015/Jun/17
+>
+> It says CVE-2015-1234 was assigned to that issue, which I think is
+> wrong, because this same CVE was mentioned by Google in their Chrome
+> update in April 2015 [1]
+> http://googlechromereleases.blogspot.cz/2015/04/stable-channel-update.html
+>
+> Can someone sched some light here?
+> Explicitely added cve-assign, and Justin Burke (fuldisclosure post
+> author).
+>
+> Thanks.
+> --
+> Vasyl Kaigorodov | Red Hat Product Security
+> PGP:  0xABB6E828 A7E0 87FF 5AB5 48EB 47D0 2868 217B F9FC ABB6 E828
+> Free/Busy status: https://url.corp.redhat.com/vk-free-busy-status
+>
+> Come talk to Red Hat Product Security at the Summit!
+> Red Hat Summit 2015 - https://www.redhat.com/summit/
+>
 
-Use CVE-2016-9453.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYL5R+AAoJEHb/MwWLVhi2Za4P/ioEFjcWkhT7AqaXUZ+G5dZ3
-M9grgWYnmkBsGwqWD56LCNLjDcD4OexKOeogFMBbJkVFaMnyX4eq/uddNlIq2dne
-9TiSm2+X4HKlbw4qiruUx3HbKsgUvQmMrowfGVA97KanT5bCIa/bt94G3/e1lLwl
-FZJ+qlooyFf8VBpR+3UWROPNSbD/m6DgRLDK0yDBxg0J2pKUJHJAu75Ql5BGXkC3
-70yiP9r5Rz9MkrIrTjzRGBidG/aSlrzaPhDk88bNv7edFwUT2EJfndtLLINV3CNl
-0eLCNX3MDb7jwCzw3DtRUPEmuqcBiAUdY/mU0V1IuO9+ipWJl959ELzdgpsFcJ9C
-4SHCOYS3XHNJeJOaQJ9nJJUmWF6DgK2xhYfwTXeifQgaBdN2h0S8DByTQU14oqVw
-5wJCXbGhWvbPq4NGDVG8ATIkgh+K1zoKn/06C/W4lyEgEc8w17xE2GDFyOglrTYt
-EYQZg5qeES940DU+khUOeSp+YOb/m3UCaUmJd/DKOcOofdoUZUVakLXfBMyKZ9rp
-VRYS8k80wwhM5KZWuiGpCOAVVW+BHFCBYgSmXZ+mA6fVP8fqooUy5G+7mjiMidzl
-uyip79HBywTkawVnAEQS5RHgdNOvVIwS6j8rbQN+M5dTseTPdoifRsbJmKLlWEfl
-u/1E3rv67yYtw4XU/Rr7
-=Np2d
------END PGP SIGNATURE-----
+--001a1137b250c11fcf05182d49af--
