@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1556" "Tuesday" "23" "February" "2016" "22:33:50" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160224033350.2DD1872E033@smtpvbsrv1.mitre.org>" "37" "[oss-security] Re: CVE Request: Linux: unix: correctly track in-flight fds in sending process user_struct sockets" nil nil nil "2" "2016022403:33:50" "[oss-security] Re: CVE Request: Linux: unix: correctly track in-flight fds in sending process user_struct sockets" (number mark "U       cve-assign@m Feb 23   37/1556  " thread-indent "\"[oss-security] Re: CVE Request: Linux: unix: correctly track in-flight fds in sending process user_struct sockets\"\n") "<20160223055624.GA29670@lorien.valinor.li>" ("<20160223055624.GA29670@lorien.valinor.li>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["584" "Wednesday" "10" "June" "2015" "16:24:06" "+0200" "Petr Matousek" "pmatouse@redhat.com" "<20150610142405.GB19706@dhcp-25-225.brq.redhat.com>" "18" "Re: [oss-security] Xen Security Advisory 135 (CVE-2015-3209) - Heap overflow in QEMU PCNET controller, allowing guest->host escape" nil nil nil "6" "2015061014:24:06" "[oss-security] Xen Security Advisory 135 (CVE-2015-3209) - Heap overflow in QEMU PCNET controller, allowing guest->host escape" (number mark "U       pmatouse@red Jun 10   18/584   " thread-indent "\"Re: [oss-security] Xen Security Advisory 135 (CVE-2015-3209) - Heap overflow in QEMU PCNET controller, allowing guest->host escape\"\n") "<E1Z2giD-0007Hh-AZ@xenbits.xen.org>" ("<E1Z2giD-0007Hh-AZ@xenbits.xen.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 9861 invoked by uid 550); 24 Feb 2016 03:34:03 -0000
+Received: (qmail 3768 invoked by uid 550); 10 Jun 2015 14:24:22 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,49 +12,36 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9843 invoked from network); 24 Feb 2016 03:34:03 -0000
-From: cve-assign@mitre.org
-To: carnil@debian.org
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <20160223055624.GA29670@lorien.valinor.li>
-Message-Id: <20160224033350.2DD1872E033@smtpvbsrv1.mitre.org>
-Date: Tue, 23 Feb 2016 22:33:50 -0500 (EST)
-Subject: [oss-security] Re: CVE Request: Linux: unix: correctly track in-flight fds in sending process user_struct sockets
+Received: (qmail 3746 invoked from network); 10 Jun 2015 14:24:21 -0000
+Date: Wed, 10 Jun 2015 16:24:06 +0200
+From: Petr Matousek <pmatouse@redhat.com>
+To: oss-security@lists.openwall.com
+Message-ID: <20150610142405.GB19706@dhcp-25-225.brq.redhat.com>
+Mail-Followup-To: oss-security@lists.openwall.com
+References: <E1Z2giD-0007Hh-AZ@xenbits.xen.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <E1Z2giD-0007Hh-AZ@xenbits.xen.org>
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.26
+Subject: Re: [oss-security] Xen Security Advisory 135 (CVE-2015-3209) - Heap
+ overflow in QEMU PCNET controller, allowing guest->host escape
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Wed, Jun 10, 2015 at 02:10:37PM +0000, Xen.org security team wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+> 
+>             Xen Security Advisory CVE-2015-3209 / XSA-135
+>                               version 3
+> 
+>  Heap overflow in QEMU PCNET controller, allowing guest->host escape
 
-> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=415e3d3e90ce9e18727e8843ae343eda5a58fad6
+QEMU upstream patch submission:
+https://www.mail-archive.com/qemu-devel@nongnu.org/msg302403.html
 
->> unix: correctly track in-flight fds in sending process user_struct
+Red Hat bug:
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2015-3209
 
->> The commit referenced in the Fixes tag incorrectly accounted the
->> number of in-flight fds over a unix domain socket to the original
->> opener of the file-descriptor. This allows another process to
->> arbitrary deplete the original file-openers resource limit for the
->> maximum of open files.
-
-Use CVE-2016-2550.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJWzSRFAAoJEL54rhJi8gl5/bYP/0SCfyofv9HhFwaE/EYSj1/K
-y607Cnxoe/9PPbLn1MxUQNCIBKvLUNR+tZqV9GUc1MrmbbKfOmyNKx0CMIl32Ewn
-1S1OamdeEIQa+wZt2N2bhHFEBy7vUXl0+TGwbuSoqX/UsBcx9Rt7gCvgmb/FKvXV
-UcCJB9T8zWEgCb179u8EWCNQ0qpC3PL8JNvymYjsVsc8BBKO053ZfvezBPm9eehD
-J7vod7f4hzR3S1N74dwwGivNvGZj9XkX7QeRDG8lsT1hRbvtycMrR8Mxs5dnhrYT
-9VnMuuSvdgllRCy+i/cDn3a2GNciCbt3rmlAcsUK/R+a/1kJJ6VGEPlCpWeZyZsp
-jH7Pg4C9sy5j76RORH0uzp/ENvLtLHoGGY2kU8lAou7iEnQ1p35cXqpVNd2xOHas
-HxypzRSO1t6x78hR9ZtbNT9wp3NZiDFADwhOE0nku7rUCEdLIl/ra0gByFwY/lbz
-91Rea30jRVhp9mE21NBA2e7a3/QRU+xLIObuZDLu4HVEs9efh8GYmh0BveQsi9h7
-5B4wiVZSb5rvdq5gN2/l65TXLN/CMQr+s0o7CZKobj6kDMZw7oCjffuLg4jP7rmN
-QELmA4GOdF5lhirAZaFpqDwZy6uUYEahOlIxLO2fF9uaABOSf/kqQan3kcYdy8Mb
-Yjf9+hopybnTS3V71UmI
-=bAtP
------END PGP SIGNATURE-----
+-- 
+Petr Matousek / Red Hat Product Security
+PGP: 0xC44977CA 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
