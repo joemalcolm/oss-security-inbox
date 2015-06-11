@@ -1,4 +1,9 @@
-Received: (qmail 26613 invoked by uid 550); 1 Apr 2025 18:19:52 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2034" "Thursday" "11" "June" "2015" "09:54:26" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150611135426.196A46C007F@smtpvmsrv1.mitre.org>" "64" "[oss-security] Re: Possible CVE Requests: libmspack: several issues" nil nil nil "6" "2015061113:54:26" "[oss-security] Re: Possible CVE Requests: libmspack: several issues" (number mark "        cve-assign@m Jun 11   64/2034  " thread-indent "\"[oss-security] Re: Possible CVE Requests: libmspack: several issues\"\n") "<20150203155205.GA14955@eldamar.local>" ("<20150203155205.GA14955@eldamar.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 1643 invoked by uid 550); 11 Jun 2015 13:54:38 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,132 +11,77 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 1615 invoked from network); 11 Jun 2015 13:54:37 -0000
+In-Reply-To: <20150203155205.GA14955@eldamar.local>
+Message-Id: <20150611135426.196A46C007F@smtpvmsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Thu, 11 Jun 2015 09:54:26 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 21602 invoked from network); 1 Apr 2025 18:18:37 -0000
-Date: Tue, 1 Apr 2025 20:18:22 +0200
-From: Solar Designer <solar@openwall.com>
-To: Arthur Mongodin <amongodin@randorisec.fr>
-Cc: oss-security@lists.openwall.com, hanguelkov@randorisec.fr,
-	Davy Douhine <davy@randorisec.fr>,
-	Matthieu Baerts <matttbe@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>
-Message-ID: <20250401181822.GA25047@openwall.com>
-References: <01a8e1bc-fc43-410b-90e2-41645b2e9f67@randorisec.fr>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <01a8e1bc-fc43-410b-90e2-41645b2e9f67@randorisec.fr>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] Linux kernel: CVE-2024-57882 fix did not prevent data stream corruption in the MPTCP protocol
+Subject: [oss-security] Re: Possible CVE Requests: libmspack: several issues
+To: carnil@debian.org
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Thank you Arthur for posting this.
+> null pointer dereference on a crafted CAB:
+>  - https://bugs.debian.org/774665
 
-I need to clarify a few things for the oss-security community.  First on
-the disclosure process, then on the actual MPTCP subsystem issues,
-including security aspects (two past CVEs and room for hardening).
+Use CVE-2014-9732.
 
-I asked Arthur to post this to oss-security despite of the extra bug
-having no known security impact because Arthur had mistakenly brought
-this to linux-distros and we have a policy to bring all issues from
-(linux-)distros to oss-security.
 
-I consider this use of (linux-)distros a mistake for two reasons:
+> CHM decompression: division by zero
+>  - https://bugs.debian.org/774725
 
-1. (linux-)distros is only for _embargoed_ _security_ issues.  It is
-wrong to use it for a non-security issue, nor to have an embargo on a
-non-security issue.
+Use CVE-2015-4467.
 
-2. Our current "List policy and instructions for reporters" ask that
-"For Linux kernel issues, you must notify the kernel security team
-first, wait for the fix, and only then notify linux-distros or
-oss-security (depending on whether the information is still private or
-already public, as well as on issue severity)."  However, in this case
-linux-distros and s@k.o were CC'ed at once, which is also something the
-kernel's current Documentation/process/security-bugs.rst asks not to do.
 
-I point this out for further occasions, not to complain.
+> CHM decompression: pointer arithmetic overflow
+>  - https://bugs.debian.org/774726
 
-Another difficulty with disclosure of this issue was that linux-distros'
-14 days turned out not to be enough for the fix to not only be ready,
-reviewed, and in mainline (which luckily happened in time), but for it
-to also reach stable.  Yet we were asked to wait until it's in stable.
+Relative to the
+http://anonscm.debian.org/cgit/collab-maint/libmspack.git/commit/?id=a25bb144795e526748b57884daf365732c7e2295
+commit, use CVE-2015-4468 for the issues resolved by
+fix-pointer-arithmetic-overflow.patch and use CVE-2015-4469 for the
+issue resolved by fix-name-field-boundaries.patch. (Note that these
+were originally combined within the diff included in the
+https://bugs.debian.org/774726#3 message.) The
+fix-name-field-boundaries.patch is about missing input validation and
+can't have the same CVE ID as the two cases where the only change was
+from a "p + name_len > end" test to a "name_len > end - p" test.
 
-Arthur was temporarily unavailable to clarify security relevance or lack
-thereof, so we assumed this could have been a security issue and we
-didn't want another conflict with the kernel security team.  So I
-reluctantly made an exception from linux-distros' 14 days maximum.  It's
-the first time we exceeded 14 days by more than a fraction of a day
-since September 2023.  I apologize for letting this happen.
 
-On Tue, Apr 01, 2025 at 03:55:41PM +0200, Arthur Mongodin wrote:
-> During previous research performed on the Linux kernel, we found a 
-> vulnerability in the MPTCP subsystem which could lead to a privilege 
-> escalation.
-> This vulnerability has been fixed and CVE-2024-57882 has been assigned 
-> to it.
+> off-by-one buffer over-read in mspack/mszipd.c
+>  - https://bugs.debian.org/775498
 
-In the linux-distros notification, Arthur also mentioned that they
-managed to exploit CVE-2024-57882 "for a privilege escalation
-that targets Fedora Workstation 39.  This exploit may works on all
-distributions that allow unprivileged user namespaces and that is not
-compiled with CONFIG_INIT_ON_{ALLOC,FREE}_DEFAULT_ON enabled."
+Use CVE-2015-4470.
 
-So distros that have not yet patched CVE-2024-57882 may want to hurry up
-to patch it now.  It's this older fix commit:
 
-> The analyze of the patch 
-> (https://web.git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/commit/?id=cbb26f7d8451fe56ccac802c6db48d16240feebd) 
-> reveals that the root cause of the bug has been partially fixed.
+> off-by-one buffer under-read in mspack/lzxd.c
+>  - https://bugs.debian.org/775499
 
-and now it should be augmented with the new believed-non-security fix:
+Use CVE-2015-4471. The vendor notes that the later-problematic code
+had been valid before 2006-08-31.
 
-A reason CVE-2024-57882 may have stayed unpatched in a distro is it
-could have been wrongly believed to be a NULL pointer dereference only
-due to a specific crash reported by Syzbot.  In particular, Red Hat's
-https://access.redhat.com/security/cve/CVE-2024-57882 currently shows
-this crash, classifies the bug as "CWE-476: NULL Pointer Dereference",
-and states "Will not fix" for RHEL9.  They'll need to reconsider.
 
-> We submitted a fix that introduces an intermediate variable which has 
-> been merged into the stable tree: 
-> https://web.git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/commit/?id=2c1f97a52cb827a5f2768e67a9dddffae1ed47ab.
+> CHM decompression: another pointer arithmetic overflow
+>  - https://bugs.debian.org/775687
 
-> Altough this is a corruption bug, we did not see any security impact 
-> from this bug.
+Use CVE-2015-4472.
 
-Another recent issue in MPTCP is CVE-2024-53122 divide-by-zero fixed by:
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-https://web.git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/commit/?id=ce7356ae35943cc6494cc692e62d51a734062b7d
-
-(I use URLs consistent with what Arthur posted, but actually these are
-mainline and not stable commits.  There are different commit hashes for
-the various stable branch commits corresponding to these same fixes.)
-
-While looking into these issues during the "embargo" for possible
-patching by CIQ's kernel team for the Rocky Linux LTS kernels, I learned
-a couple of things about exposure of the MPTCP subsystem:
-
-1. There's the net.mptcp.enabled sysctl.  It is usually enabled by
-default (e.g. on Fedora and Ubuntu, at least on older versions I've
-checked), but is disabled by default on RHEL (and its downstreams).
-This may have led Red Hat to believe that MPTCP is not exposed on RHEL
-by default.  Their https://access.redhat.com/security/cve/CVE-2024-53122
-states "By default, the MPTCP support is disabled in RHEL. This bug is
-only applicable if enabled."
-
-2. However, net.mptcp.enabled can be set from inside an unprivileged
-net namespace, including by an exploit having just created such
-namespace, regardless of its value on host in init or parent namespace.
-So MPTCP _is_ exposed to local attacks even on RHEL by default, and Red
-Hat may want to reconsider the statement above.
-
-There's also room for hardening here.  Maybe net.mptcp.enabled shouldn't
-be allowed to be set or shouldn't take effect in a namespace if it's not
-enabled in the parent namespace?  Maybe it should become tri-state to
-introduce a mode disabling it not only for the current, but also for
-child namespaces?
-
-Alexander
+iQEcBAEBAgAGBQJVeZJSAAoJEKllVAevmvmsql4H/2k7qmN/J0L5i7nuticZBbm6
+dQEHjoH4wK5n7bMoKeBVC2LAr+hlV6L5dxkfUCAknf4JwxnUCwBh27ewpGj7V5uW
+JrOSeKUkq6LHPyScB5cZPeAagqDEzp42eNZbVJ0J44qlBRMjJkaLkuXDMR6DHaW9
+am5vka2/zmDZgYYbdByleQnr1oB6NPGsl0cKxgZs73PxY96dr+T5E9L4njsa199Y
+AxIo1ULaZ8k4AEN1OqqBTxWOI3GDj3GlWSrCPzwPyXBIz2gw6OYdd1gMoqpdEuM/
+Z12I1gCdlZ3riDtBO/BMS8hW/lAcHccigao+fQegGEppCAaXPLVdZ/0qrLIsmhA=
+=NsCS
+-----END PGP SIGNATURE-----
