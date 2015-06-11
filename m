@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["227" "Monday" "30" "November" "2020" "16:10:35" "+0000" "Andrew Cooper" "andrew.cooper3@citrix.com" "<10f61e14-05f3-0294-8cda-e63764d98cbc@citrix.com>" "11" "Re: [oss-security] Xen Security Advisory 355 v2 - stack corruption from XSA-346 change" nil nil nil "11" "2020113016:10:35" "[oss-security] Xen Security Advisory 355 v2 - stack corruption from XSA-346 change" (number mark "U       andrew.coope Nov 30   11/227   " thread-indent "\"Re: [oss-security] Xen Security Advisory 355 v2 - stack corruption from XSA-346 change\"\n") "<CAA8xKjWY2+xo57n8hsvG6yMyhs6nAH+S4NbCsEJLWEVff_aWzg@mail.gmail.com>" ("<E1khX2v-0002f4-3b@xenbits.xenproject.org>" "<CAA8xKjWY2+xo57n8hsvG6yMyhs6nAH+S4NbCsEJLWEVff_aWzg@mail.gmail.com>") nil nil nil nil nil nil nil "Re: [oss-security] Xen Security Advisory 355 v2 - stack corruption from XSA-346 change" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["10199" "Thursday" "11" "June" "2015" "10:08:48" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<Pine.LNX.4.64.1506111008020.23801@beijing.mitre.org>" "406" "Re: [oss-security] CVE requests for Drupal contributed modules (from SA-CONTRIB-2015-034 to SA-CONTRIB-2015-099)" nil nil nil "6" "2015061114:08:48" "[oss-security] CVE requests for Drupal contributed modules (from SA-CONTRIB-2015-034 to SA-CONTRIB-2015-099)" (number mark "        cve-assign@m Jun 11  406/10199 " thread-indent "\"Re: [oss-security] CVE requests for Drupal contributed modules (from SA-CONTRIB-2015-034 to SA-CONTRIB-2015-099)\"\n") "<CAMYtjAr1rZsHY0u0P3s1mnwb7VcFybNnP8JrGD268x06P=+0-g@mail.gmail.com>" ("<CAMYtjAr1rZsHY0u0P3s1mnwb7VcFybNnP8JrGD268x06P=+0-g@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 15568 invoked by uid 550); 30 Nov 2020 16:43:31 -0000
+Received: (qmail 17851 invoked by uid 550); 11 Jun 2015 14:09:01 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,60 +11,425 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 25704 invoked from network); 30 Nov 2020 16:12:54 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
-  d=citrix.com; s=securemail; t=1606752774;
-  h=subject:to:cc:references:from:message-id:date:
-   mime-version:in-reply-to:content-transfer-encoding;
-  bh=wqpac+ZXvFw1ZF2F2HGgOYXyHv5dQoS1gJbo6VOVPi8=;
-  b=ehy2KJEJC9HTqIGt4f+l4ndCrWIz5GISz33j6ntrwR1HnZNoPkOMoIM4
-   G2+M3Etv1ALOR4YBRQ+8+Q46W8fiYZZkp6zviKDKwoCT/HNNXDSySxWBx
-   ywYA2LlR2z8cK1TcIPtQKeATTZtBM8u6h9pjPHoHNgO30GIBPBo/z/Ynl
-   g=;
-Authentication-Results: esa5.hc3370-68.iphmx.com; dkim=none (message not signed) header.i=none
-IronPort-SDR: RRsSWBnkNpbKylkUsEaWqll+sSpLu4/eGCXiDrUCHBqP8Ozyq8XAr/7IFzNt/wAjBECqPhyEPI
- Gc5HqvniTSBqcptvJtE9VcmZ7W9myGSPlJWmGL0dC+ceYzKxbYzgoj0S0LIt6XvNCWLrwId178
- /i5whk+BDBiGXwJO+1EBHN0qm4fxKhLb3Z+y3kfNSTAtdBvS1/ZLMwpcYraldDZ0lEgiDFLXfQ
- bAgBs7/ocPM3BqG1AX/cPIUMsA02qJdO3RAgPLa+QRCN06Xtxqetc5F2oM/Aa64pRwzfgYRqCY
- Bo4=
-X-SBRS: None
-X-MesageID: 32181387
-X-Ironport-Server: esa5.hc3370-68.iphmx.com
-X-Remote-IP: 162.221.158.21
-X-Policy: $RELAYED
-X-IronPort-AV: E=Sophos;i="5.78,382,1599537600"; 
-   d="scan'208";a="32181387"
-To: Mauro Matteo Cascella <mcascell@redhat.com>,
-	<oss-security@lists.openwall.com>
-CC: <xen-announce@lists.xen.org>, <xen-devel@lists.xen.org>,
-	<xen-users@lists.xen.org>, Xen.org security team
-	<security-team-members@xen.org>
-References: <E1khX2v-0002f4-3b@xenbits.xenproject.org>
- <CAA8xKjWY2+xo57n8hsvG6yMyhs6nAH+S4NbCsEJLWEVff_aWzg@mail.gmail.com>
-From: Andrew Cooper <andrew.cooper3@citrix.com>
-Message-ID: <10f61e14-05f3-0294-8cda-e63764d98cbc@citrix.com>
-Date: Mon, 30 Nov 2020 16:10:35 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+Received: (qmail 17827 invoked from network); 11 Jun 2015 14:09:00 -0000
+X-Authentication-Warning: beijing.mitre.org: coley owned process doing -bs
+X-X-Sender: coley@beijing.mitre.org
+In-Reply-To: <CAMYtjAr1rZsHY0u0P3s1mnwb7VcFybNnP8JrGD268x06P=+0-g@mail.gmail.com>
+Message-ID: <Pine.LNX.4.64.1506111008020.23801@beijing.mitre.org>
+References: <CAMYtjAr1rZsHY0u0P3s1mnwb7VcFybNnP8JrGD268x06P=+0-g@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <CAA8xKjWY2+xo57n8hsvG6yMyhs6nAH+S4NbCsEJLWEVff_aWzg@mail.gmail.com>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Content-Language: en-GB
-X-ClientProxiedBy: AMSPEX02CAS01.citrite.net (10.69.22.112) To
- FTLPEX02CL04.citrite.net (10.13.108.177)
-Subject: Re: [oss-security] Xen Security Advisory 355 v2 - stack corruption
- from XSA-346 change
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+cc: Security Team <security@drupal.org>, cve-assign@mitre.org
+Date: Thu, 11 Jun 2015 10:08:48 -0400 (EDT)
+From: cve-assign@mitre.org
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] CVE requests for Drupal contributed modules (from
+ SA-CONTRIB-2015-034 to SA-CONTRIB-2015-099)
+To: oss-security@lists.openwall.com
 
-On 30/11/2020 16:07, Mauro Matteo Cascella wrote:
-> Hello,
->
-> Has a CVE been assigned for this issue?
->
-> Regards,
 
-Some unknown 3rd party appears to have allocated a CVE and we're
-currently trying to track down who.
+>SA-CONTRIB-2015-034 - Commerce WeDeal - Open Redirect
+>https://www.drupal.org/node/2420089
 
-~Andrew
+Use CVE-2015-3393.
+
+>SA-CONTRIB-2015-035 - Ajax Timeline - Cross Site Scripting (XSS)
+>https://www.drupal.org/node/2420099
+
+Use CVE-2015-3392.
+
+>SA-CONTRIB-2015-036 - Public Download Count - Cross Site Scripting (XSS)
+>https://www.drupal.org/node/2420119
+
+Use CVE-2015-3389.
+
+>SA-CONTRIB-2015-037 - Path Breadcrumbs - Access Bypass
+>https://www.drupal.org/node/2420139
+
+Use CVE-2015-3391.
+
+>SA-CONTRIB-2015-038 - Facebook Album Fetcher - Cross Site Scripting (XSS)
+>https://www.drupal.org/node/2420161
+
+Use CVE-2015-3390.
+
+>DRUPAL-SA-CONTRIB-2015-039 - Views - Open redirect
+
+Use CVE-2015-3378.
+
+>DRUPAL-SA-CONTRIB-2015-039 - Views - Access bypass
+>https://www.drupal.org/node/2424403
+
+Use CVE-2015-3379.
+
+>DRUPAL-SA-CONTRIB-2015-040 - Webform prepopulate block - XSS
+>https://www.drupal.org/node/2424405
+
+Use CVE-2015-1621.
+
+>DRUPAL-SA-CONTRIB-2015-041 - Feature Set - CSRF
+>https://www.drupal.org/node/2424409
+
+Use CVE-2015-3380.
+
+>DRUPAL-SA-CONTRIB-2015-042 - Node basket - CSRF
+
+Use CVE-2015-3382.
+
+>DRUPAL-SA-CONTRIB-2015-042 - Node basket - XSS
+
+Use CVE-2015-3381.
+
+>DRUPAL-SA-CONTRIB-2015-042 - Node basket - Open redirect
+>https://www.drupal.org/node/2424419
+
+Use CVE-2015-3383.
+
+>DRUPAL-SA-CONTRIB-2015-043 - Commerce Balanced Payments - XSS
+
+Use CVE-2015-3384.
+
+>DRUPAL-SA-CONTRIB-2015-043 - Commerce Balanced Payments - CSRF
+>https://www.drupal.org/node/2424435
+
+Use CVE-2015-3388.
+
+>DRUPAL-SA-CONTRIB-2015-044 - Taxonomy Path - XSS
+>https://www.drupal.org/node/2424439
+
+Use CVE-2015-3385.
+
+>DRUPAL-SA-CONTRIB-2015-045 - Node Access Product - XSS
+>https://www.drupal.org/node/2424349
+
+Use CVE-2015-3386.
+
+>DRUPAL-SA-CONTRIB-2015-046 - Taxonomy Tools - XSS
+>https://www.drupal.org/node/2424355
+
+Use CVE-2015-3387.
+
+>SA-CONTRIB-2015-047 - Panopoly Magic - Cross Site Scripting
+>https://www.drupal.org/node/2428799
+
+Use CVE-2015-2086.
+
+>SA-CONTRIB-2015-048 - Avatar Uploader - Arbitrary PHP code execution
+>https://www.drupal.org/node/2428793
+
+Use CVE-2015-2087.
+
+>SA-CONTRIB-2015-049 - Navigate - Cross Site Scripting
+>https://www.drupal.org/node/2428815
+
+Use CVE-2015-2101.
+
+>SA-CONTRIB-2015-050 - Services Basic Authentication - Access bypass
+>https://www.drupal.org/node/2428851
+
+Use CVE-2015-4344.
+
+>SA-CONTRIB-2015-051 - Term Queue - Cross Site Scripting
+>https://www.drupal.org/node/2428853
+
+Use CVE-2015-2088.
+
+>SA-CONTRIB-2015-052 - RESTful Web Services - Access Bypass
+>https://www.drupal.org/node/2428863
+
+Use CVE-2015-4345.
+
+>SA-CONTRIB-2015-053 - Entity API - Cross Site Scripting
+>https://www.drupal.org/node/2437905
+
+Use CVE-2015-2197.
+
+>SA-CONTRIB-2015-054 - SMS Framework - Cross Site Scripting
+>https://www.drupal.org/node/2437943
+
+Use CVE-2015-4346.
+
+>SA-CONTRIB-2015-055 - Services single sign-on server helper - Open Redirect
+>https://www.drupal.org/node/2437965
+
+Use CVE-2015-2215.
+
+>SA-CONTRIB-2015-056 - inLinks Integration - Cross Site Scripting
+>https://www.drupal.org/node/2437969
+
+Use CVE-2015-4347.
+
+>SA-CONTRIB-2015-057 - Spider Contacts - Multiple vulnerabilities - SQL Injection
+
+Use CVE-2015-4348.
+
+>SA-CONTRIB-2015-057 - Spider Contacts - Multiple vulnerabilities -
+>Cross Site Request Forgery
+>https://www.drupal.org/node/2437973
+
+Use CVE-2015-4349.
+
+>SA-CONTRIB-2015-058 - Spider Catalog - Cross Site Request Forgery
+>https://www.drupal.org/node/2437977
+
+Use CVE-2015-4350.
+
+>SA-CONTRIB-2015-059 - Spider Video Player - Arbitrary file deletion
+
+Use CVE-2015-4351.
+
+>SA-CONTRIB-2015-059 - Spider Video Player - Cross Site Request Forgery
+>https://www.drupal.org/node/2437981
+
+Use CVE-2015-4352.
+
+>SA-CONTRIB-2015-060 - Custom Sitemap - Cross Site Request Forgery
+>https://www.drupal.org/node/2437985
+
+Use CVE-2015-4353.
+
+>SA-CONTRIB-2015-061 - Ubercart Webform Integration - Cross Site Scripting
+>https://www.drupal.org/node/2437991
+
+Use CVE-2015-4354.
+
+>SA-CONTRIB-2015-062 - Watchdog Aggregator - Cross Site Request Forgery
+>https://www.drupal.org/node/2437993
+
+Use CVE-2015-4355.
+
+>SA-CONTRIB-2015-063 has already been requested in
+>http://www.openwall.com/lists/oss-security/2015/03/22/35
+>SA-CONTRIB-2015-063 - Webform - XSS related to Webform Submissions
+
+Use CVE-2015-4356.
+
+>SA-CONTRIB-2015-063 - Webform - XSS related to Blocks
+>https://www.drupal.org/node/2445935
+
+Use CVE-2015-4357.
+
+>SA-CONTRIB-2015-064 - Ubercart Discount Coupons - Cross Site Scripting
+>https://www.drupal.org/node/2445953
+
+Use CVE-2015-4358.
+
+>SA-CONTRIB-2015-065 - Registration codes - Cross Site Scripting
+
+Use CVE-2015-4359.
+
+>SA-CONTRIB-2015-065 - Registration codes - Cross Site Request Forgery
+>https://www.drupal.org/node/2445955
+
+Use CVE-2015-4360.
+
+We also noticed this comment:
+
+>https://www.drupal.org/node/2446157#comment-9717643
+>I found another CSRF in the regcode_og sub module.
+
+We believe that the CSRF vulnerability in the regcode_og sub module
+reported in Comment #11 was originally discovered by Pere Orga and
+reported in SA-CONTRIB-2015-065.  It this is not the case, then MITRE
+will assign a new CVE ID to the vulnerability.
+
+>https://www.drupal.org/node/2446157#comment-9699601
+>some CSRF fixes that allowed anyone to trick administrators to delete ... the
+>registration codes (6.x-1.x only).
+
+Use CVE-2015-4361.
+
+>SA-CONTRIB-2015-066 - Tracking Code - Cross Site Request Forgery
+>https://www.drupal.org/node/2445961
+
+Use CVE-2015-4362.
+
+>SA-CONTRIB-2015-067 - Finder - Open Redirect
+>https://www.drupal.org/node/2445967
+
+Use CVE-2015-4363.
+
+>SA-CONTRIB-2015-068 - Campaign Monitor - Cross Site Request Forgery
+>https://www.drupal.org/node/2445971
+
+Use CVE-2015-4364.  The scope of CVE-2015-4364 is limited to only the
+enable and disable list subscription vectors.  Any other
+vulnerabilities reported in https://www.drupal.org/node/2449747 would
+need separate CVE IDs.
+
+>SA-CONTRIB-2015-069 - Taxonomy Accordion - Cross Site Scripting
+>https://www.drupal.org/node/2445973
+
+Use CVE-2015-4365.
+
+>SA-CONTRIB-2015-070 - Mover - Cross Site Scripting
+>https://www.drupal.org/node/2445977
+
+Use CVE-2015-4366.
+
+>SA-CONTRIB-2015-071 - Simple Subscription - Cross Site Scripting
+>https://www.drupal.org/node/2446019
+
+Use CVE-2015-4367.
+
+>SA-CONTRIB-2015-072 - Commerce Ogone - Access bypass
+>https://www.drupal.org/node/2446051
+
+Use CVE-2015-4368.
+
+>SA-CONTRIB-2015-073 - Trick Question - Cross Site Scripting
+>https://www.drupal.org/node/2446065
+
+Use CVE-2015-4369.
+
+>SA-CONTRIB-2015-074 - Site Documentation - Cross Site Scripting
+>https://www.drupal.org/node/2450387
+
+Use CVE-2015-4370.
+
+>SA-CONTRIB-2015-075 - Perfecto - Open Redirect
+>https://www.drupal.org/node/2450391
+
+Use CVE-2015-4371.
+
+>SA-CONTRIB-2015-076 - Image Title - Cross Site Scripting
+>https://www.drupal.org/node/2450393
+
+Use CVE-2015-4372.
+
+>SA-CONTRIB-2015-077 - OG tabs - Cross Site Scripting
+>https://www.drupal.org/node/2450427
+
+Use CVE-2015-4373.
+
+>SA-CONTRIB-2015-078 has already been requested in
+>http://www.openwall.com/lists/oss-security/2015/03/22/35
+>SA-CONTRIB-2015-078 - Webform - XSS related to Webform Components
+>https://www.drupal.org/node/2454903
+
+Use CVE-2015-4374.
+
+>SA-CONTRIB-2015-079 has already been requested in
+>http://www.openwall.com/lists/oss-security/2015/03/22/35
+>SA-CONTRIB-2015-079 - Chaos tool suite (ctools) - Access bypass
+
+Use CVE-2015-4375.
+
+>SA-CONTRIB-2015-079 - Chaos tool suite (ctools) - Open redirect
+>https://www.drupal.org/node/2454909
+
+Use CVE-2015-4398.
+
+>SA-CONTRIB-2015-080 - Profile2 Privacy - Cross Site Scripting
+>https://www.drupal.org/node/2455011
+
+Use CVE-2015-4376.
+
+>SA-CONTRIB-2015-081 - Petition - Cross Site Scripting
+>https://www.drupal.org/node/2459311
+
+Use CVE-2015-4377.
+
+>SA-CONTRIB-2015-082 - Crumbs - Cross Site Scripting
+>https://www.drupal.org/node/2459315
+
+Use CVE-2015-4378.
+
+>SA-CONTRIB-2015-083 - Webform Multiple File Upload - Cross Site Request Forgery
+>https://www.drupal.org/node/2459323
+
+Use CVE-2015-4379.
+
+>SA-CONTRIB-2015-084 - Linear Case - Cross Site Scripting
+>https://www.drupal.org/node/2459327
+
+Use CVE-2015-4380.
+
+>SA-CONTRIB-2015-085 - Invoice - Cross Site Scripting
+
+Use CVE-2015-4381.
+
+>SA-CONTRIB-2015-085 - Invoice - Cross Site Request Forgery
+>https://www.drupal.org/node/2459337
+
+Use CVE-2015-4382.
+
+>SA-CONTRIB-2015-086 - Decisions - Cross Site Request Forgery
+>https://www.drupal.org/node/2459349
+
+Use CVE-2015-4383.
+
+>SA-CONTRIB-2015-087 - Ubercart Webform Checkout Pane - Cross Site Scripting
+>https://www.drupal.org/node/2459359
+
+Use CVE-2015-4384.
+
+>SA-CONTRIB-2015-088 - Imagefield Info - Cross Site Scripting
+>https://www.drupal.org/node/2463823
+
+Use CVE-2015-4385.
+
+>SA-CONTRIB-2015-089 - EntityBulkDelete - Cross Site Scripting
+>https://www.drupal.org/node/2463831
+
+Use CVE-2015-4386.
+
+>SA-CONTRIB-2015-090 - Password Policy - Cross Site Scripting
+>https://www.drupal.org/node/2463835
+
+Use CVE-2015-4387.
+
+>SA-CONTRIB-2015-091 - Current Search Links - Cross Site Scripting
+>https://www.drupal.org/node/2463843
+
+Use CVE-2015-4388.
+
+>SA-CONTRIB-2015-092 - Open Graph Importer - Access bypass
+>https://www.drupal.org/node/2463891
+
+Use CVE-2015-4389.
+
+>SA-CONTRIB-2015-093 - User Import - Cross Site Request Forgery
+>https://www.drupal.org/node/2463949
+
+Use CVE-2015-4390.
+
+>SA-CONTRIB-2015-094 - CiviCRM private report - Cross Site Request Forgery
+>https://www.drupal.org/node/2467697
+
+Use CVE-2015-4391.
+
+>SA-CONTRIB-2015-095 - Display Suite - Cross Site Scripting
+>https://www.drupal.org/node/2471733
+
+Use CVE-2015-4392.
+
+>SA-CONTRIB-2015-096 - Services - Access bypass (file upload and execution)
+
+Use CVE-2015-4393.
+
+>SA-CONTRIB-2015-096 - Services - Information Disclosure
+>https://www.drupal.org/node/2471879
+
+Use CVE-2015-4394.
+
+>SA-CONTRIB-2015-097 - HybridAuth Social Login - Information Disclosure
+>https://www.drupal.org/node/2475943
+
+Use CVE-2015-4395.
+
+>SA-CONTRIB-2015-098 - Keyword Research - Cross Site Request Forgery
+>https://www.drupal.org/node/2475953
+
+Use CVE-2015-4396.
+
+>SA-CONTRIB-2015-099 - Node Template - Cross Site Scripting
+>https://www.drupal.org/node/2475955
+
+Use CVE-2015-4397.
+
+---
+
+CVE assignment team, MITRE CVE Numbering Authority M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
