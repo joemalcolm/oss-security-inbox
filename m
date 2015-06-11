@@ -1,4 +1,9 @@
-Received: (qmail 9708 invoked by uid 550); 16 Oct 2023 14:08:33 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4505" "Thursday" "11" "June" "2015" "12:30:15" "+0000" "Xen.org security team" "security@xen.org" "<E1Z31cd-0002ro-EG@xenbits.xen.org>" "133" "[oss-security] Xen Security Advisory 136 (CVE-2015-4164) - vulnerability in the iret hypercall handler" nil nil nil "6" "2015061112:30:15" "[oss-security] Xen Security Advisory 136 (CVE-2015-4164) - vulnerability in the iret hypercall handler" (number mark "        security@xen Jun 11  133/4505  " thread-indent "\"[oss-security] Xen Security Advisory 136 (CVE-2015-4164) - vulnerability in the iret hypercall handler\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 28649 invoked by uid 550); 11 Jun 2015 12:30:41 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,123 +11,151 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5783 invoked from network); 16 Oct 2023 14:02:01 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	invisiblethingslab.com; h=cc:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:sender:subject:subject:to:to; s=fm2; t=
-	1697464909; x=1697551309; bh=V52KWpe/qZ8S9oGISLBIk+cu8XbgpEmnUd7
-	5r3DBfSg=; b=knJyev4Ty2aePgjtsbjLsdKFxXoe0iVZylT/MWi96gggJYAaJEN
-	xEOd1EDtQohXBNyjT04GVakbY1mCp0pfKph0l7KlXY9M3Yxu8HEcOPbsltFAUgMF
-	9boA5hTbt6CJ9cP9YePVRy+g+IYyOyCzF4eeImhOGBvsk0hp8a/JtuXKa2qOwUO6
-	pzGcCLO/tm56VrYLAJyL7klQ/jRsi14d4/O/ric69kJtnYv7dEY12oZNDlqTWLw2
-	uiK3elV8QiAAWKyY/Ou/isCqRHUe2zIn4+rLrBpEt1vADzq84Gk9rt1s9Dp8jFyT
-	ctxrn4T38e53PAF6SNw1qHfvWz7io3gSNgg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:sender:subject
-	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm3; t=1697464909; x=1697551309; bh=V52KWpe/qZ8S9
-	oGISLBIk+cu8XbgpEmnUd75r3DBfSg=; b=iJuaA2UtwTufmaFFbhyBa4gF0GCdT
-	KSSGdV3Zn2uAQr5Ry9/q5kBADp2DaWLleBdmF4gUDMJPHW7UEsLDv7SdvaNjOlG2
-	xRl5EFl2VURXdZakoatU/T4lT6B1cGCU4QzRDW0DfB0Fmd1NrdlLvF6nJQ5GqoDP
-	ARUbp1aXzfzbyfEV9Ww+M1CcuDnOkhh38ynqVQkDCwMVumDmdcJWV6nDVjlOw5kV
-	kZSHk3G8HOsSMxuIPl9PJFi/h+EDAXnmtWOmj3FfXSDuzETvZ8EGEG9meY/doD7q
-	hkt3Zctvmij1lwk4Gb4B+FCEPeLf5hzLW7NpH3Lx2gFsUglfyg2NJgmMg==
-X-ME-Sender: <xms:TEItZQ7XBIRx3WgaVSoSIa7Bzire3KWhHPsFv7qb-DHHgHZKoOlFwA>
-    <xme:TEItZR5BJDyBrDjPIryWIFuIC6l48D7ZHisIlDM1PcWphz2yhzIHvL7LHdqr4wHk4
-    xNKcL2YV_3itq0>
-X-ME-Received: <xmr:TEItZfcF-TAFxwSUT9SOVIrb-ktjMMwty0-SRofvdpJxICnN5v46Rkl7-PcMaq6aNAJ9SFm7L8r175YuiSXSOaTxEPN5FAnAvy-HLo4w16RihoG8>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrjedtgdeilecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfhfgggtuggjsehgtderre
-    dttddvnecuhfhrohhmpeffvghmihcuofgrrhhivgcuqfgsvghnohhurhcuoeguvghmihes
-    ihhnvhhishhisghlvghthhhinhhgshhlrggsrdgtohhmqeenucggtffrrghtthgvrhhnpe
-    eigfeifedvgfejleefieefgfejvddvfeelgeelieefgeffhffgffeffffhueduheenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpeguvghmihesih
-    hnvhhishhisghlvghthhhinhhgshhlrggsrdgtohhm
-X-ME-Proxy: <xmx:TEItZVLg-osowPVnCJBPBQTkroniNNJy9NLpd__rl-GtwEAL9alJFg>
-    <xmx:TEItZULzNiOtCIcEb2D3kSv9bn4vzYa76X7kDm305xX8ehu8eisnSA>
-    <xmx:TEItZWx7sVo3AwJ7LFrwFj6k7RdT2_NzNCGScsAJHE_Qq13rPDcFrw>
-    <xmx:TUItZZXVh1k_J4KXS1ZSqM4-6m45XeX2UUbWvbmq5N6Xgp-FPlv7ww>
-Feedback-ID: iac594737:Fastmail
-Date: Mon, 16 Oct 2023 10:01:44 -0400
-From: Demi Marie Obenour <demi@invisiblethingslab.com>
-To: oss-security@lists.openwall.com
-Message-ID: <ZS1CSkbTjDYdGq8F@itl-email>
-References: <ZSyUUSF_-3YbT14k@workstation>
- <20231016080850.GF10758@suse.de>
- <2023101612-snare-dart-c7cf@gregkh>
+Received: (qmail 28168 invoked from network); 11 Jun 2015 12:30:32 -0000
+Message-Id: <E1Z31cd-0002ro-EG@xenbits.xen.org>
+Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
+Content-Transfer-Encoding: binary
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="YLW4IvL3unZ2hMJe"
+X-Mailer: MIME-tools 5.428 (Entity 5.428)
+CC: Xen.org security team <security@xen.org>
+Date: Thu, 11 Jun 2015 12:30:15 +0000
+From: Xen.org security team <security@xen.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Xen Security Advisory 136 (CVE-2015-4164) - vulnerability in the
+ iret hypercall handler
+To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
+ xen-users@lists.xen.org, oss-security@lists.openwall.com
+
+--=separator
+Content-Type: text/plain; charset="utf-8"
 Content-Disposition: inline
-In-Reply-To: <2023101612-snare-dart-c7cf@gregkh>
-Subject: Re: [oss-security] linux-distros membership application of openEuler
+Content-Transfer-Encoding: 7bit
 
---YLW4IvL3unZ2hMJe
-Content-Type: text/plain; protected-headers=v1; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Date: Mon, 16 Oct 2023 10:01:44 -0400
-From: Demi Marie Obenour <demi@invisiblethingslab.com>
-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] linux-distros membership application of openEuler
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On Mon, Oct 16, 2023 at 10:23:50AM +0200, Greg KH wrote:
-> On Mon, Oct 16, 2023 at 10:08:50AM +0200, Marcus Meissner wrote:
-> > Hi,
-> >=20
-> > Regardless of your viability of subscription status I think we also
-> > (sadly) have to consider current geopolitical issues here.
-> >=20
-> > As far as I understand, US companies and US citizens are not permitted
-> > to work with Chinese organizations and/or Chinese nationals.
->=20
-> They can when working in the open on public projects and other
-> open-source-like things.  For "closed" lists and groups, please consult
-> a lawyer as the rules there are quite varied and depends on the
-> countries and companies involved.
->=20
-> But to be sure, again, consult your corporate lawyers, they know the
-> rules and the issues involved better than I do.
->=20
-> good luck!
->=20
-> greg k-h
+            Xen Security Advisory CVE-2015-4164 / XSA-136
+                              version 3
 
-The question is _who_ should consult their lawyers.  Many security
-researchers are operating on their own time or work with small
-companies.  These researchers may not have access to corporate lawyers
-trained in the relevant areas of law, and expecting them to retain a
-lawyer at their own expense before posting is not reasonable.
-Therefore, if openEuler joining linux-distros would require them to do
-this, the request should (unfortunately) be denied.
---=20
-Sincerely,
-Demi Marie Obenour (she/her/hers)
-Invisible Things Lab
+              vulnerability in the iret hypercall handler
 
---YLW4IvL3unZ2hMJe
-Content-Type: application/pgp-signature; name="signature.asc"
+UPDATES IN VERSION 3
+====================
 
+Public release.
+
+Added email header syntax to patches, for e.g. git-am.
+
+ISSUE DESCRIPTION
+=================
+
+A buggy loop in Xen's compat_iret() function iterates the wrong way
+around a 32-bit index.  Any 32-bit PV guest kernel can trigger this
+vulnerability by attempting a hypercall_iret with EFLAGS.VM set.
+
+Given the use of __get/put_user(), and that the virtual addresses in
+question are contained within the lower canonical half, the guest
+cannot clobber any hypervisor data.  Instead, Xen will take up to 2^33
+pagefaults, in sequence, effectively hanging the host.
+
+IMPACT
+======
+
+Malicious guest administrators can cause a denial of service affecting
+the whole system.
+
+VULNERABLE SYSTEMS
+==================
+
+Only 64-bit x86 (ARCH=x86_64) builds of Xen are vulnerable.  32-bit
+builds (ARCH=x86_32) (necessarily of Xen 4.2 or earlier), are not
+affected.
+
+Xen versions 3.1 or later are vulnerable.
+
+ARM systems are not vulnerable.
+
+Only 32-bit PV guests can exploit the vulnerability.
+
+MITIGATION
+==========
+
+Systems which only need to run 32-bit guests and are running Xen 4.2
+or earlier can avoid the vulnerability by using a 32-bit build of Xen
+instead of a 64-bit build.  (The dom0 operating system would have to
+be 32-bit too.)
+
+If the boot process and kernel for the guest can be controlled,
+forcing it to use a 64-bit kernel will avoid the vulnerability.
+
+CREDITS
+=======
+
+This issue was discovered by Andrew Cooper of Citrix.
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue.
+
+$ sha256sum xsa136*.patch
+b54a71cf41d333345a9b8fd5f3f1aa644000a24e20343b54e5a41cd51d14af04  xsa136.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
 -----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-iQIzBAEBCgAdFiEEdodNnxM2uiJZBxxxsoi1X/+cIsEFAmUtQkoACgkQsoi1X/+c
-IsETDxAAmFlfIN0yTmbhxlQo15hyLMsZ/kzf4CZQwst207LZoTG2UGOnz7i4dW5i
-tq7xmCFB406TYSSHnE3PtI+eTFsSzHONwH9qblCgUloywLpOUdNGi9gij8v5njxT
-tJvqxbY1L2xpb6hl9Hx/4Hc1EvONLqwlEn7axZubTZgjdySnmtvK2SX0489r8PmC
-5b0DGLWw+gfxIz6ng6cp7wYMXI/dt7yDt6VdAmVuWkO4XXpnrQSxPFFPu+uLLn68
-xGABBVLJeay5bPxR6Rtbq1Tch8SBvEKxSzj8UZNMCFDNmAvTEUW61E9z6xRtYzKL
-0NGeJ4k3FKHlvoIF4T27vmVKCPyGgJRAWN0YckX6Yxblj2cP3WyhrLrC3lJrIT9p
-cRg5CyMi48FtNnewOx7yXlx550euh6Rgs3grbp1+t+6SBPos84kPyTMaS9Z4DE/Y
-4SQgnjqJTVbg2WKNaAioGXerUfpPyNRpngJqZcGjmAXse5qrgUoufyjOj2igjTR+
-1No+8P+duwxGsRxxsX6M5nPI7OMM+XUbWFKwzC4cPfS8rIgyWNxHKZIHTjfIjqHK
-8wJJMkMcZVNgoZyiOJ6vGIvtlKrdXwClblSQsJnrG/ZVh5Y9avKgx1RXnW7sxWWI
-2T18NeYJR0BOW7M94XdvFT6v8YrI8xG3KRpZ3U47Aldjm6gzIhM=
-=mlFx
+iQEcBAEBAgAGBQJVeX73AAoJEIP+FMlX6CvZwMsIAIkHonCdvStKAJZ6WpWFaAeo
+dgEBdQ0tHCkuEu3PNBNy0YPklBdATwQNOjt+XZj6qDJv0HvBykZNoam0E9UCqH85
+BYS0ASvjxUQrd61PrTWGmdh9XKMj2FJRGmpumr4XnNzcOalwOLuwUmfIauEIQaMy
+0yxrgcoWk2C3oWIO54m/vObwdttNlbGInrBK1bDyrOtAX0UrHByLU7dPCe0TlE5l
+IIa7QH/FcKLp7+RhxIEOQGBvuMSnw2bcXSqCIwleGo1RpnzcA/N1P+8FNs9rWmm/
+toGYLeaQus8h9fEe51zGKOTQrf+WWuKhSjwkxSFr/HEH6xHEl+oCYvwlyB5CviM=
+=yJg0
 -----END PGP SIGNATURE-----
 
---YLW4IvL3unZ2hMJe--
+--=separator
+Content-Type: application/octet-stream; name="xsa136.patch"
+Content-Disposition: attachment; filename="xsa136.patch"
+Content-Transfer-Encoding: base64
+
+RnJvbTogQW5kcmV3IENvb3BlciA8YW5kcmV3LmNvb3BlcjNAY2l0cml4LmNv
+bT4KU3ViamVjdDogeDg2L3RyYXBzOiBsb29wIGluIHRoZSBjb3JyZWN0IGRp
+cmVjdGlvbiBpbiBjb21wYXRfaXJldCgpCgpUaGlzIGlzIFhTQS0xMzYuCgpT
+aWduZWQtb2ZmLWJ5OiBBbmRyZXcgQ29vcGVyIDxhbmRyZXcuY29vcGVyM0Bj
+aXRyaXguY29tPgpSZXZpZXdlZC1ieTogSmFuIEJldWxpY2ggPGpiZXVsaWNo
+QHN1c2UuY29tPgoKLS0tIGEveGVuL2FyY2gveDg2L3g4Nl82NC9jb21wYXQv
+dHJhcHMuYworKysgYi94ZW4vYXJjaC94ODYveDg2XzY0L2NvbXBhdC90cmFw
+cy5jCkBAIC0xMTksNyArMTE5LDcgQEAgdW5zaWduZWQgaW50IGNvbXBhdF9p
+cmV0KHZvaWQpCiAgICAgICAgIH0KICAgICAgICAgZWxzZSBpZiAoIGtzcCA+
+IHJlZ3MtPl9lc3AgKQogICAgICAgICB7Ci0gICAgICAgICAgICBmb3IgKGkg
+PSA5OyBpID4gMDsgKytpKQorICAgICAgICAgICAgZm9yICggaSA9IDk7IGkg
+PiAwOyAtLWkgKQogICAgICAgICAgICAgewogICAgICAgICAgICAgICAgIHJj
+IHw9IF9fZ2V0X3VzZXIoeCwgKHUzMiAqKXJlZ3MtPnJzcCArIGkpOwogICAg
+ICAgICAgICAgICAgIHJjIHw9IF9fcHV0X3VzZXIoeCwgKHUzMiAqKSh1bnNp
+Z25lZCBsb25nKWtzcCArIGkpOwo=
+
+--=separator--
