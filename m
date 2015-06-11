@@ -1,4 +1,9 @@
-Received: (qmail 30600 invoked by uid 550); 11 May 2022 06:41:24 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1172" "Thursday" "11" "June" "2015" "17:11:13" "+0000" "mancha" "mancha1@zoho.com" "<20150611171113.GA26244@zoho.com>" "34" "[oss-security] OpenSSL Sec Adv 20150611" nil nil nil "6" "2015061117:11:13" "[oss-security] OpenSSL Sec Adv 20150611" (number mark "U       mancha1@zoho Jun 11   34/1172  " thread-indent "\"[oss-security] OpenSSL Sec Adv 20150611\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 3269 invoked by uid 550); 11 Jun 2015 17:12:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,110 +11,57 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30546 invoked from network); 11 May 2022 06:41:23 -0000
-Date: Wed, 11 May 2022 08:41:12 +0200 (CEST)
-From: Daniel Stenberg <daniel@haxx.se>
-To: curl security announcements -- curl users <curl-users@lists.haxx.se>, 
-    curl-announce@lists.haxx.se, libcurl hacking <curl-library@lists.haxx.se>, 
-    oss-security@lists.openwall.com
-Message-ID: <nooqr7o5-86no-68n-9s31-oq6o9pn1r425@unkk.fr>
-X-fromdanielhimself: yes
+Received: (qmail 3130 invoked from network); 11 Jun 2015 17:11:35 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; 
+  s=zapps768; d=zoho.com; 
+  h=date:from:to:subject:message-id:mime-version:content-type; 
+  b=XP19y4SH0zVEWY/eBOpmrTT8vNjZcZt9F2euBXhxvhwAQBvB5IESBiZ7MdScbfkRVvigB9vu9Wmu
+    YZ3Qj+ElokR3u6ZoB0HZpg80gQRDsIv1vZCBT+peClHI7n6wdd9U  
+Message-ID: <20150611171113.GA26244@zoho.com>
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-Subject: [oss-security] [SECURITY ADVISORY] curl: TLS and SSH connection too eager reuse
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="sm4nu43k4a2Rpi4c"
+Content-Disposition: inline
+X-PGP-Key: http://hkps.pool.sks-keyservers.net/pks/lookup?op=vindex&search=0x25168eb24f0b22ac
+X-PGP-FP: 56B7 100E F4D5 811C 8FEF  ADD1 2516 8EB2 4F0B 22AC
+X-Zoho-Virus-Status: 1
+Date: Thu, 11 Jun 2015 17:11:13 +0000
+From: mancha <mancha1@zoho.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] OpenSSL Sec Adv 20150611
+To: oss-security@lists.openwall.com
 
-TLS and SSH connection too eager reuse
-======================================
+--sm4nu43k4a2Rpi4c
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Project curl Security Advisory, May 11 2022 -
-[Permalink](https://curl.se/docs/CVE-2022-27782.html)
+FYI, today OpenSSL released new versions (1.0.2b, 1.0.1n, 1.0.0s, and
+0.9.8zg) to address several security issues [1].
 
-VULNERABILITY
--------------
+--mancha
 
-libcurl would reuse a previously created connection even when a TLS or SSH
-related option had been changed that should have prohibited reuse.
+[1] http://openssl.org/news/secadv_20150611.txt
 
-libcurl keeps previously used connections in a connection pool for subsequent
-transfers to reuse if one of them matches the setup. However, several TLS and
-SSH settings were left out from the configuration match checks, making them
-match too easily.
+--sm4nu43k4a2Rpi4c
+Content-Type: application/pgp-signature
 
-We are not aware of any exploit of this flaw.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-INFO
-----
+iQIcBAEBCgAGBQJVecExAAoJEB4VYy8JqhaDU8QP/0Ts5fG1fz9jgMDHY2NNRHof
+qcQo7jaU8xxY9b2Wloo/e6uoeDZwXceqcemt9cHRLvb6oLyJGAyb+O8jD4/ranPB
+Oie0SHCMA2tMTSwcYyatquFTSc82KIZ+HwMZyUswQcZB81RWRZB7naO2NLcNjdWj
+x7tm8R7BlN0ZaMswheyXFS1gVdhjDuOz7am5geaD5caN1VhKCcay7Xz81j9pRWTe
+heyl9BIkgLMn1u7otkhj2zCHq3Ou5wA6V2cGLEYt8kpvYUYGetpyC9YaeumCbvEG
+eXYRtlbJwKv1J6roCP+AzPomWPAwrSpesFib/NEAlcTGVwkqpFXiUA2T1KytoJRw
+3c8XecJs2MrPgaINAqJzCk+BDo99QxqhZcLIMABnFptJNkiMk8qSiut3fuGHUY0w
+Ev1LiLrzkj2ssRP+LpVHOTbGUjiSlV8Nct8swqcdmYIMQWjWJxzzXTc0jP6Vfc9J
+Oi8a4U7o7eM1+ZHgQ1w/K9Bm8O76QvmQG//G5fHqNfarShrznE4wSmLZZSUpUhLY
+bwMzpVU1YExr2F7tfSAYC7iygtths/sOrlakeeFLSASNAglc5Yef3aBrZO1QFZtv
+gAw74Y/oc4uoLvqZ97JivRWLlI3tiyd+9PCVVwpsQ+DHlIJYyxZ8ggKP/t8JaZc3
+JilAB4MA7jjtivWHyIWi
+=IXjl
+-----END PGP SIGNATURE-----
 
-Here are the list of options that were not considered in the check, so curl
-would reuse a connection even if the subsequent transfer would have changed
-one or more of these options.
+--sm4nu43k4a2Rpi4c--
 
-### TLS options
-
-- `CURLOPT_SSL_OPTIONS` (since 7.25.0)
-- `CURLOPT_CRLFILE` (since 7.19.0)
-- `CURLOPT_TLSAUTH_USERNAME` (since 7.21.4)
-- `CURLOPT_TLSAUTH_PASSWORD` (since 7.21.4)
-- `CURLOPT_PROXY_SSL_OPTIONS` (since 7.52.0)
-- `CURLOPT_PROXY_CRLFILE` (since 7.52.0)
-- `CURLOPT_PROXY_TLSAUTH_USERNAME` (since 7.52.0)
-- `CURLOPT_PROXY_TLSAUTH_PASSWORD` (since 7.52.0)
-
-### SSH options
-
-- `CURLOPT_SSH_PUBLIC_KEYFILE` (since 7.16.1)
-- `CURLOPT_SSH_PRIVATE_KEYFILE` (since 7.16.1)
-
-This flaw was initially introduced in curl 7.16.1 and has been widened several
-times since then. See table above for details
-
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2022-27782 to this issue.
-
-CWE-305: Authentication Bypass by Primary Weakness
-
-Severity: Medium
-
-AFFECTED VERSIONS
------------------
-
-- Affected versions: curl 7.16.1 to and including 7.83.0
-- Not affected versions: curl < 7.16.1 and curl >= 7.83.1
-
-libcurl is used by many applications, but not always advertised as such!
-
-THE SOLUTION
-------------
-
-The two patches for CVE-2022-27782: [TLS-fix](https://github.com/curl/curl/commit/f18af4f874) and [SSH-fix](https://github.com/curl/curl/commit/1645e9b44505abd5cbaf65da5282c3f33b5924a5)
-
-RECOMMENDATIONS
---------------
-
-  A - Upgrade curl to version 7.83.1
-
-  B - Apply the patch to your local version
-
-TIMELINE
---------
-
-This issue was reported to the curl project on May 1, 2022. We contacted
-distros@openwall on May 5.
-
-libcurl 7.83.1 was released on May 11 2022, coordinated with the publication
-of this advisory.
-
-CREDITS
--------
-
-This issue was reported by Harry Sintonen. Patched by Daniel Stenberg.
-
-Thanks a lot!
-
--- 
-
-  / daniel.haxx.se
-  | Commercial curl support up to 24x7 is available!
-  | Private help, bug fixes, support, ports, new features
-  | https://curl.se/support.html
