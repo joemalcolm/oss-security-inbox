@@ -1,4 +1,9 @@
-Received: (qmail 11801 invoked by uid 550); 3 Jan 2025 15:07:45 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1685" "Friday" "12" "June" "2015" "15:52:53" "+0000" "mancha" "mancha1@zoho.com" "<20150612155253.GB6534@zoho.com>" "51" "Re: [oss-security] OpenSSL Sec Adv 20150611" nil nil nil "6" "2015061215:52:53" "[oss-security] OpenSSL Sec Adv 20150611" (number mark "        mancha1@zoho Jun 12   51/1685  " thread-indent "\"Re: [oss-security] OpenSSL Sec Adv 20150611\"\n") "<20150612013733.GB26535@zoho.com>" ("<20150611171113.GA26244@zoho.com>" "<20150612013733.GB26535@zoho.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 3532 invoked by uid 550); 12 Jun 2015 15:53:15 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,119 +11,77 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 11765 invoked from network); 3 Jan 2025 15:07:45 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=netmeister.org;
-	s=2024; t=1735916855;
-	bh=AbEyU+ED4ChReknPWYiRLP95I8qtPgJHhfBO4G89fXM=;
-	h=From:To:Subject:Content-Type:From:To:Subject;
-	b=zQVKzKzWqVSVXaeO1dy82+b3XNpJ01evn2+4m8IVdDw8bezVAEL7ytX4sf+w+FTtG
-	 +H1CCN9V5n4C/dKKTlQcAg6XiEg1ZuQK9u7EYu4NhN4NM/qQ4PsX8SlefRvFUuYDit
-	 3GCxW+P3mdfzkeRzfX7FiieQJrJuXR0U38Y9ttJQ=
-Date: Fri, 3 Jan 2025 10:07:35 -0500
-From: Jan Schaumann <jschauma@netmeister.org>
-To: oss-security@lists.openwall.com
-Message-ID: <Z3f9N0Qo-qIJXfJO@netmeister.org>
+Received: (qmail 3512 invoked from network); 12 Jun 2015 15:53:14 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; 
+  s=zapps768; d=zoho.com; 
+  h=date:from:to:subject:message-id:references:mime-version:content-type:in-reply-to; 
+  b=Y19dNzqMduUmvehfxpFlfJq2kfTf0knFsbAEc9eg7eo1BvdcKO5JMYuNgPdYL0lASYP6ThJwfQif
+    mV58G9t3UtGciSL8LQCcU0zT8ulR+j+1wO43272jifl6HzUKN/o/  
+Message-ID: <20150612155253.GB6534@zoho.com>
+References: <20150611171113.GA26244@zoho.com>
+ <20150612013733.GB26535@zoho.com>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="A6N2fC+uXW/VQSAv"
+Content-Disposition: inline
+In-Reply-To: <20150612013733.GB26535@zoho.com>
+X-PGP-Key: http://hkps.pool.sks-keyservers.net/pks/lookup?op=vindex&search=0x25168eb24f0b22ac
+X-PGP-FP: 56B7 100E F4D5 811C 8FEF  ADD1 2516 8EB2 4F0B 22AC
+X-Zoho-Virus-Status: 1
+Date: Fri, 12 Jun 2015 15:52:53 +0000
+From: mancha <mancha1@zoho.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] OpenSSL Sec Adv 20150611
+To: oss-security@lists.openwall.com
+
+--A6N2fC+uXW/VQSAv
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Subject: [oss-security] iTerm2 < 3.5.11 logs input/ouput to /tmp/framer.txt on remote host
+Content-Transfer-Encoding: quoted-printable
 
-iterm2 (https://iterm2.com), a popular Terminal.app
-replacement for macOS, announced a vulnerability in
-versions < 3.5.11 whereby input/output from an SSH
-connection may be logged to the file /tmp/framer.txt
-on the remote host.  To the best of my knowledge,
-there is no CVE associated with this vulnerability.
+On Fri, Jun 12, 2015 at 01:37:33AM +0000, mancha wrote:
+> On Thu, Jun 11, 2015 at 05:11:13PM +0000, mancha wrote:
+> > FYI, today OpenSSL released new versions (1.0.2b, 1.0.1n, 1.0.0s, and
+> > 0.9.8zg) to address several security issues [1].
+> >=20
+> > --mancha
+> >=20
+> > [1] http://openssl.org/news/secadv_20150611.txt
+>=20
+> Heads up to vendors pushing upgrades; there might be some ABI breakage:
+> http://marc.info/?l=3Dopenssl-dev&m=3D143407129721271&w=3D2.
+>=20
+>=20
 
-The announcement (below) notes that this file "may be
-readable by other users", presumably depending on the
-user's umask on that system.
+Vendors et al.
 
-iterm2 is published under the GPL with source code
-available here:
-https://github.com/gnachman/iTerm2
+By way of update, OpenSSL released versions 1.0.1o and 1.0.2c to address
+the ABI breakage.
 
+https://twitter.com/mancha140/status/609386942489178112
 
-Announcement and change log:
-https://iterm2.com/downloads/stable/iTerm2-3_5_11.changelog
+--mancha
 
----
+--A6N2fC+uXW/VQSAv
+Content-Type: application/pgp-signature
 
-Version 3.5.11 of iTerm2 was built on January 2, 2025.
-
-This release contains a critical security fix. I
-strongly recommend updating immediately.
-
-Who is affected?
-----------------
-You may be affected if you used the SSH
-integration feature in any of the following
-versions:
-
-* 3.5.6
-* 3.5.7
-* 3.5.8
-* 3.5.9
-* 3.5.10
-* Any beta versions of 3.5.6 and later.
-
-What is the issue?
-------------------
-A bug in the SSH integration feature caused input
-and output to be logged to a file on the remote
-host. This file, /tmp/framer.txt, may be readable
-by other users on the remote host.
-
-When does this occur?
----------------------
-The issue occurs if both of the following conditions
-are true:
-
-1. Either:
-   a) You used the it2ssh command, or
-   b) In Settings > Profiles > General, the
-      Command popup menu was set to "SSH" (not
-      "Login Shell", "Command", or "Custom
-      Command") AND "SSH Integration" was checked
-      in the SSH configuration dialog. That dialog
-      is shown when you click the Configure button
-      next to the ssh arguments field in Settings.
-2. The remote host has Python 3.7 or later
-   installed in its default search path.
-
-What should you do?
--------------------
-* Upgrade immediately to version 3.5.11.
-* Delete /tmp/framer.txt on affected hosts.
-
-How I'm addressing this
------------------------
-I deeply regret this mistake and will take steps
-to ensure it never happens again.
-
-The code to write to log files in SSH integration
-has been deleted and will not be publicly released
-again.
-
-If you have questions you can contact me at
-gnachman@gmail.com.
-
-SHA-256 of the zip file is
-You can use the following to verify the zip file on
-https://keybase.io/verify:
-
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
-
-655e32b4a9466104f1b0d8847e852515bc332bdf434801762e01b9625caa43e2
 -----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-iHUEAREIAB0WIQSAPIQGkYVsjnBRo2J0Et0TaFtKrAUCZ3br8gAKCRB0Et0TaFtK
-rLntAQDqPcKkRA23Wo5/XuB2lymF8n+0GK3E+ZT3MYbTNgsnSQD/Xgt7V9QhP42n
-QmQpnmb804FrHkCnqIJMvcBAim6AbBM=
-=Zlrw
+iQIcBAEBCgAGBQJVewBVAAoJEB4VYy8JqhaDBkoP/0sNuOJZKtC1zTkNUEL/+QhT
+vXk+aYsAe8vSFvuCKrqvFlhHFJgXGwSZ2DUV/AGl6HKZCCg3vcMWtaG0mgJXLnZG
+OnfbtmkFJ2FXGFa/s+9IWfxshGIOolxbSeMzuQVYfIwfX8/+5FUSQjDoOsEeUGBi
+BLkI927CfTxUnp9VX69JQhBd6jO6ApXTnXJopjrVSW1y9k+YxBFi/4WvnXoFBhjw
+1N+44NOFRy5TSoMrV6QxXa4yKuNqx79xh5cERskY7DV8Ua9xjx4sfU5nOv/9UP3G
+U+d2qaiU2wem5mTvRUrWInmJbUC71HooKqGtqOj1+uXXPxGrL8wSR2hBPg4cTMRO
++UDwugmsKVcy+HzYp/hWFABmRu8lx5UzzzhW1s2Z4Afja3JiQoAq6FNv79lECrjw
+YqtITXXvZHlzOeCwp8G4NOZjZ4rOSkK1vxe29eNggErVDh0gADgc8VwhzB7glrnt
+VxteUIdN0NOGl6V8M3cN5k4CF+bxN9ENtzjctUgEMpMGaLXPWfBB+CgNZA+1XBFh
+GFZ/VFEyS4WpdqH4AAvg5om8TRRqzX1Qr1yssviYpyIl07Rq4J6ZurBb9MhPX+N/
+oMmNotha/k55jKKU17mzOTMMP0kNA20/aiKB8w9ZWEen02erQ0/VT9weEnnau1HA
+F9WVTb0zH7HYFTRfbf07
+=cgFt
 -----END PGP SIGNATURE-----
 
----
+--A6N2fC+uXW/VQSAv--
+
