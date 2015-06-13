@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1394" "Thursday" "6" "July" "2017" "15:02:07" "+0100" "Simon McVittie" "smcv@debian.org" "<20170706140207.ywcfdtsmmrh2dxmm@perpetual.pseudorandom.co.uk>" "30" "Re: [oss-security] systemd fails to parse user that should run service" "^Date:" nil nil "7" "2017070614:02:07" "[oss-security] systemd fails to parse user that should run service" (number mark "        smcv@debian. Jul  6   30/1394  " thread-indent "\"Re: [oss-security] systemd fails to parse user that should run service\"\n") "<20170706132816.GA3056@takahe.colorado.edu>" ("<VI1PR04MB310470DAAF5F79C8BA8AE789D6D10@VI1PR04MB3104.eurprd04.prod.outlook.com>" "<20170705085034.GA2638@pali>" "<CABMkiz7jqqJNjL==jrLXWPjJpDgx4r+_ZmnYFq5aJqBn9eAKCA@mail.gmail.com>" "<20170705170556.146ce33d@jabberwock.cb.piermont.com>" "<20170705211451.GA16241@hurricane.linuxnetz.de>" "<20c62ff4-6650-b0f0-0343-fe5c0c7ce85b@slackware.com>" "<20170706121755.nhem2vlrtsvzr22g@perpetual.pseudorandom.co.uk>" "<20170706132816.GA3056@takahe.colorado.edu>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2547" "Saturday" "13" "June" "2015" "23:27:43" "+1200" "Matthew Daley" "mattd@bugfuzz.com" "<CAD3Canc5UK9Fv+622LZSiksq7dWnLfNQ1ba8cAyt=14j+bP1aA@mail.gmail.com>" "54" "[oss-security] Re: CVE requests / Advisory: Codestyling Localization (Wordpress plugin) - multiple RCE via CSRF, multiple XSS" nil nil nil "6" "2015061311:27:43" "[oss-security] Re: CVE requests / Advisory: Codestyling Localization (Wordpress plugin) - multiple RCE via CSRF, multiple XSS" (number mark "        mattd@bugfuz Jun 13   54/2547  " thread-indent "\"[oss-security] Re: CVE requests / Advisory: Codestyling Localization (Wordpress plugin) - multiple RCE via CSRF, multiple XSS\"\n") "<20150604205206.753EF8BC034@smtpvmsrv1.mitre.org>" ("<CAD3CanenHhNaYu6koiNheG0w=n31ybLFw0hZt+bZar1nkkBgfA@mail.gmail.com>" "<20150604205206.753EF8BC034@smtpvmsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 14221 invoked by uid 550); 6 Jul 2017 14:02:24 -0000
+Received: (qmail 22301 invoked by uid 550); 13 Jun 2015 11:27:55 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,55 +11,86 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 14203 invoked from network); 6 Jul 2017 14:02:24 -0000
-Message-ID: <20170706140207.ywcfdtsmmrh2dxmm@perpetual.pseudorandom.co.uk>
-References: <VI1PR04MB310470DAAF5F79C8BA8AE789D6D10@VI1PR04MB3104.eurprd04.prod.outlook.com>
- <20170705085034.GA2638@pali>
- <CABMkiz7jqqJNjL==jrLXWPjJpDgx4r+_ZmnYFq5aJqBn9eAKCA@mail.gmail.com>
- <20170705170556.146ce33d@jabberwock.cb.piermont.com>
- <20170705211451.GA16241@hurricane.linuxnetz.de>
- <20c62ff4-6650-b0f0-0343-fe5c0c7ce85b@slackware.com>
- <20170706121755.nhem2vlrtsvzr22g@perpetual.pseudorandom.co.uk>
- <20170706132816.GA3056@takahe.colorado.edu>
+Received: (qmail 22282 invoked from network); 13 Jun 2015 11:27:54 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=tNFXTv2CyuIsNLHhAu/40MjdkIDoDgUs3zWDAs2q78c=;
+        b=A+B0hRrtkEkeFDWhOdhVC95+Q+8+3pGouTDYWTWKYfnL6dLMjseo7o/cRlTl37y+ki
+         hl7wpJr71WRnm00N8L4rk9KlZZYO1lGkijCF1SdxiMVeDAGLBsFdvyN6tdLnzDTV5PSB
+         14VenVcToA9RlVVm3EKuU63p/D+1jiAkwPSQphbUGRjR8Wqf3vcnHcBg3CBm+eJ2iZMc
+         WDD5X7ymymL11raGILpWJqhRsBfDNcn11+Dv/Nw9pAqNstSkXJIeijLdyVKsg7CDXn55
+         ZtKQvXXG/Us1EmS6a6AuPFL9Cba5Nf02I1OPVgMLD/fgKthRk8VWWc59+SPF1/J9xyiu
+         Zg1w==
+X-Gm-Message-State: ALoCoQm/zuc6Y/T+Q28t9o2LNyCK8bH6AUWUQqw8oOIhgh0cy/zbAx+Tuo++mi1tcXTEJUrXGz8j
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20170706132816.GA3056@takahe.colorado.edu>
-User-Agent: NeoMutt/20170609 (1.8.3)
-Date: Thu, 6 Jul 2017 15:02:07 +0100
-From: Simon McVittie <smcv@debian.org>
+X-Received: by 10.180.82.6 with SMTP id e6mr15229520wiy.84.1434194863178; Sat,
+ 13 Jun 2015 04:27:43 -0700 (PDT)
+In-Reply-To: <20150604205206.753EF8BC034@smtpvmsrv1.mitre.org>
+References: <CAD3CanenHhNaYu6koiNheG0w=n31ybLFw0hZt+bZar1nkkBgfA@mail.gmail.com>
+	<20150604205206.753EF8BC034@smtpvmsrv1.mitre.org>
+Message-ID: <CAD3Canc5UK9Fv+622LZSiksq7dWnLfNQ1ba8cAyt=14j+bP1aA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Cc: oss-security@lists.openwall.com
+Date: Sat, 13 Jun 2015 23:27:43 +1200
+From: Matthew Daley <mattd@bugfuzz.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] systemd fails to parse user that should run
- service
-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: CVE requests / Advisory: Codestyling Localization (Wordpress
+ plugin) - multiple RCE via CSRF, multiple XSS
+To: cve-assign@mitre.org
 
-On Thu, 06 Jul 2017 at 07:28:16 -0600, Leonid Isaev wrote:
-> On Thu, Jul 06, 2017 at 01:17:55PM +0100, Simon McVittie wrote:
-> > systemd units are analogous to LSB init scripts,
-> > which all start as root, and drop privileges internally if they want to.
-> 
-> Hmm, no, no and once again no. SystemdD units are sold as something simple and
-> transparent, and hence *associated with a software they launch*, not a given
-> systemD/OS version.
+On 5 June 2015 at 08:52,  <cve-assign@mitre.org> wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>
+>> The plugin contains multiple AJAX actions that, while having the
+>> necessary permission checks, do not have anti-CSRF protection
+>
+> It appears that the main vulnerability you are reporting is the
+> multiple CSRF. Use CVE-2015-4179.
+>
+> In reading your advisory, we weren't able to determine if there are
+> any realistic scenarios in which an authenticated user would
+> intentionally use csp_po_scan_source_file or csp_po_save_catalog_entry
+> for RCE (i.e., scenarios that do not involve CSRF) and thereby obtain
+> additional access to the server machine. We think you may mean
+> scenarios in which the authenticated user has the manage_options
+> capability but not the edit_plugins capability.
 
-It is entirely possible that systemd units as distributed by upstream
-projects might assume features of systemd (>= some version), just like
-upstream projects might assume features of glibc (>= some version) or
-coreutils (>= some version) or bash (>= some version). systemd does not
-magically cause dependency relationships to go away.
+The manage_options capability is required to trigger any of the
+RCE'able actions, hence normal users (without the capability) cannot
+exploit them (unless they target an administrator with a CSRF attack,
+as described in the advisory.)
 
-Some upstreams are very conservative in what dependencies they will
-accept, while others are quick to add dependencies on new things if they
-see an advantage. That doesn't mean the conservative projects have no
-dependencies at all.
+However, I hadn't considered users with the manage_options capability
+exploiting the RCE'able actions themselves. So yes, I suppose
+Administrators could use this to escalate to Super Administrator on
+multisite WordPress installations (multisite Super Administrators get
+extra capabilities compared to normal Administrators; see
+<https://codex.wordpress.org/Roles_and_Capabilities#Super_Admin> and
+<https://codex.wordpress.org/Roles_and_Capabilities#Additional_Admin_Capabilities>)
 
-> The problem is that my new and shiny
-> script won't work as intended on old systemD versions which silently ignore
-> User= directive.
+> (As always, to obtain multiple CVE IDs for a report, it is useful to
+> describe all of the substantially distinct scenarios, not only the
+> scenarios in which risk is greatest.)
+>
+> Also, we did not understand whether the "Multiple XSS in various AJAX
+> actions ... reflected unescaped POST parameters in certain AJAX
+> actions' responses" issue is independently relevant. Do you mean that
+> there is unescaped reflection regardless of whether the AJAX action is
+> authorized?
 
-I am not aware of any such version existing. The 2010 commit
-"first attempt at proper service/socket logic", which was 6 months before
-the release of systemd version 1 and was the first commit to introduce
-ExecStart, also introduced User.
+No, the actions have appropriate authorisation checks and will not be
+vulnerable to XSS if the caller is unauthorised.
 
-    S
+> More specifically, if all of the CSRF issues in the plugin
+> were fixed in a normal way, would unauthenticated attackers be able to
+> conduct XSS attacks by hosting JavaScript code that forces an
+> administrator's browser to make a POST request without a nonce?
+
+Assuming that the usual WordPress anti-CSRF nonces were added in the
+appropriate locations, i.e., to the csp_po_check_security function,
+then no.
+
+- Matthew
