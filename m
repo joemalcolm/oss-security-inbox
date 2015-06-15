@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1821" "Thursday" "3" "September" "2015" "14:16:34" "+0300" "Solar Designer" "solar@openwall.com" "<20150903111634.GA2642@openwall.com>" "36" "Re: [oss-security] CVE request: screen stack overflow (deep recursion)" nil nil nil "9" "2015090311:16:34" "[oss-security] CVE request: screen stack overflow (deep recursion)" (number mark "        solar@openwa Sep  3   36/1821  " thread-indent "\"Re: [oss-security] CVE request: screen stack overflow (deep recursion)\"\n") "<20150903063629.GA29383@openwall.com>" ("<87vbbusojr.fsf@mid.deneb.enyo.de>" "<20150903051105.6AB28B2E4ED@smtpvbsrv1.mitre.org>" "<2ECE9D9EEF1F524185270138AE23265954E74D77@S0MSMAIL112.arc.local>" "<20150903063629.GA29383@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1303" "Monday" "15" "June" "2015" "20:26:32" "+0200" "Bastian Blank" "waldi@debian.org" "<20150615182632.GA22032@mail.waldi.eu.org>" "28" "Re: [oss-security] PostgreSQL - Predictable cancel key" nil nil nil "6" "2015061518:26:32" "[oss-security] PostgreSQL - Predictable cancel key" (number mark "        waldi@debian Jun 15   28/1303  " thread-indent "\"Re: [oss-security] PostgreSQL - Predictable cancel key\"\n") "<557E8DA5.6080707@reactos.org>" ("<20150613093351.GF11230@mail.waldi.eu.org>" "<557E8DA5.6080707@reactos.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 15591 invoked by uid 550); 3 Sep 2015 11:16:49 -0000
+Received: (qmail 27919 invoked by uid 550); 15 Jun 2015 18:26:45 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,53 +11,50 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 15572 invoked from network); 3 Sep 2015 11:16:49 -0000
-Message-ID: <20150903111634.GA2642@openwall.com>
-References: <87vbbusojr.fsf@mid.deneb.enyo.de> <20150903051105.6AB28B2E4ED@smtpvbsrv1.mitre.org> <2ECE9D9EEF1F524185270138AE23265954E74D77@S0MSMAIL112.arc.local> <20150903063629.GA29383@openwall.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Received: (qmail 27897 invoked from network); 15 Jun 2015 18:26:44 -0000
+Message-ID: <20150615182632.GA22032@mail.waldi.eu.org>
+Mail-Followup-To: Bastian Blank <waldi@debian.org>,
+	Pierre Schweitzer <pierre@reactos.org>,
+	oss-security@lists.openwall.com
+References: <20150613093351.GF11230@mail.waldi.eu.org>
+ <557E8DA5.6080707@reactos.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20150903063629.GA29383@openwall.com>
-User-Agent: Mutt/1.4.2.3i
-Date: Thu, 3 Sep 2015 14:16:34 +0300
-From: Solar Designer <solar@openwall.com>
+In-Reply-To: <557E8DA5.6080707@reactos.org>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+Cc: oss-security@lists.openwall.com
+Date: Mon, 15 Jun 2015 20:26:32 +0200
+From: Bastian Blank <waldi@debian.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE request: screen stack overflow (deep recursion)
-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] PostgreSQL - Predictable cancel key
+To: Pierre Schweitzer <pierre@reactos.org>
 
-This is slightly off-topic for the current thread, but I think it is of
-interest to oss-security subscribers in general:
+Hi Pierre
 
-On Thu, Sep 03, 2015 at 09:36:29AM +0300, Solar Designer wrote:
-> On Thu, Sep 03, 2015 at 05:25:11AM +0000, Fiedler Roman wrote:
-> > What about "tail -f /var/log/syslog", Apache or other kind of logs for
-> > debugging? [Yes, that's often how logs are running over the screen in videos
-> > when talking about IT-security]. It's convenient and I'm using screen
-> > exactly to avoid any injection of commands via TIOCSTI into my current TTY
-> > when a context switch is needed before starting tail, e.g. when working with
-> > LXC containers.
-> 
-> "tail -f" on a log file is indeed very common, but it is bad practice
-> (akin to other very common bad practices like a sysadmin going into a
-> user's homedir as root).  A safer alternative in terms of terminal
-> escapes is the "F" keypress in "less -nU" (or in "less -nUEX" to more
-> closely resemble "tail -f").  Unfortunately, I am not aware of a
-> command-line option that would do this (that is, assume that "F" was
-> pressed right away) - perhaps one should be added, if it's not already
-> in there.
+On Mon, Jun 15, 2015 at 10:32:37AM +0200, Pierre Schweitzer wrote:
+> I had a look at glibc random implementation, they got rid of the old
+> LCG they were using for a "nonlinear additive feedback" PRNG which
+> uses a 31 numbers state. That means that knowing a number in the
+> pseudo-random stream you cannot recover the whole generator state to
+> compute the next PRN, as it was possible with a LCG.
 
-Dmitry V. Levin pointed out to me off-list that less already provides a
-way to specify its normally interactive commands on the command line.
-The man page says:
+> So, basically, if I'm right (correct otherwise!) knowing your cancel
+> key and your PID makes it really hard to know which key belongs to
+> other PIDs. Because you still lack two pieces of information: the
+> initial state (deduced from the knowledge of the seed) and the state
+> of the generator when it generated your key (or perhaps knowing just
+> one state would be enough? Anyway, it's missing).
 
-       +cmd   Causes the specified cmd to be executed each time a new file  is
-              examined.  For example, +G causes less to initially display each
-              file starting at the end rather than the beginning.
+The seed is not public, but you missed one detail: there are only one
+million different ones.  This seed is the only input of the PRNG.  With
+one million starting points (which is a lot less then the complete
+state) you can easily brute force the seed for the returned values.
+After you know the complete state, you can calculate possible state
+ranges for different PID.
 
-and indeed e.g. "less -nUEX +F" works as desired.
+Bastian
 
-> Unfortunately, less is more complicated and has greater
-> attack surface than tail.  Maybe this can be partially mitigated by
-> using the C locale with it (no UTF-8), but I did not look into that.
-
-Alexander
+-- 
+The sight of death frightens them [Earthers].
+		-- Kras the Klingon, "Friday's Child", stardate 3497.2
