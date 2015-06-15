@@ -1,4 +1,9 @@
-Received: (qmail 32075 invoked by uid 550); 22 Aug 2024 21:36:11 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1413" "Monday" "15" "June" "2015" "09:39:37" "+0200" "Peter Bex" "peter@more-magic.net" "<20150615073937.GV7243@more-magic.net>" "39" "[oss-security] CVE request for buffer overrun in CHICKEN Scheme's string-translate* procedure" nil nil nil "6" "2015061507:39:37" "[oss-security] CVE request for buffer overrun in CHICKEN Scheme's string-translate* procedure" (number mark "        peter@more-m Jun 15   39/1413  " thread-indent "\"[oss-security] CVE request for buffer overrun in CHICKEN Scheme's string-translate* procedure\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 20460 invoked by uid 550); 15 Jun 2015 07:40:12 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,83 +11,58 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 23841 invoked from network); 22 Aug 2024 21:13:11 -0000
-Authentication-Results: ext-mx-out013.mykolab.com (amavis);
- dkim=pass (2048-bit key) reason="pass (just generated, assumed good)"
- header.d=kolabnow.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kolabnow.com; h=
-	in-reply-to:content-transfer-encoding:content-disposition
-	:content-type:content-type:mime-version:references:message-id
-	:subject:subject:from:from:date:date:received:received:received;
-	 s=dkim20240523; t=1724361179; x=1726175580; bh=5E53Zrl5d/Jf32n+
-	8GPRgQt1D1XT17DiG4LFFTnw/DU=; b=bF4cd+1SS1TW/gCpb10m6PaWvkLW6mnv
-	VzuTZv3lEJBS1xmkcSNr1VGVZgXuaD4A1SuF9MopZMIL8zRLkpDJmU5cm8/nfn7t
-	3vYAcHuQfSJmu6rfqAaO6AIL+7CTZWOQVvzkPiMEqa2/5yw+cY8nDA+PCf06s4Gz
-	9844zrp/KcfEd5KiRFtWseTbNmiIE5pDRyJuw6fXdydK7qCIOEE3D2WAGIyGBTJW
-	BUkR0/K5mKXuUaoIvXXeBDxC+Z4BhFHzSKv2uGVa+XmcnUaHEV//JQW2A8mqj3FJ
-	IENLHmYIUh492zGS2OKQDxWcApDzwTSEMzqBMurOdbjpYQYItTt6Ag==
-X-Virus-Scanned: amavis at mykolab.com
-Date: Thu, 22 Aug 2024 23:12:57 +0200
-From: Fay Stegerman <flx@obfusk.net>
-To: oss-security@lists.openwall.com
-Message-ID: <Zsep2UnG7WHvlEnh@nihonium>
-References: <CAADqWPQNv110yAGhdYGYi7FyzpO2MB9v=sQWsV_cd+=XmB-FUA@mail.gmail.com>
- <aafef56c-c8eb-4c11-9c87-cdee03f97616@oracle.com>
+Received: (qmail 20436 invoked from network); 15 Jun 2015 07:40:11 -0000
+Message-ID: <20150615073937.GV7243@more-magic.net>
+Mail-Followup-To: Open Source Security <oss-security@lists.openwall.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="l21Zc9uzwusa2dXo"
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <aafef56c-c8eb-4c11-9c87-cdee03f97616@oracle.com>
-Subject: Re: [oss-security] CPython: CVE-2024-8088: Infinite loop when
- iterating over zip archive entry names
+X-PGP-Key: http://www.more-magic.net/peter-bex.asc
+User-Agent: Mutt/1.5.21 (2010-09-15)
+Date: Mon, 15 Jun 2015 09:39:37 +0200
+From: Peter Bex <peter@more-magic.net>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE request for buffer overrun in CHICKEN Scheme's string-translate*
+ procedure
+To: Open Source Security <oss-security@lists.openwall.com>
 
-* Alan Coopersmith <alan.coopersmith@oracle.com> [2024-08-22 20:56]:
-> -------- Forwarded Message --------
-> Subject: 	[Security-announce][CVE-2024-8088] Infinite loop when iterating
-> over zip archive entry names
-> Date: 	Thu, 22 Aug 2024 13:40:20 -0500
-> From: 	Seth Larson <seth@python.org>
-> Reply-To: 	security-sig@python.org
-> To: 	security-announce@python.org
-> 
-> There is a HIGH severity vulnerability affecting the CPython "zipfile" module.
-> 
-> When iterating over names of entries in a zip archive (for example, methods
-> of "zipfile.ZipFile" like "namelist()", "iterdir()", "extractall()", etc)
-> the process can be put into an infinite loop with a maliciously crafted
-> zip archive. This defect applies when reading only metadata or extracting
-> the contents of the zip archive. Programs that are not handling
-> user-controlled zip archives are not affected.
-> 
-> Please see the linked CVE ID for the latest information on affected versions:
-> 
-> * https://www.cve.org/CVERecord?id=CVE-2024-8088
-> * https://github.com/python/cpython/pull/122906
-> * https://github.com/python/cpython/issues/122905
+--l21Zc9uzwusa2dXo
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-A small correction/addendum based on reading the vulnerability report and the PR
-that fixes this (as well as being quite familiar with Python zipfile.ZipFile
-internals and confused how this would affect it): it's not zipfile.ZipFile and
-its methods that are affected, at least not directly, but zipfile.Path.  The
-issue being this code in zipfile._path._ancestry():
+Hello,
 
-  path = path.rstrip(posixpath.sep)
-  while path and path != posixpath.sep:
-      yield path
-      path, tail = posixpath.split(path)
+I would like to request a CVE for a buffer overrun bug in CHICKEN Scheme's
+string-translate* procedure, which is similar to CVE-2014-9651, but is a
+separate issue.  The internals of this procedure would invoke memcmp() on
+each index of the string being searched in, with a length of the source
+string in the alist map argument, which caused it to read beyond the bounds
+of the searched string.
 
-Which results in an infinite loop because for example posixpath.split("//") ==
-("//", "") but "//" != posixpath.sep:
+This bug affects all released versions of CHICKEN prior to 4.10.0.  There
+are no known workarounds at this time.
 
-  >>> it = zipfile._path._parents("//foo")
-  >>> next(it)
-  '//'
-  >>> next(it)
-  '//'
-  >>> next(it)
-  '//'
+The original announcement can be found here, including a link to the patch:
+http://lists.nongnu.org/archive/html/chicken-announce/2015-06/msg00010.html
 
-The infinite loop has been fixed by sanitising the paths.
+Cheers,
+Peter Bex
 
-- Fay
+--l21Zc9uzwusa2dXo
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQEcBAEBAgAGBQJVfoE5AAoJEBEdufnLRYmwByIIAMl+Wvt1Q9pHAVVT/LY9GqyI
+v2+GCvqJZj943k3cM8sYnkiegHrue0FOxNsbRkj3prxAcB9N894BJfgXvYUjW7PN
+d5zPhuU0x2YHXqqPTcp5x/bGZDAbGa7Jzvsmnx51sl5it4CW2jXkM4aU3WdFB/gR
+rWaJog7AAVZrFBzwsOp4qu2nEx8YHIUCRdD2NeB2bsWCd0a5wkFbSc2vhZLI5/r0
+aLXPBfqX5jc8Yk5ySG6azSLxVm9v/C/vW2tL8iVlZgAb5jbCtHcWKLrnZvBoQg99
+ZMHLTPRy62nUTXVzT9FJROwcCTxb01MGXquNbzsiUsk+B/tut5J8m+60oCmkp6o=
+=2Xsw
+-----END PGP SIGNATURE-----
+
+--l21Zc9uzwusa2dXo--
