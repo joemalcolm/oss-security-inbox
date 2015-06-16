@@ -1,4 +1,9 @@
-Received: (qmail 18177 invoked by uid 550); 12 Jan 2023 21:26:55 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3204" "Tuesday" "16" "June" "2015" "12:15:05" "+0200" "Pierre Schweitzer" "pierre@reactos.org" "<557FF729.9000109@reactos.org>" "76" "Re: [oss-security] PostgreSQL - Predictable cancel key" nil nil nil "6" "2015061610:15:05" "[oss-security] PostgreSQL - Predictable cancel key" (number mark "        pierre@react Jun 16   76/3204  " thread-indent "\"Re: [oss-security] PostgreSQL - Predictable cancel key\"\n") "<20150615182632.GA22032@mail.waldi.eu.org>" ("<20150613093351.GF11230@mail.waldi.eu.org>" "<557E8DA5.6080707@reactos.org>" "<20150615182632.GA22032@mail.waldi.eu.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 15517 invoked by uid 550); 16 Jun 2015 10:15:18 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,61 +11,93 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13850 invoked from network); 12 Jan 2023 19:24:53 -0000
-Date: Thu, 12 Jan 2023 13:24:38 -0600
-From: John Helmert III <ajak@gentoo.org>
-To: oss-security@lists.openwall.com
-Message-ID: <Y8BednLm17osifo0@gentoo.org>
-References: <CAO15rPk6Uh6ZqZ=c8yjz0=53DqXQKF=fSXqDo9dLdMAy7-YS3g@mail.gmail.com>
- <Y8A+/ys+5oIRzr9V@kroah.com>
+Received: (qmail 15496 invoked from network); 16 Jun 2015 10:15:18 -0000
+Message-ID: <557FF729.9000109@reactos.org>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.7.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="tz7tOt74yRvnpT3O"
-Content-Disposition: inline
-In-Reply-To: <Y8A+/ys+5oIRzr9V@kroah.com>
-Subject: Re: [oss-security] CVE-2023-0122: Linux kernel: Pre-Auth Remote DoS
- in NVMe
+References: <20150613093351.GF11230@mail.waldi.eu.org> <557E8DA5.6080707@reactos.org> <20150615182632.GA22032@mail.waldi.eu.org>
+In-Reply-To: <20150615182632.GA22032@mail.waldi.eu.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+Date: Tue, 16 Jun 2015 12:15:05 +0200
+From: Pierre Schweitzer <pierre@reactos.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] PostgreSQL - Predictable cancel key
+To: Bastian Blank <waldi@debian.org>, oss-security@lists.openwall.com
 
---tz7tOt74yRvnpT3O
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-On Thu, Jan 12, 2023 at 06:10:23PM +0100, Greg KH wrote:
-> On Thu, Jan 12, 2023 at 04:12:30PM +0200, Tal Lossos wrote:
-> > Hi all,
-> >=20
-> > # Description
-> > A NULL Pointer Dereference bug in nvmet_setup_auth
-> > (drivers/nvme/target/auth.c) can be triggered remotely to cause a DoS.
-> > Since the bug occurs in the authentication feature, it can be easily
-> > triggered by an unauthorized client in the pre-auth stage.
-> > Versions affected - v6.0-rc1 to v6.0-rc3 (fixed in v6.0-rc4).
->=20
-> Meta-comment, why are CVE's being assigned for issues found, and then
-> fixed, in development kernel releases?  Who assigned this CVE, MITRE or
-> someone else?
+Hi Bastian,
 
-This information used to be available for "reserved" CVEs in the JSON
-data in [1], but now that that's retired I'm not sure this is made
-public anywhere.
+On 06/15/2015 08:26 PM, Bastian Blank wrote:
+> Hi Pierre
+> 
+> On Mon, Jun 15, 2015 at 10:32:37AM +0200, Pierre Schweitzer wrote:
+>> I had a look at glibc random implementation, they got rid of the
+>> old LCG they were using for a "nonlinear additive feedback" PRNG
+>> which uses a 31 numbers state. That means that knowing a number
+>> in the pseudo-random stream you cannot recover the whole
+>> generator state to compute the next PRN, as it was possible with
+>> a LCG.
+> 
+>> So, basically, if I'm right (correct otherwise!) knowing your
+>> cancel key and your PID makes it really hard to know which key
+>> belongs to other PIDs. Because you still lack two pieces of
+>> information: the initial state (deduced from the knowledge of the
+>> seed) and the state of the generator when it generated your key
+>> (or perhaps knowing just one state would be enough? Anyway, it's
+>> missing).
+> 
+> The seed is not public, but you missed one detail: there are only
+> one million different ones.  This seed is the only input of the
+> PRNG.  With one million starting points (which is a lot less then
+> the complete state) you can easily brute force the seed for the
+> returned values.
 
-[1] https://github.com/CVEProject/cvelistV5
+Well, I've thought about it, but that's still one million seeds and
+the cancel key you're looking for might have been generated after
+several random() call. So, that means perhaps 10 millions values to
+explore? (If we make the hypothesis that for a given initialization,
+it will only draw 10 PRN)
 
-> thanks,
->=20
-> greg k-h
+How relevant would still be your cancel key once you found it?
 
---tz7tOt74yRvnpT3O
-Content-Type: application/pgp-signature; name="signature.asc"
+> After you know the complete state, you can calculate possible
+> state ranges for different PID.
 
+The exploration range still seem to look huge to me, no?
+
+I mean, let's say you auth to PGSQL, you get your cancel key. Next,
+you'll try the one million seeds + X drawn numbers to find if you find
+yours, so that you can match the appropriated seed.
+Given your seed, you can generate all the cancel keys for all the PID
+you find, and attempt to find which one matches which one. With all
+the noise you'll have in PIDs (gone PGSQL connections, other random
+processes started & gone, and so on).
+
+Or you have a fastest/simplest method I would have missed?
+
+Cheers,
+- -- 
+Pierre Schweitzer <pierre@reactos.org>
+System & Network Administrator
+Senior Kernel Developer
+ReactOS Deutschland e.V.
 -----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
 
-iHUEABYKAB0WIQQyG9yfCrmO0LPSdG2gXq2+aa/JtQUCY8BedgAKCRCgXq2+aa/J
-tZJYAP9hICVV71P6OvRaDBjUmP0GYpbZUlqWVrSRF+eTlw23vgEA/zdXsiV5yXNY
-2zOWrVUN+2KQJFoHoMKWyc+hUlzs/Q4=
-=iBxz
+iQIcBAEBCAAGBQJVf/cpAAoJEHVFVWw9WFsLWSAP/2/mkXYYYAod3KsjcCkrggXz
+T+R83fu+ZYCdiKX1qsQtuTTT+YWRHOtZe/PVIoiLGnEexKHUMEYZVL7FWosr9pWP
+qH3WI9poTFCyek8vTDc7SrZe3SUMh1LmGnwgTtgW5bUl8RdySnTQyROeNn4hA7tJ
+2BdzpoZHAP9O77xWq38VOlM6f0oazQeLj3U2/thwJNkGaD1XupfIPYzL+wduHPt0
+kNFeIA8yoo4aeFYJSCY6kT1Pf6XIXcxtjnSPMzKJIXb4hYdPIpBF1pB6YoshrO2t
+TEwnWvhDb/8Yyok0mkZFz/fCh34QSVYjelstB29h4ZKc/PDGIw+dSvuHv5oBFwDI
+/WdHWw411o+PyDRKxUvHQ/DlWZhYZABbfzg6lpVuZB8qE1T/wJ5Bl7R0IXPdWYCf
+vwKiCeR+DWdjQa7pCfnV841eZjTw3rmjt1Z7IM8djPqUauwLVrU2/BrGF9P+PVKF
++8kVoZaqIy/g4Vrqb1Um+GwK902CglCn+JA32xEB2+AhGHwMGTlJ/H98DDWfNOuE
+kF55mWszNfbcXc29SBna+6/LyI/4Wu0zZgHNNjsxBH/HO4mj6/YiHMcbIoRoesAO
+wbN6iWGSpS0h1YphSMw5sZXQgfbfSCdHravJ9PPxipgyT/N5IF746KrIOLQpR/j5
+I8pz2LXXT5olvLkA2Tkd
+=vx00
 -----END PGP SIGNATURE-----
-
---tz7tOt74yRvnpT3O--
