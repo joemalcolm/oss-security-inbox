@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1397" "Wednesday" "13" "May" "2015" "22:32:41" "+0300" "Solar Designer" "solar@openwall.com" "<20150513193240.GA19197@openwall.com>" "31" "Re: [oss-security] [PATCH 0/4] ozwpan: Four remote packet-of-death vulnerabilities" nil nil nil "5" "2015051319:32:41" "[oss-security] [PATCH 0/4] ozwpan: Four remote packet-of-death vulnerabilities" (number mark "        solar@openwa May 13   31/1397  " thread-indent "\"Re: [oss-security] [PATCH 0/4] ozwpan: Four remote packet-of-death vulnerabilities\"\n") "<1431542014-3239-1-git-send-email-Jason@zx2c4.com>" ("<1431542014-3239-1-git-send-email-Jason@zx2c4.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2208" "Tuesday" "16" "June" "2015" "15:29:19" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150616192919.8A680132E1AC@smtpvbsrv1.mitre.org>" "53" "[oss-security] Re: CVE Request - Cross-Site Request Forgery Vulnerability in Users to CSV Wordpress Plugin v1.4.5" nil nil nil "6" "2015061619:29:19" "[oss-security] Re: CVE Request - Cross-Site Request Forgery Vulnerability in Users to CSV Wordpress Plugin v1.4.5" (number mark "U       cve-assign@m Jun 16   53/2208  " thread-indent "\"[oss-security] Re: CVE Request - Cross-Site Request Forgery Vulnerability in Users to CSV Wordpress Plugin v1.4.5\"\n") "<CAARZ5vpCbfa2rGHcQWnscRjbd5xRWk3whK922FwU15PyLdJm_Q@mail.gmail.com>" ("<CAARZ5vpCbfa2rGHcQWnscRjbd5xRWk3whK922FwU15PyLdJm_Q@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 17509 invoked by uid 550); 13 May 2015 19:32:48 -0000
+Received: (qmail 30036 invoked by uid 550); 16 Jun 2015 19:29:31 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,49 +11,66 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 17487 invoked from network); 13 May 2015 19:32:47 -0000
-Message-ID: <20150513193240.GA19197@openwall.com>
-References: <1431542014-3239-1-git-send-email-Jason@zx2c4.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1431542014-3239-1-git-send-email-Jason@zx2c4.com>
-User-Agent: Mutt/1.4.2.3i
-Cc: oss-security@lists.openwall.com
-Date: Wed, 13 May 2015 22:32:41 +0300
-From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] [PATCH 0/4] ozwpan: Four remote packet-of-death vulnerabilities
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Received: (qmail 30011 invoked from network); 16 Jun 2015 19:29:31 -0000
+From: cve-assign@mitre.org
+To: venkatesh.nitin@gmail.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <CAARZ5vpCbfa2rGHcQWnscRjbd5xRWk3whK922FwU15PyLdJm_Q@mail.gmail.com>
+Message-Id: <20150616192919.8A680132E1AC@smtpvbsrv1.mitre.org>
+Date: Tue, 16 Jun 2015 15:29:19 -0400 (EDT)
+Subject: [oss-security] Re: CVE Request - Cross-Site Request Forgery Vulnerability in Users to CSV Wordpress Plugin v1.4.5
 
-Hi Jason,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-As mentioned on oss-security before, please don't ever cross-post
-anything to oss-security and a high-volume list at once, especially not
-to LKML or netdev.  Please make separate postings instead.  In this
-case, it would have been appropriate for you to send the patches to
-LKML, netdev, the relevant maintainers, etc. - and to post a summary to
-oss-security listing the vulnerabilities and mentioning that fixes are
-being discussed on LKML (ideally, you'd include links to LKML archives).
-This is sub-optimal in terms of having the relevant detail right in
-here, which is usually our preference, but cross-posting is just too
-problematic (ends up in too much noise in here).
+> I've discovered a CSRF vulnerability in the Users to CSV Wordpress Plugin
+> v1.4.5 which allows for user information can be exported via a GET request
+> to users.php. I request a CVE for the same.
+> 
+> http://seclists.org/fulldisclosure/2015/Jun/44
 
-http://www.openwall.com/lists/oss-security/2015/01/21/3
+We typically don't have CVEs for CSRF issues in which the impact is
+information disclosure, because the information is disclosed to the
+victim rather than to the attacker.
 
-Please help take these threads off oss-security now - but please do post
-summaries to oss-security, such as when fixes get committed.
+Is there any way that the attacker can specify that the CSV data
+should be written to a file with a public URL served by the web
+server, so that the attacker can read it later? The source code
+perhaps suggests that the data is always sent to the victim, e.g.,
 
-BTW, for patches that harden the Linux kernel rather than fix specific
-vulnerabilities, we host a mailing list here that you may CC: it's
-kernel-hardening.  Given its purpose and focus, it is in fact
-appropriate (and even intended) to CC it on LKML postings.  For specific
-vulnerability fixes, we host no such list here yet.  We may set one up,
-or maybe the focus of kernel-hardening needs to be made broader.
-I welcome opinions on this matter.
+  https://plugins.svn.wordpress.org/users-to-csv/trunk/users2csv.php
 
-http://www.openwall.com/lists/kernel-hardening/
+  if ( is_admin() ) {
+  ...
+  header('Content-Disposition: attachment; filename="'.$table.'.csv"');
+  ...
+  echo $csv;
 
-Thank you!
+Possibly there is a concern that the user data is sensitive
+information that might be transmitted over an insecure network path in
+cleartext during the CSRF attack, and this might be a network path
+that the admin would avoid during any intentional access to the
+WordPress installation. However, this is not the type of CSRF impact
+that normally has a CVE, and the scenario in question could be
+considered a site-specific problem or user error (i.e., either follow
+http://codex.wordpress.org/Administration_Over_SSL or at least don't
+remain logged in after moving the client machine to an especially
+insecure network).
 
-Alexander
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJVgHiOAAoJEKllVAevmvmsGRsIAIMgm3tIcS9q4jY4Yjogl2+S
+rGHvAxR2jkLFYTOH0zEkWiQyblYInhyLaoesmsTimlJxcMnRrgMf81oJp2+0Rihw
+gQXeD5tvoq5G4lY8F4QAbo3SMrvpAE568ng8HG4w+m8ku/iQ2Lal0Dye/h1MEimX
+jEyQfyetyP6wQUDaZjIdJpyvuKKfyYdq32ai89/nXiW2hw/fEEs+v3AhcFegOg0G
+SOgOLyV8CVwouTl1PNPjyva/c44ufeJ8AKomiz+rYx6YfN8FpRAUS0PMTJgjBG45
+SjxE39McuDNowXLoUwge8hVsEGqjo/9JM1jFR8n5UjjrUo86gmkvsCak170BUpg=
+=swvs
+-----END PGP SIGNATURE-----
