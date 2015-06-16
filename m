@@ -1,4 +1,9 @@
-Received: (qmail 13781 invoked by uid 550); 12 May 2026 15:54:40 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1474" "Monday" "15" "June" "2015" "22:32:45" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150616023245.E6A71B2E469@smtpvbsrv1.mitre.org>" "35" "[oss-security] Re: CVE-2015-0848 - Heap overflow on libwmf0.2-7" nil nil nil "6" "2015061602:32:45" "[oss-security] Re: CVE-2015-0848 - Heap overflow on libwmf0.2-7" (number mark "        cve-assign@m Jun 15   35/1474  " thread-indent "\"[oss-security] Re: CVE-2015-0848 - Heap overflow on libwmf0.2-7\"\n") "<20150603131043.558df5e8@redhat.com>" ("<20150603131043.558df5e8@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 11528 invoked by uid 550); 16 Jun 2015 02:32:58 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,99 +11,48 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 11510 invoked from network); 16 Jun 2015 02:32:57 -0000
+In-Reply-To: <20150603131043.558df5e8@redhat.com>
+Message-Id: <20150616023245.E6A71B2E469@smtpvbsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Mon, 15 Jun 2015 22:32:45 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 13961 invoked from network); 12 May 2026 15:32:58 -0000
-Authentication-Results: apache.org; auth=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=apache.org; s=mail;
-	t=1778599963; bh=VLyi+syFqM7EDSAIXAKG9UufxjmKcQPb7ypK8s7IwmM=;
-	h=Date:To:From:Subject:From;
-	b=XY2Kb5YqBsK0OvIhH7LZyYvStGn6mipmLS3xZL20GP397B1hTZc3tW9DkRmXSj9FV
-	 JyErtlzyE4RArBtsjTqLRsmAvGopNVCwswl0b9Qa+yxwg0TJZcgXbbdLFRFI8FbVCo
-	 amfarL/pZleYacW7wUOdcmvHjrcTzzECRV+jy3R7qVnj7NqHonDHM5/FaziubRWWy4
-	 +Ps1z0D8a6HjjsyQR3gsN6kOhA+JsA9z8R6zhMm4ZQ7GM0iN+GmqSHZPv/BFpe/HH+
-	 voMz1nkSBWJdDzQrZedqX2/FcWizD9Z8Zpoc3vH+WNZn661VDK1wwKBSpk6hHMyQfG
-	 aRDX8Abpk33EQ==
-Message-ID: <4d04a57b-dcf3-4ce0-ab8c-ce6b99889aaf@apache.org>
-Date: Tue, 12 May 2026 16:32:42 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-GB
-To: oss-security@lists.openwall.com
-From: Mark Thomas <markt@apache.org>
-Autocrypt: addr=markt@apache.org; keydata=
- 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
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] CVE-2026-43514: Apache Tomcat: AJP secret compared in non-constant
- time
+Subject: [oss-security] Re: CVE-2015-0848 - Heap overflow on libwmf0.2-7
+To: scorneli@redhat.com
 
-Severity: low
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Affected versions:
+> There's another issue related to the RLE decoding. DecodeImage() does
+> not check that the run-length "count" fits into the total size of the
+> image, which can lead to a heap-based buffer overflow. I've not
+> assigned a CVE ID to this (mainly because I'm not sure if this
+> warrants a new CVE or should be bundled with CVE-2015-0848
 
-- Apache Tomcat 11.0.0-M1 through 11.0.21
-- Apache Tomcat 10.1.0-M1 through 10.1.54
-- Apache Tomcat 9.0.0.M1 through 9.0.117
-- Apache Tomcat 8.5.0 through 8.5.100
-- Apache Tomcat 7.0.0 through 7.0.109
-- Apache Tomcat before 7.00 unknown
+> We have some possible fixes in our bug [1], but be cautious - these are
+> not fully vetted yet.
 
-Description:
+> [1] https://bugzilla.redhat.com/show_bug.cgi?id=1227243
 
-Observable Timing Discrepancy vulnerability when comparing AJP secret in 
-Apache Tomcat.
+Use CVE-2015-4588 for this new issue. (The two issues were disclosed
+at different times by different persons. CVE-2015-0848 is about a
+missing bits-per-pixel factor in a calculation. CVE-2015-4588 is about
+a loop that can proceed past the end of its output array.)
 
-This issue affects Apache Tomcat: from 11.0.0-M1 through 11.0.21, from 
-10.1.0-M1 through 10.1.54, from 9.0.0.M1 through 9.0.117, from 8.5.0 
-through 8.5.100, from 7.0.0 through 7.0.109.
-Older unsupported versions may also be affected.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-Users are recommended to upgrade to version 11.0.22, 10.1.55 or 9.0.118 
-which fix the issue.
-
-References:
-
-https://lists.apache.org/thread/2k654v5cq123npfsd1b2kk1y30owqb1m
-https://tomcat.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-43514
+iQEcBAEBAgAGBQJVf4pCAAoJEKllVAevmvmssL4H/A31/XONQy1Fc7/Ko6Nvy09R
+bBe98kCx4HTZxDONT/WT7QWXFZ1BJH5p9e+MSnTpNUkltaTtCp9PNCRnD21S6YSu
+MrbopCukDvOtifSfBEi2qWX/U6qB+Rqs1EhexK3TuUVT4L+KqxOzBkcRx+o3zmKQ
+m3iTWSAq7rVz7HUPI0lnVwpJyDmFrBZZK6KH3M0Cz95EjAeAF1HHEAkVkMn6CO9i
+3sAGCSJexFzXp6TSOfwRiHpttUr4+yt6JIF+eCRKY2dPxdt3Q9O0/jFfScQ6CJNm
+hMHjpNJyt0i/ShLxy05sV8glhy6gk1vpw0QBIAITVXZlR+CAOTa7tZoqWRCaR7I=
+=bRPB
+-----END PGP SIGNATURE-----
