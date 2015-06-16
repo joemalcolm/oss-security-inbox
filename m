@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["19511" "Sunday" "11" "December" "2016" "10:02:54" "+0100" "Summer of Pwnage" "lists@securify.nl" "<720ca118-0578-190a-8672-d26a3b7bd33b@securify.nl>" "339" "[oss-security] Multiple vulnerabilities affecting three WordPress Plugins (XSS, & PHP object injection)" "^Date:" nil nil "12" "2016121109:02:54" "[oss-security] Multiple vulnerabilities affecting three WordPress Plugins (XSS, & PHP object injection)" (number mark "U       lists@securi Dec 11  339/19511 " thread-indent "\"[oss-security] Multiple vulnerabilities affecting three WordPress Plugins (XSS, & PHP object injection)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["16517" "Tuesday" "16" "June" "2015" "11:06:07" "-0700" "Aaron Patterson" "tenderlove@ruby-lang.org" "<20150616180607.GC28496@TC.local>" "470" "[oss-security] [CVE-2015-3227] Possible Denial of Service attack in Active Support" nil nil nil "6" "2015061618:06:07" "[oss-security] [CVE-2015-3227] Possible Denial of Service attack in Active Support" (number mark "U       tenderlove@r Jun 16  470/16517 " thread-indent "\"[oss-security] [CVE-2015-3227] Possible Denial of Service attack in Active Support\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 21743 invoked by uid 550); 11 Dec 2016 09:03:08 -0000
+Received: (qmail 21568 invoked by uid 550); 16 Jun 2015 18:06:46 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,358 +11,502 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 21725 invoked from network); 11 Dec 2016 09:03:07 -0000
-X-Virus-Scanned: amavisd-new at edge1.intern.zimbra-login.net
-Organization: Securify B.V.
-Message-ID: <720ca118-0578-190a-8672-d26a3b7bd33b@securify.nl>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.5.1
-MIME-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------5350A4469AE7A164780BCFAA"
-Date: Sun, 11 Dec 2016 10:02:54 +0100
-From: Summer of Pwnage <lists@securify.nl>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Multiple vulnerabilities affecting three WordPress Plugins (XSS, &
- PHP object injection)
-To: oss-security@lists.openwall.com
+Received: (qmail 19503 invoked from network); 16 Jun 2015 18:06:23 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:sender:date:from:to:subject:message-id
+         :mime-version:content-type:content-disposition:user-agent;
+        bh=6UVHJhquxoy8wc2l4KpULGiHfDoLd0llYOxNHFpt3Ys=;
+        b=X7Gq70GR8kXY9kYFkFauRFBy0cZdIrX06s6XS5NUp22607ztu6mBi7U++rW8/eAVh1
+         4HpduYSMIY4QtpQOdajSCTlXYZzeUD7ez1z1D61o7rVHMEbByag5t+rzEtwiAfGdJrOf
+         gNflIPVsx5/BIEVxjASKr+aVFrxiZxFU08ng9uLXRh1IZl6Ia8LPuLnJstDr4BYlP5xS
+         lDeFSGmU8oc5JEg9TbAjMK8jwCDz/WQD4v1b/7F14I4WLNQEBCx/qgtvkmEZc0eL2n6e
+         zhdEYlfcVhqh1dn0/Afvlspl0eYkqNBYBclMsjq1ZFzeXqZ0pg5ZSvcinNocb1f+6Q29
+         r+EQ==
+X-Gm-Message-State: ALoCoQmWbQAPrPZyLe6yfl4PY+VHYbBe1GzXnqTIFsUUA6ABWYgobRxC42Shv1zUgJqNtyYyGDj3
+X-Received: by 10.70.134.170 with SMTP id pl10mr2890640pdb.132.1434477971960;
+        Tue, 16 Jun 2015 11:06:11 -0700 (PDT)
+Sender: Aaron Patterson <aaron@tenderlovemaking.com>
+Date: Tue, 16 Jun 2015 11:06:07 -0700
+From: Aaron Patterson <tenderlove@ruby-lang.org>
+To: security@suse.de, rubyonrails-security@googlegroups.com,
+	oss-security@lists.openwall.com, ruby-security-ann@googlegroups.com
+Message-ID: <20150616180607.GC28496@TC.local>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="Zi0sgQQBxRFxMTsj"
+Content-Disposition: inline
+User-Agent: Mutt/1.5.23 (2014-03-12)
+Subject: [oss-security] [CVE-2015-3227] Possible Denial of Service attack in Active Support
 
---------------5350A4469AE7A164780BCFAA
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-
-Please see attached advisories for more information. These issues were 
-found during Summer of Pwnage (https://sumofpwn.nl), a Dutch community 
-project. Its goal is to contribute to the security of popular, widely 
-used OSS projects in a fun and educational way.
+--Zi0sgQQBxRFxMTsj
+Content-Type: multipart/mixed; boundary="WK3l2KTTmXPVedZ6"
+Content-Disposition: inline
 
 
+--WK3l2KTTmXPVedZ6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+Possible Denial of Service attack in Active Support
+
+There is a possible denial of service attack in the XML processing in Active
+Support. This vulnerability has been assigned the CVE identifier CVE-2015-3=
+227.
+
+Versions Affected:  All.
+Not affected:       None.
+Fixed Versions:     4.2.2, 4.1.11
+
+Impact=20
+------=20
+Specially crafted XML documents can cause applications to raise a
+`SystemStackError` and potentially cause a denial of service attack.  This
+only impacts applications using REXML or JDOM as their XML processor.  Other
+XML processors that Rails supports are not impacted.
+
+All users running an affected release should either upgrade or use one of t=
+he work arounds immediately.=20
+
+Releases=20
+--------=20
+The FIXED releases are available at the normal locations.=20
+
+Workarounds=20
+-----------=20
+Use an XML parser that is not impacted by this problem, such as Nokogiri or
+LibXML.  You can change the processor like this:
+
+  ActiveSupport::XmlMini.backend =3D 'Nokogiri'
+
+If you cannot change XML parsers, then adjust
+`RUBY_THREAD_MACHINE_STACK_SIZE`.
+
+Patches=20
+-------=20
+To aid users who aren't able to upgrade immediately we have provided patche=
+s for the two supported release series.  They are in git-am format and cons=
+ist of a single changeset.=20
+
+* 4-2-xml_depth.patch - Patch for 4.2 series=20
+* 4-1-xml_depth.patch - Patch for 4.1 series=20
+* 3-2-xml_depth.patch - Patch for 3.2 series=20
+
+Please note that only the 4.2.x and 4.1.x series are supported at present. =
+ Users of earlier unsupported releases are advised to upgrade as soon as po=
+ssible as we cannot guarantee the continued availability of security fixes =
+for unsupported releases.
+
+Credits=20
+-------=20
+
+Thanks to Tomek Rabczak from the NCC Group, and Matthew Draper for reporting
+this issue.
+
+--=20
+Aaron Patterson
+http://tenderlovemaking.com/
+
+--WK3l2KTTmXPVedZ6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: attachment; filename="3-2-xml_depth.patch"
+Content-Transfer-Encoding: quoted-printable
+
+=46rom 6caad90557373d93739d4bbcb84e6814e850c0c7 Mon Sep 17 00:00:00 2001
+From: Aaron Patterson <aaron.patterson@gmail.com>
+Date: Tue, 9 Jun 2015 11:24:25 -0700
+Subject: [PATCH] enforce a depth limit on XML documents
+
+XML documents that are too deep can cause an stack overflow, which in
+turn will cause a potential DoS attack.
+
+CVE-2015-3227
+
+Conflicts:
+	activesupport/lib/active_support/xml_mini.rb
+---
+ activesupport/lib/active_support/xml_mini.rb       |  3 +++
+ activesupport/lib/active_support/xml_mini/jdom.rb  | 11 ++++++-----
+ activesupport/lib/active_support/xml_mini/rexml.rb | 11 ++++++-----
+ 3 files changed, 15 insertions(+), 10 deletions(-)
+
+diff --git a/activesupport/lib/active_support/xml_mini.rb b/activesupport/l=
+ib/active_support/xml_mini.rb
+index a4ac1d7..afe9c4a 100644
+--- a/activesupport/lib/active_support/xml_mini.rb
++++ b/activesupport/lib/active_support/xml_mini.rb
+@@ -77,6 +77,9 @@ module ActiveSupport
+     end
+=20
+     attr_reader :backend
++    attr_accessor :depth
++    self.depth =3D 100
++
+     delegate :parse, :to =3D> :backend
+=20
+     def backend=3D(name)
+diff --git a/activesupport/lib/active_support/xml_mini/jdom.rb b/activesupp=
+ort/lib/active_support/xml_mini/jdom.rb
+index 8d23ce4..8d64bc2 100644
+--- a/activesupport/lib/active_support/xml_mini/jdom.rb
++++ b/activesupport/lib/active_support/xml_mini/jdom.rb
+@@ -47,7 +47,7 @@ module ActiveSupport
+         xml_string_reader =3D StringReader.new(data)
+         xml_input_source =3D InputSource.new(xml_string_reader)
+         doc =3D @dbf.new_document_builder.parse(xml_input_source)
+-        merge_element!({CONTENT_KEY =3D> ''}, doc.document_element)
++        merge_element!({CONTENT_KEY =3D> ''}, doc.document_element, XmlMin=
+i.depth)
+       end
+     end
+=20
+@@ -59,9 +59,10 @@ module ActiveSupport
+     #   Hash to merge the converted element into.
+     # element::
+     #   XML element to merge into hash
+-    def merge_element!(hash, element)
++    def merge_element!(hash, element, depth)
++      raise 'Document too deep!' if depth =3D=3D 0
+       delete_empty(hash)
+-      merge!(hash, element.tag_name, collapse(element))
++      merge!(hash, element.tag_name, collapse(element, depth))
+     end
+=20
+     def delete_empty(hash)
+@@ -72,14 +73,14 @@ module ActiveSupport
+     #
+     # element::
+     #   The document element to be collapsed.
+-    def collapse(element)
++    def collapse(element, depth)
+       hash =3D get_attributes(element)
+=20
+       child_nodes =3D element.child_nodes
+       if child_nodes.length > 0
+         for i in 0...child_nodes.length
+           child =3D child_nodes.item(i)
+-          merge_element!(hash, child) unless child.node_type =3D=3D Node.T=
+EXT_NODE
++          merge_element!(hash, child, depth - 1) unless child.node_type =
+=3D=3D Node.TEXT_NODE
+         end
+         merge_texts!(hash, element) unless empty_content?(element)
+         hash
+diff --git a/activesupport/lib/active_support/xml_mini/rexml.rb b/activesup=
+port/lib/active_support/xml_mini/rexml.rb
+index a13ad10..cb2a4f4 100644
+--- a/activesupport/lib/active_support/xml_mini/rexml.rb
++++ b/activesupport/lib/active_support/xml_mini/rexml.rb
+@@ -30,7 +30,7 @@ module ActiveSupport
+         doc =3D REXML::Document.new(data)
+=20
+         if doc.root
+-          merge_element!({}, doc.root)
++          merge_element!({}, doc.root, XmlMini.depth)
+         else
+           raise REXML::ParseException,
+             "The document #{doc.to_s.inspect} does not have a valid root"
+@@ -45,19 +45,20 @@ module ActiveSupport
+       #   Hash to merge the converted element into.
+       # element::
+       #   XML element to merge into hash
+-      def merge_element!(hash, element)
+-        merge!(hash, element.name, collapse(element))
++      def merge_element!(hash, element, depth)
++        raise REXML::ParseException, "The document is too deep" if depth =
+=3D=3D 0
++        merge!(hash, element.name, collapse(element, depth))
+       end
+=20
+       # Actually converts an XML document element into a data structure.
+       #
+       # element::
+       #   The document element to be collapsed.
+-      def collapse(element)
++      def collapse(element, depth)
+         hash =3D get_attributes(element)
+=20
+         if element.has_elements?
+-          element.each_element {|child| merge_element!(hash, child) }
++          element.each_element {|child| merge_element!(hash, child, depth =
+- 1) }
+           merge_texts!(hash, element) unless empty_content?(element)
+           hash
+         else
+--=20
+2.2.1
 
 
+--WK3l2KTTmXPVedZ6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: attachment; filename="4-1-xml_depth.patch"
+Content-Transfer-Encoding: quoted-printable
+
+=46rom eb4f1d6a02e9557b97cdbed76157dc5a625cdb82 Mon Sep 17 00:00:00 2001
+From: Aaron Patterson <aaron.patterson@gmail.com>
+Date: Tue, 9 Jun 2015 11:24:25 -0700
+Subject: [PATCH] enforce a depth limit on XML documents
+
+XML documents that are too deep can cause an stack overflow, which in
+turn will cause a potential DoS attack.
+
+CVE-2015-3227
+---
+ activesupport/lib/active_support/xml_mini.rb       |  3 +++
+ activesupport/lib/active_support/xml_mini/jdom.rb  | 11 ++++++-----
+ activesupport/lib/active_support/xml_mini/rexml.rb | 11 ++++++-----
+ 3 files changed, 15 insertions(+), 10 deletions(-)
+
+diff --git a/activesupport/lib/active_support/xml_mini.rb b/activesupport/l=
+ib/active_support/xml_mini.rb
+index 009ee4d..df7b081 100644
+--- a/activesupport/lib/active_support/xml_mini.rb
++++ b/activesupport/lib/active_support/xml_mini.rb
+@@ -78,6 +78,9 @@ module ActiveSupport
+       )
+     end
+=20
++    attr_accessor :depth
++    self.depth =3D 100
++
+     delegate :parse, :to =3D> :backend
+=20
+     def backend
+diff --git a/activesupport/lib/active_support/xml_mini/jdom.rb b/activesupp=
+ort/lib/active_support/xml_mini/jdom.rb
+index 27c64c4..cdc5490 100644
+--- a/activesupport/lib/active_support/xml_mini/jdom.rb
++++ b/activesupport/lib/active_support/xml_mini/jdom.rb
+@@ -46,7 +46,7 @@ module ActiveSupport
+         xml_string_reader =3D StringReader.new(data)
+         xml_input_source =3D InputSource.new(xml_string_reader)
+         doc =3D @dbf.new_document_builder.parse(xml_input_source)
+-        merge_element!({CONTENT_KEY =3D> ''}, doc.document_element)
++        merge_element!({CONTENT_KEY =3D> ''}, doc.document_element, XmlMin=
+i.depth)
+       end
+     end
+=20
+@@ -58,9 +58,10 @@ module ActiveSupport
+     #   Hash to merge the converted element into.
+     # element::
+     #   XML element to merge into hash
+-    def merge_element!(hash, element)
++    def merge_element!(hash, element, depth)
++      raise 'Document too deep!' if depth =3D=3D 0
+       delete_empty(hash)
+-      merge!(hash, element.tag_name, collapse(element))
++      merge!(hash, element.tag_name, collapse(element, depth))
+     end
+=20
+     def delete_empty(hash)
+@@ -71,14 +72,14 @@ module ActiveSupport
+     #
+     # element::
+     #   The document element to be collapsed.
+-    def collapse(element)
++    def collapse(element, depth)
+       hash =3D get_attributes(element)
+=20
+       child_nodes =3D element.child_nodes
+       if child_nodes.length > 0
+         (0...child_nodes.length).each do |i|
+           child =3D child_nodes.item(i)
+-          merge_element!(hash, child) unless child.node_type =3D=3D Node.T=
+EXT_NODE
++          merge_element!(hash, child, depth - 1) unless child.node_type =
+=3D=3D Node.TEXT_NODE
+         end
+         merge_texts!(hash, element) unless empty_content?(element)
+         hash
+diff --git a/activesupport/lib/active_support/xml_mini/rexml.rb b/activesup=
+port/lib/active_support/xml_mini/rexml.rb
+index 5c7c78b..924ed72 100644
+--- a/activesupport/lib/active_support/xml_mini/rexml.rb
++++ b/activesupport/lib/active_support/xml_mini/rexml.rb
+@@ -29,7 +29,7 @@ module ActiveSupport
+         doc =3D REXML::Document.new(data)
+=20
+         if doc.root
+-          merge_element!({}, doc.root)
++          merge_element!({}, doc.root, XmlMini.depth)
+         else
+           raise REXML::ParseException,
+             "The document #{doc.to_s.inspect} does not have a valid root"
+@@ -44,19 +44,20 @@ module ActiveSupport
+       #   Hash to merge the converted element into.
+       # element::
+       #   XML element to merge into hash
+-      def merge_element!(hash, element)
+-        merge!(hash, element.name, collapse(element))
++      def merge_element!(hash, element, depth)
++        raise REXML::ParseException, "The document is too deep" if depth =
+=3D=3D 0
++        merge!(hash, element.name, collapse(element, depth))
+       end
+=20
+       # Actually converts an XML document element into a data structure.
+       #
+       # element::
+       #   The document element to be collapsed.
+-      def collapse(element)
++      def collapse(element, depth)
+         hash =3D get_attributes(element)
+=20
+         if element.has_elements?
+-          element.each_element {|child| merge_element!(hash, child) }
++          element.each_element {|child| merge_element!(hash, child, depth =
+- 1) }
+           merge_texts!(hash, element) unless empty_content?(element)
+           hash
+         else
+--=20
+2.2.1
 
 
+--WK3l2KTTmXPVedZ6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: attachment; filename="4-2-xml_depth.patch"
+Content-Transfer-Encoding: quoted-printable
 
---------------5350A4469AE7A164780BCFAA
-Content-Type: text/plain; charset=UTF-8;
- name="cross_site_request_forgery_in_insert_html_snippet_wordpress_plugin.txt"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment;
- filename*0="cross_site_request_forgery_in_insert_html_snippet_wordpress_";
- filename*1="plugin.txt"
+=46rom b247c51e0766df06829625f1f0c3d3cf18982a19 Mon Sep 17 00:00:00 2001
+From: Aaron Patterson <aaron.patterson@gmail.com>
+Date: Tue, 9 Jun 2015 11:24:25 -0700
+Subject: [PATCH] enforce a depth limit on XML documents
 
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQpDcm9zcy1TaXRlIFJlcXVl
-c3QgRm9yZ2VyeSBpbiBJbnNlcnQgSHRtbCBTbmlwcGV0IFdvcmRQcmVzcyBQ
-bHVnaW4NCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0KWW9yaWNrIEtv
-c3RlciwgSnVseSAyMDE2DQoNCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LQ0KT1ZFIElEDQotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0NCk9WRS0y
-MDE2MDcyNC0wMDI3DQoNCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0K
-QWJzdHJhY3QNCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0KSXQgd2Fz
-IGRpc2NvdmVyZWQgdGhhdCB0aGUgSW5zZXJ0IEh0bWwgU25pcHBldCBXb3Jk
-UHJlc3MgUGx1Z2luIGlzDQp2dWxuZXJhYmxlIHRvIENyb3NzLVNpdGUgUmVx
-dWVzdCBGb3JnZXJ5LiBBbW9uZ3N0IG90aGVycywgdGhpcyBpc3N1ZSBjYW4N
-CmJlIHVzZWQgdG8gdXBkYXRlIGFuIGV4aXN0aW5nIEhUTUwgc25pcHBldC4g
-VGhpcyBjYW4gYmUgdXNlZCB0byBpbnNlcnQNCmFyYml0cmFyeSBIVE1MIGFu
-ZCBzY3JpcHRpbmcgY29kZSB3aXRoaW4gYSBwb3N0IG9yIHBhZ2UgdGhhdCB1
-c2VzIHRoZQ0Kc25pcHBldC4gSW4gb3JkZXIgdG8gZXhwbG9pdCB0aGlzIGlz
-c3VlLCB0aGUgYXR0YWNrZXIgaGFzIHRvIGx1cmUvZm9yY2UNCmEgbG9nZ2Vk
-IG9uIFdvcmRQcmVzcyBBZG1pbmlzdHJhdG9yIGludG8gb3BlbmluZyBhIG1h
-bGljaW91cyB3ZWJzaXRlLg0KDQotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0NClRlc3RlZCB2ZXJzaW9ucw0KLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tDQpUaGlzIGlzc3VlIHdhcyBzdWNjZXNzZnVsbHkgdGVzdGVkIG9uIElu
-c2VydCBIdG1sIFNuaXBwZXQgWzJdIFdvcmRQcmVzcw0KUGx1Z2luIHZlcnNp
-b24gMS4yLg0KDQotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0NCkZpeA0K
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQpUaGlzIGlzc3VlIGhhcyBi
-ZWVuIGFkZHJlc3NlZCBpbiBJbnNlcnQgSHRtbCBTbmlwcGV0IFszXSB2ZXJz
-aW9uIDEuMi4xLg0KDQotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0NCklu
-dHJvZHVjdGlvbg0KLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQpJbnNl
-cnQgSHRtbCBTbmlwcGV0IFsyXSBpcyBhIHBsdWdpbiBmb3IgV29yZFByZXNz
-IHRoYXQgYWxsb3dzIHlvdSB0byBhZGQNCkhUTUwsIENTUyBhbmQgamF2YXNj
-cmlwdCBjb2RlIHRvIHlvdXIgcGFnZXMgYW5kIHBvc3RzIGVhc2lseSB1c2lu
-Zw0Kc2hvcnRjb2Rlcy4gSXQgd2FzIGRpc2NvdmVyZWQgdGhhdCB0aGUgSW5z
-ZXJ0IEh0bWwgU25pcHBldCBXb3JkUHJlc3MNClBsdWdpbiBpcyB2dWxuZXJh
-YmxlIHRvIENyb3NzLVNpdGUgUmVxdWVzdCBGb3JnZXJ5LiBBbW9uZ3N0IG90
-aGVycywgdGhpcw0KaXNzdWUgY2FuIGJlIHVzZWQgdG8gdXBkYXRlIGFuIGV4
-aXN0aW5nIEhUTUwgc25pcHBldC4gVGhpcyBjYW4gYmUgdXNlZA0KdG8gaW5z
-ZXJ0IGFyYml0cmFyeSBIVE1MIGFuZCBzY3JpcHRpbmcgY29kZSB3aXRoaW4g
-YSBwb3N0IG9yIHBhZ2UgdGhhdA0KdXNlcyB0aGUgc25pcHBldC4NCg0KLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQpEZXRhaWxzDQotLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0NClRoaXMgaXNzdWUgZXhpc3RzIGJlY2F1c2Ug
-SW5zZXJ0IEh0bWwgU25pcHBldCBsYWNrcyBwcm90ZWN0aW9uIGFnYWluc3QN
-CkNyb3NzLVNpdGUgUmVxdWVzdCBGb3JnZXJ5IGF0dGFja3MuIFNlZSBmb3Ig
-ZXhhbXBsZSB0aGUgY29kZSB0aGF0IGlzDQp1c2VkIHRvIGVkaXQgYSBzbmlw
-cGV0Lg0KDQppZihpc3NldCgkX1BPU1QpICYmIGlzc2V0KCRfUE9TVFsndXBk
-YXRlU3VibWl0J10pKXsNCgkNCi8vIAkJZWNobyAnPHByZT4nOw0KLy8gCQlw
-cmludF9yKCRfUE9TVCk7DQovLyAJCWRpZSgiSkpKIik7DQoJJF9QT1NUID0g
-c3RyaXBzbGFzaGVzX2RlZXAoJF9QT1NUKTsNCgkkX1BPU1QgPSB4eXpfdHJp
-bV9kZWVwKCRfUE9TVCk7DQoJDQoJJHh5el9paHNfc25pcHBldElkID0gJF9H
-RVRbJ3NuaXBwZXRJZCddOw0KCQ0KCSR0ZW1wX3h5el9paHNfdGl0bGUgPSBz
-dHJfcmVwbGFjZSgnICcsICcnLCAkX1BPU1RbJ3NuaXBwZXRUaXRsZSddKTsN
-CgkkdGVtcF94eXpfaWhzX3RpdGxlID0gc3RyX3JlcGxhY2UoJy0nLCAnJywg
-JHRlbXBfeHl6X2loc190aXRsZSk7DQoJDQoJJHh5el9paHNfdGl0bGUgPSBz
-dHJfcmVwbGFjZSgnICcsICctJywgJF9QT1NUWydzbmlwcGV0VGl0bGUnXSk7
-DQoJJHh5el9paHNfY29udGVudCA9ICRfUE9TVFsnc25pcHBldENvbnRlbnQn
-XTsNCgkNCglpZigkeHl6X2loc190aXRsZSAhPSAiIiAmJiAkeHl6X2loc19j
-b250ZW50ICE9ICIiKXsNCgkNCgkJaWYoY3R5cGVfYWxudW0oJHRlbXBfeHl6
-X2loc190aXRsZSkpDQoJCXsNCgkJJHNuaXBwZXRfY291bnQgPSAkd3BkYi0+
-cXVlcnkoJHdwZGItPnByZXBhcmUoICdTRUxFQ1QgKiBGUk9NDQonLiR3cGRi
-LT5wcmVmaXguJ3h5el9paHNfc2hvcnRfY29kZSBXSEVSRSBpZCE9JWQgQU5E
-IHRpdGxlPSVzIExJTUlUDQowLDEnLCR4eXpfaWhzX3NuaXBwZXRJZCwkeHl6
-X2loc190aXRsZSkpIDsNCgkNCgkJaWYoJHNuaXBwZXRfY291bnQgPT0gMCl7
-DQoJCQkkeHl6X3Nob3J0Q29kZSA9ICdbeHl6LWlocyBzbmlwcGV0PSInLiR4
-eXpfaWhzX3RpdGxlLiciXSc7DQoJDQoJCQkkd3BkYi0+dXBkYXRlKCR3cGRi
-LT5wcmVmaXguJ3h5el9paHNfc2hvcnRfY29kZScsDQphcnJheSgndGl0bGUn
-PT4keHl6X2loc190aXRsZSwnY29udGVudCc9PiR4eXpfaWhzX2NvbnRlbnQs
-J3Nob3J0X2NvZGUnPT4keHl6X3Nob3J0Q29kZSwpLA0KYXJyYXkoJ2lkJz0+
-JHh5el9paHNfc25pcHBldElkKSk7DQoNCkluIG9yZGVyIHRvIGV4cGxvaXQg
-dGhpcyBpc3N1ZSwgdGhlIGF0dGFja2VyIGhhcyB0byBsdXJlL2ZvcmNlIGEg
-bG9nZ2VkDQpvbiBXb3JkUHJlc3MgQWRtaW5pc3RyYXRvciBpbnRvIG9wZW5p
-bmcgYSBtYWxpY2lvdXMgd2Vic2l0ZS4NCg0KLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tDQpQcm9vZiBvZiBjb25jZXB0DQotLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0NCjxodG1sPg0KCTxib2R5Pg0KCQk8Zm9ybQ0KYWN0aW9u
-PSJodHRwOi8vPHRhcmdldD4vd3AtYWRtaW4vYWRtaW4ucGhwP3BhZ2U9aW5z
-ZXJ0LWh0bWwtc25pcHBldC1tYW5hZ2UmYWN0aW9uPXNuaXBwZXQtZWRpdCZz
-bmlwcGV0SWQ9MSZwYWdlbm89MSINCm1ldGhvZD0iUE9TVCI+DQoJCQk8aW5w
-dXQgdHlwZT0iaGlkZGVuIiBuYW1lPSJzbmlwcGV0SWQiIHZhbHVlPSIxIiAv
-Pg0KCQkJPGlucHV0IHR5cGU9ImhpZGRlbiIgbmFtZT0ic25pcHBldFRpdGxl
-IiB2YWx1ZT0iRnUiIC8+DQoJCQk8aW5wdXQgdHlwZT0iaGlkZGVuIiBuYW1l
-PSJzbmlwcGV0Q29udGVudCINCnZhbHVlPSI8c2NyaXB0PmFsZXJ0KDEpOzwv
-c2NyaXB0PiIgLz4NCgkJCTxpbnB1dCB0eXBlPSJoaWRkZW4iIG5hbWU9InVw
-ZGF0ZVN1Ym1pdCIgdmFsdWU9IlVwZGF0ZSIgLz4NCgkJCTxpbnB1dCB0eXBl
-PSJzdWJtaXQiIHZhbHVlPSJTdWJtaXQgcmVxdWVzdCIgLz4NCgkJPC9mb3Jt
-Pg0KCTwvYm9keT4NCjwvaHRtbD4NCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLQ0KUmVmZXJlbmNlcw0KLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-DQpbMV0NCmh0dHBzOi8vc3Vtb2Zwd24ubmwvYWR2aXNvcnkvMjAxNi9jcm9z
-c19zaXRlX3JlcXVlc3RfZm9yZ2VyeV9pbl9pbnNlcnRfaHRtbF9zbmlwcGV0
-X3dvcmRwcmVzc19wbHVnaW4uaHRtbA0KWzJdIGh0dHBzOi8vd29yZHByZXNz
-Lm9yZy9wbHVnaW5zL2luc2VydC1odG1sLXNuaXBwZXQvDQpbM10gaHR0cHM6
-Ly9kb3dubG9hZHMud29yZHByZXNzLm9yZy9wbHVnaW4vaW5zZXJ0LWh0bWwt
-c25pcHBldC4xLjIuMS56aXA=
+XML documents that are too deep can cause an stack overflow, which in
+turn will cause a potential DoS attack.
 
---------------5350A4469AE7A164780BCFAA
-Content-Type: text/plain; charset=UTF-8;
- name="google_analytics_counter_tracker_wordpress_plugin_unauthenticed_php_object_injection_vulnerability.txt"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment;
- filename*0="google_analytics_counter_tracker_wordpress_plugin_unauthenti";
- filename*1="ced_php_object_injection_vulnerability.txt"
+CVE-2015-3227
+---
+ activesupport/lib/active_support/xml_mini.rb       |  3 +++
+ activesupport/lib/active_support/xml_mini/jdom.rb  | 11 ++++++-----
+ activesupport/lib/active_support/xml_mini/rexml.rb | 11 ++++++-----
+ 3 files changed, 15 insertions(+), 10 deletions(-)
 
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQpHb29nbGUgQW5hbHl0aWNz
-IENvdW50ZXIgVHJhY2tlciBXb3JkUHJlc3MgUGx1Z2luIHVuYXV0aGVudGlj
-ZWQgUEhQDQpPYmplY3QgaW5qZWN0aW9uIHZ1bG5lcmFiaWxpdHkNCi0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0KUmVtY28gVmVybWV1bGVuLCBKdWx5
-IDIwMTYNCg0KLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQpBYnN0cmFj
-dA0KLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQpBIFBIUCBPYmplY3Qg
-aW5qZWN0aW9uIHZ1bG5lcmFiaWxpdHkgd2FzIGZvdW5kIGluIEdvb2dsZSBB
-bmFseXRpY3MNCkNvdW50ZXIgVHJhY2tlciwgd2hpY2ggY2FuIGJlIHVzZWQg
-YnkgYW4gdW5hdXRlbnRoaWNhdGVkIHVzZXIgdG8NCmluc3RhbnRpYXRlZCBh
-cmJpdHJhcnkgUEhQIE9iamVjdHMuIFVzaW5nIHRoaXMgdnVsbmVyYWJpbGl0
-eSBpdCBpcw0KcG9zc2libGUgdG8gZXhlY3V0ZSBhcmJpdHJhcnkgUEhQIGNv
-ZGUuDQoNCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0KT1ZFIElEDQot
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0NCk9WRS0yMDE2MDcxMi0wMDM1
-DQoNCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0KVGVzdGVkIHZlcnNp
-b25zDQotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0NClRoaXMgaXNzdWUg
-d2FzIHN1Y2Nlc2Z1bGx5IHRlc3RlZCBvbiB0aGUgR29vZ2xlIEFuYWx5dGlj
-cyBDb3VudGVyDQpUcmFja2VyIFsyXSBXb3JkUHJlc3MgUGx1Z2luIHZlcnNp
-b24gMy4xLjUuDQoNCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0KRml4
-DQotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0NClRoaXMgaXNzdWUgaGFz
-IGJlZW4gYWRkcmVzc2VkIGluIEdvb2dsZSBBbmFseXRpY3MgQ291bnRlciBU
-cmFja2VyDQp2ZXJzaW9uIDMuNS4xIFszXS4NCg0KLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tDQpJbnRyb2R1Y3Rpb24NCi0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLQ0KR29vZ2xlIEFuYWx5dGljcyBDb3VudGVyIFRyYWNrZXIg
-WzJdICBhbmFseXNlIHRoZSB2aXNpdG9ycyBoaXRzIG9uIHlvdQ0Kd2Vic2l0
-ZSBhbmQgZGlzcGxheSBpdCBncmFwaGljYWxseS4gQSBQSFAgT2JqZWN0IGlu
-amVjdGlvbiBbNF0NCnZ1bG5lcmFiaWxpdHkgd2FzIGZvdW5kIGluIEdvb2ds
-ZSBBbmFseXRpY3MgQ291bnRlciBUcmFja2VyLCB3aGljaCBjYW4NCmJlIHVz
-ZWQgYnkgYW4gdW5hdXRlbnRoaWNhdGVkIHVzZXIgdG8gaW5zdGFudGlhdGVk
-IGFyYml0cmFyeSBQSFANCk9iamVjdHMuDQoNCi0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLQ0KRGV0YWlscw0KLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tDQpUaGlzIGlzc3VlIGlzIHBvc3NpYmxlIGR1ZSB0byBhbiB1bnNhZmUg
-Y2FsbCB0byB1bnNlcmlhbGl6ZSgpIGluIHRoZQ0KcHJvY2Nlc3NSZXF1ZXN0
-KCkgbWV0aG9kLiBUaGUgaW5wdXQgaXMgdGFrZW4gZGlyZWN0bHkgZnJvbSB0
-aGUNCndwYWRtX2dhX3JlcXVlc3QgY29va2llIGFzIGNhbiBiZSBzZWVuIGlu
-IHRoZSBmb2xsb3dpbmcgY29kZSBmcmFnbWVudDoNCg0KY2xhc3Mud3BhZG0t
-Z2EucGhwOg0KDQpwcm90ZWN0ZWQgc3RhdGljIGZ1bmN0aW9uIHByb2NjZXNz
-UmVxdWVzdCgpIHsNCgkkcmVxdWVzdF9uYW1lID0gc2VsZjo6UkVRVUVTVF9Q
-QVJBTV9OQU1FOw0KCSRwYXJhbXMgPSB1bnNlcmlhbGl6ZShiYXNlNjRfZGVj
-b2RlKCRfUE9TVFskcmVxdWVzdF9uYW1lXSkpOw0KCQ0KCSR2ID0gc2VsZjo6
-dmVyaWZ5U2lnbmF0dXJlKCRwYXJhbXNbJ3NpZ24nXSwNCmdldF9vcHRpb24o
-J3dwYWRtX2dhX3B1Yl9rZXknKSwgbWQ1KHNlcmlhbGl6ZSgkcGFyYW1zWydk
-YXRhJ10pKSk7DQoNCkl0IGhhcyBiZWVuIGNvbmZpcm1lZCB0aGF0IHRoaXMg
-aXNzdWVzIGNhbiBiZSB1c2VkIHRvIGV4ZWN1dGUgYXJiaXRyYXJ5DQpQSFAg
-Y29kZS4NCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0KUmVmZXJlbmNl
-cw0KLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQpbMV0NCmh0dHBzOi8v
-c3Vtb2Zwd24ubmwvYWR2aXNvcnkvMjAxNi9nb29nbGVfYW5hbHl0aWNzX2Nv
-dW50ZXJfdHJhY2tlcl93b3JkcHJlc3NfcGx1Z2luX3VuYXV0aGVudGljZWRf
-cGhwX29iamVjdF9pbmplY3Rpb25fdnVsbmVyYWJpbGl0eS5odG1sDQpbMl0g
-aHR0cHM6Ly93b3JkcHJlc3Mub3JnL3BsdWdpbnMvYW5hbHl0aWNzLWNvdW50
-ZXIvDQpbM10gaHR0cHM6Ly9kb3dubG9hZHMud29yZHByZXNzLm9yZy9wbHVn
-aW4vYW5hbHl0aWNzLWNvdW50ZXIuemlwDQpbNF0gaHR0cHM6Ly93d3cub3dh
-c3Aub3JnL2luZGV4LnBocC9QSFBfT2JqZWN0X0luamVjdGlvbg==
+diff --git a/activesupport/lib/active_support/xml_mini.rb b/activesupport/l=
+ib/active_support/xml_mini.rb
+index 009ee4d..df7b081 100644
+--- a/activesupport/lib/active_support/xml_mini.rb
++++ b/activesupport/lib/active_support/xml_mini.rb
+@@ -78,6 +78,9 @@ module ActiveSupport
+       )
+     end
+=20
++    attr_accessor :depth
++    self.depth =3D 100
++
+     delegate :parse, :to =3D> :backend
+=20
+     def backend
+diff --git a/activesupport/lib/active_support/xml_mini/jdom.rb b/activesupp=
+ort/lib/active_support/xml_mini/jdom.rb
+index 27c64c4..cdc5490 100644
+--- a/activesupport/lib/active_support/xml_mini/jdom.rb
++++ b/activesupport/lib/active_support/xml_mini/jdom.rb
+@@ -46,7 +46,7 @@ module ActiveSupport
+         xml_string_reader =3D StringReader.new(data)
+         xml_input_source =3D InputSource.new(xml_string_reader)
+         doc =3D @dbf.new_document_builder.parse(xml_input_source)
+-        merge_element!({CONTENT_KEY =3D> ''}, doc.document_element)
++        merge_element!({CONTENT_KEY =3D> ''}, doc.document_element, XmlMin=
+i.depth)
+       end
+     end
+=20
+@@ -58,9 +58,10 @@ module ActiveSupport
+     #   Hash to merge the converted element into.
+     # element::
+     #   XML element to merge into hash
+-    def merge_element!(hash, element)
++    def merge_element!(hash, element, depth)
++      raise 'Document too deep!' if depth =3D=3D 0
+       delete_empty(hash)
+-      merge!(hash, element.tag_name, collapse(element))
++      merge!(hash, element.tag_name, collapse(element, depth))
+     end
+=20
+     def delete_empty(hash)
+@@ -71,14 +72,14 @@ module ActiveSupport
+     #
+     # element::
+     #   The document element to be collapsed.
+-    def collapse(element)
++    def collapse(element, depth)
+       hash =3D get_attributes(element)
+=20
+       child_nodes =3D element.child_nodes
+       if child_nodes.length > 0
+         (0...child_nodes.length).each do |i|
+           child =3D child_nodes.item(i)
+-          merge_element!(hash, child) unless child.node_type =3D=3D Node.T=
+EXT_NODE
++          merge_element!(hash, child, depth - 1) unless child.node_type =
+=3D=3D Node.TEXT_NODE
+         end
+         merge_texts!(hash, element) unless empty_content?(element)
+         hash
+diff --git a/activesupport/lib/active_support/xml_mini/rexml.rb b/activesup=
+port/lib/active_support/xml_mini/rexml.rb
+index 5c7c78b..924ed72 100644
+--- a/activesupport/lib/active_support/xml_mini/rexml.rb
++++ b/activesupport/lib/active_support/xml_mini/rexml.rb
+@@ -29,7 +29,7 @@ module ActiveSupport
+         doc =3D REXML::Document.new(data)
+=20
+         if doc.root
+-          merge_element!({}, doc.root)
++          merge_element!({}, doc.root, XmlMini.depth)
+         else
+           raise REXML::ParseException,
+             "The document #{doc.to_s.inspect} does not have a valid root"
+@@ -44,19 +44,20 @@ module ActiveSupport
+       #   Hash to merge the converted element into.
+       # element::
+       #   XML element to merge into hash
+-      def merge_element!(hash, element)
+-        merge!(hash, element.name, collapse(element))
++      def merge_element!(hash, element, depth)
++        raise REXML::ParseException, "The document is too deep" if depth =
+=3D=3D 0
++        merge!(hash, element.name, collapse(element, depth))
+       end
+=20
+       # Actually converts an XML document element into a data structure.
+       #
+       # element::
+       #   The document element to be collapsed.
+-      def collapse(element)
++      def collapse(element, depth)
+         hash =3D get_attributes(element)
+=20
+         if element.has_elements?
+-          element.each_element {|child| merge_element!(hash, child) }
++          element.each_element {|child| merge_element!(hash, child, depth =
+- 1) }
+           merge_texts!(hash, element) unless empty_content?(element)
+           hash
+         else
+--=20
+2.2.1
 
---------------5350A4469AE7A164780BCFAA
-Content-Type: text/plain; charset=UTF-8;
- name="stored_cross_site_scripting_in_gallery___image_gallery_wordpress_plugin.txt"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment;
- filename*0="stored_cross_site_scripting_in_gallery___image_gallery_wordp";
- filename*1="ress_plugin.txt"
 
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQpTdG9yZWQgQ3Jvc3MtU2l0
-ZSBTY3JpcHRpbmcgaW4gR2FsbGVyeSAtIEltYWdlIEdhbGxlcnkgV29yZFBy
-ZXNzIFBsdWdpbg0KLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQpTaXBr
-ZSBNZWxsZW1hLCBKdWx5IDIwMTYNCg0KLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tDQpBYnN0cmFjdA0KLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-DQpBIHBlcnNpc3RlbnQgQ3Jvc3MtU2l0ZSBTY3JpcHRpbmcgdnVsbmVyYWJp
-bGl0eSB3YXMgZm91bmQgaW4gdGhlIEdhbGxlcnkNCi0gSW1hZ2UgR2FsbGVy
-eSBwbHVnaW4uIFRoaXMgaXNzdWUgYWxsb3dzIGFuIGF0dGFja2VyIHRvIHBl
-cmZvcm0gYSB3aWRlDQp2YXJpZXR5IG9mIGFjdGlvbnMsIHN1Y2ggYXMgc3Rl
-YWxpbmcgQWRtaW5pc3RyYXRvcnMnIHNlc3Npb24gdG9rZW5zLCBvcg0KcGVy
-Zm9ybWluZyBhcmJpdHJhcnkgYWN0aW9ucyBvbiB0aGVpciBiZWhhbGYuIElu
-IG9yZGVyIHRvIGV4cGxvaXQgdGhpcw0KaXNzdWUsIHRoZSBhdHRhY2tlciBo
-YXMgdG8gbHVyZS9mb3JjZSBhIGxvZ2dlZCBvbiBXb3JkUHJlc3MNCkFkbWlu
-aXN0cmF0b3IgaW50byBvcGVuaW5nIGEgVVJMIHByb3ZpZGVkIGJ5IGFuIGF0
-dGFja2VyLg0KDQotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0NCk9WRSBJ
-RA0KLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQpPVkUtMjAxNjA3MjQt
-MDAxNQ0KDQotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0NClRlc3RlZCB2
-ZXJzaW9ucw0KLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQpUaGlzIGlz
-c3VlIHdhcyBzdWNjZXNzZnVsbHkgdGVzdGVkIG9uIHRoZSBHYWxsZXJ5IC0g
-SW1hZ2UgR2FsbGVyeSBbMl0NCldvcmRQcmVzcyBQbHVnaW4gdmVyc2lvbiAx
-LjkuNjUuDQoNCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0KRml4DQot
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0NClRoaXMgaXNzdWUgaXMgcmVz
-b2x2ZWQgaW4gR2FsbGVyeSAtIEltYWdlIEdhbGxlcnkgWzNdIFdvcmRQcmVz
-cyBQbHVnaW4NCnZlcnNpb24gMi4wLjYuDQoNCi0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLQ0KSW50cm9kdWN0aW9uDQotLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0NCkdhbGxlcnkgaW1hZ2UgaXMgdGhlIGJlc3QgZ2FsbGVyeSBw
-bHVnaW4gdG8gdXNlIGlmIHlvdSB3YW50IHRvIGJlDQpvcmlnaW5hbCB3aXRo
-IHlvdXIgd2Vic2l0ZS4gQSBwZXJzaXN0ZW50IENyb3NzLVNpdGUgU2NyaXB0
-aW5nDQp2dWxuZXJhYmlsaXR5IHdhcyBmb3VuZCBpbiB0aGUgR2FsbGVyeSAt
-IEltYWdlIEdhbGxlcnkgcGx1Z2luLiBUaGlzDQppc3N1ZSBhbGxvd3MgYW4g
-YXR0YWNrZXIgdG8gcGVyZm9ybSBhIHdpZGUgdmFyaWV0eSBvZiBhY3Rpb25z
-LCBzdWNoIGFzDQpzdGVhbGluZyBBZG1pbmlzdHJhdG9ycycgc2Vzc2lvbiB0
-b2tlbnMsIG9yIHBlcmZvcm1pbmcgYXJiaXRyYXJ5IGFjdGlvbnMNCm9uIHRo
-ZWlyIGJlaGFsZi4gSW4gb3JkZXIgdG8gZXhwbG9pdCB0aGlzIGlzc3VlLCB0
-aGUgYXR0YWNrZXIgaGFzIHRvDQpsdXJlL2ZvcmNlIGEgbG9nZ2VkIG9uIFdv
-cmRQcmVzcyBBZG1pbmlzdHJhdG9yIGludG8gb3BlbmluZyBhIFVSTA0KcHJv
-dmlkZWQgYnkgYW4gYXR0YWNrZXIuDQoNCi0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLQ0KRGV0YWlscw0KLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-DQpUaGUgaXNzdWUgZXhpc3RzIGJlY2F1c2UgdGhlIEdhbGxlcnkgaW1hZ2Ug
-ZG9lcyBub3QgcHJvdGVjdCBhZ2FpbnN0IENTUkYNCmF0dGFja3MgZm9yIHRo
-ZSByZXF1ZXN0cyB0byBlZGl0IGdhbGxlcnkgaW1hZ2VzLiBUaGlzIG1ha2Vz
-IGl0IHBvc3NpYmxlDQp0byBjaGFuZ2UgZ2FsbGVyeSBpbWFnZSBVUkxzIHRv
-IEphdmFTY3JpcHQgc2NoZW1hcy4gVGhlIEphdmFTY3JpcHQgd2lsbA0KYmUg
-c2F2ZWQuIEV2ZXJ5IHRpbWUgYSB1c2VyIGNsaWNrcyBvbiB0aGUgZ2FsbGVy
-eSBpbWFnZSB0aGUgSmF2YVNjcmlwdA0Kd2lsbCBydW4gKFBlcnNpc3RlbnQg
-Q3Jvc3MtU2l0ZSBTY3JpcHRpbmcpLg0KDQotLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0NClByb29mIG9mIENvbmNlcHQNCi0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLQ0KSGF2ZSBhbiBhdXRoZW50aWNhdGVkIGFkbWluIHZpc2l0
-IGEgd2VicGFnZSB3aXRoIHRoZSBmb2xsb3dpbmcgZm9ybToNCg0KPGh0bWw+
-DQogIDxib2R5Pg0KICAgIDxmb3JtIGFjdGlvbj0iaHR0cDovLzx3b3JkcHJl
-c3MNCnNpdGU+L3dwLWFkbWluL2FkbWluLnBocD9wYWdlPWdhbGxlcnlzX2h1
-Z2VfaXRfZ2FsbGVyeSZpZD0yJnRhc2s9YXBwbHkmaHVnZV9pdF9ub25jZT1i
-MzdhMjViMzNkIg0KbWV0aG9kPSJQT1NUIj4NCiAgICAgIDxpbnB1dCB0eXBl
-PSJoaWRkZW4iIG5hbWU9ImNoYW5nZWR2YWx1ZXMiIHZhbHVlPSIxMSIgLz4N
-CiAgICAgIDxpbnB1dCB0eXBlPSJoaWRkZW4iIG5hbWU9Im5hbWUiIHZhbHVl
-PSJOZXcmIzMyO2dhbGxlcnkiIC8+DQogICAgICA8aW5wdXQgdHlwZT0iaGlk
-ZGVuIiBuYW1lPSJpbWFnZXNzIiB2YWx1ZT0iIiAvPg0KICAgICAgPGlucHV0
-IHR5cGU9ImhpZGRlbiIgbmFtZT0ib3JkZXImIzk1O2J5JiM5NTsxMSIgdmFs
-dWU9IjEiIC8+DQogICAgICA8aW5wdXQgdHlwZT0iaGlkZGVuIiBuYW1lPSJp
-bWFnZXNzMTEiIHZhbHVlPSJGb28iIC8+DQogICAgICA8aW5wdXQgdHlwZT0i
-aGlkZGVuIiBuYW1lPSJ0aXRsZWltYWdlMTEiIHZhbHVlPSJ0ZXN0IiAvPg0K
-ICAgICAgPGlucHV0IHR5cGU9ImhpZGRlbiIgbmFtZT0iaW0mIzk1O2Rlc2Ny
-aXB0aW9uMTEiIHZhbHVlPSJhc2QiIC8+DQogICAgICA8aW5wdXQgdHlwZT0i
-aGlkZGVuIiBuYW1lPSJzbCYjOTU7dXJsMTEiDQp2YWx1ZT0iamF2YXNjcmlw
-dCYjNTg7YWxlcnQmIzQwOzEmIzQxOyIgLz4NCiAgICAgIDxpbnB1dCB0eXBl
-PSJoaWRkZW4iIG5hbWU9InNsJiM5NTtsaW5rJiM5NTt0YXJnZXQxMSIgdmFs
-dWU9IiIgLz4NCiAgICAgIDxpbnB1dCB0eXBlPSJoaWRkZW4iIG5hbWU9Imxp
-a2UmIzk1OzExIiB2YWx1ZT0iOSIgLz4NCiAgICAgIDxpbnB1dCB0eXBlPSJo
-aWRkZW4iIG5hbWU9ImRpc2xpa2UmIzk1OzExIiB2YWx1ZT0iMCIgLz4NCiAg
-ICAgIDxpbnB1dCB0eXBlPSJoaWRkZW4iIG5hbWU9Im5hbWUiIHZhbHVlPSJO
-ZXcmIzMyO2dhbGxlcnkiIC8+DQogICAgICA8aW5wdXQgdHlwZT0iaGlkZGVu
-IiBuYW1lPSJodWdlJiM5NTtpdCYjOTU7c2wmIzk1O2VmZmVjdHMiDQp2YWx1
-ZT0iNSIgLz4NCiAgICAgIDxpbnB1dCB0eXBlPSJoaWRkZW4iIG5hbWU9InNs
-JiM5NTt3aWR0aCIgdmFsdWU9IjYwMCIgLz4NCiAgICAgIDxpbnB1dCB0eXBl
-PSJoaWRkZW4iIG5hbWU9InNsJiM5NTtoZWlnaHQiIHZhbHVlPSIxIiAvPg0K
-ICAgICAgPGlucHV0IHR5cGU9ImhpZGRlbiIgbmFtZT0iZ2FsbGVyeSYjOTU7
-bGlzdCYjOTU7ZWZmZWN0cyYjOTU7cyINCnZhbHVlPSJjdWJlSCIgLz4NCiAg
-ICAgIDxpbnB1dCB0eXBlPSJoaWRkZW4iIG5hbWU9InNsJiM5NTtwb3NpdGlv
-biIgdmFsdWU9ImNlbnRlciIgLz4NCiAgICAgIDxpbnB1dCB0eXBlPSJoaWRk
-ZW4iIG5hbWU9ImRpc3BsYXkmIzk1O3R5cGUiIHZhbHVlPSIyIiAvPg0KICAg
-ICAgPGlucHV0IHR5cGU9ImhpZGRlbiIgbmFtZT0iY29udGVudCYjOTU7cGVy
-JiM5NTtwYWdlIiB2YWx1ZT0iNSIgLz4NCiAgICAgIDxpbnB1dCB0eXBlPSJo
-aWRkZW4iIG5hbWU9ImF1dG9zbGlkZSIgdmFsdWU9Im9mZiIgLz4NCiAgICAg
-IDxpbnB1dCB0eXBlPSJoaWRkZW4iIG5hbWU9ImF1dG9zbGlkZSIgdmFsdWU9
-Im9uIiAvPg0KICAgICAgPGlucHV0IHR5cGU9ImhpZGRlbiIgbmFtZT0icGF1
-c2UmIzk1O29uJiM5NTtob3ZlciIgdmFsdWU9Im9mZiIgLz4NCiAgICAgIDxp
-bnB1dCB0eXBlPSJoaWRkZW4iIG5hbWU9InBhdXNlJiM5NTtvbiYjOTU7aG92
-ZXIiIHZhbHVlPSJvbiIgLz4NCiAgICAgIDxpbnB1dCB0eXBlPSJoaWRkZW4i
-IG5hbWU9InNsJiM5NTtwYXVzZXRpbWUiIHZhbHVlPSI0MDAwIiAvPg0KICAg
-ICAgPGlucHV0IHR5cGU9ImhpZGRlbiIgbmFtZT0ic2wmIzk1O2NoYW5nZXNw
-ZWVkIiB2YWx1ZT0iMTAwMCIgLz4NCiAgICAgIDxpbnB1dCB0eXBlPSJoaWRk
-ZW4iIG5hbWU9InJhdGluZyIgdmFsdWU9ImRpc2xpa2UiIC8+DQogICAgICA8
-aW5wdXQgdHlwZT0iaGlkZGVuIiBuYW1lPSJ0YXNrIiB2YWx1ZT0iIiAvPg0K
-ICAgICAgPGlucHV0IHR5cGU9InN1Ym1pdCIgdmFsdWU9IlN1Ym1pdCByZXF1
-ZXN0IiAvPg0KICAgIDwvZm9ybT4NCiAgPC9ib2R5Pg0KPC9odG1sPg0KDQpU
-aGlzIHdpbGwgY2hhbmdlIHRoZSBVUkwgZm9yIHRoZSBpbWFnZSAodGhlIGlt
-YWdlIHNvdXJjZSkgdG8NCmphdmFzY3JpcHQ6YWxlcnQoMSkuIElmIGEgdXNl
-ciBjbGlja3Mgb24gdGhlIGltYWdlIG5hbWUsIHRoZSBKYXZhU2NyaXB0DQp3
-aWxsIHJ1bi4NCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0KUmVmZXJl
-bmNlcw0KLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQpbMV0NCmh0dHBz
-Oi8vc3Vtb2Zwd24ubmwvYWR2aXNvcnkvMjAxNi9zdG9yZWRfY3Jvc3Nfc2l0
-ZV9zY3JpcHRpbmdfaW5fZ2FsbGVyeV9fX2ltYWdlX2dhbGxlcnlfd29yZHBy
-ZXNzX3BsdWdpbi5odG1sDQpbMl0gaHR0cHM6Ly93b3JkcHJlc3Mub3JnL3Bs
-dWdpbnMvZ2FsbGVyeS1pbWFnZXMvDQpbM10gaHR0cHM6Ly9kb3dubG9hZHMu
-d29yZHByZXNzLm9yZy9wbHVnaW4vZ2FsbGVyeS1pbWFnZXMuMi4wLjYuemlw
+--WK3l2KTTmXPVedZ6--
 
---------------5350A4469AE7A164780BCFAA--
+--Zi0sgQQBxRFxMTsj
+Content-Type: application/pgp-signature
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEcBAEBAgAGBQJVgGWPAAoJEJUxcLy0/6/GSh0H/j77I+/vTGFnU9qvrJuy212R
+4pcipGNPPeePrFgRmw2YTN5MZVhTikCaG+G4MBvmWQ1p1liE+y0BUw5pJ8Rtt1gD
+xePK3EfDhYrGOy1W8W4RavMs/Aa1cghokJUfgkJ6azmG2r35MF5/fbaa7R/mNB3x
+a6HbngNhpXrr1sV/n3BMKS1fyGVJRKeHiSVXjuaMGoVAGFALNbpgkDhTFg/a2FX0
+uTuaa2hJ21+F71mr4LjQp+FsCyzf1qxUXWdjSl9YYeQpbc0QN0E5F7Oj7Fp7h9lH
+JDpgKeoDWmK1ZtYmJn2Efgb1ihMZFkD9WrnbuWQLnniMJEJ/kx/Zdpd+6Tpqpok=
+=ilev
+-----END PGP SIGNATURE-----
+
+--Zi0sgQQBxRFxMTsj--
