@@ -1,4 +1,9 @@
-Received: (qmail 1575 invoked by uid 550); 13 Mar 2026 13:25:55 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["18259" "Tuesday" "16" "June" "2015" "11:04:49" "-0700" "Aaron Patterson" "tenderlove@ruby-lang.org" "<20150616180449.GB28496@TC.local>" "551" "[oss-security] [CVE-2015-1840] CSRF Vulnerability in jquery-ujs and jquery-rails" nil nil nil "6" "2015061618:04:49" "[oss-security] [CVE-2015-1840] CSRF Vulnerability in jquery-ujs and jquery-rails" (number mark "U       tenderlove@r Jun 16  551/18259 " thread-indent "\"[oss-security] [CVE-2015-1840] CSRF Vulnerability in jquery-ujs and jquery-rails\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 12094 invoked by uid 550); 16 Jun 2015 18:05:19 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,180 +12,582 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 25809 invoked from network); 13 Mar 2026 13:24:36 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=openssl.foundation; s=google; t=1773408267; x=1774013067; darn=lists.openwall.com;
-        h=mime-version:user-agent:date:to:from:subject:message-id:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=y5+x54XR1EksdSXtmPqz7/BR+7sLHjdrFEwdGT1NQXI=;
-        b=ZiBLhThPO0OG1TMc6ewr4GbByBKuKDzP6dC8HlQ+r0Leju1yYCZ92iufNGLbSXhR/7
-         vA3QlyGgS92Kgn+9YFnXmhm5cCzqtcsQqDwZ1cD1flEFILywPXh2PAM4RNUUN5kwP9gN
-         gzg2PhA0T6+LBIV7Bsqe3e2H7pTEUyS92+0jmQ9PpVXWx2zon2V8sqp1KRpBHjmuw+bv
-         +6dBekIg1bUQb7Shez/5Xy2ZKQ5Bixm61iAskVcEud632XbtqshrO0fQv/qGrkofQ17T
-         ajA53n21AU/ybYFYRQGQ/A9kbhAXa8uYgjE7YD9pwFZe5YwJUeZuKWAc1zrVJdh+6TM9
-         xWlw==
+Received: (qmail 11513 invoked from network); 16 Jun 2015 18:05:05 -0000
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773408267; x=1774013067;
-        h=mime-version:user-agent:date:to:from:subject:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=y5+x54XR1EksdSXtmPqz7/BR+7sLHjdrFEwdGT1NQXI=;
-        b=UI0AANbNvzsIN37h0DS1TUHsDM6Nac0ZFCHmGbpQCCf0LsK2o32I0AlxYtIhICYmHv
-         0mTz8P/RpUNUaLFiM1k8OBGF1LCAhiwEfQq7wgSjCPRD8UbfBRa0y9VNP90Q8QUSUF7+
-         SMjDDIEOcVqTxrvBnAudBlb4XtKwCHHmaez9RdV/qgyM/0ArzQfoiNXcncCJwYdtYvhh
-         DU8fns4mF2At0RkbCv/K2G9cklGjumfxnWAdMc7xvwEySuiFmBVw42JbqglY65C6ChyY
-         ZpUZe8uUt65pcLPSRFKxtrJq6djDhkguFy+NPkIJi/qw31BmnSdbL6jJKOHCI7pWgr5W
-         CniA==
-X-Gm-Message-State: AOJu0Yxpcj78PDZFjdUDn5uA9AL4fiJEKaRssPdCAbGFyU+RUCUJYZcD
-	eSJJ5SzQANh0h5utYwB1zZbJNG+4k9Jz0j+dmjwcnyTlJzfePw5zCfKaBcwsTMD8ulbhdXE2rJz
-	ONrNg25Q=
-X-Gm-Gg: ATEYQzyOCmPg64N22zltDpDgqSK98baybEJy8cpCttZFXTqtfZ4mtZTZcYi9qrBVsH3
-	sj24myAELeOMQumvzGIs8elSj+DlhLq0sUZtcc8M1SACC2ivaNtyhM+Jq7P8HENm8+AmOiUSQFO
-	1sZ7r+yxfm5ndUL7bpY+U5b6bPlE5ceXY/8zOLmhHhPclMZse0jjzU3Dx3moYhM6fBobWjBaaof
-	GARBDKpUle9ze4oJZg37zAyn29bGJD+Dd4BkI5sZ0JDUoxFZ7nmvYqZ3CWHh+kNh8Gypi6swMdn
-	Vg77Y6Kmij7CwtOk4N3gVCDvlEx+H8wYRZ1kF0uIQOj74hVjHPr+OQ3yUt+TtMk0guzYCcSTgmB
-	99Pl2wpLVlLvfrG9OfLVE58Lyxw4mBwmDQ8QYH1LDcmjTT0TZKFX7oZD0FDJtLjp2Sfd5+zV466
-	K891sUCpf8MsiOeAOQIEAq9YsCbyLJDYX30hHO427kGOoMvKE=
-X-Received: by 2002:a05:600c:1e8b:b0:483:b505:9db7 with SMTP id 5b1f17b1804b1-4855672ada8mr49520615e9.32.1773408266615;
-        Fri, 13 Mar 2026 06:24:26 -0700 (PDT)
-Message-ID: <1d69ccace48e7567a0ab901251d8841de2487392.camel@openssl.foundation>
-From: Tomas Mraz <tomas@openssl.foundation>
-To: oss-security@lists.openwall.com
-Date: Fri, 13 Mar 2026 14:24:25 +0100
-Content-Type: multipart/signed; micalg="pgp-sha512";
-	protocol="application/pgp-signature"; boundary="=-/g14cuyNGYbDr0ZiNokn"
-User-Agent: Evolution 3.58.3 (3.58.3-1.fc43) 
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:sender:date:from:to:subject:message-id
+         :mime-version:content-type:content-disposition:user-agent;
+        bh=3ZvjFpX5aUNenk2twdHaVfVIehne8SCPUlRga8S59d0=;
+        b=l6xErk55BlC/1RRq40gmmO4Kz3kikmRmdZP6ycxfKm2IbzDpIOKQizKtCpn57ISIVf
+         aXQXQmWa3d14vlbt7UU0eCdbd97cnOyK4aV305zodBfAeZZ+/oXfHcNkX3Zfk3447plT
+         JRCnLgeQ3jhOLuDpmrFL4RsMsVUUt0OpkTAVWGDkm4zTpCaNpnQRzX9xDnsQDO9/I5dB
+         vX2JmNnB0aSheq9tjRKfv+UiCi+BtIygn77LGWIgTjzX1ACcdcW5VgudxsQmEMM4s09+
+         mc3BSbdyLPhpazrUqh+g4fI2pspEqxte83xUu7yqkQRPiiRGBhJ04YS6Yuy91wnmumKa
+         uLNA==
+X-Gm-Message-State: ALoCoQkDO7kusugxLk9Q4YUcsP4okdAerkTa2GGbHR5j9b+O2oZxP4zhkeTJE2mr0lX/xi+5Ex8F
+X-Received: by 10.70.135.168 with SMTP id pt8mr2967896pdb.8.1434477893974;
+        Tue, 16 Jun 2015 11:04:53 -0700 (PDT)
+Sender: Aaron Patterson <aaron@tenderlovemaking.com>
+Date: Tue, 16 Jun 2015 11:04:49 -0700
+From: Aaron Patterson <tenderlove@ruby-lang.org>
+To: security@suse.de, rubyonrails-security@googlegroups.com,
+	oss-security@lists.openwall.com, ruby-security-ann@googlegroups.com
+Message-ID: <20150616180449.GB28496@TC.local>
 MIME-Version: 1.0
-Subject: [oss-security] OpenSSL Security Advisory
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="n/aVsWSeQ4JHkrmm"
+Content-Disposition: inline
+User-Agent: Mutt/1.5.23 (2014-03-12)
+Subject: [oss-security] [CVE-2015-1840] CSRF Vulnerability in jquery-ujs and jquery-rails
 
---=-/g14cuyNGYbDr0ZiNokn
-Content-Type: text/plain; charset="UTF-8"
+--n/aVsWSeQ4JHkrmm
+Content-Type: multipart/mixed; boundary="H8ygTp4AXg6deix2"
+Content-Disposition: inline
+
+
+--H8ygTp4AXg6deix2
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-OpenSSL Security Advisory [13th March 2026]
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+CSRF Vulnerability in jquery-ujs and jquery-rails
 
-OpenSSL TLS 1.3 server may choose unexpected key agreement group (CVE-2026-=
-2673)
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D
+There is an vulnerability in jquery-ujs and jquery-rails that can be used to
+bypass CSP protections and allows attackers to send CSRF tokens to attacker=
+ domains.
 
-Severity: Low
+This vulnerability has been assigned the CVE identifier CVE-2015-1840.
 
-Issue summary: An OpenSSL TLS 1.3 server may fail to negotiate the expected
-preferred key exchange group when its key exchange group configuration incl=
-udes
-the default by using the "DEFAULT" keyword.
+Versions Affected:  All.
+Not affected:       Applications which don't use jquery-ujs or jquery-rails.
+Fixed Versions:     jquery-rails versions 4.0.4 and 3.1.3 and jquery-ujs 1.=
+0.4.
 
-Impact summary: A less preferred key exchange may be used even when a more
-preferred group is supported by both client and server, if the group
-was not included among the client's initial predicated keyshares.
-This will sometimes be the case with the new hybrid post-quantum groups,
-if the client chooses to defer their use until specifically requested by
-the server.
+Impact
+------
+In the scenario where an attacker might be able to control the href attribu=
+te of an anchor tag or
+the action attribute of a form tag that will trigger a POST action, the att=
+acker can set the
+href or action to " https://attacker.com" (note the leading space) that wil=
+l be passed to JQuery,
+who will see this as a same origin request, and send the user's CSRF token =
+to the attacker domain.
 
-If an OpenSSL TLS 1.3 server's configuration uses the "DEFAULT" keyword to
-interpolate the built-in default group list into its own configuration, per=
-haps
-adding or removing specific elements, then an implementation defect causes =
-the
-"DEFAULT" list to lose its "tuple" structure, and all server-supported grou=
-ps
-were treated as a single sufficiently secure "tuple", with the server not
-sending a Hello Retry Request (HRR) even when a group in a more preferred t=
-uple
-was mutually supported.
+Releases
+--------
+The FIXED releases are available at the normal locations.
 
-As a result, the client and server might fail to negotiate a mutually suppo=
-rted
-post-quantum key agreement group, such as "X25519MLKEM768", if the client's
-configuration results in only "classical" groups (such as "X25519" being the
-only ones in the client's initial keyshare prediction).
+Workarounds
+-----------
+To work around this problem, change code that allows users to control the h=
+ref attribute of an anchor
+tag or the action attribute of a form tag to filter the user parameters.
 
-OpenSSL 3.5 and later support a new syntax for selecting the most preferred=
- TLS
-1.3 key agreement group on TLS servers.  The old syntax had a single "flat"
-list of groups, and treated all the supported groups as sufficiently secure.
-If any of the keyshares predicted by the client were supported by the server
-the most preferred among these was selected, even if other groups supported=
- by
-the client, but not included in the list of predicted keyshares would have =
-been
-more preferred, if included.
+For example, code like this:
 
-The new syntax partitions the groups into distinct "tuples" of roughly
-equivalent security.  Within each tuple the most preferred group included a=
-mong
-the client's predicted keyshares is chosen, but if the client supports a gr=
-oup
-from a more preferred tuple, but did not predict any corresponding keyshare=
-s,
-the server will ask the client to retry the ClientHello (by issuing a Hello
-Retry Request or HRR) with the most preferred mutually supported group.
+    link_to params
 
-The above works as expected when the server's configuration uses the built-=
-in
-default group list, or explicitly defines its own list by directly defining=
- the
-various desired groups and group "tuples".
+to code like this:
 
-No OpenSSL FIPS modules are affected by this issue, the code in question li=
-es
-outside the FIPS boundary.
+    link_to filtered_params
 
-OpenSSL 3.6 and 3.5 are vulnerable to this issue.
+    def filtered_params
+      # Filter just the parameters that you trust
+    end
 
-OpenSSL 3.6 users should upgrade to OpenSSL 3.6.2 once it is released.
-OpenSSL 3.5 users should upgrade to OpenSSL 3.5.6 once it is released.
+Patches
+-------
+To aid users who aren't able to upgrade immediately we have provided patche=
+s for the
+supported release series. They are in git-am format and consist of a single=
+ changeset.
 
-OpenSSL 3.4, 3.3, 3.0, 1.0.2 and 1.1.1 are not affected by this issue.
+* 1-0-3-jquery_ujs_csrf.patch - Patch for jquery-ujs 1.0.3.
 
-Due to the low severity of this issue we are not issuing new releases of
-OpenSSL at this time. The fix will be included in the next release of 3.6
-and 3.5 branches, once it becomes available. The fix is also available in c=
-ommit
-2157c9d8 (for 3.6) and commit 85977e01 (for 3.5) in the OpenSSL git reposit=
-ory.
+* 3-1-2-jquery-rails-csrf.patch - Patch for jquery-rails 3.1.2.
+* 4-0-3-jquery-rails-csrf.patch - Patch for jquery-rails 4.0.3.
 
-This issue was internally reported on the 16th of February 2026 by Viktor
-Dukhovni.  The fix was developed by Viktor Dukhovni.
+Credits
+-------
 
-General Advisory Notes
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Thanks to Ben Toews of GitHub for reporting the vulnerability to us, and wo=
+rking with us on a fix.
 
-URL for this Security Advisory:
-https://openssl-library.org/news/secadv/20260313.txt
+--=20
+Aaron Patterson
+http://tenderlovemaking.com/
 
-Note: the online version of the advisory may be updated with additional det=
-ails
-over time.
+--H8ygTp4AXg6deix2
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: attachment; filename="1-0-3-jquery_ujs_csrf.patch"
+Content-Transfer-Encoding: quoted-printable
 
-For details of OpenSSL severity classifications please see:
-https://openssl-library.org/policies/general/security-policy/
+=46rom 96561a2ac0fab58e3e248458e19003e09f106ec4 Mon Sep 17 00:00:00 2001
+From: =3D?UTF-8?q?Rafael=3D20Mendon=3DC3=3DA7a=3D20Fran=3DC3=3DA7a?=3D
+ <rafaelmfranca@gmail.com>
+Date: Wed, 25 Mar 2015 17:23:33 -0300
+Subject: [PATCH] Properly check if the request is cross domain
 
---=-/g14cuyNGYbDr0ZiNokn
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
+Fix CVE-2015-1840
+---
+ src/rails.js                              | 31 ++++++++++++++++++++++++---=
+---
+ test/public/test/call-remote-callbacks.js | 14 --------------
+ test/public/test/call-remote.js           | 32 ---------------------------=
+----
+ test/public/test/data-method.js           | 26 +++++++++++++++++++++++++
+ test/public/test/override.js              |  2 +-
+ 5 files changed, 52 insertions(+), 53 deletions(-)
+
+diff --git a/src/rails.js b/src/rails.js
+index a4fb0be..1ee8859 100644
+--- a/src/rails.js
++++ b/src/rails.js
+@@ -86,16 +86,14 @@
+=20
+     // Default way to get an element's href. May be overridden at $.rails.=
+href.
+     href: function(element) {
+-      return element.attr('href');
++      return element[0].href;
+     },
+=20
+     // Submits "remote" forms and links with ajax
+     handleRemote: function(element) {
+-      var method, url, data, elCrossDomain, crossDomain, withCredentials, =
+dataType, options;
++      var method, url, data, withCredentials, dataType, options;
+=20
+       if (rails.fire(element, 'ajax:before')) {
+-        elCrossDomain =3D element.data('cross-domain');
+-        crossDomain =3D elCrossDomain =3D=3D=3D undefined ? null : elCross=
+Domain;
+         withCredentials =3D element.data('with-credentials') || null;
+         dataType =3D element.data('type') || ($.ajaxSettings && $.ajaxSett=
+ings.dataType);
+=20
+@@ -147,7 +145,7 @@
+           error: function(xhr, status, error) {
+             element.trigger('ajax:error', [xhr, status, error]);
+           },
+-          crossDomain: crossDomain
++          crossDomain: rails.isCrossDomain(url)
+         };
+=20
+         // There is no withCredentials for IE6-8 when
+@@ -167,6 +165,27 @@
+       }
+     },
+=20
++    // Determines if the request is a cross domain request.
++    isCrossDomain: function(url) {
++      var originAnchor =3D document.createElement("a");
++      originAnchor.href =3D location.href;
++      var urlAnchor =3D document.createElement("a");
++
++      try {
++        urlAnchor.href =3D url;
++        // This is a workaround to a IE bug.
++        urlAnchor.href =3D urlAnchor.href;
++
++        // Make sure that the browser parses the URL and that the protocol=
+s and hosts match.
++        return !urlAnchor.protocol || !urlAnchor.host ||
++          (originAnchor.protocol + "//" + originAnchor.host !=3D=3D
++            urlAnchor.protocol + "//" + urlAnchor.host);
++      } catch (e) {
++        // If there is an error parsing the URL, assume it is crossDomain.
++        return true;
++      }
++    },
++
+     // Handles "data-method" on links such as:
+     // <a href=3D"/users/5" data-method=3D"delete" rel=3D"nofollow" data-c=
+onfirm=3D"Are you sure?">Delete</a>
+     handleMethod: function(link) {
+@@ -178,7 +197,7 @@
+         form =3D $('<form method=3D"post" action=3D"' + href + '"></form>'=
+),
+         metadataInput =3D '<input name=3D"_method" value=3D"' + method + '=
+" type=3D"hidden" />';
+=20
+-      if (csrfParam !=3D=3D undefined && csrfToken !=3D=3D undefined) {
++      if (csrfParam !=3D=3D undefined && csrfToken !=3D=3D undefined && !r=
+ails.isCrossDomain(href)) {
+         metadataInput +=3D '<input name=3D"' + csrfParam + '" value=3D"' +=
+ csrfToken + '" type=3D"hidden" />';
+       }
+=20
+diff --git a/test/public/test/call-remote-callbacks.js b/test/public/test/c=
+all-remote-callbacks.js
+index c1791f6..ad306a3 100644
+--- a/test/public/test/call-remote-callbacks.js
++++ b/test/public/test/call-remote-callbacks.js
+@@ -64,20 +64,6 @@ asyncTest('modifying data("type") with "ajax:before" req=
+uests new dataType in re
+   });
+ });
+=20
+-asyncTest('setting data("cross-domain",true) with "ajax:before" uses new s=
+etting in request', 2, function(){
+-  $('form[data-remote]').data('cross-domain',false)
+-    .bind('ajax:before', function() {
+-      var form =3D $(this);
+-      form.data('cross-domain',true);
+-    });
+-
+-  submit(function(form) {
+-    form.bind('ajax:beforeSend', function(e, xhr, settings) {
+-      equal(settings.crossDomain, true, 'setting modified in ajax:before s=
+hould have forced cross-domain request');
+-    });
+-  });
+-});
+-
+ asyncTest('setting data("with-credentials",true) with "ajax:before" uses n=
+ew setting in request', 2, function(){
+   $('form[data-remote]').data('with-credentials',false)
+     .bind('ajax:before', function() {
+diff --git a/test/public/test/call-remote.js b/test/public/test/call-remote=
+.js
+index d78ce56..94316e8 100644
+--- a/test/public/test/call-remote.js
++++ b/test/public/test/call-remote.js
+@@ -122,22 +122,6 @@ asyncTest('sends CSRF token in custom header', 1, func=
+tion() {
+   });
+ });
+=20
+-asyncTest('does not send CSRF token in custom header if crossDomain', 1, f=
+unction() {
+-  buildForm({ 'data-cross-domain': 'true' });
+-  $('#qunit-fixture').append('<meta name=3D"csrf-token" content=3D"cf50faa=
+3fe97702ca1ae" />');
+-
+-  // Manually set request header to be XHR, since setting crossDomain: tru=
+e in .ajax()
+-  // causes jQuery to skip setting the request header, to prevent our test=
+/server.rb from
+-  // raising an an error (when request.xhr? is false).
+-  $('#qunit-fixture').find('form').bind('ajax:beforeSend', function(e, xhr=
+) {
+-    xhr.setRequestHeader('X-Requested-With', "XMLHttpRequest");
+-  });
+-
+-  submit(function(e, data, status, xhr) {
+-    equal(data.HTTP_X_CSRF_TOKEN, undefined, 'X-CSRF-Token header should N=
+OT be sent');
+-  });
+-});
+-
+ asyncTest('intelligently guesses crossDomain behavior when target URL is a=
+ different domain', 1, function(e, xhr) {
+=20
+   // Don't set data-cross-domain here, just set action to be a different d=
+omain than localhost
+@@ -156,20 +140,4 @@ asyncTest('intelligently guesses crossDomain behavior =
+when target URL is a diffe
+=20
+   setTimeout(function() { start(); }, 13);
+ });
+-
+-asyncTest('does not set crossDomain if explicitly set to false on element'=
+, 1, function() {
+-  buildForm({ action: 'http://www.alfajango.com', 'data-cross-domain': fal=
+se });
+-  $('#qunit-fixture').append('<meta name=3D"csrf-token" content=3D"cf50faa=
+3fe97702ca1ae" />');
+-
+-  $('#qunit-fixture').find('form')
+-    .bind('ajax:beforeSend', function(e, xhr, settings) {
+-      equal(settings.crossDomain, false, 'crossDomain should be set to fal=
+se');
+-      // prevent request from actually getting sent off-domain
+-      return false;
+-    })
+-    .trigger('submit');
+-
+-  setTimeout(function() { start(); }, 13);
+-});
+-
+ })();
+diff --git a/test/public/test/data-method.js b/test/public/test/data-method=
+.js
+index c442662..5752837 100644
+--- a/test/public/test/data-method.js
++++ b/test/public/test/data-method.js
+@@ -46,4 +46,30 @@ asyncTest('link "target" should be carried over to gener=
+ated form', 1, function(
+   });
+ });
+=20
++asyncTest('link with "data-method" and cross origin', 1, function() {
++  var data =3D {};
++
++  $('#qunit-fixture')
++    .append('<meta name=3D"csrf-param" content=3D"authenticity_token"/>')
++    .append('<meta name=3D"csrf-token" content=3D"cf50faa3fe97702ca1ae"/>'=
+);
++
++  $(document).on('submit', 'form', function(e) {
++    $(e.currentTarget).serializeArray().map(function(item) {
++      data[item.name] =3D item.value;
++    });
++
++    return false;
++  });
++
++  var link =3D $('#qunit-fixture').find('a');
++
++  link.attr('href', 'http://www.alfajango.com');
++
++  link.trigger('click');
++
++  start();
++
++  notEqual(data.authenticity_token, 'cf50faa3fe97702ca1ae');
++});
++
+ })();
+diff --git a/test/public/test/override.js b/test/public/test/override.js
+index ba84b6d..0dca60c 100644
+--- a/test/public/test/override.js
++++ b/test/public/test/override.js
+@@ -32,7 +32,7 @@ asyncTest("the getter for an element's href is overridabl=
+e", 1, function() {
+=20
+ asyncTest("the getter for an element's href works normally if not overridd=
+en", 1, function() {
+   $.rails.ajax =3D function(options) {
+-    equal('/real/href', options.url);
++    equal(location.protocol + '//' + location.host + '/real/href', options=
+.url);
+   }
+   $.rails.handleRemote($('#qunit-fixture').find('a'));
+   start();
+--=20
+2.3.1
+
+
+--H8ygTp4AXg6deix2
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: attachment; filename="3-1-2-jquery-rails-csrf.patch"
+Content-Transfer-Encoding: quoted-printable
+
+=46rom 92f2a9d28542aad7faf770adae99f608c5b1e2c9 Mon Sep 17 00:00:00 2001
+From: =3D?UTF-8?q?Rafael=3D20Mendon=3DC3=3DA7a=3D20Fran=3DC3=3DA7a?=3D
+ <rafaelmfranca@gmail.com>
+Date: Wed, 25 Mar 2015 17:39:15 -0300
+Subject: [PATCH] Upgrade jquery-ujs to do proper checks for cross domain
+ requests
+
+Fix CVE-2015-1840
+---
+ vendor/assets/javascripts/jquery_ujs.js | 31 +++++++++++++++++++++++++----=
+--
+ 1 file changed, 25 insertions(+), 6 deletions(-)
+
+diff --git a/vendor/assets/javascripts/jquery_ujs.js b/vendor/assets/javasc=
+ripts/jquery_ujs.js
+index a26f48c..3c94106 100644
+--- a/vendor/assets/javascripts/jquery_ujs.js
++++ b/vendor/assets/javascripts/jquery_ujs.js
+@@ -86,16 +86,14 @@
+=20
+     // Default way to get an element's href. May be overridden at $.rails.=
+href.
+     href: function(element) {
+-      return element.attr('href');
++      return element[0].href;
+     },
+=20
+     // Submits "remote" forms and links with ajax
+     handleRemote: function(element) {
+-      var method, url, data, elCrossDomain, crossDomain, withCredentials, =
+dataType, options;
++      var method, url, data, withCredentials, dataType, options;
+=20
+       if (rails.fire(element, 'ajax:before')) {
+-        elCrossDomain =3D element.data('cross-domain');
+-        crossDomain =3D elCrossDomain =3D=3D=3D undefined ? null : elCross=
+Domain;
+         withCredentials =3D element.data('with-credentials') || null;
+         dataType =3D element.data('type') || ($.ajaxSettings && $.ajaxSett=
+ings.dataType);
+=20
+@@ -147,7 +145,7 @@
+           error: function(xhr, status, error) {
+             element.trigger('ajax:error', [xhr, status, error]);
+           },
+-          crossDomain: crossDomain
++          crossDomain: rails.isCrossDomain(url)
+         };
+=20
+         // There is no withCredentials for IE6-8 when
+@@ -167,6 +165,27 @@
+       }
+     },
+=20
++    // Determines if the request is a cross domain request.
++    isCrossDomain: function(url) {
++      var originAnchor =3D document.createElement("a");
++      originAnchor.href =3D location.href;
++      var urlAnchor =3D document.createElement("a");
++
++      try {
++        urlAnchor.href =3D url;
++        // This is a workaround to a IE bug.
++        urlAnchor.href =3D urlAnchor.href;
++
++        // Make sure that the browser parses the URL and that the protocol=
+s and hosts match.
++        return !urlAnchor.protocol || !urlAnchor.host ||
++          (originAnchor.protocol + "//" + originAnchor.host !=3D=3D
++            urlAnchor.protocol + "//" + urlAnchor.host);
++      } catch (e) {
++        // If there is an error parsing the URL, assume it is crossDomain.
++        return true;
++      }
++    },
++
+     // Handles "data-method" on links such as:
+     // <a href=3D"/users/5" data-method=3D"delete" rel=3D"nofollow" data-c=
+onfirm=3D"Are you sure?">Delete</a>
+     handleMethod: function(link) {
+@@ -178,7 +197,7 @@
+         form =3D $('<form method=3D"post" action=3D"' + href + '"></form>'=
+),
+         metadataInput =3D '<input name=3D"_method" value=3D"' + method + '=
+" type=3D"hidden" />';
+=20
+-      if (csrfParam !=3D=3D undefined && csrfToken !=3D=3D undefined) {
++      if (csrfParam !=3D=3D undefined && csrfToken !=3D=3D undefined && !r=
+ails.isCrossDomain(href)) {
+         metadataInput +=3D '<input name=3D"' + csrfParam + '" value=3D"' +=
+ csrfToken + '" type=3D"hidden" />';
+       }
+=20
+--=20
+2.3.1
+
+
+--H8ygTp4AXg6deix2
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: attachment; filename="4-0-3-jquery-rails-csrf.patch"
+Content-Transfer-Encoding: quoted-printable
+
+=46rom 11ad7bc5211b02aad131ae9d009ced2164f4b975 Mon Sep 17 00:00:00 2001
+From: =3D?UTF-8?q?Rafael=3D20Mendon=3DC3=3DA7a=3D20Fran=3DC3=3DA7a?=3D
+ <rafaelmfranca@gmail.com>
+Date: Wed, 25 Mar 2015 17:36:17 -0300
+Subject: [PATCH] Upgrade jquery-ujs to do proper checks for cross domain
+ requests
+
+Fix CVE-2015-1840
+---
+ vendor/assets/javascripts/jquery_ujs.js | 31 +++++++++++++++++++++++++----=
+--
+ 1 file changed, 25 insertions(+), 6 deletions(-)
+
+diff --git a/vendor/assets/javascripts/jquery_ujs.js b/vendor/assets/javasc=
+ripts/jquery_ujs.js
+index a4fb0be..1ee8859 100644
+--- a/vendor/assets/javascripts/jquery_ujs.js
++++ b/vendor/assets/javascripts/jquery_ujs.js
+@@ -86,16 +86,14 @@
+=20
+     // Default way to get an element's href. May be overridden at $.rails.=
+href.
+     href: function(element) {
+-      return element.attr('href');
++      return element[0].href;
+     },
+=20
+     // Submits "remote" forms and links with ajax
+     handleRemote: function(element) {
+-      var method, url, data, elCrossDomain, crossDomain, withCredentials, =
+dataType, options;
++      var method, url, data, withCredentials, dataType, options;
+=20
+       if (rails.fire(element, 'ajax:before')) {
+-        elCrossDomain =3D element.data('cross-domain');
+-        crossDomain =3D elCrossDomain =3D=3D=3D undefined ? null : elCross=
+Domain;
+         withCredentials =3D element.data('with-credentials') || null;
+         dataType =3D element.data('type') || ($.ajaxSettings && $.ajaxSett=
+ings.dataType);
+=20
+@@ -147,7 +145,7 @@
+           error: function(xhr, status, error) {
+             element.trigger('ajax:error', [xhr, status, error]);
+           },
+-          crossDomain: crossDomain
++          crossDomain: rails.isCrossDomain(url)
+         };
+=20
+         // There is no withCredentials for IE6-8 when
+@@ -167,6 +165,27 @@
+       }
+     },
+=20
++    // Determines if the request is a cross domain request.
++    isCrossDomain: function(url) {
++      var originAnchor =3D document.createElement("a");
++      originAnchor.href =3D location.href;
++      var urlAnchor =3D document.createElement("a");
++
++      try {
++        urlAnchor.href =3D url;
++        // This is a workaround to a IE bug.
++        urlAnchor.href =3D urlAnchor.href;
++
++        // Make sure that the browser parses the URL and that the protocol=
+s and hosts match.
++        return !urlAnchor.protocol || !urlAnchor.host ||
++          (originAnchor.protocol + "//" + originAnchor.host !=3D=3D
++            urlAnchor.protocol + "//" + urlAnchor.host);
++      } catch (e) {
++        // If there is an error parsing the URL, assume it is crossDomain.
++        return true;
++      }
++    },
++
+     // Handles "data-method" on links such as:
+     // <a href=3D"/users/5" data-method=3D"delete" rel=3D"nofollow" data-c=
+onfirm=3D"Are you sure?">Delete</a>
+     handleMethod: function(link) {
+@@ -178,7 +197,7 @@
+         form =3D $('<form method=3D"post" action=3D"' + href + '"></form>'=
+),
+         metadataInput =3D '<input name=3D"_method" value=3D"' + method + '=
+" type=3D"hidden" />';
+=20
+-      if (csrfParam !=3D=3D undefined && csrfToken !=3D=3D undefined) {
++      if (csrfParam !=3D=3D undefined && csrfToken !=3D=3D undefined && !r=
+ails.isCrossDomain(href)) {
+         metadataInput +=3D '<input name=3D"' + csrfParam + '" value=3D"' +=
+ csrfToken + '" type=3D"hidden" />';
+       }
+=20
+--=20
+2.3.1
+
+
+--H8ygTp4AXg6deix2--
+
+--n/aVsWSeQ4JHkrmm
+Content-Type: application/pgp-signature
 
 -----BEGIN PGP SIGNATURE-----
 
-iQJNBAABCgA3FiEE3HAyZir4heL0fyQ/UnRmohynnm0FAmm0EAkZHHRvbWFzQG9w
-ZW5zc2wuZm91bmRhdGlvbgAKCRBSdGaiHKeebdqND/4n6//Ot7njGht7NwPN0puR
-81u3Iio8YIfMJBWqvnFBVgPfVnAepDqB63H7gBhRNGJxYd4smEOKrwEgY/5QvA0P
-Tq2aXGO9UQ45SgCD96SqZ1n7Sw+CHeG8h1ZS+CUdUcnjYYHXEb4iE6UhFbFhiIjy
-AQjEvKh4ESI+C2W2ttu5lHrBc+rsXZXfLM4tAKZvqaYj+afcaW5ghNt1AGrDlCOX
-cNzg54DMLkJeVQ4symtZKPaoQUbFNP1WA8XkhGZkOH7yBGn4Uk65qzmXW88T22RA
-5LgHpMFGESkMZuEVuJsQ5SnGwpd2ihLkL+mXXw7Sa51q+DNbJAXvuq07i6BH9W4z
-076tznixqjpu5FZg1LbEcYIbp66q5N/2xdz1BNV8Sve841tBnnvwC0k3Wjkdtdhi
-RWnXKrydAmssVNWMZ1wt5OOJfX2wwui9MBJsRodoTlM78eYIW3TfZKnQ9iy0KA94
-CYC3+E23s1SDJNi5uKcKZXXnKwaNtvVtzS/RyaKWclr5X3SgMtjNF4sVHPK7kPkd
-zt9wqyLZDJPQ34vol12d20EcW6DirSEFVUyNdCg3kIjArwa7Ayg/zCyumkMsipBa
-4RfgvkufoG6ORkKTf0eSZ8GBvGzFrW9GVGvaa0FwspWiMtqTtieqMHJNBcprxQtZ
-FcKX0kkEgkU5apprMz6bTg==
-=+BGG
+iQEcBAEBAgAGBQJVgGVBAAoJEJUxcLy0/6/G2pEH/1qY7d+b0yhctNT1NrwOLYW+
+ZaxTAPa+ZibfY2DjZCQvM8kWWMVAi23nuSKPr0sr+m96iptqIXa3rv4L4Zx32d/A
+rkuY0kJhND3DOd7eCihiuHivXCM7wG0XtJ8+WeuM+r34xarZgxUW3X1OZ0HhIeGK
+QWUXcdqcWhE/JPXUPC8uFxT1XZoS6p+uslr7dbFUOiLrqkoxD5oxRbQsvWgOgbH6
+FM6YkFrnSHVdEkSo+oYRuLvhcl28zLwp89/AhQdHHh5gDT0GWg1DZr6kcuqZf+Ev
+0yyc+cqrhiXjJP6zm+HBWT8b+rFjdw7qSv9Ksnz19rX+wpDG4IdUKWMLWKJwpJQ=
+=opGv
 -----END PGP SIGNATURE-----
 
---=-/g14cuyNGYbDr0ZiNokn--
+--n/aVsWSeQ4JHkrmm--
