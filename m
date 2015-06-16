@@ -1,4 +1,9 @@
-Received: (qmail 9635 invoked by uid 550); 4 Jul 2024 11:00:35 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1423" "Tuesday" "16" "June" "2015" "05:44:50" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150616094450.27DCF13A80E@smtpvmsrv1.mitre.org>" "45" "[oss-security] Re: CVE ID Request: Buffer overflow in ArduinoJson when parsing crafted JSON strings" nil nil nil "6" "2015061609:44:50" "[oss-security] Re: CVE ID Request: Buffer overflow in ArduinoJson when parsing crafted JSON strings" (number mark "U       cve-assign@m Jun 16   45/1423  " thread-indent "\"[oss-security] Re: CVE ID Request: Buffer overflow in ArduinoJson when parsing crafted JSON strings\"\n") "<F0AF15DC-5C68-4A2F-A920-BC5750912A97@me.com>" ("<F0AF15DC-5C68-4A2F-A920-BC5750912A97@me.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 17539 invoked by uid 550); 16 Jun 2015 09:45:10 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,99 +11,58 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 17490 invoked from network); 16 Jun 2015 09:45:03 -0000
+In-Reply-To: <F0AF15DC-5C68-4A2F-A920-BC5750912A97@me.com>
+Message-Id: <20150616094450.27DCF13A80E@smtpvmsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Tue, 16 Jun 2015 05:44:50 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 20238 invoked from network); 4 Jul 2024 00:58:37 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1720054709; x=1720659509; darn=lists.openwall.com;
-        h=content-transfer-encoding:in-reply-to:references:subject:to
-         :mime-version:user-agent:reply-to:from:date:message-id:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=fIWN+xvq4mnmzki9q7EDRiuvU4LYANHgKCBjXTIMWXo=;
-        b=YcKFEhDiZLpT9r67yfC7uMvLDjzCsBjU0aJy6aLCKd6mPKWZu9HxSPq8vlvzAABd+I
-         PiUodbObypPHrk95A3XIlo3he5tjqTfAKdIq9xkmfEbiVSpOTihVHl5JBxrUBOnYaJVh
-         fHYv2hnJ7zvx4eXW/nMQGNCW49LGdMq2lTUyJMMzOUkgplG28xwshGi0UghkpoqRKZGR
-         Pm322xLr7Ev2VgvKuAv5L9xI5rF+/KsvfoUKvD5QTJ16peDGedM94PVCZ8M4GBTilNXv
-         V0j9PY0o3wOYyeJS8t2XoXj6w729mj1IRqTdX7TuTSzl0ld+cip/BIc+TqIaMx77tqj5
-         0dMw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720054709; x=1720659509;
-        h=content-transfer-encoding:in-reply-to:references:subject:to
-         :mime-version:user-agent:reply-to:from:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=fIWN+xvq4mnmzki9q7EDRiuvU4LYANHgKCBjXTIMWXo=;
-        b=YWDbzCekoIxv9B6aXMuj9KC6QHP+fXXs9zC11RhElpJzU0URGWf7xC/FEROHAtjwYF
-         wtfl69ZgUnZwtN85CTtWgMONN8E49//IiC33ULdBq0P8eF99Fs1bK6cMfF/6Ww2EKxLc
-         3aRdauJPolHvUkn+nwzOILW9sN4gMXnEzyLHi+6Jkvxq42b6vtU6jCy2a8cnOQMIzbCt
-         vfvhixyrs7EB6JCFp98otTII7nkojOYU5a6XF8cfdKwvFWYQdmT7BCu6Ox2lfg2kdEGM
-         Cfpi0sqZ484EYHIEnc20nc5gpOIfkREs7MACLEKKqFwk3NJ7yiL6gIXOelKNK2VUyKbt
-         5I3Q==
-X-Gm-Message-State: AOJu0YzZI6ZOdp35JUmdcEE5P7OqTMF/m1EC84n7H4mwqnk9RZJulWPV
-	4ps05v3sAKkNB8X3b69U2T6aOzBNTZq8GIgBC1wji5+dbvtevrgZxaMCcw==
-X-Google-Smtp-Source: AGHT+IE36liA6HM4MJS36fTKDCQ8sMYZ8T1hSKyZdXvjzWCsSOcC/ZYHf7bY7IxgmSK7IyQMObLwTg==
-X-Received: by 2002:a4a:5487:0:b0:5c4:396e:6ef1 with SMTP id 006d021491bc7-5c646ac19d0mr348796eaf.0.1720054707037;
-        Wed, 03 Jul 2024 17:58:27 -0700 (PDT)
-Message-ID: <6685F3B1.6090508@gmail.com>
-Date: Wed, 03 Jul 2024 19:58:25 -0500
-From: Jacob Bachmeyer <jcb62281@gmail.com>
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.8.1.22) Gecko/20090807 SeaMonkey/1.1.17 Mnenhy/0.7.6.0
-MIME-Version: 1.0
-To: oss-security@lists.openwall.com
-References: <20240701083838.GA12787@localhost.localdomain> <6684B10C.3070904@gmail.com> <CAH8yC8=zAGQsdCXPRM3LJsoMJS+AhXLJ01awX4k3DpTbxoMqWg@mail.gmail.com>
-In-Reply-To: <CAH8yC8=zAGQsdCXPRM3LJsoMJS+AhXLJ01awX4k3DpTbxoMqWg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Subject: Re: [oss-security] CVE-2024-6387: RCE in OpenSSH's server, on glibc-based
- Linux systems
+Subject: [oss-security] Re: CVE ID Request: Buffer overflow in ArduinoJson when parsing crafted JSON strings
+To: gcanalesb@me.com
 
-Jeffrey Walton wrote:
-> On Wed, Jul 3, 2024 at 2:39 AM Jacob Bachmeyer <jcb62281@gmail.com> wrote:
->   
->> Qualys Security Advisory wrote:
->>     
->>> [...]
->>>       
->> A thought occurred to me late last night:  this exploit required the use
->> of a very long fake user name (~128KB).  No legitimate account will have
->> such a name; should defense-in-depth motivate limiting maximum user name
->> length to some (un)reasonable value?  (The actual longest user name on
->> the system cannot be used to set the limit because doing that would leak
->> the length of the longest valid user name.)  I doubt any real system has
->> even 256-byte-long user names, so a 1KiB limit (perhaps by default, with
->> a configuration option (I propose "MaxLoginNameLen" to start a
->> discussion) to raise or lower it?) would be far beyond any reasonable
->> need, but would (or so it seems to me) have made at least this exploit
->> much harder, if not impossible.
->>     
->
-> $ grep -IR LOGIN_NAME_MAX /usr/include
-> /usr/include/bits/confname.h:    _SC_LOGIN_NAME_MAX,
-> /usr/include/bits/confname.h:#define    _SC_LOGIN_NAME_MAX    _SC_LOGIN_NAME_MAX
-> /usr/include/bits/local_lim.h:#define LOGIN_NAME_MAX            256
-> /usr/include/bits/posix1_lim.h:#define  _POSIX_LOGIN_NAME_MAX   9
-> ...
->   
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I see.  So there is a declared system limit (apparently 256 bytes on GNU 
-systems, but allowed to be as low as 9 bytes in POSIX) on the length of 
-a valid user name.  Why does sshd not, as a defense-in-depth measure, 
-immediately drop the connection if a user name longer than that limit is 
-received?  ("We had not thought of that." is a perfectly good answer 
-here, of course.)
+> https://github.com/bblanchon/ArduinoJson/commit/5e7b9ec688d79e7b16ec7064e1d37e8481a31e72
+> 
+> https://github.com/bblanchon/ArduinoJson/blob/master/CHANGELOG.md
+> 
+> https://github.com/bblanchon/ArduinoJson/pull/81
 
-Solar Designer mentioned a previous patch that avoided sending 
-excessively long user names to PAM in response to a PAM implementation 
-that apparently has exploitable overflows.  I would suggest adding 
-another check using LOGIN_NAME_MAX as the limit to the code where the 
-user name is first received.  If a user name that cannot possibly be 
-valid on the system is received, drop the connection immediately without 
-further parsing.  This would potentially add a risk for fingerprinting 
-based on LOGIN_NAME_MAX, but that is probably minor compared to other 
-ways to identify a remote OS and this check would have prevented the 
-presented Ubuntu 6.06.1 exploit of this issue.  It might make other, 
-yet-to-be-found issues infeasible to exploit.
+> v4.5
+> 
+> Fixed buffer overflow when input contains a backslash followed by a terminator (issue #81)
+> Upgrading is recommended since previous versions contain a potential security risk.
 
-I argue for it as a defense-in-depth measure.
+> the pointer will move one more step to
+> 
+> "\\[\]!"
+> 
+> the unescapeChar function will once again move the pointer to:
+> 
+> "\\\[!]"
+> 
+> And, finally, at the beginning of the next cycle
+> 
+> "\\\![]"
 
+Use CVE-2015-4590 for this issue involving improper handling of quoting at the
+end of a string.
 
--- Jacob
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
+iQEcBAEBAgAGBQJVf++wAAoJEKllVAevmvms0gkH/2cT6uzjei/W8O9l9QpTgO5y
+i592tD/BqfbNkjW9koCm6gV+ptV9fk+QeNWibsnInJZx/9kylIote6C5rpYh9xwL
+OOkwsoZt19S4BG+4wWI4VzP4KjzJ5VlG2U2RU1ymPnd9edQmI+2NeEkF0KuJz9qs
+u3fJgM6G0HGBX/yY0By5Lvp+9I0ypch/e9PyGh2JlgiIXHJPvr2AeOX3e7vD7pKM
+2vXZlTv3UThnPmedwjuRHiO0v/w6jHER5nxT/iJpa1mE08xzyejUJajJF1yz1Xjj
+YcBgfB6VSeTBkM+NYF22GPh248pDIPz2sEvq2OPHkrNJZz1S4kbTK2mjdOSPTTM=
+=OYDd
+-----END PGP SIGNATURE-----
