@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["7065" "Thursday" "7" "June" "2018" "19:32:22" "+0300" "Andrey Gura" "agura@apache.org" "<CAK1mX7HgUV2_fcro107pDA8e5VNQD_NDcyz53QKZhhKFhAb3fA@mail.gmail.com>" "174" "Re: [oss-security] [CVE-2014-0114]: Apache Ignite is vulnerable to existing CVE-2014-0114" nil nil nil "6" "2018060716:32:22" "[oss-security] [CVE-2014-0114]: Apache Ignite is vulnerable to existing CVE-2014-0114" (number mark "U       agura@apache Jun  7  174/7065  " thread-indent "\"Re: [oss-security] [CVE-2014-0114]: Apache Ignite is vulnerable to existing CVE-2014-0114\"\n") "<CAK0qHnpaLFap2tdujYok1DkRg9PNDXtaxBpO2CY6saSOsnsyZg@mail.gmail.com>" ("<CAK0qHnrDU3PVMWdeBEZjatHGjiB8SBbmk1UMuPEphvMuCHkbhA@mail.gmail.com>" "<20180606133359.149aeded@redhat.com>" "<CAK0qHnpaLFap2tdujYok1DkRg9PNDXtaxBpO2CY6saSOsnsyZg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["9167" "Tuesday" "16" "June" "2015" "11:03:35" "-0700" "Aaron Patterson" "tenderlove@ruby-lang.org" "<20150616180335.GA28496@TC.local>" "285" "[oss-security] [CVE-2015-3225] Potential Denial of Service Vulnerability in Rack" nil nil nil "6" "2015061618:03:35" "[oss-security] [CVE-2015-3225] Potential Denial of Service Vulnerability in Rack" (number mark "U       tenderlove@r Jun 16  285/9167  " thread-indent "\"[oss-security] [CVE-2015-3225] Potential Denial of Service Vulnerability in Rack\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 27781 invoked by uid 550); 7 Jun 2018 17:11:00 -0000
+Received: (qmail 4088 invoked by uid 550); 16 Jun 2015 18:04:03 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,198 +12,316 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11798 invoked from network); 7 Jun 2018 16:32:37 -0000
-X-Gm-Message-State: APt69E3qf7ToBSpb0wvv6b5jirJAQS7HoO8EswtW6ttBbs0elTjXTLys
-	+bkbjpsvBQG/nGfR00hC7jnpuiW9giXeAeTEvqY=
-X-Google-Smtp-Source: ADUXVKKgokw9oEKzflk0k3tDvOechgyV2QI4zr7SBsNXNAIAmDDQHmTC190FVAgbsCSLn/JV4pP7E3IKmGxem6rAaVU=
-X-Received: by 2002:a1c:d905:: with SMTP id q5-v6mr2287732wmg.78.1528389142859;
- Thu, 07 Jun 2018 09:32:22 -0700 (PDT)
+Received: (qmail 3970 invoked from network); 16 Jun 2015 18:03:51 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:sender:date:from:to:subject:message-id
+         :mime-version:content-type:content-disposition:user-agent;
+        bh=I1LBvUY8vogmY0VudQQs6taedr72HwQsHqfY2iASJNM=;
+        b=eTzlIWO8H8V61oaq6WGGRrKFBB7uiZjpMLcKe9Bd9G/HmRY+A5137QcF1yuH0i4nSN
+         8rGr1VRW9vJqcmm/3d2XJL5q/ZUd+Noik50hwJb+T2F0Oo2lRV3IB3GDLRvspG1uyDVy
+         1iqxXUVPr4xU+VgK5JsiPUMke7/jCKADzwLgfWpWaWS5jvUGmJBF+nKZE9Y8TRqoi9r6
+         hAx1b/pKfLZzUe2WE8LXu685eAVWTkmJXrwACr+Fv2kQYiJ7Uz5HFSiAAwVAdQ4ekhMw
+         UiPI10uH0GYXqRReLED4TJMnMY+kTLW2LLV4ZVR6jtzWC05drl2QM4z+FYmHHKLoVfpS
+         fwFQ==
+X-Gm-Message-State: ALoCoQklpmNqqeARv15kRjQLbbfIdpogjup2Mot3xdy31HTyBvIrjwK7jcYCas4TLtNOySLK6eQK
+X-Received: by 10.66.66.173 with SMTP id g13mr2730200pat.155.1434477819686;
+        Tue, 16 Jun 2015 11:03:39 -0700 (PDT)
+Sender: Aaron Patterson <aaron@tenderlovemaking.com>
+Date: Tue, 16 Jun 2015 11:03:35 -0700
+From: Aaron Patterson <tenderlove@ruby-lang.org>
+To: security@suse.de, rubyonrails-security@googlegroups.com,
+	oss-security@lists.openwall.com, ruby-security-ann@googlegroups.com
+Message-ID: <20150616180335.GA28496@TC.local>
 MIME-Version: 1.0
-In-Reply-To: <CAK0qHnpaLFap2tdujYok1DkRg9PNDXtaxBpO2CY6saSOsnsyZg@mail.gmail.com>
-References: <CAK0qHnrDU3PVMWdeBEZjatHGjiB8SBbmk1UMuPEphvMuCHkbhA@mail.gmail.com>
- <20180606133359.149aeded@redhat.com> <CAK0qHnpaLFap2tdujYok1DkRg9PNDXtaxBpO2CY6saSOsnsyZg@mail.gmail.com>
-From: Andrey Gura <agura@apache.org>
-Date: Thu, 7 Jun 2018 19:32:22 +0300
-X-Gmail-Original-Message-ID: <CAK1mX7HgUV2_fcro107pDA8e5VNQD_NDcyz53QKZhhKFhAb3fA@mail.gmail.com>
-Message-ID: <CAK1mX7HgUV2_fcro107pDA8e5VNQD_NDcyz53QKZhhKFhAb3fA@mail.gmail.com>
-To: dev <dev@ignite.apache.org>
-Cc: Tomas Hoger <thoger@redhat.com>, oss-security@lists.openwall.com, 
-	"Rai, Harendra" <harendra.rai@ncr.com>
-Content-Type: text/plain; charset="UTF-8"
-Subject: Re: [oss-security] [CVE-2014-0114]: Apache Ignite is vulnerable to
- existing CVE-2014-0114
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="Pd0ReVV5GZGQvF3a"
+Content-Disposition: inline
+User-Agent: Mutt/1.5.23 (2014-03-12)
+Subject: [oss-security] [CVE-2015-3225] Potential Denial of Service Vulnerability in Rack
 
-Hi,
+--Pd0ReVV5GZGQvF3a
+Content-Type: multipart/mixed; boundary="6c2NcOVqGQ03X4Wi"
+Content-Disposition: inline
 
-I've looked to the problem and didn't see any problem with BeanUtils.
-Only module that depends on BeanUtils is Cassandra cache store in
-order to map POJO to CQL queries. Usages are only on Ignite side with
-configured Cassandra cache store and can't exploit described
-vulnerability from my point of view. All classes are already
-accessible on Ignite node (so class loader is also accessible without
-any exploites) and this classes don't exist on Cassandra side.
 
-I also don't see any reason to include BeanUtils library into Ignite
-.Net package because it never uses this library. Just a bug in build
-procedure.
+--6c2NcOVqGQ03X4Wi
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Thanks!
+Potential Denial of Service Vulnerability in Rack
 
-On Wed, Jun 6, 2018 at 7:08 PM, Denis Magda <dmagda@apache.org> wrote:
-> Hello Tomas,
->
-> We've just updated the version of Binutils because Ignite doesn't use this
-> library directly. So we don't need to inject addBeanIntrospector call.
->
-> Binutils are used by some dependencies like Cassandra. Let us confirm that
-> the dependencies shouldn't be upgraded.
->
-> --
-> Denis
->
-> On Wed, Jun 6, 2018 at 4:33 AM, Tomas Hoger <thoger@redhat.com> wrote:
->
->> Hi Denis!
->>
->> On Fri, 1 Jun 2018 10:16:50 -0700 Denis Magda wrote:
->>
->> > [CVE-2014-0114]: Apache Ignite is vulnerable to existing CVE-2014-0114
->> >
->> > Severity: Important
->> >
->> > Vendor: The Apache Software Foundation
->> >
->> > Versions Affected: Apache Ignite 2.4 or earlier
->> >
->> > Impact:
->> > An attacker can execute arbitrary code on Ignite nodes in the case
->> > when Ignite classpath contains arbitrary vulnerable classes.
->> >
->> > Description:
->> > Apache Ignite used commons-beanutils-1.8.3.jar library which did not
->> > suppress the class property, which allowed remote attackers to
->> > "manipulate" the ClassLoader and execute arbitrary code via the class
->> > parameter, as demonstrated by the passing of this parameter to the
->> > getClass method of the ActionForm object in Struts 1.
->>
->> This announcement is very light on details.  Would it be possible to
->> provide more details, ideally a link to the fix that was applied to
->> address this issue?
->>
->> Searching for more information, I found out that the upstream Jira
->> ticket for this issue should be:
->>
->> https://issues.apache.org/jira/browse/IGNITE-8472
->>
->> The ticket is non-public, but its content is leaked via a mailing list:
->>
->> https://www.mail-archive.com/search?l=issues%40ignite.
->> apache.org&q=subject%3AIGNITE-8472
->>
->> This has some important info, indicating that the problem (only?)
->> affects Ignite for .NET.  The reported problem basically seems to be:
->> Ignite for .NET bundles commons-beanutils 1.8.3 and that should be
->> upgraded to 1.9.2.  Looking into apache.ignite.2.4.0.nupkg and
->> apache.ignite.2.5.0.nupkg, I can see that commons-beanutils upgrade as
->> requested did happen in 2.5.0.
->>
->> Note that I do not see any commons-beanutils jar in
->> apache-ignite-fabric-2.4.0-bin.zip and
->> apache-ignite-fabric-2.5.0-bin.zip.  Are those, as well as source
->> distribution, considered unaffected?
->>
->> Now back to the CVE - I do not believe that your re-use of the old
->> CVE-2014-0114 is correct.  In the report, there was some ambiguity
->> whether Struts or Commons-BeanUtils should be blamed for the flaw,
->> however it seems to be explicit enough that the CVE-2014-0114 is for
->> Struts:
->>
->> http://openwall.com/lists/oss-security/2014/06/15/10
->>
->> As noted in the mail, the problem wasn't fixed in Commons-BeanUtils,
->> which only added mechanisms to make it easy for applications using
->> Commons-BeanUtils to easily disable processing of the "class"
->> property.  It did not even disable processing by default, as noted in
->> the release notes:
->>
->> http://commons.apache.org/proper/commons-beanutils/
->> javadocs/v1.9.2/RELEASE-NOTES.txt
->>
->> """
->> Release 1.9.2 mainly addresses a potential security issue when accessing
->> properties in an uncontrolled way. In a nutshell, if an application that
->> uses
->> Commons BeanUtils passes property paths from an external source directly to
->> the getProperty() method of BeanUtilsBean, an attacker can access the class
->> loader via the class property available on all Java objects.
->>
->> In version 1.9.2 now a special BeanIntrospector class was added which
->> allows
->> suppressing this property. Note that this BeanIntrospector is NOT enabled
->> by
->> default! Commons BeanUtils is a low-level library, and on this layer it
->> cannot
->> be decided whether access to a certain property is legal or not. Therefore,
->> an application has to activate this suppressing BeanIntrospector
->> explicitly.
->> This can be done with the following lines of code:
->>
->> BeanUtilsBean bub = new BeanUtilsBean();
->> bub.getPropertyUtils().addBeanIntrospector(
->>     SuppressPropertiesBeanIntrospector.SUPPRESS_CLASS);
->>
->> Now all access to properties has to be done via the specially configured
->> BeanUtilsBean instance. More information about this issue can be found at
->> https://issues.apache.org/jira/browse/BEANUTILS-463 or in section 2.5
->> of the user's guide.
->> """
->>
->> Note that there was a request to assign a separate CVE for the
->> BeanUtils part that was rejected (actually, CVE-2014-3540 was assigned
->> and later rejected), see this post from Mitre for details:
->>
->> http://openwall.com/lists/oss-security/2014/07/08/1
->>
->> It has few parts that are relevant to Ignite:
->>
->> """
->> In particular, the 1597344 change has this documentation:
->>
->>    Adding this instance as BeanIntrospector to an instance of
->>    PropertyUtilsBean suppresses the class property; it can then no
->>    longer be accessed.
->>
->> This is an additional step that would need to be followed for any
->> currently shipped product that relies on commons-beanutils. Simply
->> picking up version 1.9.2 does not solve the problem. The product's
->> source code must additionally be modified by (for example) changing
->> or adding an addBeanIntrospector method call.
->> """
->>
->> Did Ignite get any other changes related to this issue apart from
->> upgrading Commons-BeanUtils?  If not, Commons-BeanUtils upgrade should
->> not be expected to solve the problem (if Ignite actually was affected /
->> used Commons-BeanUtils in a vulnerable way, which isn't demonstrated in
->> the IGNITE-8472).
->>
->> Another relevant part is:
->>
->> """
->> If any other product makes a security announcement that they have
->> added
->> addBeanIntrospector(SuppressPropertiesBeanIntrospector.SUPPRESS_CLASS)
->> or equivalent code as a change to the default behavior, then there can
->> be an individual CVE ID for that product. However, if any other product
->> simply makes a security announcement that they have decided to ship
->> commons-beanutils 1.9.2 -- but the class property remains exposed in
->> the product as it is shipped and installed by default -- then a CVE ID
->> would not be assigned.
->> """
->>
->> If Ignite got/gets a fix that leverages the SUPPRESS_CLASS from
->> Commons-BeanUtils 1.9.2 to disable processing of the class property, it
->> should get its own CVE assigned.
->>
->> --
->> Tomas Hoger / Red Hat Product Security
->>
+There is a potential denial of service vulnerability in Rack. This
+vulnerability has been assigned the CVE identifier CVE-2015-3225.
+
+Versions Affected:  All.
+Not affected:       None.
+Fixed Versions:     1.6.2, 1.5.4
+
+Impact=20
+------=20
+Carefully crafted requests can cause a `SystemStackError` and potentially
+cause a denial of service attack.
+
+All users running an affected release should either upgrade or use one of t=
+he workarounds immediately.=20
+
+Releases=20
+--------=20
+The FIXED releases are available at the normal locations.=20
+
+Workarounds=20
+-----------=20
+There are no feasible workarounds for this issue.=20
+
+
+Patches=20
+-------=20
+To aid users who aren't able to upgrade immediately we have provided patche=
+s for the two supported release series.  They are in git-am format and cons=
+ist of a single changeset.=20
+
+* 1-6-deep_params.patch - Patch for 1.6 series=20
+* 1-5-deep_params.patch - Patch for 1.5 series=20
+
+Please note that only the 1.6.x and 1.5.x series are supported at present. =
+ Users of earlier unsupported releases are advised to upgrade as soon as po=
+ssible as we cannot guarantee the continued availability of security fixes =
+for unsupported releases.
+
+Credits=20
+-------=20
+
+Special thanks to Tomek Rabczak from the NCC Group for reporting this!
+
+--=20
+Aaron Patterson
+http://tenderlovemaking.com/
+
+--6c2NcOVqGQ03X4Wi
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: attachment; filename="1-5-deep_params.patch"
+Content-Transfer-Encoding: quoted-printable
+
+=46rom fa15479e232663b2b5b048155b8e74228ab75d7e Mon Sep 17 00:00:00 2001
+From: Aaron Patterson <aaron.patterson@gmail.com>
+Date: Tue, 20 Jan 2015 14:30:13 -0800
+Subject: [PATCH] raise an exception if the parameters are too deep
+
+CVE-2015-3225
+
+Conflicts:
+	lib/rack/utils.rb
+	test/spec_utils.rb
+---
+ lib/rack/utils.rb  | 15 +++++++++++----
+ test/spec_utils.rb | 12 ++++++++++++
+ 2 files changed, 23 insertions(+), 4 deletions(-)
+
+diff --git a/lib/rack/utils.rb b/lib/rack/utils.rb
+index 561e46e..a163c49 100644
+--- a/lib/rack/utils.rb
++++ b/lib/rack/utils.rb
+@@ -52,12 +52,17 @@ module Rack
+=20
+     class << self
+       attr_accessor :key_space_limit
++      attr_accessor :param_depth_limit
+     end
+=20
+     # The default number of bytes to allow parameter keys to take up.
+     # This helps prevent a rogue client from flooding a Request.
+     self.key_space_limit =3D 65536
+=20
++    # Default depth at which the parameter parser will raise an exception =
+for
++    # being too deep.  This helps prevent SystemStackErrors
++    self.param_depth_limit =3D 100
++
+     # Stolen from Mongrel, with some small modifications:
+     # Parses a query string by breaking it up at the '&'
+     # and ';' characters.  You can also use this to parse
+@@ -100,7 +105,9 @@ module Rack
+     end
+     module_function :parse_nested_query
+=20
+-    def normalize_params(params, name, v =3D nil)
++    def normalize_params(params, name, v =3D nil, depth =3D Utils.param_de=
+pth_limit)
++      raise RangeError if depth <=3D 0
++
+       name =3D~ %r(\A[\[\]]*([^\[\]]+)\]*)
+       k =3D $1 || ''
+       after =3D $' || ''
+@@ -118,14 +125,14 @@ module Rack
+         params[k] ||=3D []
+         raise TypeError, "expected Array (got #{params[k].class.name}) for=
+ param `#{k}'" unless params[k].is_a?(Array)
+         if params_hash_type?(params[k].last) && !params[k].last.key?(child=
+_key)
+-          normalize_params(params[k].last, child_key, v)
++          normalize_params(params[k].last, child_key, v, depth - 1)
+         else
+-          params[k] << normalize_params(params.class.new, child_key, v)
++          params[k] << normalize_params(params.class.new, child_key, v, de=
+pth - 1)
+         end
+       else
+         params[k] ||=3D params.class.new
+         raise TypeError, "expected Hash (got #{params[k].class.name}) for =
+param `#{k}'" unless params_hash_type?(params[k])
+-        params[k] =3D normalize_params(params[k], after, v)
++        params[k] =3D normalize_params(params[k], after, v, depth - 1)
+       end
+=20
+       return params
+diff --git a/test/spec_utils.rb b/test/spec_utils.rb
+index 622b8ff..c1a2207 100644
+--- a/test/spec_utils.rb
++++ b/test/spec_utils.rb
+@@ -123,6 +123,18 @@ describe Rack::Utils do
+     Rack::Utils.parse_query(",foo=3Dbar;,", ";,").should.equal "foo" =3D> =
+"bar"
+   end
+=20
++  should "raise an exception if the params are too deep" do
++    len =3D Rack::Utils.param_depth_limit
++
++    lambda {
++      Rack::Utils.parse_nested_query("foo#{"[a]" * len}=3Dbar")
++    }.should.raise(RangeError)
++
++    lambda {
++      Rack::Utils.parse_nested_query("foo#{"[a]" * (len - 1)}=3Dbar")
++    }.should.not.raise
++  end
++
+   should "parse nested query strings correctly" do
+     Rack::Utils.parse_nested_query("foo").
+       should.equal "foo" =3D> nil
+--=20
+2.2.1
+
+
+--6c2NcOVqGQ03X4Wi
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: attachment; filename="1-6-deep_params.patch"
+Content-Transfer-Encoding: quoted-printable
+
+=46rom bbac5d0d8b6a20487070dc6a298fbb8d9906a538 Mon Sep 17 00:00:00 2001
+From: Aaron Patterson <aaron.patterson@gmail.com>
+Date: Tue, 9 Jun 2015 17:07:31 -0700
+Subject: [PATCH] raise an exception if the parameters are too deep
+
+CVE-2015-3225
+---
+ lib/rack/utils.rb  | 15 +++++++++++----
+ test/spec_utils.rb | 12 ++++++++++++
+ 2 files changed, 23 insertions(+), 4 deletions(-)
+
+diff --git a/lib/rack/utils.rb b/lib/rack/utils.rb
+index eea8c87..3b6f69f 100644
+--- a/lib/rack/utils.rb
++++ b/lib/rack/utils.rb
+@@ -61,6 +61,7 @@ module Rack
+=20
+     class << self
+       attr_accessor :key_space_limit
++      attr_accessor :param_depth_limit
+       attr_accessor :multipart_part_limit
+     end
+=20
+@@ -68,6 +69,10 @@ module Rack
+     # This helps prevent a rogue client from flooding a Request.
+     self.key_space_limit =3D 65536
+=20
++    # Default depth at which the parameter parser will raise an exception =
+for
++    # being too deep.  This helps prevent SystemStackErrors
++    self.param_depth_limit =3D 100
++
+     # The maximum number of parts a request can contain. Accepting too man=
+y part
+     # can lead to the server running out of file handles.
+     # Set to `0` for no limit.
+@@ -126,7 +131,9 @@ module Rack
+     # normalize_params recursively expands parameters into structural type=
+s. If
+     # the structural types represented by two different parameter names ar=
+e in
+     # conflict, a ParameterTypeError is raised.
+-    def normalize_params(params, name, v =3D nil)
++    def normalize_params(params, name, v =3D nil, depth =3D Utils.param_de=
+pth_limit)
++      raise RangeError if depth <=3D 0
++
+       name =3D~ %r(\A[\[\]]*([^\[\]]+)\]*)
+       k =3D $1 || ''
+       after =3D $' || ''
+@@ -146,14 +153,14 @@ module Rack
+         params[k] ||=3D []
+         raise ParameterTypeError, "expected Array (got #{params[k].class.n=
+ame}) for param `#{k}'" unless params[k].is_a?(Array)
+         if params_hash_type?(params[k].last) && !params[k].last.key?(child=
+_key)
+-          normalize_params(params[k].last, child_key, v)
++          normalize_params(params[k].last, child_key, v, depth - 1)
+         else
+-          params[k] << normalize_params(params.class.new, child_key, v)
++          params[k] << normalize_params(params.class.new, child_key, v, de=
+pth - 1)
+         end
+       else
+         params[k] ||=3D params.class.new
+         raise ParameterTypeError, "expected Hash (got #{params[k].class.na=
+me}) for param `#{k}'" unless params_hash_type?(params[k])
+-        params[k] =3D normalize_params(params[k], after, v)
++        params[k] =3D normalize_params(params[k], after, v, depth - 1)
+       end
+=20
+       return params
+diff --git a/test/spec_utils.rb b/test/spec_utils.rb
+index 06ed563..c2d479f 100644
+--- a/test/spec_utils.rb
++++ b/test/spec_utils.rb
+@@ -134,6 +134,18 @@ describe Rack::Utils do
+     }.should.not.raise
+   end
+=20
++  should "raise an exception if the params are too deep" do
++    len =3D Rack::Utils.param_depth_limit
++
++    lambda {
++      Rack::Utils.parse_nested_query("foo#{"[a]" * len}=3Dbar")
++    }.should.raise(RangeError)
++
++    lambda {
++      Rack::Utils.parse_nested_query("foo#{"[a]" * (len - 1)}=3Dbar")
++    }.should.not.raise
++  end
++
+   should "parse nested query strings correctly" do
+     Rack::Utils.parse_nested_query("foo").
+       should.equal "foo" =3D> nil
+--=20
+2.2.1
+
+
+--6c2NcOVqGQ03X4Wi--
+
+--Pd0ReVV5GZGQvF3a
+Content-Type: application/pgp-signature
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEcBAEBAgAGBQJVgGT3AAoJEJUxcLy0/6/GmeMH/juedQaEH10W3Fzu+EcZKN0V
+xbedyiYfTbZbxaWFK/ZhNBBJeVVNleYcJ5iJuN1k/Dz1z4cfTmEoxwKKQJCo0+eq
+7H7AmLsWngRF7vtWScwgj9zGZsjjhTZEuHjyKB29XKB2rpgF3rFzGpOI/hVsHsJP
+C0Hh2Hljw0KIpOzTMNByjG3hy/tNzz1uoa7XvupiEVcUYgFNTD/bQcM9Me3gX0q0
+GpllDYn620ZGL2YyzKNu6EBPGjBK/XJf7yit7lBsBxqKwSlMChcnh7M6Efv6oveX
+kQbd4qLvn/RDOAwlWL5Zz66ArrkDRtDquNlcae6eJNT/t8BWrllKtGztinTcoKI=
+=zfcK
+-----END PGP SIGNATURE-----
+
+--Pd0ReVV5GZGQvF3a--
