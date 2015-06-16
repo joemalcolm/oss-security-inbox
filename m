@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1433" "Friday" "13" "December" "2019" "16:17:51" "+0200" "Aki Tuomi" "aki.tuomi@open-xchange.com" nil "46" nil "^Date:" nil nil "12" nil nil (number mark "        aki.tuomi@op Dec 13   46/1433  " thread-indent "\"[oss-security] Re: CVE-2019-19722: Critical vulnerability in Dovecot\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Re: CVE-2019-19722: Critical vulnerability in Dovecot" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4983" "Tuesday" "16" "June" "2015" "13:24:56" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150616172456.ADCE052E1F7@smtpvbsrv1.mitre.org>" "128" "[oss-security] Re: CVE Request: various issues in PHP" nil nil nil "6" "2015061617:24:56" "[oss-security] Re: CVE Request: various issues in PHP" (number mark "        cve-assign@m Jun 16  128/4983  " thread-indent "\"[oss-security] Re: CVE Request: various issues in PHP\"\n") "<20150529170751.482ad9f4@redhat.com>" ("<20150529170751.482ad9f4@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 19877 invoked by uid 550); 13 Dec 2019 14:20:23 -0000
+Received: (qmail 28484 invoked by uid 550); 16 Jun 2015 17:25:09 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,98 +11,141 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 18383 invoked from network); 13 Dec 2019 14:18:02 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=open-xchange.com;
-	s=201705; t=1576246671;
-	bh=WQ+6SqYF2RoUf0YTjYlRYDMnE9bXVFM0EH/exgmP76s=;
-	h=Date:From:To:In-Reply-To:References:Subject:From;
-	b=22H42/P2KhZC7AZ0LL6LlxYJ2ZqXF00OqDsIOgpKVlUEh4OtxqhYYZ01DrYesweSK
-	 Iewmmpv9XuAwegml5HRZc3SeKd8ZH44oHeIJkiKClNDWA/eDuuqyujfZcM7zzQRJtJ
-	 +jMe9hhr2y3hj1sAQCLFTRVjWJXW9D7y2kI9tEG+wH65kBipFXFhsOQGNve8bGaKyv
-	 O+a7aNKT7XKkC9pqX13tEaXjRfQro9lnKvTET2SYy32kV1OIOc/T9lqZvEQqqx9YlA
-	 Cdi28sL/Z2LttkotWSqMi+v7HPoNKt8jSnwnV8oY1MhiajIxwF8lIcUZgJc/zU+fT0
-	 6KVpypSaihy2g==
-Message-ID: <517261797.6194.1576246671192@appsuite-dev-gw2.open-xchange.com>
-In-Reply-To: <54a83e07-ad1e-5375-2bde-bc1c96e35e7a@dovecot.fi>
-References: <54a83e07-ad1e-5375-2bde-bc1c96e35e7a@dovecot.fi>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Priority: 3
-Importance: Normal
-X-Mailer: Open-Xchange Mailer v7.10.3-Rev3
-X-Originating-Client: open-xchange-appsuite
-Autocrypt: addr=aki.tuomi@open-xchange.com; prefer-encrypt=mutual; keydata=
- mQENBFb7bukBCACpK7GFwH/gyL0oF8t91WM7S+UjuQ1vOQZg2eoCUHi4ILpm1Kae4UeZLB2XVbeph+k
- 29BIQbo+Hjv6rq6JzPfKIZCRLLrkMD1MtA0YB7ZYiACywLrATAdAMJ6sRq+DL5RlrA2CvviTifz6DwE
- nbqI+ckcKggsY2gywHs5muDw+n5TwLiL0V9IU478vg7OUWzMZ42toTmeTW2MtsIAE5xbnjZ58LUSZR2
- CNO8SAtDHYI558ACkS0wHBAoRFNv27IPr3cebiPsIglSEIBr0R1F1Twbgm6mWVBhK+smDgGxmmuAhH6
- boSaKWoWAq+tNf+6oXnr3/D0IPtR8c/bZobtvWG3ABEBAAG0J1R1b21pLCBBa2kgPGFraS50dW9taUB
- vcGVuLXhjaGFuZ2UuY29tPokBPgQTAQIAKAIbAwUJEswDAAUCW2P/aAYLCQgHAwIGFQgCCQoLBBYCAw
- ECHgECF4AACgkQGTtjY7NEQgYmMwf9G5U0+vKJB+f3Vl8rjPqlXmUZu4waf6pig5lLCrgu56ZkqEDmj
- axmxXAah7JZ6dD/66kzlQzKQPYpLor0KnTZgm8XZr+MtqLK8DMF/4+iljADvkS4nfJuX3LbdafPyuk4
- x+GIa+6NJ+y34jZ284Oesj+FtPOevthR9rDmnc2KQjBD30ceKsadxIKqWPYPqPESQ0PyMu9tOaWNdGn
- tx8LvO3LlspZ2DzEh5rregFKtO01jR9ai5r3mbUrQqwzWLxJztBYjds8D5VAiCBeivUxetDqhoPr3Cy
- KHStc5GfgHvazjG34H+CShReqIylfR4mwc654qkmVQfPMMUTaa677n8bkBDQRW+27pAQgAosZdRB8tu
- i65tjna4iYKPHqcNDZUXOUuPLTucYc2tY2v67POGr44gOZNzuQWKyXRSBs+Q2zJHcbccPe0ZEptkOCO
- wdhhvBwZLKa6nI9jnJ0K+szT2NbD0YkvaIDALA9pVGMJqa88wvkkocf/I5fkdTk6xuLp8AamRXvcPZu
- UPo/s2PXQV4u+gtKdX1FmaHiBg1oQhtoDWZO04H74r9fyPPs499ra9iNckSlZP51OUFBbV/RmbtEC03
- 1r4iXUAgiL0nQ1mNpRIW+PU/5beX/4YwYeCpzy7g0XfMaJoMWDamRdXgzkXK6IJIxwo/89M8qPW+Bkh
- 88yAennI2SsEvniXQARAQABiQExBBgBAgAbBQJW+27pAhsMBAsJCAcGFQoJCAsCBQkSzAMAAAoJEBk7
- Y2OzREIGCm8IAIZkj5FClx8EmPy1caC+CNv1mVrC2YhKY9Zh255JUtt+Xp6tshN6IOr+saNkcwgUghx
- mx6+asZXPDHTqhXoswPi28k1uCY7n4gvh3jlS7a0HeI0sy2RCsrkIaQD2uSt+ju9fpEM2aOXQHGT/x6
- gZhJ7Uwu+JfDnCB7CBFjVnRaV2/87Y0ZImfhIMPYRzwOyWW6KR+JPIutyZAWo9c7mmjKbySLXhqgZar
- iMJU+RQF5/daQsiRJKP1IkC/Ncy/iZSnGvPIRZjvQxtrz+4xexZX6NjG7IbKAwmbo1t27cF3hE4Heja
- kF5bLOhznVWubhjXp1J6pL9fymHmG2tZPsgwXcA=
-Date: Fri, 13 Dec 2019 16:17:51 +0200 (EET)
-From: Aki Tuomi <aki.tuomi@open-xchange.com>
+Received: (qmail 28466 invoked from network); 16 Jun 2015 17:25:08 -0000
+In-Reply-To: <20150529170751.482ad9f4@redhat.com>
+Message-Id: <20150616172456.ADCE052E1F7@smtpvbsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, kaplanlior@gmail.com, security@php.net
+Date: Tue, 16 Jun 2015 13:24:56 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE-2019-19722: Critical vulnerability in Dovecot
-To: oss-security <oss-security@lists.openwall.com>
+Subject: [oss-security] Re: CVE Request: various issues in PHP
+To: thoger@redhat.com
+
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+>> > >> https://bugs.php.net/bug.php?id=69418,
+>> > >> https://bugs.php.net/bug.php?id=68598 - various functions allow
+>> > >> \0 in paths where they shouldn't. In theory, that could lead to
+>> > >> security failure for path-based access controls if the user
+>> > >> injects string with \0 in it. It's a bit theoretical, but it's a
+>> > >> possibility.
+>>
+>> CVE-2015-4025, CVE-2015-4026 respectively.
+
+> Both of these CVEs are addressed in a single commit, that also covers
+> few other functions not mentioned in either of the two bug reports
+> (dir()/opendir() and chroot()). Which CVE do those additional fixes
+> fall under? They are not 5.4 regressions, so probably not
+> CVE-2015-4025, but maybe not under CVE-2015-4026 either given that bug
+> 68598 only mentions pcntl_exec().
+
+In this type of situation, CVEs are assigned on a per-discoverer basis.
+CVE-2015-4025 is for thoger@redhat.com discoveries, whereas
+CVE-2015-4026 is for yohgaki@php.net. See:
+
+  http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-4025
+  http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-4026
+
+> dir()/opendir() and chroot()
+
+Four weeks ago, we asked security@php.net to contact us if those other
+changed functions were associated with vulnerability fixes. They have
+not contacted us about this.
+
+Are you reporting that some or all of them had vulnerabilities?
+
+For example, is it reasonable to expect that a PHP application may
+want the client to make a choice of a chroot directory, and the
+intended behavior is to restrict the choice to a name ending in ".d"
+but this can be bypassed by something like a
+"/usr/local/var/x/does-not-end-in-dot-d\0.d" value?
 
 
-> On 13/12/2019 12:44 Aki Tuomi <aki.tuomi@dovecot.fi> wrote:
->=20
->=20=20
-> Open-Xchange Security Advisory 2019-12-13
-> =C2=A0
-> Product: Dovecot IMAP/POP3 Server
-> Vendor: OX Software GmbH
-> =C2=A0
-> Internal reference: DOV-3719
-> Vulnerability type: NULL Pointer Dereference (CWE-476)
-> Vulnerable version: 2.3.9
-> Vulnerable component: push notification driver
-> Report confidence: Confirmed
-> Solution status: Fixed by Vendor
-> Fixed version: 2.3.9.1
-> Researcher credits: Frederik Schwan, Michael Stilkerich
-> Vendor notification: 2019-12-10
-> Solution date: 2019-12-12
-> Public disclosure: 2019-12-13
-> CVE reference: CVE-2019-19722
-> CVSS: 5.3 (CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L/E:F/RL:O/RC:C)
-> =C2=A0
-> Vulnerability Details:
-> Mail with group address as sender will cause a signal 11 crash in push
-> notification drivers. Group address as recipient can cause crash in some
-> drivers.
-> =C2=A0
-> Risk:
-> Repeated delivery attempts are made for the problematic mail, causing
-> queueing in MTA.
-> =C2=A0
-> Steps to reproduce:
-> 1. Configure dovecot with push notifications enabled, such as OX push
-> notification driver. This can also be observed with 3rd party plugin XAPS.
-> 2. Send mail a group address as sender
-> =C2=A0
-> Solution:
-> Operators should update to the latest Patch Release.
+> https://bugs.php.net/bug.php?id=69353
+> http://git.php.net/?p=php-src.git;a=commitdiff;h=52b93f0cfd3cba7ff98cc5198df6ca4f23865f80
+>
+> More CVE-2015-4025 / CVE-2015-4026 / CVE-2006-7243 like issues. More
+> notes on what got changed is in RHBZ:
+> https://bugzilla.redhat.com/show_bug.cgi?id=1213407#c5
 
-Due to bug in the fix, we had to release 2.3.9.2 which completes the fix fo=
-r this CVE.
+The neal@fb.com vulnerability discoveries in bug 69353 were assigned
+CVE-2015-3411 in April. The additional vulnerability discoveries in:
 
----
-Aki Tuomi
-Open-Xchange oy
+  http://git.php.net/?p=php-src.git;a=commit;h=52b93f0cfd3cba7ff98cc5198df6ca4f23865f80
+  http://git.php.net/?p=php-src.git;a=commit;h=4435b9142ff9813845d5c97ab29a5d637bedb257
+
+were assigned CVE-2015-3412.
+
+
+Use CVE-2015-4598 for the https://bugs.php.net/bug.php?id=69719
+thoger@redhat.com vulnerability discoveries.
+
+
+> More unserialize issues.
+
+> https://bugs.php.net/bug.php?id=69152
+> http://git.php.net/?p=php-src.git;a=commitdiff;h=51856a76f87ecb24fe1385342be43610fb6c86e4
+
+Use CVE-2015-4599 for the taoguangchen@icloud.com discovery fixed in
+51856a76f87ecb24fe1385342be43610fb6c86e4.
+
+
+> http://git.php.net/?p=php-src.git;a=commitdiff;h=0c136a2abd49298b66acb0cad504f0f972f5bfe8
+
+Use CVE-2015-4600 for the taoguangchen@icloud.com discoveries in bug
+69152 that were fixed in 0c136a2abd49298b66acb0cad504f0f972f5bfe8 -
+SoapClient::__getLastRequest, SoapClient::__getLastResponse,
+SoapClient::__getLastRequestHeaders,
+SoapClient::__getLastResponseHeaders, SoapClient::__getCookies, and
+SoapClient::__setCookie.
+
+Use CVE-2015-4601 for the other vulnerabilities fixed in
+0c136a2abd49298b66acb0cad504f0f972f5bfe8, with the exception that the
+issue involving the uri property in do_soap_call is already covered by
+CVE-2015-4148.
+
+
+> http://git.php.net/?p=php-src.git;a=commitdiff;h=fb83c76deec58f1fab17c350f04c9f042e5977d1
+
+Use CVE-2015-4602 for this issue mentioned at [2015-03-20 14:58 UTC]
+in bug 69152.
+
+
+> https://bugs.php.net/bug.php?id=69152 [2015-03-03 04:30 UTC]
+
+Use CVE-2015-4603 for the exception::getTraceAsString issue. As
+mentioned at [2015-03-25 09:57 UTC], the affected versions for this
+issue are different from those of other issues discussed in bug 69152.
+
+
+> https://bugs.php.net/bug.php?id=68819
+> http://git.php.net/?p=php-src.git;a=commitdiff;h=f938112c495b0d26572435c0be73ac0bfe642ecd
+>
+> Fileinfo DoS.
+
+Use CVE-2015-4604 for the violation of the "mget() guarantees buf <=
+last" constraint suggested in the [2015-02-05 13:53 UTC] comment.
+
+Use CVE-2015-4605 for the issue in which offset can exceed bytecnt,
+suggested in the [2015-02-09 17:10 UTC] comment.
+
+These might be conceptually overlapping discoveries, but we decided to
+have the two CVE IDs.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJVgFr7AAoJEKllVAevmvmsFpoIAKk541flrgppkYnl6DhxQ49O
+YKc29nQQrmGL9yZLMkGbOX2onVwCOhD4cUKVrPGNadiMhCL3uzBl3aIf6eVrWdBA
+8Dqv7/1w14dAfinrRsGl+5pA+SnNhrMLhoCGecAHBVUjPJckP69PtM4h2/AqAXxv
+hxpRMZi9+demSpUUitA5Gik0f4uw8BllarCciZH/FgwCkIflqDGQ7nN80MnBwWl7
+XLrIqdM81hksELsCYtWpN6LESwIwmRZWCLHeqilQiRdU2DSU1BRAYkVyef06Xyu5
+WZdx1RJBNb63rwfqdEERR9Bkuu4tX4WJa9yC0YykdI6eUJZU1CLBu/i4xqhhlWE=
+=CFDR
+-----END PGP SIGNATURE-----
