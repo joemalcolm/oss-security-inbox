@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3898" "Tuesday" "17" "November" "2015" "16:17:03" "-0800" "Oracle Security Alerts (Thomas)" "secalert_us@oracle.com" "<564BC37F.4090000@oracle.com>" "107" "Re: [oss-security] CVE-Request: Assign CVE for common-collections remote code execution on deserialisation flaw" "^CC:" nil nil "11" "2015111800:17:03" "[oss-security] CVE-Request: Assign CVE for common-collections remote code execution on deserialisation flaw" (number mark "        secalert_us@ Nov 17  107/3898  " thread-indent "\"Re: [oss-security] CVE-Request: Assign CVE for common-collections remote code execution on deserialisation flaw\"\n") "<56463D9A.5080108@gmail.com>" ("<1904852023.6462846.1447029380024.JavaMail.zimbra@redhat.com>" "<5640442C.1050501@redhat.com>" "<20151109215303.GN1213@sentinelchicken.org>" "<5641360D.8070102@eenterphace.org>" "<20151111002307.GP1213@sentinelchicken.org>" "<56431D4F.7090006@eenterphace.org>" "<20151111160641.GQ1213@sentinelchicken.org>" "<56445609.9050301@gmail.com>" "<1447365167.1146869.438300073.116F736D@webmail.messagingengine.com>" "<5645980D.9010105@gmail.com>" "<1447425465.3344943.438911641.39FADD79@webmail.messagingengine.com>" "<201511131617.tADGHauO002339@d03av02.boulder.ibm.com>" "<56463D9A.5080108@gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1677" "Wednesday" "17" "June" "2015" "06:43:00" "-0700" "Tristan Cacqueray" "tdecacqu@redhat.com" "<55817964.40700@redhat.com>" "49" "Re: [oss-security] [OSSA 2015-011] Cinder host file disclosure through qcow2 backing file (CVE-2015-1851)" nil nil nil "6" "2015061713:43:00" "[oss-security] [OSSA 2015-011] Cinder host file disclosure through qcow2 backing file (CVE-2015-1851)" (number mark "        tdecacqu@red Jun 17   49/1677  " thread-indent "\"Re: [oss-security] [OSSA 2015-011] Cinder host file disclosure through qcow2 backing file (CVE-2015-1851)\"\n") "<20150617043336.GA23069@lorien.valinor.li>" ("<55805FE7.5070007@redhat.com>" "<20150617043336.GA23069@lorien.valinor.li>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 19679 invoked by uid 550); 18 Nov 2015 00:17:27 -0000
+Received: (qmail 13485 invoked by uid 550); 17 Jun 2015 13:42:59 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,128 +11,69 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 19653 invoked from network); 18 Nov 2015 00:17:26 -0000
-Message-ID: <564BC37F.4090000@oracle.com>
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.3.0
+Received: (qmail 13459 invoked from network); 17 Jun 2015 13:42:58 -0000
+Message-ID: <55817964.40700@redhat.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
 MIME-Version: 1.0
-References: <1904852023.6462846.1447029380024.JavaMail.zimbra@redhat.com> <5640442C.1050501@redhat.com> <20151109215303.GN1213@sentinelchicken.org> <5641360D.8070102@eenterphace.org> <20151111002307.GP1213@sentinelchicken.org> <56431D4F.7090006@eenterphace.org> <20151111160641.GQ1213@sentinelchicken.org> <56445609.9050301@gmail.com> <1447365167.1146869.438300073.116F736D@webmail.messagingengine.com> <5645980D.9010105@gmail.com> <1447425465.3344943.438911641.39FADD79@webmail.messagingengine.com> <201511131617.tADGHauO002339@d03av02.boulder.ibm.com> <56463D9A.5080108@gmail.com>
-In-Reply-To: <56463D9A.5080108@gmail.com>
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-X-Source-IP: aserv0021.oracle.com [141.146.126.233]
-CC: cve-assign@mitre.org
-Date: Tue, 17 Nov 2015 16:17:03 -0800
-From: "Oracle Security Alerts (Thomas)" <secalert_us@oracle.com>
+References: <55805FE7.5070007@redhat.com> <20150617043336.GA23069@lorien.valinor.li>
+In-Reply-To: <20150617043336.GA23069@lorien.valinor.li>
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="qqqthkpi3RBHKSnJNkOhRbmRVeJQVE2H7"
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
+Date: Wed, 17 Jun 2015 06:43:00 -0700
+From: Tristan Cacqueray <tdecacqu@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE-Request: Assign CVE for common-collections
- remote code execution on deserialisation flaw
-To: Gsunde Orangen <gsunde.orangen@gmail.com>, oss-security@lists.openwall.com,
-        security@apache.org
+Subject: Re: [oss-security] [OSSA 2015-011] Cinder host file disclosure through
+ qcow2 backing file (CVE-2015-1851)
+To: Salvatore Bonaccorso <carnil@debian.org>, oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+--qqqthkpi3RBHKSnJNkOhRbmRVeJQVE2H7
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: quoted-printable
 
-We do not have a problem with this use of the CVE# we registered
-(CVE-2015-4852).
+Hi Salvatore,
 
-Thomas Keefe
-Oracle Security Alerts
+On 06/16/2015 09:33 PM, Salvatore Bonaccorso wrote:
+> Could you clearify if this CVE assignment is correct?
+
+OSSA 2015-011 assigned the wrong CVE and it should have included
+CVE-2015-1851 instead. An ERRATA will be issued soon.
+
+> I noticed that Red Hat Bugzilla has
+> https://bugzilla.redhat.com/show_bug.cgi?id=3D1231816 (CVE-2015-1850)
+> for the nova issue and similarly
+> https://bugzilla.redhat.com/show_bug.cgi?id=3D1231817 (CVE-2015-1851)
+> for the cinder issue. Is this correct?
+>=20
+This is correct. Note that while a CVE has been assigned for the Nova
+part, the bug has still not been reproduced there, and while there is no
+patch, Nova has been left out of this OSSA.
+
+> Regards and thanks in advance,
+> Salvatore
+
+Thanks for bringing that up!
+--
+Tristan Cacqueray
+OpenStack Vulnerability Management Team
 
 
-On 11/13/2015 11:44 AM, Gsunde Orangen wrote:
-> inline...
-> 
-> On 2015-11-13, 17:14 Lisa Bradley wrote:
->> Seems Oracle has a CVE for this:
->> https://blogs.oracle.com/security/entry/security_alert_cve_2015_4852
-> Thanks for the pointer!
-> CVE-2015-4852 was thus created by Oracle CNA (to address the issue in
-> WebLogic). I would propose to use this ID for Apache Commons-Collectio
-ns
-> as well, plus as a reference for other applications that suffer from
-> unsafe deserialisation in combination with the functors packages.
-> 
-> But I am certainly not the one to decide ;-) - CC goes to Mitre, Apach
-e
-> & Oracle.
-> 
-> Regarding Mark's (valid) concerns see further down below.
-> 
-> Gsunde
-> 
-> 
-> On 2015-11-13, 15:37 Mark Felder wrote:
->> On Fri, Nov 13, 2015, at 01:58, Gsunde Orangen wrote:
->>>
->>> I share Tim's view [2] and a dozen of (own) applications we checked
->>> won't break. A property that re-enables deserialization of course wo
-uld
->>> help additionally: allow applications that really *need* this to get
- it
->>> working; but that requires an explicit step - so latest by that time
-:
->>> those, whose applications break after including a "fixed" version of
->>> Commons-Collections would (hopefully) start to think about their des
-ign.
->>>
->>> Gsunde
->>>
->>> [1] http://seclists.org/oss-sec/2015/q4/238
->>> [2] http://seclists.org/oss-sec/2015/q4/263
->>
->> This statement is how we have been operating our mitigation strategy:
->>
->> "Applications which use Apache Commons Collections and do not use
->> deserialization are not vulnerable."
-> I agree
-> 
->>
->> Assuming that statement is correct, disabling deserialization by defa
-ult
->> doesn't offer additional protection to people. Instead it requires a
->> code change when they upgrade to re-enable it and cause them to be
->> vulnerable again.
-> It does offer additional protection to those applications who use
-> deserialization in general, but don't want to have this executed on th
-e
-> unsafe Commons-Collections classes (or even are not aware that theses
-> classes are reachable via their remote interfaces).
-> From my point of view and investigation this may be a lot of
-> applications in the world.
-> All those may not need to do anything else than upgrading their
-> Commons-Collections package to be safe from this particular issue.
-> (not addressing the important general issue of course yet...)
-> 
->>
->> Would the greater community be better served by additional documentat
-ion
->> on how to safely handle the deserialization in their application?
-> Definitely yes, I agree! For the sustainable and long term.
-> 
->> Is there such a method, or is this hopelessly broken?
-> I have to leave this up to the top Java experts (where I am not a memb
-er of)
-> Again, this is something very useful for the long term (and honestly I
-> would expect these activities starting latest by now - we may also awa
-it
-> the next posts, where others again will find other widespread classes
-> that are exploitable in a similar way. The race is on...)
-> 
-> My main point with having a single CVE ID and a new Apache
-> Commons-Collections version that fixes this ID is:
-> If you don't do it, then you end up with 1-5 CVE ids (individually for
-> those applications mentioned in the original publication: WebLogic,
-> Jenkins, etc.) and they all are reported in the context of these
-> individual applications only.
-> We would miss to address a significant number of applications in the
-> world, as it's not on their radar (but they have Commons-Collections
-> included, so that is on their radar)
-> 
+--qqqthkpi3RBHKSnJNkOhRbmRVeJQVE2H7
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v2
 
-iEYEARECAAYFAlZLw30ACgkQf36Vx1dNy5r+xgCfS37T2qb+nqQDNjfQIGd8l484
-zC8An0rJgwO+bkDYKGqckw/Uqo13VZUs
-=Bm+E
+iQEcBAEBAgAGBQJVgXlsAAoJECK5oFySXMXYlHcH/2AAH+k2hj732oaXItqzYGCw
+Ob0Ikmxv5I4Yq1G+8/p4e5E754QFyqrwwLxWR16XlrbQFWd0lhPn6PiJG9yPq9OD
+A6EW71Rr6nlJVg5nbjFeskIYg1ZMV4wFC4NO4j4d+2pwhVkwHd0TnRBMtSnl9JQ3
+bbnsaKiDA0ouFyCI8FEFEhC7zo919lQPOgvDFMDGcjdt7B+MLqvG0eipvioaOckq
+/qSqqrfJ+AUCnd2//h4eXPbS2gyyaNwRAupmUfMu8+0wQh2AydDj6JOrtXF0KqUi
+rFtNj4QJhO2HboeU5Zj1kGxmoR3Ez/q5qCI+orDG9/2P1l7FBwrkxqyH7j2sboI=
+=9SBq
 -----END PGP SIGNATURE-----
+
+--qqqthkpi3RBHKSnJNkOhRbmRVeJQVE2H7--
