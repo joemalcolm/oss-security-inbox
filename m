@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1710" "Monday" "26" "September" "2016" "06:42:38" "+0000" "=?gb2312?B?wazSu7q6?=" "lianyihan@360.cn" "<A962A2D04FAB5C4499FEFD15B642FA0A012003B7@EX02.corp.qihoo.net>" "31" "[oss-security] [CVE-2016-6881] ffmpeg endless loop when dealing with craft swf file." nil nil nil "9" "2016092606:42:38" "[oss-security] [CVE-2016-6881] ffmpeg endless loop when dealing with craft swf file." (number mark "U       lianyihan@36 Sep 26   31/1710  " thread-indent "\"[oss-security] [CVE-2016-6881] ffmpeg endless loop when dealing with craft swf file.\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["8209" "Wednesday" "17" "June" "2015" "14:04:28" "+0200" "Sebastian Wolfgang Kraemer | HSASec" "Sebastian.Kraemer@HS-Augsburg.de" "<5581624C.8090804@HS-Augsburg.de>" "168" "[oss-security] CVE request for XSS and CSRF vulnerability in wordpress plugin WP-Stats" nil nil nil "6" "2015061712:04:28" "[oss-security] CVE request for XSS and CSRF vulnerability in wordpress plugin WP-Stats" (number mark "        Sebastian.Kr Jun 17  168/8209  " thread-indent "\"[oss-security] CVE request for XSS and CSRF vulnerability in wordpress plugin WP-Stats\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 27949 invoked by uid 550); 26 Sep 2016 07:33:10 -0000
+Received: (qmail 1574 invoked by uid 550); 17 Jun 2015 12:45:15 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,54 +11,184 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5611 invoked from network); 26 Sep 2016 06:42:51 -0000
-From: =?gb2312?B?wazSu7q6?= <lianyihan@360.cn>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Thread-Topic: [CVE-2016-6881] ffmpeg endless loop when dealing with craft
- swf file.
-Thread-Index: AdIXwQRvdCFL2a2rTceddC2BpAslOQ==
-Date: Mon, 26 Sep 2016 06:42:38 +0000
-Message-ID: <A962A2D04FAB5C4499FEFD15B642FA0A012003B7@EX02.corp.qihoo.net>
-Accept-Language: zh-CN, en-US
-Content-Language: zh-CN
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-x-originating-ip: [10.18.213.15]
-Content-Type: multipart/alternative;
-	boundary="_000_A962A2D04FAB5C4499FEFD15B642FA0A012003B7EX02corpqihoone_"
+Received: (qmail 32061 invoked from network); 17 Jun 2015 12:04:43 -0000
+X-Virus-Scanned: Debian amavisd-new at hs-augsburg.de
+Message-ID: <5581624C.8090804@HS-Augsburg.de>
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
 MIME-Version: 1.0
-Subject: [oss-security] [CVE-2016-6881] ffmpeg endless loop when dealing with craft swf
- file.
+Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg=sha1; boundary="------------ms020705030909070908060602"
+CC: cve-assign@mitre.org
+Date: Wed, 17 Jun 2015 14:04:28 +0200
+From: Sebastian Wolfgang Kraemer | HSASec <Sebastian.Kraemer@HS-Augsburg.de>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE request for XSS and CSRF vulnerability in wordpress plugin WP-Stats
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
 
---_000_A962A2D04FAB5C4499FEFD15B642FA0A012003B7EX02corpqihoone_
-Content-Type: text/plain; charset="gb2312"
+--------------ms020705030909070908060602
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+Greetings,
+
+we discovered a vulnerability in the following component and want to
+request a CVE for it:
+
+Product-Type:=20=20=20=20=20
+Wordpress Plugin
+
+Product:=20=20=20=20=20=20=20=20=20
+WP-Stats (https://de.wordpress.org/plugins/wp-stats/)
+
+Version:=20=20=20=20=20=20=20=20=20
+2.51
+
+Vendor:=20=20=20=20=20=20=20=20=20
+lesterchan@gmail.com
+
+Fixed:=20=20=20=20=20=20=20=20=20=20=20=20=20
+reported: 2015-06-16
+fixed in version 2.52, 2015-06-17
+
+Changelog:=20=20=20=20=20=20=20=20=20
+https://wordpress.org/plugins/wp-stats/changelog/
+
+PoC available:=20=20=20=20=20
+yes
+
+Description:
+persistent XSS in wordpress-admin-panel enabled by csrf-vulnerability in
+admin-menu of plugin
+
+Researchers:
+* Michael Kapfer (Michael.Kapfer@hs-augsburg.de)
+* Sebastian Kraemer (Sebastian.Kraemer@hsasec.de)
+
+
+Best regards,
+ the HSASec-Team
+ (https://www.hsasec.de)
+=20
+
+
+--------------ms020705030909070908060602
+Content-Type: application/pkcs7-signature; name="smime.p7s"
 Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="smime.p7s"
+Content-Description: S/MIME Cryptographic Signature
 
-DQoNCkknbSBMaWFuICxhIHNlY3VyaXR5IHJlc2VhcmNoZXIgZnJvbSBRaWhv
-byAzNjAgLg0KDQoNCg0KSSBmb3VuZCBhIHZ1bG5lcmFiaWxpdHkgb2YgZmZt
-cGVnIC4gQW5kIHRoaXMgY291bGQgY2F1c2UgZmZtcGVnIGdldCBpbnRvIGVu
-ZGxlc3MgbG9vcCAhDQoNCj4NCg0KPiA9PT09PT09PT09PT09PT09PT0gdGFy
-Z2V0IHN5c3RlbSA9PT09PT09PT09PT09PT09PT09PT09DQoNCj4NCg0KPiBm
-Zm1wZWcgdmVyc2lvbiAzLjEuMiBDb3B5cmlnaHQgKGMpDQoNCj4NCg0KPiBG
-Zm1wZWcgLWkgcG9jLnN3ZiAtYjp2IDY0MGsgLXkgb3V0cHV0LnRzDQoNCj4N
-Cg0KPiA9PT09PT09PT09PT09PT09PT0gdGFyZ2V0IHdlYiBzaXRlID09PT09
-PT09PT09PT09PT09PT09PT0NCg0KPg0KDQo+IGh0dHBzOi8vZmZtcGVnLm9y
-Zy8NCg0KPg0KDQo+ID09PT09PT09PT09PT09PT09PT09PT09PT0ga2V5IGNv
-ZGVzID09PT09PT09PT09PT09PT09PT09PT0NCg0KPg0KDQo+IHN3ZmRlYy5j
-OiBsaW5lIDEyMQ0KDQo+DQoNCj4gemxpYl9yZWZpbGwoKQ0KDQo+IHsNCg0K
-DQoNCj4gcmV0cnk6DQoNCg0KDQo+IHJldCA9IGluZmxhdGUoeiwgWl9OT19G
-TFVTSCk7IC8vIHJldCBpcyBhbHdheXMgMiAoWl9ORUVEX0RJQ1QpICwgYW5k
-IG90aGVyIHZhcmlhdGVzIHdpbGwgbm90IGJlZW4gY2hhbmdlZC4NCg0KDQoN
-Cj4gaWYgKGJ1Zl9zaXplIC0gei0+YXZhaWxfb3V0ID09IDApDQoNCj4gIGdv
-dG8gcmV0cnk7DQoNCg0KDQoNCg0KT3VyIHVuZGVyc3RhbmRpbmcgaXMgdGhh
-dCBzd2ZkZWMuYyBpcyBwYXJ0IG9mIHRoZSBsaWJhdmZvcm1hdCBsaWJyYXJ5
-IGFuZCB0aHVzIHRoaXMgaXNzdWUgbWF5IGFmZmVjdCBvdGhlciBhcHBsaWNh
-dGlvbnMgdGhhdCB1c2UgdGhhdCBsaWJyYXJ5Lg0KDQoNCg0KVXNlIENWRS0y
-MDE2LTY4ODEuDQoNCg0KDQotLQ0KDQpDVkUgQXNzaWdubWVudCBUZWFtDQoN
-Ck0vUyBNMzAwLCAyMDIgQnVybGluZ3RvbiBSb2FkLCBCZWRmb3JkLCBNQSAw
-MTczMCBVU0EgWyBBIFBHUCBrZXkgaXMgYXZhaWxhYmxlIGZvciBlbmNyeXB0
-ZWQgY29tbXVuaWNhdGlvbnMgYXQNCg0KICBodHRwOi8vY3ZlLm1pdHJlLm9y
-Zy9jdmUvcmVxdWVzdF9pZC5odG1sIF0NCg0K
+MIAGCSqGSIb3DQEHAqCAMIACAQExCzAJBgUrDgMCGgUAMIAGCSqGSIb3DQEH
+AQAAoIIP6DCCBNUwggO9oAMCAQICCFBOxvU9EbRkMA0GCSqGSIb3DQEBCwUA
+MHExCzAJBgNVBAYTAkRFMRwwGgYDVQQKExNEZXV0c2NoZSBUZWxla29tIEFH
+MR8wHQYDVQQLExZULVRlbGVTZWMgVHJ1c3QgQ2VudGVyMSMwIQYDVQQDExpE
+ZXV0c2NoZSBUZWxla29tIFJvb3QgQ0EgMjAeFw0xNDA3MjIxMjA4MjZaFw0x
+OTA3MDkyMzU5MDBaMFoxCzAJBgNVBAYTAkRFMRMwEQYDVQQKEwpERk4tVmVy
+ZWluMRAwDgYDVQQLEwdERk4tUEtJMSQwIgYDVQQDExtERk4tVmVyZWluIFBD
+QSBHbG9iYWwgLSBHMDEwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIB
+AQDpm8NnhfkNrvWNVMOWUDU9YuluTO2U1wBblSJ01CDrNI/W7MAxBAuZgeKm
+FNJSoCgjhIt0iQReW+DieMF4yxbLKDU5ey2QRdDtoAB6fL9KDhsAw4bpXCsx
+EXsM84IkQ4wcOItqaACa7txPeKvSxhObdq3u3ibo7wGvdA/BCaL2a869080U
+ME/15eOkyGKbghoDJzANAmVgTe3RCSMqljVYJ9N2xnG2kB3E7f81hn1vM7Pb
+D8URwoqDoZRdQWvY0hD1TP3KUazZve+Sg7va64sWVlZDz+HVEz2mHycwzUlU
+28kTNJpxdcVs6qcLmPkhnSevPqM5OUhqjK3JmfvDEvK9AgMBAAGjggGGMIIB
+gjAOBgNVHQ8BAf8EBAMCAQYwHQYDVR0OBBYEFEm3xs/oPR9/6kR7Eyn38Qpw
+Pt5kMB8GA1UdIwQYMBaAFDHDeRu69VPXF+CJei0XbAqzK50zMBIGA1UdEwEB
+/wQIMAYBAf8CAQIwYgYDVR0gBFswWTARBg8rBgEEAYGtIYIsAQEEAgIwEQYP
+KwYBBAGBrSGCLAEBBAMAMBEGDysGAQQBga0hgiwBAQQDATAPBg0rBgEEAYGt
+IYIsAQEEMA0GCysGAQQBga0hgiweMD4GA1UdHwQ3MDUwM6AxoC+GLWh0dHA6
+Ly9wa2kwMzM2LnRlbGVzZWMuZGUvcmwvRFRfUk9PVF9DQV8yLmNybDB4Bggr
+BgEFBQcBAQRsMGowLAYIKwYBBQUHMAGGIGh0dHA6Ly9vY3NwMDMzNi50ZWxl
+c2VjLmRlL29jc3ByMDoGCCsGAQUFBzAChi5odHRwOi8vcGtpMDMzNi50ZWxl
+c2VjLmRlL2NydC9EVF9ST09UX0NBXzIuY2VyMA0GCSqGSIb3DQEBCwUAA4IB
+AQBjICj9nCGGcr45Rlk5MiW8qQGbDczKfUGchm0KbiyzE1l1sTOSG2EnFv/D
+stU1gvuEKgFJvWa7Zi+ywgZdbj9u4wFaW8pDY1yVtuExpx/VB19N5mWCTjL5
+w3x6S81NXHTuIfJ1AuxSPtLJatOQI25JZzW+f01WpOzML8+3oZeocj7JvEDW
+WqQIPda8gsO3tzKOsSyOam23NQIZz/U5RFhjpyQAELC7/E6vbi84u6VXST/Y
+blBvLJeW3B1GmmWJz67M8uXZn1OzPqEvkqnYC8aEHwTG6x7on321e6UC8STF
+JGMRNMxakyAqeYg6JUKQqWU7fIbTEhUjKfws2sw5W1QXMIIFZDCCBEygAwIB
+AgIHF5Bg+UNu4DANBgkqhkiG9w0BAQsFADBaMQswCQYDVQQGEwJERTETMBEG
+A1UEChMKREZOLVZlcmVpbjEQMA4GA1UECxMHREZOLVBLSTEkMCIGA1UEAxMb
+REZOLVZlcmVpbiBQQ0EgR2xvYmFsIC0gRzAxMB4XDTE0MDUxMjE1MDYxN1oX
+DTE5MDcwOTIzNTkwMFowgYgxCzAJBgNVBAYTAkRFMSAwHgYDVQQKExdGYWNo
+aG9jaHNjaHVsZSBBdWdzYnVyZzEWMBQGA1UECxMNUmVjaGVuemVudHJ1bTEd
+MBsGA1UEAxMURkggQXVnc2J1cmcgQ0EgLSBHMDIxIDAeBgkqhkiG9w0BCQEW
+EWNhQGZoLWF1Z3NidXJnLmRlMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIB
+CgKCAQEAkq9QGU/FLHb/yS/l5t4d26+K60FlBpBOqc3rT3BFetsfh6xSk/3G
+BrWzo4GOvOcIpXYoNXu9Za8Y+JUMlExMhAuKG3rIPtnES9tREncDFoC6V4Pu
+ArFmv6T9TLUrWDov6vx9LnfG3RD0vrSPJ0muo/PMUrlZ6ldSok8OfLvgcuqg
+FYY02drh59TMjqWFQ//pkmGQPaFYwnt2E5DPF/m2u8H8NHf77u7f0xG2tJfQ
+nOQFTazeIWVykxhUnuP08JE2EMgnifxY6sJ5tmq6IiaJFbipIuaWo0c5yHuR
+oynZrkiTxrcY0cjjSePT5wjaSZixpGsDP2mwdLOXznvgsG20WwIDAQABo4IB
+/jCCAfowEgYDVR0TAQH/BAgwBgEB/wIBATAOBgNVHQ8BAf8EBAMCAQYwEQYD
+VR0gBAowCDAGBgRVHSAAMB0GA1UdDgQWBBTVcBfj3sGX9Ag+6ToRs+iI8ZBH
+5DAfBgNVHSMEGDAWgBRJt8bP6D0ff+pEexMp9/EKcD7eZDAcBgNVHREEFTAT
+gRFjYUBmaC1hdWdzYnVyZy5kZTCBiAYDVR0fBIGAMH4wPaA7oDmGN2h0dHA6
+Ly9jZHAxLnBjYS5kZm4uZGUvZ2xvYmFsLXJvb3QtY2EvcHViL2NybC9jYWNy
+bC5jcmwwPaA7oDmGN2h0dHA6Ly9jZHAyLnBjYS5kZm4uZGUvZ2xvYmFsLXJv
+b3QtY2EvcHViL2NybC9jYWNybC5jcmwwgdcGCCsGAQUFBwEBBIHKMIHHMDMG
+CCsGAQUFBzABhidodHRwOi8vb2NzcC5wY2EuZGZuLmRlL09DU1AtU2VydmVy
+L09DU1AwRwYIKwYBBQUHMAKGO2h0dHA6Ly9jZHAxLnBjYS5kZm4uZGUvZ2xv
+YmFsLXJvb3QtY2EvcHViL2NhY2VydC9jYWNlcnQuY3J0MEcGCCsGAQUFBzAC
+hjtodHRwOi8vY2RwMi5wY2EuZGZuLmRlL2dsb2JhbC1yb290LWNhL3B1Yi9j
+YWNlcnQvY2FjZXJ0LmNydDANBgkqhkiG9w0BAQsFAAOCAQEAptjTJ7XD5Aiw
+AYqtvwbbBd1NJ2zh/Usst1D8xXHrc06Xgat0arfrsjnqtjN4k8fD26O1O3CU
+Uz/Vgi+LerGsD+T6L6/KgTTm1TE2Qxtj4TUO8eopN4fZ/MjBk31TXG4aFInb
+N4ciWGjgg7IG7q9I5ALLB/2a9sRIGDxf3lwwACa/YyVeejNcQFUlwx69ZDiP
+ME4LQbEA6iCZXXXWpgDgjS050MfL+Y9I2CL4zmB8+ZOtW8GaRcnhMWo+eRaD
+/dmYXZUoi7zq3Pm2+z5zxziMfMYmQ5THkW2VKVbKHJOjRf4coMRpE9ppUB0b
+I7MXyZqiY4pPmUDIy66QRkYudbTM/jCCBaMwggSLoAMCAQICBxZNOg9gTK4w
+DQYJKoZIhvcNAQEFBQAwgYgxCzAJBgNVBAYTAkRFMSAwHgYDVQQKExdGYWNo
+aG9jaHNjaHVsZSBBdWdzYnVyZzEWMBQGA1UECxMNUmVjaGVuemVudHJ1bTEd
+MBsGA1UEAxMURkggQXVnc2J1cmcgQ0EgLSBHMDIxIDAeBgkqhkiG9w0BCQEW
+EWNhQGZoLWF1Z3NidXJnLmRlMB4XDTEzMDkwOTEyMTgwN1oXDTE2MDkwODEy
+MTgwN1owgYQxCzAJBgNVBAYTAkRFMTswOQYDVQQKEzJIb2Noc2NodWxlIGZ1
+ZXIgYW5nZXdhbmR0ZSBXaXNzZW5zY2hhZnRlbiBBdWdzYnVyZzETMBEGA1UE
+CxMKSW5mb3JtYXRpazEjMCEGA1UEAxMaU2ViYXN0aWFuIFdvbGZnYW5nIEty
+YWVtZXIwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQD3Wm6mycm7
+N3SvVVb+oExwUPbvqE+u1jDZDP4Ww901HINnPCD4zJlwPhtAoPZYERFwmv9C
+qeKbI4k37+nyqMaKoctErenz4M7g1lxEAjIUOcAULql+sJYKe2qWkE/ghtIv
+vjrZNmLWQyd+2PrGTYbamFWYGpq9CD9sj5r8aZ/7gfpVgBY1TQCY3nF1Iix3
+XRvhlD3Vf5/ZLbq87EMBYu+n4XAaTW6iroCfzSQE1HepRnUEDChLQqpnCb2/
+vgJ9osqYYvbOxiyZlZNy/Z3r4wVatE9ibKsT7sfVK++ODEXw28N4jYtsug46
+ez9I5K3JJ50pqE8tNNgPvpg4RReYfZ79AgMBAAGjggISMIICDjAvBgNVHSAE
+KDAmMBEGDysGAQQBga0hgiwBAQQDADARBg8rBgEEAYGtIYIsAgEEAwAwCQYD
+VR0TBAIwADALBgNVHQ8EBAMCBeAwHQYDVR0lBBYwFAYIKwYBBQUHAwIGCCsG
+AQUFBwMEMB0GA1UdDgQWBBSbBAX/LbJGXpLpkGNzBn+7h+uy2DAfBgNVHSME
+GDAWgBTVcBfj3sGX9Ag+6ToRs+iI8ZBH5DArBgNVHREEJDAigSBTZWJhc3Rp
+YW4uS3JhZW1lckBocy1hdWdzYnVyZy5kZTCBjQYDVR0fBIGFMIGCMD+gPaA7
+hjlodHRwOi8vY2RwMS5wY2EuZGZuLmRlL2ZoLWF1Z3NidXJnLWNhL3B1Yi9j
+cmwvZ19jYWNybC5jcmwwP6A9oDuGOWh0dHA6Ly9jZHAyLnBjYS5kZm4uZGUv
+ZmgtYXVnc2J1cmctY2EvcHViL2NybC9nX2NhY3JsLmNybDCBpgYIKwYBBQUH
+AQEEgZkwgZYwSQYIKwYBBQUHMAKGPWh0dHA6Ly9jZHAxLnBjYS5kZm4uZGUv
+ZmgtYXVnc2J1cmctY2EvcHViL2NhY2VydC9nX2NhY2VydC5jcnQwSQYIKwYB
+BQUHMAKGPWh0dHA6Ly9jZHAyLnBjYS5kZm4uZGUvZmgtYXVnc2J1cmctY2Ev
+cHViL2NhY2VydC9nX2NhY2VydC5jcnQwDQYJKoZIhvcNAQEFBQADggEBAGJb
+pOVdo6BD+IRVD2vUmEwhxpxIKhz5UrR+tdZNy6TIJ2EDt2gB8ohTjDnR2dyQ
+voXEZLvdEPmhXo+ca2y3h2sD+c9KT1xwQJuP/faRKfsKi6upxevrNmZtWSwC
+KOdQRfWQFoCNab4oNFXwcDvvvd+2TLiPHidQw9OUblhWJp+rSVKgfcDwXNSA
+IJRT2hc0FxLUUs74k3IjVldZSkCB0TzuYbqv8fF5jHzaPEWjP0cCut+M/s7G
+LkV8Phe5mmHAEuHIjiAV+IQP4NHoB8vKmYp2F17hBPf0T4KqEhXi61yqXbTg
+7EBXVzm/p4aneBCPwyhwRtTU9ncd/zTcnjynAU8xggPdMIID2QIBATCBlDCB
+iDELMAkGA1UEBhMCREUxIDAeBgNVBAoTF0ZhY2hob2Noc2NodWxlIEF1Z3Ni
+dXJnMRYwFAYDVQQLEw1SZWNoZW56ZW50cnVtMR0wGwYDVQQDExRGSCBBdWdz
+YnVyZyBDQSAtIEcwMjEgMB4GCSqGSIb3DQEJARYRY2FAZmgtYXVnc2J1cmcu
+ZGUCBxZNOg9gTK4wCQYFKw4DAhoFAKCCAh0wGAYJKoZIhvcNAQkDMQsGCSqG
+SIb3DQEHATAcBgkqhkiG9w0BCQUxDxcNMTUwNjE3MTIwNDI4WjAjBgkqhkiG
+9w0BCQQxFgQU5kTKE0VpdvaL1UgdALslKuqp0lswbAYJKoZIhvcNAQkPMV8w
+XTALBglghkgBZQMEASowCwYJYIZIAWUDBAECMAoGCCqGSIb3DQMHMA4GCCqG
+SIb3DQMCAgIAgDANBggqhkiG9w0DAgIBQDAHBgUrDgMCBzANBggqhkiG9w0D
+AgIBKDCBpQYJKwYBBAGCNxAEMYGXMIGUMIGIMQswCQYDVQQGEwJERTEgMB4G
+A1UEChMXRmFjaGhvY2hzY2h1bGUgQXVnc2J1cmcxFjAUBgNVBAsTDVJlY2hl
+bnplbnRydW0xHTAbBgNVBAMTFEZIIEF1Z3NidXJnIENBIC0gRzAyMSAwHgYJ
+KoZIhvcNAQkBFhFjYUBmaC1hdWdzYnVyZy5kZQIHFk06D2BMrjCBpwYLKoZI
+hvcNAQkQAgsxgZeggZQwgYgxCzAJBgNVBAYTAkRFMSAwHgYDVQQKExdGYWNo
+aG9jaHNjaHVsZSBBdWdzYnVyZzEWMBQGA1UECxMNUmVjaGVuemVudHJ1bTEd
+MBsGA1UEAxMURkggQXVnc2J1cmcgQ0EgLSBHMDIxIDAeBgkqhkiG9w0BCQEW
+EWNhQGZoLWF1Z3NidXJnLmRlAgcWTToPYEyuMA0GCSqGSIb3DQEBAQUABIIB
+AN2n2jqdnofuc8t6l321a0jhjJV9/sQKAtf2mGsWuIiFmI424TfH54Y32JeJ
+dqS5m2KigWaq49AMvJ+a0dZS7W0DFFOio2rB0FsUzEhXxfyDDS4Y9Xchk5H1
+iT/c8tMp654/tmMfPZa2T+TQnaK3QlTFlY3YDG8OGraomTaj9AfB3ZdAwXwj
+3kk863/vqW8OwBQkx+AczHwYIzCRti1o7hgdXh/QCcqkSa+Wvxw9C+bF52gA
+Blk6gS8ZpLKkzzaKYCcjf2AfLiuDozOHMy87x18YQ9HJZhEY2zZiib5IKEi4
+qPa/Vmpf4ohEpK090cZusoyK7kKZ1VUdkBLl25o78x0AAAAAAAA=
 
---_000_A962A2D04FAB5C4499FEFD15B642FA0A012003B7EX02corpqihoone_--
+--------------ms020705030909070908060602--
