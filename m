@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1202" "Sunday" "1" "October" "2017" "08:37:55" "+0100" "Eddie Chapman" "eddie@ehuk.net" "<1e5a78ac-a93f-f4cf-b8a2-25fde5189a63@ehuk.net>" "24" "Re: [oss-security] clamav: Out of bounds read and segfault in xar parser" "^Date:" nil nil "10" "2017100107:37:55" "[oss-security] clamav: Out of bounds read and segfault in xar parser" (number mark "        eddie@ehuk.n Oct  1   24/1202  " thread-indent "\"Re: [oss-security] clamav: Out of bounds read and segfault in xar parser\"\n") "<20170929150922.15b800f8@pc1>" ("<20170929150922.15b800f8@pc1>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1424" "Thursday" "18" "June" "2015" "13:03:01" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150618170301.CF5FD132F024@smtpvbsrv1.mitre.org>" "37" "[oss-security] Re: CVE request: pure-ftpd denial of service in glob_()" nil nil nil "6" "2015061817:03:01" "[oss-security] Re: CVE request: pure-ftpd denial of service in glob_()" (number mark "        cve-assign@m Jun 18   37/1424  " thread-indent "\"[oss-security] Re: CVE request: pure-ftpd denial of service in glob_()\"\n") "<20150618151358.GA18454@mail.corp.redhat.com>" ("<20150618151358.GA18454@mail.corp.redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 27914 invoked by uid 550); 1 Oct 2017 13:10:30 -0000
+Received: (qmail 6129 invoked by uid 550); 18 Jun 2015 17:08:22 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,52 +11,50 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 26545 invoked from network); 1 Oct 2017 07:38:08 -0000
-DKIM-Filter: OpenDKIM Filter v2.10.3 schatzi.steelbluetech.co.uk 920641DC66
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ehuk.net; s=default;
-	t=1506843475; bh=GMCND4HpGR8s7sNOGbcgg42WbZsDoBGfc48UTAOBRkQ=;
-	h=Subject:To:References:From:Reply-To:Date:In-Reply-To:From;
-	b=MnhIth58ZBpn1O/sOaPWZxwyjCtxRBX+ySfcZRGy9yLpLirk3ZJ8bgTrjqTe9VV38
-	 9HoKp4XwwXFpQdTJPAKNkkRqcZp9UtUPimRO3iBR0QPrDbsuKzb0PVbfJNfJN1G/MU
-	 G2EjAap4VNZYn2E75GmVjEGENWb07QhveCgPE35I=
-References: <20170929150922.15b800f8@pc1>
-Message-ID: <1e5a78ac-a93f-f4cf-b8a2-25fde5189a63@ehuk.net>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.3.0
-MIME-Version: 1.0
-In-Reply-To: <20170929150922.15b800f8@pc1>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 8bit
-Date: Sun, 1 Oct 2017 08:37:55 +0100
-From: Eddie Chapman <eddie@ehuk.net>
+Received: (qmail 6107 invoked from network); 18 Jun 2015 17:08:22 -0000
+In-Reply-To: <20150618151358.GA18454@mail.corp.redhat.com>
+Message-Id: <20150618170301.CF5FD132F024@smtpvbsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Thu, 18 Jun 2015 13:03:01 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] clamav: Out of bounds read and segfault in xar
- parser
-To: oss-security@lists.openwall.com, =?UTF-8?Q?Hanno_B=c3=b6ck?=
- <hanno@hboeck.de>
+Subject: [oss-security] Re: CVE request: pure-ftpd denial of service in glob_()
+To: vkaigoro@redhat.com
 
-On 29/09/17 14:09, Hanno Böck wrote:
-> Meta-level comment:
-> It seems to me clamav development has mostly stalled. Detection rates
-> are very low and I'm considering to stop using it for mail filtering.
-> (also there's of course the whole AV debate, however I never saw
-> clamav as a security tool, more as something like a spam filter that
-> prevents crap in my inbox. Still of course it needs to have secure
-> parsers.)
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I agree with much of this, and I think you're right that the 
-effectiveness of Clamav in mail filtering contexts can be debated, 
-though maybe more in terms of the AV debate, as you say.  As a user 
-myself with it deployed filtering multi-user domains, I agree that 
-detection rates are low.
+> Version 1.0.40 of pure-FTPd
 
-However, checking just now on Github I do not get the impression at all 
-that development has stalled. Judging purely by number of commits, every 
-month there are consistently a very healthy number. But what has stalled 
-is stable releases; the last one being 0.99.2 on 22nd April 2016, so 
-something is not quite right. But I've seen many open source/free 
-software projects stalled over the years and definitely Clamav does not, 
-IMO, fit that description (at least not yet).
+> NEWS file:
 
-Eddie
+>  - The process handling a user session could be crashed by trying to
+>  match a file pattern longer than the maximum length for a path. This
+>  has been fixed.
+
+> https://github.com/jedisct1/pure-ftpd/commit/0627004e23a24108785dc1506c5767392b90f807
+
+Can you clarify the security impact? We have not looked into the code
+paths or the overall product design. Is this a process that is
+specific to one FTP client? Is the problem that the gl_errfunc
+assignment doesn't occur and there is always a dereference of a NULL
+function pointer? Is there a commonly relevant consequence other than
+the ability of an FTP client to conduct a DoS attack against its own
+session?
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJVgvkkAAoJEKllVAevmvmsAHgH/js/rXSJfKmyb+7VLsgYnzPz
++DRUjQ4h/Nza0ZvBUuWub3JMaqWgLq+YCXZKVHUPmdyz+i7oXYPHyEZzvGVedVHi
+djzSqdAh8sU6lN5oG7yShjlHTIDnDr+MJDvU4gjnsLxTuEGGDkUeZzwUXyOJgO9f
+hCFSFSRFe6pMrOIuaPIwO/opLX0qG+c8E2IZbR5bXCq8mKVVLxs9/rl9juBGtGeo
+oUwK9E+NktAnRCsRhtGnxCl37teIePbmuj+MLuIvQysf2xjfIJvi1FQ5GeuVDcN6
+U4nv9rx7VIAy1EWPoWlAo66YKaSyOv1RIAc3cVu/lHkYfwQA54F/KR+k1Lbfge0=
+=1/Mw
+-----END PGP SIGNATURE-----
