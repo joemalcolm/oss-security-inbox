@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1815" "Tuesday" "12" "June" "2018" "16:56:13" "-0400" "Stiepan" "stie@itk.swiss" "<olv_Epzwz4jvQCGNLIBY5Ij1Xizr1uG9HSj2IbgCrP8mqjkxs2s_jD9rz1L_gubdClRr71MOFF6pYj_i-NWiYgwSrlvZLV9cu6CHaBNSm0w=@itk.swiss>" "35" "[oss-security] Re : Re: [oss-security] Re : Re: [oss-security] CVE-2018-12020 in GnuPG" "^Date:" nil nil "6" "2018061220:56:13" "[oss-security] Re : Re: [oss-security] Re : Re: [oss-security] CVE-2018-12020 in GnuPG" (number mark "        stie@itk.swi Jun 12   35/1815  " thread-indent "\"[oss-security] Re : Re: [oss-security] Re : Re: [oss-security] CVE-2018-12020 in GnuPG\"\n") "<7897eadf67144a237334450d05396572daa60e34.camel@debian.org>" ("<167bc7e898d02f7bd13c43d272d64178f00e7e23.camel@debian.org>" "<44254614-42f1-9908-a55c-401d20ffc2bd@ruhr-uni-bochum.de>" "<bzwjweLsc_IpouMt05ni4KMcd4XJPVuF1Bp42jMQhPiNaYdT-Cei_P1CYdQzwJWMYMdRtC0GwvgBM6A774c2_EGFE3onwBMEd5lHH2KBD0s=@itk.swiss>" "<7897eadf67144a237334450d05396572daa60e34.camel@debian.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1428" "Thursday" "18" "June" "2015" "11:22:38" "+0200" "Tomas Hoger" "thoger@redhat.com" "<20150618112238.783fdf4b@redhat.com>" "34" "[oss-security] PHP 5.6.10 / 5.5.26 / 5.4.42 CVE request" nil nil nil "6" "2015061809:22:38" "[oss-security] PHP 5.6.10 / 5.5.26 / 5.4.42 CVE request" (number mark "U       thoger@redha Jun 18   34/1428  " thread-indent "\"[oss-security] PHP 5.6.10 / 5.5.26 / 5.4.42 CVE request\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 9880 invoked by uid 550); 13 Jun 2018 08:28:00 -0000
+Received: (qmail 27683 invoked by uid 550); 18 Jun 2015 09:22:58 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,56 +11,50 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 20301 invoked from network); 12 Jun 2018 20:56:37 -0000
-Authentication-Results: mail2.protonmail.ch; dkim=none
-Message-ID: <olv_Epzwz4jvQCGNLIBY5Ij1Xizr1uG9HSj2IbgCrP8mqjkxs2s_jD9rz1L_gubdClRr71MOFF6pYj_i-NWiYgwSrlvZLV9cu6CHaBNSm0w=@itk.swiss>
-In-Reply-To: <7897eadf67144a237334450d05396572daa60e34.camel@debian.org>
-References: <167bc7e898d02f7bd13c43d272d64178f00e7e23.camel@debian.org>
- <44254614-42f1-9908-a55c-401d20ffc2bd@ruhr-uni-bochum.de>
- <bzwjweLsc_IpouMt05ni4KMcd4XJPVuF1Bp42jMQhPiNaYdT-Cei_P1CYdQzwJWMYMdRtC0GwvgBM6A774c2_EGFE3onwBMEd5lHH2KBD0s=@itk.swiss>
- <7897eadf67144a237334450d05396572daa60e34.camel@debian.org>
-Feedback-ID: wnsnnc8Us3MVqt1IALGduDJl-d16B_hEkg50pF7qo11mpeysEHmUOGy-yvw8MEApAPX3TXcPDHQwu7hti-kzSw==:Ext:ProtonMail
-MIME-Version: 1.0
-Content-Type: multipart/alternative;
-	boundary="b1_92357a7dd61d8a56ddd573033dd627e2"
-Date: Tue, 12 Jun 2018 16:56:13 -0400
-From: Stiepan <stie@itk.swiss>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re : Re: [oss-security] Re : Re: [oss-security] CVE-2018-12020 in GnuPG
-To: corsac@debian.org, oss-security@lists.openwall.com, marcus.brinkmann@ruhr-uni-bochum.de
+Received: (qmail 27665 invoked from network); 18 Jun 2015 09:22:58 -0000
+Date: Thu, 18 Jun 2015 11:22:38 +0200
+From: Tomas Hoger <thoger@redhat.com>
+To: oss-security@lists.openwall.com
+Cc: cve-assign@mitre.org, security@php.net
+Message-ID: <20150618112238.783fdf4b@redhat.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
+Subject: [oss-security] PHP 5.6.10 / 5.5.26 / 5.4.42 CVE request
 
---b1_92357a7dd61d8a56ddd573033dd627e2
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
+Hi!
 
-SGkgWXZlcy1BbGV4aXMsCgpBbnkgdXBkYXRlcyBvbiB0aGlzPwoKQnkgdGhl
-IHdheSwgaXQgbWlnaHQgYmUgdGhlIG9jY2FzaW9uIHRvIHN3aXRjaCB0byBt
-b3JlIGZ1dHVyZS1wcm9vZiBzaWduYXR1cmVzLCBzdWNoIGFzCmh0dHBzOi8v
-ZGF0YXRyYWNrZXIuaWV0Zi5vcmcvZG9jL3JmYzgzOTEgLCB3aGljaCBhcmUg
-cmVwdXRlZCBhcyBxdWFudHVtLXNhZmUgYW5kIGRvIG5vdCBkZXBlbmQgb24g
-c29tZSBoYXJkbmVzcyBhc3N1bXB0aW9ucy4KV2UgY291bGQgaGVscCB3aXRo
-IGFuIG9wZW4tc291cmNlIGltcGxlbS4gaWYgbmVlZGVkLgpBcHBhcmVudGx5
-LCBOSVNUIGlzIGFsc28gbW92aW5nIGludG8gdGhhdCBkaXJlY3Rpb24gZm9y
-IHNvZnR3YXJlIHNpZ25hdHVyZXMsIGFjY29yZGluZyB0byBpbmZvcm1hdGlv
-biBnaXZlbiBub3cgYXQgRVRTSSdzIHNlY3VyaXR5IHdlZWsuCgpCZXN0IHJl
-Z2FyZHMsClN0aWVwYW4gQS4gS292YWMKUHJlc2lkZW50Cml0ayBBVnRvYnZT
-IFNBUkwKCkVudm95w6kgZGVwdWlzIFByb3Rvbk1haWwgbW9iaWxlCgotLS0t
-LS0tLSBNZXNzYWdlIGQnb3JpZ2luZSAtLS0tLS0tLQpPbiAxMCBqdWluIDIw
-MTggw6AgMTg6MzgsIFl2ZXMtQWxleGlzIFBlcmV6IGEgw6ljcml0IDoKCj4g
-T24gU3VuLCAyMDE4LTA2LTEwIGF0IDEwOjU4IC0wNDAwLCBTdGllcGFuIHdy
-b3RlOgo+Cj4gSGkgU3RlcGlhbiwKPgo+PiBUaGlzIHJlc3BvbnNpYmlsaXR5
-IGRpc2N1c3Npb24gaXMgYWxsIHdlbGwgYW5kIGZpbmUsIGJ1dCBub3cgdGhh
-dCB0aGlzIGlzCj4+IGhhbGYtcHVibGljLCBtYXkgd2Uga25vdyBmb3Igc3Vy
-ZSB3aGV0aGVyIHdlIGFyZSBhZmZlY3RlZCA6Cj4+IDEuIGFzIGRlYmlhbigt
-bGlrZSkgcGFja2FnZSBjb25zdW1lcnMKPgo+IE5vdCBlbnRpcmVseSBzdXJl
-IHdoYXQgeW91IG1lYW4gaGVyZSwgYnV0IGlmIHlvdSdyZSB0YWxraW5nIGFi
-b3V0IHRoZSBhcHQKPiBwYWNrYWdlIG1hbmFnZXJzICh3aGljaCByZWxpZXMg
-b24gZ3BndiBmb3Igc2lnbmF0dXJlIHZlcmlmaWNhdGlvbiksIGl0J3MKPiBj
-dXJyZW50bHkgaW52ZXN0aWdhdGVkLgo+Cj4gTm90ZSB0aGF0IGFsbCBzdXBw
-b3J0ZWQgc3VpdGVzIGhhdmUgaGFkIHRoZWlyIGdudXBnIHZlcnNpb24gdXBk
-YXRlZDogaHR0cHM6Ly9zCj4gZWN1cml0eS10cmFja2VyLmRlYmlhbi5vcmcv
-dHJhY2tlci9DVkUtMjAxOC0xMjAyMAo+Cj4gUmVnYXJkcywKPiAtLQo+IFl2
-ZXMtQWxleGlz
+PHP 5.6.10 / 5.5.26 / 5.4.42 releases fix few issues tagged as security
+in upstream bug tracker:
 
---b1_92357a7dd61d8a56ddd573033dd627e2--
+Fixed bug #69646 (OS command injection vulnerability in escapeshellarg).
+https://bugs.php.net/bug.php?id=69646
+http://git.php.net/?p=php-src.git;a=commitdiff;h=d2ac264ffea5ca2e85640b6736e0c7cd4ee9a4a9
+(Windows specific)
 
+Imroved fix for bug #69545 (Integer overflow in ftp_genlist() resulting
+in heap overflow).
+https://bugs.php.net/bug.php?id=69545#1431550655
+http://git.php.net/?p=php-src.git;a=commitdiff;h=0765623d6991b62ffcd93ddb6be8a5203a2fa7e2
+(#69545 was originally fixed in 5.4.41 / 5.5.25 / 5.6.9 and got
+CVE-2015-4022, but the fix was found to be incomplete, as explained in
+the upstream bug)
+
+Fixed bug #69719 (Incorrect handling of paths with NULs).
+http://bugs.php.net/69719
+http://git.php.net/?p=php-src.git;a=commitdiff;h=8fc52d77d6f66c438c98d536e2309b5fd13f90de
+(This already got CVE-2015-4598 assigned in
+http://seclists.org/oss-sec/2015/q2/727)
+
+Fixed bug #69667 (segfault in php_pgsql_meta_data).
+https://bugs.php.net/bug.php?id=69667
+http://git.php.net/?p=php-src.git;a=commitdiff;h=2cc4e69cc6d8dbc4b3568ad3dd583324a7c11d64
+(Not security bug upstream, but we found this when testing updates with
+fixes for CVE-2015-1352.  I believe the original issue that got
+CVE-2015-1352 is not considered security by upstream either, so just
+noting this for completeness.)
+
+-- 
+Tomas Hoger / Red Hat Product Security
