@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1823" "Wednesday" "19" "October" "2016" "17:34:12" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20161019213412.5EE6E8BC62F@smtpvmsrv1.mitre.org>" "44" "[oss-security] Re: CVE Request - TRE & musl libc regex integer overflows in buffer size computations" nil nil nil "10" "2016101921:34:12" "[oss-security] Re: CVE Request - TRE & musl libc regex integer overflows in buffer size computations" (number mark "U       cve-assign@m Oct 19   44/1823  " thread-indent "\"[oss-security] Re: CVE Request - TRE & musl libc regex integer overflows in buffer size computations\"\n") "<20161018230613.GH19318@brightrain.aerifal.cx>" ("<20161018230613.GH19318@brightrain.aerifal.cx>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1584" "Thursday" "18" "June" "2015" "13:05:12" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150618170512.E67857BC2AA@smtpvmsrv1.mitre.org>" "43" "[oss-security] Re: Possible CVE Request: Multiple stack overflows in squashfs-tools and sasquatch" nil nil nil "6" "2015061817:05:12" "[oss-security] Re: Possible CVE Request: Multiple stack overflows in squashfs-tools and sasquatch" (number mark "        cve-assign@m Jun 18   43/1584  " thread-indent "\"[oss-security] Re: Possible CVE Request: Multiple stack overflows in squashfs-tools and sasquatch\"\n") "<BA939B00-BFFE-40B1-B496-23DEA74FD586@me.com>" ("<BA939B00-BFFE-40B1-B496-23DEA74FD586@me.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 1593 invoked by uid 550); 19 Oct 2016 21:34:24 -0000
+Received: (qmail 27707 invoked by uid 550); 18 Jun 2015 17:05:54 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,57 +11,56 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1572 invoked from network); 19 Oct 2016 21:34:24 -0000
+Received: (qmail 27663 invoked from network); 18 Jun 2015 17:05:54 -0000
+In-Reply-To: <BA939B00-BFFE-40B1-B496-23DEA74FD586@me.com>
+Message-Id: <20150618170512.E67857BC2AA@smtpvmsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Thu, 18 Jun 2015 13:05:12 -0400 (EDT)
 From: cve-assign@mitre.org
-To: dalias@libc.org
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, ville@laurikari.net
-In-Reply-To: <20161018230613.GH19318@brightrain.aerifal.cx>
-Message-Id: <20161019213412.5EE6E8BC62F@smtpvmsrv1.mitre.org>
-Date: Wed, 19 Oct 2016 17:34:12 -0400 (EDT)
-Subject: [oss-security] Re: CVE Request - TRE & musl libc regex integer overflows in buffer size computations
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: Possible CVE Request: Multiple stack overflows in squashfs-tools and sasquatch
+To: gcanalesb@me.com
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hash: SHA1
 
-> Due to incorrect use of integer types and missing overflow checks in
-> the tre_tnfa_run_parallel function's buffer overflow logic, the TRE
-> regex implementation (both original version and the one used in musl
-> libc) are subject to integer overflows in buffer size computation.
+>> As far as we can tell, there are two independent types of problems:
 
-> at least the num_states*num_tags multiplication can clearly
-> overflow in practice. for safety, check them all, and use the proper
-> type, size_t, rather than int.
+>> We would guess that the most likely case is that only 3 and 6 are
+>> applicable, i.e., the code problems are found only in
+>> unsquash-1.c/unsquash-2.c/unsquash-3.c/unsquash-4.c and all of these
+>> files exist in both squashfs-tools and sasquatch. Is this correct?
 
-Use CVE-2016-8859 for this entire report. We do not see a sensible way
-in which the issue of an incorrect data type could be separated from
-the issue of unchecked multiplication.
+> Yes, that is correct.
+
+>>   - "int bytes" is incorrect because the return value of
+>>     SQUASHFS_FRAGMENT_BYTES can be larger than the maximum
+>>     value of a signed int
+
+Use CVE-2015-4645.
 
 
-> -    buf = xmalloc((unsigned)total_bytes);
-> +    buf = calloc(total_bytes, 1);
+>>   - pull/5 says "If we fix this by making the variable size_t, we run
+>>     into an unrelated problem in which the stack VLA allocation of
+>>     fragment_table_index[] can easily exceed RLIMIT_STACK" but
+>>     actually RLIMIT_STACK can be exceeded regardless of the data type
+>>     of the bytes variable
 
-If this is a security fix, it would need a separate CVE ID.
+Use CVE-2015-4646.
 
 - -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Version: GnuPG v1.4.14 (SunOS)
 
-iQIcBAEBCAAGBQJYB+XPAAoJEHb/MwWLVhi2xZoP/RjFX9HfV8rmj6XtIvK/V8eX
-Nr7peF92wDUfQTnwHGbB4vpPLAeBJpR9O/T9+mxmp5hbl6EhetgugUkkcr9mn8/M
-7yySbr7wCegpAzWHMm51hecozMunOB8Di0dpI/jhdMNra2N4rAFhZ+orAancZSCq
-IhMIHsj9uuxR7segrNyMlZRCGjLFHtro4TeaO7g84ITVQoswFfbP9yuIL1Ddhn+h
-s/AYfV3jqCXBOP6zWxRyZSAXT37HE/ZYVx0T/6wqrzQhX259i8dYnpRTsIvwZEJt
-dbuB7fAvE6CAhGJ/zOGjBF2U2oXnNmOEdyhWjOdB2TlmfpfS8IyO5tN/ki2Qn8Kt
-g4Lkk3+DKquMh+gcSxF8J/Xc7eKS4FOygdCSM+d5wAWr4iMDyTN0hI+zb9ypIkte
-CTO66jlPgFJy6QBFQSTrv2wqftOdkQhuJ2U6u/ZHI+57Xj/S2AZM8FbWU0dgAkEN
-xgtmF1go9v4hiK2Dln5DAyauOCq5LG1KYuddHmT/nDRxa4dMKG7nWPYH8TP+DMJM
-hnFo8BBSicRFBTBkBE57BwRPps31O3HQ2xD9UusXwy1/5Fa5kpFw0V8bHoUeIpDV
-0Uo212/UWa449y5S/QsmoKaLG/pXQn1YEnYmNZ1ASLCUhD9eiyUMFJI1au7d25PC
-15KiklfB4i7WNGH8t79S
-=M+Ab
+iQEcBAEBAgAGBQJVgvnhAAoJEKllVAevmvms1oMH/iee0wchZqLNcdv94boq7Nu3
+5AWJOLkFZjxAZrlyPvKS0e5wpnRO8Crc9ERLq4ndEzg/l5SFn1QSqgQ4eve7BiR7
+rReKZo3m67lLBjn2g+eODNgg+SRp0wxzFallB9UnjX5zaE282/toIIj4+7AvPpXN
+DVEgh96AnIUr0NyI5CsUDp6LJj75m96HOVz3iV4tYsiu2RK03eOjpm2TX9gqj8yT
+3AZiXAYx4TkHq34BZMh9zMl762vENMj3ylGfB+/PFUIoQYdilxEbfquX2szZP6KL
+gLteXkodoHfFN2sagP0pg/t5CNRPeLOqJYW+C04k2/Je7DEglZoJnJq5FKEeRyI=
+=iU1A
 -----END PGP SIGNATURE-----
