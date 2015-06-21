@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3222" "Sunday" "31" "May" "2015" "09:32:36" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150531133236.6ADCE6C003C@smtpvmsrv1.mitre.org>" "78" "[oss-security] Re: CVE request for attic : encrypted backups attack" nil nil nil "5" "2015053113:32:36" "[oss-security] Re: CVE request for attic : encrypted backups attack" (number mark "U       cve-assign@m May 31   78/3222  " thread-indent "\"[oss-security] Re: CVE request for attic : encrypted backups attack\"\n") "<556381AE.6030908@syscall.eu>" ("<556381AE.6030908@syscall.eu>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2949" "Sunday" "21" "June" "2015" "09:16:40" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150621131640.2EA966FC123@smtpvmsrv1.mitre.org>" "63" "[oss-security] Re: CVE Request: MITM & Shoulder-surfing vuln in Ruby OTP/HOTP/TOTP library \"ROPT\" - ROTP" nil nil nil "6" "2015062113:16:40" "[oss-security] Re: CVE Request: MITM & Shoulder-surfing vuln in Ruby OTP/HOTP/TOTP library \"ROPT\" - ROTP" (number mark "        cve-assign@m Jun 21   63/2949  " thread-indent "\"[oss-security] Re: CVE Request: MITM & Shoulder-surfing vuln in Ruby OTP/HOTP/TOTP library \"ROPT\" - ROTP\"\n") "<0F109ADF-DF22-4D47-8810-6229FC0D4F73@justinbull.ca>" ("<0F109ADF-DF22-4D47-8810-6229FC0D4F73@justinbull.ca>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 9604 invoked by uid 550); 31 May 2015 13:32:48 -0000
+Received: (qmail 31789 invoked by uid 550); 21 Jun 2015 13:16:52 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,77 +11,62 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9586 invoked from network); 31 May 2015 13:32:48 -0000
-From: cve-assign@mitre.org
-To: ml-oss@syscall.eu
+Received: (qmail 31771 invoked from network); 21 Jun 2015 13:16:51 -0000
+In-Reply-To: <0F109ADF-DF22-4D47-8810-6229FC0D4F73@justinbull.ca>
+Message-Id: <20150621131640.2EA966FC123@smtpvmsrv1.mitre.org>
 Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <556381AE.6030908@syscall.eu>
-Message-Id: <20150531133236.6ADCE6C003C@smtpvmsrv1.mitre.org>
-Date: Sun, 31 May 2015 09:32:36 -0400 (EDT)
-Subject: [oss-security] Re: CVE request for attic : encrypted backups attack
+Date: Sun, 21 Jun 2015 09:16:40 -0400 (EDT)
+From: cve-assign@mitre.org
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: CVE Request: MITM & Shoulder-surfing vuln in Ruby OTP/HOTP/TOTP library "ROPT" - ROTP
+To: me@justinbull.ca
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> attic is a deduplicating backup program written in Python.
-> It features encrypted remote backups.
-> 
-> Unfortunately :
-> https://github.com/jborg/attic/issues/271
-> allow an attacker able to modify a remote encrypted directory to cause the
-> client to send unencrypted data on the next backup run.
-> 
-> It was fixed in this commit :
-> https://github.com/jborg/attic/commit/78f9ad1faba7193ca7f0acccbc13b1ff6ebf9072
+> https://github.com/mdp/rotp/issues/44
+> https://github.com/mdp/rotp/pull/45
 
-As far as we can tell, this means that the client determines whether
-to send encrypted or unencrypted data by asking the server about the
-value of the "manifest type byte" stored on the server.
+As far as we can tell, ROTP is advertised as "A ruby library for
+generating one time passwords (HOTP & TOTP) according to RFC 4226 and
+RFC 6238." This applies to "generating." We did not find any
+documentation stating that the "verifier" complies with RFC 6238.
+Admittedly, it is plausible that many users expected that the verifier
+would comply with this RFC, just because this RFC was mentioned. The
+vendor's position (see the
+https://github.com/mdp/rotp/issues/44#issuecomment-113824151 comment)
+is, roughly, that this verifier behavior is outside the scope of the
+ROTP design, and that anyone who wants this verifier behavior needs to
+write code or obtain code elsewhere.
 
-The reported security problem is that the client user is not asked to
-confirm that unencrypted data is acceptable. There are two cases
-(either the repository has never been used, or the repository has
-previously been used for encrypted data), but these are conceptually
-the same. Use CVE-2015-4082.
+Possibly a second issue is
+https://github.com/f3ndot/rotp/commit/a7ffd1b5aa60235ac197859619dd29753499a666.
+We might not understand this, but we think it essentially means that
+"if ROTP were to consume an OTP, then this should be done consistently
+for the current-timestamp case and the acceptable-past-timestamp
+case." So, we don't think that this is an independent concern.
 
-A separate question is whether there is any remaining vulnerability.
-The documentation says:
+We don't think there can be a CVE ID for any aspect of the report
+recommending that the verifier comply with RFC 6238. We agree that it
+would be useful for the ROTP documentation to place some emphasis on
+the actual verifier behavior, to cover the scenario where a user
+guesses that full RFC compliance was intended, and later discovers
+that a "MUST NOT" condition isn't met.
 
-> https://github.com/jborg/attic/blob/master/docs/faq.rst
-> 
-> When backing up to remote servers, is data encrypted before leaving
-> the local machine, or do I have to trust that the remote server isn't
-> malicious?
-> 
-> Yes, everything is encrypted before leaving the local machine.
+> NOTE: I have already sent a similar email to MITRE requesting a CVE
+> ID, but been advised to submit here as well (then cancel the request
+> to MITRE
 
-We also know that use of remote servers for unencrypted data is
-intentional functionality, as long as the client user has previously
-agreed to send unencrypted data to that server.
+We aren't exactly sure what this means. The MITRE CVE team currently
+does not advise anyone to send messages to oss-security. The "already
+sent" apparently refers to a message from an hour earlier. Messages
+for us can be sent to either oss-security or to cve-assign@mitre.org
+but should not be sent to both addresses. Of course, we are willing to
+accommodate the occasional case where someone accidentally sends to
+cve-assign@mitre.org but actually wanted to make the information
+public immediately on oss-security.
 
-It seems that for this advertised functionality, normally, a client's
-decision on whether to encrypt would be specified in the client's
-configuration, on the client's command line, or in a client-side user
-interface. Asking the server seems to be an unusual design decision.
-(Conceivably, it is unusual enough to have its own CVE, but we are
-not sure about that.) A potentially problematic case would be a user
-who uses attic from many client machines, communicating with many
-servers, and intentionally chooses to encrypt in some cases but not
-all. The user goes to one client machine and types:
-
-  ATTIC_PASSPHRASE="My secret passphrase" attic create storage::second my\ data
-
-but has forgotten that the applicable server has always been set up
-for unencrypted use. Maybe a safer alternative would be for a client
-to always send encrypted data unless:
-
-  A. an option such as --cleartext is on the command line
-
-  or
-
-  B. the client configuration specifies cleartext and the attic
-     process does not have access to a passphrase
+(Subject line modified to account for the "ROPT" typo.)
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -91,11 +76,11 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJVaw0GAAoJEKllVAevmvmsKtEH/31saU48vhkXpcmwXa7ogWNs
-VU8yKdnLV018/66+/A4rGOLxm/5Pe9uY3kVmULiHqffeL54d0mCUeyH60LG64key
-StyLBAv4b36Zvt8kD367H8THp53abYXQlfIk4N769y2i3DUtMfEkL2GRLPW4U5eF
-FUxerVWqhBNUWIYk8haGsLbqgTvPzaj46incW6/ls0P4f102yzMjDE6gWdVJBraq
-iBauI23JJiPC8ZzVVyY+z/xJ6sV6E5zZav8YjbN52yw+5lstGPgjUcJ7Vlcq4o/7
-VTwpYzsxEkDPHeDsFpbq+xsRapZA/eRqddIKbpxfP+DkIltaXhV95QtMKcbWbpg=
-=Eu6l
+iQEcBAEBAgAGBQJVhriWAAoJEKllVAevmvmsBL0H/iF7pqv9Mi6IgR29G/L+77xx
+Uq+rSiqThEcm/DXyIJiRU9lFjwp+i+icPPp/1Tfz0QW2mXYSpwYuOWW6EtBwhLbJ
+VjiGSyGSvobvNbX6kX/t7P5zD+IwvnI3pUVbMssPpTdgW8XWmOL0pDetdb44IUgh
+YiXuwxWMBdkP5F06pYQAUpvk6UFW9Te5gM7JK2UVcI56Tuj5LKEe1owckbalSj9k
+E8CIS2LzGSWRuWls4widtmQnfBn3D6Nc2OKriGCmmfLsKbSXOaM8sjVjPv6LiV62
+3RXhDHoVPHMa/hOHqCSbeD7m4az8m/oVz/yShDv2hCRBeXh49ojX6805/UGuiP4=
+=E1cO
 -----END PGP SIGNATURE-----
