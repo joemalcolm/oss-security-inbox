@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2151" "Wednesday" "4" "December" "2019" "23:05:11" "+0100" "Solar Designer" "solar@openwall.com" "<20191204220511.GA16998@openwall.com>" "49" "Re: [oss-security] Authentication vulnerabilities in OpenBSD" "^Date:" nil nil "12" "2019120422:05:11" "[oss-security] Authentication vulnerabilities in OpenBSD" (number mark "        solar@openwa Dec  4   49/2151  " thread-indent "\"Re: [oss-security] Authentication vulnerabilities in OpenBSD\"\n") "<20191204204020.GB7012@localhost.localdomain>" ("<20191204204020.GB7012@localhost.localdomain>") nil nil nil nil nil nil nil "Re: [oss-security] Authentication vulnerabilities in OpenBSD" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1051" "Monday" "22" "June" "2015" "07:42:20" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150622114220.5191B6C025F@smtpvmsrv1.mitre.org>" "28" "[oss-security] Re: Wordpress Plugin: FTP To Zip 1.8" nil nil nil "6" "2015062211:42:20" "[oss-security] Re: Wordpress Plugin: FTP To Zip 1.8" (number mark "U       cve-assign@m Jun 22   28/1051  " thread-indent "\"[oss-security] Re: Wordpress Plugin: FTP To Zip 1.8\"\n") "<CAN6thH4XYHF8EMR6RLtqVEU39WcCxK32Tv9AGXSdKKraO=+z8g@mail.gmail.com>" ("<CAN6thH4XYHF8EMR6RLtqVEU39WcCxK32Tv9AGXSdKKraO=+z8g@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 23692 invoked by uid 550); 4 Dec 2019 22:06:07 -0000
+Received: (qmail 7568 invoked by uid 550); 22 Jun 2015 11:42:40 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,66 +11,41 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 22405 invoked from network); 4 Dec 2019 22:05:24 -0000
-Message-ID: <20191204220511.GA16998@openwall.com>
-References: <20191204204020.GB7012@localhost.localdomain>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20191204204020.GB7012@localhost.localdomain>
-User-Agent: Mutt/1.4.2.3i
-Date: Wed, 4 Dec 2019 23:05:11 +0100
-From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Authentication vulnerabilities in OpenBSD
-To: oss-security@lists.openwall.com
+Received: (qmail 7434 invoked from network); 22 Jun 2015 11:42:31 -0000
+From: cve-assign@mitre.org
+To: 0pc0defr@gmail.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <CAN6thH4XYHF8EMR6RLtqVEU39WcCxK32Tv9AGXSdKKraO=+z8g@mail.gmail.com>
+Message-Id: <20150622114220.5191B6C025F@smtpvmsrv1.mitre.org>
+Date: Mon, 22 Jun 2015 07:42:20 -0400 (EDT)
+Subject: [oss-security] Re: Wordpress Plugin: FTP To Zip 1.8
 
-On Wed, Dec 04, 2019 at 08:49:22PM +0000, Qualys Security Advisory wrote:
-> 1. CVE-2019-19521: Authentication bypass
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> This is the second piece of the puzzle: if an attacker specifies the
-> username "-schallenge" (or "-schallenge:passwd" to force a passwd-style
-> authentication), then the authentication is automatically successful and
-> therefore bypassed.
+> https://downloads.wordpress.org/plugin/ftp-to-zip.1.8.zip
 
-Wow, this is the new -froot.
+> The FTP To Zip 1.8 wordpress plugin is vulnerable to unauthenticated
+> execution. With vulnerability, you can create a zip archive for Wordpress
+> install and you can download this archive (
+> http://domain.tld/wp-content/plugins/ftp-to-zip/backup.php).
 
-> 2. CVE-2019-19520: Local privilege escalation via xlock
-> ==============================================================================
-> 
-> On OpenBSD, /usr/X11R6/bin/xlock is installed by default and is
-> set-group-ID "auth", not set-user-ID; the following check is therefore
-> incomplete and should use issetugid() instead:
-> 
-> ------------------------------------------------------------------------------
-> 101 _X_HIDDEN void *
-> 102 driOpenDriver(const char *driverName)
-> 103 {
-> ...
-> 113    if (geteuid() == getuid()) {
-> 114       /* don't allow setuid apps to use LIBGL_DRIVERS_PATH */
-> 115       libPaths = getenv("LIBGL_DRIVERS_PATH");
-> ------------------------------------------------------------------------------
-> 
-> A local attacker can exploit this vulnerability and dlopen() their own
-> driver to obtain the privileges of the group "auth":
+Use CVE-2015-4709.
 
-I think this library issue isn't OpenBSD-specific.  A quick Google web
-search for LIBGL_DRIVERS_PATH finds that Mesa appears to have the same
-issue, and it also finds that we should also search for GBM_DRIVERS_PATH
-(apparently, for older Mesa) and maybe EGL_DRIVERS_PATH and EGL_DRIVER,
-and LIBVA_DRIVERS_PATH and LIBVA_DRIVER_NAME.  There are probably more.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-Related discussion for X.Org, which ends with Alan Coopersmith saying:
-
-"Yeah, I really would rather not have a setuid-root program dlopen and execute
-code from a user supplied path.  Can we have something in there to prevent
-disasters, such as issetugid() or secure_getenv()?"
-
-[PATCH xserver] Search for DRI drivers at LIBGL_DRIVERS_PATH environment variable.
-https://lists.x.org/archives/xorg-devel/2016-April/049336.html
-
-It sounds like the patch adding the dangerous getenv() didn't get in,
-but I didn't verify that.
-
-Alexander
+iQEcBAEBAgAGBQJVh/RJAAoJEKllVAevmvmslbYH/R3pR54D6wvGte+/56tSd56I
+nD43k78d/Ym7GKChKybc3anC+KJlo+yUSeDGDmcHa0uRxEFnmha2Pdgud+x2rXvf
+aTUWr5pSe0cHdwR+9/5g3sxwEnKYblutCHY+kogvrruCZRl23GEVMT2Uq+fQ+YAI
+quEWFZtypr41O7NM+3cZZ2zNHKU+k1xjZARuGP7MQR6E8xgs3BqwfVTFG4uNUCWf
+yPqiRsPo9eh9++ieTttMtwaFraSLgZ9gKWwbZN2qToh06w6SQkP8VrRlCips1p5N
+j9G/0EskgfoXOdZYkuYYPC+xTyBB2/qk46hE4U8ITLO/jWz6xDHSrE0TObQebMM=
+=Pzzl
+-----END PGP SIGNATURE-----
