@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2516" "Saturday" "26" "May" "2018" "06:53:09" "-0700" "Bryan Pendleton" "bpendleton.derby@gmail.com" "<CANi-yg-yDVpTxvDEuRLefXW8fWRem=QKRzZY0DEb36KAxOVpkA@mail.gmail.com>" "53" "Re: [oss-security] [ANNOUNCE] CVE-2018-1313: Apache Derby externally-controlled input vulnerability" nil nil nil "5" "2018052613:53:09" "[oss-security] [ANNOUNCE] CVE-2018-1313: Apache Derby externally-controlled input vulnerability" (number mark "U       bpendleton.d May 26   53/2516  " thread-indent "\"Re: [oss-security] [ANNOUNCE] CVE-2018-1313: Apache Derby externally-controlled input vulnerability\"\n") "<20180521145731.60826823@redhat.com>" ("<CANi-yg-6VPUhWvAHHEkQYByYT4HPBcpTgqb+d5WsGJBVHKrm1Q@mail.gmail.com>" "<20180514145244.64c73b08@redhat.com>" "<CANi-yg8cdZzBMZRv_siCMwt8gfLWrtPvyO_vGNgGvzcAC-QngA@mail.gmail.com>" "<20180521145731.60826823@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1881" "Monday" "22" "June" "2015" "10:03:19" "+0200" "Andrea Barisani" "lcars@ocert.org" "<20150622080319.GO5539@core.inversepath.com>" "58" "[oss-security] [oCERT-2015-008] FreeRADIUS insufficent CRL application" nil nil nil "6" "2015062208:03:19" "[oss-security] [oCERT-2015-008] FreeRADIUS insufficent CRL application" (number mark "U       lcars@ocert. Jun 22   58/1881  " thread-indent "\"[oss-security] [oCERT-2015-008] FreeRADIUS insufficent CRL application\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 24146 invoked by uid 550); 26 May 2018 16:42:20 -0000
+Received: (qmail 13655 invoked by uid 550); 22 Jun 2015 08:03:36 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,99 +12,75 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3500 invoked from network); 26 May 2018 13:53:21 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=WH3HFZHSAfNm8/+PjErzSii6flE9mNZQ+OOz/WY+3Ao=;
-        b=TP2iQXgw8LzQC4Hm4W+7fR1qTOJC0sm5biDP+zQxd0grjGd6JX0TMVhr83P5n3gPyE
-         tx1Ic9hhJWbQRYJO/wjHnfc7m79V9b4xhyKPPUuVBmhh8dANHf0q1+8IrWB0M32XMYwY
-         NrJ9tKUv4Fs9U/PvpvLW1SClK4aBNZNllCgqha2hysFZ0Ga/u2vbiFj64ui0tblIqd95
-         L0sn2WUzZCZOmySSnA9TdeK0JGae55CqtmtcPeRTqCmqvx4j+6FhcA6jOsuat1FrmUpI
-         mEWwDNIGachZleoJjsUegWuumps3mjFP08bB6Dr6B5TXUacTQY47ePOZtHh4ddyKgHFd
-         xA1A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=WH3HFZHSAfNm8/+PjErzSii6flE9mNZQ+OOz/WY+3Ao=;
-        b=hy93YU4qKzKGyB8AslSZZEjcJBJ1cg+RmZP6LIWlim6EKdSkFn7BWh0Q4y5kRAgh+d
-         feGh0S3W1yS/peJamPPhYg1IOrnRiu5eETR3KphBfbcuQNX6m/5Y1/X6ByWdiVv9ONzC
-         Wh9YNlpduGtpy5aDCXqtas/at2xqX9NG7L4Jyy2MJDyZIzr2tdA4ojhOUXB/S9fGWH35
-         Qub92IRlAOXoS1EI6YEpNUpVwN3dfkUq+h1rgljNawq1x/6aKLjOL2lHxNB280StVgPT
-         n0trMG2/SglG3dPSeZuRV5V5YPI5qJTXkjsNO8k6xmnEeUSrr/SaP8pW4GUSWpfFKOj9
-         4QcA==
-X-Gm-Message-State: ALKqPwdAasvrYVsWDYDOjDMfkesimH1UbXpLKGUnl3cTspTpctlOC0nb
-	gyHjlWDTo526sU07iSD0CH+SaA93JcQmkJDqda4=
-X-Google-Smtp-Source: ADUXVKJxYoefsB590eV3Awo3zllMxGLREGlv4geOTD8+klOT2vEFCSIAidg4yUM8yZauGIRtjvV9/q+mBs2b4lhfpOM=
-X-Received: by 2002:a1f:3197:: with SMTP id x145-v6mr3828930vkx.3.1527342789543;
- Sat, 26 May 2018 06:53:09 -0700 (PDT)
+Received: (qmail 13607 invoked from network); 22 Jun 2015 08:03:31 -0000
+Date: Mon, 22 Jun 2015 10:03:19 +0200
+From: Andrea Barisani <lcars@ocert.org>
+To: oss-security@lists.openwall.com, ocert-announce@lists.ocert.org,
+        bugtraq@securityfocus.com
+Message-ID: <20150622080319.GO5539@core.inversepath.com>
 MIME-Version: 1.0
-In-Reply-To: <20180521145731.60826823@redhat.com>
-References: <CANi-yg-6VPUhWvAHHEkQYByYT4HPBcpTgqb+d5WsGJBVHKrm1Q@mail.gmail.com>
- <20180514145244.64c73b08@redhat.com> <CANi-yg8cdZzBMZRv_siCMwt8gfLWrtPvyO_vGNgGvzcAC-QngA@mail.gmail.com>
- <20180521145731.60826823@redhat.com>
-From: Bryan Pendleton <bpendleton.derby@gmail.com>
-Date: Sat, 26 May 2018 06:53:09 -0700
-Message-ID: <CANi-yg-yDVpTxvDEuRLefXW8fWRem=QKRzZY0DEb36KAxOVpkA@mail.gmail.com>
-To: Tomas Hoger <thoger@redhat.com>
-Cc: oss-security@lists.openwall.com, security <security@apache.org>, 
-	gregory draperi <gregory.draperi@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Subject: Re: [oss-security] [ANNOUNCE] CVE-2018-1313: Apache Derby
- externally-controlled input vulnerability
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+X-GPG-Key: 0x864C9B9E
+X-GPG-Fingerprint: 0A76 074A 02CD E989 CE7F  AC3F DA47 578E 864C 9B9E
+User-Agent: Mutt/1.5.20 (2009-06-14)
+Subject: [oss-security] [oCERT-2015-008] FreeRADIUS insufficent CRL application
 
-Yes, Tomas, that is a very good point; I agree completely.
 
-Thank you for the follow-ups and discussion!
+#2015-008 FreeRADIUS insufficent CRL application
 
-bryan
+Description:
 
-On Mon, May 21, 2018 at 5:57 AM, Tomas Hoger <thoger@redhat.com> wrote:
-> On Mon, 14 May 2018 21:04:58 -0700 Bryan Pendleton wrote:
->
->> Hi Tomas, thank you for getting in touch, and for the excellent questions.
->>
->> I think the problem here is primarily my lack of skill in clearly writing
->> disclosure information about vulnerabilities, so let me try to do my best
->> to clarify.
->>
->> Indeed, allowing the Derby server to open an untrusted database is
->> of serious concern, and, due to Derby's rich extensibility features, can
->> allow the execution of arbitrary *Java* code directly in Derby. So this
->> is an important concern.
->>
->> And yes, you are correct that the selection of 10.3.1.4 as the first
->> affected release is because the default security policy dates from
->> that release, and you are also correct that the "ping with arguments"
->> pre-dates that. We certainly hope that nobody is running such 11-year-old
->> software any more; if possible, we would really like them to upgrade.
->>
->> Regarding the question of which fix is the "actual security fix," I find
->> this a challenging question. In order to exploit the vulnerability, the
->> ping command must allow the specially crafted request packet, *and*
->> the security policy must allow the access to the untrusted database.
->> Closing *either* of those holes is enough to prevent that exploit; we chose
->> to close *both* of them with the 10.14.2.0 release.
->>
->> The Derby development team's primary recommendation is that
->> any Derby Network Server deployed in a production environment
->> should use an explicitly-developed custom security policy, and not
->> depend on the default policy; still, the new security policy that is
->> installed by default by 10.14.2.0 is considerably more secure than
->> the policy that was previously in place.
->>
->> I hope this helps. If I have misunderstood the intent of any of your
->> questions, please let me know.
->
-> Thank you for your detailed reply.  It addresses my questions.
->
-> FWIW, in this case, the change of the ping command handling is what I'd
-> view as the security fix.  The change of the default security policy
-> would not be sufficient in deployments where custom security policy is
-> used and that policy is less restrictive than the new default policy
-> (even though it's maybe more restrictive than the old default).
->
-> --
-> Tomas Hoger / Red Hat Product Security
+The FreeRADIUS server is an open source project that provides a RADIUS
+implementation.
+
+The FreeRADIUS server relies on OpenSSL to perform certificate validation,
+including Certificate Revocation List (CRL) checks. The FreeRADIUS usage of
+OpenSSL, in CRL application, limits the checks to leaf certificates,
+therefore not detecting revocation of intermediate CA certificates.
+
+An unexpired client certificate, issued by an intermediate CA with a revoked
+certificate, is therefore accepted by FreeRADIUS.
+
+Specifically sets the X509_V_FLAG_CRL_CHECK flag for leaf certificate CRL
+checks, but does not use X509_V_FLAG_CRL_CHECK_ALL for CRL checks on the
+complete trust chain.
+
+The FreeRADIUS project advises that the recommended configuration is to use
+self-signed CAs for all EAP-TLS methods.
+
+Affected version:
+
+   FreeRADIUS <= 2.2.7, <= 3.0.8
+
+Fixed version:
+
+   FreeRADIUS >= 2.2.8, >= 3.0.9
+
+Credit: vulnerability anonymously reported.
+
+CVE: CVE-2015-4680
+
+Timeline:
+
+2015-06-17: vulnerability report received
+2015-06-18: contacted FreeRADIUS security maintainer
+2015-06-18: patch provided by maintainer
+2015-06-19: assigned CVE
+2015-06-22: advisory release
+
+References:
+https://github.com/FreeRADIUS/freeradius-server/blob/b28326004379260ca2fe7b8884f813d90a741197/src/main/tls.c#L2111
+https://github.com/FreeRADIUS/freeradius-server/blob/b28326004379260ca2fe7b8884f813d90a741197/src/main/tls.c#L2595
+http://freeradius.org/security.html
+
+Permalink:
+http://www.ocert.org/advisories/ocert-2015-008.html
+
+-- 
+Andrea Barisani |                Founder & Project Coordinator
+          oCERT | OSS Computer Security Incident Response Team
+
+<lcars@ocert.org>                         http://www.ocert.org
+ 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
+        "Pluralitas non est ponenda sine necessitate"
