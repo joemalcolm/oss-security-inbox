@@ -1,4 +1,9 @@
-Received: (qmail 4084 invoked by uid 550); 16 Jul 2024 15:45:40 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2595" "Tuesday" "23" "June" "2015" "10:08:54" "-0700" "Tristan Cacqueray" "tdecacqu@redhat.com" "<558992A6.9050708@redhat.com>" "80" "[oss-security] [OSSA 2015-012] Neutron L2 agent DoS through incorrect allowed address pairs (CVE-2015-3221)" nil nil nil "6" "2015062317:08:54" "[oss-security] [OSSA 2015-012] Neutron L2 agent DoS through incorrect allowed address pairs (CVE-2015-3221)" (number mark "U       tdecacqu@red Jun 23   80/2595  " thread-indent "\"[oss-security] [OSSA 2015-012] Neutron L2 agent DoS through incorrect allowed address pairs (CVE-2015-3221)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 15655 invoked by uid 550); 23 Jun 2015 17:08:43 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,239 +12,97 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28365 invoked from network); 16 Jul 2024 15:27:31 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=digikod.net;
-	s=20191114; t=1721143643;
-	bh=MTy+WuAklkoimjPRPFnnMvrYWfaXAqiv/BdqRfJnrsw=;
-	h=Date:From:To:Cc:Subject:From;
-	b=Q1GTJCH8QB/YCj11kSHucclDrPj3puZbHG69qz7jCic+aRu3dzhY+24qKQC0QpxQM
-	 s1LEkk8PGD62QPr9uLa6daSGUEJL/j52KQDEmbp7wWZFNC/m38YJ4KUPJ/no26s8Ps
-	 MjBJEkHXimVgx7kBPX+YjsqD8jT08dUu0/bG4y3o=
-Date: Tue, 16 Jul 2024 17:27:21 +0200
-From: =?utf-8?Q?Micka=C3=ABl_Sala=C3=BCn?= <mic@digikod.net>
-To: landlock@lists.linux.dev
-Cc: =?utf-8?Q?G=C3=BCnther?= Noack <gnoack@google.com>, 
-	Konstantin Meskhidze <konstantin.meskhidze@huawei.com>, Mikhail Ivanov <ivanov.mikhail1@huawei-partners.com>, 
-	Tahera Fahimi <fahimitahera@gmail.com>, lwn@lwn.net, linux-security-module@vger.kernel.org, 
-	oss-security@lists.openwall.com
-Message-ID: <20240716.yui4Iezai8ae@digikod.net>
+Received: (qmail 15637 invoked from network); 23 Jun 2015 17:08:42 -0000
+Message-ID: <558992A6.9050708@redhat.com>
+Date: Tue, 23 Jun 2015 10:08:54 -0700
+From: Tristan Cacqueray <tdecacqu@redhat.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
 MIME-Version: 1.0
+To: oss-security@lists.openwall.com
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="WIFvi6N8d8wstXIlH45XAWJAikkPcvOnU"
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.23
+Subject: [oss-security] [OSSA 2015-012] Neutron L2 agent DoS through incorrect allowed address
+ pairs (CVE-2015-3221)
+
+--WIFvi6N8d8wstXIlH45XAWJAikkPcvOnU
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-X-Infomaniak-Routing: alpha
-Subject: [oss-security] Landlock news #4
+Content-Transfer-Encoding: quoted-printable
 
-Here is the fourth Landlock newsletter!
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+OSSA-2015-012: Neutron L2 agent DoS through incorrect allowed address pairs
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
 
-Official website: https://landlock.io
-Previews newsletter:
-https://lore.kernel.org/landlock/d4ed5733-d07b-5548-2534-a63e22906778@digikod.net
-
-Articles and conferences
-------------------------
-
-We wrote a detailed article about Landlock explaining the underlying
-concepts, the implementation, and the community:
-https://landlock.io/talks/2024-06-06_landlock-article.pdf
-This was written for the SSTIC conference:
-https://www.sstic.org/2024/presentation/landlock-design/
-
-I did a workshop at the Pass the Salt conference to explain how to
-mitigate security vulnerabilities with Landlock (demonstrated with
-ImageMagick): https://cfp.pass-the-salt.org/pts2024/talk/8FVYDF/
-Related materials are freely available to do it at home:
-https://github.com/landlock-lsm/workshop-imagemagick
-
-Arto Niemi published a "Survey of Real-World Process Sandboxing" at the
-Conference of Open Innovations Association (FRUCT):
-https://fruct.org/publications/volume-35/fruct35/files/Niem.pdf
-Their conclusion:  "[...] we found Landlock and minijail [which uses
-Landlock] to be relatively convenient from a developer perspective. In
-general, process self-containment and process-wrapping seems to be an
-order of magnitude easier to configure than MAC policies."
-
-Researchers from University of Bergamo gave a talk at ASIA CCS
-conference about Cage4Deno: A Fine-Grained Sandbox for Deno Subprocesses
-(leveraging Landlock)
-https://cs.unibg.it/seclab-papers/2023/ASIACCS/paper/cage4deno.pdf
-They also gave a talk at the RAID conference about NatiSand: Native Code
-Sandboxing for JavaScript Runtimes (leveraging Landlock)
-https://cs.unibg.it/seclab-papers/2023/RAID/natisand.pdf
-
-Eric Leblond gave a talk (in French) at the SSTIC conference about
-sandboxing with Landlock to mitigate real world security issues:
-https://www.sstic.org/2023/presentation/attaque_supply_chain_suricata/
-
-Günther Noack will give a talk at LSS Europe about Landlock and the new
-IOCTL support: https://sched.co/1ebVW
-
-I'll give a talk at OSS Europe to better explain sandboxing with
-Landlock: https://sched.co/1ej3a
-
-The XZ backdoor
----------------
-
-XZ Utils is a widely used compression tool and library.  The main
-maintainer implemented sandboxing with Landlock, and released a new
-version 5.6.0 with this feature.  In March 2024, a backdoor was found
-and reported.  It was introduced in February by a new maintainer who
-earned this trust after more than two years of effort.
-
-Among the malicious changes, the attacker disabled Landlock's support
-for XZ Utils and released a new version 5.6.1:
-https://research.swtch.com/xz-timeline
-The sabotaged configuration check has since been fixed with version
-5.6.2, but this effort to stealthily disable sandboxing is a clear sign
-that Landlock disturbs attackers:
-https://github.com/tukaani-project/xz/commit/f9cf4c05edd1
-
-Merged kernel features
-----------------------
-
-Linux 6.7 (Landlock ABI 4) supports initial network access control with
-the LANDLOCK_ACCESS_NET_BIND_TCP and LANDLOCK_ACCESS_NET_CONNECT_TCP
-rights thanks to Konstantin Meskhidze.  We can now control inbound and
-outbound TCP connections according to the source or the destination
-port.  This led to kernel code refactoring which opens the way to more
-network protocol support.  See user space documentation:
-https://docs.kernel.org/userspace-api/landlock.html#network-flags
-
-Linux 6.10 (Landlock ABI 5) supports IOCTL control with the new
-LANDLOCK_ACCESS_FS_IOCTL_DEV right thanks to Günther Noack.  This
-restriction only applies to IOCTL commands implemented by device drivers
-(i.e. block or character devices).  As other file system access rights,
-this can be used to only allow such IOCTL commands on a specified set of
-file hierarchies per sandbox.  See user space documentation:
-https://docs.kernel.org/userspace-api/landlock.html#filesystem-flags
-
-We also added a slight change in all supported kernels to inform system
-administrators (with kernel logs) how they can configure the system to
-support Landlock, if a process tried to sandbox itself on a kernel where
-Landlock is disabled.  New documentation will help enable Landlock on
-systems when it is not already the case:
-https://docs.kernel.org/userspace-api/landlock.html#kernel-support
-
-Since Linux 6.3, we improved documentation and kselftests (user space
-testing), and added support for KUnit (kernel testing).  Part of this
-work lead us to support the UML architecture to easily run application
-tests in a CI against different kernel versions.  With this support we
-can make sure that backward compatibility works fine for the tested
-applications.  I encourage to take a look at landlock-test-tools and the
-GitHub CI configuration for the Rust library:
-https://github.com/landlock-lsm/landlock-test-tools
-https://github.com/landlock-lsm/rust-landlock/blob/main/.github/workflows/rust.yml#L166-L179
-
-Roadmap and ongoing development
--------------------------------
-
-We created GitHub issues to track ongoing and future work:
-https://github.com/landlock-lsm/linux/issues
-https://github.com/orgs/landlock-lsm/projects/1
-
-Feel free to reach out if you want to contribute!
-https://github.com/landlock-lsm/linux/contribute
-
-We also plan to improve the website with extended documentation and
-examples.
-
-Kernel development highlights
------------------------------
-
-Günther Noack is now an official reviewer of Landlock!
-https://git.kernel.org/torvalds/c/5bf9e57e634b
-After the IOCTL feature, he is now working on improving the
-documentation, including man pages.
-
-Mikhail Ivanov is working on socket type control.  This is an important
-feature that will make it possible to create sandboxes without any
-network access, except for an explicit list of allowed protocols.  This
-will nicely complement the TCP port control (and future ones for other
-protocols): https://github.com/landlock-lsm/linux/issues/6
-He is also working on controlling TCP listen calls:
-https://github.com/landlock-lsm/linux/issues/15
-
-Tahera Fahimi was selected as an Outreachy intern to work on IPC
-restrictions (e.g. abstract unix socket, signals) to better isolate a
-Landlock domain:
-https://github.com/landlock-lsm/linux/issues/7
-https://github.com/landlock-lsm/linux/issues/8
-
-I'm working on bringing audit support to Landlock:
-https://github.com/landlock-lsm/linux/issues/3
-
-Landlock libraries
-------------------
-
-As explained by Günther Noack, the Go library now supports TCP and IOCTL
-restrictions: https://blog.gnoack.org/post/landlock-v4/
-https://blog.gnoack.org/post/landlock-ioctl/
-
-A new version of the Rust crate was released, with support for TCP
-control and some miscellaneous improvements:
-https://github.com/landlock-lsm/rust-landlock/releases/tag/v0.4.0
-
-Please update your dependencies and use the latest Landlock ABI version
-for improved sandboxing.
-
-We are also working on a new minimal C library:
-https://github.com/landlock-lsm/linux/issues/38
-
-New Landlock user space supports
---------------------------------
-
-Firejail 0.9.74 (sandboxer) will be able to use landlock:
-https://github.com/netblue30/firejail/pull/6078
-
-setpriv 2.40 (sandboxer):
-https://github.com/util-linux/util-linux/pull/2628
-
-extrasafe 0.4.0 (sandbox library):
-https://github.com/boustrophedon/extrasafe/pull/28
-
-bevy_mod_lockdown (sandbox library):
-https://github.com/FrTerstappen/bevy_mod_lockdown
-
-Cloud Hypervisor (VM monitor) will be sandboxed with Landlock:
-https://github.com/cloud-hypervisor/cloud-hypervisor/pull/6214
-
-Ukuleleweb (wiki server):
-https://github.com/gnoack/ukuleleweb/commit/0ecdd54b36fa
-
-websrv 3.2.0 (web server):
-https://github.com/ngergs/websrv/commit/40fa2d7d2bbb
-
-egress-eddie 0.5.0 (network filtering):
-https://github.com/capnspacehook/egress-eddie/releases/tag/v0.5.0
-
-Suricata 7.0.0 (network security monitoring engine):
-https://docs.suricata.io/en/latest/configuration/landlock.html
-
-sslh 2.1.0 (protocol multiplexer):
-https://lore.kernel.org/landlock/Zfq6f30spnYCx_9Y@rutschle.net/
-https://github.com/yrutschle/sslh/releases/tag/v2.1.0
-
-wireproxy 1.0.8 (Wireguard client):
-https://github.com/pufferffish/wireproxy/pull/108
-
-Emilua 0.5.0 (Lua runtime):
-https://lore.kernel.org/landlock/CAK9RveLxro4zUG4jfFB=UNgcv5gdc8JuzNhMt=YbNhH=35ADzg@mail.gmail.com/
-https://docs.emilua.org/api/0.5/changelog.html
-
-Polkadot (blockchain SDK):
-https://github.com/paritytech/polkadot/pull/7303
-
-XZ Utils 5.6.2 (archive manager):
-https://github.com/tukaani-project/xz/commit/374868d81d47
-
-Zathura (document viewer) will be sandboxed with Landlock:
-https://github.com/pwmt/zathura/pull/575
-
-Pacman 7.0.0 (Arch Linux's package manager):
-https://gitlab.archlinux.org/pacman/pacman/-/merge_requests/167
+:Date: June 23, 2015
+:CVE: CVE-2015-3221
 
 
-Thanks to all contributors!
+Affects
+~~~~~~~
+- Neutron: 2014.2 versions through 2014.2.3 and 2015.1.0 version
 
-Regards,
- Mickaël
+
+Description
+~~~~~~~~~~~
+Darragh O'Reilly from HP reported a vulnerability in Neutron. By
+adding an address pair which is rejected as invalid by the ipset tool,
+an authenticated user may crash the Neutron L2 agent resulting in a
+denial of service attack. Neutron setups using the IPTables firewall
+driver are affected.
+
+
+Patches
+~~~~~~~
+- https://review.openstack.org/194696 (Juno)
+- https://review.openstack.org/194697 (Kilo)
+- https://review.openstack.org/194695 (Liberty)
+
+
+Credits
+~~~~~~~
+- Darragh O'Reilly from HP (CVE-2015-3221)
+
+
+References
+~~~~~~~~~~
+- https://launchpad.net/bugs/1461054
+- http://cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2015-3221
+
+
+Notes
+~~~~~
+- This fix will be included in future 2014.2.4 (juno) and 2015.1.1 (kilo)
+  releases.
+- Zero prefixed address pairs are no longer accepted by the Juno API, users
+  need to use 0.0.0.0/1 and 128.0.0.1/1 or ::/1 and 8000::/1 instead. The
+  fix_zero_length_ip_prefix.py tool is provided to clean ports previously
+  configured with a zero prefixed address pair
+
+--
+Tristan Cacqueray
+OpenStack Vulnerability Management Team
+
+
+--WIFvi6N8d8wstXIlH45XAWJAikkPcvOnU
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iQEcBAEBAgAGBQJViZKmAAoJECK5oFySXMXYzYwIAKjFqq81EpR4WYSJkjeDfujL
+MtYEqmyBSHXuSVpDXuFemP6bfCXmEjcP1F8TeHxVWlTKSk3+cErm7dAhard9doyF
+Q4KmHYYx/k7/Jp9uC9TRy7Orp0FiEm+gmfOuSS7RfUf5fnCjmeOOLKk6GPTGqkBp
+aS0HU8V/weHV3XtEkd8eSDvJH2hRuMoEPyp47XykSGV6Ubgw8VRcwWAobSwdzjUB
+vOEfooZGaI8FeT9d/Xjj4xwklfoMPqm4yEkHFUJgu2oZUaeAJWYNnYT0LoNOKt+i
+hwykcBWIneRbI7rbs+sACpBXKFQINPLAAnWbIt9heOz1fwMGTYbi3Cu6xJoIb/w=
+=+xNr
+-----END PGP SIGNATURE-----
+
+--WIFvi6N8d8wstXIlH45XAWJAikkPcvOnU--
