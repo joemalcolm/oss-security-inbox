@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1696" "Thursday" "19" "January" "2017" "20:16:01" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<4b31462747644c479fb2e956ccbc3a73@imshyb01.MITRE.ORG>" "40" "[oss-security] Re: CVE request Weblate: information disclosure in password reset form" nil nil nil "1" "2017012001:16:01" "[oss-security] Re: CVE request Weblate: information disclosure in password reset form" (number mark "U       cve-assign@m Jan 19   40/1696  " thread-indent "\"[oss-security] Re: CVE request Weblate: information disclosure in password reset form\"\n") "<20170118220535.GA21362@gmail.com>" ("<20170118220535.GA21362@gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["618" "Thursday" "25" "June" "2015" "16:53:03" "+0530" "Anirudh Anand" "anirudhanand722@gmail.com" "<CAMntfF3YiZ3dDTTR0Szo4A0KF5z_a-yHjrMA1hA-VxRGiWKMRw@mail.gmail.com>" "24" "[oss-security] CVE Request: Anchor CMS - Multiple Stored and DOM Based XSS issues" nil nil nil "6" "2015062511:23:03" "[oss-security] CVE Request: Anchor CMS - Multiple Stored and DOM Based XSS issues" (number mark "        anirudhanand Jun 25   24/618   " thread-indent "\"[oss-security] CVE Request: Anchor CMS - Multiple Stored and DOM Based XSS issues\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 9578 invoked by uid 550); 20 Jan 2017 01:16:14 -0000
+Received: (qmail 19811 invoked by uid 550); 25 Jun 2015 11:30:50 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,55 +11,49 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9557 invoked from network); 20 Jan 2017 01:16:14 -0000
-From: <cve-assign@mitre.org>
-To: <jelle@vdwaa.nl>
-CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
-In-Reply-To: <20170118220535.GA21362@gmail.com>
-Message-ID: <4b31462747644c479fb2e956ccbc3a73@imshyb01.MITRE.ORG>
-Date: Thu, 19 Jan 2017 20:16:01 -0500
+Received: (qmail 15973 invoked from network); 25 Jun 2015 11:23:15 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=3pK1z3YNevxPXlKmLHSyOurcQJguzyPdjT2vaJv/36s=;
+        b=T+dnExZNwoWib3i/2coEbSLfD6SN5adXUBe7XeTIt9mEC7US0Pwx7Im59/WniJJpbp
+         iJKcjUOYRV15k9uvhV0ynXcMa74VmJJ0GXQD14WKEfUF6b5ZdC1+S9Rlm4dMSfDbe5Dn
+         QEQ3y7NAd/6oiaHpc+MTDAVIbFzYKQ2wOGCa/7L3O8R+zq2gdUyroWSG0xj0BvzXrfyV
+         ZHd8RwkgNkMtXUo/26JWhyn2SsM4x1nCdSIQxcRfokijuaeJpAuyjl9X59aATifd5AWH
+         rYQBbCPCXdVsV/vGE4Emzgioefn6RUxng10jbvT2EbPyMHAo80MnfekYL2XngNEenDhn
+         7djQ==
 MIME-Version: 1.0
-Content-Type: text/plain
-Subject: [oss-security] Re: CVE request Weblate: information disclosure in password reset form
+X-Received: by 10.55.18.158 with SMTP id 30mr52768918qks.17.1435231383709;
+ Thu, 25 Jun 2015 04:23:03 -0700 (PDT)
+Message-ID: <CAMntfF3YiZ3dDTTR0Szo4A0KF5z_a-yHjrMA1hA-VxRGiWKMRw@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=001a1146f482cc1395051955d8e9
+Date: Thu, 25 Jun 2015 16:53:03 +0530
+From: Anirudh Anand <anirudhanand722@gmail.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE Request: Anchor CMS - Multiple Stored and DOM Based XSS issues
+To: oss-security@lists.openwall.com, cve-assign@mitre.org
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--001a1146f482cc1395051955d8e9
+Content-Type: text/plain; charset=UTF-8
 
-> Weblate contains an information disclosure issue in its password reset
-> form. When entering an arbitrary email address in the password reset
-> form Weblate will report back "User with this email address was not
-> found." this makes it possible to figure out which user accounts exist
-> on the weblate instance.
-> 
-> https://github.com/WeblateOrg/weblate/commit/abe0d2a29a1d8e896bfe829c8461bf8b391f1079
-> https://github.com/WeblateOrg/weblate/issues/1317
+Hello,
 
-Use CVE-2017-5537.
+I would like to receive CVE identifier for the following Issues in the
+latest version of Anchor CMS:
 
-The scope of this CVE does not include the issues/1317 comment of "The
-login form also does not seem to implement any rate-limiting which
-makes it easy to bruteforce."
+*Reference: *
+https://github.com/anchorcms/anchor-cms/issues/876
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Anchor CMS is a very popular content Management System. There are multiple
+Stored and DOM based XSS issues in it as reported in the reference. These
+issues persists in all the latest Anchor CMS releases.
+-- 
 
-iQIcBAEBCAAGBQJYgWSEAAoJEHb/MwWLVhi2ST0P+wQSbBTkZPtExrWkqyGADC+F
-H0yp97rEg4imgEbLmHbzIpVG5xEd2htr6k1iaeE1WP8zUHNYmb6+mFM/wfDFl/nQ
-lwMCYcMTN+fhSpoX88NBsiO1T4o6wZSZAPqxIYTS/R6QqI6jPnpaeJDH67ch7wyG
-+jYFDDV2x44VcckepPoKiPBUiNGaVtdoXx4b68h1+1QK2sGMM1wERsDp4TyplTmT
-UYwuQb4ZSDUhFokkzzuaKgvqijbe7TuMKMAKDtYdzeVXvmovkUXYK24ajObCyrmd
-R1VC49uCsnXjgD8DqQSV3J4RlAv4JOKRBRQloZieU7BzL2pA5uGyWVJ4v4X60RN6
-0Rl9P61hySg/BALNU8DgEPtesa0wlTOob/6h11rfelL6Ay14Vo4AyHcN1cKQgYft
-Xwu65ycWMNY5qzX51UaGMXobUJEZ3RmzKe/jhbKy79+p5QSGNycEABBts29c9M9a
-DJncB5xzagzAUdYSJWYnAL/iXdV8IbAbdlpFO0MiMcmHQINPGryqED78jWA0ldBp
-PxGuKVuCIATsAI4/CYmGzCoNwgKH5+6cAy78cjHrv1UlSBIdkyts4X7aYbg0o49F
-r6QiKeI780UTn8pATRGbFri5O0jd1fWLAYZ4XYFg4evJ4XGMbgN2lJpFUnJX0Fm2
-IM1vExStvObk1QdRbg8R
-=fAJo
------END PGP SIGNATURE-----
+Anirudh Anand
+bi0s@AMRITA
+www.securethelock.com
+
+*"Those who Say it cannot be done, should not interrupt the people doing
+it"*
+
+--001a1146f482cc1395051955d8e9--
