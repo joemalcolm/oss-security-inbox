@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1861" "Monday" "12" "November" "2018" "10:57:28" "+0000" "Robbie Gemmell" "robbie@apache.org" "<CAFitrpQSV73Vz7rJYfLJK7gvEymZSCR5ooWUeU8j4jzRydk-eg@mail.gmail.com>" "44" "[oss-security] [SECURITY] [CVE-2018-17187] Apache Qpid Proton-J transport TLS wrapper hostname verification mode not implemented" nil nil nil "11" "2018111210:57:28" "[oss-security] [SECURITY] [CVE-2018-17187] Apache Qpid Proton-J transport TLS wrapper hostname verification mode not implemented" (number mark "U       robbie@apach Nov 12   44/1861  " thread-indent "\"[oss-security] [SECURITY] [CVE-2018-17187] Apache Qpid Proton-J transport TLS wrapper hostname verification mode not implemented\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["741" "Thursday" "25" "June" "2015" "11:54:33" "+0200" "Petr Matousek" "pmatouse@redhat.com" "<20150625095432.GH18896@dhcp-25-225.brq.redhat.com>" "18" "[oss-security] Re: CVE request -- Linux kernel - kvm: x86: out-of-bounds memory access in pit_ioport_read function" nil nil nil "6" "2015062509:54:33" "[oss-security] Re: CVE request -- Linux kernel - kvm: x86: out-of-bounds memory access in pit_ioport_read function" (number mark "        pmatouse@red Jun 25   18/741   " thread-indent "\"[oss-security] Re: CVE request -- Linux kernel - kvm: x86: out-of-bounds memory access in pit_ioport_read function\"\n") "<20150625094726.A8DDB6C0636@smtpvmsrv1.mitre.org>" ("<20150625091608.GG18896@dhcp-25-225.brq.redhat.com>" "<20150625094726.A8DDB6C0636@smtpvmsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 16013 invoked by uid 550); 12 Nov 2018 11:01:42 -0000
+Received: (qmail 8023 invoked by uid 550); 25 Jun 2015 09:54:49 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,65 +11,39 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 12059 invoked from network); 12 Nov 2018 10:57:53 -0000
-X-Gm-Message-State: AGRZ1gJtRlEVEslZS0LxnXXE26LL9uskCbgexmGq3JE/55bTMzSBZSta
-	zE3F0AZ6PkzA922ORPEjKBuPfySjOWfouHH/0NQ=
-X-Google-Smtp-Source: AJdET5c4j7DVG9XrxZZt+PjzqZejUb+tDeli35f7RpIztwc3tMyXz4fwAuYXgTFDDbswDPCnm91dDo3LFgTi6jOBOg0=
-X-Received: by 2002:a0c:ade7:: with SMTP id x36mr385094qvc.66.1542020258936;
- Mon, 12 Nov 2018 02:57:38 -0800 (PST)
+Received: (qmail 8005 invoked from network); 25 Jun 2015 09:54:48 -0000
+Message-ID: <20150625095432.GH18896@dhcp-25-225.brq.redhat.com>
+Mail-Followup-To: cve-assign@mitre.org, oss-security@lists.openwall.com
+References: <20150625091608.GG18896@dhcp-25-225.brq.redhat.com>
+ <20150625094726.A8DDB6C0636@smtpvmsrv1.mitre.org>
 MIME-Version: 1.0
-From: Robbie Gemmell <robbie@apache.org>
-Date: Mon, 12 Nov 2018 10:57:28 +0000
-X-Gmail-Original-Message-ID: <CAFitrpQSV73Vz7rJYfLJK7gvEymZSCR5ooWUeU8j4jzRydk-eg@mail.gmail.com>
-Message-ID: <CAFitrpQSV73Vz7rJYfLJK7gvEymZSCR5ooWUeU8j4jzRydk-eg@mail.gmail.com>
-To: announce@apache.org, users@qpid.apache.org, dev@qpid.apache.org, 
-	Apache Security Team <security@apache.org>, oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] [SECURITY] [CVE-2018-17187] Apache Qpid Proton-J transport TLS
- wrapper hostname verification mode not implemented
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20150625094726.A8DDB6C0636@smtpvmsrv1.mitre.org>
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.27
+Cc: oss-security@lists.openwall.com
+Date: Thu, 25 Jun 2015 11:54:33 +0200
+From: Petr Matousek <pmatouse@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: CVE request -- Linux kernel - kvm: x86: out-of-bounds memory
+ access in pit_ioport_read function
+To: cve-assign@mitre.org
 
-CVE-2018-17187: Apache Qpid Proton-J transport TLS wrapper hostname
-verification mode not implemented
+On Thu, Jun 25, 2015 at 05:47:26AM -0400, cve-assign@mitre.org wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+> 
+> > Linux kernel versions before
+> > http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=ee73f656
+> > had the same problem as QEMU/CVE-2015-3214.
+> 
+> CVE-2015-3214 is also the correct CVE ID for this vulnerability in the
+> Linux kernel. pit_ioport_read in the Linux kernel and pit_ioport_read
+> in QEMU are not independent implementations.
 
-Severity: Important
+Doesn't this fall under different code base? These are two completely
+different projects. You can use KVM without using QEMU and vice versa.
 
-Vendor: The Apache Software Foundation
-
-Versions Affected: Versions 0.3 to 0.29.0
-
-Description:
-The Proton-J transport includes an optional wrapper layer to perform TLS,
-enabled by use of the 'transport.ssl(...)' methods. Unless a verification
-mode was explicitly configured, client and server modes previously defaulted
-as documented to not verifying a peer certificate, with options to
-configure this explicitly or select a certificate verification mode with or
-without hostname verification being performed.
-
-The latter hostname verifying mode was not previously implemented, with
-attempts to use it resulting in an exception. This left only the option to
-verify the certificate is trusted, leaving such a client vulnerable to
-Man In The Middle (MITM) attack.
-
-Uses of the Proton-J protocol engine which do not utilise the optional
-transport TLS wrapper are not impacted, e.g. usage within Qpid JMS.
-
-Resolution:
-Uses of Proton-J utilising the optional transport TLS wrapper layer that
-wish to enable hostname verification must be upgraded to version 0.30.0 or
-later and utilise the VerifyMode#VERIFY_PEER_NAME configuration, which is
-now the default for client mode usage unless configured otherwise.
-
-Mitigation:
-If upgrading is not currently possible then potential workarounds include
-providing a custom SSLContext which enables hostname verification, or
-omitting use of the 'transport.ssl(...)' methods and performing TLS through
-other means such as utilising existing IO framework support or supplying a
-custom transport wrapper layer.
-
-Credit:
-This issue was reported by Peter Stockli of Alphabot Security.
-
-References:
-[1] https://issues.apache.org/jira/browse/PROTON-1962
-[2] https://qpid.apache.org/cves/CVE-2018-17187.html
+-- 
+Petr Matousek / Red Hat Product Security
+PGP: 0xC44977CA 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
