@@ -1,4 +1,9 @@
-Received: (qmail 20404 invoked by uid 550); 8 Mar 2026 10:02:38 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["949" "Friday" "26" "June" "2015" "22:30:46" "+0530" "Anirudh Anand" "anirudhanand722@gmail.com" "<CAMntfF29sAAROb6dwGSkk0+t+DLAgrX6aShHhyJReK=nbup10w@mail.gmail.com>" "42" "[oss-security] CVE Request - BigTree CMS - Stored XSS while creating a new user" nil nil nil "6" "2015062617:00:46" "[oss-security] CVE Request - BigTree CMS - Stored XSS while creating a new user" (number mark "U       anirudhanand Jun 26   42/949   " thread-indent "\"[oss-security] CVE Request - BigTree CMS - Stored XSS while creating a new user\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 25711 invoked by uid 550); 26 Jun 2015 17:09:17 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,44 +11,67 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 13714 invoked from network); 26 Jun 2015 17:00:58 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=VqxX2IKEHidITFdI28XjJCigECyiSAhHRcX/s+rW4ns=;
+        b=neKQlCNiAWdYtZ5ptSbg85gGsB23teMSEjgNBNkrv+hby3QBg3Ssq78Q+4v8q66mTU
+         LWMlhZBc127/huU+RZPWlpTiYlQ3AllLBGo9V/W5O0/xsEFgZWm861kKNWW4OS4hYehU
+         0E/3DVJUBYiZkLtEfPb67MpqfBxwOu5J6aL0HzpQ0+XaBweaf6DCEuLxSuECinQmKotY
+         OyKOZKBXN4z47Dy1m6qc/vY+1BTkQNZkHIt+E7i+AteLQd/3DaGIvj7eDzSJbh3O6v6w
+         agUCrnLCuASDJppTdn+BJ8TaYNcJ0GBtYIiQpG4fHgxj8aIYYsy/1PwNu29A5lm7hL6I
+         V3ag==
+MIME-Version: 1.0
+X-Received: by 10.55.31.226 with SMTP id n95mr6050037qkh.38.1435338046559;
+ Fri, 26 Jun 2015 10:00:46 -0700 (PDT)
+Message-ID: <CAMntfF29sAAROb6dwGSkk0+t+DLAgrX6aShHhyJReK=nbup10w@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=001a1147947665e4a105196eae51
+Date: Fri, 26 Jun 2015 22:30:46 +0530
+From: Anirudh Anand <anirudhanand722@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 19831 invoked from network); 8 Mar 2026 10:02:25 -0000
-Date: Sun, 8 Mar 2026 11:02:22 +0100
-From: Solar Designer <solar@openwall.com>
-To: Justin Swartz <justin.swartz@risingedge.co.za>
-Cc: oss-security@lists.openwall.com, bug-inetutils@gnu.org,
-	collin.funk1@gmail.com, simon@josefsson.org,
-	auerswal@unix-ag.uni-kl.de, ron.benyizhak@safebreach.com
-Message-ID: <20260308100222.GA29407@openwall.com>
-References: <20260224011702.27987-1-justin.swartz@risingedge.co.za> <20260224052943.GA13045@openwall.com> <20260224064351.GA14779@openwall.com> <20260307002011.18141-1-justin.swartz@risingedge.co.za> <20260308025745.GA24992@openwall.com> <fbfd407edbca76995b86ec45e9cf935d@risingedge.co.za> <20260308073422.20218-1-justin.swartz@risingedge.co.za> <20260308080557.GA27619@openwall.com> <0940bd56c70e5d93bc32024cca2b2ac9@risingedge.co.za>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <0940bd56c70e5d93bc32024cca2b2ac9@risingedge.co.za>
-User-Agent: Mutt/1.4.2.3i
-Subject: [oss-security] Re: Telnetd Vulnerability Report
+Subject: [oss-security] CVE Request - BigTree CMS - Stored XSS while creating a new user
+To: oss-security@lists.openwall.com, cve-assign@mitre.org
 
-On Sun, Mar 08, 2026 at 11:41:47AM +0200, Justin Swartz wrote:
-> On 2026-03-08 10:05, Solar Designer wrote:
-> >On Sun, Mar 08, 2026 at 09:34:22AM +0200, Justin Swartz wrote:
-> >>+is_env_var_allowed (const char *var, const char *val)
-> >>+{
-> >>+  const char * const *p;
-> >
-> >This second const here looks wrong as you're changing the value of this
-> >pointer.  I suggested this syntax only for the array, where you used it
-> >correctly.
-> 
-> That pointer isn't constant.
+--001a1147947665e4a105196eae51
+Content-Type: text/plain; charset=UTF-8
 
-Oh, you're right, I was wrong.  It's a non-const pointer to a const
-pointer to a const string.  Which is what we need here.
+Hello all,
 
-It's still uncommon in projects to const'ify string arrays like that,
-but I think we should start doing that more.  So I hope this little
-digression we had is helpful beyond these telnetd patches.
+BigTree CMS is a popular Content Management System written in PHP. While
+creating a new user, the "*Name*" and "*Company*" parameters are not
+properly sanitized and it leads to stored XSS.
 
-Thank you for posting the tests.
+*Date:* 25th June, 2015
 
-Alexander
+*Exploit Author:* Anirudh Anand
+
+*Vendor Homepage*: https://www.bigtreecms.org/
+
+*Software Link:* https://www.bigtreecms.org/download/
+
+*Version: *< 4.2.2
+
+*Tested on:* Linux:- Ubuntu, Debian
+
+
+The issue has been successfully reported to vendor and they have released
+an update for the same.
+
+*References: *
+
+*Bug Report:* https://github.com/bigtreecms/BigTree-CMS/issues/205
+
+*Fix Released:*
+https://github.com/bigtreecms/BigTree-CMS/commit/e13aa4795cdeb1ab1dc0f5fd0b66df2d1296591d
+
+-- 
+
+Anirudh Anand
+bi0s@AMRITA
+www.securethelock.com
+
+*"Those who Say it cannot be done, should not interrupt the people doing
+it"*
+
+--001a1147947665e4a105196eae51--
