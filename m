@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5322" "Thursday" "29" "October" "2015" "12:00:18" "+0000" "Xen.org security team" "security@xen.org" "<E1ZrlsQ-00022F-QY@xenbits.xen.org>" "143" "[oss-security] Xen Security Advisory 146 (CVE-2015-7813) - arm: various unimplemented hypercalls log without rate limiting" nil nil nil "10" "2015102912:00:18" "[oss-security] Xen Security Advisory 146 (CVE-2015-7813) - arm: various unimplemented hypercalls log without rate limiting" (number mark "U       security@xen Oct 29  143/5322  " thread-indent "\"[oss-security] Xen Security Advisory 146 (CVE-2015-7813) - arm: various unimplemented hypercalls log without rate limiting\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2849" "Monday" "29" "June" "2015" "11:33:44" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150629153344.89A5A72E070@smtpvbsrv1.mitre.org>" "70" "[oss-security] Re: Courier mail server: Write heap overflow in mailbot tool and out of bounds heap read in imap folder parser" nil nil nil "6" "2015062915:33:44" "[oss-security] Re: Courier mail server: Write heap overflow in mailbot tool and out of bounds heap read in imap folder parser" (number mark "        cve-assign@m Jun 29   70/2849  " thread-indent "\"[oss-security] Re: Courier mail server: Write heap overflow in mailbot tool and out of bounds heap read in imap folder parser\"\n") "<20150629112404.5a51f079@pc1>" ("<20150629112404.5a51f079@pc1>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 1574 invoked by uid 550); 29 Oct 2015 12:01:42 -0000
+Received: (qmail 32683 invoked by uid 550); 29 Jun 2015 15:34:03 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,161 +11,83 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 32620 invoked from network); 29 Jun 2015 15:33:57 -0000
+In-Reply-To: <20150629112404.5a51f079@pc1>
+Message-Id: <20150629153344.89A5A72E070@smtpvbsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Mon, 29 Jun 2015 11:33:44 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26176 invoked from network); 29 Oct 2015 12:00:42 -0000
-Date: Thu, 29 Oct 2015 12:00:18 +0000
-Message-Id: <E1ZrlsQ-00022F-QY@xenbits.xen.org>
-Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
-Content-Transfer-Encoding: binary
-MIME-Version: 1.0
-X-Mailer: MIME-tools 5.428 (Entity 5.428)
-To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
- xen-users@lists.xen.org, oss-security@lists.openwall.com
-From: Xen.org security team <security@xen.org>
-CC: Xen.org security team <security@xen.org>
-Subject: [oss-security] Xen Security Advisory 146 (CVE-2015-7813) - arm: various
- unimplemented hypercalls log without rate limiting
-
---=separator
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
-Content-Transfer-Encoding: 7bit
+Subject: [oss-security] Re: Courier mail server: Write heap overflow in mailbot tool and out of bounds heap read in imap folder parser
+To: hanno@hboeck.de
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-            Xen Security Advisory CVE-2015-7813 / XSA-146
-                              version 3
+> The allocation only reserves one byte
+> for the zero termination, however it must be the size of the pointer (8
+> bytes on 64 bit systems). Therefore it causes a write heap overflow of
+> seven zero bytes.
 
-   arm: various unimplemented hypercalls log without rate limiting
+Is this relevant:
 
-UPDATES IN VERSION 3
-====================
+  http://googleprojectzero.blogspot.com/2014/08/the-poisoned-nul-byte-2014-edition.html
+  "An odd malloc() size will always result in an off-by-one off the
+  end being harmless, due to malloc() minimum alignment being
+  sizeof(void*)."
 
-Public release.
+?
 
-ISSUE DESCRIPTION
-=================
+If there's a malloc implementation that relies on the values of these
+seven bytes, then the issue can have a CVE ID.
 
-The HYPERVISOR_physdev_op hypercall and most suboperations of the
-HYPERVISOR_hvm_op hypercall are not currently implemented by Xen on
-ARM and when called will log the use to the hypervisor
-console. However these guest accessible log messages are not
-rate-limited.
+Also, here's a general (but, in this case, probably unimportant)
+comment about whether command-line arguments (for a non-setuid
+program) are relevant to CVE inclusion:
 
-IMPACT
-======
+> The code parses command line data, therefore it is
+> unlikely that any attacker controlled input is affected.
 
-A malicious guest could cause repeated logging to the hypervisor
-console, leading to a Denial of Service attack.
+maildrop/testsuite.in gives this example:
 
-VULNERABLE SYSTEMS
-==================
+  LANG=en_US.utf-8 ./mailbot -T feedback -R abuse -n -N -m testmailbot.msg \
+      --feedback-source-ip 127.0.0.1 \
+      --feedback-incidents 2 \
 
-Xen 4.4 and later systems running on ARM hardware are vulnerable.
+However, this type of command line isn't necessarily under the control
+of a local user. The purpose of mailbot is to send automatic responses
+to e-mail. It seems plausible that the command line would be
+dynamically constructed based on information available from an MTA,
+e.g., maybe mailbot is called from a .qmail file with something like:
 
-x86 systems are not affected.
+  mailbot -T feedback -R abuse -n -N -m testmailbot.msg \
+      --feedback-original-mail-from $QUOTEDSENDER
 
-MITIGATION
-==========
+where $QUOTEDSENDER is derived from the SENDER environment variable
+supplied by qmail-local, and the value of SENDER can be set
+arbitrarily by a remote SMTP client.
 
-The problematic log messages are issued with priority Warning.
+In the current case, it appears that this would not be especially
+helpful to exploitation. It looks like the replyfeedback function
+would copy the string "original-mail-from" to the heap but would not
+copy the sender e-mail address to the heap. However, part of the SMTP
+DATA is copied to the heap. Thus, an attacker interested in
+controlling heap-memory contents would probably rely on DATA, not an
+envelope address that could possibly affect a command line.
 
-Therefore they can be rate limited by adding "loglvl=error/warning" to the
-hypervisor command line or suppressed entirely by adding "loglvl=error".
-
-On systems where the guest kernel is controlled by the host rather
-than guest administrator, running only kernels which do not call these
-hypercalls will also prevent untrusted guest users from exploiting
-this issue. However untrusted guest administrators can still trigger
-it unless further steps are taken to prevent them from loading code
-into the kernel (e.g. by disabling loadable modules etc) or from using
-other mechanisms which allow them to run code at kernel privilege.
-
-CREDITS
-=======
-
-This issue was discovered by Julien Grall of Citrix.
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue.
-
-xsa146.patch        xen-unstable, Xen 4.6.x, Xen 4.5.x, Xen 4.4.x
-
-$ sha256sum xsa146*.patch
-1d0ff203581ac5bcc0ec4469a4909da968b218ed83280efd217020c396028591  xsa146.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJWMgm1AAoJEIP+FMlX6CvZGjMH/iYvPwiZU0iKkgADyMBek6A6
-fmkHlmd5z7EC7eSwKn2SzRcw8KsE9E4Hdo4IaPoWx+ElSKlHwteo8vdHq3zYXWsb
-vpYFvlD5wiWRYpTDiBtDZC7cwOx1qqelDMwwN8k3p1g+eNqEB5VrfjVWWxp7xE6a
-+gqEea9+ASJmZ1K3cczOGIzWSrGSGcC7v715nECCwBkquYlsdP8L7I+K2IiCL45i
-ymRm+fD3CvDtLT+Q3ZG9I/C78CH5O4INATrdz6Syqtti+jPoYY7+6LmLZXR0tIk2
-v47g/mAoDNwJAaWDfZL9GnzXTZIm+Lri+qh/4LkunnMGgHIF4Ah4HhsNJlX4h7M=
-=lDV8
+iQEcBAEBAgAGBQJVkWSDAAoJEKllVAevmvmsAWUH/11sOu9V+jwp0nNZnaJysMHy
+xKgBEvQCCUEaIGSIaSH+XNCEzg9R/liwBSwAM8cq+cjto0VmeLjK247AWIau96GK
+CxRoA+ukbgTrkGZKYjnPpbAXoQfDTRnK6xMfZUK8f/N8ekDY3a0vcT5vgvX3Da3a
+gA3JgUZR86S66LKFt+wzWYoGSoMlAVxmqB8+XlBwjXa6Kk+k0gQK7FfuRtSs+D2o
+sqR5LKgG2ZspaZJP5g/t5M56z1guBrhALdzm8PouObUEOTsyeELVIRBTO5a/is5l
+/Gydj2BPkFf6XPa7Vl9NEo0+3xpUFI2qgf63JBT6VOpymS2fVNCvQ259/DSFngw=
+=AJxg
 -----END PGP SIGNATURE-----
-
---=separator
-Content-Type: application/octet-stream; name="xsa146.patch"
-Content-Disposition: attachment; filename="xsa146.patch"
-Content-Transfer-Encoding: base64
-
-eGVuOiBhcm06IHJhdGUtbGltaXQgbG9nZ2luZyBmcm9tIHVuaW1wbGVtZW50
-ZWQgUEhZU0RFVk9QIGFuZCBIVk1PUC4KClRoZXNlIGFyZSBndWVzdCBhY2Nl
-c3NpYmxlIGFuZCBzaG91bGQgdGhlcmVmb3JlIGJlIHJhdGUtbGltaXRlZC4K
-TW9yZW92ZXIsIGluY2x1ZGUgdGhlbSBvbmx5IGluIGRlYnVnIGJ1aWxkcy4K
-ClRoaXMgaXMgWFNBLTE0Ni4KClNpZ25lZC1vZmYtYnk6IElhbiBDYW1wYmVs
-bCA8aWFuLmNhbXBiZWxsQGNpdHJpeC5jb20+ClJldmlld2VkLWJ5OiBKYW4g
-QmV1bGljaCA8amJldWxpY2hAc3VzZS5jb20+CgpkaWZmIC0tZ2l0IGEveGVu
-L2FyY2gvYXJtL2h2bS5jIGIveGVuL2FyY2gvYXJtL2h2bS5jCmluZGV4IDQ3
-MWM0Y2QuLjFkZTI5MGYgMTAwNjQ0Ci0tLSBhL3hlbi9hcmNoL2FybS9odm0u
-YworKysgYi94ZW4vYXJjaC9hcm0vaHZtLmMKQEAgLTU3LDcgKzU3LDcgQEAg
-bG9uZyBkb19odm1fb3AodW5zaWduZWQgbG9uZyBvcCwgWEVOX0dVRVNUX0hB
-TkRMRV9QQVJBTSh2b2lkKSBhcmcpCiAKICAgICBkZWZhdWx0OgogICAgIHsK
-LSAgICAgICAgcHJpbnRrKCIlczogQmFkIEhWTSBvcCAlbGQuXG4iLCBfX2Z1
-bmNfXywgb3ApOworICAgICAgICBnZHByaW50ayhYRU5MT0dfREVCVUcsICJI
-Vk1PUCBvcD0lbHU6IG5vdCBpbXBsZW1lbnRlZFxuIiwgb3ApOwogICAgICAg
-ICByYyA9IC1FTk9TWVM7CiAgICAgICAgIGJyZWFrOwogICAgIH0KZGlmZiAt
-LWdpdCBhL3hlbi9hcmNoL2FybS9waHlzZGV2LmMgYi94ZW4vYXJjaC9hcm0v
-cGh5c2Rldi5jCmluZGV4IDYxYjRhMTguLmIxYmEyMmUgMTAwNjQ0Ci0tLSBh
-L3hlbi9hcmNoL2FybS9waHlzZGV2LmMKKysrIGIveGVuL2FyY2gvYXJtL3Bo
-eXNkZXYuYwpAQCAtOCwxMiArOCwxMyBAQAogI2luY2x1ZGUgPHhlbi90eXBl
-cy5oPgogI2luY2x1ZGUgPHhlbi9saWIuaD4KICNpbmNsdWRlIDx4ZW4vZXJy
-bm8uaD4KKyNpbmNsdWRlIDx4ZW4vc2NoZWQuaD4KICNpbmNsdWRlIDxhc20v
-aHlwZXJjYWxsLmg+CiAKIAogaW50IGRvX3BoeXNkZXZfb3AoaW50IGNtZCwg
-WEVOX0dVRVNUX0hBTkRMRV9QQVJBTSh2b2lkKSBhcmcpCiB7Ci0gICAgcHJp
-bnRrKCIlcyAlZCBjbWQ9JWQ6IG5vdCBpbXBsZW1lbnRlZCB5ZXRcbiIsIF9f
-ZnVuY19fLCBfX0xJTkVfXywgY21kKTsKKyAgICBnZHByaW50ayhYRU5MT0df
-REVCVUcsICJQSFlTREVWT1AgY21kPSVkOiBub3QgaW1wbGVtZW50ZWRcbiIs
-IGNtZCk7CiAgICAgcmV0dXJuIC1FTk9TWVM7CiB9CiAK
-
---=separator--
