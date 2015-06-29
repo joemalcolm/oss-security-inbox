@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["605" "Monday" "3" "October" "2016" "16:37:43" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1610031633160.29684@wniryva>" "19" "[oss-security] CVE request Qemu: net: inifinte loop in imx_fec_do_tx() function" nil nil nil "10" "2016100311:07:43" "[oss-security] CVE request Qemu: net: inifinte loop in imx_fec_do_tx() function" (number mark "U       ppandit@redh Oct  3   19/605   " thread-indent "\"[oss-security] CVE request Qemu: net: inifinte loop in imx_fec_do_tx() function\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["707" "Tuesday" "30" "June" "2015" "09:04:22" "+1000" "David Jorm" "david.jorm@gmail.com" "<CAO33bZW-Gz9ZThev_XPZeUL4bRixFAYHa9sdeYsOZgqft00c9A@mail.gmail.com>" "22" "[oss-security] OpenDaylight security advisory: CVE-2015-3414 CVE-2015-3416 SQLite memory corruption, CVE-2015-4000 LOGJAM TLS MITM" nil nil nil "6" "2015062923:04:22" "[oss-security] OpenDaylight security advisory: CVE-2015-3414 CVE-2015-3416 SQLite memory corruption, CVE-2015-4000 LOGJAM TLS MITM" (number mark "        david.jorm@g Jun 30   22/707   " thread-indent "\"[oss-security] OpenDaylight security advisory: CVE-2015-3414 CVE-2015-3416 SQLite memory corruption, CVE-2015-4000 LOGJAM TLS MITM\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 7959 invoked by uid 550); 3 Oct 2016 11:08:02 -0000
+Received: (qmail 12266 invoked by uid 550); 29 Jun 2015 23:04:39 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,36 +11,50 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7935 invoked from network); 3 Oct 2016 11:08:01 -0000
-Date: Mon, 3 Oct 2016 16:37:43 +0530 (IST)
-From: P J P <ppandit@redhat.com>
-X-X-Sender: pjp@javelin
-To: oss security list <oss-security@lists.openwall.com>
-cc: Li Qiang <liqiang6-s@360.cn>
-Message-ID: <alpine.LFD.2.20.1610031633160.29684@wniryva>
+Received: (qmail 12229 invoked from network); 29 Jun 2015 23:04:34 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=8G0CM40iNDjs/LXcnMJKd/Z8iRNvdHI6EEJEdU8OX1A=;
+        b=Ak7bBRtPZfj+k5w2Tf0Zvl5LUESNMEfBWPkCOD2li09XyROrjIRpTiS9I5EW4bXuFd
+         K9CyuONTB+v93x+/6pHTX2SVIXoxTni3A/0FMBLNgt/7cKSETqPmsOfY6slsHM7uaMOs
+         yn5b/zw+UNsAvlJzDvdzPbjBOABjfvCFcrDjRtCUvDrPGbU4m4PGuf89U3TcY6Cf4w+H
+         JRe1qRhRTLRK+f+D6zJzn1fNwNOsy5zTq5SBfkLBOvnvv5ZX4pzkQIdeZfEAX2DVm/qd
+         3X6v82gMGoHBkvQN8/PiVWRKJzfQuZmZGjaia6RV1cnm2ujbcIxYvz4tuSyCuKpcgdjQ
+         b5gQ==
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.27
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.27]); Mon, 03 Oct 2016 11:07:49 +0000 (UTC)
-Subject: [oss-security] CVE request Qemu: net: inifinte loop in imx_fec_do_tx() function
+X-Received: by 10.202.59.212 with SMTP id i203mr14682800oia.33.1435619062553;
+ Mon, 29 Jun 2015 16:04:22 -0700 (PDT)
+Message-ID: <CAO33bZW-Gz9ZThev_XPZeUL4bRixFAYHa9sdeYsOZgqft00c9A@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=001a113ccd8e41a20a0519b01cf0
+Date: Tue, 30 Jun 2015 09:04:22 +1000
+From: David Jorm <david.jorm@gmail.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] OpenDaylight security advisory: CVE-2015-3414 CVE-2015-3416 SQLite
+ memory corruption, CVE-2015-4000 LOGJAM TLS MITM
+To: oss-security@lists.openwall.com, 
+	opendaylight-announce@lists.opendaylight.org, 
+	security-announce@lists.opendaylight.org
 
-   Hello,
+--001a113ccd8e41a20a0519b01cf0
+Content-Type: text/plain; charset=UTF-8
 
-Quick Emulator(Qemu) built with the i.MX Fast Ethernet Controller emulator 
-support is vulnerable to an infinite loop issue. It could occur while 
-processing packets on the transmit queue in 'imx_fec_do_tx'.
+Hi All
 
-A privileged user/process inside guest could use this issue to crash the Qemu 
-process on the host leading to DoS.
+OpenDaylight Lithium GA has now been released, including patches for
+several security vulnerabilities:
 
-Upstream patch
---------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2016-09/msg05556.html
+[Moderate] CVE-2015-3414 CVE-2015-3416 AAA: SQLite memory corruption
+leading to DoS and possible code execution
 
-This issue was reported by Li Qiang of 360.cn Inc.
+[Moderate] CVE-2015-4000 OpenDaylight: TLS connections which support export
+grade DHE key-exchange are vulnerable to MITM attacks (LOGJAM)
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+Full details, including links to patched builds, are available on the
+OpenDaylight security advisories page:
+
+https://wiki.opendaylight.org/view/Security_Advisories
+Thanks
+David Jorm on behalf of the OpenDaylight security response team
+
+--001a113ccd8e41a20a0519b01cf0--
