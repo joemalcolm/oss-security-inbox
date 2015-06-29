@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["801" "Sunday" "26" "July" "2015" "07:55:54" "+1000" "Dave Horsfall" "dave@horsfall.org" "<alpine.BSF.2.11.1507260747110.880@aneurin.horsfall.org>" "18" "Re: [oss-security] Qualys Security Advisory - CVE-2015-3245 userhelper - CVE-2015-3246 libuser" nil nil nil "7" "2015072521:55:54" "[oss-security] Qualys Security Advisory - CVE-2015-3245 userhelper - CVE-2015-3246 libuser" (number mark "        dave@horsfal Jul 26   18/801   " thread-indent "\"Re: [oss-security] Qualys Security Advisory - CVE-2015-3245 userhelper - CVE-2015-3246 libuser\"\n") "<87wpxo9ck7.fsf@lysator.liu.se>" ("<20150723170954.GA17931@localhost.localdomain>" "<87h9oud89s.fsf@lysator.liu.se>" "<CAHQ_-nR8WGDK58PmsmhPp8ApnmwjrLRxeyCKTsfRL83ZUZjTxA@mail.gmail.com>" "<871tfxdgzw.fsf@lysator.liu.se>" "<55B22C72.4020706@tillo.ch>" "<874mktb7xv.fsf@lysator.liu.se>" "<875603C9-F2F1-4D25-A081-503D870A5FEB@shub-internet.org>" "<87wpxo9ck7.fsf@lysator.liu.se>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2751" "Monday" "29" "June" "2015" "11:24:04" "+0200" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20150629112404.5a51f079@pc1>" "67" "[oss-security] Courier mail server: Write heap overflow in mailbot tool and out of bounds heap read in imap folder parser" nil nil nil "6" "2015062909:24:04" "[oss-security] Courier mail server: Write heap overflow in mailbot tool and out of bounds heap read in imap folder parser" (number mark "U       hanno@hboeck Jun 29   67/2751  " thread-indent "\"[oss-security] Courier mail server: Write heap overflow in mailbot tool and out of bounds heap read in imap folder parser\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 15520 invoked by uid 550); 25 Jul 2015 23:03:44 -0000
+Received: (qmail 32380 invoked by uid 550); 29 Jun 2015 09:23:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,39 +11,83 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 15577 invoked from network); 25 Jul 2015 21:56:14 -0000
-X-Authentication-Warning: aneurin.horsfall.org: dave owned process doing -bs
-In-Reply-To: <87wpxo9ck7.fsf@lysator.liu.se>
-Message-ID: <alpine.BSF.2.11.1507260747110.880@aneurin.horsfall.org>
-References: <20150723170954.GA17931@localhost.localdomain> <87h9oud89s.fsf@lysator.liu.se> <CAHQ_-nR8WGDK58PmsmhPp8ApnmwjrLRxeyCKTsfRL83ZUZjTxA@mail.gmail.com> <871tfxdgzw.fsf@lysator.liu.se> <55B22C72.4020706@tillo.ch> <874mktb7xv.fsf@lysator.liu.se>
- <875603C9-F2F1-4D25-A081-503D870A5FEB@shub-internet.org> <87wpxo9ck7.fsf@lysator.liu.se>
-User-Agent: Alpine 2.11 (BSF 23 2013-08-11)
-X-Home-Page: http://www.horsfall.org/
-X-Witty-Saying: "chmod 666 the_mode_of_the_beast"
-MIME-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Date: Sun, 26 Jul 2015 07:55:54 +1000 (EST)
-From: Dave Horsfall <dave@horsfall.org>
+Received: (qmail 32348 invoked from network); 29 Jun 2015 09:23:15 -0000
+Message-ID: <20150629112404.5a51f079@pc1>
+X-Mailer: Claws Mail 3.11.1 (GTK+ 2.24.28; x86_64-pc-linux-gnu)
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512; protocol="application/pgp-signature"; boundary="=_zucker.schokokeks.org-29918-1435569783-0001-2"
+Date: Mon, 29 Jun 2015 11:24:04 +0200
+From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Qualys Security Advisory - CVE-2015-3245 userhelper
- - CVE-2015-3246 libuser
-To: oss-security@lists.openwall.com
+Subject: [oss-security] Courier mail server: Write heap overflow in mailbot tool and out of
+ bounds heap read in imap folder parser
+To: oss-security@lists.openwall.com, fulldisclosure@seclists.org,
+  cve-assign@mitre.org
 
-On Sat, 25 Jul 2015, Leif Nixon wrote:
+--=_zucker.schokokeks.org-29918-1435569783-0001-2
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-> What many people don't seem to realize is how much the availability of 
-> ready-to-run exploits increases the risk to innocent bystanders.
+https://blog.fuzzing-project.org/17-Courier-mail-server-Write-heap-overflow=
+-in-mailbot-tool-and-out-of-bounds-heap-read-in-imap-folder-parser.html
 
-Although a supporter of full disclosure (it was the only way to get MS to 
-fix their egregious bugs), I'd be really pissed off if I woke up one 
-morning to find my system r00ted because some idiot got his jollies by 
-announcing the exploit at the same time as the patch.
+Two memory access issues were found in the Courier mail server. These
+issues were discovered by compiling the software with Address Sanitizer
+(-fsanitize=3Daddress) and running the test suite.
 
-What would be a reasonable interval (for some definition of "reasonable") 
-in that case?  24 hours?  48 hours?  0 hours?
+In the file mailboxlist.c, part of the IMAP folder parser, there is a
+memcmp call checking whether the fist six bytes of a string match
+"SHARED". However the string can be less than six bytes, which will
+cause an out of bounds read access. This issue is unlikely to cause
+much trouble.
 
-I seem to recall that we had this discussion a few years ago...
+In the mailbot tool (mailbot.c) there is a memory allocation for a
+zero-terminated list of pointers. The allocation only reserves one byte
+for the zero termination, however it must be the size of the pointer (8
+bytes on 64 bit systems). Therefore it causes a write heap overflow of
+seven zero bytes. The code parses command line data, therefore it is
+unlikely that any attacker controlled input is affected.
 
--- 
-Dave Horsfall DTM (VK2KFU)  "Those who don't understand security will suffer"
-Watson never said "I think there is a world market for maybe five computers."
+Both issues have been reported to Courier's developer Sam Varshavchik
+on 27th June 2015 and were fixed with the release of courier 0.75 on
+29th June 2015.
+
+Commit / Patch (bundles some unrelated changes, the relevant parts are
+in mailbot.c and mailboxlist.c)
+https://github.com/svarshavchik/courier-libs/commit/174541a2e670c0ee70fd2fb=
+3116209f96ecc173e
+
+Courier 0.75 release announcement
+http://sourceforge.net/p/courier/mailman/message/34249147/
+
+--=20
+Hanno B=C3=B6ck
+http://hboeck.de/
+
+mail/jabber: hanno@hboeck.de
+GPG: BBB51E42
+
+--=_zucker.schokokeks.org-29918-1435569783-0001-2
+Content-Type: application/pgp-signature
+Content-Transfer-Encoding: 7bit
+Content-Description: OpenPGP digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iQIcBAEBCgAGBQJVkQ60AAoJEKWIAHK7tR5CsUsQAK0ZKB8b1Il5ugkwLryR9M4f
+Lro8yZsaWQnJInD0yW8242l8lYkVK4HuYjNW+whIjfDS14rkvZkMZnbz36DEIS/a
+TdDXa4fKrFKoHtfSMu5HB01Wd7FjOSCQoT6EQespuVZI65WG7tK0o5fOqoSUHPqm
+dOHCAsLWNY9dVgv9H/TySVYGclF6UB0HPMlQkBOlpK83iLv3w5zmIBtFLhB4DJS6
+zCacFtJp0IRi3ANASqeuguAgqXCHYqUf74D3gZkELxliMpho7TqmKGj2By+ApxHM
+2A+vgNwGNoKU0PtX50ZzJ9f4TnhVzA2nS2kDUYB5s7+2Zu9ogd3Rp7GMfrVt1yn/
+KpO6AQRXX1JPg0NDqA0Ya/3CtIFuvbzIgeKaTl2gTzgp9jrPxSf8TZD0VYGtR1EH
+QxS9Iq1hsJLbp4CukQwgYHyFoj1R7yiUkdmzufzyDcpo5oQrdAY8acj/hd6RYQR0
+rFSMnT/EB7fPhbeW03GU6fpMaSKVkeEcrhQIb+0XinaC2Pq+X6NX9iVWIn5TI3ME
+Dn5PmREjmC3BCkA3b3RZZGIS9Pj0AZElkzJJ2dEc5uGvEFZ2dCqiIus00gMe3nFw
+DtvhjxPFApK2mPxe2FNyQspjoiaH7sNkgD6Z97Pb5ROmdp+akXo5YHnNcCfB4EOo
+890AAy3NFzomf3OEcByu
+=RDLa
+-----END PGP SIGNATURE-----
+
+--=_zucker.schokokeks.org-29918-1435569783-0001-2--
