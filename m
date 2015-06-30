@@ -1,4 +1,9 @@
-Received: (qmail 1117 invoked by uid 550); 29 Mar 2024 21:11:10 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2611" "Tuesday" "30" "June" "2015" "08:31:08" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<5592A82C.2090301@redhat.com>" "64" "Re: [oss-security] Question about world readable config files and commented warnings" nil nil nil "6" "2015063014:31:08" "[oss-security] Question about world readable config files and commented warnings" (number mark "        kseifried@re Jun 30   64/2611  " thread-indent "\"Re: [oss-security] Question about world readable config files and commented warnings\"\n") "<20150630060358.GA24238@gremlin.ru>" ("<559224EC.3080008@redhat.com>" "<20150630060358.GA24238@gremlin.ru>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 11678 invoked by uid 550); 30 Jun 2015 14:31:24 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,57 +11,84 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 11656 invoked from network); 30 Jun 2015 14:31:23 -0000
+Message-ID: <5592A82C.2090301@redhat.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
+MIME-Version: 1.0
+References: <559224EC.3080008@redhat.com> <20150630060358.GA24238@gremlin.ru>
+In-Reply-To: <20150630060358.GA24238@gremlin.ru>
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="subgeqsvNSMQmVhXvdPTguGJtgFGhccg8"
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.26
+Date: Tue, 30 Jun 2015 08:31:08 -0600
+From: Kurt Seifried <kseifried@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 31832 invoked from network); 29 Mar 2024 21:11:01 -0000
-Date: Fri, 29 Mar 2024 22:10:52 +0100
-From: Solar Designer <solar@openwall.com>
+Subject: Re: [oss-security] Question about world readable config files and
+ commented warnings
 To: oss-security@lists.openwall.com
-Message-ID: <20240329211052.GA2470@openwall.com>
-References: <20240329155126.kjjfduxw2yrlxgzm@awork3.anarazel.de> <uu76c4$u7g$1@ciao.gmane.io>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <uu76c4$u7g$1@ciao.gmane.io>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] backdoor in upstream xz/liblzma leading to ssh server compromise
 
-On Fri, Mar 29, 2024 at 07:55:48PM -0000, Tavis Ormandy wrote:
-> Thanks Andres, amazing work!
+--subgeqsvNSMQmVhXvdPTguGJtgFGhccg8
+Content-Type: text/plain; charset=koi8-r
+Content-Transfer-Encoding: quoted-printable
 
-Certainly, thank you very much Andres!  Many others have helped in
-various ways as well, all of this is appreciated.
+On 06/30/2015 12:03 AM, gremlin@gremlin.ru wrote:
+> On 2015-06-29 23:11:08 -0600, Kurt Seifried wrote:
+>=20
+>  > So, if a config file is world readable by default, but the section
+>  > where you might put a password says:
+>  > # Database URI for the database that stores the package
+>  > # information. If it contains a password, make sure to
+>  > # adjust the permissions of the config
+>  > Is that good enough, e.g. no CVE, or do we actually need to have
+>  > proper permissions?
+>=20
+> For me, that means: the developers did their best, everything else
+> is up to package maintainers.
+>=20
+> And, obviously, when the administrators will fill in the connection
+> parameters, they most likely will see this warning.
+>=20
+>  > I'm thinking we need proper permissions and not a note (especially
+>  > with administration tools/etc that may parse/modify the file
+>  > but not change the perms).
+>=20
+> My experience says that developers' attempts to perform chmod (or,
+> even worse, chown) during `make install` are just ugly (at least
+> they never check whether DESTDIR is empty).
 
-> I have a minor procedural question for Solar though, shouldn't this
-> have been redirected to oss-security immediately from distros? What's
-> the rationale for an embargo here?
+=46rom a developer perspective I somewhat agree, however I'm looking at
+this from a vendor perspective where we do control the chmod, easily
+(RPM spec file).
 
-We don't have a clear policy for such case.  Some distros list members
-have indeed suggested making this public ASAP.  We ended up delaying
-publication by one day per my suggestion (as a compromise between ASAP
-and having no specific CRD), and I think these are some reasons why:
 
-1. Some specific distros were affected (or at least some people thought
-so) and it was under (fast-paced) discussion whether we as a group agree
-they may go for not-too-revealing reverts or source tarball replacements
-before the rationale for those becomes public knowledge.  Several
-distros in fact ended up doing those things and preparing advisories.
-This meant that when Andres posted to oss-security, users of those
-distros already had a clear course of action - just install updates.
-For example, Debian issued an advisory almost immediately after the
-oss-security posting.  I think that was helpful.  If this were made
-public yesterday, there would be more of a panic.
+--=20
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@redhat.com
 
-2. We didn't know how the culprit (or group) would react when they
-learned of the full extent of the community's awareness.  It could be
-better to have fewer systems still "held hostage" by that point, which
-availability of distros' revert/update packages may have helped achieve.
-(This wasn't discussed, but I had it in mind.  Maybe others had such
-thoughts too.)
 
-3. We were aware of concurrent coordination efforts by other groups
-(CERT/CC, CISA) and we didn't want to interfere with their plans.
+--subgeqsvNSMQmVhXvdPTguGJtgFGhccg8
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
-4. More findings were still being made and the wording of Andres'
-posting improved per private feedback.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.22 (GNU/Linux)
 
-Alexander
+iQIcBAEBAgAGBQJVkqgtAAoJEBYNRVNeJnmTR+IQAJkARsujzWgGJEyldgwYOQFK
+zQTKlI6ZXaO6HiNnnm5TEGwGkUqn5IeWBYANGL5z4oTG7f71yNr32nfzq4JXWXgG
+ER/86u0cs5P4jEb0kR3Cack3J/XN+eSLykf+2vTnd9iprtzexCV6ilGjSeoDo+YX
+FdbWLBx2knWltmRLDVS8J+Lqh1rBvyT4bZaClsQiTZBVgOoVBSiwB4qG9NBWXM90
+WaUCEzqzhgfh1Sobb3C77p0P+SRND4C3uelUtH3ExMtdQ1jhekqxww5SHFnhiXVr
+vj3+W1H6QfwxX6r2/8ZYt9hjuXTdGDKP2ydtfWAijqdq7TTQ04j13BVhRQfsJnZ1
+gCfGwrli7R39iDVRk3+Q2CVze/7JVNMkTNug2R2ZKhapeWX/ogQ55Rqn8B5Gce+/
+55G9sbPagnBjEnNG1VD63CpbzWxjUcvYxM3gNd3j6A0/fBN9hzN2HAdGXLTfcSI7
+VVzAi/NdU+Q97v+KljXvOqsCGTDcrrvl4ASh+pmjumdLNpoAWQIfi1GDdrMey7hR
+92CcL9Dg9bSfY3nx0JyVy4iOjcibYk6fpCQxotWK1G40BAR2205QAVAWeGDyLiI2
+TTolK/f1Ueaobc0zSyPd+zENZXG00YtbPAS9cWYz5staKbWLL9Bv8OBM38Hro8yr
+0jjHNtXItMBKTntfOZpE
+=htPc
+-----END PGP SIGNATURE-----
+
+--subgeqsvNSMQmVhXvdPTguGJtgFGhccg8--
