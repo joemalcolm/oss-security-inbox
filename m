@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1904" "Wednesday" "6" "February" "2019" "08:12:37" "+0100" "Daniel Stenberg" "daniel@haxx.se" "<alpine.DEB.2.20.1902060809320.28483@tvnag.unkk.fr>" "77" "[oss-security] [SECURITY ADVISORY] curl: SMTP end-of-response out-of-bounds read" "^Date:" nil nil "2" "2019020607:12:37" "[oss-security] [SECURITY ADVISORY] curl: SMTP end-of-response out-of-bounds read" (number mark "U       daniel@haxx. Feb  6   77/1904  " thread-indent "\"[oss-security] [SECURITY ADVISORY] curl: SMTP end-of-response out-of-bounds read\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2335" "Tuesday" "30" "June" "2015" "10:32:56" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<5592C4B8.4080803@redhat.com>" "53" "[oss-security] Re: Question about world readable config files and commented warnings" nil nil nil "6" "2015063016:32:56" "[oss-security] Re: Question about world readable config files and commented warnings" (number mark "        kseifried@re Jun 30   53/2335  " thread-indent "\"[oss-security] Re: Question about world readable config files and commented warnings\"\n") "<20150630155505.7B34152E4F5@smtpvbsrv1.mitre.org>" ("<20150630155505.7B34152E4F5@smtpvbsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 20092 invoked by uid 550); 6 Feb 2019 07:12:50 -0000
+Received: (qmail 23976 invoked by uid 550); 30 Jun 2015 16:33:12 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,97 +11,73 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 20020 invoked from network); 6 Feb 2019 07:12:50 -0000
-X-Authentication-Warning: giant.haxx.se: dast owned process doing -bs
-X-X-Sender: dast@giant.haxx.se
-Message-ID: <alpine.DEB.2.20.1902060809320.28483@tvnag.unkk.fr>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-fromdanielhimself: yes
+Received: (qmail 23957 invoked from network); 30 Jun 2015 16:33:11 -0000
+Message-ID: <5592C4B8.4080803@redhat.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-Date: Wed, 6 Feb 2019 08:12:37 +0100 (CET)
-From: Daniel Stenberg <daniel@haxx.se>
+References: <20150630155505.7B34152E4F5@smtpvbsrv1.mitre.org>
+In-Reply-To: <20150630155505.7B34152E4F5@smtpvbsrv1.mitre.org>
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="roBnwOCQ6G8KIUgbJBFcPd9DxqB77biM6"
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.27
+CC: oss-security@lists.openwall.com
+Date: Tue, 30 Jun 2015 10:32:56 -0600
+From: Kurt Seifried <kseifried@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] [SECURITY ADVISORY] curl: SMTP end-of-response out-of-bounds read
-To: curl security announcements -- curl users <curl-users@cool.haxx.se>,
-        curl-announce@cool.haxx.se,
-        libcurl hacking <curl-library@cool.haxx.se>,
-        oss-security@lists.openwall.com
+Subject: [oss-security] Re: Question about world readable config files and commented warnings
+To: cve-assign@mitre.org
 
-SMTP end-of-response out-of-bounds read
-=======================================
+--roBnwOCQ6G8KIUgbJBFcPd9DxqB77biM6
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: quoted-printable
 
-Project curl Security Advisory, February 6th 2019 -
-[Permalink](https://curl.haxx.se/docs/CVE-2019-3823.html)
+On 06/30/2015 09:55 AM, cve-assign@mitre.org wrote:
+>> # Database URI for the database that stores the package information. If =
+it
+>> # contains a password, make sure to adjust the permissions of the config
+>=20
+> In the "If it contains a password, make sure" scenario that you
+> mentioned, it seems entirely reasonable for the default permissions to
+> reflect the author's preference for the normal case. (A password in a
+> URI might be rare.) In other words, the author may want to optimize
+> for situations where configuration data is read by users or
+> administrators who login with an unprivileged account for most
+> day-to-day work. Alternatively, in some cases a configuration approach
+> could be redesigned to use separate files for sensitive data elements.
 
-VULNERABILITY
--------------
+Ok, so does a situation where the author creates the config file with
+that warning, and then a vendor repackages and ships it, still world
+readable, still with the warning, warrant a CVE?
 
-libcurl contains a heap out-of-bounds read in the code handling the
-end-of-response for SMTP.
 
-If the buffer passed to `smtp_endofresp()` isn't NUL terminated and contains
-no character ending the parsed number, and `len` is set to 5, then the
-`strtol()` call reads beyond the allocated buffer. The read contents will not
-be returned to the caller.
+--=20
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@redhat.com
 
-We are not aware of any exploit of this flaw.
 
-INFO
-----
+--roBnwOCQ6G8KIUgbJBFcPd9DxqB77biM6
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
-This bug was introduced in October 2013 in
-[commit 2766262a68](https://github.com/curl/curl/commit/2766262a68).
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.22 (GNU/Linux)
 
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2019-3823 to this issue.
+iQIcBAEBAgAGBQJVksS4AAoJEBYNRVNeJnmTincP/RJeYaH88LR+QlLqyB3Hc0P6
+bpdhkSBbzMKsBX6XbaASJlgQ2+C2s8cGGwN3dYwGW4T9ZYj408vcjjbGi0gyasHK
+G/rlx7DXIxo9A0IQX7TlDNOEEWW0aNNup6z/f9Il8LlEMiryncp/ZryaB+6sQ4Ae
+g1jfoJHZnUHtbYOTSkNwynGumpMgKd+eBJzulklCH92W2Lna4cYeFPbdCSxYGZdD
+Y5s1rTtvtG7VrafZBtamtNG0DxBzc54sfqe2FXHIp9vUXMmKooHtMXcJVsWfmNiI
+dKC8rGW3nBSP3chgC3lBawSQGZZ3O/yqiVhj6IN9oe5c7gTx11lfyzBo1eCUi416
+HZHG4GDD6CC3bjIpiZbJWs1bGCYwrWqDxq8dAJvRWQdPrhUS6FVnYo06Cowl9Jp6
+1dPvnU/M9jBQga2JN618I+zm/AYOoE7HZ6Zu/ezt1sU5h6X37OIJ3iIfT0qZUFWu
+Oq9M6FsTIZFRByb9XMfmuhENT75gIP4z44Ok/uup9W6/l+2RTFcZimIP4UYHz5v6
+JqO6lHOS7Es0mtG70A8Pt2DQ03Iol+lIv4quRuJMwSKUeb2NLZZNo6iWhf89IBSk
+E9FZDV1Hr09tZf51CColJ3wSU6n7uwiqtdtv+KMRRK/x3WcvH2obEolHBOJ9e0nn
+g6VunEsrhitcetDHIX0O
+=02Mh
+-----END PGP SIGNATURE-----
 
-CWE-125: Out-of-bounds Read
-
-Severity: 3.7 (Low)
-
-AFFECTED VERSIONS
------------------
-
-- Affected versions: libcurl 7.34.0 to and including 7.63.0
-- Not affected versions: libcurl < 7.34.0
-
-libcurl is used by many applications, but not always advertised as such.
-
-THE SOLUTION
-------------
-
-A [patch for CVE-2019-3823](https://github.com/curl/curl/commit/39df4073e5413fcdbb5a38da0c1ce6f1c0ceb484) is available.
-
-RECOMMENDATIONS
---------------
-
-We suggest you take one of the following actions immediately, in order of
-preference:
-
-  A - Upgrade curl to version 7.64.0
-
-  B - Apply the patch to your version and rebuild
-
-  C - Turn off SMTP
-
-TIMELINE
---------
-
-The issue was reported to the curl project on January 18, 2019. A patch was
-communicated to the reporter on January 19, 2019. We contacted distros@openwall
-on January 28.
-
-curl 7.64.0 was released on February 6 2019, coordinated with the publication
-of this advisory.
-
-CREDITS
--------
-
-Reported by Brian Carpenter, Geeknik Labs. Patch by Daniel Gustafsson
-
-Thanks a lot!
-
--- 
-
-  / daniel.haxx.se
+--roBnwOCQ6G8KIUgbJBFcPd9DxqB77biM6--
