@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2222" "Sunday" "21" "June" "2015" "06:42:39" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150621104239.641F96FC0DF@smtpvmsrv1.mitre.org>" "64" "[oss-security] Re: zip-attachments v1.1.4 wordpress plugin arbitrary file download vulnerability." nil nil nil "6" "2015062110:42:39" "[oss-security] Re: zip-attachments v1.1.4 wordpress plugin arbitrary file download vulnerability." (number mark "U       cve-assign@m Jun 21   64/2222  " thread-indent "\"[oss-security] Re: zip-attachments v1.1.4 wordpress plugin arbitrary file download vulnerability.\"\n") "<86C35E8E-96DD-40C0-8530-1F426328CE21@me.com>" ("<86C35E8E-96DD-40C0-8530-1F426328CE21@me.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["932" "Tuesday" "30" "June" "2015" "15:52:45" "+0200" "Florian Weimer" "fweimer@redhat.com" "<55929F2D.3020802@redhat.com>" "20" "Re: [oss-security] Google Chrome Address Spoofing (Request For Comment)" nil nil nil "6" "2015063013:52:45" "[oss-security] Google Chrome Address Spoofing (Request For Comment)" (number mark "        fweimer@redh Jun 30   20/932   " thread-indent "\"Re: [oss-security] Google Chrome Address Spoofing (Request For Comment)\"\n") "<55929D7F.3050805@gmail.com>" ("<55923253.8020902@deusen.co.uk>" "<55929D7F.3050805@gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 1861 invoked by uid 550); 21 Jun 2015 10:43:28 -0000
+Received: (qmail 5566 invoked by uid 550); 30 Jun 2015 13:53:03 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,77 +11,38 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 5518 invoked from network); 30 Jun 2015 13:53:01 -0000
+Message-ID: <55929F2D.3020802@redhat.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
+MIME-Version: 1.0
+References: <55923253.8020902@deusen.co.uk> <55929D7F.3050805@gmail.com>
+In-Reply-To: <55929D7F.3050805@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.27
+Date: Tue, 30 Jun 2015 15:52:45 +0200
+From: Florian Weimer <fweimer@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32750 invoked from network); 21 Jun 2015 10:42:51 -0000
-From: cve-assign@mitre.org
-To: larry0@me.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <86C35E8E-96DD-40C0-8530-1F426328CE21@me.com>
-Message-Id: <20150621104239.641F96FC0DF@smtpvmsrv1.mitre.org>
-Date: Sun, 21 Jun 2015 06:42:39 -0400 (EDT)
-Subject: [oss-security] Re: zip-attachments v1.1.4 wordpress plugin arbitrary file download vulnerability.
+Subject: Re: [oss-security] Google Chrome Address Spoofing (Request For Comment)
+To: oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 06/30/2015 03:45 PM, Daniel Micay wrote:
+> It does display a window with the oracle.com address, but I don't
+> understand why you've got an ever increasing number of setTimeout events
+> built in here. It's also unclear what you mean about click-to-verify. Is
+> this bypassing a warning prompt by breaking it with a flood of requests?
 
-> Vulnerability: zip-attachments allows arbitrary file downloads because
-> it doesn't check the download path of the requested file.
-> 
-> In zip-attachments/download.php, there is no check to see if the file
-> is outside of the intended download path:
-> 
->   8 if(isset($_REQUEST['za_file']) && !empty($_REQUEST['za_file'])){
->   9 
->  10     $file = $_GET['za_file'];
->  11     $filename = $_GET['za_filename'];
->  12 
->  13     header('Content-Type: application/zip');
->  14     header('Content-Length: ' . filesize($file));
->  15     header('Content-Disposition: attachment; filename="'.$filename.'.zip"');
->  16 
->  17     readfile($file);
-> 
-> Any file readable by the httpd process can be downloaded.
-> 
-> PoC:
-> /wp-content/plugins/zip-attachments/download.php?za_file=../../../../../etc/passwd&za_filename=passwd
+I have not tried this, but here's some context:
 
-Use CVE-2015-4694.
+Most browsers have issues where they do not update the URL bar when
+content from a different is shown (i.e., the update happens to late), or
+they show the new URL while still displaying old content (update too
+late).  I've seen such discrepancies with Firefox, but I don't know if
+it's still present in current versions.
 
+If such bugs are present, freezing browsers while they are showing
+inconsistent content (hence the DoS attempt) could lead the user to
+attribute content to the incorrect site.
 
-> Vendor: Rick Torres @ricard_dev
-> Fixed in: v1.1.5 by vendor.
-> Download: https://wordpress.org/plugins/zip-attachments/
-
-We don't know whether this is the same as:
-
-  https://wordpress.org/plugins/zip-attachments/changelog/
-  1.5.1
-  I've tried to fix a vulnerability.
-
-Possibly the similar numbers (1.1.5 versus 1.5.1) correspond to two
-different vulnerabilities.
-(https://downloads.wordpress.org/plugin/zip-attachments.1.5.1.zip
-exists, but neither
-https://downloads.wordpress.org/plugin/zip-attachments.1.1.4.zip nor
-https://downloads.wordpress.org/plugin/zip-attachments.1.1.5.zip
-exists.)
-
-1.5.1 uses sanitize_file_name, apparently blocking '/' characters.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJVhpS4AAoJEKllVAevmvmsCu0H/Ruf7xLl/3s1WIkYf+5Zq69K
-QApZ9xtEw8w+081r0pDDDHoAkh5Sqoinf4J3kSvEAhPgnYH2OsI+8UZuAssCbNCh
-dnFyF9TU59J+WnEmKh/gk9YTg/lxxApM2EG7hcAGVWbTHVVQ6mhy7XytgdC99LVK
-CcNyhCRQV3V/FCxOQ7H1tm048+AlZL2t+w8PawzjJ8xwUPn3+/Dqc08bs3ZNew9u
-Q67cqsBgjemj3aDUQxkHTvz1N6TB78+QCDU5zwaUHsCTA3ZSgv2A4m4B6nHCgt3r
-J7eYzlt1nUrdTvz00UpUDF+MPdLcl+NZWH3KvQE/qlC2iJP7h5ZL4K6H0KJZgG4=
-=p++T
------END PGP SIGNATURE-----
+-- 
+Florian Weimer / Red Hat Product Security
