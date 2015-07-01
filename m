@@ -1,4 +1,9 @@
-Received: (qmail 31801 invoked by uid 550); 8 Oct 2024 13:49:11 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1723" "Wednesday" "1" "July" "2015" "13:53:46" "+0000" "Seaman, Chad" "cseaman@akamai.com" "<000f424f.06fa3cdd38fab2ea@akamai.com>" "77" "Re: [oss-security] CVE request: persistent XSS in Wordpress Plugin NewStatPress v.1.0.3" nil nil nil "7" "2015070113:53:46" "[oss-security] CVE request: persistent XSS in Wordpress Plugin NewStatPress v.1.0.3" (number mark "U       cseaman@akam Jul  1   77/1723  " thread-indent "\"Re: [oss-security] CVE request: persistent XSS in Wordpress Plugin NewStatPress v.1.0.3\"\n") "<5592E886.5090208@hsasec.de>" ("<5592E886.5090208@hsasec.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 30016 invoked by uid 550); 1 Jul 2015 13:54:00 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,94 +12,109 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 25871 invoked from network); 8 Oct 2024 08:57:58 -0000
-Authentication-Results: apache.org; auth=none
-Date: Tue, 8 Oct 2024 10:54:30 +0200
-From: Stefan Sperling <stsp@apache.org>
-To: announce@subversion.apache.org, users@subversion.apache.org,
-	dev@subversion.apache.org
-Cc: security@apache.org, oss-security@lists.openwall.com
-Message-ID: <ZwTzRh7YIBhzbLok@benson.stsp.name>
-Mail-Followup-To: announce@subversion.apache.org,
-	users@subversion.apache.org, dev@subversion.apache.org,
-	security@apache.org, oss-security@lists.openwall.com
+Received: (qmail 29998 invoked from network); 1 Jul 2015 13:53:59 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=akamai.com; s=a1;
+	t=1435758827; bh=VqJoUixFBl7Z7OHtxjZ+Dpal1yB3VxjXrAImD9sKDt4=;
+	h=From:To:Subject:Date:References:In-Reply-To:From;
+	b=YN3jhpQcX+Nmh3wHlxrGXicHj6W6OWOCqNnw9o07hrIlEH91AL32cY3oXmMrsQ2ka
+	 Vy0RTZP5csr/hmniXFAH8UqbkcpP9EXhtF88xta03uufiQnkNBR5l6iu2/tHVDW5QM
+	 EgWg+uGKZrtZW5N2r6wU1y/DbB6StB06P/T/a+40=
+From: "Seaman, Chad" <cseaman@akamai.com>
+To: "disclosure@hsasec.de" <disclosure@hsasec.de>, "cve-assign@mitre.org"
+	<cve-assign@mitre.org>, "oss-security@lists.openwall.com"
+	<oss-security@lists.openwall.com>
+Thread-Topic: [oss-security] CVE request: persistent XSS in Wordpress Plugin
+ NewStatPress v.1.0.3
+Thread-Index: AQHQs9NEEVQzt3CdMUq4m9rf8WFObp3Gow3v
+Date: Wed, 1 Jul 2015 13:53:46 +0000
+Message-ID: <000f424f.06fa3cdd38fab2ea@akamai.com>
+References: <5592E886.5090208@hsasec.de>
+In-Reply-To: <5592E886.5090208@hsasec.de>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+x-ms-exchange-transport-fromentityheader: Hosted
+Content-Type: multipart/alternative;
+	boundary="_000_000f424f06fa3cdd38fab2eaakamaicom_"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Subject: [oss-security] CVE-2024-45720: Apache Subversion: Command line argument injection on Windows platforms
+Subject: Re: [oss-security] CVE request: persistent XSS in Wordpress Plugin
+ NewStatPress v.1.0.3
 
-I am happy to announce the release of Apache Subversion 1.14.4.
+--_000_000f424f06fa3cdd38fab2eaakamaicom_
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 
-This is a stable bugfix and security release of the Apache Subversion
-open source version control system.
+Was recently told by mitre that http referer injections don't "count" becau=
+se my PoC used the curl referer flag rather that a malicious redirect...
 
-Among regular bug fixes, this release fixes CVE-2024-45720:
 
-   Subversion command line argument injection on Windows platforms
+Curious to see what they say here.
 
-   On Windows platforms, a "best fit" character encoding conversion of
-   command line arguments to Subversion's executables (e.g., svn.exe,
-   etc.) may lead to unexpected command line argument interpretation,
-   including argument injection and execution of other programs, if a
-   specially crafted command line argument string is processed.
 
-   UNIX-like platforms are not affected.
 
-   Reported by:
-   Orange Tsai and splitline from DEVCORE Research Team
+- Chad
 
-   Full advisory:
-   https://subversion.apache.org/security/CVE-2024-45720-advisory.txt
-   https://subversion.apache.org/security/CVE-2024-45720-advisory.txt.asc
 
-To obtain this release, please choose the mirror closest to you by visiting:
+------ Original message------
 
-    https://subversion.apache.org/download.cgi#recommended-release
+From: Responsive Disclosure | HSASec
 
-SHA-512 checksums are available at:
+Date: Wed, Jul 1, 2015 3:55 AM
 
-    https://www.apache.org/dist/subversion/subversion-1.14.4.tar.bz2.sha512
-    https://www.apache.org/dist/subversion/subversion-1.14.4.tar.gz.sha512
-    https://www.apache.org/dist/subversion/subversion-1.14.4.zip.sha512
+To: cve-assign@mitre.org;oss-security@lists.openwall.com;
 
-PGP Signatures are available at:
+Subject:[oss-security] CVE request: persistent XSS in Wordpress Plugin NewS=
+tatPress v.1.0.3
 
-    https://www.apache.org/dist/subversion/subversion-1.14.4.tar.bz2.asc
-    https://www.apache.org/dist/subversion/subversion-1.14.4.tar.gz.asc
-    https://www.apache.org/dist/subversion/subversion-1.14.4.zip.asc
 
-For this release, the following people have provided PGP signatures:
+OpenWallInfo
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Created Tuesday 30 June 2015
 
-   Stefan Sperling [rsa2048/4F7DBAA99A59B973] with fingerprint:
-    8BC4 DAE0 C5A4 D65F 4044  0107 4F7D BAA9 9A59 B973
-   Nathan Hartman (CODE SIGNING KEY) [rsa4096/583F00ADF981C39F] with fingerprint:
-    3F8E 467C B336 6E30 13E1  120D 583F 00AD F981 C39F
-   Johan Corveleyn [rsa4096/B59CE6D6010C8AAD] with fingerprint:
-    8AA2 C10E EAAD 44F9 6972  7AEA B59C E6D6 010C 8AAD
-   Evgeny Kotkov [rsa4096/B64FFF1209F9FA74] with fingerprint:
-    E7B2 A7F4 EC28 BE9F F8B3  8BA4 B64F FF12 09F9 FA74
-   Timofei Zhakov with fingerprint:
-    B593 8A45 4FEA DBD4 3565  E85F 2A56 BB63 2286 4335
+Dear Sir or Mam,
 
-These public keys are available at:
+we want to inform you about a security vulnerability in one of the
+plugins provided by you or one member of your company.
+Please regard the information below.
 
-    https://www.apache.org/dist/subversion/subversion-1.14.4.KEYS
+Plugin:
+NewStatPress (https://wordpress.org/plugins/newstatpress/)
 
-Release notes for the 1.14.x release series may be found at:
+Product-Type:
+Wordpress-Plugin
 
-    https://subversion.apache.org/docs/release-notes/1.14.html
+Version:
+1.0.3
 
-You can find the list of changes between 1.14.4 and earlier versions at:
+Vendor:
+ice00 (http://newstatpress.altervista.org/?page_id=3D2)
 
-    https://svn.apache.org/repos/asf/subversion/tags/1.14.4/CHANGES
+Fixed:
+reported: 2015-06-30
+fixed in version 1.04, 2015-06-30
 
-Questions, comments, and bug reports to users@subversion.apache.org.
+Changelog:
+https://wordpress.org/plugins/newstatpress/changelog/
 
-Thanks,
-- The Subversion Team
 
---
-To unsubscribe, please see:
+Type of vulnerability:
+persistent XSS via HTTP-Header (Referer) (no authentication required)
 
-    https://subversion.apache.org/mailing-lists.html#unsubscribing
+Description:
+An unsifficent user input validation (of HTTP-Header: Referer) results
+in a persistent XSS in the wordpress admin-panel. So an attacker may be
+able to access any cookies, session tokens or other sensitive
+information retained by the browser and used with that site.
+
+Proof of Concept:
+yes (internal)
+
+Researchers:
+* Michael Kapfer (Michael.Kapfer@hs-augsburg.de)
+
+Best regards,
+HSASec-Team (https://www.HSASec.de)
+
+
+--_000_000f424f06fa3cdd38fab2eaakamaicom_--
