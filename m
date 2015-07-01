@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["720" "Tuesday" "8" "January" "2019" "22:31:58" "+0000" "Ash Berlin-Taylor" "ash@apache.org" "<ecc2a46a-c655-8648-23ba-bdaa7261c904@apache.org>" "22" "[oss-security] CVE-2018-20245: Apache Airflow LDAP auth backend did not validate SSL certificate for <= 1.10.0" "^Cc:" nil nil "1" "2019010822:31:58" "[oss-security] CVE-2018-20245: Apache Airflow LDAP auth backend did not validate SSL certificate for <= 1.10.0" (number mark "U       ash@apache.o Jan  8   22/720   " thread-indent "\"[oss-security] CVE-2018-20245: Apache Airflow LDAP auth backend did not validate SSL certificate for <= 1.10.0\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3183" "Wednesday" "1" "July" "2015" "12:12:41" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150701161241.4E08636E002@smtpvbsrv1.mitre.org>" "78" "[oss-security] Re: CVE Request: two security issues in openSSH 6.9" nil nil nil "7" "2015070116:12:41" "[oss-security] Re: CVE Request: two security issues in openSSH 6.9" (number mark "        cve-assign@m Jul  1   78/3183  " thread-indent "\"[oss-security] Re: CVE Request: two security issues in openSSH 6.9\"\n") "<5593DC98.7000204@suse.de>" ("<5593DC98.7000204@suse.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 24061 invoked by uid 550); 8 Jan 2019 23:12:39 -0000
+Received: (qmail 20017 invoked by uid 550); 1 Jul 2015 16:12:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,42 +11,91 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 14192 invoked from network); 8 Jan 2019 22:32:14 -0000
-Message-ID: <ecc2a46a-c655-8648-23ba-bdaa7261c904@apache.org>
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:52.0)
- Gecko/20100101 PostboxApp/6.1.9
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-GB
-Cc: Stijn van Drongelen <rhymoid@gmail.com>
-Date: Tue, 8 Jan 2019 22:31:58 +0000
-From: Ash Berlin-Taylor <ash@apache.org>
+Received: (qmail 19999 invoked from network); 1 Jul 2015 16:12:52 -0000
+In-Reply-To: <5593DC98.7000204@suse.de>
+Message-Id: <20150701161241.4E08636E002@smtpvbsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Wed,  1 Jul 2015 12:12:41 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE-2018-20245: Apache Airflow LDAP auth backend did not validate SSL
- certificate for <= 1.10.0
-To: dev@airflow.apache.org, Apache Security Team <security@apache.org>,
- oss-security@lists.openwall.com
+Subject: [oss-security] Re: CVE Request: two security issues in openSSH 6.9
+To: astieger@suse.de
 
-CVE-2018-20245: LDAP auth backend did not validate SSL certificate for 
-Apache Airflow <= 1.10.0
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Vendor: The Apache Software Foundation
+> The openSSH 6.9 release contains the following changes declared as
+> security issues:
 
-Versions Affected: <= 1.10.0
+We don't know whether the upstream vendor uses:
 
-Description:
-The LDAP auth backend (airflow.contrib.auth.backends.ldap_auth) was 
-misconfigured and contained improper checking of exceptions which 
-disabled server certificate checking.
+   Security
+   --------
 
-Apache Airflow 1.10.1+ now only supports TLS connections and does not 
-support insecure connections to LDAP servers any more. (Self-signed 
-certificates are allowed if you pass in the expected server certificate 
-as the "cacert" option under the "[ldap]" section of the config.)
+exclusively to mean that they are announcing vulnerability fixes, or
+sometimes instead to mean that a change is otherwise related to
+security.
 
-Credit:
-This issue was discovered by Stijn van Drongelen
+> https://anongit.mindrot.org/openssh.git/commit/?h=V_6_9&id=1bf477d3cdf1a864646d59820878783d42357a1d
 
-Thanks,
-Ash Berlin-Taylor
+Use CVE-2015-5352 for the issue in which the refusal deadline was not
+checked within the x11_open_helper function. (There's extra code to
+make the x11_refuse_time value usable within two source-code files,
+but adding that code doesn't seem to be related to any independent
+problem.)
+
+
+We didn't completely understand the rationale for moving "system(cmd)"
+after the x11_refuse_time assignment, or whether this is addressing an
+independent problem. It seems conceivable that there's a very slow
+network connection to the X server, and an "xauth generate" may
+therefore take a very long time. So, we think this might add a risk
+that, by the time system(cmd) finishes, the refusal deadline has
+already passed. If we're misunderstanding this or there's a
+vulnerability fixed by moving the system(cmd) call, please let us
+know.
+
+> - if (x11_refuse_time != 0 && monotime() >= x11_refuse_time) {
+> + if (x11_refuse_time != 0 && (u_int)monotime() >= x11_refuse_time) {
+
+We're guessing that this isn't a vulnerability fix, and that the
+author just somehow doesn't want x11_refuse_time to be a time_t.
+
+> "fail open"
+> behaviour in the X11 server when clients attempted connections with
+> expired credentials.
+
+The scope of CVE-2015-5352 does not include any fail-open
+characteristics of an X server. There could possibly be a separate CVE
+ID if there is an error that needs to be fixed in the X codebase.
+
+
+>  * ssh-agent(1): fix weakness of agent locking (ssh-add -x) to
+>    password guessing by implementing an increasing failure delay,
+>    storing a salted hash of the password rather than the password
+>    itself and using a timing-safe comparison function for verifying
+>    unlock attempts.
+
+Our current thought is that a CVE ID may not be needed because attacks
+against ssh-agent locking don't cross a privilege boundary. In other
+words, the changelog entry could be interpreted to mean addition of a
+new security feature related to a threat model that wasn't in the
+previous design goals (e.g., password guessing by malware running
+under the same account).
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJVlBB+AAoJEKllVAevmvms7U0IAJ/pkfdTyBGALMZ9cGuQ3drG
+Y4k+4sD105NJ6skzjfGOrssX9fjgc0z/ZRo+E7oups8/FrZeKwAshVATh1kxkOPe
+tCyFFSSIVohbNM1xIluSGLgtlXSTjM7useVL589YFyrO6sXrqYjh27fu616XDPPq
+etQA+P07uj/AdPR+REWIyeX7Err9D9LEIB8kP42CYcHxblxZe5tfKixFeq6+q7bm
+p/MDDckK374YoE7LXXPzF1e93CM2opAykI+W2J8W5IwL0I2C8vKO2eLUFZxkvVAH
+IAV168RI5oAZnw7uwpI5evYuvM+VWwAJwWXtaPh+u054g4TuEWdw+Gi2tDb2j5o=
+=kcq2
+-----END PGP SIGNATURE-----
