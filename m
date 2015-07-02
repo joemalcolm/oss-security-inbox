@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["713" "Sunday" "6" "March" "2022" "10:08:21" "+0100" "Gabriel Corona" "gabriel.corona@enst-bretagne.fr" nil "21" "Re: [oss-security] DNS rebinding on ReadyMedia/minidlna v1.3.0 and below" nil nil nil "3" nil nil (number mark "U       gabriel.coro Mar  6   21/713   " thread-indent "\"Re: [oss-security] DNS rebinding on ReadyMedia/minidlna v1.3.0 and below\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] DNS rebinding on ReadyMedia/minidlna v1.3.0 and below" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1408" "Thursday" "2" "July" "2015" "22:58:02" "+0100" "Tim Brown" "tmb@65535.com" "<9090379.BL7QgV4Uhp@sarpedon>" "40" "Re: [oss-security] Re: [FD] Google Chrome Address Spoofing (Request For Comment)" nil nil nil "7" "2015070221:58:02" "[oss-security] Re: [FD] Google Chrome Address Spoofing (Request For Comment)" (number mark "        tmb@65535.co Jul  2   40/1408  " thread-indent "\"Re: [oss-security] Re: [FD] Google Chrome Address Spoofing (Request For Comment)\"\n") "<681041526.1096475.1435845066860.JavaMail.yahoo@mail.yahoo.com>" ("<CAP7Z6--Zd8zojRXbevz+xETqvqRGWJKhaY=OL9LL2mRusPMNiA@mail.gmail.com>" "<681041526.1096475.1435845066860.JavaMail.yahoo@mail.yahoo.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 7822 invoked by uid 550); 6 Mar 2022 10:20:01 -0000
+Received: (qmail 23907 invoked by uid 550); 2 Jul 2015 22:25:03 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,42 +11,56 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1166 invoked from network); 6 Mar 2022 09:08:34 -0000
-Message-ID: <b134b991-774d-5e38-f8ea-f81ffc02d8f4@enst-bretagne.fr>
-Date: Sun, 6 Mar 2022 10:08:21 +0100
+Received: (qmail 23886 invoked from network); 2 Jul 2015 22:25:02 -0000
+Message-ID: <9090379.BL7QgV4Uhp@sarpedon>
+User-Agent: KMail/4.14.2 (Linux/4.0.0-1-amd64; KDE/4.14.2; x86_64; ; )
+In-Reply-To: <681041526.1096475.1435845066860.JavaMail.yahoo@mail.yahoo.com>
+References: <CAP7Z6--Zd8zojRXbevz+xETqvqRGWJKhaY=OL9LL2mRusPMNiA@mail.gmail.com> <681041526.1096475.1435845066860.JavaMail.yahoo@mail.yahoo.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.1
-Content-Language: en-US
+Content-Type: multipart/signed; boundary="nextPart6010410.IalHzE3J32"; micalg="pgp-sha256"; protocol="application/pgp-signature"
+Date: Thu, 02 Jul 2015 22:58:02 +0100
+From: Tim Brown <tmb@65535.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Re: [FD] Google Chrome Address Spoofing (Request For Comment)
 To: oss-security@lists.openwall.com
-References: <f941621c-80ad-f8cc-4065-ac169b28a725@enst-bretagne.fr>
- <949efc4e-dc03-c261-2eda-f554eb3ed0fe@enst-bretagne.fr>
-From: Gabriel Corona <gabriel.corona@enst-bretagne.fr>
-In-Reply-To: <949efc4e-dc03-c261-2eda-f554eb3ed0fe@enst-bretagne.fr>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Subject: Re: [oss-security] DNS rebinding on ReadyMedia/minidlna v1.3.0 and
- below
 
-On 03/03/2022 21:56, Gabriel Corona wrote:
-> ReadyMedia [1] (formerly MiniDLNA) v1.3.0 and below is vulnerable to DNS 
-> rebinding attacks. A malicious remote web server may trick the user 
-> browser into triggering arbitrary UPnP requests on the local DLNA server 
-> and observe the result of these actions. Moreover, the shared files are 
-> accessible through DNS rebinding as well.
-> 
-> A remote malicious server could exploit the user browser in order to:
-> 
-> * list the available media files and exfiltrate this list;
-> * download the media files and exfiltrate them.
-> 
-> This has been fixed in ReadyMedia v1.3.1.
-> 
-> [1] https://sourceforge.net/projects/minidlna/
-> 
+--nextPart6010410.IalHzE3J32
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="us-ascii"
 
-This is CVE-2022-26505.
+Doesn't appear to work on Konqueror using either KHTML or Qt WebKit based=20
+backends. Nor does it appear to work on Rekonq. No DoS, no nothing, you jus=
+t=20
+get dropped onto the legitimate site.
 
---
-Gabriel
+Cheers,
+Tim
+--=20
+Tim Brown
+<mailto:tmb@65535.com>=
+
+--nextPart6010410.IalHzE3J32
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part.
+Content-Transfer-Encoding: 7Bit
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iQIcBAABCAAGBQJVlbPxAAoJEPJhpTVyySo7+60P/17sukltl5EyiyTx9EgXiqPH
+RTaWMuuDlxzsWACmjQYDxS+DatHxJXBQR6jx5/y5MwGk/j/XZmSl80Yyosgg7O8X
+Xf4dE2FZIoi0Y4gusPbgBQme/cgF5Hia1qHbw37rSf3tTnLF0A41QifC7Avrbhym
+K7Bj5vAD7Bh6GFkHbjsor2MEIkUMHikHSnuBd++hAYlMOcyLR6jeKKEriEffYmj/
+hSliRn2RBm/mnepbyt3yr4FZhtkKoJG5QD+bvOfL1anr95fHOyxZuC8rYoyBDPgC
+NfGAF8Q9x+7IriuGKnoykjKiIYA1wmztHwwJUAxJ6iq8fdlSvB9jC63Gu9+K0Akj
+NieXdc1GThWtseogPh0etVtKaV+WIqxWt/ZujzmvMra/Z3R5HcaMnwU1UoWVLDZi
+PfX32+xC0iQq+lelFEc5PRoKukr8+x62SXGnWK0NQAFTKCAoxuwOHtuK6xvbz3AG
+wxFZqqYl2kxWyY2EqZIK+L2GQSyoycIu8iwP2yGf+jQhUz+jH/iBKwM3B0c0apf0
+QFu2rfpegArZD2KU5RL/IaXpsBbkNAkhhsGAKfMkWkqGgLEicCa+LKjLOW5KhL5z
+Zeg3sfIcOuxuouiVRgtCAp/a0Gp7mKnRTqiHnHJiuWDbG/huxwPYnpBrdysgSJpI
+5beEnjqXD6qftnqNINfc
+=sRlQ
+-----END PGP SIGNATURE-----
+
+--nextPart6010410.IalHzE3J32--
+
