@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2335" "Thursday" "3" "December" "2015" "00:18:51" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151203051851.C50F942E05C@smtpvbsrv1.mitre.org>" "57" "[oss-security] Re: CVE Request: dhcpcd 3.x, potentially other versions too" "^Cc:" nil nil "12" "2015120305:18:51" "[oss-security] Re: CVE Request: dhcpcd 3.x, potentially other versions too" (number mark "        cve-assign@m Dec  3   57/2335  " thread-indent "\"[oss-security] Re: CVE Request: dhcpcd 3.x, potentially other versions too\"\n") "<20151202015146.GJ24908@hunt>" ("<20151202015146.GJ24908@hunt>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1578" "Friday" "3" "July" "2015" "13:27:27" "+0530" "Anirudh Anand" "anirudhanand722@gmail.com" "<CAMntfF04Vq=1v=jn=1DNjPTNHfPp5YASwnm6OdVKYxs5VsaCiA@mail.gmail.com>" "57" "[oss-security] CVE Request: GetSimple CMS: Multiple Stored XSS" nil nil nil "7" "2015070307:57:27" "[oss-security] CVE Request: GetSimple CMS: Multiple Stored XSS" (number mark "U       anirudhanand Jul  3   57/1578  " thread-indent "\"[oss-security] CVE Request: GetSimple CMS: Multiple Stored XSS\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 32680 invoked by uid 550); 3 Dec 2015 05:19:04 -0000
+Received: (qmail 9811 invoked by uid 550); 3 Jul 2015 23:51:55 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,70 +11,82 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 32661 invoked from network); 3 Dec 2015 05:19:03 -0000
-In-Reply-To: <20151202015146.GJ24908@hunt>
-Message-Id: <20151203051851.C50F942E05C@smtpvbsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, guidovranken@gmail.com
-Date: Thu,  3 Dec 2015 00:18:51 -0500 (EST)
-From: cve-assign@mitre.org
+Received: (qmail 28240 invoked from network); 3 Jul 2015 07:57:38 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=FYJn7jAZ1iTLd0DANgbkxPgkIF2FP7u01HwzELaKJcc=;
+        b=HW47J1tqEhHMHr0po9QE3NTqv+m+tjbmKHcS939rH9yYyQoKFqyK/ADbFGIlBYhrh4
+         gMYPl08ZBaE1d1hxVyGknftAnv0oaksloMREHaCio3+/TutUADIOr8JyWhXzYSfglWyO
+         kipdR6yCB9AtYgKP1kSsqchuLvt4PV/e8auCmDOnbMxB3vlQy5GqgDalXh9rRrHwDLsa
+         cJ9IB0CjzKEUktnJhPK1+GD+y0xl92eGhaBI4317IvCrWxZqp0QyMhFvLPBiaLDVUEz9
+         SVUDiwOvD1gg0KQq9JK3/VVu6VYG0l2aKTG1J5mCKnAriIy4SIdZtTm77hBpdBD0hF7B
+         gxgA==
+MIME-Version: 1.0
+X-Received: by 10.140.201.80 with SMTP id w77mr51518133qha.33.1435910247134;
+ Fri, 03 Jul 2015 00:57:27 -0700 (PDT)
+Message-ID: <CAMntfF04Vq=1v=jn=1DNjPTNHfPp5YASwnm6OdVKYxs5VsaCiA@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=001a11431ca835baf10519f3e891
+Date: Fri, 3 Jul 2015 13:27:27 +0530
+From: Anirudh Anand <anirudhanand722@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE Request: dhcpcd 3.x, potentially other versions too
-To: seth.arnold@canonical.com
+Subject: [oss-security] CVE Request: GetSimple CMS: Multiple Stored XSS
+To: oss-security@lists.openwall.com, cve-assign@mitre.org
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--001a11431ca835baf10519f3e891
+Content-Type: text/plain; charset=UTF-8
 
-> https://launchpadlibrarian.net/228152582/dhcp.c.patch
+Hello,
 
->> I had expected this part of the diff to address the out-of-bounds writes:
->>
->>               if (out && out != start)
->>                       *(out - 1) = ' ';
+GetSimple <http://get-simple.info/> is a stand-a-alone, fully independent
+and lite Content Management System.
 
->>> Ack, looks like heap[-1] OOB write to me.
+Recently I found that Getsimple CMS is vulnerable to Stored Cross site
+scripting attack.
 
-Use CVE-2012-6698 for the vulnerability in which the possibility of
-"out == start" wasn't considered, leading to an out-of-bounds write.
+*POC:*
+
+While creating a new page, give the page title as
+*new"onmouseover="alert(1)";* and in the content, give *<svg
+onload="alert(10)">*. Now save it and then go to *pages.php* and then hover
+the mouse over the cross mark (which is used to delete the post). You can
+see that XSS is triggered.
+
+Now, go to *backups.php* and hover the mouse over it and again you can see
+the XSS triggered. Now open the backup and you can see that *<svg>* is
+triggered there. But since there is regex checking in the main pages, the
+*<svg>* won't get triggered in the main page.
+
+Any normal user has the ability to add new pages and each time when a post
+is saved, it gets automatically saved into *backups.php*
+
+*Date of reporting:* 3rd July, 2015
+
+*Exploit Author:* Anirudh Anand
+
+*Vendor Homepage*: http://get-simple.info/
+
+*Software Link:* http://get-simple.info/download/
+
+*Version affected: *Possibly all version <= 3.3.5
+
+*Tested on:* Linux:- Ubuntu, Debian, PHP - 5.5
 
 
->>> Recalling from my last analyse, I think this is just an OOB read, because
->>> decode_search() is called with out being NULL to count the amount of data
->>> to be copied later. Unless this data is somehow modified the next call
->>> to decode_search() should have sufficient amount of heap allocated for
->>> the memcpy() to be correct. But the loop has an OOB read when counting
->>> the data (and later when copying it and there wasnt already a SIGSEGV).
+The issue has been reported to the vendor:
+https://github.com/GetSimpleCMS/GetSimpleCMS/issues/1067
 
-Use CVE-2012-6699 for this loop error that results in an out-of-bounds read.
+Is it possible to assign CVE identifier for the same ?
 
+Thank you,
 
->	     case DHCP_DNSSEARCH:
->                     MIN_LENGTH (1);
-> -                   free (dhcp->dnssearch);
->                     len = decode_search (p, length, NULL);
->                     if (len > 0) {
-> +                           free (dhcp->dnssearch);
+-- 
 
-Use CVE-2012-6700 for the presence of the free call in an incorrect place.
+Anirudh Anand
+bi0s@AMRITA
+www.securethelock.com
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+*"Those who Say it cannot be done, should not interrupt the people doing
+it"*
 
-iQIcBAEBCAAGBQJWX8+7AAoJEL54rhJi8gl5KlMP/08/QI7yfbHAe8VVpuJiOyIN
-Df9xi8dVZ0FhzJTbab+RXfHF5BMmLhljj8GGjOWaal3+8nnWHJsC/cwuho+tDWZh
-xTJEUFPUHouK341v2HMq6Y2wbi4NHmsZkysFzunsQfWiMp5KhftCG8pxx03CSrIX
-nM4xrgb3iiHFsMoLLm2WsUa41tP2kNSHQ7vGmMxhuxUmKIHbTzq24ljnMC1yAMps
-GWxMI3xNEcMO6fl5bIJmn5AkjL5vG0dhbC5OQa6hrCpyaqCIAah9xNRFLCIKOfaY
-FlfnbRRCqOyFB2ZxNcUKZSEutb2xRJ3QiHtA2+QZiick2nGVdywltbxKSMlnNI41
-MFR033IISjE10okoMTaSdjv6nNyFjkhMOlBcqkT2EQqPjB1xFUq/vVtla3gKLzb3
-JOCugDG3ZJ/LJHb8/ZSCWDyGoaPJrtkiiJ8WTOksBq9mUTHbOm4LhOyb1yUatgYo
-UBW12MVf/8PvkC/La4rAFX4aqbsxsvm0+zMcvDhBXX1AJnEMHRHyi5zX+SjR7E5u
-EFapH8sUj92ejG5iXFndgR13MHbAIzvScpFNova4b5e9WwiN/QVjX8elEf/5aZXs
-TUfW/Sv6Ldj7I4H0RcANJHhmoq6FI59673RrTNJ6/tnTUNhrR4v7rqazYXJZiW4+
-O5Hs/K+vI9HpOyY8JaAo
-=bJBu
------END PGP SIGNATURE-----
+--001a11431ca835baf10519f3e891--
