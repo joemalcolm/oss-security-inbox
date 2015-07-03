@@ -1,4 +1,9 @@
-Received: (qmail 8177 invoked by uid 550); 29 Oct 2022 13:04:32 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["918" "Friday" "3" "July" "2015" "11:15:24" "+0200" "Stefan Cornelius" "scorneli@redhat.com" "<20150703111524.762f89eb@redhat.com>" "29" "Re: [oss-security] CVE-2015-3258 CVE-2015-3279 cups-filters" nil nil nil "7" "2015070309:15:24" "[oss-security] CVE-2015-3258 CVE-2015-3279 cups-filters" (number mark "        scorneli@red Jul  3   29/918   " thread-indent "\"Re: [oss-security] CVE-2015-3258 CVE-2015-3279 cups-filters\"\n") "<20150626195914.6809395a@redhat.com>" ("<20150626184326.6b7309a8@redhat.com>" "<20150626195914.6809395a@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 19748 invoked by uid 550); 3 Jul 2015 09:15:43 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,51 +11,47 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 29749 invoked from network); 29 Oct 2022 12:43:28 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=obtuse.com; s=20200401;
-	t=1667047392;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=2cpn9F6kpUSwSRY8K9MMPPPqIyihfgdSsa+x+iwNB+I=;
-	b=hIHuQ1AMDyk68R8Q8KgtcBgcDTneaRdeT/1MjFMBYXKI/Grq9kqAKDfbJx4mpnckTN2LiE
-	5vAcd9Nef+nNSpRZEWR8zMkkrK8wqEB6Am6hGVILcoyJm2X8GOoMurPg4fWThqmtT1UqJc
-	Kfxzdhx3RPSCuymKbztnvmR53eCdU9E=
-Content-Type: multipart/alternative; boundary=Apple-Mail-1ED91C9F-0A1D-4B5D-8873-3B2FD4DC6876
+Received: (qmail 19730 invoked from network); 3 Jul 2015 09:15:42 -0000
+Message-ID: <20150703111524.762f89eb@redhat.com>
+In-Reply-To: <20150626195914.6809395a@redhat.com>
+References: <20150626184326.6b7309a8@redhat.com>
+	<20150626195914.6809395a@redhat.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-From: Bob Beck <beck@obtuse.com>
-Mime-Version: 1.0 (1.0)
-Date: Sat, 29 Oct 2022 08:43:08 -0400
-Message-Id: <E8ADE3CA-4D49-4149-808F-8EC94BF3502D@obtuse.com>
-References: <CAB=ivF85hhN73MbzdX9j72Vqa5pNuF-FVYZD9BToqRM1qPSx2g@mail.gmail.com>
-Cc: oss-security@lists.openwall.com, libressl-security@openbsd.org
-In-Reply-To: <CAB=ivF85hhN73MbzdX9j72Vqa5pNuF-FVYZD9BToqRM1qPSx2g@mail.gmail.com>
-To: Roxana Bradescu <roxabee@chromium.org>
-X-Mailer: iPhone Mail (19G82)
-Subject: Re: [oss-security] Forthcoming OpenSSL Releases
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.24
+Date: Fri, 3 Jul 2015 11:15:24 +0200
+From: Stefan Cornelius <scorneli@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] CVE-2015-3258 CVE-2015-3279 cups-filters
+To: oss-security@lists.openwall.com
 
---Apple-Mail-1ED91C9F-0A1D-4B5D-8873-3B2FD4DC6876
-Content-Type: text/plain;
-	charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+On Fri, 26 Jun 2015 19:59:14 +0200
+Stefan Cornelius <scorneli@redhat.com> wrote:
+> Hi again,
+> 
+> I think there's a possible problem with the patch that I failed to
+> catch earlier in the process, so you may want to hold packaging for a
+> bit until this is fully investigated.
+> 
+> Sorry for the inconvenience.
 
-Libressl is not vulnerable to the upcoming issue.=20
+Hi,
 
-> On Oct 27, 2022, at 18:25, Roxana Bradescu <roxabee@chromium.org> wrote:
->=20
-> =EF=BB=BF
-> I think that's a question for the LibreSSL Security team as to whether th=
-ey do pre-advisories?
->=20
-> ---
-> Regards, Roxana
->=20
->> On Thu, Oct 27, 2022 at 8:13 AM Georgi Guninski <gguninski@gmail.com> wr=
-ote:
->> Is libressl affected by these?
->>=20
->> Haven't seen announcement from libressl.
+Even with the patch for CVE-2015-3258 in version 1.0.70 it was possible
+to trigger an integer overflow leading to a heap-based buffer overflow
+using the same vector (specially crafted line sizes).
 
---Apple-Mail-1ED91C9F-0A1D-4B5D-8873-3B2FD4DC6876--
+The integer overflow has been assigned CVE-2015-3279 and is fixed in
+version 1.0.71. Apart from that, the patch also hardens against
+possible crashes due to missing calloc() success checks.
+
+Patch:
+http://bzr.linuxfoundation.org/loggerhead/openprinting/cups-filters/revision/7365
+
+Red Hat bug:
+https://bugzilla.redhat.com/show_bug.cgi?id=1238990
+
+Thanks,
+-- 
+Stefan Cornelius / Red Hat Product Security
