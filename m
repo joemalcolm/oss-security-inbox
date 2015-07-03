@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1659" "Wednesday" "24" "August" "2016" "14:07:01" "+0100" "Dominic Cleal" "dominic@cleal.org" "<57BD9BF5.2040501@cleal.org>" "56" "[oss-security] CVE-2016-6319: Foreman stored XSS in form label helpers" nil nil nil "8" "2016082413:07:01" "[oss-security] CVE-2016-6319: Foreman stored XSS in form label helpers" (number mark "U       dominic@clea Aug 24   56/1659  " thread-indent "\"[oss-security] CVE-2016-6319: Foreman stored XSS in form label helpers\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["370" "Friday" "3" "July" "2015" "17:25:30" "+0200" "Salvatore Bonaccorso" "carnil@debian.org" "<20150703152530.GA21669@eldamar.local>" "14" "Re: [oss-security] CVE-2015-3258 CVE-2015-3279 cups-filters" nil nil nil "7" "2015070315:25:30" "[oss-security] CVE-2015-3258 CVE-2015-3279 cups-filters" (number mark "        carnil@debia Jul  3   14/370   " thread-indent "\"Re: [oss-security] CVE-2015-3258 CVE-2015-3279 cups-filters\"\n") "<1435932294.3503.31.camel@redhat.com>" ("<20150626184326.6b7309a8@redhat.com>" "<20150626195914.6809395a@redhat.com>" "<20150703111524.762f89eb@redhat.com>" "<20150703115817.GB12861@lorien.valinor.li>" "<1435932294.3503.31.camel@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 19764 invoked by uid 550); 24 Aug 2016 13:07:15 -0000
+Received: (qmail 12234 invoked by uid 550); 3 Jul 2015 15:25:44 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,74 +11,49 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 19734 invoked from network); 24 Aug 2016 13:07:14 -0000
-From: Dominic Cleal <dominic@cleal.org>
-To: oss-security@lists.openwall.com
-Cc: foreman-security@googlegroups.com
-Message-ID: <57BD9BF5.2040501@cleal.org>
-Date: Wed, 24 Aug 2016 14:07:01 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.2.0
+Received: (qmail 12207 invoked from network); 3 Jul 2015 15:25:43 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:date:from:to:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=VXzK5N2z1/DU8mfqw3Grz1QBrGK+f24yXSxO5ZbbPew=;
+        b=VRd8gHaN2yaWuDz8sekHmiICU6ckT94LEM2/a4DTAKO8hKdZmlwTP2v7zc4hw2X2Sa
+         B/s+QbatoXrw6aFytFUdbgzK8cBYjw+8e4EOjImakdJ9JAd48+6/sL1KbbCDg2X7dOsm
+         A8jheHuR9EGNHpbzdRrYjvCwTtGRoXl1+m7OwD4Ctp3qQpC7SEJ1YLjQozP9iH2eKMDr
+         jdeSmi1ddssXAZMxtxYVGew/f1nFtEO8KUdMEuO2IYAqbSCNHbC41tAsHc9Z2m4LMFKN
+         Zpf/lcQyiBctcdKviiABo+NKMqXG/TNVuzO8x0hLnPQSye3FfxB1aUqR7xycMZVbBgzs
+         p3/w==
+X-Received: by 10.180.107.138 with SMTP id hc10mr27945118wib.2.1435937132301;
+        Fri, 03 Jul 2015 08:25:32 -0700 (PDT)
+Message-ID: <20150703152530.GA21669@eldamar.local>
+References: <20150626184326.6b7309a8@redhat.com>
+ <20150626195914.6809395a@redhat.com>
+ <20150703111524.762f89eb@redhat.com>
+ <20150703115817.GB12861@lorien.valinor.li>
+ <1435932294.3503.31.camel@redhat.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="loXu9PTBrTG4AVSgArhqdOJ6wdGSIU9cR"
-Subject: [oss-security] CVE-2016-6319: Foreman stored XSS in form label helpers
-
---loXu9PTBrTG4AVSgArhqdOJ6wdGSIU9cR
-Content-Type: multipart/mixed; boundary="vNwgdPl2xX4I6ggtdE7wkE3aQM5aPorMw"
-From: Dominic Cleal <dominic@cleal.org>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1435932294.3503.31.camel@redhat.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+Date: Fri, 3 Jul 2015 17:25:30 +0200
+From: Salvatore Bonaccorso <carnil@debian.org>
+Reply-To: oss-security@lists.openwall.com
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Subject: Re: [oss-security] CVE-2015-3258 CVE-2015-3279 cups-filters
 To: oss-security@lists.openwall.com
-Cc: foreman-security@googlegroups.com
-Message-ID: <57BD9BF5.2040501@cleal.org>
-Subject: CVE-2016-6319: Foreman stored XSS in form label helpers
 
---vNwgdPl2xX4I6ggtdE7wkE3aQM5aPorMw
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-
-CVE-2016-6319: Foreman stored XSS in form label helpers
-
-The "label" parameter of all form helpers used to construct web UI
-components was not escaped allowing XSS (cross-site scripting). The
-Foreman itself did not contain exploitable code but other plugins that
-relied on these form helpers could be vulnerable. One known vulnerable
-plugin is Remote Execution. All versions of this plugin are affected.
-
-Affects Foreman 1.6.0 and higher
-Fix released in Foreman 1.12.2
-
-Patch:
-https://github.com/theforeman/foreman/commit/0f35fe14acf0d0d3b55e9337bc5e2b=
-9640ff2372
-
-More information:
-https://theforeman.org/security.html#2016-6319
-http://projects.theforeman.org/issues/16024
-https://theforeman.org
-
---=20
-Dominic Cleal
-dominic@cleal.org
+Hi Tim,
 
 
+On Fri, Jul 03, 2015 at 03:04:54PM +0100, Tim Waugh wrote:
+> On Fri, 2015-07-03 at 13:58 +0200, Salvatore Bonaccorso wrote:
+> > Can you confirm, is CVE-2015-3279 the right CVE? The patch uses in
+> > the description CVE-2015-3259.
+> 
+> Sorry, that was my mistake. The correct name is CVE-2015-3279.
 
+Thanks a lot for the quick confirmation.
 
-
---vNwgdPl2xX4I6ggtdE7wkE3aQM5aPorMw--
-
---loXu9PTBrTG4AVSgArhqdOJ6wdGSIU9cR
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-
-iEYEARECAAYFAle9m/UACgkQfH0ybywrcsxYUACghiLgx7vnUGPab43nGoVDN1Ma
-eDcAoIDSkL3opX81YbEubxQd6RYbGZYH
-=9t0B
------END PGP SIGNATURE-----
-
---loXu9PTBrTG4AVSgArhqdOJ6wdGSIU9cR--
+Regards,
+Salvatore
