@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2145" "Tuesday" "12" "January" "2016" "12:35:42" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160112173542.66C5A34E014@smtpvbsrv1.mitre.org>" "55" "[oss-security] Re: CVE request Qemu: nvram: OOB r/w access in processing firmware configurations" nil nil nil "1" "2016011217:35:42" "[oss-security] Re: CVE request Qemu: nvram: OOB r/w access in processing firmware configurations" (number mark "U       cve-assign@m Jan 12   55/2145  " thread-indent "\"[oss-security] Re: CVE request Qemu: nvram: OOB r/w access in processing firmware configurations\"\n") "<alpine.LFD.2.20.1601112211500.22978@wniryva>" ("<alpine.LFD.2.20.1601112211500.22978@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3371" "Saturday" "4" "July" "2015" "21:55:06" "+0200" "Pere Orga" "pere@orga.cat" "<CAMYtjAoKVQONvGAAR57C7gWyzgy3VsdUdCt=Ezv7C3=xc8LWXg@mail.gmail.com>" "104" "[oss-security] CVE requests for Drupal contributed modules (from SA-CONTRIB-2015-100 to SA-CONTRIB-2015-131)" nil nil nil "7" "2015070419:55:06" "[oss-security] CVE requests for Drupal contributed modules (from SA-CONTRIB-2015-100 to SA-CONTRIB-2015-131)" (number mark "        pere@orga.ca Jul  4  104/3371  " thread-indent "\"[oss-security] CVE requests for Drupal contributed modules (from SA-CONTRIB-2015-100 to SA-CONTRIB-2015-131)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 20414 invoked by uid 550); 12 Jan 2016 17:35:54 -0000
+Received: (qmail 27960 invoked by uid 550); 4 Jul 2015 19:55:41 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,68 +11,136 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 27939 invoked from network); 4 Jul 2015 19:55:40 -0000
+X-Received: by 10.180.9.111 with SMTP id y15mr37869078wia.18.1436039726409;
+ Sat, 04 Jul 2015 12:55:26 -0700 (PDT)
+MIME-Version: 1.0
+Message-ID: <CAMYtjAoKVQONvGAAR57C7gWyzgy3VsdUdCt=Ezv7C3=xc8LWXg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - gator3111.hostgator.com
+X-AntiAbuse: Original Domain - lists.openwall.com
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - orga.cat
+X-BWhitelist: no
+X-Source-IP: 209.85.212.170
+X-Exim-ID: 1ZBTX6-0006oT-8g
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: (mail-wi0-f170.google.com) [209.85.212.170]:36122
+X-Source-Auth: pere@orga.cat
+X-Email-Count: 2
+X-Source-Cap: bmV0b2w7bmV0b2w7Z2F0b3IzMTExLmhvc3RnYXRvci5jb20=
+Cc: Security Team <security@drupal.org>
+Date: Sat, 4 Jul 2015 21:55:06 +0200
+From: Pere Orga <pere@orga.cat>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 20396 invoked from network); 12 Jan 2016 17:35:54 -0000
-From: cve-assign@mitre.org
-To: ppandit@redhat.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, donghai.zdh@alibaba-inc.com
-In-Reply-To: <alpine.LFD.2.20.1601112211500.22978@wniryva>
-Message-Id: <20160112173542.66C5A34E014@smtpvbsrv1.mitre.org>
-Date: Tue, 12 Jan 2016 12:35:42 -0500 (EST)
-Subject: [oss-security] Re: CVE request Qemu: nvram: OOB r/w access in processing firmware configurations
+Subject: [oss-security] CVE requests for Drupal contributed modules (from SA-CONTRIB-2015-100
+ to SA-CONTRIB-2015-131)
+To: oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi
 
-> https://lists.gnu.org/archive/html/qemu-devel/2016-01/msg00428.html
-> https://bugzilla.redhat.com/show_bug.cgi?id=1296060
+Please can I have CVEs assigned to the following vulnerabilities:
 
-> Qemu emulator built with the Firmware Configuration device emulation support
-> is vulnerable to an OOB r/w access issue. It could occur while processing
-> firmware configurations, if the current configuration entry value was set to
-> be invalid(FW_CFG_INVALID=0xffff).
-> 
-> A privileged(CAP_SYS_RAWIO) user/process inside guest could use this flaw to
-> crash the Qemu process instance resulting in DoS OR potentially execute
-> arbitrary code with privileges of the Qemu process on the host.
+Camtasia Relay - Cross Site Scripting (XSS) - SA-CONTRIB-2015-100
+https://www.drupal.org/node/2480241
 
->> if 's->cur_entry' is set to be invalid(FW_CFG_INVALID=0xffff)
+MailChimp - Cross Site Scripting (XSS) - SA-CONTRIB-2015-101
+https://www.drupal.org/node/2480253
 
-Use CVE-2016-1714.
+Smart Trim - Cross Site Scripting (XSS) - SA-CONTRIB-2015-102
+https://www.drupal.org/node/2480321
 
-This is not yet available at
-http://git.qemu.org/?p=qemu.git;a=history;f=hw/nvram/fw_cfg.c;hb=stable-2.3
-but that may be an expected place for a later update.
+Views - Access Bypass - SA-CONTRIB-2015-103
+https://www.drupal.org/node/2480327
 
-Note that http://git.qemu.org/?p=qemu.git;a=blob;f=hw/nvram/fw_cfg.c
-has:
+Dynamic display block - Access bypass - SA-CONTRIB-2015-104
+https://www.drupal.org/node/2484157
 
-  static void fw_cfg_write(FWCfgState *s, uint8_t value)
-  {
-      /* nothing, write support removed in QEMU v2.4+ */
-  }
+Video Consultation - Cross Site Scripting (XSS) - SA-CONTRIB-2015-105
+https://www.drupal.org/node/2484195
 
-and has no fw_cfg_read function.
+Entityform Block - Access Bypass - SA-CONTRIB-2015-106
+https://www.drupal.org/node/2484169
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Webform Matrix Component - Cross Site Scripting (XSS) - SA-CONTRIB-2015-107
+https://www.drupal.org/node/2484231
 
-iQIcBAEBCAAGBQJWlTjSAAoJEL54rhJi8gl5roYP/AzQYLE2xxnFP0kaeW6eDY6R
-vXeoENyOmZeaB7MTYEAYEzt5Pm9bPaAzwpJAudIGkwHNymtrrO8qCTI4xMsWvoyq
-yq5zgUBvC/2ZX+8spL4J3wCnX40iBTEtJTcxFtQhbyVwkEdSrsi8Y9NwvtB/4sVa
-LiCqOv9c6qK0QDx5SDSpbhg0tyBdFRDY4SgPBkADT5XA8FuT9AtqHcZC2ICY4G/Q
-RVAvfhQii151fs3lYHufc2X6gTzqQLYNRqcfbhxH72g3K/ca0UXyj7E4fm1OrpU/
-9Wdyp2MXgthjL8XiWs6mHxrlTnfLvVdt07fe2/6MGx76g6nFFNL4UBJueHVojOZC
-HYsSuLSj3LmaCaJOya4aKCko0l7ZKsqfsNvpBDuXWE6dduVNf6HjC7yNUxp00Jty
-M0z3Sf3GAUfOEuPtbxQpPqslmYPHxK30Tf9I3tjM4BZUQ/je+Xk/Z/XcIO1otWL/
-OwVhZiN+zQETUoxzW0vZ33wg3sO++Wo1GWdPF+3zLa6Ucl8KBF3C4Cyk96ySk3rr
-+JND3rWFMoYjVkgDyiQXvnFaeK3BFkYAtGjpGah6grNL80LcEffWyisX61LL9+Ym
-KSAQqb2eBWYDOEXbCprMVkB0rLG694HQKxPxzdCsu0VG7lVMHmYueGfNuVT0c6Tg
-9gTsazAsV5w3iSZp36bM
-=tsnL
------END PGP SIGNATURE-----
+Mobile sliding menu - Cross Site Scripting (XSS) - SA-CONTRIB-2015-108
+https://www.drupal.org/node/2484233
+
+pass2pdf - Information Disclosure - SA-CONTRIB-2015-109
+https://www.drupal.org/node/2492205
+
+Web Links - Cross Site Scripting (XSS) - SA-CONTRIB-2015-110
+https://www.drupal.org/node/2492209
+
+Shipwire - Cross Site Scripting (XSS) - SA-CONTRIB-2015-111
+https://www.drupal.org/node/2492243
+
+Navigate - Access Bypass - SA-CONTRIB-2015-112
+Navigate - Cross-site scripting - SA-CONTRIB-2015-112
+https://www.drupal.org/node/2492245
+
+Aegir - Code Execution Prevention - SA-CONTRIB-2015-113
+https://www.drupal.org/node/2492317
+
+Storage API - Access Bypass - SA-CONTRIB-2015-114
+https://www.drupal.org/node/2495903
+
+Chamilo integration - Open Redirect - SA-CONTRIB-2015-115
+https://www.drupal.org/node/2495931
+
+Novalnet Payment Module Ubercart - SQL Injection - SA-CONTRIB-2015-116
+https://www.drupal.org/node/2499787
+
+Novalnet Payment Module Drupal Commerce - SQL Injection - SA-CONTRIB-2015-117
+https://www.drupal.org/node/2499791
+
+HTTP Strict Transport Security - Logical Error - SA-CONTRIB-2015-118
+https://www.drupal.org/node/2507563
+
+Apache Solr Real-Time - Access Bypass - SA-CONTRIB-2015-119
+https://www.drupal.org/node/2507581
+
+Inline Entity Form - Cross Site Scripting (XSS) - SA-CONTRIB-2015-120
+https://www.drupal.org/node/2507605
+
+The eXtensible Catalog (XC) Drupal Toolkit - Cross Site Request
+Forgery (CSRF) - SA-CONTRIB-2015-121
+https://www.drupal.org/node/2507619
+
+Administration Views - Access Bypass - SA-CONTRIB-2015-122
+https://www.drupal.org/node/250764
+
+jQuery Update - Open Redirect - SA-CONTRIB-2015-123
+https://www.drupal.org/node/2507729
+
+LABjs - Open Redirect - SA-CONTRIB-2015-124
+https://www.drupal.org/node/2507735
+
+Acquia Cloud Site Factory Connector - Open Redirect - SA-CONTRIB-2015-125
+https://www.drupal.org/node/2507741
+
+Content Construction Kit (CCK) - Open Redirect - SA-CONTRIB-2015-126
+https://www.drupal.org/node/2507753
+
+HybridAuth Social Login - Access bypass - SA-CONTRIB-2015-127
+https://www.drupal.org/node/2511410
+
+me aliases - Access Bypass - SA-CONTRIB-2015-128
+https://www.drupal.org/node/2511424
+
+Shibboleth authentication - Cross Site Scripting (XSS) - SA-CONTRIB-2015-129
+https://www.drupal.org/node/2511518
+
+Migrate - Cross Site Scripting (XSS) - SA-CONTRIB-2015-130
+https://www.drupal.org/node/2516678
+
+Views Bulk Operations - Access Bypass - SA-CONTRIB-2015-131
+https://www.drupal.org/node/2516688
+
+Regards
+Pere Orga on behalf of the Drupal Security Team
