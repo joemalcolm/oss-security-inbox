@@ -1,4 +1,9 @@
-Received: (qmail 6028 invoked by uid 550); 25 May 2026 20:07:00 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1712" "Saturday" "4" "July" "2015" "09:42:00" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<5597FEC8.5060400@redhat.com>" "44" "[oss-security] please REJECT CVE-2015-3199" nil nil nil "7" "2015070415:42:00" "[oss-security] please REJECT CVE-2015-3199" (number mark "        kseifried@re Jul  4   44/1712  " thread-indent "\"[oss-security] please REJECT CVE-2015-3199\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 25811 invoked by uid 550); 4 Jul 2015 15:42:16 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,55 +11,62 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 22174 invoked from network); 25 May 2026 19:52:48 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Lenny Primak <lprimak@apache.org>
-To: oss-security@lists.openwall.com
-Message-ID: <5e821fdb-61e2-e383-4db9-9f85c0e319f4@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Mon, 25 May 2026 19:51:09 +0000
+Received: (qmail 25774 invoked from network); 4 Jul 2015 15:42:15 -0000
+Message-ID: <5597FEC8.5060400@redhat.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2026-44598: Apache Shiro Jakarta EE module: Open redirect and
- SSRF (requires valid credentials) 
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="d2pE7fB1MK6LWPCdKIa74rs2cnt1oNXtg"
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.24
+Date: Sat, 04 Jul 2015 09:42:00 -0600
+From: Kurt Seifried <kseifried@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] please REJECT CVE-2015-3199
+To: oss-security@lists.openwall.com,
+        Assign a CVE Identifier <cve-assign@mitre.org>
 
-Severity:=20
+--d2pE7fB1MK6LWPCdKIa74rs2cnt1oNXtg
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Affected versions:
+This was assigned internally but then:
 
-- Apache Shiro Jakarta EE module (org.apache.shiro:shiro-jakarta-ee) 2.0.0-=
-alpha-0 through 2.1.0
-- Apache Shiro Jakarta EE module (org.apache.shiro:shiro-jakarta-ee) 3.0.0-=
-alpha-0 through 3.0.0-alpha-1
+http://projects.theforeman.org/issues/10469
 
-Description:
+"This was reported by Ori Rabin to foreman-security (thanks!) and a CVE
+identifier was filed under CVE-2015-3199, but it turned out this does
+not affect any released upstream version."
 
-With valid login credentials, URL Redirection to Untrusted Site ('Open Redi=
-rect'), Server-Side Request Forgery (SSRF) vulnerability in Apache Shiro.
+so it was effectively in an unreleased version, thus no need for CVE.
+
+--=20
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@redhat.com
 
 
+--d2pE7fB1MK6LWPCdKIa74rs2cnt1oNXtg
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.22 (GNU/Linux)
 
-This issue affects Apache Shiro from 2.0-alpha to 2.1.0, and 3.0.0-alpha-1,=
-=C2=A0only when using shiro-jakarta-ee integration module.
+iQIcBAEBAgAGBQJVl/7JAAoJEBYNRVNeJnmTMCQP/2I872dMkigAFFdeSexLyL5/
+46KZGsdv35PgijlA9HKk7/PUyLF7gQp6HpCmO+LMDqabv6SSBQvJYqXBmCCKsNEd
+jcLbttAgMpGosa//eC2qCdfkoWJUa0jSd4oxQt4eXK7AR7AMht6Lw9k22KU9dDf2
+9CHrLq0NF8IBmay4N23M+HwXZ05s/eSYXfNwLwirvjDv9lxUBp0iCVz/SE9xlbF+
+HkJHKHAaW2Kb5yN0ZvfIuj5ZuRr2FgcXV128wy+/J+buCySWK8knpJdC9VhfmoR0
++5kqDjG2oT/56iTc7IZDuaS7lf0CvAobeOaKn3ctIRjX/o1qg6vRYDmGL3Kl1L3b
+Eo+pWqfs5Lls4mHCeFH/5RxfJnlJjKkybnhJgnXpF/JaOZLyf0hGyPFhHKqQzY2v
+VtExqTw/gr8xOHb1gJ9iwZMPXe8N9bJS+LfkwCrsZ/o15OfOlUYXqzThI/+Pul4s
+bPt1X+FNck7kNY/s6/KVyzEqnOmBFczXoSMrKXIkuz+LSrg/IdY0cm0I/XajNWOA
+9hAXqzGAv6tUsjuu3l1p5GLZ9gHfE1cfnnfG2pieW3f+DsfMl8PqCYD8mbnOK+zm
+8EC+reJzv+GdOf7kwVWIqWmYI7x2Ds1TVTpxjkpRph96KNRJbYpHLi8gBZecup6u
+/5PtceImg8LnesN+Huvv
+=Hbjw
+-----END PGP SIGNATURE-----
 
-Users are recommended to upgrade to version 2.1.1, or 3.0.0-alpha-2 or late=
-r, which fixes the issue by encrypting the cookie.
-
-After successful login, Jakarta EE integration module uses shiroSavedReques=
-t cookie to redirect to a particular web page after login.
-This cookie was not validated, and can be forged to send a HTTP GET request=
- from the server itself to an arbitrary URL from the cookie.
-
-Credit:
-
-James Love <jameslove2k22@gmail.com> (finder)
-Lenny Primak <lenny@flowlogix.com> (remediation developer)
-
-References:
-
-https://shiro.apache.org/
-https://www.cve.org/CVERecord?id=3DCVE-2026-44598
-
+--d2pE7fB1MK6LWPCdKIa74rs2cnt1oNXtg--
