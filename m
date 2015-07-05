@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1373" "Monday" "2" "May" "2016" "08:46:47" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160502124647.5F221332073@smtpvbsrv1.mitre.org>" "35" "[oss-security] Re: CVE Request: Jansson: stack exhaustion parsing a JSON file" "^Cc:" nil nil "5" "2016050212:46:47" "[oss-security] Re: CVE Request: Jansson: stack exhaustion parsing a JSON file" (number mark "U       cve-assign@m May  2   35/1373  " thread-indent "\"[oss-security] Re: CVE Request: Jansson: stack exhaustion parsing a JSON file\"\n") "<CACn5sdRW0+xP0HLAHJynJJjvTBt49=Vd8uNmJO2B9NN7FEEKrw@mail.gmail.com>" ("<CACn5sdRW0+xP0HLAHJynJJjvTBt49=Vd8uNmJO2B9NN7FEEKrw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["482" "Sunday" "5" "July" "2015" "18:51:37" "-0500" "Mark Felder" "feld@feld.me" "<1436140297.2777045.315833937.576534B9@webmail.messagingengine.com>" "13" "[oss-security] node.js out of band write" nil nil nil "7" "2015070523:51:37" "[oss-security] node.js out of band write" (number mark "        feld@feld.me Jul  5   13/482   " thread-indent "\"[oss-security] node.js out of band write\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 20172 invoked by uid 550); 2 May 2016 12:47:00 -0000
+Received: (qmail 7779 invoked by uid 550); 5 Jul 2015 23:52:04 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,48 +11,43 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 20154 invoked from network); 2 May 2016 12:47:00 -0000
-In-Reply-To: <CACn5sdRW0+xP0HLAHJynJJjvTBt49=Vd8uNmJO2B9NN7FEEKrw@mail.gmail.com>
-Message-Id: <20160502124647.5F221332073@smtpvbsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Mon,  2 May 2016 08:46:47 -0400 (EDT)
-From: cve-assign@mitre.org
+Received: (qmail 7644 invoked from network); 5 Jul 2015 23:51:51 -0000
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=feld.me; h=
+	content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to:x-sasl-enc:x-sasl-enc; s=mesmtp; bh=/KV
+	Bi2oVH5yHYPLPDsMVaeINclo=; b=HFqcvJWDlAnddS3A+S3FB1P0QWFyZ6lMWzt
+	vuh3CnxhqyoExXfUaFedbB4gVVA9YXtI5IvG+AIwvF8Igitpt1g7PNKIkakA4DIO
+	laUlaW8FBaqrOOPwtpJTQH7YJ1l6qxVVVZACGxZxOavJIu2zaP0SfTa1ObNqlVr7
+	o+Ln4RkA=
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=content-transfer-encoding:content-type
+	:date:from:message-id:mime-version:subject:to:x-sasl-enc
+	:x-sasl-enc; s=smtpout; bh=/KVBi2oVH5yHYPLPDsMVaeINclo=; b=ox3M6
+	9yWpsCr8rK9M3bRtz4vH6ND36P7F2MxjaqP3O42UkmlGE9fmsupzwrAEFj6rCPwf
+	rPcZ8UAk6f6RiQ4VtMbn5tEl1fHL3zP+2FpDTD/hRPse6TZmTvGnqO5v2M6nxW34
+	uRlkq5O2zdHriyrOLMNDKFZBNzL0qfzFO9lSTk=
+Message-Id: <1436140297.2777045.315833937.576534B9@webmail.messagingengine.com>
+X-Sasl-Enc: sCjPBl5MXeFypuWKsOaiyCoxSIjmME7vpn39AFg7B3W5 1436140297
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Mailer: MessagingEngine.com Webmail Interface - ajax-eecef38c
+Date: Sun, 05 Jul 2015 18:51:37 -0500
+From: Mark Felder <feld@feld.me>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE Request: Jansson: stack exhaustion parsing a JSON file
-To: gustavo.grieco@gmail.com
+Subject: [oss-security] node.js out of band write
+To: oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Node has resolved a security vulnerability in their most recent release
+but do not appear to have requested a CVE ID.
 
-> https://github.com/akheron/jansson/issues/282
+http://blog.nodejs.org/2015/07/03/node-v0-12-6-stable/
 
-> It takes a less than 100kb json file to crash the library, which is
-> bad if you are receiving untrusted inputs.
+Node v0.12.6 (Stable)
+Sat, 04 Jul 2015 02:34:23 UTC - release
 
->> https://github.com/akheron/jansson/blob/master/README.rst
->> Jansson is a C library for encoding, decoding and manipulating JSON data.
+This release of Node.js fixes a bug that triggers an out-of-band write
+in V8's utf-8 decoder. This bug impacts all Buffer to String
+conversions. This is an important security update as this bug can be
+used to cause a denial of service attack.
 
-Use CVE-2016-4425.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXJ0ufAAoJEHb/MwWLVhi24okQALgjTPVfcfIDXtenPzhzNHRx
-ypUyAed3CIVkfJC+R+ehuFEmpyAKEgO1woqy1TjIqi9U+lDGXFVa4FX98ENwFE22
-ap3EpKq0ZwzeacPhm/XYOyIqmeA96nonf9NNFAhCvtpSjLxaWcrs7JbnqhCrsf1/
-qBM819kLXwuO8GUtdJYVkOVWQX3e5QadqwOiU5J6b7pe8FiJBlsW32b9tANXJg7I
-G1W3lYXG/nULkXGEjyj8fFlLM0icync8T4revmBXNN9AWQOxjOx7zoODy54snzSU
-7vIkd79NLG623aosZp7h2bcmJdP9l1WO7SPvF8qSzLP+fq5qrBaAuR++pOvzHp7Q
-Whnfdg3uP//UiIcM/bh9jLCMXDJKsFgr/Qr5DItwsltdYteN31g6m+4nYmARtOE5
-HjSnU5tYzzRzc7+kWtxYZxAeRFGQ8VNIv5j/85QFoIKGrkuGs2nGfW2T44ObZfyF
-Nwd/k2Pa9k3sqwTAQp3lEI0nTSUn7vlzRzAr2/QhtPqbDdeERWZWsQDlEJ5L2n0f
-m+b0iQIGBXFo9Q4wBdS91Vx6NEkhWxrgWbyIExgVCnUFh/LCo4BFjI3qq+GPsnoP
-hmxD/9LXa8B2tefKtjzlPBnw4rqKyCFmfzVi+LkrZqNCxid+2DEpUBr2r+CsA7wv
-jQNgK1C0S/wmuJclLq4+
-=4UUQ
------END PGP SIGNATURE-----
