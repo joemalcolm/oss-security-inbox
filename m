@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1742" "Thursday" "9" "August" "2018" "17:42:39" "+0200" "Cedric Buissart" "cbuissar@redhat.com" "<CAKG8Do5TnCQtc=o7Z1mkk94_gM9LbFywkrt218a0NpeL1a=9wA@mail.gmail.com>" "60" "[oss-security] cobbler CVE-2018-10931: CobblerXMLRPCInterface exports internal only functions over XMLRPC" nil nil nil "8" "2018080915:42:39" "[oss-security] cobbler CVE-2018-10931: CobblerXMLRPCInterface exports internal only functions over XMLRPC" (number mark "U       cbuissar@red Aug  9   60/1742  " thread-indent "\"[oss-security] cobbler CVE-2018-10931: CobblerXMLRPCInterface exports internal only functions over XMLRPC\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2347" "Monday" "6" "July" "2015" "01:56:03" "+0100" "Ben Hutchings" "benh@debian.org" "<1436144163.7337.64.camel@debian.org>" "57" "[oss-security] Re: CVE Request: UDP checksum DoS" nil nil nil "7" "2015070600:56:03" "[oss-security] Re: CVE Request: UDP checksum DoS" (number mark "        benh@debian. Jul  6   57/2347  " thread-indent "\"[oss-security] Re: CVE Request: UDP checksum DoS\"\n") "<20150702024857.14E9A72E0D8@smtpvbsrv1.mitre.org>" ("<20150702024857.14E9A72E0D8@smtpvbsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 18302 invoked by uid 550); 9 Aug 2018 15:43:13 -0000
+Received: (qmail 13832 invoked by uid 550); 6 Jul 2015 05:07:30 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,89 +11,79 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 23575 invoked from network); 6 Jul 2015 00:56:21 -0000
+Message-ID: <1436144163.7337.64.camel@debian.org>
+In-Reply-To: <20150702024857.14E9A72E0D8@smtpvbsrv1.mitre.org>
+References: <20150702024857.14E9A72E0D8@smtpvbsrv1.mitre.org>
+Organization: Debian project
+Content-Type: multipart/signed; micalg="pgp-sha512";
+	protocol="application/pgp-signature"; boundary="=-FzQBLQnYzrnBKRo9lOEy"
+X-Mailer: Evolution 3.16.3-1 
+Mime-Version: 1.0
+X-SA-Exim-Connect-IP: 192.168.4.249
+X-SA-Exim-Mail-From: benh@debian.org
+X-SA-Exim-Scanned: No (on shadbolt.decadent.org.uk); SAEximRunCond expanded to false
+Cc: oss-security@lists.openwall.com
+Date: Mon, 06 Jul 2015 01:56:03 +0100
+From: Ben Hutchings <benh@debian.org>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 18277 invoked from network); 9 Aug 2018 15:43:12 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=2ea/6kVAqBwmRn8TkgWG3lpLV8tknJPCgNfIqZxcuzk=;
-        b=m5Og5X0jJDhqBpbcddIcRfgFaIVkUca7xjbeRurbEZ2qHYkh6Sw1alEOvlJH9cbXx2
-         C8V3g5b4lULut3k5UbXPqm4pokjmdGWAQu7hv1ISaGlco9duRbLX1FxP+bRYWFTEDP8m
-         BAsgM8kWaJmOoGd0JtJZxLsKZ9tVNTLBpeMbEO7JVcjF/giXJXhbZWlh6QQL7kYD+rZj
-         6NEpBB1RJE5xIFG3qRKDtcVbqX5Xbect/D91AKJv2YGBW00sORLjkmlZ0cy/Tu8pzV4S
-         5cVRUuzCRpFAK5J+do1I4+bbqZd1t4mZksQ/PXY4hLt9UpQS6Z5X3+f8ActCXuZjPAKY
-         aihw==
-X-Gm-Message-State: AOUpUlGbeRQdmd54W1nwPAnaSvLRjp/Cv3SQiSLsfgszua/OTLnNavaa
-	oq+UBclH4nU+fMd4cXAQ7eyEqciBh4Fobo8its/8c+7AuF9fYQ==
-X-Google-Smtp-Source: AA+uWPx6Mknr5U1GY3rPR/f5CeFf9QWGVIVJMCDOxwf5/YmdWZ7zIO2/0x3r7+VT1lQ/KrCw4a+LBPStNxXNFc0vcq8=
-X-Received: by 2002:a6b:9554:: with SMTP id x81-v6mr2273936iod.93.1533829380282;
- Thu, 09 Aug 2018 08:43:00 -0700 (PDT)
-MIME-Version: 1.0
-From: Cedric Buissart <cbuissar@redhat.com>
-Date: Thu, 9 Aug 2018 17:42:39 +0200
-Message-ID: <CAKG8Do5TnCQtc=o7Z1mkk94_gM9LbFywkrt218a0NpeL1a=9wA@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="0000000000005bb1fb0573027bc1"
-Subject: [oss-security] cobbler CVE-2018-10931: CobblerXMLRPCInterface exports internal only
- functions over XMLRPC
+Subject: [oss-security] Re: CVE Request: UDP checksum DoS
+To: cve-assign@mitre.org, carnil@debian.org
 
---0000000000005bb1fb0573027bc1
+--=-FzQBLQnYzrnBKRo9lOEy
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Cobbler is a Linux installation server that allows for rapid setup of
-network
-installation environments. It is used in products like Red Hat Enterprise
-Satellite 5 and Spacewalk.  Upstream project is at :
-https://cobbler.github.io/
+On Wed, 2015-07-01 at 22:48 -0400, cve-assign@mitre.org wrote:
+> >=20
+> > https://twitter.com/grsecurity/status/605854034260426753
+> > https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/=
+?id=3Dbeb39db59d14990e401e235faf66a6b9b31240b0
+>=20
+> > remote DoS via flood of UDP packets with invalid checksums
+>=20
+> It appears that you are primarily asking for a CVE ID for the issue
+> involving the absence of a cond_resched call. Use CVE-2015-5364.
+>=20
+> However, the presence of "return -EAGAIN" may also have been a
+> security problem in some realistic circumstances. For example, maybe
+> there's an attacker who can't transmit a flood with invalid checksums,
+> but can sometimes inject one packet with an invalid checksum. The
+> goal of this attacker isn't to cause a system hang; the goal is to
+> cause an EPOLLET epoll application to stop reading for an indefinitely
+> long period of time. This scenario can't also be covered by
+> CVE-2015-5364. Is it better to have no CVE ID at all, e.g., is
+> udp_recvmsg/udpv6_recvmsg simply not intended to defend against this
+> scenario?
 
+It seems reasonable to assign a second CVE ID to that issue.
 
-While diagnosing the following 2 flaws :
-https://movermeyer.com/2018-08-02-privilege-escalation-exploits-in-cobblers-api/
+Ben.
 
-Another flaw has been found: cobbler exposes all functions from its
-CobblerXMLRPCInterface class over XMLRPC. However, python renames the __*
-function with _<classname>__<functionname>.  A remote, unauthenticated
-attacker
-could use this flaw by calling the real name of any __* function and gain
-high
-privileges within cobbler or upload files to arbitrary location in the
-context
-of the daemon.  This is identified as CVE-2018-10931
-
-All versions of cobbler (at least since 2.0.7) are affected.
-
-To reproduce the issue: use the reproducers from the report above and call
-any
-__<name> function as _CobblerXMLRPCInterface__<name>
-
-The patch for this specific vulnerability (i.e.: it does *not* fix the
-vulnerability reported by movermeyer.com) :
-
----
- cobbler/remote.py | 3 +++
- 1 file changed, 3 insertions(+)
-
-diff --git a/cobbler/remote.py b/cobbler/remote.py
-index 94a18e7..ea0e354 100644
---- a/cobbler/remote.py
-+++ b/cobbler/remote.py
-@@ -1752,6 +1752,9 @@ class ProxiedXMLRPCInterface:
-
-     def _dispatch(self, method, params, **rest):
-
-+        if method.startswith('_'):
-+            raise CX("forbidden method")
-+
-         if not hasattr(self.proxied, method):
-             raise CX("unknown remote method")
-
----
+--=20
+Ben Hutchings - Debian developer, member of Linux kernel and LTS teams
 
 
-Best regards,
+--=-FzQBLQnYzrnBKRo9lOEy
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
 
--- 
-Cedric Buissart,
-Product Security
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
---0000000000005bb1fb0573027bc1--
+iQIVAwUAVZnSI+e/yOyVhhEJAQo7Vw/8D7Ba35oswDenglrQKcIOXkzKiVp0Z3Tx
+dQLrI3L6ovar9CJGCUy/4gSpS+HE9cGkYeAqZ7W4mdq5oEtxkptYguK2y4Bekr3N
+uYddik6mHry0Vyc0fapc0VqzN7U8avHAHdcqVZDx4Pg7EZM3oYlws3yQxVwdNwha
+Cpik4JfCQ3S8FzdNzE8YSu4PQXbjZBA0o930B/x3DARAWcUdqn1CWux+cF5bFCGL
+ny6d80M0hkn1Ilo+/+D/ARxXoEnd5KSWER98o5vwI4dto7FxlI9WkF5NhkNU3vtq
+8SctpR/WX2L3/ztapq78SVYiyOely21+Gu9DxCQtfrIqAqS5gACtVQcA1fdi4m1q
+DJsrlmhMi/EZGOLy8DJKonuAn0EjA/7KjCXcv4aZg3fcyNufXh+b94xVN7fd7Mfz
+isHm+6kHhDMi/A/oyRvrTjL+lKvzO0pCu/pU0mkyx4JH3nJvjfeuu7dmYluZSjaM
+y53FHNFWfVKzVQFzBtZXSkM26/BLVUx6rzmDt0OBdBxWMgZPcWTmAYzYvBjyJKj+
+qH9McVper/1k6JG8/4FZGVFRwpV2Yn/ZBq67zG1YwFNKvTS2S3cMJhrCMGZyccb/
+S5r9wRKXEdkVRChVnqY8cBnUsmhIviUpQaE9UE7WYT4ltJmukPddXJVPj2I9UK/a
+XqUwLa2Anew=
+=/KtZ
+-----END PGP SIGNATURE-----
+
+--=-FzQBLQnYzrnBKRo9lOEy--
