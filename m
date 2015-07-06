@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["9582" "Wednesday" "12" "February" "2020" "15:30:36" "+0100" "Daniel Beck" "ml@beckweb.net" nil "250" nil "^Date:" nil nil "2" nil nil (number mark "        ml@beckweb.n Feb 12  250/9582  " thread-indent "\"[oss-security] Multiple vulnerabilities in Jenkins plugins\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Multiple vulnerabilities in Jenkins plugins" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2618" "Monday" "6" "July" "2015" "23:26:43" "+1200" "Amos Jeffries" "squid3@treenet.co.nz" "<559A65F3.80103@treenet.co.nz>" "75" "[oss-security] Squid HTTP proxy CVE request" nil nil nil "7" "2015070611:26:43" "[oss-security] Squid HTTP proxy CVE request" (number mark "U       squid3@treen Jul  6   75/2618  " thread-indent "\"[oss-security] Squid HTTP proxy CVE request\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 5596 invoked by uid 550); 12 Feb 2020 14:30:48 -0000
+Received: (qmail 13941 invoked by uid 550); 6 Jul 2015 11:27:06 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,268 +11,90 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5578 invoked from network); 12 Feb 2020 14:30:48 -0000
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.11\))
-Message-Id: <B194CD16-B946-4561-A0D5-F9C5A8EA3FC5@beckweb.net>
-X-Mailer: Apple Mail (2.3445.104.11)
-X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1581517847;42a8499a;
-X-HE-SMSGID: 1j1t2C-0002rC-KA
-Date: Wed, 12 Feb 2020 15:30:36 +0100
-From: Daniel Beck <ml@beckweb.net>
+Received: (qmail 13916 invoked from network); 6 Jul 2015 11:27:05 -0000
+Message-ID: <559A65F3.80103@treenet.co.nz>
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Date: Mon, 06 Jul 2015 23:26:43 +1200
+From: Amos Jeffries <squid3@treenet.co.nz>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Multiple vulnerabilities in Jenkins plugins
+Subject: [oss-security] Squid HTTP proxy CVE request
 To: oss-security@lists.openwall.com
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-The following releases contain fixes for security vulnerabilities:
+Greetings,
 
-* Azure AD Plugin 1.2.0
-* Brakeman Plugin 0.13
-* FitNesse Plugin 1.31
-* Git Parameter Plugin 0.9.12
-* Google Kubernetes Engine Plugin 0.8.1
-* NUnit Plugin 0.26
-* Pipeline GitHub Notify Step Plugin 1.0.5
-* Pipeline: Groovy Plugin 2.79
-* RadarGun Plugin 1.8
-* S3 publisher Plugin 0.11.5
-* Script Security Plugin 1.70
-* Subversion Plugin 2.13.1
-
-Additionally, we announce unresolved security issues in the following
-plugins:
+This months release of Squid HTTP proxy, version 3.5.6, contains fixes
+for two security issues.
 
-* Applatix Plugin
-* BMC Release Package and Deployment Plugin
-* Debian Package Builder Plugin
-* DigitalOcean Plugin
-* Dynamic Extended Choice Parameter Plugin
-* Eagle Tester Plugin
-* ECX Copy Data Management Plugin
-* Harvest SCM Plugin
-* Parasoft Environment Manager Plugin
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://jenkins.io/security/advisory/2020-02-12/
+Issue #1:
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
+Due to incorrect handling of peer responses in a hierarchy of 2 or
+more proxies remote clients (or scripts run on a client) are able to
+gain unrestricted access through a gateway proxy to its backend proxy.
 
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://jenkins.io/security/#reporting-vulnerabilities
+If the two proxies have differing levels of security this could lead
+to authentication bypass or unprivileged access to supposedly secure
+resources.
 
----
+<http://www.squid-cache.org/Versions/v3/3.5/changesets/squid-3.5-13856.p
+atch>
 
-SECURITY-1710 / CVE-2020-2109
-Sandbox protection in Pipeline: Groovy Plugin 2.78 and earlier can be
-circumvented through default parameter expressions in CPS-transformed
-methods.
+All Squid up to and including 3.5.5 are vulnerable.
 
-This allows attackers able to specify and run sandboxed Pipelines to
-execute arbitrary code in the context of the Jenkins master JVM.
+(when published the advisory for this will be
+<http://www.squid-cache.org/Advisories/SQUID-2015_2.txt>)
 
 
-SECURITY-1713 / CVE-2020-2110
-Sandbox protection in Script Security Plugin 1.69 and earlier can be
-circumvented during the script compilation phase by applying AST
-transforming annotations such as `@Grab` to imports or by using them inside
-of other annotations. This affects both script execution (typically invoked
-from other plugins like Pipeline) as well as HTTP endpoints providing
-sandboxed script validation.
+Issue #2:
 
-Users with Overall/Read permission can exploit this to bypass sandbox
-protection and execute arbitrary code on the Jenkins master.
+This is somewhat more obscure, and I am seeking clarification perhapse
+more than assignment.
 
-This issue is due to an incomplete fix of SECURITY-1266.
+Squid up to and including 3.5.5 are apparently vulnerable to DoS
+attack from malicious clients using repeated TLS renegotiation
+messages. This has not been verified as it also seems to require
+outdated (0.9.8l and older) OpenSSL libraries.
 
+<http://www.squid-cache.org/Versions/v3/3.5/changesets/squid-3.5-13849.p
+atch>
 
-SECURITY-1725 / CVE-2020-2111
-Subversion Plugin 2.13.0 and earlier does not escape the error message for
-the Project Repository Base URL field form validation. This results in a
-stored cross-site scripting vulnerability exploitable by users able to
-specify such base URLs, for example users able to configure Multibranch
-Pipelines.
+CVE-2009-3555 was mentioned by the submitter, but that was clearly
+assigned for server-initiated renegotiation. This Squid change is
+specifically for the client-initiated renegotiation part of the TLS
+protocol flaw.
 
+There may be some relevant CVE already assigned, although I've been
+unable to find it. Only CVE-2011-1473 which is for the library itself
+and disputed.
 
-SECURITY-1709 / CVE-2020-2112 (parameter name) & CVE-2020-2113 (default val=
-ue)
-Git Parameter Plugin 0.9.11 and earlier does not correctly escape the
-parameter name or default value. This results in a stored cross-site
-scripting vulnerability exploitable by users with Job/Configure permission.
+So, is server software being assigned specific CVE (or a shared
+generic one) for resolving this flaw? Please indicate which CVE Squid
+announcements should mention (if any).
 
 
-SECURITY-1684 / CVE-2020-2114
-S3 publisher Plugin stores a secret key in its global configuration.
+Thanks,
+Amos Jeffries
+Squid Software Foundation
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.22 (MingW32)
 
-While the credential is stored encrypted on disk, it is transmitted in
-plain text as part of the configuration form by S3 publisher Plugin 0.11.4
-and earlier. This can result in exposure of the credential through browser
-extensions, cross-site scripting vulnerabilities, and similar situations.
-
-
-SECURITY-1752 / CVE-2020-2115
-NUnit Plugin 0.25 and earlier does not configure the XML parser to prevent
-XML external entity (XXE) attacks.
-
-This allows a user able to control the input files for its post-build step
-to have Jenkins parse a crafted file that uses external entities for
-extraction of secrets from the Jenkins master, server-side request forgery,
-or denial-of-service attacks.
-
-
-SECURITY-812 (1) / CVE-2020-2116 (CSRF) & CVE-2020-2117 (missing permission=
- check)
-Pipeline GitHub Notify Step Plugin 1.0.4 and earlier does not perform
-permission checks on a method implementing form validation. This allows
-users with Overall/Read access to Jenkins to connect to an
-attacker-specified URL using attacker-specified credentials IDs obtained
-through another method, capturing credentials stored in Jenkins.
-
-Additionally, the form validation method does not require POST requests,
-resulting in a CSRF vulnerability.
-
-
-SECURITY-812 (2) / CVE-2020-2118
-Pipeline GitHub Notify Step Plugin 1.0.4 and earlier provides a list of
-applicable credential IDs to allow users configuring the plugin to select
-the one to use.
-
-This functionality does not correctly check permissions, allowing any user
-with Overall/Read permission to get a list of valid credentials IDs. Those
-can be used as part of an attack to capture the credentials using another
-vulnerability.
-
-
-SECURITY-1717 / CVE-2020-2119
-Azure AD Plugin stores a client secret in its global configuration.
-
-While the credential is stored encrypted on disk, it is transmitted in
-plain text as part of the configuration form by Azure AD Plugin 1.1.2 and
-earlier. This can result in exposure of the credential through browser
-extensions, cross-site scripting vulnerabilities, and similar situations.
-
-
-SECURITY-1751 / CVE-2020-2120
-FitNesse Plugin 1.30 and earlier does not configure the XML parser to
-prevent XML external entity (XXE) attacks.
-
-This allows a user able to control the input files for its post-build step
-to have Jenkins parse a crafted file that uses external entities for
-extraction of secrets from the Jenkins master, server-side request forgery,
-or denial-of-service attacks.
-
-
-SECURITY-1731 / CVE-2020-2121
-Google Kubernetes Engine Plugin 0.8.0 and earlier does not configure its
-YAML parser to prevent the instantiation of arbitrary types. This results
-in a remote code execution vulnerability exploitable by users able to
-provide YAML input files to Google Kubernetes Engine Plugin's build step.
-
-
-SECURITY-1644 / CVE-2020-2122
-Brakeman Plugin 0.12 and earlier did not escape values received from parsed
-JSON files when rendering them, resulting in a stored cross-site scripting
-vulnerability.
-
-This vulnerability can be exploited by users able to control the Brakeman
-post-build step input data.
-
-
-SECURITY-1733 / CVE-2020-2123
-RadarGun Plugin 1.7 and earlier does not configure its YAML parser to
-prevent the instantiation of arbitrary types. This results in a remote code
-execution vulnerability exploitable by users able to configure RadarGun
-Plugin's build step.
-
-
-SECURITY-1560 / CVE-2020-2124
-Dynamic Extended Choice Parameter Plugin 1.0.1 and earlier stores a
-Subversion password unencrypted in job `config.xml` files as part of its
-configuration. This credential can be viewed by users with Extended Read
-permission or access to the master file system.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-1558 / CVE-2020-2125
-Debian Package Builder Plugin 1.6.11 and earlier stores a GPG passphrase
-unencrypted in its global configuration file
-`ru.yandex.jenkins.plugins.debuilder.DebianPackageBuilder.xml` on the
-Jenkins master. This credential can be viewed by users with access to the
-master file system.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-1559 / CVE-2020-2126
-DigitalOcean Plugin 1.1 and earlier stores a token unencrypted in the
-global `config.xml` files as part of its configuration. This credential can
-be viewed by users with access to the master file system.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-1547 / CVE-2020-2127
-BMC Release Package and Deployment Plugin 1.1 and earlier stores the RPD
-user token unencrypted in its global configuration file
-`com.bmc.rpd.jenkins.plugin.bmcrpd.configuration.RPDPluginConfiguration.xml`
-on the Jenkins master. This credential can be viewed by users with access
-to the master file system.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-1549 / CVE-2020-2128
-ECX Copy Data Management Plugin 1.9 and earlier stores a service password
-unencrypted in job `config.xml` files as part of its configuration. This
-credential can be viewed by users with Extended Read permission or access
-to the master file system.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-1552 / CVE-2020-2129
-Eagle Tester Plugin 1.0.9 and earlier stores a password unencrypted in its
-global configuration file
-`com.bmc.rpd.jenkins.plugin.bmcrpd.configuration.RPDPluginConfiguration.xml`
-on the Jenkins master. This credential can be viewed by users with access
-to the master file system.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-1553 / CVE-2020-2130 (global configuration) & CVE-2020-2131 (job c=
-onfiguration)
-Harvest SCM Plugin 0.5.1 and earlier stores SCM passwords unencrypted in
-its global configuration file `hudson.plugins.harvest.HarvestSCM.xml` and
-in job `config.xml` files on the Jenkins master. These credentials can be
-viewed by users with Extended Read permission (job `config.xml` only) or
-access to the master file system (both).
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-1562 / CVE-2020-2132
-Parasoft Environment Manager Plugin 2.14 and earlier stores a repository
-password unencrypted in job `config.xml` files as part of its
-configuration. This credential can be viewed by users with Extended Read
-permission or access to the master file system.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-1540 / CVE-2020-2133
-Applatix Plugin 1.1 and earlier stores the Applatix password unencrypted in
-job `config.xml` files as part of its configuration. This credential can be
-viewed by users with Extended Read permission or access to the master file
-system.
-
-As of publication of this advisory, there is no fix.
-
+iQIcBAEBAgAGBQJVmmXyAAoJEGvSOzfXE+nLLjMP/2qTXQODFIdE9zfL3ZQ8MRhZ
+Edh4PNFxSkhvVyYn8kU6ZMg2jx7hiXXEfiP/Ilvo3XcY/eDWf64g+POgLX20X5jV
+o/StXDKHvcZUargImliJb2W1nalIGw1iqBERs6qwfRJhK67MHPgGWwxHu/SFEWsM
+Kk2GRlGlIM4H8g7FnsDvwAnAYweGm3+iSqZlQEaX5JOqem2M8qukGziQsc28yU4E
+SU5YIwNltW563pQYD+UTerz5i24Dt086in1AvSEFiLfqAMq4o3AdcFK73RhBdKyY
+yJJ0rKaz3o18vtru3I7soms8dmUI0mLxX6imPrBHOeSInjGbbRvPIU3g2WYpcdwF
+o6/7Xbg8HB+9QORXINqzC02aBiIJf8blleBnUKJQt1JMhQkb8vXAW4wcHoKfKTPo
+w9gyhwHgbBCYk0gSQ5CuIlaqPUEPAST0DiV0OIDHltjeLSq7vsq5zij9OKLxQdDJ
+nemVr03jrPHELCvV6eKXT/UJj6X+vfpCJk+giQq6rXC8ikhTvpID1aU/xOGxNJGq
+ig9ThwADl6RE2/cgjh7bnz1IPcG679V85uMbwPVTXU38XmhTyWQKjDdt5DuAdd6a
+RUsheekgzf5Lhhcv7/wht/ecNxDbBKvW8o8fvMinn5j9c0GNSNXtGbp8QYlySFS9
+ycdNaJLFdIm8LnV5rNSW
+=COJ4
+-----END PGP SIGNATURE-----
