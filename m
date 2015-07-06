@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["8190" "Tuesday" "5" "March" "2019" "12:21:27" "+0000" "Xen.org security team" "security@xen.org" "<E1h194Z-0001Ds-Qt@xenbits.xenproject.org>" "196" "[oss-security] Xen Security Advisory 284 v2 - grant table transfer issues on large hosts" "^CC:" nil nil "3" "2019030512:21:27" "[oss-security] Xen Security Advisory 284 v2 - grant table transfer issues on large hosts" (number mark "        security@xen Mar  5  196/8190  " thread-indent "\"[oss-security] Xen Security Advisory 284 v2 - grant table transfer issues on large hosts\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["398" "Monday" "6" "July" "2015" "01:19:16" "+0000" "Nitin Venkatesh" "venkatesh.nitin@gmail.com" "<CAARZ5vq7trVYrQBedvmHLjo8FF4g9i0u1DRn8GXJmzn3UwJEGg@mail.gmail.com>" "18" "[oss-security] CVE Request - Open Redirect Vulnerability in StageShow Wordpress Plugin v5.0.8" nil nil nil "7" "2015070601:19:16" "[oss-security] CVE Request - Open Redirect Vulnerability in StageShow Wordpress Plugin v5.0.8" (number mark "U       venkatesh.ni Jul  6   18/398   " thread-indent "\"[oss-security] CVE Request - Open Redirect Vulnerability in StageShow Wordpress Plugin v5.0.8\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 31771 invoked by uid 550); 5 Mar 2019 12:21:47 -0000
+Received: (qmail 16010 invoked by uid 550); 6 Jul 2015 05:07:46 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,214 +11,44 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 30713 invoked from network); 5 Mar 2019 12:21:47 -0000
-Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
-Content-Transfer-Encoding: binary
-MIME-Version: 1.0
-X-Mailer: MIME-tools 5.508 (Entity 5.508)
-Message-Id: <E1h194Z-0001Ds-Qt@xenbits.xenproject.org>
-CC: Xen.org security team <security-team-members@xen.org>
-Date: Tue, 05 Mar 2019 12:21:27 +0000
-From: Xen.org security team <security@xen.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Xen Security Advisory 284 v2 - grant table transfer issues on
- large hosts
-To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
- xen-users@lists.xen.org, oss-security@lists.openwall.com
+Received: (qmail 1643 invoked from network); 6 Jul 2015 01:19:38 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=sKR9MlzPl59UoUZV7SfG3Ub1CnydagZFyZ0Rozdmyo4=;
+        b=MoI0qkJOgrsK30ZSeefOqr5ncByEy7NF57M85iQP1ubyAPuTIUwhsFsaubjJQx7Eyf
+         AQxUghutSoNgAxX1n5lZqIkSHdu8bnQp0De1QMEQwl3iWIRW3KtnWXBvpVFGSpDzBV/i
+         nKRZXWn3iN9K5xLUWmssnf/QWwI1adNIAe13uBGpTYDJ3U42/1ffajczl2x0ehZjUeKj
+         +Ehf9Q0w8vujI5MbZnypdLklub4CeaH1VwuunUm5qILt7w9hqK3NC8AEPeaMC/yjhV25
+         88OOYwtyjnBKjh1T7khGde5UVjEV6dD6XYZk/Lk4w93Ziuoie8YhHKoUGBskDn0v5wpu
+         pQUA==
+X-Received: by 10.107.37.14 with SMTP id l14mr34005540iol.12.1436145566477;
+ Sun, 05 Jul 2015 18:19:26 -0700 (PDT)
+MIME-Version: 1.0
+From: Nitin Venkatesh <venkatesh.nitin@gmail.com>
+Date: Mon, 06 Jul 2015 01:19:16 +0000
+Message-ID: <CAARZ5vq7trVYrQBedvmHLjo8FF4g9i0u1DRn8GXJmzn3UwJEGg@mail.gmail.com>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Content-Type: multipart/alternative; boundary=001a1140c42655f2ae051a2ab263
+Subject: [oss-security] CVE Request - Open Redirect Vulnerability in StageShow Wordpress
+ Plugin v5.0.8
 
---=separator
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
-Content-Transfer-Encoding: 7bit
+--001a1140c42655f2ae051a2ab263
+Content-Type: text/plain; charset=UTF-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi,
 
-                    Xen Security Advisory XSA-284
-                              version 2
+I discovered CSRF and XSS vulnerabilities in the StageShow Wordpress Plugin
+v5.0.8 which was responsibly disclosed to the vendor who fixed the issues
+in v5.0.9.
 
-              grant table transfer issues on large hosts
+I request a CVE for the same.
 
-UPDATES IN VERSION 2
-====================
+References:
+http://seclists.org/fulldisclosure/2015/Jul/27
 
-Metadata updated to remove dependency on XSA-283.
+Thanks & regards,
+Nitin Venkatesh
 
-Public release.
-
-ISSUE DESCRIPTION
-=================
-
-When the code processing grant table transfer requests finds a page with
-an address too large to be represented in the interface with the guest,
-it allocates a replacement page and copies page contents.  However, the
-code doing so fails to set the newly allocated page's accounting
-properties correctly, resulting in the page becoming not only unusable
-by the target domain, but also unfreeable upon domain cleanup.  The page
-as well as certain other remnants of an affected guest will be leaked.
-
-Furthermore internal state of the processing code was also not updated
-correctly, resulting in the insertion of an IOMMU mapping to the page
-being replaced (and subsequently freed), allowing the domain access to
-memory it does not own.
-
-IMPACT
-======
-
-The primary impact is a memory leak.  Malicious or buggy guests with
-passed through PCI devices may also be able to escalate their
-privileges, crash the host, or access data belonging to other guests.
-
-VULNERABLE SYSTEMS
-==================
-
-All Xen versions from at least 3.2 onwards are vulnerable.
-
-64-bit x86 PV guests can leverage the vulnerability on hosts with
-physical memory extending past the 16 TiB boundary.  This is only
-possible for hypervisors built with CONFIG_BIGMEM enabled.
-
-32-bit x86 PV guests can leverage the vulnerability on hosts with
-physical memory extending past the 168 GiB boundary.
-
-x86 HVM and PVH guests cannot leverage the vulnerability on libxl
-based systems.  On xend based systems x86 HVM guests can leverage
-the vulnerability if their guest config file has a
-'machine_address_size' setting.
-
-ARM systems are not vulnerable.
-
-MITIGATION
-==========
-
-Running only x86 HVM/PVH guests will avoid this vulnerability.
-
-CREDITS
-=======
-
-This issue was discovered by Jan Beulich of SUSE.
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue.
-
-xsa284.patch           xen-unstable, Xen 4.11.x ... 4.7.x
-
-$ sha256sum xsa284*
-5359796890fc59dd2bbf8d23398c229153c8b9b716c01842dfb9f95d063a3ad4  xsa284.meta
-3a95ae9faef3886fd3a4ed5b22d944939bb2f819bb5a2a8061b2311cf3c05776  xsa284.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAlx+aa0MHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZwsYH/1yPmIG8vO86sWbX4bvwOsiRQMyy+U/HGKnh3kRi
-lkDap3srzCRNveh/pqIJQF0okH/gD5VfHZrr3D73cHK7JKmlhoI0bPhpb6oE7/10
-SmnaL/cW6/75FuDGdWzmKqx56Y/Ho/wxqGBj69rBbleOnGv+RHUQuGGTZ9g4rmzb
-Nn4DbVRLz2cqvQhHmwjQBl/unid1BAnHVATHnNdjlF/SgucR7oRweioYjTeoFbZv
-AdAWXX1GJRoXokGd1uE0eo/Mice/zmlHp//5JADCzo/oPevBFixMw/KWCaCMmUJt
-FyDNwlu8xtm/bopBWN9dGc2tSKj/0UnTA7FF61OG39BdJHo=
-=EzAi
------END PGP SIGNATURE-----
-
---=separator
-Content-Type: application/octet-stream; name="xsa284.meta"
-Content-Disposition: attachment; filename="xsa284.meta"
-Content-Transfer-Encoding: base64
-
-ewogICJYU0EiOiAyODQsCiAgIlN1cHBvcnRlZFZlcnNpb25zIjogWwogICAg
-Im1hc3RlciIsCiAgICAiNC4xMSIsCiAgICAiNC4xMCIsCiAgICAiNC45IiwK
-ICAgICI0LjgiLAogICAgIjQuNyIKICBdLAogICJUcmVlcyI6IFsKICAgICJ4
-ZW4iCiAgXSwKICAiUmVjaXBlcyI6IHsKICAgICI0LjEwIjogewogICAgICAi
-UmVjaXBlcyI6IHsKICAgICAgICAieGVuIjogewogICAgICAgICAgIlN0YWJs
-ZVJlZiI6ICJhMDE2YjhmMjA3YzdhM2ZlOGJkZDJiNmY3YzA4MDAyMGUzZTFj
-ODIzIiwKICAgICAgICAgICJQcmVyZXFzIjogWwogICAgICAgICAgXSwKICAg
-ICAgICAgICJQYXRjaGVzIjogWwogICAgICAgICAgICAieHNhMjg0LnBhdGNo
-IgogICAgICAgICAgXQogICAgICAgIH0KICAgICAgfQogICAgfSwKICAgICI0
-LjExIjogewogICAgICAiUmVjaXBlcyI6IHsKICAgICAgICAieGVuIjogewog
-ICAgICAgICAgIlN0YWJsZVJlZiI6ICI4N2Y1MWJmMzY2Y2E3OWI5OGUxZTIw
-MWJmOWJkN2E5YzE2NDYzMWUyIiwKICAgICAgICAgICJQcmVyZXFzIjogWwog
-ICAgICAgICAgXSwKICAgICAgICAgICJQYXRjaGVzIjogWwogICAgICAgICAg
-ICAieHNhMjg0LnBhdGNoIgogICAgICAgICAgXQogICAgICAgIH0KICAgICAg
-fQogICAgfSwKICAgICI0LjciOiB7CiAgICAgICJSZWNpcGVzIjogewogICAg
-ICAgICJ4ZW4iOiB7CiAgICAgICAgICAiU3RhYmxlUmVmIjogIjcxMGNjMDk2
-OTcxMDE5YmMyZTVhOWFhYmI5YWYxYWNjYTBiNWI5ZTciLAogICAgICAgICAg
-IlByZXJlcXMiOiBbCiAgICAgICAgICBdLAogICAgICAgICAgIlBhdGNoZXMi
-OiBbCiAgICAgICAgICAgICJ4c2EyODQucGF0Y2giCiAgICAgICAgICBdCiAg
-ICAgICAgfQogICAgICB9CiAgICB9LAogICAgIjQuOCI6IHsKICAgICAgIlJl
-Y2lwZXMiOiB7CiAgICAgICAgInhlbiI6IHsKICAgICAgICAgICJTdGFibGVS
-ZWYiOiAiOTA4ZTc2OGZhZTQ5YThkYjAwODllNjgxODg2NTIwNzllM2JmYWE2
-NiIsCiAgICAgICAgICAiUHJlcmVxcyI6IFsKICAgICAgICAgIF0sCiAgICAg
-ICAgICAiUGF0Y2hlcyI6IFsKICAgICAgICAgICAgInhzYTI4NC5wYXRjaCIK
-ICAgICAgICAgIF0KICAgICAgICB9CiAgICAgIH0KICAgIH0sCiAgICAiNC45
-IjogewogICAgICAiUmVjaXBlcyI6IHsKICAgICAgICAieGVuIjogewogICAg
-ICAgICAgIlN0YWJsZVJlZiI6ICJmNWFjZjk3ZjY2OWM2YmM5NjkxZTAzNzcx
-YWQwNjcwM2RhNzdlMGQ1IiwKICAgICAgICAgICJQcmVyZXFzIjogWwogICAg
-ICAgICAgXSwKICAgICAgICAgICJQYXRjaGVzIjogWwogICAgICAgICAgICAi
-eHNhMjg0LnBhdGNoIgogICAgICAgICAgXQogICAgICAgIH0KICAgICAgfQog
-ICAgfSwKICAgICJtYXN0ZXIiOiB7CiAgICAgICJSZWNpcGVzIjogewogICAg
-ICAgICJ4ZW4iOiB7CiAgICAgICAgICAiU3RhYmxlUmVmIjogIjI0ZDUyODI1
-MjdmNDY0NzkwN2IzNTcyODIwYjUzMzVjMTVjZDAzNTYiLAogICAgICAgICAg
-IlByZXJlcXMiOiBbCiAgICAgICAgICBdLAogICAgICAgICAgIlBhdGNoZXMi
-OiBbCiAgICAgICAgICAgICJ4c2EyODQucGF0Y2giCiAgICAgICAgICBdCiAg
-ICAgICAgfQogICAgICB9CiAgICB9CiAgfQp9
-
---=separator
-Content-Type: application/octet-stream; name="xsa284.patch"
-Content-Disposition: attachment; filename="xsa284.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbTogSmFuIEJldWxpY2ggPGpiZXVsaWNoQHN1c2UuY29tPgpTdWJqZWN0
-OiBnbnR0YWI6IHNldCBwYWdlIHJlZmNvdW50IGZvciBjb3B5LW9uLWdyYW50
-LXRyYW5zZmVyCgpDb21taXQgNWNjNzdmOTA5OCAoIjMyLW9uLTY0OiBGaXgg
-ZG9tYWluIGFkZHJlc3Mtc2l6ZSBjbGFtcGluZywKaW1wbGVtZW50IiksIHdo
-aWNoIGludHJvZHVjZWQgdGhpcyBmdW5jdGlvbmFsaXR5LCB0b29rIGNhcmUg
-b2YgY2xlYXJpbmcKdGhlIG9sZCBwYWdlJ3MgUEdDX2FsbG9jYXRlZCwgYnV0
-IGZhaWxlZCB0byBzZXQgdGhlIGJpdCAoYW5kIGluc3RhbGwgdGhlCmFzc29j
-aWF0ZWQgcmVmZXJlbmNlKSBvbiB0aGUgbmV3bHkgYWxsb2NhdGVkIG9uZS4g
-RnVydGhlcm1vcmUgdGhlICJtZm4iCmxvY2FsIHZhcmlhYmxlIHdhcyBuZXZl
-ciB1cGRhdGVkLCBhbmQgaGVuY2UgdGhlIHdyb25nIE1GTiB3YXMgcGFzc2Vk
-IHRvCmd1ZXN0X3BoeXNtYXBfYWRkX3BhZ2UoKSAoYW5kIGJhY2sgdG8gdGhl
-IGRlc3RpbmF0aW9uIGRvbWFpbikgaW4gdGhpcwpjYXNlLCBsZWFkaW5nIHRv
-IGFuIElPTU1VIG1hcHBpbmcgaW50byBhbiB1bm93bmVkIHBhZ2UuCgpJZGVh
-bGx5IHRoZSBjb2RlIHdvdWxkIHVzZSBhc3NpZ25fcGFnZXMoKSwgYnV0IHRo
-ZSBjYWxsIHRvCmdudHRhYl9wcmVwYXJlX2Zvcl90cmFuc2ZlcigpIHNpdHMg
-aW4gdGhlIG1pZGRsZSBvZiB0aGUgYWN0aW9ucwptaXJyb3JpbmcgdGhhdCBm
-dW5jdGlvbi4KClRoaXMgaXMgWFNBLTI4NC4KClNpZ25lZC1vZmYtYnk6IEph
-biBCZXVsaWNoIDxqYmV1bGljaEBzdXNlLmNvbT4KQWNrZWQtYnk6IEdlb3Jn
-ZSBEdW5sYXAgPGdlb3JnZS5kdW5sYXBAY2l0cml4LmNvbT4KCi0tLSBhL3hl
-bi9jb21tb24vZ3JhbnRfdGFibGUuYworKysgYi94ZW4vY29tbW9uL2dyYW50
-X3RhYmxlLmMKQEAgLTIxODMsNiArMjE4Myw4IEBAIGdudHRhYl90cmFuc2Zl
-cigKICAgICAgICAgICAgIHBhZ2UtPmNvdW50X2luZm8gJj0gfihQR0NfY291
-bnRfbWFza3xQR0NfYWxsb2NhdGVkKTsKICAgICAgICAgICAgIGZyZWVfZG9t
-aGVhcF9wYWdlKHBhZ2UpOwogICAgICAgICAgICAgcGFnZSA9IG5ld19wYWdl
-OworICAgICAgICAgICAgcGFnZS0+Y291bnRfaW5mbyA9IFBHQ19hbGxvY2F0
-ZWQgfCAxOworICAgICAgICAgICAgbWZuID0gcGFnZV90b19tZm4ocGFnZSk7
-CiAgICAgICAgIH0KIAogICAgICAgICBzcGluX2xvY2soJmUtPnBhZ2VfYWxs
-b2NfbG9jayk7Cg==
-
---=separator--
+--001a1140c42655f2ae051a2ab263--
