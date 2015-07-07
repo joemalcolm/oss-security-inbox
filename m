@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3682" "Thursday" "2" "November" "2017" "14:47:35" "+1100" "James Morris" "jmorris@namei.org" "<alpine.LRH.2.21.1711021348230.19623@namei.org>" "85" "[oss-security] Linux Security Summit 2017 Summary" nil nil nil "11" "2017110203:47:35" "[oss-security] Linux Security Summit 2017 Summary" (number mark "U       jmorris@name Nov  2   85/3682  " thread-indent "\"[oss-security] Linux Security Summit 2017 Summary\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2192" "Tuesday" "7" "July" "2015" "10:11:02" "+0200" "Luca Bruno" "lucab@debian.org" "<2575620.DYihEfEJs8@chimera>" "57" "Re: [oss-security] node.js out of band write" nil nil nil "7" "2015070708:11:02" "[oss-security] node.js out of band write" (number mark "        lucab@debian Jul  7   57/2192  " thread-indent "\"Re: [oss-security] node.js out of band write\"\n") "<559A2F80.5030407@redhat.com>" ("<1436140297.2777045.315833937.576534B9@webmail.messagingengine.com>" "<559A2F80.5030407@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 9803 invoked by uid 550); 2 Nov 2017 10:48:07 -0000
+Received: (qmail 7933 invoked by uid 550); 7 Jul 2015 10:53:59 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,99 +11,80 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30418 invoked from network); 2 Nov 2017 03:47:51 -0000
-Date: Thu, 2 Nov 2017 14:47:35 +1100 (AEDT)
-From: James Morris <jmorris@namei.org>
-To: oss-security@lists.openwall.com
-Message-ID: <alpine.LRH.2.21.1711021348230.19623@namei.org>
-User-Agent: Alpine 2.21 (LRH 202 2017-01-01)
+Received: (qmail 9243 invoked from network); 7 Jul 2015 08:11:28 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=unstable.it; s=mail;
+	t=1436256676; bh=APg1JNx+GmT1vv1ztgfVT6940ZlWr3wqPupOMbqbfwk=;
+	h=From:To:Subject:Date:In-Reply-To:References:From;
+	b=ETv5r0YXFufRzup0xtWDVFa2zkI3y36N7ImCcPjQr6TvAKzzvWrvLOkR40NgPJwby
+	 yfkWcH5oPLod6LRFJSJ7OGVXsNGNRcrxcsu5Tfw/EjAUMzJiaZta1p8IJrXOBp9JLT
+	 5i/676bdDL+I79ZDyrpLvVx1taDse/KFazUl887I=
+Message-ID: <2575620.DYihEfEJs8@chimera>
+Organization: Debian
+User-Agent: KMail/4.14.1 (Linux/3.16.0-4-amd64; KDE/4.14.2; x86_64; ; )
+In-Reply-To: <559A2F80.5030407@redhat.com>
+References: <1436140297.2777045.315833937.576534B9@webmail.messagingengine.com> <559A2F80.5030407@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Subject: [oss-security] Linux Security Summit 2017 Summary
+Content-Type: multipart/signed; boundary="nextPart2622590.ybLKtBDC9h"; micalg="pgp-sha1"; protocol="application/pgp-signature"
+Date: Tue, 07 Jul 2015 10:11:02 +0200
+From: Luca Bruno <lucab@debian.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] node.js out of band write
+To: oss-security@lists.openwall.com
 
-The 2017 Linux Security Summit (LSS) [1] was held on Sept 14th and 15th in 
-Los Angeles, USA.  It was co-located with Open Source Summit North America 
-[2] (previously/including LinuxCon) and the Linux Plumbers Conference 
-(LPC) [3].
+--nextPart2622590.ybLKtBDC9h
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
 
-LSS is unique as a security conference as it's dedicated to Linux and Open 
-Source, and tends to be focused on defensive security engineering.
+On Monday 06 July 2015 09:34:24 Florian Weimer wrote:
 
-This year we had refereed presentations, Linux kernel security subsystem 
-updates, and BoF topics.
+> > This release of Node.js fixes a bug that triggers an out-of-band write
+> > in V8's utf-8 decoder. This bug impacts all Buffer to String
+> > conversions. This is an important security update as this bug can be
+> > used to cause a denial of service attack.
+>=20
+> I have trouble reconciling this description with the fix in this commit:
+>=20
+> <https://github.com/joyent/node/commit/78b0e30954111cfaba0edbeee85450d8cb=
+c6f
+> df6>
+>=20
+> Upstream v8 lacks this change.  Is it required in Node.js because
+> Node.js pokes at v8 internals in unsupported ways?
 
-The schedule is here:
-http://events.linuxfoundation.org/events/archive/2017/linux-security-summit/program/schedule
+This should be the corresponding fix (plus testcases) on upstream v8:
+https://chromium.googlesource.com/v8/v8.git/+/b199bcdd47ae97ec116b430e34ab4=
+2001c8f04c0%5E!/#F2
 
-Slides may be found here:
-http://events.linuxfoundation.org/events/archive/2017/linux-security-summit/program/slides
-(and in some cases by clicking on the session topics).
+Cheers, Luca
 
-There was no video this year, unfortunately, and we'll work on making that 
-happen for next year.
+--=20
+ .''`.  ** Debian GNU/Linux **  | Luca Bruno (kaeso)
+: :'  :   The Universal O.S.    | lucab (AT) debian.org
+`. `'`                          | GPG Key ID: 0xBB1A3A854F3BBEBF
+  `-     http://www.debian.org 	| Debian GNU/Linux Developer
 
-Also, due to the LPC co-location and schedule overlap, we had no LWN 
-coverage of the event.
+--nextPart2622590.ybLKtBDC9h
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part.
+Content-Transfer-Encoding: 7Bit
 
-You can find attendee coverage here:
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
 
-http://blog.namei.org/2017/10/02/linux-security-summit-2017-roundup/
-http://www.paul-moore.com/blog/d/2017/09/linux-security-summit.html
-https://tyhicks.com/2017/09/22/2017-Linux-Security-Summit-Day-1/
-https://tyhicks.com/2017/09/25/2017-Linux-Security-Summit-Day-2/
+iQIcBAABAgAGBQJVm4mWAAoJEKmDSiJSB45OYOQP/32+lP8dvZzQTDjwA/Ii5bns
+kabnGKJO4hWiIqqzr8skh00PE+jXfBCiH/xwPeifPoO4LvtKU/5Q2UBNuconukcG
+lANptWa/lsdh9dbS8ZIyy9It1Te+DbCsKrU8dQF1Xm5/I4S8XcKIIeKPNG/8FbDG
+RxeTFg2FFS1kk6/T35kjD2p+k8pPKB7l9PnRYWPsN9GDVKeeLbst9hP9Y0PYDi3J
+mLiFux06O6GZeHApAS+UBjQqa0Oc9h8YJz9Cwpp0yuL7Hlqztjdlg/sxMIQgRoV0
+7KdE/ztPBkoNFO94a/LJyCvgvDxG56rgTy39rxg/yCnz71R/ity6KuKsfOvgeJ5z
+KGw3AxPpWmh+dVFrzHdAiDePSMQUMnQqXbWzmHSnCKOB1YL79KdNPGP8AjlBm/gc
+onDGhan6t9Ah3PsRH4Nd4jIaeXDaHUE5MfS30f+Hk0qikzQA/DoDCtgkoKu+cAVw
+HXtUsWI4YTDdqfSf7zwQK82hTsVb2sUnIUZP+hgGUjCaQV9nOmB+jwrPJSrWFUHe
+UmgU70XlBvAgsGvS9f9woJeqOGNGc6fLh/uPrR0ROtYU0riVK+LL8w39qoeA1/UM
+HLcJ9h0XF9KQLbw+Z9fIYgwgbv+MahI/r3Y4alSxnZYm1WPGeAoGAb1DqUa0vN4q
+TH0Gx4pITRqCUkT6906D
+=n2u+
+-----END PGP SIGNATURE-----
 
-There was also a shared day with LPC (on the 13th), where the TPMs and 
-containers microconfs were held. See:
-
-https://etherpad.openstack.org/p/LPC2017_TPM
-https://etherpad.openstack.org/p/LPC2017_Containers
-
-It was certainly useful to have so many security-interested Linux folk 
-there across both conferences, although we will avoid co-locating with LPC 
-in the future.  It's also useful to have some time between LPC and LSS for 
-ideas raised at one to be developed further and discussed at the other.
-
-For 2018, there will be a new European version of LSS, which will be held 
-in addition to the main event in North America.  This will be led by Elena 
-Reshetova, a member of the LSS program committee, who proposed the idea as 
-there are a lot of Linux and Open Source security folk in Europe who may 
-not be able to make it to the US event.  Stay tuned for an official 
-announcement soon (all such announcements can be found at @LinuxSecSummit 
-on twitter).
-
-In terms of trends, over the past year, we've seen a lot of activity again 
-in kernel hardening via the kernel self protection project, and you can 
-see where things are at by looking at Kees' slides:
-
-http://schd.ws/hosted_files/lss2017/aa/LSS-2017-Kernel-Self-Protection-Project.pdf
-
-This work is primarily focused on forward-porting grsecurity/PaX to 
-mainline, and I gather this will continue to be the case over the next 1-2 
-years.  One of the most significant effects of the project is more 
-mainline kernel developers gaining knowledge and skills in security via 
-involvement in KSPP.  And culturally, there is also now much greater 
-awareness of contemporary security threats and acceptance of the need to 
-mitigate them.  Kernel security is hopefully becoming less of a 
-specialized niche area, and more open to general kernel developers.
-
-We're also seeing continued activity in TPMs (v2.0 stack developoment), 
-integrity/boot verification, hardware-based mitigations, mobile/device, 
-and containers.  There are lots of challenges across these areas, and the 
-materials I've linked from LSS and LPC are a good place to start if you're 
-interested in where things are at currently.
-
-
-References:
-
-[1] http://events.linuxfoundation.org/events/archive/2017/linux-security-summit
-[2] http://events.linuxfoundation.org/events/open-source-summit-north-america
-[3] http://www.linuxplumbersconf.org/2017/
-
-
-
-
--- 
-James Morris
-<jmorris@namei.org>
+--nextPart2622590.ybLKtBDC9h--
 
