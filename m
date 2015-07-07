@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1641" "Wednesday" "22" "April" "2015" "17:27:46" "-0700" "Seth Arnold" "seth.arnold@canonical.com" "<20150423002746.GD3854@hunt>" "42" "Re: [oss-security] USBCreator D-Bus service" nil nil nil "4" "2015042300:27:46" "[oss-security] USBCreator D-Bus service" (number mark "        seth.arnold@ Apr 22   42/1641  " thread-indent "\"Re: [oss-security] USBCreator D-Bus service\"\n") "<20150423000423.GA31439@openwall.com>" ("<CAJ_zFk+imjcZZTm8KwOZia0McwHZ2iQawpXoijRpejM9jt3PGA@mail.gmail.com>" "<20150423000423.GA31439@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3691" "Monday" "6" "July" "2015" "22:57:07" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150707025707.0A6BD6C0020@smtpvmsrv1.mitre.org>" "98" "[oss-security] Re: CVE request for vulnerabilities fixed in roundcubemail 1.1.2 and 1.0.6" nil nil nil "7" "2015070702:57:07" "[oss-security] Re: CVE request for vulnerabilities fixed in roundcubemail 1.1.2 and 1.0.6" (number mark "U       cve-assign@m Jul  6   98/3691  " thread-indent "\"[oss-security] Re: CVE request for vulnerabilities fixed in roundcubemail 1.1.2 and 1.0.6\"\n") "<559A726C.9060904@suse.de>" ("<559A726C.9060904@suse.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 14270 invoked by uid 550); 23 Apr 2015 00:28:01 -0000
+Received: (qmail 25672 invoked by uid 550); 7 Jul 2015 02:57:18 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,62 +11,111 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 14227 invoked from network); 23 Apr 2015 00:28:01 -0000
-Message-ID: <20150423002746.GD3854@hunt>
-Mail-Followup-To: oss-security@lists.openwall.com
-References: <CAJ_zFk+imjcZZTm8KwOZia0McwHZ2iQawpXoijRpejM9jt3PGA@mail.gmail.com>
- <20150423000423.GA31439@openwall.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="vni90+aGYgRvsTuO"
-Content-Disposition: inline
-In-Reply-To: <20150423000423.GA31439@openwall.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-Date: Wed, 22 Apr 2015 17:27:46 -0700
-From: Seth Arnold <seth.arnold@canonical.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] USBCreator D-Bus service
-To: oss-security@lists.openwall.com
+Received: (qmail 25654 invoked from network); 7 Jul 2015 02:57:17 -0000
+From: cve-assign@mitre.org
+To: astieger@suse.de
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <559A726C.9060904@suse.de>
+Message-Id: <20150707025707.0A6BD6C0020@smtpvmsrv1.mitre.org>
+Date: Mon,  6 Jul 2015 22:57:07 -0400 (EDT)
+Subject: [oss-security] Re: CVE request for vulnerabilities fixed in roundcubemail 1.1.2 and 1.0.6
 
---vni90+aGYgRvsTuO
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On Thu, Apr 23, 2015 at 03:04:23AM +0300, Solar Designer wrote:
-> Either way, it sounds weird to keep a low severity issue private.  Low
-> severity usually means not needing an embargo in the first place.  But I
-> guess it was the vendor's preference?
+> From https://roundcube.net/news/2015/06/05/updates-1.1.2-and-1.0.6-released/
 
-In this case, no, Ubuntu would have preferred several days embargo for
-this issue. Hypothetically speaking, Monday would have been ideal, as
-we prefer to not release updates on Friday, Saturday, or Sunday.
+> Fix XSS vulnerability in _mbox argument handling
+> http://trac.roundcube.net/ticket/1490417
+> 
+> The XSS vulnerability can be triggered by appending malicious script
+> code to the _mbox parameter.
+> 
+> https://{YOURSERVER}/?_task=mail&_mbox=[XSS]
+> 
+> Commit:
+> 1.1: http://trac.roundcube.net/changeset/b782815dac/github
+> Not claimed to affect 1.0.
 
-We treat local root escalation vulnerabilities with a high priority[1].
+Use CVE-2015-5381.
 
-Please do inform us privately of further local root escalations in the
-future, either via security@ubuntu.com or filing "private security"
-bugs against the corresponding package in Launchpad.
 
-Thanks
+> Fix security issue in contact photo handling
+> http://trac.roundcube.net/ticket/1490379
+> 
+> There is a potential for an arbitrary read from an authenticated user
+> who uploads a contact (vCard) with a specially crafted POST.
+> [...]
+> by supplying the "_alt" param in the POST. User must be authenticated.
+> [...]
+> I was able to read any file on disk (the apache has access to, e.g.
+> config/config.inc.php) using GET request
+> 
+> Commits:
+> 1.1: http://trac.roundcube.net/changeset/681ba6fc3/github
+> 1.0: http://trac.roundcube.net/changeset/6ccd4c54b/github
 
-1: Our priorities don't directly map to issue severities, but local root
-escalations are treated highly:
-http://bazaar.launchpad.net/~ubuntu-security/ubuntu-cve-tracker/master/view/head:/README#L215
+Use CVE-2015-5382. For 1.1, the security fix for _alt seems to be
+announced in http://trac.roundcube.net/changeset/e84fafcec/github --
+do you mean that part of the _alt vulnerability was fixed in
+http://trac.roundcube.net/changeset/681ba6fc3/github and then a
+different part of the _alt vulnerability was fixed in
+http://trac.roundcube.net/changeset/e84fafcec/github (if so, then
+there would potentially be another CVE ID)?
 
---vni90+aGYgRvsTuO
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
 
+> Fix potential info disclosure issue by protecting directory access
+> http://trac.roundcube.net/ticket/1490378
+> 
+> The logs directory is not protected from browsing. Most log entries are
+> not bad, but one became evident on my host that was pretty nasty.
+> 
+> It looked like the following:
+> 
+> [25-Apr-2015 04:03:11 -0400]: <ijpv9kqo> DB Error: [1062]
+>   Duplicate entry 'ijpv9kqofvpksxxxxxxxxxxxx' for key 'PRIMARY' (SQL Query: INSERT INTO `session` (`sess_id`
+> 
+> I obfuscated the sensitive fields, but this would be enough for a
+> non-credential user to view the file (via the webroot/logs/errors file),
+> and then replace their own cookies with the entry from above to log in
+> as a user that was listed there.
+> 
+> This seems to be a very rare occurrence, but considering that other
+> SQL/other actions might report other sensitive data into this file, it
+> might be worth automatically protecting this directory with an .htaccess
+> file, or prepending a php tag to avoid overt reading by any
+> unauthenticated user.
+> 
+> Commits:
+> http://trac.roundcube.net/changeset/012555c1c/github
+> 1.1: http://trac.roundcube.net/changeset/16640c7fb0c8/github
+> Not claimed to affect 1.0.
+
+>> Add .htaccess files to deny access to config, temp, logs
+
+Use CVE-2015-5383. Note that
+http://trac.roundcube.net/browser/github/INSTALL states:
+
+  REQUIREMENTS
+  * .htaccess support allowing overrides for DirectoryIndex
+
+Thus, we wouldn't want to have a separate CVE ID for a scenario in
+which someone attempts to use Roundcube with nginx.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJVODyCAAoJEPMhclmdjS6XaDEH/RF8w5Nk/14OAn+l/vI31wKL
-5NkNjVOHjgWPkBo1BNs1KSWSelwwaf336Ezk1hXgUAqWfxiGQaF2sCBFrnj4v//p
-xIw5SDHgUz64h11Zju3LCUNUauOhPM58XzjjDKcrC7MlBMNVsjFK503NGZAXWm1Q
-MBGF33bOjKjRUt0AjLgqxIeJS4B/Hp0kFlolq5Tx7pSzKz1HfBbT3L34zK39ILiA
-j9CjoSyo2ZJep0Lmsqxw//qhyrXmqUmqAyIgfKtyBMQjVmUz1zxgNl2edjlCMl19
-oVgz72EoK2KI+U1qMppR3idOW0Z5STfo50ekPvO1RhiueYx3Q/GP2AiMJRMwR8Y=
-=RwzU
+iQEcBAEBAgAGBQJVmz8CAAoJEKllVAevmvmsLckIAL47aKRrnOeVXtXHMTUf+6/z
+w7Q6yHbobqqZRCd5eoXjS6eZZynhivrU07M78N9CBTGbDeIQW2HgKN9O0y/dXpsJ
+gRSzYxYDI/ZmZOPpzgVz8fdnShMSgBllTw7aW3LtzopLcQr1QBJ/j0JGp/CIyoPK
+dRV8uRVkiiM186+qQ87smaihvRf8kzjGVFb3+1xMmv2wJiTYO+0WG1efvBCEpwL+
+wOayt6VNgKPrr0MCdopzbng91YPPgyOmGPZnfPRS1iyFxvXJaFSU2BeYs8NVpXtl
+wXJc9Fe45Vn/6Rjo+uIIgai32Qk3+H23sE+Rki0eHjF8V3nUIBidH0SByBZslUY=
+=6Mwi
 -----END PGP SIGNATURE-----
-
---vni90+aGYgRvsTuO--
