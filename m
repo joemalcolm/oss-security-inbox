@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["888" "Wednesday" "10" "August" "2016" "15:00:09" "-0400" "CAI Qian" "caiqian@redhat.com" "<739916702.1278914.1470855609597.JavaMail.zimbra@redhat.com>" "27" "Re: [oss-security] cve request: systemd-machined: information exposure for docker containers" "^Date:" nil nil "8" "2016081019:00:09" "[oss-security] cve request: systemd-machined: information exposure for docker containers" (number mark "        caiqian@redh Aug 10   27/888   " thread-indent "\"Re: [oss-security] cve request: systemd-machined: information exposure for docker containers\"\n") "<f6c1ae32-c8fa-96f2-a300-87fd0accd6fe@redhat.com>" ("<1304293369.8684866.1469539505676.JavaMail.zimbra@redhat.com>" "<20160727200021.GB3330@motoko>" "<B760F07C-908F-431A-8BCE-A3AE9E93E33F@nccgroup.trust>" "<CAEk6tEx0JRNX9q0k8JH2PNkGJO59WVVMhh4=3DkoQFMNkqY9LA@mail.gmail.com>" "<4b0070a9-e8c3-ac69-a410-2269d9d08b71@redhat.com>" "<20160728144249.GB23522@perpetual.pseudorandom.co.uk>" "<291B6ECE-2D59-435D-A986-4582022C9B21@shiz.me>" "<f6c1ae32-c8fa-96f2-a300-87fd0accd6fe@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["393" "Tuesday" "7" "July" "2015" "14:47:59" "+0200" "Yann Ylavic" "ylavic.dev@gmail.com" "<CAKQ1sVO9axLdmFyiyMK1d9UJsqh3itB65O03NZmqDCmSxg6T_Q@mail.gmail.com>" "12" "Re: [oss-security] [ANNOUNCE] Apache Directory LDAP API 1.0.0-M31 released" nil nil nil "7" "2015070712:47:59" "[oss-security] [ANNOUNCE] Apache Directory LDAP API 1.0.0-M31 released" (number mark "U       ylavic.dev@g Jul  7   12/393   " thread-indent "\"Re: [oss-security] [ANNOUNCE] Apache Directory LDAP API 1.0.0-M31 released\"\n") "<20150707115217.GA30660@pisco.westfalen.local>" ("<CAG8=FRj5sL+J6YUJqY95uBJN=vxtS=rWfngAfHk4k2vyShadHw@mail.gmail.com>" "<20150707115217.GA30660@pisco.westfalen.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 23741 invoked by uid 550); 10 Aug 2016 19:00:22 -0000
+Received: (qmail 4043 invoked by uid 550); 7 Jul 2015 12:53:57 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,48 +11,42 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 23723 invoked from network); 10 Aug 2016 19:00:21 -0000
-Message-ID: <739916702.1278914.1470855609597.JavaMail.zimbra@redhat.com>
-In-Reply-To: <f6c1ae32-c8fa-96f2-a300-87fd0accd6fe@redhat.com>
-References: <1304293369.8684866.1469539505676.JavaMail.zimbra@redhat.com> <20160727200021.GB3330@motoko> <B760F07C-908F-431A-8BCE-A3AE9E93E33F@nccgroup.trust> <CAEk6tEx0JRNX9q0k8JH2PNkGJO59WVVMhh4=3DkoQFMNkqY9LA@mail.gmail.com> <4b0070a9-e8c3-ac69-a410-2269d9d08b71@redhat.com> <20160728144249.GB23522@perpetual.pseudorandom.co.uk> <291B6ECE-2D59-435D-A986-4582022C9B21@shiz.me> <f6c1ae32-c8fa-96f2-a300-87fd0accd6fe@redhat.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.18.41.13]
-X-Mailer: Zimbra 8.0.6_GA_5922 (ZimbraWebClient - GC45 (Linux)/8.0.6_GA_5922)
-Thread-Topic: cve request: systemd-machined: information exposure for docker containers
-Thread-Index: ZCeajIzJjcBZXnQDHD1X7Jn0W5jIBQ==
-Date: Wed, 10 Aug 2016 15:00:09 -0400 (EDT)
-From: CAI Qian <caiqian@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] cve request: systemd-machined: information
- exposure for docker containers
-To: oss-security@lists.openwall.com
+Received: (qmail 1351 invoked from network); 7 Jul 2015 12:48:11 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=KuZ6O1Gx4jLORzhsGU7EJ3BggxPVuemPpVw36Ja5/vU=;
+        b=rET0XQQGyKENKkrBV/UvDCYqeSuus7d/TKQZYCa+sf+JHn0qt5HWdaVbqUGeQqEf98
+         a5Hd90cV+0wOTt4yY8P3FIKoNlnytZKDHRBKIykS0mPtFi8e8AktEviRZ9AlSShFd69E
+         h3MaQ8bveRPiMibkkVFWpfsVxngc5mSNWao8xKOS5FjYEgJ96T/yDJsDoRmUNdKUVuvV
+         EV3w2VzLl3EyEmM5BcMNptNmK3V2kcOP4y9tFR7xpW+3HyeN32nr0OgjQEMbuiC/hVc+
+         CImZ/NChZvz9addYjWWAE9FGAA6KuRyJ6jXAtQh/rSOq7ROP6jVbLTPzlQh5T4Q4CKI3
+         IN5Q==
+MIME-Version: 1.0
+X-Received: by 10.42.203.4 with SMTP id fg4mr39586069icb.52.1436273279492;
+ Tue, 07 Jul 2015 05:47:59 -0700 (PDT)
+In-Reply-To: <20150707115217.GA30660@pisco.westfalen.local>
+References: <CAG8=FRj5sL+J6YUJqY95uBJN=vxtS=rWfngAfHk4k2vyShadHw@mail.gmail.com>
+	<20150707115217.GA30660@pisco.westfalen.local>
+Date: Tue, 7 Jul 2015 14:47:59 +0200
+Message-ID: <CAKQ1sVO9axLdmFyiyMK1d9UJsqh3itB65O03NZmqDCmSxg6T_Q@mail.gmail.com>
+From: Yann Ylavic <ylavic.dev@gmail.com>
+To: Moritz Muehlenhoff <jmm@debian.org>
+Cc: oss-security@lists.openwall.com, security@apache.org
+Content-Type: text/plain; charset=UTF-8
+Subject: Re: [oss-security] [ANNOUNCE] Apache Directory LDAP API 1.0.0-M31 released
 
+On Tue, Jul 7, 2015 at 1:52 PM, Moritz Muehlenhoff <jmm@debian.org> wrote:
+> On Tue, Jul 07, 2015 at 11:07:37AM +0200, Emmanuel Lecharny wrote:
+>>
+>> This release is fixing a security vulnerability : CVE-2015-3050, a
+>> Timing Attack vulnerability.
+>
+> This ID is already used for a vulnerability in Adobe Reader?
 
+That's probably a typo, CVE-2015-3250 being the assigned one.
 
------ Original Message -----
-> From: "Daniel J Walsh" <dwalsh@redhat.com>
-> To: oss-security@lists.openwall.com
-> Sent: Wednesday, August 3, 2016 3:27:00 AM
-> Subject: Re: [oss-security] cve request: systemd-machined: information exposure for docker containers
-> 
-> 
-> 
-> On 08/01/2016 12:24 PM, Shiz wrote:
-> >> On 28 Jul 2016, at 16:42, Simon McVittie <smcv@debian.org> wrote:
-> >>
-> >> *Which* unprivileged user processes?
-> >>
-> >> If the unprivileged user processes are not in a container, they can get a
-> >> significant amount of the same information by reading the host's /proc.
-> > Except if a host is running with hidepid={1,2}, which is not entirely
-> > uncommon
-> > especially in hardened systems. In that regard it /does/ qualify as
-> > infoleak.
-> >
-> > - Shiz
-> Then simply rpm -e oci-register-machine
-> 
-Except people can't do that in OSes like atomic host.
-   CAI Qian
+Regards,
+Yann.
