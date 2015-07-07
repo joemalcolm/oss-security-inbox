@@ -1,4 +1,9 @@
-Received: (qmail 18233 invoked by uid 550); 27 Feb 2026 16:54:58 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1165" "Tuesday" "7" "July" "2015" "13:53:21" "+0200" "Stefan Castille" "stefan.castille@bonnierdigital.se" "<559BBDB1.1030906@bonnierdigital.se>" "45" "[oss-security] CVE Request for sogO Open Source Groupware (www.sogo.nu)" nil nil nil "7" "2015070711:53:21" "[oss-security] CVE Request for sogO Open Source Groupware (www.sogo.nu)" (number mark "U       stefan.casti Jul  7   45/1165  " thread-indent "\"[oss-security] CVE Request for sogO Open Source Groupware (www.sogo.nu)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 3333 invoked by uid 550); 7 Jul 2015 12:28:19 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,57 +12,62 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 31762 invoked from network); 27 Feb 2026 12:10:23 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=debian.org;
-	s=smtpauto.master; h=In-Reply-To:Content-Transfer-Encoding:Content-Type:
-	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
-	Content-ID:Content-Description;
-	bh=RX9qy/yGllKHwddTknVtpwP5vZBoZBXk4293+P+OAiM=; b=0nXaWV4elirtHLXoJH2ofdU3lp
-	TM8jeynYElxf2T1estzlfnktEzTwjgKn1x5aH1pM8sPlUxcWjUaMh3tCFSK2yptwlmxA02+SPw+Bv
-	LT+Au9epdxO2cn1href2baikbhzUll9gr9jSbWYT7UFgJapPrHQrtKEqbNS9AKYz3jwS5riC4SSpm
-	6J5FzuKQOPQpWx99osHX2QXKGzKBEtULCHjdX+e65EeoDHBUhIAYoIqks+z/PM74pq8/ptu6yfVjX
-	PSTZ0iYLSdQ1jM1s2ydII4hyRSNyv84UQ1xyWNc6roorG+FQyWPDF0mUn8DYHRU/EXxQ03h4I/WTq
-	bLdassZw==;
-Date: Fri, 27 Feb 2026 13:09:57 +0100
-From: Guillem Jover <guillem@debian.org>
-To: Ron Ben Yizhak <ron.benyizhak@safebreach.com>
-Cc: Justin Swartz <justin.swartz@risingedge.co.za>, bug-inetutils@gnu.org,
-	oss-security@lists.openwall.com, simon@josefsson.org,
-	auerswal@unix-ag.uni-kl.de,
-	Salvatore Bonaccorso <carnil@debian.org>
-Message-ID: <aaGJlbbLS7cp0H-i@thunder.hadrons.org>
-Mail-Followup-To: Guillem Jover <guillem@debian.org>,
-	Ron Ben Yizhak <ron.benyizhak@safebreach.com>,
-	Justin Swartz <justin.swartz@risingedge.co.za>,
-	bug-inetutils@gnu.org, oss-security@lists.openwall.com,
-	simon@josefsson.org, auerswal@unix-ag.uni-kl.de,
-	Salvatore Bonaccorso <carnil@debian.org>
-References: <CAB1hGqQwnSzEqtrefwqAxD+rWGu_EXVDmu-btMrNYqMzkzc9Kw@mail.gmail.com>
- <20260206172730.GA12303@unix-ag.uni-kl.de>
- <877bso8mhf.fsf@josefsson.org>
- <20260224011702.27987-1-justin.swartz@risingedge.co.za>
- <CAB1hGqSJPOQwc8h7g4u4WXjtDSupwkA8HjzEyU2gzbL5uavneg@mail.gmail.com>
+Received: (qmail 11477 invoked from network); 7 Jul 2015 11:53:34 -0000
+Message-ID: <559BBDB1.1030906@bonnierdigital.se>
+Date: Tue, 7 Jul 2015 13:53:21 +0200
+From: Stefan Castille <stefan.castille@bonnierdigital.se>
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:31.0) Gecko/20100101 Icedove/31.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+To: <oss-security@lists.openwall.com>
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAB1hGqSJPOQwc8h7g4u4WXjtDSupwkA8HjzEyU2gzbL5uavneg@mail.gmail.com>
-Subject: [oss-security] CVE-2026-28372: Telnetd Vulnerability Report
+X-Originating-IP: [10.41.80.170]
+X-ClientProxiedBy: EX11.bondom.bonnier.se (172.29.192.31) To
+ EX11.bondom.bonnier.se (172.29.192.31)
+Subject: [oss-security] CVE Request for sogO Open Source Groupware (www.sogo.nu)
 
-Hi!
+Hej,
 
-On Tue, 2026-02-24 at 11:57:34 +0200, Ron Ben Yizhak wrote:
-> I’d like to ensure we follow the standard CVE process here. Standard
-> practice dictates that a CVE is issued per individual fix. Generally, once
-> a fix is merged and released, it is assigned its own CVE. Even if that fix
-> is later bypassed, the original merge stands as a unique event in the
-> codebase, meaning we should issue two separate CVEs rather than grouping
-> them.
+I would like to request a CVE for a DoS in sogo. While it does not crash
+the system, it does make it very easy to conduct a DoS against the
+application.
 
-Salvatore Bonaccorso from the Debian Security Team got a CVE assigned
-for this, see <https://www.cve.org/CVERecord?id=CVE-2026-28372>. I'll
-update the Debian packaging on the next upload to point to that.
 
-Thanks,
-Guillem
+Software: sogo
+Vendor: Inverse
+Site: www.sogo.nu
+Previously requested: No
+Type: DoS
+Description: Due to incorrect handling of certain PROPFIND requests, the
+site is vulnerable to a DoS.
+
+-----------------------------------
+PROPFIND /SOGo/dav/ HTTP/1.1
+Host: <hostname>
+Connection: keep-alive
+Content-Length: 0
+
+
+------------------------------------
+
+will return almost immediately
+
+-----------------------------------
+PROPFIND /SOGo/dav/ HTTP/1.1
+Host: myhost
+Connection: keep-alive
+
+
+-----------------------------------
+without the Content-Length will keep the child process occupied until it
+times out. Default value one minute. With only <#processes> requests per
+<timeout> the application can be rendered inaccessible.
+
+No authentication/valid account is required. The bug has been reported
+at www.sogo.nu/bugs as a private bugreport, but labelled won't fix as it
+is 'how servers work' and that tuning the timeout will help. I disagree
+and would like to get a CVE for it.
+
+
+with kind regards,
+Stefan
