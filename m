@@ -1,4 +1,9 @@
-Received: (qmail 30704 invoked by uid 550); 19 Jul 2023 07:47:28 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1366" "Tuesday" "7" "July" "2015" "16:42:22" "+0300" "Solar Designer" "solar@openwall.com" "<20150707134222.GA8667@openwall.com>" "37" "[oss-security] CVE-2015-3281 HAProxy information leak vulnerability" nil nil nil "7" "2015070713:42:22" "[oss-security] CVE-2015-3281 HAProxy information leak vulnerability" (number mark "U       solar@openwa Jul  7   37/1366  " thread-indent "\"[oss-security] CVE-2015-3281 HAProxy information leak vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 11738 invoked by uid 550); 7 Jul 2015 13:42:40 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,92 +12,51 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30686 invoked from network); 19 Jul 2023 07:47:27 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1689752836; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Syz5+xL1tMZlnA9EAuXkXKAlXYBfs3MzhnxYd5I8GhE=;
-	b=2LT7ZXmby7cQKsIBtN132m450IjuTwsWRknhtrCkcTGtsFyUVpEXgiG3JhWBAJZU5pncm9
-	xaES/2pBU5/4uG/r3rWyKUA2P2iv2IOHS4WeZgANUbBxMOZedxFQ/1m2HGFkNE+9p4CJh/
-	7gC2vtD7ZBmG90437YwpJhexVM6bHK8=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1689752836;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Syz5+xL1tMZlnA9EAuXkXKAlXYBfs3MzhnxYd5I8GhE=;
-	b=h160I5VIN9ej0A4z8RCTCvHAY7XWqP293kl2YI3uL6cesBu9FgCPOyeRklat1uavPazGDP
-	EuizFB6lcQiIVTAA==
-Date: Wed, 19 Jul 2023 09:47:15 +0200
-From: Marcus Meissner <meissner@suse.de>
+Received: (qmail 11575 invoked from network); 7 Jul 2015 13:42:26 -0000
+Date: Tue, 7 Jul 2015 16:42:22 +0300
+From: Solar Designer <solar@openwall.com>
 To: oss-security@lists.openwall.com
-Cc: Tamas Koczka <poprdi@chromium.org>
-Message-ID: <20230719074714.GA6211@suse.de>
-References: <CAEviOmOzG=KTzqee5hsrLUsCSL2ic7Kj-CzrBhEx7PxXx=5FKA@mail.gmail.com>
- <20230714180656.GA30858@openwall.com>
-MIME-Version: 1.0
+Message-ID: <20150707134222.GA8667@openwall.com>
+Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230714180656.GA30858@openwall.com>
-Organization: SUSE Software Solutions =?iso-8859-1?Q?Ger?=
- =?iso-8859-1?Q?many_GmbH=2C_Frankenstra=DFe_146=2C_90461_Nuernberg=2C_Ger?=
- =?iso-8859-1?Q?many=2C_GF=3A_Ivo_Totev=2C_Andrew_Myers=2C_Andrew_McDonald?=
- =?iso-8859-1?Q?=2C_Martje_Boudien_Moerman=2C_HRB_36809=2C_AG_N=FCrnberg?=
-User-Agent: Mutt/1.10.1 (2018-07-13)
-Subject: Re: [oss-security] Our learnings from 42 Linux kernel exploits, we
- are limiting io_uring
+User-Agent: Mutt/1.4.2.3i
+Subject: [oss-security] CVE-2015-3281 HAProxy information leak vulnerability
 
 Hi,
 
-On Fri, Jul 14, 2023 at 08:06:56PM +0200, Solar Designer wrote:
-> Hi,
-> 
-> Thank you for bringing this to oss-security back then.  I have a few
-> questions below that I think you could clarify for everyone.  I'll quote
-> more of your message than I normally do since it's been a while.
+I think this should be brought in here, from the news section on the
+HAProxy website:
 
-...
+http://www.haproxy.org/news.html
 
-> There's a recent write-up on an exploitation technique that also
-> partially describes CVE-2023-21400, "a double free vulnerability in
-> io_uring [...] found by Ye Zhang and [Nicolas Wu] last year, affecting
-> kernel 5.10. [...] we exploit CVE-2023-21400 with Dirty Pagetable on
-> Google Pixel 7."
-> 
-> Dirty Pagetable: A Novel Exploitation Technique To Rule Linux Kernel
-> https://yanglingxi1993.github.io/dirty_pagetable/dirty_pagetable.html
-> 
-> I wish this vulnerability and exploitation technique were properly
-> brought to oss-security on its own, and in a context not limited to
-> Google Pixel.  Maybe it will be once the full description is made
-> public, as right now the write-up above omits vulnerability detail.
-> 
-> It appears that this got patched in the July 5 update for Google Pixel:
-> 
-> Pixel Update Bulletin - July 2023
-> Published July 5, 2023
-> https://source.android.com/docs/security/bulletin/pixel/2023-07-01
-> 
-> "For Google devices, security patch levels of 2023-07-05 or later
-> address all issues in this bulletin and all issues in the July 2023
-> Android Security Bulletin."
-> 
-> "CVE-2023-21400	A-264663832 *	EoP	Moderate	Kernel io_uring"
-> 
-> Nothing is mentioned about seccomp-bpf on either of the above web pages,
-> although maybe it's factored into the Moderate severity rating?
-> 
-> I understand that with vulnerability detail still not public you might
-> not be able to tell much, but I am wondering whether there's any
-> inconsistency here (seccomp-bpf on Android was meant to prevent this,
-> but did not?) or just a misunderstanding or something else.  I wonder
-> if a vulnerability in io_uring could be such that it's exploitable
-> without io_uring access directly from the attacking app.
+"July, 3rd, 2015 : 1.5.14 : fixes an information leak vulnerability
+(CVE-2015-3281) 
 
-FWIW we reached out to the Android CNA team, but their statement back
-to us was that they pulled quite a number of backport commits into their 5.5
-and 5.10 based trees, but did either not specify nor identify specific commits
-fixing the issue (or further details) so far.
+A vulnerability was found when HTTP pipelining is used.  In some cases,
+a client might be able to cause a buffer alignment issue and retrieve
+uninitialized memory contents that exhibit data from a past request or
+session.  I want to address sincere congratulations to Charlie
+Smurthwaite of aTech Media for the really detailed traces he provided
+which made it possible to find the cause of this bug.  Every user of
+1.5-dev, 1.5.x or 1.6-dev must upgrade to 1.5.14 or latest 1.6-dev
+snapshot to fix this issue, or use the backport of the fix provided by
+their operating system vendors.  CVE-2015-3281 was assigned to this bug."
 
-Ciao, Marcus
+Fix:
+
+http://git.haproxy.org/?p=haproxy-1.5.git;a=commit;h=7ec765568883b2d4e5a2796adbeb492a22ec9bd4
+
+CVE:
+
+https://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2015-3281
+
+"The buffer_slow_realign function in HAProxy 1.5.x before 1.5.14 and
+1.6-dev does not properly realign a buffer that is used for pending
+outgoing data, which allows remote attackers to obtain sensitive
+information (uninitialized memory contents of previous requests) via a
+crafted request."
+
+Debian and Ubuntu have already sent out advisories.
+
+Alexander
