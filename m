@@ -1,4 +1,9 @@
-Received: (qmail 11849 invoked by uid 550); 6 Sep 2023 11:16:35 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2859" "Thursday" "9" "July" "2015" "15:48:51" "+1200" "Amos Jeffries" "squid3@treenet.co.nz" "<559DEF23.5000308@treenet.co.nz>" "85" "Re: [oss-security] Squid HTTP proxy CVE request" nil nil nil "7" "2015070903:48:51" "[oss-security] Squid HTTP proxy CVE request" (number mark "U       squid3@treen Jul  9   85/2859  " thread-indent "\"Re: [oss-security] Squid HTTP proxy CVE request\"\n") "<559A65F3.80103@treenet.co.nz>" ("<559A65F3.80103@treenet.co.nz>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 24198 invoked by uid 550); 9 Jul 2015 03:49:21 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,257 +11,102 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11810 invoked from network); 6 Sep 2023 11:16:35 -0000
-From: Daniel Beck <ml@beckweb.net>
-Content-Type: text/plain;
-	charset=us-ascii
+Received: (qmail 24180 invoked from network); 9 Jul 2015 03:49:20 -0000
+Message-ID: <559DEF23.5000308@treenet.co.nz>
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
+MIME-Version: 1.0
+References: <559A65F3.80103@treenet.co.nz>
+In-Reply-To: <559A65F3.80103@treenet.co.nz>
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3731.700.6\))
-Message-Id: <EC7CFAAF-40C7-4B69-82DD-84AACEB879A7@beckweb.net>
-Date: Wed, 6 Sep 2023 13:16:13 +0200
-To: oss-security@lists.openwall.com
-X-Mailer: Apple Mail (2.3731.700.6)
-X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1693998995;d2085863;
-X-HE-SMSGID: 1qdqWF-0003vZ-M9
-Subject: [oss-security] Multiple vulnerabilities in Jenkins plugins
-
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software.
-
-The following releases contain fixes for security vulnerabilities:
-
-* Azure AD Plugin 397.v907382dd9b_98 and 378.380.v545b_1154b_3fb_
-* Bitbucket Push and Pull Request Plugin 2.8.4
-* Google Login Plugin 1.8
-* Job Configuration History Plugin 1229.v3039470161a_d
-* Pipeline Maven Integration Plugin 1331.v003efa_fd6e81
-* Qualys Container Scanning Connector Plugin 1.6.2.7
-* SSH2 Easy Plugin 1.6
-
-Additionally, we announce unresolved security issues in the following
-plugins:
-
-* Assembla Auth Plugin
-* AWS CodeCommit Trigger Plugin
-* Frugal Testing Plugin
-* Ivy Plugin
-* TAP Plugin
-
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://www.jenkins.io/security/advisory/2023-09-06/
-
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
-
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://www.jenkins.io/security/#reporting-vulnerabilities
-
----
-
-SECURITY-3233 / CVE-2023-41930 (path traversal) & CVE-2023-41931 (XSS)
-Job Configuration History Plugin 1227.v7a_79fc4dc01f and earlier does not
-restrict a `name` query parameter when rendering a history entry. This
-allows attackers to have Jenkins render a manipulated configuration history
-that was not created by the plugin.
-
-The history view does not property sanitize or escape the timestamp value
-from history entries when rendering a history entry. This typically isn't a
-problem, as the value is numeric in genuine history entries. Combined with
-the path traversal vulnerability, this results in a stored cross-site
-scripting (XSS) vulnerability exploitable by attackers with the ability to
-create a file on the controller (e.g., archived artifacts).
-
-
-SECURITY-3235 / CVE-2023-41932 (path traversal) & CVE-2023-41933 (XXE)
-Job Configuration History Plugin 1227.v7a_79fc4dc01f and earlier does not
-restrict `timestamp` query parameters in multiple endpoints. This allows
-attackers with Job Config History/DeleteEntry permission to delete
-attacker-specified directories on the Jenkins controller file system as
-long as they contain a file called `history.xml`.
-
-Additionally, Job Configuration History Plugin 1227.v7a_79fc4dc01f and
-earlier does not configure its XML parser to prevent XML external entity
-(XXE) attacks. This allows attackers with Item/Configure permission to have
-Jenkins parse a crafted XML document that uses external entities for
-extraction of secrets from the Jenkins controller or server-side request
-forgery.
-
-
-SECURITY-3257 / CVE-2023-41934
-Pipeline Maven Integration Plugin integrates with Config File Provider
-Plugin to specify custom Maven settings, including credentials for
-authentication.
-
-Pipeline Maven Integration Plugin 1330.v18e473854496 and earlier does not
-properly mask (i.e., replace with asterisks) usernames of credentials
-specified in custom Maven settings in Pipeline build logs if "Treat
-username as secret" is checked.
-
-
-SECURITY-3227 / CVE-2023-41935
-Azure AD Plugin 396.v86ce29279947 and earlier, except
-378.380.v545b_1154b_3fb_, does not use a constant-time comparison when
-checking whether the provided and expected CSRF protection nonce are equal.
-
-This could potentially allow attackers to use statistical methods to obtain
-a valid nonce.
-
-
-SECURITY-3228 / CVE-2023-41936
-Google Login Plugin 1.7 and earlier does not use a constant-time comparison
-when checking whether the provided and expected token are equal.
-
-This could potentially allow attackers to use statistical methods to obtain
-a valid token.
-
-
-SECURITY-3165 / CVE-2023-41937
-Bitbucket Push and Pull Request Plugin provides a webhook endpoint at
-`/bitbucket-hook/` to receive webhook notifications.
-
-When acting on these notifications, Bitbucket Push and Pull Request Plugin
-2.4.0 through 2.8.3 (both inclusive) trusts values provided in the webhook
-payload, including certain URLs, and uses configured Bitbucket credentials
-to connect to those URLs. This allows attackers to capture Bitbucket
-credentials stored in Jenkins by sending a crafted webhook payload.
-
-NOTE: Successful exploitation requires that a build is triggered. This is
-the case when the repository has changed since the previous build, or the
-option "Trigger also if nothing has changed in the repo" is checked.
-
-
-SECURITY-3018 / CVE pending
-Qualys Container Scanning Connector Plugin 1.6.2.6 and earlier does not
-correctly perform a permission check in multiple HTTP endpoints.
-
-This allows attackers with global Item/Configure permission (while lacking
-Item/Configure permission on any particular job) to do the following:
-
-* Enumerate credentials IDs of credentials stored in Jenkins.
-  Those can be used as part of an attack to capture the credentials using
-  another vulnerability.
-* Connect to an attacker-specified webserver using attacker-specified
-credentials IDs obtained through another method, capturing credentials
-stored in Jenkins.
-
-
-SECURITY-2924 / CVE-2022-46751
-Ivy Plugin 2.5 and earlier bundles versions of Apache Ivy vulnerable to
-CVE-2022-46751.
-
-This allows attackers able to control the input file for the "Trigger the
-build of other projects based on the Ivy dependency management system"
-post-build step to have Jenkins parse a crafted XML document that uses
-external entities for extraction of secrets from the Jenkins controller or
-server-side request forgery.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-3093 / CVE-2023-41938
-Ivy Plugin 2.5 and earlier does not require POST requests for an HTTP
-endpoint, resulting in a cross-site request forgery (CSRF) vulnerability.
-
-This vulnerability allows attackers to delete disabled modules.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-3064 / CVE-2023-41939
-SSH2 Easy Plugin 1.4 and earlier does not verify that permissions
-configured to be granted are enabled. This may allow users formerly granted
-(typically optional permissions, like Overall/Manage) to access
-functionality they're no longer entitled to.
-
-NOTE: As a workaround, administrators can save the permission configuration
-after disabling a permission, as that will overwrite any permission
-assignments of disabled permissions.
-
-
-SECURITY-3190 / CVE-2023-41940
-TAP Plugin 2.3 and earlier does not escape TAP file contents.
-
-This results in a stored cross-site scripting (XSS) vulnerability
-exploitable by attackers able to control TAP file contents.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-3101 (1) / CVE-2023-41941
-AWS CodeCommit Trigger Plugin 3.0.12 and earlier does not perform a
-permission check in an HTTP endpoint.
-
-This allows attackers with Overall/Read permission to enumerate credentials
-IDs of AWS credentials stored in Jenkins. Those can be used as part of an
-attack to capture the credentials using another vulnerability.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-3101 (2) / CVE-2023-41942 (CSRF) & CVE-2023-41943 (permission check)
-AWS CodeCommit Trigger Plugin 3.0.12 and earlier does not perform a
-permission check in an HTTP endpoint.
-
-This allows attackers with Overall/Read permission to clear the SQS queue.
-
-Additionally, this endpoint does not require POST requests, resulting in a
-cross-site request forgery (CSRF) vulnerability.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-3102 / CVE-2023-41944
-AWS CodeCommit Trigger Plugin 3.0.12 and earlier does not escape the queue
-name parameter passed to a form validation URL, when rendering an error
-message.
-
-This results in an HTML injection vulnerability.
-
-NOTE: Since Jenkins 2.275 and LTS 2.263.2, a
-link:/doc/upgrade-guide/2.263/#formvalidation[security hardening] for form
-validation responses prevents JavaScript execution, so no scripts can be
-injected.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-3065 / CVE-2023-41945
-Assembla Auth Plugin provides an authorization strategy that defines four
-levels of access to Jenkins, based on the corresponding permissions in
-Assembla spaces: ALL, EDIT, VIEW, and NONE.
-
-Assembla Auth Plugin 1.14 and earlier does not verify that the permissions
-it grants are enabled. This results in users with EDIT permissions to be
-granted Overall/Manage and Overall/SystemRead permissions, even if those
-permissions are disabled and should not be granted.
-
-NOTE: Additionally, the plugin also grants the deprecated permissions
-Overall/RunScripts, Overall/UploadPlugins and Overall/ConfigureUpdateCenter
-to users with EDIT access. These permissions allow arbitrary code execution
-through various means in Jenkins before 2.222. Additionally, plugins not
-yet adapted to the changes in Jenkins 2.222 may also provide access to
-sensitive features to users with these permissions.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-3082 / CVE-2023-41946 (CSRF) & CVE-2023-41947 (permission check)
-Frugal Testing Plugin 1.1 and earlier does not perform permission checks in
-several HTTP endpoints.
-
-This allows attackers with Overall/Read permission to do the following:
-
-* Connect to Frugal Testing using attacker-specified username and password.
-* Retrieve test IDs and names from Frugal Testing, if a valid credential
-  corresponds to the attacker-specified username.
-
-Additionally, these endpoints do not require POST requests, resulting in a
-cross-site request forgery (CSRF) vulnerability.
-
-As of publication of this advisory, there is no fix.
-
-
-
+Date: Thu, 09 Jul 2015 15:48:51 +1200
+From: Amos Jeffries <squid3@treenet.co.nz>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Squid HTTP proxy CVE request
+To: oss-security@lists.openwall.com, cve-assign@mitre.org
+
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+CC'ing cve-assign since there has been no reply for several days.
+
+On 6/07/2015 11:26 p.m., Amos Jeffries wrote:
+> Greetings,
+> 
+> This months release of Squid HTTP proxy, version 3.5.6, contains
+> fixes for two security issues.
+> 
+> 
+> Issue #1:
+> 
+> Due to incorrect handling of peer responses in a hierarchy of 2 or 
+> more proxies remote clients (or scripts run on a client) are able
+> to gain unrestricted access through a gateway proxy to its backend
+> proxy.
+> 
+> If the two proxies have differing levels of security this could
+> lead to authentication bypass or unprivileged access to supposedly
+> secure resources.
+> 
+> <http://www.squid-cache.org/Versions/v3/3.5/changesets/squid-3.5-13856
+.p
+>
+> 
+atch>
+> 
+> All Squid up to and including 3.5.5 are vulnerable.
+> 
+> (when published the advisory for this will be 
+> <http://www.squid-cache.org/Advisories/SQUID-2015_2.txt>)
+> 
+> 
+> Issue #2:
+> 
+> This is somewhat more obscure, and I am seeking clarification
+> perhapse more than assignment.
+> 
+> Squid up to and including 3.5.5 are apparently vulnerable to DoS 
+> attack from malicious clients using repeated TLS renegotiation 
+> messages. This has not been verified as it also seems to require 
+> outdated (0.9.8l and older) OpenSSL libraries.
+> 
+> <http://www.squid-cache.org/Versions/v3/3.5/changesets/squid-3.5-13849
+.p
+>
+> 
+atch>
+> 
+> CVE-2009-3555 was mentioned by the submitter, but that was clearly 
+> assigned for server-initiated renegotiation. This Squid change is 
+> specifically for the client-initiated renegotiation part of the
+> TLS protocol flaw.
+> 
+> There may be some relevant CVE already assigned, although I've
+> been unable to find it. Only CVE-2011-1473 which is for the library
+> itself and disputed.
+> 
+> So, is server software being assigned specific CVE (or a shared 
+> generic one) for resolving this flaw? Please indicate which CVE
+> Squid announcements should mention (if any).
+> 
+> 
+> Thanks, Amos Jeffries Squid Software Foundation
+> 
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.22 (MingW32)
+
+iQIcBAEBAgAGBQJVne8iAAoJEGvSOzfXE+nLoKcQAKWz18aIZ3cWLfxXCMklqbF6
+3cb5/22qBxXXeaPVwqhxeS/yV4hFxuWp6u9DBbALxdXYpyQoM5NTtPC+nG2a1GxY
+mHV1QRgA/JMXlgjYfvOTavM3XPfTetdu83eM+36DxEk29j59rKkWsf3RQ2RNxPCo
+9jORKFnS825aCG+8K0450ueP6aSP+HzazaEFQEKehA38wAzpXcAFa7aJzJJjE8Qr
+RahLxuXX7LdOAG3ZMZMbgqOW9j5SgNU88+KiY/jC9yFbH1e9nT7LsnEGSszlSj2r
+b/MGFzyxCLaH/Q4XiPIdRxuvAP1pYDR1c4yFBPqsgLD+R3ZAkZUthyd+nHUTcOTi
+DoVfZKBexLByXXYuuTOiNeRfuKCd+ZOhH2wFDw+bhoZq1tcxPNcjOcAoJDF+mdK0
+Cwwq7hSv1AlZGYOdr6ArMzKDqyq3wgaSkJKVMMxi5f4YM4bZ9kbQMunw+ez5dBq4
+gtlxrq6cr44DkN2Ty6F+o2Laz32t+tpoPOH6vHz5x1CZE5yAliCgHm5u2sA6do7s
+j/5aeToxMA1WPKAb2LcrZlc1ku0duVExOstXrqB70OEfqAPNqGPclISwQiiBs2yj
+QIkqoDf+4HJuya7eEhjIRgbsvDgqRv6G5bd+tWHHocjATK66ddyUdGNykDDhbSYq
+XVAdvU+KS19eHTngaUW6
+=PHCB
+-----END PGP SIGNATURE-----
