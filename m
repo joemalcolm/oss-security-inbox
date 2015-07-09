@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1172" "Thursday" "11" "June" "2015" "17:11:13" "+0000" "mancha" "mancha1@zoho.com" "<20150611171113.GA26244@zoho.com>" "34" "[oss-security] OpenSSL Sec Adv 20150611" nil nil nil "6" "2015061117:11:13" "[oss-security] OpenSSL Sec Adv 20150611" (number mark "U       mancha1@zoho Jun 11   34/1172  " thread-indent "\"[oss-security] OpenSSL Sec Adv 20150611\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1746" "Thursday" "9" "July" "2015" "10:31:13" "+0200" "Vasyl Kaigorodov" "vkaigoro@redhat.com" "<20150709083112.GH6144@mail.corp.redhat.com>" "51" "[oss-security] Re: CVE request: pure-ftpd denial of service in glob_()" nil nil nil "7" "2015070908:31:13" "[oss-security] Re: CVE request: pure-ftpd denial of service in glob_()" (number mark "        vkaigoro@red Jul  9   51/1746  " thread-indent "\"[oss-security] Re: CVE request: pure-ftpd denial of service in glob_()\"\n") "<20150618170301.CF5FD132F024@smtpvbsrv1.mitre.org>" ("<20150618151358.GA18454@mail.corp.redhat.com>" "<20150618170301.CF5FD132F024@smtpvbsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 3269 invoked by uid 550); 11 Jun 2015 17:12:05 -0000
+Received: (qmail 10157 invoked by uid 550); 9 Jul 2015 08:31:32 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,57 +11,71 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3130 invoked from network); 11 Jun 2015 17:11:35 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; 
-  s=zapps768; d=zoho.com; 
-  h=date:from:to:subject:message-id:mime-version:content-type; 
-  b=XP19y4SH0zVEWY/eBOpmrTT8vNjZcZt9F2euBXhxvhwAQBvB5IESBiZ7MdScbfkRVvigB9vu9Wmu
-    YZ3Qj+ElokR3u6ZoB0HZpg80gQRDsIv1vZCBT+peClHI7n6wdd9U  
-Message-ID: <20150611171113.GA26244@zoho.com>
+Received: (qmail 10129 invoked from network); 9 Jul 2015 08:31:31 -0000
+Message-ID: <20150709083112.GH6144@mail.corp.redhat.com>
+References: <20150618151358.GA18454@mail.corp.redhat.com>
+ <20150618170301.CF5FD132F024@smtpvbsrv1.mitre.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="sm4nu43k4a2Rpi4c"
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="cfJ13FhsvNR/yOpm"
 Content-Disposition: inline
-X-PGP-Key: http://hkps.pool.sks-keyservers.net/pks/lookup?op=vindex&search=0x25168eb24f0b22ac
-X-PGP-FP: 56B7 100E F4D5 811C 8FEF  ADD1 2516 8EB2 4F0B 22AC
-X-Zoho-Virus-Status: 1
-Date: Thu, 11 Jun 2015 17:11:13 +0000
-From: mancha <mancha1@zoho.com>
+In-Reply-To: <20150618170301.CF5FD132F024@smtpvbsrv1.mitre.org>
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
+Cc: oss-security@lists.openwall.com
+Date: Thu, 9 Jul 2015 10:31:13 +0200
+From: Vasyl Kaigorodov <vkaigoro@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] OpenSSL Sec Adv 20150611
-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: CVE request: pure-ftpd denial of service in glob_()
+To: cve-assign@mitre.org
 
---sm4nu43k4a2Rpi4c
-Content-Type: text/plain; charset=us-ascii
+--cfJ13FhsvNR/yOpm
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-FYI, today OpenSSL released new versions (1.0.2b, 1.0.1n, 1.0.0s, and
-0.9.8zg) to address several security issues [1].
+On Thu, 18 Jun 2015, cve-assign@mitre.org wrote:
 
---mancha
+>=20
+> > https://github.com/jedisct1/pure-ftpd/commit/0627004e23a24108785dc1506c=
+5767392b90f807
+>=20
+> Can you clarify the security impact? We have not looked into the code
+> paths or the overall product design. Is this a process that is
+> specific to one FTP client? Is the problem that the gl_errfunc
+> assignment doesn't occur and there is always a dereference of a NULL
+> function pointer? Is there a commonly relevant consequence other than
+> the ability of an FTP client to conduct a DoS attack against its own
+> session?
 
-[1] http://openssl.org/news/secadv_20150611.txt
+As per [1]:
 
---sm4nu43k4a2Rpi4c
+It won't crash the whole service, only the user session. It is
+not going to block and dump a core file either, except if compiled in
+DEBUG mode.
+
+It appears that there's no security impact here, please disregard this
+CVE request.
+
+[1]: https://github.com/jedisct1/pure-ftpd/commit/0627004e23a24108785dc1506=
+c5767392b90f807#commitcomment-11764342
+
+--=20
+Vasyl Kaigorodov | Red Hat Product Security
+PGP:  0xABB6E828 A7E0 87FF 5AB5 48EB 47D0 2868 217B F9FC ABB6 E828
+
+--cfJ13FhsvNR/yOpm
 Content-Type: application/pgp-signature
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCgAGBQJVecExAAoJEB4VYy8JqhaDU8QP/0Ts5fG1fz9jgMDHY2NNRHof
-qcQo7jaU8xxY9b2Wloo/e6uoeDZwXceqcemt9cHRLvb6oLyJGAyb+O8jD4/ranPB
-Oie0SHCMA2tMTSwcYyatquFTSc82KIZ+HwMZyUswQcZB81RWRZB7naO2NLcNjdWj
-x7tm8R7BlN0ZaMswheyXFS1gVdhjDuOz7am5geaD5caN1VhKCcay7Xz81j9pRWTe
-heyl9BIkgLMn1u7otkhj2zCHq3Ou5wA6V2cGLEYt8kpvYUYGetpyC9YaeumCbvEG
-eXYRtlbJwKv1J6roCP+AzPomWPAwrSpesFib/NEAlcTGVwkqpFXiUA2T1KytoJRw
-3c8XecJs2MrPgaINAqJzCk+BDo99QxqhZcLIMABnFptJNkiMk8qSiut3fuGHUY0w
-Ev1LiLrzkj2ssRP+LpVHOTbGUjiSlV8Nct8swqcdmYIMQWjWJxzzXTc0jP6Vfc9J
-Oi8a4U7o7eM1+ZHgQ1w/K9Bm8O76QvmQG//G5fHqNfarShrznE4wSmLZZSUpUhLY
-bwMzpVU1YExr2F7tfSAYC7iygtths/sOrlakeeFLSASNAglc5Yef3aBrZO1QFZtv
-gAw74Y/oc4uoLvqZ97JivRWLlI3tiyd+9PCVVwpsQ+DHlIJYyxZ8ggKP/t8JaZc3
-JilAB4MA7jjtivWHyIWi
-=IXjl
+iQEcBAEBAgAGBQJVnjFQAAoJECF7+fyrtugoOjwH/3hj2ucZUPa6f/T4ENJF5ynW
+CU1khVKf0tLr+e6GOOYwAlGD4xK7mpHHVU6bLTYvh9lu5RUInBCsr++WgAoiJ0AJ
+HknEJUzYOavUzltuHgh7czCX5N2l1OBI6YwxTkdPliGiJtRVWMe470Yvwb61yyYB
+F0z7Wsyx9q2kP3HEnIskYqWV8n/wrd1bUAmm1GlcTAZ5l3WTkP4apR4uQkoGMyWe
+/4JitRX1YzCzFK0yMmpnix3wZ+24AEN5MhbFXwmdkgadd5mFaa4jNOifJgafyXoA
+nIq63M+u+hbGnF8xkfWl+zCuucml8jkivP+jaCF+dowQuGhlPLJ34RGUuvPSL+A=
+=hVrn
 -----END PGP SIGNATURE-----
 
---sm4nu43k4a2Rpi4c--
-
+--cfJ13FhsvNR/yOpm--
