@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1336" "Saturday" "7" "May" "2016" "11:17:34" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160507151734.68C826C0716@smtpvmsrv1.mitre.org>" "33" "[oss-security] Re: CVE Request: Linux: [media] videobuf2-v4l2: Verify planes array in buffer dequeueing" nil nil nil "5" "2016050715:17:34" "[oss-security] Re: CVE Request: Linux: [media] videobuf2-v4l2: Verify planes array in buffer dequeueing" (number mark "U       cve-assign@m May  7   33/1336  " thread-indent "\"[oss-security] Re: CVE Request: Linux: [media] videobuf2-v4l2: Verify planes array in buffer dequeueing\"\n") "<20160507141409.GA11843@eldamar.local>" ("<20160507141409.GA11843@eldamar.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["874" "Thursday" "9" "July" "2015" "11:18:21" "-0700" "Reed Loden" "reed@reedloden.com" "<CALPTtNV-ib_gojFXZOdb5OYb7efUgKg4tPSWuryJBvLCBCE5nQ@mail.gmail.com>" "22" "[oss-security] CVE request: Command injection in ruby gem ruby-saml <1.0.0" nil nil nil "7" "2015070918:18:21" "[oss-security] CVE request: Command injection in ruby gem ruby-saml <1.0.0" (number mark "U       reed@reedlod Jul  9   22/874   " thread-indent "\"[oss-security] CVE request: Command injection in ruby gem ruby-saml <1.0.0\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 32706 invoked by uid 550); 7 May 2016 15:17:46 -0000
+Received: (qmail 23891 invoked by uid 550); 9 Jul 2015 18:18:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,46 +11,57 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 23870 invoked from network); 9 Jul 2015 18:18:52 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=reedloden.com; s=google;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=eR4gPnaCQ/sRDbpQ8qvrG4qJr/s+z3UYPT9oek7LwYA=;
+        b=PtdjEYzXRBuau1EuHBApac8sI+f84hMlNDoZ/jg71fnrm8gTcmND6bPdnOtsC+xeJf
+         X3hXln6XjkqWBzjD/zytd4bYW9o/dbbuNU5ab0NgY2KfR0RJqKMGKPl6c1c64HiBG1qB
+         EJ/yJUAFoH0hVU+6YdTqQMe3tyrLyE5PJ3SoQ=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
+         :content-type;
+        bh=eR4gPnaCQ/sRDbpQ8qvrG4qJr/s+z3UYPT9oek7LwYA=;
+        b=hgASPQ9fSx/CZTdrth4N8LzhWDIHFimFy6y6pbs9h7Ns8J2Ssfb8FZT2Akj65KAF/h
+         2RpGcW7bZPBgQuqKrJGbTCwZCoBa+9Ya97GLpKYHYW+Ph1uFhCDJ+U9Eo+UmXDJmrbHi
+         Z4beXMC1ZU7VoX6P6BlK9CR6RhbjUSu5zHY4qIUhSM9HmZh6exZjNKqbYWn17ExB9Gce
+         XENoX2h6cwlOwteqOSoFO5+B9tiBC2GPRDewvuHswQMDuVIuvVi85DcfqMGOWkfL7LH5
+         ci+7N3Jo9z1RnQ+AWClqFCL8jhmsGhVCfastJ0jSBmTdKabvkkMNV0MJQd556hEEIJYm
+         RysQ==
+X-Gm-Message-State: ALoCoQnAfsqCXCccUGJvMgnRA6k7sAv+mYfulMi0VVUIuDtU5yX6wfEZbsoADPbxCJlGT2yDCYOF
+X-Received: by 10.170.119.147 with SMTP id l141mr19066791ykb.89.1436465920444;
+ Thu, 09 Jul 2015 11:18:40 -0700 (PDT)
+MIME-Version: 1.0
+Message-ID: <CALPTtNV-ib_gojFXZOdb5OYb7efUgKg4tPSWuryJBvLCBCE5nQ@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=001a1137c95eebc6f0051a754802
+Date: Thu, 9 Jul 2015 11:18:21 -0700
+From: Reed Loden <reed@reedloden.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32688 invoked from network); 7 May 2016 15:17:46 -0000
-From: cve-assign@mitre.org
-To: carnil@debian.org
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, benh@debian.org
-In-Reply-To: <20160507141409.GA11843@eldamar.local>
-Message-Id: <20160507151734.68C826C0716@smtpvmsrv1.mitre.org>
-Date: Sat,  7 May 2016 11:17:34 -0400 (EDT)
-Subject: [oss-security] Re: CVE Request: Linux: [media] videobuf2-v4l2: Verify planes array in buffer dequeueing
+Subject: [oss-security] CVE request: Command injection in ruby gem ruby-saml <1.0.0
+To: oss-security@lists.openwall.com, 
+	Assign a CVE Identifier <cve-assign@mitre.org>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--001a1137c95eebc6f0051a754802
+Content-Type: text/plain; charset=UTF-8
 
-> https://git.kernel.org/linus/2c1f6951a8a82e6de0d82b1158b5e493fc6c54ab
-> 
-> __fill_v4l2_buffer() however uses the number of planes from the dequeued
-> videobuf2 buffer, overwriting kernel memory ...
-> if the user provided fewer planes than the dequeued buffer had.
+A follow-up to my previous CVE request. Looked into "Fix xpath injection on
+xml_security.rb" some more.
 
-Use CVE-2016-4568.
+https://github.com/onelogin/ruby-saml/pull/225#issuecomment-120084288
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+https://github.com/onelogin/ruby-saml/commit/1b4e3dd6d2d44efa629144b2180842456bfb2a0f#diff-661b9d9743a3ff77661f224c6191165cL242
 
-iQIcBAEBCAAGBQJXLgZSAAoJEHb/MwWLVhi20G8QALSR5YnhenGOLq7Om8MR3oNK
-Y5cyZXw4E/4h9n1z1/HZ/2yn+xh52oEgQ4utPTFRzCB/yOjBW+qMGf+j3AGCRqA4
-g7WKkRmqMp9nKMhnCrCcxFC+NsnN+tySE9Nk01nHO8EGPqHBbe+HBtg2SGOuYs2I
-oCH/NZlZdb/LOCKZKAkqbLoVn5jHyKsHMYd16LVSbHDKRazMhH2IAPI1g8BgLuym
-kEDVKUEwXazwuGATpRbIf2lSVZ5Qz5RhxDEntWMR5rR/w2RLcmTUfIHTkbEVoS35
-QwV8pn+qgOEqZ1BdskOsYb8Cxc3rg+J8qusYa/xpkq3l3z9veMr/1tmcYbmWMZGb
-/yWSm2R2Oy/t0jP0B421o+2FIFkqY6CXIypk1c4wpNLBzE2JlJoaymoQrwDrITHE
-EANQ/dp9WJeNdXiuFH9wfIgQXo+Z48JhWrpdN3rleLB6Foezg/0a4tuqGCKoHdly
-hGCI6Xx0OJKSq2ZBW6kW9ZvPATs0BY76/N9BAuxGKlTew7qiU7JeuF3Y0HGzIqpj
-DUHAhNWj9/+QDPQXPQxVRoNc1m62M8pR9s7hw8dM2Fbc/kmcxV+oQTxKVoOjQryJ
-XJE8+7oHZjWgGr1CUIrczk5ugZVhIjB63xj8YWPUxyKiOoWUhz1MRdWoAu42cEtx
-I80GkBp5znEdyshOx9Rg
-=eGPg
------END PGP SIGNATURE-----
+Looks like lack of prepared statements allow for possible command
+injection, leading to arbitrary code execution (via something like eval()).
+
+Related to https://github.com/onelogin/ruby-saml/pull/183 /
+http://osvdb.org/show/osvdb/117903 (which doesn't seem to have a CVE
+assigned either as far as I can tell). Reference for that is
+https://security.dxw.com/advisories/publicly-exploitable-command-injection-in-ruby-saml-0-7-2-library-can-root-the-host/
+.
+
+~reed
+
+--001a1137c95eebc6f0051a754802--
