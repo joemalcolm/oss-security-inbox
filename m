@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5552" "Thursday" "23" "April" "2020" "19:03:14" "+0300" "PromiseLabs Pentest Research" "pentest@promiselabs.net" "<8c73ccfed18df9cf7c01e9be05710a5e@promiselabs.net>" "144" "Re: [oss-security] spoofing of local email sender via a homoglyph attack" "^Date:" nil nil "4" "2020042316:03:14" "[oss-security] spoofing of local email sender via a homoglyph attack" (number mark "        pentest@prom Apr 23  144/5552  " thread-indent "\"Re: [oss-security] spoofing of local email sender via a homoglyph attack\"\n") "<20200423151430.GA21258@openwall.com>" ("<20200422152047.3196780D981@smtprhmv1.mitre.org>" "<2843537f5deb3a7987c8485bcc56a260@promiselabs.net>" "<ef4d2b65970d80e81fc0294aca5a6a30@promiselabs.net>" "<20200423133148.GA19214@openwall.com>" "<2236ad47936a87f144248f9ab6c7340f@promiselabs.net>" "<20200423151430.GA21258@openwall.com>") nil nil nil nil nil nil nil "Re: [oss-security] spoofing of local email sender via a homoglyph attack" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3129" "Thursday" "9" "July" "2015" "13:47:55" "-0700" "Reed Black" "reed@unsafeword.org" "<CAESArwn24tDQ1kD_Tfb65zCSUTr_Nz8AYwy0a_vKP8V4be5utw@mail.gmail.com>" "87" "Re: [oss-security] Squid HTTP proxy CVE request" nil nil nil "7" "2015070920:47:55" "[oss-security] Squid HTTP proxy CVE request" (number mark "U       reed@unsafew Jul  9   87/3129  " thread-indent "\"Re: [oss-security] Squid HTTP proxy CVE request\"\n") "<559A65F3.80103@treenet.co.nz>" ("<559A65F3.80103@treenet.co.nz>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 5983 invoked by uid 550); 23 Apr 2020 16:52:29 -0000
+Received: (qmail 6069 invoked by uid 550); 9 Jul 2015 20:48:08 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,193 +11,125 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 17673 invoked from network); 23 Apr 2020 16:03:34 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=promisedev.com; s=default; h=Message-ID:References:In-Reply-To:Subject:To:
-	From:Date:Content-Transfer-Encoding:Content-Type:MIME-Version:Sender:Reply-To
-	:Cc:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=FBH2/tyEQW6AwgVN7CLaClekkelYoesNjpMEFxw3Ixo=; b=MrutW/7aSTK1eP8u6vtAqZnEuX
-	hLV/lBFij5JQntDE1JEoF4cfCoX93zie4xK2QoR1zIrCNKea8jHN2WZytO0eZdo0bBXOGsKJ3zlz0
-	Pg2TFFpfvdYFxTt7iBuaA/WRwCDXq3053LFAxfwEwgPCroXzmdYvJC/W3vvxg/jUcsai3quyl2FF/
-	SrKccSrmJebycVElK4GaBBUFBKCs0/rnpQSKNufUN0JPvlkO32coKQVNM5QHAhlFboIWK9tvjm5Oq
-	yPMzgJYTMm5BscniwbN10MVg/9y5+EPEfLnQUkJ/FjoOixo7letfH2tEGO8RP7otdQL0iLm4uSwFr
-	57b1ZMog==;
+Received: (qmail 6041 invoked from network); 9 Jul 2015 20:48:08 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=unsafeword.org; s=google;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type;
+        bh=vEkh/2OcLqtB2Wvt/jEC/KFETg8cLp5GNTz1ACzsc8s=;
+        b=XOQdIGW+aG2PRUPJdW1rI3LT93Ji39obJLcAb3uCfZLVt1YEAabdfbMDceXaLuYkVc
+         nCyayUP50N0iNbxA4M8EkOfIVCfGAx0UFGApMZfXmd+v9ZeW2F2xnfESh8KgTqVKjeUJ
+         XowQrpsJq0o955yePGkPneKGt/5+lAQHzKOHU=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:content-type;
+        bh=vEkh/2OcLqtB2Wvt/jEC/KFETg8cLp5GNTz1ACzsc8s=;
+        b=LZMLURzShf0OcYVrsYlMhz/++iPYseAR6jnYpZiiHJ8IwoZpHot3tI+mu6L2MA0dVY
+         SMfPoStIMOdY+tF/9fVRK1FUa28N7Ot35WRxPqJxcQaFFMRXrmdR4yL87rJfHyUwgP6V
+         VdwVek3dZmkyIt1IBVhFjeER0E4OT5/o1iuwMPFdXPjf+5PzxpBOW7NMNoui57iGHZoZ
+         Tdn8uho7XJc1s8/oGUog7MDFtp710zIVpnVmdkkUeQL8eNJCiQb13XKIGBWpfpggX5hH
+         Nf8smSnRG43Z7Z+jV9+ygPsoe78qgTOid2SEtQHBfJInLO+eukXSmLvG8ihllB8uUHld
+         nN9w==
+X-Gm-Message-State: ALoCoQkBVwbZnJh6M9zbiVEVh6wr5wvUbS3b9LhMB9ZZLxZn2Jkv+as3NktFaXr3arvQ4KCJ34Wy
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Organization: PromiseLabs
-In-Reply-To: <20200423151430.GA21258@openwall.com>
-References: <20200422152047.3196780D981@smtprhmv1.mitre.org>
- <2843537f5deb3a7987c8485bcc56a260@promiselabs.net>
- <ef4d2b65970d80e81fc0294aca5a6a30@promiselabs.net>
- <20200423133148.GA19214@openwall.com>
- <2236ad47936a87f144248f9ab6c7340f@promiselabs.net>
- <20200423151430.GA21258@openwall.com>
-Message-ID: <8c73ccfed18df9cf7c01e9be05710a5e@promiselabs.net>
-X-Sender: pentest@promiselabs.net
-User-Agent: Roundcube Webmail/1.3.8
-X-OutGoing-Spam-Status: No, score=-1.0
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - lego.superhosting.bg
-X-AntiAbuse: Original Domain - lists.openwall.com
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - promiselabs.net
-X-Get-Message-Sender-Via: lego.superhosting.bg: authenticated_id: pentest@promisedev.com
-X-Authenticated-Sender: lego.superhosting.bg: pentest@promisedev.com
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-Date: Thu, 23 Apr 2020 19:03:14 +0300
-From: PromiseLabs Pentest Research <pentest@promiselabs.net>
+X-Received: by 10.170.60.150 with SMTP id c144mr18191246ykc.51.1436474875988;
+ Thu, 09 Jul 2015 13:47:55 -0700 (PDT)
+X-Originating-IP: [67.174.146.125]
+In-Reply-To: <559A65F3.80103@treenet.co.nz>
+References: <559A65F3.80103@treenet.co.nz>
+Message-ID: <CAESArwn24tDQ1kD_Tfb65zCSUTr_Nz8AYwy0a_vKP8V4be5utw@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=001a1139aa74b68c80051a775e37
+Date: Thu, 9 Jul 2015 13:47:55 -0700
+From: Reed Black <reed@unsafeword.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] spoofing of local email sender via a homoglyph
- attack
+Subject: Re: [oss-security] Squid HTTP proxy CVE request
 To: oss-security@lists.openwall.com
 
-I am not sure that the "from" header applies to user probing, as the 
-actual mail server configuration on which I'm testing would accept any 
-user as a sender:
+--001a1139aa74b68c80051a775e37
+Content-Type: text/plain; charset=UTF-8
 
-# nc -v *** OMITTED *** 25
-Connection to *** OMITTED *** 25 port [tcp/smtp] succeeded!
-220 *** OMITTED *** ESMTP Postfix
-mail from: userdoesnotexists@target.com
-250 2.1.0 Ok
-rcpt to: test@target.com
-550 5.1.1 <test@target.com>: Recipient address rejected: User unknown in 
-local recipient table
-rcpt to: j??hn.doe@target.com
-550 5.1.1 <j??hn.doe@target.com>: Recipient address rejected: User 
-unknown in local recipient table
-rcpt to: existing.user@target.com
-250 2.1.5 Ok
+As I read this, issue #1 allows CONNECT requests to proceed that shouldn't
+otherwise. Is unsetting AllowTcpForwarding also sufficient for the "Determining
+if your version is vulnerable" section?
 
-However, a non-existing user would not be accepted in the "rcpt-to" 
-header, so this is another possible vector. This was discovered while 
-doing a black box test on one of our clients, and it should be noted 
-that the VRFY command has been enabled on the server, hence there was no 
-reason to look for another way. However I'm unaware whether disabling 
-VRFY would alter this behaviour. As you can see, the reported issue 
-itself is may be actually due to the possibility of relaying a local 
-email from a non-existing user.
+On Mon, Jul 6, 2015 at 4:26 AM, Amos Jeffries <squid3@treenet.co.nz> wrote:
 
-Having said this, if not then I assume then you are correct, in case we 
-take the "to" header into consideration in relation to user probing, 
-unless I'm missing your logic.
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>
+> Greetings,
+>
+> This months release of Squid HTTP proxy, version 3.5.6, contains fixes
+> for two security issues.
+>
+>
+> Issue #1:
+>
+> Due to incorrect handling of peer responses in a hierarchy of 2 or
+> more proxies remote clients (or scripts run on a client) are able to
+> gain unrestricted access through a gateway proxy to its backend proxy.
+>
+> If the two proxies have differing levels of security this could lead
+> to authentication bypass or unprivileged access to supposedly secure
+> resources.
+>
+> <http://www.squid-cache.org/Versions/v3/3.5/changesets/squid-3.5-13856.p
+> atch>
+>
+> All Squid up to and including 3.5.5 are vulnerable.
+>
+> (when published the advisory for this will be
+> <http://www.squid-cache.org/Advisories/SQUID-2015_2.txt>)
+>
+>
+> Issue #2:
+>
+> This is somewhat more obscure, and I am seeking clarification perhapse
+> more than assignment.
+>
+> Squid up to and including 3.5.5 are apparently vulnerable to DoS
+> attack from malicious clients using repeated TLS renegotiation
+> messages. This has not been verified as it also seems to require
+> outdated (0.9.8l and older) OpenSSL libraries.
+>
+> <http://www.squid-cache.org/Versions/v3/3.5/changesets/squid-3.5-13849.p
+> atch>
+>
+> CVE-2009-3555 was mentioned by the submitter, but that was clearly
+> assigned for server-initiated renegotiation. This Squid change is
+> specifically for the client-initiated renegotiation part of the TLS
+> protocol flaw.
+>
+> There may be some relevant CVE already assigned, although I've been
+> unable to find it. Only CVE-2011-1473 which is for the library itself
+> and disputed.
+>
+> So, is server software being assigned specific CVE (or a shared
+> generic one) for resolving this flaw? Please indicate which CVE Squid
+> announcements should mention (if any).
+>
+>
+> Thanks,
+> Amos Jeffries
+> Squid Software Foundation
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v2.0.22 (MingW32)
+>
+> iQIcBAEBAgAGBQJVmmXyAAoJEGvSOzfXE+nLLjMP/2qTXQODFIdE9zfL3ZQ8MRhZ
+> Edh4PNFxSkhvVyYn8kU6ZMg2jx7hiXXEfiP/Ilvo3XcY/eDWf64g+POgLX20X5jV
+> o/StXDKHvcZUargImliJb2W1nalIGw1iqBERs6qwfRJhK67MHPgGWwxHu/SFEWsM
+> Kk2GRlGlIM4H8g7FnsDvwAnAYweGm3+iSqZlQEaX5JOqem2M8qukGziQsc28yU4E
+> SU5YIwNltW563pQYD+UTerz5i24Dt086in1AvSEFiLfqAMq4o3AdcFK73RhBdKyY
+> yJJ0rKaz3o18vtru3I7soms8dmUI0mLxX6imPrBHOeSInjGbbRvPIU3g2WYpcdwF
+> o6/7Xbg8HB+9QORXINqzC02aBiIJf8blleBnUKJQt1JMhQkb8vXAW4wcHoKfKTPo
+> w9gyhwHgbBCYk0gSQ5CuIlaqPUEPAST0DiV0OIDHltjeLSq7vsq5zij9OKLxQdDJ
+> nemVr03jrPHELCvV6eKXT/UJj6X+vfpCJk+giQq6rXC8ikhTvpID1aU/xOGxNJGq
+> ig9ThwADl6RE2/cgjh7bnz1IPcG679V85uMbwPVTXU38XmhTyWQKjDdt5DuAdd6a
+> RUsheekgzf5Lhhcv7/wht/ecNxDbBKvW8o8fvMinn5j9c0GNSNXtGbp8QYlySFS9
+> ycdNaJLFdIm8LnV5rNSW
+> =COJ4
+> -----END PGP SIGNATURE-----
+>
 
----
-PLPR:
-Plamen Dimitrov
-Penetration Tester, CEH & OSCP certified
-
-Promise Solutions LTD
-Penetration Testing and Managed Security services
-
-https://www.promisedev.com
-https://www.promiselabs.net
-+359 883 22 05 12
-
-On 2020-04-23 18:14, Solar Designer wrote:
-> On Thu, Apr 23, 2020 at 05:32:15PM +0300, PromiseLabs Pentest Research 
-> wrote:
->> To follow up on your questions:
-> 
-> Thanks!  Now this is specific.
-> 
->> The current configuration actually blocks any non-authorized requests 
->> as
->> explained in the description. The use-case of this (from my 
->> perspective)
->> is that it could be used to advance a social-engineer attack into
->> tricking the recipients believing that they are getting an email from 
->> a
->> high-level position at the company.
->> 
->> It's related to the from header.
->> 
->> Issuing a regular unauthenticated request, trying to send an email 
->> from
->> john.doe, which is a high-level user at the company:
->> $ nc -v *** OMITTED *** 25
->> Connection to *** OMITTED *** 25 port [tcp/smtp] succeeded!
->> 220 *** OMITTED *** ESMTP Postfix
->> mail from: john.doe@server.com
->> 250 2.1.0 Ok
->> rcpt to: existing.user@server.com
->> 553 5.7.1 <john.doe@server.com>: Sender address rejected: not logged 
->> in
->> 
->> As you can see, the mail server rejects the request as the existing 
->> user
->> hasn't authenticated himself.
-> 
-> My guess is this works when the server is configured to support SMTP
-> AUTH for potentially relaying mail from local users to other servers,
-> but as you show under that configuration the authentication requirement
-> applies even for messages intended for local users.  That's curious.
-> 
-> I don't know whether that behavior is documented and expected, and
-> whether it is considered a security feature or not.  I hope Wietse can
-> weigh in on this.
-> 
->> However, issuing a request using a homoglyph character:
->> $ echo -ne "j\xce\xbfhn.doe@server.com" | xclip -selection clipboard
->> $ nc -v *** OMITTED ***  25
->> Connection to *** OMITTED ***  25 port [tcp/smtp] succeeded!
->> 220 *** OMITTED ***  ESMTP Postfix
->> mail from: j??hn.doe@server.com
->> 250 2.1.0 Ok
->> rcpt to: existing.user@server.com
->> 250 2.1.5 Ok
->> data
->> 354 End data with <CR><LF>.<CR><LF>
->> 
->> The victim would get an email thinking it's from the actual john.doe
->> user.
-> 
-> OK.  To me, the real unexpected issue here is not the possibility to
-> spoof (in fact, it's unexpected to me that it wasn't possible in your
-> first example), but rather the possibility to probe for valid 
-> usernames.
-> That other aspect is more likely CVE-worthy, in my opinion.  There's
-> precedent that such easy probing for usernames shouldn't work, and is
-> getting CVEs against services where it does work.
-> 
-> There's probably room for hardening here where in cases when SMTP AUTH
-> is enforced for local users, mail from other local-looking addresses 
-> yet
-> with non-existent usernames be rejected in exactly the same way (and
-> with the same timings - tricky!) as mail from existing local usernames
-> when SMTP AUTH is not attempted (like in your example).  There should
-> also be no visible (and ideally no measurable) difference for existing
-> and non-existent usernames when SMTP AUTH is attempted but fails.
-> 
-> Alternatively, mail to local users could be accepted consistently
-> regardless of whether the claimed sender username exists locally or 
-> not,
-> thus without requiring authentication.  However, this would leave
-> unfixed the username probing possibility on attempting to relay mail to
-> external servers, where bypassing authentication is certainly not an
-> option.  So overall that isn't a valid fix for the username probing.
-> 
-> I assume the tests above are with postfix-2.10.1-7.el7.x86_64 as you 
-> had
-> mentioned previously, and behavior could very well vary between builds.
-> 
->> Whether this is applicable for assigning a CVE it's up to you decide,
-> 
-> No, technically it's up to MITRE, and they've already assigned one - 
-> but
-> I complain that they did so without sufficient detail on the issue.
-> 
->> the only actual risk here discovered so far is a social-engineering
->> attack.
-> 
-> And username probing.
-> 
->> >>> Use CVE-2020-12063.
-> 
-> Alexander
+--001a1139aa74b68c80051a775e37--
