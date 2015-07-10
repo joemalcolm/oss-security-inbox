@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1378" "Wednesday" "20" "November" "2019" "13:28:04" "-0600" "Bob Friesenhahn" "bfriesen@simple.dallas.tx.us" "<alpine.GSO.2.20.1911201315110.15536@scrappy.simplesystems.org>" "29" "Re: [oss-security] Mitigating malicious packages in gnu/linux" "^cc:" nil nil "11" "2019112019:28:04" "[oss-security] Mitigating malicious packages in gnu/linux" (number mark "        bfriesen@sim Nov 20   29/1378  " thread-indent "\"Re: [oss-security] Mitigating malicious packages in gnu/linux\"\n") "<CANuUHoGe6x5ntTBMMX0rLDFWbFeMd3FXGKJtrK5NjF=t7QV-0Q@mail.gmail.com>" ("<CAGUWgD8LDusq3PyWeMd-RoDhOtfiebVtKKV_39GhG+8c0QYFYg@mail.gmail.com>" "<20191120124425.GA25554@openwall.com>" "<CANuUHoGe6x5ntTBMMX0rLDFWbFeMd3FXGKJtrK5NjF=t7QV-0Q@mail.gmail.com>") nil nil nil nil nil nil nil "Re: [oss-security] Mitigating malicious packages in gnu/linux" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1274" "Friday" "10" "July" "2015" "16:29:44" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150710202945.005C072E29D@smtpvbsrv1.mitre.org>" "37" "[oss-security] Re: Remote file download in Wordpress Plugin mdc-youtube-downloader v2.1.0" nil nil nil "7" "2015071020:29:44" "[oss-security] Re: Remote file download in Wordpress Plugin mdc-youtube-downloader v2.1.0" (number mark "        cve-assign@m Jul 10   37/1274  " thread-indent "\"[oss-security] Re: Remote file download in Wordpress Plugin mdc-youtube-downloader v2.1.0\"\n") "<0E2AF306-9C75-415A-B4C8-C9E64C7E136A@me.com>" ("<0E2AF306-9C75-415A-B4C8-C9E64C7E136A@me.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 28623 invoked by uid 550); 20 Nov 2019 19:28:18 -0000
+Received: (qmail 15872 invoked by uid 550); 10 Jul 2015 20:30:00 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,48 +11,50 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 28605 invoked from network); 20 Nov 2019 19:28:17 -0000
-X-X-Sender: bfriesen@scrappy.simplesystems.org
-In-Reply-To: <CANuUHoGe6x5ntTBMMX0rLDFWbFeMd3FXGKJtrK5NjF=t7QV-0Q@mail.gmail.com>
-Message-ID: <alpine.GSO.2.20.1911201315110.15536@scrappy.simplesystems.org>
-References: <CAGUWgD8LDusq3PyWeMd-RoDhOtfiebVtKKV_39GhG+8c0QYFYg@mail.gmail.com> <20191120124425.GA25554@openwall.com> <CANuUHoGe6x5ntTBMMX0rLDFWbFeMd3FXGKJtrK5NjF=t7QV-0Q@mail.gmail.com>
-User-Agent: Alpine 2.20 (GSO 67 2015-01-07)
-MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (smtp.simplesystems.org [65.66.246.90]); Wed, 20 Nov 2019 13:28:05 -0600 (CST)
-cc: oss-security@lists.openwall.com
-Date: Wed, 20 Nov 2019 13:28:04 -0600 (CST)
-From: Bob Friesenhahn <bfriesen@simple.dallas.tx.us>
+Received: (qmail 15806 invoked from network); 10 Jul 2015 20:29:55 -0000
+In-Reply-To: <0E2AF306-9C75-415A-B4C8-C9E64C7E136A@me.com>
+Message-Id: <20150710202945.005C072E29D@smtpvbsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Fri, 10 Jul 2015 16:29:44 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Mitigating malicious packages in gnu/linux
-To: Aditya Sirish Arunkumar Yelgundhalli <asy278@nyu.edu>
+Subject: [oss-security] Re: Remote file download in Wordpress Plugin mdc-youtube-downloader v2.1.0
+To: larry0@me.com
 
-The ideas I have seen posted on this topic thus far are about assuring 
-correct provenance and that installed binaries are based on what the 
-maintainer/developer intended.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-The extreme focus on delivery mechanisms entirely ignores the fact 
-that development source code is produced in environments which are not 
-assured to be trustworthy (possibly sitting on hard drives for months 
-or multiple years), and then stored in environments which may or may 
-not be trustworthy (e.g. somewhere in a communal cloud).  This means 
-that changes may be inserted into the source code without the 
-developer/maintainer being aware.
+> Title: Remote file download in Wordpress Plugin mdc-youtube-downloader v2.1.0
+> Download Site: https://wordpress.org/plugins/mdc-youtube-downloader
+> Vendor: https://profiles.wordpress.org/mukto90/
+> Vendor Notified: 2015-07-01, removed vulnerable code.
 
-There is also the implicit assumption that all developers and 
-maintainers have the intention of being good and not intentionally 
-inserting malicious code.  This is not always the case, particularly 
-if a developer becomes deranged or disgruntled.  Not all developers 
-are equally competent and sometimes a developer submits code with 
-severe flaws.
+> $file_name = $_GET['file'];
+> readfile($file_name);
 
-Modern GNU/Linux systems have far too much executing code to 
-reasonably secure.  Paring down the amount of executing code helps 
-quite a lot with improving security.
+> /wp-content/plugins/mdc-youtube-downloader/includes/download.php?file=/etc/passwd
 
-Bob
--- 
-Bob Friesenhahn
-bfriesen@simple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
-GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
-Public Key,     http://www.simplesystems.org/users/bfriesen/public-key.txt
+> https://wordpress.org/plugins/mdc-youtube-downloader/changelog/
+> 2.1.1
+> Bug fixed.
+
+> https://plugins.trac.wordpress.org/changeset/1191915
+
+Use CVE-2015-5469.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJVoCmmAAoJEKllVAevmvmsykEH/2NbVNQqD4jmraIaIaClJFp5
+P4uQY+BySXHguu5H6AbGni64mQ/FpLqYHpWiQPWJXrzf73ws1P04OJSGZwB0hcB6
+dTV6F4F0F1cIrefD2eK7INc6B2twPQ5yZ1kFR7fMnQh1uzUNkoPJgzuUN+QVwhmO
+4LlQQyW4+fI/oVqqpgttvr4+FVf8ia2ahxtWkKIoKqt2nfb+7zUFa59jqo76y3mB
+wm6oYboSh6Gbu6TfG/+EjiZ3KjMvE98ukXQUOXQpV1BlvpBlTYyMi3jibH8vbSJ+
+/7f5r/0arvzwac1sh8TWQAo9SOX3sUWGagEsBMPJ+xxgUukr3O0ekeNu78RTuOU=
+=7kCT
+-----END PGP SIGNATURE-----
