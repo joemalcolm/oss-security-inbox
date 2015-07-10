@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["9877" "Tuesday" "6" "December" "2016" "12:11:57" "+0000" "Xen.org security team" "security@xen.org" "<E1cEEbF-0001Jx-UJ@xenbits.xenproject.org>" "241" "[oss-security] Xen Security Advisory 199 (CVE-2016-9637) - qemu ioport array overflow" nil nil nil "12" "2016120612:11:57" "[oss-security] Xen Security Advisory 199 (CVE-2016-9637) - qemu ioport array overflow" (number mark "U       security@xen Dec  6  241/9877  " thread-indent "\"[oss-security] Xen Security Advisory 199 (CVE-2016-9637) - qemu ioport array overflow\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1202" "Friday" "10" "July" "2015" "12:27:11" "+0200" "Gsunde Orangen" "gsunde.orangen@gmail.com" "<559F9DFF.7060508@gmail.com>" "32" "Re: [oss-security] Re: CVE Request: UDP checksum DoS" nil nil nil "7" "2015071010:27:11" "[oss-security] Re: CVE Request: UDP checksum DoS" (number mark "U       gsunde.orang Jul 10   32/1202  " thread-indent "\"Re: [oss-security] Re: CVE Request: UDP checksum DoS\"\n") "<20150706092311.19A656C0D6A@smtpvmsrv1.mitre.org>" ("<20150706092311.19A656C0D6A@smtpvmsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 17805 invoked by uid 550); 6 Dec 2016 12:12:33 -0000
+Received: (qmail 9244 invoked by uid 550); 10 Jul 2015 10:22:52 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,258 +12,61 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17787 invoked from network); 6 Dec 2016 12:12:33 -0000
-Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
-Content-Transfer-Encoding: binary
+Received: (qmail 9222 invoked from network); 10 Jul 2015 10:22:51 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:subject:references
+         :in-reply-to:content-type:content-transfer-encoding;
+        bh=d1LFpXmnlCxEet9sJfpF84GRd36PpfTBTYzb5oRFCjE=;
+        b=JlbuIMU7ovIJvxtp/QQJP0yZ/o9FklJIPIjHj+SiJgIWUURAq6+MPK9tsXgR43SwQL
+         RM509XD+IEsjAoidL+2l11ULloYGLJ7/QF4DVlNBYjKdV2XVYRM6K3oixe2cjXhUmRPv
+         eoTeBcoO4mxj+XbHuT1g16YV6Hls8ny7hHI97AX+fpc0Dr3HdorqgKH7IVMQsBR/eCpv
+         pPuSHovISjshvKogJu7fqPHGJwPNAgerdumVUFZKOp1Mbi7uj3sS3cueLJlq/v8sXXcG
+         I2zaLQ9FSNcCrwSemc7cRNN0iLQ5U6OFw/Wl2Y4ud2WDbEw9u2rk7KpxWjhQDCMo70oZ
+         1Qag==
+X-Received: by 10.194.112.3 with SMTP id im3mr40062073wjb.54.1436523760150;
+        Fri, 10 Jul 2015 03:22:40 -0700 (PDT)
+Message-ID: <559F9DFF.7060508@gmail.com>
+Date: Fri, 10 Jul 2015 12:27:11 +0200
+From: Gsunde Orangen <gsunde.orangen@gmail.com>
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
 MIME-Version: 1.0
-X-Mailer: MIME-tools 5.505 (Entity 5.505)
-To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
- xen-users@lists.xen.org, oss-security@lists.openwall.com
-From: Xen.org security team <security@xen.org>
-CC: Xen.org security team <security@xen.org>
-Message-Id: <E1cEEbF-0001Jx-UJ@xenbits.xenproject.org>
-Date: Tue, 06 Dec 2016 12:11:57 +0000
-Subject: [oss-security] Xen Security Advisory 199 (CVE-2016-9637) - qemu ioport array
- overflow
+To: oss-security@lists.openwall.com
+References: <20150706092311.19A656C0D6A@smtpvmsrv1.mitre.org>
+In-Reply-To: <20150706092311.19A656C0D6A@smtpvmsrv1.mitre.org>
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: 8bit
+Subject: Re: [oss-security] Re: CVE Request: UDP checksum DoS
 
---=separator
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
-Content-Transfer-Encoding: 7bit
+These two issues (CVE-2015-5366 and CVE-2015-5364) - commit in May 30th:
+https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=beb39db59d14990e401e235faf66a6b9b31240b0
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+are fixed upstream in: 3.10.81, 3.12.44, 3.14.45, 3.18.17, 4.0.6, and
+4.1-rc7
 
-            Xen Security Advisory CVE-2016-9637 / XSA-199
-                              version 3
+Does anyone know the reason why it wasn't (yet?) included in the
+latest 3.4.x release (3.4.108 as of 2015-06-19)?
 
-                      qemu ioport array overflow
-
-UPDATES IN VERSION 3
-====================
-
-Clarify the IMPACT description, by escalating privilege to that of the
-qemu process, not necesserily the host.
-
-Public release.
-
-ISSUE DESCRIPTION
-=================
-
-The code in qemu which implements ioport read/write looks up the
-specified ioport address in a dispatch table.  The argument to the
-dispatch function is a uint32_t, and is used without a range check,
-even though the table has entries for only 2^16 ioports.
-
-When qemu is used as a standalone emulator, ioport accesses are
-generated only from cpu instructions emulated by qemu, and are
-therefore necessarily 16-bit, so there is no vulnerability.
-
-When qemu is used as a device model within Xen, io requests are
-generated by the hypervisor and read by qemu from a shared ring.  The
-entries in this ring use a common structure, including a 64-bit
-address field, for various accesses, including ioport addresses.
-
-Xen will write only 16-bit address ioport accesses.  However,
-depending on the Xen and qemu version, the ring may be writeable by
-the guest.  If so, the guest can generate out-of-range ioport
-accesses, resulting in wild pointer accesses within qemu.
+Thanks,
+Gsunde
 
 
-IMPACT
-======
+On 2015-07-06, 11:23 cve-assign@mitre.org wrote:
+>>> However, the presence of "return -EAGAIN" may also have been a
+>>>  security problem in some realistic circumstances. For
+>>> example, maybe there's an attacker who can't transmit a flood
+>>> with invalid checksums, but can sometimes inject one packet
+>>> with an invalid checksum. The goal of this attacker isn't to
+>>> cause a system hang; the goal is to cause an EPOLLET epoll
+>>> application to stop reading for an indefinitely long period of
+>>> time. This scenario can't also be covered by CVE-2015-5364. Is
+>>> it better to have no CVE ID at all, e.g., is
+>>> udp_recvmsg/udpv6_recvmsg simply not intended to defend against
+>>> this scenario?
+> 
+>> It seems reasonable to assign a second CVE ID to that issue.
+> 
+> Use CVE-2015-5366.
+> 
+> 
 
-A malicious guest administrator can escalate their privilege to that
-of the qemu process.
-
-
-VULNERABLE SYSTEMS
-==================
-
-PV guests cannot exploit the vulnerability.
-
-ARM systems are not vulnerable.
-
-HVM domains run with QEMU stub domains cannot exploit the
-vulnerability.  (A QEMU stub domain is used if xl's domain
-configuration file contains "device_model_stubdomain_override=1".)
-
-Guests using the modern "qemu-xen" device model, with a qemu version
-of at least 1.6.0 (for example, as provided by the Xen Project in its
-Xen 4.4.0 and later releases), cannot exploit the vulnerability.
-
-x86 HVM guests, not configured with qemu stub domains, using a version
-of qemu older than qemu upstream 1.6.0, can exploit the vulnerability.
-
-x86 HVM guests using the traditional "qemu-xen-traditional", not
-configured with qemu stub domains, can therefore exploit the
-vulnerability.
-
-In tabular form:
-
-  Guest      Xen       QEMU    QEMU "traditional"            Status
-  type       version   stub      and/or qemu version
-
-  ARM        any       n/a     n/a         any               OK
-  x86 PV     any       n/a     n/a         any               OK
-
-  x86 HVM    any       yes     qemu-xen-traditional          OK
-
-  x86 HVM    any       no      qemu-xen*   >= 1.6.0          OK
-  x86 HVM    >= 4.4    no      qemu-xen*   Xen supplied      OK
-
-  x86 HVM    any       no      qemu-xen*   < 1.6.0           Vulnerable
-  x86 HVM    <= 4.3    no      qemu-xen*   Xen supplied      Vulnerable
-
-  x86 HVM    any       no      qemu-xen-traditional          Vulnerable
-
-[*] qemu-xen is the default when qemu stub domains are not in
-    use, since Xen 4.3.
-
-
-MITIGATION
-==========
-
-Enabling stubdomains will mitigate this issue, by reducing the
-escalation to only those privileges accorded to the service domain.
-In a usual configuration, a service domain has only the privilege of
-the guest, so this eliminates the vulnerability.
-
-Running HVM guests with the default upstream device model, in Xen 4.4
-and later, will also avoid this vulnerability.
-
-
-CREDITS
-=======
-
-This issue was discovered by yanghongke@huawei.com of the Huawei
-Security Test Team.
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue.
-
-xsa199-trad.patch      qemu-xen-traditional, all versions
-
-$ sha256sum xsa199*
-35c6a7d0d51c2347b46a9acf22e034ca328ca62b0ce4ad868a94c190b2e14d36  xsa199-trad.patch
-$
-
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patch described above (or others which are
-substantially similar) is permitted during the embargo, even on
-public-facing systems with untrusted guest users and administrators.
-
-However deployment of the mitigations described above is NOT permitted
-(except where all the affected systems and VMs are administered and
-used only by organisations which are members of the Xen Project
-Security Issues Predisclosure List).  Specifically, deployment on
-public cloud systems is NOT permitted.
-
-This is because in all cases the configuration change may be visible
-to the guest which could lead to the rediscovery of the vulnerability.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQEcBAEBAgAGBQJYRqr8AAoJEIP+FMlX6CvZ3tQIAKrYJRz+GjkoilWBFoUDNqrA
-ruzFuDBa4RSxlQlGo4o1TiuDSCq7Fl46wLqdGmQh8NBtCSjcSTDY3vDwJH6ns8co
-L7tM3DQt4EuP82jCxiNtLmiuzyTPkFUbYtIhciPyd6D4M6DffveD2OEpOYowK4Oo
-9BRxuVb4lq6Xeke2X2S0sU1groFocfvf7Q6lWkpApWHVSx6wWCW+dewJ6x26lzn6
-FmtQiAjWoF/zDox/nOL6uq2FEqa4wAZQGHkdyWR+yLnfEwhedUuLEiMWiUSSCPN3
-erSXtqWnEVfiJevKZXhvV0YHm6WGDCj29nDvatVBDVuwmPF/BOCHBTSzb2lMfE4=
-=FtuL
------END PGP SIGNATURE-----
-
---=separator
-Content-Type: application/octet-stream; name="xsa199-trad.patch"
-Content-Disposition: attachment; filename="xsa199-trad.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbSBiNzNiZDFlZGMwNWQxYmFkNWMwMTgyMjgxNDY5MzBkNzkzMTVhNWRh
-IE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBJYW4gSmFja3NvbiA8
-aWFuLmphY2tzb25AZXUuY2l0cml4LmNvbT4KRGF0ZTogTW9uLCAxNCBOb3Yg
-MjAxNiAxNzoxOTo0NiArMDAwMApTdWJqZWN0OiBbUEFUQ0hdIHFlbXU6IGlv
-cG9ydF9yZWFkLCBpb3BvcnRfd3JpdGU6IGJlIGRlZmVuc2l2ZSBhYm91dCAz
-Mi1iaXQKIGFkZHJlc3NlcwoKT24geDg2LCBpb3BvcnQgYWRkcmVzc2VzIGFy
-ZSAxNi1iaXQuICBUaGF0IHRoZXNlIGZ1bmN0aW9ucyB0YWtlIDMyLWJpdAph
-cmd1bWVudHMgaXMgYSBtaXN0YWtlLiAgQ2hhbmdpbmcgdGhlIGFyZ3VtZW50
-IHR5cGUgdG8gMTYtYml0IHdpbGwKZGlzY2FyZCB0aGUgdG9wIGJpdHMgb2Yg
-YW55IGVycm9uZW91cyB2YWx1ZXMgZnJvbSBlbHNld2hlcmUgaW4gcWVtdS4K
-CkFsc28sIGNoZWNrIGp1c3QgYmVmb3JlIHVzZSB0aGF0IHRoZSB2YWx1ZSBp
-cyBpbiByYW5nZS4gIChUaGlzIHR1cm5zCmFuIGlsbC1hZHZpc2VkIGNoYW5n
-ZSB0byBNQVhfSU9QT1JUUyBpbnRvIGEgcG9zc2libGUgZ3Vlc3QgY3Jhc2gK
-cmF0aGVyIHRoYW4gYSBwcml2aWxlZ2UgZXNjYWxhdGlvbiB2dWxuZXJhYmls
-aXR5LikKCkFuZCwgaW4gdGhlIFhlbiBpb3JlcSBwcm9jZXNzb3IsIGNsYW1w
-IGluY29taW5nIGlvcG9ydCBhZGRyZXNzZXMgdG8KMTYtYml0IHZhbHVlcy4g
-IFhlbiB3aWxsIG5ldmVyIHdyaXRlID4xNi1iaXQgdmFsdWVzIGJ1dCB0aGUg
-Z3Vlc3QgbWF5CmhhdmUgYWNjZXNzIHRvIHRoZSBpb3JlcSByaW5nLiAgV2Ug
-d2FudCB0byBkZWZlbmQgdGhlIHJlc3Qgb2YgdGhlIHFlbXUKY29kZSBmcm9t
-IHdyb25nIHZhbHVlcy4KClRoaXMgaXMgWFNBLTE5OS4KClJlcG9ydGVkLWJ5
-OiB5YW5naG9uZ2tlIDx5YW5naG9uZ2tlQGh1YXdlaS5jb20+ClNpZ25lZC1v
-ZmYtYnk6IElhbiBKYWNrc29uIDxJYW4uSmFja3NvbkBldS5jaXRyaXguY29t
-PgotLS0KIGkzODYtZG0vaGVscGVyMi5jIHwgMiArKwogdmwuYyAgICAgICAg
-ICAgICAgfCA5ICsrKysrKystLQogMiBmaWxlcyBjaGFuZ2VkLCA5IGluc2Vy
-dGlvbnMoKyksIDIgZGVsZXRpb25zKC0pCgpkaWZmIC0tZ2l0IGEvaTM4Ni1k
-bS9oZWxwZXIyLmMgYi9pMzg2LWRtL2hlbHBlcjIuYwppbmRleCAyNzA2ZjJl
-Li41ZDI3NmJiIDEwMDY0NAotLS0gYS9pMzg2LWRtL2hlbHBlcjIuYworKysg
-Yi9pMzg2LWRtL2hlbHBlcjIuYwpAQCAtMzc1LDYgKzM3NSw4IEBAIHN0YXRp
-YyB2b2lkIGNwdV9pb3JlcV9waW8oQ1BVU3RhdGUgKmVudiwgaW9yZXFfdCAq
-cmVxKQogewogICAgIHVpbnQzMl90IGk7CiAKKyAgICByZXEtPmFkZHIgJj0g
-MHgwZmZmZlU7CisKICAgICBpZiAocmVxLT5kaXIgPT0gSU9SRVFfUkVBRCkg
-ewogICAgICAgICBpZiAoIXJlcS0+ZGF0YV9pc19wdHIpIHsKICAgICAgICAg
-ICAgIHJlcS0+ZGF0YSA9IGRvX2lucChlbnYsIHJlcS0+YWRkciwgcmVxLT5z
-aXplKTsKZGlmZiAtLWdpdCBhL3ZsLmMgYi92bC5jCmluZGV4IGY5YzRkN2Uu
-LmMzYzVkNjMgMTAwNjQ0Ci0tLSBhL3ZsLmMKKysrIGIvdmwuYwpAQCAtNTIs
-NiArNTIsNyBAQAogCiAjaW5jbHVkZSA8eGVuL2h2bS9odm1faW5mb190YWJs
-ZS5oPgogCisjaW5jbHVkZSA8YXNzZXJ0Lmg+CiAjaW5jbHVkZSA8dW5pc3Rk
-Lmg+CiAjaW5jbHVkZSA8ZmNudGwuaD4KICNpbmNsdWRlIDxzaWduYWwuaD4K
-QEAgLTI5MCwyNiArMjkxLDMwIEBAIFBpY1N0YXRlMiAqaXNhX3BpYzsKIHN0
-YXRpYyBJT1BvcnRSZWFkRnVuYyBkZWZhdWx0X2lvcG9ydF9yZWFkYiwgZGVm
-YXVsdF9pb3BvcnRfcmVhZHcsIGRlZmF1bHRfaW9wb3J0X3JlYWRsOwogc3Rh
-dGljIElPUG9ydFdyaXRlRnVuYyBkZWZhdWx0X2lvcG9ydF93cml0ZWIsIGRl
-ZmF1bHRfaW9wb3J0X3dyaXRldywgZGVmYXVsdF9pb3BvcnRfd3JpdGVsOwog
-Ci1zdGF0aWMgdWludDMyX3QgaW9wb3J0X3JlYWQoaW50IGluZGV4LCB1aW50
-MzJfdCBhZGRyZXNzKQorc3RhdGljIHVpbnQzMl90IGlvcG9ydF9yZWFkKGlu
-dCBpbmRleCwgdWludDE2X3QgYWRkcmVzcykKIHsKICAgICBzdGF0aWMgSU9Q
-b3J0UmVhZEZ1bmMgKmRlZmF1bHRfZnVuY1szXSA9IHsKICAgICAgICAgZGVm
-YXVsdF9pb3BvcnRfcmVhZGIsCiAgICAgICAgIGRlZmF1bHRfaW9wb3J0X3Jl
-YWR3LAogICAgICAgICBkZWZhdWx0X2lvcG9ydF9yZWFkbAogICAgIH07Cisg
-ICAgaWYgKGFkZHJlc3MgPj0gTUFYX0lPUE9SVFMpCisgICAgICAgIGFib3J0
-KCk7CiAgICAgSU9Qb3J0UmVhZEZ1bmMgKmZ1bmMgPSBpb3BvcnRfcmVhZF90
-YWJsZVtpbmRleF1bYWRkcmVzc107CiAgICAgaWYgKCFmdW5jKQogICAgICAg
-ICBmdW5jID0gZGVmYXVsdF9mdW5jW2luZGV4XTsKICAgICByZXR1cm4gZnVu
-Yyhpb3BvcnRfb3BhcXVlW2FkZHJlc3NdLCBhZGRyZXNzKTsKIH0KIAotc3Rh
-dGljIHZvaWQgaW9wb3J0X3dyaXRlKGludCBpbmRleCwgdWludDMyX3QgYWRk
-cmVzcywgdWludDMyX3QgZGF0YSkKK3N0YXRpYyB2b2lkIGlvcG9ydF93cml0
-ZShpbnQgaW5kZXgsIHVpbnQxNl90IGFkZHJlc3MsIHVpbnQzMl90IGRhdGEp
-CiB7CiAgICAgc3RhdGljIElPUG9ydFdyaXRlRnVuYyAqZGVmYXVsdF9mdW5j
-WzNdID0gewogICAgICAgICBkZWZhdWx0X2lvcG9ydF93cml0ZWIsCiAgICAg
-ICAgIGRlZmF1bHRfaW9wb3J0X3dyaXRldywKICAgICAgICAgZGVmYXVsdF9p
-b3BvcnRfd3JpdGVsCiAgICAgfTsKKyAgICBpZiAoYWRkcmVzcyA+PSBNQVhf
-SU9QT1JUUykKKyAgICAgICAgYWJvcnQoKTsKICAgICBJT1BvcnRXcml0ZUZ1
-bmMgKmZ1bmMgPSBpb3BvcnRfd3JpdGVfdGFibGVbaW5kZXhdW2FkZHJlc3Nd
-OwogICAgIGlmICghZnVuYykKICAgICAgICAgZnVuYyA9IGRlZmF1bHRfZnVu
-Y1tpbmRleF07Ci0tIAoyLjEuNAoK
-
---=separator--
