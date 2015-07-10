@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1719" "Monday" "5" "October" "2015" "18:20:39" "+0000" "Tristan Cacqueray" "tdecacqu@redhat.com" "<5612BF77.9070403@redhat.com>" "50" "[oss-security] CVE request for vulnerability in OpenStack Nova" nil nil nil "10" "2015100518:20:39" "[oss-security] CVE request for vulnerability in OpenStack Nova" (number mark "        tdecacqu@red Oct  5   50/1719  " thread-indent "\"[oss-security] CVE request for vulnerability in OpenStack Nova\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1163" "Friday" "10" "July" "2015" "16:34:49" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150710203449.0DD867BC176@smtpvmsrv1.mitre.org>" "31" "[oss-security] Re: Follow up: PowerDNS Security Advisory 2015-01" nil nil nil "7" "2015071020:34:49" "[oss-security] Re: Follow up: PowerDNS Security Advisory 2015-01" (number mark "        cve-assign@m Jul 10   31/1163  " thread-indent "\"[oss-security] Re: Follow up: PowerDNS Security Advisory 2015-01\"\n") "<559B9BD0.1080409@powerdns.com>" ("<559B9BD0.1080409@powerdns.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 27938 invoked by uid 550); 5 Oct 2015 18:20:30 -0000
+Received: (qmail 9727 invoked by uid 550); 10 Jul 2015 20:35:50 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,69 +11,44 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 27920 invoked from network); 5 Oct 2015 18:20:29 -0000
-Message-ID: <5612BF77.9070403@redhat.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.2.0
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="EE3Jx1Xh9OrQL0Xj9MGUICImVxETRMgsw"
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.24
-Cc: cve-assign@mitre.org
-Date: Mon, 5 Oct 2015 18:20:39 +0000
-From: Tristan Cacqueray <tdecacqu@redhat.com>
+Received: (qmail 9504 invoked from network); 10 Jul 2015 20:34:59 -0000
+In-Reply-To: <559B9BD0.1080409@powerdns.com>
+Message-Id: <20150710203449.0DD867BC176@smtpvmsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Fri, 10 Jul 2015 16:34:49 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE request for vulnerability in OpenStack Nova
-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: Follow up: PowerDNS Security Advisory 2015-01
+To: pieter.lexis@powerdns.com
 
---EE3Jx1Xh9OrQL0Xj9MGUICImVxETRMgsw
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-A vulnerability was discovered in OpenStack (see below). In order to
-ensure full traceability, we need a CVE number assigned that we can
-attach to further notifications. This issue is already public, although
-an advisory was not sent yet.
+> https://doc.powerdns.com/md/security/powerdns-advisory-2015-01/
+> Update 7th of July 2015: Toshifumi Sakaguchi discovered that the original fix was insufficient
 
-Title: Nova network security group changes are not applied to running
-       instances
-Reporter: Sreekumar S and Suntao
-Products: Nova
-Affects: <=3D2014.2.3, >=3D2015.1.0, <=3D2015.1.1
+For cases of an insufficient fix, an additional CVE ID is assigned.
+Use CVE-2015-5470. The reason for this CVE is apparently the absence
+of:
 
-Description:
-Sreekumar S and Suntao independently reported a vulnerability in Nova
-network. Security group changes silently fail to be applied to already
-running instances, potentially resulting in instances not being
-protected by the security group. All Nova network setups are affected.
+   if (ret.length() > 1024)
+     throw MOADNSException("Total name too long");
 
-References:
-https://launchpad.net/bugs/1491307
-https://launchpad.net/bugs/1484738
+in PowerDNS Recursor 3.6.3 and 3.7.2 and Auth 3.3.2 and 3.4.4.
 
-Thanks in advance,
-
---
-Tristan Cacqueray
-OpenStack Vulnerability Management Team
-
-
---EE3Jx1Xh9OrQL0Xj9MGUICImVxETRMgsw
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
+Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBCAAGBQJWEr97AAoJECK5oFySXMXYc/gH/25Gkg4072bFdb1nFgB+gMCl
-I/8B5IFLv7vMT8ZcZacpfNEHkjC1fbob7nNYChl4Zv3u3oGpnrhMEPUUFuuEIJgq
-pWjjglzyUM1kYkC0s6ka/lnyKZL6kNXniaD9lPFBuOJBM8nucqs6Wg891o7AHPwO
-bfea7Nj38rEqzr1ju+AQuC7vItFDXEz7CnIGnDeDiIZxTkuSKBnh3ARMdQRO/zov
-UzkPN0/BKsfUXnwnZ1HzqtAEaB267foO3GPyRtTSpm65WtoSxvOqF8TKT9jHa3sc
-LaT3lKduXob+S7kVMzVwmJ07Ta9HLE4wIJ7JFtjtHeCXr3CKDxnX7D2hbqAonS4=
-=YJU9
+iQEcBAEBAgAGBQJVoCm+AAoJEKllVAevmvmsCd0IAIYvsrFye9E332uBKjKKzo+V
+y2KfAeiN0qxnTL31MdYavs8ruWNkzQFgBSPKbhqYYPGKU661SMr+hDy2mVSicysY
+MywUEOamB4/9/vA11QV0P+KNhtUmwUJwL7FslAGveSZm+3OF9qxQPtIzNQQdh6J7
+YzEW1Xk5UxmjCJmWyzasFf39jAUax/RngvKtHYrUjGkNKZXWabCFqiZ5tO90ga+7
+sRhN1HSNSbxB2KMIFCqTMxe78xGV/8J7ifTihQBZe7gx2GbcoBLCf0v+N4mFTl6U
+Ziio5mchYZU5HLtdqwMxRg5/vDoxbGT7C1Nqg8rUZAgmFERzwrYzdax8HP/hzhk=
+=ONFs
 -----END PGP SIGNATURE-----
-
---EE3Jx1Xh9OrQL0Xj9MGUICImVxETRMgsw--
