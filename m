@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1821" "Thursday" "13" "September" "2018" "15:12:01" "+0200" "Frank Morgner" "frankmorgner@gmail.com" "<CAO8bUyka=0g1xJmCH5_DkKc-JsWnCDGmsPUUTbbeKpkaC4=pvg@mail.gmail.com>" "40" "[oss-security] OpenSC release 0.19.0" "^Cc:" nil nil "9" "2018091313:12:01" "[oss-security] OpenSC release 0.19.0" (number mark "        frankmorgner Sep 13   40/1821  " thread-indent "\"[oss-security] OpenSC release 0.19.0\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["201" "Friday" "10" "July" "2015" "19:45:08" "-0500" "=?UTF-8?B?RmVybmFuZG8gTXXDsW96?=" "fernando@null-life.com" "<CAEr-gPECMXMc6S79EEHOfSKfGCkSLrNDd1FJcC8DxWu_ipWxeQ@mail.gmail.com>" "7" "[oss-security] Re: CVE Request - tidy 0.99 / tidy5 heap-buffer-overflow" nil nil nil "7" "2015071100:45:08" "[oss-security] Re: CVE Request - tidy 0.99 / tidy5 heap-buffer-overflow" (number mark "        fernando@nul Jul 10    7/201   " thread-indent "\"[oss-security] Re: CVE Request - tidy 0.99 / tidy5 heap-buffer-overflow\"\n") "<CAEr-gPHWcYrk2+JCLYGQsDbTTh5OH94tMBQejjt3sbP_f9p2Xw@mail.gmail.com>" ("<CAEr-gPENyN7yex+Ra7UWMaLTAzVKA+9+YNX=H7jcY4G6CsfPLQ@mail.gmail.com>" "<CAEr-gPHWcYrk2+JCLYGQsDbTTh5OH94tMBQejjt3sbP_f9p2Xw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 26147 invoked by uid 550); 13 Sep 2018 13:31:41 -0000
+Received: (qmail 1508 invoked by uid 550); 11 Jul 2015 00:45:21 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,80 +11,38 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 11645 invoked from network); 13 Sep 2018 13:12:24 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=eD+i+MeZTvMOg+GhGj+8XTFyqMAnHRlA8Bws4ONZZAo=;
-        b=EQdqlSmL5vwZpn2mTZrfgpovnNBlJ9gCeA27adIHM/jKZ1L2deyEItqDpFvXZFg1QK
-         Jse020hMP/oMVAey7E4lSgyz4C5IVU2iQaWJUZ07klZ2P1ZvkyrbZhXhTS8MnYxFujAM
-         BiWb9epkdMXCMdSU+t6x42vvccibWddCAOfXMYEtzP/EPezxOeyOP3srxVrVe2jW9TnL
-         l3WNiIARAc1eaQC3OPOyFNPZz/19e6ZE0GWfbJF7vTi49sGuPAnZ8nSpHmkJMsZGgh3u
-         BkMnYZwbIPl1DAV1QOoAq17EA8OkYmt7gLPxC8yT1R7A6mgGkZSB6zuB1vopd6LgxqjM
-         dgWg==
+Received: (qmail 1487 invoked from network); 11 Jul 2015 00:45:20 -0000
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=eD+i+MeZTvMOg+GhGj+8XTFyqMAnHRlA8Bws4ONZZAo=;
-        b=K0QSz0ypfbmvX858G+7aDz/m6pDLLskp1VW/4nChrWkY1JCQMeLrrbdMMZNL3gE2c1
-         pI/UqJElYiKY2aXf8cWFTUInvfAaprU9E0cEsx23a708fzISZ5lZSQns4Tc142htaPoM
-         IXU7KJGATEaZnE/ZJtDQhTJPNHGOZKiv33iwONYGKlAHAWPwe/d7fb5dDHjkNEkpy3kJ
-         +sZhcWI2PmVvQP3schqDqPHe8B8siDX/n++NsXaG3vcpT1b21s3ghFzHUmgJPgGjznQf
-         xErhTvsJVBU/LU3Hb55mp/IskaUKoMTSrl+O5wyfOhslNb6qvQmI8R7gUViCYxdZTAiX
-         J5xg==
-X-Gm-Message-State: APzg51B8oCZmi8B3fN13u49Zcts273oNiL3T1jvxHKB4qc71+lk19pjk
-	0H1ip8wvXxCBRkjNuNR1DqNm2SmNQomIOMInxlI=
-X-Google-Smtp-Source: ANB0VdYFsCv2aqSIwDlwTjJ//zjnU8qoSjqjnLaW/zBOh3vh4DaOy8sXPRSgDkAw5po20JEDm5P80dnjx2Afy4F1Spg=
-X-Received: by 2002:a19:f50e:: with SMTP id j14-v6mr5091883lfb.13.1536844332459;
- Thu, 13 Sep 2018 06:12:12 -0700 (PDT)
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:content-type;
+        bh=kXQJqKJ8a9LrBUI2fAqt81VlaMNXNYSoAVV1UYPM+B4=;
+        b=epeZnucwQL19PWUIltFTmFIOh71J1olBSPE9rFwNloy7FFRqUv/6KMld4kzAhnQPYi
+         mn+JbpV7P8TlC4lpxd3m6sixgWl5sQ/sltTGbkt7GSQwCyGujlQavivt91EceqmTJ2cl
+         tuH09ygboO5AzxbnG5M8KR4VbnmvH5QVcWLz4p3p/1Aba7uwUzn6iMJqQAoUzpqvi3yZ
+         reLEUZNjk6sBau0aw1mbQlC2V7TwScm4k3RngUc3B7K5ck1qIjIJKFCJDfb0YHz2yufz
+         ZnZiKsSt5lsK3rbwODhJcoU9aRVvN6X43pkgVVkVkhJOCgnWNSIdfA/ZqMdhX68nFPhn
+         7DhA==
+X-Gm-Message-State: ALoCoQnU1R8DE8O57UQwwRw/g6wsVCT4Ml/JBGvVcH6q+s3WAC4kumW7Au2CfsQxCbWC1jbJd1Df
 MIME-Version: 1.0
-Message-ID: <CAO8bUyka=0g1xJmCH5_DkKc-JsWnCDGmsPUUTbbeKpkaC4=pvg@mail.gmail.com>
-Content-Type: multipart/alternative; boundary="00000000000082fbed0575c0743e"
-Cc: oss-security@lists.openwall.com
-Date: Thu, 13 Sep 2018 15:12:01 +0200
-From: Frank Morgner <frankmorgner@gmail.com>
+X-Received: by 10.50.137.40 with SMTP id qf8mr1526519igb.52.1436575508628;
+ Fri, 10 Jul 2015 17:45:08 -0700 (PDT)
+X-Originating-IP: [181.50.56.230]
+In-Reply-To: <CAEr-gPHWcYrk2+JCLYGQsDbTTh5OH94tMBQejjt3sbP_f9p2Xw@mail.gmail.com>
+References: <CAEr-gPENyN7yex+Ra7UWMaLTAzVKA+9+YNX=H7jcY4G6CsfPLQ@mail.gmail.com>
+	<CAEr-gPHWcYrk2+JCLYGQsDbTTh5OH94tMBQejjt3sbP_f9p2Xw@mail.gmail.com>
+Message-ID: <CAEr-gPECMXMc6S79EEHOfSKfGCkSLrNDd1FJcC8DxWu_ipWxeQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Date: Fri, 10 Jul 2015 19:45:08 -0500
+From: =?UTF-8?Q?Fernando_Mu=C3=B1oz?= <fernando@null-life.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] OpenSC release 0.19.0
-To: opensc-announce@lists.sourceforge.net, 
-	OpenSC Development <opensc-devel@lists.sourceforge.net>
+Subject: [oss-security] Re: CVE Request - tidy 0.99 / tidy5 heap-buffer-overflow
+To: oss-security@lists.openwall.com, cve-assign@mitre.org
 
---00000000000082fbed0575c0743e
-Content-Type: text/plain; charset="UTF-8"
+I'm sorry, should I just give up about trying to get a CVE here?
 
-Hi all!
+I've just noticed this issue is also being tracked at Red Hat at the moment:
 
-I'm happy to announce the new OpenSC release 0.19.0, which be found here
-https://github.com/OpenSC/OpenSC/releases/tag/0.19.0 including the full
-list of changes.
+https://bugzilla.redhat.com/show_bug.cgi?id=1228297
 
-Most notably, this release contains fixes for mutliple issues, ranging from
-stack based buffer overflows to out of bounds reads and writes on the heap.
-They can be triggered by malicious smartcards sending malformed responses
-to APDU commands. A detailed description can be found at X41-2018-002
-<https://www.x41-dsec.de/lab/advisories/x41-2018-002-OpenSC/>. The issues
-are tracked as CVE-2018-16391
-<http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2018-16391> CVE
--2018-16392 <http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2018-16392>
-CVE-2018-16393
-<http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2018-16393> CVE
--2018-16418 <http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2018-16418>
-CVE-2018-16419
-<http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2018-16419> CVE
--2018-16420 <http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2018-16420>
-CVE-2018-16421
-<http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2018-16421> CVE
--2018-16422 <http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2018-16422>
-CVE-2018-16423
-<http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2018-16423> CVE
--2018-16424 <http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2018-16424>
-CVE-2018-16425
-<http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2018-16425> CVE
--2018-16426 <http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2018-16426>
-CVE-2018-16427
-<http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2018-16427>. Thanks to
-Eric Sesterhenn from X41 D-Sec GmbH for reporting and helping fixing the
-problems.
-
-Regards, Frank
-
---00000000000082fbed0575c0743e--
+- F
