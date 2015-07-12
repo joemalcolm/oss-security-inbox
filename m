@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["557" "Wednesday" "11" "October" "2017" "11:40:33" "+0800" "Leon Zhao" "leon.zhao.7@gmail.com" "<CAPwMjngHAWa4F-_hRffJRkNk1JmhKqEFojJyd0VUF+2q5sGN7A@mail.gmail.com>" "26" "[oss-security] CVE request: Two DoS vulneribilities in libextractor" "^Date:" nil nil "10" "2017101103:40:33" "[oss-security] CVE request: Two DoS vulneribilities in libextractor" (number mark "        leon.zhao.7@ Oct 11   26/557   " thread-indent "\"[oss-security] CVE request: Two DoS vulneribilities in libextractor\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["749" "Saturday" "11" "July" "2015" "19:08:54" "-0700" "Luca Carettoni" "luca.carettoni@ikkisoft.com" "<CAFThDPFPBuHudCx2hpQS6LXd4KCubqDc_HrZRS+EKb6EJvsjpA@mail.gmail.com>" "26" "[oss-security] The Census Project (CII)" nil nil nil "7" "2015071202:08:54" "[oss-security] The Census Project (CII)" (number mark "U       luca.caretto Jul 11   26/749   " thread-indent "\"[oss-security] The Census Project (CII)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 32511 invoked by uid 550); 11 Oct 2017 03:51:59 -0000
+Received: (qmail 19608 invoked by uid 550); 12 Jul 2015 02:09:12 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,64 +11,54 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 26106 invoked from network); 11 Oct 2017 03:40:45 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=H2wPUui6LAcRz4SDdgsJwrGqn9Lhm+VEmjlJgn0Twwk=;
-        b=Albupzy0GxjnNGmqpij/cwHRncICrEUuOmX+R99Ra9zBeEQUWNBdqILO0A1CX7um07
-         G0C1rta8ju5OOm4/5QJaGFxcscHgmkfxPsYaeKnG17PEn6M7zKWeT7I+stkDLm5ieJVG
-         mQIVDfKW2szoh3R1JRUn3vWtksxCm6s60yI+MWT0DrmV0+rNRcF9n2UyjmEosdB4ij4x
-         7/RlEnnl/Wcnc71/UQXPJ3yvOe0CGnn75d4ZmaMc8XV2QGGOb5/m0/QevqKXzcQM4ZJ2
-         fwh8XFEbWF1wVWghBzvESMY7Au0M+HyTfXqracIvCG/AniYex2i8VzYvmvoTABxV4+oN
-         mVKg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=H2wPUui6LAcRz4SDdgsJwrGqn9Lhm+VEmjlJgn0Twwk=;
-        b=jGuvKzktLKbovvoh99BsR8NEkkSzmqVGWjE2Z4QMV9UtmiRu+IlR7FP9xOcbU3KNdV
-         817Tg/D7oMdJ7VgpMO31EwvoeliDU1j4Hy3MzmEIo8tEYD9jdOuAbN6JkBCOd7DoCQ7/
-         M5ANWTCINsmrlOujuVJMToydKRXR/2L4uDkCpkvSvJWEt4QJKq1/UpweQ55rDdBYs/Bk
-         JIhJBUSk1XIPCNww2N509n1/cE96F6BdqPTPinOVRENhrEfLZ8Fnk0VIRtL1fy1zHlxm
-         iAJ5sYCvnUX2cT0MCnMVYPbhnau3CChfVpdy3NEVFTpJxoG0NTRtN5UZLZsqFLKBrKrN
-         geRQ==
-X-Gm-Message-State: AMCzsaUnsdwcdPiQqz9pLFLV6OOgHKiZUPxBpt5LriEcde1t17AKvKaV
-	fSupRE3a8LUVfhA4YGWw2ZHq2Qun+LQO6dcoAZRifw==
-X-Google-Smtp-Source: AOwi7QDWButi9aMlxjWpr7lfVh8JigW3PivIxGsRHxxf3MMjc4YYzLOiqNGz41avKyCa/Xo0glUvq3joXKo07K8m0HE=
-X-Received: by 10.176.91.15 with SMTP id u15mr5891862uae.77.1507693233389;
- Tue, 10 Oct 2017 20:40:33 -0700 (PDT)
-MIME-Version: 1.0
-Message-ID: <CAPwMjngHAWa4F-_hRffJRkNk1JmhKqEFojJyd0VUF+2q5sGN7A@mail.gmail.com>
-Content-Type: multipart/alternative; boundary="f403045f8bc29b45b7055b3d2fee"
-Date: Wed, 11 Oct 2017 11:40:33 +0800
-From: Leon Zhao <leon.zhao.7@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE request: Two DoS vulneribilities in libextractor
+Received: (qmail 19562 invoked from network); 12 Jul 2015 02:09:06 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
+         :content-type;
+        bh=vZRdMxQP4+0wtekoX4C3YWB5SlC/H64CfqxjKH+4yTc=;
+        b=j3WTlc8dK427+nIv6kebs/Z1pY69XDCsWfKny+L+NPcRznls0K1FxpsaPVPTuKz8Ru
+         faFe/1gCRjhXF7B9LBqUstkszBwm4Zuajo8/Hv1qEHe2MDKHCAY1U58t89AfmwMVafsf
+         9lgwimpB7oAXQz5jXUPQ8vJmRCqbfwSHm7kzzWwJimzYjYl3c6/6KrvQ+8j4wJAyIsLb
+         CfaeI2ak9g0kMSh8WD0KQqgQJ+Wx358Sy9KELkBpOva7QNToQ7twRu3e5bUkhDJhEBDy
+         JHWZlX5Xa4BpAy/y95bBoc5aDU7jW7pFwJIubAT4R0oW60nQKKWaz/LnmDsuMzAdgGQp
+         AVHA==
+X-Gm-Message-State: ALoCoQnUBlWD2S/7Tf2NbXjJE/2smgvM160FgiVlbY7tiQCdTIGmoxDIIGAQx3QkdJzVhKTnxOZP
+MIME-Version: 1.0
+X-Received: by 10.180.74.132 with SMTP id t4mr11047173wiv.55.1436666934741;
+ Sat, 11 Jul 2015 19:08:54 -0700 (PDT)
+X-Originating-IP: [162.234.3.32]
+Date: Sat, 11 Jul 2015 19:08:54 -0700
+Message-ID: <CAFThDPFPBuHudCx2hpQS6LXd4KCubqDc_HrZRS+EKb6EJvsjpA@mail.gmail.com>
+From: Luca Carettoni <luca.carettoni@ikkisoft.com>
 To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary=f46d043be06c4e836c051aa41651
+Subject: [oss-security] The Census Project (CII)
 
---f403045f8bc29b45b7055b3d2fee
-Content-Type: text/plain; charset="UTF-8"
+--f46d043be06c4e836c051aa41651
+Content-Type: text/plain; charset=UTF-8
 
-Hello oss security,
+Hi all,
 
-I found two DoS vulneribilities in libextractor,
+It's today's news that the Core Infrastructure Initiative (CII) announced
+The Census Project.
 
-Affected version
-1.4
+"A new program that analyzes popular open source projects to identify which
+ones are critical to Internet infrastructure and also most in need of
+additional support and funding"
 
-1. Divide-By-Zero
-https://bugzilla.redhat.com/show_bug.cgi?id=1499599
-http://lists.gnu.org/archive/html/bug-libextractor/2017-10/msg00002.html
-Fixed
+https://www.coreinfrastructure.org/news/announcements/2015/07/linux-foundation%E2%80%99s-core-infrastructure-initiative-launches-new-census
 
-2. Null Pointer Dereference
-https://bugzilla.redhat.com/show_bug.cgi?id=1499600
-http://lists.gnu.org/archive/html/bug-libextractor/2017-10/msg00003.html
-Fixed
+Particularly for security testing, I think it's extremely important to
+determine funding and resource allocation for the higher priority projects.
+Another step in the right direction.
 
+Cheers,
+Luca
 
-Best regards
+-- 
 
-Zhao Liang, Huawei Weiran Labs
+Luca Carettoni
 
---f403045f8bc29b45b7055b3d2fee--
+--f46d043be06c4e836c051aa41651--
