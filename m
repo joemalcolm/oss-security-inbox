@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["916" "Monday" "27" "August" "2018" "05:25:15" "-0400" "Vladis Dronov" "vdronov@redhat.com" "<1461055985.6797445.1535361915875.JavaMail.zimbra@redhat.com>" "26" "[oss-security] CVE-2018-10938: Linux kernel: net: infinite loop in net/ipv4/cipso_ipv4.c:cipso_v4_optptr() allows a remote DoS" "^Date:" nil nil "8" "2018082709:25:15" "[oss-security] CVE-2018-10938: Linux kernel: net: infinite loop in net/ipv4/cipso_ipv4.c:cipso_v4_optptr() allows a remote DoS" (number mark "        vdronov@redh Aug 27   26/916   " thread-indent "\"[oss-security] CVE-2018-10938: Linux kernel: net: infinite loop in net/ipv4/cipso_ipv4.c:cipso_v4_optptr() allows a remote DoS\"\n") "<1314155599.6796744.1535361538888.JavaMail.zimbra@redhat.com>" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["445" "Monday" "13" "July" "2015" "11:14:01" "-0700" "Tony Arcieri" "bascule@gmail.com" "<CAHOTMVJR0A-C-SjLUEeDGeqwuz+Sn82aBP8mGUZZe_Cc=J38Qg@mail.gmail.com>" "18" "[oss-security] Retroactive CVE request for Ruby 1.9.2-p330" nil nil nil "7" "2015071318:14:01" "[oss-security] Retroactive CVE request for Ruby 1.9.2-p330" (number mark "U       bascule@gmai Jul 13   18/445   " thread-indent "\"[oss-security] Retroactive CVE request for Ruby 1.9.2-p330\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 12005 invoked by uid 550); 27 Aug 2018 09:25:30 -0000
+Received: (qmail 32587 invoked by uid 550); 13 Jul 2015 18:18:49 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,47 +11,43 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 11986 invoked from network); 27 Aug 2018 09:25:29 -0000
-Message-ID: <1461055985.6797445.1535361915875.JavaMail.zimbra@redhat.com>
-In-Reply-To: <1314155599.6796744.1535361538888.JavaMail.zimbra@redhat.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.40.5.28, 10.4.195.3]
-Thread-Topic: CVE-2018-10938: Linux kernel: net: infinite loop in net/ipv4/cipso_ipv4.c:cipso_v4_optptr() allows a remote DoS
-Thread-Index: Sh/9Ncp68iGSWLaYkACrdnEyaLkwdA==
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.12
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.44]); Mon, 27 Aug 2018 09:25:18 +0000 (UTC)
-Date: Mon, 27 Aug 2018 05:25:15 -0400 (EDT)
-From: Vladis Dronov <vdronov@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE-2018-10938: Linux kernel: net: infinite loop in
- net/ipv4/cipso_ipv4.c:cipso_v4_optptr() allows a remote DoS
+Received: (qmail 30097 invoked from network); 13 Jul 2015 18:14:32 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=cMQ7Etv5RHtUaUDv+mIE4xevrn1uxgL8coySQkDtAGs=;
+        b=gKm1977aZXgKwDfg/+tNXpON5WH509kGUzhGr0D+bCt83PGpLD82xXEJmnpVYWSpMy
+         yW9bwqMzSlBmIuN2zwMzbq7IkfcadaADWsag7M2DPNjlDWszdQaLu+5BNC8nXpagE1Y6
+         1OZMfJpzeUDLpG51rKUNLT4VAd41KdI99CLoPQ5AZIRUhwG547+XexH6mgCKXUdz9FMS
+         +sBl5dySCtzdDKGuEpeTreFD4jjoCLm1PJzUSSprNYzk6JgCSj2hw8VetDiVx1P36auI
+         iM9qGQ2wqx/bgJngytl+yuDHzPKynLTuaHESbqSo6xqI4h1mWRvWM9K0RXTWyJfhhwWB
+         JXyg==
+X-Received: by 10.182.76.100 with SMTP id j4mr30692614obw.14.1436811261156;
+ Mon, 13 Jul 2015 11:14:21 -0700 (PDT)
+MIME-Version: 1.0
+From: Tony Arcieri <bascule@gmail.com>
+Date: Mon, 13 Jul 2015 11:14:01 -0700
+Message-ID: <CAHOTMVJR0A-C-SjLUEeDGeqwuz+Sn82aBP8mGUZZe_Cc=J38Qg@mail.gmail.com>
 To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary=047d7b672924d4a355051ac5b08a
+Subject: [oss-security] Retroactive CVE request for Ruby 1.9.2-p330
 
-Heololo,
+--047d7b672924d4a355051ac5b08a
+Content-Type: text/plain; charset=UTF-8
 
-A flaw was found in the Linux kernel present since v4.0-rc1 and through v4.13-rc4.
-A crafted network packet sent remotely by an attacker may force the kernel to enter
-an infinite loop in the cipso_v4_optptr() function in net/ipv4/cipso_ipv4.c leading
-to a denial-of-service.
+Requesting a retroactive CVE for this 2014 issue:
 
-All the kernels with the cipso_v4_optptr() function which have not backported
-the upstream commit 40413955ee26 are vulnerable.
+https://www.ruby-lang.org/en/news/2014/08/19/ruby-1-9-2-p330-released/
 
-Thanks to Yves Younan from Cisco for mentioning this.
+I'd describe it as "Regular expression denial-of-service attack in form
+component processing"
 
-References:
+See this GitHub issue for additional discussion:
 
-https://bugzilla.redhat.com/show_bug.cgi?id=1622404
+https://github.com/ruby/www.ruby-lang.org/issues/817
 
-Upstream Patch introduced the flaw:
+-- 
+Tony Arcieri
 
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=04f81f0154e4bf002be6f4d85668ce1257efa4d9
-
-Upstream Patch fixed the flaw:
-
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=40413955ee265a5e42f710940ec78f5450d49149
-
-Best regards,
-Vladis Dronov | Red Hat, Inc. | Product Security Engineer
+--047d7b672924d4a355051ac5b08a--
