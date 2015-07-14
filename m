@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2484" "Sunday" "21" "June" "2015" "11:59:19" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150621155919.0E01633E058@smtpvbsrv1.mitre.org>" "66" "[oss-security] Re: Yoast Wordpress SEO Plugin <= 2.1.1 Stored, Authenticated XSS" nil nil nil "6" "2015062115:59:19" "[oss-security] Re: Yoast Wordpress SEO Plugin <= 2.1.1 Stored, Authenticated XSS" (number mark "U       cve-assign@m Jun 21   66/2484  " thread-indent "\"[oss-security] Re: Yoast Wordpress SEO Plugin <= 2.1.1 Stored, Authenticated XSS\"\n") "<0FF80D13-DF38-4489-B6DF-AC5E32D07AD3@inventropy.us>" ("<0FF80D13-DF38-4489-B6DF-AC5E32D07AD3@inventropy.us>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2831" "Tuesday" "14" "July" "2015" "20:27:13" "+1200" "Amos Jeffries" "squid3@treenet.co.nz" "<55A4C7E1.8000205@treenet.co.nz>" "87" "Re: [oss-security] Squid HTTP proxy CVE request" nil nil nil "7" "2015071408:27:13" "[oss-security] Squid HTTP proxy CVE request" (number mark "U       squid3@treen Jul 14   87/2831  " thread-indent "\"Re: [oss-security] Squid HTTP proxy CVE request\"\n") "<559A65F3.80103@treenet.co.nz>" ("<559A65F3.80103@treenet.co.nz>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 13527 invoked by uid 550); 21 Jun 2015 16:00:16 -0000
+Received: (qmail 13470 invoked by uid 550); 14 Jul 2015 08:27:36 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,79 +11,104 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 13452 invoked from network); 14 Jul 2015 08:27:35 -0000
+Message-ID: <55A4C7E1.8000205@treenet.co.nz>
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
+MIME-Version: 1.0
+References: <559A65F3.80103@treenet.co.nz>
+In-Reply-To: <559A65F3.80103@treenet.co.nz>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Date: Tue, 14 Jul 2015 20:27:13 +1200
+From: Amos Jeffries <squid3@treenet.co.nz>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13384 invoked from network); 21 Jun 2015 15:59:30 -0000
-From: cve-assign@mitre.org
-To: sec@inventropy.us
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <0FF80D13-DF38-4489-B6DF-AC5E32D07AD3@inventropy.us>
-Message-Id: <20150621155919.0E01633E058@smtpvbsrv1.mitre.org>
-Date: Sun, 21 Jun 2015 11:59:19 -0400 (EDT)
-Subject: [oss-security] Re: Yoast Wordpress SEO Plugin <= 2.1.1 Stored, Authenticated XSS
+Subject: Re: [oss-security] Squid HTTP proxy CVE request
+To: oss-security@lists.openwall.com, cve-assign@mitre.org
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> https://inventropy.us/blog/yoast-seo-plugin-cross-site-scripting-vulnerability/
-> https://wordpress.org/plugins/wordpress-seo/changelog/
+Any assignment / info on these?
 
-See http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2012-6692 for
-the XSS issue related to the "everyone can make a post. This post is
-then validate by an admin user. So everyone can use the security
-breach to execute javascript in admin" threat model on the
-https://wordpress.org/support/topic/security-issue-with-post-title-field-xss-vulnerability
-page from 2012-10-31.
+Amos
 
-It appears that the outcome is that the XSS payload is stored and then
-immediately reflected. Probably the highest risk is from the stored
-XSS, but the reflected aspect is also relevant if the admin encounters
-a malicious web site while logged into WordPress.
+On 6/07/2015 11:26 p.m., Amos Jeffries wrote:
+> Greetings,
+> 
+> This months release of Squid HTTP proxy, version 3.5.6, contains
+> fixes for two security issues.
+> 
+> 
+> Issue #1:
+> 
+> Due to incorrect handling of peer responses in a hierarchy of 2 or 
+> more proxies remote clients (or scripts run on a client) are able
+> to gain unrestricted access through a gateway proxy to its backend
+> proxy.
+> 
+> If the two proxies have differing levels of security this could
+> lead to authentication bypass or unprivileged access to supposedly
+> secure resources.
+> 
+> <http://www.squid-cache.org/Versions/v3/3.5/changesets/squid-3.5-13856
+.p
+>
+> 
+atch>
+> 
+> All Squid up to and including 3.5.5 are vulnerable.
+> 
+> (when published the advisory for this will be 
+> <http://www.squid-cache.org/Advisories/SQUID-2015_2.txt>)
+> 
+> 
+> Issue #2:
+> 
+> This is somewhat more obscure, and I am seeking clarification
+> perhapse more than assignment.
+> 
+> Squid up to and including 3.5.5 are apparently vulnerable to DoS 
+> attack from malicious clients using repeated TLS renegotiation 
+> messages. This has not been verified as it also seems to require 
+> outdated (0.9.8l and older) OpenSSL libraries.
+> 
+> <http://www.squid-cache.org/Versions/v3/3.5/changesets/squid-3.5-13849
+.p
+>
+> 
+atch>
+> 
+> CVE-2009-3555 was mentioned by the submitter, but that was clearly 
+> assigned for server-initiated renegotiation. This Squid change is 
+> specifically for the client-initiated renegotiation part of the
+> TLS protocol flaw.
+> 
+> There may be some relevant CVE already assigned, although I've
+> been unable to find it. Only CVE-2011-1473 which is for the library
+> itself and disputed.
+> 
+> So, is server software being assigned specific CVE (or a shared 
+> generic one) for resolving this flaw? Please indicate which CVE
+> Squid announcements should mention (if any).
+> 
+> 
+> Thanks, Amos Jeffries Squid Software Foundation
+> 
 
-However, that 2012-10-31 page also says:
-
-  - connect you on admin of your site
-  - go to url : [www.yoursite.com]/wp-admin/post-new.php?post_title=<script>alert('There is a problem');</script>
-  - The alert message is displaying !
-  
-  => CSRF : http://en.wikipedia.org/wiki/Cross-site_request_forgery
-
-Is (or was) there a separate CSRF vulnerability, of interest to an
-attacker who wants to make a post (without any XSS payload) with the
-admin's credentials?
-
-
-Finally, you mentioned:
-
-> the plugin author said that it had already been patched at the time.
-
->> This was already patched in 1.3
-
-Apparently this refers to:
-
-  http://plugins.svn.wordpress.org/wordpress-seo/trunk/changelog.txt
-
-  = 1.3 =
-
-  * Long list of small fixes and improvements to code best practices
-  after Sucuri review. Fixes 3 small security issues.
-
-We don't know whether there was an earlier incomplete fix to the
-metabox functionality, so we aren't currently assigning a different
-CVE ID for versions before 1.3.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Version: GnuPG v2.0.22 (MingW32)
 
-iQEcBAEBAgAGBQJVht6kAAoJEKllVAevmvmska0IALWeV0XUgZnR55gmkkcG3eQj
-zYKi+tIF3l6+e15h5JjxFcdvoND+DqyMgpko+0Y5qO+ret/lFRPWjfZi8IE/QLXl
-FNiCSKA9k0s+cte+rcsI+UPp3iUC9aG0XkHCD0s5HU27Zd2N6dzWJiJEyy+x9LzN
-ERt20Vmb/zgh2oI5CWzFgtyLE4dQ6svJG9EKEtZxDaBJWFKB2icbpQ0Bwztwsbe4
-eWjaQnMF+vwb7jFJL99TXzDKFuyVIg9fIOlBj7bEHXSTmhkFiilVaXMF/n2LKIxa
-oKrgmmQ9DkZtjPJeBWM7uEiDg6gj5I/+sJ6XIqLzCr5PKsSJIxMq3dVvfTOwkSc=
-=TGMg
+iQIcBAEBAgAGBQJVpMfhAAoJEGvSOzfXE+nL6EgP/RqJ6z+9YjsTVgPwyF9bCXfj
+vVMqGvnr/pbj9fFB82Pp/Fg/8saFgDE1pV3bGI/9D4a1EPCUQ0Hlu6BgK4hY+/bG
+jO/PDzppbMnd2TTa1J4XUsVLuk9COQBJjFP7d7X/GX5pnam4aXMSf5A3uWZbtzQt
+6p9rZ+O23lCr8qSgIr4ekJILelj2wv8E5v7eAGqpZBAV2/IhY/rK6HL6BEC2b88X
++9oXw+cMzRdm3qhzcAAtwe2YU/qHYnlyyG+FsZ6C04ZUgx6uTh1O6uuqMn4NZ1LB
+16WWAtr1GMviZXdB14xQzaUwgwtaozqf2zfujGk5G/nf4iGhPhoUCgDxhW2FRbyS
+a4gua1Bd1MbkcjjOyUrTEP135LSsW9Y6YfTSD/MDS7G/3nUWF/cU/6guXFrBCjvg
+RELk7J+7EtGEY+LmNiaT0Rj1yzMupxgKow8bk+jzSsCsnJGGRtQfrukvwm3PD8Tb
+jCrDdZyUxFPE29ZXnmFYZHybfL0JZUQ+p6N3Eo99gI5I+hZ4ujfWbizJ8Gamht4n
+RToUvf5OtP+8KcdFJrxkE3EM3/s9R9UPLoNs2sDxmzapTWBrbjdKguI02mrTRlUk
+vnTw1R2ySUJIRG/Z4/BKNCYLp8MnkCodU1SntofWqmPfmLLs4gDQbF00kStwVQKn
+r+tkf/ZfrIQ2b1FcOygQ
+=klt3
 -----END PGP SIGNATURE-----
