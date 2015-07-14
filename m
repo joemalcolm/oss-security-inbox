@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1153" "Thursday" "12" "May" "2016" "06:45:37" "+0000" "=?gb2312?B?d2luc29ubGl1KMH1v8Yp?=" "winsonliu@tencent.com" "<1F2D4DA31CA62740BFF46830A0E6A4F706575A62@EXMBX-TJ003.tencent.com>" "22" "[oss-security] CVE Request - OpenJPEG: Security Fixes" "^Date:" nil nil "5" "2016051206:45:37" "[oss-security] CVE Request - OpenJPEG: Security Fixes" (number mark "U       winsonliu@te May 12   22/1153  " thread-indent "\"[oss-security] CVE Request - OpenJPEG: Security Fixes\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1655" "Tuesday" "14" "July" "2015" "12:53:58" "+0200" "Martin Carpenter" "mcarpenter@free.fr" "<1436871238.28364.89.camel@juliet.mcarpenter.org>" "56" "[oss-security] CVE request: ansible zone/chroot/jail escape" nil nil nil "7" "2015071410:53:58" "[oss-security] CVE request: ansible zone/chroot/jail escape" (number mark "        mcarpenter@f Jul 14   56/1655  " thread-indent "\"[oss-security] CVE request: ansible zone/chroot/jail escape\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 9983 invoked by uid 550); 12 May 2016 06:49:02 -0000
+Received: (qmail 22170 invoked by uid 550); 14 Jul 2015 10:54:12 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,44 +11,75 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 9345 invoked from network); 12 May 2016 06:45:53 -0000
-Thread-Topic: CVE Request - OpenJPEG: Security Fixes
-Thread-Index: AdGsF8y2+OIC8i2yTLyqUgxGuwZaRA==
-Message-ID: <1F2D4DA31CA62740BFF46830A0E6A4F706575A62@EXMBX-TJ003.tencent.com>
-Accept-Language: zh-CN, en-US
-Content-Language: zh-CN
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-x-originating-ip: [10.4.75.17]
-Content-Type: multipart/alternative;
-	boundary="_000_1F2D4DA31CA62740BFF46830A0E6A4F706575A62EXMBXTJ003tence_"
-MIME-Version: 1.0
-Date: Thu, 12 May 2016 06:45:37 +0000
-From: =?gb2312?B?d2luc29ubGl1KMH1v8Yp?= <winsonliu@tencent.com>
+Received: (qmail 22151 invoked from network); 14 Jul 2015 10:54:11 -0000
+Authentication-Results: sfrmc.priv.atos.fr; dkim=none (no signature);
+	dkim-adsp=none (no policy) header.from=mcarpenter@free.fr
+X-SFR-UUID: 20150714105359666.A2C117000096@msfrf2219.sfr.fr
+Message-ID: <1436871238.28364.89.camel@juliet.mcarpenter.org>
+X-Mailer: Evolution 3.10.4-0ubuntu2
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: cve-assign@mitre.org
+Date: Tue, 14 Jul 2015 12:53:58 +0200
+From: Martin Carpenter <mcarpenter@free.fr>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE Request - OpenJPEG: Security Fixes
-To: oss-security <oss-security@lists.openwall.com>, cve-assign
-	<cve-assign@mitre.org>
+Subject: [oss-security] CVE request: ansible zone/chroot/jail escape
+To: oss-security@lists.openwall.com
 
---_000_1F2D4DA31CA62740BFF46830A0E6A4F706575A62EXMBXTJ003tence_
-Content-Type: text/plain; charset="gb2312"
-Content-Transfer-Encoding: base64
+Hi,
 
-SGksDQoNClNvbWUgc2VjdXJpdHkgaXNzdWVzIG9mIE9wZW5KUEVHIGhhdmUg
-YmVlbiBmaXhlZC4gUGxlYXNlIGNvbnNpZGVyIGFzc2lnbmluZyBDVkUgbnVt
-YmVycyB0byB0aGVtLg0KDQoxLiBJc3N1ZSA3NzQNCk9wZW5KUEVHIEhlYXAg
-QnVmZmVyIE92ZXJmbG93IGluIGZ1bmN0aW9uIGNvbG9yX2NteWtfdG9fcmdi
-IG9mIGNvbG9yLmMNCkZpeGVkIHZpYSBodHRwczovL2dpdGh1Yi5jb20vdWNs
-b3V2YWluL29wZW5qcGVnL2NvbW1pdC8xNjJmNjE5OWMwY2QzZWMxYzZjNmRj
-NjVlNDFiMmZhYWI5MmIyZDkxDQoNCjIuIElzc3VlIDc3NQ0KT3BlbkpQRUcg
-T3V0LW9mLUJvdW5kcyBBY2Nlc3MgaW4gZnVuY3Rpb24gb3BqX3RndF9yZXNl
-dCBvZiB0Z3QuYw0KRml4ZWQgdmlhIGh0dHBzOi8vZ2l0aHViLmNvbS91Y2xv
-dXZhaW4vb3BlbmpwZWcvY29tbWl0LzFhODMxOGY2YzI0NjIzMTg5ZWNiNjVl
-MDQ5MjY3YzZmMmUwMDVjMGUNCg0KMy4gSXNzdWUgNzMzDQpPcGVuSlBFRyBk
-aXZpc2lvbi1ieS16ZXJvIGluIGZ1bmN0aW9uIG9wal90Y2RfaW5pdF90aWxl
-IG9mIHRjZC5jDQpGaXhlZCB2aWEgaHR0cHM6Ly9naXRodWIuY29tL3VjbG91
-dmFpbi9vcGVuanBlZy9jb21taXQvOGY5Y2M2MmIzZjlhMWRhOTcxMjMyOWRk
-Y2VkYjk3NTBkNTg1NTA1Yw0KDQpSZWdhcmRzLA0KS2UgTGl1IG9mIFRlbmNl
-bnQncyBYdWFud3UgTEFCDQoNCg==
+I recently found a symlink attack that enables a malicious
+zone/chroot/jail managed by ansible to escape into the managing host.
+This was fixed in ansible 1.9.2 (commit list below, see
+https://github.com/ansible/ansible).
 
---_000_1F2D4DA31CA62740BFF46830A0E6A4F706575A62EXMBXTJ003tence_--
+I am not an ansible committer but Toshio requested I follow up. I
+understand that a request was made by Toshio to CVE-assign on 1st July
+but no response was received. The commits are already public and it has
+been announced on ansible's security page:
+http://www.ansible.com/security.
+
+Could a CVE please be assigned to this issue?
+
+
+Thanks,
+
+Martin.
+
+
+commit 548a7288a90c49e9b50ccf197da307eae525b899
+Author: Toshio Kuratomi <toshio@fedoraproject.org>
+Date:   Wed Jun 24 01:00:22 2015 -0700
+
+    Use BUFSIZE when putting file as well as fetching file.
+
+commit 270be6a6f5852c5563976f060c80eff64decc89c
+Author: Toshio Kuratomi <toshio@fedoraproject.org>
+Date:   Tue Jun 23 22:27:45 2015 -0700
+
+    Fix exec_command to not use a shell
+
+commit 952166f48eb0f5797b75b160fd156bbe1e8fc647
+Author: Toshio Kuratomi <toshio@fedoraproject.org>
+Date:   Mon Jun 22 20:07:29 2015 -0700
+
+    Fix problem with chroot connection plugins and symlinks from within
+the chroot.
+
+commit 0777d025051bf5cf3092aa79a9e6b67cec7064dd
+Author: Toshio Kuratomi <toshio@fedoraproject.org>
+Date:   Fri Jun 19 11:09:48 2015 -0700
+
+    Fix problem with jail and zone connection plugins and symlinks from
+within the jail/zone.
+
+commit ca2f2c4ebd7b5e097eab0a710f79c1f63badf95b
+Author: Toshio Kuratomi <toshio@fedoraproject.org>
+Date:   Fri Jun 19 09:41:48 2015 -0700
+
+    Fix problem with jail and zone connection plugins and symlinks from
+within the jail/zone.
+
+
+
