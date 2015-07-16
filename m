@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2270" "Tuesday" "23" "August" "2016" "22:04:44" "+0200" "Salvatore Bonaccorso" "carnil@debian.org" "<20160823200444.rcze3xsa6vjxyiws@eldamar.local>" "60" "Re: [oss-security] cracklib: Stack-based buffer overflow when parsing large GECOS field" nil nil nil "8" "2016082320:04:44" "[oss-security] cracklib: Stack-based buffer overflow when parsing large GECOS field" (number mark "U       carnil@debia Aug 23   60/2270  " thread-indent "\"Re: [oss-security] cracklib: Stack-based buffer overflow when parsing large GECOS field\"\n") "<8b386585-e699-ca12-56b3-6104701f9e9a@redhat.com>" ("<8b386585-e699-ca12-56b3-6104701f9e9a@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["15794" "Thursday" "16" "July" "2015" "12:34:13" "+0200" "Agostino Sarubbo" "ago@gentoo.org" "<13202626.As8AotmUy7@willoughby>" "130" "[oss-security] libav: divide-by-zero in ff_h263_decode_mba()" nil nil nil "7" "2015071610:34:13" "[oss-security] libav: divide-by-zero in ff_h263_decode_mba()" (number mark "        ago@gentoo.o Jul 16  130/15794 " thread-indent "\"[oss-security] libav: divide-by-zero in ff_h263_decode_mba()\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 4021 invoked by uid 550); 23 Aug 2016 20:04:58 -0000
+Received: (qmail 21504 invoked by uid 550); 16 Jul 2015 10:34:41 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,106 +11,145 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3991 invoked from network); 23 Aug 2016 20:04:57 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=FrmgeYmhX94ILTFh7YsSM8hw6vPux5LIVUt6dJ9fTUw=;
-        b=hZp5EA88pRF9/ukeHT2FRjHywXyClMJRN/85U5qzMvB1s0vLPOTIKmc60K6eDlKFH7
-         rvmISBZyNqkLGUwpdz5RjsKl2yTu90/LWWlhNAv2Y0xhHOZ6uXPK2GYHnyoR7Dc4nnG8
-         cm3KSgoACHVzy6x/0ON0gG74NZzaEC0Dp6Fe2C5kIX4XfLUiXjORcPOW0UFpavOAad7K
-         Q+hoqL3IlMqFWtaCt/79d6HRm3NeCKKbVxKzOw91rWRBy+2u326u/8+7zh99RnLq24mo
-         dvEv/k0WbZf1TN2lnL3qIX4mNLiKMe5LRtf55bHsESG8V9iplgWG+6tRfJ9bKQOJJ3iA
-         zdGw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
-         :references:mime-version:content-disposition:in-reply-to:user-agent;
-        bh=FrmgeYmhX94ILTFh7YsSM8hw6vPux5LIVUt6dJ9fTUw=;
-        b=NtYfmUGp7dF8fzYGWpQ1zEHcOuhlRYzeZ6f1IeEBeQQiRvN+SGeJJjdLBHwXjeB/tb
-         qDlep5jaqtoG8qMP+p480KmTS0f/kXmKFagoRnn8NZXrltPA2lm/HJyEP1KiOvfHgxBl
-         C8wEcxEtgUa/SOcgxA2YJBCzVg24uYrkaX7hsrj9OGK/q3SbYPhL8BVdX3H6qSs0A+Y5
-         8iq3Un1wYO9/8UNSrtDXcfBimk6DlvQuGO2xxYq+Vb99n8poi1BfS15GAR0sg8bH1N0/
-         xgxoeM+eS8bzHRqtlppQo53USJfZsqQ/N750aMN6oqwcHaU7IWV/aoBPhEvviG9rXm2b
-         HfWw==
-X-Gm-Message-State: AEkoouutFSjnDX8LQvgszPPHc5D6ZkPlHTbGpN7/0JCg0cbBIEiA6RfjTNqi1xd833Wskw==
-X-Received: by 10.194.89.129 with SMTP id bo1mr23011807wjb.105.1471982686253;
-        Tue, 23 Aug 2016 13:04:46 -0700 (PDT)
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Date: Tue, 23 Aug 2016 22:04:44 +0200
-From: Salvatore Bonaccorso <carnil@debian.org>
-To: oss-security@lists.openwall.com
-Cc: Howard Guo <hguo@suse.com>, Marcus Meissner <meissner@suse.de>,
-	CVE Assignments MITRE <cve-assign@mitre.org>
-Message-ID: <20160823200444.rcze3xsa6vjxyiws@eldamar.local>
-References: <8b386585-e699-ca12-56b3-6104701f9e9a@redhat.com>
+Received: (qmail 20424 invoked from network); 16 Jul 2015 10:34:32 -0000
+Message-ID: <13202626.As8AotmUy7@willoughby>
+User-Agent: KMail/4.14.8 (Linux/3.14.37-gentoo; KDE/4.14.8; x86_64; ; )
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <8b386585-e699-ca12-56b3-6104701f9e9a@redhat.com>
-User-Agent: Mutt/1.6.2-neo (2016-08-08)
-Subject: Re: [oss-security] cracklib: Stack-based buffer overflow when
- parsing large GECOS field
+Content-Type: multipart/alternative; boundary="nextPart1655470.aOdPlMRS2E"
+Content-Transfer-Encoding: 7Bit
+Date: Thu, 16 Jul 2015 12:34:13 +0200
+From: Agostino Sarubbo <ago@gentoo.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] libav: divide-by-zero in ff_h263_decode_mba()
+To: oss-security@lists.openwall.com
 
-Hi,
+--nextPart1655470.aOdPlMRS2E
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
 
-On Tue, Aug 16, 2016 at 03:34:54PM +0530, Huzaifa Sidhpurwala wrote:
-> Hi All,
-> 
-> A security flaw was reported to us by CSG Labs, details as follows:
-> 
-> A stack-based overflow was found in the way cracklib, a library used to
-> stop users from choosing easy to guess passwords, handled large GECOS
-> field in the /etc/passwd file. When an application compiled against the
-> cracklib libary, such as "passwd" is used to parse the GECOS field, it
-> could cause the application to crash or execute arbitary code with the
-> permissions of the user running such an application.
-> 
-> To trigger the flaw, you need a specially-crafted "long" GECOS field,
-> which can be done by a local user on the system. The attacker then needs
-> to run some utility which uses cracklib to process this long GECOS field
-> on the system. (such as "passwd" application which runs suid root)
-> 
-> All versions of the cracklib library shipped with Red Hat Enterprise
-> Linux are compiled with FORTIFY_SOURCE, which detects the
-> buffer-overflow and aborts the application safely.
-> 
-> Therefore the maximum impact of this flaw is application crash.
-> 
-> However, there may be other applications, distributions which dont
-> compile cracklib with FORTIFY_SOURCE, and this can lead to easy code
-> exec or even privsec.
-> 
-> A proposed patch is available at:
-> https://bugzilla.redhat.com/attachment.cgi?id=1188599
-> 
-> This flaw was assigned CVE-2016-6318 and it was previously disclosed via
-> linux-distros mailing list.
+Description:                                                                                                                                                                                                                                                                   
+Libav is an open source set of tools for audio and video processing.                                                                                                                                                                                                           
+                                                                                                                                                                                                                                                                               
+After talking with Luca Barbato which is both a Gentoo and Libav 
+developer, I spent a bit of my time fuzzing libav and in particular I 
+fuzzed libavcodec though avplay.                                                                                                        
+I hit a crash and after I reported it to upstream, they confirmed the 
+issue as a divide-by-zero.                                                                                                                                                                               
+                                                                                                                                                                                                                                                                               
+The complete gdb output:                                                                                                                                                                                                                                                       
+                                                                                                                                                                                                                                                                               
+ago@willoughby $ gdb --args /usr/bin/avplay avplay.crash                                                                                                                                                                                                                       
+GNU gdb (Gentoo 7.7.1 p1) 7.7.1                                                                                                                                                                                                                                                
+Copyright (C) 2014 Free Software Foundation, Inc.                                                                                                                                                                                                                              
+License GPLv3+: GNU GPL version 3 or later                                                                                                                                                                                                                                     
+This is free software: you are free to change and redistribute it.                                                                                                                                                                                                             
+There is NO WARRANTY, to the extent permitted by law.  Type "show 
+copying"                                                                                                                                                                                                     
+and "show warranty" for details.                                                                                                                                                                                                                                               
+This GDB was configured as "x86_64-pc-linux-gnu".                                                                                                                                                                                                                              
+Type "show configuration" for configuration details.                                                                                                                                                                                                                           
+For bug reporting instructions, please see:                                                                                                                                                                                                                                    
+.                                                                                                                                                                                                                                                                              
+Find the GDB manual and other documentation resources online at:                                                                                                                                                                                                               
+.                                                                                                                                                                                                                                                                              
+For help, type "help".                                                                                                                                                                                                                                                         
+Type "apropos word" to search for commands related to "word"...                                                                                                                                                                                                                
+Reading symbols from /usr/bin/avplay...Reading symbols from 
+/usr/lib64/debug//usr/bin/avplay.debug...done.                                                                                                                                                                     
+done.                                                                                                                                                                                                                                                                          
+(gdb) run                                                                                                                                                                                                                                                                      
+Starting program: /usr/bin/avplay avplay.crash                                                                                                                                                                                                                                 
+warning: Could not load shared library symbols for linux-vdso.so.1.                                                                                                                                                                                                            
+Do you need "set solib-search-path" or "set sysroot"?                                                                                                                                                                                                                          
+[Thread debugging using libthread_db enabled]                                                                                                                                                                                                                                  
+Using host libthread_db library "/lib64/libthread_db.so.1".                                                                                                                                                                                                                    
+avplay version 11.3, Copyright (c) 2003-2014 the Libav developers                                                                                                                                                                                                              
+  built on Jun 19 2015 09:50:59 with gcc 4.8.4 (Gentoo 4.8.4 p1.6, 
+pie-0.6.1)                                                                                                                                                                                                  
+[New Thread 0x7fffec4c7700 (LWP 7016)]                                                                                                                                                                                                                                         
+[New Thread 0x7fffeb166700 (LWP 7017)]                                                                                                                                                                                                                                         
+INFO: AddressSanitizer ignores mlock/mlockall/munlock/munlockall                                                                                                                                                                                                               
+[New Thread 0x7fffe9e28700 (LWP 7018)]                                                                                                                                                                                                                                         
+[h263 @ 0x60480000f680] Format detected only with low score of 25, 
+misdetection possible!                                                                                                                                                                                      
+[h263 @ 0x60440001f980] Syntax-based Arithmetic Coding (SAC) not 
+supported                                                                                                                                                                                                     
+[h263 @ 0x60440001f980] Reference Picture Selection not supported                                                                                                                                                                                                              
+[h263 @ 0x60440001f980] Independent Segment Decoding not supported                                                                                                                                                                                                             
+[h263 @ 0x60440001f980] header damaged                                                                                                                                                                                                                                         
+                                                                                                                                                                                                                                                                               
+Program received signal SIGFPE, Arithmetic exception.                                                                                                                                                                                                                          
+[Switching to Thread 0x7fffe9e28700 (LWP 7018)]                                                                                                                                                                                                                                
+0x00007ffff21e3313 in ff_h263_decode_mba (s=s@entry=0x60720005a100) at 
+/tmp/portage/media-
+video/libav-11.3/work/libav-11.3/libavcodec/ituh263dec.c:142                                                                                                                         
+142     /tmp/portage/media-
+video/libav-11.3/work/libav-11.3/libavcodec/ituh263dec.c: No such file 
+or directory.                                                                                                                                                                
+(gdb) bt                                                                                                                                                                                                                                                                       
+#0  0x00007ffff21e3313 in ff_h263_decode_mba (s=s@entry=0x60720005a100) 
+at /tmp/portage/media-
+video/libav-11.3/work/libav-11.3/libavcodec/ituh263dec.c:142                                                                                                                     
+#1  0x00007ffff21f3c2d in ff_h263_decode_picture_header 
+(s=0x60720005a100) at /tmp/portage/media-
+video/libav-11.3/work/libav-11.3/libavcodec/ituh263dec.c:1112                                                                                                                 
+#2  0x00007ffff1ae16ed in ff_h263_decode_frame (avctx=0x60440001f980, 
+data=0x60380002f480, got_frame=0x7fffe9e272f0, avpkt=) at 
+/tmp/portage/media-
+video/libav-11.3/work/libav-11.3/libavcodec/h263dec.c:444
+#3  0x00007ffff2cd963e in avcodec_decode_video2 (avctx=0x60440001f980, 
+picture=0x60380002f480, 
+got_picture_ptr=got_picture_ptr@entry=0x7fffe9e272f0, 
+avpkt=avpkt@entry=0x7fffe9e273b0) at /tmp/portage/media-
+video/libav-11.3/work/libav-11.3/libavcodec/utils.c:1600
+#4  0x00007ffff44d4fb4 in try_decode_frame (st=st@entry=0x60340002fb00, 
+avpkt=avpkt@entry=0x601c00037b00, options=) at /tmp/portage/media-
+video/libav-11.3/work/libav-11.3/libavformat/utils.c:1910
+#5  0x00007ffff44ebd89 in avformat_find_stream_info (ic=0x60480000f680, 
+options=0x600a00009e80) at /tmp/portage/media-
+video/libav-11.3/work/libav-11.3/libavformat/utils.c:2276
+#6  0x0000000000431834 in decode_thread (arg=0x7ffff7e0b800) at 
+/tmp/portage/media-video/libav-11.3/work/libav-11.3/avplay.c:2268
+#7  0x00007ffff0284b08 in ?? () from /usr/lib64/libSDL-1.2.so.0
+#8  0x00007ffff02b4be9 in ?? () from /usr/lib64/libSDL-1.2.so.0
+#9  0x00007ffff4e65aa8 in ?? () from /usr/lib/gcc/x86_64-pc-linux-
+gnu/4.8.4/libasan.so.0
+#10 0x00007ffff0062204 in start_thread () from /lib64/libpthread.so.0
+#11 0x00007fffefda957d in clone () from /lib64/libc.so.6
+(gdb)
 
-In the SuSE Bugzilla, it was noted that there is still another buffer
-overflow present, cf. 
 
-https://bugzilla.novell.com/show_bug.cgi?id=992966#c14
+Affected version:
+11.3 (and maybe past versions)
 
-and the patch
+Fixed version:
+11.5 and 12.0
 
-https://build.opensuse.org/request/show/419768
+Commit fix:
+https://git.libav.org/?p=libav.git;a=commitdiff;h=0a49a62f998747cfa564d98d36a459fe70d3299b;hp=6f4cd33efb5a9ec75db1677d5f7846c60337129f
 
-> - Add patch 0004-overflow-processing-long-words.patch
->  to fix a new buffer overflow identified together with bsc#992966.
-[...]
-> The input word is guaranteed to be at most STRINGSIZE-1 in length.
-> One of the mangle operations involves duplicating the input word,
-> resulting in a string twice the length to be accommodated by both
-> area variables.
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
-https://build.opensuse.org/package/view_file/Base:System/cracklib/0004-overflow-processing-long-words.patch
+CVE:
+CVE-2015-5479
 
-was applied.
+Timeline:
+2015-06-21: bug discovered
+2015-06-22: bug reported privately to upstream
+2015-06-30: upstream commit the fix
+2015-07-14: CVE assigned
+2015-07-16: advisory release
 
-Should that possibly get a further CVE id for reference?
+Note:
+This bug was found with American Fuzzy Lop.
+This bug does not affect ffmpeg.
 
-Regards,
-Salvatore
+Permalink:
+http://blogs.gentoo.org/ago/2015/07/16/libav-divide-by-zero-in-ff_h263_decode_mba
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
+--nextPart1655470.aOdPlMRS2E--
+
