@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1018" "Wednesday" "13" "May" "2015" "11:53:22" "-0700" "Greg KH" "greg@kroah.com" "<20150513185322.GA4029@kroah.com>" "28" "Re: [oss-security] [PATCH 0/4] ozwpan: Four remote packet-of-death vulnerabilities" nil nil nil "5" "2015051318:53:22" "[oss-security] [PATCH 0/4] ozwpan: Four remote packet-of-death vulnerabilities" (number mark "        greg@kroah.c May 13   28/1018  " thread-indent "\"Re: [oss-security] [PATCH 0/4] ozwpan: Four remote packet-of-death vulnerabilities\"\n") "<CAHmME9pL6kU5D9YNZdDMHXc0harTZ_oDo9xEpmojEN9_qs+qpQ@mail.gmail.com>" ("<1431542014-3239-1-git-send-email-Jason@zx2c4.com>" "<20150513184331.GA1847@kroah.com>" "<CAHmME9pL6kU5D9YNZdDMHXc0harTZ_oDo9xEpmojEN9_qs+qpQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["357" "Thursday" "16" "July" "2015" "11:36:13" "-0500" "Mark Felder" "feld@feld.me" "<1437064573.2531367.325509785.6E701247@webmail.messagingengine.com>" "16" "Re: [oss-security] CVE Request: use after free in PHP 5.6 and 7 (possibly others)" nil nil nil "7" "2015071616:36:13" "[oss-security] CVE Request: use after free in PHP 5.6 and 7 (possibly others)" (number mark "        feld@feld.me Jul 16   16/357   " thread-indent "\"Re: [oss-security] CVE Request: use after free in PHP 5.6 and 7 (possibly others)\"\n") "<CANMVOuxUyP_6479fSMMQsWbK1iSywX8OzMC9Px1+wa+3k9jjZg@mail.gmail.com>" ("<CANMVOuxUyP_6479fSMMQsWbK1iSywX8OzMC9Px1+wa+3k9jjZg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 5710 invoked by uid 550); 13 May 2015 18:53:36 -0000
+Received: (qmail 3286 invoked by uid 550); 16 Jul 2015 16:36:28 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,51 +11,49 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5685 invoked from network); 13 May 2015 18:53:36 -0000
-Message-ID: <20150513185322.GA4029@kroah.com>
-References: <1431542014-3239-1-git-send-email-Jason@zx2c4.com>
- <20150513184331.GA1847@kroah.com>
- <CAHmME9pL6kU5D9YNZdDMHXc0harTZ_oDo9xEpmojEN9_qs+qpQ@mail.gmail.com>
+Received: (qmail 3263 invoked from network); 16 Jul 2015 16:36:27 -0000
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=feld.me; h=
+	content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-sasl-enc
+	:x-sasl-enc; s=mesmtp; bh=o3GCubm8rAfPkUyNi/Y6c+xnpso=; b=a2waeG
+	lZgcUMuAlU6PlGZPcxA0DzT5Ab7pPDxzh97JPaiT4JL8BeAfE5SLI0UH9g2Qw9BM
+	pexumBECJYYhJtUtZsTHUY4zS5kttOTGPh+eYsN7uwdLjuOuk/CkAzRqlmFdu+7m
+	bP0vr6bwFDVQ26pkoq5qsdNODirjXm31IAGR0=
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=content-transfer-encoding:content-type
+	:date:from:in-reply-to:message-id:mime-version:references
+	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=o3GCubm8rAfPkUy
+	Ni/Y6c+xnpso=; b=FHGAnvXK7HIGTU2/FF6zMtWLj2HodtEiJl6Hr6kOnPWnBb6
+	WiIGGJTG20yCMu5Xpjdh6hi1k7ArzVxa28WKH/O/9u6yhLBN7eM3JnLTjcg4/+fa
+	uaf46jACylc6XbEURqjC9QiFOj83iU9dwY9io7hVBSS2H4uwhO3mTjOrwcFU=
+Message-Id: <1437064573.2531367.325509785.6E701247@webmail.messagingengine.com>
+X-Sasl-Enc: VYfCdzLjDlJw/2GS/Q9WaWHr6WhNAruXcm7sjUjcvFsJ 1437064573
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAHmME9pL6kU5D9YNZdDMHXc0harTZ_oDo9xEpmojEN9_qs+qpQ@mail.gmail.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-Cc: oss-security <oss-security@lists.openwall.com>,
-	shigekatsu.tateno@atmel.com, linux-kernel@vger.kernel.org,
-	netdev@vger.kernel.org
-Date: Wed, 13 May 2015 11:53:22 -0700
-From: Greg KH <greg@kroah.com>
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Mailer: MessagingEngine.com Webmail Interface - ajax-63a5d8c6
+In-Reply-To: <CANMVOuxUyP_6479fSMMQsWbK1iSywX8OzMC9Px1+wa+3k9jjZg@mail.gmail.com>
+References: <CANMVOuxUyP_6479fSMMQsWbK1iSywX8OzMC9Px1+wa+3k9jjZg@mail.gmail.com>
+Date: Thu, 16 Jul 2015 11:36:13 -0500
+From: Mark Felder <feld@feld.me>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] [PATCH 0/4] ozwpan: Four remote packet-of-death
- vulnerabilities
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Subject: Re: [oss-security] CVE Request: use after free in PHP 5.6 and 7
+ (possibly others)
+To: oss-security@lists.openwall.com
 
-On Wed, May 13, 2015 at 08:48:31PM +0200, Jason A. Donenfeld wrote:
-> On Wed, May 13, 2015 at 8:43 PM, Greg KH <greg@kroah.com> wrote:
-> > Any reason you didn't cc: the maintainer who could actually apply these
-> > to the kernel tree?
+
+
+On Thu, Jul 16, 2015, at 01:24, Brian Carpenter wrote:
+> Bug Report:
+> https://bugs.php.net/bug.php?id=70083
 > 
-> I did, look at the email again: the first recipient is
-> <shigekatsu.tateno@atmel.com>.
-> 
-> >From the MAINTAINERS file:
->     STAGING - OZMO DEVICES USB OVER WIFI DRIVER
->     M:      Shigekatsu Tateno <shigekatsu.tateno@atmel.com>
->     S:      Maintained
->     F:      drivers/staging/ozwpan/
 
-$ ./scripts/get_maintainer.pl --file drivers/staging/ozwpan/Makefile 
-Shigekatsu Tateno <shigekatsu.tateno@atmel.com> (maintainer:STAGING - OZMO DE...)
-Greg Kroah-Hartman <gregkh@linuxfoundation.org> (supporter:STAGING SUBSYSTEM)
-devel@driverdev.osuosl.org (open list:STAGING SUBSYSTEM)
-linux-kernel@vger.kernel.org (open list)
+> -Type: Security 
+> +Type: Bug
 
-You missed me, and the driverdev mailing list.  netdev could care less
-about this.
+Interesting that they removed the Security label
 
-Please resend to get the proper people involved.
+> PHP 5.5 and below are in sec-fixes only mode. I fixed the bug in PHP 5.6 though;
 
-thanks,
-
-greg k-h
+They seem to think it's not a security issue and won't be patching < 5.6
+?
