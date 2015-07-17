@@ -1,4 +1,9 @@
-Received: (qmail 15684 invoked by uid 550); 19 Oct 2023 05:23:05 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["722" "Friday" "17" "July" "2015" "08:10:33" "+0200" "Florian Weimer" "fw@deneb.enyo.de" "<874ml3nwkm.fsf@mid.deneb.enyo.de>" "17" "Re: [oss-security] Re: ezmlm warning" nil nil nil "7" "2015071706:10:33" "[oss-security] Re: ezmlm warning" (number mark "        fw@deneb.eny Jul 17   17/722   " thread-indent "\"Re: [oss-security] Re: ezmlm warning\"\n") "<CALPTtNUgpuWSznYT77cY8fTFPMgzDW-TN-VC3agv982Socc4Qg@mail.gmail.com>" ("<1436834771.18369.ezmlm-warn@lists.openwall.com>" "<CAPiURgVcmtPDG6APOESc5tG_sAjaA2JHOwThc+ByeSHQftDb8g@mail.gmail.com>" "<CALPTtNUgpuWSznYT77cY8fTFPMgzDW-TN-VC3agv982Socc4Qg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 17765 invoked by uid 550); 17 Jul 2015 06:10:46 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,43 +11,35 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1600 invoked from network); 19 Oct 2023 02:35:14 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Charles Zhang <dockerzhang@apache.org>
-To: oss-security@lists.openwall.com
-Message-ID: <d1fbf10c-8c1e-f187-b1fa-96d24dcdedc7@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Thu, 19 Oct 2023 02:34:06 +0000
+Received: (qmail 17737 invoked from network); 17 Jul 2015 06:10:46 -0000
+References: <1436834771.18369.ezmlm-warn@lists.openwall.com>
+	<CAPiURgVcmtPDG6APOESc5tG_sAjaA2JHOwThc+ByeSHQftDb8g@mail.gmail.com>
+	<CALPTtNUgpuWSznYT77cY8fTFPMgzDW-TN-VC3agv982Socc4Qg@mail.gmail.com>
+In-Reply-To: <CALPTtNUgpuWSznYT77cY8fTFPMgzDW-TN-VC3agv982Socc4Qg@mail.gmail.com>
+	(Reed Loden's message of "Thu, 16 Jul 2015 17:41:35 -0700")
+Message-ID: <874ml3nwkm.fsf@mid.deneb.enyo.de>
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2023-46227: Apache inlong has an Arbitrary File Read
- Vulnerability 
+Content-Type: text/plain
+Date: Fri, 17 Jul 2015 08:10:33 +0200
+From: Florian Weimer <fw@deneb.enyo.de>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Re: ezmlm warning
+To: oss-security@lists.openwall.com
 
-Severity: important
+* Reed Loden:
 
-Affected versions:
+> Yup, I get these, too... Been happening for almost a year. See also
+> http://seclists.org/oss-sec/2014/q3/471.
+>
+> Likely, the ezmlm instance on lists.openwall.com needs to be updated to get
+> some of the DMARC compliance changes that were made last year (
+> http://untroubled.org/ezmlm/archive/7.2.2/CHANGES).
 
-- Apache InLong 1.4.0 through 1.8.0
+Or you need to upgrade your email service to something that supports
+mailing lists.  oss-security uses Internet Mail in the way it is
+intended and specified.  If recipient mail servers cannot accept those
+messages, it is really their fault.
 
-Description:
-
-Deserialization of Untrusted Data Vulnerability in Apache Software Foundati=
-on Apache InLong.
-
-This issue affects Apache InLong: from 1.4.0 through 1.8.0, the attacker ca=
-n use \t to bypass.=C2=A0Users are advised to upgrade to Apache InLong's 1.=
-9.0 or cherry-pick [1] to solve it.
-
-[1]  https://github.com/apache/inlong/pull/8814
-
-Credit:
-
-zhiwei (finder)
-s3gundo (finder)
-
-References:
-
-https://inlong.apache.org
-https://www.cve.org/CVERecord?id=3DCVE-2023-46227
-
+DMARC is just one aspect of that.  For example, would you also request
+that Openwall will never deploy IPv6 because Gmail rejects mail sent
+over IPv6?
