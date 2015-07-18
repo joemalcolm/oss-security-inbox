@@ -1,4 +1,9 @@
-Received: (qmail 16274 invoked by uid 550); 18 Dec 2023 00:04:25 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1390" "Saturday" "18" "July" "2015" "06:51:24" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150718105124.BCFD433E08C@smtpvbsrv1.mitre.org>" "40" "[oss-security] Re: CVE request: php - segmentation fault in Phar::convertToData; buffer overflow in phar_fix_filepath;" nil nil nil "7" "2015071810:51:24" "[oss-security] Re: CVE request: php - segmentation fault in Phar::convertToData; buffer overflow in phar_fix_filepath;" (number mark "U       cve-assign@m Jul 18   40/1390  " thread-indent "\"[oss-security] Re: CVE request: php - segmentation fault in Phar::convertToData; buffer overflow in phar_fix_filepath;\"\n") "<20150717135425.GB19821@mail.corp.redhat.com>" ("<20150717135425.GB19821@mail.corp.redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 3886 invoked by uid 550); 18 Jul 2015 10:51:37 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,70 +12,52 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 16244 invoked from network); 18 Dec 2023 00:04:25 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
-	s=20170329; h=Content-Transfer-Encoding:Content-Type:Subject:Cc:To:From:
-	MIME-Version:Date:Message-ID:Sender:Reply-To:Content-ID:Content-Description:
-	Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
-	In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
-	List-Post:List-Owner:List-Archive;
-	bh=+BxCCi61UUEkT+cHwLvNWnlvvclCHhcyhHGE1YUZlQo=; b=rUf4zB+IW/JfS/G1Dv6Ubn/Uka
-	ByxH7K+IQ63Cz39hFxbYVoPm1BCg0ZdDpUSHOfgEdnmCKbW6pvWIIYqN8FlLuffR8TbvVRWbjRqif
-	17bAp4vlzThATOAqqw048FVjAg9t/APd90g+S2/BtIewNhYbE1/CEb4mepuFGMhnkiC5lPf9l5jQe
-	U3Uq2DUkYOhU+HPa1IUBO8E7rqv1QQkJbg/aReMsRVnbdegwa0dyhc/umUO/HQIp7jLs56gjLuuMB
-	lMdv+XVAkM3nf2fk5KqFg5jBkvptUM0vhzE94cJaKkUWTsVWam3CcLz1HSbuyeycXbgrsbqWD5Qac
-	yA0B/MNw==;
-Message-ID: <8eba63df-b543-10af-8f29-4c4c8ab3a5dc@igalia.com>
-Date: Mon, 18 Dec 2023 01:04:46 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.0
-Content-Language: en-GB
-From: Carlos Alberto Lopez Perez <clopez@igalia.com>
-To: webkit-gtk@lists.webkit.org, webkit-wpe@lists.webkit.org
-Cc: security@webkit.org, oss-security@lists.openwall.com
-Organization: Igalia S.L.
-Mail-Followup-To: webkit-gtk@lists.webkit.org, webkit-wpe@lists.webkit.org,
- security@webkit.org, oss-security@lists.openwall.com
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2023-0012
+Received: (qmail 3866 invoked from network); 18 Jul 2015 10:51:36 -0000
+From: cve-assign@mitre.org
+To: vkaigoro@redhat.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <20150717135425.GB19821@mail.corp.redhat.com>
+Message-Id: <20150718105124.BCFD433E08C@smtpvbsrv1.mitre.org>
+Date: Sat, 18 Jul 2015 06:51:24 -0400 (EDT)
+Subject: [oss-security] Re: CVE request: php - segmentation fault in Phar::convertToData; buffer overflow in phar_fix_filepath;
 
-------------------------------------------------------------------------
-WebKitGTK and WPE WebKit Security Advisory                 WSA-2023-0012
-------------------------------------------------------------------------
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Date reported           : December 18, 2023
-Advisory ID             : WSA-2023-0012
-WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2023-0012.html
-WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2023-0012.html
-CVE identifiers         : CVE-2023-42883, CVE-2023-42890.
+> Segfault in Phar::convertToData on invalid file
+> https://bugs.php.net/bug.php?id=69958
+> http://git.php.net/?p=php-src.git;a=commit;h=bf58162ddf970f63502837f366930e44d6a992cf
 
-Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
+> -               php_stream_close(phar->fp);
+> +               if (phar->fp) {
+> +                       php_stream_close(phar->fp);
+> +               }
 
-CVE-2023-42883
-    Versions affected: WebKitGTK and WPE WebKit before 2.42.4.
-    Credit to Zoom Offensive Security Team.
-    Impact: Processing a SVG image may lead to a denial-of-service.
-    Description: The issue was addressed with improved memory handling.
-    WebKit Bugzilla: 263349
-
-CVE-2023-42890
-    Versions affected: WebKitGTK and WPE WebKit before 2.42.0.
-    Credit to Pwn2car.
-    Impact: Processing web content may lead to arbitrary code execution.
-    Description: The issue was addressed with improved memory handling.
-    WebKit Bugzilla: 259830
+Use CVE-2015-5589.
 
 
-We recommend updating to the latest stable versions of WebKitGTK and WPE
-WebKit. It is the best way to ensure that you are running safe versions
-of WebKit. Please check our websites for information about the latest
-stable releases.
+> Buffer overflow and stack smashing error in phar_fix_filepath
+> https://bugs.php.net/bug.php?id=69923
+> http://git.php.net/?p=php-src.git;a=commit;h=6dedeb40db13971af45276f80b5375030aa7e76f
 
-Further information about WebKitGTK and WPE WebKit security advisories
-can be found at: https://webkitgtk.org/security.html or
-https://wpewebkit.org/security/.
+> there is no check if `newpath_len` will exceed MAXPATHLEN, which is
+> the size of `newpath` on the stack.
 
-The WebKitGTK and WPE WebKit team,
-December 18, 2023
+Use CVE-2015-5590.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJVqi70AAoJEKllVAevmvms/54H/RRluc6ErkmkBrq+DtmbGUqj
+YsL8AvL2GFn82tiEqsGs9+BaE9NSFYZv7Cg7fgmlWYL2TcEq6D94I1MbmaaSG9O9
+R/ogWm4XWMDbeNruDGsb3y2GEvzzgdSxuDsgSKOBcR7pzw0RYIribeJM6hwfbQ9Q
+dG9POpslHu6fTGq7tYpTY/p5fBjuDz176AcpIzdh6hm/GvvNaNvr/cgx7ZXtaGN7
+53Pqi+4YwbZbIbx4a1O4MHBmbnShbTEhhVRwvXLLwhAcvNwxocDJBLoiiYbunEVi
+70bgzyiBmqSj1qYN+wp6fnUdHBloyer7Jw37bZhmU7hRGBlzh6KTE7GaODUBnE4=
+=OZOY
+-----END PGP SIGNATURE-----
