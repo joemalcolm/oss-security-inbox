@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["947" "Tuesday" "14" "July" "2020" "13:24:45" "+0100" "Mark Thomas" "markt@apache.org" "<218e1c3b-d8bc-9c70-88b8-cea51e64e217@apache.org>" "30" "[oss-security] [SECURITY] CVE-2020-13934 Apache Tomcat HTTP/2 Denial of Service" nil nil nil "7" "2020071412:24:45" "[oss-security] [SECURITY] CVE-2020-13934 Apache Tomcat HTTP/2 Denial of Service" (number mark "U       markt@apache Jul 14   30/947   " thread-indent "\"[oss-security] [SECURITY] CVE-2020-13934 Apache Tomcat HTTP/2 Denial of Service\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [SECURITY] CVE-2020-13934 Apache Tomcat HTTP/2 Denial of Service" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1533" "Saturday" "18" "July" "2015" "14:13:26" "+0200" "Florian Weimer" "fw@deneb.enyo.de" "<87615hoe8p.fsf@mid.deneb.enyo.de>" "36" "[oss-security] CVE-2014-8873 was fixed in DSA-3235-1" nil nil nil "7" "2015071812:13:26" "[oss-security] CVE-2014-8873 was fixed in DSA-3235-1" (number mark "U       fw@deneb.eny Jul 18   36/1533  " thread-indent "\"[oss-security] CVE-2014-8873 was fixed in DSA-3235-1\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 7863 invoked by uid 550); 14 Jul 2020 13:00:20 -0000
+Received: (qmail 8151 invoked by uid 550); 18 Jul 2015 12:13:43 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,46 +12,49 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13349 invoked from network); 14 Jul 2020 12:24:50 -0000
-From: Mark Thomas <markt@apache.org>
+Received: (qmail 8086 invoked from network); 18 Jul 2015 12:13:38 -0000
+From: Florian Weimer <fw@deneb.enyo.de>
 To: oss-security@lists.openwall.com
-Message-ID: <218e1c3b-d8bc-9c70-88b8-cea51e64e217@apache.org>
-Date: Tue, 14 Jul 2020 13:24:45 +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
- Gecko/20100101 Thunderbird/68.10.0
+Cc: cve-assign@mitre.org
+Date: Sat, 18 Jul 2015 14:13:26 +0200
+Message-ID: <87615hoe8p.fsf@mid.deneb.enyo.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] [SECURITY] CVE-2020-13934 Apache Tomcat HTTP/2 Denial of Service
+Content-Type: text/plain
+Subject: [oss-security] CVE-2014-8873 was fixed in DSA-3235-1
 
-CVE-2020-13934 Apache Tomcat HTTP/2 Denial of Service
+We failed to mention in the original Debian security advisory that the
+openjdk-7 update in DSA-3235-1 also fixed the following
+Debian-specific vulnerability:
 
-Severity: Moderate
+Some web browsers in Debian jessie would automatically execute
+downloaded JAR files, without any kind of sandbox.  Presumably, that
+affects email clients as well.
 
-Vendor: The Apache Software Foundation
+We have tracked this down to the /etc/mailcap entry generated from the
+openjdk-7 .desktop file, after this change in mime-support (which is
+specific to Debian and its downstreams):
 
-Versions Affected:
-Apache Tomcat 10.0.0-M1 to 10.0.0-M6
-Apache Tomcat 9.0.0.M5 to 9.0.36
-Apache Tomcat 8.5.1 to 8.5.56
+mime-support (3.53) unstable; urgency=low
 
-Description:
-An h2c direct connection did not release the HTTP/1.1 processor after
-the upgrade to HTTP/2. If a sufficient number of such requests were
-made, an OutOfMemoryException could occur leading to a denial of service.
+  801bd8b Parse Desktop entries to generate mailcap entries.
+          Patch from Brian M. Carlson. (Closes: #497779)
 
-Mitigation:
-- Upgrade to Apache Tomcat 10.0.0-M7 or later
-- Upgrade to Apache Tomcat 9.0.37 or later
-- Upgrade to Apache Tomcat 8.5.57 or later
+ -- Charles Plessy <plessy@debian.org>  Sun, 05 May 2013 17:24:50 +0900
 
-Credit:
-This issue was reported publicly via the Apache Tomcat Users mailing
-list without reference to the potential for DoS. The DoS risks were
-identified by the Apache Tomcat Security Team.
+This change is part of Debian jessie, previous releases are not
+affected.
 
-References:
-[1] http://tomcat.apache.org/security-10.html
-[2] http://tomcat.apache.org/security-9.html
-[3] http://tomcat.apache.org/security-8.html
+After consultation with the mime-support maintainers, the resolution
+in DSA-3235-1 removes the MIME type registration from the openjdk-7
+package.  Auto-generation of /etc/mailcap from .desktop files remains
+the intended behavior of the mime-support package.
+
+The unintended code execution was reported initially to MITRE by
+Alexander Neumann, and MITRE assigned CVE-2014-8873 to this issue,
+without a full root cause analysis, incorrectly assuming it was a w3m
+(and not Debian) vulnerability.
+
+For other packages with .desktop files affected in the same way, we
+will assign separate CVE IDs from Debian's pool.  We do not believe
+any of the affected packages are in the supported package set of any
+Debian downstream.
