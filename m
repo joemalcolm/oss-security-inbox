@@ -1,4 +1,9 @@
-Received: (qmail 7328 invoked by uid 550); 18 Mar 2024 22:06:20 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1960" "Saturday" "18" "July" "2015" "19:31:21" "+0200" "Alessandro Ghedini" "alessandro@ghedini.me" "<20150718173121.GA15158@kronk.local>" "57" "[oss-security] CVE Request: cacti multiple SQL injections" nil nil nil "7" "2015071817:31:21" "[oss-security] CVE Request: cacti multiple SQL injections" (number mark "        alessandro@g Jul 18   57/1960  " thread-indent "\"[oss-security] CVE Request: cacti multiple SQL injections\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 3089 invoked by uid 550); 18 Jul 2015 17:31:34 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,276 +11,88 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3401 invoked from network); 18 Mar 2024 20:54:57 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=x17.eu; s=20140827;
-	t=1710795552; bh=kfqZzWm1fBKoPaj9mfgkr4fSp+5IUMaIFxkOdkMB1bI=;
-	h=Date:From:Subject:To;
-	b=rXlkxiYdiEhvJeGWmcmWQnveP8GxUZ3lu66XEIefNLl/KRcovzIE1w5Ldk8T4LnIv
-	 IL0VFOQRc8AFFsm3VDId6JcMqweu71QdKkrGm13ajLygiF4sU5qxVYG8QTQUNNt4CB
-	 HPOo4uVKHtnLYHSCrG4gXZGgwKKanM/rhI0yLLgc=
-Content-Type: multipart/mixed; boundary="------------LWIRhu8GMy4QWcHudolyC8Nd"
-Message-ID: <425c87ae-3998-49f0-8403-fe953f7d08a5@x17.eu>
-Date: Mon, 18 Mar 2024 21:59:12 +0100
+Received: (qmail 2044 invoked from network); 18 Jul 2015 17:31:33 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=date:from:to:cc:subject:message-id:mail-followup-to:mime-version
+         :content-type:content-disposition:user-agent;
+        bh=IbaARspz0gGpg+Jiw1utbgwwNEF0cUPmCFq+UL3yuXs=;
+        b=KZ9cWc8y5T1x+Pz+2Zue1qubBHs/giVGoPt6tjvM5diVd8GBykByhk+BoXw5Cw7oK3
+         iHFWqs8QcN9nxnyxCbl4O/0PaQrMa5qTQ4p9O8f9q19y50/3m0/hcoIzjn+FF0wg9vhC
+         5u1KX4d0dUdhBd4GmS37d/CSa8X8sTnWiUmtdDcExTJvlbqnsDAkXKCSJEvTux4aOSdd
+         XEpjTc8vgx3aB9KfZlIXgafXrYefWUjzJ/v9O6LG82RE1GetnR4XfVjAiwV6SI3xfg19
+         o2DSFbRx2cNNvQtS2RtjLy5t6fEM03ppl9efbi2QKbU3IxIZrN6KV9af3kUOUdxSY6Py
+         42VQ==
+X-Received: by 10.194.187.51 with SMTP id fp19mr38333843wjc.67.1437240682557;
+        Sat, 18 Jul 2015 10:31:22 -0700 (PDT)
+Message-ID: <20150718173121.GA15158@kronk.local>
+Mail-Followup-To: oss-security@lists.openwall.com, cve-assign@mitre.org
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: de-DE, en-GB
-From: daniel <sd@x17.eu>
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="pf9I7BMVVzbSWLtt"
+Content-Disposition: inline
+User-Agent: Mutt/1.5.23 (2014-03-12)
+Cc: cve-assign@mitre.org
+Date: Sat, 18 Jul 2015 19:31:21 +0200
+From: Alessandro Ghedini <alessandro@ghedini.me>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE Request: cacti multiple SQL injections
 To: oss-security@lists.openwall.com
-Subject: [oss-security] 5 Linux kernel ksmbd vulnerabilities
 
---------------LWIRhu8GMy4QWcHudolyC8Nd
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+--pf9I7BMVVzbSWLtt
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Recently two batches of Linux kernel ksmbd vulnerabilities became public.
+Hi,
 
-Please find here an overview, the attached ZDI information and the 
-corresponding links to the Linux kernel cve announce messages with 
-further information.
+CVE-2015-4634 was assigned for an SQL injection in cacti [0], but according to
+the commit fixing it [1] several other SQL injections were also found:
 
-###
-##	batch one
-###
-CVE            Link
---------------+---------------------------------------------------------+-----
-CVE-2024-26594 https://www.zerodayinitiative.com/advisories/ZDI-24-194/
-CVE-2024-26592 https://www.zerodayinitiative.com/advisories/ZDI-24-195/
+-bug#0002574: SQL Injection Vulnerabilitie in graph items and graph template items
+http://bugs.cacti.net/view.php?id=0002574
 
-Vendor notified: 2024-01-11
-Coordinated public release date: 2024-02-23
+-bug#0002579: SQL Injection Vulnerabilitie in data sources
+http://bugs.cacti.net/view.php?id=0002579
 
-Fixed in following kernels:
-Fixed in 6.1.75
-Fixed in 6.6.14
-Fixed in 6.7.2
-Fixed in 6.8-rc1
+-bug#0002580: SQL Injection in cdef.php
+http://bugs.cacti.net/view.php?id=0002580
 
-https://lore.kernel.org/linux-cve-announce/2024022259-CVE-2024-26592-58f7@gregkh/T/#u
-https://lore.kernel.org/linux-cve-announce/2024022325-CVE-2024-26594-1cbc%40gregkh/
+-bug#0002582: SQL Injection in data_templates.php
+http://bugs.cacti.net/view.php?id=0002582
 
-###
-##	batch two
-###
-CVE            Link
---------------+---------------------------------------------------------+-----
-CVE-2023-52442 https://www.zerodayinitiative.com/advisories/ZDI-24-227/
-CVE-2023-52441 https://www.zerodayinitiative.com/advisories/ZDI-24-228/
-CVE-2023-52440 https://www.zerodayinitiative.com/advisories/ZDI-24-229/
+-bug#0002583: SQL Injection in graph_templates.php
+http://bugs.cacti.net/view.php?id=0002583
 
-Vendor notified: 2023-07-18 - 2023-08-24
-Coordinated public release date: 2024-03-01
+-bug#0002584: SQL Injection in host_templates.php
+http://bugs.cacti.net/view.php?id=0002584
 
-Fixed in following kernels:
-Fixed in 5.15.145
-Fixed in 6.1.53
-Fixed in 6.4.16
-Fixed in 6.5
+Could CVEs be assigned for these issues as well?
 
-https://lore.kernel.org/linux-cve-announce/2024022132-unvented-arguably-5ea9@gregkh/T/#u
-https://lore.kernel.org/linux-cve-announce/2024022129-gently-activity-ca7d@gregkh/T/#u
-https://lore.kernel.org/linux-cve-announce/2024022123-glance-wrinkle-26c1@gregkh/T/#u
+Thanks
 
-###
-##	links to reports of older ksmbd vulnerabilities
-###
-https://www.openwall.com/lists/oss-security/2023/01/04/1
-https://www.openwall.com/lists/oss-security/2022/12/22/8
---------------LWIRhu8GMy4QWcHudolyC8Nd
-Content-Type: text/plain; charset=UTF-8;
- name="ZDI-24-194-ZDI-CAN-22890-CVE-2024-26594.txt"
-Content-Disposition: attachment;
- filename="ZDI-24-194-ZDI-CAN-22890-CVE-2024-26594.txt"
-Content-Transfer-Encoding: base64
+[0] http://bugs.cacti.net/view.php?id=0002577
+[1] http://svn.cacti.net/viewvc?view=rev&revision=7731
 
-QWR2aXNvcnkgRGV0YWlscwoKICAgRmVicnVhcnkgMjNyZCwgMjAyNAoKTGlu
-dXggS2VybmVsIGtzbWJkIE1lY2ggVG9rZW4gT3V0LU9mLUJvdW5kcyBSZWFk
-IEluZm9ybWF0aW9uIERpc2Nsb3N1cmUgVnVsbmVyYWJpbGl0eQoKICBaREkt
-MjQtMTk0CiAgWkRJLUNBTi0yMjg5MAoKICAgQ1ZFIElEICAgICAgICAgICAg
-ICAgIENWRS0yMDI0LTI2NTk0CiAgIENWU1MgU0NPUkUgICAgICAgICAgICA5
-LjMsIEFWOk4vQUM6TC9QUjpOL1VJOk4vUzpDL0M6SC9JOk4vQTpMCiAgIEFG
-RkVDVEVEIFZFTkRPUlMgICAgICBMaW51eAogICBBRkZFQ1RFRCBQUk9EVUNU
-UyAgICAgS2VybmVsCiAgICAgICAgICAgICAgICAgICAgICAgICBUaGlzIHZ1
-bG5lcmFiaWxpdHkgYWxsb3dzIHJlbW90ZSBhdHRhY2tlcnMgdG8gZGlzY2xv
-c2Ugc2Vuc2l0aXZlIGluZm9ybWF0aW9uIG9uIGFmZmVjdGVkIGluc3RhbGxh
-dGlvbnMgb2YgTGludXggS2VybmVsLiBBdXRoZW50aWNhdGlvbiBpcyBub3Qg
-cmVxdWlyZWQgdG8gZXhwbG9pdCB0aGlzIHZ1bG5lcmFiaWxpdHkuIEhvd2V2
-ZXIsIG9ubHkgc3lzdGVtcyB3aXRoIGtzbWJkIGVuYWJsZWQgYXJlIHZ1bG5l
-cmFibGUuCiAgIFZVTE5FUkFCSUxJVFkgREVUQUlMUwogICAgICAgICAgICAg
-ICAgICAgICAgICAgVGhlIHNwZWNpZmljIGZsYXcgZXhpc3RzIHdpdGhpbiB0
-aGUgaGFuZGxpbmcgb2YgU01CMiBNZWNoIFRva2Vucy4gVGhlIGlzc3VlIHJl
-c3VsdHMgZnJvbSB0aGUgbGFjayBvZiBwcm9wZXIgdmFsaWRhdGlvbiBvZiB1
-c2VyLXN1cHBsaWVkIGRhdGEsIHdoaWNoIGNhbiByZXN1bHQgaW4gYSByZWFk
-IHBhc3QgdGhlIGVuZCBvZiBhbiBhbGxvY2F0ZWQgYnVmZmVyLiBBbiBhdHRh
-Y2tlciBjYW4gbGV2ZXJhZ2UgdGhpcyBpbiBjb25qdW5jdGlvbiB3aXRoIG90
-aGVyIHZ1bG5lcmFiaWxpdGllcyB0byBleGVjdXRlCiAgICAgICAgICAgICAg
-ICAgICAgICAgICBhcmJpdHJhcnkgY29kZSBpbiB0aGUgY29udGV4dCBvZiB0
-aGUga2VybmVsLgogICBBRERJVElPTkFMIERFVEFJTFMgICAgTGludXggaGFz
-IGlzc3VlZCBhbiB1cGRhdGUgdG8gY29ycmVjdCB0aGlzIHZ1bG5lcmFiaWxp
-dHkuIE1vcmUgZGV0YWlscyBjYW4gYmUgZm91bmQgYXQ6CiAgICAgICAgICAg
-ICAgICAgICAgICAgICBodHRwczovL2dpdGh1Yi5jb20vdG9ydmFsZHMvbGlu
-dXgvY29tbWl0LzkyZTQ3MDE2M2Q5NmRmOGRiNmM0ZmEwZjQ4NGU0YTIyOWVk
-YjkwM2QKICAgRElTQ0xPU1VSRSBUSU1FTElORSAgICAg4oCiwqAyMDI0LTAx
-LTExIC0gVnVsbmVyYWJpbGl0eSByZXBvcnRlZCB0byB2ZW5kb3IKICAgICAg
-ICAgICAgICAgICAgICAgICAgICAg4oCiwqAyMDI0LTAyLTIzIC0gQ29vcmRp
-bmF0ZWQgcHVibGljIHJlbGVhc2Ugb2YgYWR2aXNvcnkKICAgQ1JFRElUICAg
-ICAgICAgICAgICAgIGZmZnZyCg==
+--pf9I7BMVVzbSWLtt
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
 
---------------LWIRhu8GMy4QWcHudolyC8Nd
-Content-Type: text/plain; charset=UTF-8;
- name="ZDI-24-195-ZDI-CAN-22991-CVE-2024-26592.txt"
-Content-Disposition: attachment;
- filename="ZDI-24-195-ZDI-CAN-22991-CVE-2024-26592.txt"
-Content-Transfer-Encoding: base64
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-QWR2aXNvcnkgRGV0YWlscwoKICAgRmVicnVhcnkgMjNyZCwgMjAyNAoKTGlu
-dXggS2VybmVsIGtzbWJkIFRDUCBDb25uZWN0aW9uIFJhY2UgQ29uZGl0aW9u
-IFJlbW90ZSBDb2RlIEV4ZWN1dGlvbiBWdWxuZXJhYmlsaXR5CgogIFpESS0y
-NC0xOTUKICBaREktQ0FOLTIyOTkxCgogICBDVkUgSUQgICAgICAgICAgICAg
-ICAgQ1ZFLTIwMjQtMjY1OTIKICAgQ1ZTUyBTQ09SRSAgICAgICAgICAgIDku
-MCwgQVY6Ti9BQzpIL1BSOk4vVUk6Ti9TOkMvQzpIL0k6SC9BOkgKICAgQUZG
-RUNURUQgVkVORE9SUyAgICAgIExpbnV4CiAgIEFGRkVDVEVEIFBST0RVQ1RT
-ICAgICBLZXJuZWwKICAgICAgICAgICAgICAgICAgICAgICAgIFRoaXMgdnVs
-bmVyYWJpbGl0eSBhbGxvd3MgcmVtb3RlIGF0dGFja2VycyB0byBleGVjdXRl
-IGFyYml0cmFyeSBjb2RlIG9uIGFmZmVjdGVkIGluc3RhbGxhdGlvbnMgb2Yg
-TGludXggS2VybmVsLiBBdXRoZW50aWNhdGlvbiBpcyBub3QgcmVxdWlyZWQg
-dG8gZXhwbG9pdCB0aGlzIHZ1bG5lcmFiaWxpdHkuIEhvd2V2ZXIsIG9ubHkg
-c3lzdGVtcyB3aXRoIGtzbWJkIGVuYWJsZWQgYXJlIHZ1bG5lcmFibGUuCiAg
-IFZVTE5FUkFCSUxJVFkgREVUQUlMUwogICAgICAgICAgICAgICAgICAgICAg
-ICAgVGhlIHNwZWNpZmljIGZsYXcgZXhpc3RzIHdpdGhpbiB0aGUgaGFuZGxp
-bmcgb2YgVENQIGNvbm5lY3Rpb24gYW5kIGRpc2Nvbm5lY3Rpb24uIFRoZSBp
-c3N1ZSByZXN1bHRzIGZyb20gdGhlIGxhY2sgb2YgcHJvcGVyIGxvY2tpbmcg
-d2hlbiBwZXJmb3JtaW5nIG9wZXJhdGlvbnMgb24gYW4gb2JqZWN0LiBBbiBh
-dHRhY2tlciBjYW4gbGV2ZXJhZ2UgdGhpcyB2dWxuZXJhYmlsaXR5IHRvIGV4
-ZWN1dGUgY29kZSBpbiB0aGUgY29udGV4dCBvZiB0aGUga2VybmVsLgogICBB
-RERJVElPTkFMIERFVEFJTFMgICAgTGludXggaGFzIGlzc3VlZCBhbiB1cGRh
-dGUgdG8gY29ycmVjdCB0aGlzIHZ1bG5lcmFiaWxpdHkuIE1vcmUgZGV0YWls
-cyBjYW4gYmUgZm91bmQgYXQ6CiAgICAgICAgICAgICAgICAgICAgICAgICBo
-dHRwczovL2dpdGh1Yi5jb20vdG9ydmFsZHMvbGludXgvY29tbWl0LzM4ZDIw
-YzYyOTAzZDY2OTY5M2ExODY5YWE2OGM0ZGQ1Njc0ZTI1NDQKICAgRElTQ0xP
-U1VSRSBUSU1FTElORSAgICAg4oCiwqAyMDI0LTAxLTExIC0gVnVsbmVyYWJp
-bGl0eSByZXBvcnRlZCB0byB2ZW5kb3IKICAgICAgICAgICAgICAgICAgICAg
-ICAgICAg4oCiwqAyMDI0LTAyLTIzIC0gQ29vcmRpbmF0ZWQgcHVibGljIHJl
-bGVhc2Ugb2YgYWR2aXNvcnkKICAgQ1JFRElUICAgICAgICAgICAgICAgIGZm
-ZnZyCg==
+iQIcBAEBCgAGBQJVqo1lAAoJEK+lG9bN5XPLxosQAJwCJUt9X6IUDOK2KgnPwaEI
+0jhWBce6BPuMtR2YSvMPoXzPK9IArGZ1CPGT1do4n5amcBNELyseDZdPvzgRCkmK
+pVQoonqoICu9sHtvUD8ofe8rbhlbFUOLm3+rw40VwA3ViAO5WQMGnB5Gu80fwWM+
+Q/TbbBsfL7uMLuD6dXxA2kbVicoy1cyLpWISgYExZgJYvt3TNeqXQvD+FODkamzE
+PABgHx8p9uI6WQNarLj5obpF89UZf3h5S1lVxAu7gLF28XcQTZ3nKcQPDc04Wjwy
+SxfUPOM8ZrWrssBFmHH2zaIKB1MkCEaU3kOMYrUcfYPpLQk/Q3/L0xQeIFXerY1o
+IsmT7mby0Ipq8U902KYHWQy+pFC4WamDiTtuhL3byX4oHjXLr3lNeEl88w/6V/Fq
+y8zuHjyDBQ2TfNGEyxbOyG2zj4JrhNZx0dsvSxtKoByH0/iyBDqOeECpqMwRzKSV
+dGb5IzsaTV4lf//J44ZBNQlE+O31+orE/wCs14YmXaZDhmFIkSvjzg92aIaEUXp0
+qO+WJ0U4R3abNRFZXQlpXq/hxDlFx/SRe4IaczWjTjajRyu2nvHn5g0LpAbzM1Ck
+bIJbvI8P/VVweppksNptY2aiwuG4fbpKYQ4ydEJFmf2LMBPy+QPQuJL6ZOW2qUE9
+bfl/+E1SyTlZC1OIvV1F
+=+M0x
+-----END PGP SIGNATURE-----
 
---------------LWIRhu8GMy4QWcHudolyC8Nd
-Content-Type: text/plain; charset=UTF-8;
- name="ZDI-24-227-ZDI-CAN-21506-CVE-2023-52442.txt"
-Content-Disposition: attachment;
- filename="ZDI-24-227-ZDI-CAN-21506-CVE-2023-52442.txt"
-Content-Transfer-Encoding: base64
-
-QWR2aXNvcnkgRGV0YWlscwoKICAgTWFyY2ggMXN0LCAyMDI0CgpMaW51eCBL
-ZXJuZWwga3NtYmQgQ2hhaW5lZCBSZXF1ZXN0IEltcHJvcGVyIElucHV0IFZh
-bGlkYXRpb24gSW5mb3JtYXRpb24gRGlzY2xvc3VyZSBWdWxuZXJhYmlsaXR5
-CgogIFpESS0yNC0yMjcKICBaREktQ0FOLTIxNTA2CgogICBDVkUgSUQgICAg
-ICAgICAgICAgICAgQ1ZFLTIwMjMtNTI0NDIKICAgQ1ZTUyBTQ09SRSAgICAg
-ICAgICAgIDkuMywgQVY6Ti9BQzpML1BSOk4vVUk6Ti9TOkMvQzpIL0k6Ti9B
-OkwKICAgQUZGRUNURUQgVkVORE9SUyAgICAgIExpbnV4CiAgIEFGRkVDVEVE
-IFBST0RVQ1RTICAgICBLZXJuZWwKICAgICAgICAgICAgICAgICAgICAgICAg
-IFRoaXMgdnVsbmVyYWJpbGl0eSBhbGxvd3MgcmVtb3RlIGF0dGFja2VycyB0
-byBkaXNjbG9zZSBzZW5zaXRpdmUgaW5mb3JtYXRpb24gb24gYWZmZWN0ZWQg
-aW5zdGFsbGF0aW9ucyBvZiBMaW51eCBLZXJuZWwuIEF1dGhlbnRpY2F0aW9u
-IGlzIG5vdCByZXF1aXJlZCB0byBleHBsb2l0IHRoaXMgdnVsbmVyYWJpbGl0
-eSwgYnV0IG9ubHkgc3lzdGVtcyB3aXRoIGtzbWJkIGVuYWJsZWQgYXJlIHZ1
-bG5lcmFibGUuCiAgIFZVTE5FUkFCSUxJVFkgREVUQUlMUwogICAgICAgICAg
-ICAgICAgICAgICAgICAgVGhlIHNwZWNpZmljIGZsYXcgZXhpc3RzIHdpdGhp
-biB0aGUgaGFuZGxpbmcgb2YgY2hhaW5lZCByZXF1ZXN0cy4gVGhlIGlzc3Vl
-IHJlc3VsdHMgZnJvbSB0aGUgbGFjayBvZiBwcm9wZXIgdmFsaWRhdGlvbiBv
-ZiB1c2VyLXN1cHBsaWVkIHJlcXVlc3RzIHByaW9yIHRvIHByb2Nlc3Npbmcg
-dGhlbS4gQW4gYXR0YWNrZXIgY2FuIGxldmVyYWdlIHRoaXMgaW4gY29uanVu
-Y3Rpb24gd2l0aCBvdGhlciB2dWxuZXJhYmlsaXRpZXMgdG8gZXhlY3V0ZSBh
-cmJpdHJhcnkgY29kZSBpbiB0aGUgY29udGV4dCBvZgogICAgICAgICAgICAg
-ICAgICAgICAgICAgdGhlIGtlcm5lbC4KICAgQURESVRJT05BTCBERVRBSUxT
-ICAgIExpbnV4IGhhcyBpc3N1ZWQgYW4gdXBkYXRlIHRvIGNvcnJlY3QgdGhp
-cyB2dWxuZXJhYmlsaXR5LiBNb3JlIGRldGFpbHMgY2FuIGJlIGZvdW5kIGF0
-OgogICAgICAgICAgICAgICAgICAgICAgICAgaHR0cHM6Ly9naXRodWIuY29t
-L3RvcnZhbGRzL2xpbnV4L2NvbW1pdC8zZGYwNDExZTEzMmVlNzRhODdhYTEz
-MTQyZGZkMmIxOTAyNzUzMzJlCiAgIERJU0NMT1NVUkUgVElNRUxJTkUgICAg
-IOKAosKgMjAyMy0wNy0xOCAtIFZ1bG5lcmFiaWxpdHkgcmVwb3J0ZWQgdG8g
-dmVuZG9yCiAgICAgICAgICAgICAgICAgICAgICAgICAgIOKAosKgMjAyNC0w
-My0wMSAtIENvb3JkaW5hdGVkIHB1YmxpYyByZWxlYXNlIG9mIGFkdmlzb3J5
-CiAgIENSRURJVCAgICAgICAgICAgICAgICBIZXhSYWJiaXQgKEBoM3hyNGJi
-MXQpCg==
-
---------------LWIRhu8GMy4QWcHudolyC8Nd
-Content-Type: text/plain; charset=UTF-8;
- name="ZDI-24-228-ZDI-CAN-21541-CVE-2023-52441.txt"
-Content-Disposition: attachment;
- filename="ZDI-24-228-ZDI-CAN-21541-CVE-2023-52441.txt"
-Content-Transfer-Encoding: base64
-
-QWR2aXNvcnkgRGV0YWlscwoKICAgTWFyY2ggMXN0LCAyMDI0CgpMaW51eCBL
-ZXJuZWwga3NtYmQgTmVnb3RpYXRlIFJlcXVlc3QgT3V0LU9mLUJvdW5kcyBS
-ZWFkIEluZm9ybWF0aW9uIERpc2Nsb3N1cmUgVnVsbmVyYWJpbGl0eQoKICBa
-REktMjQtMjI4CiAgWkRJLUNBTi0yMTU0MQoKICAgQ1ZFIElEICAgICAgICAg
-ICAgICAgIENWRS0yMDIzLTUyNDQxCiAgIENWU1MgU0NPUkUgICAgICAgICAg
-ICA4LjYsIEFWOk4vQUM6TC9QUjpOL1VJOk4vUzpDL0M6SC9JOk4vQTpOCiAg
-IEFGRkVDVEVEIFZFTkRPUlMgICAgICBMaW51eAogICBBRkZFQ1RFRCBQUk9E
-VUNUUyAgICAgS2VybmVsCiAgICAgICAgICAgICAgICAgICAgICAgICBUaGlz
-IHZ1bG5lcmFiaWxpdHkgYWxsb3dzIHJlbW90ZSBhdHRhY2tlcnMgdG8gZGlz
-Y2xvc2Ugc2Vuc2l0aXZlIGluZm9ybWF0aW9uIG9uIGFmZmVjdGVkIGluc3Rh
-bGxhdGlvbnMgb2YgTGludXggS2VybmVsLiBBdXRoZW50aWNhdGlvbiBpcyBu
-b3QgcmVxdWlyZWQgdG8gZXhwbG9pdCB0aGlzIHZ1bG5lcmFiaWxpdHkuIEhv
-d2V2ZXIsIG9ubHkgc3lzdGVtcyB3aXRoIGtzbWJkIGVuYWJsZWQgYXJlIHZ1
-bG5lcmFibGUuCiAgIFZVTE5FUkFCSUxJVFkgREVUQUlMUwogICAgICAgICAg
-ICAgICAgICAgICAgICAgVGhlIHNwZWNpZmljIGZsYXcgZXhpc3RzIHdpdGhp
-biB0aGUgaGFuZGxpbmcgb2YgU01CMiBuZWdvdGlhdGUgcmVxdWVzdHMuIFRo
-ZSBpc3N1ZSByZXN1bHRzIGZyb20gdGhlIGxhY2sgb2YgcHJvcGVyIHZhbGlk
-YXRpb24gb2YgdXNlci1zdXBwbGllZCBkYXRhLCB3aGljaCBjYW4gcmVzdWx0
-IGluIGEgcmVhZCBwYXN0IHRoZSBlbmQgb2YgYW4gYWxsb2NhdGVkIGJ1ZmZl
-ci4gQW4gYXR0YWNrZXIgY2FuIGxldmVyYWdlIHRoaXMgaW4gY29uanVuY3Rp
-b24gd2l0aCBvdGhlciB2dWxuZXJhYmlsaXRpZXMgdG8KICAgICAgICAgICAg
-ICAgICAgICAgICAgIGV4ZWN1dGUgYXJiaXRyYXJ5IGNvZGUgaW4gdGhlIGNv
-bnRleHQgb2YgdGhlIGtlcm5lbC4KICAgQURESVRJT05BTCBERVRBSUxTICAg
-IExpbnV4IGhhcyBpc3N1ZWQgYW4gdXBkYXRlIHRvIGNvcnJlY3QgdGhpcyB2
-dWxuZXJhYmlsaXR5LiBNb3JlIGRldGFpbHMgY2FuIGJlIGZvdW5kIGF0Ogog
-ICAgICAgICAgICAgICAgICAgICAgICAgaHR0cHM6Ly9naXRodWIuY29tL3Rv
-cnZhbGRzL2xpbnV4L2NvbW1pdC81MzZiYjQ5MmQzOWJiNmMwODBjOTJmMzFl
-OGE1NWZlOTkzNGY0NTJiCiAgIERJU0NMT1NVUkUgVElNRUxJTkUgICAgIOKA
-osKgMjAyMy0wNy0xOCAtIFZ1bG5lcmFiaWxpdHkgcmVwb3J0ZWQgdG8gdmVu
-ZG9yCiAgICAgICAgICAgICAgICAgICAgICAgICAgIOKAosKgMjAyNC0wMy0w
-MSAtIENvb3JkaW5hdGVkIHB1YmxpYyByZWxlYXNlIG9mIGFkdmlzb3J5CiAg
-IENSRURJVCAgICAgICAgICAgICAgICBBbm9ueW1vdXMK
-
---------------LWIRhu8GMy4QWcHudolyC8Nd
-Content-Type: text/plain; charset=UTF-8;
- name="ZDI-24-229-ZDI-CAN-21940-CVE-2023-52440.txt"
-Content-Disposition: attachment;
- filename="ZDI-24-229-ZDI-CAN-21940-CVE-2023-52440.txt"
-Content-Transfer-Encoding: base64
-
-QWR2aXNvcnkgRGV0YWlscwoKICAgTWFyY2ggMXN0LCAyMDI0CgpMaW51eCBL
-ZXJuZWwga3NtYmQgU2Vzc2lvbiBLZXkgRXhjaGFuZ2UgSGVhcC1iYXNlZCBC
-dWZmZXIgT3ZlcmZsb3cgUmVtb3RlIENvZGUgRXhlY3V0aW9uIFZ1bG5lcmFi
-aWxpdHkKCiAgWkRJLTI0LTIyOQogIFpESS1DQU4tMjE5NDAKCiAgIENWRSBJ
-RCAgICAgICAgICAgICAgICBDVkUtMjAyMy01MjQ0MAogICBDVlNTIFNDT1JF
-ICAgICAgICAgICAgOS4wLCBBVjpOL0FDOkgvUFI6Ti9VSTpOL1M6Qy9DOkgv
-STpIL0E6SAogICBBRkZFQ1RFRCBWRU5ET1JTICAgICAgTGludXgKICAgQUZG
-RUNURUQgUFJPRFVDVFMgICAgIEtlcm5lbAogICAgICAgICAgICAgICAgICAg
-ICAgICAgVGhpcyB2dWxuZXJhYmlsaXR5IGFsbG93cyByZW1vdGUgYXR0YWNr
-ZXJzIHRvIGV4ZWN1dGUgYXJiaXRyYXJ5IGNvZGUgb24gYWZmZWN0ZWQgaW5z
-dGFsbGF0aW9ucyBvZiBMaW51eCBLZXJuZWwuIEF1dGhlbnRpY2F0aW9uIGlz
-IG5vdCByZXF1aXJlZCB0byBleHBsb2l0IHRoaXMgdnVsbmVyYWJpbGl0eSwg
-YnV0IG9ubHkgc3lzdGVtcyB3aXRoIGtzbWJkIGVuYWJsZWQgYXJlIHZ1bG5l
-cmFibGUuCiAgIFZVTE5FUkFCSUxJVFkgREVUQUlMUwogICAgICAgICAgICAg
-ICAgICAgICAgICAgVGhlIHNwZWNpZmljIGZsYXcgZXhpc3RzIHdpdGhpbiB0
-aGUgcHJvY2Vzc2luZyBvZiBzZXNzaW9uIGtleXMuIFRoZSBpc3N1ZSByZXN1
-bHRzIGZyb20gdGhlIGxhY2sgb2YgcHJvcGVyIHZhbGlkYXRpb24gb2YgdGhl
-IGxlbmd0aCBvZiB1c2VyLXN1cHBsaWVkIGRhdGEgcHJpb3IgdG8gY29weWlu
-ZyBpdCB0byBhIGZpeGVkLWxlbmd0aCBoZWFwLWJhc2VkIGJ1ZmZlci4gQW4g
-YXR0YWNrZXIgY2FuIGxldmVyYWdlIHRoaXMgdnVsbmVyYWJpbGl0eSB0byBl
-eGVjdXRlIGNvZGUgaW4gdGhlIGNvbnRleHQgb2YKICAgICAgICAgICAgICAg
-ICAgICAgICAgIHRoZSBrZXJuZWwuCiAgIEFERElUSU9OQUwgREVUQUlMUyAg
-ICBMaW51eCBoYXMgaXNzdWVkIGFuIHVwZGF0ZSB0byBjb3JyZWN0IHRoaXMg
-dnVsbmVyYWJpbGl0eS4gTW9yZSBkZXRhaWxzIGNhbiBiZSBmb3VuZCBhdDoK
-ICAgICAgICAgICAgICAgICAgICAgICAgIGh0dHBzOi8vZ2l0aHViLmNvbS90
-b3J2YWxkcy9saW51eC9jb21taXQvNGIwODFjZTBkODMwYjY4NGZkZjk2N2Fi
-YzM2OTZkMTI2MTM4NzI1NAogICBESVNDTE9TVVJFIFRJTUVMSU5FICAgICDi
-gKLCoDIwMjMtMDgtMjQgLSBWdWxuZXJhYmlsaXR5IHJlcG9ydGVkIHRvIHZl
-bmRvcgogICAgICAgICAgICAgICAgICAgICAgICAgICDigKLCoDIwMjQtMDMt
-MDEgLSBDb29yZGluYXRlZCBwdWJsaWMgcmVsZWFzZSBvZiBhZHZpc29yeQog
-ICBDUkVESVQgICAgICAgICAgICAgICAgUHVtcGtpbiAoQHUxZjM4MykK
-
---------------LWIRhu8GMy4QWcHudolyC8Nd--
+--pf9I7BMVVzbSWLtt--
