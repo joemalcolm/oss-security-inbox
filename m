@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1972" "Monday" "2" "January" "2017" "17:43:13" "+0100" "Cedric Buissart" "cbuissar@redhat.com" "<CAKG8Do7hHuzE3=LZv59pv50F5r_1auxPtq+6e0+LbO9tMH_V=w@mail.gmail.com>" "66" "[oss-security] freeIPA CVEs CVE-2016-9575 (insufficient permission check) & CVE-2016-7030 (DoS)" nil nil nil "1" "2017010216:43:13" "[oss-security] freeIPA CVEs CVE-2016-9575 (insufficient permission check) & CVE-2016-7030 (DoS)" (number mark "U       cbuissar@red Jan  2   66/1972  " thread-indent "\"[oss-security] freeIPA CVEs CVE-2016-9575 (insufficient permission check) & CVE-2016-7030 (DoS)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["569" "Sunday" "19" "July" "2015" "11:19:08" "+0000" "Nitin Venkatesh" "venkatesh.nitin@gmail.com" "<CAARZ5vrpA1sgTmi_g=A520FkKsb19BX9eKHM8vvox-5MpY-1jA@mail.gmail.com>" "20" "[oss-security] CVE Request - Information Exposure Vulnerability in WordPress Mobile Pack Wordpress Plugin v2.1.2 (and certain versions of v2.1.3 - prior to June 3, 2015)" nil nil nil "7" "2015071911:19:08" "[oss-security] CVE Request - Information Exposure Vulnerability in WordPress Mobile Pack Wordpress Plugin v2.1.2 (and certain versions of v2.1.3 - prior to June 3, 2015)" (number mark "        venkatesh.ni Jul 19   20/569   " thread-indent "\"[oss-security] CVE Request - Information Exposure Vulnerability in WordPress Mobile Pack Wordpress Plugin v2.1.2 (and certain versions of v2.1.3 - prior to June 3, 2015)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 28461 invoked by uid 550); 2 Jan 2017 16:43:47 -0000
+Received: (qmail 21865 invoked by uid 550); 19 Jul 2015 11:19:30 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,93 +11,47 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28434 invoked from network); 2 Jan 2017 16:43:46 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=6uuT+MIAVQrzzpZxZxsjGlDquTsgl32bNPXJJY0YhDY=;
-        b=pmwB1fHV/yjA8v2YqPkBA2Sume3gXdZolBnZl13y0kQ4i4DmGpylkD97Szy4ck8toB
-         9OkVIDBx2QwDvd4rHiRYjxcRvIecVsa0DBG0HkIK/iaYHbqwt4j8Dq15Wlm8wn45EW0D
-         nDqtvBDNYx1MY/MhwXN0sLLvZJCZgnXS69YTXefXDqisiGQc6SzeDDCedD7Cx84sXb7F
-         VSifFvu5ru2VheVRrGun0pRxbjtP6wp/VqK8UHPTzoaEkCGEYlC1HM36oRNIvybqPoph
-         OPCl7KQhmSDcl/tSxjytV1SdYwaJUgG7Onwu+IVuJ9jbVHaKcl+yTVN4MKOdY99YI9ii
-         KrOg==
-X-Gm-Message-State: AIkVDXKBJFcUw1EpQwwboeq+7rdcI3b5SIoHePomsUaohOQTX80T6JMUzzTOYNB1rc8h/QUiE8Rtp/6zBSdtUepp
-X-Received: by 10.107.18.193 with SMTP id 62mr53760880ios.155.1483375414299;
- Mon, 02 Jan 2017 08:43:34 -0800 (PST)
+Received: (qmail 21847 invoked from network); 19 Jul 2015 11:19:29 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=oNwe2rFnhTfHW+fOAl2hiDxm5mDWjeLPdFW2zEjT3r0=;
+        b=yz/MDQ2xG5EaMuZXsNXba1JNlQjJBqNDlTslD+UBnwt8Kkk1TBLFbzSpeOFoe2RJhj
+         D0jWGWTiiaifggwaAc2ooQ0uKLtL8HW/uVjgGO9WvNp2W8UptAOD9YJI/PeCTo9g9ozg
+         VpfN58LOuB0IXg/jgV9oQikidbAtNL9skyhxtME46/CTrwRb4o20ZX4Af5l76V0ZWhdQ
+         ue/5GlnKrraEx9hipXC0+puY5YvuiT8ZTUKmfxBK3L920rTS0lZe3P0ye3TbKiDCfxho
+         f+JWzXhdTlOPiwiC4JKQFGT6+6/kMR5S3ii36aj/9Gm0n8Po7/Jp1JRQfxcfpXR1OAmS
+         9RYg==
+X-Received: by 10.50.143.104 with SMTP id sd8mr7420085igb.34.1437304757688;
+ Sun, 19 Jul 2015 04:19:17 -0700 (PDT)
 MIME-Version: 1.0
-From: Cedric Buissart <cbuissar@redhat.com>
-Date: Mon, 2 Jan 2017 17:43:13 +0100
-Message-ID: <CAKG8Do7hHuzE3=LZv59pv50F5r_1auxPtq+6e0+LbO9tMH_V=w@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary=001a113f581aa364e605451f40df
-Subject: [oss-security] freeIPA CVEs CVE-2016-9575 (insufficient permission check) &
- CVE-2016-7030 (DoS)
+Message-ID: <CAARZ5vrpA1sgTmi_g=A520FkKsb19BX9eKHM8vvox-5MpY-1jA@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=001a1135f1a6841fc7051b38977c
+Date: Sun, 19 Jul 2015 11:19:08 +0000
+From: Nitin Venkatesh <venkatesh.nitin@gmail.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE Request - Information Exposure Vulnerability in WordPress Mobile
+ Pack Wordpress Plugin v2.1.2 (and certain versions of v2.1.3 - prior to June
+ 3, 2015)
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
 
---001a113f581aa364e605451f40df
+--001a1135f1a6841fc7051b38977c
 Content-Type: text/plain; charset=UTF-8
 
 Hi,
 
-This is to disclose the following 2 freeIPA CVEs.
+I discovered Information Exposure Vulnerability in WordPress Mobile Pack
+Wordpress Plugin v2.1.2 which was responsibly disclosed to the vendor who
+fixed the issues in v2.1.3. The vulnerability is also present in certain
+versions of v2.1.3 (prior to June 3, 2015), hence users who have those
+versions also need to upgrade/reinstall.
 
-1) CVE-2016-9575: Insufficient permission check in certprofile-mod
+I request a CVE for the same.
 
-Due to a missing permission check, certprofile-mod can be used by an
-authenticated but unprivileged user to modify certificate profile
-configuration. This could allow the issuance of certificates with
-fraudulent
-subject naming information (allowing the holder of the private key to
-impersonate another entity), or inappropriate key usage or extended key
-usage
-information (use of certificate for unauthorised purposes e.g. code
-signing).
+References:
+http://seclists.org/fulldisclosure/2015/Jul/97
 
-Upstream patch :
-https://git.fedorahosted.org/cgit/freeipa.git/commit/?id=fec4c32ff15
+Thanks & regards,
+Nitin Venkatesh
 
-Note: on older freeipa versions (4.3 & 4.2), path to affected file differs
-
-Impact: moderate
-CVSS3 scoring : 6.3 - AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:L
-Reported by: Liam Campbell (Red Hat)
-Affected versions: all versions supporting certificate profiles are
-affected:
-4.2 and above.
-
-
-2) CVE-2016-7030 : DoS attack against kerberized services by abusing
-password
-policy
-
-FreeIPA contains MIT KDC as its main component + FreeIPA is using custom
-database driver for the KDC. As a side-effect of implementation, FreeIPA is
-enforcing password policies for all principals, including services which do
-not use "password" but keytab with randomly-generated/strong key.
-
-Default password policy locks an account after 5 unsuccessful
-authentication
-attempts for 10 minutes. An attacker can use this to simply lock-out any
-principal, including system services.
-
-Upstream patch :
-https://git.fedorahosted.org/cgit/freeipa.git/commit/?id=6f1d92746
-
-Additional dependency :
-https://git.fedorahosted.org/cgit/freeipa.git/commit/?id=73f33569c
-
-Impact: moderate
-CVSS3 scoring : 7.5 - AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H
-Affected versions: all
-
-Reported by: Petr Spacek (Red Hat)
-
-Best Regards,
-
-
--- 
-Cedric Buissart,
-Product Security
-
---001a113f581aa364e605451f40df--
+--001a1135f1a6841fc7051b38977c--
