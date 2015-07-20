@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["534" "Friday" "25" "February" "2022" "00:20:02" "+0100" "=?UTF-8?B?SnVhbiBQYWJsbyBTYW50b3MgUm9kcsOtZ3Vleg==?=" "juanpablo@apache.org" nil "20" "[oss-security] [CVE-2022-24948] Apache JSPWiki Cross-site scripting vulnerability on User Preferences screen" nil nil nil "2" nil nil (number mark "U       juanpablo@ap Feb 25   20/534   " thread-indent "\"[oss-security] [CVE-2022-24948] Apache JSPWiki Cross-site scripting vulnerability on User Preferences screen\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [CVE-2022-24948] Apache JSPWiki Cross-site scripting vulnerability on User Preferences screen" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4167" "Monday" "20" "July" "2015" "10:58:20" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150720145820.751AC72E1A4@smtpvbsrv1.mitre.org>" "95" "[oss-security] Re: Remote file upload vulnerability & SQLi in wordpress plugin wp-powerplaygallery v3.3" nil nil nil "7" "2015072014:58:20" "[oss-security] Re: Remote file upload vulnerability & SQLi in wordpress plugin wp-powerplaygallery v3.3" (number mark "        cve-assign@m Jul 20   95/4167  " thread-indent "\"[oss-security] Re: Remote file upload vulnerability & SQLi in wordpress plugin wp-powerplaygallery v3.3\"\n") "<4B83BB8E-8197-4530-816A-EF48BD586D89@me.com>" ("<4B83BB8E-8197-4530-816A-EF48BD586D89@me.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 32255 invoked by uid 550); 25 Feb 2022 11:57:25 -0000
+Received: (qmail 32141 invoked by uid 550); 20 Jul 2015 14:58:40 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,43 +11,108 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 32069 invoked from network); 20 Jul 2015 14:58:32 -0000
+In-Reply-To: <4B83BB8E-8197-4530-816A-EF48BD586D89@me.com>
+Message-Id: <20150720145820.751AC72E1A4@smtpvbsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Mon, 20 Jul 2015 10:58:20 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 27823 invoked from network); 24 Feb 2022 23:20:27 -0000
-X-Gm-Message-State: AOAM531oUpFiAfkzbP+8QVwiVxjcg9MBJo+fCnoww4Y3NiUr6zQsuRJA
-	MYweIws+/kbJNrVBZCUHHGhuy9A5VBEJvuE6Huk=
-X-Google-Smtp-Source: ABdhPJyFZCsPcJw3Iv2t2Hzwkd3WnBf0dpUABaHxaFol/3i+tJVNJmCX5JEUvLOMa4VvkbSSj0BdM3FT7l218I6RRiE=
-X-Received: by 2002:a92:dc90:0:b0:2be:f994:7dcf with SMTP id
- c16-20020a92dc90000000b002bef9947dcfmr4067392iln.160.1645744813013; Thu, 24
- Feb 2022 15:20:13 -0800 (PST)
-MIME-Version: 1.0
-From: =?UTF-8?Q?Juan_Pablo_Santos_Rodr=C3=ADguez?= <juanpablo@apache.org>
-Date: Fri, 25 Feb 2022 00:20:02 +0100
-X-Gmail-Original-Message-ID: <CAMufup7EzAAJ6QMk7C7mPutijDzFN5sG9xu1B4d2TSWF1h0eyQ@mail.gmail.com>
-Message-ID: <CAMufup7EzAAJ6QMk7C7mPutijDzFN5sG9xu1B4d2TSWF1h0eyQ@mail.gmail.com>
-To: announce@apache.org, dev@jspwiki.apache.org, user@jspwiki.apache.org, 
-	Apache Security Team <security@apache.org>, Paulos Yibelo <habte.yibelo@gmail.com>, 
-	oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] [CVE-2022-24948] Apache JSPWiki Cross-site scripting vulnerability on
- User Preferences screen
+Subject: [oss-security] Re: Remote file upload vulnerability & SQLi in wordpress plugin wp-powerplaygallery v3.3
+To: larry0@me.com
 
-Severity
-Medium
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Vendor
-The Apache Software Foundation
+This seems to be one of several cases where a third party has taken
+example code from the Ephox (formerly Moxiecode) Plupload product and
+added undesirable new behavior.
 
-Versions Affected
-Apache JSPWiki up to 2.11.1
+For background,
+https://raw.githubusercontent.com/moxiecode/plupload/master/examples/upload.php
+is the current upstream code. Although this upstream code could
+introduce security problems in some contexts, the code is not assigned
+any CVE IDs because it is clearly marked as an example, and would not
+be installed on a web server as a normal part of installing Plupload:
 
-Description
-A carefully crafted user preferences for submission could trigger an
-XSS vulnerability on Apache JSPWiki, related to the user preferences
-screen, which could allow the attacker to execute javascript in the
-victim's browser and get some sensitive information about the victim.
+  #!! IMPORTANT: 
+  #!! this file is just an example, it doesn't incorporate any security checks and 
+  #!! is not recommended to be used in production environment as it is. Be sure to 
+  #!! revise it and customize to your needs.
 
-Mitigation
-Apache JSPWiki users should upgrade to 2.11.2 or later.
+The code reported here is from
+http://plugins.svn.wordpress.org/wp-powerplaygallery/trunk/upload.php
+instead. All of the specific reported issues are ones that exist in
+wp-powerplaygallery and don't exist in Plupload.
 
-Credit
-This issue was discovered by Paulos Yibelo, from Octagon Networks.
+The most obvious difference is that the "INSERT INTO" is a new code
+block in wp-powerplaygallery - the upstream code doesn't use SQL at
+all.
+
+> 3. Sql injection 
+> Lines 131-135 of upload.php fail to handle user input appropriately either by sanitizing or paramaterizing it. Injection points are
+> any GET/POST to albumid or name.
+
+Use CVE-2015-5599.
+
+
+> 1. Ability to create directories out side of the upload path by using ../:
+> Lines 56-59 of upload.php:
+> 
+> 56 // Create target dir
+> 57 if (!file_exists($targetDir)) {
+> 58         @mkdir($targetDir);
+
+As far as we can tell, the issue you are reporting (when a current PHP
+version is used) is that the attacker can create a directory anywhere
+with "_uploadfolder" at the end of its name. This behavior isn't
+required for achieving PHP code execution, and seems unlikely to help
+with other important attacks. It might waste disk space on a small
+filesystem, and might allow an attacker to store files outside of
+wp-content (e.g., in a directory that wouldn't be checked during a
+user's post-exploitation cleanup). If so, then this is an issue that
+can be included in CVE, but it seems marginal.
+
+For anyone who is interested in reporting these types of low-priority
+side issues: it would be helpful to explicitly state that the issue is
+independently relevant and could be independently fixed.
+
+
+> 2. Arbitrary file uploads to a path in the web root directory:
+> Lines 138-160 of uploads.php don't verify what types of files are allowed or where they should be placed:
+
+We didn't completely understand this part. It seems that the essence
+of the problem is that the product could reject unsafe file types such
+as .php files, but doesn't do that. That can have one CVE ID. Is there
+also a problem with "where they should be placed" within this part of
+the code? The files seem to be placed in a *_uploadfolder/big/
+directory, which is a correct directory for an upload of an image
+file.
+
+Are you also reporting any authorization problem? Is upload.php
+responsible for verifying that the client user has the upload_files
+capability, regardless of what file type is being uploaded?
+
+
+> albumid needs to be a numeric value matching an existing album number, 1 is probably a good start
+> but you can enumerate these by using curl, and looking for redirect 301 responses:
+
+Why does the album number need to exist? Wasn't the mkdir supposed to
+create the directory for an arbitrary $_REQUEST['albumid'] value?
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJVrQv+AAoJEKllVAevmvmsO8AH/3hMf5MDgzozxwptBSXnBrVv
+8gjPcUDIDop1KqM5ZDAeC8X+tp/oQzgtN9ZPqL2mkyYWdhs3Rm+Pv/+VlFIAKjTC
+NbrL9LsuaVe9UrK2KL0zzQ0okyXOEeDGz2Myb5YrGVvshNMTmYcGOyL4oP/IiZmy
+8XZCM6QJolEiMjtX2w1J9ZdlBV7yRh+d4ie/XEdmvcPBEWdvmYt/UxTs8guZ1PZM
+8PBEUz8sTdI94Cl0mW0DRGZLzZ/T9tOvHq/Gxl0+wb+khRzWJkfPL8zuVjoi1P5x
+ZFQrcWkK6pyQCYimLLRTQs6x6MY8NdKdlUQ0t4hljg1UEVm4QSYiab9qBGsDVwM=
+=94ua
+-----END PGP SIGNATURE-----
