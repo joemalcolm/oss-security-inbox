@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["755" "Monday" "17" "January" "2022" "17:48:28" "+0000" "Larry McCay" "lmccay@apache.org" nil "25" "[oss-security] CVE-2021-42357: DOM based XSS Vulnerability in Apache Knox " nil nil nil "1" nil nil (number mark "U       lmccay@apach Jan 17   25/755   " thread-indent "\"[oss-security] CVE-2021-42357: DOM based XSS Vulnerability in Apache Knox \"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-42357: DOM based XSS Vulnerability in Apache Knox " nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["472" "Monday" "20" "July" "2015" "15:23:23" "+0200" "Jason A. Donenfeld" "zx2c4@gentoo.org" "<CAHmME9qQpTZWAQHGbk8q3_jjFWa1eqHYc-G4bpg1Mby8gRLpEw@mail.gmail.com>" "12" "Re: [oss-security] siege: off-by-one in load_conf()" nil nil nil "7" "2015072013:23:23" "[oss-security] siege: off-by-one in load_conf()" (number mark "        zx2c4@gentoo Jul 20   12/472   " thread-indent "\"Re: [oss-security] siege: off-by-one in load_conf()\"\n") "<1996622.WfZip9OtJo@arcadia>" ("<6439170.QNVfc3SXO1@arcadia>" "<20150714201152.GG19574@hunt>" "<1996622.WfZip9OtJo@arcadia>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 27677 invoked by uid 550); 17 Jan 2022 18:42:26 -0000
+Received: (qmail 13966 invoked by uid 550); 20 Jul 2015 15:09:04 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,39 +11,32 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1306 invoked from network); 17 Jan 2022 17:48:43 -0000
-Content-Type: text/plain; charset=utf-8
-From: Larry McCay <lmccay@apache.org>
-To: oss-security@lists.openwall.com
-Message-ID: <ebb955eb-5f5c-473a-35a4-1ff66d6b97d0@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Mon, 17 Jan 2022 17:48:28 +0000
+Received: (qmail 28081 invoked from network); 20 Jul 2015 13:23:39 -0000
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2021-42357: DOM based XSS Vulnerability in Apache Knox 
+X-Received: by 10.112.205.161 with SMTP id lh1mr17490522lbc.43.1437398603774;
+ Mon, 20 Jul 2015 06:23:23 -0700 (PDT)
+In-Reply-To: <1996622.WfZip9OtJo@arcadia>
+References: <6439170.QNVfc3SXO1@arcadia>
+	<20150714201152.GG19574@hunt>
+	<1996622.WfZip9OtJo@arcadia>
+Message-ID: <CAHmME9qQpTZWAQHGbk8q3_jjFWa1eqHYc-G4bpg1Mby8gRLpEw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Cc: Seth Arnold <seth.arnold@canonical.com>, cve-assign@mitre.org
+Date: Mon, 20 Jul 2015 15:23:23 +0200
+From: "Jason A. Donenfeld" <zx2c4@gentoo.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] siege: off-by-one in load_conf()
+To: oss-security <oss-security@lists.openwall.com>
 
-Severity: moderate
+Hi folks,
 
-Description:
+Chiming in on behalf of Gentoo Security Team. Bug report here, see
+comment 5: https://bugs.gentoo.org/show_bug.cgi?id=554914#c5
 
-When using Knox SSO in affected releases, a request could be crafted to
-redirect a user to a malicious page due to improper URL parsing.
-A request that included a specially crafted
-request parameter could be used to redirect the user to a page controlled
-by an attacker. This URL would need to be presented to the user outside
-the normal request flow through a XSS or phishing campaign.
+In sum, I also fail to see how this is a security issue. Does anybody
+make siege SUID, or give it untrusted input, or anything like that?
+@ago - what's the attack vector you have in mind with this bug? Feel
+free to find me in #gentoo-security if you want to work out
+conversationally what you have in mind with this finding.
 
-Mitigation:
-
-1.x users should upgrade to 1.6.1.
-Unsupported versions of the 0.x line that include this issue are: 0.13.0, 0=
-.14.0.
-and these should upgrade to 1.6.1 as well.
-1.0.0 and 1.1.0 are also Unsupported but affected and should upgrade to 1.6=
-.1.
-
-
-Credit:
-
-Apache Knox would like to thank Kajetan Rostojek for this report
-
+Jason
