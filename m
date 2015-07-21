@@ -1,4 +1,9 @@
-Received: (qmail 29751 invoked by uid 550); 25 Feb 2026 20:32:28 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3055" "Monday" "20" "July" "2015" "22:45:39" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150721024539.C702A8BC082@smtpvmsrv1.mitre.org>" "68" "[oss-security] Re: Remote file download vulnerability in Wordpress Plugin image-export v1.1" nil nil nil "7" "2015072102:45:39" "[oss-security] Re: Remote file download vulnerability in Wordpress Plugin image-export v1.1" (number mark "        cve-assign@m Jul 20   68/3055  " thread-indent "\"[oss-security] Re: Remote file download vulnerability in Wordpress Plugin image-export v1.1\"\n") "<395B9BB0-1170-49A0-9799-9925DA61731D@me.com>" ("<395B9BB0-1170-49A0-9799-9925DA61731D@me.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 11670 invoked by uid 550); 21 Jul 2015 02:47:03 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,82 +11,81 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 11384 invoked from network); 21 Jul 2015 02:45:52 -0000
+In-Reply-To: <395B9BB0-1170-49A0-9799-9925DA61731D@me.com>
+Message-Id: <20150721024539.C702A8BC082@smtpvmsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Mon, 20 Jul 2015 22:45:39 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 3261 invoked from network); 25 Feb 2026 20:04:09 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=dorfdsl.de;
-	s=default; t=1772049839;
-	bh=dFBs+9B0y2YeMiGb4d69FL51uw+C/Iq7dbsLdKMmuYw=;
-	h=Date:From:To:Subject:In-Reply-To:References:From;
-	b=s6FUgVcbVd8goq94ebkOO6DqjA/o8YwDGJROPpacKSeOc0p7SiIxTBFRt2Y/uEhbp
-	 IBc5Bx3DTwEMFnL2M23yTfXSz+G2asPNN1U1qJBWl900jc0Hg42NEfxlomk8yMBfui
-	 NAA8C9hHvEHdHYGB9zaF7K15iK9LbPmqasD7bDJ5M+7cO1S2QVLx+2Y5PQV6AC1DBM
-	 I2MOOQZFFcBn6MznwHcQprT3J3WfPQbs/7N7tUZZVJsON9DpM27dm6cA9ss08E0MV/
-	 EO1C4+qVKz4LWCoJ7zjv5cz+g8D1gGE370DS9q8v9jGnP6t/FZuZzE2HcN7cxt8/62
-	 ksEqIP5aDKxUA==
-Date: Wed, 25 Feb 2026 21:03:54 +0100
-From: Marco Moock <mm@dorfdsl.de>
-To: oss-security@lists.openwall.com
-Message-ID: <20260225210354.2bbf0d04@stinkedores.dorfdsl.de>
-In-Reply-To: <20260225194709.3XDsVdwv@steffen%sdaoden.eu>
-References: <CAB1hGqQwnSzEqtrefwqAxD+rWGu_EXVDmu-btMrNYqMzkzc9Kw@mail.gmail.com>
-	<20260206172730.GA12303@unix-ag.uni-kl.de>
-	<877bso8mhf.fsf@josefsson.org>
-	<20260224011702.27987-1-justin.swartz@risingedge.co.za>
-	<B72B4221-75D0-4C28-840F-9CF7B1A53E66.1@smtp-inbound1.duck.com>
-	<27E138FE-A205-4EDD-9A9B-1F84BFAEC100.1@smtp-inbound1.duck.com>
-	<20260224203337.GA17345@openwall.com>
-	<a0bad9ebbf4507c4@orthanc.ca>
-	<CAA748E8-86CC-4C46-AD03-319F6690252B.1@smtp-inbound1.duck.com>
-	<4A24F620-6FA6-4F2B-A1F9-B4781E391989.1@smtp-inbound1.duck.com>
-	<20260225165449.GA23380@openwall.com>
-	<20260225194709.3XDsVdwv@steffen%sdaoden.eu>
-X-Mailer: Claws Mail 4.3.1 (GTK 3.24.51; x86_64-pc-linux-gnu)
-MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="Sig_/iICPOdcgLqzeh.7mxO+Uvhr";
- protocol="application/pgp-signature"; micalg=pgp-sha512
-Subject: Re: [oss-security] Telnetd Vulnerability Report
+Subject: [oss-security] Re: Remote file download vulnerability in Wordpress Plugin image-export v1.1
+To: larry0@me.com
 
---Sig_/iICPOdcgLqzeh.7mxO+Uvhr
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: quoted-printable
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Am 25.02.2026 um 20:47:09 Uhr schrieb Steffen Nurpmeso:
+> Download Site: https://wordpress.org/plugins/image-export
+> Vendor: www.1efthander.com
+> Vendor Contact: https://twitter.com/1eftHander
 
-> It seems to me one reason to use telnet(1) arises from the fact
-> that there is no nc(1) around.  busybox has one, but it is not
-> feature rich enough.  And the one of LibreSSL, which is, as it
-> says, a swiss-army-knife, is very often not available at all.
+[ https://web.archive.org/web/20150425215252/https://wordpress.org/plugins/image-export/
+says "Active Installs: 20+" and
+https://plugins.trac.wordpress.org/changeset/1112244 says
+"03/13/15 ... adding image-export by 1eftHander." ]
+ 
+>         if ( isset( $_REQUEST['file'] ) && !empty( $_REQUEST['file'] ) ) {
+>                 $file = $_GET['file'];
+>         
+>                 header( 'Content-Type: application/zip' );
+>                 header( 'Content-Disposition: attachment; filename="' . $file . '"' );
+>                 readfile( $file );
+>     8           unlink( $file );
 
-IIRC this issue is only about the telnetd telnet server daemon, not the
-client. This service is only in use if enabled in inetd (or
-replacements) by the administrator.
+> Exploit Code:
+> curl http://example.com/wp-content/plugins/image-export/download.php?file=/etc/passwd
 
---=20
-kind regards
-Marco
+> The code in file download.php doesn't do any checking that the user is
+> requesting files from the uploaded images directory only. And line 8
+> attempts to unlink the file after being downloaded. This script could
+> be used to delete files out of the wordpress directory if file
+> permissions allow.
 
-Send unsolicited bulk mail to 1772048829muell@cartoonies.org
+Our interpretation is that there is only one security problem. The
+download.php script should only be operating on ZIP files created by
+the image-export.php script (see the
+http://plugins.svn.wordpress.org/image-export/trunk/ directory), but
+does not enforce that in any way. The latter script has
+"define( 'DOWNLOAD_PATH', dirname( __FILE__ ) );" near the top. There
+doesn't seem to be any evidence that either reading other files in the
+DOWNLOAD_PATH directory, or deleting other files in the DOWNLOAD_PATH
+directory, is supported behavior. This is not necessarily about
+directory traversal. The only file that should be either read or
+deleted is an images*.zip file. Deleting this file is apparently
+intentional because there's no need to continue storing both the
+individual files and the ZIP archive.
 
---Sig_/iICPOdcgLqzeh.7mxO+Uvhr
-Content-Type: application/pgp-signature
-Content-Description: Digitale Signatur von OpenPGP
+We don't think there should be two CVE IDs based on an argument such
+as "reading files is probably important only with directory traversal,
+but deleting files is probably important even without directory
+traversal."
 
+Use CVE-2015-5609 for the vulnerability in which download.php proceeds
+with readfile and unlink without verifying that the pathname is
+image-export's own pathname for its own ZIP file.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-iQIzBAEBCgAdFiEEpXefSZn9R6zNZtTQE76RLz2tRfAFAmmfVaoACgkQE76RLz2t
-RfALig//b4TdN45k4GhnTruo5f7zD3Abp9pR+iA84KGclOUISOT/PVFAmWNP8yj0
-umYPLhGv2kjsP+EVQZLBbTnEoR7mTXV+S3iEGfmAyoY8/ldii2ZH47//KpSwJAB5
-rARaZvSi/ghcpXp5NLT/ptOyPWvevoltx5A9jRSH2SmTc8taYZOPdoQtu7fBIraG
-+nf0/JMKgVim8UmGE8ZPWFYOY8rNg6HE1/O59yl5cMsw6xUSHRm83xbzofaJ+h5o
-PIEKctDhZ3siiTe6mvxkFMCbf2/Z/Kdiqh8l0VIch/mI3eXIMgfX12TZq/acR4ww
-PkwlbQUXmoelyz+5NAGz3kBRu4r0MrCREBajIukMQJ84BTn9dEZUW+9NcKp+Glcf
-ztH7BmU2fxgFN47zEPXWIYI//T583wZyFvwVy8sYH/gIWk8OS28uy79uOpK5hpUp
-HfVDuYBskdK4e3H0TD7cK/1y+OjFr+99XoglKGxpP++KGMKn2q/mnKROIBGOegxL
-HxlR+XvDbqMfkKIWuI+7hIf6Vnkc2XIuKcSfmXEmAQSduCbNxs99JPSawpH9z5aV
-+icaJgcX1gs+FycIr29/vHTBM36miWjw/YQdmoGzbfsLz2MaqO0FFWF43CCv5IRX
-GWo2R+yTulf4Z4fRKAz3bTNfOJKw0YbvFxTWCOF2w8aDJdteE+E=
-=ztM3
+iQEcBAEBAgAGBQJVrbG9AAoJEKllVAevmvmsOGYH/0If9ZkZGz3/Y8w2Zc4FgShw
+4AbcQt/sXiHufN0wuq2RbG+iq5Fztrq4hmH4OT7SqA6tEgx2ArKe58q3w0Lg34Mp
+as4iv8D7RPs70xFZdTuByuupOJPP1mmP180WukM/ueuuWoBxxZCbjblf1C2cLozL
+u7j7v5ROGbM6yCv/lDDc412ahp0/LdyjUMR5f99Ap1+i/rRNlH62tvt2746jvUqV
+NammFvi447WhNpr3uCH+foFzsii9rZe2g7dklpXuOY1yi8Iha3hC1aOjO+710xV4
+J6A0VF63E0QHrsEZYjbF8jqA0GL5V3fqdVVUWfDhu4ttwyqSvCzxgZAx7zxNRIU=
+=A5bx
 -----END PGP SIGNATURE-----
-
---Sig_/iICPOdcgLqzeh.7mxO+Uvhr--
