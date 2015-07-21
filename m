@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1794" "Tuesday" "23" "August" "2016" "17:04:37" "-0400" "CAI Qian" "caiqian@redhat.com" "<1439716096.1919046.1471986277289.JavaMail.zimbra@redhat.com>" "42" "[oss-security] cve request: overlayfs: Fix dentry reference leak" nil nil nil "8" "2016082321:04:37" "[oss-security] cve request: overlayfs: Fix dentry reference leak" (number mark "U       caiqian@redh Aug 23   42/1794  " thread-indent "\"[oss-security] cve request: overlayfs: Fix dentry reference leak\"\n") "<18949047.1914380.1471985043180.JavaMail.zimbra@redhat.com>" ("<18949047.1914380.1471985043180.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1667" "Tuesday" "21" "July" "2015" "20:35:49" "+0530" "Abhishek J.M" "jmabhishek4@gmail.com" "<CABpk8vbGz+TU4VvX1Cg_yr-M9DRe3kNm+q1AG-1djUBEGgN84g@mail.gmail.com>" "55" "[oss-security] CVE Request: October CMS - Stored XSS in image caption tag" nil nil nil "7" "2015072115:05:49" "[oss-security] CVE Request: October CMS - Stored XSS in image caption tag" (number mark "U       jmabhishek4@ Jul 21   55/1667  " thread-indent "\"[oss-security] CVE Request: October CMS - Stored XSS in image caption tag\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 24295 invoked by uid 550); 23 Aug 2016 21:04:50 -0000
+Received: (qmail 32519 invoked by uid 550); 21 Jul 2015 15:51:51 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,62 +11,80 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 24277 invoked from network); 23 Aug 2016 21:04:50 -0000
-Date: Tue, 23 Aug 2016 17:04:37 -0400 (EDT)
-From: CAI Qian <caiqian@redhat.com>
-To: cve-assign@mitre.org
-Cc: oss-security@lists.openwall.com
-Message-ID: <1439716096.1919046.1471986277289.JavaMail.zimbra@redhat.com>
-In-Reply-To: <18949047.1914380.1471985043180.JavaMail.zimbra@redhat.com>
+Received: (qmail 23661 invoked from network); 21 Jul 2015 15:06:01 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=WfFg5f7FYlU56lIEMxASwi+vCZzL9ailJubERXWypXo=;
+        b=lbv+6zmgJaJmJVwROisQT87wseRYSpjgYCvME76fXA3pGy7hQyWLedQV6G8QG0PQ+f
+         rDVJc9kGwCIeXp+N/MegZAMZXX/qLXAPGVc7Iv6+v7UzhDxEZVrzpMaCFr1xjvDWPnsd
+         iIaGlW2rDmbN8HcCBPdOBFB/Ne4Y6Qq+aOF5NZJVRlkad5QKmbbHX6UH8w+J1XsZU/I6
+         cis669d7/DVuzvYfghnJtPvZRuci9yGuAs7fD1spS6P7lsHgEAfhRufEdixu2E7mVldc
+         E3aPcg/499b0Y11jea5VSWyyoNrZBozloWyFVtIZbf3BJPCIqxls/THz+n0vQL6vrf+e
+         oNkQ==
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.18.41.13]
-X-Mailer: Zimbra 8.0.6_GA_5922 (ZimbraWebClient - GC45 (Linux)/8.0.6_GA_5922)
-Thread-Topic: cve request: overlayfs: Fix dentry reference leak
-Thread-Index: eLQv49li1+ZU+vdPa07cIYCJ0TwFyQ==
-Subject: [oss-security] cve request: overlayfs: Fix dentry reference leak
+X-Received: by 10.50.30.65 with SMTP id q1mr23569020igh.28.1437491149626; Tue,
+ 21 Jul 2015 08:05:49 -0700 (PDT)
+Message-ID: <CABpk8vbGz+TU4VvX1Cg_yr-M9DRe3kNm+q1AG-1djUBEGgN84g@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=047d7bb03c5a5765c5051b63fd7a
+Date: Tue, 21 Jul 2015 20:35:49 +0530
+From: "Abhishek J.M" <jmabhishek4@gmail.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE Request: October CMS - Stored XSS in image caption tag
+To: cve-assign@mitre.org, oss-security@lists.openwall.com
 
-=== Description ===
-commit ab79efab0a0ba01a74df782eb7fa44b044dae8b5 upstream.
+--047d7bb03c5a5765c5051b63fd7a
+Content-Type: text/plain; charset=UTF-8
 
-In ovl_copy_up_locked(), newdentry is leaked if the function exits through
-out_cleanup as this just to out after calling ovl_cleanup() - which doesn't
-actually release the ref on newdentry.
+Hello ,
 
-The out_cleanup segment should instead exit through out2 as certainly
-newdentry leaks - and possibly upper does also, though this isn't caught
-given the catch of newdentry.
+October CMS <https://github.com/octobercms> , an open-source , self-hosted
+Content Management System built based on the Laravel PHP Framework has been
+found to be vulnerable to Stored Cross-site Scripting attack.
 
-Without this fix, something like the following is seen:
+*Scenario :*
 
-	BUG: Dentry ffff880023e9eb20{i=f861,n=#ffff880023e82d90} still in use (1) [unmount of tmpfs tmpfs]
-	BUG: Dentry ffff880023ece640{i=0,n=bigfile}  still in use (1) [unmount of tmpfs tmpfs]
+When any *normal* user logs into the October CMS , he is given an option to
+update his account , where there is an option to upload his profile
+picture. On uploading , the user is given an option to give a caption to
+the uploaded image. This tab has been found vulnerable to stored XSS.
 
-when unmounting the upper layer after an error occurred in copyup.
+*POC  :*
 
-An error can be induced by creating a big file in a lower layer with
-something like:
+Type in :  '  *<svg onload=alert(document.cookie)>*' inside the caption tab
+of the image and save it. Logout of the user account and login as an
+administrator. Now, simply visit the user profile (of the normal user) and
+the JavaScript will be executed.
 
-	dd if=/dev/zero of=/lower/a/bigfile bs=65536 count=1 seek=$((0xf000))
+*Reporting date*           :    21st July , 2015
 
-to create a large file (4.1G).  Overlay an upper layer that is too small
-(on tmpfs might do) and then induce a copy up by opening it writably.
+*Exploit Author *           :    Abhishek J M
 
-=== POC Exploit ===
-This can be reproduced in a DevOps environment when the docker runtime storage is on overlayfs over
-xfs as a local DoS. An attacker access to a developer account could run a crafted image from elsewhere
-like docker by creating a big file in the container filesystem and try to read it running by any
-user like below by forcing xfs_file_open() returns -EFBIG,
+*Vendor  Homepage   *:     http://octobercms.com/
 
-$ cat Dockerfile
-FROM fedora
-USER nobody
-RUN dd if=/dev/zero of=/home/nobody/bigfile bs=1024k seek=2046 count=1
-ADD open /home/nobody
-CMD ["/home/nobody/open", "/home/nobody/bigfile"]
+*Product  Link             : *    http://octobercms.com/download
 
-and possibly trigger kernel dentry leaks inside the container that will eventually running out of
-kernel resources for other developers. Hence, a local DoS.
-   CAI Qian
+*Version affected         :    *Possibly all the builds  i.e ,  < = Build
+271  (Changelog
+<https://github.com/octobercms/october/blob/master/CHANGELOG.md>)
+
+*Tested on                    :  *  Linux:- Ubuntu, Debian, PHP - 5.5
+
+
+This issue has been  reported  to the vendor of this product  :
+
+https://github.com/octobercms/october/issues/1302
+
+Is it possible to assign CVE identifier for this issue ?
+
+Thank you
+
+-- 
+
+Abhishek J M
+bi0s @ Amrita
+
+Blog <http://revoextremer.wix.com/revo>   |    XDA
+<http://forum.xda-developers.com/member.php?u=5723399>    |
+
+--047d7bb03c5a5765c5051b63fd7a--
