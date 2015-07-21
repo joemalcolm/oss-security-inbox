@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["639" "Wednesday" "3" "April" "2019" "07:46:52" "-0400" "Vladis Dronov" "vdronov@redhat.com" nil "17" nil nil nil nil "4" nil nil (number mark "U       vdronov@redh Apr  3   17/639   " thread-indent "\"[oss-security] CVE-2019-3882: Linux kernel: DoS through vfio/type1 DMA mappings\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2019-3882: Linux kernel: DoS through vfio/type1 DMA mappings" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1020" "Tuesday" "21" "July" "2015" "11:16:35" "+0200" "king cope" "isowarez.isowarez.isowarez@googlemail.com" "<CAFB=mGAAaJOB3VsvhGnsBVP0COwe4MiRv5t2cDx9UA=qJ0KyPw@mail.gmail.com>" "26" "[oss-security] CVE Request for OpenSSH vulnerability - authentication limits bypass" nil nil nil "7" "2015072109:16:35" "[oss-security] CVE Request for OpenSSH vulnerability - authentication limits bypass" (number mark "        isowarez.iso Jul 21   26/1020  " thread-indent "\"[oss-security] CVE Request for OpenSSH vulnerability - authentication limits bypass\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 1635 invoked by uid 550); 3 Apr 2019 11:47:05 -0000
+Received: (qmail 21512 invoked by uid 550); 21 Jul 2015 11:34:17 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,37 +11,51 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1611 invoked from network); 3 Apr 2019 11:47:05 -0000
-Date: Wed, 3 Apr 2019 07:46:52 -0400 (EDT)
-From: Vladis Dronov <vdronov@redhat.com>
-To: oss-security@lists.openwall.com
-Message-ID: <1805750602.17169248.1554292012603.JavaMail.zimbra@redhat.com>
-In-Reply-To: <416411872.17168651.1554291862533.JavaMail.zimbra@redhat.com>
+Received: (qmail 30520 invoked from network); 21 Jul 2015 09:16:47 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=vFKX01l0MaNjLwX8kBuP6sBSmaI/aE0qYY+BCINEnpk=;
+        b=S0LK2PrRD6DAScDvaX4rACKPpWZvkv6llMrEP1K+E8XaQuF48I0m6G/SesfsLBy0VS
+         djoSIET+A11A1p93YruOyqIPoXFyQmfrDjhzzB/agsXt1j5nLmGX5bSDjDnZmZ59gQ6q
+         WGWYieBQojTevWTt2lGr4dJI/dZxLlh2ujxs6HT2dmTXEhJi2qQIeFkxAJFx6XlY4SDn
+         KAYPiuqOdfzoKtzNbkN+nkUWHyu1nwwGymCC2rKmAEqXYLz/lh3oGLbujVlYHK2LzAST
+         8VoiBUHXcnB2Fgl7jbFTyriGiTejeVg7yYm2KH7TaJ5X8/SgA2EDEvN4aVhMVYnF4dkV
+         vUdA==
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.40.4.106, 10.4.195.27]
-Thread-Topic: CVE-2019-3882: Linux kernel: DoS through vfio/type1 DMA mappings
-Thread-Index: aCvWd0Izv1SFr+UJVPIe2Nu3QMF54g==
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.11
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.30]); Wed, 03 Apr 2019 11:46:52 +0000 (UTC)
-Subject: [oss-security] CVE-2019-3882: Linux kernel: DoS through vfio/type1 DMA mappings
+X-Received: by 10.50.1.79 with SMTP id 15mr22713564igk.68.1437470195976; Tue,
+ 21 Jul 2015 02:16:35 -0700 (PDT)
+Message-ID: <CAFB=mGAAaJOB3VsvhGnsBVP0COwe4MiRv5t2cDx9UA=qJ0KyPw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Date: Tue, 21 Jul 2015 11:16:35 +0200
+From: king cope <isowarez.isowarez.isowarez@googlemail.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE Request for OpenSSH vulnerability - authentication limits bypass
+To: oss-security@lists.openwall.com
 
-Heololo,
+Hello list, solar designer,
 
-A flaw was found in the Linux kernel's vfio interface implementation that permits
-violation of the user's locked memory limit. If a device is bound to a vfio driver,
-such as vfio-pci, and the local attacker is administratively granted ownership of
-the device, it may cause a system memory exhaustion and thus a denial of service (DoS).
+Can you please add a CVE for the mentioned vulnerability in OpenSSH.
 
-CVE-2019-3882 was allocated for this flaw.
+The OpenSSH server normally wouldn't allow successive authentications
+that exceed the MaxAuthTries setting in sshd_config,
+with this vulnerability the allowed login retries can be extended
+limited only by the LoginGraceTime setting,
+that can be more than 10000 tries (depends on the network speed), and
+even more for local attacks. Technically this vulnerability affects
+OpenSSH. It can be found with FreeBSD installations because these use
+the keyboard-interactive authentication
+mechanism (that is the one affected) in combination with pam. I
+haven't tested skey/bsd auth.
+To note that this vulnerability looks pretty old, a test against
+FreeBSD 6.2 (2007 release date) showed it vulnerable.
+Additionally there is no delay between the authentication retries, but
+this is another issue that makes this vulnerability more effective.
 
-References:
+CVE please!
 
-https://lore.kernel.org/lkml/155414977872.12780.13728555131525362206.stgit@gimli.home/T/#u
+Thank you,
 
-https://bugzilla.redhat.com/show_bug.cgi?id=1689426
+KC
 
-Best regards,
-Vladis Dronov | Red Hat, Inc. | Product Security | Senior Software Engineer
+Reference: http://seclists.org/fulldisclosure/2015/Jul/92
