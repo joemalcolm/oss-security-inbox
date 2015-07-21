@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1025" "Sunday" "4" "December" "2016" "16:18:27" "+0100" "Salvatore Bonaccorso" "carnil@debian.org" "<20161204151827.w6cvq2enbqdg4ido@eldamar.local>" "32" "Re: [oss-security] Re: RCE in Zabbix 2.2 to 3.0.3" nil nil nil "12" "2016120415:18:27" "[oss-security] Re: RCE in Zabbix 2.2 to 3.0.3" (number mark "U       carnil@debia Dec  4   32/1025  " thread-indent "\"Re: [oss-security] Re: RCE in Zabbix 2.2 to 3.0.3\"\n") "<d99995e4f5284443bbb2f7d7e4b9c004@imshyb02.MITRE.ORG>" ("<877f8na318.fsf@redhat.com>" "<d99995e4f5284443bbb2f7d7e4b9c004@imshyb02.MITRE.ORG>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1787" "Tuesday" "21" "July" "2015" "07:50:58" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150721115058.8205A52E158@smtpvbsrv1.mitre.org>" "48" "[oss-security] Re: CVE request: IPython CSRF validation" nil nil nil "7" "2015072111:50:58" "[oss-security] Re: CVE request: IPython CSRF validation" (number mark "        cve-assign@m Jul 21   48/1787  " thread-indent "\"[oss-security] Re: CVE request: IPython CSRF validation\"\n") "<CA+tbMaW_byk+-swLHZ9nE7jDh1GCGc9Dd9A8who56h0rmAzjwQ@mail.gmail.com>" ("<CA+tbMaW_byk+-swLHZ9nE7jDh1GCGc9Dd9A8who56h0rmAzjwQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 1697 invoked by uid 550); 4 Dec 2016 15:18:41 -0000
+Received: (qmail 24053 invoked by uid 550); 21 Jul 2015 11:51:11 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,78 +11,61 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 24014 invoked from network); 21 Jul 2015 11:51:10 -0000
+In-Reply-To: <CA+tbMaW_byk+-swLHZ9nE7jDh1GCGc9Dd9A8who56h0rmAzjwQ@mail.gmail.com>
+Message-Id: <20150721115058.8205A52E158@smtpvbsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, khanam@us.ibm.com, security@ipython.org
+Date: Tue, 21 Jul 2015 07:50:58 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1666 invoked from network); 4 Dec 2016 15:18:40 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=mEkF5GsK6bRJDSxMcKcVZm532Q7yBh2osjjr6N/YAZ8=;
-        b=hEWA4+WhBHYiVGWCW0g3zzMqM+JOd3I+N1swXHLcBItybtf4BhVjhSsGQbA6bQZrbW
-         zAT9+FYvhsGPe7OEZ7lVDZ0nxAicPyxDiok4Lbkr7NfnVQI7ug97SB1otvPAIptcNqon
-         k60wfuegrhuLbmcV+WkUm+yzTVtsezoRC9/iamhLgHPKcHNsMLLYLm7H/5rVvuo+RjgK
-         xTPikWqSePmctGAVORr+AxaZPPx4rz+V+ATAPh1kXri/JgcMmagOT94p26qmeXx1k8qy
-         3QxUIa5C3ujEeFM0DyBQQOez+dvzrxJXhQRMKTQxwgOZ56Z5u9bUX3NuAovLIiLW5+4e
-         vWGQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
-         :references:mime-version:content-disposition:in-reply-to:user-agent;
-        bh=mEkF5GsK6bRJDSxMcKcVZm532Q7yBh2osjjr6N/YAZ8=;
-        b=lTRcT+CWyLgqOfmWSqlbD+fYR5YUjmBib7mBXvlAofCC2TF/Sndd77pIragIF3zfJr
-         LbAFojgcRvEhjT9tVJGs/HOlkX40fTIKxME9VlTfpYdkD64aqfRafDIQUtWMo0ZrSHn/
-         I3ZadP3uF2IvnKfmm2m6a7mOybLK1L8U2O86j6KATBA7W9cjjNadi4iJVZ7E7U71h8JP
-         HkvkywoLtPW7eu8c6twCKHnZV0rW0476CWzvHgjqSnFIt48tnbzIUxmGdL4QcG9V3z1X
-         bYxEdH4LL3vPx9A3ypffYsMDE7PL06KcTN2vlilcTjs3WUn8JTiA2MCCOzpV1lNQPgPW
-         nKnQ==
-X-Gm-Message-State: AKaTC02sPaPD3YkgYGrSE70veAjuNXhLsTeHkpuv5k9kDQ4N+/ZnjRgfSFI/iAH3laBmag==
-X-Received: by 10.28.48.7 with SMTP id w7mr5301238wmw.115.1480864709115;
-        Sun, 04 Dec 2016 07:18:29 -0800 (PST)
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Date: Sun, 4 Dec 2016 16:18:27 +0100
-From: Salvatore Bonaccorso <carnil@debian.org>
-To: oss-security@lists.openwall.com
-Cc: mprpic@redhat.com, cve-assign@mitre.org,
-	James Cowgill <jcowgill@debian.org>
-Message-ID: <20161204151827.w6cvq2enbqdg4ido@eldamar.local>
-References: <877f8na318.fsf@redhat.com>
- <d99995e4f5284443bbb2f7d7e4b9c004@imshyb02.MITRE.ORG>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <d99995e4f5284443bbb2f7d7e4b9c004@imshyb02.MITRE.ORG>
-User-Agent: NeoMutt/20161126 (1.7.1)
-Subject: Re: [oss-security] Re: RCE in Zabbix 2.2 to 3.0.3
+Subject: [oss-security] Re: CVE request: IPython CSRF validation
+To: rgbkrk@gmail.com
 
-Hi
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On Tue, Nov 01, 2016 at 02:17:05PM -0400, cve-assign@mitre.org wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA256
+> Software name: IPython notebook
+> Attack outcome: Possible remote execution
+> Patches:
+>   2.x:
+> https://github.com/ipython/ipython/commit/a05fe052a18810e92d9be8c1185952c13fe4e5b0
+>   3.x:
+> https://github.com/ipython/ipython/commit/1415a9710407e7c14900531813c15ba6165f0816
 > 
-> > https://www.exploit-db.com/exploits/39937/
-> > Zabbix 2.2 < 3.0.3 - API JSON-RPC Remote Code Execution
-> 
-> > /api_jsonrpc.php
-> 
-> > "method": "script.update",
-> 
-> > "command": ""+cmd+""
-> 
-> Use CVE-2016-9140.
+> POST requests exposed via the IPython REST API are vulnerable to
+> cross-site request forgery (CSRF). Web pages on different domains can make
+> non-AJAX POST requests to known IPython URLs, and IPython will honor them.
+> The user's browser will automatically send IPython cookies along with the
+> requests.
 
-This has later on been reported upstream, as
-https://support.zabbix.com/browse/ZBX-11483 . Upstream believes that
-this is not a vulnerability, but a superadmin able to use a feature as
-intended. Cf. 
+Use CVE-2015-5607.
 
-https://support.zabbix.com/browse/ZBX-11483?focusedCommentId=202709&page=com.atlassian.jira.plugin.system.issuetabpanels:comment-tabpanel#comment-202709
-and
-https://support.zabbix.com/browse/ZBX-11483?focusedCommentId=202789&page=com.atlassian.jira.plugin.system.issuetabpanels:comment-tabpanel#comment-202789
+This part of the patch seems unusual, but we haven't researched it at all:
 
-As such this might be actually be REJECTed. Martin and CVE assigning
-team from MITRE, does this look correct? Should the CVE be rejected
-instead?
+  host = self.request.headers.get("Host")
+  origin = self.request.headers.get("Origin")
 
-Regards,
-Salvatore
+  # If no header is provided, assume it comes from a script/curl.
+  # We are only concerned with cross-site browser stuff here.
+  if origin is None or host is None:
+     return True
+
+Is this a case where it is safe to skip CSRF protection in all
+situations where the client omits an Origin header?
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJVrjG9AAoJEKllVAevmvms5UwH/2hScDKEqZ7YRg+Rrh5GNsZj
+/EqVTy7VhFSr67xFxE1p/wn8X6UsRs4c4C1BtqGdbFFgh/UHE2X3uFrqeSEX+mWg
+i5fDE+OGKSZdqK+UM0pazNsEtWCyrvx/5j+zJ7PSL2Jejrc4v81F/UGP83qtY5CC
+1cbslombkmi1juKiupm57sQwqCAhVPASrTaQn9LFZyDlcuvpa/93OlGgdKtlyqX4
+u77/cDUVQ+RVb0Ivj9EJAJbfjhfdZ8h/BDn8GiAbQ51ADpogTDCpPpIqRN+9/0d1
+LAaDDbROGwBc0IdDzlDB8D2sW2z28o/D6tL9U7Kj5xYKsHuXC8PjPkSBaHZ3om8=
+=jjDB
+-----END PGP SIGNATURE-----
