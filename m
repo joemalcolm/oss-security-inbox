@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["864" "Monday" "23" "November" "2015" "06:15:57" "-0500" "Vladis Dronov" "vdronov@redhat.com" "<156275171.20653603.1448277357841.JavaMail.zimbra@redhat.com>" "21" "[oss-security] CVE request -- linux kernel: Null pointer dereference when mounting ext4 filesystem" nil nil nil "11" "2015112311:15:57" "[oss-security] CVE request -- linux kernel: Null pointer dereference when mounting ext4 filesystem" (number mark "U       vdronov@redh Nov 23   21/864   " thread-indent "\"[oss-security] CVE request -- linux kernel: Null pointer dereference when mounting ext4 filesystem\"\n") "<280559012.12238637.1447413530171.JavaMail.zimbra@redhat.com>" ("<280559012.12238637.1447413530171.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1106" "Tuesday" "21" "July" "2015" "21:51:01" "+0200" "Tomas Hoger" "thoger@redhat.com" "<20150721215101.5b7c0a96@redhat.com>" "29" "Re: [oss-security] CVE request: php - segmentation fault in Phar::convertToData; buffer overflow in phar_fix_filepath;" nil nil nil "7" "2015072119:51:01" "[oss-security] CVE request: php - segmentation fault in Phar::convertToData; buffer overflow in phar_fix_filepath;" (number mark "U       thoger@redha Jul 21   29/1106  " thread-indent "\"Re: [oss-security] CVE request: php - segmentation fault in Phar::convertToData; buffer overflow in phar_fix_filepath;\"\n") "<20150717135425.GB19821@mail.corp.redhat.com>" ("<20150717135425.GB19821@mail.corp.redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 13358 invoked by uid 550); 23 Nov 2015 11:16:11 -0000
+Received: (qmail 26313 invoked by uid 550); 21 Jul 2015 19:51:23 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,43 +11,49 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13335 invoked from network); 23 Nov 2015 11:16:10 -0000
-Date: Mon, 23 Nov 2015 06:15:57 -0500 (EST)
-From: Vladis Dronov <vdronov@redhat.com>
-To: oss-security@lists.openwall.com
-Cc: cve-assign@mitre.org
-Message-ID: <156275171.20653603.1448277357841.JavaMail.zimbra@redhat.com>
-In-Reply-To: <280559012.12238637.1447413530171.JavaMail.zimbra@redhat.com>
-References: <280559012.12238637.1447413530171.JavaMail.zimbra@redhat.com>
+Received: (qmail 26290 invoked from network); 21 Jul 2015 19:51:22 -0000
+Message-ID: <20150721215101.5b7c0a96@redhat.com>
+In-Reply-To: <20150717135425.GB19821@mail.corp.redhat.com>
+References: <20150717135425.GB19821@mail.corp.redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.40.204.98]
-X-Mailer: Zimbra 8.0.6_GA_5922 (ZimbraWebClient - FF42 (Linux)/8.0.6_GA_5922)
-Thread-Topic: CVE request -- [media] usbvision: usbvision_probe() can trigger a kernel NULL pointer dereference
-Thread-Index: hCmaV1ji8jDXJ5Lh3zK81gkiTJsnTFR3LO4b
-Subject: [oss-security] CVE request -- linux kernel: Null pointer dereference when mounting
- ext4 filesystem
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.26
+Cc: Vasyl Kaigorodov <vkaigoro@redhat.com>, oss-security@lists.openwall.com,
+        security@php.net
+Date: Tue, 21 Jul 2015 21:51:01 +0200
+From: Tomas Hoger <thoger@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] CVE request: php - segmentation fault in
+ Phar::convertToData; buffer overflow in phar_fix_filepath;
+To: cve-assign@mitre.org
 
-Hello,
-If possible, we would like to obtain a CVE-ID for the following security issue.
+On Fri, 17 Jul 2015 15:54:25 +0200 Vasyl Kaigorodov wrote:
 
-It was reported that there are some exit paths in ext4_fill_super() which result
-in destruction of workqueue which is not yet initialized, leading to kernel NULL
-pointer dereference. A privileged user with permission to mount a filesystem or
-anybody having physical access to the system's USB port and prepared filesystem
-on USB disk which will be automatically mounted can cause system panic and thus
-DoS.
+> I'd like to request a CVEs for the below issues fixed in PHP 5.5.27
+> and 5.4.43 (5.6.x was not affected by those it looks like):
+> 
+> Segfault in Phar::convertToData on invalid file
+> https://bugs.php.net/bug.php?id=69958
+> http://git.php.net/?p=php-src.git;a=commit;h=bf58162ddf970f63502837f366930e44d6a992cf
+> 
+> Buffer overflow and stack smashing error in phar_fix_filepath
+> https://bugs.php.net/bug.php?id=69923
+> http://git.php.net/?p=php-src.git;a=commit;h=6dedeb40db13971af45276f80b5375030aa7e76f
 
-References:
+Another fix noted in 5.6.11 / 5.5.27 / 5.4.43 is:
 
-https://bugs.openvz.org/browse/OVZ-6541 - initial public disclosure
+Mysqlnd: Fixed bug #69669 (mysqlnd is vulnerable to BACKRONYM). (CVE-2015-3152)
 
-https://bugzilla.redhat.com/show_bug.cgi?id=1267261 - red hat public bug
+https://bugs.php.net/bug.php?id=69669
+http://git.php.net/?p=php-src.git;a=commitdiff;h=97aa752fee61fccdec361279adbfb17a3c60f3f4
 
-commit 744692dc059845b2a3022119871846e74d4f6e11 - upstream Linux kernel commit
-which fixes the issue (only part of the commit is related).
+It references a CVE that was assigned to MySQL / libmysqlclient.  As
+the fix was applied to mysqlnd - re-implementation of the MySQL client
+- can the original BACKRONYM CVE still be used here, or is a new CVE
+id needed?
 
-Best regards,
-Vladis Dronov | Red Hat, Inc. | Product Security Engineer
+Thank you!
+
+-- 
+Tomas Hoger / Red Hat Product Security
