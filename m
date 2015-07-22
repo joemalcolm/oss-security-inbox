@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1065" "Wednesday" "5" "January" "2022" "18:35:17" "-0500" "Neil Griffin" "asfgriff@apache.org" nil "39" "[oss-security] CVE-2021-36739: Apache Portals: XSS vulnerability in the MVCBean JSP portlet maven archetype" nil nil nil "1" nil nil (number mark "U       asfgriff@apa Jan  5   39/1065  " thread-indent "\"[oss-security] CVE-2021-36739: Apache Portals: XSS vulnerability in the MVCBean JSP portlet maven archetype\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-36739: Apache Portals: XSS vulnerability in the MVCBean JSP portlet maven archetype" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["9480" "Wednesday" "22" "July" "2015" "16:16:57" "+0000" "Fiedler Roman" "Roman.Fiedler@ait.ac.at" "<2ECE9D9EEF1F524185270138AE23265954E56C4A@S0MSMAIL112.arc.local>" "169" "[oss-security] Re: Security issues in LXC (CVE-2015-1331 and CVE-2015-1334)" nil nil nil "7" "2015072216:16:57" "[oss-security] Re: Security issues in LXC (CVE-2015-1331 and CVE-2015-1334)" (number mark "U       Roman.Fiedle Jul 22  169/9480  " thread-indent "\"[oss-security] Re: Security issues in LXC (CVE-2015-1331 and CVE-2015-1334)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 8055 invoked by uid 550); 5 Jan 2022 23:41:39 -0000
+Received: (qmail 24406 invoked by uid 550); 22 Jul 2015 16:17:17 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,61 +11,199 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5282 invoked from network); 5 Jan 2022 23:35:42 -0000
-X-Gm-Message-State: AOAM532+jv8IlM89W2AFgR0mFweBbrSqR2Z4QEPYDEC0nDjtT1Csg3Hz
-	bb/pKTc4tYtG0J/menhhkmhvAEYQCT5v+lsXBiA=
-X-Google-Smtp-Source: ABdhPJzSUTnz9tKY9NHup8Ai+sq7F1fBSmrP0nGWLVccixBI3rWqKtM+YfOdT43lLUQobwjckFj2nOY8hDLjyF77M+k=
-X-Received: by 2002:a05:6830:1d7c:: with SMTP id l28mr39839011oti.372.1641425728358;
- Wed, 05 Jan 2022 15:35:28 -0800 (PST)
+Received: (qmail 24332 invoked from network); 22 Jul 2015 16:17:10 -0000
+Thread-Topic: Security issues in LXC (CVE-2015-1331 and CVE-2015-1334)
+Thread-Index: AdDEmblCzTmG9iwbTLaVXMu32r59oQ==
+Message-ID: <2ECE9D9EEF1F524185270138AE23265954E56C4A@S0MSMAIL112.arc.local>
+Accept-Language: en-US, de-AT
+Content-Language: de-DE
+X-MS-Has-Attach: yes
+X-MS-TNEF-Correlator: 
+x-originating-ip: [172.30.249.121]
+Content-Type: multipart/signed; micalg=SHA1;
+	protocol="application/x-pkcs7-signature";
+	boundary="----=_NextPart_000_015B_01D0C4AA.97DA3990"
 MIME-Version: 1.0
-From: Neil Griffin <asfgriff@apache.org>
-Date: Wed, 5 Jan 2022 18:35:17 -0500
-X-Gmail-Original-Message-ID: <CAAqbB_fND52UH8km8mqoWhWbb9pAgDkt3XrBPw1iAcJ2Woax4g@mail.gmail.com>
-Message-ID: <CAAqbB_fND52UH8km8mqoWhWbb9pAgDkt3XrBPw1iAcJ2Woax4g@mail.gmail.com>
-To: general@portals.apache.org, pluto-user@portals.apache.org, 
-	announce@apache.org, jetspeed-user@portals.apache.org, security@apache.org, 
-	oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="00000000000076cf1105d4de352b"
-Subject: [oss-security] CVE-2021-36739: Apache Portals: XSS vulnerability in the MVCBean JSP
- portlet maven archetype
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:5.14.151,1.0.33,0.0.0000
+ definitions=2015-07-22_04:2015-07-22,2015-07-22,1970-01-01 signatures=0
+CC: Serge Hallyn <serge.hallyn@ubuntu.com>,
+        =?iso-8859-1?Q?St=E9phane_Graber?=
+	<stgraber@ubuntu.com>,
+        "security@ubuntu.com" <security@ubuntu.com>,
+        "Tyler
+ Hicks" <tyhicks@canonical.com>
+Date: Wed, 22 Jul 2015 16:16:57 +0000
+From: Fiedler Roman <Roman.Fiedler@ait.ac.at>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: Security issues in LXC (CVE-2015-1331 and CVE-2015-1334)
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
 
---00000000000076cf1105d4de352b
-Content-Type: text/plain; charset="UTF-8"
+------=_NextPart_000_015B_01D0C4AA.97DA3990
+Content-Type: text/plain;
+	charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
 
-Severity: moderate
+> Von: Tyler Hicks [mailto:tyhicks@canonical.com]
+> 
+> Two security issues were found in LXC:
+> 
+> [snip]
 
-Description:
+To help others discover similar issues, not only in container virtualization
+e.g. LXC, Docker, Vserver,  OpenVZ, but also other programs, I've written up
+the basic analysis methods used during testing in [1]. Detection examples
+for the not yet disclosed vulnerabilities are omitted and will be included
+in future release.
 
-The "first name" and "last name" fields of the Apache Pluto 3.1.0 MVCBean
-JSP portlet maven archetype are vulnerable to Cross-Site Scripting (XSS)
-attacks.
+Roman
 
-Mitigation:
+[1] https://service.ait.ac.at/security/2015/LxcSecurityAnalysis.txt (.html)
 
-If a project was generated from the affected maven archetype using a
-command like the following:
+------=_NextPart_000_015B_01D0C4AA.97DA3990
+Content-Type: application/pkcs7-signature; name="smime.p7s"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="smime.p7s"
 
-mvn archetype:generate \
-     -DarchetypeGroupId=org.apache.portals.pluto.archetype \
-     -DarchetypeArtifactId=mvcbean-jsp-portlet-archetype \
-     -DarchetypeVersion=3.1.0 \
-     -DgroupId=com.mycompany \
-     -DartifactId=com.mycompany.my.mvcbean.jsp.portlet
+MIAGCSqGSIb3DQEHAqCAMIACAQExCzAJBgUrDgMCGgUAMIAGCSqGSIb3DQEH
+AQAAoIIUMTCCBDYwggMeoAMCAQICAQEwDQYJKoZIhvcNAQEFBQAwbzELMAkG
+A1UEBhMCU0UxFDASBgNVBAoTC0FkZFRydXN0IEFCMSYwJAYDVQQLEx1BZGRU
+cnVzdCBFeHRlcm5hbCBUVFAgTmV0d29yazEiMCAGA1UEAxMZQWRkVHJ1c3Qg
+RXh0ZXJuYWwgQ0EgUm9vdDAeFw0wMDA1MzAxMDQ4MzhaFw0yMDA1MzAxMDQ4
+MzhaMG8xCzAJBgNVBAYTAlNFMRQwEgYDVQQKEwtBZGRUcnVzdCBBQjEmMCQG
+A1UECxMdQWRkVHJ1c3QgRXh0ZXJuYWwgVFRQIE5ldHdvcmsxIjAgBgNVBAMT
+GUFkZFRydXN0IEV4dGVybmFsIENBIFJvb3QwggEiMA0GCSqGSIb3DQEBAQUA
+A4IBDwAwggEKAoIBAQC39xoz5vIABC054E5b7R+8bA/Ntfojts7emxEzl6Qp
+TH2Tn71KvJPtAxrjj8/lbVBa1pcplFqAsEl62y6V/bjKvzc4LR4+kUGtcFbH
+8E8/6DKedMrIkFTpxl8PeJ2aQDwOrGGqXhSPnoehalDc15pOrwWzpnGUnHGz
+UGAKxxOdOAeGAqjpqGkmGJCrTLBPI6s6T4TY386f4Wlvu9dC12tE5Met7m1B
+X3JacQg3s3llpFmglDf3AC8NwpJy2tA4ctsUqEXEXSp9t7TWxO6szRNEt8kr
+3UMAJfphuWlqWCMRt6czj1Z1WfXNKddGtworZbbTQm8Vsrh7++/pXVPVNFon
+AgMBAAGjgdwwgdkwHQYDVR0OBBYEFK29mHo0tCb3+sQmVO8DveAky1QaMAsG
+A1UdDwQEAwIBBjAPBgNVHRMBAf8EBTADAQH/MIGZBgNVHSMEgZEwgY6AFK29
+mHo0tCb3+sQmVO8DveAky1QaoXOkcTBvMQswCQYDVQQGEwJTRTEUMBIGA1UE
+ChMLQWRkVHJ1c3QgQUIxJjAkBgNVBAsTHUFkZFRydXN0IEV4dGVybmFsIFRU
+UCBOZXR3b3JrMSIwIAYDVQQDExlBZGRUcnVzdCBFeHRlcm5hbCBDQSBSb290
+ggEBMA0GCSqGSIb3DQEBBQUAA4IBAQCwm+CFJcLWI+IPlgaSnUGYnNmEeYHZ
+HlsUByM2ZY+w2He7rEFsR2CDUbD5Mj3n/PYmE8eAFqW/WvyHz3h5iSGa4kwH
+CoY1vPLeUcTSlrfcfk7ucP0cOesMAlEULY69FuDB30Z15ySt7PRCtIWTcBBn
+up0GNUoY0yt6zFFCoXpj0ea7ocUrwja+Ew3mvWN+eXunCQ1Aq2rdj4rD9vaM
+GkIFUdRF9Z+nYiFoFSBDPJnnfL0k2KmRF3OIP1YbMTgYtHEPms3IDp6OLhvh
+jJiDyx8x8URMxgRzSXZgD8f4vReAay7pzEwOWpp5DyAKLtWeYyYeVZKU2IIX
+WnvQvMePToYEMIIEnTCCA4WgAwIBAgIQND3pK6wnNP+PyzSU+8xwVDANBgkq
+hkiG9w0BAQUFADBvMQswCQYDVQQGEwJTRTEUMBIGA1UEChMLQWRkVHJ1c3Qg
+QUIxJjAkBgNVBAsTHUFkZFRydXN0IEV4dGVybmFsIFRUUCBOZXR3b3JrMSIw
+IAYDVQQDExlBZGRUcnVzdCBFeHRlcm5hbCBDQSBSb290MB4XDTA1MDYwNzA4
+MDkxMFoXDTIwMDUzMDEwNDgzOFowga4xCzAJBgNVBAYTAlVTMQswCQYDVQQI
+EwJVVDEXMBUGA1UEBxMOU2FsdCBMYWtlIENpdHkxHjAcBgNVBAoTFVRoZSBV
+U0VSVFJVU1QgTmV0d29yazEhMB8GA1UECxMYaHR0cDovL3d3dy51c2VydHJ1
+c3QuY29tMTYwNAYDVQQDEy1VVE4tVVNFUkZpcnN0LUNsaWVudCBBdXRoZW50
+aWNhdGlvbiBhbmQgRW1haWwwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEK
+AoIBAQCyOYWk8n2rQTtiRjeuzcFgdbw5ZflKGkeiucxIzGqY1U01GbmkQuXO
+SeKKLx580jEHx060g2SdLinVomTEhb2FUTV5pE5okHsceqSSqBfymBXyk8zJ
+pDKVuwxPML2YoAuL5W4bokb6eLyib6tZXqUvz8rabaov66yhs2qqty5nNYt5
+4R5piOLmRs2gpeq+C852OnoOm+r82idbPXMfIuZIYcZM82mxqC4bttQxICy8
+goqOpA6l14lD/BZarx1x1xFZ2rqHDa/68+HC8KTFZ4zW1lQ63gqkugN3s2XI
+/R7TdGKqGMpokx6hhX71R2XL+E1XKHTSNP8wtu72YjAUjCzrAgMBAAGjgfQw
+gfEwHwYDVR0jBBgwFoAUrb2YejS0Jvf6xCZU7wO94CTLVBowHQYDVR0OBBYE
+FImCZ33EnSZwAEu0UEh83j2uBG59MA4GA1UdDwEB/wQEAwIBBjAPBgNVHRMB
+Af8EBTADAQH/MBEGA1UdIAQKMAgwBgYEVR0gADBEBgNVHR8EPTA7MDmgN6A1
+hjNodHRwOi8vY3JsLnVzZXJ0cnVzdC5jb20vQWRkVHJ1c3RFeHRlcm5hbENB
+Um9vdC5jcmwwNQYIKwYBBQUHAQEEKTAnMCUGCCsGAQUFBzABhhlodHRwOi8v
+b2NzcC51c2VydHJ1c3QuY29tMA0GCSqGSIb3DQEBBQUAA4IBAQABvJzjYyiw
+8zEBwt973WKgAZ0jMQ+cknNTUeofTPrWn8TKL2d+eDMPdBa5kYeR9Yom+mRw
+ANge+QsEYlCHk4HU2vUj2zS7hVa0cDRueIM3HoUcxREVkl+HF72sav3xwtHM
+iV+xfPA+UfI183zsYJhrOivg79+zfYbrtRv1W+yifJgT1wBQudEtc94DeHTh
+BYUxXsuauZ2UxrmUN3Vy3ET7Z+jw+iUeUqfaJelH4KDHPKBOsQo2+3dIn++X
+ivu0/uOUFKiDvFwtP9JgcWDuwnGCDOmINuPaILSjoGyqlku4gI51ykkH9jsU
+ut/cBdmf2+Cy5k2geCbn5y1uf1/GHogVMIIFGjCCBAKgAwIBAgIQbRnqpxlP
+ajMi5iIyeqpx3jANBgkqhkiG9w0BAQUFADCBrjELMAkGA1UEBhMCVVMxCzAJ
+BgNVBAgTAlVUMRcwFQYDVQQHEw5TYWx0IExha2UgQ2l0eTEeMBwGA1UEChMV
+VGhlIFVTRVJUUlVTVCBOZXR3b3JrMSEwHwYDVQQLExhodHRwOi8vd3d3LnVz
+ZXJ0cnVzdC5jb20xNjA0BgNVBAMTLVVUTi1VU0VSRmlyc3QtQ2xpZW50IEF1
+dGhlbnRpY2F0aW9uIGFuZCBFbWFpbDAeFw0xMTA0MjgwMDAwMDBaFw0yMDA1
+MzAxMDQ4MzhaMIGTMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBN
+YW5jaGVzdGVyMRAwDgYDVQQHEwdTYWxmb3JkMRowGAYDVQQKExFDT01PRE8g
+Q0EgTGltaXRlZDE5MDcGA1UEAxMwQ09NT0RPIENsaWVudCBBdXRoZW50aWNh
+dGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBMIIBIjANBgkqhkiG9w0BAQEFAAOC
+AQ8AMIIBCgKCAQEAkoSEW0tXmNReL4uk4UDIo1NYX2Zl8TJO958yfVXQeExV
+t0KU4PkncQfFxmmkuTLE8UAakMwnVmJ/F7Vxaa7lIBvky2NeYMqiQfZq4aP/
+uN8fSG1lQ4wqLitjOHffsReswtqCAtbUMmrUZ28gE49cNfrlVICv2HEKHTcK
+AlBTbJUdqRAUtJmVWRIx/wmi0kzcUtve4kABW0ho3cVKtODtJB86r3FfB+Os
+vxQ7sCVxaD30D9YXWEYVgTxoi4uDD216IVfmNLDbMn7jSuGlUnJkJpFOpZIP
+/+CxYP0ab2hRmWONGoulzEKbm30iY9OpoPzOnpDfRBn0XFs1uhbzp5v/wQID
+AQABo4IBSzCCAUcwHwYDVR0jBBgwFoAUiYJnfcSdJnAAS7RQSHzePa4Ebn0w
+HQYDVR0OBBYEFHoTTgB0W8Z4Y2QnwS/ioFu8ecV7MA4GA1UdDwEB/wQEAwIB
+BjASBgNVHRMBAf8ECDAGAQH/AgEAMBEGA1UdIAQKMAgwBgYEVR0gADBYBgNV
+HR8EUTBPME2gS6BJhkdodHRwOi8vY3JsLnVzZXJ0cnVzdC5jb20vVVROLVVT
+RVJGaXJzdC1DbGllbnRBdXRoZW50aWNhdGlvbmFuZEVtYWlsLmNybDB0Bggr
+BgEFBQcBAQRoMGYwPQYIKwYBBQUHMAKGMWh0dHA6Ly9jcnQudXNlcnRydXN0
+LmNvbS9VVE5BZGRUcnVzdENsaWVudF9DQS5jcnQwJQYIKwYBBQUHMAGGGWh0
+dHA6Ly9vY3NwLnVzZXJ0cnVzdC5jb20wDQYJKoZIhvcNAQEFBQADggEBAIXW
+vnhXVW0zf0RS/kLVBqgBA4CK+w2y/Uq/9q9BSfUbWsXSrRtzbj7pJnzmTJjB
+MCjfy/tCPKElPgp11tA9OYZm0aGbtU2bb68obB2v5ep0WqjascDxdXovnrqT
+ecr+4pEeVnSy+I3T4ENyG+2P/WA5IEf7i686ZUg8mD2lJb+972DgSeUWyOs/
+Q4Pw4O4NwdPNM1+b0L1garM7/vrUyTo8H+2b/5tJM75CKTmD7jNpLoKdRU2o
+adqAGx490hpdfEeZpZsIbRKZhtZdVwcbpzC+S0lEuJB+ytF5OOu0M/qgOl0m
+WJ5hVRi0IdWZ1eBDQEIwvuql55TSsP7zdfl/bucwggY0MIIFHKADAgECAhBg
+VZtaTmI0LOuF0yVA2jvLMA0GCSqGSIb3DQEBBQUAMIGTMQswCQYDVQQGEwJH
+QjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVzdGVyMRAwDgYDVQQHEwdTYWxm
+b3JkMRowGAYDVQQKExFDT01PRE8gQ0EgTGltaXRlZDE5MDcGA1UEAxMwQ09N
+T0RPIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENB
+MB4XDTE0MDMyNzAwMDAwMFoXDTE3MDMyNjIzNTk1OVowggFBMQswCQYDVQQG
+EwJBVDENMAsGA1UEERMEMTIyMDENMAsGA1UECBMEV2llbjENMAsGA1UEBxME
+V2llbjElMCMGA1UECRMcRG9uYXUtQ2l0eS1TdHJhc2UgMXRlY2gvR2F0ZTEy
+MDAGA1UEChMpQUlUIEF1c3RyaWFuIEluc3RpdHV0ZSBvZiBUZWNobm9sb2d5
+IEdtYkgxSTBHBgNVBAsTQElzc3VlZCB0aHJvdWdoIEFJVCBBdXN0cmlhbiBJ
+bnN0aXR1dGUgb2YgVGVjaG5vbG9neSBHbWJIIEUtUEtJIE0xHzAdBgNVBAsT
+FkNvcnBvcmF0ZSBTZWN1cmUgRW1haWwxFjAUBgNVBAMTDVJvbWFuIEZpZWRs
+ZXIxJjAkBgkqhkiG9w0BCQEWF3JvbWFuLmZpZWRsZXJAYWl0LmFjLmF0MIIB
+IjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqhBnj5yFCMMUpzJHbsST
+Q0BZBqLAKKP4+SlxZGtV+YAHLUWhFbeWjcmMp+ONSjMlGdIm45TvM9GrDA8i
+ushm2xYmEJejahLhK3MZMHuyrsS2quy32b7stwFVFLWx2NM4yPwFW5Q8NNtl
+UDwuTRN0zY2+uIEAJGpm+TqdVXAtc915nKsLGyURDoAd8nWVwFVw3F1O9FXa
+nodaLQrY94IVkXkMqa5fg6+Z6vNFBOBgnw9Plx04eOGqVRllQjtF2dogT+C1
+HMfZ+/kQGUSukF+B3H6b+siqPozLt8Lagi/UORsNtQrMbSV0XTvtVuQ69T/H
+2tdV5a8Jcto+FhoICtpIuQIDAQABo4IB0TCCAc0wHwYDVR0jBBgwFoAUehNO
+AHRbxnhjZCfBL+KgW7x5xXswHQYDVR0OBBYEFPO39FQG0PJ//Q3kCUuzH4an
+euWaMA4GA1UdDwEB/wQEAwIFoDAMBgNVHRMBAf8EAjAAMB0GA1UdJQQWMBQG
+CCsGAQUFBwMEBggrBgEFBQcDAjBGBgNVHSAEPzA9MDsGDCsGAQQBsjEBAgED
+BTArMCkGCCsGAQUFBwIBFh1odHRwczovL3NlY3VyZS5jb21vZG8ubmV0L0NQ
+UzBXBgNVHR8EUDBOMEygSqBIhkZodHRwOi8vY3JsLmNvbW9kb2NhLmNvbS9D
+T01PRE9DbGllbnRBdXRoZW50aWNhdGlvbmFuZFNlY3VyZUVtYWlsQ0EuY3Js
+MIGIBggrBgEFBQcBAQR8MHowUgYIKwYBBQUHMAKGRmh0dHA6Ly9jcnQuY29t
+b2RvY2EuY29tL0NPTU9ET0NsaWVudEF1dGhlbnRpY2F0aW9uYW5kU2VjdXJl
+RW1haWxDQS5jcnQwJAYIKwYBBQUHMAGGGGh0dHA6Ly9vY3NwLmNvbW9kb2Nh
+LmNvbTAiBgNVHREEGzAZgRdyb21hbi5maWVkbGVyQGFpdC5hYy5hdDANBgkq
+hkiG9w0BAQUFAAOCAQEAJNkvZvEQuSMveOXqauL/oCneMiEg500S1jOV7yjY
+G8vYPVSws10zur520Z0ttlukgliRPMjzNzzs9qPp0LQ3VN3kNQNykjiEqCBM
+nWwUZW8qgxdtEhyyNiC+sTCf2HYG+m5GmaJLI2y7sVwZcqhBtkQW/p5SVv45
+hN5TM47QMZOefqd2zuTTqVoatC0W/c3XhTJfSksMu3GI/4kfyg7CqcZQKHSd
+UlKnhkkTFTbk0lwjBFFYVJAsdoW9HBokRY48X9N9fLtIx9uunffwNrowvoKw
+zvhA3WK7as3M0eIg82rF+CFxKfROlrQ/55p4Vm7qnwWXvXMKfDU77DMRjHtg
+8zGCBFkwggRVAgEBMIGoMIGTMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3Jl
+YXRlciBNYW5jaGVzdGVyMRAwDgYDVQQHEwdTYWxmb3JkMRowGAYDVQQKExFD
+T01PRE8gQ0EgTGltaXRlZDE5MDcGA1UEAxMwQ09NT0RPIENsaWVudCBBdXRo
+ZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBAhBgVZtaTmI0LOuF0yVA
+2jvLMAkGBSsOAwIaBQCgggKFMBgGCSqGSIb3DQEJAzELBgkqhkiG9w0BBwEw
+HAYJKoZIhvcNAQkFMQ8XDTE1MDcyMjE2MTY1NlowIwYJKoZIhvcNAQkEMRYE
+FF3ASddlhzuGBzxMZmLQILq+OzfkMIGrBgkqhkiG9w0BCQ8xgZ0wgZowCwYJ
+YIZIAWUDBAEqMAsGCWCGSAFlAwQBFjAKBggqhkiG9w0DBzALBglghkgBZQME
+AQIwDgYIKoZIhvcNAwICAgCAMAcGBSsOAwIHMA0GCCqGSIb3DQMCAgFAMA0G
+CCqGSIb3DQMCAgEoMAcGBSsOAwIaMAsGCWCGSAFlAwQCAzALBglghkgBZQME
+AgIwCwYJYIZIAWUDBAIBMIG5BgkrBgEEAYI3EAQxgaswgagwgZMxCzAJBgNV
+BAYTAkdCMRswGQYDVQQIExJHcmVhdGVyIE1hbmNoZXN0ZXIxEDAOBgNVBAcT
+B1NhbGZvcmQxGjAYBgNVBAoTEUNPTU9ETyBDQSBMaW1pdGVkMTkwNwYDVQQD
+EzBDT01PRE8gQ2xpZW50IEF1dGhlbnRpY2F0aW9uIGFuZCBTZWN1cmUgRW1h
+aWwgQ0ECEGBVm1pOYjQs64XTJUDaO8swgbsGCyqGSIb3DQEJEAILMYGroIGo
+MIGTMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVzdGVy
+MRAwDgYDVQQHEwdTYWxmb3JkMRowGAYDVQQKExFDT01PRE8gQ0EgTGltaXRl
+ZDE5MDcGA1UEAxMwQ09NT0RPIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQg
+U2VjdXJlIEVtYWlsIENBAhBgVZtaTmI0LOuF0yVA2jvLMA0GCSqGSIb3DQEB
+AQUABIIBAGYv6gMBDyo4tCz+cGNPNWS4fj3ka8dEeo2QkwPqGVUEsn0uVwUK
+z9b7IDylp100BupZizle8sVY6fDqT1UYlOGkaGTnl6CVIBflisFB8O5O73+I
+AWlpnXAyz3rbxuUMqxDhBCQYFINNdXCjbB4JL0e+bJ9v/Ed8Eq66pgGZJn4A
+6+kUlXaWbzQ/ZRLgJtQwza/+2xUjwedTj+djBNTRkJaLzZsqMCq4sgCPYfw5
+zL4emqKIC3QRdDWMgbX6MtmQEE47AOMZUbE3Cb0QyiuYcWDFt5X3hfC2ZvdF
+7WZbwM/dSl99miZ+YZlq2BWmqw4IFfvcpOXvFo1y4QxLgDoQ3d8AAAAAAAA=
 
-Then developers must fix the generated greeting.jspx file by escaping the
-rendered values submitted to the "First Name" and "Last Name" fields.
-
-For example, change:
-
-     ${user.firstName} ${user.lastName}!
-
-To:
-
-     ${mvc.encoders.html(user.firstName)}
-${mvc.encoders.html(user.lastName)}!
-
-Moving forward, all such projects should be generated from version 3.1.1 of
-the Maven archetype.
-
---00000000000076cf1105d4de352b--
+------=_NextPart_000_015B_01D0C4AA.97DA3990--
