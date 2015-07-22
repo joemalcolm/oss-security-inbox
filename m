@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1611" "Thursday" "17" "May" "2018" "15:10:15" "-0700" "Owen O'Malley" "owen.omalley@gmail.com" "<CAHfHakEnvyeMLZkyTSmWC4k5k9SaVU66NPVuMLWwt_eVU23cuA@mail.gmail.com>" "63" "[oss-security] Apache ORC 1.5.0 and 1.4.4 Released" nil nil nil "5" "2018051722:10:15" "[oss-security] Apache ORC 1.5.0 and 1.4.4 Released" (number mark "U       owen.omalley May 17   63/1611  " thread-indent "\"[oss-security] Apache ORC 1.5.0 and 1.4.4 Released\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2871" "Wednesday" "22" "July" "2015" "09:24:41" "-0500" "Tyler Hicks" "tyhicks@canonical.com" "<20150722142441.GA24809@boyd>" "68" "[oss-security] Security issues in LXC (CVE-2015-1331 and CVE-2015-1334)" nil nil nil "7" "2015072214:24:41" "[oss-security] Security issues in LXC (CVE-2015-1331 and CVE-2015-1334)" (number mark "        tyhicks@cano Jul 22   68/2871  " thread-indent "\"[oss-security] Security issues in LXC (CVE-2015-1331 and CVE-2015-1334)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 7788 invoked by uid 550); 17 May 2018 22:14:04 -0000
+Received: (qmail 20455 invoked by uid 550); 22 Jul 2015 14:25:03 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,103 +11,88 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3693 invoked from network); 17 May 2018 22:10:28 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=Dj4LXUzWdzjWC9bxBCDPNgvBxpbDXFi122Qjlvi44qU=;
-        b=Ga1DHutgXH1ACauiLQH9Qb8gaqIX7V+8OPJX89oFN88jXfKn1tSFZEg5i923FGfFcj
-         WdmjQ7jqAhkZE3BNDJj3h3nhHIGrXmVJJP+jdodSUIB5ZPQsbhpTufnz9xkL1osmZY51
-         mxyu5kAup7sBDIxd47qLYS0W+cDze3kjrcBsYocIVPstXypZIqdAdu0bMKSGTvFaIkZP
-         UbdrazfO1n/fcYY3l8BdXjnmnHPWzLs2//0aEm3/Bnyfr+Z19kEzy0CZj8lRWOVDks0b
-         LYWsC3eJh8acK+BiJ+aMg69Bom0O++HSPwJgNX5WRhDKEO8eYGrWP3aLk7HbPinkZ2zL
-         Xtsg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=Dj4LXUzWdzjWC9bxBCDPNgvBxpbDXFi122Qjlvi44qU=;
-        b=nue9+ILLVQgDCwtAwON2WjFob5eOiRLhbBKpJwkr9GH+tX3JjFV34jWuSAr51k8u7P
-         GI7kHNJ/uuhfdWoHQ5MZRinFPMPdGlpY+T4Eq+bT95vo0IUwieEGndLrmcILDv6r0tLf
-         XAh+xMFs4TIEh23eZeLxK1gtDqcWmiCaDZTLo2aHTqBkkhxarMSmBnItY1DMUruFMFzk
-         eLZGDCZqVTdHWfQ7PVi0OGVb1B/Jbb4upuAXfiX5OM7igxNPQCQQy8dbPZ3b2vptaC6m
-         NmoXQHRDTgXJQq/wF3Dlbsv06lUbqkpPQ1qjSjCdkRj6orfCgS5lCm6TlD8aH/nFbXMV
-         lHKA==
-X-Gm-Message-State: ALKqPwcVwm2MUvoUB0MPvwhBXhqzi/3satr9mzyuWu5CINRZmXuNL6rr
-	vqSNWohgtNz4XmFKUz7lrMc4+ChpxJm2wBYwMfc=
-X-Google-Smtp-Source: AB8JxZrwfoTT9yqzjpuyhL5Jn4fL4PfCi2AWPn3t5F1XvQS+JK/gIWUqwKjJi9KmZzZZkhZgVE1tAAt5c4xdP7ACtzE=
-X-Received: by 2002:a9d:42f7:: with SMTP id c52-v6mr5085711otj.298.1526595016376;
- Thu, 17 May 2018 15:10:16 -0700 (PDT)
+Received: (qmail 20365 invoked from network); 22 Jul 2015 14:24:57 -0000
+Message-ID: <20150722142441.GA24809@boyd>
 MIME-Version: 1.0
-From: "Owen O'Malley" <owen.omalley@gmail.com>
-Date: Thu, 17 May 2018 15:10:15 -0700
-Message-ID: <CAHfHakEnvyeMLZkyTSmWC4k5k9SaVU66NPVuMLWwt_eVU23cuA@mail.gmail.com>
-To: user@orc.apache.org
-Cc: Terry Chia <terrycwk1994@gmail.com>, security@orc.apache.org, 
-	oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="000000000000aac558056c6e1920"
-Subject: [oss-security] Apache ORC 1.5.0 and 1.4.4 Released
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="1LKvkjL3sHcu1TtY"
+Content-Disposition: inline
+User-Agent: Mutt/1.5.23 (2014-03-12)
+Cc: Roman Fiedler <roman.fiedler@ait.ac.at>,
+	Serge Hallyn <serge.hallyn@ubuntu.com>,
+	=?iso-8859-1?Q?St=E9phane?= Graber <stgraber@ubuntu.com>,
+	security@ubuntu.com
+Date: Wed, 22 Jul 2015 09:24:41 -0500
+From: Tyler Hicks <tyhicks@canonical.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Security issues in LXC (CVE-2015-1331 and CVE-2015-1334)
+To: oss-security@lists.openwall.com
 
---000000000000aac558056c6e1920
-Content-Type: text/plain; charset="UTF-8"
+--1LKvkjL3sHcu1TtY
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-All,
-   This week we released two releases ORC 1.5.0 and ORC 1.4.4. The 1.5
-release adds some great new features:
+Two security issues were found in LXC:
 
-   - New C++ Writer
-   - Support for variable length HDFS blocks
-   - CSV to ORC converter
-   - Much faster decimal implementation for precision <= 18 digits
-   - Support for building C++ library on Microsoft Visual C++.
-   - Support for older versions of Hadoop (all of the way back to 2.2.x)
+* Roman Fiedler discovered a directory traversal flaw that allows
+  arbitrary file creation as the root user. A local attacker must set up
+  a symlink at /run/lock/lxc/var/lib/lxc/<CONTAINER>, prior to an admin
+  ever creating an LXC container on the system. If an admin then creates
+  a container with a name matching <CONTAINER>, the symlink will be
+  followed and LXC will create an empty file at the symlink's target as
+  the root user.=20
+  - CVE-2015-1331
+  - Affects LXC 1.0.0 and higher
+  - https://launchpad.net/bugs/1470842
+  - https://github.com/lxc/lxc/commit/72cf81f6a3404e35028567db2c99a90406e9c=
+6e6 (master)
+  - https://github.com/lxc/lxc/commit/61ecf69d7834921cc078e14d1b36c459ad8f9=
+1c7 (stable-1.1)
+  - https://github.com/lxc/lxc/commit/f547349ea7ef3a6eae6965a95cb5986cd921b=
+d99 (stable-1.0)
 
-For more details, please see
-https://orc.apache.org/news/2018/05/14/ORC-1.5.0/ .
+* Roman Fiedler discovered a flaw that allows processes intended to be
+  run inside of confined LXC containers to escape their AppArmor or
+  SELinux confinement. A malicious container can create a fake proc
+  filesystem, possibly by mounting tmpfs on top of the container's
+  /proc, and wait for a lxc-attach to be ran from the host environment.
+  lxc-attach incorrectly trusts the container's
+  /proc/PID/attr/{current,exec} files to set up the AppArmor profile and
+  SELinux domain transitions which may result in no confinement being
+  used.
+  - CVE-2015-1334
+  - Affects LXC 0.9.0 and higher
+  - https://launchpad.net/bugs/1475050
+  - https://github.com/lxc/lxc/commit/5c3fcae78b63ac9dd56e36075903921bd9461=
+f9e (master)
+  - https://github.com/lxc/lxc/commit/659e807c8dd1525a5c94bdecc47599079fad8=
+407 (stable-1.1)
+  - https://github.com/lxc/lxc/commit/15ec0fd9d490dd5c8a153401360233c6ee947=
+c24 (stable-1.0)
 
-These releases also fix a denial of service vulnerability. Users are
-encouraged to update.
+Tyler
 
-# CVE-2018-8015: Apache ORC denial of service vulnerability
+--1LKvkjL3sHcu1TtY
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
 
-## Severity:
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Medium
+iQIcBAEBCgAGBQJVr6epAAoJENaSAD2qAscK03kP/0GibjGEEkqIhvmW9h6YeKWk
+4ir1KHA9a6oVND9X3+laBTp7y3erADxmtVt9lKkLWfNoTUqROkBF8VLNEohA75hf
+7LkpvSTwMZ7uXnAdRDtIZij/oXOdPniAmBvISpVfAzNChaxlscslU8KzP9kZlUf8
+PRLzDKw/UtYgn2SZV4oqyEriVGH1yELO1e27NLw7+FEqeJwA6KfxZRmTnLuRiWu8
+Pp5dP1SlTmjmWsFCr7Y0HfIlCpwCpu2QenylppDJASt2A2JQvfmNb7B2McGcyQKU
+ijRF/O/rAcurFJ3jXzjbILXyHLX1/E3LdnTiw0+Nx8q4zhHDedwZZ3gCMQuu/c4y
+p0MO00PtLtaWNuHUOIgw2kw2mmQpyCIGULB96IfbG8LDfVVPLva+yH8LBj7gBkNx
+ZyC7XasJamz1U5gSUC2/3ybbyn+fUNpl4REAANmMdbnAwhycj9l1hXtQ5MkD49dy
+f4UekYnyYSG44RoD7QDCq5cItJjUQfopI0vg8Eoh6wkZAPjcstJyalWcYvbv00Th
+NlWbyQOiz+bmpHSaswJQJ7CL+77mXxjGvgb8pw9aJbR63PFqMYnBRqm3+KmgXBXQ
+ju+v3Z5PaO66Swl+co7dMGYIuVDBou64U4LCNel1GOVwsxvgimZ2yI09FHjIr0/K
+03BFiOlG/1T5pOVPHgS1
+=+RHj
+-----END PGP SIGNATURE-----
 
-## Vendor:
-
-[The Apache Software Foundation](https://apache.org)
-
-## Versions Affected:
-
-* ORC 1.0.0 to 1.4.3
-
-## Description:
-
-A malformed ORC file can trigger an endlessly recursive function call in the
-C++ or Java parser.
-
-The impact of this bug is most likely denial-of-service against software
-that
-uses the ORC file parser. With the C++ parser, the stack overflow might
-possibly corrupt the stack.
-
-## Mitigation:
-
-* 1.3.x and 1.4.x users should upgrade to 1.4.4.
-* 1.0.x to 1.2.x users should apply ORC-360 (Java) and ORC-313 (C++).
-
-## Example:
-
-An ORC file with a struct, union, array, or map type that includes itself as
-a child will cause the parser to infinitely recurse until the stack
-overflows.
-
-## Credit:
-
-This issue was discovered by Terry Chia.
-
-## References:
-[Apache ORC security](https://orc.apache.org/security/)
-
---000000000000aac558056c6e1920--
+--1LKvkjL3sHcu1TtY--
