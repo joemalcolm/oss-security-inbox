@@ -1,4 +1,9 @@
-Received: (qmail 3241 invoked by uid 550); 12 Nov 2025 16:36:39 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3910" "Wednesday" "22" "July" "2015" "23:07:05" "+0000" "mancha" "mancha1@zoho.com" "<20150722230705.GB7017@zoho.com>" "116" "Re: [oss-security] CVE Request for OpenSSH vulnerability - authentication limits bypass" nil nil nil "7" "2015072223:07:05" "[oss-security] CVE Request for OpenSSH vulnerability - authentication limits bypass" (number mark "        mancha1@zoho Jul 22  116/3910  " thread-indent "\"Re: [oss-security] CVE Request for OpenSSH vulnerability - authentication limits bypass\"\n") "<CAFB=mGAAaJOB3VsvhGnsBVP0COwe4MiRv5t2cDx9UA=qJ0KyPw@mail.gmail.com>" ("<CAFB=mGAAaJOB3VsvhGnsBVP0COwe4MiRv5t2cDx9UA=qJ0KyPw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 16353 invoked by uid 550); 22 Jul 2015 23:07:31 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,91 +11,142 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 23803 invoked from network); 12 Nov 2025 14:09:19 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1762956549;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=3XipXBFu6PgMm5jtRb03YB34UvX0V5a7BENxn2lTvfE=;
-	b=gKw1JZ5gT0EnOSjzG/gnz3qWMCd7AbMYk3Z7KZ27FdSp1UPWA8V4ho/AH02ZJHXfGH+CI6
-	h05IJMSg5FVSCxQ5QUcBPUcjLqmtNt+cLr5G6scAbs54TKXKYN/v0pB22FJkv5Vf09rGQE
-	F8cSRXq1r6cvDOgdFiC0hYAtKZ6jJRo=
-X-MC-Unique: 6lHFWpauP4OKzqliAlNSuw-1
-X-Mimecast-MFC-AGG-ID: 6lHFWpauP4OKzqliAlNSuw_1762956547
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762956545; x=1763561345;
-        h=content-transfer-encoding:subject:from:cc:to:content-language
-         :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=3XipXBFu6PgMm5jtRb03YB34UvX0V5a7BENxn2lTvfE=;
-        b=vn2ZCIc9f86oFo3caoFiqH9cdMEtVXq7JFdsBvH4+Iq6J6CkAZlHDa/evAO6QUIcw/
-         o0MyZTmR8Frt39TZcn5fn8uunC67lCuADGxwIujEDKIVhYjw3S5fNKf5fgcaWM2ayzhl
-         UuSxknZozhYJ/08aXm6pzlfeYKhhj2B71Ylp7hF85cD34RRcraYJ+Im2bkPfp7z3Er5N
-         gDtMPhMZJoI5HASe8WyCQwz4mD7FtYaqnxMrqj2DRB0nZwBXDthUo8wPXrD2QXkmZDaP
-         oek4YoAcdUfUPFUPVVEuoHBW0tqqi50xVmga2jnGhutM2+H/MkEQb2N2uDXZJzTtNVfy
-         bMPg==
-X-Gm-Message-State: AOJu0Yz/czo4416bTO/N21Od77FFTthqleVNPgDUK909aFx7UlLvAFtL
-	2Evf2H99n3LdAXT7Z/Zclm9mMLl2bl2mVYb5PBcFZOPHH2nUJm5z/KW2UIWT4VOLenfUkY8/dc/
-	WIkxxdqJsgCE59f621HdBQbVyVa49LD2QmsowdVi7u0la2HAOOTJam0LxlfedIJ5RdBBoOW569I
-	FXS7v4yDJ7K2tpqyH0Nzmnayi3rV+UXppS5Zc/S3qKzgWN7zETSWIu
-X-Gm-Gg: ASbGncuojKtRZTDWr1c7DstQHwdb+3OKXFha6fWz73tCrECPvekTSyzCe+LJ8MxIB7v
-	cg931sD/WnoTK4r5Pra8DPeA88szD6zENTUe4WF+diFKsfCrjx+MjXYISUAmyPtE58VJpFc23Zu
-	w9ef6GoEIAb1NXbW632TPGN1BBP25UIjvgpI+Fqu7dxx7Of3S9Xzv4emT0GsdaF5FwHM7DE2xy3
-	ak3acBaF27tIL8O9eDSngloJ5xgMcbouUPmDnvnJIhEA7qhYF50YypQN5I482JNV4HmetitCPR6
-	Q+tMWNDd/W5JEsyly4pVBFYeKjbExxYrSacTo6F2PJomF4Ch+8borARTWFKKheJtj9c1Mgf8
-X-Received: by 2002:a05:6000:2306:b0:42b:38de:f00b with SMTP id ffacd0b85a97d-42b4bdb2bf7mr2466924f8f.35.1762956545359;
-        Wed, 12 Nov 2025 06:09:05 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHQKZ4bxqnHGNBQPcOlH33a0WWryre+7MsDTkhya/exg+WmNIPpfl1pMT2wyCQxdEMgITjqiQ==
-X-Received: by 2002:a05:6000:2306:b0:42b:38de:f00b with SMTP id ffacd0b85a97d-42b4bdb2bf7mr2466895f8f.35.1762956544876;
-        Wed, 12 Nov 2025 06:09:04 -0800 (PST)
-Message-ID: <12c38708-e5b8-4901-b0e2-b662bd8c3190@redhat.com>
-Date: Wed, 12 Nov 2025 15:09:03 +0100
+Received: (qmail 16316 invoked from network); 22 Jul 2015 23:07:30 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; 
+  s=zapps768; d=zoho.com; 
+  h=date:from:to:subject:message-id:references:mime-version:content-type:in-reply-to; 
+  b=Y5MtDFEtlcA0IGcs6CUVKnMQCjfPnuRCvLBkOxc0cBGlH5cfZMCom4FpNJxcys09HgsGc9tJvY61
+    T6Vukk4ZkkN6icIsZj6GZbFW6IoGQhj3F1UBWJpHIOOSsqcPh5zo  
+Message-ID: <20150722230705.GB7017@zoho.com>
+References: <CAFB=mGAAaJOB3VsvhGnsBVP0COwe4MiRv5t2cDx9UA=qJ0KyPw@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="T7mxYSe680VjQnyC"
+Content-Disposition: inline
+In-Reply-To: <CAFB=mGAAaJOB3VsvhGnsBVP0COwe4MiRv5t2cDx9UA=qJ0KyPw@mail.gmail.com>
+X-PGP-Key: http://hkps.pool.sks-keyservers.net/pks/lookup?op=vindex&search=0x25168eb24f0b22ac
+X-PGP-FP: 56B7 100E F4D5 811C 8FEF  ADD1 2516 8EB2 4F0B 22AC
+X-Zoho-Virus-Status: 1
+Date: Wed, 22 Jul 2015 23:07:05 +0000
+From: mancha <mancha1@zoho.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] CVE Request for OpenSSH vulnerability -
+ authentication limits bypass
 To: oss-security@lists.openwall.com
-Cc: Red Hat Product Security <secalert@redhat.com>
-From: Zdenek Dohnal <zdohnal@redhat.com>
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: gqcU4L4J6l8o3dxd5U3INhA3tXWNhKTvRZiicJk7Lj0_1762956547
-X-Mimecast-Originator: redhat.com
-Content-Language: en-US
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Subject: [oss-security] CVE-2025-64503 libcupsfilters, cups-filters 1.x: out of bounds write
- in pdftoraster
 
-Hi all,
-
-we have moderate CVE-2025-64503 in libcupsfilters and cups-filters 1.x 
-projects about out of bounds write in functions related to pdftoraster 
-filtering reported by big-sleep-vuln-reports.
-
-The CVSS score is 4.0 with CVSS v3 base 
-metrics CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L
-
-The fix lies in libcupsfilters:
-
-https://github.com/OpenPrinting/cups-filters/commit/50d94ca0f2fa6177613c97c59791bde568631865
-
-and in cups-filters 1.x (which contains libcupsfilters library before 2.x):
-
-https://github.com/OpenPrinting/libcupsfilters/commit/fd01543f372ca3ba1f1c27bd3427110fa0094e3f
-
-The detailed description of vulnerability is present at
-
-https://github.com/OpenPrinting/cups-filters/security/advisories/GHSA-893j-2wr2-wrh9
+--T7mxYSe680VjQnyC
+Content-Type: multipart/mixed; boundary="z4+8/lEcDcG5Ke9S"
+Content-Disposition: inline
 
 
-Have a nice day,
+--z4+8/lEcDcG5Ke9S
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
+Attached patch fixes.
 
-Zdenek Dohnal
+--mancha
 
--- 
-Zdenek Dohnal
-Senior Software Engineer
-Red Hat, BRQ-TPBC
+On Tue, Jul 21, 2015 at 11:16:35AM +0200, king cope wrote:
+> Hello list, solar designer,
+>=20
+> Can you please add a CVE for the mentioned vulnerability in OpenSSH.
+>=20
+> The OpenSSH server normally wouldn't allow successive authentications
+> that exceed the MaxAuthTries setting in sshd_config, with this
+> vulnerability the allowed login retries can be extended limited only
+> by the LoginGraceTime setting, that can be more than 10000 tries
+> (depends on the network speed), and even more for local attacks.
+> Technically this vulnerability affects OpenSSH. It can be found with
+> FreeBSD installations because these use the keyboard-interactive
+> authentication mechanism (that is the one affected) in combination
+> with pam. I haven't tested skey/bsd auth.  To note that this
+> vulnerability looks pretty old, a test against FreeBSD 6.2 (2007
+> release date) showed it vulnerable.  Additionally there is no delay
+> between the authentication retries, but this is another issue that
+> makes this vulnerability more effective.
+>=20
+> CVE please!
+>=20
+> Thank you,
+>=20
+> KC
+>=20
+> Reference: http://seclists.org/fulldisclosure/2015/Jul/92
+
+--z4+8/lEcDcG5Ke9S
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: attachment; filename="openssl-6.9p1_kbd-interactive.diff"
+Content-Transfer-Encoding: quoted-printable
+
+=46rom 5b64f85bb811246c59ebab70aed331f26ba37b18 Mon Sep 17 00:00:00 2001
+From: "djm@openbsd.org" <djm@openbsd.org>
+Date: Sat, 18 Jul 2015 07:57:14 +0000
+Subject: [PATCH] upstream commit
+
+Query each keyboard-interactive device only once per authentication
+request regardless of how many times it is listed; ok markus@
+
+Upstream-ID:  d73fafba6e86030436ff673656ec1f33d9ffeda1
+Reference-ID: 701a201481b751df5ed85b68de259637
+
+---
+ auth2-chall.c | 11 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
+
+--- a/auth2-chall.c
++++ b/auth2-chall.c
+@@ -83,6 +83,7 @@ struct KbdintAuthctxt
+ 	void *ctxt;
+ 	KbdintDevice *device;
+ 	u_int nreq;
++	u_int devices_done;
+ };
+=20
+ #ifdef USE_PAM
+@@ -169,11 +170,15 @@ kbdint_next_device(Authctxt *authctxt, KbdintAuthctxt=
+ *kbdintctxt)
+ 		if (len =3D=3D 0)
+ 			break;
+ 		for (i =3D 0; devices[i]; i++) {
+-			if (!auth2_method_allowed(authctxt,
++			if ((kbdintctxt->devices_done & (1 << i)) !=3D 0 ||
++			    !auth2_method_allowed(authctxt,
+ 			    "keyboard-interactive", devices[i]->name))
+ 				continue;
+-			if (strncmp(kbdintctxt->devices, devices[i]->name, len) =3D=3D 0)
++			if (strncmp(kbdintctxt->devices, devices[i]->name,
++			    len) =3D=3D 0) {
+ 				kbdintctxt->device =3D devices[i];
++				kbdintctxt->devices_done |=3D 1 << i;
++			}
+ 		}
+ 		t =3D kbdintctxt->devices;
+ 		kbdintctxt->devices =3D t[len] ? xstrdup(t+len+1) : NULL;
+
+--z4+8/lEcDcG5Ke9S--
+
+--T7mxYSe680VjQnyC
+Content-Type: application/pgp-signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCgAGBQJVsCIZAAoJEB4VYy8JqhaDKJwQAIPFq1VpxeQw0Vv4rr2kcSo3
+YE39c5dSyusnTVeKPRJQ8doG/4lajzMfc6Gnil4N6oV7LfghhjInOaKMfcTq+Yok
+2UXd918BDRwfASJ3lCPJyy83htRj5tZ+vhDns8jIQOTExxeVn4FhJQx48vyo0j/F
+vW1UZVz7kB2/gSUUdmoQC8Vbl48SX10GO3ptrMCLdCwe1MFCk3ODPzSqTdvUIDKD
+ZTITwLnM1KLpcyIp1b41f9y3e6ikTwk0IDaktPBE3Y2X85J1PsfFiCKjLg5uG5/I
+PRBKC9QyAY65lZ9zqG0wISdaz/LdbsJlihZ07DEgKU7tpUdG4GIgcSaqsz8uc2f2
+PIquERK2GkIrfBeVGFWql4u5EeuvE+l2lboZNJtLh2vngnYuGUpeSq0Z7vhW7VgS
+vPR+fRPGS4qZlRAYZhv9L2HZEdDfqS5TX6Yo1R2QkaCfEaX6HXaLFW/PlrWbA4HX
+RhXzbc3jU9gu7DO3SQvzx6CG3A2Jpw2M6MlyOYDQGSvTSvqRnjIpou+i0GbIWo59
+d9q4l9vOW3p5YcGScbX8BElzc4AUCn7ePyvdM373F93P2ifYlJWiLEgw1O5LazQn
+qXQCgYgZ0HouWfRez3sIPyGH7ObDaO6Ad6aO7DXKTLMaO4kZo7YURZ9fn/09W2i6
+JYnuv0zkvmVzofSStgz2
+=GCtd
+-----END PGP SIGNATURE-----
+
+--T7mxYSe680VjQnyC--
 
