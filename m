@@ -1,4 +1,9 @@
-Received: (qmail 17437 invoked by uid 550); 29 Apr 2026 06:01:23 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1712" "Wednesday" "22" "July" "2015" "09:39:08" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150722133908.B9BE16C07C6@smtpvmsrv1.mitre.org>" "41" "[oss-security] Re: CVE Request: October CMS - Stored XSS in image caption tag" nil nil nil "7" "2015072213:39:08" "[oss-security] Re: CVE Request: October CMS - Stored XSS in image caption tag" (number mark "U       cve-assign@m Jul 22   41/1712  " thread-indent "\"[oss-security] Re: CVE Request: October CMS - Stored XSS in image caption tag\"\n") "<CABpk8vbGz+TU4VvX1Cg_yr-M9DRe3kNm+q1AG-1djUBEGgN84g@mail.gmail.com>" ("<CABpk8vbGz+TU4VvX1Cg_yr-M9DRe3kNm+q1AG-1djUBEGgN84g@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 29978 invoked by uid 550); 22 Jul 2015 13:39:21 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,114 +12,53 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 17415 invoked from network); 29 Apr 2026 06:01:23 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=haxx.se; s=silly;
-	t=1777442470; bh=H6gMb9O1U6R8+5eM6Yl6v6AuR9kbj0pZbljULn7Gf20=;
-	h=Date:From:To:Subject:From;
-	b=Mo4RhEKW9DuHreZiV6HuPNalzsX0cmbBs0MQ3uv92JWfZbQ9Skm6ceJ6NxEfcJ6iC
-	 JclP1SBnBSocVxe0FUxppVLIO8SpKxFzJmw7tJOYC2xwsDDeqUNWi4bJD/oalqbc/3
-	 PHrVc0nKHfweOQM7uuAy0MZ4Ex83DJb8bRN+4tzfiqqmhgzH5fpRcnPupuQXMR3FCm
-	 wyKvLVPD8VXOkTitSSsVWbL58OePiMIgOBhhb9mc9PYIeUKVfOLgDJbW5NidKp8pzE
-	 e2+zAQnPY2aXo5VqNw3wAAMJONtwqHx7zcpdKdXTN2E4JdSNWZA3ehJdm243H64zS2
-	 IEfN+yrzeXNNg==
-Date: Wed, 29 Apr 2026 08:01:10 +0200 (CEST)
-From: Daniel Stenberg <daniel@haxx.se>
-To: curl security announcements -- curl users <curl-users@lists.haxx.se>, 
-    curl-announce@lists.haxx.se, libcurl hacking <curl-library@lists.haxx.se>, 
-    oss-security@lists.openwall.com
-Message-ID: <rn98r54r-0s36-117o-685s-921n16spr1p1@unkk.fr>
-X-fromdanielhimself: yes
-MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-Subject: [oss-security] [ADVISORY] curl: CVE-2026-6253: proxy credentials leak over redirect-to
- proxy
+Received: (qmail 29951 invoked from network); 22 Jul 2015 13:39:20 -0000
+From: cve-assign@mitre.org
+To: jmabhishek4@gmail.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <CABpk8vbGz+TU4VvX1Cg_yr-M9DRe3kNm+q1AG-1djUBEGgN84g@mail.gmail.com>
+Message-Id: <20150722133908.B9BE16C07C6@smtpvmsrv1.mitre.org>
+Date: Wed, 22 Jul 2015 09:39:08 -0400 (EDT)
+Subject: [oss-security] Re: CVE Request: October CMS - Stored XSS in image caption tag
 
-proxy credentials leak over redirect-to proxy
-=============================================
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Project curl Security Advisory, April 29 2026
-[Permalink](https://curl.se/docs/CVE-2026-6253.html)
+> save it. Logout of the user account and login as an
+> administrator. Now, simply visit the user profile (of the normal user) and
+> the JavaScript will be executed.
 
-VULNERABILITY
--------------
+> https://github.com/octobercms/october/blob/master/CHANGELOG.md
+> *Version affected         :    *Possibly all the builds  i.e ,  < = Build 271
 
-curl might erroneously pass on credentials for a first proxy to a second
-proxy.
+We didn't understand this part. Build 271 is from 2015-06-20. The
+vendor made a source-code change related to the bug report today.
+There were three builds that occurred after 271, but before today.
+We're not sure why "< = Build 271" would be mentioned.
 
-This can happen when the following conditions are true:
+> https://github.com/octobercms/october/issues/1302
+> 
+> https://github.com/octobercms/october/commit/8a4ac533e5cd6b8f92e9ef19fbfbb2f505dc7a9a
 
-1. curl is setup to use specific different proxies for different URL schemes
-2. the first proxy needs credentials
-3. the second proxy uses no credentials
-4. while using the first proxy (using say `http://`), curl is asked to follow
-    a redirect to a URL using another scheme (say `https://`), accessed using a
-    second, different, proxy
+Use CVE-2015-5612 for the issue affecting the caption of a profile
+picture. Use CVE-2015-5613 for the other issues fixed in
+8a4ac533e5cd6b8f92e9ef19fbfbb2f505dc7a9a. (We haven't yet looked at
+whether "caption of a profile picture" is only associated with the
+_image_single.htm change.)
 
-INFO
-----
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-The credentials are passed on base64 encoded. The receiving proxy gets no hint
-as for where or how the credentials are valid.
-
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2026-6253 to this issue.
-
-CWE-522: Insufficiently Protected Credentials
-
-Severity: Medium
-
-AFFECTED VERSIONS
------------------
-
-This flaw has existed since curl added support for credentials in proxy
-strings.
-
-- Affected versions: from curl 7.14.1 to and including 8.19.0
-- Not affected versions: curl < 7.14.1 and >= 8.20.0
-- Introduced-in: https://github.com/curl/curl/commit/3b60bb725913ce
-
-libcurl is used by many applications, but not always advertised as such!
-
-This bug is not considered a *C mistake*. It is not likely to have been
-avoided had we not been using C.
-
-This flaw **also** affects the curl command line tool.
-
-SOLUTION
---------
-
-- Fixed-in: https://github.com/curl/curl/commit/188c2f166a20fa97c2325
-
-RECOMMENDATIONS
----------------
-
-We suggest you take one of the following actions immediately, in order of
-preference:
-
-  A - Upgrade to curl and libcurl 8.20.0
-
-  B - Apply the patch and rebuild libcurl
-
-  C - Avoid using proxies with credentials
-
-TIMELINE
----------
-
-It was reported to the curl project on April 13th 2026. We contacted
-distros@openwall on April 23.
-
-libcurl 8.20.0 was released on April 29th 2026, coordinated with the
-publication of this advisory.
-
-CREDITS
--------
-
-- Reported-by: Dwij Mehta
-- Patched-by: Daniel Stenberg
-
-Thanks a lot!
-
--- 
-
-  / daniel.haxx.se || https://rock-solid.curl.dev
+iQEcBAEBAgAGBQJVr5xoAAoJEKllVAevmvmsA4YH/1r5R42L5CdWzOsQmbtxG+PI
+Jci5Rthqr/DGbOJ+chRPTRtD3om2RAHclbYLMmKzrl3craigvyQLGz1ljfuISr5h
+qC7fk5/wWm1ANDLxPDA+ZzjKYG0jybbb8d/7DpJnEb2tRePuojHOVoXEwRZaFx+g
+hhjVmsH+4ZYkkCxeOeeq694kPqVKGw/W2bdgRJ7k/mEwAb9evUJ8cENlViBjyylb
+ivYowIxX8nqOf+XklJAk9rezH8meqwhzNzmP9phiSPEugH4uoxaCo/ASx3Z0Isgl
+sZyuPtvZVeSfkXQt3AaN2NFt+Lkiek38qDHekyZWSm0oD1RXX3QNcwa645KczVg=
+=LNgC
+-----END PGP SIGNATURE-----
