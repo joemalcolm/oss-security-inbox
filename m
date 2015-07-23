@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1685" "Friday" "12" "June" "2015" "15:52:53" "+0000" "mancha" "mancha1@zoho.com" "<20150612155253.GB6534@zoho.com>" "51" "Re: [oss-security] OpenSSL Sec Adv 20150611" nil nil nil "6" "2015061215:52:53" "[oss-security] OpenSSL Sec Adv 20150611" (number mark "        mancha1@zoho Jun 12   51/1685  " thread-indent "\"Re: [oss-security] OpenSSL Sec Adv 20150611\"\n") "<20150612013733.GB26535@zoho.com>" ("<20150611171113.GA26244@zoho.com>" "<20150612013733.GB26535@zoho.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2132" "Wednesday" "22" "July" "2015" "22:55:09" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<55B073AD.4030900@redhat.com>" "56" "Re: [oss-security] Linux x86_64 NMI security issues" nil nil nil "7" "2015072304:55:09" "[oss-security] Linux x86_64 NMI security issues" (number mark "        kseifried@re Jul 22   56/2132  " thread-indent "\"Re: [oss-security] Linux x86_64 NMI security issues\"\n") "<20150723013008.GA2017@openwall.com>" ("<CALCETrXViSiMG79NtqN79NauDN9B2k9nOQN18496h9pJg+78+g@mail.gmail.com>" "<20150723013008.GA2017@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 3532 invoked by uid 550); 12 Jun 2015 15:53:15 -0000
+Received: (qmail 32161 invoked by uid 550); 23 Jul 2015 04:55:22 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,77 +11,75 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3512 invoked from network); 12 Jun 2015 15:53:14 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; 
-  s=zapps768; d=zoho.com; 
-  h=date:from:to:subject:message-id:references:mime-version:content-type:in-reply-to; 
-  b=Y19dNzqMduUmvehfxpFlfJq2kfTf0knFsbAEc9eg7eo1BvdcKO5JMYuNgPdYL0lASYP6ThJwfQif
-    mV58G9t3UtGciSL8LQCcU0zT8ulR+j+1wO43272jifl6HzUKN/o/  
-Message-ID: <20150612155253.GB6534@zoho.com>
-References: <20150611171113.GA26244@zoho.com>
- <20150612013733.GB26535@zoho.com>
+Received: (qmail 32141 invoked from network); 23 Jul 2015 04:55:22 -0000
+Message-ID: <55B073AD.4030900@redhat.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="A6N2fC+uXW/VQSAv"
-Content-Disposition: inline
-In-Reply-To: <20150612013733.GB26535@zoho.com>
-X-PGP-Key: http://hkps.pool.sks-keyservers.net/pks/lookup?op=vindex&search=0x25168eb24f0b22ac
-X-PGP-FP: 56B7 100E F4D5 811C 8FEF  ADD1 2516 8EB2 4F0B 22AC
-X-Zoho-Virus-Status: 1
-Date: Fri, 12 Jun 2015 15:52:53 +0000
-From: mancha <mancha1@zoho.com>
+References: <CALCETrXViSiMG79NtqN79NauDN9B2k9nOQN18496h9pJg+78+g@mail.gmail.com> <20150723013008.GA2017@openwall.com>
+In-Reply-To: <20150723013008.GA2017@openwall.com>
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="nbiPtHx9nhxAQEeTf14VudfSqtmltxq6A"
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
+Date: Wed, 22 Jul 2015 22:55:09 -0600
+From: Kurt Seifried <kseifried@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] OpenSSL Sec Adv 20150611
+Subject: Re: [oss-security] Linux x86_64 NMI security issues
 To: oss-security@lists.openwall.com
 
---A6N2fC+uXW/VQSAv
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+--nbiPtHx9nhxAQEeTf14VudfSqtmltxq6A
+Content-Type: text/plain; charset=windows-1252
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Jun 12, 2015 at 01:37:33AM +0000, mancha wrote:
-> On Thu, Jun 11, 2015 at 05:11:13PM +0000, mancha wrote:
-> > FYI, today OpenSSL released new versions (1.0.2b, 1.0.1n, 1.0.0s, and
-> > 0.9.8zg) to address several security issues [1].
-> >=20
-> > --mancha
-> >=20
-> > [1] http://openssl.org/news/secadv_20150611.txt
+On 07/22/2015 07:30 PM, Solar Designer wrote:
+> Andy et al.,
 >=20
-> Heads up to vendors pushing upgrades; there might be some ABI breakage:
-> http://marc.info/?l=3Dopenssl-dev&m=3D143407129721271&w=3D2.
+> First of all, thank you for your hard work on these issues!
 >=20
+> On Wed, Jul 22, 2015 at 11:12:00AM -0700, Andy Lutomirski wrote:
+>> +++++ CVE-2015-3291 +++++
+>> +++++ CVE-2015-5157 +++++
+>> +++++ NMI bug, no CVE assigned +++++
+>> +++++ CVE-2015-3290 +++++
 >=20
+> Red Hat folks, and Petr in particular - please post to this thread when
+> you have statements on which RHEL kernels are affected by which of these
+> issues.  RHEL kernels are upstream for several other distros/projects.
 
-Vendors et al.
+That information usually ends up in our Bugzilla, e.g.:
 
-By way of update, OpenSSL released versions 1.0.1o and 1.0.2c to address
-the ABI breakage.
+https://bugzilla.redhat.com/show_bug.cgi?id=3DCVE-2015-3291
 
-https://twitter.com/mancha140/status/609386942489178112
+No statements have been added yet, but they should be at some point not
+to long.
 
---mancha
+--=20
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@redhat.com
 
---A6N2fC+uXW/VQSAv
-Content-Type: application/pgp-signature
+
+--nbiPtHx9nhxAQEeTf14VudfSqtmltxq6A
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Version: GnuPG v2.0.22 (GNU/Linux)
 
-iQIcBAEBCgAGBQJVewBVAAoJEB4VYy8JqhaDBkoP/0sNuOJZKtC1zTkNUEL/+QhT
-vXk+aYsAe8vSFvuCKrqvFlhHFJgXGwSZ2DUV/AGl6HKZCCg3vcMWtaG0mgJXLnZG
-OnfbtmkFJ2FXGFa/s+9IWfxshGIOolxbSeMzuQVYfIwfX8/+5FUSQjDoOsEeUGBi
-BLkI927CfTxUnp9VX69JQhBd6jO6ApXTnXJopjrVSW1y9k+YxBFi/4WvnXoFBhjw
-1N+44NOFRy5TSoMrV6QxXa4yKuNqx79xh5cERskY7DV8Ua9xjx4sfU5nOv/9UP3G
-U+d2qaiU2wem5mTvRUrWInmJbUC71HooKqGtqOj1+uXXPxGrL8wSR2hBPg4cTMRO
-+UDwugmsKVcy+HzYp/hWFABmRu8lx5UzzzhW1s2Z4Afja3JiQoAq6FNv79lECrjw
-YqtITXXvZHlzOeCwp8G4NOZjZ4rOSkK1vxe29eNggErVDh0gADgc8VwhzB7glrnt
-VxteUIdN0NOGl6V8M3cN5k4CF+bxN9ENtzjctUgEMpMGaLXPWfBB+CgNZA+1XBFh
-GFZ/VFEyS4WpdqH4AAvg5om8TRRqzX1Qr1yssviYpyIl07Rq4J6ZurBb9MhPX+N/
-oMmNotha/k55jKKU17mzOTMMP0kNA20/aiKB8w9ZWEen02erQ0/VT9weEnnau1HA
-F9WVTb0zH7HYFTRfbf07
-=cgFt
+iQIcBAEBAgAGBQJVsHOtAAoJEBYNRVNeJnmTXG8P/AsIGWHGYey6VPQPPkJDjTiX
+ZEQyPtRCEYiLf0mWzECLzH8AvnpAOBOrla7Php1lmjRBiScDu2OyUvBMtxoRkUxL
+UCuOtf60GeWU5Q9vkyXvGbKkNtPYZnD0hcufB6xCMeOCYgbvls1Oo0CLi1xFvong
+QznhlKNyJWgg5HF2F+y7zI16CxDscxfBpXBXAjs6QkP58r5wmpCuBZ3qEs96CdFZ
+RU90/syVHkUgn5q7HHPLuwQp1ONXpaZaiQx+N+3zqTyiZYDRI78ondOFc5oqlvuF
+6iFmhztZONWW4bqGhnZKhyzsZ2vPfTV28gi/jVRZqPgI/JO+lfX8BQC+PYbYTD71
++B6SDRqdeLt7na6UVX8KxrJ2jTiehJjUWcieP6VzIrb/QNXK/9d5PlMz1fYnyPMt
+VkngqDRk54p6i8m20pYoEDvaMAkWhrlevDVmi7rWyJOhmkuM6R0tVCZBhSBxwRI2
+G9ibHo/6H7evZ5zCCWu23HrDesUwEh9Ki879lpfgaVQ+3HcpF59Mm4Ajq1JVLhy3
+JXv/zZNsmp4aLkNgA8WaLsEZwYK0MZMWihE/bg0rCZltNmd5OKncKF/Mvcl3PV2/
+Z07dQHPtwQFV7DfamZAV30AXRYn+b/ct28VNfSPPxrA7rv58OgCAXdBkmEssPN9Q
+CseQ94uM9jK/X5mINviC
+=9VsQ
 -----END PGP SIGNATURE-----
 
---A6N2fC+uXW/VQSAv--
-
+--nbiPtHx9nhxAQEeTf14VudfSqtmltxq6A--
