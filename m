@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["413" "Sunday" "16" "October" "2016" "12:30:53" "+0200" "Agostino Sarubbo" "ago@gentoo.org" "<1705729.nZSttpXEVz@arcadia>" "12" "Re: [oss-security] Re: Fuzzing jasper" "^Cc:" nil nil "10" "2016101610:30:53" "[oss-security] Re: Fuzzing jasper" (number mark "        ago@gentoo.o Oct 16   12/413   " thread-indent "\"Re: [oss-security] Re: Fuzzing jasper\"\n") "<CAHapaJ1yTNVH+umS9U3SeW0jK73WY0H06_k0eJmJ3pnEVO9D+Q@mail.gmail.com>" ("<1528713.C8CqGc87r5@arcadia>" "<20161016030229.F231642E027@smtpvbsrv1.mitre.org>" "<CAHapaJ1yTNVH+umS9U3SeW0jK73WY0H06_k0eJmJ3pnEVO9D+Q@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["638" "Thursday" "23" "July" "2015" "20:43:43" "+0200" "Leif Nixon" "nixon@lysator.liu.se" "<87h9oud89s.fsf@lysator.liu.se>" "16" "Re: [oss-security] Qualys Security Advisory - CVE-2015-3245 userhelper - CVE-2015-3246 libuser" nil nil nil "7" "2015072318:43:43" "[oss-security] Qualys Security Advisory - CVE-2015-3245 userhelper - CVE-2015-3246 libuser" (number mark "        nixon@lysato Jul 23   16/638   " thread-indent "\"Re: [oss-security] Qualys Security Advisory - CVE-2015-3245 userhelper - CVE-2015-3246 libuser\"\n") "<20150723170954.GA17931@localhost.localdomain>" ("<20150723170954.GA17931@localhost.localdomain>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 3351 invoked by uid 550); 16 Oct 2016 10:30:38 -0000
+Received: (qmail 19787 invoked by uid 550); 23 Jul 2015 18:45:12 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,30 +11,34 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3330 invoked from network); 16 Oct 2016 10:30:37 -0000
-Message-ID: <1705729.nZSttpXEVz@arcadia>
-User-Agent: KMail/4.14.10 (Linux/4.1.15-gentoo-r1; KDE/4.14.20; x86_64; ; )
-In-Reply-To: <CAHapaJ1yTNVH+umS9U3SeW0jK73WY0H06_k0eJmJ3pnEVO9D+Q@mail.gmail.com>
-References: <1528713.C8CqGc87r5@arcadia> <20161016030229.F231642E027@smtpvbsrv1.mitre.org> <CAHapaJ1yTNVH+umS9U3SeW0jK73WY0H06_k0eJmJ3pnEVO9D+Q@mail.gmail.com>
+Received: (qmail 17895 invoked from network); 23 Jul 2015 18:43:58 -0000
+References: <20150723170954.GA17931@localhost.localdomain>
+In-Reply-To: <20150723170954.GA17931@localhost.localdomain> (Qualys Security
+	Advisory's message of "Thu, 23 Jul 2015 10:09:54 -0700")
+Message-ID: <87h9oud89s.fsf@lysator.liu.se>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.5 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"
-Cc: oss-security@lists.openwall.com, cve-assign@mitre.org
-Date: Sun, 16 Oct 2016 12:30:53 +0200
-From: Agostino Sarubbo <ago@gentoo.org>
+Content-Type: text/plain
+Cc: oss-security@lists.openwall.com
+Date: Thu, 23 Jul 2015 20:43:43 +0200
+From: Leif Nixon <nixon@lysator.liu.se>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: Fuzzing jasper
-To: Graham Christensen <graham@grahamc.com>
+Subject: Re: [oss-security] Qualys Security Advisory - CVE-2015-3245 userhelper - CVE-2015-3246 libuser
+To: Qualys Security Advisory <qsa@qualys.com>
 
-On Sunday 16 October 2016 10:23:43 Graham Christensen wrote:
-> For what it is worth, Jasper has recently issued a release fixing many
-> CVEs, and would likely appreciate these fussing results as bug reports on
-> their github project: https://github.com/mdadams/jasper/
+Qualys Security Advisory <qsa@qualys.com> writes:
 
-This was already done.
+> Hello, it is July 23, 2015, 17:00 UTC, the Coordinated Release Date for
+> CVE-2015-3245 and CVE-2015-3246.  Please find our advisory below, and
+> our exploit attached.
 
-I will quote my first mail which includes the details and the commit fix.
+*Why* are you releasing a full exploit just minutes after the patch is
+released?
+
+(Disclosure: I am employed by Red Hat, but this is my purely personal question.)
 
 -- 
-Agostino Sarubbo
-Gentoo Linux Developer
+Leif Nixon
+------------------------------------------------------------------------------
+"supercomputer specialists are charming, polite [and] witty" -- Wired Magazine
+------------------------------------------------------------------------------
