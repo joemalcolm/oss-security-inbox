@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2848" "Sunday" "16" "September" "2018" "22:58:50" "+0200" "Reindl Harald" "h.reindl@thelounge.net" "<d08c27a3-a842-e545-38aa-82a4eb50f8bd@thelounge.net>" "70" "[oss-security] Re: [SECURITY] Apache SpamAssassin 3.4.2 resolves CVE-2017-15705, CVE-2016-1238, CVE-2018-11780 & CVE-2018-11781" nil nil nil "9" "2018091620:58:50" "[oss-security] Re: [SECURITY] Apache SpamAssassin 3.4.2 resolves CVE-2017-15705, CVE-2016-1238, CVE-2018-11780 & CVE-2018-11781" (number mark "U       h.reindl@the Sep 16   70/2848  " thread-indent "\"[oss-security] Re: [SECURITY] Apache SpamAssassin 3.4.2 resolves CVE-2017-15705, CVE-2016-1238, CVE-2018-11780 & CVE-2018-11781\"\n") "<c57c0f41-742c-3c3e-249c-ae2614bf0d7d@apache.org>" ("<c44ca0f1-cba9-b129-20b2-ba59816cfd13@apache.org>" "<c57c0f41-742c-3c3e-249c-ae2614bf0d7d@apache.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3089" "Thursday" "23" "July" "2015" "00:27:17" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150723042717.C1C05B2E4B6@smtpvbsrv1.mitre.org>" "72" "[oss-security] Re: CVE Request for OpenSSH vulnerability - authentication limits bypass" nil nil nil "7" "2015072304:27:17" "[oss-security] Re: CVE Request for OpenSSH vulnerability - authentication limits bypass" (number mark "        cve-assign@m Jul 23   72/3089  " thread-indent "\"[oss-security] Re: CVE Request for OpenSSH vulnerability - authentication limits bypass\"\n") "<CAFB=mGAAaJOB3VsvhGnsBVP0COwe4MiRv5t2cDx9UA=qJ0KyPw@mail.gmail.com>" ("<CAFB=mGAAaJOB3VsvhGnsBVP0COwe4MiRv5t2cDx9UA=qJ0KyPw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 16341 invoked by uid 550); 17 Sep 2018 10:04:13 -0000
+Received: (qmail 3641 invoked by uid 550); 23 Jul 2015 04:27:30 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,98 +11,85 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 3621 invoked from network); 23 Jul 2015 04:27:29 -0000
+In-Reply-To: <CAFB=mGAAaJOB3VsvhGnsBVP0COwe4MiRv5t2cDx9UA=qJ0KyPw@mail.gmail.com>
+Message-Id: <20150723042717.C1C05B2E4B6@smtpvbsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Thu, 23 Jul 2015 00:27:17 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 22163 invoked from network); 16 Sep 2018 20:59:03 -0000
-To: "Kevin A. McGrail" <kmcgrail@apache.org>,
- Spamassassin <users@SpamAssassin.apache.org>,
- SpamAssassin Devel List <dev@spamassassin.apache.org>,
- announce@spamassassin.apache.org, announce@apache.org
-Cc: security@spamassassin.apache.org, oss-security@lists.openwall.com
-References: <c44ca0f1-cba9-b129-20b2-ba59816cfd13@apache.org>
- <c57c0f41-742c-3c3e-249c-ae2614bf0d7d@apache.org>
-From: Reindl Harald <h.reindl@thelounge.net>
-Openpgp: id=9D2B46CDBC140A36753AE4D733174D5A5892B7B8;
- url=https://arrakis-tls.thelounge.net/gpg/h.reindl_thelounge.net.pub.txt
-Organization: the lounge interactive design
-Message-ID: <d08c27a3-a842-e545-38aa-82a4eb50f8bd@thelounge.net>
-Date: Sun, 16 Sep 2018 22:58:50 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.0
-MIME-Version: 1.0
-In-Reply-To: <c57c0f41-742c-3c3e-249c-ae2614bf0d7d@apache.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: de-CH
-Content-Transfer-Encoding: 8bit
-Subject: [oss-security] Re: [SECURITY] Apache SpamAssassin 3.4.2 resolves CVE-2017-15705,
- CVE-2016-1238, CVE-2018-11780 & CVE-2018-11781
+Subject: [oss-security] Re: CVE Request for OpenSSH vulnerability - authentication limits bypass
+To: isowarez.isowarez.isowarez@googlemail.com
 
-i doubt that it is wiese to blwo out security notes *that short* after
-release and *that long* after the last release
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Am 16.09.18 um 18:59 schrieb Kevin A. McGrail:
-> Apache SpamAssassin 3.4.2 was recently released [1], and fixes several
-> issues of security note.
-> 
-> First, a denial of service vulnerability that exists in all modern versions.
-> 
-> The vulnerability arises with certain unclosed tags in emails that cause
-> markup to be handled incorrectly leading to scan timeouts.
-> 
-> In Apache SpamAssassin, using HTML::Parser, we setup an object and hook
-> into the begin and end tag event handlers  In both cases, the "open"
-> event is immediately followed by a "close" event - even if the tag *does
-> not* close in the HTML being parsed.
-> 
-> Because of this, we are missing the "text" event to deal with the object
-> normally.  This can cause carefully crafted emails that might take more
-> scan time than expected leading to a Denial of Service.
-> 
-> The issue is possibly a bug or design decision in HTML::Parser that
-> specifically impacts the way Apache SpamAssassin uses the module with
-> poorly formed html.
-> 
-> The exploit has been seen in the wild but not believe to have been
-> purposefully part of a Denial of Service attempt.  We are concerned that
-> there may be attempts to abuse the vulnerability in the future. 
-> Therefore, we strongly recommend all users of these versions upgrade to
-> Apache SpamAssassin 3.4.2 as soon as possible.
-> 
-> This issue has been assigned CVE id CVE-2017-15705 [2].
-> 
-> 
-> Second, this release also fixes a reliance on "." in @INC in one
-> configuration script.  Whether this can be exploited in any way is
-> uncertain.
-> 
-> This issue has been assigned CVE id CVE-2016-1238 [3].
-> 
-> 
-> Third, this release fixes a potential Remote Code Execution bug with the
-> PDFInfo plugin.  Thanks to cPanel Security Team for their report of this
-> issue.
-> 
-> This issue has been assigned CVE id CVE-2018-11780 [4].
-> 
-> 
-> Fourth, this release fixes a local user code injection in the meta rule
-> syntax. Thanks again to cPanel Security Team for their report of this issue.
-> 
-> This issue has been assigned CVE id CVE-2018-11781 [5].
-> 
-> 
-> To contact the Apache SpamAssassin security team, please e-mail
-> security at spamassassin.apache.org.  For more information about Apache
-> SpamAssassin, visit the http://spamassassin.apache.org/ web site.
-> 
-> Apache SpamAssassin Security Team
-> 
-> [1]:
-> https://lists.apache.org/thread.html/1ac11532235b5459aa16c4e9d636bf4aa0b141d347d1361e40cc1b78@%3Cannounce.apache.org%3E
-> 
-> [2]: https://cve.mitre.org/cgi-bin/cvename.cgi?name=2017-15705
-> 
-> [3]: https://cve.mitre.org/cgi-bin/cvename.cgi?name=2016-1238
-> 
-> [4]: https://cve.mitre.org/cgi-bin/cvename.cgi?name=2018-11780
-> 
-> [5]: https://cve.mitre.org/cgi-bin/cvename.cgi?name=2018-11781
+As far as we can tell, the essence of the vulnerability is that the
+client shouldn't be able to specify an arbitrarily large number of
+KbdInteractiveDevices and be entitled to have the server cooperate.
+Use CVE-2015-5600.
+
+Here are additional notes in case anyone was expecting two CVE IDs.
+
+The patch at:
+
+  http://cvsweb.openbsd.org/cgi-bin/cvsweb/src/usr.bin/ssh/auth2-chall.c
+  http://cvsweb.openbsd.org/cgi-bin/cvsweb/src/usr.bin/ssh/auth2-chall.c.diff?r1=1.42&r2=1.43&f=h
+
+seems to suggest a very similar decision. With this change, the server
+no longer cooperates even with:
+
+  -oKbdInteractiveDevices=pam,pam
+
+and this makes sense because, if a client is behaving normally, using
+pam a second time would typically just waste server resources, and
+would not increase usability from the client's perspective. The only
+exception we've thought of is a server that sometimes makes
+false-negative access-control decisions, e.g., either it is
+intentionally designed to be inconsistent, or uses an intermittently
+available hardware authentication device. In the latter case, maybe
+users were actually supposed to do something like:
+
+  -oKbdInteractiveDevices=iahad,iahad,iahad
+
+and the patch would have to be revised to support that.
+
+More importantly, we don't think the issue should be characterized as
+a "MaxAuthTries bypass." If there are several different
+keyboard-interactive methods supported by the server, and there's a
+use case in which the client user can type in a single string and have
+the client program attempt all of the keyboard-interactive methods,
+then the server arguably shouldn't block any if MaxAuthTries is
+reached. From the perspective of the client user, it's only one try.
+
+Example: MaxAuthTries has its default value of six, but MIT-KIT has
+suddenly released six new major Kerberos protocol versions, and the
+legitimate user enters:
+
+  -oKbdInteractiveDevices=krb5,krb6,krb7,krb8,krb9,krb10,krb11
+
+We don't think it's necessarily correct to block use of the krb11
+protocol because it's the seventh one.
+
+This might not be a completely valid example. The essential point is
+that we don't feel there's a remaining vulnerability in which a
+MaxAuthTries value of N is supposed to prevent a command line with N+1
+different supported elements in the KbdInteractiveDevices list. There
+is no CVE ID tied directly to the concept of a MaxAuthTries bypass.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJVsGvBAAoJEKllVAevmvmsIl8H/iebO+Sk56RvkQWMX7PPh68p
+GsizwMKpTCiGPmqHLSLoILlj3Pg457BaVnf4inlJQjFezIjtXpnSotIa85PiEfad
+t2o6IgX6Kulb9aWeEjxhd3cNCTtrNsg4t6V+Ex6BtPPwTmaibyzXngW/1C5mfRzC
+n5C5VZA8lo0ysWQ19Dm1oRA/nb5FRha6lBeDDfIMwLATY8vlaChNtOstaHePYoLf
+8gNdRAvJGmP6EsZJ8Kycgn/hAwnyetL83ZAXa4oa0O/CKDrOsPOip2uIRW9IySqF
+5/sffgeb9Ea5Scwke8KBDHZzERgfBYHNza21N6aAoDhzcZHovPHuptZu0R7XxWk=
+=oFQW
+-----END PGP SIGNATURE-----
