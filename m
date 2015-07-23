@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["611" "Wednesday" "20" "June" "2018" "00:48:55" "+0400" "Loganaden Velvindron" "loganaden@gmail.com" "<CAOp4FwSEi=_bNCMoiK66r4Y2QQToJgZyBjUX74s0omQ+whCS-w@mail.gmail.com>" "21" "[oss-security] Intel hyper-threading security issues" "^Cc:" nil nil "6" "2018061920:48:55" "[oss-security] Intel hyper-threading security issues" (number mark "        loganaden@gm Jun 20   21/611   " thread-indent "\"[oss-security] Intel hyper-threading security issues\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3595" "Thursday" "23" "July" "2015" "16:00:15" "+0200" "Petr Matousek" "pmatouse@redhat.com" "<20150723140015.GQ15931@dhcp-25-225.brq.redhat.com>" "55" "Re: [oss-security] Linux x86_64 NMI security issues" nil nil nil "7" "2015072314:00:15" "[oss-security] Linux x86_64 NMI security issues" (number mark "        pmatouse@red Jul 23   55/3595  " thread-indent "\"Re: [oss-security] Linux x86_64 NMI security issues\"\n") "<CALCETrUkkNhnAnbwVCk94sXv0fxEoiXVXa7kFFu-=BbMAy8Ubg@mail.gmail.com>" ("<CALCETrXViSiMG79NtqN79NauDN9B2k9nOQN18496h9pJg+78+g@mail.gmail.com>" "<20150723132828.GP15931@dhcp-25-225.brq.redhat.com>" "<CALCETrUkkNhnAnbwVCk94sXv0fxEoiXVXa7kFFu-=BbMAy8Ubg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 26288 invoked by uid 550); 19 Jun 2018 20:55:44 -0000
+Received: (qmail 20263 invoked by uid 550); 23 Jul 2015 14:00:32 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,60 +11,77 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 19984 invoked from network); 19 Jun 2018 20:49:08 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=f4dkjqTHQAEIsWoHlEh+XmCKscIri1dD+wKCnYGcqWY=;
-        b=ZDYvNAiPxF9rEFGFaDIeW1W5O6maZ2wbJYQR1IYC1pJTALz+Wzq/lso2W3lnZDJiGx
-         jz/KswtX/0XUHEYgJKKPKZMdaHUnvYkxVKiFsmBy3RqF+yedF7lZW0Q4CIOURHeQuBlO
-         T9ZfosjRNSZy6KIZzEObOMOwHwKFiZTkiIW2Z4YCmaun7FNhj8g0JLTOmM0nxl0iiyGt
-         DNb1/q6yXVBPyQsPQhh1JtXMNez9eQwo+lDXQaGNN6Vww3eZcvpG+9niHs15iJbd9lfT
-         vlNgU80VVgtqIpbYwEPMQWWSk+7+mlumbPTN8QvL2sZJzkUFcDf1QM5+Dord02xWjfxx
-         iiWQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=f4dkjqTHQAEIsWoHlEh+XmCKscIri1dD+wKCnYGcqWY=;
-        b=pjPPsUU4qCobMOFuLPB9AhnCV9IDd+15x7gExDy9OCpCi14/CWaSVqfEGXFDSbCt6w
-         FuE378yCBcaNOlzFmNKvFbHn9sxYMRhByTBfeuTVaeTSfrd5JpgMRsrFJfMDYKJYSRJ0
-         vDbI+yU8/tgH1WvxpDsYH35Zk1AcWCELJFWOpWWrBj+LpOQDnfa6D8Luz0anGCEVRivS
-         1aVL2ltDQWglhS7Iszehbqt1PGmnZTCIaqRdsRu1v6Jhk4G9004tO7jZ5kbWN7KBfZ8G
-         Jrl3RnIxks6QgqyLuchWZRBGduurSrd8iJk0enGPZXA/qbG0LYwfNsqqrZZsBiZF33la
-         /10w==
-X-Gm-Message-State: APt69E1sOqzoPVe4YAZ3BHUdSthns9oDvoi3LjbxTXlA5gu2tDjhxjvL
-	oKsFqMVQSRKToFvMm6s6REElDzvKv6c9ESe0pRV68z8w
-X-Google-Smtp-Source: ADUXVKIFpRwErJ61a/GHp5ZOqfPvkRuMWyw2YlksupjVpACF8eOuJEot8EEXN6YMZmKzX56eO70b+P5HX5+XW94QGi0=
-X-Received: by 2002:a24:90d:: with SMTP id 13-v6mr15018306itm.69.1529441336232;
- Tue, 19 Jun 2018 13:48:56 -0700 (PDT)
+Received: (qmail 20245 invoked from network); 23 Jul 2015 14:00:31 -0000
+Message-ID: <20150723140015.GQ15931@dhcp-25-225.brq.redhat.com>
+Mail-Followup-To: Andy Lutomirski <luto@amacapital.net>,
+	oss security list <oss-security@lists.openwall.com>
+References: <CALCETrXViSiMG79NtqN79NauDN9B2k9nOQN18496h9pJg+78+g@mail.gmail.com>
+ <20150723132828.GP15931@dhcp-25-225.brq.redhat.com>
+ <CALCETrUkkNhnAnbwVCk94sXv0fxEoiXVXa7kFFu-=BbMAy8Ubg@mail.gmail.com>
 MIME-Version: 1.0
-Message-ID: <CAOp4FwSEi=_bNCMoiK66r4Y2QQToJgZyBjUX74s0omQ+whCS-w@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Cc: secure@intel.com
-Date: Wed, 20 Jun 2018 00:48:55 +0400
-From: Loganaden Velvindron <loganaden@gmail.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CALCETrUkkNhnAnbwVCk94sXv0fxEoiXVXa7kFFu-=BbMAy8Ubg@mail.gmail.com>
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.26
+Cc: oss security list <oss-security@lists.openwall.com>
+Date: Thu, 23 Jul 2015 16:00:15 +0200
+From: Petr Matousek <pmatouse@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Intel hyper-threading security issues
-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Linux x86_64 NMI security issues
+To: Andy Lutomirski <luto@amacapital.net>
 
-Hi all,
+On Thu, Jul 23, 2015 at 06:34:50AM -0700, Andy Lutomirski wrote:
+> On Jul 23, 2015 6:28 AM, "Petr Matousek" <pmatouse@redhat.com> wrote:
+> > On Wed, Jul 22, 2015 at 11:12:00AM -0700, Andy Lutomirski wrote:
+> > > On kernels that are patched for BadIRET and have a fixup_bad_iret
+> > > function (which should be most kernels that are keeping up with
+> > > low-level security issues), there are two cases.
+> > >
+> > > Case 1a (more up-to-date kernels where INTERRUPT_RETURN is "jmp
+> > > irq_return"): fixup_bad_iret will be invoked and will attempt to
+> > > recover.  There's a narrow window in which a new NMI will cause
+> > > corruption, in which case all bets are off.  That could hang, crash,
+> > > or possibly be exploited for privilege escalation.
+> > >
+> > > Case 1b (less up-to-date kernels where INTERRUPT_RETURN is "iretq"):
+> > > The kernel will try to OOPS due to a bad kernel fault, except that the
+> > > OOPS will be processed with the wrong gsbase.  This is basically the
+> > > BadIRET condition, and is probably exploitable using similar
+> > > techniques to BadIRET.
+> >
+> > Could you please explain the backtrace leading to this?  You mean the
+> > nested nmi return which invokes INTERRUPT_RETURN and in case
+> > INTERRUPT_RETURN is "iretq", error_kernelspace won't detect that and
+> > won't fixup the gs?
+> 
+> I mean the normal (non-nested) NMI return.  If we return with iretq, then
+> the error_bad_iret fixup won't trigger at all because that iretq
+> instruction has no fixup entry or swapgs special case.
 
-OpenBSD has gone ahead and disabled Intel Hyper threading with a
-fairly detailed comment about the reasons behind:
+Hmm, sorry, my bad. I've been looking at rhel-7 -- I see two ways to exit
+the NMI handler there -- INTERRUPT_RETURN after the nested_nmi_out label,
+which should only trigger on nested NMIs and thus be safe, and the second
+one after the nmi_restore label which does jmp irq_return.
 
-https://www.mail-archive.com/source-changes@openbsd.org/msg99141.html
+And irq_return is:
 
-As far as I can tell:
--cache timing attacks are possible, and spectre-like problems are an
-issue again.
--OSes will need to modify their schedulers to avoid scheduling domains
-in a dangerous way.
+irq_return:                                                                                                                                                                                                    
+	INTERRUPT_RETURN                                                                                                                                                                                       
+	_ASM_EXTABLE(irq_return, bad_iret)
 
-When will the details be published so that OpenBSD users who buy Intel
-hardware can get more fined grained solutions against specific attack
-vectors ? Is it also scheduled for the 27th ?
+and error_kernelspace checking for irq_return
+
+error_kernelspace:                                                                                                                                                                                             
+	incl %ebx                                                                                                                                                                                              
+	leaq irq_return(%rip),%rcx                                                                                                                                                                             
+	cmpq %rcx,RIP+8(%rsp)                                                                                                                                                                                  
+	je error_swapgs                                                                                                                                                                                        
 
 
-Kind regards,
-//Logan
-C-x-C-c
+Now the paravirt iret case is not protected by the error_kernelspace
+fixup. How much that is a problem is something I'm going to have a look
+at ...
+
+-- 
+Petr Matousek / Red Hat Product Security
+PGP: 0xC44977CA 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
