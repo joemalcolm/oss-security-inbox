@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6532" "Monday" "18" "December" "2017" "16:21:36" "-0500" "Daniel Kahn Gillmor" "dkg@fifthhorseman.net" "<871sjrpw9r.fsf@fifthhorseman.net>" "137" "Re: [oss-security] Recommendations GnuPG-2 replacement" "^Date:" nil nil "12" "2017121821:21:36" "[oss-security] Recommendations GnuPG-2 replacement" (number mark "        dkg@fifthhor Dec 18  137/6532  " thread-indent "\"Re: [oss-security] Recommendations GnuPG-2 replacement\"\n") "<814-1513628516.856754@MaI1.D5wz.7Roo>" ("<20171207210134.GA7079@openwall.com>" "<2172-1513501568.968862@pLoG.Le7g.f3CQ>" "<87tvwoowng.fsf@fifthhorseman.net>" "<814-1513628516.856754@MaI1.D5wz.7Roo>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5491" "Thursday" "23" "July" "2015" "11:41:01" "+0000" "mancha" "mancha1@zoho.com" "<20150723114101.GD7017@zoho.com>" "137" "Re: [oss-security] Re: CVE Request for OpenSSH vulnerability - authentication limits bypass" nil nil nil "7" "2015072311:41:01" "[oss-security] Re: CVE Request for OpenSSH vulnerability - authentication limits bypass" (number mark "        mancha1@zoho Jul 23  137/5491  " thread-indent "\"Re: [oss-security] Re: CVE Request for OpenSSH vulnerability - authentication limits bypass\"\n") "<20150723042717.C1C05B2E4B6@smtpvbsrv1.mitre.org>" ("<CAFB=mGAAaJOB3VsvhGnsBVP0COwe4MiRv5t2cDx9UA=qJ0KyPw@mail.gmail.com>" "<20150723042717.C1C05B2E4B6@smtpvbsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 11500 invoked by uid 550); 18 Dec 2017 21:22:07 -0000
+Received: (qmail 20165 invoked by uid 550); 23 Jul 2015 11:41:29 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,153 +11,166 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 11479 invoked from network); 18 Dec 2017 21:22:07 -0000
-In-Reply-To: <814-1513628516.856754@MaI1.D5wz.7Roo>
-References: <20171207210134.GA7079@openwall.com> <2172-1513501568.968862@pLoG.Le7g.f3CQ> <87tvwoowng.fsf@fifthhorseman.net> <814-1513628516.856754@MaI1.D5wz.7Roo>
-Message-ID: <871sjrpw9r.fsf@fifthhorseman.net>
+Received: (qmail 20103 invoked from network); 23 Jul 2015 11:41:28 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; 
+  s=zapps768; d=zoho.com; 
+  h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; 
+  b=V5FdH7DJI3cuWVFggaTMLfgXgRW85mQBSXBi6Qt1lz7AXIc7jlEFuF/kmsh2bpn0KFHnKyvwL2Cc
+    IIbiqweN2I2PY+Zz/Rcb+ZmTeTpclIeKcSyRAp7RzYO1Q0hfuDUM  
+Message-ID: <20150723114101.GD7017@zoho.com>
+References: <CAFB=mGAAaJOB3VsvhGnsBVP0COwe4MiRv5t2cDx9UA=qJ0KyPw@mail.gmail.com>
+ <20150723042717.C1C05B2E4B6@smtpvbsrv1.mitre.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
-	micalg=pgp-sha512; protocol="application/pgp-signature"
-Date: Mon, 18 Dec 2017 16:21:36 -0500
-From: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="FeAIMMcddNRN4P4/"
+Content-Disposition: inline
+In-Reply-To: <20150723042717.C1C05B2E4B6@smtpvbsrv1.mitre.org>
+X-PGP-Key: http://hkps.pool.sks-keyservers.net/pks/lookup?op=vindex&search=0x25168eb24f0b22ac
+X-PGP-FP: 56B7 100E F4D5 811C 8FEF  ADD1 2516 8EB2 4F0B 22AC
+X-Zoho-Virus-Status: 1
+Cc: isowarez.isowarez.isowarez@googlemail.com, cve-assign@mitre.org,
+	djm@mindrot.org
+Date: Thu, 23 Jul 2015 11:41:01 +0000
+From: mancha <mancha1@zoho.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Recommendations GnuPG-2 replacement
-To: halfdog <me@halfdog.net>, oss-security@lists.openwall.com
+Subject: Re: [oss-security] Re: CVE Request for OpenSSH vulnerability -
+ authentication limits bypass
+To: oss-security@lists.openwall.com
 
---=-=-=
-Content-Type: text/plain
+--FeAIMMcddNRN4P4/
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On Mon 2017-12-18 20:21:56 +0000, halfdog wrote:
-> The features you describe are a clear must for desktop/enduser
-> usecases, that require frequent access to the key. It is clear
-> to me, that those features are required, no discussion to this
-> point.
->
-> The point in starting this thread was, that GnuPG does NOT conveniently
-> cover usecases for headless or scripting operation. Thus it seems
-> that the time has come to look for replacement, as GnuPG is moving
-> more in the "desktop" direction, as also your comments indicate.
+MITRE et al. -
 
-I find that gpg works fine in a headless operation, but it does so
-mainly without a password.  If your headless operation has access to the
-secret key and the password, that's basically equivalent, afaict, so
-it's not clear to me what benefit password protection gives you.  If you
-don't want to deal with pinentry, how do you propose protecting the
-secret key material?
+I don't think I agree with your CVE-2015-5600 assignation analysis.
 
-I'm not asking this to be contrary -- i'm trying to understand your
-threat model.  Why do you need a passphrase for your secret key that you
-use in headless/scripting operation?  and what security benefit do you
-expect to gain from it?
+The change introduced by upstream's patch [1] is not to prevent a client
+from supplying an arbitrary number of keyboard-interactive devices, per
+se. What the fix does is prevent a given keyboard-interactive device
+from getting queried more than once per userauth request.=20=20
 
-> That's really a strange argument. You fear PTRACING for key extraction
-> of a short-lived, per-key instance of gpg1 process and solve that
-> by putting all the key material into a single long-lived gpg-agent
-> process, not even providing convenient commands to flush the keys
-> from there? Hence not even PTRACING is needed, you can just access
-> the socket to make the process give you the keys (directly or
-> by requesting decrypts/signatures - I did not check on that).
+Unfortunately I don't have ready access to a server with multiple
+keyboard-interactive device types but, unless I'm mistaken, if the
+devices in the supplied client list all differ, the behavior is
+unchanged pre and post patch:
 
-You should look into gpg-agent's restricted socket.  i believe it's
-intended to provide very similar constraints to what you're looking
-for.
+-oKbdInteractiveDevices=3D"snap,crackle,pop"
 
-> Even with namespaces, PTRACE is still allowed unless you are running
-> the agent as SUID-binary, causing other risks again.
+The difference in behavior can be observed when the list contains
+repeats:
 
-fwiw, gpg-agent upstream provides no ptrace protection, but in debian we
-have a minor defense-in-depth patch applied:
+-oKbdInteractiveDevices=3D"snap,snap,snap"
 
-    https://anonscm.debian.org/git/pkg-gnupg/gnupg2.git/tree/debian/patches/block-ptrace-on-secret-daemons/Avoid-simple-memory-dumps-via-ptrace.patch
+Pre-patch the above would query the snap device three times per userauth
+request while post-patch only once.
 
-I welcome any suggested improvements on these changes, even if upstream
-isn't willing to apply them directly.
+So, your hypothetical of:
 
-> In my opinion, for server operation both schemes would not improve
-> security the same way as on desktops: if the automated tasks is
-> implemented to be run as root, PTRACE and namespaces do not help in
-> any way.
+-oKbdInteractiveDevices=3D"krb5,krb6,krb7,krb8,krb9,krb10,krb11"
 
-sure, but maybe we can acknowledge that automated tasks running as root
-are already in a pretty dangerous position?  I'm not aware of any of the
-solutions offered in this thread as a "replacement for GnuPG-2" other
-than hardware tokens themselves that provide any real resistence to an
-automated task running as root on the machine in question.
+would work the same before and after the fix. Each of the seven listed
+devices would get queried once per userauth request. Assuming a default
+maxauth of 6, that means a total of 42 device queries before the
+connection gets severed.=20=20
 
-> If run as distinct user, there are only two usecases:
->
-> * The service just does encryption/signature verification: here
->   the unavoidable agent just provides additional attack surface,
->   e.g. by replacing verification keys in the agent only, thus
->   everything looks nice on disk but your signature verification
->   is broken.
+In practice, the flaw allows mounting a brute-force attack using fewer
+connections. For example, if a server has MaxAuthTries=3D6, one can use:
 
-eh?  the agent does not handle verification keys (i.e. public keys) --
-it only handles private keys.  if the service in question only does
-public key operation, then the agent is irrelevant.
+-oKbdInteractiveDevices=3D"pam,pam,pam"
 
-> * The service does signing/decryption: the key is passwordless
->   (or password is within user-readable configuration) or HW-token.
->   In both cases, the initial security of the key material before
->   being transfered to gpg-agent only depends on file system level
->   access restrictions. Gaining access to UID or PTRACE is already
->   equivalent to full key material compromise. So also here the
->   agent only adds attack surface and that's it.
+to pack 18 password guesses (three per userauth request) in a single
+connection instead of the intended limit of 6.
 
-I agree with you that the safest case would be to isolate the secret key
-material in a different UID and filesystem namespace.  If the agent is
-running as a dedicated user account, and accessed by a different user
-account talking specifically to its restricted socket, then access to
-UID is not a given, and PTRACE isn't possible.
+The fix prevents this circumvention of MaxAuthTries.
 
-This kind of privilege isolation is (i think) what you're looking for,
-and it is *only* possible with the agent (or some similar architecture).
-While this is not a common deployment of gpg-agent today, and it might
-have bugs in it for current deployment, it seems you're arguing *for*
-using an agent, rather than against it.
+Please let me know if you don't agree.
 
-If you try this particular use case, i'd be happy to help you iron out
-any bugs to make sure it's safe to use this way.
+--mancha
 
-> To reduce the attack surface, a "gpg --one-shot" argument could
-> be added, which will terminate the agent immediately after use,
-> maybe not even exposing it via sockets visible to other processes
-> but only connected to its "parent" gpg process via pipes.
+[1] https://marc.info/?l=3Doss-security&m=3D143760646430682&w=3D2
 
-this approach would lose the benefit of long-running processes that you
-can get from things like dirmngr, and it would fail in the event that
-your agent was acting across a privilege boundary (you'd have to launch
-a constrained agent somehow).  wouldn't it be better to improve on the
-user-isolated processes instead?
 
-that said, i do agree that having an anonymous socketpair()-connected
-agent that lives and dies with the parent process would be a nice option
--- but each option incurs a support burden, and i am not sure that the
-burden is worth the tradeoff when it is compared with the other
-isolate-and-constrain-the-agent proposals, so i'm more likely to work on
-the latter myself.
+On Thu, Jul 23, 2015 at 12:27:17AM -0400, cve-assign@mitre.org wrote:
+> As far as we can tell, the essence of the vulnerability is that the
+> client shouldn't be able to specify an arbitrarily large number of
+> KbdInteractiveDevices and be entitled to have the server cooperate.
+> Use CVE-2015-5600.
+>=20
+> Here are additional notes in case anyone was expecting two CVE IDs.
+>=20
+> The patch at:
+>=20
+>   http://cvsweb.openbsd.org/cgi-bin/cvsweb/src/usr.bin/ssh/auth2-chall.c
+>   http://cvsweb.openbsd.org/cgi-bin/cvsweb/src/usr.bin/ssh/auth2-chall.c.=
+diff?r1=3D1.42&r2=3D1.43&f=3Dh
+>=20
+> seems to suggest a very similar decision. With this change, the server
+> no longer cooperates even with:
+>=20
+>   -oKbdInteractiveDevices=3Dpam,pam
+>=20
+> and this makes sense because, if a client is behaving normally, using
+> pam a second time would typically just waste server resources, and
+> would not increase usability from the client's perspective. The only
+> exception we've thought of is a server that sometimes makes
+> false-negative access-control decisions, e.g., either it is
+> intentionally designed to be inconsistent, or uses an intermittently
+> available hardware authentication device. In the latter case, maybe
+> users were actually supposed to do something like:
+>=20
+>   -oKbdInteractiveDevices=3Diahad,iahad,iahad
+>=20
+> and the patch would have to be revised to support that.
+>=20
+> More importantly, we don't think the issue should be characterized as
+> a "MaxAuthTries bypass." If there are several different
+> keyboard-interactive methods supported by the server, and there's a
+> use case in which the client user can type in a single string and have
+> the client program attempt all of the keyboard-interactive methods,
+> then the server arguably shouldn't block any if MaxAuthTries is
+> reached. From the perspective of the client user, it's only one try.
+>=20
+> Example: MaxAuthTries has its default value of six, but MIT-KIT has
+> suddenly released six new major Kerberos protocol versions, and the
+> legitimate user enters:
+>=20
+>   -oKbdInteractiveDevices=3Dkrb5,krb6,krb7,krb8,krb9,krb10,krb11
+>=20
+> We don't think it's necessarily correct to block use of the krb11
+> protocol because it's the seventh one.
+>=20
+> This might not be a completely valid example. The essential point is
+> that we don't feel there's a remaining vulnerability in which a
+> MaxAuthTries value of N is supposed to prevent a command line with N+1
+> different supported elements in the KbdInteractiveDevices list. There
+> is no CVE ID tied directly to the concept of a MaxAuthTries bypass.
+>=20
+> -- CVE assignment team, MITRE CVE Numbering Authority M/S M300 202
+> Burlington Road, Bedford, MA 01730 USA [ PGP key available through
+> http://cve.mitre.org/cve/request_id.html ]
 
-All the best,
-
-                  --dkg
-
---=-=-=
-Content-Type: application/pgp-signature; name="signature.asc"
+--FeAIMMcddNRN4P4/
+Content-Type: application/pgp-signature
 
 -----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-iQIzBAEBCgAdFiEEOCdgUepHf6PklTkyFJitxsGSMjcFAlo4MWEACgkQFJitxsGS
-Mjf+ZRAAuyEISOcVNDSiOvAD82f8qNotpssZqHvsDDsgpWURH6uZN+aSCKvQS/id
-U3QEdPxSd5YEbuPBMNF1HH/0SQDmkZuO4hFXMb/pLi3tNm3r8cibWazrHchpIoZy
-R/uEpvywtsAFAcTBn51xx4s6WXElsm9g0q8P+bJrzVwpuDYJcR1A3BHg4p+nljGl
-1CjU/Q65dxXuo3kIoXsmqKe43w6eF2qPqL1NuQjGpuNgH0UjSb82jSleMK3V+oNR
-e+mVpJTAFbysncUC6JmqLAXxejC/4NyhYGtUphg5y5APlfQHhp+UY/11wPiHbsuc
-/8VJB9OrGJ+JtxFtQRgLTiSUVaDsZz0MeZz+p30RzrgHIymi4i1dk4YW3DNbFIwJ
-nUChF9xWWMMImdm9ePP0OMTij23DRjj8MwuA4eMxwB6V+JpgIwQPY09n1I1j8Keh
-wDj3PXeCao9FGX/481a/NAkE5TnuS9dovnsAbv/QRmy+Yna/w8GByi8fETPrNUht
-Ckvn38FgItPtnPaCI+0RiJ5gURVCNt4yA/ZtMIJ71vPhbvhJEEYlvb2aR79LuWz5
-lFxzz31aVbZDeFEi2kE51NYj0V/JNR43qCpJ2rHv9tE3JIwCXy48IiG44TpAqFYI
-xFZrEej7jnHcWue/uFlkwEcIlbtOQyYoQPE2ucbi++Vl8wU2jug=
-=4DvY
+iQIcBAEBCgAGBQJVsNLMAAoJEB4VYy8JqhaDhw0QALurfkviWlS588awfVenrO6N
+jp1Eu31Pnl6ZZ9PD8vcaQ6NbpFHnhRUFJDHaMY5sgAdqRSUuf+yM9AP9m0H5yMuo
++YypX3LmSg1rXPqEvrKq+e548N+P0ArtsqLimKlc8VoLq1GKhFSfwK+8Q73/qj54
+q6UZMuK8u3Cl4KaAZrsisKWW+8jgaDQ2ymhNZWteIMgW+k1OdIzDXmmQbNIooOky
+j7bH5yYTS28VcZwreze6aFdYtc5aMciaS3Vq7/3x5U3FPlWoz277FprV0yhQoJ7G
+XPUCJ2knZ4XmOye1uRWiZIhSjOjUzKhEQzfsDSf6N+SRs8RK4Z95RldJbHaadc6S
+3asDJgkB0C9rMsGaMiiZ7QFasOTIbEFwtpDkc/9kDw8gFdS3Htca/55DjPIw41y7
+VRCwLUsNdEohBkNPZEWifpNIsJqtbGrHjb2qUNPqCrnMgM+/zIS27plgDOaau+jY
+ENCIPWFBwmyI6d29dIMozmal69NUt3gu7G17BRlMsc6aJ0z0UWf2EKcd+/JWEYMr
+Z8T6HY3V/xptToMwIWFRwmYY67H2L+KGGQLJ3XZQnQ2C1M0L5I3f41srLRMnc6mp
+uVH+FeC6BNoQbzfBAcH8vf0xmhtIMlWv+IBwkXK4t5duziNY8tTeLLF/YRszJnrN
+oq/gyUWHk9Yd/JZ8bvtV
+=nFN1
 -----END PGP SIGNATURE-----
---=-=-=--
+
+--FeAIMMcddNRN4P4/--
+
