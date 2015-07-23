@@ -1,4 +1,9 @@
-Received: (qmail 3440 invoked by uid 550); 15 Jan 2025 15:29:28 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2890" "Thursday" "23" "July" "2015" "08:41:05" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<55B0FD01.1080602@redhat.com>" "64" "[oss-security] CVE-2012-2150 xfsprogs: xfs_metadump information disclosure flaw" nil nil nil "7" "2015072314:41:05" "[oss-security] CVE-2012-2150 xfsprogs: xfs_metadump information disclosure flaw" (number mark "U       kseifried@re Jul 23   64/2890  " thread-indent "\"[oss-security] CVE-2012-2150 xfsprogs: xfs_metadump information disclosure flaw\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 21794 invoked by uid 550); 23 Jul 2015 14:41:19 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,69 +12,80 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 13971 invoked from network); 15 Jan 2025 06:21:41 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1736922091; x=1737526891; darn=lists.openwall.com;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=AoGZaZRkZnpwxuE0hsj+i5C45xO9zWpobLNHmo93H3o=;
-        b=PO2Q5BKFsshlAfx2RIGpt/F43Bp4orikunuo//A8goxB5GdNPbRKhG6T45qWaa2+/3
-         A5M75Lry6i9I8hk+cipCeFjMUnQjH1exiHaVjnQXKMpGsuszq+Za320dEusSnAf/UDsm
-         wU5PG42QwNWPaqmvQ+og3JL+DABr6cyZSaxAUtCQ4AVDk7QWpDgErMwDSyy+rqyIjTtS
-         lhcSL3SSL3A9skMmdPesEZdjctEIsqkXXhMER4UAjynbXGHjqQgkk6zqVc0hyMWDsgkl
-         Hh7BM5ax8LzhdevXYvnPTSfkTPM+b1BJ3BWGbP5T8NqpnbKXUUon7hphP1Fwfl6BPm0I
-         FECw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736922091; x=1737526891;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=AoGZaZRkZnpwxuE0hsj+i5C45xO9zWpobLNHmo93H3o=;
-        b=AmzIuLiZ2T8YqhhgAl282k58L1EAFBy8clZ7QoFh3hfioxiM7s/zY9rMLZiYaiipUX
-         V+8tBMxGYJYQeb8ohs2tB516/H69HUdImkqB9eyqaB4kj1A2kjPj/yIVH26xcJlmplkW
-         nBbZ9/uuP4JA++8CiRM4ptmsISrj9AI/mOz9+Mou2PlWxGKGF+RSzbblNda1A2p73wXT
-         qbk9Gdr438ykePdPhF4C8wt+a2hghpmmKI+V2EHN2nJisF+ABONOnb6Fs3azpiGuxflX
-         69TORhFenWSNOvMPzJx3VyrdhtrdUUu9TZeEPIhIMAcNPW3jaah/DRJ5Tx4caNo7mHWq
-         roBA==
-X-Gm-Message-State: AOJu0Yz5L3HjYVh3134jgO1S6y8isNr8/SRLye7is8R/S1q2C5l21u/e
-	nNY/1HseOygAfJ1Tc3xoZRyLwQXkf1Do/m+yF7ER4K0I96LhXhkqLmrDk1wzIbJZO1gp+SpqvBU
-	80ygHD8xXm25LX/PVs+51sw0zrv+ZV8uK5XU=
-X-Gm-Gg: ASbGncv1AeMG1ywHfaDpr0OP1xVbq++p9eR8XILPezKo2XyQ5kEooUSoaL/x9x2C3tb
-	LBL37MhaAmp91xcDi05AQASdofrDos2n26Q7BNhF2vDwFjkpqswSP/vgc/ZC/lRN533lD
-X-Google-Smtp-Source: AGHT+IH1yJF4BMYTDnetZMTJPlOYb0Ae+LhRHiFy3AIXU69x+AlJ59WzBS30tRN7YBWgeYwSxl1AFXEnDOJIwKgDwT4=
-X-Received: by 2002:a05:6871:6216:b0:296:e4bb:80f5 with SMTP id
- 586e51a60fabf-2aa069844ccmr16611550fac.36.1736922090964; Tue, 14 Jan 2025
- 22:21:30 -0800 (PST)
+Received: (qmail 21776 invoked from network); 23 Jul 2015 14:41:19 -0000
+Message-ID: <55B0FD01.1080602@redhat.com>
+Date: Thu, 23 Jul 2015 08:41:05 -0600
+From: Kurt Seifried <kseifried@redhat.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
 MIME-Version: 1.0
-From: Soatok Dreamseeker <soatok.dhole@gmail.com>
-Date: Wed, 15 Jan 2025 01:21:20 -0500
-X-Gm-Features: AbW1kvbBasGq7_2EN0OB3wbTWS2Yd2hktulEV7zpF-WNRi_cNC5pyOCYkP6V8-8
-Message-ID: <CAOvwWh2tea8QjHf63Efhxh7-ESa2zoDv-e1Cwf2T=WRVuWZRmw@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="0000000000003c1328062bb8b02e"
-Subject: [oss-security] Session (a fork of the Signal private messaging app) is sus
+To: oss-security@lists.openwall.com, david@fromorbit.com
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="nUJKBgVhWIEfvADjc1kWgFrILJN6EGlLa"
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.27
+Subject: [oss-security] CVE-2012-2150 xfsprogs: xfs_metadump information disclosure flaw
 
---0000000000003c1328062bb8b02e
-Content-Type: text/plain; charset="UTF-8"
+--nUJKBgVhWIEfvADjc1kWgFrILJN6EGlLa
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Full details here:
-https://soatok.blog/2025/01/14/dont-use-session-signal-fork/
+https://bugzilla.redhat.com/show_bug.cgi?id=3D817696
 
-At a glance, what I found is the following:
+Gabriel Vlasiu reported that xfs_metadump, part of the xfsprogs suite of
+tools for the XFS filesystem, did not properly obfuscate data.
+xfs_metadump properly obfuscates active metadata, but the rest of the
+space within that fs block comes through in the clear.  This could lead
+to exposure of stale disk data via the produced metadump image.
 
-   1. Session only uses 128 bits of entropy for Ed25519 keys. This means
-   their ECDLP is at most 64 bits, which is pretty reasonably in the realm of
-   possibility for nation state attackers to exploit.
-   2. Session has an Ed25519 verification algorithm that verifies a
-   signature for a message against a public key provided by the message. This
-   is amateur hour.
-   3. Session uses an X25519 public key as the symmetric key for AES-GCM as
-   part of their encryption for onion routing.
+The expectation of xfs_metadump is to obfuscate all but the shortest
+names in the metadata, as noted in the manpage:
 
-Additional gripes about their source code were also included in the blog
-post.
+By  default,  xfs_metadump  obfuscates  most  file (regular file,
+directory and symbolic link) names and extended  attribute  names to
+allow  the  dumps  to be sent without revealing confidential
+information. Extended attribute values are zeroed and no data  is
+copied.  The only exceptions are file or attribute names that are 4 or
+less characters in length. Also file names that span extents (this can
+only occur with the mkfs.xfs(8) options where -n size > -b size) are not
+obfuscated.  Names between 5 and 8 characters  in length
+inclusively are partially obfuscated.
 
-Happy hacking!
-Soatok
+While the xfs_metadump tool can be run by unprivileged users, it
+requires appropriate permissions to access block devices (such as root)
+where the sensitive data might be dumped.  An unprivileged user, without
+access to the block device, could not use this flaw to obtain sensitive
+data they would not otherwise have permission to access.
 
---0000000000003c1328062bb8b02e--
+Upstream patches will be available at
+https://git.kernel.org/cgit/fs/xfs/xfsprogs-dev.git/
+
+--=20
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@redhat.com
+
+
+--nUJKBgVhWIEfvADjc1kWgFrILJN6EGlLa
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.22 (GNU/Linux)
+
+iQIcBAEBAgAGBQJVsP0CAAoJEBYNRVNeJnmTHFwP/Akr7Vv7NN5b+eV6GPSu8+Fl
+IMLllZrOdityTdY7bzQGxmJNhOIjqGUHajTvQ4P/rxmLUGYk9asmkL3055eZ0u1s
+qstbXGfJxHcf4naf8Sg/0EYbSGHVNv3oJ3wIQoyuGJOBeHh9fRkrR9PXI+eMII4s
+KBWzqYLuCzl13LR50BAxQlY0C1oOAGX5zc7bkM5xXDOa0NO9UtKJWz3r1QFzPYG9
+Du1moWpozDvuH/zYjKDtNDk6wTCmYIt0SECxsMzBEioH9Fk44EbQE28cO+2hZo5s
+r2ADK1rivrkXzkbzT4AhdP3ykEih5Ln/Ouz5RVW0UsiNcTuUwOKhLGRrJfb7awmb
+a4ChyBfCBeCSoE1xjVxxxaSVNduO9HnZPqDO+VW2k/XMcShd2f8Wm7jnHP4U44x8
+waTOp2WFCurRG9mysXPIlqT7CqbXynqZB63zurMhMU58RTA+xPjXFujl95Or9OBW
+WgwcCO083gY0z12GZZlt36xM4s/uuz/YdRNs6rN7tecBnta7nB/LgrzB3srfcUp6
+jqKbDjqrrJ14yONHwf3LTFEj0/MfJJEOY4fDyftt1lkcE38LzNjSTscEQdGWPIrM
+/U2NMGYqFWx3S3HwuAinaoknjA9WmVLIRizCp/9J+YQqp+058SZT1RzlgEx09zhw
+eXvBYRT2nrJh4a/PQRLB
+=BmVd
+-----END PGP SIGNATURE-----
+
+--nUJKBgVhWIEfvADjc1kWgFrILJN6EGlLa--
