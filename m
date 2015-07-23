@@ -1,4 +1,9 @@
-Received: (qmail 14303 invoked by uid 550); 12 May 2026 18:13:32 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5800" "Thursday" "23" "July" "2015" "04:29:53" "+0200" "Solar Designer" "solar@openwall.com" "<20150723022953.GB2298@openwall.com>" "90" "Re: [oss-security] Multiple memory corruption vulnerabilities in SoX 14.4.2" nil nil nil "7" "2015072302:29:53" "[oss-security] Multiple memory corruption vulnerabilities in SoX 14.4.2" (number mark "        solar@openwa Jul 23   90/5800  " thread-indent "\"Re: [oss-security] Multiple memory corruption vulnerabilities in SoX 14.4.2\"\n") "<CAJmfd-iN-y9g9cN9vLvR8B9YC6kNveh0L_aY5ZhNitQR=z=viw@mail.gmail.com>" ("<CAJmfd-iN-y9g9cN9vLvR8B9YC6kNveh0L_aY5ZhNitQR=z=viw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 32202 invoked by uid 550); 23 Jul 2015 02:30:17 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,69 +11,107 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 32175 invoked from network); 23 Jul 2015 02:30:16 -0000
+Message-ID: <20150723022953.GB2298@openwall.com>
+References: <CAJmfd-iN-y9g9cN9vLvR8B9YC6kNveh0L_aY5ZhNitQR=z=viw@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: multipart/mixed; boundary="Fba/0zbH8Xs+Fj9o"
+Content-Disposition: inline
+In-Reply-To: <CAJmfd-iN-y9g9cN9vLvR8B9YC6kNveh0L_aY5ZhNitQR=z=viw@mail.gmail.com>
+User-Agent: Mutt/1.4.2.3i
+Date: Thu, 23 Jul 2015 04:29:53 +0200
+From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 14276 invoked from network); 12 May 2026 18:13:32 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pipping.org;
-	s=manitu-webhosting; t=1778609601;
-	bh=qsb3dcBWbikfLZ790nMFVhTn6TAANh1GjG+lQRCMZ0w=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=u1v0wghilIBb2B4wpy8l0tEFFlugcVo9GIYd64VQnghOiL1I5a2sJSoJBPLLY5tHw
-	 txDIpjzST8hE7G+H1xi0RzpFDjm8bdJ+bgZydyxYmJ/isAP/f8CLVDmqANVTjP8V2W
-	 xKIXha92FsDF8AGTbyT1R/Spp3A+MkYF92gqI60WxnESmGByqARvziALm6C11c1ryq
-	 5UTJrkU6C6OXewVxuCFArrMvS/LVQ+wbh5X3/dBpN43q095IYnn4vgpIVKcsDRimO1
-	 Zwt9pYBOtEsHyDbg29gELBvFxE/Hu2ubb4RZPjsqzecPpF9Ato18eVRi46ZoY5iHWG
-	 uYFx/ep00VAWw==
-Message-ID: <9079a54f-f83b-486f-b66b-79ed0ba69838@pipping.org>
-Date: Tue, 12 May 2026 20:13:21 +0200
-MIME-Version: 1.0
+Subject: Re: [oss-security] Multiple memory corruption vulnerabilities in SoX 14.4.2
 To: oss-security@lists.openwall.com
-Cc: Ilia <ilia@ilia.ws>, solar@openwall.com
-References: <958c7edc-400f-44e9-aac4-78161e999db4@pipping.org>
- <20260510074756.GA17210@openwall.com>
- <c67530db-c586-4921-bc3f-67a12e389eb1@pipping.org>
- <CALkpNnQHhjgua8=6iH+L+5hB1AgcLeJTV9Js_9uQ4OJA5Sd+qQ@mail.gmail.com>
-Content-Language: en-US
-From: Sebastian Pipping <sebastian@pipping.org>
-In-Reply-To: <CALkpNnQHhjgua8=6iH+L+5hB1AgcLeJTV9Js_9uQ4OJA5Sd+qQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Subject: Re: [oss-security] uriparser 1.0.2 fixes CVE-2026-44927 and
- CVE-2026-44928
 
-Ilia, thanks for jumping in!
+--Fba/0zbH8Xs+Fj9o
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-
-On 5/12/26 19:44, Ilia wrote:
->      > CVE-2026-44927: In uriparser before 1.0.2, there is pointer
->     difference
->      > truncation to int in various places.
+On Wed, Jul 22, 2015 at 07:55:42PM +0200, Michele Spagnuolo wrote:
+> I would like to report publicly new memory corruption vulnerabilities in
+> the latest SoX, 14.4.2 - these have been reported in April 2015 through
+> oCERT, but they have notified me they still haven't received a response
+> from upstream.
 > 
->  From my perspective CVE-2026-44927 is a low-severity security issue 
-> that would be hard to exploit in reality since it requires an actual 
-> 2gb+ input to even trigger. For example, in the context of PHP (which 
-> uses the lib) you'd hit the memory limit long before this even triggers. 
-> Therefore, this is "Low" severity from my perspective. Given the input 
-> size, it definitely doesn't have a remote vector.
+> Please see this shared folder, visible to anybody with the link:
+> https://drive.google.com/folderview?id=0B52EFul-UCEIflZhcjlrRGlqcWdER2xJZWR4dmVUQ1RaRGl6a09sbVdGYjg2MER6OHl3aUU&usp=sharing
+> 
+> The write heap buffer overflows are related to ADPCM handling in WAV files,
+> while the read heap buffer overflow is while opening a .VOC.
+> 
+> For each crash, you have the input file and a .txt with the ASAN output.
 
-I have no problem with this being considering "low severity" based
-on the payload size needed, but this /does/ have a remote vector that is
-independent of size constraints, as far as I am concerned. I just 
-checked the definition of a remote attack vector a la CVSS [3][4] and
-it's not "adjacent", not "local", and not "physical": I see nothing
-stopping applications from parsing URI strings read "from the wire",
-directly or indirectly, the same way that XMPP parses XML from the wire.
-Am I missing something here?
+I'm not happy about use of external resources like Google Drive or
+pastebin for crucial detail.  With Google Drive gone in some years from
+now, your message would make little sense.  I understand that the .voc
+file was a bit too large for attaching, and I dislike binary attachments
+anyway, but at least I've attached the text files with ASAN backtraces,
+as text/plain MIME type.  Ideally, you'd have proper analysis and even
+smaller testcases rather than just this, but I understand that people's
+time is limited.  So whatever we have... but at least we should have it
+archived in here.
 
-Best
+Alexander
+
+--Fba/0zbH8Xs+Fj9o
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: attachment; filename="asan_heap-oob_53faf1_785_GOTTASAY.txt"
+
+==16475==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x62d000008400 at pc 0x7f678e99886f bp 0x7fff25fdd480 sp 0x7fff25fdd478
+READ of size 4 at 0x62d000008400 thread T0
+    #0 0x7f678e99886e in sox_write_ub_samples /usr/local/google/home/mikispag/Downloads/sox/src/raw.c:113
+    #1 0x7f678ea469e3 in write_samples /usr/local/google/home/mikispag/Downloads/sox/src/wav.c:1624
+    #2 0x7f678e99d48d in sox_write /usr/local/google/home/mikispag/Downloads/sox/src/formats.c:986
+    #3 0x40f770 in output_flow /usr/local/google/home/mikispag/Downloads/sox/src/sox.c:663
+    #4 0x7f678e9c850d in flow_effect /usr/local/google/home/mikispag/Downloads/sox/src/effects.c:257
+    #5 0x7f678e9c850d in sox_flow_effects /usr/local/google/home/mikispag/Downloads/sox/src/effects.c:449
+    #6 0x41105a in process /usr/local/google/home/mikispag/Downloads/sox/src/sox.c:1802
+    #7 0x404074 in main /usr/local/google/home/mikispag/Downloads/sox/src/sox.c:3008
+    #8 0x7f678dc66ec4 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x21ec4)
+    #9 0x405694 (/usr/local/google/home/mikispag/Downloads/sox/src/.libs/lt-sox+0x405694)
 
 
+--Fba/0zbH8Xs+Fj9o
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: attachment; filename="asan_heap-oob_73793c_6614_test_ima_adpcm.txt"
 
-Sebastian
+==11226==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x619000008172 at pc 0x7fad485a099f bp 0x7fffeb10ecb0 sp 0x7fffeb10eca8
+WRITE of size 2 at 0x619000008172 thread T0
+    #0 0x7fad485a099e in ImaExpandS /usr/local/google/home/mikispag/Downloads/sox/src/ima_rw.c:126
+    #1 0x7fad485a0f3c in lsx_ima_block_expand_i /usr/local/google/home/mikispag/Downloads/sox/src/ima_rw.c:142
+    #2 0x7fad485a52b5 in ImaAdpcmReadBlock /usr/local/google/home/mikispag/Downloads/sox/src/wav.c:141
+    #3 0x7fad485a52b5 in read_samples /usr/local/google/home/mikispag/Downloads/sox/src/wav.c:1131
+    #4 0x7fad484fa40e in sox_read /usr/local/google/home/mikispag/Downloads/sox/src/formats.c:978
+    #5 0x40e1b2 in sox_read_wide /usr/local/google/home/mikispag/Downloads/sox/src/sox.c:490
+    #6 0x40f000 in combiner_drain /usr/local/google/home/mikispag/Downloads/sox/src/sox.c:552
+    #7 0x7fad48524f9f in drain_effect /usr/local/google/home/mikispag/Downloads/sox/src/effects.c:352
+    #8 0x7fad48524f9f in sox_flow_effects /usr/local/google/home/mikispag/Downloads/sox/src/effects.c:445
+    #9 0x41105a in process /usr/local/google/home/mikispag/Downloads/sox/src/sox.c:1802
+    #10 0x404074 in main /usr/local/google/home/mikispag/Downloads/sox/src/sox.c:3008
+    #11 0x7fad477c3ec4 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x21ec4)
+    #12 0x405694 (/usr/local/google/home/mikispag/Downloads/sox/src/.libs/lt-sox+0x405694)
 
 
-[3] 
-https://www.first.org/cvss/v3.0/specification-document#Exploitability-Metrics
-[4] 
-https://www.first.org/cvss/v4.0/specification-document#Exploitability-Metrics
+--Fba/0zbH8Xs+Fj9o
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: attachment; filename="asan_heap-oob_7391b4_8427_wav_ms_adpcm.txt"
 
+==11888==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x61600000f88a at pc 0x7fdf6135ae89 bp 0x7fff38e05f70 sp 0x7fff38e05f68
+WRITE of size 2 at 0x61600000f88a thread T0
+    #0 0x7fdf6135ae88 in lsx_ms_adpcm_block_expand_i /usr/local/google/home/mikispag/Downloads/sox/src/adpcm.c:157
+    #1 0x7fdf61360090 in AdpcmReadBlock /usr/local/google/home/mikispag/Downloads/sox/src/wav.c:178
+    #2 0x7fdf61360090 in read_samples /usr/local/google/home/mikispag/Downloads/sox/src/wav.c:1133
+    #3 0x7fdf612b540e in sox_read /usr/local/google/home/mikispag/Downloads/sox/src/formats.c:978
+    #4 0x40e1b2 in sox_read_wide /usr/local/google/home/mikispag/Downloads/sox/src/sox.c:490
+    #5 0x40f000 in combiner_drain /usr/local/google/home/mikispag/Downloads/sox/src/sox.c:552
+    #6 0x7fdf612dff9f in drain_effect /usr/local/google/home/mikispag/Downloads/sox/src/effects.c:352
+    #7 0x7fdf612dff9f in sox_flow_effects /usr/local/google/home/mikispag/Downloads/sox/src/effects.c:445
+    #8 0x41105a in process /usr/local/google/home/mikispag/Downloads/sox/src/sox.c:1802
+    #9 0x404074 in main /usr/local/google/home/mikispag/Downloads/sox/src/sox.c:3008
+    #10 0x7fdf6057eec4 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x21ec4)
+    #11 0x405694 (/usr/local/google/home/mikispag/Downloads/sox/src/.libs/lt-sox+0x405694)
+
+
+--Fba/0zbH8Xs+Fj9o--
