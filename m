@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3407" "Friday" "25" "August" "2017" "18:27:59" "+0200" "Carlos Alberto Lopez Perez" "clopez@igalia.com" "<6128ec04-31d7-6978-e1bd-41e70ef4cf7d@igalia.com>" "82" "[oss-security] WebKitGTK+ Security Advisory WSA-2017-0007" nil nil nil "8" "2017082516:27:59" "[oss-security] WebKitGTK+ Security Advisory WSA-2017-0007" (number mark "U       clopez@igali Aug 25   82/3407  " thread-indent "\"[oss-security] WebKitGTK+ Security Advisory WSA-2017-0007\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5151" "Thursday" "23" "July" "2015" "14:45:42" "+0000" "mancha" "mancha1@zoho.com" "<20150723144542.GE7017@zoho.com>" "112" "Re: [oss-security] Re: CVE Request for OpenSSH vulnerability - authentication limits bypass" nil nil nil "7" "2015072314:45:42" "[oss-security] Re: CVE Request for OpenSSH vulnerability - authentication limits bypass" (number mark "        mancha1@zoho Jul 23  112/5151  " thread-indent "\"Re: [oss-security] Re: CVE Request for OpenSSH vulnerability - authentication limits bypass\"\n") "<20150723125816.13ED03321FC@smtpvbsrv1.mitre.org>" ("<20150723114101.GD7017@zoho.com>" "<20150723125816.13ED03321FC@smtpvbsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 32119 invoked by uid 550); 25 Aug 2017 16:28:34 -0000
+Received: (qmail 1600 invoked by uid 550); 23 Jul 2015 14:46:09 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,110 +11,141 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 31966 invoked from network); 25 Aug 2017 16:28:22 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com; s=20170329;
-	h=Content-Type:MIME-Version:Date:Message-ID:Subject:From:Cc:To; bh=HCJNZqbOQRJvaqhqQ26dSpquRKqxaVV26Ej0mLXv51c=;
-	b=eqlqkEH8IikuJPeTDp8yXSAfGSVF/MI1VyBDI3P5C3c9SicKVBKKPSIsO+flQWV37/DvCZ1SdWup1fg3oQEwrPVXwO3pVjIqkHkMgLx1PgEiuPLor93jpL9BjLCZY13oSH6p7xBu5vq13TPbB+e5TCVi09XzQzhd0y2JQvgmRDphV+KD3nq9I485HCPhrk7A46kwJ+DI7cpGA6orlLMc+gwOMaAPst5zlIVGL2yZqbHSL2wPO8oQaXpQlGNKb/NwLt0SI04Lj3A9Xfrxm5j6Y42qi1iCyhLvL5PfI14iGoVP2ThjjvhPRe8JPJis7sS05/53GfM60bVwWHQjr6vk1w==;
-To: webkit-gtk@lists.webkit.org
-Cc: security@webkit.org, distributor-list@gnome.org,
- oss-security@lists.openwall.com, bugtraq@securityfocus.com
-From: Carlos Alberto Lopez Perez <clopez@igalia.com>
-Openpgp: id=B5D2B50BC48EC7F1EE90D9AB965089CE6B95F882;
- url=http://key.neutrino.es
-Organization: Igalia S.L.
-Mail-Followup-To: webkit-gtk@lists.webkit.org, security@webkit.org,
- distributor-list@gnome.org, oss-security@lists.openwall.com,
- bugtraq@securityfocus.com
-Message-ID: <6128ec04-31d7-6978-e1bd-41e70ef4cf7d@igalia.com>
-Date: Fri, 25 Aug 2017 18:27:59 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.2.1
+Received: (qmail 1580 invoked from network); 23 Jul 2015 14:46:08 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; 
+  s=zapps768; d=zoho.com; 
+  h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; 
+  b=hODdOLXe6YqH88B8hV7bk4lY+tKU3zOVXX+PfeuP+XTEXUU8DKQF1UZypM5ijHLrwmGoeKYJ6Wa4
+    WnK+RviykeiGSlcwCy0cj9mTjcYVflOhE2yU01wa2tY6wHBArzub  
+Message-ID: <20150723144542.GE7017@zoho.com>
+References: <20150723114101.GD7017@zoho.com>
+ <20150723125816.13ED03321FC@smtpvbsrv1.mitre.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature";
- boundary="ngVoNwhgk7qutUEHpAWm7NSso3k557wEE"
-Subject: [oss-security] WebKitGTK+ Security Advisory WSA-2017-0007
+	protocol="application/pgp-signature"; boundary="Fnm8lRGFTVS/3GuM"
+Content-Disposition: inline
+In-Reply-To: <20150723125816.13ED03321FC@smtpvbsrv1.mitre.org>
+X-PGP-Key: http://hkps.pool.sks-keyservers.net/pks/lookup?op=vindex&search=0x25168eb24f0b22ac
+X-PGP-FP: 56B7 100E F4D5 811C 8FEF  ADD1 2516 8EB2 4F0B 22AC
+X-Zoho-Virus-Status: 1
+Cc: cve-assign@mitre.org, isowarez.isowarez.isowarez@googlemail.com,
+	djm@mindrot.org
+Date: Thu, 23 Jul 2015 14:45:42 +0000
+From: mancha <mancha1@zoho.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Re: CVE Request for OpenSSH vulnerability -
+ authentication limits bypass
+To: oss-security@lists.openwall.com
 
---ngVoNwhgk7qutUEHpAWm7NSso3k557wEE
-Content-Type: multipart/mixed; boundary="OLivMimJ7TCOetI26fjgwTql665t1ClXN";
- protected-headers="v1"
-From: Carlos Alberto Lopez Perez <clopez@igalia.com>
-To: webkit-gtk@lists.webkit.org
-Cc: security@webkit.org, distributor-list@gnome.org,
- oss-security@lists.openwall.com, bugtraq@securityfocus.com
-Message-ID: <6128ec04-31d7-6978-e1bd-41e70ef4cf7d@igalia.com>
-Subject: WebKitGTK+ Security Advisory WSA-2017-0007
-
---OLivMimJ7TCOetI26fjgwTql665t1ClXN
-Content-Type: text/plain; charset=utf-8
-Content-Language: es
+--Fnm8lRGFTVS/3GuM
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-------------------------------------------------------------------------
-WebKitGTK+ Security Advisory                               WSA-2017-0007
-------------------------------------------------------------------------
+On Thu, Jul 23, 2015 at 08:58:16AM -0400, cve-assign@mitre.org wrote:
+> Our message was written from the perspective that everyone already
+> understood what the patch does, and to start from there in defining
+> what CVE-2015-5600 means.
 
-Date reported      : August 25, 2017
-Advisory ID        : WSA-2017-0007
-Advisory URL       : https://webkitgtk.org/security/WSA-2017-0007.html
-CVE identifiers    : CVE-2017-1000121, CVE-2017-1000122.
+The patch is relatively un-intrusive in terms of LoC but understanding
+its impact requires knowledge of how OpenSSH implements
+keyboard-interactive authentication. That's probably too esoteric for
+one to readily assume "everyone already understands" it.=20=20
+>=20
+> > if the devices in the supplied client list all differ, the behavior
+> > is unchanged pre and post patch:
+>=20
+> Yes; however, because no server supports an arbitrarily large number
+> of different KbdInteractiveDevices, a client that wishes to launch an
+> effective attack with an arbitrarily large number must use
+> duplication, as in the original example with 10000 instances of the
+> pam device. Disallowing all duplication is one way to prevent this
+> specific "arbitrarily large number" scenario. As we suggested in the
+> iahad example, disallowing all duplication might break somebody's use
+> case. (This is just theoretical; we haven't heard any reports of a
+> problem.) Even if the patch is revised to allow a small amount of
+> duplication, the definition of CVE-2015-5600 will stay the same.
 
-Several vulnerabilities were discovered in WebKitGTK+.
+You make a compelling defense for your description of CVE-2015-5600. And
+as you say, as worded it would cover the case of a future OpenSSH
+modified to accommodate your iahad hypothetical.
 
-CVE-2017-1000121
-    Versions affected: WebKitGTK+ before 2.16.3.
-    Credit to Nathan Crandall.
-    Impact: Processing maliciously crafted input may lead to arbitrary
-    code execution or application crash. Description: An input
-    validation issue on the handling of UNIX IPC messages may allow an
-    attacker to trigger an integer overflow. The issue was addressed
-    through improved state management.
+Nonetheless, "arbitrarily large" isn't possible (cf. SSHBUF_SIZE_MAX and
+such) yet the duplication problem remains (it isn't reasonable for a
+user to expect that MaxAuthTries=3D6 allows 1000 password attempts).
 
-CVE-2017-1000122
-    Versions affected: WebKitGTK+ before 2.16.3.
-    Credit to Nathan Crandall.
-    Impact: Processing maliciously crafted input may lead to application
-    crash. Description: An input validation issue on the handling of
-    UNIX IPC messages allows an attacker to trigger an application
-    crash. The issue was addressed through improved state management.
+A crisper and more accurate description of the current issue (sans
+hypotheticals) is the ability to trigger multiple queries to a given
+keyboard-interactive device within a single userauth request by having
+duplication in the device list.
 
+>=20
+> > The difference in behavior can be observed when the list contains
+> > repeats:
+> >=20
+> > -oKbdInteractiveDevices=3D"snap,snap,snap"
+> >=20
+> > Pre-patch the above would query the snap device three times per
+> > userauth request while post-patch only once.
+>=20
+> Yes; "the client shouldn't be able to specify an arbitrarily large
+> number of KbdInteractiveDevices and be entitled to have the server
+> cooperate" means that the vulnerable behavior was the server's
+> decision to cooperate with the client and execute a piece of code 3
+> times (or, more importantly, 10000 times), when a more reasonable
+> behavior is to execute that piece of code only once.
+>=20
+> > So, your hypothetical of:
+> >=20
+> > -oKbdInteractiveDevices=3D"krb5,krb6,krb7,krb8,krb9,krb10,krb11"
+> >=20
+> > would work the same before and after the fix. Each of the seven
+> > listed devices would get queried once per userauth request. Assuming
+> > a default maxauth of 6, that means a total of 42 device queries
+> > before the connection gets severed.
+>=20
+> What we are saying is that we don't consider that specific behavior,
+> after the fix, to be a separate vulnerability that requires a separate
+> CVE ID. It is possible for someone to make an argument that the "42
+> device queries" behavior is inconsistent with the documentation and
+> that the connection must be severed after 6 device queries. Although
+> we currently don't agree with that argument, we consider the argument
+> somewhat reasonable. That's why we chose to explicitly mention the
+> case of a legitimate list of seven devices, and provide our
+> perspective on whether we would support a second CVE request based on
+> a claim of an incomplete fix.
 
-We recommend updating to the last stable version of WebKitGTK+. It is
-the best way of ensuring that you are running a safe version of
-WebKitGTK+. Please check our website for information about the last
-stable releases.
+RFC 4256 leaves the interpretation of the submethod field of the
+userauth request up to the server implementation.=20
 
-Further information about WebKitGTK+ Security Advisories can be found
-at: https://webkitgtk.org/security.html
+The right way to frame the question isn't whether there's a legitimate
+use of 7 devices and 6 auth tries resulting in 42 total queries but what
+MaxAuthTries is meant to restrict. If it isn't entirely clear from
+documentation (and maybe it isn't) that it's a bound on userauth
+requests then that is easy enough to fix in the manpage.
 
-The WebKitGTK+ team,
-August 25, 2017
+--mancha
 
-
---OLivMimJ7TCOetI26fjgwTql665t1ClXN--
-
---ngVoNwhgk7qutUEHpAWm7NSso3k557wEE
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
+--Fnm8lRGFTVS/3GuM
+Content-Type: application/pgp-signature
 
 -----BEGIN PGP SIGNATURE-----
-Comment: You can fetch my GnuPG key from http://key.neutrino.es
+Version: GnuPG v1
 
-iQIzBAEBCgAdFiEEtdK1C8SOx/HukNmrllCJzmuV+IIFAlmgUA8ACgkQllCJzmuV
-+IJ2IRAAvzlCMGjLSJnjrLpGIu3l8KXhUYeofxuH4wyreHRL7go6IezJJ8FvvYRd
-k+nU0MBwL29e8WGmYfSlvolDYqnC9Z0LzjnNPt5QX0MEncfld6WR0RLTFePzVqaL
-N/Oy1ZltirvGjrBzZHi9SWmn4QgP64UX+TmFl3dbxlVrxazTBb2Uqgv7hb1DF623
-7LOHi+XppFp9RyA6E6U6skuc92kLqxqk/j8LzEvmlrev2Ggtu19gmTpwYXf9qw67
-PkdR5ecRF/tINaHwRDFIk4xK7QSMg97s0mZvGYIryLGVmNhP9dG43dwDtxmCHeeJ
-mkCUVwwOxUMWnAm70kX56ISoYeZyLHV9Bm03aF5E6AGE98Z6kJfpwapRhGWZ4HmK
-NP6+YKoRvRE945AtrJJ/5eZGSKJF0+ENBqd5e/+peux+HOZkK1ZOh10B6/DUfir1
-b3yXHJ2UtJdZGouDsDDed3oIqPXXdodiwYs0XIbdYSy34EThT8ANvJuWQ4NXbH14
-t6DJqLOvG1WRf9Z2NXqNPgX+CauBoNkVnLFDmLFjNigcyjuCBdlFFH4TMTgySPuh
-t6zGrNFc9ChjCtHXwxPKb9db206ph8IptX9GcqrLE7HnykPMN+zk5U4a2Mrk8vKw
-aPVYhgSmLaJlAez3hsaXtoQ8oZW1AH2ndG8eWSfGek7guNb4wcQ=
-=ytgZ
+iQIcBAEBCgAGBQJVsP4WAAoJEB4VYy8JqhaD2lkP/iMeiEEkDMAipyHG4Kn+Ib3g
+hZrjl3JJ9jDIZty+mXNTOjElahScsTCSu4TGVi7W6MrH3582tF8TyJc0j6oAd1bq
+jHBTIfP+y5YpgqpJXW1js/gzAEaBAh8oRq6mh5sukCwO2va3+ZyedBSx0WIhyiiG
+9uAcrASxr07wJsK8Vpf3Bi9dg4cI6OUu9sm7H4SQt71nKtOrF7tgT5r1ZJok8+2y
++Zcns5oucG4ZB5oVimOKKCZV6y2rfGyamqJm8ARZEuQf9XYMr2EOEfqc+bQCNAEi
+jXaKJyR75rOSOcBCspy5NG+lFn4Z8WsDKrrLQ27LSxEjSC1n1Z3IVemPnELCvkFd
+ZsDbaCGCu6rBujTvoskVOt2vykP87ymAjsgNKc0NUIdRY2zAUhECtksKfvbYnbep
+bkHA3KPcmNKhwy+UCIXxNgr1+mCIJ95Kseh5NOksMUVxm/QHDACm1a2mOFmMlQ4p
+Ob5S/Sz40voEHKPpAzmJ2ddZaMpk6r3nZRAqc3x3qYs7bXgKDLjvCbiwsMjo0Z7d
+DTGIZYtV/JleoYhAd3yF19mbI7PYltZFbJa4qZX73YRVM2OHBE8VC0I9Cb3HohLs
+j0f2RewwJvCwzX54lNymLvQGDaVjoH9AlqsA0JAI+urkuFWxECjVZ5iq52BxnRuJ
+r+8i/apBYejq7mBHakT2
+=+Q4p
 -----END PGP SIGNATURE-----
 
---ngVoNwhgk7qutUEHpAWm7NSso3k557wEE--
+--Fnm8lRGFTVS/3GuM--
+
