@@ -1,4 +1,9 @@
-Received: (qmail 28246 invoked by uid 550); 14 Oct 2024 15:42:05 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1414" "Thursday" "23" "July" "2015" "16:20:36" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1507231618390.9639@wniryva>" "38" "[oss-security] CVE-2015-5158 Qemu: scsi stack buffer overflow" nil nil nil "7" "2015072310:50:36" "[oss-security] CVE-2015-5158 Qemu: scsi stack buffer overflow" (number mark "U       ppandit@redh Jul 23   38/1414  " thread-indent "\"[oss-security] CVE-2015-5158 Qemu: scsi stack buffer overflow\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 11983 invoked by uid 550); 23 Jul 2015 10:51:02 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,150 +12,52 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 1474 invoked from network); 14 Oct 2024 15:24:54 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1728919485;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type;
-	bh=DtRyHHD21/QV9ki6vUgMGnfCzSVB5QPvRTgdepK4oSc=;
-	b=XoE0WAjAxrRbM7GmO08GtO/vDt4UAv0Dt0ipnKbgVQmxrbnk0yKIQWAcmMA4LwnBoLbu3t
-	6aGxXpBI4peDytWFdQ6LyJuS80olVFoM9ttALRB47G3NZDNaGQ2Q6f/61y3LZHFa+5I0Ga
-	Q+W186W+OYbznTBFlZA5k0pl4dKT+GI=
-X-MC-Unique: yyjM3gYTN46xjw5EL2varw-1
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728919481; x=1729524281;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=DtRyHHD21/QV9ki6vUgMGnfCzSVB5QPvRTgdepK4oSc=;
-        b=M2pFklTVJBA60A65KXHVSH6Wr0JJQRXA/KJcOz/eV2kR56skTJm+V8GJGf4Sdevy+J
-         Q2uRq3coduwDdAtf46nU1qOxULJbXw/jofuoiLRFwFJJAUa6m8vd/T2lJrud0SxZDo0I
-         j8dG0nF1Ulb/ePOFvy+8aSRl8byCZIgTta7DtAYCScJ5YQtx5LcpbvMxt2jM81BRWtUV
-         tedAFsEPkkcI2yRbpi3ChBPAZuJa0yNwAu1VUyIOMGBcBUtdzKb/EQdhEIAMORmU1PV2
-         UeycmIlDkLUCSh7XZibzXoTy5g6MV8/78dnlEYsNMdNWscXII6r/t8clJJwzE70BvHrE
-         62qw==
-X-Gm-Message-State: AOJu0YxJHfCCSWkNB8tLTSIYirMAfkJOL+qVizpvTuaLgRA9WqBisiXd
-	uBuBABIvPc0/I645o9W+DL3i2x4JOE92gNuQqSE8XnxtF6OYffnonOWUjutKnlPAc0AxyNCSX4n
-	iWB0rt9ip8+gcb/i1oAPFqLgNBdagEJW9kjs9DksIWqM7b/Ake3Hn5rtVgkv1uaDHWgpoNe1zjs
-	rIWQzhTzJx0PFAtaEf+5oxSiD7/QWtmbwjZ+2+je13G/dl8rVnyfc=
-X-Received: by 2002:a2e:4e02:0:b0:2fb:5810:3403 with SMTP id 38308e7fff4ca-2fb58103bd3mr7885341fa.10.1728919480995;
-        Mon, 14 Oct 2024 08:24:40 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHxBxMmbPgx+7I+U3HKrw/26JoKJ1ce/EYGS5auttR0qlKNxF5/IILHlB3LpZa4BAUShck0Zhoy/pzeydlCDdA=
-X-Received: by 2002:a2e:4e02:0:b0:2fb:5810:3403 with SMTP id
- 38308e7fff4ca-2fb58103bd3mr7885101fa.10.1728919480308; Mon, 14 Oct 2024
- 08:24:40 -0700 (PDT)
+Received: (qmail 11957 invoked from network); 23 Jul 2015 10:51:01 -0000
+Date: Thu, 23 Jul 2015 16:20:36 +0530 (IST)
+From: P J P <ppandit@redhat.com>
+X-X-Sender: pjp@javelin
+To: oss security list <oss-security@lists.openwall.com>
+Message-ID: <alpine.LFD.2.20.1507231618390.9639@wniryva>
 MIME-Version: 1.0
-From: Joel Smith <joelsmith@redhat.com>
-Date: Mon, 14 Oct 2024 09:24:28 -0600
-Message-ID: <CAEftUapV2VARqJBVpugRkKX0CPnxz=EYOpPzuAg29aYhHJPzSg@mail.gmail.com>
-To: oss-security@lists.openwall.com
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Type: multipart/alternative; boundary="0000000000007830770624716fb6"
-Subject: [oss-security] [kubernetes] CVE-2024-9486 and CVE-2024-9594: VM images built with
- Kubernetes Image Builder use default credentials
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.23
+Subject: [oss-security] CVE-2015-5158 Qemu: scsi stack buffer overflow
 
---0000000000007830770624716fb6
-Content-Type: text/plain; charset="UTF-8"
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Hello Kubernetes Community,
+   Hello,
 
-A security issue was discovered in Kubernetes where an unauthorized user
-may be able to ssh to a node VM which uses a VM image built with the
-Kubernetes Image Builder project (
-https://github.com/kubernetes-sigs/image-builder).
+Qemu emulator built with the SCSI device emulation support is vulnerable to a 
+stack buffer overflow issue. It could occur while parsing SCSI command 
+descriptor block with an invalid operation code.
 
-For images built with the Proxmox provider, this issue has been rated
-Critical (
-https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H)
-(9.8), and assigned CVE-2024-9486.
+A privileged(CAP_SYS_RAWIO) user inside guest could use this flaw to crash the 
+Qemu instance resulting in DoS.
 
-For images built with the Nutanix, OVA, QEMU or raw providers, this issue
-has been rated Medium (
-https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:A/AC:H/PR:H/UI:R/S:U/C:H/I:H/A:H)
-(6.3), and assigned CVE-2024-9594.
+Upstream fix:
+- -------------
+   -> https://lists.nongnu.org/archive/html/qemu-devel/2015-07/msg04558.html
 
-Am I vulnerable?
+Thank you.
+- --
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
 
-Clusters using virtual machine images built with Kubernetes Image Builder (
-https://github.com/kubernetes-sigs/image-builder) version v0.1.37 or
-earlier are affected.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-CVE-2024-9486: VMs using images built with the Proxmox provider are
-confirmed to be vulnerable.
-
-CVE-2024-9594: VMs using images built with the Nutanix, OVA, QEMU or raw
-providers were vulnerable during the build process and are affected only if
-an attacker was able to reach the VM where the image build was happening
-and used the vulnerability to modify the image at the time the image build
-was occurring.
-
-VMs using images built with all other providers are not affected.
-
-To determine the version of Image Builder you are using, use one of the
-following methods:
-
-* For git clones of the image builder repository:
-    cd <local path to image builder repo>
-
-    make version
-
-* For installations using a tarball download:
-    cd <local path to install location>
-
-    grep -o v0\\.[0-9.]* RELEASE.md | head -1
-
-* For a container image release:
-
-    docker run --rm <image pull spec> version
-  or
-    podman run --rm <image pull spec> version
-
-  or look at the image tag specified, in the case of an official image such
-as
-registry.k8s.io/scl-image-builder/cluster-node-image-builder-amd64:v0.1.37
-
-How do I mitigate this vulnerability?
-
-Rebuild any affected images using a fixed version of Image Builder.
-Re-deploy the fixed images to any affected VMs.
-
-Prior to upgrading, this vulnerability can be mitigated by disabling the
-builder account on affected VMs:
-
-usermod -L builder
-
-Fixed Versions
-
-Kubernetes Image Builder versions >= v0.1.38
-
-Detection
-
-The linux command "last builder" can be used to view logins to the affected
-"builder" account.
-
-If you find evidence that this vulnerability has been exploited, please
-contact security@kubernetes.io
-
-Additional Details
-
-See the GitHub issues for more details:
-
-https://github.com/kubernetes/kubernetes/issues/128006
-
-https://github.com/kubernetes/kubernetes/issues/128007
-
-Acknowledgements
-
-This vulnerability was reported by Nicolai Rybnikar @rybnico from Rybnikar
-Enterprises GmbH.
-
-The issue was fixed and coordinated by Marcus Noble of the Image Builder
-project.
-
-Thank You,
-
-Joel Smith on behalf of the Kubernetes Security Response Committee
-
---0000000000007830770624716fb6--
-
+iQIcBAEBAgAGBQJVsMb8AAoJEN0TPTL+WwQfqZMQAKJ3KxyJXTGkh8zUjqOklHn/
+F25jyVZfar02oNsgc8CSBAk/ySsPUH6LWnOrTPD8ToeZtuYuDgLi6qjO6Zpa6sl/
+SEdnZcJJMre79Ib1w/LLqPwd7nKeSaeXEVnX8zDR/cF4ktFrH0mmrF5B6AOSVw23
+riktn/LOfMnBhyIM51Xiij5Y+yzizP0pihosjaX7s5QBfUFK4TDYPYwN5kmXizzh
+JGjGT9EwZgEVTe1jXNAFyuF8njz0CzU9QylyHMbRgpn3HoGBMoIIrAGw1B30TzFc
+cVySGLpFzy7qbho+SRqjV4+mgFyy0ueE4sspt83Cutcnv0MkXgXRlRWHM3XhT4XU
+GqUprZKnSMszjyh+s1GkQO64ATcouW9t1fxUkn15StOqb0xOcO5dTduZo8Pd0t9i
+vzKBw8zJMACHYLn5GttuW9RNTtEfzbFjF/fbl7d0rT/ET8L3tJE/F296/Enl3Uak
+etNbbU1eLFX5y4JfQojUzmcC2dPYnkO7jGykd2wm4NsjMT2H5havy8w7SJrJOYTz
+NnpudF+vuGoo6PszvFLkNj3g75TbroWNEHsNmYfZ5EsKmLAls7DFqIMFrIepUyY9
+dKGhZjGwck97uKh8wFnprBczH+G9zWAVLJVGIbZuD2DjZy9Vl3ZZ9J+f/7UQSBYP
+5CPYh59L4D1+GCI5ZmAX
+=/KWH
+-----END PGP SIGNATURE-----
