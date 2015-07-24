@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["603" "Monday" "19" "September" "2016" "13:46:34" "+0800" "east wu" "ylgaaaaa@gmail.com" "<CABxEYvnvyroQL2ef7rkmDcoNkLXQOXeLmLsUYYPxvfhwoev0QQ@mail.gmail.com>" "19" "[oss-security] Exponent CMS 2.3.9 SQL injection vulnerabilities" "^Cc:" nil nil "9" "2016091905:46:34" "[oss-security] Exponent CMS 2.3.9 SQL injection vulnerabilities" (number mark "U       ylgaaaaa@gma Sep 19   19/603   " thread-indent "\"[oss-security] Exponent CMS 2.3.9 SQL injection vulnerabilities\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3006" "Friday" "24" "July" "2015" "16:31:44" "-0500" "Brad Knowles" "brad@shub-internet.org" "<875603C9-F2F1-4D25-A081-503D870A5FEB@shub-internet.org>" "72" "Re: [oss-security] Qualys Security Advisory - CVE-2015-3245 userhelper - CVE-2015-3246 libuser" nil nil nil "7" "2015072421:31:44" "[oss-security] Qualys Security Advisory - CVE-2015-3245 userhelper - CVE-2015-3246 libuser" (number mark "        brad@shub-in Jul 24   72/3006  " thread-indent "\"Re: [oss-security] Qualys Security Advisory - CVE-2015-3245 userhelper - CVE-2015-3246 libuser\"\n") "<874mktb7xv.fsf@lysator.liu.se>" ("<20150723170954.GA17931@localhost.localdomain>" "<87h9oud89s.fsf@lysator.liu.se>" "<CAHQ_-nR8WGDK58PmsmhPp8ApnmwjrLRxeyCKTsfRL83ZUZjTxA@mail.gmail.com>" "<871tfxdgzw.fsf@lysator.liu.se>" "<55B22C72.4020706@tillo.ch>" "<874mktb7xv.fsf@lysator.liu.se>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 26049 invoked by uid 550); 19 Sep 2016 11:52:13 -0000
+Received: (qmail 19554 invoked by uid 550); 24 Jul 2015 22:54:41 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,56 +11,111 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 32065 invoked from network); 19 Sep 2016 05:46:46 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=qLV/KD0cugcf/8PamudfQaS1PX2mdFpUtGkc3JMT84M=;
-        b=czOazhYK101lJxHVW3o4My3jjcnNqVr7EjFz6EJKeb14KJQFAhrt2OQhGk57pCOpsq
-         5r0p70LfAhtGn1EKZQUfMQK/4KTOJd3YRloEDVXMF7O4cXLbAIpavy4YiplPIUzqh6en
-         MnKceWxX5ZeR86w+nimipQu3WOtGTFHmoBIy6KiDQUtBLRYq20ikiCTuSJuBNs2/KgnK
-         FO29uSE37CCEtL62cdeQWe1ED/0ao5q9qWe227H0YzGurUMwmSOOdqeeJ1KujSHDRH67
-         CVoYohA5FMmqIIH1zg7wHcSDy9zpLy1W9QtiOqhC1xCFH/eZB9V04OyTU8Tg/baZ9Bo/
-         nzzw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=qLV/KD0cugcf/8PamudfQaS1PX2mdFpUtGkc3JMT84M=;
-        b=TRvbSJmmSEaR13ppM2Ef6/VAGrL0W19ipJc98mmaIgOibxrOdryqHLlDukQv9Z/1m1
-         2Mt4n00dRAamtCtg1koWGSae9XX/95DST7BBBDdbv/xA2Z7KY3/BmRZumTdyj3ZaHnxF
-         6TEYreOMe9M03JwldfvuQk3TlS30J06t13Eta5fgvd4bcbf12EajfpXn/muV8++9XbVV
-         P2MdzGSRgmXw3lGVUE5upMmFBBvzYczQhZ6YUfaIM1F3bSa2pWD8iWjDzJebd79Dvpln
-         Hwe/nrtmoIoiav3N2DRiEm5pYoQ0vkvYmaYse/FLrX89psAitP+nivIkghVvLSX4HJVV
-         9lqQ==
-X-Gm-Message-State: AE9vXwPYXfYvxwNHt9tlBkCRp3gj5eo88pIjq6HnlEEvmPWmWSewxkDvOQtGFMvksAEgyj9zwm3rW/hvY5k4Uw==
-X-Received: by 10.202.190.215 with SMTP id o206mr28705542oif.76.1474263994574;
- Sun, 18 Sep 2016 22:46:34 -0700 (PDT)
-MIME-Version: 1.0
-Message-ID: <CABxEYvnvyroQL2ef7rkmDcoNkLXQOXeLmLsUYYPxvfhwoev0QQ@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=001a113dc528b3b51c053cd5d5b2
-Cc: cve-assign@mitre.org
-Date: Mon, 19 Sep 2016 13:46:34 +0800
-From: east wu <ylgaaaaa@gmail.com>
+Received: (qmail 3665 invoked from network); 24 Jul 2015 21:32:05 -0000
+X-ASG-Debug-ID: 1437773510-061c416de378fb80001-Ebmqpw
+X-Barracuda-Envelope-From: brad@shub-internet.org
+X-Barracuda-RBL-Trusted-Forwarder: 216.194.196.20
+X-Barracuda-RBL-Trusted-Forwarder: 216.194.248.141
+X-Virus-Scanned: amavisd-new at mail-sterling.his.com
+X-Barracuda-RBL-IP: 10.137.0.130
+Mime-Version: 1.0 (Mac OS X Mail 8.2 \(2102\))
+X-ASG-Orig-Subj: Re: [oss-security] Qualys Security Advisory - CVE-2015-3245 userhelper - CVE-2015-3246 libuser
+Content-Type: multipart/signed; boundary="Apple-Mail=_3D977D48-43BE-4AFF-BD95-9F5FBEAA1CDB"; protocol="application/pgp-signature"; micalg=pgp-sha256
+X-Pgp-Agent: GPGMail 2.5
+In-Reply-To: <874mktb7xv.fsf@lysator.liu.se>
+X-Mao-Original-Outgoing-Id: 459466304.242727-b4ca4a37aeffd472627131352a1927e3
+Message-Id: <875603C9-F2F1-4D25-A081-503D870A5FEB@shub-internet.org>
+References: <20150723170954.GA17931@localhost.localdomain> <87h9oud89s.fsf@lysator.liu.se> <CAHQ_-nR8WGDK58PmsmhPp8ApnmwjrLRxeyCKTsfRL83ZUZjTxA@mail.gmail.com> <871tfxdgzw.fsf@lysator.liu.se> <55B22C72.4020706@tillo.ch> <874mktb7xv.fsf@lysator.liu.se>
+X-Mailer: Apple Mail (2.2102)
+X-Barracuda-Connect: smtp-nf-202.his.com[216.194.196.20]
+X-Barracuda-Start-Time: 1437773510
+X-Barracuda-URL: https://spam.his.com:443/cgi-mod/mark.cgi
+X-Virus-Scanned: by bsmtpd at his.com
+X-Barracuda-BRTS-Status: 1
+X-Barracuda-Spam-Score: 0.01
+X-Barracuda-Spam-Status: No, SCORE=0.01 using global scores of TAG_LEVEL=1000.0 QUARANTINE_LEVEL=1000.0 KILL_LEVEL=7.0 tests=BSF_SC0_MISMATCH_TO, BSF_SC2_SA022a
+X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.3.21052
+	Rule breakdown below
+	 pts rule name              description
+	---- ---------------------- --------------------------------------------------
+	0.00 BSF_SC0_MISMATCH_TO    Envelope rcpt doesn't match header
+	0.01 BSF_SC2_SA022a         Custom Rule SA022a
+Cc: Brad Knowles <brad@shub-internet.org>
+Date: Fri, 24 Jul 2015 16:31:44 -0500
+From: Brad Knowles <brad@shub-internet.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Exponent CMS 2.3.9 SQL injection vulnerabilities
+Subject: Re: [oss-security] Qualys Security Advisory - CVE-2015-3245 userhelper - CVE-2015-3246 libuser
 To: oss-security@lists.openwall.com
 
---001a113dc528b3b51c053cd5d5b2
-Content-Type: text/plain; charset=UTF-8
+--Apple-Mail=_3D977D48-43BE-4AFF-BD95-9F5FBEAA1CDB
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=utf-8
 
-https://github.com/exponentcms/exponent-cms/blob/master/framework/modules/
-addressbook/controllers/addressController.php#L172
+On Jul 24, 2015, at 3:46 PM, Leif Nixon <nixon@lysator.liu.se> wrote:
 
-'is_what' parameter there is an injection without login
+> I may have been somewhat unclear; what I'm (very) upset about is the
+> release of a working exploit without giving the user community a
+> realistic chance to patch.
+
+Debates over how much to release and when have been with us since the very =
+first security announcement, and they trace their lineage back to the histo=
+ry of physical security going back thousands of years.
+
+There will always be people who get their panties in a major twist because =
+they feel that too much information was released too soon, and there will a=
+lways be people who get their panties in a major twist because not enough i=
+nformation was released soon enough.
+
+In this day and age, we have the CRD process.  Official representatives fro=
+m both Qualys and Red Hat have spoken about their perspective on the matter=
+, and they seem to largely be in agreement.
 
 
-https://github.com/exponentcms/exponent-cms/blob/master/framework/core/subsystems/expDatabase.php#L559
+So, as a private citizen, you have all the right in the world to get your p=
+anties in a major twist because of some huge flaws that you find in the CRD=
+ process and how it was executed.  Just like every other private citizen wh=
+o may have something to say on that topic.
 
-$this->sql("UPDATE " . $this->prefix . $table . " SET " . $col . "=0 WHERE "
-. $where);
+However, this list is not the proper place to have that flamewar.
 
-POC:
-/index.php?controller=address&action=activate_address&is_what=address1=(select
-* from (select sleep(5))x)%23&id=1
+If you really feel that strongly about it, I suggest that you find the prop=
+er place to have a discussion about what CRD really means and how that shou=
+ld be executed.  If you can actually help that process to become better, I=
+=E2=80=99m sure that most of the involved parties will welcome your partici=
+pation.
 
---001a113dc528b3b51c053cd5d5b2--
+Just keep in mind that this list is not that place.
+
+--
+Brad Knowles <brad@shub-internet.org>
+LinkedIn Profile: <http://tinyurl.com/y8kpxu>
+
+
+--Apple-Mail=_3D977D48-43BE-4AFF-BD95-9F5FBEAA1CDB
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+	filename=signature.asc
+Content-Type: application/pgp-signature;
+	name=signature.asc
+Content-Description: Message signed with OpenPGP using GPGMail
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG/MacGPG2 v2.0.27
+
+iQIcBAEBCAAGBQJVsq7AAAoJEKOyg2+mWTCTQwAP/3i0TvuBYZzwlODMx+fbEB08
+ZbcuiK3UpdxE2BcwuvkMKl55nq5CPxwHo6octALDVC3sWsiF6NqITfeTxiF2XzAW
+BDS4/mpQWW7ykfoe6NTS/ztJT/ix6hHm3YAoIJCKi1vZ9jfvirgT6DXowQSGy3mQ
+TQigdfCEAsc7MbPHqHCE+V+Nw8IiGxIWn38gYtV8lxQs31Nor43SPnRqYvmCKv8/
+v7LYvU+q0fJnZB9iBxioNpp1bNddoMJiVfqVjW3YdXa6OgIBUZ/uo1l1nioXCIu/
+2q5Kp3riV2OuHeR3m0ybP0O+hX2p/8HHU9kmNs38rr09QkY93V07wmSGhLb2X8KZ
+SmqyfQC6Nsf+FQGA6N2dtyZ2sM5U4L41LVRwpZSA15WpZb/ABJLA8Jr9tY+zFtAl
+XTqLAEMn18OzLUG+iH5Mw3078LkIlgPNT9zyPPdO7VSET9TrU0/TvChaHfwrRch4
+31wTxuipEhmZK4zI5nnuLneIPQEDmDjdVWkTUYy1ikV2WMldM0hYyPyItzpEKRU+
+7AcgEGzGSM8UFnih2USejJPhqCo5pIHUv9yWhkDwemsJzhrAsSM6u8zmuPCWjo2O
+bEBfvzGuENhSNmQkNZl1+x5W0KN6LJlZYn43NVLTRU3UeMS7nK0lmPv0ouq2RAsK
+HeLRTMBj14s3hsw1E2I0
+=LrGN
+-----END PGP SIGNATURE-----
+
+--Apple-Mail=_3D977D48-43BE-4AFF-BD95-9F5FBEAA1CDB--
