@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1716" "Wednesday" "18" "November" "2015" "06:17:56" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151118111756.05AB234E03F@smtpvbsrv1.mitre.org>" "37" "[oss-security] Re: CVE request: Jenkins remote code execution vulnerability due to unsafe deserialization" "^Cc:" nil nil "11" "2015111811:17:56" "[oss-security] Re: CVE request: Jenkins remote code execution vulnerability due to unsafe deserialization" (number mark "        cve-assign@m Nov 18   37/1716  " thread-indent "\"[oss-security] Re: CVE request: Jenkins remote code execution vulnerability due to unsafe deserialization\"\n") "<2A8BEBF8-84F6-476A-91B7-14A461A83E30@beckweb.net>" ("<2A8BEBF8-84F6-476A-91B7-14A461A83E30@beckweb.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1860" "Friday" "24" "July" "2015" "15:56:25" "+0000" "mancha" "mancha1@zoho.com" "<20150724155625.GA15469@zoho.com>" "53" "Re: [oss-security] Qualys Security Advisory - CVE-2015-3245 userhelper - CVE-2015-3246 libuser" nil nil nil "7" "2015072415:56:25" "[oss-security] Qualys Security Advisory - CVE-2015-3245 userhelper - CVE-2015-3246 libuser" (number mark "        mancha1@zoho Jul 24   53/1860  " thread-indent "\"Re: [oss-security] Qualys Security Advisory - CVE-2015-3245 userhelper - CVE-2015-3246 libuser\"\n") "<87h9oud89s.fsf@lysator.liu.se>" ("<20150723170954.GA17931@localhost.localdomain>" "<87h9oud89s.fsf@lysator.liu.se>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 15560 invoked by uid 550); 18 Nov 2015 11:18:08 -0000
+Received: (qmail 26477 invoked by uid 550); 24 Jul 2015 15:56:52 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,50 +11,81 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 15536 invoked from network); 18 Nov 2015 11:18:07 -0000
-In-Reply-To: <2A8BEBF8-84F6-476A-91B7-14A461A83E30@beckweb.net>
-Message-Id: <20151118111756.05AB234E03F@smtpvbsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Wed, 18 Nov 2015 06:17:56 -0500 (EST)
-From: cve-assign@mitre.org
+Received: (qmail 26449 invoked from network); 24 Jul 2015 15:56:51 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; 
+  s=zapps768; d=zoho.com; 
+  h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; 
+  b=hEj/K9TBhJEgiCsrgVzFs/u05dTdDBPNFFjAGIrB9qBd75AAsr/yB6X3gBI7QW5CzvB4aDd54F2Y
+    WWKBz2eYsZlZaHiemTFLx7jpb/QMRd7TNT11u77NTJH25c0fQd2y  
+Message-ID: <20150724155625.GA15469@zoho.com>
+References: <20150723170954.GA17931@localhost.localdomain>
+ <87h9oud89s.fsf@lysator.liu.se>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="UlVJffcvxoiEqYs2"
+Content-Disposition: inline
+In-Reply-To: <87h9oud89s.fsf@lysator.liu.se>
+X-PGP-Key: http://hkps.pool.sks-keyservers.net/pks/lookup?op=vindex&search=0x25168eb24f0b22ac
+X-PGP-FP: 56B7 100E F4D5 811C 8FEF  ADD1 2516 8EB2 4F0B 22AC
+X-Zoho-Virus-Status: 1
+Cc: Qualys Security Advisory <qsa@qualys.com>
+Date: Fri, 24 Jul 2015 15:56:25 +0000
+From: mancha <mancha1@zoho.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE request: Jenkins remote code execution vulnerability due to unsafe deserialization
-To: ml@beckweb.net
+Subject: Re: [oss-security] Qualys Security Advisory - CVE-2015-3245
+ userhelper - CVE-2015-3246 libuser
+To: oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--UlVJffcvxoiEqYs2
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> We updated neither commons-collections nor Groovy, the fix for both is
-> specific to Jenkins, in the same component, and was part of the same
-> release of Jenkins. Does this mean the one CVE ID covers both?
+On Thu, Jul 23, 2015 at 08:43:43PM +0200, Leif Nixon wrote:
+> Qualys Security Advisory <qsa@qualys.com> writes:
+>=20
+> > Hello, it is July 23, 2015, 17:00 UTC, the Coordinated Release Date
+> > for CVE-2015-3245 and CVE-2015-3246.  Please find our advisory
+> > below, and our exploit attached.
+>=20
+> *Why* are you releasing a full exploit just minutes after the patch is
+> released?
+>=20
+> (Disclosure: I am employed by Red Hat, but this is my purely personal
+> question.)
+>=20
+> -- Leif Nixon
 
-Yes, CVE-2015-8103 applies to all of SECURITY-218 as listed at
-https://wiki.jenkins-ci.org/display/SECURITY/Jenkins+Security+Advisory+2015-11-11
-and therefore is associated with both the
-http://foxglovesecurity.com/2015/11/06/what-do-weblogic-websphere-jboss-jenkins-opennms-and-your-application-have-in-common-this-vulnerability/#jenkins
-attack and the
-https://github.com/frohoff/ysoserial/blob/master/src/main/java/ysoserial/payloads/Groovy1.java
-attack.
+There was absolutely nothing wrong with Qualys' timing. When the embargo
+ends, it ends.=20=20
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+The real problem is the underlying model: "responsible disclosure". It's
+nothing more than a CYA strategy that doesn't maximize the ecosystem's
+welfare. The positive-sounding name fools some into thinking it a good
+thing.
+
+--mancha
+
+--UlVJffcvxoiEqYs2
+Content-Type: application/pgp-signature
+
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJWTF4CAAoJEL54rhJi8gl5dycP/00lDmDND0eZpQYN3GRcTPY4
-VKnMZnH//Zovw5gVSlZNDEAkpm4o8OlN9K5nOE0GG2XQsfk/haR67fG11KTjbOIq
-HKDCYuborQicwSsLlxsfsMFgEdodMOs1+L4WQ/EJ7UYnTfEf1iG0zp150lfSNKxL
-Zv+JPIvg6tJdUeYCUVOEgcSjr/0bLqJ7slZNEL+PVVV7eFPnwi0GfwdylblhR+mB
-7ialUTNBKf5nZhYXI5LjkBC5EHiuxzmTRiD182VpwoXbVdrQaX4HVTLFnNdvWnCz
-BcFMUB11d+8d+bGKj6r7mZPADHJeWr3KcxGVs0jlBVUuTmBA186MIy0zdK7eIKxM
-QjUIsd5puBGAwvdlonnyilp3nxqQAV2j0RFgU5g9UnCWcOmOyU3+xX/gSqap/oRE
-Vi/zqTsPkQwM1QumQ9gzmm+Cx5YYS+q3rLb5J8Og02i0I2TRtmHizWT+PBRk0I3t
-0v43OHrktKtu+v8MS005gKTWrac2+1x2gPWydooNw3zVVqfPjCsXLd69bGFmW9HX
-qpBZRX+me9r2ac5dHK0HuVnR9mNi1IZ0tutcsFkhjWHDHx2pUBxqWM+KnNHfPcux
-QQrWFrfb8tu57rh/l02zsV6ah5sjnaz0qttsUSisMpUoAnUGQO1D8q0GSeJdm8mc
-RFJV9K/Hf0Fh2i1Giz+A
-=9Gr6
+iQIcBAEBCgAGBQJVsmApAAoJEB4VYy8JqhaDOKIP/0jZcPjI+M3on2DJ1eBbxeWw
+he1XZOyIHlM8FTnkfMPB3zGy91l3JEl3QtbtLVzAKkT/P4X6xfh5sac9yBSlZXj0
+SiOhQ7iEnYl3pIhkt/rPSo3olJ6L6ig/9mrfrTIb2F87FsNI5BXDU2k9gkLF4Qqk
+/C+VM8jx1c4R3YkFo3hmglcU5dCgXwTWhKK2a+FRY5nEUEcvstTwWRRxf1ri+JWS
+VOmq86rmMpRPvFaImxNjrL/wAaK8gc4gk15FmKnPjgSEWeke0snd14xPT1tzQCbV
+km7SV2SFQ1NDtnvQNFHMgKdsieg03RxiffUy5wrsjmc+7WrdNE1zLp7FeiSQiA8m
+AU9Q4T0Duj8BDR8Q3tXw5vrk6hkW0W3PlN7ZqEV3+jmkwH83mA9YT/905imICEsR
+d7uTfLof0EznNc/c3UxIJP1kPocnFQ1hQ75CjLsna7xUk0wiw3YUhpW1ENHuE35J
+5IAQMaS8SWh6vj1+4WSXnCetcH5f7T79Ospuy9l5XbNCIrSvd+NpLGOSj/X80gZc
+DuKtBt/AM3qqoja01J5QwmV5KzHj6B1DjulzNqiFCRdfHEqizh2a0Hi1aJxwYGKl
+jt8JAzdOTwl0oYWsPQat1xro52OeGU5Pd9TGmlP8TFk51XiAGUJeexe0OCg8o0Y7
+ZS9UW6oAAQJa5h3pAYX4
+=WwmA
 -----END PGP SIGNATURE-----
+
+--UlVJffcvxoiEqYs2--
+
