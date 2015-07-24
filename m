@@ -1,4 +1,9 @@
-Received: (qmail 32324 invoked by uid 550); 3 Feb 2024 04:17:23 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2370" "Friday" "24" "July" "2015" "23:03:20" "+1000" "Joshua Rogers" "oss@internot.info" "<55B23798.7090709@internot.info>" "61" "Re: [oss-security] Qualys Security Advisory - CVE-2015-3245 userhelper - CVE-2015-3246 libuser" nil nil nil "7" "2015072413:03:20" "[oss-security] Qualys Security Advisory - CVE-2015-3245 userhelper - CVE-2015-3246 libuser" (number mark "        oss@internot Jul 24   61/2370  " thread-indent "\"Re: [oss-security] Qualys Security Advisory - CVE-2015-3245 userhelper - CVE-2015-3246 libuser\"\n") "<55B22C72.4020706@tillo.ch>" ("<20150723170954.GA17931@localhost.localdomain>" "<87h9oud89s.fsf@lysator.liu.se>" "<CAHQ_-nR8WGDK58PmsmhPp8ApnmwjrLRxeyCKTsfRL83ZUZjTxA@mail.gmail.com>" "<871tfxdgzw.fsf@lysator.liu.se>" "<55B22C72.4020706@tillo.ch>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 6070 invoked by uid 550); 24 Jul 2015 13:03:43 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,135 +11,80 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 6040 invoked from network); 24 Jul 2015 13:03:43 -0000
+Message-ID: <55B23798.7090709@internot.info>
+Organization: Internot IT
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.8.0
+References: <20150723170954.GA17931@localhost.localdomain>	<87h9oud89s.fsf@lysator.liu.se>	<CAHQ_-nR8WGDK58PmsmhPp8ApnmwjrLRxeyCKTsfRL83ZUZjTxA@mail.gmail.com> <871tfxdgzw.fsf@lysator.liu.se> <55B22C72.4020706@tillo.ch>
+In-Reply-To: <55B22C72.4020706@tillo.ch>
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="q91t3wg03HnRbrIlw6E4172fWjwqbi7UC"
+Date: Fri, 24 Jul 2015 23:03:20 +1000
+From: Joshua Rogers <oss@internot.info>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32300 invoked from network); 3 Feb 2024 04:17:22 -0000
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/simple;
- d=fifthhorseman.net; i=@fifthhorseman.net; q=dns/txt; s=2019;
- t=1706933983; h=from : to : subject : in-reply-to : references : date
- : message-id : mime-version : content-type : from;
- bh=Bv4Jd5zUZhnWHfWhKwrBRNKe0uAGm7KRaeXMgqU5m8U=;
- b=XuOnjoL31n+JbH+Inmezzv54fkPOKVHm+GMr8V/xfLqRG/rGnTG8IqIvSXTb2STvOCHXt
- cYCrPPBEOTab09OBg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=fifthhorseman.net;
- i=@fifthhorseman.net; q=dns/txt; s=2019rsa; t=1706933983; h=from : to
- : subject : in-reply-to : references : date : message-id :
- mime-version : content-type : from;
- bh=Bv4Jd5zUZhnWHfWhKwrBRNKe0uAGm7KRaeXMgqU5m8U=;
- b=RDD71IvT/pPrt991ss96Iu9w+ZL/d90a6yb/ssEepm5DhABiOQLwNMaUpTyxiHverNNzQ
- C9rlTu1YOJcDXoNfQoWgSwDgY1swJtTXUPClgpJSkZyGtoYR/Z1McCg05reCmBpm7Il0wjA
- LufhcOP/6ybTRgcefYI51GFP5xHVvhjz61Hl3JoXt2K4AwRn3Rye+4/KPkp2Hb+VOqI+L3j
- /myAXVrIfOfoJ1jkX0++J63CPgB5F7pfcrJOHhy3BmkT/wTIrIIQSPEocwZK6Rl9Al+r7+U
- uTIPczLtssZaUXNSO0mqTEN4V6K6aidsyL1ge4WybPxIfc0OkjCsxrY647+w==
-From: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
-To: nightmare.yeah27@aceecat.org, oss-security@lists.openwall.com
-In-Reply-To: <r2yfkmeszb5nz37jepgatysvm3ajua3kwte72sfzdicffh5vze@oizk252b5l77>
-References: <20240201123100.42ba1334.hanno@hboeck.de>
- <r2yfkmeszb5nz37jepgatysvm3ajua3kwte72sfzdicffh5vze@oizk252b5l77>
-Autocrypt: addr=Daniel Kahn Gillmor; prefer-encrypt=mutual; keydata=
- xjMEZXEJyxYJKwYBBAHaRw8BAQdA5BpbW0bpl5qCng/RiqwhQINrplDMSS5JsO/YO+5Zi7HCi
- QQfFgoAMQWCZadnIAUJBdtHCwMLCQcDFQoIApsBAh4BFiEE1HcEDHDCFWpcKYVJu36RAUlea/
- cACgkQu36RAUlea/edDQD+M2QjnoEyu/TjI+gRXBpXQ5jCsnnp9FdYhaSSUW/vZ8kBAJByWlj
- A9aMfVaVrmvgcYw7jzJz+gmZspBRB++5LZ20NzRc8ZGtnQGZpZnRoaG9yc2VtYW4ubmV0PsLA
- EQQTFgoAeQMLCQdHFAAAAAAAHgAgc2FsdEBub3RhdGlvbnMuc2VxdW9pYS1wZ3Aub3JnEu/CS
- CeyWwC6j4ihJr2u/z6delsF1pvYW3ufgf1L538DFQoIApsBAh4BFiEE1HcEDHDCFWpcKYVJu3
- 6RAUlea/cFAmWnX5AFCQXZ8EUACgkQu36RAUlea/cjVwD+ONjdHM74rAa6EEiiqaPjlptiaZx
- CVqFYXnib6EbZARkBAPnnR8pW8vCBnDXHKu65jNqwF3aH761NaOqqMFfppg8GzjMEZXEJyxYJ
- KwYBBAHaRw8BAQdAjX25Fq2Q9IUFeHy6yByIQPBnFOedFliuEiCIUzJsENDCwMUEGBYKAS1HF
- AAAAAAAHgAgc2FsdEBub3RhdGlvbnMuc2VxdW9pYS1wZ3Aub3JnwqKWsw56uoWVLIFcs7ZecJ
- gwpsSNevWCzbviKQ8yRLUCmwK+oAQZFgoAbwWCZXEJywkQdy0WHjXNS4FHFAAAAAAAHgAgc2F
- sdEBub3RhdGlvbnMuc2VxdW9pYS1wZ3Aub3JnEIJSOxuw2y/UJmg5M3BLpN0JYjODZpXiEVFu
- 1byARzMWIQR0vATEPYYIS+hnLAZ3LRYeNc1LgQAAsH8BAKg1C5LK/D7pSkXCD+jfTSP+CqM58
- iHLjh4vKhpOKsTJAQCHldtEjxJ1ksPTFgG9HihHH7qc6/wvvLw77ETMpwlrAxYhBNR3BAxwwh
- VqXCmFSbt+kQFJXmv3BQJlp1+rBQkCF4lgAAoJELt+kQFJXmv3ydsA/2roQZ2Jm/7iUrg/2C5
- ClWA/xbvPC31LyMkGGH2/rq8tAP9BgqLuCPnNTVPqeX9+9qqMmaFq7wmvjq5I+yycAw9CDc44
- BGVxCcsSCisGAQQBl1UBBQEBB0BZMsRrRaaeFSYMF1ZdfRmVgBriDUIr99eDQ085BK14DgMBC
- AfCwAYEGBYKAG5HFAAAAAAAHgAgc2FsdEBub3RhdGlvbnMuc2VxdW9pYS1wZ3Aub3JnsazAWX
- tEHUPmSTmcRZAIsAsNiO8k0hdjsfRlRVipgJgCmwwWIQTUdwQMcMIValwphUm7fpEBSV5r9wU
- CZadfqwUJAheJYAAKCRC7fpEBSV5r90AjAPwLgY1iKiFJEj32SVD5f721929l79VxQB5FlQss
- x1n5kQEA6Uct2tPvbB6T7p5KG3Gl+tbi7oJAuxFmpkpW5/N2Owg=
-Date: Fri, 02 Feb 2024 18:47:15 -0500
-Message-ID: <87jznme8e4.fsf@fifthhorseman.net>
-MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
-	micalg=pgp-sha256; protocol="application/pgp-signature"
-Subject: Re: [oss-security] Re: Python standard library defaults to insecure
- TLS for mail protocols
+Subject: Re: [oss-security] Qualys Security Advisory - CVE-2015-3245 userhelper
+ - CVE-2015-3246 libuser
+To: oss-security@lists.openwall.com
 
---=-=-=
+--q91t3wg03HnRbrIlw6E4172fWjwqbi7UC
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-Thanks Hanno for raising this.
-
-Hanno's conclusion is the right one: the mail protocol implementations
-in stdlib need to default to the standard default TLS behavior, which is
-requires verifying the server identity.
-
-On Thu 2024-02-01 09:45:36 -0800, nightmare.yeah27@aceecat.org wrote:
-> On Thu, Feb 01, 2024 at 12:31:00PM +0100, Hanno B=C3=B6ck wrote:
+On 24/07/15 22:15, Martino Dell'Ambrogio wrote:
+> Moreover, as soon as systems can be patched, they should be.
+> Of course a few hours delay is not realistic, but I want to be sure tha=
+t
+> everyone understands how much "releasing a working exploit *does not
+> help anybody*" is false.
 >
->> Also relevant is RFC 8314, which contains guidelines for TLS
->> connections in email protocols [5]. ("MUAs MUST validate TLS server
->> certificates [...]") It targets client software, but I believe it is
->> reasonable to apply the same standards to client APIs.
->
-> Relaying *MTAs* do not usually verify the certificate of the server
-> they connect to. When they do, it creates problems because MTA
-> certificates are very often self-signed. IIRC Yahoo relays in
-> particular used to have this problem (or still do?)
+> I urge researchers to continue to release their exploits into the publi=
+c
+> domain.
+> Do it "responsibly", maybe get help in order to do it correctly, but do=
 
-This is a poor counterargument.  Note that Hanno's example was for
-IMAP_SSL, which is not used by any MTA i'm aware of.
+> it, because it's beneficial more than harmful to any potential target.
+I concur.
+The releasing of PoC's are very important, for many reasons. It allows,
+as stated, the ability to pentest a system efficiently.
 
-> It is true that MTAs are not usually written in Python :-) So maybe
-> the proposal is OK. But there's a general point to note here, namely
-> not all protocols are the same wrt TLS.
+I think in this case, it is inappropriate for a PoC to be released on
+the same day as the updates being pushed.
+As everybody knows, there are a lot of hacked boxes on the internet. Now
+someguy that has a botnet of local-users will be able to mass root all
+the boxes while the owners sleep, because they have been given no
+warning at all about this.. Even if 48 hours was waited before the PoC
+was released, it would be much better.
 
-This note is fair: there are implementations that use TLS *without*
-confirming the server identity.  However, those implementations should
-have to explicitly opt *into* that looser behavior by default.
+That's just my 2cents anyways.
 
-The baseline toolkit should not start in the unverified mode, for any
-protocol that uses TLS.
 
-As the lead author of the deliberately minimalist imap-dl from
-mailscripts (https://git.spwhitton.name/mailscripts/tree/imap-dl) i
-happen to be lucky enough to have avoided this because i have tried to
-support a configuration which happened to want to have a dedicated set
-of CA certificates.
+Thanks,
+--=20
+-- Joshua Rogers <https://internot.info/>
 
-The relevant code there is:
 
------
-    ca_certs =3D conf.get('retriever', 'ca_certs', fallback=3DNone)
-    [=E2=80=A6]
-    ctx =3D ssl.create_default_context(cafile=3Dca_certs)
-    [=E2=80=A6]
-    server:str =3D conf.get('retriever', 'server')
-    with imaplib.IMAP4_SSL(host=3Dserver,
-                           port=3Dint(conf.get('retriever', 'port', fallbac=
-k=3D993)),
-                           ssl_context=3Dctx) as imap:
------
-
-Basically, i avoided getting burned by really dumb luck.
-
-Had i not implemented that particular use case (which is admittedly
-distracting from imap-dl's minimalist goals), i would certainly have
-expected that the default would be an ssl_default_context().
-
-This needs to be fixed in the stdlib.
-
-      --dkg
-
---=-=-=
+--q91t3wg03HnRbrIlw6E4172fWjwqbi7UC
 Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-iHUEARYIAB0WIQR0vATEPYYIS+hnLAZ3LRYeNc1LgQUCZb1/BQAKCRB3LRYeNc1L
-gfPKAPsGJ2FvxbImbQ/uGvD+av8U7P/FoBuMqd0WQp3yj96uegD/ZrJARYxLh7tZ
-VNrePQE2XqJjlbC1Ryjmf3AYqjIkKAI=
-=szOS
+iQIcBAEBAgAGBQJVsjecAAoJEJCcj5QpbmADkjwQAJV2Sv5Cz+niwTNyJiwEFkjc
+QjwNdNEyPDzTWqaU8ynYGFB+kNYCUW2FRjBA6BPj7LukECG5KR1ojrkJT0N1Qzi6
+Ri9+CLX/um+BSMbMtlauQHRGVXdLNWeEX57RSTNBOXnhLUSRMPgEf7LLOnFnP9bJ
+egmeSYFPv4rifFiXEdkJ5Hb3zOh64Lb0nEzbLS/aQbM6n5Fgar8aoCPDIiKEoHOX
+MFJavQWFQacwu0qRnBuhHybQXzvOe2SIH8t4l+0LGeuCt8lSw0wi3wTig/9uTKAb
+Q2S7kHOBwNOAvDtYkxOg1SjHJJUMzX4YBpTKMSgGDIZ2PtiyJTngDdS1x4EVVyFT
+dByc1ri1Rs9GL+hGWokbKUBBSEoutsJsCjp9TJowGB+qA0jwF9EZpQBI0DZSdZ13
+uitiAfWauiptLIX+GXFOq/GDV+ab1VXtrPMaAJqO7i4UcMGBTYi1HnFb+KEN+WB3
+9bNGlE0GBXTIqlzM2r5ry37h6EaUr2x6alaknRNcIudtAkpityqCC+Z3eH6c8I9s
+orayjQ4DYssTDUF7hkqb7FboHZVl6+CAmu+eZPBOABlsHMlD+Bo7xZRpK4Fv0vcx
+ax3Sf3l980M5WhwGg/T/qcfuTd/J37mgwltoOUvmzTlYamYPNLF9XJ5MypSvPmuS
+XX6AMbtreHXj1l1B0/pN
+=SXPE
 -----END PGP SIGNATURE-----
---=-=-=--
+
+--q91t3wg03HnRbrIlw6E4172fWjwqbi7UC--
