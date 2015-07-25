@@ -1,4 +1,9 @@
-Received: (qmail 21715 invoked by uid 550); 5 Jun 2022 11:45:54 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["432" "Saturday" "25" "July" "2015" "08:31:02" "+0000" "Nitin Venkatesh" "venkatesh.nitin@gmail.com" "<CAARZ5vpQJqC27an=PFHU7BS=CVqT=uvnt16fCcCNrtL4P+0wJw@mail.gmail.com>" "18" "[oss-security] CVE Request - Cross-Site Request Forgery & SQL Injection Vulnerabilities in Unite Gallery Lite Wordpress Plugin v1.4.6" nil nil nil "7" "2015072508:31:02" "[oss-security] CVE Request - Cross-Site Request Forgery & SQL Injection Vulnerabilities in Unite Gallery Lite Wordpress Plugin v1.4.6" (number mark "U       venkatesh.ni Jul 25   18/432   " thread-indent "\"[oss-security] CVE Request - Cross-Site Request Forgery & SQL Injection Vulnerabilities in Unite Gallery Lite Wordpress Plugin v1.4.6\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 3855 invoked by uid 550); 25 Jul 2015 08:31:23 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,134 +11,44 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1427 invoked from network); 5 Jun 2022 02:52:10 -0000
-X-Originating-IP: [106.117.78.144]
-Date: Sun, 5 Jun 2022 10:51:54 +0800 (GMT+08:00)
-X-CM-HeaderCharset: UTF-8
-From: duoming@zju.edu.cn
-To: oss-security@lists.openwall.com
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version XT5.0.13 build 20210104(ab8c30b6)
- Copyright (c) 2002-2022 www.mailtech.cn zju.edu.cn
-Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset=UTF-8
+Received: (qmail 3771 invoked from network); 25 Jul 2015 08:31:22 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=af+TWREE62HUYgbXkACC5JXLpd8Nkp7QAAqTGVe+cqk=;
+        b=MPd6GZK8EnRhC2RkoRGyL+U5XE13VFHuoZ51htOM4RsJm2P3M359rCmn+zZq+U2fjR
+         tYeiPxue1Il3ip0m+LLBqbsGbTWkENUxVjaOolO+Z9CTaFSfDJ0GESQPYhXNkbY5tjto
+         NVu0nqNN44HldSOiYYhnBptMFeV7CsD228Mpwt1IDY+Nd8kf6lVY0jTNxSTeWmWJPBI0
+         meRdBk8IIvP1540ozB98e/AQLQWl483s2E0O9WmhLPirn2/DrbzIHueiQkw11xMW3wPe
+         Mu2t/O/+oc4fcEYjKb06j6wM3PLQ5TgUuf6xCNR9K32PZ8sQzKhk9moR1Uv7yQIpblbH
+         7pDA==
+X-Received: by 10.107.32.146 with SMTP id g140mr30720429iog.23.1437813071317;
+ Sat, 25 Jul 2015 01:31:11 -0700 (PDT)
 MIME-Version: 1.0
-Message-ID: <62cf5ab.4d34d.18131c6b47b.Coremail.duoming@zju.edu.cn>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID: cC_KCgDni7hLGpxi_MKDAQ--.35132W
-X-CM-SenderInfo: qssqjiasttq6lmxovvfxof0/1tbiAgAMAVZdtaCl2wABsu
-X-Coremail-Antispam: 1Ur529EdanIXcx71UUUUU7IcSsGvfJ3iIAIbVAYjsxI4VW3Jw
-	CS07vEb4IE77IF4wCS07vE1I0E4x80FVAKz4kxMIAIbVAFxVCaYxvI4VCIwcAKzIAtYxBI
-	daVFxhVjvjDU=
-Subject: [oss-security] CVE-2022-1975: Linux kernel: sleep in atomic context bug when nfc firmware
- download timeout
+Message-ID: <CAARZ5vpQJqC27an=PFHU7BS=CVqT=uvnt16fCcCNrtL4P+0wJw@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=001a1141b5205e92ea051baef1d6
+Date: Sat, 25 Jul 2015 08:31:02 +0000
+From: Nitin Venkatesh <venkatesh.nitin@gmail.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE Request - Cross-Site Request Forgery & SQL Injection
+ Vulnerabilities in Unite Gallery Lite Wordpress Plugin v1.4.6
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
 
-SGVsbG8gdGhlcmUsCgpUaGVyZSBhcmUgc2xlZXAgaW4gYXRvbWljIGNvbnRl
-eHQgYnVncyB0aGF0IGNvdWxkIGNhdXNlIGtlcm5lbCBwYW5pYyBkdXJpbmcK
-bmZjIGZpcm13YXJlIGRvd25sb2FkIHByb2Nlc3MuCgo9Kj0qPSo9Kj0qPSo9
-Kj0qPSAgQnVnIERldGFpbHMgID0qPSo9Kj0qPSo9Kj0qPSo9CgpUaGUgcm9v
-dCBjYXVzZSBvZiB0aGlzIGJ1ZyBpcyB0aGF0IG5sbXNnX25ldyB3aXRoIEdG
-UF9LRVJORUwgcGFyYW1ldGVyIGlzIGNhbGxlZAppbiBmd19kbmxkX3RpbWVv
-dXQgd2hpY2ggaXMgYSB0aW1lciBoYW5kbGVyLiAKClRoZSBubG1zZ19uZXcg
-d2l0aCBHRlBfS0VSTkVMIHBhcmFtZXRlciBtYXkgc2xlZXAgZHVyaW5nIG1l
-bW9yeSBhbGxvY2F0aW9uIHByb2Nlc3MsCmFuZCB0aGUgdGltZXIgaGFuZGxl
-ciBpcyBydW4gYXMgdGhlIHJlc3VsdCBvZiBhICJzb2Z0d2FyZSBpbnRlcnJ1
-cHQiIHRoYXQgc2hvdWxkIG5vdApjYWxsIGFueSBvdGhlciBmdW5jdGlvbnMg
-dGhhdCBjb3VsZCBzbGVlcC4KCj0qPSo9Kj0qPSo9Kj0qPSo9ICBCdWcgRWZm
-ZWN0cyAgPSo9Kj0qPSo9Kj0qPSo9Kj0KCldlIGNhbiBzdWNjZXNzZnVsbHkg
-dHJpZ2dlciB0aGUgdnVsbmVyYWJpbGl0aWVzIHRvIGNyYXNoIHRoZSBsaW51
-eCBrZXJuZWwuCgpbICAgNDEuODUyMDE5XSBnZW5lcmFsIHByb3RlY3Rpb24g
-ZmF1bHQsIHByb2JhYmx5IGZvciBub24tY2Fub25pY2FsIGFkZHJlc3MgMHhk
-ZWFkMDAwMDAwMDAwMTJhOiAwMDAwIFsjMV0gUFJFRU1QVCBTTVAgTk9QVEkK
-WyAgIDQxLjg3MTI2Ml0gKE5VTEwgZGV2aWNlICopOiBORkM6IEZXIGxvYWRp
-bmcgdGltZW91dApbICAgNDEuODUyMDE5XSBSSVA6IDAwMTA6X19ydW5fdGlt
-ZXJzLnBhcnQuMCsweDM5MS8weDUwMApbICAgNDEuODUyMDE5XSBDb2RlOiAw
-MCA0OCA4YiA0NSAwOCA0OCA4OSBjNyA0OCA4OSAwNCAyNCBlOCBmOCA1NCAw
-ZSAwMCA0OCA4YiAwNCAyNCA0YyA4OSAzMCA0ZCA4NSBmNiA3NCAxMSA0OSA4
-ZCA3ZSAwOCBlOCA5ClsgICA0MS44NTIwMTldIFJTUDogMDAxODpmZmZmYzkw
-MDAwMGM4ZWMwIEVGTEFHUzogMDAwMDAwNDYKWyAgIDQxLjg1MjAxOV0gUkFY
-OiBmZmZmYzkwMDAwMGM4ZWYwIFJCWDogZmZmZmM5MDAwMDBjOGVmMCBSQ1g6
-IGZmZmZmZmZmODExNjkyN2QKWyAgIDQxLjg1MjAxOV0gUkRYOiAwMDAwMDAw
-MDAwMDAwMzhiIFJTSTogMDAwMWZmZmZmZmZmZmZmZiBSREk6IGRlYWQwMDAw
-MDAwMDAxMmEKWyAgIDQxLjg1MjAxOV0gUkJQOiBmZmZmODg4MDA0NmNiZDIw
-IFIwODogZmZmZmZmZmY4NDE3YWI3OCBSMDk6IDAwMDAwMDAwMDAwMDAwMDAK
-WyAgIDQxLjg1MjAxOV0gUjEwOiAwMDAwMDAwMDAwMDAwMDAxIFIxMTogMDAw
-MDAwMDAwMDAwMDAwMiBSMTI6IGZmZmY4ODgwN2RjOWJmMDAKWyAgIDQxLjg1
-MjAxOV0gUjEzOiBmZmZmODg4MDdkYzliZjQwIFIxNDogZGVhZDAwMDAwMDAw
-MDEyMiBSMTU6IGZmZmY4ODgwMDQ2Y2JkMjgKWyAgIDQxLjg1MjAxOV0gRlM6
-ICAwMDAwMDAwMDAwMDAwMDAwKDAwMDApIEdTOmZmZmY4ODgwN2RjODAwMDAo
-MDAwMCkga25sR1M6MDAwMDAwMDAwMDAwMDAwMApbICAgNDEuODUyMDE5XSBD
-UzogIDAwMTAgRFM6IDAwMDAgRVM6IDAwMDAgQ1IwOiAwMDAwMDAwMDgwMDUw
-MDMzClsgICA0MS44NTIwMTldIENSMjogMDAwMDdmYTdmMDIyOTE4MCBDUjM6
-IDAwMDAwMDAwMDMyMjIwMDAgQ1I0OiAwMDAwMDAwMDAwMDAwNmUwClsgICA0
-MS44NTIwMTldIENhbGwgVHJhY2U6ClsgICA0MS44NTIwMTldICA8SVJRPgpb
-ICAgNDEuODUyMDE5XSAgPyBjbG9ja2V2ZW50c19wcm9ncmFtX2V2ZW50KzB4
-ZDkvMHgxNTAKWyAgIDQxLjg1MjAxOV0gID8gdGlja19wcm9ncmFtX2V2ZW50
-KzB4NTAvMHg5MApbICAgNDEuODUyMDE5XSAgcnVuX3RpbWVyX3NvZnRpcnEr
-MHg0Zi8weGEwClsgICA0MS44NTIwMTldICBfX2RvX3NvZnRpcnErMHgxMWQv
-MHgzNjMKWyAgIDQxLjg1MjAxOV0gIGlycV9leGl0X3JjdSsweGIwLzB4MTAw
-ClsgICA0MS44NTIwMTldICBzeXN2ZWNfYXBpY190aW1lcl9pbnRlcnJ1cHQr
-MHg4Zi8weGMwClsgICA0MS44NTIwMTldICA8L0lSUT4KWyAgIDQxLjg1MjAx
-OV0gIDxUQVNLPgpbICAgNDEuODUyMDE5XSAgYXNtX3N5c3ZlY19hcGljX3Rp
-bWVyX2ludGVycnVwdCsweDEyLzB4MjAKWyAgIDQxLjg1MjAxOV0gUklQOiAw
-MDEwOnJlc2N1ZXJfdGhyZWFkKzB4NWE1LzB4NmQwClsgICA0MS44NTIwMTld
-IENvZGU6IDAwIDQ4IDhiIDAzIDQ4IDM5IGMzIDBmIDg0IGNmIDAwIDAwIDAw
-IDQ4IGM3IGM3IDYwIGQzIDI2IDgzIGU4IDdjIDYxIDU4IDAxIGU5IGNkIGZl
-IGZmIGZmIDQ4IGM3IGM3IDYwIDcKWyAgIDQxLjg1MjAxOV0gUlNQOiAwMDE4
-OmZmZmZjOTAwMDBlMDNlNzAgRUZMQUdTOiAwMDAwMDI4NgpbICAgNDEuODUy
-MDE5XSBSQVg6IDAwMDAwMDAwODAwMDAwMDAgUkJYOiBmZmZmODg4MDA3Mjlj
-MGU4IFJDWDogMDAwMDAwMDAwMDAwMDAwMApbICAgNDEuODUyMDE5XSBSRFg6
-IDAwMDAwMDAwMDAwMDAwMDEgUlNJOiAwMDAxZmZmZjgzMjZkMzYwIFJESTog
-MDAwMDAwMDBmZmZmZmZmZgpbICAgNDEuODUyMDE5XSBSQlA6IGZmZmY4ODgw
-MDczZTgwMmMgUjA4OiBmZmZmZmZmZjg0MTdhY2UwIFIwOTogMDAwMDAwMDAw
-MDAwMDAwMApbICAgNDEuODUyMDE5XSBSMTA6IDAwMDFmZmZmZmZmZmZmZmYg
-UjExOiBmZmZmZmZmZjgxMTEyNWE3IFIxMjogZmZmZjg4ODAwNzNhZjcwMApb
-ICAgNDEuODUyMDE5XSBSMTM6IGZmZmZjOTAwMDAyN2ZiNjggUjE0OiBmZmZm
-ODg4MDA3MjljMDAwIFIxNTogZmZmZjg4ODAwNzNlODAwMApbICAgNDEuODUy
-MDE5XSAgPyBkb19yYXdfc3Bpbl91bmxvY2srMHg5Ny8weGYwClsgICA0MS44
-NTIwMTldICA/IF9fdGhpc19jcHVfcHJlZW1wdF9jaGVjaysweGYvMHgxMApb
-ICAgNDEuODUyMDE5XSAgPyBsb2NrX3JlbGVhc2UrMHgxM2MvMHgyYzAKWyAg
-IDQxLjg1MjAxOV0gID8gZG9fcmF3X3NwaW5fdW5sb2NrKzB4OTcvMHhmMApb
-ICAgNDEuODUyMDE5XSAgPyBwcm9jZXNzX29uZV93b3JrKzB4YTgwLzB4YTgw
-ClsgICA0MS44NTIwMTldICBrdGhyZWFkKzB4MTdlLzB4MWIwClsgICA0MS44
-NTIwMTldICA/IGt0aHJlYWRfY29tcGxldGVfYW5kX2V4aXQrMHgyMC8weDIw
-ClsgICA0MS44NTIwMTldICByZXRfZnJvbV9mb3JrKzB4MjIvMHgzMApbICAg
-NDEuODUyMDE5XSAgPC9UQVNLPgpbICAgNDEuODUyMDE5XSBNb2R1bGVzIGxp
-bmtlZCBpbjoKWyAgIDQxLjg1MjAxOV0gLS0tWyBlbmQgdHJhY2UgMDAwMDAw
-MDAwMDAwMDAwMCBdLS0tClsgICA0MS44NTIwMTldIFJJUDogMDAxMDpfX3J1
-bl90aW1lcnMucGFydC4wKzB4MzkxLzB4NTAwClsgICA0MS44NTIwMTldIENv
-ZGU6IDAwIDQ4IDhiIDQ1IDA4IDQ4IDg5IGM3IDQ4IDg5IDA0IDI0IGU4IGY4
-IDU0IDBlIDAwIDQ4IDhiIDA0IDI0IDRjIDg5IDMwIDRkIDg1IGY2IDc0IDEx
-IDQ5IDhkIDdlIDA4IGU4IDkKWyAgIDQxLjg1MjAxOV0gUlNQOiAwMDE4OmZm
-ZmZjOTAwMDAwYzhlYzAgRUZMQUdTOiAwMDAwMDA0NgpbICAgNDEuODUyMDE5
-XSBSQVg6IGZmZmZjOTAwMDAwYzhlZjAgUkJYOiBmZmZmYzkwMDAwMGM4ZWYw
-IFJDWDogZmZmZmZmZmY4MTE2OTI3ZApbICAgNDEuODUyMDE5XSBSRFg6IDAw
-MDAwMDAwMDAwMDAzOGIgUlNJOiAwMDAxZmZmZmZmZmZmZmZmIFJESTogZGVh
-ZDAwMDAwMDAwMDEyYQpbICAgNDEuODUyMDE5XSBSQlA6IGZmZmY4ODgwMDQ2
-Y2JkMjAgUjA4OiBmZmZmZmZmZjg0MTdhYjc4IFIwOTogMDAwMDAwMDAwMDAw
-MDAwMApbICAgNDEuODUyMDE5XSBSMTA6IDAwMDAwMDAwMDAwMDAwMDEgUjEx
-OiAwMDAwMDAwMDAwMDAwMDAyIFIxMjogZmZmZjg4ODA3ZGM5YmYwMApbICAg
-NDEuODUyMDE5XSBSMTM6IGZmZmY4ODgwN2RjOWJmNDAgUjE0OiBkZWFkMDAw
-MDAwMDAwMTIyIFIxNTogZmZmZjg4ODAwNDZjYmQyOApbICAgNDEuODUyMDE5
-XSBGUzogIDAwMDAwMDAwMDAwMDAwMDAoMDAwMCkgR1M6ZmZmZjg4ODA3ZGM4
-MDAwMCgwMDAwKSBrbmxHUzowMDAwMDAwMDAwMDAwMDAwClsgICA0MS44NTIw
-MTldIENTOiAgMDAxMCBEUzogMDAwMCBFUzogMDAwMCBDUjA6IDAwMDAwMDAw
-ODAwNTAwMzMKWyAgIDQxLjg1MjAxOV0gQ1IyOiAwMDAwN2ZhN2YwMjI5MTgw
-IENSMzogMDAwMDAwMDAwMzIyMjAwMCBDUjQ6IDAwMDAwMDAwMDAwMDA2ZTAK
-WyAgIDQxLjg1MjAxOV0gS2VybmVsIHBhbmljIC0gbm90IHN5bmNpbmc6IEZh
-dGFsIGV4Y2VwdGlvbiBpbiBpbnRlcnJ1cHQKWyAgIDQxLjg1MjAxOV0gU2h1
-dHRpbmcgZG93biBjcHVzIHdpdGggTk1JClsgICA0MS44NTIwMTldIEtlcm5l
-bCBPZmZzZXQ6IGRpc2FibGVkClsgICA0MS44NTIwMTldIC0tLVsgZW5kIEtl
-cm5lbCBwYW5pYyAtIG5vdCBzeW5jaW5nOiBGYXRhbCBleGNlcHRpb24gaW4g
-aW50ZXJydXB0IF0tLS0KCj0qPSo9Kj0qPSo9Kj0qPSo9ICBCdWcgRml4ICA9
-Kj0qPSo9Kj0qPSo9Kj0qPQoKVGhlIHBhdGNoIHRoYXQgaGF2ZSBiZWVuIGFw
-cGxpZWQgdG8gbWFpbmxpbmUgTGludXgga2VybmVsIGlzIHNob3duIGJlbG93
-LgpodHRwczovL2dpdGh1Yi5jb20vdG9ydmFsZHMvbGludXgvY29tbWl0LzQw
-NzFiZjEyMWQ1OTk0NGQ1Y2QyMjM4ZGUwNjQyZjNkNzk5NWE5OTcKCj0qPSo9
-Kj0qPSo9Kj0qPSo9ICBUaW1lbGluZSAgPSo9Kj0qPSo9Kj0qPSo9Kj0KCjIw
-MjItMDUtMDU6IGNvbW1pdCA0MDcxYmYxMjFkNTkgYWNjZXB0ZWQgdG8gbWFp
-bmxpbmUga2VybmVsCjIwMjItMDYtMDM6IENWRS0yMDIyLTE5NzUgaXMgYXNz
-aWduZWQKCj0qPSo9Kj0qPSo9Kj0qPSo9ICBDcmVkaXQgID0qPSo9Kj0qPSo9
-Kj0qPSo9CgpEdW9taW5nIFpob3UgPGR1b21pbmdAemp1LmVkdS5jbj4KCkJl
-c3QgUmVnYXJkcywKRHVvbWluZyBaaG91
+--001a1141b5205e92ea051baef1d6
+Content-Type: text/plain; charset=UTF-8
+
+Hi,
+
+I discovered Cross-Site Request Forgery & SQL Injection Vulnerabilities in
+Unite Gallery Lite Wordpress Plugin v1.4.6 which was responsibly disclosed
+to the vendor who fixed the issues in v1.5.
+
+I request a CVE for the same.
+
+References:
+http://seclists.org/fulldisclosure/2015/Jul/114
+
+Thanks & regards,
+Nitin Venkatesh
+
+--001a1141b5205e92ea051baef1d6--
