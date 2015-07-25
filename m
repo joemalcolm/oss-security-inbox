@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["886" "Wednesday" "30" "August" "2017" "08:01:31" "-0800" "ISC Security Officer" "security-officer@isc.org" "<1d770872-05b4-6e74-930f-09a49c34ad24@isc.org>" "23" "[oss-security] A recommendation for maintainers of BIND packages (re: DNSSEC validation)" nil nil nil "8" "2017083016:01:31" "[oss-security] A recommendation for maintainers of BIND packages (re: DNSSEC validation)" (number mark "U       security-off Aug 30   23/886   " thread-indent "\"[oss-security] A recommendation for maintainers of BIND packages (re: DNSSEC validation)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["897" "Friday" "24" "July" "2015" "23:12:48" "-0700" "Andy Lutomirski" "luto@amacapital.net" "<55B328E0.8050701@amacapital.net>" "23" "[oss-security] Re: Linux x86_64 NMI security issues" nil nil nil "7" "2015072506:12:48" "[oss-security] Re: Linux x86_64 NMI security issues" (number mark "        luto@amacapi Jul 24   23/897   " thread-indent "\"[oss-security] Re: Linux x86_64 NMI security issues\"\n") "<CA+5PVA7MZCryECtCVw1zLacEqvRWrsq3rSnZKPBJjcwC3e0h=g@mail.gmail.com>" ("<CALCETrXViSiMG79NtqN79NauDN9B2k9nOQN18496h9pJg+78+g@mail.gmail.com>" "<CA+5PVA7MZCryECtCVw1zLacEqvRWrsq3rSnZKPBJjcwC3e0h=g@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 3761 invoked by uid 550); 30 Aug 2017 16:05:52 -0000
+Received: (qmail 2025 invoked by uid 550); 25 Jul 2015 06:13:09 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,41 +11,58 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32256 invoked from network); 30 Aug 2017 16:01:50 -0000
-To: oss-security@lists.openwall.com
-From: ISC Security Officer <security-officer@isc.org>
-Message-ID: <1d770872-05b4-6e74-930f-09a49c34ad24@isc.org>
-Date: Wed, 30 Aug 2017 08:01:31 -0800
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:52.0)
- Gecko/20100101 Thunderbird/52.3.0
+Received: (qmail 1963 invoked from network); 25 Jul 2015 06:13:04 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=Q4kxJ08/8m43ZEXOhyV9M/uL6S2uldsbDoYnsXbrCZ0=;
+        b=Da8e7xU1phDHqH/JUQSgwUOokB5Vt8O/uzNlqa3QpFSI7SGhVvuHtI4HXg8ruujhYQ
+         5B2/+Ow8tUmfa3hMMG+xFSNMO1+l2Ahs5jw/hWL3vMiYyfRyRX+l25+hTJZD7iReIZPZ
+         1iFCV+KGuMlsECkLgx66zNB+ktX6OGDsBne1BuRlc7ZJc7v7XrwOApodx93PUEIiedcD
+         gNSQ7ODHobeTxPZVPDXDsKOWfI3fHEFzjRYrp+g2Xd4Q9uNA3HcuHH+bGJvMdrPFTLX7
+         kmm8W5Lwc7CnvjbOFjLb9yhfCzX3S7UUwtYOlltPr8+XKnIpks1n7kXEqTelZNg4kNjb
+         jxug==
+X-Gm-Message-State: ALoCoQkWShP9u1CeTOBRNN5Pa3adaCApmpaL4NCCUqKW5qv8D9ZfbZOl20P4/ZtxEkupGrhIRYWD
+X-Received: by 10.66.186.138 with SMTP id fk10mr39264965pac.75.1437804772596;
+        Fri, 24 Jul 2015 23:12:52 -0700 (PDT)
+References: <CALCETrXViSiMG79NtqN79NauDN9B2k9nOQN18496h9pJg+78+g@mail.gmail.com>
+ <CA+5PVA7MZCryECtCVw1zLacEqvRWrsq3rSnZKPBJjcwC3e0h=g@mail.gmail.com>
+Message-ID: <55B328E0.8050701@amacapital.net>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.1.0
 MIME-Version: 1.0
+In-Reply-To: <CA+5PVA7MZCryECtCVw1zLacEqvRWrsq3rSnZKPBJjcwC3e0h=g@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
-Subject: [oss-security] A recommendation for maintainers of BIND packages (re: DNSSEC
- validation)
+Content-Transfer-Encoding: 7bit
+Cc: oss security list <oss-security@lists.openwall.com>
+Date: Fri, 24 Jul 2015 23:12:48 -0700
+From: Andy Lutomirski <luto@amacapital.net>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: Linux x86_64 NMI security issues
+To: Josh Boyer <jwboyer@fedoraproject.org>
 
-Hello, oss-security list subscribers --
+On 07/24/2015 07:16 AM, Josh Boyer wrote:
+> On Wed, Jul 22, 2015 at 2:12 PM, Andy Lutomirski <luto@amacapital.net> wrote:
+>> Note: Several of these fixes each depend on a few patches immediately
+>> before them.  The NMI stack switching fix also depends on changes made
+>> in 4.2 and will appear to apply but crash on older kernels.  I have a
+>> different variant that's more portable.
+> 
+> Given that none of these are going to apply cleanly on older kernels,
+> do you have backports available for 4.1.y and the longterm stable
+> kernels?
+> 
 
-Please pardon the intrusion but ISC are trying to reach packagers who
-maintain and redistribute packages of BIND based on our source.
+There's this:
 
-We know that many of you selectively pick and choose changes which are
-added to current BIND releases for backporting to older BIND versions
-on which your distributed packages are based.  For those of you who do,
-we would like to make sure you have selected this change:
+https://git.kernel.org/cgit/linux/kernel/git/luto/linux.git/commit/?h=x86/nmi-backport
 
-4564.	[maint]		Update the built in managed keys to include the
-			upcoming root KSK. [RT #44579]
+which is a combined effort of me and Ben Hutchings.  It's not synced up
+to the fixes in Linus' tree.
 
-and distributed it to users prior to the completion of the in-progress
-root key rollover in order to ensure that DNSSEC validation continues
-to work for operators who are using BIND's managed-keys functionality.
+Note that even Linus' tree doesn't have the synchronous modify_ldt fix
+yet.  I sent a hopefully final version of that out a few minutes ago.
 
-If you have any questions, you may contact us using security-officer@isc.org
-
-Thank you,
-
-Michael McNally
-ISC Security Officer
+--Andy
