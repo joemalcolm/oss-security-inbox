@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1962" "Friday" "5" "June" "2015" "12:04:11" "+0200" "Alessandro Ghedini" "alessandro@ghedini.me" "<20150605100411.GA6837@kronk.local>" "51" "[oss-security] Re: CVE Request: redis Lua sandbox escape and arbitrary code execution" nil nil nil "6" "2015060510:04:11" "[oss-security] Re: CVE Request: redis Lua sandbox escape and arbitrary code execution" (number mark "        alessandro@g Jun  5   51/1962  " thread-indent "\"[oss-security] Re: CVE Request: redis Lua sandbox escape and arbitrary code execution\"\n") "<20150604215609.811EC42E102@smtpvbsrv1.mitre.org>" ("<20150604134618.GA1613@kronk.local>" "<20150604215609.811EC42E102@smtpvbsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1918" "Saturday" "25" "July" "2015" "19:41:08" "-0500" "Brad Knowles" "brad@shub-internet.org" "<F47CFA85-FA37-4287-9921-C056C0CA8FF0@shub-internet.org>" "50" "Re: [oss-security] Qualys Security Advisory - CVE-2015-3245 userhelper - CVE-2015-3246 libuser" nil nil nil "7" "2015072600:41:08" "[oss-security] Qualys Security Advisory - CVE-2015-3245 userhelper - CVE-2015-3246 libuser" (number mark "        brad@shub-in Jul 25   50/1918  " thread-indent "\"Re: [oss-security] Qualys Security Advisory - CVE-2015-3245 userhelper - CVE-2015-3246 libuser\"\n") "<alpine.BSF.2.11.1507260747110.880@aneurin.horsfall.org>" ("<20150723170954.GA17931@localhost.localdomain>" "<87h9oud89s.fsf@lysator.liu.se>" "<CAHQ_-nR8WGDK58PmsmhPp8ApnmwjrLRxeyCKTsfRL83ZUZjTxA@mail.gmail.com>" "<871tfxdgzw.fsf@lysator.liu.se>" "<55B22C72.4020706@tillo.ch>" "<874mktb7xv.fsf@lysator.liu.se>" "<875603C9-F2F1-4D25-A081-503D870A5FEB@shub-internet.org>" "<87wpxo9ck7.fsf@lysator.liu.se>" "<alpine.BSF.2.11.1507260747110.880@aneurin.horsfall.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 9857 invoked by uid 550); 5 Jun 2015 10:04:26 -0000
+Received: (qmail 11565 invoked by uid 550); 26 Jul 2015 00:54:39 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,87 +11,89 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 9816 invoked from network); 5 Jun 2015 10:04:24 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=pTEJxvO1zMcG0Y8uNvNu1voqSy6jotmAKjM29HLdpMk=;
-        b=EuwjRONnpwU+mAdPz6dVglL7ZoRtK+71BUpjBs2FSF6xpN0asxoJ8TRVeTBKDbHsbe
-         mafQ75yMZW2JKs0sn7sRTLRL/P8p2gOxkvAElgmLyG6tIPwJ4zqmuupnOhMfH/dUolUn
-         A+IsGU/Km/oDOpLykx8AIzH1hyksWUYlcYNHDzTOCLeWShaHtD6vImMgeeaO4C7XhPOB
-         SqtNWofHPJCLyBOg41LdE3G9l1a+vwr0fgO6HhvjJ4c137JrXUJq97WJVjtcQ2pl1pEh
-         HsrIrf5XUJm7ha0qKj5HVhvZUGgS3TfFOdiB66Sd0oQPJDs8zdSRjK+ZFiNc9UCbwWQN
-         zn9w==
-X-Received: by 10.194.5.74 with SMTP id q10mr3832217wjq.27.1433498652808;
-        Fri, 05 Jun 2015 03:04:12 -0700 (PDT)
-Message-ID: <20150605100411.GA6837@kronk.local>
-Mail-Followup-To: cve-assign@mitre.org, oss-security@lists.openwall.com
-References: <20150604134618.GA1613@kronk.local>
- <20150604215609.811EC42E102@smtpvbsrv1.mitre.org>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="/9DWx/yDrRhgMJTb"
-Content-Disposition: inline
-In-Reply-To: <20150604215609.811EC42E102@smtpvbsrv1.mitre.org>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-Cc: oss-security@lists.openwall.com
-Date: Fri, 5 Jun 2015 12:04:11 +0200
-From: Alessandro Ghedini <alessandro@ghedini.me>
+Received: (qmail 3155 invoked from network); 26 Jul 2015 00:41:18 -0000
+X-ASG-Debug-ID: 1437871265-061c416de586d350001-Ebmqpw
+X-Barracuda-Envelope-From: brad@shub-internet.org
+X-Barracuda-RBL-Trusted-Forwarder: 216.194.196.20
+X-Barracuda-RBL-Trusted-Forwarder: 216.194.248.141
+X-Virus-Scanned: amavisd-new at mail-sterling.his.com
+X-Barracuda-RBL-IP: 10.137.0.22
+Mime-Version: 1.0 (Mac OS X Mail 8.2 \(2102\))
+X-ASG-Orig-Subj: Re: [oss-security] Qualys Security Advisory - CVE-2015-3245 userhelper - CVE-2015-3246 libuser
+Content-Type: multipart/signed; boundary="Apple-Mail=_5E9960A7-2E6C-4C71-B5A9-719430271089"; protocol="application/pgp-signature"; micalg=pgp-sha256
+X-Pgp-Agent: GPGMail 2.5
+In-Reply-To: <alpine.BSF.2.11.1507260747110.880@aneurin.horsfall.org>
+X-Mao-Original-Outgoing-Id: 459564067.735581-b345034f4c08230e1971ba1020d9e7a2
+Message-Id: <F47CFA85-FA37-4287-9921-C056C0CA8FF0@shub-internet.org>
+References: <20150723170954.GA17931@localhost.localdomain> <87h9oud89s.fsf@lysator.liu.se> <CAHQ_-nR8WGDK58PmsmhPp8ApnmwjrLRxeyCKTsfRL83ZUZjTxA@mail.gmail.com> <871tfxdgzw.fsf@lysator.liu.se> <55B22C72.4020706@tillo.ch> <874mktb7xv.fsf@lysator.liu.se> <875603C9-F2F1-4D25-A081-503D870A5FEB@shub-internet.org> <87wpxo9ck7.fsf@lysator.liu.se> <alpine.BSF.2.11.1507260747110.880@aneurin.horsfall.org>
+X-Mailer: Apple Mail (2.2102)
+X-Barracuda-Connect: smtp-nf-202.his.com[216.194.196.20]
+X-Barracuda-Start-Time: 1437871265
+X-Barracuda-URL: https://spam.his.com:443/cgi-mod/mark.cgi
+X-Virus-Scanned: by bsmtpd at his.com
+X-Barracuda-BRTS-Status: 1
+X-Barracuda-Spam-Score: 0.01
+X-Barracuda-Spam-Status: No, SCORE=0.01 using global scores of TAG_LEVEL=1000.0 QUARANTINE_LEVEL=1000.0 KILL_LEVEL=7.0 tests=BSF_SC0_MISMATCH_TO, BSF_SC2_SA022a
+X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.3.21081
+	Rule breakdown below
+	 pts rule name              description
+	---- ---------------------- --------------------------------------------------
+	0.00 BSF_SC0_MISMATCH_TO    Envelope rcpt doesn't match header
+	0.01 BSF_SC2_SA022a         Custom Rule SA022a
+Cc: Brad Knowles <brad@shub-internet.org>
+Date: Sat, 25 Jul 2015 19:41:08 -0500
+From: Brad Knowles <brad@shub-internet.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE Request: redis Lua sandbox escape and arbitrary code
- execution
-To: cve-assign@mitre.org
+Subject: Re: [oss-security] Qualys Security Advisory - CVE-2015-3245 userhelper - CVE-2015-3246 libuser
+To: oss-security@lists.openwall.com
 
---/9DWx/yDrRhgMJTb
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+--Apple-Mail=_5E9960A7-2E6C-4C71-B5A9-719430271089
 Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=us-ascii
 
-On Thu, Jun 04, 2015 at 05:56:09PM -0400, cve-assign@mitre.org wrote:
-> > redis 3.0.2 and 2.8.21 have been released
->=20
-> > https://groups.google.com/forum/#!msg/redis-db/4Y6OqK8gEyk/Dg-5cejl-eUJ
-> > http://benmmurphy.github.io/blog/2015/06/04/redis-eval-lua-sandbox-esca=
-pe/
-> > https://github.com/antirez/redis/commit/fdf9d455098f54f7666c702ae464e6e=
-a21e25411
->=20
-> The Ben Murphy advisory has a long discussion of many software and
-> deployment issues. Do you have a specific viewpoint about what the CVE
-> ID should be for? In particular, is the essence of the request that
-> the Redis upstream vendor believes that loading Lua bytecode was, by
-> itself, inherently an implementation mistake in Redis, and is now
-> fixed by the
-> https://github.com/antirez/redis/commit/fdf9d455098f54f7666c702ae464e6ea2=
-1e25411
-> change?
+On Jul 25, 2015, at 4:55 PM, Dave Horsfall <dave@horsfall.org> wrote:
 
-Yes, that was the idea.
+> What would be a reasonable interval (for some definition of "reasonable")
+> in that case?  24 hours?  48 hours?  0 hours?
 
-Cheers
+Any value you choose will be wrong, because there will always be people on =
+both sides of that argument who are violently opposed to any value longer o=
+r shorter than what they think is appropriate.  Consensus is not only impos=
+sible, but these people will actively work to prohibit any possible consens=
+us.
 
---/9DWx/yDrRhgMJTb
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
+Thus begins the flame wars.
+
+--
+Brad Knowles <brad@shub-internet.org>
+LinkedIn Profile: <http://tinyurl.com/y8kpxu>
+
+
+--Apple-Mail=_5E9960A7-2E6C-4C71-B5A9-719430271089
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+	filename=signature.asc
+Content-Type: application/pgp-signature;
+	name=signature.asc
+Content-Description: Message signed with OpenPGP using GPGMail
 
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Version: GnuPG/MacGPG2 v2.0.27
 
-iQIcBAEBCgAGBQJVcXQYAAoJEK+lG9bN5XPLzSQP/R5xIqAq0JhrjyZCmBvsoAnC
-MEMQjZc4wpnhNmQiVq6wWumZXp7IZmDP5PsfeffBU76/6/KKBHdb6i8waQR2UYcx
-hhXsl3P1Hw7RIqk54Chamjj6NHDO9OZZmW8RUs5ZGOqNP0QHVUq3/tE0XIrVtmEQ
-3wlGQv2x3GmLNw8kakze3RukdObQ6wS053UfhAUfW3XYPDocqB7PKeLtPeXwS/v6
-zJemscCWkDzb4R6quSeKkiOAxw6N9BBg6JsXPPu8bwUhos4AN3TdtGEAdqTPto9v
-eFN8WZLHU9ecnSTVq2d/rSDtOzrSX9dTbcKiJK5betaLeyr3lIov16dLB92QRoZR
-kvhlx4a50c6eXVu3YOqunl3kIUf7t7prg3WN0CJ0gS/TQ9WfGlkw2R54AlXPkMUP
-C4/UIif4gc5z8ML4ZsiMPev9tQMUfIx51UmdDe6QX9TU4IIhDahmySuEaHPCvimG
-h5Go9+IypJOaq3mANniAmEeM9vlG0wdwWnVfIweIfISfLdS0jhdqFQ8bpmQ40S9I
-hymAdPu6s/hbNRA4AwWyalnUM9LOqYtQ6bMGLVZa58q1gkih6+x1Nmrri9Tgy0et
-psG9uAoi27PDrGOHKFaRHkZY1pDk/NbVhKrOmX4FAFb8ZEaE0n4Py+J8brgS8D1U
-cfOVZLPv3aAEELGsV1ci
-=61bz
+iQIcBAEBCAAGBQJVtCyjAAoJEKOyg2+mWTCTuKcP/0b82BP9G7x6AxuVoQELyuiv
+BGFYqdJP+6dgvIwlWy56TQRJ5aEB5xfxEYORwTXgTUuc+aWKzs11+itRVEzlVBNb
+xuCVIocBu+vASRKYsl3eD0ReuQUgxQ0aPop3ZrdUO4MGm1oZZ9UgPbxsgfvsNURq
+ohzBx6dwOo95gyrd5moz6vPtdKsiOTKHnQt0RylCa8KH4gAezTeq3bxtgF61yyqm
+RpABXWpKvnJPr6JLW9Bl3W+iEZyPeGq5Pq3o9YmzAOD8WGMNqzybI/eUyvS476xr
+yHVlCf5e49Qkq4iBsyvSnLfSVEbOpqF8+CMaMRNlqi8iam8GJLRkE0mdCUl8om4k
+HU7pvodUQrhWf70wHj6LsIBc0rKVldQtIc/aXrVWf9HJqHXk/RiMlrV5IUUUHZ9C
+DhfLoJoHj9TL967dnalW79L92svOXjOtI602YPstwkH7P1AYusJtG+cOUIK9gZAb
+IJ1MHTfmZN97OMCNzxrGM0h8AZc9Vt1IBVkoHd+6/iJ0OsFl6JC1SnWrO4xstf12
+Q3kppUQz/8FK6BHA7fFl8hqyNoMQiqcfV2YMGlHYXJIzElJV2F/ChXo1ZMhy6NTx
+0M7NNlEOydv6xnjpBhsedE2gMg8fSQr6RHzYkXFgxPcnFo4KMih/DDqaeXxLB+pA
+U1dIOw+HZTN0cK5jWQ1N
+=4rPu
 -----END PGP SIGNATURE-----
 
---/9DWx/yDrRhgMJTb--
+--Apple-Mail=_5E9960A7-2E6C-4C71-B5A9-719430271089--
