@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["8699" "Monday" "4" "December" "2017" "22:33:56" "+0100" "oststrom \\(public\\)" "pub@oststrom.com" "<000301d36d47$979bc4b0$c6d34e10$@oststrom.com>" "262" "[oss-security] CVE-2017-16930 - Claymore's Dual Ethereum Miner unauth stack buffer overflow in remote management interface" nil nil nil "12" "2017120421:33:56" "[oss-security] CVE-2017-16930 - Claymore's Dual Ethereum Miner unauth stack buffer overflow in remote management interface" (number mark "U       pub@oststrom Dec  4  262/8699  " thread-indent "\"[oss-security] CVE-2017-16930 - Claymore's Dual Ethereum Miner unauth stack buffer overflow in remote management interface\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1172" "Sunday" "26" "July" "2015" "16:33:02" "+0300" "gremlin@gremlin.ru" "gremlin@gremlin.ru" "<20150726133302.GD12150@gremlin.ru>" "31" "Re: [oss-security] Qualys Security Advisory - CVE-2015-3245 userhelper - CVE-2015-3246 libuser" nil nil nil "7" "2015072613:33:02" "[oss-security] Qualys Security Advisory - CVE-2015-3245 userhelper - CVE-2015-3246 libuser" (number mark "U       gremlin@grem Jul 26   31/1172  " thread-indent "\"Re: [oss-security] Qualys Security Advisory - CVE-2015-3245 userhelper - CVE-2015-3246 libuser\"\n") "<20150723170954.GA17931@localhost.localdomain>" ("<20150723170954.GA17931@localhost.localdomain>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 30674 invoked by uid 550); 4 Dec 2017 21:41:28 -0000
+Received: (qmail 32641 invoked by uid 550); 26 Jul 2015 13:33:18 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,282 +11,51 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 32612 invoked from network); 26 Jul 2015 13:33:16 -0000
+Message-ID: <20150726133302.GD12150@gremlin.ru>
+References: <20150723170954.GA17931@localhost.localdomain>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=koi8-r
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20150723170954.GA17931@localhost.localdomain>
+OpenPGP: id=8832FE9FA791F7968AC96E4E909DAC45EF3B1FA8
+X-PGP-PubKey: 0xEF3B1FA8
+X-PGP-Fingerprint: 8832 FE9F A791 F796 8AC9 6E4E 909D AC45 EF3B 1FA8
+Date: Sun, 26 Jul 2015 16:33:02 +0300
+From: gremlin@gremlin.ru
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26431 invoked from network); 4 Dec 2017 21:34:09 -0000
-From: "oststrom \(public\)" <pub@oststrom.com>
-To: <oss-security@lists.openwall.com>
-References: 
-In-Reply-To: 
-Date: Mon, 4 Dec 2017 22:33:56 +0100
-Message-ID: <000301d36d47$979bc4b0$c6d34e10$@oststrom.com>
-MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 14.0
-Thread-Index: AdNtOk5F4bX1At4QS/KJ+3wpR8q8dwADRsPA
-Content-Language: en-us
-Subject: [oss-security] CVE-2017-16930 - Claymore's Dual Ethereum Miner unauth stack buffer overflow in remote management interface
+Subject: Re: [oss-security] Qualys Security Advisory - CVE-2015-3245 userhelper - CVE-2015-3246 libuser
+To: oss-security@lists.openwall.com
 
-VuNote
-===================
+On 2015-07-23 10:09:54 -0700, Qualys Security Advisory wrote:
 
-  Author:       <github.com/tintinweb>
-  Ref:
-https://github.com/tintinweb/pub/tree/master/pocs/cve-2017-16930
- 
-https://github.com/tintinweb/pub/tree/master/pocs/cve-2017-16929
+ > We discovered a bug in userhelper, a setuid-root program from
+ > the usermode package
 
-  Version:      0.2
-  Date:         Nov 30th, 2017
+That's the requirement #1.
 
-  Tag:          claymore dual ethereum decred crypto currency miner
+ > userhelper's chfn() function verifies that the fields it was
+ > given on the command-line are sane (i.e., contain no forbidden
+ > characters).  Unfortunately, these forbidden characters (":,=")
+ > do not include '\n' and allow local attackers to inject newline
+ > characters into /etc/passwd and alter this file in unexpected ways.
 
-Overview
---------
+Here comes the requirement #2: adding the line to /etc/passwd must
+be sufficient for the user to log in.
 
-  Name:         Claymore's Dual ETH + DCR/SC/LBC/PASC GPU Miner
-  Vendor:       nanopool/claymore
-  References:   * https://github.com/nanopool/Claymore-Dual-Miner
-                * https://bitcointalk.org/index.php?topic=1433925.0
+ > Our ultimate goal is to inject an arbitrary line into /etc/passwd
+ > (for example, the a-line "\na::0:0::/:\n")
 
-  Version:        10.1 [2]
-  Latest Version: 10.1 [2]
-  Other Versions: <= 10.1
-  Platform(s):    windows, linux
-  Technology:     C/C++
+In my tests, I used "a::0:0::/:/bin/sh"
 
-  Vuln Classes:   CWE-121: Stack-based Buffer Overflow
-  Origin:         remote
-  Min. Privs.:    None
+Obviously enough, these tests have failed with the "Authentication
+service cannot retrieve authentication info" error as the requirement
+#2 was not satisfied - all my hosts use TCB password shadowing.
 
-  Source:         Closed; runtime protection mechanisms
+Anyway, thank you for a nice catch :-)
 
-  CVE:            CVE-2017-16930
 
-
-
-Description
----------
-
-A specialized mining solution with remote management interface for mining
-ethereum / decred / siacoin / LBRY Credits / pascal coin.
-
-quote website [1][2]
-
-  - Supports new "dual mining" mode: mining both Ethereum and
-Decred/Siacoin/Lbry/Pascal at the same time, with no impact on Ethereum
-mining speed. Ethereum-only mining mode is supported as well.
-  - Effective Ethereum mining speed is higher by 3-5% because of a
-completely different miner code - much less invalid and outdated shares,
-higher GPU load, optimized OpenCL code, optimized assembler kernels.
-  - Supports both AMD and nVidia cards, even mixed.
-  - No DAG files.
-  - Supports all Stratum versions for Ethereum: can be used directly without
-any proxies with all pools that support eth-proxy, qtminer or miner-proxy.
-  - Supports Ethereum and Siacoin solo mining.
-  - Supports both HTTP and Stratum for Decred.
-  - Supports both HTTP and Stratum for Siacoin. Note: not all Stratum
-versions are supported currently for Siacoin.
-  - Supports Stratum for Lbry and Pascal.
-  - Supports failover.
-  - Displays detailed mining information and hashrate for every card.
-  - Supports remote monitoring and management.
-  - Supports GPU selection, built-in GPU overclocking features and
-temperature management.
-  - Supports Ethereum forks (Expanse, etc).
-  - Windows and Linux versions.
-
-Summary
--------
-
-Claymore's Dual ETH miner's remote management interface is prone to an
-unauthenticated remote stack buffer overwrite that can be triggered by
-simply sending an overly long api request to the management interface
-resulting in an unbound `(v)sprintf` style buffer overwrite when trying to
-log to file or console.
-
-
-* unauthenticated
-* remote
-* stack buffer overwrite
-
-conditions:
-* remote management must be enabled: -mport <port>
-* also works in read-only mode (-<port>)
-
-Successful exploitation can be turned into:
-* DoS - taking profit from crashing the miner
-* RCE - execute arbitrary code, silently take over the mining node or host
-system.
-
-See PoC ref github.
-
-//Also see: CVE-2017-16929 - Claymore's Dual ETH Miner relative path
-traversal in remote management interface [4] //For details see ref github.
-
-Details
--------
-
-Service Discovery:
-* shodan: 'eth result' lists about 170-240 publicly available instances [3]
-with significant hash power
-* banner:
-
-
-<html><body bgcolor="#000000" style="font-family: monospace;">
-{"result": ["10.1 - ETH", "4286", "149336;7492;0",
-"30620;29877;28285;30605;29946", "0;0;0", "off;off;off;off;off",
-"62;65;51;64;61;75;51;67;62;72", "eth-us-east1.nanopool.org:9999",
-"0;1;0;0"]}<br><br><font color="#ff0000">Remote management: read-only mode,
-command miner_file ignored </font><br><font color="#00ff00">ETH:
-11/22/17-15:28:38 - SHARE FOUND - (GPU 3) ...
-
-
-Remote Management API overview:
-
-# >nc -L -p 3333
-{"id":0,"jsonrpc":"2.0","method":"miner_getstat1"}
-{"id":0,"jsonrpc":"2.0","method":"miner_file","params":["epools.txt","<encod
-ed>"]}
-{"id":0,"jsonrpc":"2.0","method":"miner_getfile","params":["config.txt"]}
-{"id":0,"jsonrpc":"2.0","method":"miner_restart"}
-{"id":0,"jsonrpc":"2.0","method":"miner_reboot"}
-{"id":0,"jsonrpc":"2.0","method":"control_gpu","params":["0", "1"]}
-{"id":0,"jsonrpc":"2.0","method":"control_gpu","params":["-1", "0"]}
-{"id":0,"jsonrpc":"2.0","method":"control_gpu","params":["0", "2"]}
-{"id":0,"jsonrpc":"2.0","method":"miner_file","params":["config.txt","<encod
-ed>"]}
-{"id":0,"jsonrpc":"2.0","method":"miner_file","params":["dpools.txt","<encod
-ed>"]}
-
-
-EthDcrMiner64 comes with an optional http/tcp based remote management
-interface that can be enabled by providing `-mport <[-]port>` as a command
-line argument. Providing a negative port starts the remote management
-interface in readonly mode. The remote management interfaces request handler
-checks for a list of known commands (see Remote Management API overview).
-Commands are being logged to file. When the handler encounters an invalid
-command a logline like `log(level, "Remote management: unknown command
-%s\n", request)` is being emitted. This method internally calls `sprintf`
-multiple times writing to a fixed size buffer of `0x4000` (16384) bytes. Any
-attempt to log more than `0x4000` bytes us causing a stack buffer overwrite.
-There's likely multiple occurrences of the same bug within this software.
-
-//see PoC vector: method, extrafield, psw
-
-See PoC ref github.
-
-Proof of Concept
-----------------
-
-Prerequisites:
-* compatible AMD/NVidia hardware
-
-
-RCE:
-
-1. start the miner, specify any pool and the readonly management port 3333
-with a management password 123456
-
-
-#> EthDcrMiner64.exe -epool http://192.168.0.1:8545 -mport -3333
-
-+----------------------------------------------------------------+
-|     Claymore's Dual ETH + DCR/SC/LBC/PASC GPU Miner v10.0      |
-+----------------------------------------------------------------+
-
-...
-Total cards: 1
-ETH - connecting to 192.168.0.1:8545
-DUAL MINING MODE ENABLED: ETHEREUM+DECRED
-DCR: Stratum - connecting to 'pasc-eu2.nanopool.org' <213.32.29.168> port
-15555
-ETH: HTTP SOLO mode
-Ethereum HTTP requests time (-etht) is set to 200 ms Watchdog enabled Remote
-management (READ-ONLY MODE) is enabled on port 3333
-
-DCR: Stratum - Connected (pasc-eu2.nanopool.org:15555)
-DCR: Authorized
-DCR: 11/22/17-22:05:12 - New job from pasc-eu2.nanopool.org:15555
-
-    2. wait for it to initialize
-    3. run `poc.py --vector=method localhost:3333` (using the "method"
-vector)
-
-#> poc.py 127.0.0.1:3333
-[poc.py -             <module>() ][    INFO] --start--
-[poc.py -             <module>() ][    INFO] # Claymore's Dual ETH +
-DCR/SC/LBC/PASC GPU Miner - Remote Buffer Overwrite
-[poc.py -             <module>() ][    INFO] # github.com/tintinweb
-[poc.py -         iter_targets() ][ WARNING] shodan apikey missing! shodan
-support disabled.
-[poc.py -             <module>() ][    INFO] [i] Target: 127.0.0.1:3333
-[poc.py -             <module>() ][    INFO] [+] connected.
-[poc.py -             <module>() ][    INFO] [+] peer disappeared.
-vulnerable!
-[poc.py -             <module>() ][ WARNING] error(10054, 'Eine vorhandene
-Verbindung wurde vom Remotehost geschlossen')
-[poc.py -             <module>() ][    INFO] --done--
-
-
-4. EthDcrMiner64.exe faults with `INVALID_POINTER_WRITE_EXPLOITABLE` (stack
-overwrite, see stacktrace)
-
-
-GPU0 t=57C fan=0%
-Remote management: unknown command miner_getstat1
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-.... <crash>
-
-
-WinDBG:
-
-%< %< see ref github link. >% >%
-
-Patch
------
-
-n/A - closed source
-
-Notes
------
-
-* Timeline
-
-11/22/2017 - vendor contact: report sent
-11/23/2017 - vendor response:
-             fixed version 10.2 ready and publicly available
-             request for 7+ day embargo
-12/04/2017 - public disclosure
-
-* Vendor Changelog
-
-Fixed version: v10.2
-
-
-References
-----------
-
-[1] https://github.com/nanopool/Claymore-Dual-Miner
-[2] https://bitcointalk.org/index.php?topic=1433925.0
-[3] https://www.shodan.io/search?query=eth+result
-[4] https://github.com/tintinweb/pub/tree/master/pocs/cve-2017-16929
-
-Contact
--------
-
-https://github.com/tintinweb
-
-
+-- 
+Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin נעי gremlin פ‏כ ru>
+GPG: 8832FE9FA791F7968AC96E4E909DAC45EF3B1FA8 @ hkp://keys.gnupg.net
