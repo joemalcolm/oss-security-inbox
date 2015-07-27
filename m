@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1088" "Saturday" "23" "June" "2018" "17:48:14" "+0200" "=?ISO-8859-1?Q?Peter_Kjellstr=F6m?=" "cap@nsc.liu.se" "<17C874D1-EAF8-41E2-91EC-DEE13D8290D2@nsc.liu.se>" "37" "Re: [oss-security] Intel hyper-threading security issues" "^CC:" nil nil "6" "2018062315:48:14" "[oss-security] Intel hyper-threading security issues" (number mark "U       cap@nsc.liu. Jun 23   37/1088  " thread-indent "\"Re: [oss-security] Intel hyper-threading security issues\"\n") "<87vaabea58.fsf@concordia.ellerman.id.au>" ("<CAOp4FwSEi=_bNCMoiK66r4Y2QQToJgZyBjUX74s0omQ+whCS-w@mail.gmail.com>" "<20180621045642.fy67joeaxu2n4j56@sivokote.iziade.m$>" "<20180621093754.GY53290@symphytum.spacehopper.org>" "<CABob6iqkc7x7awz-aMAb-yOHWKdWgnQF0rkPYdporiUmGCkc5Q@mail.gmail.com>" "<CABob6iqHuN+tVuxf9ibUh6Xx=j4AChRNygMXzR0nHcr1ogUtmA@mail.gmail.com>" "<718d05e5-3057-7c32-da9a-70bc5a82e3f5@tao.at>" "<20180621125049.GA14978@openwall.com>" "<87vaabea58.fsf@concordia.ellerman.id.au>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1762" "Monday" "27" "July" "2015" "16:28:08" "+0300" "Henri Salo" "henri@nerv.fi" "<20150727132808.GA23000@lakka.kapsi.fi>" "46" "[oss-security] CVE request: Easy!Appointments 1.0 Missing HTTPOnly flag" nil nil nil "7" "2015072713:28:08" "[oss-security] CVE request: Easy!Appointments 1.0 Missing HTTPOnly flag" (number mark "U       henri@nerv.f Jul 27   46/1762  " thread-indent "\"[oss-security] CVE request: Easy!Appointments 1.0 Missing HTTPOnly flag\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 9955 invoked by uid 550); 23 Jun 2018 16:07:44 -0000
+Received: (qmail 32513 invoked by uid 550); 27 Jul 2015 13:28:21 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,54 +11,64 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 20200 invoked from network); 23 Jun 2018 15:49:05 -0000
-User-Agent: K-9 Mail for Android
-References: <CAOp4FwSEi=_bNCMoiK66r4Y2QQToJgZyBjUX74s0omQ+whCS-w@mail.gmail.com> <20180621045642.fy67joeaxu2n4j56@sivokote.iziade.m$> <20180621093754.GY53290@symphytum.spacehopper.org> <CABob6iqkc7x7awz-aMAb-yOHWKdWgnQF0rkPYdporiUmGCkc5Q@mail.gmail.com> <CABob6iqHuN+tVuxf9ibUh6Xx=j4AChRNygMXzR0nHcr1ogUtmA@mail.gmail.com> <718d05e5-3057-7c32-da9a-70bc5a82e3f5@tao.at> <20180621125049.GA14978@openwall.com> <87vaabea58.fsf@concordia.ellerman.id.au>
-MIME-Version: 1.0
-Content-Type: multipart/alternative; boundary="----P22KA07LR631QI763FKZ631PDQW0I0"
-Content-Transfer-Encoding: 7bit
-Message-ID: <17C874D1-EAF8-41E2-91EC-DEE13D8290D2@nsc.liu.se>
-CC: oss-security@lists.openwall.com,Solar Designer <solar@openwall.com>
-Date: Sat, 23 Jun 2018 17:48:14 +0200
-From: =?ISO-8859-1?Q?Peter_Kjellstr=F6m?= <cap@nsc.liu.se>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Intel hyper-threading security issues
-To: Michael Ellerman <mpe@ellerman.id.au>
+Received: (qmail 32492 invoked from network); 27 Jul 2015 13:28:20 -0000
+Date: Mon, 27 Jul 2015 16:28:08 +0300
+From: Henri Salo <henri@nerv.fi>
+To: oss-security@lists.openwall.com
+Cc: cve-assign@mitre.org, Alex Tselegidis <alextselegidis@gmail.com>
+Message-ID: <20150727132808.GA23000@lakka.kapsi.fi>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii; x-action=pgp-signed
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-SA-Exim-Connect-IP: 2001:1bc8:1004::1
+X-SA-Exim-Mail-From: fgeek@kapsi.fi
+X-SA-Exim-Scanned: No (on mail.kapsi.fi); SAEximRunCond expanded to false
+Subject: [oss-security] CVE request: Easy!Appointments 1.0 Missing HTTPOnly flag
 
-------P22KA07LR631QI763FKZ631PDQW0I0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On Fri, 22 Jun 2018 14:08:03 +1000
-Michael Ellerman <mpe@ellerman.id.au> wrote:
+Product: Easy!Appointments Open Source Appointment Scheduler
+Product URL: http://easyappointments.org/
+Vendor: Alex Tselegidis
+Vulnerability Type: Information Exposure (CWE-200)
+Vulnerable Versions: 1.0
+Fixed Version: next release
+Vendor Notification: 2015-04-03
+Solution Status: Fixed by Misha Tavkhelidze
+Solution Date: 2015-06-04
+Public Disclosure: 2015-07-27
 
-> Solar Designer <solar@openwall.com> writes:
-> > On Thu, Jun 21, 2018 at 01:54:16PM +0200, Sven Schwedas wrote:=20=20
-> >> On 2018-06-21 12:28, Lukas Odzioba wrote:=20=20
-...
-> > On a related note, attached is a generic Linux /proc/cpuinfo parser
-> > I=20=20
->=20
-> I guess by "generic" you mean Intel & AMD? :)
->=20
-> It won't work on powerpc, or arm, or arm64 ...
->=20
-> You should be able to determine all of the info you need from the
-> sysfs topology files, which work across arches.
->=20
-> See the script below for example, which shows CPUs grouped by core.
-...
+Vulnerability Details:
 
-This is sliding OT a bit I guess, but may I suggest the fairly mature
-hwloc (used by many projects in need of numa/core/smt topology):
+Easy!Appointments do not include the HTTPOnly flag in a Set-Cookie header for a
+'ci_session' cookie, which makes it easier for remote attackers to obtain
+potentially sensitive information via script access to this cookie.
 
-https://www.open-mpi.org/projects/hwloc/
+Fixed in following commit:
+    https://github.com/alextselegidis/easyappointments/commit/e3273582213849e46e6ff5296be1f169bd96399d
 
- $ lstopo
+References:
+    https://www.owasp.org/index.php/HttpOnly
+    https://en.wikipedia.org/wiki/HTTP_cookie#HttpOnly_cookie
 
-/Peter K
---=20
-Sent from my Android device with K-9 Mail. Please excuse my brevity.=
+- -- 
+Henri Salo
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-------P22KA07LR631QI763FKZ631PDQW0I0--
+iQIcBAEBAgAGBQJVtjHoAAoJECet96ROqnV0HjQQAISCtCcmPC+0fdBlr5hMmxc7
+/zrVGSmxlpk+MIhQrUoVSlCWOJAsCTTz2gO28fsMMm+9lT5sMTrI0MnKvNfXw4Nt
+6fusZBfShFlFTbiE6IcwSTWkeNYIAT9o4R8Gdj5KOx34NWdpbCoGLcfBOzabULTq
+tSBtpcl122bm9ekkQq5C7Fcih5WXOdT+DnQQzOaUc/CUgoEIysrKZSmERXIHalgR
+Hz3GzWqJ9i3r4CbveDW2YZeLwVb8rmnpzwtR48UmhJU6kzw1feaHpbcuECeSaPL5
+sYC1QbmKublMI1eiMYKMRzDaoQz2KBUmfDPahiczV9o6PYGb1INnrliAtm1JE1xH
+001PsT0alzk83pQL+aQGs4isI/8sXebPiYbsPuAcpJYTE5Znsa1hDlMlkmyOhEnY
+F3llTwMr/oWbdvfFRID93ugj9uTG+kJn1kY/DqDDCet7pTzsxse9DIpei6CF8yJl
+wtnXPb2CDUrY6hY4mQ/ii57Emq7XemtzByReXNssTwFdrJej+SKSacNwHsBkd9to
+dRdJHLupWgzny4g8Q237EdqyBbF6w6nv5XLbCJhlYDeAQDdc7vi6k94udrUgwyDP
+s5nqM7GOD2ANc8pxideRCZeb5UX6AUaYHsGY2s1aiX1o/h7z6KWEVOTpDO3FGTEo
+HZF0Fr4yxBVr+ELoWpE4
+=6/cR
+-----END PGP SIGNATURE-----
