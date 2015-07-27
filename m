@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1944" "Monday" "19" "September" "2016" "12:59:40" "+0200" "Agostino Sarubbo" "ago@gentoo.org" "<2145849.9YTcpQNJZe@willoughby>" "50" "Re: [oss-security] Libarchive/bsdtar: multiple crashes" "^Date:" nil nil "9" "2016091910:59:40" "[oss-security] Libarchive/bsdtar: multiple crashes" (number mark "        ago@gentoo.o Sep 19   50/1944  " thread-indent "\"Re: [oss-security] Libarchive/bsdtar: multiple crashes\"\n") "<30086816.X7GymaXB0v@willoughby>" ("<30086816.X7GymaXB0v@willoughby>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1184" "Monday" "27" "July" "2015" "11:38:38" "+0100" "Luis Henriques" "luis.henriques@canonical.com" "<20150727103838.GA12581@charon.olymp>" "34" "Re: [oss-security] Re: Linux x86_64 NMI security issues" nil nil nil "7" "2015072710:38:38" "[oss-security] Re: Linux x86_64 NMI security issues" (number mark "U       luis.henriqu Jul 27   34/1184  " thread-indent "\"Re: [oss-security] Re: Linux x86_64 NMI security issues\"\n") "<55B328E0.8050701@amacapital.net>" ("<CALCETrXViSiMG79NtqN79NauDN9B2k9nOQN18496h9pJg+78+g@mail.gmail.com>" "<CA+5PVA7MZCryECtCVw1zLacEqvRWrsq3rSnZKPBJjcwC3e0h=g@mail.gmail.com>" "<55B328E0.8050701@amacapital.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 24326 invoked by uid 550); 19 Sep 2016 11:00:00 -0000
+Received: (qmail 9530 invoked by uid 550); 29 Jul 2015 00:57:07 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,67 +11,54 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 24302 invoked from network); 19 Sep 2016 10:59:59 -0000
-Message-ID: <2145849.9YTcpQNJZe@willoughby>
-User-Agent: KMail/4.14.10 (Linux/4.4.6-gentoo; KDE/4.14.24; x86_64; ; )
-In-Reply-To: <30086816.X7GymaXB0v@willoughby>
-References: <30086816.X7GymaXB0v@willoughby>
-MIME-Version: 1.0
-Content-Type: multipart/alternative; boundary="nextPart2068040.f69BK3B2NB"
-Content-Transfer-Encoding: 7Bit
-Date: Mon, 19 Sep 2016 12:59:40 +0200
-From: Agostino Sarubbo <ago@gentoo.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Libarchive/bsdtar: multiple crashes
+Received: (qmail 13968 invoked from network); 27 Jul 2015 10:38:51 -0000
+Date: Mon, 27 Jul 2015 11:38:38 +0100
+From: Luis Henriques <luis.henriques@canonical.com>
 To: oss-security@lists.openwall.com
+Cc: Josh Boyer <jwboyer@fedoraproject.org>
+Message-ID: <20150727103838.GA12581@charon.olymp>
+References: <CALCETrXViSiMG79NtqN79NauDN9B2k9nOQN18496h9pJg+78+g@mail.gmail.com>
+ <CA+5PVA7MZCryECtCVw1zLacEqvRWrsq3rSnZKPBJjcwC3e0h=g@mail.gmail.com>
+ <55B328E0.8050701@amacapital.net>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <55B328E0.8050701@amacapital.net>
+Subject: Re: [oss-security] Re: Linux x86_64 NMI security issues
 
---nextPart2068040.f69BK3B2NB
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"
+On Fri, Jul 24, 2015 at 11:12:48PM -0700, Andy Lutomirski wrote:
+> On 07/24/2015 07:16 AM, Josh Boyer wrote:
+> > On Wed, Jul 22, 2015 at 2:12 PM, Andy Lutomirski <luto@amacapital.net> wrote:
+> >> Note: Several of these fixes each depend on a few patches immediately
+> >> before them.  The NMI stack switching fix also depends on changes made
+> >> in 4.2 and will appear to apply but crash on older kernels.  I have a
+> >> different variant that's more portable.
+> > 
+> > Given that none of these are going to apply cleanly on older kernels,
+> > do you have backports available for 4.1.y and the longterm stable
+> > kernels?
+> > 
+> 
+> There's this:
+> 
+> https://git.kernel.org/cgit/linux/kernel/git/luto/linux.git/commit/?h=x86/nmi-backport
+> 
+> which is a combined effort of me and Ben Hutchings.  It's not synced up
+> to the fixes in Linus' tree.
+>
 
-On Thursday 15 September 2016 17:52:52 Agostino Sarubbo wrote:
-> Hello all.
-> 
-> I'd like to make people aware of the following crashes in 
-libarchive/bsdtar 
-> found by fuzzing (all issues are public on github):
-> 
-> The most dangerous, an out of bounds stack write (which is also fixed 
-> upstream):
-> https://blogs.gentoo.org/ago/2016/09/11/libarchive-bsdtar-stack-based-buffer
-> -overflow-in-bsdtar_expand_char-util-c/ 
-> 
-> 
-> The following are buffer over read of 1 (all are unfixed upstream ATM):
-> 
-> https://blogs.gentoo.org/ago/2016/09/11/libarchive-bsdtar-heap-based-buffer-> overflow-in-detect_form-archive_read_support_format_mtree-c/ 
-> https://blogs.gentoo.org/ago/2016/09/11/libarchive-bsdtar-heap-based-buffer
-> -overflow-in-read_header-archive_read_support_format_7zip-c/
-> https://blogs.gentoo.org/ago/2016/09/11/libarchive-bsdtar-memory-corruption
-> unknown-crash-in-bid_entry-archive_read_support_format_mtree-c/
-> https://blogs.gentoo.org/ago/2016/09/11/libarchive-bsdtar-heap-based-buffer
-> -overflow-in-bid_entry-archive_read_support_format_mtree-c/
-> 
-> As stated in the posts, the two latest bug could be the same, but I 
-didn't 
-> have an upstream response about, so I posted both stacktrace to 
-better
-> track  the issues.
-> 
-> 
-> The following are use-after-free (all are unfixed upstream ATM):
-> https://blogs.gentoo.org/ago/2016/09/11/libarchive-bsdtar-use-after-free-in-> bid_entry-archive_read_support_format_mtree-c/
-> https://blogs.gentoo.org/ago/2016/09/11/libarchive-bsdtar-use-after-free-in
-> -detect_form-archive_read_support_format_mtree-c/
-> 
-> As stated in the posts, they could be the same.
-> I didn't have an upstream response too for those.
+Thank you all for working on these backports.  I'm planning to use
+them (and more specifically the patches in the Debian kernel) for the
+3.16 stable kernel.
 
-All issues mentioned in the previous posts, are now fixed in git.
-I updated all posts with the git commit.
-
+Cheers,
 --
-Agostino
+Luís
 
---nextPart2068040.f69BK3B2NB--
 
+> Note that even Linus' tree doesn't have the synchronous modify_ldt fix
+> yet.  I sent a hopefully final version of that out a few minutes ago.
+> 
+> --Andy
