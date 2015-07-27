@@ -1,4 +1,9 @@
-Received: (qmail 15559 invoked by uid 550); 4 Oct 2023 13:42:30 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2257" "Monday" "27" "July" "2015" "13:55:51" "+0000" "Ankeet Presswala" "mythic.boost@gmail.com" "<CAMPM09bC79nGD3aBUVSxpeT6pPwdE4bOF8zWR-poXj-wX1mULw@mail.gmail.com>" "66" "Re: [oss-security] Qualys Security Advisory - CVE-2015-3245 userhelper - CVE-2015-3246 libuser" nil nil nil "7" "2015072713:55:51" "[oss-security] Qualys Security Advisory - CVE-2015-3245 userhelper - CVE-2015-3246 libuser" (number mark "        mythic.boost Jul 27   66/2257  " thread-indent "\"Re: [oss-security] Qualys Security Advisory - CVE-2015-3245 userhelper - CVE-2015-3246 libuser\"\n") "<20150727115227.GA29353@zoho.com>" ("<20150723170954.GA17931@localhost.localdomain>" "<87h9oud89s.fsf@lysator.liu.se>" "<20150724155625.GA15469@zoho.com>" "<2434EAC6-A1E1-4863-A76E-1AC488B569B1@gmail.com>" "<20150727115227.GA29353@zoho.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 23735 invoked by uid 550); 27 Jul 2015 16:07:49 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,60 +11,98 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 28043 invoked from network); 27 Jul 2015 13:56:12 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=OB7QUjzCehNgbYDAOwL71KbuIabCer3qVZO0HpzWKks=;
+        b=0vNZTq1WCPnMxb3PErbRkBgpb2QYMJsg7HXcpOosG+nFRSut7DpY+hM0khsNzZwbD0
+         BQsZL1KTfhNnR1+ALHZQgmIshb8w4VYMpJLQ6Ezt7kY18hdxPJOiXzv9kezw+r7CTW7+
+         beEIvFbCQKPuDadMM99Ch+RPUeoHJVe0B22fMCu2/+c9aKGhlrYQY6zGbj5pfPo6EEbK
+         UjPgpZ7AbiLGAAEq5IOwN0VL/N9tKPDDrgUqkr66yMRnpD6wf55bn8v/KWSuPeetkPVx
+         8hZrZG2LaSVWy38E7/RAprZLRe+BnJCT+TSGJXSrECm+1Kt3McdUwNEI8QiOMcVUhfou
+         Lttw==
+X-Received: by 10.60.46.200 with SMTP id x8mr29001997oem.73.1438005360455;
+ Mon, 27 Jul 2015 06:56:00 -0700 (PDT)
+MIME-Version: 1.0
+References: <20150723170954.GA17931@localhost.localdomain> <87h9oud89s.fsf@lysator.liu.se>
+ <20150724155625.GA15469@zoho.com> <2434EAC6-A1E1-4863-A76E-1AC488B569B1@gmail.com>
+ <20150727115227.GA29353@zoho.com>
+In-Reply-To: <20150727115227.GA29353@zoho.com>
+Message-ID: <CAMPM09bC79nGD3aBUVSxpeT6pPwdE4bOF8zWR-poXj-wX1mULw@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=089e0149bfd4b1f867051bdbb62e
+Cc: bperry.volatile@gmail.com
+Date: Mon, 27 Jul 2015 13:55:51 +0000
+From: Ankeet Presswala <mythic.boost@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 14069 invoked from network); 4 Oct 2023 13:41:55 -0000
-Date: Wed, 4 Oct 2023 15:41:50 +0200
-From: Solar Designer <solar@openwall.com>
+Subject: Re: [oss-security] Qualys Security Advisory - CVE-2015-3245
+ userhelper - CVE-2015-3246 libuser
 To: oss-security@lists.openwall.com
-Message-ID: <20231004134150.GB27450@openwall.com>
-References: <E1qko5Z-0003cF-KD@xenbits.xenproject.org> <ZROMd1GCpD8uDtbE@itl-email> <20231003201212.GA24599@openwall.com> <1786f020-2af8-4adb-bb4c-5dc87c545dcd@citrix.com> <20231003214424.prarc3aboi3ar7zk@yuggoth.org> <CADxcaYUe3Mj-VYn7j5T_JoF-vhDeqxJh9CZXm-r+z27zrnjwow@mail.gmail.com> <20231003225156.GA26670@openwall.com> <CADxcaYX-XvrKe4R-mSzK2iNVm9F_dRtz1Bf2Zi8jqWbCXGKK9g@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CADxcaYX-XvrKe4R-mSzK2iNVm9F_dRtz1Bf2Zi8jqWbCXGKK9g@mail.gmail.com>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] Xen Security Advisory 439 v1 (CVE-2023-20588) - x86/AMD: Divide speculative information leak
 
-Regarding AMD not intending to provide a microcode mitigation:
+--089e0149bfd4b1f867051bdbb62e
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Oct 03, 2023 at 04:04:31PM -0700, Jean Luc Picard wrote:
-> No intent?  It wouldn't be terribly hard
+Whatever happened to the half-life of vulnerabilities?
 
-Possibly not terribly hard, but (with my also too limited understanding)
-probably not in any of the ways you suggested.
+From
+https://community.qualys.com/blogs/laws-of-vulnerabilities/2015/01/27/the-g=
+host-vulnerability
+:
 
-> That said I could understand the
-> want to depricate zen1 support entirely, everyone upgraded when they could
-> it was super super cheap to do so & there weren't really any enterprise
-> users.
+"Where can I download the exploit?
 
-That's false.
+We want to give everyone enough time to patch. According to our data once
+the vulnerability has reached its half-life we will release the exploit.
+Half-life is the time interval measuring a reduction of a vulnerability=E2=
+=80=99s
+occurrence by half. Over time, this metric shows how successful efforts
+have been to eradicate vulnerability. A shorter half-life indicates faster
+remediation. Half-life was originally coined by Qualys in the Laws of
+Vulnerability."
 
-Zen1 is still found in major clouds.  The AMD security bulletin:
+On Mon, Jul 27, 2015 at 7:53 AM mancha <mancha1@zoho.com> wrote:
 
-https://www.amd.com/en/resources/product-security/bulletin/amd-sb-7007.html
+> On Fri, Jul 24, 2015 at 12:37:29PM -0500, Brandon Perry wrote:
+> > Prefer the term coordinated disclosure.
+> >
+> > Sent from a phone
+> >
+> > > On Jul 24, 2015, at 10:56 AM, mancha <mancha1@zoho.com> wrote:
+> > >
+> > >> On Thu, Jul 23, 2015 at 08:43:43PM +0200, Leif Nixon wrote: Qualys
+> > >> Security Advisory <qsa@qualys.com> writes:
+> > >>
+> > >>> Hello, it is July 23, 2015, 17:00 UTC, the Coordinated Release
+> > >>> Date for CVE-2015-3245 and CVE-2015-3246.  Please find our
+> > >>> advisory below, and our exploit attached.
+> > >>
+> > >> *Why* are you releasing a full exploit just minutes after the patch
+> > >> is released?
+> > >>
+> > >> (Disclosure: I am employed by Red Hat, but this is my purely
+> > >> personal question.)
+> > >>
+> > >> -- Leif Nixon
+> > >
+> > > There was absolutely nothing wrong with Qualys' timing. When the
+> > > embargo ends, it ends.
+> > >
+> > > The real problem is the underlying model: "responsible disclosure".
+> > > It's nothing more than a CYA strategy that doesn't maximize the
+> > > ecosystem's welfare. The positive-sounding name fools some into
+> > > thinking it a good thing.
+> > >
+> > > --mancha
+>
+> Agreed. Coordinated disclosure is much more precise.
+>
+> Also, it's judgment-free unlike the loaded term "responsible disclosure"
+> that implies alternative disclosure models like full disclosure are
+> irresponsible.
+>
+> --mancha
+>
 
-specifically lists "Datacenter AMD EPYC 7001 Processors" as affected,
-and these are used e.g. in:
-
-https://aws.amazon.com/about-aws/whats-new/2021/04/amazon-ec2-instances-featuring-amd-epyc-processors-are-now-available-in-additional-regions/
-
-"M5a, R5a and T3a instances are variants of Amazon EC2 general purpose
-(M5), memory optimized (R5) and burstable general-purpose (T3) instance
-families. These instances feature AMD EPYC 7001 series processors"
-
-That was in 2021, but indeed the T3a tab at:
-
-https://aws.amazon.com/ec2/amd/
-
-still says:
-
-"Amazon EC2 T3a instances feature AMD EPYC 7000 series processors"
-
-T3 are the most common/default AWS instance family with Intel CPUs, and
-T3a are probably the most commonly used AMD alternative to them.
-
-I don't mean to single out AWS, I think it's similar with many other
-cloud and dedicated server providers.  This is just a prominent example.
-
-Alexander
+--089e0149bfd4b1f867051bdbb62e--
