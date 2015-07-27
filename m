@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2297" "Tuesday" "14" "July" "2015" "18:13:08" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<55A5A594.9040100@redhat.com>" "57" "Re: [oss-security] CVE Request: AWS s2n" nil nil nil "7" "2015071500:13:08" "[oss-security] CVE Request: AWS s2n" (number mark "        kseifried@re Jul 14   57/2297  " thread-indent "\"Re: [oss-security] CVE Request: AWS s2n\"\n") "<55A58720.6020105@lsexperts.de>" ("<55A525D8.5060303@lsexperts.de>" "<55A52F41.8070702@redhat.com>" "<55A58720.6020105@lsexperts.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5588" "Monday" "27" "July" "2015" "11:33:48" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150727153348.04ADB6FC064@smtpvmsrv1.mitre.org>" "130" "[oss-security] Re: Remote file upload vulnerability & SQLi in wordpress plugin wp-powerplaygallery v3.3" nil nil nil "7" "2015072715:33:48" "[oss-security] Re: Remote file upload vulnerability & SQLi in wordpress plugin wp-powerplaygallery v3.3" (number mark "        cve-assign@m Jul 27  130/5588  " thread-indent "\"[oss-security] Re: Remote file upload vulnerability & SQLi in wordpress plugin wp-powerplaygallery v3.3\"\n") "<7A32AB08-3039-4F44-BD53-9680109B79C4@me.com>" ("<7A32AB08-3039-4F44-BD53-9680109B79C4@me.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 13641 invoked by uid 550); 15 Jul 2015 00:13:22 -0000
+Received: (qmail 19744 invoked by uid 550); 27 Jul 2015 15:34:22 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,77 +11,143 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 13623 invoked from network); 15 Jul 2015 00:13:21 -0000
-Message-ID: <55A5A594.9040100@redhat.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
-MIME-Version: 1.0
-References: <55A525D8.5060303@lsexperts.de> <55A52F41.8070702@redhat.com> <55A58720.6020105@lsexperts.de>
-In-Reply-To: <55A58720.6020105@lsexperts.de>
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="oxuuE05aKO1hTF2uBXQXFB7iaTfr0axXn"
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.23
-Date: Tue, 14 Jul 2015 18:13:08 -0600
-From: Kurt Seifried <kseifried@redhat.com>
+Received: (qmail 19704 invoked from network); 27 Jul 2015 15:34:16 -0000
+In-Reply-To: <7A32AB08-3039-4F44-BD53-9680109B79C4@me.com>
+Message-Id: <20150727153348.04ADB6FC064@smtpvmsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Mon, 27 Jul 2015 11:33:48 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE Request: AWS s2n
-To: oss-security@lists.openwall.com,
-        Assign a CVE Identifier <cve-assign@mitre.org>
+Subject: [oss-security] Re: Remote file upload vulnerability & SQLi in wordpress plugin wp-powerplaygallery v3.3
+To: larry0@me.com
 
---oxuuE05aKO1hTF2uBXQXFB7iaTfr0axXn
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On 07/14/2015 04:03 PM, Markus Vervier wrote:
->=20
-> On 14.07.2015 17:48, Kurt Seifried wrote:
->> Reminder: Client mode is disabled and won't be enabled until X509 valida=
-tion is ready. But we
-> can still make improvements and fixes in the meantime.
->> so I'm not sure this needs a CVE as the code is not yet enabled.
-> Hi Kurt,
->=20
-> that is a valid point from you and not for me to decide.
-> Yet with default settings a binary is compiled (bin/s2nc) which will
-> work in client mode when environment variable S2N_ENABLE_CLIENT_MODE=3D1
-> is set (as documented). So it is possible several people were tempted to
-> use s2n in client mode already as the client mode code is actually
-> compiled into the lib and useable by default.
-> I guess it depends on your definition of "enabled".
->=20
-> Markus
+>> ... It seems that the essence
+>> of the problem is that the product could reject unsafe file types such
+>> as .php files, but doesn't do that. That can have one CVE ID.
 
-Ah, I didn't know that, Mitre I'm leaving this one up to you (way to
-much of a gray area for me to even poke with a stick).
+> It should filter out what file types are allowed for uploading at least.
 
+Use CVE-2015-5681 for the issue in which an executable file is not
+blocked, and consequently an attacker has the ability to create and
+execute arbitrary PHP code, such as at the
+/wp-content/uploads/power_play/4_uploadfolder/big/shell.php URI in
+your original example.
 
---=20
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@redhat.com
+> The directory creation code in upload.php doesn't create the
+> subdirectories big and thumb. These directories are added when a new
+> album is created through normal use of the plugin.
 
+Thanks for this additional information. In that case, we feel that it
+is best to categorize the:
 
---oxuuE05aKO1hTF2uBXQXFB7iaTfr0axXn
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
+  // Create target dir
+  if (!file_exists($targetDir)) {
+          @mkdir($targetDir);
+  }
 
+code block as, more or less, an authorization bypass. The user of
+upload.php has no legitimate need to create a $targetDir directory,
+because this directory is usable only if previously created by a
+power_play.php code block of:
+
+        if( !is_dir( $album_dir ) )
+                mkdir($album_dir);
+        if( !is_dir($album_dir . '/big') )
+                mkdir($album_dir . '/big');
+        if( !is_dir($album_dir . '/thumb') )
+                mkdir($album_dir . '/thumb'); 
+
+The user of upload.php can choose to use directory traversal (as you
+mentioned) or can simply create a huge number of directories with (for
+example) numeric or alphanumeric $_REQUEST['albumid'] values.
+Directory traversal is not an independent primary vulnerability and
+cannot have its own separate CVE ID.
+
+Use CVE-2015-5682 for the issue of a superfluous "@mkdir($targetDir);"
+line that allows attackers to create arbitrarily many useless
+directories via a series of requests.
+
+>> Are you also reporting any authorization problem? Is upload.php
+>> responsible for verifying that the client user has the upload_files
+>> capability, regardless of what file type is being uploaded?
+
+> I know I wouldn't want arbitrary images uploaded to my Wordpress
+> instance from users who aren't logged in.
+
+This was a somewhat philosophical question about WordPress security.
+There are no more CVE ID assignments below, but here are our comments
+in case anyone is interested.
+
+As far as we can tell, there is no expectation that the author of a
+plugin must determine whether the plugin offers a feature associated
+with the concept of "uploading files" and, if so, make that feature
+available only to users who have the upload_files capability. In some
+cases, this would be a good idea for aligning the plugin's behavior
+with user expectations, or for making the plugin's authorization model
+easy to understand. However, a plugin may have a good reason to do
+something entirely different. For example, if there are many people
+who need to do exactly one upload and will never interact with that
+WordPress installation again, it might be simpler to have an upload
+password.
+
+WordPress apparently supports the behavior of some plugins with:
+
+  wp-admin/media-new.php
+
+  /**
+   * Manage media uploaded file.
+   *
+   * There are many filters in here for media. Plugins can extend functionality
+   * by hooking into the filters.
+  ... 
+   if (!current_user_can('upload_files'))
+           wp_die(__('You do not have permission to upload files.'));
+
+The current case is, essentially, that an unauthenticated attacker can
+send a request to upload.php and place non-executable content at the
+URI:
+
+  /wp-content/uploads/power_play/4_uploadfolder/big/not-a-shell.jpg
+
+Your comment was "I know I wouldn't want arbitrary images uploaded,"
+which doesn't directly answer the question of whether this is a
+reported vulnerability or not. Our current feeling is that we will not
+universally categorize this as a vulnerability unless there is
+confirming feedback from the author. We didn't find anything at
+either:
+
+  https://web.archive.org/web/20150503133237/https://wordpress.org/plugins/wp-powerplaygallery/
+  http://wpslideshow.com/powerplay-gallery/
+
+documenting that the upload process should be authenticated or that
+uploaded files should be initially inaccessible. There are obviously
+very good reasons to prevent an unauthenticated upload of a JPG file
+to an accessible and predictable URL; however, there might sometimes
+be a tradeoff with usability and the WordPress installation might want
+to deploy the plugin anyway until abuse is actually observed. We also
+realize that, for any specific example in which this is occurring,
+there is probably a possible design improvement that preserves nearly
+all usability and makes abuse much more difficult. Still, our decision
+for now is that there's no CVE ID associated with creating
+/wp-content/uploads/power_play/4_uploadfolder/big/not-a-shell.jpg in
+the above example.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.22 (GNU/Linux)
+Version: GnuPG v1.4.14 (SunOS)
 
-iQIcBAEBAgAGBQJVpaWUAAoJEBYNRVNeJnmTSxkP/jRW2S7/gC2S3ckCqu4fFj8H
-HBLIi9OTALxdjxmdhT35Kf3ffyf4/w7ZtgmsXDjKLBesaE5atPT8iz/Uoi40KX38
-pU1MIe3DZY49JlOAfQv8uTVh7BQSagptrrua21aIXZ8DJpLNuKeY+ZCWc2obuWXX
-HGKuNS2FH+Og2fUxZicOpP8WzYsOSN4lyiNvVMcvc1Rd9HAPSKqFSeDjys354bQg
-JB2XiFgd+mF/8noijlkj7oGsLe2M3xBEWL9Pn5MLs2Bm+W93LiJcY8/icBNX1lx7
-cZeDjCQoPPLA0QbUwB6rCzXVYmYyGlrPyLN4tv51S+VDS/YVXQnca44/aQ6YhkCM
-dHwzNLNcTySxkm1JqKW6DEFA6of457cssPQLMBCCcOkc2dGSd9iL/lMc7G7da0el
-QjUPLD5uzUyzbXJ5DDvWGUuRnbs98yVoRb8wd6VU463rlpvZkhOaAPq1ReeX5ufP
-m3fd7ZtDZFrn+iGoQkT/nNIVB5Zl1dF+OkBDBhB6gR4WnbNYds1RHERK6yft9X+d
-M2hdtKOkht0891CdmyG9e9myLbwNwBbz9+Bsc5GH+k5kJyPjpkqwxiplxt5oEE9L
-X8R12sWRq5iBids1gjmeeY94rcYcvvfRdBboiFd3YvCinOdFM/+cl4dg7ap0/y/u
-pHZgQYePNN7EldbAUdjs
-=LmoU
+iQEcBAEBAgAGBQJVtk5cAAoJEKllVAevmvmswL4H/1jFeB0Dr3s+KqtbJX+xTvzP
+LvTFb9m4gG5OGfzqUVWeQPnjURgWw7Hz7Qcdj3WIo3SpsmOkq89RgaQFSWKsYxAp
+BzedA08ztTzEaaVSGHHN/7TgXe05xuVpYPzyO2D4SRmXU7LRCSDg/lpi5SHCTcJY
+GMW5inwiB1LiJhsQ+c3CsY5iD+HjSTk7t640wHuMY5aIRfcbdd5utVfR9PUlfafg
+Wyu7jJhNmqGOSKe4lXa9jwtjND31SQcCIgLe5HnI/E1fOpIzaHh/oS0yLcRID/nM
+mWeHDCoXHeF4seHFXNHg4pSl/BOVxJqBWQKz6ZVklqIf4ryLQ2dWxAITZ2NuTwQ=
+=KocW
 -----END PGP SIGNATURE-----
-
---oxuuE05aKO1hTF2uBXQXFB7iaTfr0axXn--
