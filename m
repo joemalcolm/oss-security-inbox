@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["874" "Wednesday" "17" "March" "2021" "16:29:58" "+0100" "Salvatore Bonaccorso" "carnil@debian.org" nil "25" "Re: [oss-security] CVE-2021-20219 Linux kernel: improper synchronization in flush_to_ldisc() can lead to DoS" nil nil nil "3" nil nil (number mark "U       carnil@debia Mar 17   25/874   " thread-indent "\"Re: [oss-security] CVE-2021-20219 Linux kernel: improper synchronization in flush_to_ldisc() can lead to DoS\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] CVE-2021-20219 Linux kernel: improper synchronization in flush_to_ldisc() can lead to DoS" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2020" "Tuesday" "28" "July" "2015" "12:26:33" "-0500" "Tyler Hicks" "tyhicks@canonical.com" "<20150728172632.GA3132@boyd>" "54" "Re: [oss-security] Security issue in Linux Kernel Keyring (CVE-2015-1333)" nil nil nil "7" "2015072817:26:33" "[oss-security] Security issue in Linux Kernel Keyring (CVE-2015-1333)" (number mark "U       tyhicks@cano Jul 28   54/2020  " thread-indent "\"Re: [oss-security] Security issue in Linux Kernel Keyring (CVE-2015-1333)\"\n") "<20150727141855.GA14038@boyd>" ("<20150727141855.GA14038@boyd>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 9834 invoked by uid 550); 17 Mar 2021 15:30:12 -0000
+Received: (qmail 27725 invoked by uid 550); 28 Jul 2015 17:26:48 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,70 +12,74 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9814 invoked from network); 17 Mar 2021 15:30:12 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:date:from:to:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=kdRZHZ+3kHyVE2YmSPmtCyr5Js6pSHjrftAaZg3OXZs=;
-        b=aHpv/63fzSS/OnM9rwpiN6PnCHx1tuokfe6EZS19StahEWlljmuRitwv6qq/Kt6ynl
-         5YCxFyCG01JLeh95ys0ZXqOD+hhArPIPPzYhvl+Zh5W0wlBZmGyUWOZo6gYKtVb4ur/n
-         X/cqPvkK7J4gyd53GdGmnst1xGAQ8dGAY86jKUAJLCbBA38Jt3MUeP6XKBAxcXXh6F2/
-         msM5oGZ+kYGSd6wyQl9aM5Iw5qnb6lmTY3kV/0lMMXmi1E9LIqatMcBKwPhVlKXC3/Np
-         o3cum5kZL2f2XW0LHC4CbZmVmTLoKmor2x/2eN7rby194caChvMlGbm5bl4lrbTE0dh/
-         NNVA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:from:to:subject:message-id
-         :references:mime-version:content-disposition:in-reply-to;
-        bh=kdRZHZ+3kHyVE2YmSPmtCyr5Js6pSHjrftAaZg3OXZs=;
-        b=VThmMvmObtG5RCaoHbf8n8g/yVDtM13WD0qerXNnJ5HiB5rau7rvVFSDH+7EE6OvbS
-         aflKqgHhYedEXofE0hrwx96+75mofaDiqu6/A820OKf5SNHwExBUz/kEg5P6d11LNNTU
-         J4vwQXnThlZKdgA/U50gELyzPbsDKGnRShTRrsTFVNQU7r88+ow+4QnOziYKvRs+3oTU
-         ZSIbwr/Tam122pTgDMTNETKIICxH1p4OoMRhOavx2jchtWIaqYwnxIo3/H+R1q5JWN2I
-         QvAuQyiRfFwVqFUxsuJDPgTJcHIZYl1XIndh9J3eFs6Fje8J2H5pQaKfxOp1UTGjSssx
-         luDg==
-X-Gm-Message-State: AOAM533Y7scH9VQowz3AQvt1qCBV1AJkF0+NCvBmwaTfrHAGpw9T9UJt
-	DUurbIjB+R1LucjY/1r+KRcr9lKmd8wXNQ==
-X-Google-Smtp-Source: ABdhPJzn8Zm5d/1NGD2k7T/cMerK+rINRHQ/LXziIs9i1SFLumy9ltKlARxMOBP0JpfsuQ0tirULIw==
-X-Received: by 2002:a5d:5104:: with SMTP id s4mr5285587wrt.62.1615995000971;
-        Wed, 17 Mar 2021 08:30:00 -0700 (PDT)
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Date: Wed, 17 Mar 2021 16:29:58 +0100
-From: Salvatore Bonaccorso <carnil@debian.org>
+Received: (qmail 27704 invoked from network); 28 Jul 2015 17:26:48 -0000
+Date: Tue, 28 Jul 2015 12:26:33 -0500
+From: Tyler Hicks <tyhicks@canonical.com>
 To: oss-security@lists.openwall.com
-Message-ID: <YFIgdvb3HG4js+Y2@eldamar.lan>
-References: <CAKx+4-qgvO4_R8fTqwxKLqwud42wUkG3V2POGeXE6C6Bv+zrxg@mail.gmail.com>
- <YFIdcSI6NvjeqFKp@kroah.com>
+Cc: David Howells <dhowells@redhat.com>,
+	Colin Ian King <colin.king@canonical.com>, security@ubuntu.com
+Message-ID: <20150728172632.GA3132@boyd>
+References: <20150727141855.GA14038@boyd>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="zYM0uCDKw75PZbzx"
+Content-Disposition: inline
+In-Reply-To: <20150727141855.GA14038@boyd>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+Subject: Re: [oss-security] Security issue in Linux Kernel Keyring
+ (CVE-2015-1333)
+
+--zYM0uCDKw75PZbzx
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <YFIdcSI6NvjeqFKp@kroah.com>
-Subject: Re: [oss-security] CVE-2021-20219 Linux kernel: improper
- synchronization in flush_to_ldisc() can lead to DoS
+Content-Transfer-Encoding: quoted-printable
 
-Hi Rohit,
+On 2015-07-27 09:18:55, Tyler Hicks wrote:
+> While improving the system call coverage in stress-ng[1], Colin Ian King
+> discovered a bug in the Linux kernel keyring that can be used to cause a
+> local denial of service due to memory exhaustion when the same key is
+> repeatedly added to the kernel keyring via the add_key() syscall.
+>=20
+> This issue has been assigned CVE-2015-1333.
 
-On Wed, Mar 17, 2021 at 04:17:05PM +0100, Greg KH wrote:
-> On Wed, Mar 17, 2021 at 07:45:59PM +0530, Rohit Keshri wrote:
-> > Hello Team,
-> > 
-> > A denial of service vulnerability was found in n_tty_receive_char_special
-> > in drivers/tty/n_tty.c of the Linux kernel.  In this flaw a local attacker
-> > with a normal user privilege could delay the loop (due to a changing
-> > ldata->read_head, and a missing sanity check) and cause a threat to the
-> > system availability.
-> > 
-> > 'CVE-2021-20219' was assigned by Red Hat.
-> > 
-> > Acknowledgements: Evgenii Shatokhin (Virtuozzo Research LLC)
-> 
-> Really?  Not the tools or people that reported this issue and fixed it
-> in the community back in 2018?
+mancha pinged me on IRC while trying to figure out what kernel versions
+are affected and I realized that I forgot to include an import detail in
+my original email.
 
-Can you clarify, would 3d63b7e4ae0d ("n_tty: Fix stall at
-n_tty_receive_char_special().") be the upstream fix you are referring
-to for it?
+The following commit introduced the issue:
 
-Regards,
-Salvatore
+  commit 034faeb9ef390d58239e1dce748143f6b35a0d9b
+  Date:   Wed Oct 30 11:15:24 2013 +0000
+=20=20
+      KEYS: Fix keyring quota misaccounting on key replacement and unlink
+
+Which means that v3.13 and newer kernels are affected:
+
+  $ git describe --contains 034faeb9ef390d58239e1dce748143f6b35a0d9b
+  v3.13-rc1~18^2~6^2~2
+
+Tyler
+
+--zYM0uCDKw75PZbzx
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCgAGBQJVt7tIAAoJENaSAD2qAscK3CcQAI6M4AJk/I+BoTC6lsgmYCp5
+l8o8fjA+0+tC01KuscZMpww4JSa6Yx3w9ELxgmkdaZKlxYhd4fV1QlXBQLPEMYnc
+z3ObYAua2oLCclAes8W0SAH1ZKSOy7jIBtWgNbCiLnlR8FEEUxmrxJG3zjNP8YRR
+pGLxKZ+E00w3NR9cLAvz9FuWko8GuY/ameK0UjxKG6/3Bd0bNrDQMyK4D4EVzzcS
+euPicoRCU0Zm8t+UaX/f2z8f7C4XMXTkm39/JYc7F506dnPM0Vs0MKId2bV2wCr9
+wcE0zS7nBbBdslG2EtTBaLQ/Jm6XejCgsEQMYYEzABisTyMicCTyu+9TVVo+vWZ8
+FpsxzXbkTWHJz4Dzqyuz1cTiw2lrAf4K/8U0WDy2WLThU4JOe3y818wfCNlM+PO/
+NBc+j6x7o+TTMo74LOFB3Q3wSVAlWzLCxsbmmAXSIbn1H2dYVkDP7zpAcCjKM/1s
+Q8nykMzKmeKbx8tTUZbQ0S3gUwLpNlZNHfLjbOFpAebwQgT2nNg/PQ+AnolcieHW
+VCjA2dSTgrYQNkvtJy+ZFanr+QBGcE/bpyeaPc+rB8MQjUsDAnwstu4v2kSDSrgR
+Rjokz+yJM/UovjxAm+Wo55lSjwx47Egwu/ybtqlEdnRB2UdLjsQA0lRPVm2UfKzJ
+k17J6vd6VBCtYeAhBJgR
+=Jp6H
+-----END PGP SIGNATURE-----
+
+--zYM0uCDKw75PZbzx--
