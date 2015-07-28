@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["945" "Tuesday" "29" "August" "2017" "11:44:53" "-0500" "Bob Friesenhahn" "bfriesen@simple.dallas.tx.us" "<alpine.GSO.2.20.1708291116010.12310@scrappy.simplesystems.org>" "25" "Re: [oss-security] A bunch of duplicate CVEs requested for?? bho.." "^Date:" nil nil "8" "2017082916:44:53" "[oss-security] A bunch of duplicate CVEs requested for?? bho.." (number mark "        bfriesen@sim Aug 29   25/945   " thread-indent "\"Re: [oss-security] A bunch of duplicate CVEs requested for?? bho..\"\n") "<6609652.OIiHvm4qLd@wanheda>" ("<6609652.OIiHvm4qLd@wanheda>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2666" "Tuesday" "28" "July" "2015" "14:57:46" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150728185746.BE8E46C0099@smtpvmsrv1.mitre.org>" "61" "[oss-security] Re: CVE Request - OpenStack Designate mDNS DoS through incorrect handling of large RecordSets" nil nil nil "7" "2015072818:57:46" "[oss-security] Re: CVE Request - OpenStack Designate mDNS DoS through incorrect handling of large RecordSets" (number mark "        cve-assign@m Jul 28   61/2666  " thread-indent "\"[oss-security] Re: CVE Request - OpenStack Designate mDNS DoS through incorrect handling of large RecordSets\"\n") "<55B7A747.3050806@macinnes.ie>" ("<55B7A747.3050806@macinnes.ie>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 1954 invoked by uid 550); 29 Aug 2017 16:45:10 -0000
+Received: (qmail 21531 invoked by uid 550); 28 Jul 2015 18:57:59 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,43 +11,74 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 1922 invoked from network); 29 Aug 2017 16:45:08 -0000
-X-X-Sender: bfriesen@scrappy.simplesystems.org
-In-Reply-To: <6609652.OIiHvm4qLd@wanheda>
-Message-ID: <alpine.GSO.2.20.1708291116010.12310@scrappy.simplesystems.org>
-References: <6609652.OIiHvm4qLd@wanheda>
-User-Agent: Alpine 2.20 (GSO 67 2015-01-07)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (smtp.simplesystems.org [65.66.246.90]); Tue, 29 Aug 2017 11:44:54 -0500 (CDT)
-Date: Tue, 29 Aug 2017 11:44:53 -0500 (CDT)
-From: Bob Friesenhahn <bfriesen@simple.dallas.tx.us>
+Received: (qmail 21504 invoked from network); 28 Jul 2015 18:57:59 -0000
+In-Reply-To: <55B7A747.3050806@macinnes.ie>
+Message-Id: <20150728185746.BE8E46C0099@smtpvmsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Tue, 28 Jul 2015 14:57:46 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] A bunch of duplicate CVEs requested for?? bho..
-To: oss-security <oss-security@lists.openwall.com>
+Subject: [oss-security] Re: CVE Request - OpenStack Designate mDNS DoS through incorrect handling of large RecordSets
+To: kiall@macinnes.ie
 
-On Tue, 29 Aug 2017, Agostino Sarubbo wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> Hi all.
->
-> In the last time there are some people that run afl for fuzzing...that's just
-> fine and great. Some people miss to communicate their findings to upstream and
-> request a CVE from mitre.
-> However I'm noticing that every day there are new duplicates, let me post some
-> examples:
+> https://launchpad.net/bugs/1471161
 
-It is important to keep in mind that CVEs are issued against 
-"products".  There might be a CVE issued against a software version 
-distributed by Red Hat or Debian which is not applicable to the 
-upstream version.  Since each distribution patches their version it is 
-difficult to know the "product" that a particular CVE is applicable 
-to.
+> Designate does not enforce the DNS protocol limit concerning record set sizes 
 
-I agree that in my personal experience upstream maintainers are rarely 
-involved in the CVE process.
+> As a result, the rendering loop in desginate-mdns can does not make progress
 
-Bob
--- 
-Bob Friesenhahn
-bfriesen@simple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
-GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
+> Because it keeps receiving data, it does not seem it will ever run
+> into a timeout (and if it does, it will try again).
+
+> https://bugs.launchpad.net/designate/+bug/1471161/comments/5
+
+> I think there is 2 parts to this bug:
+
+> 1: Quotas were being bypassed as part of the v1 API.
+> 2. If there was enough RRs in a RRSet MiniDNS went into a loop.
+> 3. MiniDNS does not have a timeout.
+
+Our current feeling is that it is best to have two CVE IDs: one for
+the original "does not enforce the DNS protocol limit concerning
+record set sizes" issue and one for the "Quotas were being bypassed"
+issue. Is that OK?
+
+The basic rationale is that the issues can be independently fixed,
+i.e., regardless of how large a quota exists or whether that quota is
+sensible, the "rendering loop in desginate-mdns can does not make
+progress" behavior is still a relevant vulnerability. Also, even after
+the loop is fixed, an installation may have its own reason for a small
+quota, and thus any quota bypass is a vulnerability.
+
+We feel that item 3, adding a timeout, can be considered a security
+enhancement opportunity that should not have its own CVE ID, i.e.,
+there is no report of a vulnerability that can be fixed only with a
+timeout. Finally, our understanding is that multiple names are being
+used to refer to the general
+https://wiki.openstack.org/wiki/Designate/Blueprints/MiniDNS concept,
+i.e., we think "MiniDNS does not have a timeout" is an observation
+about the Designate codebase, not a third-party DNS server such as
+from the https://code.google.com/p/minidns/ site. Also, we think this
+part of the Designate codebase is also called designate-mdns
+(misspelled as desginate-mdns) and mDNS -- these are essentially
+alternative names for Designate MiniDNS.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJVt9BUAAoJEKllVAevmvmsj+gH/R6TY6J5Wrq6+XvDEccKo+kb
+w/s+164JE+yaPddI5yc+NjDPCXb78Fv+Hn7eOLsqUEOon78D+MxGExmrNaYh8sVb
+QlJYINgMnpzT9wH7cYruEki33P6JAXO0zXR0mnvh2p9glHaRLkn7ZLsfwijMPAR+
+aEjpRltb2bkP9vDk4nF3avlDPKImPM0njA59cwBVSJ0qBRMrb6Z9TixAr9l0E5Pd
+wkS5rcWfWhIeiz85paU2H2iolNcfyEnDE1TX6iHFdH0U0h1y329YzUYS9gWrLFL/
+iXzKdl6SfpJtDmKr7tiR0TvnTLFHXBCJ3jDer4T56bIwUq3ZhVSSArBcG7pRY2M=
+=a10I
+-----END PGP SIGNATURE-----
