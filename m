@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["690" "Thursday" "6" "September" "2018" "10:21:09" "-0600" "Leonid Isaev" "leonid.isaev@jila.colorado.edu" "<20180906162109.GB19583@takahe.colorado.edu>" "18" "Re: [oss-security] Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?" "^Date:" nil nil "9" "2018090616:21:09" "[oss-security] Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?" (number mark "        leonid.isaev Sep  6   18/690   " thread-indent "\"Re: [oss-security] Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?\"\n") "<20180906131725.5dyq5xjweg5ljet4@jwilk.net>" ("<20180903105747.dihmczuqhl4kcnx5@suse.de>" "<CAJ_zFkLOkSWe8x5N9Mf9bx1J9+oLnzNtHzTfEDXg0JGPj7N7DA@mail.gmail.com>" "<CAJ_zFk++=BcFw0mU1NefSCkGqo3RzRjePQwPo0mCUzL=QeGBiA@mail.gmail.com>" "<F21BEEA3-4932-472D-9FEA-A318F543861D@gmail.com>" "<CAJ_zFkLmua6XK9iRV-TRQsXKXo=s9Y32FQjOM5UB_UPrrNsAxw@mail.gmail.com>" "<CAJ_zFkLvLBnn8OO6Q3JuqyvpRKoo=63wE1meqsT_jR4USir4DQ@mail.gmail.com>" "<20180905150128.5f9430f4@jabberwock.cb.piermont.com>" "<74d8474f-f18b-7543-a8a8-6072a416aca6@gathman.org>" "<20180905233220.GK1664@takahe.colorado.edu>" "<20180906131725.5dyq5xjweg5ljet4@jwilk.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["902" "Tuesday" "28" "July" "2015" "17:01:11" "+0100" "Kiall Mac Innes" "kiall@macinnes.ie" "<55B7A747.3050806@macinnes.ie>" "32" "[oss-security] CVE Request - OpenStack Designate mDNS DoS through incorrect handling of large RecordSets" nil nil nil "7" "2015072816:01:11" "[oss-security] CVE Request - OpenStack Designate mDNS DoS through incorrect handling of large RecordSets" (number mark "        kiall@macinn Jul 28   32/902   " thread-indent "\"[oss-security] CVE Request - OpenStack Designate mDNS DoS through incorrect handling of large RecordSets\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 18343 invoked by uid 550); 6 Sep 2018 16:26:16 -0000
+Received: (qmail 4025 invoked by uid 550); 28 Jul 2015 16:43:52 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,48 +11,54 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 13970 invoked from network); 6 Sep 2018 16:21:24 -0000
-X-Virus-Status: Clean
-X-Virus-Scanned: clamav-milter 0.99.2 at jilau1.colorado.edu
-Message-ID: <20180906162109.GB19583@takahe.colorado.edu>
-Mail-Followup-To: oss-security@lists.openwall.com
-References: <20180903105747.dihmczuqhl4kcnx5@suse.de>
- <CAJ_zFkLOkSWe8x5N9Mf9bx1J9+oLnzNtHzTfEDXg0JGPj7N7DA@mail.gmail.com>
- <CAJ_zFk++=BcFw0mU1NefSCkGqo3RzRjePQwPo0mCUzL=QeGBiA@mail.gmail.com>
- <F21BEEA3-4932-472D-9FEA-A318F543861D@gmail.com>
- <CAJ_zFkLmua6XK9iRV-TRQsXKXo=s9Y32FQjOM5UB_UPrrNsAxw@mail.gmail.com>
- <CAJ_zFkLvLBnn8OO6Q3JuqyvpRKoo=63wE1meqsT_jR4USir4DQ@mail.gmail.com>
- <20180905150128.5f9430f4@jabberwock.cb.piermont.com>
- <74d8474f-f18b-7543-a8a8-6072a416aca6@gathman.org>
- <20180905233220.GK1664@takahe.colorado.edu>
- <20180906131725.5dyq5xjweg5ljet4@jwilk.net>
+Received: (qmail 26269 invoked from network); 28 Jul 2015 16:01:28 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=macinnes.ie;
+	s=default; t=1438099273;
+	bh=kA+ytzhPTa2HN54V1xB6VM97sg5+GP6kjhumW4gGDeE=;
+	h=Date:From:To:Subject;
+	b=BQMMEQn1gkLSgzWTuss+R4FQQMbv0H6ByK59knOjqBSwa43PYw6biX5NgEQjkvcIf
+	 tI3Od0EVet2mYxhhPa2CbrqHOC3te0OGngk+cYGnKlYS8bCeT9uFCsLreqJscdz4r9
+	 TAPC5zZdbXlDhBCbgqwrXUWKHPpQ/wnjrZq5Y96Q=
+Message-ID: <55B7A747.3050806@macinnes.ie>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20180906131725.5dyq5xjweg5ljet4@jwilk.net>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-Date: Thu, 6 Sep 2018 10:21:09 -0600
-From: Leonid Isaev <leonid.isaev@jila.colorado.edu>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Date: Tue, 28 Jul 2015 17:01:11 +0100
+From: Kiall Mac Innes <kiall@macinnes.ie>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: More Ghostscript Issues: Should we disable PS
- coders in policy.xml by default?
+Subject: [oss-security] CVE Request - OpenStack Designate mDNS DoS through incorrect handling
+ of large RecordSets
 To: oss-security@lists.openwall.com
 
-On Thu, Sep 06, 2018 at 03:17:25PM +0200, Jakub Wilk wrote:
-> * Leonid Isaev <leonid.isaev@jila.colorado.edu>, 2018-09-05, 17:32:
-> > pdf files can contains things like javascript...
-> 
-> Do any open-source PDF browsers actually execute embedded JS?
+Hi,
 
-Currently, evince, okular and gv don't. The same goes for zathura with its
-poppler backend (haven't checked this, but pretty sure). But then there is also
-Artifex Mupdf which, AFAIR, supports JS in pdf files (by extension, so does
-zathura when viewing a pdf file using the mupdf plugin). I don't know how
-complete that support is. Most importantly, many Android pdf/ebook readers
-probably include JS support.
+Can I please have a CVE assigned for the following issue:
 
-CHeers,
-L.
+Launchpad Number: 1471161
+CVE: TBA
+Date: July 28, 2015
+Title: Designate mDNS DoS through incorrect handling of large RecordSets
+Reporter: Florian Weimer (Red Hat)
+Products: Designate
+Versions: 2015.1.0 through 1.0.0.0b1
 
--- 
-Leonid Isaev
+Description:
+Florian Weimer from Red Hat reported a vulnerability in Designate.
+By creating a single RecordSet that exceeds the configured max allowed
+DNS packet size, an authenticated user may cause the Designate mDNS
+service to enter an infinite loop, triggering a DoS.
+
+Liberty (development branch) fix:
+https://review.openstack.org/206578
+
+Kilo fix:
+https://review.openstack.org/206580
+
+Notes:
+This fix will be included in a future 1.0.0.0b2 release.
+
+References:
+https://launchpad.net/bugs/1471161
+http://lists.openstack.org/pipermail/openstack/2015-July/013548.html
+
+-- Kiall Mac Innes, OpenStack Designate PTL
