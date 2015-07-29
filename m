@@ -1,4 +1,9 @@
-Received: (qmail 30407 invoked by uid 550); 16 Apr 2024 20:16:57 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1135" "Wednesday" "29" "July" "2015" "22:16:57" "+0200" "z80" "z80@bytealchemy.be" "<55B934B9.7040803@bytealchemy.be>" "40" "Re: [oss-security] Qualys Security Advisory - CVE-2015-3245 userhelper - CVE-2015-3246 libuser" nil nil nil "7" "2015072920:16:57" "[oss-security] Qualys Security Advisory - CVE-2015-3245 userhelper - CVE-2015-3246 libuser" (number mark "        z80@bytealch Jul 29   40/1135  " thread-indent "\"Re: [oss-security] Qualys Security Advisory - CVE-2015-3245 userhelper - CVE-2015-3246 libuser\"\n") "<20150724155625.GA15469@zoho.com>" ("<20150723170954.GA17931@localhost.localdomain>" "<87h9oud89s.fsf@lysator.liu.se>" "<20150724155625.GA15469@zoho.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 32240 invoked by uid 550); 29 Jul 2015 20:51:46 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,121 +11,63 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 5736 invoked from network); 29 Jul 2015 20:17:19 -0000
+X-Virus-Scanned: Debian amavisd-new at mfilter14-d.gandi.net
+X-Originating-IP: 91.182.98.9
+References: <20150723170954.GA17931@localhost.localdomain>
+ <87h9oud89s.fsf@lysator.liu.se> <20150724155625.GA15469@zoho.com>
+X-Enigmail-Draft-Status: N1110
+Message-ID: <55B934B9.7040803@bytealchemy.be>
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:38.0) Gecko/20100101
+ Thunderbird/38.1.0
+MIME-Version: 1.0
+In-Reply-To: <20150724155625.GA15469@zoho.com>
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: quoted-printable
+Date: Wed, 29 Jul 2015 22:16:57 +0200
+From: z80 <z80@bytealchemy.be>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28505 invoked from network); 16 Apr 2024 20:16:14 -0000
-Date: Tue, 16 Apr 2024 22:16:02 +0200
-From: Solar Designer <solar@openwall.com>
+Subject: Re: [oss-security] Qualys Security Advisory - CVE-2015-3245
+ userhelper - CVE-2015-3246 libuser
 To: oss-security@lists.openwall.com
-Message-ID: <20240416201602.GA21501@openwall.com>
-References: <607d5716-128f-44c5-ab52-6dde4ca6e8a4@christopher-kunz.de> <20240410211457.GA20881@openwall.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240410211457.GA20881@openwall.com>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] New Linux LPE via GSMIOC_SETCONF_DLCI?
 
-On Wed, Apr 10, 2024 at 11:14:57PM +0200, Solar Designer wrote:
-> On Wed, Apr 10, 2024 at 09:56:33PM +0200, Dr. Christopher Kunz wrote:
-> > 1. YuriiCrimson's version (April 6-ish)
-> > 
-> > It seems to use GSMIOC_SETCONF_DLCI, PoC supposedly works on current Ubuntu 
-> > and Debians, but is stopped by LKRG.
-> > 
-> > PoC and writeup are here: 
-> > https://github.com/YuriiCrimson/ExploitGSM/tree/main
-> 
-> According to YuriiCrimson:
-> 
-> https://twitter.com/YuriiCrimson/status/1778163455075217443
-> 
-> "Exploit 6.4 - 6.5 using race condition in gsm_dlci_config.
-> Exploit for 5.15 - 6.5. using race condition in
-> gsm_dlci_open->gsm_modem_update->gsm_modem_upd_via_msc->gsm_control_wait.
-> We just waiting on gsm_cobtrol_wait and restart config for make free
-> dlci)). So it two zero days."
-> 
-> > 3. ZDI-24-020 / CVE-2023-6546 (January)
-> > 
-> > This also exploits a race condition resulting UAF in the gsm_dlci struct. 
-> > It's a little older.
-> > 
-> > Writeup and PoC: https://github.com/Nassim-Asrir/ZDI-24-020/
-> > 
-> > What do you make of this?
-> 
-> So it sounds like there are 3 different bugs recently found in this same
-> subsystem.  Perhaps someone can follow up with links to relevant commits.
 
-I'm puzzled by the lack of follow-ups on this, but anyway @FFFVR_
-tweeted they also found (more) vulnerabilities in the n_gsm driver:
+Actually, the things is very simple:
 
-https://twitter.com/FFFVR_/status/1778244738833080571
+- H4x0rz: Lose The Ego!
+- H4x0rz: Lose The L33t Principles!
 
-> It seems there has been an interesting incident related to the n_gsm
-> vector of the Linux kernel.
-> 
-> While it's still unclear who is right and who is wrong, one thing can be
-> asserted: my bug will soon be patched, and I need more caffeine.
-> 
-> The person who first posted about this bug, jmpeax, claims to have run
-> syzkaller on n_gsm. I also used syzkaller to fuzz the same vector and
-> found several other vulnerabilities, not just the one in question.
-> 
-> I've reported the vulnerabilities that have been analyzed, and I plan to
-> report the remaining ones shortly. It's likely that I will soon make a
-> brief post about how I analyzed n_gsm, including the fuzzing process.
-> 
-> https://bugzilla.kernel.org/show_bug.cgi?id=218708
+- H4x0rz: Use your Brain v1.0
 
-> Bug 218708 - Off-by-one vulnerability when reading data from the n_gsm module
-> 
-> j51569436 2024-04-11 01:56:38 UTC
-> An off-by-one vulnerability occurs in gsm0_receive and gsm1_receive.
-> I'll focus on gsm0_receive for our discussion.
-> 
-> [1] : Write the value to gsm->buf, then increment gsm->count by 1.
-> [2] : If gsm->count == gsm->len is reached, stop reading.
-> 
-> Writing a value to a buffer and then checking its length is typical of
-> off-by-one vulnerabilities.
+What would Brain v1.0 have told you when thinking about releasing an
+exploit at the same time than the patch...
 
-Finally someone willing to report these bugs upstream, and there's now a
-lengthy thread of comments in the above Bugzilla entry.
 
-Also relevant is this mainline commit from August 2023:
 
-tty: n_gsm: require CAP_NET_ADMIN to attach N_GSM0710 ldisc
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=67c37756898a
 
-which is now being backported to stable/longterm kernels:
-
-Subject: Backport of 67c37756898a ("tty: n_gsm: require CAP_NET_ADMIN to attach N_GSM0710 ldisc") to older stable series? (at least 6.1.y)
-https://lore.kernel.org/stable/ZhbiWp9DexB_gJh_@eldamar.lan/
-
-Since there are multiple known unfixed bugs in this driver and since it
-poses unjustified risk on most systems anyway, here are some mitigations
-we can apply:
-
-1. At kernel build time, don't enable CONFIG_N_GSM.
-
-2. Unload and disallow auto-loading of the module:
-
-rmmod n_gsm
-echo blacklist n_gsm >> /etc/modprobe.d/blacklist.conf
-
-3. Disallow auto-loading of tty line discipline modules in general:
-
-sysctl dev.tty.ldisc_autoload = 0
-
-4. Disallow (unprivileged) user or/and network namespaces, however this
-is not expected to help on kernels without the commit referenced above!
-We recently discussed other related aspects in this thread:
-
-https://www.openwall.com/lists/oss-security/2024/04/14/1
-
-Any one of these mitigations should be sufficient where it works, but
-mitigations 2 and 3 assume the driver is built as a module (not built
-into the kernel) and mitigation 4 assumes a (very) recent kernel.
-
-Alexander
+On 24/07/2015 17:56, mancha wrote:
+> On Thu, Jul 23, 2015 at 08:43:43PM +0200, Leif Nixon wrote:
+>> Qualys Security Advisory <qsa@qualys.com> writes:
+>>
+>>> Hello, it is July 23, 2015, 17:00 UTC, the Coordinated Release Date
+>>> for CVE-2015-3245 and CVE-2015-3246.  Please find our advisory
+>>> below, and our exploit attached.
+>>
+>> *Why* are you releasing a full exploit just minutes after the patch is
+>> released?
+>>
+>> (Disclosure: I am employed by Red Hat, but this is my purely personal
+>> question.)
+>>
+>> -- Leif Nixon
+>=20
+> There was absolutely nothing wrong with Qualys' timing. When the embargo
+> ends, it ends.=20=20
+>=20
+> The real problem is the underlying model: "responsible disclosure". It's
+> nothing more than a CYA strategy that doesn't maximize the ecosystem's
+> welfare. The positive-sounding name fools some into thinking it a good
+> thing.
+>=20
+> --mancha
+>=20
