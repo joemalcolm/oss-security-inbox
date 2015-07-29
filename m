@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2774" "Tuesday" "10" "July" "2018" "09:22:25" "+0100" "Luke Hinds" "lhinds@redhat.com" "<a2972f5b-b716-52f2-732f-093081865c65@redhat.com>" "76" "[oss-security] [OSSN-0084] Data retained after deletion of a ScaleIO volume" nil nil nil "7" "2018071008:22:25" "[oss-security] [OSSN-0084] Data retained after deletion of a ScaleIO volume" (number mark "U       lhinds@redha Jul 10   76/2774  " thread-indent "\"[oss-security] [OSSN-0084] Data retained after deletion of a ScaleIO volume\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2400" "Wednesday" "29" "July" "2015" "14:48:17" "-0700" "Reed Loden" "reed@reedloden.com" "<CALPTtNVyNZZh=d6axNF9yNqi5_5h_sp6_AiwE7xrjSJj+Av_8A@mail.gmail.com>" "59" "[oss-security] Re: CVE request: Two ruby 'dl' vulnerabilities fixed in ruby-1.9.1-p129" nil nil nil "7" "2015072921:48:17" "[oss-security] Re: CVE request: Two ruby 'dl' vulnerabilities fixed in ruby-1.9.1-p129" (number mark "U       reed@reedlod Jul 29   59/2400  " thread-indent "\"[oss-security] Re: CVE request: Two ruby 'dl' vulnerabilities fixed in ruby-1.9.1-p129\"\n") "<20150728122724.120D93321BC@smtpvbsrv1.mitre.org>" ("<CALPTtNVtm+tLFxZcg268GSp0LtX+zCz0RwRowxSf7S0Tv6kutA@mail.gmail.com>" "<20150728122724.120D93321BC@smtpvbsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 3135 invoked by uid 550); 10 Jul 2018 09:43:09 -0000
+Received: (qmail 13465 invoked by uid 550); 29 Jul 2015 21:48:49 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,132 +12,97 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15660 invoked from network); 10 Jul 2018 08:22:39 -0000
+Received: (qmail 13443 invoked from network); 29 Jul 2015 21:48:48 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=reedloden.com; s=google;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=eJXI+9oTO3d4AgezJYdph/3TH8wwoVBWw9yi+y8COGg=;
+        b=FwYjOWY07F8SsDvrOPr/yEJi3m9XBa+JcwFXqCUki4awKla0ZNAkZdDpiiTxN4I149
+         9mY6JWbtAsyChnupSSyfGxFMBm6N1ymrzDcj27XH1A24H8BIntd/UnbdQRbJuMwPJd9G
+         9Z7AHPItAlSM/f2qHvP4CE2Ugx9Wk0oXszRek=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:to:from:subject:openpgp:autocrypt:message-id
-         :date:user-agent:mime-version;
-        bh=LNKg3poe4o82/7L+icUKXwvJYRqQpQEPZq24NrkWIp0=;
-        b=dALfEvZylkcyno19hVO4pC6L2Ls5zjo9azTOA1SMQ1TbeG3ZcAgXZK1SDVLsHSA5J/
-         oKI81vtVL1UEsTz8uCNN6znDXK+D6tk4yh64zWEyoPF+N+XQ5JCf1LEs+qNqAZdGfUEG
-         nbagpNokmEQUfAWqDLIhRjGiP0nR1b57Swb+6A5861FKgAB4t6CnCie9DzwjtG/Y4dPX
-         fi6EnhFbO7ZWxN9+NO57CYeW3X+RQ+s1wo60o7n4NPlHEo5l7UzZKmMlMp/lMrGc1O4W
-         +3xq8I6Njo0cadbhlVIXEJPzYIq8cS4bxsyGYwKCK00AlBT+pyyO2v3+gZ27jLekhdpV
-         9FhA==
-X-Gm-Message-State: APt69E19nknwbfrP7ZfVeQiiffQ8sUgNXEyHyOZHyR2dcOWR6uIuCTOd
-	FhWjMwBCGbzJcC4RnkfNkZ+Xd12WSw==
-X-Google-Smtp-Source: AAOMgpeZc2dwgYjvTkP0cDc/+/g22Z+vU5TH3DYpQMhXvKofkU7sLNpwuZv7eNwpEtPefJrV9nSlTA==
-X-Received: by 2002:a5d:6550:: with SMTP id z16-v6mr16221059wrv.194.1531210947141;
-        Tue, 10 Jul 2018 01:22:27 -0700 (PDT)
-To: oss-security <oss-security@lists.openwall.com>
-From: Luke Hinds <lhinds@redhat.com>
-Openpgp: preference=signencrypt
-Autocrypt: addr=lhinds@redhat.com; prefer-encrypt=mutual; keydata=
- xsBNBFcLyhwBCADSNb8iiJtTiTVyLB9gmIah09wj48CULxqIC8VYogNRwky3CmQefLQgcirI
- lvWFqL39PHHon3AYzpEU1fBB1G0SN2/bFT+qO/vE8fjkCuAxMJkfollN7Nq9y1/bSnXpw0uS
- +avKHClLD5OGX2oY2mDkiExkm8bzONu2+Iu3ZW313KU6Qw//sukJNwVVB8t67xsxiADUcfxU
- YQEZ1CGKPD4KFovrzmRodFE3BtMnsJNzHPMsI1CTBt+8BuQhmoZ5akQSPQfojfVZvqr3DbCc
- FEQaBm5GCz6Rdqch1R7kQ+lgudXqpW92N+qm0kozx34TMFHw6mazuV2XhGpRUbV3r2GpABEB
- AAHNHkx1a2UgSGluZHMgPGxoaW5kc0ByZWRoYXQuY29tPsLAeAQTAQIAIgUCVwvKHAIbAwYL
- CQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQ8WVWFzwgJhRnyQf6AnYhPjNfL6pKCQ/Pjmyi
- sgfMIXwHwK3P8Ev2Am1+xipt254NyZbO7P5i7efJ3GZqBc4TR93j8WqKalri+CYYao+PpNqE
- u6nlA3vbL9LA6W7B/hQLSFt2gNmMp24tNBenpqYkNOQA8A/5H0EOiyvhjepxUQ7+1jz1kKhK
- Fua4a6nBSEdtqNGckOTx9T3q5ktQAp3tjhXQTaqNFKme4Wq5axT/aIe1gJRwa9ZPWEMdK1jy
- w88vFrEa4Y/3N29QlpaN9XwU4Wp8Amij2MN+C3BjF30sFXd3Cr6KU3VpcqqfM4s1ryrEJCtC
- pelOs8wK8Hr9xLeZ114PRYm+xSsAacNptM7ATQRXC8ocAQgAuqHCGpL2e3CNLbYFm19la3Z2
- 3/zbLZrSZyvhxHDuYlEfdK9qjX7zyYxVyNHyI6jhxDXED6ZObDgZNhST2V+E5h0t5PvLdfzL
- Vffe/2bDa4GP+t63cqxtWPTVkiPHyvDNsBrMmM9n7iiEa01OxKOnAxBxvUJshfzUAiy5Atek
- rFRFTGOeBRiJXJI7N6dGtFBdQ7KfZRbQT3DMhz0nlERilva/+sbJ1sMbwDixMHhGBzVck9dW
- s+rJeMnl6lTeDBXg8kYXkMwdcV4vjaoRs7d7haF4vhlL9VQbM1I/3rhUXjXHX8Ct8XMMYhtI
- mHpbmqueX/lL4Rq71EAKoy4luvQk1QARAQABwsBfBBgBAgAJBQJXC8ocAhsMAAoJEPFlVhc8
- ICYUOnUIAKMnO8bxB1UQRAkpzDq97fWaPSJgSxKRD8fzDg2k0zzuxeQ6D6EtSxmViTqYbjxr
- 6Gd/bzuNQOkKy/fQXHbGL/zDurR+Xh+GH7yr+ynFdlWY701OSa1+xAT5igQaKl29ofjH/I5s
- xCTZiCwySFcwhdpGUg1IMn7TlzPT6r/2Pafueqyha0VPUxL91H+2emxu5EALHPaOmwyTlZWU
- mr4KL5BE88RTdZtu851nXSH6/qtGPmoeNrAh2yuKR9EkQYh9XyqC7dHQM4gM12XGTlwIwEg0
- zsE7Ve7ZewmXEKeqo2VTMPAmeC5p/0sWKobjfctTp6nuzolU6Ph6zJxPrHK+EoY=
-Message-ID: <a2972f5b-b716-52f2-732f-093081865c65@redhat.com>
-Date: Tue, 10 Jul 2018 09:22:25 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.8.0
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=eJXI+9oTO3d4AgezJYdph/3TH8wwoVBWw9yi+y8COGg=;
+        b=fv9dHSevkegcsfec90p/M0YeVdCp54O9X1NXqney1/iipOh95pYYUk8WkkWoMd5NdW
+         VamY0AhAs+2XfiaeX9oyMC1b5tgjgaHq0YOxIVA8AHkXrMRvnA4oEhR/KNF68JsT7KqM
+         KekWaZBcWFSKzTIzDrw9q6bpTGL+zimKRpNQ1Ns8SNicQjQSkL/M6jwWd/NG9phNYGuV
+         GYc56OnZGTd/PuhTq5Y0OsfYcP4XJxesZXroDDQ8GRUz+QfyoVFfKfNopZouf7YSofLq
+         iwiW3DJr4xj2QNTv3ymjqiial3NpOzSazRiNh2dH++9Ap+hsUU3dZAto1BqfdVsoapmi
+         kDeQ==
+X-Gm-Message-State: ALoCoQng9iz8C1IY3qzgkfwrG31GfkjKYZisvuCevjH4aHZ+eWDb7fzeJWv+waJnF3iPGn7FPzHz
+X-Received: by 10.107.7.214 with SMTP id g83mr5589014ioi.28.1438206516664;
+ Wed, 29 Jul 2015 14:48:36 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="85NBK4P8t0QB6eErZ5zC3RItK3JXLmYmw"
-Subject: [oss-security] [OSSN-0084] Data retained after deletion of a ScaleIO volume
+In-Reply-To: <20150728122724.120D93321BC@smtpvbsrv1.mitre.org>
+References: <CALPTtNVtm+tLFxZcg268GSp0LtX+zCz0RwRowxSf7S0Tv6kutA@mail.gmail.com>
+ <20150728122724.120D93321BC@smtpvbsrv1.mitre.org>
+From: Reed Loden <reed@reedloden.com>
+Date: Wed, 29 Jul 2015 14:48:17 -0700
+Message-ID: <CALPTtNVyNZZh=d6axNF9yNqi5_5h_sp6_AiwE7xrjSJj+Av_8A@mail.gmail.com>
+To: Assign a CVE Identifier <cve-assign@mitre.org>
+Cc: oss-security@lists.openwall.com, security@ruby-lang.org
+Content-Type: multipart/alternative; boundary=001a113f911c8a3860051c0a8c6a
+Subject: [oss-security] Re: CVE request: Two ruby 'dl' vulnerabilities fixed in ruby-1.9.1-p129
 
---85NBK4P8t0QB6eErZ5zC3RItK3JXLmYmw
-Content-Type: multipart/mixed; boundary="VYbnCfvd1gGsYQJnC7tNf5wSxUdfhz1Xw";
- protected-headers="v1"
-From: Luke Hinds <lhinds@redhat.com>
-To: oss-security <oss-security@lists.openwall.com>
-Message-ID: <a2972f5b-b716-52f2-732f-093081865c65@redhat.com>
-Subject: [OSSN-0084] Data retained after deletion of a ScaleIO volume
+--001a113f911c8a3860051c0a8c6a
+Content-Type: text/plain; charset=UTF-8
 
---VYbnCfvd1gGsYQJnC7tNf5wSxUdfhz1Xw
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB-large
-Content-Transfer-Encoding: quoted-printable
+On Tue, Jul 28, 2015 at 5:27 AM, <cve-assign@mitre.org> wrote:
 
-Data retained after deletion of a ScaleIO volume
----
+> > * DL::Function#call could pass tainted arguments to a C function even if
+> > $SAFE > 0.
+> >
+> https://github.com/ruby/ruby/commit/7269e3de3cee3bbb6ab77fc708f3a10cab00b65e
+>
+> > These seem to be different issues than CVE-2008-3657.
+>
+> Please clarify what research you have done to reach this conclusion
+> for the DL::Function#call issue. Finding information about
+> vulnerabilities with different dates does not always mean that
+> separate CVE IDs are used. For example, if a 2008 patch was
+> ineffective in the sense that it did not actually fix any aspect of a
+> CVE-2008-xxxx vulnerability, and then an effective patch and a new
+> advisory were produced in 2009, the previously assigned CVE-2008-xxxx
+> ID would continue to be used - there would not be a new CVE-2009-yyyy
+> ID.
+>
+> The available information about CVE-2008-3657 includes the "Lack of
+> taintness check in dl" section of
+>
+> https://www.ruby-lang.org/en/news/2008/08/08/multiple-vulnerabilities-in-ruby/
+> with "dl doesn't check taintness ... This vulnerability was reported
+> by sheepman" and "Please upgrade to ... 1.8.7-p72." See the
+> ftp://ftp.ruby-lang.org/pub/ruby/1.8/ archives.
+>
+> Comparing ext/dl/sym.c between p71 and p72 shows a new
+> rb_check_safe_obj(pval) line in rb_dlsym_call.
+>
+> Comparing ext/dl/dl.c between p71 and p72 shows new instances of
+> OBJ_INFECT, among other changes.
+>
+> The 2009 commit mentions "Patch by sheepman" and a change to a .rb
+> file (no changes to any .c file).
+>
+> Is the 2009 issue a new issue because it is specific to a "tainted
+> arguments to a C function" attack, and the 2008 patch correctly
+> resolved the 2008 test case involving uname?
+>
 
-### Summary ###
-Certain storage volume configurations allow newly created volumes to
-contain previous data. This could lead to leakage of sensitive
-information between tenants.
+Sorry, not a Ruby developer, so not really able to give an authoritative
+answer here (cc'ing security@ruby-lang.org to see if they can help). I am
+just trying to track all Ruby vulnerabilities for inclusion into
+https://github.com/rubysec/ruby-advisory-db, and I noticed those never had
+CVEs assigned (yet the Ruby devs considered them security issues).
 
-### Affected Services / Software ###
-Cinder releases up to and including Queens with ScaleIO volumes
-using thin volumes and zero padding.
+To help with this, here is the 2008 diff --
+https://github.com/ruby/ruby/commit/48c7bb17de234f881b775128b354715ece973415
 
-### Discussion ###
-Using both thin volumes and zero padding does not ensure data contained
-in a volume is actually deleted. The default volume provisioning rule is
-set to thick so most installations are likely not affected. Operators
-can check their configuration in `cinder.conf` or check for zero padding
-with this command `scli --query_all`.
+Hopefully, one of the Ruby core devs can jump in here and give a better
+answer.
 
-#### Recommended Actions ####
+~reed
 
-Operators can use the following two workarounds, until the release of
-Rocky (planned 30th August 2018) which resolves the issue.
-
-1. Swap to thin volumes
-
-2. Ensure ScaleIO storage pools use zero-padding with:
-
-`scli --modify_zero_padding_policy
-    (((--protection_domain_id <ID> |
-    --protection_domain_name <NAME>)
-    --storage_pool_name <NAME>) | --storage_pool_id <ID>)
-    (--enable_zero_padding | --disable_zero_padding)`
-
-### Contacts / References ###
-Author: Nick Tait
-This OSSN : https://wiki.openstack.org/wiki/OSSN/OSSN-0084
-Original LaunchPad Bug : https://bugs.launchpad.net/ossn/+bug/1699573
-Mailing List : [Security] tag on openstack-dev@lists.openstack.org
-OpenStack Security Project : https://launchpad.net/~openstack-ossg
-
-
-
---VYbnCfvd1gGsYQJnC7tNf5wSxUdfhz1Xw--
-
---85NBK4P8t0QB6eErZ5zC3RItK3JXLmYmw
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCAAdFiEElSwKI1Vlx+dE6h5a8WVWFzwgJhQFAltEbMEACgkQ8WVWFzwg
-JhQH3AgAxpuzge3GNQezVC2oj0Hg3lVl8j/aI02FAm8vf+L3QYqFGvPkn/Zwb73c
-TENiHObzpr6R4aZBocRGB2t6Rzhy8o2Ym37Vr36nHjOnkl0tIAuroPvmER0G3VXk
-pPjVBIDs7h3LaQjpPa2r1abKPPaq+Hn1n/FicRzhU3bWqsi3CWIBNjj28FUC4TBE
-bcZkLVi0/EeaC37dU10naLv19XNKCV1YAuLwhzg0acg57SKJAkwWWtnxTW4O2kAE
-HXf8ACWg8ra+k9xOkdxYpt216yrsHHmEcLjjhdzjuEtGP6tUgZD6D3JpYiLQ6Qug
-B02JrUV8+iOkltkeRHzyfscBoC/ZRQ==
-=2ggl
------END PGP SIGNATURE-----
-
---85NBK4P8t0QB6eErZ5zC3RItK3JXLmYmw--
+--001a113f911c8a3860051c0a8c6a--
