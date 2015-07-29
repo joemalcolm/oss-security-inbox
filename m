@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2403" "Monday" "25" "April" "2016" "23:00:10" "+0200" "Moritz Muehlenhoff" "jmm@debian.org" "<20160425210010.GA9723@pisco.westfalen.local>" "70" "[oss-security] CVE requests: Multiple Wireshark vulnerabilities" nil nil nil "4" "2016042521:00:10" "[oss-security] CVE requests: Multiple Wireshark vulnerabilities" (number mark "U       jmm@debian.o Apr 25   70/2403  " thread-indent "\"[oss-security] CVE requests: Multiple Wireshark vulnerabilities\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["654" "Wednesday" "29" "July" "2015" "14:48:27" "-0700" "Reed Loden" "reed@reedloden.com" "<CALPTtNWfcr-Y6XTM9yphQ5xVkOKTYJ_vWLaOLw4972afNQhPOw@mail.gmail.com>" "23" "Re: [oss-security] CVE request: Two ruby 'dl' vulnerabilities fixed in ruby-1.9.1-p129" nil nil nil "7" "2015072921:48:27" "[oss-security] CVE request: Two ruby 'dl' vulnerabilities fixed in ruby-1.9.1-p129" (number mark "U       reed@reedlod Jul 29   23/654   " thread-indent "\"Re: [oss-security] CVE request: Two ruby 'dl' vulnerabilities fixed in ruby-1.9.1-p129\"\n") "<55B7781F.20804@redhat.com>" ("<CALPTtNVtm+tLFxZcg268GSp0LtX+zCz0RwRowxSf7S0Tv6kutA@mail.gmail.com>" "<55B7781F.20804@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 22262 invoked by uid 550); 25 Apr 2016 21:00:25 -0000
+Received: (qmail 15367 invoked by uid 550); 29 Jul 2015 21:48:59 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,88 +12,62 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 22244 invoked from network); 25 Apr 2016 21:00:24 -0000
-Date: Mon, 25 Apr 2016 23:00:10 +0200
-From: Moritz Muehlenhoff <jmm@debian.org>
-To: cve-assign@mitre.org, oss-security@lists.openwall.com
-Cc: security@wireshark.org
-Message-ID: <20160425210010.GA9723@pisco.westfalen.local>
+Received: (qmail 14267 invoked from network); 29 Jul 2015 21:48:58 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=reedloden.com; s=google;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=DBrxRXWxT0UCSJTIMcaVKfhs1891pzlF9nGsVTmoLDc=;
+        b=I31DokfMPytcueSWcttf0O+7Px/DU08/8bj+NwZgn++k0siBeMcOgQowwILIy7x44C
+         fjKD6Ih+JtZ2VtmNe+/UC8E1oi2TkIAl5qWkCmwCvK/m2Dwbk1bap7xMji2rhJkO7Y9P
+         o4/rk1tkPYks6SCDwr0+aXS3HU/L5SCWu5TiA=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=DBrxRXWxT0UCSJTIMcaVKfhs1891pzlF9nGsVTmoLDc=;
+        b=V4cXmhjI7ftgEfPdyUe0UvgU8Ci90BDx+wJFcjDHzuC1H11vMEDqNcwfKng9IsPHG6
+         KChxzw1SLXq7KW4sAV536fVoXd24lhwG5/fKYfye7zz0L5oNiufrYdbjB+I+6P2gDUEp
+         YW8l/DqawBdFpRQzZCy9E1JZ2t5qcV8y8oFa+nHvLDyAbePPxxBdx8JFUvzHVuwpQF7v
+         jputyAEJkES3qlBOv5Ey3VWvha3yHK1RjOL8ZziqWfzyz+0G6BtvjrxPvj5TQ6PS/7YE
+         QRvNgfcmUMTXGjBq6xApB+kqsvb01uu7+ftHuTTaLmSg0wKvdxaSL5eq3ozGn0ReNA7k
+         JbxQ==
+X-Gm-Message-State: ALoCoQmiYlevsL4HXce98+/w0CvYw0rCN14Lfn0f/YaeHYpSLTV0Qy4Wq8goJh5XbLehlI8QpIqe
+X-Received: by 10.50.59.242 with SMTP id c18mr9703419igr.66.1438206526552;
+ Wed, 29 Jul 2015 14:48:46 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.5.24 (2015-08-30)
-X-SA-Exim-Connect-IP: 95.33.145.171
-X-SA-Exim-Mail-From: jmm@inutil.org
-X-SA-Exim-Scanned: No (on inutil.org); SAEximRunCond expanded to false
-Subject: [oss-security] CVE requests: Multiple Wireshark vulnerabilities
+In-Reply-To: <55B7781F.20804@redhat.com>
+References: <CALPTtNVtm+tLFxZcg268GSp0LtX+zCz0RwRowxSf7S0Tv6kutA@mail.gmail.com>
+ <55B7781F.20804@redhat.com>
+From: Reed Loden <reed@reedloden.com>
+Date: Wed, 29 Jul 2015 14:48:27 -0700
+Message-ID: <CALPTtNWfcr-Y6XTM9yphQ5xVkOKTYJ_vWLaOLw4972afNQhPOw@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Cc: Assign a CVE Identifier <cve-assign@mitre.org>, security@ruby-lang.org
+Content-Type: multipart/alternative; boundary=047d7bea423e211603051c0a8da2
+Subject: Re: [oss-security] CVE request: Two ruby 'dl' vulnerabilities fixed
+ in ruby-1.9.1-p129
 
-Hi,
-there's quite a backlog of Wireshark vulnerabilities which don't
-have CVE IDs assigned:
+--047d7bea423e211603051c0a8da2
+Content-Type: text/plain; charset=UTF-8
 
-Ixia IxVeriWave file parser crash :
-https://www.wireshark.org/security/wnpa-sec-2016-12.html
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=11795
+On Tue, Jul 28, 2015 at 5:39 AM, Jan Rusnacko <jrusnack@redhat.com> wrote:
 
-IEEE 802.11 dissector crash :
-https://www.wireshark.org/security/wnpa-sec-2016-13.html
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=11818
+> On 07/28/2015 11:44 AM, Reed Loden wrote:
+> > * DL::Function#call could pass tainted arguments to a C function even if
+> > $SAFE > 0.
+> >
+> https://github.com/ruby/ruby/commit/7269e3de3cee3bbb6ab77fc708f3a10cab00b65e
+> Could this be related to CVE-2013-2065 ?
+>
+>
+> https://www.ruby-lang.org/en/news/2013/05/14/taint-bypass-dl-fiddle-cve-2013-2065/
 
-GSM A-bis OML dissector crash :
-https://www.wireshark.org/security/wnpa-sec-2016-14.html
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=11825
 
-ASN.1 BER dissector crash :
-https://www.wireshark.org/security/wnpa-sec-2016-15.html
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12106
+For the record, CVE-2013-2065 is
+https://github.com/ruby/ruby/commit/c7d7ff45f1e0d6fad28e53c02108d4b067e843c3
+.
 
-SPICE dissector large loop :
-https://www.wireshark.org/security/wnpa-sec-2016-16.html
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12151
+~reed
 
-NFS dissector crash :
-https://www.wireshark.org/security/wnpa-sec-2016-17.html
-
-ASN.1 BER dissector crash :
-https://www.wireshark.org/security/wnpa-sec-2016-18.html
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=11822
-
-NCP dissector crash :
-https://www.wireshark.org/security/wnpa-sec-2016-19.html
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=11591
-
-TShark reassembly crash :
-https://www.wireshark.org/security/wnpa-sec-2016-20.html
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=11799
-
-IEEE 802.11 dissector crash :
-https://www.wireshark.org/security/wnpa-sec-2016-21.html
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=11824
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12187
-
-PKTC dissector crash :
-https://www.wireshark.org/security/wnpa-sec-2016-22.html
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12206
-
-PKTC dissector crash :
-https://www.wireshark.org/security/wnpa-sec-2016-23.html
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12242
-
-IAX2 infinite loop :
-https://www.wireshark.org/security/wnpa-sec-2016-24.html
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12260
-
-Wireshark and TShark crash :
-https://www.wireshark.org/security/wnpa-sec-2016-25.html
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12268
-
-GSM CBCH dissector crash :
-https://www.wireshark.org/security/wnpa-sec-2016-26.html
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12278
-
-MS-WSP dissector crash :
-https://www.wireshark.org/security/wnpa-sec-2016-27.html
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12341
-
-Cheers,
-        Moritz
+--047d7bea423e211603051c0a8da2--
