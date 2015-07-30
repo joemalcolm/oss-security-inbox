@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1945" "Monday" "15" "June" "2020" "11:28:57" "-0600" "Jason A. Donenfeld" "Jason@zx2c4.com" "<CAHmME9oR=X2OayrySfVaA-1uxHGAu0ix2caf9jAvNg72V0mbyg@mail.gmail.com>" "39" "Re: [oss-security] lockdown bypass on mainline kernel for loading unsigned modules" "^Cc:" nil nil "6" "2020061517:28:57" "[oss-security] lockdown bypass on mainline kernel for loading unsigned modules" (number mark "        Jason@zx2c4. Jun 15   39/1945  " thread-indent "\"Re: [oss-security] lockdown bypass on mainline kernel for loading unsigned modules\"\n") "<CAG48ez3fQbBLUBUkSaF-0b_DhL8M_1JU4DKkjTYXGB_6G1RgiA@mail.gmail.com>" ("<CAHmME9rmAznrAmEQTOaLeMM82iMFTfCNfpxDGXw4CJjuVEF_gQ@mail.gmail.com>" "<206DB19C-0117-4F4B-AFF7-212E40CB8C75@oracle.com>" "<CAG48ez3fQbBLUBUkSaF-0b_DhL8M_1JU4DKkjTYXGB_6G1RgiA@mail.gmail.com>") nil nil nil nil nil nil nil "Re: [oss-security] lockdown bypass on mainline kernel for loading unsigned modules" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1096" "Thursday" "30" "July" "2015" "09:33:56" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<55BA43E4.7040506@redhat.com>" "26" "[oss-security] A new class of security vulns?" nil nil nil "7" "2015073015:33:56" "[oss-security] A new class of security vulns?" (number mark "        kseifried@re Jul 30   26/1096  " thread-indent "\"[oss-security] A new class of security vulns?\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 7901 invoked by uid 550); 15 Jun 2020 17:29:13 -0000
+Received: (qmail 32266 invoked by uid 550); 30 Jul 2015 15:34:11 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,76 +11,43 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 7866 invoked from network); 15 Jun 2020 17:29:12 -0000
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
-	:in-reply-to:references:from:date:message-id:subject:to:cc
-	:content-type; s=mail; bh=m3AkrHNEP3fRbfUKcEmklayjG/Y=; b=Vnq6wL
-	H/GlVughWBz9MLzBZDqFOiVvq2odnVCIbltAHG4OcPm6lhEaWSbaSpOAsRDBUegE
-	u4n8TSF+EVf4oL2tJBhzCgEGDf2ucmy8SFWoZr+IgFgRssQOA676SDON+KhSRcaH
-	ER9uKsvFET2KNE0JPtUDKaXA522KHU1wOPszZI0fGnn8BpO4K6LM0emM3o6Svvux
-	1aK7vssIcYM6LXiZoLWfTWRiZ+aTwB5CTnAZRMPEQWZej12knFGOV5w2+gfunJAj
-	UEnGhaV0TlmQ+iId591+3P5pWi7UjC7WbXe+WiLSg5IaWQR6ls22oibMsADEYKgW
-	A/5WpHmLFRsUCo1Q==
-X-Gm-Message-State: AOAM530itGyQUfRnMOpcEG71X+1IQcMugFokNmqXN/ENwMCpjROdSl7N
-	NjLdioZa53oBCuxxxsWRZwUb2vnSCRAy0g3pel0=
-X-Google-Smtp-Source: ABdhPJxbrQ3bGRl0GkiYs6/6hV26W43YxBqSNtYmC1faaRba+IWxUls2u4WXMRsQ/6ex5PHS+Qi1f/omynEyBDBFhSs=
-X-Received: by 2002:a05:6e02:605:: with SMTP id t5mr28160520ils.231.1592242138131;
- Mon, 15 Jun 2020 10:28:58 -0700 (PDT)
+Received: (qmail 32241 invoked from network); 30 Jul 2015 15:34:10 -0000
+Message-ID: <55BA43E4.7040506@redhat.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.8.0
 MIME-Version: 1.0
-In-Reply-To: <CAG48ez3fQbBLUBUkSaF-0b_DhL8M_1JU4DKkjTYXGB_6G1RgiA@mail.gmail.com>
-References: <CAHmME9rmAznrAmEQTOaLeMM82iMFTfCNfpxDGXw4CJjuVEF_gQ@mail.gmail.com>
- <206DB19C-0117-4F4B-AFF7-212E40CB8C75@oracle.com> <CAG48ez3fQbBLUBUkSaF-0b_DhL8M_1JU4DKkjTYXGB_6G1RgiA@mail.gmail.com>
-X-Gmail-Original-Message-ID: <CAHmME9oR=X2OayrySfVaA-1uxHGAu0ix2caf9jAvNg72V0mbyg@mail.gmail.com>
-Message-ID: <CAHmME9oR=X2OayrySfVaA-1uxHGAu0ix2caf9jAvNg72V0mbyg@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Cc: John Haxby <john.haxby@oracle.com>, oss-security@lists.openwall.com, 
-	linux-security-module <linux-security-module@vger.kernel.org>, linux-acpi@vger.kernel.org, 
-	Matthew Garrett <mjg59@srcf.ucam.org>, 
-	Kernel Hardening <kernel-hardening@lists.openwall.com>, 
-	Ubuntu Kernel Team <kernel-team@lists.ubuntu.com>
-Date: Mon, 15 Jun 2020 11:28:57 -0600
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.27
+Date: Thu, 30 Jul 2015 09:33:56 -0600
+From: Kurt Seifried <kseifried@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] lockdown bypass on mainline kernel for loading
- unsigned modules
-To: Jann Horn <jannh@google.com>
+Subject: [oss-security] A new class of security vulns?
+To: oss-security@lists.openwall.com,
+        Assign a CVE Identifier <cve-assign@mitre.org>
 
-On 6/15/20, Jann Horn <jannh@google.com> wrote:
-> On Mon, Jun 15, 2020 at 6:24 PM John Haxby <john.haxby@oracle.com> wrote:
->> > On 15 Jun 2020, at 11:26, Jason A. Donenfeld <Jason@zx2c4.com> wrote:
->> > Yesterday, I found a lockdown bypass in Ubuntu 18.04's kernel using
->> > ACPI table tricks via the efi ssdt variable [1]. Today I found another
->> > one that's a bit easier to exploit and appears to be unpatched on
->> > mainline, using acpi_configfs to inject an ACPI table. The tricks are
->> > basically the same as the first one, but this one appears to be
->> > unpatched, at least on my test machine. Explanation is in the header
->> > of the PoC:
->> >
->> > https://git.zx2c4.com/american-unsigned-language/tree/american-unsigned-language-2.sh
->> >
->> > I need to get some sleep, but if nobody posts a patch in the
->> > meanwhile, I'll try to post a fix tomorrow.
->> >
->> > Jason
->> >
->> > [1] https://www.openwall.com/lists/oss-security/2020/06/14/1
->>
->>
->> This looks CVE-worthy.   Are you going to ask for a CVE for it?
->
-> Does it really make sense to dole out CVEs for individual lockdown
-> bypasses when various areas of the kernel (such as filesystems and
-> BPF) don't see root->kernel privilege escalation issues as a problem?
-> It's not like applying the fix for this one issue is going to make
-> systems meaningfully safer.
->
+So in past we have had vulns around injection of terminal control
+characters into log files:
 
-Indeed, I'm more or less of the same mind: lockdown is kind of a
-best-effort thing at the moment, and it'd be crazy to rely on it,
-considering various bypasses and differing attitudes on the security
-model from different subsystems. This acpi bypass is a bug, maybe, but
-it doesn't feel like a "real" security bug, because I'm not sure why
-this would be a feature somebody would want to lean on at this point
-in time. I wrote a PoC for this one rather than others because it
-seemed fun and technically interesting to poke around with acpi in
-this way, not because it's particularly rare or something.
+http://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=terminal+escape
+
+However now I'm seeing flaws around printing/display of user data, e.g.
+systems where a user can set their own name, but fills it with backspace
+characters, so when an admin looks at the text record it is
+mangled/shows something the attacker wants them to see and not the
+"True" data.
+
+An example of this is:
+
+https://fedorahosted.org/freeipa/ticket/5153
+
+assuming there are no actual terminal escape sequences allowed, but just
+backspace characters/etc, is this worthy of a CVE? Right now it
+definitely allows manipulation of displayed data, and if an admin cuts
+and pastes it would potentially be just the modified data, so I'm
+thinking there is an integrity impact (not a very big one mind you), but
+it's quite limited (at least as I understand the issue right now).
+
+-- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@redhat.com
