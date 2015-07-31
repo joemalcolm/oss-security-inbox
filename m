@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["480" "Friday" "3" "June" "2016" "15:26:24" "+0200" "Kangjie Lu" "kangjielu@gmail.com" "<CABEk9YwpYud4vgFLWJQTV6PFPdGQ2ejd6ueJMimsgKw94KgnYQ@mail.gmail.com>" "20" "[oss-security] CVE Request: tipc: an infoleak in tipc_nl_compat_link_dump" nil nil nil "6" "2016060313:26:24" "[oss-security] CVE Request: tipc: an infoleak in tipc_nl_compat_link_dump" (number mark "U       kangjielu@gm Jun  3   20/480   " thread-indent "\"[oss-security] CVE Request: tipc: an infoleak in tipc_nl_compat_link_dump\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2422" "Friday" "31" "July" "2015" "01:02:30" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150731050230.EB6626C0171@smtpvmsrv1.mitre.org>" "53" "[oss-security] Re: net-snmp snmp_pdu_parse() function incompletely initializaition vulnerability" nil nil nil "7" "2015073105:02:30" "[oss-security] Re: net-snmp snmp_pdu_parse() function incompletely initializaition vulnerability" (number mark "        cve-assign@m Jul 31   53/2422  " thread-indent "\"[oss-security] Re: net-snmp snmp_pdu_parse() function incompletely initializaition vulnerability\"\n") "<20150416140557.72e3e4d3@redhat.com>" ("<20150416140557.72e3e4d3@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 17974 invoked by uid 550); 3 Jun 2016 13:26:37 -0000
+Received: (qmail 19682 invoked by uid 550); 31 Jul 2015 05:02:46 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,57 +11,66 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 19646 invoked from network); 31 Jul 2015 05:02:43 -0000
+In-Reply-To: <20150416140557.72e3e4d3@redhat.com>
+Message-Id: <20150731050230.EB6626C0171@smtpvmsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, luodalongde@gmail.com
+Date: Fri, 31 Jul 2015 01:02:30 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17953 invoked from network); 3 Jun 2016 13:26:36 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=td8SfqxP5AAbJYgvXpz9Y6CfmsBhML676MvCX2jwO68=;
-        b=K4CMnEFe/p46uz47CYn2w5nx7MA1fHarvPmYQatkZxd9D+iTw2Wohi8dKns1oe41t3
-         sw0FU5uj7mBeEwd+YyClR2SBhSkIOuw4KaeaxrX8KmRLgcBNZtVMKWBNhSELrKB4I0VL
-         mihtd7BtMp6Yil8P0uCBUN3LZCCQolGihdIhWepLxKJRruE3m1fQsyqjZIUIvMjSqE/x
-         +IhwmbnnGz+j0FUM+MGaxjT9hSbkdXl0lGIKVhjthpMq+0aJ9HQIqEHGT8ggpx4OLmeb
-         6sQeOe+lS9vDg08jZjfBS+u3IiXPv/MXj+uXVe4AnRTiYbGIJwoZ/x12XVaoxzZzcBSJ
-         JL6w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=td8SfqxP5AAbJYgvXpz9Y6CfmsBhML676MvCX2jwO68=;
-        b=XqNzQVf9c8nDmoWPDovDghu1wQdkguRUuQJMdKmJWKrGhnzJvLrClCnuDXhTu6qcc2
-         omzQZ9bF4rAGcNZzGTCQdmyZ0lhO39shVw1a5OoCNe4+4vKgsJ+ZiuydCdXLMZoyQ5/H
-         5qOh7PZOzCTg96NsgaazYSOXiwJqfD3IQ8yGRnNxGQHpcS2xjqNOT2opt9+X4KkLvn5E
-         0ArPaPxb+HyCVRLr1HR9s7UY+3WiFdcOL21rEEFnIsx6pW/cFzNNqLxwKsJSoOGqwV54
-         zjVIAdkx4MD/GBVutSv1LKJ+F3vFH7VeyIOcbENZ+EhtxGRE8W/HH1KevrVOyLzRCRcU
-         Yqag==
-X-Gm-Message-State: ALyK8tKb5J1XeUcmaRPs6m7g5DX1G2ezEvTzZGMow5YXX5RI8Qd0TzpEMopdGRqiRSJ0bE/L63N7TBVqIuMZCA==
-X-Received: by 10.202.170.130 with SMTP id t124mr1954745oie.108.1464960384835;
- Fri, 03 Jun 2016 06:26:24 -0700 (PDT)
-MIME-Version: 1.0
-From: Kangjie Lu <kangjielu@gmail.com>
-Date: Fri, 3 Jun 2016 15:26:24 +0200
-Message-ID: <CABEk9YwpYud4vgFLWJQTV6PFPdGQ2ejd6ueJMimsgKw94KgnYQ@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Cc: Taesoo Kim <taesoo@gatech.edu>, Chengyu Song <csong84@gatech.edu>
-Content-Type: multipart/alternative; boundary=001a113cde4059288705345fab79
-Subject: [oss-security] CVE Request: tipc: an infoleak in tipc_nl_compat_link_dump
+Subject: [oss-security] Re: net-snmp snmp_pdu_parse() function incompletely initializaition vulnerability
+To: scorneli@redhat.com
 
---001a113cde4059288705345fab79
-Content-Type: text/plain; charset=UTF-8
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Hello,
+> https://sourceforge.net/p/net-snmp/bugs/2615/
+> https://sourceforge.net/p/net-snmp/code/ci/f23bcd3ac6ddee5d0a48f9703007ccc738914791/
+> https://bugzilla.redhat.com/show_bug.cgi?id=1212408
 
-In function tipc_nl_compat_link_dump of file net/tipc/netlink_compat.c,
-link_info.str is a char array of size 60. Memory after the NULL
-byte is not initialized. Sending the whole object out can cause
-a leak of sensitive info in kernel stack.
+As far as we can tell, the primary vulnerability is described in
+1212408 as:
 
-Fix info:
-https://patchwork.ozlabs.org/patch/629100/
+  Each time the function parses a new
+  varBind, a new netsnmp_variable_list item is allocated on the heap
+  and linked to the list of variables. The problem is that this item
+  is not removed from the list, even if snmp_pdu_parse() fails to
+  complete the parsing.
 
-Please help assign a CVE to this vulnerability.
+Use CVE-2015-5621.
 
+The patch, among other changes, adds an snmp_free_var(vp) call in the
+parsing-failure case. There are apparently a number of reasons for
+having this snmp_free_var(vp) call, including less important reasons
+such as avoiding a waste of resources by continuing to store the
+useless vp data after a parsing failure. The behavior of greatest
+interest is that the useless vp data has an uninitialized "type"
+structure member, which can be accessed by later code in various ways.
+This was the motivation for recommending an addition of a "vp->type =
+0" line in the http://www.openwall.com/lists/oss-security/2015/04/13/1
+post. However, the uninitialized "type" structure member is not a
+separate primary vulnerability. The "type" structure member is
+uninitialized only in cases where the entire vp data structure is
+useless. This is the reason that
+f23bcd3ac6ddee5d0a48f9703007ccc738914791 does not add a "vp->type = 0"
+line. Accordingly, we feel that an additional CVE ID for lack of
+"type" initialization would not make sense. If this paragraph is
+misleading or wrong, or if lack of "type" initialization requires its
+own CVE ID for another reason, please let us know.
 
-Thanks,
-Kangjie Lu
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
---001a113cde4059288705345fab79--
+iQEcBAEBCAAGBQJVuwBvAAoJEKllVAevmvms1qUIAMfVwAcMghDOPaSMtv1IQ1Ca
+a05/5knB4g2hG/Uj7R3ExMjW7gvj0Vz9649lz7kpmyo9K+BaVbvDJByLlelDQazU
+FwRAocw+jBDc31ZwCGFlYyumDYk8WEN+/ll9PhvZWpOBEHW0XzQ5X5/jY39ZpNuG
+2U1kQT89DW+s7AV7KpMwe4OMwWZPu03MN2SDoISDy2Q430Ez9CBRZflyW3mvVE8H
+KCyP8r3Oiz6/p/PJkR707BF9x50se5YFZYMm0WGg849kDIS0MfIX7c/BMZTcy2/4
+a2vChzPkVFZBxbJvrT3K5NOuXNhBqc5odqAytDTnFJ3Y8R0Lq24KQJLjf8EZ1wk=
+=KnpH
+-----END PGP SIGNATURE-----
