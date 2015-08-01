@@ -1,4 +1,9 @@
-Received: (qmail 7676 invoked by uid 550); 28 Dec 2023 18:59:41 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2506" "Saturday" "1" "August" "2015" "17:37:42" "+0100" "Ben Hutchings" "ben@decadent.org.uk" "<1438447062.3225.7.camel@decadent.org.uk>" "70" "[oss-security] CVE request: Use-after-free in path lookup in Linux 3.11-4.0 inclusive" nil nil nil "8" "2015080116:37:42" "[oss-security] CVE request: Use-after-free in path lookup in Linux 3.11-4.0 inclusive" (number mark "        ben@decadent Aug  1   70/2506  " thread-indent "\"[oss-security] CVE request: Use-after-free in path lookup in Linux 3.11-4.0 inclusive\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 24055 invoked by uid 550); 1 Aug 2015 16:38:06 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,145 +11,90 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 24037 invoked from network); 1 Aug 2015 16:38:05 -0000
+Message-ID: <1438447062.3225.7.camel@decadent.org.uk>
+Content-Type: multipart/signed; micalg="pgp-sha512";
+	protocol="application/pgp-signature"; boundary="=-uBIHRTpn0oqOmihUhdIU"
+X-Mailer: Evolution 3.16.3-1 
+Mime-Version: 1.0
+X-SA-Exim-Connect-IP: 192.168.4.249
+X-SA-Exim-Mail-From: ben@decadent.org.uk
+X-SA-Exim-Scanned: No (on shadbolt.decadent.org.uk); SAEximRunCond expanded to false
+Cc: security@debian.org, Brad Spengler <spender@grsecurity.net>
+Date: Sat, 01 Aug 2015 17:37:42 +0100
+From: Ben Hutchings <ben@decadent.org.uk>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21870 invoked from network); 28 Dec 2023 18:31:23 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	invisiblethingslab.com; h=cc:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1703788331;
-	 x=1703874731; bh=VE0uAr17SdVqgHXCQ4q4C0QWdxA5KIU7chYVkCbfY+E=; b=
-	dS9Pdw91odOm7SQMyJ2D5iUaUQaW/S6vLIEG8pkLaBnpbsIwvTqT2MGQLZ7NCpXm
-	yFjdKMH9OosAFrpE1Uz+y48pvjx0gYodQiJwxXHd+4u0WLsbuprmNdiywNWUw10q
-	3fqN9uXjDDFaYvQsQ9r9k84L8FsxYiuyjScN0VgtwpaI47febLcnj6YaZaZN1Fp6
-	Ckuw6CobRFAfG4Oa3FneF1034+5q4oMjexGd5rDz62TSVEcr/Tm0Omb+joJ0nGz0
-	rIUauVPlGXdHUeAYdlllDI2eki/5kybDDJEWz6JA6xchMUcsHHv1UaOeQsgk3j6u
-	IbU92R0jM5QVdaWLWOf0hA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1703788331; x=1703874731; bh=VE0uAr17SdVqgHXCQ4q4C0QWdxA5
-	KIU7chYVkCbfY+E=; b=mv6H7U5uenQsYY9W1iDU5AXEqZ2lbPsJ5HRf+S58GYkf
-	/L637VlosceX39cd607tM03kVd2Pp0g1S3oCQE9r87HCIWvA3pRZgOE8rNeM6Qdu
-	GbR87OQWaJ6OaoizxY1r3ahaNcVsX7k6eYeR5d/n4H2R+DwbOioYlH2uMh+SEdON
-	0DlRABlNEJAAZx29f4f8xd5iLyR/Mv09Cz7RyOie/8QmZNGInruJOWWUVStCsqMK
-	/qNZWD0K16W4T9NvqJ3oJpKF1ZEEXeSXs6iT7i3qJlOzT2yh0GgNHPJjNUngc+ul
-	0YX7Usrz3kVFgx9D1pDTvDFacm+N4FMwpSwGpB6MwA==
-X-ME-Sender: <xms:Kr-NZeTV6-4ttTfdAXDuB5GblIhmhzituXVJjaIg6660nCIrZEOsqQ>
-    <xme:Kr-NZTwGu8omYMiHbul_AgQL5bV2q8g8Uc3KDsWhTaIt8P5b_t96Nb9BblhKnzA6a
-    db9Ww3afLEq19k>
-X-ME-Received: <xmr:Kr-NZb3n6xeMRAPGfHTe5KnCIGYVsz3-eIXtpt6qeIX1kZ9w65K1PTlu9r3OUWyE15UJhrpHGkAkNxIWDJ3dnSL2jwuX-3HitFCWDZD98jtOb69y>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdefuddgudduhecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfhfgggtuggjsehgtd
-    erredttddvnecuhfhrohhmpeffvghmihcuofgrrhhivgcuqfgsvghnohhurhcuoeguvghm
-    ihesihhnvhhishhisghlvghthhhinhhgshhlrggsrdgtohhmqeenucggtffrrghtthgvrh
-    hnpeeigfeifedvgfejleefieefgfejvddvfeelgeelieefgeffhffgffeffffhueduheen
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpeguvghmih
-    esihhnvhhishhisghlvghthhhinhhgshhlrggsrdgtohhm
-X-ME-Proxy: <xmx:Kr-NZaDlxO4JbAhHK2kxcpxFDaU53SGzqbdID2iNF8qlIK0BjYuUoA>
-    <xmx:Kr-NZXhJ5ztZMB2lPBqmornzLH7X32Cb_hpwyY-kyC-xmcz4J7suMw>
-    <xmx:Kr-NZWq0Apkw7joT10qST8bWwquGsEjnufKj60mrzQ5fxixTD4suhg>
-    <xmx:K7-NZSuZg1j-g5lyaJqMA_0UokdoQxrhJY1ImP1TzSfPZQtQiSJ4zQ>
-Feedback-ID: iac594737:Fastmail
-Date: Thu, 28 Dec 2023 13:32:07 -0500
-From: Demi Marie Obenour <demi@invisiblethingslab.com>
-To: oss-security@lists.openwall.com
-Message-ID: <ZY2_KYCRMCjlL9ED@itl-email>
-References: <2023101622-imply-tidal-b6cf@gregkh>
- <ZS1UPsZo1VyHDAkV@itl-email>
- <CAMr=8w4N87t24jrRzw+hLHnhB9EoYDtjgic8yVPBqv6jJY_ZvA@mail.gmail.com>
- <20231223181636.GA8305@openwall.com>
- <CA+-XxSE0v4B32UjrVZgu5WUpTb+78W3zpupnoJq4FeR3omPGSg@mail.gmail.com>
- <CAN_LGv2C4DNFaK2TRA5upQuwaP=SY3K6zzOzp7zT8J-k1HaM0Q@mail.gmail.com>
- <20231225220925.GA17188@openwall.com>
- <20231225233836.R7BLTwQ-@steffen%sdaoden.eu>
- <20231226003555.GA19071@openwall.com>
- <2023122830-stopwatch-sierra-7cf0@gregkh>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="v1QsHwu7jZDLw3L8"
-Content-Disposition: inline
-In-Reply-To: <2023122830-stopwatch-sierra-7cf0@gregkh>
-Subject: Re: [oss-security] linux-distros membership application of openEuler
+Subject: [oss-security] CVE request: Use-after-free in path lookup in Linux 3.11-4.0
+ inclusive
+To: oss-security <oss-security@lists.openwall.com>
 
---v1QsHwu7jZDLw3L8
-Content-Type: text/plain; protected-headers=v1; charset=us-ascii
-Content-Disposition: inline
+--=-uBIHRTpn0oqOmihUhdIU
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Date: Thu, 28 Dec 2023 13:32:07 -0500
-From: Demi Marie Obenour <demi@invisiblethingslab.com>
-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] linux-distros membership application of openEuler
 
-On Thu, Dec 28, 2023 at 10:31:42AM +0000, Greg KH wrote:
-> On Tue, Dec 26, 2023 at 01:35:55AM +0100, Solar Designer wrote:
-> > On Tue, Dec 26, 2023 at 12:38:36AM +0100, Steffen Nurpmeso wrote:
-> > > and i really today stumbled over his funny opinion
-> > >=20
-> > >   . All "early notice" lists are leaks and should be considered
-> > >     public.
-> > >   . Unless your project is not used by anyone.
-> > >   . Otherwise, why would your government allow it to exist?
-> >=20
-> > I think Greg's stance on this is inconsistent, if we also recall his
-> > preference against full public disclosure of issues discussed on private
-> > lists and his running of private lists on CPU microarchitectural issues.
->=20
-> As you are referring to my talk here, I figured I would point out that
-> later on in it I do talk explicitly about the private lists that we run
-> for these CPU issues and how much we hate them.  Companies who are
-> currently not on these lists are actively trying to circumvent them to
-> get access to the information on them, despite all of the lawyers and
-> governments involved agreeing that this is the best and only way we know
-> how to handle these types of issues at the moment.
->=20
-> In other words, I hate them, companies hate them, and governments hate
-> them, but no one involved has solid ideas of what to do instead.
+Bug was introduced in Linux 3.11-rc1 by:
 
-Change the incentives so that CPU vendors decide to produce CPUs that
-don't have bugs, and therefore the lists aren't needed?
+commit 60545d0d4610b02e55f65d141c95b18ccf855b6e
+Author: Al Viro <viro@zeniv.linux.org.uk>
+Date:   Fri Jun 7 01:20:27 2013 -0400
 
-I'm not sure if this is practical, but if it is, it would solve the
-problem.  I also am not sure what the unintended consequences would be.
-Mandating Speculative Taint Tracking would get rid of the speculative
-execution vulnerabilities, assuming that it is implemented correctly.
+    [O_TMPFILE] it's still short a few helpers, but infrastructure should b=
+e OK now...
+=20=20=20=20
+    Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
 
-> "Luckily" I think that laws like the CRA are going to make them obsolete
-> in a few years time so maybe that will cause them to go away as I don't
-> see any end of CPU bugs happening before then.
->=20
-> > However, the concern about leaks is valid.  I think the most effective
-> > defense we have is the 14 days maximum embargo time, which removes the
-> > data's long-term value for potential use in attacks.
->=20
-> Again, I still consider this a form of blackmail against open source
-> projects when you do this, but hey, you do you :)
+Fixed in 4.1-rc3 by:
+
+commit f15133df088ecadd141ea1907f2c96df67c729f0
+Author: Al Viro <viro@zeniv.linux.org.uk>
+Date:   Fri May 8 22:53:15 2015 -0400
+
+    path_openat(): fix double fput()
+=20=20=20=20
+    path_openat() jumps to the wrong place after do_tmpfile() - it has
+    already done path_cleanup() (as part of path_lookupat() called by
+    do_tmpfile()), so doing that again can lead to double fput().
+=20=20=20=20
+    Cc: stable@vger.kernel.org  # v3.11+
+    Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+
+Thanks to Brad Spengler for pointing this out:<
+https://twitter.com/grsecurity/status/597127122910490624>
+
+The fix was also included in the following stable releases:
+
+v3.13.11-ckt22: d8ef4f4c5465 path_openat(): fix double fput()
+v3.16.7-ckt12: bedf03d0b88d path_openat(): fix double fput()
+v3.18.15: f42b455331b5 path_openat(): fix double fput()
+v3.19.8-ckt1: cf32bb6d9d18 path_openat(): fix double fput()
+v4.0.4: 335d3678d60d path_openat(): fix double fput()
+
+Ben.
 
 --=20
-Sincerely,
-Demi Marie Obenour (she/her/hers)
-Invisible Things Lab
+Ben Hutchings
+One of the nice things about standards is that there are so many of them.
 
---v1QsHwu7jZDLw3L8
+--=-uBIHRTpn0oqOmihUhdIU
 Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
 
 -----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-iQIzBAEBCgAdFiEEdodNnxM2uiJZBxxxsoi1X/+cIsEFAmWNvykACgkQsoi1X/+c
-IsHz0RAAi77lXNPgXvuprMdMzYPrTI4j1qnnuQ9meI7K2RsrNG4gmgs3vsR9f268
-JS1vhQadck92CZbLfCvs8fQoCYH+sr1Shv36Ht6WG20n7jXX8wqXNuv18P3tgVCI
-LWYqtcLuu4jwt4L2gqHmmY9Mi7TWY6nRllhxgDcSI2HdgJc3VCVUEpPXEOu5xPOc
-aNH9rgPAXUwdeAmXvMZs+JhlMwuIXzl/KCHKqN3oOg9NyiHE+UlIHbdLU2YOcrKs
-Y2lhEzwMyw7QsrXh4yGMzk3xJQBu+uiVmpZRAPxpaOt2cBlxN9PaUpARed5mJ0OA
-HTCrIqACpb3T+RamamBIxu76FYbDco4JKMPxRz282GYclJy7sosIVR96UuJN0ioB
-43wHJqwddbyqJLx6NU63SZxUi3C+uoVpgsKSQ/egyoQtzYmXM0mHpOZNlrGbWxWz
-rI91w5OwcSNoSvK8C3/e2GIFVLV3lBgu+YkC1wrae+TVOGINSMFbE+H9RooEV47C
-hMPvN+wfaNA8pddJqd0X2jkDEM4Xdcb/ABQzyBeHmRFHj5U4lz1OPg+EkNzBQ8m3
-zOX/3wOU7BwUHJHJn/HXs4XxB9hKQxO6f9P8We1qS4XcH5eU9XQQP0GLqRXeDdG5
-C+md0U5SXl1OPwg367EwSmTM5/+3aYJFYPcMcaDl77HADBKfSXI=
-=DRyx
+iQIVAwUAVbz11ue/yOyVhhEJAQoXHBAAjoZJVAZjTrgz/Unk+AY+/tK8R5I4YCfY
+2er8fqcTiX1TAOf7qszh57d212gjQlcYbvDy8XuGcbnhO3M7+Fe1EzPnon3HG3J/
+ghh6VSIpN41j0sNvnbhTjU5RQvHnIggvDxpN4pbVlaotk71xWiDjaJBEkyQ8vXmS
+M/LXGPIjzicqwC0ZeEXfkRI+UKCAQuZK4FkLLfU7JbRoVFhXj6vYTlHpFlCCrtRc
+8zIjsGw3uO1PMIRcvCFIaoI1H4s/ON4vypni4VV9GYxfbQn69uglifsic3KD+JKH
+996GFGg3UFgLt9zwR9j9bD4A2rIePjONF+np1YRa5Hvhp4PJRKL280fNH7GxQa/X
+k87vIiVYgh0YQPyi7Jx8atPO9SQdv8lNbm4SHFKShVp6X1In118Zm+QhT2JF0QLz
+hn5rIIJ2/dJWTi0VVBH0hHufxBu2ekf7IZgjBH7UXwxcPkgJVpKZlslpsdnKQvYX
+6+datSxlzfvP8TW+c1hWYZ4VRpgwzW2ZnTVV43gdOpYuWWz5Rs+LTGPqNwHNwiZd
+B1Q+dE4Tguiu/LMCVuTrKq8QDCpmGgnvxv0s4wS4xnHdt6w+CEgOb6JXjCYosB6/
+xqnaCWxKUd3ccPmQnF6bPr7WajErOlZMdx2bjnccTGf4Gf7wGSQaq1ZWnIMH/XHv
+5cpjGarPKGY=
+=Tp4L
 -----END PGP SIGNATURE-----
 
---v1QsHwu7jZDLw3L8--
+--=-uBIHRTpn0oqOmihUhdIU--
