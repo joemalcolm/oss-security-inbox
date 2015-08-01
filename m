@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1981" "Thursday" "15" "June" "2017" "11:29:26" "-0600" "kseifried@redhat.com" "kseifried@redhat.com" "<d86f3fc7-7fab-4059-6c6c-14bea996d50d@redhat.com>" "48" "Re: [oss-security] Re: MySQL - use-after-free after mysql_stmt_close()" "^Date:" nil nil "6" "2017061517:29:26" "[oss-security] Re: MySQL - use-after-free after mysql_stmt_close()" (number mark "        kseifried@re Jun 15   48/1981  " thread-indent "\"Re: [oss-security] Re: MySQL - use-after-free after mysql_stmt_close()\"\n") "<20170615172804.GA21944@wopr>" ("<201706082349.03355@pali>" "<201706122347.54536@pali>" "<1497534642.3053.3.camel@redhat.com>" "<CANO=Ty0mQugCFyHqxzSVyc+2NUQcL5f42xXu9w=NQ5XvJHU75w@mail.gmail.com>" "<20170615172804.GA21944@wopr>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1008" "Saturday" "1" "August" "2015" "19:31:15" "+1000" "Michael Samuel" "mik@miknet.net" "<CACYkhxiBvVbV-Xg-gM7ZdJzR=xaR2ta_OA-K6Lvftxvo9j3=uA@mail.gmail.com>" "35" "Re: [oss-security] CVE for crypto_get_random() from libsrtp" nil nil nil "8" "2015080109:31:15" "[oss-security] CVE for crypto_get_random() from libsrtp" (number mark "        mik@miknet.n Aug  1   35/1008  " thread-indent "\"Re: [oss-security] CVE for crypto_get_random() from libsrtp\"\n") "<55BB6E77.1070007@redhat.com>" ("<55BB6E77.1070007@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 26266 invoked by uid 550); 15 Jun 2017 17:34:36 -0000
+Received: (qmail 31841 invoked by uid 550); 1 Aug 2015 09:31:57 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,87 +11,73 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 26242 invoked from network); 15 Jun 2017 17:34:36 -0000
+Received: (qmail 31820 invoked from network); 1 Aug 2015 09:31:56 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=miknet.net; s=google;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :content-type;
+        bh=5zZ0p6E9WVrZTI/4J0n5nvx58VBK4VXrbLAQgSOtcz8=;
+        b=hYlEmixOR+ijGeHjCVHnh2HrPaHhS+zzASoXdoJHuRBEbAaQTY1k+ixkFf6xzFxMAs
+         3L/bDt9ZBVS7RESrqz7SSa671p5VBRi+C3iaotPETZDfZ752T5dr+NlxokGdgynaLwIH
+         R7XBys8gdxalMeiZLrCnGgH56u9TqF0LFq4K4=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:reply-to:subject:to:references:from:message-id
-         :date:user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=6q5nJkYKtIO8p1I9KNm9dYgix5rfaELVxXsaZddl2Ys=;
-        b=kUEKfNANgSkAuN34GksOFEpZbQXOKbiZbu6D1/4IbEFFSkFHym9vJmjoaCsvSJuXOy
-         uFXuCRrMfhQEyEbKThVYbf607Tm0NZ9KC0/P6TSXtK8UBOWZMjvbbJsnpZzUD2sGEIZd
-         58guz1M2M8CBpPwfiOuya/c7yDpnHB0gbXtr3W6ZemrUgBpFHT6KOVe1enIPm0oP5sp6
-         +m9WFhCiJSJ/MBGv4ODjSb69CxKuSnj60BesxgonXGOK+A+UR7IUxpwhgPE2gbMz4V+L
-         CoB4Rqyt9HglmfYuFSZQsQ+V2QL9pTj2x5RVYxYRu7EqsgLL2fsa/0/fs6wPB3FBbNW1
-         SXwg==
-X-Gm-Message-State: AKS2vOy0BYxtnTG7hpxZe+G8PEPLwIMbvgXEMry542dIdBBgv9eZD2IN
-	fCsxgtJqBWaFQ4M9vBwbYw==
-X-Received: by 10.36.76.214 with SMTP id a205mr6593049itb.35.1497548064307;
-        Thu, 15 Jun 2017 10:34:24 -0700 (PDT)
-References: <201706082349.03355@pali> <201706122347.54536@pali>
- <1497534642.3053.3.camel@redhat.com>
- <CANO=Ty0mQugCFyHqxzSVyc+2NUQcL5f42xXu9w=NQ5XvJHU75w@mail.gmail.com>
- <20170615172804.GA21944@wopr>
-Message-ID: <d86f3fc7-7fab-4059-6c6c-14bea996d50d@redhat.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.1.0
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:content-type;
+        bh=5zZ0p6E9WVrZTI/4J0n5nvx58VBK4VXrbLAQgSOtcz8=;
+        b=Q/yk3NZOLycM1BB6oB/tR6kwMK04xd+CEQVEolXR4lQQ0mGhEFNZTYyAllkCpth6PE
+         D4axTmHsS19ScQpmbNn0UpoflHlJIF0YUeoEa4mV0JjGM3OTHlmsZN+dRVf+GZ/6/gFh
+         wMNt2/QzULKAcFGUPkSPYHQlOMeS6kMro7ENJ+alUzKWVtcFrFzhaxEZYrb9UNKwqPhV
+         UT0hMB0Bn1twuDTb/TCdAVClZGSCCIukKRQTaxt0d37UbmG8V5u7ycAWBL6xaf02VH3l
+         OtqczobNDJ5WD7OBGgvSng1Ii/fZOCw3uCc62eNxSz26DZ1H31J4mxSnseiNTpr0fXup
+         moYg==
+X-Gm-Message-State: ALoCoQkbcbepHlHNF7wECfOTgYh4HXxdVcWAVp7wsKrtiLZzpghRwKR3U8r/jA3aY8f7Ddp69rUI
+X-Received: by 10.107.137.95 with SMTP id l92mr11156141iod.2.1438421504691;
+ Sat, 01 Aug 2015 02:31:44 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20170615172804.GA21944@wopr>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-Date: Thu, 15 Jun 2017 11:29:26 -0600
-From: "kseifried@redhat.com" <kseifried@redhat.com>
+X-Originating-IP: [202.147.141.11]
+In-Reply-To: <55BB6E77.1070007@redhat.com>
+References: <55BB6E77.1070007@redhat.com>
+Message-ID: <CACYkhxiBvVbV-Xg-gM7ZdJzR=xaR2ta_OA-K6Lvftxvo9j3=uA@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=001a113ecbfed325db051c3c9a5f
+Date: Sat, 1 Aug 2015 19:31:15 +1000
+From: Michael Samuel <mik@miknet.net>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: MySQL - use-after-free after
- mysql_stmt_close()
+Subject: Re: [oss-security] CVE for crypto_get_random() from libsrtp
 To: oss-security@lists.openwall.com
 
+--001a113ecbfed325db051c3c9a5f
+Content-Type: text/plain; charset=UTF-8
 
+Hi,
 
-On 06/15/2017 11:28 AM, Kurt H Maier wrote:
-> On Thu, Jun 15, 2017 at 08:21:29AM -0600, Kurt Seifried wrote:
->> 1) Official documentation that says "do this [insecure thing]" should
->> probably get a CVE (e.g. "turn off all the encryption to make it work more
->> easily"). This should probably get a CVE, especially as it results in
->> operational changes which won't get a CVE (since it's not in code that
->> "ships", it's just on the end of whoever is using it).
-> 
-> I really like this idea.  What would be the approach to software whose
-> documentation starts out with "turn off selinux," out of curiosity?
+I can't see any reference to it using 80 bits of random data - it looks
+like it's AES-CTR mode.  Do you have further information on that?
 
-Good question. I would rephrase it was "turn off the firewall" or "turn
-off the Anti virus" and I think we're definitely into the "yes, that
-needs a CVE" territory (even if it can't be fixed, at least people will
-be more aware and maybe make more informed decisions when picking).
+That being said, I can see quite a few ways it can go wrong - it's doesn't
+appear thread-safe for a start.  Is it worth taking a closer look or are
+you planning on shipping the patch anyway?
 
-> Obviously this lessens the security stance of the system, but presumably
-> the system is designed to be operable without selinux.  Would CVEs get
-> assigned for all bad ideas, or just those that expose actual attack
-> vectors?
+Regards,
+  Michael
 
-I would say that being told/forced (e.g. most systems that say turn off
-SELinux say that because they couldn't make it work with SELinux on) do
-definitely expose the system and people need to be aware of this.
+On 31 July 2015 at 22:47, Adam Maris <amaris@redhat.com> wrote:
 
-> 
->> 3) Unofficial but commonly used documentation and code examples, I guess
->> the best example here is stackoverflow and friends?
-> 
-> This is going to cause you to hit INT_MAX relatively quickly.
+> Hello,
+>
+> I've got question whether this bug (
+> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=793971) is CVE-worthy?
+> Could it be classified as CWE-330: Use of Insufficiently Random Values?
+>
+> According to the SRTP documentation (
+> http://srtp.sourcearchive.com/documentation/1.4.2.dfsg/group__SRTP_g1d4c228c6a58096dfab3cefbabd66f17.html),
+> it provides 80 bits of random data, which is quite a borderline.
+>
+> Thanks.
+>
+> --
+> Adam Maris / Red Hat Product Security
+>
+>
 
-Well part of it would be the current test case of "does anyone care",
-e.g. do people actually use this/care enough to do the work to assign a
-CVE, if someone wants to spend their time being the CNA for
-stackoverflow and put out good CVEs I'm fine with that.
-
-> 
-> 
-> khm
-> 
-
--- 
-
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@redhat.com
+--001a113ecbfed325db051c3c9a5f--
