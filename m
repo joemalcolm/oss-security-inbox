@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1546" "Wednesday" "7" "October" "2015" "00:30:24" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151007043024.D61FF72E0CF@smtpvbsrv1.mitre.org>" "39" "[oss-security] Re: CVE Request: Arm Mali gpu driver Dos vulnerability" nil nil nil "10" "2015100704:30:24" "[oss-security] Re: CVE Request: Arm Mali gpu driver Dos vulnerability" (number mark "U       cve-assign@m Oct  7   39/1546  " thread-indent "\"[oss-security] Re: CVE Request: Arm Mali gpu driver Dos vulnerability\"\n") "<CAAseMr5f2d-v8YxATJ9cE6uMdJ68Cj4QDdW3v+JpUFgo_gDV4Q@mail.gmail.com>" ("<CAAseMr5f2d-v8YxATJ9cE6uMdJ68Cj4QDdW3v+JpUFgo_gDV4Q@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2998" "Saturday" "1" "August" "2015" "13:24:34" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150801172434.746C54D8BEC@smtpvbsrv1.mitre.org>" "71" "[oss-security] Re: CVE Request: devscripts: licensecheck: arbitrary shell command injection" nil nil nil "8" "2015080117:24:34" "[oss-security] Re: CVE Request: devscripts: licensecheck: arbitrary shell command injection" (number mark "        cve-assign@m Aug  1   71/2998  " thread-indent "\"[oss-security] Re: CVE Request: devscripts: licensecheck: arbitrary shell command injection\"\n") "<20150801050050.GA24937@eldamar.local>" ("<20150801050050.GA24937@eldamar.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 3379 invoked by uid 550); 7 Oct 2015 04:30:37 -0000
+Received: (qmail 32257 invoked by uid 550); 1 Aug 2015 17:24:47 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,32 +11,70 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3346 invoked from network); 7 Oct 2015 04:30:36 -0000
-From: cve-assign@mitre.org
-To: chengjia4574@gmail.com
+Received: (qmail 32239 invoked from network); 1 Aug 2015 17:24:46 -0000
+In-Reply-To: <20150801050050.GA24937@eldamar.local>
+Message-Id: <20150801172434.746C54D8BEC@smtpvbsrv1.mitre.org>
 Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <CAAseMr5f2d-v8YxATJ9cE6uMdJ68Cj4QDdW3v+JpUFgo_gDV4Q@mail.gmail.com>
-Message-Id: <20151007043024.D61FF72E0CF@smtpvbsrv1.mitre.org>
-Date: Wed,  7 Oct 2015 00:30:24 -0400 (EDT)
-Subject: [oss-security] Re: CVE Request: Arm Mali gpu driver Dos vulnerability
+Date: Sat,  1 Aug 2015 13:24:34 -0400 (EDT)
+From: cve-assign@mitre.org
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: CVE Request: devscripts: licensecheck: arbitrary shell command injection
+To: carnil@debian.org
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> The lastest gpu driver ARM MALI (used in many android devices) has a
-> denial of service vulnerability
-
-> http://community.arm.com/thread/8963
-> http://malideveloper.arm.com/resources/drivers/open-source-mali-gpus-linux-kernel-device-drivers/
-
-> crw-rw-rw- system   graphics  10,  58 2015-09-16 17:14 mali
+> licensecheck is prone to arbitrary shell command injection via
+> shell metacharacters in filenames
 > 
-> as you can see, Mali devices in huawei P8 ale-ul00 can be accessed by all users!!!!
-> 
-> any users can trigger the phone to  crash  use a simple ioctl to /dev/mali
+> https://bugs.debian.org/794260
+> https://anonscm.debian.org/cgit/collab-maint/devscripts.git/commit/?id=c0687bcde23108dd42e146573c368b6905e6b8e8
 
-Use CVE-2015-7740.
+Use CVE-2015-5704 for the issue involving shell metacharacters that
+was fixed in c0687bcde23108dd42e146573c368b6905e6b8e8.
+
+
+> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=794260#8
+> 
+> (If the variable were expanded by shell, command injection wouldn't be 
+> even possible. You could still exploit argument injection, but that's 
+> less exciting.)
+
+Yes, but argument injection is within the scope of CVE and seems to be
+relevant even in the patched code, i.e.,
+
+  % touch -- -C
+  % ln -s /etc/passwd magic.mgc
+  % ls -l /etc/passwd
+  -rw-r--r-- 1 root root 1388 Jul 16 14:47 /etc/passwd
+  % licensecheck -- *C
+  /usr/bin/licensecheck warning: cannot parse file '-C' with mime type ''
+  % ls -l /etc/passwd
+  -rw-r--r-- 1 0 root 248 Aug  1 13:07 /etc/passwd
+
+In other words, we don't believe it's intentional behavior for
+licensecheck to operate on arbitrary files that have '-' at the
+beginning of their names, and use these names to construct unsafe
+command lines for the file program. The new spawn section perhaps
+should begin with
+
+  spawn(exec => ['file', '--brief', '--mime', '--dereference', '--', $file],
+
+instead. Use CVE-2015-5705 for this argument injection vulnerability.
+
+For now, we'll leave the open question of whether the file program
+should be following symlinks when creating a magic.mgc file in
+response to the -C option. Possibly file was supposed to be resilient
+in the face of unsafe directories, e.g., a legitimate user shouldn't
+need to be concerned about file overwrites when running "file *" in a
+directory where a local attacker has created a -C file and a symlink
+named magic.mgc. However, maybe the legitimate user is supposed to
+know to type "file -- *" whenever the directory might contain leading
+'-' characters in filenames. And maybe the legitimate user who
+directly enters -C on the command line actually wants magic.mgc to be
+created in the location specified by the symlink. It doesn't seem
+possible to decide whether there's a file vulnerability here without
+clarification from the author of file.
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -46,17 +84,11 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJWFJ+HAAoJEL54rhJi8gl5qC0P/RusS0R2dck4Fjd9V5FkeDcJ
-qe0UAGqeQfo1HPF1o6NLm/DffrSLG3cYb2CrI7LBSz8z9J4O9BJDE2QpLjnNR61x
-jGrWozYujPM+N5cJt4RMpHTvdS6c/UiV6XzKn10Au4PAmtjiG9IO9zateLiyC74H
-sNrrzjZ91VefXGSncl8dauWjDEMViuX/hH8w2h4W8V+9xqF8hcebRM8RB2xpxbYo
-Rgf2Gzf6DgbFtqPx8Za9adicYKTeFhbe063hTktjf+aBtudD0HWjtanhxzPd8Ypv
-E61QQY/MXkF9N/85duBtg9bX1iZQtvDfBZI+4xpZZQhHcFikX6y6DnIXvEchblp7
-vho8mYg7mzYf4q1yirCMTgko+WgvqcyrnCncCYn+8fN64xk8tQEwV1dAORwaLhoA
-hEyLPUbbAgXPexs0C2hkYPDgvHpuMG1dTu4Dba6oGFl0ggBEmrpAJg0i5GrzAky2
-Gz+YO7QewETMwePp9Nle6PsYKl/NKUJCLEnNzBYDGiSOSThI76hFrMWj2FBIEPzL
-w6TUFKAmcE/BP3gtdK6NL9nXJ6qmw2Ma7JPaLxpkrW6RHWCLXRyLYSOLKGeKxHEb
-CTZCoL1Vi02sBbijYXMjSK/+R/Qno91SrLGtASKe5J9vFltrhpNV2A19kB9Q/Ng8
-wOhEe+pw25igVI20Y5JN
-=Fwns
+iQEcBAEBCAAGBQJVvP/TAAoJEKllVAevmvmsV0sIAL7zUQZr+qMT+n8fN6mdtroc
+wqgwVisSbNv1KfuzjPtQ0NZDLaO83gOs7Mx5HM/dZu/LAErFkfmzZpz+Cw3DYaqt
+cPCcwE+hPjylzsHNZYJvQaOzNqrM75tvmAvGRfaBTEiRkiW0fvkYsHr3wVi1VCqu
+lE304MuyzKuXNbBHPpM1G+RKWpkgHNmzQ57xGZ9GV+krO3MpkZ+na3wHAlnflBYv
+Q5klYBEOke8kvfnAQ2a7SL82sKhRmvNP5h+LS+IMb+Mg0zzTbt6HAqu4lNgWdKlP
+gkK3t5EOEwB9fikb6YYaHAxPF46cGgSGZDGakTzO50HfZK8xPv7/9u0qk8e4BhU=
+=CXEC
 -----END PGP SIGNATURE-----
