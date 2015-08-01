@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2029" "Wednesday" "5" "July" "2017" "17:05:56" "-0400" "Perry E. Metzger" "perry@piermont.com" "<20170705170556.146ce33d@jabberwock.cb.piermont.com>" "49" "Re: [oss-security] systemd fails to parse user that should run service" "^Cc:" nil nil "7" "2017070521:05:56" "[oss-security] systemd fails to parse user that should run service" (number mark "        perry@piermo Jul  5   49/2029  " thread-indent "\"Re: [oss-security] systemd fails to parse user that should run service\"\n") "<CABMkiz7jqqJNjL==jrLXWPjJpDgx4r+_ZmnYFq5aJqBn9eAKCA@mail.gmail.com>" ("<VI1PR04MB310470DAAF5F79C8BA8AE789D6D10@VI1PR04MB3104.eurprd04.prod.outlook.com>" "<20170705085034.GA2638@pali>" "<CABMkiz7jqqJNjL==jrLXWPjJpDgx4r+_ZmnYFq5aJqBn9eAKCA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["288" "Sunday" "2" "August" "2015" "00:49:44" "+0200" "Florian Weimer" "fw@deneb.enyo.de" "<87r3nmzks7.fsf@mid.deneb.enyo.de>" "7" "Re: [oss-security] CVE-2015-1416: vulnerability in patch(1)" nil nil nil "8" "2015080122:49:44" "[oss-security] CVE-2015-1416: vulnerability in patch(1)" (number mark "        fw@deneb.eny Aug  2    7/288   " thread-indent "\"Re: [oss-security] CVE-2015-1416: vulnerability in patch(1)\"\n") "<1438436974.154880.345073153.04BE710A@webmail.messagingengine.com>" ("<55BA131C.20501@redhat.com>" "<1438436974.154880.345073153.04BE710A@webmail.messagingengine.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 16089 invoked by uid 550); 5 Jul 2017 21:06:09 -0000
+Received: (qmail 15979 invoked by uid 550); 1 Aug 2015 22:49:57 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,70 +11,24 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 16061 invoked from network); 5 Jul 2017 21:06:08 -0000
-Message-ID: <20170705170556.146ce33d@jabberwock.cb.piermont.com>
-In-Reply-To: <CABMkiz7jqqJNjL==jrLXWPjJpDgx4r+_ZmnYFq5aJqBn9eAKCA@mail.gmail.com>
-References: <VI1PR04MB310470DAAF5F79C8BA8AE789D6D10@VI1PR04MB3104.eurprd04.prod.outlook.com>
-	<20170705085034.GA2638@pali>
-	<CABMkiz7jqqJNjL==jrLXWPjJpDgx4r+_ZmnYFq5aJqBn9eAKCA@mail.gmail.com>
+Received: (qmail 15955 invoked from network); 1 Aug 2015 22:49:56 -0000
+References: <55BA131C.20501@redhat.com>
+	<1438436974.154880.345073153.04BE710A@webmail.messagingengine.com>
+In-Reply-To: <1438436974.154880.345073153.04BE710A@webmail.messagingengine.com>
+	(Mark Felder's message of "Sat, 01 Aug 2015 08:49:34 -0500")
+Message-ID: <87r3nmzks7.fsf@mid.deneb.enyo.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: oss-security@lists.openwall.com, Daniel =?UTF-8?Q?Skowro=C5=84ski?=
- <daniel@dsinf.net>
-Date: Wed, 5 Jul 2017 17:05:56 -0400
-From: "Perry E. Metzger" <perry@piermont.com>
+Content-Type: text/plain
+Date: Sun, 02 Aug 2015 00:49:44 +0200
+From: Florian Weimer <fw@deneb.enyo.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] systemd fails to parse user that should run
- service
-To: Ben Tasker <ben@bentasker.co.uk>
+Subject: Re: [oss-security] CVE-2015-1416: vulnerability in patch(1)
+To: oss-security@lists.openwall.com
 
-On Wed, 5 Jul 2017 13:28:43 +0100 Ben Tasker <ben@bentasker.co.uk>
-wrote:
-> You'd really hope it'd be consistent. If they want to enforce a
-> policy that user names cannot start with a digit (which as
-> Poettering notes, many distro's do) that's fine, but the resulting
-> behaviour should be safe, well defined and expected. I wouldn't say
-> running the service as root falls under that definition, personally.
+* Mark Felder:
 
-1) However, not all distributions enforce such a rule, and a has been
-noted, such a rule doesn't exist in POSIX. Indeed, a quick check on a
-PDP-11 simulator demonstrates that Unix at least back to v7 handled
-such names without trouble.
+> Which upstream? There are a few different flavors of patch(1) out there.
+> The one in FreeBSD is a variant of Larry Wall's patch, not GNU patch.
 
-2) The lack of fail safety is disturbing. It is probably important for
-systems code like this to always fail safely, rather than unsafely.
-
-> Honestly, I think upstream have done an *awful *job of handling it
-> so far (and it's far from the only example of Poettering taking the
-> not-a-bug approach questionably).
-
-I've long since come to the conclusion that systemd is not safe to run
-on a security critical machine. The developers are simply too lax
-about safety.
-
-If you're going to write a piece of systems code that has to run on
-essentially every Linux box on earth and which runs much of the time
-as root, extreme care has to be taken. You need to program defensively.
-
-Instead, what we seem to have is a set of highly interdependent
-shotgun parsers written without much regard to the rules people have
-developed (of necessity) for writing code that must run with high
-privileges. In other words, the code is _not_ written defensively.
-
-(For those not familiar with the term "shotgun parser", which the
-LangSec community introduced, do learn about it. It's a useful
-concept.)
-
-> FWIW, I'd be inclined to agree that it needs a CVE so that
-> downstream distro's can at least refer to it, and decide how (and
-> if) they want to address it.
-
-+1
-
-I don't care much if the developers deny that this is a problem. It is
-a problem.
-
-Perry
--- 
-Perry E. Metzger		perry@piermont.com
+GNU patch is a variant of Larry Wall's patch, too.  I guess this makes
+FreeBSD (and OpenBSD?) patch and GNU patch siblings.
