@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1638" "Wednesday" "12" "August" "2015" "21:50:10" "+0200" "Moritz Jodeit" "moritz@bluefrostsecurity.de" "<55CBA372.6080102@bluefrostsecurity.de>" "39" "Re: [oss-security] CVE request - OpenSSH 6.9 PAM privilege separation vulnerabilities" nil nil nil "8" "2015081219:50:10" "[oss-security] CVE request - OpenSSH 6.9 PAM privilege separation vulnerabilities" (number mark "        moritz@bluef Aug 12   39/1638  " thread-indent "\"Re: [oss-security] CVE request - OpenSSH 6.9 PAM privilege separation vulnerabilities\"\n") "<20150812161103.GA11200@openwall.com>" ("<55CA41A6.600@bluefrostsecurity.de>" "<20150812161103.GA11200@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1372" "Friday" "31" "July" "2015" "23:45:38" "-0700" "Reed Loden" "reed@reedloden.com" "<CALPTtNVxah-sXXi=JZdDrDJw8y8NvjdAu=d0g92qhgc-vb97RQ@mail.gmail.com>" "39" "[oss-security] CVE request: Multiple XSS and CSRF vulnerabilities in sidekiq ruby gem" nil nil nil "7" "2015080106:45:38" "[oss-security] CVE request: Multiple XSS and CSRF vulnerabilities in sidekiq ruby gem" (number mark "        reed@reedlod Jul 31   39/1372  " thread-indent "\"[oss-security] CVE request: Multiple XSS and CSRF vulnerabilities in sidekiq ruby gem\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 9277 invoked by uid 550); 12 Aug 2015 20:48:14 -0000
+Received: (qmail 26202 invoked by uid 550); 1 Aug 2015 06:46:10 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,60 +11,74 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 25785 invoked from network); 12 Aug 2015 19:50:23 -0000
-X-Sender-Id: moritz@bluefrostsecurity.de
-References: <55CA41A6.600@bluefrostsecurity.de>
- <20150812161103.GA11200@openwall.com>
-Message-ID: <55CBA372.6080102@bluefrostsecurity.de>
-User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:38.0) Gecko/20100101
- Thunderbird/38.1.0
+Received: (qmail 26181 invoked from network); 1 Aug 2015 06:46:09 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=reedloden.com; s=google;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=AK+9Z3VD5hIEPrAuJl6qPxTNlhTYnrJnBeCa3oNLU/c=;
+        b=PjkxuQvwnU27vISjdzFaLMmGdnGoPoFVky9uuQaaNuGtiLNOS6YjRsRcNkvQBw4uGQ
+         DZTCiKmpeCKCwxbf+U+KCpdCjrvt7ZxpeZfRe78vQz6TKn1H76sKxbOhZUsKvXQytSYR
+         FmwoV5AYo0P09uQLssob2fYJbUcSowo5CAvco=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
+         :content-type;
+        bh=AK+9Z3VD5hIEPrAuJl6qPxTNlhTYnrJnBeCa3oNLU/c=;
+        b=eqokg5RS4oqeZFw0lJJ7p8YQrY/LOUANvjw7xIfHHe4FUKX31lF3X27BdY2ySr1A56
+         3F/P6NSZnob97tja4LfkIyka0PQUlhZKz+EmsBFyeSFmS1qTfYfuuWhPdyI0aHDDbg6V
+         s7u+uqwF1TS1CNJxLYgGToasPRrZZZ8mksntJ+oOC5WCLGmZXHYC3+Wp+NgKrS+dvUJ1
+         fXr44z0wU2l8KJ6ejeKdAbSVGRy2os4SYrT1Wl0TeZ5POIChKFEtotKnFu+h3jPbcg2W
+         XlDn+h3EMUOj5ea97sDwgouJmqIS56UHBvAUYiqCafXAQtZXcEKlck0WLnz+512cQeyd
+         G0AA==
+X-Gm-Message-State: ALoCoQmKjMmKUWN4T9HBQrhLOgEqQoVZEdQ8peGB/0vI/LKIgZfugJlsNlw3FPEmKiFuaQmiWBwg
+X-Received: by 10.50.126.42 with SMTP id mv10mr11467163igb.66.1438411557895;
+ Fri, 31 Jul 2015 23:45:57 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20150812161103.GA11200@openwall.com>
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-Date: Wed, 12 Aug 2015 21:50:10 +0200
-From: Moritz Jodeit <moritz@bluefrostsecurity.de>
+Message-ID: <CALPTtNVxah-sXXi=JZdDrDJw8y8NvjdAu=d0g92qhgc-vb97RQ@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=047d7b2e1219f31d6b051c3a493b
+Date: Fri, 31 Jul 2015 23:45:38 -0700
+From: Reed Loden <reed@reedloden.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE request - OpenSSH 6.9 PAM privilege separation
- vulnerabilities
-To: Solar Designer <solar@openwall.com>, oss-security@lists.openwall.com
+Subject: [oss-security] CVE request: Multiple XSS and CSRF vulnerabilities in sidekiq ruby gem
+To: oss-security@lists.openwall.com, 
+	Assign a CVE Identifier <cve-assign@mitre.org>
 
-On 12.08.2015 18:11, Solar Designer wrote:
-> Damien, Moritz -
-> 
-> On Tue, Aug 11, 2015 at 08:40:38PM +0200, Moritz Jodeit wrote:
->> could you please assign two CVE IDs for the following two security
->> issues fixed in OpenSSH 7.0 (directly taken from the release notes [1]):
->>
->>  * sshd(8): Portable OpenSSH only: Fixed a privilege separation
->>    weakness related to PAM support. Attackers who could successfully
->>    compromise the pre-authentication process for remote code
->>    execution and who had valid credentials on the host could
->>    impersonate other users.  Reported by Moritz Jodeit.
->>
->>  * sshd(8): Portable OpenSSH only: Fixed a use-after-free bug
->>    related to PAM support that was reachable by attackers who could
->>    compromise the pre-authentication process for remote code
->>    execution. Also reported by Moritz Jodeit.
->>
->> [1] http://www.openssh.com/txt/release-7.0
-> 
-> Far more important than having CVEs would be to know when (in what
-> version) these bugs were introduced, with what commits, and what commits
-> fix them.  For checking derived versions, and for backports.
+--047d7b2e1219f31d6b051c3a493b
+Content-Type: text/plain; charset=UTF-8
 
-The vulnerable code for the two privsep issues was introduced with the merge of the
-FreeBSD PAM code in 2003:
+Sidekiq is "Simple, efficient background processing for Ruby" (a gem)
+* http://sidekiq.org
+* https://github.com/mperham/sidekiq/
+* https://rubygems.org/gems/sidekiq
 
-https://github.com/openssh/openssh-portable/commit/4f9f42a9bb6a6aa8f6100d873dc6344f2f9994de
+Was going through Sidekiq's changelog and its commits, and I came across
+several security issues that lack CVEs.
 
-The user impersonation issue was fixed by the following commit:
+XSS via queue name in Sidekiq::Web
+* Reported via https://github.com/mperham/sidekiq/issues/2330
+* Fixed by
+https://github.com/mperham/sidekiq/commit/2178d66b6686fbf4430223c34c184a64c9906828
+* Fix released in sidekiq 3.4.0
 
-https://github.com/openssh/openssh-portable/commit/d4697fe9a28dab7255c60433e4dd23cf7fce8a8b
+XSS via job arguments display class in Sidekiq::Web
+* Reported via https://github.com/mperham/sidekiq/pull/2309
+* Fixed by
+https://github.com/mperham/sidekiq/commit/54766f336620ca0ce3b0b87a7a56382496e64b61
+* Fix released in sidekiq 3.4.0
 
-While the use-after-free is fixed by this commit:
+Sidekiq::Web lacks CSRF protection
+* Reported via https://github.com/mperham/sidekiq/pull/2422
+* Fixed by
+https://github.com/mperham/sidekiq/commit/cf3c43b2410c4573e05ac119494e41115f4140ad
+* Fix released in sidekiq 3.4.2
+* Follow-up fix in
+https://github.com/mperham/sidekiq/commit/75a3524c919857aac16e0541b0cb107f48d00694
+to enable sessions in Sinatra, plus mention of a possible monkey patch
+needed to make Rails work correctly (neither change is in a release yet).
 
-https://github.com/openssh/openssh-portable/commit/5e75f5198769056089fb06c4d738ab0e5abc66f7
+Can CVEs be assigned for these issues?
 
-Cheers,
-Moritz
+Thanks,
+~reed
+
+--047d7b2e1219f31d6b051c3a493b--
