@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["8373" "Monday" "18" "September" "2017" "05:09:51" "-0400" "Vladis Dronov" "vdronov@redhat.com" "<1833013643.11628252.1505725791885.JavaMail.zimbra@redhat.com>" "220" "[oss-security] CVE-2017-14497: Linux kernel: packet: buffer overflow in tpacket_rcv()" "^Date:" nil nil "9" "2017091809:09:51" "[oss-security] CVE-2017-14497: Linux kernel: packet: buffer overflow in tpacket_rcv()" (number mark "U       vdronov@redh Sep 18  220/8373  " thread-indent "\"[oss-security] CVE-2017-14497: Linux kernel: packet: buffer overflow in tpacket_rcv()\"\n") "<490676762.11626765.1505724795059.JavaMail.zimbra@redhat.com>" ("<490676762.11626765.1505724795059.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["840" "Sunday" "2" "August" "2015" "09:33:01" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150802133301.DA5C43321AD@smtpvbsrv1.mitre.org>" "23" "[oss-security] Re: CVE request: Use-after-free in path lookup in Linux 3.11-4.0 inclusive - Linux kernel" nil nil nil "8" "2015080213:33:01" "[oss-security] Re: CVE request: Use-after-free in path lookup in Linux 3.11-4.0 inclusive - Linux kernel" (number mark "        cve-assign@m Aug  2   23/840   " thread-indent "\"[oss-security] Re: CVE request: Use-after-free in path lookup in Linux 3.11-4.0 inclusive - Linux kernel\"\n") "<1438447062.3225.7.camel@decadent.org.uk>" ("<1438447062.3225.7.camel@decadent.org.uk>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 17750 invoked by uid 550); 18 Sep 2017 09:10:05 -0000
+Received: (qmail 24184 invoked by uid 550); 2 Aug 2015 13:33:14 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,244 +11,36 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 17723 invoked from network); 18 Sep 2017 09:10:04 -0000
-DMARC-Filter: OpenDMARC Filter v1.3.2 mx1.redhat.com 1ECF7883BA
-Authentication-Results: ext-mx02.extmail.prod.ext.phx2.redhat.com; dmarc=none (p=none dis=none) header.from=redhat.com
-Authentication-Results: ext-mx02.extmail.prod.ext.phx2.redhat.com; spf=fail smtp.mailfrom=vdronov@redhat.com
-Message-ID: <1833013643.11628252.1505725791885.JavaMail.zimbra@redhat.com>
-In-Reply-To: <490676762.11626765.1505724795059.JavaMail.zimbra@redhat.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.40.4.223, 10.4.195.11]
-Thread-Topic: CVE-2017-14497: Linux kernel: packet: buffer overflow in tpacket_rcv()
-Thread-Index: aQ0soOcq4fIVeOreD9KbI4e3Iqb28g==
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.16
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.26]); Mon, 18 Sep 2017 09:09:52 +0000 (UTC)
-Date: Mon, 18 Sep 2017 05:09:51 -0400 (EDT)
-From: Vladis Dronov <vdronov@redhat.com>
+Received: (qmail 24163 invoked from network); 2 Aug 2015 13:33:13 -0000
+In-Reply-To: <1438447062.3225.7.camel@decadent.org.uk>
+Message-Id: <20150802133301.DA5C43321AD@smtpvbsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, security@debian.org, spender@grsecurity.net
+Date: Sun,  2 Aug 2015 09:33:01 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE-2017-14497: Linux kernel: packet: buffer overflow in
- tpacket_rcv()
-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: CVE request: Use-after-free in path lookup in Linux 3.11-4.0 inclusive - Linux kernel
+To: ben@decadent.org.uk
 
-Heololo,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-> [Suggested description]
-> The tpacket_rcv() function in 'net/packet/af_packet.c' file in the Linux
-> kernel before 4.13 mishandles vnet headers, which might allow local users
-> to cause a denial of service (buffer overflow, and disk and memory corruption)
-> or possibly have unspecified other impact via crafted system calls.
->
-> ------------------------------------------
->
-> [Additional Information]
-> A buffer overflow was discovered in tpacket_rcv() function in the
-> Linux kernel since v4.6-rc1 through v4.13. A number of socket-related
-> syscalls can be made to set up a configuration when each packet
-> received by a network interface can cause writing up to 10 bytes to a
-> kernel memory outside of a kernel buffer. This can cause unspecified
-> kernel data corruption effects, including damage of in-memory and
-> on-disk XFS data.
+> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=f15133df088ecadd141ea1907f2c96df67c729f0
 
-An upstream commit which introduced the flaw is 58d19b19cd (v4.6-rc1),
-the flaw was fixed by edbd58be15 (v4.13).
+Use CVE-2015-5706.
 
-> our research shows:
->
-> - a reproducer run as root makes the issue apparent (detected via
->   KASAN). That is, writing up to 10 bytes to an unallocated kernel
->   memory per each packet sent to a network interface on the host.
->
-> - while having a reproducer running as root, it can corrupt xfs root
->   filesystem by flooding the test machine with packets while doing a
->   rsync of high number of small files. after corrupting the in-memory
->   XFS data (and subsequent XFS self-unmount), the on-disk layout is
->   damaged too.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-An attacker can exploit the flaw if granted root permissions in
-a user+net namespace, i.e. with an ability to open PF_PACKET+SOCK_RAW
-sockets:
-
-[REGULAR USER] <= not vulnerable, expected
-
-$ ./vnethdr
-socket(): create raw packet socket failed: Operation not permitted
-
-[ROOT] <= vulnerable, expected
-
-# ./vnethdr 
-socket() fd=3
-setsockopt() ret=0
-mmap() map=0x7f24fc585000
-bind() ret=0
-
-[ROOT IN JUST USER-NS] <= not vulnerable, expected
-
-$ unshare -U -r
-# ./vnethdr
-socket(): create raw packet socket failed: Operation not permitted
-
-[ROOT IN USER+NET NS] <= vulnerable, bad!
-
-$ unshare -U -r -n
-# ./vnethdr
-socket() fd=3
-setsockopt() ret=0
-mmap() map=0x7fab6b965000
-bind() ret=0
-
-> There are still points which are open in the assessment:
->
->  - whether we are effectively able to spray the heap with a shellcode
->    (and gain root access) from the host itself
->
->  - whether we are effectively able to spray the heap with a shellcode
->    from outside, by crafting packets
->
-> ------------------------------------------
->
-> [Vulnerability Type]
-> Buffer Overflow
->
-> ------------------------------------------
->
-> [Vendor of Product]
-> kernel.org: Linux kernel
->
-> ------------------------------------------
->
-> [Affected Product Code Base]
-> Linux kernel - since v4.6-rc1 through v4.13
->
-> ------------------------------------------
->
-> [Affected Component]
-> Linux kernel, net/packet/af_packet.c file, tpacket_rcv() function
->
-> ------------------------------------------
->
-> [Attack Type]
-> Local
->
-> ------------------------------------------
->
-> [Impact Denial of Service]
-> true
->
-> ------------------------------------------
->
-> [CVE Impact Other]
-> Data corruption
->
-> ------------------------------------------
->
-> [Attack Vectors]
-> a number of socket-related syscalls can be made to set up a
-> configuration when each packet received by a network interface can
-> cause writing up to 10 bytes to a kernel memory outside of a kernel
-> buffer
->
-> ------------------------------------------
->
-> [Reference]
-> https://marc.info/?l=linux-kernel&m=150394500728906&w=2
-> https://marc.info/?t=150394517700001&r=1&w=2
-> https://github.com/torvalds/linux/commit/edbd58be15a957f6a760c4a514cd475217eb97fd
-> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=edbd58be15a957f6a760c4a514cd475217eb97fd
->
-> ------------------------------------------
->
-> [Has vendor confirmed or acknowledged the vulnerability?]
-> true
->
-> ------------------------------------------
->
-> [Discoverer]
-> Benjamin Poirier <bpoirier@suse.com>
->
-> Use CVE-2017-14497.
-
-[Proof of the flaw presence]
-
-[53606.579471] ==================================================================
-[53606.585074] BUG: KASAN: use-after-free in tpacket_rcv+0x6e4/0x14e0 at addr ffff880117639ffe
-[53606.589586] Write of size 10 by task swapper/1/0
-[53606.593681] page:ffffea00045d8e40 count:2 mapcount:1 mapping:          (null) index:0x0
-[53606.597866] flags: 0x2fffff80000000()
-[53606.601470] raw: 002fffff80000000 0000000000000000 0000000000000000 0000000200000000
-[53606.605867] raw: dead000000000100 dead000000000200 0000000000000000 0000000000000000
-[53606.611068] page dumped because: kasan: bad access detected
-[53606.615188] CPU: 1 PID: 0 Comm: swapper/1 Not tainted 4.11.0kasan_driver_fixes_03+ #36
-[53606.621325] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.9.3-1.fc25 04/01/2014
-[53606.628767] Call Trace:
-[53606.633875]  <IRQ>
-[53606.637539]  dump_stack+0x86/0xcf
-[53606.641321]  kasan_report.part.2+0x4d2/0x510
-[53606.644543]  ? tpacket_rcv+0x6e4/0x14e0
-[53606.647665]  kasan_report+0x24/0x30
-[53606.650646]  check_memory_region+0x13c/0x1a0
-[53606.653566]  memset+0x23/0x40
-[53606.656354]  tpacket_rcv+0x6e4/0x14e0
-[53606.659017]  ? packet_rcv+0x790/0x790
-[53606.660631]  ? packet_rcv+0x790/0x790
-[53606.662124]  __netif_receive_skb_core+0x63a/0x1510
-[53606.663747]  ? get_rps_cpu+0x760/0x760
-[53606.665193]  ? sched_clock_cpu+0x1b/0x100
-[53606.666736]  ? lock_acquire+0x127/0x2a0
-[53606.668187]  ? debug_lockdep_rcu_enabled.part.2+0x1a/0x30
-[53606.669748]  ? lock_acquire+0x127/0x2a0
-[53606.671762]  __netif_receive_skb+0x26/0xb0
-[53606.673349]  ? debug_lockdep_rcu_enabled.part.2+0x1a/0x30
-[53606.674950]  netif_receive_skb_internal+0x15e/0x2a0
-[53606.676444]  ? dev_cpu_dead+0x360/0x360
-[53606.677784]  ? dev_gro_receive+0x81/0x960
-[53606.679156]  ? __lock_is_held+0x2d/0x100
-[53606.680572]  ? __asan_loadN+0xf/0x20
-[53606.681991]  napi_gro_receive+0x1d0/0x2b0
-[53606.683729]  virtnet_receive+0x61a/0x2830 [virtio_net]
-[53606.685163]  ? __asan_loadN+0xf/0x20
-[53606.686420]  ? virtnet_xdp_xmit.isra.40+0x3b0/0x3b0 [virtio_net]
-[53606.688309]  ? __lock_acquire+0x7bb/0x1a50
-[53606.689796]  ? debug_check_no_locks_freed+0x1d0/0x1d0
-[53606.691174]  ? trace_hardirqs_off_caller+0x75/0x120
-[53606.692532]  ? mark_held_locks+0x22/0xc0
-[53606.693723]  virtnet_poll+0x22/0xa0 [virtio_net]
-[53606.694928]  net_rx_action+0x4a3/0x840
-[53606.696063]  ? napi_complete_done+0x1f0/0x1f0
-[53606.697307]  ? __lock_is_held+0x2d/0x100
-[53606.698398]  ? sched_clock+0x9/0x10
-[53606.699442]  __do_softirq+0x11b/0x6de
-[53606.700490]  irq_exit+0x187/0x1b0
-[53606.701485]  do_IRQ+0x70/0x140
-[53606.702438]  common_interrupt+0x9d/0x9d
-[53606.703438] RIP: 0010:native_safe_halt+0x6/0x10
-[53606.704642] RSP: 0018:ffff88011993fd58 EFLAGS: 00000246 ORIG_RAX: ffffffffffffff3e
-[53606.706426] RAX: ffffed0023325817 RBX: ffff88011992b440 RCX: ffffffff8119d447
-[53606.707903] RDX: dffffc0000000000 RSI: 0000000000000001 RDI: ffff88011992c0bc
-[53606.709594] RBP: ffff88011993fd58 R08: 0000000000000003 R09: 0000000000000000
-[53606.710961] R10: 0000000000000000 R11: 0000000000000000 R12: ffff88011992b440
-[53606.712364] R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000000
-[53606.713647]  </IRQ>
-[53606.714511]  ? trace_hardirqs_on_caller+0x187/0x280
-[53606.715590]  ? trace_hardirqs_on+0xd/0x10
-[53606.716586]  default_idle+0x27/0x260
-[53606.717567]  arch_cpu_idle+0xf/0x20
-[53606.718523]  default_idle_call+0x2c/0x40
-[53606.719565]  do_idle+0x1db/0x270
-[53606.720499]  cpu_startup_entry+0xbe/0xc0
-[53606.721517]  ? cpu_in_idle+0x20/0x20
-[53606.723026]  ? __asan_loadN+0xf/0x20
-[53606.724071]  start_secondary+0x292/0x350
-[53606.725123]  ? set_cpu_sibling_map+0xd30/0xd30
-[53606.726233]  start_cpu+0x14/0x141
-[53606.727282] Memory state around the buggy address:
-[53606.728371]  ffff880117639f00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-[53606.729682]  ffff880117639f80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-[53606.730976] >ffff88011763a000: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
-[53606.732264]                    ^
-[53606.733433]  ffff88011763a080: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
-[53606.735124]  ffff88011763a100: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
-
-Best regards,
-Vladis Dronov | Red Hat, Inc. | Product Security Engineer
+iQEcBAEBCAAGBQJVvhrzAAoJEKllVAevmvmsx3cH/3+jxtP6zz25K7kBl6VqpBxm
+rwYWaSTklwy3+sI/76JPI9TmM1WKMQMpZyp3ezLltxAwgA7W7pjGVM9KLyaERGRA
+lwxUzkPafvIBiwwTs42PKFweXn8TtMfJKgI1OEFQC448gCw3NiawLXwnlZWJ44uV
+RIhIPcB7gBGdubnA/G7mAXGm69JBfKF8pSMuqvrsWDXS3cPVwxfufQB7RNGNJOID
+ChRZC7UFPEgutU//GGDaPiyjMfLTRtiwcu50J2CvvDeFEql9NV5vF9smJDeuETzF
+kGyJ7P6me18185WkBibuKjVuq30QsmBh3mQBzqMzm8ZL/WtAxBmmic7IhiYzckc=
+=rPEP
+-----END PGP SIGNATURE-----
