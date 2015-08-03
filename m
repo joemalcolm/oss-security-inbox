@@ -1,4 +1,9 @@
-Received: (qmail 3900 invoked by uid 550); 6 Sep 2024 20:20:14 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1033" "Sunday" "2" "August" "2015" "18:27:47" "-0700" "Reed Loden" "reed@reedloden.com" "<CALPTtNWPoVzCkrFVuR4StNgR_srWdadQsTVyL7=EgYYJFmPHWg@mail.gmail.com>" "32" "[oss-security] Re: CVE request: Command injection in ruby gem ruby-saml <1.0.0" nil nil nil "8" "2015080301:27:47" "[oss-security] Re: CVE request: Command injection in ruby gem ruby-saml <1.0.0" (number mark "U       reed@reedlod Aug  2   32/1033  " thread-indent "\"[oss-security] Re: CVE request: Command injection in ruby gem ruby-saml <1.0.0\"\n") "<CALPTtNV-ib_gojFXZOdb5OYb7efUgKg4tPSWuryJBvLCBCE5nQ@mail.gmail.com>" ("<CALPTtNV-ib_gojFXZOdb5OYb7efUgKg4tPSWuryJBvLCBCE5nQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 11639 invoked by uid 550); 3 Aug 2015 01:28:19 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,140 +11,70 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1179 invoked from network); 6 Sep 2024 20:17:51 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=hoffie.info;
-	s=sarchoo; t=1725653861;
-	bh=7JsARNwXHZJxCgXQKFq+9FDiGI5B8lN6kyt7RfTDDI8=;
-	h=Date:To:From:Subject;
-	b=NN4CCTGllKQYiweit3WaZVBFEhvSJ986uuSyZ75MR/TU6hT+DwgJMFXkKNtoT89JX
-	 Z+ooO7EfO3CJI/CO6vJxa1Z3EtWFIfEZVUQNtbbLo+5W3Gmk/zpUIGmaA0PBqj1fbQ
-	 8Cj+npLdHQPxkfzs7MeqAsvJT1iAsqRBKWOfuGro=
-Message-ID: <080043e4-2259-4681-aefd-8114f40d818b@hoffie.info>
-Date: Fri, 6 Sep 2024 22:17:40 +0200
+Received: (qmail 11552 invoked from network); 3 Aug 2015 01:28:18 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=reedloden.com; s=google;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :content-type;
+        bh=v0iVjNXhTfKBsXaoPv9QrAh2Tg1umBhIHrnXP1dBe/8=;
+        b=dLuIUEmWqK+kJx0CmFuhRfIIxdDsfuVtV3GRjrG7u6rjz5r23F+XC9wgYbi5+Aql4L
+         ZI//QsIHIkISGjVje5P3DyGj/LcccknMW7H21hMQ7e3HrFofiNMyBYwXu7SRgOpWJtTE
+         sSLsDJbbi7dn6IekU7/Be7AP/iRu0tsyKQsZs=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:content-type;
+        bh=v0iVjNXhTfKBsXaoPv9QrAh2Tg1umBhIHrnXP1dBe/8=;
+        b=aDqOpKX6HOPFdo00we8N6kjVKFKUtAvAtW5a4dmGa89Bfb/9fhP61RWHLbx5RKX5Gl
+         YjNm0xyx5dizGDUEnAAYRkPZg26il1nACK2UmTxDRYOlUo1ra/KkUsJxhXYT+dfwXVRU
+         K/CCh2nm8JVyX8x9SR/35kNYTq4omZtc1Ic94rxi6X8hXKv8OQNoZ/106zDNhA/thkMQ
+         IAorGh/W7qd9IV/GtBsAl8EFH3d9FpGp2Tg+mAs5KCBOB70cCSOu/6s0QV/3nRnsdCcb
+         kmeOY/kzZwzsk3PePmX8i35cDNS8sIVNOagfGsao1EOdXinE7LL72uv7YdQ0iCYjwWKr
+         Yy0w==
+X-Gm-Message-State: ALoCoQliAMBPUaj0HhQzv/nnRwWBkndD1DRsMeIGPMIAiGultbMXlU0Qr1kz81UopHRsGGFfoXfr
+X-Received: by 10.50.109.233 with SMTP id hv9mr19673197igb.92.1438565286575;
+ Sun, 02 Aug 2015 18:28:06 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: oss-security@lists.openwall.com
-Content-Language: en-IE
-From: Christian Hoffmann <christian@hoffie.info>
-Autocrypt: addr=christian@hoffie.info; keydata=
- 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
- 2jwe3t4l7A==
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------uAczk3VEYu6nZkdtha10pZOK"
-Subject: [oss-security] CVE-2024-7012, CVE-2024-7923: Authentication bypass in Foreman &
- Pulpcore
+In-Reply-To: <CALPTtNV-ib_gojFXZOdb5OYb7efUgKg4tPSWuryJBvLCBCE5nQ@mail.gmail.com>
+References: <CALPTtNV-ib_gojFXZOdb5OYb7efUgKg4tPSWuryJBvLCBCE5nQ@mail.gmail.com>
+Message-ID: <CALPTtNWPoVzCkrFVuR4StNgR_srWdadQsTVyL7=EgYYJFmPHWg@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=089e0122e6bce49ef7051c5e140a
+Date: Sun, 2 Aug 2015 18:27:47 -0700
+From: Reed Loden <reed@reedloden.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: CVE request: Command injection in ruby gem ruby-saml <1.0.0
+To: oss-security@lists.openwall.com, 
+	Assign a CVE Identifier <cve-assign@mitre.org>
 
---------------uAczk3VEYu6nZkdtha10pZOK
-Content-Type: multipart/mixed; boundary="------------QVgZgZb9LNFQ07FwLqqGeiLm";
- protected-headers="v1"
-From: Christian Hoffmann <christian@hoffie.info>
-To: oss-security@lists.openwall.com
-Message-ID: <080043e4-2259-4681-aefd-8114f40d818b@hoffie.info>
-Subject: CVE-2024-7012, CVE-2024-7923: Authentication bypass in Foreman &
- Pulpcore
+--089e0122e6bce49ef7051c5e140a
+Content-Type: text/plain; charset=UTF-8
 
---------------QVgZgZb9LNFQ07FwLqqGeiLm
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
+Any update on a CVE assignment for this?
 
-SGksDQoNCm5vdCBhZmZpbGlhdGVkIGluIGFueSB3YXksIGJ1dCBJIHRoaW5rIHRoZSBmb2xsb3dp
-bmcgdHdvIGNyaXRpY2FsIA0KRm9yZW1hbiAmIFB1bHBjb3JlIHZ1bG5lcmFiaWxpdGllcyBbMV0g
-YXJlIHdvcnRoIG1lbnRpb25pbmcgaGVyZToNCg0KIEZyb20gWzJdOg0KID4gIyMjIyBDVkUtMjAy
-NC03OTIzOiBBdXRoZW50aWNhdGlvbiBieXBhc3MgaW4gUHVscGNvcmUNCiA+IEFuIGF1dGhlbnRp
-Y2F0aW9uIGJ5cGFzcyB2dWxuZXJhYmlsaXR5IGhhcyBiZWVuIGlkZW50aWZpZWQgaW4gUHVscGNv
-cmUNCiA+IHdoZW4gZGVwbG95ZWQgYnkgdGhlIEZvcmVtYW4gSW5zdGFsbGVyIHdpdGggR3VuaWNv
-cm4gdmVyc2lvbnMgcHJpb3IgdG8NCiA+IDIyLjAuDQogPiBUaGlzIGlzc3VlIGFyaXNlcyBmcm9t
-IHRoZSB3YXkgQXBhY2hlIGlzIGNvbmZpZ3VyZWQgdG8gZG8gY2VydGlmaWNhdGUNCiA+IGF1dGhl
-bnRpY2F0aW9uIGFuZCBwYXNzIHRoaXMgaW5mb3JtYXRpb24gdG8gdGhlIEd1bmljb3JuIGJhY2tl
-bmQsDQogPiB3aXRob3V0IHVuc2V0dGluZyBhbGwgaGVhZGVycyBjb21pbmcgZnJvbSBhIHBvc3Np
-Ymx5IG1hbGljaW91cyBjbGllbnQuDQogPiAqIEFmZmVjdHMgS2F0ZWxsbyA0LjAuMCBhbmQgaGln
-aGVyDQogPiAqIEZpeCByZWxlYXNlZCBpbiBGb3JlbWFuIDMuMTAuMSwgMy4xMS4yLCAzLjEyLjAN
-CiA+ICogR2l0SHViIFBSIHB1cHBldC1wdWxwY29yZSMzNTcNCiA+DQogPg0KID4gIyMjIyBDVkUt
-MjAyNC03MDEyOiBBdXRoZW50aWNhdGlvbiBieXBhc3MgaW4gRm9yZW1hbg0KID4gQW4gYXV0aGVu
-dGljYXRpb24gYnlwYXNzIHZ1bG5lcmFiaWxpdHkgaGFzIGJlZW4gaWRlbnRpZmllZCBpbiBGb3Jl
-bWFuDQogPiB3aGVuIGRlcGxveWVkIGJ5IHRoZSBGb3JlbWFuIEluc3RhbGxlciB3aXRoIEV4dGVy
-bmFsIEF1dGhlbnRpY2F0aW9uLg0KID4gVGhpcyBpc3N1ZSBhcmlzZXMgZnJvbSB0aGUgd2F5IEFw
-YWNoZSBpcyBjb25maWd1cmVkIHRvIGRvIGNlcnRpZmljYXRlDQogPiBhdXRoZW50aWNhdGlvbiBh
-bmQgcGFzcyB0aGlzIGluZm9ybWF0aW9uIHRvIHRoZSBQdW1hIGJhY2tlbmQsDQogPiB3aXRob3V0
-IHVuc2V0dGluZyBhbGwgaGVhZGVycyBjb21pbmcgZnJvbSBhIHBvc3NpYmx5IG1hbGljaW91cyBj
-bGllbnQuDQogPiAqIEFmZmVjdHMgRm9yZW1hbiAyLjIuMCBhbmQgaGlnaGVyDQogPiAqIEZpeCBy
-ZWxlYXNlZCBpbiBGb3JlbWFuIDMuMTAuMSwgMy4xMS4yLCAzLjEyLjANCiA+ICogR2l0SHViIFBS
-IHB1cHBldC1mb3JlbWFuIzExODENCg0KRm9yZW1hbiBpcyBhbHNvIHVzZWQgYXMgcGFydCBvZiBv
-dGhlciBwcm9qZWN0cyBzdWNoIGFzIFJlZCBIYXQgDQpTYXRlbGxpdGUsIHdoaWNoIGlzIGFsc28g
-ZG9jdW1lbnRlZCB0byBiZSBhZmZlY3RlZCBbM11bNF0uDQoNCg0KRnVydGhlciBSZWZlcmVuY2Vz
-Og0KWzFdIGh0dHBzOi8vY29tbXVuaXR5LnRoZWZvcmVtYW4ub3JnL3QvZm9yZW1hbi0zLTExLTIt
-aXMtbm93LWF2YWlsYWJsZS8zOTM3MA0KWzJdIGh0dHBzOi8vdGhlZm9yZW1hbi5vcmcvc2VjdXJp
-dHkuaHRtbCMyMDI0LTc5MjMNClszXSBodHRwczovL2FjY2Vzcy5yZWRoYXQuY29tL3NlY3VyaXR5
-L2N2ZS9DVkUtMjAyNC03MDEyDQpbNF0gaHR0cHM6Ly9hY2Nlc3MucmVkaGF0LmNvbS9zZWN1cml0
-eS9jdmUvQ1ZFLTIwMjQtNzkyMw0KaHR0cHM6Ly9wcm9qZWN0cy50aGVmb3JlbWFuLm9yZy9pc3N1
-ZXMvMzc3ODY/dGFiPWNoYW5nZXNldHMNCmh0dHBzOi8vcHJvamVjdHMudGhlZm9yZW1hbi5vcmcv
-aXNzdWVzLzM3Nzg3P3RhYj1jaGFuZ2VzZXRzDQoNCg0KS2luZCByZWdhcmRzLA0KQ2hyaXN0aWFu
-DQo=
+~reed
 
---------------QVgZgZb9LNFQ07FwLqqGeiLm--
+On Thu, Jul 9, 2015 at 11:18 AM, Reed Loden <reed@reedloden.com> wrote:
 
---------------uAczk3VEYu6nZkdtha10pZOK
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature.asc"
+> A follow-up to my previous CVE request. Looked into "Fix xpath injection
+> on xml_security.rb" some more.
+>
+> https://github.com/onelogin/ruby-saml/pull/225#issuecomment-120084288
+>
+>
+> https://github.com/onelogin/ruby-saml/commit/1b4e3dd6d2d44efa629144b2180842456bfb2a0f#diff-661b9d9743a3ff77661f224c6191165cL242
+>
+> Looks like lack of prepared statements allow for possible command
+> injection, leading to arbitrary code execution (via something like eval()).
+>
+> Related to https://github.com/onelogin/ruby-saml/pull/183 /
+> http://osvdb.org/show/osvdb/117903 (which doesn't seem to have a CVE
+> assigned either as far as I can tell). Reference for that is
+> https://security.dxw.com/advisories/publicly-exploitable-command-injection-in-ruby-saml-0-7-2-library-can-root-the-host/
+> .
+>
+> ~reed
+>
+>
+>
 
------BEGIN PGP SIGNATURE-----
-
-wsF5BAABCAAjFiEE2Kc0rHVX6MF2Qjg2LB9BzzYcsoAFAmbbY2UFAwAAAAAACgkQLB9BzzYcsoBf
-fQ//blt23XJ0/Wl5LKbx0IVL5e77YjN5MSidwLOSZYEmUFG/upuVdQbo8fbfDHgp5d4i+Tv5o1wd
-GFLS+cwsejow5fLdh/qYr20UcD3SVeeBTFdbSPOMwsinZ6xN2qpA55pOBdFBqx4aYBUsKRyorRxy
-ELt7IJ3E56ZaH1lMG8GYVCKWNkQyRPKNc84YWD0QuOUjhUDhbZ9lUy29Q1s8uDx+UfTsQ8sakCaG
-/qMyDVcBP/C0Hh8AOBSucqqSCbFdLqrtw5V/AZoMpnmKTbQFkxeIBHgnIDG3xwPE+zllCfrK4Tmy
-aLWN4/82OrEk5mLasgiBMTK4NSHOs3/UrkBiWGJvwszdXajX6JQW3yqd0j2X07u1HY5Xsvm3WU4C
-wPXKmJeS0kFUCaYGfJO4CqPIl09rRG/5mYarHY/jPTcktP+s1VoJD84ElFGoMJtmqDIY3XSSR7Vd
-oseYx2+pPjpQnP89Q5m4jhkONVgGnS/ZYHYnGnksxbrQ5ijruqmtm4bqUcuANmYEI38Cyrk9EHEM
-JjBzjsbekfQBAkD8zz6e26GApHnsk8i4X6XmV2Jfj48OpXTSHFkH6e6g7S5eHDM2/Rb0438Znt+S
-C49zXpWrJ1lB1XDmjeMGQr6dudqY/HNNbpGcb/+n2Ah7cMnv17GaStPZCTsluJ9k7l6tTpdWvVYx
-sdE=
-=C3LY
------END PGP SIGNATURE-----
-
---------------uAczk3VEYu6nZkdtha10pZOK--
+--089e0122e6bce49ef7051c5e140a--
