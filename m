@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2738" "Saturday" "15" "June" "2019" "11:49:03" "-0400" "Alex Gaynor" "alex.gaynor@gmail.com" "<CAFRnB2UmyOiRV9fnMffcAtF4ruuJZwx=fg5X=hLbQjeFN=t3Bg@mail.gmail.com>" "58" "[oss-security] Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz" "^Date:" nil nil "6" "2019061515:49:03" "[oss-security] Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz" (number mark "U       alex.gaynor@ Jun 15   58/2738  " thread-indent "\"[oss-security] Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2971" "Tuesday" "4" "August" "2015" "22:56:12" "+0000" "Jason Buberel" "jbuberel@google.com" "<CA+s3sfHhUWzMvW5FikvWnCq6jqt6ZQFnk++zZrr3P9V3WVWeAg@mail.gmail.com>" "84" "Re: [oss-security] CVE Request - Go net/http library - HTTP smuggling" nil nil nil "8" "2015080422:56:12" "[oss-security] CVE Request - Go net/http library - HTTP smuggling" (number mark "        jbuberel@goo Aug  4   84/2971  " thread-indent "\"Re: [oss-security] CVE Request - Go net/http library - HTTP smuggling\"\n") "<CA+s3sfEOMOLWgkLGTRxdEQ1f8KzJ2-oSuFpebd4U_x2y9Dz_WQ@mail.gmail.com>" ("<CA+s3sfH-k=1RQtuEqST-2NB7XrEZZv1QYwxNdG6TuDz_A5ruVA@mail.gmail.com>" "<55B926A4.2020601@redhat.com>" "<CA+s3sfEOMOLWgkLGTRxdEQ1f8KzJ2-oSuFpebd4U_x2y9Dz_WQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 29924 invoked by uid 550); 15 Jun 2019 15:49:28 -0000
+Received: (qmail 5601 invoked by uid 550); 4 Aug 2015 22:56:34 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,96 +11,127 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 29906 invoked from network); 15 Jun 2019 15:49:27 -0000
+Received: (qmail 5579 invoked from network); 4 Aug 2015 22:56:33 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=+iowhhL/YU4svTAtqViLcVBDl00YBiDpnyioeO9I440=;
-        b=c3DSENwZ74DrN7BPexRMDweDDHQJvVipfSPcLaoBZ96H+ASBbc6bnVkhPapm61WTk8
-         AMuKvYNYyU2w3dz/vQMdOlyM2ViviwV7u5UP14Bf8S13Rk/cbvTf7wYW0KGxOnsWu+2Y
-         RrI6ZURIIhVuiJvAfv5MN5Dixel0RVBkR9lkusVHhuY3a8D4LeA11Polk52wXtTOHfDm
-         CKmgFZCqg7RVjb16xYwdJHmJmqckPYQnmtg2k6Eosjz7g051fGYcsNaTNh052HE14ChM
-         SdMsRAJWbJWK077hupLKlDHF4Lcr4FhN6PK3481AL+t82so3RX3b9Sr6BPBTKqAgklh2
-         Gbew==
+        d=google.com; s=20120113;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=0LvhO7FC2pTlgKnfb/viT8w6hWKrjH+Qth5Hq29NdG8=;
+        b=UUrIrufKF6aSC14vpMYEwx2z4nq/QkfMq+iouOTJtXrXv0gt+UlIY0jFHWUlRWVt75
+         FCIi37+rKKgdUeu7v6T7gwPzll0Pc3lvPaHPBSIKHxAoGGS3qoKDFXQn/vt5yKzKPApP
+         hDqmRwizoKzsWsCazj5/Og9kzKj6CVW1x/X1G5KkaIwusRJAkdvOH0IYYBHHlofyisBD
+         K6ntTkA8cDEf3sDNTO7+zVXmcfEfc54AUnJVTDGJAkAVh/WiWx7D+rFD/O7HHt1rnAh5
+         8GaUaqghN8u+h8WCg46AvRuA9L/xt4Lk0v14dGbweem5LHFLQafvhFezX51vejucH8xS
+         5X1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=+iowhhL/YU4svTAtqViLcVBDl00YBiDpnyioeO9I440=;
-        b=ayz07OICl1zVXVKGaR9f6rMHJr7qaR95gfRDnZxKsES6/Jq3z9/SW5gD0Q63Ql8cpg
-         t4Jka/CIFDjtZBgEPGM0h1HfuFfZA6h8ntd2m+FQnTr0Nj5pay7VwZOiK3gNLE+pOj1I
-         jMMequG22CRSwPc/ESrcOFO3Q6b+/WLdgMuyF4jr2njJjYU4WsgyYdqdMfXUxQMAT1Z9
-         z7dnFUhuYibZamNQ7b+gXOUQGYMFajtsIvexXyoJGdPsaN8nwVUyM5/40vobLaW56s6D
-         39osEO6SEenpEFXH4za6EGRfmPXeS//X9dsS5XHIMsQ4kPnRI3q5Fk4TYKq5vy0A4tIU
-         k7oA==
-X-Gm-Message-State: APjAAAVWyxQLF7VqwkPAaUJ6bLEZc48MYcom/EaOR0+7bCeDlLtV3DUN
-	P2nXOtk93E8TO3npOE8s2jH0j9EtYD0yHanmoZH+xkQl+8A=
-X-Google-Smtp-Source: APXvYqzZlRmvZSW0p8aFf7lSwU1e7oI/euXtFxwrVCkfVMl5zCZ0sPbXiGDz54yEz4kFf77XBeT++rXS8k+mCGMBDmQ=
-X-Received: by 2002:aca:fc8d:: with SMTP id a135mr5387295oii.145.1560613755512;
- Sat, 15 Jun 2019 08:49:15 -0700 (PDT)
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=0LvhO7FC2pTlgKnfb/viT8w6hWKrjH+Qth5Hq29NdG8=;
+        b=mNY3B4bh6G2YtnOh2vD4sgv8nWxoi/InybG2qNzdwhGMLYUZ8qQeGoeboM06iWOIu8
+         bdrEs6YCxQZr+Rj1KbDUu/RxgIPXFHUIXR7wyllU+ZWzIzkyCofwox0EYGwzn7hKte7f
+         6+KrERLBX/vWU/G3fizH7kNUUv6/Gtmj+WrTyoJn7USlTpKgUiSUkz4HnT9CBGD4dNJY
+         f6w8KSH9+4wyx0Duzo34Y5QukJBUwr5YaFV0EivMz/m4PmYHDz1WESxsDt6kzAvnEHPb
+         3fiJM9mj84j963uAuuc/4Fo11b/sOIW+UqG2vpGk2uYOCX63KWRJOZte5Oitjtqx38It
+         MHDw==
+X-Gm-Message-State: ALoCoQlhuiXEiy7b8CAl1HcPbaXIBIjw1k0JZJeX9EjcAAeY4bdIyFsHHDL535dpu9v4g/o/4DLK
+X-Received: by 10.180.91.76 with SMTP id cc12mr3697424wib.67.1438728982337;
+ Tue, 04 Aug 2015 15:56:22 -0700 (PDT)
 MIME-Version: 1.0
-Message-ID: <CAFRnB2UmyOiRV9fnMffcAtF4ruuJZwx=fg5X=hLbQjeFN=t3Bg@mail.gmail.com>
-Content-Type: multipart/alternative; boundary="000000000000876c6d058b5eb474"
-Date: Sat, 15 Jun 2019 11:49:03 -0400
-From: Alex Gaynor <alex.gaynor@gmail.com>
+References: <CA+s3sfH-k=1RQtuEqST-2NB7XrEZZv1QYwxNdG6TuDz_A5ruVA@mail.gmail.com>
+ <55B926A4.2020601@redhat.com> <CA+s3sfEOMOLWgkLGTRxdEQ1f8KzJ2-oSuFpebd4U_x2y9Dz_WQ@mail.gmail.com>
+In-Reply-To: <CA+s3sfEOMOLWgkLGTRxdEQ1f8KzJ2-oSuFpebd4U_x2y9Dz_WQ@mail.gmail.com>
+Message-ID: <CA+s3sfHhUWzMvW5FikvWnCq6jqt6ZQFnk++zZrr3P9V3WVWeAg@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=f46d043c7e26ebd301051c8431c6
+Cc: oss-security@lists.openwall.com, 
+	"cve-assign@mitre.org" <cve-assign@mitre.org>
+Date: Tue, 04 Aug 2015 22:56:12 +0000
+From: Jason Buberel <jbuberel@google.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz
-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] CVE Request - Go net/http library - HTTP smuggling
+To: Florian Weimer <fweimer@redhat.com>
 
---000000000000876c6d058b5eb474
-Content-Type: text/plain; charset="UTF-8"
+--f46d043c7e26ebd301051c8431c6
+Content-Type: text/plain; charset=UTF-8
 
-Hi everyone,
+Florian,
 
-OSS-Fuzz is Google's project to provide continious large-scale fuzzing.
-Since it launched in 2016, it's found just shy of 3000 things it counts as
-security bugs [0][1]. I'm not a developer of OSS-Fuzz (at Google), but I've
-helped several projects integrate with it.
+We believe that this is a potentially exploitable issue.  We would like a
+CVE-ID in order to release a 1.4.3 build that has the fixes applied to the
+current stable release (1.4.2) for linux distro coordination.
 
-You can see that it's had some amazing success across a variety of projects
--- I've written previously to this list about the things I thought made it
-particularly effective working with ImageMagick and GraphicsMagick [2].
+Commits have been made to the Go master branch to fix the problem:
 
-Today I'd like to highlight what I see as a tremendous issue: very few of
-these security bugs ever has a CVE issued for it. This is probably due to a
-few factors, a) the relative difficulty of obtaining a CVE, b) the lack of
-a human reporter who is interested in obtaining one for "credit" purposes,
-c) the sheer number of bugs that we're talking about.
+https://github.com/golang/go/commit/117ddcb83d7f42d6aa72241240af99ded81118e9
+https://github.com/golang/go/commit/300d9a21583e7cf0149a778a0611e76ff7c6680f
+https://github.com/golang/go/commit/143822585e32449860e624cace9d2e521deee62e
 
-CVEs are not important for their own sake. The true value is in all of the
-downstream processing that uses them as input: the Linux distributions that
-use them to figure out what fixes to backport, the docker security scanners
-that look for vulnerable code on the system, the corporate
-threat-intelligence feeds, etc.
+Additional background on the exploit, as provided by the reporter:
 
-A test of a random ImageMagick vulnerability against Ubuntu Xenial shows
-that it, indeed, continues to reproduce.
+net/http problems
+------------------
 
-This is in addition to the >100 security bugs OSS-Fuzz found and publicly
-disclosed due to hitting their disclosure deadline, and which still have
-not been fixed [3].
+* Double Content-length headers in a request does not generate a 400 error,
+the second Content-length is ignored
+* Invalid headers are parsed as valid headers (like "Content Length:" with a
+space in the middle)
 
-I haven't analyzed any of these vulnerabilities for exploitability, and I
-doubt anyone else has either.
+Exploitations
+--------------
 
-I do not have a solution to this problem. I wanted to raise awareness of
-it, in the hope that it would start a discussion which might come to a
-solution.
+In a situation where the net/http agent HTTP communication with the final
+http clients is using some reverse proxy (reverse proxy cache, SSL
+terminators, etc), some requests can be made exploiting the net/http HTTP
+protocol violations.
 
-Alex
+The goal of theses requests will be either:
+ * to bypass security controls on theses previous elements
+ * to perform some cache poisoning on these elements
+ * to alter the request/response map on these previous elements (for DOS),
+see for example this apache 2.4 issue:
+https://bz.apache.org/bugzilla/show_bug.cgi?id=57832
 
 
-[0]: Security bug is defined as roughly: heap/stack/global buffer overflow,
-heap use after free, heap double free, invalid free, stack use after scope,
-invalid typecast, other non-null segfaults, and a few other things.
-[1]:
-https://bugs.chromium.org/p/oss-fuzz/issues/list?can=1&q=status%3AVerified+Type%3ABug-Security&colspec=ID+Type+Component+Status+Library+Reported+Owner+Summary+Modified&sort=-modified&groupby=&mode=grid&y=Proj&x=Security_Severity&cells=counts&nobtn=Update
-[2]:
-https://alexgaynor.net/2019/feb/05/notes-fuzzing-imagemagick-graphicsmagick/
-[3]:
-https://bugs.chromium.org/p/oss-fuzz/issues/list?can=1&q=Type%3DBug-Security+status%3ANew+label%3ADeadline-exceeded&colspec=ID+Type+Component+Status+Library+Reported+Summary+Modified&sort=-modified&groupby=&mode=grid&y=Proj&x=--&cells=ids&nobtn=Update
+On Wed, Jul 29, 2015 at 12:51 PM Jason Buberel <jbuberel@google.com> wrote:
 
+> Forian,
+>
+> We do have a security@golang.org alias, and a proposal for a more formal
+> security review process <https://github.com/golang/go/issues/11502>, but
+> I agree that the process isn't clear enough currently.
+>
+> In this particular case, the reporter sent a messages to go-dev@golang.org.
+> That was then forwarded to me for handling.
+>
+> And I agree on the bundling. Is there another specific issue that you're
+> tracking? Feel free to contact me directly - jbuberel@google.com.
+>
+> -jason
+>
+> On Wed, Jul 29, 2015 at 12:16 PM Florian Weimer <fweimer@redhat.com>
+> wrote:
+>
+>> On 07/29/2015 05:15 PM, Jason Buberel wrote:
+>> > Hello OSS Security Community,
+>> >
+>> > The Go open source project has received notification of an HTTP request
+>> > smuggling vulnerability in the net/http library (
+>> > http://golang.org/pkg/net/http/). The vulnerability was identified in
+>> the
+>> > 1.4.2 release version (http://golang.org/dl) and in the 1.5 release
+>> branch.
+>>
+>> How does one report such things?
+>>
+>> Due to lack of published security contact information, I contacted the
+>> de-facto subsystem maintainer about the issue, but I have been ignored.
+>>
+>> (It would be nice to be able to bundle such security updates as far as
+>> possible, to avoid recompiling everything constantly.)
+>>
+>> --
+>> Florian Weimer / Red Hat Product Security
+>>
+>
 
--- 
-All that is necessary for evil to succeed is for good people to do nothing.
-
---000000000000876c6d058b5eb474--
+--f46d043c7e26ebd301051c8431c6--
