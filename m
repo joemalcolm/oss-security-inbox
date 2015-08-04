@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["809" "Sunday" "3" "May" "2015" "18:24:18" "+0200" "Sebastian Andrzej Siewior" "cve-announce@ml.breakpoint.cc" "<20150503162418.GA2096@breakpoint.cc>" "19" "[oss-security] CVE-2015-2222: clamav: crash on crafted petite packed file" nil nil nil "5" "2015050316:24:18" "[oss-security] CVE-2015-2222: clamav: crash on crafted petite packed file" (number mark "        cve-announce May  3   19/809   " thread-indent "\"[oss-security] CVE-2015-2222: clamav: crash on crafted petite packed file\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1164" "Tuesday" "4" "August" "2015" "18:09:12" "+0300" "Henri Salo" "henri@nerv.fi" "<20150804123051.GA27639@lakka.kapsi.fi>" "30" "[oss-security] Re: CVE request: WordPress 4.2.3 and earlier multiple vulnerabilities" nil nil nil "8" "2015080415:09:12" "[oss-security] Re: CVE request: WordPress 4.2.3 and earlier multiple vulnerabilities" (number mark "        henri@nerv.f Aug  4   30/1164  " thread-indent "\"[oss-security] Re: CVE request: WordPress 4.2.3 and earlier multiple vulnerabilities\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 19505 invoked by uid 550); 3 May 2015 16:24:57 -0000
+Received: (qmail 23792 invoked by uid 550); 4 Aug 2015 15:09:25 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,34 +11,48 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 15814 invoked from network); 3 May 2015 16:24:30 -0000
-Message-ID: <20150503162418.GA2096@breakpoint.cc>
+Received: (qmail 23774 invoked from network); 4 Aug 2015 15:09:24 -0000
+Message-ID: <20150804123051.GA27639@lakka.kapsi.fi>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.5.23 (2014-03-12)
-Date: Sun, 3 May 2015 18:24:18 +0200
-From: Sebastian Andrzej Siewior <cve-announce@ml.breakpoint.cc>
+Content-Type: text/plain; charset=us-ascii; x-action=pgp-signed
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-SA-Exim-Connect-IP: 2001:1bc8:1004::1
+X-SA-Exim-Mail-From: fgeek@kapsi.fi
+X-SA-Exim-Scanned: No (on mail.kapsi.fi); SAEximRunCond expanded to false
+Cc: cve-assign@mitre.org
+Date: Tue, 4 Aug 2015 18:09:12 +0300
+From: Henri Salo <henri@nerv.fi>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE-2015-2222: clamav: crash on crafted petite packed file
+Subject: [oss-security] Re: CVE request: WordPress 4.2.3 and earlier multiple vulnerabilities
 To: oss-security@lists.openwall.com
 
-Petite [0] is a tool for compressing PE files on windows.
-Clamav [1] is a virus scanning tool which is able to unpack
-such files during scanning.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Once the file has been identified as "petite" compressed before the
-decompressing process is started it is possible that a specially crafted
-file tells clamav to read more data than it allocated memory. On glibc it
-leads to SIGABRT on free() since glibc's malloc() recognizes this.
-A fix to this bug is part of the 0.98.7 release.
+Please ignore this CVE request as https://codex.wordpress.org/Version_4.2.4 says:
 
-This is a different issue than the one reported in CVE-2015-1463.
-This bug has been discovered by AFL [3], american fuzzy lop.
+"WordPress 4.2.4 fixes three cross-site scripting vulnerabilities and a
+potential SQL injection that could be used to compromise a site
+(CVE-2015-2213)."
 
-[0] http://www.un4seen.com/petite/
-[1] http://www.clamav.net/
-[2] https://github.com/vrtadmin/clamav-devel/commit/8aeedf3c4282bc916d6f6c290e1e530d125ec953
-[3] http://lcamtuf.coredump.cx/afl/
+Sorry for mistake/noise.
 
-Sebastian
+- -- 
+Henri Salo
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQIcBAEBAgAGBQJVwNWXAAoJECet96ROqnV0Z00QAL2VTMLRjsLul1gNV3Eyz6rY
+vXc6WjNKOxtnKWZAWGTspwPlQSUEoC0gqOo0z4UCBvCqHpZgMBT0uHhg4yFqxMGK
+d5Z5c8vBP7YOz21b0IfRF21PXmsX2ildvOrkcqJ8CMb1tyroYkphDLPSYZkOWiO2
+1dUUOGFipHPqYVvfSsWCYujn5ms4CIHezPjONdvNFQfYZ4s0R6LHUYUt3LLblYiC
+IcWA3Oeiw3i/0ZsgLNihoHMkBKUnBiLbefTKzDzlRRQjMhQlS1Rt/p6wRd5Aq6ki
+d5snKSxSlUPnun2b2NBo49jvpSUyhllzwSDGHWpqTC3judo+rVuxSuLG+Jlcy5qb
+zrRiMhvFqBrMEE0oQubw/avrkX01hkBq/nYfHdEB1Rr2P8yoiMHvG+AoQTNbTLpX
+zi7kvYHZHe1SRR1IcC+GZri5Wnvpsc9PMzZbzt/xsgc35P7WJ3Tml4jzDsDFJdKF
+FzqJzNsNB89gbPUhUpdJ/YJ8MWg+Yz+/HodHNeu+OXK4nXpCISVOhL0Hehy0GymO
+1k93ll5dgWpUl1D03xFOiIrGBOTTXzwrqwEBRP7SS7rnnexxLRla3xkx6sslDHSq
+UXW0RrChHX967oZ+pXp0hGBy+WNAw/8yzzivzXzkLHwK6t8xuQOyWjdqKfqsKga8
+v10bcym51WjelsvvOngU
+=ggBf
+-----END PGP SIGNATURE-----
