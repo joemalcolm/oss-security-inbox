@@ -1,4 +1,9 @@
-Received: (qmail 3869 invoked by uid 550); 10 May 2026 23:21:45 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["553" "Tuesday" "4" "August" "2015" "10:41:52" "+0530" "Huzaifa Sidhpurwala" "huzaifas@redhat.com" "<55C04998.10105@redhat.com>" "17" "Re: [oss-security] CVE Request: freeradius: the EAP-PWD module performs insufficient validation on packets received from an EAP peer" nil nil nil "8" "2015080405:11:52" "[oss-security] CVE Request: freeradius: the EAP-PWD module performs insufficient validation on packets received from an EAP peer" (number mark "        huzaifas@red Aug  4   17/553   " thread-indent "\"Re: [oss-security] CVE Request: freeradius: the EAP-PWD module performs insufficient validation on packets received from an EAP peer\"\n") "<55BB16DD.2000206@redhat.com>" ("<55BB16DD.2000206@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 16104 invoked by uid 550); 4 Aug 2015 04:59:08 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,89 +11,38 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 16086 invoked from network); 4 Aug 2015 04:59:07 -0000
+References: <55BB16DD.2000206@redhat.com>
+Message-ID: <55C04998.10105@redhat.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.1.0
+MIME-Version: 1.0
+In-Reply-To: <55BB16DD.2000206@redhat.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.24
+Date: Tue, 4 Aug 2015 10:41:52 +0530
+From: Huzaifa Sidhpurwala <huzaifas@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 26262 invoked from network); 10 May 2026 20:24:01 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stig.io; s=MBO0001;
-	t=1778444631;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=Hm2mQnB50ygj48MR/UkYWyF/ZMA/iuH8ADwNnPA0Z8M=;
-	b=BionuxIsPASAXkoXWdEBi0QnOBxG86RQeyhbzKQnl28HTB8pmlFAp9P8kr2A9JqDx7Y+lW
-	frxJF0mAInb7EdyzvMzyMsj+hxTfEwpjkyn+eKgrSyVeROT7iyGUBH4tIdwsQ8mGdmiWmy
-	PmBbR+ldUtunuUbsJQ+KIwjDYBMjsxh2J1R0BcjDSsgMzMADFk1+vJrHU6GpwzWQQMoFo/
-	nIMBUVKgCbRh1oXVcFpspuoSWP5T7DyfkUdlPqp32nwAvccaYODbNH4zLTzJSZ0j94kUke
-	OUxaMp4pBqB4m40767SAseCPU1Y9S/cBnfxWiIDNbcl1c/8uODjW5m4y3y7QmA==
-From: Stig Palmquist <stig@stig.io>
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0
-Message-Id: <D80998EF-B823-448B-B82E-C14B82E25578@stig.io>
-Date: Sun, 10 May 2026 22:23:39 +0200
-To: cve-announce@security.metacpan.org,
- oss-security@lists.openwall.com
-Subject: [oss-security] CVE-2026-45190: Net::CIDR::Lite versions before 0.24 for Perl does
- not properly validate IP address and CIDR mask inputs, which may allow IP ACL
- bypass
+Subject: Re: [oss-security] CVE Request: freeradius: the EAP-PWD module
+ performs insufficient validation on packets received from an EAP peer
+To: oss-security@lists.openwall.com,
+        Mitre CVE assign department <cve-assign@mitre.org>
 
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-CVE-2026-45190                                       CPAN Security Group
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-        CVE ID:  CVE-2026-45190
-  Distribution:  Net-CIDR-Lite
-      Versions:  before 0.24
-
-      MetaCPAN:  https://metacpan.org/dist/Net-CIDR-Lite
-      VCS Repo:  https://github.com/stigtsp/Net-CIDR-Lite
+On 07/31/2015 12:04 PM, Huzaifa Sidhpurwala wrote:
+> The FreeRADIUS project has reported a flaw that affects the EAP-PWD
+> module of the freeradius package versions 3.0 up to 3.0.8. This module
+> is not enabled by default, so administrators must have manually enabled
+> it for their servers to be vulnerable.
+> 
+> Reference:
+> http://freeradius.org/security.html#eap-pwd-2015
+> 
+> Can a CVE id be please assigned to this flaw?
+> 
+> 
+Copying cve-assign this time to see if this gets picked up :)
 
 
-Net::CIDR::Lite versions before 0.24 for Perl does not properly
-validate IP address and CIDR mask inputs, which may allow IP ACL bypass
-
-Description
------------
-Net::CIDR::Lite versions before 0.24 for Perl does not properly
-validate IP address and CIDR mask inputs, which may allow IP ACL
-bypass.
-
-Inputs containing a trailing newline or non-ASCII digit characters pass
-the validators but are then re-encoded by the parser to a different
-address than the input string spelled. find() and bin_find() can match
-or miss addresses as a result.
-
-Example:
-
-  my $cidr =3D Net::CIDR::Lite->new();
-  $cidr->add("::1\n/128");
-  $cidr->find("::1a");  # incorrectly returns true
-
-See also CVE-2026-45191.
-
-Problem types
--------------
-- CWE-1289 Improper Validation of Unsafe Equivalence in Input
-
-Solutions
----------
-Upgrade to version 0.24 or newer, or apply the patch provided.
-
-
-References
-----------
-https://github.com/stigtsp/Net-CIDR-Lite/commit/ca9542adec87110556601d7ce48=
-381ea8d13e692.patch
-https://metacpan.org/release/STIGTSP/Net-CIDR-Lite-0.24/changes
-https://www.cve.org/CVERecord?id=3DCVE-2026-45191
-
-Timeline
---------
-- 2026-05-10: Vulnerability found
-- 2026-05-10: Net-CIDR-Lite version 0.24 released
-
+-- 
+Huzaifa Sidhpurwala / Red Hat Product Security Team
