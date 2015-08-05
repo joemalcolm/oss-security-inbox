@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1753" "Saturday" "12" "December" "2015" "10:55:10" "+0100" "Pierre Schweitzer" "pierre@reactos.org" "<566BEEFE.7050302@reactos.org>" "52" "[oss-security] CVE request: Remote DoS in Quassel" nil nil nil "12" "2015121209:55:10" "[oss-security] CVE request: Remote DoS in Quassel" (number mark "U       pierre@react Dec 12   52/1753  " thread-indent "\"[oss-security] CVE request: Remote DoS in Quassel\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1067" "Wednesday" "5" "August" "2015" "21:43:20" "+0100" "Darren Martyn" "darren.martyn@xiphosresearch.co.uk" "<55C27568.8070503@xiphosresearch.co.uk>" "23" "[oss-security] CVE Request: SuiteCRM Post-Auth Race Condition Shell Upload Remote Code Execution." nil nil nil "8" "2015080520:43:20" "[oss-security] CVE Request: SuiteCRM Post-Auth Race Condition Shell Upload Remote Code Execution." (number mark "        darren.marty Aug  5   23/1067  " thread-indent "\"[oss-security] CVE Request: SuiteCRM Post-Auth Race Condition Shell Upload Remote Code Execution.\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 32755 invoked by uid 550); 12 Dec 2015 09:55:38 -0000
+Received: (qmail 17418 invoked by uid 550); 5 Aug 2015 20:43:34 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,74 +11,53 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32737 invoked from network); 12 Dec 2015 09:55:37 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=reactos.org; s=25047;
-	h=Content-Type:MIME-Version:Date:Message-ID:Subject:From:Cc:To; bh=JCDb3P7MN9yhSmvlj3jmJaZdgyBHx+RIdbehvaEnPt0=;
-	b=h+4kzjFjluaMXLb3KRLqVYa+piQhaSy4S2KLkVj7AubWunLkq/SWHLHjSCo63BAVhCTEPHYXv5FkW14q6TxaU803o7oZ3yIvW2wW38j2YaeSqSVwI8G0CSRGCmvf5DtUdfMtdGZaO+m8cEeRkxFmJ0vX28M+CqdWp6u6FRT5f8Y=;
-To: oss-security@lists.openwall.com
-Cc: cve-assign@mitre.org
-From: Pierre Schweitzer <pierre@reactos.org>
-X-Enigmail-Draft-Status: N1210
-Message-ID: <566BEEFE.7050302@reactos.org>
-Date: Sat, 12 Dec 2015 10:55:10 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.4.0
+Received: (qmail 16364 invoked from network); 5 Aug 2015 20:43:34 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:date:from:user-agent:mime-version:to
+         :subject:content-type:content-transfer-encoding;
+        bh=UiAzfMwvb2lbCMbiaKxtu6CoUN0Mh9MpkQ+r0reZxmc=;
+        b=jc37DrWFZd2PKCQFFd2eXO6uBA3ZD9c9JoOnv7OTTAVhWSWTviyDmTJFHQyz+kt9V0
+         b8Yh/hJhBUWkhq0sYXrmN9hcATREUgo32ImVAdibhycmt1XuKdLWKPVLBuaSxc/0ItRl
+         9bKAisQKKYn22KSx+0Go62nPnATcQLI7pLykxTu8UxTWet3T/cCwJIbk6NXpC7+se5JJ
+         nvXquJtGCpL1tR10wQNCZN6fJ1hauiGoTUJYUfceKzHqOKkjJCDAYmlXtY6ELri/X74v
+         ixPD9nYOF91cAkW5qP/N7Yy8QcRq5+ijw/gjQpi6dYeUMGcx/It4W5XVqzvY05mtIH4/
+         MJgA==
+X-Gm-Message-State: ALoCoQm0WuXtuknsR8VLD/I5U48R7HCRVDnDpH6UT+fMwBbMVMZGUBdwyLS5PEV6pRAFLd86/2jB
+X-Received: by 10.180.84.230 with SMTP id c6mr2358627wiz.32.1438807402598;
+        Wed, 05 Aug 2015 13:43:22 -0700 (PDT)
+Message-ID: <55C27568.8070503@xiphosresearch.co.uk>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.7.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="KCkqxLj9HF92vLDjGXs04eEnlRhqTpmTb"
-Subject: [oss-security] CVE request: Remote DoS in Quassel
-
---KCkqxLj9HF92vLDjGXs04eEnlRhqTpmTb
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 7bit
+Date: Wed, 05 Aug 2015 21:43:20 +0100
+From: Darren Martyn <darren.martyn@xiphosresearch.co.uk>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE Request: SuiteCRM Post-Auth Race Condition Shell Upload Remote
+ Code Execution.
+To: oss-security@lists.openwall.com
 
-Dear all,
+Hello List,
+I am requesting a CVE to be issued for the SuiteCRM product. There
+exists a race condition in the image upload verification component which
+leads to a race condition wherein an uploaded piece of PHP code exists
+on disc temporarily before being deleted, which can be leveraged to gain
+code execution. This vulnerability was introduced in version 7.2.2, as a
+patch to fix a prior code execution issue found in 7.2.1.
 
-It was discovered and fixed [1] in Quassel, a DoS remotely triggerable
-by any client on a Quassel core.
+Github issue: https://github.com/salesagility/SuiteCRM/issues/333
+Responsible commit:
+https://github.com/salesagility/SuiteCRM/commit/b1b3fd61c7697ad2073cd253d31c9462929e7bb5
+Them being told it was a bad idea:
+https://github.com/salesagility/SuiteCRM/commit/b1b3fd61c7697ad2073cd253d31c9462929e7bb5#commitcomment-11281062
+Video of exploitation: https://www.youtube.com/watch?v=eHVIg5eoYNc
 
-Any client sending the command "/op *" in a query will cause the Quassel
-core to crash. I was able to reproduce it with Quassel 0.10.0.
+A proof of concept exploit will be published in a couple of days along
+with a dissection of the vulnerable components of the code and
+explanation of how it all works and stuff.
 
-No release has this fix in yet.
-
-Can a CVE be assigned to this issue?
-
-Cheers,
-
-[1]:
-https://github.com/quassel/quassel/commit/b8edbda019eeb99da8663193e224efc9d=
-1265dc7
---=20
-Pierre Schweitzer <pierre at reactos.org>
-System & Network Administrator
-Senior Kernel Developer
-ReactOS Deutschland e.V.
-
-
---KCkqxLj9HF92vLDjGXs04eEnlRhqTpmTb
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.22 (GNU/Linux)
-
-iQIcBAEBAgAGBQJWa+8MAAoJEHVFVWw9WFsLPEgP/0LjdJWQmFfXpGPLKd4E1+HE
-1nbjeJsxPxL1esmGKz690SGsaEAY9i16+wd9AjQGtmRPJBXSWN8vJqRkc+yy2Gr4
-OwtkjpKGE4Dj8adVvELdr2Wi6NdMVn6+tE1R+QtZ1NZe85b7eRjqdTyYAWTenu+X
-Gspn5pMsDHyJ6sknIkV7Hu8TWRVxOd5y70SlR3ql1ZOBTt0Q36jMFxCBzKtiWJl/
-er6ipL5NBR9CphRlHZMgIiCOMD68zGyejcnOALWgpK7NEl3wrjBt0gYUxLONwccf
-dpPGWleEwjWGXqAleL/jr1+F/+l33mU8EiRUnzN6XD6c9LwpewMy8Y2l3Diu1Xbp
-TQ0PBgxYs6+cPHiO8yje9xPGSqMQDhvCLh910/3ps4+gUL9jXY+I+GDWJXUVbauE
-1S8FughxukhFPTxN/3OiLZgLpeHfe/T2tRmSL+j5omvDZ5DEA4+7LDBKukNbcW6d
-/HSheauHK1/kb35w1qAoLiForldWjKZUlqdD+hFmL1HLA1CPqost0YAJR5gO6Adz
-P9CVKskQGAjKN5M/L/W2tLND3mf4n4/cRsRD93zoT4UlSQtYnwKvuzGWcyK3W5MY
-IHEzuvRiVYmt4ec9LGwopWjQmN6mWUV4E2/3uMxAaSR1RD4Op6tZwi5zPZctAcrk
-hTUN8S2h454ItyMLSEcJ
-=rQZr
------END PGP SIGNATURE-----
-
---KCkqxLj9HF92vLDjGXs04eEnlRhqTpmTb--
+Best regards,
+Darren Martyn,
+Security Researcher,
+Xiphos Research Ltd.
