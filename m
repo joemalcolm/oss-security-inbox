@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2777" "Monday" "21" "December" "2015" "21:31:18" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151222023118.E01086C412F@smtpvmsrv1.mitre.org>" "69" "[oss-security] Re: mail-client/claws-mail-3.13.1: Stack Overflow - CVE needed?" "^Cc:" nil nil "12" "2015122202:31:18" "[oss-security] Re: mail-client/claws-mail-3.13.1: Stack Overflow - CVE needed?" (number mark "        cve-assign@m Dec 21   69/2777  " thread-indent "\"[oss-security] Re: mail-client/claws-mail-3.13.1: Stack Overflow - CVE needed?\"\n") "<CANO=Ty30N=AwTvdU6Hj2ySS=doE7Nt2ptkExN61KOfho5FR9RQ@mail.gmail.com>" ("<CANO=Ty30N=AwTvdU6Hj2ySS=doE7Nt2ptkExN61KOfho5FR9RQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1468" "Wednesday" "5" "August" "2015" "16:37:04" "-0400" "Velmurugan Periasamy" "vel@apache.org" "<D1E7EC30.9D53F%vel@apache.org>" "45" "[oss-security] CVEs fixed in Ranger 0.5" nil nil nil "8" "2015080520:37:04" "[oss-security] CVEs fixed in Ranger 0.5" (number mark "        vel@apache.o Aug  5   45/1468  " thread-indent "\"[oss-security] CVEs fixed in Ranger 0.5\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 25749 invoked by uid 550); 22 Dec 2015 02:31:31 -0000
+Received: (qmail 20468 invoked by uid 550); 5 Aug 2015 21:04:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,82 +11,65 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 25731 invoked from network); 22 Dec 2015 02:31:30 -0000
-In-Reply-To: <CANO=Ty30N=AwTvdU6Hj2ySS=doE7Nt2ptkExN61KOfho5FR9RQ@mail.gmail.com>
-Message-Id: <20151222023118.E01086C412F@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Mon, 21 Dec 2015 21:31:18 -0500 (EST)
-From: cve-assign@mitre.org
+Received: (qmail 11793 invoked from network); 5 Aug 2015 20:36:03 -0000
+User-Agent: Microsoft-MacOutlook/14.5.1.150515
+Message-ID: <D1E7EC30.9D53F%vel@apache.org>
+Thread-Topic: CVEs fixed in Ranger 0.5
+Mime-version: 1.0
+Content-type: multipart/alternative;
+	boundary="B_3521637430_35925425"
+Date: Wed, 05 Aug 2015 16:37:04 -0400
+From: Velmurugan Periasamy <vel@apache.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: mail-client/claws-mail-3.13.1: Stack Overflow - CVE needed?
-To: kseifried@redhat.com
+Subject: [oss-security] CVEs fixed in Ranger 0.5
+To: "dev@ranger.incubator.apache.org" <dev@ranger.incubator.apache.org>,
+	<user@ranger.incubator.apache.org>,
+	<security@apache.org>,
+	<oss-security@lists.openwall.com>,
+	<bugtraq@securityfocus.com>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--B_3521637430_35925425
+Content-type: text/plain;
+	charset="ISO-8859-2"
+Content-transfer-encoding: quoted-printable
 
-> https://bugs.gentoo.org/show_bug.cgi?id=569010
+Ranger Community:
 
-> http://www.thewildbeast.co.uk/claws-mail/bugzilla/show_bug.cgi?id=3557
+Please see below details.
 
->> So in codeconv.c there is a function for japanese character set
->> conversion called conv_jistoeuc(). There is no bounds checking on the
->> output buffer, which is created on the stack with alloca().
+CVE-2015-0265: Apache Ranger code injection vulnerability
+----------------------------------------------------------------------------
+---
+Severity: Important
+Vendor: The Apache Software Foundation
+Versions Affected: 0.4.0 version of Apache Ranger
+Users affected: All admin users of ranger policy admin tool
+Description: Unauthorized users can send some javascript code to be executed
+in ranger policy admin tool admin sessions
+Fix detail: Added logic to sanitize the user input
+Mitigation: Users should upgrade to 0.5.0+ version of Apache Ranger with the
+fix
+Credit: Thanks to Jakub Ka=B3u=BFny from SecuRing for reporting this issue
 
->> http://git.claws-mail.org/?p=claws.git;a=commit;h=d390fa07f5548f3173dd9cc13b233db5ce934c82
->>
->> conv_jistoeuc
->> conv_euctojis
->> conv_sjistoeuc
+CVE-2015-0266: Apache Ranger direct url access vulnerability
+----------------------------------------------------------------------------
+-----
+Severity: Important
+Vendor: The Apache Software Foundation
+Versions Affected: 0.4.0 version of Apache Ranger
+Users affected: All users of ranger policy admin tool
+Description: Regular users can type in the URL of modules that are
+accessible only to admin users
+Fix detail: Added logic in the backend to verify user access
+Mitigation: Users should upgrade to 0.5.0+ version of Apache Ranger with the
+fix
+Credit: Thanks to Jakub Ka=B3u=BFny from SecuRing for reporting this issue
 
-The original discoverer found a conv_jistoeuc issue, and then the
-vendor apparently also found conv_euctojis and conv_sjistoeuc issues.
-However, we don't see an indication that these issues arose in
-independent ways. (Also, there is no vendor statement that
-conv_euctojis or conv_sjistoeuc is exploitable.) It seems best to
-assign CVE-2015-8614 to the combination of the conv_jistoeuc,
-conv_euctojis, and conv_sjistoeuc issues.
-
-
-> This version also fixes two oob errors I reported, I don't think
-> they're security risks
-
-There are currently no CVE IDs for these:
-
-  http://www.thewildbeast.co.uk/claws-mail/bugzilla/show_bug.cgi?id=3559
-
-  We think this might mean that there is a bug in code supporting
-  the UI, triggerable with UI interaction and not triggerable with
-  any untrusted input.
+Thank you,
+Vel
 
 
-  http://www.thewildbeast.co.uk/claws-mail/bugzilla/show_bug.cgi?id=3563
 
-  There isn't a statement of a security impact. If there is data loss
-  in a realistic scenario, then a CVE ID can be assigned. For example,
-  the user is in the middle of composition of a long outbound message
-  and pauses to read a new inbound message containing a
-  "List-Archive: <" line, and then there is a crash causing the entire
-  composition to be irretrievably lost.
+--B_3521637430_35925425--
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQIcBAEBCAAGBQJWeLVXAAoJEL54rhJi8gl5OKcP/2Wht3iy1rvLGBP1c49DfvMb
-elsgsowxPnNHDuY3eNbY7VuKvfK+LR4aLafK/puq/x9f8RW5RAN4iPEgYwuoZ36I
-2Jlfr9phP4F/s3AElMlLlnw2a0VsK7q77qiQCpSIORSxettjaaSMe0ANnA0aIm9B
-zwQDjGtR+g/c6BHmCgNtWy/xtx31v76Cueu2h2kI6ChiXXD9ogpo/QsPJESyk8Cm
-B7fXXfgpj0fz/3naVobU4tnCoJe8fLrI1iwkyfpWIf8zk/JLX6SlbulK8RkwyJgM
-mxZAHlmNNyb3N2/DGO6vj5BXxoAuOaJ13FVIOlTngIcbdv6jijfcrZ4h9YP3V3h7
-2bxp8kh/PL9us6XrlH5H70yFNXUvgHXK5VYEtd3uQZPE/Sn9e7YlAbOSriyvZSZ0
-P85BSDFUZgTwvI/G/iP6moMeclpDJ85I853IGKiDMvamLK8/6X8x75zzZTqIJHIs
-pxZsrnbBDW+E9574KHuHtO5IohdNKpAVx2cP7ooVTvs4F//rxIGta0UUV+eW7Pxi
-XVHAi358cFE33C8ZDldJTygIkaZz3pRfoK0WYKKV0RrlpxOoRnLwDBZW4qeru+VM
-Cdcl/I627zbOcNu7gHE1HOX9CVzeDAFZxg6duqRsBHbECimJyI+hyVoAQGYj8Ard
-GvKWDNciI/GdMgvBe3hc
-=C4ff
------END PGP SIGNATURE-----
