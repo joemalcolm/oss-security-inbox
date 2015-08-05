@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["337" "Wednesday" "4" "May" "2016" "14:23:39" "+0200" "Aymeric" "mulx@aplu.fr" "<7830cad706e7061be3fe25de4f5116d3@aplu.fr>" "12" "Re: [oss-security] Dotclear 2.9.1 XSS vulnerability by SVG" "^Date:" nil nil "5" "2016050412:23:39" "[oss-security] Dotclear 2.9.1 XSS vulnerability by SVG" (number mark "U       mulx@aplu.fr May  4   12/337   " thread-indent "\"Re: [oss-security] Dotclear 2.9.1 XSS vulnerability by SVG\"\n") "<3626D6E697A150459C44C0E5D8D8D00E0DBDC360@EX02.corp.qihoo.net>" ("<3626D6E697A150459C44C0E5D8D8D00E0DBDC360@EX02.corp.qihoo.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2179" "Wednesday" "5" "August" "2015" "13:13:17" "+0200" "Alessandro Ghedini" "alessandro@ghedini.me" "<20150805111317.GA18023@kronk.local>" "63" "Re: [oss-security] CVE Request: cacti multiple SQL injections" nil nil nil "8" "2015080511:13:17" "[oss-security] CVE Request: cacti multiple SQL injections" (number mark "        alessandro@g Aug  5   63/2179  " thread-indent "\"Re: [oss-security] CVE Request: cacti multiple SQL injections\"\n") "<20150718173121.GA15158@kronk.local>" ("<20150718173121.GA15158@kronk.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 26305 invoked by uid 550); 4 May 2016 12:37:43 -0000
+Received: (qmail 18249 invoked by uid 550); 5 Aug 2015 11:13:30 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,60 +11,96 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 11921 invoked from network); 4 May 2016 12:23:51 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=aplu.fr; s=s4096;
-	t=1462364619; bh=srbF3zaeASwDHoeN+Y0TK5RBbtxROWvBoS2tmF1+B00=;
-	h=Date:From:To:Subject:In-Reply-To:References:From;
-	b=bb8HXRJCs2NJlrLZ61a5Bji/9McVTb7gxPiq+qe7xwm1GnhArBgeY+dhCbo1nwy7Q
-	 Qe7f4HHHJHRhlNoCMqfJrQ7OVmFdIAvqtzAyQasWtjWYtJfd9oqZFKCj/9N2DvmiR5
-	 f3inyKpWqHqCBqfVw3c6lxPCaarm+W3Dv+HMKnYVqsxonvF49backJEKA9UiWHAznY
-	 PghpCrMjnKRb0PX/IKHfKA2hPbhM6cPMX9dee1x0jCo2nq9E6SYPdip/ojNZSjIukn
-	 BGR6xdGNkft8xLgHvr2C6WAtTLkHmTrAu8HGSxdhVNguRKfRw/p2K5A2k2ORqv6RhT
-	 kLYq6L9k96ROXCDBM8UOqnjKEqkhO4gqyI9+tueOFofhcJ8y/t2FVCDcgVhnC64jVT
-	 KcU73WedKaPq9ahVHNx4rjbFShEctJX4eHKy8gisq1QYSTDQJMeBR7i3vmL1w9AN8Y
-	 uKBu7R8jM6XNMWmBf7popk3oem0qKT3qJEIcfVx21kMhXLry4V2P6Lubg+vEcDeNxh
-	 8aQ/S/EL+Cohoq1KgIHvrWMimYVCAf5lK/BiTGXgrkMko8yasXObWBwLYVp15JQdYj
-	 aKpATApgJw37Dbw22NRWwrf3cY/gKx78fPG097IhP3CSiCZRp2am6TbMoVJVlgJDjq
-	 hyw84khrsG/O/0pM2X8Tohd4=
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=aplu.fr; s=s4096;
-	t=1462364619; bh=srbF3zaeASwDHoeN+Y0TK5RBbtxROWvBoS2tmF1+B00=;
-	h=Date:From:To:Subject:In-Reply-To:References:From;
-	b=bb8HXRJCs2NJlrLZ61a5Bji/9McVTb7gxPiq+qe7xwm1GnhArBgeY+dhCbo1nwy7Q
-	 Qe7f4HHHJHRhlNoCMqfJrQ7OVmFdIAvqtzAyQasWtjWYtJfd9oqZFKCj/9N2DvmiR5
-	 f3inyKpWqHqCBqfVw3c6lxPCaarm+W3Dv+HMKnYVqsxonvF49backJEKA9UiWHAznY
-	 PghpCrMjnKRb0PX/IKHfKA2hPbhM6cPMX9dee1x0jCo2nq9E6SYPdip/ojNZSjIukn
-	 BGR6xdGNkft8xLgHvr2C6WAtTLkHmTrAu8HGSxdhVNguRKfRw/p2K5A2k2ORqv6RhT
-	 kLYq6L9k96ROXCDBM8UOqnjKEqkhO4gqyI9+tueOFofhcJ8y/t2FVCDcgVhnC64jVT
-	 KcU73WedKaPq9ahVHNx4rjbFShEctJX4eHKy8gisq1QYSTDQJMeBR7i3vmL1w9AN8Y
-	 uKBu7R8jM6XNMWmBf7popk3oem0qKT3qJEIcfVx21kMhXLry4V2P6Lubg+vEcDeNxh
-	 8aQ/S/EL+Cohoq1KgIHvrWMimYVCAf5lK/BiTGXgrkMko8yasXObWBwLYVp15JQdYj
-	 aKpATApgJw37Dbw22NRWwrf3cY/gKx78fPG097IhP3CSiCZRp2am6TbMoVJVlgJDjq
-	 hyw84khrsG/O/0pM2X8Tohd4=
+Received: (qmail 18225 invoked from network); 5 Aug 2015 11:13:29 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=date:from:to:subject:message-id:mail-followup-to:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=PRtnHCbRHS/h9gcuJrN93Y3T6WrsE52fEqfO/Qp+UAY=;
+        b=IglYs3SRZ7bNOz6iyrKCI7wbsi9Sr+hrbDfRiwG8yWxdSS1fDC0+RXChNpQikSJJcz
+         uIFZ4DIFtjokY2juBvVy8YF7sXUD03o+4/z/gb9vEZ1vf0FINT8KY6swo3JWA1DNJevu
+         CXrOJjBHu7WxMZEkcAHuQeK4jc4tg4QKj+vEMtX7adw5mOc2Qlp5N09jsVq5HKmZvBl+
+         VKproLKDJdM+b8epz1bD/hBuOHGbUP60B2X58afe5LIFm6h1BKN8LQ0X/VVnk4Am8R8q
+         DrJZ89lTFEBRABpzJLMlyyCc6/t47zfcWgu0ikbdpevakSm7ygtzOZiKsnO2gzPm6Xfc
+         PZWw==
+X-Received: by 10.194.108.232 with SMTP id hn8mr18650076wjb.154.1438773198266;
+        Wed, 05 Aug 2015 04:13:18 -0700 (PDT)
+Message-ID: <20150805111317.GA18023@kronk.local>
+Mail-Followup-To: oss-security@lists.openwall.com, cve-assign@mitre.org
+References: <20150718173121.GA15158@kronk.local>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-In-Reply-To: <3626D6E697A150459C44C0E5D8D8D00E0DBDC360@EX02.corp.qihoo.net>
-References: <3626D6E697A150459C44C0E5D8D8D00E0DBDC360@EX02.corp.qihoo.net>
-Message-ID: <7830cad706e7061be3fe25de4f5116d3@aplu.fr>
-X-Sender: mulx@aplu.fr
-User-Agent: Roundcube Webmail/1.1.1
-X-AV-Checked: ClamAV using ClamSMTP
-Date: Wed, 04 May 2016 14:23:39 +0200
-From: Aymeric <mulx@aplu.fr>
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="+QahgC5+KEYLbs62"
+Content-Disposition: inline
+In-Reply-To: <20150718173121.GA15158@kronk.local>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+Date: Wed, 5 Aug 2015 13:13:17 +0200
+From: Alessandro Ghedini <alessandro@ghedini.me>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Dotclear 2.9.1 XSS vulnerability by SVG
-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] CVE Request: cacti multiple SQL injections
+To: oss-security@lists.openwall.com, cve-assign@mitre.org
 
-On 2016-05-04 08:46, limingxing wrote:
-> Hello,
-> We find an vulnerability about Dotclear 2.9.1 XSS vulnerability by SVG
-> [zip]
+--+QahgC5+KEYLbs62
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Hello,
+On Sat, Jul 18, 2015 at 07:31:21PM +0200, Alessandro Ghedini wrote:
+> Hi,
+>=20
+> CVE-2015-4634 was assigned for an SQL injection in cacti [0], but accordi=
+ng to
+> the commit fixing it [1] several other SQL injections were also found:
+>=20
+> -bug#0002574: SQL Injection Vulnerabilitie in graph items and graph templ=
+ate items
+> http://bugs.cacti.net/view.php?id=3D0002574
+>=20
+> -bug#0002579: SQL Injection Vulnerabilitie in data sources
+> http://bugs.cacti.net/view.php?id=3D0002579
+>=20
+> -bug#0002580: SQL Injection in cdef.php
+> http://bugs.cacti.net/view.php?id=3D0002580
+>=20
+> -bug#0002582: SQL Injection in data_templates.php
+> http://bugs.cacti.net/view.php?id=3D0002582
+>=20
+> -bug#0002583: SQL Injection in graph_templates.php
+> http://bugs.cacti.net/view.php?id=3D0002583
+>=20
+> -bug#0002584: SQL Injection in host_templates.php
+> http://bugs.cacti.net/view.php?id=3D0002584
+>=20
+> Could CVEs be assigned for these issues as well?
+>=20
+> Thanks
+>=20
+> [0] http://bugs.cacti.net/view.php?id=3D0002577
+> [1] http://svn.cacti.net/viewvc?view=3Drev&revision=3D7731
 
-FYI, I forwarded your email to their dev mailing list.
-Please, if you found any other vulnerability on dotclear, at least add 
-them to cc security(@)dotclear.net (http://dev.dotclear.org/2.0/).
+Ping?
 
-Bye
+--+QahgC5+KEYLbs62
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCgAGBQJVwe/KAAoJEK+lG9bN5XPLYncP/1x3stbk/Lf5Rs+LDDsb0fxu
+aKi5ygfAIeqdWlFz/918jDRbBpMHd4VjEn74ISHSN/FMnKiUnJtfwsm75dDiKtEb
+G/fXh4+9g3E2W4G3ltVruACYbcFjndoFjQSavg4/7+JgGh6YX4Ckzdmb2GQNPfma
+HaA5QBE1Slfdg4L+mUdlgT5Wp62cJBzQVeeBdKb+CpD3n+/1KY00VqkwVxMu8q1c
+m3u7I2S179IlksrFCTrbETOv6zxFyfkQfb1h2FV5qUdHfy3sAeRjFKShc0Kp1bhZ
+qCJS1ic75BNfpATit+BPbrHebBKL6mVFdMYntUQbe07eOFU5CypaWFTyYcl2J6Pi
+8W9V9sl7EeIRFettgOKiD9OpH9PWDpZwMFTbIYvrbbp9R1cQo6VXNPCC96Tc1ECJ
+7kS7H/RTwTckxRy5+QBHKZJ0vGZZDR4hBwI65igUXCydQwbP3gGkfV1wMrVfFxzY
+3ohcO4jezS3fBFyCPcx2gUYYUihkv8NUuMbeXB74lS8QWbyEBl5VtqCmOHy1SLDg
+l3CHl1R4hYZftJtnMLP8xS5ASR1A+Y3t2fDR8tUdQHtKEDvWjMkt1fZP0Ipz4vbm
+5lytxcx6lnQ91y2iHvuqBNTgyzMOlXVLhiWurI/v3hi5DcUqmF7JujXNTm/AaQnX
+WjyCqbcRWu00z338jYZi
+=np7k
+-----END PGP SIGNATURE-----
+
+--+QahgC5+KEYLbs62--
