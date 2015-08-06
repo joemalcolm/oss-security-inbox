@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["585" "Thursday" "12" "October" "2017" "19:23:10" "+0200" "Salvatore Bonaccorso" "carnil@debian.org" "<20171012172310.kejumlealja5qu2k@eldamar.local>" "26" "Re: [oss-security] CVE request: Two DoS vulneribilities in libextractor" "^Cc:" nil nil "10" "2017101217:23:10" "[oss-security] CVE request: Two DoS vulneribilities in libextractor" (number mark "        carnil@debia Oct 12   26/585   " thread-indent "\"Re: [oss-security] CVE request: Two DoS vulneribilities in libextractor\"\n") "<CAPwMjngHAWa4F-_hRffJRkNk1JmhKqEFojJyd0VUF+2q5sGN7A@mail.gmail.com>" ("<CAPwMjngHAWa4F-_hRffJRkNk1JmhKqEFojJyd0VUF+2q5sGN7A@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2910" "Thursday" "6" "August" "2015" "10:55:39" "+0200" "Martin Prpic" "mprpic@redhat.com" "<87io8s23uc.fsf@redhat.com>" "75" "Re: [oss-security] Re: CVE Request - Go net/http library - HTTP smuggling" nil nil nil "8" "2015080608:55:39" "[oss-security] Re: CVE Request - Go net/http library - HTTP smuggling" (number mark "        mprpic@redha Aug  6   75/2910  " thread-indent "\"Re: [oss-security] Re: CVE Request - Go net/http library - HTTP smuggling\"\n") "<20150805163639.18AE06CC065@smtpvmsrv1.mitre.org>" ("<CA+s3sfHhUWzMvW5FikvWnCq6jqt6ZQFnk++zZrr3P9V3WVWeAg@mail.gmail.com>" "<20150805163639.18AE06CC065@smtpvmsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 26046 invoked by uid 550); 12 Oct 2017 17:23:24 -0000
+Received: (qmail 25890 invoked by uid 550); 6 Aug 2015 08:55:54 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,73 +11,94 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 26019 invoked from network); 12 Oct 2017 17:23:23 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=ZAyMXI4l6aSAbvvVE6paccniWFf2HSUSItpssUwXzIM=;
-        b=Ja89vLZ4ImWAXu9N8GBqPentu88xsdTxT1lXIkIT2DmD/Epk1oYhHtngEAIRfE44rs
-         rv+T7+9D0H7/iB5w4Opz+QYSMg/WkdlMdzJLcONNvsnPhP8CNj96+OZR9aBBk0/pmZ2X
-         FpWkD0buDfyF687fsPhkYKF3ZqFWWurhEVez5H7s0dlE2OHgF5DsiOFr1h50C/qfXQTl
-         K80RHJM+GyEFbQEiIPKDvhlRc3DZJZ44p7xltl1cfg+DdPHmqvU+u68tIez5+10JzgTW
-         nJJvZpcQZasVfWI2YORgLWXkpL3MLuWjEbCrbeKM/3Nkev0fjrYJ9OuvBsH34tnBSeks
-         O/4w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
-         :references:mime-version:content-disposition:in-reply-to:user-agent;
-        bh=ZAyMXI4l6aSAbvvVE6paccniWFf2HSUSItpssUwXzIM=;
-        b=dm/B5hDFQR9PxnZfzM5tkf7jcTKghodCcLh6hYCIgGnjMQxg8U5iTHk6lQHuBg6yyl
-         BT86xDb9EQ62ajDOZVLZrj8Vnzw7k5L3nAbyl1emmv3gwcgwHPmjgLz4BOiy1v/iiwUK
-         q4AYXWJLbnMJswwn54zyTGvjCoflSjZJ5q4XXksTFyDMSby4ux+amTS4/5T1OtsWo6+E
-         z1ChzN5iGDvEDqvHKD9yz2pHhOgJNc4TFBTf/Ttz9cqu41Bg73Hj54PAACm1yIpF/Bv6
-         ZuSWhEy4Gy0oSMSYApNerPQDw3SXr83pmhNuEXUaYSpG+bAT/d3npOVen69u32U8/rgD
-         VVyg==
-X-Gm-Message-State: AMCzsaXIngun28kCTevmvZaoU6GFMQ1Zsg4BP3PjU5qmDkJ4fu1wBmyg
-	6Ubr9lB0+QvWv3RU8ViL/sOjTQ==
-X-Google-Smtp-Source: AOwi7QDODmzuctHpEfkDqri/xaTleg+6Nblnx5YGVMPHEf16RatIEk8qYKL/oFT+B3mKUVoHtOZDJw==
-X-Received: by 10.28.51.19 with SMTP id z19mr2272310wmz.18.1507828991689;
-        Thu, 12 Oct 2017 10:23:11 -0700 (PDT)
-Message-ID: <20171012172310.kejumlealja5qu2k@eldamar.local>
-References: <CAPwMjngHAWa4F-_hRffJRkNk1JmhKqEFojJyd0VUF+2q5sGN7A@mail.gmail.com>
+Received: (qmail 25863 invoked from network); 6 Aug 2015 08:55:53 -0000
+References: <CA+s3sfHhUWzMvW5FikvWnCq6jqt6ZQFnk++zZrr3P9V3WVWeAg@mail.gmail.com> <20150805163639.18AE06CC065@smtpvmsrv1.mitre.org>
+User-agent: mu4e 0.9.9.5; emacs 24.3.1
+In-reply-to: <20150805163639.18AE06CC065@smtpvmsrv1.mitre.org>
+Message-ID: <87io8s23uc.fsf@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAPwMjngHAWa4F-_hRffJRkNk1JmhKqEFojJyd0VUF+2q5sGN7A@mail.gmail.com>
-User-Agent: NeoMutt/20170609 (1.8.3)
-Cc: oss-security@lists.openwall.com
-Date: Thu, 12 Oct 2017 19:23:10 +0200
-From: Salvatore Bonaccorso <carnil@debian.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.27
+Cc: jbuberel@google.com, cve-assign@mitre.org
+Date: Thu, 06 Aug 2015 10:55:39 +0200
+From: Martin Prpic <mprpic@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Subject: Re: [oss-security] CVE request: Two DoS vulneribilities in
- libextractor
-To: Leon Zhao <leon.zhao.7@gmail.com>
+Subject: Re: [oss-security] Re: CVE Request - Go net/http library - HTTP smuggling
+To: oss-security@lists.openwall.com
 
-Hi
+Hi, this looks like it needs a CVE as well:
 
-On Wed, Oct 11, 2017 at 11:40:33AM +0800, Leon Zhao wrote:
-> Hello oss security,
-> 
-> I found two DoS vulneribilities in libextractor,
-> 
-> Affected version
-> 1.4
-> 
-> 1. Divide-By-Zero
-> https://bugzilla.redhat.com/show_bug.cgi?id=1499599
-> http://lists.gnu.org/archive/html/bug-libextractor/2017-10/msg00002.html
-> Fixed
+https://github.com/golang/go/commit/26049f6f9171d1190f3bbe05ec304845cfe6399f
+https://github.com/golang/go/issues/12027
 
-This was assigned CVE-2017-15266.
+Can you please assign one? Thank you!
 
-> 2. Null Pointer Dereference
-> https://bugzilla.redhat.com/show_bug.cgi?id=1499600
-> http://lists.gnu.org/archive/html/bug-libextractor/2017-10/msg00003.html
-> Fixed
+-- 
+Martin Prpič / Red Hat Product Security
 
-This was assigned CVE-2017-15267.
 
-Regards,
-Salvatore
+cve-assign@mitre.org writes:
+
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA256
+>
+>> https://github.com/golang/go/commit/117ddcb83d7f42d6aa72241240af99ded81118e9
+>> 
+>> * Invalid headers are parsed as valid headers (like "Content Length:" with a
+>> space in the middle)
+>
+> For purposes of CVE assignments, we feel that this needs to be
+> categorized separately from the other parts of the report. The primary
+> factor is that there are different sets of affected versions. This
+> behavior apparently was not present in all versions of Go: it was
+> added in February 2012. Also, it is not really an error in determining
+> the semantics of a set of headers; it's a security-relevant error in
+> interpretation of the syntax of an individual header.
+>
+> Use CVE-2015-5739.
+>
+>
+>> https://github.com/golang/go/commit/300d9a21583e7cf0149a778a0611e76ff7c6680f
+>> 
+>> * Double Content-length headers in a request does not generate a 400 error,
+>> the second Content-length is ignored
+>
+> Use CVE-2015-5740 for the reporter's finding of a security-relevant
+> RFC 7230 3.3.3 4 violation ("MUST respond with a 400 (Bad Request)
+> status code").
+>
+>
+> 300d9a21583e7cf0149a778a0611e76ff7c6680f also has code changes that
+> were not mentioned in your "as provided by the reporter" section. Our
+> interpretation is that there were separate internal discoveries of
+> other security-relevant RFC 7230 violations, such as "MUST NOT send a
+> Content-Length header field in any message that contains a
+> Transfer-Encoding header field." Use CVE-2015-5741 for one or more
+> internal discoveries reflected in
+> 300d9a21583e7cf0149a778a0611e76ff7c6680f.
+>
+>
+> Finally, if there is a code change in
+> 300d9a21583e7cf0149a778a0611e76ff7c6680f that is exclusively for the
+> purposes of hardening (i.e., no RFC requires the change as a smuggling
+> security fix, and the code change is not for addressing an
+> individually exploitable problem), then that code change is outside
+> the scope of CVE.
+>
+> - -- 
+> CVE assignment team, MITRE CVE Numbering Authority
+> M/S M300
+> 202 Burlington Road, Bedford, MA 01730 USA
+> [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1
+>
+> iQEcBAEBCAAGBQJVwjr0AAoJEKllVAevmvms4SgH/1K26OmJwLV0/D+IgSIcWq8q
+> ecN2DlngcNpU7W/fq9o/brN4hoMGVzh/aEPU3JIqC0JbY0OhidPe/DZmqLcndnwb
+> iQ4wS4r89akrzZpdOYc09oBlqyxKtto1exwFHWqqdVIbBjHdq+nQhEBwYGyjf/XK
+> 0DyEX6f72Msa//HFhNKycOKM4KPKsi1Gh5Dl+L9nddWnPdTnTSHoIdD+RGmXDDkD
+> 8i6WI/e5QVrGL2g24mrpefDUWX/p9T/cx9LR1hiiUUDuvns40NVz11E1i8PD2fv3
+> wRzEjUqyt94syYh9PNa0+ZFH7sPUyYOhnpi3/1UzRkSUSI++FfpDFrq3rOEZ4Jk=
+> =rNSr
+> -----END PGP SIGNATURE-----
