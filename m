@@ -1,4 +1,9 @@
-Received: (qmail 16194 invoked by uid 550); 4 Apr 2024 11:26:58 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3622" "Thursday" "6" "August" "2015" "14:30:56" "+0000" "Jason Buberel" "jbuberel@google.com" "<CA+s3sfGGv2dyqvp2YovqTrhe2jti1JALhr2K4L2_HLAg=h0q1g@mail.gmail.com>" "107" "Re: [oss-security] Re: CVE Request - Go net/http library - HTTP smuggling" nil nil nil "8" "2015080614:30:56" "[oss-security] Re: CVE Request - Go net/http library - HTTP smuggling" (number mark "        jbuberel@goo Aug  6  107/3622  " thread-indent "\"Re: [oss-security] Re: CVE Request - Go net/http library - HTTP smuggling\"\n") "<87io8s23uc.fsf@redhat.com>" ("<CA+s3sfHhUWzMvW5FikvWnCq6jqt6ZQFnk++zZrr3P9V3WVWeAg@mail.gmail.com>" "<20150805163639.18AE06CC065@smtpvmsrv1.mitre.org>" "<87io8s23uc.fsf@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 12183 invoked by uid 550); 6 Aug 2015 14:31:18 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,72 +11,149 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13756 invoked from network); 4 Apr 2024 11:15:24 -0000
+Received: (qmail 12162 invoked from network); 6 Aug 2015 14:31:17 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1712229314; x=1712834114; darn=lists.openwall.com;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=66PaCkSx/JuXcECyvC3kTepLqFzzgZUgIQDXmm4KPxE=;
-        b=UzjI9Mu7GdMO1cIvrWF4iUG553mMPR7RiZUkjZNMZR054kzK8J8xMYkG5pn4X0ioGp
-         wgy5FbFFm4w+qiqgOaVuzxpV39y0S7l4if+0YX90Jhds9ZE9WwDTXGw7SXe1xXG+R/LB
-         qmgnJww5FqEkngkSp6hJyANNZgj1teZV6bL+dujXV1HqRd5gFzKZ3rRwS7EWj9w92DBp
-         dL8RiPHMmihNprxCVh9h8TdoQxri3DwZdjSw2bJR8Aq5y+h67DEGvFh7+8XUJM81k0It
-         WzfQKs/WluURkwMeF6G0M+nrLen30kap+Y1Z+myj6K/OAXuwCKpMWPNnJsBBV7XwoE/9
-         juNA==
+        d=google.com; s=20120113;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=YK8Ivmahe54GWgy3uYmAtpJgSnYYJaYaxEBQb6S8qRE=;
+        b=kq5gmJSrqw2HLe9Lzm9nM+gLzLDSWkXhVFGEcPuKOl8BVG/xcEAVy5Rcq6s0JVDK6B
+         hJSqg8d81lNl4v91i5xaCdfxP+LzZ86NzIdpvRW4z+xYSsNwvtAkxxHZglz5WeBek4y4
+         UvozplxGeefXxFtEi1MsjI3jxWOoSATAANVRkwbiIUjI4N4Eek2Lq1exkV08J4AG5G7Q
+         5eYBdw6i8qM9Oy5veCEk6NX0uzCYTvJ+FGMDsj186S/LOK74gWP1IhlID+4ucJ5HnB/+
+         GbviJ/6wOW0pWEiJemLQD1BlmIshEP7HLGzO/i/7JLDn17n/8AEdxRsYYU6Bhykri4W0
+         tdyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712229314; x=1712834114;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=66PaCkSx/JuXcECyvC3kTepLqFzzgZUgIQDXmm4KPxE=;
-        b=E70hMxV4DBURBZyrT/4N+ZxOUeCw1Gc7+bNv8UALmXsDTVSz6UWtHn1sTiGfIxKfLF
-         eTaUZjE/V95NMs4xCIHcWqkhTCT7zdFAFORI8ty6DPIyO9ADengOFT/Yvx2ZueaoikSq
-         RLcjgRUSGDuUJTSiLMY0nPpR/wVjpJJA3/oGX/nDNxQG1vBMIz2uMTUeBd8BmXMzdJ9U
-         nJyZxWKjBljDDf5ZLQpgzaHcsyueXw9UrOYFJgOnfmNy/xK/JI8DzBaUuS8KEuy/iG5H
-         CjMrfpv8IVd1RtwZtuwyDw+d0eWe6ZkKfskyQjNzTkxD7p0GnEAPpcKAgAiWM2EpIq4p
-         oC/A==
-X-Gm-Message-State: AOJu0YyaG4NKVxAWRRHzbFi8cmhsgqFKzMWoZAU//6EM8aVqAhBontBf
-	6m+6BWF7qcxX+srUPIplgVesyDt805R+7N0toZTrpr6sSS5p83q516nURHYBLKWdvKEnC6+ufv2
-	yTaD2+gIWDrpyJy795qaT0BOlv0WwsPZlirg=
-X-Google-Smtp-Source: AGHT+IHzjsweNiGZ+00fVKN9xQ6/evSC+omyyUDrAM2PgcJsqbkW0LFDMIlHCt0aEhSznoywYEepeoTLHBXEkxcNTGo=
-X-Received: by 2002:a05:6122:2b0:b0:4d4:1a1a:6db7 with SMTP id
- 16-20020a05612202b000b004d41a1a6db7mr1706238vkq.2.1712229314435; Thu, 04 Apr
- 2024 04:15:14 -0700 (PDT)
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=YK8Ivmahe54GWgy3uYmAtpJgSnYYJaYaxEBQb6S8qRE=;
+        b=WylllYYb3RMlYR3pglUJBokHhALJSV9iubXrZBlm9ud7SEL/GsU5O77r0FI1VaO6p3
+         wlsmPEL98af8XsOKgtVB8M6/EJBSY3NR42fw4ndsarPitnFF4o5sA8XeJ6q/4OtRFMCL
+         XO5lN9gtn409TMPZCPlsmtmwA/sMVDFqCDbBijKiMATtR52XmHUH3knVnUH7QiC7abId
+         m/MzDE9fNySrBy/GrsdBphVMxywaKoZYiZp8T7618jCNoKgjsoeGXC/i4R206mndEOsm
+         JZcfd2Wsgg/1yENlQ9+tmSz4bUtdNKGQPV22zgUSZBlT6KIFlw4SIqdHB+sgaPuNKw5/
+         HA7Q==
+X-Gm-Message-State: ALoCoQnPPTWhz/rbR/u8Szo7pqy0B2zBmMj+R1ysR5W0nSARgSqjg/opxm/xaDv2Jp6vxjwTWjMx
+X-Received: by 10.180.77.129 with SMTP id s1mr7071926wiw.67.1438871465766;
+ Thu, 06 Aug 2015 07:31:05 -0700 (PDT)
 MIME-Version: 1.0
-From: Alex Sarum <rum.274.4@gmail.com>
-Date: Thu, 4 Apr 2024 15:14:58 +0400
-Message-ID: <CAF69u5qz-WPQq_-5_Mbybe9cDGcHOHJyjY1qLKOJzq+tfXnDQQ@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="0000000000000fa5b4061543742c"
-Subject: [oss-security] opusfile by Xiph.Org Foundation, DoS vulnerability (SIGFPE)
+References: <CA+s3sfHhUWzMvW5FikvWnCq6jqt6ZQFnk++zZrr3P9V3WVWeAg@mail.gmail.com>
+ <20150805163639.18AE06CC065@smtpvmsrv1.mitre.org> <87io8s23uc.fsf@redhat.com>
+In-Reply-To: <87io8s23uc.fsf@redhat.com>
+Message-ID: <CA+s3sfGGv2dyqvp2YovqTrhe2jti1JALhr2K4L2_HLAg=h0q1g@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=f46d043c801e986690051ca55eb8
+Cc: cve-assign@mitre.org
+Date: Thu, 06 Aug 2015 14:30:56 +0000
+From: Jason Buberel <jbuberel@google.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Re: CVE Request - Go net/http library - HTTP smuggling
+To: Martin Prpic <mprpic@redhat.com>, oss-security@lists.openwall.com
 
---0000000000000fa5b4061543742c
-Content-Type: text/plain; charset="UTF-8"
+--f46d043c801e986690051ca55eb8
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-Hi,
+Martin,
 
-I was doing vulnerability research on a project that uses the library as a
-dependency. During the research, I found a vulnerability that I have
-already informed the vendor about. It's been a long time, but the vendor
-hasn't passed the information on to Xiph.Org Foundation, so I decided to do
-it myself. I created an issue[1], but still have not received a comment
-about reproducibility or fixing the vulnerability.
+We agree that that issue should be included in a 1.4.3 release under a 4th
+CVE ID. In addition, we would also like to include:
 
-A copy of the vulnerability details below.
+https://go-review.googlesource.com/#/c/12865/
 
-One of the possible paths of execution:
+Which addresses the very closely related issue:
 
-./opusfile/opusfile.c: op_open_file -> op_open_close_on_failure ->
-op_open_callbacks -> op_open2 -> op_open_seekable2 ->
-op_open_seekable2_impl -> op_bisect_forward_serialno ->
-op_predict_link_start
+https://golang.org/issue/11930
 
-SIGFPE:
-https://github.com/xiph/opusfile/blob/9d718345ce03b2fad5d7d28e0bcd1cc69ab2b166/src/opusfile.c#L1089
+...under the same (4th, not yet assigned) CVE ID.
 
-Trigger: crash.zip[2]
+-jason
 
-[1]: https://github.com/xiph/opusfile/issues/48
-[2]: https://github.com/xiph/opusfile/files/14397558/crash.zip
+On Thu, Aug 6, 2015 at 1:55 AM Martin Prpic <mprpic@redhat.com> wrote:
 
---0000000000000fa5b4061543742c--
+> Hi, this looks like it needs a CVE as well:
+>
+>
+> https://github.com/golang/go/commit/26049f6f9171d1190f3bbe05ec304845cfe63=
+99f
+> https://github.com/golang/go/issues/12027
+>
+> Can you please assign one? Thank you!
+>
+> --
+> Martin Prpi=C4=8D / Red Hat Product Security
+>
+>
+> cve-assign@mitre.org writes:
+>
+> > -----BEGIN PGP SIGNED MESSAGE-----
+> > Hash: SHA256
+> >
+> >>
+> https://github.com/golang/go/commit/117ddcb83d7f42d6aa72241240af99ded8111=
+8e9
+> >>
+> >> * Invalid headers are parsed as valid headers (like "Content Length:"
+> with a
+> >> space in the middle)
+> >
+> > For purposes of CVE assignments, we feel that this needs to be
+> > categorized separately from the other parts of the report. The primary
+> > factor is that there are different sets of affected versions. This
+> > behavior apparently was not present in all versions of Go: it was
+> > added in February 2012. Also, it is not really an error in determining
+> > the semantics of a set of headers; it's a security-relevant error in
+> > interpretation of the syntax of an individual header.
+> >
+> > Use CVE-2015-5739.
+> >
+> >
+> >>
+> https://github.com/golang/go/commit/300d9a21583e7cf0149a778a0611e76ff7c66=
+80f
+> >>
+> >> * Double Content-length headers in a request does not generate a 400
+> error,
+> >> the second Content-length is ignored
+> >
+> > Use CVE-2015-5740 for the reporter's finding of a security-relevant
+> > RFC 7230 3.3.3 4 violation ("MUST respond with a 400 (Bad Request)
+> > status code").
+> >
+> >
+> > 300d9a21583e7cf0149a778a0611e76ff7c6680f also has code changes that
+> > were not mentioned in your "as provided by the reporter" section. Our
+> > interpretation is that there were separate internal discoveries of
+> > other security-relevant RFC 7230 violations, such as "MUST NOT send a
+> > Content-Length header field in any message that contains a
+> > Transfer-Encoding header field." Use CVE-2015-5741 for one or more
+> > internal discoveries reflected in
+> > 300d9a21583e7cf0149a778a0611e76ff7c6680f.
+> >
+> >
+> > Finally, if there is a code change in
+> > 300d9a21583e7cf0149a778a0611e76ff7c6680f that is exclusively for the
+> > purposes of hardening (i.e., no RFC requires the change as a smuggling
+> > security fix, and the code change is not for addressing an
+> > individually exploitable problem), then that code change is outside
+> > the scope of CVE.
+> >
+> > - --
+> > CVE assignment team, MITRE CVE Numbering Authority
+> > M/S M300
+> > 202 Burlington Road, Bedford, MA 01730 USA
+> > [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+> > -----BEGIN PGP SIGNATURE-----
+> > Version: GnuPG v1
+> >
+> > iQEcBAEBCAAGBQJVwjr0AAoJEKllVAevmvms4SgH/1K26OmJwLV0/D+IgSIcWq8q
+> > ecN2DlngcNpU7W/fq9o/brN4hoMGVzh/aEPU3JIqC0JbY0OhidPe/DZmqLcndnwb
+> > iQ4wS4r89akrzZpdOYc09oBlqyxKtto1exwFHWqqdVIbBjHdq+nQhEBwYGyjf/XK
+> > 0DyEX6f72Msa//HFhNKycOKM4KPKsi1Gh5Dl+L9nddWnPdTnTSHoIdD+RGmXDDkD
+> > 8i6WI/e5QVrGL2g24mrpefDUWX/p9T/cx9LR1hiiUUDuvns40NVz11E1i8PD2fv3
+> > wRzEjUqyt94syYh9PNa0+ZFH7sPUyYOhnpi3/1UzRkSUSI++FfpDFrq3rOEZ4Jk=3D
+> > =3DrNSr
+> > -----END PGP SIGNATURE-----
+>
+
+--f46d043c801e986690051ca55eb8--
