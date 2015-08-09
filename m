@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["547" "Thursday" "14" "September" "2017" "16:08:21" "+0200" "Levente Polyak" "levente@leventepolyak.net" "<0066D0CA-AF18-48FD-AB6E-34EF5CF7A986@leventepolyak.net>" "17" "Re: [oss-security] tcpdump 4.9.2 is fully available" "^CC:" nil nil "9" "2017091414:08:21" "[oss-security] tcpdump 4.9.2 is fully available" (number mark "        levente@leve Sep 14   17/547   " thread-indent "\"Re: [oss-security] tcpdump 4.9.2 is fully available\"\n") "<20170914130443.GA21420@openwall.com>" ("<15e7d09e363.baac2a74163896.7143621165441625815@ovsienko.info>" "<20170914130443.GA21420@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1097" "Sunday" "9" "August" "2015" "15:50:10" "-0400" "=?UTF-8?B?RnJhbsOnb2lzIExhYnLDqGNoZQ==?=" "f.labreche@gmail.com" "<55C7AEF2.1070908@gmail.com>" "31" "[oss-security] CVE request - simple-php-captcha - captcha bypass vulnerability" nil nil nil "8" "2015080919:50:10" "[oss-security] CVE request - simple-php-captcha - captcha bypass vulnerability" (number mark "        f.labreche@g Aug  9   31/1097  " thread-indent "\"[oss-security] CVE request - simple-php-captcha - captcha bypass vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 27847 invoked by uid 550); 14 Sep 2017 14:23:01 -0000
+Received: (qmail 20244 invoked by uid 550); 9 Aug 2015 20:28:56 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,37 +11,60 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 14294 invoked from network); 14 Sep 2017 14:08:36 -0000
-In-Reply-To: <20170914130443.GA21420@openwall.com>
-References: <15e7d09e363.baac2a74163896.7143621165441625815@ovsienko.info> <20170914130443.GA21420@openwall.com>
+Received: (qmail 24555 invoked from network); 9 Aug 2015 19:50:23 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :content-type;
+        bh=6bswQe+6KKi1a45IVPFr4KdXB2GkN/hScKZlQcQI54g=;
+        b=TdWzLvY8RP7GHAYT7Sf+U4+oygqeyNt1i5ncOX/WmTByz3tq8S7oCZ/wC/IJHRUoIe
+         LBsJvpyDQbSt2aYkqm794YfhXQApa7CvPOhfMPz4+eNFoLAnlf1ISDj1GhoBxFpEfR8k
+         aaBmztrPUhnyUogTGQE0RTfd6IPU56l8B5nnV00Uw3B1C6eo/K81yTeEoMyC3NIN80Cm
+         wPr6x6CSX3HQ3fw0Gu1d3/aHs6kC/d8VwRMcQS/Y9FO9qZnSjErqT0eLxJk+RyBIh3SS
+         Xw18irUYSo35auQlf9KcdcA6qiEBaJaoSlznGLztuU6TJlPRLCHcRGOAeHUXQPNxuKxh
+         q82g==
+X-Received: by 10.107.131.22 with SMTP id f22mr17296790iod.73.1439149812191;
+        Sun, 09 Aug 2015 12:50:12 -0700 (PDT)
+Message-ID: <55C7AEF2.1070908@gmail.com>
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Message-ID: <0066D0CA-AF18-48FD-AB6E-34EF5CF7A986@leventepolyak.net>
-X-bounce-key: webpack.hosteurope.de;levente@leventepolyak.net;1505398116;61099710;
-X-HE-SMSGID: 1dsUoa-0004Gi-Fc
-CC: Denis Ovsienko <denis@ovsienko.info>
-Date: Thu, 14 Sep 2017 16:08:21 +0200
-From: Levente Polyak <levente@leventepolyak.net>
+Content-Type: multipart/alternative;
+ boundary="------------060204070203060402010605"
+CC: Olivier Bilodeau <olivier@bottomlesspit.org>
+Date: Sun, 09 Aug 2015 15:50:10 -0400
+From: =?UTF-8?B?RnJhbsOnb2lzIExhYnLDqGNoZQ==?= <f.labreche@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] tcpdump 4.9.2 is fully available
-To: oss-security@lists.openwall.com,Solar Designer <solar@openwall.com>
+Subject: [oss-security] CVE request - simple-php-captcha - captcha bypass vulnerability
+To: oss-security@lists.openwall.com
 
-On September 14, 2017 3:04:43 PM GMT+02:00, Solar Designer <solar@openwall.=
-com> wrote:
->
->September 7 - an Arch Linux developer (who is not on (linux-)distros
->and
->apparently was not aware of the distros list discussion) brings the
->issue to oss-security (it's unclear to me how that person knew of the
->September 25 initial CRD); I approve that message right away
->
+--------------060204070203060402010605
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-Leo Famulari has posted this here, and he is not affiliated with Arch Linux=
-. AFAIK he is involved in the GNU Guix project.
+Hi,
 
-Everything else sounds valid.
+We found a captcha bypass vulnerability in an open source captcha 
+software, made by Cory LaViska for A Beautiful Site. Here is the github 
+repository: https://github.com/claviska/simple-php-captcha.
 
-Cheers,
-Levente=20
+We opened an issue on github 
+<https://github.com/claviska/simple-php-captcha/issues/16>, and the 
+vulnerability has been fixed. They never did any release so we don't 
+think the fix will be released in any form. Simply advising users to 
+update to git master's should suffice.
+
+The simple-php-captcha.php file had a vulnerability enabling a client to 
+generate the captcha response automatically, effectively bypassing the 
+captcha.
+
+Since the microtime() function was used both in the initial seed for the 
+captcha and in the captcha url path sent to the client, it was possible 
+to generate the captcha result automatically by running the same code 
+client-side.
+
+Could a CVE be assigned to this?
+
+Thank you,
+François
+
+--------------060204070203060402010605--
