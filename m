@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1379" "Monday" "27" "April" "2015" "11:16:06" "+0200" "Pierre Schweitzer" "pierre@reactos.org" "<553DFE56.3030102@reactos.org>" "37" "[oss-security] CVE request: incomplete fix for CVE-2013-4422" nil nil nil "4" "2015042709:16:06" "[oss-security] CVE request: incomplete fix for CVE-2013-4422" (number mark "        pierre@react Apr 27   37/1379  " thread-indent "\"[oss-security] CVE request: incomplete fix for CVE-2013-4422\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["766" "Tuesday" "11" "August" "2015" "20:40:38" "+0200" "Moritz Jodeit" "moritz@bluefrostsecurity.de" "<55CA41A6.600@bluefrostsecurity.de>" "20" "[oss-security] CVE request - OpenSSH 6.9 PAM privilege separation vulnerabilities" nil nil nil "8" "2015081118:40:38" "[oss-security] CVE request - OpenSSH 6.9 PAM privilege separation vulnerabilities" (number mark "        moritz@bluef Aug 11   20/766   " thread-indent "\"[oss-security] CVE request - OpenSSH 6.9 PAM privilege separation vulnerabilities\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 11624 invoked by uid 550); 27 Apr 2015 09:16:19 -0000
+Received: (qmail 21718 invoked by uid 550); 11 Aug 2015 18:41:34 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,53 +11,38 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 11606 invoked from network); 27 Apr 2015 09:16:19 -0000
-Message-ID: <553DFE56.3030102@reactos.org>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.6.0
+Received: (qmail 20463 invoked from network); 11 Aug 2015 18:40:51 -0000
+X-Sender-Id: moritz@bluefrostsecurity.de
+X-Enigmail-Draft-Status: N1110
+Message-ID: <55CA41A6.600@bluefrostsecurity.de>
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:38.0) Gecko/20100101
+ Thunderbird/38.1.0
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
-Date: Mon, 27 Apr 2015 11:16:06 +0200
-From: Pierre Schweitzer <pierre@reactos.org>
+Date: Tue, 11 Aug 2015 20:40:38 +0200
+From: Moritz Jodeit <moritz@bluefrostsecurity.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE request: incomplete fix for CVE-2013-4422
-To: OSS Security List <oss-security@lists.openwall.com>, 
- cve-assign@mitre.org
+Subject: [oss-security] CVE request - OpenSSH 6.9 PAM privilege separation vulnerabilities
+To: oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hello list,
 
-Dear all,
+could you please assign two CVE IDs for the following two security
+issues fixed in OpenSSH 7.0 (directly taken from the release notes [1]):
 
-It's been found that in Quassel, the CVE-2013-4422 was incorrectly
-fixed and that core was still vulnerable to SQL injection on reconnection.
+ * sshd(8): Portable OpenSSH only: Fixed a privilege separation
+   weakness related to PAM support. Attackers who could successfully
+   compromise the pre-authentication process for remote code
+   execution and who had valid credentials on the host could
+   impersonate other users.  Reported by Moritz Jodeit.
 
-This has been fixed with commit:
-https://github.com/quassel/quassel/commit/6605882f41331c80f7ac3a6992650a702ec71283
+ * sshd(8): Portable OpenSSH only: Fixed a use-after-free bug
+   related to PAM support that was reachable by attackers who could
+   compromise the pre-authentication process for remote code
+   execution. Also reported by Moritz Jodeit.
 
-The incomplete bugfix had been released with Quassel 0.9.1:
-http://quassel-irc.org/node/120
+[1] http://www.openssh.com/txt/release-7.0
 
-With my best regards,
-- -- 
-Pierre Schweitzer <pierre@reactos.org>
-System & Network Administrator
-Senior Kernel Developer
-ReactOS Deutschland e.V.
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-
-iQIcBAEBCAAGBQJVPf5WAAoJEHVFVWw9WFsLidQP+QFVN33rAzw1OC7NRF1MW1yW
-uKo11iRnjt2F+WRl+0MlJR2ev5b3VirlDs19pfyD/JVJCI13FKnr8LtqKcLFvGQ/
-1XjQSKOPzoGttr2wvL84QkixjnsD4S6uVRwJvFyo8GoEbs5FTIGDLS8Jn8JqZaqG
-HRX9apwYiKwYzThPAMkbAS8v8VTmNhYiUfjmLBZzncJiRbJCGd3GSe6Znjsx7Zj5
-/Ge85szRnDrl/QFoW1G0w+Kcs4eyTtNaWoZftoblUqSNwe2/Wn77DKePOyQzClgh
-efuzFZy/8X728AsywI8O0UlxcyBTe0xjXUoxPuflUVzX18ZVrFdkWTqUisSxtl9a
-tCsm6TsXH3rSc/+fkgYvGUNADnv8koc5ej0KWHF/8LAkKhE8HwaehDHp2zVdfCnu
-czDy62DKJc6AW8X1aqAccXA1CpSzH/s+fBA7SZeS4w8h2cpsLaOIGHmgxvHxApzo
-NApdhDiv4LjooDyiAVaptGmT4w6S4XieuCnAz58J7f/hHgx1CPPSrrzCYVAFeIAK
-Seeyl45LoqyTkxK0uKs5savmhHHSNiTSo4tbpYoZ6nPwOzJorhWCxB2ozxNNu8V4
-jHpgh9gOCDV/ZcMIVSzQlhVZZdpZ9hVevYIPVk/ZQSZ2ZoY0cfxcT6y9KPudaqFY
-+fKtOm4enoBnQWsjvJUz
-=Xd5Y
------END PGP SIGNATURE-----
+Thank you,
+Moritz
