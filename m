@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1360" "Saturday" "24" "June" "2017" "16:14:42" "+0200" "Solar Designer" "solar@openwall.com" "<20170624141442.GA29443@openwall.com>" "23" "Re: [oss-security] Qualys Security Advisory - The Stack Clash" "^Date:" nil nil "6" "2017062414:14:42" "[oss-security] Qualys Security Advisory - The Stack Clash" (number mark "        solar@openwa Jun 24   23/1360  " thread-indent "\"Re: [oss-security] Qualys Security Advisory - The Stack Clash\"\n") "<bc61fe61-7d1a-2263-252e-9b0196dfd7c2@redhat.com>" ("<20170619152843.GC7769@localhost.localdomain>" "<14558692.afnJ5aRU9J@wanheda>" "<20170621122526.GA32701@grsecurity.net>" "<20170621135727.GA12852@openwall.com>" "<20170621212742.GA28766@grsecurity.net>" "<90f1cd71-5c5d-83ae-23ce-9f12a9074bd3@redhat.com>" "<bc61fe61-7d1a-2263-252e-9b0196dfd7c2@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["901" "Tuesday" "11" "August" "2015" "10:23:59" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<CANO=Ty1ku4Hs-eFzCWK_K0=QXEZbtDFR4c--gBnoHPQi7Ko+XQ@mail.gmail.com>" "27" "[oss-security] Terminal escape sequences - the new XSS for admins?" nil nil nil "8" "2015081116:23:59" "[oss-security] Terminal escape sequences - the new XSS for admins?" (number mark "        kseifried@re Aug 11   27/901   " thread-indent "\"[oss-security] Terminal escape sequences - the new XSS for admins?\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 16312 invoked by uid 550); 24 Jun 2017 14:15:07 -0000
+Received: (qmail 28208 invoked by uid 550); 11 Aug 2015 16:24:11 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,40 +11,54 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 16126 invoked from network); 24 Jun 2017 14:14:45 -0000
-Message-ID: <20170624141442.GA29443@openwall.com>
-References: <20170619152843.GC7769@localhost.localdomain> <14558692.afnJ5aRU9J@wanheda> <20170621122526.GA32701@grsecurity.net> <20170621135727.GA12852@openwall.com> <20170621212742.GA28766@grsecurity.net> <90f1cd71-5c5d-83ae-23ce-9f12a9074bd3@redhat.com> <bc61fe61-7d1a-2263-252e-9b0196dfd7c2@redhat.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <bc61fe61-7d1a-2263-252e-9b0196dfd7c2@redhat.com>
-User-Agent: Mutt/1.4.2.3i
-Date: Sat, 24 Jun 2017 16:14:42 +0200
-From: Solar Designer <solar@openwall.com>
+Received: (qmail 28184 invoked from network); 11 Aug 2015 16:24:10 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
+         :content-type;
+        bh=HAUz7VAKAIGAC6QraB/KKNSEH7zpVgd7r7iHGMnW+zw=;
+        b=XLC3r7LdcXOObBYGscKPxIOJHSuEq9A/uhFOnhIUgxflqeGvzZbs5A1mPCIQ7zmbfj
+         Amjq+cr3egojltZ0wgJ/MqWft9oySSMhO1W3NGt80vjeWMuy4HW67KFvtblhqWO7xf0c
+         a3CEXLLCjf7rX151J8H5jiC3k4oCff5p05D77gMLUpTQIfLduF1rSgNNdcQBZdWjmu04
+         R92YY/DdjyHZRuBtmJwqckHFmNrhpqtOCHl920YhhLMJZLS3MT7IC1nou6sQnJPFk0/n
+         ZrOpN2salpjXRX+1lgoyARGyW8OGI3NCPgS1McM4QwhNPLEifNyi/sEUXNB/E7lGmQ9+
+         8QBw==
+X-Gm-Message-State: ALoCoQmKB7FwCAzjvS/LTH+pZwFnzIzXWNFTWWvEJIg/lvaAOkFRYyGR/+kDrdS8MdjmmDpofWFm
+MIME-Version: 1.0
+X-Received: by 10.170.154.67 with SMTP id v64mr28221702ykc.83.1439310239085;
+ Tue, 11 Aug 2015 09:23:59 -0700 (PDT)
+Message-ID: <CANO=Ty1ku4Hs-eFzCWK_K0=QXEZbtDFR4c--gBnoHPQi7Ko+XQ@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=001a113a9cb285efb6051d0b8786
+Date: Tue, 11 Aug 2015 10:23:59 -0600
+From: Kurt Seifried <kseifried@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Qualys Security Advisory - The Stack Clash
-To: oss-security@lists.openwall.com
+Subject: [oss-security] Terminal escape sequences - the new XSS for admins?
+To: oss-security <oss-security@lists.openwall.com>
 
-On Fri, Jun 23, 2017 at 08:02:36AM -0600, Kurt Seifried wrote:
-> OpenBSD made changes to the then known qsort() issue, and implemented
-> what was then thought to be the solution to the stack guard issue, the 1
-> megabyte guard pages. Subsequent discussion (without OpenBSD present,
-> due to them breaking the embargo) took place and as you know we ended up
-> with some pretty significant changes to glibc (I don't know if OpenBSD
-> has picked this group of fixes up or not).
+--001a113a9cb285efb6051d0b8786
+Content-Type: text/plain; charset=UTF-8
 
-I think Kurt's words "without OpenBSD present, due to them breaking the
-embargo" are Kurt's (and maybe others') impression only (and maybe these
-people's personal decision(s) not to inform OpenBSD going forward, as
-Kurt mentioned he did help ping OpenBSD this time when Qualys wasn't
-getting a response from them in early May).  No decision on the distros
-list at large was made to either inform or not inform OpenBSD of further
-issues.  As it happened, we did CC the discussion around Cron to Todd
-(although like I said in my posting about Cron in here, there was no
-point in having that minor issue embargoed in the first place).  The
-glibc issues and fixes are most likely irrelevant to *BSD libc's - in
-fact, we should have been more careful not to spam the full distros list
-with them (I think some sub-threads correctly went to linux-distros
-only, but some did not).
+So we've had a bunch of this stuff over the years:
 
-Alexander
+http://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=terminal+escape
+
+And now more recently:
+
+http://turbochaos.blogspot.ca/2014/08/journalctl-terminal-escape-injection.html
+https://bugzilla.redhat.com/show_bug.cgi?id=1084577
+
+And we have at least one more coming down the pipeline that's pretty
+widespread.
+
+Also I'm thinking of all those docker apps that log to STDOUT.
+
+So the basic TL;DR: please don't use really ancient terminal programs that
+are vulnerable to this stuff. It appears in testing that most (all?) of the
+Red Hat stuff is ok, but I can't speak for other vendors.
+
+--
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@redhat.com
+
+--001a113a9cb285efb6051d0b8786--
