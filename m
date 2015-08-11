@@ -1,4 +1,9 @@
-Received: (qmail 11838 invoked by uid 550); 7 Mar 2023 14:07:14 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1330" "Tuesday" "11" "August" "2015" "09:51:50" "+0200" "Adam Maris" "amaris@redhat.com" "<55C9A996.5090705@redhat.com>" "45" "Re: [oss-security] CVE for crypto_get_random() from libsrtp" nil nil nil "8" "2015081107:51:50" "[oss-security] CVE for crypto_get_random() from libsrtp" (number mark "        amaris@redha Aug 11   45/1330  " thread-indent "\"Re: [oss-security] CVE for crypto_get_random() from libsrtp\"\n") "<CACYkhxiBvVbV-Xg-gM7ZdJzR=xaR2ta_OA-K6Lvftxvo9j3=uA@mail.gmail.com>" ("<55BB6E77.1070007@redhat.com>" "<CACYkhxiBvVbV-Xg-gM7ZdJzR=xaR2ta_OA-K6Lvftxvo9j3=uA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 20161 invoked by uid 550); 11 Aug 2015 07:52:04 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,60 +11,65 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 18329 invoked from network); 7 Mar 2023 12:57:08 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Eric Covener <covener@apache.org>
-To: oss-security@lists.openwall.com
-Message-ID: <035a67dc-3b6a-3db1-1ad5-7fafac835c1f@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 07 Mar 2023 12:55:07 +0000
+Received: (qmail 20143 invoked from network); 11 Aug 2015 07:52:04 -0000
+References: <55BB6E77.1070007@redhat.com>
+ <CACYkhxiBvVbV-Xg-gM7ZdJzR=xaR2ta_OA-K6Lvftxvo9j3=uA@mail.gmail.com>
+Message-ID: <55C9A996.5090705@redhat.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.1.0
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2023-25690: Apache HTTP Server: HTTP request splitting with
- mod_rewrite and mod_proxy 
+In-Reply-To: <CACYkhxiBvVbV-Xg-gM7ZdJzR=xaR2ta_OA-K6Lvftxvo9j3=uA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.23
+Date: Tue, 11 Aug 2015 09:51:50 +0200
+From: Adam Maris <amaris@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] CVE for crypto_get_random() from libsrtp
+To: oss-security@lists.openwall.com
 
-Severity: important
+Hello,
 
-Description:
+The weakest method it provides uses no encryption at all, just HMAC-SHA1 
+with 80 bit authentication tag:
+http://srtp.sourcearchive.com/documentation/1.4.2.dfsg/group__SRTP_g94d0056e812802ac2920aa474bc5b59b.html
 
-Some mod_proxy configurations on Apache HTTP Server versions 2.4.0 through =
-2.4.55 allow a HTTP Request Smuggling attack.
+Unless CVE is assigned, we don't plan to ship any patch at the moment.
 
+Regards,
 
+On 01/08/15 11:31, Michael Samuel wrote:
+> Hi,
+>
+> I can't see any reference to it using 80 bits of random data - it looks
+> like it's AES-CTR mode.  Do you have further information on that?
+>
+> That being said, I can see quite a few ways it can go wrong - it's doesn't
+> appear thread-safe for a start.  Is it worth taking a closer look or are
+> you planning on shipping the patch anyway?
+>
+> Regards,
+>    Michael
+>
+> On 31 July 2015 at 22:47, Adam Maris <amaris@redhat.com> wrote:
+>
+>> Hello,
+>>
+>> I've got question whether this bug (
+>> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=793971) is CVE-worthy?
+>> Could it be classified as CWE-330: Use of Insufficiently Random Values?
+>>
+>> According to the SRTP documentation (
+>> http://srtp.sourcearchive.com/documentation/1.4.2.dfsg/group__SRTP_g1d4c228c6a58096dfab3cefbabd66f17.html),
+>> it provides 80 bits of random data, which is quite a borderline.
+>>
+>> Thanks.
+>>
+>> --
+>> Adam Maris / Red Hat Product Security
+>>
+>>
 
-
-Configurations are affected when mod_proxy is enabled along with some form =
-of RewriteRule
- or ProxyPassMatch in which a non-specific pattern matches
- some portion of the user-supplied request-target (URL) data and is then
- re-inserted into the proxied request-target using variable=20
-substitution. For example, something like:
-
-
-
-
-RewriteEngine on
-RewriteRule "^/here/(.*)" " http://example.com:8080/elsewhere?$1" http://ex=
-ample.com:8080/elsewhere ; [P]
-ProxyPassReverse /here/  http://example.com:8080/ http://example.com:8080/=
-=20
-
-
-Request splitting/smuggling could result in bypass of access controls in th=
-e proxy server, proxying unintended URLs to existing origin servers, and ca=
-che poisoning.
-
-Credit:
-
-Lars Krapf of Adobe (finder)
-
-References:
-
-https://httpd.apache.org/
-https://www.cve.org/CVERecord?id=3DCVE-2023-25690
-
-Timeline:
-
-2023-02-02: reported
+-- 
+Adam Maris / Red Hat Product Security
 
