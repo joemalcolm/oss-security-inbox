@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2254" "Friday" "18" "September" "2015" "12:58:26" "+1200" "Amos Jeffries" "squid3@treenet.co.nz" "<55FB61B2.8040204@treenet.co.nz>" "55" "[oss-security] CVE Request: Squid HTTP Proxy Denial of Service" nil nil nil "9" "2015091800:58:26" "[oss-security] CVE Request: Squid HTTP Proxy Denial of Service" (number mark "        squid3@treen Sep 18   55/2254  " thread-indent "\"[oss-security] CVE Request: Squid HTTP Proxy Denial of Service\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1183" "Tuesday" "11" "August" "2015" "16:13:48" "-0400" "Daniel Kahn Gillmor" "dkg@fifthhorseman.net" "<874mk5poqr.fsf@alice.fifthhorseman.net>" "30" "Re: [oss-security] Terminal escape sequences - the new XSS for admins?" nil nil nil "8" "2015081120:13:48" "[oss-security] Terminal escape sequences - the new XSS for admins?" (number mark "        dkg@fifthhor Aug 11   30/1183  " thread-indent "\"Re: [oss-security] Terminal escape sequences - the new XSS for admins?\"\n") "<CANO=Ty1ku4Hs-eFzCWK_K0=QXEZbtDFR4c--gBnoHPQi7Ko+XQ@mail.gmail.com>" ("<CANO=Ty1ku4Hs-eFzCWK_K0=QXEZbtDFR4c--gBnoHPQi7Ko+XQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 15805 invoked by uid 550); 18 Sep 2015 00:59:13 -0000
+Received: (qmail 13372 invoked by uid 550); 11 Aug 2015 20:14:11 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,72 +11,46 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 15753 invoked from network); 18 Sep 2015 00:59:12 -0000
-X-Enigmail-Draft-Status: N0110
-Message-ID: <55FB61B2.8040204@treenet.co.nz>
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101
- Thunderbird/38.2.0
+Received: (qmail 13353 invoked from network); 11 Aug 2015 20:14:10 -0000
+In-Reply-To: <CANO=Ty1ku4Hs-eFzCWK_K0=QXEZbtDFR4c--gBnoHPQi7Ko+XQ@mail.gmail.com>
+References: <CANO=Ty1ku4Hs-eFzCWK_K0=QXEZbtDFR4c--gBnoHPQi7Ko+XQ@mail.gmail.com>
+User-Agent: Notmuch/0.20.2 (http://notmuchmail.org) Emacs/24.5.1 (x86_64-pc-linux-gnu)
+Message-ID: <874mk5poqr.fsf@alice.fifthhorseman.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Date: Fri, 18 Sep 2015 12:58:26 +1200
-From: Amos Jeffries <squid3@treenet.co.nz>
+Content-Type: text/plain
+Date: Tue, 11 Aug 2015 16:13:48 -0400
+From: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE Request: Squid HTTP Proxy Denial of Service
-To: oss-security@lists.openwall.com, cve-assign@mitre.org
+Subject: Re: [oss-security] Terminal escape sequences - the new XSS for admins?
+To: Kurt Seifried <kseifried@redhat.com>, oss-security <oss-security@lists.openwall.com>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Tue 2015-08-11 12:23:59 -0400, Kurt Seifried wrote:
+> So we've had a bunch of this stuff over the years:
+>
+> http://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=terminal+escape
+>
+> And now more recently:
+>
+> http://turbochaos.blogspot.ca/2014/08/journalctl-terminal-escape-injection.html
+> https://bugzilla.redhat.com/show_bug.cgi?id=1084577
+>
+> And we have at least one more coming down the pipeline that's pretty
+> widespread.
+>
+> Also I'm thinking of all those docker apps that log to STDOUT.
+>
+> So the basic TL;DR: please don't use really ancient terminal programs that
+> are vulnerable to this stuff. It appears in testing that most (all?) of the
+> Red Hat stuff is ok, but I can't speak for other vendors.
 
-Hi,
- The TLS/SSL parser in the latest series of Squid HTTP Proxy has been
-found to have several bugs leading to Denial of Service possibilities.
-Can CVE be assigned as appropriate please?
+Do we have a catalog of terminal programs that are vulnerable, or of
+particularly dangerous escape sequences to test with each terminal
+emulator?  I'd be happy to try to organize a torches-and-pitchforks run
+through the debian archive if i know what to look for.
 
-Vulnerable versions are 3.5.0.1 to 3.5.8 (inclusive), which are built
-with OpenSSL and configured for "SSL-Bump" decryption.
+https://security.stackexchange.com/questions/56307/can-cat-ing-a-file-be-a-potential-security-risk
 
+has some good links and discussion from just last year but nothing
+systematized that i can see.
 
-Integer overflows can lead to invalid pointer math reading from random
-memory on some CPU architectures. In the best case this leads to wrong
-TLS extensiosn being used for the client, worst-case a crash of the
-proxy terminating all active transactions.
-Fixed by
-<http://www.squid-cache.org/Versions/v3/3.5/changesets/squid-3.5-13914.p
-atch>.
-
-Incorrect message size checks and assumptions about the existence of
-TLS extensions in the SSL/TLS handshake message can lead to very high
-CPU consumption (up to and including 'infinite loop' behaviour).
-Fixed by
-<http://www.squid-cache.org/Versions/v3/3.5/changesets/squid-3.5-13915.p
-atch>.
-
-
-The above can be triggered remotely. Though there is one layer of
-authorization applied before this processing to check that the client
-is allowed to use the proxy, that check is generally weak. MS Skype on
-Windows XP is known to trigger some of these.
-
-(Formal release with advisory will be coming in a few days. 3.5.9
-tarballs are available now, via FTP if the web mirrors ).
-
-Amos Jeffries
-Squid Software Foundation
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.22 (MingW32)
-
-iQIcBAEBAgAGBQJV+2F7AAoJEGvSOzfXE+nLdygQAI1SaDkmAic6RBAik92SaZsz
-fRizZC4y8ffnh70HZc9O3Z79sMmTD7q+HC/QKS0zSHSyzc+mDb4J9WjVfyr/DOJM
-MG1mr/QIWqqF4v+x+P1PEYmK68uHvuD4gqZZ+A/JQH1ZUt60OkRo4+wF3c8WukPG
-YUB6OTmAfPmE3W9Sp06mJ8irtzNQKibp6P+NBWSfjthxKTvmHKWp/MINZj3b3LBb
-n/QgRVYiHSeiHZTHJ0yLNIG+jcgBh68AVJZ5LpbHSfLGfQnAOmyuMdKmXdiMw0xL
-Qjb2g3sVU15WPgMQQvbSVI1W0Fla9WOhq1+XGtu+bUd82wx8P7J7Vpi/tA1dLERr
-lBir5CCZYXEp/WsFVkGnGCn5jV04CZ7kLACmlBIvXEWdKs1nUsIOTNCaGhfdpX2h
-KTejb//5L2zmTRE8e1dssfR1zO1nL8zTwujKXmWMX9QW09GlGkr/FNZEfvFwV1GN
-FaLII/QfH2YPKAuJCJevvXhozwTiKbbB6OG0VyGoMxcJoQ4TTbeXeXKqr/B1ax6t
-zeY5Tb5tETYSYRfKNbVisGC8j+dd1e/TklQxQvXZ8kP1ySyVSZ6cMkJlsQu3vFQ7
-b5kkVyfOgA8JOZ3KEd+LU48annxCcSINyFLSl8560Mgx5avXE5eCB40RprS1AgfL
-RBoy/To5OxWYq+vEGSXg
-=eltL
------END PGP SIGNATURE-----
+   --dkg
