@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1860" "Friday" "20" "November" "2020" "10:29:34" "+1100" "Daniel Axtens" "dja@axtens.net" "<20201119232934.366442-1-dja@axtens.net>" "41" "[oss-security] CVE-2020-4788: Speculation on incompletely validated data on IBM Power9" nil nil nil "11" "2020111923:29:34" "[oss-security] CVE-2020-4788: Speculation on incompletely validated data on IBM Power9" (number mark "U       dja@axtens.n Nov 20   41/1860  " thread-indent "\"[oss-security] CVE-2020-4788: Speculation on incompletely validated data on IBM Power9\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2020-4788: Speculation on incompletely validated data on IBM Power9" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3641" "Tuesday" "11" "August" "2015" "16:29:04" "-0400" "Steve Grubb" "sgrubb@redhat.com" "<4034525.BTXsUWy6Cb@x2>" "92" "Re: [oss-security] Terminal escape sequences - the new XSS for admins?" nil nil nil "8" "2015081120:29:04" "[oss-security] Terminal escape sequences - the new XSS for admins?" (number mark "        sgrubb@redha Aug 11   92/3641  " thread-indent "\"Re: [oss-security] Terminal escape sequences - the new XSS for admins?\"\n") "<874mk5poqr.fsf@alice.fifthhorseman.net>" ("<CANO=Ty1ku4Hs-eFzCWK_K0=QXEZbtDFR4c--gBnoHPQi7Ko+XQ@mail.gmail.com>" "<874mk5poqr.fsf@alice.fifthhorseman.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 9329 invoked by uid 550); 20 Nov 2020 08:11:57 -0000
+Received: (qmail 32070 invoked by uid 550); 11 Aug 2015 20:29:16 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,85 +11,113 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30350 invoked from network); 19 Nov 2020 23:29:51 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=axtens.net; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=7Hv50OTKof1ySLSgXKhbSDwPu63dc/Q2OYUYjDioqDk=;
-        b=K7IAO8/bWSn0BNaUx2CV0Adr4gHAQxYGdy13lz4Av9ecvYMOor+eJgmjUKEuSiR1U5
-         dKltGQ7TI5T0UfOOuy1HkRWRtlx+Z4AalngJHhvpUiwtGKhE3Lyy+RxD8brjetwwI2yl
-         QuF2wqPYK63qwaJM/+d3TYKDhV7WqYT68adMk=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=7Hv50OTKof1ySLSgXKhbSDwPu63dc/Q2OYUYjDioqDk=;
-        b=ExrA9eBVwRpgosFBK1vUyhKF1ghC4B08x4sO2JAyqKVKydwksiBSf33YVvQQmXNHHT
-         G6EH5Rhawe1MMoQKZhFZiPKJSkX98CCKxegtoIZ1O0IGrdYpxNeEg0/O/DCJ4nArQoz9
-         LS+lwzkJUKbf3SQDr4bpaDBkatEZ1m/WIcZtA+6PEjJ1CtRZtOAJTJawBZPHGWkcweYe
-         MZSa1Y5YJ7pWqdzjsl64Zd7kjBAYK2Fi7NPza2VLHaYqQnnqMd8G88oDSWZmEwealbzr
-         HR5Qab+dAGl4AJaYHqvE6ygBzXgrc8fBmDWxQeIrPqs0lZm5I8d8QAfBdpd37E1DHm+P
-         qxVA==
-X-Gm-Message-State: AOAM530gt62lUVC6/TB0dt0W8ARIFZ2i38v7bSOoG96GnXVZ+QNeCxgu
-	r6MvwhqhdzMaaBpdOwhyqa5NkWM5FElSBA==
-X-Google-Smtp-Source: ABdhPJx6B0ZhBVMY7by5UNT8Nhy6OaoT1ETK0GrbPUqqrYS2zyj6Gf2zPTLhI/U5sJut53xbfctwcg==
-X-Received: by 2002:a17:90a:aa09:: with SMTP id k9mr7300838pjq.197.1605828578550;
-        Thu, 19 Nov 2020 15:29:38 -0800 (PST)
-From: Daniel Axtens <dja@axtens.net>
-To: oss-security@lists.openwall.com
-Cc: cmr@informatik.wtf,
-	ruscur@russell.cc,
-	npiggin@gmail.com,
-	mpe@ellerman.id.au,
-	spoorts2@in.ibm.com,
-	dja@axtens.net
-Date: Fri, 20 Nov 2020 10:29:34 +1100
-Message-Id: <20201119232934.366442-1-dja@axtens.net>
-X-Mailer: git-send-email 2.25.1
+Received: (qmail 32035 invoked from network); 11 Aug 2015 20:29:15 -0000
+Message-ID: <4034525.BTXsUWy6Cb@x2>
+Organization: Red Hat
+User-Agent: KMail/4.14.9 (Linux/4.1.3-201.fc22.x86_64; KDE/4.14.9; x86_64; ; )
+In-Reply-To: <874mk5poqr.fsf@alice.fifthhorseman.net>
+References: <CANO=Ty1ku4Hs-eFzCWK_K0=QXEZbtDFR4c--gBnoHPQi7Ko+XQ@mail.gmail.com> <874mk5poqr.fsf@alice.fifthhorseman.net>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: [oss-security] CVE-2020-4788: Speculation on incompletely validated data on IBM Power9
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.27
+Cc: Daniel Kahn Gillmor <dkg@fifthhorseman.net>,
+        Kurt Seifried <kseifried@redhat.com>
+Date: Tue, 11 Aug 2015 16:29:04 -0400
+From: Steve Grubb <sgrubb@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Terminal escape sequences - the new XSS for admins?
+To: oss-security@lists.openwall.com
 
-Hi,
+On Tuesday, August 11, 2015 04:13:48 PM Daniel Kahn Gillmor wrote:
+> On Tue 2015-08-11 12:23:59 -0400, Kurt Seifried wrote:
+> > So we've had a bunch of this stuff over the years:
+> > 
+> > http://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=terminal+escape
+> > 
+> > And now more recently:
+> > 
+> > http://turbochaos.blogspot.ca/2014/08/journalctl-terminal-escape-injection
+> > .html https://bugzilla.redhat.com/show_bug.cgi?id=1084577
+> > 
+> > And we have at least one more coming down the pipeline that's pretty
+> > widespread.
+> > 
+> > Also I'm thinking of all those docker apps that log to STDOUT.
+> > 
+> > So the basic TL;DR: please don't use really ancient terminal programs that
+> > are vulnerable to this stuff. It appears in testing that most (all?) of
+> > the
+> > Red Hat stuff is ok, but I can't speak for other vendors.
+> 
+> Do we have a catalog of terminal programs that are vulnerable, or of
+> particularly dangerous escape sequences to test with each terminal
+> emulator?
 
-IBM Power9 processors can speculatively operate on data in the L1
-cache before it has been completely validated, via a way-prediction
-mechanism. It is not possible for an attacker to determine the
-contents of impermissible memory using this method, since these
-systems implement a combination of hardware and software security
-measures to prevent scenarios where protected data could be leaked.
+echo $'\e[30m'   - turns foreground black (used to trick people by hiding 
+text)
+echo $'\e]2;ls -al\a' - set window title to 'ls -al'
+echo $'\e[21t' - print the window title to the command prompt. This is the one 
+to watch out for.
 
-However these measures don't address the scenario where an attacker
-induces the operating system to speculatively execute instructions
-using data that the attacker controls. This can be used for example to
-speculatively bypass "kernel user access prevention" techniques, as
-discovered by Anthony Steinhauser of Google's Safeside Project. This
-is not an attack by itself, but there is a possibility it could be
-used in conjunction with side-channels or other weaknesses in the
-privileged code to construct an attack.
+In my survey recently, Some emulators could set the window title; none of them 
+supported reading the window title back to the command prompt. If you find one 
+that does, it is one that is at risk.
 
-This issue can be mitigated by flushing the L1 cache between privilege
-boundaries of concern.
+Also note that an attempt to foil or make it hard to set window titles is in 
+bashrc under something called PROMPT_COMMAND. You may have to export 
+PROMPT_COMMAND="" and then start a new shell to launch the terminal windows.
 
-Patches to fix this have been sent to the linuxppc-dev mailing list:
-https://lore.kernel.org/linuxppc-dev/20201119231333.361771-1-dja@axtens.net/T/#me4f6a44748747e3327d27cd95200bf7a87486ffc
-https://patchwork.ozlabs.org/project/linuxppc-dev/list/?series=215657&state=%2A&archive=both
+In my survey over the weekend, I used Fedora 22 and tested the following:
 
-Backports to supported stable trees are currently being sent to the
-stable mailing list.
+xterm - not vulnerable
+gnome-terminal - not vulnerable
+konsole - not vulnerable
+terminator - not vulnerable.
+qterminal - not vulnerable (Undecodable sequence: \001b(hex)[21t)
+Eterm - not vulnerable
+rxvt - not vulnerable
+st - not vulnerable (erresc: unknown csi ESC[21t)
+lilyterm - not vulnerable
+sakura - not vulnerable
+caja-terminal - not vulnerable
+xfce4-terminal - not vulnerable
+roxterm - not vulnerable
+mate-terminal - not vulnerable
+termit - not vulnerable
 
-Fixes for AIX and IBM i are also available from IBM.
+A lot were based on the vte package. So, I dug into the vte package. In the 
+file, vteseq.c, is this:
 
-CVE-2020-4788 has been assigned. Further details, including the CVSS
-score, will be available at
-https://exchange.xforce.ibmcloud.com/vulnerabilities/CVE-2020-4788
+                case 21:
+                        /* Report a static window title, since the real
+                           window title should NEVER be reported, as it
+                           creates a security vulnerability.  See
+                           http://marc.info/?l=bugtraq&m=104612710031920&w=2
+                           and CVE-2003-0070. */
+                        _vte_debug_print(VTE_DEBUG_PARSE,
+                                        "Reporting fake window title.\n");
+                        /* never use terminal->window_title here! */
+                        g_snprintf (buf, sizeof (buf),
+                                    _VTE_CAP_OSC "lTerminal" _VTE_CAP_ST);
+                        vte_terminal_feed_child(terminal, buf, -1);
+                        break;
 
-Thanks to Nick Piggin, Russell Currey, Christopher M. Riedl, Michael
-Ellerman and Spoorthy S for their work in developing, optimising,
-testing and backporting these fixes, and to the many others who helped
-behind the scenes.
+At this point, I was convinced that most major emulators are safe. That 
+said...there are all the ones I didn't check including older ones. The older 
+ones are likely to be the ones I'd be most concerned about.
 
-Kind regards,
-Daniel Axtens
+-Steve
+
+
+> I'd be happy to try to organize a torches-and-pitchforks run
+> through the debian archive if i know what to look for.
+> 
+> https://security.stackexchange.com/questions/56307/can-cat-ing-a-file-be-a-p
+> otential-security-risk
+> 
+> has some good links and discussion from just last year but nothing
+> systematized that i can see.
+> 
+>    --dkg
+
