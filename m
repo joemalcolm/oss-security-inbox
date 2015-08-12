@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2929" "Saturday" "1" "April" "2017" "22:33:15" "+0200" "Solar Designer" "solar@openwall.com" "<20170401203314.GA12852@openwall.com>" "65" "Re: [oss-security] CVE-2017-7184: kernel: Local privilege escalation in XFRM framework" "^Date:" nil nil "4" "2017040120:33:15" "[oss-security] CVE-2017-7184: kernel: Local privilege escalation in XFRM framework" (number mark "        solar@openwa Apr  1   65/2929  " thread-indent "\"Re: [oss-security] CVE-2017-7184: kernel: Local privilege escalation in XFRM framework\"\n") "<20170401182736.GA12311@openwall.com>" ("<f7bff499-47e8-c5f2-e867-eb7f7bf329d8@canonical.com>" "<20170401182736.GA12311@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5717" "Wednesday" "12" "August" "2015" "17:18:47" "+0300" "Solar Designer" "solar@openwall.com" "<20150812141846.GA8647@openwall.com>" "109" "Re: [oss-security] CVE request - Processor side channels using out of order execution" nil nil nil "8" "2015081214:18:47" "[oss-security] CVE request - Processor side channels using out of order execution" (number mark "U       solar@openwa Aug 12  109/5717  " thread-indent "\"Re: [oss-security] CVE request - Processor side channels using out of order execution\"\n") "<9BA73C86-0475-4DBD-937E-AD20DD41C622@trailofbits.com>" ("<9BA73C86-0475-4DBD-937E-AD20DD41C622@trailofbits.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 18142 invoked by uid 550); 1 Apr 2017 20:34:16 -0000
+Received: (qmail 25724 invoked by uid 550); 12 Aug 2015 14:19:09 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,82 +11,126 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 17813 invoked from network); 1 Apr 2017 20:33:38 -0000
-Message-ID: <20170401203314.GA12852@openwall.com>
-References: <f7bff499-47e8-c5f2-e867-eb7f7bf329d8@canonical.com> <20170401182736.GA12311@openwall.com>
+Received: (qmail 25703 invoked from network); 12 Aug 2015 14:19:09 -0000
+Message-ID: <20150812141846.GA8647@openwall.com>
+References: <9BA73C86-0475-4DBD-937E-AD20DD41C622@trailofbits.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20170401182736.GA12311@openwall.com>
+In-Reply-To: <9BA73C86-0475-4DBD-937E-AD20DD41C622@trailofbits.com>
 User-Agent: Mutt/1.4.2.3i
-Date: Sat, 1 Apr 2017 22:33:15 +0200
+Date: Wed, 12 Aug 2015 17:18:47 +0300
 From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE-2017-7184: kernel: Local privilege escalation in XFRM framework
+Subject: Re: [oss-security] CVE request - Processor side channels using out of order execution
 To: oss-security@lists.openwall.com
 
-On Sat, Apr 01, 2017 at 08:27:36PM +0200, Solar Designer wrote:
-> I address this message primarily to Red Hat, but I'd like us to discuss
-> it in public so that others can benefit from this information as well.
-> 
-> On Wed, Mar 29, 2017 at 04:43:28PM -0500, Tyler Hicks wrote:
-> > A security issue was reported by ZDI, on behalf of Chaitin Security
-> > Research Lab, against the Linux kernel in Ubuntu. It also affected the
-> > upstream kernel.
-> > 
-> > Chaitin Security Research Lab discovered that xfrm_replay_verify_len(),
-> > as called by xfrm_new_ae(), did not verify that the user-specified
-> > replay_window was within the replay state buffer.
-> > 
-> > This allowed for out-of-bounds reads and writes of kernel memory.
-> > Chaitin Security showed that this can lead to local privilege escalation
-> > by using user namespaces in order to configure XFRM. XFRM configuration
-> > requires CAP_NET_ADMIN so this issue is mitigated in kernels which do
-> > not enable user namespaces by default.
-> > 
-> > Fixes:
-> > - https://git.kernel.org/linus/677e806da4d916052585301785d847c3b3e6186a
-> > - https://git.kernel.org/linus/f843ee6dd019bcece3e74e76ad9df0155655d0df
-> 
-> Red Hat claims that all of RHEL5, RHEL6, and RHEL7 are affected,
-> although the issue is mitigated by it requiring CAP_NET_ADMIN and/or
-> unprivileged user namespaces, neither of which are available by default:
-> 
-> https://access.redhat.com/security/cve/cve-2017-7184
+Hi Sophia,
 
-Bugzilla, including the same statement in a comment, but without
-explanation on how this statement was arrived at:
+On Tue, Aug 11, 2015 at 09:35:26PM -0400, sophia wrote:
+> Past discussion of this includes: http://www.openwall.com/lists/oss-security/2015/08/11/16
+> 
+> Details of attack:
+> https://blog.trailofbits.com/2015/07/21/hardware-side-channels-in-the-cloud/
+[...]
+> Brief Description: 
+> Simultaneous multi-threading on current processors allows for one process to exploit out-of-order execution optimizations to leak information from co-executed processes. Conversely, this same setup allows for one process to force an increase or a decrease in out-of-order-execution optimizations in the other process, thereby effecting its computed values and control flow.
 
-https://bugzilla.redhat.com/show_bug.cgi?id=1435153
+First of all, this is fine work.  Thank you for spending your time on it.
 
-> RHEL7 does indeed contain the vulnerable upstream code, but RHEL5 and
-> RHEL6 don't - at least not the same code that the commits referenced
-> above patch.  This leaves me with two other interpretations of Red Hat's
-> analysis:
-> 
-> 1. Similar issues existed for other inputs (not ESN) and were silently
-> fixed some time between RHEL6 and RHEL7 (perhaps in equivalent upstream
-> revisions).  Maybe with the current renewed attention, Red Hat realized
-> that older fixes were missed, which are now finally understood as
-> security-relevant.  The code does look to me like this may be the case,
-> but I didn't spend much time on its analysis yet.
-> 
-> -OR-
-> 
-> 2. Red Hat's analysis is not correct, and RHEL5 and RHEL6 are not
-> affected at all.
-> 
-> Which is it, or something else I haven't thought of?
-> 
-> While for RHEL itself this is almost a non-issue either way due to the
-> mitigations mentioned above, better understanding is required for other
-> distros where such mitigations might not fully apply (such as along with
-> use of containers, where container root would have CAP_NET_ADMIN).
-> 
-> And while I am at it, kudos to Red Hat for patching out unprivileged
-> user namespaces in RHEL7!
-> 
-> /* While user namespaces remain in tech preview disable them */
-> static bool enable_user_ns_creation;
+Then, can we try to summarize what the novelty in your research is?
+
+Here's my take at it: the novelty is primarily in use of other than
+direct timing measurements on the receiving or attacker end (instead,
+you observe memory reordering, even though it's also dependent on
+timings internally), and secondarily in targeting out-of-order execution
+rather than caching.  (Yet another thing to target, and one I considered
+and briefly played with on P4 with HT in 2005 when I saw Colin
+Percival's paper, would be utilization of different execution units
+within a core, which is measurable from another hardware thread running
+on the same core.  Surprisingly, I am still unaware of published
+research on that.)
+
+That's great.  However, to figure out whether this poses a new
+vulnerability (rather than "merely" a novel exploitation technique for
+what were already considered vulnerabilities), we may want to determine
+whether there (might) exist programs that are vulnerable to your attacks
+yet invulnerable to previously known attacks.  Do these exist, and what
+are they (or what would they be like)?
+
+Of the 7 attack types you listed in your thesis, 2 through 7 don't
+appear to be limited to your novel attack technique.  They are also
+do-able by cache timings on the same hardware.  Do you agree?  Also,
+for most systems the ability to deliberately construct a covert channel
+between two processes or VMs isn't considered a vulnerability.  The
+system designers would need to specifically claim to prevent covert
+channels in order for this to become a vulnerability.
+
+As to attack type 1, cryptographic key theft, I'd be interested in more
+detail on it.  Am I correct that this attack relies on the victim
+program doing secret-dependent branching or at least secret-dependent
+indexing (in the latter case, out-of-order execution might be affected
+by caching and by cache bank conflicts)?  If so, that same program
+might be susceptible to a cache timing attack on its instruction fetches
+(as well as execution unit utilization attack, but like I mentioned this
+is surprisingly lacking published research), and in the latter case also
+to the classic cache timing attack.  Now, "might be" is not same as
+"always is", so there might be cases where your attack is the only known
+one that works.  (For example, I think secret-dependent branching within
+one cache line _might_ be unrealistic to attack as such, but might be
+exploitable via its effect on out-of-order execution and memory
+reordering, or via execution unit utilization.)
+
+Do I understand correctly that for attack type 1, there should be at
+least 3 concurrent threads: the victim and two attacker threads (these
+two would be performing reorder-"unsafe" memory operations between
+themselves)?  And that at least the victim and one of the attacker
+threads would need to be scheduled onto the same core (as different
+hardware threads)?
+
+Would you release the code, please?  So far, I only saw your receiver.py
+and sender.py, which look like high-level wrappers for a demo, but lack
+the substance.
+
+Another aspect is whether "the issue" (the focus of your research) is
+realistically fixable as a vulnerability anywhere.  I don't care about
+CVEs much (and we'll see what MITRE says on this), but FWIW Colin
+Percival's 2005 work did receive a CVE ID:
+
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2005-0109
+
+and there were a handful of security advisories, such as:
+
+https://www.freebsd.org/security/advisories/FreeBSD-SA-05:09.htt.asc
+
+At the time, only the workaround of disabling HT was suggested, but e.g.
+the FreeBSD advisory also said:
+
+"NOTE:  It is expected that future work in cryptographic libraries and
+operating system schedulers may remedy this problem for many or most
+users, without necessitating the disabling of Hyper-Threading
+Technology.  Future advisories will address individual cases."
+
+and we've since seen such work (changes to crypto libraries and
+programs are practical and already deployed, but changes to schedulers
+appear to be more recent and only academic - granting temporary
+exclusive use of CPU cores to programs processing sensitive data).
+
+When a particular crypto library or program was found to be vulnerable
+to cache timing side-channels, this was generally treated as a separate
+vulnerability (and getting its own CVE ID).
+
+I guess there's probably a 100% overlap between vulnerabilities that
+would be treated as potentially susceptible to cache timing and to
+out-of-order / memory reordering attacks, even if in practice the
+likelihood of exploitation via these methods might vary drastically.
+(This guess is based on my current understanding as described above.)
+
+Finally, arguably, systems with any shared resources are knowingly
+taking a performance/$ vs. security tradeoff.  It is very important for
+us to have an idea just how bad (or not) the security impact is in
+practice, so your research is a step in the right direction.
+
+Thanks again for working on this.
 
 Alexander
