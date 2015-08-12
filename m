@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3663" "Tuesday" "26" "October" "2021" "08:59:53" "-0700" "Anthony Liguori" "aliguori@amazon.com" nil "78" "RE: [oss-security] CVE-2021-3760: Linux kernel: Use-After-Free vulnerability of ndev->rf_conn_info object" nil nil nil "10" nil nil (number mark "U       aliguori@ama Oct 26   78/3663  " thread-indent "\"RE: [oss-security] CVE-2021-3760: Linux kernel: Use-After-Free vulnerability of ndev->rf_conn_info object\"\n") nil nil nil nil nil nil nil nil nil "RE: [oss-security] CVE-2021-3760: Linux kernel: Use-After-Free vulnerability of ndev->rf_conn_info object" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5482" "Wednesday" "12" "August" "2015" "18:52:58" "+0000" "Jason Buberel" "jbuberel@google.com" "<CA+s3sfHPVyVzeZ2brBmS0Zpg+yM7fbdqZ=KAvzNHsG3-VeLzzQ@mail.gmail.com>" "155" "Re: [oss-security] Re: CVE Request - Go net/http library - HTTP smuggling" nil nil nil "8" "2015081218:52:58" "[oss-security] Re: CVE Request - Go net/http library - HTTP smuggling" (number mark "        jbuberel@goo Aug 12  155/5482  " thread-indent "\"Re: [oss-security] Re: CVE Request - Go net/http library - HTTP smuggling\"\n") "<CA+s3sfGFOw7y=t03t6jYWNWxHsN5nQO0hjKrR-HBo6OKvODMzw@mail.gmail.com>" ("<CA+s3sfHhUWzMvW5FikvWnCq6jqt6ZQFnk++zZrr3P9V3WVWeAg@mail.gmail.com>" "<20150805163639.18AE06CC065@smtpvmsrv1.mitre.org>" "<87io8s23uc.fsf@redhat.com>" "<CA+s3sfGGv2dyqvp2YovqTrhe2jti1JALhr2K4L2_HLAg=h0q1g@mail.gmail.com>" "<CA+s3sfE-SR=6UujvBedAZiRcB3xSBx4V7HHYDLtk1-JHqozPCg@mail.gmail.com>" "<CA+s3sfGFOw7y=t03t6jYWNWxHsN5nQO0hjKrR-HBo6OKvODMzw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 7749 invoked by uid 550); 26 Oct 2021 16:16:32 -0000
+Received: (qmail 25617 invoked by uid 550); 12 Aug 2015 18:53:19 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,108 +11,198 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28305 invoked from network); 26 Oct 2021 16:00:08 -0000
+Received: (qmail 24575 invoked from network); 12 Aug 2015 18:53:19 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
-  t=1635264008; x=1666800008;
-  h=from:to:cc:in-reply-to:references:date:message-id:
-   mime-version:subject;
-  bh=tRhupi8pzzS5XQO1ii3AEUEGx8A9aLs/ZHd4ehPHwcA=;
-  b=WVFmsUMp5mYikA1swQKo6/9fd1vPEFauB/Pa4if3wJlkWpkUWd7jJOv4
-   /tey3dL7EYCbcuwnWlaXpP3pqWNsDy8JWqqKUVoHoaGIMyzpV+84ntTZn
-   3GgbaaHGIKB7hRnuqSbZLNph/EZ5HXifKksFlPAdoXHzKUFiH/TG0OjrY
-   I=;
-X-IronPort-AV: E=Sophos;i="5.87,184,1631577600"; 
-   d="scan'208";a="169760037"
-From: Anthony Liguori <aliguori@amazon.com>
-To: Solar Designer <solar@openwall.com>, <oss-security@lists.openwall.com>
-CC: Lin Horse <kylin.formalin@gmail.com>
-In-Reply-To: <20211026115947.GA29482@openwall.com>
-References: <CAJjojJsrNyz+ML+Q81JB9iF2-DTKfAEkUP1cSTgyvCL6NebhzQ@mail.gmail.com>
- <20211026115947.GA29482@openwall.com>
-Date: Tue, 26 Oct 2021 08:59:53 -0700
-Message-ID: <pwfk72ee87ixom.fsf@ua5189936247a55.ant.amazon.com>
+        d=google.com; s=20120113;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :content-type;
+        bh=LKPe9/wRNRK1PtgIFB8sq2uxDdhsABCqWU+8ExYS9MM=;
+        b=MYYai0CygWIMSV0fS6D2/RTC/+ff3C8/ZO7/GpgQKafpUFW0SLtZhMhpWLfBFaAyy5
+         4ny2UaA7ad70rXdbjTfAbf9NcB1dONOxhP3ThHWpK42c6d3qz8yPnMWhwTcYCySd8IO8
+         6j3RMdd7ZZDzAARFtIyPF4NPfYHpNVMa9p2J+81xXNqqJU4apFTP0PlfI/24UwJQF8Hs
+         KgjNAumaf2KMUbSujQqJV7Tq8Y04vYZL9isHHXA4VESDjNa+MuB/mcEg2MgktgP1RzYl
+         S529qjjXFJsR+JYefRKff5DVZhdjhmLLAWHNsPyyZVkGHDwHr83PByC58mRJEF+NF1vL
+         zBow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:content-type;
+        bh=LKPe9/wRNRK1PtgIFB8sq2uxDdhsABCqWU+8ExYS9MM=;
+        b=cEpYTekALsL5bHYr8vxjQCQfUdCP/6y+HtIbbxVk5DIdf3noFf/S42irMjq387yNYY
+         Uh+8pOQgRu4a7jKhGfwR18bayT3Oaw0vhdfv17XLX5MnqnOlw2xx4Uc5FPshK6bjlERZ
+         tlC0H/ixWjnFMgGwCXBeQZhAh1PAkbmZrxwycSNLNTjIQfOjbxohBcybSiqwMKIdEra+
+         cvm+7oHanfiG6FTGQui67DxtZghmkxAWVzviLAAod+7vA8dB9lkgke5/36cUpF46wyRc
+         2YCMUxH5OrcwmAXjXc6oNkSkuqsn6w/6QgR7lz0uo1KxBD1WQ75HJEMu1+JZQIuDNZ71
+         vqRQ==
+X-Gm-Message-State: ALoCoQmqMWZXBoIOlVlSrxS8T+1B7MSsZKHSqsLMzzWypsaN7lOG/NIuwFnbJH0QXggDiOh4QKGO
+X-Received: by 10.194.87.102 with SMTP id w6mr68172198wjz.111.1439405588040;
+ Wed, 12 Aug 2015 11:53:08 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-Subject: RE: [oss-security] CVE-2021-3760: Linux kernel: Use-After-Free vulnerability
- of ndev->rf_conn_info object
+References: <CA+s3sfHhUWzMvW5FikvWnCq6jqt6ZQFnk++zZrr3P9V3WVWeAg@mail.gmail.com>
+ <20150805163639.18AE06CC065@smtpvmsrv1.mitre.org> <87io8s23uc.fsf@redhat.com>
+ <CA+s3sfGGv2dyqvp2YovqTrhe2jti1JALhr2K4L2_HLAg=h0q1g@mail.gmail.com>
+ <CA+s3sfE-SR=6UujvBedAZiRcB3xSBx4V7HHYDLtk1-JHqozPCg@mail.gmail.com> <CA+s3sfGFOw7y=t03t6jYWNWxHsN5nQO0hjKrR-HBo6OKvODMzw@mail.gmail.com>
+In-Reply-To: <CA+s3sfGFOw7y=t03t6jYWNWxHsN5nQO0hjKrR-HBo6OKvODMzw@mail.gmail.com>
+Message-ID: <CA+s3sfHPVyVzeZ2brBmS0Zpg+yM7fbdqZ=KAvzNHsG3-VeLzzQ@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=047d7bf19850c38eaf051d21ba51
+Date: Wed, 12 Aug 2015 18:52:58 +0000
+From: Jason Buberel <jbuberel@google.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Re: CVE Request - Go net/http library - HTTP smuggling
+To: Martin Prpic <mprpic@redhat.com>, oss-security@lists.openwall.com
 
-Solar Designer <solar@openwall.com> writes:
+--047d7bf19850c38eaf051d21ba51
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-> CAUTION: This email originated from outside of the organization. Do not click links or open attachments unless you can confirm the sender and know the content is safe.
+Agreed - that will be included in 1.4.3.
+
+-jason
+
+On Wed, Aug 12, 2015 at 8:34 AM Jason Buberel <jbuberel@google.com> wrote:
+
+> Having not heard back, we're planning to start preparing a 1.4.3 release
+> to include the following patches:
 >
+> CVE-2015-5739 <https://security-tracker.debian.org/tracker/CVE-2015-5739>
+> "Content Length" treated as valid header:
+> 117ddcb83d7f42d6aa72241240af99ded81118e9
+> <https://github.com/golang/go/commit/117ddcb83d7f42d6aa72241240af99ded811=
+18e9>
 >
+> CVE-2015-5740 <https://security-tracker.debian.org/tracker/CVE-2015-5740>
+> Double content-length headers does not return 400 error:
+> 300d9a21583e7cf0149a778a0611e76ff7c6680f
+> <https://github.com/golang/go/commit/300d9a21583e7cf0149a778a0611e76ff7c6=
+680f>
 >
-> On Tue, Oct 26, 2021 at 02:37:20PM +0800, Lin Horse wrote:
->> 2021-09-01 Report to security and linux-distro
->> 2021-09-01 CVE-2021-3760 assigned
->> 2021-10-26 patch upstream
+> CVE-2015-5741 <https://security-tracker.debian.org/tracker/CVE-2015-5741>
+> Additional hardening, not sending Content-Length w/Transfer-Encoding,
+> Closing connections:
+> 300d9a21583e7cf0149a778a0611e76ff7c6680f
+> <https://github.com/golang/go/commit/300d9a21583e7cf0149a778a0611e76ff7c6=
+680f>
+> I0bf18006d7d8f6537529823fc450f2e2bdb7c18e
+> <https://go-review.googlesource.com/#/q/I0bf18006d7d8f6537529823fc450f2e2=
+bdb7c18e>
+> I077eb0b8dff35c5d5534ee5f6386127c9954bd58
+> <https://go-review.googlesource.com/#/q/I077eb0b8dff35c5d5534ee5f6386127c=
+9954bd58>
+>
+> -jason
+>
+> On Mon, Aug 10, 2015 at 1:34 PM Jason Buberel <jbuberel@google.com> wrote:
+>
+>> Any updates fro the cve-assigners on this 4th item?
 >>
->> Sorry for the delay of this report T.T
->
-> Ouch.  Let's use this opportunity to learn from the mishandling of this
-> issue and avoid that for other issues.  Many things went wrong here:
->
-> 1. The original notification by Lin to linux-distros did include "I'd
-> like to ask for 14 days of the embargo", which is OK'ish, but ideally
-> such messages should include the proposed public disclosure date/time -
-> and that's what the instructions ask for.  When it's just "N days", I
-> guess people think "that's OK'ish" and move on.  When it's a specific
-> date/time, it's easier for everyone to notice it approaching - not only
-> for people specifically tasked with that.  That's just a psychological
-> detail that I guess nevertheless statistically affects the outcomes.
->
-> So I think that the distros tasked with reviewing initial notifications
-> should insist on the actual date/time being present in there, or add it
-> on their own in an immediate follow-up.  Those distros currently are
-> Oracle and Wind River.  I'd appreciate them confirming that they accept
-> this clarification.
->
-> "Promptly review new issue reports for meeting the list's requirements
-> and confirm receipt of the report and, when necessary, inform the
-> reporter of any issues with their report (e.g., obviously not actionable
-> by the distros) and request and/or propose any required yet missing
-> information (most notably, a tentative public disclosure date/time) -
-> primary: Oracle, backup: Wind River"
->
-> 2. While Lin's original message to linux-distros included a "SUGGESTED
-> FIX" section (with a patch in it) and "I will do my best to work with
-> the developer on fixing this", no further messages on a fix were sent to
-> linux-distros.  Lin, if you did in fact work with upstream on this, you
-> should have kept linux-distros aware of the progress, and especially of
-> the fix getting to public Linux kernel mailing lists or public commits,
-> as that ends the embargo.
->
-> Further, distros failed to handle the corresponding "contributing back"
-> tasks.  There was no activity by Gentoo lately at all, and while there
-> is recent helpful activity by Amazon, they didn't act this time.
->
-> "Stay on top of issues to ensure progress is being made, remind others
-> when there's no apparent progress, as well as when the public disclosure
-> date for an issue is approaching and when it's finally reached (unless
-> the reporter beats you to it by making their mandatory posting to
-> oss-security first) - primary: Gentoo, backup: Amazon
+>>
+>> On Thu, Aug 6, 2015 at 7:30 AM Jason Buberel <jbuberel@google.com> wrote:
+>>
+>>> Martin,
+>>>
+>>> We agree that that issue should be included in a 1.4.3 release under a
+>>> 4th CVE ID. In addition, we would also like to include:
+>>>
+>>> https://go-review.googlesource.com/#/c/12865/
+>>>
+>>> Which addresses the very closely related issue:
+>>>
+>>> https://golang.org/issue/11930
+>>>
+>>> ...under the same (4th, not yet assigned) CVE ID.
+>>>
+>>> -jason
+>>>
+>>> On Thu, Aug 6, 2015 at 1:55 AM Martin Prpic <mprpic@redhat.com> wrote:
+>>>
+>>>> Hi, this looks like it needs a CVE as well:
+>>>>
+>>>>
+>>>> https://github.com/golang/go/commit/26049f6f9171d1190f3bbe05ec304845cf=
+e6399f
+>>>> https://github.com/golang/go/issues/12027
+>>>>
+>>>> Can you please assign one? Thank you!
+>>>>
+>>>> --
+>>>> Martin Prpi=C4=8D / Red Hat Product Security
+>>>>
+>>>>
+>>>> cve-assign@mitre.org writes:
+>>>>
+>>>> > -----BEGIN PGP SIGNED MESSAGE-----
+>>>> > Hash: SHA256
+>>>> >
+>>>> >>
+>>>> https://github.com/golang/go/commit/117ddcb83d7f42d6aa72241240af99ded8=
+1118e9
+>>>> >>
+>>>> >> * Invalid headers are parsed as valid headers (like "Content
+>>>> Length:" with a
+>>>> >> space in the middle)
+>>>> >
+>>>> > For purposes of CVE assignments, we feel that this needs to be
+>>>> > categorized separately from the other parts of the report. The prima=
+ry
+>>>> > factor is that there are different sets of affected versions. This
+>>>> > behavior apparently was not present in all versions of Go: it was
+>>>> > added in February 2012. Also, it is not really an error in determini=
+ng
+>>>> > the semantics of a set of headers; it's a security-relevant error in
+>>>> > interpretation of the syntax of an individual header.
+>>>> >
+>>>> > Use CVE-2015-5739.
+>>>> >
+>>>> >
+>>>> >>
+>>>> https://github.com/golang/go/commit/300d9a21583e7cf0149a778a0611e76ff7=
+c6680f
+>>>> >>
+>>>> >> * Double Content-length headers in a request does not generate a 400
+>>>> error,
+>>>> >> the second Content-length is ignored
+>>>> >
+>>>> > Use CVE-2015-5740 for the reporter's finding of a security-relevant
+>>>> > RFC 7230 3.3.3 4 violation ("MUST respond with a 400 (Bad Request)
+>>>> > status code").
+>>>> >
+>>>> >
+>>>> > 300d9a21583e7cf0149a778a0611e76ff7c6680f also has code changes that
+>>>> > were not mentioned in your "as provided by the reporter" section. Our
+>>>> > interpretation is that there were separate internal discoveries of
+>>>> > other security-relevant RFC 7230 violations, such as "MUST NOT send a
+>>>> > Content-Length header field in any message that contains a
+>>>> > Transfer-Encoding header field." Use CVE-2015-5741 for one or more
+>>>> > internal discoveries reflected in
+>>>> > 300d9a21583e7cf0149a778a0611e76ff7c6680f.
+>>>> >
+>>>> >
+>>>> > Finally, if there is a code change in
+>>>> > 300d9a21583e7cf0149a778a0611e76ff7c6680f that is exclusively for the
+>>>> > purposes of hardening (i.e., no RFC requires the change as a smuggli=
+ng
+>>>> > security fix, and the code change is not for addressing an
+>>>> > individually exploitable problem), then that code change is outside
+>>>> > the scope of CVE.
+>>>> >
+>>>> > - --
+>>>> > CVE assignment team, MITRE CVE Numbering Authority
+>>>> > M/S M300
+>>>> > 202 Burlington Road, Bedford, MA 01730 USA
+>>>> > [ PGP key available through http://cve.mitre.org/cve/request_id.html
+>>>> ]
+>>>> > -----BEGIN PGP SIGNATURE-----
+>>>> > Version: GnuPG v1
+>>>> >
+>>>> > iQEcBAEBCAAGBQJVwjr0AAoJEKllVAevmvms4SgH/1K26OmJwLV0/D+IgSIcWq8q
+>>>> > ecN2DlngcNpU7W/fq9o/brN4hoMGVzh/aEPU3JIqC0JbY0OhidPe/DZmqLcndnwb
+>>>> > iQ4wS4r89akrzZpdOYc09oBlqyxKtto1exwFHWqqdVIbBjHdq+nQhEBwYGyjf/XK
+>>>> > 0DyEX6f72Msa//HFhNKycOKM4KPKsi1Gh5Dl+L9nddWnPdTnTSHoIdD+RGmXDDkD
+>>>> > 8i6WI/e5QVrGL2g24mrpefDUWX/p9T/cx9LR1hiiUUDuvns40NVz11E1i8PD2fv3
+>>>> > wRzEjUqyt94syYh9PNa0+ZFH7sPUyYOhnpi3/1UzRkSUSI++FfpDFrq3rOEZ4Jk=3D
+>>>> > =3DrNSr
+>>>> > -----END PGP SIGNATURE-----
+>>>>
+>>>
 
-Yes, we totally missed this.
-
->
-> Monitor relevant public channels (mailing lists, code repositories,
-> etc.) and inform the reporter and the list in case an issue is made
-> public prematurely (that is, leaks or is independently rediscovered) -
-> primary: Amazon, backup: SUSE
->
-> Make sure the mandatory oss-security posting is made promptly and is
-> sufficiently detailed, and remind the reporter if not - primary: Gentoo,
-> backup: Amazon"
->
-> I'd like replies by Gentoo and Amazon on this, please.  They should
-> either state that they'd be handling these tasks from this point on, or
-> we should reassign the tasks.
-
-This is one I think we've been able to handle previously and would like
-to keep handling.
-
-Regards,
-
-Anthony Liguori
+--047d7bf19850c38eaf051d21ba51--
