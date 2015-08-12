@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6361" "Thursday" "29" "October" "2015" "16:25:52" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151029202552.288F5B2E09F@smtpvbsrv1.mitre.org>" "162" "[oss-security] Re: CVE Request: MediaWiki 1.25.3, 1.24.4 and 1.23.11" nil nil nil "10" "2015102920:25:52" "[oss-security] Re: CVE Request: MediaWiki 1.25.3, 1.24.4 and 1.23.11" (number mark "        cve-assign@m Oct 29  162/6361  " thread-indent "\"[oss-security] Re: CVE Request: MediaWiki 1.25.3, 1.24.4 and 1.23.11\"\n") "<CAKcmtDz6cemDXMhP0jjzeo6oyAh-xu8=PBmi+u4J-4GEop52UQ@mail.gmail.com>" ("<CAKcmtDz6cemDXMhP0jjzeo6oyAh-xu8=PBmi+u4J-4GEop52UQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1009" "Wednesday" "12" "August" "2015" "13:32:12" "+0200" "Adam Maris" "amaris@redhat.com" "<55CB2EBC.706@redhat.com>" "29" "Re: [oss-security] CVE request - OpenSSH 6.9 PAM privilege separation vulnerabilities" nil nil nil "8" "2015081211:32:12" "[oss-security] CVE request - OpenSSH 6.9 PAM privilege separation vulnerabilities" (number mark "        amaris@redha Aug 12   29/1009  " thread-indent "\"Re: [oss-security] CVE request - OpenSSH 6.9 PAM privilege separation vulnerabilities\"\n") "<55CB0624.2080003@redhat.com>" ("<55CA41A6.600@bluefrostsecurity.de>" "<55CB0624.2080003@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 24462 invoked by uid 550); 29 Oct 2015 20:26:05 -0000
+Received: (qmail 6123 invoked by uid 550); 12 Aug 2015 11:32:27 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,175 +11,49 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 24441 invoked from network); 29 Oct 2015 20:26:04 -0000
-In-Reply-To: <CAKcmtDz6cemDXMhP0jjzeo6oyAh-xu8=PBmi+u4J-4GEop52UQ@mail.gmail.com>
-Message-Id: <20151029202552.288F5B2E09F@smtpvbsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Thu, 29 Oct 2015 16:25:52 -0400 (EDT)
-From: cve-assign@mitre.org
+Received: (qmail 6097 invoked from network); 12 Aug 2015 11:32:26 -0000
+References: <55CA41A6.600@bluefrostsecurity.de> <55CB0624.2080003@redhat.com>
+Message-ID: <55CB2EBC.706@redhat.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.1.0
+MIME-Version: 1.0
+In-Reply-To: <55CB0624.2080003@redhat.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
+Date: Wed, 12 Aug 2015 13:32:12 +0200
+From: Adam Maris <amaris@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE Request: MediaWiki 1.25.3, 1.24.4 and 1.23.11
-To: csteipp@wikimedia.org
-
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
-
-> * Wikipedia user RobinHood70 reported that the API failed to correctly stop
-> adding new chunks to the upload when the reported size was exceeded,
-> allowing a malicious users to upload add an infinite number of chunks for a
-> single file upload.
-> <https://phabricator.wikimedia.org/T91203>
-
-> As long as the so-called final chunk exceeds the filesize rather than
-> equalling it, the upload can continue. You can set filesize to 1000,
-> upload 2000 bytes in a chunk, then continue uploading data for as long
-> as you wish, as long as you continue to claim that the filesize is
-> 1000 bytes.
-
-Use CVE-2015-8001.
+Subject: Re: [oss-security] CVE request - OpenSSH 6.9 PAM privilege separation
+ vulnerabilities
+To: oss-security@lists.openwall.com
 
 
-> * Wikipedia user RobinHood70 also reported that a malicious user could
-> upload chunks of 1 byte for very large files, potentially creating a very
-> large number of files on the server's filesystem.
-> <https://phabricator.wikimedia.org/T91205>
 
-> All but the final block should have a minimum chunk size.
+On 12/08/15 10:39, Adam Maris wrote:
+> Could you assign CVEs for the other two issues as well?
+>
+>  * sshd(8): fix circumvention of MaxAuthTries using keyboard-
+>    interactive authentication. By specifying a long, repeating
+>    keyboard-interactive "devices" string, an attacker could request
+>    the same authentication method be tried thousands of times in
+>    a single pass. The LoginGraceTime timeout in sshd(8) and any
+>    authentication failure delays implemented by the authentication
+>    mechanism itself were still applied. Found by Kingcope.
+>
+>  * sshd(8): OpenSSH 6.8 and 6.9 incorrectly set TTYs to be world-
+>    writable. Local attackers may be able to write arbitrary messages
+>    to logged-in users, including terminal escape sequences.
+>    Reported by Nikolay Edigaryev.
+>
+> Or have they CVEs already?
+>
+> Thanks.
+>
+Well, the first one (circumvention of MaxAuthTries) was already assigned 
+CVE-2015-5600.
+Not sure about the second one.
 
-Use CVE-2015-8002.
+-- 
+Adam Maris / Red Hat Product Security
 
-
-> * Internal review discovered that it is not possible to throttle file
-> uploads.
-> <https://phabricator.wikimedia.org/T91850>
-
-> DESCRIPTION
-> 
-> We don't rate limit uploading files. We should.
-
-Use CVE-2015-8003. An important note here is that the MITRE CVE team
-accepted this CVE request only because it came from the organization
-that wrote the code. In the general case, adding completely new
-functionality such as an upload rate limit is a security enhancement
-and not eligible for a CVE ID.
-
-
-> * Internal review discovered a missing authorization check when removing
-> suppression from a revision. This allowed users with the 'viewsuppressed'
-> user right but not the appropriate 'suppressrevision' user right to
-> unsuppress revisions.
-> <https://phabricator.wikimedia.org/T95589>
-
-> Check all revisions for suppression, not just the first
-
-Use CVE-2015-8004.
-
-
-> * Richard Stanway from teamliquid.net reported that thumbnails of PNG files
-> generated with ImageMagick contained the local file path in the image
-> metadata.
-> <https://phabricator.wikimedia.org/T108616>
-
-Use CVE-2015-8005.
-
-This CVE ID is not about the default behavior of ImageMagick; it is
-about MediaWiki's use of ImageMagick without a command-line option
-that prevents pathname disclosure.
-
-There is a separate issue that the machine might be using an old
-*Magick program that lacks support for this command-line option (e.g.,
-an old version of GraphicsMagick instead of ImageMagick). The MITRE
-CVE team did not investigate how this interacts with the MediaWiki
-installation process. If the MediaWiki installation process is aware
-that only an old *Magick program is installed and would ignore the
-command-line option, and none of these is in place:
-
-  - the installation process aborts with an error
-  - the "image scaler" functionality is disabled
-  - the user is warned that this is an undesirable configuration
-  - installation-requirements documentation exists stating that the old
-    *Magick program is unsupported
-
-then this is a separate vulnerability that should have its own CVE ID.
-
-Finally, T108616 also mentions "this amount of metadata makes up a
-large part of the file size on smaller images, which can waste of
-bandwidth." There is no CVE ID for any related DoS attack, e.g.,
-abnormally long pathnames or other excessive metadata.
-
-
-> * Extension:PageTriage - MediaWiki user Grunny discovered a DOM-based XSS in
-> the way the extension handled page titles.
-> <https://phabricator.wikimedia.org/T111029>
-
-Use CVE-2015-8006.
-
-The CVE ID is only about what was fixed in 1.23.11/1.24.4/1.25.3. It
-is not about any other issues that might remain, associated with the
-https://phabricator.wikimedia.org/T111029#1600445 "That part of the
-PageTriage code is a nightmare, it's very hard to audit for security.
-Everything is raw HTML several levels up every imaginable call stack."
-
-
-> * Extension:Echo - Internal review discovered that Echo could display
-> deleted
-> or suppressed usernames when the username was previously used to Thank
-> users.
-> <https://phabricator.wikimedia.org/T110553>
-
-> "GoodUser" looks at their notifications and sees "AbusiveUsername"
-> everywhere instead of "username removed"
-
-Use CVE-2015-8007.
-
-
-> * Extension:OAuth - Wikipedia user Sitic discovered that the OAuth
-> extension did not correctly enforce the IP restrictions of a Consumer when
-> using previously negotiated credentials.
-> <https://phabricator.wikimedia.org/T103022>
-
-> These IP restrictions only seem to work when negotiating a new client
-> token over Special:OAuth/initiate. When I locally make an API request
-> with an already existing client/access token I get a valid response
-> and no error.
-
-Use CVE-2015-8008.
-
-
-> * Extension:OAuth - Wikipedia user Sitic discovered that OAuth would accept
-> a valid signature from any Consumer when checking the authorization
-> signature. This allowed a registered Consumer who gained access to another
-> Consumer's users' access tokens and secrets to use those credentials.
-> <https://phabricator.wikimedia.org/T103023>
-
-> I think there is a check missing in MWOAuthDataStore::lookup_token().
-> For access tokens, we lookup the consumer by the access token, and
-> don't confirm that the id's match.
-> 
-> This requires that you have the access token for a different
-> consumer's users, which should be a rare occurrence.
-
-Use CVE-2015-8009.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJWMn/4AAoJEL54rhJi8gl5Pz4QAJK5bFrsRgwAiu+2N5mgQg7H
-cbz0m3uBYkuSV1CiC2LgXeu7CRJ8gtUf7Bok/HwPlRqxZEWfnXcdLRqgbYq6yXNp
-J487WOM0dSkuXBIAZ1cbk3D0BGXRuVkSSUNqiAtxLBb75bUQqQbr9hcJuSDZ+SYi
-Zoi3U93ZdMcaqyPDt1wq6D3P+9yrJxu7Ve3X67wHi4fc5lEAIU+SZKcA0GjWMhH6
-0MbUxEPvx4lXW0r/HT3Rz8Kn2WKY9jJNuK+N06VF8rxGTfdFOeeWVRnBjdIZck0L
-RKaI0lHSPx1e5c2uAr+gSip7K1JnT8jaVPALUlP3ODDL8VGIU2qi1bAQ0vFO/D9H
-xvLApQxZsCmg7StsQdt9I/bdzPEtQA1/lpet1+G9aDrP3H0bBRHy5/WBEtANK7Fx
-1dncHG21c1t2dI+v+/K6iHyZiARQ6X/d8/FgU/8H/QnCWJcmLEJF5uilY2u+PpJR
-iBrem0kvV+iFr/M6gGSe73dZSoPiAryJ9T33Dt/+wCllBZYq7nBeQBm7pWBZM+5D
-3SOwo+6GUSflH68oTbvnyDrO6fOW+K5hrNXdu6fUdLJoktHJ8UDeAk20X21RNa36
-r0fGHU/JAFnfr8oBa44LCqZ+xydjuNQ8iTXy0Fxp1JlzarIQpeHyz49IBUm2rWKM
-Ls7SRQdMYbvPMwkxkeJb
-=A8Gw
------END PGP SIGNATURE-----
