@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["8458" "Saturday" "27" "March" "2021" "19:02:56" "+0100" "Solar Designer" "solar@openwall.com" nil "202" "[oss-security] OpenSSL 1.1.1 CVE-2021-3450 CA certificate check bypass with X509_V_FLAG_X509_STRICT, CVE-2021-3449 NULL pointer deref in signature_algorithms processing" nil nil nil "3" nil nil (number mark "U       solar@openwa Mar 27  202/8458  " thread-indent "\"[oss-security] OpenSSL 1.1.1 CVE-2021-3450 CA certificate check bypass with X509_V_FLAG_X509_STRICT, CVE-2021-3449 NULL pointer deref in signature_algorithms processing\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] OpenSSL 1.1.1 CVE-2021-3450 CA certificate check bypass with X509_V_FLAG_X509_STRICT, CVE-2021-3449 NULL pointer deref in signature_algorithms processing" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1420" "Wednesday" "12" "August" "2015" "12:30:56" "+0530" "sreepriya" "sreepriya1111@gmail.com" "<CANzWz4HNTYJgq=6-6yH-gwMugY=ck=CwxxtysXsbv9xAKP5X9Q@mail.gmail.com>" "42" "[oss-security] CVE Request: ATutor LMS Version 2.2 with stored XSS and file upload issue" nil nil nil "8" "2015081207:00:56" "[oss-security] CVE Request: ATutor LMS Version 2.2 with stored XSS and file upload issue" (number mark "U       sreepriya111 Aug 12   42/1420  " thread-indent "\"[oss-security] CVE Request: ATutor LMS Version 2.2 with stored XSS and file upload issue\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 24117 invoked by uid 550); 27 Mar 2021 18:05:07 -0000
+Received: (qmail 3872 invoked by uid 550); 12 Aug 2015 09:23:08 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,217 +11,67 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 15402 invoked from network); 12 Aug 2015 07:01:28 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=R2vLj73wwhl5mbbqr6FWznaZBq6XFQRLWZzJW7goqnE=;
+        b=HW0248SOOyciEDLeYx0oRwcb7q/d/HdyCQgiOs8807C+ypGOdiMXS8N+lSPz0bO3/w
+         C6HdRVaXGwBVupAB9vZob+zpZlxFRh7KhPRs6Kyx0WWn5kwgTxPrI3ouyqyQfNZp596X
+         1Fro4KWESrd6f+b+4w83EVjnwVPqNkpmB0A/bDrDeaotelZAc06dlgN+7T8DiP9l0xIO
+         jwRqIBQzGLeYeeTKKV98jE/M0Y5muKZu9o0X3H0fuJcXNNWw8iFlckQbyWWBXBej1nQg
+         SOTqbcMY0j0tp0Ml49Ytu9j5a57Bwf/TdxEqIOLLvykblR6UDehaVXycS2+r23J/JBo1
+         dRSg==
+X-Received: by 10.170.220.67 with SMTP id m64mr32499894ykf.41.1439362876104;
+ Wed, 12 Aug 2015 00:01:16 -0700 (PDT)
+MIME-Version: 1.0
+Message-ID: <CANzWz4HNTYJgq=6-6yH-gwMugY=ck=CwxxtysXsbv9xAKP5X9Q@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=001a1139c1fceee7ba051d17c84b
+Date: Wed, 12 Aug 2015 12:30:56 +0530
+From: sreepriya <sreepriya1111@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 23928 invoked from network); 27 Mar 2021 18:04:30 -0000
-Date: Sat, 27 Mar 2021 19:02:56 +0100
-From: Solar Designer <solar@openwall.com>
-To: oss-security@lists.openwall.com
-Message-ID: <20210327180255.GA12647@openwall.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.4.2.3i
-Subject: [oss-security] OpenSSL 1.1.1 CVE-2021-3450 CA certificate check bypass with X509_V_FLAG_X509_STRICT, CVE-2021-3449 NULL pointer deref in signature_algorithms processing
+Subject: [oss-security] CVE Request: ATutor LMS Version 2.2 with stored XSS and file upload issue
+To: oss-security@lists.openwall.com, cve-assign@mitre.org
 
-Hi,
+--001a1139c1fceee7ba051d17c84b
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-As many of you are aware, the OpenSSL project provides pre-notification
-of vulnerability disclosures.  The way they do it is by posting to the
-public OpenSSL mailing lists (see "Forthcoming OpenSSL release" below)
-and by contacting specific other projects/channels with an offer to
-provide the actual detail more privately only to those interested in
-such detail.  This time, not unlike other times, there was a message to
-the distros list with content similar to the public "Forthcoming OpenSSL
-release" below plus the offer I mentioned.  Since the message itself did
-not contain any vulnerability detail, it might not strictly fall under
-the distros list policy of requiring a subsequent oss-security posting,
-but I think it's preferable to proceed with such postings in such cases.
-So I am doing that now (the "OpenSSL Security Advisory" below), and I'd
-like the OpenSSL project itself to be doing it going forward.
+Hello,
 
-One other detail I feel I have to bring up in here, and expect a
-response to, is Wind River's apparent leak of the vulnerability detail
-two days prior to scheduled public disclosure.  This was brought up on
-the distros list back then, and I was also asked about it on Twitter
-when the vulnerabilities were finally made public appropriately on the
-scheduled date.
+I would like to request for a CVE  for the following issues in the latest
+version of ATutor <http://www.atutor.ca/> learning management system.
 
-Since the vulnerability detail wasn't on the distros list, it's not
-exactly a case of a list member leaking from there, but it's closely
-related.  And regardless of where this happened, it's a concern, which
-we probably should discuss on oss-security.
+There are a few Stored XSS and file upload vulnerabilities in the software.
+*Issue*: https://github.com/atutor/ATutor/issues/103
 
-So I'd appreciate an explanation/statement from Wind River on what
-happened and what measures, if any, are being taken to prevent this from
-happening again.  I'd also appreciate a comment from OpenSSL.
+*Stored/Persistent XSS:*
+In course management, multiple user inputs are not sanitized.
+Course name and banner are vulnerable to Stored XSS.
 
-The leak was on a web page archived here:
+*File Upload:*
+An instructor can upload a malicious script (I tried Javascript that gets
+executed in browser if opened after download). Not just the file content,
+the file name is also vulnerable. This leaves the students (lower
+privilege) as well as the administrators (higher privilege) vulnerable to
+the attack.
 
-https://web.archive.org/web/20210324105700/https://support2.windriver.com/index.php?page=security-notices&on=view&id=7055
+*Date of reporting*: 11th August, 2015
+*Exploit Author* : Sreepriya Chalakkal
+*Vendor Homepage*: http://www.atutor.ca/
+*Software Link*: http://www.atutor.ca/atutor/download.php
+*Version *: 2.2
+*Tested on Linux* : Ubuntu, Kali
+*Issue has been reported to the vendor: *
+https://github.com/atutor/ATutor/issues/103
 
-As I recall, the private GitHub links in there gave me "404 Not Found"
-soon after the windriver.com link (which was live at the time, not
-needing archive.org) was sent to the distros list by a concerned fellow
-distro.  This means that either OpenSSL promptly brought them down or
-they were only ever accessible under appropriately privileged GitHub
-accounts.  In the latter case, the existence of that web page with its
-content might not have been that much of a leak, as in addition to the
-public pre-notification the web page only contained CVE IDs and one-line
-vulnerability titles and commit hashes and those GitHub links.  If the
-actual commits and the links were never publicly accessible, then it
-wasn't that much of an issue and reasonably didn't require considering
-the embargo broken.
+Please let me know if it is possible to get a CVE identifier assigned for
+the above issue.
 
-Another concern I have is that I have to write this to ever hear from
-Wind River.  I'd have expected them to comment on the distros list the
-moment this was brought up in there - but they kept silent.  Did they
-even see the message?  (Of course, I could ask privately, but the
-concerns are already public and we need to discuss this in public.)
+=E2=80=8BThanks and =E2=80=8B
+Regards,
+--
+Sreepriya C
+priyachalakkal.wordpress.com <http://www.priyachalakkal.wordpress.com>
 
-To summarize, this is probably not a big deal, but let's figure out what
-happened and what can be done better next time.
-
-Thanks,
-
-Alexander
-
------ Forwarded message from Matt Caswell <matt@openssl.org> -----
-
-To: "openssl-project@openssl.org" <openssl-project@openssl.org>,
- openssl-announce@openssl.org,
- "openssl-users@openssl.org" <openssl-users@openssl.org>
-From: Matt Caswell <matt@openssl.org>
-Subject: Forthcoming OpenSSL release
-Date: Mon, 22 Mar 2021 09:18:12 +0000
-
-The OpenSSL project team would like to announce the forthcoming
-release of OpenSSL version 1.1.1k.
-
-This release will be made available on Thursday 25th March 2021
-between 1300-1700 UTC.
-
-OpenSSL 1.1.1k is a security-fix release. The highest severity issue
-fixed in this release is HIGH:
-https://www.openssl.org/policies/secpolicy.html#high
-
-Yours
-
-The OpenSSL Project Team
-
------ End forwarded message -----
-
------ Forwarded message from OpenSSL <openssl@openssl.org> -----
-
-Date: Thu, 25 Mar 2021 14:03:24 +0000
-From: OpenSSL <openssl@openssl.org>
-To: openssl-project@openssl.org,
- OpenSSL User Support ML <openssl-users@openssl.org>,
- OpenSSL Announce ML <openssl-announce@openssl.org>
-Subject: OpenSSL Security Advisory
-
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
-
-OpenSSL Security Advisory [25 March 2021]
-=========================================
-
-CA certificate check bypass with X509_V_FLAG_X509_STRICT (CVE-2021-3450)
-========================================================================
-
-Severity: High
-
-The X509_V_FLAG_X509_STRICT flag enables additional security checks of the
-certificates present in a certificate chain. It is not set by default.
-
-Starting from OpenSSL version 1.1.1h a check to disallow certificates in
-the chain that have explicitly encoded elliptic curve parameters was added
-as an additional strict check.
-
-An error in the implementation of this check meant that the result of a
-previous check to confirm that certificates in the chain are valid CA
-certificates was overwritten. This effectively bypasses the check
-that non-CA certificates must not be able to issue other certificates.
-
-If a "purpose" has been configured then there is a subsequent opportunity
-for checks that the certificate is a valid CA.  All of the named "purpose"
-values implemented in libcrypto perform this check.  Therefore, where
-a purpose is set the certificate chain will still be rejected even when the
-strict flag has been used. A purpose is set by default in libssl client and
-server certificate verification routines, but it can be overridden or
-removed by an application.
-
-In order to be affected, an application must explicitly set the
-X509_V_FLAG_X509_STRICT verification flag and either not set a purpose
-for the certificate verification or, in the case of TLS client or server
-applications, override the default purpose.
-
-OpenSSL versions 1.1.1h and newer are affected by this issue. Users of these
-versions should upgrade to OpenSSL 1.1.1k.
-
-OpenSSL 1.0.2 is not impacted by this issue.
-
-This issue was reported to OpenSSL on 18th March 2021 by Benjamin Kaduk
-from Akamai and was discovered by Xiang Ding and others at Akamai. The fix was
-developed by Tom???? Mr??z.
-
-
-NULL pointer deref in signature_algorithms processing (CVE-2021-3449)
-=====================================================================
-
-Severity: High
-
-An OpenSSL TLS server may crash if sent a maliciously crafted renegotiation
-ClientHello message from a client. If a TLSv1.2 renegotiation ClientHello omits
-the signature_algorithms extension (where it was present in the initial
-ClientHello), but includes a signature_algorithms_cert extension then a NULL
-pointer dereference will result, leading to a crash and a denial of service
-attack.
-
-A server is only vulnerable if it has TLSv1.2 and renegotiation enabled (which
-is the default configuration). OpenSSL TLS clients are not impacted by this
-issue.
-
-All OpenSSL 1.1.1 versions are affected by this issue. Users of these versions
-should upgrade to OpenSSL 1.1.1k.
-
-OpenSSL 1.0.2 is not impacted by this issue.
-
-This issue was reported to OpenSSL on 17th March 2021 by Nokia. The fix was
-developed by Peter K??stle and Samuel Sapalski from Nokia.
-
-Note
-====
-
-OpenSSL 1.0.2 is out of support and no longer receiving public updates. Extended
-support is available for premium support customers:
-https://www.openssl.org/support/contracts.html
-
-OpenSSL 1.1.0 is out of support and no longer receiving updates of any kind.
-The impact of these issues on OpenSSL 1.1.0 has not been analysed.
-
-Users of these versions should upgrade to OpenSSL 1.1.1.
-
-References
-==========
-
-URL for this Security Advisory:
-https://www.openssl.org/news/secadv/20210325.txt
-
-Note: the online version of the advisory may be updated with additional details
-over time.
-
-For details of OpenSSL severity classifications please see:
-https://www.openssl.org/policies/secpolicy.html
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCAAdFiEEhlersmDwVrHlGQg52cTSbQ5gRJEFAmBcl6sACgkQ2cTSbQ5g
-RJGvnAgAtG6I7rfokDC9E5yB26KC3k0Vasfq5iH/aZz0CNRyOokWJBUyyNIVjqr0
-2eZP7VsQT7zRM+tgh9c8MwH3FIghtpwJRJls4qZDHKoXts7JH4Ul4NLPd546x7xA
-GcKNwTD4NkZbTqtZ72NTgliInzrj0MCC8jqQrIIkcAIleGNzvZ0f64jdE+vBXoqX
-M2FOhWiA/JkAKtB3W7pthIt25qkOwHbrpTy+UUp/S5QD779NJ/EOYcsOFBRfLZiP
-gA6QILuW2L55lhG6Y2u+nVE3UI2hqd2hGgSAvDIPr2lVJxq0LQpgHca7Gj5bfIRo
-GLDz7n0FhN6n7NBqetP+nlHmYivcSg==
-=XIXK
------END PGP SIGNATURE-----
-
------ End forwarded message -----
+--001a1139c1fceee7ba051d17c84b--
