@@ -1,4 +1,9 @@
-Received: (qmail 28358 invoked by uid 550); 28 May 2026 20:56:34 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2359" "Wednesday" "12" "August" "2015" "17:00:34" "+0200" "=?UTF-8?B?Um9iZXJ0IMWad2nEmWNraQ==?=" "robert@swiecki.net" "<CAP145pgN_79MkD_Z+KRkJZr68aOPt_JpkEPC1i0Q-NbwG0jKzQ@mail.gmail.com>" "63" "Re: [oss-security] Re: Terminal escape sequences - the new XSS for admins?" nil nil nil "8" "2015081215:00:34" "[oss-security] Re: Terminal escape sequences - the new XSS for admins?" (number mark "        robert@swiec Aug 12   63/2359  " thread-indent "\"Re: [oss-security] Re: Terminal escape sequences - the new XSS for admins?\"\n") "<3251855.920OV3rWUH@x2>" ("<CANO=Ty1ku4Hs-eFzCWK_K0=QXEZbtDFR4c--gBnoHPQi7Ko+XQ@mail.gmail.com>" "<4034525.BTXsUWy6Cb@x2>" "<55CA6BBC.7070101@amacapital.net>" "<3251855.920OV3rWUH@x2>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 16378 invoked by uid 550); 12 Aug 2015 15:00:46 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,84 +11,97 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 11965 invoked from network); 28 May 2026 11:39:55 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cpansec.org; s=gm1;
-	t=1779968386;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=Z22Wwzp+CB+wNJvmQT6LvTnxjLK96WXMmQ/sR5zTmSE=;
-	b=LKKkPJUTIxH/xdCEfD9kYOO5ZuQDop6ofBKzDI2meS6cHUajmRY1icjdBxkaI6nV8TYMvX
-	VvBaP1vg+Jkf1Ns8Y3+DxFWyq1IUVp5VO7cizxJZpP1Trp2rkdNA4LDvbC5jyd7v1XkvnC
-	rvyCl/eqbPdaB1cerBqi4LjwvMsZp9BRS3uj7qvC/dzK+MJ4KD0IjPcpITQQrn1e5s+S48
-	jtcaGc1RY3uvsSR7fhFf1Zhabijf6IA0Wwh0V+pVplkUCPlPiAaCirsGq7E/5tHEeyfUn1
-	RpmI8guEixTOTN7yJzsSJRLokpEWmqc9jV8fYGggZ4jID1HRYkr+ar4GrqAbvA==
-Message-ID: <af71576b-1914-49ba-8579-b0823e296df8@cpansec.org>
-Date: Thu, 28 May 2026 12:39:44 +0100
+Received: (qmail 16359 invoked from network); 12 Aug 2015 15:00:45 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=czEGQLsNC4oBl1TYKwbPJhS+IYMrOuNazT5I0WZaB48=;
+        b=Lpa9lSmHcd2LmYwbu4Lv2NoVm//VfWLIyZ1XBXrUasxb3ksvuvHa+Rb/DZhx1icl8K
+         x8bQolxQHG4KEcQbezZLxuNbW+AGmiHAUAFdsiBghIGxYAFftTlli8Es2zCSyGY3F5mW
+         iHyG6GJNPMVutC9oKnIpMJv3KThFz0eqjwwp9pQ9geTCsF4fbhqKXcRln5m2O8bmTPaL
+         JpiuDGZFRsI+ix9tmR/733H0sKA17yLn2wVoX6n1IJAE4JXC109knKoF/GCoOILX9mut
+         kqi0NcBZn3UJzTfYMqMxYqHgCpZauR7dfkaSRRaFfMLbcSCcoS6AlrwCstBhnQiXJDOQ
+         mfsg==
+X-Gm-Message-State: ALoCoQngeyoH6PSa43yZrgA+CMuFFJxk+xiE7CDGVTpYkrh4rxnIhtGs+CDbSO1nR5hLk97OU6f7
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Robert Rothenberg <rrwo@cpansec.org>
-Content-Language: en-GB, en-ZA
-To: cve-announce@security.metacpan.org, oss-security@lists.openwall.com
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-GND-Sasl: rrwo@cpansec.org
-X-GND-Score: 0
-X-GND-Cause: dmFkZTFPts7nsQnEd5Xtg4CIMotEswFVRKZpGN15LVZx/3R50Y1bRwcfXRDMUlZINKUnmAzNttfnMfGre/89BwSkAqbGMnIjOuhOgd4pQ1tBWdY2GJNBw502jmHfeBIFp5RvhIkyoCRlqWshXgfMI2awgKcXHyEh5k6FFHm4muVfdY3Dc7Qqs6LPwt0ZMrbTwPqypWwA0u/5FYMyiLrz47XAl7kTJOeXwz7qCWTY2OzVzL76kas8of7ghXXcGVmo2HGRapcx9vCoVGElAcpWkvoZWgdrlrtodZAn48r9PC0HSOaKW9xLD8+G8OgCUje46sAJBhlZQ7fw3pS9lJoFhCRr8CdMRBcpy9fSAwcwolEnev9OHuYE3nv6UNa+h40qUZtuGQeqRvBo2F8Wju5VEyTPwCEfPFdiOGlW7q5W1r4gCnIRjgp+oth0BJG15+4CUNNze9boi/0XaSDVGb3CEN5ccZONtgktfLIze956B/HGeuZlX7wK5EkjPU6qhT4JIhGIsHEqRnNQfgaM29G841d/WxzOeEmyhCh1BUcFnlSn26OQGfnZiKg6sOkDmBoHsL6Fx5OhKILkaxSLX1eTLwe5JM1fstiF4esBohXdIJkXq0pVJ8yq3oWQF/saw4XWIu6P2uFboGfO32w9gI7ngO8c7r/3HdyRHir0GWulAT0zs75hzw
-X-GND-State: clean
-Subject: [oss-security] CVE-2026-9658: Plack::Middleware::Security::Common versions before
- 0.13.1 for Perl did not block header injections in request paths
+X-Received: by 10.180.103.34 with SMTP id ft2mr33770500wib.62.1439391634385;
+ Wed, 12 Aug 2015 08:00:34 -0700 (PDT)
+In-Reply-To: <3251855.920OV3rWUH@x2>
+References: <CANO=Ty1ku4Hs-eFzCWK_K0=QXEZbtDFR4c--gBnoHPQi7Ko+XQ@mail.gmail.com>
+	<4034525.BTXsUWy6Cb@x2>
+	<55CA6BBC.7070101@amacapital.net>
+	<3251855.920OV3rWUH@x2>
+Message-ID: <CAP145pgN_79MkD_Z+KRkJZr68aOPt_JpkEPC1i0Q-NbwG0jKzQ@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=f46d044281f20f84b9051d1e7b2d
+Cc: Andy Lutomirski <luto@amacapital.net>, Daniel Kahn Gillmor <dkg@fifthhorseman.net>, 
+	Kurt Seifried <kseifried@redhat.com>
+Date: Wed, 12 Aug 2015 17:00:34 +0200
+From: =?UTF-8?B?Um9iZXJ0IMWad2nEmWNraQ==?= <robert@swiecki.net>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Re: Terminal escape sequences - the new XSS for admins?
+To: oss-security@lists.openwall.com
 
-========================================================================
-CVE-2026-9658                                        CPAN Security Group
-========================================================================
+--f46d044281f20f84b9051d1e7b2d
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-         CVE ID:  CVE-2026-9658
-   Distribution:  Plack-Middleware-Security-Simple
-       Versions:  before 0.13.1
+2015-08-11 23:59 GMT+02:00 Steve Grubb <sgrubb@redhat.com>:
 
-       MetaCPAN: https://metacpan.org/dist/Plack-Middleware-Security-Simple
-       VCS Repo: https://github.com/robrwo/Plack-Middleware-Security-Simple
-
-
-Plack::Middleware::Security::Common versions before 0.13.1 for Perl did
-not block header injections in request paths
-
-Description
------------
-Plack::Middleware::Security::Common versions before 0.13.1 for Perl did
-not block header injections in request paths.
-
-The header injection rule was ineffective at blocking header injections
-in the request paths unless they were double-encoded, for example,
-
-   GET /path\r\nHTTP/1.1\r\nHost: secret.example.com
-
-Note that it is unclear whether request paths with CRLF followed by
-additional headers would be blocked by reverse proxies, or how they
-would be processed by Plack-based servers.
-
-Problem types
--------------
-- CWE-790 Improper Filtering of Special Elements
-- CWE-113 Improper Neutralization of CRLF Sequences in HTTP Headers
-
-Workarounds
------------
-Use with the the the non_printable_chars rule to block header
-injections.
-
-
-Solutions
----------
-Upgrade to 0.13.1 or later.
-
-
-References
-----------
-https://metacpan.org/release/RRWO/Plack-Middleware-Security-Simple-v0.13.1/changes
+> On Tuesday, August 11, 2015 02:40:12 PM Andy Lutomirski wrote:
+> > > At this point, I was convinced that most major emulators are safe. Th=
+at
+> > > said...there are all the ones I didn't check including older ones. The
+> > > older ones are likely to be the ones I'd be most concerned about.
+> >
+> > Are all the supposedly invulnerable terminals actually safe?
+> > Gnome-terminal reports:
+> >
+> > 0000000: 1b5d 6c54 6572 6d69 6e61 6c1b 5c       .]lTerminal.\
+> >
+> > That's not as bad as echoing 'ls -al' back to the terminal input, but
+> > why is it considered acceptable for terminals to input anything
+> > whatsoever in response to the in-band data they receive?
+>
+> The whole idea is to write something that you can bounce back to the
+> prompt.
+> lTerminal is pretty limiting. An attacker would have to also place the fi=
+le
+> lTerminal in the search path before using this trick. But if they can do
+> pre-
+> place a file in the search path, they can also take advantage of typing
+> mistakes like placing a file vo and then waiting for the admin to make a
+> mistake typing vi.
+>
+> What you really want to do in an attack is to  try placing a call back
+> shell
+> command on the prompt or download/upload files.
+>
+> Most terminal emulators, konsole for example, reply with nothing. Its the
+> vte
+> based ones that reply like this.
 
 
+I was reviewing the code and fuzzing various terminal emulators quite
+extensively some time ago, and found that "only" rxvt might be susceptible
+to this (if I remember correctly, there's typo in the code that enables
+this).
 
+$ echo -ne "\eGQ;"
+;$ 0
+bash: 0: command not found
+
+If you manage to append some arbitrary bytes to the input queue (except 0
+and meaningless sequences like echo -ne "\e[6n\eGQ;"), then this sequence
+can be used to execute your command.
+
+As for other terminal emulators, I was able to crash most of them, and from
+what I see I still have testcases for konsole, pterm, rxvt, securecrt and
+xterm. I was looking for command injections though, so simply forgot to
+submit the testcases to the maintainers of the code after the exercise.
+I'll do that shortly.
+
+--=20
+Robert =C5=9Awi=C4=99cki
+
+--f46d044281f20f84b9051d1e7b2d--
