@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2049" "Sunday" "24" "January" "2016" "13:07:26" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160124180726.F02FE6C00EA@smtpvmsrv1.mitre.org>" "49" "[oss-security] Re: CVE Request: tiff: potential out-of-bound write in NeXTDecode()" nil nil nil "1" "2016012418:07:26" "[oss-security] Re: CVE Request: tiff: potential out-of-bound write in NeXTDecode()" (number mark "U       cve-assign@m Jan 24   49/2049  " thread-indent "\"[oss-security] Re: CVE Request: tiff: potential out-of-bound write in NeXTDecode()\"\n") "<20160124153743.GA19655@eldamar.local>" ("<20160124153743.GA19655@eldamar.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2313" "Thursday" "13" "August" "2015" "21:11:30" "+0000" "Tristan Cacqueray" "tdecacqu@redhat.com" "<55CD0802.9000606@redhat.com>" "77" "[oss-security] [OSSA 2015-014] Glance v2 API host file disclosure through qcow2 backing file (CVE-2015-5163)" nil nil nil "8" "2015081321:11:30" "[oss-security] [OSSA 2015-014] Glance v2 API host file disclosure through qcow2 backing file (CVE-2015-5163)" (number mark "        tdecacqu@red Aug 13   77/2313  " thread-indent "\"[oss-security] [OSSA 2015-014] Glance v2 API host file disclosure through qcow2 backing file (CVE-2015-5163)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 14203 invoked by uid 550); 24 Jan 2016 18:07:39 -0000
+Received: (qmail 23831 invoked by uid 550); 13 Aug 2015 21:11:26 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,62 +11,96 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 23811 invoked from network); 13 Aug 2015 21:11:26 -0000
+Message-ID: <55CD0802.9000606@redhat.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.1.0
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="0iH5qGEJTD9QUXxeHJsH3TGoSXGVRootd"
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
+Date: Thu, 13 Aug 2015 21:11:30 +0000
+From: Tristan Cacqueray <tdecacqu@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 14185 invoked from network); 24 Jan 2016 18:07:38 -0000
-From: cve-assign@mitre.org
-To: carnil@debian.org
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <20160124153743.GA19655@eldamar.local>
-Message-Id: <20160124180726.F02FE6C00EA@smtpvmsrv1.mitre.org>
-Date: Sun, 24 Jan 2016 13:07:26 -0500 (EST)
-Subject: [oss-security] Re: CVE Request: tiff: potential out-of-bound write in NeXTDecode()
+Subject: [oss-security] [OSSA 2015-014] Glance v2 API host file disclosure through qcow2
+ backing file (CVE-2015-5163)
+To: oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--0iH5qGEJTD9QUXxeHJsH3TGoSXGVRootd
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-> Could you assign a CVE for the following issue in tiff:
-> 
-> http://bugzilla.maptools.org/show_bug.cgi?id=2508
-> 
->> 2015-12-27  Even Rouault <even.rouault at spatialys.com>
->>
->>         * libtiff/tif_next.c: fix potential out-of-bound write in NeXTDecode()
->>         triggered by http://lcamtuf.coredump.cx/afl/vulns/libtiff5.tif
->>         (bugzilla #2508)
-> 
-> Fixing commit:
-> 
-> https://github.com/vadz/libtiff/commit/b18012dae552f85dcc5c57d3bf4e997a15b1cc1c
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D
+OSSA-2015-014: Glance v2 API host file disclosure through qcow2 backing file
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D
 
-As mentioned in the
-http://openwall.com/lists/oss-security/2015/02/07/5 post, this
-libtiff5.tif file was first associated with CVE-2015-1547. However,
-https://bugs.mageia.org/show_bug.cgi?id=15519 is about "libtiff new
-security issue (second issue from PoC for CVE-2015-1547) ... this is
-actually another issue in libtiff itself." This suggests that a
-separate CVE ID is useful, because there were two separate types of
-problems, discovered at different times, that were triggered by the
-same example .tif file. Use CVE-2015-8784.
+:Date: August 13, 2015
+:CVE: CVE-2015-5163
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+
+Affects
+~~~~~~~
+- Glance: 2015.1 versions through 2015.1.1
+
+
+Description
+~~~~~~~~~~~
+Eric Harney from Red Hat reported a vulnerability in Glance. By
+importing a qcow2 image with a malicious backing file, an
+authenticated user may mislead Glance import task action, resulting in
+the disclosure of any file on the Glance server for which the Glance
+process user has access to. Only setups using the Glance V2 API are
+affected by this flaw.
+
+
+Patches
+~~~~~~~
+- https://review.openstack.org/212568 (Kilo)
+- https://review.openstack.org/212567 (Liberty)
+
+
+Credits
+~~~~~~~
+- Eric Harney from Red Hat (CVE-2015-5163)
+
+
+References
+~~~~~~~~~~
+- https://launchpad.net/bugs/1471912
+- http://cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2015-5163
+
+
+Notes
+~~~~~
+- This fix will be included in the future 2015.1.2 (kilo) release.
+
+--=20
+Tristan Cacqueray
+OpenStack Vulnerability Management Team
+
+
+--0iH5qGEJTD9QUXxeHJsH3TGoSXGVRootd
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Version: GnuPG v2
 
-iQIcBAEBCAAGBQJWpQ/XAAoJEL54rhJi8gl5fHkQAJn5r1tcywWFYkpi7xgmiS7X
-GZ00mtvvyl4tO13+qnLSH7Odv7wfVUaKhcdoAXbCjqvlGYwfHt93+kP/6uqjD/te
-sJgo2E89yzaI+kc5p3+Ta1FubRfG/rljUyk+RnxZ1LprGf9eZ9BHV4C0ORNHyUOC
-nA/UvWsbmaVZoWn2FqakcFsPA/GzcfYjBNdLPNvZe/RdUzyivm79k/VUgHz+EzbT
-ERPaA5scDo7irc0jNjkerkNCuav8Wsn3nnXBVDngewQb5h0BUhjVIKhJOnOugqS6
-/fNMxKj8whnhuQI9NsYlqPXo+bmLXOJWc5aoAXZD/kabMOU2zUvMguqCZChRx+GM
-Ww3bYOed4b7ug0K5p8ZIeO6oP/XoInrQbPC09kvVX/xnKXXicIbxmnENVjbWOu80
-lXyoRp2qI3FnaIVhHWBkRbnxWVhqlSyr2fUeu9DBW52TMVgTWnr6Ovm/9lDtv67P
-JFFwTN15Zxvi6B8o2B/Rrpo6smTPWDV6D88rqF+U0wR/MZ9kJ5zHGR4tFTMUQK3J
-P6cGRkSnJwhrdp6eWiaLu9EZkOwSTPBhioEoSaWG1EmzFI6gXzlmd8gGeG/XikAQ
-c7oEaLuVxXhZyHBTBn+og+73FTJCdTHJLi4MgQWnErkaA9Tjzu9vNKqe4rotIiCH
-eH4woIieb01417xgvS7x
-=EnxA
+iQEcBAEBAgAGBQJVzQgCAAoJECK5oFySXMXYsp8H/imPe+D6BarMNNBhPWodborx
+QRFp9eWyUR6RvAljF9QHDhtiPgslJwCvvvc+dhCSG9EyTR8MisIcC9GGWhqL7IK8
+UObkgK3FytjnQkpBbo9/hTqgOmOc+kDwsC+eUJb74gX2otvUtdc7nEfv8opxZa1W
+Bj5yi/jm2SKoXhXz/NAyCbv0bX9IuKdsy/tZA9uFHnpoUkD7wGLj16s5/f7ijcQx
+nuGTClZEdlaJB37Bs5VWf8Gn/N8wH8bB833HIMY9eIy1wnIqCizJRL1gBt177f9E
+IPo1+oUkl5fbXJPA9XnrZj+i0aUDORExorYg/9W6PrTLpsTon99SYJwlDH7bQ4k=
+=j2RP
 -----END PGP SIGNATURE-----
+
+--0iH5qGEJTD9QUXxeHJsH3TGoSXGVRootd--
