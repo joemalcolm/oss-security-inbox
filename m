@@ -1,4 +1,9 @@
-Received: (qmail 19477 invoked by uid 550); 14 Feb 2024 15:51:15 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["820" "Thursday" "13" "August" "2015" "15:00:35" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<CANO=Ty1O8VjFrbhFDW73aeoyOrpoMYp22A=ExDvXtWG1hpTPgQ@mail.gmail.com>" "25" "[oss-security] Audit: log terminal emulator escape sequences handling CVE-2015-5186" nil nil nil "8" "2015081321:00:35" "[oss-security] Audit: log terminal emulator escape sequences handling CVE-2015-5186" (number mark "        kseifried@re Aug 13   25/820   " thread-indent "\"[oss-security] Audit: log terminal emulator escape sequences handling CVE-2015-5186\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 6131 invoked by uid 550); 13 Aug 2015 21:00:48 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,83 +11,52 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30705 invoked from network); 14 Feb 2024 15:44:46 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-	s=20210705; t=1707925655;
-	bh=i/GpVbBOylaLKuo1+eDImyNC5I/Z0Y2+WS3R1scJXAA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Content-Type;
-	b=a79HmyUwEyUF/qRK7/CKjSYIWB8Xcz+A+MEWXbDOJqaqAyb9fQtgvGZ0tbtCnEjON
-	 TwIt0mfA5NoDeFL3Kr4sj+LRYh/AtHYV+RZ3wjz1uygKt76/+ByPa3aDwkfcA3daA5
-	 ZSyc0yLnRqdQrbhAva2hxtgynjwooVb6Nzgxpf7Q5tPlyoQbiDjx2YNSm7yPFz7bgb
-	 H3FaImTvb8oda22E/VwT7eoX4x5ZwyHRAiK9jErMmU6Oqf1GoYEiAvv4wUSS2KwZ9k
-	 HPqD/0qKkJ6v6nj2RuC/92+p6XiXrKsbxXQezkeI0OPSDz520u7qcnM+ZX0g0qQa4v
-	 2srSyQiPkQcjg==
+Received: (qmail 6110 invoked from network); 13 Aug 2015 21:00:47 -0000
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707925654; x=1708530454;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=i/GpVbBOylaLKuo1+eDImyNC5I/Z0Y2+WS3R1scJXAA=;
-        b=SLMBkcZ1ED17aj4iNzW8RNU1z59yaLncUuR9CcDk7pJb2SpeHaFtLpi7XogYPmWzRX
-         KcfPVjJh4j4MLoc181yNioUGXzq/PQpxyKjCkzEe2Xf0HyeRNdfwD/UwRqd+um444ak5
-         3v79rmyie0Mvr48uL/secxVonCFzTrSU4zYE0lt9B3NeGi+7Xbm1go83l3Itxm6proFk
-         yDGPvREFlbjl8I83eK9pVqQt5MFF9Iq+I7gkfM/eCjXKj999jAlgqD87xX5qNOhTBL7L
-         T5Sjeu0yd/NOwKpucNRLuTtuy9K5j7KfF2PBQGzoypD5oWupswEmv/nidKVslASKZalI
-         vr3A==
-X-Forwarded-Encrypted: i=1; AJvYcCWPu+ezzaLMntgmsjZi9+87iOOfE8zp6Yi+3Eg6HXs0mDUjqvFr+byqccXcoMm2g17KE1r8WNXWKF56hqZ387V0Fxx1MRPU3cfgennQtxf8
-X-Gm-Message-State: AOJu0Yw7pKutnVmJ1aHCaIdtJIEbRUtc2kQFbRv9/y12AFciVzDaQCFp
-	BzPqzoSfJuSgfeATRPs6OSUQKV/zIRIENqbsVV0eIA81d2Rjbz89xRYF/vQ1kRUfVE1BaHCzXOX
-	VIcTBeafDYFZl0C9EIkiHOwOA5S+kll5whwAoVseuUtdFxw0TF8JIyOodhvjZnBHBIASwM8k8zJ
-	hUuycYyY1eGpStlhdR/si7YYm9fQJCIK/4M6q0qVHNmnAiXBb/Es4UqiG+/Iyw++m1
-X-Received: by 2002:a05:6820:1ca8:b0:59a:6df:5f19 with SMTP id ct40-20020a0568201ca800b0059a06df5f19mr1607503oob.4.1707925654549;
-        Wed, 14 Feb 2024 07:47:34 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEq4EeQ2gUHo++Bhqbri8Fd0AmhOvY3SmRasJ9A4LeV7k6AeKG0XL9C1mGOtF8N+nomsyUQoiIgFuC8EY1wceU=
-X-Received: by 2002:a05:6820:1ca8:b0:59a:6df:5f19 with SMTP id
- ct40-20020a0568201ca800b0059a06df5f19mr1607489oob.4.1707925654317; Wed, 14
- Feb 2024 07:47:34 -0800 (PST)
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
+         :content-type;
+        bh=e16H4zoTC9zeONAipwQO7+f9+RXeWWUgI6tp+tNzpx8=;
+        b=Km5J9ra+qUyTY1ckaEoWPqfZ7Uwyt8fDUfKjRyVQB7qtTL7IIiFymblWwZ4Di3zing
+         0yekHJwVGSnYHJhsQ7VxDUQBAuV4UQ/ypuQjigyXZjhyzM7SjpO1QhTPIYkEZ6gEElJk
+         0MFnpwMfTmsuZocKkxNOnsidt1swTu+uz4HZIVokuxnICk/+34v32UWP0Ou57XSYHZh8
+         xCah96ZCR/mWHH2f/9w5yrxCZtUkxto3XS65Sh9zfrvJg5cPLQtZ3fs3twOa299Pd+Yp
+         T+CwlBWx41lqG6X6v5rbhvs6tFsO9upaJqPBUfmPOlmTJKKLGWej2KIY2q0gzfMedjqF
+         SpMQ==
+X-Gm-Message-State: ALoCoQkeA29XD12nBRm/5Vt9tQOhp6UWJ2kxnp7h/WlvZAxI5HK/gkKi/aTjqWjroeO/f3a7+83t
 MIME-Version: 1.0
-References: <CAAfJHtpMWco6y_wRRzrgQfJZmwzsMG6P8D5FFWLMAOihuc2dZw@mail.gmail.com>
- <ZczfqLnI23SC-A7Q@corsac.net>
-In-Reply-To: <ZczfqLnI23SC-A7Q@corsac.net>
-From: Mate Kukri <mate.kukri@canonical.com>
-Date: Wed, 14 Feb 2024 15:47:23 +0000
-Message-ID: <CAAfJHtrrtWXmZzUbNhTKP9aXyu90ZsfcOa_cZhBkKS4uUign9Q@mail.gmail.com>
-To: corsac@debian.org, oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [oss-security] Secure Boot bypass in EDK2 based Virtual Machine firmware
+X-Received: by 10.170.41.144 with SMTP id 138mr40214409ykj.45.1439499635851;
+ Thu, 13 Aug 2015 14:00:35 -0700 (PDT)
+Message-ID: <CANO=Ty1O8VjFrbhFDW73aeoyOrpoMYp22A=ExDvXtWG1hpTPgQ@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=001a1137d4427341fc051d37a01a
+Date: Thu, 13 Aug 2015 15:00:35 -0600
+From: Kurt Seifried <kseifried@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Audit: log terminal emulator escape sequences handling CVE-2015-5186
+To: oss-security <oss-security@lists.openwall.com>
 
-That is correct in the general case, but here the issue comes from the
-fact that a copy of the Shell was included in the firmware image
-itself, and as a built-in application was implicitly trusted.
+--001a1137d4427341fc051d37a01a
+Content-Type: text/plain; charset=UTF-8
 
-On Wed, Feb 14, 2024 at 3:44=E2=80=AFPM Yves-Alexis Perez <corsac@debian.or=
-g> wrote:
->
-> On Wed, Feb 14, 2024 at 02:40:43PM +0000, Mate Kukri wrote:
-> > Hello,
-> >
-> > We have identified a vulnerability resulting from an insecure default
-> > configuration of OVMF/AAVMF
-> > and similar firmware as used in Ubuntu's edk2 package, the firmware
-> > used by LXD, and potentially other similar software.
-> >
-> > Said EDK2 based firmwares implement UEFI Secure Boot functionality but
-> > also contain a copy of the UEFI Shell,
-> > this gives an OS resident attacker (without physical access or
-> > pseudo-physical access) the ability to execute arbitrary
-> > code at system level, and thus the ability bypass UEFI Secure Boot.
->
-> Hi Mate,
->
-> I'm not sure if I understand everything correctly, but if UEFI Secure
-> Boot is enabled, shouldn't the shell.efi binary need to be explicitely
-> signed in order for it to be correctly loaded? It doesnt look like a
-> good idea to sign shell.efi on a production platform, but for test
-> purposes it might be relevant.
->
-> Regards,
-> --
-> Yves-Alexis Perez
+Steve Grubb of Red Hat reports:
+
+When auditing the filesystem the names of files are logged. These filenames
+can contain escape sequences, when viewed using the ausearch programs "-i"
+option for example this can result in the escape sequences being processed
+unsafely by the terminal program being used to view the data.
+
+This has been corrected upstream with the following commit:
+https://fedorahosted.org/audit/changeset/1122
+
+Easy workaround: don't use really old terminals/rxvt/etc that are
+vulnerable to escape sequence handling issues.
+
+
+-- 
+
+--
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@redhat.com
+
+--001a1137d4427341fc051d37a01a--
