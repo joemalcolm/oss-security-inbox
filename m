@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["974" "Monday" "19" "June" "2017" "15:17:03" "-0700" "Jacob Champion" "jchampion@apache.org" "<d95393cd-f9f9-4ddf-d8bd-9bb972214230@apache.org>" "31" "[oss-security] CVE-2017-7668: Apache httpd 2.x ap_find_token buffer overread" nil nil nil "6" "2017061922:17:03" "[oss-security] CVE-2017-7668: Apache httpd 2.x ap_find_token buffer overread" (number mark "U       jchampion@ap Jun 19   31/974   " thread-indent "\"[oss-security] CVE-2017-7668: Apache httpd 2.x ap_find_token buffer overread\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["862" "Thursday" "13" "August" "2015" "11:06:10" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<CANO=Ty1icpVKK4T-QLNe9ym1zeJRhvkRHvZFpVd7Vb1vM1tV2A@mail.gmail.com>" "33" "[oss-security] CVE request for saltstack" nil nil nil "8" "2015081317:06:10" "[oss-security] CVE request for saltstack" (number mark "        kseifried@re Aug 13   33/862   " thread-indent "\"[oss-security] CVE request for saltstack\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 5971 invoked by uid 550); 19 Jun 2017 22:54:46 -0000
+Received: (qmail 32254 invoked by uid 550); 13 Aug 2015 17:06:23 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,48 +11,60 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 6077 invoked from network); 19 Jun 2017 22:17:18 -0000
-From: Jacob Champion <jchampion@apache.org>
-To: oss-security@lists.openwall.com
-Message-ID: <d95393cd-f9f9-4ddf-d8bd-9bb972214230@apache.org>
-Date: Mon, 19 Jun 2017 15:17:03 -0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.1.1
+Received: (qmail 32226 invoked from network); 13 Aug 2015 17:06:23 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
+         :content-type;
+        bh=mwcME8MG2Y2xDRRBCodoB8u9G6hspKD77jmDpQXo8Hk=;
+        b=LwheQcFLA03KRhoUqwj8FmZDsbA0KfN4+tV3BJP3FXKN8t7YP0/CbsyoXAOdi/Njjd
+         TbEEHskpHzutqLmTUSE2r96Nc2XmRoRpay+PDc1bq2vX64snA1ca+bWjyUJgdh7IgfZ8
+         vbL0JpVxy6R6Tqb5XadZzV3ymP5hBMV1OEQQHEorBN4oKC4ltHHTmNrmNa9L91kpz1SS
+         vkeoBOMEFPQn6DiMLg8JcbI68xojOBAJlgerPBwfc/c2CKVdIerCYrY7OT480eVtPOFs
+         jdqTYpE1UoR+gvjPT5lmpKBVLYNHlHqz383l2bjLNA6R0nW34JPvDLCHRf8CyERwHox9
+         JZBw==
+X-Gm-Message-State: ALoCoQkmsGjlEV5dfBJjcnGHB/MVqdbNT61zOH7uu8tD8LQLe9gatuchVfDUhxaqECsze7zFU6PR
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-Subject: [oss-security] CVE-2017-7668: Apache httpd 2.x ap_find_token buffer overread
+X-Received: by 10.129.103.5 with SMTP id b5mr21319292ywc.55.1439485570995;
+ Thu, 13 Aug 2015 10:06:10 -0700 (PDT)
+Message-ID: <CANO=Ty1icpVKK4T-QLNe9ym1zeJRhvkRHvZFpVd7Vb1vM1tV2A@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=001a11490c141e8f0a051d345aa3
+Date: Thu, 13 Aug 2015 11:06:10 -0600
+From: Kurt Seifried <kseifried@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE request for saltstack
+To: oss-security <oss-security@lists.openwall.com>, security@saltstack.com
 
-CVE-2017-7668: ap_find_token buffer overread
+--001a11490c141e8f0a051d345aa3
+Content-Type: text/plain; charset=UTF-8
 
-Severity: Important
+So someone pointed this out to me:
 
-Vendor: The Apache Software Foundation
+https://github.com/saltstack/salt/commit/e8ce66cf688b43aeb3e716e78b1af3a08e9940e3
 
-Versions Affected:
-httpd 2.2.32
-httpd 2.4.24 (unreleased)
-httpd 2.4.25
+     priv = '{0}.pem'.format(base)
+     pub = '{0}.pub'.format(base)
 
-Description:
-The HTTP strict parsing changes added in 2.2.32 and 2.4.24 introduced a
-bug in token list parsing, which allows ap_find_token() to search past
-the end of its input string. By maliciously crafting a sequence of
-request headers, an attacker may be able to cause a segmentation fault,
-or to force ap_find_token() to return an incorrect value.
+-    gen = RSA.gen_key(keysize, 1, callback=lambda x, y, z: None)
++    gen = RSA.gen_key(keysize, 65537, callback=lambda x, y, z: None)
+     cumask = os.umask(191)
+     gen.save_key(priv, None)
+     os.umask(cumask)
 
-Mitigation:
-2.2.32 users should either apply the patch available at
-https://www.apache.org/dist/httpd/patches/apply_to_2.2.32/CVE-2017-7668.patch
-or upgrade in the future to 2.2.33, which is currently unreleased.
+This is using the M2Crypto.RSA.
 
-2.4.25 users should upgrade to 2.4.26.
+TL;DR: doing RSA crypto with a public exponent value of "1" makes crypto
+very fast. Fast is not always good.
 
-Credit:
-The Apache HTTP Server security team would like to thank Javier Jiménez
-(javijmor@gmail.com) for reporting this issue.
+Can we get a CVE for this please?
 
-References:
-https://httpd.apache.org/security_report.html
+
+
+-- 
+
+--
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@redhat.com
+
+--001a11490c141e8f0a051d345aa3--
