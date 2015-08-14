@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["513" "Sunday" "22" "March" "2015" "23:41:56" "+0300" "Alexander Cherepanov" "cherepan@mccme.ru" "<550F2914.2080504@mccme.ru>" "12" "Re: [oss-security] CVE for Kali Linux" nil nil nil "3" "2015032220:41:56" "[oss-security] CVE for Kali Linux" (number mark "        cherepan@mcc Mar 22   12/513   " thread-indent "\"Re: [oss-security] CVE for Kali Linux\"\n") "<550F0ADD.5020800@gmail.com>" ("<550EE478.70005@redhat.com>" "<E1YZj9N-0003Th-Gn@rmm6prod02.runbox.com>" "<20150322172300.GA21110@openwall.com>" "<550F0ADD.5020800@gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1035" "Friday" "14" "August" "2015" "15:09:39" "-0800" "Michael McNally" "mcnally@isc.org" "<55CE7533.1090303@isc.org>" "33" "[oss-security] Re: Is CVE-2015-4650 a duplicate, leak, or just a typo?" nil nil nil "8" "2015081423:09:39" "[oss-security] Re: Is CVE-2015-4650 a duplicate, leak, or just a typo?" (number mark "        mcnally@isc. Aug 14   33/1035  " thread-indent "\"[oss-security] Re: Is CVE-2015-4650 a duplicate, leak, or just a typo?\"\n") "<55CB4D2A.1070404@isc.org>" ("<55CB3CE9.1030104@redhat.com>" "<55CB4D2A.1070404@isc.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 10228 invoked by uid 550); 22 Mar 2015 20:42:07 -0000
+Received: (qmail 7554 invoked by uid 550); 14 Aug 2015 23:09:57 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,28 +11,52 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 10198 invoked from network); 22 Mar 2015 20:42:07 -0000
-Message-ID: <550F2914.2080504@mccme.ru>
+Received: (qmail 7531 invoked from network); 14 Aug 2015 23:09:56 -0000
+Message-ID: <55CE7533.1090303@isc.org>
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
 MIME-Version: 1.0
-References: <550EE478.70005@redhat.com> <E1YZj9N-0003Th-Gn@rmm6prod02.runbox.com> <20150322172300.GA21110@openwall.com> <550F0ADD.5020800@gmail.com>
-In-Reply-To: <550F0ADD.5020800@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Date: Sun, 22 Mar 2015 23:41:56 +0300
-From: Alexander Cherepanov <cherepan@mccme.ru>
+References: <55CB3CE9.1030104@redhat.com> <55CB4D2A.1070404@isc.org>
+In-Reply-To: <55CB4D2A.1070404@isc.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+CC: oss-security@lists.openwall.com, 
+ "security-officer@isc.org" <security-officer@isc.org>
+Date: Fri, 14 Aug 2015 15:09:39 -0800
+From: Michael McNally <mcnally@isc.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE for Kali Linux
-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: Is CVE-2015-4650 a duplicate, leak, or just a typo?
+To: Florian Weimer <fweimer@redhat.com>
 
-On 2015-03-22 21:33, Daniel Micay wrote:
-> HTTPS/HSTS/HPKP is important because it doesn't require that the user
-> goes out of their way to validate the software (few do) and is needed to
-> build the initial trust in the first place. How else do you get the GPG
-> public key in the first place?
+On 8/12/15 5:42 AM, ISC Security Officer wrote:
 
-By HTTP via several routes. It's easy now -- just use Tor. Download you 
-bootstrapping pieces through clearnet once and via Tor several times 
-switching circuits in-between and compare them.
+> Speaking for ISC on the matter, I suspect a typo as well; at any rate
+> we have no knowledge of a CVE with that number.=20
 
--- 
-Alexander Cherepanov
+We contacted the administrators of the web page that Florian identified
+as the origin of the error and asked them about it.  I include their
+response, which confirms that it was an inadvertent typo.
+
+> Hi Michael,
+>=20
+> Thanks for flagging this for us.  It is indeed a typo.
+> We've corrected our release notes and security advisory.
+>=20
+> https://www.alienvault.com/forums/discussion/5706/
+>=20
+> Regards,
+> Jim
+>=20
+> -------------------------------------------------------------------------=
+------------------
+> Jim Hansen
+> AlienVault, Inc. | VP, Product Management
+
+If you spot "CVE-2015-4650" (the typo'ed number) in use elsewhere,
+please either inform the page owner of the error or inform
+security-officer@isc.org if you think that people will be significantly
+mislead by the error.
+
+Thank you,
+
+Michael McNally
+(responding as ISC Security Officer)
