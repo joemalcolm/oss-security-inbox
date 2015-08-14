@@ -1,4 +1,9 @@
-Received: (qmail 1394 invoked by uid 550); 27 Apr 2026 15:06:36 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1283" "Friday" "14" "August" "2015" "15:04:03" "+0200" "Salvatore Bonaccorso" "carnil@debian.org" "<20150814130403.GA15575@eldamar.local>" "42" "Re: [oss-security] CVE request: GNUTLS-SA-2015-3 double free in certificate DN decoding" nil nil nil "8" "2015081413:04:03" "[oss-security] CVE request: GNUTLS-SA-2015-3 double free in certificate DN decoding" (number mark "        carnil@debia Aug 14   42/1283  " thread-indent "\"Re: [oss-security] CVE request: GNUTLS-SA-2015-3 double free in certificate DN decoding\"\n") "<87d1yv1oqx.fsf@redhat.com>" ("<87d1yv1oqx.fsf@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 14190 invoked by uid 550); 14 Aug 2015 13:04:16 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,84 +11,75 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 15979 invoked from network); 27 Apr 2026 12:31:55 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cpansec.org; s=gm1;
-	t=1777293105;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=oZWHyAeyZ0BdarCaXx1mN5qeq33L+c+3r+NFTvJsx1c=;
-	b=Nj1tIlHyLP1bkMLD8k1C3RZ282vJ4eJYyGkqvSGXyF14q4c4vDcJ20ldCNXDOQTeBc2BaF
-	oweh038Oxxj+8trA0Amg65MpDp8QlEC3Wt7LNCk8SXVMPiUlIp8jg24jeas+IqV+3YSKdo
-	DRNLAX9TKTSrcgZvl/l+VwSHXzCt7eqanKfAcnO6u/Kc7Bv2HHChHQsGWn8M0ISRg+1GQ5
-	g7CpVUL/vtN5p/W46Si8qnLkOmlQu7/+0qJ52eLaHRIL+BLazHV3pX6Q1dOdf4DDdKJtLw
-	YxEsN/5s6XH7Lv6Oo/2BvLhgacVRBwWxT5ELQYt0RDD+MxSOiXlQrbLrQGfv5A==
-Message-ID: <a28db23e-ff76-424c-9945-8e96a36015c3@cpansec.org>
-Date: Mon, 27 Apr 2026 13:31:45 +0100
+Received: (qmail 14172 invoked from network); 14 Aug 2015 13:04:15 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=yf8BwUUcAEFtapRlQSvoTAkD2BEAPBHA4hi/iN0E7IU=;
+        b=VRwXPmxQlfb+RGk7ZVxlfQE9y90FhccC7k3hFVDWCw6jOGGw5x3HqczYjPU+G3UFj4
+         EQS5dIWeNZELF/9RZPdvgJew7oBWE3DK7hf1j3HTdgmLWOe8/3NFNAsKnOx6Sa1oyinc
+         86MQiNgkPKFp5c/+F8lq55w/T+Y8IiyIT3+vRbi9Fnq6piOQhiDg0a4zUUJOFjA8uZOC
+         U2sxnSBSprXI/+4LYP0ILz5gJd1eqezNyyWLHSulpMAMDoGJLs1KYpAACIlUBVaSf0eL
+         +5k/HPRksbdpM2clK7ROZ1HJVxSzy5GeKRRWk1Hid+OWcVAImP0OiddvhrTFn4loF/aQ
+         5ujA==
+X-Received: by 10.180.39.172 with SMTP id q12mr6626921wik.17.1439557444565;
+        Fri, 14 Aug 2015 06:04:04 -0700 (PDT)
+Message-ID: <20150814130403.GA15575@eldamar.local>
+References: <87d1yv1oqx.fsf@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Robert Rothenberg <rrwo@cpansec.org>
-Content-Language: en-GB, en-ZA
-To: cve-announce@security.metacpan.org, oss-security@lists.openwall.com
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-GND-Sasl: rrwo@cpansec.org
-X-GND-State: clean
-X-GND-Score: 0
-X-GND-Cause: dmFkZTFMA4X3M+ABZEjJ1i7aqhSqktc73OBNxOXXhhbFRNi2ppzS1hD+fceFkWPtYx+3Rn7hHefcAMoKYf5Yi1qeSx86kVlIIvhS+joO+CNzbN6UfKPqiE8qfRNFgvZOXjpoQ/qsltBWrVFTf6oDTrrf7M13/7ObYLJBNOVDUWZ0cQ1xrjIGfpHWIQdPyRPI8LyqmEQUmUepFSkO1AZMvzkDR94FUN7Ohg8zydDGJRM84iA3+TWGEE//Bt6xLE2hTE1UA/H+dP+QGh1xHoSCaxR7QleYjRuc/9GvboLrzcy7oybYeGwqkKHLDYMxs2c69O8YCGhQu103b8DMigWNbERwqfoheVQGxvapJlC/OJj6ZRFeQFI9s2UWYPplssmbpB/66sVAf87XH2lA0iMrBfoewo19YVk4LvVXYErB1xwIayZ+ZyVUboGcNICDI1WNApXnUYy+/we1BWIifKz12fRbxPkTlHbKn06goQsWJJ0zs1/XAzS375ZA7I1AbH2MyhPF4nQ7NdWciLzEDWb8geJ6rKt8utLI0e72skYTdUpQsf7G1wukJOwocR0rA20q+sltHm09g9s90GholsZu2MJcsvKMLHZQzeNLg7YkiHSL3F/Z6JY0v7XmX33L6vIW8Z0rcaOrAcuqDemKsWaam+YS3Um1eLW60Au1Wy5FGf20QeJuvQ
-Subject: [oss-security] CVE-2026-7040: Text::Minify::XS versions from v0.3.0 before v0.7.8
- for Perl have heap overflow when processing some malformed UTF-8 characters
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <87d1yv1oqx.fsf@redhat.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+Cc: CVE Assignments MITRE <cve-assign@mitre.org>
+Date: Fri, 14 Aug 2015 15:04:03 +0200
+From: Salvatore Bonaccorso <carnil@debian.org>
+Reply-To: oss-security@lists.openwall.com
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Subject: Re: [oss-security] CVE request: GNUTLS-SA-2015-3 double free in
+ certificate DN decoding
+To: oss-security@lists.openwall.com
 
-========================================================================
-CVE-2026-7040                                        CPAN Security Group
-========================================================================
+Hi,
 
-         CVE ID:  CVE-2026-7040
-   Distribution:  Text-Minify-XS
-       Versions:  from v0.3.0 before v0.7.8
+On Mon, Aug 10, 2015 at 11:23:02AM +0200, Martin Prpic wrote:
+> Hi,
+> 
+> GnuTLS released versions 3.4.4 and 3.3.17 that fix one security issue:
+> 
+> http://www.gnutls.org/security.html#GNUTLS-SA-2015-3
+> 
+> "Kurt Roeckx reported that decoding a specific certificate with very
+> long DistinguishedName (DN) entries leads to double free, which may
+> result to a denial of service. Since the DN decoding occurs in almost
+> all applications using certificates it is recommended to upgrade the
+> latest GnuTLS version fixing the issue. Recommendation: Upgrade to
+> GnuTLS 3.4.4, or 3.3.17."
+> 
+> The upstream patch that fixes this issue is available at:
+> 
+> https://gitlab.com/gnutls/gnutls/commit/272854367efc130fbd4f1a51840d80c630214e12
+> 
+> Can a CVE please be assigned to this issue?
+> 
+> Also, there is still no CVE for the issue before this one. The CVE
+> request was sent on May 5:
+> 
+> http://seclists.org/oss-sec/2015/q2/367
+> 
+> Can a CVE be assigned to this as well?
+> 
+> Thank you!
+> 
+> Refs:
+> rhbz GNUTLS-SA-2015-2: https://bugzilla.redhat.com/1218426
+> rhbz GNUTLS-SA-2015-3: https://bugzilla.redhat.com/1251902
 
-       MetaCPAN:  https://metacpan.org/dist/Text-Minify-XS
-       VCS Repo:  https://github.com/robrwo/Text-Minify-XS
+Adding explicitly MITRE CVE assignment team to the loop.
 
+Can CVEs be assigned for both GNUTLS-SA-2015-2 and GNUTLS-SA-2015-3
+issues?
 
-Text::Minify::XS versions from v0.3.0 before v0.7.8 for Perl have heap
-overflow when processing some malformed UTF-8 characters
-
-Description
------------
-Text::Minify::XS versions from v0.3.0 before v0.7.8 for Perl have a
-heap overflow when processing some malformed UTF-8 characters.
-
-The minify functions mishandled some malformed UTF-8 characters,
-leading to heap corruption.
-
-Note that the minify_utf8 function is an alias for minnify.
-
-Problem types
--------------
-- CWE-176 Improper Handling of Unicode Encoding
-- CWE-122 Heap-based Buffer Overflow
-
-Workarounds
------------
-Validate that all strings passed to the minify and minify_utf8
-functions.
-
-
-Solutions
----------
-Upgrade to v0.7.8 or later.
-
-
-References
-----------
-https://github.com/robrwo/Text-Minify-XS/security/advisories/GHSA-jqhf-vv4h-77h2
-https://metacpan.org/release/RRWO/Text-Minify-XS-v0.7.8/changes
-
-Timeline
---------
-- 2026-04-23: This issue was identified by CPANSec
-- 2025-04-25: Fix uploaded to CPAN
-
+Regards,
+Salvatore
