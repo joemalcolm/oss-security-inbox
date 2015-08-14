@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["705" "Sunday" "8" "November" "2015" "19:36:20" "-0500" "Jason Shepherd" "jshepher@redhat.com" "<1904852023.6462846.1447029380024.JavaMail.zimbra@redhat.com>" "10" "[oss-security] Assign CVE for common-collections remote code execution on deserialisation flaw" "^Date:" nil nil "11" "2015110900:36:20" "[oss-security] Assign CVE for common-collections remote code execution on deserialisation flaw" (number mark "        jshepher@red Nov  8   10/705   " thread-indent "\"[oss-security] Assign CVE for common-collections remote code execution on deserialisation flaw\"\n") "<1278250696.6459242.1447028856240.JavaMail.zimbra@redhat.com>" ("<1278250696.6459242.1447028856240.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1651" "Thursday" "13" "August" "2015" "21:53:42" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150814015342.4DE6F6C008C@smtpvmsrv1.mitre.org>" "43" "[oss-security] Re: Duplicate Wireshark CVEs?" nil nil nil "8" "2015081401:53:42" "[oss-security] Re: Duplicate Wireshark CVEs?" (number mark "        cve-assign@m Aug 13   43/1651  " thread-indent "\"[oss-security] Re: Duplicate Wireshark CVEs?\"\n") "<87bnef1kxg.fsf@redhat.com>" ("<87bnef1kxg.fsf@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 27763 invoked by uid 550); 9 Nov 2015 01:01:28 -0000
+Received: (qmail 5718 invoked by uid 550); 14 Aug 2015 01:53:55 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,30 +11,56 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 19591 invoked from network); 9 Nov 2015 00:36:33 -0000
-Message-ID: <1904852023.6462846.1447029380024.JavaMail.zimbra@redhat.com>
-In-Reply-To: <1278250696.6459242.1447028856240.JavaMail.zimbra@redhat.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.64.51.119]
-X-Mailer: Zimbra 8.0.6_GA_5922 (ZimbraWebClient - SAF9 (Mac)/8.0.6_GA_5922)
-Thread-Topic: Assign CVE for common-collections remote code execution on deserialisation flaw
-Thread-Index: GwiytGA/IDdJaAuw8DiW0sDj65Wqdg==
-Date: Sun, 8 Nov 2015 19:36:20 -0500 (EST)
-From: Jason Shepherd <jshepher@redhat.com>
+Received: (qmail 5696 invoked from network); 14 Aug 2015 01:53:54 -0000
+In-Reply-To: <87bnef1kxg.fsf@redhat.com>
+Message-Id: <20150814015342.4DE6F6C008C@smtpvmsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Thu, 13 Aug 2015 21:53:42 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Assign CVE for common-collections remote code execution on
- deserialisation flaw
-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: Duplicate Wireshark CVEs?
+To: mprpic@redhat.com, siddharth@redhat.com
 
-Hello oss-esc,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-It was found that a flaw in Apache commons-collections Java library allowed remote code execution when Deserialised with Java Object Serialization. Full details of the vulnerability can be found in this recent blog post, [1]. A proposed patch for 3.2.x branch has been submitted upstream, but no release has been made with the fix at the current time. The issue affects version 3.x, and 4.x of Apache common-collections, [2].
+> Any information available on why both Wireshark CVEs
+> CVE-2015-3811 CVE-2015-2188 point to one fix ?
 
-   [1] http://foxglovesecurity.com/2015/11/06/what-do-weblogic-websphere-jboss-jenkins-opennms-and-your-application-have-in-common-this-vulnerability/
-   [2] https://issues.apache.org/jira/browse/COLLECTIONS-580
+These two URLs:
 
-Regards,
-Jason Shepherd
-Red Hat Product Security
+  http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-3811
+  http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-2188
+
+currently do not point to the same fix, and never have pointed to the
+same fix. The first URL has existed since May, and the second has
+existed since March.
+
+>> Is there a reason two CVEs were assigned for this
+
+The two CVEs were assigned to two different issues.
+
+Our perspective is that multiple sources, including the upstream
+vendor, currently have an error in which wnpa-sec-2015-14 refers to
+bug number 10844, and that the intended bug number for
+wnpa-sec-2015-14 (after that error is corrected) is 10978. We will
+check with the upstream vendor and see whether they can confirm that
+bug number 10978 actually does refer to a non-identical security
+problem that was addressed months after 10844.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBCAAGBQJVzUkhAAoJEKllVAevmvmsblIIAJUpf8g7W9D+WJmD0AGgTqaO
+Wb0K7n1q8GwLcR+kucLqAyMruXu0hqliuc0lZGkylIqllL6h/yPbDAjE3TxYCavf
+GPquPCJyV5SenrIjJLNq7tNAMA4MDUZF23UoR3wI1a/SEpVLzLXgadMpsGZ1Q4CZ
+pydcttGTgnQGX9oc//PCMahIAMzA/lJcvASu4XnqlSayZ6yVvzKogF51nsqFK+zD
+sQzSI0Vhrv/p9Ycn7FVcJYI7LRbw+yM5tS+TibgjPM6p7OKPrNJzVzSnpDs+UhkZ
+EWOaOl8Qdy/+aWsagMWSCz52Kqo0jJ2LMsW8ulhqgyL2JfmKdWL1ZBx5N0+9cyk=
+=eI8T
+-----END PGP SIGNATURE-----
