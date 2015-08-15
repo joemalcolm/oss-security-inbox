@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["642" "Friday" "12" "August" "2016" "00:53:17" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1608120047520.6399@wniryva>" "22" "[oss-security] CVE Request Qemu: Information leak in vmxnet3_complete_packet" nil nil nil "8" "2016081119:23:17" "[oss-security] CVE Request Qemu: Information leak in vmxnet3_complete_packet" (number mark "U       ppandit@redh Aug 12   22/642   " thread-indent "\"[oss-security] CVE Request Qemu: Information leak in vmxnet3_complete_packet\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["903" "Saturday" "15" "August" "2015" "13:52:45" "+0200" "=?UTF-8?B?TW9yaXR6IE3DvGhsZW5ob2Zm?=" "jmm@inutil.org" "<20150815115245.GB6223@pisco.westfalen.local>" "27" "Re: [oss-security] CVE request: 2 issues in inspircd" nil nil nil "8" "2015081511:52:45" "[oss-security] CVE request: 2 issues in inspircd" (number mark "        jmm@inutil.o Aug 15   27/903   " thread-indent "\"Re: [oss-security] CVE request: 2 issues in inspircd\"\n") "<20150415172201.GA8061@eldamar.local>" ("<20150329122044.GX1846@frisco.mine.nu>" "<20150415172201.GA8061@eldamar.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 5614 invoked by uid 550); 11 Aug 2016 19:23:36 -0000
+Received: (qmail 30673 invoked by uid 550); 15 Aug 2015 19:55:39 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,39 +11,50 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5596 invoked from network); 11 Aug 2016 19:23:35 -0000
-Date: Fri, 12 Aug 2016 00:53:17 +0530 (IST)
-From: P J P <ppandit@redhat.com>
-X-X-Sender: pjp@javelin
-To: oss security list <oss-security@lists.openwall.com>
-cc: Li Qiang <liqiang6-s@360.cn>
-Message-ID: <alpine.LFD.2.20.1608120047520.6399@wniryva>
+Received: (qmail 30651 invoked from network); 15 Aug 2015 19:55:39 -0000
+Message-ID: <20150815115245.GB6223@pisco.westfalen.local>
+References: <20150329122044.GX1846@frisco.mine.nu>
+ <20150415172201.GA8061@eldamar.local>
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.27
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.30]); Thu, 11 Aug 2016 19:23:23 +0000 (UTC)
-Subject: [oss-security] CVE Request Qemu: Information leak in vmxnet3_complete_packet
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20150415172201.GA8061@eldamar.local>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-SA-Exim-Connect-IP: 141.70.75.12
+X-SA-Exim-Mail-From: jmm@inutil.org
+X-SA-Exim-Scanned: No (on inutil.org); SAEximRunCond expanded to false
+Cc: cve-assign@mitre.org
+Date: Sat, 15 Aug 2015 13:52:45 +0200
+From: =?UTF-8?Q?Moritz_M=C3=BChlenhoff?= <jmm@inutil.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] CVE request: 2 issues in inspircd
+To: oss-security@lists.openwall.com
 
-   Hello,
+On Wed, Apr 15, 2015 at 07:22:01PM +0200, Salvatore Bonaccorso wrote:
+> Hi,
+> 
+> On Sun, Mar 29, 2015 at 02:20:44PM +0200, Sébastien Delafond wrote:
+> > Hi,
+> > 
+> > the Debian Security Team is requesting 2 CVEs for inspircd.
+> > 
+> >   * the fix that was included in Debian for CVE-2012-1836 is incomplete,
+> >     and does not solve the original remote code execution problem. See:
+> > 
+> >       https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=780880#5
+> > 
+> >   * a DoS can be triggered by invalid DNS packets. See:
+> > 
+> >       https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=780880#5
+> >       https://github.com/inspircd/inspircd/commit/58c893e834ff20495d007709220881a3ff13f423
+> 
+> For reference, this has been fixed via DSA-3226-1 in Debian:
+> https://lists.debian.org/debian-security-announce/2015/msg00114.html
 
-Quick Emulator(Qemu) built with the VMWARE VMXNET3 NIC device support is 
-vulnerable to an information leakage issue. It could occur while processing 
-transmit(tx) queue, when it reaches the end of packet.
+*ping*
 
-A privileged user inside guest could use this leak host memory bytes to a 
-guest.
+These never ended up in CVE assignments.
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2016-08/msg02108.html
-
-Reference:
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1366369
-
-This issue was reported by Li Qiang of 360.cn Inc.
-
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+Cheers,
+        Moritz
