@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6342" "Sunday" "17" "December" "2017" "09:06:08" "+0000" "halfdog" "me@halfdog.net" "<2172-1513501568.968862@pLoG.Le7g.f3CQ>" "129" "Re: [oss-security] Recommendations GnuPG-2 replacement" "^Date:" nil nil "12" "2017121709:06:08" "[oss-security] Recommendations GnuPG-2 replacement" (number mark "        me@halfdog.n Dec 17  129/6342  " thread-indent "\"Re: [oss-security] Recommendations GnuPG-2 replacement\"\n") "<20171207210134.GA7079@openwall.com>" ("<20171207210134.GA7079@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["528" "Monday" "17" "August" "2015" "15:52:17" "+0200" "Jan Kara" "jack@suse.cz" "<20150817135217.GA5728@quack.suse.cz>" "17" "[oss-security] CVE-2015-5706: kernel: Use-after-free in path lookup" nil nil nil "8" "2015081713:52:17" "[oss-security] CVE-2015-5706: kernel: Use-after-free in path lookup" (number mark "        jack@suse.cz Aug 17   17/528   " thread-indent "\"[oss-security] CVE-2015-5706: kernel: Use-after-free in path lookup\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 30094 invoked by uid 550); 17 Dec 2017 09:07:13 -0000
+Received: (qmail 32726 invoked by uid 550); 17 Aug 2015 13:59:07 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,146 +11,33 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 30076 invoked from network); 17 Dec 2017 09:07:12 -0000
-In-reply-to: <20171207210134.GA7079@openwall.com>
-References: <20171207210134.GA7079@openwall.com>
-Comments: In-reply-to Solar Designer <solar@openwall.com>
-   message dated "Thu, 07 Dec 2017 22:01:34 +0100."
+Received: (qmail 26587 invoked from network); 17 Aug 2015 13:52:32 -0000
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Message-ID: <20150817135217.GA5728@quack.suse.cz>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Message-ID: <2172-1513501568.968862@pLoG.Le7g.f3CQ>
-Date: Sun, 17 Dec 2017 09:06:08 +0000
-From: halfdog <me@halfdog.net>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
+Date: Mon, 17 Aug 2015 15:52:17 +0200
+From: Jan Kara <jack@suse.cz>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Recommendations GnuPG-2 replacement
+Subject: [oss-security] CVE-2015-5706: kernel: Use-after-free in path lookup
 To: oss-security@lists.openwall.com
 
-Solar Designer writes:
-> On Thu, Dec 07, 2017 at 06:32:11AM +0000, halfdog wrote:
-> > After getting gpg and agent running, I noticed, that not reliably
-> > stopping the gpg-agent on initrd would introduce a private key
-> > data leak via /proc from early boot process to running system
-> > when stopping fails.
-> 
-> Can you elaborate on this, please?
+Hello,
 
-As the agent process stays alive and initrd PID namespace is the
-same as final init-process PID namespace, the agent will stay
-via /proc and traceable by root using PTRACE.
+when looking into a fix for above CVE (commit f15133df088 in Linux kernel
+git tree) I found out that the commit description is wrong and the problem
+wasn't introduced by commit 60545d0d4610 in 3.11 but only by commit
+5e53084d7734 "path_init(): store the "base" pointer to file in nameidata
+itself" in 3.19. So the fix doesn't have to backported all the way back to
+3.11.
 
-> > Thus the Debian switch from gpg1 to gpg2 just introduced efforts
-> > fiddling with functionality I do not need and cannot disable,
-> > provides a keymanagement that cannot be configured easily to
-> > protect against the threats it should mitigate (theft of key material)
-> > and creating additional attack surface without any recognizable
-> > benefit.
-> 
-> I think the benefit is being on a version upstream intends to maintain
-> to a greater extent and for a longer time.  For example, when yet
-> another side-channel leak was reported against GnuPG 1 & 2 recently,
-> upstream officially patched it for GnuPG 2 only and said that GnuPG 1
-> probably contains many other side-channel leaks anyway: ...
->
-> Personally, I intend to stay with GnuPG 1 for now.
+For detailed analysis feel free to see:
+https://bugzilla.suse.com/show_bug.cgi?id=940339
 
-As Debian marked the packages with "gnupg1 - GNU privacy guard -
-a PGP implementation (deprecated "classic" version)" I wanted to
-anticipate the changes now, giving me more time to evaluate the
-changes and to find alternatives when needed. Apart from that,
-I am also inclined to switching, when statements from open-source
-community seem to indicate, that the burden to maintain both
-versions in a LTS scheme might be too much to carry. They should
-have their hands free for doing good work on the latest version,
-leaving the LTS procedures to payed service providers, I do not
-use privately.
- 
-> ...
-> > has changed
-> > from gpgv1 to gpgv2, so that it is ignored in gpg2 but does not
-> > cause any warning or error. Thus previous audited procedures continue
-> > to work but do not produce the same results any more. Of course,
-> > I could have compared documentation of all parameters of (at least
-> > security-related) programs after Jessie to Stretch upgrade, but
-> > I assumed, that security critical parameters would not change
-> > their meaning without any noticable effect - so just my fault.
-> 
-> Are you saying "--s2k-count" option to "gpg2" is ignored, and moreover
-> that this is documented?  gnupg-2.1.23/doc/gpg.texi says (formatted):
-> 
-> `--s2k-count `n''
->      Specify how many times the passphrase mangling is repeated.  This
->      value may range between 1024 and 65011712 inclusive.  The default
->      is inquired from gpg-agent.  Note that not all values in the
->      1024-65011712 range are legal and if an illegal value is selected,
->      GnuPG will round up to the nearest legal value.  This option is
->      only meaningful if `--s2k-mode' is 3.
+								Honza
 
-Here is the gpgv2 documentation:
-
-"     --s2k-count n
-              Specify how many times the passphrases  mangling  for  symmetric
-              encryption  is  repeated.  This value may range between 1024 and
-              65011712 inclusive.  The default  is  inquired  from  gpg-agent.
-              Note  that  not  all values in the 1024-65011712 range are legal
-              and if an illegal value is selected, GnuPG will round up to  the
-              nearest  legal  value.  This option is only meaningful if --s2k-
-              mode is set to the default of 3."
-
-You noticed the additional "symmetric" word? According to GPG
-developer that means, that with gpgv2 this setting is only applied
-with symmetric schemes, e.g. the "--symmetric" mode of GPG. For
-assymetric mode the parameter is just ignored.
-
-> This doesn't say the option is ignored - only that "the default is
-> inquired from gpg-agent."  Is the option in fact ignored?  That would be
-> a bug in either code or documentation.
-> 
-> > Still, this would just be a minor mishap, but what reduced my
-> > trust in GPG, was the comment of a developer: it was assumed,
-> > that they know better, where there software will be run without
-> > specifying that "where" in the documentation. Also his replies
-> > matched that picture, e.g. "(gpg-agent will) ... calibrate the
-> > S2K count to match the current machine", assuming that this is
-> > good reason to change "--s2k-count" meaning and ignore the parameter.
-> 
-> I see no problem with gpg-agent providing a calibrated default, if that
-> default can be overridden.  If it can't be, and especially if that's in
-> conflict with the documentation, that's problematic.
-
-It is not in conflict with documentation, as the "symmetric" word
-was added but therefore the parameter's meaning changed quite
-radically, considering that gpg is a tool used for assymetric
-encryption mainly.
- 
-> > PS: I do not know, how much the gpg-agent calibration under
-> > increased system load reduced the KDF complexity, as I failed
-> > to extract the KDF rounds value from the gpg data structures,
-> > but the value seems to be at least below 70ms due to total time
-> > measurements for gpg-agent (math, interprocess communication,
-> > filesystem) to unlock a key on an idle system.
-> 
-> You may process the private key file with gpg2john, then try to crack it
-> with john.  This will output the actual value, as well as show you the
-> speed at which passphrases can be tested against that key on your system
-> and with that version of JtR.  To use a GPU, add "--format=gpg-opencl".
-> Please use latest bleeding-jumbo off GitHub for all of this.
-
-Done that, but still fighting how to use "gpg2john" with the new
-gpgv2 "private-keys-v1.d" key format. Exporting the private keys
-using gpgv2 does not help as that requires the passphrase already,
-thus removing the gpgv2-encryption, we want to test.
-
-Just FYI: your releases on Openwall are still signed with the old
-openwall-key, according to http://www.openwall.com/signatures/ the
-key is "Old Openwall offline signing key (no longer used)". Apart
-from that, gnupgv2 cannot read it any more anyway. (gpg man page
-"You only need  to  use  GnuPG  1.x  if  your  platform
-doesn't  support  GnuPG 2.x, or you need support for some features that
-GnuPG 2.x has deprecated, e.g.,  decrypting  data  created  with  PGP-2
-keys."
-
-> ....
-
-hd
-
-
+-- 
+Jan Kara <jack@suse.com>
+SUSE Labs, CR
