@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1423" "Tuesday" "16" "August" "2016" "15:34:54" "+0530" "Huzaifa Sidhpurwala" "huzaifas@redhat.com" "<8b386585-e699-ca12-56b3-6104701f9e9a@redhat.com>" "35" "[oss-security] cracklib: Stack-based buffer overflow when parsing large GECOS field" nil nil nil "8" "2016081610:04:54" "[oss-security] cracklib: Stack-based buffer overflow when parsing large GECOS field" (number mark "U       huzaifas@red Aug 16   35/1423  " thread-indent "\"[oss-security] cracklib: Stack-based buffer overflow when parsing large GECOS field\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4968" "Monday" "17" "August" "2015" "16:19:09" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150817201909.DB2D46C002C@smtpvmsrv1.mitre.org>" "111" "[oss-security] Re: CVE request: ansible zone/chroot/jail escape" nil nil nil "8" "2015081720:19:09" "[oss-security] Re: CVE request: ansible zone/chroot/jail escape" (number mark "        cve-assign@m Aug 17  111/4968  " thread-indent "\"[oss-security] Re: CVE request: ansible zone/chroot/jail escape\"\n") "<1436871238.28364.89.camel@juliet.mcarpenter.org>" ("<1436871238.28364.89.camel@juliet.mcarpenter.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 5346 invoked by uid 550); 16 Aug 2016 10:05:08 -0000
+Received: (qmail 28578 invoked by uid 550); 17 Aug 2015 20:19:22 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,53 +11,124 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5328 invoked from network); 16 Aug 2016 10:05:07 -0000
-Message-ID: <8b386585-e699-ca12-56b3-6104701f9e9a@redhat.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.0
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.30]); Tue, 16 Aug 2016 10:04:56 +0000 (UTC)
-Date: Tue, 16 Aug 2016 15:34:54 +0530
-From: Huzaifa Sidhpurwala <huzaifas@redhat.com>
+Received: (qmail 28553 invoked from network); 17 Aug 2015 20:19:21 -0000
+In-Reply-To: <1436871238.28364.89.camel@juliet.mcarpenter.org>
+Message-Id: <20150817201909.DB2D46C002C@smtpvmsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, tkuratomi@ansible.com
+Date: Mon, 17 Aug 2015 16:19:09 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] cracklib: Stack-based buffer overflow when parsing large GECOS field
-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: CVE request: ansible zone/chroot/jail escape
+To: mcarpenter@free.fr
 
-Hi All,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-A security flaw was reported to us by CSG Labs, details as follows:
+> I recently found a symlink attack that enables a malicious
+> zone/chroot/jail managed by ansible to escape into the managing host.
+> This was fixed in ansible 1.9.2 (commit list below
 
-A stack-based overflow was found in the way cracklib, a library used to
-stop users from choosing easy to guess passwords, handled large GECOS
-field in the /etc/passwd file. When an application compiled against the
-cracklib libary, such as "passwd" is used to parse the GECOS field, it
-could cause the application to crash or execute arbitary code with the
-permissions of the user running such an application.
+We think we understand this well enough to make an initial CVE ID
+assignment. It is possible that some of our comments below are not
+really correct, or that additional CVE IDs will be needed.
 
-To trigger the flaw, you need a specially-crafted "long" GECOS field,
-which can be done by a local user on the system. The attacker then needs
-to run some utility which uses cracklib to process this long GECOS field
-on the system. (such as "passwd" application which runs suid root)
+Our understanding is that the essential issue is that file copying
+must be performed by code that is operating within the restricted
+environment (chroot, jail, or zone). It is wrong to do the file
+copying by operating outside the restricted environment, and relying
+on the addition of a leading pathname substring, because that doesn't
+address the symlink case.
 
-All versions of the cracklib library shipped with Red Hat Enterprise
-Linux are compiled with FORTIFY_SOURCE, which detects the
-buffer-overflow and aborts the application safely.
+This essential issue is what is covered by:
 
-Therefore the maximum impact of this flaw is application crash.
+  https://github.com/ansible/ansible/commit/952166f48eb0f5797b75b160fd156bbe1e8fc647
+      Fix problem with chroot connection plugins and symlinks from within
+      the chroot.
 
-However, there may be other applications, distributions which dont
-compile cracklib with FORTIFY_SOURCE, and this can lead to easy code
-exec or even privsec.
+  https://github.com/ansible/ansible/commit/ca2f2c4ebd7b5e097eab0a710f79c1f63badf95b
+      Fix problem with jail and zone connection plugins and symlinks from
+      within the jail/zone.
 
-A proposed patch is available at:
-https://bugzilla.redhat.com/attachment.cgi?id=1188599
+from your commit list.
 
-This flaw was assigned CVE-2016-6318 and it was previously disclosed via
-linux-distros mailing list.
+Use CVE-2015-6240 for this issue.
+
+There were a few differences in the code for chroot versus jail and
+zone, but we don't believe that the differences require a separate CVE
+ID. (Roughly, it appeared that code for operating within the
+restricted environment did exist in the jail and zone cases, i.e.,
+calls to jexec and zlogin existed, but this code was not used in the
+applicable place. By contrast, code for operating within the
+restricted environment did not exist in the chroot case.)
 
 
--- 
-Huzaifa Sidhpurwala / Red Hat Product Security Team
+> https://github.com/ansible/ansible/commit/548a7288a90c49e9b50ccf197da307eae525b899
+>     Use BUFSIZE when putting file as well as fetching file.
+
+We think this is an unrelated performance improvement that probably
+has no practical effect on security (maybe an attacker who had access
+within a restricted environment could create a huge file that would be
+copied with a 512-byte block size rather than a 65536-byte block size,
+and thus trigger more resource consumption). There is currently no CVE
+ID for this commit.
+
+
+> https://github.com/ansible/ansible/commit/270be6a6f5852c5563976f060c80eff64decc89c
+>     Fix exec_command to not use a shell
+
+We didn't completely understand this. One guess is that, given that
+the new code is operating within the restricted environment, it would
+be unsafe to rely on the pathname /bin/sh within the restricted
+environment, because the contents of /bin/sh are controllable by the
+attacker, or because /bin/sh might not exist. In that situation,
+there is no CVE ID because the previous code wasn't operating within
+the restricted environment, and thus the status of /bin/sh within the
+restricted environment was originally irrelevant.
+
+This might raise the question of text such as:
+
+   try:
+       p = self._buffered_exec_command('dd if=%s bs=%s' % (in_path, BUFSIZE), None)
+   except OSError:
+       raise errors.AnsibleError("jail connection requires dd command in the jail")
+
+in the next commit. In other words, we don't understand why it is safe
+to run a dd program found inside the restricted environment, given the
+original premise that the attacker has write access inside the
+restricted environment.
+
+It is also conceivable that this commit addresses a
+shell-metacharacter issue that is independent of which /bin/sh
+pathname is used. The CVE project team has not researched this.
+
+
+> https://github.com/ansible/ansible/commit/0777d025051bf5cf3092aa79a9e6b67cec7064dd
+>     Fix problem with jail and zone connection plugins and symlinks from
+>     within the jail/zone.
+
+There is no CVE ID for the code problem that was fixed by this commit.
+(For completeness, we should mention that the analogous code changes
+for the chroot case are contained in
+952166f48eb0f5797b75b160fd156bbe1e8fc647.) In other words, the
+existence of dd within the restricted environment was originally
+irrelevant. As mentioned above, it is conceivable that a CVE ID is
+needed for a code problem introduced by running an attacker-controlled
+dd program, but the CVE project team has not researched this and does
+not know whether it could ever be an exploitable vulnerability.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBCAAGBQJV0kEVAAoJEKllVAevmvmsLigH/0osp9n+2cpYhkHT4DmYoGdz
+0nJ8Mpu9BH9XgWANHbBLya2K0r6H/Injn39wngmRZaDZ2VWW+aqq4PDg5WHPKYG4
+SVgo4WbeRCb6FwPkTWs8omw/CkhuvQ8htviHaOMO5JiFPxRGiVCB6ucLNY87BSxP
+WD3YUH2DoFvZf4r6dATtxRSiix1+lLK6R9qzu+1WFtjNIKgXnN46lblK1dygcycC
+/MFhcApekA3k79QHRkBalBlCRw8Droj0Dzq52FiLnv10QnQcBrA8+JAdKBzbN0pt
+olUKhW20vQtXHphcsvXivgBQuEVwb0Kjno9NCR74/ZgwQbT7QIeZ40Sd0E4QNik=
+=ugTB
+-----END PGP SIGNATURE-----
