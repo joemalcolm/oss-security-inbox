@@ -1,4 +1,9 @@
-Received: (qmail 1615 invoked by uid 550); 10 Apr 2024 11:49:39 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["636" "Monday" "17" "August" "2015" "14:29:05" "+0200" "Dejan Bosanac" "dejan@nighttale.net" "<CAGeh-pEJEEEoQWNnsWhTAVQTw1J=VgeD_tab4DTT+RnaG5YDCw@mail.gmail.com>" "22" "[oss-security] [ANNOUNCE] CVE-2015-1830 - Path traversal leading to unauthenticated RCE in ActiveMQ" nil nil nil "8" "2015081712:29:05" "[oss-security] [ANNOUNCE] CVE-2015-1830 - Path traversal leading to unauthenticated RCE in ActiveMQ" (number mark "        dejan@nightt Aug 17   22/636   " thread-indent "\"[oss-security] [ANNOUNCE] CVE-2015-1830 - Path traversal leading to unauthenticated RCE in ActiveMQ\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 13868 invoked by uid 550); 17 Aug 2015 12:29:23 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,123 +11,53 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17485 invoked from network); 10 Apr 2024 03:13:34 -0000
+Received: (qmail 13814 invoked from network); 17 Aug 2015 12:29:17 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1712718807; x=1713323607; darn=lists.openwall.com;
-        h=content-transfer-encoding:in-reply-to:references:subject:to
-         :mime-version:user-agent:reply-to:from:date:message-id:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=BJy+jLc84NnjUNOcGuw+w0ewid/JdRwcPZYV3jIBh0E=;
-        b=JkxTQOG+gFq/BeBIt1o+g8NImKORLeXUdSRDZ0R5yDLsJ64w2fRIX9+Ru/eNX/Z8gC
-         f09LyfYF6cVJYJHRddInh5UkPYcvm23IhTw2xZRAeJ4daGbAWAXdCPUmOiTlFOjffjxT
-         tl9wTxeUBOwJYjz4J97KSyZTtI8K4amVjGid80DaMHmLhVxaetS3G2OADzgLuqruuYkE
-         M3h2+rZDgc64NPyx4A3Ma3uwK6Mm0IbYjcbJT+pVypqT6Qcp8eajxu2hS7eiFzpReiZf
-         mSZu+OP/JOCvhXUuVNjs9kHBAa92wRKhRINjdNNCNotiHNN6kcMnLJQfyoBubhnWNZHB
-         g3eg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712718807; x=1713323607;
-        h=content-transfer-encoding:in-reply-to:references:subject:to
-         :mime-version:user-agent:reply-to:from:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=BJy+jLc84NnjUNOcGuw+w0ewid/JdRwcPZYV3jIBh0E=;
-        b=ITI0Y8bn+YjEe+7afPdnEMfHtTVOtCuXbIyk5pdv381AN8zJTq3LSlazwiRpJoDVil
-         b+eX0y0MSh2OcPfu9GuL00maOsQ9xLzk6pm/2bFyfmCTRDbmNQFcoJWIDSGSb/UofOzm
-         Qxs3I2DwgU2QFZhbf4PE20EORlWEOe4tR+fo966ZYuN7mPu624YLRsyTe6p2YvKA+QtB
-         HgCmFNEhzEA+3mxdBZk9fCRkl6sEjA9tn0louNpaZ5NxIyHouwil2RXuTyCXGGne92vs
-         V33IsplOlyvVOETxxw3x5m8w83RZQ/K1Q3hjNJ3aEJC+mbka/eQxDSlC5do4fZjJ96fW
-         D3rA==
-X-Gm-Message-State: AOJu0YyJGevoowy9KIRZc6KgBQ04aq7DqUvvim29FOrgrp0XmJdS5pHq
-	PUXl/CZkDVeA/lH3//MA5MgfzmvfZ1PVNoilXWe2QHyXye/SuMzpLH5q143p
-X-Google-Smtp-Source: AGHT+IFFfm3MpHmJ/nNs4LPZgVGRoD9fjJ+RpH2BnxPKIiPpfVARbI+4udBpdrBGwVWltD+9IDkI2w==
-X-Received: by 2002:a05:6870:aa8c:b0:221:9c97:69eb with SMTP id gr12-20020a056870aa8c00b002219c9769ebmr1899784oab.50.1712718806626;
-        Tue, 09 Apr 2024 20:13:26 -0700 (PDT)
-Message-ID: <661603D4.4020908@gmail.com>
-Date: Tue, 09 Apr 2024 22:13:24 -0500
-From: Jacob Bachmeyer <jcb62281@gmail.com>
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.8.1.22) Gecko/20090807 MultiZilla/1.8.3.4e SeaMonkey/1.1.17 Mnenhy/0.7.6.0
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:date:message-id:subject:from:to:content-type;
+        bh=hm/4yLVyd0kWvZPu01nxfXIRijsVfpWHDj5dKU4vspo=;
+        b=e60SPtTxiKg9KivPo6g6TOmYDwb0lYybDJldO+FL2E33zQLEX1C17nYQCfdtxIG0N1
+         te/L1DCqjs7waQDNpiJavf3bcAATVWmWDhG3n5zzRc63o89r+uaNfbmKbMr/Lz/hM2i5
+         VI6SFO0jR4zCaSabRI/rdLXuqGRSjWOWRqQ/dgyl/vrQFjzoHMfJo9H8dcYDStzgnNHe
+         UMgzbIopWK0TIE7R7Jd8e5i5hzddq3IdNnY1UZKNTKM6zfknjHaL9h6Esk1ijIfRebnc
+         OC1LmcndETmPYsRWzz8STDTBF5wjVZM3YXZYYqzhx0lM8wmczrrjIGvrMxHXsQ1OxeKl
+         jRyg==
 MIME-Version: 1.0
-To: oss-security@lists.openwall.com
-References: <loqt-RGEN6MMP_6J6pm7KJN3UgHgOBQ3NLoF3NsdmxQhyJrFIS0XYItBeLNZeSMliq69Lw8ogw3rnIW3BZEqCIHQQSFq307cqsyIt7dcocE=@proton.me> <42bf95dbef6e44d416c030ff6dad7b6806f54cbf.camel@sec.16bits.net> <6614BD70.8090200@gmail.com> <20240409233648.igiak63z7ep2nmco@awork3.anarazel.de>
-In-Reply-To: <20240409233648.igiak63z7ep2nmco@awork3.anarazel.de>
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Subject: Re: [oss-security] xz backdoor prevention using hosts.deny?
+X-Received: by 10.170.127.86 with SMTP id t83mr1010107ykb.107.1439814545743;
+ Mon, 17 Aug 2015 05:29:05 -0700 (PDT)
+X-Google-Sender-Auth: JO1EQK6MZ7WSUq2Wg9U-sCXkWEk
+Message-ID: <CAGeh-pEJEEEoQWNnsWhTAVQTw1J=VgeD_tab4DTT+RnaG5YDCw@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=001a1139d1cc8aa649051d80f20c
+Date: Mon, 17 Aug 2015 14:29:05 +0200
+From: Dejan Bosanac <dejan@nighttale.net>
+Reply-To: oss-security@lists.openwall.com
+Sender: chubrilo@gmail.com
+Subject: [oss-security] [ANNOUNCE] CVE-2015-1830 - Path traversal leading to unauthenticated
+ RCE in ActiveMQ
+To: "dev@activemq.apache.org" <dev@activemq.apache.org>, 
+	"users@activemq.apache.org" <users@activemq.apache.org>, 
+	Apache Security Response Team <security@apache.org>, oss-security@lists.openwall.com, 
+	bugtraq@securityfocus.com
 
-Andres Freund wrote:
-> Hi,
->
-> On 2024-04-08 23:00:48 -0500, Jacob Bachmeyer wrote:
->   
->> I am not so sure about this.  The original discovery of this backdoor
->> observed a slowdown in refusing a session for a nonexistent account using
->> only SSH publickey auth, *not* SSH certificate auth.  Reports have also
->> suggested that testing began after common botnet scans were observed to be
->> causing sshd to use an inordinate amount of CPU time.  I doubt botnets are
->> presenting certificates either.
->>     
->> I am unsure how sshd would call RSA_public_decrypt in those situations,
->> which suggests that the backdoor blob is more complex than we currently
->> think.
->>     
->
-> The slow part of the backdoor is *not* when actually calling
-> RSA_public_decrypt(). It's the "initialization" of the backdoor, which happens
-> very early during sshd startup, well before reaching main().  Note how, in the
-> initial report, even "sshd -h" is slow if called in the right environment.
->   
+--001a1139d1cc8aa649051d80f20c
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-Yes, but the initial report also gave timings for "ssh 
-nonexistent@localhost", see the quote below.
+A security vulnerabilities is reported against Apache ActiveMQ 5.11.1 and
+older versions
 
-> https://www.openwall.com/lists/oss-security/2024/03/29/4 :
->   
->> In fact, openssh does not need to be started as a server to observe the
->> slowdown:
->>
->> slow:
->> env -i LANG=C /usr/sbin/sshd -h
->>     
-Also from <URL:https://www.openwall.com/lists/oss-security/2024/03/29/4>:
-> == Observing Impact on openssh server ==
->
-> With the backdoored liblzma installed, logins via ssh become a lot slower.
->
-> time ssh nonexistant@...alhost
->
-> before:
-> nonexistant@...alhost: Permission denied (publickey).
->
-> before:
-> real	0m0.299s
-> user	0m0.202s
-> sys	0m0.006s
->
-> after:
-> nonexistant@...alhost: Permission denied (publickey).
->
-> real	0m0.807s
-> user	0m0.202s
-> sys	0m0.006s
+Please check the following document and see if you=E2=80=99re affected
 
-This seems to indicate that sshd takes more than twice as long to reject 
-a login (using SSH publickey auth, /not/ a certificate) to a 
-non-existent account with the backdoor active.
+http://activemq.apache.org/security-advisories.data/CVE-2015-1830-announcem=
+ent.txt
 
->> In fact, I would expect sshd to reject the connection without ever
->> attempting to verify a signature if the requested account does not exist,
->> yet a significant delay in that rejection led to the discovery of the
->> backdoor.
->>     
->
-> See https://www.openwall.com/lists/oss-security/2024/03/30/37 for the path
-> leading to certification validation before certificate validity, users, etc
-> are checked.
->   
+Apache ActiveMQ 5.12.0 and 5.11.2 with appropriate fixes are released and
+available for upgrade. There's also a configuration workaround that
+resolves the problem (described in the announcement).
 
-Yes, but that is for logins where the client presents a certificate, 
-which I understand that your client did not, only requesting "publickey" 
-auth.  How does the backdoor have such a large effect in that scenario?
+Regards
+--
+Dejan Bosanac
+about.me/dejanb
 
-
--- Jacob
+--001a1139d1cc8aa649051d80f20c--
