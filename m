@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1021" "Thursday" "25" "January" "2018" "09:59:31" "+0100" "Daniel Beck" "ml@beckweb.net" "<64204672-5D14-48CD-95F4-984EB0197C02@beckweb.net>" "24" "Re: [oss-security] Multiple vulnerabilities in Jenkins" nil nil nil "1" "2018012508:59:31" "[oss-security] Multiple vulnerabilities in Jenkins" (number mark "U       ml@beckweb.n Jan 25   24/1021  " thread-indent "\"Re: [oss-security] Multiple vulnerabilities in Jenkins\"\n") "<61F736A2-A375-45DD-9137-12B53BF9A228@beckweb.net>" ("<61F736A2-A375-45DD-9137-12B53BF9A228@beckweb.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6814" "Monday" "17" "August" "2015" "13:09:08" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150817170908.1DF636C005B@smtpvmsrv1.mitre.org>" "134" "[oss-security] Re: CVE request: GNUTLS-SA-2015-3 double free in certificate DN decoding" nil nil nil "8" "2015081717:09:08" "[oss-security] Re: CVE request: GNUTLS-SA-2015-3 double free in certificate DN decoding" (number mark "U       cve-assign@m Aug 17  134/6814  " thread-indent "\"[oss-security] Re: CVE request: GNUTLS-SA-2015-3 double free in certificate DN decoding\"\n") "<87d1yv1oqx.fsf@redhat.com>" ("<87d1yv1oqx.fsf@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 7625 invoked by uid 550); 25 Jan 2018 09:00:14 -0000
+Received: (qmail 18324 invoked by uid 550); 17 Aug 2015 17:09:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,43 +11,147 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 18296 invoked from network); 17 Aug 2015 17:09:20 -0000
+In-Reply-To: <87d1yv1oqx.fsf@redhat.com>
+Message-Id: <20150817170908.1DF636C005B@smtpvmsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Mon, 17 Aug 2015 13:09:08 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7198 invoked from network); 25 Jan 2018 08:59:42 -0000
-From: Daniel Beck <ml@beckweb.net>
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Mime-Version: 1.0 (Mac OS X Mail 10.3 \(3273\))
-Date: Thu, 25 Jan 2018 09:59:31 +0100
-References: <61F736A2-A375-45DD-9137-12B53BF9A228@beckweb.net>
-To: oss-security@lists.openwall.com
-In-Reply-To: <61F736A2-A375-45DD-9137-12B53BF9A228@beckweb.net>
-Message-Id: <64204672-5D14-48CD-95F4-984EB0197C02@beckweb.net>
-X-Mailer: Apple Mail (2.3273)
-X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1516870782;5979273e;
-X-HE-SMSGID: 1eedNa-0001cU-Uq
-Subject: Re: [oss-security] Multiple vulnerabilities in Jenkins
+Subject: [oss-security] Re: CVE request: GNUTLS-SA-2015-3 double free in certificate DN decoding
+To: mprpic@redhat.com
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-> On 14. Dec 2017, at 04:10, Daniel Beck <ml@beckweb.net> wrote:
+> http://www.gnutls.org/security.html#GNUTLS-SA-2015-3
 > 
-> SECURITY-667
-> A race condition during Jenkins startup could result in the wrong order of
-> execution of commands during initialization.
+> "Kurt Roeckx reported that decoding a specific certificate with very
+> long DistinguishedName (DN) entries leads to double free, which may
+> result to a denial of service. Since the DN decoding occurs in almost
+> all applications using certificates it is recommended to upgrade the
+> latest GnuTLS version fixing the issue. Recommendation: Upgrade to
+> GnuTLS 3.4.4, or 3.3.17."
 > 
-> On Jenkins 2.81 and newer, including LTS 2.89.1, this could in rare cases
-> (we estimate less than 20% of new instances) result in failure to
-> initialize the setup wizard on the first startup. This resulted in multiple
-> security-related settings not being set to their usual strict default.
-> Affected instances need to be configured to restrict access.
+> The upstream patch that fixes this issue is available at:
+> 
+> https://gitlab.com/gnutls/gnutls/commit/272854367efc130fbd4f1a51840d80c630214e12
 
-CVE-2017-1000503
+> lib/x509/common.c
+> _gnutls_x509_dn_to_string
+> +  str->data = NULL;
 
-> Additionally, there's a very short window of time after startup during
-> which Jenkins may no longer show the "Please wait while Jenkins is getting
-> ready to work" message, but Cross-Site Request Forgery (CSRF) protection
-> may not yet be effective. As of publication of this advisory, we've been
-> unable to confirm this can actually be exploited, but generally recommend
-> that users upgrade their instances.
+Use CVE-2015-6251 for GNUTLS-SA-2015-3.
 
-CVE-2017-1000504
 
+> http://www.openwall.com/lists/oss-security/2015/05/05/8
+> I wonder if the following issue in GnuTLS should get a CVE:
+
+> http://www.gnutls.org/security.html#GNUTLS-SA-2015-2
+
+We consider this a potentially complex question. There are multiple
+ways to think about a case in which a client or server bug has the
+possible side effect of an algorithm choice that should not have
+occurred. The perspective from which the CVE project thinks about
+these cases is not necessarily the same as the perspective from which
+a protocol designer, or a cryptographic-library author, would think
+about these cases.
+
+>> https://lists.gnupg.org/pipermail/gnutls-devel/2015-April/007572.html
+
+>> GnuTLS does not by default support MD5 signatures. Indeed the RSA-MD5
+>> signature-hash algorithm needs to be explicitly enabled using the
+>> priority option VERIFY_ALLOW_SIGN_RSA_MD5. In the NORMAL and SECURE
+>> profiles, GnuTLS clients do not offer RSA-MD5 in the signature
+>> algorithms extension. However, we find that all GnuTLS clients still
+>> accept RSA-MD5 in the ServerKeyExchange and GnuTLS servers still
+>> accept RSA-MD5 in the ClientCertificateVerify.
+>> 
+>> To see the bug, connect with GnuTLS to an openssl 1.0.1m server with a
+>> modified ssl/s3_srvr.c (attached) which always signs the
+>> ServerKeyExchange with RSA-MD5.  When gnutls-cli connects to a server,
+>> its signature algorithms extension only advertises signature/hash
+>> algorithms that use the SHA family. Notably, it should not allow any
+>> MD5 signature. However, when our server sends it an RSA-MD5 signature,
+>> NSS does not check that this algorithm is included in the allowed
+>> algorithms and quietly accepts it, hence downgrading the expected
+>> security of the connection.
+
+We think that the implied perspective here is "the actual security is
+weaker than the intended security, and therefore the bug must be
+categorized as a vulnerability in the cryptographic library."
+
+An alternative perspective is:
+
+  The issue does not cross any privilege boundary. Regardless of
+  whether this bug exists, the server was already able to weaken
+  security to any extent that it chose. The server could, for example,
+  automatically publish the cleartext of all sessions to pastebin.com.
+  The attacker role in the described scenario is a server operator who
+  has intentionally decided to modify OpenSSL code to always sign with
+  RSA-MD5. The server operator may, equivalently, have decided to use
+  a non-OpenSSL product that is only capable of signing with RSA-MD5.
+  Similarly, the server operator may have accidentally enabled a
+  product configuration that signs with RSA-MD5 even though the server
+  operator hadn't wanted that. In general, an observation that a
+  server implements the TLS protocol does not mean that the client
+  user is entitled to conclude anything about the ultimate
+  confidentiality or integrity of any data supplied by the client
+  user. The ultimate confidentiality and integrity depends, to a very
+  large extent, on how the server site is operated and maintained. An
+  especially concerned client user could choose to participate in TLS
+  sessions only in cases where operations on the server side had
+  passed a satisfactory third-party audit. Indeed there is a bug in the
+  _gnutls_session_sign_algo_enabled function within the client code,
+  but a bug cannot be categorized as a vulnerability unless it enables
+  an attacker to accomplish a type/severity of impact that the
+  attacker was not already able to accomplish.
+
+The 007572.html message doesn't discuss an attack scenario for "GnuTLS
+servers still accept RSA-MD5 in the ClientCertificateVerify" but we
+think the alternative perspective may be similar. No privilege
+boundary is crossed, because the client was already able to weaken
+security to any extent that it chose, e.g., by publishing its client
+certificate and the associated private key to pastebin.com.
+
+Going back to the "all GnuTLS clients still accept RSA-MD5 in the
+ServerKeyExchange" bug for the entire remainder of this message, it
+may be possible to argue that the attacker role is not the server
+operator, and instead the attacker role is a man in the middle. The
+argument here is "because there might be server code somewhere with a
+bug that causes an unintentional choice of RSA-MD5 for signing, the
+client has a vulnerability unless the client is able to detect that
+and refuse to let the session happen." In this scenario, the "server
+code somewhere with a bug that causes an unintentional choice" issue
+could have a CVE ID for that server-side vulnerability (i.e., if the
+code is generally available rather than in-house code). Before
+assigning a CVE ID for the client's _gnutls_session_sign_algo_enabled
+bug, it may be reasonable to require that the "server code somewhere
+with a bug that causes an unintentional choice" actually exists.
+
+In other words, if the only known relevance of the
+_gnutls_session_sign_algo_enabled bug is in situations where the
+server has chosen to have weak security, then ultimately no privilege
+boundary is crossed, and no CVE ID is needed. If the relevance of the
+_gnutls_session_sign_algo_enabled bug is in an actual (not
+hypothetical) situation where an in-the-wild server bug is causing
+accidental RSA-MD5 signing, and the _gnutls_session_sign_algo_enabled
+bug means that the intended client-side countermeasure is missing,
+then a CVE ID is needed.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBCAAGBQJV0hRqAAoJEKllVAevmvmslXIH/367Ktcsmy7a4QW5TOunbDl4
+1ejMuUYm/S+h1LG73BUgR4MCtyBHFd/GnSLGCJWQamiS5crlAobwEeMO1qE74fBh
+Ibk2KdYAKTUM1SwuSK9C+u4XdTz/K5qac9B8YwzvMvjULNnqbjkyf3a4N1H2UYB3
+rDSFd4qvHK0Mtk+aM76rGfVfyePz10dkc6sGHsp6pnlZl153FeNi69lfdvMbK3Ls
+vwY+ROvQ/OiFqbrv0HamWytfSyOlpMVEullEMgpwEC7KRrbNQ5U+tdBNe33ZsdXp
++1zHqyJ1M76vr4oQp5B+fMEmP0o9sfbLYm/P89hM/h0qA5ls2K2rP+nBqgTtl+s=
+=Xgcf
+-----END PGP SIGNATURE-----
