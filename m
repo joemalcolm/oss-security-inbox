@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1655" "Monday" "1" "June" "2015" "21:47:54" "+0000" "mancha" "mancha1@zoho.com" "<20150601214754.GA3491@zoho.com>" "49" "[oss-security] MITRE delays persist" nil nil nil "6" "2015060121:47:54" "[oss-security] MITRE delays persist" (number mark "        mancha1@zoho Jun  1   49/1655  " thread-indent "\"[oss-security] MITRE delays persist\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1948" "Monday" "17" "August" "2015" "15:04:42" "+0000" "mancha" "mancha1@zoho.com" "<20150817150442.GA30459@zoho.com>" "54" "Re: [oss-security] Double free corruption in JasPer JPEG-2000 implementation (CVE-2015-5203)" nil nil nil "8" "2015081715:04:42" "[oss-security] Double free corruption in JasPer JPEG-2000 implementation (CVE-2015-5203)" (number mark "        mancha1@zoho Aug 17   54/1948  " thread-indent "\"Re: [oss-security] Double free corruption in JasPer JPEG-2000 implementation (CVE-2015-5203)\"\n") "<20150816184849.GA32213@zoho.com>" ("<CACn5sdSnp7LMeeV_rFbgVQCeQkoqGGTvHLZ3Xo_xgU70bhbOYw@mail.gmail.com>" "<20150816184849.GA32213@zoho.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 15832 invoked by uid 550); 1 Jun 2015 21:48:23 -0000
+Received: (qmail 11518 invoked by uid 550); 17 Aug 2015 15:05:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,72 +11,82 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 15793 invoked from network); 1 Jun 2015 21:48:18 -0000
+Received: (qmail 11500 invoked from network); 17 Aug 2015 15:05:04 -0000
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; 
   s=zapps768; d=zoho.com; 
-  h=date:from:to:subject:message-id:mime-version:content-type; 
-  b=IKm2SY7gWqMNkS6wAISw2e4x5mDTL3tLF2qwWOLmRUDwi9snT0T/8H9pepeOfrLhLrJAofKa5ouR
-    vgAG56rFUQSnvk9X+81NYKbWg4K2tp3dk57oXjhRsHtOSUnWDRRH  
-Message-ID: <20150601214754.GA3491@zoho.com>
+  h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; 
+  b=m/h97rQZy7q1Y/7W2awogWLa892CxYbIqzkr8xkoKPre5Va+ggwHlc3pDbjjkL8HMsaSpuW8+oww
+    htJ5B54j6RMkfV8n8VtzOEz0B2TfuyBkUc9m1jyn8TnuKgGNjae1  
+Message-ID: <20150817150442.GA30459@zoho.com>
+References: <CACn5sdSnp7LMeeV_rFbgVQCeQkoqGGTvHLZ3Xo_xgU70bhbOYw@mail.gmail.com>
+ <20150816184849.GA32213@zoho.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="T4sUOijqQbZv57TR"
+	protocol="application/pgp-signature"; boundary="pWyiEgJYm5f9v55/"
 Content-Disposition: inline
+In-Reply-To: <20150816184849.GA32213@zoho.com>
 X-PGP-Key: http://hkps.pool.sks-keyservers.net/pks/lookup?op=vindex&search=0x25168eb24f0b22ac
 X-PGP-FP: 56B7 100E F4D5 811C 8FEF  ADD1 2516 8EB2 4F0B 22AC
 X-Zoho-Virus-Status: 1
-Date: Mon, 1 Jun 2015 21:47:54 +0000
+Cc: gustavo.grieco@gmail.com
+Date: Mon, 17 Aug 2015 15:04:42 +0000
 From: mancha <mancha1@zoho.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] MITRE delays persist
-To: oss-security@lists.openwall.com, coley@mitre.org
+Subject: Re: [oss-security] Double free corruption in JasPer JPEG-2000
+ implementation (CVE-2015-5203)
+To: oss-security@lists.openwall.com
 
---T4sUOijqQbZv57TR
+--pWyiEgJYm5f9v55/
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Hello Steve.
+On Sun, Aug 16, 2015 at 06:48:49PM +0000, mancha wrote:
+> On Sun, Aug 16, 2015 at 05:22:50PM +0200, Gustavo Grieco wrote:
+> > A new double free affecting JasPer JPEG-2000 (libjasper 1.900) has
+> > been found triggered by function jasper_image_stop_load.  Despite
+> > this library is used by many programs (
+> > http://www.ece.uvic.ca/~frodo/jasper/#overview), there is no one
+> > providing support, so there is no fix so far.
+>=20
+> If you email me your crasher I can look into a fix.
+>=20
+> >=20
+> > This vulnerability was found by QuickFuzz.
+> >=20
+> > Regards, Gustavo.
+>=20
+> --mancha (https://twitter.com/mancha140)
 
-Back in mid-March you wrote an email addressing the CVE assignment
-delays people had been experiencing. [1]
+By way of update, Gustavo shared his crasher with me and I've since
+provided him with a patch that solves the most immediate cause of the
+double free. However, in my review I've found other issues that require
+some TLC.
 
-I was relieved when I received your email because I had several
-outstanding requests and was wondering why they were being held up.
+I am waiting to hear back from Gustavo for his feedback.
 
-Unfortunately, almost 11 weeks has passed since your email and my
-pending requests have yet to be addressed.
+--mancha
 
-Would you please provide an update on the steps MITRE is taking to
-become more responsive and provide a hard timeline on clearing of the
-existing backlog?
-
-For example, I have pending requests dating back to mid-February.
-
-Thank you.
-
-[1] http://marc.info/?l=oss-security&m=142679274522902&w=2
-
-
---T4sUOijqQbZv57TR
+--pWyiEgJYm5f9v55/
 Content-Type: application/pgp-signature
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCgAGBQJVbNMJAAoJEB4VYy8JqhaDpeEP/RHTIMjBgZgKTadMkrYvHU1F
-m9WVEn0PjFWd8f1FpkrUe5NhJ4E/Bd0DZTUwBbBYPsS/K4ckxAPzX9BPnSx3Chfu
-bnDNst5rRHF/tVaS4/TKOJvdO6jbIZYwveheTcFW7AC64eqXAc1nUCvRV6lmxjOG
-jZmEbUN+p/ttb6MoJ13pM3aPU438oOgGQlUl81ddPVTDHKrA2/vlWhSE0BFA1ZK1
-9iQ2l1bhLFGmTgWxDfhZ3zlJE9tDg/f7rgNoIvP/bO8hISDS4ACpsZqLWgKkKHSM
-Q/xccAnoL+OrwPFgmfS6MSjvmCRxrLL8/glsbhkA1vK3J8B0su7CwZ7h6m6fH0oZ
-GxuM5slZdTlPnatnbH1zIZULOEgc57ZKkXREuyvr760kwPacW3yohJ3JEzGvPuOg
-2NwslBvCYi4sMdsWXd7YCI8+u3ivtiPy6GwI+bEfrcNskN7d2r5eAc4y+veB9spz
-tL1c/A2QDX+bMuhnhXBNgaymIVX62KNzGWsD4aKC+fFYYSZeg0+mIu/I0smklfPP
-bFvjX8qJvvUgXeXTDDEyzYTicSD7niXhmAj/+j4IzPFS59t/bMURCnM+G+MSpLPf
-xcGgkq+d34b7ABBRj9bVx6gxDXUbgUfloFm8XDMLCrT938h9XiZA4lqIT4FAgyQp
-6vO139KrOa94EsT36a6S
-=3Su4
+iQIcBAEBCgAGBQJV0fgKAAoJEB4VYy8JqhaDGnMQAK+mNq6vmxW0aVCjimDnZc4c
+PZPgmQU0Z02fx9DWbQm1vNDcCA/Ell4NWWBFkn1fRG1EZkFHMfhYgwARStgBnV+f
+CaJ6ltu3lS8n3FpsaZLnlsIxFdEFhwvZRmmAz6HQGJkfud3JqgDvB1BrPx5CJE8O
++2FgnfnVAeL3g/HFiDUtT4amRWLp/z3e7v9yatFLrHuqTz+JnAg1Kk5noTwL2PHj
+XRpYAkOB4Ky0h3hRXvFFVwxtvLXHBCMt/+IbYNj9XriGfoacdhdmTcXjROcc4f5Q
+fI34n9dNhIKyKlJD8NPQS4fr97TwYJrgKQXZi6f5mabjnw4rB9YKX0d6WPB4OuYW
+PqMlndJzX7/F6XOT/cjbhblx1R3COw6IkMGpMmhNq9qOtluPoEnRS+pLPTztVMZe
+9PxPkWIC8sZpi6sr1ZX0zPm/tntj4wKFiuV5lFSC6bGi7ScElnifGEcXxvwiLEjE
+o22LddWYRbAJAl3cLISiG18NPRe66DpxJWycvcg4gbhsChgP2PMz7yiYRua6p2BP
+z5Z3W6B/6vj94+Zzg5hlIBUsy++PXRdXjBCFjUHEPOHvsKjtOP4v39+REM6h5/nf
+787/qa3Ks/EslZaez+v8SkBYu92Vj4h6wFQL/odzdLnnm5FDXzh2QCONKTARcXyG
+QDPlkfKoOcS2Q7XxhK6g
+=BbgG
 -----END PGP SIGNATURE-----
 
---T4sUOijqQbZv57TR--
+--pWyiEgJYm5f9v55/--
 
