@@ -1,4 +1,9 @@
-Received: (qmail 3499 invoked by uid 550); 4 Jun 2026 16:29:27 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2359" "Tuesday" "18" "August" "2015" "19:24:48" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150818232448.386636C005E@smtpvmsrv1.mitre.org>" "50" "[oss-security] Re: CVE Request: ippusbxd" nil nil nil "8" "2015081823:24:48" "[oss-security] Re: CVE Request: ippusbxd" (number mark "        cve-assign@m Aug 18   50/2359  " thread-indent "\"[oss-security] Re: CVE Request: ippusbxd\"\n") "<20150811025532.GB23539@hunt>" ("<20150811025532.GB23539@hunt>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 16175 invoked by uid 550); 18 Aug 2015 23:25:08 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,78 +11,63 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 16154 invoked from network); 18 Aug 2015 23:25:07 -0000
+In-Reply-To: <20150811025532.GB23539@hunt>
+Message-Id: <20150818232448.386636C005E@smtpvmsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, security@ubuntu.com
+Date: Tue, 18 Aug 2015 19:24:48 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 10234 invoked from network); 4 Jun 2026 16:09:36 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cpansec.org; s=gm1;
-	t=1780589366;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=ysdQk2C4mppkYxzsiDHm3jt1m97tiWTJzWZtW4+sWpk=;
-	b=Vji/jKRpOlljqLXfFX8HH/B03trvIwkeunCCd3wb7xTD+P9gEuyhswpRZE59YjfqZmUsGH
-	lsvhUUNvB/tshTug5mZKqBJiRwjjw+3B++QnS9hskDzLXn6dA6aMXjgtSiyAOWuEuotR3N
-	tkMqg0bqpiGSGoAsAi3cETR2TLgziXV4Q6am/hIS4RJZr91rqLkwZxya18IAwEEgWNpgh+
-	DBktBxR3ycOZZ22RBDqN0Z/nKn5jDlpVXwBW+EExxfjXFMg8jz27xddCaQv+iZsUziZnkw
-	LWfqk9tCLV0UiRAmIU2+dLYvqVT1RPBbwsNzPmWPSNLSrQT08Wapnz+eovJQ4w==
-Message-ID: <de5d8e03-86d3-48d7-a8c3-d26107f2c51f@cpansec.org>
-Date: Thu, 4 Jun 2026 17:09:26 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Robert Rothenberg <rrwo@cpansec.org>
-Content-Language: en-GB
-To: cve-announce@security.metacpan.org, oss-security@lists.openwall.com
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-GND-Sasl: rrwo@cpansec.org
-X-GND-Cause: dmFkZTEM/K11n17wMWdAA5heYlMVLKC/r2V+bV2p9ljjNp9D3+zTRgdHocaEOraBaSCPXDdVcaRluhGHDl6nf56BrPiwgOXwEXdmJnbO3TXv2hXnN3yaa/ML9aH2AUuRtgGsBB3sb27Xi9zEYuT/Mb9c7DKY3ggy6nLQkAas/XH0WwTWxVAyw0mU3SP1vGVrzcUTtJhQXqyfNM8Y3NWUh9vvj1COxZvdzj9pOpeyWqd3qALptQ8JkWIi/HoI9s/MBiyvYlwISEVbYHgoVQW5Rr+6YPVzIEUiXRARNeIFEc0WlGr5R3zYwHnpELxAlaFUiyVOUeN9uUg3X7EZmrx2uvCY1WMhbcDAoi8rWb/wwWNo2IiuVNzDuyLqY66RuleyQ4/JVoAsUcpIetdb3YMrHNNt7GHIkh5UM6bZQgGPCqcQmKhk+OtkwDDuR4td5t+hotQVDvARQrxhYq4m1x1MP4iSq/xdX1hvLwKspN4Pcw7HYFSh2LJwROCP1nOg0Mh9KNxAj2o9aAOWk4O4nfDGjx9/0XSrkehL9r2sQvqHKqD/h8TUT8GQjWwUcBuf1sGifPkjlvtVXKimhk2u8l4AHVgrGSltgB72kETK25FtC82SE5+k9NpJqYezecoTbkpICJ24t+GOVjp2Hkv48ktwbV6v6+sldmYwQxlEed9g56HmKy6WIw
-X-GND-State: clean
-X-GND-Score: -6
-Subject: [oss-security] CVE-2026-49940: Net::CIDR::Set versions through 0.20 for Perl accept
- non-ASCII IP addresses and netmasks
+Subject: [oss-security] Re: CVE Request: ippusbxd
+To: seth.arnold@canonical.com
 
-========================================================================
-CVE-2026-49940                                       CPAN Security Group
-========================================================================
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-         CVE ID:  CVE-2026-49940
-   Distribution:  Net-CIDR-Set
-       Versions:  through 0.20
+> Till Kamppeter has provided the following patches to address the issue:
+> https://github.com/tillkamppeter/ippusbxd/commit/46844402bca7a38fc224483ba6f0a93c4613203f
+> https://github.com/tillkamppeter/ippusbxd/commit/a632841f8e65d402e13e81921515f5a1e2736c82
+> 
+> The first patch switches to using two sockets and binds them explicitly
+> to the IPv6 and the IPv4 loopback addresses; the second patch simplifies
+> the use of select(). Both patches are recommended.
 
-       MetaCPAN:  https://metacpan.org/dist/Net-CIDR-Set
-       VCS Repo:  https://github.com/robrwo/perl-Net-CIDR-Set
+As far as we can tell, the message was written this way because you
+are addressing multiple audiences: one audience is interested in what
+aspects of the commits are security-related so that they can be mapped
+to individual CVE IDs, and another audience is much less concerned
+about these mapping details but wants to fix the security problem
+without adding a new problem in its place. Specifically, our
+understanding is that there is no expectation that anyone has a
+production copy of the code with
+46844402bca7a38fc224483ba6f0a93c4613203f but not
+a632841f8e65d402e13e81921515f5a1e2736c82. If anyone had such a copy,
+they possibly might find that an attacker could cause a performance
+degradation via a crafted client that intentionally triggers the
+"select() call repeated in a loop if the timeout expired without
+incoming data" issue. In other words, there is no CVE ID for a
+"repeated in a loop" problem, and probably for two reasons: nobody is
+using that code, and the performance degradation is too small.
 
 
-Net::CIDR::Set versions through 0.20 for Perl accept non-ASCII IP
-addresses and netmasks
+> https://bugs.launchpad.net/ubuntu/+source/ippusbxd/+bug/1455644
 
-Description
------------
-Net::CIDR::Set versions through 0.20 for Perl accept non-ASCII IP
-addresses and netmasks.
+The only CVE ID is for the presence of "addr.sin6_addr = in6addr_any"
+in the original code. Use CVE-2015-6520.
 
-Unicode digits such as the Arabic-Indic One (U+0661) were accepted but
-not properly parsed as numbers.  This could allow network masks to
-accept larger networks.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Problem types
--------------
-- CWE-1289 Improper Validation of Unsafe Equivalence in Input
-
-Solutions
----------
-Upgrade to version 0.21.
-
-
-References
-----------
-https://metacpan.org/release/RRWO/Net-CIDR-Set-0.21/changes
-https://nvd.nist.gov/vuln/detail/CVE-2025-40911
-
-Timeline
---------
-- 2026-05-13: Issue reported to CPANSec
-- 2026-06-02: Net::CIDR::Set version 0.21 released with fix
-
-
-
+iQEcBAEBCAAGBQJV071DAAoJEKllVAevmvmsaF0IAIwQQu5Le3ygNRS0luytSxf8
+tdqQ19YXjCdlQVSyXbqlRsSul3BMskti3KvsUwLo5zxJZfIwb/npdekT2pkp1g5Y
+GbJ3jbL70iXf9oSX6G/7arSZWPmrGDpDbeU02pvCxQtLmS5ApqS9OMNOAzp51i5m
+u9o7yEqnWUMuB0NnIQITonCiAZHuFBruhQ3j3yksKLz0SUl8AevefzBxCurDwaBV
+vBnEpqc9qvgQIHhvNZ3CfMthTI2tJbDB2oOCqckFxtnsMIS6QcYdBS5X0mla7ilf
+7WDzZKFCCAgUAjTZ9Mukhno1cmSLeBNTuEMK6lmoumK0SOlxUgV+weeXTBQHttI=
+=MhM/
+-----END PGP SIGNATURE-----
