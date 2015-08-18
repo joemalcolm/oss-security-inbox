@@ -1,4 +1,9 @@
-Received: (qmail 23979 invoked by uid 550); 2 Nov 2022 11:55:59 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5737" "Tuesday" "18" "August" "2015" "12:30:14" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<Pine.LNX.4.64.1508181228030.30440@beijing.mitre.org>" "204" "Re: [oss-security] CVE requests for Drupal contributed modules (from SA-CONTRIB-2015-100 to SA-CONTRIB-2015-131)" nil nil nil "8" "2015081816:30:14" "[oss-security] CVE requests for Drupal contributed modules (from SA-CONTRIB-2015-100 to SA-CONTRIB-2015-131)" (number mark "        cve-assign@m Aug 18  204/5737  " thread-indent "\"Re: [oss-security] CVE requests for Drupal contributed modules (from SA-CONTRIB-2015-100 to SA-CONTRIB-2015-131)\"\n") "<CAMYtjAoKVQONvGAAR57C7gWyzgy3VsdUdCt=Ezv7C3=xc8LWXg@mail.gmail.com>" ("<CAMYtjAoKVQONvGAAR57C7gWyzgy3VsdUdCt=Ezv7C3=xc8LWXg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 17934 invoked by uid 550); 18 Aug 2015 16:30:28 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,45 +11,223 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 17906 invoked from network); 18 Aug 2015 16:30:27 -0000
+X-Authentication-Warning: beijing.mitre.org: coley owned process doing -bs
+X-X-Sender: coley@beijing.mitre.org
+In-Reply-To: <CAMYtjAoKVQONvGAAR57C7gWyzgy3VsdUdCt=Ezv7C3=xc8LWXg@mail.gmail.com>
+Message-ID: <Pine.LNX.4.64.1508181228030.30440@beijing.mitre.org>
+References: <CAMYtjAoKVQONvGAAR57C7gWyzgy3VsdUdCt=Ezv7C3=xc8LWXg@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+cc: Security Team <security@drupal.org>, cve-assign@mitre.org
+Date: Tue, 18 Aug 2015 12:30:14 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32452 invoked from network); 2 Nov 2022 11:34:08 -0000
-X-Injected-Via-Gmane: http://gmane.org/
+Subject: Re: [oss-security] CVE requests for Drupal contributed modules (from
+ SA-CONTRIB-2015-100 to SA-CONTRIB-2015-131)
 To: oss-security@lists.openwall.com
-From: Tavis Ormandy <taviso@gmail.com>
-Date: Wed, 2 Nov 2022 11:33:50 -0000 (UTC)
-Message-ID: <tjtkiu$jeu$1@ciao.gmane.io>
-References: <20221101170833.GA10470@openwall.com>
- <Y2FhxvA/2e7xFUiF@itl-email>
- <alpine.BSF.2.21.9999.2211020631160.34372@aneurin.horsfall.org>
- <CAPWQ=1TzQ_e2yHZMXx6Tm4UJG3owZypShvm+VDoxEMcDSDxX+A@mail.gmail.com>
- <CAH8yC8mzcw-C257znYHH+qSyXoFVJWaAD=3dbvH3ZxymUtZU0A@mail.gmail.com>
-User-Agent: slrn/pre1.0.4-5 (Linux)
-Subject: [oss-security] Re: OpenSSL X.509 Email Address 4-byte Buffer Overflow
- (CVE-2022-3602), X.509 Email Address Variable Length Buffer Overflow
- (CVE-2022-3786)
 
-On 2022-11-01, Jeffrey Walton wrote:
-> On Tue, Nov 1, 2022 at 3:55 PM Pavan Maddamsetti
-><pavan.maddamsetti@gmail.com> wrote:
->>
->> https://github.com/RustCrypto
+
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+
+>Camtasia Relay - Cross Site Scripting (XSS) - SA-CONTRIB-2015-100
+>https://www.drupal.org/node/2480241
+
+Use CVE-2015-5487.
+
+>MailChimp - Cross Site Scripting (XSS) - SA-CONTRIB-2015-101
+>https://www.drupal.org/node/2480253
+
+Use CVE-2015-5488.
+
+>Smart Trim - Cross Site Scripting (XSS) - SA-CONTRIB-2015-102
+>https://www.drupal.org/node/2480321
+
+Use CVE-2015-5489.
+
+>Views - Access Bypass - SA-CONTRIB-2015-103
+>https://www.drupal.org/node/2480327
+
+Use CVE-2015-5490.
+
+>Dynamic display block - Access bypass - SA-CONTRIB-2015-104
+>https://www.drupal.org/node/2484157
+
+Use CVE-2015-5491.
+
+>Video Consultation - Cross Site Scripting (XSS) - SA-CONTRIB-2015-105
+>https://www.drupal.org/node/2484195
+
+Use CVE-2015-5492.
+
+>Entityform Block - Access Bypass - SA-CONTRIB-2015-106
+>https://www.drupal.org/node/2484169
+
+Use CVE-2015-5493.
+
+>Webform Matrix Component - Cross Site Scripting (XSS) - SA-CONTRIB-2015-107
+>https://www.drupal.org/node/2484231
+
+Use CVE-2015-5494.
+
+>Mobile sliding menu - Cross Site Scripting (XSS) - SA-CONTRIB-2015-108
+>https://www.drupal.org/node/2484233
+
+Use CVE-2015-5495.
+
+>pass2pdf - Information Disclosure - SA-CONTRIB-2015-109
+>https://www.drupal.org/node/2492205
+
+Use CVE-2015-5496.
+
+>Web Links - Cross Site Scripting (XSS) - SA-CONTRIB-2015-110
+>https://www.drupal.org/node/2492209
+
+Use CVE-2015-5497.
+
+>Shipwire - Cross Site Scripting (XSS) - SA-CONTRIB-2015-111
+>https://www.drupal.org/node/2492243
+
+Use CVE-2015-5498.
+
+>Navigate - Access Bypass - SA-CONTRIB-2015-112
+
+Use CVE-2015-5499.
+
+>Navigate - Cross-site scripting - SA-CONTRIB-2015-112
+>https://www.drupal.org/node/2492245
+
+Use CVE-2015-5500.
+
+>Aegir - Code Execution Prevention - SA-CONTRIB-2015-113
+>https://www.drupal.org/node/2492317
+
+Use CVE-2015-5501.
+
+>Storage API - Access Bypass - SA-CONTRIB-2015-114
+>https://www.drupal.org/node/2495903
+
+Use CVE-2015-5502.
+
+>Chamilo integration - Open Redirect - SA-CONTRIB-2015-115
+>https://www.drupal.org/node/2495931
+
+Use CVE-2015-5503.
+
+>Novalnet Payment Module Ubercart - SQL Injection - SA-CONTRIB-2015-116
+>https://www.drupal.org/node/2499787
+
+>The module fails to sanitize a database query by not using the database
+>API properly, thereby leading to a SQL Injection vulnerability.
+
+Use CVE-2015-5504.
+
+>Since the affected path is not protected against CSRF, a malicious user can
+>exploit this vulnerability by triggering a request to a specially-crafted URL.
+
+It is not clear to us if this CSRF issue is exploitable.  The attack
+seems to be against a Novalnet employee, but it is not known if
+Novalnet employees have access to the specific IP in a way that would
+make the exploit feasible.
+
+>Novalnet Payment Module Drupal Commerce - SQL Injection - SA-CONTRIB-2015-117
+>https://www.drupal.org/node/2499791
+
+We believe that the Novalnet Payment Module Drupal Commerce module may
+share a codebase with the Novalnet Payment Module Ubercart module in
+SA-CONTRIB-2015-116.
+
+If you can confirm that the vulnerable code in SA-CONTRIB-2015-117 is
+different from the code in SA-CONTRIB-2015-116, then we will issue a
+separate CVE ID.  Otherwise, use CVE-2015-5504 for this vulnerability.
+
+>HTTP Strict Transport Security - Logical Error - SA-CONTRIB-2015-118
+>https://www.drupal.org/node/2507563
+
+Use CVE-2015-5505.
+
+>Apache Solr Real-Time - Access Bypass - SA-CONTRIB-2015-119
+>https://www.drupal.org/node/2507581
+
+Use CVE-2015-5506.
+
+>Inline Entity Form - Cross Site Scripting (XSS) - SA-CONTRIB-2015-120
+>https://www.drupal.org/node/2507605
+
+Use CVE-2015-5507.
+
+>The eXtensible Catalog (XC) Drupal Toolkit - Cross Site Request
+>Forgery (CSRF) - SA-CONTRIB-2015-121
+>https://www.drupal.org/node/2507619
+
+Use CVE-2015-5508.
+
+>Administration Views - Access Bypass - SA-CONTRIB-2015-122
+>https://www.drupal.org/node/250764
+
+Use CVE-2015-5509.
+
+>jQuery Update - Open Redirect - SA-CONTRIB-2015-123
+>https://www.drupal.org/node/2507729
 >
+>LABjs - Open Redirect - SA-CONTRIB-2015-124
+>https://www.drupal.org/node/2507735
+>
+>Acquia Cloud Site Factory Connector - Open Redirect - SA-CONTRIB-2015-125
+>https://www.drupal.org/node/2507741
 
-I don't know rust, so serious question - if this same buggy punycode
-routine had been written in rust, what would have happened?
+A new CVE might not be necessary.
 
-- I assume you *could* write similar logic, but perhaps the argument is
-  that idiomatic rust discourages it?
-- Would rustc have been able to reason about the code well enough at
-  compile time to error out?
-- Just detect it at runtime and abort()?
+We believe that SA-CONTRIB-2015-123, SA-CONTRIB-2015-124, and
+SA-CONTRIB-2015-125 share the same codebase (Overlay JavaScript file)
+as the Overlay module in SA-CORE-2015-002, which has been issued
+CVE-2015-3233.
 
-If the answer is "error out", then I think that's a pretty convincing win.
+>Content Construction Kit (CCK) - Open Redirect - SA-CONTRIB-2015-126
+>https://www.drupal.org/node/2507753
 
-Tavis.
+Use CVE-2015-5510.
 
--- 
- _o)            $ lynx lock.cmpxchg8b.com
- /\\  _o)  _o)  $ finger taviso@sdf.org
-_\_V _( ) _( )  @taviso
+>HybridAuth Social Login - Access bypass - SA-CONTRIB-2015-127
+>https://www.drupal.org/node/2511410
 
+Use CVE-2015-5511.
+
+>me aliases - Access Bypass - SA-CONTRIB-2015-128
+>https://www.drupal.org/node/2511424
+
+Use CVE-2015-5512.
+
+>Shibboleth authentication - Cross Site Scripting (XSS) - SA-CONTRIB-2015-129
+>https://www.drupal.org/node/2511518
+
+Use CVE-2015-5513.
+
+>Migrate - Cross Site Scripting (XSS) - SA-CONTRIB-2015-130
+>https://www.drupal.org/node/2516678
+
+Use CVE-2015-5514.
+
+>Views Bulk Operations - Access Bypass - SA-CONTRIB-2015-131
+>https://www.drupal.org/node/2516688
+
+Use CVE-2015-5515.
+
+- ---
+
+CVE assignment team, MITRE CVE Numbering Authority M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEVAwUBVdNcpKllVAevmvmsAQJK2Af9EPXhYRtkAtE4Pmm/YiRLnv4ogjkylGZ6
+BRaLS6xZ++A6XpzsUrmUuH8iTisC6KqW8s2JV2NyFTc4snLvIYv3lvBkZTpVP5f7
+sB7njM4e97tbCScCwy2ZwzEf6kzKEVEOBIM3WBY0u+D4i5/afcTyI5x+S3jkEZfZ
+Jksyfq70H7WZgBQNO23pitYl3YstJ+1tY8iKkSsDnSFHXNKvAJ0CsXRF7Ow5g11G
+sanB8viFt9ASOrUoqkOQvTEPY8iwzNGRQoOMhOI9TETvlSLb0tausNdAcHkDEeYA
+u27FNVQLs11FZ7XAulU3NxxuivFtG3jHEjrkgpGCtULhhlPaDxsuEw==
+=L9ro
+-----END PGP SIGNATURE-----
