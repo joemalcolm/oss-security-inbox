@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1369" "Wednesday" "18" "May" "2016" "13:40:18" "+0200" "Cedric Buissart" "cbuissar@redhat.com" "<CAKG8Do6qnT4yPS8B=fTaoFf2x4k-cKy2ixDZLRA8aSxRkuFo2Q@mail.gmail.com>" "54" "Re: [oss-security] CVE-2016-3698 libndp: denial of service due to insufficient validation of source of NDP messages" nil nil nil "5" "2016051811:40:18" "[oss-security] CVE-2016-3698 libndp: denial of service due to insufficient validation of source of NDP messages" (number mark "U       cbuissar@red May 18   54/1369  " thread-indent "\"Re: [oss-security] CVE-2016-3698 libndp: denial of service due to insufficient validation of source of NDP messages\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["417" "Tuesday" "18" "August" "2015" "10:49:27" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<CANO=Ty14tdTVwM2ncay44mr11WjtnTFuTbEL4iuVRn1iPLkn7g@mail.gmail.com>" "15" "[oss-security] CVE REJECT CVE-2015-5192/CVE-2015-5193" nil nil nil "8" "2015081816:49:27" "[oss-security] CVE REJECT CVE-2015-5192/CVE-2015-5193" (number mark "        kseifried@re Aug 18   15/417   " thread-indent "\"[oss-security] CVE REJECT CVE-2015-5192/CVE-2015-5193\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 7832 invoked by uid 550); 18 May 2016 11:40:31 -0000
+Received: (qmail 19602 invoked by uid 550); 18 Aug 2015 16:49:40 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,81 +11,42 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7810 invoked from network); 18 May 2016 11:40:30 -0000
+Received: (qmail 19577 invoked from network); 18 Aug 2015 16:49:39 -0000
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to;
-        bh=4wq2LaLo+UF76aoIJA3E6NBEJqOTHYoyO4ynsRA5+oQ=;
-        b=EHK6uz9zQBifrAyVjhek9ZexpDdQmhmG9Oi+tf0nsrJ0benyBud6/Yu+fQn7Iyf31S
-         9RpRUNvqIAlU2/mrgpHC/Xzrl9omj2CXx7wZvsbHktr3+n5D7mJ9J4nRhSYQqlF0xsxQ
-         j8BWxQHdvcTKt6YtSVVXJ3W+l4oVEjE5qcAygHgFbHhywGa1A9BpUc9Oc1b1e+Ubw1Y9
-         5js1JtQawH9tllFuy7M31gm8fjy8mWUkQLTMuTkLt2LD1JJutGS2VKYmRiwswx8w6aGH
-         5kzNwaJLmTrZcrYqJ7ozfTHeBCiuZnebQgP2SJuf0lyDo+NuCh4K2H3BGhhlcqFvOScG
-         bQxg==
-X-Gm-Message-State: AOPr4FVYAS7++RAAZ+iWgazosQ2bjwnb23AHCeNkyGtSYSj8Oak63nLOMXSOkCp8mMudtY1RrH+eP0w6uEPduBIZ
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
+         :content-type;
+        bh=DnDLesablmBINl5dPXKE9iaNsiIU8ngRKhNk276Js7Q=;
+        b=SRYLWges5K7PU3cVbm7ce8qZUw1YyPVlPZzTb02LGkjpBwCQADDgQqVjS1GiblET3Q
+         nOH5185XFaflaYeb1QvclywwK+T87kKRPWo9+zohU9aW1/PEXb9DaPesA7yNPgcfXz0J
+         PE4Tyezdwu8ejPQqRCCR0VZ3YY0KZa5cyEL+cKIRKfv6XcjDyW+X/pJRe9/pzp2Pmfke
+         5ccztJMflKC0/WfN3Xr2J7PFG+OFTho9Be8GIPIWgrSb+zKaw0Am7vEliML3MXln1KtS
+         WKOgmX3Rwm2xH+sfg4I4f60e1tbCImLHjOc3a0xN9uvxpCEtJ5yjs7UCkVlG+D26sjWL
+         UJSA==
+X-Gm-Message-State: ALoCoQl1xbZpIIGxqLnmLNDLQMaIhV6Jv6WYWOgJuJK+qksTTqbj09nlMI6cIrPZ8ztXW+h5n0XN
 MIME-Version: 1.0
-X-Received: by 10.98.20.197 with SMTP id 188mr10248487pfu.144.1463571618785;
- Wed, 18 May 2016 04:40:18 -0700 (PDT)
-Date: Wed, 18 May 2016 13:40:18 +0200
-Message-ID: <CAKG8Do6qnT4yPS8B=fTaoFf2x4k-cKy2ixDZLRA8aSxRkuFo2Q@mail.gmail.com>
-From: Cedric Buissart <cbuissar@redhat.com>
-To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary=94eb2c0396fe71040c05331c527c
-Subject: Re: [oss-security] CVE-2016-3698 libndp: denial of service due to
- insufficient validation of source of NDP messages
+X-Received: by 10.129.2.86 with SMTP id 83mr8235750ywc.61.1439916567742; Tue,
+ 18 Aug 2015 09:49:27 -0700 (PDT)
+Message-ID: <CANO=Ty14tdTVwM2ncay44mr11WjtnTFuTbEL4iuVRn1iPLkn7g@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=001a1140cb5086f9d4051d98b3ab
+Date: Tue, 18 Aug 2015 10:49:27 -0600
+From: Kurt Seifried <kseifried@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE REJECT CVE-2015-5192/CVE-2015-5193
+To: oss-security <oss-security@lists.openwall.com>, cve-assign@mitre.org
 
---94eb2c0396fe71040c05331c527c
+--001a1140cb5086f9d4051d98b3ab
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
 
-Accidental miss-use of copy/paste : updated subject with the CVE number.
-
-On Tue, May 17, 2016 at 8:40 PM, Cedric Buissart <cbuissar@redhat.com>
-wrote:
-
-> Dear all,
->
-> An improper input validation check, and improper origin check flaw during
-> the reception of NDP message was discovered in libndp. An attacker in a
-> non local network could use this flaw to advertise a node as a router, and
-> cause a denial of service attack, or act as a man in the middle.
->
-> The patches enforce that hop limit must be 255, to ensure that the NDP
-> message
-> has not been routed.
->
-> Patches can be found upsteam:
->
->  -  libndp: validate the IPv6 hop limit
->
-> https://github.com/jpirko/libndp/commit/a4892df306e0532487f1634ba6d4c6d4b=
-b381c7f
->
->  -  libndb: reject redirect and router advertisements from non-link-local
->
-> https://github.com/jpirko/libndp/commit/2af9a55b38b55abbf05fd116ec097d402=
-9115839
->   https://people.freedesktop.org/~lkundrak/.libndp/
->
-> Known affected packages : NetworkManager >=3D 1.0
->
-> Thanks to Julien Bernard (Viag=C3=A9nie) for discovering the issue
->
-> Kind regards,
-> --
-> Cedric Buissart
-> Purkynova 99
-> Brno 612 45
->
+Please CVE REJECT CVE-2015-5192/CVE-2015-5193 I misread a request and
+assigned CVE's twice to two issues, so one set needs to be rejected.
 
 
+-- 
 
---=20
-Cedric Buissart,
-Product Security
+--
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@redhat.com
 
-Purkynova 99
-Brno 612 45
-
---94eb2c0396fe71040c05331c527c--
+--001a1140cb5086f9d4051d98b3ab--
