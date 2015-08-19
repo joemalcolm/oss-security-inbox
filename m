@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["540" "Wednesday" "19" "December" "2018" "12:49:47" "+0530" "P J P" "ppandit@redhat.com" "<nycvar.YSQ.7.76.1812191246500.14650@xnncv>" "19" "[oss-security] CVE-2018-20216 QEMU: pvrdma: infinite loop in pvrdma_qp_send/recv" nil nil nil "12" "2018121907:19:47" "[oss-security] CVE-2018-20216 QEMU: pvrdma: infinite loop in pvrdma_qp_send/recv" (number mark "U       ppandit@redh Dec 19   19/540   " thread-indent "\"[oss-security] CVE-2018-20216 QEMU: pvrdma: infinite loop in pvrdma_qp_send/recv\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1020" "Wednesday" "19" "August" "2015" "15:50:19" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<CANO=Ty3WvawiwP7FbyzCjPrx9BK9pnzPc-EPq2RHw=E2uKH_ow@mail.gmail.com>" "29" "Re: [oss-security] CVE REJECT noise" nil nil nil "8" "2015081921:50:19" "[oss-security] CVE REJECT noise" (number mark "        kseifried@re Aug 19   29/1020  " thread-indent "\"Re: [oss-security] CVE REJECT noise\"\n") "<20150819214225.GA20825@openwall.com>" ("<20150819214225.GA20825@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 32171 invoked by uid 550); 19 Dec 2018 07:20:08 -0000
+Received: (qmail 16361 invoked by uid 550); 19 Aug 2015 21:50:32 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,36 +11,58 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32153 invoked from network); 19 Dec 2018 07:20:07 -0000
-Date: Wed, 19 Dec 2018 12:49:47 +0530 (IST)
-From: P J P <ppandit@redhat.com>
-X-X-Sender: pjp@kaapi
-To: oss security list <oss-security@lists.openwall.com>
-cc: Li Qiang <liq3ea@163.com>
-Message-ID: <nycvar.YSQ.7.76.1812191246500.14650@xnncv>
+Received: (qmail 16329 invoked from network); 19 Aug 2015 21:50:31 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:content-type;
+        bh=+QlrxpScn8R9aEHj0FUyyhkQltLINjZDcvwUSQ+8uOQ=;
+        b=IvBPRRcgsJUAAwIEuqA2EpK+obgll/nqfrcUfm++WoQJiaWhkunMyfhdDT5EFxuvfJ
+         FiAicQ3/59d1Tv3IVaucigVdtzNCRcyDcLpOAT7f9CCpHvXRhIIfUa8oH9Z9s6n9rmQK
+         0JkkgYmpg3cZSXBA6orf0BGDODxqZUKtkxIZ5RkSG5NVBy7ymclO5LHSTetVm5flegsv
+         fCjxWsgp5On9gnvvVYcnXMd+LCs1hX7JmslwG5geoiJh5eHvhNXFXyeFVa21Xb0xKo2p
+         3DUDPf741p8molJqD8CNTbiPc7YHI5i8NJp9p2xh3gn5GZ8sXgf8qJomDDNMAvT4TpLw
+         OMFQ==
+X-Gm-Message-State: ALoCoQlu2JsNVTEvHaI28Qw/km3Jm4icsgvtICAuhEVrVdCTkR9Su5nbOFjYq60cqQjqpUfmwUXb
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.14
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.31]); Wed, 19 Dec 2018 07:19:55 +0000 (UTC)
-Subject: [oss-security] CVE-2018-20216 QEMU: pvrdma: infinite loop in pvrdma_qp_send/recv
+X-Received: by 10.13.245.69 with SMTP id e66mr15654457ywf.176.1440021019945;
+ Wed, 19 Aug 2015 14:50:19 -0700 (PDT)
+In-Reply-To: <20150819214225.GA20825@openwall.com>
+References: <20150819214225.GA20825@openwall.com>
+Message-ID: <CANO=Ty3WvawiwP7FbyzCjPrx9BK9pnzPc-EPq2RHw=E2uKH_ow@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=94eb2c0885be5d41fe051db10527
+Date: Wed, 19 Aug 2015 15:50:19 -0600
+From: Kurt Seifried <kseifried@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] CVE REJECT noise
+To: oss-security <oss-security@lists.openwall.com>
 
-   Hello,
+--94eb2c0885be5d41fe051db10527
+Content-Type: text/plain; charset=UTF-8
 
-An infinite loop issue was found in QEMU's implementation of VMWare's 
-paravirtual RDMA device. It could occur while transferring QP ring objects' 
-data in pvrdma_qp_send/recv functions.
+On Wed, Aug 19, 2015 at 3:42 PM, Solar Designer <solar@openwall.com> wrote:
 
-A guest user/process could use this flaw to cause infinite loop resulting in 
-DoS.
+> All -
+>
+> Can we please agree that CVE REJECT postings such as those Kurt has been
+> occasionally making in here for a while are not to be made anymore?  To
+> me, and I suspect to almost(?) all other oss-security subscribers, they
+> are just noise.  I mean things like this:
+>
+>
+Stupid question but who is "We"? I mean it's your list and if you want me
+to definitely not post these, I can respect that no problem, OTOH if you're
+looking for community consensus I doubt that'll happen in any meaningful
+way (bike shedding is the most likely outcome). Mitre people: is it
+sufficient if I privately inform you of such CVE rejects so they can be put
+int he database?
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2018-12/msg03052.html
 
-This issue was reported by Li Qiang.
+-- 
 
-Thank you.
 --
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@redhat.com
+
+--94eb2c0885be5d41fe051db10527--
