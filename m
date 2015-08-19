@@ -1,4 +1,9 @@
-Received: (qmail 21899 invoked by uid 550); 23 Jun 2023 10:29:03 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2965" "Tuesday" "18" "August" "2015" "21:46:08" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150819014608.32B3AB2E092@smtpvbsrv1.mitre.org>" "66" "[oss-security] Re: CVE Request: ATutor LMS Version 2.2 with stored XSS and file upload issue" nil nil nil "8" "2015081901:46:08" "[oss-security] Re: CVE Request: ATutor LMS Version 2.2 with stored XSS and file upload issue" (number mark "U       cve-assign@m Aug 18   66/2965  " thread-indent "\"[oss-security] Re: CVE Request: ATutor LMS Version 2.2 with stored XSS and file upload issue\"\n") "<CANzWz4HNTYJgq=6-6yH-gwMugY=ck=CwxxtysXsbv9xAKP5X9Q@mail.gmail.com>" ("<CANzWz4HNTYJgq=6-6yH-gwMugY=ck=CwxxtysXsbv9xAKP5X9Q@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 5209 invoked by uid 550); 19 Aug 2015 01:46:21 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,54 +12,78 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21523 invoked from network); 23 Jun 2023 10:28:39 -0000
-Date: Fri, 23 Jun 2023 12:28:33 +0200
-From: Solar Designer <solar@openwall.com>
-To: oss-security@lists.openwall.com
-Message-ID: <20230623102833.GA6568@openwall.com>
-References: <CAGUWgD83Q_Sce+Zcwni33yjcx9bzFv=XUhKPJK1_v226Odj1ZA@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAGUWgD83Q_Sce+Zcwni33yjcx9bzFv=XUhKPJK1_v226Odj1ZA@mail.gmail.com>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] Opinion: Governments don't want IT security, they want to have cyber weapons
+Received: (qmail 5188 invoked from network); 19 Aug 2015 01:46:20 -0000
+From: cve-assign@mitre.org
+To: sreepriya1111@gmail.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <CANzWz4HNTYJgq=6-6yH-gwMugY=ck=CwxxtysXsbv9xAKP5X9Q@mail.gmail.com>
+Message-Id: <20150819014608.32B3AB2E092@smtpvbsrv1.mitre.org>
+Date: Tue, 18 Aug 2015 21:46:08 -0400 (EDT)
+Subject: [oss-security] Re: CVE Request: ATutor LMS Version 2.2 with stored XSS and file upload issue
 
-Hi Georgi and all,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-I actually think we should be rejecting postings like this.  I accepted
-this one as an example.  By "postings like this" I mean rants without
-proposed solutions, not helpful for this community (and where replies
-are unlikely to be helpful either), and/or lacking focus on Open Source.
-I think in this case it's all 3 of these.  I think the recent thread
-"The AI chatgpt writes insecure code" was of similarly questionable
-value for this list's subscribers.  I'd appreciate off-list replies on
-whether postings/threads like these two should be accepted or rejected
-going forward (or e.g. that one kind should be and the other not).
+> There are a few Stored XSS ... vulnerabilities in the software.
+> Issue: https://github.com/atutor/ATutor/issues/103
 
-Georgi, replying to you in another thread, I wrote:
+Use CVE-2015-6521 for all of these XSS issues. We think they don't
+overlap CVE-2010-0971.
 
-I'm all for more discussion, but I'd like it to be relevant and helpful.
 
-I think your posting is relevant, but not helpful and not focused on
-Open Source.  Like you wrote, you miss the old full-disclosure list -
-well, this list isn't, we try to stay more focused.  I'm sorry there
-might not be currently a list that would be a better fit for your rants
-and observations.
-
-Anyway, on the topic:
-
-On Fri, Jun 23, 2023 at 11:34:28AM +0300, Georgi Guninski wrote:
-> What the security community thinks about it?
+> There are ... file upload vulnerabilities in the software.
+> Issue: https://github.com/atutor/ATutor/issues/103
 > 
-> Inline:
+> 2) File Upload in course
+> There are illegal file extensions mentioned where all the executable
+> files are checked. But a file without any extension is accepted. This
+> could be a binary executable file.
 > 
-> Tue Aug 17 14:35:14 EEST 2021
-> Opinion: Governments don't want IT security, they want to have cyber weapons
+> Against file upload: Use a white list of extensions that are allowed
+> to be uploaded rather than extensions that are not allowed (black
+> list).
 
-I think most governments do want IT security.  Some also want "cyber
-weapons", which is partially contradictory, but that's how it is:
+We don't think this is a type of issue for which a CVE ID is typically
+assigned. See also the second-to-last part of the
+http://www.openwall.com/lists/oss-security/2015/08/06/6 post.
 
-https://en.wikipedia.org/wiki/NOBUS
+For web applications, file upload is often of interest because the
+attacker can upload a file with an extension recognized by a web
+server as an executable file, e.g., an extension listed on an
+AddHandler line in an Apache HTTP Server configuration. We're not sure
+whether there are any web servers that, in their default
+configuration, have an AddHandler equivalent for all extensionless
+files. Although a web application might want to block uploads of any
+file that has a native executable-file format recognized by the
+underlying operating system, we don't think this is a commonly
+recommended feature, and we don't believe we should be assigning CVE
+IDs to every web application that omits this feature. (We're not
+disputing that the feature could sometimes be useful. Most web
+applications aren't intended to receive native executables through an
+upload mechanism, and there might be attack methodologies that rely on
+these uploads, e.g., uploading something like Staog --
+https://en.wikipedia.org/wiki/Staog -- to a Linux machine with a
+filename of Staog and no extension.)
 
-Alexander
+If there is something about a web application that makes native
+executables especially dangerous (e.g., local users are somehow
+encouraged to open all non-PHP files uploaded by web visitors) or if a
+vendor was actually trying to block all native executables but the
+code was wrong, then a CVE ID could exist.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBCAAGBQJV097NAAoJEKllVAevmvmsC5IH/2Pr//NPyWiWIpZghzARBhcf
+xtVlAg40ENtz1Bi89soNQeBnoDYiJww22ZNyAWs6C4Tx3mwCSH0QZaWEpOWWqZ8q
+ewxth6fUMmWC+c21DN5DrANxWa/kufXURRS7HHzrnMp8XozhBLUfDnh2cqGdGMSN
+93vyoZi1bzkK+rtaCwII89Io31xMDWF3Bz8MUbFc5xKAWhHdFOSNnuAhEHbi5UGb
+R69HmoPY6bBO/i25oKnO/RSmYj46PcHALN37IESCfcxPXZiOOwWVpibEcdFOhE4R
+IKXtyThPD4TrlUsba4hwXDt8IhCJaNy4V7YjqvQab4ZS832ERqNt0taf1Hu5B7c=
+=/WDp
+-----END PGP SIGNATURE-----
