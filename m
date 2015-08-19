@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3409" "Monday" "26" "December" "2016" "12:57:26" "-0500" "Michael Hess" "mlhess@umich.edu" "<CANNt_rZQ9ZbmeB3kNGgBafny=TYoGbm7xMJPrzD2KNUt60Ld=Q@mail.gmail.com>" "103" "[oss-security] Re: [security] [oss-security] PHPMailer < 5.2.18 Remote Code Execution [CVE-2016-10033]" nil nil nil "12" "2016122617:57:26" "[oss-security] Re: [security] [oss-security] PHPMailer < 5.2.18 Remote Code Execution [CVE-2016-10033]" (number mark "U       mlhess@umich Dec 26  103/3409  " thread-indent "\"[oss-security] Re: [security] [oss-security] PHPMailer < 5.2.18 Remote Code Execution [CVE-2016-10033]\"\n") "<20161226145559.GU31189@scully.more-magic.net>" ("<CADSYzsubAm_GzSJ1S3uoskp1JNJe5Jemb0jtt8waA8QMdcbHOw@mail.gmail.com>" "<20161226154650.4b40cca8@pc1>" "<20161226145559.GU31189@scully.more-magic.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1830" "Thursday" "20" "August" "2015" "01:06:35" "+0300" "Solar Designer" "solar@openwall.com" "<20150819220635.GA20939@openwall.com>" "35" "Re: [oss-security] CVE REJECT noise" nil nil nil "8" "2015081922:06:35" "[oss-security] CVE REJECT noise" (number mark "        solar@openwa Aug 20   35/1830  " thread-indent "\"Re: [oss-security] CVE REJECT noise\"\n") "<CANO=Ty3WvawiwP7FbyzCjPrx9BK9pnzPc-EPq2RHw=E2uKH_ow@mail.gmail.com>" ("<20150819214225.GA20825@openwall.com>" "<CANO=Ty3WvawiwP7FbyzCjPrx9BK9pnzPc-EPq2RHw=E2uKH_ow@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 30582 invoked by uid 550); 26 Dec 2016 19:16:59 -0000
+Received: (qmail 13425 invoked by uid 550); 19 Aug 2015 22:06:44 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,148 +11,52 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 12214 invoked from network); 19 Aug 2015 22:06:40 -0000
+Message-ID: <20150819220635.GA20939@openwall.com>
+References: <20150819214225.GA20825@openwall.com> <CANO=Ty3WvawiwP7FbyzCjPrx9BK9pnzPc-EPq2RHw=E2uKH_ow@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CANO=Ty3WvawiwP7FbyzCjPrx9BK9pnzPc-EPq2RHw=E2uKH_ow@mail.gmail.com>
+User-Agent: Mutt/1.4.2.3i
+Date: Thu, 20 Aug 2015 01:06:35 +0300
+From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 25794 invoked from network); 26 Dec 2016 17:58:18 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:content-transfer-encoding;
-        bh=xMcwA70L8DGiML4ocpsaN/zomqsa1G7ZfKCLhgynFSc=;
-        b=GZDplmIK57tETAbZiYDUDMn21qyS7jomyBoMPWmRqduHVA59r3F06/ua/j8zythDVf
-         Zb0n/FB6k1PJpSDo8peL1+k6mI/dlooXEiwTS9LjCtAl6JSwP10xbSiebVfwTcKP9bqP
-         SnyFuD4LfJqKB7t70Jok9AmfnnQrp966o2XbyqcjGuNXKc5ySR8YiOBIOw5WiiqIx7xk
-         Nf1B1NfO3mw99y8g9aBiWDc+Q6V3JyJ/8CXsjevOqQbFVOSbCoa3YG9wUzgSiMKTf9w+
-         OVzupIu6cYbzlUdDgHsxoP6zCV7giBk6zgl/azlVknInz02uR4qYxJD4S7E4OTaUssTe
-         RRhw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:content-transfer-encoding;
-        bh=xMcwA70L8DGiML4ocpsaN/zomqsa1G7ZfKCLhgynFSc=;
-        b=MVvbzBoSgPb0bmS424G8RpuLk2PnUZAaLUVB6oyH0GjapyRrjm3R74Tsk6PdLJG9AO
-         +tcry1WpgAn0EjtqGH6WnRITnacyNsuBvHs2qHVsxXKr30EDiiGy0rykMeTAIt2ujzMS
-         FXx1QKvvdMlsvIKar89YgTKGbYfMSWZlBJIl9gks8d5tWxDabOdipnbflpWJMcinGZBy
-         4O2ODhvhFYnSyWvphsPkhh2Fxja66yn9LwDOAFe3NbHGhgm9n5FjfEe3QS5qdxUhK5mn
-         1AMCliOO5EjqsVk5lOOanI7OT+VOS+NwIl/29JMDvWmWDUv9qhflJqfPRdr0DPm0luWL
-         JK0A==
-X-Gm-Message-State: AIkVDXIEo3HYz02cYnfjxXYCEQMY3S9piYeCAMkMUodtLIHjkyYv29WA0jMbb6GZLlWeIEXP0RSQmtqiscm6JA==
-X-Received: by 10.202.252.8 with SMTP id a8mr13203504oii.159.1482775086741;
- Mon, 26 Dec 2016 09:58:06 -0800 (PST)
-MIME-Version: 1.0
-Sender: michaellevinehess@gmail.com
-In-Reply-To: <20161226145559.GU31189@scully.more-magic.net>
-References: <CADSYzsubAm_GzSJ1S3uoskp1JNJe5Jemb0jtt8waA8QMdcbHOw@mail.gmail.com>
- <20161226154650.4b40cca8@pc1> <20161226145559.GU31189@scully.more-magic.net>
-From: Michael Hess <mlhess@umich.edu>
-Date: Mon, 26 Dec 2016 12:57:26 -0500
-X-Google-Sender-Auth: EIHcvCORDHozM2kYmigjMtswxew
-Message-ID: <CANNt_rZQ9ZbmeB3kNGgBafny=TYoGbm7xMJPrzD2KNUt60Ld=Q@mail.gmail.com>
-To: security@drupal.org, oss-security@lists.openwall.com, security@chamilo.org
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Subject: [oss-security] Re: [security] [oss-security] PHPMailer < 5.2.18 Remote Code
- Execution [CVE-2016-10033]
+Subject: Re: [oss-security] CVE REJECT noise
+To: oss-security@lists.openwall.com
 
-The Drupal Security team is going to release a PSA on this topic, we
-don't normally do it, but given the holiday we will issue PSA-004, in
-about 30 min.
+On Wed, Aug 19, 2015 at 03:50:19PM -0600, Kurt Seifried wrote:
+> On Wed, Aug 19, 2015 at 3:42 PM, Solar Designer <solar@openwall.com> wrote:
+> > Can we please agree that CVE REJECT postings such as those Kurt has been
+> > occasionally making in here for a while are not to be made anymore?  To
+> > me, and I suspect to almost(?) all other oss-security subscribers, they
+> > are just noise.  I mean things like this:
+> 
+> Stupid question but who is "We"? I mean it's your list and if you want me
+> to definitely not post these, I can respect that no problem, OTOH if you're
+> looking for community consensus I doubt that'll happen in any meaningful
+> way (bike shedding is the most likely outcome).
 
-The text is below.
+"We" is the oss-security community, or the current subscribers to this
+mailing list.  I expect that very few people, if any, need those
+postings.  I want to hear from those few, if any.  If it's no one at
+all, then the postings should just stop.  If it's like 1 or 2 people or
+groups, then we should find a way for Kurt to e-mail them directly (and
+I don't mind setting up a separate mailing list if that would help).  If
+it's a lot of people (totally unexpected, but who knows), then we should
+continue the current practice.
 
-Thanks,
-Michael on behalf of the Drupal Security Team.
+So, once again, can _only_ those people who want to see non-informative
+CVE REJECT postings in here state so, please?  I don't need to hear from
+the 99%+ of people who I am sure don't want to see those postings in
+here.  That's obvious.  I also already know your preference, Kurt.
 
+And let's end this thread soon.  It isn't meant to be long, or that
+would defeat the purpose.  But for now, the thread is open in case
+anyone at all (besides Kurt) has any objections to the proposed decision
+or wants to establish another mechanism for them to receive those
+seemingly useless messages.
 
+Thanks!
 
-Posted by Drupal Security Team on December 26, 2016 at 12:50pm
-
-Advisory ID: DRUPAL-SA-PSA-2016-004
-Project: PHPMailer (third-party library)
-Version: 7.x, 8.x
-Date: 2016-December-26
-Security risk: 23/25 (Highly Critical)
-AC:None/A:User/CI:All/II:All/E:Exploit/TD:All
-Vulnerability: Arbitrary PHP code execution
-
-Description
-
-The PHPMailer and SMTP modules (and maybe others) add support for
-sending e-mails using the 3rd party PHPMailer library.
-
-In general the Drupal project does not create advisories for 3rd party
-libraries. Drupal site maintainers should pay attention to the
-notifications provided by those 3rd party libraries as outlined in
-PSA-2011-002 - External libraries and plugins. However, given the
-extreme criticality of this issue and the timing of its release we are
-issuing a Public Service Announcement to alert potentially affected
-Drupal site maintainers.
-
-CVE identifier(s) issued
-
-CVE-2016-10033
-
-Versions affected
-
-All versions of the external PHPMailer library < 5.2.18.
-
-Drupal core is not affected. If you do not use the contributed
-PHPMailer third party library, there is nothing you need to do.
-
-Solution
-
-Upgrade to the newest version of the phpmailler library.
-https://github.com/PHPMailer/PHPMailer
-
-Reported by
-
-Dawid Golunski
-
-Contact and More Information
-
-The Drupal security team can be reached at security at drupal.org or
-via the contact form at https://www.drupal.org/contact.
-
-Learn more about the Drupal Security team and their policies, writing
-secure code for Drupal, andsecuring your site.
-
-Follow the Drupal Security Team on Twitter at https://twitter.com/drupalsec=
-urity
-
-
-
-On Mon, Dec 26, 2016 at 9:55 AM, Peter Bex <peter@more-magic.net> wrote:
-> On Mon, Dec 26, 2016 at 03:46:50PM +0100, Hanno B=C3=B6ck wrote:
->> Hi,
->>
->> Given I had plenty of time on the train to 33c3 I did a quick
->> lookaround on what contains PHPMailer. As the details of the vuln
->> aren't clear yet this doesn't necessarily mean they're vulnerable, just
->> that they ship the affected code.
->
-> It looks like the vulnerability is due to a missing escaping of shell
-> arguments in the sender's e-mail address.  This commit seems to be
-> the one that fixes the bug:
-> https://github.com/PHPMailer/PHPMailer/commit/4835657cd639fbd09afd33307ce=
-f164edf807cdc#diff-ace81e501931d8763b49f2410cf3094dR1449
->
-> So it depends on whether a web form allows one to control the "from"
-> mail address or not.
->
->> Drupal doesn't contain PHPMailer, although mentioned in the advisory.
->> But there are probably plugins and extensions using it. I also saw it
->> used in some wordpress themes.
->
-> I noticed this Drupal module: https://www.drupal.org/project/phpmailer
-> which has some sort of integration with the widely used mimemail module.
-> The linked module http://drupal.org/project/smtp also uses PHPMailer.
-> There are undoubtedly more modules that do.
->
-> The LCMS system Chamilo also uses PHPMailer for sending mails internally.
->
-> Cheers,
-> Peter Bex
->
-> --
-> [ Security | https://lists.drupal.org/mailman/listinfo/security ]
-> [Security team mailing list management and scheduling is documented here =
-| https://security.drupal.org/handling-list-emails]
+Alexander
