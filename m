@@ -1,4 +1,9 @@
-Received: (qmail 15687 invoked by uid 550); 11 Aug 2023 13:08:10 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1185" "Wednesday" "19" "August" "2015" "13:48:04" "+0200" "Christofer Dutz" "cdutz@apache.org" "<op.x3l5qewzn9yd54@christofers-mbp>" "36" "[oss-security] CVE-2015-3269 Apache Flex BlazeDS Insecure Xml Entity Expansion Vulnerability" nil nil nil "8" "2015081911:48:04" "[oss-security] CVE-2015-3269 Apache Flex BlazeDS Insecure Xml Entity Expansion Vulnerability" (number mark "U       cdutz@apache Aug 19   36/1185  " thread-indent "\"[oss-security] CVE-2015-3269 Apache Flex BlazeDS Insecure Xml Entity Expansion Vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 5237 invoked by uid 550); 19 Aug 2015 12:10:48 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,42 +12,53 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 4066 invoked from network); 11 Aug 2023 04:58:29 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Elad Kalif <eladkal@apache.org>
-To: oss-security@lists.openwall.com
-Message-ID: <40a53997-ded9-402a-6c5b-2fa76e160ad6@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Fri, 11 Aug 2023 04:57:45 +0000
+Received: (qmail 21662 invoked from network); 19 Aug 2015 11:48:28 -0000
+Content-Type: text/plain; charset=utf-8; format=flowed; delsp=yes
+Date: Wed, 19 Aug 2015 13:48:04 +0200
+To: security@apache.org, oss-security@lists.openwall.com,
+ bugtraq@securityfocus.com, dev@flex.apache.org, users@flex.apache.org
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2023-39553: Apache Airflow Drill Provider Arbitrary File Read
- Vulnerability 
+Content-Transfer-Encoding: Quoted-Printable
+From: "Christofer Dutz" <cdutz@apache.org>
+Organization: Apache Foundation
+Message-ID: <op.x3l5qewzn9yd54@christofers-mbp>
+User-Agent: Opera Mail/1.0 (MacIntel)
+Subject: [oss-security] CVE-2015-3269 Apache Flex BlazeDS Insecure Xml Entity Expansion
+ Vulnerability
 
-Severity: moderate
+CVE-2015-3269 Apache Flex BlazeDS Insecure Xml Entity Expansion=20=20
+Vulnerability
 
-Affected versions:
+Severity: Important
 
-- Apache Airflow Drill Provider before 2.4.3
+Vendor: The Apache Software Foundation
 
-Description:
+Versions Affected: Apache Flex BlazeDS 4.7.0
 
-Improper Input Validation vulnerability in Apache Software Foundation Apach=
-e Airflow Drill Provider.
+Description: When receiving XML encoded AMF messages containing DTD=20=20
+entities, the
+default XML parser configurations allows expanding of entities to local=20=
+=20
+resources.
+A request that included a specially crafted request parameter could be=20=20
+used to
+access content that would otherwise be protected.
 
-Apache Airflow Drill Provider is affected by a vulnerability that allows an=
- attacker to pass in malicious parameters when establishing a connection wi=
-th DrillHook giving an opportunity to read files on the Airflow server.
-This issue affects Apache Airflow Drill Provider: before 2.4.3.
-It is recommended to upgrade to a version that is not affected.
 
-Credit:
+Mitigation: All users of Apache Flex BlazeDS prior to 4.7.1
 
-sw0rd1ight of Caiji Sec Team and 4ra1n of Chaitin Tech (finder)
+Example: For an AMF message that contains the following xml payload:
+<?xml version=3D"1.0" encoding=3D"ISO-8859-1"?>
+  <!DOCTYPE foo [
+    <!ELEMENT foo ANY >
+    <!ENTITY xxe SYSTEM "file:///etc/passwd" >]><foo>&xxe;</foo>
+the entity &xxe; would be expanded to the content of the file /etc/passwd.
+However this expanded information is not automatically transferred back to
+the client, but could be made available by the application.
 
-References:
+Credit: This issue was discovered by =EF=BB=BFMatthias Kaiser of Code White
 
-https://github.com/apache/airflow/pull/33074
-https://airflow.apache.org/
-https://www.cve.org/CVERecord?id=3DCVE-2023-39553
+References:=20=20
+https://www.owasp.org/index.php/XML_External_Entity_(XXE)_Processing
 
+Christofer Dutz
