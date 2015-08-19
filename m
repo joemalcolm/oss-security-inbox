@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6800" "Monday" "1" "August" "2016" "06:14:02" "-0600" "Damien Miller" "djm@openbsd.org" "<7e553c0abb51b403@openbsd.org>" "174" "[oss-security] Announce: OpenSSH 7.3 released" "^Date:" nil nil "8" "2016080112:14:02" "[oss-security] Announce: OpenSSH 7.3 released" (number mark "U       djm@openbsd. Aug  1  174/6800  " thread-indent "\"[oss-security] Announce: OpenSSH 7.3 released\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["963" "Wednesday" "19" "August" "2015" "11:49:45" "+0200" "Marcus Meissner" "meissner@suse.de" "<20150819094945.GD6584@suse.de>" "34" "[oss-security] CVE Request: more php unserializing issues" nil nil nil "8" "2015081909:49:45" "[oss-security] CVE Request: more php unserializing issues" (number mark "U       meissner@sus Aug 19   34/963   " thread-indent "\"[oss-security] CVE Request: more php unserializing issues\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 26320 invoked by uid 550); 1 Aug 2016 12:14:17 -0000
+Received: (qmail 20295 invoked by uid 550); 19 Aug 2015 09:49:58 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,185 +11,53 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 26294 invoked from network); 1 Aug 2016 12:14:15 -0000
-Message-Id: <7e553c0abb51b403@openbsd.org>
-Date: Mon, 1 Aug 2016 06:14:02 -0600 (MDT)
-From: Damien Miller <djm@openbsd.org>
+Received: (qmail 20274 invoked from network); 19 Aug 2015 09:49:58 -0000
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Message-ID: <20150819094945.GD6584@suse.de>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Organization: SUSE Linux GmbH, GF: =?iso-8859-1?Q?Felix_?=
+ =?iso-8859-1?Q?Imend=F6rffer=2C_Jane_Smithard=2C_Graham_Norton=2C_HRB_212?=
+ =?iso-8859-1?Q?84_=28AG_N=FCrnberg=29?=
+User-Agent: Mutt/1.5.21 (2010-09-15)
+Date: Wed, 19 Aug 2015 11:49:45 +0200
+From: Marcus Meissner <meissner@suse.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Announce: OpenSSH 7.3 released
-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE Request: more php unserializing issues
+To: OSS Security List <oss-security@lists.openwall.com>
 
-OpenSSH 7.3 has just been released. It will be available from the
-mirrors listed at http://www.openssh.com/ shortly.
+Hi,
 
-OpenSSH is a 100% complete SSH protocol 2.0 implementation and
-includes sftp client and server support. OpenSSH also includes
-transitional support for the legacy SSH 1.3 and 1.5 protocols
-that may be enabled at compile-time.
+I am not sure these have CVE ids yet:
 
-Once again, we would like to thank the OpenSSH community for their
-continued support of the project, especially those who contributed
-code or patches, reported bugs, tested snapshots or donated to the
-project. More information on donations may be found at:
-http://www.openssh.com/donations.html
+https://bugs.php.net/bug.php?id=70068
+Dangling pointer in the unserialization of ArrayObject items
+	impact: remote code execution
 
-Future deprecation notice
-=========================
 
-We plan on retiring more legacy cryptography in a near-future
-release, specifically:
+https://bugs.php.net/bug.php?id=70166
+https://bugs.php.net/bug.php?id=70155 (dup)
+Use After Free Vulnerability in unserialize() with SPLArrayObject
 
- * Refusing all RSA keys smaller than 1024 bits (the current minimum
-   is 768 bits)
- * Removing server-side support for the SSH v.1 protocol (currently
-   compile-time disabled).
- * In approximately 1 year, removing all support for the SSH v.1
-   protocol (currently compile-time disabled).
+https://bugs.php.net/bug.php?id=70168
+Use After Free Vulnerability in unserialize() with SplObjectStorage
 
-This list reflects our current intentions, but please check the final
-release notes for future releases.
+https://bugs.php.net/bug.php?id=70169
+Use After Free Vulnerability in unserialize() with SplDoublyLinkedList
 
-Changes since OpenSSH 7.2
-=========================
 
-This is primarily a bugfix release.
+These look like they can be exploited for code execution.
 
-Security
---------
 
- * sshd(8): Mitigate a potential denial-of-service attack against
-   the system's crypt(3) function via sshd(8). An attacker could
-   send very long passwords that would cause excessive CPU use in
-   crypt(3). sshd(8) now refuses to accept password authentication
-   requests of length greater than 1024 characters. Independently
-   reported by Tomas Kuthan (Oracle), Andres Rojas and Javier Nieto.
+https://bugs.php.net/bug.php?id=70019
+Files extracted from archive may be placed outside of destination directory
 
- * sshd(8): Mitigate timing differences in password authentication
-   that could be used to discern valid from invalid account names
-   when long passwords were sent and particular password hashing
-   algorithms are in use on the server. CVE-2016-6210, reported by
-   EddieEzra.Harari at verint.com
+(indirect reference also  https://msisac.cisecurity.org/advisories/2015/2015-091.cfm
+ and the php release notes
+ http://php.net/ChangeLog-5.php#5.4.44
+ http://php.net/ChangeLog-5.php#5.5.28
+ http://php.net/ChangeLog-5.php#5.6.12
+)
 
- * ssh(1), sshd(8): Fix observable timing weakness in the CBC padding
-   oracle countermeasures. Reported by Jean Paul Degabriele, Kenny
-   Paterson, Torben Hansen and Martin Albrecht. Note that CBC ciphers
-   are disabled by default and only included for legacy compatibility.
-
- * ssh(1), sshd(8): Improve operation ordering of MAC verification for
-   Encrypt-then-MAC (EtM) mode transport MAC algorithms to verify the
-   MAC before decrypting any ciphertext. This removes the possibility
-   of timing differences leaking facts about the plaintext, though no
-   such leakage has been observed.  Reported by Jean Paul Degabriele,
-   Kenny Paterson, Torben Hansen and Martin Albrecht.
-    
- * sshd(8): (portable only) Ignore PAM environment vars when
-   UseLogin=yes. If PAM is configured to read user-specified
-   environment variables and UseLogin=yes in sshd_config, then a
-   hostile local user may attack /bin/login via LD_PRELOAD or
-   similar environment variables set via PAM. CVE-2015-8325,
-   found by Shayan Sadigh.
-
-New Features
-------------
-
- * ssh(1): Add a ProxyJump option and corresponding -J command-line
-   flag to allow simplified indirection through a one or more SSH
-   bastions or "jump hosts".
-
- * ssh(1): Add an IdentityAgent option to allow specifying specific
-   agent sockets instead of accepting one from the environment.
-    
- * ssh(1): Allow ExitOnForwardFailure and ClearAllForwardings to be
-   optionally overridden when using ssh -W. bz#2577
-
- * ssh(1), sshd(8): Implement support for the IUTF8 terminal mode as
-   per draft-sgtatham-secsh-iutf8-00.
-    
- * ssh(1), sshd(8): Add support for additional fixed Diffie-Hellman
-   2K, 4K and 8K groups from draft-ietf-curdle-ssh-kex-sha2-03.
-
- * ssh-keygen(1), ssh(1), sshd(8): support SHA256 and SHA512 RSA
-   signatures in certificates;
-    
- * ssh(1): Add an Include directive for ssh_config(5) files.
-
- * ssh(1): Permit UTF-8 characters in pre-authentication banners sent
-   from the server. bz#2058
-
-Bugfixes
---------
-
- * ssh(1), sshd(8): Reduce the syslog level of some relatively common
-   protocol events from LOG_CRIT. bz#2585
-
- * sshd(8): Refuse AuthenticationMethods="" in configurations and
-   accept AuthenticationMethods=any for the default behaviour of not
-   requiring multiple authentication. bz#2398
-
- * sshd(8): Remove obsolete and misleading "POSSIBLE BREAK-IN
-   ATTEMPT!" message when forward and reverse DNS don't match. bz#2585
-
- * ssh(1): Close ControlPersist background process stderr except
-   in debug mode or when logging to syslog. bz#1988
-
- * misc: Make PROTOCOL description for direct-streamlocal@openssh.com
-   channel open messages match deployed code. bz#2529
-
- * ssh(1): Deduplicate LocalForward and RemoteForward entries to fix
-   failures when both ExitOnForwardFailure and hostname
-   canonicalisation are enabled. bz#2562
-
- * sshd(8): Remove fallback from moduli to obsolete "primes" file
-   that was deprecated in 2001. bz#2559.
-
- * sshd_config(5): Correct description of UseDNS: it affects ssh
-   hostname processing for authorized_keys, not known_hosts; bz#2554
-    
- * ssh(1): Fix authentication using lone certificate keys in an agent
-   without corresponding private keys on the filesystem. bz#2550
-
- * sshd(8): Send ClientAliveInterval pings when a time-based
-   RekeyLimit is set; previously keepalive packets were not being
-   sent. bz#2252
-    
-Portability
------------
-
- * ssh(1), sshd(8): Fix compilation by automatically disabling ciphers
-   not supported by OpenSSL. bz#2466
-
- * misc: Fix compilation failures on some versions of AIX's compiler
-   related to the definition of the VA_COPY macro. bz#2589
-
- * sshd(8): Whitelist more architectures to enable the seccomp-bpf
-   sandbox. bz#2590
-
- * ssh-agent(1), sftp-server(8): Disable process tracing on Solaris
-   using setpflags(__PROC_PROTECT, ...). bz#2584
-
- * sshd(8): On Solaris, don't call Solaris setproject() with
-   UsePAM=yes it's PAM's responsibility. bz#2425
-
-Checksums:
-==========
-
- - SHA1 (openssh-7.3.tar.gz) = b1641e5265d9ec68a9a19decc3a7edd1203cbd33
- - SHA256 (openssh-7.3.tar.gz) = vS0X35qrX9OOPBkyDMYhOje/DBwHBVEV7nv5rkzw4vM=
-
- - SHA1 (openssh-7.3p1.tar.gz) = bfade84283fcba885e2084343ab19a08c7d123a5
- - SHA256 (openssh-7.3p1.tar.gz) = P/uYmm3KppWUw7VQ1IVaWi4XGMzd5/XjY4e0JCIPvsw=
-
-Please note that the SHA256 signatures are base64 encoded and not
-hexadecimal (which is the default for most checksum tools). The PGP
-key used to sign the releases is available as RELEASE_KEY.asc from
-the mirror sites.
-
-Reporting Bugs:
-===============
-
-- Please read http://www.openssh.com/report.html
-  Security bugs should be reported directly to openssh@openssh.com
-
-OpenSSH is brought to you by Markus Friedl, Niels Provos, Theo de
-Raadt, Kevin Steves, Damien Miller, Darren Tucker, Jason McIntyre,
-Tim Rice and Ben Lindstrom.
+Ciao, Marcus
