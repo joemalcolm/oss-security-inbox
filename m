@@ -1,4 +1,9 @@
-Received: (qmail 3503 invoked by uid 550); 17 Apr 2024 12:46:29 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1731" "Thursday" "20" "August" "2015" "16:52:53" "+0200" "Alessandro Ghedini" "alessandro@ghedini.me" "<20150820145253.GB24832@kronk.local>" "50" "Re: [oss-security] [oCERT-2015-009] VLC arbitrary pointer dereference" nil nil nil "8" "2015082014:52:53" "[oss-security] [oCERT-2015-009] VLC arbitrary pointer dereference" (number mark "        alessandro@g Aug 20   50/1731  " thread-indent "\"Re: [oss-security] [oCERT-2015-009] VLC arbitrary pointer dereference\"\n") "<20150820130138.GA17576@core.inversepath.com>" ("<20150820130138.GA17576@core.inversepath.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 25618 invoked by uid 550); 20 Aug 2015 14:53:07 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,119 +11,85 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 10207 invoked from network); 17 Apr 2024 02:26:03 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1713320755; x=1713925555; darn=lists.openwall.com;
-        h=content-transfer-encoding:in-reply-to:references:subject:to
-         :mime-version:user-agent:reply-to:from:date:message-id:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=BqLgO6uZWUOsoeBv815tKIcDppNKs8LTICi9QVvv0Qc=;
-        b=GjhashXtIjPbenWmZcbLcDkZtghwEhNRw6TiTicuplE4lbfAtl71LEi+lUIP7jv0Lu
-         nbCrReM4Q3LqC7Ig7mEt/JuFPpB3sPam0aRLBB87yADAP8Z4xs823MdrZAS4eFtLE4Ca
-         snFqbE7or9iBj09+5B/F6pakMYBoqFN1o12iqilVGckW83ePapqWpGlIWAZl243vGsGL
-         eqiodJbQPyY9ioBGONQ1HK+szaQCvVNwvQ1b88dmg/TYdbdurDjSOWl68OI8/F/Xvxxg
-         DomWWrqhPuiVxliSqMD7qFQ/6KjwxCiyFrT3O/H6vr0gRpXRuIl8NdzjMwMge3aWMa0z
-         a91g==
+Received: (qmail 24563 invoked from network); 20 Aug 2015 14:53:05 -0000
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713320755; x=1713925555;
-        h=content-transfer-encoding:in-reply-to:references:subject:to
-         :mime-version:user-agent:reply-to:from:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=BqLgO6uZWUOsoeBv815tKIcDppNKs8LTICi9QVvv0Qc=;
-        b=GJ9A9N2h7mjX7cdf29YL3jqY50OAvmAtrdejgslBXEtHiAfj/Z8PFbXrrdIbWqbsBr
-         HWutpUrEm7120AvNK8sOmz6Wq9bb0tosm7Sww1ickHuDIK3e42jbfI48EXTHY61xWKQs
-         LKcLjKfQ0KQNWWH1ENshd8HGh4UCgVfbmFXSemJVYWGnMVRkOL33d+7jiLxcnDsUVJnx
-         GyAPW42qeO8CETmuS46L+1QOP2l/yYhCkri55TbFZM0jSIk0k0MoVof70Qmi6HzVlduB
-         7cYTpT0L0pFYgPu66PH8T5O5aTD587a185nG1qWCnOBm0kfFw7QuRysg2IW8uCWRNZUF
-         hw2g==
-X-Gm-Message-State: AOJu0Yw3U7A57HA6R3dGEmlextr1tldsbBsekXlYya8MHhYQ7wAApGq6
-	be/x0c7nR8V9z76u6DsrqtzWK39Pi7+OkSWOfSiquD0tdXoUE1N60nzAgQ==
-X-Google-Smtp-Source: AGHT+IEWFHNtcOWdxqeQc40LU/3wg11aYLqS5UJa03dKEqk7dgNqmO30EAQdSKQtO00i4EgyOH83Lg==
-X-Received: by 2002:a05:6870:b514:b0:22e:d20d:1274 with SMTP id v20-20020a056870b51400b0022ed20d1274mr18407558oap.9.1713320755399;
-        Tue, 16 Apr 2024 19:25:55 -0700 (PDT)
-Message-ID: <661F3331.3020408@gmail.com>
-Date: Tue, 16 Apr 2024 21:25:53 -0500
-From: Jacob Bachmeyer <jcb62281@gmail.com>
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.8.1.22) Gecko/20090807 MultiZilla/1.8.3.4e SeaMonkey/1.1.17 Mnenhy/0.7.6.0
+        d=1e100.net; s=20130820;
+        h=date:from:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=rowxceWF08W5pL9jH8IzQAUkE1XzufDRAn8fsNofjIM=;
+        b=mXXxn1MvZheN9fyu5ozmanjlT7xw1mh7qKI9InuZxL49JwBaHuj6cCMOW6CT1oQvax
+         k7te/cZ2aXvTS5TsD8GF9foDvKW+1sq5zfbKa2b/RKyKd5AKSS2Win3wHN2geuKhs+46
+         1o3tKCeanZMQReBaIv3Eaxr97LkhXQFHSJ6Uf9C/Zm1OxRuIDSYe/lcUI+8nXwg5Au9x
+         v3F3HO53VfGYINNCQquJpxq3kAlWT//nUoWxCUNZQt0SZLBJB0KNlrBXxjpRSmK4Okxe
+         kzn++XRfDqMvv8UpzB/d3JK20427gWMxgwt6Ko1n0BZEJD4hOD+iODIn7T2AxuP9po2R
+         2vRA==
+X-Received: by 10.194.60.226 with SMTP id k2mr6537533wjr.10.1440082374611;
+        Thu, 20 Aug 2015 07:52:54 -0700 (PDT)
+Message-ID: <20150820145253.GB24832@kronk.local>
+Mail-Followup-To: Andrea Barisani <lcars@ocert.org>,
+	oss-security@lists.openwall.com
+References: <20150820130138.GA17576@core.inversepath.com>
 MIME-Version: 1.0
-To: oss-security@lists.openwall.com
-References: <20240329155126.kjjfduxw2yrlxgzm@awork3.anarazel.de> <ed2715be-e7a0-4a7f-a3fd-7041f6c6fa49@fu-berlin.de> <Zgmn06K3C-nY83YH@codewreck.org> <20240331202502.GA21116@openwall.com> <20240416225900.GA23474@openwall.com>
-In-Reply-To: <20240416225900.GA23474@openwall.com>
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Subject: Re: [oss-security] backdoor in upstream xz/liblzma leading to ssh
- server compromise
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="Bn2rw/3z4jIqBvZU"
+Content-Disposition: inline
+In-Reply-To: <20150820130138.GA17576@core.inversepath.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+Cc: oss-security@lists.openwall.com
+Date: Thu, 20 Aug 2015 16:52:53 +0200
+From: Alessandro Ghedini <alessandro@ghedini.me>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] [oCERT-2015-009] VLC arbitrary pointer dereference
+To: Andrea Barisani <lcars@ocert.org>
 
-Solar Designer wrote:
-> [...]
->
-> xz backdoor analysis
-> ====================
->
-> More findings were made about the backdoor's functionality, notably as
-> published on April 6 by blasty, who discovered that besides triggering
-> system() the backdoor also allows interactive sessions:
->
-> https://twitter.com/bl4sty/status/1776691497506623562
->
->   
->> [...]
+--Bn2rw/3z4jIqBvZU
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-There is almost certainly more yet to be uncovered:  Andres Freund's 
-original report included timing for SSH client connections requesting a 
-nonexistent account using publickey auth.  The backdoored SSH server was 
-found to require significantly longer to reject those requests than the 
-untampered sshd.  I do not believe that the currently known backdoor 
-hooks are reachable by that means, so why did Andres Freund see that 
-particular slowdown?  (Not the backdoor initialization making sshd take 
-longer to start up---a running sshd taking longer to reject a session 
-for a nonexistent account, unless Andres Freund forgot to tell us that 
-he was running sshd from inetd and thereby including sshd startup 
-latency in his measurements.)
+On Thu, Aug 20, 2015 at 03:01:39pm +0200, Andrea Barisani wrote:
+>=20
+> #2015-009 VLC arbitrary pointer dereference
+>=20
+> Description:
+>=20
+> The VLC media player is an open source media player and streaming media
+> server.
+>=20
+> The stable VLC version suffers from an arbitrary pointer dereference
+> vulnerability.
+>=20
+> The vulnerability affects the 3GP file format parser, insufficient
+> restrictions on a writable buffer can be exploited to execute arbitrary c=
+ode
+> via the heap memory. A specific 3GP file can be crafted to trigger the
+> vulnerability.
 
-> [...]
->
-> OpenJS Foundation "Failed Credible Takeover Attempt"
-> ====================================================
->
-> On April 15, the OpenJS and OpenSSF foundations released the following:
->
-> https://openjsf.org/blog/openssf-openjs-alert-social-engineering-takeovers
-> https://openssf.org/blog/2024/04/15/open-source-security-openssf-and-openjs-foundations-issue-alert-for-social-engineering-takeovers-of-open-source-projects/
->
-> I'll quote an excerpt:
->
->   
->> The OpenJS Foundation Cross Project Council received a suspicious series
->> of emails with similar messages, bearing different names and overlapping
->> GitHub-associated emails. These emails implored OpenJS to take action to
->> update one of its popular JavaScript projects to "address any critical
->> vulnerabilities," yet cited no specifics. The email author(s) wanted
->> OpenJS to designate them as a new maintainer of the project despite
->> having little prior involvement. This approach bears strong resemblance
->> to the manner in which "Jia Tan" positioned themselves in the XZ/liblzma
->> backdoor.
->>
->> [...]
+So, is there a reproducer for this issue that you can share?
 
-Concerning, yes, but not quite the "Jia Tan" /modus operandi/---"Jia" 
-seems to have been contributing patches for some time (with sockpuppets 
-pushing their acceptance as needed) before making a move to be appointed 
-co-maintainer of xz.  This looks to me like the common cybercrooks have 
-seen the technique, decided that it sounds like a great idea, and are 
-now trying to use it, but do not have the patience that the "Jia Tan" 
-gang had.  In other words, now the "Nigerian Princes" want to help you 
-maintain your project, just give them write access to the source 
-repository up front.  :-P
+Thanks
 
-I also want to call out a critical detail:  claims of vulnerabilities 
-with no specifics that would aid in actually fixing them.  This should 
-be a general red flag:  *anyone* who makes such claims is probably up to 
-no good.
+--Bn2rw/3z4jIqBvZU
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
 
-Lastly, thank you for making the summary.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
+iQIcBAEBCgAGBQJV1enFAAoJEK+lG9bN5XPL5LAP/0ifXX5iHmqyGOE7WtPlK4pn
+osDTNXeJ7s5K5AV9GaUbBcKJkfPapETS7InFUkr4jy0D6e0Y/qNOjlcdDI1O3rOo
+90ghweRUrfdTjUKDPc1tl4aJk0HEGxwRGb4Mo+y+JW4OplqmhpFnmJ4J3cAKhn1S
+JYCz/AUjanQtN0pkLMPpJpApi54/4FENWRmIUWKZIITvYRBn60rZNb8KQ8ZxF7ML
+j6EIgcc6M1FQHALBRGEmLA3190talPKAyBmzRWCooG+BpY9t3HKFxnxIwYpMuwQN
+k2UyKGO4pzXdujBr5E2isKCqnB/VglywF8uAttLv7P+jYnz0uhkvwy8PYhIeoGuh
+izy7mkzUi/lR7oO3Mf9qPqeo7DVsuG5rMMk/EI/+NuS2s2D1h4iHJygFMvZpmMMX
+J6qOO2VAeB2Drouat5Q/f+R7lYD2Z+Pu+8xgqATFPosS0wrTgvMPA4sgbun5g14X
+pEaHJ7CI5f8tasYEznpvtaHstNwxMpBEWIvSym4pn717APJJ4pw9UOLGfuL0WDeJ
+TkbZgL1h3WwIXclqlPxn6dt7ZAhg2NzSB4xCGII7ZbX5nlufkfQ8TUQN6pZAyzyP
+Qej5k+1/yW5IW/diFijo+un13WreIAEgoUhsSX9AdVAPP9w4C/Xra3fNAS9Wsii8
+phM6x1c8fLdn0fqjZgU+
+=rhLD
+-----END PGP SIGNATURE-----
 
--- Jacob
-
+--Bn2rw/3z4jIqBvZU--
