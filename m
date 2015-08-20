@@ -1,4 +1,9 @@
-Received: (qmail 19712 invoked by uid 550); 9 Apr 2025 23:24:39 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1759" "Thursday" "20" "August" "2015" "12:23:51" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150820162351.97F80B2E143@smtpvbsrv1.mitre.org>" "42" "[oss-security] Re: CVE request - Linux kernel - perf on ppp64 - unbounded checks in perf_callchain_user_64 denial of service." nil nil nil "8" "2015082016:23:51" "[oss-security] Re: CVE request - Linux kernel - perf on ppp64 - unbounded checks in perf_callchain_user_64 denial of service." (number mark "        cve-assign@m Aug 20   42/1759  " thread-indent "\"[oss-security] Re: CVE request - Linux kernel - perf on ppp64 - unbounded checks in perf_callchain_user_64 denial of service.\"\n") "<1385098753.10178920.1439876309298.JavaMail.zimbra@redhat.com>" ("<1385098753.10178920.1439876309298.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 3914 invoked by uid 550); 20 Aug 2015 16:24:04 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,44 +11,55 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 3893 invoked from network); 20 Aug 2015 16:24:03 -0000
+In-Reply-To: <1385098753.10178920.1439876309298.JavaMail.zimbra@redhat.com>
+Message-Id: <20150820162351.97F80B2E143@smtpvbsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Thu, 20 Aug 2015 12:23:51 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 3834 invoked from network); 9 Apr 2025 21:24:06 -0000
-Authentication-Results: mail.eu-relay.fedcom.net; dmarc=pass (p=quarantine dis=none) header.from=lindev.ch
-Authentication-Results: mail.eu-relay.fedcom.net;
-	dkim=pass (1024-bit key; unprotected) header.d=lindev.ch header.i=@lindev.ch header.a=rsa-sha256 header.s=default header.b=b9BxbBEA;
-	dkim-atps=neutral
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=lindev.ch; s=default;
-	t=1744233834; bh=0Qi6+DoW81JSY5IpTgY9B6KdP9HBaeuIHSmWwSr+hiQ=;
-	h=From:In-Reply-To:References:Date:To:Subject;
-	b=b9BxbBEAep41lvRBxkTbMsrZzMjivaLGzncjJEt+CSuCDY3Qmmpe+P6oCh5MC4h3x
-	 XvXolgpGQIglx8qc6LhOtM9/NQ+aWs2kR4v5oHlN6dDZgAimsntQz7aR68XiaSY1fY
-	 0Y8sxCo7hOclUTuVerDr96+zIlUC0FAmgySHv0N4=
-From: =?utf-8?q?Bernhard_Rosenkr=C3=A4nzer?= <bero@lindev.ch>
-In-Reply-To: <94ed5662-d24b-40e4-b832-6228a7e473df@pipping.org>
-Content-Type: text/plain; charset="utf-8"
-X-Forward: 127.0.0.1
-References: <c91c769394051f886c25f8bf895ec770dce36a73.04827fe8.a43c.41dd.9fe9.7f451462d2d9@feishu.cn> <94ed5662-d24b-40e4-b832-6228a7e473df@pipping.org>
-Date: Wed, 09 Apr 2025 23:23:53 +0200
-To: oss-security@lists.openwall.com
-MIME-Version: 1.0
-Message-ID: <543-67f6e580-2d-5396a400@170623133>
-Content-Transfer-Encoding: quoted-printable
-Subject: =?utf-8?q?Re=3A?= [oss-security] =?utf-8?q?CVE-2025-31344=3A?=
- =?utf-8?q?_giflib=3A?= The giflib open-source component has a buffer 
- overflow =?utf-8?q?vulnerability=2E?=
+Subject: [oss-security] Re: CVE request - Linux kernel - perf on ppp64 - unbounded checks in perf_callchain_user_64 denial of service.
+To: wmealing@redhat.com
 
-On Wednesday, April 09, 2025 23:11 CEST, Sebastian Pipping <sebastian@pippi=
-ng.org> wrote:
->    https://github.com/openwrt/packages/issues/26277
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Except for https://sourceforge.net/p/giflib/bugs/179/, all the issues seem =
-to be in gif2rgb, which is, according to the giflib maintainer, "old and cr=
-appy code", and TBH, other than as a no-dependency test tool for giflib, it=
- is fairly useless (just use ImageMagick or a similar tool to do the gif to=
- rgb conversion).
-Simply removing the gif2rgb tool is probably an acceptable solution.
+> A malicious user could create a special stack layout that fools
+> the perf_callchain_user_64 function (called by perf record) into
+> an infinite loop, tying up that particular CPU and the process
+> can not be killed.
+> 
+> A kernel patch was committed upstream capping the maximum user-level
+> stacktrace collected by perf to PERF_MAX_STACK_DEPTH on 64bit powerpc
+> architectures.
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=1218454
+> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=9a5cbce421a283e6aea3c4007f141735bf9da8c3
 
-ttyl
-bero
+>> We cap 32bit userspace backtraces to PERF_MAX_STACK_DEPTH (currently
+>> 127), but we forgot to do the same for 64bit backtraces.
 
+Use CVE-2015-6526.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJV1f6MAAoJEL54rhJi8gl5KroP/0uXkRzhODlvbLPJsU0xNmhc
+RR/C+5ugnZsrjC3H0RHKe7C7msCcFoGtXG+UKArCsLgN/ub+lcwf7p5tMcGr57h8
+F3uEGMa+BAvb+A8Y2mnRVfLzZ5PS94qklRngZDsJdO3NfY/R0W0oJT5FTjX74+MJ
+yvGz2xikpeE5sgfnPtMNBwCfSyICfsNCUnwqYjp9tdN4E+RKuNXSlf9vsUeMHdj9
+M0/oHuC7y6e+EiNestFPpPNwjKypvKnvCqZIFR43ty558GxRNWQZEmNlaPMZfZ8o
+OgKEwcHUpk96567Jyld9k3l9BR3wEggAR3ayoHSAvNkck2Y2NTt80y33uTdHhm9V
+9tVY6hSEUMt7xUoU1ePN1cZMvledTM3z450vkPnAdMUt0MilUBL46+dHULEo7qAE
+vq/tWtO8d4kC84rOggfgcJK4np/qf8ffTSJITpv4YnHy00bFTIhRCPcLGPfDgqNv
+Lelaz5G24nUIFKIzSzDns4E4JClr6xRq4tzIUziAVvg4TAeYZgXfJjCk95xaFk7F
+NLUCFYCpg0nc0zIPdt4fBAhuiUHhxhOVENeVKAxLAKRoHGHCt2uIN+pdGJerK5R/
+vo/HA/CFuos7qojBgnuvAmeCHGGcfMLXHiGcS8TaDwqQvRyTNCZ9UpH6I/MfVjun
+QA2LWaIGj3s4a6xMmQiX
+=CCb4
+-----END PGP SIGNATURE-----
