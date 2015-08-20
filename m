@@ -1,4 +1,9 @@
-Received: (qmail 5975 invoked by uid 550); 6 May 2024 18:34:34 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1700" "Thursday" "20" "August" "2015" "12:27:13" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150820162713.95EB26C0030@smtpvmsrv1.mitre.org>" "44" "[oss-security] Re: CVE Request: PHP v7 - Code execution vulnerability" nil nil nil "8" "2015082016:27:13" "[oss-security] Re: CVE Request: PHP v7 - Code execution vulnerability" (number mark "U       cve-assign@m Aug 20   44/1700  " thread-indent "\"[oss-security] Re: CVE Request: PHP v7 - Code execution vulnerability\"\n") "<CAOdP2ADNoNVvdXfGDbAPyqscpjDe=OGQQM-AO9fsr0pBUF8eAw@mail.gmail.com>" ("<CAOdP2ADNoNVvdXfGDbAPyqscpjDe=OGQQM-AO9fsr0pBUF8eAw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 14331 invoked by uid 550); 20 Aug 2015 16:27:25 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,59 +12,56 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28599 invoked from network); 6 May 2024 18:32:12 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
-	s=smtp-20201208; t=1715020324;
-	bh=bHgo/S16nvhhvyCvAYdSmIRCLQDSXVfYkIwt7Nw5iUQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=EIgeNJORBRVN/F+H6t8GDFyAPQyEUxXLcnmfBKVh+bHKaTryRy/UN/rGO4l/8YeKN
-	 AePwPtu7WBgE1yk17FNQJTUwO4DrTzOh9irSCZ/yiks7sj2nVQ92cmbe2m1alWE1tB
-	 yYhgle5PibXOjyZUTR8eJ9GS1aMz9hS2bSOrPmP7jfVwBgB8Ebylqq18kcZd9wUZVB
-	 Ei1VIJHGo1SAzIISRK+KdrOJJ26HyVIGZ/IlB8XMa31UB+sGHVOGsVGNYdYGBW2fqk
-	 P9HBEl48ClP4takHiGimnQ9FuUT0oW6LeMccRl/uVts4HKPL0Pu3TxXNnFeo+Se5rY
-	 TFzH0OxfLDNkQ==
-Date: Mon, 6 May 2024 20:32:01 +0200
-From: "Yann E. MORIN" <yann.morin.1998@free.fr>
-To: Ben Hutchings <ben.hutchings@mind.be>
-Cc: oss-security@lists.openwall.com, buildroot@buildroot.org
-Message-ID: <ZjkiIepSLogcd1zY@landeda>
-References: <20240411152016.1185109-1-ben.hutchings@mind.be>
- <ZhgCNMQXfxPXuqvs@cephalopod>
- <Zjiv9wzmqtfy8DYr@cephalopod>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <Zjiv9wzmqtfy8DYr@cephalopod>
-Subject: [oss-security] Re: [Buildroot] Buildroot: incorrect permissons on /dev/shm
+Received: (qmail 14306 invoked from network); 20 Aug 2015 16:27:25 -0000
+From: cve-assign@mitre.org
+To: fourny.d@gmail.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <CAOdP2ADNoNVvdXfGDbAPyqscpjDe=OGQQM-AO9fsr0pBUF8eAw@mail.gmail.com>
+Message-Id: <20150820162713.95EB26C0030@smtpvmsrv1.mitre.org>
+Date: Thu, 20 Aug 2015 12:27:13 -0400 (EDT)
+Subject: [oss-security] Re: CVE Request: PHP v7 - Code execution vulnerability
 
-Ben, All,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-On 2024-05-06 12:24 +0200, Ben Hutchings via buildroot spake thusly:
-> On Thu, Apr 11, 2024 at 05:31:02PM +0200, Ben Hutchings wrote:
-> > Buildroot is a Linux distribution and system builder for embedded
-> > systems.  Starting in Buildroot 2011.08, its default /etc/fstab
-> > included an entry for /dev/shm with incorrect permissons (sticky bit
-> > not set). (CWE-276)
-> > 
-> > Buildroot 2017.08 removed this entry for systems using systemd, and it
-> > has never been included for systems using OpenRC.  So this only
-> > affects Buildroot-built systems that use sysvinit, and some older
-> > systems that use systemd.
-> [...]
+>> From: Fourny Dimitri <fourny.d@gmail.com>
+>> Date: Thu, 30 Jul 2015 13:16:38 +0200
+>> 
+>> An arbitrary code execution is possible in the function str_ireplace()
+>> with PHP 7.
+>> The vulnerability is in the function php_string_tolower().
+>> 
+>> http://git.php.net/?p=php-src.git;a=commit;h=6aeee47b2cd47915ccfa3b41433a3f57aea24dd5
+>> https://bugs.php.net/bug.php?id=70140
+
+> From: cve-assign@mitre.org
+> Date: Thu, 30 Jul 2015 09:43:12 -0400 (EDT)
 > 
-> This has been assigned CVE-2024-34455.
+> Unless there is other information, we feel that CVE can include the
+> 70140 issue, but that this doesn't mean that CVE should include every
+> bug fixed during 7.0 development
 
-Thanks for th efeedback. The fix has already been committed, with commit
-0b2967e158 (package/skeleton-init-sysv: Set sticky bit on /dev/shm) that
-I applied on 2024-04-11.
+Use CVE-2015-6527.
 
-Regards,
-Yann E. MORIN.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
--- 
-.-----------------.--------------------.------------------.--------------------.
-|  Yann E. MORIN  | Real-Time Embedded | /"\ ASCII RIBBON | Erics' conspiracy: |
-| +33 662 376 056 | Software  Designer | \ / CAMPAIGN     |  ___               |
-| +33 561 099 427 `------------.-------:  X  AGAINST      |  \e/  There is no  |
-| http://ymorin.is-a-geek.org/ | _/*\_ | / \ HTML MAIL    |   v   conspiracy.  |
-'------------------------------^-------^------------------^--------------------'
+iQIcBAEBCAAGBQJV1f6WAAoJEL54rhJi8gl5H5IP/2KTIVieITKTLjvoUGpz9Vug
+/4Cf5d0JN/UaPsV+jf5WeolmxkTaggdgwA/rkgLUh0WxEpEe73Z4pRaspIvD0cQz
+qXvYmQUA3PnpTHyYrosOQ+MgkQcNdwExNLxmOlKkpGL9xv0BfT+wD44Gwm2wWx0G
+jRBLXVO1f22V83otU+qBirDJkJZ3w56SYPSbY4XpFeP/YJ0Nvw5X4fN8TTYqODxl
+XcpuOwXPRJYFrni9DzY9ehywVOGa6L4hCZQi1YnEpH1xwz4p10VTGpmeRCMYtP4m
+9BzyoiN/mvFpPQUDPrwWgWuHNhcdObAvIwHVswLdURlNo7TWtkvaS9N3thyVVTP4
+zfTLpK44ILY+y0T5O8vBWjpfo3DcjsIIHTP9j611zOv51P5UBJlriDgQhnR/Em4P
+yDsG3wRj9sVaIN6ojArCGGqVlY5Py3/gb2WHmQSokqrYMN2dYlQORJzLOybaXT/h
+mdWMCbht4aFcO/2JPjnoLtU2EiPmg0pS7p9KJ0F6JyZ/V4ETXHbaUxFlQ6I/fzHy
+HMU2YFvGrvPHI9+J+kxK7Vqwi9nAS/P48oRsoV2yFR9hH2/mHMk3SRzV3tzZBnon
+5vZMiqHhNxwSrY2b7gFhE5snvioEah7TwfSPMIur1hscTTYbkPV07dzrw3rnFTH5
+E5NM+96stU4jbS3DmQSG
+=RUS7
+-----END PGP SIGNATURE-----
