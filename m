@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["11383" "Friday" "2" "November" "2018" "05:30:02" "+0100" "Andrea Barisani" "andrea.barisani@f-secure.com" "<20181102043002.GC2786@lambda.inversepath.com>" "321" "[oss-security] CVE-2018-18439, CVE-2018-18440 - U-Boot verified boot bypass vulnerabilities" nil nil nil "11" "2018110204:30:02" "[oss-security] CVE-2018-18439, CVE-2018-18440 - U-Boot verified boot bypass vulnerabilities" (number mark "U       andrea.baris Nov  2  321/11383 " thread-indent "\"[oss-security] CVE-2018-18439, CVE-2018-18440 - U-Boot verified boot bypass vulnerabilities\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["9123" "Thursday" "20" "August" "2015" "17:27:57" "-0400" "Loren" "loren@trailofbits.com" "<D6B7941C-4F10-4FC3-81BE-C8E4DC277DD6@trailofbits.com>" "162" "[oss-security] Re: [oCERT-2015-009] VLC arbitrary pointer dereference" nil nil nil "8" "2015082021:27:57" "[oss-security] Re: [oCERT-2015-009] VLC arbitrary pointer dereference" (number mark "U       loren@trailo Aug 20  162/9123  " thread-indent "\"[oss-security] Re: [oCERT-2015-009] VLC arbitrary pointer dereference\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 17461 invoked by uid 550); 2 Nov 2018 10:04:41 -0000
+Received: (qmail 18410 invoked by uid 550); 20 Aug 2015 22:05:02 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,341 +12,196 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1686 invoked from network); 2 Nov 2018 04:30:24 -0000
-Date: Fri, 2 Nov 2018 05:30:02 +0100
-From: Andrea Barisani <andrea.barisani@f-secure.com>
-To: <oss-security@lists.openwall.com>
-Message-ID: <20181102043002.GC2786@lambda.inversepath.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-X-GPG-Key: 0x864C9B9E
-X-GPG-Fingerprint: 0A76 074A 02CD E989 CE7F  AC3F DA47 578E 864C 9B9E
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Originating-IP: [10.191.8.98]
-X-ClientProxiedBy: helex01.FI.F-Secure.com (10.190.48.70) To
- helex01.FI.F-Secure.com (10.190.48.70)
-Subject: [oss-security] CVE-2018-18439, CVE-2018-18440 - U-Boot verified boot bypass
- vulnerabilities
-
-Security advisory: U-Boot verified boot bypass
-==============================================
-
-The Universal Boot Loader - U-Boot [1] verified boot feature allows
-cryptographic authentication of signed kernel images, before their execution.
-
-This feature is essential in maintaining a full chain of trust on systems which
-are secure booted by means of an hardware anchor.
-
-Multiple techniques have been identified that allow to execute arbitrary code,
-within a running U-Boot instance, by means of externally provided
-unauthenticated data.
-
-All such techniques spawn from the lack of memory allocation protection within
-the U-Boot architecture, which results in several means of providing
-excessively large images during the boot process.
-
-Some implementers might find the following issues as an intrinsic
-characteristic of the U-Boot memory model, and consequently a mere aspect of
-correct U-Boot configuration and command restrictions.
-
-However in our opinion the inability of U-Boot to protect itself when loading
-binaries is an unexpected result of non trivial understanding, particularly
-important to emphasize in trusted boot scenarios.
-
-This advisory details two specific techniques that allow to exploit U-Boot lack
-of memory allocation restrictions, with the most severe case also detailing a
-workaround to mitigate the issue.
-
-It must be emphasized that cases detailed in the next sections only represent
-two possible occurrences of such architectural limitation, other U-Boot image
-loading functions are extremely likely to suffer from the same validation
-issues.
-
-To a certain extent the identified issues are similar to one of the findings
-reported as CVE-2018-1000205 [2], however they concern different functions
-which in some cases are at a lower level, therefore earlier in the boot image
-loading stage.
-
-Again all such issues are a symptom of the same core architectural limitation,
-being the lack of memory allocation constraints for received images.
-
-It is highly recommended, for implementers of trusted boot schemes, to review
-use of all U-Boot booting/loading commands, and not merely the two specific
-ones involved in the findings below, to apply limitations (where
-applicable/possible) to the size of loaded images in relation to the available
-RAM.
-
-It should also be emphasized that any trusted boot scheme must also rely on an
-appropriate lockdown of all possibilities for interactive consoles, by boot
-process interruption or failure, to ever be prompted.
-
-
-U-Boot insufficient boundary checks in filesystem image load
-------------------------------------------------------------
-
-The U-Boot bootloader supports kernel loading from a variety of filesystem
-formats, through the `load` command or its filesystem specific equivalents
-(e.g. `ext2load`, `ext4load`, `fatload`, etc.)
-
-These commands do not protect system memory from being overwritten when loading
-files of a length that exceeds the boundaries of the relocated U-Boot memory
-region, filled with the loaded file starting from the passed `addr` variable.
-
-Therefore an excessively large boot image, saved on the filesystem, can be
-crafted to overwrite all U-Boot static and runtime memory segments, and in
-general all device addressable memory starting from the `addr` load address
-argument.
-
-The memory overwrite can directly lead to arbitrary code execution, fully
-controlled by the contents of the loaded image.
-
-When verified boot is implemented, the issue allows to bypass its intended
-validation as the memory overwrite happens before any validation can take
-place.
-
-The following example illustrates the issue, triggered with a 129MB file on a
-machine with 128MB or RAM:
-
-```
-U-Boot 2018.09-rc1 (Oct 10 2018 - 10:52:54 +0200)
-
-DRAM:  128 MiB
-Flash: 128 MiB
-MMC:   MMC: 0
-
-# print memory information
-=> bdinfo
-arch_number = 0x000008E0
-boot_params = 0x60002000
-DRAM bank   = 0x00000000
--> start    = 0x60000000
--> size     = 0x08000000
-DRAM bank   = 0x00000001
--> start    = 0x80000000
--> size     = 0x00000004
-eth0name    = smc911x-0
-ethaddr     = 52:54:00:12:34:56
-current eth = smc911x-0
-ip_addr     = <NULL>
-baudrate    = 38400 bps
-TLB addr    = 0x67FF0000
-relocaddr   = 0x67F96000
-reloc off   = 0x07796000
-irq_sp      = 0x67EF5EE0
-sp start    = 0x67EF5ED0
-
-# load large file
-=> ext2load mmc 0 0x60000000 fitimage.itb
-
-# In this specific example U-Boot falls in an infinite loop, results vary
-# depending on the test case and filesystem/device driver used. A debugging
-# session demonstrates memory being overwritten:
-(gdb) p gd
-$28 = (volatile gd_t *) 0x67ef5ef8
-(gdb) p *gd
-$27 = {bd = 0x7f7f7f7f, flags = 2139062143, baudrate = 2139062143, ... }
-(gdb) x/300x 0x67ef5ef8
-0x67ef5ef8:	0x7f7f7f7f	0x7f7f7f7f	0x7f7f7f7f	0x7f7f7f7f
-```
-
-It can be seen that memory address belonging to U-Boot data segments, in this
-specific case the global data structure `gd`, is overwritten with payload
-originating from `fitimage.itb` (filled with `0x7f7f7f7f`).
-
-### Impact
-
-Arbitrary code execution can be achieved within a U-Boot instance by means of
-unauthenticated binary images, loaded through the `load` command or its
-filesystem specific equivalents.
-
-It should be emphasized that all load commands are likely to be affected by the
-same underlying root cause of this vulnerability.
-
-### Workaround
-
-The optional `bytes` argument can be passed to all load commands to restrict
-the maximum size of the retrieved data.
-
-The issue can be therefore mitigated by passing a `bytes` argument with a value
-consistent with the U-Boot memory regions mapping and size.
-
-
-U-Boot insufficient boundary checks in network image boot
----------------------------------------------------------
-
-The U-Boot bootloader supports kernel loading from a variety of network
-sources, such as TFTP via the `tftpboot` command.
-
-This command does not protect system memory from being overwritten when loading
-files of a length that exceeds the boundaries of the relocated U-Boot memory
-region, filled with the loaded file starting from the passed `loadAddr`
-variable.
-
-Therefore an excessively large boot image, served over TFTP, can be crafted to
-overwrite all U-Boot static and runtime memory segments, and in general all
-device addressable memory starting from the `loadAddr` load address argument.
-
-The memory overwrite can directly lead to arbitrary code execution, fully
-controlled by the contents of the loaded image.
-
-When verified boot is implemented, the issue allows to bypass its intended
-validation as the memory overwrite happens before any validation can take
-place.
-
-The issue can be exploited by several means:
-
-  - An excessively large crafted boot image file is parsed by the
-    `tftp_handler` function which lacks any size checks, allowing the memory
-    overwrite.
-
-  - A malicious server can manipulate TFTP packet sequence numbers to store
-    downloaded file chunks at arbitrary memory locations, given that the
-    sequence number is directly used by the `tftp_handler` function to calculate
-    the destination address for downloaded file chunks.
-
-    Additionally the `store_block` function, used to store downloaded file
-    chunks in memory, when invoked by `tftp_handler` with a `tftp_cur_block`
-    value of 0, triggers an unchecked integer underflow.
-
-    This allows to potentially erase memory located before the `loadAddr` when
-    a packet is sent with a null, following at least one valid packet.
-
-The following example illustrates the issue, triggered with a 129MB file on a
-machine with 128MB or RAM:
-
-```
-U-Boot 2018.09-rc1 (Oct 10 2018 - 10:52:54 +0200)
-
-DRAM:  128 MiB
-Flash: 128 MiB
-MMC:   MMC: 0
-
-# print memory information
-=> bdinfo
-arch_number = 0x000008E0
-boot_params = 0x60002000
-DRAM bank   = 0x00000000
--> start    = 0x60000000
--> size     = 0x08000000
-DRAM bank   = 0x00000001
--> start    = 0x80000000
--> size     = 0x00000004
-eth0name    = smc911x-0
-ethaddr     = 52:54:00:12:34:56
-current eth = smc911x-0
-ip_addr     = <NULL>
-baudrate    = 38400 bps
-TLB addr    = 0x67FF0000
-relocaddr   = 0x67F96000
-reloc off   = 0x07796000
-irq_sp      = 0x67EF5EE0
-sp start    = 0x67EF5ED0
-
-# configure environment
-=> setenv loadaddr 0x60000000
-=> dhcp
-smc911x: MAC 52:54:00:12:34:56
-smc911x: detected LAN9118 controller
-smc911x: phy initialized
-smc911x: MAC 52:54:00:12:34:56
-BOOTP broadcast 1
-DHCP client bound to address 10.0.0.20 (1022 ms)
-Using smc911x-0 device
-TFTP from server 10.0.0.1; our IP address is 10.0.0.20
-Filename 'fitimage.bin'.
-Load address: 0x60000000
-Loading: #################################################################
-...
-         ####################################
-
-R00=7f7f7f7f R01=67fedf6e R02=00000000 R03=7f7f7f7f
-R04=7f7f7f7f R05=7f7f7f7f R06=7f7f7f7f R07=7f7f7f7f
-R08=7f7f7f7f R09=7f7f7f7f R10=0000d677 R11=67fef670
-R12=00000000 R13=67ef5cd0 R14=02427f7f R15=7f7f7f7e
-PSR=400001f3 -Z-- T S svc32
-```
-
-It can be seen that the program counter (PC, r15) is set to an address
-originating from `fitimage.itb` (filled with `0x7f7f7f7f`), as the result of
-the U-Boot memory overwrite.
-
-### Impact
-
-Arbitrary code execution can be achieved within a U-Boot instance by means of
-unauthenticated binary images, passed through TFTP and loaded through the
-`tftpboot` command, or by a malicious TFTP server capable of sending arbitrary
-response packets.
-
-It should be emphasized that all network boot commands are likely to be
-affected by the same underlying root cause of this vulnerability.
-
-### Workaround
-
-The `tftpboot` command lacks any optional argument to restrict the maximum size
-of downloaded images, therefore the only workaround at this time is to avoid
-using this command on environments that require trusted boot.
-
-
-Affected version
-----------------
-
-All released U-Boot versions, at the time of this advisory release, are
-believed to be vulnerable.
-
-All tests have been performed against U-Boot version 2018.09-rc1.
-
-
-Credit
-------
-
-Vulnerabilities discovered and reported by the Inverse Path team at F-Secure,
-in collaboration with Quarkslab.
-
-
-CVE
----
-
-CVE-2018-18440: U-Boot insufficient boundary checks in filesystem image load
-CVE-2018-18439: U-Boot insufficient boundary checks in network image boot
-
-
-Timeline
---------
-
-2018-10-05: network boot finding identified during internal security audit
-            by Inverse Path team at F-Secure in collaboration with Quarkslab.
-
-2018-10-10: filesystem load finding identified during internal security audit
-            by Inverse Path team at F-Secure.
-
-2018-10-12: vulnerability reported by Inverse Path team at F-Secure to U-Boot
-            core maintainer and Google security, embargo set to 2018-11-02.
-
-2018-10-16: Google closes ticket reporting that ChromeOS is not affected due
-            to their specific environment customizations.
-
-2018-10-17: CVE IDs requested to MITRE and assigned.
-
-2018-11-02: advisory release.
-
-
-References
-----------
-
-[1] https://www.denx.de/wiki/U-Boot
-[2] https://lists.denx.de/pipermail/u-boot/2018-June/330487.html
-
-
-Permalink
----------
-
-https://github.com/inversepath/usbarmory/blob/master/software/secure_boot/Security_Advisory-Ref_IPVR2018-0001.txt
-
--- 
-Andrea Barisani     Head of Hardware Security |     F-Secure
-                                      Founder | Inverse Path
-
-https://www.f-secure.com             https://inversepath.com
-0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
-       "Pluralitas non est ponenda sine necessitate"
+Received: (qmail 17682 invoked from network); 20 Aug 2015 21:28:11 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=trailofbits.com; s=trailofbits;
+        h=from:content-type:subject:message-id:date:to:mime-version;
+        bh=Q+Yx47vqMTkiEMIqMLVyx8dsTt85Joo8Jvqdy78UzL8=;
+        b=RVbc618swhVWwVkAd+hWEn1uJuBJKEhaaotPQrJEDBXCs+aJWFAFANof9zUTEbjPWJ
+         EyvSZ6Et9Nt94HDTaMI1EZ6HdV8Ik/PwooRUsC73mZnKXqsIwsO3QxEA2fS3DdY07hzC
+         l6p2Dp5OldWc+v5Mws6jm6LxcF48DWEVEWZtY=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:content-type:subject:message-id:date:to
+         :mime-version;
+        bh=Q+Yx47vqMTkiEMIqMLVyx8dsTt85Joo8Jvqdy78UzL8=;
+        b=HKrOUB4Kau1x/BaDxy7EDNOQRCTW9v+DZK3wTD2RFJOwjEMSgPYc1RXU7VlfZSuEpP
+         8dJSqjtJKVYIgYxJczWUGa4Y2Jgl+jt7J0bkfofL2s5oVLaZ/prsRQAUdrmJYkO6PgF/
+         9gmMkrLi5IHTxXaEn+CTLGCW017aVHC+rUf79ybQxjW5mIOx4AsATNbxL378TGyOWL4C
+         4S07hiEnO7F6bWGHv5tHw2NAUvdNKSzZLmvJ+RDGchRudA1ez9TVIZeZADeCKXeVW0IL
+         Uj3l4MTHPbcwMXHQkic3paqPW5mw2sSWWZTVcMQ1BTvFuY2WSYABMl4/gIRhpW2JAvPl
+         Hx3w==
+X-Gm-Message-State: ALoCoQnRDAJwFAOooJK0+itm+0SMM6c2KrxE1g9gcdrOol08Mf2cYox3nDkHbNLVSfelFiXLpklS
+X-Received: by 10.55.53.193 with SMTP id c184mr9416516qka.62.1440106079506;
+        Thu, 20 Aug 2015 14:27:59 -0700 (PDT)
+From: Loren <loren@trailofbits.com>
+Content-Type: multipart/signed; boundary="Apple-Mail=_EAC3776A-21D9-46DA-ACDE-1F0DC6195045"; protocol="application/pkcs7-signature"; micalg=sha1
+Message-Id: <D6B7941C-4F10-4FC3-81BE-C8E4DC277DD6@trailofbits.com>
+Date: Thu, 20 Aug 2015 17:27:57 -0400
+To: oss-security@lists.openwall.com
+Mime-Version: 1.0 (Mac OS X Mail 8.2 \(2102\))
+X-Mailer: Apple Mail (2.2102)
+Subject: [oss-security] Re: [oCERT-2015-009] VLC arbitrary pointer dereference
+
+--Apple-Mail=_EAC3776A-21D9-46DA-ACDE-1F0DC6195045
+Content-Type: multipart/alternative;
+	boundary="Apple-Mail=_A4B0D7DD-3E4C-4327-A4A9-655E977A5750"
+
+
+--Apple-Mail=_A4B0D7DD-3E4C-4327-A4A9-655E977A5750
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=us-ascii
+
+POC for oCERT#2015-009 VLC arbitrary pointer dereference
+
+Running VLC v2.2.1 with sample_crash causes a segmentation fault on 0xccdde=
+eff, an address read in from 0x1b6e6 in the sample_crash file. After this a=
+ddress is freed, vlc then attempts to free the next four bytes in the file,=
+ 0x1122331e.=20
+
+This data can be changed in the sample_crash file to free two arbitrary add=
+resses.=20
+
+sample_crash : http://s000.tinyupload.com/?file_id=3D94915905821495818830 <=
+http://s000.tinyupload.com/index.php?file_id=3D94915905821495818830>=20
+
+-Loren Maggiore=
+
+--Apple-Mail=_A4B0D7DD-3E4C-4327-A4A9-655E977A5750
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html;
+	charset=us-ascii
+
+<html><head><meta http-equiv=3D"Content-Type" content=3D"text/html charset=
+=3Dus-ascii"></head><body style=3D"word-wrap: break-word; -webkit-nbsp-mode=
+: space; -webkit-line-break: after-white-space;" class=3D""><div style=3D"m=
+argin: 0px; font-family: Courier; -webkit-text-stroke-color: rgb(0, 0, 0); =
+-webkit-text-stroke-width: initial;" class=3D"">POC for oCERT#2015-009 VLC =
+arbitrary pointer dereference</div><div style=3D"margin: 0px; font-family: =
+Courier; -webkit-text-stroke-color: rgb(0, 0, 0); -webkit-text-stroke-width=
+: initial; min-height: 14px;" class=3D""><br class=3D""></div><div style=3D=
+"margin: 0px; font-family: Courier; -webkit-text-stroke-color: rgb(0, 0, 0)=
+; -webkit-text-stroke-width: initial;" class=3D"">Running VLC v2.2.1 with s=
+ample_crash causes a segmentation fault on 0xccddeeff, an address read in f=
+rom 0x1b6e6 in the sample_crash file. After this address is freed, vlc then=
+ attempts to free the next four bytes in the file, 0x1122331e.&nbsp;</div><=
+div style=3D"margin: 0px; font-family: Courier; -webkit-text-stroke-color: =
+rgb(0, 0, 0); -webkit-text-stroke-width: initial; min-height: 14px;" class=
+=3D""><br class=3D""></div><div style=3D"margin: 0px; font-family: Courier;=
+ -webkit-text-stroke-color: rgb(0, 0, 0); -webkit-text-stroke-width: initia=
+l;" class=3D"">This data can be changed in the sample_crash file to free tw=
+o arbitrary addresses.&nbsp;</div><div style=3D"margin: 0px; font-family: C=
+ourier; -webkit-text-stroke-color: rgb(0, 0, 0); -webkit-text-stroke-width:=
+ initial; min-height: 14px;" class=3D""><br class=3D""></div><div style=3D"=
+margin: 0px; font-family: Verdana; color: rgb(161, 215, 0); -webkit-text-st=
+roke-color: rgb(161, 215, 0); -webkit-text-stroke-width: initial;" class=3D=
+""><span style=3D"font-family: Courier; color: rgb(0, 0, 0); -webkit-text-s=
+troke-color: rgb(0, 0, 0);" class=3D"">sample_crash : <a href=3D"http://s00=
+0.tinyupload.com/index.php?file_id=3D94915905821495818830" class=3D""><span=
+ style=3D"font-family: Verdana; -webkit-text-stroke-color: rgb(161, 215, 0)=
+;" class=3D"">http://s000.tinyupload.com/?file_id=3D94915905821495818830</s=
+pan></a></span>&nbsp;</div><div style=3D"margin: 0px; font-family: Verdana;=
+ color: rgb(161, 215, 0); -webkit-text-stroke-color: rgb(161, 215, 0); -web=
+kit-text-stroke-width: initial;" class=3D""><br class=3D""></div><div style=
+=3D"margin: 0px; -webkit-text-stroke-color: rgb(161, 215, 0); -webkit-text-=
+stroke-width: initial;" class=3D""><font face=3D"Courier" class=3D"">-Loren=
+ Maggiore</font></div></body></html>=
+
+--Apple-Mail=_A4B0D7DD-3E4C-4327-A4A9-655E977A5750--
+
+--Apple-Mail=_EAC3776A-21D9-46DA-ACDE-1F0DC6195045
+Content-Disposition: attachment;
+	filename=smime.p7s
+Content-Type: application/pkcs7-signature;
+	name=smime.p7s
+Content-Transfer-Encoding: base64
+
+MIAGCSqGSIb3DQEHAqCAMIACAQExCzAJBgUrDgMCGgUAMIAGCSqGSIb3DQEH
+AQAAoIILxjCCBXAwggRYoAMCAQICEAqJsSU4TWoHDXi0KUyU0qAwDQYJKoZI
+hvcNAQELBQAwZTELMAkGA1UEBhMCVVMxFTATBgNVBAoTDERpZ2lDZXJ0IElu
+YzEZMBcGA1UECxMQd3d3LmRpZ2ljZXJ0LmNvbTEkMCIGA1UEAxMbRGlnaUNl
+cnQgU0hBMiBBc3N1cmVkIElEIENBMB4XDTE1MDcwNjAwMDAwMFoXDTE2MDcw
+NjEyMDAwMFowgZAxCzAJBgNVBAYTAlVTMREwDwYDVQQIEwhOZXcgWW9yazER
+MA8GA1UEBxMITmV3IFlvcmsxHDAaBgNVBAoTE1RyYWlsIG9mIEJpdHMsIElu
+Yy4xFzAVBgNVBAMTDkxvcmVuIE1hZ2dpb3JlMSQwIgYJKoZIhvcNAQkBFhVs
+b3JlbkB0cmFpbG9mYml0cy5jb20wggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAw
+ggEKAoIBAQCe8u82hMFAPfsujLsDC3iXJvQsT3i7DeBy+5XTHJ4Q7Gy+U76r
+q46f9wilcq0DRKaJQFYxENFi5fL0F4tOP8V67gUJeMp2qE2wT5CzxrCthZ8y
+HhzdRMg8HI8w2Ypf2hzOZFgTH++WbgInbp/KkWJbv9nr8kq+WnjfcXfCKaAd
+SmONWJwHiI6mwDifPUKXRN4RppQg6nPTCodRy1kREE46oh250srWUt2s3C64
+Os7nG6o/pdYBYYD4K26ieyApU2EIufNSPU/eEQMMwdaNeCL7z2mwhx5J1LPp
+yA91Xpa32Gyjcy8PPAtPde5g//vzTZq+qabg9elxxLvm6RvORwbJAgMBAAGj
+ggHuMIIB6jAfBgNVHSMEGDAWgBTnAiOAAE/Y17yUC9k/dDlJMjyKeTAdBgNV
+HQ4EFgQU9mwj2nKaOo48L+qgfqecWwFTmlEwDAYDVR0TAQH/BAIwADAgBgNV
+HREEGTAXgRVsb3JlbkB0cmFpbG9mYml0cy5jb20wDgYDVR0PAQH/BAQDAgWg
+MB0GA1UdJQQWMBQGCCsGAQUFBwMCBggrBgEFBQcDBDBDBgNVHSAEPDA6MDgG
+CmCGSAGG/WwEAQIwKjAoBggrBgEFBQcCARYcaHR0cHM6Ly93d3cuZGlnaWNl
+cnQuY29tL0NQUzCBiAYDVR0fBIGAMH4wPaA7oDmGN2h0dHA6Ly9jcmwzLmRp
+Z2ljZXJ0LmNvbS9EaWdpQ2VydFNIQTJBc3N1cmVkSURDQS1nMS5jcmwwPaA7
+oDmGN2h0dHA6Ly9jcmw0LmRpZ2ljZXJ0LmNvbS9EaWdpQ2VydFNIQTJBc3N1
+cmVkSURDQS1nMS5jcmwweQYIKwYBBQUHAQEEbTBrMCQGCCsGAQUFBzABhhho
+dHRwOi8vb2NzcC5kaWdpY2VydC5jb20wQwYIKwYBBQUHMAKGN2h0dHA6Ly9j
+YWNlcnRzLmRpZ2ljZXJ0LmNvbS9EaWdpQ2VydFNIQTJBc3N1cmVkSURDQS5j
+cnQwDQYJKoZIhvcNAQELBQADggEBALGO/IbTt89KwjnxkzysmkjWMgwUB0FB
+sozZMEa9PcOkXGFgyJrGt4+s7NC9gmzD1al+OjEzNnJ97RFB1+zVaSliFcQX
+ZEH7HEbq0VZcrfKw9s9/VOZckAFvD1dOx5YUg4QGpEhtjJzOrqg18kz+TrWu
+InvRwoB4tVu6VrrwQIJwPPvm6UzNVAE8D4GSxGGr6Vz6pJzXRR7CVTrYh10m
+Udvd4a5YtRqaj7oOuYiWuxYFnuo/pu5qsu7/fdeXlE31uxgeJiY7q2TRQI45
+t1TZZpNtjK81v18H4XoD+9Y4ghNATTYgU+TmUbOCYsE78v4DeE7FSm/vR62i
+wPUcStz076IwggZOMIIFNqADAgECAhAErnlgZmaQGrnFf6ZsW9zNMA0GCSqG
+SIb3DQEBCwUAMGUxCzAJBgNVBAYTAlVTMRUwEwYDVQQKEwxEaWdpQ2VydCBJ
+bmMxGTAXBgNVBAsTEHd3dy5kaWdpY2VydC5jb20xJDAiBgNVBAMTG0RpZ2lD
+ZXJ0IEFzc3VyZWQgSUQgUm9vdCBDQTAeFw0xMzExMDUxMjAwMDBaFw0yODEx
+MDUxMjAwMDBaMGUxCzAJBgNVBAYTAlVTMRUwEwYDVQQKEwxEaWdpQ2VydCBJ
+bmMxGTAXBgNVBAsTEHd3dy5kaWdpY2VydC5jb20xJDAiBgNVBAMTG0RpZ2lD
+ZXJ0IFNIQTIgQXNzdXJlZCBJRCBDQTCCASIwDQYJKoZIhvcNAQEBBQADggEP
+ADCCAQoCggEBANz4ESM/arXvwCd5Gy0Fh6IQQzHfDtQVG093pCLOPoxw8L4H
+jt0nKrwBHbYsCsrdaVgfQe1qBR/aY3hZHiIsK/i6fsk1O1bxH3xCfiWwIxnG
+RTjXPUT5IHxgrhywWhgEvo8796nwlJqmDGNJtkEXU0AyvU/mUHpQHyVF6PGJ
+r83/Xv9Q8/AXEf+9xYn1vWK52PuORQSFbZnNxUhN/SarAjZF6jbXX2riGoJB
+Ctzp2fWRF47GIa04PBPmHn9mnNVN2Uba9s9Sp307JMO0wVE1xpvr1O9+5HsD
+4US9egs34E/LgooNcRjkpuCJLBvzsnM8wbCSnhh9vat9xX0IoSzCn3MCAwEA
+AaOCAvgwggL0MBIGA1UdEwEB/wQIMAYBAf8CAQAwDgYDVR0PAQH/BAQDAgGG
+MDQGCCsGAQUFBwEBBCgwJjAkBggrBgEFBQcwAYYYaHR0cDovL29jc3AuZGln
+aWNlcnQuY29tMIGBBgNVHR8EejB4MDqgOKA2hjRodHRwOi8vY3JsNC5kaWdp
+Y2VydC5jb20vRGlnaUNlcnRBc3N1cmVkSURSb290Q0EuY3JsMDqgOKA2hjRo
+dHRwOi8vY3JsMy5kaWdpY2VydC5jb20vRGlnaUNlcnRBc3N1cmVkSURSb290
+Q0EuY3JsMB0GA1UdJQQWMBQGCCsGAQUFBwMCBggrBgEFBQcDBDCCAbMGA1Ud
+IASCAaowggGmMIIBogYKYIZIAYb9bAACBDCCAZIwKAYIKwYBBQUHAgEWHGh0
+dHBzOi8vd3d3LmRpZ2ljZXJ0LmNvbS9DUFMwggFkBggrBgEFBQcCAjCCAVYe
+ggFSAEEAbgB5ACAAdQBzAGUAIABvAGYAIAB0AGgAaQBzACAAQwBlAHIAdABp
+AGYAaQBjAGEAdABlACAAYwBvAG4AcwB0AGkAdAB1AHQAZQBzACAAYQBjAGMA
+ZQBwAHQAYQBuAGMAZQAgAG8AZgAgAHQAaABlACAARABpAGcAaQBDAGUAcgB0
+ACAAQwBQAC8AQwBQAFMAIABhAG4AZAAgAHQAaABlACAAUgBlAGwAeQBpAG4A
+ZwAgAFAAYQByAHQAeQAgAEEAZwByAGUAZQBtAGUAbgB0ACAAdwBoAGkAYwBo
+ACAAbABpAG0AaQB0ACAAbABpAGEAYgBpAGwAaQB0AHkAIABhAG4AZAAgAGEA
+cgBlACAAaQBuAGMAbwByAHAAbwByAGEAdABlAGQAIABoAGUAcgBlAGkAbgAg
+AGIAeQAgAHIAZQBmAGUAcgBlAG4AYwBlAC4wHQYDVR0OBBYEFOcCI4AAT9jX
+vJQL2T90OUkyPIp5MB8GA1UdIwQYMBaAFEXroq/0ksuCMS1Ri6enIZ3zbcgP
+MA0GCSqGSIb3DQEBCwUAA4IBAQBO1Iknuf0dh3d+DygFkPEKL8k7Pr2TnJDG
+r/qRUYcyVGvoysFxUVyZjrX64GIZmaYHmnwTJ9vlAqKEEtkV9gpEV8Q0j21z
+HzrWoAE93uOC5EVrsusl/YBeHTmQvltC9s6RYOP5oFYMSBDOM2h7zZOr8GrL
+T1gPuXtdGwSBnqci4ldJJ+6Skwi+aQhTAjouXcgZ9FCATgLZsF2RtJOH+ZaW
+gVVAjmbtgti7KF/tTGHtBlgoGVMRRLxHICmyBGzYiVSZO3XbZ3gsHpJ4xlU9
+WBIRMm69QwxNNNt7xkLb7L6rm2FMBpLjjt8hKlBXBMBgojXVJJ5mNwlJz9X4
+ZbPg4m7CMYIDGTCCAxUCAQEweTBlMQswCQYDVQQGEwJVUzEVMBMGA1UEChMM
+RGlnaUNlcnQgSW5jMRkwFwYDVQQLExB3d3cuZGlnaWNlcnQuY29tMSQwIgYD
+VQQDExtEaWdpQ2VydCBTSEEyIEFzc3VyZWQgSUQgQ0ECEAqJsSU4TWoHDXi0
+KUyU0qAwCQYFKw4DAhoFAKCCAXUwGAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEH
+ATAcBgkqhkiG9w0BCQUxDxcNMTUwODIwMjEyNzU4WjAjBgkqhkiG9w0BCQQx
+FgQULahS+rkXlp6O39PlNgmBBWbZ+bwwgYgGCSsGAQQBgjcQBDF7MHkwZTEL
+MAkGA1UEBhMCVVMxFTATBgNVBAoTDERpZ2lDZXJ0IEluYzEZMBcGA1UECxMQ
+d3d3LmRpZ2ljZXJ0LmNvbTEkMCIGA1UEAxMbRGlnaUNlcnQgU0hBMiBBc3N1
+cmVkIElEIENBAhAKibElOE1qBw14tClMlNKgMIGKBgsqhkiG9w0BCRACCzF7
+oHkwZTELMAkGA1UEBhMCVVMxFTATBgNVBAoTDERpZ2lDZXJ0IEluYzEZMBcG
+A1UECxMQd3d3LmRpZ2ljZXJ0LmNvbTEkMCIGA1UEAxMbRGlnaUNlcnQgU0hB
+MiBBc3N1cmVkIElEIENBAhAKibElOE1qBw14tClMlNKgMA0GCSqGSIb3DQEB
+AQUABIIBADQoC3BB7Fvv+F4epFRhtTU+Qic9lzt+ijBVb+RQt0wjQP6K/jS7
+DyixYnEKcjOJWVGKx2rYBUZqrmB8aujxrclT+JbDFCO9MuvCgod1detkA9U/
+BF5N2HGBIae4mAUbniVrIZInWMElPWheonoIfAC2GGQRJ0SDk1HuCBRpZNx8
+GW8SrdqSBqKVStKYSbHEPF1oQGUzRhgQLri5PRbGzj+kVxA+9BapzqUFqOyl
+QLEd0xPtroTZBq6spwGgtrWVLATL7wT5MuWtcR1oEKP/TptSO0KPsUN0JjJI
+XaOpljFo2Nyl8Y8+0Ra2A7RVga8riuR50JHz+UVvZPr3Z9nQ7n4AAAAAAAA=
+
+--Apple-Mail=_EAC3776A-21D9-46DA-ACDE-1F0DC6195045--
