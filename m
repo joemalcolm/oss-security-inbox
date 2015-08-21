@@ -1,4 +1,9 @@
-Received: (qmail 1927 invoked by uid 550); 29 Jun 2023 13:07:56 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1651" "Friday" "21" "August" "2015" "14:58:41" "+0000" "mancha" "mancha1@zoho.com" "<20150821145841.GA4492@zoho.com>" "47" "Re: [oss-security] Double free corruption in JasPer JPEG-2000 implementation (CVE-2015-5203)" nil nil nil "8" "2015082114:58:41" "[oss-security] Double free corruption in JasPer JPEG-2000 implementation (CVE-2015-5203)" (number mark "        mancha1@zoho Aug 21   47/1651  " thread-indent "\"Re: [oss-security] Double free corruption in JasPer JPEG-2000 implementation (CVE-2015-5203)\"\n") "<CACn5sdSnp7LMeeV_rFbgVQCeQkoqGGTvHLZ3Xo_xgU70bhbOYw@mail.gmail.com>" ("<CACn5sdSnp7LMeeV_rFbgVQCeQkoqGGTvHLZ3Xo_xgU70bhbOYw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 9233 invoked by uid 550); 21 Aug 2015 14:59:21 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,82 +11,73 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1897 invoked from network); 29 Jun 2023 13:07:55 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
-	s=20170329; h=Content-Transfer-Encoding:Content-Type:Cc:To:Subject:From:
-	MIME-Version:Date:Message-ID:Sender:Reply-To:Content-ID:Content-Description:
-	Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
-	In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
-	List-Post:List-Owner:List-Archive;
-	bh=MMFBqtiH3VwNJ9ylG0dSTTre2Gx5/g9BWfY9S4y0pkY=; b=RiHwINHTu5o1UcUbbM1+0YPyFE
-	pNd61q7mCLOZaEfOcK2khOWOvONH2zl/0DkpI33UrSryba9Id1VCM83Da0tl7PkpgoXDo8R/pLM6F
-	Dk4QYtKBFbuwUvqUZIgPEhHLeEw7NSiRwf6EamtP0Qlsat7TTyFv0avD9KBajXHhVPr+BiGcBJz+I
-	STLHVyQxm9oQN9bznPeDgnQOZzDDY0c7EaX8wmgHdLZKeqOMJCt8desn4gS8qUTnnu6frLny4Kf4Y
-	RlhZyoUbB0WxU7z4t6ewlTGlFWc0U3k4WyxRmrdxqU61/idYryRQkZxzQCpZWu874s7T9t5r46fYM
-	WuTBR3fw==;
-Message-ID: <c5e6ac62-28b2-76be-f65b-07449c82b536@igalia.com>
-Date: Thu, 29 Jun 2023 15:07:40 +0200
+Received: (qmail 8172 invoked from network); 21 Aug 2015 14:59:19 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; 
+  s=zapps768; d=zoho.com; 
+  h=date:from:to:subject:message-id:references:mime-version:content-type:in-reply-to; 
+  b=OjOqPU8tABqdYl7150DUhHbw1QZ9Dj3aVXXI5tkAx8JdIUFi1TPUuI17ZXZ7cXSos+6PDMdVDWz1
+    9+OjexuVOXXN3vZK2b0Rzta7N573FVeCHXPksIb6bL3c4HNtmwmx  
+Message-ID: <20150821145841.GA4492@zoho.com>
+References: <CACn5sdSnp7LMeeV_rFbgVQCeQkoqGGTvHLZ3Xo_xgU70bhbOYw@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.0
-Content-Language: en-GB
-From: Carlos Alberto Lopez Perez <clopez@igalia.com>
-To: webkit-gtk@lists.webkit.org, webkit-wpe@lists.webkit.org
-Cc: security@webkit.org, oss-security@lists.openwall.com
-Organization: Igalia S.L.
-Mail-Followup-To: webkit-gtk@lists.webkit.org, webkit-wpe@lists.webkit.org,
- security@webkit.org, oss-security@lists.openwall.com
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2023-0005
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="5vNYLRcllDrimb99"
+Content-Disposition: inline
+In-Reply-To: <CACn5sdSnp7LMeeV_rFbgVQCeQkoqGGTvHLZ3Xo_xgU70bhbOYw@mail.gmail.com>
+X-PGP-Key: http://hkps.pool.sks-keyservers.net/pks/lookup?op=vindex&search=0x25168eb24f0b22ac
+X-PGP-FP: 56B7 100E F4D5 811C 8FEF  ADD1 2516 8EB2 4F0B 22AC
+X-Zoho-Virus-Status: 1
+Date: Fri, 21 Aug 2015 14:58:41 +0000
+From: mancha <mancha1@zoho.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Double free corruption in JasPer JPEG-2000
+ implementation (CVE-2015-5203)
+To: oss-security@lists.openwall.com
 
-------------------------------------------------------------------------
-WebKitGTK and WPE WebKit Security Advisory                 WSA-2023-0005
-------------------------------------------------------------------------
+--5vNYLRcllDrimb99
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Date reported           : June 29, 2023
-Advisory ID             : WSA-2023-0005
-WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2023-0005.html
-WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2023-0005.html
-CVE identifiers         : CVE-2022-48503, CVE-2023-32435,
-                          CVE-2023-32439.
+On Sun, Aug 16, 2015 at 05:22:50PM +0200, Gustavo Grieco wrote:
+> A new double free affecting JasPer JPEG-2000 (libjasper 1.900) has
+> been found triggered by function jasper_image_stop_load.  Despite this
+> library is used by many programs (
+> http://www.ece.uvic.ca/~frodo/jasper/#overview), there is no one
+> providing support, so there is no fix so far.
+>=20
+> This vulnerability was found by QuickFuzz.
+>=20
+> Regards, Gustavo.
 
-Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
+Hi all.
 
-CVE-2022-48503
-    Versions affected: WebKitGTK and WPE WebKit before 2.38.0.
-    Credit to Dongzhuo Zhao working with ADLab of Venustech, and ZhaoHai
-    of Cyberpeace Tech Co., Ltd.
-    Impact: Processing web content may lead to arbitrary code execution.
-    Description: The issue was addressed with improved bounds checks.
+This is the CVE-2015-5203 fix I shared with Gustavo:
 
-CVE-2023-32435
-    Versions affected: WebKitGTK and WPE WebKit before 2.40.0.
-    Credit to Georgy Kucherin (@kucher1n), Leonid Bezvershenko (@bzvr_),
-    and Boris Larin (@oct0xor) of Kaspersky.
-    Impact: Processing web content may lead to arbitrary code execution.
-    Apple is aware of a report that this issue may have been actively
-    exploited. Description: A memory corruption issue was addressed with
-    improved state management.
+http://sf.net/projects/mancha/files/sec/jasper-1.900.1_CVE-2015-5203.diff
 
-CVE-2023-32439
-    Versions affected: WebKitGTK and WPE WebKit before 2.40.3.
-    Credit to an anonymous researcher.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Apple is aware of a report that this issue
-    may have been actively exploited. Description: A type confusion
-    issue was addressed with improved checks.
+--mancha (https://twitter.com/mancha140)
 
+--5vNYLRcllDrimb99
+Content-Type: application/pgp-signature
 
-We recommend updating to the latest stable versions of WebKitGTK and WPE
-WebKit. It is the best way to ensure that you are running safe versions
-of WebKit. Please check our websites for information about the latest
-stable releases.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Further information about WebKitGTK and WPE WebKit security advisories
-can be found at: https://webkitgtk.org/security.html or
-https://wpewebkit.org/security/.
+iQIcBAEBCgAGBQJV1zyhAAoJEB4VYy8JqhaDtO4P/A61lmtrZ6diTlWItJ7tNlJ9
+U7qQOxAXVyAai8LFIGXHSJ5KqHfp5IhpmdELLrB9A1NDRxK3a8sa9tRPofScHiqC
+uDo/K0iKtoYbIyy7GuFJFk5+tw6QYYV/ush+NDjok1R9q4tF/5Vx1isYLTvEG6X5
+ZFBr9yyPH7krR48AF31kEx5T+IzLhk1Q/brKgzUqNI3IRHEV3pZBf93P1j0OERAb
+dAxbTWlLAsGya3dVV6GdlXkYIOrSFpxtdZKDBsrld8e1009ad0vUTLVeJLLWMd2i
+FXnCxvddYsSw2PsxNOvHsFYNETrgQERIefH2dbiND7FvxKuB5IaR7N84Fam17R1+
+Uqia2eFqxQT1gTm+tPFQ52A4IXt8vo4Zz0gLv4/l7vvm4h7pkaSVy6EtYdfWArsQ
+36p9v+a+bkoYwlnrx93CiW6lkx7DzjbMEDeVMNAIlVdS75Cpf55oLGJ0O03Smb5n
+UzqeEewyDzwPBVLw+AiGruPBQvLZgZjPu+ozWFi9KIHJLM27o/5Q67XqimSaOI0f
+mpTujC9XGKd1WIQyUehSScNQeytdyWu1HAsdauLpUj61awn6W+E9G81BwdmHDi6d
+q3gHlp0Gg9pdCf1ytECbMhERV4FvfyHZO8/MnQLhoE894/awdYk/EB7G3Pn7WCdF
+I0oNI9mq9R6QIFLxVNJ4
+=sKB1
+-----END PGP SIGNATURE-----
 
-The WebKitGTK and WPE WebKit team,
-June 29, 2023
+--5vNYLRcllDrimb99--
+
