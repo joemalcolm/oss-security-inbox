@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2258" "Thursday" "16" "April" "2015" "01:20:11" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150416052011.C25D86C0072@smtpvmsrv1.mitre.org>" "53" "[oss-security] Re: Problems in automatic crash analysis frameworks" nil nil nil "4" "2015041605:20:11" "[oss-security] Re: Problems in automatic crash analysis frameworks" (number mark "        cve-assign@m Apr 16   53/2258  " thread-indent "\"[oss-security] Re: Problems in automatic crash analysis frameworks\"\n") "<552F38FC.3010109@redhat.com>" ("<552F38FC.3010109@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1633" "Saturday" "22" "August" "2015" "01:45:07" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1508220141170.14543@wniryva>" "45" "[oss-security] CVE-2015-5225 Qemu: ui: vnc: heap memory corruption issue" nil nil nil "8" "2015082120:15:07" "[oss-security] CVE-2015-5225 Qemu: ui: vnc: heap memory corruption issue" (number mark "U       ppandit@redh Aug 22   45/1633  " thread-indent "\"[oss-security] CVE-2015-5225 Qemu: ui: vnc: heap memory corruption issue\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 23574 invoked by uid 550); 16 Apr 2015 05:20:24 -0000
+Received: (qmail 23890 invoked by uid 550); 21 Aug 2015 20:15:36 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,66 +11,60 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 22523 invoked from network); 16 Apr 2015 05:20:23 -0000
-In-Reply-To: <552F38FC.3010109@redhat.com>
-Message-Id: <20150416052011.C25D86C0072@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Thu, 16 Apr 2015 01:20:11 -0400 (EDT)
-From: cve-assign@mitre.org
+Received: (qmail 23852 invoked from network); 21 Aug 2015 20:15:36 -0000
+X-X-Sender: pjp@javelin
+Message-ID: <alpine.LFD.2.20.1508220141170.14543@wniryva>
+MIME-Version: 1.0
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
+Date: Sat, 22 Aug 2015 01:45:07 +0530 (IST)
+From: P J P <ppandit@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: Problems in automatic crash analysis frameworks
-To: huzaifas@redhat.com
+Subject: [oss-security] CVE-2015-5225 Qemu: ui: vnc: heap memory corruption issue
+To: oss security list <oss-security@lists.openwall.com>
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> IMO two CVEs are required:
-> 
-> "Various symlink flaws in abrt" and "Various race conditions in abrt"
+    Hello,
 
-For purposes of CVE, a set of vulnerabilities related to symlink
-following normally isn't assigned two CVE IDs solely because some of
-the symlink attacks depend on a race condition, whereas other symlink
-attacks don't depend on a race condition.
+Qemu emulator built with the VNC display driver support is vulnerable to a 
+buffer overflow flaw leading to a heap memory corruption issue. It could occur 
+while refreshing the server display surface via routine 
+vnc_refresh_server_surface().
 
-The specific exploitation scenario disclosed in raceabrt.c is about
-replacing maps with a symlink to /etc/passwd and then waiting for the
-next line of the code to chown /etc/passwd. This requires symlink
-following, and will have the same CVE ID as other issues that require
-symlink following.
+A privileged guest user could use this flaw to corrupt the heap memory and 
+crash the Qemu process instance OR potentially use it to execute arbitrary 
+code on the host.
 
-If the only goal of an attacker were to delete the maps file in order
-to cause data loss, then we think that attacker does not need to win a
-race. That attacker can delete the maps file either before or after
-the chown. (It's also conceivable that file deletion, by itself, was
-considered an acceptable risk, and not a valid attack goal.)
+Upstream fix:
+- -------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2015-08/msg02495.html
 
-However, the text of
-http://openwall.com/lists/oss-security/2015/04/14/4 said "is
-vulnerable to a filesystem race where a user unlinks the file." That's
-why we asked about the possibility of another scenario in which:
+Issue introduced by:
+- --------------------
+   -> http://git.qemu.org/?p=qemu.git;a=commit;h=bea60dd7679364493a0d7f5b
 
-  1. The ultimate goal is only to unlink the file.
-  2. Achieving this ultimate goal requires winning a race.
 
-We think there's isn't any such scenario, but we wanted to confirm
-that before doing a CVE mapping. If there isn't any such scenario,
-then the total number of CVE IDs for the whole "Furthermore, Abrt
-suffers" section will be 1.
+Thank you.
+- --
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Version: GnuPG v1
 
-iQEcBAEBAgAGBQJVL0V/AAoJEKllVAevmvmsNBgH/1cm1EzfPto2c5q9CF9fSd7v
-MJ3O/53tfiuWGrWecFyFtn5NsAXb3t35TEioQe6EbDDmEO+ogN6xh+lBJSxc0hBI
-+kTCjza08/6a1+vfgQaHX5zLdXUrA0BXi97Id1gfr+LcelSVMY0yoGfFlE/VvoKN
-CXNiXu+FtukYMUSwIdmuHvTjmo54yPyMWI3bMRrw+Tt8X4KQq6mpUZKwNKQ8cOMb
-1CVXIWSzs7cdVOEWe4xAeqKKbzhfclB4VB6uFRf/As5z6sWBcvY3sQMUfvvcw0yS
-3rQ0LU90yq1rjnUGID4ckzFhV7o9h/AdshYrfi15SmdcR3G5TaKFs2fEkP5PZR0=
-=h2Xd
+iQIcBAEBAgAGBQJV14bLAAoJEN0TPTL+WwQfRZsP/iEpjrdXOKwwf3PUmJafvLBj
+yg7SxSHhrg0CFbD8zpNCD8u5/umTSH+VyCZaU0B+gVbctCqRe5zl3WOI/Q4zFOv9
+desKe49REGgEY140F/V7aJxVkb4jf9F819H5tlyO/bH49Mexp/5VrggQ7mSMFUbS
+F1CcXZcOguIDMyrP7a98QCJKTZfzuy8UCHLDjc9WupjsNKnJ8Wux/cN+eZiE3c08
+PwVQOg49PJH6z/c5pJovv7j5A6ic4FacaHYdUloszRmTR4zZCdCcmNNguCHphlo9
+rsJzvVgdF2+lzPvgxwDK41qswg2SngUQKb/OeCxZqjBusplD4Ke67C+WDaYVAMip
+AkPBmm/ut9Ki06zMl53FbirShDxFySJG5FXLDMWoSMEBfv9MuNkbc98jRNMjNwYW
+ARYFwVuLTWourvr4Zk69BmTbitLe+DvY2j5k6593X+I1T7ZTqBl52mp7AslU6zBt
+JQ4Oknhelg7Qlr8CAiHoYR3vql5NABenBne7PY2VTdS9fAkKObIJN8dKIqZgZQNY
+N1pMeOoROn7GqDNJq7yJF9jcut5DwC5eiVjcxqS6Efm2X1Q5XmW7l37u7rodEg8y
+PzJxXZeFKH+1VYTc6t/BU9qUQyWbVhRpXqSUFSsWCTx4Mnkfe2SioNSwUwgHQvK+
+cD0hqfRIoZmFIjA90/G6
+=wD0r
 -----END PGP SIGNATURE-----
