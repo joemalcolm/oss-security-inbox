@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1067" "Wednesday" "5" "August" "2015" "21:43:20" "+0100" "Darren Martyn" "darren.martyn@xiphosresearch.co.uk" "<55C27568.8070503@xiphosresearch.co.uk>" "23" "[oss-security] CVE Request: SuiteCRM Post-Auth Race Condition Shell Upload Remote Code Execution." nil nil nil "8" "2015080520:43:20" "[oss-security] CVE Request: SuiteCRM Post-Auth Race Condition Shell Upload Remote Code Execution." (number mark "        darren.marty Aug  5   23/1067  " thread-indent "\"[oss-security] CVE Request: SuiteCRM Post-Auth Race Condition Shell Upload Remote Code Execution.\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1340" "Saturday" "22" "August" "2015" "06:48:19" "-0400" "Larry W Cashdollar" "larry0@me.com" "<55D85373.7010101@me.com>" "37" "[oss-security] CVE Request Blind SQL Injection in wordpress plugin dukapress v2.5.9" nil nil nil "8" "2015082210:48:19" "[oss-security] CVE Request Blind SQL Injection in wordpress plugin dukapress v2.5.9" (number mark "        larry0@me.co Aug 22   37/1340  " thread-indent "\"[oss-security] CVE Request Blind SQL Injection in wordpress plugin dukapress v2.5.9\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 17418 invoked by uid 550); 5 Aug 2015 20:43:34 -0000
+Received: (qmail 23668 invoked by uid 550); 22 Aug 2015 10:48:35 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,53 +11,59 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 16364 invoked from network); 5 Aug 2015 20:43:34 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:date:from:user-agent:mime-version:to
-         :subject:content-type:content-transfer-encoding;
-        bh=UiAzfMwvb2lbCMbiaKxtu6CoUN0Mh9MpkQ+r0reZxmc=;
-        b=jc37DrWFZd2PKCQFFd2eXO6uBA3ZD9c9JoOnv7OTTAVhWSWTviyDmTJFHQyz+kt9V0
-         b8Yh/hJhBUWkhq0sYXrmN9hcATREUgo32ImVAdibhycmt1XuKdLWKPVLBuaSxc/0ItRl
-         9bKAisQKKYn22KSx+0Go62nPnATcQLI7pLykxTu8UxTWet3T/cCwJIbk6NXpC7+se5JJ
-         nvXquJtGCpL1tR10wQNCZN6fJ1hauiGoTUJYUfceKzHqOKkjJCDAYmlXtY6ELri/X74v
-         ixPD9nYOF91cAkW5qP/N7Yy8QcRq5+ijw/gjQpi6dYeUMGcx/It4W5XVqzvY05mtIH4/
-         MJgA==
-X-Gm-Message-State: ALoCoQm0WuXtuknsR8VLD/I5U48R7HCRVDnDpH6UT+fMwBbMVMZGUBdwyLS5PEV6pRAFLd86/2jB
-X-Received: by 10.180.84.230 with SMTP id c6mr2358627wiz.32.1438807402598;
-        Wed, 05 Aug 2015 13:43:22 -0700 (PDT)
-Message-ID: <55C27568.8070503@xiphosresearch.co.uk>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.7.0
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Date: Wed, 05 Aug 2015 21:43:20 +0100
-From: Darren Martyn <darren.martyn@xiphosresearch.co.uk>
+Received: (qmail 23644 invoked from network); 22 Aug 2015 10:48:34 -0000
+MIME-version: 1.0
+Content-type: multipart/alternative;
+ boundary="Boundary_(ID_Ae/Yd8xLx2B5XVd8YcVFqA)"
+X-Proofpoint-Virus-Version: vendor=fsecure
+ engine=2.50.10432:5.14.151,1.0.33,0.0.0000
+ definitions=2015-08-22_02:2015-08-21,2015-08-22,1970-01-01 signatures=0
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
+ suspectscore=1 phishscore=0 adultscore=0 bulkscore=0 classifier=spam adjust=0
+ reason=mlx scancount=1 engine=7.0.1-1412110000 definitions=main-1508220177
+Message-id: <55D85373.7010101@me.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101
+ Thunderbird/31.8.0
+Date: Sat, 22 Aug 2015 06:48:19 -0400
+From: Larry W Cashdollar <larry0@me.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE Request: SuiteCRM Post-Auth Race Condition Shell Upload Remote
- Code Execution.
+Subject: [oss-security] CVE Request Blind SQL Injection in wordpress plugin dukapress v2.5.9
 To: oss-security@lists.openwall.com
 
-Hello List,
-I am requesting a CVE to be issued for the SuiteCRM product. There
-exists a race condition in the image upload verification component which
-leads to a race condition wherein an uploaded piece of PHP code exists
-on disc temporarily before being deleted, which can be leveraged to gain
-code execution. This vulnerability was introduced in version 7.2.2, as a
-patch to fix a prior code execution issue found in 7.2.1.
+--Boundary_(ID_Ae/Yd8xLx2B5XVd8YcVFqA)
+Content-type: text/plain; CHARSET=US-ASCII; format=flowed
+Content-transfer-encoding: 7BIT
 
-Github issue: https://github.com/salesagility/SuiteCRM/issues/333
-Responsible commit:
-https://github.com/salesagility/SuiteCRM/commit/b1b3fd61c7697ad2073cd253d31c9462929e7bb5
-Them being told it was a bad idea:
-https://github.com/salesagility/SuiteCRM/commit/b1b3fd61c7697ad2073cd253d31c9462929e7bb5#commitcomment-11281062
-Video of exploitation: https://www.youtube.com/watch?v=eHVIg5eoYNc
+Hello,
+May I have a CVE for this vulnerability?
 
-A proof of concept exploit will be published in a couple of days along
-with a dissection of the vulnerable components of the code and
-explanation of how it all works and stuff.
+Title: Blind SQL Injection in wordpress plugin dukapress v2.5.9
+Author: Larry W. Cashdollar, @_larry0
+Date: 2015-08-04
+Download Site: http://wordpress.org/plugins/dukapress/
+Vendor: dukapress.org
+Vendor Notified: 2015-08-07, fixed in v2.5.9.1
+Vendor Contact: https://twitter.com/moshthepitt
+Description: DukaPress is open source software that can be used to build 
+online shops quickly and easily. DukaPress is built on top of WordPress, 
+a world class content management system. DukaPress is built to be both 
+simple and elegant yet powerful and scalable.
+Vulnerability:
+The code in dukapress/download.php does not sanitize user input before 
+passing it to query() allowing SQL to be injected.  The user is not 
+required to be logged into wordpress in order to exploit this vulnerability.
 
-Best regards,
-Darren Martyn,
-Security Researcher,
-Xiphos Research Ltd.
+
+9:$sql = "SELECT saved_name, real_name, count, 
+TIMESTAMPDIFF(SECOND,sent_time,NOW()) as time_diff FROM `{$table_name2}` 
+WHERE saved_name='{$_GET['id']}'";
+.
+.
+.
+
+26:    $wpdb->query("UPDATE {$table_name2} SET count={$download_count} 
+WHERE saved_name='{$_GET['id']}'");
+
+Advisory: http://www.vapid.dhs.org/advisory.php?v=152
+
+--Boundary_(ID_Ae/Yd8xLx2B5XVd8YcVFqA)--
