@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1647" "Friday" "6" "September" "2019" "20:52:56" "-0400" "Phil Pennock" "pdp@exim.org" nil "36" nil "^Cc:" nil nil "9" nil nil (number mark "        pdp@exim.org Sep  6   36/1647  " thread-indent "\"Re: [oss-security] Sv: [exim] CVE-2019-15846: Exim - local or remote attacker can execute programs with root privileges\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Sv: [exim] CVE-2019-15846: Exim - local or remote attacker can execute programs with root privileges" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["895" "Monday" "24" "August" "2015" "11:26:15" "-0700" "Reed Loden" "reed@reedloden.com" "<CALPTtNXiS0jqswCaH2z59oAAsOmAWZBaKcGEtOc8cGGUM9yd=Q@mail.gmail.com>" "29" "[oss-security] CVE request: uglify-js node.js module <2.4.24 incorrectly handles non-boolean comparisons during minification" nil nil nil "8" "2015082418:26:15" "[oss-security] CVE request: uglify-js node.js module <2.4.24 incorrectly handles non-boolean comparisons during minification" (number mark "        reed@reedlod Aug 24   29/895   " thread-indent "\"[oss-security] CVE request: uglify-js node.js module <2.4.24 incorrectly handles non-boolean comparisons during minification\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 3132 invoked by uid 550); 7 Sep 2019 06:56:24 -0000
+Received: (qmail 5517 invoked by uid 550); 24 Aug 2015 18:26:47 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,75 +11,65 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 6027 invoked from network); 7 Sep 2019 00:53:12 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=exim.org;
-	 s=d201908; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:
-	Subject:Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
-	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-	:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
-	List-Post:List-Owner:List-Archive;
-	bh=7OF87tkEWte8FLN7KRpEXRAtBB3zHrd+UxGGlj+LQqI=; b=u3I3HsQxDzv/VhYmf3e2K1A0wb
-	vfzdZPuC2GT2ruiXYBjkVUnPkjpos9HXW51QpnUadqK+MVl1kyII3BEgZonQsMTqxSuYziQAssh++
-	l4oTj6V/wWPAL1y6QGEirfCEzOq/yEh7mWscasbcagLjpfEg7jQmfD7gW87xG7aw5n1E5hRm26NYK
-	5wf44WbH3KU4uYPP67JSxricnKpvTmI9qGvaBSiLn62f2tngB/qlr4flnOO2oHNBNemTQWVmm581v
-	C1Gn7/bTl24j4JdtUNlIx6Yzcii8LO3mN3LYu0p0Ol4J8XGqOiS4r6n5mfUyLMssBFfH0ipVrkjmO
-	u+28u82A==;
-Message-ID: <20190907005255.GA22947@spodhuis.org>
-Mail-Followup-To: oss-security@lists.openwall.com,
-	'Heiko Schlittermann' <hs@nodmarc.schlittermann.de>,
-	exim-users@exim.org
-References: <20190904092248.GQ3837@jumper.schlittermann.de>
- <20190906102039.GZ3837@jumper.schlittermann.de>
- <20190906104430.GA3837@jumper.schlittermann.de>
- <20190906111406.GB3837@jumper.schlittermann.de>
- <005d01d564e3$cbf48090$63dd81b0$@sebbe.eu>
+Received: (qmail 5479 invoked from network); 24 Aug 2015 18:26:46 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=reedloden.com; s=google;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=JGnxT/RfQHyJyAw5JwMM75c5hQr88v1+Mf5R78sG7qk=;
+        b=eqMPBcqhvLHNKCjNWZWPPad5jjPm96rF0N68D343sTAups76NP0fwrUi83b/CFaQYd
+         cqeQb1hy82lb1qW3EivpijudRblVvJN0vYncvJve8h1J+54rqVcUqK/zxOlqcqndFub+
+         Coh7NLLzcmPhDfKcDjgKJ/mnZLWt8p4Va7xVU=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
+         :content-type;
+        bh=JGnxT/RfQHyJyAw5JwMM75c5hQr88v1+Mf5R78sG7qk=;
+        b=D8YqDAplfipc1If4xzmejdR4V+/icjqZr6V604Lm10jUWdond8PYgv4JlevdU79oBE
+         X4WxTczhWwGMxpk4VUeYWpz1JHtcnhpzTBA0pubS/Cn3FzeWGpnY2rKWzpAy4L12DJsr
+         uIXa/RL/j98/qBR6vtspB7wR0+7EDQfIG7mRUfijEviW84KWJGDtqeOhiSwRGieWEHLS
+         xw8l4nUbQGGqhGiv+bZPxDHu9pQQl2axy21tX66sudYGACXF9Z4rjZADG/3n6v2S38xv
+         9xqLyDMrN/a7LZXw3v+aWNgvkVsT2FOZXbEVzbB3KmPrbfWSXlyJxNy+BS5lLJc8DI00
+         1ZVg==
+X-Gm-Message-State: ALoCoQnJNOI+i9uxSYCjVEMFSFSy8q4+EiBCAIIbB7pTDQD6OQrK6SJhzd5RMW0A313yKmF8RUPU
+X-Received: by 10.107.7.168 with SMTP id g40mr22592550ioi.28.1440440795093;
+ Mon, 24 Aug 2015 11:26:35 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <005d01d564e3$cbf48090$63dd81b0$@sebbe.eu>
-OpenPGP: url=https://www.security.spodhuis.org/PGP/keys/0x4D1E900E14C1CC04.asc
-Cc: 'Heiko Schlittermann' <hs@nodmarc.schlittermann.de>,
-	exim-users@exim.org
-Date: Fri, 6 Sep 2019 20:52:56 -0400
-From: Phil Pennock <pdp@exim.org>
+Message-ID: <CALPTtNXiS0jqswCaH2z59oAAsOmAWZBaKcGEtOc8cGGUM9yd=Q@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=001a113f2784e9d95f051e12c182
+Date: Mon, 24 Aug 2015 11:26:15 -0700
+From: Reed Loden <reed@reedloden.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Sv: [exim] CVE-2019-15846: Exim - local or remote
- attacker can execute programs with root privileges
-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE request: uglify-js node.js module <2.4.24 incorrectly handles
+ non-boolean comparisons during minification
+To: oss-security@lists.openwall.com, 
+	Assign a CVE Identifier <cve-assign@mitre.org>
 
-On 2019-09-06 at 20:50 +0200, Sebastian Nielsen wrote:
-> Shouldn't this be in connect ACL?
-> How would the deny in MAIL FROM prevent the exploit? What I have understand is that there is exploit in the SNI of the TLS negotiation, thus the whole connect attempt must be rejected right?
+--001a113f2784e9d95f051e12c182
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-The connect ACL won't protect you against STARTTLS usage, which is far
-more common for email than TLS-on-connect.
+As seen on Hacker News -- https://zyan.scripts.mit.edu/blog/backdooring-js/
 
-I myself use the HELO ACL.
+Blog post has all the details, but basically the UglifyJS node module has a
+problem where the combination of De Morgan=E2=80=99s Law and non-boolean va=
+lues can
+lead to a case where code is incorrectly minified, which can lead to
+possibly malicious minified JS code.
 
-Blocking in the MAIL ACL is safe.  The problem is not in the TLS SNI
-itself.  The problem relates to safely storing the SNI in spool files
-for messages and what happens when Exim reads those values back later.
+UglifyJS is a "JavaScript parser / mangler / compressor / beautifier
+toolkit" for Node.js.
 
-Unless and until an email is spooled, there is no security hole.
+Node.js module: uglify-js (https://www.npmjs.com/package/uglify-js)
+Affects: 2.4.23 and earlier
+Fixed in: 2.4.24
+Reported via https://github.com/mishoo/UglifyJS2/issues/751
+Fixed by
+https://github.com/mishoo/UglifyJS2/commit/905b6011784ca60d41919ac1a499962b=
+7c1d4b02
 
-Some time back, the TLS SNI would be written unescaped to the spool
-files.  That meant that a newline in SNI would let attackers introduce
-arbitrary metadata into the spool (which includes ACL variables,
-commonly subject to expansion, so ${run ...} could be injected).  So I
-fixed it, by escaping the SNI when writing it to the spool file and
-unescaping when reading it back.
+Can a CVE be assigned?
 
-I remember sighing wistfully because I'm not fond of escaping/quoting
-and much prefer using DJB netstrings, but didn't fancy rewriting all of
-Exim's spool file handling, so just used the escape/unescape functions
-we had.
+Thanks,
+~reed
 
-I missed that the escape function didn't escape everything which the
-unescape function would unescape, and that this provided a means to mess
-up Exim's internal state.  Qualys were able to prove out that yes, this
-is exploitable.
-
-AFAIK that's the first remote execution exploitable security hole I've
-ever introduced to a project.  :(
-
--Phil
+--001a113f2784e9d95f051e12c182--
