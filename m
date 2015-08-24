@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1395" "Wednesday" "22" "November" "2017" "12:13:23" "+0530" "P J P" "ppandit@redhat.com" "<nycvar.YSQ.7.76.1711221200110.4822@wniryva>" "34" "Re: [oss-security] Re: CVE-2017-16845 Qemu: ps2: information leakage via post_load routine" nil nil nil "11" "2017112206:43:23" "[oss-security] Re: CVE-2017-16845 Qemu: ps2: information leakage via post_load routine" (number mark "U       ppandit@redh Nov 22   34/1395  " thread-indent "\"Re: [oss-security] Re: CVE-2017-16845 Qemu: ps2: information leakage via post_load routine\"\n") "<20171122035243.edl3dqbnpyaa337h@matica.foolinux.mooo.com>" ("<nycvar.YSQ.7.76.1711171112070.7823@wniryva>" "<20171122035243.edl3dqbnpyaa337h@matica.foolinux.mooo.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1597" "Monday" "24" "August" "2015" "12:59:14" "-0700" "Reed Loden" "reed@reedloden.com" "<CALPTtNWUpz6bPZG9ho4u6MCFnBx=kFOXEK-Pmw9LkAEh6C6YWw@mail.gmail.com>" "41" "Re: [oss-security] CVE request: uglify-js node.js module <2.4.24 incorrectly handles non-boolean comparisons during minification" nil nil nil "8" "2015082419:59:14" "[oss-security] CVE request: uglify-js node.js module <2.4.24 incorrectly handles non-boolean comparisons during minification" (number mark "        reed@reedlod Aug 24   41/1597  " thread-indent "\"Re: [oss-security] CVE request: uglify-js node.js module <2.4.24 incorrectly handles non-boolean comparisons during minification\"\n") "<55DB7568.5000601@redhat.com>" ("<CALPTtNXiS0jqswCaH2z59oAAsOmAWZBaKcGEtOc8cGGUM9yd=Q@mail.gmail.com>" "<55DB7568.5000601@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 7991 invoked by uid 550); 22 Nov 2017 06:43:40 -0000
+Received: (qmail 29774 invoked by uid 550); 24 Aug 2015 19:59:46 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,53 +11,80 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7968 invoked from network); 22 Nov 2017 06:43:40 -0000
-Date: Wed, 22 Nov 2017 12:13:23 +0530 (IST)
-From: P J P <ppandit@redhat.com>
-X-X-Sender: pjp@javelin
-To: oss security list <oss-security@lists.openwall.com>
-In-Reply-To: <20171122035243.edl3dqbnpyaa337h@matica.foolinux.mooo.com>
-Message-ID: <nycvar.YSQ.7.76.1711221200110.4822@wniryva>
-References: <nycvar.YSQ.7.76.1711171112070.7823@wniryva> <20171122035243.edl3dqbnpyaa337h@matica.foolinux.mooo.com>
+Received: (qmail 29750 invoked from network); 24 Aug 2015 19:59:45 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=reedloden.com; s=google;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :content-type;
+        bh=BkKBLtDB6ezNejn05FS4XjGm7CMtFXqhvYq0AaM7n+o=;
+        b=Q7YeofL8AlDtdZLPxSmvWpRuDQ0c419iLUKN7OLqM1/odQuOVFRk/zhx+IAz5pIov7
+         8WVXUVjZS6R5+mIAeoV6Q6ZBcdi0A8zKzuqFPsb6ot6Znyic1z9pWkSE7qCB2RU+Oshu
+         7mokJrREmD9bO/rwdtEWkDU6nKHMnFij4HuR8=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:content-type;
+        bh=BkKBLtDB6ezNejn05FS4XjGm7CMtFXqhvYq0AaM7n+o=;
+        b=HLszIswdWcgdJzICxzGc3idikuKH9xlMt3uwhuGigksDxtSYchCk1DODJSGeBmeOi7
+         JWQdVOlrJUz0em39TFB0HbeCkMgnF+5tVuvPjByhK0wsXF5jpWCtpisRATUYfmYuDTJJ
+         Xr/Jxj1Hv8JcALzuGWLlw2Icb90tOe9W416tIJJONs6HlmyQHYHIUFxFPNNotrvzpr47
+         1hJ3K9Iuzh6B3Og3P3KUVa0p+7OrfDtYWbxVbStQlVSTcHohLwz1iwHl5dTRsusZO3Kx
+         IG0mXXiaeZYl6MyaPGcm3R40ENnG1aJYDgm4rxa98lTctJj69kOHSqLx0omARO0mpPgQ
+         SHqg==
+X-Gm-Message-State: ALoCoQn5J1lI5ExiXPX0t9sxqi5VX8Wok50gKtMJMW39ipcFReTYr/lo/DdBbHjcb+YG3sy7w6tY
+X-Received: by 10.50.61.243 with SMTP id t19mr16984679igr.24.1440446374313;
+ Mon, 24 Aug 2015 12:59:34 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.13
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.30]); Wed, 22 Nov 2017 06:43:28 +0000 (UTC)
-Subject: Re: [oss-security] Re: CVE-2017-16845 Qemu: ps2: information leakage
- via post_load routine
+In-Reply-To: <55DB7568.5000601@redhat.com>
+References: <CALPTtNXiS0jqswCaH2z59oAAsOmAWZBaKcGEtOc8cGGUM9yd=Q@mail.gmail.com>
+ <55DB7568.5000601@redhat.com>
+Message-ID: <CALPTtNWUpz6bPZG9ho4u6MCFnBx=kFOXEK-Pmw9LkAEh6C6YWw@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=047d7bdc0a4e75b5ed051e140e51
+Date: Mon, 24 Aug 2015 12:59:14 -0700
+From: Reed Loden <reed@reedloden.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] CVE request: uglify-js node.js module <2.4.24
+ incorrectly handles non-boolean comparisons during minification
+To: oss-security@lists.openwall.com
 
-  Hello Ian,
+--047d7bdc0a4e75b5ed051e140e51
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-+-- On Tue, 21 Nov 2017, Ian Zimmerman wrote --+
-| >   -> https://lists.gnu.org/archive/html/qemu-devel/2017-11/msg02982.html
-| 
-| Hi, what can I do with these QEMU reports?  I can try to apply the
-| patch, but I have no idea if it will work, because I don't know which
-| branch or revision it is based on.
+On Mon, Aug 24, 2015 at 12:50 PM, Florian Weimer <fweimer@redhat.com> wrote:
 
-  Patch is sent against upstream Qemu git repository(below) and is merged 
-after due review on the -devel list.
+> On 08/24/2015 08:26 PM, Reed Loden wrote:
+> > As seen on Hacker News --
+> https://zyan.scripts.mit.edu/blog/backdooring-js/
+> >
+> > Blog post has all the details, but basically the UglifyJS node module
+> has a
+> > problem where the combination of De Morgan=E2=80=99s Law and non-boolea=
+n values
+> can
+> > lead to a case where code is incorrectly minified, which can lead to
+> > possibly malicious minified JS code.
+> >
+> > UglifyJS is a "JavaScript parser / mangler / compressor / beautifier
+> > toolkit" for Node.js.
+>
+> How is this different from a any other compiler bug?  They can be abused
+> in similar ways by crafted code, and we don't treat them as
+> vulnerabilities (unless there is actual application impact beyond
+> synthetic test cases).
+>
+> Note that I'm not saying this isn't a nice find, I'm just not sure if it
+> should be considered as a security by itself.
+>
 
-  -> https://git.qemu.org/?p=qemu.git;a=summary
+I fully agree not every compiler bug is a security issue, but when one is
+used for (theoretically) malicious purposes (including a full write-up and
+example PoC), seems like there should be some middle ground here. If we're
+always being reactive and waiting for an issue to actually be exploited,
+we'll never win. Sadly, sometimes it takes an issue being classified as
+'security' for folks (including distros) to update their
+applications/software to pull in updated dependencies.
 
-| By my unscientific counting, there are only 2 other userspace projects which 
-| earn CVEs as frequently as QEMU: openjpeg and graphicsmagick.  In both these 
-| cases, starting with the message posted here and following the references, I 
-| can quickly locate the actual VC commit (in git and mercurial, respectively) 
-| and thus have a sound basis for deciding what to do: patch, wait for an 
-| updated distro package, or fork the distro package.
-| 
-| Is there a reason why that cannot be done with QEMU?
+~reed
 
-Reviewed patches soon show-up in the above master repository. In this case, it 
-so happened that an earlier version v1 of the patch was more acceptable
-
-  -> https://lists.gnu.org/archive/html/qemu-devel/2017-11/msg02946.html
-
-It should make it upstream soon, I'll update here accordingly.
-
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+--047d7bdc0a4e75b5ed051e140e51--
