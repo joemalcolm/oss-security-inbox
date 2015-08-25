@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3345" "Sunday" "17" "July" "2016" "10:32:56" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160717143256.2AF9F332028@smtpvbsrv1.mitre.org>" "79" "[oss-security] Re: multiple memory corruption issues in lepton" nil nil nil "7" "2016071714:32:56" "[oss-security] Re: multiple memory corruption issues in lepton" (number mark "U       cve-assign@m Jul 17   79/3345  " thread-indent "\"[oss-security] Re: multiple memory corruption issues in lepton\"\n") "<CAFkTriKABkDUui3D70ct6VSAXQ6=CHpkjwW5ji4OTM3wpYnABg@mail.gmail.com>" ("<CAFkTriKABkDUui3D70ct6VSAXQ6=CHpkjwW5ji4OTM3wpYnABg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["423" "Tuesday" "25" "August" "2015" "14:03:18" "+0200" "Florian Weimer" "fweimer@redhat.com" "<55DC5986.2040709@redhat.com>" "11" "[oss-security] CVE-2015-5228 & CVE-2015-5231 in the criu service daemon" nil nil nil "8" "2015082512:03:18" "[oss-security] CVE-2015-5228 & CVE-2015-5231 in the criu service daemon" (number mark "        fweimer@redh Aug 25   11/423   " thread-indent "\"[oss-security] CVE-2015-5228 & CVE-2015-5231 in the criu service daemon\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 3317 invoked by uid 550); 17 Jul 2016 14:34:28 -0000
+Received: (qmail 7869 invoked by uid 550); 25 Aug 2015 12:03:33 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,92 +11,28 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 7820 invoked from network); 25 Aug 2015 12:03:32 -0000
+Message-ID: <55DC5986.2040709@redhat.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.1.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.24
+Date: Tue, 25 Aug 2015 14:03:18 +0200
+From: Florian Weimer <fweimer@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 27728 invoked from network); 17 Jul 2016 14:33:08 -0000
-From: cve-assign@mitre.org
-To: marco.gra@gmail.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <CAFkTriKABkDUui3D70ct6VSAXQ6=CHpkjwW5ji4OTM3wpYnABg@mail.gmail.com>
-Message-Id: <20160717143256.2AF9F332028@smtpvbsrv1.mitre.org>
-Date: Sun, 17 Jul 2016 10:32:56 -0400 (EDT)
-Subject: [oss-security] Re: multiple memory corruption issues in lepton
+Subject: [oss-security] CVE-2015-5228 & CVE-2015-5231 in the criu service daemon
+To: oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+This is just a heads-up that a discussion about hardening the criu
+service daemon is now happening upstream:
 
-> I just reported on dropbox/lepton github project some memory corruption
-> issues, with reproducers.
-> 
-> https://github.com/dropbox/lepton/issues/26
+  <http://lists.openvz.org/pipermail/criu/2015-August/021847.html>
 
->> download some samples that will cause memory corruption problems in lepton:
->> 
->> https://github.com/marcograss/marcograss.github.io/blob/master/assets/lepton_testcases1.zip?raw=true
->> 
->> you can reproduce with ./lepton/lepton -singlethread -unjailed -preload testcase.jpeg /tmp/out.lep
+Considering impact (the service is not widely used right now), we
+decided to discuss the new design in the open.  Please contribute to the
+discussion on the criu mailing list if you are interested.
 
->> AddressSanitizer: unknown-crash
->> READ of size 208
->> #0 0x52eb78 in std::__atomic_base::load(std::memory_order) const /usr/include/c++/6/bits/atomic_base.h:396
->> #1 0x52eb78 in std::__atomic_base::operator unsigned int() const /usr/include/c++/6/bits/atomic_base.h:259
->> #2 0x52eb78 in print_bill(int) src/vp8/util/billing.cc:145
->> #3 0x46b7f3 in process_file(IOUtil::FileReader, IOUtil::FileWriter, int, bool) src/lepton/jpgcoder.cc:1616
-
-Use CVE-2016-6234. We think this is an issue in Lepton code. We were
-unable to find any relationship between src/vp8/util/billing.cc and
-the https://github.com/webmproject/libvpx/tree/master/vp8 code.
-
-
->> AddressSanitizer: SEGV on unknown address
->> #0 0x455163 in setup_imginfo_jpg(bool) src/lepton/jpgcoder.cc:4023
-
-Use CVE-2016-6235.
-
-
->> AddressSanitizer: global-buffer-overflow
->> READ of size 2
->> #0 0x4571f0 in setup_imginfo_jpg(bool) src/lepton/jpgcoder.cc:4023
-
-Use CVE-2016-6236 for this buffer over-read issue.
-
-
->> AddressSanitizer: global-buffer-overflow
->> WRITE of size 2
->> #0 0x45392c in build_huffcodes(unsigned char, unsigned char, huffCodes, huffTree) src/lepton/jpgcoder.cc:5099
-
-Use CVE-2016-6237.
-
-
->> AddressSanitizer: global-buffer-overflow
->> READ of size 2
->> #0 0x4fe248 in ProbabilityTablesBase::set_quantization_table(BlockType, unsigned short const) src/vp8/model/model.hh:233
->> #1 0x4fe248 in VP8ComponentEncoder::vp8_full_encoder(UncompressedComponents const, IOUtil::FileWriter, ThreadHandoff const, unsigned int) src/lepton/vp8_encoder.cc:465
->> #2 0x47b3a8 in write_ujpg(std::vector >, std::vector >) src/lepton/jpgcoder.cc:3660
-
-Use CVE-2016-6238 for this buffer over-read issue. We think this is an
-issue in Lepton code. We were unable to find any relationship between
-src/vp8/model/model.hh and the
-https://github.com/webmproject/libvpx/tree/master/vp8 code.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXi5bEAAoJEHb/MwWLVhi2NgEP/3kibyFdWoOvdS0pi/zyPGq4
-WnVyS1lgnjNKUH/eJSj2L0mpxh9ecW7SRojAxE5DG8W0KjZRH2KyNJDnSVq04BtW
-tgZv5SzUbAZpZ3g0mQo4hjXcfv9Iss3ajjHol7KliMIpU8gnquHRUJytKGHVjKyj
-uTFCIsQIv29yXGyU9A7999uuSlwWpKo6amJUh4q4ip14B75Ho9SDCOwjX6Zp7E7Z
-z0aoPUWRHaOIg3/1u3KPQ2JM0dapD+Z0R7Bo9I5uHWYA79shp5OQ4LeLCF8jMCHI
-Y2WOp2sQWxXBGoYPtbeCzvTFj+EAeXfLa6vI+oEFiYiQRaUzrbwN4PGgNJ00IISu
-2snPbfeUxnwbTXjcs1eBS0kwlBBuCNjA619sdIuq8CV4qEXSHr4SR195j1dVa3kD
-aQOhp7IhTzvTwbhDrzccCcqnoduE3Gs9GfzS0QQfvYgPxkclRT3zIBFoKqJ9kgy6
-mzBouOlWmCPzVD4PB2ugG5Aq7ChqDoTTwCmP+VoA9Ne736Y0s2FiEGPC5rKhLACW
-vjkHAjKLfV4hXbXfPRRL3FDZ2t3EV2CqFVer5+iJZgAY6DE7vYP/BSuqA/Qjrnl/
-h+H1xnvBiW6V5MF+D7vmrdn8LzZ3Bj+G5KCdIAT7c0VtlFO6VM68LE1OyRGjcHID
-Fw2yhG0f2WXRJCB1eda6
-=OEE8
------END PGP SIGNATURE-----
+-- 
+Florian Weimer / Red Hat Product Security
