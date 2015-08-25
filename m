@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["391" "Wednesday" "28" "July" "2021" "08:28:53" "+0200" "Salvatore Bonaccorso" "carnil@debian.org" nil "11" "Re: [oss-security] Prosody XMPP server advisory 2021-07-22 (Remote Information Disclosure) (CVE Request)" "^Cc:" nil nil "7" nil nil (number mark "        carnil@debia Jul 28   11/391   " thread-indent "\"Re: [oss-security] Prosody XMPP server advisory 2021-07-22 (Remote Information Disclosure) (CVE Request)\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Prosody XMPP server advisory 2021-07-22 (Remote Information Disclosure) (CVE Request)" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2641" "Tuesday" "25" "August" "2015" "13:25:53" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150825172553.F1D61B2E107@smtpvbsrv1.mitre.org>" "63" "[oss-security] Re: CVE request: libgpf: use-after-free vulnerability in Decoder.cpp" nil nil nil "8" "2015082517:25:53" "[oss-security] Re: CVE request: libgpf: use-after-free vulnerability in Decoder.cpp" (number mark "        cve-assign@m Aug 25   63/2641  " thread-indent "\"[oss-security] Re: CVE request: libgpf: use-after-free vulnerability in Decoder.cpp\"\n") "<trinity-05553c71-f016-46b0-90e9-bc7adeb72553-1440024619340@3capp-mailcom-lxa05>" ("<trinity-05553c71-f016-46b0-90e9-bc7adeb72553-1440024619340@3capp-mailcom-lxa05>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 29836 invoked by uid 550); 28 Jul 2021 06:29:06 -0000
+Received: (qmail 31761 invoked by uid 550); 25 Aug 2015 17:26:06 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,59 +11,76 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 29810 invoked from network); 28 Jul 2021 06:29:06 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=s5hxBtHd5tI6zJt6oeJ9TMylbVfkLA2cFd1zLBEYiSE=;
-        b=ZtB5v5CaR1xjQZCwKkFHm6WX50bGMGNlIps/mDRgqNUaq69jIOmosqoNPhszCd939o
-         0A9zmin22ANsJ3fTZ5UaqMHG1N8WratXQzZLGKfnJ42yKnt6m0BpYV0ocLNOHBIHiL/V
-         HWif82RkSFEjj3hNpJWzakDNCaO/9CHqkG38xXjTGFvmNk+FO9vcLdG81dtxe/5QKUNA
-         xYB1bYGg+A/X3lI/GrmrMFe8VoQFFgekqGYMkG3D33Mhkk8/SKEj2Asd+ycKruC3PnIO
-         1qZ8nL+SBw9wJdc+t8K9xwZxI6m60MEbtLBpkEck038ALhiQOoOwNgRy0S5n5tEXLmd8
-         8KXg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
-         :references:mime-version:content-disposition
-         :content-transfer-encoding:in-reply-to;
-        bh=s5hxBtHd5tI6zJt6oeJ9TMylbVfkLA2cFd1zLBEYiSE=;
-        b=Ue8OsCKxmxZLkE1e+iVirjCAF2+f59mv5SFUzTzf8H/+N6nWhfqKX/oBBwVFQB3LBd
-         iLVW7FyYZB9Gmp4XqEYpNj8i5PuFtbeRrD8Zkt4LzG7baxPpPCA26eWL7ZtJQLyAtelF
-         UQUIrIl71yV022GuuT1E6xGUy+t+oVyAMiZdSQ+8tGXjlt+N1YsFkDDiCDbMmWXgyU1+
-         l27i945EBSHrA9FAuHBBGce4b396Pgr3P7Bx3WQpPKfP413AXbkGgKdzPHR9U1zrypYG
-         fnaXgde36rSOk1pMMZCs1uKJ1+2jSq1350kyPijgP0AFJ5rChSvy7d0yqLWQYpugm4pS
-         7NgA==
-X-Gm-Message-State: AOAM531R+UD9/33CNxT1tEO+91eQmVuMh3tY2J2luO6+/S/sAUaGzqno
-	E6r4WkGp39J4oh+E+a7bp1U=
-X-Google-Smtp-Source: ABdhPJxJVOUrcKHl+WorYlOp4Iita78wcODsaJKmr6mGEycgiO7aojT2yft5FfgZvkQ4i9Ybv9boSQ==
-X-Received: by 2002:a05:600c:4304:: with SMTP id p4mr25569140wme.93.1627453734765;
-        Tue, 27 Jul 2021 23:28:54 -0700 (PDT)
-Message-ID: <YQD5JUAfS954qxkQ@eldamar.lan>
-References: <3576736.366f73iyps@sinistra>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <3576736.366f73iyps@sinistra>
-Cc: developers@prosody.im
-Date: Wed, 28 Jul 2021 08:28:53 +0200
-From: Salvatore Bonaccorso <carnil@debian.org>
+Received: (qmail 30719 invoked from network); 25 Aug 2015 17:26:06 -0000
+In-Reply-To: <trinity-05553c71-f016-46b0-90e9-bc7adeb72553-1440024619340@3capp-mailcom-lxa05>
+Message-Id: <20150825172553.F1D61B2E107@smtpvbsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Tue, 25 Aug 2015 13:25:53 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Subject: Re: [oss-security] Prosody XMPP server advisory 2021-07-22 (Remote
- Information Disclosure) (CVE Request)
-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: CVE request: libgpf: use-after-free vulnerability in Decoder.cpp
+To: pcheng@gmx.com
 
-Hi Jonas,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-On Thu, Jul 22, 2021 at 05:03:36PM +0200, Jonas Schäfer wrote:
-> (NB: [1] suggested that posting to this list is still an acceptable way to 
-> request a CVE, especially if disclosure should happen immediately. Please let 
-> me know if that's not going to work, then I'll fill out the form.)
+> An use-after-free issue in Decoder.cpp was reported to upstream. The
+> problem is due to lack of validation of ColorTableSize.
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=1251749
+> https://sourceforge.net/p/libpgf/code/147/
+> https://sourceforge.net/p/libpgf/code/148/
 
-Can you request a CVE directly through https://cveform.mitre.org/ ?
+We think you mean that a use-after-free can occur when the
+http://sourceforge.net/p/libpgf/code/HEAD/tree/trunk/libpgf/INSTALL
+instructions are followed. Use CVE-2015-6673.
 
-Regards,
-Salvatore
+https://sourceforge.net/p/libpgf/code/147/ seems to be a series of
+changes for handling failed input validation by propagating an error
+status, rather than by using assert calls. Typically these cases do
+not have CVE IDs (see the
+http://openwall.com/lists/oss-security/2014/11/28/8 post). When
+writing a general-purpose open-source library, it is often best not to
+rely on assert calls, because someone may not realize their role, and
+may decide to adapt the library code and integrate it into their own
+build process that uses NDEBUG.
+
+There can be a CVE ID for behavior of a library with NDEBUG if any of
+these are true:
+
+  - the author doesn't provide build instructions
+
+  - the build instructions always or sometimes use NDEBUG
+
+  - there's other information suggesting that NDEBUG is acceptable
+    (e.g., "all of the asserts are for impossible conditions that were
+    only relevant during development")
+
+  - the author intended to support use of NDEBUG
+
+or possibly a few other similar conditions (e.g., end users would
+reasonably guess that NDEBUG was acceptable based on the author's past
+practices or on how the library is used).
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJV3KRBAAoJEL54rhJi8gl58a8P/jBFCHH5anrDKTyqXxxBk/AI
+638SN+O/ve3CssNmXk75E75i5+bZhJvuXpGWDPx3Ew3B5ijlaJ0tzDr5+LXJeo7L
+OcKTTB1FuepD/5BwittRW1HQDS1X83247tbHpKWNqZVWfMaJb92NU0MTyvB8kU/K
+modDPxBoY06+aMJvS+p489BfZYMi97/H1mkwGFEekuFEZsET9PA8l0a/Or3Jcbv+
+ObdpXWkbiOYlrLJPfPBXFwZ3zRlx3PgRpVfqeB60u0PAU4WW+ZkQdN4ZqntqAwet
+6NkfLKcqaMEkcsGNT82lh6eQXbReJS0UWVegE5HJcOu+weAkjjMkxsv6gydeUvEW
+fChjJ3uinsUifb29XXJ1ofROQhQ1kHxOckiXWKh2MY6ThDXbSPVwPvVnFtzHDZuw
+BXomIDpLeXcXnXBwtXx6esXQ1WM82BvwKcvnY5kR1crrM6xXUOOpnjf7fnzL/nWn
+DTZWM6vhmOH21vNX6D7V6oHRkn056R5xxZmpK/MH6p30Dt3hSDUds+BMziC2RerL
+7urAVKCbebZOFU4wIJC+78cqcuh6kTost+8nlsqSr6GSstICbgqxk19D9MWGtzRF
+gFo4z8b/x1709jNMowqnCkLnHnDkDbhw3AJ5Plu05sMoQpyR+QizYKC447lQQwIo
+0rrvxnRcjdvtIgzFQiAk
+=7Eio
+-----END PGP SIGNATURE-----
