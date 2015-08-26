@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1469" "Friday" "4" "August" "2017" "10:51:51" "-0700" "Greg KH" "greg@kroah.com" "<20170804175151.GA13252@kroah.com>" "42" "Re: [oss-security] Reporting and disclosing Linux kernel vulnerabilities" "^Cc:" nil nil "8" "2017080417:51:51" "[oss-security] Reporting and disclosing Linux kernel vulnerabilities" (number mark "        greg@kroah.c Aug  4   42/1469  " thread-indent "\"Re: [oss-security] Reporting and disclosing Linux kernel vulnerabilities\"\n") "<CA+fCnZe3QtwBGRTsL=p9ju-NUkXeQp_1osz0mmZtKFaKUBvY_A@mail.gmail.com>" ("<CA+fCnZe3QtwBGRTsL=p9ju-NUkXeQp_1osz0mmZtKFaKUBvY_A@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5213" "Tuesday" "25" "August" "2015" "22:26:54" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150826022654.C3EC06C0019@smtpvmsrv1.mitre.org>" "114" "[oss-security] Re: CVE request: 2 issues in inspircd" nil nil nil "8" "2015082602:26:54" "[oss-security] Re: CVE request: 2 issues in inspircd" (number mark "        cve-assign@m Aug 25  114/5213  " thread-indent "\"[oss-security] Re: CVE request: 2 issues in inspircd\"\n") "<20150329122044.GX1846@frisco.mine.nu>" ("<20150329122044.GX1846@frisco.mine.nu>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 7383 invoked by uid 550); 4 Aug 2017 17:52:06 -0000
+Received: (qmail 25859 invoked by uid 550); 26 Aug 2015 02:27:07 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,74 +11,127 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 7362 invoked from network); 4 Aug 2017 17:52:05 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to:x-me-sender
-	:x-me-sender:x-sasl-enc:x-sasl-enc; s=fm1; bh=eph6ewepCpCYNyK1hL
-	rAsqPgPGf6Je6sDg7V+u/MwFg=; b=QfA9ufRm1Bdw17OXVQyopLUdqMzNiNXH7h
-	2G9TDjSKqJxaps1UTYHWnj7zc3Wk72GTWEKH7JE6/7VNqXX5i/JKAHhHzYfvtfLL
-	ahwJ9nGzJ8Bvg97XccjrrreZIBuPPIdMVb82NN2Jiue9WCNgfgfjqnJg3MQIMGgG
-	BYhYhEW0MMq8/F4haFPB+r6s+f5276vSqDRUZSE3rb3D59MkYKWme+HqYnEfSG2Z
-	X5zuJmlklejVrmVc1+o3NvnfVCEu1C5mp+9WIZNXD3FOId/j4XH/tGGjHU8lGbt6
-	FAzXi7Ioechdb6m8nPd7DBocPfdHxmCd7UlL038fGPlyvxsZhSrQ==
-X-ME-Sender: <xms:ObSEWfMK1ZC_hCQuCX6lt-M1oWOpmBAiVJEyacLUEsJCjZBwq5mUCA>
-X-Sasl-enc: IW++lD4sVKae9Hnd1R8aHWjsh5ZdJtBoiAafHJW8EUHV 1501869113
-Message-ID: <20170804175151.GA13252@kroah.com>
-References: <CA+fCnZe3QtwBGRTsL=p9ju-NUkXeQp_1osz0mmZtKFaKUBvY_A@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CA+fCnZe3QtwBGRTsL=p9ju-NUkXeQp_1osz0mmZtKFaKUBvY_A@mail.gmail.com>
-User-Agent: Mutt/1.8.3 (2017-05-23)
-Cc: willemdebruijn.kernel@gmail.com, Dmitry Vyukov <dvyukov@google.com>,
-	Kostya Serebryany <kcc@google.com>
-Date: Fri, 4 Aug 2017 10:51:51 -0700
-From: Greg KH <greg@kroah.com>
+Received: (qmail 25838 invoked from network); 26 Aug 2015 02:27:07 -0000
+In-Reply-To: <20150329122044.GX1846@frisco.mine.nu>
+Message-Id: <20150826022654.C3EC06C0019@smtpvmsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Tue, 25 Aug 2015 22:26:54 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Reporting and disclosing Linux kernel
- vulnerabilities
-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: CVE request: 2 issues in inspircd
+To: sdelafond@gmail.com
 
-On Fri, Aug 04, 2017 at 06:59:15PM +0200, Andrey Konovalov wrote:
-> Hi!
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
+
+> the Debian Security Team is requesting 2 CVEs for inspircd.
 > 
-> It's not completely clear to me how to properly report and disclose
-> Linux kernel security issues.
-
-As your document shows, it all depends on what type of issue it is, and
-what _you_ want to get out of it. [1]
-
-> There are a few different parties [1, 2, 3] that need to be informed
-> and coordinated.
-
-Again, it depends on what you want to do :)
-
-> I couldn't find a publicly available actionable list of steps, so I've
-> outlined it as I see it here:
+>   * the fix that was included in Debian for CVE-2012-1836 is incomplete,
+>     and does not solve the original remote code execution problem. See:
 > 
-> https://github.com/google/syzkaller/blob/master/docs/linux_kernel_reporting_bugs.md#reporting-security-bugs
+>       https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=780880#5
 > 
-> Thoughts? Comments?
+>   * a DoS can be triggered by invalid DNS packets. See:
+> 
+>       https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=780880#5
+>       https://github.com/inspircd/inspircd/commit/58c893e834ff20495d007709220881a3ff13f423
 
-That looks like a good start, nice job.
+We think 3 CVE IDs are needed; see below. (Two of them are
+CVE-2012-#### IDs because a 2012 commit message announced the
+vulnerability.)
 
-thanks,
+>> I am an upstream maintainer for InspIRCd. The patch you have for
+>> CVE-2012-1836 (patches/03_CVE-2012-1836.diff) is not the same patch we
+>> released as part of 2.0.7 (there was no 2.0.6) to address the CVE. It
+>> appears to be a a version of this commit:
+>> https://github.com/inspircd/inspircd/commit/9aa28f3730fb3dd69c1e06f78bb2bbc43d36c684.
+>> However this commit was never in a release, and was only in git for
+>> about 6 days (due to someone other than me pulling it in).
 
-greg k-h
+It appears that 9aa28f3730fb3dd69c1e06f78bb2bbc43d36c684 did
+accomplish something. For example, it adds an "if (o +
+header.payload[i] > sizeof(DNSHeader))" test that was not present in
+the 2.0.5 dns.cpp, but is present in the 2.0.7 dns.cpp. Therefore, it
+is necessary to have a new CVE ID associated with the remaining
+original problem.
 
-[1] This matters a lot.  Here's my feeling on the matter:
+>> This commit and your patch do not fix the problem. You can still send
+>> maliciously crafted packets and cause remote code execution. This was
+>> fixed in
+>> https://github.com/inspircd/inspircd/commit/ed28c1ba666b39581adb860bf51cdde43c84cc89,
+>> prior to the 2.0.7 release.
 
-    If you just want the bug fixed so you can get on with whatever else
-    you were doing, just notify security@kernel.org, the bug will get
-    fixed and pushed out to all kernel.org trees as soon as possible.
+Because the ed28c1ba666b39581adb860bf51cdde43c84cc89 patch is:
 
-    If you think it affects users of the "traditional" Linux distros,
-    then contact distros and hope someone contacts security@k.o later to
-    get the issue resolved for everyone else.
+  -  if (length - i < 10)
+  +  if (static_cast<int>(length - i) < 10)
 
-    If it affects only an odd one-off or embedded device that will never
-    get updated, again, security@k.o and oss-security to get some public
-    leverage to try to get the vendor to fix the issue.
+this implies that the original problem was in handling the case where
+i is greater than length, and thus a "length - i < 10" comparison is
+something like a "4000000000 < 10" comparison. The original patch
+attempted to fix this with:
 
-    If you don't really care what happens to anyone, oss-security works :)
+  -  if (length - i < 10)
+  +  if ((unsigned) length - i < 10)
+
+which doesn't accomplish anything. Use CVE-2012-6696 for this
+vulnerability involving mishandling of unsigned values.
+
+
+>> Furthermore, your patch introduces a buffer underflow where it has
+>> "i =- 12" and not "i -= 12". This causes it to start reading from
+>> before the packet's buffer. It is unclear to me what this can cause.
+
+We disagree with this analysis. The Debian patch in question is in the
+http://anonscm.debian.org/cgit/collab-maint/inspircd.git/commit/?id=c9c6b10b9f1489d3c9fb3929dfe73c26ffec89a4
+commit from 2012-04-09. Here, debian/patches/03_CVE-2012-1836.diff
+adds the problematic "i =- 12" line but also changes the data type of
+i from int to unsigned. Thus, "i =- 12" sets i to a value greater than
+4 billion, the "i < length" test will be false, and the while loop
+will exit. As far as we can tell, nothing is read from outside a
+buffer. We think the general outcome is that decompression for CNAME
+and PTR records results in safely determining the wrong answer. We
+didn't look at what types of wrong answers can occur: possibly the
+result can be either an empty string or a truncated name. Our guess is
+that this is security relevant because IRC daemons can rely on DNS
+lookups for access control, e.g., to support
+
+  /MODE #channel +b *!*@example.com
+
+but we didn't look at the specific role of dns.cpp in InspIRCd. In any
+case, we want to assign a CVE ID for the code problem of "i =- 12"
+where "i -= 12" was intended: use CVE-2015-6674. Again, this has a
+directly resultant issue in which there's misuse of an unsigned
+variable, and (possibly?) an indirectly resultant issue of ban bypass.
+
+
+>> Additionally, at the same time I commited
+>> 58c893e834ff20495d007709220881a3ff13f423 to prevent malicious packets
+>> from causing InspIRCd to infinite loop. This is not a part of the CVE
+>> as it does not allow remote code execution, but is still a critical
+>> problem due to the potential for denial of service.
+
+Use CVE-2012-6697 for this infinite-loop issue.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJV3SINAAoJEL54rhJi8gl5mcoQAKVaZtXyEh0zbdf3LeEPvZ6p
+e5ptlLFvcCqcX9eq9WTPA0Bq1n1+SzWafGhIBpr7SW0P6PkWw8NYmAP0rJPL7aD7
+CIFEo2a8GcvPptaB4lzTZlxYogBHvIDiuDIpVi02yJlHCQJSLjN2ckOFWQy5WBD7
+GT7vCgq4VQxC+u6O87Roj13yXaEaDdwBXDJH2v8JTKR1/yyJ8SexHjXDXbsKfyum
++0SfwUED4BVtPw1gpjgWdtlXyPpTi16/uSofUOWZe6ohCzBE2yB74E1dfbu/wOMK
+YidVNjfiQT7svXdlQEmWSe64dCsEWMKLlCqEZ3LTSwfYadXKfMMzZUFfHGLNGpRV
+qQB6RuZIMc8+tkuQfKL4iIAE7FMgTMQqurbURxJDwoDCEpI5yqeel/HWYKn1kkvq
+Hm5kux9wwU0vsTJiPbJKijy0OejC5esHGMTTQNhQR9Cn6X3dHugD1LoG8nuJ59wb
+glzRlj3yZgntZX8MnoumrdV8hfWwxJ2iH29rJ4KqrtgAq5zQ7auB4fb6Lp3SG6du
+qvQcEXRslXrItgMOo9DYhB2szIhPjopOpD40Q+SmRPeCRVdBUoZ944mnYpi4liWu
+VRORW7Ztg5nOnvxeQGYa543zv4GMQx0ehHVoOhJjZyvAvIphVBncsR2riN4qR2pD
+09GUl6VPwiWtDD8wHt+U
+=cRan
+-----END PGP SIGNATURE-----
