@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6747" "Monday" "1" "February" "2016" "08:16:36" "+0100" "Daniel Stenberg" "daniel@haxx.se" "<alpine.DEB.2.20.1602010816060.21513@tvnag.unkk.fr>" "177" "[oss-security] curl: remote file name path traversal in curl tool for Windows" nil nil nil "2" "2016020107:16:36" "[oss-security] curl: remote file name path traversal in curl tool for Windows" (number mark "U       daniel@haxx. Feb  1  177/6747  " thread-indent "\"[oss-security] curl: remote file name path traversal in curl tool for Windows\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1047" "Wednesday" "26" "August" "2015" "14:31:00" "+0530" "Dis close" "disclose@cybersecurityworks.com" "<CAMWaY3N6VeFvW4A+ZPqDkMTy-vkP9XgTka6pfj+9BSjLfs+9rA@mail.gmail.com>" "35" "[oss-security] CVE Request : Serenity Media Player Buffer Overflow" nil nil nil "8" "2015082609:01:00" "[oss-security] CVE Request : Serenity Media Player Buffer Overflow" (number mark "U       disclose@cyb Aug 26   35/1047  " thread-indent "\"[oss-security] CVE Request : Serenity Media Player Buffer Overflow\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 20407 invoked by uid 550); 1 Feb 2016 07:18:33 -0000
+Received: (qmail 9383 invoked by uid 550); 26 Aug 2015 10:20:35 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,193 +12,62 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13668 invoked from network); 1 Feb 2016 07:16:48 -0000
-X-Authentication-Warning: giant.haxx.se: dast owned process doing -bs
-Date: Mon, 1 Feb 2016 08:16:36 +0100 (CET)
-From: Daniel Stenberg <daniel@haxx.se>
-X-X-Sender: dast@giant.haxx.se
-To: oss-security@lists.openwall.com
-Message-ID: <alpine.DEB.2.20.1602010816060.21513@tvnag.unkk.fr>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-fromdanielhimself: yes
+Received: (qmail 29964 invoked from network); 26 Aug 2015 09:01:12 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to:cc
+         :content-type;
+        bh=OWNcv8RL0zEx+AVgG3W5anxS9WZKhvIJSrh32FaLNkE=;
+        b=PMS7Va1Kr7hxbhUw5Sqxxzjkhg/mvkK6KLC4jbooe5IOdIyDrfFt2HvaelN/dD1b3w
+         KzLMae+Xi/PMwhKtatj5g2EEqvhRbXFpSfC9uLd8craJ2wKEpz6EwWhuKxqgYG7yMfPA
+         0Dig+/lI+DDcpNS4hMi1+OQ4sbJ4CAjIXFhqFMUwk2ltT+tnQfoBHAUgQnF+9Sa+S0dI
+         /caCcPnA3OkngtzvvxT11eA190iTXGDzdJgbanmWW9KDOrU4NzCySZORxIzMgq50PoTD
+         Lcq+W2/QeuYjTq1pepdG9AD+2PjhbOiC9uI20QFDzONrwFrbAEmAMTxlTw4SgT1LXfle
+         gTBg==
+X-Gm-Message-State: ALoCoQluftQDF+C4r8vnJdcIIIaFiILfV8BTPqAXE1MAUI9lKoBYII5bvzDv1ZP6gvA4Cs/WOYz5
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-Subject: [oss-security] curl: remote file name path traversal in curl tool for Windows
+X-Received: by 10.107.37.12 with SMTP id l12mr1938521iol.92.1440579660279;
+ Wed, 26 Aug 2015 02:01:00 -0700 (PDT)
+Date: Wed, 26 Aug 2015 14:31:00 +0530
+Message-ID: <CAMWaY3N6VeFvW4A+ZPqDkMTy-vkP9XgTka6pfj+9BSjLfs+9rA@mail.gmail.com>
+From: Dis close <disclose@cybersecurityworks.com>
+To: oss-security@lists.openwall.com
+Cc: cve-assign@mitre.org
+Content-Type: multipart/alternative; boundary=001a1141b24eec0902051e331698
+Subject: [oss-security] CVE Request : Serenity Media Player Buffer Overflow
 
-remote file name path traversal in curl tool for Windows
-========================================================
+--001a1141b24eec0902051e331698
+Content-Type: text/plain; charset=UTF-8
 
-Project cURL Security Advisory, January 27th 2016 -
-[Permalink](http://curl.haxx.se/docs/adv_20160127B.html)
+Hi List:
 
-VULNERABILITY
--------------
 
-curl does not sanitize colons in a remote file name that is used as the local
-file name. This may lead to a vulnerability on systems where the colon is a
-special path character. Currently Windows is the only OS where this
-vulnerability applies.
+This issue was disclosed and was acknowledged as public disclosure on
+http://openwall.com/lists/oss-security/2015/08/24/2
 
-curl offers command line options --remote-name (also usable as -O) and
---remote-header-name (also usable as -J). When both of those options are used
-together (-OJ) and the server provides a remote file name for the content,
-curl will write its output to that server-provided file name, as long as that
-file does not already exist. If it does exist curl will fail to write.
+We request for a CVE on the below mentioned vulnerability.
 
-If both options are used together (-OJ) but the server does not provide a
-remote file name, or if -O is used without -J, curl will write output to a
-file name based solely on the remote file name in the URL string provided by
-the user, regardless of whether or not that file already exists.
+Below is the detailed information about the exploit code and POC video.
 
-In either case curl does not sanitize colons in the file name. As a result in
-Windows it is possible and unintended behavior for curl to write to a file in
-the working directory of a drive that is not the current drive (ie outside the
-current working directory), and also possible to write to a file's alternate
-data stream.
+Exploit code and stack trace:
+https://github.com/cybersecurityworks/Diclosed/blob/master/Serenity%20audio%20Player%203.2.3%20SEH%20Buffer%20Overflow
+<https://www.google.com/url?q=https%3A%2F%2Fgithub.com%2Fcybersecurityworks%2FDiclosed%2Fblob%2Fmaster%2FSerenity%2520audio%2520Player%25203.2.3%2520SEH%2520Buffer%2520Overflow&sa=D&sntz=1&usg=AFQjCNF6zuK_VDbA7UI72gJoxHFlzV7LpA>
 
-For example if curl -OJ and the server sends filename=f:foo curl will
-incorrectly write foo to the working directory for drive F even if drive F
-isn't the current drive. For a more detailed explanation see the 'MORE
-BACKGROUND AND EXAMPLE' section at the end of this notice.
 
-Though no known exploit is available for this issue, writing one would be
-undemanding and could be serious depending on the name of the file and where
-it ends up being written.
+Exploit Video POC
+https://youtu.be/ZMC-URZagMg
 
-INFO
-----
 
-This flaw only affects the curl command line tool as this is a feature not
-present or provided by libcurl.
+Note : Vulnerability was discovered by below mentioned person and
+organization. Credit for this vulnerability is requested for following :
 
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2016-0754 to this issue.
+*Discover Credit:*
+*Arjun Basnet from Cyber Security Works Pvt Ltd*
 
-AFFECTED VERSIONS
------------------
 
-In the case of using a remote file name provided by the user (-O without -J),
-the feature has existed since inception.
+*----*
+Thanks in advance
 
-- Affected versions (-O): curl <= 7.46.0
-- Not affected versions (-O): curl >= 7.47.0
+Team CSW
 
-In the case of using a remote file name provided by the server (-OJ), the
-feature was added in 7.20.0 and didn't exist before then.
-
-- Affected versions (-OJ): curl 7.20.0 to and including 7.46.0
-- Not affected versions (-OJ): curl < 7.20.0 and curl >= 7.47.0
-
-THE SOLUTION
-------------
-
-Starting in curl 7.47.0 the curl tool in Windows will replace all colons in a
-remote file name with underscores. For example if `f:foo::$DATA` is the remote
-file name it will be sanitized as `f_foo__$DATA` .
-
-A patch is available at:
-
-     http://curl.haxx.se/CVE-2016-0754.patch
-
-Exercise judicious use of the -J option. The -J option when combined with -O
-lets the server choose the file name. Do you trust the server you are using
-the -J option on? Is your connection to the server vulnerable to a
-man-in-the-middle attack? Have you enabled location redirects and the server
-may send you somewhere untrustworthy? In any of these cases, even with this
-vulnerability fixed know that if you use the -J option it will still be
-possible for a rogue server to send you the name of a DLL or other file that
-could possibly be loaded automatically by Windows or some third party
-software.
-
-RECOMMENDATIONS
----------------
-
-We suggest you take one of the following actions immediately, in order of
-preference:
-
-  A - Upgrade curl and libcurl to version 7.47.0.
-
-  B - Apply the patch to your version and rebuild.
-
-  C - If you cannot do (A) or (B) it is suggested you do not use -J on Windows.
-      If you choose to continue to use -O without -J it is your responsibility
-      to check that the URL you pass does not have a remote file name that could
-      be exploited.
-
-Regardless of which action you take, exercise judicious use of the -J option as
-described in THE SOLUTION.
-
-TIME LINE
----------
-
-It was first reported to the curl project on November 30 2015. We contacted
-distros@openwall on January 21 2016.
-
-curl 7.47.0 was released on January 27 2016, coordinated with the publication
-of this advisory.
-
-CREDITS
--------
-
-Reported and patched by Ray Satiro (Jay).
-
-Thanks a lot!
-
-MORE BACKGROUND AND EXAMPLE
----------------------------
-
-In Windows if a colon is used to specify a drive letter for a path and there
-is a slash or backslash (hereafter path separator) that proceeds the colon it
-means start from the root of the drive, but if that slash is omitted it means
-start from the current working directory of the drive.
-
-  - C:\foo => Windows looks for foo in the root directory of drive C.
-  - C:foo => Windows looks for foo in the working directory of drive C.
-
----
-
-A process in Windows on its creation may inherit a list of drives and their
-working directories from its parent, and one of those is the current working
-directory.
-
-For example a command prompt is open and has these working directories:
-
-  - Drive C, Path \bar\baz\
-  - Drive D, Path \
-  - Drive E, Path \qux\    <-- Current
-  - Drive F, Path \
-
-Assume other drives were not accessed which means they default to their root.
-
-A user running curl from that command prompt would expect that their file will
-be output to the current working directory, E:\qux\ in this example. However
-that may not happen if there is a colon in the filename.
-
-curl has a function which will strip the path to get the file name by removing
-the last path separator and everything that precedes it. In the case of a colon
-without a path separator that comes after it, it is not removed from the file
-name.
-
-Following this example:
-
-In the case of -O without -J recall that the filename is parsed from the user-
-supplied URL, and is written regardless of whether the file already exists.
-
-`curl -O http://somewhere/f:foo` => curl writes output to f:\foo
-
-`curl -O http://somewhere/c:foo` => curl writes output to c:\bar\baz\foo
-
-In the case of -O with -J recall that the file name is parsed from the
-server's "Content-Disposition:" header if one is given (eg
-`Content-Disposition: attachment; filename=abc`) and in that case the file is
-written only if it does not already exist.
-
-`curl -OJ http://somewhere/somefile` => Server sends filename=f:foo
-                                         curl writes output to f:\foo
-
-`curl -OJ http://somewhere/somefile` => Server sends filename=c:foo
-                                         curl writes output to c:\bar\baz\foo
-
--- 
-
-  / daniel.haxx.se
+--001a1141b24eec0902051e331698--
