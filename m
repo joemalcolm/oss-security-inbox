@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["755" "Wednesday" "24" "February" "2016" "10:26:40" "-0800" "Alan Coopersmith" "alan.coopersmith@oracle.com" "<56CDF5E0.7080402@oracle.com>" "21" "Re: [oss-security] [Pixman] create_bits(): Cast the result of height * stride to size_t" "^CC:" nil nil "2" "2016022418:26:40" "[oss-security] [Pixman] create_bits(): Cast the result of height * stride to size_t" (number mark "        alan.coopers Feb 24   21/755   " thread-indent "\"Re: [oss-security] [Pixman] create_bits(): Cast the result of height * stride to size_t\"\n") "<CACn5sdRX-tyOuVDXfTeFXfen6hq54e_zMVhsd5_TYW1XsHHk+w@mail.gmail.com>" ("<CACn5sdRX-tyOuVDXfTeFXfen6hq54e_zMVhsd5_TYW1XsHHk+w@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6468" "Thursday" "27" "August" "2015" "15:33:51" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150827193351.35E1E52E5B7@smtpvbsrv1.mitre.org>" "146" "[oss-security] Re: CVE Request: MediaWiki 1.25.2, 1.24.3, 1.23.10" nil nil nil "8" "2015082719:33:51" "[oss-security] Re: CVE Request: MediaWiki 1.25.2, 1.24.3, 1.23.10" (number mark "U       cve-assign@m Aug 27  146/6468  " thread-indent "\"[oss-security] Re: CVE Request: MediaWiki 1.25.2, 1.24.3, 1.23.10\"\n") "<CAKcmtDz8vumgDXa8Y=bZiEEKyMLET5VDPNSgLk+mo0JsaqY5xg@mail.gmail.com>" ("<CAKcmtDz8vumgDXa8Y=bZiEEKyMLET5VDPNSgLk+mo0JsaqY5xg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 15997 invoked by uid 550); 25 Feb 2016 12:44:23 -0000
+Received: (qmail 9991 invoked by uid 550); 27 Aug 2015 19:34:03 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,41 +11,159 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 15972 invoked from network); 25 Feb 2016 12:44:21 -0000
-Message-ID: <56CDF5E0.7080402@oracle.com>
-User-Agent: Mozilla/5.0 (X11; SunOS i86pc; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
-MIME-Version: 1.0
-References: <CACn5sdRX-tyOuVDXfTeFXfen6hq54e_zMVhsd5_TYW1XsHHk+w@mail.gmail.com>
-In-Reply-To: <CACn5sdRX-tyOuVDXfTeFXfen6hq54e_zMVhsd5_TYW1XsHHk+w@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Source-IP: aserp1040.oracle.com [141.146.126.69]
-CC: "X.Org Security Team" <xorg-security@lists.x.org>
-Date: Wed, 24 Feb 2016 10:26:40 -0800
-From: Alan Coopersmith <alan.coopersmith@oracle.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] [Pixman] create_bits(): Cast the result of height
- * stride to size_t
-To: oss-security@lists.openwall.com
+Received: (qmail 9964 invoked from network); 27 Aug 2015 19:34:03 -0000
+From: cve-assign@mitre.org
+To: csteipp@wikimedia.org
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <CAKcmtDz8vumgDXa8Y=bZiEEKyMLET5VDPNSgLk+mo0JsaqY5xg@mail.gmail.com>
+Message-Id: <20150827193351.35E1E52E5B7@smtpvbsrv1.mitre.org>
+Date: Thu, 27 Aug 2015 15:33:51 -0400 (EDT)
+Subject: [oss-security] Re: CVE Request: MediaWiki 1.25.2, 1.24.3, 1.23.10
 
-On 02/24/16 04:10 AM, Gustavo Grieco wrote:
->   Hi,
->
-> There is an (old) integer overflow in create_bits in the pixman library.
-> Patch and details are available here:
->
-> https://web.archive.org/web/20141227044037/http://lists.freedesktop.org/archives/pixman/2014-April/003244.html
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-The quoted patch was applied to the master branch of the pixman git repo as:
+> * Internal review discovered that Special:DeletedContributions did not
+> properly protect the IP of autoblocked users. This fix makes the
+> functionality of Special:DeletedContributions consistent with
+> Special:Contributions and Special:BlockList.
+> <https://phabricator.wikimedia.org/T106893>
 
-https://cgit.freedesktop.org/pixman/commit/?id=857e40f3d2bc2cfb714913e0cd7e6184cf69aca3
+The DESCRIPTION section of T106893 refers to a similar issue that
+existed in other code until 2013. As far as we can tell, both issues
+have security relevance for the same reason (although the first issue
+was debated at the time). So, we think it will be best to use
+CVE-2015-6727 for the issue fixed in the
+https://github.com/wikimedia/mediawiki/commit/5faabfa1bbf65536ea36108887040198afcb3c82
+commit, and CVE-2013-7444 for the issue fixed in the
+https://github.com/wikimedia/mediawiki/commit/dc2966bd05b69321300c63fd0bd78e7c78ecea6e
+commit.
 
-and to the pixman-0.32 branch as:
 
-https://cgit.freedesktop.org/pixman/commit/?id=50d7b5fa8ea2ae119f35c20ab0dd0413d5103cbb
+> * Internal review discovered that watchlist anti-csrf tokens were not being
+> compared in constant time, which could allow various timing attacks. This
+> could allow an attacker to modify a user's watchlist via csrf.
+> <https://phabricator.wikimedia.org/T94116>
 
-It is included in pixman 0.32.6 and later releases.
+Use CVE-2015-6728.
 
--- 
-	-Alan Coopersmith-              alan.coopersmith@oracle.com
-	 Oracle Solaris Engineering - http://blogs.oracle.com/alanc
+
+> * John Menerick reported that MediaWiki's thumb.php failed to sanitize
+> various error messages, resulting in xss.
+> <https://phabricator.wikimedia.org/T97391>
+
+Based on the T97391 "Apr 28 2015, 5:58 PM" comment describing both
+"Confirmed the rel404 issue" and "ForeignAPI images also have an xss"
+vectors, it appears that the original John Menerick report was about
+"unvalidated or sanitized parameters are pulled from the client's
+request" and that the f parameter wasn't necessarily known to be
+exploitable when that report was written. (Maybe this isn't accurate
+because the "attached image" in the original report is apparently
+unavailable.) In any case, use CVE-2015-6729 for the John Menerick XSS
+report, and use CVE-2015-6730 for the internal XSS discoveries.
+
+
+> * Extension:SemanticForms - MediaWiki user Grunny discovered multiple
+> reflected xss vectors in SemanticForms. Further internal review discovered
+> and fixed other reflected and stored xss vectors.
+> <https://phabricator.wikimedia.org/T103391>
+> <https://phabricator.wikimedia.org/T103765>
+> <https://phabricator.wikimedia.org/T103761>
+
+Use CVE-2015-6731 for the Grunny XSS report, and use CVE-2015-6732 for
+the internal XSS discoveries.
+
+There is currently no CVE ID for the "The Special:CreateForm post to
+add the template doesn't check the csrf token, so it can be submitted
+for a user via csrf" statement in the T103761 DESCRIPTION section. We
+aren't sure about this, but we think that a CSRF token check there is
+not thought to be required. If a CSRF token check there is thought to
+be required, then another CVE ID can be assigned.
+
+
+> * Extension:SyntaxHighlight_GeSHi - xss and potential DoS vectors. Internal
+> review discovered that the contib directory for GeSHi was re-included in
+> MediaWiki 1.25. Some scripts could be potentially be used for DoS, and DAU
+> Huy Ngoc discovered an xss vector. All contrib scripts have been removed.
+> <https://phabricator.wikimedia.org/T108198>
+
+There are multiple options with which this topic could be covered in
+CVE, e.g.,
+
+  1. It is a single integration-policy error. In other words, the
+     policy is that Extension:SyntaxHighlight_GeSHi may have an update
+     at any time from the upstream GeSHi source code, but the contrib
+     directory must be excluded. A person who did an update did not
+     follow that policy.
+
+  2. The problems with using the upstream contrib directory within
+     MediaWiki need to be considered individually.
+
+We're using option 2.
+
+"Some scripts could be potentially be used for DoS" is not really
+enough information, because distinct types of DoS can't always be
+combined into one CVE ID. We think the only known DoS problem is
+resource consumption from otherwise correct algorithms, as mentioned
+at http://qbnz.com/highlighter/ with "GeSHi aims to do this all as
+quickly as possible. Many customisable features of GeSHi facilitate
+speed increases, and you can easily find a balance between the amount
+of highlighting done and the speed in which it is done." Use
+CVE-2015-6733 for this type of resource-consumption DoS, which has
+security relevance within the MediaWiki product.
+
+Use CVE-2015-6734 for the cssgen.php keywords-1 XSS. (Although not
+directly related to CVE assignment, it's possible that that XSS hasn't
+been reported upstream because it's not listed on the
+https://github.com/GeSHi/geshi-1.0/commits/master/src/contrib/cssgen.php
+page.)
+
+
+> * Extension:TimedMediaHandler - User:McZusatz reported that resetting
+> transcodes deleted the transcode without creating a new one, which could be
+> used for vandalism or potentially DoS.
+> <https://phabricator.wikimedia.org/T100211>
+
+Use CVE-2015-6735.
+
+
+> * Extension:Quiz - Internal review discovered that Quiz did not properly
+> escape regex metacharacters in a user controlled regular expression,
+> enabling a DoS vector.
+> <https://phabricator.wikimedia.org/T97083>
+
+Use CVE-2015-6736.
+
+
+> * Extension:Widgets - MediaWiki developer Majr reported a potential HTML
+> injection (xss) vector.
+> <https://phabricator.wikimedia.org/T88964>
+
+Use CVE-2015-6737. We think that the primary vulnerability is that the
+approach to integrity protection is wrong, and that the HTML injection
+is resultant from this. In any case, we think that only one CVE ID is
+needed for T88964.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJV32WdAAoJEL54rhJi8gl5KxcQAKlVrS3ikXXKM8qxnNFpEJUC
+hP39Qbz6FY6mvPlXw199gZsgoIGMBfjmg4+NFwH3W+gksbpieUWcd71Mc5mGb0dY
+to1w7kFiDsgroearzKWQq96N+qBoF+erQtYFIfEXhJGi4DTOyTuXor0W4YfcFfPT
++VTp3RiyB4l6njQ7oxEBF0fvmNRdJX5fqvUU/VxEjhWLqjvWZmcC+lNRIXaat4sA
+XqDa6ktW/rCdYDMZLsnMibqx8R6Z8nI7PFAJoijFFwfzREMAnkEoPDzttM4Q2g0q
+IpEqbhrxJUFXllIUOcfmAz3f4zVvaMCJpJeU2e36zwQ5tpOEern2/TJM0OkNHJrL
+nwaatdyYXJd8oFrId0lUlSa66BXqmakOu09qUrF06p1CtLPQd4YSufdMNbY0g6aL
+28rP/Y/pd0KV770MLux/FfeDdNkkbYCSX+kWq0xJHepOTaqrpd9t8nlFzK9SB3D9
+bylKhU0JSG3H5Z4vTMIVbJU2tI6aPJ0tIfYJ46UChzbhyDlHUrqkUiCUP76gGGR/
+Iu2xAfXOOtaLXJpTWKElX+NZyYfzoULxklTImdF0FpS8sqlX2LpA/YuMWgcwcD1z
+a4os1wcHJhPgbG6vBHp7uYoav0e1iW7nTbjCTpZi/sGYp7KQpHsgYsNhNPyydiSz
+Z9r2ydLeSD5uag51jEtH
+=vozk
+-----END PGP SIGNATURE-----
