@@ -1,4 +1,9 @@
-Received: (qmail 23757 invoked by uid 550); 21 Apr 2024 12:00:31 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1107" "Friday" "28" "August" "2015" "05:32:36" "+0200" "pcheng pcheng" "pcheng@gmx.com" "<trinity-ddfb0472-ffff-435b-9f9b-606ca08a9c4a-1440732755137@3capp-mailcom-lxa06>" "25" "[oss-security] CVE-2015-0852 [FreeImage] Integer overflow in PluginPCX.cpp" nil nil nil "8" "2015082803:32:36" "[oss-security] CVE-2015-0852 [FreeImage] Integer overflow in PluginPCX.cpp" (number mark "U       pcheng@gmx.c Aug 28   25/1107  " thread-indent "\"[oss-security] CVE-2015-0852 [FreeImage] Integer overflow in PluginPCX.cpp\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 12069 invoked by uid 550); 28 Aug 2015 03:33:08 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,89 +12,56 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 23739 invoked from network); 21 Apr 2024 12:00:31 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=debian.org;
-	s=smtpauto.stravinsky; h=X-Debian-User:In-Reply-To:Content-Type:MIME-Version:
-	References:Message-ID:Subject:To:From:Date:Reply-To:Cc:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=XcBg/NEYIVpzeUuHSCkI2KFQTxQymYKwbrd6VxYdb2U=; b=WKihNCLYSOq2NjSNMZ4FfHv6Ku
-	HdHkXf6kVuD4eVC3RoSW9vRINuW+8nBCfXpXs9eyy6dQCF4HCL73jBhqgm0UNDxk+e68jTZEFkfxc
-	UhX3Xdr7qC5kNkiDxjNXMvJLUiQ/ql3fZAZvDg4D4/DZXsT9mWGfz6I9aPlgmGiFKqBJ1s2byu2FX
-	9ekxspdwHa+DV3+rx5tPFTGXN7uh2tyOwtWuCtNNL089c+ytlhype1UsNqqxwCxC+je3Pc1PbH4/4
-	q0SuLrBtDB9wnW//h8Cm6r2GtneZcH7p3tRj1u7Eq7LLLy4L9zNMhN1QBhYs8oeafrqrrRXJUawNa
-	St5yvawg==;
-Date: Sun, 21 Apr 2024 13:00:18 +0100
-From: Simon McVittie <smcv@debian.org>
-To: oss-security@lists.openwall.com
-Message-ID: <ZiT_0pj-sgTHeCzs@remnant.pseudorandom.co.uk>
-References: <20240414190855.GA12716@openwall.com>
- <354b913bc1c154c1e3a2fc34ed8ed6b0d4641f11.camel@canonical.com>
- <20240419154435.GA7046@openwall.com>
- <ZiKo7shztRpgvAIC@remnant.pseudorandom.co.uk>
- <20240420181211.GA12463@openwall.com>
- <s7YhmQrnIRbmomFiJi0MJSYAPjcHLyd18qqgj0vxVww8pXjjmpmzh_TKTfQe-aLvqDRRXaVowt__uXBXONKKDA48d1uKDyeEuSiH0yM0uUI=@protonmail.ch>
+Received: (qmail 11987 invoked from network); 28 Aug 2015 03:33:00 -0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <s7YhmQrnIRbmomFiJi0MJSYAPjcHLyd18qqgj0vxVww8pXjjmpmzh_TKTfQe-aLvqDRRXaVowt__uXBXONKKDA48d1uKDyeEuSiH0yM0uUI=@protonmail.ch>
-X-Debian-User: smcv
-Subject: Re: [oss-security] Linux: Disabling network namespaces
+Message-ID: <trinity-ddfb0472-ffff-435b-9f9b-606ca08a9c4a-1440732755137@3capp-mailcom-lxa06>
+From: "pcheng pcheng" <pcheng@gmx.com>
+To: oss-security@lists.openwall.com
+Cc: carnil@debian.org, ghedo@debian.org
+Content-Type: text/plain; charset=UTF-8
+Date: Fri, 28 Aug 2015 05:32:36 +0200
+Importance: normal
+Sensitivity: Normal
+X-Priority: 3
+X-Provags-ID: V03:K0:zc2ESDB+I8oZaOOLISEbKI4iP7Z1q2Jyw0c+92YMdA0
+ KPH+J0XLOzHfjHL3yDAHtr4nkRdBylGc+j5ddFyA+d33eeUimU
+ w5Jur89KOAuPLpVEklUhTbqV344eJrQ2E7dc3mFgeWwWMs6fBd
+ LsUBfXPnN6s2q76psAPB/KwckOEb5btdFlFMu3JdacB+3nBe+d
+ +Vw1Bnked/u9f/I0qcOoPgZIbffqC8Al2vVisvtLxBaST0kK/G
+ exkgtZXbFWZ1NGwhFBvSkYCXNYi9c+Dq1P/Yw9sEWdMQWkfWGV
+ BmtxDWXoWsuQA4Lzm8X9tRoVVaY
+X-UI-Out-Filterresults: notjunk:1;V01:K0:kRdYH7s3u5I=:7jP1rEPacVNCYs/71+2l22
+ ++46c+TCSLYLMzgI5Y3tLDCj9QcM0zT7AvjXYlBWmAwoVDkJ6UvmG0zsWs3DcEDw04JET1c0l
+ q7wY7bpoql5UBa4oy7wS4azGI2bBpzLQjwj55xrZ/SIFF/09V/b5JwrZJyltTESXOrAlV8TDc
+ bK4UPzyT0So2END1/1KD7wKG8tl6RKxVCYiTpJqHZXL/h/A2/qQ19U7/qnqJCtXwl1tjtyTG+
+ M3Q9kLP2xELKXNlatyjELqr4OLxYf89HCQMcEDUUFahuaccm4+sizdsZcekhLnPnc84YPIVe/
+ XBiV2/wF62kHymSYfEYJN593awSdhzBY8AaoN5X+ytSNFrIPh08nrIICLo5a+bd1RbCnEhOGe
+ d+kUie1MVSYbG925nVnxAIlETtDEra3V6ASJLJFvuYlpwJVVcLHEJT+6J2al5t7h+WWmJizty
+ XvTUSd/jig==
+Subject: [oss-security] CVE-2015-0852 [FreeImage] Integer overflow in PluginPCX.cpp
 
-On Sat, 20 Apr 2024 at 21:33:07 +0000, Jordan Glover wrote:
-> On Saturday, April 20th, 2024 at 8:12 PM, Solar Designer <solar@openwall.com> wrote:
-> > Does bubblewrap maybe already relinquish also the ability to create
-> > nested namespaces, which it probably could do with seccomp?
+The following bug was reported to upstream and Debian security team. CVE-2015-0852 was assigned by Debian security team.
 
-bubblewrap doesn't rely on seccomp itself, because linking to libseccomp
-and compiling seccomp programs would be a concerning amount of attack
-surface for a program that is optionally setuid root, but it has options
-that can be used to make it receive a precompiled seccomp program as a
-binary blob and submit it to the kernel. The intention is that a larger
-framework like Flatpak, WebKitGTK or similar, which isn't setuid, can
-supply a seccomp program if it wants to.
+Name : FreeImage
+Affected Version: <= 3.17.0
+URL : http://freeimage.sourceforge.net/
 
-The design of bubblewrap is that it's a toolkit for making sandboxes,
-but is not, itself, a ready-made sandboxing solution - so the sandbox can
-be secure but limited, insecure but versatile, or anywhere in between,
-and larger frameworks like Flatpak are responsible for designing their
-own security model and constructing a bubblewrap command-line that will
-implement it.
+Description :
+An integer overflow issue in the FreeImage project was reported and fixed recently.
+Upstream fix: Revision 1.18 http://freeimage.cvs.sourceforge.net/viewvc/freeimage/FreeImage/Source/FreeImage/PluginPCX.cpp?view=log&pathrev=MAIN
 
-> bubblwrap has --disable-userns option
-...
-> Flatpak uses this (or seccomp filter) to block nested namespaces
+Details:
 
-Development versions of Flatpak (1.15.6+) use both seccomp and
---disable-userns: possibly redundant, but it's better to be safe,
-and Flatpak wants to disable some other syscalls with seccomp anyway
-(for example access to the kernel keyring).
+The PluginPCX.cpp file(version 3.17.0) has:
 
-Older versions of Flatpak completely relied on seccomp, because
---disable-userns is a recent addition to bubblewrap.
+371 unsigned width = header.window[2] - header.window[0] + 1;
+372 unsigned height = header.window[3] - header.window[1] + 1;
+373 unsigned bitcount = header.bpp * header.planes;
 
-bubblewrap also uses PR_SET_NO_NEW_PRIVS (this is hard-coded and not
-optional), but creating a new user namespace in which you have all
-capabilities is not considered to be a new privilege for the purposes
-of that prctl, so that doesn't help us here.
+However, it's possible that header.window[2] < header.window[0], and also header.window[3] < header.window[1]. In this two cases, width and height can be overflowed. And this can lead further issue in the rest of the code. Take the following lines for example:
 
-> For this reason firefox own sandbox doesn't use namespaces in flatpak
+568 for (x = 0; x < width; x++) {
+569 bits[x * 3 + FI_RGBA_RED] = pline[x];
+570 }
 
-Flatpak does have a feature (the somewhat misleadingly named
-"sub-sandboxes") where a sandboxed program can ask Flatpak to create a
-new user namespace on its behalf, in parallel with the one it uses for
-the original program. This can either be done with the same restrictions
-as the original program and therefore no effective security boundary
-between the original program and the sub-sandbox (Steam does this, to
-run parts of itself with a different /usr), or with tighter restrictions
-(the original purpose of this feature).
-
-But, as noted on the Firefox bug, this implies some IPC, a new user
-namespace and an execve(), so it's higher-overhead than just fork()ing:
-if the original program wants to share state with the new program,
-it needs to do that explicitly, perhaps by using shared memory or an
-AF_UNIX-based protocol like D-Bus. A stronger security boundary means
-more effort needs to be put into crossing that boundary safely and with
-the desired performance characteristics, so t's a trade-off with no
-single correct answer.
-
-    smcv
+The write operation on buffer bits can help an attacker to corrupt the heap.
