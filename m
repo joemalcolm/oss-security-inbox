@@ -1,4 +1,9 @@
-Received: (qmail 9217 invoked by uid 550); 15 May 2026 23:07:06 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["410" "Saturday" "29" "August" "2015" "05:44:07" "+0200" "pcheng pcheng" "pcheng@gmx.com" "<trinity-116f3199-3a24-4fd2-926b-9e59b39c2a36-1440819846798@3capp-mailcom-lxa14>" "14" "[oss-security] CVE request: vorbis-tools: buffer overflow in aiff_open()" nil nil nil "8" "2015082903:44:07" "[oss-security] CVE request: vorbis-tools: buffer overflow in aiff_open()" (number mark "        pcheng@gmx.c Aug 29   14/410   " thread-indent "\"[oss-security] CVE request: vorbis-tools: buffer overflow in aiff_open()\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 23763 invoked by uid 550); 29 Aug 2015 03:44:22 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,74 +11,45 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 21831 invoked from network); 15 May 2026 22:12:34 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cpansec.org; s=gm1;
-	t=1778883146;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=odxvJPSwxyGaZgrGpCqAudw/I46/V7h0haGCkYKc/T8=;
-	b=pt3F/h299ReVHqAVe26LEwaSNG5lbZBIDkxntlsywGusqwG58KHD0nAfhc/xSsZdLCePvd
-	5cZqe03VTtAjhjX/EIh0d5ig22MLPKAJN1i9w8PoheoFRtKZEe9ZSsLMYlTNz1jNQjJ0iT
-	r1TJ8ZDmYdW9MUqoBMioJ4uprVxcE73KD4HhNqEWuwJIiLvazzx15otmJnKudzhjN+/bCK
-	d6LjmHdmcIfoHCdmuFVbX+onMiDR09H5aoc52Rcgb2XOmIQUANWxT+R8p+QQ4WgjPkeXbv
-	njkDMJgFyh6/xN5iHX+V4d4e3wFTI2tXqAbaR/jvs9KV2+vvPW3emEuap6Pr/w==
+Received: (qmail 23736 invoked from network); 29 Aug 2015 03:44:21 -0000
 MIME-Version: 1.0
-Date: Fri, 15 May 2026 19:12:25 -0300
-From: Timothy Legge <timlegge@cpansec.org>
-To: Cve Announce <cve-announce@security.metacpan.org>, Oss Security
- <oss-security@lists.openwall.com>
-Message-ID: <11f05be71f0408fd4106472a85084cbe@cpansec.org>
-X-Sender: timlegge@cpansec.org
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-X-GND-Sasl: timlegge@cpansec.org
-X-GND-Score: -100
-X-GND-Cause: dmFkZTFTOJJYsQCC+QBk9UD6A8Rqbl69RaFIZEJn5FYtUogt9l5q5vNDsuPTVgmKLAKRn6TwdaXCFP8TPHsNe4uNRxZwjxdbErgpDVMwpnPob5yoJWRnFVBnpIma/TbrW+Pd4bgjAup4iTMNC1cLNAoyC+Mc9d7UZYcH9Vr8uhn8XgZRf76Cm1/6FIxMouosZzIRV8l9w6B2j6jCRtPaJg2qfrsnXcx/I46N4gZiBEwZ2LzLQ01uscygfjjuUN/Zux5tlAy5erjkuOFdHEKGrNJYGlDLi8pvcW5yBhYoBZYlaxh7v9FQflC6UcoWtB+bfLKi2Cgev8K7mWr/KPZf7cC+V1YCDuTGAh8vA2Zu+dKBfFLFGzHCV0nhVDK9lY8jRRfC5dNJj9mlCLqW6GnOZ56nj5XKyreimaWrss5fwjTUo7G9f495h5NDNjsEpyQVolLEQOWWDOVnzHBAJd+6BDVuWBHzwkMVZGqygHyQJXP5kVW/ibuAu8EXziIKX1n5G1P2OJYwgK7l0wXRvp0In+zk3dJb+kzu2sHyDyltYOdHjsxOLY1+t8iYWUn5KjzIJvaN5ZX5c37ge8SmS+nQya8g2mooCI4I38s1qe7bZe5y5aF1tSDsOqCbhRrUGoET6UCBcWmS6UKjZckCdpt42+SEC7ksI9RC86AdS0CLlgf+zI/dIA
-X-GND-State: clean
-Subject: [oss-security] CVE-2026-8700: Crypt::DSA versions before 1.20 for Perl generate
- seeds using rand
+Message-ID: <trinity-116f3199-3a24-4fd2-926b-9e59b39c2a36-1440819846798@3capp-mailcom-lxa14>
+Content-Type: text/plain; charset=UTF-8
+Importance: normal
+Sensitivity: Normal
+X-Priority: 3
+X-Provags-ID: V03:K0:6jJMAVjmSjwpteCMAC3NAoSaBNkOFpr8DkGi9qsYU0D
+ DPILYOB1eH7hok9PikbDv9FZCn2W+oF6c1zjNanABxCseYmAro
+ trFtAtsvgeeOkaPGddi3b6DjMqlCy93Qgbfpw/KOztogtJqLfs
+ sijs58txgWhz1Coe8aO7eQS95txgBmpRHlbiClvXr1SHHDPvIn
+ /869Xbl/GxqyvI3Ey22UrUbHZvFPirmjVqbuDpy2PG5RDVFffp
+ Fz/0NeXBtT2crD1ygUt168kgiy3K9dv5ErFLmuxxflYCz0AJxf
+ p2afsVr3P9i/dWiFWbCzStcAyq3
+X-UI-Out-Filterresults: notjunk:1;V01:K0:mILFn1F1Pks=:N0b04lw444MzY0wpMm7fIA
+ y0+imP59xeG1Te/UwuhweqHgFO3JVhoUh45bptUy7JgsFnXyVn1rMfdfmGz9+gtaLkVPjIIOT
+ 0vDK8ysLn+5LGQ8cC/jgpRt3GJLdPrmDgd7vqrSCsXWb+BC5lUWufj0RLNSIiTK7JAJ0fiDNt
+ 0TlzwS1MVYxl4i1qlG53G3adhgm6r/QJqKsAM5jgNbJ4FtZfX48gAKzdr3Frq4ui6QVYwe6F0
+ j1tUMudP9YNuhd/RXrjd1odSXp7E3CHlcOwdAxC4724ArtxsAo2ky5LA3oyEvDgD0gHE0Cjhj
+ hamX9pYOn8N4EptSq9A4Y7nqe6Q0QdgIO5j30GWSxtvdOM7Sd3qQw2087FS3TGJnCuzWRRbU5
+ RpxKFF19jD18an4jL3vkLSQuJ8XRTzz8dh0vbVU7Gm29PRUIFxtbjcum1vxGq/pUY8mEOpobQ
+ Fl6DcaWCaA==
+Date: Sat, 29 Aug 2015 05:44:07 +0200
+From: "pcheng pcheng" <pcheng@gmx.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE request: vorbis-tools: buffer overflow in aiff_open()
+To: oss-security@lists.openwall.com
 
-========================================================================
-CVE-2026-8700                                        CPAN Security Group
-========================================================================
+Name : vorbis-tool
+Affected Version: <= Revision 19495
+URL : https://wiki.xiph.org/Vorbis-tools
 
-         CVE ID:  CVE-2026-8700
-   Distribution:  Crypt-DSA
-       Versions:  before 1.20
+Description :
+An issue was found in oggenc/audio.c when it tries to open invalid AIFF file.
 
-       MetaCPAN:  https://metacpan.org/dist/Crypt-DSA
-       VCS Repo:  https://github.com/perl-Crypt-OpenPGP/Crypt-DSA.git
+274    if(fread(buffer,1,len,in) < len)
+The input buffer and length can be controlled by user indirectly via:
 
+260    if(!find_aiff_chunk(in, "COMM", &len))
 
-Crypt::DSA versions before 1.20 for Perl generate seeds using rand
-
-Description
------------
-Crypt::DSA versions before 1.20 for Perl generate seeds using rand.
-
-Seeds were generated using Perl's built-in rand function, which is
-predictable and unsuitable for security usage.
-
-Problem types
--------------
-- CWE-331 Insufficient Entropy
-
-Solutions
----------
-Upgrade to version 1.20 or later.
-
-
-References
-----------
-https://metacpan.org/release/TIMLEGGE/Crypt-DSA-1.20/changes
-https://metacpan.org/release/TIMLEGGE/Crypt-DSA-1.20/diff/TIMLEGGE/Crypt-DSA-1.19#lib/Crypt/DSA/KeyChain.pm
-
-Timeline
---------
-- 2026-05-15: CPANSec identified issue
-- 2026-05-15: Author was notified
-- 2026-05-15: Version 1.20 released.
+More info can be found at :
+https://trac.xiph.org/ticket/2212
