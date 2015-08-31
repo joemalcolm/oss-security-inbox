@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2254" "Saturday" "11" "July" "2020" "19:58:42" "+0200" "Solar Designer" "solar@openwall.com" "<20200711175842.GA8907@openwall.com>" "34" "Re: [oss-security] Contributing Back" nil nil nil "7" "2020071117:58:42" "[oss-security] Contributing Back" (number mark "U       solar@openwa Jul 11   34/2254  " thread-indent "\"Re: [oss-security] Contributing Back\"\n") "<ea742763-f1bb-bf13-3ecf-f61aaf1e0b43@windriver.com>" ("<ea742763-f1bb-bf13-3ecf-f61aaf1e0b43@windriver.com>") nil nil nil nil nil nil nil "Re: [oss-security] Contributing Back" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1772" "Monday" "31" "August" "2015" "14:29:42" "+0200" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20150831142942.74f0a4b7@pc1>" "49" "Re: [oss-security] Out of bounds read using malformed tar archive in GNU Tar and BSD Tar" nil nil nil "8" "2015083112:29:42" "[oss-security] Out of bounds read using malformed tar archive in GNU Tar and BSD Tar" (number mark "        hanno@hboeck Aug 31   49/1772  " thread-indent "\"Re: [oss-security] Out of bounds read using malformed tar archive in GNU Tar and BSD Tar\"\n") "<CACn5sdQBUYfLa8JPTFXyQpooCRdWMQ2HRegp0B57wE5r3i5xKQ@mail.gmail.com>" ("<CACn5sdQBUYfLa8JPTFXyQpooCRdWMQ2HRegp0B57wE5r3i5xKQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 20123 invoked by uid 550); 11 Jul 2020 17:59:32 -0000
+Received: (qmail 1744 invoked by uid 550); 31 Aug 2015 12:29:43 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,51 +11,66 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 19922 invoked from network); 11 Jul 2020 17:58:47 -0000
-Date: Sat, 11 Jul 2020 19:58:42 +0200
-From: Solar Designer <solar@openwall.com>
-To: oss-security@lists.openwall.com
-Message-ID: <20200711175842.GA8907@openwall.com>
-References: <ea742763-f1bb-bf13-3ecf-f61aaf1e0b43@windriver.com>
+Received: (qmail 1724 invoked from network); 31 Aug 2015 12:29:42 -0000
+Message-ID: <20150831142942.74f0a4b7@pc1>
+In-Reply-To: <CACn5sdQBUYfLa8JPTFXyQpooCRdWMQ2HRegp0B57wE5r3i5xKQ@mail.gmail.com>
+References: <CACn5sdQBUYfLa8JPTFXyQpooCRdWMQ2HRegp0B57wE5r3i5xKQ@mail.gmail.com>
+X-Mailer: Claws Mail 3.11.1 (GTK+ 2.24.28; x86_64-pc-linux-gnu)
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ea742763-f1bb-bf13-3ecf-f61aaf1e0b43@windriver.com>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] Contributing Back
+Content-Type: multipart/signed; micalg=pgp-sha512; protocol="application/pgp-signature"; boundary="=_zucker.schokokeks.org-26245-1441024171-0001-2"
+Date: Mon, 31 Aug 2015 14:29:42 +0200
+From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Out of bounds read using malformed tar archive
+ in GNU Tar and BSD Tar
+To: oss-security@lists.openwall.com
 
-Hi Xiao,
+--=_zucker.schokokeks.org-26245-1441024171-0001-2
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Jul 02, 2020 at 05:33:20PM +0800, Zhang Xiao wrote:
-> I am an engineer of WindRiver. Thanks for Alexander's remind about the distribution and we would like to "backup" the first item of the administrative list:
-> https://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
-> 
-> 1. Promptly review new issue reports for meeting the list's requirements and confirm receipt of the report and, when necessary, inform the reporter of any issues with their report (e.g., obviously not actionable by the distros) and request and/or propose any required yet missing information (most notably, a tentative public disclosure date/time) /- primary: Oracle, backup: vacant /
-> Please let me know how we get started helping out.
+On Mon, 31 Aug 2015 08:20:11 -0300
+Gustavo Grieco <gustavo.grieco@gmail.com> wrote:
 
-I've just added Wind River as backup for this role.  Please watch for
-issues on which Oracle (and others) haven't provided an initial response
-to the reporter or where such response is incomplete (per the above),
-and provide your own response (CC'ing the list) whenever that happens.
+> Fortunately the last revisions of GNU Tar and libarchive fixed these
+> issues. Do we have CVE for these issues?
 
-> And, I have another point want to discuss. As we know, sometimes, the CVE and NVD website don't upgrade their web page timely. For example:
-> 
-> the security maillist had an encrypted mail called "curl: overwrite local file with -J" in 20200617. It was a "pre-notification about a security advisory about to ship next week in sync with our next curl release", for CVE-2020-8177. On curl's git tree, that very bug did been fixed and released in 20200621:
-> https://github.com/curl/curl/commit/8236aba5854
-> 
-> But, till now, both cve.mitre.org and nvd.nist.gov still mark this CVE as "RESERVED":
-> https://nvd.nist.gov/vuln/detail/CVE-2020-8177
-> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-8177
-> 
-> So I wonder if that is also an contribution to remind them, if so, any advises to make it? And If it ca be defined as an contribution, we can take it. :-)
+The bsdtar issue looks like this one:
+https://github.com/libarchive/libarchive/issues/515
 
-We've received some responses in this thread regarding the specific
-example above, but I'd like more general responses please.  Is there a
-general task Wind River can reasonably help with for getting CVE details
-published for issues that pass the distros and/or oss-security lists,
-and how exactly could they help with that?
+I have reported ~20 such issues in libarchive in the past months.
+Unfortunately there are still some open issues, I was hoping to create
+an advisory once everything is done, but it has taken much longer than
+expected.
 
-Thanks,
+--=20
+Hanno B=C3=B6ck
+http://hboeck.de/
 
-Alexander
+mail/jabber: hanno@hboeck.de
+GPG: BBB51E42
+
+--=_zucker.schokokeks.org-26245-1441024171-0001-2
+Content-Type: application/pgp-signature
+Content-Transfer-Encoding: 7bit
+Content-Description: OpenPGP digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iQIcBAEBCgAGBQJV5Ei2AAoJEKWIAHK7tR5CoKUQAKwcmg85L3L4EDyQ3YbOmElI
+7FV3u3HgS5BpOeMPL/3oc6KKTna60XO/1gYXda7tk3DOXltxgoMMLm8L/3tKmhld
+tPl9YHee9mkbq7t8mqQEI3rAWWE6/4oTNkG54x+k8hnp8H47FndHRHi05lUJVaOF
+lQIm1Cr29NOsiO+70G7laZUVTCyI4Wv4uFb1vy4Uo9/vj4VppU0myakb3sHAsqsO
+vl6B4f351QYfF6vd4S/7Pm4fRBjViXWGw2pf1x6mUkIagDOOxN0Lt59T9HvHeVz9
+kXF5+f8FeKrYRpkcFbh5ERSkaGY1IQRrNWbTaovAzE87HgC/ojqwFrhIQ63q267c
+Y1GxwN/ZodsstgBcwlKQ96yBSIqf5U22mI2DeQ/R2UBm1la1uVq8Y7bYSG+UXaLH
+sbQPCIsWyO1TUGgK5iJpixjb4rRedVGa6LyOVoo+i/Kje3Z1ie7iXzgY8SrclnqZ
+w9qlrgoSvkKVHU9SnDtH5Hz1VNEs+X0c1wg/4h83jdPuLbH1UdsmsvnBYa34dD95
+MKt5/twtwFvFQEDK0kfGKrnKluxcHtd3d3GTsusXtAbsQ5mEjbFqRiKUZ5Or0VJL
+gsbf6tqod7do7TX++UMjYzoFtS+KxFZ9Yn/H1n5EfTJtKX1U2/jDaHuwl/P8/5py
+li6/G8rwfJBVi+l1crKX
+=sptb
+-----END PGP SIGNATURE-----
+
+--=_zucker.schokokeks.org-26245-1441024171-0001-2--
