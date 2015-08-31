@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1833" "Saturday" "10" "February" "2018" "11:25:49" "+0100" "Heiko Schlittermann" "hs@nodmarc.schlittermann.de" "<20180210102549.fpeskg2rxvxwjitd@jumper.schlittermann.de>" "51" "[oss-security] Re: CVE-2018-6789 Exim 4.90 and earlier: buffer overflow" "^Date:" nil nil "2" "2018021010:25:49" "[oss-security] Re: CVE-2018-6789 Exim 4.90 and earlier: buffer overflow" (number mark "        hs@nodmarc.s Feb 10   51/1833  " thread-indent "\"[oss-security] Re: CVE-2018-6789 Exim 4.90 and earlier: buffer overflow\"\n") "<20180207103943.wwijjdmnlzpp46lm@jumper.schlittermann.de>" ("<20180207103943.wwijjdmnlzpp46lm@jumper.schlittermann.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5968" "Monday" "31" "August" "2015" "08:20:11" "-0300" "Gustavo Grieco" "gustavo.grieco@gmail.com" "<CACn5sdQBUYfLa8JPTFXyQpooCRdWMQ2HRegp0B57wE5r3i5xKQ@mail.gmail.com>" "125" "[oss-security] Out of bounds read using malformed tar archive in GNU Tar and BSD Tar" nil nil nil "8" "2015083111:20:11" "[oss-security] Out of bounds read using malformed tar archive in GNU Tar and BSD Tar" (number mark "        gustavo.grie Aug 31  125/5968  " thread-indent "\"[oss-security] Out of bounds read using malformed tar archive in GNU Tar and BSD Tar\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 11706 invoked by uid 550); 10 Feb 2018 12:16:20 -0000
+Received: (qmail 7179 invoked by uid 550); 31 Aug 2015 11:20:30 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,85 +11,150 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 12017 invoked from network); 10 Feb 2018 10:26:01 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=schlittermann.de; s=dd201504; h=In-Reply-To:Content-Type:MIME-Version:
-	References:Message-ID:Subject:To:From:Date:Cc:Content-Description:Content-ID:
-	Content-Transfer-Encoding:Resent-Cc:Resent-To;
-	bh=kazcoZNcEcvFzNRwIPlAN5kwMwMqpzmat196JJnpLNc=; b=ASkTrxQAdEYSx57LPosEiOlpk/
-	buE6HpVO2sOTjOe9QWqrkEDwH/AyOXJ0aG3mTde3HwaE3WpATl5PJR+UTBnS5l1rWYlqM3AIDMzEj
-	C9LF6QIJ5xxS6R/L00kDiaLB1NMQig/GyMPncFeAIzwPzCcs+9lqkT1O3ujfq2XgClaM=;
-Message-ID: <20180210102549.fpeskg2rxvxwjitd@jumper.schlittermann.de>
-References: <20180207103943.wwijjdmnlzpp46lm@jumper.schlittermann.de>
+Received: (qmail 6099 invoked from network); 31 Aug 2015 11:20:22 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=zZoKjLVmuLPolXXx9vvAbqsoCbbMHmquErYgTJmY8XE=;
+        b=UthMnJJGGlz+K2tRqSdGzDqfWVGjAAfF19Id9GrDfl+tejalW/AK1aAswnn2ynn/Ma
+         w3L44/acO3q/dCpARBFgZ8xD0FuUZqvQvO8XyccV6s864sh0R6UPo1Gdc25PPU9GoO/N
+         wkCW4kC9eLFcW0XULkpyOFQgy49Jn7lTidxIO+7P1KOC03uA2H1prOSWQc3iMmH7t6II
+         IXWO9c6PDjqTdBgcFrCJysWGxMhkzc1baKVuy1Frj8Fxndnh1qGlnqPEaEPQ6uNEaKLm
+         gE0zYwGiKgztWl4jo+azGBgsEsTwGA3VQTMq7lR9A0V2mvOGutqpZRC1YS/WxBrsTqxY
+         r2zw==
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="c2jbfubsqm2i4m3t"
-Content-Disposition: inline
-In-Reply-To: <20180207103943.wwijjdmnlzpp46lm@jumper.schlittermann.de>
-Organization: schlittermann -- internet & unix support
-X-Face: =y#&-VlCH8uT|8#-#JE_^c<:+qPbYxFD`}8`m)xjyA$93tpwm-vKsa(V,0?906(2VIVNQbU
- QzD%zhE+~-AA?\v-v.HY6]ebO4_$vY`l|||Q!EZT5*Xx/>Fj{8E_a.;;#<4S$>&T%n5()2Yt=R5FSC
- y:Na&@T{Rf`kPq^'ffPFA%`mP~>%-LU$d*]]{-%>j={&MsMND.">]H)&#AoSI~(U8Jk;v*;,Pf+l85
- X?H&`
-X-Telegram: @HeikoSchlittermann
-X-Phone: +49.172.7909055
-X-GPG-Fingerprint: E5CA 331D 44AB 8E4C 806F  DBEE 2610 1B62 F693 76CE
-X-GPG-Key-ID: F69376CE
-User-Agent: NeoMutt/20170113 (1.7.2)
-Date: Sat, 10 Feb 2018 11:25:49 +0100
-From: Heiko Schlittermann <hs@nodmarc.schlittermann.de>
+X-Received: by 10.152.44.130 with SMTP id e2mr10233776lam.14.1441020011556;
+ Mon, 31 Aug 2015 04:20:11 -0700 (PDT)
+Message-ID: <CACn5sdQBUYfLa8JPTFXyQpooCRdWMQ2HRegp0B57wE5r3i5xKQ@mail.gmail.com>
+Content-Type: multipart/mixed; boundary=089e0160bc46e7fdc3051e999d67
+Date: Mon, 31 Aug 2015 08:20:11 -0300
+From: Gustavo Grieco <gustavo.grieco@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE-2018-6789 Exim 4.90 and earlier: buffer overflow
+Subject: [oss-security] Out of bounds read using malformed tar archive in GNU Tar and BSD Tar
 To: oss-security@lists.openwall.com
 
---c2jbfubsqm2i4m3t
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+--089e0160bc46e7fdc3051e999d67
+Content-Type: text/plain; charset=UTF-8
 
-Heiko Schlittermann <hs@schlittermann.de> (Mi 07 Feb 2018 11:39:43 CET):
-> CVE-2018-6789 Exim 4.90 and earlier
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-=E2=80=A6.
-> Next steps:
->=20
-> * t0:     Distros will get access to our "security" non-public git repo
->           (based on the SSH keys known to us)
-> * t0 +7d: Patch will be published on the official public git repo
-=20
- t0 was 2018-02-08 17:00 UTC
+Hello,
 
-As one distro failed to keep the embargo we need to cut the time
-for the distros and we'll release the patch to the public today.
+We found some out-of-bands reads in tar clients: GNU Tar and  BSD Tar
+(libarchive 3.1.2). These vulnerabilities can be triggered performing
+a list operation of the compressed files inside an archive. Find
+attached a single test case that exposes both vulnerabilities. They
+can be easily detected using valgrind:
 
-    2018-02-10 18:00 UTC
 
-Sorry for the inconvenience, thank you for understanding and for using
-Exim.
+$ valgrind bsdtar -tvf oob-access.tar
 
-    Best regards from Dresden/Germany
-    Viele Gr=C3=BC=C3=9Fe aus Dresden
-    Heiko Schlittermann
---=20
- SCHLITTERMANN.de ---------------------------- internet & unix support -
- Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
- gnupg encrypted messages are welcome --------------- key ID: F69376CE -
- ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
+bsdtar: Failed to set default locale
+==8307== Invalid read of size 4
+==8307==    at 0x807AC4D: archive_read_format_tar_read_header
+(archive_read_support_format_tar.c:506)
+==8307==    by 0x805779D: _archive_read_next_header2 (archive_read.c:636)
+==8307==    by 0x80578D1: _archive_read_next_header (archive_read.c:676)
+==8307==    by 0x804C783: read_archive (read.c:235)
+==8307==    by 0x804D1C5: tar_mode_t (read.c:86)
+==8307==    by 0x804B591: main (bsdtar.c:798)
+==8307==  Address 0x422ca94 is 4 bytes before a block of size 32 alloc'd
+==8307==    at 0x402A17C: malloc (in
+/usr/lib/valgrind/vgpreload_memcheck-x86-linux.so)
+==8307==    by 0x402C3AF: realloc (in
+/usr/lib/valgrind/vgpreload_memcheck-x86-linux.so)
+==8307==    by 0x808006E: archive_string_ensure (archive_string.c:307)
+==8307==    by 0x8082F76: archive_wstring_append_from_mbs (archive_string.c:259)
+==8307==    by 0x8083876: archive_mstring_get_wcs (archive_string.c:3955)
+==8307==    by 0x8050802: archive_entry_pathname_w (archive_entry.c:540)
+==8307==    by 0x807A17B: tar_read_header
+(archive_read_support_format_tar.c:1273)
+==8307==    by 0x807AB87: archive_read_format_tar_read_header
+(archive_read_support_format_tar.c:473)
+==8307==    by 0x805779D: _archive_read_next_header2 (archive_read.c:636)
+==8307==    by 0x80578D1: _archive_read_next_header (archive_read.c:676)
+==8307==    by 0x804C783: read_archive (read.c:235)
+==8307==    by 0x804D1C5: tar_mode_t (read.c:86)
+==8307==
+---------x  0 1      1           1 Jan  1  1970
 
---c2jbfubsqm2i4m3t
-Content-Type: application/pgp-signature; name="signature.asc"
+$ valgrind tar -tvf oob-access.tar
 
------BEGIN PGP SIGNATURE-----
+tar: Substituting `.' for empty member name
+==8598== Invalid read of size 1
+==8598==    at 0x80614B9: simple_print_header (list.c:1142)
+==8598==    by 0x80620CC: list_archive (list.c:287)
+==8598==    by 0x8061F6F: read_and (list.c:199)
+==8598==    by 0x804BD81: main (tar.c:2710)
+==8598==  Address 0x4271857 is 1 bytes before a block of size 1 alloc'd
+==8598==    at 0x402A17C: malloc (in
+/usr/lib/valgrind/vgpreload_memcheck-x86-linux.so)
+==8598==    by 0x808164F: xmalloc (xmalloc.c:43)
+==8598==    by 0x808185F: xmemdup (xmalloc.c:115)
+==8598==    by 0x808189E: xstrdup (xmalloc.c:123)
+==8598==    by 0x8062274: assign_string (misc.c:43)
+==8598==    by 0x8060AEC: read_header (list.c:530)
+==8598==    by 0x8061BF5: read_and (list.c:154)
+==8598==    by 0x804BD81: main (tar.c:2710)
+==8598==
+---------x 1/1               1 1970-01-01 00:00
 
-iQEzBAABCgAdFiEE0L/WueylaUpvFJ3Or0zGdqa2wUIFAlp+yKkACgkQr0zGdqa2
-wUImTAgAzqbZbnw6aRwYDsa3HdTX5AqMKL6zDvop0pblvB+aeZMrHuXFeUIoZhYd
-7Jq4IE0KjlUjbiEht3W5N3TogMAiowkjFcaA9ajviSkEAs/RMoCBBP+uv4etXMug
-qun8aDqNMfLsCeFJRyJQPixMzclFu8rcdTmZ4rVKcMm/igaG0ogsgDH3xEd8RuwM
-FG3c8OH+1yl131x+up4lGJghC1v6oUUj/G3gt2r2HbiIEg16lh2Cm4LtouEHR19G
-9AJ8ZICYUIoAf9d4QCa+hsc9uxE/Dhz0E/kQsmOUa1kJyTkShND+CNdpS5hqCDwZ
-b+eoHHw/lWH68F3O6V+81uhJK7F2WA==
-=LOJy
------END PGP SIGNATURE-----
 
---c2jbfubsqm2i4m3t--
+Fortunately the last revisions of GNU Tar and libarchive fixed these
+issues. Do we have CVE for these issues?
+
+Regards,
+Gustavo.
+
+--089e0160bc46e7fdc3051e999d67
+Content-Type: application/x-tar; name="oob-access.tar"
+Content-Disposition: attachment; filename="oob-access.tar"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_idzu3zes0
+
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAADAwMDAwMDEAMDAwMDAwMQAwMDAwMDAxADAwMDAwMDAwMDAx
+ADAwMDAwMDAwMDAxADAwNDUwNQAgMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
+
+--089e0160bc46e7fdc3051e999d67--
