@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1620" "Saturday" "8" "October" "2016" "11:35:46" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20161008153546.5A92852E4A0@smtpvbsrv1.mitre.org>" "49" "[oss-security] Re: CVE request: invalid memory accesses parsing object files in libgit2" nil nil nil "10" "2016100815:35:46" "[oss-security] Re: CVE request: invalid memory accesses parsing object files in libgit2" (number mark "U       cve-assign@m Oct  8   49/1620  " thread-indent "\"[oss-security] Re: CVE request: invalid memory accesses parsing object files in libgit2\"\n") "<CACn5sdQhDOBYjZ86=9G_tE3n_MZZ=az179T67ztn0pZvUHeiKw@mail.gmail.com>" ("<CACn5sdQhDOBYjZ86=9G_tE3n_MZZ=az179T67ztn0pZvUHeiKw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["330" "Monday" "31" "August" "2015" "22:50:11" "-0700" "Michal Zalewski" "lcamtuf@coredump.cx" "<CALx_OUC8jZN6ebpF18M890KmP8u7A=VE5HCoNxbuB3YhVq1mXA@mail.gmail.com>" "12" "Re: [oss-security] Terminal escape sequences - the new XSS for admins?" nil nil nil "8" "2015090105:50:11" "[oss-security] Terminal escape sequences - the new XSS for admins?" (number mark "        lcamtuf@core Aug 31   12/330   " thread-indent "\"Re: [oss-security] Terminal escape sequences - the new XSS for admins?\"\n") "<CALx_OUCRbOcpFHyU=kju+WTZju-orChnU50wOP2Tw=8V3mpUtA@mail.gmail.com>" ("<CANO=Ty1ku4Hs-eFzCWK_K0=QXEZbtDFR4c--gBnoHPQi7Ko+XQ@mail.gmail.com>" "<CALx_OUDJbSmjcgOAe27h9k4h5dq6cHUXOTgbO9YTkCanopGzUA@mail.gmail.com>" "<20150817202748.GA3032@openwall.com>" "<CALx_OUCRbOcpFHyU=kju+WTZju-orChnU50wOP2Tw=8V3mpUtA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 26131 invoked by uid 550); 8 Oct 2016 15:35:58 -0000
+Received: (qmail 21592 invoked by uid 550); 1 Sep 2015 05:50:42 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,62 +11,43 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 21571 invoked from network); 1 Sep 2015 05:50:42 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:content-type;
+        bh=k1hpcicgLRiiM41g2Lnu0RydW9mPN8rZ+yXAzbGv3dE=;
+        b=VeWOiVdw2+FqTVljnBYYkU7gmGCcKtwAFgWhSkF91074N2leHwc7A+u7+wyUtV68nJ
+         MbviglhllzLZiY2vFlsBmEMnjwSshhfRBzk/4vFR+ipK7KTNIpir4Bzc35RUfnISlYP5
+         BrOw3TA/KHJ3rr0sZYJ+ZT8EtFYuifC7V36RJ8Mnu7qSus7bz9uShG8c46YiddwL4155
+         SYOV5ZW84JXHFbk7YXO2c1EHc+W+8t1EnxgZFdFTIk0k0EAsHLDLZPGEvwGpbcDdAb/X
+         NSrj4RZKCVA9kVmJeqYfbyBk64oKB9YF3FBE7joDf1nP9ty7DLyMEnbqr7RiaPhT6n3P
+         GBDQ==
+X-Gm-Message-State: ALoCoQmzwjoutSpOSJcx8BYWWbLsHQiy8j+sDo+Fn/MO3c8zmA4Yyw2cDCPR+t1dwhrJXciMEV6Q
+X-Received: by 10.107.17.33 with SMTP id z33mr26213072ioi.130.1441086630583;
+ Mon, 31 Aug 2015 22:50:30 -0700 (PDT)
+MIME-Version: 1.0
+In-Reply-To: <CALx_OUCRbOcpFHyU=kju+WTZju-orChnU50wOP2Tw=8V3mpUtA@mail.gmail.com>
+References: <CANO=Ty1ku4Hs-eFzCWK_K0=QXEZbtDFR4c--gBnoHPQi7Ko+XQ@mail.gmail.com>
+ <CALx_OUDJbSmjcgOAe27h9k4h5dq6cHUXOTgbO9YTkCanopGzUA@mail.gmail.com>
+ <20150817202748.GA3032@openwall.com> <CALx_OUCRbOcpFHyU=kju+WTZju-orChnU50wOP2Tw=8V3mpUtA@mail.gmail.com>
+Message-ID: <CALx_OUC8jZN6ebpF18M890KmP8u7A=VE5HCoNxbuB3YhVq1mXA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Date: Mon, 31 Aug 2015 22:50:11 -0700
+From: Michal Zalewski <lcamtuf@coredump.cx>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26111 invoked from network); 8 Oct 2016 15:35:57 -0000
-From: cve-assign@mitre.org
-To: gustavo.grieco@gmail.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <CACn5sdQhDOBYjZ86=9G_tE3n_MZZ=az179T67ztn0pZvUHeiKw@mail.gmail.com>
-Message-Id: <20161008153546.5A92852E4A0@smtpvbsrv1.mitre.org>
-Date: Sat,  8 Oct 2016 11:35:46 -0400 (EDT)
-Subject: [oss-security] Re: CVE request: invalid memory accesses parsing object files in libgit2
+Subject: Re: [oss-security] Terminal escape sequences - the new XSS for admins?
+To: oss-security <oss-security@lists.openwall.com>, =?UTF-8?Q?Hanno_B=C3=B6ck?= <hanno@hboeck.de>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+> I definitely think it deserves a closer look. Here are three recent
+> finds that kcwu reported after apparently testing GNU screen with
+> afl-fuzz:
+>
+> https://savannah.gnu.org/bugs/?45713
+> https://savannah.gnu.org/bugs/?45715
+> https://savannah.gnu.org/bugs/?45714
 
-> We recently reported two invalid memory accesses in the last revision
-> of libgit2
+Ditto for tmux:
+https://github.com/tmux/tmux/issues/92
 
-> The developers are preparing a patch to harden object parsing in libgit2 here:
-> 
-> https://github.com/libgit2/libgit2/pull/3956
-
-
-> * Read out-of-bounds in git_oid_nfmt:
-> https://github.com/libgit2/libgit2/issues/3936
-
->> AddressSanitizer: heap-buffer-overflow
->> READ of size 1
-
-Use CVE-2016-8568.
-
-
-> * DoS using a null pointer dereference in git_commit_message:
-> https://github.com/libgit2/libgit2/issues/3937
-
->> AddressSanitizer: SEGV on unknown address
-
-Use CVE-2016-8569.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJX+RBBAAoJEHb/MwWLVhi2pIsP/3r+mK3MErKPVn3pSw9s7j68
-2hvKXTV5xyzdCrM85se+AVo2KszYtmIVpfojhUxTGh1vJ10ZCNprPwQQzMiqMKoU
-DN9OOECQITgmMeSirRVCN9mfbVLhHP0mnrJn8E07iFpi+zjwBpIcXEVdilZPXSpT
-GvmhnFVhQYxskJz9BxxT0euow5GNMVdLXz8uMyCIi7YdxZxHPmMFYnHtZutnr6Bp
-2QTkbarZA1qaTd6xrf3VKVJNXJbs3x8+MNyMMEss26L+3nZZUM5KOZOzsHmXrwIY
-tiA6J6jB3sWn6X4LopdXswQyidjYmdahv8QyuX6yBPJwntmswHpkCBMBNhrXGMqA
-+KoR7dVMkh48KH+KMgB2QyeQ7nYasCSZ5J/OWnm9TiMgeaw+39dKcc/9gRmgxwfV
-KH6aZWHT11XUGfRK0cXEOKaO3S5+SWXzfPg2AELEkqA+v0qZO0h1ax1dUcYgCuWp
-8XRTyEXZzWhQOG3oP8KK74liddEUoJBXa/GmBAr9iGqt0PzJAn2/gLpqP0zW1R9C
-8YboSai6v51uQuGJutlNFeor5PY0gDVaEzbtRdXL42U7RkyutwEraDcmfoWsi/lL
-lqRoltnxseYju9ztrQF9B88wE1LSa6/SbuZx+3HZJGKOGPIQVvcqnrcUVsg/P1V8
-pfrxWeIOGJG7GMSeCynU
-=i1n/
------END PGP SIGNATURE-----
+/mz
