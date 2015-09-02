@@ -1,4 +1,9 @@
-Received: (qmail 7259 invoked by uid 550); 24 Feb 2026 22:15:31 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1876" "Wednesday" "2" "September" "2015" "22:52:30" "+0200" "ISC Security Officer" "security-officer@isc.org" "<55E7618E.1020301@isc.org>" "52" "[oss-security] Two new vulnerabilities in BIND: CVE-2015-5722 and CVE-2015-5986 are now public" nil nil nil "9" "2015090220:52:30" "[oss-security] Two new vulnerabilities in BIND: CVE-2015-5722 and CVE-2015-5986 are now public" (number mark "U       security-off Sep  2   52/1876  " thread-indent "\"[oss-security] Two new vulnerabilities in BIND: CVE-2015-5722 and CVE-2015-5986 are now public\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 19844 invoked by uid 550); 3 Sep 2015 03:49:47 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,59 +12,70 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 4002 invoked from network); 24 Feb 2026 22:15:14 -0000
-Date: Tue, 24 Feb 2026 23:15:13 +0100
-From: Solar Designer <solar@openwall.com>
-To: Jan Bessai <jan.bessai@tu-dortmund.de>
-Cc: oss-security@lists.openwall.com
-Message-ID: <20260224221513.GA18896@openwall.com>
-References: <6b70985a-cc52-49a8-b4fe-4345bf33b51d@tu-dortmund.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <6b70985a-cc52-49a8-b4fe-4345bf33b51d@tu-dortmund.de>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] Unsound Workshop at ECOOP 2026
+Received: (qmail 13909 invoked from network); 2 Sep 2015 20:52:48 -0000
+To: oss-security@lists.openwall.com
+Cc: ISC Security Officer <security-officer@isc.org>
+From: ISC Security Officer <security-officer@isc.org>
+Message-ID: <55E7618E.1020301@isc.org>
+Date: Wed, 2 Sep 2015 22:52:30 +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:38.0)
+ Gecko/20100101 Thunderbird/38.2.0
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="mDKHen3cOXGJONbQAKIhgM0cu97eTgET9"
+Subject: [oss-security] Two new vulnerabilities in BIND: CVE-2015-5722 and CVE-2015-5986 are
+ now public
 
-Hello Jan,
+--mDKHen3cOXGJONbQAKIhgM0cu97eTgET9
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Feb 24, 2026 at 10:45:09PM +0100, Jan Bessai wrote:
-> UNSOUND 2026 - Sources of Unsoundness in Type Systems and Verification
-> Workshop co-located with ECOOP 2026, Brussels, Belgium
+Please be advised that ISC publicly announced two critical
+vulnerabilities in BIND:
 
-Posting a conference CFP in here is explicitly against the list content
-guidelines, so as a moderator I should have rejected your message, like
-I normally do for things like this.
++ CVE-2015-5722 is a denial-of-service vector which can be
+  exploited remotely against a BIND server that is performing
+  validation on DNSSEC-signed records. All versions of BIND since
+  9.0.0 are vulnerable.
+  https://kb.isc.org/article/AA-01287
 
-https://oss-security.openwall.org/wiki/mailing-lists/oss-security#list-content-guidelines
++ CVE-2015-5986 is a denial-of-service vector which can be used
+  against a BIND server that is performing recursion and (under
+  limited conditions) an authoritative-only nameserver.
+  Versions of BIND since 9.9.7 and 9.10.2 are vulnerable.
+  https://kb.isc.org/article/AA-01291
 
-"Please don't post conference CFPs, (e-)magazine calls for articles, and
-survey questionnaires. (These are generally cross-posted to lots of
-places, and oss-security list members have expressed that they do not
-want to see them here.)"
 
-However, yours appeared to be more relevant and less typical than
-others, so I made an exception.  Without setting a precedent, please.
+New releases of BIND, including security fixes for these
+vulnerabilities, are available:
 
-In return, I ask you to please also bring in here relevant proceedings
-from this workshop, properly summarized and formatted for list postings.
-Where "relevant" means focus on open source software security.
+ftp://ftp.isc.org/isc/bind9/9.10.3rc1/RELEASE-NOTES.bind-9.10.3rc1.html
+ftp://ftp.isc.org/isc/bind9/9.9.8rc1/RELEASE-NOTES.bind-9.9.8rc1.html
+ftp://ftp.isc.org/isc/bind9/9.10.2-P4/RELEASE-NOTES.bind-9.10.2-P4.html
+ftp://ftp.isc.org/isc/bind9/9.9.7-P3/RELEASE-NOTES.bind-9.9.7-P3.html
 
-If you don't do that, I'll know to reject further CFPs from you and also
-from others despite of seemingly greater-than-average relevance.  I'll
-learn my lesson... again, as I tried this thing with someone else before
-and I think they never got back to this community.
+Marcin Siodelski
+(as ISC Security Officer)
 
-Basically, this is not a place to (solely) advertise your events.  You
-have to bring on-topic content directly to here.
 
-Will you, please?
 
-Thanks,
 
-Alexander
+--mDKHen3cOXGJONbQAKIhgM0cu97eTgET9
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
-P.S. I don't know how my tone comes across.  So let me clarify: no hard
-feelings and not really complaining (rejecting a message wouldn't be
-much effort), just using this opportunity to get desirable content. :-)
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iQEbBAEBCAAGBQJV52GOAAoJEL2X3GOe6MR7rfkH+Lxe8AvYoSHySXGAhEzJ7cPv
+dVXaqyhBM1ZLPGjj1uE4JLEx6pTty5DTu0WlHREhCi/GSGCzUVe3k+1vKDDVkxib
+qFpsJQA/CCJPWt94vXGsKKcK/QPXFr9l4D4TO5lI1/AdWNTkayBSXI9xlC7fmqKB
+VquROmTFGvh7M1zGR/qqhDU/dOWG2iquM+xbZ0yPW5CiUN8jyEM2E4JEftZFnDhA
+hAoSxnhwA+airElSnUv7bkANoeUq41yvPggfcp8ajFpEoDSDnuq/hfX23xVBCFsD
+2EzNPn/3d8pKW5smXYUXrw90bKatEycS+lSLqa3jcGUda932WJExd74nzqQEvQ==
+=w7hv
+-----END PGP SIGNATURE-----
+
+--mDKHen3cOXGJONbQAKIhgM0cu97eTgET9--
