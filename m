@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["672" "Friday" "28" "October" "2016" "15:25:02" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1610281523450.17516@wniryva>" "23" "[oss-security] CVE request Qemu: 9pfs: memory leakage in v9fs_write" nil nil nil "10" "2016102809:55:02" "[oss-security] CVE request Qemu: 9pfs: memory leakage in v9fs_write" (number mark "U       ppandit@redh Oct 28   23/672   " thread-indent "\"[oss-security] CVE request Qemu: 9pfs: memory leakage in v9fs_write\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2320" "Wednesday" "2" "September" "2015" "22:17:35" "+0200" "Pere Orga" "pere@orga.cat" "<CAMYtjAqx16oC6PfyxiaF30E78QxeXEBHVVeiLRSQ2VQNeU=uiQ@mail.gmail.com>" "74" "Re: [oss-security] CVE requests for Drupal contributed modules (from SA-CONTRIB-2015-100 to SA-CONTRIB-2015-131)" nil nil nil "9" "2015090220:17:35" "[oss-security] CVE requests for Drupal contributed modules (from SA-CONTRIB-2015-100 to SA-CONTRIB-2015-131)" (number mark "U       pere@orga.ca Sep  2   74/2320  " thread-indent "\"Re: [oss-security] CVE requests for Drupal contributed modules (from SA-CONTRIB-2015-100 to SA-CONTRIB-2015-131)\"\n") "<Pine.LNX.4.64.1508181228030.30440@beijing.mitre.org>" ("<CAMYtjAoKVQONvGAAR57C7gWyzgy3VsdUdCt=Ezv7C3=xc8LWXg@mail.gmail.com>" "<Pine.LNX.4.64.1508181228030.30440@beijing.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 21901 invoked by uid 550); 28 Oct 2016 09:55:20 -0000
+Received: (qmail 4032 invoked by uid 550); 2 Sep 2015 20:18:09 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,39 +12,108 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21880 invoked from network); 28 Oct 2016 09:55:19 -0000
-Date: Fri, 28 Oct 2016 15:25:02 +0530 (IST)
-From: P J P <ppandit@redhat.com>
-X-X-Sender: pjp@javelin
-To: oss security list <oss-security@lists.openwall.com>
-cc: Li Qiang <liqiang6-s@360.cn>
-Message-ID: <alpine.LFD.2.20.1610281523450.17516@wniryva>
+Received: (qmail 4014 invoked from network); 2 Sep 2015 20:18:08 -0000
+X-Received: by 10.140.86.212 with SMTP id p78mr204792qgd.25.1441225074693;
+ Wed, 02 Sep 2015 13:17:54 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.23
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.29]); Fri, 28 Oct 2016 09:55:08 +0000 (UTC)
-Subject: [oss-security] CVE request Qemu: 9pfs: memory leakage in v9fs_write
+In-Reply-To: <Pine.LNX.4.64.1508181228030.30440@beijing.mitre.org>
+References: <CAMYtjAoKVQONvGAAR57C7gWyzgy3VsdUdCt=Ezv7C3=xc8LWXg@mail.gmail.com>
+ <Pine.LNX.4.64.1508181228030.30440@beijing.mitre.org>
+From: Pere Orga <pere@orga.cat>
+Date: Wed, 2 Sep 2015 22:17:35 +0200
+Message-ID: <CAMYtjAqx16oC6PfyxiaF30E78QxeXEBHVVeiLRSQ2VQNeU=uiQ@mail.gmail.com>
+To: cve-assign@mitre.org
+Cc: Security Team <security@drupal.org>, oss-security@lists.openwall.com
+Content-Type: text/plain; charset=UTF-8
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - gator3111.hostgator.com
+X-AntiAbuse: Original Domain - lists.openwall.com
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - orga.cat
+X-BWhitelist: no
+X-Source-IP: 209.85.192.52
+X-Exim-ID: 1ZXETj-0006kM-Lz
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: (mail-qg0-f52.google.com) [209.85.192.52]:34336
+X-Source-Auth: pere@orga.cat
+X-Email-Count: 2
+X-Source-Cap: bmV0b2w7bmV0b2w7Z2F0b3IzMTExLmhvc3RnYXRvci5jb20=
+Subject: Re: [oss-security] CVE requests for Drupal contributed modules (from
+ SA-CONTRIB-2015-100 to SA-CONTRIB-2015-131)
 
-   Hello,
+Hi
 
-Quick Emulator(Qemu) built with the VirtFS, host directory sharing via Plan 9 
-File System(9pfs) support, is vulnerable to a memory leakage issue. It could 
-occur when calling v9fs_write call.
+On Tue, Aug 18, 2015 at 6:30 PM,  <cve-assign@mitre.org> wrote:
 
-A privileged user inside guest could use this flaw to leak the host memory 
-bytes resulting in DoS for other services.
+[..]
 
-Upstream patches:
------------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2016-10/msg02623.html
+>> Novalnet Payment Module Ubercart - SQL Injection - SA-CONTRIB-2015-116
+>> https://www.drupal.org/node/2499787
+>
+>
+>> The module fails to sanitize a database query by not using the database
+>> API properly, thereby leading to a SQL Injection vulnerability.
+>
+>
+> Use CVE-2015-5504.
+>
+>> Since the affected path is not protected against CSRF, a malicious user
+>> can
+>> exploit this vulnerability by triggering a request to a specially-crafted
+>> URL.
+>
+>
+> It is not clear to us if this CSRF issue is exploitable.  The attack
+> seems to be against a Novalnet employee, but it is not known if
+> Novalnet employees have access to the specific IP in a way that would
+> make the exploit feasible.
+>
 
-Reference:
-----------
-   -> http://wiki.qemu.org/Documentation/9psetup
+At the time Novalnet was notified, they did not provide any details
+but acknowledged the issue and stated their will to fix it. It is not
+certain if the issue is exploitable.
 
-This issue was reported by Li Qiang of 360.cn Inc.
+>> Novalnet Payment Module Drupal Commerce - SQL Injection -
+>> SA-CONTRIB-2015-117
+>> https://www.drupal.org/node/2499791
+>
+>
+> We believe that the Novalnet Payment Module Drupal Commerce module may
+> share a codebase with the Novalnet Payment Module Ubercart module in
+> SA-CONTRIB-2015-116.
+>
+> If you can confirm that the vulnerable code in SA-CONTRIB-2015-117 is
+> different from the code in SA-CONTRIB-2015-116, then we will issue a
+> separate CVE ID.  Otherwise, use CVE-2015-5504 for this vulnerability.
+>
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+It is the same vulnerable code, so we'll reuse CVE-2015-5504.
+
+[..]
+
+>> jQuery Update - Open Redirect - SA-CONTRIB-2015-123
+>> https://www.drupal.org/node/2507729
+>>
+>> LABjs - Open Redirect - SA-CONTRIB-2015-124
+>> https://www.drupal.org/node/2507735
+>>
+>> Acquia Cloud Site Factory Connector - Open Redirect - SA-CONTRIB-2015-125
+>> https://www.drupal.org/node/2507741
+>
+>
+> A new CVE might not be necessary.
+>
+> We believe that SA-CONTRIB-2015-123, SA-CONTRIB-2015-124, and
+> SA-CONTRIB-2015-125 share the same codebase (Overlay JavaScript file)
+> as the Overlay module in SA-CORE-2015-002, which has been issued
+> CVE-2015-3233.
+
+Yes, these projects were affected in the same way because they shared
+the same vulnerable code of Drupal core. Reusing CVE-2015-3233.
+
+Updating our records, thanks.
+
+Regards
+Pere Orga on behalf of the Drupal Security Team
