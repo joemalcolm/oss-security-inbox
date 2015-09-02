@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1516" "Saturday" "1" "October" "2016" "16:59:47" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20161001205947.0427D34E006@smtpvbsrv1.mitre.org>" "40" "[oss-security] Re: GraphicsMagick CVE request: 8BIM/8BIMW unsigned underflow leads to heap overflow" nil nil nil "10" "2016100120:59:47" "[oss-security] Re: GraphicsMagick CVE request: 8BIM/8BIMW unsigned underflow leads to heap overflow" (number mark "U       cve-assign@m Oct  1   40/1516  " thread-indent "\"[oss-security] Re: GraphicsMagick CVE request: 8BIM/8BIMW unsigned underflow leads to heap overflow\"\n") "<alpine.GSO.2.20.1610011036390.13801@freddy.simplesystems.org>" ("<alpine.GSO.2.20.1610011036390.13801@freddy.simplesystems.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1081" "Wednesday" "2" "September" "2015" "14:28:59" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<CANO=Ty3i9JGHOm9J=XbQDLq9POLa2=G5FVzKs58b4YHrS=-iqA@mail.gmail.com>" "40" "Re: [oss-security] CVE-2015-5239 Qemu: vnc infinite loop issue" nil nil nil "9" "2015090220:28:59" "[oss-security] CVE-2015-5239 Qemu: vnc infinite loop issue" (number mark "        kseifried@re Sep  2   40/1081  " thread-indent "\"Re: [oss-security] CVE-2015-5239 Qemu: vnc infinite loop issue\"\n") "<alpine.LFD.2.20.1509030058080.6240@wniryva>" ("<alpine.LFD.2.20.1509030058080.6240@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 5611 invoked by uid 550); 1 Oct 2016 21:00:00 -0000
+Received: (qmail 18041 invoked by uid 550); 2 Sep 2015 20:29:12 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,53 +11,70 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 18023 invoked from network); 2 Sep 2015 20:29:11 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=EZ8KbZJvhfLe8oWeQp7Gq969IQsTIOslqpoeU5B8BWo=;
+        b=lNVwps391/zWMMRpP/vV/lZrMt/WkTwNNqm2+fAHPCrXsOVrUJiliNk4ECI1wTqac/
+         oJ85uorwVfX1Wx8/8pVmv/OhZco4oPZpzQhe0VN5v5oku8BcbEI4475sWCB4SHdWr6W3
+         M+Zj64j7t1sB7/Mj4s2xo2CoPTmB7k3LclY0R7fmYW0fAvb0xBfrf7Fz2VMi8qPUS8XF
+         bOqOT6/lWo/jaOdlVZV/wocTVqK0/qtPTl69BeZTwiRm0j73SlgfbcambPun8RJafddf
+         rlffRhWc8AzTalDwQpbKTkw2gFjs/sNeszGrwYuWzSIHRSalU93+KaTpwwFdBpNRqBAJ
+         Ifmg==
+X-Gm-Message-State: ALoCoQl6bvtjlyg2kyRM5AnzkdnlZ6bMVHDJu86ucaGQalEWTpx6t4SaLSFYp5UUuvzxslogPvMV
+MIME-Version: 1.0
+X-Received: by 10.129.79.198 with SMTP id d189mr19332872ywb.159.1441225739871;
+ Wed, 02 Sep 2015 13:28:59 -0700 (PDT)
+In-Reply-To: <alpine.LFD.2.20.1509030058080.6240@wniryva>
+References: <alpine.LFD.2.20.1509030058080.6240@wniryva>
+Message-ID: <CANO=Ty3i9JGHOm9J=XbQDLq9POLa2=G5FVzKs58b4YHrS=-iqA@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=001a114db2ea44662f051ec984af
+Cc: lianyihan@360.cn
+Date: Wed, 2 Sep 2015 14:28:59 -0600
+From: Kurt Seifried <kseifried@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5585 invoked from network); 1 Oct 2016 20:59:59 -0000
-From: cve-assign@mitre.org
-To: bfriesen@simple.dallas.tx.us
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <alpine.GSO.2.20.1610011036390.13801@freddy.simplesystems.org>
-Message-Id: <20161001205947.0427D34E006@smtpvbsrv1.mitre.org>
-Date: Sat,  1 Oct 2016 16:59:47 -0400 (EDT)
-Subject: [oss-security] Re: GraphicsMagick CVE request: 8BIM/8BIMW unsigned underflow leads to heap overflow
+Subject: Re: [oss-security] CVE-2015-5239 Qemu: vnc infinite loop issue
+To: oss-security <oss-security@lists.openwall.com>, Prasad Pandit <ppandit@redhat.com>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--001a114db2ea44662f051ec984af
+Content-Type: text/plain; charset=UTF-8
 
-> Today we received a report from Marco Grassi about a heap overflow in
-> the 8BIM reader. 8BIM is a metadata chunk often attached to JPEG
-> files.
-> 
-> After investigation it was found that there was a small unsigned
-> overflow leading to a huge size value, which then resulted in a heap
-> overflow (causing a crash).
-> 
-> https://sourceforge.net/p/graphicsmagick/code/ci/5c7b6d6094a25e99c57f8b18343914ebfd8213ef/
+PJP are you sure this isn't
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2015-5239 ? Mitre: can you
+please hold off in case this already has a CVE assigned. Thanks.
 
->> coders/meta.c
->> parse8BIM
+On Wed, Sep 2, 2015 at 1:33 PM, P J P <ppandit@redhat.com> wrote:
 
-Use CVE-2016-7800.
+>   Hello,
+>
+> Qemu emulator built with the VNC display driver is vulnerable to an
+> infinite loop issue. It could occur while processing a CLIENT_CUT_TEXT
+> message with specially crafted payload message.
+>
+> A privileged guest user could use this flaw to crash the Qemu process on
+> the host, resulting in DoS.
+>
+> Upstream fix:
+> -------------
+>   ->
+> http://git.qemu.org/?p=qemu.git;a=commit;h=f9a70e79391f6d7c2a912d785239ee8effc1922d
+>
+>
+> Thank you.
+> --
+> Prasad J Pandit / Red Hat Product Security Team
+> 47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+>
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQIcBAEBCAAGBQJX8CLoAAoJEHb/MwWLVhi25tIQAKwOxW+rmQR3/yYEeOUs12z6
-dAu3II8DrfdEIetl+Tqtl3p0+qno6pIcU33e1M58u09xzHaeI1bLbHfajWMLHsHS
-89z+9p7NVUh9YTEHmVtrFPtCwa8KLkxDG7FrG3tJ0kANFC5qNFqsQrO3V3X2F6CO
-Ntj1crMkglIgKdqEyBfHAYVZCz4ViP4khbyIG/jZaD3jDr+tIq0eTT5/Sk3us9dM
-WTUdlN2ZBx2dPMtDKDnTI76AlDow4qQdpuwuUatjaE1P3NsUA2IoyE1P31s4Sdid
-Vg4D+IarUiubUg7ZyojpAZl1wvz+wXkh4YO7nwOxUsJ6fNcWeYRNtKGScyqyMOC8
-6cPXmHkbbe92mtYDf0aEgwCsWaaFtcByPADn1S50dqN9ABwzN7uKgC6dxE+Ca8Et
-gv/d/j8uMlZPZsS3Eo3V8U/df7MlTBo/X9Nt5CsNgZvwdcL9j6MN0CBFUXOEAiRZ
-IZwPFb+YNzoOmhz9WRHqhJC73pcM3h951fZYipRKq/5FnydhhMaKzzqFZbThE4Gz
-jJS96Mm8o9XEAeU9qntREWrshaot070IXUgnINMG56fllJOOwAWbAFyr7ZHWH6Sc
-6ZLAzwMqY+uxYQgMAHmhYyFllrg2mUZC+keMM1Pemci1Iny+GiWx6rXtoEPWqdgr
-th/lBrPHnXbti+aatzvs
-=g+mv
------END PGP SIGNATURE-----
+
+-- 
+
+--
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@redhat.com
+
+--001a114db2ea44662f051ec984af--
