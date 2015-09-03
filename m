@@ -1,4 +1,9 @@
-Received: (qmail 5719 invoked by uid 550); 3 Jun 2026 15:03:34 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["9955" "Thursday" "3" "September" "2015" "05:25:11" "+0000" "Fiedler Roman" "Roman.Fiedler@ait.ac.at" "<2ECE9D9EEF1F524185270138AE23265954E74D77@S0MSMAIL112.arc.local>" "179" "AW: [oss-security] Re: CVE request: screen stack overflow (deep recursion)" nil nil nil "9" "2015090305:25:11" "AW: [oss-security] Re: CVE request: screen stack overflow (deep recursion)" (number mark "        Roman.Fiedle Sep  3  179/9955  " thread-indent "\"AW: [oss-security] Re: CVE request: screen stack overflow (deep recursion)\"\n") "<20150903051105.6AB28B2E4ED@smtpvbsrv1.mitre.org>" ("<87vbbusojr.fsf@mid.deneb.enyo.de>" "<20150903051105.6AB28B2E4ED@smtpvbsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 22485 invoked by uid 550); 3 Sep 2015 05:25:27 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,169 +11,208 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 25794 invoked from network); 3 Jun 2026 09:17:15 -0000
-ARC-Seal: i=1; a=rsa-sha256; t=1780478225; cv=none;
-        d=google.com; s=arc-20240605;
-        b=h9ObVJj4lwKog7m68zNNcD5/jR6hX52k2efSaF18M40IHGDQ4XDFOTaPWq8jTj+LyP
-         B7veG9Y3oBTNzTF2QXDyqYKcRHcOJ8uVi/EY3wCbWGXzahjUKmGLFuG7W4rAnSTiIJbm
-         F75E7+Tu8VLRJSiDpWDdzKlgyqpVeqO9u1KpmkHxwmKvtTUe9LQkg0/AB6KUNuoZDGxb
-         YnwWBO8++7Ck8FIfvCxO02qjECmkJlwLSgoDnjt9EAuEtngQHa4FE5ivMnbA4A8oH2xh
-         L3ryRs3FlpgaJzd/Tf8aRofABkVAeG/KdLgPbFztetduYPuAIbtNeNmT8uqfaKkUXAsD
-         G1qw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=jhZTAWnxsUOValMeVq/z4PZtK+dv8RUq+uRhKlABptw=;
-        fh=pHc2ymm3DgH+gUzh/HIXAFUkfArN7532PJ/xelfu6K8=;
-        b=Ymp0wcwpzTzmQe1yZUTbqwD/WbKC4K0ZeHB04CCBAxW/mXCVP1zj8m9agK6FCM7u+n
-         GozGpeV0LCBVGRiM5wACklXjjlsmvK1E5Q9Ld8JTn7iGeURcQXKi23wdC65ITKYWIpPg
-         hvxQpxpwAlF1CWBFSfScLGMjHxeuXwE0Pu55rGTdvRtg/osyA0jhZogZhXvChZQzDP3M
-         gplsPA2CJ/CxmfFh56/BqZDOYE30+q3h+YgkJi+2d9E12ROZD0Qdf3uY3TR0wRvE+dqj
-         kt0rRhnLpoCY52GgquemcAI+2r8KjMd6P14jYvdvDDKpXNxdecUGZ/XyVrjoFZXMGhjW
-         OU3Q==;
-        darn=lists.openwall.com
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780478225; x=1781083025; darn=lists.openwall.com;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=jhZTAWnxsUOValMeVq/z4PZtK+dv8RUq+uRhKlABptw=;
-        b=gBSK9SouG1HSSYi/1SIBGnkMW9Bi29jLmNTYv83qTGfgvJX9Xt7BzActBZEd/uNdkR
-         9aGhQjpm8MdLZleRVLCiLPdesyCC3LcQmIsXzd5A04Ck+Cx2JelIj7nnLAIzo0TVqhnT
-         s6QHBbmKGm96v1A2BO7fv7rXLDrCBbJXXlVReAgIIJdscD2uPZB9f+GibZCeuQFDyZsW
-         fDSluXkvioIbqodpTI2ynf+LbH6A2JY9bWcDvlWrVZuZHZygnjq7F8tAkgm1gaRjt33c
-         fePxGfkv8yRP99AWxChaIwgmDVt7KbHVeQ4huFvGg7YBBLVIaryMMw9k1RnrWDS1HOto
-         q6Ww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780478225; x=1781083025;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=jhZTAWnxsUOValMeVq/z4PZtK+dv8RUq+uRhKlABptw=;
-        b=p30n4vDBjoPRZU2DWdWVdLr5rk+7T+M3eE0W4QkbmTseSt2KEibH4/6yLDqlVW1j6P
-         7zpfotIHbmIQr7L0UgUcbLzS+SG6najWjJtfKXq9UwWbz6L6gyr1jFGQmuXGCNwvmWjV
-         tfmTexztcUDoWm30OFN5PNNGQQh2Bq/e1/fMUljEwbP23JE4CzEctkD7cYCuqHPnhSak
-         0OPjJPjrP3n75Pk/G1hHUkDSrqO4kBNpPLSy1oKFzbcxf3rA9wOqDoV4AcgNOnhDC/wd
-         6IpM3YwOlkBDAI6u/twRpCCJUi42BApqkfaN3dRzajsjDaDN17HsKQEurhBuR6MPorNS
-         h+Fg==
-X-Gm-Message-State: AOJu0YxJ+j2HTKyd8JkPwd9z3gYfT/Eo/w8Z/B5NGuMznrj/1/mlE/sx
-	LfMue3PNDAr7JjuuIURLG23vo2olecaiP+d5jILVYQ0aI02Lj8CIDlBHdNKdRiji7hT+XNeccHh
-	9zoFrcd5tyEghATWOje3t1WB6F8/+5Q==
-X-Gm-Gg: Acq92OGKuVLUK3SwGgqiXFihupa2l8uJsRffAlh9xb8pTIXH4KGpl0Yr7p/NgWZA6/I
-	bo/tWP+/rl0TmljkmosKWmB21rYTK13GJH7cy6v+9/DWQOEY3QhatTt0+K4YmjPbJ5I6/VFI7N5
-	Kr862wX4nLUS0zyQw0FhdEmlqIKz/H6JFunSyw6rORM+XYM1kQdIhdgzVJ0DdN3qpup4Z0Y3Ot6
-	U+sUk5uzyDov/a6KXub+vdr5/uYtqfaS3duWdh7bosPXi+3XLuPU+bPhTcB58ecz6qEVJN3CQaj
-	d6KUEN1rUcINGr4TwXDtSIeIHe+NEG07rtoihHpoIP+OpSrZ4ouCnxejTqdXCv7e+L/y1uzX
-X-Received: by 2002:a53:d015:0:b0:660:8fc2:cbd0 with SMTP id
- 956f58d0204a3-660dbe976ffmr1937681d50.31.1780478225127; Wed, 03 Jun 2026
- 02:17:05 -0700 (PDT)
+Received: (qmail 22461 invoked from network); 3 Sep 2015 05:25:26 -0000
+Thread-Topic: [oss-security] Re: CVE request: screen stack overflow (deep
+ recursion)
+Thread-Index: AQHQ5gb6CDeW5ESS80ax7jKLld0cT54qQyJQ
+Message-ID: <2ECE9D9EEF1F524185270138AE23265954E74D77@S0MSMAIL112.arc.local>
+References: <87vbbusojr.fsf@mid.deneb.enyo.de>
+ <20150903051105.6AB28B2E4ED@smtpvbsrv1.mitre.org>
+In-Reply-To: <20150903051105.6AB28B2E4ED@smtpvbsrv1.mitre.org>
+Accept-Language: en-US, de-AT
+Content-Language: de-DE
+X-MS-Has-Attach: yes
+X-MS-TNEF-Correlator: 
+x-originating-ip: [172.30.249.121]
+Content-Type: multipart/signed; protocol="application/x-pkcs7-signature";
+	micalg=SHA1; boundary="----=_NextPart_000_000C_01D0E619.A86003E0"
 MIME-Version: 1.0
-References: <CAJv4Csu5=C04SfEWEWe7QuUTTYbwRieTxCXQ4chO3tPXDvGxHw@mail.gmail.com>
- <dba33ac5-e1de-47d1-ac39-05fc42dfa3f4@gmail.com>
-In-Reply-To: <dba33ac5-e1de-47d1-ac39-05fc42dfa3f4@gmail.com>
-From: Oleg Sevostyanov <savant05@gmail.com>
-Date: Wed, 3 Jun 2026 12:16:51 +0300
-X-Gm-Features: AVHnY4Ip6kHXbPa7IZZbmz4zMCCrKAWkdo3icWIFKvAdfdMrtTDlOZ0FcjzFNVw
-Message-ID: <CAJv4CssaPRCG40QqABsMj89riidUxAO35LVns_X=Df-+qfThpQ@mail.gmail.com>
-To: jcb62281@gmail.com
-Cc: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="000000000000239c38065355e475"
-Subject: Re: [oss-security] Linux kernel TLS ULP use-after-free in tls_sk_proto_close()
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:5.14.151,1.0.33,0.0.0000
+ definitions=2015-09-03_03:2015-09-02,2015-09-03,1970-01-01 signatures=0
+CC: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Date: Thu, 3 Sep 2015 05:25:11 +0000
+From: Fiedler Roman <Roman.Fiedler@ait.ac.at>
+Reply-To: oss-security@lists.openwall.com
+Subject: AW: [oss-security] Re: CVE request: screen stack overflow (deep
+ recursion)
+To: "fw@deneb.enyo.de" <fw@deneb.enyo.de>
 
---000000000000239c38065355e475
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+------=_NextPart_000_000C_01D0E619.A86003E0
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 
-Thank you for the comments.
+> Von: cve-assign@mitre.org [mailto:cve-assign@mitre.org]
+> 
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA256
+> 
+> Use CVE-2015-6806.
+> 
+> We feel that the CVE inclusion case for this issue might be marginal.
+> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=797624#5 says
+> 
+>   Hence this can be used to cause a denial of service attack by
+>   tricking a user into e.g. displaying a file with "cat" inside screen
 
-You are right about the reproducer. I mistakenly included it despite saying
-that I was not including it. I apologize for the inconsistency.
+What about "tail -f /var/log/syslog", Apache or other kind of logs for
+debugging? [Yes, that's often how logs are running over the screen in videos
+when talking about IT-security]. It's convenient and I'm using screen
+exactly to avoid any injection of commands via TIOCSTI into my current TTY
+when a context switch is needed before starting tail, e.g. when working with
+LXC containers.
 
-I also agree that taking lock_sock(sk) earlier in tls_sk_proto_close() looks
-like the natural mitigation direction, given that the function takes it
-unconditionally anyway. I will bring this point to the kernel/networking
-maintainers when discussing a fix.
+Still not sure, if this is an argument for CVE inclusion, at least it is one
+for more auditing/hardening on tools like screen, which is now happening.
+Thanks for that!
 
-Regards,
-Oleg
+> [..snip..]
 
-=D1=81=D1=80, 3 =D0=B8=D1=8E=D0=BD. 2026=E2=80=AF=D0=B3. =D0=B2 06:02, Jaco=
-b Bachmeyer <jcb62281@gmail.com>:
+------=_NextPart_000_000C_01D0E619.A86003E0
+Content-Type: application/pkcs7-signature; name="smime.p7s"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="smime.p7s"
 
-> On 6/2/26 14:59, Oleg Sevostyanov wrote:
-> > Hello oss-security,
-> >
-> > I am disclosing a Linux kernel vulnerability in the TLS ULP subsystem.
-> >
-> > [...]
-> >
-> > Summary:
-> >   There is a race between close() and setsockopt(SOL_TLS, TLS_TX) in the
-> >   Linux kernel TLS ULP subsystem. Under certain interleavings, one
-> > thread can
-> >   close a TLS socket while another thread is still operating on
-> > TLS-related
-> >   socket state through setsockopt(). This can lead to a use-after-free
-> > in the
-> >   TLS socket teardown path.
->
-> Looking at the kernel code in the report, I suspect that there is a
-> pattern here:  a lock that will be unconditionally taken is deferred
-> until later instead of being taken at the first opportunity.
->
-> In this example, in tls_sk_proto_close, lock_sock(sk) is *always*
-> called, so there is no reason for it to not be the very first call after
-> the accessors that are used to initialize local variables.
->
-> In fact, maybe Linux should adopt a new pattern where lock_* functions
-> return a meaningless but non-void value, simply to allow moving them to
-> the very first step in a function, as the first local variable initialize=
-r.
->
-> >
-> > [...]
-> >
-> > Status:
-> >   This issue was reported to linux-distros on 2026-05-16. I incorrectly
-> >   contacted linux-distros before first getting a fix accepted by the
-> Linux
-> >   kernel maintainers. The latest proposed public disclosure date was
-> >   2026-05-30, and this oss-security posting is being made late.
->
-> At least you owned up to this; I believe this to be quite rare. (Not the
-> screw-up---admitting it---usually the list moderator ends up having to
-> make the public post as I recall.)
->
-> > [...]
-> >
-> > Reproducer:
-> >   I have a reproducer for the race. I am not including it in this
-> > initial public
-> >   posting to avoid unnecessarily increasing harm before a fix is
-> > available, but
-> >   I can share it with kernel maintainers on request.
->
-> Oops; it was included in your message and is now in the public archives.
->
-> > [...]
-> >
-> > AI disclosure:
-> >   AI assistance was used during analysis and report preparation.
-> > Specifically,
-> >   OpenAI Codex was used to help inspect the relevant code path, reason
-> > about
-> >   the race condition, and draft portions of the vulnerability report.
-> > I reviewed
-> >   and take responsibility for the report contents.
->
-> This is at least the proverbial breath of fresh air---the use of "AI"
-> openly admitted.
->
->
-> -- Jacob
->
->
+MIAGCSqGSIb3DQEHAqCAMIACAQExCzAJBgUrDgMCGgUAMIAGCSqGSIb3DQEH
+AQAAoIIUMTCCBDYwggMeoAMCAQICAQEwDQYJKoZIhvcNAQEFBQAwbzELMAkG
+A1UEBhMCU0UxFDASBgNVBAoTC0FkZFRydXN0IEFCMSYwJAYDVQQLEx1BZGRU
+cnVzdCBFeHRlcm5hbCBUVFAgTmV0d29yazEiMCAGA1UEAxMZQWRkVHJ1c3Qg
+RXh0ZXJuYWwgQ0EgUm9vdDAeFw0wMDA1MzAxMDQ4MzhaFw0yMDA1MzAxMDQ4
+MzhaMG8xCzAJBgNVBAYTAlNFMRQwEgYDVQQKEwtBZGRUcnVzdCBBQjEmMCQG
+A1UECxMdQWRkVHJ1c3QgRXh0ZXJuYWwgVFRQIE5ldHdvcmsxIjAgBgNVBAMT
+GUFkZFRydXN0IEV4dGVybmFsIENBIFJvb3QwggEiMA0GCSqGSIb3DQEBAQUA
+A4IBDwAwggEKAoIBAQC39xoz5vIABC054E5b7R+8bA/Ntfojts7emxEzl6Qp
+TH2Tn71KvJPtAxrjj8/lbVBa1pcplFqAsEl62y6V/bjKvzc4LR4+kUGtcFbH
+8E8/6DKedMrIkFTpxl8PeJ2aQDwOrGGqXhSPnoehalDc15pOrwWzpnGUnHGz
+UGAKxxOdOAeGAqjpqGkmGJCrTLBPI6s6T4TY386f4Wlvu9dC12tE5Met7m1B
+X3JacQg3s3llpFmglDf3AC8NwpJy2tA4ctsUqEXEXSp9t7TWxO6szRNEt8kr
+3UMAJfphuWlqWCMRt6czj1Z1WfXNKddGtworZbbTQm8Vsrh7++/pXVPVNFon
+AgMBAAGjgdwwgdkwHQYDVR0OBBYEFK29mHo0tCb3+sQmVO8DveAky1QaMAsG
+A1UdDwQEAwIBBjAPBgNVHRMBAf8EBTADAQH/MIGZBgNVHSMEgZEwgY6AFK29
+mHo0tCb3+sQmVO8DveAky1QaoXOkcTBvMQswCQYDVQQGEwJTRTEUMBIGA1UE
+ChMLQWRkVHJ1c3QgQUIxJjAkBgNVBAsTHUFkZFRydXN0IEV4dGVybmFsIFRU
+UCBOZXR3b3JrMSIwIAYDVQQDExlBZGRUcnVzdCBFeHRlcm5hbCBDQSBSb290
+ggEBMA0GCSqGSIb3DQEBBQUAA4IBAQCwm+CFJcLWI+IPlgaSnUGYnNmEeYHZ
+HlsUByM2ZY+w2He7rEFsR2CDUbD5Mj3n/PYmE8eAFqW/WvyHz3h5iSGa4kwH
+CoY1vPLeUcTSlrfcfk7ucP0cOesMAlEULY69FuDB30Z15ySt7PRCtIWTcBBn
+up0GNUoY0yt6zFFCoXpj0ea7ocUrwja+Ew3mvWN+eXunCQ1Aq2rdj4rD9vaM
+GkIFUdRF9Z+nYiFoFSBDPJnnfL0k2KmRF3OIP1YbMTgYtHEPms3IDp6OLhvh
+jJiDyx8x8URMxgRzSXZgD8f4vReAay7pzEwOWpp5DyAKLtWeYyYeVZKU2IIX
+WnvQvMePToYEMIIEnTCCA4WgAwIBAgIQND3pK6wnNP+PyzSU+8xwVDANBgkq
+hkiG9w0BAQUFADBvMQswCQYDVQQGEwJTRTEUMBIGA1UEChMLQWRkVHJ1c3Qg
+QUIxJjAkBgNVBAsTHUFkZFRydXN0IEV4dGVybmFsIFRUUCBOZXR3b3JrMSIw
+IAYDVQQDExlBZGRUcnVzdCBFeHRlcm5hbCBDQSBSb290MB4XDTA1MDYwNzA4
+MDkxMFoXDTIwMDUzMDEwNDgzOFowga4xCzAJBgNVBAYTAlVTMQswCQYDVQQI
+EwJVVDEXMBUGA1UEBxMOU2FsdCBMYWtlIENpdHkxHjAcBgNVBAoTFVRoZSBV
+U0VSVFJVU1QgTmV0d29yazEhMB8GA1UECxMYaHR0cDovL3d3dy51c2VydHJ1
+c3QuY29tMTYwNAYDVQQDEy1VVE4tVVNFUkZpcnN0LUNsaWVudCBBdXRoZW50
+aWNhdGlvbiBhbmQgRW1haWwwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEK
+AoIBAQCyOYWk8n2rQTtiRjeuzcFgdbw5ZflKGkeiucxIzGqY1U01GbmkQuXO
+SeKKLx580jEHx060g2SdLinVomTEhb2FUTV5pE5okHsceqSSqBfymBXyk8zJ
+pDKVuwxPML2YoAuL5W4bokb6eLyib6tZXqUvz8rabaov66yhs2qqty5nNYt5
+4R5piOLmRs2gpeq+C852OnoOm+r82idbPXMfIuZIYcZM82mxqC4bttQxICy8
+goqOpA6l14lD/BZarx1x1xFZ2rqHDa/68+HC8KTFZ4zW1lQ63gqkugN3s2XI
+/R7TdGKqGMpokx6hhX71R2XL+E1XKHTSNP8wtu72YjAUjCzrAgMBAAGjgfQw
+gfEwHwYDVR0jBBgwFoAUrb2YejS0Jvf6xCZU7wO94CTLVBowHQYDVR0OBBYE
+FImCZ33EnSZwAEu0UEh83j2uBG59MA4GA1UdDwEB/wQEAwIBBjAPBgNVHRMB
+Af8EBTADAQH/MBEGA1UdIAQKMAgwBgYEVR0gADBEBgNVHR8EPTA7MDmgN6A1
+hjNodHRwOi8vY3JsLnVzZXJ0cnVzdC5jb20vQWRkVHJ1c3RFeHRlcm5hbENB
+Um9vdC5jcmwwNQYIKwYBBQUHAQEEKTAnMCUGCCsGAQUFBzABhhlodHRwOi8v
+b2NzcC51c2VydHJ1c3QuY29tMA0GCSqGSIb3DQEBBQUAA4IBAQABvJzjYyiw
+8zEBwt973WKgAZ0jMQ+cknNTUeofTPrWn8TKL2d+eDMPdBa5kYeR9Yom+mRw
+ANge+QsEYlCHk4HU2vUj2zS7hVa0cDRueIM3HoUcxREVkl+HF72sav3xwtHM
+iV+xfPA+UfI183zsYJhrOivg79+zfYbrtRv1W+yifJgT1wBQudEtc94DeHTh
+BYUxXsuauZ2UxrmUN3Vy3ET7Z+jw+iUeUqfaJelH4KDHPKBOsQo2+3dIn++X
+ivu0/uOUFKiDvFwtP9JgcWDuwnGCDOmINuPaILSjoGyqlku4gI51ykkH9jsU
+ut/cBdmf2+Cy5k2geCbn5y1uf1/GHogVMIIFGjCCBAKgAwIBAgIQbRnqpxlP
+ajMi5iIyeqpx3jANBgkqhkiG9w0BAQUFADCBrjELMAkGA1UEBhMCVVMxCzAJ
+BgNVBAgTAlVUMRcwFQYDVQQHEw5TYWx0IExha2UgQ2l0eTEeMBwGA1UEChMV
+VGhlIFVTRVJUUlVTVCBOZXR3b3JrMSEwHwYDVQQLExhodHRwOi8vd3d3LnVz
+ZXJ0cnVzdC5jb20xNjA0BgNVBAMTLVVUTi1VU0VSRmlyc3QtQ2xpZW50IEF1
+dGhlbnRpY2F0aW9uIGFuZCBFbWFpbDAeFw0xMTA0MjgwMDAwMDBaFw0yMDA1
+MzAxMDQ4MzhaMIGTMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBN
+YW5jaGVzdGVyMRAwDgYDVQQHEwdTYWxmb3JkMRowGAYDVQQKExFDT01PRE8g
+Q0EgTGltaXRlZDE5MDcGA1UEAxMwQ09NT0RPIENsaWVudCBBdXRoZW50aWNh
+dGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBMIIBIjANBgkqhkiG9w0BAQEFAAOC
+AQ8AMIIBCgKCAQEAkoSEW0tXmNReL4uk4UDIo1NYX2Zl8TJO958yfVXQeExV
+t0KU4PkncQfFxmmkuTLE8UAakMwnVmJ/F7Vxaa7lIBvky2NeYMqiQfZq4aP/
+uN8fSG1lQ4wqLitjOHffsReswtqCAtbUMmrUZ28gE49cNfrlVICv2HEKHTcK
+AlBTbJUdqRAUtJmVWRIx/wmi0kzcUtve4kABW0ho3cVKtODtJB86r3FfB+Os
+vxQ7sCVxaD30D9YXWEYVgTxoi4uDD216IVfmNLDbMn7jSuGlUnJkJpFOpZIP
+/+CxYP0ab2hRmWONGoulzEKbm30iY9OpoPzOnpDfRBn0XFs1uhbzp5v/wQID
+AQABo4IBSzCCAUcwHwYDVR0jBBgwFoAUiYJnfcSdJnAAS7RQSHzePa4Ebn0w
+HQYDVR0OBBYEFHoTTgB0W8Z4Y2QnwS/ioFu8ecV7MA4GA1UdDwEB/wQEAwIB
+BjASBgNVHRMBAf8ECDAGAQH/AgEAMBEGA1UdIAQKMAgwBgYEVR0gADBYBgNV
+HR8EUTBPME2gS6BJhkdodHRwOi8vY3JsLnVzZXJ0cnVzdC5jb20vVVROLVVT
+RVJGaXJzdC1DbGllbnRBdXRoZW50aWNhdGlvbmFuZEVtYWlsLmNybDB0Bggr
+BgEFBQcBAQRoMGYwPQYIKwYBBQUHMAKGMWh0dHA6Ly9jcnQudXNlcnRydXN0
+LmNvbS9VVE5BZGRUcnVzdENsaWVudF9DQS5jcnQwJQYIKwYBBQUHMAGGGWh0
+dHA6Ly9vY3NwLnVzZXJ0cnVzdC5jb20wDQYJKoZIhvcNAQEFBQADggEBAIXW
+vnhXVW0zf0RS/kLVBqgBA4CK+w2y/Uq/9q9BSfUbWsXSrRtzbj7pJnzmTJjB
+MCjfy/tCPKElPgp11tA9OYZm0aGbtU2bb68obB2v5ep0WqjascDxdXovnrqT
+ecr+4pEeVnSy+I3T4ENyG+2P/WA5IEf7i686ZUg8mD2lJb+972DgSeUWyOs/
+Q4Pw4O4NwdPNM1+b0L1garM7/vrUyTo8H+2b/5tJM75CKTmD7jNpLoKdRU2o
+adqAGx490hpdfEeZpZsIbRKZhtZdVwcbpzC+S0lEuJB+ytF5OOu0M/qgOl0m
+WJ5hVRi0IdWZ1eBDQEIwvuql55TSsP7zdfl/bucwggY0MIIFHKADAgECAhBg
+VZtaTmI0LOuF0yVA2jvLMA0GCSqGSIb3DQEBBQUAMIGTMQswCQYDVQQGEwJH
+QjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVzdGVyMRAwDgYDVQQHEwdTYWxm
+b3JkMRowGAYDVQQKExFDT01PRE8gQ0EgTGltaXRlZDE5MDcGA1UEAxMwQ09N
+T0RPIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENB
+MB4XDTE0MDMyNzAwMDAwMFoXDTE3MDMyNjIzNTk1OVowggFBMQswCQYDVQQG
+EwJBVDENMAsGA1UEERMEMTIyMDENMAsGA1UECBMEV2llbjENMAsGA1UEBxME
+V2llbjElMCMGA1UECRMcRG9uYXUtQ2l0eS1TdHJhc2UgMXRlY2gvR2F0ZTEy
+MDAGA1UEChMpQUlUIEF1c3RyaWFuIEluc3RpdHV0ZSBvZiBUZWNobm9sb2d5
+IEdtYkgxSTBHBgNVBAsTQElzc3VlZCB0aHJvdWdoIEFJVCBBdXN0cmlhbiBJ
+bnN0aXR1dGUgb2YgVGVjaG5vbG9neSBHbWJIIEUtUEtJIE0xHzAdBgNVBAsT
+FkNvcnBvcmF0ZSBTZWN1cmUgRW1haWwxFjAUBgNVBAMTDVJvbWFuIEZpZWRs
+ZXIxJjAkBgkqhkiG9w0BCQEWF3JvbWFuLmZpZWRsZXJAYWl0LmFjLmF0MIIB
+IjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqhBnj5yFCMMUpzJHbsST
+Q0BZBqLAKKP4+SlxZGtV+YAHLUWhFbeWjcmMp+ONSjMlGdIm45TvM9GrDA8i
+ushm2xYmEJejahLhK3MZMHuyrsS2quy32b7stwFVFLWx2NM4yPwFW5Q8NNtl
+UDwuTRN0zY2+uIEAJGpm+TqdVXAtc915nKsLGyURDoAd8nWVwFVw3F1O9FXa
+nodaLQrY94IVkXkMqa5fg6+Z6vNFBOBgnw9Plx04eOGqVRllQjtF2dogT+C1
+HMfZ+/kQGUSukF+B3H6b+siqPozLt8Lagi/UORsNtQrMbSV0XTvtVuQ69T/H
+2tdV5a8Jcto+FhoICtpIuQIDAQABo4IB0TCCAc0wHwYDVR0jBBgwFoAUehNO
+AHRbxnhjZCfBL+KgW7x5xXswHQYDVR0OBBYEFPO39FQG0PJ//Q3kCUuzH4an
+euWaMA4GA1UdDwEB/wQEAwIFoDAMBgNVHRMBAf8EAjAAMB0GA1UdJQQWMBQG
+CCsGAQUFBwMEBggrBgEFBQcDAjBGBgNVHSAEPzA9MDsGDCsGAQQBsjEBAgED
+BTArMCkGCCsGAQUFBwIBFh1odHRwczovL3NlY3VyZS5jb21vZG8ubmV0L0NQ
+UzBXBgNVHR8EUDBOMEygSqBIhkZodHRwOi8vY3JsLmNvbW9kb2NhLmNvbS9D
+T01PRE9DbGllbnRBdXRoZW50aWNhdGlvbmFuZFNlY3VyZUVtYWlsQ0EuY3Js
+MIGIBggrBgEFBQcBAQR8MHowUgYIKwYBBQUHMAKGRmh0dHA6Ly9jcnQuY29t
+b2RvY2EuY29tL0NPTU9ET0NsaWVudEF1dGhlbnRpY2F0aW9uYW5kU2VjdXJl
+RW1haWxDQS5jcnQwJAYIKwYBBQUHMAGGGGh0dHA6Ly9vY3NwLmNvbW9kb2Nh
+LmNvbTAiBgNVHREEGzAZgRdyb21hbi5maWVkbGVyQGFpdC5hYy5hdDANBgkq
+hkiG9w0BAQUFAAOCAQEAJNkvZvEQuSMveOXqauL/oCneMiEg500S1jOV7yjY
+G8vYPVSws10zur520Z0ttlukgliRPMjzNzzs9qPp0LQ3VN3kNQNykjiEqCBM
+nWwUZW8qgxdtEhyyNiC+sTCf2HYG+m5GmaJLI2y7sVwZcqhBtkQW/p5SVv45
+hN5TM47QMZOefqd2zuTTqVoatC0W/c3XhTJfSksMu3GI/4kfyg7CqcZQKHSd
+UlKnhkkTFTbk0lwjBFFYVJAsdoW9HBokRY48X9N9fLtIx9uunffwNrowvoKw
+zvhA3WK7as3M0eIg82rF+CFxKfROlrQ/55p4Vm7qnwWXvXMKfDU77DMRjHtg
+8zGCBFkwggRVAgEBMIGoMIGTMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3Jl
+YXRlciBNYW5jaGVzdGVyMRAwDgYDVQQHEwdTYWxmb3JkMRowGAYDVQQKExFD
+T01PRE8gQ0EgTGltaXRlZDE5MDcGA1UEAxMwQ09NT0RPIENsaWVudCBBdXRo
+ZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBAhBgVZtaTmI0LOuF0yVA
+2jvLMAkGBSsOAwIaBQCgggKFMBgGCSqGSIb3DQEJAzELBgkqhkiG9w0BBwEw
+HAYJKoZIhvcNAQkFMQ8XDTE1MDkwMzA1MjUwNlowIwYJKoZIhvcNAQkEMRYE
+FOcWXHGzPRunlpt4M7fu99XfdeMrMIGrBgkqhkiG9w0BCQ8xgZ0wgZowCwYJ
+YIZIAWUDBAEqMAsGCWCGSAFlAwQBFjAKBggqhkiG9w0DBzALBglghkgBZQME
+AQIwDgYIKoZIhvcNAwICAgCAMAcGBSsOAwIHMA0GCCqGSIb3DQMCAgFAMA0G
+CCqGSIb3DQMCAgEoMAcGBSsOAwIaMAsGCWCGSAFlAwQCAzALBglghkgBZQME
+AgIwCwYJYIZIAWUDBAIBMIG5BgkrBgEEAYI3EAQxgaswgagwgZMxCzAJBgNV
+BAYTAkdCMRswGQYDVQQIExJHcmVhdGVyIE1hbmNoZXN0ZXIxEDAOBgNVBAcT
+B1NhbGZvcmQxGjAYBgNVBAoTEUNPTU9ETyBDQSBMaW1pdGVkMTkwNwYDVQQD
+EzBDT01PRE8gQ2xpZW50IEF1dGhlbnRpY2F0aW9uIGFuZCBTZWN1cmUgRW1h
+aWwgQ0ECEGBVm1pOYjQs64XTJUDaO8swgbsGCyqGSIb3DQEJEAILMYGroIGo
+MIGTMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVzdGVy
+MRAwDgYDVQQHEwdTYWxmb3JkMRowGAYDVQQKExFDT01PRE8gQ0EgTGltaXRl
+ZDE5MDcGA1UEAxMwQ09NT0RPIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQg
+U2VjdXJlIEVtYWlsIENBAhBgVZtaTmI0LOuF0yVA2jvLMA0GCSqGSIb3DQEB
+AQUABIIBAIOq/+W6rCw0gGIxEf0SySqbWPo7UfPFGr8+MUXJGUuqRHt2bZu3
+GokqUVXVfSBOxA5tEnHrrNq0N6QK4VCqpJa8MWiX9dpNJRtz5MD64Zk3vQ1y
+vWIbhUF8w/JnC8L6vIWW8ZoSYRHI35GIjux0wv/dYq0dpY/n+YKVNvNaBWAT
+W2nF2MF/VX68mTKQLgY4SzBEhdSH7a0RTqemIaFzJDExP9bM9r9+WSadS0Hg
+h4w9m7RsyiNeAILWnBwHex4eGo4pBVpEn/tPfdK8vIrV5q9/MeesJ3KVIWYi
+nRn8oXWS9/yBIluR3nrckuBCX5xKAdFTF4DlURNGn8nzz0vSB9UAAAAAAAA=
 
---000000000000239c38065355e475--
+------=_NextPart_000_000C_01D0E619.A86003E0--
