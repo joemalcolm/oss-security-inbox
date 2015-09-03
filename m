@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["724" "Tuesday" "24" "March" "2015" "15:44:01" "+0100" "Florian Weimer" "fw@deneb.enyo.de" "<871tke8ngu.fsf@mid.deneb.enyo.de>" "18" "Re: [oss-security] 2 moderate (borderline low) docker flaws fixed in >=1.5 and possibly earlier" nil nil nil "3" "2015032414:44:01" "[oss-security] 2 moderate (borderline low) docker flaws fixed in >=1.5 and possibly earlier" (number mark "        fw@deneb.eny Mar 24   18/724   " thread-indent "\"Re: [oss-security] 2 moderate (borderline low) docker flaws fixed in >=1.5 and possibly earlier\"\n") "<5510F66A.9030202@redhat.com>" ("<5510F66A.9030202@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1412" "Thursday" "3" "September" "2015" "21:02:50" "+0200" "Florian Weimer" "fweimer@redhat.com" "<55E8995A.9040901@redhat.com>" "34" "Re: [oss-security] Two new vulnerabilities in BIND: CVE-2015-5722 and CVE-2015-5986 are now public" nil nil nil "9" "2015090319:02:50" "[oss-security] Two new vulnerabilities in BIND: CVE-2015-5722 and CVE-2015-5986 are now public" (number mark "        fweimer@redh Sep  3   34/1412  " thread-indent "\"Re: [oss-security] Two new vulnerabilities in BIND: CVE-2015-5722 and CVE-2015-5986 are now public\"\n") "<55E7618E.1020301@isc.org>" ("<55E7618E.1020301@isc.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 27750 invoked by uid 550); 24 Mar 2015 14:44:13 -0000
+Received: (qmail 22347 invoked by uid 550); 3 Sep 2015 19:03:06 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,34 +11,56 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 27728 invoked from network); 24 Mar 2015 14:44:12 -0000
-References: <5510F66A.9030202@redhat.com>
-In-Reply-To: <5510F66A.9030202@redhat.com> (Kurt Seifried's message of "Mon,
-	23 Mar 2015 23:30:18 -0600")
-Message-ID: <871tke8ngu.fsf@mid.deneb.enyo.de>
+Received: (qmail 22322 invoked from network); 3 Sep 2015 19:03:05 -0000
+References: <55E7618E.1020301@isc.org>
+X-Enigmail-Draft-Status: N1010
+Message-ID: <55E8995A.9040901@redhat.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.1.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Date: Tue, 24 Mar 2015 15:44:01 +0100
-From: Florian Weimer <fw@deneb.enyo.de>
+In-Reply-To: <55E7618E.1020301@isc.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.24
+Cc: ISC Security Officer <security-officer@isc.org>
+Date: Thu, 3 Sep 2015 21:02:50 +0200
+From: Florian Weimer <fweimer@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] 2 moderate (borderline low) docker flaws fixed in >=1.5 and possibly earlier
+Subject: Re: [oss-security] Two new vulnerabilities in BIND: CVE-2015-5722 and
+ CVE-2015-5986 are now public
 To: oss-security@lists.openwall.com
 
-* Kurt Seifried:
+On 09/02/2015 10:52 PM, ISC Security Officer wrote:
+> Please be advised that ISC publicly announced two critical
+> vulnerabilities in BIND:
+> 
+> + CVE-2015-5722 is a denial-of-service vector which can be
+>   exploited remotely against a BIND server that is performing
+>   validation on DNSSEC-signed records. All versions of BIND since
+>   9.0.0 are vulnerable.
+>   https://kb.isc.org/article/AA-01287
 
-> Another example of why embargoes are a bad idea, these issues have been
-> fixed for ages by upstream but fell through the cracks, because embargo!
+Your patch had quite good obfuscation, and it took me a while to see
+where the actual fix was.  Was this deliberate?
 
-There is no hard information in those bug reports.  It's not clear
-what, precisely, they are about, and so it is impossible to tell if
-they actually have been fixed.  I appreciate that you clean out old
-stuff, but doing it this way makes it seem you suddenly have developed
-a policy for secrecy around security issues.
+But anyway, we can confirm it's exploitable over the network.  Nice
+analysis, I would not have immediately seen that if I only had Hanno's
+reproducer.
 
-> https://bugzilla.redhat.com/show_bug.cgi?id=1063550
+For validating recursors, it's actually quite a bit worse than
+CVE-2015-5477 because CVE-2015-5722 does not require a completely
+crafted query, just an attacker-controlled QNAME (which can be in the
+in-addr.arpa or ip6.arpa tree) is sufficient.  So attacks could be
+reflected through basically anything.
 
-(CVE-2014-0048)
+> + CVE-2015-5986 is a denial-of-service vector which can be used
+>   against a BIND server that is performing recursion and (under
+>   limited conditions) an authoritative-only nameserver.
+>   Versions of BIND since 9.9.7 and 9.10.2 are vulnerable.
+>   https://kb.isc.org/article/AA-01291
 
-Could this be a dupe of the index.docker.io registry misconfiguration
-that had at least one redirect to http:// (now fixed) for the actual
-(unverified) image data?
+This can't be reflected as easily, only through applications that use
+the affected record type.
+
+-- 
+Florian Weimer / Red Hat Product Security
