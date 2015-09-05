@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1123" "Thursday" "30" "June" "2016" "17:02:14" "+0200" "Yves-Alexis Perez" "corsac@debian.org" "<1467298934.9347.0.camel@debian.org>" "34" "Re: [oss-security] Debian Exim Spool Local Root" nil nil nil "6" "2016063015:02:14" "[oss-security] Debian Exim Spool Local Root" (number mark "U       corsac@debia Jun 30   34/1123  " thread-indent "\"Re: [oss-security] Debian Exim Spool Local Root\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4577" "Friday" "4" "September" "2015" "20:42:10" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150905004210.55B4E6C006E@smtpvmsrv1.mitre.org>" "104" "[oss-security] Re: CVE Request for glusterfs:  fuse check return value of setuid" nil nil nil "9" "2015090500:42:10" "[oss-security] Re: CVE Request for glusterfs: fuse check return value of setuid" (number mark "        cve-assign@m Sep  4  104/4577  " thread-indent "\"[oss-security] Re: CVE Request for glusterfs:  fuse check return value of setuid\"\n") "<415496778.7350783.1439890690568.JavaMail.zimbra@redhat.com>" ("<415496778.7350783.1439890690568.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 24127 invoked by uid 550); 30 Jun 2016 15:02:30 -0000
+Received: (qmail 9421 invoked by uid 550); 5 Sep 2015 00:42:23 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,49 +11,117 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 9400 invoked from network); 5 Sep 2015 00:42:22 -0000
+In-Reply-To: <415496778.7350783.1439890690568.JavaMail.zimbra@redhat.com>
+Message-Id: <20150905004210.55B4E6C006E@smtpvmsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Fri,  4 Sep 2015 20:42:10 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 24103 invoked from network); 30 Jun 2016 15:02:29 -0000
-Message-ID: <1467298934.9347.0.camel@debian.org>
-From: Yves-Alexis Perez <corsac@debian.org>
-To: oss-security@lists.openwall.com
-Date: Thu, 30 Jun 2016 17:02:14 +0200
-Content-Type: multipart/signed; micalg="pgp-sha256";
-	protocol="application/pgp-signature"; boundary="=-auBKKLxeXetUY/CmCIi1"
-X-Mailer: Evolution 3.20.3-1 
-Mime-Version: 1.0
-Subject: Re: [oss-security] Debian Exim Spool Local Root
+Subject: [oss-security] Re: CVE Request for glusterfs:  fuse check return value of setuid
+To: siddharth@redhat.com, fw@deneb.enyo.de
 
---=-auBKKLxeXetUY/CmCIi1
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-On jeu., 2016-06-30 at 04:00 +0000, halfdog wrote:
-> This is just a minor issue in Exim, no replies so far, so publication
-> should be OK.
+> https://bugzilla.redhat.com/show_bug.cgi?id=1254488
+> http://review.gluster.org/#/c/10780/
+> https://github.com/gluster/glusterfs/commit/b5ceb1a9de9af563b0f91e2a3138fa5a95cad9f6
 
-Agreed disclosure is fine, and sorry we actually didn't reply, but I wasn't
-able to decrypt the mail you sent on June 5 to the Debian security list. You
-might want to check your mail setup.
+> it is a grave security error to omit checking
+> for a failure return from setuid()
 
-Regards,
---=20
+We don't understand why this would be true in all cases. It can be a
+security error to omit checking for a failure return from setuid, if
+the motivation for calling setuid is to drop privileges. If the
+motivation for calling setuid is to increase privileges, then
+sometimes this "omit checking" behavior is only a usability bug, or is
+not a bug at all.
 
-Yves-Alexis=
+We haven't traced the glusterfs code in detail, but we think the
+scenario may be the following:
 
---=-auBKKLxeXetUY/CmCIi1
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
+  - the only goal in calling setuid is to execute /bin/mount (or
+    /bin/umount) from a process with both an effective UID of 0 and a
+    real UID of 0. This is a requirement of the util-linux mount
+    program. See the "if we're really root and aren't running setuid"
+    comment in mount.c. Otherwise, for the types of mount usage in
+    question, mount would print "mount: only root can do that" and
+    exit.
 
+  - the "setuid (geteuid ());" calls that were changed are in the
+    glusterfs fuse_mnt_add_mount and fuse_mnt_umount functions
+
+  - as far as we know, no part of the glusterfs code can call
+    fuse_mnt_add_mount or fuse_mnt_umount unless "geteuid () == 0" is
+    true - see mount_fuse, add_mount, fuse_mount_sys, main,
+    unmount_fuse_locked, unmount_fuse, and gf_fuse_unmount
+
+  - in other words, fuse_mnt_add_mount and fuse_mnt_umount are not
+    calling setuid to drop privileges; they are calling setuid to try
+    to ensure that the real UID becomes 0
+
+  - if the setuid call fails and the real UID remains nonzero, the
+    immediate impact is that the /bin/mount child process exits, with
+    a nonzero status, without doing the requested mount. Then the
+    calling function returns -1. No code ever runs with
+    higher-than-intended privileges.
+
+  - if an attacker is able to conduct an RLIMIT_NPROC attack against
+    use of the setuid system call by glusterfs, probably the attacker
+    could just as easily conduct an RLIMIT_NPROC attack against use of
+    the fork system call by glusterfs. That would also cause the
+    calling function to return -1.
+
+  - we also aren't sure that anyone would have any motivation for
+    conducting an RLIMIT_NPROC attack
+
+  - thus, it seems that the original code had only a minor usability
+    problem: in the presence of an RLIMIT_NPROC attack against use of
+    the setuid system call, /bin/mount would refuse to mount anything
+    and glusterfs itself would not print an informative error message
+
+As far as we can tell, there's no vulnerability: an attacker cannot
+ever achieve anything useful by arranging for a glusterfs setuid
+system call to fail. We can't assign a CVE ID unless there's different
+information.
+
+
+> From: Florian Weimer <fw@deneb.enyo.de>
+> Date: Tue, 18 Aug 2015 14:44:51 +0200
+
+> Original code:
+> 
+> <http://sourceforge.net/p/fuse/fuse/ci/master/tree/lib/mount_util.c#l103>
+> 
+> Pluse two more locations in that file.
+
+The fuse mount_util.c file has a unique third case in the remove_mount
+function to support "umount --fake" calls. (glusterfs doesn't support
+- --fake.) The code behavior in this case may be different because
+- --fake might not require a real UID of 0. However, our guess is that
+this is also a situation where no code ever runs with
+higher-than-intended privileges, and no CVE ID can be assigned.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
+Version: GnuPG v1
 
-iQEcBAABCAAGBQJXdTR2AAoJEG3bU/KmdcClTJMH/32CUhCMQSawYjOLHmf7xYvs
-o7RDrj7If3mi0dqU7AvkIepLLzZkbbtJts8169KcXBFIukI56mAA7tcKeEjXPdaO
-/JyOAzCOIk9C97dN6WnkfgMb9jO2HXp/PeYAKGIGa+mSBNG7nZLcjbghG0sejTtG
-ZrJEyvnaZ6EAvrfhYKcz4LHLGY0yqSnN+epD8Ug1pKjUyDGneGRKh/GrZo5SChOI
-Z+jAJjq1EqtU67gmpQnld7knoYSrtHmylD707024Q9jbWXEaYngryubTGfaZvBio
-GXqA6uO2xm0BqqHYbq4eM5MEdZU16JtGHLknvCuB1X7HE/evIJTYr8AinUqGZfc=
-=EDwW
+iQIcBAEBCAAGBQJV6jngAAoJEL54rhJi8gl5mdMQAJ3dbHo6SocjCVrslGy85vCd
+1+YdStE2T5Ppq6Nzs3Vcw0mYbG8wo0j4FCJTkzSBPS5OV6AyFWIsfHHX76hOsrp1
+uVouamdh3lGbzracDKUpm6/Zt2/R+7my0MnmzhyvKWL2NNSsuodNix+MvPSvp9ry
+7CjQzYVzVYEa/WtqW856yA+ye7p9AqFGhBJPB8giOV2HwuAytzgXkeVhrG5r/Zmu
+agYCs+pFJwUrmgkHmDYtyfQP5Ue4kA/peSo+6L/9cJ+NTC/7zm4Liw+kgj819pF2
+RZ2790NadXgXIYXtMv471BUkA9mFYeljcuajIQ2y/XTTH9aB/NgnhCtRLzLBkAKW
+D7EPkrWQ2r9ZTPf/p3n714Kt76mAyXkcUy4vrSAPGBH+y0bvBJ+1HezhceHy1M+b
+wtxy3x8UkemdM1ZndSzSN3KtqYvZRi44O+KCPhZXp34tzFEI8h0gTH/7vUb4X3t5
+xX2OXzokBQe9urwQj0E63N4az1hj6gcKezVfLiq+YDHSYa/dCkiuaDZbMzVyLhLT
+UP1WYohvaDYkuewKwTn8Q9tz+iMfnfAR2i7FcTUQ9Mcs6RXcPIknEjirZXmP0wd4
+DetOlnPsBN7vf6zrgGuh1D0TIi2WnKSFR3nNg58vuSc2SuazcQFaUVkRG0rtt92h
+dV2/n9JTP9Dem1GX9HQs
+=Scls
 -----END PGP SIGNATURE-----
-
---=-auBKKLxeXetUY/CmCIi1--
