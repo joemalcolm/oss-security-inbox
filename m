@@ -1,4 +1,9 @@
-Received: (qmail 1621 invoked by uid 550); 5 Jan 2023 12:06:17 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2028" "Saturday" "5" "September" "2015" "06:07:00" "-0400" "Scott Arciszewski" "scott@arciszewski.me" "<CAPKwhwto-ZPi0o98NAF3F9FxRjiiwiwHCFYTKNSCQJrf8BRReQ@mail.gmail.com>" "67" "[oss-security] Some Wordpress Plugin Stuff" nil nil nil "9" "2015090510:07:00" "[oss-security] Some Wordpress Plugin Stuff" (number mark "U       scott@arcisz Sep  5   67/2028  " thread-indent "\"[oss-security] Some Wordpress Plugin Stuff\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 30076 invoked by uid 550); 5 Sep 2015 10:54:47 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,141 +11,94 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5486 invoked from network); 4 Jan 2023 22:47:24 -0000
-Message-ID: <07c41f5e-dbe3-4ff4-0e2f-386776a07370@free.fr>
-Date: Wed, 4 Jan 2023 23:47:12 +0100
+Received: (qmail 20290 invoked from network); 5 Sep 2015 10:07:13 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:date:message-id:subject:from:to:content-type;
+        bh=Fr0gKRK4QZkjUTMG1DZfapoAtAw2HJo7yEuIc3fVfOo=;
+        b=rWxZ2LUbLSmbXsi45XGmqeBPTBVAdZpOueQUkV4PpqBPcqMU7DU+AYADeyQwG9irvA
+         N5xkB0dzrxec9O4vVX1zZ3pHvnH3ULa9Vx5KIcdizI+wQ7Hr4oEp6OL8/nHEcgx5exi6
+         4vCEOywzEh2Wh6ylMGH4/rCgTs36ld5Ock0yB6yamY7qQOKmQ2J3ScYhV4AwlKvl5nY7
+         GVUcqryN3kas/f9EkJdzwff5E8JLB3+0AaA4inD36/F6W9gLEmlBMDX5PvZM5BL2TEae
+         liM19i2z+lg9KMVugrS6KQe5mjZM0+fWuftvKD5zd5aHlIKbQRy7JYblNtM8IOasWLAa
+         maLQ==
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Content-Language: fr, en-US
+X-Received: by 10.50.61.243 with SMTP id t19mr14408475igr.22.1441447620813;
+ Sat, 05 Sep 2015 03:07:00 -0700 (PDT)
+X-Google-Sender-Auth: 04NWwIcjNiEcaH_EpzkXLSEpsbY
+Message-ID: <CAPKwhwto-ZPi0o98NAF3F9FxRjiiwiwHCFYTKNSCQJrf8BRReQ@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=047d7bdc0a4e66aaa1051efd2d21
+Date: Sat, 5 Sep 2015 06:07:00 -0400
+From: Scott Arciszewski <scott@arciszewski.me>
+Reply-To: oss-security@lists.openwall.com
+Sender: kobrasrealm@gmail.com
+Subject: [oss-security] Some Wordpress Plugin Stuff
 To: oss-security@lists.openwall.com
-From: Gabriel Corona <gabriel.corona@free.fr>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------RuwiTjnWcK0MREhZbFRYnvjV"
-Subject: [oss-security] Code execution through MIME-type association of Mono interpreter and
- security expectations of MIME type associations
 
---------------RuwiTjnWcK0MREhZbFRYnvjV
-Content-Type: multipart/mixed; boundary="------------COWUHtzHfvX0cRjzJdzzFS0Z";
- protected-headers="v1"
-From: Gabriel Corona <gabriel.corona@free.fr>
-To: oss-security@lists.openwall.com
-Message-ID: <07c41f5e-dbe3-4ff4-0e2f-386776a07370@free.fr>
-Subject: Code execution through MIME-type association of Mono interpreter and
- security expectations of MIME type associations
+--047d7bdc0a4e66aaa1051efd2d21
+Content-Type: text/plain; charset=UTF-8
 
---------------COWUHtzHfvX0cRjzJdzzFS0Z
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
+Hi OSS Sec,
 
-T24gRGViaWFuIGFuZCBkZXJpdmF0aXZlcywgdGhlIG1vbm8tcnVudGltZS1j
-b21tb24gcGFja2FnZSBhc3NvY2lhdGVzDQp0aGUgYXBwbGljYXRpb24veC1t
-cy1kb3MtZXhlY3V0YWJsZSBNSU1FIHR5cGUgd2l0aCB0aGUgTW9ubyBDTFIN
-CmludGVycHJldGVyIFsxXS4gVGhpcyBtYWtlcyBpdCB2ZXJ5IGVhc3kgZm9y
-IGFuIGF0dGFja2VyIHRvIHRyaWdnZXINCmFyYml0cmFyeSBjb2RlIGV4ZWN1
-dGlvbiB0aHJvdWdoIHByb2dyYW1zIHN1Y2ggYXMgQ2hyb21pdW0gWzJdLCBG
-aXJlZm94DQpbM10gYW5kIFRodW5kZXJiaXJkIFs0XSB3aGVuIHRoZSBNb25v
-IHBhY2thZ2VzIGFyZSBpbnN0YWxsZWQuDQoNClRoaXMgaGFzIGJlZW4gZml4
-ZWQgaW4gcGFja2FnZSA2LjguMC4xMDUrZGZzZy0zLjMgWzVdIHdoaWNoIGlz
-IGF2YWlsYWJsZQ0KaW4gRGViaWFuIHRlc3RpbmcsIERlYmlhbiBTaWQgYW5k
-IFVidW50dSBMdW5hciAoMjMuMDQpLiBUaGlzIGhhcw0KY3VycmVudGx5IG5v
-dCBiZWVuIGZpeGVkIGluIGFueSBzdGFibGUgZGlzdHJpYnV0aW9uLg0KDQpP
-biBGaXJlZm94IGFuZCBUaHVuZGVyYmlyZCwgYSB1c2VyIGludGVyZmFjZSBp
-cyB1c2VkIHRvIGxldCB0aGUgdXNlcg0KY29uZmlybSB3aGljaCBwcm9ncmFt
-IHRvIHVzZSB0byBvcGVuIHRoZSBmaWxlLiBJbiB0aGlzIGNhc2UsIHdlIGNh
-bg0KdHJpY2sgdGhlIHVzZXIgaW50byB0aGlua2luZyBoZSBpcyBhYm91dCB0
-byBvcGVuIHRoZSBmaWxlIHdpdGggYQ0KaW5ub2N1b3VzIHByb2dyYW0gYnkg
-c2VydmluZyB0aGUgZmlsZSB3aXRoIGEgc3BlY2lhbCBNSU1FIHR5cGUgc3Vj
-aCBhcw0KaW5vZGUvZGlyZWN0b3J5IG9yIHgtc2NoZW1lLWhhbmRsZXIvdHJh
-c2ggWzMsNF0uIFRoZXNlIE1JTUUgdHlwZXMgYXJlDQp0eXBpY2FsbHkgYXNz
-b2NpYXRlZCB3aXRoIGEgZmlsZSBtYW5hZ2VyLiBXaGVuIGNhbGxlZCB0aGlz
-IHdheSwgc2V2ZXJhbA0KZmlsZSBtYW5hZ2VycyB3aWxsIHRyeSB0byBvcGVu
-IHRoZSBmaWxlIGJhc2VkIG9uIE1JTUUtdHlwZSBhc3NvY2lhdGlvbnMNCih3
-aGVyZSB0aGUgTUlNRS10eXBlIGlzIGluZmVycmVkIGVpdGhlciBmcm9tIHRo
-ZSBmaWxlIG5hbWUgZXh0ZW5zaW9uIG9yDQpmcm9tIHRoZSBmaWxlIGNvbnRl
-bnQpLiBUaHVuYXIsIFBDTWFuRk0sIFBDTWFuRk0tUXQgd2VyZSBmb3VuZCB0
-bw0KZXhoaWJpdCB0aGlzIGJlaGF2aW9yLg0KDQpGb3IgVGh1bmFyLCB0aGlz
-IGJlaGF2aW9yIGhhcyBiZWVuIGZpeGVkIGluIHY0LjE2LjcgYW5kIHY0LjE3
-LjIgWzddLg0KDQpXZSBjYW4gdXNlIGEgdmlzdWFsbHkgY29uZnVzYWJsZSBm
-aWxlIG5hbWUgc3VjaCBhcyBSRVBPUlQuzqFERiAobm90aWNlDQp0aGUgbm9u
-LUFTQ0lJIGZpcnN0IGxldHRlciBpbiB0aGUgZXh0ZW5zaW9uKSBpbiBvcmRl
-ciB0byB0cmljayB0aGUgdXNlcg0KaW50byB0aGlua2luZyBoZSBpcyBvcGVu
-aW5nIGEgInNhZmUiIGZpbGUgdHlwZSB3aGlsZSBkaXNhYmxpbmcgTUlNRS10
-eXBlDQpkZXRlY3Rpb24gYmFzZWQgb24gdGhlIGZpbGUgbmFtZSBleHRlbnNp
-b24uDQoNCk1vcmVvdmVyLCBpbiBGaXJlZm94IGFuZCBUaHVuZGVyYmlyZCBb
-OF0sIHdlIGNhbiBjb3JydXB0IHRoZSBmaWxlDQphc3NvY2lhdGlvbiBkYXRh
-YmFzZSAoaGFuZGxlcnMuanNvbikgaW4gb3JkZXIgdG8gZGlzcGxheSBhIGJv
-Z3VzIGZpbGUNCnR5cGUgZGVzY3JpcHRpb24gYXNzb2NpYXRlZCB3aXRoIHRo
-ZSBpbm9kZS9kaXJlY3Rvcnkgb3IgeC1zY2hlbWUtDQpoYW5kbGVyL3RyYXNo
-IE1JTUUgdHlwZS4gVGhpcyBpcyBkb25lIGJ5IGZpcnN0IHNlcnZpbmcgYSAi
-c2FmZSIgZmlsZQ0KdHlwZSAoc3VjaCBhcyBhIFBERikgd2l0aCB0aGlzIE1J
-TUUgdHlwZS4NCg0KVGhpcyBiZWdzIHNldmVyYWwgcXVlc3Rpb25zIGFib3V0
-IGZpbGUgYXNzb2NpYXRpb25zOg0KDQoqIElzIGl0IGxlZ2l0aW1hdGUgdG8g
-cmVnaXN0ZXIgZmlsZSBhc3NvY2lhdGlvbnMgZm9yIHByb2dyYW1zDQogICB3
-aGljaCBjYW4gZXhiaWJpdCBhcmJpdHJhcnkgY29kZSBleGVjdXRpb24gc3Vj
-aCBhcyB1bnNhbmRib3hlZA0KICAgcHJvZ3JhbSBpbnRlcnByZXRlcnM/DQoq
-IFdoZW4gYSBwcm9ncmFtIChzdWNoIGFzIGEgZmlsZSBtYW5hZ2VyKSBpcyBj
-YWxsZWQgd2l0aCBhIHJlZ3VsYXIgZmlsZQ0KICAgaXQgZG9lcyBub3QgaGFu
-ZGxlLCBzaG91bGQgaXQgc3Bhd24gYSBuZXcgcHJvZ3JhbSBmb3IgaGFuZGxp
-bmcgdGhlDQogICBmaWxlIHdpdGhvdXQgdXNlciBjb25maXJtYXRpb24gKGFz
-IGl0IG1heSBiZSBleHBsb2l0ZWQgZm9yIGZpbGUgdHlwZQ0KICAgc3Bvb2Zp
-bmcpPw0KKiBTaG91bGQgYSBjbGllbnQgcHJvZ3JhbSByZWplY3Qgc3BlY2lh
-bC9ib2d1cyBNSU1FIHR5cGVzIHN1Y2ggYXMNCiAgIGlub2RlLyogYW5kIHgt
-c2NoZW1lLWhhbmRsZXIvKiBhcyB0aGV5IGFyZSBub3QgZXhwZWN0ZWQgdG8g
-YmUNCiAgIHVzZWQgaW4gdGhpcyBjb250ZXh0IChhbmQgaXQgbWF5IGJlIGV4
-cGxvaXRlZCBmb3IgZmlsZSB0eXBlIHNwb29maW5nKT8NCg0KSSB3b3VsZCBj
-b25zaWRlciB0aGUgZm9sbG93aW5nIGJlaGF2aW9ycyB0byBiZSB2dWxuZXJh
-YmlsaXRpZXM6DQoNCiogQXNzb2NpYXRpb24gb2YgdGhlIE1vbm8gaW50ZXJw
-cmV0ZXIgd2l0aCBhIE1JTUUgdHlwZSBpbiB0aGUNCiAgIERlYmlhbi9VYnVu
-dHUgcGFja2FnZXM7DQoqIFRodW5hciBkZWxlZ2F0ZXMgdG8gTUlNRSB0eXBl
-IGFzc29jaWF0aW9ucyB3aGVuIG9wZW5lZCB3aXRoIGEgcmVndWxhcg0KICAg
-ZmlsZSAoQ1ZFLTIwMjEtMzI1NjMpOw0KKiBQQ01hbkZNIGRlbGVnYXRlcyB0
-byBNSU1FIHR5cGUgYXNzb2NpYXRpb25zIHdoZW4gb3BlbmVkIHdpdGggYSBy
-ZWd1bGFyDQogICBmaWxlOw0KKiBQQ01hbkZNLVF0IGRlbGVnYXRlcyB0byBN
-SU1FIHR5cGUgYXNzb2NpYXRpb25zIHdoZW4gb3BlbmVkIHdpdGggYQ0KICAg
-cmVndWxhciBmaWxlOw0KKiBGaXJlZm94IGFuZCBUaHVuZGVyYmlyZCBhY2Nl
-cHQgInNwZWNpYWwiIE1JTUUgdHlwZXMgKGlub2RlLyogYW5kDQogICB4LXNj
-aGVtZS1oYW5kbGVyLyopIGZyb20gcmVtb3RlIHNlcnZlcnM7DQoqIEZpbGUg
-dHlwZSBzcG9vZmluZyBieSBjb3JydXB0aW5nIHRoZSBGaXJlZm94IGFuZCBU
-aHVuZGVyYmlyZA0KICAgaGFuZGxlcnMuanNvbiBkYXRhYmFzZS4NCg0KWzFd
-IGh0dHBzOi8vYnVncy5kZWJpYW4ub3JnL2NnaS1iaW4vYnVncmVwb3J0LmNn
-aT9idWc9OTcyMTQ2DQpbMl0gaHR0cHM6Ly93d3cuZ2FicmllbC51cmRoci5m
-ci92aWRlb3MvY2hyb21pdW0tZmlsZXR5cGUtc3Bvb2ZpbmctcG9jLm9ndg0K
-WzNdIGh0dHBzOi8vd3d3LmdhYnJpZWwudXJkaHIuZnIvdmlkZW9zL2ZpcmVm
-b3gtZmlsZXR5cGUtc3Bvb2ZpbmctcG9jLm9ndg0KWzRdIA0KaHR0cHM6Ly93
-d3cuZ2FicmllbC51cmRoci5mci92aWRlb3MvdGh1bmRlcmJpcmQtZmlsZXR5
-cGUtc3Bvb2ZpbmctcG9jLm9ndg0KWzVdIGh0dHBzOi8vcGFja2FnZXMuZGVi
-aWFuLm9yZy9idXN0ZXIvbW9uby1ydW50aW1lLWNvbW1vbg0KWzZdIA0KaHR0
-cHM6Ly9wYWNrYWdlcy51YnVudHUuY29tL3NlYXJjaD9rZXl3b3Jkcz1tb25v
-LXJ1bnRpbWUtY29tbW9uJnNlYXJjaG9uPW5hbWVzJnN1aXRlPWFsbCZzZWN0
-aW9uPWFsbA0KWzddIGh0dHBzOi8vbnZkLm5pc3QuZ292L3Z1bG4vZGV0YWls
-L0NWRS0yMDIxLTMyNTYzDQpbOF0gaHR0cHM6Ly93d3cuZ2FicmllbC51cmRo
-ci5mci92aWRlb3MvZmlyZWZveC1maWxldHlwZS1zcG9vZmluZy1wb2MyLm9n
-dg0K
+I took a quick glance through some Wordpress plugins tagged with security.
+I don't imagine anyone would be surprised that I found vulnerabilities.
 
---------------COWUHtzHfvX0cRjzJdzzFS0Z--
+-------------------------------
 
---------------RuwiTjnWcK0MREhZbFRYnvjV
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature"
+SecurityMoz Security Audit
 
------BEGIN PGP SIGNATURE-----
+https://wordpress.org/plugins/securemoz-security-audit/
 
-wsF5BAABCAAjFiEEleStherPvjH3F2XUIWPS9KpGc+gFAmO2AfAFAwAAAAAACgkQIWPS9KpGc+gf
-ARAAgkn74dU8I9biqBZrQGVajMjmMzsCCsUL4VmqR9chUFT/XJ2qmkGdGxTJvcMB5QmqS4hinrtI
-P8e6n8ZfRLdY5f8JZuyog0S81Tb6odyioqOwW/CfbZOtziImu/FA9ZxTTEGE/8NNN13iH1vSiV1s
-qAcKNST2qHoVgl9hyyjzy4V0bc1hpVhPTqWxkH46wky6qKC2lD1D0PTozSXY/32Ht/rW6glw4Ll4
-nja760CePpAtSD5zGWcqESaBsWcVwRCs7a/Lz72i7OhyF7VcBmhpXJK8Ym3grTUtmL3Jx7GwKO6W
-d/4C2iP/fxQxOX4NrDvn+rgBguwpI8a3zW1BSKZKK1u3tHldn/NZVBF5+VCSYfmch6o7l13J566S
-jGQxjo6kl6wWKmBQcN7seXDUWrf5Qs1rfAtxYcJuX6gtzjiVgsyp+yMTUjxvL0RRoQZ4w9xWoSd8
-HMABEP5kUYg4s/UgtNlD571qPFK9w1NyTaz3tHudUF50rgY1RpBkiNk0+1hddNW7uVtn5q83WhlX
-91Y4on5uhccFN+nLnzmZsFOs26waNjQzVf4H/i+Ot9lmZguws+TH8UrXFtDCqEOYYrFbrOF92wMs
-oGObQhIljL54HjVYMXnK6h4jxb3yq6Uv0MKfgXZ/LCoWGa2zKtvu/SVsKViU/YtzAUBKAoIWOXE8
-cgQ=
-=gjyL
------END PGP SIGNATURE-----
+file_get_contents() + explicitly HTTP (no TLS) -> unserialize()
 
---------------RuwiTjnWcK0MREhZbFRYnvjV--
+-------------------------------
+
+WP Limit Login Attempts
+
+https://wordpress.org/plugins/wp-limit-login-attempts/
+
+Trivial SQL injection via HTTP headers.
+
+     $ip = getip();
+     $tablename = $wpdb->prefix."limit_login";
+     $tablerows = $wpdb->get_results( "SELECT `login_id`,
+`login_ip`,`login_attempts`,`attempt_time`,`locked_time` FROM  `$tablename`
+  WHERE `login_ip` =  '$ip'  ORDER BY `login_id` DESC LIMIT 1 " );
+
+     // ~8<~8<~8<~8<~8<~8<~8<~8<~
+
+    function getip(){
+           if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+            $ip = $_SERVER['HTTP_CLIENT_IP'];
+        } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+            $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+        } else {
+            $ip = $_SERVER['REMOTE_ADDR'];
+             if($ip=='::1'){
+                 $ip = '127.0.0.1';
+             }
+        }
+        return $ip;
+    }
+
+-------------------------------
+
+I'm not sure if it's even worth assigning a CVE to any of these. Maybe the
+SQLi one? I leave that decision in MITRE's capable hands.
+
+Also, Tor Blocker (link below) uses HTTP to grab the list of IP addresses
+to block. It's telling and appropriate that the person who developed a
+plugin to oppose a privacy technology would fail to use TLS.
+
+https://wordpress.org/plugins/tor-exit-nodes-blocker/
+
+(Surely no one would ever think to hack an upstream router and MitM the
+connection to block the blog administrator from their own blog or allow Tor
+nodes through!)
+
+That's all from me. I might keep poking at some of the fatter plugins to
+see what I can find.
+
+Scott Arciszewski
+
+--047d7bdc0a4e66aaa1051efd2d21--
