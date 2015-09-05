@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5448" "Thursday" "28" "April" "2016" "14:44:18" "+0700" "Hans Jerry Illikainen" "hji@dyntopia.com" "<m1lh3yjhyl.darpa@darpa.mil>" "213" "[oss-security] CVE-2016-3078: php: integer overflow in ZipArchive::getFrom*" nil nil nil "4" "2016042807:44:18" "[oss-security] CVE-2016-3078: php: integer overflow in ZipArchive::getFrom*" (number mark "U       hji@dyntopia Apr 28  213/5448  " thread-indent "\"[oss-security] CVE-2016-3078: php: integer overflow in ZipArchive::getFrom*\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1591" "Saturday" "5" "September" "2015" "12:39:39" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150905163939.EF74C36E3D5@smtpvbsrv1.mitre.org>" "40" "[oss-security] Re: CVE Request: PgBouncer: failed auth_query lookup leads to connection as auth_user" nil nil nil "9" "2015090516:39:39" "[oss-security] Re: CVE Request: PgBouncer: failed auth_query lookup leads to connection as auth_user" (number mark "U       cve-assign@m Sep  5   40/1591  " thread-indent "\"[oss-security] Re: CVE Request: PgBouncer: failed auth_query lookup leads to connection as auth_user\"\n") "<20150904180811.GA22933@eldamar.local>" ("<20150904180811.GA22933@eldamar.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 11435 invoked by uid 550); 28 Apr 2016 07:44:06 -0000
+Received: (qmail 26188 invoked by uid 550); 5 Sep 2015 16:39:51 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,248 +12,52 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11412 invoked from network); 28 Apr 2016 07:44:05 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=dyntopia-com.20150623.gappssmtp.com; s=20150623;
-        h=from:to:subject:date:message-id:mime-version;
-        bh=KXu7A9XYwXwlFnTdVoQso5jo3zBjffRpMGZgSXsEczQ=;
-        b=wWIAPybUeUzbq38nuu7U+04Rhdjin0kEJqL+0XtSpROdOTKhZ2NRHcCHE++zZYwFRH
-         DcWgoTz+lJLc4bB72HvEMtvhEcXQ1+TCKkPFiv4Le9PI2+zNI3C5OLvHYZIjRa5snfl4
-         6ELteXlfVooGn3I9Sc8mOeuSBLWPWnxS8Pm7EcvOw1n0zbqAy+gsuGl6+t3JspMXpUrC
-         RuDSJWVcuZtq9s4hDjEJ7O2bcIEItjmTY1aCAv5UP2uRYa1+ygxEQ7MnrlGgJtbIPj46
-         gHUK9/yMbFb/7ezNDtiAbefCuakWhQxmyUfdTWP3v8xo46S58TxgSDqoxqUuyJZ0uzaJ
-         GsYw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:subject:date:message-id:mime-version;
-        bh=KXu7A9XYwXwlFnTdVoQso5jo3zBjffRpMGZgSXsEczQ=;
-        b=VmomPmaofzfMOnkIxrMVvlVgm8H/WEG2Esq0ZDgUxe54gwMu3axd0grPZFM08fPQvx
-         bLD74shPXNwRjCuYmK788HWFRsAmxPqBeFpRFkyuD8QC671nZuMImHCOcnogH0xIFVjj
-         9OUqTdZhDIK4PVENYBHew6qDfVOTCQUf/PDPDETxqy1MYkwDHaHWJAPy9KGnS0rWFl7R
-         0i0xQA0RNYDWu/7eo8IxFiW6NwqkvXEUovWJGM9cLvqKa6Y0PiXlC3RAjvFX0A0SqOYt
-         bL5BmcpBZT8Biv6VOgVjQ8D2XnRBbz1LxkH/TUkE7asiM/jhKJTWvYxelchqYJW/w7+z
-         AbTA==
-X-Gm-Message-State: AOPr4FVotQ9JLCufjjfvv2fFoDwfc6IDlPdQHaTVDxjnEyMZpRjLtVyCDU8Oiel1ScnDYQ==
-X-Received: by 10.28.188.7 with SMTP id m7mr13898709wmf.37.1461829434084;
-        Thu, 28 Apr 2016 00:43:54 -0700 (PDT)
-From: Hans Jerry Illikainen <hji@dyntopia.com>
-To: bugtraq@securityfocus.com, fulldisclosure@seclists.org, oss-security@lists.openwall.com
-Date: Thu, 28 Apr 2016 14:44:18 +0700
-Message-ID: <m1lh3yjhyl.darpa@darpa.mil>
-MIME-Version: 1.0
-Content-Type: text/plain
-Subject: [oss-security] CVE-2016-3078: php: integer overflow in ZipArchive::getFrom*
+Received: (qmail 26170 invoked from network); 5 Sep 2015 16:39:51 -0000
+From: cve-assign@mitre.org
+To: carnil@debian.org
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <20150904180811.GA22933@eldamar.local>
+Message-Id: <20150905163939.EF74C36E3D5@smtpvbsrv1.mitre.org>
+Date: Sat,  5 Sep 2015 12:39:39 -0400 (EDT)
+Subject: [oss-security] Re: CVE Request: PgBouncer: failed auth_query lookup leads to connection as auth_user
 
-Details
-=======
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-An integer wrap may occur in PHP 7.x before version 7.0.6 when reading
-zip files with the getFromIndex() and getFromName() methods of
-ZipArchive, resulting in a heap overflow.
+> https://pgbouncer.github.io/2015/09/pgbouncer-1-6-1/
+> https://github.com/pgbouncer/pgbouncer/issues/69
+> https://github.com/pgbouncer/pgbouncer/commit/7ca3e5279d05fceb1e8a043c6f5b6f58dea3ed38
 
-php-7.0.5/ext/zip/php_zip.c
-,----
-| 2679 static void php_zip_get_from(INTERNAL_FUNCTION_PARAMETERS, int type) /* {{{ */
-| 2680 {
-| ....
-| 2684     struct zip_stat sb;
-| ....
-| 2689     zend_long len = 0;
-| ....
-| 2692     zend_string *buffer;
-| ....
-| 2702     if (type == 1) {
-| 2703         if (zend_parse_parameters(ZEND_NUM_ARGS(), "P|ll", &filename, &len, &flags) == FAILURE) {
-| 2704             return;
-| 2705         }
-| 2706         PHP_ZIP_STAT_PATH(intern, ZSTR_VAL(filename), ZSTR_LEN(filename), flags, sb);  // (1)
-| 2707     } else {
-| 2708         if (zend_parse_parameters(ZEND_NUM_ARGS(), "l|ll", &index, &len, &flags) == FAILURE) {
-| 2709             return;
-| 2710         }
-| 2711         PHP_ZIP_STAT_INDEX(intern, index, 0, sb);                                      // (1)
-| 2712     }
-| ....
-| 2718     if (len < 1) {
-| 2719         len = sb.size;
-| 2720     }
-| ....
-| 2731     buffer = zend_string_alloc(len, 0);                                                // (2)
-| 2732     n = zip_fread(zf, ZSTR_VAL(buffer), ZSTR_LEN(buffer));                             // (3)
-| ....
-| 2742 }
-`----
+> http://comments.gmane.org/gmane.comp.db.postgresql.pgbouncer.general/1251
+> 
+> auth_user is already set (to the config 
+> auth_user value). Thus, getting no rows back from the auth_query lets one 
+> log in as the powerful auth_user user
 
-With `sb.size' from (1) being:
+> The real bug was assigning db->auth_user to client->auth_user in the
+> first place.
 
-php-7.0.5/ext/zip/lib/zip_stat_index.c
-,----
-| 038 ZIP_EXTERN int
-| 039 zip_stat_index(zip_t *za, zip_uint64_t index, zip_flags_t flags,
-| 040                zip_stat_t *st)
-| 041 {
-| ...
-| 043     zip_dirent_t *de;
-| 044
-| 045     if ((de=_zip_get_dirent(za, index, flags, NULL)) == NULL)
-| 046         return -1;
-| ...
-| 063         st->size = de->uncomp_size;
-| ...
-| 086 }
-`----
+Use CVE-2015-6817.
 
-Both `size' and `uncomp_size' are unsigned 64bit integers:
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-php-7.0.5/ext/zip/lib/zipint.h
-,----
-| 339 struct zip_dirent {
-| ...
-| 351     zip_uint64_t uncomp_size;        /* (cl) size of uncompressed data */
-| ...
-| 332 };
-`----
-
-php-7.0.5/ext/zip/lib/zip.h
-,----
-| 279 struct zip_stat {
-| ...
-| 283     zip_uint64_t size;            /* size of file (uncompressed) */
-| ...
-| 290 };
-`----
-
-Whereas `len' is signed and has a platform-dependent size:
-
-php-7.0.5/Zend/zend_long.h
-,----
-| 028 #if defined(__x86_64__) || defined(__LP64__) || defined(_LP64) || defined(_WIN64)
-| 029 # define ZEND_ENABLE_ZVAL_LONG64 1
-| 030 #endif
-| ...
-| 033 #ifdef ZEND_ENABLE_ZVAL_LONG64
-| 034 typedef int64_t zend_long;
-| ...
-| 043 #else
-| 044 typedef int32_t zend_long;
-| ...
-| 053 #endif
-`----
-
-Uncompressed file sizes in zip-archives may be specified as either 32-
-or 64bit values; with the latter requiring that the size be specified in
-the extra field in zip64 mode.
-
-Anyway, as for the invocation of `zend_string_alloc()' in (2):
-
-php-7.0.5/Zend/zend_string.h
-,----
-| 119 static zend_always_inline zend_string *zend_string_alloc(size_t len, int persistent)
-| 120 {
-| 121     zend_string *ret = (zend_string *)pemalloc(ZEND_MM_ALIGNED_SIZE(_ZSTR_STRUCT_SIZE(len)), persistent); // (4)
-| ...
-| 133     ZSTR_LEN(ret) = len;                                                                                  // (5)
-| 134     return ret;
-| 135 }
-`----
-
-The `size' argument to the `pemalloc' macro is aligned/adjusted in (4)
-whilst the *original* value of `len' is stored as the size of the
-allocated buffer in (5).  No boundary checking is done in (4) and it may
-thus wrap, which would lead to a heap overflow during the invocation of
-`zip_fread()' in (3) as the `toread' argument is `ZSTR_LEN(buffer)':
-
-php-7.0.5/Zend/zend_string.h
-,----
-| 041 #define ZSTR_LEN(zstr)  (zstr)->len
-`----
-
-On a 32bit system:
-
-,----
-| (gdb) p/x ZEND_MM_ALIGNED_SIZE(_ZSTR_STRUCT_SIZE(0xfffffffe))
-| $1 = 0x10
-`----
-
-The wraparound may also occur on 64bit systems with `uncomp_size'
-specified in the extra field (Zip64 mode; ext/zip/lib/zip_dirent.c:463).
-However, it won't result in a buffer overflow because of `zip_fread()'
-bailing on a size that would have wrapped the allocation in (4):
-
-php-7.0.5/ext/zip/lib/zip_fread.c
-,----
-| 038 ZIP_EXTERN zip_int64_t
-| 039 zip_fread(zip_file_t *zf, void *outbuf, zip_uint64_t toread)
-| 040 {
-| ...
-| 049     if (toread > ZIP_INT64_MAX) {
-| 050         zip_error_set(&zf->error, ZIP_ER_INVAL, 0);
-| 051         return -1;
-| 052     }
-| ...
-| 063 }
-`----
-
-php-7.0.5/ext/zip/lib/zipconf.h
-,----
-| 130 #define ZIP_INT64_MAX     0x7fffffffffffffffLL
-`----
-
-,----
-| (gdb) p/x ZEND_MM_ALIGNED_SIZE(_ZSTR_STRUCT_SIZE(0x7fffffffffffffff))
-| $1 = 0x8000000000000018
-`----
-
-
-PoC
-===
-
-Against Arch Linux i686 with php-fpm 7.0.5 behind nginx [1]:
-
-,----
-| $ python exploit.py --bind-port 5555 http://1.2.3.4/upload.php
-| [*] this may take a while
-| [*] 103 of 4096 (0x67fd0)...
-| [+] connected to 1.2.3.4:5555
-| 
-| id
-| uid=33(http) gid=33(http) groups=33(http)
-| 
-| uname -a
-| Linux arch32 4.5.1-1-ARCH #1 SMP PREEMPT Thu Apr 14 19:36:01 CEST
-| 2016 i686 GNU/Linux
-| 
-| pacman -Qs php-fpm
-| local/php-fpm 7.0.5-2
-|     FastCGI Process Manager for PHP
-| 
-| cat upload.php
-| <?php
-| $zip = new ZipArchive();
-| if ($zip->open($_FILES["file"]["tmp_name"]) !== TRUE) {
-|     echo "cannot open archive\n";
-| } else {
-|     for ($i = 0; $i < $zip->numFiles; $i++) {
-|         $data = $zip->getFromIndex($i);
-|     }
-|     $zip->close();
-| }
-| ?>
-`----
-
-
-Solution
-========
-
-This issue has been fixed in php 7.0.6.
-
-
-
-Footnotes
-_________
-
-[1] [https://github.com/dyntopia/exploits/tree/master/CVE-2016-3078]
-
-
--- 
-Hans Jerry Illikainen
+iQIcBAEBCAAGBQJV6xpiAAoJEL54rhJi8gl5xggP/ifKkzMNnMHj6gpM3wvGfgNk
+7cp/i+FaEz/q6o+f7ZGY7uTRnPaaD51QXWQpg4FZZpEN5MuXCEYzx9zwXZVJxEte
+Pbim83MHo0ubnMABwkP/9rKDo5l+e3mFHB5DM+mKsWwdwudK1wUCoTxWo19VISPn
+nZH6sEwPmj2OFIRD01sq7J/WPaE1Yc7UGDLX2nwO6+sGQfkTLcOl6DXSXQWry0xO
+PJiUKynWfSnEr8fyGtw1/8Y0X7JcBTSxOJ/fcPxSpTfatmtePnMYRf9a8+AlS7fV
+K8tuecXItQo8hyQEKxzayMy0tilFOww3xWoxdLTeziQZeIvywjvL9Keij+PhHTXH
++Fcb4sMb7O1wdpIx4mlvTvleF1PHTccUB41tqRvWz+V+i9ag49ER+qpEpJkhpZ5V
+tNJkEf4O71lDFgzWnSXfJeNYUDasMkK/JqJyZ8jrUDlIkrKfqjrsgnji1ytuD+wh
+5rMWNjDeFMUtzEWR8fDTDCVzcYPmnvI1yaW+U9EjHzXzFqKLaueP9NTQGtBTBCnq
+cRhI435z59m7ILXTbVGxo4IGmhVtLWqZMSfHI/7ImQBuNYfMw6thRA9hHHOUEP6m
+iSsRrrahj3aYOJCmt76c1cyk0wy/MoW2oE6Ijt9+dKenFC11sn0rx4YLW5gbkbs3
+DxI5O04+S3maL6o50vuE
+=7MYo
+-----END PGP SIGNATURE-----
