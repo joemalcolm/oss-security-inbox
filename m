@@ -1,4 +1,9 @@
-Received: (qmail 32153 invoked by uid 550); 28 Nov 2024 12:14:19 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3191" "Sunday" "6" "September" "2015" "12:58:12" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150906165812.888373AE033@smtpvbsrv1.mitre.org>" "83" "[oss-security] Re: Some Wordpress Plugin Stuff" nil nil nil "9" "2015090616:58:12" "[oss-security] Re: Some Wordpress Plugin Stuff" (number mark "U       cve-assign@m Sep  6   83/3191  " thread-indent "\"[oss-security] Re: Some Wordpress Plugin Stuff\"\n") "<CAPKwhwto-ZPi0o98NAF3F9FxRjiiwiwHCFYTKNSCQJrf8BRReQ@mail.gmail.com>" ("<CAPKwhwto-ZPi0o98NAF3F9FxRjiiwiwHCFYTKNSCQJrf8BRReQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 3891 invoked by uid 550); 6 Sep 2015 16:58:30 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,93 +12,95 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 32135 invoked from network); 28 Nov 2024 12:14:19 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=debian.org;
-	s=smtpauto.stravinsky; h=X-Debian-User:In-Reply-To:Content-Type:MIME-Version:
-	References:Message-ID:Subject:To:From:Date:Reply-To:Cc:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=VLjGr0fgncfM6m9cdADlGkdNtpjgAHMqTmFM7xMS4ws=; b=WSpPz/yxYzBgNtDEmQDSKcW582
-	bgRVzeWA0n8oZWr42F1I/zFSPwtu3V4tsSFYY7IFPVyv31CIxWnWcBNXShNoWl9UNine5IJrRH90z
-	qm5KwJVIwba/3uRVwvmuv9lqtqB/41YaVHztWx0ja2VC+P3cI3VlOQG4wWFsDKqLRKIxWLGhft4T7
-	4xPBEQ+uhYRSPeKz/pltLjs3s1zxnZTO7glIZeNP3E0g2lpHQEniz8p/quzRwy4r+w8rcEyZuCtpN
-	T3IV+qUwbZnIJll5NocmeR/7JRqXEDKjnoGRJ/IiWpdrdsiQjMQ2yHKYcORRXm6OCkyBVrkrwNfft
-	3VOJI3yg==;
-Date: Thu, 28 Nov 2024 12:14:07 +0000
-From: Simon McVittie <smcv@debian.org>
-To: oss-security@lists.openwall.com
-Message-ID: <Z0hejwSEFfhScLbR@remnant.pseudorandom.co.uk>
-References: <Z0g4nBTW-VFYm4cu@kasco.suse.de>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Z0g4nBTW-VFYm4cu@kasco.suse.de>
-X-Debian-User: smcv
-Subject: Re: [oss-security] tuned: local root exploit in D-Bus method
- instance_create and other issues in tuned >= 2.23 (CVE-2024-52336,
- CVE-2024-52337)
+Received: (qmail 3833 invoked from network); 6 Sep 2015 16:58:24 -0000
+From: cve-assign@mitre.org
+To: scott@arciszewski.me
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <CAPKwhwto-ZPi0o98NAF3F9FxRjiiwiwHCFYTKNSCQJrf8BRReQ@mail.gmail.com>
+Message-Id: <20150906165812.888373AE033@smtpvbsrv1.mitre.org>
+Date: Sun,  6 Sep 2015 12:58:12 -0400 (EDT)
+Subject: [oss-security] Re: Some Wordpress Plugin Stuff
 
-On Thu, 28 Nov 2024 at 10:32:09 +0100, Matthias Gerstner wrote:
-> The new D-Bus methods `HoldProfile()` and `ReleaseProfile()` use a
-> cookie to identify a profile hold. The cookie is simply a continuously
-> increasing integer starting at zero. This means other users in the
-> system can easily release the profile holds of any other users.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-This should be easily resolvable if the authors of tuned want to do so,
-without needing to resort to relying on hard-to-predict cookie values.
-Clients of the D-Bus system bus can identify other clients of the system
-bus, by calling the GetConnectionCredentials method on the message bus
-itself (this is how polkit works).
+> SecurityMoz Security Audit
+> 
+> https://wordpress.org/plugins/securemoz-security-audit/
+> 
+> file_get_contents() + explicitly HTTP (no TLS) -> unserialize()
 
-So, if tuned's design constraints allow a model where a cookie is only
-considered valid to release if it was allocated by the same uid that
-made the original request, that would be straightforward to implement.
-Pseudocode:
+> http://plugins.svn.wordpress.org/securemoz-security-audit/trunk/class/__functions.php
+> 
+> unserialize(file_get_contents("http://api.tweetmeme.com/url_info.php?url=$url"));
 
-    HoldProfile() -> cookie:
-        get the caller's unique bus name (looks like e.g. :1.23)
-        call GetConnectionCredentials(":1.23") to get the UnixUserID
-        allocate a cookie
-        store {cookie: uid} in a hash table
-        return cookie
+Use CVE-2015-6828.
 
-    ReleaseProfile(cookie):
-        get the caller's unique bus name (looks like e.g. :1.23)
-        call GetConnectionCredentials(":1.23") to get the UnixUserID
 
-        look up the cookie's corresponding uid in the hash table
+> WP Limit Login Attempts
+> 
+> https://wordpress.org/plugins/wp-limit-login-attempts/
+> 
+> Trivial SQL injection via HTTP headers.
+> 
+> $ip = getip();
+> 
+> SELECT ... WHERE `login_ip` =  '$ip'
+> 
+> function getip(){
+> 
+> $ip = $_SERVER['HTTP_CLIENT_IP'];
+> $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
 
-        if cookie not found || caller_uid != cookie_uid:
-            error "No such cookie owned by this uid"
+Use CVE-2015-6829.
 
-        ... continue to release the profile
 
-Any good-quality D-Bus client library should have API to get the unique
-bus name of the caller while handling an incoming method call. The most
-commonly-used client libraries (dbus' libdbus, GLib's GDBus, systemd's
-sd-bus) can certainly do that.
+> Also, Tor Blocker (link below) uses HTTP to grab the list of IP addresses
+> to block. It's telling and appropriate that the person who developed a
+> plugin to oppose a privacy technology would fail to use TLS.
+> 
+> https://wordpress.org/plugins/tor-exit-nodes-blocker/
+> 
+> (Surely no one would ever think to hack an upstream router and MitM the
+> connection to block the blog administrator from their own blog or allow Tor
+> nodes through!)
 
-Treating each uid as a trust domain is the most common way to handle
-system bus security, but on Linux, various other fields are conditionally
-available in the result of GetConnectionCredentials if tuned wants to
-implement some more complicated security model (for example looking at
-the SELinux/AppArmor/Smack security label, which is available on D-Bus as
-the LinuxSecurityLabel credential).
+We don't think that we can assign a CVE ID for this. The product
+relies on data at the http://pike.hqpeak.com/api/free.php URL; that
+data is not currently available at the
+https://pike.hqpeak.com/api/free.php URL or any other HTTPS URL that
+we know about. Apparently the risk in using HTTP is
+incorrect/incomplete data, not code execution. If MITM attacks occur,
+the product user could typically recover from them by deleting
+unwanted postings and by establishing their own administrative login
+from a different IP address. MITM attacks aren't likely to occur
+continuously. Given that the data is only available via HTTP (not
+HTTPS) and the product user wants the data, we're unable to reach a
+conclusion that the http://pike.hqpeak.com URL is necessarily a
+vulnerability without knowing the vendor's perspective. One possible
+example is that the vendor didn't want to support HTTPS in case the
+plugin became very popular and the pike.hqpeak.com server was unable
+to support all of the load of cryptography calculations.
 
-(Behind the scenes, this is implemented by the message bus using
-SO_PEERCRED, SO_PEERSEC, etc. on each client connection, or the closest
-available equivalent of SO_PEERCRED on various non-Linux OSs.)
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Or, if the tuned authors want to implement a model where only the same
-bus connection that initially called HoldProfile can call ReleaseProfile,
-that's even simpler, because it doesn't need GetConnectionCredentials:
-tuned could remember the unique bus name of the caller of HoldProfile,
-and only allow ReleaseProfile to be called by a matching unique bus
-name. If this is the chosen model, it will probably also want to watch for
-NameOwnerChanged signals, so that it can automatically release the profile
-when the requester disconnects from the message bus. In particular,
-if the requester crashes, this disconnection will happen automatically
-when the kernel cleans up its resources, which is not directly
-security-relevant but seems likely to be desirable anyway.
-
-    smcv
+iQIcBAEBCAAGBQJV7G/jAAoJEL54rhJi8gl5zBgP/jrGs9pxHGh/KTnnOPKLPTNN
+5m6R05QzpqJKf4/Ztt2T8Ewe/FmHL9XrcWTsz5/VnidxlwdY5/vUGqCpomCYxVn0
+T7SU77+AildiPBZOdVrO3i+JRkQZo6k0I77HAmwP94WU9GDY0v2qS3yd2vnYzmtp
+KB7jrrBDxMNZ0HqytgtdiTToyta2PrLnQA+fzjf3Z71loQsZw/9w7+IBK9xSOE1o
+iZz4h3kocsW0ZijcT4UJ2rD31fLBSYZ8Rzcp39VtzrQkO5tiMCMjLONaeOLF6XuD
+9EFPzj4xh9xLa7KytS96+I0Lq0NHM3H8XrACkCYm5kzS9dollzSHUmrJqYWmcrt8
+6GCMquPp/52YUzWExNZcmNG/LCecMRfCVMRJaC3wVIb+CPduIdvpQB5n+WVBQf8b
+Kwq5sZbtbKWe1W8HMZgr3pRibh1yu+41mSgTsZi+L0uqzkpCdwnLfnLFr19CTdX/
+N+Ar0qjmfhz9p4uGfKHcuepy8/mq1JesgiLBbdoM9q3/wnZjJVIp5pqNbli9fqfi
+nwLqEzbNucSSqLxTEb4z51DZ/cNcfjcW9IcHwXCgCdNywQ5xwk41F+kW7hNF6PUM
+NlCuEgIEreWze/Kberp3PMGjF2OBsQQF4lRZe2xvKJQNfxmGWYrTpZxm3l9Crke0
+Tt2OUTb4jvb5AsWl1w3B
+=DjqZ
+-----END PGP SIGNATURE-----
