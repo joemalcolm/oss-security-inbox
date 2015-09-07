@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1832" "Wednesday" "8" "February" "2017" "14:32:29" "-0800" "Ian Zimmerman" "itz@primate.net" "<20170208223043.15051.2370DCC3@matica.foolinux.mooo.com>" "41" "[oss-security] Re: CVE request: Null pointer derefence parsing xml file using libxml 2.9.4 (in recover mode)" nil nil nil "2" "2017020822:32:29" "[oss-security] Re: CVE request: Null pointer derefence parsing xml file using libxml 2.9.4 (in recover mode)" (number mark "U       itz@primate. Feb  8   41/1832  " thread-indent "\"[oss-security] Re: CVE request: Null pointer derefence parsing xml file using libxml 2.9.4 (in recover mode)\"\n") "<CACn5sdQKBq6cDXY_OAp6a+7dYWXtjE6=hSQps5g5aMxtiCTZHQ@mail.gmail.com>" ("<CACn5sdQKBq6cDXY_OAp6a+7dYWXtjE6=hSQps5g5aMxtiCTZHQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["8378" "Monday" "7" "September" "2015" "15:39:49" "-0500" "Austin English" "austinenglish@gmail.com" "<CACC5Q1dz1GhKVD+0P6Ox7Gom8A0wzFv8FzQ6fbE0twehUOhawA@mail.gmail.com>" "149" "[oss-security] CVE request for wget" nil nil nil "9" "2015090720:39:49" "[oss-security] CVE request for wget" (number mark "        austinenglis Sep  7  149/8378  " thread-indent "\"[oss-security] CVE request for wget\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 20106 invoked by uid 550); 8 Feb 2017 22:42:04 -0000
+Received: (qmail 5937 invoked by uid 550); 7 Sep 2015 21:48:55 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,61 +11,174 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 12280 invoked from network); 8 Feb 2017 22:32:44 -0000
-X-Authentication-Warning: acedia.primate.net: itz set sender to itz@primate.net using -f
-Date: Wed, 8 Feb 2017 14:32:29 -0800
-From: Ian Zimmerman <itz@primate.net>
-To: oss-security@lists.openwall.com
-Message-ID: <20170208223043.15051.2370DCC3@matica.foolinux.mooo.com>
-Mail-Followup-To: oss-security@lists.openwall.com
-References: <CACn5sdQKBq6cDXY_OAp6a+7dYWXtjE6=hSQps5g5aMxtiCTZHQ@mail.gmail.com>
+Received: (qmail 17565 invoked from network); 7 Sep 2015 20:40:41 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=zgTss9cRHMhulm9gqVDLOosifuB6csLOR/oF8qkvo7k=;
+        b=ZtoBY+UZKEtW8WYaNZ+s19FyIhlp8fjyQnUI0PUjI9M32EusakS65JwgOcSwMXw6k8
+         /X9qG66aqbkeZiVqCgA3tC8hEXIJLqDsgrDp8Ukunm+ciaBjw2jj887iVRXG2jas54f9
+         P0UG69ptAauI0/AuupaTB9TdPC9bxGjT+i5gxSDrLG4LqATfO3rkbosx7TNd2HEv8qam
+         qC85pkkmcEqCSEe9eDLD4cVQ4wzsoGbCeJLJqudDfY1igCbIYSBGoV4LiUyBtMgrwppE
+         2Lua+/rCUZBVhDoch1SAzMndMZQdCfGhsi+fDaf5cvBGt7vOko18Q0Sz04JWDno7J2tb
+         Bv+Q==
+X-Received: by 10.66.218.135 with SMTP id pg7mr49666338pac.141.1441658429397;
+ Mon, 07 Sep 2015 13:40:29 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CACn5sdQKBq6cDXY_OAp6a+7dYWXtjE6=hSQps5g5aMxtiCTZHQ@mail.gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-Subject: [oss-security] Re: CVE request: Null pointer derefence parsing xml file using
- libxml 2.9.4 (in recover mode)
+Message-ID: <CACC5Q1dz1GhKVD+0P6Ox7Gom8A0wzFv8FzQ6fbE0twehUOhawA@mail.gmail.com>
+Content-Type: multipart/mixed; boundary=047d7b5d49fa929595051f2e42a9
+Date: Mon, 7 Sep 2015 15:39:49 -0500
+From: Austin English <austinenglish@gmail.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE request for wget
+To: oss-security@lists.openwall.com
 
-On 2016-11-05 10:04, Gustavo Grieco wrote:
+--047d7b5d49fa929595051f2e42a9
+Content-Type: text/plain; charset=UTF-8
 
-> We found a null pointer dereference when parsing a xml file using recover
-> mode. It was tested in libxml 2.9.4 (ArchLinux x86_64). To reproduce:
-> 
-> $ xmllint --recover crash-libxml2-recover.xml
-> 
-> ==27646==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000
-> (pc 0x0000004fbd88 bp 0x7ffc3345dff0 sp 0x7ffc3345dfd0 T0)
->     #0 0x4fbd87 in xmlDumpElementContent
-> /home/g/Work/Code/libxml2-2.9.4/valid.c:1181
->     #1 0x4fbcd5 in xmlDumpElementContent
-> /home/g/Work/Code/libxml2-2.9.4/valid.c:1177
->     #2 0x4fe5ff in xmlDumpElementDecl
-> /home/g/Work/Code/libxml2-2.9.4/valid.c:1706
->     #3 0x72e714 in xmlBufDumpElementDecl
-> /home/g/Work/Code/libxml2-2.9.4/xmlsave.c:501
->     #4 0x73048f in xmlNodeDumpOutputInternal
-> /home/g/Work/Code/libxml2-2.9.4/xmlsave.c:939
->     #5 0x72fc47 in xmlNodeListDumpOutput
-> /home/g/Work/Code/libxml2-2.9.4/xmlsave.c:825
->     #6 0x72f6d5 in xmlDtdDumpOutput
-> /home/g/Work/Code/libxml2-2.9.4/xmlsave.c:749
->     #7 0x73038f in xmlNodeDumpOutputInternal
-> /home/g/Work/Code/libxml2-2.9.4/xmlsave.c:931
->     #8 0x732412 in xmlDocContentDumpOutput
-> /home/g/Work/Code/libxml2-2.9.4/xmlsave.c:1234
->     #9 0x735883 in xmlSaveDoc /home/g/Work/Code/libxml2-2.9.4/xmlsave.c:1936
->     #10 0x40ba0f in parseAndPrintFile
-> /home/g/Work/Code/libxml2-2.9.4/xmllint.c:2712
->     #11 0x411eb6 in main /home/g/Work/Code/libxml2-2.9.4/xmllint.c:3767
->     #12 0x7f23dcd4c290 in __libc_start_main (/usr/lib/libc.so.6+0x20290)
->     #13 0x4032b9 in _start
-> (/home/g/Work/Code/libxml2-2.9.4/xmllint+0x4032b9)
+This was reported to tails-dev [1] and other places [2] and is fixed
+upstream [3].
 
-Where did this one ever go?  Is there a CVE?  Is there a patch?
+I've rebased the patch for 1.13.4 (attached), which is the current
+version in Debian wheezy [4] that Tails is based on.
 
+Please keep me in CC, as I'm not subscribed.
+
+[1] https://mailman.boum.org/pipermail/tails-dev/2015-August/009370.html
+[2] https://lists.gnu.org/archive/html/bug-wget/2015-08/msg00020.html
+[3] http://git.savannah.gnu.org/cgit/wget.git/commit/?id=075d7556964f5a871a73c22ac4b69f5361295099
+[4] https://packages.debian.org/wheezy/wget
 -- 
-Please *no* private Cc: on mailing lists and newsgroups
-Personal signed mail: please _encrypt_ and sign
-Don't clear-text sign: http://cr.yp.to/smtp/8bitmime.html
+-Austin
+
+--047d7b5d49fa929595051f2e42a9
+Content-Type: text/plain; charset=US-ASCII; name="ftp_rediff.txt"
+Content-Disposition: attachment; filename="ftp_rediff.txt"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_ieae6br00
+
+ZGlmZiAtdXJOIHdnZXQtMS4xMy40Lm9yaWcvc3JjL2Z0cC5jIHdnZXQtMS4x
+My40L3NyYy9mdHAuYwotLS0gd2dldC0xLjEzLjQub3JpZy9zcmMvZnRwLmMJ
+MjAxMS0wOS0xMyAwMzowNToxMi4wMDAwMDAwMDAgLTA1MDAKKysrIHdnZXQt
+MS4xMy40L3NyYy9mdHAuYwkyMDE1LTA5LTA3IDE0OjAxOjEwLjY5NDcyNzA1
+MyAtMDUwMApAQCAtMjQ5LDcgKzI0OSw2IEBACiAgIGNoYXIgKnRtczsKICAg
+Y29uc3QgY2hhciAqdG1yYXRlOwogICBpbnQgY21kID0gY29uLT5jbWQ7Ci0g
+IGJvb2wgcGFzdl9tb2RlX29wZW4gPSBmYWxzZTsKICAgd2dpbnQgZXhwZWN0
+ZWRfYnl0ZXMgPSAwOwogICBib29sIGdvdF9leHBlY3RlZF9ieXRlcyA9IGZh
+bHNlOwogICBib29sIHJlc3RfZmFpbGVkID0gZmFsc2U7CkBAIC04NDEsMTMg
+Kzg0MCwxOSBAQAogICAgICAgICAgICAgICAgICAgICAgICAgICA/IENPTkVS
+Uk9SIDogQ09OSU1QT1NTSUJMRSk7CiAgICAgICAgICAgICAgICAgfQogCi0g
+ICAgICAgICAgICAgIHBhc3ZfbW9kZV9vcGVuID0gdHJ1ZTsgIC8qIEZsYWcg
+dG8gYXZvaWQgYWNjZXB0IHBvcnQgKi8KICAgICAgICAgICAgICAgaWYgKCFv
+cHQuc2VydmVyX3Jlc3BvbnNlKQogICAgICAgICAgICAgICAgIGxvZ3B1dHMg
+KExPR19WRVJCT1NFLCBfKCJkb25lLiAgICAiKSk7Ci0gICAgICAgICAgICB9
+IC8qIGVycj09RlRQX09LICovCi0gICAgICAgIH0KKyAgICAgICAgICAgIH0K
+KyAgICAgICAgICBlbHNlCisgICAgICAgICAgICByZXR1cm4gZXJyOwogCi0g
+ICAgICBpZiAoIXBhc3ZfbW9kZV9vcGVuKSAgIC8qIFRyeSB0byB1c2UgYSBw
+b3J0IGNvbW1hbmQgaWYgUEFTViBmYWlsZWQgKi8KKyAgICAgICAgICAvKgor
+ICAgICAgICAgICAqIFdlIGRvIG5vdCB3YW50IHRvIGZhbGwgYmFjayBmcm9t
+IFBBU1NJVkUgbW9kZSB0byBBQ1RJVkUgbW9kZSAhCisgICAgICAgICAgICog
+VGhlIHJlYXNvbiBpcyB0aGUgUE9SVCBjb21tYW5kIGV4cG9zZXMgdGhlIGNs
+aWVudCdzIHJlYWwgSVAgYWRkcmVzcworICAgICAgICAgICAqIHRvIHRoZSBz
+ZXJ2ZXIuIEJhZCBmb3Igc29tZW9uZSB3aG8gcmVsaWVzIG9uIHByaXZhY3kg
+dmlhIGEgZnRwIHByb3h5LgorICAgICAgICAgICAqLworICAgICAgICB9Cisg
+ICAgICBlbHNlCiAgICAgICAgIHsKICAgICAgICAgICBlcnIgPSBmdHBfZG9f
+cG9ydCAoY3NvY2ssICZsb2NhbF9zb2NrKTsKICAgICAgICAgICAvKiBGVFBS
+RVJSLCBXUklURUZBSUxFRCwgYmluZHBvcnQgKEZUUFNZU0VSUiksIEhPU1RF
+UlIsCkBAIC0xMTA2LDggKzExMTEsOCBAQAogICAgIH0KIAogICAvKiBJZiBu
+byB0cmFuc21pc3Npb24gd2FzIHJlcXVpcmVkLCB0aGVuIGV2ZXJ5dGhpbmcg
+aXMgT0suICAqLwotICBpZiAoIXBhc3ZfbW9kZV9vcGVuKSAgLyogd2UgYXJl
+IG5vdCB1c2luZyBwYXNpdmUgbW9kZSBzbyB3ZSBuZWVkCi0gICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICB0byBhY2NlcHQgKi8KKyAgaWYgKCFvcHQu
+ZnRwX3Bhc3YpICAvKiB3ZSBhcmUgbm90IHVzaW5nIHBhc3NpdmUgbW9kZSBz
+byB3ZSBuZWVkCisgICAgICAgICAgICAgICAgICAgICAgICAgdG8gYWNjZXB0
+ICovCiAgICAgewogICAgICAgLyogV2FpdCBmb3IgdGhlIHNlcnZlciB0byBj
+b25uZWN0IHRvIHRoZSBhZGRyZXNzIHdlJ3JlIHdhaXRpbmcKICAgICAgICAg
+IGF0LiAgKi8KZGlmZiAtdXJOIHdnZXQtMS4xMy40Lm9yaWcvdGVzdHMvRlRQ
+U2VydmVyLnBtIHdnZXQtMS4xMy40L3Rlc3RzL0ZUUFNlcnZlci5wbQotLS0g
+d2dldC0xLjEzLjQub3JpZy90ZXN0cy9GVFBTZXJ2ZXIucG0JMjAxMS0wMS0w
+MSAwNjoxMjozNS4wMDAwMDAwMDAgLTA2MDAKKysrIHdnZXQtMS4xMy40L3Rl
+c3RzL0ZUUFNlcnZlci5wbQkyMDE1LTA5LTA3IDE0OjAxOjEwLjY5NDcyNzA1
+MyAtMDUwMApAQCAtNjMzLDYgKzYzMywxNCBAQAogICAgICAgICAgICAgICAg
+ICAgICBsYXN0OwogICAgICAgICAgICAgICAgIH0KIAorICAgICAgICAgICAg
+ICAgIGlmIChkZWZpbmVkKCRzZWxmLT57X3NlcnZlcl9iZWhhdmlvcn17cGFz
+dl9ub3Rfc3VwcG9ydGVkfSkKKyAgICAgICAgICAgICAgICAgICAgJiYgJGNt
+ZCBlcSAnUEFTVicpCisgICAgICAgICAgICAgICAgeworICAgICAgICAgICAg
+ICAgICAgICBwcmludCB7JGNvbm4tPntzb2NrZXR9fQorICAgICAgICAgICAg
+ICAgICAgICAgICI1MDAgUEFTViBub3Qgc3VwcG9ydGVkLlxyXG4iOworICAg
+ICAgICAgICAgICAgICAgICBuZXh0OworICAgICAgICAgICAgICAgIH0KKwog
+ICAgICAgICAgICAgICAgICMgUnVuIHRoZSBjb21tYW5kLgogICAgICAgICAg
+ICAgICAgICZ7JGNvbW1hbmRfdGFibGUtPnskY21kfX0gKCRjb25uLCAkY21k
+LCAkcmVzdCk7CiAgICAgICAgICAgICB9CmRpZmYgLXVyTiB3Z2V0LTEuMTMu
+NC5vcmlnL3Rlc3RzL01ha2VmaWxlLmFtIHdnZXQtMS4xMy40L3Rlc3RzL01h
+a2VmaWxlLmFtCi0tLSB3Z2V0LTEuMTMuNC5vcmlnL3Rlc3RzL01ha2VmaWxl
+LmFtCTIwMTEtMDctMjAgMDQ6Mzc6MTUuMDAwMDAwMDAwIC0wNTAwCisrKyB3
+Z2V0LTEuMTMuNC90ZXN0cy9NYWtlZmlsZS5hbQkyMDE1LTA5LTA3IDE1OjAw
+OjM2Ljg2NDM5NDI4MiAtMDUwMApAQCAtODIsNiArODIsNyBAQAogICAgICAg
+ICAgICAgIFRlc3QtZnRwLWlyaS1mYWxsYmFjay5weCBcCiAgICAgICAgICAg
+ICAgVGVzdC1mdHAtaXJpLXJlY3Vyc2l2ZS5weCBcCiAgICAgICAgICAgICAg
+VGVzdC1mdHAtaXJpLWRpc2FibGVkLnB4IFwKKyAgICAgICAgICAgICBUZXN0
+LWZ0cC1wYXN2LW5vdC1zdXBwb3J0ZWQucHggXAogICAgICAgICAgICAgIFRl
+c3QtSFRUUC1Db250ZW50LURpc3Bvc2l0aW9uLTEucHggXAogICAgICAgICAg
+ICAgIFRlc3QtSFRUUC1Db250ZW50LURpc3Bvc2l0aW9uLTIucHggXAogICAg
+ICAgICAgICAgIFRlc3QtSFRUUC1Db250ZW50LURpc3Bvc2l0aW9uLnB4IFwK
+ZGlmZiAtdXJOIHdnZXQtMS4xMy40Lm9yaWcvdGVzdHMvcnVuLXB4IHdnZXQt
+MS4xMy40L3Rlc3RzL3J1bi1weAotLS0gd2dldC0xLjEzLjQub3JpZy90ZXN0
+cy9ydW4tcHgJMjAxMS0wNy0yMCAwNDozNzoxNS4wMDAwMDAwMDAgLTA1MDAK
+KysrIHdnZXQtMS4xMy40L3Rlc3RzL3J1bi1weAkyMDE1LTA5LTA3IDE1OjEz
+OjU0LjEyNTQ2OTA4NCAtMDUwMApAQCAtMzUsNiArMzUsNyBAQAogICAgICdU
+ZXN0LWZ0cC1pcmktZmFsbGJhY2sucHgnLAogICAgICdUZXN0LWZ0cC1pcmkt
+cmVjdXJzaXZlLnB4JywKICAgICAnVGVzdC1mdHAtaXJpLWRpc2FibGVkLnB4
+JywKKyAgICAnVGVzdC1mdHAtcGFzdi1ub3Qtc3VwcG9ydGVkLnB4JywKICAg
+ICAnVGVzdC1IVFRQLUNvbnRlbnQtRGlzcG9zaXRpb24tMS5weCcsCiAgICAg
+J1Rlc3QtSFRUUC1Db250ZW50LURpc3Bvc2l0aW9uLTIucHgnLAogICAgICdU
+ZXN0LUhUVFAtQ29udGVudC1EaXNwb3NpdGlvbi5weCcsCmRpZmYgLXVyTiB3
+Z2V0LTEuMTMuNC5vcmlnL3Rlc3RzL1Rlc3QtZnRwLXBhc3Ytbm90LXN1cHBv
+cnRlZC5weCB3Z2V0LTEuMTMuNC90ZXN0cy9UZXN0LWZ0cC1wYXN2LW5vdC1z
+dXBwb3J0ZWQucHgKLS0tIHdnZXQtMS4xMy40Lm9yaWcvdGVzdHMvVGVzdC1m
+dHAtcGFzdi1ub3Qtc3VwcG9ydGVkLnB4CTE5NjktMTItMzEgMTg6MDA6MDAu
+MDAwMDAwMDAwIC0wNjAwCisrKyB3Z2V0LTEuMTMuNC90ZXN0cy9UZXN0LWZ0
+cC1wYXN2LW5vdC1zdXBwb3J0ZWQucHgJMjAxNS0wOS0wNyAxNDowMToxMC42
+OTg3MjcwNDYgLTA1MDAKQEAgLTAsMCArMSw2MCBAQAorIyEvdXNyL2Jpbi9l
+bnYgcGVybAorCit1c2Ugc3RyaWN0OwordXNlIHdhcm5pbmdzOworCit1c2Ug
+RlRQVGVzdDsKKworIyBUaGlzIHRlc3QgY2hlY2tzIHdoZXRoZXIgV2dldCAq
+ZG9lcyBub3QqIGZhbGwgYmFjayBmcm9tIHBhc3NpdmUgbW9kZSB0bworIyBh
+Y3RpdmUgbW9kZSB1c2luZyBhIFBPUlQgY29tbWFuZC4gV2dldCA8PSAxLjE2
+LjMgbWFkZSBhIGZhbGxiYWNrIGV4cG9zaW5nCisjIHRoZSBjbGllbnQncyBy
+ZWFsIElQIGFkZHJlc3MgdG8gdGhlIHJlbW90ZSBGVFAgc2VydmVyLgorIwor
+IyBUaGlzIGJlaGF2aW9yIGNpcmN1bXZlbnRzIGV4cGVjdGVkIHByaXZhY3kg
+d2hlbiB1c2luZyBhIHByb3h5IC8gcHJveHkgbmV0d29yayAoZS5nLiBUb3Ip
+LgorIworIyBXZ2V0ID49IDEuMTYuNCBkb2VzIGl0IHJpZ2h0LiBUaGlzIHRl
+c3QgY2hlY2tzIGl0LgorCisjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMj
+IyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMj
+IyMjIyMjCisKKyMgRnJvbSBidWcgcmVwb3J0IDEwLjA4LjIwMTUgZnJvbSB0
+b210aWRhbHlAc2lnYWludC5vcmcKK215ICRhZmlsZSA9IDw8RU9GOworRlRQ
+IFBPUlQgY29tbWFuZCBjb2RlIGluIHYxLjE2LjM/CisKK0luIHRoZSBwYXN0
+IGl0IGNvdWxkIGJlIHBvc3NpYmxlIGZvciBhIHNpdGUgb3ZlciBodHRwIGNv
+bm5lY3Rpb24gdG8KK3JlZGlyZWN0IHdnZXQgdG8gRlBUIHVzaW5nIEZUUCBQ
+T1JUIGNvbW1hbmQgc28gdGhlIHNpdGUgZ2V0cyB0aGUgcmVhbCBJUAorb2Yg
+dGhlIGNvbXB1dGVyIGV2ZW4gd2hlbiB3Z2V0IHByb3h5IGNvbW1hbmQgaXMg
+aW4gdXNlIEkgYmVsaWV2ZToKK2h0dHBzOi8vbGlzdHMudG9ycHJvamVjdC5v
+cmcvcGlwZXJtYWlsL3Rvci10YWxrLzIwMTItQXByaWwvMDI0MDQwLmh0bWwK
+KworSXMgdGhhdCBjb2RlIHN0aWxsIHByZXNlbnQgaW4gd2dldCB2MS4xNi4z
+PyBJdCB3YXMgcHJlc2VudCBpbiB2MS4xMy40LgorRU9GCisKKyRhZmlsZSA9
+fiBzL1xuL1xyXG4vZzsKKworCisjIGNvZGUsIG1zZywgaGVhZGVycywgY29u
+dGVudAorbXkgJXVybHMgPSAoCisgICAgJy9hZmlsZS50eHQnID0+IHsKKyAg
+ICAgICAgY29udGVudCA9PiAkYWZpbGUsCisgICAgfSwKKyk7CisKK215ICRj
+bWRsaW5lID0gJFdnZXRUZXN0OjpXR0VUUEFUSCAuICIgLVMgZnRwOi8vbG9j
+YWxob3N0Ont7cG9ydH19L2FmaWxlLnR4dCI7CisKK215ICRleHBlY3RlZF9l
+cnJvcl9jb2RlID0gODsKKworbXkgJWV4cGVjdGVkX2Rvd25sb2FkZWRfZmls
+ZXMgPSAoCisgICAgJ2FmaWxlLnR4dCcgPT4geworICAgICAgICBjb250ZW50
+ID0+ICRhZmlsZSwKKyAgICB9LAorKTsKKworIyMjIyMjIyMjIyMjIyMjIyMj
+IyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMj
+IyMjIyMjIyMjIyMjIyMjIworCitteSAkdGhlX3Rlc3QgPSBGVFBUZXN0LT5u
+ZXcgKAorICAgICAgICAgICAgICAgICAgICAgICAgICAgICBzZXJ2ZXJfYmVo
+YXZpb3IgPT4ge3Bhc3Zfbm90X3N1cHBvcnRlZCA9PiAxfSwKKyAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgaW5wdXQgPT4gXCV1cmxzLAorICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICBjbWRsaW5lID0+ICRjbWRsaW5lLAor
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICBlcnJjb2RlID0+ICRleHBl
+Y3RlZF9lcnJvcl9jb2RlLAorICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICBvdXRwdXQgPT4gXCVleHBlY3RlZF9kb3dubG9hZGVkX2ZpbGVzKTsKK2V4
+aXQgISR0aGVfdGVzdC0+cnVuKCk7CisKKyMgdmltOiBldCB0cz00IHN3PTQK
+
+--047d7b5d49fa929595051f2e42a9--
