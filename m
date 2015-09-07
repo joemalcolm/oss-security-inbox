@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4354" "Saturday" "25" "February" "2017" "11:23:43" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<719404.939885379-sendEmail@localhost>" "102" "[oss-security] pax-utils: scanelf: out of bounds read in scanelf_file_get_symtabs (scanelf.c)" "^Date:" nil nil "2" "2017022511:23:43" "[oss-security] pax-utils: scanelf: out of bounds read in scanelf_file_get_symtabs (scanelf.c)" (number mark "U       ago@gentoo.o Feb 25  102/4354  " thread-indent "\"[oss-security] pax-utils: scanelf: out of bounds read in scanelf_file_get_symtabs (scanelf.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1660" "Monday" "7" "September" "2015" "14:51:24" "+0200" "Marcus Meissner" "meissner@suse.de" "<20150907125124.GH5993@suse.de>" "42" "[oss-security] CVE Request: PHP remote exploits (even more)" nil nil nil "9" "2015090712:51:24" "[oss-security] CVE Request: PHP remote exploits (even more)" (number mark "U       meissner@sus Sep  7   42/1660  " thread-indent "\"[oss-security] CVE Request: PHP remote exploits (even more)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 32238 invoked by uid 550); 25 Feb 2017 11:24:06 -0000
+Received: (qmail 7329 invoked by uid 550); 7 Sep 2015 12:51:38 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,116 +11,62 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 32206 invoked from network); 25 Feb 2017 11:24:03 -0000
-Message-ID: <719404.939885379-sendEmail@localhost>
-X-Mailer: sendEmail-1.56
-MIME-Version: 1.0
-Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-167816.381043853"
-Date: Sat, 25 Feb 2017 11:23:43 +0000
-From: "Agostino Sarubbo" <ago@gentoo.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] pax-utils: scanelf: out of bounds read in scanelf_file_get_symtabs (scanelf.c)
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Received: (qmail 7307 invoked from network); 7 Sep 2015 12:51:37 -0000
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Date: Mon, 7 Sep 2015 14:51:24 +0200
+From: Marcus Meissner <meissner@suse.de>
+To: OSS Security List <oss-security@lists.openwall.com>, security@php.net,
+	cve-assign@mitre.org
+Message-ID: <20150907125124.GH5993@suse.de>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Organization: SUSE Linux GmbH, GF: =?iso-8859-1?Q?Felix_?=
+ =?iso-8859-1?Q?Imend=F6rffer=2C_Jane_Smithard=2C_Graham_Norton=2C_HRB_212?=
+ =?iso-8859-1?Q?84_=28AG_N=FCrnberg=29?=
+User-Agent: Mutt/1.5.21 (2010-09-15)
+Subject: [oss-security] CVE Request: PHP remote exploits (even more)
 
-------MIME delimiter for sendEmail-167816.381043853
-Content-Type: text/plain;
-        charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
+Hi,
 
-Description:
-pax-utils is a set of tools that check files for security relevant properties.
+the last patch of PHP remote exploits have no CVEs assigned yet, but here are even more.
 
-A fuzz on scanelf exposed that the out-of bound read already reported at 
-https://blogs.gentoo.org/ago/2017/02/01/pax-utils-scanelf-out-of-bounds-read-in-scanelf_file_get_symtabs-scanelf-c was unfixed.
+Please assign CVEs.
 
-The complete ASan output:
+http://php.net/ChangeLog-5.php#5.4.45
 
-# scanelf -s '*' -axetrnibSDIYZB $FILE
-==1093==ERROR: AddressSanitizer: unknown-crash on address 0x7f4ddab2c3a0 at pc 0x000000524a77 bp 0x7fffcd2bc320 sp 0x7fffcd2bc318
-READ of size 4 at 0x7f4ddab2c3a0 thread T0
-    #0 0x524a76 in scanelf_file_get_symtabs /tmp/portage/app-misc/pax-utils-1.2.2/work/pax-utils-1.2.2/scanelf.c:357:3
-    #1 0x514af2 in scanelf_file_sym /tmp/portage/app-misc/pax-utils-1.2.2/work/pax-utils-1.2.2/scanelf.c:1282:2
-    #2 0x514af2 in scanelf_elfobj /tmp/portage/app-misc/pax-utils-1.2.2/work/pax-utils-1.2.2/scanelf.c:1502
-    #3 0x5137f8 in scanelf_elf /tmp/portage/app-misc/pax-utils-1.2.2/work/pax-utils-1.2.2/scanelf.c:1567:8
-    #4 0x5137f8 in scanelf_fileat /tmp/portage/app-misc/pax-utils-1.2.2/work/pax-utils-1.2.2/scanelf.c:1634
-    #5 0x512d9b in scanelf_dirat /tmp/portage/app-misc/pax-utils-1.2.2/work/pax-utils-1.2.2/scanelf.c:1668:10
-    #6 0x511d9d in scanelf_dir /tmp/portage/app-misc/pax-utils-1.2.2/work/pax-utils-1.2.2/scanelf.c:1718:9
-    #7 0x511d9d in parseargs /tmp/portage/app-misc/pax-utils-1.2.2/work/pax-utils-1.2.2/scanelf.c:2228
-    #8 0x511d9d in main /tmp/portage/app-misc/pax-utils-1.2.2/work/pax-utils-1.2.2/scanelf.c:2316
-    #9 0x7f4dd9b4e61f in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
-    #10 0x419b28 in getenv (/usr/bin/scanelf+0x419b28)
+	https://bugs.php.net/bug.php?id=70172	Use After Free Vulnerability in unserialize() 
+		Given attacker input to unserialize() we should consider this a security issue.
 
-AddressSanitizer can not describe address in more detail (wild memory access suspected).
-SUMMARY: AddressSanitizer: unknown-crash /tmp/portage/app-misc/pax-utils-1.2.2/work/pax-utils-1.2.2/scanelf.c:357:3 in scanelf_file_get_symtabs
-Shadow bytes around the buggy address:
-  0x0fea3b55d820: fe fe fe fe fe fe fe fe fe fe fe fe fe fe fe fe
-  0x0fea3b55d830: fe fe fe fe fe fe fe fe fe fe fe fe fe fe fe fe
-  0x0fea3b55d840: fe fe fe fe fe fe fe fe fe fe fe fe fe fe fe fe
-  0x0fea3b55d850: fe fe fe fe fe fe fe fe fe fe fe fe fe fe fe fe
-  0x0fea3b55d860: fe fe fe fe fe fe fe fe fe fe fe fe fe fe fe fe
-=>0x0fea3b55d870: fe fe fe fe[fe]fe fe fe fe fe fe fe fe fe fe fe
-  0x0fea3b55d880: fe fe fe fe fe fe fe fe fe fe fe fe fe fe fe fe
-  0x0fea3b55d890: fe fe fe fe fe fe fe fe fe fe fe fe fe fe fe fe
-  0x0fea3b55d8a0: fe fe fe fe fe fe fe fe fe fe fe fe fe fe fe fe
-  0x0fea3b55d8b0: fe fe fe fe fe fe fe fe fe fe fe fe fe fe fe fe
-  0x0fea3b55d8c0: fe fe fe fe fe fe fe fe fe fe fe fe fe fe fe fe
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Heap right redzone:      fb
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack partial redzone:   f4
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==1093==ABORTING
+	https://bugs.php.net/bug.php?id=70219	Use after free vulnerability in session deserializer
+		Same.
 
-Affected version:
-1.2.2
+	https://bugs.php.net/bug.php?id=70388	SOAP serialize_function_call() type confusion / RCE
+		Definitely, even the summary has enough indication for me.
 
-Fixed version:
-1.2.3 (not released atm)
+	https://bugs.php.net/bug.php?id=70365	yet another use-after-free vulnerability in unserialize() with SplObjectStorage
+		I would also say this can be attacker driven, so needs a CVE.
 
-Commit fix:
-https://github.com/gentoo/pax-utils/commit/e577c5b7e230c52e5fc4fa40e4e9014c634b3c1d
-https://github.com/gentoo/pax-utils/commit/858939ea6ad63f1acb4ec74bba705c197a67d559
+	https://bugs.php.net/bug.php?id=70366	yet another use-after-free vulnerability in unserialize() with SplDoublyLinkedL
+		Same.
+	
+	https://bugs.php.net/bug.php?id=69782	NULL pointer dereference
+		Denial of service, these queries might be fed from remote.
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
+Perhaps CVEs also for:
+	https://bugs.php.net/bug.php?id=70385	Buffer over-read in exif_read_data with TIFF IFD tag byte value of 32 bytes
 
-CVE:
-N/A
+	Questionable. It seems no crash was observed, so no denial of service. At most a information leak.
 
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00169-pax-utils-scanelf-oobread1
+	https://bugs.php.net/bug.php?id=70312 	HAVAL gives wrong hashes in specific cases
 
-Timeline:
-2017-02-09: bug discovered and reported to upstream
-2017-02-11: upstream realeased a patch
-2017-02-25: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/02/25/pax-utils-scanelf-out-of-bounds-read-in-scanelf_file_get_symtabs-scanelf-c-2
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
+	Questionable. I am not sure this is attacker driveable or if an attacker could do anything with this.
 
 
-------MIME delimiter for sendEmail-167816.381043853--
+	https://bugs.php.net/bug.php?id=70345
 
+	Various PCRE issues caused by the regexp string. There has been a tendency to either declare this CVE worthy or
+	declare that its not attacker driven usually.
+
+Ciao, Marcus
