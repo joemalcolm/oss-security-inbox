@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1421" "Tuesday" "11" "August" "2015" "14:58:10" "+0200" "Adam Maris" "amaris@redhat.com" "<55C9F162.8030700@redhat.com>" "29" "Re: [oss-security] CVE for crypto_get_random() from libsrtp" nil nil nil "8" "2015081112:58:10" "[oss-security] CVE for crypto_get_random() from libsrtp" (number mark "        amaris@redha Aug 11   29/1421  " thread-indent "\"Re: [oss-security] CVE for crypto_get_random() from libsrtp\"\n") "<20150811114801.GA2731@yuggoth.org>" ("<55BB6E77.1070007@redhat.com>" "<CACYkhxiBvVbV-Xg-gM7ZdJzR=xaR2ta_OA-K6Lvftxvo9j3=uA@mail.gmail.com>" "<55C9A996.5090705@redhat.com>" "<20150811114801.GA2731@yuggoth.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2025" "Tuesday" "8" "September" "2015" "13:02:44" "+0530" "Huzaifa Sidhpurwala" "huzaifas@redhat.com" "<55EE8F1C.605@redhat.com>" "52" "[oss-security] Pending CVE requests for glibc" nil nil nil "9" "2015090807:32:44" "[oss-security] Pending CVE requests for glibc" (number mark "U       huzaifas@red Sep  8   52/2025  " thread-indent "\"[oss-security] Pending CVE requests for glibc\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 3925 invoked by uid 550); 11 Aug 2015 12:58:25 -0000
+Received: (qmail 20072 invoked by uid 550); 8 Sep 2015 07:19:28 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,50 +11,70 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3889 invoked from network); 11 Aug 2015 12:58:24 -0000
-References: <55BB6E77.1070007@redhat.com>
- <CACYkhxiBvVbV-Xg-gM7ZdJzR=xaR2ta_OA-K6Lvftxvo9j3=uA@mail.gmail.com>
- <55C9A996.5090705@redhat.com> <20150811114801.GA2731@yuggoth.org>
-Message-ID: <55C9F162.8030700@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Received: (qmail 20052 invoked from network); 8 Sep 2015 07:19:28 -0000
+To: oss-security@lists.openwall.com,
+        Mitre CVE assign department <cve-assign@mitre.org>
+From: Huzaifa Sidhpurwala <huzaifas@redhat.com>
+Message-ID: <55EE8F1C.605@redhat.com>
+Date: Tue, 8 Sep 2015 13:02:44 +0530
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
  Thunderbird/38.1.0
 MIME-Version: 1.0
-In-Reply-To: <20150811114801.GA2731@yuggoth.org>
-Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.27
-Date: Tue, 11 Aug 2015 14:58:10 +0200
-From: Adam Maris <amaris@redhat.com>
-Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE for crypto_get_random() from libsrtp
-To: oss-security@lists.openwall.com
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
+Subject: [oss-security] Pending CVE requests for glibc
+
+Hi MITRE,
+
+I could not help but notice, some glibc security issues were not
+assigned CVE ids.
+
+1. glibc: multiple overflows in strxfrm()
+Integer overflow when computing memory allocation sizes (similar to
+CVE-2012-4412) was reported [1] in glibc strxfrm() function. Attached
+strxfrm-int32.c should trigger this issue on a 32-bit systems.
+Additionally, it was discovered [1] that strxfrm() falls back to an
+unbounded alloca if malloc fails making it vulnerable to stack-based
+buffer overflows (similar to CVE-2012-4424). Attached strxfrm-alloca.c
+should trigger this issue.
+
+Previously a request was made via:
+http://seclists.org/oss-sec/2015/q1/540
+
+2. glibc: _IO_wstr_overflow integer overflow
+An integer overflow flaw, leading to a heap-based buffer overflow, was
+found in glibc's _IO_wstr_overflow() function. If an application used
+this function, it could cause the application to crash or, potentially,
+execute arbitrary code with the privileges of the user running the
+application.
+
+https://sourceware.org/bugzilla/show_bug.cgi?id=17269
+https://sourceware.org/git/gitweb.cgi?p=glibc.git;h=bdf1ff052a8e23d637f2c838fa5642d78fcedc33
+
+3. glibc: potential denial of service in internal_fnmatch()
+It was reported [1] that when processing certain malformed patterns,
+fnmatch can skip over the NUL byte terminating the pattern.  This can
+potentially result in an application crash if fnmatch hits an unmapped
+page before encountering a NUL byte.
+
+https://sourceware.org/bugzilla/show_bug.cgi?id=18032
+https://sourceware.org/git/gitweb.cgi?p=glibc.git;h=4a28f4d55a6cc33474c0792fe93b5942d81bf185
+
+Previously a request was made via:
+http://seclists.org/oss-sec/2015/q1/689
+
+4. glibc: potential denial of service in pop_fail_stack()
+A crash was reported [1] during glibc extended regular expression
+processing. No known patch exists at the time of writing.
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=779392
 
 
+Can MITRE please assign CVE ids to these flaws?
 
-On 11/08/15 13:48, Jeremy Stanley wrote:
-> On 2015-08-11 09:51:50 +0200 (+0200), Adam Maris wrote:
-> [...]
->> Unless CVE is assigned, we don't plan to ship any patch at the moment.
-> I find this an interesting stance. Don't you decide on your own
-> whether your customers are impacted by a bug sufficiently to require
-> a fix (security vulnerability or otherwise)? It seems reasonable to
-> me that you would choose whether or not to ship a patch
-> independently of how MITRE chooses to classify (or not) the
-> associated bug... and vice versa, if a CVE is assigned for a bug you
-> consider to have minimal impact, do you release a patch for it
-> anyway just because there's a CVE?
-This has nothing to do with us not fixing flaws just because they don't 
-get a CVE. I assure you that we've fixed security flaws that had no CVEs 
-before. And if you look through our CVE database, you'll find many 
-examples of simple crashers that unfortunately got a CVE, which we did 
-not fix.
-The main reason for not fixing it for now is that we think 80 bits of 
-randomness is enough for most applications up to this day, especially if 
-it's session data and not permanent storage, etc. Therefore we classify 
-this issue as having a Low security impact. If a CVE is assigned for 
-this issue, we will create an entry in our CVE database but the end 
-result will likely be the same, wontfix.
+Thanks!
+
 
 -- 
-Adam Maris / Red Hat Product Security
-
+Huzaifa Sidhpurwala / Red Hat Product Security Team
