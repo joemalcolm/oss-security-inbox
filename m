@@ -1,4 +1,9 @@
-Received: (qmail 2024 invoked by uid 550); 3 Aug 2022 21:07:33 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["963" "Friday" "11" "September" "2015" "07:27:21" "-0400" "Marc Deslauriers" "marc.deslauriers@canonical.com" "<55F2BA99.8090005@canonical.com>" "33" "[oss-security] CVE Request: 2 FreeType issues" nil nil nil "9" "2015091111:27:21" "[oss-security] CVE Request: 2 FreeType issues" (number mark "        marc.deslaur Sep 11   33/963   " thread-indent "\"[oss-security] CVE Request: 2 FreeType issues\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 6063 invoked by uid 550); 11 Sep 2015 11:27:36 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,43 +11,50 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21910 invoked from network); 3 Aug 2022 20:46:09 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: =?UTF-8?Q?Juan_Pablo_Santos_Rodr=C3=ADguez?= <juanpablo@apache.org>
-To: oss-security@lists.openwall.com
-Message-ID: <cb402038-6b4f-e640-467d-652b8ca7cc26@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Wed, 03 Aug 2022 20:45:51 +0000
+Received: (qmail 6039 invoked from network); 11 Sep 2015 11:27:35 -0000
+X-Enigmail-Draft-Status: N1110
+Message-ID: <55F2BA99.8090005@canonical.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.2.0
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2022-28730: Apache JSPWiki Cross-site scripting vulnerability
- on AJAXPreview.jsp 
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+Date: Fri, 11 Sep 2015 07:27:21 -0400
+From: Marc Deslauriers <marc.deslauriers@canonical.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE Request: 2 FreeType issues
+To: oss-security@lists.openwall.com
 
-Severity: moderate
+Hello,
 
-Description:
+I don't believe these two FreeType issues have assigned CVEs:
 
-A carefully crafted request on AJAXPreview.jsp could trigger an XSS vulnera=
-bility on Apache JSPWiki, which could allow the attacker to execute javascr=
-ipt in the victim's browser and get some sensitive information about the vi=
-ctim.
+1- Use of uninitialized memory in ps_parser_load_field, t42_parse_font_matrix
+and t1_parse_font_matrix
 
-This vulnerability leverages CVE-2021-40369, where the Denounce plugin dang=
-erously renders user-supplied URLs. Upon re-testing CVE-2021-40369, it appe=
-ars that the patch was incomplete as it was still possible to insert malici=
-ous input via the Denounce plugin.=20
+https://savannah.nongnu.org/bugs/?41309
+http://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=8b281f83e8516535756f92dbf90940ac44bd45e1
 
-Mitigation:
+https://bugs.launchpad.net/ubuntu/+source/freetype/+bug/1449225
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=798619
 
-Apache JSPWiki users should upgrade to 2.11.3 or later.=20
 
-Credit:
+2- infinite loop in parse_encoding (t1load.c)
 
-This issue was discovered by Poh Jia Hao, from Star Labs <info AT starlabs =
-DOT sg>
+https://savannah.nongnu.org/bugs/index.php?41590
+http://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=df14e6c0b9592cbb24d5381dfc6106b14f915e75
 
-References:
+https://bugs.launchpad.net/ubuntu/+source/freetype/+bug/1492124
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=798620
 
-https://jspwiki-wiki.apache.org/Wiki.jsp?page=3DCVE-2022-28732
 
+Could CVEs please be assigned to them?
+
+Thanks,
+
+Marc.
+
+-- 
+Marc Deslauriers
+Ubuntu Security Engineer     | http://www.ubuntu.com/
+Canonical Ltd.               | http://www.canonical.com/
