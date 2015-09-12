@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3164" "Friday" "7" "April" "2017" "07:49:10" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<915244.595936628-sendEmail@localhost>" "51" "[oss-security] CVE-2017-7578: libming: heap overflow in parser.c (Incomplete fix for CVE-2016-9831)" nil nil nil "4" "2017040707:49:10" "[oss-security] CVE-2017-7578: libming: heap overflow in parser.c (Incomplete fix for CVE-2016-9831)" (number mark "U       ago@gentoo.o Apr  7   51/3164  " thread-indent "\"[oss-security] CVE-2017-7578: libming: heap overflow in parser.c (Incomplete fix for CVE-2016-9831)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1278" "Sunday" "13" "September" "2015" "02:14:29" "+0900" "mala" "mala@ma.la" "<CAD8wLziqkz9NrTOO+Pxo9YchDJa3BkNvcgMnkXm8fRt7jDF81Q@mail.gmail.com>" "39" "[oss-security] CVE request: Flash based XSS in FileAPI.flash.swf" nil nil nil "9" "2015091217:14:29" "[oss-security] CVE request: Flash based XSS in FileAPI.flash.swf" (number mark "        mala@ma.la   Sep 13   39/1278  " thread-indent "\"[oss-security] CVE request: Flash based XSS in FileAPI.flash.swf\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 24185 invoked by uid 550); 7 Apr 2017 07:49:30 -0000
+Received: (qmail 14107 invoked by uid 550); 12 Sep 2015 17:19:22 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,64 +11,66 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 24165 invoked from network); 7 Apr 2017 07:49:29 -0000
-Message-ID: <915244.595936628-sendEmail@localhost>
-From: "Agostino Sarubbo" <ago@gentoo.org>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Date: Fri, 7 Apr 2017 07:49:10 +0000
+Received: (qmail 11619 invoked from network); 12 Sep 2015 17:14:41 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:date:message-id:subject:from:to:content-type;
+        bh=rCqAfeMoKGYsG0C7Gn8bQkHO0//Y6jqsVHtVBEh+gwU=;
+        b=pzsMVl5pInt9iljlb2nXjr/JMoTwnGvqpI6zUrnmeLWK08uP+DDmyQhXszT3gbqFdQ
+         qeN6n0XQ4EQMwjXpCxc9Z7sabU2FbOxZYrwDqpMbwN3PKnaJkA4IgLPo626vDle5TIcC
+         wQQgfskpyNuI4EM6A5KqwFSyAZSL72nujWa+Vs7CwbPHh7VoRdgsbyvVbCGG1mic1u3p
+         zUGmeMSf/0f2kiTNWEXfIBJm9/dL2BFPH97j8S0OJGtnbXAbSqm2NiIJJj9zGNi2gK3I
+         6A26A+GO1EhFrRuMC6AVmBWJ0ZxUNUmni9BPY0Fi7W77TYWqZao4xYM8tt6Yx0rxNiLN
+         mwIA==
 MIME-Version: 1.0
-Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-889913.021194847"
-Subject: [oss-security] CVE-2017-7578: libming: heap overflow in parser.c (Incomplete fix for CVE-2016-9831)
-
-------MIME delimiter for sendEmail-889913.021194847
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 7bit
+X-Received: by 10.60.58.4 with SMTP id m4mr4184866oeq.74.1442078069412; Sat,
+ 12 Sep 2015 10:14:29 -0700 (PDT)
+X-Google-Sender-Auth: _naF5ZaQkzvzlhdsWzTqp0zy2Lo
+Message-ID: <CAD8wLziqkz9NrTOO+Pxo9YchDJa3BkNvcgMnkXm8fRt7jDF81Q@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Date: Sun, 13 Sep 2015 02:14:29 +0900
+From: mala <mala@ma.la>
+Reply-To: oss-security@lists.openwall.com
+Sender: bulkneets@gmail.com
+Subject: [oss-security] CVE request: Flash based XSS in FileAPI.flash.swf
+To: oss-security@lists.openwall.com
 
 Hello,
 
-Marcel Böhme, fuzzing the master version of libming, discovered that the fix for CVE-2016-9831 was incomplete:
+Please assign a CVE ID to this.
 
-$ util/listswf libming1.swf
-read.c:109:14: runtime error: shift exponent -1 is negative
-read.c:110:20: runtime error: left shift of 1 by 31 places cannot be represented in type 'int'
-read.c:110:16: runtime error: signed integer overflow: 1389485020 - -2147483648 cannot be represented in type 'int'
-205 gradients in SWF_MORPHGRADiENT, expected a max of 8parser.c:786:40: runtime error: index 9 out of bounds for type 'SWF_MORPHGRADIENTRECORD [8]'
-203 gradients in SWF_MORPHGRADiENT, expected a max of 8=================================================================
-==179946==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x62e00000b298 at pc 0x0000005b1be8 bp 0x7ffc849e8990 sp 0x7ffc849e8988
-WRITE of size 1 at 0x62e00000b298 thread T0
-    #0 0x5b1be7 in parseSWF_RGBA /home/ubuntu/subjects/build-asan/libming/util/parser.c:68:14
-    #1 0x5f004a in parseSWF_MORPHGRADIENTRECORD /home/ubuntu/subjects/build-asan/libming/util/parser.c:771:3
-    #2 0x5f0c1f in parseSWF_MORPHGRADIENT /home/ubuntu/subjects/build-asan/libming/util/parser.c:786:5
-    #3 0x5ee190 in parseSWF_MORPHFILLSTYLE /home/ubuntu/subjects/build-asan/libming/util/parser.c:802:7
-    #4 0x5f1bbe in parseSWF_MORPHFILLSTYLES /home/ubuntu/subjects/build-asan/libming/util/parser.c:829:7
-    #5 0x634ee5 in parseSWF_DEFINEMORPHSHAPE /home/ubuntu/subjects/build-asan/libming/util/parser.c:2185:3
-    #6 0x543923 in blockParse /home/ubuntu/subjects/build-asan/libming/util/blocktypes.c:145:14
-    #7 0x52b2a9 in readMovie /home/ubuntu/subjects/build-asan/libming/util/main.c:265:11
-    #8 0x528f82 in main /home/ubuntu/subjects/build-asan/libming/util/main.c:350:2
-    #9 0x7ff0c21cdf44 in __libc_start_main /build/eglibc-oGUzwX/eglibc-2.19/csu/libc-start.c:287
-    #10 0x4bdf5c in _start (/home/ubuntu/subjects/build-asan/libming/util/listswf+0x4bdf5c)
+FileAPI https://github.com/mailru/FileAPI
+- fixed in 2.0.15 https://github.com/mailru/FileAPI/releases/tag/2.0.15
+- https://github.com/mailru/FileAPI/pull/342
 
-0x62e00000b298 is located 0 bytes to the right of 44696-byte region [0x62e000000400,0x62e00000b298)
-allocated by thread T0 here:
-    #0 0x4a0a40 in calloc (/home/ubuntu/subjects/build-asan/libming/util/listswf+0x4a0a40)
-    #1 0x5f17b2 in parseSWF_MORPHFILLSTYLES /home/ubuntu/subjects/build-asan/libming/util/parser.c:826:28
-    #2 0x634ee5 in parseSWF_DEFINEMORPHSHAPE /home/ubuntu/subjects/build-asan/libming/util/parser.c:2185:3
-    #3 0x543923 in blockParse /home/ubuntu/subjects/build-asan/libming/util/blocktypes.c:145:14
-    #4 0x52b2a9 in readMovie /home/ubuntu/subjects/build-asan/libming/util/main.c:265:11
-    #5 0x528f82 in main /home/ubuntu/subjects/build-asan/libming/util/main.c:350:2
-    #6 0x7ff0c21cdf44 in __libc_start_main /build/eglibc-oGUzwX/eglibc-2.19/csu/libc-start.c:287
+summary:
+Cross-site scripting (XSS) vulnerability in FileAPI.flash.swf related
+to the "ExternalInterface.call" function.
+Arbitrary javascript code execution is possible on the domain hosting swf file.
 
-SUMMARY: AddressSanitizer: heap-buffer-overflow /home/ubuntu/subjects/build-asan/libming/util/parser.c:68 parseSWF_RGBA
+This is similar to http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-8992
+https://github.com/mailru/FileAPI/pull/228
 
-Reference:
-https://github.com/libming/libming/issues/68
+but another attack vector.
+Probably, all older versions are affected by XSS.
+At least mailru/FileAPI version 1.1.0 contains vulnerable code.
+
+references:
+
+major library that include FileAPI.flash.swf
+
+jquery.fileapi https://github.com/RubaXa/jquery.fileapi
+- fixed in 0.4.11 https://github.com/RubaXa/jquery.fileapi/releases/tag/0.4.11
+
+ng-file-upload https://github.com/danialfarid/ng-file-upload
+- fixed in 7.1.0
+https://github.com/danialfarid/ng-file-upload/releases/tag/7.1.0
+- https://github.com/danialfarid/ng-file-upload/issues/997
+
+and CMS/Web framework that uses jquery.fileapi, ng-file-upload
+
+https://github.com/search?l=json&q=jquery.fileapi&ref=searchresults&type=Code
+https://github.com/search?l=json&q=ng-file-upload&type=Code
 
 --
-Agostino Sarubbo
-Gentoo Linux Developer
-
-
-------MIME delimiter for sendEmail-889913.021194847--
-
+ma.la
