@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2582" "Saturday" "20" "October" "2018" "11:42:20" "+0000" "Jordan Glover" "Golden_Miller83@protonmail.ch" "<OgcnF5Js29vkskb2jEXrUQDCCyFPkPS44JdOSJ-scVB2WymKAmNWpE3qxCcY4u32snE5_lcl5VTQQQ0dyIfA-yN2N-ZGcXubRunexuQgxNQ=@protonmail.ch>" "61" "Re: [oss-security] Attempting to patch ghostscript-9.25" "^Date:" nil nil "10" "2018102011:42:20" "[oss-security] Attempting to patch ghostscript-9.25" (number mark "        Golden_Mille Oct 20   61/2582  " thread-indent "\"Re: [oss-security] Attempting to patch ghostscript-9.25\"\n") "<20181020014701.GB3366@milliways.localdomain>" ("<20181020014701.GB3366@milliways.localdomain>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1990" "Monday" "14" "September" "2015" "15:37:07" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150914193707.999F472E128@smtpvbsrv1.mitre.org>" "46" "[oss-security] Re: CVE Request: Linux x86_64 NT flag issue - Linux kernel" nil nil nil "9" "2015091419:37:07" "[oss-security] Re: CVE Request: Linux x86_64 NT flag issue - Linux kernel" (number mark "        cve-assign@m Sep 14   46/1990  " thread-indent "\"[oss-security] Re: CVE Request: Linux x86_64 NT flag issue - Linux kernel\"\n") "<CALCETrUvVMBAK-uWR28u4CzJZYo=mKsqoqd+y84L=GdgwAQJVA@mail.gmail.com>" ("<CALCETrUvVMBAK-uWR28u4CzJZYo=mKsqoqd+y84L=GdgwAQJVA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 14276 invoked by uid 550); 20 Oct 2018 12:04:50 -0000
+Received: (qmail 11804 invoked by uid 550); 14 Sep 2015 19:37:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,86 +11,59 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5722 invoked from network); 20 Oct 2018 11:42:38 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.ch;
-	s=default; t=1540035746;
-	bh=x6DNhA+n1N3z+dtLaHaiPpP+DrARPrAakEDlAKnUJX4=;
-	h=Date:To:From:Reply-To:Subject:In-Reply-To:References:Feedback-ID:
-	 From;
-	b=ZzgMwp4Um89iJc3S1rf1I5WgpJFvbLHHe697PoBa295qLd94s7U9FEel3kAmyH7Bo
-	 /d5K+UZiktA9Sb2qgLPx1sliy2h9V/Qyo87uKX2mCJt+YF9OnhRTq2MFxV9psSlCJW
-	 29xkXxjvK+2MsCc1avN1z693/sWjcjngix5pWldI=
-Message-ID: <OgcnF5Js29vkskb2jEXrUQDCCyFPkPS44JdOSJ-scVB2WymKAmNWpE3qxCcY4u32snE5_lcl5VTQQQ0dyIfA-yN2N-ZGcXubRunexuQgxNQ=@protonmail.ch>
-In-Reply-To: <20181020014701.GB3366@milliways.localdomain>
-References: <20181020014701.GB3366@milliways.localdomain>
-Feedback-ID: QEdvdaLhFJaqnofhWA-dldGwsuoeDdDw7vz0UPs8r8sanA3bIt8zJdf4aDqYKSy4gJuZ0WvFYJtvq21y6ge_uQ==:Ext:ProtonMail
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Date: Sat, 20 Oct 2018 11:42:20 +0000
-From: Jordan Glover <Golden_Miller83@protonmail.ch>
+Received: (qmail 11742 invoked from network); 14 Sep 2015 19:37:19 -0000
+In-Reply-To: <CALCETrUvVMBAK-uWR28u4CzJZYo=mKsqoqd+y84L=GdgwAQJVA@mail.gmail.com>
+Message-Id: <20150914193707.999F472E128@smtpvbsrv1.mitre.org>
+Cc: cve-assign@mitre.org
+Date: Mon, 14 Sep 2015 15:37:07 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Attempting to patch ghostscript-9.25
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Subject: [oss-security] Re: CVE Request: Linux x86_64 NT flag issue - Linux kernel
+To: oss-security@lists.openwall.com
 
-=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90 Original Me=
-ssage =E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90
-On Saturday, October 20, 2018 3:47 AM, Ken Moffat <zarniwhoop@ntlworld.com>=
- wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-> Hi,
->
-> I hope people can read this - I know that google marks my mails as
-> spam (so no point Cc'ing Tavis) and also that Suse discard my mails.
-> Probably many other places also do that. Anyway:
->
-> When the first set of vulnerabilities in 9.25 came out there was a
-> nice 'mostly harmless' example, and I patched BLFS for that (needed
-> one extra commit beyond the two Tavis specified, so that I could
-> make sense of where to apply part of it).
->
-> For the later vulnerabilities, working out what to apply has been
-> much harder. Either everyone else thinks that other mitigations
-> against untrusted ps files will suffice, or else it's on everybody's
-> ToDo lists.
->
-> So, here is a first attempt to fix all this month's vulnerabilities.
-> For the latest exploit(s) I do not have an example, so I don't know
-> whether or not this works. But it prevents the earlier
-> vulnerability, and usage of real ps (and eps - I only have the gs
-> examples, and only gs seems able to use them) seems to work
-> correctly. Unlike my first attempt to fix this, which turned out
-> to fail to display any ps, eps files.
->
-> The patch is a bit big, so I've uploaded it to
-> http://www.linuxfromscratch.org/~ken/provisional/ as
-> ghostscript-9.25-security_fixes-2.patch
->
-> 'provisional' until I find out if it protects adequately. If there
-> turn out ot be problems, I suppose I'll need to renumber later
-> versions.
->
-> Built in BLFS using the same instructions as for the earlier -1
-> patch [ http://www.linuxfromscratch.org/blfs/view/svn/pst/gs.html ]
-> but that doesn't mean it will work for everyone else's ways of
-> building. Note tht I do build the shared library.
->
-> The patch lists which upstream commits I pulled in. I was mostly
-> concentrating on changes to gs_init which would maybe help me apply
-> the needed patches. As I've noted in the patch's introduction,
-> several commits had negative offsets (I guess hunks of code were
-> removed in some of the unrelated commits that I ignored).
->
-> Comments welcome.
->
-> One final thought - apart from 9.25, upstream seem to have an
-> approximately 6-monthly release schedule, so probably the only thing
-> likely to speed up 9.26 is everybody patching ;)
->
-> =C4=B8en
+>> Use CVE-2015-6666.
 
-I think the easiest way is to build on upstream git snapshot.
-All of its contents will be included in future release anyway.
+> I think this may be a false alarm.  SDM Volume 3 6.12.1.2 says:
+> 
+> On calls to exception and interrupt handlers, the processor also
+> clears the VM, RF, and NT flags in the EFLAGS register, after
+> they are saved on the stack.
+> 
+> So if an interrupt or page fault happened while NT was incorrectly
+> set, the NT flag would still be clear when context switching and would
+> therefore never leak. (This wouldn't have been the case before 3.19,
+> when we could context switch by calling schedule() directly while NT
+> was set, but those kernels manually saved and restored flags across
+> context switches.)
 
-Jordan
+We have not seen any further discussion of this. Our understanding is
+that this "might be able to leak NT into an unrelated task" security
+impact was not found to affect any version of the Linux kernel. Unless
+there is other information, we will move CVE-2015-6666 into the
+"rejected" state later this week.
 
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJV9x+yAAoJEL54rhJi8gl517kP/0veNuawDhSguGeXOrtzKv/k
+d6+CJJZq4YUUAhOJ5ZdWL0TeLqN0FRaDsAhcs6SgmCNjKTWtq4diZcGPI3dElNfC
+bLjmrsvJ3cWF2mk1JRUHgLhOnNj4pCOTbLQGknKKORZbBV3nH55WZhLNicqahkJL
+qrUnPC05yRxI/xHmKLWu8Ic7W4s2jhz74F1se64t5qgdlekhQc9VqrXMvuzJhq+t
+SAODGrf6c4fwjhhPT/XPXDq2aqa0wGkvF4usS8Kxgp2g6cBuH39UZ54e5istzV79
+v1k8lwS+AnG6/W7od8sVzE3QahRr/ia7EDnurvUEC9AbkLF7qWr2+zhkvgsbx9UU
+r6jPWpQbNkrZMZdVEH3lwDNsMGOiuB6E1W+2BTXJB+HSo/4IBd8JuF9JOP07E3ye
+p5hb5u34P/WSXa3D+B3HukRB5aYK3KnoY0F9Fu0RT/f/v/OFZnwzyfrmAzLGI44c
+dlw3kjQXEayFi8V6816YODZnKQHk4z2EwvrK7Jeu0bP1wnn/xvToWapVVLIaQ0wK
+ojsATC/5KxLTJzc888++/aIlgpomGlmDBZVgpEImAc9Hr50V3gm5u1QZeAcGy4h6
+Um6f1USBtnmDiebA8N2ITF3Vh55AzsmyX2vRKg382soaw8TKWVygXLwLrPE/1VXh
+PvwowWLecM0VCnO6nqoT
+=N5KU
+-----END PGP SIGNATURE-----
