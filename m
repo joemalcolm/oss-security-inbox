@@ -1,4 +1,9 @@
-Received: (qmail 21826 invoked by uid 550); 22 Jun 2023 06:59:03 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1047" "Tuesday" "15" "September" "2015" "16:33:13" "+0000" "Kurt Grutzmacher" "grutz@jingojango.net" "<CAMDnkS=1BX3c0CEE1+nhcjiE2LNS_QhJnYd+W98-Tb_SCBWsvg@mail.gmail.com>" "38" "Re: [oss-security] CVE-2015-6584: XSS in DataTables" nil nil nil "9" "2015091516:33:13" "[oss-security] CVE-2015-6584: XSS in DataTables" (number mark "        grutz@jingoj Sep 15   38/1047  " thread-indent "\"Re: [oss-security] CVE-2015-6584: XSS in DataTables\"\n") "<87mvwoj6gu.fsf@redhat.com>" ("<87mvwoj6gu.fsf@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 28306 invoked by uid 550); 15 Sep 2015 16:51:42 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,95 +11,75 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 23739 invoked from network); 22 Jun 2023 02:12:08 -0000
+Received: (qmail 32523 invoked from network); 15 Sep 2015 16:33:35 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1687399916; x=1689991916;
-        h=content-transfer-encoding:to:subject:message-id:date:from:reply-to
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=SUY/GYXLYcix7hGh5QMlriFoMzDH1daBw4nnE/e/U8c=;
-        b=bQ7/WghXV4/0xZiDK+MDURm0nY3wXBKE0cgab6lh7iNYfzmArOL9wLlg+Tw6PpVAAL
-         dYOD4Uzj2Otf45C2yP6FAUJiNf/i6u1kumhv7k0xHuU7lscXZrRAdPE8NQv0xReDjCVg
-         CvVIm+SiRAsOYm683TkW3/6Gd4uhvmIFUUgml6et9mGXJv3vUkO7Rk2efqmR/bv6VlU2
-         GIteVsKqdHKweO8QT0Wa5WzzdnqO7VPdBBEo9x51i5w86FhQaQxvBrPElWUMZnTkM5Cf
-         SWOlH+B9PdiZRAeFd31XPiabI4Yn4Fvet2RxuFrWGcKWrwD5Xg8OgJvoO/L8OvryqBaz
-         f5iQ==
+        d=jingojango.net; s=dkim;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :content-type;
+        bh=bSf9l/UudAc13ipDhy5H9HjJOsiSsJZR3oNvTckdUuA=;
+        b=dfcUFgnIbMSAkrCVRfCCn1jfuPUgmXz4NQBBj8Ni52GPHjcT5w0Em6MQ6eTZpJp4fr
+         XpWfNq3qHnTpGPaHHpzEYgw8/mkCZXtTUm+A//aWJ6si5MRvVxwrgozzHCipk6FlQ0N7
+         pIL9kGbt/J6MYomILRajzd3weGPavXdenW8l4=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687399916; x=1689991916;
-        h=content-transfer-encoding:to:subject:message-id:date:from:reply-to
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=SUY/GYXLYcix7hGh5QMlriFoMzDH1daBw4nnE/e/U8c=;
-        b=JeY/QUditYHJWaagDMUBJspicXVnFAl2GMCR5wl5lgtvuDjJzuJTuChqwg3ehQdgjQ
-         SupWp3ak1Z0y56t0WrwjX2kXURv3fZHC/WiNM0RaVBj+6dprBIxVdPnfXGtYuNdzWui2
-         cueEPFyPfkl8C5hQeP9tYj1xRsY/ihYBRsmYEPbQenbn/HxboYgU9KGG27KrKE1Tvot9
-         XmRKkx4Wgm7y2OH+Lo0pBWaclOAYvyk6+fMo+s8T99gfmXkbUsMyXWbdHvX2NFl79GhT
-         TZEIbebaD+WfaMKUGzB86CydPNT/bSMBqzPzmqviPmVludnu7vua2K/iF/yvWzLeS7Ix
-         L/fg==
-X-Gm-Message-State: AC+VfDxQHywb9/wa47AG15D+N+P9j/tOQV3pOzauaXMsJVlrMB8u4nzZ
-	fh1ziwtvvfm2YI52+Fmx/ogj3462A5fKQPF9RDlXYKSzhEQ=
-X-Google-Smtp-Source: ACHHUZ4idjQUlsGENw+Bak6UWy8VQ7HpaTC4VhYvG3ZelpI01//0GZ4DXBX3HbJYkqntXtjsw7mbws5um3J9L8Db+90=
-X-Received: by 2002:a05:6808:2088:b0:3a0:307f:45f5 with SMTP id
- s8-20020a056808208800b003a0307f45f5mr5464878oiw.14.1687399916020; Wed, 21 Jun
- 2023 19:11:56 -0700 (PDT)
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:content-type;
+        bh=bSf9l/UudAc13ipDhy5H9HjJOsiSsJZR3oNvTckdUuA=;
+        b=AERezs8ZH3fUngOfvwiKymAhR7huKf9Qqu4h2FYrq61zKJc5v+c9Y1NdZYh9LUWHTx
+         OntpQV323NMMX6LHqXSqpoEEf3CIMcdJxFmzWP+COydtora4bnZw6sp6sQJEQfIEW6Z9
+         mvGOefzPfclDB1BWar0QyP3keKPVce4RUHBKAxIUkNHNgSeQsVmoqW6alfRdy75NPTMO
+         24DYQH+3ITLaX4qOT8C/CF6wdjDExq8pRBFeuxfprOw8t71+PTzG5N6QxCxviYjaTsXy
+         hLJ7viIIiYk1q0XMbgkNdAmxB4178n5SycuBwEKr7MxVdkzP1pOkEKviVzIQmUMjNlWj
+         2dJg==
+X-Gm-Message-State: ALoCoQnvgnQkaBVPEcdNJqIlhhb4FiilSgODkiwf9qLbeYNQ6CVn4JZ/x9vJ2JTkZVUen1hQcu24
+X-Received: by 10.140.92.106 with SMTP id a97mr33446014qge.43.1442334803430;
+ Tue, 15 Sep 2015 09:33:23 -0700 (PDT)
 MIME-Version: 1.0
-References: <a37bfa30-f7d2-ae37-5af4-e3674af29a7a@oracle.com>
- <alpine.BSF.2.21.9999.2306220132050.17927@aneurin.horsfall.org>
- <ZJNx4OBlGqGFgOYD@itl-email> <1856911.tdWV9SEqCh@x2>
-In-Reply-To: <1856911.tdWV9SEqCh@x2>
-From: Jeffrey Walton <noloader@gmail.com>
-Date: Wed, 21 Jun 2023 22:11:42 -0400
-Message-ID: <CAH8yC8njh+1Q2QHvkN2pwAFWsL+v1HdxFYZYBDjk9h9qZHUcfA@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
+References: <87mvwoj6gu.fsf@redhat.com>
+In-Reply-To: <87mvwoj6gu.fsf@redhat.com>
+Message-ID: <CAMDnkS=1BX3c0CEE1+nhcjiE2LNS_QhJnYd+W98-Tb_SCBWsvg@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=001a1139644e9b54c3051fcbbd00
+Date: Tue, 15 Sep 2015 16:33:13 +0000
+From: Kurt Grutzmacher <grutz@jingojango.net>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] CVE-2015-6584: XSS in DataTables
+To: oss security list <oss-security@lists.openwall.com>
+
+--001a1139644e9b54c3051fcbbd00
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-Subject: Re: [oss-security] CVE-2023-31975: memory leak in yasm
 
-On Wed, Jun 21, 2023 at 9:55=E2=80=AFPM Steve Grubb <sgrubb@redhat.com> wro=
-te:
+https://github.com/DataTables/DataTables/issues/602 speaks to the XSS in
+the unit testing code.
+
+https://github.com/DataTables/DataTablesSrc/commit/ccf86dc5982bd8e16d is
+the commit.
+
+
+
+On Tue, Sep 15, 2015 at 3:57 AM Martin Prpic <mprpic@redhat.com> wrote:
+
+> Hi,
 >
-> On Wednesday, June 21, 2023 5:54:57 PM EDT Demi Marie Obenour wrote:
-> > On Thu, Jun 22, 2023 at 01:44:04AM +1000, Dave Horsfall wrote:
-> > > On Wed, 21 Jun 2023, Jeffrey Walton wrote:
-> > > > Memory leaks on exit are par for the course in GNU software per
-> > > > https://www.gnu.org/prep/standards/standards.html#Memory-Usage .
-> > >
-> > > Don't bother with this, don't bother with that, etc...  Call me
-> > > old-school (which I am), but I cannot abide sloppy programming[*].
-> >
-> > Memory leaks on exit are a _good_ thing in general.  There is absolutely
-> > zero point in calling free() if the program is about to exit =E2=80=94 =
-the OS
-> > will do a better job of freeing resources than the program itself ever
-> > could.
+> CVE-2015-6584 was assigned to a cross-site scripting flaw in DataTables:
 >
-> Sure, but how can static analysis or address sanitizers tell the differen=
-ce
-> between something created and leaked on the error path, vs something that
-> mattered during the life of the program? Meaning something leaks in an ev=
-ent
-> loop and slowly accumulates leakage. Nothing gives you a free pass but th=
-e OS
-> when analyzing leaks. Mundane leaks need cleaning up so you can find the =
-real
-> leaks that matter.
+>
+> https://www.netsparker.com/cve-2015-6384-xss-vulnerability-identified-in-=
+datatables/
+> https://cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2015-6584
+>
+> Any pointers on which commit fixes this issue? The advisory linked above
+> only mentions it was fixed in 1.10.9, but the changelog for that version
+> does not mention the CVE, or any change that looks like XSS for that
+> matter.
+>
+> https://cdn.datatables.net/1.10.9/
+> https://github.com/DataTables/DataTables/commits/master
+>
+> Thanks!
+>
+> --
+> Martin Prpi=C4=8D / Red Hat Product Security
+>
 
-Right. And shared objects are even worse. The test program exits,
-memory is cleaned up by the OS, so who cares, right?
-
-Just ask the OpenJDK developers who had to contend with the OpenSSL
-memory leaks that exhausted all memory on Android devices. The
-accumulated leaks literally used up all memory. That's because shared
-objects are loaded/unloaded hundreds of times over the life of a
-program on Android.
-
-Another offender from GNU is ncurses. It leaks like a sieve, too.
-Ncurses makes it nearly impossible to test GNU programs because
-ncurses masks real problems (in itself and the program). And it causes
-resource exhaustion on mobile devices, too.
-
-It's very unfortunate the world has to lower its standards to that of
-GNU software.
-
-Jeff
+--001a1139644e9b54c3051fcbbd00--
