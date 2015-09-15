@@ -1,4 +1,9 @@
-Received: (qmail 32122 invoked by uid 550); 11 Sep 2022 17:10:42 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1642" "Tuesday" "15" "September" "2015" "13:10:17" "-0300" "Gustavo Grieco" "gustavo.grieco@gmail.com" "<CACn5sdScL+e_x+QH4wS-cUKaEAMhSSy-jjeKufXu53j6-as_HA@mail.gmail.com>" "50" "Re: [oss-security] Heap overflow and DoS in unzip 6.0" nil nil nil "9" "2015091516:10:17" "[oss-security] Heap overflow and DoS in unzip 6.0" (number mark "        gustavo.grie Sep 15   50/1642  " thread-indent "\"Re: [oss-security] Heap overflow and DoS in unzip 6.0\"\n") "<20150915180357.7a0097a4@redhat.com>" ("<CACn5sdRQaUEHfde5QzqnOSv829baMEgDBCN7n8rzzrb+1s2uMw@mail.gmail.com>" "<20150915180357.7a0097a4@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 14219 invoked by uid 550); 15 Sep 2015 16:10:30 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,95 +11,80 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 14179 invoked from network); 15 Sep 2015 16:10:28 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=9tUUQ4pAQH68LYMy78afgDAthkyjcsPxaPeqCOV1etI=;
+        b=xbh14I6C5M5UgLQGI7wWbaF9B7QOeIOU8UnYBAyuyeEp0KnNBW+/Rb3iNtGs2/Eq7d
+         nsOE2lyqijY71favXQsFTKsBQ2zDJG0WQrsXnmI4jZHKMVPEGYGXwvHBgW11jfOYSrS+
+         e2hR3jdo5qv9sBnh/geHZKUVpIS3cXwX+aFQkWB0f6ktAXrvimhXhTVTEaJF+1JYQ0Xz
+         CpVdTttTsf9+Bfs/kl06LPm0yObiMq3EO86HUfe63SvNVEhWXn/4NAyfhOr/0kYud7gA
+         a+5kDkz/tDaW63slc1tf5vykU7e6nvpyfionZ9jzzNwFWNiemIQaAykg3jFQQCUFI61V
+         8KlA==
+MIME-Version: 1.0
+X-Received: by 10.153.8.37 with SMTP id dh5mr681859lad.53.1442333417492; Tue,
+ 15 Sep 2015 09:10:17 -0700 (PDT)
+In-Reply-To: <20150915180357.7a0097a4@redhat.com>
+References: <CACn5sdRQaUEHfde5QzqnOSv829baMEgDBCN7n8rzzrb+1s2uMw@mail.gmail.com>
+	<20150915180357.7a0097a4@redhat.com>
+Message-ID: <CACn5sdScL+e_x+QH4wS-cUKaEAMhSSy-jjeKufXu53j6-as_HA@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=001a11369b58ff597f051fcb6a5e
+Cc: cve-assign@mitre.org
+Date: Tue, 15 Sep 2015 13:10:17 -0300
+From: Gustavo Grieco <gustavo.grieco@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30659 invoked from network); 11 Sep 2022 17:09:38 -0000
-Date: Sun, 11 Sep 2022 19:09:22 +0200
-From: Solar Designer <solar@openwall.com>
+Subject: Re: [oss-security] Heap overflow and DoS in unzip 6.0
 To: oss-security@lists.openwall.com
-Cc: "Anthony Liguori (aliguori)" <aliguori@amazon.com>, sandreim@amazon.com,
-	Valentina Palmiotti <chompie@graplsecurity.com>
-Message-ID: <20220911170922.GA20993@openwall.com>
-References: <97042bbb-bf57-23e8-f1d9-75b95df5b9ff@amazon.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <97042bbb-bf57-23e8-f1d9-75b95df5b9ff@amazon.com>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] CVE-2019-18960: Firecracker v0.18.0 and v0.19.0 vsock buffer overflow
 
-Hi,
+--001a11369b58ff597f051fcb6a5e
+Content-Type: text/plain; charset=UTF-8
 
-FWIW, Valentina Palmiotti @chompie1337 and her colleagues at Grapl have
-recently looked into exploiting the below vulnerability, and blogged
-about it here:
+2015-09-15 13:03 GMT-03:00 Stefan Cornelius <scorneli@redhat.com>:
 
-https://www.graplsecurity.com/post/attacking-firecracker
+> On Mon, 7 Sep 2015 08:57:20 -0300
+> Gustavo Grieco <gustavo.grieco@gmail.com> wrote:
+>
+> > Hello,
+> >
+> > Two issues were found in unzip 6.0:
+> >
+> > * A heap overflow triggered by unzipping a file with password (e.g
+> > unzip -p -P x sigsegv.zip)
+> > * A denegation of service with a file that never finishes unzipping
+> > (e.g. unzip sigxcpu.zip).
+> >
+> > Upstream is notified. Nevertheless the test cases as well as the
+> > valgrind and the adress sanitizer reports of the heap overflow case
+> > are attached (as a single file) in case someone wants to provide some
+> > feedback. These issues were found with QuickFuzz.
+> >
+> > Regards,
+> > Gustavo.
+>
+> Can CVEs be assigned?
+>
+> Thanks in advance,
+>
 
-The attempts so far have bumped into guard pages, some of unidentified
-origin.  Maybe someone else will want to continue this research.
+AFAIK, upstream is still working on the heap overflow issue (the DoS is
+fixed in the last unzip beta). In concrete, they said:
 
-The blog post above includes a lot of other observations, not limited to
-this one vulnerability and its exploitation, but also covering VMMs,
-Firecracker vs. QEMU, Rust "unsafe" blocks, guard pages, hardening.
+"My initial (quick) analysis suggested that the basic problem is
+corrupt (unrealistic) Extra-Field sizes, which UnZip does not check well
+enough. I need to verify that that is the cause, and then figure out
+what to do about it. Currently, if the program sees an Extra-Field
+length of, say, 0x1007, it tends to believe it, even if that's bigger
+than the actual archive member's length (or perhaps even bigger than the
+whole archive). If it actually tries to read data which haven't been
+read, then valgrind gets upset (with good reason). At least that's what
+I believe so far."
 
-I guess further research could be to identify the source of all guard
-pages observed, see if they're created consistently and reliably across
-all platforms, harden that if not.  This could help mitigate some other
-vulnerabilities, maybe in other Rust programs.
 
-Alexander
 
-On Tue, Dec 10, 2019 at 11:30:58AM +1100, sandreim@amazon.com wrote:
-> We have identified an issue in the Firecracker v0.18.0 and v0.19.0 vsock
-> implementation.
-> 
-> # Issue Description
-> 
-> A logical error in bounds checking performed on vsock virtio descriptors
-> can be used by a malicious guest to read from and write to a segment of
-> the host-side Firecracker process' heap address space, directly after
-> the end of a guest memory region. For reads, the accessible segment's
-> size is 64 KiB. For writes, the accessible segment is limited by the
-> host Linux kernel to a size defined in /proc/sys/net/core/rmem_max. We
-> expect the value of rmem_max to be on the order of a few hundred KiB to
-> a few MiB.
-> 
-> # Impact
-> 
-> This will generally result in a segmentation fault, but remote code
-> execution within the Firecracker host-side process context cannot be
-> ruled out.
-> 
-> # Vulnerable Systems
-> 
-> Only Firecracker v0.18.0 and v0.19.0 are affected. Only Firecracker
-> microVMs with configured vsock devices are affected, and only if one or
-> more vsock devices are in active use by both host and guest.
-> 
-> # Mitigation
-> 
-> Patched binaries for the affected versions have been released as
-> Firecracker v0.18.1 [1] and Firecracker v0.19.1 [2].
-> If you are using Firecracker v0.18.0 or v0.19.0 , we recommend you apply
-> the provided fix. If you are using Firecracker v0.17.0 or below, you do
-> not need to take any action.
-> In a remote code execution scenario, users running Firecracker in line
-> with the recommended Production Host Setup will see the impact limited
-> as follows: a malicious microVM guest that would manage to compromise
-> the Firecracker VMM process would be restricted to running on the host
-> as an unprivileged user, in a chroot and mount namespace isolated from
-> the host's filesystem, in a separate pid namespace, in a separate
-> network namespace, with system calls limited to Firecracker's seccomp
-> whitelist, on a single NUMA node, and on a cgroups-limited number of CPU
-> cores.
-> 
-> [1] https://github.com/firecracker-microvm/firecracker/releases/tag/v0.18.1
-> [2] https://github.com/firecracker-microvm/firecracker/releases/tag/v0.19.1
-> 
-> Best Regards,
-> Andrei on behalf of the Firecracker maintainers team.
-> 
-> 
-> 
-> 
-> Amazon Development Center (Romania) S.R.L. registered office: 27A Sf. Lazar Street, UBC5, floor 2, Iasi, Iasi County, 700045, Romania. Registered in Romania. Registration number J22/2621/2005.
+> --
+> Stefan Cornelius / Red Hat Product Security
+>
+
+--001a11369b58ff597f051fcb6a5e--
