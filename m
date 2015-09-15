@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["444" "Sunday" "19" "April" "2015" "22:21:00" "-0400" "Dan McDonald" "danmcd@omniti.com" "<93B50930-3327-4BCA-86C1-3768F27C7490@omniti.com>" "11" "[oss-security] CVE request" nil nil nil "4" "2015042002:21:00" "[oss-security] CVE request" (number mark "        danmcd@omnit Apr 19   11/444   " thread-indent "\"[oss-security] CVE request\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1744" "Tuesday" "15" "September" "2015" "18:38:42" "+0200" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20150915183842.6e72c05b@pc1>" "50" "Re: [oss-security] Heap overflow and DoS in unzip 6.0" nil nil nil "9" "2015091516:38:42" "[oss-security] Heap overflow and DoS in unzip 6.0" (number mark "        hanno@hboeck Sep 15   50/1744  " thread-indent "\"Re: [oss-security] Heap overflow and DoS in unzip 6.0\"\n") "<CACn5sdScL+e_x+QH4wS-cUKaEAMhSSy-jjeKufXu53j6-as_HA@mail.gmail.com>" ("<CACn5sdRQaUEHfde5QzqnOSv829baMEgDBCN7n8rzzrb+1s2uMw@mail.gmail.com>" "<20150915180357.7a0097a4@redhat.com>" "<CACn5sdScL+e_x+QH4wS-cUKaEAMhSSy-jjeKufXu53j6-as_HA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 9776 invoked by uid 550); 20 Apr 2015 02:21:14 -0000
+Received: (qmail 2040 invoked by uid 550); 15 Sep 2015 16:38:36 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,41 +11,68 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 9758 invoked from network); 20 Apr 2015 02:21:14 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:content-type:mime-version:subject:from:date:cc
-         :content-transfer-encoding:message-id:to;
-        bh=6KCDGCKijaXjWkNIc0rBUiOWl6dKVWMeDLHAbCK9Caw=;
-        b=KKcJCy0mPEr3cVzEhZQY0dI+noQ4xKx+OP6xB/HQttETU62EWD+PGWhzMoU7Lsan2p
-         A9Yp1GT5OHaN2z57y2LzcPV6JFX50iN/zQoL1EXgmZFnFWFUvhyhlH1UaKElPe1RKy1+
-         3P/A7lYyyCd/WJ+eC5oqNLOA1EQB8+/TpG7vai8BEciSR5pEmVMBCqAKt1a0pLP1Tfav
-         49fm2f2O2hJdSI/fUh/zGODYOhFR/pyK/6Ki4Z1COUVKyWnmajhMBn98RdA3BZ8YuuQe
-         kY9QfKdbsorlcidx4SJR5QYB8Dftlpf7k3Dd3ayZnxGCmHaPNyC7XF6fHhAgwaoUgGAs
-         J3MA==
-X-Gm-Message-State: ALoCoQmg1Ip8sH8LQ/cqGyTzJkGkqAoM7VRwChxDjr1MivGfCl0nOBLH5DQoMptydo3Fn9eP5Spz
-X-Received: by 10.229.66.198 with SMTP id o6mr15683847qci.31.1429496462463;
-        Sun, 19 Apr 2015 19:21:02 -0700 (PDT)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 8.2 \(2098\))
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <93B50930-3327-4BCA-86C1-3768F27C7490@omniti.com>
-X-Mailer: Apple Mail (2.2098)
-Cc: Dan McDonald <danmcd@omniti.com>
-Date: Sun, 19 Apr 2015 22:21:00 -0400
-From: Dan McDonald <danmcd@omniti.com>
+Received: (qmail 2016 invoked from network); 15 Sep 2015 16:38:35 -0000
+Message-ID: <20150915183842.6e72c05b@pc1>
+In-Reply-To: <CACn5sdScL+e_x+QH4wS-cUKaEAMhSSy-jjeKufXu53j6-as_HA@mail.gmail.com>
+References: <CACn5sdRQaUEHfde5QzqnOSv829baMEgDBCN7n8rzzrb+1s2uMw@mail.gmail.com>
+	<20150915180357.7a0097a4@redhat.com>
+	<CACn5sdScL+e_x+QH4wS-cUKaEAMhSSy-jjeKufXu53j6-as_HA@mail.gmail.com>
+X-Mailer: Claws Mail 3.12.0 (GTK+ 2.24.28; x86_64-pc-linux-gnu)
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512; protocol="application/pgp-signature"; boundary="=_zucker.schokokeks.org-9959-1442335103-0001-2"
+Date: Tue, 15 Sep 2015 18:38:42 +0200
+From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE request
+Subject: Re: [oss-security] Heap overflow and DoS in unzip 6.0
 To: oss-security@lists.openwall.com
 
-Illumos bug #5853 (https://www.illumos.org/issues/5853), now fixed, can be =
-exploited to escalate privilege.  It's not easy to do so, but it is enough =
-to cause concern and ask for a CVE number.
+--=_zucker.schokokeks.org-9959-1442335103-0001-2
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-At least two distros already have this fix in place.  I'd appreciate a CVE =
-number (and if possible a way to request these on a non-public list... sorr=
-y if I missed the FAQ).
+On Tue, 15 Sep 2015 13:10:17 -0300
+Gustavo Grieco <gustavo.grieco@gmail.com> wrote:
 
-Thanks,
-Dan McDonald -- OmniOS Engineering & illumos Security POC
+> AFAIK, upstream is still working on the heap overflow issue (the DoS
+> is fixed in the last unzip beta). In concrete, they said:
 
+Actually talking about upstream: The state of the info-zip packages is
+pretty dismal.
+
+There are issues from 2009(!) that haven't seen a fix yet, at least
+not in a release:
+http://www.info-zip.org/phpBB3/viewtopic.php?f=3D7&t=3D267
+
+Are you in contact with upstream?
+
+--=20
+Hanno B=C3=B6ck
+http://hboeck.de/
+
+mail/jabber: hanno@hboeck.de
+GPG: BBB51E42
+
+--=_zucker.schokokeks.org-9959-1442335103-0001-2
+Content-Type: application/pgp-signature
+Content-Transfer-Encoding: 7bit
+Content-Description: OpenPGP digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iQIcBAEBCgAGBQJV+EmSAAoJEKWIAHK7tR5CL4MP/3CwmApfPwxoK9wH9W3U73k2
+4BKr+2zAdktMDeqoCx2TtSoqM0GeTugB8m/N2h4H/5lpx9MPOcbnnAfF7PRUAizW
+9njvQ5jHo1yJ5wzSkAlVpQtazcQYjUUhPi15OQsCyrh/2btT0dYpK47TY1TfvjD9
+Qpw+xF6JkO43dV4+Ox+VvSJOgDa7geqyI9NTt2P+k0cpp+sLvWIEAH7ozExA2EG3
+YmH5wETCc0Y8SKiDKwwjeq8w9P/k+PN+jZyibCv0CcMrzJHMzjXg+w1Y7VkTsCsK
+b+DKhvwgwT7yZ3Q9I1NcS9vk4LSzuYa66bQ3y97ipA7uFl4xr0t7oAHdfjAyCYnC
+dcGmwzmQxmuCtgKSQMyCLTbbBcN1MD7j0eeO6fUolmiRt5thgMFB6UeFprBB6TPH
+b0uUmRVZxx+d4HIo+gpyQZDHe7gOc6oTyZvGO1Ab/BNjkIoCpzb7PKYij5jF4N09
+wRipFZtLXEXuYmF7zGQqPmefqkgXMicFDP+YEEQ5vC7tqS8Irdk2qTelETCi/a9E
+3JPfpAXGzzNH433oxJpLQAR5Df959V+HV9fFHsnPABgV3x6IFqkhxKQmTGgEb6T2
+l2inb6q2DMcF46JIypHbrebUOsQfzcyCQkkryuJxeLMIb7QqB4OYNJG2/BHHA3qC
+8fBceSaTNnp8FOUgDoPp
+=DmXj
+-----END PGP SIGNATURE-----
+
+--=_zucker.schokokeks.org-9959-1442335103-0001-2--
