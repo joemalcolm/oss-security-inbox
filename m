@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2219" "Wednesday" "31" "October" "2018" "11:37:23" "+0100" "Karol Babioch" "kbabioch@suse.de" "<a25ed246-3326-c643-076e-b0d90afc692c@suse.de>" "62" "[oss-security] Re: Squid Proxy multiple vulnerabilities" "^Date:" nil nil "10" "2018103110:37:23" "[oss-security] Re: Squid Proxy multiple vulnerabilities" (number mark "        kbabioch@sus Oct 31   62/2219  " thread-indent "\"[oss-security] Re: Squid Proxy multiple vulnerabilities\"\n") "<ffa9731a-99c9-f60c-2454-25609835ac93@treenet.co.nz>" ("<ffa9731a-99c9-f60c-2454-25609835ac93@treenet.co.nz>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1465" "Wednesday" "16" "September" "2015" "15:02:06" "+0200" "MinRK" "benjaminrk@gmail.com" "<CAHNn8BV_zT_eADA1DGDwQNG2EQQraW0nAe42z5ft+8P=5L5MZw@mail.gmail.com>" "52" "[oss-security] CVE Request: Maliciously crafted text files in IPython/Jupyter editor" nil nil nil "9" "2015091613:02:06" "[oss-security] CVE Request: Maliciously crafted text files in IPython/Jupyter editor" (number mark "        benjaminrk@g Sep 16   52/1465  " thread-indent "\"[oss-security] CVE Request: Maliciously crafted text files in IPython/Jupyter editor\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 1344 invoked by uid 550); 31 Oct 2018 11:54:52 -0000
+Received: (qmail 3944 invoked by uid 550); 16 Sep 2015 14:14:16 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,83 +11,79 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 27802 invoked from network); 31 Oct 2018 10:37:36 -0000
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-References: <ffa9731a-99c9-f60c-2454-25609835ac93@treenet.co.nz>
-Openpgp: preference=signencrypt
-Message-ID: <a25ed246-3326-c643-076e-b0d90afc692c@suse.de>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.2.1
+Received: (qmail 11440 invoked from network); 16 Sep 2015 13:02:37 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:cc:content-type;
+        bh=M/4w6lWVSOlk0D2/sT1esK8SYa9byFERCOjT4DR4OSs=;
+        b=JhVvDMjjfhkAMP4ohKbDaTIkT5sbDivilnDBRcCo+XOy46VbBkJ5uuOaQ0xw/8QQnj
+         9Zp1XPPPF1UL9A9RK9ldEH5B/hsDTVOf5jtO2yrdWCPUc1nokOpt47vHxq8ND/dkQ8if
+         BZyXcg54DIQw8ofSgZpZDlkSqaQA1Ph2ZDjENDn5COEKXwD+tMJMJ2mV5EqUHI03Ay0x
+         XZTJe3RSiJJV10BR6Py3jxCRHkgjoR5H/HR2gka+pOhBL9+djAGhkCwbFV9qvnb7tA2l
+         sQrelyFNHt0QTfs3lnaX/3tL1GTEyQ2tl21P24Ug3gUFLGrUypcW4AcfN2tzEAh7nFSQ
+         LOrw==
+X-Received: by 10.140.232.73 with SMTP id d70mr42931725qhc.72.1442408545947;
+ Wed, 16 Sep 2015 06:02:25 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <ffa9731a-99c9-f60c-2454-25609835ac93@treenet.co.nz>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="gjcqK0cTfUr5UXKFzkrH9XgLYXfY4oVPh"
-Date: Wed, 31 Oct 2018 11:37:23 +0100
-From: Karol Babioch <kbabioch@suse.de>
+Message-ID: <CAHNn8BV_zT_eADA1DGDwQNG2EQQraW0nAe42z5ft+8P=5L5MZw@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=001a1136fe7200b1b2051fdce95d
+Cc: security <security@ipython.org>, Kyle Kelley <rgbkrk@gmail.com>, 
+	Jonathan Kamens <jkamens@quantopian.com>, Scott Sanderson <ssanderson@quantopian.com>
+Date: Wed, 16 Sep 2015 15:02:06 +0200
+From: MinRK <benjaminrk@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: Squid Proxy multiple vulnerabilities
+Subject: [oss-security] CVE Request: Maliciously crafted text files in IPython/Jupyter editor
 To: oss-security@lists.openwall.com
 
---gjcqK0cTfUr5UXKFzkrH9XgLYXfY4oVPh
-Content-Type: multipart/mixed; boundary="9z3p7emrt9pjz66F51A9gitFcIzbhyYH7";
- protected-headers="v1"
-From: Karol Babioch <kbabioch@suse.de>
-To: oss-security@lists.openwall.com
-Message-ID: <a25ed246-3326-c643-076e-b0d90afc692c@suse.de>
-Subject: Re: Squid Proxy multiple vulnerabilities
-References: <ffa9731a-99c9-f60c-2454-25609835ac93@treenet.co.nz>
-In-Reply-To: <ffa9731a-99c9-f60c-2454-25609835ac93@treenet.co.nz>
-
---9z3p7emrt9pjz66F51A9gitFcIzbhyYH7
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
+--001a1136fe7200b1b2051fdce95d
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
 
-Hi,
+Email address of requester: security@ipython.org, benjaminrk@gmail.com,
+rgbkrk@gmail.com, jkamens@quantopian.com, ssanderson@quantopian.com
 
-Am 28.10.18 um 17:13 schrieb Amos Jeffries:
-> Several vulnerabilities have recently been found in Squid HTTP proxy.
+Software name: IPython notebook / Jupyter notebook
+Type of vulnerability: Maliciously forged file
+Attack outcome: Possible remote execution
 
-Thank you very much for your announcement and the attached patches.
+Vulnerability: A maliciously forged file opened for editing can execute
+javascript, specifically by being redirected to /files/ due to a failure to
+treat the file as plain text.
 
-> CVE have been requested and awaiting assignment by the DWF project.
+Affected versions:
 
-Is there any update and/or ETA on this ;-)?
+- IPython 3.0 =E2=89=A4 version =E2=89=A4 3.2.1
+- notebook 4.0 =E2=89=A4 4.0.4
 
-Best regards,
-Karol Babioch
+URI with issues:
 
---=20
-OpenPGP: 4687 CA1E A0F7 3B1E BB7D E179 DF49 418F 6267 267B
+- GET /edit/**
 
-SUSE Linux GmbH
-GF: Felix Imend=C3=B6rffer, Jane Smithard, Graham Norton
-HRB 21284 (AG N=C3=BCrnberg)
+Patches:
 
+- IPython 3.x: 0a8096adf165e2465550bd5893d7e352544e5967 (
+https://github.com/ipython/ipython/commit/0a8096adf165e2465550bd5893d7e3525=
+44e5967
+)
+- Jupyter 4.0.x: 9e63dd89b603dfbe3a7e774d8a962ee0fa30c0b5 (
+https://github.com/jupyter/notebook/commit/9e63dd89b603dfbe3a7e774d8a962ee0=
+fa30c0b5
+)
 
---9z3p7emrt9pjz66F51A9gitFcIzbhyYH7--
+Mitigations:
 
---gjcqK0cTfUr5UXKFzkrH9XgLYXfY4oVPh
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
+Upgrade to IPython/Jupyter notebook 4.0.5, 4.1 or 3.2.2 once available.
+If using pip,
 
------BEGIN PGP SIGNATURE-----
+    pip install --upgrade "ipython[notebook]<4.0"  # for 3.2.2
+    pip install --upgrade notebook # for 4.1 or 4.0.5
 
-iQIzBAEBCAAdFiEEnUhp7WLQVtMYEQ0oVBnvwITBRQIFAlvZheMACgkQVBnvwITB
-RQLmCg/7BVTQLFJQuHdBQp9P6o5YnRU2z++5onoibZGLrVf1N+DYP+YHt8saG1yY
-qwtRhbIULPWTO6A3CJqHaKosn6xBL2aVKY4I5fagcQ91FOWhq3MKZioAjrxI7fHV
-DuqoUhM0JKg0LS9llxqwyvKPf9Lvh8kxizTLQB/g3cEvP9I6mfkHtpSnXlpvXYi/
-3bMPMdaDlwDw2sFV0BE9PQQE4Ayghs/lmUdSd3DFp8cFJWZeshjMnFou7guQkiA+
-YLpHmhkyj5juWpups13XA9rbwM7JawnOY8PIm8itzcyx/fxJMnD+MRCpm7yEG/iV
-+1+C7hnDz4hCuNRYLSXvSVI3HNnH5fXpZHu+6DOoWcsGw1jAoYzdiI2hFuDBy8cJ
-Lvu4qkTk40CQsJzJ6S0HbVjyAjawc3E8LT+BURotGsyMsUyVUoSzIqLIpGDIujpH
-qlFJuDOKETI3VPnE6k7yeNFNvBC+0YudSEoXHGCWRWqUgXajLpmZ4eHP2NbtZaza
-4UBL6reD7ATyLoUV4vucMXUQOg/JiZkHfaNemQ57e51iFfj/ElS9BqrN6JK5BX4G
-3qRtRMZNCWXhgfh8+BlNpO8s2hoxMwXVmqBdoHhfZnG3ICd9LaadigxJFE5rbalr
-g0EJ1y7CQwbk1va2vWwneSyYf71ZEP/tDe1lq9XovopGsc/+RtU=
-=Hf+T
------END PGP SIGNATURE-----
+For conda:
 
---gjcqK0cTfUr5UXKFzkrH9XgLYXfY4oVPh--
+    conda update conda
+    conda update ipython "ipython-notebook<4.0" # for 3.2.2
+    conda update notebook # for 4.1 or 4.0.5
+
+Vulnerability reported by Jonathan Kamens at Quantopian
+
+--001a1136fe7200b1b2051fdce95d--
