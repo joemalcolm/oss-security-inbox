@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["10112" "Monday" "19" "June" "2017" "22:39:33" "+0200" "Solar Designer" "solar@openwall.com" "<20170619203933.GA910@openwall.com>" "186" "Re: [oss-security] Qualys Security Advisory - The Stack Clash" "^Date:" nil nil "6" "2017061920:39:33" "[oss-security] Qualys Security Advisory - The Stack Clash" (number mark "        solar@openwa Jun 19  186/10112 " thread-indent "\"Re: [oss-security] Qualys Security Advisory - The Stack Clash\"\n") "<2a53a138-8f6b-133d-72b2-6dfd5355241a@redhat.com>" ("<20170619152843.GC7769@localhost.localdomain>" "<2a53a138-8f6b-133d-72b2-6dfd5355241a@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2244" "Wednesday" "16" "September" "2015" "18:35:52" "+0200" "Dirk Wetter" "dirk@testssl.sh" "<55F99A68.1080909@testssl.sh>" "51" "[oss-security] New release (2.6.) of testssl.sh" nil nil nil "9" "2015091616:35:52" "[oss-security] New release (2.6.) of testssl.sh" (number mark "        dirk@testssl Sep 16   51/2244  " thread-indent "\"[oss-security] New release (2.6.) of testssl.sh\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 5931 invoked by uid 550); 19 Jun 2017 20:45:33 -0000
+Received: (qmail 13562 invoked by uid 550); 16 Sep 2015 16:39:33 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,203 +11,68 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 31979 invoked from network); 19 Jun 2017 20:39:59 -0000
-Message-ID: <20170619203933.GA910@openwall.com>
-References: <20170619152843.GC7769@localhost.localdomain> <2a53a138-8f6b-133d-72b2-6dfd5355241a@redhat.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <2a53a138-8f6b-133d-72b2-6dfd5355241a@redhat.com>
-User-Agent: Mutt/1.4.2.3i
-Date: Mon, 19 Jun 2017 22:39:33 +0200
-From: Solar Designer <solar@openwall.com>
+Received: (qmail 11527 invoked from network); 16 Sep 2015 16:36:07 -0000
+Message-ID: <55F99A68.1080909@testssl.sh>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.0.1
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Df-Sender: NDM2MjM5
+Date: Wed, 16 Sep 2015 18:35:52 +0200
+From: Dirk Wetter <dirk@testssl.sh>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Qualys Security Advisory - The Stack Clash
+Subject: [oss-security] New release (2.6.) of testssl.sh
 To: oss-security@lists.openwall.com
 
-On Mon, Jun 19, 2017 at 09:40:28AM -0600, kseifried@redhat.com wrote:
-> I just want to publicly thank Qualys for working with the Open Source
-> community so we (Linux and *BSD) could all get this fixed properly.
-> There was a lot of work from everyone involved and it all went pretty
-> smoothly.
 
-+1
+Hi,
 
-It's excellent research by Qualys, building upon yet exceeding what was
-previously known about this vulnerability class.  The quality of Qualys'
-writing is also rare these days.
+version 2.6 of the SSL/TLS checker "testssl.sh" is out!
 
-That said, we owe apologies to the community for violating the published
-distros list policy regarding the maximum embargo duration.  Personally
-and as distros list admin, I do apologize for letting this happen.
+testssl.sh is a free command line tool which checks a server's service
+on any port for the support of TLS/SSL ciphers, protocols as well as
+recent cryptographic flaws and it does more.
 
-I think we shouldn't have let it happen.
+It is written in (pure) bash, makes only use of standard Unix utilities,
+openssl and last but not least bash sockets.
 
-The stated argument for extending the embargo duration beyond list
-policy's maximum was that fixes presumably wouldn't be ready.
+Version 2.6 includes major improvements (ids from github):
 
-However, there were also arguments in favor of disclosing on the
-originally planned date, which was within list policy: interim
-workarounds and mitigations could be ready in time for that, the fixes
-that would be ready by the later date (thus, presumably are ready now)
-are not the end of the story anyway (specifically, gcc -fstack-check
-wasn't expected to be ready, and isn't - let alone having distros'
-userlands rebuilt with that option), the general issue wasn't new, and
-all the usual arguments against long embargoes (some of the affected
-parties being left out of the discussion, inconvenient and maybe less
-productive discussion in the smaller private community, risk of leaks,
-risk of rediscovery).
+* LOGJAM: check of DHE_EXPORT ciphers, displays DH(/ECDH) bits in wide mode
+  on negotiated ciphers
+* (HTTP) proxy support! Via sockets and openssl -- Thx @jnewbigin
+* TLS_FALLBACK_SCSV check -- Thx @JonnyHightower
+* TLS 1.0-1.1 as socket checks per default in production
+* TLS time and HTTP time stamps for architecture fiingerprinting
+* support of sockets also for STARTTLS protocol checks
+* TLS time displayed also for STARTTLS
+* binary directory provides out of the box better suited binaries (with up to
+  195 ciphers), besides Linux static binaries:
+  * OS X binaries (new builds from @jpluimers)
+  * FreeBSD binary
+  * ARM binary (@f-s)
+* Extended validation certificate detection
+* "wide mode" option for checks like RC4, BEAST. PFS: Displays hexcode, kx,
+  strength, DH bits, RFC cipher name
+* will test multiple IP adresses in one shot, --ip= restricts it accordingly
+* runs in default mode through all ciphers at the end of a default run
+* new mass testing file option --file option where testssl.sh commands are being
+  read from, see https://twitter.com/drwetter/status/627619848344989696
+* displays matching host key (HPKP)
+* further detection of security relevant headers (reverse proxy, IPv4 addresses) as
+  well as proprietary banners (OWA, Liferay etc.)
+* can scan STARTTLS+XMPP by also supplying the XMPP domain (to-option in XML
+  streams).
+* quite some fixes when using LibreSSL, still not recommended to use though
+  (see https://testssl.sh/)
+* lots of fixes, code improvements, even more robust
 
-Apparently, the workarounds and mitigations just were not enterprisey
-enough for the bigger players.  Releasing interim updates first would
-mean the vendors would have to acknowledge that some (I think obscure)
-functionality might be temporarily(?) gone, until a later final update
-that would include the more invasive fixes for the underlying issues
-while optionally removing the previously introduced workarounds and
-mitigations (although personally I would prefer to make them standard,
-as security hardening).  The vendors could also provide a knob (e.g., a
-sysctl) to restore the questionable functionality right away (in this
-case, it's things like limited debugging of dynamic linking on SUID/SGID
-exec, and multi-megabyte command-line argument lists to SUID/SGID
-programs) for those customers who prefer no risk of breakage over
-security.  I understand it's a tough trade-off to expose to a paying
-customer.  Yet I think it would have been most reasonable from a purely
-technical and community friendliness points of view.
+Get it while it's hot @ https://testssl.sh or @ github where all development
+action takes place: https://github.com/drwetter/testssl.sh/tree/2.6 .
 
-As Qualys advisory says, relevant security hardening for Linux kernel is
-already found in grsecurity (per my quick check, some of it since 2012,
-some earlier).  Relevant security hardening for glibc has been in Owl's
-and ALT Linux's packages (always enabled - no knob) since at least 2005
-(some or all of it probably also since 2000-2001, but I didn't re-review
-how complete older revisions of that patch were).  Merging some of those
-changes (at least the least invasive ones, sufficient to deal with the
-most promising and most immediate attacks - short of the currently more
-hypothetical remote attacks on system services) into distros' kernels
-and glibc could surely be done in 14 days, including QA.
+Some of the planned feaures for the next release see
+https://github.com/drwetter/testssl.sh/milestones/2.7dev%20%282.8%29
 
-Apparently, companies disclosing security issues are concerned of being
-held to a higher standard (than individuals) with regard to being (or
-appearing) responsible.  If a company's disclosure is deemed
-irresponsible by some (like we've seen happen before), that company (and
-others) might become more cautious next time (which might be what
-happened here), or worse - they might no longer fund security research
-(luckily not the case here).
 
-When I say these things, I don't mean to blame anyone, nor any company.
-Everyone was probably doing their best under their circumstances.  I am
-merely sharing my thoughts with the community.
-
-Qualys first informed the distros list about this upcoming set of issues
-on May 3.  This initial notification didn't say Stack Clash nor anything
-like that, but merely expressed intent to disclose the issues and
-concern that the list's maximum embargo duration of 14 to 19 days might
-not be sufficient in this case.  In the resulting discussion, I agreed
-to consider extending the embargo beyond list policy should there be
-convincing reasons for that.  In retrospect, I think I shouldn't have
-agreed to that.
-
-Qualys posted the detail to distros on May 17 with public disclosure
-planned for May 30, which was within list policy.  Due in part to
-requests by Red Hat (who were going to do much of the work needed by
-other distros, in particular on glibc) and presumably Qualys' internal
-reasoning, on May 23 Qualys unilaterally said they were extending the
-embargo until June 19 (the date previously requested by Red Hat, and
-IIRC one that Qualys had said was also known good for Oracle Solaris,
-although Oracle was OK with others publishing on May 30), and they said
-they were already in the process of informing others (those they had
-notified beyond the distros list membership) of this extension.
-
-This was against what I had said previously, where I offered merely to
-consider extending the embargo, not to unconditionally accept a decision
-like this from Qualys nor anyone else.  At this point, I was still in my
-right to insist on the originally planned date, and to make it happen
-technically - just post the detail to oss-security myself on May 30, as
-that wouldn't have violated any agreement I had.  (Of course, people
-would be mad at me.)  Instead:
-
-On Tue, May 23, 2017 at 11:21:01AM +0200, Solar Designer wrote:
-> That's really bad.  I don't support you in your decision as from my
-> perspective it's wrong, but I also don't want to go against it.
-> So I reluctantly accept it
-
-I didn't say it at the time, but frankly part of my reasoning for the
-reluctant acceptance was that I had no idea what might have been going
-on inside Qualys, nor wanted to have that inside info.  I understand
-it's rare for companies to do quality security research, and I didn't
-want my action to have hampered the stream of quality security research
-we're seeing from Qualys lately.
-
-Distro vendors saying they wouldn't be ready wasn't as important to me.
-In fact, most distros hadn't yet expressed a clear opinion by then and I
-was still NAK'ing Red Hat's requests at the time of Qualys' decision.
-
-I am really not blaming Red Hat here.  They were the ones making the
-request largely because they were also one of two distros, the other
-being SUSE, doing much of the work on shared upstream code, for benefit
-of most other Linux distros.
-
-Anyhow, with the unfortunate embargo extension in place, my remaining
-goal was to minimize the damage.  I helped disentangle and push out two
-of the sub-issues - with Sudo and ISC/Vixie Cron - on dates that are
-within list policy (no more than 14 days since initial disclosure of
-vulnerability detail on the distros list).  I also used the opportunity
-to test which of the distros are actually reading the lengthy thread
-(resulting in one distro, which was represented by just one person,
-getting removed from the distros list).  Finally, it's also in this
-context that I decided to accept some non-distro volunteers to help with
-patch review (unfortunately, this hasn't worked well enough yet -
-although some patch review did occur and changes were made, an important
-issue with the first Sudo patch was missed).
-
-Timeline:
-
-May 3 - preliminary notification by Qualys, no detail
-May 17 - detail posted by Qualys on Stack Clash and Sudo
-May 23 - embargo extension
-May 26 - detail posted by Qualys on Cron
-May 30 - initially planned public disclosure date for all Qualys issues
-May 30 - Sudo issue public:
-http://www.openwall.com/lists/oss-security/2017/05/30/16
-May 31 - Sudo incomplete fix fixed in 1.8.20p2
-June 2 - Sudo incomplete fix and its fix announced:
-http://www.openwall.com/lists/oss-security/2017/06/02/7
-June 8 - Cron minor issue public (along with some fixes):
-http://www.openwall.com/lists/oss-security/2017/06/08/3
-June 19 - Stack Clash public
-
-Since we were making this public in pieces like that, I have to say: no,
-there's nothing else left to publish as part of this series of Qualys'
-findings.  Everything Qualys brought to distros so far is now public.
-
-Given this experience, I am not going to give any impression I could
-agree to an embargo extension beyond list policy again.  I am going to
-enforce the stated list policy.  Unfortunately, this means that next
-time someone or some company who's extra careful about being/appearing
-responsible wants to inform distros of an issue, they might opt to work
-with individual distros off-list or through some other channel.  That's
-life.  At least the distros list would not be contributing to that.
-Having this discussion explode on the distros list was not great in
-other aspects anyway - it's too many too frequent messages for too long
-to conveniently handle on an encrypted list.  This wasn't worth it.
-
-I am also going to remove the "up to 19 days" option, where an embargo
-longer than 14 days (up to 19) could be applied for issues posted to
-distros too close to or on a weekend, so that the embargo time could be
-"rounded up" to expire next Tuesday after the normal maximum of 2 weeks.
-Part of the reason for this removal, besides desire to shorten embargoes
-in general and on average, is to remove the wrong incentive to report
-issues to distros close to a weekend just to have (and give distros)
-more time (much of that being an extra weekend).  The original issue
-this option tried to address can also be addressed by "rounding down"
-(e.g., to last Wednesday or Thursday before 14 days would run out on a
-weekend), so let's be doing that.
-
-This wrong incentive didn't play a role this time, but it was mentioned.
-
-Alexander
-
-P.S. While I am at it, for those reading this in web archives of the
-list here's a link to a portion of this thread on gcc issues, which I
-think inadvertently broke off:
-
-http://www.openwall.com/lists/oss-security/2017/06/19/6
+Cheers, Dirk (@drwetter)
