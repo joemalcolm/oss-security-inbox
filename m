@@ -1,4 +1,9 @@
-Received: (qmail 31816 invoked by uid 550); 6 Mar 2025 05:34:31 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["353" "Thursday" "17" "September" "2015" "11:41:44" "-0500" "Mark Felder" "feld@feld.me" "<1442508104.707732.386478233.2DF9FB74@webmail.messagingengine.com>" "16" "Re: [oss-security] Heap overflow and DoS in unzip 6.0" nil nil nil "9" "2015091716:41:44" "[oss-security] Heap overflow and DoS in unzip 6.0" (number mark "        feld@feld.me Sep 17   16/353   " thread-indent "\"Re: [oss-security] Heap overflow and DoS in unzip 6.0\"\n") "<20150915183842.6e72c05b@pc1>" ("<CACn5sdRQaUEHfde5QzqnOSv829baMEgDBCN7n8rzzrb+1s2uMw@mail.gmail.com>" "<20150915180357.7a0097a4@redhat.com>" "<CACn5sdScL+e_x+QH4wS-cUKaEAMhSSy-jjeKufXu53j6-as_HA@mail.gmail.com>" "<20150915183842.6e72c05b@pc1>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 15436 invoked by uid 550); 17 Sep 2015 16:41:57 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,52 +11,51 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 15411 invoked from network); 17 Sep 2015 16:41:56 -0000
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=feld.me; h=
+	content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-sasl-enc
+	:x-sasl-enc; s=mesmtp; bh=7mxJDq+l5RU0FNOLtb7188q6AqY=; b=I+OrKP
+	tTQ82OxM+gk/fNNytYAp1eQz/TRvSM8oaxFUBHpYknJfaFAkoZIiY2rfEob/64MF
+	DNX6m6yD1R9iUK/venLeegJlDUYaYgxcZedeT9LaFgYtu46aKUawmJDq3HJkEzik
+	HFhQMkEABKeR+CrvqkCrSB5n+G6Jxvz4edER8=
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=content-transfer-encoding:content-type
+	:date:from:in-reply-to:message-id:mime-version:references
+	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=7mxJDq+l5RU0FNO
+	Ltb7188q6AqY=; b=GN6sCtxia+uYm9m7COdcUPFpGrq96TSDqpGsSUEjVoyI2Rt
+	4Tabr2TLkShKf641CsT5Xqa9xa8M92ez6jMdgA+sTbJxrgq7nP45Rzi5+GFjJMe/
+	Z59ZluB+N+SrW28FXf/fV6T2OabQOg6HvaMJf8xFeKinkEiBzG7dF2kRD7fY=
+Message-Id: <1442508104.707732.386478233.2DF9FB74@webmail.messagingengine.com>
+X-Sasl-Enc: NfNWaITLqEq/ytbVZqEK18QA4vNe8kC+27g4L0MHhKzo 1442508104
+MIME-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="ISO-8859-1"
+X-Mailer: MessagingEngine.com Webmail Interface - ajax-746d2121
+In-Reply-To: <20150915183842.6e72c05b@pc1>
+References: <CACn5sdRQaUEHfde5QzqnOSv829baMEgDBCN7n8rzzrb+1s2uMw@mail.gmail.com>
+ <20150915180357.7a0097a4@redhat.com>
+ <CACn5sdScL+e_x+QH4wS-cUKaEAMhSSy-jjeKufXu53j6-as_HA@mail.gmail.com>
+ <20150915183842.6e72c05b@pc1>
+Date: Thu, 17 Sep 2015 11:41:44 -0500
+From: Mark Felder <feld@feld.me>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 30570 invoked from network); 6 Mar 2025 05:34:24 -0000
-Date: Thu, 6 Mar 2025 06:34:16 +0100
-From: Solar Designer <solar@openwall.com>
-To: Jacob Bachmeyer <jcb62281@gmail.com>
-Cc: oss-security@lists.openwall.com, Tavis Ormandy <taviso@gmail.com>
-Message-ID: <20250306053416.GA6682@openwall.com>
-References: <Z5BYg9WPFBF7JBEB@thinkstation.cmpxchg8b.net> <Z5B2PA7DHTBbvbOq@itl-email> <Z5EUUMd1xkSSKAEM@thinkstation.cmpxchg8b.net> <20250204101028.GA20864@openwall.com> <20250306033000.GA4987@openwall.com> <6f9ffc49-ad46-45eb-9d6f-7d58769c3671@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <6f9ffc49-ad46-45eb-9d6f-7d58769c3671@gmail.com>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] AMD Microcode Signature Verification Vulnerability
+Subject: Re: [oss-security] Heap overflow and DoS in unzip 6.0
+To: oss-security@lists.openwall.com
 
-On Wed, Mar 05, 2025 at 11:03:49PM -0600, Jacob Bachmeyer wrote:
-> On 3/5/25 21:30, Solar Designer wrote:
-> >[...] I'll focus on what the vulnerability and its fix are:
-> >
-> >>[...]
-> >>
-> >>Forging On
-> >>We noticed that the key from an old Zen 1 CPU was the example key of the
-> >>NIST SP 800-38B publication (Appendix D.1 2b7e1516 28aed2a6 abf71588
-> >>09cf4f3c) and was reused until at least Zen 4 CPUs. [...]
-> 
-> They... used... the... example... key... in... a... real...
-> production... system...
-> 
-> [I have no words.]
 
-It appears they didn't realize the key's secrecy would matter for their
-use case (or else they probably wouldn't use CMAC in the first place),
-so it "made sense" to stick with a "standard" tested key.  Given that
-misunderstanding, I wouldn't blame them for choosing an example key.
 
-Whatever key, it sounds like the Google folks already had it before they
-realized it's an example key from NIST, so the rest of the story would
-have been the same with any other fixed key.
+On Tue, Sep 15, 2015, at 11:38, Hanno B=F6ck wrote:
+>=20
+> There are issues from 2009(!) that haven't seen a fix yet, at least
+> not in a release:
+> http://www.info-zip.org/phpBB3/viewtopic.php?f=3D7&t=3D267
+>=20
 
-The real issue is the use of CMAC without understanding its properties,
-not the key choice.
+Are any distros shipping patches to solve these issues? I'd import them
+into FreeBSD ports if so...
 
-Indeed, HMAC wouldn't be any weaker than its underlying hash on its own
-even when used with a publicly known example key.  So I can see how they
-could have (wrongly) expected the same from CMAC.
 
-Alexander
+--=20
+  Mark Felder
+  feld@feld.me
