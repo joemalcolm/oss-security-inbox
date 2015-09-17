@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1888" "Monday" "10" "July" "2017" "09:11:48" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<329641.122228594-sendEmail@localhost>" "60" "[oss-security] xar: NULL pointer dereference in xar_unserialize (archive.c)" nil nil nil "7" "2017071009:11:48" "[oss-security] xar: NULL pointer dereference in xar_unserialize (archive.c)" (number mark "U       ago@gentoo.o Jul 10   60/1888  " thread-indent "\"[oss-security] xar: NULL pointer dereference in xar_unserialize (archive.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2411" "Thursday" "17" "September" "2015" "10:25:30" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150917142530.46F9A52E1E7@smtpvbsrv1.mitre.org>" "55" "[oss-security] Re: CVE Request: TOTP Replay Attack in Ruby library \"devise-two-factor\"" nil nil nil "9" "2015091714:25:30" "[oss-security] Re: CVE Request: TOTP Replay Attack in Ruby library \"devise-two-factor\"" (number mark "        cve-assign@m Sep 17   55/2411  " thread-indent "\"[oss-security] Re: CVE Request: TOTP Replay Attack in Ruby library \"devise-two-factor\"\"\n") "<C9CE8540-74F4-48C4-9416-76827CF2CCF7@justinbull.ca>" ("<C9CE8540-74F4-48C4-9416-76827CF2CCF7@justinbull.ca>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 12108 invoked by uid 550); 10 Jul 2017 09:12:15 -0000
+Received: (qmail 31950 invoked by uid 550); 17 Sep 2015 14:25:42 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,73 +11,68 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 31930 invoked from network); 17 Sep 2015 14:25:42 -0000
+In-Reply-To: <C9CE8540-74F4-48C4-9416-76827CF2CCF7@justinbull.ca>
+Message-Id: <20150917142530.46F9A52E1E7@smtpvbsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Thu, 17 Sep 2015 10:25:30 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 12058 invoked from network); 10 Jul 2017 09:12:13 -0000
-Message-ID: <329641.122228594-sendEmail@localhost>
-From: "Agostino Sarubbo" <ago@gentoo.org>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Date: Mon, 10 Jul 2017 09:11:48 +0000
-MIME-Version: 1.0
-Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-34071.3342457128"
-Subject: [oss-security] xar: NULL pointer dereference in xar_unserialize (archive.c)
+Subject: [oss-security] Re: CVE Request: TOTP Replay Attack in Ruby library "devise-two-factor"
+To: me@justinbull.ca
 
-------MIME delimiter for sendEmail-34071.3342457128
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 7bit
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Description:
-xar is an easily extensible archive format.
+> Date: Sun, 6 Sep 2015 11:55:41 -0400
 
-The complete ASan output of the issue:
+> Given an attacker already knows a victim's credentials, they could
+> "shoulder surf" the victim's second factor device, obtaining the OTP,
+> and login with the known credentials & OTP within the current
+> time-step (a default 30 second window). This defeats two-factor
+> authentication for the duration of the time-step.
 
-# xar -t -f $FILE
-==7615==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000008 (pc 0x7f71a859ebd6 bp 0x7fffd8ace150 sp 0x7fffd8acde80 T0)
-==7615==The signal is caused by a WRITE memory access.
-==7615==Hint: address points to the zero page.
-    #0 0x7f71a859ebd5 in xar_unserialize /var/tmp/portage/app-arch/xar-1.6.1-r1/work/xar-1.6.1/lib/archive.c:1767:27
-    #1 0x7f71a859ebd5 in xar_open /var/tmp/portage/app-arch/xar-1.6.1-r1/work/xar-1.6.1/lib/archive.c:340
-    #2 0x5139ee in list /var/tmp/portage/app-arch/xar-1.6.1-r1/work/xar-1.6.1/src/xar.c:1492:6
-    #3 0x5139ee in main /var/tmp/portage/app-arch/xar-1.6.1-r1/work/xar-1.6.1/src/xar.c:2666
-    #4 0x7f71a76a2680 in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #5 0x41af38 in _init (/usr/bin/xar+0x41af38)
+This 2015-09-06 message is directly related to a discussion of CVE
+assignment here on 2015-06-22, but doesn't mention that that
+discussion had occurred. Specifically:
 
-AddressSanitizer can not provide additional info.
-SUMMARY: AddressSanitizer: SEGV /var/tmp/portage/app-arch/xar-1.6.1-r1/work/xar-1.6.1/lib/archive.c:1767:27 in xar_unserialize
-==7615==ABORTING
-Affected version:
-1.6.1
+  http://www.openwall.com/lists/oss-security/2015/06/22/2
 
-Fixed version:
-N/A
+  From: cve-assign@mitre.org
 
-Commit fix:
-N/A
+  devise-two-factor can potentially have a CVE ID. As you mentioned, the
+  attack surface is somewhat narrow, and it might make more sense to see
+  how the devise-two-factor vendor announces the update. For example, if
+  the vendor makes a code change to prevent multiple submissions and
+  describes the code change as resolving a vulnerability, then there can
+  be a CVE ID.
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
+The vendor did all of that, so we're assigning CVE-2015-7225.
 
-CVE:
-CVE-2017-11124
+[ relevant parts include 'to protect against "shoulder-surfing" attacks' in
+https://github.com/tinfoil/devise-two-factor/blob/master/UPGRADING.md and
+'While a valid security issue, this is a very narrow vulnerability' in
+https://github.com/tinfoil/devise-two-factor/issues/45#issuecomment-139335608 ]
 
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00288-xar-nullptr-xar_unserialize
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Timeline:
-2017-06-17: bug discovered and reported to upstream
-2017-06-28: blog post about the issue
-2017-07-10: CVE assigned
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/06/28/xar-null-pointer-dereference-in-xar_unserialize-archive-c/
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
-
-
-------MIME delimiter for sendEmail-34071.3342457128--
-
+iQIcBAEBCAAGBQJV+sz+AAoJEL54rhJi8gl5FkUQAIUNoqnHZHkc6ZY5OXkG1Si+
+UIiPAUEtxTXe067zoZjEzqlsjzexzh0ld96XzD0kmfrCR0O/4tddpyX6n5Q7ooqI
+VrVp+UDJO36/qDW/ODlxjbJoWD02TdHlWd5gZVb4h7uBSKbj4PItDAMx5VGZbJgP
+msCoSOVG48odcGdbOKXR+Bb0zQQURq0s9Qxqwi28MT3IAXlyz9jjSrgyd7W4J87m
++SrS+dL8gH22BA0rNI7UUNeCRpBOmUt9i1QPRRi9nmPjTmBtGZ1AxUXQj/VFTe1c
+fcwyvTHBsAslavhVEwbN2IzO+8ycuP55NVW90e2v2k977kHSTjiEpdJ8b3Hl7BtR
+2Tu+uZjHIUvNoLznhag/+f9LL3yhxdpgPXlmYQNFeKcsaIxiXxaNF6zg8soRQDMi
+f0hMP8yfBkwzSVZY2xl1QeZyww00+RY45WvLPilH7fkoCZmsT3ftxfQkurNViFAU
+zCDyKmQIaHXIpcOrC9qLuWmSE02NB8Qod+XkBGOd1/tRDxzMBYoVSDabFfS3npBZ
+qDK13djTq8rZKhlXrzdeTrmW5RwDhZrZSrNcdAh140lIL9DwkD/6n/JAubfH68Gn
+uFGwgRSCUbNUP8nLJ97Rv81NHNP+XYcd+X3mHumJpPf/R94/dEwkAoi6ytQsE5pr
+s9eZT7jONl8mzpQL1Vzl
+=aeha
+-----END PGP SIGNATURE-----
