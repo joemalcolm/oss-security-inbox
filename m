@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["315" "Thursday" "9" "February" "2017" "16:38:23" "+0100" "Agostino Sarubbo" "ago@gentoo.org" "<9917317.bvZ6nie1ul@blackgate>" "15" "[oss-security] Re: mupdf: heap-based buffer overflow in fz_subsample_pixmap" nil nil nil "2" "2017020915:38:23" "[oss-security] Re: mupdf: heap-based buffer overflow in fz_subsample_pixmap" (number mark "U       ago@gentoo.o Feb  9   15/315   " thread-indent "\"[oss-security] Re: mupdf: heap-based buffer overflow in fz_subsample_pixmap\"\n") "<79a088b371714beb89209770a077002d@imshyb02.MITRE.ORG>" ("<79a088b371714beb89209770a077002d@imshyb02.MITRE.ORG>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["650" "Thursday" "17" "September" "2015" "16:12:29" "-0400" "Steve Dickson" "SteveD@redhat.com" "<55FB1EAD.4050600@RedHat.com>" "23" "[oss-security] Re: CVE Request: remote triggerable use-after-free in rpcbind" nil nil nil "9" "2015091720:12:29" "[oss-security] Re: CVE Request: remote triggerable use-after-free in rpcbind" (number mark "        SteveD@redha Sep 17   23/650   " thread-indent "\"[oss-security] Re: CVE Request: remote triggerable use-after-free in rpcbind\"\n") "<20150917122333.GB23283@suse.de>" ("<20150917122333.GB23283@suse.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 16046 invoked by uid 550); 9 Feb 2017 15:38:42 -0000
+Received: (qmail 1682 invoked by uid 550); 17 Sep 2015 20:12:43 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,32 +11,43 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 16020 invoked from network); 9 Feb 2017 15:38:41 -0000
-From: Agostino Sarubbo <ago@gentoo.org>
-To: oss-security@lists.openwall.com
-Date: Thu, 09 Feb 2017 16:38:23 +0100
-Message-ID: <9917317.bvZ6nie1ul@blackgate>
-User-Agent: KMail/4.14.10 (Linux/4.4.39-gentoo; KDE/4.14.24; x86_64; ; )
-In-Reply-To: <79a088b371714beb89209770a077002d@imshyb02.MITRE.ORG>
-References: <79a088b371714beb89209770a077002d@imshyb02.MITRE.ORG>
+Received: (qmail 1655 invoked from network); 17 Sep 2015 20:12:42 -0000
+References: <20150917122333.GB23283@suse.de>
+Message-ID: <55FB1EAD.4050600@RedHat.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.2.0
 MIME-Version: 1.0
-Content-Type: multipart/alternative; boundary="nextPart2447426.LctfuiSCcJ"
-Content-Transfer-Encoding: 7Bit
-Subject: [oss-security] Re: mupdf: heap-based buffer overflow in fz_subsample_pixmap
+In-Reply-To: <20150917122333.GB23283@suse.de>
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.23
+Date: Thu, 17 Sep 2015 16:12:29 -0400
+From: Steve Dickson <SteveD@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: CVE Request: remote triggerable use-after-free in rpcbind
+To: Marcus Meissner <meissner@suse.de>,
+        OSS Security List <oss-security@lists.openwall.com>
 
---nextPart2447426.LctfuiSCcJ
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"
 
-The upstream commit which fixes the issue:
 
-http://www.ghostscript.com/cgi-bin/findgit.cgi?
-2c4e5867ee699b1081527bc6c6ea0e99a35a5c27
+On 09/17/2015 08:23 AM, Marcus Meissner wrote:
+> Hi,
+> 
+> One of our customers saw rpcbind crashing on a remote security scan.
+> Olaf Kirch identified and fixed the problem:
+> 
+> http://www.spinics.net/lists/linux-nfs/msg53045.html
+> https://bugzilla.suse.com/show_bug.cgi?id=946204
+> 
+> It so far has not been integrated into rpcbind upstream.
+> 
+> This is a use-after-free, so at least remote denial of service.
+> We have not researched further exploitability.
+> 
 
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+In Olaf's patch there is a call to __rpc_set_netbuf() which is
+not visible in the upstream libtirpc lib... Did  Olaf roll his own or
+changed libtirpc to make it visible? 
 
---nextPart2447426.LctfuiSCcJ--
+steved.
 
