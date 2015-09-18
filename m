@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6089" "Sunday" "14" "August" "2016" "21:24:49" "+0200" "Tim =?ISO-8859-1?Q?R=FChse?==?ISO-8859-1?Q?n?=" "tim.ruehsen@gmx.de" "<3081339.jO4PGzo31U@debian>" "211" "[oss-security] Re: [Bug-wget] CVE Request - Gnu Wget 1.17 - Design Error Vulnerability" "^Cc:" nil nil "8" "2016081419:24:49" "[oss-security] Re: [Bug-wget] CVE Request - Gnu Wget 1.17 - Design Error Vulnerability" (number mark "        tim.ruehsen@ Aug 14  211/6089  " thread-indent "\"[oss-security] Re: [Bug-wget] CVE Request - Gnu Wget 1.17 - Design Error Vulnerability\"\n") "<F1719FA0B756A0418954A40BEB1A013849B1062B@BRN1WNEXMBX01.vcorp.ad.vrsn.com>" ("<F1719FA0B756A0418954A40BEB1A013849B1062B@BRN1WNEXMBX01.vcorp.ad.vrsn.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3776" "Friday" "18" "September" "2015" "14:02:36" "+0200" "up201407890@alunos.dcc.fc.up.pt" "up201407890@alunos.dcc.fc.up.pt" "<20150918140236.16423e1uvmlvi544@webmail.alunos.dcc.fc.up.pt>" "99" "Re: [oss-security] s/party/hack like it's 1999" nil nil nil "9" "2015091812:02:36" "[oss-security] s/party/hack like it's 1999" (number mark "        up201407890@ Sep 18   99/3776  " thread-indent "\"Re: [oss-security] s/party/hack like it's 1999\"\n") "<55FBD48F.7080401@redhat.com>" ("<20150917180319.1933609esmj3aaw4@webmail.alunos.dcc.fc.up.pt>" "<55FBD48F.7080401@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 16097 invoked by uid 550); 14 Aug 2016 19:28:49 -0000
+Received: (qmail 11853 invoked by uid 550); 18 Sep 2015 12:27:11 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,244 +11,122 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 14238 invoked from network); 14 Aug 2016 19:25:16 -0000
-Message-ID: <3081339.jO4PGzo31U@debian>
-User-Agent: KMail/5.2.3 (Linux/4.6.0-1-amd64; KDE/5.23.0; x86_64; ; )
-In-Reply-To: <F1719FA0B756A0418954A40BEB1A013849B1062B@BRN1WNEXMBX01.vcorp.ad.vrsn.com>
-References: <F1719FA0B756A0418954A40BEB1A013849B1062B@BRN1WNEXMBX01.vcorp.ad.vrsn.com>
+Received: (qmail 9837 invoked from network); 18 Sep 2015 12:22:50 -0000
+Message-ID: <20150918140236.16423e1uvmlvi544@webmail.alunos.dcc.fc.up.pt>
+References: <20150917180319.1933609esmj3aaw4@webmail.alunos.dcc.fc.up.pt>
+	<55FBD48F.7080401@redhat.com>
+In-Reply-To: <55FBD48F.7080401@redhat.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="nextPart2209211.2f2KRc0dGj"; micalg="pgp-sha512"; protocol="application/pgp-signature"
-X-Provags-ID: V03:K0:f1UfEmGbib3OkPzAz6RpZwE8ecyl83oMbu098Nc6RcSNIo0YplJ
- hX5yAUfh0zFvOPrNQgh00woLBhK3uHu3kj9pF71UEFGaT/WIP0E1jLZeCX7pa8sN6slzwwj
- 6VnLLgauGobkIyrlbREk0zGkv0UXzpr9+99yvMYgecOUfRVm8u0DGxbKyqskoDnqNxj/k7T
- MCjtsojUnYrfGJdF2dTYQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:U39fmb+x1Nk=:4bCAQCNHIYkKTq929e/LF1
- on3iq17rCUp0la1LFRvqiXtjvCil1+VkKkoRX0WxQMaURZ8zHArBW55kEAPoXpupjobYXNFW6
- 1ueLVNolEH4/UvtTWvHLxH6E+eBQX1oNrw+E6dA4tJHyn3AB6onGISm6JSvoOLyXu1mxTNFQM
- OTiQTz3DpYTAl6Aped94Z6zNop/h+3gp1TN+KrzIFEm9vSe2TqT48h7EyzCUB/burVKfL+tVd
- 5A+OhCdA+4UNWRRImjXk0MVPcTYcqHIoeuB6MX/S5zu3RG/yvXH1QfJIgSAVG4HcYMOXrO5t8
- ttpB5mI19L/HM4BrRXtg/90jDkpHhZc2EKli+sAbOABssxj9/HMG7cZz8wpgH7qfw9Q+Ry1yP
- xEQ3wwoAY5X+NpzbOL66ZlYTDZ0gtwi6G5BpH6S+sdyK2VXVkq9aoxsCErPzpV68f5h1eGlKd
- TV6NSl81rwtTgqwbsNDH8awxjN1NhIS002FMCl1VZEYFsAivQFLHS0f/8Syoi49uS0QGk1Ntn
- Iepg+UsUy/YH78LA/M6j7caGBgZOhp6CWLVkrHdTC1o3L7hIj53Ly3CgENm074hi9AyDwoYkv
- NACg/hduTv1jb08seJrxEXX3AhvoHLQTPOPlSC8eMDUoSpiGFjGElD6fyhJrnYtt39mf9Pn0X
- W1TcRsdllB9V5vRMQDfdcDlu0Fqh3WAL8TigDjajuyWW5W3p/1EDgakx8c8IYJ1oJGaJZZLIl
- 8TJkm/mL4hUL1GXf0QFexivnpHF+T4SVVd0FKeHdZqa9vNku9VJTKnE0mUQ=
-Cc: "Misra, Deapesh" <dmisra@verisign.com>, "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>, "dawid@legalhackers.com" <dawid@legalhackers.com>
-Date: Sun, 14 Aug 2016 21:24:49 +0200
-From: Tim =?ISO-8859-1?Q?R=FChsen?= <tim.ruehsen@gmx.de>
-Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: [Bug-wget] CVE Request - Gnu Wget 1.17 - Design Error Vulnerability
-To: bug-wget@gnu.org
-
---nextPart2209211.2f2KRc0dGj
-Content-Type: multipart/mixed; boundary="nextPart2443315.9d2y7kplQM"
+Content-Type: text/plain;
+	charset=UTF-8;
+	DelSp="Yes";
+	format="flowed"
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
+User-Agent: Internet Messaging Program (IMP) H3 (4.2)
+X-Virus-Scanned: amavisd-new at alunos.dcc.fc.up.pt
+Date: Fri, 18 Sep 2015 14:02:36 +0200
+From: up201407890@alunos.dcc.fc.up.pt
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] s/party/hack like it's 1999
+To: oss-security@lists.openwall.com
 
-This is a multi-part message in MIME format.
+Date: Thu, 17 Sep 2015 12:33:28 -0430
+From: Manuel G=C3=B3mez <targen@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: s/party/hack like it's 1999
 
---nextPart2443315.9d2y7kplQM
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
+On Thu, Sep 17, 2015 at 12:33:28 AM, <targen@gmail.com> wrote:
+> On Thu, Sep 17, 2015 at 11:33 AM,  <up201407890@...nos.dcc.fc.up.pt> wrot=
+e:
+>> Federico Bento <up201407890@...nos.dcc.fc.up.pt>
+>>
+>> [=E2=80=A6]
+>>
+>> As you can see, our beloved 'cat' cheated on us. Why?
+>> Because instead of displaying the character-sequence, the escape sequence
+>> \033[XA (being X the number of times) performed some action.
+>> And this action moves the cursor up X times, overwriting what is above i=
+t X
+>> lines.
+>> But this doesn't affect only 'cat', it affects everything that interprets
+>> escape sequences.
+>>
+>> [=E2=80=A6 examples with head, tail, more, curl, wget =E2=80=A6]
+>>
+>> 'diff' also interprets escape sequences and so do the resulting patches
+>>
+>> [=E2=80=A6 examples with diff =E2=80=A6]
+>>
+>> Hint:
+>> 'less' doesn't interpret escape sequences unless the -r switch is used,
+>> so stop aliasing it to 'less -r' just because there's no colored output.
 
-Hi,
+> Not a single one of those programs does anything to its input that
+> ought to be considered any form of interpretation in the sense you
+> imply.  They simply produce outputs that correspond to their inputs.
+> If that output is later presented to a terminal emulator, *then* some
+> characters happen to produce effects that go beyond simply displaying
+> them as glyphs on a screen, one by one.
+>
+> There is absolutely nothing wrong with `head`, `tail`, `more`, `curl`,
+> `wget` or `diff`.  They are not meant to =E2=80=9Cinterpret=E2=80=9D anyt=
+hing of the
+> sort that is being addressed, and indeed they do not.  `less` *does*
+> have special processing rules active by default for input sequences
+> that would cause terminals to do anything special; indeed, the default
+> behaviour of `less`, without the `-r` option, is the only mentioned
+> behaviour that may be considered a form of interpretation.
 
-here is a patch to limit the file modes to u+rw for temp. downloaded files.
+Yes, that is correct. I should have rephrased that better, thanks for=20=20
+clearing that up.
 
-Not sure if your proof of concept still works or not - but it seems a good 
-thing anyways.
+>> It's no secret, most of us rely on 'cat' to view files. I guess this is =
+one
+>> black kitty, giving you bad luck.
+>
+> Perhaps =E2=80=9Cmost of us=E2=80=9D should use `view` to view files.
 
-Regards, Tim
+Also correct. There are several ways one can go about this, but the=20=20
+point is, do people actually do that? Do they take that extra care=20=20
+sometimes? :)
 
---nextPart2443315.9d2y7kplQM
-Content-Disposition: attachment; filename="0001-Limit-file-mode-to-u-rw-on-temp.-downloaded-files.patch"
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/x-patch; charset="UTF-8"; name="0001-Limit-file-mode-to-u-rw-on-temp.-downloaded-files.patch"
-
-From=205de996a94f74a31132660238e3b11fd0e29c18fe Mon Sep 17 00:00:00 2001
-From: =?UTF-8?q?Tim=20R=C3=BChsen?= <tim.ruehsen@gmx.de>
-Date: Sun, 14 Aug 2016 21:04:58 +0200
-Subject: [PATCH] Limit file mode to u=rw on temp. downloaded files
-
-* bootstrap.conf: Add gnulib modules fopen, open.
-* src/http.c (open_output_stream): Limit file mode to u=rw
-  on temp. downloaded files.
-
-Reported-by: "Misra, Deapesh" <dmisra@verisign.com>
----
- bootstrap.conf |  2 ++
- src/http.c     | 13 ++++++++++++-
- 2 files changed, 14 insertions(+), 1 deletion(-)
-
-diff --git a/bootstrap.conf b/bootstrap.conf
-index 2b225b7..d9a5f90 100644
---- a/bootstrap.conf
-+++ b/bootstrap.conf
-@@ -40,6 +40,7 @@ dirname
- fcntl
- flock
- fnmatch
-+fopen
- futimens
- ftello
- getaddrinfo
-@@ -71,6 +72,7 @@ crypto/md5
- crypto/sha1
- crypto/sha256
- crypto/sha512
-+open
- quote
- quotearg
- recv
-diff --git a/src/http.c b/src/http.c
-index 56b8669..d463f29 100644
---- a/src/http.c
-+++ b/src/http.c
-@@ -39,6 +39,7 @@ as that of the covered work.  */
- #include <errno.h>
- #include <time.h>
- #include <locale.h>
-+#include <fcntl.h>
- 
- #include "hash.h"
- #include "http.h"
-@@ -2471,7 +2472,17 @@ open_output_stream (struct http_stat *hs, int count, FILE **fp)
-           open_id = 22;
-           *fp = fopen (hs->local_file, "wb", FOPEN_OPT_ARGS);
- #else /* def __VMS */
--          *fp = fopen (hs->local_file, "wb");
-+          if (opt.delete_after
-+            || opt.spider /* opt.recursive is implicitely true */
-+            || !acceptable (hs->local_file))
-+            {
-+              *fp = fdopen (open (hs->local_file, O_CREAT | O_TRUNC | O_WRONLY, S_IRUSR | S_IWUSR), "wb");
-+            }
-+          else
-+            {
-+              *fp = fopen (hs->local_file, "wb");
-+            }
-+
- #endif /* def __VMS [else] */
-         }
-       else
--- 
-2.8.1
+I'd also like to point out that the title should've been=20=20
+"s/party/hack/ like it's 1999", I guess that's what you get when=20=20
+you're trying to write up things fast, but that's not really the point=20=20
+of the post ;-)
 
 
---nextPart2443315.9d2y7kplQM--
-This is a multi-part message in MIME format.
 
---nextPart2443315.9d2y7kplQM
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
+Quoting "Cliff Perry" <cperry@redhat.com>:
 
-Hi,
+>> Interesting. I woul advocate usage of something like cat -A.
+>>  - something I learned to find end of line chars.
+>>
+>> [cperry@cperry ~]$ printf '#!/bin/bash\necho doing something=20=20
+>> evil!\nexit\n\033[2Aecho doing something very nice!\n' > backdoor.sh
+>> [cperry@cperry ~]$ chmod +x backdoor.sh
+>> [cperry@cperry ~]$ cat backdoor.sh
+>> #!/bin/bash
+>> echo doing something very nice!
+>> [cperry@cperry ~]$ cat -A backdoor.sh
+>> #!/bin/bash$
+>> echo doing something evil!$
+>> exit$
+>> ^[[2Aecho doing something very nice!$
+>> [cperry@cperry ~]$
+>>
+>> Also, my terminal prompt jumped a line when doing the normal cat.
+>>
+>> Cliff
 
-here is a patch to limit the file modes to u+rw for temp. downloaded files.
+Yes, there are several ways to go about this, but the point is that=20=20
+'cat -A file' isn't something that people do in their day to day lives!
 
-Not sure if your proof of concept still works or not - but it seems a good 
-thing anyways.
-
-Regards, Tim
-
---nextPart2443315.9d2y7kplQM
-Content-Disposition: attachment; filename="0001-Limit-file-mode-to-u-rw-on-temp.-downloaded-files.patch"
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/x-patch; charset="UTF-8"; name="0001-Limit-file-mode-to-u-rw-on-temp.-downloaded-files.patch"
-
->From 5de996a94f74a31132660238e3b11fd0e29c18fe Mon Sep 17 00:00:00 2001
-From: =?UTF-8?q?Tim=20R=C3=BChsen?= <tim.ruehsen@gmx.de>
-Date: Sun, 14 Aug 2016 21:04:58 +0200
-Subject: [PATCH] Limit file mode to u=rw on temp. downloaded files
-
-* bootstrap.conf: Add gnulib modules fopen, open.
-* src/http.c (open_output_stream): Limit file mode to u=rw
-  on temp. downloaded files.
-
-Reported-by: "Misra, Deapesh" <dmisra@verisign.com>
----
- bootstrap.conf |  2 ++
- src/http.c     | 13 ++++++++++++-
- 2 files changed, 14 insertions(+), 1 deletion(-)
-
-diff --git a/bootstrap.conf b/bootstrap.conf
-index 2b225b7..d9a5f90 100644
---- a/bootstrap.conf
-+++ b/bootstrap.conf
-@@ -40,6 +40,7 @@ dirname
- fcntl
- flock
- fnmatch
-+fopen
- futimens
- ftello
- getaddrinfo
-@@ -71,6 +72,7 @@ crypto/md5
- crypto/sha1
- crypto/sha256
- crypto/sha512
-+open
- quote
- quotearg
- recv
-diff --git a/src/http.c b/src/http.c
-index 56b8669..d463f29 100644
---- a/src/http.c
-+++ b/src/http.c
-@@ -39,6 +39,7 @@ as that of the covered work.  */
- #include <errno.h>
- #include <time.h>
- #include <locale.h>
-+#include <fcntl.h>
- 
- #include "hash.h"
- #include "http.h"
-@@ -2471,7 +2472,17 @@ open_output_stream (struct http_stat *hs, int count, FILE **fp)
-           open_id = 22;
-           *fp = fopen (hs->local_file, "wb", FOPEN_OPT_ARGS);
- #else /* def __VMS */
--          *fp = fopen (hs->local_file, "wb");
-+          if (opt.delete_after
-+            || opt.spider /* opt.recursive is implicitely true */
-+            || !acceptable (hs->local_file))
-+            {
-+              *fp = fdopen (open (hs->local_file, O_CREAT | O_TRUNC | O_WRONLY, S_IRUSR | S_IWUSR), "wb");
-+            }
-+          else
-+            {
-+              *fp = fopen (hs->local_file, "wb");
-+            }
-+
- #endif /* def __VMS [else] */
-         }
-       else
--- 
-2.8.1
+I believe some adjustments to the script would make it not jump a line=20=20
+for other terminal emulators.
 
 
---nextPart2443315.9d2y7kplQM--
-
---nextPart2209211.2f2KRc0dGj
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part.
-Content-Transfer-Encoding: 7Bit
-
------BEGIN PGP SIGNATURE-----
-
-iQIcBAABCgAGBQJXsMWBAAoJEAgwLbaiZwQojVEP/230GxxDuIB5OpG61pSK3AdY
-3LYrBQj+cy2g1VTKjX82I7IFr/G/MuxHeFk7uXRGmPJnn2Wv9mK+4W+BRS7Y9lKu
-JidZzDOcm4nJ5hu4bpgOtx8N4xr7VCJje7ajAEyCO/bi6WYY3Vs3rrDkvsZbymh8
-doT+L55oje/d3cwVwN9sxz59+e+hZoMFexMHcdjcDABP7lAdIdbLV19E2RN4xzwY
-GZo30J2GxV7/2jRS0byZtJh+lSpro6w9gJnQcMb/0WA2p1L/+5axKpe7x1k1Y+BF
-1dHfEgYFX2f9uxWia/RgwXcxe4b+4wKbDvxGoCsbBXlMs11UySFa8eS9NwyOGwQc
-DZmzSH6OjvRakBkNzRzzD7uh+cRf/5MdLN6ltVPL92BGVfmss540UoqdyDi6zJk9
-DWy2QEBWE3emcM6034LkiiAgF4MNUwwNpCwQz78BQo7HDRwgPfdi/B2F2EphDH2C
-Zo4hICrCJsE6/f+EQ9CXNc2WEIl0cktoqV3T0H8sJj49XTr3SYTkJWjwhAQ4XlCf
-G72zOzUTQ6N335o2ycDwEg170Xai5XB6O8LBRnKPlnk0mj+ZltwdYsqgwizaQLzZ
-B90yC2+NxJx6QP+QTLqaGlKQ9mq5NrpjDmTk5KXxOwFEWbdKdMzhia9AduIz9JmA
-Wj9kIeSL1y7HSGjo/Gkm
-=X2Bh
------END PGP SIGNATURE-----
-
---nextPart2209211.2f2KRc0dGj--
+----------------------------------------------------------------
+This message was sent using IMP, the Internet Messaging Program.
 
