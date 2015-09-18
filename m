@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4983" "Tuesday" "16" "June" "2015" "13:24:56" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150616172456.ADCE052E1F7@smtpvbsrv1.mitre.org>" "128" "[oss-security] Re: CVE Request: various issues in PHP" nil nil nil "6" "2015061617:24:56" "[oss-security] Re: CVE Request: various issues in PHP" (number mark "        cve-assign@m Jun 16  128/4983  " thread-indent "\"[oss-security] Re: CVE Request: various issues in PHP\"\n") "<20150529170751.482ad9f4@redhat.com>" ("<20150529170751.482ad9f4@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2254" "Friday" "18" "September" "2015" "12:58:26" "+1200" "Amos Jeffries" "squid3@treenet.co.nz" "<55FB61B2.8040204@treenet.co.nz>" "55" "[oss-security] CVE Request: Squid HTTP Proxy Denial of Service" nil nil nil "9" "2015091800:58:26" "[oss-security] CVE Request: Squid HTTP Proxy Denial of Service" (number mark "        squid3@treen Sep 18   55/2254  " thread-indent "\"[oss-security] CVE Request: Squid HTTP Proxy Denial of Service\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 28484 invoked by uid 550); 16 Jun 2015 17:25:09 -0000
+Received: (qmail 15805 invoked by uid 550); 18 Sep 2015 00:59:13 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,141 +11,72 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 28466 invoked from network); 16 Jun 2015 17:25:08 -0000
-In-Reply-To: <20150529170751.482ad9f4@redhat.com>
-Message-Id: <20150616172456.ADCE052E1F7@smtpvbsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, kaplanlior@gmail.com, security@php.net
-Date: Tue, 16 Jun 2015 13:24:56 -0400 (EDT)
-From: cve-assign@mitre.org
+Received: (qmail 15753 invoked from network); 18 Sep 2015 00:59:12 -0000
+X-Enigmail-Draft-Status: N0110
+Message-ID: <55FB61B2.8040204@treenet.co.nz>
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101
+ Thunderbird/38.2.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Date: Fri, 18 Sep 2015 12:58:26 +1200
+From: Amos Jeffries <squid3@treenet.co.nz>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE Request: various issues in PHP
-To: thoger@redhat.com
+Subject: [oss-security] CVE Request: Squid HTTP Proxy Denial of Service
+To: oss-security@lists.openwall.com, cve-assign@mitre.org
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
->> > >> https://bugs.php.net/bug.php?id=69418,
->> > >> https://bugs.php.net/bug.php?id=68598 - various functions allow
->> > >> \0 in paths where they shouldn't. In theory, that could lead to
->> > >> security failure for path-based access controls if the user
->> > >> injects string with \0 in it. It's a bit theoretical, but it's a
->> > >> possibility.
->>
->> CVE-2015-4025, CVE-2015-4026 respectively.
+Hi,
+ The TLS/SSL parser in the latest series of Squid HTTP Proxy has been
+found to have several bugs leading to Denial of Service possibilities.
+Can CVE be assigned as appropriate please?
 
-> Both of these CVEs are addressed in a single commit, that also covers
-> few other functions not mentioned in either of the two bug reports
-> (dir()/opendir() and chroot()). Which CVE do those additional fixes
-> fall under? They are not 5.4 regressions, so probably not
-> CVE-2015-4025, but maybe not under CVE-2015-4026 either given that bug
-> 68598 only mentions pcntl_exec().
-
-In this type of situation, CVEs are assigned on a per-discoverer basis.
-CVE-2015-4025 is for thoger@redhat.com discoveries, whereas
-CVE-2015-4026 is for yohgaki@php.net. See:
-
-  http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-4025
-  http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-4026
-
-> dir()/opendir() and chroot()
-
-Four weeks ago, we asked security@php.net to contact us if those other
-changed functions were associated with vulnerability fixes. They have
-not contacted us about this.
-
-Are you reporting that some or all of them had vulnerabilities?
-
-For example, is it reasonable to expect that a PHP application may
-want the client to make a choice of a chroot directory, and the
-intended behavior is to restrict the choice to a name ending in ".d"
-but this can be bypassed by something like a
-"/usr/local/var/x/does-not-end-in-dot-d\0.d" value?
+Vulnerable versions are 3.5.0.1 to 3.5.8 (inclusive), which are built
+with OpenSSL and configured for "SSL-Bump" decryption.
 
 
-> https://bugs.php.net/bug.php?id=69353
-> http://git.php.net/?p=php-src.git;a=commitdiff;h=52b93f0cfd3cba7ff98cc5198df6ca4f23865f80
->
-> More CVE-2015-4025 / CVE-2015-4026 / CVE-2006-7243 like issues. More
-> notes on what got changed is in RHBZ:
-> https://bugzilla.redhat.com/show_bug.cgi?id=1213407#c5
+Integer overflows can lead to invalid pointer math reading from random
+memory on some CPU architectures. In the best case this leads to wrong
+TLS extensiosn being used for the client, worst-case a crash of the
+proxy terminating all active transactions.
+Fixed by
+<http://www.squid-cache.org/Versions/v3/3.5/changesets/squid-3.5-13914.p
+atch>.
 
-The neal@fb.com vulnerability discoveries in bug 69353 were assigned
-CVE-2015-3411 in April. The additional vulnerability discoveries in:
-
-  http://git.php.net/?p=php-src.git;a=commit;h=52b93f0cfd3cba7ff98cc5198df6ca4f23865f80
-  http://git.php.net/?p=php-src.git;a=commit;h=4435b9142ff9813845d5c97ab29a5d637bedb257
-
-were assigned CVE-2015-3412.
-
-
-Use CVE-2015-4598 for the https://bugs.php.net/bug.php?id=69719
-thoger@redhat.com vulnerability discoveries.
+Incorrect message size checks and assumptions about the existence of
+TLS extensions in the SSL/TLS handshake message can lead to very high
+CPU consumption (up to and including 'infinite loop' behaviour).
+Fixed by
+<http://www.squid-cache.org/Versions/v3/3.5/changesets/squid-3.5-13915.p
+atch>.
 
 
-> More unserialize issues.
+The above can be triggered remotely. Though there is one layer of
+authorization applied before this processing to check that the client
+is allowed to use the proxy, that check is generally weak. MS Skype on
+Windows XP is known to trigger some of these.
 
-> https://bugs.php.net/bug.php?id=69152
-> http://git.php.net/?p=php-src.git;a=commitdiff;h=51856a76f87ecb24fe1385342be43610fb6c86e4
+(Formal release with advisory will be coming in a few days. 3.5.9
+tarballs are available now, via FTP if the web mirrors ).
 
-Use CVE-2015-4599 for the taoguangchen@icloud.com discovery fixed in
-51856a76f87ecb24fe1385342be43610fb6c86e4.
-
-
-> http://git.php.net/?p=php-src.git;a=commitdiff;h=0c136a2abd49298b66acb0cad504f0f972f5bfe8
-
-Use CVE-2015-4600 for the taoguangchen@icloud.com discoveries in bug
-69152 that were fixed in 0c136a2abd49298b66acb0cad504f0f972f5bfe8 -
-SoapClient::__getLastRequest, SoapClient::__getLastResponse,
-SoapClient::__getLastRequestHeaders,
-SoapClient::__getLastResponseHeaders, SoapClient::__getCookies, and
-SoapClient::__setCookie.
-
-Use CVE-2015-4601 for the other vulnerabilities fixed in
-0c136a2abd49298b66acb0cad504f0f972f5bfe8, with the exception that the
-issue involving the uri property in do_soap_call is already covered by
-CVE-2015-4148.
-
-
-> http://git.php.net/?p=php-src.git;a=commitdiff;h=fb83c76deec58f1fab17c350f04c9f042e5977d1
-
-Use CVE-2015-4602 for this issue mentioned at [2015-03-20 14:58 UTC]
-in bug 69152.
-
-
-> https://bugs.php.net/bug.php?id=69152 [2015-03-03 04:30 UTC]
-
-Use CVE-2015-4603 for the exception::getTraceAsString issue. As
-mentioned at [2015-03-25 09:57 UTC], the affected versions for this
-issue are different from those of other issues discussed in bug 69152.
-
-
-> https://bugs.php.net/bug.php?id=68819
-> http://git.php.net/?p=php-src.git;a=commitdiff;h=f938112c495b0d26572435c0be73ac0bfe642ecd
->
-> Fileinfo DoS.
-
-Use CVE-2015-4604 for the violation of the "mget() guarantees buf <=
-last" constraint suggested in the [2015-02-05 13:53 UTC] comment.
-
-Use CVE-2015-4605 for the issue in which offset can exceed bytecnt,
-suggested in the [2015-02-09 17:10 UTC] comment.
-
-These might be conceptually overlapping discoveries, but we decided to
-have the two CVE IDs.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+Amos Jeffries
+Squid Software Foundation
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Version: GnuPG v2.0.22 (MingW32)
 
-iQEcBAEBAgAGBQJVgFr7AAoJEKllVAevmvmsFpoIAKk541flrgppkYnl6DhxQ49O
-YKc29nQQrmGL9yZLMkGbOX2onVwCOhD4cUKVrPGNadiMhCL3uzBl3aIf6eVrWdBA
-8Dqv7/1w14dAfinrRsGl+5pA+SnNhrMLhoCGecAHBVUjPJckP69PtM4h2/AqAXxv
-hxpRMZi9+demSpUUitA5Gik0f4uw8BllarCciZH/FgwCkIflqDGQ7nN80MnBwWl7
-XLrIqdM81hksELsCYtWpN6LESwIwmRZWCLHeqilQiRdU2DSU1BRAYkVyef06Xyu5
-WZdx1RJBNb63rwfqdEERR9Bkuu4tX4WJa9yC0YykdI6eUJZU1CLBu/i4xqhhlWE=
-=CFDR
+iQIcBAEBAgAGBQJV+2F7AAoJEGvSOzfXE+nLdygQAI1SaDkmAic6RBAik92SaZsz
+fRizZC4y8ffnh70HZc9O3Z79sMmTD7q+HC/QKS0zSHSyzc+mDb4J9WjVfyr/DOJM
+MG1mr/QIWqqF4v+x+P1PEYmK68uHvuD4gqZZ+A/JQH1ZUt60OkRo4+wF3c8WukPG
+YUB6OTmAfPmE3W9Sp06mJ8irtzNQKibp6P+NBWSfjthxKTvmHKWp/MINZj3b3LBb
+n/QgRVYiHSeiHZTHJ0yLNIG+jcgBh68AVJZ5LpbHSfLGfQnAOmyuMdKmXdiMw0xL
+Qjb2g3sVU15WPgMQQvbSVI1W0Fla9WOhq1+XGtu+bUd82wx8P7J7Vpi/tA1dLERr
+lBir5CCZYXEp/WsFVkGnGCn5jV04CZ7kLACmlBIvXEWdKs1nUsIOTNCaGhfdpX2h
+KTejb//5L2zmTRE8e1dssfR1zO1nL8zTwujKXmWMX9QW09GlGkr/FNZEfvFwV1GN
+FaLII/QfH2YPKAuJCJevvXhozwTiKbbB6OG0VyGoMxcJoQ4TTbeXeXKqr/B1ax6t
+zeY5Tb5tETYSYRfKNbVisGC8j+dd1e/TklQxQvXZ8kP1ySyVSZ6cMkJlsQu3vFQ7
+b5kkVyfOgA8JOZ3KEd+LU48annxCcSINyFLSl8560Mgx5avXE5eCB40RprS1AgfL
+RBoy/To5OxWYq+vEGSXg
+=eltL
 -----END PGP SIGNATURE-----
