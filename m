@@ -1,4 +1,9 @@
-Received: (qmail 7659 invoked by uid 550); 16 Aug 2023 13:11:40 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2254" "Friday" "18" "September" "2015" "12:58:26" "+1200" "Amos Jeffries" "squid3@treenet.co.nz" "<55FB61B2.7040001@treenet.co.nz>" "55" "[oss-security] CVE Request: Squid HTTP Proxy Denial of Service" nil nil nil "9" "2015091800:58:26" "[oss-security] CVE Request: Squid HTTP Proxy Denial of Service" (number mark "U       squid3@treen Sep 18   55/2254  " thread-indent "\"[oss-security] CVE Request: Squid HTTP Proxy Denial of Service\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 15918 invoked by uid 550); 18 Sep 2015 00:59:14 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,223 +12,71 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7624 invoked from network); 16 Aug 2023 13:11:39 -0000
-From: Daniel Beck <ml@beckweb.net>
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3731.700.6\))
-Message-Id: <12CEE5C7-4E38-4998-BB27-A445F742C6C7@beckweb.net>
-Date: Wed, 16 Aug 2023 15:11:18 +0200
-To: oss-security@lists.openwall.com
-X-Mailer: Apple Mail (2.3731.700.6)
-X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1692191499;ec657375;
-X-HE-SMSGID: 1qWGJ6-0006Mw-58
-Subject: [oss-security] Multiple vulnerabilities in Jenkins plugins
-
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software.
-
-The following releases contain fixes for security vulnerabilities:
-
-* Blue Ocean Plugin 1.27.5.1
-* Config File Provider Plugin 953.v0432a_802e4d2
-* Delphix Plugin 3.0.3
-* Flaky Test Handler Plugin 1.2.3
-* Folders Plugin 6.848.ve3b_fd7839a_81
-* Fortify Plugin 22.2.39
-* NodeJS Plugin 1.6.0.1
-* Shortcut Job Plugin 0.5
-* Tuleap Authentication Plugin 1.1.21
-
-Additionally, we announce unresolved security issues in the following
-plugins:
-
-* Docker Swarm Plugin
-* Favorite View Plugin
-* Gogs Plugin
-* Maven Artifact ChoiceListProvider (Nexus) Plugin
-
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://www.jenkins.io/security/advisory/2023-08-16/
-
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
-
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://www.jenkins.io/security/#reporting-vulnerabilities
-
----
-
-SECURITY-3106 / CVE-2023-40336
-Folders Plugin 6.846.v23698686f0f6 and earlier does not require POST
-requests for an HTTP endpoint, resulting in a cross-site request forgery
-(CSRF) vulnerability.
-
-This vulnerability allows attackers to copy an item, which could
-potentially automatically approve unsandboxed scripts and allow the
-execution of unsafe scripts.
-
-
-SECURITY-3105 / CVE-2023-40337
-Folders Plugin 6.846.v23698686f0f6 and earlier does not require POST
-requests for an HTTP endpoint, resulting in a cross-site request forgery
-(CSRF) vulnerability.
-
-This vulnerability allows attackers to copy a view inside a folder.
-
-
-SECURITY-3109 / CVE-2023-40338
-Folders Plugin displays an error message when attempting to access the Scan
-Organization Folder Log if no logs are available.
-
-In Folders Plugin 6.846.v23698686f0f6 and earlier, this error message
-includes the absolute path of a log file, exposing information about the
-Jenkins controller file system.
-
-
-SECURITY-3090 / CVE-2023-40339
-Config File Provider Plugin 952.va_544a_6234b_46 and earlier does not mask
-(i.e., replace with asterisks) credentials specified in configuration files
-when they're written to the build log.
-
-
-SECURITY-3196 / CVE-2023-40340
-NodeJS Plugin integrates with Config File Provider Plugin to specify custom
-NPM settings, including credentials for authentication, in a Npm config
-file.
-
-NodeJS Plugin 1.6.0 and earlier does not properly mask (i.e., replace with
-asterisks) credentials specified in the Npm config file in Pipeline build
-logs.
-
-
-SECURITY-3116 / CVE-2023-40341
-Blue Ocean Plugin 1.27.5 and earlier does not require POST requests for an
-HTTP endpoint, resulting in a cross-site request forgery (CSRF)
-vulnerability.
-
-This vulnerability allows attackers to connect to an attacker-specified
-URL, capturing GitHub credentials associated with an attacker-specified
-job.
-
-
-SECURITY-3115 / CVE-2023-4301 (CSRF) & CVE-2023-4302 (missing permission ch=
-eck)
-Fortify Plugin 22.1.38 and earlier does not perform permission checks in
-several HTTP endpoints.
-
-This allows attackers with Overall/Read permission to connect to an
-attacker-specified URL using attacker-specified credentials IDs obtained
-through another method, capturing credentials stored in Jenkins.
-
-Additionally, these HTTP endpoints do not require POST requests, resulting
-in a cross-site request forgery (CSRF) vulnerability.
-
-
-SECURITY-3140 / CVE-2023-4303
-Fortify Plugin 22.1.38 and earlier does not escape the error message for a
-form validation method. This results in an HTML injection vulnerability.
-
-NOTE: Since Jenkins 2.275 and LTS 2.263.2, a security hardening for form
-validation responses prevents JavaScript execution, so no scripts can be
-injected.
-
-
-SECURITY-3223 / CVE-2023-40342
-Flaky Test Handler Plugin 1.2.2 and earlier does not escape JUnit test
-contents when showing them on the Jenkins UI.
-
-This results in a stored cross-site scripting (XSS) vulnerability
-exploitable by attackers able to control JUnit report file contents.
-
-
-SECURITY-3229 / CVE-2023-40343
-Tuleap Authentication Plugin 1.1.20 and earlier does not use a
-constant-time comparison when checking whether two authentication tokens
-are equal.
-
-This could potentially allow attackers to use statistical methods to obtain
-a valid authentication token.
-
-
-SECURITY-3214 (1) / CVE-2023-40344
-Delphix Plugin 3.0.2 and earlier does not perform a permission check in an
-HTTP endpoint.
-
-This allows attackers with Overall/Read permission to enumerate credentials
-IDs of credentials stored in Jenkins. Those can be used as part of an
-attack to capture the credentials using another vulnerability.
-
-
-SECURITY-3214 (2) / CVE-2023-40345
-Delphix Plugin 3.0.2 and earlier does not set the appropriate context for
-credentials lookup, allowing the use of System-scoped credentials otherwise
-reserved for the global configuration.
-
-This allows attackers with Overall/Read permission to access and capture
-credentials they are not entitled to.
-
-
-SECURITY-3071 / CVE-2023-40346
-Shortcut Job Plugin 0.4 and earlier does not escape the shortcut
-redirection URL.
-
-This results in a stored cross-site scripting (XSS) vulnerability
-exploitable by attackers able to configure shortcut jobs.
-
-
-SECURITY-3153 / CVE-2023-40347
-Maven Artifact ChoiceListProvider (Nexus) Plugin 1.14 and earlier does not
-set the appropriate context for credentials lookup, allowing the use of
-System-scoped credentials otherwise reserved for the global configuration.
-
-This allows attackers with Item/Configure permission to access and capture
-credentials they are not entitled to.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2894 / CVE-2023-40348 (information disclosure) & CVE-2023-40349 (i=
-nsecure default)
-Gogs Plugin provides a webhook endpoint at `/gogs-webhook` that can be used
-to trigger builds of jobs. In Gogs Plugin 1.0.15 and earlier, an option to
-specify a Gogs secret for this webhook is provided, but not enabled by
-default.
-
-This allows unauthenticated attackers to trigger builds of jobs
-corresponding to the attacker-specified job name.
-
-Additionally, the output of the webhook endpoint includes whether a job
-corresponding to the attacker-specified job name exists, even if the
-attacker has no permission to access it.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2811 / CVE-2023-40350
-Docker Swarm Plugin processes Docker responses to generate the Docker Swarm
-Dashboard view.
-
-Docker Swarm Plugin 1.11 and earlier does not escape values returned from
-Docker before inserting them into the Docker Swarm Dashboard view. This
-results in a stored cross-site scripting (XSS) vulnerability exploitable by
-attackers able to control responses from Docker.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-3201 / CVE-2023-40351
-Favorite View Plugin 5.v77a_37f62782d and earlier does not require POST
-requests for an HTTP endpoint, resulting in a cross-site request forgery
-(CSRF) vulnerability.
-
-This vulnerability allows attackers to add or remove views from another
-user's favorite views tab bar.
-
-As of publication of this advisory, there is no fix.
-
-
-
+Received: (qmail 15751 invoked from network); 18 Sep 2015 00:59:12 -0000
+To: oss-security@lists.openwall.com, cve-assign@mitre.org
+From: Amos Jeffries <squid3@treenet.co.nz>
+X-Enigmail-Draft-Status: N0110
+Message-ID: <55FB61B2.7040001@treenet.co.nz>
+Date: Fri, 18 Sep 2015 12:58:26 +1200
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101
+ Thunderbird/38.2.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] CVE Request: Squid HTTP Proxy Denial of Service
+
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+Hi,
+ The TLS/SSL parser in the latest series of Squid HTTP Proxy has been
+found to have several bugs leading to Denial of Service possibilities.
+Can CVE be assigned as appropriate please?
+
+Vulnerable versions are 3.5.0.1 to 3.5.8 (inclusive), which are built
+with OpenSSL and configured for "SSL-Bump" decryption.
+
+
+Integer overflows can lead to invalid pointer math reading from random
+memory on some CPU architectures. In the best case this leads to wrong
+TLS extensiosn being used for the client, worst-case a crash of the
+proxy terminating all active transactions.
+Fixed by
+<http://www.squid-cache.org/Versions/v3/3.5/changesets/squid-3.5-13914.p
+atch>.
+
+Incorrect message size checks and assumptions about the existence of
+TLS extensions in the SSL/TLS handshake message can lead to very high
+CPU consumption (up to and including 'infinite loop' behaviour).
+Fixed by
+<http://www.squid-cache.org/Versions/v3/3.5/changesets/squid-3.5-13915.p
+atch>.
+
+
+The above can be triggered remotely. Though there is one layer of
+authorization applied before this processing to check that the client
+is allowed to use the proxy, that check is generally weak. MS Skype on
+Windows XP is known to trigger some of these.
+
+(Formal release with advisory will be coming in a few days. 3.5.9
+tarballs are available now, via FTP if the web mirrors ).
+
+Amos Jeffries
+Squid Software Foundation
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.22 (MingW32)
+
+iQIcBAEBAgAGBQJV+2GbAAoJEGvSOzfXE+nLUXAP+QHtjtge8w2NfIUPvHxugp6I
+lB7tcmNU2CIbA7Ocgd49Hyz0mgVyv3eTi5ZPoa9qamyU8h4YuKYMSG3dW1O3VRGo
++CDahX3BnoXp1XkXnkfg/35icUzxSj2G3JdTlk6SKe5T/sVmfOObcq1DXUqN//xR
+DH4k5BSe69m/4WJ+rgddkGwSfkrk/n4+SiuhmbRD8NP0qfpnJG+wyp07WKZ7L4/7
+FIK+zlk9oWYaibNMEUMzC1cxfa2veAkBcXEfFIxUkjGTapdlYrZKlV/QTSRp5nuo
+LCsluMie9Yz+CPHEg6ZaVfzc1t92+tA87OgvTdW7rS8kA65T9YZ8v2EEudnMDcfd
++Vh3TzcW3vntw8AafcB4zpJZFtqo3kN+2amN585hQYcCgElImn18yfsvs4KeDKK4
+xaOnPoDsaFUXgw6gSmaEUXBbR0Xvg2Gf0f4wt4VSQQg/uZY9g3peLmxInsaAZRtQ
+ExQx7AgRF1dUq5qBQFBIovKcuYUACKX1voBrTD3UVPTZECmpS8ofUNJn48T0EIij
+n9OksIAQyi1zRg4Phyh8hJy/Jh7HDeLJI56LGI5a6PCpMd3c8+lKifATrzzht0ih
+CrFVBytxW3um10GSxUo95fr1ZAJr096QmfIZWxNnRj0M+g8kHxoSW7spsiZ79ZMt
+h8mCSUBX9NdWxJje7VMM
+=Dyqj
+-----END PGP SIGNATURE-----
