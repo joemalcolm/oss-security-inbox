@@ -1,4 +1,9 @@
-Received: (qmail 1053 invoked by uid 550); 29 Dec 2025 17:08:08 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2134" "Friday" "18" "September" "2015" "15:11:09" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150918191109.4FD816C002B@smtpvmsrv1.mitre.org>" "50" "[oss-security] Re: CVE request Qemu: net: virtio-net possible remote DoS" nil nil nil "9" "2015091819:11:09" "[oss-security] Re: CVE request Qemu: net: virtio-net possible remote DoS" (number mark "        cve-assign@m Sep 18   50/2134  " thread-indent "\"[oss-security] Re: CVE request Qemu: net: virtio-net possible remote DoS\"\n") "<alpine.LFD.2.20.1509181611430.12625@wniryva>" ("<alpine.LFD.2.20.1509181611430.12625@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 14017 invoked by uid 550); 18 Sep 2015 19:11:22 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,39 +11,63 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 13999 invoked from network); 18 Sep 2015 19:11:21 -0000
+In-Reply-To: <alpine.LFD.2.20.1509181611430.12625@wniryva>
+Message-Id: <20150918191109.4FD816C002B@smtpvmsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, jasowang@redhat.com
+Date: Fri, 18 Sep 2015 15:11:09 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 22430 invoked from network); 29 Dec 2025 14:45:27 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=bebt.de;
-	s=d2; h=In-Reply-To:Content-Transfer-Encoding:Content-Type:MIME-Version:
-	Message-ID:Subject:To:From:Date:From:Sender:Reply-To:Subject:Date:Message-ID:
-	To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:Content-ID:
-	Content-Description:In-Reply-To:References;
-	bh=92CIXD6eH98zoZouT87wi6CGRr8BBE2SVXqy0CG/ruE=; b=s9M4atINVA5pRj3AJi2w7T3xr/
-	M4yY9ysJnEEDmkdVz2bw+w2/dBbWbJg28D1usTtMS4gExOTTtldNITKli1eP6qHX2sEIz+wpXTL7+
-	k6iWix6dNqqHgGTfPNwgZ0QiBwRZEhZrc3XFzSQbx8HwcP1iV5hMKSNNjgkQECBPJloJ3Tja364M8
-	gXa2AXJ5pjuaba0kQf1riYwN//tGhlCj/lKtpPquAmiE5NCPOVgvZMayW2Wmz45OXCnuFFV6t2OJq
-	H0Yij8SyiObnAGyc5bjAdmzedP2lH2cSZrES6UVrX/Pqt+XYW9nFCpEU+aYWycngZsHFs1EgVF+fs
-	bhWwdpKw==;
-Date: Mon, 29 Dec 2025 15:45:15 +0100
-From: Andreas Metzler <ametzler@bebt.de>
-To: oss-security@lists.openwall.com
-Message-ID: <aVKT-72EaOkbvDNM@argenau.bebt.de>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <0bf8169edb12d002a4654c4ccf6aa54d84eba14a.camel@verbuecheln.ch>
-X-Spam-Score: -2.0 (--)
-X-Spam-Report: (-2.0 / 8.0 requ) ALL_TRUSTED=-1,BAYES_00=-1.9,TXREP=-1.639,URIBL_DBL_SPAM=2.5 autolearn=no autolearn_force=no
-Subject: [oss-security] Re: Many vulnerabilities in GnuPG
+Subject: [oss-security] Re: CVE request Qemu: net: virtio-net possible remote DoS
+To: ppandit@redhat.com
 
-Stephan Verbücheln <stephan@...buecheln.ch> wrote:
-> The RCE bug was actually fixed as they already state in their slides.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-> https://github.com/gpg/gnupg/commit/ad0c6c33c3d6fe7ff7cc8c2e73d02ead5788e5b3
+> Qemu emulator built with the Virtual Network Device(virtio-net) support is
+> vulnerable to a DoS issue. It could occur while receiving large packets over
+> the tuntap/macvtap interfaces and when guest's virtio-net driver did not
+> support big/mergeable receive buffers.
+> 
+> An attacker on the local network could use this flaw to disable guest's
+> networking by sending a large number of jumbo frames to the guest, exhausting
+> all receive buffers and thus leading to a DoS situation.
+> 
+> https://lists.gnu.org/archive/html/qemu-devel/2015-09/msg04729.html
+> https://lists.gnu.org/archive/html/qemu-devel/2015-09/msg04730.html
+> https://lists.gnu.org/archive/html/qemu-devel/2015-09/msg04731.html
 
-This commit seems to be related to #3 https://gpg.fail/filename while
-the RCE is #5 https://gpg.fail/memcpy aka CVE-2025-68973, isn't it?
+> When packet is truncated during receiving, we drop the packets but
+> neither discard the descriptor nor add and signal used
+> descriptor. This will lead several issues:
+> 
+> - sg mappings are leaked
+> - rx will be stalled if a lots of packets were truncated
 
-cu Andreas
+Use CVE-2015-7295.
+
+As far as we can tell, "sg mappings are leaked" and "rx will be
+stalled" aren't independent problems.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJV/GCUAAoJEL54rhJi8gl5CR0P/3W08SnlO7UG5romkJRFhZUX
+MMmoucggrWMmrY1hGq11cODk5DmD53R0WDg5Eu+XfEwEyryHpTk034kJUub3yLOM
+ylj+ZatLRWpRw2qofMSyI7wfJHOWbi6XjfzVPsMX1biub1ncIMnt3DYngXlKj4H5
+leXdQDbcatxUvuSe7wYwxiFEVsLi0tS9EdlFmjxgQ63iOGqZXI6TL/pkvAeOPx4C
+OIbxd2lAfyjtSxPo9NOXoXzlOxSoBm7n1KTD+nwOIVxlkbLQfh63lIycJ6dH717u
+nuq1p7Hgd+KwkG6aqjD7iy+B0NLuS1oJj3Yl9P2bxlLjXf3qqieaOjk4AeZoMNXZ
+zMx0f8ejWFgO0IP/kknslYcRnV6vvP+bBSmdCDwJZPi/ov82yVtRfIt3CLJ3rifP
+Ms3/0sb58x5PITjYurioOJxDSpmXClRgUpahnCKBQijyNyLQF5tih0FSJ7RRqZub
+/6cgwOvY6TIJJklZ9I4j/xn2VFbFwkf0ShqWzBIr2QZ3I5zNuwuGNGLE0Z/nGgf/
+Pds9nDggKCHEPy96xsnfevbdGwIkNofRpTWwCRe1Qyy4KfM6t8mZ2vL4kjB+8Ngp
+vDpulZkDVaLB7FvZ9Gb3SWICeLt2rMq8nQy3vJGKtss8zI2dcwJ6a0H/EP+cVaD8
+nPCVm7dzeyUY84OY6uyN
+=pwm1
+-----END PGP SIGNATURE-----
