@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["729" "Wednesday" "17" "May" "2017" "16:27:01" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1705171622060.32210@wniryva>" "25" "[oss-security] CVE-2017-7493 Qemu: 9pfs: guest privilege escalation in virtfs mapped-file mode" nil nil nil "5" "2017051710:57:01" "[oss-security] CVE-2017-7493 Qemu: 9pfs: guest privilege escalation in virtfs mapped-file mode" (number mark "U       ppandit@redh May 17   25/729   " thread-indent "\"[oss-security] CVE-2017-7493 Qemu: 9pfs: guest privilege escalation in virtfs mapped-file mode\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["758" "Saturday" "19" "September" "2015" "10:51:04" "-0500" "Nathan Van Gheem" "nathan.van.gheem@plone.org" "<CAL8hw9HO8ONYEZFAfztUSvDnTON73Zr-xXXXGQL6jb_zDCqSbQ@mail.gmail.com>" "26" "[oss-security] CVE Request: Plone header injection" nil nil nil "9" "2015091915:51:04" "[oss-security] CVE Request: Plone header injection" (number mark "U       nathan.van.g Sep 19   26/758   " thread-indent "\"[oss-security] CVE Request: Plone header injection\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 13729 invoked by uid 550); 17 May 2017 10:57:19 -0000
+Received: (qmail 1572 invoked by uid 550); 19 Sep 2015 15:51:16 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,46 +12,52 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13690 invoked from network); 17 May 2017 10:57:18 -0000
-DMARC-Filter: OpenDMARC Filter v1.3.2 mx1.redhat.com E862A80468
-Authentication-Results: ext-mx04.extmail.prod.ext.phx2.redhat.com; dmarc=none (p=none dis=none) header.from=redhat.com
-Authentication-Results: ext-mx04.extmail.prod.ext.phx2.redhat.com; spf=pass smtp.mailfrom=ppandit@redhat.com
-DKIM-Filter: OpenDKIM Filter v2.11.0 mx1.redhat.com E862A80468
-Date: Wed, 17 May 2017 16:27:01 +0530 (IST)
-From: P J P <ppandit@redhat.com>
-X-X-Sender: pjp@javelin
-To: oss security list <oss-security@lists.openwall.com>
-cc: Leo Gaspard <leo@gaspard.io>
-Message-ID: <alpine.LFD.2.20.1705171622060.32210@wniryva>
+Received: (qmail 1546 invoked from network); 19 Sep 2015 15:51:16 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:date:message-id:subject:from:to:content-type;
+        bh=ZSefC6tZk061sEK+t19F2AfF7Bmfbbke3qqtjdFl/mc=;
+        b=u8g9xvVPkINUGkrWoCN0hpJhdPNqvxnF1OKrmdzDzcDUOtPZJXuLzIjG0ZQyP4J041
+         z6gFzCtfb5OChTVTxBCZXDjsmIoMJbmPYai8gQdKXtkqV+0DZ1qnpG4aOuUnMIx48qO4
+         StzHyXwhZKHKU97iaE5iTZIZ7mD9+xyn5Q0IoJA+DWVXiUf8QwBIVwAQaAdxOfHVyaft
+         kJxssZtqqEvAwN2NieDEauND6KS3VDE1+rPdYqIzSqcbOnwb/ZT/DvonB67d63l8fHnE
+         FV3ZVY1hM+cQHrvUgeKyTWm8IvRFUlGGp/AlzlpxgAQVrU/gHCJeXuBp3j8c4k0oPQ8U
+         T6qw==
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.16
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.28]); Wed, 17 May 2017 10:57:06 +0000 (UTC)
-Subject: [oss-security] CVE-2017-7493 Qemu: 9pfs: guest privilege escalation in virtfs
- mapped-file mode
+X-Received: by 10.31.149.86 with SMTP id x83mr3478512vkd.104.1442677864483;
+ Sat, 19 Sep 2015 08:51:04 -0700 (PDT)
+Sender: vangheem@gmail.com
+Date: Sat, 19 Sep 2015 10:51:04 -0500
+X-Google-Sender-Auth: ojoF1r-V_kiWn7Pvh_lJQ_Ka94o
+Message-ID: <CAL8hw9HO8ONYEZFAfztUSvDnTON73Zr-xXXXGQL6jb_zDCqSbQ@mail.gmail.com>
+From: Nathan Van Gheem <nathan.van.gheem@plone.org>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary=001a113d329ea3553305201b9d52
+Subject: [oss-security] CVE Request: Plone header injection
 
-   Hello,
+--001a113d329ea3553305201b9d52
+Content-Type: text/plain; charset=UTF-8
 
-Quick Emulator(Qemu) built with the VirtFS, host directory sharing via Plan 9 
-File System(9pfs) support, is vulnerable to an improper access control issue. 
-It could occur while accessing virtfs metadata files in mapped-file security 
-mode.
+Hi,
 
-A guest user could use this flaw to escalate their privileges inside guest.
+Can a CVE be assigned to this issue, please?
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2017-05/msg03663.html
+   https://plone.org/security/20150910/header-injection
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1451709
+Users who had access to write cookie values were able to inject headers
+into the response. Versions affected are all versions Plone 3. A hotfix has
+been posted only as releases are not made of these versions any longer. The
+code in question was actually fixed long ago but no CVE was ever assigned
+and no hotfix was ever created for older versions of Plone.
 
-'CVE-2017-7493' has been assigned to this issue by Red Hat Inc.
+The relevant code is:
 
-It was reported by Leo Gaspard.
+https://plone.org/security/20150910/
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+The vendor credits with the discovery: Jan Pokorny from RedHat
+
+Thanks, let me know if you'd like more information.
+
+Nathan
+
+--001a113d329ea3553305201b9d52--
