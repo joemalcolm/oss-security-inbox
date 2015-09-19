@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["409" "Wednesday" "1" "November" "2017" "19:02:22" "+0100" "Jakub Wilk" "jwilk@jwilk.net" "<20171101180222.5j6wqmmqakwvu72q@jwilk.net>" "12" "Re: [oss-security] Fw: Security risk of vim swap files" "^Date:" nil nil "11" "2017110118:02:22" "[oss-security] Fw: Security risk of vim swap files" (number mark "        jwilk@jwilk. Nov  1   12/409   " thread-indent "\"Re: [oss-security] Fw: Security risk of vim swap files\"\n") "<CAH8yC8=KKh8SPtDUUSAL_GuDHT7eYBrmHvVjzeQ5n4ocFh4m5Q@mail.gmail.com>" ("<20171031132352.2df6d2ad@pc1>" "<20171031175407.jcniviupwyab6qcl@sentinelchicken.org>" "<20171101023330.GK30551@takahe.colorado.edu>" "<20171101144927.srk7stiwoia4qt57@sentinelchicken.org>" "<CAH8yC8=KKh8SPtDUUSAL_GuDHT7eYBrmHvVjzeQ5n4ocFh4m5Q@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["805" "Saturday" "19" "September" "2015" "10:43:42" "-0500" "Nathan Van Gheem" "vangheem@gmail.com" "<CAL8hw9GkuYtt2hn4QfHTzXYEoN9bMYCq=Hgptpf4Cqv6Mcsfpw@mail.gmail.com>" "26" "[oss-security] CVE Request: Plone XSS" nil nil nil "9" "2015091915:43:42" "[oss-security] CVE Request: Plone XSS" (number mark "U       vangheem@gma Sep 19   26/805   " thread-indent "\"[oss-security] CVE Request: Plone XSS\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 12203 invoked by uid 550); 1 Nov 2017 18:02:47 -0000
+Received: (qmail 13754 invoked by uid 550); 19 Sep 2015 15:43:55 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,38 +11,51 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 12176 invoked from network); 1 Nov 2017 18:02:47 -0000
-Message-ID: <20171101180222.5j6wqmmqakwvu72q@jwilk.net>
-Mail-Followup-To: oss-security@lists.openwall.com
-References: <20171031132352.2df6d2ad@pc1>
- <20171031175407.jcniviupwyab6qcl@sentinelchicken.org>
- <20171101023330.GK30551@takahe.colorado.edu>
- <20171101144927.srk7stiwoia4qt57@sentinelchicken.org>
- <CAH8yC8=KKh8SPtDUUSAL_GuDHT7eYBrmHvVjzeQ5n4ocFh4m5Q@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <CAH8yC8=KKh8SPtDUUSAL_GuDHT7eYBrmHvVjzeQ5n4ocFh4m5Q@mail.gmail.com>
-User-Agent: NeoMutt/20170609 (1.8.3)
-X-Ovh-Tracer-Id: 881298154139670438
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: 0
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedttddrgeeggdduudduucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecufedttdenuc
-Date: Wed, 1 Nov 2017 19:02:22 +0100
-From: Jakub Wilk <jwilk@jwilk.net>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Fw: Security risk of vim swap files
+Received: (qmail 13731 invoked from network); 19 Sep 2015 15:43:54 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=4BCSiY2usGG+NXpxQ8kwe3WLDAu3vemt94TJP1JG/HY=;
+        b=qSI+jdhj8qHuQa8z9Mczmuh/a54UPbJG9yM3NQG+z6g8BMtTyynP5qkKjdDNmUh8mY
+         kILUkhBODzgzTBbGd0Zer6Q4nIPG5yQyWwdEwsvcwhw5o+H5AMnTU6q/qoqlL0D6aAei
+         aq4F0un/k8mHn8wMa0cuzl4AtuPFr/RiBOdZyhDxjOBPF9CFEEmojOtBPYY2wqx81ntm
+         MixFA1m9HO2zj+Ilb41qz2OZJgDjpemYxOtS34RB4ilueKOmkXskuIF5IpzuHBVAR4Cd
+         qnhpmMxN/HbKDT2X0f2LYr4l+7d00PORjrgYGIHJ6P3gwwIskciSbApCeniBoIAtvOBX
+         FEsg==
+MIME-Version: 1.0
+X-Received: by 10.31.141.130 with SMTP id p124mr6612683vkd.44.1442677422926;
+ Sat, 19 Sep 2015 08:43:42 -0700 (PDT)
+Date: Sat, 19 Sep 2015 10:43:42 -0500
+Message-ID: <CAL8hw9GkuYtt2hn4QfHTzXYEoN9bMYCq=Hgptpf4Cqv6Mcsfpw@mail.gmail.com>
+From: Nathan Van Gheem <vangheem@gmail.com>
 To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary=001a11425a4e51b40905201b8317
+Subject: [oss-security] CVE Request: Plone XSS
 
-* Jeffrey Walton <noloader@gmail.com>, 2017-11-01, 11:31:
->Code and scripts certainly need to check TMPDIR
+--001a11425a4e51b40905201b8317
+Content-Type: text/plain; charset=UTF-8
 
-Unfortunately, glibc's implementation of tmpfile(3), which is the most 
-fool-proof interface for dealing with temporary files that the C library 
-offers, doesn't honour TMPDIR. :(
+Hi,
 
-BTW, there's a preloadable library that catches writes to /tmp:
-https://github.com/paultag/tmperamental
+Can a CVE be assigned to this issue, please?
 
--- 
-Jakub Wilk
+    https://plone.org/security/20150910/non-persistent-xss-in-plone
+
+Plone's URL checking infrastructure includes a method for checking if URLs
+valid and located in the Plone site. By passing HTML into this specially
+crafted url, XSS can be achieved. Versions affected are Plone 3.x, 4.1.x,
+4.2.x, <4.3.7, <5.0rc1. A hotfix has been posted for earlier versions of
+Plone that are no longer provided new releases.
+
+The relevant commit is:
+
+https://github.com/plone/Products.CMFPlone/commit/3da710a2cd68587f0bf34f2e7ea1167d6eeee087
+
+The vendor credits with the discovery: Peter Uittenbroek
+
+Thanks, let me know if you'd like more information.
+
+Nathan
+
+--001a11425a4e51b40905201b8317--
