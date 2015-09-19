@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["673" "Friday" "7" "December" "2018" "11:19:43" "-0600" "Michael Catanzaro" "mcatanzaro@igalia.com" "<1544203183.3826.2@mail.igalia.com>" "18" "[oss-security] Invalid free in cairo_ft_apply_variations" nil nil nil "12" "2018120717:19:43" "[oss-security] Invalid free in cairo_ft_apply_variations" (number mark "U       mcatanzaro@i Dec  7   18/673   " thread-indent "\"[oss-security] Invalid free in cairo_ft_apply_variations\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["820" "Saturday" "19" "September" "2015" "10:41:18" "-0500" "Nathan Van Gheem" "nathan.van.gheem@plone.org" "<CAL8hw9HF3ohJHgGrBUgV2Z5RPHADf6UgDjOD7o2iEhmkf2XZWA@mail.gmail.com>" "27" "[oss-security] CVE Request: Plone Unauthorized user creation" nil nil nil "9" "2015091915:41:18" "[oss-security] CVE Request: Plone Unauthorized user creation" (number mark "U       nathan.van.g Sep 19   27/820   " thread-indent "\"[oss-security] CVE Request: Plone Unauthorized user creation\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 22259 invoked by uid 550); 7 Dec 2018 17:25:56 -0000
+Received: (qmail 5152 invoked by uid 550); 19 Sep 2015 15:42:43 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,34 +12,53 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17572 invoked from network); 7 Dec 2018 17:20:07 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com; s=20170329;
-	h=Content-Type:MIME-Version:Message-Id:To:Subject:From:Date; bh=C/BMTSw6eQS//74AC0ju3f3dS+lm2DND3sXzPuqv/O8=;
-	b=nuP4o0Rgz26Xxltj5qnxZwqrkGJQ7/533VjjZVsZr35S/zfNPx63Ysybbzu8l/IVF6nRf+whAipfx4nkC/xPn+2iU+zO0W0IzdcYwUYyam2nAQjasyV1TRwDWe0IDnnn66/q9mmphreHfRuZNTIGuaaAmDC0GifdYkCn6o2ca/r2aNBjIqxMIWKy9IGReSGwO4ZPKOgrEjJ/CL6NsvaqVX4CvIkktMXB2TSB/RiJ0PFXNowdzPyWLyYzfyFbbJeQrE9p9vghDUO//gT9AT/UjkTfiNGkDkFQ9+1dSyWYeyzitqtSJbjDBEHj6uilF3mcnpG7/BsSgT9vhnrH3KOmCw==;
-Date: Fri, 07 Dec 2018 11:19:43 -0600
-From: Michael Catanzaro <mcatanzaro@igalia.com>
-To: oss-security@lists.openwall.com
-Message-Id: <1544203183.3826.2@mail.igalia.com>
-X-Mailer: geary/0.12.4
+Received: (qmail 3729 invoked from network); 19 Sep 2015 15:41:30 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:date:message-id:subject:from:to:content-type;
+        bh=o3F/36L1+y2qCtSMRPXdfY5E/fUp4JeZmPdgjRLUXTM=;
+        b=fB06plDjo8A5hCgzSlXdCtsvhLyK/iibpzP9bFSEa54WYj+7o7C3ziMkEZvGH9X0KD
+         AAZbIr3ovUFeY/8N2665s7sE5C8nJUE9ppZ7vC7h7HnRYOpsMiqvaF/lUE+k52hAYTAv
+         hAg8CJPZsi4eDMstSuNx6ITD/X+ShzRcOdDj2+XjCWKdu9X29iRCdViihL9mhukVEYwI
+         nVnQ0b2CKmMQkFJNFegoSfX2xKZqVctNFqyBYUCOxGDL8pCSAlofuPYJSUB/UMEJ8S+F
+         zW0yErhqfmOngiqgIiQiRaAlTpMFCanISmQblv0zI3gF6b6Jvl2B8hDZO9HdmxjZppS5
+         KSTQ==
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Subject: [oss-security] Invalid free in cairo_ft_apply_variations
+X-Received: by 10.31.164.146 with SMTP id n140mr6800557vke.148.1442677278794;
+ Sat, 19 Sep 2015 08:41:18 -0700 (PDT)
+Sender: vangheem@gmail.com
+Date: Sat, 19 Sep 2015 10:41:18 -0500
+X-Google-Sender-Auth: qV4lRxwj1_qUcHtRgYctwvLelUs
+Message-ID: <CAL8hw9HF3ohJHgGrBUgV2Z5RPHADf6UgDjOD7o2iEhmkf2XZWA@mail.gmail.com>
+From: Nathan Van Gheem <nathan.van.gheem@plone.org>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary=001a11414f88ba685005201b7a34
+Subject: [oss-security] CVE Request: Plone Unauthorized user creation
+
+--001a11414f88ba685005201b7a34
+Content-Type: text/plain; charset=UTF-8
 
 Hi,
 
-cairo 1.16.0, in cairo_ft_apply_variations() in cairo-ft-font.c frees 
-memory using the wrong free function, leading to memory corruption. 
-Because cairo is used by WebKitGTK+, WPE WebKit, and the WinCairo port 
-of WebKit, this issue can be triggered by web content. CVE-2018-19876 
-has been allocated by MITRE. For details, see:
+Can a CVE be assigned to this issue, please?
 
-https://gitlab.freedesktop.org/cairo/cairo/merge_requests/5
 
-We recommend Linux distros should patch cairo because the fix has not 
-yet been integrated into the upstream source code repository:
+https://plone.org/security/20150910/anonymous-is-able-to-create-plone-members
 
-https://gitlab.freedesktop.org/cairo/cairo/merge_requests/5.patch
-(warning: link provided for convenience, it is not a stable link)
+It's a vulnerability that allows remote attackers to add a new member to a
+Plone site when registration is enabled, without acknowledgment of site
+administrator. Versions affected are Plone 3.x, 4.1.x, 4.2.x, <4.3.7,
+<5.0rc1. A hotfix has been posted for earlier versions of Plone that are no
+longer provided new releases.
 
-Michael
+The relevant commit is:
 
+https://github.com/zopefoundation/Products.CMFCore/commit/e1d981bfa14b664317285f0f36498f4be4a23406
+
+The vendor credits with the discovery: Maurits van Rees at Zest Software
+
+Thanks, let me know if you'd like more information.
+
+Nathan
+
+--001a11414f88ba685005201b7a34--
