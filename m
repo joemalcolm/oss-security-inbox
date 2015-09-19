@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4078" "Sunday" "6" "September" "2015" "11:55:41" "-0400" "Justin Bull" "me@justinbull.ca" "<C9CE8540-74F4-48C4-9416-76827CF2CCF7@justinbull.ca>" "117" "[oss-security] CVE Request: TOTP Replay Attack in Ruby library \"devise-two-factor\"" nil nil nil "9" "2015090615:55:41" "[oss-security] CVE Request: TOTP Replay Attack in Ruby library \"devise-two-factor\"" (number mark "U       me@justinbul Sep  6  117/4078  " thread-indent "\"[oss-security] CVE Request: TOTP Replay Attack in Ruby library \"devise-two-factor\"\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3610" "Sunday" "20" "September" "2015" "02:34:15" "+0300" "Solar Designer" "solar@openwall.com" "<20150919233415.GA31305@openwall.com>" "81" "Re: [oss-security] s/party/hack like it's 1999" nil nil nil "9" "2015091923:34:15" "[oss-security] s/party/hack like it's 1999" (number mark "        solar@openwa Sep 20   81/3610  " thread-indent "\"Re: [oss-security] s/party/hack like it's 1999\"\n") "<CAJWnFaP4QGvJxsJes7fmud787xG=vuh+AFiYPh79kiSLOe-rOA@mail.gmail.com>" ("<20150917180319.1933609esmj3aaw4@webmail.alunos.dcc.fc.up.pt>" "<CAJWnFaP4QGvJxsJes7fmud787xG=vuh+AFiYPh79kiSLOe-rOA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 9956 invoked by uid 550); 6 Sep 2015 15:55:57 -0000
+Received: (qmail 1746 invoked by uid 550); 19 Sep 2015 23:34:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,146 +11,98 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 1728 invoked from network); 19 Sep 2015 23:34:20 -0000
+Message-ID: <20150919233415.GA31305@openwall.com>
+References: <20150917180319.1933609esmj3aaw4@webmail.alunos.dcc.fc.up.pt> <CAJWnFaP4QGvJxsJes7fmud787xG=vuh+AFiYPh79kiSLOe-rOA@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAJWnFaP4QGvJxsJes7fmud787xG=vuh+AFiYPh79kiSLOe-rOA@mail.gmail.com>
+User-Agent: Mutt/1.4.2.3i
+Date: Sun, 20 Sep 2015 02:34:15 +0300
+From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9935 invoked from network); 6 Sep 2015 15:55:56 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:content-type:subject:date:message-id:to
-         :mime-version;
-        bh=1+VzRwdIofcHfMZkvxg2hC4m1oHQbNoV9Fo/NTktF34=;
-        b=XhGKLV+t2R1VSLovkSuJaGiyWokMZKJn3/x7JCzZLI5JAMqwnD6ACeEemdUIYwNX4T
-         gJChBRllGaf/l+Q44psB1FjOF4UZ3QOK3wJftb+DGWus7yOWECj1oItdeZJ8+gvMQGMj
-         eqYK0eF2evq4qEFcYSDItkFgWjl//wjUwX7F40Pk2UpLHv2VTrdNSzF7QGL9YVleJOUl
-         foaKtCshWnfiA3gr/NjxrauBWCjEeDyVfsLh3kFYCjtJt4T5baZ2sODV2DyrGyxRp1Do
-         CJZXzKb925TKJNXdLtjmLhgO+hicaL42FHXuecwR+ACDGoUblPLjCmZvN/efHnh+XbzT
-         1JrA==
-X-Gm-Message-State: ALoCoQnB/gPxT4f2Vzck7REDrvIzjR+SZPjyp2toQDVlymJHFzZDUuz24O+VNsy2haX1Wbbr9tGC
-X-Received: by 10.50.21.10 with SMTP id r10mr24316308ige.94.1441554943845;
-        Sun, 06 Sep 2015 08:55:43 -0700 (PDT)
-From: Justin Bull <me@justinbull.ca>
-X-Pgp-Agent: GPGMail 2.5.1
-Content-Type: multipart/signed; boundary="Apple-Mail=_37CD0973-3868-42AE-B879-65EB793F8748"; protocol="application/pgp-signature"; micalg=pgp-sha512
-Date: Sun, 6 Sep 2015 11:55:41 -0400
-Message-Id: <C9CE8540-74F4-48C4-9416-76827CF2CCF7@justinbull.ca>
+Subject: Re: [oss-security] s/party/hack like it's 1999
 To: oss-security@lists.openwall.com
-Mime-Version: 1.0 (Mac OS X Mail 8.2 \(2104\))
-X-Mailer: Apple Mail (2.2104)
-Subject: [oss-security] CVE Request: TOTP Replay Attack in Ruby library "devise-two-factor"
 
---Apple-Mail=_37CD0973-3868-42AE-B879-65EB793F8748
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=utf-8
+On Thu, Sep 17, 2015 at 11:33 AM,  <up201407890@alunos.dcc.fc.up.pt> wrote:
+> Federico Bento <up201407890@alunos.dcc.fc.up.pt>
+[...]
+> escape sequences have been introduced circa 70's
 
-Hello again,
+Yes, it appears to be 1970s for multi-character escape sequences (DEC
+VT05 with cursor positioning is 1970), but single characters controlling
+a machine were introduced a century earlier:
 
-I=E2=80=99d like to request a CVE ID for the following:
+https://en.wikipedia.org/wiki/Control_character#History
 
+"A form of control characters were introduced in the 1870 Baudot code:
+NUL and DEL.  The 1901 Murray code added the carriage return (CR) and
+line feed (LF), and other versions of the Baudot code included other
+control characters.
 
-=3D=3D Affected Software: =3D=3D
+The bell character (BEL), which rang a bell to alert operators, was also
+an early teletype control character."
 
-Devise-Two-Factor Authentication (https://github.com/tinfoil/devise-two-fac=
-tor)
-By Tinfoil Security (https://www.tinfoilsecurity.com/)
+DEL would have been usable for deception if computers and CRT terminals
+existed at the time.
 
-Devise-two-factor is a minimalist extension to Devise which offers support =
-for two-factor authentication, through the TOTP scheme.
+ENQ is also very old:
 
-This enables Ruby on Rails applications to have strong two-factor authentic=
-ation in their auth/auth flow.
+https://en.wikipedia.org/wiki/Enquiry_character
 
-=3D=3D Versions Affected: =3D=3D
+On Thu, Sep 17, 2015 at 12:33:28PM -0430, Manuel Gomez wrote:
+> There is absolutely nothing wrong with `head`, `tail`, `more`, `curl`,
+> `wget` or `diff`.
 
-All versions.
+I agree that Federico's examples show nothing wrong with these tools.
 
-=3D=3D Fixed Versions: =3D=3D
+However, out of these tools, I think we should test curl and wget for
+their handling of metadata such as filenames and HTTP responses when
+printing them (likely) to the terminal.  Federico's examples do not test
+this (they explicitly request the remote file's content to be printed,
+so having it printed verbatim and interpreted by the terminal, if any,
+is expected behavior).
 
-None.
+In processing of metadata, I think such tools that are commonly run on a
+terminal should prevent character codes in the typical controls ranges
+(ranges C0 and C1, and DEL character) from being sent to the terminal.
 
-=3D=3D Description of Vulnerability: =3D=3D
+https://en.wikipedia.org/wiki/C0_and_C1_control_codes
 
-The library=E2=80=99s use of TOTP for Two-Factor Authentication is not full=
-y compliant with Section 5.2 of RFC 6238[1] and does not =E2=80=9Cburn=E2=
-=80=9D a successfully validated OTP.
+What exactly such programs should do is debatable, though.  For example,
+the ps command from Linux procps prints question marks.  Its detection
+of control characters is locale and multibyte character aware, which
+doesn't make me confident: it relies on libc and on locale data, neither
+of which is directly related to a terminal one is using.  It's also more
+complex (especially including libc and locale data), and hence poses a
+higher risk of implementation bugs, than a direct check for C0 and C1
+ranges and DEL would have been.  Maybe this complexity is a price to pay
+for supporting arbitrary printable UTF-8, which includes codes in the C1
+range in continuation bytes.
 
-When the prover (end user) sends a valid OTP to the verifier (web app), the=
- verifier must not accept subsequent submissions of the same OTP in that gi=
-ven time-step. That is, in order to maintain the =E2=80=9COne-Time=E2=80=9D=
- aspect of a One-Time Password, it can be used once and only once.
+Perhaps we can pay a lower code complexity price by checking for a UTF-8
+locale and then validating the UTF-8 characters explicitly (assuming
+that if a UTF-8 locale is chosen, the terminal is also set to UTF-8).
+Maybe we need a generic code snippet or library of this sort?
 
-=3D=3D Impact / Attack: =3D=3D
+Then, besides terminal escapes there are UTF-8 control characters: BOM,
+LRM, RLM (any others?)
 
-Given an attacker already knows a victim=E2=80=99s credentials, they could =
-"shoulder surf" the victim=E2=80=99s second factor device, obtaining the OT=
-P, and login with the known credentials & OTP within the current time-step =
-(a default 30 second window). This defeats two-factor authentication for th=
-e duration of the time-step.
+https://en.wikipedia.org/wiki/Byte_order_mark
+https://en.wikipedia.org/wiki/Left-to-right_mark
+https://en.wikipedia.org/wiki/Right-to-left_mark
 
-Alternatively, an attacker could Man-in-The-Middle the connection between t=
-he prover and verifier, and replay the OTP & credentials within the given t=
-ime-step. This however is not as much as a concern since, if an attacker ca=
-n MITM the connection, they can just obtain the granted session secret from=
- the response instead.
+Should our code be checking for these too?  Or is it a reason to bite
+the bullet and rely on the locale data?
 
-Although a narrow vulnerability, it remains a valid security issue that=E2=
-=80=99s been explicitly called out in the RFC[1].
+Besides possible locale data bugs (which I've seen back on glibc 2.1.x),
+there are also 8-bit locales where some legitimate printable characters
+fall into C1.  Should we assume that anyone with such a locale
+configured is running on a terminal that won't process the corresponding
+codes in C1 as control (or it's their own problem otherwise)?  Luckily,
+this is one issue that UTF-8 made mostly irrelevant.
 
-=3D=3D Solution: =3D=3D
+With UTF-8, it might be different how to s/party/hack/ now than in 1999.
 
-Use the library=E2=80=99s implicit access to a persistence layer to store =
-=E2=80=9Cburned=E2=80=9D OTPs, preventing multiple uses of an OTP in a give=
-n time-step.
-
-Proposed fix pending vendor acceptance and release[2].
-
-=3D=3D Previously Requested: =3D=3D
-
-Not to my knowledge.
-
-=3D=3D Acknowledgements: =3D=3D
-
-Thanks to Viliam Holub (https://github.com/vilda) for originally reporting =
-the issue[3].
-Thanks to Shane Wilton of Tinfoil Security (https://github.com/ShaneWilton)=
- for validating my suggested solution.
-
-=3D=3D References:=3D=3D
-
-[1]: https://tools.ietf.org/html/rfc6238#section-5.2
-[2]: https://github.com/tinfoil/devise-two-factor/pull/43
-[3]: https://github.com/tinfoil/devise-two-factor/issues/30
-
-
-Best Regards,
-
-Justin Bull
-PGP Fingerprint: E09D 38DE 8FB7 5745 2044 A0F4 1A2B DEAA 68FD B34C
-
-
---Apple-Mail=_37CD0973-3868-42AE-B879-65EB793F8748
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment;
-	filename=signature.asc
-Content-Type: application/pgp-signature;
-	name=signature.asc
-Content-Description: Message signed with OpenPGP using GPGMail
-
------BEGIN PGP SIGNATURE-----
-Comment: GPGTools - https://gpgtools.org
-
-iQIcBAEBCgAGBQJV7GH9AAoJEESFZfv8+htYrdgP/3WvoMaX9jOFqqRZIZCKzzww
-eAc1x3Ffk7hl2JKwf/P3maXUVUlVyMNmC7HrmPXzLdTkcTScTCLof28G68wHWz+V
-jLrzeMmAqm0uji62SrlKNtToXguCJpyPnli+0L4W3nGAY5d0cjOkARqItLys1m/G
-QLPrd4bA/deMANf1uqcJvsYj6ls4CkZ8xIPSJAuOvkeys7R7SEO19oueqtG46xKG
-kIBXaCrkmU/BTedPHDguVWpEBr515INDXc12dGSpvS/IM9xF5BWVrXl+wj6OsxJO
-SLbBn2VKSi+fiw8IG3Rjqd50R4rePunpMUQfeBXAc7RUCBXDo2RgpMi27+oVrn1p
-x3lFK/UQbkXgzuPuqkUy9MH8rcxfbbWG5nOj3A2FFd+Wcc2yUbOzuzqZbF8oS9T/
-bmKpF5K6jWxCTytKErX6PWe0OMWX+NnzLb3Xq1C0g1ImOsdfpD0XrV3ER1kWJVeN
-huWx3SGqhibhHS0605LefVnXhABTbDhf5vBnZfz5JvSQ5UhKo6vGqrFZSjSvcZWL
-M6W8fSKh5wNSf0WmY6SEj6quoI6+llTYsAA5aj8IKwSSXa0Wa+Cdd97HhuCwijkF
-4rz53skXnlfhKfZjQYMnHeeWQPkks6+Oy1iMW69ox3FUjKvoGYizSG9gCzBIQ5Qg
-4qHFwMurCad2W/o6ufqS
-=i5X8
------END PGP SIGNATURE-----
-
---Apple-Mail=_37CD0973-3868-42AE-B879-65EB793F8748--
+Alexander
