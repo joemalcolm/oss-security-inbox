@@ -1,50 +1,166 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/03/7
-Message-ID: <54F5D5EB.3020406@redhat.com>
-Date: Tue, 03 Mar 2015 08:40:27 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/09/20/1
+Message-ID: <20150920022811.GJ17773@oevtugenva.nrevsny.pk>
+Date: Sat, 19 Sep 2015 22:28:11 -0400
+From: Rich Felker <dalias@...c.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: validation on update
+Subject: Re: s/party/hack like it's 1999
 Content-Type: text/plain; charset=utf-8
 
-On 03/03/15 03:32 AM, gremlin@...mlin.ru wrote:
-> On 2015-03-02 19:24:30 +0000, Simon McVittie wrote:
->  > An end-to-end integrity check from the original publisher to
->  > the consumer would prevent more attacks, but would also be
->  > harder to deploy (it requires action from each publisher,
+On Sun, Sep 20, 2015 at 02:34:15AM +0300, Solar Designer wrote:
+> On Thu, Sep 17, 2015 at 12:33:28PM -0430, Manuel Gomez wrote:
+> > There is absolutely nothing wrong with `head`, `tail`, `more`, `curl`,
+> > `wget` or `diff`.
 > 
-> Running `gpg --detach-sign < package.tar.gz > package.tar.gz.sig`
-> (or, better, `gpg -ba ...`) on each release isn't a big deal...
+> I agree that Federico's examples show nothing wrong with these tools.
 > 
->  > verification at each consumer,
+> However, out of these tools, I think we should test curl and wget for
+> their handling of metadata such as filenames and HTTP responses when
+> printing them (likely) to the terminal.  Federico's examples do not test
+> this (they explicitly request the remote file's content to be printed,
+> so having it printed verbatim and interpreted by the terminal, if any,
+> is expected behavior).
 > 
-> Running `gpg --verify package.tar.gz.sig package.tar.gz` will do
-> that just perfectly. And, when talking about automatic updates,
-> that should be included into the update procedure.
+> In processing of metadata, I think such tools that are commonly run on a
+> terminal should prevent character codes in the typical controls ranges
+> (ranges C0 and C1, and DEL character) from being sent to the terminal.
 > 
->  > and a way to determine whether publisher X is authorized to
->  > publish package Y);
+> https://en.wikipedia.org/wiki/C0_and_C1_control_codes
 > 
-> `gpg --no-default-keyring --keyring /path/authors.pub --verify ...`
+> What exactly such programs should do is debatable, though.  For example,
+> the ps command from Linux procps prints question marks.  Its detection
+> of control characters is locale and multibyte character aware, which
+> doesn't make me confident: it relies on libc and on locale data, neither
+> of which is directly related to a terminal one is using.  It's also more
 
-No but key distribution and management is a real problem. How does
-upstream sign all these things securely but also conveniently on their
-end? How do they store the key (Hardware Security Module?). How does
-upstream distribute the key (just HTTPS website? in the maven source?
-hope nobody spoofs them.
+They're supposed to match; if they don't, this is user error. It would
+be nice if we could just assume everything is UTF-8, but doing that
+would actually break one case: where the user has properly configured
+both their locale and terminal for a non-UTF-8 encoding, just assuming
+UTF-8 would happily let C1 characters through. So trusting the locale
+really is the right thing to do here, IMO.
 
-There's a simple reason most projects don't sign software, key
-management is such a pain (how do you security backup something that
-should only exist in one spot? Encrypt it? Ok how do you secure that
-key... Not saying it shouldn't be done, but just pointing out it's a
-little more work than running "gpg --sigh".
+> complex (especially including libc and locale data), and hence poses a
+> higher risk of implementation bugs, than a direct check for C0 and C1
+> ranges and DEL would have been.  Maybe this complexity is a price to pay
+> for supporting arbitrary printable UTF-8, which includes codes in the C1
+> range in continuation bytes.
 
-Does anyone have any good guidelines/procedure docs on this stuff? E.g.
-which HSM devices support GPG, etc?
+"The C1 range in continuation bytes" is a complex concept that needs
+to be explained.
 
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Traditionally, the way terminals supported character sets with
+printable characters in the "C1 range" was by having an option
+(separate from character encoding, which the terminal often did not
+even know or care about) to disable processing of C1 characters and
+treat them as printable. This worked, but it was the wrong model, and
+precluded use of C1 in UTF-8.
 
+The right way for a terminal to behave is to put the byte to character
+conversion step before the escape processing step. In this way,
+character sets like cp1252 or koi8-r that have printable characters in
+the "C1 range" naturally work just fine, because the bytes 80-9F _are
+not C1 character_ but rather bytes which correspond to other
+characters. Likewise, in UTF-8, the bytes 80-9F are not even
+characters at all, but the C1 characters do exist: they're represented
+by sequences C2 80 ... C2 9F, and when you perform the bytes to
+characters step first, you end up with U+0080 ... U+009F, which then
+perform their expected (and dangerous, as we will see) functions.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+It's easy to play with this on a UTF-8 terminal with the printf
+command, e.g.:
+
+printf '\xc2\x9b1mhello\xc2\x9b0m\n'
+
+to see what happens. At least on GNU screen, the C1 characters are
+processed by default, but can be disabled per-window with the "c1 off"
+command or globally for new windows with "defc1 off". I haven't widely
+tested other terminals, but at least my uuterm also processes UTF-8 C1
+this way.
+
+> Perhaps we can pay a lower code complexity price by checking for a UTF-8
+> locale and then validating the UTF-8 characters explicitly (assuming
+> that if a UTF-8 locale is chosen, the terminal is also set to UTF-8).
+> Maybe we need a generic code snippet or library of this sort?
+
+As long as you're following the locale, mbrtowc+iswprint should
+suffice.
+
+> Then, besides terminal escapes there are UTF-8 control characters: BOM,
+> LRM, RLM (any others?)
+> 
+> https://en.wikipedia.org/wiki/Byte_order_mark
+> https://en.wikipedia.org/wiki/Left-to-right_mark
+> https://en.wikipedia.org/wiki/Right-to-left_mark
+
+I don't think bidi controls are a particularly high risk since most
+terminals I've used fail to support them properly, but this could
+change (or maybe already has changed on some of the more
+desktop-environment-type terminals people use these days). This should
+probably be checked.
+
+> With UTF-8, it might be different how to s/party/hack/ now than in 1999.
+
+Solar and I just discussed this and I believe there's at least one
+interesting attack that's possible even when applications have
+validated that they have printable data. It involves interleaving of
+data from multiple writers. Consider the following example:
+
+Writer 1: "©"
+Writer 2: "Û1m"
+
+As bytes, these are:
+
+Writer 1: C2 A9
+Writer 2: C3 9B 31 6D
+
+One possible interleaving (writes to terminals have _no_ atomicity at
+all) is:
+
+C3 C2 9B 31 6D A9
+
+This of course contails illegal sequences. The standard practice for
+processing the above sequence of bytes is to drop or replace truncated
+or illegal sequences. The exact manner in which this is done varies,
+but since most software tries to minimize data loss in the case of
+dropped or corrupt bytes, the usual interpretation is:
+
+[illegal C3] [valid C2 9B] [valid 31] [valid 6D] [illegal A9]
+
+Regardless of how the illegal sequences are dropped/replaced, then,
+the characters in the middle are:
+
+U+009B U+0031 U+006D
+
+or:
+
+CSI '1' 'm'
+
+If C1 characters are processed, that put your terminal in bold mode.
+
+Note that all that was needed for this to happen was for a stray C2
+byte from one writer to get injected just before the character-final
+9B byte of a multibyte character from another writer. I specifically
+chose my example so that both writers output data which is well-formed
+and printable UTF-8, but that was not necessary.
+
+Since I see no reasonable application-side mitigation for this, I
+think the right recommendation should be disabling C1 control codes in
+terminal emulators, at least in UTF-8 mode, but preferably just across
+the board. AFAIK nothing is using them. They don't even work reliably
+across all terminal emulators; many users have C1 disabled from the
+old days where that was the right way to use certain legacy 8-bit
+encodings, and some UTF-8 terminal emulators probably don't even
+support them at all.
+
+Note that when considering disabling C1 controls in screen or tmux,
+it's important that the attaching terminal also has them disabled.
+Otherwise screen/tmux will treat them as printable and pass them
+through to be interpreted by the attaching terminal, which is
+potentially even more dangerous. It would be nice to see an option in
+screen/tmux not to treat C1 as printable but rather filter out these
+characters, so that users running everything in screen/tmux don't have
+to worry about potentially dangerous settings on the terminal they
+attach from.
+
+Rich
