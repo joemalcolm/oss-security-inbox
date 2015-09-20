@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2162" "Wednesday" "2" "November" "2016" "08:12:14" "+0100" "Daniel Stenberg" "daniel@haxx.se" "<alpine.DEB.2.20.1611020811430.375@tvnag.unkk.fr>" "78" "[oss-security] [SECURITY ADVISORY] curl use-after-free via shared cookies" nil nil nil "11" "2016110207:12:14" "[oss-security] [SECURITY ADVISORY] curl use-after-free via shared cookies" (number mark "U       daniel@haxx. Nov  2   78/2162  " thread-indent "\"[oss-security] [SECURITY ADVISORY] curl use-after-free via shared cookies\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1021" "Sunday" "20" "September" "2015" "14:34:41" "+0200" "Dawa Ometto" "d.ometto@gmail.com" "<55FEA7E1.1070007@uu.nl>" "35" "[oss-security] CVE Request: gollum information disclosure vulnerability" nil nil nil "9" "2015092012:34:41" "[oss-security] CVE Request: gollum information disclosure vulnerability" (number mark "U       d.ometto@gma Sep 20   35/1021  " thread-indent "\"[oss-security] CVE Request: gollum information disclosure vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 21836 invoked by uid 550); 2 Nov 2016 07:12:31 -0000
+Received: (qmail 13362 invoked by uid 550); 20 Sep 2015 15:13:09 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,98 +11,66 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21617 invoked from network); 2 Nov 2016 07:12:28 -0000
-X-Authentication-Warning: giant.haxx.se: dast owned process doing -bs
-Date: Wed, 2 Nov 2016 08:12:14 +0100 (CET)
-From: Daniel Stenberg <daniel@haxx.se>
-X-X-Sender: dast@giant.haxx.se
-To: curl security announcements -- curl users <curl-users@cool.haxx.se>,
-        curl-announce@cool.haxx.se,
-        libcurl hacking <curl-library@cool.haxx.se>,
-        oss-security@lists.openwall.com
-Message-ID: <alpine.DEB.2.20.1611020811430.375@tvnag.unkk.fr>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-fromdanielhimself: yes
+Received: (qmail 18381 invoked from network); 20 Sep 2015 12:34:54 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:subject:reply-to:message-id:date:user-agent:mime-version
+         :content-type:content-transfer-encoding;
+        bh=SpTzBiv5u5ptPLXHEkKVQqMA/QYSLnig30PLezPZo9g=;
+        b=0GLDVE3Se7JrXzwgxT6NpQKvfZE0iNi8uQ0xMQSjWdD/c+2HGhqBcE1irsJXuhi7fn
+         ALqYUxDq11RxXfhxOOp6l9brjkoI/Mp1sg6IJqK51LNquX7LVtQ4G7s9UHP2uVu2Zq4V
+         uCXRBWbLEjWfhpkryV5d9gOqXXkYV2DM25NlrtQ+S3AXmhIb/kFAxCvBxRxLB+/1WHlj
+         0fYLKhg5evrqXbi6iYnM53Va058AM7NqF0f4aWfjIJgNrez/m0njoGag09lcXCPOg8he
+         zvUlghBoIrBaAR290XH3rVtmCfvrzxcsgPm9YdC6REXqZO+VMaXpbkJG2Hmiwii3o/Um
+         LGYQ==
+X-Received: by 10.180.87.198 with SMTP id ba6mr8646826wib.39.1442752482799;
+        Sun, 20 Sep 2015 05:34:42 -0700 (PDT)
+X-Google-Original-From: Dawa Ometto <d.l.a.ometto@uu.nl>
+X-Enigmail-Draft-Status: N1210
+Message-ID: <55FEA7E1.1070007@uu.nl>
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:38.0)
+ Gecko/20100101 Thunderbird/38.2.0
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-Subject: [oss-security] [SECURITY ADVISORY] curl use-after-free via shared cookies
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Date: Sun, 20 Sep 2015 14:34:41 +0200
+From: Dawa Ometto <d.ometto@gmail.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE Request: gollum information disclosure vulnerability
+To: oss-security@lists.openwall.com
 
-Use-after-free via shared cookies
-=================================
 
-Project cURL Security Advisory, November 2, 2016 -
-[Permalink](https://curl.haxx.se/docs/adv_20161102I.html)
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
 
-VULNERABILITY
--------------
+Hi,
 
-libcurl explicitly allows users to share cookies between multiple easy handles
-that are concurrently employed by different threads.
+A vulnerability has been found in the gollum wiki, which allows
+attackers to gain read access to arbitrary files on the system.
 
-When cookies to be sent to a server are collected, the matching function
-collects all cookies to send and the cookie lock is released immediately
-afterwards. That funcion however only returns a list with *references* back to
-the original strings for name, value, path and so on. Therefore, if another
-thread quickly takes the lock and frees one of the original cookie structs
-together with its strings, a use-after-free can occur and lead to information
-disclosure. Another thread can also replace the contents of the cookies from
-separate HTTP responses or API calls.
+Website: https://github.com/gollum/gollum
+Affected versions: 4.0.0 and earlier
+Patched version: 4.0.1
+Fix: update the gollum gem by running `gem update gollum`
 
-We are not aware of any exploit of this flaw.
+See this commit for the patch:
+https://github.com/gollum/gollum/commit/ce68a88293ce3b18c261312392ad33a88bb69ea1
 
-INFO
-----
+Please assign a CVE identifier.
 
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2016-8623 to this issue.
+Thanks in advance,
 
-AFFECTED VERSIONS
------------------
+Dawa Ometto
 
-This flaw exists in the following curl versions:
+-----BEGIN PGP SIGNATURE-----
+Comment: GPGTools - https://gpgtools.org
 
-- Affected versions: curl 7.10.7 to and including 7.50.3
-- Not affected versions: curl < 7.10.7 and curl >= 7.51.0
+iQEcBAEBCgAGBQJV/qfhAAoJEOZ/bElPm95rx8sIAN1//QHUPQEM3Dy3M4zTesTw
+72rBxilGPpsb/sCJunekbigW9gVubWrfqmpt7S7RZNW5PTUpspAlgp03Zz6mqhzX
+PFYAtF4OaQkumGAigI5Ae+4Zd2I0swkzWWi3G8Xhyze6POYQYy2rxsoOJCfV2l/I
+3dxKJL9bX23PCc2G3TyOoNr4ctYsjtHLLosUDuoyTYsRgoturUlf1+My+naV9Ccv
++JtRkeCCtZ+YsJmnnhxzWp/KtCAVju5xalfDbxPJdYeo40+P8crTjXHzLAfD7zra
+6IvdnqX9w3VtfKSWzDmoVIefFa6Mq8na7ojeOWAjKSnLoDimyqzAXkTrMPh13Ds=
+=DwwE
+-----END PGP SIGNATURE-----
 
-libcurl is used by many applications, but not always advertised as such!
-
-THE SOLUTION
-------------
-
-In version 7.51.0, the function returning the cookies make deep copies.
-
-A [patch for CVE-2016-8623](https://curl.haxx.se/CVE-2016-8623.patch) is
-available.
-
-RECOMMENDATIONS
----------------
-
-We suggest you take one of the following actions immediately, in order of
-preference:
-
-  A - Upgrade curl and libcurl to version 7.51.0
-
-  B - Apply the patch to your version and rebuild
-
-  C - Do not share cookies between threads
-
-TIME LINE
----------
-
-It was first reported to the curl project on September 23 by Cure53.
-
-We contacted distros@openwall on October 19.
-
-curl 7.51.0 was released on November 2 2016, coordinated with the publication
-of this advisory.
-
-CREDITS
--------
-
-his vulnerability was found during a Secure Open Source audit performed by
-Cure53.
-
--- 
-
-  / daniel.haxx.se
