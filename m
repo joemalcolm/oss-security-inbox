@@ -1,4 +1,9 @@
-Received: (qmail 32426 invoked by uid 550); 5 May 2026 17:29:25 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["7012" "Saturday" "19" "September" "2015" "22:28:11" "-0400" "Rich Felker" "dalias@libc.org" "<20150920022811.GJ17773@brightrain.aerifal.cx>" "157" "Re: [oss-security] s/party/hack like it's 1999" nil nil nil "9" "2015092002:28:11" "[oss-security] s/party/hack like it's 1999" (number mark "        dalias@libc. Sep 19  157/7012  " thread-indent "\"Re: [oss-security] s/party/hack like it's 1999\"\n") "<20150919233415.GA31305@openwall.com>" ("<20150917180319.1933609esmj3aaw4@webmail.alunos.dcc.fc.up.pt>" "<CAJWnFaP4QGvJxsJes7fmud787xG=vuh+AFiYPh79kiSLOe-rOA@mail.gmail.com>" "<20150919233415.GA31305@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 23830 invoked by uid 550); 20 Sep 2015 02:28:27 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,377 +11,178 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 23792 invoked from network); 20 Sep 2015 02:28:26 -0000
+Message-ID: <20150920022811.GJ17773@brightrain.aerifal.cx>
+References: <20150917180319.1933609esmj3aaw4@webmail.alunos.dcc.fc.up.pt>
+ <CAJWnFaP4QGvJxsJes7fmud787xG=vuh+AFiYPh79kiSLOe-rOA@mail.gmail.com>
+ <20150919233415.GA31305@openwall.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20150919233415.GA31305@openwall.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+Date: Sat, 19 Sep 2015 22:28:11 -0400
+From: Rich Felker <dalias@libc.org>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 25936 invoked from network); 5 May 2026 16:44:18 -0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=SuNTOXXawlpXzvDfkSHrdH+27bJbSfONBcG7cXRWBKoOQpR/UaMVEtuh17lBO2IE29hfNHw6NccQa2mp79irADt4jVMJiyneTokP9WPAwBCD0bXlqCObTLQEhTuPC6t/C3dGMtsoeyi3NTLstaiUwACJ9rgVyacfyYA/KUuzqn9HebqrwLTsEJEhfZ+0EmmS/cuF5lQt/AxP+yVJExAW82vSOINTASFv4cagtTxCNiAOhimUQ86Gnj3KY1Ur6A51Cphv8zYo3fIYdJXS/zuvMcdcctFIQA2aAY3Wtw2oZgNg7Lh5f4l4dDFjHajJVE7FB8mHXJy/zoVMO7XW/H7ojw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Ynhsbzn8lwyjN2q7Z0jEr6FdW3WWcGq3NqxCTrCzMHc=;
- b=ZFLLKPwEd3xDMiAismZ91X7Mva1dtvEjFL036VavRlD6AhAFhMZG7sbQca7grmynTS2bnqo1mLWWnWjlIg1SFwjcNX5O9LNlm0cvWw4/5zSuljIQIp2HgtRITsyyrueWVsI2WNvhI5RijCG8+Vf+DG1E1q40M9bP0Ig4glmBOf/CU7Di+FUIkirdy77Z5oClkaKP74d7Oi0u7oQO8mrY1/rmYVGaas02xzRzhV3QVYeqFeGqAThJ/j++UJWxu7ll3gjhSPYqT0J5UQGyQSoaG9fIPUHLnOnxtg+SuFwIguSqZS9MtTalLNbWagi3aLcnpouoPTqOk+R5v6o+RNArCw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=jvf.cc; dmarc=pass action=none header.from=jvf.cc; dkim=pass
- header.d=jvf.cc; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jvf.onmicrosoft.com;
- s=selector2-jvf-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Ynhsbzn8lwyjN2q7Z0jEr6FdW3WWcGq3NqxCTrCzMHc=;
- b=BDAsjhkxTfgdOFRX8MgS0of39iNMYKw01TT4Us1HcBdCuL4KP3trXth05OXaBwDyE5jPulKQiZjBFJGR6R+RQaLXvnAleV+yFLTS3ErWbIes8nzdJJ5R5iEfA97on/URBzZ/FWInat+KMKQ/2+lQqPhU9gf34uO/Lw7VVW79Ll0=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=jvf.cc;
-Message-ID: <b4337e36-bd0c-4fc9-b545-8102748fcd6a@jvf.cc>
-Date: Tue, 5 May 2026 09:44:03 -0700
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
+Sender: Rich Felker <dalias@aerifal.cx>
+Subject: Re: [oss-security] s/party/hack like it's 1999
 To: oss-security@lists.openwall.com
-From: Jay Faulkner <jay@jvf.cc>
-Autocrypt: addr=jay@jvf.cc; keydata=
- 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
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------CgzFj3kVzY1VM3DzYCO02Afq"
-X-ClientProxiedBy: MW4PR04CA0125.namprd04.prod.outlook.com
- (2603:10b6:303:84::10) To CO6PR19MB5340.namprd19.prod.outlook.com
- (2603:10b6:303:137::10)
-MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CO6PR19MB5340:EE_|DM6PR19MB3868:EE_
-X-MS-Office365-Filtering-Correlation-Id: af1764e4-8870-4b68-60fd-08deaac58442
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|19092799006|10070799003|1800799024|376014|366016|6049299003|4053099003|56012099003|18002099003;
-X-Microsoft-Antispam-Message-Info:
-	4MpwHapAYYh7DU57mo6kywjnakkIAflIWIkGEpMPX57dDvWDm9KHWNbY62zMRZnQefjtW1BHJS3wHxWaJG0pC9QDTMGYKAlfoq4rm8V6yYg17EL4jiTwHpRa/xzoEoeF7u/4fNksVitKzVHMV7YWG5f7d+/KcPpLdc81nJwuTd0ItevXuRu5M1OBXaPnrDHhdWe5cj/Dz2+VDoyVg7RhpBM3RO/69GtVVEjV/EjsaNHXBpeaU0mJUG3QkbsorwoMvkOL740vCtSPa6jN80+U6CzyNdZ9+ZoxfgUVxEb1U1MF+LDSVjtgChT3hRFS13gF2F2wFyUP5EPC35JrInUMYPKQ12OGrngHL6PciUDcuK9X6t5SauY7HY1km7TViA8dj6XmzT1FjXSSFHtzf5/AuUPvkXpNXU2rR4h/RqB9GTM0H+Jc//X8KUKpzP/RlBNsq4u2RRlGAm8/XfAira5QAOF6xemrQhE3AWaIquJAuz0pof2OZ/0lEBj8TZ3OH88iFQIO2K71Bh6fQduYhWqghnQhjey+IrbdSulw0TZ8+aGvkck6SvqXeLBbQ0UN2WsWPmpAIoGsK928np4/YvWlo/hTX+puMAPuMslM59IfxSVdv3T1RNQQcW9TYYGg759G6YSDxSjd6I7q7FqTjd1gKYyL7yGpS4ElP/wbmcFaJIiMTft7USX0neJP42CMA7YyKuRwAbXRzKwpcDhw6T2bnQ==
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CO6PR19MB5340.namprd19.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(19092799006)(10070799003)(1800799024)(376014)(366016)(6049299003)(4053099003)(56012099003)(18002099003);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?VHhlS2ZkUTlWWjcwSWdmcVR6UWNCVjh6ekRrazBCVW10bkpDN3pIclpiLzZC?=
- =?utf-8?B?WUpucVNUUGFTZ3dQa2pKSlRwTWtZSW9lTEd6dEJPV015NjVGSHhSQnA2WTFh?=
- =?utf-8?B?Z1J2ZktnbkdENTR0NzZ0M1ZvdXYzV3ZJZXJVODZPQmxodkhXTnFJa1R3dFhX?=
- =?utf-8?B?cWNKMng4bitzNXJnaXhKQ0puYnRzNWhMejV1Qzd1M1htWWNpTkFnTnRiNjBv?=
- =?utf-8?B?UCszUzlzelhPOFgzcWRzZ0xac1NpSWYxVW5WU3pqM0U2bXNLMm5lcHJYNWN5?=
- =?utf-8?B?ZXZJR2luVFdWT3h4bUJCKzRqUk14REJyb0NHVVprbzVBYVFmcHFXb1dTLzBm?=
- =?utf-8?B?Q3l3SkorOWc2dGhQMnhxZ0VlZGZmcFRQVUY2YWxLcjltR3RheXUrWkxLMFAr?=
- =?utf-8?B?MkFNa255d21aMHc2N0N6ZWxmeFFUZzRsaWduWTA4MUFUMnVkZDdqejJQOFNZ?=
- =?utf-8?B?RTBSUU5lUk1tTGpqbjNoSmtQck5aU0VnL1kwbTVZOWRkc2lDck91NlBvVHRr?=
- =?utf-8?B?R0ZUbkpTdnZTZWtGR0pZMGNRT0xjdGNFR3JjeXRBcTRuQjZ5cEVBd1lzMGRn?=
- =?utf-8?B?V1Q1WU9xOUk5dnVZVGFZVlJ4QUkyMmVzazg4T3RnNHBQTTF0eWt1Z2pzTFox?=
- =?utf-8?B?OUVHM3cwMEhxT2VuZnNmdU41VUNZYlVWZFZQdlkxd0FuT0hoS1NjOW9pZDRJ?=
- =?utf-8?B?dEs3ZEZrSlh5dXVrNytXVkc1UkJrY1k5VktmK2JsRFpqWkJLY3NhNnlFWEJi?=
- =?utf-8?B?UGgxcnNiTGc1Z0Q2TTJ4dWt3Y0NQOXdPblMwVS9pSUsrYkhvZHFGMVB4Wmhk?=
- =?utf-8?B?S1RwZkVLZkhLRWpUV0hoZUdoaGxxM1FIdGJ4eUZONGtuY1dRVU5hcVdWdzNG?=
- =?utf-8?B?ZzQ1R25uSUFxYVhCT1BTR2kxbFpKNkFYTG5qZ3V1T2tBQU9TTW0rYk9sak9X?=
- =?utf-8?B?ak1MeUVkSjRVNXBjSWxrYzVpUC9tVW5zM3pBN3BId0g2eTNTVFFDaVNGMUtj?=
- =?utf-8?B?Sk1CRUQ1dkF4UmJQWHFSNEFIZzFYUzhpRzhnRmQ3d1ZETk04RG5ka0o3Qits?=
- =?utf-8?B?d0pSd1Q1bmpOcXRGbFhZMDRYK1F4REFha3UvTkJwcGxWd2l2MWN1Z1BUZVYx?=
- =?utf-8?B?QmMzWSs1a21Tck96YTRTOVY1S2ljR0x5byt2N2dOZlRnSGZuVjRkZ2p0eURT?=
- =?utf-8?B?Z0x4clpyZ0d5Uk9wNTJxbFZ2Q210L0gzb0ZhaGdvSUl1Z3dxR1d2WGY3TXpu?=
- =?utf-8?B?eG12RmhDcG42dS9RTGFWcGl6VG5QUmxFU1NmVWZVZlc1Tk5QRndIZEJ2alcz?=
- =?utf-8?B?TmdoTllwNE02TDVlNE9HbFEweTRYcE80SEdPZ3kwVjNqSEwvN0NRWHVOSzhq?=
- =?utf-8?B?RmtjVlBvRXg4VzIvYkczZkFZVDRuNWp5clM1YXd2cVE2TDJUZittY2RHaFdO?=
- =?utf-8?B?NzN3dHBFU2pyTXVxSHVpYWF6QXhaamV1cXlKRlg4SDlPcGZ4WVpBWDZlb1lk?=
- =?utf-8?B?M2FHMnRnOXN6a3FiNFVQY2ZrNGFQQXFOeG8yUHJNREZFSUQ1dlAyMDBhYVlG?=
- =?utf-8?B?a3Y1V1NHSm1NbzczSmpmSnJDaVVPekg0MGk4Mmlldmx1Yy9qNlc0alc0N0xG?=
- =?utf-8?B?T2xCZ2dWbHUxdytVWTJCSGc3QUI0NzhYdXVIbVcwemJneU9wWnJhRk83enNh?=
- =?utf-8?B?UW4yMG40WmpsdXhFazRwMGxNcXl4ei9OTjV1RzYza1BXUXVsdlhIUEZ1bVdW?=
- =?utf-8?B?RlRzTzYrODdtUFRFV01BenB2ZVlhNmJsUFVjQUZSQzhVdmxCTXJMVHpJanA0?=
- =?utf-8?B?Y09uR1ZkTndLZm1NYnd2OEtzaHNtMzBXM1lOUnE0bjcvdkV5RG1ZclBnWWlj?=
- =?utf-8?B?S2ttK3lEcmNPQjdNTVBYQ3RTV3M0aTZpNkpEQ0hidE8rY2hKQTlqT2t0Z3Zk?=
- =?utf-8?B?aDBuU21lOTNqQmdHVEorSi8ycHRGK0JLNkd6SlJRMVVNR2JtYVNrdXN0dGtG?=
- =?utf-8?B?THI2elpETi84QWc1bU1jVkVWdFQ4NXFOdFJqbE8vQ25OZ1pmSE1qTWRSQ3J4?=
- =?utf-8?B?Qy9zeEQxdElKSmdSNTE5SEZmbjViVExObjlLRERqdTZFVGNIQm94OFB6RFVV?=
- =?utf-8?B?dFRXOHd0R0ZzUEp0WVg4ZGViVTVZeFhCbk1QWXNaQ0wzSHQvU0NXckdDQVZF?=
- =?utf-8?B?OG5GMnhJMzFVS2dzOUgvZUw4WUtQQkViT3RpZXUrRXg3R256MFBWblZFK2Vz?=
- =?utf-8?B?eHg4ZjNURjdaOTdhUGd1cEdLRTlIeklQY2V6NkIyUnF4TWFXOHZhcyt6TTJo?=
- =?utf-8?B?Q2J0TlJVc0d3dlY2UmFTWlMvTXJxTHV4NHJUcFMvY0xtOC9lRkU4TFZCdVRm?=
- =?utf-8?Q?9jwk8JiKoxK5c2wWubvaQJCFPTZjCWPqLDB0+?=
-X-OriginatorOrg: jvf.cc
-X-MS-Exchange-CrossTenant-Network-Message-Id: af1764e4-8870-4b68-60fd-08deaac58442
-X-MS-Exchange-CrossTenant-AuthSource: CO6PR19MB5340.namprd19.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 May 2026 16:44:03.9226
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3268b97a-2d09-45a8-9816-8dea1f44039e
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: Cvd7Yr6DwuVVGSUGyL0oSkh/P60heJsic9p0DiUn0f2OWZQlfjm4Sc31yQziPS3x
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR19MB3868
-Subject: [oss-security] [OSSA-2026-010] Ironic: Credential Forwarding to Arbitrary Endpoints
- via iDrac Configuration Molds Feature (CVE-2026-42997)
 
---------------CgzFj3kVzY1VM3DzYCO02Afq
-Content-Type: multipart/mixed; boundary="------------OZAnOhiSm4BsMpEf0pWmn4FF";
- protected-headers="v1"; hp="clear"
-Message-ID: <b4337e36-bd0c-4fc9-b545-8102748fcd6a@jvf.cc>
-Date: Tue, 5 May 2026 09:44:03 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
-To: oss-security@lists.openwall.com
-From: Jay Faulkner <jay@jvf.cc>
-Subject: [OSSA-2026-010] Ironic: Credential Forwarding to Arbitrary Endpoints
- via iDrac Configuration Molds Feature (CVE-2026-42997)
-Autocrypt: addr=jay@jvf.cc; keydata=
- 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
+On Sun, Sep 20, 2015 at 02:34:15AM +0300, Solar Designer wrote:
+> On Thu, Sep 17, 2015 at 12:33:28PM -0430, Manuel Gomez wrote:
+> > There is absolutely nothing wrong with `head`, `tail`, `more`, `curl`,
+> > `wget` or `diff`.
+> 
+> I agree that Federico's examples show nothing wrong with these tools.
+> 
+> However, out of these tools, I think we should test curl and wget for
+> their handling of metadata such as filenames and HTTP responses when
+> printing them (likely) to the terminal.  Federico's examples do not test
+> this (they explicitly request the remote file's content to be printed,
+> so having it printed verbatim and interpreted by the terminal, if any,
+> is expected behavior).
+> 
+> In processing of metadata, I think such tools that are commonly run on a
+> terminal should prevent character codes in the typical controls ranges
+> (ranges C0 and C1, and DEL character) from being sent to the terminal.
+> 
+> https://en.wikipedia.org/wiki/C0_and_C1_control_codes
+> 
+> What exactly such programs should do is debatable, though.  For example,
+> the ps command from Linux procps prints question marks.  Its detection
+> of control characters is locale and multibyte character aware, which
+> doesn't make me confident: it relies on libc and on locale data, neither
+> of which is directly related to a terminal one is using.  It's also more
 
---------------OZAnOhiSm4BsMpEf0pWmn4FF
-Content-Type: multipart/mixed; boundary="------------g7XORnGDbefvyeHTRBqgR6Xs"
+They're supposed to match; if they don't, this is user error. It would
+be nice if we could just assume everything is UTF-8, but doing that
+would actually break one case: where the user has properly configured
+both their locale and terminal for a non-UTF-8 encoding, just assuming
+UTF-8 would happily let C1 characters through. So trusting the locale
+really is the right thing to do here, IMO.
 
---------------g7XORnGDbefvyeHTRBqgR6Xs
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
+> complex (especially including libc and locale data), and hence poses a
+> higher risk of implementation bugs, than a direct check for C0 and C1
+> ranges and DEL would have been.  Maybe this complexity is a price to pay
+> for supporting arbitrary printable UTF-8, which includes codes in the C1
+> range in continuation bytes.
 
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PQ0KT1NTQS0y
-MDI2LTAxMDogQ3JlZGVudGlhbCBGb3J3YXJkaW5nIHRvIEFyYml0cmFyeSBFbmRwb2ludHMgdmlh
-IElyb25pYydzIA0KaWRyYWMgQ29uZmlndXJhdGlvbiBtb2xkcyBGZWF0dXJlDQo9PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09DQoNCjpEYXRlOiBNYXkgMDUs
-IDIwMjYNCjpDVkU6IENWRS0yMDI2LTQyOTk3DQoNCg0KQWZmZWN0cw0Kfn5+fn5+fg0KLSBJcm9u
-aWM6ID49MTcuMC4wIDwyNi4xLjYsID49MjcuMC4wIDwyOS4wLjUsID49MzAuMC4wIDwzMi4wLjEs
-ID49MzMuMC4wIA0KPDM1LjAuMQ0KDQoNCkRlc2NyaXB0aW9uDQp+fn5+fn5+fn5+fg0KRG1pdHJ5
-IFRhbnRzdXIgYW5kIFR1b21vIFRhbnNrYW5lbiBmcm9tIHRoZSBNZXRhbDMuaW8gU2VjdXJpdHkg
-VGVhbSANCnJlcG9ydGVkIGEgdnVsbmVyYWJpbGl0eSBpbiBJcm9uaWMncyBjb25maWd1cmF0aW9u
-IG1vbGQgaW1wb3J0IGNvZGUgZm9yIA0KaWRyYWMuIFdoZW4gaW1wb3J0aW5nIGEgY29uZmlndXJh
-dGlvbiBtb2xkLCBhIHVzZXIgaW52b2tpbmcgbW9sZHMgY2FuIA0KcmVxdWVzdCBhdXRob3JpemF0
-aW9uIHRvIGJlIHNlbnQgdG8gYSByZW1vdGUgZW5kcG9pbnQuIFRoZSBjcmVkZW50aWFsIA0KZm9y
-d2FyZGVkIGlzIGEgdGltZS1saW1pdGVkIEtleXN0b25lIHRva2VuICh3aGljaCBwcm92aWRlcyBh
-Y2Nlc3MgdG8gYWxsIA0KT3BlblN0YWNrIHNlcnZpY2VzIElyb25pYyBpcyBhdXRob3JpemVkIGZv
-cik7IG9yIGJhc2ljIGNyZWRlbnRpYWxzIA0KY29uZmlndXJlZCBmb3IgbW9sZHMgc3RvcmFnZS4N
-Ck9wZXJhdG9ycyBjaG9vc2UgdGhlIFVSTCBhbmQgdGhlIGF0dGFja2VyIGhhcyB0byBhbHJlYWR5
-IGJlIA0KYXV0aGVudGljYXRlZCB3aXRoIHBlcm1pc3Npb25zIHRvIGV4ZWN1dGUgY2xlYW4vZGVw
-bG95IHN0ZXBzLCBidXQgdGhlIA0KYXJiaXRyYXJ5IFVSTCBmb3IgdGhlIGF1dGhvcml6YXRpb24g
-cmVxdWVzdCBpcyB1c2VyLWNvbnRyb2xsZWQgYW5kIG5vdCANCnZhbGlkYXRlZCBieSBJcm9uaWMu
-DQoNCg0KDQpQYXRjaGVzDQp+fn5+fn5+DQotIGh0dHBzOi8vcmV2aWV3Lm9wZW5kZXYub3JnL2Mv
-b3BlbnN0YWNrL2lyb25pYy8rLzk4NjgxNyANCigyMDIzLjEvYW50ZWxvcGUgKHVubWFpbnRhaW5l
-ZCkpDQotIGh0dHBzOi8vcmV2aWV3Lm9wZW5kZXYub3JnL2Mvb3BlbnN0YWNrL2lyb25pYy8rLzk4
-NjgxNiAoMjAyNC4xL2NhcmFjYWwgDQoodW5tYWludGFpbmVkKSkNCi0gaHR0cHM6Ly9yZXZpZXcu
-b3BlbmRldi5vcmcvYy9vcGVuc3RhY2svaXJvbmljLysvOTg2ODE1ICgyMDI0LjIvZGFsbWF0aWFu
-KQ0KLSBodHRwczovL3Jldmlldy5vcGVuZGV2Lm9yZy9jL29wZW5zdGFjay9pcm9uaWMvKy85ODY3
-NjcgKDIwMjUuMS9lcG94eSkNCi0gaHR0cHM6Ly9yZXZpZXcub3BlbmRldi5vcmcvYy9vcGVuc3Rh
-Y2svaXJvbmljLysvOTg2NzM3ICgyMDI1LjIvZmxhbWluZ28pDQotIGh0dHBzOi8vcmV2aWV3Lm9w
-ZW5kZXYub3JnL2Mvb3BlbnN0YWNrL2lyb25pYy8rLzk4NjcyNSAoMjAyNi4xL2dhenBhY2hvKQ0K
-DQoNCkNyZWRpdHMNCn5+fn5+fn4NCi0gRG1pdHJ5IFRhbnRzdXIgZnJvbSBNZXRhbDMuaW8gU2Vj
-dXJpdHkgVGVhbQ0KLSBUdW9tbyBUYW5za2FuZW4gZnJvbSBNZXRhbDMuaW8gU2VjdXJpdHkgVGVh
-bQ0KDQoNClJlZmVyZW5jZXMNCn5+fn5+fn5+fn4NCi0gaHR0cHM6Ly9idWdzLmxhdW5jaHBhZC5u
-ZXQvaXJvbmljLytidWcvMjE0ODMxNw0KLSBodHRwOi8vY3ZlLm1pdHJlLm9yZy9jZ2ktYmluL2N2
-ZW5hbWUuY2dpP25hbWU9Q1ZFLTIwMjYtNDI5OTcNCg0KDQpOb3Rlcw0Kfn5+fn4NCi0gVGhlIG1v
-bGRzIGZlYXR1cmUgd2FzIGRlcHJlY2F0ZWQgaW4gdGhlIDIwMjQuMSAoQ2FyYWNhbCkgcmVsZWFz
-ZSBhbmQNCiDCoCBoYXMgYmVlbiByZW1vdmVkIGR1cmluZyBkZXZlbG9wbWVudCBvZiB0aGUgMjAy
-Ni4yIChIaWJpc2N1cykgcmVsZWFzZS4NCg0K
+"The C1 range in continuation bytes" is a complex concept that needs
+to be explained.
 
---------------g7XORnGDbefvyeHTRBqgR6Xs
-Content-Type: application/pgp-keys; name="OpenPGP_0x6B75D939B424C6D4.asc"
-Content-Disposition: attachment; filename="OpenPGP_0x6B75D939B424C6D4.asc"
-Content-Description: OpenPGP public key
-Content-Transfer-Encoding: quoted-printable
+Traditionally, the way terminals supported character sets with
+printable characters in the "C1 range" was by having an option
+(separate from character encoding, which the terminal often did not
+even know or care about) to disable processing of C1 characters and
+treat them as printable. This worked, but it was the wrong model, and
+precluded use of C1 in UTF-8.
 
------BEGIN PGP PUBLIC KEY BLOCK-----=0A=
-=0A=
-xsFNBGFpBPQBEACaRxGb+O+Ypgxi2gg3bfkxuejyTGUYJ3dwXkoFnZvaSeq7Nx6X=0A=
-4+vEd20x/9vjuwdbXB5w3Tb4N9oIAGUpukjzVX3rBZ9TqkvOiY5KpJf8lJVCJupp=0A=
-lfUkxurWEvwdcCv9KU7HyFSKcMdmFIOGPzbg4N/d2gF52HIKTQBorI0dMAoKsBXu=0A=
-Wfb1/rK+C8wcY3gecqLgrjEdOFsQETFFSUs8Egn3Z81DMoNucBVZWnz+p7R6nhlr=0A=
-Mt9gXNBEZWPFZihteE6EovP6BXSotdyBRmmxAOBCaZZsA4CIzZoK9cb84N6y1PQH=0A=
-AAl4W7wCoakiKByF9/0gCIIbYWgauJ5oD0kQTNgwNDcygQnTdrs7UQ6GUlaT4Cgf=0A=
-eRWydLmmv8LvJyZOqFQs+3DOUTagTYZqsarfBBQO9PaeZvKbz3s5Dsr5QCeOMIVy=0A=
-4Te4tNRNExut48cp+n31ZUARCAlQHAoKiswELCkOgnKzSEVJ8PEeIYP8Up5zoWfK=0A=
-4/SaqeVrY3ziKl8RdOGW2zW7WikfgWODIp5L6erTnT2xRGGcikDbShkGzOQCIkfm=0A=
-XPzp8HmSHumIEO002KzCMsRX8jQphEPtC1QXsAwDpyYMTPjxPIvVtTQbrtoJoYCV=0A=
-uzDiETsB9VWvNRXn687uvVaFL96aui0hLO79basRPiekRp33IlXuEaxVdQARAQAB=0A=
-zR5KYXkgRmF1bGtuZXIgPGpheWZAZ2VudG9vLm9yZz7CwZcEEwEIAEECGwMFCwkI=0A=
-BwICIgIGFQoJCAsCBBYCAwECHgcCF4AWIQS8XViawYtJi5aoT61rddk5tCTG1AUC=0A=
-aMs9igUJDAS+lgAKCRBrddk5tCTG1CQdD/47lPT8z3bbBxlu9zBu4kwDBvrN1wRA=0A=
-ARwAoKE02yKiWDkYt0XqNFuAeGK5gXt+nTqHDHVmHCvDsh13CHKiZL21ZxqX8I4z=0A=
-IvuqVfHdLJ36k161qUtn/vb78kmFNqITgGmU2TfcdRCGY8lgycRbr7Z0EGOIWNlD=0A=
-u0hzE7tU0JOY2lJSeBfvq7MAAuGTy3uL1dQCZmwf8tH2u02AprfATcVz0DfwPKRl=0A=
-E/Ku4cXnLTsje2QSz3SjF0tsbUhohLipfuI5yJQaCwILHzWrMv+bX+wzO4qoUale=0A=
-ozfiCuXwHaC5XqGL4XPrTHT4IzhuURtbf6PsMvnCDTTEntajvm1veZuH+ONMkq73=0A=
-Do56v1JOXJIvpCniXlLiBu3BehCZfRolG/aeF66hkYUF9kaugsXizqbjiQ8Lljjc=0A=
-+YfGGOip6+1bhWE7qFaD+JzpVkDgJfO3gEqZlHhJsWm3GpRIpFElXAC+vits5XVJ=0A=
-ccRikHkeHLBaoUk592yRtxOQ0hIwUy6/zWhVcbv05u79ofd5WfpC0vxy1YSbYYGN=0A=
-2BZL91aZKf97GXSNVTavbXQ8mhLTQbpL2ClF6k/KQISZV9629qkhVecbbS4H9W0A=0A=
-Ce3ivVZ+FhLRCQ85huJ81YrJcecDlBNN8Ytojq5ZIEht6KCsZVngsNAOW27yxNzt=0A=
-I3Dh/PfnO+MTas0ZSmF5IEZhdWxrbmVyIDxqYXlAanZmLmNjPsLBlAQTAQgAPgIb=0A=
-AwULCQgHAgYVCgkICwIEFgIDAQIeAQIXgBYhBLxdWJrBi0mLlqhPrWt12Tm0JMbU=0A=
-BQJoyz2KBQkMBL6WAAoJEGt12Tm0JMbUXfYP+QGRxf0ICu3BR44gj24keIyqPjvC=0A=
-5TUega/ioHR2db3KJSfWqij5El6gAJBEAY5HW04KkRv2ru2BOmdz2+5vA/FimM5/=0A=
-si4LC0MvokxZ0QUqUFZI5/UmHsog9pH+lAJPs2ObzCE3mY0g0RDtziqnIyZNpw7z=0A=
-sxP6Y3A4vl+tXAeUuZ6r88vbesEHdWy6w6dgwH5LvWGsPe9vPn/Lyo/nB+ITh5HK=0A=
-6xgjuuRldNL/iYBu6Ph89wUxrEYRwkIXd63RkzYcZLu+l+G2AnopCvMUAXJQn1JM=0A=
-DJkRjLHknVAvWUslFOO3M0Hhs+Wa0V6ACWu5VDCu3gEuIaSfFmsS07WmGeqACTHk=0A=
-8/ovUoxLYz7xydReuYYoz2g0FKoAywb2HOuwXt7+dfu+Zvj50UIIltf6wVv0cj+M=0A=
-hSPI7sCN9C2kx5RzItee5VUGS2fB+46YUukxUVNgSorLfFauxtRXlbGv5ZQr3esB=0A=
-4Ll2TpP5Wd/WxdztQG5SYH5+qeUVWEb9JVVMgx3VN+bpne2axHpBp1Mj3viKXR+s=0A=
-pudGPwtFj+imrZXmA0R848a1JQn5pBuCjXDK7CljNw2LQiZUdcIVMi1kmYYNEOSj=0A=
-iB/h3cMvF07gAkhZw/K8ZefqC+z2k6ZieVrlwMC5eoRcPyfbT22F5VxGj9o+ckjH=0A=
-isvo4o0fqpuKmT8swsGUBBMBCAA+FiEEvF1YmsGLSYuWqE+ta3XZObQkxtQFAmFp=0A=
-BPQCGwMFCQeEzgAFCwkIBwIGFQoJCAsCBBYCAwECHgECF4AACgkQa3XZObQkxtSX=0A=
-QQ//VwFbzIE2x79AhX3wHReYH+6UR0qe+QuTl0zd3vp1sKukkbU+i3J4eVHmVXdT=0A=
-I2rFE1WH9TbTaEBM3qZJgXsQEQ5+im+eyZFfZbGgZLJWyig3uKOogS0OrxOjRwjl=0A=
-DLN9Orcl4de/HA1zAVrLRV3zfg8ZMj6zXrv84L54lZ5e9C7mD5oS8Ge5enFrU9kE=0A=
-dHNjqzt1PCXCeA37/HRJoR+nzHmcSzJyMMxQdo0cgiaRHYyu7LOJFL5qR0jLEmZw=0A=
-Eulmd6fMeU4Tx5eMx4o6O3diTmGyeFs/UDGWn0qcMDkh9T00Qw1bLOv/yFrpCMjE=0A=
-yryR7hJ53HYtLqEkvn/7lClrp2BUsV8XjYqexnB6unr30/RduC6koXXUHAZpk/+m=0A=
-D0WEdShFNuiFlOn8BDjBvk5k6j2VlEO3uH0BhWUBfY+bahWiLgWUhupK2Wd8qLYb=0A=
-E9VDj5jvcKVt7qonBuguDY43aXyf7gnm3u1pprGuqTcWyRijHeLXLHNZg2fCUjQ0=0A=
-tdto/YblvNexrEDxjK7nzgmHR7KDTVFcjG91yrTrO2/hmREQSN5WWk50q6n5NLBS=0A=
-MWyDuzOxG0baOuKZrSCnMamFNjMPvAnCdqe1HoNq4b7Hb9FheqJulqQFLEhGN33K=0A=
-IummGYTjJBYnz4L7c1F0iqlvEVO7MEir+a63lMWh6wIarg3OwU0EYWkE9AEQALHc=0A=
-nXwEWn5WF3y47vkl4ASUisl1QHSlYrs1qlsBmqdbQzo5TOtupuGVk9G7jqo1J1Iu=0A=
-+ejI+uYCcU1jPYH5H+PJ9AK5qcM6MGniwJNaopHmvUgERwlUcxP99IH4LGS2npnX=0A=
-SxIrSYfYBXuDUW7vbW2Ksj5XfXlBMd/6PE4b5kljOABB9SWFw3eXJunaV7h2tLne=0A=
-wqFU/sbZHLhDkAER7vwlXyTMDrkPTCyOqfweFZcn2iRD52/LsoL4hlpcGZz/mSV/=0A=
-sQJBoiM5op+3NWKKe0V4RkJ+lgACQG4jzC5jyN4XOk48tQF4ZHqyy32O+HRH4xRX=0A=
-pOAmxiZzvXLPUqSmI+uNnjyO5tzFy8K/hzL/3YtXQyxVGFYtmtILSnQORO/a37or=0A=
-eb5RQm8jvvq7R+Id2/BmdekGcxQn5l6gn4+DVyp5EW/n7wXKz5bdt74OFk6RQafb=0A=
-24RHsNbJehIHWDuK2PO5FS6T3T5S2il2khGg2wu6xh5vXyWtB3eW1skdOWwt/M/H=0A=
-FinesaCkvHTUJwTKk6BnQUzpKHyZcGRuQ+pnT/5xJumi6AztsXU29wfyaoZK1o6f=0A=
-oRRk8ojpIVZIUZyR7cV2BXzewwKyv9HihGa+P4atcjPMsGhVh6cJXxKS1xKdfn8i=0A=
-BD7ngS1LIOhDKzjQrRD7Pz/Q0SxwYgYrz51AdH7tABEBAAHCwXwEGAEIACYCGwwW=0A=
-IQS8XViawYtJi5aoT61rddk5tCTG1AUCaMs9fQUJDAS+iQAKCRBrddk5tCTG1OiG=0A=
-D/0dV4IeXX4rBG++DPiW3ZZZU5tCZjrTUIhi6KNilESLvBB5ovrdOPgrJ21CKrQX=0A=
-D9RlLTl8c5OUUaYNP0cOUx97d01ZmfquIauJbXBXWC9XiDWoUEY2eJFfMmb0EW7m=0A=
-4WU/Ot2HjOX/8U8iWW59bL8ONyAg2J/fLaFqJtLkjtqZIeoUvHO+SC5p2EYfMwms=0A=
-xIZzmtvPtLclVRvFUuJIEz9vNLCAarxas+peQ+t2FbyMvrsPISxCZ4axGZ+P+FII=0A=
-FEfckeFwYJEsVeKhj52U05wvPrsZfJIGO4KZ97PsWTNggFUCXhiYkTPoYsXnv09F=0A=
-CDeum6tFM1yGmaD5siLWI8dZdJOIhrMstYDMRlHDoQPOcugRCVv/I0rtKJ1OFG4P=0A=
-Lqbx3aR1cKYyTkpG3GtkM6rSThYFx6N4UKVE9ncCXgjyOHXglWI1BnRqzd86prEd=0A=
-evSVpaasxZjJMta6LbC6PU5Vd/ETNcnJIVsf8zLCoHx7cTmDHHoAU3rELhq5vyWm=0A=
-EpPU3zf0EnbgGXnj+C71yAdmIj04fCt6d2vnM+0nHFL7S3BB18JMpwfJbs0PPair=0A=
-KVQwhPcEWmY6u8pI1J37vTG4MrABj1qZzKJ9SnkwRU1h6uVPdsom0dOzMl+arjW1=0A=
-yZEeXN3xGPq7s2ozyhrYR475/Pvk/G+B/HiUSR3sLybbUc7ATQRnx8pTAQgAvzTh=0A=
-wcbjjoTY/Y95MBW77xGoCVrv2H1Vm36liU18LVQ15RkgsDZv/sLXN9MmUc79Dazn=0A=
-0T0I4Q3po/Micd4ka++dFUGzY0yk+VyrNJG8ibtl0/a6kNInzqUPH52yGDPWu08Y=0A=
-1Y6NAYDBmo7ePqXncZeGevKFsOGtHPV83mRIwyGPN4QOk2h3xOZ72Y3wKrGdBUIT=0A=
-+rdetAngzRaqdqyZkzvKzPB6zvEDnJOost1BDZ9FMECAJ+7MnayYE3Ytq5m/+12R=0A=
-b4IUHsVbmi914wrvO2LJCN1hS+yCEazMhgkVXJ0f4wO+ISYAoGyrBrRZE1BplEjt=0A=
-aHB69QMCNqYMih7tTQARAQABwsKyBBgBCAAmAhsCFiEEvF1YmsGLSYuWqE+ta3XZ=0A=
-ObQkxtQFAmjLPX0FCQWl+SoBQMB0IAQZAQgAHRYhBLDzBOkQOEyJiV8Bvs1FRFIp=0A=
-C0VqBQJnx8pTAAoJEM1FRFIpC0VqxMQIAInaBNwQt7qPulrEE18uHf6RyZLAI3l/=0A=
-0n3r40Cd8S9NKjAu/bnHGu0memat5YZOhot7I2tvKlNHRzPTBV+yK1rhbZH8QCwV=0A=
-s/yksTL8kJhWNm/svXRDWYv4zImTwYqB+RPSwAd2eJnknSa5xY/gOr88JKZyjlYx=0A=
-ILyC9Dp7Vo0j9GaXhr796QOKsop4BqEew4HgIkY2+79WGb0BOfAiW2pa0PNf5rn6=0A=
-vTAdmoHDgpeJytyFPTaU5N2Zdhq9c4igUW7H7t3D3M9km+1yRCoNMywVZE1mypvF=0A=
-h8ibNttffwCNw4beaGd9ePmcu0RoepG2PBCuJ5/yJOhvKCM9zmwbU3EJEGt12Tm0=0A=
-JMbULzsP/3VLk57bYrsVgLHGB+IzmvZfM6cd6K1kSa0iE3tHFd2yDGLvQ5S8PaUJ=0A=
-LZGqI9nYX0l6XkRUalU7luPB8f/wlAGnLRIoq/lCnYhmrZzAHGOq7MdKw4poK6Yk=0A=
-3vXrxMyjR1aIeARQkNDGDRmnjBM8o+ldQj9LB/ra56T21A2nk/2LGsN7CjKSlQ0p=0A=
-WIgRHEVCsSCpBDlA2vegfU1P5l5aLZuu7gZewtx7EK4hBTZiI4oTSGe4QeEkX/yA=0A=
-uXkoRHA/kdcyl0Jb9M+Xa5fZ0/m6v5lM8wJtdkByVp6wWIr9KuQQmLdedJA4dU5a=0A=
-o+7OIAJB7vVUWDu1Z3HuUSAPZe1gru2hjdD7LsU6DfjI5GMqSKKYtvTfd5hWvEEX=0A=
-mEIAkIaN9SDjH7gqcb/0WCGJIVvmx6OtcU4ndMxrNEsHljF8sI0+bu4q8serswz7=0A=
-wU0SYIqcsgLVqJaEMMKUisxhz/jycJ1yikLR+TRr3srFTEnhgS1j/cDLOLzoK6Gj=0A=
-783ny5uWumnPPgzYPtOZMz7GSflsirdYPUW4TZEwPwBKutu1p11fPWPWj0pi3bZ1=0A=
-VDf3xur65x3TpbXjyhiaKZE50HR3mPHn2Sm/8Q+9ergC7QJ18Wh13aQqHoH8n4aP=0A=
-N9B6kDLrB1xhe5UKYi1shLeKXdjDO9SPgB/FPq/hue1yvwVEuNn2=0A=
-=3DtvZI=0A=
------END PGP PUBLIC KEY BLOCK-----=0A=
+The right way for a terminal to behave is to put the byte to character
+conversion step before the escape processing step. In this way,
+character sets like cp1252 or koi8-r that have printable characters in
+the "C1 range" naturally work just fine, because the bytes 80-9F _are
+not C1 character_ but rather bytes which correspond to other
+characters. Likewise, in UTF-8, the bytes 80-9F are not even
+characters at all, but the C1 characters do exist: they're represented
+by sequences C2 80 ... C2 9F, and when you perform the bytes to
+characters step first, you end up with U+0080 ... U+009F, which then
+perform their expected (and dangerous, as we will see) functions.
 
---------------g7XORnGDbefvyeHTRBqgR6Xs--
+It's easy to play with this on a UTF-8 terminal with the printf
+command, e.g.:
 
---------------OZAnOhiSm4BsMpEf0pWmn4FF--
+printf '\xc2\x9b1mhello\xc2\x9b0m\n'
 
---------------CgzFj3kVzY1VM3DzYCO02Afq
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature.asc"
+to see what happens. At least on GNU screen, the C1 characters are
+processed by default, but can be disabled per-window with the "c1 off"
+command or globally for new windows with "defc1 off". I haven't widely
+tested other terminals, but at least my uuterm also processes UTF-8 C1
+this way.
 
------BEGIN PGP SIGNATURE-----
+> Perhaps we can pay a lower code complexity price by checking for a UTF-8
+> locale and then validating the UTF-8 characters explicitly (assuming
+> that if a UTF-8 locale is chosen, the terminal is also set to UTF-8).
+> Maybe we need a generic code snippet or library of this sort?
 
-wsB5BAABCAAjFiEEsPME6RA4TImJXwG+zUVEUikLRWoFAmn6HlMFAwAAAAAACgkQzUVEUikLRWrc
-MAf9E4dCcnoWgSQsTS5ZOseXMuoL3siNU/L07lxDxY8Y9wVk79wCS7jdT8qfs1xNtzb+I7o49AT6
-UtIrPlni0RcxBVj84mCOjVpGs4UIcQZzVQcuxYfPLLwOIJWLrXUUVPjjhYu2U1wmsvCwhg/Kv+5W
-NY4eIk763KxSAIg7te5rwxwU9S7I/OEMNyKYfq78EeFnPkD3oId6K/H3jQpjk4pBm4LtbylZh4ew
-wGqVBC5PmhRvGiuqNvC1LZZngi6ktP+xCi9J46B6S3UV09ZWolKtvRwI4AwK0OEF/nP4S3r0mKxh
-34zmmrlmROZ+dgSoa4xqVzTyNvTpaMp0Mc+l3TqdEQ==
-=hkEM
------END PGP SIGNATURE-----
+As long as you're following the locale, mbrtowc+iswprint should
+suffice.
 
---------------CgzFj3kVzY1VM3DzYCO02Afq--
+> Then, besides terminal escapes there are UTF-8 control characters: BOM,
+> LRM, RLM (any others?)
+> 
+> https://en.wikipedia.org/wiki/Byte_order_mark
+> https://en.wikipedia.org/wiki/Left-to-right_mark
+> https://en.wikipedia.org/wiki/Right-to-left_mark
+
+I don't think bidi controls are a particularly high risk since most
+terminals I've used fail to support them properly, but this could
+change (or maybe already has changed on some of the more
+desktop-environment-type terminals people use these days). This should
+probably be checked.
+
+> With UTF-8, it might be different how to s/party/hack/ now than in 1999.
+
+Solar and I just discussed this and I believe there's at least one
+interesting attack that's possible even when applications have
+validated that they have printable data. It involves interleaving of
+data from multiple writers. Consider the following example:
+
+Writer 1: "©"
+Writer 2: "Û1m"
+
+As bytes, these are:
+
+Writer 1: C2 A9
+Writer 2: C3 9B 31 6D
+
+One possible interleaving (writes to terminals have _no_ atomicity at
+all) is:
+
+C3 C2 9B 31 6D A9
+
+This of course contails illegal sequences. The standard practice for
+processing the above sequence of bytes is to drop or replace truncated
+or illegal sequences. The exact manner in which this is done varies,
+but since most software tries to minimize data loss in the case of
+dropped or corrupt bytes, the usual interpretation is:
+
+[illegal C3] [valid C2 9B] [valid 31] [valid 6D] [illegal A9]
+
+Regardless of how the illegal sequences are dropped/replaced, then,
+the characters in the middle are:
+
+U+009B U+0031 U+006D
+
+or:
+
+CSI '1' 'm'
+
+If C1 characters are processed, that put your terminal in bold mode.
+
+Note that all that was needed for this to happen was for a stray C2
+byte from one writer to get injected just before the character-final
+9B byte of a multibyte character from another writer. I specifically
+chose my example so that both writers output data which is well-formed
+and printable UTF-8, but that was not necessary.
+
+Since I see no reasonable application-side mitigation for this, I
+think the right recommendation should be disabling C1 control codes in
+terminal emulators, at least in UTF-8 mode, but preferably just across
+the board. AFAIK nothing is using them. They don't even work reliably
+across all terminal emulators; many users have C1 disabled from the
+old days where that was the right way to use certain legacy 8-bit
+encodings, and some UTF-8 terminal emulators probably don't even
+support them at all.
+
+Note that when considering disabling C1 controls in screen or tmux,
+it's important that the attaching terminal also has them disabled.
+Otherwise screen/tmux will treat them as printable and pass them
+through to be interpreted by the attaching terminal, which is
+potentially even more dangerous. It would be nice to see an option in
+screen/tmux not to treat C1 as printable but rather filter out these
+characters, so that users running everything in screen/tmux don't have
+to worry about potentially dangerous settings on the terminal they
+attach from.
+
+Rich
