@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1476" "Wednesday" "26" "September" "2018" "10:39:00" "+0200" "Solar Designer" "solar@openwall.com" "<20180926083900.GA20977@openwall.com>" "28" "Re: [oss-security] bounties" nil nil nil "9" "2018092608:39:00" "[oss-security] bounties" (number mark "U       solar@openwa Sep 26   28/1476  " thread-indent "\"Re: [oss-security] bounties\"\n") "<CADCX+3Wsh6uMUsHgbfqwUYh7HjVac1TC7KsSK88nspxkBmXvJg@mail.gmail.com>" ("<CABejAM+hhgCipLzUycSV-RszcF6un45CncGFT9w0Yc69qNcbjQ@mail.gmail.com>" "<20180925191022.bqfadai7rfsu46nf@yuggoth.org>" "<CADCX+3Wsh6uMUsHgbfqwUYh7HjVac1TC7KsSK88nspxkBmXvJg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["668" "Monday" "21" "September" "2015" "21:02:27" "+0200" "Florian Weimer" "fw@deneb.enyo.de" "<87oagvppdo.fsf@mid.deneb.enyo.de>" "17" "Re: [oss-security] s/party/hack like it's 1999" nil nil nil "9" "2015092119:02:27" "[oss-security] s/party/hack like it's 1999" (number mark "        fw@deneb.eny Sep 21   17/668   " thread-indent "\"Re: [oss-security] s/party/hack like it's 1999\"\n") "<20150921165337.GA17627@kroah.com>" ("<20150917180319.1933609esmj3aaw4@webmail.alunos.dcc.fc.up.pt>" "<CAJWnFaP4QGvJxsJes7fmud787xG=vuh+AFiYPh79kiSLOe-rOA@mail.gmail.com>" "<20150919233415.GA31305@openwall.com>" "<20150920022811.GJ17773@brightrain.aerifal.cx>" "<20150920032631.GA2301@openwall.com>" "<20150921164346.GA11060@netbsd.org>" "<20150921165337.GA17627@kroah.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 13478 invoked by uid 550); 26 Sep 2018 08:39:31 -0000
+Received: (qmail 29941 invoked by uid 550); 21 Sep 2015 19:02:41 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,45 +11,38 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 29903 invoked from network); 21 Sep 2015 19:02:40 -0000
+References: <20150917180319.1933609esmj3aaw4@webmail.alunos.dcc.fc.up.pt>
+	<CAJWnFaP4QGvJxsJes7fmud787xG=vuh+AFiYPh79kiSLOe-rOA@mail.gmail.com>
+	<20150919233415.GA31305@openwall.com>
+	<20150920022811.GJ17773@brightrain.aerifal.cx>
+	<20150920032631.GA2301@openwall.com>
+	<20150921164346.GA11060@netbsd.org> <20150921165337.GA17627@kroah.com>
+In-Reply-To: <20150921165337.GA17627@kroah.com> (Greg KH's message of "Mon, 21
+	Sep 2015 09:53:37 -0700")
+Message-ID: <87oagvppdo.fsf@mid.deneb.enyo.de>
+MIME-Version: 1.0
+Content-Type: text/plain
+Date: Mon, 21 Sep 2015 21:02:27 +0200
+From: Florian Weimer <fw@deneb.enyo.de>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13320 invoked from network); 26 Sep 2018 08:39:14 -0000
-Date: Wed, 26 Sep 2018 10:39:00 +0200
-From: Solar Designer <solar@openwall.com>
+Subject: Re: [oss-security] s/party/hack like it's 1999
 To: oss-security@lists.openwall.com
-Message-ID: <20180926083900.GA20977@openwall.com>
-References: <CABejAM+hhgCipLzUycSV-RszcF6un45CncGFT9w0Yc69qNcbjQ@mail.gmail.com> <20180925191022.bqfadai7rfsu46nf@yuggoth.org> <CADCX+3Wsh6uMUsHgbfqwUYh7HjVac1TC7KsSK88nspxkBmXvJg@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CADCX+3Wsh6uMUsHgbfqwUYh7HjVac1TC7KsSK88nspxkBmXvJg@mail.gmail.com>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] bounties
 
-On Tue, Sep 25, 2018 at 06:55:16PM -0700, Justin Ferguson wrote:
-> Thus I am asking in a larger context about other peoples experiences
-> with such things,
+* Greg KH:
 
-OK.  You already did that, and people are free to share their experience
-(if on-topic for this list).  You also shared your experience (which
-happens to be only partially on-topic for this list).  As a moderator, I
-think that's enough contribution from you to this thread.
+> On Mon, Sep 21, 2015 at 04:43:46PM +0000, David Holland wrote:
+>> I have been arguing for years (but without success) that vt bomb
+>> injection needs to be blocked in the tty driver. This problem
+>> (corruption of concurrent UTF-8 streams) needs to be too, as a matter
+>> of correctness and not even security.
+>
+> How exactly would a tty driver "block" anything like this?
 
-> and while I would agree that this subject matter is
-> not particularly on-topic for the list, I would think that there
-> effectively are not unmoderated lists, no place to really ask this
-> question in a substantial manner despite the importance of it, and of
-> crowd-sourcing other peoples experiences would be concerning to an
-> industry as a whole.
+Avoiding in-band signaling in the first place. :-/
 
-While I also regret that there's no longer an unmoderated
-full-disclosure list, I understand why there is not.  Besides needing to
-filter out all the automated spam (which already makes the list
-technically moderated), all sorts of semi-on-topic crap ends up being
-posted to truly unmoderated lists like that - personal attacks, doxing
-(and when you ask for removal of that content from archives later, you
-sort of engage in moderation too), conspiracy theories and dubious facts
-(and good luck figuring out what's real and what's not), etc.  That
-said, you may host a new list like that, and I'd be happy to be able to
-redirect discussions that are unsuitable in here to there.
+> A tty driver never looks at the data stream in the kernel, as that
+> way lies madness...
 
-Alexander
+Surely there is a way to prevent two writes from interleaving?  For
+writes to files in O_APPEND mode, this already happens, doesn't it?
