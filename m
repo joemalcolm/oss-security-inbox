@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6024" "Thursday" "23" "February" "2017" "17:53:54" "+0100" "X41 D-Sec GmbH Advisories" "advisories@x41-dsec.de" "<46fe3e2c-05b5-f574-4bd6-eb62ad99b68c@x41-dsec.de>" "184" "[oss-security] Advisory X41-2017-004: Multiple Vulnerabilities in tnef" nil nil nil "2" "2017022316:53:54" "[oss-security] Advisory X41-2017-004: Multiple Vulnerabilities in tnef" (number mark "U       advisories@x Feb 23  184/6024  " thread-indent "\"[oss-security] Advisory X41-2017-004: Multiple Vulnerabilities in tnef\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1879" "Monday" "21" "September" "2015" "15:52:07" "+0200" "Stefan Cornelius" "scorneli@redhat.com" "<20150921155207.31b29845@redhat.com>" "46" "Re: [oss-security] Heap overflow and DoS in unzip 6.0" nil nil nil "9" "2015092113:52:07" "[oss-security] Heap overflow and DoS in unzip 6.0" (number mark "U       scorneli@red Sep 21   46/1879  " thread-indent "\"Re: [oss-security] Heap overflow and DoS in unzip 6.0\"\n") "<CACn5sdScL+e_x+QH4wS-cUKaEAMhSSy-jjeKufXu53j6-as_HA@mail.gmail.com>" ("<CACn5sdRQaUEHfde5QzqnOSv829baMEgDBCN7n8rzzrb+1s2uMw@mail.gmail.com>" "<20150915180357.7a0097a4@redhat.com>" "<CACn5sdScL+e_x+QH4wS-cUKaEAMhSSy-jjeKufXu53j6-as_HA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 32222 invoked by uid 550); 23 Feb 2017 17:23:36 -0000
+Received: (qmail 7911 invoked by uid 550); 21 Sep 2015 13:52:25 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,201 +12,64 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9604 invoked from network); 23 Feb 2017 16:55:13 -0000
-From: X41 D-Sec GmbH Advisories <advisories@x41-dsec.de>
+Received: (qmail 7886 invoked from network); 21 Sep 2015 13:52:24 -0000
+Date: Mon, 21 Sep 2015 15:52:07 +0200
+From: Stefan Cornelius <scorneli@redhat.com>
 To: oss-security@lists.openwall.com
-Organization: X41 D-Sec GmbH
-Message-ID: <46fe3e2c-05b5-f574-4bd6-eb62ad99b68c@x41-dsec.de>
-Date: Thu, 23 Feb 2017 17:53:54 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.7.1
+Message-ID: <20150921155207.31b29845@redhat.com>
+In-Reply-To: <CACn5sdScL+e_x+QH4wS-cUKaEAMhSSy-jjeKufXu53j6-as_HA@mail.gmail.com>
+References: <CACn5sdRQaUEHfde5QzqnOSv829baMEgDBCN7n8rzzrb+1s2uMw@mail.gmail.com>
+	<20150915180357.7a0097a4@redhat.com>
+	<CACn5sdScL+e_x+QH4wS-cUKaEAMhSSy-jjeKufXu53j6-as_HA@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="oDTPXL0oDqVeWW79NAjdUG3MoIrom7iVi"
-Subject: [oss-security] Advisory X41-2017-004: Multiple Vulnerabilities in tnef
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.26
+Subject: Re: [oss-security] Heap overflow and DoS in unzip 6.0
 
---oDTPXL0oDqVeWW79NAjdUG3MoIrom7iVi
-Content-Type: multipart/mixed; boundary="u6l3JJcOejQhsQasde24nPPJnQSXXO6bs";
- protected-headers="v1"
-From: X41 D-Sec GmbH Advisories <advisories@x41-dsec.de>
-To: oss-security@lists.openwall.com
-Message-ID: <46fe3e2c-05b5-f574-4bd6-eb62ad99b68c@x41-dsec.de>
-Subject: Advisory X41-2017-004: Multiple Vulnerabilities in tnef
+On Tue, 15 Sep 2015 13:10:17 -0300
+Gustavo Grieco <gustavo.grieco@gmail.com> wrote:
+> AFAIK, upstream is still working on the heap overflow issue (the DoS
+> is fixed in the last unzip beta). In concrete, they said:
+> 
+> "My initial (quick) analysis suggested that the basic problem is
+> corrupt (unrealistic) Extra-Field sizes, which UnZip does not check
+> well enough. I need to verify that that is the cause, and then figure
+> out what to do about it. Currently, if the program sees an Extra-Field
+> length of, say, 0x1007, it tends to believe it, even if that's bigger
+> than the actual archive member's length (or perhaps even bigger than
+> the whole archive). If it actually tries to read data which haven't
+> been read, then valgrind gets upset (with good reason). At least
+> that's what I believe so far."
+>
 
---u6l3JJcOejQhsQasde24nPPJnQSXXO6bs
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+I've tried to contact upstream via the contact form to share my
+analysis. So far, I've had no response, so I'll share it here:
 
+I believe the root cause for this issue is in extract.c around line
+1250:
+"""
+        if (G.lrec.compression_method == STORED) {
+            zusz_t csiz_decrypted = G.lrec.csize;
 
-X41 D-Sec GmbH Security Advisory: X41-2017-004
+            if (G.pInfo->encrypted)
+                csiz_decrypted -= 12; ##### BOOOOM 
+            if (G.lrec.ucsize != csiz_decrypted) {
+                Info(slide, 0x401, ((char *)slide,
+                  LoadFarStringSmall2(WrnStorUCSizCSizDiff),
+                  FnFilter1(G.filename),
+                  FmZofft(G.lrec.ucsize, NULL, "u"),
 
-Multiple Vulnerabilities in tnef
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D
+So there can be an integer overflow if csiz_decrypted is smaller than
+12: if (G.pInfo->encrypted)
+                csiz_decrypted -= 12;
+"""
 
-Overview
---------
-Confirmed Affected Versions: 1.4.12 and earlier
-Confirmed Patched Versions:
-Vendor: verdammelt
-Vendor URL: https://github.com/verdammelt/tnef/
-Vector: File
-Credit: X41 D-Sec GmbH, Eric Sesterhenn
-Status: Public
-Advisory-URL: https://www.x41-dsec.de/lab/advisories/x41-2017-004-tnef/
+Did anyone come to a similar conclusion? Also, the subsequent unzip
+processing after this underflow exposed a lot of other places where
+additional hardening may be a very good idea. Is somebody working on
+that?
 
-
-Summary and Impact
-------------------
-Multiple Integer Overflows, Type Confusions and Out of Band Reads and
-Writes have been discovered in tnef 1.4.12 and earlier. These could
-be exploited by tricking a user into opening a malicious winmail.dat file.
-
-
-Product Description
--------------------
-=46rom the Readme.md:
-TNEF is a program for unpacking MIME attachments of type
-"application/ms-tnef". This is a Microsoft only attachment. Due to the
-proliferation of Microsoft Outlook and Exchange mail servers, more and
-more mail is encapsulated into this format. The TNEF program allows one
-to unpack the attachments which were encapsulated into the TNEF
-attachment. Thus alleviating the need to use Microsoft Outlook to view
-the attachment. TNEF is mainly tested and used on GNU/Linux and CYGWIN
-systems. It 'should' work on other UNIX and UNIX-like systems.
-
-
-
-Integer Overflows in Memory Allocator
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Severity Rating: High
-Vector: Local
-CVE: Not yet assigned
-CVSS Score: 7.0
-CVSS Vector: CVSS:3.0/AV:L/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:H
-
-Summary and Impact
-------------------
-Several Integer Overflows, which can lead to Heap Overflows have been
-identified in the functions, which wrap memory allocation.
-
-Workarounds
------------
-None, X41 D-Sec GmbH recommends to update to the latest version.
-
-
-
-Type Confusion in src/tnef.c:parse_file()
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Severity Rating: High
-Vector: Local
-CVE: Not yet assigned
-CVSS Score: 7.0
-CVSS Vector: CVSS:3.0/AV:L/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:H
-
-Summary and Impact
-------------------
-Two type confusions have been identified in the parse_file() function.
-These might lead to invalid read and write operations, controlled by an
-attacker.
-
-Workarounds
------------
-None, X41 D-Sec GmbH recommends to update to the latest version.
-
-
-
-OOB Writes in src/mapi_attr.c:mapi_attr_read()
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Severity Rating: High
-Vector: Local
-CVE: Not yet assigned
-CVSS Score: High
-CVSS Vector: CVSS:3.0/AV:L/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:H
-
-Summary and Impact
-------------------
-Two OOB Writes have been identified in src/mapi_attr.c:mapi_attr_read().
-These might lead to invalid read and write operations, controlled by an
-attacker.
-
-Workarounds
------------
-None, X41 D-Sec GmbH recommends to update to the latest version.
-
-
-Type Confusion in src/file.c:file_add_mapi_attrs()
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Severity Rating: High
-Vector: Local
-CVE: Not yet assigned
-CVSS Score: 7.0
-CVSS Vector: CVSS:3.0/AV:L/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:H
-
-Summary and Impact
-------------------
-Four type confusions have been identified in the file_add_mapi_attrs()
-function. These might lead to invalid read and write operations,
-controlled by an attacker.
-
-Workarounds
------------
-None, X41 D-Sec GmbH recommends to update to the latest version.
-
-
-About X41 D-Sec GmbH
---------------------
-X41 D-Sec is a provider of application security services. We focus on
-application code reviews, design review and security testing. X41 D-Sec
-GmbH was founded in 2015 by Markus Vervier. We support customers in
-various industries such as finance, software development and public
-institutions.
-
-Timeline
---------
-2017-02-17	Issue found
-2017-02-19	Vendor contacted
-2017-02-20	CVE IDs requested
-2017-02-21	Vendor Reply
-2017-02-23	Vendor releases patched version
-2017-02-23	Advisory released
-
---=20
-X41 D-SEC GmbH, Dennewartstr. 25-27, D-52068 Aachen
-T: +49 241 9809418-0, Fax: -9
-Unternehmenssitz: Aachen, Amtsgericht Aachen: HRB19989
-Gesch=C3=A4ftsf=C3=BChrer: Markus Vervier
-
-
-
-
---u6l3JJcOejQhsQasde24nPPJnQSXXO6bs--
-
---oDTPXL0oDqVeWW79NAjdUG3MoIrom7iVi
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEEpwxVTgxAIcUvTugIo5Klpg50CxAFAlivE6IACgkQo5Klpg50
-CxCWSg/9EH5A9b2zWNtj5E5wE5Q/asS18QeG7TO45UK1eCXB8BCpCTx1aYd3uBEm
-ECLyYLvC7Ol7+ouq3UVaPayOAE/G12vOM6PsYuXeWZkZEn1zCAypjAMb7hSc3kwN
-Oh7TEJZNWioSwDx3hd9UoWoFW2wiCjKcMj+/NILkDwaZN6oTt9zysfTb3cUTuyet
-4N8txEMan5pGOMN20qWKp7J7VaRwqG8/NDKo0MnJllZzV5HjuIhkN1ZFLiHM65Q8
-r3Xpt3zeIyxAZq4zwK+wTcXFlYFE+d19s+JtD6pO4x+IrjGuDar8eTJ0F4NY0ISC
-/TYlSDmmLW9d7+EJ17IPWHxxAXPbRsVCYPhwrrwSG3tGb2D0NDaFoWQBkkL9+yf9
-J9KgBWgGOCkTj8OWeyoA2us6OMYh6JsJ1HiuSs2LgVtRymQz8Mz/eYWHz78hvIsm
-RLVcCWBS9QXGxNJgGcqhv/fnYUwze+0lhN6rE6lmPIqI0IgboyxfcjfQ1nXoOZlt
-xgG6jonoZ0aROolWRvQP51ZhkzeNpVWVk8JCshaLpIlYaUPxACpg2f0zb5E/UWVJ
-IDpBADp6nVry6XxFM2Y26dVF9sx3jK+n3qemTlBYvHcagYraeMVRpXiutyDobk14
-43pJ4MF0DYTgLZNqnfJk4dRZhD7yakP7W3uX7zJ+/r1XUSO6Q8Q=
-=xcka
------END PGP SIGNATURE-----
-
---oDTPXL0oDqVeWW79NAjdUG3MoIrom7iVi--
+Thanks,
+-- 
+Stefan Cornelius / Red Hat Product Security
