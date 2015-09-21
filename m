@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5363" "Thursday" "7" "April" "2016" "07:32:48" "+0000" "=?gb2312?B?zfXDtw==?=" "wangmei@360.cn" "<865AFA5E-6CB2-4631-99E2-70C321F2FF9D@360.cn>" "92" "[oss-security] CVE-2016-3619 libtiff: Out-of-bounds Read in the bmp2tiff tool" "^Date:" nil nil "4" "2016040707:32:48" "[oss-security] CVE-2016-3619 libtiff: Out-of-bounds Read in the bmp2tiff tool" (number mark "        wangmei@360. Apr  7   92/5363  " thread-indent "\"[oss-security] CVE-2016-3619 libtiff: Out-of-bounds Read in the bmp2tiff tool\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2186" "Monday" "21" "September" "2015" "18:05:53" "+0200" "Christian Hoffmann" "christian@hoffie.info" "<56002AE1.1030908@hoffie.info>" "68" "Re: [oss-security] CVE request: zarafa-autorespond suffers from a potential local privilege escalation" nil nil nil "9" "2015092116:05:53" "[oss-security] CVE request: zarafa-autorespond suffers from a potential local privilege escalation" (number mark "        christian@ho Sep 21   68/2186  " thread-indent "\"Re: [oss-security] CVE request: zarafa-autorespond suffers from a potential local privilege escalation\"\n") "<874miorksk.fsf@redhat.com>" ("<874miorksk.fsf@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 22304 invoked by uid 550); 7 Apr 2016 07:59:08 -0000
+Received: (qmail 11340 invoked by uid 550); 21 Sep 2015 16:06:47 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,113 +11,97 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3903 invoked from network); 7 Apr 2016 07:33:02 -0000
-Thread-Topic: CVE-2016-3619 libtiff: Out-of-bounds Read in the bmp2tiff tool
-Thread-Index: AQHRkJ+vBNlwdF79I0Sm48dGutPNww==
-Message-ID: <865AFA5E-6CB2-4631-99E2-70C321F2FF9D@360.cn>
-Accept-Language: zh-CN, en-US
-Content-Language: zh-CN
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-x-originating-ip: [10.18.25.162]
-Content-Type: multipart/alternative;
-	boundary="_000_865AFA5E6CB2463199E270C321F2FF9D360cn_"
+Received: (qmail 11322 invoked from network); 21 Sep 2015 16:06:47 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=hoffie.info;
+	s=sarchoo; t=1442851594;
+	bh=+mmfpqThXxwRt6RriJgrkvx4r7TbwG97UotItiuPOcU=;
+	h=Subject:To:References:From:Date:In-Reply-To;
+	b=Mc1eKehEdb3CwqQH1yY7/kSQLU4wdmokp8lmMZee69UZxKkLGo1rCL64+/G+XFe8e
+	 fbYUvjdZ3cElfE3C8g35P/bYgcy0bCRBgNAOt6XubTI/4iHkszNg4r9zRU9zZKw+Ai
+	 EEkjP3YItUKk4eo1flpMGkbcew24YGTi1LZ14v6w=
+References: <874miorksk.fsf@redhat.com>
+Openpgp: id=D8A734AC7557E8C1764238362C1F41CF361CB280
+X-Enigmail-Draft-Status: N1110
+Message-ID: <56002AE1.1030908@hoffie.info>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.2.0
 MIME-Version: 1.0
-Date: Thu, 7 Apr 2016 07:32:48 +0000
-From: =?gb2312?B?zfXDtw==?= <wangmei@360.cn>
+In-Reply-To: <874miorksk.fsf@redhat.com>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="atL41QUwCWURh6XHiFrVGgcKa10KkBndD"
+Date: Mon, 21 Sep 2015 18:05:53 +0200
+From: Christian Hoffmann <christian@hoffie.info>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE-2016-3619 libtiff: Out-of-bounds Read in the bmp2tiff tool
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Subject: Re: [oss-security] CVE request: zarafa-autorespond suffers from a
+ potential local privilege escalation
+To: oss-security@lists.openwall.com
 
---_000_865AFA5E6CB2463199E270C321F2FF9D360cn_
-Content-Type: text/plain; charset="gb2312"
-Content-Transfer-Encoding: base64
+--atL41QUwCWURh6XHiFrVGgcKa10KkBndD
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-RGV0YWlscw0KPT09PT09PQ0KDQpQcm9kdWN0OiBsaWJ0aWZmDQpBZmZlY3Rl
-ZCBWZXJzaW9uczogPD0gNC4wLjYNClZ1bG5lcmFiaWxpdHkgVHlwZTogT3V0
-LW9mLWJvdW5kcyBSZWFkDQpWZW5kb3IgVVJMOiBodHRwOi8vd3d3LmxpYnRp
-ZmYub3JnLw0KQ1ZFIElEOiBDVkUtMjAxNi0zNjE5DQpDcmVkaXQ6IE1laSBX
-YW5nIG9mIHRoZSBDbG91ZCBTZWN1cml0eSBUZWFtLCBRaWhvbyAzNjANCg0K
-SW50cm9kdWN0aW9uDQo9PT09PT09PT09PT0NCg0KIFdoZW4gYm1wMnRpZmYg
-ZnVuY3Rpb24gRHVtcE1vZGVFbmNvZGUgaGFuZGxlIG1hbGljaW91cyBibXAg
-ZmlsZSB3aXRoIHBhcmFtIC1jIG5vbmUgd2lsbCBjYXVzZSBPdXQtb2YtYm91
-bmRzIFJlYWQuIEFuIGF0dGFja2VyIGNvdWxkIGV4cGxvaXQgdGhpcyBpc3N1
-ZSB0byBjYXVzZSBhIGRlbmlhbCBvZiBzZXJ2aWNlLg0KDQoNCiBsaWJ0aWZm
-LW1hc3Rlci9saWJ0aWZmL3RpZl9kdW1wbW9kZS5jOjYyDQoNCjU5ICAgICAg
-ICAgICAgICAgICAgKiBkYXRhIGJ1ZmZlciB0byBhdm9pZCBleHRyYSBjb3B5
-Lg0KIDYwICAgICAgICAgICAgICAgICAgKi8NCiA2MSAgICAgICAgICAgICAg
-ICAgaWYgKHRpZi0+dGlmX3Jhd2NwICE9IHBwKQ0KIDYyICAgICAgICAgICAg
-ICAgICAgICAgICAgIF9USUZGbWVtY3B5KHRpZi0+dGlmX3Jhd2NwLCBwcCwg
-bik7DQogNjMgICAgICAgICAgICAgICAgIHRpZi0+dGlmX3Jhd2NwICs9IG47
-DQogNjQgICAgICAgICAgICAgICAgIHRpZi0+dGlmX3Jhd2NjICs9IG47DQog
-NjUgICAgICAgICAgICAgICAgIHBwICs9IG47DQogNjYgICAgICAgICAgICAg
-ICAgIGNjIC09IG47DQogNjcgICAgICAgICAgICAgICAgIGlmICh0aWYtPnRp
-Zl9yYXdjYyA+PSB0aWYtPnRpZl9yYXdkYXRhc2l6ZSAmJg0KIDY4ICAgICAg
-ICAgICAgICAgICAgICAgIVRJRkZGbHVzaERhdGExKHRpZikpDQogNjkgICAg
-ICAgICAgICAgICAgICAgICAgICAgcmV0dXJuICgwKTsNCg0KLi9ibXAydGlm
-ZiAgLWMgbm9uZSAgLi9zYW1wbGUvYm1wMnRpZmZfbm9uZS5ibXAgMS50aWYN
-Cg0KPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT0NCj09MTY2NDQ9PSBFUlJPUjogQWRk
-cmVzc1Nhbml0aXplcjogdW5rbm93bi1jcmFzaCBvbiBhZGRyZXNzIDB4N2Y2
-ZjdkYmRlODAwIGF0IHBjIDB4N2Y2ZjdhYjc3YjNmIGJwIDB4N2ZmYzgyMjY0
-ZDYwIHNwIDB4N2ZmYzgyMjY0NTA4DQpSRUFEIG9mIHNpemUgMzM0MjMzNiBh
-dCAweDdmNmY3ZGJkZTgwMCB0aHJlYWQgVDANCiAgICAjMCAweDdmNmY3YWI3
-N2IzZSAoL2xpYjY0L2xpYmFzYW4uc28uMCsweGViM2UpDQogICAgIzEgMHg0
-NWI5NmMgaW4gX1RJRkZtZW1jcHkgL2hvbWUvZGF6aHVhbmcvYXNhbi9saWJ0
-aWZmLW1hc3Rlci9saWJ0aWZmL3RpZl91bml4LmM6MzQwDQogICAgIzIgMHg0
-NjE0YzEgaW4gRHVtcE1vZGVFbmNvZGUgL2hvbWUvZGF6aHVhbmcvYXNhbi9s
-aWJ0aWZmLW1hc3Rlci9saWJ0aWZmL3RpZl9kdW1wbW9kZS5jOjYyDQogICAg
-IzMgMHg0NTY2NWUgaW4gVElGRldyaXRlU2NhbmxpbmUgL2hvbWUvZGF6aHVh
-bmcvYXNhbi9saWJ0aWZmLW1hc3Rlci9saWJ0aWZmL3RpZl93cml0ZS5jOjE3
-Mw0KICAgICM0IDB4NDA0NTBmIGluIG1haW4gL2hvbWUvZGF6aHVhbmcvYXNh
-bi9saWJ0aWZmLW1hc3Rlci90b29scy9ibXAydGlmZi5jOjc3NQ0KICAgICM1
-IDB4N2Y2ZjdhMmFlYWY0IGluIF9fbGliY19zdGFydF9tYWluICgvbGliNjQv
-bGliYy5zby42KzB4MjFhZjQpDQogICAgIzYgMHg0MDE5YTggaW4gX3N0YXJ0
-ICgvaG9tZS9kYXpodWFuZy9hc2FuL2xpYnRpZmYtbWFzdGVyL3Rvb2xzL2Jt
-cDJ0aWZmKzB4NDAxOWE4KQ0KMHg3ZjZmN2RjZWU4MDAgaXMgbG9jYXRlZCAw
-IGJ5dGVzIHRvIHRoZSByaWdodCBvZiAxMTE0MTEyLWJ5dGUgcmVnaW9uIFsw
-eDdmNmY3ZGJkZTgwMCwweDdmNmY3ZGNlZTgwMCkNCmFsbG9jYXRlZCBieSB0
-aHJlYWQgVDAgaGVyZToNCiAgICAjMCAweDdmNmY3YWI3ZjEyOSAoL2xpYjY0
-L2xpYmFzYW4uc28uMCsweDE2MTI5KQ0KICAgICMxIDB4NDViNzYxIGluIF9U
-SUZGbWFsbG9jIC9ob21lL2Rhemh1YW5nL2FzYW4vbGlidGlmZi1tYXN0ZXIv
-bGlidGlmZi90aWZfdW5peC5jOjMxNg0KICAgICMyIDB4NDAzN2MzIGluIG1h
-aW4gL2hvbWUvZGF6aHVhbmcvYXNhbi9saWJ0aWZmLW1hc3Rlci90b29scy9i
-bXAydGlmZi5jOjY3OA0KICAgICMzIDB4N2Y2ZjdhMmFlYWY0IGluIF9fbGli
-Y19zdGFydF9tYWluICgvbGliNjQvbGliYy5zby42KzB4MjFhZjQpDQpTVU1N
-QVJZOiBBZGRyZXNzU2FuaXRpemVyOiB1bmtub3duLWNyYXNoID8/OjAgPz8N
-ClNoYWRvdyBieXRlcyBhcm91bmQgdGhlIGJ1Z2d5IGFkZHJlc3M6DQogIDB4
-MGZlZTZmYjczY2IwOiBmYSBmYSBmYSBmYSBmYSBmYSBmYSBmYSBmYSBmYSBm
-YSBmYSBmYSBmYSBmYSBmYQ0KICAweDBmZWU2ZmI3M2NjMDogZmEgZmEgZmEg
-ZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmENCiAgMHgw
-ZmVlNmZiNzNjZDA6IGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZh
-IGZhIGZhIGZhIGZhIGZhDQogIDB4MGZlZTZmYjczY2UwOiBmYSBmYSBmYSBm
-YSBmYSBmYSBmYSBmYSBmYSBmYSBmYSBmYSBmYSBmYSBmYSBmYQ0KICAweDBm
-ZWU2ZmI3M2NmMDogZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEg
-ZmEgZmEgZmEgZmEgZmENCj0+MHgwZmVlNmZiNzNkMDA6WzAwXTAwIDAwIDAw
-IDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAwDQogIDB4MGZl
-ZTZmYjczZDEwOiAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAw
-MCAwMCAwMCAwMCAwMA0KICAweDBmZWU2ZmI3M2QyMDogMDAgMDAgMDAgMDAg
-MDAgMDAgMDAgMDAgMDAgMDAgMDAgMDAgMDAgMDAgMDAgMDANCiAgMHgwZmVl
-NmZiNzNkMzA6IDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAw
-IDAwIDAwIDAwIDAwDQogIDB4MGZlZTZmYjczZDQwOiAwMCAwMCAwMCAwMCAw
-MCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMA0KICAweDBmZWU2
-ZmI3M2Q1MDogMDAgMDAgMDAgMDAgMDAgMDAgMDAgMDAgMDAgMDAgMDAgMDAg
-MDAgMDAgMDAgMDANClNoYWRvdyBieXRlIGxlZ2VuZCAob25lIHNoYWRvdyBi
-eXRlIHJlcHJlc2VudHMgOCBhcHBsaWNhdGlvbiBieXRlcyk6DQogIEFkZHJl
-c3NhYmxlOiAgICAgICAgICAgMDANCiAgUGFydGlhbGx5IGFkZHJlc3NhYmxl
-OiAwMSAwMiAwMyAwNCAwNSAwNiAwNw0KICBIZWFwIGxlZnQgcmVkem9uZTog
-ICAgIGZhDQogIEhlYXAgcmlnaCByZWR6b25lOiAgICAgZmINCiAgRnJlZWQg
-SGVhcCByZWdpb246ICAgICBmZA0KICBTdGFjayBsZWZ0IHJlZHpvbmU6ICAg
-IGYxDQogIFN0YWNrIG1pZCByZWR6b25lOiAgICAgZjINCiAgU3RhY2sgcmln
-aHQgcmVkem9uZTogICBmMw0KICBTdGFjayBwYXJ0aWFsIHJlZHpvbmU6IGY0
-DQogIFN0YWNrIGFmdGVyIHJldHVybjogICAgZjUNCiAgU3RhY2sgdXNlIGFm
-dGVyIHNjb3BlOiBmOA0KICBHbG9iYWwgcmVkem9uZTogICAgICAgIGY5DQog
-IEdsb2JhbCBpbml0IG9yZGVyOiAgICAgZjYNCiAgUG9pc29uZWQgYnkgdXNl
-cjogICAgICBmNw0KICBBU2FuIGludGVybmFsOiAgICAgICAgIGZlDQo9PTE2
-NjQ0PT0gQUJPUlRJTkcNCg0KUmVmZXJlbmNlczoNClsxXSBodHRwOi8vd3d3
-LnJlbW90ZXNlbnNpbmcub3JnL2xpYnRpZmYvDQpbMl0gaHR0cDovL2J1Z3pp
-bGxhLm1hcHRvb2xzLm9yZy9idWdsaXN0LmNnaT9wcm9kdWN0PWxpYnRpZmYN
-Cg0KDQpUaGFuayB5b3UhDQpCZXN0IFJlZ2FyZHMsDQoNCg0KTWVpDQoNCg0K
-DQo=
+Hi Martin,
 
---_000_865AFA5E6CB2463199E270C321F2FF9D360cn_--
+as far as I know, this issue has already been assigned a CVE. I was
+about to post the number here, but as the internal ticket IDs do not
+match as I expected, I refrain from doing so in order to avoid confusion.
+
+I am not sure if Zarafa contacts are on this list, but I will forward
+this mail so that they can confirm/clarify publicly.
+
+So, for now, I don't think a new CVE should be assigned. Either Zarafa
+or me will send an update shortly.
+
+Kind regards,
+
+Christian
+
+
+On 09/21/2015 02:58 PM, Martin Prpic wrote:
+> Hi,
+>=20
+> The following bug was reported to Red Hat:
+>=20
+> https://bugzilla.redhat.com/show_bug.cgi?id=3D1263006
+>=20
+> The issue is noted as "zarafa-autorespond suffers from a potential local
+> privilege escalation" in the zarafa changelog:
+>=20
+> https://download.zarafa.com/community/beta/7.2/changelog-7.2.txt
+>=20
+> Patch:
+>=20
+> https://bugzilla.redhat.com/attachment.cgi?id=3D1073440&action=3Ddiff
+>=20
+> Can a CVE be assigned for this issue?
+>=20
+> Thanks!
+>=20
+
+
+
+--atL41QUwCWURh6XHiFrVGgcKa10KkBndD
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iQIcBAEBCAAGBQJWACrlAAoJECwfQc82HLKA0xEP/3lpSH+/MQl5o+6039ZcDi0B
+wWuOsKH5ffZP0ABiErVGMJ1a4k15Xq30tMJ5cgmSsRC+bCrCnoRm4W83YpZbXWzO
+85JairHlgiF8QYviKxOmzvzil3kJ+9jtfxbUpDEw1uWk7WYdtmsjLXvG2bLIf8Zx
+q+n82M4YsYk8EWbL1kS193Au+a5DBy4wWMJp23h2UBLUl7MzJMMeRIJvfZ2YZJyu
+8tQLGkdnNoxPHgJpwdb1WFxVeqFrMXiKskgvF6HIgHqmEV7w9LkWzwHO0U/kDUXA
+KClGLsZUzTAXRMH29Jp7Ya0gvxyDAuIz7TqnkqybZYvbNloeZKnA9i2rzxXWaALm
+H6brNtsg2Dgf6HJD4C9stbtcWyCkbb94MGfn+t6xf/KcCj9fqIx+F4BhTUPhYy3G
+vXBKHUvIkMZ0Nb2gGXTH0j+PBA3JUIJH6Rj1inthW0KB+mTEdT+lttZG3yxJZLFd
+JkjFBgbypNVvJ0lhMbtt+6l4WxoXbsvWxlB+WsxfNrHGDvHORfYOeT5Dc+Qg3h7a
+cbfIp8fhG/xDblCO4nYlodNyseFUaD9cJACLxp93SVq3IOD+7IR9D/skkZ7UVV80
+3Ao+4v6xzTfBjkEuLIS0y2UskbRfDCjhTBqvmIVMTe16Bhh0nZDdKixyv78BMrZC
+4fVeh+WWKnLOurqwfsc8
+=N9lr
+-----END PGP SIGNATURE-----
+
+--atL41QUwCWURh6XHiFrVGgcKa10KkBndD--
