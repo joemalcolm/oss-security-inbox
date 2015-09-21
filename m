@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1516" "Thursday" "16" "February" "2017" "21:16:16" "+0100" "Solar Designer" "solar@openwall.com" "<20170216201616.GA26922@openwall.com>" "34" "Re: [oss-security] MITRE is adding data intake to its CVE ID process" "^Date:" nil nil "2" "2017021620:16:16" "[oss-security] MITRE is adding data intake to its CVE ID process" (number mark "        solar@openwa Feb 16   34/1516  " thread-indent "\"Re: [oss-security] MITRE is adding data intake to its CVE ID process\"\n") "<b4e968ce-5baf-5bb5-8ccb-6dc07ed09ee8@redhat.com>" ("<e159bb7e5d3a4352be4cc9c401b0e081@imshyb02.MITRE.ORG>" "<b1a94becd9a94b39bd3c95c89bc05f1f@imshyb02.MITRE.ORG>" "<20170211233541.GA6315@openwall.com>" "<b4e968ce-5baf-5bb5-8ccb-6dc07ed09ee8@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1414" "Monday" "21" "September" "2015" "17:50:17" "+0200" "Salvatore Bonaccorso" "carnil@debian.org" "<20150921155017.GA31242@eldamar.local>" "34" "Re: [oss-security] CVE request: Use-after-free in Linux kernel with aufs mmap patch" nil nil nil "9" "2015092115:50:17" "[oss-security] CVE request: Use-after-free in Linux kernel with aufs mmap patch" (number mark "        carnil@debia Sep 21   34/1414  " thread-indent "\"Re: [oss-security] CVE request: Use-after-free in Linux kernel with aufs mmap patch\"\n") "<1441913190.17007.15.camel@decadent.org.uk>" ("<1441913190.17007.15.camel@decadent.org.uk>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 11313 invoked by uid 550); 16 Feb 2017 20:17:41 -0000
+Received: (qmail 14127 invoked by uid 550); 21 Sep 2015 15:50:31 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,51 +11,67 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 9700 invoked from network); 16 Feb 2017 20:16:23 -0000
-Message-ID: <20170216201616.GA26922@openwall.com>
-References: <e159bb7e5d3a4352be4cc9c401b0e081@imshyb02.MITRE.ORG> <b1a94becd9a94b39bd3c95c89bc05f1f@imshyb02.MITRE.ORG> <20170211233541.GA6315@openwall.com> <b4e968ce-5baf-5bb5-8ccb-6dc07ed09ee8@redhat.com>
-Mime-Version: 1.0
+Received: (qmail 14089 invoked from network); 21 Sep 2015 15:50:30 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=iYKN5lF0kPlU+n2Zdd87bQzMPVe4MMprJQVQ9li0vkQ=;
+        b=rsK3ZrCsRMVIHrIhLFe93SeADJWPE2Yf9IxVBdCc4MKM73zVgGEczs2FQVdJamxK9s
+         E1ahtiXi+YtZPD3p12m8UF1dJ1SFYg4hTD1fZo97SOoxfMZz54Fm+nv8buXQuyi4tXpo
+         E7q510Sz0f9HJ6YNZV4jRTCNyKR0RfH53e3xKYxbACDhbXQmXtLCB5lO+CtbSohU9ThZ
+         hMvKZ9NYldjSm17vDUDA7wEc/wTBQ1pCONUcxl7/dqYytr10tfvakOfIujcPayk4FH0w
+         cbvHqvDVVSjSokqwI1BOH7Wc6vi1XrZkxJC1MlD0pNov5hifaqkUWXHoIoppuO7oaRrx
+         XHCA==
+X-Received: by 10.194.209.240 with SMTP id mp16mr14960808wjc.100.1442850618955;
+        Mon, 21 Sep 2015 08:50:18 -0700 (PDT)
+Message-ID: <20150921155017.GA31242@eldamar.local>
+References: <1441913190.17007.15.camel@decadent.org.uk>
+MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <b4e968ce-5baf-5bb5-8ccb-6dc07ed09ee8@redhat.com>
-User-Agent: Mutt/1.4.2.3i
-Date: Thu, 16 Feb 2017 21:16:16 +0100
-From: Solar Designer <solar@openwall.com>
+In-Reply-To: <1441913190.17007.15.camel@decadent.org.uk>
+User-Agent: Mutt/1.5.24 (2015-08-30)
+Cc: sfjro@users.sourceforge.net
+Date: Mon, 21 Sep 2015 17:50:17 +0200
+From: Salvatore Bonaccorso <carnil@debian.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] MITRE is adding data intake to its CVE ID process
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Subject: Re: [oss-security] CVE request: Use-after-free in Linux kernel with
+ aufs mmap patch
 To: oss-security@lists.openwall.com
 
-On Thu, Feb 16, 2017 at 03:16:45PM -0200, Fabio Olive Leite wrote:
-> On 02/11/2017 09:35 PM, Solar Designer wrote:
-> >> C5. I want MITRE to send the https://cveform.mitre.org form data, and
-> >> the CVE ID, to the oss-security list at the same time that these are
-> >> sent to the requester.
-> >>
-> >> R5. We have had internal discussions within MITRE about this. We are
-> >> able to implement this easily if the community requires this approach.
-> >> At the moment, we are expecting the requester to resend this
-> >> information to oss-security once they accept their CVE ID assignment.
-> > 
-> > MITRE - can you please implement that, and we'll see how it goes and
-> > whether we need it adjusted or possibly discontinued if things go wrong
-> > or if there's opposition (so far, there's almost none)?
+Hi
+
+On Thu, Sep 10, 2015 at 08:26:30PM +0100, Ben Hutchings wrote:
+> The aufs (Advanced Union Filesystem) project provides an optional patch
+> for the Linux kernel, called either aufs3-mmap.patch or
+> aufs4-mmap.patch, which is needed to ensure correct behaviour of
+> memory-mapped files from an aufs mount.
 > 
-> Was there any response from Mitre to this request?  I believe a lot of
-> people would feel better if they confirmed they will do it.
+> Each memory mapping (vma) holds a reference to the file that is mapped.
+> This patch makes it also hold a reference to the virtual file on the
+> union mount through which the file was found, where applicable.
+> 
+> In two functions, madvise_remove() and sys_msync(), it is necessary to
+> take an extra reference to the mapped file before unlocking the current
+> memory management state, as the vma may be freed after that point.
+> Unfortunately the aufs patch introduces later uses of the vma, resulting
+> in a potential use-after-free.  This is certainly exploitable for a
+> minor denial of service (BUG in process context, so the task can't be
+> cleaned up properly but the system does not panic) but might also be
+> usable for privilege escalation.
+> 
+> I posted a patch here that works for me:
+> http://sourceforge.net/p/aufs/mailman/message/34449209/
+> 
+> Please assign a CVE ID to this.
 
-I saw no response from MITRE.
+Adding MITRE's CVE assignment team to CC.
 
-Kurt, who is not with MITRE but who presumably knows what he's saying,
-implied it'd be non-trivial for MITRE to separate issues in open source
-vs. other software:
+Can you assign a CVE for this issue?
+http://www.openwall.com/lists/oss-security/2015/09/18/10 confirms that
+Ben Hutchins' patch fixes the issue.
 
-http://www.openwall.com/lists/oss-security/2017/02/12/2
-
-"We could also have the MITRE CVE ID feed new stuff into oss-security but it
-would include non open source stuff."
-
-MITRE - is this difficulty the reason for the lack of response so far?
-If so, should we consider workarounds such as setting up another mailing
-list to which all assigned CVE IDs would be posted?
-
-Alexander
+Regards,
+Salvatore
