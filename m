@@ -1,4 +1,9 @@
-Received: (qmail 26299 invoked by uid 550); 7 Mar 2026 14:41:47 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["494" "Tuesday" "22" "September" "2015" "15:09:21" "+0800" "Gengjia Chen" "chengjia4574@gmail.com" "<CAAseMr5f2d-v8YxATJ9cE6uMdJ68Cj4QDdW3v+JpUFgo_gDV4Q@mail.gmail.com>" "27" "[oss-security] CVE Request: Arm Mali gpu driver Dos vulnerability" nil nil nil "9" "2015092207:09:21" "[oss-security] CVE Request: Arm Mali gpu driver Dos vulnerability" (number mark "        chengjia4574 Sep 22   27/494   " thread-indent "\"[oss-security] CVE Request: Arm Mali gpu driver Dos vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 3195 invoked by uid 550); 22 Sep 2015 13:16:57 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,104 +11,53 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 3796 invoked from network); 6 Mar 2026 23:18:16 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=debian.org;
-	s=smtpauto.stravinsky; h=X-Debian-User:In-Reply-To:Content-Transfer-Encoding:
-	Content-Type:MIME-Version:References:Message-ID:Subject:To:From:Date:Reply-To
-	:Cc:Content-ID:Content-Description;
-	bh=8tp4oIA3nuTkN1lwksMzfO/9hv7HpUsThqS61BgTtC4=; b=LaPAItzlcRoFYpTNMi9veD6fUk
-	0h56eYa77iX/1bfO+H6GnTg8iJIMGYMvKcaESmSJqOAoCC2YyQIrpjXT3FlDd7GGZtXa8CLqDas/K
-	YcUW8npL+8ML/fprAZwrQRLW2s4tHGcYt5TJIvLZ06KM8y4fBfPydvc0dzXe14/kATfOUkU6YnT1d
-	eC3Fxb7jR/JZHLBSeEf1lXN0etaUivJgi4tAtJmNYLnhAbmrYJDIzeOALFMQ2LoU8W/OdRIChUnx9
-	IeIdyOzHngKQ5HFYSObiltVkT61W9/7JSMGP9KswtUNZS195ru0Yqys7/7n3QfapIzeh4j6Ix2JXT
-	DA63Ckww==;
-Date: Sat, 7 Mar 2026 00:17:55 +0100
-From: Salvatore Bonaccorso <carnil@debian.org>
-To: Guillem Jover <guillem@debian.org>, Solar Designer <solar@openwall.com>,
-	Ron Ben Yizhak <ron.benyizhak@safebreach.com>,
-	Justin Swartz <justin.swartz@risingedge.co.za>,
-	bug-inetutils@gnu.org, oss-security@lists.openwall.com,
-	simon@josefsson.org, auerswal@unix-ag.uni-kl.de
-Message-ID: <aatgo8pqaI-4IOMo@eldamar.lan>
-References: <CAB1hGqQwnSzEqtrefwqAxD+rWGu_EXVDmu-btMrNYqMzkzc9Kw@mail.gmail.com>
- <20260206172730.GA12303@unix-ag.uni-kl.de>
- <877bso8mhf.fsf@josefsson.org>
- <20260224011702.27987-1-justin.swartz@risingedge.co.za>
- <CAB1hGqSJPOQwc8h7g4u4WXjtDSupwkA8HjzEyU2gzbL5uavneg@mail.gmail.com>
- <aaGJlbbLS7cp0H-i@thunder.hadrons.org>
- <20260306151649.GB16746@openwall.com>
- <aar1K4kcGXpw_UGc@thunder.hadrons.org>
+Received: (qmail 28428 invoked from network); 22 Sep 2015 07:09:33 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=HMqSl6yzHTi/ICKMY9eOFTDwb2RfOSd46bgCKO5hbGs=;
+        b=cXtEnZ9qEwVJgeZuyGd6wsxdL0FKlUBSL89gK5RUN616kJUJ8pc//98V3yPYBgvUhF
+         G+QrZfDXdf92ouTHn4z7Kr2lW+qKWbI26mnqhXlsuzNySiSZs8HbPmthaEYAmdxn+fEw
+         tD3WmJTo3YjaIDUHTKzwt2sVIwpfzuwIZKbPnzBmGJncfQt8AkF4JDjTIgZb6NxkeYZ3
+         5fKjcYe7Bg++dZtvu426mf22i8HKIy9uaJUn6z5RgLtpgN6hsUaVOk+vlt4xZxKEQ0PN
+         628ZB1ftxwgxKI3KII4FmratpcWtQ2tR0/bBPjofDELHIJfF2dsATFXzFHWgMb4xo8v3
+         5nzg==
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <aar1K4kcGXpw_UGc@thunder.hadrons.org>
-X-Debian-User: carnil
-Subject: Re: [oss-security] CVE-2026-28372: Telnetd Vulnerability Report
+X-Received: by 10.25.19.193 with SMTP id 62mr2279693lft.68.1442905761516; Tue,
+ 22 Sep 2015 00:09:21 -0700 (PDT)
+Message-ID: <CAAseMr5f2d-v8YxATJ9cE6uMdJ68Cj4QDdW3v+JpUFgo_gDV4Q@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=001a114069e25c186e052050ade2
+Date: Tue, 22 Sep 2015 15:09:21 +0800
+From: Gengjia Chen <chengjia4574@gmail.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE Request: Arm Mali gpu driver Dos vulnerability
+To: oss-security@lists.openwall.com, cve-assign@mitre.org, 
+	jive-820703416-dd0-1swlb2-7wq@community.mx.arm.com
 
-Hi,
+--001a114069e25c186e052050ade2
+Content-Type: text/plain; charset=UTF-8
 
-On Fri, Mar 06, 2026 at 04:39:23PM +0100, Guillem Jover wrote:
-> Hi!
-> 
-> On Fri, 2026-03-06 at 16:16:49 +0100, Solar Designer wrote:
-> > On Fri, Feb 27, 2026 at 01:09:57PM +0100, Guillem Jover wrote:
-> > > On Tue, 2026-02-24 at 11:57:34 +0200, Ron Ben Yizhak wrote:
-> > > > I’d like to ensure we follow the standard CVE process here. Standard
-> > > > practice dictates that a CVE is issued per individual fix. Generally, once
-> > > > a fix is merged and released, it is assigned its own CVE. Even if that fix
-> > > > is later bypassed, the original merge stands as a unique event in the
-> > > > codebase, meaning we should issue two separate CVEs rather than grouping
-> > > > them.
-> > > 
-> > > Salvatore Bonaccorso from the Debian Security Team got a CVE assigned
-> > > for this, see <https://www.cve.org/CVERecord?id=CVE-2026-28372>. I'll
-> > > update the Debian packaging on the next upload to point to that.
-> > 
-> > The CVE description says:
-> > 
-> > "telnetd in GNU inetutils through 2.7 allows privilege escalation that
-> > can be exploited by abusing systemd service credentials support added to
-> > the login(1) implementation of util-linux in release 2.40. This is
-> > related to client control over the CREDENTIALS_DIRECTORY environment
-> > variable, and requires an unprivileged local user to create a
-> > login.noauth file."
-> > 
-> > So is this CVE only for the attack vector reported by Ron Ben Yizhak,
-> > and not also for the other attack vector and more general issue reported
-> > by Justin Swartz?
-> > 
-> > If so, are you going to assign a second CVE for the more general issue?
-> 
-> I'm not part of the Debian Security Team (I just maintain the inetutils
-> package in Debian), but I think they assigned a CVE because there didn't
-> seem to be one coming from upstream. I guess the expectation would be
-> that if there's a new CVE to be assigned that would be handled by
-> upstream, but if it's needed and it's not forthcoming they might assign
-> another one? (Although the easier way forward would be to reuse the
-> existing one, and issue an update for the DSA.)
+Hello,
 
-I just need to clarify one thing here: The CVE was not assigned by the
-Debian CNA, but as there was no CVE assigned by the issue reported by
-Ron, I requested one from MITRE. There was none assigned in time when
-we released the DSA, and at that point TTBOMK the more general
-issue/root cause indication by Justin Swartz was not known. So the CVE
-request to MITRE was done specifically as for the issue found by Ron.
+The lastest gpu driver ARM MALI (used in many android devices) has a
+denial of service vulnerability which can be triggered by any
+privilege users
 
-Later, after the DSA release on our end, the CVE got assigned.
 
-This is why
-https://lists.debian.org/debian-security-announce/2026/msg00053.html
-does not mention any CVE.
 
-So in short: The CVE request to mitre was back then done specific to
-the issue as it is described in the CVE description, specific to
-CREDENTIALS_DIRECTORY environment variable passing to login(1).
+Code Download:
 
-So I think just another CVE should be requested for the more general
-issue.
 
-Regards,
-Salvatore
+http://malideveloper.arm.com/resources/drivers/open-source-mali-gpus-linux-kernel-device-drivers/
+
+Detail Info:http://community.arm.com/thread/8963
+
+
+Could a CVE please be assigned to this issue?
+
+Thanks,
+
+
+jiayy
+
+--001a114069e25c186e052050ade2--
