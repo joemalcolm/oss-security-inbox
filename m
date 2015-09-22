@@ -1,4 +1,9 @@
-Received: (qmail 31756 invoked by uid 550); 22 Dec 2023 22:33:59 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1813" "Tuesday" "22" "September" "2015" "16:55:55" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150922205555.6C564B2E1B1@smtpvbsrv1.mitre.org>" "42" "[oss-security] Re: CVE Request: Plone Unauthorized user creation" nil nil nil "9" "2015092220:55:55" "[oss-security] Re: CVE Request: Plone Unauthorized user creation" (number mark "        cve-assign@m Sep 22   42/1813  " thread-indent "\"[oss-security] Re: CVE Request: Plone Unauthorized user creation\"\n") "<CAL8hw9HF3ohJHgGrBUgV2Z5RPHADf6UgDjOD7o2iEhmkf2XZWA@mail.gmail.com>" ("<CAL8hw9HF3ohJHgGrBUgV2Z5RPHADf6UgDjOD7o2iEhmkf2XZWA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 32050 invoked by uid 550); 22 Sep 2015 20:56:07 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,54 +11,55 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 32032 invoked from network); 22 Sep 2015 20:56:07 -0000
+In-Reply-To: <CAL8hw9HF3ohJHgGrBUgV2Z5RPHADf6UgDjOD7o2iEhmkf2XZWA@mail.gmail.com>
+Message-Id: <20150922205555.6C564B2E1B1@smtpvbsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Tue, 22 Sep 2015 16:55:55 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30413 invoked from network); 22 Dec 2023 18:43:08 -0000
-Authentication-Results: mail.gathman.org; iprev=pass policy.iprev="2001:470:8:809::1010" (mail.gathman.org); auth=pass (CRAM-MD5 sslbits=256) smtp.auth=stuart
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gathman.org; 
- i=@gathman.org; q=dns/txt; s=default; t=1703270580; 
- h=date : from : to : subject : in-reply-to : message-id : 
- references : mime-version : content-type : date : from : 
- subject; bh=ReP1aSWk20XysLeGfrDQzu1GC9TPnO9TASe7dS9TLj8=; 
- b=HWf6D+4oQ6GDEZMAAn3zhUradXH2s+islc6vil9A+WpLK8OZJUcQdtLp
- unLiLn+BWK8nraLt+8f4wFl+tYraypbOx80ZZU5Tsl9c0hWAr6WcXnPYU3
- qZJAq740b1hVplnWqQgSRvAO1uxv6QYvZzkZqOmTwuxzUoEC9tl0/KGq4=
-Date: Fri, 22 Dec 2023 13:42:49 -0500 (EST)
-From: Stuart D Gathman <stuart@gathman.org>
-To: oss-security@lists.openwall.com
-In-Reply-To: <CAN_LGv2BhL40uhEk0TdYaYmd9zodSS-UJjWH5xSdLZWSoDFUMw@mail.gmail.com>
-Message-ID: <72b7513c-c471-1c8f-cbdb-574536d18ec4@gathman.org>
-References: <20231221143630.GD14101@suse.de> <20231221144656.GA40693@veps.esmtp.org> <20231222104647.GH14101@suse.de> <ZYVufT0sq16Z-M43@symphytum.spacehopper.org> <20231222121134.GI14101@suse.de> <20231222150438.GA13989@unix-ag.uni-kl.de>
- <CAHjsZGbiZYGug2L04iZ+VEmMg-pdfKyKOGdcSeCLnsZYd0Vm2Q@mail.gmail.com> <CAN_LGv2BhL40uhEk0TdYaYmd9zodSS-UJjWH5xSdLZWSoDFUMw@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Subject: Re: [oss-security] Re: New SMTP smuggling attack
+Subject: [oss-security] Re: CVE Request: Plone Unauthorized user creation
+To: nathan.van.gheem@plone.org
 
-On Sat, 23 Dec 2023, Alexander E. Patrakov wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
->> I'm trying to make sense of it - where's the compromise of the
->> Confidentiality, Integrity or Availability of the affected mail
->> servers?
->>
->
-> The integrity of the sender's identity, as a minimum, is compromised
-> here. Normally, when relaying mail, servers add a "Received:" header
-> that specifies where they received the connection from. This allows
-> tracking down the true origin of the message. The smuggled message
-> does not have such a header and thus misrepresents the vulnerable
-> relay as the ultimate sender. Additionally, if the relay has
-> destination-based deny lists that deny some but not all addresses on
-> the destination domain, they are sidestepped.
+> https://plone.org/security/20150910/anonymous-is-able-to-create-plone-members
+> https://github.com/zopefoundation/Products.CMFCore/commit/e1d981bfa14b664317285f0f36498f4be4a23406
 
-This is certainly a bug, but the currently reality is that
-authentication involves SPF, DKIM, and other schemes - and does not
-solely rely on headers.  So can this "delete some headers" attack
-compromise these authentication schemes?
+> Do not make this a normal method comment. Doing so makes
+> this method publishable
 
-I don't have a PoC, but I think so.  If the original sender can indeed
-convince the victim to relay their message, the victim will sign it
-using their DKIM key - missing header fields and all.  Relays will
-typically alter the MAIL FROM so that SPF authentication passes.
+Use CVE-2015-7315.
 
-But, that first "If" is the kicker.  Any mail admin these days is very
-careful about who can relay through their server.  If they are relaying
-at all, it is for a customer, partner, or buddy.
+We think this might be a somewhat unusual vulnerability cause. See
+"Zope has few restrictions on publishable objects. The basic rule is
+that the object must have a doc string. This requirement goes for
+method objects too. Another requirement is that a publishable object
+must not have a name that begin with an underscore. These two
+restrictions are designed to keep private objects from being
+published." on the
+http://docs.zope.org/zope2/zdgbook/ObjectPublishing.html page.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJWAb1rAAoJEL54rhJi8gl5Xo8P/2tgKny5vcnr67hC8RE/AZSU
+ploRmUwqRpqDS2TJzhMK5ZtKBkNHu2paS88xFM342qL8CFzAsXC8RS8YT/UKWF/9
+tvLwkH0SPkksaYSRonrHH/b6dkV1rt+eEKEGA7h56Xo3fnJZE9aq5wDLQQ8hFbUs
+UxErOnG4T+oDMoW+K0ZPNU3D1sOupcvZ2IOcCBSO5req8cLx6u8pKB/yjn3Q7cw+
+bf093qnzfyQgKkw1buq4TfkffHfO+StkpnBwPuqV4JwgsM5OAyN5haqiZjJewt29
+bni0N2maU3krq5uYC4YwYfiUIiBY05ZDQ9II+4iX89fmozJB5fdUbqqTOmQjZX2i
+99CmRWzOezYzd9Uz4oDFLzqAlNR9xegkzI8UfjMG0mZsK8/KsAyvOwfQeChgUT38
+9bPAw5ghvY3M5MxghyjZueeWdawT7/A9b5xZvY25dxDSx5bseNfRkrh0/DeAE84i
+Xje9tZgpjwaWZ078hOqIJ4n5bmxoqOKGmH2JO6baucz6VEy5l6bv9NKcJ424rYbD
+piwdyLUBTK/ugUe+qotV783LVkE9vrmykWpJMtHHGRkaH8lP+PKBgpNjbiF5D7jJ
+LxZti2Rj2s+gkbIHgGoDd8P/C50lnzl00XH2NHQqFmbfz2afLF6VLPv0Dp7NngVL
+uCaG/GraegoAXNKsWjDV
+=6/gi
+-----END PGP SIGNATURE-----
