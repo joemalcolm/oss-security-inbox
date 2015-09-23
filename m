@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2337" "Tuesday" "29" "November" "2016" "17:29:39" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<d2199a0a0afa4844b7add509b108329c@imshyb02.MITRE.ORG>" "54" "[oss-security] Re: openjpeg CVE-2016-3181, CVE-2016-3182 .. and CVE-2013-6045" nil nil nil "11" "2016112922:29:39" "[oss-security] Re: openjpeg CVE-2016-3181, CVE-2016-3182 .. and CVE-2013-6045" (number mark "U       cve-assign@m Nov 29   54/2337  " thread-indent "\"[oss-security] Re: openjpeg CVE-2016-3181, CVE-2016-3182 .. and CVE-2013-6045\"\n") "<20160927012359.GA30247@sin.redhat.com>" ("<20160927012359.GA30247@sin.redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1897" "Tuesday" "22" "September" "2015" "20:17:06" "-0700" "Greg KH" "greg@kroah.com" "<20150923031706.GB18670@kroah.com>" "47" "Re: [oss-security] Vulnerability in WhiteHEAT Linux Driver-CVE-2015-5257" nil nil nil "9" "2015092303:17:06" "[oss-security] Vulnerability in WhiteHEAT Linux Driver-CVE-2015-5257" (number mark "        greg@kroah.c Sep 22   47/1897  " thread-indent "\"Re: [oss-security] Vulnerability in WhiteHEAT Linux Driver-CVE-2015-5257\"\n") "<5601F731.3090409@istuary.com>" ("<56019762.70002@istuary.com>" "<5601F731.3090409@istuary.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 3812 invoked by uid 550); 29 Nov 2016 22:30:07 -0000
+Received: (qmail 11902 invoked by uid 550); 23 Sep 2015 03:17:45 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,69 +11,75 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3791 invoked from network); 29 Nov 2016 22:30:06 -0000
-From: <cve-assign@mitre.org>
-To: <dmoppert@redhat.com>
-CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
-In-Reply-To: <20160927012359.GA30247@sin.redhat.com>
-Message-ID: <d2199a0a0afa4844b7add509b108329c@imshyb02.MITRE.ORG>
-Date: Tue, 29 Nov 2016 17:29:39 -0500
+Received: (qmail 11876 invoked from network); 23 Sep 2015 03:17:45 -0000
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=content-transfer-encoding:content-type
+	:date:from:in-reply-to:message-id:mime-version:references
+	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=1IUuI74guhm7vTp
+	HU8za2yzex64=; b=qYs/DzQ8Hcc4Rib3VPELldfr5ngrvhNvQTeq2GdgxeV2pF4
+	T7D6OA1cVa2/qyKFF5PyGFw6yj4v7xS8Ph+cOiYh9OZSJhPmN9vGFI2h5U4xoyr6
+	QjQ2euZAEF8SUFP6tesRcEE2ChZTeWV4Yfag8fBT8dS895gJjvqt/8sJq/Hc=
+X-Sasl-enc: hDmTkq9xd5DDU1a/GFX51kcNxcIoIcOdA0Ioa1RWpNIF 1442978250
+Message-ID: <20150923031706.GB18670@kroah.com>
+References: <56019762.70002@istuary.com>
+ <5601F731.3090409@istuary.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-Subject: [oss-security] Re: openjpeg CVE-2016-3181, CVE-2016-3182 .. and CVE-2013-6045
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <5601F731.3090409@istuary.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
+Date: Tue, 22 Sep 2015 20:17:06 -0700
+From: Greg KH <greg@kroah.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Vulnerability in WhiteHEAT Linux
+ Driver-CVE-2015-5257
+To: oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Tue, Sep 22, 2015 at 05:49:53PM -0700, Moein Ghasemzadeh wrote:
+> Hello,
+> 
+> We have discovered a vulnerability in a linux kernel module and would
+> like to inform you so that required actions could be taken.
+> 
+> Assigned CVE ID : CVE-2015-5257.
+> 
+> Below is the description of the vulnerability.
+> 
+> 1. Software name and vendor name:
+> USB WhiteHEAT serial driver by ConnecTech in the Linux kernel
+> v3.19.0-28, but likely to exist in all kernel versions.
+> 
+> 2. Type of vulnerability or attack outcome:
+> 
+> The vulnerability triggers a kernel NULL pointer dereference. It causes
+> the OS to freeze on many machines and requires a cold reboot, causing
+> denial of service.
+> 
+> 3. A description of the affected code (e.g. the function name, the
+> vulnerable web page, link to the affected code, a bug entry, etc.):
+> 
+> The flaw exists in the "whiteheat_attach" function in
+> drivers/usb/serial/whiteheat.c in the Whiteheat USB Serial Driver in the
+> Linux kernel.
+> (http://lxr.free-electrons.com/source/drivers/usb/serial/whiteheat.c?v=3.19)
+> 
+> 
+> In the driver, the “COMMAND_PORT” variable is hard coded and is set to
+> “4” (5th element). So, the driver assumes that the number of ports
+> always will be 5 and takes the port number 5 as the command port. But,
+> using a specially made USB device in which the number of ports was set
+> to a number less than 5 (e.g. 3) we were able to perform Denial of
+> Service on the system due to a kernel NULL pointer dereference. The
+> system froze and requires a reboot.
+> 
+> You may find more information regarding the bug from the logs attached
+> to this email. Please let us know if you have any questions or concerns.
 
-> https://bugzilla.redhat.com/show_bug.cgi?id=1382202
+FWIW, the USB serial subsystem maintainer was just told about this an
+hour or so ago, and is working on a patch for this, which should be
+merged into Linus's tree by the end of the week or so.
 
-> The reproducer [of https://github.com/uclouvain/openjpeg/issues/725] happens to tickle
-> a flaw in a patch for CVE-2013-6045 that was posted here back when:
-> 
-> http://seclists.org/oss-sec/2013/q4/412
-> 
-> segfault-1.patch uses:
-> 
-> +                     tilec->data = (int*) opj_aligned_malloc((comp0size+3) * sizeof(int));
-> 
-> which should have used compcsize instead of comp0size.
-> 
-> Upstream never included this patch - deeper work went into eliminating this and
-> other issues in openjpeg-1.5.2.  The patch that addresses this particular issue
-> seems to be 69cd4f92 (hunk starting /* testcase 1336.pdf.asan.47.376 */).
-> 
-> https://github.com/uclouvain/openjpeg/commit/69cd4f92
-> https://github.com/uclouvain/openjpeg/issues/297
-> 
-> This hasn't been an issue in upstream openjpeg releases for a long time ...
-> but there are LTS distributions around still shipping 1.5.1 (or 1.3) with the
-> patches from here applied.  Those should preferably upgrade to 1.5.2:  changing
-> comp0size to compcsize eliminates this particular crash ...
+thanks,
 
-Use CVE-2016-9675 for this vulnerability, stated to have a "crash or
-possible code execution" impact, that results from mistakenly using
-the comp0size variable (instead of compcsize).
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYPgC5AAoJEHb/MwWLVhi2hbcP/1RHpatrKyMXBx7glnwHES3y
-RzIKPd/DHgpd4DoXVjHCv9EFnkLbcGT1r9efX1GZKxi5SKDRtdPr8X6430mYk5Pu
-VilIA+8npB3rfaOncVLGJ24jrlcxrp2UF+w+5soWa442PEtd45UtY2WxLcXsIdtq
-z3cmoVcYcCyWan5aQjFBJEssNk7c5vglt/6nxW2jrmZpOqMYcPt9XlcfbZRk8T19
-501bqoURLLhy5YL9+jKQdUtPhbaf+JSVqyHxOqOg+xrVd1AqIaWvJ7evVRaVYlWB
-+agVEVb2uviA6UB9OQKPK0UkHRRYWW4uvCnQS6zOvCs4U6PdEcHZMXtdp8LrRQI4
-F28az8rxpfnU9aHE3Syu6zlqy27ZbwLorLEL43FjeduhMxbxaPiatU6lubVawZf3
-UV0YyEx7hSMQ/xFTG8HtJ1cwZf4hLqDK0idABBEW6PNR1eyFoHbMG/tMOUX439fy
-qyvSAJ69YS4ftXTihKWMNOA7Z0kOgN87rZMU3A7Uh9Boy7y3IobmrRMaD2VdE3aW
-OF4Sa2dLyHV+/LKmC3n/o60dGVJDyNALhdGNtnG8MoQVwFhhr7Db4LPpLSWPKc2I
-3LgTaLbxdjctvZLU/aWjF/YEaGDeWHtsWfP0XnBEceaGIxl5tddhIhfjTN14Rb89
-Y6Lf6hQUSq1ZoR8Rpkc+
-=riCJ
------END PGP SIGNATURE-----
+greg k-h
