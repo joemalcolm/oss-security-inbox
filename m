@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6077" "Friday" "17" "September" "2021" "18:18:48" "+0200" "Solar Designer" "solar@openwall.com" nil "159" "Re: [oss-security] Containers-optimized OS (COS) membership in the linux-distros list" nil nil nil "9" nil nil (number mark "U       solar@openwa Sep 17  159/6077  " thread-indent "\"Re: [oss-security] Containers-optimized OS (COS) membership in the linux-distros list\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Containers-optimized OS (COS) membership in the linux-distros list" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2174" "Wednesday" "23" "September" "2015" "11:54:42" "-0700" "Greg KH" "greg@kroah.com" "<20150923185442.GA4974@kroah.com>" "47" "Re: [oss-security] Vulnerability in WhiteHEAT Linux Driver-CVE-2015-5257" nil nil nil "9" "2015092318:54:42" "[oss-security] Vulnerability in WhiteHEAT Linux Driver-CVE-2015-5257" (number mark "        greg@kroah.c Sep 23   47/2174  " thread-indent "\"Re: [oss-security] Vulnerability in WhiteHEAT Linux Driver-CVE-2015-5257\"\n") "<20150923031706.GB18670@kroah.com>" ("<56019762.70002@istuary.com>" "<5601F731.3090409@istuary.com>" "<20150923031706.GB18670@kroah.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 5555 invoked by uid 550); 17 Sep 2021 16:19:15 -0000
+Received: (qmail 19472 invoked by uid 550); 23 Sep 2015 18:55:33 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,177 +11,76 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5434 invoked from network); 17 Sep 2021 16:18:51 -0000
-Date: Fri, 17 Sep 2021 18:18:48 +0200
-From: Solar Designer <solar@openwall.com>
-To: Oleksandr Tymoshenko <ovt@google.com>
-Cc: oss-security@lists.openwall.com, Kees Cook <keescook@chromium.org>
-Message-ID: <20210917161848.GB9168@openwall.com>
-References: <CACGj0Cg_OgsYUAw8R6cbHr+ihPjfrKUJw0RjVewzuWYVi8tXpg@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Received: (qmail 18419 invoked from network); 23 Sep 2015 18:55:32 -0000
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=content-transfer-encoding:content-type
+	:date:from:in-reply-to:message-id:mime-version:references
+	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=mBpd22xWPt2KPCF
+	gl7VTHlilpC8=; b=mMaUmfh86txIb8PMJItsbmbz2oEfOMs0Jwso2pjkRVWo7Ss
+	GcpRD0lglC68dGf4RraN7x5lbJ67vUgNtoqo5cMgWYTEJmbHmws+7f1h5WJHV+qv
+	CyyvrbrDiFzY2lW7LAX2QdV61lZlYnSEs/wN3dngrxcrFcZ9qg0BYeHNPnUc=
+X-Sasl-enc: VXzST0gSdyRElm470unJH9XIgF68FQ1nSyjeZAGsLusb 1443034521
+Message-ID: <20150923185442.GA4974@kroah.com>
+References: <56019762.70002@istuary.com>
+ <5601F731.3090409@istuary.com>
+ <20150923031706.GB18670@kroah.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CACGj0Cg_OgsYUAw8R6cbHr+ihPjfrKUJw0RjVewzuWYVi8tXpg@mail.gmail.com>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] Containers-optimized OS (COS) membership in the linux-distros list
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20150923031706.GB18670@kroah.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
+Date: Wed, 23 Sep 2015 11:54:42 -0700
+From: Greg KH <greg@kroah.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Vulnerability in WhiteHEAT Linux
+ Driver-CVE-2015-5257
+To: oss-security@lists.openwall.com
 
-Hello Oleksandr,
+On Tue, Sep 22, 2015 at 08:17:06PM -0700, Greg KH wrote:
+> On Tue, Sep 22, 2015 at 05:49:53PM -0700, Moein Ghasemzadeh wrote:
+> > Hello,
+> > 
+> > We have discovered a vulnerability in a linux kernel module and would
+> > like to inform you so that required actions could be taken.
+> > 
+> > Assigned CVE ID : CVE-2015-5257.
+> > 
+> > Below is the description of the vulnerability.
+> > 
+> > 1. Software name and vendor name:
+> > USB WhiteHEAT serial driver by ConnecTech in the Linux kernel
+> > v3.19.0-28, but likely to exist in all kernel versions.
+> > 
+> > 2. Type of vulnerability or attack outcome:
+> > 
+> > The vulnerability triggers a kernel NULL pointer dereference. It causes
+> > the OS to freeze on many machines and requires a cold reboot, causing
+> > denial of service.
+> > 
+> > 3. A description of the affected code (e.g. the function name, the
+> > vulnerable web page, link to the affected code, a bug entry, etc.):
+> > 
+> > The flaw exists in the "whiteheat_attach" function in
+> > drivers/usb/serial/whiteheat.c in the Whiteheat USB Serial Driver in the
+> > Linux kernel.
+> > (http://lxr.free-electrons.com/source/drivers/usb/serial/whiteheat.c?v=3.19)
+> > 
+> > 
+> > In the driver, the “COMMAND_PORT” variable is hard coded and is set to
+> > “4” (5th element). So, the driver assumes that the number of ports
+> > always will be 5 and takes the port number 5 as the command port. But,
+> > using a specially made USB device in which the number of ports was set
+> > to a number less than 5 (e.g. 3) we were able to perform Denial of
+> > Service on the system due to a kernel NULL pointer dereference. The
+> > system froze and requires a reboot.
+> > 
+> > You may find more information regarding the bug from the logs attached
+> > to this email. Please let us know if you have any questions or concerns.
+> 
+> FWIW, the USB serial subsystem maintainer was just told about this an
+> hour or so ago, and is working on a patch for this, which should be
+> merged into Linus's tree by the end of the week or so.
 
-You posted this from @google.com, which probably means many subscribers
-didn't receive the message because of that domain's strict DMARC policy.
-So I fully quote your message below for others to possibly comment.
-
-BTW, you will similarly need to be posting from another domain (e.g.,
-gmail.com) to the linux-distros list.
-
-Overall, your proposal looks reasonable to me at first glance.
-
-Please also propose which specific contributing-back task(s) your team
-would like to help with.
-
-Thanks,
-
-Alexander
-
-On Thu, Sep 16, 2021 at 11:12:21PM -0700, Oleksandr Tymoshenko wrote:
-> Hello,
-> 
-> 
-> I???d like to propose Container-Optimized OS (COS)  for membership in
-> linux-distros. Text below addresses items listed in the ???Membership
-> criteria??? section of
-> https://oss-security.openwall.org/wiki/mailing-lists/distros
-> 
-> 
-> > 1. Be an actively maintained Unix-like operating system distro with
-> > substantial use of Open Source components
-> 
-> 
-> Container-Optimized OS (COS) s a Chromium OS based
-> server operating system. Google distributes COS as a pre-built cloud image,
-> but also provides sources for users to customize and build their own
-> specialized versions of the OS.
-> 
-> 
-> URL: https://cloud.google.com/container-optimized-os
-> 
-> 
-> Source code:  https://cos.googlesource.com
-> Build instructions:
-> https://cloud.google.com/container-optimized-os/docs/how-to/building-from-open-source
-> 
-> 
-> COS has a 6-month major release cadence and 3 LTS branches with their own
-> 3-month refresh cadence. Critical security vulnerabilities addressed in
-> patch releases, independently from the release/refresh cycle.
-> 
-> 
-> Release notes: https://cloud.google.com/container-optimized-os/docs/release-notes
-> 
-> 
-> > 2. Have a user base not limited to your own organization
-> 
-> 
-> COS is available directly to external customers as a base VM image for the
-> Google Compute Engine and indirectly as a base OS for managed services such
-> as Google Kubernetes Engine (GKE), CloudSQL, Google Cloud Filestore.
-> Overall usage of COS adds up to millions of cloud instances.
-> 
-> 
-> > 3. Have a publicly verifiable track record, dating back at least 1 year and
-> > continuing to present day, of fixing security issues (including some that
-> > had been handled on (linux-)distros, meaning that membership would have
-> > been relevant to you) and releasing the fixes within 10 days (and
-> > preferably much less than that) of the issues being made public (if it
-> > takes you ages to fix an issue, your users wouldn't substantially benefit
-> > from the additional time, often around 7 days and sometimes up to 14 days,
-> > that list membership could give you)
-> 
-> 
-> Some of the examples of COS reacting quickly (less than 7 days) to CVEs
-> with high impact:
-> 
-> 
-> CVE-2021-33909(Sequoia):
-> https://cloud.google.com/container-optimized-os/docs/release-notes/m85#cos-85-13310-1308-6
-> 
-> 
-> CVE-2020-14308, CVE-2020-14311, CVE-2020-15705 (GRUB2):
-> https://cloud.google.com/container-optimized-os/docs/release-notes/m81#cos-81-12871-1185-0
-> 
-> 
-> CVE-2020-14386:
-> https://cloud.google.com/container-optimized-os/docs/release-notes/m81#cos-81-12871-1196-0
-> 
-> 
-> Having access to embargoed CVEs would have helped us to plan and prepare
-> for patch releases in a more proactive way.
-> 
-> 
-> > 4. Not be (only) downstream or a rebuild of another distro (or else we need
-> > convincing additional justification of how the list membership would enable
-> > you to release fixes sooner, presumably not relying on the upstream distro
-> > having released their fixes first?)
-> 
-> 
-> Although COS is derived from Chromium OS we switched to maintaining our own
-> kernel package that tracks more recent versions of the Linux kernel. We
-> make an effort to keep it as close to the upstream kernel as possible. We
-> also track releases of other open-source packages relevant for our use
-> cases independently from Chromium OS or Gentoo.
-> 
-> 
-> > 5. Be a participant and preferably an active contributor in relevant public
-> > communities (most notably, if you're not watching for issues being made
-> > public on oss-security, which are a superset of those that had been handled
-> > on (linux-)distros, then there's no valid reason for you to be on
-> > (linux-)distros)
-> 
-> 
-> We are actively monitoring multiple sources of information about
-> vulnerabilities but haven???t contributed much directly because we didn't
-> have anything to add to discussions.  We contributed to OSTIF Linux Kernel
-> Vuln Reporting/Remediation Practices review, and also monitor the
-> oss-security indirectly via ChromeOS.
-> 
-> 
-> 
-> 
-> > 6. Accept the list policy:
-> > http://oss-security.openwall.org/wiki/mailing-lists/distros#list-policy-and-instructions-for-members
-> 
-> 
-> Please consider this note as acceptance of the list policy.
-> 
-> 
-> > 7. Be able and willing to contribute back, preferably in specific ways
-> > announced in advance (so that you're responsible for a specific area and so
-> > that we know what to expect from which member), and demonstrate actual
-> > contributions once you've been a member for a while:
-> > http://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
-> 
-> 
-> Our team can perform administrative tasks that benefit the wider community
-> and also can draw upon Google???s internal kernel expertise if required (on
-> the need-to-know basis, maintaining confidentiality).
-> 
-> 
-> > 8. Be able and willing to handle PGP-encrypted e-mail
-> 
-> 
-> We???ll provide relevant GPG keys separately if our membership is accepted.
-> 
-> 
-> > 9. Have someone already on the private list, or at least someone else who
-> > has been active on oss-security for years but is not affiliated with your
-> > distro nor your organization, vouch for at least one of the people
-> > requesting membership on behalf of your distro (then that one vouched-for
-> > person will be able to vouch for others on your team, in case you'd like
-> > multiple people subscribed)
-> 
-> 
-> Kees Cook (Cc-ed) can vouch for the proposed candidates.
-> 
-> 
-> Thank you
+And here's a patch if distros care to pick it up earlier than "normal":
+	https://lkml.kernel.org/r/<1443033702-29600-1-git-send-email-johan@kernel.org>
