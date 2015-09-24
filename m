@@ -1,4 +1,9 @@
-Received: (qmail 13618 invoked by uid 550); 21 Sep 2023 21:02:38 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2453" "Thursday" "24" "September" "2015" "16:42:10" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150924204210.6DA5F6C0059@smtpvmsrv1.mitre.org>" "62" "[oss-security] Re: CVE Request - TrueCrypt 7.1a and VeraCrypt 1.14 Local Elevation of Privilege" nil nil nil "9" "2015092420:42:10" "[oss-security] Re: CVE Request - TrueCrypt 7.1a and VeraCrypt 1.14 Local Elevation of Privilege" (number mark "        cve-assign@m Sep 24   62/2453  " thread-indent "\"[oss-security] Re: CVE Request - TrueCrypt 7.1a and VeraCrypt 1.14 Local Elevation of Privilege\"\n") "<5601973A.5080009@idrix.fr>" ("<5601973A.5080009@idrix.fr>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 18068 invoked by uid 550); 24 Sep 2015 20:42:23 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,61 +11,75 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 18042 invoked from network); 24 Sep 2015 20:42:22 -0000
+In-Reply-To: <5601973A.5080009@idrix.fr>
+Message-Id: <20150924204210.6DA5F6C0059@smtpvmsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Thu, 24 Sep 2015 16:42:10 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13585 invoked from network); 21 Sep 2023 21:02:37 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1695330146; x=1695934946; darn=lists.openwall.com;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:to:from:date:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=PU2fg0djprK6Xbxxofgqg1SbLDEX/vvJyolyRTTp9bo=;
-        b=Jv76QfYf1iyJJqA3lc4tUquWjF6spnsCfNXiZFnZ2LouqLpe3Qw+Ts7jyDHHcvY8pG
-         vPMhBW1zQPIbVVLz2C71MWzLjZbcTK32vWQr1SUv0iybmYAyfVq0F+ZqAYmO+em1gI1I
-         ccwbG8qftdNu2OhO6d0a7CSiB/a2EZoXc+hxaAUW8tA+psNJOi61NDAhxoJ9JvWfEfWE
-         RvQFDB5fY/2AzKyQMKfhz6Szow+Vo72wjLWfQ8DMEOt8Xm3ujA9n8EwVYIclnjokr02V
-         CkB8zeP6ua02PeL4i5d5tv8i/XE7MjLwJoqnnEsIwA2x6QlA0L2hPEqKW/asHMRc7vYG
-         AjEQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695330146; x=1695934946;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:to:from:date:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=PU2fg0djprK6Xbxxofgqg1SbLDEX/vvJyolyRTTp9bo=;
-        b=PIiuzT7qD4iQD6hwpHajsISoXc6t+mN2BRv9cqBZwkcVfHuRYAUZjXzliVhqaF68VV
-         3fTSKasLhAE5QqR1A5JQxY8l8iQIOWHkaay8fK1jjfwQrfXGJSP/onYs9C4IcJ9SUPEe
-         RjFdsHzkeUeYAoMBXIFUBcckzfCjZgNdEQUrr859tRAj17qfZZw+i24LLSm7cHWqnubU
-         yk0L4nAoMDnVfq0DeSgUwD8z0lgoFT5TdBIddmt8sldlZwx3K9CRvLMiwxAi82c5cBpl
-         w2nH1urqSiLGoqmUnP/w1GiFqN/7xAft8d3aHRe0DBmJY4E7Wnl71hlftoUXyWZLs9uF
-         bQtA==
-X-Gm-Message-State: AOJu0YzUxmDz/YM6FQ54cBZ5TACaS+8VQ3x+WR9TFnT7LGlKgAEwK5XZ
-	5R9GVelgLn1rGXqhdhwwrf8clko7APeefw==
-X-Google-Smtp-Source: AGHT+IEAVWbndAN2Et0Rib9P0Bo8qQBdDaYuaz/jOOspqDCOFMnwCWsfdkLNzuDgEyCRVoRX4o944Q==
-X-Received: by 2002:a05:600c:2203:b0:401:b204:3b8d with SMTP id z3-20020a05600c220300b00401b2043b8dmr6134666wml.27.1695330146159;
-        Thu, 21 Sep 2023 14:02:26 -0700 (PDT)
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Date: Thu, 21 Sep 2023 23:02:24 +0200
-From: Salvatore Bonaccorso <carnil@debian.org>
-To: oss-security@lists.openwall.com
-Message-ID: <ZQyvYCfvJyVF2KsQ@eldamar.lan>
-References: <ZPsjthELNqb7nPFf@kasco.suse.de>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZPsjthELNqb7nPFf@kasco.suse.de>
-Subject: [oss-security] Re: croc: multiple issues in file sharing utility
+Subject: [oss-security] Re: CVE Request - TrueCrypt 7.1a and VeraCrypt 1.14 Local Elevation of Privilege
+To: veracrypt@idrix.fr
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-On Fri, Sep 08, 2023 at 03:37:55PM +0200, Matthias Gerstner wrote:
-[...]
-> 5) CVE Assignments
-> ==================
+> I would like to request two CVE identifiers for the two security issues
+> described below affecting TrueCrypt 7.1a (latest version) and its fork
+> VeraCrypt 1.14 (latest version) running on all versions of Windows.
 > 
-> I have requested CVEs from Mitre for the more tangible issues 3.1 through 3.5
-> and issue 3.8. I will publish them here once they are available.
+> These issues were reported by James Forshaw (Google).
 
-They are CVE-2023-43616, CVE-2023-43617, CVE-2023-43618,
-CVE-2023-43619, CVE-2023-43620 and CVE-2023-43621.
+> Issue 1: Local Elevation of Privilege on Windows by abusing
+>               drive letter handling.
 
-Regards,
-Salvatore
+Use CVE-2015-7358.
+
+
+> Issue 2: Local Elevation of Privilege on Windows caused by incorrect
+>               Impersonation Token Handling.
+
+Use CVE-2015-7359.
+
+
+> For your information, I have sent a similar CVE request to mitre.org.
+
+That request was about 40 minutes earlier.
+
+Sending the same CVE request to multiple addresses is typically not
+what MITRE wants, although you're certainly welcome to change your
+mind and decide that you had actually preferred that a CVE request be
+publicly archived from the beginning. (It's rare for a vendor to use
+oss-security for CVE requests related to "critical" vulnerabilities
+that don't yet have a fixed release. The issue descriptions here, in
+combination with vendor confirmation, probably make the
+vulnerabilities sufficiently public that they are within the scope of
+the oss-security list charter. We think the implication is that
+readers should look at
+
+  https://code.google.com/p/google-security-research/issues/list?can=1
+
+at a future time, if interested in other details.)
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJWBF+VAAoJEL54rhJi8gl5SUsP/2oSElay/xGb8kSzpdhQWDwh
+6of8eo/Ii4Wj0/0B8h1nzgHweUL528Kkf7cevrW0R9xPIwSEw2xidZdsFJCNX5hE
+FesWoKBu98UXHwBOV0Vz0FjeiQvdiclw2UKNFsOcAi9CPrXkHqIUQAmafaVNVl17
+ZtmRHZlGGPtra05DU7Ttd/0W52ODzcQuI+BDp3pitEjvu6Hsyaw6/5umANi9+tBG
+tOvd4yWefIF+QEG28X7zGRLS1J6SeJIBhZ7eUboKdxWBmh927SlXszZ5RcCgynKf
+8+8is2WeGs9BoxH96yKXqYTDptDXN7SlnrCdK0+D/GZOaN7cKfz7DjwXK5GditJr
+wPTCA39Y61BAzfRxOLkM8L2C/4s4XeGTHDz90MvCgNF4fAvztJa7lJfawry8V+1p
+8sEgCA04Bh2c7xQ5sbgWF/4n+zF+Po/llYy+dZBHwzJCVTevmfRTUBuhe1juYsJQ
+abhRpRL+rfh0SncrNECFCDJNOUh8DMGzLkdEKnpUK44xb07vQ9UqNCoWfjR2v0f+
+fmsOxlFdrgQ6Bq1oz5gOJZKcT7wcCNpltq1TUw1PU/SC+CW2yTCg40mniq4fJy2t
+fd3dtk/CrICDWl+TtBXfh0u6lM6bvH7HiJepSYdWyXyONHgUfmCIwNK6tURtBCTZ
+4inClRaCYGeljBY90rUm
+=FyM2
+-----END PGP SIGNATURE-----
