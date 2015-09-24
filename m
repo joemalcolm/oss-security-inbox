@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["511" "Tuesday" "23" "March" "2021" "10:10:37" "+0100" "Petr Matousek" "pmatouse@redhat.com" nil "16" "Re: [oss-security] Re: CVE-2021-20219 Linux kernel: improper synchronization in flush_to_ldisc() can lead to DoS" nil nil nil "3" nil nil (number mark "U       pmatouse@red Mar 23   16/511   " thread-indent "\"Re: [oss-security] Re: CVE-2021-20219 Linux kernel: improper synchronization in flush_to_ldisc() can lead to DoS\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Re: CVE-2021-20219 Linux kernel: improper synchronization in flush_to_ldisc() can lead to DoS" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2916" "Thursday" "24" "September" "2015" "17:00:49" "-0400" "Randy Barlow" "rbarlow@redhat.com" "<20150924210049.GG17080@mail.corp.redhat.com>" "70" "[oss-security] Pulp 2.6.4 released for CVE-2015-5263" nil nil nil "9" "2015092421:00:49" "[oss-security] Pulp 2.6.4 released for CVE-2015-5263" (number mark "        rbarlow@redh Sep 24   70/2916  " thread-indent "\"[oss-security] Pulp 2.6.4 released for CVE-2015-5263\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 9654 invoked by uid 550); 23 Mar 2021 09:10:55 -0000
+Received: (qmail 15779 invoked by uid 550); 24 Sep 2015 21:06:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,48 +11,87 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9636 invoked from network); 23 Mar 2021 09:10:55 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1616490643;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=463bqGGeQGEeNu7VP/Xh+2haRqDurNWfctDAeBn9xGc=;
-	b=YXHux/rVfk5Xbif2ou8TNLUJ2Yt0sXiDnssvl+cWHBZNKP95wuCXkJciCeFhzU8huV/9qY
-	37EYsor5Jq/3F90vMc73FAO0fe9YYCdTEPFUz4XJIBZ6Yt69qzmg1R+y8e5oDsZeeX8zMx
-	xfk5g66DlRqNJfeINnw5ZtXeh/9wwX4=
-X-MC-Unique: E_VUSsuBOR68XYDaBYe60w-1
-Date: Tue, 23 Mar 2021 10:10:37 +0100
-From: Petr Matousek <pmatouse@redhat.com>
-To: oss-security@lists.openwall.com
-Message-ID: <20210323091036.GB2094@dhcp-25-225.brq.redhat.com>
-References: <CAKx+4-pR3JScgA-PJFSwkAw6B8xiXYWFtVD6rEYp2wnJjyCogw@mail.gmail.com>
+Received: (qmail 11884 invoked from network); 24 Sep 2015 21:01:03 -0000
+Message-ID: <20150924210049.GG17080@mail.corp.redhat.com>
 MIME-Version: 1.0
-In-Reply-To: <CAKx+4-pR3JScgA-PJFSwkAw6B8xiXYWFtVD6rEYp2wnJjyCogw@mail.gmail.com>
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.15
-Authentication-Results: relay.mimecast.com;
-	auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=pmatouse@redhat.com
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="IuhbYIxU28t+Kd57"
 Content-Disposition: inline
-Subject: Re: [oss-security] Re: CVE-2021-20219 Linux kernel: improper
- synchronization in flush_to_ldisc() can lead to DoS
+User-Agent: Mutt/1.5.24 (2015-08-30)
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
+Date: Thu, 24 Sep 2015 17:00:49 -0400
+From: Randy Barlow <rbarlow@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Pulp 2.6.4 released for CVE-2015-5263
+To: OSS Security <oss-security@lists.openwall.com>
 
-Hello,
+--IuhbYIxU28t+Kd57
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 
-we are reviewing our approach to sending CVE kernel announcements to
-oss-security after the (mostly) constructive feedback received in this
-email thread.
+Summary
+=======
+The Pulp[0] team has published Pulp 2.6.4 which contains a fix for
+an important security vulnerability (CVE-2015-5263). Users who use the
+pulp-consumer CLI to register consumers to the Pulp server should
+upgrade to pulp-consumer-client>=2.6.4. All versions of
+pulp-consumer-client from 2.4.0 to 2.6.3 inclusive are vulnerable and
+should be upgraded.
 
-I admit that several of the recent announcements were not up to par with
-the minimal standard we strive to achieve and I apologize for that. Our
-intention never was to cause unnecessary work for others, quite the
-opposite.
+Details
+=======
 
-Thank you,
--- 
-Petr Matousek / Red Hat Product Security
-PGP: 0xC44977CA 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
+A security flaw (CVE-2015-5263) was discovered in Pulp's consumer
+management system. When the pulp-consumer CLI is used to register to the
+Pulp server, it downloads a public key from the Pulp server and stores
+it locally. Later when the Pulp server sends messages to the client via
+a message broker to instruct it to perform commands, it will use the
+corresponding private key to sign the messages. The client checks the
+signatures before executing the instructions to ensure that the messages
+came from the Pulp server and not from an attacker.
 
+Versions of pulp-consumer-client between 2.4.0 and 2.6.3 do not check
+the server's TLS certificate signatures when retrieving the server's
+public key upon registration:
+
+https://github.com/pulp/pulp/blob/aa432bf58497b5e3682333b1d5f5ae4f45788a61/client_consumer/pulp/client/consumer/cli.py#L103
+
+This allows a man in the middle to inject their own message signing
+key and to then perform administrative actions on the machine, if they
+are able to send messages through the message broker.
+
+Austin Macdonald fixed this issue in this commit by using our
+pulp.bindings library as the rest of our CLI does:
+
+https://github.com/pulp/pulp/commit/b542d7465f7e6e02e1ea1aec059ac607a65cefe7#diff-17110211f89c042a9267e2167dedd754
+
+Users who do not use pulp-consumer are not affected by this issue.
+
+Thanks to Austin Macdonald for writing the fix, to Dennis Kliban for making
+our beta and release builds, and to Preethi Thomas for testing our
+releases!
+
+[0] http://www.pulpproject.org/
+
+--IuhbYIxU28t+Kd57
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBAgAGBQJWBGSBAAoJEIyFaKUJtmpiaR4QAJiF/wCZQ7QI7PC6lb73+yRO
+b7Z5J3TYfntNGnmR/kVZd4IWXOfDzMnb50vZomio1XNOaEqgNGaSFRbLCOp4qipN
+upce9+KJYcFcdiN8qzTrTM7OcBsY/NsepYVbuEdeOGForF9sAIKOP1QISto55sqa
+3HFTdt6pyGkGOboIgxPsPuhgG4PMP1VoSPqTV9O7Itwu6jdt03xOTNnkbIis80F6
+1oRaEj+5dSNJKiUMNcq9JyXflAzpJ81ny3278HTTkE1Nw6gPWbPGcTc3STTLhCx7
+T7zfLXgIr+tYhB+7ZqR6p8wZ3ibYS/0WamVRGOeCgaUCiDu9eB4k3Ui1prB3uO+e
+Cn/GKu6Kmk2uEcEmjI8+NmZID/BtFZ0z1+ya8aK0REiyBARRG9Rp+XWW+b4fvtaK
+r9/ElJ/Rgo6lXBHaltqtPOYc2NWE7j5BdqcCmei4EJKgeVLbyxdTthYbe0YdQOk7
+PqLtR8mQi8/hio8N5/JdLrrQwwBcGtWXDgH/Gn0TdFnQBnRkeQ7oZK5+KTAwaeOG
+Mang3rBw/GscuyqmuwMyyWU/T/giwwxHPjJrGaWR3wsr6wyrMhdBZIu62d0xcxK9
+Rm91pH+eyX9/H0JLKB54y1P1EA6cDGtXujMXwb2MXB3XxJ0HF17FbCxuEaeLTatn
+Nuq/UdbEzYiCDzGLmJrk
+=W569
+-----END PGP SIGNATURE-----
+
+--IuhbYIxU28t+Kd57--
