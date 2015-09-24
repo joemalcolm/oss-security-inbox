@@ -1,4 +1,9 @@
-Received: (qmail 14055 invoked by uid 550); 2 Jan 2023 16:19:43 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1750" "Thursday" "24" "September" "2015" "00:16:21" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150924041621.914CA8BC02B@smtpvmsrv1.mitre.org>" "50" "[oss-security] Re: CVE Request: Maliciously crafted text files in IPython/Jupyter editor" nil nil nil "9" "2015092404:16:21" "[oss-security] Re: CVE Request: Maliciously crafted text files in IPython/Jupyter editor" (number mark "        cve-assign@m Sep 24   50/1750  " thread-indent "\"[oss-security] Re: CVE Request: Maliciously crafted text files in IPython/Jupyter editor\"\n") "<CAHNn8BV_zT_eADA1DGDwQNG2EQQraW0nAe42z5ft+8P=5L5MZw@mail.gmail.com>" ("<CAHNn8BV_zT_eADA1DGDwQNG2EQQraW0nAe42z5ft+8P=5L5MZw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 5940 invoked by uid 550); 24 Sep 2015 04:16:34 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,93 +11,63 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 5916 invoked from network); 24 Sep 2015 04:16:33 -0000
+In-Reply-To: <CAHNn8BV_zT_eADA1DGDwQNG2EQQraW0nAe42z5ft+8P=5L5MZw@mail.gmail.com>
+Message-Id: <20150924041621.914CA8BC02B@smtpvmsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, security@ipython.org, rgbkrk@gmail.com, jkamens@quantopian.com, ssanderson@quantopian.com
+Date: Thu, 24 Sep 2015 00:16:21 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 14037 invoked from network); 2 Jan 2023 16:19:43 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=/cql/hBAj8G4EpWJlK9mt+e5yO6LEUNSYKIh0AJFevQ=;
-        b=Wq7yrHx1UItWzQOeD8LgcBU+RqoNAifXuAYgkjsBm4/H5p1oSToTjuNXes8DqHuehe
-         7UgJINVMxtz+4F6Qyi5qOKGUiUql2farBJO9nNgLaTYT3T3Um4EKkMQVfs0D/UWMsxJx
-         0RDiN7hc4jbrS051i0+lBnHWiIEsxfZ4l3555jxugryK/SS5FSaUVJnfnK3LjIZjDQG3
-         Oob/D/3j4g1OXFSDDT0nWXfa7nNf3GyJwe0sjr21Jb2kQ+rQo8+jXPyLO7t49Pmvr8kf
-         tgJzie1zy7ISM1UAvpPgFn/WPeNuWzCq2kTt0NVIMgUQywkx8Px+KFQhbDx+96EowbMA
-         q65g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=/cql/hBAj8G4EpWJlK9mt+e5yO6LEUNSYKIh0AJFevQ=;
-        b=ht5Od1tAr/RM3AKyIP3A+g6eNal+S8OOcYJ/IoZVHQB5A3Dj3QDlh5wmoq2X/IdwnV
-         qU/cqdnBESFuqvKcyb1swLtCSvQJ6L4TbHX78e/6NnLw0+vjucwHtZqKOJGPmixACvjw
-         LSa7UgFcmifGM85s7w/mBR87DqdOsnKoO8FMQqUm6gyaM/5YtEKMvgbUbfVPgIMQflHV
-         xAdM7f3FjnxsLU8RJce2ARzRUJkr5rH6zYtF3U/dDYoWZ4dzZoDNgvNHvfIWYqDL0Zhb
-         5fLO22DviT3v1bBvSmeLWybh70VaMa1WfrN5QaG6khVne7D2qTYNO9f5lhTfLdAVZ4Fb
-         J4oQ==
-X-Gm-Message-State: AFqh2krnbVtCTrGOkHPAMbsPoNl6PblnIITT7ek2InJncYMJ6l1/gxtg
-	UFBsR1Q1qeoNA0gdnBjkc4g=
-X-Google-Smtp-Source: AMrXdXsKl3XZ45chaBCs6ViUtSvSvAHp77M2fjur6h6ijB9U4SUvtfIEulYMY6L/uV47qRZfu1G9ig==
-X-Received: by 2002:adf:e88f:0:b0:29c:e3b0:838b with SMTP id d15-20020adfe88f000000b0029ce3b0838bmr1217192wrm.15.1672676371502;
-        Mon, 02 Jan 2023 08:19:31 -0800 (PST)
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Date: Mon, 2 Jan 2023 17:19:29 +0100
-From: Salvatore Bonaccorso <carnil@debian.org>
-To: Arnout Engelen <engelen@apache.org>
-Cc: John Helmert III <ajak@gentoo.org>, security@apache.org,
-	jorton@apache.org, oss-security@lists.openwall.com
-Message-ID: <Y7MEEZ8v8rhptsuL@eldamar.lan>
-References: <d1b6acf9-0f59-1954-ccad-2243ca03d138@apache.org>
- <YwjuUy0a6FFdHPVB@gentoo.org>
- <Y61i4ojYhvXXx7Ap@eldamar.lan>
- <Y69d7JASugX99avX@gentoo.org>
- <CAHKPuKEiTO8uJi=sJxogt9ZUmvQ1o4mXT+bEb+6xBf=N7K_3-Q@mail.gmail.com>
- <Y7B0lbSvEhkIMdoq@gentoo.org>
- <CAHKPuKFDBmPF2So+g=VTkgniFGJpXHZ37kv+urCM-_j4pkjNRQ@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAHKPuKFDBmPF2So+g=VTkgniFGJpXHZ37kv+urCM-_j4pkjNRQ@mail.gmail.com>
-Subject: Re: [oss-security] CVE-2022-22728: libapreq2: libapreq2 multipart
- form parse memory corruption
+Subject: [oss-security] Re: CVE Request: Maliciously crafted text files in IPython/Jupyter editor
+To: benjaminrk@gmail.com
 
-Hi Arnout,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-On Mon, Jan 02, 2023 at 12:51:04PM +0100, Arnout Engelen wrote:
-> On Sat, Dec 31, 2022 at 6:42 PM John Helmert III <ajak@gentoo.org> wrote:
-> > On Sat, Dec 31, 2022 at 10:54:00AM +0100, Arnout Engelen wrote:
-> > > On Fri, Dec 30, 2022 at 10:54 PM John Helmert III <ajak@gentoo.org> wrote:
-> > > > On Thu, Dec 29, 2022 at 10:50:26AM +0100, Salvatore Bonaccorso wrote:
-> > > > > On Fri, Aug 26, 2022 at 11:01:23AM -0500, John Helmert III wrote:
-> > > > > > On Thu, Aug 25, 2022 at 02:09:16PM +0000, Joe Orton wrote:
-> > > > > > > A flaw in libapreq2 versions 2.16 and earlier could cause a buffer
-> > > > > > > overflow while processing multipart form uploads.
-> > > > > >
-> > > > > > Is there a fixed version or patch or upstream issue?
-> > >
-> > > libapreq2 2.17 was released on the same day as the advisory describing
-> > > the problem with 2.16 and earlier (https://httpd.apache.org/apreq/).
-> >
-> > Does it fix CVE-2022-22728? Whether or not it does isn't clear from
-> > the changelog [1], and I can't find a reference to the CVE elsewhere
-> > in the source tree.
+> Software name: IPython notebook / Jupyter notebook
+> Type of vulnerability: Maliciously forged file
+> Attack outcome: Possible remote execution
+
+> Vulnerability: A maliciously forged file opened for editing can execute
+> javascript, specifically by being redirected to /files/ due to a failure to
+> treat the file as plain text.
+
+> Affected versions:
 > 
-> I think https://svn.apache.org/viewvc?view=revision&revision=1894937
-> contained the fix for this issue. This is included in 2.17.
+> - IPython 3.0 <= version <= 3.2.1
+> - notebook 4.0 <= 4.0.4
+> 
+> URI with issues:
+> 
+> - GET /edit/**
 
-Thank you!
+> Patches:
+> 
+> - IPython 3.x: https://github.com/ipython/ipython/commit/0a8096adf165e2465550bd5893d7e352544e5967
+> 
+> - Jupyter 4.0.x: https://github.com/jupyter/notebook/commit/9e63dd89b603dfbe3a7e774d8a962ee0fa30c0b5
 
-So apart https://svn.apache.org/r1894937 one would probably as well
-need
+Use CVE-2015-7337.
 
-https://svn.apache.org/r1894940 (non-functional change)
-https://svn.apache.org/r1894977
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-and
-
-https://svn.apache.org/r1895054
-
-Regards,
-Salvatore
+iQIcBAEBCAAGBQJWA3g8AAoJEL54rhJi8gl5nPYQALND4562BMNgf8AljcDNH/t7
+vslyEpM0547uN1Nrss+wTkXgAbkVDtggguPoE1Ok/I6PQP2D586Gp+V8TnKPiMBq
+u7i34j++T1E0eWtK/vV40Bx3oPNKdfO3pv54wJDvgToBIUc5f5yBffueejQtmGHS
+WNIhDSCRu0YNzV1Qw1hydLZiRu22JTP2PRCMAI+Go15v8iXq0dBtDE/c7hjyKkIK
+hCc3pCT+JQnOtjOENMa1A1V/pdT3y87FB8/wWYzCoBYzaYnJy1dEa+ZHDjRWoQSJ
+Y0kDRT/NzxMrXvnRNxgoaTITdk1vNooTXv3vn8U7omVIBf2AUjM6jXAZ1Kdve4Cz
+3D9eXibuBKCcgu3RSKhvVJrX8LcewVlJPUudqFjRA4btBljEI61K81t389Mrmb7o
+saxXyaeUc0qaJ4yaXf9Zf5B7XTMcUU7dZtTOMZouDYL5l+od2sgxNzcerPC9tJg5
+L9mIDaKKq0JraiExeRPJ623dh1iYPf1e3MediffPXJXA2fl6G8rZQU2IMUeXW14O
+/tBZeKxExdpRM/D/HfMb8bw9kryzWlIxPINHl9UbM/4V3+kg7boDwPpOaFXS+94P
+epoZxo7DbjesPCZ0MfDsPcw+ap2g19QCU5X9ey8Dj49Pc3TrqTybCMwEM7z74fOI
+Tgy1TA0PSNfSgpJ2EuNQ
+=KkUJ
+-----END PGP SIGNATURE-----
