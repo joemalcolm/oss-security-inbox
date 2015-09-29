@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1470" "Sunday" "1" "April" "2018" "21:11:12" "-0700" "Denis Magda" "dmagda@apache.org" "<CAK0qHnqF7Ls+FfxfO=kdnaAWDrLcRSE8PUUyp20SKht1Ko+sWQ@mail.gmail.com>" "41" "[oss-security] [CVE-2018-1295]: Possible Execution of Arbitrary Code Within Deserialization Endpoints of Apache Ignite" nil nil nil "4" "2018040204:11:12" "[oss-security] [CVE-2018-1295]: Possible Execution of Arbitrary Code Within Deserialization Endpoints of Apache Ignite" (number mark "U       dmagda@apach Apr  1   41/1470  " thread-indent "\"[oss-security] [CVE-2018-1295]: Possible Execution of Arbitrary Code Within Deserialization Endpoints of Apache Ignite\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1963" "Tuesday" "29" "September" "2015" "13:12:37" "+0200" "Andreas Stieger" "astieger@suse.com" "<560A7225.6020201@suse.com>" "55" "Re: [oss-security] Re: CVE request for wget" nil nil nil "9" "2015092911:12:37" "[oss-security] Re: CVE request for wget" (number mark "        astieger@sus Sep 29   55/1963  " thread-indent "\"Re: [oss-security] Re: CVE request for wget\"\n") "<20150925200413.DC3B16C406D@smtpvmsrv1.mitre.org>" ("<20150925200413.DC3B16C406D@smtpvmsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 13362 invoked by uid 550); 2 Apr 2018 10:23:29 -0000
+Received: (qmail 27671 invoked by uid 550); 29 Sep 2015 11:13:17 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,63 +11,77 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26443 invoked from network); 2 Apr 2018 04:11:57 -0000
-X-Gm-Message-State: AElRT7FTpCVniSiVRIXSTBHvUwkskt1eggqCxQif1AYMxeKTxlUb1O9/
-	aC6vTmD83vjJsRu7o94sRu/utj1WMfPIPKrNkPCTbQ==
-X-Google-Smtp-Source: AIpwx4823LA09cwBr70iKclH/5OLI3XlWez0eMuJqTWwDe9vQjxaHjH36dDCOXkKluZvESrV7uD9vaiLGi+vqyc2FH4=
-X-Received: by 10.55.25.134 with SMTP id 6mr10638819qkz.52.1522642303049; Sun,
- 01 Apr 2018 21:11:43 -0700 (PDT)
+Received: (qmail 26615 invoked from network); 29 Sep 2015 11:13:16 -0000
+References: <20150925200413.DC3B16C406D@smtpvmsrv1.mitre.org>
+X-Enigmail-Draft-Status: N1110
+Organization: SUSE Linux GmbH
+Message-ID: <560A7225.6020201@suse.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.2.0
 MIME-Version: 1.0
-From: Denis Magda <dmagda@apache.org>
-Date: Sun, 1 Apr 2018 21:11:12 -0700
-X-Gmail-Original-Message-ID: <CAK0qHnqF7Ls+FfxfO=kdnaAWDrLcRSE8PUUyp20SKht1Ko+sWQ@mail.gmail.com>
-Message-ID: <CAK0qHnqF7Ls+FfxfO=kdnaAWDrLcRSE8PUUyp20SKht1Ko+sWQ@mail.gmail.com>
-To: dev <dev@ignite.apache.org>, user@ignite.apache.org, 
-	Man Yue Mo <mmo@semmle.com>, security@apache.org, security@ignite.apache.org, 
-	oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="001a114738bc97fe4f0568d5c955"
-Subject: [oss-security] [CVE-2018-1295]: Possible Execution of Arbitrary Code Within
- Deserialization Endpoints of Apache Ignite
+In-Reply-To: <20150925200413.DC3B16C406D@smtpvmsrv1.mitre.org>
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature";
+ boundary="lis0N21mbNMoNhufBUIGo4pVNSmU6Dnaw"
+Cc: oss-security@lists.openwall.com
+Date: Tue, 29 Sep 2015 13:12:37 +0200
+From: Andreas Stieger <astieger@suse.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Re: CVE request for wget
+To: cve-assign@mitre.org
 
---001a114738bc97fe4f0568d5c955
-Content-Type: text/plain; charset="UTF-8"
+--lis0N21mbNMoNhufBUIGo4pVNSmU6Dnaw
+Content-Type: text/plain; charset=windows-1252
 Content-Transfer-Encoding: quoted-printable
 
-CVE-2018-1295: Possible Execution of Arbitrary Code Within Deserialization
-Endpoints of Apache Ignite
+Hello,
 
-Severity: Important
+On 09/25/2015 10:04 PM, cve-assign@mitre.org wrote:
+> > https://mailman.boum.org/pipermail/tails-dev/2015-August/009370.html
+> > https://lists.gnu.org/archive/html/bug-wget/2015-08/msg00020.html
+> >
+> http://git.savannah.gnu.org/cgit/wget.git/commit/?id=3D075d7556964f5a871a=
+73c22ac4b69f5361295099
+>
+> We really don't understand what set of expectations led to this
+> becoming a CVE request for a vulnerability in wget.
 
-Vendor: The Apache Software Foundation
+Possibly assignments for CWE-200 including CVE-2000-0649, CVE-2002-0422
+relating to exposure if an internal IP address of a communication partner.
 
-Versions Affected: Apache Ignite 2.3 or earlier
+The remaining points are noted.
 
-Impact:
-An attacker can execute arbitrary code on Ignite nodes in the case when
-Ignite classpath contains arbitrary vulnerable classes.
+Andreas
 
-Description:
-Apache Ignite serialization mechanism does not have a list of classes
-allowed for serialization/deserialization, which makes it possible to run
-arbitrary code when 3-rd party vulnerable classes are present in Ignite
-classpath. The vulnerability can be exploited if the one sends a specially
-prepared form of a serialized object to one of the deserialization
-endpoints of some Ignite components -   discovery SPI, Ignite persistence,
-Memcached endpoint, socket steamer.
+--=20
+Andreas Stieger <astieger@suse.com>
+Project Manager Security
+SUSE Linux GmbH, GF: Felix Imend=F6rffer, Jane Smithard, Graham Norton, HRB=
+ 21284 (AG N=FCrnberg)
 
-Mitigation:
-=E2=80=A2    All Ignite versions: make sure there are no vulnerable classes=
- among
-your custom code used in Apache Ignite.
-=E2=80=A2    Ignite 2.3 or earlier users: upgrade to Ignite 2.4 and use
-IGNITE_MARSHALLER_WHITELIST and/or IGNITE_MARSHALLER_BLACKLIST system
-properties to define classes allowed for deserialization
 
-Credit:
-The vulnerability was discovered by Man Yue Mo of lgtm.com.
 
-References:
-* http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2018-1295
 
---001a114738bc97fe4f0568d5c955--
+--lis0N21mbNMoNhufBUIGo4pVNSmU6Dnaw
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIcBAEBCgAGBQJWCnIuAAoJECzWqVXhWUVGyCAQAKk/pbCol1zT63N1R/XHpJ00
+uuH3E+ruZWodE6dOESl6ZR5MV3yTaMzP+1dNQdj4J4ZmQBUhjePNTbaGR3GUDGqC
+IHOib6tpOnuRK4AQ1UdhcLZSVtiS61yuE7HsvRjdEGj42+YLMJwVy3r4Rl0zFsvO
+rqDBatdfhV29B/mVB2qTot3QKI8eKTUu2r494UU0XFZLWVZN8kGXGvCpLnf+r+xb
+zb7w6vhDyCZHaTbjxrM4FGx/2JhjuPXNIjOukzJOKEws2qqfXjVixcLxIf42L9X8
+VAzjo9PGeqd/mSmZJkq/xKxtWt2ozvfdA62sGAxBvw5eTFNJiz9yUNlH96T5eoKZ
+Lj6Aq+WxvQNCYnM8ng2B5aBpBPn1yfhQCWt/uF4z6vU3iCFqRIfPL+2bOYXWhOLt
+ZQPNqOMXN+NLhY71LtQGA5D8kJr6gSfi5mm/CBnQ2H+oVl5yOVopNJrsfPNffO0C
+DenHwvbh0qRC0riBe6cJkf1inRsHvnZQzrCqa/cQYKLt2/gg7DnDIwAUqkyI9VRJ
+WUdpNpsiHjIzQuOT/qUnThsqZb+g4Hlz4DFbIH9ijWDMEEyRh9me92pHiuVVGO7U
+JaPw5rcCt4xuFfL09Lb/FP3ibV3wP9t7HTh08Glq6n1cMmaCoA6OBYcrZOCtA3FF
+g74NQjz20VA7Dn0CtJts
+=c35w
+-----END PGP SIGNATURE-----
+
+--lis0N21mbNMoNhufBUIGo4pVNSmU6Dnaw--
