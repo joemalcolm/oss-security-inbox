@@ -1,4 +1,9 @@
-Received: (qmail 30060 invoked by uid 550); 21 Dec 2023 14:30:09 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3523" "Wednesday" "30" "September" "2015" "03:15:07" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150930071507.90DE21BE293@smtpvbsrv1.mitre.org>" "84" "[oss-security] Re: DoS attack through Email-Address perl module v1.907 (CVE id request)" nil nil nil "9" "2015093007:15:07" "[oss-security] Re: DoS attack through Email-Address perl module v1.907 (CVE id request)" (number mark "        cve-assign@m Sep 30   84/3523  " thread-indent "\"[oss-security] Re: DoS attack through Email-Address perl module v1.907 (CVE id request)\"\n") "<201509270953.59256@pali>" ("<201509270953.59256@pali>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 26350 invoked by uid 550); 30 Sep 2015 07:15:25 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,43 +11,97 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 26300 invoked from network); 30 Sep 2015 07:15:19 -0000
+In-Reply-To: <201509270953.59256@pali>
+Message-Id: <20150930071507.90DE21BE293@smtpvbsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Wed, 30 Sep 2015 03:15:07 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32407 invoked from network); 21 Dec 2023 07:04:48 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Ephraim Anierobi <ephraimanierobi@apache.org>
-To: oss-security@lists.openwall.com
-Message-ID: <168cd715-c39b-aadc-0bb0-9bda2b06da0a@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Thu, 21 Dec 2023 07:05:17 +0000
-MIME-Version: 1.0
-Subject: [oss-security] =?UTF-8?Q?CVE-2023-50783=3A_Apache_Airflow=3A_Impr?=
- =?UTF-8?Q?oper_access_control_vulnerability_on_the?=
- =?UTF-8?Q?_=22varimport=22_endpoint=20?=
+Subject: [oss-security] Re: DoS attack through Email-Address perl module v1.907 (CVE id request)
+To: pali.rohar@gmail.com
 
-Severity: low
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Affected versions:
+> Probably nobody has normal usage for inserting nested comments
+> into email address in To:/Cc: headers...
 
-- Apache Airflow before 2.8.0
+It may be reasonable to assign one CVE ID for the Email::Address
+issue; however, the decision may depend somewhat on this information
+about normal usage. See below for a question about the behavior of the
+patched version.
 
-Description:
+> Because input string for Email::Address module comes from external
+> source (e.g. from email sent by attacker) it is security problem all
+> software application which parse email messages by Email::Address perl
+> module. For example: RT: Request Tracker, CiderWebmail, ...
 
-Apache Airflow, versions before 2.8.0, is affected by a vulnerability that =
-allows an authenticated user without the variable edit permission, to updat=
-e a variable.
-This flaw compromises the integrity of variable management, potentially lea=
-ding to unauthorized data modification.
-Users are recommended to upgrade to 2.8.0, which fixes this issue
+The documentation says it "locates email addresses in strings" and
+this might not always mean "from external source." Thus, one might
+argue that it is not a vulnerability in a general-purpose utility such
+as Email::Address, and instead is a vulnerability in each individual
+application that uses Email::Address without changing the
+$Email::Address::COMMENT_NEST_LEVEL package variable to satisfy that
+application's threat model.
 
-Credit:
+However, we think one CVE ID may be enough if, realistically, no
+application ever needed $COMMENT_NEST_LEVEL to have a value of 2,
+i.e., changing from 2 to 1 does not break anything.
 
-balis0ng (finder)
-Ephraim Anierobi (remediation developer)
+We think there may be two distinct cases of nested comments:
 
-References:
+  A. each nested comment is either entirely before or entirely after
+     the address
 
-https://github.com/apache/airflow/pull/33932
-https://airflow.apache.org/
-https://www.cve.org/CVERecord?id=3DCVE-2023-50783
+  B. the nested comment is inside the address, similar to the
+     "Wilt . (the  Stilt) Chamberlain@NBA.US" example from
+     RFC 822 section A.1.4
 
+
+In case A, if $COMMENT_NEST_LEVEL is reduced, is correctness affected?
+Or does the module always still find the correct address string (and
+typically faster)?
+
+We would guess that correctness is affected in case B.
+
+As far as we know, case A sometimes occurs in real life. The example
+we found is online.microsoft.com address strings, e.g., do a web
+search for either of these:
+
+  jsmit@online.microsoft.com (Jan Smith (MSFT))
+  evanba@online.microsoft.com (Evan T. Basalik (MSFT))
+
+As far as we know, case B essentially never occurs in the standard
+format of an address string, although it might occur in something
+like:
+
+  Wilt . (hide address from spambot(s)) Chamberlain@NBA.US
+
+All of the above discussion implies that the CVE ID would be assigned
+for the concept of "the default configuration is unsafe." This is, for
+most purposes, largely equivalent to the concept of "the computational
+complexity of the comment-parsing algorithm is too high."
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJWC4tDAAoJEL54rhJi8gl5xo8P/ityH+Lo6SY0SoCwruealNVP
+6/7OHZftSAtpsSp5YBok280FIwK+J2cm11Sj2O7Xzwm9LOwNFOAjNz8nQN2HyueK
+y4adxpY8NyIiEP7PKichUOtE5+ykJTeV8UBDDP1ZHGHD6sbRy7Z9EEx9RtXX3MxT
+IaqvcYUfvi/YmBB1j/lvhNtT8PkI8arEs7dPOfIcVDwnIfr+yW1vp95xKWIpNXvN
+YCeO4ku5SRt5w6c2qultSk0RrgjPHaRBikLNvFScBBqrYnS0v4qquteCgf/l2/SD
+i3wFaXVudKdQF8TXhhwia1ydfcnATet1oxKJNxp2RUyBhufFHAI59EwxC2VHcaSL
+I5v/F0mfNZSup+RHs9NkRWMRPpG4uZMfI13oO1pb52zdekg7Maetz3omm3kPRldn
+3o0Hx0lVHb1LFE8CtuowZgEFde/6yL6Pfp2vgAY1ago5j0DRp4XiSIsqHQBzRm3h
+azE/AeuFYm/SCDvXP3HEEgQ2rHajJT5UvlsKVY8KlzHq0qqWAShDVBrffa+cJF2j
+ibEASbLr3SrleeDAU0r+DCyRC7j35Nby0WCl5PwQGo88YAL52HifDukjcrfJ6b2U
+BU3Y15zBprq5Bu92tzsxL94KTyEpiztXJuntNMsJxgXI5gSPFr3zWcffEsqbFO7K
+GJ9shcLdixnAgS9SEH6E
+=Iv35
+-----END PGP SIGNATURE-----
