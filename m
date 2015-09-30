@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4504" "Friday" "5" "June" "2015" "17:29:22" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150605212922.123888BC10A@smtpvmsrv1.mitre.org>" "108" "[oss-security] Re: CVE Request: Linux Kernel Ozwpan Driver - Remote packet-of-death vulnerabilities" nil nil nil "6" "2015060521:29:22" "[oss-security] Re: CVE Request: Linux Kernel Ozwpan Driver - Remote packet-of-death vulnerabilities" (number mark "        cve-assign@m Jun  5  108/4504  " thread-indent "\"[oss-security] Re: CVE Request: Linux Kernel Ozwpan Driver - Remote packet-of-death vulnerabilities\"\n") "<CAHmME9opocVgo-EpALxnAYc4HoRWo1TVE12Tbn3QarYyYu+2qg@mail.gmail.com>" ("<CAHmME9opocVgo-EpALxnAYc4HoRWo1TVE12Tbn3QarYyYu+2qg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2151" "Wednesday" "30" "September" "2015" "12:50:31" "+0200" "Alessandro Ghedini" "alessandro@ghedini.me" "<20150930105031.GA8507@kronk.local>" "64" "Re: [oss-security] CVE Request: cacti multiple SQL injections" nil nil nil "9" "2015093010:50:31" "[oss-security] CVE Request: cacti multiple SQL injections" (number mark "        alessandro@g Sep 30   64/2151  " thread-indent "\"Re: [oss-security] CVE Request: cacti multiple SQL injections\"\n") "<20150718173121.GA15158@kronk.local>" ("<20150718173121.GA15158@kronk.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 1608 invoked by uid 550); 5 Jun 2015 21:29:34 -0000
+Received: (qmail 19739 invoked by uid 550); 30 Sep 2015 10:50:45 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,121 +11,98 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 1584 invoked from network); 5 Jun 2015 21:29:33 -0000
-In-Reply-To: <CAHmME9opocVgo-EpALxnAYc4HoRWo1TVE12Tbn3QarYyYu+2qg@mail.gmail.com>
-Message-Id: <20150605212922.123888BC10A@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Fri,  5 Jun 2015 17:29:22 -0400 (EDT)
-From: cve-assign@mitre.org
+Received: (qmail 19715 invoked from network); 30 Sep 2015 10:50:44 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=date:from:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=hsC598ELcJTvDocV8Np9onx+bXqUO3LNTr+lA38WCqM=;
+        b=RtWLpU9DIj4bKzDR129Uf/cw0fucyMfldsR7BmAnqmrk+GDcnxyekuPTq93lO1fa0+
+         /Kpe0hmW7aP7VPY1nCe427eGwUe5P4vaF6JIxWuzxmkTf+QJcl51bTM2waANV5UlzkjM
+         ZuYvUvFxOMLP8yQ0U9INQCLUfR/brvI9cr3ggd/rT/D9+qWBn413fyJF6cH/p2GmIgRp
+         KmCpBIQFYnoAsSOZrvQ6xDwqpTpA5ACaGBIBtskuf2XJX8N3iP3OxoLz5XOiCh/Z4bKk
+         6K7znbHSBcocMa32E8G0QTxJ0u12TJU8PBBmxXIxt3WApsUtu3Zd0PP8GTJEUaUR9sgF
+         kNJQ==
+X-Received: by 10.180.106.66 with SMTP id gs2mr31463034wib.14.1443610232980;
+        Wed, 30 Sep 2015 03:50:32 -0700 (PDT)
+Message-ID: <20150930105031.GA8507@kronk.local>
+Mail-Followup-To: oss-security@lists.openwall.com, cve-assign@mitre.org
+References: <20150718173121.GA15158@kronk.local>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="cNdxnHkX5QqsyA0e"
+Content-Disposition: inline
+In-Reply-To: <20150718173121.GA15158@kronk.local>
+User-Agent: Mutt/1.5.24 (2015-08-30)
+Cc: cve-assign@mitre.org
+Date: Wed, 30 Sep 2015 12:50:31 +0200
+From: Alessandro Ghedini <alessandro@ghedini.me>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE Request: Linux Kernel Ozwpan Driver - Remote packet-of-death vulnerabilities
-To: Jason@zx2c4.com
+Subject: Re: [oss-security] CVE Request: cacti multiple SQL injections
+To: oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+--cNdxnHkX5QqsyA0e
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> Two of them result in
-> a memcpy(kernel_buffer, network_packet, -length), one of them is a
-> divide-by-zero, and one of them is a loop that decrements -1 until it's
-> zero.
-> 
-> Please assign CVEs for these vulnerabilities. I believe the first two
-> patches of this set can receive one CVE for both, and the remaining two
-> can receive one CVE each.
+On Sat, Jul 18, 2015 at 07:31:21PM +0200, Alessandro Ghedini wrote:
+> Hi,
+>=20
+> CVE-2015-4634 was assigned for an SQL injection in cacti [0], but accordi=
+ng to
+> the commit fixing it [1] several other SQL injections were also found:
+>=20
+> -bug#0002574: SQL Injection Vulnerabilitie in graph items and graph templ=
+ate items
+> http://bugs.cacti.net/view.php?id=3D0002574
+>=20
+> -bug#0002579: SQL Injection Vulnerabilitie in data sources
+> http://bugs.cacti.net/view.php?id=3D0002579
+>=20
+> -bug#0002580: SQL Injection in cdef.php
+> http://bugs.cacti.net/view.php?id=3D0002580
+>=20
+> -bug#0002582: SQL Injection in data_templates.php
+> http://bugs.cacti.net/view.php?id=3D0002582
+>=20
+> -bug#0002583: SQL Injection in graph_templates.php
+> http://bugs.cacti.net/view.php?id=3D0002583
+>=20
+> -bug#0002584: SQL Injection in host_templates.php
+> http://bugs.cacti.net/view.php?id=3D0002584
+>=20
+> Could CVEs be assigned for these issues as well?
+>=20
+> Thanks
+>=20
+> [0] http://bugs.cacti.net/view.php?id=3D0002577
+> [1] http://svn.cacti.net/viewvc?view=3Drev&revision=3D7731
 
-Determining the right number of CVE IDs is typically not based on
-looking at the number of impacts. We have reorganized your request to
-account for that.
+Re-ping?
 
+Cheers
 
-> 1. A remote packet can be sent, resulting in funny subtractions of
-> signed integers, which causes a memcpy(kernel_heap,
-> network_user_buffer, -network_user_provided_length).
->
-> https://lkml.org/lkml/2015/5/13/744
-> https://git.kernel.org/cgit/linux/kernel/git/gregkh/staging.git/commit/?id=b1bb5b49373b61bf9d2c73a4d30058ba6f069e4c
+--cNdxnHkX5QqsyA0e
+Content-Type: application/pgp-signature; name="signature.asc"
 
-In this case, the primary problem was using the wrong integer data
-type. No code needed to be added; the only change was from signed to
-unsigned. Use CVE-2015-4001.
-
-
-> 1. A remote packet can be sent, resulting in funny subtractions of
-> signed integers, which causes a memcpy(kernel_heap,
-> network_user_buffer, -network_user_provided_length).
->
-> https://lkml.org/lkml/2015/5/13/740
-> https://git.kernel.org/cgit/linux/kernel/git/gregkh/staging.git/commit/?id=d114b9fe78c8d6fc6e70808c2092aa307c36dc8e
-
-> 3. A remote packet can be sent, resulting in a funny subtraction,
-> causing an insanely big loop to lock up the kernel:
->
-> https://lkml.org/lkml/2015/5/13/742
-> https://git.kernel.org/cgit/linux/kernel/git/gregkh/staging.git/commit/?id=9a59029bc218b48eff8b5d4dde5662fd79d3e1a8
-
-In these two cases, the primary problem was lack of a check for
-whether a length value (elt->length or len) was too small. (A
-secondary factor is that the data types needed to be changed to
-implement this check.) The nature of the later code results in two
-different types of impacts, but the two issues can still share the
-same CVE ID. Use CVE-2015-4002.
-
-
-> 2. A remote packet can be sent, resulting in divide-by-zero in
-> softirq, causing hard crash:
-> https://lkml.org/lkml/2015/5/13/741
-> https://git.kernel.org/cgit/linux/kernel/git/gregkh/staging.git/commit/?&id=04bf464a5dfd9ade0dda918e44366c2c61fce80b
-
-Use CVE-2015-4003.
-
-
-> 4. Multiple out-of-bounds reads, resulting in possible information
-> leakage, explained in the last paragraph of the introductory email
-> here:
-> https://lkml.org/lkml/2015/5/13/739
-
-> The maintainer has not yet written a patch to fix this issue, so it
-> remains an open case.
-
-> When ozwpan receives a packet,
-> it casts the packet into a variety of different structs, based on the
-> value of type and length parameters inside the packet. When making these
-> casts, and when reading bytes based on this length parameter, the actual
-> length of the packet in the socket buffer is never actually consulted. As
-> such, it's very likely that a packet could be sent that results in the
-> kernel reading memory in adjacent buffers, resulting in an information
-> leak, or from unpaged addresses, resulting in a crash.
-
-The "actual length ... is never actually consulted" issues are
-essentially what is described on the
-http://cwe.mitre.org/data/definitions/130.html page. Use CVE-2015-4004
-for all of these CWE-130 issues. An issue can, of course, have an
-out-of-bounds read impact but not be a CWE-130 issue.
-
-
-> So, I'd highly
-> recommend the maintainers of this driver go branch-by-branch from the
-> initial rx function, adding checks to ensure all reads and casts are
-> within the bounds of the socket buffer.
-
-If the maintainers (or any researcher) decide to disclose a
-security-relevant out-of-bounds read issue that is outside the defined
-scope of CVE-2015-4004, then they're certainly welcome to ask for
-their own CVE ID.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Version: GnuPG v2
 
-iQEcBAEBAgAGBQJVchQ8AAoJEKllVAevmvmsDikH/2bokNcp2iLCX6V+hudRyavo
-te5PksfYBRHVRUPoboMx3nchFIAHU4o4ZxTpSvbdt6/WNr2xTRra0tL7hl1tXDA3
-RoFOxQtzjE5R80E/yWkxphvnsVMLDEUJKNt0ojI9xjGiFGD/XgyOGHnrZU26/Z9V
-hrjezTzAqLH8pN43byarVHBDv8QyB7e5vKljWvIKW6zWldnpUnPX8HRnIILxBDsK
-AkvjPLFGekPo0YfLNN9s1DgKg/Bjp+fHbK+1XckbA73furworOiI4z5O8yCzDhi5
-Ee4vzJBGlcCJU6YcoLO0Gz8nnozH89JvJXecCqDihGk1jrMHfVHFN3HMzu/Cel4=
-=ge8R
+iQIcBAEBCgAGBQJWC753AAoJEK+lG9bN5XPLXBMP/1yCoq0t7ouNlefeifOMAusX
+8yVGC/Hj7JMSGguAVHaGQNeiHg1AfmJ5BCpcCaGjQyUKwUnW+ZM2GpejpUK8DYiD
+IEJnhZB7GQ9JKY/lht8PnvJDDmicLzx3n36OX13kzXbqAtiErZlTeGXWIzPseVJM
+0FxLnlwzLVa4cHg1IuoRHsNLXqjC6EGr+iUwRDrEtx/bNiSGxoSD74N4SBcX9xO1
+ec+Z72Gbhn8YDlO/gSzPouErbwESYyDlRPmxin3h0sC3BXsO8ttoXoHXcU32Ky2t
+IQURQgqq4chKBp4IGqbIxXIXkH9Q167go2uB/Pl1yVRibKpItst1/rq6/3TY5KEz
+fBMUAEnL6wOm2a1KImTN+yn6KzhEbVD7yMDzacLVv05IS6Xt+LD98P966FECphsP
+ifFfAOn3N9skRDJNFdCIUR5M3Pfdk0+eswRBRplAB9x4k+Mv/9hY694SfWQTtFoY
+7Sra0CfBFGoPa21vNdgPloMRqNO7oT27rfNc8Tb1BlyKocJ/HDoeaA6APHN+EZ1t
+yPvzSQKbxZj1suzmX01T5YRMvKfTxZpg/cuG1knmPjFCTdekSTZsLz2K+jqp3qwq
+o03lKys25HKBoqwZgBv3ubnwJ19BX0GMy+jmN14zISJEOcV1EO/PBMoKr5dzdNO0
+5JHaklOTCCeikptPzoLt
+=poZ6
 -----END PGP SIGNATURE-----
+
+--cNdxnHkX5QqsyA0e--
