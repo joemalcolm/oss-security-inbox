@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1285" "Monday" "18" "May" "2015" "11:01:14" "+0200" "Andrea Palazzo" "andrea.palazzo@truel.it" "<5559AA5A.3050705@truel.it>" "29" "[oss-security] Re: CVE Request + Advisory: PHP str_repeat() sign mismatch based memory corruption" nil nil nil "5" "2015051809:01:14" "[oss-security] Re: CVE Request + Advisory: PHP str_repeat() sign mismatch based memory corruption" (number mark "        andrea.palaz May 18   29/1285  " thread-indent "\"[oss-security] Re: CVE Request + Advisory: PHP str_repeat() sign mismatch based memory corruption\"\n") "<5559A43F.7040606@gmail.com>" ("<5559A053.6090004@truel.it>" "<5559A43F.7040606@gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2774" "Wednesday" "30" "September" "2015" "00:47:56" "-0400" "Rich Felker" "dalias@libc.org" "<20150930044756.GA8645@brightrain.aerifal.cx>" "62" "Re: [oss-security] s/party/hack like it's 1999" nil nil nil "9" "2015093004:47:56" "[oss-security] s/party/hack like it's 1999" (number mark "        dalias@libc. Sep 30   62/2774  " thread-indent "\"Re: [oss-security] s/party/hack like it's 1999\"\n") "<20150926222609.GB11060@netbsd.org>" ("<20150917180319.1933609esmj3aaw4@webmail.alunos.dcc.fc.up.pt>" "<CAJWnFaP4QGvJxsJes7fmud787xG=vuh+AFiYPh79kiSLOe-rOA@mail.gmail.com>" "<20150919233415.GA31305@openwall.com>" "<20150920022811.GJ17773@brightrain.aerifal.cx>" "<20150920032631.GA2301@openwall.com>" "<20150921164346.GA11060@netbsd.org>" "<20150921165337.GA17627@kroah.com>" "<87oagvppdo.fsf@mid.deneb.enyo.de>" "<20150926222609.GB11060@netbsd.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 24303 invoked by uid 550); 18 May 2015 09:01:27 -0000
+Received: (qmail 11377 invoked by uid 550); 30 Sep 2015 04:48:10 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,57 +11,88 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 24285 invoked from network); 18 May 2015 09:01:26 -0000
-Message-ID: <5559AA5A.3050705@truel.it>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
+Received: (qmail 11336 invoked from network); 30 Sep 2015 04:48:09 -0000
+Message-ID: <20150930044756.GA8645@brightrain.aerifal.cx>
+References: <20150917180319.1933609esmj3aaw4@webmail.alunos.dcc.fc.up.pt>
+ <CAJWnFaP4QGvJxsJes7fmud787xG=vuh+AFiYPh79kiSLOe-rOA@mail.gmail.com>
+ <20150919233415.GA31305@openwall.com>
+ <20150920022811.GJ17773@brightrain.aerifal.cx>
+ <20150920032631.GA2301@openwall.com>
+ <20150921164346.GA11060@netbsd.org>
+ <20150921165337.GA17627@kroah.com>
+ <87oagvppdo.fsf@mid.deneb.enyo.de>
+ <20150926222609.GB11060@netbsd.org>
 MIME-Version: 1.0
-References: <5559A053.6090004@truel.it> <5559A43F.7040606@gmail.com>
-In-Reply-To: <5559A43F.7040606@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - srv-hp9.netsons.net
-X-AntiAbuse: Original Domain - lists.openwall.com
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - truel.it
-X-Get-Message-Sender-Via: srv-hp9.netsons.net: authenticated_id: info@truel.it
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-CC: oss-security@lists.openwall.com, security@php.net
-Date: Mon, 18 May 2015 11:01:14 +0200
-From: Andrea Palazzo <andrea.palazzo@truel.it>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20150926222609.GB11060@netbsd.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+Date: Wed, 30 Sep 2015 00:47:56 -0400
+From: Rich Felker <dalias@libc.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE Request + Advisory: PHP str_repeat() sign mismatch based
- memory corruption
-To: Stanislav Malyshev <smalyshev@gmail.com>, cve-assign@mitre.org
+Sender: Rich Felker <dalias@aerifal.cx>
+Subject: Re: [oss-security] s/party/hack like it's 1999
+To: oss-security@lists.openwall.com
 
-Hi Stas,
-while I agree on what you say about the huge memory allocation needed, I 
-wouldn't say this requires the ability to run arbitrary code, 
-controlling str_repeat() arguments it's enough to create a corrupted 
-zval and injecting an eventual payload somewhere in memory (which, 
-again, is unlikely but possible).
-About code execution, I haven't had the chance to focus on actual 
-exploitation yet (I surely will in the near future), but as you can see 
-from the original report (https://bugs.php.net/bug.php?id=69403), I 
-pointed out several cases in which working on a so-crafted zval would 
-lead to invalid memory access (with user controlled values as well), so 
-I am pretty confident it is achievable.
+On Sat, Sep 26, 2015 at 10:26:09PM +0000, David Holland wrote:
+> On Mon, Sep 21, 2015 at 09:02:27PM +0200, Florian Weimer wrote:
+>  > >> I have been arguing for years (but without success) that vt bomb
+>  > >> injection needs to be blocked in the tty driver. This problem
+>  > >> (corruption of concurrent UTF-8 streams) needs to be too, as a matter
+>  > >> of correctness and not even security.
+>  > >
+>  > > How exactly would a tty driver "block" anything like this?
+>  > 
+>  > Avoiding in-band signaling in the first place. :-/
+> 
+> Yes, that.
+> 
+>  > > A tty driver never looks at the data stream in the kernel, as that
+>  > > way lies madness...
+>  > 
+>  > Surely there is a way to prevent two writes from interleaving?  For
+>  > writes to files in O_APPEND mode, this already happens, doesn't it?
+> 
+> Theoretically each write() call is supposed to be atomic; there are
 
+This is only true for regular files and for pipes when the size is
+bounded by PIPE_BUF.
 
-On 18/05/2015 10:35, Stanislav Malyshev wrote:
-> Hi!
->
->> Hi everyone,
->> this is intended as CVE Request and advisory for
->> https://bugs.php.net/bug.php?id=69403.
-> I do not think this requires a CVE as this needs specially crafted PHP
-> script (i.e. local access or ability to run arbitrary PHP code) and
-> memory settings allowing to allocate huge (>4G) values, which seems to
-> be unlikely to happen on a common production system. I am not sure how
-> remote code execution vector can be provided for this issue, if you have
-> an example, please clarify.
->
-> Thanks,
+> presumably some limits to that in practice, especially on ptys (like
+> PIPE_BUF is the limit for pipes) but this doesn't help if programs
+> emit partial characters, as is (in general) likely. Programs that use
+> stdio to write to stdout are ok because stdio line-buffers stdout when
+> it's a tty; but that doesn't help with stderr, or with programs that
 
+It also does not help for lines longer than the stdio buffer size.
+
+> ship text around in arbitrary-sized blocks, or programs in cbreak
+> mode, or if you're logged in across a network that hiccups
+> occasionally. (Or can be made to hiccup on purpose.)
+> 
+> ISTM that for safety the tty driver is going to have to know about
+> multibyte encodings and not let through partial characters; this is an
+> enormous can of worms.
+
+This is not possible. Ttys are not terminals and do not deal in text.
+They are bidirectional byte-granularity IO devices. (Yes there's
+canonical mode which has some text interpretation but that's only at
+the endpoints and not always in use; it's not part of the actual data
+channel.)
+
+> (but, let's not overreact; it's always been possible to blat out
+> sequences beginning with [ and hope that they'll be inserted right
+> after someone else's ESC.)
+
+Well that's not going to happen if none of the writers are writing
+non-printable characters (ESC is non-printable). What's unique about
+the UTF-8 interleaving is that you can interleave _printable_
+characters and get a control character.
+
+But in general I agree that we should not be over-reacting. I think
+the simple, clean, non-invasive solution that won't break any
+real-world apps is just deprecating C1 controls once and for all --
+set them off by default in existing terminals that used to have them
+on by default, and don't implement them at all in new terminals.
+
+Rich
