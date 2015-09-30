@@ -1,43 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/07/6
-Message-ID: <4EB7FE03.7090805@redhat.com>
-Date: Mon, 07 Nov 2011 08:49:23 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/09/30/1
+Message-ID: <20150930044756.GA8645@oevtugenva.nrevsny.pk>
+Date: Wed, 30 Sep 2015 00:47:56 -0400
+From: Rich Felker <dalias@...c.org>
 To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Nanakos Chrysostomos <nanakos@...ed-net.gr>, Dennis Gilmore <dennis@...il.us>
-Subject: Re: CVE Request -- pam_yubico -- Authentication bypass via NULL password
+Subject: Re: s/party/hack like it's 1999
 Content-Type: text/plain; charset=utf-8
 
-On 11/07/2011 04:15 AM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, vendors,
->
->   a security flaw was found in the way pam_yubico, a pluggable
-> authentication module for yubikeys, performed user authentication,
-> when 'use_first_pass' PAM configuration option was not used and
-> pam_yubico module was configured as 'sufficient' in the PAM
-> configuration. A remote attacker could use this flaw to circumvent
-> common authentication process and obtain access to the account in
-> question by providing a NULL value (pressing Ctrl-D keyboard
-> sequence) as the password string.
->
-> Relevant upstream patch:
-> [1]
-> https://github.com/Yubico/yubico-pam/commit/4712da70cac159d5ca9579c1e4fac0645b674043
->
-> References:
-> [2]
-> http://groups.google.com/group/yubico-devel/browse_thread/thread/3f179ec0e6845deb
-> [3] https://bugzilla.redhat.com/show_bug.cgi?id=733322
->
-> Could you allocate a CVE id for this?
->
-Please use CVE-2011-4120 for this issue.
-> Thank you && Regards, Jan.
-> -- 
-> Jan iankko Lieskovsky / Red Hat Security Response Team
+On Sat, Sep 26, 2015 at 10:26:09PM +0000, David Holland wrote:
+> On Mon, Sep 21, 2015 at 09:02:27PM +0200, Florian Weimer wrote:
+>  > >> I have been arguing for years (but without success) that vt bomb
+>  > >> injection needs to be blocked in the tty driver. This problem
+>  > >> (corruption of concurrent UTF-8 streams) needs to be too, as a matter
+>  > >> of correctness and not even security.
+>  > >
+>  > > How exactly would a tty driver "block" anything like this?
+>  > 
+>  > Avoiding in-band signaling in the first place. :-/
+> 
+> Yes, that.
+> 
+>  > > A tty driver never looks at the data stream in the kernel, as that
+>  > > way lies madness...
+>  > 
+>  > Surely there is a way to prevent two writes from interleaving?  For
+>  > writes to files in O_APPEND mode, this already happens, doesn't it?
+> 
+> Theoretically each write() call is supposed to be atomic; there are
 
+This is only true for regular files and for pipes when the size is
+bounded by PIPE_BUF.
 
--- 
+> presumably some limits to that in practice, especially on ptys (like
+> PIPE_BUF is the limit for pipes) but this doesn't help if programs
+> emit partial characters, as is (in general) likely. Programs that use
+> stdio to write to stdout are ok because stdio line-buffers stdout when
+> it's a tty; but that doesn't help with stderr, or with programs that
 
--Kurt Seifried / Red Hat Security Response Team
+It also does not help for lines longer than the stdio buffer size.
 
+> ship text around in arbitrary-sized blocks, or programs in cbreak
+> mode, or if you're logged in across a network that hiccups
+> occasionally. (Or can be made to hiccup on purpose.)
+> 
+> ISTM that for safety the tty driver is going to have to know about
+> multibyte encodings and not let through partial characters; this is an
+> enormous can of worms.
+
+This is not possible. Ttys are not terminals and do not deal in text.
+They are bidirectional byte-granularity IO devices. (Yes there's
+canonical mode which has some text interpretation but that's only at
+the endpoints and not always in use; it's not part of the actual data
+channel.)
+
+> (but, let's not overreact; it's always been possible to blat out
+> sequences beginning with [ and hope that they'll be inserted right
+> after someone else's ESC.)
+
+Well that's not going to happen if none of the writers are writing
+non-printable characters (ESC is non-printable). What's unique about
+the UTF-8 interleaving is that you can interleave _printable_
+characters and get a control character.
+
+But in general I agree that we should not be over-reacting. I think
+the simple, clean, non-invasive solution that won't break any
+real-world apps is just deprecating C1 controls once and for all --
+set them off by default in existing terminals that used to have them
+on by default, and don't implement them at all in new terminals.
+
+Rich
