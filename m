@@ -1,4 +1,9 @@
-Received: (qmail 21653 invoked by uid 550); 20 Jul 2023 13:27:24 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3876" "Thursday" "1" "October" "2015" "18:57:26" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151001225726.9EF7AB2E0A6@smtpvbsrv1.mitre.org>" "89" "[oss-security] Re: CVE request for wget" nil nil nil "10" "2015100122:57:26" "[oss-security] Re: CVE request for wget" (number mark "        cve-assign@m Oct  1   89/3876  " thread-indent "\"[oss-security] Re: CVE request for wget\"\n") "<CACC5Q1eQ8jf-nxub=viXgnSt6pZGzSzbV=RD2YXV76NVHw7WTQ@mail.gmail.com>" ("<CACC5Q1eQ8jf-nxub=viXgnSt6pZGzSzbV=RD2YXV76NVHw7WTQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 10134 invoked by uid 550); 1 Oct 2015 22:57:39 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,169 +11,102 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 10110 invoked from network); 1 Oct 2015 22:57:38 -0000
+In-Reply-To: <CACC5Q1eQ8jf-nxub=viXgnSt6pZGzSzbV=RD2YXV76NVHw7WTQ@mail.gmail.com>
+Message-Id: <20151001225726.9EF7AB2E0A6@smtpvbsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Thu,  1 Oct 2015 18:57:26 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17673 invoked from network); 20 Jul 2023 13:24:40 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	invisiblethingslab.com; h=cc:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:sender:subject:subject:to:to; s=fm3; t=
-	1689859464; x=1689945864; bh=oqvwuzYFgX+msMG8z9WccDc0WxYtVezz6qx
-	lXlrFcyk=; b=eY0sOfWYtbrM6PQRwnj7uwY6aL9vssXsMzcxZLPCM5vfO5ieEhq
-	euEhtABWREJ033+6RCWG8dkNBZScijUPYNCQOpaW5Xno+/alDq1JbVkJ/PQEs4C0
-	eOZGcfaNz6wqswy7xp/+N4xGaGrJM0YDCTUddjQaFlvPPIedxX1X3erC3Q5lyLA2
-	3ExsFAxRlYSH/xObU2LF4zch/zu0oj3v9wDUzVR3z1KebWFILL4v+hvYgrQW6XTV
-	c9Pi/2Ryt5NZg3hvce2BriWBtKZBKmCCnzoNQqOPTwE86fBjZF0jMy0mdrTQuL36
-	xmwjNkObAsojdlzAGG2yk5w95EGCTImcdkA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:sender:subject
-	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm3; t=1689859464; x=1689945864; bh=oqvwuzYFgX+ms
-	MG8z9WccDc0WxYtVezz6qxlXlrFcyk=; b=LG0+3YvO21PuRxFUB+e5525T/uOCc
-	FapHQ/NB2x5kUplb8hnzyJvwZACoJ4HKn65k+GVV8GFTDx0CtKKyWYFaefHaWBAb
-	3dYWx9pLZEiK89BbaJ+qxp0YMcPoYf4zdYWdvP8CZOHlJl5DSON/aFqGMF449gUR
-	r2gQB4JNRGbUiMh11tCW0X7zwYAnTZpHYCIegXcBKRTGWmDtrBBOlGMqBntMuToi
-	xEETMS+LkmSSSGvJMbyYGnFtrZY3CbDF3KkHtRP3RAuzVFhIGOE60+9IZ7qTSlJu
-	6z6JAjh5qS8L/LuQeDKp8n+QcOEF/lQQ0MxhlbZ++bGHpOrMPh8tIwKcg==
-X-ME-Sender: <xms:hzW5ZDgv0oPzvJT8u01g06bMy0NP4U9HMrUTZphwJcvqgyPwN7uN-Q>
-    <xme:hzW5ZACHgFbwCOZ4mPmJ7sqTEJ1MQjUqi1-S-4X7eGU6VlRBWlcOEaYVXd76juC6c
-    TiXfyWlhpwDg-I>
-X-ME-Received: <xmr:hzW5ZDHTY7lCWrqqHvYanH0bdlNG6q953MkqFDExi5RIGFfLO6ztkaV-uhXHHxrsquo39q5h9YT1QMAv3bg4-5Ui67c>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedviedrhedtgdeifecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfhfgggtuggjsehgtderre
-    dttdejnecuhfhrohhmpeffvghmihcuofgrrhhivgcuqfgsvghnohhurhcuoeguvghmihes
-    ihhnvhhishhisghlvghthhhinhhgshhlrggsrdgtohhmqeenucggtffrrghtthgvrhhnpe
-    ejieefjeeugeeftdekudehtdffkeejveelveeuudfgieetieelhffggeeuveehteenucff
-    ohhmrghinhepohhpvghnshhshhdrtghomhdpohhpvghnsghsugdrohhrghenucevlhhush
-    htvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpeguvghmihesihhnvhhi
-    shhisghlvghthhhinhhgshhlrggsrdgtohhm
-X-ME-Proxy: <xmx:iDW5ZAReThOaR2m8Vdd4qHZbLO4d8NHWH-vVdRCdOvqlx5DBZ51-Dw>
-    <xmx:iDW5ZAxkyQDF3vIsh1HMsAajwg0QTZycmIYQdL6Ey1iMq4cMG3AAcw>
-    <xmx:iDW5ZG79mGmAPXhBd6yaqIgLavG68mH-LBTKihJEtRpUvrEG9H3TmA>
-    <xmx:iDW5ZP9I1LCnJikMaNVpfZw0mrVJBMmYsjP8yesjFEqQbnDAOvSENg>
-Feedback-ID: iac594737:Fastmail
-Date: Thu, 20 Jul 2023 09:24:21 -0400
-From: Demi Marie Obenour <demi@invisiblethingslab.com>
-To: oss-security@lists.openwall.com
-Message-ID: <ZLk1hSUEt00caovk@itl-email>
-References: <e9c022742fc07cee@cvs.openbsd.org>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="Igh/Fss4Q8Ra5KwN"
-Content-Disposition: inline
-In-Reply-To: <e9c022742fc07cee@cvs.openbsd.org>
-Subject: Re: [oss-security] Announce: OpenSSH 9.3p2 released
+Subject: [oss-security] Re: CVE request for wget
+To: austinenglish@gmail.com
 
---Igh/Fss4Q8Ra5KwN
-Content-Type: text/plain; protected-headers=v1; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Date: Thu, 20 Jul 2023 09:24:21 -0400
-From: Demi Marie Obenour <demi@invisiblethingslab.com>
-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Announce: OpenSSH 9.3p2 released
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-On Wed, Jul 19, 2023 at 08:40:40AM -0600, Damien Miller wrote:
-> OpenSSH 9.3p2 has just been released. It will be available from the
-> mirrors listed at https://www.openssh.com/ shortly.
->=20
-> OpenSSH is a 100% complete SSH protocol 2.0 implementation and
-> includes sftp client and server support.
->=20
-> Once again, we would like to thank the OpenSSH community for their
-> continued support of the project, especially those who contributed
-> code or patches, reported bugs, tested snapshots or donated to the
-> project. More information on donations may be found at:
-> https://www.openssh.com/donations.html
->=20
-> Changes since OpenSSH 9.3
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D
->=20
-> This release fixes a security bug.
->=20
-> Security
-> =3D=3D=3D=3D=3D=3D=3D=3D
->=20
-> Fix CVE-2023-38408 - a condition where specific libaries loaded via
-> ssh-agent(1)'s PKCS#11 support could be abused to achieve remote
-> code execution via a forwarded agent socket if the following
-> conditions are met:
->=20
-> * Exploitation requires the presence=C2=A0of specific libraries on
-> =C2=A0 the victim system.
-> * Remote exploitation=C2=A0requires that the agent was forwarded
-> =C2=A0 to an attacker-controlled=C2=A0system.
->=20
-> Exploitation can also be prevented by starting ssh-agent(1) with an
-> empty PKCS#11/FIDO allowlist (ssh-agent -P '') or by configuring
-> an allowlist that contains only specific provider libraries.
->=20
-> This vulnerability was discovered and demonstrated to be exploitable
-> by the Qualys Security Advisory team.=20
->=20=20
-> In addition to removing the main precondition for exploitation,
-> this release removes the ability for remote ssh-agent(1) clients
-> to load PKCS#11 modules by default (see below).
->=20
-> Potentially-incompatible changes
-> --------------------------------
->=20
->  * ssh-agent(8): the agent will now refuse requests to load PKCS#11
->    modules issued by remote clients by default. A flag has been added
->    to restore the previous behaviour "-Oallow-remote-pkcs11".
->=20
->    Note that ssh-agent(8) depends on the SSH client to identify
->    requests that are remote. The OpenSSH >=3D8.9 ssh(1) client does
->    this, but forwarding access to an agent socket using other tools
->    may circumvent this restriction.
->=20
-> Checksums:
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
->=20
-> - SHA1 (openssh-9.3p2.tar.gz) =3D 219cf700c317f400bb20b001c0406056f7188ea4
-> - SHA256 (openssh-9.3p2.tar.gz) =3D IA6+FH9ss/EB/QzfngJEKvfdyimN/9n0VoeOf=
-MrGdug=3D
->=20
-> Please note that the SHA256 signatures are base64 encoded and not
-> hexadecimal (which is the default for most checksum tools). The PGP
-> key used to sign the releases is available from the mirror sites:
-> https://cdn.openbsd.org/pub/OpenBSD/OpenSSH/RELEASE_KEY.asc
->=20
-> Reporting Bugs:
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
->=20
-> - Please read https://www.openssh.com/report.html
->   Security bugs should be reported directly to openssh@openssh.com
+>>                                                 ... We know that a
+>> design goal of Tails is to prevent Internet servers from discovering
+>> the IP address of a machine running Tails. Possibly it's a design
+>> requirement of Tails that a developer needs to "torify" every piece of
+>> Internet client software before it can be shipped with the Tails
+>> distribution, and that a failure of a torify step is, by definition, a
+>> Tails vulnerability.
 
-Should there be a system-wide configuration file containing a list of
-known-good PKCS#11 libraries?  ssh-agent having to guess if something is
-a PKCS#11 library is less than awesome.
---=20
-Sincerely,
-Demi Marie Obenour (she/her/hers)
-Invisible Things Lab
+> That's a reasonable position, please instead issue a CVE for Tails.
 
---Igh/Fss4Q8Ra5KwN
-Content-Type: application/pgp-signature; name="signature.asc"
+Use CVE-2015-7665 for the Tails vulnerability corresponding to the
+http://git.savannah.gnu.org/cgit/wget.git/commit/?id=075d7556964f5a871a73c22ac4b69f5361295099
+commit.
 
+If there is any additional Tails vulnerability related to this,
+another CVE ID may be needed. For example,
+
+  https://lists.gnu.org/archive/html/bug-wget/2015-08/msg00050.html
+
+says
+
+  to be 100% sure, you should add --passive-ftp to your command line.
+  If you don't do that, your /etc/wgetrc or ~/.wgetrc could include
+  --no-passive-ftp (or passiveftp = off).
+
+If Tails is supposed to try to ensure that, perhaps there's a
+requirement to have something like:
+
+  alias wget="wget --passive-ftp"
+
+in a system-wide location (possibly /etc/bash.bashrc). The concept of
+CVE IDs for "failure of a torify step" issues is new, and we aren't
+sure of the best approach.
+
+Responding to:
+
+> From: Andreas Stieger <astieger@suse.com>
+> Date: Tue, 29 Sep 2015 13:12:37 +0200
+
+>> We really don't understand what set of expectations led to this
+>> becoming a CVE request for a vulnerability in wget.
+
+> Possibly assignments for CWE-200 including CVE-2000-0649, CVE-2002-0422
+> relating to exposure if an internal IP address of a communication partner.
+
+The difference here is that sending the client IP address within the
+TCP application data is inherently a part of the FTP protocol. That's
+why we've been reluctant to consider this a vulnerability in the
+upstream wget distribution.
+
+This is also a situation in which the need to torify may be different
+with IPv6 than with IPv4. IPv4 NAT environments are sometimes set up
+so that clients cannot successfully use FTP in active mode. Perhaps
+because of this, it is currently common for FTP clients to use passive
+mode by default. With IPv6, it is probably more likely that a client
+can successfully use FTP in active mode. There might be, now or in the
+near future, FTP clients that try active mode for IPv6 FTP servers.
+Thus, when Tor is used, there may be information disclosure in EPRT
+commands even when there hadn't been information disclosure in PORT
+commands. (Of course, a PORT command may be sent even when active mode
+is ultimately going to fail. The point is that, for communication
+between a normal FTP client and a normal IPv4 FTP server, active mode
+will often never be attempted.)
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-iQIzBAEBCgAdFiEEdodNnxM2uiJZBxxxsoi1X/+cIsEFAmS5NYYACgkQsoi1X/+c
-IsGVDA//fRoL9G7M56FNlPQ9w/vD9nYcS/WgvTI8ZGRCN93T5qaOWRsl8jyjEi1+
-bdc0uzSpKQAnllo1Pj7Pm2q4lsEIe+wW1/SdjxVn9fMNvHYB4p17tNI1iWbGpFzN
-ua/mXKI8hDuQV5ZiDz4Avk9DpAIlDQr/hCF1ejPuTykZDJOpCaak0EQ78c6bDQA3
-V6JzGCmvrINLT2/S/P/WzzYSvl/aH7U8apRrDPI2VmAKETvoonlaQE9ydEL3WUvp
-dFkOdinMpzlnLhkqJRbpUC2056ZrQH/NnKA1IkTsxnZ0qnLtNTzuu1tNv3T+rJMF
-2PYgLTscfd4FVVnOC1ZFPFqb508iMP4GeNM31SgeobfeHc9vz0Umz4/RMO5Kc7Og
-JVmZnGr/9ocR2JEVBLoAhIX/3S8xKXrRBRNwfImHqVtAkSfVy9CC+bluNLhvT8HP
-Mo4jYNdO1fae8amg6GDXcYq5CxLs2U/AGuHJrk5XpBAGXXWbQHuq9t8iK+Xks8lN
-JtTGD+k47eIcheAgUXETCX777X/niB0BuNGmnVv5mx8LJfWL9ESFu9wWqR12z4M/
-/TV+PlsCnKPKLisZvifcPQT/r4CiC9solx+IqI03sZv6gkK+AZ/rHcKh6Jj5G/BL
-r/pvzZT691EOajAWwB1U2wq/jD79ORJWryM4P8VEj+OsfPOGymo=
-=Eut8
+iQIcBAEBCAAGBQJWDboGAAoJEL54rhJi8gl5WzwP/3vIX0WkQy2KIhjGgI+4dhcZ
+lPT9GynzMKGCG5U4Fnqez5lfMammTAmyU6kRCohUSWLfxPkDNDZM5kf5fbnBcgPr
+ebq0awx7oj9y506x0YHMw9zYtd1C1uaY18BEdVsZcTs8E2+nBMayAW8+T+o9OVyo
+bqImRG5lIj+c68VJuY6mmePDRpqXohOZ4I+Vv5pzBim4cNKcYA28upErh5mZwYYj
+rFct5GV3Jc//yAJPhtZMhRIaf+bXcKYoyL3bze+bFLPnLUQSJV/8ezcB2WWE4+Uu
+1G4iYD0ZOrmHmbZfJs32ZF2QHdoWMRQzNNN0JQk60iB/4nWuP5Ns28QH3Vu2CRw1
+XqyAnaChCEX+Xead71z5Db5ugdIOgTo1hPZ5DaUlU1EJ3T+SYCiwJCCPIELXcGgN
+unlml3il98COee1E7tOFudguGlHq0PwHGPixlQVMtZSAHIbuec+Vh4LAbsEE5rTC
+Hrsp3xRtUgQNKHiuYgDNNH03fh5e7A75RR6CPaIuTPKjMRCxVPtTzqyhrQYAkc/f
+4kEQioiLK/2obNO7EuiitWBaQQGZHZgbFxWnz8F08ZGagg0hQj2QtYeN0SBp+iqY
+CEqfUoihoZharTag3XPLf3xA2C8w4GGkWUI6LcyUtrlzoVoSaj0nB6Mt6tWaq6cT
+QD/3LlAZGdgiRu5bEuld
+=9V0C
 -----END PGP SIGNATURE-----
-
---Igh/Fss4Q8Ra5KwN--
