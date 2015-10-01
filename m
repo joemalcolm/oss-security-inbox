@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1447" "Friday" "23" "March" "2018" "21:49:59" "-0500" "Daniel Ruggeri" "druggeri@apache.org" "<E1ezZFn-00031E-TI@romulus.home.bitnebula.com>" "40" "[oss-security] CVE-2017-15710: Out of bound write in mod_authnz_ldap when using too small Accept-Language values" nil nil nil "3" "2018032402:49:59" "[oss-security] CVE-2017-15710: Out of bound write in mod_authnz_ldap when using too small Accept-Language values" (number mark "U       druggeri@apa Mar 23   40/1447  " thread-indent "\"[oss-security] CVE-2017-15710: Out of bound write in mod_authnz_ldap when using too small Accept-Language values\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1705" "Thursday" "1" "October" "2015" "08:17:51" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151001121751.548F66C0670@smtpvmsrv1.mitre.org>" "42" "[oss-security] Re: Apache James Server 2.3.2 security vulnerability fixed VU#988628" nil nil nil "10" "2015100112:17:51" "[oss-security] Re: Apache James Server 2.3.2 security vulnerability fixed VU#988628" (number mark "        cve-assign@m Oct  1   42/1705  " thread-indent "\"[oss-security] Re: Apache James Server 2.3.2 security vulnerability fixed VU#988628\"\n") "<560BE19C.50901@apache.org>" ("<560BE19C.50901@apache.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 28287 invoked by uid 550); 24 Mar 2018 11:25:15 -0000
+Received: (qmail 31782 invoked by uid 550); 1 Oct 2015 12:18:09 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,52 +11,55 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 31744 invoked from network); 1 Oct 2015 12:18:03 -0000
+In-Reply-To: <560BE19C.50901@apache.org>
+Message-Id: <20151001121751.548F66C0670@smtpvmsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, Jakub.Palaczynski@ingservicespolska.pl, security@apache.org, cert@cert.org
+Date: Thu,  1 Oct 2015 08:17:51 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 24392 invoked from network); 24 Mar 2018 02:50:15 -0000
-To: announce@httpd.apache.org, oss-security@lists.openwall.com,
-    security@httpd.apache.org
-From: Daniel Ruggeri <druggeri@apache.org>
-Message-Id: <E1ezZFn-00031E-TI@romulus.home.bitnebula.com>
-Date: Fri, 23 Mar 2018 21:49:59 -0500
-Subject: [oss-security] CVE-2017-15710: Out of bound write in mod_authnz_ldap when using too small Accept-Language values
+Subject: [oss-security] Re: Apache James Server 2.3.2 security vulnerability fixed VU#988628
+To: eric@apache.org
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-CVE-2017-15710: Out of bound write in mod_authnz_ldap when using too small Accept-Language values.
+> Description: Apache James Server 2.3.2 has security issue that can let a
+> user execute arbitrary system command for servers configured with file
+> based user repositories.
+> 
+> Mitigation: 2.3.2 users should upgrade to 2.3.2.1 to be downloaded from
+> http://james.apache.org/download.cgi#Apache_James_Server
+> 
+> Credit: This issue was discovered by Palaczynski Jakub
+> <Jakub.Palaczynski@ingservicespolska.pl> (recorded as VU#988628 by CERT)
 
-Severity: Low
+Use CVE-2015-7611.
 
-Vendor: The Apache Software Foundation
+(The MITRE CVE team has had earlier communication with the discoverer,
+and learned that step 8 of the
+http://www.apache.org/security/committers.html process wasn't
+completed in this case.)
 
-Versions Affected:
-httpd 2.0.23 to 2.0.65
-httpd 2.2.0 to 2.2.34
-httpd 2.4.0 to 2.4.29
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Description:
-
-mod_authnz_ldap, if configured with AuthLDAPCharsetConfig,
-uses the Accept-Language header value to lookup the right charset encoding
-when verifying the user's credentials.
-If the header value is not present in the charset conversion
-table, a fallback mechanism is used to truncate it to a two
-characters value to allow a quick retry (for example, 'en-US' is truncated
-to 'en'). A header value of less than two characters forces an out of bound
-write of one NUL byte to a memory location that is not part of the string.
-In the worst case, quite unlikely, the process would crash which could
-be used as a Denial of Service attack. In the more likely case, this memory is
-already reserved for future use and the issue has no effect at all."
-
-Mitigation:
-All httpd users should upgrade to 2.4.30 or later.
-
-Users of (the now end-of-life) httpd 2.2 who cannot upgrade at this time should
-apply CVE-2017-15710.patch, which is available at
-
-   https://www.apache.org/dist/httpd/patches/apply_to_2.2.34/
-
-Credit:
-The Apache HTTP Server security team would like to thank Alex Nichols
-and Jakob Hirsch for reporting this issue.
-
-References:
-https://httpd.apache.org/security/vulnerabilities_24.html
+iQIcBAEBCAAGBQJWDSLlAAoJEL54rhJi8gl5Z4MP/0qtNB4vq72DmYEHNKScQYFc
+fojNnegH/3uH8V6Mj8f3NZw/87SkZCfcryIK9PcFcJDFwHwnJAIjfixFySSacvri
+x5JjIMhYKNWFV5wAbSN1cWmKMEehhhtHT3TRSyR10gsu+wmJZgQDM5RhTb90QCQt
+SkFHWbrNckvgiuOtTNflhX9D3Nkv7yy8KmzNfD1QAhtKHjy4DWw+zKje5MIj5a70
+BZdwPkufTB2AvL6iYMsF3UMCuzRYNIp3Oa3EXdPonf20V/kvJINX5pURLh0UAawG
+Y85mNhmen0UnQyAnMxw+ewWzAJ2NwqIfS6CiV3nDCDeZ5XqXwYi86RR+U/rOjf1C
+3RXOq8jfAc/0HgaZ2vIw7BE8Gx7Co8mYh+zbw+DWiSGUhxwAsKwTM7W+jdtqyW2+
+iGrsrFbwxQVTxK4iU4BmW2uzFnbDVHIogJHVrC0lr2g7miWOGmQwclBzoRRP2X1M
+xfrEc80u9gQuSssv97Dr8ykmCPHOuxfuZPxA6xhj519DqpDQgVcNMZDa7qJzJvgj
+2L6LkEptqK3nYm4IKE1QwxzszTtY6A5f/H71v3qs9JCzWhEVLK8YYu5Svjdtz9o9
+f4/WFgUu4mRaQDrvHVEwz0fXOChTvwILTEIZyK8lqZ0LIhvrT1kaoMyjsSzkdRlk
+PbH4QryaY29jRJbRTzys
+=hNER
+-----END PGP SIGNATURE-----
