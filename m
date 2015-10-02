@@ -1,4 +1,9 @@
-Received: (qmail 9479 invoked by uid 550); 8 Nov 2024 00:19:22 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["445" "Friday" "2" "October" "2015" "16:19:15" "+0200" "Gilles Chehade" "gilles@poolp.org" "<20151002141915.GB15335@poolp.org>" "15" "Re: [oss-security] CVE requests: Critical vulnerabilities in OpenSMTPD" nil nil nil "10" "2015100214:19:15" "[oss-security] CVE requests: Critical vulnerabilities in OpenSMTPD" (number mark "        gilles@poolp Oct  2   15/445   " thread-indent "\"Re: [oss-security] CVE requests: Critical vulnerabilities in OpenSMTPD\"\n") "<CAHmME9parQruG9aJroLU82J4sX0yodYcPPRks+5XWF4tD2nWpg@mail.gmail.com>" ("<CAHmME9o2B_FcO57rhDSKg7x-6aiVscP-XHgz3SXnf1GYwUvp7g@mail.gmail.com>" "<A43D5151-BE22-4D14-9336-73F9DE2785C3@alchemistowl.org>" "<CAHmME9parQruG9aJroLU82J4sX0yodYcPPRks+5XWF4tD2nWpg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 18427 invoked by uid 550); 2 Oct 2015 14:19:27 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,97 +11,52 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 6011 invoked from network); 8 Nov 2024 00:18:00 -0000
-Date: Fri, 8 Nov 2024 01:17:59 +0100
-From: Solar Designer <solar@openwall.com>
-To: oss-security@lists.openwall.com
-Message-ID: <20241108001759.GA15331@openwall.com>
-References: <20241106041215.GA4432@openwall.com> <F60236E0-F65A-4441-9E62-64EE55016B2C@dwheeler.com> <20241107000819.z6Ygg103@steffen%sdaoden.eu> <20241107041658.GA10363@openwall.com> <20241107210420.v7ZcHYHZ@steffen%sdaoden.eu> <20241107214159.XFJ1n5cL@steffen%sdaoden.eu>
-Mime-Version: 1.0
+Received: (qmail 18403 invoked from network); 2 Oct 2015 14:19:26 -0000
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=poolp.org; h=date:from:to
+	:cc:subject:message-id:references:mime-version:content-type
+	:in-reply-to; s=opensmtpd; bh=vXMSzSXHQzkgfhrOECWtZVCFe2A=; b=I2
+	kLUe7gjOOcctwbfKx9FB6Is5Jc5xcP6+YfPg4KvwjNhBeIb0qWObvgncH+5THe4x
+	xugDwmP8VaWQwHiFIqfHRUsEFOkt6giZQwuD6AoZpXNI8ASjekzCi362pL/JHBWx
+	J89tpPzldiI580JFyNMlggnjhVqFONR6SXsQKdO8E=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=poolp.org; h=date:from:to:cc
+	:subject:message-id:references:mime-version:content-type
+	:in-reply-to; q=dns; s=opensmtpd; b=DC62rTh3JVK7wX4keIEJmUHLA1M2
+	HEW2lBvImwqjdDJfaM5hNH7ZCPfsftK701hrVFqOGvmpS0ZTyZ+HPICuq/B5EVGV
+	HdRyApuKpsL47Nb+2h1Qa57iBWv9nd0EgsGsnzNTZKayB3lXdEipJ6HzZEhlWvN4
+	JxZPog8Jhr8x3aE=
+Message-ID: <20151002141915.GB15335@poolp.org>
+References: <CAHmME9o2B_FcO57rhDSKg7x-6aiVscP-XHgz3SXnf1GYwUvp7g@mail.gmail.com>
+ <A43D5151-BE22-4D14-9336-73F9DE2785C3@alchemistowl.org>
+ <CAHmME9parQruG9aJroLU82J4sX0yodYcPPRks+5XWF4tD2nWpg@mail.gmail.com>
+MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20241107214159.XFJ1n5cL@steffen%sdaoden.eu>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] shell wildcard expansion (un)safety
+In-Reply-To: <CAHmME9parQruG9aJroLU82J4sX0yodYcPPRks+5XWF4tD2nWpg@mail.gmail.com>
+X-Operating-System: OpenBSD poolp.org 5.7 GENERIC.MP
+X-Flattr: poolp
+X-Twitter: poolpOrg
+User-Agent: Mutt/1.5.23 (2014-03-12)
+Cc: oss-security <oss-security@lists.openwall.com>,
+	misc <misc@opensmtpd.org>
+Date: Fri, 2 Oct 2015 16:19:15 +0200
+From: Gilles Chehade <gilles@poolp.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] CVE requests: Critical vulnerabilities in
+ OpenSMTPD
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
 
-On Thu, Nov 07, 2024 at 10:41:59PM +0100, Steffen Nurpmeso wrote:
-> Steffen Nurpmeso wrote in
->  <20241107210420.v7ZcHYHZ@steffen%sdaoden.eu>:
->  |Solar Designer wrote in
->  | <20241107041658.GA10363@openwall.com>:
->  ||On Thu, Nov 07, 2024 at 01:08:19AM +0100, Steffen Nurpmeso wrote:
->  ||> To add that the POSIX core developers mention (APPLICATION USAGE):
->  ||> 
->  ||>   It should be noted that using find with -print0 to pipe input to
->  ||>   xargs -r0 is less safe than using find with -exec because if
->  ||>   find -print0 is terminated after it has written a partial
->  ||>   pathname, the partial pathname may be processed as if it was
->  ||>   a complete pathname.
->  ||
->  ||Shouldn't that behavior be treated as an xargs implementation bug or at
->  ||least shortcoming, and fixed as such?  I hope POSIX doesn't require it?
+On Fri, Oct 02, 2015 at 03:29:31PM +0200, Jason A. Donenfeld wrote:
+> I haven't looked at these commits yet but:
 > 
-> POSIX.1-2024 says, for xargs, on page 3600, lines 123174 ff.:
+> If a local user sends a message to a remote address, does this
+> outgoing connection open up this remote vulnerability vector?
 > 
->   If the -0 option is specified, the application shall ensure that
->   arguments in the standard input are delimited by null bytes.
->   If multiple adjacent null bytes occur in the input, each null
->   byte shall be treated as a delimiter.
->   If the standard input is not empty and does not end with a null
->   byte, xargs should ignore the trailing non-null bytes (as this
->   can signal incomplete data) but may use them as the last
->   argument passed to utility.
-> 
-> So it standardizes behaviour as it exists in real life
-> applications.
-> (This is pretty unfortunate.)
 
-Actually, to me the above reads like it merely allows the current
-behavior ("may"), but encourages change ("should").  That's good.
+It would still require a local user to do it and it would still only
+affect an unprivileged process.
 
-My only complaint is that "ignore" doesn't suggest this resulting in a
-non-zero exit status from xargs.  POSIX allows exit status in the range
-of 1 to 125 if, among other possibilities, "some other error occurred".
-So I think a non-zero exit status in that range on this condition isn't
-too far from being compliant.
 
->   ...
->  |A first thought is that the now really included (four decades too
->  |late!) sh(1)ell's "pipefail" option was agreed upon long after the
->  |text above appeared for the -print0/-r0 addition.  If that is true
->  |the above text is anyway a correct statement less the partial
->  |pathname because the undesired "termination" will not be reflected
->  |in the exit status of the pipe.
+-- 
+Gilles Chehade
 
-It will be when "pipefail" is present and enabled, and even if not it's
-extra and different impact - not indicating error to further commands
-(which may or may not matter in a given case) vs. also processing of an
-unintended file (truncated filename) by this very command.
-
->  ||In other words, if the input stream to "xargs -0" doesn't end in a NUL,
->  ||xargs must not process the last maybe-partial string.  I've just checked
->  |
->  |Other than that i would agree.
->  |
->  ||GNU findutils xargs (not the latest version, though) and it does have
->  ||this problem - something we'd want to fix?
->  |
->  |From a glance "git show master:findutils/xargs.c::process0_stdin()"
->  |of busybox also does
->  ...
->  |So then the above paragraph even reflects code reality.
-
-So it looks like we can fix/enhance xargs in this way in both GNU
-findutils and Busybox findutils and perhaps elsewhere.  It would also be
-interesting to know if any implementations exist that already "ignore
-the trailing non-null bytes".
-
-Another reason for this safer behavior is that it's also more consistent
-with respect to empty strings.  If "trailing non-null bytes" are passed
-"as the last argument", then this only occurs if the last argument is
-non-empty.  Yet xargs otherwise does support empty arguments, except for
-the last non-null-terminated one.  We'd be removing this inconsistency.
-
-Alexander
+https://www.poolp.org                                          @poolpOrg
