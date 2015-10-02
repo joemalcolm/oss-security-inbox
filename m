@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2361" "Sunday" "16" "October" "2016" "10:23:43" "+0000" "Graham Christensen" "graham@grahamc.com" "<CAHapaJ1yTNVH+umS9U3SeW0jK73WY0H06_k0eJmJ3pnEVO9D+Q@mail.gmail.com>" "68" "Re: [oss-security] Re: Fuzzing jasper" "^Cc:" nil nil "10" "2016101610:23:43" "[oss-security] Re: Fuzzing jasper" (number mark "        graham@graha Oct 16   68/2361  " thread-indent "\"Re: [oss-security] Re: Fuzzing jasper\"\n") "<20161016030229.F231642E027@smtpvbsrv1.mitre.org>" ("<1528713.C8CqGc87r5@arcadia>" "<20161016030229.F231642E027@smtpvbsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2637" "Friday" "2" "October" "2015" "13:13:39" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151002171339.1A8176C0006@smtpvmsrv1.mitre.org>" "63" "[oss-security] Re: CVE request: Heap overflow and DoS with a tga file in gdk-pixbuf < 2.32.1" nil nil nil "10" "2015100217:13:39" "[oss-security] Re: CVE request: Heap overflow and DoS with a tga file in gdk-pixbuf < 2.32.1" (number mark "        cve-assign@m Oct  2   63/2637  " thread-indent "\"[oss-security] Re: CVE request: Heap overflow and DoS with a tga file in gdk-pixbuf < 2.32.1\"\n") "<CACn5sdR_PnnzeTT921B2mu2o1ceaC5qzKsKCuqHpK0FVp5OKng@mail.gmail.com>" ("<CACn5sdR_PnnzeTT921B2mu2o1ceaC5qzKsKCuqHpK0FVp5OKng@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 25711 invoked by uid 550); 16 Oct 2016 13:30:07 -0000
+Received: (qmail 11567 invoked by uid 550); 2 Oct 2015 17:13:51 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,106 +11,76 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 32666 invoked from network); 16 Oct 2016 10:24:06 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=grahamc.com; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=cYk3dVB+2o+qGN4GPbiCB7bwVFtI4gXyKI91aqZ9QuE=;
-        b=avFRqDfFm00JWNhU/i1KG5T4L6fEYUcFc22y/orzXmzhjd2K8oOS5n33NRM1f6rOQ9
-         SGlKFtyhTl9DE5L99CHZwFYp+c0B8XU5HDjJ4FHFy2354HWMwaI6ai/8kyLtgJDTgDgC
-         aUG7hJ1UeciyRK46VnRJCiyww4mIMXGpC1amo=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=cYk3dVB+2o+qGN4GPbiCB7bwVFtI4gXyKI91aqZ9QuE=;
-        b=SstLFKJaANKTKwZ79S7AvjpZGQTtizt4h7td3wat4FFWC9gLn5zE3BYd6oS0/hPhPR
-         Xcmz9LAosnxjqyT1a3NYSfaOM9qC7Ey6OBnYgaWLVgbTlI8OycxTNRrAYDa0dRPyijMQ
-         2EmG8h+d5LwfDxQTxk25ORUZU9SDTGBNcvbTwqEuQwu29OlHDitiazia+O/mEiztjzX9
-         2/nbVviRjQsj/oIryLBhcnAzKgyA4IhAdZGqnPFgTwn/FVaXXtDbGxouB8sSXDrFs30E
-         mNoXDypoLU+Oz37xmqHWygR59btdSRgro+cb5L5bAhNnxcSLjDgvk/o8dNVk5FWGFhHV
-         SySQ==
-X-Gm-Message-State: AA6/9RnbLGwEpX06Wr5v0Rddkv57TzyKVW2KcqdEjZ+3SjTP/EffbcZXDuugL3TGmYEImHTSdFBKjkSvqNeUjw==
-X-Received: by 10.31.158.20 with SMTP id h20mr11812354vke.110.1476613434131;
- Sun, 16 Oct 2016 03:23:54 -0700 (PDT)
-MIME-Version: 1.0
-References: <1528713.C8CqGc87r5@arcadia> <20161016030229.F231642E027@smtpvbsrv1.mitre.org>
-In-Reply-To: <20161016030229.F231642E027@smtpvbsrv1.mitre.org>
-Message-ID: <CAHapaJ1yTNVH+umS9U3SeW0jK73WY0H06_k0eJmJ3pnEVO9D+Q@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=001a11427c36365807053ef8dba4
-Cc: cve-assign@mitre.org
-Date: Sun, 16 Oct 2016 10:23:43 +0000
-From: Graham Christensen <graham@grahamc.com>
+Received: (qmail 11545 invoked from network); 2 Oct 2015 17:13:51 -0000
+In-Reply-To: <CACn5sdR_PnnzeTT921B2mu2o1ceaC5qzKsKCuqHpK0FVp5OKng@mail.gmail.com>
+Message-Id: <20151002171339.1A8176C0006@smtpvmsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Fri,  2 Oct 2015 13:13:39 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: Fuzzing jasper
-To: oss-security@lists.openwall.com, ago@gentoo.org
+Subject: [oss-security] Re: CVE request: Heap overflow and DoS with a tga file in gdk-pixbuf < 2.32.1
+To: gustavo.grieco@gmail.com
 
---001a11427c36365807053ef8dba4
-Content-Type: text/plain; charset=UTF-8
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-For what it is worth, Jasper has recently issued a release fixing many
-CVEs, and would likely appreciate these fussing results as bug reports on
-their github project: https://github.com/mdadams/jasper/
-On Sat, Oct 15, 2016 at 11:21 PM <cve-assign@mitre.org> wrote:
+> We found a heap overflow and a DoS in the gdk-pixbuf implementation
+> triggered by the scaling of tga file. These issues are only fixed in the
+> recent release of gdk-pixbuf 2.32.1
+> 
+> it was fixed in 2.32.0 with the 3 commits
+> starting with
+> https://git.gnome.org/browse/gdk-pixbuf/commit/?id=19f9685dbff7d1f929c61cf99188df917a18811d
 
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA256
->
-> > AddressSanitizer: SEGV on unknown address
-> > 0x527ebf in bmp_getdata ...
-> jasper-1.900.1/src/libjasper/bmp/bmp_dec.c:383:5
-> >
-> > AddressSanitizer: SEGV on unknown address
-> > 0x528252 in bmp_getdata ...
-> jasper-1.900.1/src/libjasper/bmp/bmp_dec.c:385:5
->
-> Use CVE-2016-8690 for both of these (the first and fifth items in the
-> http://www.openwall.com/lists/oss-security/2016/08/23/6 post).
->
->
-> > AddressSanitizer: FPE on unknown address
-> > 0x56de63 in jpc_dec_process_siz ...
-> jasper-1.900.1/src/libjasper/jpc/jpc_dec.c:1195:17
->
-> Use CVE-2016-8691.
->
->
-> > AddressSanitizer: FPE on unknown address
-> > 0x56dee3 in jpc_dec_process_siz ...
-> jasper-1.900.1/src/libjasper/jpc/jpc_dec.c:1197:18
->
-> Use CVE-2016-8692.
->
->
-> > AddressSanitizer: attempting double-free
-> > 0x51f8f8 in mem_close ...
-> jasper-1.900.1/src/libjasper/base/jas_stream.c:1073:3
->
-> Use CVE-2016-8693.
->
-> - --
-> CVE Assignment Team
-> M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-> [ A PGP key is available for encrypted communications at
->   http://cve.mitre.org/cve/request_id.html ]
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1
->
-> iQIcBAEBCAAGBQJYAu2GAAoJEHb/MwWLVhi2D2wQAI6W9/5UOJJD9vMc25GdYVGo
-> Is0tX/21v2ibFpgyAAHBLaQd1ohNeu9U5Y6Nj9lAYAydmcoEZrXX9FxEMNp6XlI3
-> ybIDOapRLsjqLovdEzZUEnEDiHWAFS/t/p4hZv67PB7fHWKkeA3QhthSf3OlGVNm
-> IDQX8jMzhb96ZLS9aq5Hlz28K2z2Bx9j08WXQ0Fkp2ksMOCdNF0QwRp1TuA7Ork8
-> gtxNSVS+r8oAwWBH9fdwU8d9rgBoh0nkMVt9PJex5Hd4ys8CrOS6gBBc9HqDcxdc
-> bVdYRUuNbXJjZdlOcfQU37a6MyWJ0gCmCp6xs7u1joAnNmzT9C894xLInJFzx37n
-> JVqNBMltWgkkp1ClyVIdkRJErif2JstRpL59JBaMXgSRD0ZCZRsMrehc6SobX0A1
-> iUGxdjG/jpP7c8ZPaC2SS/1y0cEpP7CsbDFliZaGxt6QcKOfNqs33L3DSuc7qn0d
-> OJIH4GMNlZQFgf7+c67+ZSi86HVmTda9DJjm2a9uqU7tKKE/kJWC9OyWTef9K0aJ
-> 1HAu1yNjgGmc/oIIMCk/8wNO4UqlHiXhcF/kjWUBc4/eTAPxYLHSH5703HTStaVU
-> EN0ONeBMsfx6lhZgoJqDC+ItztjnDR90VGJyrH98XoEn+3KzjGkgEeaYv/N/mUfw
-> Q/58lzCKYeVI4ovM1u+J
-> =1lOZ
-> -----END PGP SIGNATURE-----
->
+This means:
 
---001a11427c36365807053ef8dba4--
+https://git.gnome.org/browse/gdk-pixbuf/commit/?id=19f9685dbff7d1f929c61cf99188df917a18811d
+https://git.gnome.org/browse/gdk-pixbuf/commit/?id=edf6fb8d856574bc3bb3a703037f56533229267c
+https://git.gnome.org/browse/gdk-pixbuf/commit/?id=6ddca835100107e6b5841ce9d56074f6d98c387e
+
+Use CVE-2015-7673. Apparently the cause of the issue was use of heap
+memory after an allocation failure.
+
+The original CVE request said "< 2.32.1" and "only fixed in ...
+2.32.1" but then a followup message said "fixed in 2.32.0" instead. We
+think the latter is correct.
+
+The entry in the 2.32.0 changelog is shown in:
+https://git.gnome.org/browse/gdk-pixbuf/commit/?id=02a76ac6956ee1418da926d6f2cedb78525495b7
+
+Responding to:
+
+> From: Kurt Seifried <kseifried@redhat.com>
+> Date: Thu, 1 Oct 2015 08:04:12 -0600
+> 
+> I know on our end there was some
+> confusion as to whether or not this is the same flaw or closely related to
+> https://www.mozilla.org/en-US/security/advisories/mfsa2015-88/
+
+CVE-2015-4491 from mfsa2015-88 has different affected versions. Also, that
+CVE is only for an integer overflow. If missing allocation-failure checking
+before ffec86ed5010c5a2be14f47b33bcf4ed3169a199
+is separately exploitable, then another CVE ID could be assigned.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJWDro2AAoJEL54rhJi8gl5D54QAK/Vzop01NHL5zZpZlBwzrGZ
+8dLEBvFTqXPjItMwhmLGNV/R9M59T3LEtRyENG45lMyDECuKsMVoL696Q87h16+c
+Gweir8ZcVC19QxMBpwn4ITiXZ3JRnLgHqEZAp+6eI4zlW4GFkpyXxF3E3YR/U3mv
+Bace8L3FoAq9jVqgMsHdVzZWyeUpKL9FZbRDE9wsimOg1mFIrZ/ZLW5qlFDdoxVt
+GqbeBpr2F+8678HQh+DIaDfyLmqSj0RCO4qBtOOoQzQ9VU+JL8TvMJE2883rwVq+
++JHf81c8ABZmqYrn/oh8AMr8WggesZRd1Q/0r+Tb7/w1FGv/qPa6JsNglrOxDxT3
+AEBfTUrllJpmfrX8VQFTTNecagLwPMC3s1j48lV8ZghOj3/mL4n68Tp5sV6f/b6Z
+olX0pqH6E5iSy8BNBtrRF7r0yLfUewqwKlvOhT04zl3M26O2RD5HYWuxSxokXtkn
+kUGd/zhryOX5Duz+c7HAG9ZBl26zC9BCyaSbzlo6yj3HPi+AxtQKSLxFl+dQmtIg
+sWgQAKn056s6BWtdTbInUIzTV86LQ7Oa00QKobcLrVHwFi2mEZIRjmdDuR3oin7M
+DRdB89E4SdLGFe8cIw3oG60noyRObJitB2hjSoxuUdO/ZFAbUTbgfz0b44grS/YD
+njkGj067RRjmWP+GKRGp
+=cZzu
+-----END PGP SIGNATURE-----
