@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1697" "Monday" "24" "August" "2015" "23:21:15" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150825032115.659E16FC026@smtpvmsrv1.mitre.org>" "42" "[oss-security] Re: CVE Request: Linux x86_64 NT flag issue - Linux kernel" nil nil nil "8" "2015082503:21:15" "[oss-security] Re: CVE Request: Linux x86_64 NT flag issue - Linux kernel" (number mark "        cve-assign@m Aug 24   42/1697  " thread-indent "\"[oss-security] Re: CVE Request: Linux x86_64 NT flag issue - Linux kernel\"\n") "<CALCETrUvz+ABna38d-at13Z=X=O_juH1FROqg5YDNSvzAZj3sQ@mail.gmail.com>" ("<CALCETrUvz+ABna38d-at13Z=X=O_juH1FROqg5YDNSvzAZj3sQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3472" "Friday" "2" "October" "2015" "17:43:40" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151002214340.090C66C000A@smtpvmsrv1.mitre.org>" "81" "[oss-security] Re: DoS attack through Email-Address perl module v1.907 (CVE id request)" nil nil nil "10" "2015100221:43:40" "[oss-security] Re: DoS attack through Email-Address perl module v1.907 (CVE id request)" (number mark "        cve-assign@m Oct  2   81/3472  " thread-indent "\"[oss-security] Re: DoS attack through Email-Address perl module v1.907 (CVE id request)\"\n") "<201510021858.31300@pali>" ("<201510021858.31300@pali>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 25603 invoked by uid 550); 25 Aug 2015 03:21:28 -0000
+Received: (qmail 17439 invoked by uid 550); 2 Oct 2015 21:44:00 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,35 +11,74 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 24559 invoked from network); 25 Aug 2015 03:21:27 -0000
-In-Reply-To: <CALCETrUvz+ABna38d-at13Z=X=O_juH1FROqg5YDNSvzAZj3sQ@mail.gmail.com>
-Message-Id: <20150825032115.659E16FC026@smtpvmsrv1.mitre.org>
+Received: (qmail 16323 invoked from network); 2 Oct 2015 21:43:51 -0000
+In-Reply-To: <201510021858.31300@pali>
+Message-Id: <20151002214340.090C66C000A@smtpvmsrv1.mitre.org>
 Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Mon, 24 Aug 2015 23:21:15 -0400 (EDT)
+Date: Fri,  2 Oct 2015 17:43:40 -0400 (EDT)
 From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE Request: Linux x86_64 NT flag issue - Linux kernel
-To: luto@amacapital.net
+Subject: [oss-security] Re: DoS attack through Email-Address perl module v1.907 (CVE id request)
+To: pali.rohar@gmail.com
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> When I fixed Linux's NT flag handling, I added an optimization to
-> Linux 3.19 and up. A malicious 32-bit program might be able to leak
-> NT into an unrelated task. On a CONFIG_PREEMPT=y kernel, this is a
-> straightforward DoS. On a CONFIG_PREEMPT=n kernel, it's probably
-> still exploitable for DoS with some more care.
-> 
-> I believe that this could be used for privilege escalation, too, but
-> it won't be easy.
-> 
-> The fix is just to revert the optimization:
-> 
-> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=512255a2ad2c832ca7d4de9f31245f73781922d0
-> 
-> Mitigation: CONFIG_IA32_EMULATION=n
+> Standard usage of Email::Address module is to parse From/To/Cc headers
+> from emails. And standard is also to use that module without setting
+> $COMMENT_NEST_LEVEL variable... So because I was thinking about this
+> standard usage in other applications I think that one CVE ID could be
+> enough.
 
-Use CVE-2015-6666.
+Thanks for your additional notes. We have decided to choose the option
+of a single CVE, although this option is unattractive for some
+reasons. Use CVE-2015-7686 for the CWE-407 ("Algorithmic Complexity")
+issue in versions 1.908 and earlier. In other words, we consider 1.908
+to be an affected version because there are realistic cases in which
+COMMENT_NEST_LEVEL must be 2 for usability reasons. There is no CVE ID
+corresponding to the behavior change between 1.907 and 1.908.
+
+Looking at the first example from our previous reply:
+
+  jsmit@online.microsoft.com (Jan Smith (MSFT))
+
+has a name field of "Jan Smith" in level 2 but a name field of "jsmit"
+in level 1. However,
+
+  jsmit@online.microsoft.com (Jan Smith)
+
+has a name field of "Jan Smith" in both level 2 and level 1. The
+documentation for the name instance method says:
+
+  This method tries very hard to determine the name belonging to the
+  address. First the "phrase" is checked. If that doesn't work out
+  the "comment" is looked into.
+
+The comment field of "(Jan Smith (MSFT))" is a real-life example and
+doesn't seem inherently complicated, so we feel that the documented
+"tries very hard" behavior is no longer provided if level 1 is used.
+As an example, Email::Address->parse might be used only on the "From"
+line to support an application that really, really wants to print:
+
+   Dear Jan Smith,
+      Thank you for opening a ticket.
+
+instead of
+
+   Dear jsmit,
+      Thank you for opening a ticket.
+
+It is, of course, not the CVE project's role to offer advice on
+whether to update. In practice, though, if there were a CVE stating
+"before 1.908" as the affected versions, then (because 1.908 exists)
+many people would update to resolve the CVE. It would fix a
+denial-of-service problem for anyone who is actually attacked, but
+potentially add a usability problem for a much larger population.
+
+Finally, if anyone is planning to actually fix the CWE-407 issue, note
+that the problem might occur only with a list of addresses, as shown
+in the address-line attachment in the original CVE request. None of
+the four addresses by itself requires much CPU time.
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -49,17 +88,17 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJV290aAAoJEL54rhJi8gl51BEP/3YJaklikoui7IEnP++vCiyw
-ZKapRPky4Gp2aDs0aecdsgkq+n18zq2NjfsECw5I3hvf9Anmg264pwbvrckmpITu
-6Zm3V9yvO4DeJdMCDAk9W7YZzXmW1H18cXCa8DkG4Fr53h4ZZ1tUCsunXXZ82VHT
-mlLiJtMlPazjaGinVLK9maMrYkmubOMOnq4sCpbGbHplo9SVfapg0BCZ5mPJyjPQ
-f12Z2HRu8Gz3axij27+2vm0YA153JzELrJJ7O50Pu64cfFliXBhy0HN89OvML69h
-qkR4QDvFlMmnKJIUSuiYA5exsUMUIQiCfu+ID0ho6v+HbsKNhhdS8VaFtI7LVIKJ
-qOYG+EcaotiYz/2KnXuIKhxuLkU+jy42omhfLtWzf1N3GY1+L8I4yaSgmI0fAZag
-k+oLWRLujAxiy58KbSfOZcpPj1IHtPXkgNBlGUWepAx8we49RvsWBNYVRTEOW+5l
-3JAXBUUhueMc6+j69QjOJLmCLUKRZyRKDcxBUh8ZuiSkw+wPbOipQZMMLHpxuUAf
-yGJIKArqG5pBajdzS29KjFL9mDwAs84rIR2PIlEF791k2a/5ZwN/xJr0v76cLnRI
-Cjzd6re9ta70IhxMNlRhSCRepIRv5I5Ik3uHFj15bPdIul+3m01v7uZL2krGEQAl
-HY2AwGUOLrm8lo8eAISC
-=AgVe
+iQIcBAEBCAAGBQJWDvnQAAoJEL54rhJi8gl5HWkP/jTvpIsmvuIp/asS5pTJOXZD
+kT5jvSVR76xGWyww4gD85oGzaYgg0mW4JMNmqgRWeK8KeSvhaBo3Q5eKzxL+XjLC
+Ykjn9Ho9u+cbG6MBkGFeMW0SOYuN0nqIun7gxAPeYwE44fS2wSRFLDYQydgJahS7
+Zqk4FCxSt+aPl4dDsxEaMn2LVr3JbzaRSqbihuzsoKLzjJObC0vAaQDSQgYED6F7
+essACn02BiQbfwA7aBP1a8gOpV0J30IdmOsomBsBfqxVwma5GqFSfAnlzMYPM9Ys
+/8qV+CZZrkXz42y58YwqolpS8THUtaIsvV2SttmZSGNXuNS0hWqP2tvquV5apvBv
+4Wpu4Jx6ouw/3YYncQ5cm+pBjOmK7qYMUVeDlxREZnSxIPQOQ6Jq9womX6OGdEwL
+KZV5w3B1U1+82Si6U8Dh0SiJhcumElsg5dvMVAaILDkzA13uEzipci59+oU1G0w2
+pdaArJUZ8MvXFPRXGRB2D7GsG3NA0fBT1kttS9jIcsMkaZlHAJDeT9GnhDzWZcIi
+SBdR2xi38nOEGHh1uGl7LSNmwrtY+mdkW3o1bEIr9/Ar7ji6c385RnzcTsgza2B3
+NP4D5OjARqf4Txh7vpUu1OSohDlJpYjeDTvhu+1wMJaO5aaQf8JKS4owC+JQOJL8
+TpZM2oVjUrN/Zbgnmgni
+=EqLL
 -----END PGP SIGNATURE-----
