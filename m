@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2379" "Tuesday" "15" "March" "2016" "18:43:07" "+0300" "Solar Designer" "solar@openwall.com" "<20160315154307.GA4255@openwall.com>" "48" "Re: [oss-security] server and client side remote code execution through a buffer overflow in all git versions before 2.7.1 (unpublished cve-2016-2324 and cve-2016-2315)" "^Cc:" nil nil "3" "2016031515:43:07" "[oss-security] server and client side remote code execution through a buffer overflow in all git versions before 2.7.1 (unpublished cve-2016-2324 and cve-2016-2315)" (number mark "        solar@openwa Mar 15   48/2379  " thread-indent "\"Re: [oss-security] server and client side remote code execution through a buffer overflow in all git versions before 2.7.1 (unpublished cve-2016-2324 and cve-2016-2315)\"\n") "<bc447bb9-e653-f606-5529-598b77722513@laposte.net>" ("<discussions/26aaf01a977311e58051278c8e160af2/comments/2444280@github.com>" "<318847d0-05d4-f1e3-9e2a-e50567f82515@laposte.net>" "<20160211155031.GA8584@sigill.intra.peff.net>" "<bc447bb9-e653-f606-5529-598b77722513@laposte.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1647" "Friday" "2" "October" "2015" "13:14:48" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151002171448.077C752E0B4@smtpvbsrv1.mitre.org>" "39" "[oss-security] Re: CVE request: Heap overflow with a gif file in gdk-pixbuf < 2.32.1" nil nil nil "10" "2015100217:14:48" "[oss-security] Re: CVE request: Heap overflow with a gif file in gdk-pixbuf < 2.32.1" (number mark "        cve-assign@m Oct  2   39/1647  " thread-indent "\"[oss-security] Re: CVE request: Heap overflow with a gif file in gdk-pixbuf < 2.32.1\"\n") "<CACn5sdTCA42QQcgRzw4u6jSVAyXovch8qgG4oAgMm3G0in=hPQ@mail.gmail.com>" ("<CACn5sdTCA42QQcgRzw4u6jSVAyXovch8qgG4oAgMm3G0in=hPQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 11288 invoked by uid 550); 15 Mar 2016 15:43:12 -0000
+Received: (qmail 20244 invoked by uid 550); 2 Oct 2015 17:15:01 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,66 +11,52 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 11269 invoked from network); 15 Mar 2016 15:43:11 -0000
-Message-ID: <20160315154307.GA4255@openwall.com>
-References: <discussions/26aaf01a977311e58051278c8e160af2/comments/2444280@github.com> <318847d0-05d4-f1e3-9e2a-e50567f82515@laposte.net> <20160211155031.GA8584@sigill.intra.peff.net> <bc447bb9-e653-f606-5529-598b77722513@laposte.net>
-Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="envbJBWh7q8WU6mo"
-Content-Disposition: inline
-In-Reply-To: <bc447bb9-e653-f606-5529-598b77722513@laposte.net>
-User-Agent: Mutt/1.4.2.3i
-Cc: La??l Cellier <lael.cellier@laposte.net>
-Date: Tue, 15 Mar 2016 18:43:07 +0300
-From: Solar Designer <solar@openwall.com>
+Received: (qmail 20210 invoked from network); 2 Oct 2015 17:15:01 -0000
+In-Reply-To: <CACn5sdTCA42QQcgRzw4u6jSVAyXovch8qgG4oAgMm3G0in=hPQ@mail.gmail.com>
+Message-Id: <20151002171448.077C752E0B4@smtpvbsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Fri,  2 Oct 2015 13:14:48 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] server and client side remote code execution through a buffer overflow in all git versions before 2.7.1 (unpublished cve-2016-2324 and cve-2016-2315)
-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: CVE request: Heap overflow with a gif file in gdk-pixbuf < 2.32.1
+To: gustavo.grieco@gmail.com
 
---envbJBWh7q8WU6mo
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Thanks for bringing this to oss-security.
+> We found a heap overflow in the gdk-pixbuf implementation triggered by the
+> scaling of gif file. These issues are only fixed in the recent release of
+> gdk-pixbuf 2.32.1
+> 
+> fixed in 2.32.1 with this commit:
+> https://git.gnome.org/browse/gdk-pixbuf/commit/?id=e9a5704edaa9aee9498f1fbf6e1b70fcce2e55aa
 
-On Tue, Mar 15, 2016 at 03:55:37PM +0100, La??l Cellier wrote:
-> Hello, original report describing the overflow is here 
-> http://pastebin.com/UX2P2jjg
+Use CVE-2015-7674. Apparently the cause of the issue was that the
+integer data type was incompatible with the details of how bitwise
+shifts were used.
 
-Going forward, please post the actual content directly to oss-security,
-not (only) via reference.  I've attached the contents of this pastebin
-to this message, so that it's properly archived.
+The entry in the 2.32.1 changelog is shown in:
+https://git.gnome.org/browse/gdk-pixbuf/commit/?id=044bdb059a26608fa8178e16a8505eb7ef56dfd0
 
-(No idea why you had "cve" obfuscated with Unicode, but I undid that.)
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Alexander
-
---envbJBWh7q8WU6mo
-Content-Type: text/x-c; charset=us-ascii
-Content-Disposition: attachment; filename="cve-2016-2315.c"
-
-// In revision.c before https://github.com/git/git/commit/34fa79a6cde56d6d428ab0d3160cb094ebad3305
-char *path_name(const struct name_path *path, const char *name) // by design, name_path->len is a 32 bits int, but this doesn't concern name
-{
-      const struct name_path *p;
-      char *n, *m;
-      int nlen = strlen(name); // the size is converted to a positive number (the correct size was allocated previously with an unsigned long). I got 705804100
-      int len = nlen + 1;
-
-      for (p = path; p; p = p->up) { //loop is skipped (except for the cve-2016-2324 case which is fixed since 2.7.1 in February 2016)
-          if (p->elem_len)
-              len += p->elem_len + 1;
-      }
-      n = xmalloc(len); // if len is negative, it will also be converted to a negative 64 bits integer *(which explains it is normally trying to allocate serveral Pb of ram most of the time)* which will be read as positive after that. // but this isn't the run case that is interesting here.
-      m = n + len - (nlen + 1); // the size of m is lower than name
-      strcpy(m, name); // strcpy rely on the null terminating character. The result is written in an unallocated memory from heap. This is the definition of heap overflow enabling server side remote code execution if name[] contains assembly, and have the correct size. This open the way to defeat canaries aslr, and nx combined see http://security.stackexchange.com/q/20497/36301#comment182004_20550
-      for (p = path; p; p = p->up) {
-          if (p->elem_len) {
-              m -= p->elem_len + 1;
-              memcpy(m, p->elem, p->elem_len);
-              m[p->elem_len] = '/';
-          }
-      }
-      return n;
-}
-
---envbJBWh7q8WU6mo--
+iQIcBAEBCAAGBQJWDro8AAoJEL54rhJi8gl5Y90P/3Bn9Ju1jDuWjFyI0icQQKH+
+17XiOgVKl58CZ35G28g7lp5lhvF+QbuFNenS/bZFKl4/6NN3ODs2x9pnO/horMNQ
+pIY5WhJS8z50VfS2Kr6EWlWsUgiB7N/+FPn4F/1mcH+Gg+P6OupZaF/76MmxECVU
+/YXo0OOgN6qkbvy+Z4l9ZL+htV3ojTU8+Q8k0JxWGTmMp8rfHKIfJ6b/J1yMzWhN
+Ljjf+7F55yL/YwyICf3Ww7D2vjXesTS90EE9+kNA3w0qcaoQuooYaSdl5CIwFXtm
+iIFbWDJIzRbZsmjEf6v9E9DyOt20jI2zShiBoDs697WHrcguNAJIKKTPWChkm0GV
+EGh8qm2RxZnjXnAcHYX6qNcs2kWerQ9gLWmMCyZaSqq4opSDekEosM+pTUmWJyV4
+cLEIEFsMeKD4+aIRckNa958LUeuEbN2TjluSJ6NsA6PTXDAefGMctoyG/aFSLOQu
+qkpkreA7gm0oC96y4E6kF+ltcc3HeUmNbMGMqDNk9/sv05NeKd+YB6u/VcNeuxmF
+Mi6yMNviVGmMr4wW1QvUlnA2skhTkd0Jx2IRm74Mb8IqRGxQ6EUJ6abDFDl0fKx6
+IoRzKBtcLRGHLRumpMMh9Cqq88c6rMzMkNjmynr3DE5svuK/JE+2QwSQs5u1btz0
+JyGSFmwiUakdpxmydN2X
+=h2vy
+-----END PGP SIGNATURE-----
