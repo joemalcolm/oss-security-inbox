@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1334" "Thursday" "6" "July" "2017" "07:28:16" "-0600" "Leonid Isaev" "leonid.isaev@jila.colorado.edu" "<20170706132816.GA3056@takahe.colorado.edu>" "25" "Re: [oss-security] systemd fails to parse user that should run service" "^Date:" nil nil "7" "2017070613:28:16" "[oss-security] systemd fails to parse user that should run service" (number mark "        leonid.isaev Jul  6   25/1334  " thread-indent "\"Re: [oss-security] systemd fails to parse user that should run service\"\n") "<20170706121755.nhem2vlrtsvzr22g@perpetual.pseudorandom.co.uk>" ("<VI1PR04MB310470DAAF5F79C8BA8AE789D6D10@VI1PR04MB3104.eurprd04.prod.outlook.com>" "<20170705085034.GA2638@pali>" "<CABMkiz7jqqJNjL==jrLXWPjJpDgx4r+_ZmnYFq5aJqBn9eAKCA@mail.gmail.com>" "<20170705170556.146ce33d@jabberwock.cb.piermont.com>" "<20170705211451.GA16241@hurricane.linuxnetz.de>" "<20c62ff4-6650-b0f0-0343-fe5c0c7ce85b@slackware.com>" "<20170706121755.nhem2vlrtsvzr22g@perpetual.pseudorandom.co.uk>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2275" "Friday" "2" "October" "2015" "15:11:06" "+0200" "Kristian Fiskerstrand" "kristian.fiskerstrand@sumptuouscapital.com" "<560E826A.6060403@sumptuouscapital.com>" "62" "[oss-security] CVE request: OpenSMTPD 5.7.2" nil nil nil "10" "2015100213:11:06" "[oss-security] CVE request: OpenSMTPD 5.7.2" (number mark "        kristian.fis Oct  2   62/2275  " thread-indent "\"[oss-security] CVE request: OpenSMTPD 5.7.2\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 7471 invoked by uid 550); 6 Jul 2017 13:34:59 -0000
+Received: (qmail 7284 invoked by uid 550); 2 Oct 2015 13:14:14 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,52 +11,93 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3289 invoked from network); 6 Jul 2017 13:28:32 -0000
-X-Virus-Status: Clean
-X-Virus-Scanned: clamav-milter 0.99.2 at jilau1.colorado.edu
-Message-ID: <20170706132816.GA3056@takahe.colorado.edu>
-Mail-Followup-To: oss-security@lists.openwall.com
-References: <VI1PR04MB310470DAAF5F79C8BA8AE789D6D10@VI1PR04MB3104.eurprd04.prod.outlook.com>
- <20170705085034.GA2638@pali>
- <CABMkiz7jqqJNjL==jrLXWPjJpDgx4r+_ZmnYFq5aJqBn9eAKCA@mail.gmail.com>
- <20170705170556.146ce33d@jabberwock.cb.piermont.com>
- <20170705211451.GA16241@hurricane.linuxnetz.de>
- <20c62ff4-6650-b0f0-0343-fe5c0c7ce85b@slackware.com>
- <20170706121755.nhem2vlrtsvzr22g@perpetual.pseudorandom.co.uk>
+Received: (qmail 7258 invoked from network); 2 Oct 2015 13:14:13 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:to:cc:from:subject:message-id:date:user-agent
+         :mime-version:content-type:content-transfer-encoding;
+        bh=YgBwNFcol88Lt95a9nS4R4m8ZnIh4PtM0Zkl2xCC5ck=;
+        b=LXj5ZryxVLc/aw1S0T4l3FyykeyYeVr5kZ4f91dH4kw+fobWEiI/v+d8cazui//97F
+         k4f5txb+lgVzoboZDzPUdjreIBKP1HoINvkDdh1bKfaPhdKTHi3v2hWK9pE9Z1uJZA1D
+         EcJv7Ou7zhRqbj+UBp+laP+aGYyj+mJuk5KqmaIDTJVAiX36RnvJCo3WgsgvzTpmdVqy
+         EitVSEw5xnalbbppA+chN+i5A7iXrq9w4DWpMouStliTgb7ovftHmPXi0T69o5PCaRle
+         OJx7glUfirJARJ94SXLQk2EZ3drlhldaPdvDV6YvSNeb5gg0EFrqReCe6W5VMRDe/E9Q
+         UcIg==
+X-Gm-Message-State: ALoCoQk9CqZZxJwXMiJwYIeowmeJ0b4+1SbBT+jsNgA8vw44NPHCiuNFy/unzKuYQfgEaLwxEFrX
+X-Received: by 10.112.130.39 with SMTP id ob7mr5671596lbb.66.1443791642452;
+        Fri, 02 Oct 2015 06:14:02 -0700 (PDT)
+Message-ID: <560E826A.6060403@sumptuouscapital.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.3.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20170706121755.nhem2vlrtsvzr22g@perpetual.pseudorandom.co.uk>
-User-Agent: Mutt/1.8.2 (2017-04-18)
-Date: Thu, 6 Jul 2017 07:28:16 -0600
-From: Leonid Isaev <leonid.isaev@jila.colorado.edu>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: cve-assign@mitre.org
+Date: Fri, 2 Oct 2015 15:11:06 +0200
+From: Kristian Fiskerstrand <kristian.fiskerstrand@sumptuouscapital.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] systemd fails to parse user that should run
- service
+Subject: [oss-security] CVE request: OpenSMTPD 5.7.2
 To: oss-security@lists.openwall.com
 
-On Thu, Jul 06, 2017 at 01:17:55PM +0100, Simon McVittie wrote:
-> systemd units are analogous to LSB init scripts,
-> which all start as root, and drop privileges internally if they want to.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
 
-Hmm, no, no and once again no. SystemdD units are sold as something simple and
-transparent, and hence *associated with a software they launch*, not a given
-systemD/OS version. In contrast, init scripts are specific to a distibution
-(would you just run init scripts from Debian on a CentOS or ArchLinux?)
+Dear all,
 
-For example, if I maintain a backup script that drops privileges via su(1), I
-can use the wonderful systemD unit syntax, specify User=xxx and have my package
-manager install that user in post_install. The problem is that my new and shiny
-script won't work as intended on old systemD versions which silently ignore
-User= directive. This situation is far worse than a simple failure to properly
-parse User= config string that seems to so much excite ppl, as it obsoletes
-the User= directive and perhaps others too. I'm far from sysadmin culture, but
-is this called "sh*t hitting the fan"?
+OpenSMTPd announced version 5.7.2 today[0] listing the following
+issues, if CVEs have not been requested for these issues already,
+might some be assigned, please?
 
-So, the lesson for all developers would be to rely on systemD features as
-LITTLE as possible and do all important privilege stuff inside their software.
-SystemD units should therefore only contain Exec{Start,Stop,Restart}=.
+Issues fixed in this release (since 5.7.1):
+===========================================
 
-Cheers,
--- 
-Leonid Isaev
+- - an oversight in the portable version of fgetln() that allows attackers
+  to read and write out-of-bounds memory;
+
+- - multiple denial-of-service vulnerabilities that allow local users to
+  kill or hang OpenSMTPD;
+
+- - a stack-based buffer overflow that allows local users to crash
+  OpenSMTPD, or execute arbitrary code as the non-chrooted _smtpd user;
+
+- - a hardlink attack (or race-conditioned symlink attack) that allows
+  local users to unset the chflags() of arbitrary files;
+
+- - a hardlink attack that allows local users to read the first line of
+  arbitrary files (for example, root's hash from /etc/master.passwd);
+
+- - a denial-of-service vulnerability that allows remote attackers to fill
+  OpenSMTPD's queue or mailbox hard-disk partition;
+
+- - an out-of-bounds memory read that allows remote attackers to crash
+  OpenSMTPD, or leak information and defeat the ASLR protection;
+
+- - a use-after-free vulnerability that allows remote attackers to crash
+  OpenSMTPD, or execute arbitrary code as the non-chrooted _smtpd user;
+
+
+References:
+[0] https://www.opensmtpd.org/announces/release-5.7.2.txt
+
+- -- 
+- ----------------------------
+Kristian Fiskerstrand
+Blog: http://blog.sumptuouscapital.com
+Twitter: @krifisk
+- ----------------------------
+Public OpenPGP key 0xE3EDFAE3 at hkp://pool.sks-keyservers.net
+fpr:94CB AFDD 3034 5109 5618 35AA 0B7F 8B60 E3ED FAE3
+- ----------------------------
+"Excellence is not a singular act but a habit. You are what you do
+repeatedly."
+(Shaquille O'Neal)
+-----BEGIN PGP SIGNATURE-----
+
+iQEcBAEBCgAGBQJWDoJmAAoJECULev7WN52FwIUIAJFWaOhKmNNJ8Pj0dqf96kIx
+sn4oZG/iD8oJn/KjNDoAVCilujxJ7NV8gWMzNqHRVUwGkEcfAmkfmfJjsKpr24ZE
+m9fWP82k36WPaLl9kM4arL2PeWEDEooOpjiAgE5Jj+pfoONU4MU9yDTeAmsSx5Zt
+UC0dZILlTBNFGg7Dxl9wzZhkTlgTq5ukx9j+5LKUzF3QlOixj0+uqOqxX+iz+Cny
+3kDDmvEYA/79kIMpnao609ntrWg3NCRTFm6EK38XidncI+NqYSF2Vt3TBcm8Beqg
+GicW+itboy3305PFXWrZOJSg7/wxG7wJnw9NWZj2Dz2buCJ1sRir8KUaecqQpqA=
+=7++X
+-----END PGP SIGNATURE-----
