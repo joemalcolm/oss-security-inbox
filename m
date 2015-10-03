@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3524" "Monday" "20" "June" "2016" "15:40:53" "+0200" "Marcus Meissner" "meissner@suse.de" "<20160620134053.GG24371@suse.de>" "114" "[oss-security] CVE Request: 2015 squidguard reflected XSS" nil nil nil "6" "2016062013:40:53" "[oss-security] CVE Request: 2015 squidguard reflected XSS" (number mark "U       meissner@sus Jun 20  114/3524  " thread-indent "\"[oss-security] CVE Request: 2015 squidguard reflected XSS\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3093" "Saturday" "3" "October" "2015" "02:07:08" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151003060708.E1F076C0055@smtpvmsrv1.mitre.org>" "71" "[oss-security] Re: Qualys Security Advisory - OpenSMTPD Audit Report" nil nil nil "10" "2015100306:07:08" "[oss-security] Re: Qualys Security Advisory - OpenSMTPD Audit Report" (number mark "        cve-assign@m Oct  3   71/3093  " thread-indent "\"[oss-security] Re: Qualys Security Advisory - OpenSMTPD Audit Report\"\n") "<20151002144933.GA10319@localhost.localdomain>" ("<20151002144933.GA10319@localhost.localdomain>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 21621 invoked by uid 550); 20 Jun 2016 13:41:07 -0000
+Received: (qmail 7355 invoked by uid 550); 3 Oct 2015 06:07:27 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,134 +11,84 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 7237 invoked from network); 3 Oct 2015 06:07:20 -0000
+In-Reply-To: <20151002144933.GA10319@localhost.localdomain>
+Message-Id: <20151003060708.E1F076C0055@smtpvmsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Sat,  3 Oct 2015 02:07:08 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21597 invoked from network); 20 Jun 2016 13:41:06 -0000
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Date: Mon, 20 Jun 2016 15:40:53 +0200
-From: Marcus Meissner <meissner@suse.de>
-To: OSS Security List <oss-security@lists.openwall.com>
-Message-ID: <20160620134053.GG24371@suse.de>
-MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="sm4nu43k4a2Rpi4c"
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-Organization: SUSE Linux GmbH, GF: =?iso-8859-1?Q?Felix_?=
- =?iso-8859-1?Q?Imend=F6rffer=2C_Jane_Smithard=2C_Graham_Norton=2C_HRB_212?=
- =?iso-8859-1?Q?84_=28AG_N=FCrnberg=29?=
-User-Agent: Mutt/1.5.21 (2010-09-15)
-Subject: [oss-security] CVE Request: 2015 squidguard reflected XSS
+Subject: [oss-security] Re: Qualys Security Advisory - OpenSMTPD Audit Report
+To: qsa@qualys.com
 
---sm4nu43k4a2Rpi4c
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Hi,
+> (Sorry for the "CVE-2015-ABCD" place-holders in the report, but
+> OpenSMTPD's developers were ready with the patches before MITRE was
+> ready with the CVE-IDs.)
 
-Please assign a CVE for:
+Qualys had previously sent MITRE a specific disclosure date for the
+OpenSMTPD Audit Report that was later than 2015-10-02.
 
-http://www.squidguard.org/Downloads/CHANGELOG
-	2015-02-01	Fixed a cross site vulnerability in squidGuard.cgi
+> However, the project is pretty much in its infancy (the first
+> stable version, 5.3, was released on March 17, 2013), which explains why
+> we discovered various vulnerabilities during our security assessment:
 
-http://www.squidguard.org/Downloads/Patches/1.4/Readme.Patch-20150201
+Here are our initial comments:
 
-I have attached the diff against 1.4, the relevant part seem to be the two lines replacing tags
-in $url.
+1. Historically, there have been very few, or perhaps no, other
+research reports that identified this volume of distinct bugs and
+presented the findings as a complex set of interrelationships among
+the bugs.
 
-Unsure why they added another \n to the headers, as there are already two \n.
+2. Ideally, we would model this in the normal way (e.g., by
+identifying primary and resultant weaknesses); however, it is possible
+that we will choose a different approach so that something loosely
+resembling a CVE mapping will be available sooner (and remain the
+final CVE mapping for this one report).
 
-Ciao, Marcus
+3. With either of those two options, we feel it is unlikely that the
+set of CVE IDs would correspond directly to the CVE-2015-ABCD labels
+used in the report.
 
---sm4nu43k4a2Rpi4c
-Content-Type: text/x-patch; charset=utf-8
-Content-Disposition: attachment; filename="squidguard-20150201.patch"
-Content-Transfer-Encoding: 8bit
+4. We have been studying some parts of the report and have reached a
+tentative conclusion that the use-after-free bug is probably the most
+important issue (or among the most important issues) for actual
+OpenSMTPD users, because of its role in enabling remote code
+execution. At present, this issue has a CVE ID; the remainder of the
+report does not yet have a CVE mapping, and we will send another
+message here when we have chosen a CVE mapping for it.
 
---- squidGuard-1.4/samples/squidGuard.cgi.in	2008-12-23 22:08:35.000000000 +0100
-+++ squidGuard-1.4-patch-20150201/squidGuard.cgi	2015-02-01 19:43:27.000000000 +0100
-@@ -1,4 +1,4 @@
--#! @PERL@  -w
-+#! /usr/bin/perl  -w
- #
- # Explain to the user that the URL is blocked and by which rule set
- #
-@@ -6,7 +6,8 @@
- # French texts thanks to Fabrice Prigent (fabrice.prigent@univ-tlse1.fr)
- # Dutch texts thanks to Anneke Sicherer-Roetman (sicherer@sichemsoft.nl)
- # German texts thanks to Buergernetz Pfaffenhofen (http://www.bn-paf.de/filter/)
--# Spanish texts thanks to Samuel GarcÃ­a).
-+# Spanish texts thanks to Samuel GarcÃ­a.
-+# Russian texts thanks to Vladimir Ipatov.
- # Rewrite by Christine Kronberg, 2008, to enable an easier integration of
- # other languages.
- #
-@@ -57,21 +58,22 @@
- #
- # CONFIGURABLE OPTIONS:
- #
--# (Currently: "en", "fr", "de", "es", "nl", "no")
-+# (Currently: "en", "fr", "de", "es", "nl", "no", "ru")
- @supported   = (
- 		"en (English), ",
--		"fr (Français), ",
-+		"fr (Fran&#231;ais), ",
- 		"de (Deutsch), ",
--		"es (Español), ",
-+		"es (Espa&#241;ol), ",
- 		"nl (Nederlands), ",
--		"no (Norsk)."
-+		"no (Norsk), ",
-+		"ru (Russian)."
- 	       );
- #
- # Modifiy the values below to reflect you environment
- # The image you define with "$image" and redirect will be displayed if the unappropriate
- # url is of the type: gif, jpg, jpeg, png, mp3, mpg, mpeg, avi or mov.
- #
--$image       = "/images/blocked.gif";					# RELATIVE TO DOCUMENT_ROOT
-+$image       = "/Logos/md5.png";					# RELATIVE TO DOCUMENT_ROOT
- $redirect    = "http://admin.your-domain/images/blocked.gif";		# "" TO AVOID REDIRECTION
- $proxy       = "proxy.your-domain";					# Your proxy server
- $proxymaster = "operator\@your-domain";					# The email of your proxy adminstrator
-@@ -142,7 +144,7 @@
- }
- 
- #
--# PRINT HTTP STATUS HEARER:
-+# PRINT HTTP STATUS HEADER:
- #
- sub status($) {
-   my $status = shift;
-@@ -150,7 +152,7 @@
- }
- 
- #
--# PRINT HTTP LOCATION HEARER:
-+# PRINT HTTP LOCATION HEADER:
- #
- sub redirect($) {
-   my $location = shift;
-@@ -249,7 +251,7 @@
-     status("404 Not Found");
-   }
-   if (@names) {
--    print "Content-type: text/html\n\n";
-+    print "Content-type: text/html\n\n\n";
-     print "<!DOCTYPE html PUBLIC \"-//W3C//DTD  HTML 4.0 Transitional//EN\" \"http://www.w3.org/TR/REC-html40/loose.dtd\">\n";
-     print "<html><head>\n";
-     print "<title>$Babel{Title}</title>\n";
-@@ -317,9 +319,12 @@
-    showinaddr($targetgroup,$protocol,$address,$port,$path);
- }
- 
-+$url =~ s/</&lt;/g ;
-+$url =~ s/>/&gt;/g ;
-+
- status("403 Forbidden");
- expires(0);
--print "Content-type: text/html\n\n";
-+print "Content-type: text/html\n\n\n";
- print "<!DOCTYPE html PUBLIC \"-//W3C//DTD  HTML 4.0 Transitional//EN\" \"http://www.w3.org/TR/REC-html40/loose.dtd\">\n";
- print "<html><head>\n";
- print "<title>$Babel{Title}</title>\n";
+Specifically, for this finding:
 
---sm4nu43k4a2Rpi4c--
+  - In the IMSG_{SMTP,MTA}_SSL_VERIFY case, PROC_LKA does not reset the
+    static pointer req_ca_vrfy_{smtp,mta} to NULL after free(), but trusts
+    PROC_PONY to always send an IMSG_{SMTP,MTA}_SSL_VERIFY_CERT (which
+    re-initializes this static pointer) before sending an
+    IMSG_{SMTP,MTA}_SSL_VERIFY{_CHAIN,} (use-after-free
+
+use CVE-2015-7687.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJWD2/1AAoJEL54rhJi8gl5pEcQAL18JC5G0nxCznlCxy22odvc
+TCDtrrRXlx6oa5JZebFBdndo1vqVLbe1HY9Mld2WEX+6EvhVaa7zVqXnmEdZbBfF
+NXeQZF38hCmVc7JU8AbftfF8Q+au9n2gTBM2nlf07j0dNde7vr9pOS5Ri01O9sRI
+vTXCF8b0Yb5qrpevnilp0lRs+A7DcJGciXf+gwQC6Os5isKdmI6L7k9w+g21c5n+
+JxeeuuGdviHEl7V/HGu/RmtvfH+7RIi+9sHwkVCC0+/CLXa7FiQ2TGyhnNn4tQCQ
+Vq55FKPBOdmya9jDOhRKB1i+pBydn6xS1NRHofIZ+DMg/fckEkI8xQOZaiyr1MoO
+oPmbGLH+ZSmCBwuBJoG0NZyP+Tqc8lGsJbgjcAwFcPtz68O6p9l+eCg3qG8rNkEb
+yFatKC7v5c8I4KnhahqhcCVbJj/H9Yms5btCcx363DptJlOiEhWl/1lSTggvn0m3
+QuBexKBSqn6Cvt4p4CkDbua9QHqAZgQ7tkYJBrFw5x4tFZPvsmeM3gu70TdMCDWW
+pWV+fViBcivs1N4anlBTRKRvw5c1lK8vDL+mYYrP2+znoRMYlFcN4zVKbt+UHbHH
+wHCuT+jUcfSCw6lO2GMZaNpR2dve2GQe+Ghsz0vRwq9pJsyEU4dUnsw2DdjliE7V
+VId8hoQ0y/ovTx8yi8p+
+=p4wc
+-----END PGP SIGNATURE-----
