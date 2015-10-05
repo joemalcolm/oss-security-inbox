@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6184" "Thursday" "14" "December" "2017" "06:18:23" "+0000" "halfdog" "me@halfdog.net" "<1513231666@halfdog.net>" "133" "Re: [oss-security] Recommendations GnuPG-2 replacement" "^cc:" nil nil "12" "2017121406:18:23" "[oss-security] Recommendations GnuPG-2 replacement" (number mark "        me@halfdog.n Dec 14  133/6184  " thread-indent "\"Re: [oss-security] Recommendations GnuPG-2 replacement\"\n") "<0ac49cb5-f257-f6c2-d104-7110ecf463d2@stachelkaktus.net>" ("<0ac49cb5-f257-f6c2-d104-7110ecf463d2@stachelkaktus.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1719" "Monday" "5" "October" "2015" "18:20:39" "+0000" "Tristan Cacqueray" "tdecacqu@redhat.com" "<5612BF77.9070403@redhat.com>" "50" "[oss-security] CVE request for vulnerability in OpenStack Nova" nil nil nil "10" "2015100518:20:39" "[oss-security] CVE request for vulnerability in OpenStack Nova" (number mark "        tdecacqu@red Oct  5   50/1719  " thread-indent "\"[oss-security] CVE request for vulnerability in OpenStack Nova\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 18072 invoked by uid 550); 15 Dec 2017 19:06:21 -0000
+Received: (qmail 27938 invoked by uid 550); 5 Oct 2015 18:20:30 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,151 +11,69 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 17995 invoked from network); 15 Dec 2017 19:06:21 -0000
-In-reply-to: <0ac49cb5-f257-f6c2-d104-7110ecf463d2@stachelkaktus.net>
-References: <0ac49cb5-f257-f6c2-d104-7110ecf463d2@stachelkaktus.net>
-Comments: In-reply-to oss-security@stachelkaktus.net
-   message dated "Thu, 07 Dec 2017 10:16:44 +0100."
+Received: (qmail 27920 invoked from network); 5 Oct 2015 18:20:29 -0000
+Message-ID: <5612BF77.9070403@redhat.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.2.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Message-ID: <1513231666@halfdog.net>
-cc: oss-security@lists.openwall.com
-Date: Thu, 14 Dec 2017 06:18:23 +0000
-From: halfdog <me@halfdog.net>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="EE3Jx1Xh9OrQL0Xj9MGUICImVxETRMgsw"
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.24
+Cc: cve-assign@mitre.org
+Date: Mon, 5 Oct 2015 18:20:39 +0000
+From: Tristan Cacqueray <tdecacqu@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Recommendations GnuPG-2 replacement
-To: oss-security@stachelkaktus.net
+Subject: [oss-security] CVE request for vulnerability in OpenStack Nova
+To: oss-security@lists.openwall.com
 
-Hi,
+--EE3Jx1Xh9OrQL0Xj9MGUICImVxETRMgsw
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-> Hello,
- 
-> for the gpg scenario on initrd I use:
-> echo $PASSWORD |/bin/gpg -d --passphrase-fd 0 --lock-never
-> --no-auto-check-trustdb --no-tty -q --no-keyring --batch --yes
-> --no-permission-warning /etc/a_key.gpg
+A vulnerability was discovered in OpenStack (see below). In order to
+ensure full traceability, we need a CVE number assigned that we can
+attach to further notifications. This issue is already public, although
+an advisory was not sent yet.
 
-Yes, that is quite similar to my use, only the "echo" is missing -
-but taking into account your knowledge about KDFs, I guess you
-have it just in here for demonstration purposes, knowing the security
-implications.
+Title: Nova network security group changes are not applied to running
+       instances
+Reporter: Sreekumar S and Suntao
+Products: Nova
+Affects: <=3D2014.2.3, >=3D2015.1.0, <=3D2015.1.1
 
-> To fix the "--s2k-count" problem I've added argon2 before using the pipe
-> for gpg.
->
-> Its not great but it works for me.
+Description:
+Sreekumar S and Suntao independently reported a vulnerability in Nova
+network. Security group changes silently fail to be applied to already
+running instances, potentially resulting in instances not being
+protected by the security group. All Nova network setups are affected.
 
-Thanks for the hint. "argon2" seems to be what, what I'm looking
-for. This solves the issues also in a more "UNIX-like" way, as
-it can be combined with any, where high-cost KDFs are wanted.
+References:
+https://launchpad.net/bugs/1491307
+https://launchpad.net/bugs/1484738
 
-hd
+Thanks in advance,
 
-PS: sorry about the delayed reply: when in bad mood I just do
-not manage to open my mailbox for weeks or month.
-
-> On 12/07/2017 07:32 AM, halfdog wrote:
-> > Hello list,
-> > 
-> > Are there recommendations for open-source light-weight replacements
-> > of GnuPG2 suitable for use on Debian? I would like discontinue
-> > using GnuPG project, as the GnuPG design regarding security seems
-> > to be moving in a direction, that does not match my personal security
-> > needs any more.
-> > 
-> > The two main events causing me considering the change were related
-> > to the Debian Jessie to Stretch switch - thus giving a small
-> > impression on the current needs:
-> > 
-> > Event 1:
-> > 
-> > While gpg1 was a light-weight tool, just doing what said, the
-> > new gpg2 cannot really work without gpg-agent, pinentry frontend.
-> > Both are very nice for desktop usecases. As I also used it during
-> > machine setup for generating material related to disk encryption,
-> > the agent first did not want to start -- the primitive /dev/ttyX
-> > via openvt was not the environment gpg tools were expecting
-> > for password input, thus failing. gpg2 by default will not ask
-> > the passphrase any more on the terminal, it was started from,
-> > but tries to work out using various information, where passphrase
-> > input should be delegated to.
-> > 
-> > After getting gpg and agent running, I noticed, that not reliably
-> > stopping the gpg-agent on initrd would introduce a private key
-> > data leak via /proc from early boot process to running system
-> > when stopping fails. This is also more annoying as it is not possible
-> > to instruct gpg, that a single private key should NOT be cached,
-> > and you have to configure gpg-agent beforehand, something not
-> > quite funny and little error prone on limited functionality systems
-> > like on an initrd systems.
-> > 
-> > Thus the Debian switch from gpg1 to gpg2 just introduced efforts
-> > fiddling with functionality I do not need and cannot disable,
-> > provides a keymanagement that cannot be configured easily to
-> > protect against the threats it should mitigate (theft of key material)
-> > and creating additional attack surface without any recognizable
-> > benefit.
-> > 
-> > Event 2:
-> > 
-> > After getting everything working, which was little anoying as
-> > building of initrds, testing via QEmu is not very user friendly
-> > regarding debugging for less experienced users - but at least not
-> > GnuPG's fault at any reason - I noticed, that the password protection
-> > of the key was significantly lower than expected. Getting back
-> > to the developers, we found out, that the specification of the
-> > "--s2k-count" parameter, which specifies the number of rounds
-> > of key deriviation function to unlock the private key, has changed
-> > from gpgv1 to gpgv2, so that it is ignored in gpg2 but does not
-> > cause any warning or error. Thus previous audited procedures continue
-> > to work but do not produce the same results any more. Of course,
-> > I could have compared documentation of all parameters of (at least
-> > security-related) programs after Jessie to Stretch upgrade, but
-> > I assumed, that security critical parameters would not change
-> > their meaning without any noticable effect - so just my fault.
-> > 
-> > Still, this would just be a minor mishap, but what reduced my
-> > trust in GPG, was the comment of a developer: it was assumed,
-> > that they know better, where there software will be run without
-> > specifying that "where" in the documentation. Also his replies
-> > matched that picture, e.g. "(gpg-agent will) ... calibrate the
-> > S2K count to match the current machine", assuming that this is
-> > good reason to change "--s2k-count" meaning and ignore the parameter.
-> > I had the impression, that it did not come to mind, that someone
-> > might have used such a parameter for a reason, e.g. because speed
-> > calibration might not be the best idea, while the system is taking
-> > in data at the maximum speed the ethernet adapter, disk controller
-> > can do during system setup.
-> > 
-> > Another bonmot on the mathematical complexity of private key
-> > unlocking: "For user experience 100ms is a good value; your
-> > suggested 1000ms is an annoying long delay which would most user
-> > only increase the cache time." But the discussion was not on
-> > user defaults. If I deem it a good idea to requirea longer KDF
-> > computation time for material with higher sensitivity, e.g. to
-> > to unlock data storage once at startup, and therefore tell the
-> > software to perform that computation, it should accept that
-> > decision. Thus someone not understanding or accepting the
-> > existance of such choices in alternative usecase might not be
-> > the right person to develop the software, I want to use.
-> > 
-> > 
-> > Result:
-> > 
-> > For all steps regarding system startup, I switched to LUKS only,
-> > using detached headers for special features. For release signing,
-> > mail sign/encrypt, a good light-weight solution is still needed.
-> > 
-> > hd
-> > 
-> > PS: I do not know, how much the gpg-agent calibration under
-> > increased system load reduced the KDF complexity, as I failed
-> > to extract the KDF rounds value from the gpg data structures,
-> > but the value seems to be at least below 70ms due to total time
-> > measurements for gpg-agent (math, interprocess communication,
-> > filesystem) to unlock a key on an idle system.
-> > 
-> > 
-> 
+--
+Tristan Cacqueray
+OpenStack Vulnerability Management Team
 
 
+--EE3Jx1Xh9OrQL0Xj9MGUICImVxETRMgsw
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iQEcBAEBCAAGBQJWEr97AAoJECK5oFySXMXYc/gH/25Gkg4072bFdb1nFgB+gMCl
+I/8B5IFLv7vMT8ZcZacpfNEHkjC1fbob7nNYChl4Zv3u3oGpnrhMEPUUFuuEIJgq
+pWjjglzyUM1kYkC0s6ka/lnyKZL6kNXniaD9lPFBuOJBM8nucqs6Wg891o7AHPwO
+bfea7Nj38rEqzr1ju+AQuC7vItFDXEz7CnIGnDeDiIZxTkuSKBnh3ARMdQRO/zov
+UzkPN0/BKsfUXnwnZ1HzqtAEaB267foO3GPyRtTSpm65WtoSxvOqF8TKT9jHa3sc
+LaT3lKduXob+S7kVMzVwmJ07Ta9HLE4wIJ7JFtjtHeCXr3CKDxnX7D2hbqAonS4=
+=YJU9
+-----END PGP SIGNATURE-----
+
+--EE3Jx1Xh9OrQL0Xj9MGUICImVxETRMgsw--
