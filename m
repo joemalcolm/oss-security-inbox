@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1119" "Sunday" "10" "June" "2018" "18:38:47" "+0200" "Yves-Alexis Perez" "corsac@debian.org" "<7897eadf67144a237334450d05396572daa60e34.camel@debian.org>" "33" "Re: [oss-security] Re : Re: [oss-security] CVE-2018-12020 in GnuPG" "^Date:" nil nil "6" "2018061016:38:47" "[oss-security] Re : Re: [oss-security] CVE-2018-12020 in GnuPG" (number mark "        corsac@debia Jun 10   33/1119  " thread-indent "\"Re: [oss-security] Re : Re: [oss-security] CVE-2018-12020 in GnuPG\"\n") "<bzwjweLsc_IpouMt05ni4KMcd4XJPVuF1Bp42jMQhPiNaYdT-Cei_P1CYdQzwJWMYMdRtC0GwvgBM6A774c2_EGFE3onwBMEd5lHH2KBD0s=@itk.swiss>" ("<167bc7e898d02f7bd13c43d272d64178f00e7e23.camel@debian.org>" "<44254614-42f1-9908-a55c-401d20ffc2bd@ruhr-uni-bochum.de>" "<bzwjweLsc_IpouMt05ni4KMcd4XJPVuF1Bp42jMQhPiNaYdT-Cei_P1CYdQzwJWMYMdRtC0GwvgBM6A774c2_EGFE3onwBMEd5lHH2KBD0s=@itk.swiss>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["748" "Monday" "5" "October" "2015" "10:50:20" "+0200" "Jason A. Donenfeld" "zx2c4@gentoo.org" "<CAHmME9rmsM+FKstBTcEPCLF4Y8_yhrdhpmj65PbnwFOu7RPCRg@mail.gmail.com>" "24" "[oss-security] Re: Remotely triggerable buffer overflow in OpenSMTPD" nil nil nil "10" "2015100508:50:20" "[oss-security] Re: Remotely triggerable buffer overflow in OpenSMTPD" (number mark "        zx2c4@gentoo Oct  5   24/748   " thread-indent "\"[oss-security] Re: Remotely triggerable buffer overflow in OpenSMTPD\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 27655 invoked by uid 550); 10 Jun 2018 16:39:04 -0000
+Received: (qmail 30009 invoked by uid 550); 5 Oct 2015 08:50:41 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,52 +11,40 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 26613 invoked from network); 10 Jun 2018 16:39:03 -0000
-Message-ID: <7897eadf67144a237334450d05396572daa60e34.camel@debian.org>
-In-Reply-To: <bzwjweLsc_IpouMt05ni4KMcd4XJPVuF1Bp42jMQhPiNaYdT-Cei_P1CYdQzwJWMYMdRtC0GwvgBM6A774c2_EGFE3onwBMEd5lHH2KBD0s=@itk.swiss>
-References: <167bc7e898d02f7bd13c43d272d64178f00e7e23.camel@debian.org>
-	 <44254614-42f1-9908-a55c-401d20ffc2bd@ruhr-uni-bochum.de>
-	 <bzwjweLsc_IpouMt05ni4KMcd4XJPVuF1Bp42jMQhPiNaYdT-Cei_P1CYdQzwJWMYMdRtC0GwvgBM6A774c2_EGFE3onwBMEd5lHH2KBD0s=@itk.swiss>
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.28.2-1 
-Mime-Version: 1.0
-Date: Sun, 10 Jun 2018 18:38:47 +0200
-From: Yves-Alexis Perez <corsac@debian.org>
+Received: (qmail 29934 invoked from network); 5 Oct 2015 08:50:36 -0000
+MIME-Version: 1.0
+X-Received: by 10.112.141.228 with SMTP id rr4mr8659423lbb.48.1444035020858;
+ Mon, 05 Oct 2015 01:50:20 -0700 (PDT)
+Message-ID: <CAHmME9rmsM+FKstBTcEPCLF4Y8_yhrdhpmj65PbnwFOu7RPCRg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Date: Mon, 5 Oct 2015 10:50:20 +0200
+From: "Jason A. Donenfeld" <zx2c4@gentoo.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re : Re: [oss-security] CVE-2018-12020 in GnuPG
-To: oss-security@lists.openwall.com, marcus.brinkmann@ruhr-uni-bochum.de
+Subject: [oss-security] Re: Remotely triggerable buffer overflow in OpenSMTPD
+To: misc <misc@opensmtpd.org>, oss-security <oss-security@lists.openwall.com>, 
+	gentoo-security@gentoo.org
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi folks,
 
-On Sun, 2018-06-10 at 10:58 -0400, Stiepan wrote:
+On Mon, Oct 5, 2015 at 12:38 AM, Jason A. Donenfeld <Jason@zx2c4.com> wrote:
+> impact etc. There's a remotely triggerable buffer overflow in
+> OpenBSD's OpenSMTPD -- the latest version, 5.7.2 -- reachable by
+> sending messages with huge header lines.
 
-Hi Stepian,
+Fixed downstream in Gentoo with mail-mta/opensmtpd-5.7.2_p1-r1:
 
-> This responsibility discussion is all well and fine, but now that this is
-> half-public, may we know for sure whether we are affected :
-> 1. as debian(-like) package consumers
+https://gitweb.gentoo.org/repo/gentoo.git/commit/?id=3f8e2fe24f3ff174d8515b82607e951e054f68f6
 
-Not entirely sure what you mean here, but if you're talking about the apt
-package managers (which relies on gpgv for signature verification), it's
-currently investigated.
-
-Note that all supported suites have had their gnupg version updated: https:=
-//s
-ecurity-tracker.debian.org/tracker/CVE-2018-12020
+Users are encouraged to update immediately. It's worth noting that
+this vulnerability was being triggered "in the wild" - hence the
+rushed disclosure etc.
 
 Regards,
-- --=20
-Yves-Alexis
------BEGIN PGP SIGNATURE-----
+Jason
 
-iQEzBAEBCAAdFiEE8vi34Qgfo83x35gF3rYcyPpXRFsFAlsdVBcACgkQ3rYcyPpX
-RFvs6wgAyOwnS9uaOmW1Qg6pM7iKDlTYVe7SteOlVn6QyAQzKhTmsazdo+xZJ6+y
-Bd7BScDNRRvyTCZKtqyMvuTMCBjVoGcIQoGvrZW64X9wVCCgk/U5bpe39WwTpePZ
-uScfW3MZKGOvYEKAGbC8aZDbTAkJ1D1HjOe0xVAv7Ifc0lpinYJSwQ2dEu9qDyRm
-jxD9IpsZwAA2IX+yAb87ebW5Cm6ZFMoWUuj2VmE8Eth3k6wmHexLahiz/JR+qrET
-+s3aRcDTae7dajEPfIWLrSnxxVYHrdYs3xiDsD4NbapJ2YACSZ/ayL8P5GWIuQZ/
-tipCq/jMIikHy59/fc247FOxSgCOew=3D=3D
-=3Dc5lf
------END PGP SIGNATURE-----
+-- 
+Jason A. Donenfeld
+Gentoo Linux Security & Infrastructure
+zx2c4@gentoo.org
+www.zx2c4.com
+zx2c4.com/keys/A28BEDE08F1744E16037514806C4536755758000.asc
