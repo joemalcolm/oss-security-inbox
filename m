@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1712" "Wednesday" "22" "July" "2015" "09:39:08" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150722133908.B9BE16C07C6@smtpvmsrv1.mitre.org>" "41" "[oss-security] Re: CVE Request: October CMS - Stored XSS in image caption tag" nil nil nil "7" "2015072213:39:08" "[oss-security] Re: CVE Request: October CMS - Stored XSS in image caption tag" (number mark "U       cve-assign@m Jul 22   41/1712  " thread-indent "\"[oss-security] Re: CVE Request: October CMS - Stored XSS in image caption tag\"\n") "<CABpk8vbGz+TU4VvX1Cg_yr-M9DRe3kNm+q1AG-1djUBEGgN84g@mail.gmail.com>" ("<CABpk8vbGz+TU4VvX1Cg_yr-M9DRe3kNm+q1AG-1djUBEGgN84g@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1171" "Tuesday" "6" "October" "2015" "11:20:57" "+0530" "Huzaifa Sidhpurwala" "huzaifas@redhat.com" "<56136141.2040503@redhat.com>" "37" "[oss-security] Fwd: [vs-plain] CVE-2015-5261" nil nil nil "10" "2015100605:50:57" "[oss-security] Fwd: [vs-plain] CVE-2015-5261" (number mark "U       huzaifas@red Oct  6   37/1171  " thread-indent "\"[oss-security] Fwd: [vs-plain] CVE-2015-5261\"\n") "<560A2023.7010200@redhat.com>" ("<560A2023.7010200@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 29978 invoked by uid 550); 22 Jul 2015 13:39:21 -0000
+Received: (qmail 8183 invoked by uid 550); 6 Oct 2015 05:37:16 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,53 +12,56 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 29951 invoked from network); 22 Jul 2015 13:39:20 -0000
-From: cve-assign@mitre.org
-To: jmabhishek4@gmail.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <CABpk8vbGz+TU4VvX1Cg_yr-M9DRe3kNm+q1AG-1djUBEGgN84g@mail.gmail.com>
-Message-Id: <20150722133908.B9BE16C07C6@smtpvmsrv1.mitre.org>
-Date: Wed, 22 Jul 2015 09:39:08 -0400 (EDT)
-Subject: [oss-security] Re: CVE Request: October CMS - Stored XSS in image caption tag
+Received: (qmail 8160 invoked from network); 6 Oct 2015 05:37:15 -0000
+References: <560A2023.7010200@redhat.com>
+To: oss-security@lists.openwall.com
+From: Huzaifa Sidhpurwala <huzaifas@redhat.com>
+X-Forwarded-Message-Id: <560A2023.7010200@redhat.com>
+Message-ID: <56136141.2040503@redhat.com>
+Date: Tue, 6 Oct 2015 11:20:57 +0530
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.1.0
+MIME-Version: 1.0
+In-Reply-To: <560A2023.7010200@redhat.com>
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.27
+Subject: [oss-security] Fwd: [vs-plain] CVE-2015-5261
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Making this public as promised on distros list!
 
-> save it. Logout of the user account and login as an
-> administrator. Now, simply visit the user profile (of the normal user) and
-> the JavaScript will be executed.
 
-> https://github.com/octobercms/october/blob/master/CHANGELOG.md
-> *Version affected         :    *Possibly all the builds  i.e ,  < = Build 271
+-------- Forwarded Message --------
+Subject: [vs-plain] CVE-2015-5261
+Date: Tue, 29 Sep 2015 10:52:43 +0530
+From: Huzaifa Sidhpurwala <huzaifas@redhat.com>
+To: distros@vs.openwall.org
 
-We didn't understand this part. Build 271 is from 2015-06-20. The
-vendor made a source-code change related to the bug report today.
-There were three builds that occurred after 271, but before today.
-We're not sure why "< = Build 271" would be mentioned.
+Hello Vendors,
 
-> https://github.com/octobercms/october/issues/1302
-> 
-> https://github.com/octobercms/october/commit/8a4ac533e5cd6b8f92e9ef19fbfbb2f505dc7a9a
+Frediano Ziglio of Red Hat has found a security flaw in spice related
+to, host memory access from guest using crafted images. Details as follows:
 
-Use CVE-2015-5612 for the issue affecting the caption of a profile
-picture. Use CVE-2015-5613 for the other issues fixed in
-8a4ac533e5cd6b8f92e9ef19fbfbb2f505dc7a9a. (We haven't yet looked at
-whether "caption of a profile picture" is only associated with the
-_image_single.htm change.)
+It is possible for a guest issuing QXL commands to host to allow reading
+and writing host memory in a range of about 16-20gb.
+The guest can create a surface very large (say 1000000 x 1000000). If
+width * height overflow the 32 bit and became a small number the host
+will accept the command and will create the surface. Now guest can copy
+areas of surfaces to access any area of memory covered by the image.
+Considering overflows, pixman implementation and image formats (32 bit,
+top-down or down-top) the range (the guest pass an offset into video
+memory for the start) the range if about +/- 8gb.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJVr5xoAAoJEKllVAevmvmsA4YH/1r5R42L5CdWzOsQmbtxG+PI
-Jci5Rthqr/DGbOJ+chRPTRtD3om2RAHclbYLMmKzrl3craigvyQLGz1ljfuISr5h
-qC7fk5/wWm1ANDLxPDA+ZzjKYG0jybbb8d/7DpJnEb2tRePuojHOVoXEwRZaFx+g
-hhjVmsH+4ZYkkCxeOeeq694kPqVKGw/W2bdgRJ7k/mEwAb9evUJ8cENlViBjyylb
-ivYowIxX8nqOf+XklJAk9rezH8meqwhzNzmP9phiSPEugH4uoxaCo/ASx3Z0Isgl
-sZyuPtvZVeSfkXQt3AaN2NFt+Lkiek38qDHekyZWSm0oD1RXX3QNcwa645KczVg=
-=LNgC
------END PGP SIGNATURE-----
+We have assigned CVE-2015-5261  to this issue.
+
+
+Reference:
+https://bugzilla.redhat.com/show_bug.cgi?id=1261889
+
+
+-- 
+Huzaifa Sidhpurwala / Red Hat Product Security Team
+
+
+
