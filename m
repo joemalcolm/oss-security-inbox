@@ -1,4 +1,9 @@
-Received: (qmail 3641 invoked by uid 550); 26 Dec 2023 19:21:05 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1646" "Monday" "5" "October" "2015" "21:03:19" "-0700" "Seth Arnold" "seth.arnold@canonical.com" "<20151006040319.GH16643@hunt>" "48" "[oss-security] CVE Request: Audio File Library" nil nil nil "10" "2015100604:03:19" "[oss-security] CVE Request: Audio File Library" (number mark "U       seth.arnold@ Oct  5   48/1646  " thread-indent "\"[oss-security] CVE Request: Audio File Library\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 31834 invoked by uid 550); 6 Oct 2015 04:03:35 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,45 +12,66 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 18200 invoked from network); 26 Dec 2023 19:14:45 -0000
-Date: Tue, 26 Dec 2023 19:15:28 +0000
-From: Claus Assmann <ml+oss@esmtp.org>
+Received: (qmail 31816 invoked from network); 6 Oct 2015 04:03:34 -0000
+Date: Mon, 5 Oct 2015 21:03:19 -0700
+From: Seth Arnold <seth.arnold@canonical.com>
 To: oss-security@lists.openwall.com
-Message-ID: <20231226191528.GA6930@veps.esmtp.org>
-References: <20231221143630.GD14101@suse.de>
- <20231221144656.GA40693@veps.esmtp.org>
- <20231222104647.GH14101@suse.de>
- <croalohbjdjf2cb6e5ol2l7rsdoxd6mr4mw55lyzzf7ljkkx5a@czm7be4dpjj4>
- <20231224093335.GM14101@suse.de>
+Cc: michael@68k.org, security@ubuntu.com
+Message-ID: <20151006040319.GH16643@hunt>
+Mail-Followup-To: oss-security@lists.openwall.com, michael@68k.org,
+	security@ubuntu.com
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="jRdC2OsRnuV8iIl8"
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
+Subject: [oss-security] CVE Request: Audio File Library
+
+--jRdC2OsRnuV8iIl8
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20231224093335.GM14101@suse.de>
-Subject: [oss-security] Re: New SMTP smuggling attack
 
-On Sun, Dec 24, 2023, Marcus Meissner wrote:
+Hello MITRE, all,
 
-> - CVE-2023-51765 sendmail
+Fabrizio Gennari reported an issue in The Audio File library to the Ubuntu
+bugtracker:
+https://bugs.launchpad.net/ubuntu/+source/audiofile/+bug/1502721
 
-Can you update the text for this (or point me to the proper way/persons
-to do this)?
+His description included, in part:
 
-1.
-"sendmail through at least 8.14.7"
-->
-sendmail up to and including 8.17.2
+        When libaudiofile is used to change both the number of channels of
+	an audio file (e.g. from stereo to mono) and the sample format
+	(e.g. from 16-bit samples to 8-bit samples), the output file will
+	contain corrupted data.
 
-2.
-remove the seemingly unrelated reference to
-"Merge sendmail 8.14.8 to HEAD  freebsd/freebsd-src@5dd76dd"
+	If the new sample format is smaller than the old one, there is a
+	risk of buffer overflow: e.g. when the input file has 16-bit
+	samples and the output file has 8-bit samples, afReadFrames will
+	treat the buffer to read the samples (argument void *data) as a
+	pointer to int16_t instead of int8_t, therefore it will write past
+	its end.
 
-3.
-Mention that 8.18 fixes the problem:
-	Accept only CR LF . CR LF as end of an SMTP message as
-		required by the RFCs when the new srv_features
-		option 'o' is used.
+He proposed a solution and test case to the Audio File library:
+https://github.com/mpruett/audiofile/pull/25/files
 
-sendmail 8.18.0.2 is available at
-https://ftp.sendmail.org/snapshots/sendmail.8.18.0.2.tar.gz
-https://ftp.sendmail.org/snapshots/sendmail.8.18.0.2.tar.gz.sig
+Please assign a CVE as appropriate.
 
+Thanks
+
+--jRdC2OsRnuV8iIl8
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBAgAGBQJWE0gHAAoJEPMhclmdjS6Xu2IH/i8VpRm27dsJ5+S9bPUOpAbN
+Pc/+TYA6kugubGtCRuNrE+k/Q4ydCR6QeQdmGxJRnhtmUR7C187jn1gbzvVvZzTk
+B7S2WnY6LOD6ebLsRCtpNTSKu73ed7kwtP4gVWugg52lTuu71f5TEYW44rfL/ND8
+yFYxYYnSYmMkTGDBXOpU/tSNTSS7FPCJ8CfhbthF3+SVALIXkJsyHDnWnZJSfwgn
+5cP1Fl+q0zb7p1IeNQAzFG5fAgMSJ4cPbpMxFMwIPctNKJXZxyIepoD52wqlaeu/
+UvCeTama5qGsf45kIGJ7RbuAALqvkioUBbD0upPB+CfKKcYwp04O3Vhl3g4AXtU=
+=/Lsx
+-----END PGP SIGNATURE-----
+
+--jRdC2OsRnuV8iIl8--
