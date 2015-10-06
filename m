@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1693" "Wednesday" "22" "June" "2016" "13:11:51" "+0100" "henrix@camandro.org" "henrix@camandro.org" "<8760t1pgmw.fsf@camandro.org>" "55" "Re: [oss-security] [vs-plain] Linux kernel stack overflow via ecryptfs and /proc/$pid/environ" nil nil nil "6" "2016062212:11:51" "[oss-security] [vs-plain] Linux kernel stack overflow via ecryptfs and /proc/$pid/environ" (number mark "U       henrix@caman Jun 22   55/1693  " thread-indent "\"Re: [oss-security] [vs-plain] Linux kernel stack overflow via ecryptfs and /proc/$pid/environ\"\n") "<20160622092838.GA9075@openwall.com>" ("<575B352F.9000808@canonical.com>" "<20160622092838.GA9075@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2160" "Tuesday" "6" "October" "2015" "01:41:51" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151006054151.E0A2F6C000E@smtpvmsrv1.mitre.org>" "51" "[oss-security] Re: CVE request for vulnerability in OpenStack Nova" nil nil nil "10" "2015100605:41:51" "[oss-security] Re: CVE request for vulnerability in OpenStack Nova" (number mark "        cve-assign@m Oct  6   51/2160  " thread-indent "\"[oss-security] Re: CVE request for vulnerability in OpenStack Nova\"\n") "<5612BF77.9070403@redhat.com>" ("<5612BF77.9070403@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 7588 invoked by uid 550); 22 Jun 2016 16:42:18 -0000
+Received: (qmail 19661 invoked by uid 550); 6 Oct 2015 05:42:04 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,76 +11,64 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 19637 invoked from network); 6 Oct 2015 05:42:03 -0000
+In-Reply-To: <5612BF77.9070403@redhat.com>
+Message-Id: <20151006054151.E0A2F6C000E@smtpvmsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Tue,  6 Oct 2015 01:41:51 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 19719 invoked from network); 22 Jun 2016 12:12:26 -0000
-From: henrix@camandro.org
-To: Solar Designer <solar@openwall.com>
-Cc: oss-security@lists.openwall.com
-References: <575B352F.9000808@canonical.com>
-	<20160622092838.GA9075@openwall.com>
-Date: Wed, 22 Jun 2016 13:11:51 +0100
-In-Reply-To: <20160622092838.GA9075@openwall.com> (Solar Designer's message of
-	"Wed, 22 Jun 2016 12:28:38 +0300")
-Message-ID: <8760t1pgmw.fsf@camandro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-BlackCat-Spam-Score: -28
-X-Mythic-Debug: Threshold =  On = 
-Subject: Re: [oss-security] [vs-plain] Linux kernel stack overflow via ecryptfs and /proc/$pid/environ
+Subject: [oss-security] Re: CVE request for vulnerability in OpenStack Nova
+To: tdecacqu@redhat.com
 
-Solar Designer <solar@openwall.com> writes:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-> On Fri, Jun 10, 2016 at 02:46:23PM -0700, John Johansen wrote:
->> This is a forward notification of a local priv escalation flaw from
->> security@kernel.org to the OSS security list. The CRD was for
->> 2016-06-08 14:00:00 UTC. Patches attached to the email.
->>=20
->> The flaw in eCryptfs was assigned CVE-2016-1583.
->
-> The Project Zero issue is now public:
->
-> https://bugs.chromium.org/p/project-zero/issues/detail?id=3D836
->
-> and it includes an exploit, which I've re-attached.  (The rest of the
-> files, including the crasher, were already posted in here by John.)
->
->> Subject: [PATCH 2/3] ecryptfs: forbid opening files without mmap handler
->
-> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?i=
-d=3D2f36db71009304b3f0b95afacd8eba1f9f046b87
->
->> Subject: [PATCH 1/3] proc: prevent stacking filesystems on top
->
-> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?i=
-d=3De54ad7f1ee263ffa5a2de9c609d58dfa27b21cd9
->
->> Subject: [PATCH 3/3] sched: panic on corrupted stack end
->
-> Not committed?
->
+>  Title: Nova network security group changes are not applied to running
+>         instances
+>  https://launchpad.net/bugs/1491307
+>  https://launchpad.net/bugs/1484738
 
-Yup, it's committed:
+> https://bugs.launchpad.net/nova/+bug/1491307/comments/5
+> 
+> The db instance dict doesn't have the keys in 'metas' because in
+> trigger_rules_refresh() the sec groups are got from db by joining on
+> the instances column, but it doesn't join on the
+> metadata/system_metadata fields. This again causes 'KeyError' because
+> when db instance dict is converted to the Instance object, it expects
+> fields that aren't in the dict.
 
-https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=
-=3D29d6455178a09e1dc340380c582b13356227e8df
+> https://bugs.launchpad.net/nova/+bug/1484738/comments/20
+> 
+> the instance passed to refresh_instance_security_rules
+> comes from the call to get the security group(s) which joins on the
+> instances column, but that doesn't join on the metadata/system_metadata
+> fields for the instances. So when the instances get to object_compat in
+> the compute manager and the db instance dict is converted to the
+> Instance object, it expects fields that aren't in the dict and we get
+> the KeyError.
 
-Cheers,
---=20
-Lu=C3=ADs
+Use CVE-2015-7713.
 
-> Andy Lutomirski is working on virtually mapped stacks with guard pages
-> so that kernel stack overflows would be detected:
->
-> http://www.openwall.com/lists/kernel-hardening/2016/06/15/1
-> http://www.openwall.com/lists/kernel-hardening/2016/06/20/14
->
-> Linus wants the 1.5us overhead on task creation to be reduced before
-> this gets merged:
->
-> http://www.openwall.com/lists/kernel-hardening/2016/06/21/10
->
-> Alexander
->
->
->
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJWE16qAAoJEL54rhJi8gl5cQoP/R0rm6Y1GsnrrsjiNu7P++Gb
+D65ez/8UbNQbppouKIrcjULGtFYHn5CRc2nkrEFDTB9pbuQk6ghFjj3SJqn44mwb
+YsUxxly1S2UGKXrbmxX6nOR3DkqwvQSFb8FvmxqnwgdPLKAlsXffCkLOtzIEGGGI
+6jWwOrSDPj6BbANNUJ3/SyYHKPowMPVwGZvWbWZbLVm8JvoVvrausJqa/hG3O+DJ
+tmHlSZTEB5127tUG5abcf6MuCZDOCO1HiNbT1F3JXf4A/LL3VPMjKCN3TL0NYvce
+UhnbGpFoIWB8Eqly5Uz6tAlMi7podtPQ3IWbvlJJ1ogX6FjO11mhMSasRwsr4bW5
+fAOPFRQy9m7xv6FT/WnR8pdRmv0GhE4WbCD1FtzaSc+9yv/9YGPvobBG6EsBFSpr
+tnWBLCdZv3fTHfq6oHV/hnftU58QEFYk722UF3e3famuknaHayUx3gfDJxbUIVp4
+4mybiLCebrWd/IaDk1QdKMrn25G03T7II+wxmT0YJswAOC6/Y29sfYMpB0pJe+YX
+LtKN6X0rFyt/Cdlmrp5bTlSnLQsTsKwsgEjbnubgo/5bs0DB9PRPvYfdhqa2PObJ
+LFSW+zSPzmZNyQb9m9Q1Ke5ieEpySsXnPBKnhKyhTLjc1T/jbhzCcVtimH8R+18n
+SHKld5vgqyyXvA9nIQV7
+=Rpze
+-----END PGP SIGNATURE-----
