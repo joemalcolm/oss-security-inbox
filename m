@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["578" "Tuesday" "27" "April" "2021" "09:44:07" "+0100" "daniel gaspar" "danielvazgaspar@gmail.com" nil "23" "[oss-security] CVE-2021-28125: Apache Superset Open Redirect" nil nil nil "4" nil nil (number mark "U       danielvazgas Apr 27   23/578   " thread-indent "\"[oss-security] CVE-2021-28125: Apache Superset Open Redirect\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-28125: Apache Superset Open Redirect" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2444" "Wednesday" "7" "October" "2015" "18:33:38" "+0000" "Tristan Cacqueray" "tdecacqu@redhat.com" "<56156582.1040201@redhat.com>" "80" "[oss-security] [OSSA 2015-021] Nova network security group changes are not applied to running instances (CVE-2015-7713)" nil nil nil "10" "2015100718:33:38" "[oss-security] [OSSA 2015-021] Nova network security group changes are not applied to running instances (CVE-2015-7713)" (number mark "U       tdecacqu@red Oct  7   80/2444  " thread-indent "\"[oss-security] [OSSA 2015-021] Nova network security group changes are not applied to running instances (CVE-2015-7713)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 30251 invoked by uid 550); 27 Apr 2021 10:30:35 -0000
+Received: (qmail 7524 invoked by uid 550); 7 Oct 2015 18:33:21 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,61 +12,98 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11996 invoked from network); 27 Apr 2021 08:44:30 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=Ed5bO+PO/P/r7bhh1CKWJsxEOouLEzyCsjA9slTY9WE=;
-        b=WOppbj5XcIMWqv0F5OX90p7sLBr9Mw2A3kF81+5i0h7zkUZkGl8NsLZbSvSRp1vE4T
-         dPS5ZyVx3s0zloT+bV2x0+z5Iu+UaeqpHTlpCM3kZqTVhNphh7juoXJVxYrIRK1x5SUJ
-         3kfvbPEGdb6o03A4MnI2qerm8jcgZO+GNSOR5TUuyYRDR+YQDvlb2kctQAYJ5QT/oxJ1
-         VlaqiYtc79nYcESrlNlJ7nKMn7KT3GsGM38rp3QY5F8m5Vh8VQil49M6ukzegAJftxhT
-         ABKCJO1XJZp9IsOCSpw/ZgADFAOcdRjtZXXQkerIqG3J6++vZTacRsuxQ6X7XtGL2jAq
-         UHVA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=Ed5bO+PO/P/r7bhh1CKWJsxEOouLEzyCsjA9slTY9WE=;
-        b=F3cuhIWdvpg4aiCYa54w0v/OQ/YxNG6Zg8M653FIZgm9a5caOooRTH4hpG8oxw7mjI
-         fUWBBF0K5Iwu6t1uN+fiOha4yzmeLe5gqzWXOtbJRPbfGBvXyTOWpk61DXg8NlRns+1y
-         IkC+7dbMppdy3vJBObATHyhXYzhMUYt6EHJwgv6rwZCvb+Y598oJh943NYuTjsKlOChq
-         hjzYOTn6kKUVA+zxi/QSgVijaTJ7VPUxpgR4X1Npn2Zgd2CX+TnpdeIT0pa1VDOKkOwU
-         fNSyZVKX8IN8YXuJM/kYwd6TZuJgzNWFwY71s90MKlew+Z667dXUm1WDL2hEI8doL4HO
-         GPMA==
-X-Gm-Message-State: AOAM530yeyOPsNrE1Tif0RwOuPztj+rj3lCloNo45SD8ysVHaPQLU2Bx
-	qenaY6jZBqQ9Yk66P7Q/QFl27tdEFh89M5os7oXpAb/KWlV/bw==
-X-Google-Smtp-Source: ABdhPJxNSsMWNCDRpsHH63qoDOpqceYCU8hpz8jvtwHBgONW4skYqTur6MUkvH/H5w5K2uV1Yj+Vb2Vj91yoELxNFWM=
-X-Received: by 2002:a17:902:d4d0:b029:eb:59ea:2f32 with SMTP id
- o16-20020a170902d4d0b02900eb59ea2f32mr23544779plg.58.1619513058275; Tue, 27
- Apr 2021 01:44:18 -0700 (PDT)
-MIME-Version: 1.0
-From: daniel gaspar <danielvazgaspar@gmail.com>
-Date: Tue, 27 Apr 2021 09:44:07 +0100
-Message-ID: <CALSkbjrM=-cXMznHXnRyoKvAqOkoczWJXzyLpRsmSLubvftkdg@mail.gmail.com>
+Received: (qmail 7504 invoked from network); 7 Oct 2015 18:33:20 -0000
 To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="0000000000008c34c105c0f044e5"
-Subject: [oss-security] CVE-2021-28125: Apache Superset Open Redirect
+From: Tristan Cacqueray <tdecacqu@redhat.com>
+Message-ID: <56156582.1040201@redhat.com>
+Date: Wed, 7 Oct 2015 18:33:38 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.2.0
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="KRIrUdGMXKbxxdROQNSRKIHjCnTgsuSon"
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
+Subject: [oss-security] [OSSA 2015-021] Nova network security group changes are not applied
+ to running instances (CVE-2015-7713)
 
---0000000000008c34c105c0f044e5
-Content-Type: text/plain; charset="UTF-8"
+--KRIrUdGMXKbxxdROQNSRKIHjCnTgsuSon
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Description:
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+OSSA-2015-021: Nova network security group changes are not applied to runni=
+ng instances
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
 
-Apache Superset up to and including 1.0.1 allowed for the creation of
-an external URL that could be malicious. By not checking user input
-for open redirects the URL shortener functionality would allow for a
-malicious user to create a short URL for a dashboard that could
-convince the user to click the link.
+:Date: October 06, 2015
+:CVE: CVE-2015-7713
 
 
-Mitigation:
+Affects
+~~~~~~~
+- Nova: <=3D2014.2.3, >=3D2015.1.0, <=3D2015.1.1
 
-Upgrade to 1.1.0 or above
 
-Credit:
+Description
+~~~~~~~~~~~
+Sreekumar S. and Suntao independently reported a vulnerability in Nova
+network. Security group changes silently fail to be applied to already
+running instances, potentially resulting in instances not being
+protected by the security group. All Nova network setups are affected.
 
-Found and reported by Gianluca Veltri, Dario Castrogiovanni
 
-Reply to: users@superset.apache.org
+Patches
+~~~~~~~
+- https://review.openstack.org/222026 (Juno)
+- https://review.openstack.org/222023 (Kilo)
+- https://review.openstack.org/222022 (Liberty)
 
---0000000000008c34c105c0f044e5--
+
+Credits
+~~~~~~~
+- Sreekumar S. (CVE-2015-7713)
+- Suntao (CVE-2015-7713)
+
+
+References
+~~~~~~~~~~
+- https://bugs.launchpad.net/bugs/1491307
+- https://bugs.launchpad.net/bugs/1484738
+- http://cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2015-7713
+
+
+Notes
+~~~~~
+- This fix will be included in future 2014.2.4 (juno) and 2015.1.2 (kilo)
+  releases.
+
+--
+Tristan Cacqueray
+OpenStack Vulnerability Management Team
+
+
+--KRIrUdGMXKbxxdROQNSRKIHjCnTgsuSon
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iQEcBAEBCAAGBQJWFWWCAAoJECK5oFySXMXYfiYH/3wzbcAeD8jFX+j4HLrHiRfV
+SgWSBMilZfv7l6EmE+VesvFK4++P0limPXu6KNHtDLaVjEv53OX3QCdlMijXO/fu
+RUi4uiPCmzXwamfjZwnE9immfCAyDwyLJU/v2P4PeZ2Oc1Y/UqgEP9cJ3nR2Gj30
+6B1SozBI221Ks2b7md9bqV0ogefupMvUKzGahXI3bLviSn8FGvNCq2VMU7xAAuWr
+aJcZ+53SxCH2Cvn23DvwDEvznxBnWqyhsF6Yt5B3ZyaH8WksnjqQdNyeWS4hKtCc
+CY3n6lSgWtoGQBB0VnZhye3W+4dkELTGnScv+VwUlVfyjuScRqN9BbI9uRgN+VI=
+=InQQ
+-----END PGP SIGNATURE-----
+
+--KRIrUdGMXKbxxdROQNSRKIHjCnTgsuSon--
