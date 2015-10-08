@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil t nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2164" "Wednesday" "20" "November" "2019" "13:44:25" "+0100" "Solar Designer" "solar@openwall.com" "<20191120124425.GA25554@openwall.com>" "46" "Re: [oss-security] Mitigating malicious packages in gnu/linux" "^Date:" nil nil "11" "2019112012:44:25" "[oss-security] Mitigating malicious packages in gnu/linux" (number mark "  z     solar@openwa Nov 20   46/2164  " thread-indent "\"Re: [oss-security] Mitigating malicious packages in gnu/linux\"\n") "<CAGUWgD8LDusq3PyWeMd-RoDhOtfiebVtKKV_39GhG+8c0QYFYg@mail.gmail.com>" ("<CAGUWgD8LDusq3PyWeMd-RoDhOtfiebVtKKV_39GhG+8c0QYFYg@mail.gmail.com>") nil nil nil nil nil nil nil "Re: [oss-security] Mitigating malicious packages in gnu/linux" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1761" "Thursday" "8" "October" "2015" "15:11:49" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151008191149.DDC3942E4F0@smtpvbsrv1.mitre.org>" "40" "[oss-security] Re: CVE request - perl library UI::Dialog 1.09 - shell escaping vulnerability" nil nil nil "10" "2015100819:11:49" "[oss-security] Re: CVE request - perl library UI::Dialog 1.09 - shell escaping vulnerability" (number mark "U       cve-assign@m Oct  8   40/1761  " thread-indent "\"[oss-security] Re: CVE request - perl library UI::Dialog 1.09 - shell escaping vulnerability\"\n") "<20151008122930.GS8704@login.tika.stderr.nl>" ("<20151008122930.GS8704@login.tika.stderr.nl>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 1001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 5665 invoked by uid 550); 20 Nov 2019 12:44:59 -0000
+Received: (qmail 3961 invoked by uid 550); 8 Oct 2015 19:12:02 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,63 +11,53 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5516 invoked from network); 20 Nov 2019 12:44:31 -0000
-Message-ID: <20191120124425.GA25554@openwall.com>
-References: <CAGUWgD8LDusq3PyWeMd-RoDhOtfiebVtKKV_39GhG+8c0QYFYg@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAGUWgD8LDusq3PyWeMd-RoDhOtfiebVtKKV_39GhG+8c0QYFYg@mail.gmail.com>
-User-Agent: Mutt/1.4.2.3i
-Date: Wed, 20 Nov 2019 13:44:25 +0100
-From: Solar Designer <solar@openwall.com>
+Received: (qmail 3941 invoked from network); 8 Oct 2015 19:12:01 -0000
+In-Reply-To: <20151008122930.GS8704@login.tika.stderr.nl>
+Message-Id: <20151008191149.DDC3942E4F0@smtpvbsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, alejandro@debian.org, kevin@krinke.ca
+Date: Thu,  8 Oct 2015 15:11:49 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Mitigating malicious packages in gnu/linux
-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: CVE request - perl library UI::Dialog 1.09 - shell escaping vulnerability
+To: matthijs@stdin.nl
 
-On Tue, Nov 19, 2019 at 01:33:48PM +0200, Georgi Guninski wrote:
-> As end user and contributor of gnu/linux, I am concerned about malicious
-> packages (either hostile developers or hacked developers or another reason)
-> and have two questions:
-> 
-> * What do linux vendors to avoid malicious packages?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Back when Openwall GNU/*/Linux was being actively developed, I used to
-review each contributor's changes before making them public.  I also
-(re-)verified authenticity of third-party source tarballs instead of
-blindly trusting whatever the contributor could have uploaded to us.
-(I'd do the same now, but without active development there's simply
-nothing to review lately.)
+> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=496448
+> https://rt.cpan.org/Public/Bug/Display.html?id=107364
 
-Of course, this approach doesn't scale as-is (with just one person to
-review and publish everything) to larger distros, but some kind of peer
-review can and should be present.
+Use CVE-2008-7315.
 
-> * As end user what can I do to mitigate malicious packages?
+Note that bug-report discussion debates the question of whether this
+is a vulnerability. Our feeling is that "I have a script that parses
+URLs from an e-mail and uses UI::dialog to prompt me to select one.
+This means that sending me a specially crafted e-mail could cause
+execution of arbitrary commands" is a plausible use case and that the
+current documentation at http://search.cpan.org/~kck/UI-Dialog/
+doesn't exclude this use case. Also, the code analysis in 107364
+suggests that some or all parts of the product were attempting to
+address input containing ` characters.
 
-Try to install only what's needed, or not a lot more than what's needed.
-(Can't be done perfectly with larger distros and their dependency hell.)
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Contrary to traditional best practices, update only what and when needs
-to be updated.  (Of course, you take responsibility to watch for any
-relevant security updates, or accept the risk if you neglect to do that.
-You also miss silent security fixes, but on the other hand you similarly
-miss newly introduced vulnerabilities.)
-
-Use a long-term support distro, preferably starting half-way into its
-lifetime when updates are already infrequent.  (Similar risk of missing
-silent security fixes in new upstream versions, but also avoiding new
-vulnerabilities.)
-
-Setup packet filters with blocking and logging of unexpected outbound
-packets, including to console so that you'd notice.
-
-Setup custom anomaly detection and actually watch it - e.g., for new
-programs running that haven't ever run before, etc.
-
-Use multiple pseudo-user accounts (doesn't protect against issues in
-packages' pre/post-install scripts, etc.), containers, VMs - but even
-then you have the risk of getting the same malicious package in multiple
-VMs, which e.g. on Qubes OS could happen through updating a template VM.
-
-Alexander
+iQIcBAEBCAAGBQJWFr7gAAoJEL54rhJi8gl51sIP/0VVhnUMgRBooEotNYh78GEE
+F6qUp6oRxG51f3wf6csxcdpBdD4RkQYOXz99vM7fbey6AYBmRPBi432m/1X31UZD
+xz6fYns7JDuVqbjL5zUqhBoqLhZwFzWZNbTRk/lEVzryhFIfGG7/Jy2P9mXbRMxV
+ufUb/+ugbzvLeRV3Szf59q14TuiAWw/Q2YYHf0AhKVB7FOL4+cquuoSTranXcqA2
+8HBRWlcPVrZGiHgWvRZQfEagsX7JVuqKQs6Hi2HHvATYR8Q2pywXYxBLqpMjdzDi
+DL74S1MSXQ1zA0IQFh6XzaS/skEl4Lm3xlAllrgQm/U5N4KgxBn/P6+Fe/ea4Sph
+r6GLCGzBXGHtFSUCzG7pOQKnvhpEMksD26c2usBwN2KzwubEFvkuanD+8bPxkNn/
+YRjAX/TKvTlWU+FQ2m+8uvUmqHcO0jhzkcyiSX3hk6lb46gj2494UtwhxtCCYk8a
+JvgJMmz4eKO3PMLOxf3YA9+kWyVom07uRPLzPIzYaptrV9+fRGfcwlPfEThmVR2W
+8SKEzPE48m3PAsh19R8T1fB9MccYGllaORv/YEixpWtIIdkqVvD51+ivn0Mn3Zm9
+00dONqNgKtxaDhQOjAFktuRrjtnFcDF97yfbWf+qayW3HAP6JzefJQWv8oMaZeVy
+Vt7uwcSpg9AnV1Y0y6+0
+=ZtLd
+-----END PGP SIGNATURE-----
