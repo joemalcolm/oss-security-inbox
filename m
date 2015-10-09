@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1150" "Wednesday" "1" "April" "2015" "09:43:43" "-0400" "Jake Luciani" "jake@apache.org" "<CALamADJu4yo=cO8HgA6NpgFc1wQN_VNqpkMn-3SZwhPq9foLBw@mail.gmail.com>" "32" "[oss-security] [SECURITY ANNOUNCEMENT] CVE-2015-0225" nil nil nil "4" "2015040113:43:43" "[oss-security] [SECURITY ANNOUNCEMENT] CVE-2015-0225" (number mark "        jake@apache. Apr  1   32/1150  " thread-indent "\"[oss-security] [SECURITY ANNOUNCEMENT] CVE-2015-0225\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3503" "Friday" "9" "October" "2015" "05:08:22" "-0700" "Nick Kralevich" "nnk@google.com" "<CAFJ0LnG64u87qvJo4DWe-1kUNn4BNoMSoym-CXXiXN+FyfpDPA@mail.gmail.com>" "204" "Re: [oss-security] CVE request - Android OS - Using the PPP character device driver caused the system to restart" nil nil nil "10" "2015100912:08:22" "[oss-security] CVE request - Android OS - Using the PPP character device driver caused the system to restart" (number mark "U       nnk@google.c Oct  9  204/3503  " thread-indent "\"Re: [oss-security] CVE request - Android OS - Using the PPP character device driver caused the system to restart\"\n") "<2166DED8C457614D95A6AAC18B144F082B2D23@EX02.corp.qihoo.net>" ("<2166DED8C457614D95A6AAC18B144F082B2D23@EX02.corp.qihoo.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 14096 invoked by uid 550); 1 Apr 2015 13:56:09 -0000
+Received: (qmail 3965 invoked by uid 550); 9 Oct 2015 12:08:35 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,62 +11,245 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 7379 invoked from network); 1 Apr 2015 13:44:16 -0000
+Received: (qmail 3943 invoked from network); 9 Oct 2015 12:08:34 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:from:date:message-id:subject:to:cc:content-type;
-        bh=OgsgLkzhu9muy+zfapitvNiRNiFUu92B6Gu4knkxboE=;
-        b=ps6d/1+o9CmqWX46kjnJ9aUk54F5yeBQ3A7TcQ3owOf4qv1arYkVVbEvWy56ZlKU07
-         rpoxv7SjL+x6JrgkCnpjP52fIAH+sDpdWbXlaebILcAvfOyXK81iazBQC5cGRCvqFLkp
-         WKtV7jVRjB75WrgZRrT0yhu9U/xBIBW8OrgzP5NIJq9azqxOdWa6gNOWquEKlREXy4Ve
-         vbKFPdRc7NFu3+1NnwFyctjbPOC18+8qylruijr8TruB/xtwlkGqmgte1ITIutcEPcY4
-         zZ+OatA2UOWxmhgh1Bl610RRFNOQK8DLc26q8bx8kwWQMMZ1spgQ35PZzu0K79/by3D6
-         GcFA==
-X-Received: by 10.68.224.69 with SMTP id ra5mr46182143pbc.161.1427895844113;
- Wed, 01 Apr 2015 06:44:04 -0700 (PDT)
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type;
+        bh=YouXtJNdT5b6kDzrgeRSFH/yvoMw+JYroAEf5j/0BHc=;
+        b=kZLcoAZkjtDKu9NEnDh/4LL4nCZF2BqOv7I9L5nP+7RPyqg8c9oJCEdsQyP2IoqGB5
+         GAMc1SqrpPP9gYDYwm91U7CX5GYIyHwHjExHOHJmEX7n/2kRfpoE5LEIPdz9RMcnheuV
+         UcMVUICDGZDrGcJ46ayD1fCLhET5cHsProhM3S1kNm9NRh6muG7X+Jas7pafeUdi/pQW
+         TzrvOmxPC+IwbOzqN8WiZ5HgqMpAv0fSQ2MbWqS9MZchtztn1QWgrEUWopSTaHEE5zmB
+         P7DY8DvGM3H00UovCp15D+2AigP80iiE5xCOvC3fRkfLsKueV0cnTNuM4TT9o9d/qktr
+         PgrQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:content-type;
+        bh=YouXtJNdT5b6kDzrgeRSFH/yvoMw+JYroAEf5j/0BHc=;
+        b=nGPpbYQnMLjE49Ymrwvkci0Ok/glhhUH+uPg/mS+gV6PJqvj5BuHxHDMk85Wg8iZRb
+         4xXxpK54m9ljQSPk9qdEF1zz8XduOPdtyQM1rIDQKyTSEw5ik+kZh7y8pxodg3VxZaho
+         5rIqsFJ1vFBoL+5K6eVQQGODJ4R1pW4KLA7bfQzYf/D+vTAm3KwSXa6lA5N1PydE5Pa6
+         aWiFpsFsYT4FOjUxo0Z5Hx1mcWPUthJzm0F7SV725sDVzS8t5q80BZCwncUwsAmLQ1Dl
+         YprzqJ2DbGwGoaIo6JkgvufcDRjnoZw9kXfEciJwAsk6D0e2fephUUdFmEfp+TavNntp
+         TNTA==
+X-Gm-Message-State: ALoCoQkKs2ZhWB9sIkW4SxA8/J8McOK0kzAwT5lv1q+wI/M0jsUH18b1BNfGS/YMPndeX3xrxHbN
 MIME-Version: 1.0
-X-Google-Sender-Auth: w5QZ3Y211wzgnKPNT_ZfEFEFvwo
-Message-ID: <CALamADJu4yo=cO8HgA6NpgFc1wQN_VNqpkMn-3SZwhPq9foLBw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Cc: georgi.geshev@mwrinfosecurity.com, security@apache.org, 
-	oss-security@lists.openwall.com, bugtraq@securityfocus.com
-Date: Wed, 1 Apr 2015 09:43:43 -0400
-From: Jake Luciani <jake@apache.org>
+X-Received: by 10.31.34.7 with SMTP id i7mr7495424vki.60.1444392502699; Fri,
+ 09 Oct 2015 05:08:22 -0700 (PDT)
+In-Reply-To: <2166DED8C457614D95A6AAC18B144F082B2D23@EX02.corp.qihoo.net>
+References: <2166DED8C457614D95A6AAC18B144F082B2D23@EX02.corp.qihoo.net>
+Message-ID: <CAFJ0LnG64u87qvJo4DWe-1kUNn4BNoMSoym-CXXiXN+FyfpDPA@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=001a113dc8b80a78f20521aad642
+Date: Fri, 9 Oct 2015 05:08:22 -0700
+From: Nick Kralevich <nnk@google.com>
 Reply-To: oss-security@lists.openwall.com
-Sender: jakers@gmail.com
-Subject: [oss-security] [SECURITY ANNOUNCEMENT] CVE-2015-0225
-To: user <user@cassandra.apache.org>, 
-	"dev@cassandra.apache.org" <dev@cassandra.apache.org>
+Subject: Re: [oss-security] CVE request - Android OS - Using the PPP character
+ device driver caused the system to restart
+To: oss-security@lists.openwall.com
 
-CVE-2015-0225: Apache Cassandra remote execution of arbitrary code
+--001a113dc8b80a78f20521aad642
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-Severity: Important
+As explained in https://code.google.com/p/android/issues/detail?id=3D187973=
+ ,
+this is not an Android specific bug, nor is it reachable from untrusted
+code within Android.
 
-Vendor:
-The Apache Software Foundation
+-- Nick
 
-Versions Affected:
-Cassandra 1.2.0 to 1.2.19
-Cassandra 2.0.0 to 2.0.13
-Cassandra 2.1.0 to 2.1.3
+On Thu, Oct 8, 2015 at 10:43 PM, =E9=83=AD=E6=B0=B8=E5=88=9A <guoyonggang@3=
+60.cn> wrote:
 
-Description:
-Under its default configuration, Cassandra binds an unauthenticated
-JMX/RMI interface to all network interfaces.  As RMI is an API for the
-transport and remote execution of serialized Java, anyone with access
-to this interface can execute arbitrary code as the running user.
+> Detailed steps(The code below using C language):
+>
+> Step1:     Open PPP drive device.
+>
+>       int fd =3D open("/dev/ppp",O_RDWR);
+>
+>
+>
+> Step2:     Create a new ppp unit.
+>
+>       unsigned int cmd =3D PPPIOCNEWUNIT;
+>
+>       long arg =3D -1;/* Set arg < 0 */
+>
+>       ret =3D ioctl(fd,cmd, &arg);
+>
+>
+>
+> Step3:  Set VJ max slot ID.
+>
+>       cmd=3D PPPIOCSMAXCID;
+>
+>       arg =3D 0x67084000;
+>
+>       ret =3D ioctl(fd,cmd, &arg);
+>
+>
+>
+> Result:
+>
+>       System restart.
+>
+>
+>
+>
+>
+> I think the correct behavior should be :
+>
+>       return -EINVAL;
+>
+>       Tell user not a typewriter.
+>
+>
+>
+> Analysis of causes:
+>
+> In the process of using the PPP device driver, if the unit of the PPP
+> device file has been created. On the basis of the above, the ioctl functi=
+on
+> is used to pass the PPPIOCSMAXCID command and the 0x67084000  parameter
+> (parameters must be satisfied: arg>>16 > 255 and 0xFFFF&arg > 255), which
+> will lead to the use of null pointers in the kernel.
+>
+> The null pointer is used specifically in the slhc_init function, and the
+> function is defined as follows:
+>
+>
+> ////////////////////////////slhc_init////////////////////////////////////=
+///
+>
+> struct slcompress *
+>
+> slhc_init(int rslots, int tslots)
+>
+> {
+>
+>       ......
+>
+>       struct slcompress *comp;
+>
+>       ......
+>
+>
+>
+>       if ( rslots > 0  &&  rslots < 256 ) {
+>
+>            ......
+>
+>            comp->rstate =3D kzalloc(rsize, GFP_KERNEL);
+>
+>            ......
+>
+>       }
+>
+>
+>
+>       if ( tslots > 0  &&  tslots < 256 ) {
+>
+>            ......
+>
+>            comp->tstate =3D kzalloc(tsize, GFP_KERNEL);
+>
+>            ......
+>
+>       }
+>
+>
+>
+>       ......
+>
+>
+>
+>       if ( tslots > 0 ) {
+>
+>            ts =3D comp->tstate;
+>
+>            for(i =3D comp->tslot_limit; i > 0; --i){
+>
+>                  ts[i].cs_this =3D i;
+>
+>                  ts[i].next =3D &(ts[i - 1]);
+>
+>            }
+>
+>            ts[0].next =3D &(ts[comp->tslot_limit]);
+>
+>            ts[0].cs_this =3D 0;
+>
+>       }
+>
+>       ......
+>
+> }
+>
+>
+>
+> If you pass the appropriate parameters, make sure tslots and rslots two
+> parameters are greater than 255. This lead comp->rstate equal NULL.In cas=
+es
+> no check the comp->rstate is NULL, using it in kernel casue the system
+> crash and restart.
+>
+>
+>
+>
+>
+>
+>
+> Solution:
+>
+>       Add a judge in front of "ts =3D comp->tstate;".
+>
+>
+>
+>       As follows:
+>
+>       if ( tslots > 0 ) {
+>
+>            if(comp->tstate !=3D NULL){
+>
+>                  ts =3D comp->tstate;
+>
+>                  for(i =3D comp->tslot_limit; i > 0; --i){
+>
+>                       ts[i].cs_this =3D i;
+>
+>                       ts[i].next =3D &(ts[i - 1]);
+>
+>                  }
+>
+>                  ts[0].next =3D &(ts[comp->tslot_limit]);
+>
+>                  ts[0].cs_this =3D 0;
+>
+>            }else{
+>
+>                  return NULL;
+>
+>            }
+>
+>       }
+>
+>
+>
+>
+>
+>
+>
+> The specific exploit code and steps caused the system to restart see atta=
+chment.
+>
+>
+>
 
-Mitigation:
-1.2.x has reached EOL, so users of <= 1.2.x are recommended to upgrade
-to a supported version of Cassandra, or manually configure encryption
-and authentication of JMX,
-(seehttps://wiki.apache.org/cassandra/JmxSecurity).
-2.0.x users should upgrade to 2.0.14
-2.1.x users should upgrade to 2.1.4
-Alternately, users of any version not wishing to upgrade can
-reconfigure JMX/RMI to enable encryption and authentication according
-to https://wiki.apache.org/cassandra/JmxSecurityor
-http://docs.oracle.com/javase/7/docs/technotes/guides/management/agent.html
 
-Credit:
-This issue was discovered by Georgi Geshev of MWR InfoSecurity
+
+--=20
+Nick Kralevich | Android Security | nnk@google.com | 650.214.4037
+
+--001a113dc8b80a78f20521aad642--
