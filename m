@@ -1,4 +1,9 @@
-Received: (qmail 21580 invoked by uid 550); 31 Jan 2024 13:02:30 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2239" "Sunday" "11" "October" "2015" "14:06:25" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151011180625.CA832332326@smtpvbsrv1.mitre.org>" "60" "[oss-security] Re: Heap overflow and DoS in unzip 6.0" nil nil nil "10" "2015101118:06:25" "[oss-security] Re: Heap overflow and DoS in unzip 6.0" (number mark "U       cve-assign@m Oct 11   60/2239  " thread-indent "\"[oss-security] Re: Heap overflow and DoS in unzip 6.0\"\n") "<CACn5sdRQaUEHfde5QzqnOSv829baMEgDBCN7n8rzzrb+1s2uMw@mail.gmail.com>" ("<CACn5sdRQaUEHfde5QzqnOSv829baMEgDBCN7n8rzzrb+1s2uMw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 20315 invoked by uid 550); 11 Oct 2015 18:07:25 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,64 +12,72 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15869 invoked from network); 31 Jan 2024 11:23:32 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-	s=20210705; t=1706700347;
-	bh=oGIwYiknVWQNKN0BElkQay8AXR8eKTtPoHGPYwzNE0k=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:In-Reply-To;
-	b=VeCnX9YH0E1YHU75mRezOvxCYkYNRLSAoOV2W32wPX6mV5Bt1Iq4RlpeH8reoNtz/
-	 UIgAHj2vrKoHQoSysonXOhJO1Qtb0yKAwyC2bq46vNytKrTVjWzrX/YeSwW2UfurEm
-	 i95GDifc7t/UTolr/8OMc761QmpN8In65z8L71ajdlsW5Ecq761I1i+ZJNNRnQJqSS
-	 d22QfIfIeqemZENTKXcjeFGyeSe1Ta/sg0AEHP8ictWyeJq7WW3nOiYvVywQ2OTgSb
-	 sg2Jx0HDxmwIb5wnLZ0QWlnbonnJb0pgm6cMSRO4ymkVrPN2UBzEv8qp2VYR4+ciej
-	 BJICcfraNDQew==
-Date: Wed, 31 Jan 2024 08:25:42 -0300
-From: Thadeu Lima de Souza Cascardo <cascardo@canonical.com>
-To: oss-security@lists.openwall.com
-Cc: Armin Kuster <akuster@mvista.com>
-Message-ID: <ZbouNugSu+17l256@quatroqueijos.cascardo.eti.br>
-References: <CAKLnGtR3cgHVQz0kTmGVJAaT4nKvSejAZvbMGONTe=f_e9fSYA@mail.gmail.com>
- <20240130142524.GA21216@openwall.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240130142524.GA21216@openwall.com>
-Subject: Re: [oss-security] FWD: Kernel vulnerabilities CVE-2021-33630 &
- CVE-2021-33631
+Received: (qmail 20032 invoked from network); 11 Oct 2015 18:06:37 -0000
+From: cve-assign@mitre.org
+To: gustavo.grieco@gmail.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <CACn5sdRQaUEHfde5QzqnOSv829baMEgDBCN7n8rzzrb+1s2uMw@mail.gmail.com>
+Message-Id: <20151011180625.CA832332326@smtpvbsrv1.mitre.org>
+Date: Sun, 11 Oct 2015 14:06:25 -0400 (EDT)
+Subject: [oss-security] Re: Heap overflow and DoS in unzip 6.0
 
-On Tue, Jan 30, 2024 at 03:25:24PM +0100, Solar Designer wrote:
-> Hi,
-[...]
-> > https://nvd.nist.gov/vuln/detail/CVE-2021-33630
-> 
-> This says:
-> 
-> "NULL Pointer Dereference vulnerability in openEuler kernel on Linux
-> (network modules) allows Pointer Manipulation. This vulnerability is
-> associated with program files net/sched/sch_cbs.C. This issue affects
-> openEuler kernel: from 4.19.90 before 4.19.90-2401.3."
-> 
-> > https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=3e8b9bfa110896f95d602d8c98d5f9d67e41d78c
-> 
-> This mainline commit is from 2019, "net/sched: cbs: Fix not adding cbs
-> instance to list".
-> 
-[...]
-> The above links don't say anything about attack vectors and required
-> access - I guess CAP_NET_ADMIN [...]
-[...]
- 
-> Alexander
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-I always find it lacking when CAP_NET_ADMIN is mentioned but without specifying
-if it is the capability in the initial user namespace or any user namespace.
+> Two issues were found in unzip 6.0:
 
-That is relevant for Ubuntu since it allows unprivileged creation of user
-namespaces by default making it a PR:L instead of a PR:H attack, using CVSS
-parlance.
+Please see our comments about multi-session use cases in the
+http://www.openwall.com/lists/oss-security/2014/11/04/7 post.
+Demonstrating that a crash occurs, or that the flow of execution never
+halts, after entering command-line arguments is not necessarily
+sufficient for obtaining a CVE ID.
 
-I suppose it is relevant for other distros and systems as well, so worth noting
-that this is important information.
+We found this:
 
-Cascardo.
+  http://info-zip.org/FAQ.html#threads
+  Can I use the Windows DLLs in a multithreaded application?
+
+  The UnZip DLL is believed to be thread-safe.
+
+which suggests that programs exist that are unzipping files for
+multiple clients within the same run of the program. (Thread safety is
+not a critical factor; what is important is that an attacker can cause
+a denial of service to another person who presented their own ZIP
+archive independently.)
+
+> * A heap overflow triggered by unzipping a file with password (e.g unzip -p
+> -P x sigsegv.zip)
+
+> AddressSanitizer: heap-buffer-overflow on address 0xb5202104 at pc 0x80500c0 bp 0xbfffedb8 sp 0xbfffedac
+> READ of size 1
+
+Use CVE-2015-7696 for this buffer over-read issue.
+
+
+> * A denegation of service with a file that never finishes unzipping (e.g.
+> unzip sigxcpu.zip).
+
+Use CVE-2015-7697.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJWGqPmAAoJEL54rhJi8gl5F8cQAK4S8UrCsSEmBZ4US/VOIjey
+2bsqclpJQE6jR1OKWm6cmxoUcqTsW7ihsFhTrjGtNklrTtW6S67NJydu4ZeHfr9H
+ddMbI8/SfQbYNFXY8ARZ5TOiTW137nM90CBtqOcSMhVuwFB+5OSq8+p8XrqmXXKV
+tgNiuXs4Btw70N8frhfgR2GguLgQbLiOJrNlp6sfgak/biesE/VPeZlRE1rCq0mo
+i2HsQBG6s0nt6VChXh5DeM+THbwHVw/cJpNYvzwH4DQezzli33AjPdX4fZw8Q12g
+weLfWaXZmMRT4orWyKzOc1FqoSJmaZczuaE3siBmqRTt41Ky8/T39KoQAeTgkV/s
+Lim1YOtZoji7AQ0FodLJUFSPF3OeoEbhgEPp6SdYf1BO28golZ4oxlaTR1QjsfkH
+ZpC1foqzYw6q/6aFv8x5O4XkUrkrNR1gLKzWm+LU7/kdSXVUXo+5i1oVKS4fy/g6
+xfKXw+mwaDBjHhxVFSiJ1bW3LGU3+2XXrsWc1MfOc3D84QBYtXYq7+fdXvD2Ryp0
+c5YTXrBo4GNswske/jS7jJQvOvWQYsDfnUsBP+tA3La8fJ7lF0XHZRxmPjQT0ZF/
+vAl0sz99QRN3F5NSIH+ZfdJSBqoNf8ncOGLWOfeYhjyXMM5ACu4rB24u59sgOLPq
+YrCeryQMr84yk0h09TzT
+=fh+S
+-----END PGP SIGNATURE-----
