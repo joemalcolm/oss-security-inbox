@@ -1,4 +1,9 @@
-Received: (qmail 14012 invoked by uid 550); 4 Jul 2022 10:03:41 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1880" "Sunday" "11" "October" "2015" "14:04:57" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151011180457.0EFED332338@smtpvbsrv1.mitre.org>" "46" "[oss-security] Re: CVE Request: squid: Nonce replay vulnerability in Digest authentication" nil nil nil "10" "2015101118:04:57" "[oss-security] Re: CVE Request: squid: Nonce replay vulnerability in Digest authentication" (number mark "        cve-assign@m Oct 11   46/1880  " thread-indent "\"[oss-security] Re: CVE Request: squid: Nonce replay vulnerability in Digest authentication\"\n") "<560C98E1.10503@redhat.com>" ("<560C98E1.10503@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 11567 invoked by uid 550); 11 Oct 2015 18:05:08 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,223 +11,59 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 11549 invoked from network); 11 Oct 2015 18:05:08 -0000
+In-Reply-To: <560C98E1.10503@redhat.com>
+Message-Id: <20151011180457.0EFED332338@smtpvbsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Sun, 11 Oct 2015 14:04:57 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17666 invoked from network); 4 Jul 2022 05:31:35 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	invisiblethingslab.com; h=cc:content-type:date:date:from:from
-	:in-reply-to:message-id:mime-version:reply-to:sender:subject
-	:subject:to:to; s=fm2; t=1656912680; x=1656999080; bh=2do7FSdpjX
-	mp6k4RThOxclpb9c7eUkSb/XLRkMLUovE=; b=yRQM4xCUsKIxkc7KpPYWYn4ZLu
-	Foyf0FEC579hL5PPcXuyDauKOs70mQw0DVcIy5rV1t3jQy8KUwzR+Tq/+aDUDX2b
-	gmDUkCllv9mer0n+EhE+Fo9v2iBn3ZvM0F4l2mFH+88mXwQdLjYW0JcAKyyu1OFc
-	MFLKU4AwG+lJj0JZTjg7gcRVTjBOeoA3eIS/Nd8+UXqCLQMfN7j9Z7CjaG3HYmTm
-	bwXPpZiHEZtCBivagy661WcaXF14ULR8F0sNMHb4OG24TSHfj98RoTTXt8r5p/vI
-	jpoLL6FSduA+6wk+iIuGNb2/xXu1rQDAO76IpxNPjBHzFY+gvubixB6CcKWQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:date:date:feedback-id
-	:feedback-id:from:from:in-reply-to:message-id:mime-version
-	:reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1656912680; x=
-	1656999080; bh=2do7FSdpjXmp6k4RThOxclpb9c7eUkSb/XLRkMLUovE=; b=X
-	9/bjdnMem95Kc3Kauj565qP+s8EMBDpLwyOjkAI9QH6E6qmsyURAEOolA0YObU+A
-	XvXI9BF6AN5PLez5z85D4XODjjzvE3wlxG4Yf6Bs9fKpsXt7dKkbrD6KQuA/9UtG
-	LZy+Btz2fwNbLc9D6Ypx6ZYjf/a4Yn8fLSR6Vo+HKQ9rsYT9lkmXc4dfOa2u3j0F
-	1YvfFR68ACRmoxttsNF/5Y6TAIY655ruDWvDH9hJybnq/Vv8YMnSXKkhjiizFx8C
-	eBcpMhmNXMJRfk53StZPhoT61HNSieSbMZK/pEXLGsNZ3eiFI0Je6horBdKwJCgD
-	qH76Vxk27NI5YOKdllRBw==
-X-ME-Sender: <xms:KHvCYhdSS8ZsSvHnZUogGYStwoQmZ0aq2BvaxRjx2z-pfZeyuBBj5w>
-    <xme:KHvCYvO5_ADpuhMg8j5dFiptyG8n37IFTuA3UiJhLvBu6wXCtlL0QlCPnQHsKAAuC
-    z_lgElUTnuouJw>
-X-ME-Received: <xmr:KHvCYqjWD5hkZlExeSeXMNfKbQCZ0iO0LzzIIv70V407-DvV1vmFjfcNba5b>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrudehkedgleehucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvffukfggtggusehgtderredttddvnecuhfhrohhmpeffvghmihcuofgr
-    rhhivgcuqfgsvghnohhurhcuoeguvghmihesihhnvhhishhisghlvghthhhinhhgshhlrg
-    gsrdgtohhmqeenucggtffrrghtthgvrhhnpefhudeghedugeetveevueevvdfhgfelgffg
-    vdffgffgveejheeuleetlefhvdejhfenucffohhmrghinhepghhnuhhpghdrohhrghenuc
-    evlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpeguvghmihes
-    ihhnvhhishhisghlvghthhhinhhgshhlrggsrdgtohhm
-X-ME-Proxy: <xmx:KHvCYq_BXNHatjM4HFLGYvn3pQxeKDEwhY_gHQoVa2GZZmYV8wYJsg>
-    <xmx:KHvCYtt1GQZa6L7s1JDUVafE_FjqXuSr6cbNZFhwQbpFgfF9R6wO6w>
-    <xmx:KHvCYpGMhIkFTqNgndZYza1Nq1Og-alO4635HzFbB7lEkb39-mhjSA>
-    <xmx:KHvCYr5IVQp7NeLspapGV_tLapAcFQ0xav3mhYas7Q-s-ueFXJXY0Q>
-Feedback-ID: iac594737:Fastmail
-Date: Mon, 4 Jul 2022 01:31:18 -0400
-From: Demi Marie Obenour <demi@invisiblethingslab.com>
-To: Open Source Software Security <oss-security@lists.openwall.com>
-Message-ID: <YsJ7JjZ/R/jqN+YX@itl-email>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="8k5xxnZALPRdW3V/"
-Content-Disposition: inline
-Subject: [oss-security] Denial of service in GnuPG
+Subject: [oss-security] Re: CVE Request: squid: Nonce replay vulnerability in Digest authentication
+To: huzaifas@redhat.com
 
---8k5xxnZALPRdW3V/
-Content-Type: multipart/mixed; protected-headers=v1;
-	boundary="x9Iz0ZqNZknNipIn"
-Content-Disposition: inline
-Date: Mon, 4 Jul 2022 01:31:18 -0400
-From: Demi Marie Obenour <demi@invisiblethingslab.com>
-To: Open Source Software Security <oss-security@lists.openwall.com>
-Subject: Denial of service in GnuPG
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
+> Upstream fixed a security issue in digest_authentication
+> 
+> allow disabled user or users with changed password to access the squid
+> service with old credentials.
+> 
+> http://bazaar.launchpad.net/~squid/squid/3.4/revision/13211
+> http://bazaar.launchpad.net/~squid/squid/3.5/revision/13735
+> http://bugs.squid-cache.org/show_bug.cgi?id=4066
 
---x9Iz0ZqNZknNipIn
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+As far as we can tell, there is only one vulnerability -- it is
+associated with http://bugs.squid-cache.org/show_bug.cgi?id=4066#c3
 
-GnuPG is vulnerable to a denial of service attack when processing
-crafted detached signatures and/or certificates.  By concatenating the
-same signature to itself a very large number of times, and then wrapping
-them in a compressed packet, I am able to cause GnuPG to take over a
-minute to process an input that is less than 5KB armored.
+Use CVE-2014-9749.
 
-https://dev.gnupg.org/D556 should fix this particular bug by refusing to
-process compressed packets in detached signatures and/or certificates.
-There may be further problems with non-detached signatures that are not
-addressed by D556, but I recommend applying D556 first.
+We aren't currently providing any statement about the
+affected versions for this vulnerability. It is possible that
+http://bugs.squid-cache.org/show_bug.cgi?id=4066#c7 implies
+that 3.5.x wasn't ever vulnerable, but that the 3.5.x code was replaced
+anyway because it had used too slow of an approach to
+preventing the vulnerability.
 
-Signature (of /dev/null) that triggers this bug is attached, along with
-the corresponding public key.
---=20
-Sincerely,
-Demi Marie Obenour (she/her/hers)
-Invisible Things Lab
-
---x9Iz0ZqNZknNipIn
-Content-Type: application/octet-stream
-Content-Disposition: attachment; filename="test-key.cert"
-Content-Transfer-Encoding: base64
-
-xjMEYq+NUxYJKwYBBAHaRw8BAQdAOZibYhwKwkgm2R+K5UjNNN9uAx9Td0OU
-HiV8IoMwgx/CwBEEHxYKAIMFgmKvjVMFiQWkj70DCwkHCRA9nKuhjMmsLkcU
-AAAAAAAeACBzYWx0QG5vdGF0aW9ucy5zZXF1b2lhLXBncC5vcmfyYYRsqYJO
-L503xcPTJ4fHvVypKE5l19MRvOTv6/SS6wMVCggCmwECHgEWIQRKJVZYs9jV
-LEtcmlM9nKuhjMmsLgAAiF8A/0ovlTi8ipI+F3Q6SvZrCZOwYhwm50pHpvLP
-i1ejmh/pAP473wZckuSlrb1zXaJaHF4XhJRsFYS8/xH86QJz84+FBM0XVGVz
-dCBLZXkgZm9yIEdudVBHIHZ1bG7CwBQEExYKAIYFgmKvjVMFiQWkj70DCwkH
-CRA9nKuhjMmsLkcUAAAAAAAeACBzYWx0QG5vdGF0aW9ucy5zZXF1b2lhLXBn
-cC5vcme7YhMr9jcqZm9CwaDHs5oXV6Ga87JTEUWS3rMFlTf6DgMVCggCmQEC
-mwECHgEWIQRKJVZYs9jVLEtcmlM9nKuhjMmsLgAAokUBAP4zIMRR7VZpXaf1
-lLY6jb9DgBWWFFfmSDzrZEQQNAWSAP9eNT/lfvlGxKK1a4dH3JRtIuKuSgSw
-JhqBu2gxR7f9As4zBGKvjVMWCSsGAQQB2kcPAQEHQE56xBuSWAAK+uoPi7QW
-V4x8oJD0SKtn/tmHBpdnuFLrwsDFBBgWCgE3BYJir41TBYkFpI+9CRA9nKuh
-jMmsLkcUAAAAAAAeACBzYWx0QG5vdGF0aW9ucy5zZXF1b2lhLXBncC5vcmc+
-DV4PzBbi+MLpTI0YKJu7MkDcSvrlZG7BKWcT+rxtvAKbAr6gBBkWCgBvBYJi
-r41TCRBuC3AAhNYgqUcUAAAAAAAeACBzYWx0QG5vdGF0aW9ucy5zZXF1b2lh
-LXBncC5vcmf0V0Q3N/LUPHAOBQLiZloDt29QNPsZ430ZPOB+uiAWoRYhBEtk
-dYWh/Rqu6T0lxW4LcACE1iCpAACkgAD9E0Bhcky8HobQT3r39unQ3aHt+R1a
-0P/i89e8OFPcK0ABAIth9yQqkGzB3Wz55xM562/y1tox4IJ8peaideY+99wE
-FiEESiVWWLPY1SxLXJpTPZyroYzJrC4AAG+hAQDkjE2ovlHzNtKAJJRle4M4
-A22eeE/oik6yI0NeepATdwEAtYwlM6cQdoxK/Ctjmx1wy8+/0jrWbEyG8len
-iIcxvgfOOARir41TEgorBgEEAZdVAQUBAQdAeJ9oYXYGXOzcuB7r9wU+z1s/
-Srg03G3rigKG4hm5jjQDAQgJwsAGBBgWCgB4BYJir41TBYkFpI+9CRA9nKuh
-jMmsLkcUAAAAAAAeACBzYWx0QG5vdGF0aW9ucy5zZXF1b2lhLXBncC5vcmcb
-/5aJa71IdbleQBcmZEeTzipjkymVD9URiDXvBLT4oAKbDBYhBEolVliz2NUs
-S1yaUz2cq6GMyawuAAD3cgD9Fiyx7mtx9/p0/xeRlJXBaxa76LvvRkLPAeDN
-Wxj8BvkBAOmVfbJYVyX6tPDKaTYrtntI9kFGDvlWwyYsXXTm75sK
-
---x9Iz0ZqNZknNipIn
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: attachment; filename=decomp-3
-
------BEGIN PGP MESSAGE-----
-
-owNCWmg5MUFZJlNZ9Js3WgY6hv///zzHl+Zjd9J/r98Kvq3/KF5RARgiO6mI0yjB
-sAGoYkbgCL75VUFFJSlIIRVBSgUAgwAmAAABMACYAAAEwAmhgAAAAAAIMAJgAAAT
-AAmAAABMAJoYAAAAAACDACYAAAEwAJgAAATACaGAAAAAAAgwAmAAABMACYAAAEwA
-mhgAAAAAACaqqp+mVNH6jSeo9T0NIB6jT1GhgEZDT1GTRgGoMQ9TAmA1BiZMjCaa
-BSqUp5PVNPCZTRoZqeo0yAAaGhk0G1GmhpoNNNPSYg9RmkNDQaPUNtT0p9xUJauV
-CWBEUTnSoSwkKkxUKk3iFSZSFScqQqTEhUmjQqTRQqTTKhLFKhLKKhLSKhLbSKk7
-NCpNRCpORQqTqoCWnKhLLKhL0ioS7kqJNFCpOAhUnAoVJqIVFopUJeGVCXnlQl6p
-UI6aFScVCpPMoVJjQqTMoVJiQqTnoVJkQqTpoVJ+iFSaiFSfyhUmmhUnRQqThUKk
-4aFScNCpOOhUnpkKk0qFSaSFJfIVCWuKhLDSoS0UqJMEKk3aFSb6QqTTQqTtpCpP
-XQqT8kKkwQqTnIVJ5aFSayFSc2hUmSVCXzlQlgSoS9mVCXMQqTdoVJmoVJwVEgYS
-FSYIVJgkKkwkKlagqEtYVCWslQlkJUJYCoS7RUJYUqEshKhLMoVJghUmqhUnPQqT
-DOKhL6YqEsRUJYyoS8UqEs0qEsJUJZBUJeWRUm9kKk71CpNwhUmuiEsoqEvUlQl+
-BUJfZKhLPlQl9EqEuOVCXuyoJzkKkwQqT70KkxoVKz5UJYioS5SVCWklQl+0qEuU
-VCWkVCWOVCWghUmqhUnMQqT5qFSdBCpM1CpO+kKk8RCpMiFSZchUm5QqTWoVJlIV
-JiQqTOQqTgoVJnoVJ8KFSdJCpOhIVJ0kKSxFQlmJUJfklQlqpUJbIqEufKhLLKhL
-BFQlzyoS9MqEs6VCWdKhLxFQl1ioS/OVCWgVCWOhUn2IVJsoVJ26FSbCFSaZCpOp
-QqTTQqTBCpOpQqTXoVJoIVJ10BLDKhL0EqEv7lQlzipSfshUmWhUm8QqTBCqWUVC
-XXKhL9ZUJZsqEYkKky0KkzkKk85CpO0hUn3SFSe4QqT8UKk36FSaqFSclCpOOhUm
-6QqTKQqTcoVJoUKk3CFSZqFSbSFSd4hUmJCJZkqEv3lQlklQl7UqCdVCpNJCpNlC
-pM+hUnZQqTbQqTkoVJroVJsFQlplQl0pUJfWlQlmUKk6yFSddCpP8oVJ2EKk9RCp
-PqQqTmoVJ3aFSdhCpPzQqTUQqTOQqTChUnmoVJtIVJ36FSY0Kk1kKk/dCpPKoVJy
-EKk/1CpP6QqThIVJkKhL3JUJcwqEvGVCWPfQVJy0Kk36FSY0Kk/tCpNZCpN0hUmY
-hUmyhUn/SFSZEKk3qFScxCpN9QqTrIVJy0Kk9tCpMaFSdpCpM9CpNpCpNihUmNCp
-OUhUmRCpNtCpOihUm2hUmghUn/mKCskyms3dFvq4Edtb///55jy/Mxu+k/1++FX1
-b/lC8ogIwRHdTEaZRg2ADUMSNwBF+B9CVIgSFSUpFUgAAQYATAAAAmABMAAACYAT
-QwAAAAAAEGAEwAAAJgATAAAAmAE0MAAAAAABBgBMAAACYAEwAAAJgBNDAAAAAAAQ
-YATAAAAmABMAAACYATQwAAAAAABNVUqMnoaaj0mTA1NNNlGCYAEwIyaYAjAIzQAA
-AEZDJgKVVBopk8U9Jp5TTE9QAA0NAGmmh6TQNNNHqaep5EMnqZPKep6hoZHqHgU0
-EKkyqFSYZSil1UKkwpCpMdCpM2hUmGhUnPIVJjoVJloVJloVJx0KkwUKky0Kk6aF
-SclCpNpCpM5CpOchUmshUmuhUnDQqTjIVJ2kKSxSoSxyoSx5UJaOVCnRIVJtIVJw
-kKkzkKk7CFScqhUnIQqTcQqTAhUmOhUmmhUm8hUnYQqT9UKkzqFSdpCpOOiEulKh
-LYSoS2hUJbQqEt6VCW1ioSzUqEs0VEnKQqTiIVJiqFSdGQpLAVCWbKhLRUqEsaVB
-MSQqT20Kk/NCpMJCpNGhUnnIVJpIVJ0kKkxJUJflKhL5EqEscqEskqEs2VCWGVCW
-QpJVWBKhLAVCWCSoSwJUIx0KkzUKkzUKkzMWQqTEQqT90KkwSFSYkhUmMhUmFQqT
-PQqTTQqTJQqTmkKkwIVJ3KFSbaFScVCpMVCpMRCpMdCpMiQqTiIVJjIVJqIhLFlQ
-l9ZUJc+VCX7lQlppUJfnKhLkSoS1BUE0aFSYSFSddCpNxCpPIoVJgQqTY+uQqTqS
-FSYaFSaKFSdNCpODQqTmIVJnoVJoIVJ9KFSdSVCWGVCWgSoS++VCXvgqTFkKk4FC
-pNJCpMOlCWEVCWZKhLIKhLEKhLjSoSySoS6KVCWSVKTAhUmZIVJpyFSZFCpOQhUn
-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
-=+qAL
------END PGP MESSAGE-----
-
---x9Iz0ZqNZknNipIn--
-
---8k5xxnZALPRdW3V/
-Content-Type: application/pgp-signature; name="signature.asc"
-
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-iQIzBAEBCgAdFiEEdodNnxM2uiJZBxxxsoi1X/+cIsEFAmLCeyYACgkQsoi1X/+c
-IsHuOg/+KN8BPdt0EspZv/m19b3ZXfGnf2GMNyP2x0Oc78NTysHpb8T7s1jwiPkU
-HEN82KEREvcS2SFiU1PHbZaOfoIujf6TfSTXzGMMCe1qxHat9DbESsNFL6Jm4+34
-dwKWWqwzRnOmmi5Eir6WBW6+W70Hyc5Ip3/OhI8DIiIH8f4Twy4jZmZtFxNWD5OM
-hCa5eG7hUbBeYhqySt/E84IJR2NrLPlCOS5T/37fDDGZASOa+zkseplBNhhM0Qqy
-Dfo5DPZ22BintYjxvBJsgxR9Kh0eqb1E8N658cqFmIxryk2CPIkiScZoSxk545Rf
-R1yNwqJPZt5CTKwGgUKmeWd8WeQB1n4GByCfRzytymbxVyF/F5tVd7ul2huSztTg
-rfUW5TLKTcalO15HedJd2lcdBJcMeGfVpkePeZhk3Ju+uS5MKNDY5BZ3lsjdKKVc
-NPXzazUaiBRmCclIqMaJh6UvX3ung0xhF3PxHXbO0f4qx7EAXfT/aONL1DQe9wXi
-JE2BNgusDJib2Ldy19y/q7KBgey09Hkn//pZWzVTii4jQd3nGF/lofmh0/TTDTsv
-yTg2JQcnYbZ7uoSK5q0JFiWq1ej46gPEwfvxBppgPYnPEAUc6qAhhf30DmYOrfuM
-/ZQsLYHV7YprlOVSq8OPvT/AeTBaaW4wPLm7qXcqAiDAnc+CRzc=
-=PGWL
+iQIcBAEBCAAGBQJWGqM8AAoJEL54rhJi8gl56YIQAKJDgc+1QONtR6ZCRQ2A2ggw
+HAGFBHlouBm0EQjjqegGvrzDvgaYI3T6sjGIpP+raH1vv4sV04oVr+hL9t4D6r9j
+injVtZoS6dT2BstB7aaTNusBA3FBQv972x7r89bIxLN3tZluZYIYH8BSUA7LN4om
+7w69gFkuPArOC4dT4iSTmKKOBpLBOrgQNdxk3vPGYQ0GSmpPuGLD/kdBu8+y4zJZ
+KadGePTQcnk7zk4oXLyAfHSxAhKKAMQzpqdxbqxGTWYGl0q42t/iRwwdC5KJ9zaH
+3ZuYz7eRRJSa/VXZ44oE69HxnXvnvgEcN+z+AaR+pZHQKI5keXNEG/gL1+WfVlCO
+RgOMU/Fee8ZNaLcuFJzJPLGwASN4IVr0aJ9d0E9KxkO0OwfQf/XBsj8I3h0M9ByL
+8zRIf5JR48pOC2v2Ucw9gt8jLG1hPkU1NxRorMsHI0HiaDHMwoZ3Jt7XaQ4NdPob
+BJA3KQgGmn+AL2xGNKwY+F5lyKgT63KtF0nBnlk1qellOz7KmGnfO7ZzZ3cNPpl8
+YIUfUE2cT259ZiPeciPmmrHdGmmgUKisnBPSDH/0g0KP3m6TQaQDjY+aTMDsasDo
+ZGvyxOkwBMd4eio03DILBFc6Wfazh4fH2vRofAO55TTWxWErA6vMuLOCF2PXfKer
+YXFt+CdXo1f72pKmM54K
+=BHmq
 -----END PGP SIGNATURE-----
-
---8k5xxnZALPRdW3V/--
