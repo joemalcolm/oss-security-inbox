@@ -1,4 +1,9 @@
-Received: (qmail 15583 invoked by uid 550); 31 Dec 2025 00:56:41 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4169" "Monday" "12" "October" "2015" "12:04:40" "-0500" "Nathan Van Gheem" "nathan.van.gheem@plone.org" "<CAL8hw9E4UMfhDtQ5R6niVe1ee36=LAHbds-0yrhGDNA+NC-ePQ@mail.gmail.com>" "98" "[oss-security] Re: CVE Request: Plone CSRF" nil nil nil "10" "2015101217:04:40" "[oss-security] Re: CVE Request: Plone CSRF" (number mark "U       nathan.van.g Oct 12   98/4169  " thread-indent "\"[oss-security] Re: CVE Request: Plone CSRF\"\n") "<20151012161612.5FE516C04EF@smtpvmsrv1.mitre.org>" ("<CAL8hw9GrJsZk5uVN2aY9EdBo2uahxLbQFG8j_5=ArC8Z+cGfKA@mail.gmail.com>" "<20151012161612.5FE516C04EF@smtpvmsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 28090 invoked by uid 550); 12 Oct 2015 17:04:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,134 +11,130 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 10016 invoked from network); 31 Dec 2025 00:27:53 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hexsys.org;
-	s=protonmail; t=1767140863; x=1767400063;
-	bh=sucziHWBTrqhEWe/HL2VEUc1ChOdXo+1rdYhW1jiuQw=;
-	h=Date:To:From:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=jSKKyKhFIp2B6afkEKhJvzo9zysLXmZHkObtK0bcMyfSeZbRNpMLbCsVpvbw0w/Rs
-	 vf/NP70J/rTV97oWwKRcjrxHsSH2Ns3lQgKj+JmasywafbguXJhC+C2+mYNghTYgkj
-	 KuXVvqKoR6yg9dJGAxW3E3DNzu3grqHgLAy237P6NSNUosB51XhnwSBSSKMb3VIegs
-	 hhQCNuIwPH4h74W0Kj41moyeW5IGztyLHNiRlLpbyF2VX9InI2Hh9bXBAZV6wScWsn
-	 TiEfT7UhPti3veBDXp0p+J15FFiC5VbrfNIfZllc5qPMdKXVjVANVSwXMF4sGS3BB5
-	 mXnrCcfdTy67A==
-Date: Wed, 31 Dec 2025 00:27:41 +0000
-To: oss-security@lists.openwall.com
-From: Ali Polatel <alip@hexsys.org>
-Message-ID: <kijdjK8TrndDINJsZmPKxfdpiDaRwCvpNP0cqzmmySQwBeDhQWDHTsOMFkNH9vZ8KvEZG8hy027J4PnqWL18_BcaxkDgGdDvgmF3K0pJ-no=@hexsys.org>
-In-Reply-To: <4bb0e4f7-a4f3-45cc-b519-2044b4b2871c@gmail.com>
-References: <4bb0e4f7-a4f3-45cc-b519-2044b4b2871c@gmail.com>
-Feedback-ID: 105281019:user:proton
-X-Pm-Message-ID: f5d0a0aa5c56cdcf43657c5fbe10a2f01a79484d
+Received: (qmail 28069 invoked from network); 12 Oct 2015 17:04:52 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=l2YfGsWkjNPfxwQarrXi0Uovnbhn3+yUjxAOJoELfjs=;
+        b=hE08X+EIN/hNT4fucSolZCEsjKKFFmij7WeZfl2bRYDUfKMGEBBfJPnVQj6PmDDp0x
+         Clh52N5IVab+ivWoOk1pElOGMF3HrZy+PB7q9EGDD9P3Lmj+e61yocmF+UfEX3K/v3K6
+         MGY+MKwTDokLaEofDHcuQdFnHvnF2r3n5fwyd1UDegTc/ipW8eFWV6k31fhnqT1C36rr
+         LyzHAygg4WEZvScc8LJXT9hKEXkP9tPRUu0QD02Dtyfq5sufwIPAWst3cxYICj8KwnKp
+         evHQI1bDUFxh6+wcAceVxo9Al18F6/gb1e7W7fH4PLKzGs3V0kk74SDtt33wZdJS+rsq
+         GD1Q==
 MIME-Version: 1.0
-Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha512; boundary="------db39979f65c96114803967f74779ccc9b6d17b6525ff20ab774f2ebab05a443e"; charset=utf-8
-Subject: [oss-security] Re: Best practices for signature verifcation
+X-Received: by 10.31.164.146 with SMTP id n140mr17759629vke.148.1444669480554;
+ Mon, 12 Oct 2015 10:04:40 -0700 (PDT)
+In-Reply-To: <20151012161612.5FE516C04EF@smtpvmsrv1.mitre.org>
+References: <CAL8hw9GrJsZk5uVN2aY9EdBo2uahxLbQFG8j_5=ArC8Z+cGfKA@mail.gmail.com>
+	<20151012161612.5FE516C04EF@smtpvmsrv1.mitre.org>
+X-Google-Sender-Auth: Ok-SPw-4zAKwm-a9Vhw8yentAe4
+Message-ID: <CAL8hw9E4UMfhDtQ5R6niVe1ee36=LAHbds-0yrhGDNA+NC-ePQ@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=001a11414f8834d6c50521eb5320
+Cc: oss-security@lists.openwall.com
+Date: Mon, 12 Oct 2015 12:04:40 -0500
+From: Nathan Van Gheem <nathan.van.gheem@plone.org>
+Reply-To: oss-security@lists.openwall.com
+Sender: vangheem@gmail.com
+Subject: [oss-security] Re: CVE Request: Plone CSRF
+To: cve-assign@mitre.org
 
---------db39979f65c96114803967f74779ccc9b6d17b6525ff20ab774f2ebab05a443e
-Content-Type: multipart/mixed;boundary=---------------------5a0442b3108d8911fecf19f0682588a6
+--001a11414f8834d6c50521eb5320
+Content-Type: text/plain; charset=UTF-8
 
------------------------5a0442b3108d8911fecf19f0682588a6
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;charset=utf-8
+On Mon, Oct 12, 2015 at 11:16 AM, <cve-assign@mitre.org> wrote:
 
-On Monday, 29 December 2025 at 02:36, Demi Marie Obenour <demiobenour@gmail=
-.com> wrote:
-
-> In light of the recent GnuPG vulnerabilities, I remembered that OpenPGP
-> is almost never the right choice. CMS/PKCS#7 isn't any better, and
-> X.509 is also bad except that its extremely wide deployment in TLS
-> keeps it alive.
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA256
 >
-> See https://www.latacora/com/blog/2019/07/16/the-pgp-problem/
+> > Can a CVE be assigned to this issue, please?
+> >
+> >
+> https://plone.org/security/20151006/multiple-csrf-vulnerabilities-in-zope
+> >
+> https://plone.org/products/plone/security/advisories/security-vulnerability-20151006-csrf
+> >
+> > Plone is built on the Zope2 application framework. In the Zope2
+> application
+> > framework, there are multiple CSRF vulnerabilities. The latest version of
+> > Plone has automatic CSRF protection integrated at the database layer.
+> This
+> > patch basically backports the latest automatically CSRF infrastructure to
+> > Plone 4.x.
 >
-> and https://soatok.blog/2024/11/15/what-to-use-instead-of-pgp/.
+> The vulnerability information can be covered in CVE; however, we do
+> not really understand why it is being presented in this way.
+>
+> https://github.com/plone/plone4.csrffixes says "there are a lot of
+> CSRF problem with the ZMI that Zope2 will never be able to fix." It
+> seems that, normally, if one or more persons had discovered CSRF
+> problems in Zope2, then they could have CVE IDs for their discoveries.
+>
+We have one person who discovered and submitted a vulnerability. On further
+investigation by the security team, more vulnerabilities were found.
 
-OpenBSD has signify[1] and the article "Securing OpenBSD From Us To You"
-by the main author is worth reading. Having been a loyal GnuPG user for
-long years, these vulnerabilities made me reconsider my approach to
-signing yet again. This time, though, I decided to act on it. I wrote
-a clean Rust implementation of signify and called it signify-rs[3].
-It uses the same license (ISC) as the reference implementation. Code
-is free of unsafes and arithmetic side effects. No proc macros are used
-in the code or any dependencies making it static-linking friendly. It's
-fairly portable and passes tests on FreeBSD, NetBSD, Linux and Windows.
-
-My initial goal is to switch signing Syd binary releases from gpg to
-signify. Next intention is to consider signing package manifests on
-Exherbo Linux distribution with it. If my memory serves me right,
-Gentoo Linux and Portage has support for GPG signed manifests and
-it has been a longstanding issue in Exherbo Linux how we want to
-do manifests. Current consensus is to use thin package manifests
-on a best-effort basis because we lack the developer time to go
-all in. Thin manifests store a single checksum and package size
-of the relevant package distfiles. My goal/dream is to integrate
-signify into this workflow and start signing thin manifests using
-signify.
-
-Sharing is caring, so here is the git[5] and CI[6]. CI saves
-static-linked signify binaries as build artifacts which gives
-an option to quickly test. Enjoy.
-
-Finally, my contribution is the "keyring" feature. When built
-with this feature on Linux, keyrings(7) support is compiled in.
-This adds a "-k <key-id>" argument to the subcommands -G(enerate)
-and -S(ign) when the user may submit a 32-bit key ID rather than
-inputting the passphrase manually with a prompt.
-
-[1]: https://man.openbsd.org/signify
-[2]: https://www.openbsd.org/papers/bsdcan-signify.html
-[3]: https://crates.io/crates/signify-rs
-[4]: https://www.kepstin.ca/blog/manifest-generation-in-exherbo/
-[5]: https://git.sr.ht/~alip/signify
-[6]: https://builds.sr.ht/~alip/signify
-
-> --
-> Sincerely,
-> Demi Marie Obenour (she/her/hers)
-
-Best regards,
-Ali Polatel=
-
------------------------5a0442b3108d8911fecf19f0682588a6
-Content-Type: application/pgp-keys; filename="publickey - alip@hexsys.org - 0xC22DA9DE.asc"; name="publickey - alip@hexsys.org - 0xC22DA9DE.asc"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="publickey - alip@hexsys.org - 0xC22DA9DE.asc"; name="publickey - alip@hexsys.org - 0xC22DA9DE.asc"
-
-LS0tLS1CRUdJTiBQR1AgUFVCTElDIEtFWSBCTE9DSy0tLS0tCgp4ak1FWmdRSmRSWUpLd1lCQkFI
-YVJ3OEJBUWRBbjlaVnJMbi9tclpseThqTE9qVklwTmRWSXhTSVZ4WmUKL2ZDeDZpcTNPM1hOSVdG
-c2FYQkFhR1Y0YzNsekxtOXlaeUE4WVd4cGNFQm9aWGh6ZVhNdWIzSm5Qc0tNCkJCQVdDZ0ErQllK
-bUJBbDFCQXNKQndnSmtCY2phUTFHWTNTNkF4VUlDZ1FXQUFJQkFoa0JBcHNEQWg0QgpGaUVFd2ky
-cDNrbUo2K2VhOUErdEZ5TnBEVVpqZExvQUFFaDlBUUNVRlB2YytPL1FzYzdpVDF0STcvMTAKakJW
-aklPa2xyL01DU2lzZ2w0SzRqQUQvZkRaejVuVStqbzBmcjh3QXNLdFU0M1UrVWd5alVuNHhuczVQ
-CnVzcFViZy9PT0FSbUJBbDFFZ29yQmdFRUFaZFZBUVVCQVFkQXFrait2ejdsbjQyNmhmQS9wSWZz
-elJKbQpWWHpLc1VJOWJQd3dqZEdQUlNRREFRZ0h3bmdFR0JZS0FDb0ZnbVlFQ1hVSmtCY2phUTFH
-WTNTNkFwc00KRmlFRXdpMnAza21KNitlYTlBK3RGeU5wRFVaamRMb0FBTHNMQVAwWUVEUkw1OVdi
-UndSTFdpN0RlRjY2ClRCSzZtdmZGeG5maG9rM3JKSU1lWXdFQTZGNi85c1J6SzJqbExCRk9kbHlu
-ZGdZbEpxUFVpZk1CZGU5ego2QkZFY1FnPQo9NFhXSgotLS0tLUVORCBQR1AgUFVCTElDIEtFWSBC
-TE9DSy0tLS0tCg==
-
------------------------5a0442b3108d8911fecf19f0682588a6--
-
---------db39979f65c96114803967f74779ccc9b6d17b6525ff20ab774f2ebab05a443e
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: ProtonMail
-
-wrsEARYKAG0FgmlUbeUJEBcjaQ1GY3S6RRQAAAAAABwAIHNhbHRAbm90YXRp
-b25zLm9wZW5wZ3Bqcy5vcmeSnU0i1WKhm7a8POFuw1iMrKMBFoXvDZYo4YOW
-r+o9MRYhBMItqd5JievnmvQPrRcjaQ1GY3S6AABFKwD+MF/kq5w9EGsTX5pR
-WbTII24w1gHwSklevgGbRJhsMacA/jxbwf/vUXVHZ7vQFikTpGiZcKCb6YzS
-2+BoCN81apEM
-=ELXr
------END PGP SIGNATURE-----
+There are no CVEs. The backport is of the technology to protect all
+functionality, along with addons of the CMS.
 
 
---------db39979f65c96114803967f74779ccc9b6d17b6525ff20ab774f2ebab05a443e--
+> Why is this a "never be able to fix" situation? Is there, more or
+> less, a requirement that Zope2 allow arbitrary requests from clients
+> that have never previously read the content of any web page, because
+> of the variety of ways that Zope2 is used? In that situation, the
+> request behavior of Zope2 would not necessarily be considered a Zope2
+> vulnerability.
+>
+Zope2 development is dead. They do not have the people to address the
+problem and aren't very interested in it(we've tried coordinating). It is a
+Zope2 issue vulnerability. Plone will likely be forking...
 
+
+>
+> Also, a separate issue is that the CVE request is specifically about
+> backporting. It seems that, at some time in the past, the possibility
+> of CSRF attacks against default Plone sites was identified and this
+> motivated the development of auto CSRF protection in Plone 5.
+> Normally, an assignment of a CVE ID or IDs would be associated with
+> the original discovery, not a later backporting of fixes. Are these
+> equivalent in this case: for example, were all of the CSRF attack
+> possibilities against default Plone sites discovered by Plone
+> Foundation contributors, and security-vulnerability-20151006-csrf is
+> the first general public announcement that these CSRF issues existed
+> at all?
+>
+There are no other previously known unpatched CSRF vulnerabilities this is
+backporting. After testing, we knew that our automatic CSRF protection also
+addressed the reported CSRF issue.
+
+security-vulnerability-20151006-csrf is the first public announcement that
+Zope2 is mostly unprotected. Zope2 has a collection of management
+interfaces, many of which are vulnerable.
+
+
+>
+> - --
+> CVE assignment team, MITRE CVE Numbering Authority
+> M/S M300
+> 202 Burlington Road, Bedford, MA 01730 USA
+> [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1
+>
+> iQIcBAEBCAAGBQJWG9wmAAoJEL54rhJi8gl5n6oQAKXuzwqb4bmBs4K5NhpJ4NtI
+> d37u737MsJSGLLtXGlrupC2XDwq/LuSN80SmOQVYnPn4EU4SU+17bvwjOP30LECD
+> DJMt7m10LuGjamyrbFGfALzXh0iPkZHoUN289c+oQZN9P8pdVlVfZlVrgZP2KPQk
+> 3MbELeGrh0NogA2+yRFAdufKQovo4cnyQuHsxqpV/7Mv+YJwlFInhJVcrI35F5TF
+> R3sDKoIkjMXicPRA9+9dZYnTeNmypGVhuBUhG6UwW+Ob4dlR6fAyMH6NV+977r+5
+> 9DnDsyHQ+6axYqNT/+4kY1tXHi9dXvhSoV71OGtcMODknD7RyiVdF1DpuJl7PP7Y
+> u+TaqrN7A7x5kalSCspLYsYlvciyIXURJv32ZANVeT/67mEqnWky7ZnoUrssPqzf
+> FIgqAM1MUPD9KT+P9zDoiG0oFfVKpu9EqLlo372pyw+nVn/2U0fPdGzKro+kOZGQ
+> CU+wxdFX2xwZTAsP1JXzHBoHEY0Q/i+GSAlqHvNuILlLgdypPS9YxiCNc0pVmsBE
+> 2HRxNoZAWBhiAD/B/nEFjNyvi6yGzz35QNhaYGeMQpVrlDh65BNt3wT+pkCxB/tr
+> W7ZbRsu4DBxt/yyVy9FqOdw0eIqo2beplKxVWHjbAIKapQjCyJ0VXD887CBw7AlC
+> uVpQbre4M9bmYXVg95Bz
+> =tvlJ
+> -----END PGP SIGNATURE-----
+>
+
+--001a11414f8834d6c50521eb5320--
