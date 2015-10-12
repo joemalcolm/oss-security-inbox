@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["863" "Tuesday" "14" "April" "2015" "13:35:20" "-0700" "Tavis Ormandy" "taviso@google.com" "<CAJ_zFkLtZteX-ge_=9jE8KHxDmKZ=7cwWUmwkHwGHbnCpiQWZA@mail.gmail.com>" "25" "Re: [oss-security] Re: Problems in automatic crash analysis frameworks" nil nil nil "4" "2015041420:35:20" "[oss-security] Re: Problems in automatic crash analysis frameworks" (number mark "        taviso@googl Apr 14   25/863   " thread-indent "\"Re: [oss-security] Re: Problems in automatic crash analysis frameworks\"\n") "<552D3A20.8040909@canonical.com>" ("<20150414155515.BFCAD6C0075@smtpvmsrv1.mitre.org>" "<552D3A20.8040909@canonical.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3033" "Monday" "12" "October" "2015" "12:16:12" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151012161612.5FE516C04EF@smtpvmsrv1.mitre.org>" "62" "[oss-security] Re: CVE Request: Plone CSRF" nil nil nil "10" "2015101216:16:12" "[oss-security] Re: CVE Request: Plone CSRF" (number mark "U       cve-assign@m Oct 12   62/3033  " thread-indent "\"[oss-security] Re: CVE Request: Plone CSRF\"\n") "<CAL8hw9GrJsZk5uVN2aY9EdBo2uahxLbQFG8j_5=ArC8Z+cGfKA@mail.gmail.com>" ("<CAL8hw9GrJsZk5uVN2aY9EdBo2uahxLbQFG8j_5=ArC8Z+cGfKA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 15765 invoked by uid 550); 14 Apr 2015 20:36:23 -0000
+Received: (qmail 15767 invoked by uid 550); 12 Oct 2015 16:16:25 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,66 +11,75 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 15744 invoked from network); 14 Apr 2015 20:36:23 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=M57Q8vtuRn1IpE3gLyHq3+gYD3QwjlFLXMfJid7D2zQ=;
-        b=C7IRw4zWpRYJE8h3kRlAinUbZ582MoG4pCJnOUQRpuXzbu+HwWp5y/P5vppn+Cp5OB
-         dUFEyn3YB3B6p9Isa6jq44lgy9RosuQF/gH8s+LK4BiYeUGySD1iKK6uLriHQ7zdaUo7
-         fJaFQhVWCcppANcE452cNWfoCIS21/Y/9gG7JX7VPX4beuibjKhcrF+5TChLTEqI+6YR
-         4WPb1/G/2jBQ7+jv6l24MQA0hBA293l0JfdGUJiddigRLqothiY2JOH7Ww8a2z2AkyyS
-         SM3RdEnAXmkX/HD6I3TLM6ZolW+3L51aoq4k/2zTF3FEv+0rBddQdPw5xuQy2tX9Zvt3
-         cOMg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=M57Q8vtuRn1IpE3gLyHq3+gYD3QwjlFLXMfJid7D2zQ=;
-        b=WkWNFW509sOeK4cXti6NIoH0vAQ6yD0u8WA1ZpzB0odC/CGcSIqwr2Wu9/5tlipYRD
-         cnVTKfoOnOHB6psuO8ZwQo7hbS8mugPz3FvIL+VXJN5dnqsYSmBYgp7wwJNJqmW1sc7Z
-         5Zg7rCI2sy58dDozjy4S0KhfY9lSgY9iIpd9QA3bi4zyiXwCCBXcWg+VWokJN0dTuB61
-         qaXg4qWd1LHztpI9IFJT+Svf40Pp/8Fz+wFpUJJnxKnVIr5HPV/wP3zY0KFELkGnt2Pz
-         bGgwCoRhuGNWMOx9yB2I2VSBvynqJT1r0LDVWFdAkl7kdwDXOSvAXBhumUSHnPnzljkj
-         mETA==
-X-Gm-Message-State: ALoCoQku2Taea/8f1Jx0hL174V0WDptG41jM7xI5ajU+8483u+p/ZE+YM2fIiG0jko087Rz00C64
-X-Received: by 10.55.21.139 with SMTP id 11mr44641520qkv.19.1429043741292;
- Tue, 14 Apr 2015 13:35:41 -0700 (PDT)
-MIME-Version: 1.0
-In-Reply-To: <552D3A20.8040909@canonical.com>
-References: <20150414155515.BFCAD6C0075@smtpvmsrv1.mitre.org> <552D3A20.8040909@canonical.com>
-Message-ID: <CAJ_zFkLtZteX-ge_=9jE8KHxDmKZ=7cwWUmwkHwGHbnCpiQWZA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Cc: Assign a CVE Identifier <cve-assign@mitre.org>
-Date: Tue, 14 Apr 2015 13:35:20 -0700
-From: Tavis Ormandy <taviso@google.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: Problems in automatic crash analysis frameworks
-To: oss-security@lists.openwall.com
+Received: (qmail 15745 invoked from network); 12 Oct 2015 16:16:24 -0000
+From: cve-assign@mitre.org
+To: nathan.van.gheem@plone.org
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <CAL8hw9GrJsZk5uVN2aY9EdBo2uahxLbQFG8j_5=ArC8Z+cGfKA@mail.gmail.com>
+Message-Id: <20151012161612.5FE516C04EF@smtpvmsrv1.mitre.org>
+Date: Mon, 12 Oct 2015 12:16:12 -0400 (EDT)
+Subject: [oss-security] Re: CVE Request: Plone CSRF
 
-On Tue, Apr 14, 2015 at 9:02 AM, Marc Deslauriers
-<marc.deslauriers@canonical.com> wrote:
-> Hi,
->
-> On 2015-04-14 11:55 AM, cve-assign@mitre.org wrote:
->> This is mostly a question for the persons who assigned CVE-2015-1318
->> and CVE-2015-1862. Should these CVE assignments be interpreted to
->> mean:
->>
->>   CVE-2015-1318 - in Apport, an unprivileged user can use a
->>                   namespace-based attack because there is an execve by
->>                   root after a chroot into a user-specified directory
->
-> Yes, I assigned CVE-2015-1318 to that specific issue in Apport.
->
-> Marc.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-It looks like this is the patch for Apport:
+> Can a CVE be assigned to this issue, please?
+> 
+>    https://plone.org/security/20151006/multiple-csrf-vulnerabilities-in-zope
+>    https://plone.org/products/plone/security/advisories/security-vulnerability-20151006-csrf
+> 
+> Plone is built on the Zope2 application framework. In the Zope2 application
+> framework, there are multiple CSRF vulnerabilities. The latest version of
+> Plone has automatic CSRF protection integrated at the database layer. This
+> patch basically backports the latest automatically CSRF infrastructure to
+> Plone 4.x.
 
-http://bazaar.launchpad.net/~apport-hackers/apport/trunk/revision/2943#data/apport
+The vulnerability information can be covered in CVE; however, we do
+not really understand why it is being presented in this way.
 
-It's far more complicated than I expected, and not obviously correct.
-It could probably use some review, I'll think about it today.
+https://github.com/plone/plone4.csrffixes says "there are a lot of
+CSRF problem with the ZMI that Zope2 will never be able to fix." It
+seems that, normally, if one or more persons had discovered CSRF
+problems in Zope2, then they could have CVE IDs for their discoveries.
+Why is this a "never be able to fix" situation? Is there, more or
+less, a requirement that Zope2 allow arbitrary requests from clients
+that have never previously read the content of any web page, because
+of the variety of ways that Zope2 is used? In that situation, the
+request behavior of Zope2 would not necessarily be considered a Zope2
+vulnerability.
 
-Tavis.
+Also, a separate issue is that the CVE request is specifically about
+backporting. It seems that, at some time in the past, the possibility
+of CSRF attacks against default Plone sites was identified and this
+motivated the development of auto CSRF protection in Plone 5.
+Normally, an assignment of a CVE ID or IDs would be associated with
+the original discovery, not a later backporting of fixes. Are these
+equivalent in this case: for example, were all of the CSRF attack
+possibilities against default Plone sites discovered by Plone
+Foundation contributors, and security-vulnerability-20151006-csrf is
+the first general public announcement that these CSRF issues existed
+at all?
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJWG9wmAAoJEL54rhJi8gl5n6oQAKXuzwqb4bmBs4K5NhpJ4NtI
+d37u737MsJSGLLtXGlrupC2XDwq/LuSN80SmOQVYnPn4EU4SU+17bvwjOP30LECD
+DJMt7m10LuGjamyrbFGfALzXh0iPkZHoUN289c+oQZN9P8pdVlVfZlVrgZP2KPQk
+3MbELeGrh0NogA2+yRFAdufKQovo4cnyQuHsxqpV/7Mv+YJwlFInhJVcrI35F5TF
+R3sDKoIkjMXicPRA9+9dZYnTeNmypGVhuBUhG6UwW+Ob4dlR6fAyMH6NV+977r+5
+9DnDsyHQ+6axYqNT/+4kY1tXHi9dXvhSoV71OGtcMODknD7RyiVdF1DpuJl7PP7Y
+u+TaqrN7A7x5kalSCspLYsYlvciyIXURJv32ZANVeT/67mEqnWky7ZnoUrssPqzf
+FIgqAM1MUPD9KT+P9zDoiG0oFfVKpu9EqLlo372pyw+nVn/2U0fPdGzKro+kOZGQ
+CU+wxdFX2xwZTAsP1JXzHBoHEY0Q/i+GSAlqHvNuILlLgdypPS9YxiCNc0pVmsBE
+2HRxNoZAWBhiAD/B/nEFjNyvi6yGzz35QNhaYGeMQpVrlDh65BNt3wT+pkCxB/tr
+W7ZbRsu4DBxt/yyVy9FqOdw0eIqo2beplKxVWHjbAIKapQjCyJ0VXD887CBw7AlC
+uVpQbre4M9bmYXVg95Bz
+=tvlJ
+-----END PGP SIGNATURE-----
