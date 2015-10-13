@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1237" "Friday" "20" "January" "2017" "09:26:35" "+0100" "Greg KH" "greg@kroah.com" "<20170120082635.GB28326@kroah.com>" "35" "Re: [oss-security] CVE REQUEST: linux kernel: process with pgid zero able to crash kernel" "^Cc:" nil nil "1" "2017012008:26:35" "[oss-security] CVE REQUEST: linux kernel: process with pgid zero able to crash kernel" (number mark "        greg@kroah.c Jan 20   35/1237  " thread-indent "\"Re: [oss-security] CVE REQUEST: linux kernel: process with pgid zero able to crash kernel\"\n") "<1484880112.11949.24.camel@redhat.com>" ("<1484880112.11949.24.camel@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["977" "Tuesday" "13" "October" "2015" "20:21:54" "+0200" "Gijs Hollestelle" "g.hollestelle@gmail.com" "<CAGq7Pojhq-Cnm97H=D8TOm8K+Z2CFssGAUyyY==WonqhWCwVBg@mail.gmail.com>" "34" "[oss-security] CVE Request: Openpgp.js Critical vulnerability in S2K" nil nil nil "10" "2015101318:21:54" "[oss-security] CVE Request: Openpgp.js Critical vulnerability in S2K" (number mark "U       g.hollestell Oct 13   34/977   " thread-indent "\"[oss-security] CVE Request: Openpgp.js Critical vulnerability in S2K\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 1412 invoked by uid 550); 20 Jan 2017 08:26:54 -0000
+Received: (qmail 18101 invoked by uid 550); 13 Oct 2015 18:24:08 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,64 +11,59 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 1390 invoked from network); 20 Jan 2017 08:26:54 -0000
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to:x-me-sender
-	:x-me-sender:x-sasl-enc:x-sasl-enc; s=smtpout; bh=iAgvWH7EopMqWR
-	lbCOhxm28AIsM=; b=YpLFj/4oi40DUDB5VHe1Tyr76eDsYOX3yPuCjvhV2NzKVA
-	j8pxgoDmNoHochCgBFeSadLBoOQrVrPtDV77zg9r2XRyc8P1JnLiZjmM7NXERsv5
-	lYPXQssD3kM4MwDIoe/btutQCK3gmF9aBJS/TR7zMxAfswJ31c3qp5MLLBFIU=
-X-ME-Sender: <xms:wsmBWGU_vVX89CrewsybVOgL3jAuy_-RZ_f_OHaCw6qJ8d2BeH6NGQ>
-X-Sasl-enc: f1ObnLRv8jchchWJ+D3Hj2uetquOXCMWxDqbLxVG9obQ 1484900802
-Message-ID: <20170120082635.GB28326@kroah.com>
-References: <1484880112.11949.24.camel@redhat.com>
+Received: (qmail 17630 invoked from network); 13 Oct 2015 18:22:30 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=R6e3H4K5puKedQsxH/6BoRzsn54e9VuuadAbJv+bamE=;
+        b=bQ4ueuUpXBIpaOk2/xEr4lpN3bad58IZkGdfUS66XTxfpW/2/Kw1x4WXRWHitCaC0K
+         7Mi+UN77HKIG8qy6VnmVGkHnygGs7jjh5GsoZxQ8pMJbSjsLLdkHuBN0knfdcBmTcZhW
+         /U+bWTRJhknHlUWD+7nZBSr+Zwd6s9zQXfn0Ukhe/DKmkn9q1S63ZeW7ixLwK0Q+i5/d
+         xo5fJHvOzKSiUduNW/wTsp5b0oqa7XhvuwoA6hFsybmqyJQ2kCyAoT6m32vLaalISYLP
+         B1Kq5n6shDy+7EYSRb9wMQWxsJ5aelML3C1Ebi+fDdC86SVYANlpPzji7bxIiSOYrgM1
+         SIgg==
+X-Received: by 10.202.93.215 with SMTP id r206mr19509398oib.42.1444760533369;
+ Tue, 13 Oct 2015 11:22:13 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1484880112.11949.24.camel@redhat.com>
-User-Agent: Mutt/1.7.2 (2016-11-26)
-Cc: Jesse Hertz <Jesse.Hertz@nccgroup.trust>,
-	Wade Mealing <wmealing@redhat.com>
-Date: Fri, 20 Jan 2017 09:26:35 +0100
-From: Greg KH <greg@kroah.com>
+Message-ID: <CAGq7Pojhq-Cnm97H=D8TOm8K+Z2CFssGAUyyY==WonqhWCwVBg@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=001a113d500c6088ec0522008697
+Date: Tue, 13 Oct 2015 20:21:54 +0200
+From: Gijs Hollestelle <g.hollestelle@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE REQUEST: linux kernel: process with pgid zero
- able to crash kernel
+Subject: [oss-security] CVE Request: Openpgp.js Critical vulnerability in S2K
 To: oss-security@lists.openwall.com
 
-On Fri, Jan 20, 2017 at 01:41:52PM +1100, Harshula wrote:
-> Hi Folks,
-> 
-> Red Hat Product Security has been notified of a kernel vulnerability
-> that a local attacker can exploit to crash/panic the kernel and cause a
-> denial of service.
-> 
-> This was reported to Red Hat by Jesse Hertz (CC'd) (reproducer:
-> rt411016):
-> 
-> "A process that is in the same process group as the ``init'' process
-> (group id zero) can crash the Linux 2 kernel with several system calls
-> by passing in a process ID or process group ID of zero. The value zero
-> is a special value that indicates the current process ID or process
-> group. However, in this case it is also the process group ID of the
-> process."
-> 
-> I've been testing whether RHEL is vulnerable and found the following:
-> 
-> * Upstream/mainline is not vulnerable
+--001a113d500c6088ec0522008697
+Content-Type: text/plain; charset=UTF-8
 
-Is this true for the mainline kernel tree that RHEL 6 was based on?
+Hi,
 
-> * RHEL 7 is not vulnerable
-> * RHEL 6 is vulnerable
-> * RHEL 5 is partially vulnerable
+A vulnerability in the S2K function of OpenPGP.js allows to produce a
+predictable session key without knowing the passphrase.
 
-So this is only due to a specific set of patches that were added to RHEL
-6 and RHEL 5 yet never made it upstream?  I ask as we want to make sure
-some of the older LTS mainline kernels might be affected and it would be
-good to ensure they are not.
+An attacker is able to create a private PGP key that will decrypt in
+OpenPGP.js regardless of the passphrase given.
 
-thanks,
+Also using this flaw it is possible to forge a symmetrically encrypted PGP
+message (Symmetric-Key Encrypted Session Key Packets (Tag 3)) that
+will decrypt with any passphrase in OpenPGP.js. This can be an attack
+vector if successful decryption of such a message is used as an
+authentication mechanism.
 
-greg k-h
+The bug is fixed with a strict check on unknown S2K types.
+
+Info:
+https://www.mail-archive.com/list@openpgpjs.org/msg00918.html
+
+Fixed by:
+https://github.com/openpgpjs/openpgpjs/commit/668a9bbe7033f3f475576209305eb57a54306d29
+
+Fixen in:
+OpenPGP.js v1.3.0
+
+Could a CVE please be assigned to this issue?
+
+Regards,
+  Gijs
+
+--001a113d500c6088ec0522008697--
