@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["328" "Friday" "19" "March" "2021" "16:32:39" "+0100" "Andreas Lehmkuehler" "lehmi@apache.org" nil "12" "[oss-security] CVE-2021-27906: Apache PDFBox: A carefully crafted PDF file can trigger an OutOfMemory-Exception while loading the file" nil nil nil "3" nil nil (number mark "U       lehmi@apache Mar 19   12/328   " thread-indent "\"[oss-security] CVE-2021-27906: Apache PDFBox: A carefully crafted PDF file can trigger an OutOfMemory-Exception while loading the file\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-27906: Apache PDFBox: A carefully crafted PDF file can trigger an OutOfMemory-Exception while loading the file" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["996" "Tuesday" "13" "October" "2015" "01:53:36" "+0000" "Yusaku Sako" "yusaku@hortonworks.com" "<FBCDBCD4-3B6C-4D1A-BF45-870A6EBFDFA3@hortonworks.com>" "20" "[oss-security] [CVE-2015-5210] Unvalidated Redirects and Forwards using targetURI parameter can enable phishing exploits" nil nil nil "10" "2015101301:53:36" "[oss-security] [CVE-2015-5210] Unvalidated Redirects and Forwards using targetURI parameter can enable phishing exploits" (number mark "U       yusaku@horto Oct 13   20/996   " thread-indent "\"[oss-security] [CVE-2015-5210] Unvalidated Redirects and Forwards using targetURI parameter can enable phishing exploits\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 10049 invoked by uid 550); 19 Mar 2021 17:38:51 -0000
+Received: (qmail 32473 invoked by uid 550); 13 Oct 2015 05:35:28 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,30 +12,51 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30001 invoked from network); 19 Mar 2021 15:32:54 -0000
-From: Andreas Lehmkuehler <lehmi@apache.org>
-To: oss-security@lists.openwall.com
-Organization: Apache Software Foundation
-Message-ID: <7bca690f-e807-8447-d624-45476e9e8711@apache.org>
-Date: Fri, 19 Mar 2021 16:32:39 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.8.0
+Received: (qmail 11784 invoked from network); 13 Oct 2015 01:53:49 -0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
+x-echoworx-msg-id: dc5dedea-c552-4d32-826b-4649d91fa607
+x-echoworx-emg-received: Mon, 12 Oct 2015 18:53:37.914 -0700
+x-echoworx-action: delivered
+From: Yusaku Sako <yusaku@hortonworks.com>
+To: Robert Levas <rlevas@hortonworks.com>, "user@ambari.apache.org"
+	<user@ambari.apache.org>, "dev@ambari.apache.org" <dev@ambari.apache.org>,
+	"security@apache.org" <security@apache.org>,
+	"oss-security@lists.openwall.com" <oss-security@lists.openwall.com>,
+	"bugtraq@securityfocus.com" <bugtraq@securityfocus.com>
+Thread-Topic: [CVE-2015-5210] Unvalidated Redirects and Forwards using
+ targetURI parameter can enable phishing exploits
+Thread-Index: AQHRBVn50N/KIk5j1US2ZRA5vHz1Sg==
+Date: Tue, 13 Oct 2015 01:53:36 +0000
+Message-ID: <FBCDBCD4-3B6C-4D1A-BF45-870A6EBFDFA3@hortonworks.com>
+Accept-Language: en-US
 Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] CVE-2021-27906: Apache PDFBox: A carefully crafted PDF file can trigger an
- OutOfMemory-Exception while loading the file
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [192.175.27.12]
+x-source-routing-agent: Processed
+Content-Type: multipart/alternative;
+	boundary="_000_FBCDBCD43B6C4D1ABF45870A6EBFDFA3hortonworkscom_"
+Subject: [oss-security] [CVE-2015-5210] Unvalidated Redirects and Forwards using targetURI
+ parameter can enable phishing exploits
 
+--_000_FBCDBCD43B6C4D1ABF45870A6EBFDFA3hortonworkscom_
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 
-Description:
+Q1ZFLTIwMTUtNTIxMDogVW52YWxpZGF0ZWQgUmVkaXJlY3RzIGFuZCBGb3J3
+YXJkcyB1c2luZyB0YXJnZXRVUkkgcGFyYW1ldGVyIGNhbiBlbmFibGUgcGhp
+c2hpbmcgZXhwbG9pdHMNCg0KU2V2ZXJpdHk6IEltcG9ydGFudA0KDQpWZW5k
+b3I6IFRoZSBBcGFjaGUgU29mdHdhcmUgRm91bmRhdGlvbg0KDQpWZXJzaW9u
+cyBBZmZlY3RlZDogMS43LjAgdG8gMi4xLjENCg0KVmVyc2lvbnMgRml4ZWQ6
+IDIuMS4yDQoNCkRlc2NyaXB0aW9uOiBBIHJlZGlyZWN0IHRvIGFuIHVudHJ1
+c3RlZCBzZXJ2ZXIgaXMgcG9zc2libGUgdmlhIHVudmFsaWRhdGVkIGlucHV0
+IHRoYXQgc3BlY2lmaWVzIGEgcmVkaXJlY3QgVVJMIHVwb24gc3VjY2Vzc2Z1
+bCBsb2dpbi4NCg0KTWl0aWdhdGlvbjogQW1iYXJpIHVzZXJzIHNob3VsZCB1
+cGdyYWRlIHRvIHZlcnNpb24gMi4xLjIgb3IgYWJvdmUuIFZlcnNpb24gMi4x
+LjIgb253YXJkcyByZWRpcmVjdCBsb2NhdGlvbnMgbXVzdCBiZSByZWxhdGl2
+ZSBVUkxzLg0KDQpSZWZlcmVuY2VzOiBodHRwczovL2N3aWtpLmFwYWNoZS5v
+cmcvY29uZmx1ZW5jZS9kaXNwbGF5L0FNQkFSSS9BbWJhcmkrVnVsbmVyYWJp
+bGl0aWVzDQo=
 
-A carefully crafted PDF file can trigger an OutOfMemory-Exception while loading 
-the file. This issue affects Apache PDFBox Apache PDFBox version 2.0.22 and 
-prior 2.0.x versions.
-
-This issue is being tracked as PDFBOX-5112
-
-Credit:
-
-Apache PDFBox would like to thank Fabian Meumertzheim for reporting this issue
+--_000_FBCDBCD43B6C4D1ABF45870A6EBFDFA3hortonworkscom_--
