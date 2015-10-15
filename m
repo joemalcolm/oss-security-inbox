@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["319" "Monday" "7" "August" "2017" "08:47:35" "-0400" "Glenn Randers-Pehrson" "glennrp@gmail.com" "<CA+PdXctggn-AoYVKJQZS=+jbnEga4P2AkJa6OJaAS_GUgw0b_g@mail.gmail.com>" "10" "Re: [oss-security] Cve issue discussion" nil nil nil "8" "2017080712:47:35" "[oss-security] Cve issue discussion" (number mark "U       glennrp@gmai Aug  7   10/319   " thread-indent "\"Re: [oss-security] Cve issue discussion\"\n") "<20170807123756.GA27766@suse.de>" ("<SG2PR0401MB1834CC0A72F7B7E547C0F42888B50@SG2PR0401MB1834.apcprd04.prod.outlook.com>" "<6651351.AxBd7pCpa9@wanheda>" "<SG2PR0401MB18341DCF23068229492F4B2A88B50@SG2PR0401MB1834.apcprd04.prod.outlook.com>" "<CA+PdXcspyUe_0yO1bypEWmsZNd9xng-4avjExXFnbb0pGi_X=w@mail.gmail.com>" "<20170807123756.GA27766@suse.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["735" "Thursday" "15" "October" "2015" "06:53:48" "-0700" "Greg KH" "greg@kroah.com" "<20151015135348.GA8128@kroah.com>" "22" "Re: [oss-security] CVE Request: Linux Kernel heap corruption on debug_read_tlb" nil nil nil "10" "2015101513:53:48" "[oss-security] CVE Request: Linux Kernel heap corruption on debug_read_tlb" (number mark "        greg@kroah.c Oct 15   22/735   " thread-indent "\"Re: [oss-security] CVE Request: Linux Kernel heap corruption on debug_read_tlb\"\n") "<CAJpd-bHmTaQ37Tykmfu7HAJrfu1JuW7wgFR32u1MWy0BjcTv6Q@mail.gmail.com>" ("<CAJpd-bHmTaQ37Tykmfu7HAJrfu1JuW7wgFR32u1MWy0BjcTv6Q@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 16017 invoked by uid 550); 7 Aug 2017 12:48:28 -0000
+Received: (qmail 3636 invoked by uid 550); 15 Oct 2015 13:54:04 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,52 +11,49 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15999 invoked from network); 7 Aug 2017 12:48:27 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
-        bh=z8j4/+I7JgP4xtGA6lpAyLWa4Xlls7BFuxoIk8sFYQ8=;
-        b=Fusto0xR5QXN87987gfskLY0yyK3iav1rsh33WIVntF5dws6LWpONUnzmcP+5/3NBl
-         hjkHQO4oydtvOIUMRfB+lrlA90mKr4PPI53MSV9JcJwGprQyhyHnwbzzNexWghyTNhJc
-         7DnLrH5tEJwUfUeDC+nzdFmGQYRMfbPyeU/ZwuDcVGbMxEvKe3tMQMssTcjQihvTWfyj
-         jZl7MfEyAoDGYHypPHHIAh5d5F7j4s2RuDh4+p1SljBTR3AMA9bWP5Z+794D1QzxeT7V
-         pTwD1x+8cYT8Ow2xGOtabGbgZkz0qlTJyjbboATvyc+goCYaSyHSODdQKF61aWPAAhV4
-         am7Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to;
-        bh=z8j4/+I7JgP4xtGA6lpAyLWa4Xlls7BFuxoIk8sFYQ8=;
-        b=c/mmNxPzrD+HRiP/214j2EXAQcleTW2pQgmJ/Q9eYyoalrEhZ9l/QWULyVCo5ueCPN
-         b3nN2wRqDInol+n97h/Vd/lGV0mFZBOhJ1kKM6ViTPcbEcmpo3hp/aPiEvDK7IcpgWIX
-         OsZCecZZM+iIoIqGOR5gcEbMj6yjhVQiKFnSfmugq0audA9yrAWNpSCIhs+NAV1V0M9f
-         qfdzEdqbj+kPR5Ij2B++3X+1WOUN3Wp1PW32t/BTTwCwuboIuXUZ8HkUZn99yknNmWKd
-         W3hv3o+Zi+CiPSQ/ub/op7hg1ug+8iwSIAvr9iguJ3Drc5O5c/nUcIfIZzVJ12Dprf4R
-         oOeg==
-X-Gm-Message-State: AHYfb5iznpN1vNgsnbZpF80wRypf+3D/AjZNV+EIeMhIM+/fTezLtW6m
-	6k8YGlk7FL1ZcDm1aDbpUGqYlb2GOw==
-X-Received: by 10.36.181.23 with SMTP id v23mr673773ite.163.1502110095710;
- Mon, 07 Aug 2017 05:48:15 -0700 (PDT)
+Received: (qmail 3610 invoked from network); 15 Oct 2015 13:54:03 -0000
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=content-transfer-encoding:content-type
+	:date:from:in-reply-to:message-id:mime-version:references
+	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=oh4tD0Ef42mkSG5
+	JEYxMpk477do=; b=ImlG+HGNhKYJ9HlBE3NXzh9mUhBtfmzLPzkGCMgP6FXtxGZ
+	VoFEKi1yyniEL37uWa1HvpwD7HCsN7xj17pb6XhsatYza831ZhBp/TRNrQOpbVEj
+	ANgqkLlbzrQkuoX2LfWU2mJ5n3+eD7q8qdGOh88GmIZibfmuIJfywcQV73Oo=
+X-Sasl-enc: DTxaA0B16XffF7fLI3YTswuUXl/yeBTz9V3xnnRX12J5 1444917229
+Message-ID: <20151015135348.GA8128@kroah.com>
+References: <CAJpd-bHmTaQ37Tykmfu7HAJrfu1JuW7wgFR32u1MWy0BjcTv6Q@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <20170807123756.GA27766@suse.de>
-References: <SG2PR0401MB1834CC0A72F7B7E547C0F42888B50@SG2PR0401MB1834.apcprd04.prod.outlook.com>
- <6651351.AxBd7pCpa9@wanheda> <SG2PR0401MB18341DCF23068229492F4B2A88B50@SG2PR0401MB1834.apcprd04.prod.outlook.com>
- <CA+PdXcspyUe_0yO1bypEWmsZNd9xng-4avjExXFnbb0pGi_X=w@mail.gmail.com> <20170807123756.GA27766@suse.de>
-From: Glenn Randers-Pehrson <glennrp@gmail.com>
-Date: Mon, 7 Aug 2017 08:47:35 -0400
-Message-ID: <CA+PdXctggn-AoYVKJQZS=+jbnEga4P2AkJa6OJaAS_GUgw0b_g@mail.gmail.com>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAJpd-bHmTaQ37Tykmfu7HAJrfu1JuW7wgFR32u1MWy0BjcTv6Q@mail.gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
+Date: Thu, 15 Oct 2015 06:53:48 -0700
+From: Greg KH <greg@kroah.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] CVE Request: Linux Kernel heap corruption on
+ debug_read_tlb
 To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: Re: [oss-security] Cve issue discussion
 
-It's not causing a crash, just a delay.  You'll safely get either an OOM
-message or an EOF message.and no memory leak.
+On Thu, Oct 15, 2015 at 10:30:04AM +0200, Salva Peiró wrote:
+> Hello,
+> 
+> Is there a CVE for this? If not, could one be assigned, please?
+> 
+>      https://patchwork.kernel.org/patch/6853351/
+>      commit e203db293863fa15b4b1917d4398fb5bd63c4e88
+>      iommu/omap: Fix debug_read_tlb() to use seq_printf()
+> 
+>      The debug_read_tlb() uses the sprintf() functions directly on the
+> buffer
+>      allocated by buf = kmalloc(count), without taking into account the size
+>      of the buffer, with the consequence corrupting the heap, depending on
+>      the count requested by the user.
+> 
+>      The patch fixes the issue replacing sprintf() by seq_printf().
 
-Glenn
+For a root-only-readable file?  Why is a CVE needed?
 
-On Mon, Aug 7, 2017 at 8:37 AM, Marcus Meissner <meissner@suse.de> wrote:
-> Hi,
->
-> if it could crash the image reader I would consider it "remote denial of service"
-> classed and CVE worthy.
+thanks,
+
+greg k-h
