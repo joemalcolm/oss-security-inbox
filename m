@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["441" "Friday" "14" "August" "2015" "19:49:06" "+0200" "Florian Weimer" "fweimer@redhat.com" "<55CE2A12.6020909@redhat.com>" "12" "[oss-security] Alleged libstdc++ vulnerabilities" nil nil nil "8" "2015081417:49:06" "[oss-security] Alleged libstdc++ vulnerabilities" (number mark "        fweimer@redh Aug 14   12/441   " thread-indent "\"[oss-security] Alleged libstdc++ vulnerabilities\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["817" "Thursday" "15" "October" "2015" "12:39:44" "-0700" "Blibbet" "blibbet@gmail.com" "<56200100.8010400@gmail.com>" "22" "Re: [oss-security] Re: CVE Request - Linux kernel - securelevel/secureboot bypass." nil nil nil "10" "2015101519:39:44" "[oss-security] Re: CVE Request - Linux kernel - securelevel/secureboot bypass." (number mark "        blibbet@gmai Oct 15   22/817   " thread-indent "\"Re: [oss-security] Re: CVE Request - Linux kernel - securelevel/secureboot bypass.\"\n") "<20151015165850.69C4A3AE01F@smtpvbsrv1.mitre.org>" ("<20151015165850.69C4A3AE01F@smtpvbsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 23655 invoked by uid 550); 14 Aug 2015 17:49:23 -0000
+Received: (qmail 11549 invoked by uid 550); 15 Oct 2015 19:42:47 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,30 +11,54 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 23634 invoked from network); 14 Aug 2015 17:49:22 -0000
-X-Enigmail-Draft-Status: N1110
-Message-ID: <55CE2A12.6020909@redhat.com>
+Received: (qmail 9910 invoked from network); 15 Oct 2015 19:39:59 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-type:content-transfer-encoding;
+        bh=AbdBZHmlBOdBWi34azaTU/mbARZNIK+XeFf6jTEqYhc=;
+        b=UzbNU8UbqpKr0Bz7l7PBsQF91NK3/IXzHKK5ll4GNBQSMYygsxPG0KH+27AinV0MJy
+         tEXqV3lVvGKxXW7xPRMnTglbyGUC21IN4ORYPTb4hPyTbgw1JFocLn5b1B/BeQHTnD2x
+         pXjEwJFLYMl1AUDgoLIPTZ8iW3+TCNUwCfG9SFD3mVHnl3z0DRKswPS8YKHlUm99wV4X
+         MjPNT57qUzEh42bjgsXJS1p6RVmvxvThxZ/uXHu6HyCJWjH61P42LsmnL3Pbsob8HxWV
+         KYCOzm8eaydkIii5f7L4qOibOiD+86TLJt5P4vWE5uoeVzZv+gtdDnECIex9mEVPvaIa
+         2IpA==
+X-Received: by 10.68.93.227 with SMTP id cx3mr11730615pbb.155.1444937987003;
+        Thu, 15 Oct 2015 12:39:47 -0700 (PDT)
+References: <20151015165850.69C4A3AE01F@smtpvbsrv1.mitre.org>
+Message-ID: <56200100.8010400@gmail.com>
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.1.0
+ Thunderbird/38.3.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.24
-Date: Fri, 14 Aug 2015 19:49:06 +0200
-From: Florian Weimer <fweimer@redhat.com>
+In-Reply-To: <20151015165850.69C4A3AE01F@smtpvbsrv1.mitre.org>
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+Date: Thu, 15 Oct 2015 12:39:44 -0700
+From: Blibbet <blibbet@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Alleged libstdc++ vulnerabilities
-To: libstdc++ <libstdc++@gcc.gnu.org>, oss-security@lists.openwall.com
+Subject: Re: [oss-security] Re: CVE Request - Linux kernel -
+ securelevel/secureboot bypass.
+To: oss-security@lists.openwall.com
 
-Does anybody know what this is about and can point to the relevant PRs?
 
-“discovered serious security bugs in […] libstdc++”
 
-<http://www.news.gatech.edu/2015/08/13/georgia-tech-finds-11-security-flaws-popular-internet-browsers-using-new-analysis-method>
+On 10/15/2015 09:58 AM, cve-assign@mitre.org wrote:
+> As far as we can tell, you are reporting an issue in functionality
+> that was developed for a Red Hat product. Because identical
+> functionality is not currently offered elsewhere, a CVE ID can be
+> assigned without considering the details of the securelevel behavior
+> that may later be implemented (or considered optimal) outside of Red
+> Hat.
 
-The USENIX paper
-<https://www.usenix.org/system/files/conference/usenixsecurity15/sec15-paper-lee.pdf>
-does not back up this claim.
+I haven't seen Red Hat's new patch yet, but does this count? It sounds
+like similar functionality, at least.
+https://github.com/mjg59/linux/commit/4980702888a73e0fd4b48ef6f6683345011aa3a6
 
--- 
-Florian Weimer / Red Hat Product Security
+More URLs here:
+http://firmwaresecurity.com/2015/10/06/matthew-garretts-new-linux-fork/
+http://firmwaresecurity.com/2015/10/09/clarification-of-matthew-garretts-linux-fork/
+
+Thanks,
+Lee
+RSS: http://firmwaresecurity.com/feed
+
