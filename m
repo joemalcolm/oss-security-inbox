@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1988" "Thursday" "15" "April" "2021" "14:31:14" "-0700" "Steve Beattie" "steve.beattie@canonical.com" nil "54" "[oss-security] [CVE-2021-3493] Ubuntu Linux kernel overlayfs fs caps privilege escalation" nil nil nil "4" nil nil (number mark "U       steve.beatti Apr 15   54/1988  " thread-indent "\"[oss-security] [CVE-2021-3493] Ubuntu Linux kernel overlayfs fs caps privilege escalation\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [CVE-2021-3493] Ubuntu Linux kernel overlayfs fs caps privilege escalation" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2566" "Thursday" "15" "October" "2015" "12:58:50" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151015165850.69C4A3AE01F@smtpvbsrv1.mitre.org>" "55" "[oss-security] Re: CVE Request - Linux kernel - securelevel/secureboot bypass." nil nil nil "10" "2015101516:58:50" "[oss-security] Re: CVE Request - Linux kernel - securelevel/secureboot bypass." (number mark "        cve-assign@m Oct 15   55/2566  " thread-indent "\"[oss-security] Re: CVE Request - Linux kernel - securelevel/secureboot bypass.\"\n") "<631817816.36915863.1444890902322.JavaMail.zimbra@redhat.com>" ("<631817816.36915863.1444890902322.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 25832 invoked by uid 550); 16 Apr 2021 10:10:33 -0000
+Received: (qmail 7322 invoked by uid 550); 15 Oct 2015 16:59:02 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,71 +11,68 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 7302 invoked from network); 15 Oct 2015 16:59:02 -0000
+In-Reply-To: <631817816.36915863.1444890902322.JavaMail.zimbra@redhat.com>
+Message-Id: <20151015165850.69C4A3AE01F@smtpvbsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Thu, 15 Oct 2015 12:58:50 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13519 invoked from network); 15 Apr 2021 21:32:02 -0000
-Date: Thu, 15 Apr 2021 14:31:14 -0700
-From: Steve Beattie <steve.beattie@canonical.com>
-To: oss-security@lists.openwall.com
-Message-ID: <20210415213114.GA5315@nxnw.org>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="EeQfGwPcQSOJBaQU"
-Content-Disposition: inline
-X-PGP-Key: http://www.NxNW.org/~steve/005E81F4.txt
-Subject: [oss-security] [CVE-2021-3493] Ubuntu Linux kernel overlayfs fs caps privilege
- escalation
+Subject: [oss-security] Re: CVE Request - Linux kernel - securelevel/secureboot bypass.
+To: wmealing@redhat.com
 
---EeQfGwPcQSOJBaQU
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Hello,
+> When the kernel was booted with UEFI Secure Boot enabled, securelevel
+> is set. If kexec (either through crash or admin action) is then used
+> to load the same kernel, after reboot securelevel is disabled. In this
+> state, the system is missing the protections provided by securelevel,
+> for example kexec may be used to load an unsigned kernel via the
+> legacy system call kexec_load.
+> 
+> In the securelevel patchset, the state of UEFI Secure Boot is queried
+> in the EFI stub, and sets a boot_params flag to indicate the state of
+> UEFI Secure Boot. This flag is then used in setup_arch() to determine
+> the correct state of securelevel. If the kernel is not booted via the
+> EFI stub, securelevel is not set even if UEFI Secure Boot is enabled.
+> 
+> TLDR: this allows a bypass the security mechanism of
+> securelevel/secureboot combination.
+> 
+> This patchset affects Red Hat specific kernels as secureboot is not
+> fully fully implemented upstream yet.
 
-An independent security researcher reported via the SSD Secure
-Disclosure program that the overlayfs stacking file system within the
-Linux kernel as used within Ubuntu did not properly validate the
-application of file capabilities against user namespaces.
+As far as we can tell, you are reporting an issue in functionality
+that was developed for a Red Hat product. Because identical
+functionality is not currently offered elsewhere, a CVE ID can be
+assigned without considering the details of the securelevel behavior
+that may later be implemented (or considered optimal) outside of Red
+Hat. In other words, within (at least) the Red Hat product, "If the
+kernel is not booted via the EFI stub, securelevel is not set even if
+UEFI Secure Boot is enabled" is unquestionably incorrect behavior.
 
-This issue is likely Ubuntu specific, as Ubuntu carries a patch to
-enable unprivileged overlayfs mounts. The combination of that patch
-plus allowing unprivileged user namespaces by default in Ubuntu allows
-an unprivileged attacker to gain elevated privileges.
+Use CVE-2015-7837.
 
-A commit that addresses the issue was applied in the upstream kernel:
-
-  7c03e2cda4a5 ("vfs: move cap_convert_nscap() call into vfs_setxattr()") (=
-v5.10)
-
-It was added prior to the upstream kernel commit allowing unprivileged
-overlayfs mounts:
-
-  459c7c565ac3 ("ovl: unprivieged mounts") (v5.11)
-
-Thus the upstream Linux kernel is not affected.
-
---=20
-Steve Beattie
-<sbeattie@ubuntu.com>
-
---EeQfGwPcQSOJBaQU
-Content-Type: application/pgp-signature; name="signature.asc"
-
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-iQIzBAABCgAdFiEEpgY7tWAjCaQ8jrvULwmejQBegfQFAmB4sKIACgkQLwmejQBe
-gfQnhw/+MngnHCijM9f87KZ0vsEdNWSo+h1N1kBEi9hYYOwarrDA0hoyN+eSPdnn
-ZZIpB3AWJ64s6nq5n65wogKwYWijCLF7raWlgoJWkd+votYoNV8iEjcTIjNN96Un
-d4VnwuuDgC4Ksu775XGFHdEjC/DN0M5DltR/08Q54MqIUPPJhCf4Wqtsqw3Ugsgu
-m9AwAyqOvDfL39lIyrA7P/oueQoxnbiF/DKB27bymiqppfNJIVDBCtyAWjHTj0nG
-6htt8JNeLwpsBecyff6RL6iLAJsTBLRRpnxBKQ/vgCMuBkfUUMXGoqo2ZUeiXN/X
-h5Bw7z2nv/HXuaOGQyvUQSokouER2QBQBbjmks80/QJKCwo5Jib4GJjdt1/jpwO2
-ScxwM7CXsvh6DGHjV+PXo9ZnTl54iNMAUhffS5Dcnm1gMSEKrNsZhPvGEGkNzYyg
-Ja7MMi9IxcjooAuceTjGi768YVxg5h12aQ5JLMCNU0A8KMlR6SxHsNG28PXCHaes
-FUv/HCYlbHGQL7WdeDQABFOwgP78aaiwrHyTATPTKCMMK8q+dND34IVDI3Bfn/+L
-neJIApQe9T33/F/xxWO9kfwWS5DdOKPQ5LwdSlT3y3czJvEgM67PG6uTgtnDkSW/
-Op61gxnaQ37qaabhMmTnopqHgfCLQU6uq8rBHcb56dlT+U3XGUM=
-=haW7
+iQIcBAEBCAAGBQJWH9r7AAoJEL54rhJi8gl5TUkP/juU8uF2oSvn+q9wmrT0k7q1
+zLxI2K9pxoryQq8EBSpQDelo97fe5QPAkQ/A1abN7kvNzSnfcLOvO9fW6KZyvOAY
+Vc8qXf+3aQaGheqUWiuVnWTZtIbBvzLpVAiHIXhzYzz3bQ1SfXakdZVBum5d+X6U
+cpZ2LYNUqV7RMJsM2cf/1XxeV7QHF0Q6QweyYWO4jZ9ijBVugEo+rK2uSFE5C3u5
+8KSttFfEOJuAtfcPVZRUnrsc9cBON6VCJe0t+3dTrDJ3UQCPgOJda4AUKDzdQS3t
+P9s24gZe5X+iquHonyLXNXiVbJS6CcSV9A0reYROwUMCI8/9tI5OezO65xraX1Q2
+biO/KfO5iITCpFdf+EGH462P2LiNNpxx0ADJPxuxaABJhNS2NTCWer7y4OR6lbYN
+16yWE3m4IfBhvoJjRPHoAHn/p+zzhPibnksyZbyPQJlj8Mw5ahYoAoaW5rBjmSTO
+qu4RokLFIDbmdYyt9/6aXi6Y4rTobZ8MWdH+qjJu29e9SOT0aCU1qEzXA2TWqZtE
+EwfwB2ZlP1XnmbBVBNMY9vuDdfEHFc3EABizcf/XwLr9t5sHJOg6GHbr3oln91T0
+iAu3xAeWEEpyhqHANPx7x1pZTtgIfAdBofvsqHrKgP/Dj4MlXL29X2oO4nlnEsK4
+xTCrWQkKNwm/ZzHYnYJW
+=2iBw
 -----END PGP SIGNATURE-----
-
---EeQfGwPcQSOJBaQU--
