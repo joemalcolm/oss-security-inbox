@@ -1,4 +1,9 @@
-Received: (qmail 11630 invoked by uid 550); 20 Mar 2023 07:26:34 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["319" "Friday" "16" "October" "2015" "08:05:57" "+0200" "Florian Weimer" "fw@deneb.enyo.de" "<871tcvuz3u.fsf@mid.deneb.enyo.de>" "7" "[oss-security] CVE request: lldpd crash in lldp_decode due large management address" nil nil nil "10" "2015101606:05:57" "[oss-security] CVE request: lldpd crash in lldp_decode due large management address" (number mark "        fw@deneb.eny Oct 16    7/319   " thread-indent "\"[oss-security] CVE request: lldpd crash in lldp_decode due large management address\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 5969 invoked by uid 550); 16 Oct 2015 06:06:10 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,110 +11,20 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11568 invoked from network); 20 Mar 2023 07:26:33 -0000
-Date: Mon, 20 Mar 2023 08:26:21 +0100 (CET)
-From: Daniel Stenberg <daniel@haxx.se>
-To: curl security announcements -- curl users <curl-users@lists.haxx.se>, 
-    curl-announce@lists.haxx.se, libcurl hacking <curl-library@lists.haxx.se>, 
-    oss-security@lists.openwall.com
-Message-ID: <s3sr40p2-p54p-803q-4313-30opr383p732@unkk.fr>
-X-fromdanielhimself: yes
+Received: (qmail 5949 invoked from network); 16 Oct 2015 06:06:09 -0000
+Message-ID: <871tcvuz3u.fsf@mid.deneb.enyo.de>
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-Subject: [oss-security] [SECURITY ADVISORY] curl: CVE-2023-27538: SSH connection too eager
- reuse still
+Content-Type: text/plain
+Date: Fri, 16 Oct 2015 08:05:57 +0200
+From: Florian Weimer <fw@deneb.enyo.de>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE request: lldpd crash in lldp_decode due large management address
+To: oss-security@lists.openwall.com
 
-CVE-2023-27538: SSH connection too eager reuse still
-====================================================
+Upstream commit:
 
-Project curl Security Advisory, March 20th 2023 -
-[Permalink](https://curl.se/docs/CVE-2023-27538.html)
+<https://github.com/vincentbernat/lldpd/commit/dd4f16e7e816f2165fba76e3d162cd8d2978dcb2>
 
-VULNERABILITY
--------------
-
-libcurl would reuse a previously created connection even when an SSH related
-option had been changed that should have prohibited reuse.
-
-libcurl keeps previously used connections in a connection pool for subsequent
-transfers to reuse if one of them matches the setup. However, two SSH settings
-were left out from the configuration match checks, making them match too
-easily.
-
-We are not aware of any exploit of this flaw.
-
-INFO
-----
-
-These are the options that were not considered in the check, so curl would
-reuse a connection even if the subsequent transfer would have changed one or
-more of these options.
-
-- `CURLOPT_SSH_PUBLIC_KEYFILE`
-- `CURLOPT_SSH_PRIVATE_KEYFILE`
-
-This flaw was initially introduced in curl 7.16.1.
-
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2023-27538 to this issue.
-
-This vulnerability is partially identical to
-[CVE-2022-27782](https://curl.se/docs/CVE-2022-27782.html) since the fix for
-that previous issue was bad and did not actually correct the problem for these
-SSH options.
-
-CWE-305: Authentication Bypass by Primary Weakness
-
-The previos flaw CVE-2022-27782 was set to severity Medium, but since this is
-a partial of that and affects only two options that rarely will change with
-the expectation that the user will be different, this time we set it severity
-Low.
-
-Severity: Low
-
-AFFECTED VERSIONS
------------------
-
-- Affected versions: curl 7.16.1 to and including 7.88.1
-- Not affected versions: curl < 7.16.1 and curl >= 8.0.0
-
-libcurl is used by many applications, but not always advertised as such!
-
-THE SOLUTION
-------------
-
-The fix for [CVE-2023-27538](https://github.com/curl/curl/commit/af369db4d3833272b8ed)
-
-RECOMMENDATIONS
---------------
-
-  A - Upgrade curl to version 8.0.0
-
-  B - Apply the patch to your local version
-
-  C - Avoid SCP and SFTP transfers
-
-TIMELINE
---------
-
-This issue was reported to the curl project on March 9 2023. We contacted
-distros@openwall on March 13, 2023.
-
-curl 8.0.0 was released on March 20 2023, coordinated with the publication of
-this advisory.
-
-CREDITS
--------
-
-- Reported-by: Harry Sintonen
-- Patched-by: Daniel Stenberg
-
-Thanks a lot!
-
--- 
-
-  / daniel.haxx.se
-  | Commercial curl support up to 24x7 is available!
-  | Private help, bug fixes, support, ports, new features
-  | https://curl.se/support.html
+If compiled with effective source fortification, the vulnerability is
+just a crash and not exploitable for anything else, as a result of the
+compiler-emitted length check for memcpy inside the PEEK_BYTES macro.
