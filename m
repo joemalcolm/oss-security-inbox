@@ -1,4 +1,9 @@
-Received: (qmail 5910 invoked by uid 550); 27 Oct 2025 18:48:32 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1199" "Sunday" "18" "October" "2015" "12:21:59" "-0700" "robert@robert.io" "robert@robert.io" "<1445196119.3560107.413423481.7C9B0859@webmail.messagingengine.com>" "27" "Re: [oss-security] CVE request for sqlalchemy-utils" nil nil nil "10" "2015101819:21:59" "[oss-security] CVE request for sqlalchemy-utils" (number mark "U       robert@rober Oct 18   27/1199  " thread-indent "\"Re: [oss-security] CVE request for sqlalchemy-utils\"\n") "<1444165809.2991126.403145441.2CAE05C4@webmail.messagingengine.com>" ("<1444165809.2991126.403145441.2CAE05C4@webmail.messagingengine.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 29917 invoked by uid 550); 18 Oct 2015 19:22:15 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,114 +11,60 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 13609 invoked from network); 27 Oct 2025 17:34:17 -0000
-Authentication-Results: apache.org; auth=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=apache.org; s=mail;
-	t=1761586443; bh=lda77e+3GNUSYyu7RmfhDrnIGrbuk9eEg6aWYIUX3Ww=;
-	h=Date:To:From:Subject:From;
-	b=zLHcL8kUeDrTo2Z3uWl8dYsF+4EwdWqDkihFQfdn1glwkF3GHl5vS/SIt+hv63Kiw
-	 Vfh6GqEFwEB+tmvTs/bmnpaZE5SaCXJ32EpkfxQjyRxEIPeyHzJu+dGW77qWzK3Fr0
-	 Nlc3HFNt3g6vsPXT/F0Vbhws4HiV5exdLPi97sYU/ltqErJ5vGXEh1WMk9RlTs+oCR
-	 sNpAdGZWYuNbrS5mxgi04rFnBcNPniwIVtLLE7HHPmmzL5KrnvTGEIJNKrI2UYaobE
-	 TaL6Tlq2v/6wpSDVOwSKTQFwd3UxETp2HxebY0b/ZyPluc/ppcoPcVOwQVqq5YaWmF
-	 LOFVJJaXjTCUw==
-Message-ID: <0c55d81c-26ed-475e-8d76-f150c237d945@apache.org>
-Date: Mon, 27 Oct 2025 17:34:03 +0000
+Received: (qmail 29886 invoked from network); 18 Oct 2015 19:22:14 -0000
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=robert.io; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-sasl-enc
+	:x-sasl-enc; s=mesmtp; bh=SocKaVUTG3UamzrlqiUf8vtt5dM=; b=TEZELu
+	Z6FkS5Kj/2jVjXsXtKghvdO6HYY6RDkSQ1HzFbu8AXUoWvSZvxJJah2TKLohj9lP
+	NbfmO3qVvAKJAjEduTbOS8Mdk6sLn8M6zGt0LeVhU76Ns+h+3L7jMZKJoY7Z7ND3
+	AuCgJB7zCaBMOSJST12D34/iSF/c0OqLBHmjs=
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:date:from:in-reply-to:message-id:mime-version:references
+	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=SocKaVUTG3Uamzr
+	lqiUf8vtt5dM=; b=WQcj/nrH7siEQy2EBlBHz7UHuEPsMWiSX9WnjM8T4D1VG5/
+	imvkiMAZ9uVvxgtXB8hf1xZnc8B0YwCtTalVS0y2oWuHwW3Q1R1SBC43IlqgbGea
+	FENpLPzd3LW/Ly8IGOEB1hSjTcMQKCMmpZahdgCi9ErJsBvxfMEkKt7vg/Hc=
+Message-Id: <1445196119.3560107.413423481.7C9B0859@webmail.messagingengine.com>
+X-Sasl-Enc: Thrt6Z6J8RVITUo+OQGlgFdrOo2ODogUJXG6zWDDK3/+ 1445196119
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-GB
-To: oss-security@lists.openwall.com
-From: Mark Thomas <markt@apache.org>
-Autocrypt: addr=markt@apache.org; keydata=
- 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
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Subject: [oss-security] CVE-2025-55754: Apache Tomcat: console manipulation via escape
- sequences in log messages
+Content-Type: text/plain
+X-Mailer: MessagingEngine.com Webmail Interface - ajax-25d3ec43
+In-Reply-To: <1444165809.2991126.403145441.2CAE05C4@webmail.messagingengine.com>
+References: <1444165809.2991126.403145441.2CAE05C4@webmail.messagingengine.com>
+Cc: cve-assign@mitre.org
+Date: Sun, 18 Oct 2015 12:21:59 -0700
+From: robert@robert.io
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] CVE request for sqlalchemy-utils
+To: oss-security@lists.openwall.com
 
-Severity: low
+I've been told I should check-in after a couple of weeks without a
+response. Is there any more information I can provide to help you make a
+decision?
 
-Affected versions:
+>From the discussion on the bug tracker, this was a design decision, but
+at least some users of the library weren't aware of it. As far as I know
+it wasn't / isn't documented. I noticed the issue when reviewing the
+code for Netflix's Lemur tool and they were not previously aware of the
+issue: https://github.com/Netflix/lemur/issues/117
+ 
+- Robert
 
-- Apache Tomcat 11.0.0-M1 through 11.0.10
-- Apache Tomcat 10.1.0-M1 through 10.1.44
-- Apache Tomcat 9.0.40 through 9.0.108
-- Apache Tomcat 8.5.60 through 8.5.100
-- Apache Tomcat 3 before 8.5.0 unknown
-
-Description:
-
-Improper Neutralization of Escape, Meta, or Control Sequences 
-vulnerability in Apache Tomcat.
-
-Tomcat did not escape ANSI escape sequences in log messages. If Tomcat 
-was running in a console on a Windows operating system, and the console 
-supported ANSI escape sequences, it was possible for an attacker to use 
-a specially crafted URL to inject ANSI escape sequences to manipulate 
-the console and the clipboard and attempt to trick an administrator into 
-running an attacker controlled command. While no attack vector was 
-found, it may have been possible to mount this attack on other operating 
-systems.
-
-
-
-This issue affects Apache Tomcat: from 11.0.0-M1 through 11.0.10, from 
-10.1.0-M1 through 10.1.44, from 9.0.40 through 9.0.108.
-
-The following versions were EOL at the time the CVE was created but are
-known to be affected: 8.5.60 though 8.5.100. Other, older, EOL versions 
-may also be affected.
-Users are recommended to upgrade to version 11.0.11 or later, 10.1.45 or 
-later or 9.0.109 or later, which fix the issue.
-
-Credit:
-
-Elysee Franchuk of MOBIA Technology Innovations (finder)
-
-References:
-
-https://lists.apache.org/thread/j7w54hqbkfcn0xb9xy0wnx8w5nymcbqd
-https://tomcat.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2025-55754
+On Tue, Oct 6, 2015, at 02:10 PM, robert@robert.io wrote:
+> Description: I noticed that the sqlalchemy-utils package's EncryptedType
+> does not use a random IV when encrypting with AES in CBC mode. It
+> generates a SHA256 hash of the user's key and uses the first 16 bytes of
+> that hash as the IV (and the full hash as the encryption key). The
+> result is that for a given key, the IV will always be the same.
+> 
+> Reported here: https://github.com/kvesteri/sqlalchemy-utils/issues/166
+> Version: Current. I'm not sure what the version history of this package
+> looks like, though.
+> Reporter: Robert Picard
+> 
+> Please assign a CVE if you feel it would be appropriate for this bug.
+> 
+> - Robert
