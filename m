@@ -1,4 +1,9 @@
-Received: (qmail 9316 invoked by uid 550); 29 Apr 2024 19:07:34 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2794" "Monday" "19" "October" "2015" "15:06:28" "-0500" "Brad Knowles" "brad@shub-internet.org" "<ECA0E8CA-EDCB-4814-8A41-F74C4CC9ECF8@shub-internet.org>" "68" "Re: [oss-security] Prime example of a can of worms" nil nil nil "10" "2015101920:06:28" "[oss-security] Prime example of a can of worms" (number mark "        brad@shub-in Oct 19   68/2794  " thread-indent "\"Re: [oss-security] Prime example of a can of worms\"\n") "<CANO=Ty18_pMLco8RdabsEbhs9sLahRhT_U93PGhDVwhcRaqzpQ@mail.gmail.com>" ("<CANO=Ty18_pMLco8RdabsEbhs9sLahRhT_U93PGhDVwhcRaqzpQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 26027 invoked by uid 550); 19 Oct 2015 20:25:59 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,108 +11,108 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 15457 invoked from network); 19 Oct 2015 20:06:54 -0000
+X-ASG-Debug-ID: 1445285201-061c414fe084070001-Ebmqpw
+X-Barracuda-Envelope-From: brad@shub-internet.org
+X-Barracuda-RBL-Trusted-Forwarder: 216.194.196.20
+X-Barracuda-RBL-Trusted-Forwarder: 216.194.248.141
+X-Virus-Scanned: amavisd-new at mail-sterling.his.com
+Content-Type: multipart/signed; boundary="Apple-Mail=_828AA61A-1C94-48AA-8915-A54C46252430"; protocol="application/pgp-signature"; micalg=pgp-sha256
+X-Barracuda-RBL-IP: 172.20.10.2
+Mime-Version: 1.0 (Mac OS X Mail 8.2 \(2104\))
+X-Pgp-Agent: GPGMail 2.5.2
+X-ASG-Orig-Subj: Re: [oss-security] Prime example of a can of worms
+In-Reply-To: <CANO=Ty18_pMLco8RdabsEbhs9sLahRhT_U93PGhDVwhcRaqzpQ@mail.gmail.com>
+X-Mao-Original-Outgoing-Id: 466977988.247604-edbe59ba0b054e299f8bb45d0960b7c1
+Message-Id: <ECA0E8CA-EDCB-4814-8A41-F74C4CC9ECF8@shub-internet.org>
+References: <CANO=Ty18_pMLco8RdabsEbhs9sLahRhT_U93PGhDVwhcRaqzpQ@mail.gmail.com>
+X-Mailer: Apple Mail (2.2104)
+X-Barracuda-Connect: smtp-nf-202.his.com[216.194.196.20]
+X-Barracuda-Start-Time: 1445285201
+X-Barracuda-URL: https://spam.his.com:443/cgi-mod/mark.cgi
+X-Virus-Scanned: by bsmtpd at his.com
+X-Barracuda-BRTS-Status: 1
+X-Barracuda-Spam-Score: 0.01
+X-Barracuda-Spam-Status: No, SCORE=0.01 using global scores of TAG_LEVEL=1000.0 QUARANTINE_LEVEL=1000.0 KILL_LEVEL=7.0 tests=BSF_SC0_MISMATCH_TO, BSF_SC2_SA022a
+X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.3.23632
+	Rule breakdown below
+	 pts rule name              description
+	---- ---------------------- --------------------------------------------------
+	0.00 BSF_SC0_MISMATCH_TO    Envelope rcpt doesn't match header
+	0.01 BSF_SC2_SA022a         Custom Rule SA022a
+Cc: Brad Knowles <brad@shub-internet.org>,
+ CVE ID Requests <cve-assign@mitre.org>
+Date: Mon, 19 Oct 2015 15:06:28 -0500
+From: Brad Knowles <brad@shub-internet.org>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9298 invoked from network); 29 Apr 2024 19:07:34 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-	s=20210705; t=1714417646;
-	bh=YNI9WLILehCWBpvHD5IL6kdrV4+hQ4h9iFfcfBeIcBY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type;
-	b=mXE2AP6d7308UBxMYg4qFnTkSzfrSrWjPFh9RGRCRlxelnMB9b89wY9cIUaXUNvQd
-	 RntSObflvWoDjgJHAhYwYrrB74bSNgyO3Sd7THcW/HQEQByiQrpCegba7GtB+n+r02
-	 mpUTpoJT/lLSyaEI/rzG3om2niatGquAsNv+IoZ4gRaCNv3Vw0BsRNqEPLapgrnpY3
-	 7N1KHRTewuxilav22I7NU28Jd2bkBzVJqSzUnDn1tTUeMzSzr0DLTIKwwvK1ZQXpdB
-	 pq9GNlzSarImGnzrlR7J0VqMNaEO0C2xOS27jNaNcNeg7VS1eV5vfQRvBkQdBL9bnB
-	 I/vnEiGM6avmA==
-Message-ID: <98d8462c-e881-403a-80cb-3800d98e4c01@canonical.com>
-Date: Mon, 29 Apr 2024 12:07:23 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
+Subject: Re: [oss-security] Prime example of a can of worms
 To: oss-security@lists.openwall.com
-References: <20240414190855.GA12716@openwall.com>
- <354b913bc1c154c1e3a2fc34ed8ed6b0d4641f11.camel@canonical.com>
- <Hz11pVeI7utfT3Od@aceecat.org>
-Content-Language: en-US
-From: John Johansen <john.johansen@canonical.com>
-Autocrypt: addr=john.johansen@canonical.com; keydata=
- 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 lT9Q
-Organization: Canonical
-In-Reply-To: <Hz11pVeI7utfT3Od@aceecat.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+
+--Apple-Mail=_828AA61A-1C94-48AA-8915-A54C46252430
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=utf-8
+
+On Oct 18, 2015, at 11:06 PM, Kurt Seifried <kseifried@redhat.com> wrote:
+
+> A small
+> number of fixed or standardized groups are used by millions
+> of servers; performing precomputation for a single 1024-bit
+> group would allow passive eavesdropping on 18% of popular
+> HTTPS sites, and a second group would allow decryption
+> of traffic to 66% of IPsec VPNs and 26% of SSH servers.
+
+I think this may be a bit of a slippery slope here.
+
+How many machines would have to be vulnerable for a given group to be consi=
+dered big enough to be =E2=80=9Cweak=E2=80=9D and therefore worth of having=
+ a CVE issued?  Would that number be 1%?  5%?  10%?
+
+At what point is it more dangerous to generate your own DH groups on system=
+s that do not have sufficient uptime, versus re-using an existing DH group =
+that might be considered =E2=80=9Cweak=E2=80=9D?
+
+
+There was a time when 1024-bit DH groups were considered sufficiently safe,=
+ and 2048-bit was overkill.  At what point does 2048-bit become =E2=80=9Cwe=
+ak=E2=80=9D in the same way that 1024-bit is today?  How many years in adva=
+nce are we going to build into the system, so that we can have people =E2=
+=80=9Csafely=E2=80=9D transitioned off 2048-bit DH groups and onto whatever=
+ the next new thing is?
+
+I mean, NIST is having a hard enough time getting people to stop using MD-5=
+, much less SHA-1.  And if SHA-1 falls this year, how long before SHA-2 fal=
+ls?
+
+--
+Brad Knowles <brad@shub-internet.org>
+LinkedIn Profile: <http://tinyurl.com/y8kpxu>
+
+
+--Apple-Mail=_828AA61A-1C94-48AA-8915-A54C46252430
 Content-Transfer-Encoding: 7bit
-Subject: Re: [oss-security] Re: Linux: Disabling network namespaces
+Content-Disposition: attachment;
+	filename=signature.asc
+Content-Type: application/pgp-signature;
+	name=signature.asc
+Content-Description: Message signed with OpenPGP using GPGMail
 
-On 4/19/24 12:01, nightmare.yeah27@aceecat.org wrote:
-> On Wed, Apr 17, 2024 at 09:52:10AM GMT, Georgia Garcia wrote:
-> 
->> I just wanted to add that in the Ubuntu Noble Numbat release we are
->> using AppArmor to restrict unprivileged user namespaces.
-> 
->> Applications that don't have an AppArmor profile will use a default
->> profile which denies the use of capabilities within the user
->> namespace.  Applications that need to use capabilities will have to
->> be confined by a profile. Since we understand that creating an
->> AppArmor profile might not be a trivial task for large programs, we
->> introduced the "unconfined" flag which makes the profile act as if
->> it were unconfined from the perspective of AppArmor, allowing all
->> operations.
-> 
->> There are more details here:
-> 
->> https://discourse.ubuntu.com/t/noble-numbat-release-notes/39890#unprivileged-user-namespace-restrictions-13
-> 
-> I wonder if this (at least the kernel part of it) is already in the
-> latest PopOS rolling updates? I see some nodes in /proc/sys/kernel
-> that look very related.
-> 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG/MacGPG2 v2.0.28
 
-partially. The ability to straight up deny user namespace creation is
-in the kernel already. The ability to transition the profile and the
-default behavior for unconfined is not. In Ubuntu the behavior for
-the unconfined profile is hard coded as there is still some work to be
-done around allowing this to be replaced easily in policy (its
-possible but has some limitations/costs that were not acceptable).
+iQIcBAEBCAAGBQJWJU1EAAoJEKOyg2+mWTCTWRsQAKaOS+XJlOCAaW2kzSAb5Xoo
+OT3yr2ui1K+VHzklNMMmg8nudKySrB9nLs1Go+XdnwNSbxs+moMSmMz56vIlRS9v
+7fCJHCJZjwPTOJin0NikiqK2v9f6KQPFfHCugolTTGylQoSn4zmE5PqEDWZKAgN9
+ObYUoaHEGW2OlYrtrzj1NYKWAy6JG1dsH2dQeaKGeIRUVotIi7B2vw4m1h9q1PO8
+uj/yb6T9qYIXE7ELvp2W9fP9PWxn6hTc8I78ZXD0slc8rGmHQ1nTh0kTbfQm9euc
+GLM712C6+cB/esOCx3tuiiutHmK+5N3jzK7UwxCyOYqF1cK6MRNR5vuflJ66GQ4t
+9flZn3IMw9K1VWspzfAnm/XeNnW3/ej404LMxjhxMxKfbKJdOFb2qxCibXBljVnY
+WsQN3Xa9p5VFAlFxDSNdY/UJvms1V+DXIF9MAV9ichm0ohY0IQNMvH7IR4PLobtw
+L0BZwjg32yAii22iNk2JhhRo+/5aZHtEmLz1daPUZaasvMW8wF8WKRSAL3BaMs5v
+fEr5AyZvkCQiCPM9aILaGX8+y6gHJiMd305rgQNXegAdL3wdPr0U7aTNJKpR/IR3
+OjctmiQWdu7yDvbe+mtRVyWu5NPnEc9XtKRUANfWGX9pLkThBahINMC3pqGd45mc
+3gVJtm7mr5YOwLvnRDK3
+=0M7s
+-----END PGP SIGNATURE-----
 
-Once the work to make replacing unconfined easy is done that will be
-upstreamed and the hard coded behavior will get dropped.
-
+--Apple-Mail=_828AA61A-1C94-48AA-8915-A54C46252430--
