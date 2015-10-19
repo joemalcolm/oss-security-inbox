@@ -1,4 +1,9 @@
-Received: (qmail 3401 invoked by uid 550); 6 Mar 2025 21:25:44 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1546" "Sunday" "18" "October" "2015" "22:06:13" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<CANO=Ty18_pMLco8RdabsEbhs9sLahRhT_U93PGhDVwhcRaqzpQ@mail.gmail.com>" "41" "[oss-security] Prime example of a can of worms" nil nil nil "10" "2015101904:06:13" "[oss-security] Prime example of a can of worms" (number mark "        kseifried@re Oct 18   41/1546  " thread-indent "\"[oss-security] Prime example of a can of worms\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 5333 invoked by uid 550); 19 Oct 2015 04:06:26 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,158 +11,68 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 6111 invoked from network); 6 Mar 2025 21:15:28 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741295720; x=1741900520; darn=lists.openwall.com;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Yy0KIs0gt24gFOeNIqLqNtwqwKkyRsb+KmtZNtojGjI=;
-        b=RLNAHpnzDB737OIG7Ydqo5Skamqi59U6DkErCbn51orcCA89E13f/AdvN4kt0Jzeh9
-         x+N9GAKkaggLxWeRGZjYiMnbS1krSQVGJoyZyMR5R92hgKejJ/enB5hyCgL1UfRANFcb
-         lBGrVSYUyMGCpaRLok4imwSEo+w2W6ELZhupMpQ9cM+FDTonkTaNv2gajoaiy7pCoI+c
-         iTCymFdktyNvZNbJIv2tPgBKSIrNpCWSqGRbx6ZunEOaamIltsXh984iWyG5UkcnP1iY
-         wPgE2uOjHzPVBdlHS+Qt80ZZ4fFPO0S9ZTQ+cDU5EVrvBU+014L/+r0aauCfTRkMOs1G
-         8PZQ==
+Received: (qmail 5302 invoked from network); 19 Oct 2015 04:06:25 -0000
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741295720; x=1741900520;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Yy0KIs0gt24gFOeNIqLqNtwqwKkyRsb+KmtZNtojGjI=;
-        b=gM02Q1C4ZuhB0XJhg/kut08nb6TyX6DkJYldgC4D0HssTD6FSUBGBt0g73DzPG1ygK
-         +zxjPhUJSjrBgTp46e8RkdlX9nMgbtnL4nPBiLzVOy8y92pCg+ItSF7d6NmUivVxqKIN
-         7zznChbF3XHMNbv32+Ag5pGKTHcepgeiou80vMqlUe3wgOalQWyK90/HiDvFS6i+W0le
-         4C6c4UCT7CEhPR6tkSiveApELtmp+gkCioP5WZ/jiEU+vch+fww/gvaKtJKPxR6S9nz6
-         If5oQofX9qK8TCIDTH8afWWCesnU6kROqKCvu4n8/U5I6yBnpftkuRkYwPmxwvsKICrH
-         DUlg==
-X-Gm-Message-State: AOJu0Yy700nMHudFOUvzyovXAru7UPK8OdIEuQWsWYUVoOESLihSNSjp
-	NrUcD8Eei7hCoAhrbIHz1l8mU9OFjuMjaoh5VcY65iaRhJeXVhTg8JswBOsLkM5G/UZspQyIKCx
-	P7h9SlSM6ykSbeguH8KISqodiGxcWPgdP
-X-Gm-Gg: ASbGnctx2UOzNjTYjN0ZXXtewwzg6tLdAMZeENTjt3+jdcTUtFe9CTgzjDXd5T8Cjm1
-	NcnJpziOe/qthwsFTruKcrfWUjV41U/rAzhiIZMRgAp5fREkKnMjNDaS7FFF+yDtnud+yHrHbW4
-	IXzsL2SbTQQ/astQ2fCjf7f22T
-X-Google-Smtp-Source: AGHT+IFfs87cbGBrdl8cVovJlHMTkLEFp8NWzQw2aX40+qGqB4sEcKzuO93DcUlMBzbV5FeuzznpJsMjrhz/BivGLTo=
-X-Received: by 2002:a05:6402:27d2:b0:5e0:7fc9:8605 with SMTP id
- 4fb4d7f45d1cf-5e5e08ebda7mr1085670a12.6.1741295719580; Thu, 06 Mar 2025
- 13:15:19 -0800 (PST)
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
+         :content-type;
+        bh=Gcu9TMjmkjekn7ICs1TiSUioR4ZE16asGuCOXtuEwgM=;
+        b=ZlH1+TrI6h7Z4z+6KWq6SH6T8JUnSXcOYCk+9ZNzXBkcZP8ijKgr6tE32jOU9z/C5R
+         teW2KGYyZeySjIJPXhC1wfCI8M1VTTwdrxKtOPyXPs0GBYcPi1kEyJWIfqd71OtoN/pd
+         DJQ6vPI9YePNb3ATYPlU+FYZokfhDTtbEtJpP2H1k/Yo179SZKb49HcRmTfoXsyUuTn6
+         PeqSF1dcM8o7fVZECUmV4dL73RUvZa5G+QuKyFytwGTWBojsj2b8OKIt7tE3QEHUuvhY
+         k98twAOJJ7uw4rFLcVSPb7V8eQYnVprZtrTs3pLkoAjjMvZqy03DdMeEDHeoqgzzpjHA
+         AQTQ==
+X-Gm-Message-State: ALoCoQmgcsTfxnW7DcsPKFWo4H7Q+UzAqUTDGKY2SBcSgS8AAAIIO2qqxx5LWWvEprDH680NqQzV
 MIME-Version: 1.0
-References: <1167011785.77274.1740140560949@privateemail.com> <20250221175431.GB2391@localhost.localdomain>
-In-Reply-To: <20250221175431.GB2391@localhost.localdomain>
-From: =?UTF-8?Q?Buher=C3=A1tor?= <buherator@gmail.com>
-Date: Thu, 6 Mar 2025 22:15:08 +0100
-X-Gm-Features: AQ5f1JoY0WTlTyh9KyQmrCTmmirqSLw7MJhpXJI_wTE1b_2P2cYewR0jpJlPbKo
-Message-ID: <CAAyDpL9t6DA06f_vpREvW1FiXVntQr3FRh6iA+smeg+2muiKQw@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: Re: [oss-security] MitM attack against OpenSSH's VerifyHostKeyDNS-enabled
- client
+X-Received: by 10.13.212.141 with SMTP id w135mr20554128ywd.76.1445227573531;
+ Sun, 18 Oct 2015 21:06:13 -0700 (PDT)
+Message-ID: <CANO=Ty18_pMLco8RdabsEbhs9sLahRhT_U93PGhDVwhcRaqzpQ@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=001a114fd41223e62205226d44e0
+Date: Sun, 18 Oct 2015 22:06:13 -0600
+From: Kurt Seifried <kseifried@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Prime example of a can of worms
+To: CVE ID Requests <cve-assign@mitre.org>, oss-security <oss-security@lists.openwall.com>
 
-Hi all,
+--001a114fd41223e62205226d44e0
+Content-Type: text/plain; charset=UTF-8
 
-I also gave this a shot and came up with this query that uses
-data-flow tracking and also uses StackVariableReachability as
-suggested by Jordy. The results match the original closely, and based
-on my measurements it is more performant, esp. on larger codebases
-(tested with OpenSSL):
+So in light of:
 
-```ql
-import cpp
-import semmle.code.cpp.controlflow.StackVariableReachability
-import semmle.code.cpp.dataflow.new.DataFlow
+https://weakdh.org/imperfect-forward-secrecy-ccs15.pdf
 
-// variable is not mentioned inside if
-predicate notChildOfIf(Variable v, IfStmt i){
-    not exists (VariableAccess a | a.getTarget()=v  and
-i.getEnclosingStmt().getAChild*()=a.getEnclosingStmt())
-}
+and
 
-// if leads to goto on its true path
-predicate ifToGoto(IfStmt i, GotoStmt g){
-    g.hasName() and
-    i.getThen().getAChild*()=g
-}
+https://www.eff.org/deeplinks/2015/10/how-to-protect-yourself-from-nsa-attacks-1024-bit-DH
 
-// Return statement accesses v
-predicate isProperReturn(Variable v, ReturnStmt ret){
-    exists(VariableAccess a | a.getTarget() = v and not a.isModified()
-and a.getEnclosingStmt() = ret.getChildStmt*())
-}
+I would suggest we minimally have a conversation about DH prime security
+(e.g. using larger 2048 primes, and/or a better mix of primes to make
+pre-computation attacks harder). Generating good primes is not easy from
+what I've seen of several discussions, my fear would be that people try to
+fix this by finding new primes that turn out to be problematic.
 
-class InitToFaultyIfConfiguration extends StackVariableReachability {
-    InitToFaultyIfConfiguration() { this = "InitToFaultyIfConfiguration" }
+Secondly I would also suggest we seriously look at assigning a CVE to the
+use of suspected compromised DH primes. Despite the fact we don't have
+conclusive direct evidence (that I'm aware of, correct me if there is any
+conclusive evidence) I think in this case:
 
-    override predicate isSource(ControlFlowNode node, StackVariable v) {
-        // We are interested in all variable accesses
-        // Note: Initializers are not VariableAccess!
-        exists(VariableAccess ae | v = ae.getTarget() and
-ae.isModified() and ae = node)
+1) the attack is computationally feasible for an organization with
+sufficient funding
+2) the benefit of such an attack far, far, FAR outweighs the cost for
+certain orgs, from the paper:
 
-    }
+A small
+number of fixed or standardized groups are used by millions
+of servers; performing precomputation for a single 1024-bit
+group would allow passive eavesdropping on 18% of popular
+HTTPS sites, and a second group would allow decryption
+of traffic to 66% of IPsec VPNs and 26% of SSH servers.
 
-    override predicate isSink(ControlFlowNode node, StackVariable v) {
-        exists(ReturnStmt ret, GotoStmt goto, IfStmt i | node = i and
-// Source is an IfStmt
-               i.getEnclosingFunction() =
-v.getAnAssignment().getEnclosingStmt().getEnclosingFunction() and //
-IfStmt and StackVariable are in the same function
-               isProperReturn(v,ret) and // Return statement accesses v
-               notChildOfIf(v, i) and // return variable not part of
-this if statement
-               ifToGoto(i, goto) and // if leads to goto
-               goto.getASuccessor+()=ret // goto leads to relevant return
-        )
-    }
 
-    override predicate  isBarrier(ControlFlowNode node, StackVariable v) {
-        exists(VariableAccess ae | v = ae.getTarget() and
-ae.isModified() and ae = node)
-    }
-}
+--
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@redhat.com
 
-from ControlFlowNode sourceInit, ControlFlowNode sinkIf,
-InitToFaultyIfConfiguration confInitIf, LocalVariable v, ReturnStmt
-ret,
-DataFlow::Node sinkRet, DataFlow::Node sourceDef
-where confInitIf.reaches(sourceInit, v, sinkIf) and // A local
-variable reaches a faulty if in the CFG
-  isProperReturn(v, ret) and // the variable is used as part of the return
-  sourceDef.asExpr() = v.getAnAssignment() and // we are looking for
-data-flows from the return variable ...
-  sinkRet.asExpr() = ret.getAChild() and // ... to the return statement
-  DataFlow::localFlow(sourceDef, sinkRet) // we are only interested in
-value-preserving, local data-flows
-select sourceInit, sinkIf,
-sinkIf.getLocation().getFile().getBaseName()+":"+sinkIf.getLocation().getStartLine()+":"+sinkIf.getLocation().getStartColumn()
-```
-
-I also wrote (much) about the development process to help tweaking the
-query further:
-
-  https://scrapco.de/blog/dreams-in-codeql-quest-for-the-perfect-goto.html
-
-Code with additional data:
-
-  https://github.com/v-p-b/codeql-verify-goto
-
-I hope you'll find this useful. If you spot any errors or have other
-questions/comments, please let me know!
-
-Regards,
-
-buherator
-
-On Fri, 21 Feb 2025 at 18:57, Qualys Security Advisory <qsa@qualys.com> wrote:
->
-> Hi Jordy,
->
-> On Fri, Feb 21, 2025 at 01:22:40PM +0100, Jordy Zomer wrote:
-> > Hope that's helpful, please reach out if you have any questions :)
->
-> Woo-hoo, awesome work, thank you very much for sharing it! We are
-> looking into it now (and learning from it).
->
-> Thanks again! With best regards,
->
-> --
-> the Qualys Security Advisory team
+--001a114fd41223e62205226d44e0--
