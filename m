@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1872" "Saturday" "5" "September" "2020" "05:47:04" "-0400" "Perry E. Metzger" "perry@piermont.com" "<20200905054704.1d90da6a@jabberwock.cb.piermont.com>" "42" "Re: [oss-security] Open Source Tool | vPrioritization | Risk Prioritization Framework" "^Cc:" nil nil "9" "2020090509:47:04" "[oss-security] Open Source Tool | vPrioritization | Risk Prioritization Framework" (number mark "        perry@piermo Sep  5   42/1872  " thread-indent "\"Re: [oss-security] Open Source Tool | vPrioritization | Risk Prioritization Framework\"\n") "<CALv8orGS3m5i=WihK7PAfJLwNuCd9bMxcs7UVTYy1s3MSc5PRQ@mail.gmail.com>" ("<CALv8orGS3m5i=WihK7PAfJLwNuCd9bMxcs7UVTYy1s3MSc5PRQ@mail.gmail.com>") nil nil nil nil nil nil nil "Re: [oss-security] Open Source Tool | vPrioritization | Risk Prioritization Framework" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2350" "Monday" "19" "October" "2015" "13:52:26" "-0700" "Chris Steipp" "csteipp@wikimedia.org" "<CAKcmtDz6cemDXMhP0jjzeo6oyAh-xu8=PBmi+u4J-4GEop52UQ@mail.gmail.com>" "55" "[oss-security] CVE Request: MediaWiki 1.25.3, 1.24.4 and 1.23.11" nil nil nil "10" "2015101920:52:26" "[oss-security] CVE Request: MediaWiki 1.25.3, 1.24.4 and 1.23.11" (number mark "U       csteipp@wiki Oct 19   55/2350  " thread-indent "\"[oss-security] CVE Request: MediaWiki 1.25.3, 1.24.4 and 1.23.11\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 13663 invoked by uid 550); 5 Sep 2020 09:47:18 -0000
+Received: (qmail 26202 invoked by uid 550); 19 Oct 2015 20:52:39 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,60 +11,89 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 13645 invoked from network); 5 Sep 2020 09:47:17 -0000
-Message-ID: <20200905054704.1d90da6a@jabberwock.cb.piermont.com>
-In-Reply-To: <CALv8orGS3m5i=WihK7PAfJLwNuCd9bMxcs7UVTYy1s3MSc5PRQ@mail.gmail.com>
-References: <CALv8orGS3m5i=WihK7PAfJLwNuCd9bMxcs7UVTYy1s3MSc5PRQ@mail.gmail.com>
+Received: (qmail 26178 invoked from network); 19 Oct 2015 20:52:38 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=wikimedia.org; s=google;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=5gSHOdbX/nICAsl6d+t8ds/a4gpyUlyNeqcinMWh2jU=;
+        b=EcuzV+UGLZiFP6fgQQRGL4gnMgnk8Gr9mFCbFLPy4DV3ppui9dezKyRfZ62ZncTCeE
+         KvBrSXo0P7g+sXTxGrA7ATnzF19tvSghbKflEsFuFQWU8U2zcWR/klkyj0KKOdAhtzcn
+         qazTpU7ZbtTro7kejw0WgzSeDdBL/bCBIOqk4=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
+         :content-type;
+        bh=5gSHOdbX/nICAsl6d+t8ds/a4gpyUlyNeqcinMWh2jU=;
+        b=FJplJOa59Uaey49m7I4U5Cj16Y2+v4OnaiRPJVCzVdLCW8WXXyZ6wgDZ4krhNDszT/
+         g9nCtkLHhmTOVr6T5oKZY9EroyGxXmURFWc0I+4JdKwKVVV91GypDkQ/1kXRPvEUU8kS
+         r9i3Kzxi+w55gEFpYEmAe6+uHy+mA0E3ieX+gvKCE6hXzUuOtP63pKRL9jWABCPtAmv3
+         KXsouU8j3SGaxZuWG8+p48jigGEO0wov+1DDlfqUPbhFAwcH9K4i9tIPiybcd4uiAhJb
+         4DvHx8fsfmSO16wM0ZUNghHpt3YarwfVg+96ONbWD73WC0Lf64rGijSL+JU1SmiX54sU
+         2QiQ==
+X-Gm-Message-State: ALoCoQlzMJNPXZ6HL37GuRdgN6Qnc4HwkFKGfl7HxZcI/IuAe0RUfYr+fUYM+s0kYG0PXbQt+VNz
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: oss-security@lists.openwall.com
-Date: Sat, 5 Sep 2020 05:47:04 -0400
-From: "Perry E. Metzger" <perry@piermont.com>
+X-Received: by 10.140.233.80 with SMTP id e77mr40893715qhc.27.1445287946649;
+ Mon, 19 Oct 2015 13:52:26 -0700 (PDT)
+Message-ID: <CAKcmtDz6cemDXMhP0jjzeo6oyAh-xu8=PBmi+u4J-4GEop52UQ@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=001a113763a8a8a58305227b52fa
+Date: Mon, 19 Oct 2015 13:52:26 -0700
+From: Chris Steipp <csteipp@wikimedia.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Open Source Tool | vPrioritization | Risk
- Prioritization Framework
-To: Pramod Rana <varchashva@gmail.com>
+Subject: [oss-security] CVE Request: MediaWiki 1.25.3, 1.24.4 and 1.23.11
+To: oss-security@lists.openwall.com
 
-[Perhaps somewhat off topic, but the original announcement felt a bit
-tangental as well.]
+--001a113763a8a8a58305227b52fa
+Content-Type: text/plain; charset=UTF-8
 
-On Thu, 3 Sep 2020 20:13:34 +0530 Pramod Rana <varchashva@gmail.com>
-wrote:
-> It is no secret that today we have more vulnerabilities than we can
-> assess and remediate, timely and comprehensively. Risk
-> prioritization is a key component for any vulnerability management
-> program.
+We recently released new mediawiki versions to address several security
+issues in core an extensions. The relevant parts of the release
+announcements are here. Can we get CVE's assigned?
 
-I'm not sure I agree with this premise.
+* Wikipedia user RobinHood70 reported that the API failed to correctly stop
+adding new chunks to the upload when the reported size was exceeded,
+allowing a malicious users to upload add an infinite number of chunks for a
+single file upload.
+<https://phabricator.wikimedia.org/T91203>
 
-1. It is entirely feasible to keep even a very large organization
-comprehensively patched. There are organizations that do that.
-2. It is not feasible to calculate a probability of exploitation of a
-given vulnerability, and it is not feasible to determine how bad the
-damage from exploitation will be. This is a classic example of "tail
-risk" where probability distributions are simply not calculable by
-normal methods.
+* Wikipedia user RobinHood70 also reported that a malicious user could
+upload chunks of 1 byte for very large files, potentially creating a very
+large number of files on the server's filesystem.
+<https://phabricator.wikimedia.org/T91205>
 
-I keep hearing people in the security industry speak about scientific
-risk assessment as though it were possible. I don't think it's
-possible, and it seems cheaper to simply patch than to do some sort
-of scientific assessment and prioritization of patches.
+* Internal review discovered that it is not possible to throttle file
+uploads.
+<https://phabricator.wikimedia.org/T91850>
 
-My gut reaction is that the growth of this idea is attributable
-to the large number of large, well-funded organizations that are
-none the less not capable of properly maintaining their own
-infrastructure and thus not capable of patching in a timely manner.
-(I have consulted to many such organizations.)
+* Internal review discovered a missing authorization check when removing
+suppression from a revision. This allowed users with the 'viewsuppressed'
+user right but not the appropriate 'suppressrevision' user right to
+unsuppress revisions.
+<https://phabricator.wikimedia.org/T95589>
 
-The notion that some sort of "risk analytics" could therefore justify
-failing to patch quickly and give a rationale for maintaining an
-incapable systems management team is thus attractive. However, the
-real solution is simply to patch; a capable systems management team is
-better than the illusion of a risk calculation system, and provides
-far more benefits than simply maintaining infrastructure in a fully
-patched state.
+* Richard Stanway from teamliquid.net reported that thumbnails of PNG files
+generated with ImageMagick contained the local file path in the image
+metadata.
+<https://phabricator.wikimedia.org/T108616>
 
-Perry
--- 
-Perry E. Metzger		perry@piermont.com
+* Extension:PageTriage - MediaWiki user Grunny discovered a DOM-based XSS in
+the way the extension handled page titles.
+<https://phabricator.wikimedia.org/T111029>
+
+* Extension:Echo - Internal review discovered that Echo could display
+deleted
+or suppressed usernames when the username was previously used to Thank
+users.
+<https://phabricator.wikimedia.org/T110553>
+
+* Extension:OAuth - Wikipedia user Sitic discovered that the OAuth
+extension did not correctly enforce the IP restrictions of a Consumer when
+using previously negotiated credentials.
+<https://phabricator.wikimedia.org/T103022>
+
+* Extension:OAuth - Wikipedia user Sitic discovered that OAuth would accept
+a valid signature from any Consumer when checking the authorization
+signature. This allowed a registered Consumer who gained access to another
+Consumer's users' access tokens and secrets to use those credentials.
+<https://phabricator.wikimedia.org/T103023>
+
+--001a113763a8a8a58305227b52fa--
