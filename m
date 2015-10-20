@@ -1,4 +1,9 @@
-Received: (qmail 3996 invoked by uid 550); 26 Mar 2026 03:01:41 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2876" "Tuesday" "20" "October" "2015" "03:36:19" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151020073619.CE49C6C0018@smtpvmsrv1.mitre.org>" "62" "[oss-security] Re: CVE request for sqlalchemy-utils" nil nil nil "10" "2015102007:36:19" "[oss-security] Re: CVE request for sqlalchemy-utils" (number mark "U       cve-assign@m Oct 20   62/2876  " thread-indent "\"[oss-security] Re: CVE request for sqlalchemy-utils\"\n") "<1445196119.3560107.413423481.7C9B0859@webmail.messagingengine.com>" ("<1445196119.3560107.413423481.7C9B0859@webmail.messagingengine.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 15721 invoked by uid 550); 20 Oct 2015 07:36:32 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,99 +12,74 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 13692 invoked from network); 26 Mar 2026 02:06:27 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cpansec.org; s=gm1;
-	t=1774490779;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=ki0pbYHapkVmEbSU0SJVVv1sGvSZuwwyEL1P2OS2LUY=;
-	b=bw9yvxxJ/gdYgZPheqLOCZ+Ke4XJ6DwAKrsxWHUn/9Mz364nzVkZjcaHOIMOgLWW/ob8Em
-	YAYoBkJ+f1Qvrj47365Fuvc2sO2zjzjq3d6EkOrngOJX0L2d4AHuxBnAld/nLfIaZjRXmT
-	vZFvCAn6FJB+2TBu1M8yEeiRYhpMy0pwrKdarrN4oPNyOFi/cJTymOvUhIaca50oFtvcws
-	Bj0xeuYUn3xwCdl9odylwlF9q9Oh4rFRSQcJniJF8LAj+Q36YkcpO/tk+cf2N3QTv0j/Pq
-	JgTOi11S6GZqlI6H8XNTvMT66sLA/8JEzdvEKk/mwPDYNxgoaoEN0k3BpGqL2g==
-MIME-Version: 1.0
-Date: Wed, 25 Mar 2026 23:06:18 -0300
-From: Timothy Legge <timlegge@cpansec.org>
-To: Cve Announce <cve-announce@security.metacpan.org>, Oss Security
- <oss-security@lists.openwall.com>
-Message-ID: <519da6569229ef855d1d412d9b61a9da@cpansec.org>
-X-Sender: timlegge@cpansec.org
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-X-GND-Sasl: timlegge@cpansec.org
-X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefvdeiudduucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuifetpfffkfdpucggtfgfnhhsuhgsshgtrhhisggvnecuuegrihhlohhuthemuceftddunecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpeggfffhvffukfigtgfgsehtjehjtddttddvnecuhfhrohhmpefvihhmohhthhihucfnvghgghgvuceothhimhhlvghgghgvsegtphgrnhhsvggtrdhorhhgqeenucggtffrrghtthgvrhhnpeejheevfeefhfekjeejvdduhfegvddtjeetffekteetudeivdeuleekheeuhfekveenucffohhmrghinhepmhgvthgrtghprghnrdhorhhgpdhgihhthhhusgdrtghomhenucfkphepuddtrddvtddtrddvtddurdejnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepuddtrddvtddtrddvtddurdejpdhhvghloheprhhouhhnuggtuhgsvgdrghgrnhguihdrnhgvthdpmhgrihhlfhhrohhmpehtihhmlhgvghhgvgestghprghnshgvtgdrohhrghdpqhhiugepveevjeeiffefgfeugfffpdhmohguvgepshhmthhpohhuthdpnhgspghrtghpthhtohepvddprhgtphhtthhopegtvhgvqdgrnhhnohhunhgtvgesshgvtghurhhithihrdhmvghtrggtphgrnhdrohhrghdprhgtphhtthhopehoshhsqdhsvggtuhhrihhthieslhhishhtshdrohhpvghnfigrlhhlrdgtohhm
-X-GND-State: clean
-X-GND-Score: -100
-Subject: [oss-security] CVE-2014-125112: Plack::Middleware::Session::Cookie versions through
- 0.21 for Perl allows remote code execution
+Received: (qmail 15695 invoked from network); 20 Oct 2015 07:36:31 -0000
+From: cve-assign@mitre.org
+To: robert@robert.io
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <1445196119.3560107.413423481.7C9B0859@webmail.messagingengine.com>
+Message-Id: <20151020073619.CE49C6C0018@smtpvmsrv1.mitre.org>
+Date: Tue, 20 Oct 2015 03:36:19 -0400 (EDT)
+Subject: [oss-security] Re: CVE request for sqlalchemy-utils
 
-========================================================================
-CVE-2014-125112                                      CPAN Security Group
-========================================================================
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-         CVE ID:  CVE-2014-125112
-   Distribution:  Plack-Middleware-Session
-       Versions:  through 0.21
+> https://github.com/Netflix/lemur/issues/117
+> https://github.com/kvesteri/sqlalchemy-utils/issues/166
 
-       MetaCPAN:  https://metacpan.org/dist/Plack-Middleware-Session
-       VCS Repo:  https://github.com/plack/Plack-Middleware-Session
+> does not use a random IV when encrypting with AES in CBC mode
 
+> I noticed the issue when reviewing the code for Netflix's Lemur tool
+> and they were not previously aware of the issue
 
-Plack::Middleware::Session::Cookie versions through 0.21 for Perl
-allows remote code execution
+We think that, of the plausible alternatives here, the best choice is
+to assign a CVE ID to Lemur 0.1.4 because of this "were not previously
+aware of the issue" (in other words, they wanted to have the usual
+random-IV behavior and had selected a library that didn't offer that
+behavior). Use CVE-2015-7764.
 
-Description
------------
-Plack::Middleware::Session::Cookie versions through 0.21 for Perl
-allows remote code execution.
+https://github.com/kvesteri/sqlalchemy-utils/issues/166#issuecomment-146252997
+indicates that the without-random-IV behavior was intentional within
+sqlalchemy-utils itself. Also, the sqlalchemy-utils documentation
+apparently doesn't advertise any specific security properties for its
+encryption. For example:
 
-Plack::Middleware::Session::Cookie versions through 0.21 has a security
-vulnerability where it allows an attacker to execute arbitrary code on
-the server during deserialization of the cookie data, when there is no
-secret used to sign the cookie.
+  http://sqlalchemy-utils.readthedocs.org/en/latest/data_types.html#module-sqlalchemy_utils.types.encrypted
 
-Problem types
--------------
-- CWE-565 Reliance on Cookies without Validation and Integrity Checking
+just says "provides a way to encrypt and decrypt values." If it had
+stated "encrypt and decrypt values with AES," then there might have
+been a reasonable argument that random-IV behavior is required, i.e.,
+otherwise, a user's expectations about standard practices wouldn't be
+satisfied. In other words, the sqlalchemy-utils documentation omits
+potentially useful facts but isn't directly misleading. CVE IDs
+typically aren't assigned in that situation.
 
-Workarounds
------------
-Set the "secret" option.
+(We do realize that the OSS release of Lemur is very new, and that
+sqlalchemy-utils has much greater usage, e.g., it has a Debian
+package. We don't have any information about whether Lemur or any
+other Netflix OSS package is already in widespread use outside of
+Netflix, e.g., because it is included in a major Linux distribution or
+for another reason.)
 
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Solutions
----------
-Upgrade Plack::Middleware::Session to version 0.23 or later (ideally
-version 0.36 or later), and set the "secret" option.
-
-
-References
-----------
-https://gist.github.com/miyagawa/2b8764af908a0dacd43d
-https://metacpan.org/release/MIYAGAWA/Plack-Middleware-Session-0.23-TRIAL/changes
-
-Timeline
---------
-- 2014-08-11: Vulnerability disclosed by MIYAGAWA.
-- 2014-08-11: Version 0.22 released that warns when the "secret" option
-   is not set.
-- 2014-08-11: Version 0.23-TRIAL released that requires the "secret"
-   option to be set.
-- 2014-09-05: Version 0.24 released. Same as 0.23 but not a trial
-   release.
-- 2016-02-03: Version 0.26 released. Documentation improved with
-   SYNOPSIS giving an example of how to set the "secret" option.
-- 2019-01-26: CPANSA-Plack-Middleware-Session-Cookie-2014-01 assigned
-   in CPAN::Audit::DB
-- 2019-03-09: CPANSA-Plack-Middleware-Session-2014-01 reassigned in
-   CPAN::Audit::DB
-- 2025-07-08: CVE-2014-125112 assigned by CPANSec.
-
-Credits
--------
-mala (@bulkneets), finder
-
+iQIcBAEBCAAGBQJWJe5MAAoJEL54rhJi8gl5Q5QP/2GJdxeDYRAQeFExqnTOhe3I
+C66gTYDLwrubh5xRVlLAol9b+tGpvqJGpA8V1xONgQfocypVdTaLdOwi7YLeMqAI
+JD7kqSp2b4oZgat6g7WHN6UW04q0yg5jREqhxRRvdnWRYqzSdiQY0BRXvOqIHe2Y
+H4nqS5jeCwgyXFt9JtU2rZzJl4cmm1qhfRNki+iqCXE/1xDrCsoW62Fhg+kY6orn
+UOYig8vFHp9uIFkf5qn4p1A/Pc0YKwbD/DtXdQoC7LOM4RZMuw51KF6M4lqAvo6x
+LJ4T8xlFcCiJYnGU+WHSY91GWjuoebRb49UbMv3z8TxnNTTupWkFd/55I7U9VH5G
+Jr1xNUsKUCA2CCBP7t1jvivmYsbX9DfFY8Th0ZamWcQlqfWcspCYMtc1gBATk+3P
+UHFwSyWYL74mH/LHW8Cwi9tLq4DScdymoCTjvLwpN8KIJGVCDzm7klh+P1SvC24w
+ZPiXUhkUdqxdPVGLYW0eZsL6XQqtH/eb/BesyuaW5Myv7aHho3oLhvGx37MrL9vn
+dRLUmAMYqRWioaTAvf3vkPQGz0C9ePaqu/RiT7jIFx5Cb+5fhrv/rNvF8C8qbqAw
+vw+NsWZ9zExtKgeP+A+3fzWOtMjTHKKLsbHUHea3gy4s+hklvH37T+jErmgFYyZ9
+dbmggO105ZSb7lGbOlLM
+=IBJp
+-----END PGP SIGNATURE-----
