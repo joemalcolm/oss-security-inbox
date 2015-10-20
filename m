@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["858" "Tuesday" "28" "August" "2018" "16:49:14" "+1000" "Wade Mealing" "wmealing@redhat.com" "<CALJHwhQyQQjyWxczrjtBgt8GSmHHarzfSDPPFKt3xY0Sk0Sd_g@mail.gmail.com>" "28" "[oss-security] Linux kernel: CVE-2018-14619 kernel: crash (possible privesc) in kernel crypto subsystem." "^Date:" nil nil "8" "2018082806:49:14" "[oss-security] Linux kernel: CVE-2018-14619 kernel: crash (possible privesc) in kernel crypto subsystem." (number mark "U       wmealing@red Aug 28   28/858   " thread-indent "\"[oss-security] Linux kernel: CVE-2018-14619 kernel: crash (possible privesc) in kernel crypto subsystem.\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1408" "Tuesday" "20" "October" "2015" "10:22:40" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<CANO=Ty2kaJ3cyiq=-QAoSK3+0cw9QXdnam0H3Mqx6gNHVAcKrQ@mail.gmail.com>" "32" "Re: [oss-security] Prime example of a can of worms" nil nil nil "10" "2015102016:22:40" "[oss-security] Prime example of a can of worms" (number mark "U       kseifried@re Oct 20   32/1408  " thread-indent "\"Re: [oss-security] Prime example of a can of worms\"\n") "<76804C86-B1DC-44C1-9CD8-65A9A3915EB7@shub-internet.org>" ("<CANO=Ty18_pMLco8RdabsEbhs9sLahRhT_U93PGhDVwhcRaqzpQ@mail.gmail.com>" "<CAFRnB2Wrz=zexGonV5fHosVqfiOhNvA6Ya2YsCYyDkt7UE_0mw@mail.gmail.com>" "<20151019193411.GA15710@hunt>" "<87eggqmta9.fsf@alice.fifthhorseman.net>" "<CANO=Ty2ffi_iLEzRzX4rBi-7xLg8p8BmbfxZZVPZdh1ORmPFsw@mail.gmail.com>" "<76804C86-B1DC-44C1-9CD8-65A9A3915EB7@shub-internet.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 19828 invoked by uid 550); 28 Aug 2018 06:49:38 -0000
+Received: (qmail 11655 invoked by uid 550); 20 Oct 2015 16:22:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,57 +11,66 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 19809 invoked from network); 28 Aug 2018 06:49:37 -0000
+Received: (qmail 11633 invoked from network); 20 Oct 2015 16:22:52 -0000
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=t68HjqaHxEnsVM1yEwfi2zUI7UVyYqV1d0f+iCaK5Hk=;
-        b=UVWV952VAUAyGYmVb3nsWey9BQezE6wLxjjWkN39lzvCMMEzPhXZ41mVeogOp4u9D0
-         LSROYAcp4t6eycM/DU/w7Y7ugRW5O0ehkKN2SiKZtoUWPvVlxwki5CkM+6yA9LDLZeKM
-         wyh8w5AN22lClIns0NX605JxVCG8EyefDnUe89/47JNTYA9i8XaBwSz2YTKTcH85UtTC
-         e9YOSKhvrm8kis0Tkv0SRdgbAmmgU36wf7n8sSM7DZGKg5Rlxcm0K/901XogPiGNrGL7
-         rpSE4ehJWZOE6nW3rmSXsDZN6OPfR0a16Mww06UVGpWt+6LSpMRsrv62lVZJh+dhSmVc
-         tenw==
-X-Gm-Message-State: APzg51BtzViM9CkceWSwozzB8KPgqL80EMmrQ/AYScxa/YVrTW3XAoG/
-	tg7EbbQ93CnVw0oDREsE1jEAu52kbNAPOparv0wZLenReOw=
-X-Google-Smtp-Source: ANB0VdbXKLcHPDfk7GqIvSpl7bfl4CT4nE+e0ZBPZ7CIn0QKBlece9jpKMRcFzb687iM4+VGPosWJgcUIRXjMfc/LUU=
-X-Received: by 2002:a02:8341:: with SMTP id w1-v6mr146057jag.61.1535438965710;
- Mon, 27 Aug 2018 23:49:25 -0700 (PDT)
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:content-type;
+        bh=VA+rGT3RqunopKTIMw0m2teb6ZM7EBTNfNN1qt+QhB0=;
+        b=AJ0gF6c1zj/NZUZnE20z1JOmbLxxwW4LIhGfZdxzp6Hpbw3UKnmhf4Uw/vrBZfFQp3
+         Tt2LCWgXv3MKi00VR8SLi03mmlxbdXhx9fpNQlFl9W0Fbo7MYkSLGf4NOv3UfQWWPxP4
+         /Er/6SrEs2oyDLQbeHDwEjQJblfkqMNwVa5wxqT9s5eFyhessSWl0iguKhWhYOyLQCXO
+         A72IPTJg1VXPi3FqHQds4N0fOhcXzmcw+skdVXZytOw94HXWqwJFgtD+b7UV5stID5Vd
+         E/bbOyTcEKD6J28RmRO4LVKNgCcw03zWR3QWjmENIJ/Ozq+JjSVMwXedaRWv5gKhHs0i
+         TBMQ==
+X-Gm-Message-State: ALoCoQkwK0qvPqVa++ibpiSKaoQamYZ5vxTFVg31L5KoNBda4IHq/djabXA664UFIkDpSEv2yifM
 MIME-Version: 1.0
-Message-ID: <CALJHwhQyQQjyWxczrjtBgt8GSmHHarzfSDPPFKt3xY0Sk0Sd_g@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Date: Tue, 28 Aug 2018 16:49:14 +1000
-From: Wade Mealing <wmealing@redhat.com>
+X-Received: by 10.13.206.7 with SMTP id q7mr3367618ywd.47.1445358160216; Tue,
+ 20 Oct 2015 09:22:40 -0700 (PDT)
+In-Reply-To: <76804C86-B1DC-44C1-9CD8-65A9A3915EB7@shub-internet.org>
+References: <CANO=Ty18_pMLco8RdabsEbhs9sLahRhT_U93PGhDVwhcRaqzpQ@mail.gmail.com>
+	<CAFRnB2Wrz=zexGonV5fHosVqfiOhNvA6Ya2YsCYyDkt7UE_0mw@mail.gmail.com>
+	<20151019193411.GA15710@hunt>
+	<87eggqmta9.fsf@alice.fifthhorseman.net>
+	<CANO=Ty2ffi_iLEzRzX4rBi-7xLg8p8BmbfxZZVPZdh1ORmPFsw@mail.gmail.com>
+	<76804C86-B1DC-44C1-9CD8-65A9A3915EB7@shub-internet.org>
+Message-ID: <CANO=Ty2kaJ3cyiq=-QAoSK3+0cw9QXdnam0H3Mqx6gNHVAcKrQ@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=001a114da68ab6f66005228bab82
+Date: Tue, 20 Oct 2015 10:22:40 -0600
+From: Kurt Seifried <kseifried@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Linux kernel: CVE-2018-14619 kernel: crash (possible privesc) in
- kernel crypto subsystem.
-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Prime example of a can of worms
+To: oss-security <oss-security@lists.openwall.com>
 
-Gday,
+--001a114da68ab6f66005228bab82
+Content-Type: text/plain; charset=UTF-8
 
-Syzkaller/syzbot found a use-after-free bug in the cryptographic
-subsystem of the Linux kernel [1], that can be used to panic the
-system and possibly escalate privileges.
+So some new questions arise:
 
-The bug was introduced in commit 72548b093ee3, and has been addressed
-in b32a7dc8aef1882fbf983eb354837488cc9d54dc, a reproducer is available
-on the tail end of  syzbots email to kernel list (
-https://lkml.org/lkml/2017/11/27/866 ).  Most RHEL kernels are not
-affected as they do not have the feature, but it does affect the
-kernel-alt package (the 4.11 based kernel for 64-bit ARM , IBM POWER9
-(little endian ) and IBM z Systems ).
+1) in openssl does the -2/-5 option matter with respect to security? I read
+http://security.stackexchange.com/questions/54359/what-is-the-difference-between-diffie-hellman-generator-2-and-5
+and some other things and I have no idea if there is a real impact on
+security. I bet the other tools have similar switches for which very few
+people seem to understand what they actually do, and if they actually
+impact security meaningfully.
 
-Upstream fix:
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=b32a7dc8aef1882fbf983eb354837488cc9d54dc
+2) Openssl/gnutls (and likely others) all apparently have slight variations
+on how they generate/test primes. E.g.
+http://nmav.gnutls.org/2011/12/generating-diffie-hellman-parameters.html
+this worries me, diversity is good, but if not implemented correctly. Do
+any best practices actually exist?
 
-Reproducer:
-https://lkml.org/lkml/2017/11/27/866
+3) in testing for primeness how sure are we? Reading
+https://en.wikipedia.org/wiki/Miller%E2%80%93Rabin_primality_test and so on
+these tests are all "probably prime" but I can't find any data to show that
+e.g. given this set of large primes, tested against the various traditional
+primality methods, and then brute forced to confirm they are prime/not
+prime, what % failed?
 
-Thanks.
 
--- 
-Wade Mealing
+--
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@redhat.com
 
-Product Security - Kernel
-
-Red Hat
+--001a114da68ab6f66005228bab82--
