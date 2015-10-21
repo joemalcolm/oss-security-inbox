@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2028" "Saturday" "5" "September" "2015" "06:07:00" "-0400" "Scott Arciszewski" "scott@arciszewski.me" "<CAPKwhwto-ZPi0o98NAF3F9FxRjiiwiwHCFYTKNSCQJrf8BRReQ@mail.gmail.com>" "67" "[oss-security] Some Wordpress Plugin Stuff" nil nil nil "9" "2015090510:07:00" "[oss-security] Some Wordpress Plugin Stuff" (number mark "U       scott@arcisz Sep  5   67/2028  " thread-indent "\"[oss-security] Some Wordpress Plugin Stuff\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1710" "Wednesday" "21" "October" "2015" "14:56:50" "-0500" "Tyler Hicks" "tyhicks@canonical.com" "<20151021195650.GB2430@boyd>" "44" "Re: [oss-security] CVE Request: BusyBox tar directory traversal" nil nil nil "10" "2015102119:56:50" "[oss-security] CVE Request: BusyBox tar directory traversal" (number mark "        tyhicks@cano Oct 21   44/1710  " thread-indent "\"Re: [oss-security] CVE Request: BusyBox tar directory traversal\"\n") "<20151021153633.GA2430@boyd>" ("<20151021153633.GA2430@boyd>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 30076 invoked by uid 550); 5 Sep 2015 10:54:47 -0000
+Received: (qmail 17592 invoked by uid 550); 21 Oct 2015 19:57:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,94 +11,63 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 20290 invoked from network); 5 Sep 2015 10:07:13 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:date:message-id:subject:from:to:content-type;
-        bh=Fr0gKRK4QZkjUTMG1DZfapoAtAw2HJo7yEuIc3fVfOo=;
-        b=rWxZ2LUbLSmbXsi45XGmqeBPTBVAdZpOueQUkV4PpqBPcqMU7DU+AYADeyQwG9irvA
-         N5xkB0dzrxec9O4vVX1zZ3pHvnH3ULa9Vx5KIcdizI+wQ7Hr4oEp6OL8/nHEcgx5exi6
-         4vCEOywzEh2Wh6ylMGH4/rCgTs36ld5Ock0yB6yamY7qQOKmQ2J3ScYhV4AwlKvl5nY7
-         GVUcqryN3kas/f9EkJdzwff5E8JLB3+0AaA4inD36/F6W9gLEmlBMDX5PvZM5BL2TEae
-         liM19i2z+lg9KMVugrS6KQe5mjZM0+fWuftvKD5zd5aHlIKbQRy7JYblNtM8IOasWLAa
-         maLQ==
+Received: (qmail 17568 invoked from network); 21 Oct 2015 19:57:05 -0000
+Message-ID: <20151021195650.GB2430@boyd>
+References: <20151021153633.GA2430@boyd>
 MIME-Version: 1.0
-X-Received: by 10.50.61.243 with SMTP id t19mr14408475igr.22.1441447620813;
- Sat, 05 Sep 2015 03:07:00 -0700 (PDT)
-X-Google-Sender-Auth: 04NWwIcjNiEcaH_EpzkXLSEpsbY
-Message-ID: <CAPKwhwto-ZPi0o98NAF3F9FxRjiiwiwHCFYTKNSCQJrf8BRReQ@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=047d7bdc0a4e66aaa1051efd2d21
-Date: Sat, 5 Sep 2015 06:07:00 -0400
-From: Scott Arciszewski <scott@arciszewski.me>
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="FkmkrVfFsRoUs1wW"
+Content-Disposition: inline
+In-Reply-To: <20151021153633.GA2430@boyd>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+Cc: security@ubuntu.com, Denys Vlasenko <vda.linux@googlemail.com>
+Date: Wed, 21 Oct 2015 14:56:50 -0500
+From: Tyler Hicks <tyhicks@canonical.com>
 Reply-To: oss-security@lists.openwall.com
-Sender: kobrasrealm@gmail.com
-Subject: [oss-security] Some Wordpress Plugin Stuff
+Subject: Re: [oss-security] CVE Request: BusyBox tar directory traversal
 To: oss-security@lists.openwall.com
 
---047d7bdc0a4e66aaa1051efd2d21
-Content-Type: text/plain; charset=UTF-8
+--FkmkrVfFsRoUs1wW
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Hi OSS Sec,
+On 2015-10-21 10:36:33, Tyler Hicks wrote:
+> Hello - The BusyBox implementation of tar will extract a symlink that
+> points outside of the current working directory and then follow that
+> symlink when extracting other files. This allows for a directory
+> traversal attack when extracting untrusted tarballs.
 
-I took a quick glance through some Wordpress plugins tagged with security.
-I don't imagine anyone would be surprised that I found vulnerabilities.
+I forgot to mention that I took a look at BusyBox's protections against
+directory traversal attacks while extracting files with absolute paths
+or dot dot ("..") components and it seems to sufficiently protect
+against those attacks.
 
--------------------------------
+The function can be found here:
 
-SecurityMoz Security Audit
+  http://git.busybox.net/busybox/tree/archival/libarchive/unsafe_prefix.c
 
-https://wordpress.org/plugins/securemoz-security-audit/
+Tyler
 
-file_get_contents() + explicitly HTTP (no TLS) -> unserialize()
+--FkmkrVfFsRoUs1wW
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
 
--------------------------------
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-WP Limit Login Attempts
+iQIcBAEBCgAGBQJWJ+4CAAoJENaSAD2qAscKXLcQALCVcVCnKitwUyzxr+1d0ncu
+mBmlhTcjHE1PebyT2pEJRwAILCJNx/m3498BBtZVdmtt2IxD53F9WAFq6zuuD4e5
+QI8/3QQNZWtucu3lc1FaM1JcKYi049gx42p84H9F3GdZBCHig8/nb6pK/bxNTN08
+9eWa+7p323pu53pJRAVwfw3oaoMm3qzQWxJFNNAx8naP5cxNygiAO1VfcWJAZhok
+tgR46je29uv/B8vpZCPZZfqG1cFHBsMFOay+qqHGQrIAye270UGLgXUd+wOR9ZH2
+knFGaZ+bUWxQcKTVkvz/Q8q1I2QeZClVqoQC7cVOvSDiABKB0scKXXdHU54qibSh
+e/GImZxgowD/IdwHLjySmbOCvqNvd0tdgalBhO8zNsdKcu3NI4LZuEfxKHDMXgz4
+QiiM7/KKAzR/AVFqZQGG75bJvkPmojTptnTpOtIAPrHQy7B9PE4nOxsRDRUdZnb9
++pav00EQH/js35TkbzpTbpmwQTnLWSg87NYI4G66B6SLyNdsoMpjHx6zBYfCUNia
+XVTUvXndVXxxR+ZgHqW9imtsNzbE2fLPEW+lDuUCtS2ETmDnwfBL0lRGmH5U98yc
+A0wdzkZg6xZIdnosjhGfuFBzgU3e7epiQC+h7g4KE0uW1AQth/Vn8+ezaz5VXvF0
+ypGZm5JVO+ngmRiQ+K22
+=SpNh
+-----END PGP SIGNATURE-----
 
-https://wordpress.org/plugins/wp-limit-login-attempts/
-
-Trivial SQL injection via HTTP headers.
-
-     $ip = getip();
-     $tablename = $wpdb->prefix."limit_login";
-     $tablerows = $wpdb->get_results( "SELECT `login_id`,
-`login_ip`,`login_attempts`,`attempt_time`,`locked_time` FROM  `$tablename`
-  WHERE `login_ip` =  '$ip'  ORDER BY `login_id` DESC LIMIT 1 " );
-
-     // ~8<~8<~8<~8<~8<~8<~8<~8<~
-
-    function getip(){
-           if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
-            $ip = $_SERVER['HTTP_CLIENT_IP'];
-        } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-            $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
-        } else {
-            $ip = $_SERVER['REMOTE_ADDR'];
-             if($ip=='::1'){
-                 $ip = '127.0.0.1';
-             }
-        }
-        return $ip;
-    }
-
--------------------------------
-
-I'm not sure if it's even worth assigning a CVE to any of these. Maybe the
-SQLi one? I leave that decision in MITRE's capable hands.
-
-Also, Tor Blocker (link below) uses HTTP to grab the list of IP addresses
-to block. It's telling and appropriate that the person who developed a
-plugin to oppose a privacy technology would fail to use TLS.
-
-https://wordpress.org/plugins/tor-exit-nodes-blocker/
-
-(Surely no one would ever think to hack an upstream router and MitM the
-connection to block the blog administrator from their own blog or allow Tor
-nodes through!)
-
-That's all from me. I might keep poking at some of the fatter plugins to
-see what I can find.
-
-Scott Arciszewski
-
---047d7bdc0a4e66aaa1051efd2d21--
+--FkmkrVfFsRoUs1wW--
