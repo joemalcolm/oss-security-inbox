@@ -1,4 +1,9 @@
-Received: (qmail 28402 invoked by uid 550); 27 Apr 2026 12:57:46 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["762" "Thursday" "22" "October" "2015" "12:25:12" "+0200" "Raphael Hertzog" "hertzog@debian.org" "<20151022102512.GA23523@home.ouaza.com>" "24" "[oss-security] CVE Request: invalid curve attack on bouncycastle" nil nil nil "10" "2015102210:25:12" "[oss-security] CVE Request: invalid curve attack on bouncycastle" (number mark "U       hertzog@debi Oct 22   24/762   " thread-indent "\"[oss-security] CVE Request: invalid curve attack on bouncycastle\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 1767 invoked by uid 550); 22 Oct 2015 11:02:32 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,47 +12,41 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 28369 invoked from network); 27 Apr 2026 12:57:46 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pipping.org;
-	s=manitu-webhosting; t=1777294657;
-	bh=gR3xcGakPtT3cWFIMUq8py/lpRLuQSbLR4mmD90lDmY=;
-	h=Date:To:From:Subject;
-	b=L8tEiFzHSg2hiVuLlrnd4E4wrLrqBul7hPqxAJSoopRvQjTkN4RNUwCyDzxKLxnpv
-	 bRCNjbyrshj+VyC4LHqefirte0LxMnDQ+n0k8HXtxrav/f6zFGkdRsCpPoRORQipjf
-	 d/cRh93SU3Wuch7vLKXCKV8SMOpi42/78QZbVqIyqrLh0pQK9kkIrX/+fnKrnQeIe3
-	 Wh1eCXpt5WuFJPinc8PLA28LVRyRGckiz56c8Rt989GgNurhn8GEwUE7v4HqndYvpU
-	 EnplmRipY0QPyqNgWNJUDaSU8xwDulrOUYh27pSSwZnnM/zuovwR+DGAG9hq78gHWr
-	 n8anFaLC65KFw==
-Message-ID: <8db46812-9b6a-4db6-90d2-ea46b3dab09d@pipping.org>
-Date: Mon, 27 Apr 2026 14:57:36 +0200
-MIME-Version: 1.0
-Content-Language: en-US
+Received: (qmail 15880 invoked from network); 22 Oct 2015 10:25:27 -0000
+Date: Thu, 22 Oct 2015 12:25:12 +0200
+From: Raphael Hertzog <hertzog@debian.org>
 To: oss-security@lists.openwall.com
-From: Sebastian Pipping <sebastian@pipping.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] uriparser 1.0.1 fixes CVE-2026-42371 (integer overflow)
+Message-ID: <20151022102512.GA23523@home.ouaza.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+User-Agent: Mutt/1.5.24 (2015-08-30)
+X-Virus-Scanned: clamav-milter 0.98.7 at mail
+X-Virus-Status: Clean
+Subject: [oss-security] CVE Request: invalid curve attack on bouncycastle
 
-Hello oss-security,
+Hello,
 
+bouncycastle versions older than 1.51 are vulnerable to an
+invalid curve attack as described in this article:
+http://web-in-security.blogspot.ca/2015/09/practical-invalid-curve-attacks.html
 
-just a quick note that uriparser 1.0.1 released today is fixing
-CVE-2026-42371: integer overflow in text range comparison.
+The attack allows to extract private keys used in elliptic curve
+crytpography with a few thousands queries.
 
-Some key links are:
+According to upstream developer Peter Dettman, the issue has been fixed
+with those two commits:
+https://github.com/bcgit/bc-java/commit/5cb2f05
+https://github.com/bcgit/bc-java/commit/e25e94a
 
-- The change log of release 1.0.1
-   https://github.com/uriparser/uriparser/blob/uriparser-1.0.1/ChangeLog
+Could a CVE be assigned to this issue?
 
-- The fixing pull request
-   https://github.com/uriparser/uriparser/pull/298
+Thank you.
 
-- The official CVE metadata
-   https://nvd.nist.gov/vuln/detail/CVE-2026-42371
+PS: Please CC me as I'm not subscribed.
+-- 
+Raphaël Hertzog ◈ Debian Developer
 
-Best
-
-
-
-Sebastian
+Support Debian LTS: http://www.freexian.com/services/debian-lts.html
+Learn to master Debian: http://debian-handbook.info/get/
