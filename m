@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1124" "Thursday" "16" "January" "2020" "14:10:53" "+0000" "Colm O hEigeartaigh" "coheigea@apache.org" "<CAB8XdGAqVbPj=oaCN=0_aXNmLLr4NqeAR=r74ogJegEwJqpfWw@mail.gmail.com>" "37" "[oss-security] [CVE-2019-17573] Apache CXF Reflected XSS in the services listing page" nil nil nil "1" "2020011614:10:53" "[oss-security] [CVE-2019-17573] Apache CXF Reflected XSS in the services listing page" (number mark "U       coheigea@apa Jan 16   37/1124  " thread-indent "\"[oss-security] [CVE-2019-17573] Apache CXF Reflected XSS in the services listing page\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [CVE-2019-17573] Apache CXF Reflected XSS in the services listing page" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1128" "Thursday" "22" "October" "2015" "23:41:39" "-0400" "Daniel Kahn Gillmor" "dkg@fifthhorseman.net" "<87r3km9rpo.fsf@alice.fifthhorseman.net>" "30" "Re: [oss-security] Prime example of a can of worms" nil nil nil "10" "2015102303:41:39" "[oss-security] Prime example of a can of worms" (number mark "        dkg@fifthhor Oct 22   30/1128  " thread-indent "\"Re: [oss-security] Prime example of a can of worms\"\n") "<CANO=Ty3BGrXMkocF2Vp-wXJVE_oo5K4dSA4+H-son_dzuMo4ZQ@mail.gmail.com>" ("<CANO=Ty18_pMLco8RdabsEbhs9sLahRhT_U93PGhDVwhcRaqzpQ@mail.gmail.com>" "<CAFRnB2Wrz=zexGonV5fHosVqfiOhNvA6Ya2YsCYyDkt7UE_0mw@mail.gmail.com>" "<20151019193411.GA15710@hunt>" "<87eggqmta9.fsf@alice.fifthhorseman.net>" "<20151021170113.128d3a8e@silentmaxx>" "<CANO=Ty0eLFpezes_WfNTN0eKj6u5BinhwBQkM6BR7PZPg3eCiA@mail.gmail.com>" "<562869CF.3060106@internot.info>" "<CANO=Ty3ii2MXgtpxVx0w-Vqd+yVSppauA8Qt4xFa7+uKddybSg@mail.gmail.com>" "<8737x2bjjp.fsf@alice.fifthhorseman.net>" "<CANO=Ty3BGrXMkocF2Vp-wXJVE_oo5K4dSA4+H-son_dzuMo4ZQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 11921 invoked by uid 550); 16 Jan 2020 14:17:53 -0000
+Received: (qmail 24429 invoked by uid 550); 23 Oct 2015 03:41:56 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,56 +11,47 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9549 invoked from network); 16 Jan 2020 14:11:16 -0000
-X-Gm-Message-State: APjAAAXp0bdHrRm1LzPbjKrJ+abzkDk528OmVX7Tz85JxB0gztNxjnVW
-	C688/0ElGNjETkG6GPNwY3SdB5x2aGPi1NDDqS8=
-X-Google-Smtp-Source: APXvYqzaS7RWBS6ncdEBcpuG1fA1JHA/zCql9epcBXV3o4T4nQRx2eLfDNyvQ2Yf1Qsw4kLwSAA7QeQT2FGZBbvRPNk=
-X-Received: by 2002:a92:ca8b:: with SMTP id t11mr3870574ilo.227.1579183864167;
- Thu, 16 Jan 2020 06:11:04 -0800 (PST)
+Received: (qmail 24405 invoked from network); 23 Oct 2015 03:41:55 -0000
+In-Reply-To: <CANO=Ty3BGrXMkocF2Vp-wXJVE_oo5K4dSA4+H-son_dzuMo4ZQ@mail.gmail.com>
+References: <CANO=Ty18_pMLco8RdabsEbhs9sLahRhT_U93PGhDVwhcRaqzpQ@mail.gmail.com> <CAFRnB2Wrz=zexGonV5fHosVqfiOhNvA6Ya2YsCYyDkt7UE_0mw@mail.gmail.com> <20151019193411.GA15710@hunt> <87eggqmta9.fsf@alice.fifthhorseman.net> <20151021170113.128d3a8e@silentmaxx> <CANO=Ty0eLFpezes_WfNTN0eKj6u5BinhwBQkM6BR7PZPg3eCiA@mail.gmail.com> <562869CF.3060106@internot.info> <CANO=Ty3ii2MXgtpxVx0w-Vqd+yVSppauA8Qt4xFa7+uKddybSg@mail.gmail.com> <8737x2bjjp.fsf@alice.fifthhorseman.net> <CANO=Ty3BGrXMkocF2Vp-wXJVE_oo5K4dSA4+H-son_dzuMo4ZQ@mail.gmail.com>
+User-Agent: Notmuch/0.20.2 (http://notmuchmail.org) Emacs/24.5.1 (x86_64-pc-linux-gnu)
+Message-ID: <87r3km9rpo.fsf@alice.fifthhorseman.net>
 MIME-Version: 1.0
-From: Colm O hEigeartaigh <coheigea@apache.org>
-Date: Thu, 16 Jan 2020 14:10:53 +0000
-X-Gmail-Original-Message-ID: <CAB8XdGAqVbPj=oaCN=0_aXNmLLr4NqeAR=r74ogJegEwJqpfWw@mail.gmail.com>
-Message-ID: <CAB8XdGAqVbPj=oaCN=0_aXNmLLr4NqeAR=r74ogJegEwJqpfWw@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="0000000000004241cf059c4265ea"
-Subject: [oss-security] [CVE-2019-17573] Apache CXF Reflected XSS in the services listing page
+Content-Type: text/plain
+Cc: oss-security <oss-security@lists.openwall.com>
+Date: Thu, 22 Oct 2015 23:41:39 -0400
+From: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Prime example of a can of worms
+To: Kurt Seifried <kseifried@redhat.com>
 
---0000000000004241cf059c4265ea
-Content-Type: text/plain; charset="UTF-8"
+On Thu 2015-10-22 19:37:49 -0400, Kurt Seifried wrote:
+> Sorry when I said a "large" pool I meant more then the current 5 or so that
+> seem to be in popular use, but certainly not more than a few hundred.
 
-CVE-2019-17573: Apache CXF Reflected XSS in the services listing page
+ok, that's a relief :) but, running the numbers, even 100 hundred
+2048-bit groups comes out to a quarter MiB of RAM.  (i figure 256 bytes
+per prime, a well-known, shared generator)
 
-Severity: Moderate
+Larger groups (or more groups) inflate the size even further.  I know
+RAM is cheap these days but for embedded devices a quarter meg or more
+of RAM is still not insignificant.
 
-Vendor: The Apache Software Foundation
+> Basically we're in agreement, I think nothing under 2048 should even be
+> considered, and we probably need to bump that up in a few years anyways.
 
-Versions Affected:
+yep, agreed.
 
-This vulnerability affects all versions of Apache CXF prior to 3.3.5 and
-3.2.12.
+> I've also been going through source code to see how people use dh
+> params/treat them, and I have some worrying results (basically what I
+> expected though, everything is terrible as usual)
 
-Description:
+:/
 
-By default, Apache CXF creates a /services page containing a listing of the
-available endpoint names and addresses. This webpage is vulnerable to a
-reflected Cross-Site Scripting (XSS) attack, which allows a malicious actor
-to
-inject javascript into the web page.
+> I'm going to be writing this up as an article rather than a long email as I
+> have a few more sticky points to raise (security rabbit holes are so much
+> fun).
 
-Please note that the attack exploits a feature which is not typically not
-present in modern browsers, who remove dot segments before sending the
-request. However, Mobile applications may be vulnerable.
+I look forward to reading it.
 
-Mitigation:
-
-Users of Apache CXF should update to either 3.3.5 or 3.2.12. Alternatively,
-it is possible to disable the service listing altogether by setting the
-"hide-service-list-page" servlet parameter to "true".
-
-Credit:
-
-We would like to thank the GE cyber security team for reporting this issue.
-
---0000000000004241cf059c4265ea--
+  --dkg
