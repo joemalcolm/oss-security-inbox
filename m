@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1661" "Wednesday" "20" "April" "2016" "10:35:48" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160420143548.A83166C05E8@smtpvmsrv1.mitre.org>" "38" "[oss-security] Re: CVE Request: perl: denial-of-service / Regexp-matching \"hangs\" indefinitely on illegal input using binmode :utf8 using 100%CPU" nil nil nil "4" "2016042014:35:48" "[oss-security] Re: CVE Request: perl: denial-of-service / Regexp-matching \"hangs\" indefinitely on illegal input using binmode :utf8 using 100%CPU" (number mark "U       cve-assign@m Apr 20   38/1661  " thread-indent "\"[oss-security] Re: CVE Request: perl: denial-of-service / Regexp-matching \"hangs\" indefinitely on illegal input using binmode :utf8 using 100%CPU\"\n") "<20160420091832.GA580@lorien.valinor.li>" ("<20160420091832.GA580@lorien.valinor.li>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["741" "Friday" "23" "October" "2015" "23:53:04" "+0200" "Florian Weimer" "fweimer@redhat.com" "<562AAC40.4000002@redhat.com>" "18" "Re: [oss-security] Re: Duplicate CVE: CVE-2015-7703 in NTP" nil nil nil "10" "2015102321:53:04" "[oss-security] Re: Duplicate CVE: CVE-2015-7703 in NTP" (number mark "        fweimer@redh Oct 23   18/741   " thread-indent "\"Re: [oss-security] Re: Duplicate CVE: CVE-2015-7703 in NTP\"\n") "<CANO=Ty1DejyNjY5SHGSpbADx+Ece9B6+N837HqTkzecJaABKvQ@mail.gmail.com>" ("<874mhidqhp.fsf@redhat.com>" "<20151023160608.06B6D52E093@smtpvbsrv1.mitre.org>" "<CANO=Ty1DejyNjY5SHGSpbADx+Ece9B6+N837HqTkzecJaABKvQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 1413 invoked by uid 550); 20 Apr 2016 14:36:01 -0000
+Received: (qmail 1932 invoked by uid 550); 23 Oct 2015 21:53:19 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,51 +11,39 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 1912 invoked from network); 23 Oct 2015 21:53:19 -0000
+References: <874mhidqhp.fsf@redhat.com>
+ <20151023160608.06B6D52E093@smtpvbsrv1.mitre.org>
+ <CANO=Ty1DejyNjY5SHGSpbADx+Ece9B6+N837HqTkzecJaABKvQ@mail.gmail.com>
+Message-ID: <562AAC40.4000002@redhat.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.2.0
+MIME-Version: 1.0
+In-Reply-To: <CANO=Ty1DejyNjY5SHGSpbADx+Ece9B6+N837HqTkzecJaABKvQ@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
+Date: Fri, 23 Oct 2015 23:53:04 +0200
+From: Florian Weimer <fweimer@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1394 invoked from network); 20 Apr 2016 14:36:00 -0000
-From: cve-assign@mitre.org
-To: carnil@debian.org
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <20160420091832.GA580@lorien.valinor.li>
-Message-Id: <20160420143548.A83166C05E8@smtpvmsrv1.mitre.org>
-Date: Wed, 20 Apr 2016 10:35:48 -0400 (EDT)
-Subject: [oss-security] Re: CVE Request: perl: denial-of-service / Regexp-matching "hangs" indefinitely on illegal input using binmode :utf8 using 100%CPU
+Subject: Re: [oss-security] Re: Duplicate CVE: CVE-2015-7703 in NTP
+To: oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On 10/23/2015 06:39 PM, Kurt Seifried wrote:
 
-> A bug in perl can cause regular expressions an malformed UTF8 inputs
-> to go into a forever loop and consume 100% CPU. The issue was found to
-> drive a realworld web application into an infinite loop
-> 
-> https://rt.perl.org/Public/Bug/Display.html?id=123562
-> http://perl5.git.perl.org/perl.git/commit/22b433eff9a1ffa2454e18405a56650f07b385b5
-> https://bugs.debian.org/821848
+> I'm going to also ensure we communicate our CVE's to upstreams, I could
+> swear we did in this case but I can't find a specific artifact (e.g. sent
+> email) of doing so from myself (but quite often I just assign the CVE and
+> other people are handling the issue so that wouldn't be to abnormal) so I'm
+> going to go on the assumption we failed to do so properly and update our
+> process as well to ensure we do.
 
-Use CVE-2015-8853 for all of 22b433eff9a1ffa2454e18405a56650f07b385b5.
-We do not feel that there is enough information to pursue an
-interpretation of "I did this also in the similar areas of regexec.c"
-as requiring a separate CVE.
+This is not the case.  <security@ntp.org> was notified on 2015-08-20.
+As the flaws were of low impact and there was no reaction, we disclosed
+the issues here:
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+  <http://openwall.com/lists/oss-security/2015/08/25/3>
 
-iQIcBAEBCAAGBQJXF5K9AAoJEHb/MwWLVhi2imAQAK01mTbjuVOPJ6g2APUntKXR
-80XiAZQBnqCUO4Khnt399G1dyUgI4GrY0CzBvh34b6ecx37NP+OgZBsT+Jh+xQuA
-EiiTiKb7foU7bf1R+b6aofyOiI0+ofG8i9i6fR/fSBcp93XHOTrWItc9H+W0Suiq
-AjUUMOpr71daYsNmRq4rqscXI2TfSHHgzJ5rrEeO0/v3wru4RffxXfbNEIcR5soL
-APjr/2AIWczHtZFKDeLZa0tGngrSrbN6Cx1psCw1zJ0ivAg5OX9l5dxHZMkI4nFt
-Mn2fOHh5jMh5UIjaroxAxwTP9baN/Wh4HdROirSJrErM4k5LJzjjIJwaG3rE9mfr
-9szFq+7zBjt7SlJEAOKiQrRNXYC1NM2SrKp3TXPI6KtREumuty0rH2kvv3xaoCut
-Ne5aNxGnVni3zxUgul0UW/Z8+ObsGoM8HhiKPy2CU7lmllWIXVmRcNAzQaPrX1D4
-owSBk2y1vgCkZ325BMgphUi82nFlqMMB+lb35KYbznhfPXwg0aSd7//9sIx3yYsJ
-BmMMDZ/c5gkyXve3HHzgijMroJZnazTocvqXE9o8Y9eM4R/uOCuEa3c4KxkHuPgu
-FKyWGbMZI8V0SlvMhhtXX3q+z77lTistWg0F1JA+eiIeBvBt3ZNFnuHpGUlasNZ3
-KKhEY+5zhUgRcbGgYQn+
-=/FX1
------END PGP SIGNATURE-----
+I don't know what else we can do to avoid duplicates.
+
+Florian
