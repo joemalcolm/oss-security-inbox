@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1469" "Thursday" "30" "July" "2015" "10:15:08" "+0200" "Stefan Cornelius" "scorneli@redhat.com" "<20150730101508.3530416a@redhat.com>" "51" "Re: [oss-security] net-snmp snmp_pdu_parse() function incompletely initializaition vulnerability" nil nil nil "7" "2015073008:15:08" "[oss-security] net-snmp snmp_pdu_parse() function incompletely initializaition vulnerability" (number mark "U       scorneli@red Jul 30   51/1469  " thread-indent "\"Re: [oss-security] net-snmp snmp_pdu_parse() function incompletely initializaition vulnerability\"\n") "<20150510110648.GA28525@eldamar.local>" ("<CAPcZBq7YrwpZDJNZ58yQjcYHTZ43qoQWCoUAet9Eb7Dn2sruBQ@mail.gmail.com>" "<20150416140557.72e3e4d3@redhat.com>" "<20150510110648.GA28525@eldamar.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1162" "Thursday" "22" "October" "2015" "22:40:29" "-0400" "Robert Watson" "robertcwatson1@gmail.com" "<CAOfWR+FbqxJL-PPAnOPoJ4i3eCBjZv87uhpqtnOha1MCE4orbQ@mail.gmail.com>" "39" "Re: [oss-security] CVE Request: BusyBox tar directory traversal" nil nil nil "10" "2015102302:40:29" "[oss-security] CVE Request: BusyBox tar directory traversal" (number mark "        robertcwatso Oct 22   39/1162  " thread-indent "\"Re: [oss-security] CVE Request: BusyBox tar directory traversal\"\n") "<20151021153633.GA2430@boyd>" ("<20151021153633.GA2430@boyd>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 13644 invoked by uid 550); 30 Jul 2015 08:15:27 -0000
+Received: (qmail 18167 invoked by uid 550); 23 Oct 2015 02:41:21 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,74 +11,67 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13624 invoked from network); 30 Jul 2015 08:15:26 -0000
-Date: Thu, 30 Jul 2015 10:15:08 +0200
-From: Stefan Cornelius <scorneli@redhat.com>
-To: Salvatore Bonaccorso <carnil@debian.org>
-Cc: oss-security@lists.openwall.com,
-        CVE Assignments MITRE
- <cve-assign@mitre.org>
-Message-ID: <20150730101508.3530416a@redhat.com>
-In-Reply-To: <20150510110648.GA28525@eldamar.local>
-References: <CAPcZBq7YrwpZDJNZ58yQjcYHTZ43qoQWCoUAet9Eb7Dn2sruBQ@mail.gmail.com>
-	<20150416140557.72e3e4d3@redhat.com>
-	<20150510110648.GA28525@eldamar.local>
+Received: (qmail 18149 invoked from network); 23 Oct 2015 02:41:20 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :content-type;
+        bh=43ICFeZw9BfAMgicYLehFSDJoIe1cHkfoT6iVWg0LOI=;
+        b=DfmaQC6nCh8N/3IXKLoQluiq57S7sZSYMKVw1pE1JQX6Qr8twF5wojlPWXF6n+KAmY
+         kblOZyey/bLklHjYwNF542FRw+HIwMY+YB8xV8ik923J6QPa86DtxOxjuLppMxdNCf1u
+         GRb5exc1pCXplA0WSEz2AM9I9ygDmylgubDxNnz2w91xPEme2dkWAnokgSear8gDrF8X
+         5f6QSaZwnNerTxv2rHtNHCl32AGj1htGuIxBEXnA2AV9c2rm+fn83KQ3N5YUuaHwXYq2
+         khLmsy9w5W51n1feoEJ5qJFk46OIDl6/s6ozkBOtUyWdazUGmNOmqYpfz9uXfmJheNCk
+         3H8Q==
+X-Received: by 10.50.143.4 with SMTP id sa4mr1760402igb.52.1445568068514; Thu,
+ 22 Oct 2015 19:41:08 -0700 (PDT)
 MIME-Version: 1.0
+In-Reply-To: <20151021153633.GA2430@boyd>
+References: <20151021153633.GA2430@boyd>
+Message-ID: <CAOfWR+FbqxJL-PPAnOPoJ4i3eCBjZv87uhpqtnOha1MCE4orbQ@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=001a1134bce238fe3b0522bc8ba1
+Date: Thu, 22 Oct 2015 22:40:29 -0400
+From: Robert Watson <robertcwatson1@gmail.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] CVE Request: BusyBox tar directory traversal
+To: oss-security@lists.openwall.com
+
+--001a1134bce238fe3b0522bc8ba1
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.24
-Subject: Re: [oss-security] net-snmp snmp_pdu_parse() function incompletely
- initializaition vulnerability
 
-On Sun, 10 May 2015 13:06:48 +0200
-Salvatore Bonaccorso <carnil@debian.org> wrote:
+Apologies if I'm naive but... since /tmp is world writable, how is this a
+vulnerability?
 
-> Hi,
->=20
-> On Thu, Apr 16, 2015 at 02:05:57PM +0200, Stefan Cornelius wrote:
-> > On Mon, 13 Apr 2015 13:44:04 +0800
-> > =E7=BD=97=E5=A4=A7=E9=BE=99 <luodalongde@gmail.com> wrote:
-> >=20
-> > > HI there,
-> > >=20
-> > >=20
-> > >=20
-> > > Greeting! This is Qinghao Tang from QIHU 360  company, China. I
-> > > am a security researcher there.
-> > >=20
-> > > I'm writing to apply for a CVE ID, for a 0day vulnerability in
-> > > net-snmp. Please refer to below report.
-> > >=20
-> >=20
-> > The upstream patch is here:
-> > https://sourceforge.net/p/net-snmp/code/ci/f23bcd3ac6ddee5d0a48f9703007=
-ccc738914791/
-> >=20
-> > As linked from the commit, the (currently restricted) upstream bug
-> > is: https://sourceforge.net/p/net-snmp/bugs/2615/
-> >=20
-> > Although this leads to crashes at different locations, all of them
-> > can be attributed to snmp_pdu_parse() leaving stale
-> > netsnmp_variable_list items in the list, so I think one CVE should
-> > be enough.
-> >=20
-> >=20
-> > In case anyone is interested, the Red Hat bug is:
-> > https://bugzilla.redhat.com/show_bug.cgi?id=3D1212408
->=20
-> Explicitly adding MITREs CVE assignment team to the CC list.
->=20
-> Any news on this? Unfortunately the upstream bug report ist still
-> restricted.
->=20
-> Thanks and regards,
-> Salvatore
 
-Hi,
 
-As far as I can tell, this still needs a CVE.
 
-Thanks,
---=20
-Stefan Cornelius / Red Hat Product Security
+*Trust in truth keeps hope aliverobertcwatson1@gmail.com
+<robertcwatson1@gmail.com>www.docsalvage.info
+<http://www.docsalvage.info>www.CivicChorale.org
+<http://www.CivicChorale.org>*
+<http://www.wunderground.com/cgi-bin/findweather/getForecast?query=Tallahassee,%20FL>
+<https://www.healthcare.gov/>
+
+On Wed, Oct 21, 2015 at 11:36 AM, Tyler Hicks <tyhicks@canonical.com> wrote:
+
+> Hello - The BusyBox implementation of tar will extract a symlink that
+> points outside of the current working directory and then follow that
+> symlink when extracting other files. This allows for a directory
+> traversal attack when extracting untrusted tarballs.
+>
+> This behavior was documented in the BusyBox source with the following
+> 2011 commit:
+>
+>
+> http://git.busybox.net/busybox/commit/?id=a116552869db5e7793ae10968eb3c962c69b3d8c
+>
+> I've created an upstream bug report:
+>
+>   https://bugs.busybox.net/8411
+>
+> Can we get a CVE assigned to track this? Thanks!
+>
+> Tyler
+>
+
+--001a1134bce238fe3b0522bc8ba1--
