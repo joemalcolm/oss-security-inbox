@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1837" "Thursday" "14" "May" "2015" "13:53:56" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150514175356.6DF79B2E201@smtpvbsrv1.mitre.org>" "43" "[oss-security] Re: Potential issue in NTP -A option" nil nil nil "5" "2015051417:53:56" "[oss-security] Re: Potential issue in NTP -A option" (number mark "        cve-assign@m May 14   43/1837  " thread-indent "\"[oss-security] Re: Potential issue in NTP -A option\"\n") "<5554CB76.3070509@redhat.com>" ("<5554CB76.3070509@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2227" "Saturday" "24" "October" "2015" "17:54:10" "+0200" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20151024175410.42963a35@pc1>" "73" "[oss-security] Two out of bounds reads in Zstandard / zstd" nil nil nil "10" "2015102415:54:10" "[oss-security] Two out of bounds reads in Zstandard / zstd" (number mark "        hanno@hboeck Oct 24   73/2227  " thread-indent "\"[oss-security] Two out of bounds reads in Zstandard / zstd\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 24313 invoked by uid 550); 14 May 2015 17:54:09 -0000
+Received: (qmail 21700 invoked by uid 550); 24 Oct 2015 15:53:39 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,56 +11,87 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 24292 invoked from network); 14 May 2015 17:54:08 -0000
-In-Reply-To: <5554CB76.3070509@redhat.com>
-Message-Id: <20150514175356.6DF79B2E201@smtpvbsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, stenn@ntp.org
-Date: Thu, 14 May 2015 13:53:56 -0400 (EDT)
-From: cve-assign@mitre.org
+Received: (qmail 21653 invoked from network); 24 Oct 2015 15:53:32 -0000
+Message-ID: <20151024175410.42963a35@pc1>
+X-Mailer: Claws Mail 3.13.0 (GTK+ 2.24.28; x86_64-pc-linux-gnu)
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512; protocol="application/pgp-signature"; boundary="=_zucker.schokokeks.org-31465-1445702000-0001-2"
+Date: Sat, 24 Oct 2015 17:54:10 +0200
+From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: Potential issue in NTP -A option
-To: kseifried@redhat.com
+Subject: [oss-security] Two out of bounds reads in Zstandard / zstd
+To: oss-security@lists.openwall.com, cve-assign@mitre.org
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+--=_zucker.schokokeks.org-31465-1445702000-0001-2
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-> the documentation seems to conflict slightly
+https://blog.fuzzing-project.org/26-Two-out-of-bounds-reads-in-Zstandard-zs=
+td.html
 
-We do not feel that a CVE is required; however, Harlan can choose to
-have a CVE ID if the undocumented risky behavior is going to be
-announced as a vulnerability.
+Zstandard or short zstd is a new compression algorithm and tool
+developed by Yann Collet. Fuzzing zstd with american fuzzy lop and
+address sanitizer uncovered two out of bounds reads.
 
-More specifically, it appears that mode 7 itself is, in some sense,
-deprecated (e.g., "mode7 ... Enables processing of NTP mode 7
-implementation-specific requests which are used by the deprecated
-ntpdc program" on the
-http://www.eecis.udel.edu/~mills/ntp/html/miscopt.html page and
-"functionally deprecating ntpdc" on the
-http://support.ntp.org/bin/view/Main/SoftwareDownloads page). If so,
-then we do not feel that there is a requirement for the documentation
-to precisely specify the effect of a command-line option on a
-deprecated feature. The -A documentation doesn't directly make a false
-statement about authentication within mode 7; it simply does not
-discuss mode 7.
 
-If mode 7 itself isn't deprecated, and there is a supported use case
-in which the user may choose to enable both mode 7 and the -A option,
-then announcing the behavior/documentation mismatch as a vulnerability
-is probably more useful.
+Heap out of bounds read in function ZSTD_copy8:
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+https://crashes.fuzzing-project.org/zstd-oob-heap-ZSTD_copy8
+Input sample
+
+https://github.com/Cyan4973/zstd/issues/49
+Upstream bug report
+
+https://github.com/Cyan4973/zstd/commit/fc60883d42f7f860d4573e34b466eca632d=
+57966
+Git commit / fix
+
+
+Stack out of bounds read in function HUF_readStats:
+
+https://crashes.fuzzing-project.org/zstd-oob-stack-HUF_readStats
+Input sample
+
+https://github.com/Cyan4973/zstd/issues/50
+Upstream bug report
+
+https://github.com/Cyan4973/zstd/commit/3e8fbabfa8b16fa605038c68c8fac7fe29f=
+4c78a
+Git commit / fix
+
+
+https://github.com/Cyan4973/zstd/releases/tag/zstd-0.2.1
+The new zstd version 0.2.1 fixes both issues.
+
+
+--=20
+Hanno B=C3=B6ck
+http://hboeck.de/
+
+mail/jabber: hanno@hboeck.de
+GPG: BBB51E42
+
+--=_zucker.schokokeks.org-31465-1445702000-0001-2
+Content-Type: application/pgp-signature
+Content-Transfer-Encoding: 7bit
+Content-Description: OpenPGP digital signature
+
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Version: GnuPG v2
 
-iQEcBAEBAgAGBQJVVOBzAAoJEKllVAevmvmsy4oH/REWyDXtOBOoJL5lYtj6zroV
-DATBhEgJTGSK7m7zc5Z1sqGGEGXNthghS8VGysc4T1vbkgKVO0hpATMzHdZb6L6R
-rNGggnTpHxoubpKRt+flURxCBzMta0w9brQb2vXxUvh4RYy+6MklDqGQofQA3ELB
-9rZW6wkMK3KYms00HJGrGkIutxcVe+1/1At6htLGlQo3wEuY5ORHdlxmUxHaXBos
-99fyRa1rR8ZzrN1EKWgh62WUhetvauqASFlYXdhNcqUgySlzIfMrAlFpLUyvTIGn
-TjTYgf+XAvlQLmnPjKV48IeY/g2BE8MHO61loTCX5fBeYMT3lzyl2PVDx6sIN9s=
-=MpGY
+iQIcBAEBCgAGBQJWK6miAAoJEKWIAHK7tR5CF1wQAJez3rr/F0dbqkTeDMDdmwW1
+SqYfvU8A/kZ4lfehGAky8b1VtY4zRZe5a4bxWw0JZQ3U+fioCstQQWsH+5rOqxrD
+caCMI+pskBa3af/hhWPKVyQcHLOovt3VQV2zUeYsG35jUpiBdFHEs2R8KF7/3CjY
+iHhVUzwgZLaJ06YPglBW3W/ePf1f9kxd4bx7CrBz0RuX8UJDRs8URknFYrMNVBYU
+NUlQDpE8r9pxHNqN/4sth4Wm/Q5r6csyCspfEgwFyDYwU+jdpuoGhyrHjrwdm+4f
+YW4vFU/1GwD/ifw7qmXkWGYkVlqrmRCN2w2hLuezj8qbwBi0kd2g1Cii2uCg6qde
+3tU2cM9A309lqFMyCz885VxalUhTJWMwiaB+VQ33BVcroknPVhWvk0YV7mb6p4yS
+HhWCHGzy9Cydl0BYXdaQ63pAb3oCB2cRxacEizePyU1Ks95Mgr9OmDfSHO+6OH3J
+0wUONdxOf+4N6zeYN1aE0bahpEOVO2aFKWm+ggKbWKFSceiKJPnkxjpyUrZa/V+I
+TCobdpV7SNXRCK6x5sq2a72/6rEiv2Gwu8l9s+DIEyxowTgBGymGlswLWxkXqoSr
+TpMADpHVzrVWw5JVb7mWbOAD0fjez6+Bt8fWrQDQGiCTCeupDOTs5yRx2DXTnsvd
+aypzERqL4i/5OlBq3rO3
+=CMrl
 -----END PGP SIGNATURE-----
+
+--=_zucker.schokokeks.org-31465-1445702000-0001-2--
