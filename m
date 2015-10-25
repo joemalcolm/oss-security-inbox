@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["933" "Monday" "5" "September" "2016" "17:26:06" "-0500" "William Pitcock" "nenolod@dereferenced.org" "<CA+T2pCG=MJMxQZXgGsCevny2_tSkiBcya-hebS8HxuEMCxQw_A@mail.gmail.com>" "38" "Re: [oss-security] CVE ID request: certificate spoofing through crafted SASL message in inspircd, charybdis" nil nil nil "9" "2016090522:26:06" "[oss-security] CVE ID request: certificate spoofing through crafted SASL message in inspircd, charybdis" (number mark "U       nenolod@dere Sep  5   38/933   " thread-indent "\"Re: [oss-security] CVE ID request: certificate spoofing through crafted SASL message in inspircd, charybdis\"\n") "<87r38ze3vk.fsf@angela.anarc.at>" ("<87r38ze3vk.fsf@angela.anarc.at>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3483" "Sunday" "25" "October" "2015" "12:01:47" "-0600" "Mohamed A. Baset" "symbian2010@gmail.com" "<CAHu6=a7_KG+Sy5uFiX39J=93LnqoKs9f96gcLa83+w82AhnVCA@mail.gmail.com>" "110" "[oss-security] CVE Request regarding Firefox FindMyDevice Service Critical ClickJacking" nil nil nil "10" "2015102518:01:47" "[oss-security] CVE Request regarding Firefox FindMyDevice Service Critical ClickJacking" (number mark "        symbian2010@ Oct 25  110/3483  " thread-indent "\"[oss-security] CVE Request regarding Firefox FindMyDevice Service Critical ClickJacking\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 7318 invoked by uid 550); 5 Sep 2016 22:27:27 -0000
+Received: (qmail 30056 invoked by uid 550); 25 Oct 2015 20:12:17 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,80 +11,135 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5364 invoked from network); 5 Sep 2016 22:26:18 -0000
+Received: (qmail 26575 invoked from network); 25 Oct 2015 18:02:38 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=dereferenced-org.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=VH1ezDbewhDR4Lvwd30jRhmdPnhMiLYbuqAAZkWTk8g=;
-        b=MrsMuGuIJqChD8jnnoBQjwfn+L6J/g45RsQ6Q4BM5ysLA7ZKCUUraapjwk19BiwstU
-         n5rPP+5tEs4hLKhew2nhJsIJXEpAfTCrlMEu/KGkTTSQzNX1fPM86lo4stlF5LrNcz3q
-         X7h/FSsU6OBLGQl2HjoIzSHVXUPSFZ0K0MCY+3C5NOZIlTeW0vOL5cJW6y7PnlDwM1bj
-         awBZFfC/Qh/z+R/cSSwJEfxGQYS8f42YBEQL108UZJJYU3qPKFilxbeFjCdGLlyxBRE+
-         hAoBz+f4eb8Z+oqU4G8VWLhzwEh72pu9BELRdmAW9+IqjfCA8/ikY5tIBbREadALAEJx
-         JyXA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:content-transfer-encoding;
-        bh=VH1ezDbewhDR4Lvwd30jRhmdPnhMiLYbuqAAZkWTk8g=;
-        b=limoD4Xl//xpvQoFX/K6gy3MLl8vO0U4wQxxsAhF3Uj5s0sBm0p8Pl8hp+8Epy4POV
-         e62rPE1z8ayS7eobHxSrMQWsbHqVIv1MMc7zY7/iUJNccJMnp666OvzcbTmq4ShBpCMx
-         Upc66T9r0+/KbseXQvqwZjc/0+edUEaAQIh0DQTTOCgtv2MP/R/k7M++GdyTOoEONJas
-         Fz2pqIeB0EXbsaqA4eRs+4ThpoFPXe+Amtxll9VQ6WTpHY6jCgxLtSCFljnxM+VD98mK
-         35OFFiSXl3buoYdOpYMafTjPuDf46SR0tWd5LZTymovLA7CKNKLV8OsEqq33xWhnTb0b
-         yhiw==
-X-Gm-Message-State: AE9vXwOL7nA0Gevimdh0S7AJ7zyrafjLUOmBlQqx38Cw4khakqou0G2MFUuT3o3iDINfXBXk5XLf4YcGHfrx5Q==
-X-Received: by 10.55.195.146 with SMTP id r18mr14207811qkl.236.1473114366821;
- Mon, 05 Sep 2016 15:26:06 -0700 (PDT)
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=QJCIp0qpb2N8BicX7v8Ysm9wCEqAFbP8TVA9BS2sJ04=;
+        b=SpWhLuZRlGxUdQSQ902ktwgKTyJHD/2Kybn9ZugZTDWT2pjEmjiiY+gZC5Q9ZinYVd
+         Vt/XQH7VyKghyomQ2+2xFtmfvzeExBj01goQhtdlaj5gcWJk41qbjUly5gryfJCN/l8K
+         eampZBuw/JH3GYRaUuUkA7JmqWTGGx3Kn5YpTwdA3+ox4+zw8yhlapjVZr2ssdKyX8wX
+         bea83CklEnhnynibgR+R9/86FzZZLGkdIiHVMa9lQglqmoLT4bdKl982fPM5qHjFwzdF
+         KNF3vXtOS1/vwD9Du55uQ5DSEJstpsElNyd2+xNid2/ASdUQKn66UOqMVVwsTNZpX8nH
+         +HaQ==
+X-Received: by 10.107.12.142 with SMTP id 14mr28711601iom.78.1445796146546;
+ Sun, 25 Oct 2015 11:02:26 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <87r38ze3vk.fsf@angela.anarc.at>
-References: <87r38ze3vk.fsf@angela.anarc.at>
-From: William Pitcock <nenolod@dereferenced.org>
-Date: Mon, 5 Sep 2016 17:26:06 -0500
-Message-ID: <CA+T2pCG=MJMxQZXgGsCevny2_tSkiBcya-hebS8HxuEMCxQw_A@mail.gmail.com>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Message-ID: <CAHu6=a7_KG+Sy5uFiX39J=93LnqoKs9f96gcLa83+w82AhnVCA@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=001a113f9726bb8d9c0522f1a5f1
+Date: Sun, 25 Oct 2015 12:01:47 -0600
+From: "Mohamed A. Baset" <symbian2010@gmail.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE Request regarding Firefox FindMyDevice Service Critical ClickJacking
+To: secalert@redhat.com, oss-security@lists.openwall.com
+
+--001a113f9726bb8d9c0522f1a5f1
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-Subject: Re: [oss-security] CVE ID request: certificate spoofing through
- crafted SASL message in inspircd, charybdis
 
-Hello,
+Vulnerability Title:
+Firefox FindMyDevice Service Critical ClickJacking
 
-UnrealIRCd is also affected:
+Author Name
+Mohamed Abdelbasset Elnouby Abouelwaffa
 
-https://github.com/unrealircd/unrealircd/commit/f473e355e1dc422c4f019dbf86b=
-c50ba1a34a766
+Contact Details:
+https://twitter.com/SymbianSyMoh
+https://mx.linkedin.com/in/SymbianSyMoh
 
-As is Nefarious:
+Report Date:
+2014-11-15 11:54:12 PST
 
-https://github.com/evilnet/nefarious2/commit/f50a84bad996d438e7b31b9e74c32a=
-41e43f8be5
+Report Status:
+Fixed / 2015-03-23 13:23:19 PDT
 
-William
+Vulnerability Type:
+ClickJacking
 
-On Sun, Sep 4, 2016 at 4:45 PM, Antoine Beaupr=C3=A9 <anarcat@debian.org> w=
-rote:
-> inspircd published 2.0.23 that fixes an issue with SASL
-> authentication. The details are here:
->
-> http://www.inspircd.org/2016/09/03/v2023-released.html
->
-> All versions are affected.
->
-> Upstream hasn't requested a CVE yet. I told them I would request one
-> from here on IRC.
->
-> It seems to also affect Charybdis, which fixed the issue in the
-> upcoming 3.5.3 release:
->
-> https://github.com/charybdis-ircd/charybdis/commit/818a3fda944b26d4814132=
-cee14cfda4ea4aa824
->
-> A.
->
-> --
-> All governments are run by liars and nothing they say should be
-> believed.
->                        - I. F. Stone
+Info:
+https://www.owasp.org/index.php/Clickjacking
+
+Affected URL(s):
+https://find.firefox.com
+
+PoC Screenshot:
+Included as an attachment
+For non email receptionist "https://goo.gl/FUkFVm"
+
+In-depth analysis of the Vulnerability:
+Regardless The security protection mechanism which is that that attacker
+definitely can't guess or brute force the Device id
+"8fcXXXXc40de04b3803945XXXXXXXXXX" which is a part of the URL to the
+victim's profile to make a successful clickjacking attack iframe, in fact
+this protection mechanism is too low coz all the attacker to do is just to
+point the logged in user to his iframe source https://find.firefox.com and
+Mozilla will care about the rest "redirect the victim to the correct logged
+in active device id.
+
+What attacker can do:
+1-"Erase the victim's device data" With just only 3 clicks by the victim
+himself if he tricked with "click here to win a 50 BTC for Example
+2-"Lock The victim device or change his lock code" if it is the first time
+to be set "4 clicks"
+3-"Makes the Device ringing" 2 clicks"
+
+Expected results:
+Find My Device web interface mustn't be iframed Apply XFO or Frame Busting
+techniques
+
+More Details About clickjacking:
+Because of No Frame Busting Techniques or X-Frame-Options header, the whole
+website is vulnerable to Clickjacking attacks which could lead to a full
+account takeover considering such scenario:
+1. Attacker will iframe any sensitive the website page and adjust the
+iframe size and add a "divs" as a layers on the unwanted-to-show parts of
+the original web page to fool and trick the user.
+2. User get tricked by the crafted page and followed the attacker's
+instruction to do a specific clicks to the iframed page
+3. Unwanted actions happened in the logged in user's session in result to
+the attack's clicks.
+
+Remedy:
+1- Add an X-Frame-Options HTTP Header and set it's value to "Deny" or
+"Sameorigin" as you can see it suitable to mitigate such attacks
+2- Use iframe busting techmiques in JS code like this:
+
+<script type=3D"text/javascript">
+ if (self =3D=3D=3D top) {
+ var antiClickjack =3D document.getElementById("antiClickjack");
+ antiClickjack.parentNode.removeChild(antiClickjack);
+ } else {
+ top.location =3D 'Your_Website_URL_Here';
+ }
+</script>
+
+or
+
+<script type=3D"text/javascript">
+ // Disable frame hijacking
+ if (top !=3D self)
+ top.location.href =3D location.href;
+ </script>
+
+Actual results:
+Find My Device web interface is iframable which makes it vulnerable to
+ClickJacking Attacks
+
+References:
+https://developer.mozilla.org/en-US/docs/Web/HTTP/X-Frame-Options
+Original Report: https://bugzilla.mozilla.org/show_bug.cgi?id=3D1100004
+
+Thanks=E2=80=8B
+
+
+*Mohamed Abdelbaset Elnoby*Guru Programmer, Senior Information Security
+Consultant & Web Application Penetration Tester at Seekurity Inc
+<http://www.Seekurity.com>.
+
+Contact me at:
+LinkedIn
+<https://www.linkedin.com/in/symbiansymoh>Facebook
+<https://fb.com/symbiansymoh>Twitter <https://twitter.com/symbiansymoh>
+<https://twitter.com/symbiansymoh>
+
+--001a113f9726bb8d9c0522f1a5f1--
