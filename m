@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2804" "Saturday" "9" "May" "2015" "21:22:14" "+0300" "Jouni Malinen" "j@w1.fi" "<20150509182214.GC9017@w1.fi>" "75" "Re: [oss-security] CVE request: vulnerability in wpa_supplicant and hostapd" nil nil nil "5" "2015050918:22:14" "[oss-security] CVE request: vulnerability in wpa_supplicant and hostapd" (number mark "        j@w1.fi      May  9   75/2804  " thread-indent "\"Re: [oss-security] CVE request: vulnerability in wpa_supplicant and hostapd\"\n") "<20150507121507.GA10575@openwall.com>" ("<87k2wkfvks.fsf@redhat.com>" "<20150507121507.GA10575@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1669" "Monday" "26" "October" "2015" "11:20:57" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151026152057.F21AA52E016@smtpvbsrv1.mitre.org>" "43" "[oss-security] Re: CVE Requests for read out of bound in libpng" nil nil nil "10" "2015102615:20:57" "[oss-security] Re: CVE Requests for read out of bound in libpng" (number mark "        cve-assign@m Oct 26   43/1669  " thread-indent "\"[oss-security] Re: CVE Requests for read out of bound in libpng\"\n") "<414a4453.66f6.150a218e6f4.Coremail.xiaoqixue_1@163.com>" ("<414a4453.66f6.150a218e6f4.Coremail.xiaoqixue_1@163.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 32634 invoked by uid 550); 9 May 2015 18:22:28 -0000
+Received: (qmail 5128 invoked by uid 550); 26 Oct 2015 15:21:11 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,94 +11,56 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 32616 invoked from network); 9 May 2015 18:22:27 -0000
-Message-ID: <20150509182214.GC9017@w1.fi>
-References: <87k2wkfvks.fsf@redhat.com>
- <20150507121507.GA10575@openwall.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20150507121507.GA10575@openwall.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-Date: Sat, 9 May 2015 21:22:14 +0300
-From: Jouni Malinen <j@w1.fi>
+Received: (qmail 4084 invoked from network); 26 Oct 2015 15:21:10 -0000
+In-Reply-To: <414a4453.66f6.150a218e6f4.Coremail.xiaoqixue_1@163.com>
+Message-Id: <20151026152057.F21AA52E016@smtpvbsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Mon, 26 Oct 2015 11:20:57 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE request: vulnerability in wpa_supplicant and
- hostapd
-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: CVE Requests for read out of bound in libpng
+To: xiaoqixue_1@163.com
 
-> On Thu, May 07, 2015 at 01:58:27PM +0200, Martin Prpic wrote:
-> > Hi, I don't see a CVE assigned for this anywhere:
-> > http://w1.fi/security/2015-4/eap-pwd-missing-payload-length-validation.txt
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-In support of this CVE assignment request for hostapd/wpa_supplicant,
-here's the full advisory text:
+> there is a memory read out of bound in libpng 1.2.* and 1.4.* , which
+> is used in many operate systems and applications. it may leak
+> information in the application .
 
+> this bug has been accepted and fixed in LIBPNG :
+> http://sourceforge.net/p/libpng/bugs/241/
 
-EAP-pwd missing payload length validation
+>> function png_convert_to_rfc1123 in png.c
 
-Published: May 4, 2015
-Latest version available from: http://w1.fi/security/2015-4/
+>> when ptime->month is 0 (which gains from tIME chunk data ), the
+>> short_months[(ptime->month - 1) % 12] will return the memory before
+>> short_months
 
+>>> We'll take care of the bug by using "ptime->month - 1U" to ensure that
+>>> the "%" operation returns a value in the range 0..11
 
-Vulnerability
+Use CVE-2015-7981.
 
-A vulnerability was found in EAP-pwd server and peer implementation used
-in hostapd and wpa_supplicant, respectively. The EAP-pwd/Commit and
-EAP-pwd/Confirm message payload is processed without verifying that the
-received frame is long enough to include all the fields. This results in
-buffer read overflow of up to couple of hundred bytes.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-The exact result of this buffer overflow depends on the platform and may
-be either not noticeable (i.e., authentication fails due to invalid data
-without any additional side effects) or process termination due to the
-buffer read overflow being detected and stopped. The latter case could
-potentially result in denial of service when EAP-pwd authentication is
-used.
-
-Further research into this issue found that the fragment reassembly
-processing is also missing a check for the Total-Length field and this
-could result in the payload length becoming negative. This itself would
-not add more to the vulnerability due to the payload length not being
-verified anyway. However, it is possible that a related reassembly step
-would result in hitting an internal security check on buffer use and
-result in the processing being terminated.
-
-
-Vulnerable versions/configurations
-
-hostapd v1.0-v2.4 with CONFIG_EAP_PWD=y in the build configuration
-(hostapd/.config) and EAP-pwd authentication server enabled in runtime
-configuration.
-
-wpa_supplicant v1.0-v2.4 with CONFIG_EAP_PWD=y in the build
-configuration (wpa_supplicant/.config) and EAP-pwd enabled in a network
-profile at runtime.
-
-
-Acknowledgments
-
-Thanks to Kostya Kortchinsky of Google Security Team for discovering and
-reporting this issue.
-
-
-Possible mitigation steps
-
-- Merge the following commits and rebuild hostapd/wpa_supplicant:
-
-  EAP-pwd peer: Fix payload length validation for Commit and Confirm
-  EAP-pwd server: Fix payload length validation for Commit and Confirm
-  EAP-pwd peer: Fix Total-Length parsing for fragment reassembly
-  EAP-pwd server: Fix Total-Length parsing for fragment reassembly
-  EAP-pwd peer: Fix asymmetric fragmentation behavior
-
-  These patches are available from http://w1.fi/security/2015-4/
-
-- Update to hostapd/wpa_supplicant v2.5 or newer, once available
-
-- Remove CONFIG_EAP_PWD=y from build configuration
-
-- Disable EAP-pwd in runtime configuration
-
--- 
-Jouni Malinen                                            PGP id EFC895FA
+iQIcBAEBCAAGBQJWLkSCAAoJEL54rhJi8gl5zuMP/0xpC73vodJgAU6kElyJGLUG
+sNk8vNDZ0gTZbPIvlEhP5tLLLk9UPLCFbaCW9K7AxVtl5IA1/oPP2qY5dq8GOzNu
+Vfusqv4jLgMDwXom5MTaDMdYuGYoC9rq788uRoqRtKaAzh8fxt5jeszzJo/GwHHS
+1QIpG0r2Ufxzu0XPFEo4xk+ZHs2sAiuIC9Df71I07dVrTen2b72R466G9sJGW7tH
+fC8qZfXOysDfjTedt+JW6/P3kIxKlnaPe69Zh9M6tkCItpk3r6WvR2R3eFTyONoZ
+s7ucaoYST1q9Z1+SIziC4zbljth1cvQysB4ozO485EvGFlX9hHEJISZnvKKWZhd+
+0RkGSvqybVjw6s6XDs3KE2un6tqYOZ7ocGc3jPGDcTNdhxWWWXOGzd6DM/peOc8t
+/NQrqdLw3wSeqZ2iVbPjK4ZS/BgdnbRrLqTJtJLf9IL35ycnx+kql42e/xWM+Y+z
+nMEXrmvBDyOLvKt9VsLpKnZ67YzoLXHI2gc8s6tQVkutRAinckFQT+rmihZpAVzV
+8ViJBvXdv5a5Kzq1SZfLetTU0PTRJvQssovzg4j31wIYLVtNwdM+4uMblQqedxAw
+zvxf31woMdoW9SekK0zGLVm+DUrI1rdq0znAuBLHTbJEGkq0oHPV09/IeiyVVGkH
+UUYjAn+ovJHMEVH7ONBO
+=dvCw
+-----END PGP SIGNATURE-----
