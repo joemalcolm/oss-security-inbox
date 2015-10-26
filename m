@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["664" "Wednesday" "18" "July" "2018" "09:02:27" "+0100" "Mark Cox" "mjc@apache.org" "<CANnUo4+QaK2c6e9QEWCUAfvWW5x=NpnsoJqWgt5c-Aihvgf4Rg@mail.gmail.com>" "27" "[oss-security] CVE-2018-8011: Apache HTTP Server mod_md DoS" nil nil nil "7" "2018071808:02:27" "[oss-security] CVE-2018-8011: Apache HTTP Server mod_md DoS" (number mark "U       mjc@apache.o Jul 18   27/664   " thread-indent "\"[oss-security] CVE-2018-8011: Apache HTTP Server mod_md DoS\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1936" "Monday" "26" "October" "2015" "15:21:23" "-0500" "Austin English" "austinenglish@gmail.com" "<CACC5Q1dPzS3C_9L_vVx4scx7UaE38OqXcC0g6zFPE-Eb-tYRSw@mail.gmail.com>" "46" "Re: [oss-security] Re: CVE request for wget" nil nil nil "10" "2015102620:21:23" "[oss-security] Re: CVE request for wget" (number mark "        austinenglis Oct 26   46/1936  " thread-indent "\"Re: [oss-security] Re: CVE request for wget\"\n") "<20151001231046.GB16643@hunt>" ("<CACC5Q1eQ8jf-nxub=viXgnSt6pZGzSzbV=RD2YXV76NVHw7WTQ@mail.gmail.com>" "<20151001225726.9EF7AB2E0A6@smtpvbsrv1.mitre.org>" "<20151001231046.GB16643@hunt>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 23814 invoked by uid 550); 18 Jul 2018 08:02:42 -0000
+Received: (qmail 5246 invoked by uid 550); 26 Oct 2015 20:22:15 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,47 +11,76 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 23702 invoked from network); 18 Jul 2018 08:02:41 -0000
-X-Gm-Message-State: AOUpUlE9WYSlgJNg+uI1BAZ1YY8tAjIS5sgAczuuCFq+d+pC2RuRflNF
-	Ri/DC1Dp9DreXTo3y1ObWJc+ozszii4Y4IcDFGw=
-X-Google-Smtp-Source: AAOMgpdiPVfke6HeX2ucu1P1powPQpEKPfX7GPS9qn/cJUskgy3dM75L7/KhXN7JlUpya0IBDkJkLQhGMBJ9gy6q3uo=
-X-Received: by 2002:a17:902:262:: with SMTP id 89-v6mr4895741plc.221.1531900947804;
- Wed, 18 Jul 2018 01:02:27 -0700 (PDT)
+Received: (qmail 5225 invoked from network); 26 Oct 2015 20:22:14 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :content-type;
+        bh=lSlDV/+QP1h4GSvZhvDf9/9u+xscmrUEBHkfz8eor28=;
+        b=R4UA30DLs3ZVvmIr1au5ko4ziZQSJied26RSaDkLioEC0RFdWpFqhKX7AGcfBpPsmx
+         qk9LoG0LdHTpygvKyT4JcSNwRH5EaK/hql4LN7EyOT28rQAqf+K8nORd/pvMFVjCkefW
+         Tf3l6NnIE8UUNhkWJfd4eyIGC2mm83ZH/fmLUhmPOr6dBZIZIvXHyM+gR4375pDhN5vJ
+         YUlE/Aq7cKGxzopI3mlK+veN+QmZyckJDEWKAwd4d6FrMODOY/abUtiDfGQGHWurGVb6
+         +FN8THvESXvJAvozA1rRqHAC/tsy5DrBulPpM4YeZNuKxs8NKyn+MMvxURmM24VRsV5O
+         o9yw==
+X-Received: by 10.107.19.106 with SMTP id b103mr34502588ioj.144.1445890923089;
+ Mon, 26 Oct 2015 13:22:03 -0700 (PDT)
 MIME-Version: 1.0
-From: Mark Cox <mjc@apache.org>
-Date: Wed, 18 Jul 2018 09:02:27 +0100
-X-Gmail-Original-Message-ID: <CANnUo4+QaK2c6e9QEWCUAfvWW5x=NpnsoJqWgt5c-Aihvgf4Rg@mail.gmail.com>
-Message-ID: <CANnUo4+QaK2c6e9QEWCUAfvWW5x=NpnsoJqWgt5c-Aihvgf4Rg@mail.gmail.com>
-To: announce@httpd.apache.org, oss-security@lists.openwall.com
-Cc: Apache Software Foundation HTTP Server Project <security@httpd.apache.org>
-Content-Type: multipart/alternative; boundary="000000000000d337e40571417b1b"
-Subject: [oss-security] CVE-2018-8011: Apache HTTP Server mod_md DoS
+In-Reply-To: <20151001231046.GB16643@hunt>
+References: <CACC5Q1eQ8jf-nxub=viXgnSt6pZGzSzbV=RD2YXV76NVHw7WTQ@mail.gmail.com>
+ <20151001225726.9EF7AB2E0A6@smtpvbsrv1.mitre.org> <20151001231046.GB16643@hunt>
+Message-ID: <CACC5Q1dPzS3C_9L_vVx4scx7UaE38OqXcC0g6zFPE-Eb-tYRSw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Date: Mon, 26 Oct 2015 15:21:23 -0500
+From: Austin English <austinenglish@gmail.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Re: CVE request for wget
+To: cve-assign@mitre.org, Austin English <austinenglish@gmail.com>, 
+	oss-security@lists.openwall.com
 
---000000000000d337e40571417b1b
-Content-Type: text/plain; charset="UTF-8"
+On Thu, Oct 1, 2015 at 6:10 PM, Seth Arnold <seth.arnold@canonical.com> wrote:
+> On Thu, Oct 01, 2015 at 06:57:26PM -0400, cve-assign@mitre.org wrote:
+>> If there is any additional Tails vulnerability related to this,
+>> another CVE ID may be needed. For example,
+>>
+>>   https://lists.gnu.org/archive/html/bug-wget/2015-08/msg00050.html
+>>
+>> says
+>>
+>>   to be 100% sure, you should add --passive-ftp to your command line.
+>>   If you don't do that, your /etc/wgetrc or ~/.wgetrc could include
+>>   --no-passive-ftp (or passiveftp = off).
+>>
+>> If Tails is supposed to try to ensure that, perhaps there's a
+>> requirement to have something like:
+>>
+>>   alias wget="wget --passive-ftp"
+>>
+>> in a system-wide location (possibly /etc/bash.bashrc). The concept of
+>> CVE IDs for "failure of a torify step" issues is new, and we aren't
+>> sure of the best approach.
+>
+> I suspect using a bash alias in a site-wide config might then qualify for
+> another CVE in the future, along the lines of "programs that spawn wget
+> via system(3), popen(3), or exec family of functions can use unsafe active
+> mode by accident". If Tails is in the business of fixing these things
+> for safety, removing active ftp support from tools seems like better fix.
+>
+> Thanks
 
-CVE-2018-8011: mod_md DoS via Coredumps on specially crafted requests
+A fix has been applied to Tails git:
+https://labs.riseup.net/code/projects/tails/repository/revisions/b9fd6312435d55dd0bc0b6abdb7994da4d66e2b2
 
-Severity: Moderate
+In short, the wget binary is moved to /usr/lib/wget/wget, and a
+wrapper script is put in place in /usr/bin/wget. The wrapper ensures
+that wget is called via torsocks, and additionally, also forces
+--passive-ftp.
 
-Vendor: The Apache Software Foundation
+Moving wget to /usr/lib/wget/wget gets the potentially dangerous wget
+binary out of $PATH. A dedicated attacker could check if /usr/bin/wget
+is a script and then parse it to find the actual binary, but that
+would need to be a very dedicated attacker and at that point, there
+are more feasible attacks available.
 
-Versions Affected:
-httpd 2.4.33
-
-Description:
-By specially crafting HTTP requests, the mod_md challenge
-handler would dereference a NULL pointer and cause the child
-process to segfault. This could be used to DoS the server
-
-Mitigation:
-All httpd users should upgrade to 2.4.34 or later.
-
-Credit:
-The issue was discovered by Daniel Caminada
-
-References:
-https://httpd.apache.org/security/vulnerabilities_24.html#CVE-2018-8011
-
---000000000000d337e40571417b1b--
+-- 
+-Austin
