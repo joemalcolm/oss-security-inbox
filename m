@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2618" "Thursday" "18" "March" "2021" "10:19:31" "-0700" "Kurt H Maier" "khm@sciops.net" nil "54" "Re: [oss-security] Re: CVE-2021-20219 Linux kernel: improper synchronization in flush_to_ldisc() can lead to DoS" nil nil nil "3" nil nil (number mark "U       khm@sciops.n Mar 18   54/2618  " thread-indent "\"Re: [oss-security] Re: CVE-2021-20219 Linux kernel: improper synchronization in flush_to_ldisc() can lead to DoS\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Re: CVE-2021-20219 Linux kernel: improper synchronization in flush_to_ldisc() can lead to DoS" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2441" "Tuesday" "27" "October" "2015" "14:31:39" "+0530" "Dis close" "disclose@cybersecurityworks.com" "<CAMWaY3P5rS0PP=b1Wvqgh7=U-uKSnXiRu30FN6GY=4VWLmF4nQ@mail.gmail.com>" "70" "[oss-security] CVE Request: Malicious File Upload in NextGEN Gallery by Photocrati Version 2.1.10" nil nil nil "10" "2015102709:01:39" "[oss-security] CVE Request: Malicious File Upload in NextGEN Gallery by Photocrati Version 2.1.10" (number mark "U       disclose@cyb Oct 27   70/2441  " thread-indent "\"[oss-security] CVE Request: Malicious File Upload in NextGEN Gallery by Photocrati Version 2.1.10\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 25839 invoked by uid 550); 18 Mar 2021 17:19:45 -0000
+Received: (qmail 7769 invoked by uid 550); 27 Oct 2015 09:25:30 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,72 +12,108 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 25821 invoked from network); 18 Mar 2021 17:19:44 -0000
-Date: Thu, 18 Mar 2021 10:19:31 -0700
-From: Kurt H Maier <khm@sciops.net>
-To: oss-security@lists.openwall.com
-Message-ID: <YFOLo/QrlgIrFotJ@wopr>
-Mail-Followup-To: oss-security@lists.openwall.com
-References: <CAKx+4-pR3JScgA-PJFSwkAw6B8xiXYWFtVD6rEYp2wnJjyCogw@mail.gmail.com>
- <YFNCtWmsYrtYQeEJ@kroah.com>
+Received: (qmail 21506 invoked from network); 27 Oct 2015 09:01:51 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=cybersecurityworks_com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:date:message-id:subject:from:to:cc:content-type;
+        bh=rXPrdssDptl4HGyD+ehT4nFqqUVNfw/ZBbuR5oqTEgI=;
+        b=t9e0SVe33XVDHsW0jA1KgVxVZ495blPxqm+BH3rIkyyMPQXIPu5wpX3cMAMRLuoVxq
+         05QNUDjS3SE+7jwt61QPjdc5pO7qYIdxiBusgXgWz4Hp/elvRyNiGkH6VfFQC4fAvE/T
+         p2I+hxN3cgWh38L/FZhrpU8ydUn1L70xgz9RnitRJxV3iUxcu1jpjHnFZjKyGS/fhNDT
+         zjWXs0yhaDSbDauxOIQl55XDwhpv7fDWtwKrPNJTpqMmu3wNwAGc/rx4HbDLFgPFgukH
+         dcRPYEYhSXbc8I/TnDyeip/553phm14nRuoTBQJEnMOoL93ZmdU6Am3W3Kr73tIN2fL0
+         N/PA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to:cc
+         :content-type;
+        bh=rXPrdssDptl4HGyD+ehT4nFqqUVNfw/ZBbuR5oqTEgI=;
+        b=jW2W5DGIvZXUFN0t9/YhWK/LU6ZsOxJxVPhllTEqrBVYgDTE1+GPlvkSZ7uzYNxzvS
+         d7E5DPv/p7TxQ0D8W2NpEiXyRjbN1RBrESa7RMm5iEwrTyTlYTspDwJw5YljvC0w5I08
+         GjpkpXMLH11kbycjbb+0z3fghaiuhh0tPq5adhEW4UjQf3R2lB+BMrMQILEA4itIp+jI
+         rcnfHYLmYmrpQ+6x7zmgPUj9AsvuajrR/8M1q+5gRS7DZtTfKa3E2fNvgql3qeqbO5Kc
+         lbVeigzb3mAACnmX9AF66QzM06ClYznhY2l7IubGZAhFCq2NBEk6/gOKhtr53vepnEMR
+         oSWw==
+X-Gm-Message-State: ALoCoQlpylerTjomocbh0va3QaAo7HZQF5RhNttjdp11nHhqqM+a9jve08N1kDlxmwaHnPlddIqF
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <YFNCtWmsYrtYQeEJ@kroah.com>
-Subject: Re: [oss-security] Re: CVE-2021-20219 Linux kernel: improper
- synchronization in flush_to_ldisc() can lead to DoS
+X-Received: by 10.50.20.74 with SMTP id l10mr24202286ige.2.1445936499324; Tue,
+ 27 Oct 2015 02:01:39 -0700 (PDT)
+Date: Tue, 27 Oct 2015 14:31:39 +0530
+Message-ID: <CAMWaY3P5rS0PP=b1Wvqgh7=U-uKSnXiRu30FN6GY=4VWLmF4nQ@mail.gmail.com>
+From: Dis close <disclose@cybersecurityworks.com>
+To: cve-assign@mitre.org
+Cc: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary=047d7bd7527069254a05231253c6
+Subject: [oss-security] CVE Request: Malicious File Upload in NextGEN Gallery by Photocrati
+ Version 2.1.10
 
-On Thu, Mar 18, 2021 at 01:08:21PM +0100, Greg KH wrote:
-> 
-> But none of that takes into account for the backporting of commits into
-> the stable tree, you need a different tool for that, which many of us
-> have our own.  If you use that you will see that the above commit really
-> is in lots of fixed kernel trees:
-> 
-> $ id_found_in 3d63b7e4ae0dc5e02d28ddd2fa1f945defc68d81
-> 3.16.61 3.18.115 4.4.140 4.9.112 4.14.54 4.17.5 4.18
+--047d7bd7527069254a05231253c6
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-It's not really Red Hat's fault that there are six hundred "stable"
-kernel versions, which each change approximately weekly.  It's generally
-not worth tracking, and it would not be sane to expect Red Hat to seek 
-or announce CVEs for git branches they don't maintain.
+Hi,
 
-> > Since this issue was reported to us,  identified as a security flaw,
-> > and was fixed in the upstream, we decided to assign a CVE.
-> 
-> But then you announce that CVE to the community with no context or
-> information which only causes us to have to do lots of extra work.
+Details
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+# Title : Malicious File Upload in NextGEN Gallery by Photocrati Version
+2.1.10
+# Affected Product  : NextGEN Gallery by Photocrati Version 2.1.10
+# Vendor Homepage: https://wordpress.org/plugins/nextgen-gallery/download/
+# Vulnerability Type :  Malicious File upload
+# Risk :  High
+# POC URL             :
+https://github.com/cybersecurityworks/Disclosed/issues/6
+# Video URL  :  https://www.youtube.com/watch?v=3DhMMG42HsgUA&feature=3Dyou=
+tu.be
+# Status : Fixed
 
-They should have included the details which they later added, but I
-can't even remember the last time Red Hat reported a kernel
-vulnerability which contained enough information to satisfy you, so I
-wouldn't really blame them if they gave up trying to please you.
+Description
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Even though credentials are required to upload file into the server. any
+new combined vulnerability can allow an attacker to Upload shell into the
+server which gives entire root access of the server.
 
-> If it's Red Hat's goal to get some people in the Linux kernel community
-> mad at them, it's working well.  If it's Red Hat's goal to somehow help
-> the community out with this type of announcement, it's not working at
-> all.  You failed to site the fix, when it was, who did the fix, who
-> found the fix, and where it was actually fixed in, all things that
-> people here actually would like to know.
+Technical Details
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
 
-Some people in the Linux kernel community seem to get mad as a hobby,
-and measure their success by volume of email sent about it.  Those of
-us who administer Red Hat systems generally find the level of detail
-sufficient and I for one appreciate Rohit's announcements.  This one
-could have been better, I agree.
+   1. Logon into any wordpress application (localhost or public host)
+   2. Move on to Next Gen Gallery plugin file upload option available on
+   products.
+   3. Upload JPG file to the server through file upload option.
+   4. Modify the file variable contains JPG extension to PHP. Also, edit
+   and add shell content to the name variable body containing JPG
+   information/content.
 
-Since MITRE set about destroying the CVE assignment process, reporting
-of CVE assignments has been optional and to be frank we're lucky to get
-this much these days.
+Advisory Timeline
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+2015-09-04 =E2=80=93 Discovered in NextGen Gallery 2.1.10 version.
+2015-09-04 =E2=80=93 Reported to plugins@wordpress.org
+2015-09-04 =E2=80=93 Vendor responded in the same.
+2015-09-09 =E2=80=93 Fixed in NextGen Gallery 2.1.15 version.
 
-> So, what really is your goal here?
+Fix
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+https://www.owasp.org/index.php/Unrestricted_File_Upload
 
-What's yours?  You don't seem to run RHEL, so why get bent out of shape
-if they slip up while reporting a CVE assignment?  I guess more 
-accurately, why get bent out of shape *every time* they report a CVE
-assignment?  Is it possible for you to just stop, so those of us who
-find value in the reports don't have to page through all the complaining
-in order to read it?  Or is oss-security just doomed to the "greg is mad
-at the email" cycle forever?
+Credits & Authors
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+sathish@cybersecurityworks.com from cybersecurityworks Pvt Ltd
 
-khm
+About Cybersecurityworks
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Cybersecurity Works is basically an auditing company passionate working on
+findings & reporting security flaws & vulnerabilities on web application
+and network. As professionals, we handle each client differently based on
+their unique requirements. Visit our website
+http://www.cybersecurityworks.com/ for more information.
+
+Please assign CVE as appropriate. Thanks for your valuable time & effort
+taken.
+
+--
+
+Cheers !!!
+
+Team CSW
+
+--047d7bd7527069254a05231253c6--
