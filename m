@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["782" "Sunday" "23" "February" "2020" "15:00:27" "+0800" "George Ni" "nic@apache.org" nil "39" nil "^Date:" nil nil "2" nil nil (number mark "U       nic@apache.o Feb 23   39/782   " thread-indent "\"[oss-security] [CVE-2020-1937] Apache Kylin SQL injection vulnerability\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [CVE-2020-1937] Apache Kylin SQL injection vulnerability" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1877" "Tuesday" "27" "October" "2015" "11:45:34" "+0100" "Patrick Uiterwijk" "puiterwijk@redhat.com" "<20151027104534.GA1620@bofh.thuis.puiterwijk.org>" "48" "[oss-security] Multiple CVE info for Ipsilon" nil nil nil "10" "2015102710:45:34" "[oss-security] Multiple CVE info for Ipsilon" (number mark "U       puiterwijk@r Oct 27   48/1877  " thread-indent "\"[oss-security] Multiple CVE info for Ipsilon\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 31951 invoked by uid 550); 23 Feb 2020 07:43:28 -0000
+Received: (qmail 1991 invoked by uid 550); 27 Oct 2015 12:27:09 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,60 +11,63 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 7999 invoked from network); 23 Feb 2020 07:00:51 -0000
-X-Gm-Message-State: APjAAAVAaxxe3+gbT6kTabqLD3BGFNaIAEOuS5Ga5clv6pvRlLtExjIo
-	Fc6StyqEcN07RvfdsOIb6L7IVJno3YQvmNdodnM=
-X-Google-Smtp-Source: APXvYqzC1s4MHGNCJqAxHNBebMltSXypH6lXs8A5diLdJAq7CKXgP6tPK6EDr8xWGNwJ87MGzJa3kM6D7j1cLQ33Smo=
-X-Received: by 2002:a37:93c3:: with SMTP id v186mr9399799qkd.456.1582441238177;
- Sat, 22 Feb 2020 23:00:38 -0800 (PST)
-MIME-Version: 1.0
-X-Gmail-Original-Message-ID: <CANUbERwKhzhZnUWrxqBB6tjYqz0yAWTrRbH9j+WhFc9wGwtsMQ@mail.gmail.com>
-Message-ID: <CANUbERwKhzhZnUWrxqBB6tjYqz0yAWTrRbH9j+WhFc9wGwtsMQ@mail.gmail.com>
-Content-Type: multipart/alternative; boundary="000000000000e12d2a059f38cf77"
-Date: Sun, 23 Feb 2020 15:00:27 +0800
-From: George Ni <nic@apache.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] [CVE-2020-1937] Apache Kylin SQL injection vulnerability
-To: user <user@kylin.apache.org>, dev <dev@kylin.apache.org>, announce@apache.org, 
-	Jonathan Leitschuh <jonathan.leitschuh@gmail.com>, Apache Security Team <security@apache.org>, 
-	oss-security@lists.openwall.com
+Received: (qmail 22446 invoked from network); 27 Oct 2015 10:47:20 -0000
+Date: Tue, 27 Oct 2015 11:45:34 +0100
+From: Patrick Uiterwijk <puiterwijk@redhat.com>
+To: oss-security@lists.openwall.com
+Message-ID: <20151027104534.GA1620@bofh.thuis.puiterwijk.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+User-Agent: Mutt/1.5.24 (2015-08-30)
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.24
+Subject: [oss-security] Multiple CVE info for Ipsilon
 
---000000000000e12d2a059f38cf77
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Hi,
 
-Severity: Important
+I would like to provide information about multiple CVE's related to Ipsilon.
 
-Vendor:
-The Apache Software Foundation
 
-Versions Affected:
-Kylin 2.3.0 to 2.3.2
-Kylin 2.4.0 to 2.4.1
-Kylin 2.5.0 to 2.5.2
-Kylin 2.6.0 to 2.6.4
-Kylin 3.0.0-alpha, Kylin 3.0.0-alpha2, Kylin 3.0.0-beta, Kylin 3.0.0
-
+CVE-2015-5216:
+Versions affected: 0.1.0 to 1.0.0
+Fixed in versions: 1.0.1, 1.1.0
 Description:
-Kylin has some restful apis which will concatenate SQLs with the user input
-string, a user is likely to be able to run malicious database queries.
+ipsilon does not escape HTML when processing http(s) request responses,
+and that js code could potentially be injected into Python exception message template.
 
-Mitigation:
-Users should upgrade to 3.0.1 or 2.6.5
-
-Credit:
-This issue was discovered by =EF=BB=BFJonathan Leitschuh
-
-References:
-https://kylin.apache.org/docs/security.html
+Mitigation: Users of Ipsilon should update to version 1.0.1 or later.
+Credit: This issue was discovered by Michael Scherer of Red Hat.
+References: https://bugzilla.redhat.com/show_bug.cgi?id=1255170
+Upstream patch: https://pagure.io/ipsilon/a503aa9c2a30a74e709d1c88099befd50fb2eb16
 
 
----------------------
+CVE-2015-5217:
+Versions affected: 0.1.0 to 1.0.0
+Fixed in versions: 1.0.1, 1.1.0
+Description:
+It was found that Ipsilon does not properly authorize change of the name of the provider.
+Non-admin users could change the name to a duplicate value which could possibly lead to DoS attack.
 
-Best regards,
+Mitigation: Users of Ipsilon should update to version 1.0.1 or later.
+Credit: This issue was discovered by Patrick Uiterwijk of Red Hat.
+References: https://bugzilla.redhat.com/show_bug.cgi?id=1255172
+Upstream patch: https://pagure.io/ipsilon/826e6339441546f596320f3d73304ab5f7c10de6
 
 
+CVE-2015-5301:
+Versions affected: 0.1.0 to 1.0.1 and 1.1.0
+Fixed in versions: 1.0.2, 1.1.1
+Description:
+It was found that Ipsilon does not check whether a user is authorized to delete a service provider.
+This makes it possible for any authenticated user to delete any service provider, causing a denial of service.
 
-Ni Chunen / George
+Mitigation: Users of Ipsilon should update to version 1.0.2 or 1.1.1 or later.
+Credit: This issue was discovered by Patrick Uiterwijk and Rob Crittenden of Red Hat.
+References: https://bugzilla.redhat.com/show_bug.cgi?id=1271530
+Upstream patch: https://pagure.io/ipsilon/9dec97c3c83928d231ea10f4160523a13803e594
 
---000000000000e12d2a059f38cf77--
+
+---
+With kind regards,
+Patrick Uiterwijk
+Fedora Infra
