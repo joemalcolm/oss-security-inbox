@@ -1,4 +1,9 @@
-Received: (qmail 12237 invoked by uid 550); 2 Apr 2022 07:55:14 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1883" "Wednesday" "28" "October" "2015" "00:57:16" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151028045716.D2ADB8BC010@smtpvmsrv1.mitre.org>" "44" "[oss-security] Re: CVE-2015-6937 - Linux kernel - NULL pointer dereference in net/rds/connection.c" nil nil nil "10" "2015102804:57:16" "[oss-security] Re: CVE-2015-6937 - Linux kernel - NULL pointer dereference in net/rds/connection.c" (number mark "        cve-assign@m Oct 28   44/1883  " thread-indent "\"[oss-security] Re: CVE-2015-6937 - Linux kernel - NULL pointer dereference in net/rds/connection.c\"\n") "<20151027083712.GA1560@chrystal.uk.oracle.com>" ("<20151027083712.GA1560@chrystal.uk.oracle.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 3911 invoked by uid 550); 28 Oct 2015 04:57:33 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,161 +11,57 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 3860 invoked from network); 28 Oct 2015 04:57:28 -0000
+In-Reply-To: <20151027083712.GA1560@chrystal.uk.oracle.com>
+Message-Id: <20151028045716.D2ADB8BC010@smtpvmsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Wed, 28 Oct 2015 00:57:16 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32034 invoked from network); 2 Apr 2022 07:51:11 -0000
-X-Originating-IP: [10.192.67.219]
-Date: Sat, 2 Apr 2022 15:50:56 +0800 (GMT+08:00)
-X-CM-HeaderCharset: UTF-8
-From: =?UTF-8?B?5ZGo5aSa5piO?= <duoming@zju.edu.cn>
-To: oss-security@lists.openwall.com
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version XT5.0.8 build 20200806(7a9be5e8)
- Copyright (c) 2002-2022 www.mailtech.cn zju.edu.cn
-Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset=UTF-8
-MIME-Version: 1.0
-Message-ID: <c012878.3292f.17fe9417790.Coremail.duoming@zju.edu.cn>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID: cS_KCgDnaRBgAEhitI+wAA--.27322W
-X-CM-SenderInfo: qssqjiasttq6lmxovvfxof0/1tbiAgwIAVZdtZAjJAAAsu
-X-Coremail-Antispam: 1Ur529EdanIXcx71UUUUU7IcSsGvfJ3iIAIbVAYjsxI4VWDJw
-	CS07vEb4IE77IF4wCS07vE1I0E4x80FVAKz4kxMIAIbVAFxVCaYxvI4VCIwcAKzIAtYxBI
-	daVFxhVjvjDU=
-Subject: [oss-security] CVE-2022-1198 kernel: use-after-free in
- drivers/net/hamradio/6pack.c
+Subject: [oss-security] Re: CVE-2015-6937 - Linux kernel - NULL pointer dereference in net/rds/connection.c
+To: quentin.casasnovas@oracle.com
 
-SGVsbG8gdGhlcmUsCgpUaGVyZSBhcmUgdXNlLWFmdGVyLWZyZWUgdnVsbmVy
-YWJpbGl0aWVzIGluIGRyaXZlcnMvbmV0L2hhbXJhZGlvLzZwYWNrLmMKb2Yg
-bGludXggdGhhdCBhbGxvdyBhdHRhY2tlciB0byBjcmFzaCBsaW51eCBrZXJu
-ZWwgYnkgc2ltdWxhdGluZyBheDI1IGRldmljZQp1c2luZyA2cGFjayBkcml2
-ZXIgZnJvbSB1c2VyIHNwYWNlLgoKPSo9Kj0qPSo9Kj0qPSo9Kj0gIEJ1ZyBE
-ZXRhaWxzICA9Kj0qPSo9Kj0qPSo9Kj0qPQoKV2hlbiBhIDZwYWNrIGRldmlj
-ZSBpcyBkZXRhY2hpbmcsIHRoZSBzaXhwYWNrX2Nsb3NlKCkgd2lsbCBhY3Qg
-dG8gY2xlYW51cApuZWNlc3NhcnkgcmVzb3VyY2VzLiBBbHRob3VnaCBkZWxf
-dGltZXJfc3luYygpIGluIHNpeHBhY2tfY2xvc2UoKQp3b24ndCByZXR1cm4g
-aWYgdGhlcmUgaXMgYW4gYWN0aXZlIHRpbWVyLCBvbmUgY291bGQgdXNlIG1v
-ZF90aW1lcigpIGluCnNwX3htaXRfb25fYWlyKCkgdG8gd2FrZSB1cCB0aW1l
-ciBhZ2FpbiBieSBjYWxsaW5nIHVzZXJzcGFjZSBzeXNjYWxsIHN1Y2gKYXMg
-YXgyNV9zZW5kbXNnKCksIGF4MjVfY29ubmVjdCgpIGFuZCBheDI1X2lvY3Rs
-KCkuCgpUaGlzIHVuZXhwZWN0ZWQgd2FrZWQgaGFuZGxlciwgc3BfeG1pdF9v
-bl9haXIoKSwgcmVhbGl6ZXMgbm90aGluZyBhYm91dAp0aGUgdW5kZXJnb2lu
-ZyBjbGVhbnVwIGFuZCBtYXkgc3RpbGwgY2FsbCBwdHlfd3JpdGUoKSB0byB1
-c2UgZHJpdmVyIGxheWVyCnJlc291cmNlcyB0aGF0IGhhdmUgYWxyZWFkeSBi
-ZWVuIHJlbGVhc2VkLgoKVGhlIHJhY2UgY29uZGl0aW9uIGlzIHNob3duIGJl
-bG93OgoKICAgICAgKFVTRSkgICAgICAgICAgICAgICAgICAgICAgfCAgICAg
-IChGUkVFKQpheDI1X3NlbmRtc2coKSAgICAgICAgICAgICAgICAgICB8CiBh
-eDI1X3F1ZXVlX3htaXQoKSAgICAgICAgICAgICAgIHwKICAuLi4gICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgfAogIHNwX3htaXQoKSAgICAgICAgICAg
-ICAgICAgICAgICB8CiAgIHNwX2VuY2FwcygpICAgICAgICAgICAgICAgICAg
-IHwgc2l4cGFja19jbG9zZSgpCiAgICBzcF94bWl0X29uX2FpcigpICAgICAg
-ICAgICAgIHwgIGRlbF90aW1lcl9zeW5jKCZzcC0+dHhfdCkKICAgICBtb2Rf
-dGltZXIoJnNwLT50eF90LC4uLikgICAgfCAgLi4uCiAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgIHwgIHVucmVnaXN0ZXJfbmV0ZGV2KCkKICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgfCAgLi4uCiAgICAgKHdh
-aXQgYSB3aGlsZSkgICAgICAgICAgICAgIHwgdHR5X3JlbGVhc2UoKQogICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICB8ICB0dHlfcmVsZWFzZV9z
-dHJ1Y3QoKQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICB8ICAg
-cmVsZWFzZV90dHkoKQogICAgc3BfeG1pdF9vbl9haXIoKSAgICAgICAgICAg
-ICB8ICAgIHR0eV9rcmVmX3B1dCh0dHlfc3RydWN0KSAvL0ZSRUUKICAgICBw
-dHlfd3JpdGUodHR5X3N0cnVjdCkgLy9VU0UgfCAgICAuLi4KCj0qPSo9Kj0q
-PSo9Kj0qPSo9ICBCdWcgRWZmZWN0cyAgPSo9Kj0qPSo9Kj0qPSo9Kj0KCldl
-IGNhbiBzdWNjZXNzZnVsbHkgdHJpZ2dlciB0aGUgdnVsbmVyYWJpbGl0aWVz
-IHRvIGNyYXNoIHRoZSBsaW51eCBrZXJuZWwuCgpbICAxOTYuNTE4NTc4XSBC
-VUc6IEtBU0FOOiB1c2UtYWZ0ZXItZnJlZSBpbiBfX3J1bl90aW1lcnMucGFy
-dC4wKzB4MTcwLzB4NDcwClsgIDE5Ni41MTg1NzhdIFdyaXRlIG9mIHNpemUg
-OCBhdCBhZGRyIGZmZmY4ODgwMGE2NTJhYjggYnkgdGFzayBzd2FwcGVyLzIv
-MApbICAxOTYuNTE4NTc4XSBDYWxsIFRyYWNlOgpbICAxOTYuNTE4NTc4XSAg
-PElSUT4KWyAgMTk2LjUxODU3OF0gIGR1bXBfc3RhY2srMHg3ZC8weGEzClsg
-IDE5Ni41MTg1NzhdICBwcmludF9hZGRyZXNzX2Rlc2NyaXB0aW9uLmNvbnN0
-cHJvcC4wKzB4MTgvMHgxMzAKWyAgMTk2LjUxODU3OF0gID8gX19ydW5fdGlt
-ZXJzLnBhcnQuMCsweDE3MC8weDQ3MApbICAxOTYuNTE4NTc4XSAgPyBfX3J1
-bl90aW1lcnMucGFydC4wKzB4MTcwLzB4NDcwClsgIDE5Ni41MTg1NzhdICBr
-YXNhbl9yZXBvcnQuY29sZCsweDdmLzB4MTBlClsgIDE5Ni41MTg1NzhdICA/
-IF9fcnVuX3RpbWVycy5wYXJ0LjArMHgxNzAvMHg0NzAKWyAgMTk2LjUxODU3
-OF0gIF9fcnVuX3RpbWVycy5wYXJ0LjArMHgxNzAvMHg0NzAKWyAgMTk2LjUx
-ODU3OF0gID8gY2FsbF90aW1lcl9mbisweDE1MC8weDE1MApbICAxOTYuNTE4
-NTc4XSAgPyBsYXBpY190aW1lcl9zaHV0ZG93bi5wYXJ0LjArMHg3Yy8weDkw
-ClsgIDE5Ni41MTg1NzhdICA/IGxhcGljX3RpbWVyX3NodXRkb3duKzB4MTgv
-MHgyMApbICAxOTYuNTMxMjI1XSAgPyBjbG9ja2V2ZW50c19zd2l0Y2hfc3Rh
-dGUrMHhhMS8weDE2MApbICAxOTYuNTMxMjI1XSAgPyB0aWNrX3Byb2dyYW1f
-ZXZlbnQrMHg1Zi8weDgwClsgIDE5Ni41MzEyMjVdICA/IGhydGltZXJfaW50
-ZXJydXB0KzB4NDE4LzB4NDQwClsgIDE5Ni41MzEyMjVdICBydW5fdGltZXJf
-c29mdGlycSsweDNiLzB4ODAKWyAgMTk2LjUzMTIyNV0gIF9fZG9fc29mdGly
-cSsweGYxLzB4MzgwClsgIDE5Ni41MzEyMjVdICBhc21fY2FsbF9pcnFfb25f
-c3RhY2srMHgxMi8weDIwClsgIDE5Ni41MzEyMjVdICA8L0lSUT4KWyAgMTk2
-LjUzMTIyNV0gIGRvX3NvZnRpcnFfb3duX3N0YWNrKzB4MzIvMHg0MApbICAx
-OTYuNTMxMjI1XSAgaXJxX2V4aXRfcmN1KzB4YjMvMHgxMDAKWyAgMTk2LjUz
-MTIyNV0gIHN5c3ZlY19hcGljX3RpbWVyX2ludGVycnVwdCsweDJlLzB4ODAK
-WyAgMTk2LjUzMTIyNV0gIGFzbV9zeXN2ZWNfYXBpY190aW1lcl9pbnRlcnJ1
-cHQrMHgxMi8weDIwClsgIDE5Ni41MzEyMjVdIFJJUDogMDAxMDpkZWZhdWx0
-X2lkbGUrMHhlLzB4MTAKWyAgMTk2LjUzMTIyNV0gQ29kZTogOTggMzYgZTgg
-ZmUgZjAgODAgNjMgMDIgZGYgNWIgNDEgNWMgYzMgMGYgYWUgZjAgMGYgYWUg
-M2IgMGYgYWUgZjAgZWIgOGQgMGYgMWYgNDAgMDAgZTkgMDcgMDAgMDAgMDAg
-MGYgMDAgMmQgNjQgZjcgNTkgMDAgZmIgZjQgPGMzPiBjYyA0MSA1NSA0MSA1
-NCA1NSA0OCA4OSBmZCA1MyA0ODUKWyAgMTk2LjUzMTIyNV0gUlNQOiAwMDE4
-OmZmZmY4ODgwMDUyMzdlODAgRUZMQUdTOiAwMDAwMDIwMgpbICAxOTYuNTMx
-MjI1XSBSQVg6IGZmZmZmZmZmODI0ODFhZjAgUkJYOiBmZmZmODg4MDA1MjEy
-OTQwIFJDWDogZmZmZmZmZmY4MjQ3NmY2MgpbICAxOTYuNTMxMjI1XSBSRFg6
-IDAwMDAwMDAwMDAwNjRlYzIgUlNJOiAwMDAwMDAwMDAwMDAwMDA0IFJESTog
-ZmZmZjg4ODA2ZDUzMjI0MApbICAxOTYuNTMxMjI1XSBSQlA6IDAwMDAwMDAw
-MDAwMDAwMDIgUjA4OiAwMDAwMDAwMDAwMDAwMDAxIFIwOTogZmZmZjg4ODA2
-ZDUzMjI0MwpbICAxOTYuNTMxMjI1XSBSMTA6IGZmZmZlZDEwMGRhYTY0NDgg
-UjExOiAwMDAwMDAwMDAwMDAwMDAxIFIxMjogMDAwMDAwMDAwMDAwMDAwMgpb
-ICAxOTYuNTMxMjI1XSBSMTM6IDAwMDAwMDAwMDAwMDAwMDAgUjE0OiAwMDAw
-MDAwMDAwMDAwMDAwIFIxNTogMWZmZmYxMTAwMGE0NmZkNgpbICAxOTYuNTMx
-MjI1XSAgPyBtd2FpdF9pZGxlKzB4YzAvMHhjMApbICAxOTYuNTMxMjI1XSAg
-PyByY3VfZXFzX2VudGVyLmNvbnN0cHJvcC4wKzB4OTIvMHhiMApbICAxOTYu
-NTMxMjI1XSAgZGVmYXVsdF9pZGxlX2NhbGwrMHg1Ni8weDE0MApbICAxOTYu
-NTMxMjI1XSAgZG9faWRsZSsweDMwYS8weDNiMApbICAxOTYuNTMxMjI1XSAg
-PyBhcmNoX2NwdV9pZGxlX2V4aXQrMHgzMC8weDMwClsgIDE5Ni41MzEyMjVd
-ICA/IHNjaGVkdWxlX2lkbGUrMHg0MS8weDUwClsgIDE5Ni41MzEyMjVdICBj
-cHVfc3RhcnR1cF9lbnRyeSsweDE0LzB4MjAKWyAgMTk2LjUzMTIyNV0gIHNl
-Y29uZGFyeV9zdGFydHVwXzY0X25vX3ZlcmlmeSsweGMyLzB4Y2IKClsgIDE5
-Ni41MzEyMjVdIEFsbG9jYXRlZCBieSB0YXNrIDEzNToKWyAgMTk2LjUzMTIy
-NV0gIGthc2FuX3NhdmVfc3RhY2srMHgxYi8weDQwClsgIDE5Ni41MzEyMjVd
-ICBfX19fa2FzYW5fa21hbGxvYy5jb25zdHByb3AuMCsweDg0LzB4YTAKWyAg
-MTk2LjU1MjMwOV0gIGFsbG9jX25ldGRldl9tcXMrMHg1YS8weDYzMApbICAx
-OTYuNTUyMzA5XSAgc2l4cGFja19vcGVuKzB4YmYvMHg0ZTAKWyAgMTk2LjU1
-MjMwOV0gIHR0eV9sZGlzY19vcGVuKzB4NTUvMHg5MApbICAxOTYuNTUyMzA5
-XSAgdHR5X3NldF9sZGlzYysweDE4Ny8weDJkMApbICAxOTYuNTUyMzA5XSAg
-dHR5X2lvY3RsKzB4NDNmLzB4Y2UwClsgIDE5Ni41NTIzMDldICBfX3g2NF9z
-eXNfaW9jdGwrMHhiNC8weGYwClsgIDE5Ni41NTIzMDldICBkb19zeXNjYWxs
-XzY0KzB4MzMvMHg0MApbICAxOTYuNTUyMzA5XSAgZW50cnlfU1lTQ0FMTF82
-NF9hZnRlcl9od2ZyYW1lKzB4NDQvMHhhOQoKWyAgMTk2LjU1MjMwOV0gRnJl
-ZWQgYnkgdGFzayAzNDE0OgpbICAxOTYuNTUyMzA5XSAga2FzYW5fc2F2ZV9z
-dGFjaysweDFiLzB4NDAKWyAgMTk2LjU1MjMwOV0gIGthc2FuX3NldF90cmFj
-aysweDFjLzB4MzAKWyAgMTk2LjU1MjMwOV0gIGthc2FuX3NldF9mcmVlX2lu
-Zm8rMHgyMC8weDMwClsgIDE5Ni41NTIzMDldICBfX19fa2FzYW5fc2xhYl9m
-cmVlKzB4ZWMvMHgxMjAKWyAgMTk2LjU1MjMwOV0gIGtmcmVlKzB4OGYvMHgy
-MTAKWyAgMTk2LjU2MDk0Nl0gIGRldmljZV9yZWxlYXNlKzB4NTQvMHhlMApb
-ICAxOTYuNTYwOTQ2XSAga29iamVjdF9wdXQrMHhhNS8weDEyMApbICAxOTYu
-NTYwOTQ2XSAgdHR5X2xkaXNjX2hhbmd1cCsweDFhYi8weDJkMApbICAxOTYu
-NTYwOTQ2XSAgX190dHlfaGFuZ3VwLnBhcnQuMCsweDMwNi8weDUxMApbICAx
-OTYuNTYwOTQ2XSAgdHR5X3JlbGVhc2UrMHgyMDAvMHg2NzAKWyAgMTk2LjU2
-Mzk5N10gIF9fZnB1dCsweDEwNC8weDNiMApbICAxOTYuNTYzOTk3XSAgdGFz
-a193b3JrX3J1bisweDhmLzB4ZDAKWyAgMTk2LjU2Mzk5N10gIGV4aXRfdG9f
-dXNlcl9tb2RlX3ByZXBhcmUrMHgxMTQvMHgxMjAKWyAgMTk2LjU2Mzk5N10g
-IHN5c2NhbGxfZXhpdF90b191c2VyX21vZGUrMHgxZC8weDQwClsgIDE5Ni41
-NjM5OTddICBlbnRyeV9TWVNDQUxMXzY0X2FmdGVyX2h3ZnJhbWUrMHg0NC8w
-eGE5Cgo9Kj0qPSo9Kj0qPSo9Kj0qPSAgQnVnIFJlcHJvZHVjZSAgPSo9Kj0q
-PSo9Kj0qPSo9Kj0KCldlIGNvdWxkIHVzZSBwc2V1ZG90ZXJtaW5hbC1iYXNl
-ZCBkZXZpY2UgZW11bGF0aW9uIHRvIHNpbXVsYXRlCmF4MjUgZGV2aWNlIGZy
-b20gdXNlciBzcGFjZSBhbmQgY3JlYXRlIGEgc29ja2V0IGZvciBpdC4gVGhl
-biwgCndlIGNyZWF0ZSBmb3VyIHRocmVhZHM6IHRoZSBmaXJzdCB0aHJlYWQg
-aXMgdXNlZCB0byBpbml0aWFsaXplIAphbmQgc3RhcnQgYXgyNSBkZXZpY2Us
-IHRoZSBzZWNvbmQgdGhyZWFkIGlzIHVzZWQgdG8gY2xvc2UgdGhlCnBzZXVk
-b3Rlcm1pbmFsLWJhc2VkIGRldmljZSwgdGhlIHRoaXJkIHRocmVhZCBpcyB1
-c2VkIHRvIGV4ZWN1dGUKYmluZCBhbmQgc2VuZG1zZyBzeXNjYWxscywgdGhl
-IGxhc3QgdGhyZWFkIGlzIHVzZWQgdG8gY2xvc2UgdGhlIApzb2NrZXQuIExl
-dCB0aGVzZSBmb3VyIHRocmVhZHMgdG8gaW50ZXJsZWF2ZSwgd2UgY291bGQg
-cmVwcm9kdWNlCnRoZSBidWcuIAoKPSo9Kj0qPSo9Kj0qPSo9Kj0gIEJ1ZyBG
-aXggID0qPSo9Kj0qPSo9Kj0qPSo9CgpUaGUgcGF0Y2ggdGhhdCBoYXZlIGJl
-ZW4gYXBwbGllZCB0byBtYWlubGluZSBMaW51eCBrZXJuZWwgaXMgc2hvd24g
-YmVsb3cuCmh0dHBzOi8vZ2l0aHViLmNvbS90b3J2YWxkcy9saW51eC9jb21t
-aXQvZWZlNDE4NmU2YTFiNTRiZjM4YjllMDU0NTBkNDNiMGRhMWZkNzczOQoK
-PSo9Kj0qPSo9Kj0qPSo9Kj0gIFRpbWVsaW5lICA9Kj0qPSo9Kj0qPSo9Kj0q
-PQoKMjAyMi0wMi0xODogY29tbWl0IGVmZTQxODZlNmExYiBhY2NlcHRlZCB0
-byBtYWlubGluZSBrZXJuZWwKMjAyMi0wNC0wMTogQ1ZFLTIwMjItMTE5OCBp
-cyBhc3NpZ25lZAoKPSo9Kj0qPSo9Kj0qPSo9Kj0gIENyZWRpdCAgPSo9Kj0q
-PSo9Kj0qPSo9Kj0KRHVvbWluZyBaaG91IDxkdW9taW5nQHpqdS5lZHUuY24+
-CgpCZXN0IFJlZ2FyZHMsCkR1b21pbmcgWmhvdQ==
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
+
+>> CVE-2015-6937 has been assigned to this issue that is exploitable "on
+>> sockets that weren't properly bound before attempting to send a
+>> message":
+>>
+>>   https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=74e98eb085889b0d2d4908f59f6e00026063014f
+ 
+> The above fix is incomplete and still allows to trigger a NULL pointer
+> dereference when sending a message.  The root cause of this problem is a
+> race condition when checking that the socket is bound in rds_sendmsg(),
+> more information and a complete fix can be found here:
+> 
+>   https://lkml.org/lkml/2015/10/16/530
+> 
+> It should hit Linus' tree soon but since distributions already started
+> shipping the incomplete fix, ...
+
+Use CVE-2015-7990 for the vulnerability that remains present after the
+74e98eb085889b0d2d4908f59f6e00026063014f commit.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJWMFSAAAoJEL54rhJi8gl5uLsQALnjDW0KqA0GdufltOgGh5oy
+HhFSvZirdqBkB+tSGn2J18yHKSB0wmcdlnGHMOVjCMTIAQCK5LYR/PsBoSid4rn+
+xCUnmh8+OoZEt8d5ukMVlOT6iQ6p/aqyoCnjMdRmEsK+lxVNb2Ew1OFAOvyYehWw
+Lf3QK7CO66IRbcxAtHn+3AEVcA8mEJv/0fskIdiAEi3BVZ0u+V1SKjdwRivYmxV8
+4yWi8EW/SVtZ7YEx64uOdWw8vJwo95YC4gVrkRBU4SYLF0W/b59+H/J2BRMzUHwG
+N6JUUrvDA00yx4wOqJidqR1IVY/LaqohoF6AWBaQ8hczBK/mnUuObnPBBAjS3NxH
+f/9g+E9R5QNBvFgzEImrC0fOYaKOmJqkb3zzIxrWAqMLcYiAehwpqp8NATEIhcQy
+GoxqZIlUIkIZcLBFvmRoLX0fF5ZLuwCJSh9r91oOlNjVKPYSa2ZVSSbN6x2m8Sn8
+/RyQBtxeFMgeymzF1XPCXJh17HCwpt4zYrZJf0Co6sbuatHw6FjyXLSnhNZ9DcLx
+qgfqAVQwHw+xqquEioRhKlzRld/+xz6tgtseTTHk/Tcawx3slH9zTy2slQW745Rl
+AcSLLCvlthPfhx3kNXjITaQ3WKaGTVsCHTuvhkxC2fyC6cAMYdPBDnuLMhZg6gKT
+HCjDdydb6XKjWdCO12pV
+=w9IK
+-----END PGP SIGNATURE-----
