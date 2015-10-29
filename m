@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["904" "Tuesday" "26" "September" "2017" "16:55:22" "+0200" "Alex R" "alexr@apache.org" "<CAPNiXbHGAzwC69b4pYbqyF2+kL+EH5HSRBeJaYa4fHtwQSBq2Q@mail.gmail.com>" "33" "[oss-security] CVE-2017-7687: Libprocess might crash when decoding a malformed request." nil nil nil "9" "2017092614:55:22" "[oss-security] CVE-2017-7687: Libprocess might crash when decoding a malformed request." (number mark "U       alexr@apache Sep 26   33/904   " thread-indent "\"[oss-security] CVE-2017-7687: Libprocess might crash when decoding a malformed request.\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1230" "Thursday" "29" "October" "2015" "02:02:49" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151029060249.95D1DB2E06C@smtpvbsrv1.mitre.org>" "32" "[oss-security] Re: CVE Request: Linux kernel: Buffer overflow when copying data from skbuff to userspace" nil nil nil "10" "2015102906:02:49" "[oss-security] Re: CVE Request: Linux kernel: Buffer overflow when copying data from skbuff to userspace" (number mark "        cve-assign@m Oct 29   32/1230  " thread-indent "\"[oss-security] Re: CVE Request: Linux kernel: Buffer overflow when copying data from skbuff to userspace\"\n") "<20151027131644.GA1699@bistromath.redhat.com>" ("<20151027131644.GA1699@bistromath.redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 25849 invoked by uid 550); 26 Sep 2017 15:08:34 -0000
+Received: (qmail 26392 invoked by uid 550); 29 Oct 2015 06:03:02 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,54 +11,45 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 26360 invoked from network); 29 Oct 2015 06:03:02 -0000
+In-Reply-To: <20151027131644.GA1699@bistromath.redhat.com>
+Message-Id: <20151029060249.95D1DB2E06C@smtpvbsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, hannes@stressinduktion.org
+Date: Thu, 29 Oct 2015 02:02:49 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1752 invoked from network); 26 Sep 2017 14:55:37 -0000
-X-Gm-Message-State: AHPjjUgZFl8e5/uc1FQ4kTF8r3NLN7wRbbDcyNrtsKr1lMh1WIGgsWAF
-	zZWS4xXMx0naG/d2ndik4UwJw40sZQ8vnr7Rn+0=
-X-Google-Smtp-Source: AOwi7QCr29gcq4JFs26/CaEiBqmQkBmx8xkgEXpquJc8t94osWXLKPU2QZUzcGw0lGG7IItfeRccuUwvSb2aI+bON7w=
-X-Received: by 10.159.33.195 with SMTP id 61mr10183004uac.63.1506437722916;
- Tue, 26 Sep 2017 07:55:22 -0700 (PDT)
-MIME-Version: 1.0
-From: Alex R <alexr@apache.org>
-Date: Tue, 26 Sep 2017 16:55:22 +0200
-X-Gmail-Original-Message-ID: <CAPNiXbHGAzwC69b4pYbqyF2+kL+EH5HSRBeJaYa4fHtwQSBq2Q@mail.gmail.com>
-Message-ID: <CAPNiXbHGAzwC69b4pYbqyF2+kL+EH5HSRBeJaYa4fHtwQSBq2Q@mail.gmail.com>
-To: dev <dev@mesos.apache.org>, user <user@mesos.apache.org>, 
-	Amon Flair <amon@nandynarwhals.org>, Lyon Yang <lyon.yang.s@gmail.com>, 
-	security <security@apache.org>, oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="001a114505a059d00f055a18dd47"
-Subject: [oss-security] CVE-2017-7687: Libprocess might crash when decoding a malformed request.
+Subject: [oss-security] Re: CVE Request: Linux kernel: Buffer overflow when copying data from skbuff to userspace
+To: sd@queasysnail.net
 
---001a114505a059d00f055a18dd47
-Content-Type: text/plain; charset="UTF-8"
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Severity: Important
+> http://patchwork.ozlabs.org/patch/530642/
 
-Vendor:
-The Apache Software Foundation
+> skb_copy_and_csum_datagram_iovec doesn't check the actual length of
+> the iovec's buffers to which it copies data
 
-Versions Affected:
-Apache Mesos 1.1.0 to 1.3.0
-The unsupported Apache Mesos 1.0.x as well as 0.x versions may be also
-affected.
+Use CVE-2015-8019.
 
-Description:
-When handling a decoding failure for a malformed URL path of an HTTP
-request, libprocess might crash because the code accidentally calls
-inappropriate function. A malicious actor can therefore cause a denial
-of service of Mesos masters rendering the Mesos-controlled cluster
-inoperable.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Mitigation:
-pre-1.1.x users should upgrade to at least 1.1.3
-1.1.x users should upgrade to 1.1.3
-1.2.x users should upgrade to 1.2.2
-1.3.0 users should upgrade to 1.3.1
-1.4.0-dev users should obtain Mesos 1.4.0
-
-Credit:
-This issue was discovered by Lyon Yang and Jeremy Heng
-
-Alex on behalf of Mesos PMC.
-
---001a114505a059d00f055a18dd47--
+iQIcBAEBCAAGBQJWMbWOAAoJEL54rhJi8gl5u2IP/1uwOebEBEyOnCiDcG7jxdpz
+SxgyYUaFHY0H3pflkKV87ycIlygAU2yGt1mxPU8LEZvA7gi7RBNOxG1+T4ntMblw
+0rUvWz3TNW1ccUQXs/QjKRD+x9KYJxeC835qkXCX/oL3gmP9+J2+lX3blW6L7Qr8
+n5U/XI+a+kbPZyMjOvtMOGtEtorDV1yw4duONre6x6VjRJ5i0M812oumuemYFgn3
+LM38GZu3n7KXI7Rk0nNbraJ3NktJbVf7wTezuRGLCVRJY52dLRf+Y7Ne54KIwPt3
+pHONuWYdk/L9SvQDVRUT8r04M0k5Zl8xfSSwiXbsxal9vHopScnkLv3/IUVYgU7f
+H5YCVIkkJxb48rXdN9XIjp7YXxXoRl/I52cmEizW8a5+rlK7T+1wUpoVV0CzPTHM
+7Q4Yu2UE0bFMkqxcd9OnW04AWUrWV+higjKe+rLx/N+7jdpO/287vPUNfy6ZkYK3
+B3XgRx5A25I0Bczph9NsUq/CKO/R2CGPLGIl8kMRMScrkAnNk+2tXhFKiPYXENBp
+Nao+vWmyhKI/kyBSX00dQOZ3pSVmFNJk11mSVYADAjbzMFBT2F0MNmWdAASxXOaf
+so+o5QzuNgmNzuvKkTYzLw4VcDm43WY81eRuY7JWBn+m44ymtnZ50H4vwyg07dWZ
+T4TXvgTe3mVfHmgC2TW1
+=37OD
+-----END PGP SIGNATURE-----
