@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["730" "Tuesday" "1" "March" "2016" "18:18:12" "+0000" "Stuart Henderson" "stu@spacehopper.org" "<20160301181812.GY13281@symphytum.spacehopper.org>" "16" "Re: [oss-security] CVE's for SSLv2 support" "^Cc:" nil nil "3" "2016030118:18:12" "[oss-security] CVE's for SSLv2 support" (number mark "        stu@spacehop Mar  1   16/730   " thread-indent "\"Re: [oss-security] CVE's for SSLv2 support\"\n") "<CAOp4FwSj_OAUV0qsnE35VR4UdFCC1qjvQXy9_Rf=-kK0S1eMQQ@mail.gmail.com>" ("<CANO=Ty3qgsHtaivrfwoB=ZdbgyE=z5+Q+HkhazE06ppDbw63RQ@mail.gmail.com>" "<CAOp4FwSj_OAUV0qsnE35VR4UdFCC1qjvQXy9_Rf=-kK0S1eMQQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1299" "Thursday" "29" "October" "2015" "16:51:04" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151029205104.BDBB4B2E09D@smtpvbsrv1.mitre.org>" "36" "[oss-security] Re: CVE request - Icinga 1.13.3 and older are vulnerable to XSS" nil nil nil "10" "2015102920:51:04" "[oss-security] Re: CVE request - Icinga 1.13.3 and older are vulnerable to XSS" (number mark "        cve-assign@m Oct 29   36/1299  " thread-indent "\"[oss-security] Re: CVE request - Icinga 1.13.3 and older are vulnerable to XSS\"\n") "<42EBFF7E-09FE-4998-9805-A2812EFC83F9@bitchbrothers.com>" ("<42EBFF7E-09FE-4998-9805-A2812EFC83F9@bitchbrothers.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 20264 invoked by uid 550); 1 Mar 2016 18:18:56 -0000
+Received: (qmail 24108 invoked by uid 550); 29 Oct 2015 20:51:16 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,47 +11,49 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 20244 invoked from network); 1 Mar 2016 18:18:56 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=spacehopper.org;
-	 h=user-agent:in-reply-to:content-disposition:content-type
-	:content-type:mime-version:references:message-id:subject:subject
-	:from:from:date:date:received:received; s=spacehop2; t=
-	1456856292; bh=4Lym+MTJoUSf3Bv+n0HcnPtWyN5PbyBSjmecimohq24=; b=o
-	UdQrAk6RJPMMOOKnKAXqpuMTPcrTaEBTtlAtK0LCKD10OqAh5EqsP+e+0ssAC3S+
-	oX7WffL6ASh/C+gO8RJkrnf7Pdzel0pGR3VP957B9OgfSAFCqjJgELxQHGYcA3qM
-	Z7v8uNtxMsAMyPMjnfP7Fij5VlL+f0PWNtdOsavx4zAqt2/bq6YOAeSr7N74Cd+6
-	cVQQd5/8ZdKLAkCYiqiT2Zr1gA3Y2hkbh3qredK8Jx7EmOsethhsPMTHm66lcgd0
-	cfwokDpfdROlGLSYLq+Ql3Sf4d+nq0X/+xSKy2J7B8XAk1cCO9OJyuO5GvhDpYu5
-	OSxdopXPZpi/Dg5KczKIQ==
-X-Virus-Scanned: amavisd-new at spacehopper.org
-Message-ID: <20160301181812.GY13281@symphytum.spacehopper.org>
-References: <CANO=Ty3qgsHtaivrfwoB=ZdbgyE=z5+Q+HkhazE06ppDbw63RQ@mail.gmail.com>
- <CAOp4FwSj_OAUV0qsnE35VR4UdFCC1qjvQXy9_Rf=-kK0S1eMQQ@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAOp4FwSj_OAUV0qsnE35VR4UdFCC1qjvQXy9_Rf=-kK0S1eMQQ@mail.gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-Cc: CVE ID Requests <cve-assign@mitre.org>
-Date: Tue, 1 Mar 2016 18:18:12 +0000
-From: Stuart Henderson <stu@spacehopper.org>
+Received: (qmail 24082 invoked from network); 29 Oct 2015 20:51:16 -0000
+In-Reply-To: <42EBFF7E-09FE-4998-9805-A2812EFC83F9@bitchbrothers.com>
+Message-Id: <20151029205104.BDBB4B2E09D@smtpvbsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Thu, 29 Oct 2015 16:51:04 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE's for SSLv2 support
-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: CVE request - Icinga 1.13.3 and older are vulnerable to XSS
+To: ricardo@bitchbrothers.com
 
-On 2016/03/01 17:39, Loganaden Velvindron wrote:
-> Btw, FreeBSD has done some work there:
-> https://wiki.freebsd.org/LibreSSL/PatchingPorts#SSLv2.2FSSLv3_method_failures
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Debian did most of that work for SSLv2 years ago. Quite a lot was
-upstreamed and a bunch more in patches, this really made it easier
-to disable SSLv2 support in OpenSSL when we did it in OpenBSD.
+> https://dev.icinga.org/issues/10453
 
-> Linking with LibreSSL would help uncover those cases, and assign CVEs :)
+> Classic-UI with the CSV export link and pagination feature
 
-There shouldn't be all that many left for SSLv2. There are a number
-of patches in OpenBSD ports for SSLv*3* removal, some upstreamed -
-if OS/distros are already going through ABI change pain at this
-point to drop SSLv2, why not go the whole hog and drop v3 as well
-while you're at it?
+> The functions parsed QUERY_STRING from the environment without
+> properly sanitizing it.
 
+> /cgi-bin/status.cgi?host=all&[XSS]
+
+Use CVE-2015-8010.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJWMoZFAAoJEL54rhJi8gl5Q7oP/A1ALnCznQCfABA13OjO0gPQ
+7AAhmJ7ehF75Zhj+5HrGl4AzqxdFQ36jGGVhFvedBBCt6GKEGmdz5w3LXcMW0fUx
+oV3Fj5odzUJzscnZhzVvDdoce6hFJaXhuTOtdEhU2TBNr1tf6HwzXhT5nbOcfOAa
+lFi5KFVCFhXBtk0yCzufCoFEb6ey6xkNXxTI5xiSxtyngE5rPW6/Iczqsj5cVC5B
+FhYwmnLa7L+wrW8wy4/9DaQRedKWYpZpwCpfoFyDykVNuoIFFkRVKlyM53tnBmS0
+j7cHHVfQezAJSK/Yr40PcYsSP6lNKydMArzDoo8n5qWMN5TkjSAVFg+B4pq0CHCY
+/TjTXM8AMGlMIrQldxfPVrIYvwrU5FYGHgONNf2yFDfaCCUTgbNrwEize4WgwzJV
+VsUpKgY/WV00LS5WmfzD6mPhz9kdewKaBiLpOg4lFY5szB+qpjdzhW9a48VOHmQZ
+6mut47yGovCoiZZGf2AHmEjwIoaiQu7qYJfUSsU5aRfpKSMlXxatWkR/imwJ4acU
+IwCkdbYnORwx/umNqhVGtEgvVonwdSwF3DpIDvduCxnI4TsGgvZ9VF7DbW45/kT2
+XuXiaRRD2YS5RFlF7fm3GDe5sXWER8+BgqXZqynkXvo7/ZRc44gWPU/4WKdvbS/+
+5zpre8b5xsrn4rroQTOX
+=CtNa
+-----END PGP SIGNATURE-----
