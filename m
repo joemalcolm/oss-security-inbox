@@ -1,4 +1,9 @@
-Received: (qmail 24332 invoked by uid 550); 31 Mar 2024 15:11:24 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5852" "Thursday" "29" "October" "2015" "12:00:14" "+0000" "Xen.org security team" "security@xen.org" "<E1ZrlsM-00021I-Bt@xenbits.xen.org>" "153" "[oss-security] Xen Security Advisory 145 (CVE-2015-7812) - arm: Host crash when preempting a multicall" nil nil nil "10" "2015102912:00:14" "[oss-security] Xen Security Advisory 145 (CVE-2015-7812) - arm: Host crash when preempting a multicall" (number mark "U       security@xen Oct 29  153/5852  " thread-indent "\"[oss-security] Xen Security Advisory 145 (CVE-2015-7812) - arm: Host crash when preempting a multicall\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 26177 invoked by uid 550); 29 Oct 2015 12:00:42 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,123 +12,170 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 12178 invoked from network); 31 Mar 2024 12:29:25 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1711888156; x=1712492956; darn=lists.openwall.com;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=aDm+mvYpRlUAwwBtuBQHht3xoKVq6azfs1L/LdDxUyk=;
-        b=bTa0Ancq4zbJIdHT/jfbxY5b6uPS3SYhZYkyeyHtIhuENA2z7OleeHlxUwmaym1ywE
-         L7bqAOCTxEos3MrJHQseXn+UkBMqq53Q8To1zqkd0jcec+yY8/+kpXKa0/0YRzyTpZ3m
-         EiPoNK32nnDBwsSMSqMmrMbbdDqDK/i/fgMfhtQwMCIIKfGOzDsNwyxD73Psram1tA0d
-         3QM5DadwPxoPXIBB5eBK53yUctu2wDn3yrhdBldQdYpR15Mqk0CH/7ibBZO+Gji8WBy3
-         r0eSS1PGpZI3GwsB40YaZQ4qF5d6b6KcdIGDk1dSGENozSi4CXGnD9wYGN1YkZ+ABWgo
-         k+6Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711888156; x=1712492956;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=aDm+mvYpRlUAwwBtuBQHht3xoKVq6azfs1L/LdDxUyk=;
-        b=JFSkUmRc2E0QSnx/0uLfsNR9R0pK1WgKmnY1TyRUgohUVq20esDeq/e/M6rWO109Ld
-         DbwGuPpJi5ECq+H8Jgj2HQSgYaeo++OlRS4k6NHZ/rlx6rCTmVx4+xwUAhy3xkj2A8zi
-         urXwMu4Qw5Akz5+ytrc9Lq9xpjxPzDn0M+tYiwpf3PACkzXfVrxJSeUzG/ukKZissL1/
-         3eWIXq1JxExwIdNBjJQA02cIFGauRCRphV+nBGwSjsxNM3nZ6SJ8HwjNmGFQC67tzFxi
-         8QjkMP0mSRwy0RGpE0SfzWXxDr7BQCqGlraHeu/LDH4wuIL6AH9U9gcvHulQEv1/CV+j
-         c8SA==
-X-Gm-Message-State: AOJu0YzA/PXOGrTlNxNzgCUk6PMpICeY5LZd1BU7oZqyQEojmUjmlJUi
-	8Ct8ubjbzvEftjG9LfR8KRG5gXtQJSb+N8OvXylf2T4ZESDF/Is2iogQPTrlYK7JWOtJjNNKRpo
-	4Wb9kuzaci3AFJbpxeQoaQNA5ZFDEwMzRdHuX/Q==
-X-Google-Smtp-Source: AGHT+IFyLG6EtSTRA4dAQGrRq9XTcq3n7DfLk61+Nqoj9JD12420YG6Gx2XB/at2/zwh3BuM1SSywV/bWcuphkW9wTc=
-X-Received: by 2002:a2e:7e12:0:b0:2d7:2ba:525 with SMTP id z18-20020a2e7e12000000b002d702ba0525mr4217846ljc.18.1711888155665;
- Sun, 31 Mar 2024 05:29:15 -0700 (PDT)
+Received: (qmail 26084 invoked from network); 29 Oct 2015 12:00:34 -0000
+Date: Thu, 29 Oct 2015 12:00:14 +0000
+Message-Id: <E1ZrlsM-00021I-Bt@xenbits.xen.org>
+Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
+Content-Transfer-Encoding: binary
 MIME-Version: 1.0
-References: <20240329155126.kjjfduxw2yrlxgzm@awork3.anarazel.de>
- <uu76c4$u7g$1@ciao.gmane.io> <20240329211052.GA2470@openwall.com>
- <uu7da3$87n$1@ciao.gmane.io> <20240329221938.dqit6xuh4es2v6gc@awork3.anarazel.de>
- <uu7g5q$8hl$1@ciao.gmane.io> <01322afdcf6b4dd7b81452dc5afed6b1@amazon.com>
- <6038e843-fc3f-4c51-a48c-feb283242b41@canonical.com> <uu7k2m$61a$1@ciao.gmane.io>
- <CAOp4FwT+kqoG1JRawFu6tkz0LUMgkT9RCVfh7vyaN3bbFkYx3Q@mail.gmail.com>
- <72a9dfe5-a88d-4711-bc90-cd9269124f08@schafweide.org> <87cyrbzw2z.fsf@daath.pimeys.fr>
- <CAH8yC8nw_5rvGtemqZ3ojSaOCoLZnb+5q8m4NxTf5QTJ=5hoQg@mail.gmail.com>
-In-Reply-To: <CAH8yC8nw_5rvGtemqZ3ojSaOCoLZnb+5q8m4NxTf5QTJ=5hoQg@mail.gmail.com>
-From: Loganaden Velvindron <loganaden@gmail.com>
-Date: Sun, 31 Mar 2024 16:29:01 +0400
-Message-ID: <CAOp4FwT-F2H2dyqJoGM1d4G=-83LRDTk2GKcW56H-=9FUZ-EMQ@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [oss-security] Re: backdoor in upstream xz/liblzma leading to ssh
- server compromise
+X-Mailer: MIME-tools 5.428 (Entity 5.428)
+To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
+ xen-users@lists.xen.org, oss-security@lists.openwall.com
+From: Xen.org security team <security@xen.org>
+CC: Xen.org security team <security@xen.org>
+Subject: [oss-security] Xen Security Advisory 145 (CVE-2015-7812) - arm: Host crash when
+ preempting a multicall
 
-Closer look at "Jia Tan" commits show that he/they disabled the Linux
-landlock sandbox. Lasse Collin is doing
-good work to audit the commits and I wish Github would reinstate his
-github account.
+--=separator
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+Content-Transfer-Encoding: 7bit
 
-commit f9cf4c05edd14dedfe63833f8ccbe41b55823b00 (HEAD -> master,
-origin/master, origin/HEAD)
-Author: Lasse Collin <lasse.collin@tukaani.org>
-Date:   Sat Mar 30 14:36:28 2024 +0200
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-    CMake: Fix sabotaged Landlock sandbox check.
+            Xen Security Advisory CVE-2015-7812 / XSA-145
+                              version 3
 
-    It never enabled it.
+             arm: Host crash when preempting a multicall
 
-After using git blame:
-328c52da8 (Jia Tan       2024-02-26 23:02:06 +0800 1004) .
+UPDATES IN VERSION 3
+====================
 
-Pulling out git show:
+Public release.
 
-commit 328c52da8a2bbb81307644efdb58db2c422d9ba7
-Author: Jia Tan <jiat0218@gmail.com>
-Date:   Mon Feb 26 23:02:06 2024 +0800
+ISSUE DESCRIPTION
+=================
 
-    Build: Fix Linux Landlock feature test in Autotools and CMake builds.
+Early versions of Xen on ARM did not support "multicall" functionality
+(the ability to perform multiple operations via a single hypercall)
+and therefore stubbed out the functionality needed to support
+preemption of multicalls in a manner which crashed the host.
 
-    The previous Linux Landlock feature test assumed that having the
-    linux/landlock.h header file was enough. The new feature tests also
-    requires that prctl() and the required Landlock system calls are
-    supported.
+When multicall support was subsequently added these stubs were not
+replaced with the correct functionality and therefore exposed to
+guests a code path which crashes the host.
+
+Any guest can issue a preemptable hypercall via the multicall interface
+to exploit this vulnerability.
+
+IMPACT
+======
+
+A malicious guest can crash the host.
+
+VULNERABLE SYSTEMS
+==================
+
+Both 32- and 64-bit ARM systems are vulnerable from Xen 4.4 onward.
+
+x86 systems are not vulnerable.
+
+MITIGATION
+==========
+
+On systems where the guest kernel is controlled by the host rather
+than guest administrator, running only kernels which do not make use
+of multicall functionality will prevent untrusted guest users from
+exploiting this issue. However untrusted guest administrators can still
+trigger it unless further steps are taken to prevent them from loading
+code into the kernel (e.g. by disabling loadable modules etc) or from
+using other mechanisms which allow them to run code at kernel
+privilege.
+
+CREDITS
+=======
+
+This issue was discovered by Julien Grall of Citrix.
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue.
+
+xsa145.patch        xen-unstable, Xen 4.6.x, Xen 4.5.x, Xen 4.4.x
+
+$ sha256sum xsa145*.patch
+4d4a4724e4d367ddfc9ac1b43dfe81bce873c65fe9bb13f443266dd12c002db1  xsa145.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
 
 
-The code to weaken the sandbox was shipped in the 5.6.1 version.
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
 
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
 
+iQEcBAEBAgAGBQJWMgmzAAoJEIP+FMlX6CvZUV0H/2uDN/R1KaR1x2OljM5toEUR
+vGrEN1LX/AzQ1f4DADZO4LIvth2BLdFEB6OsaaKThFdnZjJWQ0fbfxIzb6eGOpMR
+XzuToUEIBTA01JHKNUo5ovWQ36gePyvxkFWDjk8Ixj22YpbuyUDU5HiHH5UpTovg
+0QLfJdKDij7Sp3/r9quQ5KSO86kw9CZqut5qRvMI8VKRa03O2jDch5iKkyDTcuCL
+md7r5+k6O3F4/TVPrlET+BAHOqgOtuQd6EMFfqXolsr12OpzzBz2/ntK4srmqlZc
+wa7PgAoELAaLnv4nBtFEtIyjg9YI4RIKnMwBbeD9suM305ohi3yDCxDj9eaYJwo=
+=eNQ5
+-----END PGP SIGNATURE-----
 
+--=separator
+Content-Type: application/octet-stream; name="xsa145.patch"
+Content-Disposition: attachment; filename="xsa145.patch"
+Content-Transfer-Encoding: base64
 
-On Sat, Mar 30, 2024, 19:42 Jeffrey Walton <noloader@gmail.com> wrote:
->
-> On Sat, Mar 30, 2024 at 9:38=E2=80=AFAM Pierre-Elliott B=C3=A9cue <peb@de=
-bian.org> wrote:
-> >
-> > Bjoern Franke <bjo@schafweide.org> wrote on 30/03/2024 at 14:06:38+0100:
-> >
-> > > Am 30.03.24 um 04:50 schrieb Loganaden Velvindron:
-> > >> Github has suspended the repo:
-> > >> https://github.com/tukaani-project/xz
-> > >> Im wondering what is the next step for the xz project as a whole ?
-> > >
-> > > https://git.tukaani.org/?p=3Dxz.git;a=3Dsummary exists and Lasse said=
- on
-> > > IRC he thinks he would make a clean 5.6.2 release.
-> > >
-> > > Regards
-> >
-> > I honestly would like to extend my sympathy to Lasse.
-> >
-> > This situation must clearly be a hell for him.
->
-> Lasse published a statement at <https://tukaani.org/xz-backdoor/>.
->
-> > Someone asked what would become of xz as a project. I do hope in light
-> > of this event, some people step in to help.
->
-> Perhaps Lasse should turn over control of the project to an entity
-> like the Linux Foundation. Xz is critical to Linux now, and it needs
-> more oversight than Lasse can provide. (Not to impugn Lasse; he seems
-> to be very busy. Extra [trusted] helping hands would probably be
-> welcomed).
->
-> Jeff
+eGVuL2FybTogU3VwcG9ydCBoeXBlcmNhbGxfY3JlYXRlX2NvbnRpbnVhdGlv
+biBmb3IgbXVsdGljYWxsCgpNdWx0aWNhbGwgZm9yIEFSTSBoYXMgYmVlbiBz
+dXBwb3J0ZWQgc2luY2UgY29tbWl0IGYwZGJkYzYgInhlbjogYXJtOiBmdWxs
+eQppbXBsZW1lbnQgbXVsdGljYWxsIGludGVyZmFjZS4iLiBBbHRob3VnaCwg
+aWYgYW4gaHlwZXJjYWxsIGluIG11bHRpY2FsbApyZXF1aXJlcyBwcmVlbXB0
+aW9uLCBpdCB3aWxsIGNyYXNoIHRoZSBob3N0OgoKKFhFTikgWGVuIEJVRyBh
+dCBkb21haW4uYzozNDcKKFhFTikgLS0tLVsgWGVuLTQuNy11bnN0YWJsZSAg
+YXJtNjQgIGRlYnVnPXkgIFRhaW50ZWQ6ICAgIEMgXS0tLS0KWy4uLl0KKFhF
+TikgWGVuIGNhbGwgdHJhY2U6CihYRU4pICAgIFs8MDAwMDAwMDAwMDI0MjBj
+Yz5dIGh5cGVyY2FsbF9jcmVhdGVfY29udGludWF0aW9uKzB4NjQvMHgzODAg
+KFBDKQooWEVOKSAgICBbPDAwMDAwMDAwMDAyMTcyNzQ+XSBkb19tZW1vcnlf
+b3ArMHgxYjAwLzB4MjMzNCAoTFIpCihYRU4pICAgIFs8MDAwMDAwMDAwMDI1
+MGQyYz5dIGRvX211bHRpY2FsbF9jYWxsKzB4MTE0LzB4MTI0CihYRU4pICAg
+IFs8MDAwMDAwMDAwMDIxN2ZmMD5dIGRvX211bHRpY2FsbCsweDE3Yy8weDIz
+YwooWEVOKSAgICBbPDAwMDAwMDAwMDAyNGY5N2M+XSBkb190cmFwX2h5cGVy
+Y2FsbCsweDkwLzB4MTJjCihYRU4pICAgIFs8MDAwMDAwMDAwMDI1MWNhOD5d
+IGRvX3RyYXBfaHlwZXJ2aXNvcisweGQyYy8weDFiYTQKKFhFTikgICAgWzww
+MDAwMDAwMDAwMjU4MmNjPl0gZ3Vlc3Rfc3luYysweDg4LzB4YjgKKFhFTikK
+KFhFTikKKFhFTikgKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioq
+KioqKioqKgooWEVOKSBQYW5pYyBvbiBDUFUgNToKKFhFTikgWGVuIEJVRyBh
+dCBkb21haW4uYzozNDcKKFhFTikgKioqKioqKioqKioqKioqKioqKioqKioq
+KioqKioqKioqKioqKioqKgooWEVOKQooWEVOKSBNYW51YWwgcmVzZXQgcmVx
+dWlyZWQgKCdub3JlYm9vdCcgc3BlY2lmaWVkKQoKTG9va2luZyB0byB0aGUg
+Y29kZSwgdGhlIHN1cHBvcnQgb2YgbXVsdGljYWxsIGxvb2tzIHZhbGlkIHRv
+IG1lLCBhcyB3ZSBvbmx5Cm5lZWQgdG8gZmlsbCBjYWxsLmFyZ3NbLi4uXS4g
+U28gZHJvcCB0aGUgQlVHKCk7CgpUaGlzIGlzIFhTQS0xNDUuCgpBY2tlZC1i
+eTogSWFuIENhbXBiZWxsIDxpYW4uY2FtcGJlbGxAY2l0cml4LmNvbT4KCmRp
+ZmYgLS1naXQgYS94ZW4vYXJjaC9hcm0vZG9tYWluLmMgYi94ZW4vYXJjaC9h
+cm0vZG9tYWluLmMKaW5kZXggNTc1NzQ1Yy4uNWM1YWM5ZSAxMDA2NDQKLS0t
+IGEveGVuL2FyY2gvYXJtL2RvbWFpbi5jCisrKyBiL3hlbi9hcmNoL2FybS9k
+b21haW4uYwpAQCAtMzQ0LDggKzM0NCw2IEBAIHVuc2lnbmVkIGxvbmcgaHlw
+ZXJjYWxsX2NyZWF0ZV9jb250aW51YXRpb24oCiAKICAgICBpZiAoIHRlc3Rf
+Yml0KF9NQ1NGX2luX211bHRpY2FsbCwgJm1jcy0+ZmxhZ3MpICkKICAgICB7
+Ci0gICAgICAgIEJVRygpOyAvKiBYWFggbXVsdGljYWxscyBub3QgaW1wbGVt
+ZW50ZWQgeWV0LiAqLwotCiAgICAgICAgIF9fc2V0X2JpdChfTUNTRl9jYWxs
+X3ByZWVtcHRlZCwgJm1jcy0+ZmxhZ3MpOwogCiAgICAgICAgIGZvciAoIGkg
+PSAwOyAqcCAhPSAnXDAnOyBpKysgKQo=
+
+--=separator--
