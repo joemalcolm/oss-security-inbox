@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4525" "Saturday" "18" "July" "2015" "11:41:15" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150718154115.805846C00BB@smtpvmsrv1.mitre.org>" "116" "[oss-security] Re: CVE request: Zenphoto before 1.4.9 multiple vulnerabilities" nil nil nil "7" "2015071815:41:15" "[oss-security] Re: CVE request: Zenphoto before 1.4.9 multiple vulnerabilities" (number mark "U       cve-assign@m Jul 18  116/4525  " thread-indent "\"[oss-security] Re: CVE request: Zenphoto before 1.4.9 multiple vulnerabilities\"\n") "<20150716103647.GD4912@lakka.kapsi.fi>" ("<20150716103647.GD4912@lakka.kapsi.fi>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["10918" "Thursday" "29" "October" "2015" "12:00:27" "+0000" "Xen.org security team" "security@xen.org" "<E1ZrlsZ-00024q-IX@xenbits.xen.org>" "245" "[oss-security] Xen Security Advisory 148 (CVE-2015-7835) - x86: Uncontrolled creation of large page mappings by PV guests" nil nil nil "10" "2015102912:00:27" "[oss-security] Xen Security Advisory 148 (CVE-2015-7835) - x86: Uncontrolled creation of large page mappings by PV guests" (number mark "U       security@xen Oct 29  245/10918 " thread-indent "\"[oss-security] Xen Security Advisory 148 (CVE-2015-7835) - x86: Uncontrolled creation of large page mappings by PV guests\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 13765 invoked by uid 550); 18 Jul 2015 15:41:28 -0000
+Received: (qmail 13853 invoked by uid 550); 29 Oct 2015 12:03:22 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,128 +12,262 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13734 invoked from network); 18 Jul 2015 15:41:27 -0000
-From: cve-assign@mitre.org
-To: henri@nerv.fi
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <20150716103647.GD4912@lakka.kapsi.fi>
-Message-Id: <20150718154115.805846C00BB@smtpvmsrv1.mitre.org>
-Date: Sat, 18 Jul 2015 11:41:15 -0400 (EDT)
-Subject: [oss-security] Re: CVE request: Zenphoto before 1.4.9 multiple vulnerabilities
+Received: (qmail 26541 invoked from network); 29 Oct 2015 12:00:46 -0000
+Date: Thu, 29 Oct 2015 12:00:27 +0000
+Message-Id: <E1ZrlsZ-00024q-IX@xenbits.xen.org>
+Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
+Content-Transfer-Encoding: binary
+MIME-Version: 1.0
+X-Mailer: MIME-tools 5.428 (Entity 5.428)
+To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
+ xen-users@lists.xen.org, oss-security@lists.openwall.com
+From: Xen.org security team <security@xen.org>
+CC: Xen.org security team <security@xen.org>
+Subject: [oss-security] Xen Security Advisory 148 (CVE-2015-7835) - x86: Uncontrolled
+ creation of large page mappings by PV guests
+
+--=separator
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+Content-Transfer-Encoding: 7bit
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> Can I get CVEs for vulnerabilities fixed in Zenphoto 1.4.9 ...
-> http://www.zenphoto.org/news/zenphoto-1.4.9 says "Fixes several SQL Injection,
-> XSS and path traversal
+            Xen Security Advisory CVE-2015-7835 / XSA-148
+                              version 4
 
-> http://software-talk.org/blog/2015/07/second-order-sql-injection-reflected-xss-path-traversal-function-execution-vulnerability-zenphoto/
+      x86: Uncontrolled creation of large page mappings by PV guests
 
-For purposes of CVE assignments, one important part of this blog post
-is:
+UPDATES IN VERSION 4
+====================
 
-  In practice, it doesn't matter, because an attacker can just edit a
-  legitimate PHP theme file and inject <?php passthru($_GET['c']) ?>
+Public release.
 
-In other words, it appears that the design of Zenphoto intentionally
-gives the admin an ability to execute arbitrary code on the server.
-This ability apparently also extends to users with the THEMES_RIGHTS
-right. The researcher suggests:
+ISSUE DESCRIPTION
+=================
 
-  It is still a good idea to fix this, as users might disable the
-  file edit functionality themselves to increase security.
+The code to validate level 2 page table entries is bypassed when
+certain conditions are satisfied.  This means that a PV guest can
+create writeable mappings using super page mappings.
 
-We couldn't immediately find documentation suggesting that there is a
-supported way to use the product without letting an admin execute
-arbitrary code (e.g., by deleting/changing admin-themes-editor.php or
-possibly other files). In general, the scope of CVE doesn't include
-questionable behaviors that have security relevance only if a user
-modifies a product.
+Such writeable mappings can violate Xen intended invariants for pages
+which Xen is supposed to keep read-only.
 
-Now, to consider the individual issues:
+This is possible even if the "allowsuperpage" command line option is
+not used.
 
-> There are multiple second order error based SQL injections into the
-> ORDER BY keyword in the admin area.
+IMPACT
+======
 
-This seems to allow exploitation by users who have only the
-OPTIONS_RIGHTS right. Use CVE-2015-5591.
+Malicious PV guest administrators can escalate privilege so as to
+control the whole system.
+
+VULNERABLE SYSTEMS
+==================
+
+Xen 3.4 and onward are vulnerable.
+
+Only x86 systems are vulnerable.  ARM systems are not vulnerable.
+
+Only PV guests can exploit the vulnerability.  Both 32-bit and 64-bit
+PV guests can do so.
+
+MITIGATION
+==========
+
+Running only HVM guests will avoid this vulnerability.
+
+On systems where the guest kernel is controlled by the host rather
+than guest administrator, running only kernels which do not call these
+hypercalls will also prevent untrusted guest users from exploiting
+this issue. However untrusted guest administrators can still trigger
+it unless further steps are taken to prevent them from loading code
+into the kernel (e.g. by disabling loadable modules etc) or from using
+other mechanisms which allow them to run code at kernel privilege.
+
+CREDITS
+=======
+
+This issue was discovered by 栾尚聪 (好风) of Alibaba.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa148.patch                 xen-unstable, Xen 4.6.x
+xsa148-4.5.patch             Xen 4.5.x
+xsa148-4.4.patch             Xen 4.4.x, Xen 4.3.x
+
+$ sha256sum xsa148*.patch
+f320d105a4832124910f46c50acd4803fe289bd7c4702ec15f97fb611b70944d  xsa148.patch
+7f78efd001f041a0e5502546664d28011cb881d72c94ea564585efb3ca01ddfe  xsa148-4.4.patch
+272a729048471cea851d4a881f3f2c32c7be101e2a452d2b2ceb9d66908ee4a3  xsa148-4.5.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
 
 
-> XSS 1
-> sanitize_string, which does not adequately protect against any attacks
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
 
-The product is apparently trying to prevent all XSS but has three
-independent types of mistakes described by the researcher.
-
->       $content = preg_replace('~<script.*?/script>~is', '', $content);
->       $content = preg_replace('~<style.*?/style>~is', '', $content);
-
->       $content = strip_tags($content);
-
-Identifying only a short list of relevant elements (e.g., SCRIPT and
-STYLE) and relying on strip_tags are both incomplete protection
-mechanisms. Use CVE-2015-5592.
-
-This specific use of preg_replace also has an implementation error,
-noted by the researcher in the first "can be easily bypassed" example
-involving multiple SCRIPT elements. Use CVE-2015-5593.
-
->       $content = html_entity_decode($content, ENT_QUOTES, 'UTF-8');
-
-Finally, the placement of html_entity_decode after input sanitization
-is inconsistent with the function's purpose. Use CVE-2015-5594.
-
-
-> Directory Traversal
-
-This has no CVE ID because it doesn't cross privilege boundaries.
-
-
-> XSS 2
-> admin.php?action=external&error=" onmouseover="alert('xsstest')" foo="bar
-
-We don't think this is an independent type of issue. admin.php has a
-call to sanitize($_GET['error']), and this seems to use
-sanitize_string. The three CVE IDs related to sanitize_string also
-apply to this admin.php behavior.
-
-
-> Execute Function
-> admin.php?action=phpinfo
-
-> An admin user can execute any function they want via this URL (there
-> is also no CSRF protection for it)
-
-> I'm reporting this because as defense in depth, it's a good idea to
-> not allow execution of arbitrary functions. I have not found a way to
-> actually exploit it
-
-We feel that action=ingres_connect seems to be a relevant example.
-http://php.net/manual/function.ingres-connect.php says "If some
-parameters are missing, ingres_connect() uses the values in php.ini
-for ingres.default_database, ingres.default_user and
-ingres.default_password." This is, more or less, a CSRF with resultant
-SSRF: the attacker can cause a denial of service by triggering many
-connections to a (victim-specified) remote Ingres database.
-
-Use CVE-2015-5595 for this CSRF issue. An intentional call to
-admin.php?action= doesn't cross privilege boundaries because it
-requires that the attacker is an admin.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-iQEcBAEBAgAGBQJVqm1+AAoJEKllVAevmvms2ccH/3lD5AOAzdh9YtJBP+rBv4OO
-RMb0QpjWKcEWjXXMZzLeYQLiHX0HG63+NIpTajrTgCMRoWyjZB+ay+XkH6mbFvB3
-wiMm9IP6IVx7nfc8jzJLJtHfMrGgczr06i0sUPWoncVE1nIv6ErS/qrCbW7CL2BU
-/0lkuWeX4G18aANWrULuxKxrzLhx+fy4jvSHNQPab6Hje6amxEtQZkxp3df2oHIT
-/CFICBItz4mo3JvuhMJqzFGoqp+C+itPwO+S+9Uromw7XIA/aztdUesDANY2OjvH
-eso6opnRHWql4WfKvR9TyuLio54kK96BaD61H6nCahcoe6J2BYP19wP4nlzf8RE=
-=/q0j
+iQEcBAEBAgAGBQJWMgm4AAoJEIP+FMlX6CvZPl0IAI7uPHn9OiDqQlKnvuF5DJkx
+WkmX6lNgIXd9arkZ2gUvlenPArfJV2Rv75TP/0LLuITrv+AcylFEBd7T7rdbXeAT
+w5TaYI1wnixu8D+klyMGDjIt8Oy0gG1D8tpJYB4SETmT/Knv9FmFmUrShPD5kEVW
+6W3j3PulCpPX6+8rpmD+1CD8DDH/FHvr3xc/mK9gaWTSfPvYX0wcUbVR5GK63SHy
+6smdmcbyMz6RLlq9MRSs1ifYuAOFel3bFi0NaUm+w3luVozgg6MiEopmnmLZXgbu
+93iMDiKbQmr6XdsqvqWexJ7hAiWD5Sp+ztUW0iyNLKpj482VU9wSm0vwneZpgCg=
+=WDZi
 -----END PGP SIGNATURE-----
+
+--=separator
+Content-Type: application/octet-stream; name="xsa148.patch"
+Content-Disposition: attachment; filename="xsa148.patch"
+Content-Transfer-Encoding: base64
+
+eDg2OiBndWFyZCBhZ2FpbnN0IHVuZHVlIHN1cGVyIHBhZ2UgUFRFIGNyZWF0
+aW9uCgpXaGVuIG9wdGlvbmFsIHN1cGVyIHBhZ2Ugc3VwcG9ydCBnb3QgYWRk
+ZWQgKGNvbW1pdCBiZDFjZDgxZDY0ICJ4ODY6IFBWCnN1cHBvcnQgZm9yIGh1
+Z2VwYWdlcyIpLCB0d28gYWRqdXN0bWVudHMgd2VyZSBtaXNzZWQ6IG1vZF9s
+Ml9lbnRyeSgpCm5lZWRzIHRvIGNvbnNpZGVyIHRoZSBQU0UgYW5kIFJXIGJp
+dHMgd2hlbiBkZWNpZGluZyB3aGV0aGVyIHRvIHVzZSB0aGUKZmFzdCBwYXRo
+LCBhbmQgdGhlIFBTRSBiaXQgbXVzdCBub3QgYmUgcmVtb3ZlZCBmcm9tIEwy
+X0RJU0FMTE9XX01BU0sKdW5jb25kaXRpb25hbGx5LgoKVGhpcyBpcyBYU0Et
+MTQ4LgoKU2lnbmVkLW9mZi1ieTogSmFuIEJldWxpY2ggPGpiZXVsaWNoQHN1
+c2UuY29tPgpSZXZpZXdlZC1ieTogVGltIERlZWdhbiA8dGltQHhlbi5vcmc+
+CgotLS0gYS94ZW4vYXJjaC94ODYvbW0uYworKysgYi94ZW4vYXJjaC94ODYv
+bW0uYwpAQCAtMTYwLDcgKzE2MCwxMCBAQCBzdGF0aWMgdm9pZCBwdXRfc3Vw
+ZXJwYWdlKHVuc2lnbmVkIGxvbmcgCiBzdGF0aWMgdWludDMyX3QgYmFzZV9k
+aXNhbGxvd19tYXNrOwogLyogR2xvYmFsIGJpdCBpcyBhbGxvd2VkIHRvIGJl
+IHNldCBvbiBMMSBQVEVzLiBJbnRlbmRlZCBmb3IgdXNlciBtYXBwaW5ncy4g
+Ki8KICNkZWZpbmUgTDFfRElTQUxMT1dfTUFTSyAoKGJhc2VfZGlzYWxsb3df
+bWFzayB8IF9QQUdFX0dOVFRBQikgJiB+X1BBR0VfR0xPQkFMKQotI2RlZmlu
+ZSBMMl9ESVNBTExPV19NQVNLIChiYXNlX2Rpc2FsbG93X21hc2sgJiB+X1BB
+R0VfUFNFKQorCisjZGVmaW5lIEwyX0RJU0FMTE9XX01BU0sgKHVubGlrZWx5
+KG9wdF9hbGxvd19zdXBlcnBhZ2UpIFwKKyAgICAgICAgICAgICAgICAgICAg
+ICAgICAgPyBiYXNlX2Rpc2FsbG93X21hc2sgJiB+X1BBR0VfUFNFIFwKKyAg
+ICAgICAgICAgICAgICAgICAgICAgICAgOiBiYXNlX2Rpc2FsbG93X21hc2sp
+CiAKICNkZWZpbmUgbDNfZGlzYWxsb3dfbWFzayhkKSAoIWlzX3B2XzMyYml0
+X2RvbWFpbihkKSA/IFwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+YmFzZV9kaXNhbGxvd19tYXNrIDogMHhGRkZGRjE5OFUpCkBAIC0xODQxLDcg
+KzE4NDQsMTAgQEAgc3RhdGljIGludCBtb2RfbDJfZW50cnkobDJfcGdlbnRy
+eV90ICpwbAogICAgICAgICB9CiAKICAgICAgICAgLyogRmFzdCBwYXRoIGZv
+ciBpZGVudGljYWwgbWFwcGluZyBhbmQgcHJlc2VuY2UuICovCi0gICAgICAg
+IGlmICggIWwyZV9oYXNfY2hhbmdlZChvbDJlLCBubDJlLCBfUEFHRV9QUkVT
+RU5UKSApCisgICAgICAgIGlmICggIWwyZV9oYXNfY2hhbmdlZChvbDJlLCBu
+bDJlLAorICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgdW5saWtlbHko
+b3B0X2FsbG93X3N1cGVycGFnZSkKKyAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgID8gX1BBR0VfUFNFIHwgX1BBR0VfUlcgfCBfUEFHRV9QUkVTRU5U
+CisgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA6IF9QQUdFX1BSRVNF
+TlQpICkKICAgICAgICAgewogICAgICAgICAgICAgYWRqdXN0X2d1ZXN0X2wy
+ZShubDJlLCBkKTsKICAgICAgICAgICAgIGlmICggVVBEQVRFX0VOVFJZKGwy
+LCBwbDJlLCBvbDJlLCBubDJlLCBwZm4sIHZjcHUsIHByZXNlcnZlX2FkKSAp
+Cg==
+
+--=separator
+Content-Type: application/octet-stream; name="xsa148-4.4.patch"
+Content-Disposition: attachment; filename="xsa148-4.4.patch"
+Content-Transfer-Encoding: base64
+
+eDg2OiBndWFyZCBhZ2FpbnN0IHVuZHVlIHN1cGVyIHBhZ2UgUFRFIGNyZWF0
+aW9uCgpXaGVuIG9wdGlvbmFsIHN1cGVyIHBhZ2Ugc3VwcG9ydCBnb3QgYWRk
+ZWQgKGNvbW1pdCBiZDFjZDgxZDY0ICJ4ODY6IFBWCnN1cHBvcnQgZm9yIGh1
+Z2VwYWdlcyIpLCB0d28gYWRqdXN0bWVudHMgd2VyZSBtaXNzZWQ6IG1vZF9s
+Ml9lbnRyeSgpCm5lZWRzIHRvIGNvbnNpZGVyIHRoZSBQU0UgYW5kIFJXIGJp
+dHMgd2hlbiBkZWNpZGluZyB3aGV0aGVyIHRvIHVzZSB0aGUKZmFzdCBwYXRo
+LCBhbmQgdGhlIFBTRSBiaXQgbXVzdCBub3QgYmUgcmVtb3ZlZCBmcm9tIEwy
+X0RJU0FMTE9XX01BU0sKdW5jb25kaXRpb25hbGx5LgoKVGhpcyBpcyBYU0Et
+MTQ4LgoKU2lnbmVkLW9mZi1ieTogSmFuIEJldWxpY2ggPGpiZXVsaWNoQHN1
+c2UuY29tPgpSZXZpZXdlZC1ieTogVGltIERlZWdhbiA8dGltQHhlbi5vcmc+
+CgotLS0gYS94ZW4vYXJjaC94ODYvbW0uYworKysgYi94ZW4vYXJjaC94ODYv
+bW0uYwpAQCAtMTYzLDcgKzE2MywxMCBAQCBzdGF0aWMgdm9pZCBwdXRfc3Vw
+ZXJwYWdlKHVuc2lnbmVkIGxvbmcgCiAKIHN0YXRpYyB1aW50MzJfdCBiYXNl
+X2Rpc2FsbG93X21hc2s7CiAjZGVmaW5lIEwxX0RJU0FMTE9XX01BU0sgKGJh
+c2VfZGlzYWxsb3dfbWFzayB8IF9QQUdFX0dOVFRBQikKLSNkZWZpbmUgTDJf
+RElTQUxMT1dfTUFTSyAoYmFzZV9kaXNhbGxvd19tYXNrICYgfl9QQUdFX1BT
+RSkKKworI2RlZmluZSBMMl9ESVNBTExPV19NQVNLICh1bmxpa2VseShvcHRf
+YWxsb3dfc3VwZXJwYWdlKSBcCisgICAgICAgICAgICAgICAgICAgICAgICAg
+ID8gYmFzZV9kaXNhbGxvd19tYXNrICYgfl9QQUdFX1BTRSBcCisgICAgICAg
+ICAgICAgICAgICAgICAgICAgIDogYmFzZV9kaXNhbGxvd19tYXNrKQogCiAj
+ZGVmaW5lIGwzX2Rpc2FsbG93X21hc2soZCkgKCFpc19wdl8zMm9uNjRfZG9t
+YWluKGQpID8gIFwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgYmFz
+ZV9kaXNhbGxvd19tYXNrIDogICAgICAgXApAQCAtMTc4Niw3ICsxNzg5LDEw
+IEBAIHN0YXRpYyBpbnQgbW9kX2wyX2VudHJ5KGwyX3BnZW50cnlfdCAqcGwK
+ICAgICAgICAgfQogCiAgICAgICAgIC8qIEZhc3QgcGF0aCBmb3IgaWRlbnRp
+Y2FsIG1hcHBpbmcgYW5kIHByZXNlbmNlLiAqLwotICAgICAgICBpZiAoICFs
+MmVfaGFzX2NoYW5nZWQob2wyZSwgbmwyZSwgX1BBR0VfUFJFU0VOVCkgKQor
+ICAgICAgICBpZiAoICFsMmVfaGFzX2NoYW5nZWQob2wyZSwgbmwyZSwKKyAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgIHVubGlrZWx5KG9wdF9hbGxv
+d19zdXBlcnBhZ2UpCisgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA/
+IF9QQUdFX1BTRSB8IF9QQUdFX1JXIHwgX1BBR0VfUFJFU0VOVAorICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgOiBfUEFHRV9QUkVTRU5UKSApCiAg
+ICAgICAgIHsKICAgICAgICAgICAgIGFkanVzdF9ndWVzdF9sMmUobmwyZSwg
+ZCk7CiAgICAgICAgICAgICBpZiAoIFVQREFURV9FTlRSWShsMiwgcGwyZSwg
+b2wyZSwgbmwyZSwgcGZuLCB2Y3B1LCBwcmVzZXJ2ZV9hZCkgKQo=
+
+--=separator
+Content-Type: application/octet-stream; name="xsa148-4.5.patch"
+Content-Disposition: attachment; filename="xsa148-4.5.patch"
+Content-Transfer-Encoding: base64
+
+eDg2OiBndWFyZCBhZ2FpbnN0IHVuZHVlIHN1cGVyIHBhZ2UgUFRFIGNyZWF0
+aW9uCgpXaGVuIG9wdGlvbmFsIHN1cGVyIHBhZ2Ugc3VwcG9ydCBnb3QgYWRk
+ZWQgKGNvbW1pdCBiZDFjZDgxZDY0ICJ4ODY6IFBWCnN1cHBvcnQgZm9yIGh1
+Z2VwYWdlcyIpLCB0d28gYWRqdXN0bWVudHMgd2VyZSBtaXNzZWQ6IG1vZF9s
+Ml9lbnRyeSgpCm5lZWRzIHRvIGNvbnNpZGVyIHRoZSBQU0UgYW5kIFJXIGJp
+dHMgd2hlbiBkZWNpZGluZyB3aGV0aGVyIHRvIHVzZSB0aGUKZmFzdCBwYXRo
+LCBhbmQgdGhlIFBTRSBiaXQgbXVzdCBub3QgYmUgcmVtb3ZlZCBmcm9tIEwy
+X0RJU0FMTE9XX01BU0sKdW5jb25kaXRpb25hbGx5LgoKVGhpcyBpcyBYU0Et
+MTQ4LgoKU2lnbmVkLW9mZi1ieTogSmFuIEJldWxpY2ggPGpiZXVsaWNoQHN1
+c2UuY29tPgpSZXZpZXdlZC1ieTogVGltIERlZWdhbiA8dGltQHhlbi5vcmc+
+CgotLS0gYS94ZW4vYXJjaC94ODYvbW0uYworKysgYi94ZW4vYXJjaC94ODYv
+bW0uYwpAQCAtMTYyLDcgKzE2MiwxMCBAQCBzdGF0aWMgdm9pZCBwdXRfc3Vw
+ZXJwYWdlKHVuc2lnbmVkIGxvbmcgCiBzdGF0aWMgdWludDMyX3QgYmFzZV9k
+aXNhbGxvd19tYXNrOwogLyogR2xvYmFsIGJpdCBpcyBhbGxvd2VkIHRvIGJl
+IHNldCBvbiBMMSBQVEVzLiBJbnRlbmRlZCBmb3IgdXNlciBtYXBwaW5ncy4g
+Ki8KICNkZWZpbmUgTDFfRElTQUxMT1dfTUFTSyAoKGJhc2VfZGlzYWxsb3df
+bWFzayB8IF9QQUdFX0dOVFRBQikgJiB+X1BBR0VfR0xPQkFMKQotI2RlZmlu
+ZSBMMl9ESVNBTExPV19NQVNLIChiYXNlX2Rpc2FsbG93X21hc2sgJiB+X1BB
+R0VfUFNFKQorCisjZGVmaW5lIEwyX0RJU0FMTE9XX01BU0sgKHVubGlrZWx5
+KG9wdF9hbGxvd19zdXBlcnBhZ2UpIFwKKyAgICAgICAgICAgICAgICAgICAg
+ICAgICAgPyBiYXNlX2Rpc2FsbG93X21hc2sgJiB+X1BBR0VfUFNFIFwKKyAg
+ICAgICAgICAgICAgICAgICAgICAgICAgOiBiYXNlX2Rpc2FsbG93X21hc2sp
+CiAKICNkZWZpbmUgbDNfZGlzYWxsb3dfbWFzayhkKSAoIWlzX3B2XzMyb242
+NF9kb21haW4oZCkgPyAgXAogICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICBiYXNlX2Rpc2FsbG93X21hc2sgOiAgICAgICBcCkBAIC0xNzcwLDcgKzE3
+NzMsMTAgQEAgc3RhdGljIGludCBtb2RfbDJfZW50cnkobDJfcGdlbnRyeV90
+ICpwbAogICAgICAgICB9CiAKICAgICAgICAgLyogRmFzdCBwYXRoIGZvciBp
+ZGVudGljYWwgbWFwcGluZyBhbmQgcHJlc2VuY2UuICovCi0gICAgICAgIGlm
+ICggIWwyZV9oYXNfY2hhbmdlZChvbDJlLCBubDJlLCBfUEFHRV9QUkVTRU5U
+KSApCisgICAgICAgIGlmICggIWwyZV9oYXNfY2hhbmdlZChvbDJlLCBubDJl
+LAorICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgdW5saWtlbHkob3B0
+X2FsbG93X3N1cGVycGFnZSkKKyAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgID8gX1BBR0VfUFNFIHwgX1BBR0VfUlcgfCBfUEFHRV9QUkVTRU5UCisg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICA6IF9QQUdFX1BSRVNFTlQp
+ICkKICAgICAgICAgewogICAgICAgICAgICAgYWRqdXN0X2d1ZXN0X2wyZShu
+bDJlLCBkKTsKICAgICAgICAgICAgIGlmICggVVBEQVRFX0VOVFJZKGwyLCBw
+bDJlLCBvbDJlLCBubDJlLCBwZm4sIHZjcHUsIHByZXNlcnZlX2FkKSApCg==
+
+--=separator--
