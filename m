@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1545" "Friday" "14" "July" "2017" "18:14:53" "-0700" "Seth Arnold" "seth.arnold@canonical.com" "<20170715011453.GB14774@hunt>" "43" "Re: [oss-security] CVE-2017-1000083: evince: Command injection vulnerability in CBT handler" "^Date:" nil nil "7" "2017071501:14:53" "[oss-security] CVE-2017-1000083: evince: Command injection vulnerability in CBT handler" (number mark "        seth.arnold@ Jul 14   43/1545  " thread-indent "\"Re: [oss-security] CVE-2017-1000083: evince: Command injection vulnerability in CBT handler\"\n") "<C6395DC7-CB29-4844-9EB0-E572C7AAAE81@gmail.com>" ("<20170713154344.GG21662@suse.com>" "<C6395DC7-CB29-4844-9EB0-E572C7AAAE81@gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1229" "Friday" "30" "October" "2015" "15:34:22" "-0400" "Rich Felker" "dalias@libc.org" "<20151030193422.GH8645@brightrain.aerifal.cx>" "26" "Re: [oss-security] Re: Pointer misuse unziping files with busybox" nil nil nil "10" "2015103019:34:22" "[oss-security] Re: Pointer misuse unziping files with busybox" (number mark "        dalias@libc. Oct 30   26/1229  " thread-indent "\"Re: [oss-security] Re: Pointer misuse unziping files with busybox\"\n") "<20151029060451.38E3F6C00ED@smtpvmsrv1.mitre.org>" ("<CACn5sdRFRE-eTpgGdJr8hok0phUFtXHGAF_k3OAe1R46a1Nv9g@mail.gmail.com>" "<20151029060451.38E3F6C00ED@smtpvmsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 30423 invoked by uid 550); 15 Jul 2017 01:15:07 -0000
+Received: (qmail 19972 invoked by uid 550); 30 Oct 2015 19:34:39 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,64 +11,46 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 30402 invoked from network); 15 Jul 2017 01:15:07 -0000
-Message-ID: <20170715011453.GB14774@hunt>
-Mail-Followup-To: oss-security@lists.openwall.com
-References: <20170713154344.GG21662@suse.com>
- <C6395DC7-CB29-4844-9EB0-E572C7AAAE81@gmail.com>
+Received: (qmail 19951 invoked from network); 30 Oct 2015 19:34:38 -0000
+Message-ID: <20151030193422.GH8645@brightrain.aerifal.cx>
+References: <CACn5sdRFRE-eTpgGdJr8hok0phUFtXHGAF_k3OAe1R46a1Nv9g@mail.gmail.com>
+ <20151029060451.38E3F6C00ED@smtpvmsrv1.mitre.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="GRPZ8SYKNexpdSJ7"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <C6395DC7-CB29-4844-9EB0-E572C7AAAE81@gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-Date: Fri, 14 Jul 2017 18:14:53 -0700
-From: Seth Arnold <seth.arnold@canonical.com>
+In-Reply-To: <20151029060451.38E3F6C00ED@smtpvmsrv1.mitre.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+Cc: gustavo.grieco@gmail.com, cve-assign@mitre.org
+Date: Fri, 30 Oct 2015 15:34:22 -0400
+From: Rich Felker <dalias@libc.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE-2017-1000083: evince: Command injection
- vulnerability in CBT handler
+Sender: Rich Felker <dalias@aerifal.cx>
+Subject: Re: [oss-security] Re: Pointer misuse unziping files with busybox
 To: oss-security@lists.openwall.com
 
---GRPZ8SYKNexpdSJ7
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Thu, Oct 29, 2015 at 02:04:51AM -0400, cve-assign@mitre.org wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA256
+> 
+> > http://git.busybox.net/busybox/commit/?id=1de25a6e87e0e627aa34298105a3d17c60a1f44e
+> 
+> > Unziping a specially crafted zip file results in a computation of an invalid
+> > pointer and a crash reading an invalid address.
+> 
+> Could you please comment directly about the likelihood of
+> exploitability for code execution? See the
+> http://www.openwall.com/lists/oss-security/2015/10/11/5 post. We
+> currently feel that a CVE assignment for a non-exploitable unzip crash
+> on BusyBox may be unlikely, because BusyBox wouldn't realistically be
+> used for deployment of a program that remains running to offer an
+> unzipping service to multiple clients.
 
-On Fri, Jul 14, 2017 at 07:27:53PM -0500, Brandon Perry wrote:
-> > On Jul 13, 2017, at 10:43 AM, Johannes Segitz <jsegitz@suse.de> wrote:
-> > This can be exploited by creating a tar archive with an embedded file
-> > named something
-> > like this: "--checkpoint-action=3Dexec=3Dbash -c 'touch ~/covfefe.evinc=
-e;'.jpg"
-> >=20
-> > (Make sure evince is not sandboxed by apparmor before trying to reprodu=
-ce
-> > the attached POC)
->=20
-> Not sure if the list ate the attachment, but I don=E2=80=99t see it avail=
-able.
-> Perhaps a link to it somewhere else would be of use?
+There are several distributions including Alpine Linux, widely used in
+container environments, which by default use busybox to provide the
+unzip utility. Unzipping of any files downloaded by the user, possibly
+from untrusted sources, may be affected. I believe CVE is appropriate
+for user-facing programs commonly used to open untrusted files even
+without an automated process accepting and processing
+potentially-malicious files from a client.
 
-The attachment didn't make it through to the distros list either. When I
-was testing just the tar portion of this, I skipped the / character in the
-filename and added a 10MB zeroed file (truncate -s 10MB huge) to make sure
-the checkpoint program gets run.
-
-Thanks
-
---GRPZ8SYKNexpdSJ7
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQEcBAEBCgAGBQJZaWyNAAoJEPMhclmdjS6X8WgH/1aW4QJyUE1SV+tNQ/edUHt4
-+VnjvD2MNKxIK1De2PTZ75arDvuAfQALBNtOQ64F0SKEW5ODFLphclo47JQdsk9y
-Xwp502FQHjW2wdA4QXTt40m/FXIm/sKNL+oDpV2jRFhRt0lIGJwPJz/b896fkxOW
-/7njhILkjEuJ8zKlhBYX02htUqCuRMDkMq6eEXWUk8KeGwR7ob2T4kydxRN1ov44
-4n1W9gQZSY3GA9eoi7wFIXP0mQ6W7RZGM8KMbuuv0TbZi9m+zttO7+3Sm/qFyQj0
-e70NK4j4ixUWPo0I8uBS26GS1D9zyiaRFq1kwvV3LwliWcGd83l6z6FSkLRSXqA=
-=D7zI
------END PGP SIGNATURE-----
-
---GRPZ8SYKNexpdSJ7--
+Rich
