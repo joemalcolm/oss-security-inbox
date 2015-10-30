@@ -1,55 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/13/16
-Message-ID: <000a01d047de$4077a8c0$c166fa40$@mantisforge.org>
-Date: Fri, 13 Feb 2015 22:41:47 -0000
-From: "P Richards" <paul@...tisforge.org>
-To: <oss-security@...ts.openwall.com>
-Subject: RE: Re: CVE request: XSS in MantisBT
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/10/30/7
+Message-ID: <20151030193422.GH8645@oevtugenva.nrevsny.pk>
+Date: Fri, 30 Oct 2015 15:34:22 -0400
+From: Rich Felker <dalias@...c.org>
+To: oss-security@...ts.openwall.com
+Cc: gustavo.grieco@...il.com, cve-assign@...re.org
+Subject: Re: Re: Pointer misuse unziping files with busybox
 Content-Type: text/plain; charset=utf-8
 
-According to github https://github.com/mantisbt/mantisbt/commit/cabacdc291c251bfde0dc2a2c945c02cef41bf40 - the fix referenced for CVE-2014-8986 has never been tagged to a 1.2.x release.
+On Thu, Oct 29, 2015 at 02:04:51AM -0400, cve-assign@...re.org wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA256
+> 
+> > http://git.busybox.net/busybox/commit/?id=1de25a6e87e0e627aa34298105a3d17c60a1f44e
+> 
+> > Unziping a specially crafted zip file results in a computation of an invalid
+> > pointer and a crash reading an invalid address.
+> 
+> Could you please comment directly about the likelihood of
+> exploitability for code execution? See the
+> http://www.openwall.com/lists/oss-security/2015/10/11/5 post. We
+> currently feel that a CVE assignment for a non-exploitable unzip crash
+> on BusyBox may be unlikely, because BusyBox wouldn't realistically be
+> used for deployment of a program that remains running to offer an
+> unzipping service to multiple clients.
 
-I've not yet done an announcement for this fix as it's not gone into a release.
+There are several distributions including Alpine Linux, widely used in
+container environments, which by default use busybox to provide the
+unzip utility. Unzipping of any files downloaded by the user, possibly
+from untrusted sources, may be affected. I believe CVE is appropriate
+for user-facing programs commonly used to open untrusted files even
+without an automated process accepting and processing
+potentially-malicious files from a client.
 
-It's listed as the fix @ http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-8986, however, that changeset has never been tagged against 1.2.
-
-Paul
-
-
------Original Message-----
-From: Damien Regad [mailto:dregad@...tisbt.org] 
-Sent: 13 February 2015 21:53
-To: oss-security@...ts.openwall.com
-Subject: [oss-security] Re: CVE request: XSS in MantisBT
-
-On 2015-02-10 01:41, P Richards wrote:
- > This issue looks fairly like the issue previously identified in  > adm_config_report.php in May 2014, as an XSS. See  >
-https://github.com/mantisbt/mantisbt/commit/cabacdc291c251bfde0dc2a2c945c02cef41bf40
- > I'm still waiting for the CVE to be provided for  > cabacdc291c251bfde0dc2a2c945c02cef41bf40 from May, or could you let  > me know what CVE was assigned for the initial fix?
-
-A 5 seconds search through the MantisBT changesets tells me that it was CVE-2014-8986.
-See https://www.mantisbt.org/bugs/view.php?id=17889.
-
-Which, by the way, would have been even easier for you to find if you had actually bothered to follow the process and report the security issue in our tracker yourself instead of emailing me that PDF file of yours and making me do the legwork.
-
- > And in fact, it looking at the diff, my initial thought was you were  > trying to take a vulnerability discovered by myself and pass it off  > as something new crediting someone else and yourself for the fix -  > although it may be this was unintentional as it appears you  > re-introduced the same bug a few months after the initial fix.
-
-You know, this really sounds like paranoia... You know me, and should know better. I have never taken credit for somebody else's work. Credit was given, where it was due:
-http://thread.gmane.org/gmane.comp.security.oss.general/14706/focus=14849
-
- > [...]
- >
- > It seems you then modified the fix for this vulnerability in August  > to re-introduce the vulnerability [...]  >  > And now are requesting a CVE for the new issue crediting a different  > researchcompany for the 'new vulnerability', with no mention of the  > original discovery for this issue in May 2014.
- >
- > @Mitre: How is this handled? Do you assign two CVE's in this case?
-
-As far as I can tell, while related, these are indeed 2 distinct issues even though they are evidently related.
-
-Quite frankly, I just can't be bothered to analyze whether my follow-up fix for CVE-2014-8986 reintroduced the issue or not.
-
-Even if I did, the fact remains that 1.2.19 was released as it was, so we DO have two distinct issues here in any case.
-
-D
-
-
-
+Rich
