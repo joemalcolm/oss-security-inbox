@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2825" "Wednesday" "3" "June" "2015" "01:00:28" "+0200" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20150603010028.2c166570@pc1>" "78" "[oss-security] Stack out of bounds read access in uudecode / sharutils" nil nil nil "6" "2015060223:00:28" "[oss-security] Stack out of bounds read access in uudecode / sharutils" (number mark "        hanno@hboeck Jun  3   78/2825  " thread-indent "\"[oss-security] Stack out of bounds read access in uudecode / sharutils\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2485" "Thursday" "29" "October" "2015" "20:28:22" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151030002822.EA52E6C0116@smtpvmsrv1.mitre.org>" "62" "[oss-security] Re: CVE request: lldpd crash in lldp_decode due large management address" nil nil nil "10" "2015103000:28:22" "[oss-security] Re: CVE request: lldpd crash in lldp_decode due large management address" (number mark "        cve-assign@m Oct 29   62/2485  " thread-indent "\"[oss-security] Re: CVE request: lldpd crash in lldp_decode due large management address\"\n") "<871tcvuz3u.fsf@mid.deneb.enyo.de>" ("<871tcvuz3u.fsf@mid.deneb.enyo.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 5870 invoked by uid 550); 2 Jun 2015 23:00:00 -0000
+Received: (qmail 5350 invoked by uid 550); 30 Oct 2015 00:28:35 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,93 +11,75 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5824 invoked from network); 2 Jun 2015 22:59:54 -0000
-Message-ID: <20150603010028.2c166570@pc1>
-X-Mailer: Claws Mail 3.11.1 (GTK+ 2.24.28; x86_64-pc-linux-gnu)
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512; protocol="application/pgp-signature"; boundary="=_zucker.schokokeks.org-29183-1433285982-0001-2"
-Cc: cve-assign@mitre.org
-Date: Wed, 3 Jun 2015 01:00:28 +0200
-From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
+Received: (qmail 5319 invoked from network); 30 Oct 2015 00:28:34 -0000
+In-Reply-To: <871tcvuz3u.fsf@mid.deneb.enyo.de>
+Message-Id: <20151030002822.EA52E6C0116@smtpvmsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Thu, 29 Oct 2015 20:28:22 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Stack out of bounds read access in uudecode / sharutils
-To: oss security list <oss-security@lists.openwall.com>
+Subject: [oss-security] Re: CVE request: lldpd crash in lldp_decode due large management address
+To: fw@deneb.enyo.de
 
---=_zucker.schokokeks.org-29183-1433285982-0001-2
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-https://blog.fuzzing-project.org/13-Stack-out-of-bounds-read-access-in-uude=
-code-sharutils.html
+> https://github.com/vincentbernat/lldpd/commit/dd4f16e7e816f2165fba76e3d162cd8d2978dcb2
+> 
+> lldp: fix a buffer overflow when handling management address TLV
+> 
+> When a remote device was advertising a too large management address
+> while still respecting TLV boundaries, lldpd would crash due to a buffer
+> overflow. However, the buffer being a static one, this buffer overflow
+> is not exploitable if hardening was not disabled. This bug exists since
+> version 0.5.6.
 
-uudecode is a tool to decode uuencoded data. It is shipped with the
-package sharutils.
+>> https://github.com/vincentbernat/lldpd/blob/master/configure.ac
 
-An invalid input file can cause an out of bounds stack read access in
-the function expand_tilde(). This issue has been reported to the
-developers on 2015-03-04. It has been fixed in sharutils 4.15.2
-(2015-05-30).
+>> [AS_HELP_STRING([--enable-hardening],
+>>   [Enable compiler and linker options to frustrate memory corruption exploits @<:@default=yes@:>@])],
 
-To see this bug one needs to use a tool like valgrind or address
-sanitizer that detects out of bounds memory reads. The bug was found
-with american fuzzy lop.
+Based on the
+https://github.com/vincentbernat/lldpd/commit/8738a36d30e2e94257c5b1ae9cd3e7c3d314808e
+commit, there are apparently some platforms, such as the OpenWrt Linux
+distribution, on which hardening must be disabled. Thus, this is a
+relevant exploitable problem in the general case.
 
-Sample file
-https://crashes.fuzzing-project.org/uudecode-oob-read-stack-expand_tilde.uu
+Use CVE-2015-8011.
 
-Address sanitizer output:
 
-=3D=3D8209=3D=3DERROR: AddressSanitizer: stack-buffer-overflow on address 0=
-x7fff8a4a8690 at pc 0x40738d bp 0x7fff8a4a44a0 sp 0x7fff8a4a4490
-READ of size 1 at 0x7fff8a4a8690 thread T0
-#0 0x40738c in expand_tilde /mnt/ram/sharutils-4.14/src/uudecode.c:252
-#1 0x40738c in decode /mnt/ram/sharutils-4.14/src/uudecode.c:437
-#2 0x403660 in main /mnt/ram/sharutils-4.14/src/uudecode.c:530
-#3 0x7f13d97fff9f in __libc_start_main (/lib64/libc.so.6+0x1ff9f)
-#4 0x403c81 (/mnt/ram/sharutils-4.14/src/uudecode+0x403c81)
+> https://github.com/vincentbernat/lldpd/commit/793526f8884455f43daecd0a2c46772388417a00
+> 
+> protocols: don't use assert on paths that can be reached
+> 
+> Malformed packets should not make lldpd crash. Ensure we can handle them
+> by not using assert() in this part.
 
-Address 0x7fff8a4a8690 is located in stack of thread T0 at offset 16800 in =
-frame
-#0 0x403da7 in decode /mnt/ram/sharutils-4.14/src/uudecode.c:362
+Use CVE-2015-8012.
 
-This frame has 7 object(s):
-[32, 36) 'mode'
-[96, 104) 'outlen'
-[160, 168) 'ctx'
-[224, 368) 'attr'
-[416, 16800) 'buf' <=3D=3D Memory access at offset 16800 overflows this var=
-iable
-[16832, 33216) 'buf_in'
-[33248, 49632) 'buf'
+(Apparently there are various types of malformed packets that can
+cause different problems. However, the code changes themselves are all
+for CWE-617.)
 
---=20
-Hanno B=C3=B6ck
-http://hboeck.de/
-
-mail/jabber: hanno@hboeck.de
-GPG: BBB51E42
-
---=_zucker.schokokeks.org-29183-1433285982-0001-2
-Content-Type: application/pgp-signature
-Content-Transfer-Encoding: 7bit
-Content-Description: OpenPGP digital signature
-
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
+Version: GnuPG v1
 
-iQIcBAEBCgAGBQJVbjWMAAoJEKWIAHK7tR5C0pwP/i3uIAM/03H501E5ppislTa8
-e6WxuRnJar0yORGWCmDV5He0SLx1pkMoiHNB7GBEa8OYSmfp8ZEUHflxQGXzNtYz
-GzCGJWlo1oUzFOmRPvn86/W4wcC+K80jN1tBjCOSitK3S33jUmClcui8trjk/wjr
-L1tcYF/Om8h+J2ZhWNX65jyqcjQ1L4oNxe4IvouQvWV/Z8ScNvYR5F3EoeLhKsap
-h8WDB7SvChqKxeuVZwKGe2asKcETYqoxiLvCtLj+0Y53t8gtYTgRz2DhVRpAvJ7v
-auozrUSlBU56zN24Nr/1ZAeelboJyDMw/RI57YMtsw+msC0h1oW/QCulwJvVSTyT
-bpnhoBXvm2Z1ki8RQmC31JuSLRpL3ZtQ/m+XXOS3RASlMLPbj5dc8+Wb9WyaL1NZ
-cAnE0FG3bFMjdOp4NyPvecEpusq8K7r4s45G2b2ry9OfkwMfAKoenI9nlctBOQwk
-V1aGrOwIiEmcAzh9um+Yqo1VyxNaJYUJ30fiYB5aWQwWo2rS1btmLCn1PJfydl9+
-Z0XrsQoS4EdY8KH19Keo0ok0GiqqGt4NqlLOZBF5960dfO1vKYuVsCKSRir6ZoTZ
-94aBRh8rz7Cn/EzD0tXTdj5jOStxP4RFDmNFH9u4AIZe6mBJjOV5zvtoOwtVSfPA
-P+hILw/SYKCvxQs8dkZn
-=xQrE
+iQIcBAEBCAAGBQJWMriDAAoJEL54rhJi8gl5QwcQAMzf82elhg+4B1gE2Yg0APUa
+6wTU/GsftPClKuy9zVGNGbajoZgDcrkyqADc45aH4Dpb9G+YK/X6s/B9dgf9KqBj
+3X+5lreJbNKXJlOfZRU9t9J0HH+qRSYa3uVnU19gmLcSG8Z1rJU2JVHVYGha7ujF
+Vh6UozSj/U+hgmfMs9ArXCrjWFEz15kiWr3XmAcVH6ARwtkKNbIadGiz5R5w/dqb
+HF1V7gZHSMz+QHVj/LsMLeuX6Ba6eGFtSAXgrIWKuqZbstTRde2spTUwmB5Njayn
+RUUkIWxQd4oRqNL4ckAj1hIq28GjEreoO3gn2p8CU8On6kc/geHEc2xXt3PBsaZU
+k4R+qY/uq4gFiLjNUdrw9oiCEC5LqFgc2PM1EqzwXlPgvBTvAf6end1DIzf8DLVM
+7WAChlIPTXJL1+mRz6N5xEGdlEEDiCKDpvgCtUNc1b88IHB6Rr51eJgjypxhDAsp
+D8gWfyCwuPps2gSLmipz0LXfb/2DwuzAjcJoZ5rAiWRnmz53asI+2DZMUM2Q6/jF
+kdsgw0lHv5TIO+5MMl/s82s/gmiLbYZ7muvxqzlgCynpTR3UJNs9NDLp6ifLYLAw
+27HxxKBq+vGKbCmtK5pDwE2qth9fSR8k5n/ofBcmuPG2mbKMQMPrDvb87Usq5XOR
+P0vNhiVvQ3oNBE9Ny7UM
+=dhHo
 -----END PGP SIGNATURE-----
-
---=_zucker.schokokeks.org-29183-1433285982-0001-2--
