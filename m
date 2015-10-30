@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3280" "Monday" "30" "November" "2020" "10:09:41" "+0100" "Matthias Gerstner" "mgerstner@suse.de" "<20201130090941.GA11303@f195.suse.de>" "81" "Re: [oss-security] kdeconnect: CVE-2020-26164: multiple security issues in kdeconnectd network daemon" nil nil nil "11" "2020113009:09:41" "[oss-security] kdeconnect: CVE-2020-26164: multiple security issues in kdeconnectd network daemon" (number mark "U       mgerstner@su Nov 30   81/3280  " thread-indent "\"Re: [oss-security] kdeconnect: CVE-2020-26164: multiple security issues in kdeconnectd network daemon\"\n") "<20201013122912.GA32635@f195.suse.de>" ("<20201013122912.GA32635@f195.suse.de>") nil nil nil nil nil nil nil "Re: [oss-security] kdeconnect: CVE-2020-26164: multiple security issues in kdeconnectd network daemon" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3085" "Friday" "30" "October" "2015" "13:05:49" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151030170549.4FECE6C014C@smtpvmsrv1.mitre.org>" "71" "[oss-security] Re: CVE Request: Openpgp.js Critical vulnerability in S2K" nil nil nil "10" "2015103017:05:49" "[oss-security] Re: CVE Request: Openpgp.js Critical vulnerability in S2K" (number mark "        cve-assign@m Oct 30   71/3085  " thread-indent "\"[oss-security] Re: CVE Request: Openpgp.js Critical vulnerability in S2K\"\n") "<CAGq7Pojhq-Cnm97H=D8TOm8K+Z2CFssGAUyyY==WonqhWCwVBg@mail.gmail.com>" ("<CAGq7Pojhq-Cnm97H=D8TOm8K+Z2CFssGAUyyY==WonqhWCwVBg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 3509 invoked by uid 550); 30 Nov 2020 09:09:53 -0000
+Received: (qmail 21966 invoked by uid 550); 30 Oct 2015 17:06:02 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,100 +11,84 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 21945 invoked from network); 30 Oct 2015 17:06:01 -0000
+In-Reply-To: <CAGq7Pojhq-Cnm97H=D8TOm8K+Z2CFssGAUyyY==WonqhWCwVBg@mail.gmail.com>
+Message-Id: <20151030170549.4FECE6C014C@smtpvmsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Fri, 30 Oct 2015 13:05:49 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3491 invoked from network); 30 Nov 2020 09:09:52 -0000
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Date: Mon, 30 Nov 2020 10:09:41 +0100
-From: Matthias Gerstner <mgerstner@suse.de>
-To: oss-security@lists.openwall.com
-Message-ID: <20201130090941.GA11303@f195.suse.de>
-References: <20201013122912.GA32635@f195.suse.de>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="n8g4imXOkfNTN/H1"
-Content-Disposition: inline
-In-Reply-To: <20201013122912.GA32635@f195.suse.de>
-Subject: Re: [oss-security] kdeconnect: CVE-2020-26164: multiple security
- issues in kdeconnectd network daemon
+Subject: [oss-security] Re: CVE Request: Openpgp.js Critical vulnerability in S2K
+To: g.hollestelle@gmail.com
 
---n8g4imXOkfNTN/H1
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Hi,
+> A vulnerability in the S2K function of OpenPGP.js allows to produce a
+> predictable session key without knowing the passphrase.
+> 
+> An attacker is able to create a private PGP key that will decrypt in
+> OpenPGP.js regardless of the passphrase given.
+> 
+> Also using this flaw it is possible to forge a symmetrically encrypted PGP
+> message (Symmetric-Key Encrypted Session Key Packets (Tag 3)) that
+> will decrypt with any passphrase in OpenPGP.js. This can be an attack
+> vector if successful decryption of such a message is used as an
+> authentication mechanism.
+> 
+> The bug is fixed with a strict check on unknown S2K types.
+> 
+> https://www.mail-archive.com/list@openpgpjs.org/msg00918.html
+> https://github.com/openpgpjs/openpgpjs/commit/668a9bbe7033f3f475576209305eb57a54306d29
 
-On Tue, Oct 13, 2020 at 02:29:12PM +0200, Matthias Gerstner wrote:
-> following is a security review report concerning kdeconnect [1].
+Nobody has commented on this, so we'll conclude that "successful
+decryption of such a message is used as an authentication mechanism"
+is a plausible use case, and assign a CVE ID: CVE-2015-8013.
 
-this is an amendment to my original report. Upstream wanted to keep this
-private until they had something to address it. Originally I raised the
-following additional concern:
+As far as we know, the scenario might be something like:
 
-    ## General Observations and Recommendations
-=20=20=20=20=20=20
-    ### Pairing Procedure
-=20=20=20=20
-    The pairing procedure currently seems lacking. The GUI component only p=
-resents
-    the friendly 'deviceName' to identify peer devices, which is completely=
- under
-    attacker control. Furthermore the 'deviceName' is transmitted in cleart=
-ext in
-    UDP broadcast messages for all other nodes in the network segment to se=
-e.
-    Therefore malicious devices can attempt to confuse users by requesting a
-    pairing under the same 'deviceName' to gain access to a system.
-=20=20=20=20
-    I strongly suggest to introduce a secure procedure here, like displayin=
-g the
-    certificate fingerprint to the user.
+  if a user symmetrically encrypts a message of "hello" with the
+  hard-to-guess passphrase of secret0, then an automated process
+  grants them access to uid 0
 
-Upstream addresses this now [1]. A sha256 fingerprint of the
-concatenated public keys of the two involved certificates is displayed.
-I'm not completely happy with the chosen solution, because in the
-initial popup only a prefix of 8 hex digits of the fingerprint is
-displayed. The full fingerprint is only reachable via an additional
-"view key" button. There are no additional instructions for the end user
-and no explanation about the severity of trusting a device. At least in
-theory it is now possible to do a proper peer device verification.
+  if a user symmetrically encrypts a message of "hello" with the
+  hard-to-guess passphrase of secret1, then an automated process
+  grants them access to uid 1
 
-Other discussed approaches to make the verification more user friendly
-and/or more secure would have been:
+  etc.
 
-- displaying a randomart image in the fashion of ssh-keygen.
-- scanning a QR code displayed on the PC end using the kdeconnect
-  Android app.
-- requiring the user to enter (at least part of) the fingerprint on the
-  PC end to force proper user interaction. Since the pairing procedure
-  should not occur very often and given the importance of verifying
-  device identity this would have been justified.
+Although there is a communication channel from the user to the
+automated process, there is no way for the user to send a helpful hint
+about what passphrase should be tried. The automated process only
+tries its own set of hard-coded passphrases. For this reason, it is a
+vulnerability if a user is able to construct (intentionally) a
+properly formatted message that seems to be encrypted in a useful
+way, but actually isn't encrypted in a useful way.
 
-[1]: https://github.com/KDE/kdeconnect-kde/commit/e7518493df7398f27f7dffbfc=
-3f79750bc1fda50
+This vulnerability (unlike the
+https://github.com/openpgpjs/openpgpjs/wiki/Cure53-security-audit
+vulnerabilities) is not yet referenced from the
+https://github.com/openpgpjs/openpgpjs/blob/master/README.md page.
 
-Cheers
-
-Matthias
-
---n8g4imXOkfNTN/H1
-Content-Type: application/pgp-signature; name="signature.asc"
-
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-iQIzBAABCAAdFiEE82oG1A8ab1eESZdjFMQFyXGSNVMFAl/EttQACgkQFMQFyXGS
-NVPHDRAAkU7HcKEukdf5wJYf61j5kI4TC3dcUsEB2QClokeouVc2VccdDY1zgbUz
-xRjYRu0fIA+Tz/UxTn61GihVnLqhhqDxh5paovl5MwR0m4A51NAW6Mz1D6ZBmBrF
-pU6851RGyY5fj0A28rJ5gWGOTxAduYqQAxsBtzsXhxyEhd7TnENVLOPkkjv15z0M
-xN8C/YlgLK44XYhqJ19g+iEIZmO2CNzmkTkO3M0cZXOokz3lQIYoIIDk7cClSBB9
-tj4JlsGXyIH+Wo13Gp6p8PHMC4IxXwgLncKmfLW4MAWGQ72knKVGuHdDuKZcfMzV
-S/Cipt1R/tWuYg0G8jwTNqBsF+iWn6B43hkKmL6VMBs8oto2mWaMPg1nTQiKQCf/
-5lnQSKftbHDPtu8YJVn581HbTtBOZY5ranMS2+dVQYjFQCiTo8TdifuxZMTHT5V1
-0ryNrAL7tNqYJYnUEPSRzEbtPOg9h49zhVanFuvlWv5oRRtpYxYvzxTFqKRXhFM8
-n2xSmETGuHJ/vDDuy04rvx77yrtwH9Opsvu6ctLIq+PHbe2B+IDnW72johNsI/2A
-GZtEZbHuvPsa4N+mirRp2EsudNrftPhrX6h3apx97DcxzVCrqnb4zkcjfXFBvTkH
-7ZkPnF5LM6OaKSQnrpuIPlqK7HtXsni0rw2BtOxi/g0/biLnU2E=
-=YLBA
+iQIcBAEBCAAGBQJWM6LRAAoJEL54rhJi8gl5C70QANEfTQ+t7ws0lPSPa1qJ0h+0
+a1EsXsyF28Og6mDQnZt4Y+Fd2L1WaXpdEzplf8Q7IZt/zPL0d7UOPG9A7js51M7N
+mXfPAEZSUSHCpeSYEhwnoSGnsQpIhXBiyduKt/9MaCgSXux/30pqOOOU7TU1Xeo/
+3ByWnZavS9YuKFQP3ChWyzh8wGuxMe9OmFkFBzjAwyb5gZ57AtpbZHqHXdBDGJiE
+OHSMp5cbM/K7Jtr0wQCidkXsMyHrlKo1PV4HwoamFtdKxzmUrLUSSe3otnFWkBDt
+cMc++xIjlk98SKZhkXGhEcrSWuqTKGZ0RG3t/28pnO4rc2N89IO4hGM8hmnoUdxr
+S81pzyG1VyhWbXspvfM+Dk5JGZEWH2EgxccGHatT/jYSAg1CBYgZcS7rVCSiOCqp
+TcwXGS1KY46GpTDSjj0muSazFF58x9I8PCXkPXbAv6rIBh0rwaB/OJs81LAderyk
+YO93p9CiuyD/9ltTbyb3ym0/qeaiQhjupc28jbFm2PAh5f2zUm1fmUx8eGX5KY0T
+1f8QpUq715VawQykfMLnFYoTHBf6Zt9K8RGWiEMMrZ4PdVjqYu0A/UfXzIuSlBgP
+w2vVwDpqFbAc2OAfFRfiYln8gBzgWrqVeVeh1Dt+23YDmessYKZ2CtjISS+SaUzq
+ntQ5dTRst2lyzmzSciSB
+=RXDl
 -----END PGP SIGNATURE-----
-
---n8g4imXOkfNTN/H1--
