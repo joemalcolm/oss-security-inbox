@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["9435" "Thursday" "2" "November" "2017" "23:30:38" "+0100" "Lionel Debroux" "lionel_debroux@yahoo.fr" "<fd338a37-b8c0-6bea-ff0d-ec2e182ed638@yahoo.fr>" "191" "[oss-security] Many issues in \"module\" / \"track\" music decoders..." nil nil nil "11" "2017110222:30:38" "[oss-security] Many issues in \"module\" / \"track\" music decoders..." (number mark "U       lionel_debro Nov  2  191/9435  " thread-indent "\"[oss-security] Many issues in \"module\" / \"track\" music decoders...\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2328" "Monday" "2" "November" "2015" "02:37:08" "-0600" "Austin English" "austinenglish@gmail.com" "<CACC5Q1dRGnLHyxwEznn5Hm+Pym_ijXAsQuAT=AD16zaeUWSLgw@mail.gmail.com>" "66" "Re: [oss-security] Re: CVE request for wget" nil nil nil "11" "2015110208:37:08" "[oss-security] Re: CVE request for wget" (number mark "        austinenglis Nov  2   66/2328  " thread-indent "\"Re: [oss-security] Re: CVE request for wget\"\n") "<CACC5Q1dPzS3C_9L_vVx4scx7UaE38OqXcC0g6zFPE-Eb-tYRSw@mail.gmail.com>" ("<CACC5Q1eQ8jf-nxub=viXgnSt6pZGzSzbV=RD2YXV76NVHw7WTQ@mail.gmail.com>" "<20151001225726.9EF7AB2E0A6@smtpvbsrv1.mitre.org>" "<20151001231046.GB16643@hunt>" "<CACC5Q1dPzS3C_9L_vVx4scx7UaE38OqXcC0g6zFPE-Eb-tYRSw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 20439 invoked by uid 550); 2 Nov 2017 22:47:37 -0000
+Received: (qmail 24570 invoked by uid 550); 2 Nov 2015 08:38:01 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,233 +11,97 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30346 invoked from network); 2 Nov 2017 22:30:56 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.fr; s=s2048; t=1509661844; bh=xmZ6RmhKOcoEOjbDjxCU57yRRW/S7fbCF8gmAiNGzmM=; h=From:Subject:To:Date:From:Subject; b=RSF6MctGpv8d9uu5JEjLckQC7PDpNCd5AcdX3MTdsApz2DMyFcyVKTe7OGZoG3678KuYFJ+S4+lLydOPpcRUSJuu3Ab5Hw2LGbMTA1+ncIUnYhmE3ao+fjY40n7EsybJghsGSvl43+//HcMvMsd5sj24pUmW5NcoHpofe322u3aLMTvJ2dp6AOj0nn3TsraoQzyg7PdKA70oeoGhVXkzI2bBke3koZtPKhtpaYg6qI+HDxhj8/LKJzj/PUP+VipjZV6sQyM5lnczs9KVhZYgRmVDmBdOC/Wye4F26yYnvA36Da0dSWWW67m0NlYT1MZa21mUARYLTzgAQefx7KwfcQ==
-X-YMail-OSG: 17Ol3igVM1mlN36tIMnKBFUEDv2gWuOFhCIuuqWO_5S5sVRoeoOh81g2wgVgmbZ
- OMBAAFLmf_.hwLc6LY894b3qAS8cljCWkBlyow0hctBBHwKZZDdBQnbPs_1y4QJWbbiHf9mS1Xan
- FKr_O3_Wy.e036ypVXrgV_0cEg1IxyfAY3Oc5.fMlIY.r0Wbajn5VfG7K9bB3QcDUsftGCNPwdNp
- fc2Qglnhu_5P0rM0Ey4QvOUEefSkE.1I2QbK7h1aHENHdY17Uh1Hv2tsgeuqc5dgnVbivo78aAy8
- XDfW5TqPDauPeVfI80M4z7uqMS9SZug3_P5HN7kfq2G6J53e4T58iKHC6mXTkEpyr34O61_t8hC6
- cFzdKYWGTfAfqEDijYaaQewSLGybaSHHjoKl4ET6bwzcOnf0DQ5Mni_x1BAVsLF45Z6rp.4ZCCYc
- e1fWzdSKcLKglMDGmuEJyh_rjQbciU9NSTwwDssz.JbuxTDSMGuzHewc3YmFHa2RkbRPNsQTixNj
- Fevf3g8TefpUWEF7WEpLvSsJzdZEMAvaKnO6GY7CPypp_v_2oE57c_zKTvwVDUpc32VlHIHhfw1l
- iZzu6OcXqQ6aLtWiTtmfsoUc0j6Oz
-X-Yahoo-Newman-Id: 857146.81916.bm@smtp115.mail.ir2.yahoo.com
-X-Yahoo-Newman-Property: ymail-3
-X-YMail-OSG: 17Ol3igVM1mlN36tIMnKBFUEDv2gWuOFhCIuuqWO_5S5sVR
- oeoOh81g2wgVgmbZOMBAAFLmf_.hwLc6LY894b3qAS8cljCWkBlyow0hctBB
- HwKZZDdBQnbPs_1y4QJWbbiHf9mS1XanFKr_O3_Wy.e036ypVXrgV_0cEg1I
- xyfAY3Oc5.fMlIY.r0Wbajn5VfG7K9bB3QcDUsftGCNPwdNpfc2Qglnhu_5P
- 0rM0Ey4QvOUEefSkE.1I2QbK7h1aHENHdY17Uh1Hv2tsgeuqc5dgnVbivo78
- aAy8XDfW5TqPDauPeVfI80M4z7uqMS9SZug3_P5HN7kfq2G6J53e4T58iKHC
- 6mXTkEpyr34O61_t8hC6cFzdKYWGTfAfqEDijYaaQewSLGybaSHHjoKl4ET6
- bwzcOnf0DQ5Mni_x1BAVsLF45Z6rp.4ZCCYce1fWzdSKcLKglMDGmuEJyh_r
- jQbciU9NSTwwDssz.JbuxTDSMGuzHewc3YmFHa2RkbRPNsQTixNjFevf3g8T
- efpUWEF7WEpLvSsJzdZEMAvaKnO6GY7CPypp_v_2oE57c_zKTvwVDUpc32Vl
- HIHhfw1liZzu6OcXqQ6aLtWiTtmfsoUc0j6Oz
-X-Yahoo-SMTP: zgdcvJ6swBBcTOk5fgveL37ak9AQxYCP7GdO
-From: Lionel Debroux <lionel_debroux@yahoo.fr>
-To: oss-security@lists.openwall.com
-Openpgp: preference=signencrypt
-Message-ID: <fd338a37-b8c0-6bea-ff0d-ec2e182ed638@yahoo.fr>
-Date: Thu, 2 Nov 2017 23:30:38 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101
- Thunderbird/56.0
+Received: (qmail 24546 invoked from network); 2 Nov 2015 08:38:00 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :content-type;
+        bh=tlGKkPbXuuhPGLF+CS3oaT2OR2bhtvmCK1f/1MwHeLc=;
+        b=Dq4Crl/x82WpD1uYfCvFdhZPdwSA/erNNWGsyy433SCAeX3n4eFl+IvOsyNoTApkmb
+         vEu9/90DXGques/zM5Z9KFeq45Rotb1WEdCT8Lo2GDgyFTxisVgHZKQWahWy5Sxwv0d2
+         G7qlVO/18F3MkD42nzaBB1uo2kdlH6HNQPJieGydmtej9x3EwyPHIRgD047AJT10O048
+         43SW36UDO67lryTHGRYMjtNgwwXdvjJqS5kM+SJwojjX0COOmUMneDANtaZZALzE1Tqu
+         2RovdC0tvTpHrWHDjYEQP8FendsQPT4ssgJAlN/K9z3SAHZr9YD5z7xQA1SdqEvWwhIY
+         wtAQ==
+X-Received: by 10.107.35.16 with SMTP id j16mr21446643ioj.120.1446453467454;
+ Mon, 02 Nov 2015 00:37:47 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-Subject: [oss-security] Many issues in "module" / "track" music decoders...
+In-Reply-To: <CACC5Q1dPzS3C_9L_vVx4scx7UaE38OqXcC0g6zFPE-Eb-tYRSw@mail.gmail.com>
+References: <CACC5Q1eQ8jf-nxub=viXgnSt6pZGzSzbV=RD2YXV76NVHw7WTQ@mail.gmail.com>
+ <20151001225726.9EF7AB2E0A6@smtpvbsrv1.mitre.org> <20151001231046.GB16643@hunt>
+ <CACC5Q1dPzS3C_9L_vVx4scx7UaE38OqXcC0g6zFPE-Eb-tYRSw@mail.gmail.com>
+Message-ID: <CACC5Q1dRGnLHyxwEznn5Hm+Pym_ijXAsQuAT=AD16zaeUWSLgw@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=001a11405fc01ca08e05238ab1cb
+Date: Mon, 2 Nov 2015 02:37:08 -0600
+From: Austin English <austinenglish@gmail.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Re: CVE request for wget
+To: cve-assign@mitre.org, Austin English <austinenglish@gmail.com>, 
+	oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+--001a11405fc01ca08e05238ab1cb
+Content-Type: text/plain; charset=UTF-8
 
-Hi,
+The fix has been released in 1.7-rc1,
+https://tails.boum.org/news/test_1.7-rc1/index.en.html
 
-Summary
-=======
-Another family of decoders for a bunch of old, complex binary music
-formats, whose code bases are written in C/C++ and originate in the
-1990s, has received more or less advertised fixes for many security
-issues over the past few years.
-The issues are mostly DoS (divide by zero, heap-based / wild OOB
-reads), but a number of stack-based and heap-based memory corruptions
-can be found in the mix. Some issues remain unfixed.
-These decoders usually run outside a sandbox, one of them is widely
-distributed (not just on *nix). Patching (especially backports of
-fixed versions to older, still maintained distros) is insufficient,
-as is usage and packaging of the newer, more secure and more accurate
-decoders (libopenmpt, libxmp). That might be partially because few of
-the "recently" fixed issues received CVEs.
+On Mon, Oct 26, 2015 at 3:21 PM, Austin English <austinenglish@gmail.com>
+wrote:
 
-
-Detailed description
-====================
-The "old, complex binary music formats" I'm referring to are module /
-track files. Most of these formats were created in the 1980s and 1990s,
-sometimes as part of intros / demos; the most popular formats are MOD,
-S3M, XM and IT.
-Track music is less popular nowadays, but they can still be decoded by
-many Windows, MacOS X, Linux, *BSD desktop computers thanks to VLC,
-GStreamer and others. There are large collections of freely downloadable
-modules, e.g. ModArchive.
-
-Portable C/C++ code bases readily usable on modern Linux / *BSD distros
-which deal with these formats include:
-* players: libmodplug, libmikmod, libxmp, libopenmpt, libdumb, Open
-Cubic Player, as well as the closed-source libbass;
-* trackers (editors + players): OpenMPT (through Wine), Milky Tracker,
-Schism Tracker.
-All of the open source code bases are maintained by volunteers on their
-spare time, AFAICT.
-
-Decoders for popular image, music and video formats have received, and
-still receive, their share of fuzzing work, yielding a steady stream of
-fixes. Likewise, fuzzing is behind many of the recent fixes on module
-decoders.
-
-Sadly, the availability of:
-* fixed versions of libmodplug (0.8.9.0 + fixes in Git), libmikmod
-(3.3.11+), libxmp (nowadays 4.4.x) and libdumb (2.0.x);
-* libopenmpt (nowadays 0.3), which was derived from the original ModPlug
-as well, loses several minor features, but provides better rendering
-accuracy than libmodplug, higher robustness as a result of design +
-implementation changes followed by long, deep fuzzing rounds, and also a
-perfect compatibility layer for libmodplug's C API (I gather that
-deviations in the C API compat layer would be considered bugs by
-libopenmpt maintainers)
-remains limited downstream, especially on older distros.
-Many projects still depend on libmodplug (VLC, GStreamer, etc.) or
-libmikmod, whereas, as mentioned above, libopenmpt and nowadays libxmp
-do better jobs. FWIW (the data is imperfect), the popularity of
-libmodplug in Debian's popcon rivaled that of the X server libraries in
-late 2016...
-
-
-Summary of the timeline
-=======================
-* 2015, 2016: libxmp received multiple fuzzing rounds, at least by
-myself (zzuf for the first round, afl later) and Jonathan Neuschäfer
-(afl); the hard-working maintainer Claudio Matsuoka made fixes for
-issues uncovered by fuzzing and issues reported by Coverity Scan. He
-also improved the rendering accuracy further, beating libmodplug at e.g.
-Saga Musix's (one of the OpenMPT maintainers) complex IT files;
-
-* probably 2015: I tried several broken files generated by old fuzzing
-rounds on Open Cubic Player, found a crash but failed to report it;
-
-* November 2016: Hanno Böck sent a patch for issues in libmodplug found
-by using an asan build;
-
-* December 2016 - January 2017: I fuzzed libxmp, libmodplug, libmikmod
-and libopenmpt with afl, and the closed-source libbass with afl and
-honggfuzz in dumb mode. I reported the issues upstream.
-Only libopenmpt didn't segfault; the only issue I had with it was when
-it attempted to commit (not just allocate) 5+ GB of RAM to play a broken
-file... fortunately, the Linux OOM killer kicked in quickly, and the
-host computer didn't suffer much, but that was still DoS. It doesn't
-seem to occur anymore in newer versions on that sample.
-There were few libxmp crashes, too. However, libmikmod crashed quite a
-bit, and libmodplug crashed more, with evidence of memory corruption
-(bitter complaints from the memory allocator and valgrind). At some
-point, afl-fuzz's map coverage suddenly jumped to 100%; this was the
-only time I experienced such behaviour in core-years of fuzzing runs,
-and libmodplug definitely wasn't the only memory-corrupting code base.
-
-* January 2017: I wrote privately to Debian Security + package
-maintainers, SUSE Security, VLC Security, GStreamer Security, Hanno Böck
-about libmodplug's issues. In February, to avoid potential fuzzing work
-duplication before fixes appeared, I notified Agostino Sarubbo.
-One of the visible effects was the packaging of libopenmpt's libmodplug
-compat layer, and the Debian VLC package being switched to build against
-that compat layer, in time for the Stretch release - AFAICT (and
-unsurprisingly) without ill effects. libmodplug's popularity dropped a
-hundred spots in Debian popcon (number of installs), but it's still
-within the top 1000, on nearly half of the small subset of Debian-
-running computers which report to popcon.
-Under the current Debian sid, the libavformat57 package depends on
-libopenmpt0, i.e. FFmpeg seems to have switched to libopenmpt.
-
-* 2017: new releases of libmodplug, libmikmod containing fixes for
-issues I reported. The libmodplug Git repository contains a bunch of
-additional fixes for less severe issues, not yet part of a release.
-
-* April 2017: I requested CVEs to DWF for a subset of the issues fixed
-by libmodplug 0.8.9.0. For multiple reasons, including my own sloppiness
-(in August, sitting for ~3 weeks on Kurt Seifried's e-mail requesting
-commit IDs for the fixes, hoping that the libmodplug maintainer would
-have some time to push a new release in the meantime), they don't seem
-to have been assigned yet.
-
-* August - September 2017: I used afl on the original, unmaintained
-libdumb packaged by Debian and others, and kode54's newer libdumb fork
-packaged basically nowhere. kode54 quickly fixed the crashes I reported
-and produced new releases. Allegro depends on libdumb. I do not yet have
-data on the accuracy of kode54/libdumb.
-
-* early October 2017: I tried some broken files from old fuzzing rounds
-in Milky Tracker and Schism Tracker, and sure enough, they don't like it
-either: segfaults, memory allocator aborts upon corruption. Reported
-upstream alongside the crash in Open Cubic Player.
-The Schism Tracker and Milky Tracker maintainers acknowledged receipt.
-The latter pointed to Jonathan Neuschäfer's issue from over two years
-ago: https://github.com/milkytracker/MilkyTracker/issues/35
-A month later, no fixes have appeared yet in any of the Git
-repositories.
-
-* early November 2017: this post, only ~30 days after the initial
-reports to three upstreams, but 300+ days after the initial reports to
-the most popular upstreams, and more than 120 days after versions of
-libmodplug and libmikmod fixing the most pressing issues were released.
+> On Thu, Oct 1, 2015 at 6:10 PM, Seth Arnold <seth.arnold@canonical.com>
+> wrote:
+> > On Thu, Oct 01, 2015 at 06:57:26PM -0400, cve-assign@mitre.org wrote:
+> >> If there is any additional Tails vulnerability related to this,
+> >> another CVE ID may be needed. For example,
+> >>
+> >>   https://lists.gnu.org/archive/html/bug-wget/2015-08/msg00050.html
+> >>
+> >> says
+> >>
+> >>   to be 100% sure, you should add --passive-ftp to your command line.
+> >>   If you don't do that, your /etc/wgetrc or ~/.wgetrc could include
+> >>   --no-passive-ftp (or passiveftp = off).
+> >>
+> >> If Tails is supposed to try to ensure that, perhaps there's a
+> >> requirement to have something like:
+> >>
+> >>   alias wget="wget --passive-ftp"
+> >>
+> >> in a system-wide location (possibly /etc/bash.bashrc). The concept of
+> >> CVE IDs for "failure of a torify step" issues is new, and we aren't
+> >> sure of the best approach.
+> >
+> > I suspect using a bash alias in a site-wide config might then qualify for
+> > another CVE in the future, along the lines of "programs that spawn wget
+> > via system(3), popen(3), or exec family of functions can use unsafe
+> active
+> > mode by accident". If Tails is in the business of fixing these things
+> > for safety, removing active ftp support from tools seems like better fix.
+> >
+> > Thanks
+>
+> A fix has been applied to Tails git:
+>
+> https://labs.riseup.net/code/projects/tails/repository/revisions/b9fd6312435d55dd0bc0b6abdb7994da4d66e2b2
+>
+> In short, the wget binary is moved to /usr/lib/wget/wget, and a
+> wrapper script is put in place in /usr/bin/wget. The wrapper ensures
+> that wget is called via torsocks, and additionally, also forces
+> --passive-ftp.
+>
+> Moving wget to /usr/lib/wget/wget gets the potentially dangerous wget
+> binary out of $PATH. A dedicated attacker could check if /usr/bin/wget
+> is a script and then parse it to find the actual binary, but that
+> would need to be a very dedicated attacker and at that point, there
+> are more feasible attacks available.
+>
+> --
+> -Austin
+>
 
 
-Several notes
-=============
-* unsurprisingly, the well-known FLOSS maintainership sustainability
-problem occurs for module / track handling code as well: while
-maintainers do try to go out of their way to fix issues, they can only
-spend so much time on the FLOSS projects they're maintaining. Large
-batches of issues found by fuzzers usually represent a significant,
-sometimes too large, strain on their resources;
-* more patching is needed, especially for older distros, which consumes
-packager and security maintainer resources;
-* more fuzzing is warranted, especially for the most popular targets,
-which have stripped-down load-only modes, and could efficiently be
-integrated into the likes of OSS-Fuzz. However, fuzzing does limited
-good when maintainers can't spend enough time to deal with the fallout;
-* sandboxing would arguably be useful, and lack thereof is partially,
- well, a maintainer resource issue...
 
+-- 
+-Austin
 
-Thanks
-======
-* Sam Hocevar and others for zzuf, Michal Zalewski for afl, Robert
-Święcki for honggfuzz;
-* Hanno Böck for TFP and associated work, as well as the disclosure
-process for one of the first batches of vulnerabilities I found with
-a fuzzer, in Oracle Berkeley DB;
-* the upstream maintainers, and downstream packagers, of the libraries
-and programs I fuzzed;
-* security teams;
-* other persons who were part of / aware of this journey :)
-
-
-Regards,
-Lionel Debroux.
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCgAdFiEE3bt9Bno1p6KT7q/zE2Z0SUsm6A4FAln7m1sACgkQE2Z0SUsm
-6A6KZQ//WBv5pqXK/GjewCvwz2SZd9t717pNGf10gDHxTpynAI4dd1fQx/NXo+Q/
-LcFg12JDaC0QRZ0uJxhk81N+T+YNzRKqzV3JHV8OJRFwpiT+WjvUa3Qym03bGVU7
-1FJXHT3qYGNAuKPQWRBp2iouTXpzECJu+G52DFwPn5n/XoRal3ijDSBGCddk8BzJ
-BsKNeM+tHh88Z6C1uVhMTa+hvnKW87wbxiZ/PVktxxlm0T5ZJ0oN/0qkxMBsnVBX
-4o/8pHNOFOnKxflGVyOfoTjMosxr2s7K3Bmayik4essDv1+JOBaHo1AYi5Gl47dz
-wL8+TTiOTHOJO43pK61XS+KRXFONE6bGQdkBC1gyjAlU+OTYJXWRjdkeW61Y0qF8
-22BXPaYv+Ynr+egY0CqLqUlLE5zK+Ww3tdq5MsPGXyMfaQGwjl0EInnVZTIWJ7jl
-BJmkuC2K3QLpwSWjVdSTPq2g4Ay5CX2BqmQsTGBsHncLxU/s/8Ylm6ZFtN5MkJVa
-CWMEKCm5b5Y2OcPqFKaqG2ULjJFBiZqUSdcmG80gsefBEHFVRC//Z46nTnP5tJq5
-wsa94pXzFigvjfQPW1t3n3ZQJ5ATSxMp0XMlpcyOTvEUkYP+GaFdik9cbwsdLi60
-WnruiiJcch6EssscK+FwAZZBOU4DpOedqSesBwuKNeKNiX8hAPk=
-=3ueK
------END PGP SIGNATURE-----
+--001a11405fc01ca08e05238ab1cb--
