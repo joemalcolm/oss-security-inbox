@@ -1,4 +1,9 @@
-Received: (qmail 30673 invoked by uid 550); 3 Nov 2022 20:31:59 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1693" "Tuesday" "3" "November" "2015" "13:47:36" "+0100" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20151103134736.49e4edcb@pc1>" "47" "Re: [oss-security] CVE request: libsndfile 1.0.25 heap overflow" nil nil nil "11" "2015110312:47:36" "[oss-security] CVE request: libsndfile 1.0.25 heap overflow" (number mark "        hanno@hboeck Nov  3   47/1693  " thread-indent "\"Re: [oss-security] CVE request: libsndfile 1.0.25 heap overflow\"\n") "<87y4ef9s4i.fsf@redhat.com>" ("<87y4ef9s4i.fsf@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 3706 invoked by uid 550); 3 Nov 2015 12:46:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,118 +11,63 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 3684 invoked from network); 3 Nov 2015 12:46:53 -0000
+Message-ID: <20151103134736.49e4edcb@pc1>
+In-Reply-To: <87y4ef9s4i.fsf@redhat.com>
+References: <87y4ef9s4i.fsf@redhat.com>
+X-Mailer: Claws Mail 3.13.0 (GTK+ 2.24.28; x86_64-pc-linux-gnu)
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512; protocol="application/pgp-signature"; boundary="=_zucker.schokokeks.org-23331-1446554801-0001-2"
+Date: Tue, 3 Nov 2015 13:47:36 +0100
+From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 25980 invoked from network); 3 Nov 2022 20:24:01 -0000
-Content-Type: multipart/signed;
-	boundary="Apple-Mail=_EF1E2CC5-4BCB-4A01-9CB0-E310E72A51EF";
-	protocol="application/pgp-signature";
-	micalg=pgp-sha512
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3731.200.110.1.12\))
-From: Sam James <sam@gentoo.org>
-In-Reply-To: <CANm5x_MaPRcY8B6WdNM40xj8kaeqqfX2Z=EZk36MohfSk9KYNA@mail.gmail.com>
-Date: Thu, 3 Nov 2022 20:23:32 +0000
-Cc: nic.tuv@gmail.com,
- =?utf-8?Q?Hanno_B=C3=B6ck?= <hanno@gentoo.org>
-Message-Id: <FFA5687C-C618-4896-A2C0-5CE992FEF632@gentoo.org>
-References: <20221101170833.GA10470@openwall.com>
- <20221102150921.3ab3f2d0@computer> <Y2K1yOB7748iGI2P@wopr>
- <tk0n6j$10pr$1@ciao.gmane.io>
- <CANm5x_MaPRcY8B6WdNM40xj8kaeqqfX2Z=EZk36MohfSk9KYNA@mail.gmail.com>
+Subject: Re: [oss-security] CVE request: libsndfile 1.0.25 heap overflow
 To: oss-security@lists.openwall.com
-X-Mailer: Apple Mail (2.3731.200.110.1.12)
-Subject: Re: [oss-security] OpenSSL X.509 Email Address 4-byte Buffer Overflow
- (CVE-2022-3602), X.509 Email Address Variable Length Buffer Overflow
- (CVE-2022-3786)
 
---Apple-Mail=_EF1E2CC5-4BCB-4A01-9CB0-E310E72A51EF
+--=_zucker.schokokeks.org-23331-1446554801-0001-2
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=us-ascii
 
+On Tue, 03 Nov 2015 13:36:45 +0100
+Martin Prpic <mprpic@redhat.com> wrote:
 
+> I also don't see a patch for this issue (or an upstream bug). Any
+> pointers there would be greatly appreciated. Thanks!
 
-> On 3 Nov 2022, at 16:32, Nicola Tuveri <nic.tuv@gmail.com> wrote:
->=20
-> I can also add that at least this member of the OpenSSL Technical
-> Committee is following the discussion, and I believe I am not the only
-> one.
->=20
-> The feedback shared here on oss-security is read and carefully
-> considered, and I know it will be discussed within OTC to continue the
-> ongoing process of improving the OpenSSL project and its procedures.
+Unrelated, but I recently reported an out of bounds triggered by the
+test suite of libsndfile and got no reply:
+http://permalink.gmane.org/gmane.comp.audio.libsndfile.devel/681
 
-I'd like to thank the OpenSSL developers for being open to the
-CI improvements I've been making lately.
+Seems like a dead / unmaintaned upstream project...
 
->=20
-> I totally concur with Tavis Ormandy:
->> this is active prolific opensource security researchers discussing their=
- opensource security work on the opensource security mailing list :)
->=20
-> Personally, I'd like to thank you all for the feedback so far, as it
-> is in itself a contribution to the project, even when it is harsh and
-> reminds us of our mistakes.
-> As long as it is kept polite and constructive, as it has been so far
-> here, all feedback is very welcome and valuable.
+--=20
+Hanno B=C3=B6ck
+http://hboeck.de/
 
-Something I think that should be revisited is the priority
-of undefined behaviour in the codebase.
+mail/jabber: hanno@hboeck.de
+GPG: BBB51E42
 
-Undefined behaviour can - and has [0][1] - led to misbehaviour
-at runtime.
-
-Part of living with "Modern C" is embracing the
-techniques we have available to enhance compiler diagnostics
-and detect problems. That includes LTO, as well, which
-generally leads to _far_ better compiler warnings.
-
-The OpenSSL codebase isn't strict aliasing clean, and in
-Gentoo, we've built with -fno-strict-aliasing since ~2005
-(note that -fstrict-aliasing is enabled by default with -O2
-in GCC since at least 10 years ago).
-
-If at all possible, I'd ask that the OpenSSL team revisit
-its assessment of the severity of strict aliasing bugs
-as well as the value of LTO in enhancing diagnostics
-and finding bugs.
-
-And if it's deemed to not be a priority at this time,
-the build should enforce disabling them both.
-
-Again, this isn't about performance - it's about:
-1. Distributions inadvertently enabling something
-which is unsafe/insufficiently tested (LTO), or
-2. Not realising an option enabled by default
-in standard configurations can lead to miscompiled
-OpenSSL.
-
-(For my part, I've been trying to improve CI but I've
-also got some patches for aliasing bits which I'm
-playing with.)
-
-[0] https://github.com/llvm/llvm-project/issues/55255
-[1] https://github.com/openssl/openssl/issues/18225
-[2] https://github.com/openssl/openssl/issues/18663#issuecomment-1181478057
-
-Best,
-sam
-
---Apple-Mail=_EF1E2CC5-4BCB-4A01-9CB0-E310E72A51EF
+--=_zucker.schokokeks.org-23331-1446554801-0001-2
+Content-Type: application/pgp-signature
 Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment;
-	filename=signature.asc
-Content-Type: application/pgp-signature;
-	name=signature.asc
-Content-Description: Message signed with OpenPGP
+Content-Description: OpenPGP digital signature
 
 -----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
 
-iNUEARYKAH0WIQQlpruI3Zt2TGtVQcJzhAn1IN+RkAUCY2QjRF8UgAAAAAAuAChp
-c3N1ZXItZnByQG5vdGF0aW9ucy5vcGVucGdwLmZpZnRoaG9yc2VtYW4ubmV0MjVB
-NkJCODhERDlCNzY0QzZCNTU0MUMyNzM4NDA5RjUyMERGOTE5MAAKCRBzhAn1IN+R
-kHKgAQDbK01qvxMmxWXsWSLh4b1CMVQyhmld1DJ7xN+tRU+IxwEA7WkWztY13k8/
-jlt/99t8/ZuxInT+NL4EnbM3bwMZ5gw=
-=HkZI
+iQIcBAEBCgAGBQJWOKzoAAoJEKWIAHK7tR5CqNcQAKiE7/1jhOobI3I/+ryddDAV
+z4xpHrWhpxEE5J8WPtznTrGQ6yVSy4vPv+yX69AGlANJrdWFF7ped9Li3mE6cRKJ
+i/Heugc/nGIp++xIL/P98NLwW1yDIPl0WKx9R3PZIiyzMBd/750cH/lZgdQSnWhG
+y33tAsRulaypJxbqVuUrHwW/Hz/viS9KjX/FewcTEZvhr6h8zv/qsCZV2aRzx7Aa
+EgbuSBLXicUc77w63h4wjJUcgDTsnFCnF9QvMD+sWwzbB8ttBx+9VYs57ZPIfaB/
+k197DGjqrsBrKgnX7iu/sDm8d5i8AbVj77Nb6l4O1D/GAGaSwB2l6mLymOKA4a7E
+atEPZAjeG8gvpdO8ijMD8aWzscHngT2ie+9ZC8LYb/UpyKYBYHfQRntXw6Ze2+t+
+t7IM1WRqmxO9oCNqed/mvwTvvKvsot5kMWIU+o2PDIbbEQjxqW1Y0W+4xuTFb7tV
+M97l/2Et1tOWltQJqPzk3mEMueMnp4VUIZDuDMUV+1Ok6ZcZGdvmH6XdgD/P7onG
+hWDfv/uiXYqdpY79+X3TN+1o3MExP0+3QRGnanGHw5lNdGXEb6PK/PzzbFxOVbr6
+o9ZPvsFeyd21StmM9spu4o+wn/VuB+cmbPS8KviYZSxJ3kafIdVINK8J+I/uHmyR
+CEMIfuwIgV46hvk25XH0
+=HA+N
 -----END PGP SIGNATURE-----
 
---Apple-Mail=_EF1E2CC5-4BCB-4A01-9CB0-E310E72A51EF--
+--=_zucker.schokokeks.org-23331-1446554801-0001-2--
