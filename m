@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1199" "Wednesday" "25" "August" "2021" "17:39:02" "+0000" "Travis Finkenauer" "tmfink@juniper.net" nil "30" "Re: [oss-security] Possible memory leak on getspnam / getspnam_r" nil nil nil "8" nil nil (number mark "U       tmfink@junip Aug 25   30/1199  " thread-indent "\"Re: [oss-security] Possible memory leak on getspnam / getspnam_r\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Possible memory leak on getspnam / getspnam_r" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3132" "Tuesday" "3" "November" "2015" "16:00:46" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151103210046.BE34B72E027@smtpvbsrv1.mitre.org>" "69" "[oss-security] Re: Pointer misuse unziping files with busybox" nil nil nil "11" "2015110321:00:46" "[oss-security] Re: Pointer misuse unziping files with busybox" (number mark "        cve-assign@m Nov  3   69/3132  " thread-indent "\"[oss-security] Re: Pointer misuse unziping files with busybox\"\n") "<20151030193422.GH8645@brightrain.aerifal.cx>" ("<20151030193422.GH8645@brightrain.aerifal.cx>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 3565 invoked by uid 550); 25 Aug 2021 17:57:48 -0000
+Received: (qmail 3633 invoked by uid 550); 3 Nov 2015 21:01:03 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,143 +11,82 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 3564 invoked from network); 3 Nov 2015 21:00:58 -0000
+In-Reply-To: <20151030193422.GH8645@brightrain.aerifal.cx>
+Message-Id: <20151103210046.BE34B72E027@smtpvbsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, gustavo.grieco@gmail.com
+Date: Tue,  3 Nov 2015 16:00:46 -0500 (EST)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28096 invoked from network); 25 Aug 2021 17:39:18 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=juniper.net; h=from : to : subject
- : date : message-id : references : in-reply-to : content-type : content-id
- : content-transfer-encoding : mime-version; s=PPS1017;
- bh=rJhaLu0OvDH0dLK4yaAviEbelS+7u0wLORfUnUEtrvc=;
- b=EzcbFO3GvyTfb4Wy30JWhNdEIVS6fhb3wViansy3GCtX62o5CP7ap7XzOV1aLmOFxbkW
- V8jc5b0vqP7++8EqxiuO2wTt3dnFTGF+jIKyEcd2WrazoD0qx26qKfAsqH0Fn+muatuf
- /wBfTHjOU9y5VkjuGiqbLmKfrqTbS7WIPA+gOVI4TPQjULgRJ6NK8OsLwyCMhgxzwqQU
- Cr40ISFDNg74yZOk8dNS4pD+9S1LI2u6LxTzcy7mHFRBdZRQiun3GKnHfdvCbV5djkrd
- UveRHEUBmpI8lPHuwFoLFQ0OjqydBRG1kt5kpD3Si0Fy80XJD1Srvcp7+sVMvc1tptHW +g== 
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=UEpwQPTsQ1Bf8hwtik2/5bR3BdzIk41WzX7XjekC+TuSm2DjJ1/2zfGvJxx8+TpTHCifrlRmzAN2/OXNqhGVZHYyLzEaB/ZNtSVkTzyrCJ3TK+Z/cfeb8HDOyNQVzilVmZhejKeNOAG8eMswg6pDGBCxI4h3ni1i0nebSw0ttw5Uv0Hje3Yg9cgZcapkWa4RVBQLfsowEn0fwWwngik8PPN0qSwzt2SoZJBeYcY/T508Cee0y5huZ6E4RrfEd6ttT61Ui4hLZ1IKgYVMk0nBPeNM3peY3hMZKEvNiHNhUgpI7WG/nW54VbTdJCFBy1ag03Tp4cJxnXfo0N3Ddw6xBg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=rJhaLu0OvDH0dLK4yaAviEbelS+7u0wLORfUnUEtrvc=;
- b=AWMhIHUryGrgZPE1nwLewdxcG36K+Co5ZDvjGeW8xCeI+RXOo99R2QENMBNArxyVIDlv+4kpCngZvHcOtAJTIMmTUQj4eWk03id7xqZ5aGNwZ0tlgmVwt1RJtQUyKf0sjGx855vCfMRcL46XSipz3SKN5RFLhc7s7QUjmhClFaXxz9670gmwwsdIxCnhcji9Pif0gNxJvQP0N0uBu37yi4TFtyYgqOH/Xi6QMRx0Sp2CfyJf5iiqAFNxYsetfp9GMwMuV8tZhbfdBhKArJ82cjvccDdxTaPIOX/zSuSYYmZN7ZqgkSdwt4BseWAdqUt9Pxb2aN+y/VUPvzfvLThVfA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=juniper.net; dmarc=pass action=none header.from=juniper.net;
- dkim=pass header.d=juniper.net; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=juniper.net;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=rJhaLu0OvDH0dLK4yaAviEbelS+7u0wLORfUnUEtrvc=;
- b=FNU71ajOyO3jkrkzd5Igqhiw1Vg1OvSd1z8zwOlRV4X/1fe4fRvXmiN0y3XA9EeJ2XNQjq1tpUr01CMwaVxAiJDNsxlCGbr/evv7P3AcNP1FV0GaO5yhfr8f354QiO2opt1e6dfZJjgIC5Hkj9/HE9421C5UkGZv3BZNsBGGd3E=
-From: Travis Finkenauer <tmfink@juniper.net>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Thread-Topic: [oss-security] Possible memory leak on getspnam / getspnam_r
-Thread-Index: AQHXmYlRmCLuPw2s+0e9nQHKCmeM0KuEfRwA
-Date: Wed, 25 Aug 2021 17:39:02 +0000
-Message-ID: <38355066-A140-44A7-8E3D-58339304E77E@juniper.net>
-References: 
- <CAKpyPV-Z18FXae0t7vCozupvZ6+_9eeaoAQ=8_1sPM8Xfbn3ZQ@mail.gmail.com>
-In-Reply-To: 
- <CAKpyPV-Z18FXae0t7vCozupvZ6+_9eeaoAQ=8_1sPM8Xfbn3ZQ@mail.gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-mailer: Apple Mail (2.3654.120.0.1.13)
-authentication-results: lists.openwall.com; dkim=none (message not signed)
- header.d=none;lists.openwall.com; dmarc=none action=none
- header.from=juniper.net;
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 0d2cb3ec-6732-4808-c6b0-08d967ef3ac9
-x-ms-traffictypediagnostic: BYAPR05MB5477:
-x-microsoft-antispam-prvs: 
- <BYAPR05MB547744FDF2A7E8D5B97A6604C7C69@BYAPR05MB5477.namprd05.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:8882;
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: 
- RzP8huMHLSYY6pDlBUEumUx4dm4QAxJCcg2t1Vs466hViA1anwUlMqqnBTicCiP1VAU33cfGF7hM+TR7A6Vo1OGe1dVb5ZSwaIqijfSbd0aNwZu0KfLXQg109eXlURs1vJ6EGzEYmv+0Mo/Jz2BAxrMQvfNigCXW1G49oevdlC6YDyzFcqsvJVXNj/DeupjrUXUjeUmT3sGBw4Ujo/UwiMuc0b4LGWwZx/M30oAJ6abXka4kJovK9uTe5GmdSyqmhtO3qRiX13OAIywlaVM9A/U0S5U74g11Z9HNTj2PLLVY7DNkd3Zto/jJhZjrVDVeqN2gYM4FDSGI18NKz5yL71sl8iiGBIWEjvcXY6Hts/7/cyqFrOc5096h+XuNHWE+kFnJEaJfIDAbwJEX5UaqxEQ8xT3MaGavn8N3kSVlNbLmOVsNZzz6QQ+aXaEiatn6ionHkWU7TY51PCeaY08QNQS2L6ynCUp8Toqs7RdXWWyIGaru/ON5Nep9WWyvvzcloC/4eNnF8jkNGLMOX9TNxhMfG4OMa6rvDqlEYMaE0zzvGHRrP7G8q/qRZaJo2P/x4BtGhEJ/ULM2xlL+pIosZSGKn8fLNpr9gh/uIeFjeNan6+auH6HVQNQ9j7BECEzN2ia1A0Wf2vDvjRADK6qBZQpVkCLqCD88lr1WmO02AB+FLOdnXnjLgW/vdr0BrJ0IPUTJYIesgRsxoF7w5J2qUiteHp37OinqahpNsvj5DyT7C6nrviXKI3epYSLtJie3qGUGuItZ5/hCTFLKh/1iNoKh2qwr9X+XuN7l29P86s6orX93cVRM2nVMox5d6IXI
-x-forefront-antispam-report: 
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BYAPR05MB6470.namprd05.prod.outlook.com;PTR:;CAT:NONE;SFS:(4636009)(39860400002)(376002)(136003)(366004)(396003)(346002)(66476007)(2616005)(66946007)(66446008)(33656002)(6916009)(8676002)(64756008)(66556008)(316002)(186003)(478600001)(122000001)(76116006)(2906002)(6512007)(26005)(36756003)(6486002)(38100700002)(53546011)(6506007)(966005)(91956017)(38070700005)(8936002)(15650500001)(5660300002)(86362001)(83380400001)(71200400001)(45980500001);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: 
- =?us-ascii?Q?oaEMIixEdKNmIuybZ+A4a7QCg/6rqnypbbHXKDBtOOgXSaZzaDU0VfzBmi/m?=
- =?us-ascii?Q?WdmBmcjZXUkC3EyNm7MmlNTANvZVAhZZiluyVSwH+fQSLQcFOTIbfJiAS7x+?=
- =?us-ascii?Q?tm9C+yMRoI9vWpTllHElFnJrUtihCvK8++QuVkLtIRJmSkEu8BGlcOYj2U2z?=
- =?us-ascii?Q?0LB1/h5H/OPBO2tE2HFZjUdVHt8KUcSPbawdAg11/I1Ao/79WWiscJW1BhxJ?=
- =?us-ascii?Q?iYzjLfuL1L4CSgSeWiHBifSCEOkZOWjbBmwu3JKkIGOgqSz7DoDdOxISDDvd?=
- =?us-ascii?Q?wcgk866cu0KUa3x8m+bIkVYdIv3rUj3VWD3DcOEAru6laU8WtOoWGA6eg+z4?=
- =?us-ascii?Q?FLZXaVummkG8SGcPw50If89/BYHmgf4plI8oQyxiune+sjnY1A8Ei0/jlIMu?=
- =?us-ascii?Q?EOPqKjCh90B/iaF36xw8fdtoUL8KppFVuBhbqceDa0zaFNKHgC4eQtiCaCEU?=
- =?us-ascii?Q?LyfnnQWsqBMWZ+OxW2PBBYRUGZLQ6rVO8gT/HKmHAV6brDVSk8wPk6rkvXXO?=
- =?us-ascii?Q?iOUKX99n+thRVDqwTK0mFZzw7GLtTPwcR0kwZ/yoD41JCkBhWsjuZu1Fsaan?=
- =?us-ascii?Q?K//aRPe5MW2qF5GlhnpXB3NXW8FkfH2gt/+AbPLUygHo7Bs8kWy428bQZoeN?=
- =?us-ascii?Q?lsHcOD2+xzTRPtCaaSnxlNJgDAlNJ28fCeoyzE4aSfmeW5zHiaecAivPeOyf?=
- =?us-ascii?Q?wk2wmo8wVx79d89W/Pb8Isz3jMaQmQMlck2yXv+4xPOhS9Eib3vsGyydwk+A?=
- =?us-ascii?Q?Rjv8l1f5ldWJo0pK+beOBK+6Wdd2AXq9N6vtOLq9wc17RCAgE6lrxz0MlsUr?=
- =?us-ascii?Q?nYLPUKC75XPnqtyGKaH7YRJrzG+zLqCNRrystN/H9GTbMf4YxThsiq6mJjkg?=
- =?us-ascii?Q?wLr24nKK6Fv6GNhwQ0ea9orKliPhXo5IrNY03/ZUVwQdckkzD392NykATPTs?=
- =?us-ascii?Q?3LOzYR9176F5nT8LiBZ1AXJp8Cd90zYJ9CgiiKy8KVML/fgN/TcWZyzBzGq2?=
- =?us-ascii?Q?jkbd90SO1siia3tMaj8zmFfPEDFFi1MZYPANIdJW2rkWKe5AN38o0Kj1XaRe?=
- =?us-ascii?Q?h6rTKVKq006VrPVZtiomdmzYve8iS7zu89vgySu/sDJAlfYEZNFcqNMq3jU8?=
- =?us-ascii?Q?4/WAOp5upgDQx3gtQnw8i6m92pgSmDtj0kBEi6SNjhnzxlb0e5GmkkB5TbSx?=
- =?us-ascii?Q?xjhiMkioOQeR1jmxqSxu33ZlH/PJyul0Jjh1FWyo+A7gBGvbfxegstR0nH2Y?=
- =?us-ascii?Q?j6ZRHtJ5lEEGA/aikwp6z7fs+2FmjpVXTEWmpz3SDxLme106pXyLB+mUH8/K?=
- =?us-ascii?Q?09w5SA8A1+KIPvWZTXI0MU0j?=
-x-ms-exchange-transport-forked: True
-Content-Type: text/plain; charset="us-ascii"
-Content-ID: <6BD7DE824C09AF479AF5F344A56C711A@namprd05.prod.outlook.com>
-Content-Transfer-Encoding: quoted-printable
-MIME-Version: 1.0
-X-OriginatorOrg: juniper.net
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: BYAPR05MB6470.namprd05.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 0d2cb3ec-6732-4808-c6b0-08d967ef3ac9
-X-MS-Exchange-CrossTenant-originalarrivaltime: 25 Aug 2021 17:39:02.9863
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: bea78b3c-4cdb-4130-854a-1d193232e5f4
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: 5UGQ9Ift4dZfonJrd5wrly4I9pBkyMUxzFiIsDhAWumbDT0qOGRrhptA9RMjvR4JRMw3re4Nzgg5lWnLcMRkRg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BYAPR05MB5477
-X-Proofpoint-ORIG-GUID: RyoC8jG8CW8_SFEBJYCcXAezoKGZwysi
-X-Proofpoint-GUID: RyoC8jG8CW8_SFEBJYCcXAezoKGZwysi
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.182.1,Aquarius:18.0.790,Hydra:6.0.391,FMLib:17.0.607.475
- definitions=2021-08-25_07,2021-08-25_02,2020-04-07_01
-X-Proofpoint-Spam-Details: rule=outbound_spam_notspam policy=outbound_spam score=0 malwarescore=0
- adultscore=0 spamscore=0 suspectscore=0 phishscore=0 mlxscore=0
- clxscore=1034 impostorscore=0 priorityscore=1501 mlxlogscore=762
- lowpriorityscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2107140000 definitions=main-2108250104
-Subject: Re: [oss-security] Possible memory leak on getspnam / getspnam_r
+Subject: [oss-security] Re: Pointer misuse unziping files with busybox
+To: dalias@libc.org
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-> On Aug 24, 2021, at 4:14 PM, Jean Diogo <j@bsd.com.br> wrote:
->=20
-> Thus, although caching is mostly required for performance, maybe this
-> (caching) should happen only on getspnam function but not on getspnam_r.
-> That's because on getspnam_r the user wants to have control over this
-> buffering, then the user has a way to clean up it's memory when this
-> caching is not desired.
+>> > http://git.busybox.net/busybox/commit/?id=1de25a6e87e0e627aa34298105a3d17c60a1f44e
+>>
+>> > Unziping a specially crafted zip file results in a computation of an invalid
+>> > pointer and a crash reading an invalid address.
 
-Per Hyrum's Law [1], there are users who expect this caching behavior. Such
-users would hit a performance regression and be upset.
+>> BusyBox wouldn't realistically be
+>> used for deployment of a program that remains running to offer an
+>> unzipping service to multiple clients.
 
-To control the caching behavior, there could be another function like
-getspnam_r_with_cache() that takes an additional 'void **cache' parameter.
-getspnam_r_with_cache() could update the pointer to point to a cache. If a =
-user
-wants to avoid caching, then the user could just pass NULL instead.
+> There are several distributions including Alpine Linux, widely used in
+> container environments, which by default use busybox to provide the
+> unzip utility. Unzipping of any files downloaded by the user, possibly
+> from untrusted sources, may be affected. I believe CVE is appropriate
+> for user-facing programs commonly used to open untrusted files even
+> without an automated process accepting and processing
+> potentially-malicious files from a client.
 
-Alternatively, a new function cleanup_and_zeroize_caches() could added. A u=
-ser
-could call this after fork().
+We'll try to add some information about what we're looking for.
 
-Of course, introducing a new function complicates the APIs and requires
-developers to add them. Also, to support multiple versions of libraries,
-developers would need to protect the call with an '#ifdef SUPPORTS_NEW_FUNC=
-TION'.
+1. If the product were a library that decompresses untrusted files,
+then the existence of a crash would be enough to assign a CVE ID. The
+rationale is that a library might have been used to develop a program
+that needs to remain running even after one bad file is encountered.
 
--Travis
+2. Many products that aren't libraries have no need to remain running
+after a bad file is encountered. If the only possible problem is "a
+crash reading an invalid address" and there is no way to write to an
+invalid address or change the flow of control, then there typically
+can't be a CVE ID. Typically, a simple and complete workaround for the
+crash problem is to not try to unzip the bad file again.
 
-[1]: https://www.hyrumslaw.com/=
+> From: Gustavo Grieco <gustavo.grieco@gmail.com>
+> Date: Fri, 30 Oct 2015 09:38:47 -0300
+
+>> Could you please comment directly about the likelihood of
+>> exploitability for code execution?
+
+> To be honest, i don't know. The patched code looks quite complex and i
+> cannot discard any potential arbitrary write there.
+
+We currently prefer not to assign CVE IDs when the available
+information is "a crash reading an invalid address" in combination
+with "cannot discard any potential arbitrary write."
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJWOR/wAAoJEL54rhJi8gl5Y/MQAMu/aVQBoFhPCvqyvrG0ABiz
+K6kfDNA+d9mus1GqKju007FM7l3YEjvVfBTP/yQy1xfwBlWtgJHPK4Xc5/VDNo2z
+lqop/O85DB+dV2sswcR8C7lqplLwCS5RocT5nyi8wF2YadAFgWk/WZVX9dgpWQF7
+wODx8HBTH2aLVOoNTGNZY4srRFACMFi6jycvrBZkbDfOvxeYU6sKZDU+ZxA8zU8X
+ULsDr6xqS+XRQBu2JExX6WyTQHRcS90Errti5k0GhghbPrcTB2eXGpDOFQ+AScAi
+KSbx7zV9ngBHNXPNuXoQ1WAeUUD5L1P69zMfy8asxBdLOQWTK0PrZNMKPxwbOD9R
+UqzbeztiBJ9uS6fnKGWeTyLH3+5vtvBSB+UA3NSaIayAN2GXJfGaKHLYeEDovAUr
+kuaN8gvya/y5cce0NtvUcz/Z5BiJEfE2CEaY24f/FJ8ZqXKEjEO0sIG6nNMUH8Zy
+8d3HSsigsLesGpLdUFpD4kLxUjyMYkUew0CXVZ6STHX1wpcRUUksot9KocHybFXw
+KKoPSbMi27C2tgYIrFdJn4wHIU4hJFgqDQh1QjVRcq1H+6aNcdwxbLb+WQBSA0ze
+bzXG0r5Q0NW4AqFW/jaU29ACcylqnVsPilbbQ6hG/n5l4+gkAT0su7x75k+NPaI0
+ezjjs0eDQnlnp00K7930
+=xHYl
+-----END PGP SIGNATURE-----
