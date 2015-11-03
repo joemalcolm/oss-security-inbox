@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1627" "Wednesday" "2" "March" "2016" "17:55:48" "-0600" "Tyler Hicks" "tyhicks@canonical.com" "<20160302235547.GB21900@boyd>" "42" "[oss-security] CVE-2015-1339: Linux Kernel: memory exhaustion via CUSE driver" "^Cc:" nil nil "3" "2016030223:55:48" "[oss-security] CVE-2015-1339: Linux Kernel: memory exhaustion via CUSE driver" (number mark "        tyhicks@cano Mar  2   42/1627  " thread-indent "\"[oss-security] CVE-2015-1339: Linux Kernel: memory exhaustion via CUSE driver\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["487" "Tuesday" "3" "November" "2015" "11:57:42" "+0100" "Jean-Baptiste Kempf" "jb@videolan.org" "<56389326.6000609@videolan.org>" "13" "Re: [oss-security] CVE request: BD-J implementation in libbluray" nil nil nil "11" "2015110310:57:42" "[oss-security] CVE request: BD-J implementation in libbluray" (number mark "        jb@videolan. Nov  3   13/487   " thread-indent "\"Re: [oss-security] CVE request: BD-J implementation in libbluray\"\n") "<56124122.10305@redhat.com>" ("<54EAEB47.7070106@redhat.com>" "<5603C2A8.3060202@redhat.com>" "<561155A0.7020400@videolan.org>" "<56124122.10305@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 24258 invoked by uid 550); 2 Mar 2016 23:56:02 -0000
+Received: (qmail 28099 invoked by uid 550); 3 Nov 2015 10:57:54 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,60 +11,33 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 24232 invoked from network); 2 Mar 2016 23:56:02 -0000
-Message-ID: <20160302235547.GB21900@boyd>
+Received: (qmail 28081 invoked from network); 3 Nov 2015 10:57:54 -0000
+References: <54EAEB47.7070106@redhat.com> <5603C2A8.3060202@redhat.com>
+ <561155A0.7020400@videolan.org> <56124122.10305@redhat.com>
+Message-ID: <56389326.6000609@videolan.org>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Icedove/38.3.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="U+BazGySraz5kW0T"
-Content-Disposition: inline
-User-Agent: Mutt/1.5.24 (2015-08-30)
-Cc: Miklos Szeredi <miklos@szeredi.hu>,
-	Colin Ian King <colin.king@canonical.com>, security@ubuntu.com
-Date: Wed, 2 Mar 2016 17:55:48 -0600
-From: Tyler Hicks <tyhicks@canonical.com>
+In-Reply-To: <56124122.10305@redhat.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Date: Tue, 3 Nov 2015 11:57:42 +0100
+From: Jean-Baptiste Kempf <jb@videolan.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE-2015-1339: Linux Kernel: memory exhaustion via CUSE driver
-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] CVE request: BD-J implementation in libbluray
+To: Florian Weimer <fweimer@redhat.com>, oss-security@lists.openwall.com,
+ Assign a CVE Identifier <cve-assign@mitre.org>
 
---U+BazGySraz5kW0T
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+On 05/10/2015 11:21, Florian Weimer wrote:
+> I don't know.  There is a BDJSecurityManager, but I'm not convinced it's
+> sufficiently strict.  For instance, the checkPermission(Permission)
+> method does not call checkWrite(String) for FilePermission objects at
+> all.  This does not look right, but I'm not familiar with the finer
+> points of Java sandboxing.
 
-Colin Ian King discovered a kernel memory leak in the CUSE driver using
-stress-ng. A local denial of service, via memory exhaustion, is possible
-if the attacker has sufficient privileges to repeatedly open /dev/cuse
-for reading.
+Confirmed as fixed in 0.9.1.
 
-In Ubuntu, /dev/cuse is only readable by root so this flaw was deemed to
-have a very low impact. I'm unsure of the default permissions in other
-distributions.
-
-CVE-2015-1339 was assigned to the issue.
-
-Introduced in 4.2: https://git.kernel.org/linus/cc080e9e9be16ccf26135d366d7d2b65209f1d56
-Fixed in 4.4: https://git.kernel.org/linus/2c5816b4beccc8ba709144539f6fdd764f8fa49c
-
-Tyler
-
---U+BazGySraz5kW0T
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCgAGBQJW132DAAoJENaSAD2qAscKb24P/RdHp8K8mFy1FMbjlJYZWf15
-9+F5jJ/M1+2XtA54CBUekZEtw74itAn1+0dkNzb6dcuIDP4YZrAKKuq/srpdEqdY
-LfptHfUXV1K5sA7hG69i4sW8k1Bd/9l7VuQcpY5nWlKKjy2qpQoG19z/RL5AxDbH
-OeTolrvBza2wOx7CdGPNPehotb1UhFv/IzFkspeHZp9pd1hac9+Kjwsz6jHRarW8
-I+u3Xq1q397WMPlPOoT09Z/hC8YMrqT32D6FKqX7ReLalsqz+fMaEwNx5gArBN4a
-FlmVf1GeWU45vFDa7fFuTSmq+sqmLUTwgIA7F4ksEm15c6SZP/WZ3xwKrb+bFCo3
-Ghj2vmN7wUpXSzsTcpmxcqtm1InXaIeT0WE7S2NwcPLOqjAsNdiB8RL8Bujwt/ps
-oe0VTylfsV8E8DKVGJvPsJW0UVWY+Q/p3NfN068XoWLsqpV24BWDmqH9mMcP6Klm
-iI2LnO+jrddyTPteieW8dgnIy6pC78p9QaJ/3UGoIuC/v4mnb3f4JOKi7zkwPwDz
-4RMpNK9kd0IPMh+8kWe/daCTlgHG6mc8+kLvwLb/VCbwJFFBggZGfsrLJmocWzX6
-K66+4ZwBzn2yFaQf3HxTiCBgf98HF/PHLIcIB6nfl0meognnZpSnY9rO4Tf0aBUi
-/7vOYD++9m9PkC6JUkEx
-=dl6w
------END PGP SIGNATURE-----
-
---U+BazGySraz5kW0T--
+-- 
+Jean-Baptiste Kempf
+http://www.jbkempf.com/ - +33 672 704 734
+Sent from my Electronic Device
