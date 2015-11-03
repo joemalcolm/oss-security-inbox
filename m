@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1914" "Thursday" "8" "December" "2016" "01:40:01" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<b27c2ab5ac124be9929b4093ac19cd16@imshyb02.MITRE.ORG>" "49" "[oss-security] Re: CVE Request: html5lib: potential cross-site scripting vulnerablity: quote attributes that need escaping in legacy browsers" nil nil nil "12" "2016120806:40:01" "[oss-security] Re: CVE Request: html5lib: potential cross-site scripting vulnerablity: quote attributes that need escaping in legacy browsers" (number mark "U       cve-assign@m Dec  8   49/1914  " thread-indent "\"[oss-security] Re: CVE Request: html5lib: potential cross-site scripting vulnerablity: quote attributes that need escaping in legacy browsers\"\n") "<20161206125628.g46mnllue6akwt5p@lorien.valinor.li>" ("<20161206125628.g46mnllue6akwt5p@lorien.valinor.li>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2413" "Tuesday" "3" "November" "2015" "15:05:23" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151103200523.E8C2272E00E@smtpvbsrv1.mitre.org>" "51" "[oss-security] Re: CVE Request: pycurl use after free fixed in version 7.19.5.2" nil nil nil "11" "2015110320:05:23" "[oss-security] Re: CVE Request: pycurl use after free fixed in version 7.19.5.2" (number mark "U       cve-assign@m Nov  3   51/2413  " thread-indent "\"[oss-security] Re: CVE Request: pycurl use after free fixed in version 7.19.5.2\"\n") "<5638AB3E.30209@sumptuouscapital.com>" ("<5638AB3E.30209@sumptuouscapital.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 5557 invoked by uid 550); 8 Dec 2016 06:40:13 -0000
+Received: (qmail 32132 invoked by uid 550); 3 Nov 2015 20:05:35 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,64 +12,63 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5539 invoked from network); 8 Dec 2016 06:40:13 -0000
-From: <cve-assign@mitre.org>
-To: <carnil@debian.org>
-CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>,
-	<scott@kitterman.com>
-In-Reply-To: <20161206125628.g46mnllue6akwt5p@lorien.valinor.li>
-Message-ID: <b27c2ab5ac124be9929b4093ac19cd16@imshyb02.MITRE.ORG>
-Date: Thu, 8 Dec 2016 01:40:01 -0500
-MIME-Version: 1.0
-Content-Type: text/plain
-Subject: [oss-security] Re: CVE Request: html5lib: potential cross-site scripting vulnerablity: quote attributes that need escaping in legacy browsers
+Received: (qmail 32114 invoked from network); 3 Nov 2015 20:05:35 -0000
+From: cve-assign@mitre.org
+To: kristian.fiskerstrand@sumptuouscapital.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <5638AB3E.30209@sumptuouscapital.com>
+Message-Id: <20151103200523.E8C2272E00E@smtpvbsrv1.mitre.org>
+Date: Tue,  3 Nov 2015 15:05:23 -0500 (EST)
+Subject: [oss-security] Re: CVE Request: pycurl use after free fixed in version 7.19.5.2
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> As found in
-> https://www.sourceclear.com/registry/security/cross-site-scripting-xss-/python/sid-3068/fix
-> html5lib fixed a cross-site scripting vulnerability in upstream
-> version 0.99999999 with commit
+> https://github.com/pycurl/pycurl/commit/602f8e364634d386524f0396e962c2c9de0536a9
 > 
-> https://github.com/html5lib/html5lib-python/commit/9b8d8eb5afbc066b7fac9390f5ec75e5e8a7cab7
-> 
-> References:
-> 
-> https://github.com/html5lib/html5lib-python/issues/11
-> https://github.com/html5lib/html5lib-python/issues/12
-> 
-> Question about the CVE assignment for html5lib was raised as well in
-> https://github.com/mozilla/bleach/issues/229
+> my understanding is that use-after-free generally gets assigned a CVE
+> based on CWE 416
 
-We are not sure of the optimal way to represent this in CVE. We
-are making this mapping, which we feel is adequate:
+There isn't that type of direct relationship between the existence of
+a CWE ID and the availability of a CVE ID for an instance of the
+weakness. CVE, for example, involves additional decision points about
+whether the weakness is a mistake (here, yes) and about whether the
+weakness is exploitable in a way that crosses a privilege boundary
+(here, possibly not). It's also necessary that the vulnerability
+existed in something akin to "shipped code." The patch seems to be
+possibly related to "PyTuple" and the ChangeLog has "List and tuples
+are now accepted in all positions of HTTPPOST option values" for the
+same version. If the problem only existed in unshipped code between
+7.19.5.1 and 7.19.5.2 as tuple support was being developed, then it
+typically would not have a CVE ID.
 
-  Use CVE-2016-9909 for the mishandling of the '<' character in
-  attribute values.
+> I haven't looked into the code in any detail for exploitability
 
-  Use CVE-2016-9910 for the mishandling of all of the other mentioned
-  characters in attribute values.
+Anyone is welcome to provide additional analysis. We can accept a
+threat model in which a Python script allows an untrusted person to
+control the string data for properly formed setopt calls. We probably
+can't accept an implausible threat model in which a Python script
+allows an untrusted person to make improperly formed setopt calls.
 
 - -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJYSPwUAAoJEHb/MwWLVhi2HSwP/3e58+AisDyrqaNcdRNrQvPG
-ri5lDi8E9AFA38gx2IEdyavHzmzc+dCFUz/KGrapeHV94MLiAszUJTK1kB9nqesI
-iagSlx9sbYZcwCvbpiKcYex8UvKMR24CX2faoxtzJulycsulrvYzJ9Jskq4aylCQ
-pw7XipGJMs3gHHaSCThGq2t/w5zEiHdYSfKjixKdwk9jczhLihoRSueGkDDyBy5O
-M9q27mSccXHEDa2Xq6Eyio6rsTsckA9DRYh0L36JYn83XhMqBdqK00LnfgfUorzi
-tN4Mrxgci7pAE4JFTqrK9aR+LJht1oLf2Z79foucvIRyiyU5swVEKFz8HekEMbEm
-wAVmV67qV6A/bfR23/86JoQNSv7WjYoqrfue0tAY4Q1EM5fF4qN590lWT3bfDprT
-3wX9o8+3xt+JwSSQZdfw13jqjoJyxX10waJLcM02L72dM57OH7u8vB9c4xIiU14w
-/lhJxfW4DDNl4DNYuNE3Yj/auAPUCXhJfrY4RpjLFmfFSP48i2PNlgHCGXkE5cen
-5OmoaJN58L7Vi2q4cgEtUPdqGCQGawfZ5NXIhOyTrP2dcdAa6r+RqStlMH6MB2Cx
-IEMvqZCxmKtFKOZdx+svgjtvaQ6zs6Csc+z1GBTQc64nJH52ivV+e6Vb446hJNXR
-TsPjDC+UafOQstWKp4Qe
-=ZAOJ
+iQIcBAEBCAAGBQJWORI9AAoJEL54rhJi8gl5jNUQALG063HFSrdfMbFire7l1S+/
+GU/KMqaHAr2zM+GYNevtUyrid/B9A1wQ4WRcKE5HkGrD5OrEWwLyajdVjdnIHk9R
+qxI8nmHNQi4r2x6JUx6KuuL774NmjVU0IIJHJ6+ca6Z9ZXRI6snZWnBVxBeUerNp
+DhJiuo/VQ6fFJUrT0RrudiG7neG6ml33KsgZ0eMFQWOLejLetVoVJT5l0N9LWkJ6
+clyywFN8c+OeDjQxRfnDuvBPnzr4D+YB8US+d9suDiRR9vWHxyKMqj58rTr+UVn4
+y/NGqCpV+c8DFx64s08pKNOxKy61Sa+xHsEu3OokIpqVmbrw/aAogLrJBdE1hYBM
+oaoI8DqbO7kb2y80WEpzeSpXinpeP9dfD3p6dTtnNhfRSGUKp9vGnw1+XnPAylE6
+qm9NfSE8laViO888lCFPFcGq26bIuhzkPMaVbtv5XN3onePnZj7gSat6Bk8kRNPE
+Dwjac094EmRrvE2ve4ABEYlxxDyyazRF57BfRPUQVfgPytQX17ed1TPfTyjHTB6U
+9d4YHie9z4ud7NR+C8QZjmCIybZnaCZJBodcfIAyIpVH1OXP7a4kr0vy2FaEWA8R
+nPPqp65Y8BKdfzjKcVk1AbrDkvg/tpZAYWWM++8Yk+dunouCdnjXeJFjphmJuac1
+fKRoWuusiPUA6aACQki0
+=AH8p
 -----END PGP SIGNATURE-----
