@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2675" "Friday" "29" "July" "2016" "20:42:03" "-0700" "lazytyped" "lazytyped@gmail.com" "<83a44672-b86b-08c3-689e-f55675c5f6b7@gmail.com>" "65" "Re: [oss-security] Re: Use after free in my_login() function of DBD::mysql (Perl module)" "^Cc:" nil nil "7" "2016073003:42:03" "[oss-security] Re: Use after free in my_login() function of DBD::mysql (Perl module)" (number mark "        lazytyped@gm Jul 29   65/2675  " thread-indent "\"Re: [oss-security] Re: Use after free in my_login() function of DBD::mysql (Perl module)\"\n") "<20160729115843.386c87dc@pc1>" ("<20160727013203.C008FABC4E2@smtpvmsrv1.mitre.org>" "<abec12ab-d311-cbe6-f256-5c9df0af2008@gmail.com>" "<20160729115843.386c87dc@pc1>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3235" "Thursday" "5" "November" "2015" "10:27:32" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151105152732.904A66C0357@smtpvmsrv1.mitre.org>" "73" "[oss-security] Re: CVE request -- Linux kernel: selinux: rate-limit unrecognized netlink message warnings in selinux_nlmsg_perm()" nil nil nil "11" "2015110515:27:32" "[oss-security] Re: CVE request -- Linux kernel: selinux: rate-limit unrecognized netlink message warnings in selinux_nlmsg_perm()" (number mark "        cve-assign@m Nov  5   73/3235  " thread-indent "\"[oss-security] Re: CVE request -- Linux kernel: selinux: rate-limit unrecognized netlink message warnings in selinux_nlmsg_perm()\"\n") "<1185185396.4061488.1446649876420.JavaMail.zimbra@redhat.com>" ("<1185185396.4061488.1446649876420.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 25859 invoked by uid 550); 30 Jul 2016 03:42:22 -0000
+Received: (qmail 14225 invoked by uid 550); 5 Nov 2015 15:27:45 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,112 +11,86 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 25841 invoked from network); 30 Jul 2016 03:42:22 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=subject:to:references:cc:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=fjXCweEliU4qcvqDNZPlDLOLq3ve5rFDnY1/0Hu7iiA=;
-        b=xQ/2tH8ebYgU1gXDgXYyviJ//A30Va1tdlvJl2otUJvMCA+LLO+KqHEbexlF1PfniU
-         wFqJLvidYz/cHrOAdJOCXRGMNmR6Z5zG9hO5RCRGq5r3OCzzPwuE+vbt0J4bNjRRgUNW
-         N7o8mFpYIzr2MW3+qsUqPytLFWrTK/BWxeeK0TgG7RFeDdFSCcw7hfo3Lxt/22RpkwFC
-         GVeVgfzEgeD7zkpByI2xKz5VH5QHjOJ5CzO6/lZnM+sE7BanlkFaIT41nBNm+svSzI/z
-         SB8FA4AcQQ5wWT7Z6601Zb0imUhrq7z+mzGLB9z7o1n6fcpqoVNlrOc10BzMvIyzL8Ti
-         dKJg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=fjXCweEliU4qcvqDNZPlDLOLq3ve5rFDnY1/0Hu7iiA=;
-        b=muP1HC99XJd80fe8Vpp4Ctj87b8fRtdybgnKUo42W8aACUw/25hSwKJaRP4pngd5hS
-         vYvst8DnqHXRpCTubjTiAnyFVRLxkb9qTCh2SxXAq1NZEbDIGswxFwvqK0Eh5OVldGRL
-         ymxWEy+wC8HVC8W3WFuB0LkFQmEQhdfPmWEGUGt51D6szZ5LpPZ9+gEQTFYg5hDIc+5o
-         DFsg2rn9Otwql+XZGnXlDSvrwuvmscCKX4BfSD9NMrfjVrrxYDJJfZ2IqAABx7CUg35a
-         Pv1CvBn7kk0pz8L/5BVuFaWZ8ZFM3ieukYkPp3gBhtPymi/Zk8bxroPBjCnymJCvtHF/
-         XV4A==
-X-Gm-Message-State: AEkoouvBb4E+9HKadAYJXO4frvPf5fl4LClcrUPiZiWm7tI4zoL2dcxTDH2Y3pxm4YM3ag==
-X-Received: by 10.55.69.69 with SMTP id s66mr55073277qka.100.1469850129831;
-        Fri, 29 Jul 2016 20:42:09 -0700 (PDT)
-References: <20160727013203.C008FABC4E2@smtpvmsrv1.mitre.org>
- <abec12ab-d311-cbe6-f256-5c9df0af2008@gmail.com>
- <20160729115843.386c87dc@pc1>
-Message-ID: <83a44672-b86b-08c3-689e-f55675c5f6b7@gmail.com>
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:45.0)
- Gecko/20100101 Thunderbird/45.1.0
-MIME-Version: 1.0
-In-Reply-To: <20160729115843.386c87dc@pc1>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Cc: oss-security@lists.openwall.com
-Date: Fri, 29 Jul 2016 20:42:03 -0700
-From: lazytyped <lazytyped@gmail.com>
+Received: (qmail 14204 invoked from network); 5 Nov 2015 15:27:44 -0000
+In-Reply-To: <1185185396.4061488.1446649876420.JavaMail.zimbra@redhat.com>
+Message-Id: <20151105152732.904A66C0357@smtpvmsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, pmatouse@redhat.com
+Date: Thu,  5 Nov 2015 10:27:32 -0500 (EST)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: Use after free in my_login() function of
- DBD::mysql (Perl module)
-To: =?UTF-8?Q?Hanno_B=c3=b6ck?= <hanno@hboeck.de>
+Subject: [oss-security] Re: CVE request -- Linux kernel: selinux: rate-limit unrecognized netlink message warnings in selinux_nlmsg_perm()
+To: vdronov@redhat.com
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
+> https://bugzilla.redhat.com/show_bug.cgi?id=1278005
+> http://article.gmane.org/gmane.linux.kernel.lsm/25958
 
-On 7/29/16 8:58 AM, Hanno Böck wrote:
-> On Thu, 28 Jul 2016 06:31:20 -0700
-> lazytyped <lazytyped@gmail.com> wrote:
->
->> Quick question:
->>
->> - I guess the affecting function call is the following:
->>
->>     do_error(dbh, mysql_errno(imp_dbh->pmysql),
->>                    mysql_error(imp_dbh->pmysql)
->> ,mysql_sqlstate(imp_dbh->pmysql));
->>
->> which one of those calls provides an exploitation path? They seem all
->> reads off the free'd structure.
->>
->> I see in the bug report: " (I think use after free's can be serious
->> and potentially lead to malfunction and security issues)" and would
->> like to understand more about the rationale.
-> Hi,
->
-> I don't have a practical exploit scenario, thus my careful wording (the
-> best answer to "is this exploitable?" is often simply "I don't know").
->
-> It's a use after free, should be undeniable that it should be fixed.
+Our current feeling is that this might be best categorized as a
+security enhancement (with no CVE ID) rather than a vulnerability fix.
+Is there a documented policy that a privilege boundary is crossed in
+all cases where a printk can be triggered by an unprivileged user, or
+cases where the number of printk calls is somehow "too many" or the
+required circumstances happen "too often"?
 
-Yes, but whether this is a security bug or not is a different matter. 
-The main reason why I'm bringing this up is that security bugs have a 
-significantly different treatment by OS teams and a quite different 
-expectation of turnaround time by users/customers.
+We'd like to avoid a situation where a CVE ID is needed every time
+that a kernel patch exists that changes a printk to a
+pr_warn_ratelimited (regardless of whether the patch is ultimately
+added to the stable kernel).
 
-But once a CVE is out (as is in this case), the bug has been officially 
-declared as a security issue, there is no turning back.
+We feel it's more reasonable to have a CVE ID in a case where code is
+intended to have the functionality of printing something (with a rate
+limit), but the functionality is broken because of an inadvertent
+coding error, or because of a divergence between a distribution kernel
+and upstream, e.g., something like
 
-So, yes, a use-after-free is a bug, but not necessarily a security one, 
-yet the CVE makes it as much, with all the associated process. It would 
-be great if we could get a bit more triaging by the owner of the code or 
-the submitter before declaring the bug one thing or the other 
-(especially in these days of projects like yours that bring in a lot of 
-reports -- and don't get me wrong, this is a very valuable effort).
+  https://bugzilla.redhat.com/show_bug.cgi?id=1115545#c5
+  http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=bb1dc0bacb8ddd7ba6a5906c678a5a5a110cf695
 
->
-> But my highlevel understanding of what could happen in such a case: In a
-> multithreaded application using that module it may be possible that
-> another thread is allocating the free'd memory before do_error is
-> called and may fill the memory of the struct with attacker-controlled
-> content. Would require careful analysis of what do_error does exactly
-> whether that could lead to further bad things.
+but where a pr_warn_ratelimited was supposed to alert a system
+administrator about an attack.
 
-Well, AddressSanitizer should have told you whether the access is a read 
-access (as I suspect) or a write access. A bit of code inspection (or 
-follow up from the code maintainer) should add to the picture.
+(Also, 1115545#c5 mentions "I think maybe the reason no one has
+noticed is due to the low usage of ratelimiting - from what I counted
+there were only a handful of pr_warn_ratelimit calls, and most were in
+nfs.")
 
-As things stand right now, it seems that this could be turned into an 
-infoleak (despite some CVSS high scores I've seen around). But 
-notwithstanding this, I think it might help the community in general if 
-we do not just blindly characterize bugs based on what class they 
-belong, but we get a bit more information/effort around them.
+An example similar to the current one apparently does not have a CVE:
 
+  http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=bfc5184b69cf9eeb286137640351c650c27f118a
 
-        -  Enrico
+People have proposed putting pr_warn_ratelimited into the
+nfs4_schedule_state_manager function in the
+http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/tree/fs/nfs/nfs4state.c
+file, but that hasn't happened:
 
->
+  https://bugs.launchpad.net/bugs/1423472
 
+http://unix.stackexchange.com/questions/130742/how-to-enable-printk-selectively
+discusses configuration options, suggesting that the security
+enhancement of putting in a pr_warn_ratelimited is not needed on all
+machines.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJWO3RKAAoJEL54rhJi8gl5BCYQAICe0NaiE4jUrQFZRserj52e
+Ma6LI9AxvxXREB74jRRLPOV4HEYOnACnAoOk45g61QEE+/9Px28tdQfDTd9Rwi9C
+Zf3HX119VIwE9Trv8MZ2H8SzFTSMLsM5Qg4VGxLGkkNJx1G6hqPVPu3dqBA8DLoN
++Kl9WShcXoqhIvlB3PBEqxkzyQnobeU0W0lWbl5bNDvMuf8nFp0GF4ClWDdZWKDs
+z+KJQ269iBQAeVI9g+8SwTuXmS3S4FG6H11IY24labutOaEJYv5fgdltNYYuPSBc
+ruo4A0pHIT3Q8xSAlLTRx0ZBk3DVaFG4ScQKjTofJIKKNAFmAWqzQzTutahWd584
+8iAUaU9WNkuGyUhe5LnnC50+CoAWdmNwgmOdBD2zIRdVtBey5wF3PxncOzHMcI2Q
+I5yFcyY+WexnQjkIKqfuHIe7uJacicZ4QGnM/Uk4cBEOXDla2+WSj6PFTfkNqFPd
+yKT77vfhP7wFGdiF3FiDo1CUVcj9h057ps8hhDfCtfelmSWgr6gEJv4Ueno0vrAQ
+LgK0eH8z7uW3UonEG8W6pXFX9D/js6z0ShMJlyNOB+Fa7LatNDr5GSU5MuUM1FDh
+7t1Esi42WoEWZPFKVC5pcyGfKDvnBFWajXDa5bOg42poNogmbcxxVGdjYu0VDx0S
+ePT+hfNc9OOcnG4jyJUW
+=L5+e
+-----END PGP SIGNATURE-----
