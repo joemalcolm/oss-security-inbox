@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5159" "Wednesday" "28" "June" "2017" "12:07:30" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<727726.979970129-sendEmail@localhost>" "105" "[oss-security] lame: stack-based buffer overflow in III_i_stereo (layer3.c)" nil nil nil "6" "2017062812:07:30" "[oss-security] lame: stack-based buffer overflow in III_i_stereo (layer3.c)" (number mark "U       ago@gentoo.o Jun 28  105/5159  " thread-indent "\"[oss-security] lame: stack-based buffer overflow in III_i_stereo (layer3.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["258" "Thursday" "5" "November" "2015" "15:51:52" "+0100" "Adam Maris" "amaris@redhat.com" "<563B6D08.6030008@redhat.com>" "14" "[oss-security] CVE request: qt5-qtwebkit records visited URLS in private browsing mode" nil nil nil "11" "2015110514:51:52" "[oss-security] CVE request: qt5-qtwebkit records visited URLS in private browsing mode" (number mark "        amaris@redha Nov  5   14/258   " thread-indent "\"[oss-security] CVE request: qt5-qtwebkit records visited URLS in private browsing mode\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 8180 invoked by uid 550); 28 Jun 2017 12:07:46 -0000
+Received: (qmail 6012 invoked by uid 550); 5 Nov 2015 14:52:08 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,118 +11,33 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 8099 invoked from network); 28 Jun 2017 12:07:45 -0000
-Message-ID: <727726.979970129-sendEmail@localhost>
-From: "Agostino Sarubbo" <ago@gentoo.org>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Date: Wed, 28 Jun 2017 12:07:30 +0000
+Received: (qmail 5991 invoked from network); 5 Nov 2015 14:52:08 -0000
+Message-ID: <563B6D08.6030008@redhat.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.3.0
 MIME-Version: 1.0
-Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-739888.712371798"
-Subject: [oss-security] lame: stack-based buffer overflow in III_i_stereo (layer3.c)
-
-------MIME delimiter for sendEmail-739888.712371798
-Content-Type: text/plain;
-        charset="UTF-8"
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 7bit
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.23
+Cc: cve-assign@mitre.org
+Date: Thu, 5 Nov 2015 15:51:52 +0100
+From: Adam Maris <amaris@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE request: qt5-qtwebkit records visited URLS in private browsing
+ mode
+To: oss-security@lists.openwall.com
 
-Description:
-lame is a high quality MPEG Audio Layer III (MP3) encoder licensed under the LGPL.
+Hello,
 
-Few notes before the details of this bug. Time ago a fuzz was done by Brian Carpenter and Jakub Wilk which posted the results on the debian 
-bugtracker. In cases like this, when upstream is not active and people do not post on the upstream bugzilla is easy discover duplicates, so I 
-downloaded all available testcases, and noone of the bug you will see on my blog is a duplicate of an existing issue. Upstream seems a bit 
-dead, latest release was into 2011, so this blog post will probably forwarded on the upstream bugtracker just for the record.
+could a CVE be assigned to this issue?
 
-The complete ASan output of the issue:
+qt5-qtwebkit records visited URLS to its favicon database 
+WebpageIcons.db while using private browsing mode:
 
-# lame -f -V 9 $FILE out.wav
-==30141==ERROR: AddressSanitizer: stack-buffer-overflow on address 0x7ffd587a7600 at pc 0x7f95cdaf0f34 bp 0x7ffd587a6250 sp 0x7ffd587a6248
-WRITE of size 4 at 0x7ffd587a7600 thread T0
-    #0 0x7f95cdaf0f33 in III_i_stereo /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/mpglib/layer3.c:1236:28
-    #1 0x7f95cdaf0f33 in decode_layer3_frame /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/mpglib/layer3.c:1753
-    #2 0x7f95cdaaa3ca in decodeMP3_clipchoice /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/mpglib/interface.c:615:13
-    #3 0x7f95cdaa7c13 in decodeMP3 /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/mpglib/interface.c:696:12
-    #4 0x7f95cda68092 in decode1_headersB_clipchoice /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/mpglib_interface.c:149:11
-    #5 0x7f95cda6d94a in hip_decode1_headersB /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/mpglib_interface.c:436:16
-    #6 0x7f95cda6d94a in hip_decode1_headers /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/mpglib_interface.c:379
-    #7 0x51efa6 in lame_decode_fromfile /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/get_audio.c:2099:19
-    #8 0x51efa6 in read_samples_mp3 /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/get_audio.c:877
-    #9 0x51efa6 in get_audio_common /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/get_audio.c:785
-    #10 0x51e4fa in get_audio /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/get_audio.c:688:16
-    #11 0x50f776 in lame_encoder_loop /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/lame_main.c:456:17
-    #12 0x50f776 in lame_encoder /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/lame_main.c:531
-    #13 0x50c43f in lame_main /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/lame_main.c:707:15
-    #14 0x510793 in c_main /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/main.c:470:15
-    #15 0x510793 in main /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/main.c:438
-    #16 0x7f95cc660680 in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #17 0x41c998 in _init (/usr/bin/lame+0x41c998)
+https://codereview.qt-project.org/#/c/108936/
 
-Address 0x7ffd587a7600 is located in stack of thread T0 at offset 5024 in frame
-    #0 0x7f95cdadc48f in decode_layer3_frame /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/mpglib/layer3.c:1659
+Thanks!
 
-  This frame has 4 object(s):
-    [32, 344) 'scalefacs'
-    [416, 5024) 'hybridIn' 0x10002b0ecec0:[f2]f2 f2 f2 f2 f2 f2 f2 f2 f2 f2 f2 f2 f2 f2 f2
-  0x10002b0eced0: f2 f2 f2 f2 f2 f2 f2 f2 f2 f2 f2 f2 f2 f2 f2 f2
-  0x10002b0ecee0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x10002b0ecef0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x10002b0ecf00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x10002b0ecf10: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==30141==ABORTING
-
-Affected version:
-3.99.5
-
-Fixed version:
-N/A
-
-Commit fix:
-N/A
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-CVE-2017-9871
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00293-lame-stackoverflow-III_i_stereo
-
-Timeline:
-2017-06-01: bug discovered
-2017-06-17: blog post about the issue
-2017-06-25: CVE assigned
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/06/17/lame-stack-based-buffer-overflow-in-iii_i_stereo-layer3-c/
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
-
-
-------MIME delimiter for sendEmail-739888.712371798--
+-- 
+Adam Maris / Red Hat Product Security
 
