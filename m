@@ -1,4 +1,9 @@
-Received: (qmail 15438 invoked by uid 550); 22 Mar 2023 17:02:33 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["705" "Sunday" "8" "November" "2015" "19:36:20" "-0500" "Jason Shepherd" "jshepher@redhat.com" "<1904852023.6462846.1447029380024.JavaMail.zimbra@redhat.com>" "10" "[oss-security] Assign CVE for common-collections remote code execution on deserialisation flaw" "^Date:" nil nil "11" "2015110900:36:20" "[oss-security] Assign CVE for common-collections remote code execution on deserialisation flaw" (number mark "        jshepher@red Nov  8   10/705   " thread-indent "\"[oss-security] Assign CVE for common-collections remote code execution on deserialisation flaw\"\n") "<1278250696.6459242.1447028856240.JavaMail.zimbra@redhat.com>" ("<1278250696.6459242.1447028856240.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 27763 invoked by uid 550); 9 Nov 2015 01:01:28 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,98 +11,30 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 19591 invoked from network); 9 Nov 2015 00:36:33 -0000
+Message-ID: <1904852023.6462846.1447029380024.JavaMail.zimbra@redhat.com>
+In-Reply-To: <1278250696.6459242.1447028856240.JavaMail.zimbra@redhat.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.64.51.119]
+X-Mailer: Zimbra 8.0.6_GA_5922 (ZimbraWebClient - SAF9 (Mac)/8.0.6_GA_5922)
+Thread-Topic: Assign CVE for common-collections remote code execution on deserialisation flaw
+Thread-Index: GwiytGA/IDdJaAuw8DiW0sDj65Wqdg==
+Date: Sun, 8 Nov 2015 19:36:20 -0500 (EST)
+From: Jason Shepherd <jshepher@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 14019 invoked from network); 22 Mar 2023 17:02:06 -0000
-Date: Wed, 22 Mar 2023 18:01:59 +0100
-From: Solar Designer <solar@openwall.com>
+Subject: [oss-security] Assign CVE for common-collections remote code execution on
+ deserialisation flaw
 To: oss-security@lists.openwall.com
-Cc: Tomas Mraz <tomas@openssl.org>
-Message-ID: <20230322170158.GA10390@openwall.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.4.2.3i
-Subject: [oss-security] CVE-2023-0464: OpenSSL: Excessive Resource Usage Verifying X.509 Policy Constraints
 
-Somehow the OpenSSL project doesn't post these in here on their own; I
-wish they did, but meanwhile let's forward.
+Hello oss-esc,
 
------ Forwarded message from Tomas Mraz <tomas@openssl.org> -----
+It was found that a flaw in Apache commons-collections Java library allowed remote code execution when Deserialised with Java Object Serialization. Full details of the vulnerability can be found in this recent blog post, [1]. A proposed patch for 3.2.x branch has been submitted upstream, but no release has been made with the fix at the current time. The issue affects version 3.x, and 4.x of Apache common-collections, [2].
 
-Date: Wed, 22 Mar 2023 15:49:38 +0000
-From: Tomas Mraz <tomas@openssl.org>
-To: openssl-project@openssl.org, openssl-users@openssl.org,
- openssl-announce@openssl.org
-Subject: OpenSSL Security Advisory
+   [1] http://foxglovesecurity.com/2015/11/06/what-do-weblogic-websphere-jboss-jenkins-opennms-and-your-application-have-in-common-this-vulnerability/
+   [2] https://issues.apache.org/jira/browse/COLLECTIONS-580
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
-
-Excessive Resource Usage Verifying X.509 Policy Constraints (CVE-2023-0464)
-===========================================================================
-
-Severity: Low
-
-A security vulnerability has been identified in all supported versions
-of OpenSSL related to the verification of X.509 certificate chains
-that include policy constraints.  Attackers may be able to exploit this
-vulnerability by creating a malicious certificate chain that triggers
-exponential use of computational resources, leading to a denial-of-service
-(DoS) attack on affected systems.
-
-Policy processing is disabled by default but can be enabled by passing
-the `-policy' argument to the command line utilities or by calling the
-`X509_VERIFY_PARAM_set1_policies()' function.
-
-OpenSSL 3.1, 3.0, 1.1.1 and 1.0.2 are vulnerable to this issue.
-
-Due to the low severity of this issue we are not issuing new releases of
-OpenSSL at this time. The fix will be included in the next releases when they
-become available. The fix is also available in commit 2017771e (for 3.1),
-commit 959c59c7 (for 3.0), commit 879f7080 (for 1.1.1) in the OpenSSL
-git repository, and commit 2dcd4f1e (for 1.0.2) in the OpenSSL git
-repository for premium customers.
-
-Once they are released:
-
-OpenSSL 3.1 users should upgrade to 3.1.1.
-OpenSSL 3.0 users should upgrade to 3.0.9.
-OpenSSL 1.1.1 users should upgrade to 1.1.1u.
-OpenSSL 1.0.2 users should upgrade to 1.0.2zh (premium support customers only).
-
-This issue was reported on 12th January 2023 by David Benjamin (Google).
-The fix was developed by Dr Paul Dale.
-
-OpenSSL 1.1.1 will reach end-of-life on 2023-09-11. After that date security
-fixes for 1.1.1 will only be available to premium support customers.
-
-References
-==========
-
-URL for this Security Advisory:
-https://www.openssl.org/news/secadv/20230322.txt
-
-Note: the online version of the advisory may be updated with additional details
-over time.
-
-For details of OpenSSL severity classifications please see:
-https://www.openssl.org/policies/secpolicy.html
------BEGIN PGP SIGNATURE-----
-
-iQJGBAEBCAAwFiEE3HAyZir4heL0fyQ/UnRmohynnm0FAmQbItgSHHRvbWFzQG9w
-ZW5zc2wub3JnAAoJEFJ0ZqIcp55t8AgP/3mUOflbZ7e8yLjgEMqFqCSFlSQo5bFK
-gh2h2NOKBjkvzFtlqnAR+bqNPAr9CEosSRF1LiVtKu9RhaIh1LlTsp53aFWSP48p
-7LekiPmd5hnorO72dB1eLlbHPIe0lh2It2cDlkYc95BVcttQEzHbyygVKBD0f0cN
-WqslsIeVPIqMIZMHAlpnINz630Rsn/4cif+6U8gYgNN51f7WeCArPp3U7hAhHVuC
-b7lOVXBNzdfdFzKVjSTHqvWBib/Ji+Ga4knHFZya7VLQagKjDJiQB9uBpuCOmzxD
-kb9nJCSroIwf74wDxJxr4gb314/hju+jpC2Xny8l7SXxJUahdMywJLgofPMEOhWb
-lRod8SHr0Je5Gpp4R+p6cmwr0PM76KPxcLOvsa7OsIwIZQvFyxMVvsGYdMxg0ads
-qDqROqkb1Mx+Fa0smySe6Xru0RtEgXAk7AIltz8AqHmCvMED8S7ZwhsHipM/eLYZ
-Iky8SsSYn4K3a4Sa05+IrQARWmDCZHRHp9JfHacPq0HunNrAX5unDfHUNAx1TZcX
-0cSeN/SF56sds+SEjJpURCHxO+Z4toUxpaVKqZyLsDhuq/IwrbbaxhBFkNiHcWOg
-vCinoWvhpjo2YBs0BVJNIu4wpNhnCwOP7+91zmTAvD28xoBhSHKWkwGuypPkW3bO
-Y6lneBDfoNpj
-=iUFS
------END PGP SIGNATURE-----
-
------ End forwarded message -----
+Regards,
+Jason Shepherd
+Red Hat Product Security
