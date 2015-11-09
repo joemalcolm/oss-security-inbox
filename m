@@ -1,4 +1,9 @@
-Received: (qmail 8168 invoked by uid 550); 21 Feb 2025 16:45:27 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["699" "Monday" "9" "November" "2015" "07:58:52" "+0100" "Florian Weimer" "fweimer@redhat.com" "<5640442C.1050501@redhat.com>" "17" "Re: [oss-security] Assign CVE for common-collections remote code execution on deserialisation flaw" "^Date:" nil nil "11" "2015110906:58:52" "[oss-security] Assign CVE for common-collections remote code execution on deserialisation flaw" (number mark "        fweimer@redh Nov  9   17/699   " thread-indent "\"Re: [oss-security] Assign CVE for common-collections remote code execution on deserialisation flaw\"\n") "<1904852023.6462846.1447029380024.JavaMail.zimbra@redhat.com>" ("<1904852023.6462846.1447029380024.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 23934 invoked by uid 550); 9 Nov 2015 06:59:08 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,85 +11,38 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 17868 invoked from network); 21 Feb 2025 12:22:51 -0000
-Date: Fri, 21 Feb 2025 13:22:40 +0100 (CET)
-From: Jordy Zomer <jordy@pwning.systems>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>,
-	"qsa@qualys.com" <qsa@qualys.com>
-Message-ID: <1167011785.77274.1740140560949@privateemail.com>
+Received: (qmail 23911 invoked from network); 9 Nov 2015 06:59:07 -0000
+References: <1904852023.6462846.1447029380024.JavaMail.zimbra@redhat.com>
+X-Enigmail-Draft-Status: N1110
+Message-ID: <5640442C.1050501@redhat.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.3.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Priority: 3
-Importance: Normal
-X-Mailer: Open-Xchange Mailer v7.10.6-Rev73
-X-Originating-Client: open-xchange-appsuite
-X-Virus-Scanned: ClamAV using ClamSMTP
-Subject: Re: [oss-security] MitM attack against OpenSSH's
- VerifyHostKeyDNS-enabled client
+In-Reply-To: <1904852023.6462846.1447029380024.JavaMail.zimbra@redhat.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.27
+Date: Mon, 9 Nov 2015 07:58:52 +0100
+From: Florian Weimer <fweimer@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Assign CVE for common-collections remote code
+ execution on deserialisation flaw
+To: oss-security@lists.openwall.com
 
-Hey all,
+On 11/09/2015 01:36 AM, Jason Shepherd wrote:
+> Hello oss-esc,
+> 
+> It was found that a flaw in Apache commons-collections Java library allowed remote code execution when Deserialised with Java Object Serialization.
 
-First of all, cool findings! I've been working on the CodeQL query and have a revised version that I think improves accuracy and might offer some performance gains (though I haven't done rigorous benchmarking). The key change is the use of `StackVariableReachability` and making sure that there's a path where `var` is not reassigned before taking a `goto _;`. Ran it on an older database, found some of the same bugs with no false-positives so far.
+This is not a vulnerability in the library.  How can this feature allow
+remote code execution if it does not involve any networking at all?
 
+The root cause is the incorrect use of Java deserialization.  As long as
+you do not fix that, something else on the classpath will serve the role
+of Apache Commons Collections.
 
-This is the revised query.
-```
-import cpp 
-import semmle.code.cpp.controlflow.StackVariableReachability
+Disabling InvokerTransformer deserialization may be a prudent hardening
+measure, but calling the existing behavior a vulnerability is a bit of a
+stretch.
 
-
-// A call that can return 0
-class CallReturningOK extends FunctionCall {
-    CallReturningOK() {
-     exists(ReturnStmt ret | this.getTarget() = ret.getEnclosingFunction() and ret.getExpr().getValue().toInt() = 0)
-    }
-  
-  }
-
-class GotoWrongRetvalConfiguration extends StackVariableReachability {
-    GotoWrongRetvalConfiguration() { this = "GotoWrongRetvalConfiguration" }
-
-    // Source is an assigment of an "OK" return value to an access of v
-    // To not get FP's we get a false successor
-    override predicate isSource(ControlFlowNode node, StackVariable v) {
-        exists(AssignExpr ae, IfStmt ifst | ae.getRValue() instanceof CallReturningOK 
-        and v.getAnAccess() = ae.getLValue() and  ifst.getCondition().getAChild() = ae  and
-        ifst.getCondition().getAFalseSuccessor() = node)
-        
-    }
-
-    // Our intermediate sink is a `goto _` statement, but it should have a successor that's a return of `v`
-    override predicate isSink(ControlFlowNode node, StackVariable v) {
-        exists(ReturnStmt ret | ret.getExpr() = v.getAnAccess() and
-        node instanceof GotoStmt and node.getASuccessor+() = ret.getExpr())
-    }
-
-    // We don't want `v` to be reassigned
-    override predicate  isBarrier(ControlFlowNode node, StackVariable v) {
-        exists(AssignExpr ae | ae.getLValue() = node and v.getAnAccess() = node)
-    }
-}
-
-from ControlFlowNode source, ControlFlowNode sink, GotoWrongRetvalConfiguration conf, Variable v, Expr retval
-where
-// We want a call that can `return 0` to reach a goto that has a ret of `v` sucessor
-conf.reaches(source, v, sink)
-and 
-// We don't want `v` to be reassigned after the goto
-not conf.isBarrier(sink.getASuccessor+(), v)
-// this goes from our intermediate sink to retval
-and sink.getASuccessor+() = retval
-// Just making sure that it's returning v
-and exists(ReturnStmt ret | ret.getExpr() = retval and retval = v.getAnAccess())
-select retval.getEnclosingFunction(), source, sink, retval
-```
-
-
-Hope that's helpful, please reach out if you have any questions :)
-
-Cheers,
-
-Jordy Zomer
+Florian
