@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1352" "Monday" "26" "June" "2017" "18:07:59" "+1000" "Wade Mealing" "wmealing@redhat.com" "<CALJHwhQkb-2yLFMTuF51QSiUWx=6Wv9DV_e7_s+vgopjhXKyxA@mail.gmail.com>" "50" "[oss-security] CVE-2017-7482 Linux kernel: krb5 ticket decode len check." "^Date:" nil nil "6" "2017062608:07:59" "[oss-security] CVE-2017-7482 Linux kernel: krb5 ticket decode len check." (number mark "        wmealing@red Jun 26   50/1352  " thread-indent "\"[oss-security] CVE-2017-7482 Linux kernel: krb5 ticket decode len check.\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4255" "Tuesday" "10" "November" "2015" "10:29:05" "-0300" "Gustavo Grieco" "gustavo.grieco@gmail.com" "<CACn5sdSp7D-1_qhZzB2Z5D4esN4K4aczp5cc+Vzm4J+ySDReyw@mail.gmail.com>" "117" "[oss-security] Several reads out-of-bound in mplayer 1.1" "^Date:" nil nil "11" "2015111013:29:05" "[oss-security] Several reads out-of-bound in mplayer 1.1" (number mark "U       gustavo.grie Nov 10  117/4255  " thread-indent "\"[oss-security] Several reads out-of-bound in mplayer 1.1\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 7462 invoked by uid 550); 26 Jun 2017 08:08:12 -0000
+Received: (qmail 29912 invoked by uid 550); 10 Nov 2015 13:29:25 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,77 +11,142 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 7444 invoked from network); 26 Jun 2017 08:08:11 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=057a3LMt8xuD0Kqgr6/mb1HqpXhcfeIkIPE9OfPBiRc=;
-        b=VDAw0mrwDnHHiiAONEykYplJ7Wq/2c9eAuapn5vegCe05HPFQhL+eSuyefibIxB9Pi
-         Ti6CLq4bSuJ3tJmQ4sglZzbr8cxrn31KLiREoLx+R16e5wurTpPqv7XaqZgAdSLHbeQs
-         TsSn3InmrlufHnJaE9Q/NdwtKwDJVSS0DwuRDHjwI6dnoovI0M973ffWpr3RAkwmA3jl
-         knznrUNW5hfkf9bWvlvwWvKrOwNQlmpwDxAQKWGn5OwSvkO07+bpIqLIbiRxS2KiP9jf
-         w+viebIAYc+/kJxZZLFQ+L8YAgmJ9nGSYwPATWhS4bb8B2XeMldT+1A/NWynWr1XP85h
-         HEhg==
-X-Gm-Message-State: AKS2vOy3+ObbGc0gLBqC0F89JbF1rGivyG0RDAJlVoyuc/krAxweZJIJ
-	XxdzjULViqo9ATco53JNrHE/Tp8eBy5DoFjJ/A==
-X-Received: by 10.237.57.5 with SMTP id l5mr24439668qte.121.1498464480044;
- Mon, 26 Jun 2017 01:08:00 -0700 (PDT)
+Received: (qmail 29759 invoked from network); 10 Nov 2015 13:29:17 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=jpE5pUJfOWudrpUsyF0Pq9W3ZZlTQy7BQut1etMRpD8=;
+        b=HaillL5cshRnbCxJpNTDGn2sr/qyZKsnVZaC6nihAk8J/5E6yIFkmfb55VgPPVEvgu
+         fUD3ekcF2MmTVktQ+gUVaxQIUOXCQR9gTYETN/66DtbHqQ0LDJAirQw+bYUeuI7F+Ozj
+         xKMaJgM8sG/Z2NkCHLtYA939VSiCLWfmTR/Kd8FD3DMrC8M66uZeVeAVPt4/ebmsqb0A
+         ikil267PzXBxfFI7TsRbtjVzA+9A+VZzeGeWcTz+ApFx9yq1Gp1/5+Sq2wJZZV1k4Wmn
+         Usy8BttIbO+9XylsxFh6eggGVmT+0280ZPgIEq8GHVjePf2oVWYcH4ykFTunrBW6HfLr
+         8B5A==
 MIME-Version: 1.0
-Message-ID: <CALJHwhQkb-2yLFMTuF51QSiUWx=6Wv9DV_e7_s+vgopjhXKyxA@mail.gmail.com>
-Content-Type: multipart/alternative; boundary="001a1140dbbc0ac0d40552d873b9"
-Date: Mon, 26 Jun 2017 18:07:59 +1000
-From: Wade Mealing <wmealing@redhat.com>
+X-Received: by 10.112.136.136 with SMTP id qa8mr1718489lbb.14.1447162145280;
+ Tue, 10 Nov 2015 05:29:05 -0800 (PST)
+Message-ID: <CACn5sdSp7D-1_qhZzB2Z5D4esN4K4aczp5cc+Vzm4J+ySDReyw@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=089e011831169a1fb705242fb1a5
+Date: Tue, 10 Nov 2015 10:29:05 -0300
+From: Gustavo Grieco <gustavo.grieco@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE-2017-7482 Linux kernel: krb5 ticket decode len check.
+Subject: [oss-security] Several reads out-of-bound in mplayer 1.1
 To: oss-security@lists.openwall.com
 
---001a1140dbbc0ac0d40552d873b9
-Content-Type: text/plain; charset="UTF-8"
+--089e011831169a1fb705242fb1a5
+Content-Type: text/plain; charset=UTF-8
 
-Gday,
+Some reads out-of-bound in functions asf_mmst_streaming_start and
+http_build_request are present in Mplayer 1.1-4.8 (tested in Ubuntu 14.04).
+Other versions are probably affected. Upstream is notified.
 
-David Howells has written a great description, so rather than reword what
-he's written here is a quote directly from the git commit.
+How to reproduce:
 
->From the patch notes:
+First, launch a dummy server:
 
----
-    When a kerberos 5 ticket is being decoded so that it can be loaded into
-an
-    rxrpc-type key, there are several places in which the length of a
-    variable-length field is checked to make sure that it's not going to
-    overrun the available data - but the data is padded to the nearest
-    four-byte boundary and the code doesn't check for this extra.  This
-could
-    lead to the size-remaining variable wrapping and the data pointer going
-    over the end of the buffer.
+$ true | netcat -l 127.0.0.1 5002
 
-    Fix this by making the various variable-length data checks use the
-padded
-    length.
----
+Then, mplayer using valgrind:
 
->From what I can see, this could leak 3 bytes of memory to userspace or
-possibly corrupt 3 bytes of memory,
+$ valgrind mplayer mms://127.0.0.1:5002
+==31830== Memcheck, a memory error detector
+==31830== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==31830== Using Valgrind-3.10.0.SVN and LibVEX; rerun with -h for copyright
+info
+==31830== Command: mplayer mms://127.0.0.1:5002
+==31830==
+MPlayer 1.1-4.8 (C) 2000-2012 MPlayer Team
+mplayer: could not connect to socket
+mplayer: No such file or directory
+Failed to open LIRC support. You will not be able to use your remote
+control.
 
-Upstream fix
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=5f2f97656ada8d811d3c1bef503ced266fcd53a0
+Playing mms://127.0.0.1:5002.
+STREAM_ASF, URL: mms://127.0.0.1:5002
+Resolving 127.0.0.1 for AF_INET6...
 
-Red Hat Bugzilla:
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2017-7482
+Couldn't resolve name for AF_INET6: 127.0.0.1
+Connecting to server 127.0.0.1[127.0.0.1]: 5002...
 
--- 
+Connected
+==31830== Invalid read of size 4
+==31830==    at 0x5A6792: asf_mmst_streaming_start
+(asf_mmst_streaming.c:595)
+==31830==    by 0x5A8AA8: open_s (asf_streaming.c:94)
+==31830==    by 0x54FD1F: open_stream_full (stream.c:186)
+==31830==    by 0x54F3D0: open_stream (open.c:65)
+==31830==    by 0x4321D9: main (mplayer.c:3223)
+==31830==  Address 0x153e0ef0 is 0 bytes inside a block of size 1 alloc'd
+==31830==    at 0x4C2AB80: malloc (in
+/usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==31830==    by 0x5A65E7: asf_mmst_streaming_start
+(asf_mmst_streaming.c:539)
+==31830==    by 0x5A8AA8: open_s (asf_streaming.c:94)
+==31830==    by 0x54FD1F: open_stream_full (stream.c:186)
+==31830==    by 0x54F3D0: open_stream (open.c:65)
+==31830==    by 0x4321D9: main (mplayer.c:3223)
+==31830==
+==31830== Invalid read of size 4
+==31830==    at 0x5A67E6: asf_mmst_streaming_start
+(asf_mmst_streaming.c:597)
+==31830==    by 0x5A8AA8: open_s (asf_streaming.c:94)
+==31830==    by 0x54FD1F: open_stream_full (stream.c:186)
+==31830==    by 0x54F3D0: open_stream (open.c:65)
+==31830==    by 0x4321D9: main (mplayer.c:3223)
+==31830==  Address 0x153e0ef0 is 0 bytes inside a block of size 1 alloc'd
+==31830==    at 0x4C2AB80: malloc (in
+/usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==31830==    by 0x5A65E7: asf_mmst_streaming_start
+(asf_mmst_streaming.c:539)
+==31830==    by 0x5A8AA8: open_s (asf_streaming.c:94)
+==31830==    by 0x54FD1F: open_stream_full (stream.c:186)
+==31830==    by 0x54F3D0: open_stream (open.c:65)
+==31830==    by 0x4321D9: main (mplayer.c:3223)
+==31830==
 
-Wade Mealing
+Alert! EOF
+read error:: Operation now in progress
+pre-header read failed
+Resolving 127.0.0.1 for AF_INET6...
 
-Product Security - Kernel, RHCE
+Couldn't resolve name for AF_INET6: 127.0.0.1
+Connecting to server 127.0.0.1[127.0.0.1]: 5002...
 
-Red Hat
+connect error: Connection refused
+Failed, exiting.
+==31830== Invalid read of size 4
+==31830==    at 0x5AA4BA: http_build_request (http.c:478)
+==31830==    by 0x5AB409: http_send_request (network.c:261)
+==31830==    by 0x5AA827: http_streaming_start (http.c:725)
+==31830==    by 0x5AAF5B: open_s2 (http.c:936)
+==31830==    by 0x54FD1F: open_stream_full (stream.c:186)
+==31830==    by 0x54F3D0: open_stream (open.c:65)
+==31830==    by 0x4321D9: main (mplayer.c:3223)
+==31830==  Address 0x153ecf90 is 0 bytes inside a block of size 2 alloc'd
+==31830==    at 0x4C2AB80: malloc (in
+/usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==31830==    by 0x5AA492: http_build_request (http.c:468)
+==31830==    by 0x5AB409: http_send_request (network.c:261)
+==31830==    by 0x5AA827: http_streaming_start (http.c:725)
+==31830==    by 0x5AAF5B: open_s2 (http.c:936)
+==31830==    by 0x54FD1F: open_stream_full (stream.c:186)
+==31830==    by 0x54F3D0: open_stream (open.c:65)
+==31830==    by 0x4321D9: main (mplayer.c:3223)
+==31830==
+Resolving 127.0.0.1 for AF_INET6...
 
-<https://www.redhat.com>
+Couldn't resolve name for AF_INET6: 127.0.0.1
+Connecting to server 127.0.0.1[127.0.0.1]: 5002...
 
-wmealing@redhat.com
-<https://red.ht/sig>
-TRIED. TESTED. TRUSTED. <https://redhat.com/trusted>
+connect error: Connection refused
+No stream found to handle url mms://127.0.0.1:5002
 
---001a1140dbbc0ac0d40552d873b9--
+
+Exiting... (End of file)
+
+This issue was discovered using QuickFuzz and minimized manually
+
+Regards,
+Gus.
+
+--089e011831169a1fb705242fb1a5--
