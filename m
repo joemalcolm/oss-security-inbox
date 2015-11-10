@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2035" "Thursday" "5" "January" "2017" "15:12:56" "+0000" "Mark Thomas" "markt@apache.org" "<a842988f-6778-03e2-0b74-c2922eb46bf4@apache.org>" "53" "[oss-security] [SECURITY][UPDATE] CVE-2016-8745 Apache Tomcat Information Disclosure" nil nil nil "1" "2017010515:12:56" "[oss-security] [SECURITY][UPDATE] CVE-2016-8745 Apache Tomcat Information Disclosure" (number mark "U       markt@apache Jan  5   53/2035  " thread-indent "\"[oss-security] [SECURITY][UPDATE] CVE-2016-8745 Apache Tomcat Information Disclosure\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2194" "Tuesday" "10" "November" "2015" "19:48:08" "+0200" "Jouni Malinen" "j@w1.fi" "<20151110174808.GB7251@w1.fi>" "60" "[oss-security] hostapd/wpa_supplicant: EAP-pwd missing last fragment length validation" "^Date:" nil nil "11" "2015111017:48:08" "[oss-security] hostapd/wpa_supplicant: EAP-pwd missing last fragment length validation" (number mark "U       j@w1.fi      Nov 10   60/2194  " thread-indent "\"[oss-security] hostapd/wpa_supplicant: EAP-pwd missing last fragment length validation\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 15705 invoked by uid 550); 5 Jan 2017 16:18:20 -0000
+Received: (qmail 13641 invoked by uid 550); 10 Nov 2015 17:48:29 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,69 +11,76 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 20084 invoked from network); 5 Jan 2017 15:13:14 -0000
-From: Mark Thomas <markt@apache.org>
-To: oss-security@lists.openwall.com
-Message-ID: <a842988f-6778-03e2-0b74-c2922eb46bf4@apache.org>
-Date: Thu, 5 Jan 2017 15:12:56 +0000
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.6.0
+Received: (qmail 13567 invoked from network); 10 Nov 2015 17:48:23 -0000
+Message-ID: <20151110174808.GB7251@w1.fi>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] [SECURITY][UPDATE] CVE-2016-8745 Apache Tomcat Information Disclosure
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
+Date: Tue, 10 Nov 2015 19:48:08 +0200
+From: Jouni Malinen <j@w1.fi>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] hostapd/wpa_supplicant: EAP-pwd missing last fragment length
+ validation
+To: oss-security@lists.openwall.com
 
-CVE-2016-8745 Apache Tomcat Information Disclosure
+EAP-pwd missing last fragment length validation
 
-Severity: Important
+Published: November 10, 2015
+Identifier: CVE-2015-5314 (hostapd), CVE-2015-5315 (wpa_supplicant)
+Latest version available from: http://w1.fi/security/2015-7/
 
-Vendor: The Apache Software Foundation
 
-Versions Affected:
-Apache Tomcat 9.0.0.M1 to 9.0.0.M13
-Apache Tomcat 8.5.0 to 8.5.8
-Apache Tomcat 8.0.0.RC1 to 8.0.39 (new)
-Apache Tomcat 7.0.0 to 7.0.73 (new)
-Apache Tomcat 6.0.16 to 6.0.48 (new)
+Vulnerability
 
-Description
-A bug in the error handling of the send file code for the NIO HTTP
-connector resulted in the current Processor object being added to the
-Processor cache multiple times. This in turn meant that the same
-Processor could be used for concurrent requests. Sharing a Processor can
-result in information leakage between requests including, not not
-limited to, session ID and the response body.
-The bug was first noticed in 8.5.x onwards where it appears the
-refactoring of the Connector code for 8.5.x onwards made it more likely
-that the bug was observed. Initially it was thought that the 8.5.x
-refactoring introduced the bug but further investigation has shown that
-the bug is present in all currently supported Tomcat versions.
+A vulnerability was found in EAP-pwd server and peer implementation used
+in hostapd and wpa_supplicant, respectively. When an incoming EAP-pwd
+message is fragmented, the remaining reassembly buffer length was not
+checked for the last fragment (but was checked for other
+fragments). This allowed a suitably constructed last fragment frame to
+try to add extra data that would go beyond the buffer. The length
+validation code in wpabuf_put_data() prevents an actual buffer write
+overflow from occurring, but this results in process termination.
 
-Mitigation:
-Users of the NIO HTTP connector with the affected versions should apply
-one of the following mitigations
-- Switch to the BIO HTTP, NIO2 HTTP or APR HTTP connector
-- Disable send file
-- Upgrade to Apache Tomcat 9.0.0.M15 or later
-  (Apache Tomcat 9.0.0.M14 has the fix but was not released)
-- Upgrade to Apache Tomcat 8.5.9 or later
-- Upgrade to Apache Tomcat 8.0.40 or later when released
-- Upgrade to Apache Tomcat 7.0.74 or later when released
-- Upgrade to Apache Tomcat 6.0.49 or later when released
+For hostapd used with an internal EAP server and EAP-pwd enabled in the
+runtime configuration, this could allow a denial of service attack by an
+attacker within radio range of the AP device.
 
-Credit:
-This issue was reported publicly as Bug 60409 [1] and the security
-implications identified by the Tomcat security team.
+For hostapd used as a RADIUS server with EAP-pwd enabled in the runtime
+configuration, this could allow a denial of service attack by an
+attacker within radio range of any AP device that is authorized to use
+the RADIUS server.
 
-History:
-2016-12-12 Original advisory
-2017-01-04 Updated information on affected versions
+For wpa_supplicant with EAP-pwd enabled in a network configuration
+profile, this could allow a denial of service attack by an attacker
+within radio range.
 
-References:
-[1] https://bz.apache.org/bugzilla/show_bug.cgi?id=60409
-[2] http://tomcat.apache.org/security-9.html
-[3] http://tomcat.apache.org/security-8.html
-[3] http://tomcat.apache.org/security-7.html
-[3] http://tomcat.apache.org/security-6.html
 
+Vulnerable versions/configurations
+
+hostapd v2.0-v2.5 with CONFIG_EAP_PWD=y in the build configuration
+(hostapd/.config) and EAP-pwd authentication server enabled in runtime
+configuration.
+
+wpa_supplicant v2.0-v2.5 with CONFIG_EAP_PWD=y in the build
+configuration (wpa_supplicant/.config) and EAP-pwd enabled in a network
+profile at runtime.
+
+
+Possible mitigation steps
+
+- Merge the following commits and rebuild hostapd/wpa_supplicant:
+
+  EAP-pwd peer: Fix last fragment length validation
+  EAP-pwd server: Fix last fragment length validation
+
+  These patches are available from http://w1.fi/security/2015-7/
+
+- Update to hostapd/wpa_supplicant v2.6 or newer, once available
+
+- Remove CONFIG_EAP_PWD=y from build configuration
+
+- Disable EAP-pwd in runtime configuration
+
+-- 
+Jouni Malinen                                            PGP id EFC895FA
