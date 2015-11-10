@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["614" "Monday" "28" "September" "2020" "14:42:30" "+0900" "Akira Ajisaka" "aajisaka@apache.org" "<CAP+3qq52fdBO3WmcYZWs6ETxJ7y6SG-V2KomfaB+xbBn4aSApw@mail.gmail.com>" "20" "[oss-security] CVE-2018-11765: Potential information disclosure in Hadoop Web interfaces" nil nil nil "9" "2020092805:42:30" "[oss-security] CVE-2018-11765: Potential information disclosure in Hadoop Web interfaces" (number mark "U       aajisaka@apa Sep 28   20/614   " thread-indent "\"[oss-security] CVE-2018-11765: Potential information disclosure in Hadoop Web interfaces\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2018-11765: Potential information disclosure in Hadoop Web interfaces" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2098" "Tuesday" "10" "November" "2015" "01:10:53" "+0100" "Moritz Bechler" "mbechler@eenterphace.org" "<5641360D.8070102@eenterphace.org>" "43" "Re: [oss-security] Assign CVE for common-collections remote code execution on deserialisation flaw" "^Date:" nil nil "11" "2015111000:10:53" "[oss-security] Assign CVE for common-collections remote code execution on deserialisation flaw" (number mark "        mbechler@een Nov 10   43/2098  " thread-indent "\"Re: [oss-security] Assign CVE for common-collections remote code execution on deserialisation flaw\"\n") "<20151109215303.GN1213@sentinelchicken.org>" ("<1904852023.6462846.1447029380024.JavaMail.zimbra@redhat.com>" "<5640442C.1050501@redhat.com>" "<20151109215303.GN1213@sentinelchicken.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 6143 invoked by uid 550); 28 Sep 2020 06:35:35 -0000
+Received: (qmail 28430 invoked by uid 550); 10 Nov 2015 07:21:08 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,39 +11,64 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15493 invoked from network); 28 Sep 2020 05:42:54 -0000
-X-Gm-Message-State: AOAM530YjZAWKebOz9qbilSNGqo8UE/u3665zdLoQ6K28Pm0dbFz64eK
-	MGcP5GJ3Epj0PL8qKpSMy+OuwflwdvQukuiOxv8=
-X-Google-Smtp-Source: ABdhPJy9w6TzfCg0gDI4lkfqAurnSllzRNKYMf2rlkvZN+jGH/wlarVP2UGJtoU0qUPYE27P81jS6R3SOFmyXL/lnfg=
-X-Received: by 2002:a05:651c:38d:: with SMTP id e13mr4105564ljp.38.1601271761525;
- Sun, 27 Sep 2020 22:42:41 -0700 (PDT)
+Received: (qmail 24254 invoked from network); 10 Nov 2015 00:11:05 -0000
+References: <1904852023.6462846.1447029380024.JavaMail.zimbra@redhat.com>
+ <5640442C.1050501@redhat.com> <20151109215303.GN1213@sentinelchicken.org>
+X-Enigmail-Draft-Status: N1110
+Message-ID: <5641360D.8070102@eenterphace.org>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.3.0
 MIME-Version: 1.0
-From: Akira Ajisaka <aajisaka@apache.org>
-Date: Mon, 28 Sep 2020 14:42:30 +0900
-X-Gmail-Original-Message-ID: <CAP+3qq52fdBO3WmcYZWs6ETxJ7y6SG-V2KomfaB+xbBn4aSApw@mail.gmail.com>
-Message-ID: <CAP+3qq52fdBO3WmcYZWs6ETxJ7y6SG-V2KomfaB+xbBn4aSApw@mail.gmail.com>
+In-Reply-To: <20151109215303.GN1213@sentinelchicken.org>
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+Date: Tue, 10 Nov 2015 01:10:53 +0100
+From: Moritz Bechler <mbechler@eenterphace.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Assign CVE for common-collections remote code
+ execution on deserialisation flaw
 To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] CVE-2018-11765: Potential information disclosure in Hadoop Web interfaces
 
-CVE-2018-11765: Potential information disclosure in Hadoop Web interfaces
+Am 09.11.2015 um 22:53 schrieb Tim:
+> 
+>> This is not a vulnerability in the library.  How can this feature allow
+>> remote code execution if it does not involve any networking at all?
+>>
+>> The root cause is the incorrect use of Java deserialization.  As long as
+>> you do not fix that, something else on the classpath will serve the role
+>> of Apache Commons Collections.
+> 
+> Can you elaborate on this last point?  Can you better describe the
+> root cause, as you see it, and what should have been done differently
+> by the systems using Apache Commons?
 
-Severity: Important
 
-Vendor: The Apache Software Foundation
+The main problem is that deserialization can easily get you into
+executing code paths (either through custom serialization code or other
+funny code). Given that the regular deserialization routines allow any
+(Serializable) class to be deserialized, you would have to make sure
+that cannot happen by any interaction of any code (what, given the sheer
+amount of library code in typical java projects, you simply cannot). If
+you cannot, you either must refrain from deserializing any untrusted or
+privilege-boundary-crossing data or use a whitelisting approach to
+reduce the amount of classes you need to check for problems (that of
+course still leaves room for error and often is not easily possible as
+the code performing the deserialization is buried in libraries or even
+the standard library).
 
-Versions affected:
-3.0.0-alpha2 to 3.0.0, 2.9.0 to 2.9.2, 2.8.0 to 2.8.5
+Regarding the issue at hand, it's pretty clear that the involved parties
+make different assumptions about whether it should be okay to
+deserialize untrusted data and there simply is no way of differentiating
+between the two - one Serializable to rule them all. (Standard library
+behaviour, OpenJDK, is also a bit frightening, as they, for example,
+assume it is okay to call into collection api methods).
 
-Description:
-When Kerberos authentication is enabled and SPNEGO through HTTP is not
-enabled, any users can access some servlets without authentication.
+Given that, the only sane advice I have right now is - don't do it at
+all. No RMI, JMX, whatever. Of course that is pretty inconvenient.
 
-Mitigation:
-Users should upgrade to Apache Hadoop 2.10.0, 3.0.1 or upper. If you
-are using the affected version of Apache Hadoop, you need to enable
-SPNEGO through HTTP.
+This needs to be fixed on a much lower level than commons collections.
+Whitelisting might be a mitigation, but right now, e.g. for RMI code you
+cannot really do it without patching your JRE.
 
-Credit:
-This issue was discovered by Owen O'Malley and reported by Larry McCay.
+
+Moritz
