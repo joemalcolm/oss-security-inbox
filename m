@@ -1,4 +1,9 @@
-Received: (qmail 30387 invoked by uid 550); 9 Apr 2026 15:37:42 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2629" "Tuesday" "10" "November" "2015" "19:45:45" "+0200" "Jouni Malinen" "j@w1.fi" "<20151110174545.GA7251@w1.fi>" "62" "[oss-security] wpa_supplicant unauthorized WNM Sleep Mode GTK control" "^Date:" nil nil "11" "2015111017:45:45" "[oss-security] wpa_supplicant unauthorized WNM Sleep Mode GTK control" (number mark "        j@w1.fi      Nov 10   62/2629  " thread-indent "\"[oss-security] wpa_supplicant unauthorized WNM Sleep Mode GTK control\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 3387 invoked by uid 550); 10 Nov 2015 17:46:06 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,58 +11,77 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 20420 invoked from network); 9 Apr 2026 12:42:33 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: "Christopher L. Shannon" <cshannon@apache.org>
-To: oss-security@lists.openwall.com
-Message-ID: <bedc23a3-74fc-5137-870a-de773c639e9b@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Thu, 09 Apr 2026 12:42:17 +0000
+Received: (qmail 3306 invoked from network); 10 Nov 2015 17:45:59 -0000
+Message-ID: <20151110174545.GA7251@w1.fi>
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2026-39304: Apache ActiveMQ Client, Apache ActiveMQ Broker,
- Apache ActiveMQ All, Apache ActiveMQ: Incorrect handling of TLSv1.3
- KeyUpdate can be exploited to cause DoS via OOM 
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
+Date: Tue, 10 Nov 2015 19:45:45 +0200
+From: Jouni Malinen <j@w1.fi>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] wpa_supplicant unauthorized WNM Sleep Mode GTK control
+To: oss-security@lists.openwall.com
 
-Severity: important=20
+wpa_supplicant unauthorized WNM Sleep Mode GTK control
 
-Affected versions:
+Published: November 10, 2015
+Identifier: CVE-2015-5310
+Latest version available from: http://w1.fi/security/2015-6/
 
-- Apache ActiveMQ Client (org.apache.activemq:activemq-client) before 5.19.4
-- Apache ActiveMQ Client (org.apache.activemq:activemq-client) 6.0.0 before=
- 6.2.4
-- Apache ActiveMQ Broker (org.apache.activemq:activemq-broker) before 5.19.4
-- Apache ActiveMQ Broker (org.apache.activemq:activemq-broker) 6.0.0 before=
- 6.2.4
-- Apache ActiveMQ All (org.apache.activemq:activemq-all) before 5.19.4
-- Apache ActiveMQ All (org.apache.activemq:activemq-all) 6.0.0 before 6.2.4
-- Apache ActiveMQ (org.apache.activemq:apache-activemq) before 5.19.4
-- Apache ActiveMQ (org.apache.activemq:apache-activemq) 6.0.0 before 6.2.4
 
-Description:
+Vulnerability
 
-Denial of Service via Out of Memory vulnerability in Apache ActiveMQ Client=
-, Apache ActiveMQ Broker, Apache ActiveMQ.
+A vulnerability in wpa_supplicant was found in WMM Sleep Mode Response
+frame processing in a case where the association uses RSN (WPA2-Personal
+or WPA2-Enterprise), but does not use management frame protection (MFP,
+also known as PMF = protected management frames). This WNM Sleep Mode
+mechanism was not designed to be used without management frame
+protection, but there was no explicit check for that in wpa_supplicant.
 
-ActiveMQ NIO SSL transports do not correctly handle TLSv1.3 handshake KeyUp=
-dates triggered by clients. This makes it possible for a client to rapidly =
-trigger updates which causes the broker to exhaust all its memory in the SS=
-L engine leading to DoS.
+wpa_supplicant accepted the updated GTK keys from this frame regardless
+of whether management frame protection was negotiated for the
+association. This may result in an unauthenticated, injected frame being
+able to replace the GTK (the key used to protected broadcast and
+multicast Data frames).
 
-Note: TLS versions before TLSv1.3 (such as TLSv1.2) are broken but are not =
-vulnerable to OOM. Previous TLS versions require a full handshake renegotia=
-tion which causes a connection to hang but not OOM. This is fixed as well.
-This issue affects Apache ActiveMQ Client: before 5.19.4, from 6.0.0 before=
- 6.2.4; Apache ActiveMQ Broker: before 5.19.4, from 6.0.0 before 6.2.4; Apa=
-che ActiveMQ: before 5.19.4, from 6.0.0 before 6.2.4.
+This vulnerability can be used to perform broadcast/multicast packet
+injection and denial of service (prevent authorized broadcast/multicast
+packets from being accepted) attacks by an attacker that is within radio
+range of the station devices.
 
-Users are recommended to upgrade to version 6.2.4 or 5.19.5, which fixes th=
-e issue.
 
-References:
+Vulnerable versions/configurations
 
-https://activemq.apache.org/
-https://www.cve.org/CVERecord?id=3DCVE-2026-39304
+wpa_supplicant v2.0-v2.5 with CONFIG_WNM=y the build configuration
+(wpa_supplicant/.config) and a driver that sends WNM Action frames to
+user space for processing. For example, most cfg80211/mac80211-based
+drivers do this. However, some drivers do not seem to send the WNM Sleep
+Mode Response frame to user space even though they are reporting some
+other WNM Action frames. When wpa_supplicant is used with such a driver,
+it may not be possible to trigger this vulnerability.
 
+
+Possible mitigation steps
+
+- Merge the following commit and rebuild hostapd/wpa_supplicant:
+
+  WNM: Ignore Key Data in WNM Sleep Mode Response frame if no PMF in use
+
+  This patch is available from http://w1.fi/security/2015-6/
+  (two different versions; one matching the exact hostap.git and another
+  one for older snapshot prior to the unrelated changes in the file; the
+  latter can be used to fix older wpa_supplicant versions).
+
+- Update to wpa_supplicant v2.6 or newer, once available.
+
+- Enable management frame protection in the AP and station configuration
+  ("ieee80211w=2" in wpa_supplicant network profile).
+
+- wpa_supplicant: Disable CONFIG_WNM=y in the build configuration
+  (wpa_supplicant/.config) (i.e., remove the line or comment it out);
+  note: this will disable all WNM functionality, so this mitigation option
+  may not be appropriate for number of use cases.
+
+-- 
+Jouni Malinen                                            PGP id EFC895FA
