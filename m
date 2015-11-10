@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1420" "Wednesday" "12" "August" "2015" "12:30:56" "+0530" "sreepriya" "sreepriya1111@gmail.com" "<CANzWz4HNTYJgq=6-6yH-gwMugY=ck=CwxxtysXsbv9xAKP5X9Q@mail.gmail.com>" "42" "[oss-security] CVE Request: ATutor LMS Version 2.2 with stored XSS and file upload issue" nil nil nil "8" "2015081207:00:56" "[oss-security] CVE Request: ATutor LMS Version 2.2 with stored XSS and file upload issue" (number mark "U       sreepriya111 Aug 12   42/1420  " thread-indent "\"[oss-security] CVE Request: ATutor LMS Version 2.2 with stored XSS and file upload issue\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2992" "Tuesday" "10" "November" "2015" "15:38:30" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151110203830.67ABE6C001F@smtpvmsrv1.mitre.org>" "62" "[oss-security] Re: race condition checking digests/checksums in sudoers" "^Cc:" nil nil "11" "2015111020:38:30" "[oss-security] Re: race condition checking digests/checksums in sudoers" (number mark "        cve-assign@m Nov 10   62/2992  " thread-indent "\"[oss-security] Re: race condition checking digests/checksums in sudoers\"\n") "<20151110002314.GU18245@li141-249.members.linode.com>" ("<20151110002314.GU18245@li141-249.members.linode.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 3872 invoked by uid 550); 12 Aug 2015 09:23:08 -0000
+Received: (qmail 1426 invoked by uid 550); 10 Nov 2015 20:38:47 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,67 +11,75 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 15402 invoked from network); 12 Aug 2015 07:01:28 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=R2vLj73wwhl5mbbqr6FWznaZBq6XFQRLWZzJW7goqnE=;
-        b=HW0248SOOyciEDLeYx0oRwcb7q/d/HdyCQgiOs8807C+ypGOdiMXS8N+lSPz0bO3/w
-         C6HdRVaXGwBVupAB9vZob+zpZlxFRh7KhPRs6Kyx0WWn5kwgTxPrI3ouyqyQfNZp596X
-         1Fro4KWESrd6f+b+4w83EVjnwVPqNkpmB0A/bDrDeaotelZAc06dlgN+7T8DiP9l0xIO
-         jwRqIBQzGLeYeeTKKV98jE/M0Y5muKZu9o0X3H0fuJcXNNWw8iFlckQbyWWBXBej1nQg
-         SOTqbcMY0j0tp0Ml49Ytu9j5a57Bwf/TdxEqIOLLvykblR6UDehaVXycS2+r23J/JBo1
-         dRSg==
-X-Received: by 10.170.220.67 with SMTP id m64mr32499894ykf.41.1439362876104;
- Wed, 12 Aug 2015 00:01:16 -0700 (PDT)
-MIME-Version: 1.0
-Message-ID: <CANzWz4HNTYJgq=6-6yH-gwMugY=ck=CwxxtysXsbv9xAKP5X9Q@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=001a1139c1fceee7ba051d17c84b
-Date: Wed, 12 Aug 2015 12:30:56 +0530
-From: sreepriya <sreepriya1111@gmail.com>
+Received: (qmail 1374 invoked from network); 10 Nov 2015 20:38:42 -0000
+In-Reply-To: <20151110002314.GU18245@li141-249.members.linode.com>
+Message-Id: <20151110203830.67ABE6C001F@smtpvmsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, Todd.Miller@courtesan.com
+Date: Tue, 10 Nov 2015 15:38:30 -0500 (EST)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE Request: ATutor LMS Version 2.2 with stored XSS and file upload issue
-To: oss-security@lists.openwall.com, cve-assign@mitre.org
+Subject: [oss-security] Re: race condition checking digests/checksums in sudoers
+To: amilburn@zall.org
 
---001a1139c1fceee7ba051d17c84b
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Hello,
+>> http://www.sudo.ws/man/1.8.15/sudoers.man.html
 
-I would like to request for a CVE  for the following issues in the latest
-version of ATutor <http://www.atutor.ca/> learning management system.
+>> If a command name is prefixed with a Digest_Spec, the command will
+>> only match successfully if it can be verified using the specified
+>> SHA-2 digest. This may be useful in situations where the user invoking
+>> sudo has write access to the command or its parent directory.
 
-There are a few Stored XSS and file upload vulnerabilities in the software.
-*Issue*: https://github.com/atutor/ATutor/issues/103
+> This results in a race condition if the digest functionality is used
+> as suggested (in fact, the rules are matched before the user is
+> prompted for a password, so you have quite some time to replace the
+> binary from underneath sudo).
 
-*Stored/Persistent XSS:*
-In course management, multiple user inputs are not sanitized.
-Course name and banner are vulnerable to Stored XSS.
+Our perspective is that the documentation is directly misleading, and
+the product actually does not have a security feature for which
+there's a reasonable expectation. We do assign a CVE ID in this type of
+situation, and can do that later this week unless there's other
+discussion.
 
-*File Upload:*
-An instructor can upload a malicious script (I tried Javascript that gets
-executed in browser if opened after download). Not just the file content,
-the file name is also vulnerable. This leaves the students (lower
-privilege) as well as the administrators (higher privilege) vulnerable to
-the attack.
+As far as we know, the Digest_Spec feature can be useful if the user
+invoking sudo doesn't have write access to the program file, but a
+second (and potentially untrusted) user does have write access to the
+program file. In the envisioned scenario, the second user is not
+allowed to use sudo, the second user has no way to predict when anyone
+else may use sudo, and the second user cannot use their write access
+often. Thus, if the second user attempts a file-replacement attack,
+the attack will almost certainly occur at an ineffective instant of
+time, and the Digest_Spec feature will successfully prevent the
+attacker's desired outcome.
 
-*Date of reporting*: 11th August, 2015
-*Exploit Author* : Sreepriya Chalakkal
-*Vendor Homepage*: http://www.atutor.ca/
-*Software Link*: http://www.atutor.ca/atutor/download.php
-*Version *: 2.2
-*Tested on Linux* : Ubuntu, Kali
-*Issue has been reported to the vendor: *
-https://github.com/atutor/ATutor/issues/103
+However, the documentation is specifically about "the user invoking
+sudo has write access." A reasonably experienced person reading the
+documentation could easily conclude that sudo and the kernel cooperate
+to ensure that the executed code is always exactly the same as the
+code with the specified SHA-2 digest value. This person can't be
+expected to guess that a race condition is considered OK because a
+non-racy approach may be hard to implement.
 
-Please let me know if it is possible to get a CVE identifier assigned for
-the above issue.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-=E2=80=8BThanks and =E2=80=8B
-Regards,
---
-Sreepriya C
-priyachalakkal.wordpress.com <http://www.priyachalakkal.wordpress.com>
-
---001a1139c1fceee7ba051d17c84b--
+iQIcBAEBCAAGBQJWQlUYAAoJEL54rhJi8gl58pYP/iXOFLyMmGwHT8nhSCL9FoEK
++xP6MCf2vQjpjpAhi2kejNtji//qPGXCwDAAuBoXW9YRC30aGhBzuZqOQZxMFMqv
+01x3m0Fm4A2cMyWA67VC50481WsiYGYHob8uld8h26VBY7VL9+s/TaUekMdKkTyq
+yiczwH2kMu8QiHGjBlw5yyeEhSc+6V6gK7+YjX6nWCEQlvqjaorlOiUAfmYLfv5l
+FPgj+WTssHR+gKaVmSuw+WqG4w6ukH9AVoOiMwej08mqAhttQmfcIZrmCNItUq8H
+/t5vvbRYXpQz+KwwaQ0ENsMQDsquO9XnzGdHSmvrC0jbSRdNWCpsONal7DF8OVqi
+8YzM24nulX6wWxgd2dAI/IBVvMO0A+SEbApikBrJPEdW9gZ/+SVG+nLethyirD22
+xbBkP1PE49vfHuZaOCwR7D4A5oGl+wymbTg8D9ihD9Vq+9+Nedr3FrPZ9wTEMMha
++X+yRu/UeDHqGN3mkwCXNT2vKTLa/+cYi+opbRt7KVLVFB0XsYJrpHrKgvntRRTB
+eo+HTmxX0ISWkWOTOeUy5zsDm6XcU/YYBylZpgkKJy3e8xcRKK8uUi0my25m3EaX
+Akv0Zn5yTIgSz1+mEKFSFnhtX9KcAsExs0xwSu7qxrw8shCVoln4Y0JKWHPgfONw
+XXNM7lVxJwW2dgvND1gE
+=EaN/
+-----END PGP SIGNATURE-----
