@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1237" "Thursday" "6" "January" "2022" "19:58:53" "+0800" "Xiaoxiang Yu" "xxyu@apache.org" nil "25" "[oss-security] CVE-2021-27738: Apache Kylin: Improper Access Control to Streaming Coordinator & SSRF" nil nil nil "1" nil nil (number mark "U       xxyu@apache. Jan  6   25/1237  " thread-indent "\"[oss-security] CVE-2021-27738: Apache Kylin: Improper Access Control to Streaming Coordinator & SSRF\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-27738: Apache Kylin: Improper Access Control to Streaming Coordinator & SSRF" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1454" "Monday" "9" "November" "2015" "21:55:46" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151110025546.502E46C0115@smtpvmsrv1.mitre.org>" "37" "[oss-security] Re: CVE request: net-snmp OpenBSD package - insecure file permission vulnerability" "^Cc:" nil nil "11" "2015111002:55:46" "[oss-security] Re: CVE request: net-snmp OpenBSD package - insecure file permission vulnerability" (number mark "        cve-assign@m Nov  9   37/1454  " thread-indent "\"[oss-security] Re: CVE request: net-snmp OpenBSD package - insecure file permission vulnerability\"\n") "<CADxEXOj7zHdWtMxuERxC3sPXFKDRYb-0gOtsWBcDH=0Zh3=Fig@mail.gmail.com>" ("<CADxEXOj7zHdWtMxuERxC3sPXFKDRYb-0gOtsWBcDH=0Zh3=Fig@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 29748 invoked by uid 550); 6 Jan 2022 13:55:10 -0000
+Received: (qmail 31868 invoked by uid 550); 10 Nov 2015 02:55:58 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,56 +11,50 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 31850 invoked from network); 10 Nov 2015 02:55:58 -0000
+In-Reply-To: <CADxEXOj7zHdWtMxuERxC3sPXFKDRYb-0gOtsWBcDH=0Zh3=Fig@mail.gmail.com>
+Message-Id: <20151110025546.502E46C0115@smtpvmsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Mon,  9 Nov 2015 21:55:46 -0500 (EST)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1953 invoked from network); 6 Jan 2022 12:00:38 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=126.com;
-	s=s110527; h=Date:From:Subject:MIME-Version:Message-ID; bh=VY3a+
-	OfLO2GEjY3rKy658VHYBqzQYJDOl9GRIQp6D/w=; b=kX6YFer6GlvVZD1yE3PWa
-	1K0csrQaBevfgoX04xlafnxFuOEpiMFmFY0Q/RkGDCY5/KiwlU4hLFia2RZh5yYu
-	TdXp9owrUowro1NUf8J3FGYRvrNviZAt+EGwKe2iCdeoyjFPgH0MCVTRI1tESH7n
-	8ReP9gqDsrNQkPWvoGZBHk=
-X-Originating-IP: [116.228.210.42]
-Date: Thu, 6 Jan 2022 19:58:53 +0800 (CST)
-From: "Xiaoxiang Yu" <xxyu@apache.org>
-To: oss-security@lists.openwall.com
-Cc: ngo.weilin@starlabs.sg
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version XT5.0.13 build 20210622(1d4788a8)
- Copyright (c) 2002-2022 www.mailtech.cn 126com
-Sender: hit_lacus@126.com
-Content-Type: multipart/alternative; 
-	boundary="----=_Part_67525_778403002.1641470333753"
-MIME-Version: 1.0
-Message-ID: <5ca291c.47d5.17e2f419339.Coremail.xxyu@apache.org>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID: NMqowAAnqPF92dZhqaQNAA--.61565W
-X-CM-SenderInfo: pklwszpdfx2qqrswhudrp/1tbikwiA4lpEDKjX0AAGsC
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
-Subject: [oss-security] CVE-2021-27738: Apache Kylin: Improper Access Control to Streaming
- Coordinator & SSRF
+Subject: [oss-security] Re: CVE request: net-snmp OpenBSD package - insecure file permission vulnerability
+To: pierre.kim.sec@gmail.com
 
-------=_Part_67525_778403002.1641470333753
-Content-Type: text/plain; charset=GBK
-Content-Transfer-Encoding: base64
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-U2V2ZXJpdHk6IG1vZGVyYXRlCgpEZXNjcmlwdGlvbjoKCkFsbCByZXF1ZXN0
-IG1hcHBpbmdzIGluIGBTdHJlYW1pbmdDb29yZGluYXRvckNvbnRyb2xsZXIu
-amF2YWAgaGFuZGxpbmcgYC9reWxpbi9hcGkvc3RyZWFtaW5nX2Nvb3JkaW5h
-dG9yLypgIFJFU1QgQVBJIGVuZHBvaW50cyBkaWQgbm90IGluY2x1ZGUgYW55
-IHNlY3VyaXR5IGNoZWNrcywgd2hpY2ggYWxsb3dlZCBhbiB1bmF1dGhlbnRp
-Y2F0ZWQgdXNlciB0byBpc3N1ZSBhcmJpdHJhcnkgcmVxdWVzdHMsIHN1Y2gg
-YXMgYXNzaWduaW5nL3VuYXNzaWduaW5nIG9mIHN0cmVhbWluZyBjdWJlcywg
-Y3JlYXRpb24vbW9kaWZpY2F0aW9uIGFuZCBkZWxldGlvbiBvZiByZXBsaWNh
-IHNldHMsIHRvIHRoZSBLeWxpbiBDb29yZGluYXRvci4KCkZvciBlbmRwb2lu
-dHMgYWNjZXB0aW5nIG5vZGUgZGV0YWlscyBpbiBIVFRQIG1lc3NhZ2UgYm9k
-eSwgdW5hdXRoZW50aWNhdGVkIChidXQgbGltaXRlZCkgc2VydmVyLXNpZGUg
-cmVxdWVzdCBmb3JnZXJ5IChTU1JGKSBjYW4gYmUgYWNoaWV2ZWQuCgpUaGlz
-IGlzc3VlIGFmZmVjdHMgQXBhY2hlIEt5bGluIEFwYWNoZSBLeWxpbiAzIHZl
-cnNpb25zIHByaW9yIHRvIDMuMS4yLgoKTWl0aWdhdGlvbjoKClVzZXJzIG9m
-IEt5bGluIDMueCBzaG91bGQgdXBncmFkZSB0byAzLjEuMyBvciBhcHBseSBw
-YXRjaCBodHRwczovL2dpdGh1Yi5jb20vYXBhY2hlL2t5bGluL3B1bGwvMTY0
-Ni4KCkNyZWRpdDoKCldlaSBMaW4gTmdvIC0tCgpCZXN0IHdpc2hlcyB0byB5
-b3UgISAKRnJvbSCjulhpYW94aWFuZyBZdQ==
+> By default the permissions of the snmpd configuration file are 0644
+> instead of 0600:
 
-------=_Part_67525_778403002.1641470333753--
+>   -rw-r--r--  1 root  wheel  6993 Nov  4 09:16 /etc/snmp/snmpd.conf
 
+> The snmpd configuration file is readable by a local user and contains
+> the credentials
+> for read-only and read-write access (for SNMPv1, SNMPv2 and SNMPv3
+> protocols) and gives a local user unnecessary/dangerous access
+
+Use CVE-2015-8100.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJWQVxaAAoJEL54rhJi8gl5W/UP/03ySa/FVL8bh6bVyv/a9b6n
+fUiKD8LnPJBFf/3mnocDkvXO+PaUhTTXi4Us8Ym19gvOiE8xu6DkAczBU9jtSAeZ
+qKDtAxa+hqsiKhWqHFILt+wGzsBUTDRR0GaRRGXfWRLIZXje9UUtllg7Vy2WIWO0
+coxO9m7nHwmNHo748uLCFW2v1n/EuHmXhW7rz4QJHWIWOm6JXdGjMG8RqeTJLOLz
+qoMWbnWQaW6xgDSrDEeM4ENlZ8gSSSQrBDhq5lEtW1oHu2K/fa5DwUVWIgLRJFQA
+clDIGEZww3u0o1PmdfvCaCrmAtEQ6yClu8rmsXF6P8kJO7WaGb7yiN32unBaiVUv
+Qh3BDOjizs8c+tLKVvmTZxgy2BiVgzy1/c66q2lqkmNITgVpV08xz3wfMayuyliy
+v5GIO2QjV2aVoPeneROGh2G8CPT/BffO9UJX2x5ECVEWh9JclQsj1iO44+6tPzQG
+dqLWCY5ILUp58SmD6Ks0ltb5gLBGcDGsRz982VQ6isw9PeesSjjUM7pcUVOOo354
+kZ+fenAsvOH0HLA1qrbTJFZ/evmr4OnzX/5z3ucYkTo9Ce7ze22YoLZGLhgANs+N
+zy4Nu58WYJDvWO3x+MwXxX4GXXYxkLvIZCBoJADqakBV6dTjPhDLnvII1Y3ZBf3Q
+Fgjnyyvn2oVm29xOZr/o
+=j4TX
+-----END PGP SIGNATURE-----
