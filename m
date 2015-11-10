@@ -1,4 +1,9 @@
-Received: (qmail 26438 invoked by uid 550); 22 Sep 2023 10:38:01 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1395" "Tuesday" "10" "November" "2015" "08:46:26" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1511100841340.20288@wniryva>" "37" "[oss-security] CVE-2015-8104 kernel: kvm: guest to host DoS by triggering an infinite loop in microcode via #DB exception" "^Date:" nil nil "11" "2015111003:16:26" "[oss-security] CVE-2015-8104 kernel: kvm: guest to host DoS by triggering an infinite loop in microcode via #DB exception" (number mark "        ppandit@redh Nov 10   37/1395  " thread-indent "\"[oss-security] CVE-2015-8104 kernel: kvm: guest to host DoS by triggering an infinite loop in microcode via #DB exception\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 27856 invoked by uid 550); 10 Nov 2015 03:16:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,197 +11,53 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32595 invoked from network); 22 Sep 2023 10:14:57 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vanrees.org; s=MBO0001;
-	t=1695377683;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=uhkwffje6ZHk5AmAYZWn7WVe7CDTt0GonPclY8zdVeo=;
-	b=OsHJYqvL7mmqa0W6xnedbUJ5gE6+99w4nJvc1JmhWCybvwFl2JVQwccr6TgMa3NfGBNlVy
-	cINky9xsDaDqJb3NCqbq3wKL+fNGSb9LnR3R1uUoF2W9QF++vD/DaduFMzdhXj844jxlSw
-	QIrV9OAsEQPxqgSghvFeDwcgoAQEdwjOC9G3OkfA6gZpuCBLHQx1GZQpq+0q7mm8yyM3Jp
-	75OwLJYp/OpH88+t0bh51kbadgfOuZAsEvSmVanibWK1yC/GJlfYrUgQ9sqZ9UXaTLGsC7
-	y7qygzDA/94Mb80ZJmcl7UiBUG5Kr6wkINATo2rYwz7QDNaF4v0+uGdw/T4LwQ==
-Message-ID: <1afd8036-850f-c98e-5ee8-9e95f658e82e@vanrees.org>
-Date: Fri, 22 Sep 2023 12:14:42 +0200
+Received: (qmail 27837 invoked from network); 10 Nov 2015 03:16:53 -0000
+X-X-Sender: pjp@javelin
+Message-ID: <alpine.LFD.2.20.1511100841340.20288@wniryva>
 MIME-Version: 1.0
-Content-Language: nl
-To: oss-security@lists.openwall.com
-From: Maurits van Rees <maurits@vanrees.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] Plone security advisory 2023/09/21
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.26
+Date: Tue, 10 Nov 2015 08:46:26 +0530 (IST)
+From: P J P <ppandit@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE-2015-8104 kernel: kvm: guest to host DoS by triggering an infinite
+ loop in microcode via #DB exception
+To: oss security list <oss-security@lists.openwall.com>
 
-Various vulnerabilities in Plone and Zope have been reported and fixed. 
-They affect all supported Plone versions: 5.2 and 6.0. Older Plone 
-versions are likely also affected.
-There will be no traditional hotfix package for these: you should update 
-the version pins of individual packages. See [this 
-post](https://community.plone.org/t/less-plone-hotfix-packages/17931?u=mauritsvanrees) 
-about why we do less hotfix packages.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-The information can be found here:
-https://community.plone.org/t/plone-security-advisory-2023-09-21/17941
-https://plone.org/security/hotfix/20230921
+   Hello,
 
-The text is included below.
+A guest to host DoS issue was found affecting various hypervisors. In that, a 
+a guest can DoS the host by triggering an infinite stream of "debug check" 
+(#DB) exceptions. This causes the microcode to enter an infinite loop where 
+the core never receives another interrupt. The host kernel panics due to this 
+effect.
 
+Reference:
+- ----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1278496
 
-## Denial of service
+Thank you.
+- --
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
 
-In `plone.rest` when the `++api++` traverser is accidentally used 
-multiple times in a url, handling it takes increasingly longer, making 
-the server less responsive.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Security advisory: 
-[CVE-2023-42457](https://github.com/plone/plone.rest/security/advisories/GHSA-h6rp-mprm-xgcq).
-
-## Stored XSS
-
-There is a stored cross site scripting vulnerability for SVG images. A 
-[security hotfix from 
-2021](https://github.com/plone/Products.PloneHotfix20210518) already 
-partially fixed this, by making sure SVG images are always downloaded 
-instead of shown inline. But the same problem still exists for *scales* 
-of SVG images. And it exists for *user portraits*, both in Volto and 
-ClassicUI.
-
-Technically, ClassicUI is not vulnerable for the user portrait part, 
-because you cannot upload an SVG as user portrait. But in Volto you can, 
-so you may be able to access a vulnerable url in the backend anyway.
-
-Note that a page that uses an image tag with an SVG image as source is 
-never vulnerable, even when the SVG image contains malicious code. To 
-exploit the vulnerability, an attacker would first need to upload a 
-malicious SVG image, and then trick a user into following a specially 
-crafted link.
-
-Fixes are needed in three packages. We link to the security advisories:
-
-* 
-[`plone.namedfile`](https://github.com/plone/plone.namedfile/security/advisories/GHSA-jj7c-jrv4-c65x) 
-CVE-2023-41048
-* 
-[`Zope`](https://github.com/zopefoundation/Zope/security/advisories/GHSA-wm8q-9975-xh5v) 
-CVE-2023-42458
-* 
-[`plone.restapi`](https://github.com/plone/plone.restapi/security/advisories/GHSA-hc5c-r8m5-2gfh) 
-also CVE-2023-42458
-
-## Information disclosure and sandbox escape
-
-Earlier this month, new Zope releases were made, which included security 
-releases of `AccessControl` and `RestrictedPython` . See the [community 
-announcement](https://community.plone.org/t/zope-4-8-9-and-5-8-4-released-with-a-security-fix/17849).
-
-## Fixed Plone versions
-
-All needed packages are included in Plone 5.2.14 and 6.0.7 which have 
-just been released.
-
-## Package versions
-
-If you cannot or do not want to upgrade your entire Plone version, you 
-can upgrade individual package versions.
-
-Fixes are available in these versions:
-
-```
-AccessControl = 4.4, 5.8, 6.2
-RestrictedPython = 5.4, 6.2
-plone.namedfile = 5.6.1, 6.0.3, 6.1.3, 6.2.1
-plone.rest = 2.0.1, 3.0.1
-plone.restapi = 8.43.4
-Zope = 4.8.10, 5.8.5
-```
-
-If you are using Buildout, then for the `Zope`, `AccessControl` and 
-`RestrictedPython` versions it is best to update the `[buildout] 
-extends` lines to include the following.
-
-For Plone 5.2: 
-https://zopefoundation.github.io/Zope/releases/4.8.10/versions.cfg
-
-For Plone 6: 
-https://zopefoundation.github.io/Zope/releases/5.8.5/versions.cfg
-
-So which versions of these packages should you use on which Plone version?
-
-To avoid surprises, you should use the version that is closest to the 
-version you are already using. If you use the default versions, the 
-following should help. This uses the Buildout notation. If you use a pip 
-constraints file, you should use a double equals sign.
-
-### Plone 5.2
-
-```
-AccessControl = 4.4
-plone.namedfile = 5.6.1
-RestrictedPython = 5.4
-Zope = 4.8.10
-```
-
-If you run Plone 5.2 on Python 3, and you are already using 
-`plone.restapi` 8, then you can additionally use:
-
-```
-plone.restapi = 8.43.4
-```
-
-### Plone 6.0.0/6.0.1
-
-```
-AccessControl = 5.8
-plone.namedfile = 6.0.3
-plone.rest = 2.0.1
-plone.restapi = 8.43.4
-RestrictedPython = 6.2
-Zope = 5.8.5
-```
-
-### Plone 6.0.2
-
-```
-AccessControl = 5.8
-plone.namedfile = 6.0.3
-plone.rest = 3.0.1
-plone.restapi = 8.43.4
-RestrictedPython = 6.2
-Zope = 5.8.5
-```
-
-### Plone 6.0.3/6.0.4
-
-```
-AccessControl = 6.2
-plone.namedfile = 6.0.3
-plone.rest = 3.0.1
-plone.restapi = 8.43.4
-RestrictedPython = 6.2
-Zope = 5.8.5
-```
-
-### Plone 6.0.5/6.0.6
-
-```
-AccessControl = 6.2
-plone.namedfile = 6.1.3
-plone.rest = 3.0.1
-plone.restapi = 8.43.4
-RestrictedPython = 6.2
-Zope = 5.8.5
-```
-
-If you are having problems with the installation, or see regressions, 
-please make a post in this thread, and anyone can help you.
-
-If you see further security problems, please [mail the Plone/Zope 
-Security Team](mailto:security@plone.org).
-
-
--- 
-Maurits van Rees https://maurits.vanrees.org/
-Plone/Zope Security Team
-
+iQIcBAEBAgAGBQJWQWGKAAoJEN0TPTL+WwQfE10P/RZp6169cBa+wBCZc5I9shuW
+Hvl3JRDkOGJJnc6Jjg01cFnqBSIbncNWo4acq6PosPrlVanaeSAGXkzWq/oszLcj
+uZevt8nQN9caOvNivLUEHMLtWBXNCojLWObABj7BvrLL32JIAgkO0cEceS6cb8Vt
+rOCWNpWaj+FaSh36UreC8tTAsUxneXw+BuuN2+uasXWIJYZeJCekK916rjS9WAr2
+bEdYmk0P4cnIQ+u+8cdEzmz07He8WSIQ8jrpiyz+7zVCj7Z7BjyR8cEyiySZRJlC
+errCzmGKXTXH38M5aYv4s+ZDSHKiE5xngcao0slGIOFXz0nLCNqqk1gUSsuH97Cx
+CNH8UujEafM+YC2GBElFZKhDzbMpJEcQodtEIgQ1exCU8GoexCTzsDctrXMtA5Zp
+2y2O8IA++fFQ6CeqiC0zuzh6OSRm8C65OVFyzbrmpNMiaZpUNmLe2SdSOQhwBlLJ
+fTQymbEe6wWvXooU2rR4RU0+6DkEMmWbCLA2aAZMtyLNny6IqFVHYlnZM3mkpvZT
+p33N8ALlJjjgmSTRUPkFzWKcVNbZ8K6kBzGMW3/TIC2l3vb74JNzp1SEisUcpTgt
+oKTAfyRrF7GwNPBwi1UxpYfvKOj62RZU+wTYoldvyjrvmqsvMNmdDxh5yw/aKANS
+K0CMyjpUBGXe2x2qG8d9
+=3ufF
+-----END PGP SIGNATURE-----
