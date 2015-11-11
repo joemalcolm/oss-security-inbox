@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2004" "Monday" "18" "July" "2016" "12:12:11" "+1000" "David Black" "dblack@atlassian.com" "<CAAYo3BvcTv66Cr5m6p32u+AXLx1eyFwM+mfb2O4rZOHtnk__mw@mail.gmail.com>" "57" "[oss-security] Re: CVE request for the Play Framework" nil nil nil "7" "2016071802:12:11" "[oss-security] Re: CVE request for the Play Framework" (number mark "U       dblack@atlas Jul 18   57/2004  " thread-indent "\"[oss-security] Re: CVE request for the Play Framework\"\n") "<20160715115441.2B51D6C4292@smtpvmsrv1.mitre.org>" ("<CAAYo3BupQw4M1Ct5nO4UVC87TmQatCdcxbmZpaiyckMb8ws4sQ@mail.gmail.com>" "<20160715115441.2B51D6C4292@smtpvmsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3295" "Wednesday" "11" "November" "2015" "11:49:51" "+0100" "Moritz Bechler" "mbechler@eenterphace.org" "<56431D4F.7090006@eenterphace.org>" "63" "Re: [oss-security] Assign CVE for common-collections remote code execution on deserialisation flaw" "^Date:" nil nil "11" "2015111110:49:51" "[oss-security] Assign CVE for common-collections remote code execution on deserialisation flaw" (number mark "        mbechler@een Nov 11   63/3295  " thread-indent "\"Re: [oss-security] Assign CVE for common-collections remote code execution on deserialisation flaw\"\n") "<20151111002307.GP1213@sentinelchicken.org>" ("<1904852023.6462846.1447029380024.JavaMail.zimbra@redhat.com>" "<5640442C.1050501@redhat.com>" "<20151109215303.GN1213@sentinelchicken.org>" "<5641360D.8070102@eenterphace.org>" "<20151111002307.GP1213@sentinelchicken.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 14097 invoked by uid 550); 18 Jul 2016 02:12:43 -0000
+Received: (qmail 30231 invoked by uid 550); 11 Nov 2015 13:07:14 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,99 +11,87 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 14076 invoked from network); 18 Jul 2016 02:12:42 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=atlassian-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=4LFKIyrKiiIuPY8qUUbyNqraskV1V8YQ6f/53aL2Wf8=;
-        b=j9CdPnFf0g+lWolaOBhbITYftiKLwXMV2uCVmtOdeZCFTsnN09yJIyHfs3pI7fn7S9
-         y+xd/ZwsuEeuUXUbko9ztP0QDB25RnwzHz8sMdZGB6+Qv7a0JLIXiSOq/4NGmIAWj4vw
-         pS0UlOmGgxokNqlMSlZcAAUn9uulw/S8YIs1y/bN75bTtECqLEpx9fTG600u2AaV6k9k
-         LyW2OAZB5EzDLR9ltXSU61fEN7WexQkUdGPed4UhfsfxWNtcTodsAkTuZDcUdCg/Glk0
-         BFcl3m13ClorugahsdsljDMaREeLFwfQe54fnHXilYFsbhCeLeYrYK1zVxEhtpUdwCCJ
-         Hp2g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=4LFKIyrKiiIuPY8qUUbyNqraskV1V8YQ6f/53aL2Wf8=;
-        b=lA9UJ5F8gMlx5vQP5PJZM2RkL0MQ2RVVx+6pMH4/NlDRbsJXkFa0AJzju7M1j8F2AU
-         SypCIDUHQqR32JcFNsqwwOb7aMntjyryBzqqlOjIy/RrHEBYJEwVpFcEZC8aPUPeUvqz
-         ubSKejb0/14CYMk5RWxPn1lgbyxn5jaShbsSiWhJZakUsnmgI+cqxg9qjSK+HyzT1w3q
-         5Fb9Dm9OlD76k0Aq7CxIulSYyFOZy1M3FZSyhskPypGr2EEQy8rQk+SUlXjS0ZV0Xb8j
-         MLY4DB5bEeklB83ldmdHhxKuS3dkrH87TGgRn16CvRY1sK+swlccYr1ztogLi/RK89Qi
-         z9Ug==
-X-Gm-Message-State: ALyK8tLwrufXsjoKz7DnYYpEHHIF2Ou8mZFmx1RDlBv9krUzNAhbfaUF4wCzrJWZ6+DPj5EvbJ7t2NitQy3HJcDa
-X-Received: by 10.129.101.213 with SMTP id z204mr20859322ywb.153.1468807950744;
- Sun, 17 Jul 2016 19:12:30 -0700 (PDT)
+Received: (qmail 5826 invoked from network); 11 Nov 2015 10:50:03 -0000
+References: <1904852023.6462846.1447029380024.JavaMail.zimbra@redhat.com>
+ <5640442C.1050501@redhat.com> <20151109215303.GN1213@sentinelchicken.org>
+ <5641360D.8070102@eenterphace.org>
+ <20151111002307.GP1213@sentinelchicken.org>
+Openpgp: url=hkp-x://random.sks.keyserver.penguin.de
+X-Enigmail-Draft-Status: N1110
+Message-ID: <56431D4F.7090006@eenterphace.org>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.3.0
 MIME-Version: 1.0
-In-Reply-To: <20160715115441.2B51D6C4292@smtpvmsrv1.mitre.org>
-References: <CAAYo3BupQw4M1Ct5nO4UVC87TmQatCdcxbmZpaiyckMb8ws4sQ@mail.gmail.com>
- <20160715115441.2B51D6C4292@smtpvmsrv1.mitre.org>
-From: David Black <dblack@atlassian.com>
-Date: Mon, 18 Jul 2016 12:12:11 +1000
-Message-ID: <CAAYo3BvcTv66Cr5m6p32u+AXLx1eyFwM+mfb2O4rZOHtnk__mw@mail.gmail.com>
-To: cve-assign@mitre.org
-Cc: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary=001a114c83ae25fbfe0537df809b
-Subject: [oss-security] Re: CVE request for the Play Framework
+In-Reply-To: <20151111002307.GP1213@sentinelchicken.org>
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 8bit
+Date: Wed, 11 Nov 2015 11:49:51 +0100
+From: Moritz Bechler <mbechler@eenterphace.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Assign CVE for common-collections remote code
+ execution on deserialisation flaw
+To: oss-security@lists.openwall.com
 
---001a114c83ae25fbfe0537df809b
-Content-Type: text/plain; charset=UTF-8
+Hi,
 
-On 15 July 2016 at 21:54, <cve-assign@mitre.org> wrote:
+> 1. Most vulnerabilities require a "source" of untrusted data, and a 
+> "sink" in the code where that data is used unsafely.  In my
+> experience, most vulnerabilities are best corrected by making the
+> "sink" safe.  For example: output encoding in HTML or prepared
+> statements in SQL.  While many people preach input validation (or
+> *gag* "sanitization"), this is not how most classes of bugs are fixed
+> reliably.
+The problem here is that the amount of potential "sinks" is incredibly
+large - everything on your classpath. No objection here to hardening the
+specific instance, but thinking one will be safe afterwards is a
+misconception. Like someone else put it, it's a game of whack-a-mole.
 
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA256
->
-> > In version 2.5.0 of the Play Framework a CSRF bypass that depends upon
-> > an implementation bug in chrome's beacon api was fixed.
->
-> We think additional information would help in deciding whether this is
-> commonly recognized as a Play Framework vulnerability (which would
-> have a CVE ID) or Play Framework security hardening (which would not
-> have a CVE ID). Our understanding thus far is:
->
->   - Play Framework is not an Atlassian product
->
+> 2. There's absolutely no reason serialization can't be done safely.
+> It's absurd to think otherwise, given the fact that developers
+> regularly serialize/marshal/pickle objects into a wide variety of
+> formats, accept these from untrusted sources, deserialize them and
+> aren't made vulnerable by it.  Examples: JSON from websites, XML in
+> SOAP, ...  Any advice telling developers that "you shouldn't
+> deserialized objects from untrusted sources" must apply only to
+> software that has a flawed deserialization design.
+Sure, as long as nobody does any funny stuff in their default
+constructors, setters or getters. But the difference there is that these
+unmarshallers (at least the ones I know of) only act on a very specific
+set of classes you mostly control.
+Looking at the flawed deserialization design at hand...
+
+> 3. Java *does* provide a way to distinguish those to be trusted during
+> deserialization from all other classes.  Trusted classes implement
+> Serializable.  If you implement Serializable, you've been added to a
+> white list of code that should be safe.  If you've added a "sink" to
+> your Serializable objects, then that's a vulnerability.  Not only is
+> it a "sink", but validating the input prior to deserialization is
+> nearly impossible, which means you can't filter it at the "source"
+> even if you wanted to.  
+And that's the assumption you are making. There is no such statement in
+the Serializable definition, neither is anywhere defined what is
+acceptable behavior for a readObject method and neither forbids the
+collection API to do something dangerous in a getter (which in OpenJDK
+seems to generally be an acceptable call).
+Serializable is inherited, so the base class can give guarantees about
+it's children - don't think so.
+
+Serialization is also used for passivation in trusted contexts where
+different rules apply and checking all this code is an unnecessary
+effort. In fact I would guess that the majority of the classes out there
+are solely Serializable for that purpose. These concepts don't mix well
+and the mixture unnecessarily increases the attack surface.
+
+> 
+> So I do agree with you that Oracle could do a much better job here.
+> They could give us better tools and better ways to whitelist the kinds
+> of objects we're willing to accept.  Good luck convincing them of
+> that.  Last I checked, they still think XMLDecoder is ok.
+> 
+
+Maybe forcing them to take a position on the RMI implementation will be
+of some use. They clearly assume deserialization is safe there and fun
+fact, even use it for the authentication crendentials.
 
 
-Correct.
-
-
-
->
->   -
-> https://github.com/playframework/playframework/pull/5527#discussion-diff-51786858
->     says "In order to make Play's CSRF filter more resilient to
->     browser plugin vulnerabilities and new extensions, the default
->     configuration for the CSRF filter has been made far more
->     conservative."
->
->   - Chromium issue 490015 has some debate about whether it is a
->     Chrome/Chromium vulnerability, e.g., "The issue is whether it's
->     the browser responsibility to act as a nanny to weak websites, or
->     we should leave weak websites as sacrifice for great justice."
->     versus "To be clear, this is a security bug ... There is a
->     security bug in Chrome, but no action is being done."
->
-> Typically, it would be best not to have a CVE for Play Framework if
-> the essence of the Play Framework problem is "the product did not
-> proactively add workarounds for all browser-level vulnerabilities that
-> might be discovered later."
->
-
-
-Perhaps the question(s) should also be - "should a CVE be assigned to
-chrome/chromium?" or perhaps in general for CSRF protection implementations
-that make an assumption that at least currently does not hold up in a
-widely used browser (content-type is not as restricted in cross-domain
-requests as some have assumed) ?
-
-
--- 
-David Black / Security Engineer.
-
---001a114c83ae25fbfe0537df809b--
+Moritz
