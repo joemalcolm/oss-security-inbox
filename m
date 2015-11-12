@@ -1,4 +1,9 @@
-Received: (qmail 1816 invoked by uid 550); 9 Apr 2026 14:18:32 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["367" "Thursday" "12" "November" "2015" "15:22:45" "-0800" "Tim" "tim-security@sentinelchicken.org" "<20151112232245.GA1213@sentinelchicken.org>" "12" "Re: [oss-security] CVE-Request: Assign CVE for common-collections remote code execution on deserialisation flaw" "^Cc:" nil nil "11" "2015111223:22:45" "[oss-security] CVE-Request: Assign CVE for common-collections remote code execution on deserialisation flaw" (number mark "        tim-security Nov 12   12/367   " thread-indent "\"Re: [oss-security] CVE-Request: Assign CVE for common-collections remote code execution on deserialisation flaw\"\n") "<1447365167.1146869.438300073.116F736D@webmail.messagingengine.com>" ("<1904852023.6462846.1447029380024.JavaMail.zimbra@redhat.com>" "<5640442C.1050501@redhat.com>" "<20151109215303.GN1213@sentinelchicken.org>" "<5641360D.8070102@eenterphace.org>" "<20151111002307.GP1213@sentinelchicken.org>" "<56431D4F.7090006@eenterphace.org>" "<20151111160641.GQ1213@sentinelchicken.org>" "<56445609.9050301@gmail.com>" "<1447365167.1146869.438300073.116F736D@webmail.messagingengine.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 7298 invoked by uid 550); 12 Nov 2015 23:23:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,51 +11,39 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 1795 invoked from network); 9 Apr 2026 14:18:32 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Maxim Solodovnik <solomax@apache.org>
-To: oss-security@lists.openwall.com
-Message-ID: <5fe9dbb2-d948-7040-fa65-cf9ebf8f9af2@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Thu, 09 Apr 2026 14:18:19 +0000
+Received: (qmail 7280 invoked from network); 12 Nov 2015 23:23:04 -0000
+Message-ID: <20151112232245.GA1213@sentinelchicken.org>
+References: <1904852023.6462846.1447029380024.JavaMail.zimbra@redhat.com>
+ <5640442C.1050501@redhat.com>
+ <20151109215303.GN1213@sentinelchicken.org>
+ <5641360D.8070102@eenterphace.org>
+ <20151111002307.GP1213@sentinelchicken.org>
+ <56431D4F.7090006@eenterphace.org>
+ <20151111160641.GQ1213@sentinelchicken.org>
+ <56445609.9050301@gmail.com>
+ <1447365167.1146869.438300073.116F736D@webmail.messagingengine.com>
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2026-33005: Apache OpenMeetings: Insufficient checks in
- FileWebService 
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1447365167.1146869.438300073.116F736D@webmail.messagingengine.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
+Cc: cve-assign@mitre.org
+Date: Thu, 12 Nov 2015 15:22:45 -0800
+From: Tim <tim-security@sentinelchicken.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] CVE-Request: Assign CVE for common-collections
+ remote code execution on deserialisation flaw
+To: oss-security@lists.openwall.com
 
-Severity: moderate=20
 
-Affected versions:
+> The currently proposed "fix"[1] is to disable functionality that is
+> being used. This will break applications that need them.
+> 
+> [1] https://issues.apache.org/jira/browse/COLLECTIONS-580
 
-- Apache OpenMeetings 3.1.0 before 9.0.0
 
-Description:
+I just read through that thread and I did not see anyone indicating
+that the fix breaks applications.  Only speculation.  Perhaps you
+meant to link us somewhere else?
 
-Improper Handling of Insufficient Privileges vulnerability in Apache OpenMe=
-etings.
-
-Any registered user can query web service with their credentials and get fi=
-les/sub-folders of any folder by ID (metadata only NOT contents). Metadata =
-includes id, type, name and some other field. Full list of fields get be ch=
-ecked at=C2=A0FileItemDTO=C2=A0object.
-
-This issue affects Apache OpenMeetings: from 3.10 before 9.0.0.
-
-Users are recommended to upgrade to version 9.0.0, which fixes the issue.
-
-This issue is being tracked as OPENMEETINGS-2812=20
-
-Credit:
-
-4ra2n (A code security AI agent) (finder)
-
-References:
-
-https://openmeetings.apache.org/openmeetings-db/apidocs/org.apache.openmeet=
-ings.db/org/apache/openmeetings/db/dto/file/FileItemDTO.html
-https://openmeetings.apache.org/
-https://www.cve.org/CVERecord?id=3DCVE-2026-33005
-https://issues.apache.org/jira/browse/OPENMEETINGS-2812
-
+tim
