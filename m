@@ -1,4 +1,9 @@
-Received: (qmail 5843 invoked by uid 550); 1 Feb 2024 11:28:44 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1245" "Thursday" "12" "November" "2015" "23:50:56" "-0500" "Jason Shepherd" "jshepher@redhat.com" "<1466254601.10395170.1447390256651.JavaMail.zimbra@redhat.com>" "22" "[oss-security] Re: Assign CVE for common-collections remote code execution on deserialisation flaw" "^Date:" nil nil "11" "2015111304:50:56" "[oss-security] Re: Assign CVE for common-collections remote code execution on deserialisation flaw" (number mark "U       jshepher@red Nov 12   22/1245  " thread-indent "\"[oss-security] Re: Assign CVE for common-collections remote code execution on deserialisation flaw\"\n") "<1904852023.6462846.1447029380024.JavaMail.zimbra@redhat.com>" ("<1904852023.6462846.1447029380024.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 1986 invoked by uid 550); 13 Nov 2015 04:51:09 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,87 +11,43 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5813 invoked from network); 1 Feb 2024 11:28:44 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hboeck.de; s=key1;
-	t=1706787062; bh=juhEYpgLctqNX8Kc+wmPfjau1c28uvaJBgwQWy+SNTM=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding;
-	b=o2yBQUZns5E9HAFup7J4NnxiIgGE6jW6uSED/SqziXczqbaOevjdRkJl+gA0tgfu5
-	 UBpUj/XkeN7It/MSMMuxL1O/ANjSl4No2gp04nZn+4JnUL/zqL6SJVAK5wVsxDuEKo
-	 +ziIWSqyBx/Rx7hj3nN4jSr1Gqw5uj0ZxsdAH8rbxwEKxRpFTbw0uT3cxglGoMkDtd
-	 wvz/Qj8/HrvDiwVzqExw3dtFsjCPV+IyoVpfZo+/9T7Yvnjo1czydxSgKEirb+cXSi
-	 qvaXMzHzhsIMXMgAIkYxhOyZ7wqefO8ttXstcup3JxQAG5PjUqG98WRJPYlJ+sfj6n
-	 R9SbKygW3hLsg==
-Original-Subject: Python standard library defaults to insecure TLS for mail protocols
-Author: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
-Date: Thu, 1 Feb 2024 12:31:00 +0100
-From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
-To: oss-security@lists.openwall.com
-Message-ID: <20240201123100.42ba1334.hanno@hboeck.de>
-X-Mailer: Claws Mail 4.2.0 (GTK 3.24.41; x86_64-pc-linux-gnu)
+Received: (qmail 1962 invoked from network); 13 Nov 2015 04:51:09 -0000
+Message-ID: <1466254601.10395170.1447390256651.JavaMail.zimbra@redhat.com>
+In-Reply-To: <1904852023.6462846.1447029380024.JavaMail.zimbra@redhat.com>
+References: <1904852023.6462846.1447029380024.JavaMail.zimbra@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Subject: [oss-security] Python standard library defaults to insecure TLS for mail protocols
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.64.51.209]
+X-Mailer: Zimbra 8.0.6_GA_5922 (ZimbraWebClient - FF40 (Linux)/8.0.6_GA_5922)
+Thread-Topic: Assign CVE for common-collections remote code execution on deserialisation flaw
+Thread-Index: GwiytGA/IDdJaAuw8DiW0sDj65Wqdixy58jN
+Date: Thu, 12 Nov 2015 23:50:56 -0500 (EST)
+From: Jason Shepherd <jshepher@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: Assign CVE for common-collections remote code execution on
+ deserialisation flaw
+To: oss-security@lists.openwall.com
 
-Hello,
+I think a precedent has been set with the Groovy issue [1] that we'd issue a CVE for the libraries that allow us to execute code during deserialization of their classes.
 
-By default, the mail protocol functions in Python's standard library do
-not validate certificates for TLS connections. The API is surprising
-and unintuitive. This is not a new issue, but I was surprised to learn
-about it. Therefore, I'm sharing it here so more people know.
+[1] CVE-2015-3253 
 
-Python provides functionality for the standard email protocols in its
-standard library. One can create a connection to an IMAP host like this:
-c =3D imaplib.IMAP4_SSL(host=3D"example.com")
+As Gsunde points out, it would make it a lot easier for everyone to refer to this issue if it had a CVE.
 
-Similar functions exist for pop3 and smtp. This code is insecure and
-vulnerable to man-in-the-middle attacks, as certificates are not
-checked.
+----- Original Message -----
+From: "Jason Shepherd" <jshepher@redhat.com>
+To: oss-security@lists.openwall.com
+Sent: Monday, 9 November, 2015 10:36:20 AM
+Subject: Assign CVE for common-collections remote code execution on deserialisation flaw
 
-The secure version looks like this:
-c =3D imaplib.IMAP4_SSL(host=3D"example.com",
-ssl_context=3Dssl.create_default_context())
-(The parameter is sometimes called "ssl_context" and sometimes
-"context", depending on the protocol.)
+Hello oss-esc,
 
-In my view this is not just an insecure default, but also very
-counterintuitive.  Nothing about
-"ssl_context=3Dssl.create_default_context()" implies that this is about
-certificate checking. Furthermore, it is surprising and
-counterintuitive that you need a "default context" to enable something
-and that the "default context" is not the default.
+It was found that a flaw in Apache commons-collections Java library allowed remote code execution when Deserialised with Java Object Serialization. Full details of the vulnerability can be found in this recent blog post, [1]. A proposed patch for 3.2.x branch has been submitted upstream, but no release has been made with the fix at the current time. The issue affects version 3.x, and 4.x of Apache common-collections, [2].
 
-This is documented behavior [1].
+   [1] http://foxglovesecurity.com/2015/11/06/what-do-weblogic-websphere-jboss-jenkins-opennms-and-your-application-have-in-common-this-vulnerability/
+   [2] https://issues.apache.org/jira/browse/COLLECTIONS-580
 
-There exists a discussion in the Python issue tracker [2] since April
-2022. According to that, the same issue exists for NNTP and FTP
-functionality. It was discussed to change the default, but it hasn't
-happened yet.
-
-Python already had a previous discussion about enabling certificate
-validation by default in the standard library, but it was only done for
-HTTPS connections [3]. The PEP document says that this should be
-reviewed in the future for other protocols.
-
-The company Pentagrid has reached out to a large number of open source
-projects impacted by this, and wrote a blogpost [4].
-
-Also relevant is RFC 8314, which contains guidelines for TLS
-connections in email protocols [5]. ("MUAs MUST validate TLS server
-certificates [...]") It targets client software, but I believe it is
-reasonable to apply the same standards to client APIs.
-
-
-[1] https://docs.python.org/3/library/ssl.html#ssl-security
-[2] https://github.com/python/cpython/issues/91826
-[3] https://peps.python.org/pep-0476/
-[4]
-https://www.pentagrid.ch/en/blog/python-mail-libraries-certificate-verifica=
-tion/
-[5] https://datatracker.ietf.org/doc/html/rfc8314
-
---=20
-Hanno B=C3=B6ck
-https://hboeck.de/
+Regards,
+Jason Shepherd
+Red Hat Product Security
