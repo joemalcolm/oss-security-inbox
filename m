@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["9023" "Wednesday" "9" "November" "2016" "15:38:04" "+0100" "Agostino Sarubbo" "ago@gentoo.org" "<3155102.1YCGyAV9D0@blackgate>" "204" "[oss-security] elfutils: memory allocation failure in __libelf_set_rawdata_wrlock (elf_getdata.c)" nil nil nil "11" "2016110914:38:04" "[oss-security] elfutils: memory allocation failure in __libelf_set_rawdata_wrlock (elf_getdata.c)" (number mark "U       ago@gentoo.o Nov  9  204/9023  " thread-indent "\"[oss-security] elfutils: memory allocation failure in __libelf_set_rawdata_wrlock (elf_getdata.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2767" "Friday" "13" "November" "2015" "12:45:13" "+0530" "Dis close" "disclose@cybersecurityworks.com" "<CAMWaY3P-bJSw2B2mEs2iDBgoZbuWNNg-AaUJxsPyGu1mOC+Ewg@mail.gmail.com>" "97" "[oss-security] CVE request: Reflected XSS in OcPortal CMS 9.0.20" nil nil nil "11" "2015111307:15:13" "[oss-security] CVE request: Reflected XSS in OcPortal CMS 9.0.20" (number mark "U       disclose@cyb Nov 13   97/2767  " thread-indent "\"[oss-security] CVE request: Reflected XSS in OcPortal CMS 9.0.20\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 5321 invoked by uid 550); 9 Nov 2016 14:38:24 -0000
+Received: (qmail 22303 invoked by uid 550); 13 Nov 2015 13:02:58 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,219 +12,134 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5295 invoked from network); 9 Nov 2016 14:38:22 -0000
-From: Agostino Sarubbo <ago@gentoo.org>
-To: oss-security@lists.openwall.com
-Cc: cve-assign@mitre.org
-Date: Wed, 09 Nov 2016 15:38:04 +0100
-Message-ID: <3155102.1YCGyAV9D0@blackgate>
-User-Agent: KMail/4.14.10 (Linux/4.4.26-gentoo; KDE/4.14.24; x86_64; ; )
+Received: (qmail 5679 invoked from network); 13 Nov 2015 07:15:25 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=cybersecurityworks_com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:date:message-id:subject:from:to:cc:content-type;
+        bh=+paa82DFz4+Lmgf2nS7r1fhuvO7z4lUMcuBuiXvKo+E=;
+        b=V85+L8GSIbJn0gWTAoOHbp/wIz/rROJ5JqdBR4Uwiy6C+SkjZWolmLA4d7q8DZB+nK
+         es7BQwkgUNpzbe86+eKS/Cwsh/h6Q3vUFFmAZbKTRVINOqOGvCUBG6oYRaLvSxKAS2to
+         iFqd0fQJkMm9o5Y0BABjaB2rP2pQZHOaXtu493BxpSfZZeZyLtXPDvNnWL21THv8LvcU
+         mwe42ne6AK0e2BpMowx+nZp7rWOo5s9m/dKBvuO8Cgg9XAkB1K/WyXykNtGw0yNTnQCl
+         N6X4kcLpg+OaNMR+5HqlG9dsSORAhBPnC4A7/XNv9jnpjjA0zkmb7ytRGLqb4t/Bni+D
+         p7LA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to:cc
+         :content-type;
+        bh=+paa82DFz4+Lmgf2nS7r1fhuvO7z4lUMcuBuiXvKo+E=;
+        b=QVDWc0w6k9SxV0lH/5lxxjJ8ZR3zNrhAC7ctkQFcH8aqUyapr7WRFb8iQUm7vHG7v0
+         lI1U+mHW/7hMVuTVvSFjQPCeqnXznhq9ekfFv23qBkc2exztslIB61ZL08NGcHc0n9R1
+         YjpXpzUUI6bb82/so3jK3v1rJzuz0unsyON2isMRUrrL94XJe4UC4aSLVBgWd/Dodaek
+         VHtL4Zl2wODCTj8eOG/hiSGEzFqvDsEvUtxqBKlo4TJ+RETXczDA7czHFc8UyP01ct2y
+         acN33s8DqqtlryHFEn+zmKyGv6KGzy49cA9fz8yvLTk8s/mhjotvftfpE/PLLTP2ob4T
+         zGLA==
+X-Gm-Message-State: ALoCoQk8Pt84n0ytsTdMWECPRFhMpfTGOCFWJvhMiuzxCvTSx36SkuA3F5JSjTujJlKd4i97BI9G
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"
-Subject: [oss-security] elfutils: memory allocation failure in __libelf_set_rawdata_wrlock (elf_getdata.c)
+X-Received: by 10.50.13.42 with SMTP id e10mr1731546igc.72.1447398913082; Thu,
+ 12 Nov 2015 23:15:13 -0800 (PST)
+Date: Fri, 13 Nov 2015 12:45:13 +0530
+Message-ID: <CAMWaY3P-bJSw2B2mEs2iDBgoZbuWNNg-AaUJxsPyGu1mOC+Ewg@mail.gmail.com>
+From: Dis close <disclose@cybersecurityworks.com>
+To: cve-assign@mitre.org
+Cc: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary=089e013c66d4102156052466d256
+Subject: [oss-security] CVE request: Reflected XSS in OcPortal CMS 9.0.20
 
-If it is suitable for a CVE please assign one. Thanks.
+--089e013c66d4102156052466d256
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-Description:
-elfutils is a set of libraries/utilities to handle ELF objects (drop in 
-replacement for libelf).
+Hello List:
 
-During the fuzz of libdwarf, I noticed a memory allocation failure which 
-involves elfutils.
-To have a double-check, the bug was first reported to the libdwarf maintainer 
-and then to the elfutils maintainer. Actually there is a proposed patch on the 
-elfutils mailing list, but nobody commented.
+Can a CVE be assigned to the following ?
 
-The complete ASan output:
+Details
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D
+Title                              :Reflected cross-site scripting
+vulnerability in *OcPortal CMS*
+Version                         : 9.0.20
+Vendor Homepage         :http://ocportal.com/start.htm
+Vulnerability Type          :Reflected cross-site scripting vulnerability
+(XSS)
+Risk                             :High
+Status                          :Fixed
 
-# dwarfdump $FILE
-==30083==ERROR: AddressSanitizer failed to allocate 0x8000003000 
-(549755826176) bytes of LargeMmapAllocator (error code: 12)
-==30083==Process memory map follows:
-	0x000000400000-0x0000006bb000	/usr/bin/dwarfdump-asan
-	0x0000008ba000-0x0000008c2000	/usr/bin/dwarfdump-asan
-	0x0000008c2000-0x0000008ff000	/usr/bin/dwarfdump-asan
-	0x0000008ff000-0x0000015a3000	
-	0x00007fff7000-0x00008fff7000	
-	0x00008fff7000-0x02008fff7000	
-	0x02008fff7000-0x10007fff8000	
-	0x600000000000-0x602000000000	
-	0x602000000000-0x602000010000	
-	0x602000010000-0x603000000000	
-	0x603000000000-0x603000010000	
-	0x603000010000-0x604000000000	
-	0x604000000000-0x604000010000	
-	0x604000010000-0x607000000000	
-	0x607000000000-0x607000010000	
-	0x607000010000-0x611000000000	
-	0x611000000000-0x611000010000	
-	0x611000010000-0x612000000000	
-	0x612000000000-0x612000010000	
-	0x612000010000-0x613000000000	
-	0x613000000000-0x613000010000	
-	0x613000010000-0x614000000000	
-	0x614000000000-0x614000020000	
-	0x614000020000-0x619000000000	
-	0x619000000000-0x619000020000	
-	0x619000020000-0x61c000000000	
-	0x61c000000000-0x61c000020000	
-	0x61c000020000-0x61d000000000	
-	0x61d000000000-0x61d000020000	
-	0x61d000020000-0x624000000000	
-	0x624000000000-0x624000020000	
-	0x624000020000-0x625000000000	
-	0x625000000000-0x625000020000	
-	0x625000020000-0x640000000000	
-	0x640000000000-0x640000003000	
-	0x7f0afdc00000-0x7f0afdd00000	
-	0x7f0afde00000-0x7f0afdf00000	
-	0x7f0afdff0000-0x7f0b00342000	
-	0x7f0b00342000-0x7f0b004d5000	/lib64/libc-2.22.so
-	0x7f0b004d5000-0x7f0b006d5000	/lib64/libc-2.22.so
-	0x7f0b006d5000-0x7f0b006d9000	/lib64/libc-2.22.so
-	0x7f0b006d9000-0x7f0b006db000	/lib64/libc-2.22.so
-	0x7f0b006db000-0x7f0b006df000	
-	0x7f0b006df000-0x7f0b006f5000	/usr/lib64/gcc/x86_64-pc-linux-
-gnu/4.9.3/libgcc_s.so.1
-	0x7f0b006f5000-0x7f0b008f4000	/usr/lib64/gcc/x86_64-pc-linux-
-gnu/4.9.3/libgcc_s.so.1
-	0x7f0b008f4000-0x7f0b008f5000	/usr/lib64/gcc/x86_64-pc-linux-
-gnu/4.9.3/libgcc_s.so.1
-	0x7f0b008f5000-0x7f0b008f6000	/usr/lib64/gcc/x86_64-pc-linux-
-gnu/4.9.3/libgcc_s.so.1
-	0x7f0b008f6000-0x7f0b008f8000	/lib64/libdl-2.22.so
-	0x7f0b008f8000-0x7f0b00af8000	/lib64/libdl-2.22.so
-	0x7f0b00af8000-0x7f0b00af9000	/lib64/libdl-2.22.so
-	0x7f0b00af9000-0x7f0b00afa000	/lib64/libdl-2.22.so
-	0x7f0b00afa000-0x7f0b00bf7000	/lib64/libm-2.22.so
-	0x7f0b00bf7000-0x7f0b00df6000	/lib64/libm-2.22.so
-	0x7f0b00df6000-0x7f0b00df7000	/lib64/libm-2.22.so
-	0x7f0b00df7000-0x7f0b00df8000	/lib64/libm-2.22.so
-	0x7f0b00df8000-0x7f0b00dfe000	/lib64/librt-2.22.so
-	0x7f0b00dfe000-0x7f0b00ffe000	/lib64/librt-2.22.so
-	0x7f0b00ffe000-0x7f0b00fff000	/lib64/librt-2.22.so
-	0x7f0b00fff000-0x7f0b01000000	/lib64/librt-2.22.so
-	0x7f0b01000000-0x7f0b01017000	/lib64/libpthread-2.22.so
-	0x7f0b01017000-0x7f0b01216000	/lib64/libpthread-2.22.so
-	0x7f0b01216000-0x7f0b01217000	/lib64/libpthread-2.22.so
-	0x7f0b01217000-0x7f0b01218000	/lib64/libpthread-2.22.so
-	0x7f0b01218000-0x7f0b0121c000	
-	0x7f0b0121c000-0x7f0b01231000	/lib64/libz.so.1.2.8
-	0x7f0b01231000-0x7f0b01430000	/lib64/libz.so.1.2.8
-	0x7f0b01430000-0x7f0b01431000	/lib64/libz.so.1.2.8
-	0x7f0b01431000-0x7f0b01432000	/lib64/libz.so.1.2.8
-	0x7f0b01432000-0x7f0b01449000	/usr/lib64/libelf-0.166.so
-	0x7f0b01449000-0x7f0b01649000	/usr/lib64/libelf-0.166.so
-	0x7f0b01649000-0x7f0b0164a000	/usr/lib64/libelf-0.166.so
-	0x7f0b0164a000-0x7f0b0164b000	/usr/lib64/libelf-0.166.so
-	0x7f0b0164b000-0x7f0b0166d000	/lib64/ld-2.22.so
-	0x7f0b017f7000-0x7f0b01860000	
-	0x7f0b01860000-0x7f0b0186c000	
-	0x7f0b0186c000-0x7f0b0186d000	/lib64/ld-2.22.so
-	0x7f0b0186d000-0x7f0b0186e000	/lib64/ld-2.22.so
-	0x7f0b0186e000-0x7f0b0186f000	
-	0x7ffff2f19000-0x7ffff2f3a000	[stack]
-	0x7ffff2f3d000-0x7ffff2f3f000	[vvar]
-	0x7ffff2f3f000-0x7ffff2f41000	[vdso]
-	0xffffffffff600000-0xffffffffff601000	[vsyscall]
-==30083==End of process memory map.
-==30083==AddressSanitizer CHECK failed: /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-
-rt/lib/sanitizer_common/sanitizer_common.cc:183 "((0 && "unable to mmap")) != 
-(0)" (0x0, 0x0)
-    #0 0x4ca3ed in __asan::AsanCheckFailed(char const*, int, char const*, 
-unsigned long long, unsigned long long) /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_rtl.cc:67
-    #1 0x4d0f23 in __sanitizer::CheckFailed(char const*, int, char const*, 
-unsigned long long, unsigned long long) /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-
-rt/lib/sanitizer_common/sanitizer_common.cc:159
-    #2 0x4d1111 in __sanitizer::ReportMmapFailureAndDie(unsigned long, char 
-const*, char const*, int, bool) /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-
-rt/lib/sanitizer_common/sanitizer_common.cc:183
-    #3 0x4da14a in __sanitizer::MmapOrDie(unsigned long, char const*, bool) 
-/var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-
-rt/lib/sanitizer_common/sanitizer_posix.cc:122
-    #4 0x4224df in 
-__sanitizer::LargeMmapAllocator::Allocate(__sanitizer::AllocatorStats*, 
-unsigned long, unsigned long) /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-
-rt/lib/asan/../sanitizer_common/sanitizer_allocator.h:1033
-    #5 0x4224df in 
-__sanitizer::CombinedAllocator<__sanitizer::SizeClassAllocator64<105553116266496ul, 
-4398046511104ul, 0ul, __sanitizer::SizeClassMap, 
-__asan::AsanMapUnmapCallback>, 
-__sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<105553116266496ul, 
-4398046511104ul, 0ul, __sanitizer::SizeClassMap, __asan::AsanMapUnmapCallback> 
->, __sanitizer::LargeMmapAllocator 
->::Allocate(__sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<105553116266496ul, 
-4398046511104ul, 0ul, __sanitizer::SizeClassMap, __asan::AsanMapUnmapCallback> 
->*, unsigned long, unsigned long, bool, bool) /var/tmp/portage/sys-
-devel/llvm-3.8.1-r2/work/llvm-3.8.1.src/projects/compiler-
-rt/lib/asan/../sanitizer_common/sanitizer_allocator.h:1302
-    #6 0x4224df in __asan::Allocator::Allocate(unsigned long, unsigned long, 
-__sanitizer::BufferedStackTrace*, __asan::AllocType, bool) 
-/var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_allocator.cc:368
-    #7 0x4224df in __asan::asan_malloc(unsigned long, 
-__sanitizer::BufferedStackTrace*) /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_allocator.cc:718
-    #8 0x4c0ab1 in malloc /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:53
-    #9 0x7f0b0143c206 in __libelf_set_rawdata_wrlock /tmp/portage/dev-
-libs/elfutils-0.166/work/elfutils-0.166/libelf/elf_getdata.c:318
-    #10 0x7f0b0143c5db in __elf_getdata_rdlock /tmp/portage/dev-
-libs/elfutils-0.166/work/elfutils-0.166/libelf/elf_getdata.c:521
-    #11 0x580659 in dwarf_elf_object_access_load_section 
-/tmp/dwarf-20161001/libdwarf/dwarf_elf_access.c:1312:16
-    #12 0x5b5142 in _dwarf_load_section 
-/tmp/dwarf-20161001/libdwarf/dwarf_init_finish.c:1139:11
-    #13 0x6082ae in _dwarf_load_debug_info 
-/tmp/dwarf-20161001/libdwarf/dwarf_util.c:855:11
-    #14 0x57043f in _dwarf_next_cu_header_internal 
-/tmp/dwarf-20161001/libdwarf/dwarf_die_deliv.c:819:32
-    #15 0x572fcd in dwarf_next_cu_header_d 
-/tmp/dwarf-20161001/libdwarf/dwarf_die_deliv.c:629:15
-    #16 0x512f4f in print_one_die_section 
-/tmp/dwarf-20161001/dwarfdump/print_die.c:660:16
-    #17 0x512262 in print_infos 
-/tmp/dwarf-20161001/dwarfdump/print_die.c:371:16
-    #18 0x4faaea in process_one_file 
-/tmp/dwarf-20161001/dwarfdump/dwarfdump.c:1371:9
-    #19 0x4faaea in main /tmp/dwarf-20161001/dwarfdump/dwarfdump.c:654
-    #20 0x7f0b0036261f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
-    #21 0x419588 in _start (/usr/bin/dwarfdump-asan+0x419588)
+Description
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D
+OcPortal CMS 9.0.20 is prone to a cross-site scripting vulnerability
+because it fails to properly sanitize user-supplied input.A value in a
+template that is not meant to contain HTML is marked as an escaped value
+({VALUE*}). This meant that =E2=80=98html entities=E2=80=99 are put in repl=
+acement of HTML
+control characters.
 
-Affected version:
-0.166
 
-Fixed version:
-N/A
 
-Proposed patch:
-https://lists.fedorahosted.org/archives/list/elfutils-devel@lists.fedorahosted.org/thread/Q4LE47FPEVRZANMV6JE2NMHYO4H5MHGJ/
+Vulnerable Parameter
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D
+[*FIELD_NAME*]
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
 
-CVE:
-N/A
+Remote Exploitable
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D
+*Yes*
 
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00031-elfutils-memalloc-__libelf_set_rawdata_wrlock
+Technical Details
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D
 
-Timeline:
-2016-10-03: bug discovered
-2016-10-21: bug reported to upstream
-2016-11-04: blog post about the issue
+https://github.com/cybersecurityworks/Disclosed/issues/11
 
-Note:
-This bug was found with American Fuzzy Lop.
 
-Permalink:
-https://blogs.gentoo.org/ago/2016/11/04/elfutils-memory-allocation-failure-in-__libelf_set_rawdata_wrlock-elf_getdata-c
 
+
+Solution
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D
+Upgrade to latest version 9.0.21
+https://ocportal.com/site/sites.htm
+
+OR
+
+Vendor has released patch for this issue, please refer below link
+http://ocportal.com/site/news/view/security_issues/security-patch-for-xss.h=
+tm?filter=3D1%2C2%2C3%2C29%2C30
+
+
+
+Timeline
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D
+2015-11-06 - First Contact
+2015-11-06 - Vendor Response
+2015-11-07 - Vendor Fixed
+2015-11-13 - Public Disclosure
+
+Credits & Author
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D
+Arjun Basnet from Cyber Security Works Pvt. Ltd (
+http://www.cybersecurityworks.com/)
+
+About Cybersecurityworks
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D
+Cybersecurity Works is basically an auditing company passionate working on
+findings & reporting security flaws & vulnerabilities on web application
+and network. As professionals, we handle each client differently based on
+their unique requirements. Visit our website
+http://www.cybersecurityworks.com/ for more information.
+
+
+--=20
+----------
+Cheers !!!
+
+Team CSW
+
+--089e013c66d4102156052466d256--
