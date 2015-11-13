@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1225" "Wednesday" "28" "April" "2021" "17:09:42" "-0800" "Michael McNally" "mcnally@isc.org" nil "28" "[oss-security] ISC discloses three BIND vulnerabilities (CVE-2021-25214, CVE-2021-25215, and CVE-2021-25216)" nil nil nil "4" nil nil (number mark "U       mcnally@isc. Apr 28   28/1225  " thread-indent "\"[oss-security] ISC discloses three BIND vulnerabilities (CVE-2021-25214, CVE-2021-25215, and CVE-2021-25216)\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] ISC discloses three BIND vulnerabilities (CVE-2021-25214, CVE-2021-25215, and CVE-2021-25216)" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1577" "Thursday" "12" "November" "2015" "22:03:05" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151113030305.3273073C0B1@smtpvmsrv1.mitre.org>" "36" "[oss-security] Re: CVE request: libpng buffer overflow in png_set_PLTE" "^Cc:" nil nil "11" "2015111303:03:05" "[oss-security] Re: CVE request: libpng buffer overflow in png_set_PLTE" (number mark "        cve-assign@m Nov 12   36/1577  " thread-indent "\"[oss-security] Re: CVE request: libpng buffer overflow in png_set_PLTE\"\n") "<CA+PdXctx4LcZLTkfhohX1iErjwPUJTA3EBDsvf=qAJwFYBFRqw@mail.gmail.com>" ("<CA+PdXctx4LcZLTkfhohX1iErjwPUJTA3EBDsvf=qAJwFYBFRqw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 24180 invoked by uid 550); 29 Apr 2021 01:09:57 -0000
+Received: (qmail 16242 invoked by uid 550); 13 Nov 2015 03:03:32 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,62 +11,49 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 16176 invoked from network); 13 Nov 2015 03:03:17 -0000
+In-Reply-To: <CA+PdXctx4LcZLTkfhohX1iErjwPUJTA3EBDsvf=qAJwFYBFRqw@mail.gmail.com>
+Message-Id: <20151113030305.3273073C0B1@smtpvmsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Thu, 12 Nov 2015 22:03:05 -0500 (EST)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 24159 invoked from network); 29 Apr 2021 01:09:56 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=isc.org; s=ostpay;
-	t=1619658584; bh=QADBDZWiqdePsQumcqPNdSVwtt7Bw0juMbkT9DlsiGA=;
-	h=To:Cc:From:Subject:Date;
-	b=Qj2OaN0FDz5u9qSWO2SF3apxydTgQEkVHcmVO8DUmLiyMSZYUqbFnrwHjme2TpYhw
-	 9KEMYEIKO2Hg5RAuwpVvow+44YSPz2t5VSaLP05dKK+HOHLiuuvCNhzy8dG56W8SHD
-	 saTYbVLek7GWYowX8nUalnblPH0uLROcbwMoVc5g=
-DKIM-Filter: OpenDKIM Filter v2.9.2 zmx1.isc.org 29F7316007E
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=isc.org;
-	s=05DFB016-56A2-11EB-AEC0-15368D323330; t=1619658584;
-	bh=JQFAJP9mWOkoyj+Cn5FGGhXbXVKX6TsTmKQXLjD65qo=;
-	h=To:From:Subject:Message-ID:Date:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding;
-	b=VdN53rzzhon68sT47yI4DrntiIveU4gxt/W255+9wgAhqbXQkaNvfOTsL/FQ+HaN3
-	 UDyV7wOPmE2Py3t4QVO9f3dEMF9QD1pqS0fEMss3Lr8J9qKeITsTcIFzE/uZXLnZMr
-	 A1QSZfrhmDBh2WLXXkIGJ8U3mfxg+iNchf2z5Q40=
-To: oss-security@lists.openwall.com
-Cc: "security-officer@isc.org" <security-officer@isc.org>
-From: Michael McNally <mcnally@isc.org>
-Message-ID: <bb03954a-2db8-8c4c-3937-a3c59072abb4@isc.org>
-Date: Wed, 28 Apr 2021 17:09:42 -0800
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
- Gecko/20100101 Thunderbird/78.9.1
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] ISC discloses three BIND vulnerabilities (CVE-2021-25214,
- CVE-2021-25215, and CVE-2021-25216)
+Subject: [oss-security] Re: CVE request: libpng buffer overflow in png_set_PLTE
+To: glennrp@gmail.com
 
-On April 28, 2021, we (Internet Systems Consortium) disclosed three
-vulnerabilities affecting our BIND 9 software:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-    CVE-2021-25214: A broken inbound incremental zone update (IXFR)
-    can cause named to terminate unexpectedly
-    https://kb.isc.org/docs/cve-2021-25214
+> I request a CVE for a vulnerability in libpng, all versions, in the
+> png_set_PLTE/png_get_PLTE functions.  These functions failed to check for
+> an out-of-range palette when reading or writing PNG files with a bit_depth
+> less than 8.  Some applications might read the bit depth from the IHDR
+> chunk and allocate memory for a 2^N entry palette, while libpng can return
+> a palette with up to 256 entries even when the bit depth is less than 8.
 
-    CVE-2021-25215: An assertion check can fail while answering queries for
-    DNAME records that require the DNAME to be processed to resolve itself
-    https://kb.isc.org/docs/cve-2021-25215
+>> https://github.com/glennrp/libpng/blob/libpng16/CHANGES
 
-    CVE-2021-25216: A second vulnerability in BIND's GSSAPI security policy
-    negotiation can be targeted by a buffer overflow attack
-    https://kb.isc.org/docs/cve-2021-25216
+Use CVE-2015-8126.
 
-New versions of BIND are available from https://www.isc.org/downloads
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Operators and package maintainers who prefer to apply patches selectively can
-find individual vulnerability-specific patches in the "patches" subdirectory
-of the release directories for our two stable release branches (9.11 and 9.16)
-
-   https://downloads.isc.org/isc/bind9/9.11.31/patches
-   https://downloads.isc.org/isc/bind9/9.16.15/patches
-
-With the public announcement of these vulnerabilities, the embargo
-period is ended and any updated software packages that have been
-prepared may be released.
-
+iQIcBAEBCAAGBQJWRVIvAAoJEL54rhJi8gl5sPkQAKEY828dq1YZnIDjf8gSQldb
+Bam8eRz0cVyxGo8sZ5oB+FTymMaBNGfccLBWY0XoS8WcGFYOOv1rBqIhvJrvyGm/
+TsNXJJTqwe41rF1SQNOT6AwncJtsfXpPhMrCOvqw3s71dDMcxtyXkyQycry4V8Kt
+IMBz++W50GC/KanDXjYnR+XTGddvU9hh9OytOZmGiroeArBn6D62KI0sBRFW1bzJ
+q8ftTiV8wznang1xy8pFYaTTXK+UIOe23tVw6XAZAcpMXXF31g84SjbjULHEnS7G
+Zc1m9MspDI0zo5LPVv0SZM5NpQ0H9KH7HsJ1JYY+qCqK72eUN6hnkMz2FKXqa6LA
+Pj6Smng4WuPfROlse8QaM46Auk2qI6aJ3TvrfSnMiEiXuumSs3fSdAksvSO5ncvm
+AbIlVmc/tBnw26wlP7Bi0YAMoLzlZACK2IemVwsHjd8r8KZZEQRGV0ofPB3TH2+i
+AsmOWHdz3UQeFcOkK+KOk/gb41uDzr0tIt6u9PCc/H0mAV2b3DbF/l+dxHpg1VcO
+ZHnc6pUTYZY4eWBnfSFhuL7f5qA2OlNsxMUIcLd1twtRFyAllr9d9cU5Ex05KeOJ
+fgawhpJJ9zyq0fcwPitvCji+UpJher0GBrb/BLWufUbiYIVN+fUP/mDKf3zrJvAk
+ncDbOaufQIwVUmXaH0iy
+=K98Y
+-----END PGP SIGNATURE-----
