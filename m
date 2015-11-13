@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2004" "Thursday" "18" "May" "2017" "04:39:50" "+0200" "Marc Lehmann" "schmorp@schmorp.de" "<20170518023950.gkj6diatbr4bfdmh@schmorp.de>" "45" "Re: [oss-security] terminal emulators' processing of escape sequences" "^Cc:" nil nil "5" "2017051802:39:50" "[oss-security] terminal emulators' processing of escape sequences" (number mark "        schmorp@schm May 18   45/2004  " thread-indent "\"Re: [oss-security] terminal emulators' processing of escape sequences\"\n") "<20170517110530.GA11230@openwall.com>" ("<20170501164428.GA12322@openwall.com>" "<CALx_OUDauCKOg20Lp5wumy_JUiu7Cj3=-d-HJSci+nROrK8BRw@mail.gmail.com>" "<CAP145pgb85EujmBuvCnFq-W9RRmK8NxsoJ3327JSy03gcU-F6w@mail.gmail.com>" "<20170516220345.GA10874@openwall.com>" "<CAHmME9p-tvS=nc5J9REB6kRurCHXLUSR6r+hxcFzPHwWFuVDGw@mail.gmail.com>" "<20170517012314.vyjnu3k7pgh5ey6s@schmorp.de>" "<20170517110530.GA11230@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1323" "Friday" "13" "November" "2015" "06:43:19" "-0500" "Vladis Dronov" "vdronov@redhat.com" "<1105840871.12262760.1447414999303.JavaMail.zimbra@redhat.com>" "33" "[oss-security] Re: CVE request -- [media] usbvision: usbvision_probe() can trigger a kernel NULL pointer dereference" nil nil nil "11" "2015111311:43:19" "[oss-security] Re: CVE request -- [media] usbvision: usbvision_probe() can trigger a kernel NULL pointer dereference" (number mark "U       vdronov@redh Nov 13   33/1323  " thread-indent "\"[oss-security] Re: CVE request -- [media] usbvision: usbvision_probe() can trigger a kernel NULL pointer dereference\"\n") "<280559012.12238637.1447413530171.JavaMail.zimbra@redhat.com>" ("<280559012.12238637.1447413530171.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 8123 invoked by uid 550); 18 May 2017 05:25:47 -0000
+Received: (qmail 20453 invoked by uid 550); 13 Nov 2015 11:43:34 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,72 +11,55 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 7920 invoked from network); 18 May 2017 02:40:02 -0000
-Message-ID: <20170518023950.gkj6diatbr4bfdmh@schmorp.de>
-References: <20170501164428.GA12322@openwall.com>
- <CALx_OUDauCKOg20Lp5wumy_JUiu7Cj3=-d-HJSci+nROrK8BRw@mail.gmail.com>
- <CAP145pgb85EujmBuvCnFq-W9RRmK8NxsoJ3327JSy03gcU-F6w@mail.gmail.com>
- <20170516220345.GA10874@openwall.com>
- <CAHmME9p-tvS=nc5J9REB6kRurCHXLUSR6r+hxcFzPHwWFuVDGw@mail.gmail.com>
- <20170517012314.vyjnu3k7pgh5ey6s@schmorp.de>
- <20170517110530.GA11230@openwall.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20170517110530.GA11230@openwall.com>
-OpenPGP: id=904ad2f81fb16978e7536f726dea2ba30bc39eb6;
- url=http://pgp.schmorp.de/schmorp-pgpkey.txt; preference=signencrypt
-Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>,
-	oss-security <oss-security@lists.openwall.com>,
-	rxvt-unicode@lists.schmorp.de, rxvt@schmorp.de
-Date: Thu, 18 May 2017 04:39:50 +0200
-From: Marc Lehmann <schmorp@schmorp.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] terminal emulators' processing of escape sequences
-To: Solar Designer <solar@openwall.com>
+Received: (qmail 20434 invoked from network); 13 Nov 2015 11:43:33 -0000
+Date: Fri, 13 Nov 2015 06:43:19 -0500 (EST)
+From: Vladis Dronov <vdronov@redhat.com>
+To: oss-security@lists.openwall.com
+Cc: cve-assign@mitre.org
+Message-ID: <1105840871.12262760.1447414999303.JavaMail.zimbra@redhat.com>
+In-Reply-To: <280559012.12238637.1447413530171.JavaMail.zimbra@redhat.com>
+References: <280559012.12238637.1447413530171.JavaMail.zimbra@redhat.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.40.204.127]
+X-Mailer: Zimbra 8.0.6_GA_5922 (ZimbraWebClient - FF41 (Linux)/8.0.6_GA_5922)
+Thread-Topic: CVE request -- [media] usbvision: usbvision_probe() can trigger a kernel NULL pointer dereference
+Thread-Index: hCmaV1ji8jDXJ5Lh3zK81gkiTJsnTII20tVB
+Subject: [oss-security] Re: CVE request -- [media] usbvision: usbvision_probe() can trigger
+ a kernel NULL pointer dereference
 
-On Wed, May 17, 2017 at 01:05:30PM +0200, Solar Designer <solar@openwall.com> wrote:
-> You're right that we provided "little to no information" - sorry.  I'll
-> correct this now.
-> 
-> Jason's e-mail was in part prompted by my off-list message to him, where
-> I wrote about this issue (or non-issue depending on one's perspective):
+Greatest apologies, this issue already has CVE-2015-7833 assigned.
+Please, disregard previous request.
 
-Thanks a lot, this makes a lot more sense. The confusing part was that the
-patch sent by Jason in his mail had nothing to do with this issue.
+Vladis Dronov | Red Hat, Inc.
+| Product Security Engineer |
 
-> I think it's pretty bad, because unlike many other terminals' automated
-> responses triggered by escapes, this one includes a linefeed.
+----- Original Message -----
+From: "Vladis Dronov" <vdronov@redhat.com>
+To: oss-security@lists.openwall.com
+Cc: cve-assign@mitre.org
+Sent: Friday, November 13, 2015 12:18:50 PM
+Subject: CVE request -- [media] usbvision: usbvision_probe() can trigger a kernel NULL pointer dereference
 
-I agree - rxvt-unicode shouldn't reply with a LF when in secure mode (this
-is a policy). The sequence in question is also not used (or even usable,
-as it queries the original rxvt graphics mode which is not implemented in
-urxvt), so the next version will have it disabled, at least in secure mode
-(the default).
+Hello,
+If possible, we would like to obtain a CVE-ID for the following security issue.
 
-> The risk probability is low, but this is nevertheless a valid security
-> issue to patch.
+An out-of-bounds memory access flaw was found in USBVision USB Camera Driver in
+usbvision_probe() function in drivers/media/usb/usbvision/usbvision-video.c.
+The driver assumes that the interfaces numbers of the USB device are always in
+0,1,2,3... order. By using a specially crafted USB device which advertises
+out-of-order number on one of its interfaces an unprivileged user with a physical
+access can trigger a kernel NULL pointer dereference causing the system to freeze.
 
-I agree, it is a reasonable defense in depth mechanism where the benefit
-clearly outweighs the disadvantages.
+Currently there is an effort to create an upstream patch for this driver fixing
+this issue.
 
-> (The pasted text appears to vary between "0" and "1".)
+References:
+http://seclists.org/bugtraq/2015/Oct/35
+http://bugzilla.redhat.com/show_bug.cgi?id=1201858
+http://bugzilla.redhat.com/show_bug.cgi?id=1270158
 
-urxvt always replies with "\033G0\012" to indicate "graphics mode not
-supported". It's quite possible the the original rxvt replies with other
-sequences.
-
-> Thus, a sentiment expressed in past discussions in here is that terminal
-> emulators shouldn't have the riskiest escape sequences supported by
-> default.  It is fully expected that malicious escape sequences can make
-
-Again, I fully agree - I just couldn't make the connection between the
-patch sent and these "riskiest escape sequences".
-
--- 
-                The choice of a       Deliantra, the free code+content MORPG
-      -----==-     _GNU_              http://www.deliantra.net
-      ----==-- _       generation
-      ---==---(_)__  __ ____  __      Marc Lehmann
-      --==---/ / _ \/ // /\ \/ /      schmorp@schmorp.de
-      -=====/_/_//_/\_,_/ /_/\_\
+Vladis Dronov | Red Hat, Inc.
+| Product Security Engineer |
