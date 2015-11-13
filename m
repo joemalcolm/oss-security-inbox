@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2211" "Wednesday" "2" "November" "2016" "08:09:01" "+0100" "Daniel Stenberg" "daniel@haxx.se" "<alpine.DEB.2.20.1611020808080.375@tvnag.unkk.fr>" "83" "[oss-security] [SECURITY ADVISORY] curl double-free in curl_maprintf" nil nil nil "11" "2016110207:09:01" "[oss-security] [SECURITY ADVISORY] curl double-free in curl_maprintf" (number mark "U       daniel@haxx. Nov  2   83/2211  " thread-indent "\"[oss-security] [SECURITY ADVISORY] curl double-free in curl_maprintf\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["873" "Friday" "13" "November" "2015" "06:18:50" "-0500" "Vladis Dronov" "vdronov@redhat.com" "<280559012.12238637.1447413530171.JavaMail.zimbra@redhat.com>" "20" "[oss-security] CVE request -- [media] usbvision: usbvision_probe() can trigger a kernel NULL pointer dereference" nil nil nil "11" "2015111311:18:50" "[oss-security] CVE request -- [media] usbvision: usbvision_probe() can trigger a kernel NULL pointer dereference" (number mark "U       vdronov@redh Nov 13   20/873   " thread-indent "\"[oss-security] CVE request -- [media] usbvision: usbvision_probe() can trigger a kernel NULL pointer dereference\"\n") "<1986702170.12223760.1447412422089.JavaMail.zimbra@redhat.com>" ("<1986702170.12223760.1447412422089.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 1613 invoked by uid 550); 2 Nov 2016 07:09:20 -0000
+Received: (qmail 28567 invoked by uid 550); 13 Nov 2015 11:20:47 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,102 +12,40 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32683 invoked from network); 2 Nov 2016 07:09:15 -0000
-X-Authentication-Warning: giant.haxx.se: dast owned process doing -bs
-Date: Wed, 2 Nov 2016 08:09:01 +0100 (CET)
-From: Daniel Stenberg <daniel@haxx.se>
-X-X-Sender: dast@giant.haxx.se
-To: curl security announcements -- curl users <curl-users@cool.haxx.se>,
-        curl-announce@cool.haxx.se,
-        libcurl hacking <curl-library@cool.haxx.se>,
-        oss-security@lists.openwall.com
-Message-ID: <alpine.DEB.2.20.1611020808080.375@tvnag.unkk.fr>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-fromdanielhimself: yes
+Received: (qmail 28543 invoked from network); 13 Nov 2015 11:20:46 -0000
+Date: Fri, 13 Nov 2015 06:18:50 -0500 (EST)
+From: Vladis Dronov <vdronov@redhat.com>
+To: oss-security@lists.openwall.com
+Cc: cve-assign@mitre.org
+Message-ID: <280559012.12238637.1447413530171.JavaMail.zimbra@redhat.com>
+In-Reply-To: <1986702170.12223760.1447412422089.JavaMail.zimbra@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-Subject: [oss-security] [SECURITY ADVISORY] curl double-free in curl_maprintf
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.40.204.127]
+X-Mailer: Zimbra 8.0.6_GA_5922 (ZimbraWebClient - FF41 (Linux)/8.0.6_GA_5922)
+Thread-Topic: CVE request -- [media] usbvision: usbvision_probe() can trigger a kernel NULL pointer dereference
+Thread-Index: hCmaV1ji8jDXJ5Lh3zK81gkiTJsnTA==
+Subject: [oss-security] CVE request -- [media] usbvision: usbvision_probe() can trigger a
+ kernel NULL pointer dereference
 
-double-free in curl_maprintf
-============================
+Hello,
+If possible, we would like to obtain a CVE-ID for the following security issue.
 
-Project cURL Security Advisory, November 2, 2016 -
-[Permalink](https://curl.haxx.se/docs/adv_20161102D.html)
+An out-of-bounds memory access flaw was found in USBVision USB Camera Driver in
+usbvision_probe() function in drivers/media/usb/usbvision/usbvision-video.c.
+The driver assumes that the interfaces numbers of the USB device are always in
+0,1,2,3... order. By using a specially crafted USB device which advertises
+out-of-order number on one of its interfaces an unprivileged user with a physical
+access can trigger a kernel NULL pointer dereference causing the system to freeze.
 
-VULNERABILITY
--------------
+Currently there is an effort to create an upstream patch for this driver fixing
+this issue.
 
-The libcurl API function called `curl_maprintf()` can be tricked into doing a
-double-free due to an unsafe `size_t` multiplication, on systems using 32 bit
-`size_t` variables. The function is also used internallty in numerous
-situations.
+References:
+http://seclists.org/bugtraq/2015/Oct/35
+http://bugzilla.redhat.com/show_bug.cgi?id=1201858
+http://bugzilla.redhat.com/show_bug.cgi?id=1270158
 
-The function doubles an allocated memory area with realloc() and allows the
-size to wrap and become zero and when doing so realloc() returns NULL *and*
-frees the memory - in contrary to normal realloc() fails where it only returns
-NULL - causing libcurl to free the memory *again* in the error path.
-
-Systems with 64 bit versions of the `size_t` type are not affected by this
-issue.
-
-This behavior is triggable using the publicly exposed function.
-
-We are not aware of any exploit of this flaw.
-
-INFO
-----
-
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2016-8618 to this issue.
-
-AFFECTED VERSIONS
------------------
-
-This flaw exists in the following curl versions (and again, only on 32bit
-versions).
-
-- Affected versions: curl 7.1 to and including 7.50.3
-- Not affected versions: curl >= 7.51.0
-
-libcurl is used by many applications, but not always advertised as such!
-
-THE SOLUTION
-------------
-
-In version 7.51.0, the memory growing functions will fail instead of letting
-the size wrap.
-
-A [patch for CVE-2016-8618](https://curl.haxx.se/CVE-2016-8618.patch) is
-available.
-
-RECOMMENDATIONS
----------------
-
-We suggest you take one of the following actions immediately, in order of
-preference:
-
-  A - Upgrade curl and libcurl to version 7.51.0
-
-  B - Apply the patch to your version and rebuild
-
-  C - Make really sure you never send strings larger than 1GB into this funciton
-
-TIME LINE
----------
-
-It was first reported to the curl project on September 23 by Cure53.
-
-We contacted distros@openwall on October 19.
-
-curl 7.51.0 was released on November 2 2016, coordinated with the publication
-of this advisory.
-
-CREDITS
--------
-
-This vulnerability was found during a Secure Open Source audit performed by
-Cure53.
-
--- 
-
-  / daniel.haxx.se
+Vladis Dronov | Red Hat, Inc.
+| Product Security Engineer |
