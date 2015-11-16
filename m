@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1251" "Monday" "5" "December" "2016" "16:27:38" "-0600" "Steven M. Schweda" "sms@antinode.info" "<16120516273894_2020046C@antinode.info>" "36" "[oss-security] Re: CVE Request: Info-Zip zipinfo buffer overflow" nil nil nil "12" "2016120522:27:38" "[oss-security] Re: CVE Request: Info-Zip zipinfo buffer overflow" (number mark "U       sms@antinode Dec  5   36/1251  " thread-indent "\"[oss-security] Re: CVE Request: Info-Zip zipinfo buffer overflow\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1074" "Monday" "16" "November" "2015" "02:56:41" "+0000" "=?gb2312?B?ufk=?==?gb2312?B?08C41Q==?=" "guoyonggang@360.cn" "<2166DED8C457614D95A6AAC18B144F082B48AE@EX02.corp.qihoo.net>" "21" "[oss-security] CVE request-HUAWEI P8 GRA-UL00" "^Date:" nil nil "11" "2015111602:56:41" "[oss-security] CVE request-HUAWEI P8 GRA-UL00" (number mark "U       guoyonggang@ Nov 16   21/1074  " thread-indent "\"[oss-security] CVE request-HUAWEI P8 GRA-UL00\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 25629 invoked by uid 550); 5 Dec 2016 22:36:41 -0000
+Received: (qmail 10068 invoked by uid 550); 16 Nov 2015 12:50:26 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,50 +11,42 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 3779 invoked from network); 16 Nov 2015 02:56:55 -0000
+Thread-Topic: CVE request-HUAWEI P8 GRA-UL00
+Thread-Index: AdEgGlizhhl1UL0dSbSLp46oeqCeqw==
+Message-ID: <2166DED8C457614D95A6AAC18B144F082B48AE@EX02.corp.qihoo.net>
+Accept-Language: zh-CN, en-US
+Content-Language: zh-CN
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+x-originating-ip: [10.18.32.47]
+Content-Type: multipart/alternative;
+	boundary="_000_2166DED8C457614D95A6AAC18B144F082B48AEEX02corpqihoonet_"
+MIME-Version: 1.0
+Date: Mon, 16 Nov 2015 02:56:41 +0000
+From: =?gb2312?B?ufnTwLjV?= <guoyonggang@360.cn>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 23954 invoked from network); 5 Dec 2016 22:34:34 -0000
-Date: Mon, 5 Dec 2016 16:27:38 -0600 (CST)
-Message-Id: <16120516273894_2020046C@antinode.info>
-From: "Steven M. Schweda" <sms@antinode.info>
-To: tyhicks@canonical.com, oss-security@lists.openwall.com
-Cc: security@ubuntu.com, Info-ZIP-Dev@goatley.com
-X-VMS-To: SMTP%"tyhicks@canonical.com" SMTP%"oss-security@lists.openwall.com"
-X-VMS-Cc: SMTP%"security@ubuntu.com", IZ,SMS
-Subject: [oss-security] Re: CVE Request: Info-Zip zipinfo buffer overflow
+Subject: [oss-security] CVE request-HUAWEI P8 GRA-UL00
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
 
-From: Tyler Hicks <tyhicks@canonical.com>
+--_000_2166DED8C457614D95A6AAC18B144F082B48AEEX02corpqihoonet_
+Content-Type: text/plain; charset="gb2312"
+Content-Transfer-Encoding: base64
 
-> >    Thanks for the (thorough, helpful) report.
-> 
-> I appreciate it but Alexis deserves most of the credit.
+Q29kZSBiZWxvdyB3aWxsIGxlYWQgUDggcmVzdGFydCA6DQoNCiNpbmNsdWRl
+IDxzdGRsaWIuaD4NCiNpbmNsdWRlIDxzdGRpby5oPg0KI2luY2x1ZGUgPHN5
+cy90eXBlcy5oPg0KI2luY2x1ZGUgPHN5cy9zdGF0Lmg+DQojaW5jbHVkZSA8
+ZmNudGwuaD4NCiNpbmNsdWRlIDxlcnJuby5oPg0KDQppbnQgbWFpbih2b2lk
+KQ0Kew0KICBpbnQgcmV0Ow0KICBpbnQgZmQ7DQogIHZvaWQgKnAgPSBOVUxM
+Ow0KDQogIGZkID0gb3BlbigiL3Byb2MvaGk2NDAyZGJnL2hpNjQwMmRlYnVn
+bGV2ZWwiLCBPX1JET05MWSk7DQogIGlmKGZkID09IC0xKSAgICB7DQogICAg
+ICAgICBwcmludGYoIlstXSBPcGVuIGZhaWxlZCAoJWQgLSAlcylcbiIsIGVy
+cm5vLCBzdHJlcnJvcihlcnJubykpOw0KICAgICAgICAgcmV0dXJuIC0xOw0K
+ICB9DQogIHByaW50ZigiT3BlbiBzdWNjZXNzZnVsbHlcbiIpOw0KDQogIHAg
+PSAodm9pZCAqKTA7DQogIHJldCA9IHJlYWQoZmQsIHAsIDQpOw0KICBpZihy
+ZXQgPT0gLTEpICAgew0KICAgICAgICAgcHJpbnRmKCJbLV1mYWlsZWQgKCVk
+IC0gJXMpXG4iLCBlcnJubywgc3RyZXJyb3IoZXJybm8pKTsNCiAgICAgICAg
+IHJldHVybiAtMTsNCiAgfQ0KDQogIGNsb3NlKGZkKTsNCiAgcmV0dXJuIDA7
+DQp9DQoNCg==
 
-   The item in the next History.610 file should resemble:
-
- - In ZipInfo ("-Z", /ZIPINFO) short-format ("-s", /SHORT, default)
-   reports, an unexpectedly large compression method value (>999) caused
-   a (mostly harmless) buffer overflow, and spoiled the report format.
-   Now, values less than 1000 are displayed as before, using a
-   three-digit decimal format, "uDDD", but larger values are displayed
-   using a four-digit (unlabled) hexadecimal format, "XXXX".
-   https://launchpad.net/bugs/1643750
-   (zipinfo.c) [Alexis Vanden Eijnde, Tyler Hicks, SMS]
-
-(Credit is cheap.)
-
-> Thanks for the quick fix. Is there a public code repository available so
-> that we can reference a specific commit that fixes this issue?
-
-   No.  We've been thinking about it, though.
-
-> Nope. As you probably noticed, MITRE just assigned a CVE. It likely
-> helped that you confirmed the issue.
-
-   Swell.  (One fewer thing I need to know.)
-
->  Thanks again!
-
-   Same to you (plural).
-
-------------------------------------------------------------------------
-
-   Steven M. Schweda               sms@antinode-info
+--_000_2166DED8C457614D95A6AAC18B144F082B48AEEX02corpqihoonet_--
