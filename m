@@ -1,37 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/07/3
-Message-ID: <Pine.LNX.4.64.1501070835210.9814@beijing.mitre.org>
-Date: Wed, 7 Jan 2015 08:43:36 -0500 (EST)
-From: cve-assign@...re.org
-To: Salvatore Bonaccorso <carnil@...ian.org>
-cc: OSS Security Mailinglist <oss-security@...ts.openwall.com>, CVE Assignments MITRE <cve-assign@...re.org>
-Subject: Re: Dublicate CVE assignment for directory traversal in elfutils? (CVE-2014-9486 and CVE-2014-9447)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/11/17/18
+Message-ID: <20151117221139.GE3818@oevtugenva.nrevsny.pk>
+Date: Tue, 17 Nov 2015 17:11:39 -0500
+From: Rich Felker <dalias@...c.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: Fwd: x86 ROP mitigation
 Content-Type: text/plain; charset=utf-8
 
+On Tue, Nov 17, 2015 at 01:52:07PM -0500, Daniel Micay wrote:
+> Is that really the right approach vs. preventing hijacking of flow
+> control via return pointers and function pointers? It doesn't really
+> seem like there's an end game in mind where it actually prevents ROP
+> rather than just removing many useful gadgets. Making useful ROP gadgets
+> harder to find doesn't mean much, since tools are used to find them and
+> the tools can be improved if it becomes necessary.
+> 
+> i.e. why not just go with something like PaX's RAP
 
-On Tue, 6 Jan 2015, Salvatore Bonaccorso wrote:
+My understanding is that it's not ABI-compatible with non-RAP code, so
+you'd essentially be going with a whole new ABI. If so, this is going
+to be completely impractical for most users. Am I mistaken?
 
-> while updating our tracker information at Debian i noticed that there
-> might be a dublicate CVE assignment for elfutils:
->
-> In
->
-> https://marc.info/?l=oss-security&m=142032305709528&w=2
->
-> CVE-2014-9486 was assigned for elfutils, with fixing commit identified
-> with
->
-> https://git.fedorahosted.org/cgit/elfutils.git/commit/?id=147018e729e7c22eeabf15b82d26e4bf68a0d18e
->
-> In https://bugzilla.redhat.com/show_bug.cgi?id=1178888 though the same
-> commit is referenced, but the bug aliased to CVE-2014-9447.
->
-> Should one of those actually be rejected?
-
-Thank you.  CVE-2014-9486 will be REJECTed.
-
----
-
-CVE assignment team, MITRE CVE Numbering Authority M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+Rich
