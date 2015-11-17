@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["738" "Friday" "6" "January" "2017" "18:08:36" "+0100" "sivmu" "sivmu@web.de" "<f47526d9-157e-1600-8f64-d737db07753c@web.de>" "15" "Re: [oss-security] Re: Firejail local root exploit" "^Date:" nil nil "1" "2017010617:08:36" "[oss-security] Re: Firejail local root exploit" (number mark "        sivmu@web.de Jan  6   15/738   " thread-indent "\"Re: [oss-security] Re: Firejail local root exploit\"\n") "<730e35dc08384f6f9bef4e403802a871@imshyb02.MITRE.ORG>" ("<730e35dc08384f6f9bef4e403802a871@imshyb02.MITRE.ORG>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1309" "Tuesday" "17" "November" "2015" "13:57:19" "-0500" "Josh Bressers" "bressers@redhat.com" "<365956254.15394397.1447786639162.JavaMail.zimbra@redhat.com>" "32" "Re: [oss-security] Re: Fwd: x86 ROP mitigation" nil nil nil "11" "2015111718:57:19" "[oss-security] Re: Fwd: x86 ROP mitigation" (number mark "U       bressers@red Nov 17   32/1309  " thread-indent "\"Re: [oss-security] Re: Fwd: x86 ROP mitigation\"\n") "<564B7757.6080100@gmail.com>" ("<20151117153951.GA28672@openwall.com>" "<564B52D6.9090205@t-online.de>" "<564B54BA.6090203@redhat.com>" "<564B6536.2030908@redhat.com>" "<564B7757.6080100@gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 15977 invoked by uid 550); 6 Jan 2017 21:04:07 -0000
+Received: (qmail 1389 invoked by uid 550); 17 Nov 2015 18:57:32 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,48 +11,52 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 20382 invoked from network); 6 Jan 2017 17:08:52 -0000
-References: <730e35dc08384f6f9bef4e403802a871@imshyb02.MITRE.ORG>
-Message-ID: <f47526d9-157e-1600-8f64-d737db07753c@web.de>
-MIME-Version: 1.0
-In-Reply-To: <730e35dc08384f6f9bef4e403802a871@imshyb02.MITRE.ORG>
-Content-Type: text/plain; charset=iso-8859-15
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:x4/FPEa6dXelpomZZdLv1+WaLoYK5nJ2GOahdU0eJGZ810j/nh3
- icC2L4hh7K0OT8On22p+23QMTmuhNR7NQQ08O9UzEKBeySQqbKTV8qGjOT2RAH5XJhn/Kt2
- 7BtBXH7LN3Upb6aSfEctIibcuuBPk/THeXCJWPVWUWceofiWsL0kJETC2npE/ieTAiap7Le
- gRDDJ/ShgWCbml9Fy58iw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:pz4vKnPFLaw=:zMYuQ+WZOniZ4Fqaur9qss
- w4hkJc3G2FAsoW8/SjAzZPaeyzdXZ8RqsolfQgGYigZ78jwyNnYpP+PtfFfTRj09CTUnptB1j
- HB44u9ed1cW6IR/2GingzVrPX/eHU6bTiV5E4Y4A8XfobjDf1xVecZ23FyOpruG0zyZKAKll+
- BUUJBEyFnoPHCf6EBDBAVuemJIzxXusNt8hYKTTRFi6P29+HPw6KS3A793t1aRumXNK7A/KWY
- YU+p5gWwYX2cQRsHmrOStWtP9dbvX/dckPqw2PfC77TOZ9QhhgBUJ0XaaawnD3+hv07rLxS/E
- NrsnUjHG/4RUJKw7zVqC76nCL9ws7no2+8NIQKeSSIYb1ZfqDUcaLGhSP4XmmA0U6mlqtwWsu
- vxTu5MXxxHf2EwD0dFgBeHalR6ZhbWYiItlbOZCUNFCrZMURo7yNexKzK+JNnvBq1f78w967e
- mESvKJmxZzj8J3WA18jtuVaX0WG4fQLD2LIdu8RzwSyOJOn1B1nZpB1ukPa44ugdMIhtK1N6h
- 1zo6Gs3FG2NdF33yfjPRm8tD3jIx+TnAhNtOGGGETySVZgWlU+m7CsHvKK8ST5pVFx9xvChu8
- I9UncvQabLRN6CATqeY/cc0GPVfxYRj8wdUDY/IqswnggJ5gZ4tlqDmJbIZjwILokJSsdOY+S
- M/3HcLnpz/YqghuilqRAKqdCC2/bj2e3N/NYRGalxSw4cGNP0vtyxLtrA8c38W3kIJW4tPsLD
- xS0Ju+1yQbIeh86EnVoIO44Ad4LU1fUdr+EctTiWDP0Nt8TTaQEVx9V3XMYrrVhSCQg0onECp
- Qd9u5V2
-Date: Fri, 6 Jan 2017 18:08:36 +0100
-From: sivmu <sivmu@web.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: Firejail local root exploit
+Received: (qmail 1371 invoked from network); 17 Nov 2015 18:57:31 -0000
+Date: Tue, 17 Nov 2015 13:57:19 -0500 (EST)
+From: Josh Bressers <bressers@redhat.com>
 To: oss-security@lists.openwall.com
+Message-ID: <365956254.15394397.1447786639162.JavaMail.zimbra@redhat.com>
+In-Reply-To: <564B7757.6080100@gmail.com>
+References: <20151117153951.GA28672@openwall.com> <564B52D6.9090205@t-online.de> <564B54BA.6090203@redhat.com> <564B6536.2030908@redhat.com> <564B7757.6080100@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.10.116.22]
+X-Mailer: Zimbra 8.0.6_GA_5922 (ZimbraWebClient - FF41 (Linux)/8.0.6_GA_5922)
+Thread-Topic: x86 ROP mitigation
+Thread-Index: hfd3OsqCpgjj1ZNBDlVaahNXhN34/g==
+Subject: Re: [oss-security] Re: Fwd: x86 ROP mitigation
 
-Am 05.01.2017 um 23:37 schrieb Martin Carpenter:
-> Setuid-root makes me sad, copy_file() worries me still and the ability
-> for a non-priv user to run any seccomp filter on anything feels like an
-> accident waiting to happen (assuming it cannot already be exploited).
-
-Non-priv users can run seccomp filter on anything anyway.
-Seccomp does not rewuire any privileges and as far as I know it onl
-restricts permissions (to use syscalls) and never expands them.
 
 
-Also the question is how many of these issues are specific to firejail
-and how many of them also applied to (user)namespaces in general or
-wrapper tool lke bubblewrap that utilise namespaces as firejail does.
+----- Original Message -----
+> Is that really the right approach vs. preventing hijacking of flow
+> control via return pointers and function pointers? It doesn't really
+> seem like there's an end game in mind where it actually prevents ROP
+> rather than just removing many useful gadgets. Making useful ROP gadgets
+> harder to find doesn't mean much, since tools are used to find them and
+> the tools can be improved if it becomes necessary.
+> 
+> i.e. why not just go with something like PaX's RAP
+> 
+> (things like CPI/SafeStack could work too, but SafeStack requires
+> hardware support that's not available on x86_64 and ARM yet)
+> 
+> Preventing ROP by preventing hijacking of flow control in the first
+> place isn't as good as outright preventing memory corruption (i.e. the
+> bugs are still exploitable in many cases) but at least it wipes out a
+> form of exploitation entirely and forces techniques that are not always
+> going to accomplish everything that's desired. Chipping away at gadgets
+> doesn't do that unless they're entirely gone, and it's hard to see how
+> that could happen without higher performance costs than simply doing
+> full memory safety (not like ASAN, but rather with GC).
+> 
+> 
 
-Meaning some of these issues could applie to a lot more programms.
+Why not both?
+
+Security is about layers, this is a nice place for a new security layer.
+
+-- 
+    JB
