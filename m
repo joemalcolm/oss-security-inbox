@@ -1,4 +1,9 @@
-Received: (qmail 5480 invoked by uid 550); 26 Jan 2025 12:34:34 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["500" "Wednesday" "18" "November" "2015" "00:00:01" "+0900" "GAURAV GUPTA" "ya1gaurav@gmail.com" "<CAJUzAGYKBt1VP4ab4LKOsj5tF5=unSFt4WhPVkXnic7OZ0p9SQ@mail.gmail.com>" "20" "[oss-security] Buffer overflow in libxml2" "^Date:" nil nil "11" "2015111715:00:01" "[oss-security] Buffer overflow in libxml2" (number mark "        ya1gaurav@gm Nov 18   20/500   " thread-indent "\"[oss-security] Buffer overflow in libxml2\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 21965 invoked by uid 550); 17 Nov 2015 15:03:51 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,54 +11,45 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 27858 invoked from network); 26 Jan 2025 11:57:36 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Jason Gerlowski <gerlowskija@apache.org>
-To: oss-security@lists.openwall.com
-Message-ID: <4c705481-0880-5c30-8d2a-f812d6545cd3@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Sun, 26 Jan 2025 11:57:25 +0000
+Received: (qmail 20256 invoked from network); 17 Nov 2015 15:00:12 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=7eGkGtNjbMj+18LLCZNoPbovWsJAllTsxycdWjr8aO8=;
+        b=Jy1+LpNwkjdVgeVMJUDte/p/yDKfBlVdjLwJ/Tj49iBjhVxW2sYfpqHXakvFXAW5AK
+         xeuOzJQVVEkaT25RT5rd/qeRTw1B3rlQnX1ZKpPwMz4qkwBjTZ1UHoTD8IQAFGqwWt4Q
+         NxkshXZRo9fGi7CC7iOO3SJ0ESlk08hERaVq8mkrvaoNa5SjI1YztJPwbU6vDcgVHDsQ
+         nWfQC1GWHgG2T+hu4xIsEvQImksG4WKwHS97CIqUahQlrO+xNylAgQDFjB8RFk0Vqa0N
+         uSmwibeIA0/9P7vTRuvMCGjbhuQHlQ+pgjhQPQRDxIT+xDJ9SqPKQ1qjXvyCj11RwS/v
+         wWZQ==
 MIME-Version: 1.0
-Subject: [oss-security] =?UTF-8?Q?CVE-2025-24814=3A_Apache_Solr=3A_Core-cr?=
- =?UTF-8?Q?eation_with_=22trusted=22_configset_can_?=
- =?UTF-8?Q?use_arbitrary_untrusted_files=20?=
+X-Received: by 10.112.99.4 with SMTP id em4mr18834431lbb.87.1447772401091;
+ Tue, 17 Nov 2015 07:00:01 -0800 (PST)
+Message-ID: <CAJUzAGYKBt1VP4ab4LKOsj5tF5=unSFt4WhPVkXnic7OZ0p9SQ@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=001a11340c9aaeca5f0524bdc7c1
+Date: Wed, 18 Nov 2015 00:00:01 +0900
+From: GAURAV GUPTA <ya1gaurav@gmail.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Buffer overflow in libxml2
+To: oss-security@lists.openwall.com, cve-assign@mitre.org
 
-Severity: moderate
+--001a11340c9aaeca5f0524bdc7c1
+Content-Type: text/plain; charset=UTF-8
 
-Affected versions:
+Hello,
+Please assign CVE for below vulnerability:
 
-- Apache Solr through 9.7
+Description : Buffer overlflow in libxml2 with crafted xml input generated
+using Fuzzer - American fuzzy loop when compiled with ASAN.
 
-Description:
+Reported discussion : https://bugzilla.gnome.org/show_bug.cgi?id=756263
 
-Core creation allows users to replace "trusted" configset files with arbitr=
-ary configuration
+Upstream Fixes :
+https://git.gnome.org/browse/libxml2/commit/?id=ab2b9a93ff19cedde7befbf2fcc48c6e352b6cbe
 
-Solr instances that (1) use the "FileSystemConfigSetService" component (the=
- default in "standalone" or "user-managed" mode), and (2) are running witho=
-ut authentication and authorization are vulnerable to a sort of privilege e=
-scalation wherein individual "trusted" configset files can be ignored in fa=
-vor of potentially-untrusted replacements available elsewhere on the filesy=
-stem.=C2=A0 These replacement config files are treated as "trusted" and can=
- use "<lib>" tags to add to Solr's classpath, which an attacker might use t=
-o load malicious code as a searchComponent or other plugin.
 
-This issue affects all Apache Solr versions up through Solr 9.7.=C2=A0 User=
-s can protect against the vulnerability by enabling authentication and auth=
-orization on their Solr clusters or switching to SolrCloud (and away from "=
-FileSystemConfigSetService").=C2=A0 Users are also recommended to upgrade t=
-o Solr 9.8.0, which mitigates this issue by disabling use of "<lib>" tags b=
-y default.
+-- 
+Regards,
+Gaurav Gupta
 
-Credit:
-
-pwn null (finder)
-
-References:
-
-https://solr.apache.org
-https://www.cve.org/CVERecord?id=3DCVE-2025-24814
-
+--001a11340c9aaeca5f0524bdc7c1--
