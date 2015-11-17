@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2146" "Sunday" "25" "June" "2017" "00:07:10" "+0800" "Shawn" "citypw@gmail.com" "<CABniQZNP2rP2OBdSYtVwrVGVL3wu52_Z_1bLmK7=ZRhgU6ZQOg@mail.gmail.com>" "54" "Re: [oss-security] Re: More CONFIG_VMAP_STACK vulnerabilities, refcount_t UAF, and an ignored Secure Boot bypass / rootkit method" "^Cc:" nil nil "6" "2017062416:07:10" "[oss-security] Re: More CONFIG_VMAP_STACK vulnerabilities, refcount_t UAF, and an ignored Secure Boot bypass / rootkit method" (number mark "        citypw@gmail Jun 25   54/2146  " thread-indent "\"Re: [oss-security] Re: More CONFIG_VMAP_STACK vulnerabilities, refcount_t UAF, and an ignored Secure Boot bypass / rootkit method\"\n") "<20170624155549.GA31293@openwall.com>" ("<20170624005003.GB27479@grsecurity.net>" "<CAADWXX8JYe-AewtzoY6VBVLPTs+UvnfZst76vL4tccf6x9cY=g@mail.gmail.com>" "<CABniQZPtHV+-XiHPRUGcDe+KwEd1JpPdcDb2Xn63t2Z_Os6ETQ@mail.gmail.com>" "<20170624155549.GA31293@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2323" "Tuesday" "17" "November" "2015" "13:52:07" "-0500" "Daniel Micay" "danielmicay@gmail.com" "<564B7757.6080100@gmail.com>" "50" "Re: [oss-security] Re: Fwd: x86 ROP mitigation" nil nil nil "11" "2015111718:52:07" "[oss-security] Re: Fwd: x86 ROP mitigation" (number mark "U       danielmicay@ Nov 17   50/2323  " thread-indent "\"Re: [oss-security] Re: Fwd: x86 ROP mitigation\"\n") "<564B6536.2030908@redhat.com>" ("<20151117153951.GA28672@openwall.com>" "<564B52D6.9090205@t-online.de>" "<564B54BA.6090203@redhat.com>" "<564B6536.2030908@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 14239 invoked by uid 550); 24 Jun 2017 16:14:56 -0000
+Received: (qmail 22490 invoked by uid 550); 17 Nov 2015 18:52:31 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,98 +11,85 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 7813 invoked from network); 24 Jun 2017 16:07:22 -0000
+Received: (qmail 22472 invoked from network); 17 Nov 2015 18:52:31 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=Gn4sWQwcRc5fhK/VUow+qMlAlY/2QQJu3in5rB2zh6U=;
-        b=QlWePIQ1O1LLARkHKbHqbvobaNNhroGoXBJbHrVI5pNTEqUfomcluIdAujnUTT4sYI
-         bbJzDFrTc9WwvCZU6ve+LenmIc8gzC47H87WYb25O7nF/ztmetVqDoLeb5RitxbocAFl
-         41frZ7N0WaQ+uVO6g8X4Ktv9lgDLhXnl9ZmuVK9xTthrGy1JpgQWvgBV5Tks3GcCxU7O
-         /r9Ypfyf0Y52kzG7MAzomStj3RJXgPtyZL16ftdkGpIlbC67enbc6mkF5JqmwC2MQp9E
-         APUtaOjh+t/QjVj4/XMgPGpLtUeZnsxe4OGWmpqB+QgEl+iUPt0n3vs46bUhw8xHG9zH
-         48Cg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=Gn4sWQwcRc5fhK/VUow+qMlAlY/2QQJu3in5rB2zh6U=;
-        b=BJY/SlFt6p8WSKfyzq89RyuSH1iQJwGjiUFsqbwNYyrCKN18cOvvCB0ip8C5nYCOxG
-         G2sC4BMBkLvXUWMLfRRvD3qDNwg/IrRRd7n+ooXp9ZOeSx2n+ZBu/9Hr2iO3+bMnKM/h
-         U9kc29GoNgHN69egJ6gKtebiX/d5DnWRM/1HmwgeHYYiHePPH1SAqjHDbiVnA04JKihV
-         Tetk4qUD53qq62XThxavFmlxT1x/+N0yXidp5cCBHU0BtWqL1GJOMh/8SSpnXQ/kQK+j
-         ONezmelS95tQ2MeW20osM9UFOxdsOnSVFTmll933JliHEof+LPAdXnroKq4dYaTJ3Fk1
-         5Wdg==
-X-Gm-Message-State: AKS2vOxL8Owp6HO0jFYEuDp8fKwmjFWIjUieRUhNJMoWtAipd5bfFKdg
-	q4U76r9xzmbpH3sdX450yP6oBwVJ9g==
-X-Received: by 10.37.5.19 with SMTP id 19mr10195761ybf.134.1498320430650; Sat,
- 24 Jun 2017 09:07:10 -0700 (PDT)
+        d=gmail.com; s=20120113;
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-type;
+        bh=6zh4SHaJimRDDdl0Bg2806cuMFBAzJfLdDnAjY4ic6Q=;
+        b=yMuFZTbi/cNbJ6akPc6OlkmXXXtmHQBopr6N+75VwT6QF9qr1UO0l442FxCSovqePr
+         dOJZ5NPctiS39Ac9FFS16UawjLWdal4aMBJ9ZUYOlcNcwgw2LMGwJ3Q8OmDY0uzTces/
+         AH9iDDthcfKVpcoR8oT361j1FUJT0/qQhcUkuNEMH1zclQC5s1ZcEkYmXEPhwzW4/Vn0
+         VwoB3yoX3l+jNipAjCNLYgReTecONPVOoJbAdxdT6P0oz9iTdIAngb3b36MpAG1u6J+B
+         xn3MAcHqxCWmU9Zica0WCKFSqKuuLCuj8w2s6Dd9dvwWlkT7+UQI6m46swhtW7LFKcQS
+         Pgyg==
+X-Received: by 10.140.36.212 with SMTP id p78mr42774138qgp.13.1447786338974;
+        Tue, 17 Nov 2015 10:52:18 -0800 (PST)
+References: <20151117153951.GA28672@openwall.com>
+ <564B52D6.9090205@t-online.de> <564B54BA.6090203@redhat.com>
+ <564B6536.2030908@redhat.com>
+X-Enigmail-Draft-Status: N1110
+Message-ID: <564B7757.6080100@gmail.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.3.0
 MIME-Version: 1.0
-In-Reply-To: <20170624155549.GA31293@openwall.com>
-References: <20170624005003.GB27479@grsecurity.net> <CAADWXX8JYe-AewtzoY6VBVLPTs+UvnfZst76vL4tccf6x9cY=g@mail.gmail.com>
- <CABniQZPtHV+-XiHPRUGcDe+KwEd1JpPdcDb2Xn63t2Z_Os6ETQ@mail.gmail.com> <20170624155549.GA31293@openwall.com>
-Message-ID: <CABniQZNP2rP2OBdSYtVwrVGVL3wu52_Z_1bLmK7=ZRhgU6ZQOg@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Cc: oss-security@lists.openwall.com
-Date: Sun, 25 Jun 2017 00:07:10 +0800
-From: Shawn <citypw@gmail.com>
+In-Reply-To: <564B6536.2030908@redhat.com>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="ObEUXB7qnVQW83ReJgFQ4k5v3Q1Bu2cO0"
+Date: Tue, 17 Nov 2015 13:52:07 -0500
+From: Daniel Micay <danielmicay@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: More CONFIG_VMAP_STACK vulnerabilities,
- refcount_t UAF, and an ignored Secure Boot bypass / rootkit method
-To: Solar Designer <solar@openwall.com>
+Subject: Re: [oss-security] Re: Fwd: x86 ROP mitigation
+To: oss-security@lists.openwall.com
 
-Hi Alexander,
+--ObEUXB7qnVQW83ReJgFQ4k5v3Q1Bu2cO0
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: quoted-printable
 
-I respect your decision. Because this is your list. To myself, it's
-not a crap. I was just simply talking the fact I know. I've been
-suffering from Linux security for a long time due to lacking of the
-defensive mitigation. Anyway, this kind of discussion may be somewhere
-else but not on oss-security.
+Is that really the right approach vs. preventing hijacking of flow
+control via return pointers and function pointers? It doesn't really
+seem like there's an end game in mind where it actually prevents ROP
+rather than just removing many useful gadgets. Making useful ROP gadgets
+harder to find doesn't mean much, since tools are used to find them and
+the tools can be improved if it becomes necessary.
 
-S0rry for the extra maintainence work on pre-moderation.
+i.e. why not just go with something like PaX's RAP
 
+(things like CPI/SafeStack could work too, but SafeStack requires
+hardware support that's not available on x86_64 and ARM yet)
 
-On Sat, Jun 24, 2017 at 11:55 PM, Solar Designer <solar@openwall.com> wrote:
-> Shawn,
->
-> I really don't appreciate you CC'ing kernel-hardening on this.  As I
-> wrote to you in the rejection message for that copy of your message:
->
-> "It's sufficient that we have this crap on oss-security.  Let's not spam
-> kernel-hardening with it as well.  Let's have it on just one list, and
-> it just so happens it started on oss-security this one time.  As a
-> moderator, I fully expect I'll have to shut down this thread soon anyway."
->
-> I also had to switch kernel-hardening to full message pre-moderation
-> because of your CC.  Hopefully temporarily again.  Last time I did this
-> (recently), and had since undone it (re-enabling the whitelist until
-> today), was because of what I'll call an "anti-grsecurity crap" thread.
->
-> Why pre-moderate even for previously whitelisted senders?  Because they
-> might be replying to this thread that you attempted to CC to
-> kernel-hardening, without them realizing that your initial message was
-> not approved there.  This is a general problem with CC's to moderated
-> lists, and why I ask that all of us please use CC's sparingly.
->
-> I don't like censorship, but I also want these mailing lists to remain
-> usable for their primary intended purposes for all of us.  This is why
-> we generally don't reject individual messages in these discussion
-> threads until eventually having to shut down the threads.  So all sides
-> have an equal opportunity to speak.
->
-> FWIW, my own opinion on the actual matters raised in these threads is
-> nuanced.  I'm not with either side.  I guess this makes it easier for me
-> to stay neutral as a moderator.
->
-> Alexander
+Preventing ROP by preventing hijacking of flow control in the first
+place isn't as good as outright preventing memory corruption (i.e. the
+bugs are still exploitable in many cases) but at least it wipes out a
+form of exploitation entirely and forces techniques that are not always
+going to accomplish everything that's desired. Chipping away at gadgets
+doesn't do that unless they're entirely gone, and it's hard to see how
+that could happen without higher performance costs than simply doing
+full memory safety (not like ASAN, but rather with GC).
 
 
+--ObEUXB7qnVQW83ReJgFQ4k5v3Q1Bu2cO0
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
--- 
-GNU powered it...
-GPL protect it...
-God blessing it...
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
 
-regards
-Shawn
+iQIcBAEBCAAGBQJWS3dXAAoJEPnnEuWa9fIqPL8P/ilKztDVgxtum4DG5lTSoks8
+6yufCh3ko1EIZAWOwnX5oWxmK9Tii5wswYvLf9fN7nrKn6sXg0cV8zab6EY0d/AT
+IyeojJysr2q1dqxjMDcuYhjsI3KS5ghm5n9rBXPmMewjlz3RmOcO+8d2rZMhL63C
+ThTGHE1izqDtGs+2uyw0Vc0jP6wND/45gyza6dczTX6v/EdwQN3KN+EUdu8nc5Nv
+JLh4KBgIqiUcKKjBNs+Xn5A7jhyHRE1TDnC4m+t8r+GsvEQZRJGPJ9NIKNHQbt9F
+i7OpPOdDpl6KzqWRGvK9K7kBRk12GE68i2v7fJsWbLFgvmsn+2XvsyBIRGLydGpr
+KDG8IHkTc0GQUYSabWptmP6gtgMSICYIVSolXjKEmeK0n1NUjtR1RDj7fYvy673G
+hw783s92Yz5jqyZGqAqxBVflmZzvcxHpyJxY4DcpECO0JdEDlkeVrm2dQyP4oW+y
+//u138JPGLY2IbRfffJtq/hsOHDeX35u4zMwoVRXRRvMeX9DD8W04zDbpmXEETlY
+fq/ePq5F437W12Gnhsldq/4mrhKmUph61pls7f98ZYzJ9c4Wo9WT9rr7hItU0+il
+h3g0cA52qoBzGXdR9dUmF75foxqhVMAhZotvWLUZG9zZLPNpeVB/RVxoQJkW5L3P
+IIvLtHEY4LuxKJFWIpRl
+=XD8n
+-----END PGP SIGNATURE-----
+
+--ObEUXB7qnVQW83ReJgFQ4k5v3Q1Bu2cO0--
