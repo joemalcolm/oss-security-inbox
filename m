@@ -1,4 +1,9 @@
-Received: (qmail 11972 invoked by uid 550); 17 Dec 2023 20:56:32 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3210" "Tuesday" "17" "November" "2015" "17:41:28" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151117224128.B300342E101@smtpvbsrv1.mitre.org>" "74" "[oss-security] Re: Assign CVE for common-collections remote code execution on deserialisation flaw" "^Cc:" nil nil "11" "2015111722:41:28" "[oss-security] Re: Assign CVE for common-collections remote code execution on deserialisation flaw" (number mark "        cve-assign@m Nov 17   74/3210  " thread-indent "\"[oss-security] Re: Assign CVE for common-collections remote code execution on deserialisation flaw\"\n") "<1904852023.6462846.1447029380024.JavaMail.zimbra@redhat.com>" ("<1904852023.6462846.1447029380024.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 9746 invoked by uid 550); 17 Nov 2015 22:41:41 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,63 +11,87 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 9728 invoked from network); 17 Nov 2015 22:41:40 -0000
+In-Reply-To: <1904852023.6462846.1447029380024.JavaMail.zimbra@redhat.com>
+Message-Id: <20151117224128.B300342E101@smtpvbsrv1.mitre.org>
+Cc: cve-assign@mitre.org
+Date: Tue, 17 Nov 2015 17:41:28 -0500 (EST)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11793 invoked from network); 17 Dec 2023 20:56:15 -0000
-Date: Sun, 17 Dec 2023 21:56:42 +0100
-From: Solar Designer <solar@openwall.com>
+Subject: [oss-security] Re: Assign CVE for common-collections remote code execution on deserialisation flaw
 To: oss-security@lists.openwall.com
-Cc: Jonathan Wright <jonathan@almalinux.org>,
-	Andrew Lukoshko <alukoshko@almalinux.org>,
-	benny Vasquez <benny@almalinux.org>,
-	Igor Seletskiy <iseletsk@almalinux.org>,
-	Darya Malyavkina <dmalyavkina@cloudlinux.com>,
-	Jack Aboutboul <jack@almalinux.org>
-Message-ID: <20231217205642.GA7164@openwall.com>
-References: <CAKe4=-LwgzB3e1gkwLuTmbMBGW4-L0-4=JVQ_ry1SWXNE266zA@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAKe4=-LwgzB3e1gkwLuTmbMBGW4-L0-4=JVQ_ry1SWXNE266zA@mail.gmail.com>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] AlmaLinux Distros List Application
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-On Tue, Dec 12, 2023 at 02:35:35PM -0600, Jonathan Wright wrote:
-> I'm submitting this application on behalf of the AlmaLinux OS Foundation.
-> 
-> Myself (Jonathan Wright) and Andrew Lukoshko, our lead architect, would be
-> joining if approved.
+> [1] http://foxglovesecurity.com/2015/11/06/what-do-weblogic-websphere-jboss-jenkins-opennms-and-your-application-have-in-common-this-vulnerability/
+> [2] https://issues.apache.org/jira/browse/COLLECTIONS-580
 
-This looks reasonable to me.
+The MITRE CVE team has no current plans to provide a CVE ID associated
+with the Apache Commons Collection product for its behavior described
+at:
 
->       Historically we have been following Red Hat releases within 1-2 days,
->       and since our shift in June away from following Red Hat we have been able
->       to release some security updates ahead of Red Hat (Iperf3 patch and AMD
->       microcode/kernel patches specifically). We would not be beholden to CentOS
->       Stream updates for our patch releases.
+  https://blogs.apache.org/foundation/entry/apache_commons_statement_to_widespread
 
-This isn't a lot yet.  I suppose linux-distros membership would enable
-you to do ahead of Red Hat updates more often?
+and elsewhere. Our interpretation is that some people are taking a
+position that, very roughly, corresponds to:
 
->       Immediately we can begin to help reporters ensure their reports are
->       following the requirements and are confirmed/replied to. As we
-> advance our
->       understanding of how things operate, and the need arises, we can
-> expand our
->       work into contributing more deeply.
+ - suppose that a library product is very difficult to deploy safely
+   in a use case involving untrusted input
 
-These tasks are already accepted by some distros.  We can indeed
-re-assign, so that those older members handle more complex tasks
-instead, or maybe you'd volunteer for some of the tasks from the
-"Administrative tasks mostly unrelated to (linux-)distros lists (but
-relevant to the wider community)" category?  This category is
-essentially about expanding and improving the public oss-security
-content and its visibility.
+ - furthermore, suppose that part of this library product has
+   semantics that are inconsistent with the usual semantics for the
+   programming language in use
 
->       Darya Malyavkina from CloudLinux will vouch for us.
+ - furthermore, suppose that a number of applications are actually
+   using this library in a very unsafe way
 
-For others reading this - Darya has been on linux-distros for CloudLinux
-for a long while, so this satisfies the requirement as written.
+ - furthermore, suppose that the vendor of this library product has
+   decided to change this product's behavior so that (among other
+   differences) it will sometimes be easier to deploy safely
 
-Alexander
+ - furthermore, suppose that this vendor's change notification seems
+   to be more about hardening the library as a way to help prevent
+   exploitation of current or future applications, and seems to be
+   less about announcing the original behavior as a library
+   vulnerability
+
+ - still, a CVE ID could be used as a name for the original behavior
+
+We prefer not to have a CVE ID for the library product in this
+situation. There is a continuum between "inadvertent coding error" on
+the left side and "a choice that was reasonable for a smaller than
+expected fraction of customers" on the right side. The situation here
+is not far enough to the left to have a CVE ID.
+
+The CVE-2015-3253 ID came from the Apache Software Foundation itself,
+and thus can't be generalized to other cases that may seem similar.
+
+The CVE-2015-4852 ID came from Oracle and must remain associated only
+with Oracle's own software (WebLogic Server is the product they've
+named).
+
+We'll send a separate response about the Jenkins SECURITY-218 report.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJWS6xKAAoJEL54rhJi8gl5QJ0P/11kaNbWjxC2RpWh4L8Y1U29
+Jo+LSwxdBDmh8v8I0Xab4ne6/rmqKN7iPl65yy7J7t8ULYcf2fcU4lUe93sZHpk9
+hPWX/x4eYQBQRS89f7lerYD/RK0hTJ8RGQIsfqYCScEmFuNpqdOA0LoXhGCJFu7p
+63GRtyJuvI0sZkFQKYY5l9A8E2fDLMHyEk9NWyTgwWNKXZWVyMQAkXipbtVko/xy
+DjtVA0OTgaje0PZzh6moFU1rwwMqkSmq+5pXPpUq+iCrAP55RIuEFzzM+sBhgeEG
+6I9JoEjaGci+w6t+jnEwLfzjFWDL9ioFkenyqG0GsTdd7fGC96Lsa2jHI7ZsDy6g
+4GLTUJ/BEhQxKNvQ88cNfUNsyIP8NzLdwjChvxEa7m4CmnxmHU++MQZXmlo8Aq6C
+PBLrWeKaOGhGz6fs8H0NNWfcM5GAco6nEK8d4EYLsb7lIVNrGqaNpwKqnkfntK97
+9vH7OnrIAIfnneyKH8+53IcN1ogPrBmwLPY9DDTU2XUIOlWE7IvtRtmpuBX884KF
+7c5r2pA/xgecczvjGQ5C9t0yMzrNgPBNgfkG9RsPnh/1LOhcm/tA4Ijo21JXmYb6
+2s6MF3yl9H8qvtRAu1fMCUMjuHa4wTOH7Uv57MeJsFVzRZvNxf0nmlWRV5PrLGuW
+VHHOmkmQRl9UWJ9jGv14
+=93c8
+-----END PGP SIGNATURE-----
