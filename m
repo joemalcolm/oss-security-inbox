@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["932" "Friday" "24" "May" "2019" "09:19:51" "+0000" "Andrea Cosentino" "ancosen1985@yahoo.com" nil "33" nil "^Date:" nil nil "5" nil nil (number mark "U       ancosen1985@ May 24   33/932   " thread-indent "\"[oss-security] [SECURITY][ERRATA-CORRIGE] New security advisory CVE-2019-0188 released for Apache Camel\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [SECURITY][ERRATA-CORRIGE] New security advisory CVE-2019-0188 released for Apache Camel" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2669" "Tuesday" "17" "November" "2015" "17:24:26" "+0100" "Bernd Schmidt" "bschmidt@redhat.com" "<564B54BA.6090203@redhat.com>" "58" "[oss-security] Re: Fwd: x86 ROP mitigation" "^Cc:" nil nil "11" "2015111716:24:26" "[oss-security] Re: Fwd: x86 ROP mitigation" (number mark "        bschmidt@red Nov 17   58/2669  " thread-indent "\"[oss-security] Re: Fwd: x86 ROP mitigation\"\n") "<564B52D6.9090205@t-online.de>" ("<20151117153951.GA28672@openwall.com>" "<564B52D6.9090205@t-online.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 15619 invoked by uid 550); 24 May 2019 09:30:12 -0000
+Received: (qmail 7335 invoked by uid 550); 17 Nov 2015 18:11:32 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,72 +11,80 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 4045 invoked from network); 24 May 2019 09:20:08 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1558689595; bh=trVCUI2VlnmLfC/Xo4k/K0ZldJ1zd3MEJ1PVakCNIn4=; h=Date:From:Reply-To:To:Subject:References:From:Subject; b=K41kjB1bUrpiEiLVks01IpiS+DUoBNXJfDbsXTPVoUaNhSFwazkrvmFis2F8bdCDrcW8GvP/f1qkVaXLKIofFunKHyhvN0Hcd79iGajzh0uReVYbpJe7fI7roCqA1tyyrPv5gcNRj/7YMyZhnKLcsaHUJCRThNzXhl1YR2g9C4B10AkuxDPQAK4PYbyyTlKpdlRa5pKy02zHCjHRHYyUhhL0eSrkq9I0kaeg+J1AyWRCkXZdHfsADBT7FFO5ddmkr1qYvF74t5FIDmFRim7VQuzohCXTnjgh64a1MoaKLFNJeyuNLP4TAgCBtM2M61mPaRUa/spgt6s+iw4o6ejocw==
-X-YMail-OSG: xh3pmVcVM1kcyOqZ4MIz.VN3fT6M77txLeFNnGBCwcvg8H4dPnvFTdc4NZ3OXwK
- 0cMrkRng.CWvwmgqdtO2J7KiHXOqnR4d.JJhrLokV6vcuJOGS4r._WfB9uotJ3ca6Fl8SxglyETn
- JmeyizxnyI85bSHmBpJQuIBOOZXwxt_HXKPQZdTwFKDPxGcBp6_3WNmFAxfjLMB8SA2uIjInAL5Z
- _rys8vscpCr6PqwE4We.KtxaeMADqfQ6RNe1kct1vYxnyler6zpq6yWdAJffDm6cL9QP9X5zaV7T
- 7NYoP6EgD.xPAeULuz517f.p94vUV86bc_AHuVUcCduqy6v.wdHR2c4RD.od9o3rcV.D2lPR_YyB
- g9m5.._6CjK5Qfg557XfP0TGEves71ozcFDxUjmrYAL6UZUk5hC0bK.8OMKG2DAarT.DHqln5inr
- 4alpciX0FB7kNpmEze7x2MwDLLWk47L71rhVIATBueRJF5ul8xYe2E6YFpa4.g2ohKKz9wWOGyVS
- f0INMk8QMxU6vwlhOuU7QggMaX_yraYO1fevB.WHZOC1_FLRyhVCHZdNn_XJxOIv39OhH.2lL7v7
- PXL53guTlywOW4fZFO5UQTUgt38WsmafFK1vTwCTq_J8t8k3AANbhg71yspkqewt6NQbzIcxU1dv
- jtdjcelgZXMW0S8Z6y60JXq98Oz.RriP_dl8qHUIQdjthz4f9XqhhhqqQQhpVbr85lI8rQdJhLaM
- DvHbldQYzRw9XkG_Te.WTVuqB0qqKdZrchMZ.acpqO.YMxVKxb79Jl3WHeci56IYldIBxHzb5JJx
- xd9npL2S25Y4uSLe.lxbDl8kNMhBFwl93WNoriII2LjyFuUr2ySA3XioHBIM_IIdSjygW.kn1Rpe
- sz7aADYM7xKIxaWD83580Uz7rksUqy156IiMaFgAoRttQJ1rPIudCbjwlwWkHfeGyTU4opJinIQg
- S4qzoTz_wFndxp5EXlJp5g_qKBhu8VSU_vNDocu1TKdgtwiZI.A3loBcKYHjKew3CIoQ8RZTkTI3
- uK1bFhesAqNgDmq561cJqzDaBniQUX9MGCd8YCVvEQEm6q7umLusYzWo4KsyuhqCkWd50wwXfdqi
- 4R5xUgAwDDakXIpMt6hK8jE.2ataHIzIJI9Ko017Y4gQHxUV1mRfnhcOaIWva0Gd2KSU9SY7hgS2
- W8MXN8THNNl9YYY_XE5HsdlYdIGgyVW82zymSH4gQcWTUXOu9Mtb2XtRD1jp1WEBrD9m._HArKFM
- 8UGLzsgLTG6DdUl_lqOwvB.sj
-Message-ID: <1569210823.4344775.1558689591923@mail.yahoo.com>
+Received: (qmail 30151 invoked from network); 17 Nov 2015 16:24:40 -0000
+References: <20151117153951.GA28672@openwall.com>
+ <564B52D6.9090205@t-online.de>
+Message-ID: <564B54BA.6090203@redhat.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.3.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-References: <1569210823.4344775.1558689591923.ref@mail.yahoo.com>
-X-Mailer: WebService/1.1.13634 YMailNorrin Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.157 Safari/537.36
-Date: Fri, 24 May 2019 09:19:51 +0000 (UTC)
-From: Andrea Cosentino <ancosen1985@yahoo.com>
+In-Reply-To: <564B52D6.9090205@t-online.de>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.27
+Cc: oss-security@lists.openwall.com, Jeff Law <law@redhat.com>,
+        Florian Weimer <fweimer@redhat.com>
+Date: Tue, 17 Nov 2015 17:24:26 +0100
+From: Bernd Schmidt <bschmidt@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] [SECURITY][ERRATA-CORRIGE] New security advisory CVE-2019-0188
- released for Apache Camel
-To: Dev <dev@camel.apache.org>, Users <users@camel.apache.org>, 
-	Apache Security Team <security@apache.org>, 
-	"oss-security@lists.openwall.com" <oss-security@lists.openwall.com>, 
-	JPCERT/CC <vuls@jpcert.or.jp>
+Subject: [oss-security] Re: Fwd: x86 ROP mitigation
+To: Solar Designer <solar@openwall.com>
 
-A new security advisory has been released for Apache Camel, that is fixed in
-the recent 2.24.0 release.
+On 11/17/2015 04:39 PM, Solar Designer wrote:
+ > A few days ago, Bernd Schmidt posted this gcc patch:
+ >
+ > https://gcc.gnu.org/ml/gcc-patches/2015-11/msg01773.html
+ >
+ > "This adds a new -mmitigate-rop option to the i386 port. The idea is to
+ > mitigate against certain forms of attack called "return oriented
+ > programming" that some of our security folks are concerned about.
+ > [...]
+ > This patch is a small step towards preventing this kind of attack.
+ > I have a few more steps queued (not quite ready for stage 1), but
+ > additional work will be necessary to give reasonable protection."
+ >
+ > This was followed with a few tweets:
+[...]
+Obviously, I'm aware that this by itself isn't going to do very much. I 
+said so in my submission email! But you have to start somewhere, and 
+these pieces were ready.
 
-CVE-2019-0188: Apache Camel-XMLJson vulnerable to XML external entity injec=
-tion (XXE)=C2=A0
+ > Bernd, I'd appreciate it if you describe your plan in a reply to this
+ > e-mail.  Please keep oss-security CC'ed.
 
-Severity: MEDIUM
+I wouldn't call it my plan. I'm essentially in the role of implementing 
+requirements that others with more knowledge of the security issues come 
+up with.
 
-Vendor: The Apache Software Foundation
+The plan, as far as it goes, is to start picking low-hanging fruit, and
+hopefully build up over time until we have something that actually
+provides protection. Things that we've discussed include:
 
-Versions Affected: Apache Camel versions prior to 2.24.0
+   * modr/m bytes (posted)
+   * sib bytes (relatively simple extension, some parts done)
+   * immediates (patch exists but has some remaining problems)
+   * also look into avoiding not just ret bytes but also indirect jumps
+     and such. More interesting because that may span instructions.
+   * See if we can get as to detect cases where two adjacent instructions
+     contain a pattern useful for attacks (like the indirect jump) and
+     put a nop in between.
+   * Look into an idea Florian had for improving stack-protector
+     epilogues.
+   * branch offsets (I'm not sure but I think Jeff told me of efforts
+     on the binutils side).
+   * yesterday we discussed something which Florian tells me is called
+     "contification" and which I think could be done reasonably easily
+     for functions with known local scope. Florian thinks it's expensive
+     (it probably is) so we may want -mmitigate-rop=strong options at
+     some point.
+   * Further out, symbolic addresses are a remaining problem that would
+     require work throughout the toolchain and could be expensive to
+     address.
 
-Description: Apache Camel provided contains an XML external entity injectio=
-n (XXE) vulnerability (CWE-611) due to using an outdated vulnerable JSON-li=
-b library. This affects only the camel-xmljson component, which was removed=
-.=C2=A0
+Also useful would be better tools to detect possibly exploitable 
+sequences. Florian had some complaints about the reliability of the ones 
+we looked at, and I had some complaints about being lost in python 
+dependencies and not getting them installed in the first place.
 
-Mitigation: Update to version 2.24.0
 
-Credit: This issue was discovered by Takayoshi Isayama of Mitsui Bussan Sec=
-ure Directions, Inc.=C2=A0
-
-On behalf of the Apache Camel PMC
-
---
-Andrea Cosentino=C2=A0
-----------------------------------
-Apache Camel PMC Chair
-Apache Karaf Committer
-Apache Servicemix PMC Member
-Email: ancosen1985@yahoo.com
-Twitter: @oscerd2
-Github: oscerd
+Bernd
