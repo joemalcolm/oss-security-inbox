@@ -1,4 +1,9 @@
-Received: (qmail 22408 invoked by uid 550); 15 Nov 2023 20:31:23 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1670" "Tuesday" "17" "November" "2015" "17:51:17" "+0100" "Peter Bex" "peter@more-magic.net" "<20151117165117.GB2631@more-magic.net>" "46" "[oss-security] CVE request for path traversal / info leak bug in Spiffy web server" nil nil nil "11" "2015111716:51:17" "[oss-security] CVE request for path traversal / info leak bug in Spiffy web server" (number mark "U       peter@more-m Nov 17   46/1670  " thread-indent "\"[oss-security] CVE request for path traversal / info leak bug in Spiffy web server\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 19466 invoked by uid 550); 17 Nov 2015 16:51:26 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,119 +12,63 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 22364 invoked from network); 15 Nov 2023 20:31:23 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
-	s=20170329; h=Content-Transfer-Encoding:Content-Type:Subject:Cc:To:From:
-	MIME-Version:Date:Message-ID:Sender:Reply-To:Content-ID:Content-Description:
-	Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
-	In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
-	List-Post:List-Owner:List-Archive;
-	bh=qeMe/NXV3J3LnH9iP0XOz+oZm5RxJ2NSfrlTe+JW54Y=; b=GFNV6XyWvljrLNATBIPdEDNDMi
-	/UvGv+CdLdDCZChu/b5fYsRFLY4tffIdvwQX/cDqFRh5XGJdknXTvi0B9hgVKb9xbWvwYt1I6pBJE
-	pvxSBMFdZN0p6rPoLXmcXllU7XP9NoWK2muo0/lgbMZr9O0ngY/mTmDP7O/UPN/4trTNeP51fk/J4
-	D1uZziZrmFAn29u9rBmff39aRwPNIHK1hlrZl67kP/JnYVV9g4rACS8LqkPO8LGm6aJSKnovd67Ch
-	KqiYCCzMrR7ZFDC46gN6R+2lqNuOmaWhjKzCzbfX0K8SxmyuEfbqseliFp+pzQsRTfnFbOIznn9DG
-	dJbRb6Tg==;
-Message-ID: <0c888152-705e-e0cf-9184-82e6ba7d1c6a@igalia.com>
-Date: Wed, 15 Nov 2023 21:31:10 +0100
+Received: (qmail 18417 invoked from network); 17 Nov 2015 16:51:25 -0000
+Date: Tue, 17 Nov 2015 17:51:17 +0100
+From: Peter Bex <peter@more-magic.net>
+To: Open Source Security <oss-security@lists.openwall.com>
+Message-ID: <20151117165117.GB2631@more-magic.net>
+Mail-Followup-To: Open Source Security <oss-security@lists.openwall.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.0
-Content-Language: en-GB
-From: Carlos Alberto Lopez Perez <clopez@igalia.com>
-To: webkit-gtk@lists.webkit.org, webkit-wpe@lists.webkit.org
-Cc: security@webkit.org, oss-security@lists.openwall.com
-Organization: Igalia S.L.
-Mail-Followup-To: webkit-gtk@lists.webkit.org, webkit-wpe@lists.webkit.org,
- security@webkit.org, oss-security@lists.openwall.com
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Subject: [oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2023-0010
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="xXmbgvnjoT4axfJE"
+Content-Disposition: inline
+X-PGP-Key: http://www.more-magic.net/peter-bex.asc
+User-Agent: Mutt/1.5.21 (2010-09-15)
+Subject: [oss-security] CVE request for path traversal / info leak bug in Spiffy web server
 
-------------------------------------------------------------------------
-WebKitGTK and WPE WebKit Security Advisory                 WSA-2023-0010
-------------------------------------------------------------------------
+--xXmbgvnjoT4axfJE
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Date reported           : November 15, 2023
-Advisory ID             : WSA-2023-0010
-WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2023-0010.html
-WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2023-0010.html
-CVE identifiers         : CVE-2022-32919, CVE-2022-32933,
-                          CVE-2022-46705, CVE-2022-46725,
-                          CVE-2023-32359, CVE-2023-41983,
-                          CVE-2023-42852.
+Hello all,
 
-Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
+I would like to request a CVE for a path traversal vulnerability in
+Spiffy, the web server written in CHICKEN Scheme.  The bug allows
+one to request arbitrary files due to a problem in the handling of
+backslashes in URI path components.
 
-CVE-2022-32919
-    Versions affected: WebKitGTK and WPE WebKit before 2.38.4.
-    Credit to @real_as3617.
-    Impact: Visiting a website that frames malicious content may lead to
-    UI spoofing. Description: The issue was addressed with improved UI
-    handling.
-    WebKit Bugzilla: 247461
+In principle, the bug only affects Windows, but unfortunately due
+to another bug in CHICKEN core that causes backslashes to be converted
+to slashes, *nix platforms are equally affected.
 
-CVE-2022-32933
-    Versions affected: WebKitGTK and WPE WebKit before 2.38.0.
-    Credit to Binoy Chitale, MS student, Stony Brook University, Nick
-    Nikiforakis, Associate Professor, Stony Brook University, Jason
-    Polakis, Associate Professor, University of Illinois at Chicago, Mir
-    Masood Ali, PhD student, University of Illinois at Chicago, Chris
-    Kanich, Associate Professor, University of Illinois at Chicago, and
-    Mohammad Ghasemisharif, PhD Candidate, University of Illinois at
-    Chicago.
-    Impact: A website may be able to track the websites a user visited
-    in private browsing mode. Description: An information disclosure
-    issue was addressed by removing the vulnerable code.
-    WebKit Bugzilla: 239547
+A workaround to simply block all requests containing backslashes in
+path components has been implemented in Spiffy 5.4, and a proper
+solution (allowing backslashes on UNIX in CHICKEN versions where
+it's safe to do so) will be implemented in a later version, pending
+the fix in CHICKEN core.
 
-CVE-2022-46705
-    Versions affected: WebKitGTK and WPE WebKit before 2.38.4.
-    Credit to Hyeon Park (@tree_segment) of Team ApplePIE.
-    Impact: Visiting a malicious website may lead to address bar
-    spoofing. Description: A spoofing issue existed in the handling of
-    URLs. This issue was addressed with improved input validation.
-    WebKit Bugzilla: 247287
+In other words, the bug applies to all versions of Spiffy prior to 5.4.
 
-CVE-2022-46725
-    Versions affected: WebKitGTK and WPE WebKit before 2.38.4.
-    Credit to Hyeon Park (@tree_segment) of Team ApplePIE.
-    Impact: Visiting a malicious website may lead to address bar
-    spoofing. Description: A spoofing issue existed in the handling of
-    URLs. This issue was addressed with improved input validation.
-    WebKit Bugzilla: 247289
+The original announcement can be found here:
+http://lists.gnu.org/archive/html/chicken-announce/2015-11/msg00000.html
 
-CVE-2023-32359
-    Versions affected: WebKitGTK and WPE WebKit before 2.42.0.
-    Credit to Claire Houston.
-    Impact: A user's password may be read aloud by a text-to-speech
-    accessibility feature. Description: This issue was addressed with
-    improved redaction of sensitive information.
-    WebKit Bugzilla: 248717
+Kind regards,
+Peter Bex
 
-CVE-2023-41983
-    Versions affected: WebKitGTK and WPE WebKit before 2.42.2.
-    Credit to 이준성(Junsung Lee).
-    Impact: Processing web content may lead to a denial-of-service.
-    Description: The issue was addressed with improved memory handling.
-    WebKit Bugzilla: 260757
+--xXmbgvnjoT4axfJE
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
 
-CVE-2023-42852
-    Versions affected: WebKitGTK and WPE WebKit before 2.42.2.
-    Credit to an anonymous researcher.
-    Impact: Processing web content may lead to arbitrary code execution.
-    Description: A logic issue was addressed with improved checks.
-    WebKit Bugzilla: 260173
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
 
+iQEcBAEBAgAGBQJWS1sFAAoJEBEdufnLRYmwZikH/jIQ3ndNTeWsieKdJ7uHx6GD
+L0KWonY6bquvoOjk8/hr/Eowe1LlGOeIVvbpn11Fpu1KsQVtB7ff3rHGhXLv6oZ1
+7jk3letPjShuXygXq2OEb5JbHZB6TRbGkw2Px7XBfK3OhNCz9qae+OmP/arFoLtz
+3jbJFkse3tWdmRFqOFL4nfHIvFyxIOEvQUlK7M3QfTX5Nu9uk02Mc7hsvt53/Gax
+5a8d/+Gd/cEtl7B/5apuiNaG+QKAuy+Vzjgf5SQuEACTgzwGHYGvxD5cUvClrsXG
+XhlxfZUzo8Pknd0NFVYZzKSacMVS0NNuL2aKs1VFA7pp63MK7yS1/1ZGe+6rAQk=
+=6A2D
+-----END PGP SIGNATURE-----
 
-We recommend updating to the latest stable versions of WebKitGTK and WPE
-WebKit. It is the best way to ensure that you are running safe versions
-of WebKit. Please check our websites for information about the latest
-stable releases.
-
-Further information about WebKitGTK and WPE WebKit security advisories
-can be found at: https://webkitgtk.org/security.html or
-https://wpewebkit.org/security/.
-
-The WebKitGTK and WPE WebKit team,
-November 15, 2023
+--xXmbgvnjoT4axfJE--
