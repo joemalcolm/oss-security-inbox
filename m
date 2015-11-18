@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1480" "Tuesday" "24" "August" "2021" "14:19:59" "+0530" "Mohammad Tausif Siddiqui" "msiddiqu@redhat.com" nil "48" "Re: [oss-security] Linux kernel: nfc: null ptr dereference in llcp_sock_getname" nil nil nil "8" nil nil (number mark "U       msiddiqu@red Aug 24   48/1480  " thread-indent "\"Re: [oss-security] Linux kernel: nfc: null ptr dereference in llcp_sock_getname\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Linux kernel: nfc: null ptr dereference in llcp_sock_getname" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3898" "Tuesday" "17" "November" "2015" "16:17:03" "-0800" "Oracle Security Alerts (Thomas)" "secalert_us@oracle.com" "<564BC37F.4090000@oracle.com>" "107" "Re: [oss-security] CVE-Request: Assign CVE for common-collections remote code execution on deserialisation flaw" "^CC:" nil nil "11" "2015111800:17:03" "[oss-security] CVE-Request: Assign CVE for common-collections remote code execution on deserialisation flaw" (number mark "        secalert_us@ Nov 17  107/3898  " thread-indent "\"Re: [oss-security] CVE-Request: Assign CVE for common-collections remote code execution on deserialisation flaw\"\n") "<56463D9A.5080108@gmail.com>" ("<1904852023.6462846.1447029380024.JavaMail.zimbra@redhat.com>" "<5640442C.1050501@redhat.com>" "<20151109215303.GN1213@sentinelchicken.org>" "<5641360D.8070102@eenterphace.org>" "<20151111002307.GP1213@sentinelchicken.org>" "<56431D4F.7090006@eenterphace.org>" "<20151111160641.GQ1213@sentinelchicken.org>" "<56445609.9050301@gmail.com>" "<1447365167.1146869.438300073.116F736D@webmail.messagingengine.com>" "<5645980D.9010105@gmail.com>" "<1447425465.3344943.438911641.39FADD79@webmail.messagingengine.com>" "<201511131617.tADGHauO002339@d03av02.boulder.ibm.com>" "<56463D9A.5080108@gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 3384 invoked by uid 550); 24 Aug 2021 10:55:02 -0000
+Received: (qmail 19679 invoked by uid 550); 18 Nov 2015 00:17:27 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,100 +11,128 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15734 invoked from network); 24 Aug 2021 08:50:25 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1629795013;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=cBz36AOzINGWWPbY8ZwPfqqPASk8+Mmnw0lnpATK3HY=;
-	b=iUGtcgVWPdjS/HWQ0xJIw6SD35Sg8SNzFU2qlZ8sVR3HVIKb2RUXq868FXQOyFuPMNk+/w
-	VZdQV0qLAGP6w8HuX1E8vESM4kxyxeZ9/WUETJp//DiS2UNCKMMy+G6sDIuYTxPqdlbiVR
-	XvUHz5XGwk4SbPOT406d2/NlE3Uw5I0=
-X-MC-Unique: 8-atkYi1P4OMPE94W6UyeQ-1
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=cBz36AOzINGWWPbY8ZwPfqqPASk8+Mmnw0lnpATK3HY=;
-        b=m+oBPivpDSQQD5/tLOA5wx0hYIye0T0e/6n0zzGQmRM30dQASX6P2dDBXZ4p9BhMdl
-         I5q/gHVaQc4wxmV18F6Z4M/gWGTQ1Yp90BLhF0pr0JX0CWvdtemcDMz+fEnmgL7lRfaR
-         buRspjyGcMNRIlPM3YqFjNcZwvN1NaPELSg2DgU38hTfpfs2Dgd7SKY/pydwd2SC8H/Y
-         B75LIAfRJV9fEIJWkaipJG0d/VbuLJGyX1fcC5umlLxXbEEsiDp9/wkg6X7QK65OYpYS
-         RSAgxaaVqmbtqzLhmut+qjq/NZVeBwmeJse6PshR3e+zN+hu07XGPu8zQH74mIIpRkGZ
-         nSgQ==
-X-Gm-Message-State: AOAM533cOLGCSh91KgtL0kgn6L9Ab+V5pDviUZ2MfyegE2FXQMz02jR/
-	FxWkfxqRhwihjsOC0oWBxkbFLWGm8lkHUY/6jtQ/7ZaOX7Zz+Xt7xv6VlewByYqlJjZ+7Q9x+Zq
-	/Iejs8oa5aJW56Pw1BrYwr+2ljDYsqW9TXf99zHDPT4xu
-X-Received: by 2002:a05:620a:69b:: with SMTP id f27mr24285463qkh.287.1629795010507;
-        Tue, 24 Aug 2021 01:50:10 -0700 (PDT)
-X-Google-Smtp-Source: ABdhPJw5GYwRnbT6ef9VhiOI0mm1AfvDH8Pjlrsm6pzgMYGnMtQ8BRUyVV/zDJCG7qhrltwf/1ImozeZUx+Fg+n/KLo=
-X-Received: by 2002:a05:620a:69b:: with SMTP id f27mr24285440qkh.287.1629795010201;
- Tue, 24 Aug 2021 01:50:10 -0700 (PDT)
+Received: (qmail 19653 invoked from network); 18 Nov 2015 00:17:26 -0000
+Message-ID: <564BC37F.4090000@oracle.com>
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.3.0
 MIME-Version: 1.0
-References: <CAFcO6XOFPEGiO_HwajTB3zA9d3jyhUwDX742huVhaNtQy0=TfQ@mail.gmail.com>
- <CAFcO6XP_-WSEzDB2E=r90Yk4sXwUjo6fRsY=E+ZoAYunpry=qw@mail.gmail.com>
- <CALJHwhSkYWmBk3u5nBnOZfSskksFPP6k9oFfWGdtDpbr1yVFAA@mail.gmail.com>
- <CAFcO6XOYL=EN3xkkyE72gR_tau+3=BhrgNub3NYtR1isr77MbA@mail.gmail.com> <YRurAomxEDQrxY+i@eldamar.lan>
-In-Reply-To: <YRurAomxEDQrxY+i@eldamar.lan>
-From: Mohammad Tausif Siddiqui <msiddiqu@redhat.com>
-Date: Tue, 24 Aug 2021 14:19:59 +0530
-Message-ID: <CAC5HUDwRAzx657HLVrADOUrnJBKfEEu_dbpV-_B7D1R6ygzpFQ@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Cc: Wade Mealing <wmealing@redhat.com>
-Authentication-Results: relay.mimecast.com;
-	auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=msiddiqu@redhat.com
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Type: multipart/alternative; boundary="000000000000a3db7305ca4a389e"
-Subject: Re: [oss-security] Linux kernel: nfc: null ptr dereference in llcp_sock_getname
+References: <1904852023.6462846.1447029380024.JavaMail.zimbra@redhat.com> <5640442C.1050501@redhat.com> <20151109215303.GN1213@sentinelchicken.org> <5641360D.8070102@eenterphace.org> <20151111002307.GP1213@sentinelchicken.org> <56431D4F.7090006@eenterphace.org> <20151111160641.GQ1213@sentinelchicken.org> <56445609.9050301@gmail.com> <1447365167.1146869.438300073.116F736D@webmail.messagingengine.com> <5645980D.9010105@gmail.com> <1447425465.3344943.438911641.39FADD79@webmail.messagingengine.com> <201511131617.tADGHauO002339@d03av02.boulder.ibm.com> <56463D9A.5080108@gmail.com>
+In-Reply-To: <56463D9A.5080108@gmail.com>
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+X-Source-IP: aserv0021.oracle.com [141.146.126.233]
+CC: cve-assign@mitre.org
+Date: Tue, 17 Nov 2015 16:17:03 -0800
+From: "Oracle Security Alerts (Thomas)" <secalert_us@oracle.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] CVE-Request: Assign CVE for common-collections
+ remote code execution on deserialisation flaw
+To: Gsunde Orangen <gsunde.orangen@gmail.com>, oss-security@lists.openwall.com,
+        security@apache.org
 
---000000000000a3db7305ca4a389e
-Content-Type: text/plain; charset="UTF-8"
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-[Update] Root CNA MITRE marked rejected CVE-2021-3587 for CVE-2021-38208.
+We do not have a problem with this use of the CVE# we registered
+(CVE-2015-4852).
 
-CVE-2021-38208 to be used for this issue.
-
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-3587
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-38208
+Thomas Keefe
+Oracle Security Alerts
 
 
-On Tue, Aug 17, 2021 at 5:57 PM Salvatore Bonaccorso <carnil@debian.org>
-wrote:
+On 11/13/2015 11:44 AM, Gsunde Orangen wrote:
+> inline...
+> 
+> On 2015-11-13, 17:14 Lisa Bradley wrote:
+>> Seems Oracle has a CVE for this:
+>> https://blogs.oracle.com/security/entry/security_alert_cve_2015_4852
+> Thanks for the pointer!
+> CVE-2015-4852 was thus created by Oracle CNA (to address the issue in
+> WebLogic). I would propose to use this ID for Apache Commons-Collectio
+ns
+> as well, plus as a reference for other applications that suffer from
+> unsafe deserialisation in combination with the functors packages.
+> 
+> But I am certainly not the one to decide ;-) - CC goes to Mitre, Apach
+e
+> & Oracle.
+> 
+> Regarding Mark's (valid) concerns see further down below.
+> 
+> Gsunde
+> 
+> 
+> On 2015-11-13, 15:37 Mark Felder wrote:
+>> On Fri, Nov 13, 2015, at 01:58, Gsunde Orangen wrote:
+>>>
+>>> I share Tim's view [2] and a dozen of (own) applications we checked
+>>> won't break. A property that re-enables deserialization of course wo
+uld
+>>> help additionally: allow applications that really *need* this to get
+ it
+>>> working; but that requires an explicit step - so latest by that time
+:
+>>> those, whose applications break after including a "fixed" version of
+>>> Commons-Collections would (hopefully) start to think about their des
+ign.
+>>>
+>>> Gsunde
+>>>
+>>> [1] http://seclists.org/oss-sec/2015/q4/238
+>>> [2] http://seclists.org/oss-sec/2015/q4/263
+>>
+>> This statement is how we have been operating our mitigation strategy:
+>>
+>> "Applications which use Apache Commons Collections and do not use
+>> deserialization are not vulnerable."
+> I agree
+> 
+>>
+>> Assuming that statement is correct, disabling deserialization by defa
+ult
+>> doesn't offer additional protection to people. Instead it requires a
+>> code change when they upgrade to re-enable it and cause them to be
+>> vulnerable again.
+> It does offer additional protection to those applications who use
+> deserialization in general, but don't want to have this executed on th
+e
+> unsafe Commons-Collections classes (or even are not aware that theses
+> classes are reachable via their remote interfaces).
+> From my point of view and investigation this may be a lot of
+> applications in the world.
+> All those may not need to do anything else than upgrading their
+> Commons-Collections package to be safe from this particular issue.
+> (not addressing the important general issue of course yet...)
+> 
+>>
+>> Would the greater community be better served by additional documentat
+ion
+>> on how to safely handle the deserialization in their application?
+> Definitely yes, I agree! For the sustainable and long term.
+> 
+>> Is there such a method, or is this hopelessly broken?
+> I have to leave this up to the top Java experts (where I am not a memb
+er of)
+> Again, this is something very useful for the long term (and honestly I
+> would expect these activities starting latest by now - we may also awa
+it
+> the next posts, where others again will find other widespread classes
+> that are exploitable in a similar way. The race is on...)
+> 
+> My main point with having a single CVE ID and a new Apache
+> Commons-Collections version that fixes this ID is:
+> If you don't do it, then you end up with 1-5 CVE ids (individually for
+> those applications mentioned in the original publication: WebLogic,
+> Jenkins, etc.) and they all are reported in the context of these
+> individual applications only.
+> We would miss to address a significant number of applications in the
+> world, as it's not on their radar (but they have Commons-Collections
+> included, so that is on their radar)
+> 
 
-> Hi,
->
-> On Tue, Aug 17, 2021 at 04:17:38PM +0800, butt3rflyh4ck wrote:
-> > Hi, MITRE has assigned CVE-2021-38208 to this issue,
-> > https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-38208
-> >
-> > The CVE-2021-3587 assigned by Redhat was 'RESERVED' now.
-> > https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-3587
-> >
-> > There was some confusion here, Maybe CVE-2021-3587 should be 'REJECT'.
->
-> I wonder if it would actually be better the other way around, but
-> leaving the decision to MITRE CNA and Red Hat: Several downstream
-> Linux distrubutions seem to have already used CVE-2021-3587 in their
-> advisories, so rejecting CVE-2021-38208 would seem to cause less
-> turnarounds). But I have a biased view here, at least Debian, Ubuntu,
-> Slackware, Fedora and Mageia used already accordingly CVE-2021-3587.
->
-> Regards,
-> Salvatore
->
->
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
 
--- 
-
-*Tausif Siddiqui* | RED HAT PRODUCT SECURITY
-
-0EE1 F6BF 8991 9A65 0A79 A0A7 5849 60EC 88B8 2C71
-
-secalert@redhat.com <https://access.redhat.com/security/team/contact> for
-urgent response.
-
---000000000000a3db7305ca4a389e--
-
+iEYEARECAAYFAlZLw30ACgkQf36Vx1dNy5r+xgCfS37T2qb+nqQDNjfQIGd8l484
+zC8An0rJgwO+bkDYKGqckw/Uqo13VZUs
+=Bm+E
+-----END PGP SIGNATURE-----
