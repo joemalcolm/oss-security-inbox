@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2958" "Friday" "6" "January" "2017" "22:51:10" "+0100" "Lizzie Dixon" "_@lizzie.io" "<20170106215110.GB6771@lizzie.io>" "96" "Re: [oss-security] Re: Firejail local root exploit" "^Date:" nil nil "1" "2017010621:51:10" "[oss-security] Re: Firejail local root exploit" (number mark "        _@lizzie.io  Jan  6   96/2958  " thread-indent "\"Re: [oss-security] Re: Firejail local root exploit\"\n") "<730e35dc08384f6f9bef4e403802a871@imshyb02.MITRE.ORG>" ("<1483655866.8979.68.camel@juliet.mcarpenter.org>" "<730e35dc08384f6f9bef4e403802a871@imshyb02.MITRE.ORG>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2701" "Wednesday" "18" "November" "2015" "12:15:41" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151118171541.3A12B6C0188@smtpvmsrv1.mitre.org>" "61" "[oss-security] Re: CVE request for path traversal / info leak bug in Spiffy web server" nil nil nil "11" "2015111817:15:41" "[oss-security] Re: CVE request for path traversal / info leak bug in Spiffy web server" (number mark "U       cve-assign@m Nov 18   61/2701  " thread-indent "\"[oss-security] Re: CVE request for path traversal / info leak bug in Spiffy web server\"\n") "<20151117165117.GB2631@more-magic.net>" ("<20151117165117.GB2631@more-magic.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 28285 invoked by uid 550); 6 Jan 2017 21:52:47 -0000
+Received: (qmail 5210 invoked by uid 550); 18 Nov 2015 17:15:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,117 +11,74 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 27690 invoked from network); 6 Jan 2017 21:50:56 -0000
-X-Auth-ID: _@lizzie.io
-X-Sender-Id: _@lizzie.io
-Message-ID: <20170106215110.GB6771@lizzie.io>
-References: <1483655866.8979.68.camel@juliet.mcarpenter.org>
- <730e35dc08384f6f9bef4e403802a871@imshyb02.MITRE.ORG>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <730e35dc08384f6f9bef4e403802a871@imshyb02.MITRE.ORG>
-User-Agent: Mutt/1.7.2 (2016-11-26)
-Date: Fri, 6 Jan 2017 22:51:10 +0100
-From: Lizzie Dixon <_@lizzie.io>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: Firejail local root exploit
-To: oss-security@lists.openwall.com
+Received: (qmail 5181 invoked from network); 18 Nov 2015 17:15:52 -0000
+From: cve-assign@mitre.org
+To: peter@more-magic.net
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <20151117165117.GB2631@more-magic.net>
+Message-Id: <20151118171541.3A12B6C0188@smtpvmsrv1.mitre.org>
+Date: Wed, 18 Nov 2015 12:15:41 -0500 (EST)
+Subject: [oss-security] Re: CVE request for path traversal / info leak bug in Spiffy web server
 
-Hello oss-security,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-I was inspired by this thread so I took a look as well. I noticed that
-firejail allows ptrace with --allow-debuggers, which allows a
-sandboxed program to escape the seccomp profile by rewriting permitted
-system calls into unpermitted ones pre-Linux-4.8. This is documented
-in the seccomp manpage:
+> http://lists.gnu.org/archive/html/chicken-announce/2015-11/msg00000.html
 
-http://man7.org/linux/man-pages/man2/seccomp.2.html
+> if you are using awful,
+> chickadee, pastiche, qwiki, websockets or any other egg that uses Spiffy
+> as HTTP server, your server is vulnerable as well.
 
-> Before kernel 4.8, the seccomp check will not be run again
-> after the tracer is notified.  (This means that, on older
-> kernels, seccomp-based sandboxes must not allow use of
-> ptrace(2)—even of other sandboxed processes—without extreme
-> care; ptracers can use this mechanism to escape from the
-> seccomp sandbox.)
+> Spiffy 5.4 eliminates the
+> vulnerability without requiring the fix for the CHICKEN core.
 
-(I wrote a little program demonstrating this behavior last year at
-https://blog.lizzie.io/linux-containers-in-500-loc.html#fn.51 ).
+Use CVE-2015-8235 for the Spiffy vulnerability.
 
-I emailed the author and they commited a fix (within 45 minutes!):
-https://github.com/netblue30/firejail/commit/6b8dba29d73257311564ee7f27b9b14758cc693e#diff-18143ef0a33f3f378f310a976725f141R80
 
-Should this have a CVE id as well?
+> The unfortunate cause of this is that some CHICKEN core
+> procedures are misbehaving: when passed a file that starts with a
+> backslash, some path manipulation procedures incorrectly
+> *replace* the backslash with a slash. This has the effect of
+> injecting a path separator into a path component that was
+> supposed to be "atomic". This results in the path component
+> being reinterpretated as two components.
+> 
+> The issue with the CHICKEN core procedures has been addressed by
+> edd4926bb4f4c97760a0e03b0d0e8210398fe967 in the git repository, but it
+> is not in any stable release yet.
+> 
+> http://code.call-cc.org/cgi-bin/gitweb.cgi?p=chicken-core.git;a=commit;h=edd4926bb4f4c97760a0e03b0d0e8210398fe967
 
-Best,
+If this is a CHICKEN core vulnerability, it needs a separate CVE ID.
+The description above -- especially the 'supposed to be "atomic"'
+comment -- suggests that the code is unambiguously wrong, but the
+commit message presents the issue differently. Also, it appears that
+introducing '/' characters into strings is a general problem for any
+program that prohibits only '/' characters in user-supplied filenames
+(e.g., because the program, for whatever reason, can only be used on
+UNIX platforms). Is there a rationale for not considering this a
+CHICKEN vulnerability?
 
-Lizzie.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-On 01/06, cve-assign@mitre.org wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA256
-> 
-> > 1. --tmpfs
-> 
-> Use CVE-2016-10117.
-> 
-> 
-> > 2. Nuke /etc/resolv.conf
-> 
-> Use CVE-2016-10118.
-> 
-> 
-> > /tmp was mounted tmpfs 0777 prior to:
-> > 
-> >   commit aa28ac9e09557b833f194f594e2940919d940d1f
-> 
-> Use CVE-2016-10119.
-> 
-> 
-> > /dev, /dev/shm, /var/tmp, /var/lock were mounted 0777 prior to:
-> > 
-> >   commit cd0ecfc7a7b30abde20db6dea505cd8c58e7c046
-> 
-> Use CVE-2016-10120.
-> 
-> 
-> > There are other weak perms fixed around here eg /dev/shm/firejail was
-> > 0777 prior to:
-> > 
-> >   commit 1cab02f5ae3c90c01fae4d1c16381820b757a3a6
-> 
-> Use CVE-2016-10121.
-> 
-> 
-> > 4. Environment not cleaned before root exec()
-> 
-> Use CVE-2016-10122.
-> 
-> 
-> > don't allow --chroot as user without seccomp support
-> 
-> Use CVE-2016-10123.
-> 
-> - -- 
-> CVE Assignment Team
-> M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-> [ A PGP key is available for encrypted communications at
->   http://cve.mitre.org/cve/request_id.html ]
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1
-> 
-> iQIcBAEBCAAGBQJYb1OiAAoJEHb/MwWLVhi2N9kP/0AHycN7Au+PTq/bHoxXVi4l
-> 74YrEI8PcE1UHIkL2m1kOLbZGTWWc8E0uMEJFTfKrVoIPAINN3iYtU9dYukSACxu
-> 4gyQK8xWuzpbqBeF/PIBaZsp9THvTy7sfz2dKYDh/n5i0AFRv34/cs8BUIcl9BDE
-> 4D/1FgdwLqarh0SJvclJRBmi4zmftqub3xbt1dJItSfc/5u5SxWMHqHbmW5vESIf
-> y3LU27S7E2qnSARfHxk1HfdqViDQO/76yYLQqlfGRc23wyj7ydFWQpRC28x0jjOL
-> SCiC91a2gG7nGyV1l/uFIF8QAQMACNl3uJT/5Hgp8ugUOVAko81u/o0liNJMthRK
-> NGWhENcFRuHqlqqxvOME/DfErfa7gn2cgFi+udl2BMfllCJb2ICH+Ddg9joaFLfu
-> 33iPga5J0MB5YSPQYoCSERjz2Q/i65P9kzgeTjGRLOhHsfY4p6yxUr/YmqTJ9E+W
-> DXiTCbpxNJXEsopKwHODBD4ausPQ83A8LGPine7eGaJKoW3q8UdphDqOqitCRFEL
-> d/XkVjtt44N0wgjB/ABDezrRAYbRPSudcCDPYh7WVl6V/6D0YRuaqYJ/Q8LlT+Nl
-> /17KzyEunx/+0lBjvdtyGz2UQN8F7+9XKl/S0ZRBJS9i+Hrb4ShctP53h2aNbTQT
-> nC4OrYY4JBuW90DY4Ef2
-> =DJ5s
-> -----END PGP SIGNATURE-----
+iQIcBAEBCAAGBQJWTLHmAAoJEL54rhJi8gl5sVQP/RNAF0urGXCKfGnigPmyHtDK
+7hDILbfND4iaMAS+o3avt+Nhfml1MuLMKwRWp31uHaAGnglbIQWp6eMC2JOlSSci
+Q3g7QsV4s/x7FMvBXrvv0jLDkxJpL8mtCZ8pah9qXPr5CLr6KZzA499NvoUVlyqb
+5c5kL8ERmrm0mmHgRAyt8hcb4Zv6wuzOCGBwmzhVLDe+rx7Nr68WBL1oJdcBzfJE
+tYuV4RwF/iqyxfRKa5xxEkirawdiGRMo3D0MRVIyuaJoj70Cmy2pWJjChi0mgGfV
+hNLREKlg60e7NXWYdtzAJE9w4KkM/emHdFLth9JNGr9AryLu32VTdqJQ9E9JKiK5
++veMNE4U2TzsKNqUTx1Li2UnogLhSNlO/ZetujG76QC97qBYfrFpiMIntf/kyox1
+5IrhOAjZohUoH07Rm0bF6HXiVvteOvJg9NJAymFc7GdAZJvYuNfIsV3rFJNl2gHI
+ybAVNlNApmuiOXh+umvCzAqUi3flaNev6Xuti98rbqi3aaxutCSwdS7xnWmvSaSy
+HDNFVELLcyqSrTAI1P8StFHlV4FR4zJzq30T5N/aGfl+obMmLDpVpNbNVChSzdfU
+x2te+gBcM7lZjKM8QOjqogcVSvUUPHQ9cvAtfmjCgH1IGigBmaejtBW1gzELykIp
+nqmUX0Ef4QyYg8ylidBx
+=u0rD
+-----END PGP SIGNATURE-----
