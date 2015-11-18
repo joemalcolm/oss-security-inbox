@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1542" "Tuesday" "27" "June" "2017" "15:44:04" "+0200" "Solar Designer" "solar@openwall.com" "<20170627134404.GA19110@openwall.com>" "25" "Re: [oss-security] malicious hypervisor threat was ignored but it is real" "^Cc:" nil nil "6" "2017062713:44:04" "[oss-security] malicious hypervisor threat was ignored but it is real" (number mark "        solar@openwa Jun 27   25/1542  " thread-indent "\"Re: [oss-security] malicious hypervisor threat was ignored but it is real\"\n") "<DM5PR11MB16439A3C3D41C0A38E019859AADC0@DM5PR11MB1643.namprd11.prod.outlook.com>" ("<DM5PR11MB16439A3C3D41C0A38E019859AADC0@DM5PR11MB1643.namprd11.prod.outlook.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1716" "Wednesday" "18" "November" "2015" "06:17:56" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151118111756.05AB234E03F@smtpvbsrv1.mitre.org>" "37" "[oss-security] Re: CVE request: Jenkins remote code execution vulnerability due to unsafe deserialization" "^Cc:" nil nil "11" "2015111811:17:56" "[oss-security] Re: CVE request: Jenkins remote code execution vulnerability due to unsafe deserialization" (number mark "        cve-assign@m Nov 18   37/1716  " thread-indent "\"[oss-security] Re: CVE request: Jenkins remote code execution vulnerability due to unsafe deserialization\"\n") "<2A8BEBF8-84F6-476A-91B7-14A461A83E30@beckweb.net>" ("<2A8BEBF8-84F6-476A-91B7-14A461A83E30@beckweb.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 23621 invoked by uid 550); 27 Jun 2017 13:47:35 -0000
+Received: (qmail 15560 invoked by uid 550); 18 Nov 2015 11:18:08 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,43 +11,50 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 19927 invoked from network); 27 Jun 2017 13:44:20 -0000
-Message-ID: <20170627134404.GA19110@openwall.com>
-References: <DM5PR11MB16439A3C3D41C0A38E019859AADC0@DM5PR11MB1643.namprd11.prod.outlook.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <DM5PR11MB16439A3C3D41C0A38E019859AADC0@DM5PR11MB1643.namprd11.prod.outlook.com>
-User-Agent: Mutt/1.4.2.3i
-Cc: oss-security@lists.openwall.com
-Date: Tue, 27 Jun 2017 15:44:04 +0200
-From: Solar Designer <solar@openwall.com>
+Received: (qmail 15536 invoked from network); 18 Nov 2015 11:18:07 -0000
+In-Reply-To: <2A8BEBF8-84F6-476A-91B7-14A461A83E30@beckweb.net>
+Message-Id: <20151118111756.05AB234E03F@smtpvbsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Wed, 18 Nov 2015 06:17:56 -0500 (EST)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] malicious hypervisor threat was ignored but it is real
-To: Mikhail Utin <mikhailutin@hotmail.com>
+Subject: [oss-security] Re: CVE request: Jenkins remote code execution vulnerability due to unsafe deserialization
+To: ml@beckweb.net
 
-Hi Mikhail,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-The concern is legitimate and there are relevant PoC's (perhaps starting
-with Joanna Rutkowska's Blue Pill), but as a moderator for oss-security
-I find your message inappropriate for this list: no focus on Open Source
-(relevance yes, focus no), effectively no substance (only references to
-others' work and general reasoning about how the attacks are possible),
-promotion of your company and resource, a couple of instances of "patent
-pending" on your recent slides, and a cross-post (you also brought this
-at least to full-disclosure, where it is in fact more on topic).
+> We updated neither commons-collections nor Groovy, the fix for both is
+> specific to Jenkins, in the same component, and was part of the same
+> release of Jenkins. Does this mean the one CVE ID covers both?
 
-On Tue, Jun 27, 2017 at 02:52:16AM +0000, Mikhail Utin wrote:
-> Around 2007 ? 2008 a hypervisor has been found in Intel Corporation motherboards which have been shipped to Russia for the development of a special computer system. Russian scientist published the article describing how he found the malware in BMC BIOS flash memory. The article is available in English now.
+Yes, CVE-2015-8103 applies to all of SECURITY-218 as listed at
+https://wiki.jenkins-ci.org/display/SECURITY/Jenkins+Security+Advisory+2015-11-11
+and therefore is associated with both the
+http://foxglovesecurity.com/2015/11/06/what-do-weblogic-websphere-jboss-jenkins-opennms-and-your-application-have-in-common-this-vulnerability/#jenkins
+attack and the
+https://github.com/frohoff/ysoserial/blob/master/src/main/java/ysoserial/payloads/Groovy1.java
+attack.
 
-It's been a long while, but if you're referring to the same thing I read
-in Russian back then (and it looks so), I can say that IMO it lacked
-substance too.  From the text, I couldn't discern whether the author
-wrote a fine piece of science fiction (with sufficiently good knowledge
-of the underlying "science") or a documentary, but either way there were
-no specifics that would enable anyone else to reproduce the findings.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Unless anyone has anything on-topic (focus on Open Source) and specific
-(ideally, reproducible) to add, let's end this oss-security thread here.
-
-Alexander
+iQIcBAEBCAAGBQJWTF4CAAoJEL54rhJi8gl5dycP/00lDmDND0eZpQYN3GRcTPY4
+VKnMZnH//Zovw5gVSlZNDEAkpm4o8OlN9K5nOE0GG2XQsfk/haR67fG11KTjbOIq
+HKDCYuborQicwSsLlxsfsMFgEdodMOs1+L4WQ/EJ7UYnTfEf1iG0zp150lfSNKxL
+Zv+JPIvg6tJdUeYCUVOEgcSjr/0bLqJ7slZNEL+PVVV7eFPnwi0GfwdylblhR+mB
+7ialUTNBKf5nZhYXI5LjkBC5EHiuxzmTRiD182VpwoXbVdrQaX4HVTLFnNdvWnCz
+BcFMUB11d+8d+bGKj6r7mZPADHJeWr3KcxGVs0jlBVUuTmBA186MIy0zdK7eIKxM
+QjUIsd5puBGAwvdlonnyilp3nxqQAV2j0RFgU5g9UnCWcOmOyU3+xX/gSqap/oRE
+Vi/zqTsPkQwM1QumQ9gzmm+Cx5YYS+q3rLb5J8Og02i0I2TRtmHizWT+PBRk0I3t
+0v43OHrktKtu+v8MS005gKTWrac2+1x2gPWydooNw3zVVqfPjCsXLd69bGFmW9HX
+qpBZRX+me9r2ac5dHK0HuVnR9mNi1IZ0tutcsFkhjWHDHx2pUBxqWM+KnNHfPcux
+QQrWFrfb8tu57rh/l02zsV6ah5sjnaz0qttsUSisMpUoAnUGQO1D8q0GSeJdm8mc
+RFJV9K/Hf0Fh2i1Giz+A
+=9Gr6
+-----END PGP SIGNATURE-----
