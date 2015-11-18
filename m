@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1139" "Wednesday" "3" "June" "2015" "22:23:40" "+0800" "=?ISO-8859-1?Q?wen=5Fguanxing?=" "wen_guanxing@venustech.com.cn" "<tencent_001D505F0C2859614F0BD937@qq.com>" "24" "[oss-security] CVE-2015-3217: PCRE Library Call Stack Overflow Vulnerability in match()" nil nil nil "6" "2015060314:23:40" "[oss-security] CVE-2015-3217: PCRE Library Call Stack Overflow Vulnerability in match()" (number mark "        wen_guanxing Jun  3   24/1139  " thread-indent "\"[oss-security] CVE-2015-3217: PCRE Library Call Stack Overflow Vulnerability in match()\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2144" "Wednesday" "18" "November" "2015" "07:40:58" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151118124058.C6B0B3320C3@smtpvbsrv1.mitre.org>" "55" "[oss-security] Re: CVE request - Linux kernel - Unix sockets use after free - peer_wait_queue prematurely freed" nil nil nil "11" "2015111812:40:58" "[oss-security] Re: CVE request - Linux kernel - Unix sockets use after free - peer_wait_queue prematurely freed" (number mark "U       cve-assign@m Nov 18   55/2144  " thread-indent "\"[oss-security] Re: CVE request - Linux kernel - Unix sockets use after free - peer_wait_queue prematurely freed\"\n") "<225451526.7843702.1447833457143.JavaMail.zimbra@redhat.com>" ("<225451526.7843702.1447833457143.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 7967 invoked by uid 550); 3 Jun 2015 14:24:07 -0000
+Received: (qmail 25991 invoked by uid 550); 18 Nov 2015 12:41:11 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,62 +11,68 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 7873 invoked from network); 3 Jun 2015 14:23:58 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=venustech.com.cn;
-	 h=x-mailer:message-id:date:date:content-transfer-encoding
-	:content-type:content-type:mime-version:subject:subject:to:from
-	:from; s=dkim; t=1433341212; x=1434205213; bh=t0z5Tb56qoMc1x3///
-	33wc2nmbPr0JgPtZNX+5faAQA=; b=CfLeP1rT2O8o9hF+qI5SvDeC8rj+9fVLAw
-	Wlr0Ei+Dyg+9Rp1oOwb8KQTYqYAobI/IH45eSNFg6QdSDoAVHOL25FbtWTMKSkke
-	EK+eb8ssHwNRdrJjWFlt6Jib8t8wEmXTNDjDjSChrZR7uXHgrPLMkEcknbjOu7XX
-	wseh54uPA=
-X-QQ-FEAT: xLWi6UhUIaWWrs4slWmEW5S9PA4CaDZpun1kIcHYEDFJz/JMdkZnOI5bBUmcU
-	rSEICjhRkCYVVEbfVuFKYMuNQqPIbJKNXHJe6LXybZ8n02ee8KHIrxy6UXF1arNeFuDD2uN
-	ikwVjaFnnY3RHcSoPUq1ALY1tXyfgK0gfbzrMq9XV0wqFcEPagNS93RvYYHyFkGIvbg1omi
-	dLSYd++W91w==
-X-QQ-SSF: 00000000000000F000000000000000N
-X-HAS-ATTACH: no
-X-QQ-BUSINESS-ORIGIN: 2
-X-Originating-IP: 111.197.192.60
-X-QQ-STYLE: 
-X-QQ-mid: webmail802t1433341420t1425864
-Mime-Version: 1.0
-Content-Type: multipart/alternative;
-	boundary="----=_NextPart_556F0DEC_098D1CF0_62E44A5B"
-Content-Transfer-Encoding: 8Bit
-X-Priority: 3
-Message-ID: <tencent_001D505F0C2859614F0BD937@qq.com>
-X-QQ-MIME: TCMime 1.0 by Tencent
-X-Mailer: QQMail 2.x
-X-QQ-Mailer: QQMail 2.x
-X-QQ-SENDSIZE: 520
-Date: Wed, 3 Jun 2015 22:23:40 +0800
-From: "=?ISO-8859-1?B?d2VuX2d1YW54aW5n?=" <wen_guanxing@venustech.com.cn>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE-2015-3217: PCRE Library Call Stack Overflow Vulnerability in match()
-To: "=?ISO-8859-1?B?b3NzLXNlY3VyaXR5?=" <oss-security@lists.openwall.com>
+Received: (qmail 25973 invoked from network); 18 Nov 2015 12:41:10 -0000
+From: cve-assign@mitre.org
+To: wmealing@redhat.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <225451526.7843702.1447833457143.JavaMail.zimbra@redhat.com>
+Message-Id: <20151118124058.C6B0B3320C3@smtpvbsrv1.mitre.org>
+Date: Wed, 18 Nov 2015 07:40:58 -0500 (EST)
+Subject: [oss-security] Re: CVE request - Linux kernel - Unix sockets use after free - peer_wait_queue prematurely freed
 
-------=_NextPart_556F0DEC_098D1CF0_62E44A5B
-Content-Type: text/plain;
-	charset="ISO-8859-1"
-Content-Transfer-Encoding: base64
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-UENSRSBpcyBhIHJlZ3VsYXIgZXhwcmVzc2lvbiBDIGxpYnJhcnkgaW5zcGly
-ZWQgYnkgdGhlIHJlZ3VsYXIgZXhwcmVzc2lvbiBjYXBhYmlsaXRpZXMgaW4g
-dGhlIFBlcmwgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2UuIFRoZSBQQ1JFIGxpYnJh
-cnkgaXMgaW5jb3Jwb3JhdGVkIGludG8gYSBudW1iZXIgb2YgcHJvbWluZW50
-IHByb2dyYW1zLCBzdWNoIGFzIEFkb2JlIEZsYXNoLCBBcGFjaGUsIE5naW54
-LCBQSFAuDQoNCg0KUENSRSBsaWJyYXJ5IGlzIHByb25lIHRvIGEgdnVsbmVy
-YWJpbGl0eSB3aGljaCBsZWFkcyB0byBTdGFjayBPdmVyZmxvdy4gV2l0aG91
-dCBlbm91Z2ggYm91bmQgY2hlY2tpbmcgaW5zaWRlIG1hdGNoKCksIHRoZSBz
-dGFjayBtZW1vcnkgY291bGQgYmUgb3ZlcmZsb3dlZCB2aWEgYSBjcmFmdGVk
-IHJlZ3VsYXIgZXhwcmVzc2lvbi4gU2luY2UgUENSRSBsaWJyYXJ5IGlzIHdp
-ZGVseSB1c2VkLCB0aGlzIHZ1bG5lcmFiaWxpdHkgc2hvdWxkIGFmZmVjdCBt
-YW55IGFwcGxpY2F0aW9ucy4gQXQgbGVhc3QsIGFuIGF0dGFja2VyIG1heSBl
-eHBsb2l0IHRoaXMgaXNzdWUgdG8gRE9TIHRoZSB1c2VyIHJ1bm5pbmcgdGhl
-IGFmZmVjdGVkIGFwcGxpY2F0aW9uLiANCg0KDQpSZWZlcmVuY2U6DQpodHRw
-czovL2J1Z3MuZXhpbS5vcmcvc2hvd19idWcuY2dpP2lkPTE2MzgNCg0KDQoN
-CldlbiBHdWFueGluZyBmcm9tIFZlbnVzdGVjaCBBRExBQg==
+> https://forums.grsecurity.net/viewtopic.php?f=3&t=4150
 
-------=_NextPart_556F0DEC_098D1CF0_62E44A5B--
+> https://lkml.org/lkml/2014/5/15/532
+> eventpoll __list_del_entry corruption
 
+> https://lkml.org/lkml/2013/10/14/424
+> Re: epoll oops.
+
+> http://www.spinics.net/lists/netdev/msg318826.html
+> [PATCH net] af_unix: don't poll dead peers
+
+> https://lkml.org/lkml/2015/9/13/195
+> List corruption on epoll_ctl(EPOLL_CTL_DEL)
+> AF_UNIX socket
+
+> https://groups.google.com/forum/#!topic/syzkaller/3twDUI4Cpm8
+> Use-after-free in ep_remove_wait_queue
+
+> https://bugzilla.redhat.com/show_bug.cgi?id=1282688
+> Unix sockets use after free - peer_wait_queue prematurely freed
+>
+> A flaw was found in the Linux kernel's implementation of Unix sockets(AF_UNIX). A
+> server polling for data coming from a client socket may put the peer
+> socket on a wait list. This peer may close the connection making
+> the reference on the wait list no longer valid. A determined attacker
+> could poison this memory and lead to bypassing permissions on a the socket,
+> and packets being injected into the stream. This may also panic the machine.
+
+Use CVE-2013-7446.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJWTHAWAAoJEL54rhJi8gl5RAQQAKe8eoD2rfjGta3FfDkU9RUU
+62Qx2Cdvggp2Z921D9KYzOnBBzEC0D5FkZDLBPEbrZQxrhIW4i6qdsEkJG5JvED6
+cipsXz9VoIJtDhmfl2t16OmveEOk2Cu6U1qlJ3dnbXxLl3bH/Q/iP0fm18nSGR/Z
+3NexudadJUobLvxtjbaama+s3J5OYa2TuXrAhBut9+gkACHvJW7Rt+25jTu8ziCD
+ndJ+0UD9HOiJ/eJsXSyJ7MNvcVYdJdj8YkbWdEJPODpLyTEDGZ5eKIPbhwrImP/Q
+7rXKqQXUe5mEiklwxKOCHdTjRbFRVajHpqMWj0nobXM+mCFNxzsIfzLQoeFSQv+I
+hSNGj0R6Hi6NtIioKq4m3P3M9Vl7ZReZx+RquQvKXF3AAm5BkhnOrPkQZtvrEXV6
+x5jDRxixLkQsvskwNevTfuwBQxEkZSl0kbvKTkDLudpvFZFDqv8aa8Qi2tOMH4ZP
+Sh7y6v+TvNhaDs/VMb5LQRG2teI2b87lqaygSyBjQJA3F2o+zJWxSd1iR5hH/RR9
+XVX0IdMX+4kxO2XDMBava9xmllF+K4ipEYiJKFWkng1zQVNKzoShu8h1CRQXVZ/6
+Hw+LUrzN8eyf7O3uB3VyMOWqRBjXBNygoVjSKU8KMcCJc7xW3M0uYIuZRybrWmPA
+zwOIRg/G/qOu1IOqKBzk
+=lWXE
+-----END PGP SIGNATURE-----
