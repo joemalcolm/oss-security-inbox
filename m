@@ -1,4 +1,9 @@
-Received: (qmail 5186 invoked by uid 550); 14 May 2023 21:42:57 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["857" "Wednesday" "18" "November" "2015" "08:13:52" "-0500" "Josh Bressers" "bressers@redhat.com" "<1066672844.15713138.1447852432638.JavaMail.zimbra@redhat.com>" "21" "[oss-security] Data on Linux attacks (was Re: [oss-security] Re: Fwd: x86 ROP mitigation)" nil nil nil "11" "2015111813:13:52" "[oss-security] Data on Linux attacks (was Re: [oss-security] Re: Fwd: x86 ROP mitigation)" (number mark "U       bressers@red Nov 18   21/857   " thread-indent "\"[oss-security] Data on Linux attacks (was Re: [oss-security] Re: Fwd: x86 ROP mitigation)\"\n") "<564C582B.6080803@redhat.com>" ("<20151117153951.GA28672@openwall.com>" "<564B52D6.9090205@t-online.de>" "<564B54BA.6090203@redhat.com>" "<564B6536.2030908@redhat.com>" "<20151118021008.GB31188@openwall.com>" "<564C582B.6080803@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 17814 invoked by uid 550); 18 Nov 2015 13:14:06 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,56 +12,41 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3859 invoked from network); 14 May 2023 21:41:35 -0000
-Date: Sun, 14 May 2023 23:41:21 +0200
-From: Solar Designer <solar@openwall.com>
+Received: (qmail 17793 invoked from network); 18 Nov 2015 13:14:05 -0000
+Date: Wed, 18 Nov 2015 08:13:52 -0500 (EST)
+From: Josh Bressers <bressers@redhat.com>
 To: oss-security@lists.openwall.com
-Message-ID: <20230514214121.GA18829@openwall.com>
-References: <CAGUWgD8jWfhdA5+o_BJN-Mgh0+4x7yYPDcjb+Bve14b9Hxnp3A@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAGUWgD8jWfhdA5+o_BJN-Mgh0+4x7yYPDcjb+Bve14b9Hxnp3A@mail.gmail.com>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] Real world vulnerabilities of CWE-1077: Floating Point Comparison with Incorrect Operator?
+Message-ID: <1066672844.15713138.1447852432638.JavaMail.zimbra@redhat.com>
+In-Reply-To: <564C582B.6080803@redhat.com>
+References: <20151117153951.GA28672@openwall.com> <564B52D6.9090205@t-online.de> <564B54BA.6090203@redhat.com> <564B6536.2030908@redhat.com> <20151118021008.GB31188@openwall.com> <564C582B.6080803@redhat.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.10.116.22]
+X-Mailer: Zimbra 8.0.6_GA_5922 (ZimbraWebClient - FF41 (Linux)/8.0.6_GA_5922)
+Thread-Topic: Data on Linux attacks (was Re: [oss-security] Re: Fwd: x86 ROP mitigation)
+Thread-Index: 5ISK6MLyxm3tQAq9s0yK3q8dQceb/w==
+Subject: [oss-security] Data on Linux attacks (was Re: [oss-security] Re: Fwd: x86 ROP
+ mitigation)
 
-On Mon, Apr 24, 2023 at 04:43:29PM +0300, Georgi Guninski wrote:
-> Are there real world examples of vulnerabilities of this:
 > 
-> https://cwe.mitre.org/data/definitions/1077.html
-> CWE-1077: Floating Point Comparison with Incorrect Operator
+> We face the problem that I and my immediate colleagues (on the Red Hat
+> tools team) do not have access to information about successful
+> compromises, and what attackers actually do today, on GNU/Linux systems,
+> both to achieve initial access and to maintain a presence afterwards.
+> Under these conditions, anything we implement is, to some degree,
+> arbitrary and a shot in the dark.  We can still use our best judgment to
+> set priorities, but we are very far from being guided by empirical evidence.
 > 
-> This issue can prevent the product from running reliably. If the
-> relevant code is reachable by an attacker, then this reliability
-> problem might introduce a vulnerability.
-> 
-> One simple example in python:
-> 
-> >>> A=(0.1+0.2)+0.3;B=0.1+(0.2+0.3);(A==B,A-B,A,B)
-> (False, 1.1102230246251565e-16, 0.6000000000000001, 0.6)
 
-See this thread:
+This is a place I think we could all stand to work together on. If anyone
+has any information on Linux attacks it would be very useful for planning
+future projects.
 
-https://www.openwall.com/lists/oss-security/2011/01/05/2
+There is a lot of evidence against some other platforms, but I've not seen
+anything great around Linux specifically.
 
-"Since this problem stems from a single codebase, strtod.c, so it gets a
-single CVE identifier (already assigned CVE-2010-4645).  The CVE
-description will "blame" strtod.c and mention PHP, and any other
-high-profile software that is discovered to use the same vulnerable,
-shared code."
+If anyone has ideas or comments, I'm all ears.
 
-CVE-2010-4645 description currently in NVD is:
-
-"strtod.c, as used in the zend_strtod function in PHP 5.2 before 5.2.17
-and 5.3 before 5.3.5, and other products, allows context-dependent
-attackers to cause a denial of service (infinite loop) via a certain
-floating-point value in scientific notation, which is not properly
-handled in x87 FPU registers, as demonstrated using
-2.2250738585072011e-308."
-
-Interestingly, at least PHP's fix at the time wasn't to avoid the direct
-comparison, but to avoid having the floating-point values stay in x87 FP
-registers.  This should be sufficient to workaround GCC "bug" 323, but
-it might not be robust across platforms and it does not fix CWE-1077.
-
-Alexander
+-- 
+    JB
