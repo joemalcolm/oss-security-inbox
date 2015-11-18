@@ -1,4 +1,9 @@
-Received: (qmail 19522 invoked by uid 550); 17 Feb 2026 17:06:49 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3188" "Tuesday" "17" "November" "2015" "19:54:20" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151118005420.DB2DA73C35C@smtpvmsrv1.mitre.org>" "70" "[oss-security] Re: CVE request: Jenkins remote code execution vulnerability due to unsafe deserialization" "^Cc:" nil nil "11" "2015111800:54:20" "[oss-security] Re: CVE request: Jenkins remote code execution vulnerability due to unsafe deserialization" (number mark "        cve-assign@m Nov 17   70/3188  " thread-indent "\"[oss-security] Re: CVE request: Jenkins remote code execution vulnerability due to unsafe deserialization\"\n") "<E819DDD5-C53B-48A6-9578-580E69A84DF3@beckweb.net>" ("<E819DDD5-C53B-48A6-9578-580E69A84DF3@beckweb.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 11829 invoked by uid 550); 18 Nov 2015 00:54:33 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,62 +11,83 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 11811 invoked from network); 18 Nov 2015 00:54:32 -0000
+In-Reply-To: <E819DDD5-C53B-48A6-9578-580E69A84DF3@beckweb.net>
+Message-Id: <20151118005420.DB2DA73C35C@smtpvmsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Tue, 17 Nov 2015 19:54:20 -0500 (EST)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 11564 invoked from network); 17 Feb 2026 16:37:12 -0000
-From: Sam James <sam@gentoo.org>
-To: oss-security@lists.openwall.com
-In-Reply-To: <05b52c22-8676-47aa-965d-c2e8194e451d@gmail.com>
-Organization: Gentoo
-References: <05b52c22-8676-47aa-965d-c2e8194e451d@gmail.com>
-User-Agent: mu4e 1.12.15; emacs 31.0.50
-Date: Tue, 17 Feb 2026 16:36:58 +0000
-Message-ID: <878qcr4991.fsf@gentoo.org>
-MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
-	micalg=pgp-sha512; protocol="application/pgp-signature"
-Subject: Re: [oss-security] CVE-2026-25506: MUNGE 0.5-0.5.17 buffer overflow
- allowing key leakage
+Subject: [oss-security] Re: CVE request: Jenkins remote code execution vulnerability due to unsafe deserialization
+To: ml@beckweb.net
 
---=-=-=
-Content-Type: text/plain
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Chris Dunlap <chris.m.dunlap@gmail.com> writes:
+> Remote code execution vulnerability due to unsafe deserialization in Jenkins remoting
+> Unsafe deserialization allows unauthenticated remote attackers to run arbitrary code on the Jenkins master.
+> This is tracked as SECURITY-218 in the Jenkins project. All current Jenkins releases are affected.
 
-> A buffer overflow vulnerability in MUNGE allows a local attacker to
-> leak cryptographic key material from the munged daemon process
-> memory. With the leaked key material, the attacker could forge
-> arbitrary MUNGE credentials to impersonate any user to services that
-> rely on MUNGE for authentication.
+> https://wiki.jenkins-ci.org/display/SECURITY/Jenkins+Security+Advisory+2015-11-11
 
-Thanks for posting this to oss-security.
+> Public exploit:
+> http://foxglovesecurity.com/2015/11/06/what-do-weblogic-websphere-jboss-jenkins-opennms-and-your-application-have-in-common-this-vulnerability/#jenkins
 
-> [...]
->
-> There is no indication this vulnerability is being exploited in the
-> wild. The vulnerability was discovered during a security audit and
-> responsibly disclosed.
->
-> [...]
+>> The exploit requires you to have access to a high numbered TCP port
+>> running on the Jenkins machine, so it's unlikely this one will work
+>> from the Internet.
 
-I see there's a writeup published now as well:
-https://blog.lexfo.fr/munge-heap-buffer-overflow.html
 
-> Reported by Titouan Lazard (LEXFO).
+> Temporary workaround:
+> https://jenkins-ci.org/content/mitigating-unauthenticated-remote-code-execution-0-day-jenkins-cli
 
-sam
+> A related issue is being discussed here:
+> http://www.openwall.com/lists/oss-security/2015/11/09/1
+> Jenkins is affected by both this and the Groovy variant in 'ysoserial'.
 
---=-=-=
-Content-Type: application/pgp-signature; name="signature.asc"
+Use CVE-2015-8103 for the vulnerability addressed by modifying Jenkins
+to be safe in the presence of a problematic
+webapps/ROOT/WEB-INF/lib/commons-collections-*.jar file.
 
+As far as we know, "the Groovy variant in 'ysoserial'" means:
+
+  https://github.com/frohoff/ysoserial/blob/master/src/main/java/ysoserial/payloads/Groovy1.java
+
+which is a CVE-2015-3253 exploit. Also, we are guessing that Groovy is
+relevant because of:
+
+  https://wiki.jenkins-ci.org/display/JENKINS/Groovy+plugin
+
+If preventing the ysoserial Groovy attack against Jenkins only
+involves updating the installed Groovy code to 2.4.4 or 2.4.5, and it
+has never been necessary or recommended to change any component unique
+to Jenkins, then we would recommend mapping to CVE-2015-3253. If it
+were necessary or recommended to change any component unique to
+Jenkins, then you can have an additional CVE ID for the ysoserial
+Groovy aspect of SECURITY-218. (Our expectation is that separate CVE
+IDs are needed because the Groovy plugin has own version numbering --
+such as version 1.27 -- that's separate from the version numbering of
+Jenkins core.)
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-iQEBBAEWCgCpFiEEJaa7iN2bdkxrVUHCc4QJ9SDfkZAFAmmUmSobFIAAAAAABAAO
-bWFudTIsMi41KzEuMTIsMiwyXxSAAAAAAC4AKGlzc3Vlci1mcHJAbm90YXRpb25z
-Lm9wZW5wZ3AuZmlmdGhob3JzZW1hbi5uZXQyNUE2QkI4OEREOUI3NjRDNkI1NTQx
-QzI3Mzg0MDlGNTIwREY5MTkwDxxzYW1AZ2VudG9vLm9yZwAKCRBzhAn1IN+RkPBE
-AQCUYzRX/cKSxGy2S6yGVU/G9tbZlVdjsktEieoY21TpjgEAx95pd3E0Iaj9R4Iq
-zAfiTItJI+0RAskBQuiS4F5y5Ao=
-=dBN9
+iQIcBAEBCAAGBQJWS8srAAoJEL54rhJi8gl54nAQAKIr4J93MinobpK5D8TV9FUd
+fyNB0tpgQwJYihVKaR/Uqu0T8B0Rtu9y1uG0DMJynJUPaiw5A1jQh4YsdylgjjOX
+NoCdqpzv3ZzboCjHb5f9/4d5O9mVR3MV4T86i0Bf5n7bfB1JxWKMD0PaRBeIGAbk
+tTkSXqI0BamT6RwSPHHHd+4jTEkKDT7mlm+J8Fx/WeyZ4LI8DM8lwyC7hOdrStlq
+KzyRHm0Wdi9QQMdKFWNtwY02gC9F7BL5zDzvsqX1l2h5E47xFxjgprImJK20+6WA
+L7gtL7jE+BqYSwBBDCxkVLqaOHPG5eKM0KXg4Owk0S9rYzbvkd0p7bpRBCMsxo+a
+j81fUnrjPO/1w2P4C4FUuiaGonR+Tu958DVIkRlAWU7dhkUZrbKduqCdKO2578la
+YCMkWrDg/nyJH5KDfFyitWhmw3KN359M+BX9quM/O3qBkpvx1BYNOgLrEWszOyCf
+DBSJ7NMqyIPYKp6c946iXBGtomavI9lbNxCwpW44YlHeTf0mJxGQ28Qi1WvJm4rP
+IKKtAsCwb5BuOnGPq10yqQsXnTdNVu713BMDToNhfE9F8NvhIk8Ko2/Gme4xdDYz
+lJzMToAXbYCETPk1r3QK1gjYadWf3TyBfe0DRK9ZpPNYfjQzMWQeBZG4uedUvL3F
+q/mc2sF12N2a8sX/Ulzh
+=n4BO
 -----END PGP SIGNATURE-----
---=-=-=--
