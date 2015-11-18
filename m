@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3589" "Monday" "21" "September" "2015" "11:11:25" "+0200" "Jonathan Salwan" "jsalwan@quarkslab.com" "<55FFC9BD.6030503@quarkslab.com>" "115" "[oss-security] Samsung S4 (GT-I9500) multiple kernel vulnerabilities" nil nil nil "9" "2015092109:11:25" "[oss-security] Samsung S4 (GT-I9500) multiple kernel vulnerabilities" (number mark "U       jsalwan@quar Sep 21  115/3589  " thread-indent "\"[oss-security] Samsung S4 (GT-I9500) multiple kernel vulnerabilities\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2328" "Wednesday" "18" "November" "2015" "11:30:42" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151118163042.F3D2D42E11D@smtpvbsrv1.mitre.org>" "64" "[oss-security] Re: Buffer overflow in libxml2" "^Cc:" nil nil "11" "2015111816:30:42" "[oss-security] Re: Buffer overflow in libxml2" (number mark "        cve-assign@m Nov 18   64/2328  " thread-indent "\"[oss-security] Re: Buffer overflow in libxml2\"\n") "<CAJUzAGYKBt1VP4ab4LKOsj5tF5=unSFt4WhPVkXnic7OZ0p9SQ@mail.gmail.com>" ("<CAJUzAGYKBt1VP4ab4LKOsj5tF5=unSFt4WhPVkXnic7OZ0p9SQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 24104 invoked by uid 550); 21 Sep 2015 12:09:01 -0000
+Received: (qmail 24405 invoked by uid 550); 18 Nov 2015 16:30:59 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,131 +11,77 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 24363 invoked from network); 18 Nov 2015 16:30:54 -0000
+In-Reply-To: <CAJUzAGYKBt1VP4ab4LKOsj5tF5=unSFt4WhPVkXnic7OZ0p9SQ@mail.gmail.com>
+Message-Id: <20151118163042.F3D2D42E11D@smtpvbsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Wed, 18 Nov 2015 11:30:42 -0500 (EST)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17946 invoked from network); 21 Sep 2015 09:11:00 -0000
-To: oss-security@lists.openwall.com
-From: Jonathan Salwan <jsalwan@quarkslab.com>
-Message-ID: <55FFC9BD.6030503@quarkslab.com>
-Date: Mon, 21 Sep 2015 11:11:25 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.2.0
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] Samsung S4 (GT-I9500) multiple kernel vulnerabilities
+Subject: [oss-security] Re: Buffer overflow in libxml2
+To: ya1gaurav@gmail.com
 
-Samsung S4 (GT-I9500) version I9500XXUEMK8 vulnerabilities' report
-==================================================================
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
+> Please assign CVE for below vulnerability
 
-1 - Bugs description
---------------------
+There were two buffer over-read issues reported at different times; we
+are assigning two CVE IDs.
 
-This report describes 5 bugs in the Samsung S4 GT-I9500 JB (I9500XXUEMK8).
+> https://bugzilla.gnome.org/show_bug.cgi?id=756263
+> Reported: 2015-10-08 21:12 UTC by Hugh Davenport
+> 
+> Buffer overead with XML parser in xmlNextChar
+> 
+> AddressSanitizer: global-buffer-overflow ... READ of size 1
+> 
+> there is potential to get input that could cause out of bounds memory
+> to be returned to userspace through the use of libxml2, which could be
+> used to cause denial of service attacks, or gain sensitive
+> information.
+> 
+> https://git.gnome.org/browse/libxml2/commit/?id=ab2b9a93ff19cedde7befbf2fcc48c6e352b6cbe
 
-- 1 Kernel memory disclosure (CVE-2015-1800)
-- 4 Kernel memory corruption (CVE-2015-1801)
-
-Driver affected : samsung_extdisp (s3cfb_extdsp)
-
-
-
-1.1 - Kernel memory disclosure
-------------------------------
-
-1.1.1 - CVE-2015-1800: Video driver samsung_extdisp (1 bug)
------------------------------------------------------------
-
-In the s3cfb_extdsp_ioctl() function, located in the drivers/video/samsung
-_extdisp/s3cfb_extdsp_ops.c file, the structure s3cfb_extdsp_time_stamp is
-allocated on the stack frame. Below, all attributes of this structure:
-
-    struct s3cfb_extdsp_time_stamp {
-        int                 y_fd;
-        int                 uv_fd;
-        struct timeval      time_marker;
-    };
-
-In the same function, in the switch case of the ioctl, we can find the
-S3CFB_EXTDSP_GET_FB_PHY_ADDR request. Below, the part of the code
-related about:
-
-    case S3CFB_EXTDSP_GET_FB_PHY_ADDR:
-        time_stamp2.y_fd = -1;
-        time_stamp2.uv_fd = -1;
-        /* ... */
-        if (copy_to_user((struct s3cfb_extdsp_time_stamp __user*)arg,
-                          &time_stamp2,
-                          sizeof(time_stamp2))) {
-            dev_err(fbdev->dev, "copy_to error\n");
-            return -EFAULT;
-        }
-
-As you can see, the attribute y_fd and uv_fd are initialised but not the
-timeval structure. So, when the copy_to_user occurs, we have a kernel
-memory disclosure of sizeof(struct timeval).
+Use CVE-2015-8241.
 
 
+> https://bugzilla.gnome.org/show_bug.cgi?id=756372
+> Reported: 2015-10-11 03:18 UTC by Hugh Davenport 
+> 
+> Buffer overead with HTML parser in push mode in xmlSAX2TextNode
+> 
+> AddressSanitizer: stack-buffer-overflow ... READ of size 1
+> 
+> there is potential to get input that could cause out of bounds memory
+> to be returned to userspace through the use of libxml2, which could be
+> used to cause denial of service attacks, or gain sensitive
+> information.
 
-1.2 - Kernel memory corrpution
-------------------------------
+(apparently https://git.gnome.org/browse/libxml2/log/HTMLparser.c
+does not yet have a commit)
 
-1.2.1 - CVE-2015-1801: Video driver samsung_extdisp (4 bugs)
-------------------------------------------------------------
+Use CVE-2015-8242.
 
-In the s3cfb_extdsp_ioctl function, located in the drivers/video/
-samsung_extdisp/s3cfb_extdsp_ops.c file, some ioctl requests are
-vulnerable. The destination pointer can be controlled from the userspace.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Below, the vulnerable requests:
-
-    case FBIOGET_FSCREENINFO:
-        ret = memcpy(argp, &fb->fix, sizeof(fb->fix)) ? 0 : -EFAULT;
-        break;
-
-    case FBIOGET_VSCREENINFO:
-        ret = memcpy(argp, &fb->var, sizeof(fb->var)) ? 0 : -EFAULT;
-        break;
-
-    case S3CFB_EXTDSP_GET_LCD_WIDTH:
-        ret = memcpy(argp, &lcd->width, sizeof(int)) ? 0 : -EFAULT;
-        if (ret) {
-            dev_err(fbdev->dev, "failed to S3CFB_EXTDSP_GET_LCD_WIDTH\n");
-            break;
-        }
-        break;
-
-    case S3CFB_EXTDSP_GET_LCD_HEIGHT:
-        ret = memcpy(argp, &lcd->height, sizeof(int)) ? 0 : -EFAULT;
-        if (ret) {
-            dev_err(fbdev->dev, "failed to S3CFB_EXTDSP_GET_LCD_HEIGHT\n");
-            break;
-        }
-        break;
-
-The argp pointer can be controlled by the user and it is not verified by the
-driver. As you can see, the argp pointer is used as destination in all
-memcpy
-functions.
-
-These memory corruptions may cause an elevation of privileges and/or a
-denial
-of service.
-
-
-
-2 - Timeline
-------------
-
-Feb 03 2014 - Vulnerabilities found
-Aug 08 2014 - Report sent to the Samsung Security Team
-Nov 24 2014 - Samsung confirmed the security issues
-Feb 11 2015 - Private CVE request to the Mitre team but no response
-Feb 18 2015 - Second private CVE request to the Mitre team but no response
-Mar 16 2015 - CVE request to Kurt Seifried
-Mar 17 2015 - CVE assigned: CVE-2015-1800 (1 bug) and CVE-2015-1801 (4 bugs)
-Sep 21 2015 - Still not patched by Samsung. Full disclosure.
-
--- 
-jonathan
-
+iQIcBAEBCAAGBQJWTKddAAoJEL54rhJi8gl5cb0QAI/a8SGInkhVa0m5K3eWYbE4
+F+XXCozYZidv46Ld8zJA/2dXZJ9XlD0sve5THsMH+EKcxPRWrKQMZxhREH9XlygP
+X6SxOT7B2rbxCBW6bj8RaCg23JcbdP+Ev4d6Zd+9eRszvb6fRlAIS/FqbNEIQs1u
+ZOG3NkNCBuVrKICzzRy45xji+MdCaJzlP0rZzvdU/+Alhe5Y3ugAmnsHcq83ghND
+WZfB6PMJDJhPd9yg9cP+2DR8o1iwrln15l0voNAtgVjdioAQgI3XCxOsj4A8W5uI
+vVxtm2c3a4nwJokkeStcKHMHwrgABgk9ijOiePOOAbbKRQYuf+PSh8ziWZCJyH08
+HgEmUva2ONaDPKuuWz6AQ62vGzSpmyXFz5dE/zJIhxB3IJKoVv4gonVSxc5nu4Ar
+Q0yNaLr+xRd2NT3TLXL8wck1QElBjHBPH8HDrb/Q6A4Codqk/tBDzRc0vOWQ4FfY
+7tedv+1zMjx4FIJhK/SnqnQa4ZG9lypvVP00PCbZnpPuiVyLlOPZPxRx7Ifteom8
+zM6+5fsvHMv4vmpB84BOz+9j9AKv36wM1WtdimST4Bl/Pg7f22+v3PJQl06mWB43
+/9lMvsCYbn+NpjBlFOykcrTjUeKYgK8h9tKkDMca2dXAzMpEZHZyR44qXyzSx2rz
+glyY1KJD+cauQcYNVFTC
+=8GTa
+-----END PGP SIGNATURE-----
