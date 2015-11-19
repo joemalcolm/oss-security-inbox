@@ -1,4 +1,9 @@
-Received: (qmail 5381 invoked by uid 550); 10 Mar 2025 16:47:58 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2632" "Thursday" "19" "November" "2015" "04:18:42" "+0300" "Solar Designer" "solar@openwall.com" "<20151119011842.GB6450@openwall.com>" "55" "Re: [oss-security] CVE-2015-7266" nil nil nil "11" "2015111901:18:42" "[oss-security] CVE-2015-7266" (number mark "U       solar@openwa Nov 19   55/2632  " thread-indent "\"Re: [oss-security] CVE-2015-7266\"\n") "<564D1096.5070901@trylinux.us>" ("<564D1096.5070901@trylinux.us>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 15902 invoked by uid 550); 19 Nov 2015 01:18:55 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,66 +12,72 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 1797 invoked from network); 10 Mar 2025 16:47:03 -0000
-Authentication-Results: apache.org; auth=none
-Message-ID: <f5aaf921-b849-4978-9a8f-0b5ff044ac3e@apache.org>
-Date: Mon, 10 Mar 2025 16:44:57 +0000
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
-To: oss-security@lists.openwall.com
-From: Mark Thomas <markt@apache.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] CVE-2025-24813: Apache Tomcat: Potential RCE and/or information
- disclosure and/or information corruption with partial PUT
+Received: (qmail 15883 invoked from network); 19 Nov 2015 01:18:54 -0000
+Date: Thu, 19 Nov 2015 04:18:42 +0300
+From: Solar Designer <solar@openwall.com>
+To: "Zach W." <kestrel@trylinux.us>
+Cc: oss-security@lists.openwall.com
+Message-ID: <20151119011842.GB6450@openwall.com>
+References: <564D1096.5070901@trylinux.us>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <564D1096.5070901@trylinux.us>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] CVE-2015-7266
 
-Severity: important
+On Wed, Nov 18, 2015 at 03:58:14PM -0800, Zach W. wrote:
+> Anybody have any idea what the deal is with this CVE, since it's
+> referenced in http://media.pixalate.com/white-papers/xindi.pdf? It's
+> being splattered all over the news, but the CVE is still in "reservered"
 
-Affected versions:
+Kurt has already commented on the CVE aspect, but I'd like to point out
+that the Subject line of this message is inappropriate, especially given
+that the message body didn't include the required detail as well.
+Subjects must be descriptive, whereas including only a CVE ID is not.
+(If another moderator were not quick to approve Zach's message, I would
+insist on the Subject being corrected first.)
 
-- Apache Tomcat 11.0.0-M1 through 11.0.2
-- Apache Tomcat 10.1.0-M1 through 10.1.34
-- Apache Tomcat 9.0.0.M1 through 9.0.98
+Going to the URL in Zach's message, I see that page 6 of the PDF says:
 
-Description:
+"The Amnesia Bug is a critical vulnerability (CVE-2015-7266) in the
+OpenRTB v2.3 protocol implementation, which is the standard for
+real-time digital media buying and selling.  This vulnerability allows
+fraudsters to conceal the true status of an ad transaction [...]"
 
-Path Equivalence: 'file.Name' (Internal Dot) leading to Remote Code 
-Execution and/or Information disclosure and/or malicious content added 
-to uploaded files via write enabled Default Servlet in Apache Tomcat.
+I think the above detail must have been included in Zach's message, in
+order not to waste people's time on figuring out whether the
+vulnerability is relevant to them (upon reading this, most people would
+conclude that it is not).  And a proper Subject could be:
 
-This issue affects Apache Tomcat: from 11.0.0-M1 through 11.0.2, from 
-10.1.0-M1 through 10.1.34, from 9.0.0.M1 through 9.0.98.
+"CVE-2015-7266 - OpenRTB 2.3 protocol implementation Amnesia Bug"
 
-If all of the following were true, a malicious user was able to view 
-   security sensitive files and/or inject content into those files:
-- writes enabled for the default servlet (disabled by default)
-- support for partial PUT (enabled by default)
-- a target URL for security sensitive uploads that was a sub-directory 
-of a target URL for public uploads
-- attacker knowledge of the names of security sensitive files being uploaded
-- the security sensitive files also being uploaded via partial PUT
+as per these guidelines:
 
-If all of the following were true, a malicious user was able to 
-perform remote code execution:
-- writes enabled for the default servlet (disabled by default)
-- support for partial PUT (enabled by default)
-- application was using Tomcat's file based session persistence with the 
-default storage location
-- application included a library that may be leveraged in a 
-deserialization attack
+http://oss-security.openwall.org/wiki/mailing-lists/oss-security#list-content-guidelines
 
-Users are recommended to upgrade to version 11.0.3, 10.1.35 or 9.0.98, 
-which fixes the issue.
+"When applicable, the message Subject must include the name and
+version(s) of affected software, and vulnerability type.  For example, a
+Subject saying only "CVE request" or "CVE-2099-99999" is not appropriate,
+whereas "CVE request - Acme Placeholder 1.0 buffer overflow" or
+"CVE-2099-99999 - Acme Placeholder 1.0 buffer overflow" would be OK."
 
-Credit:
+Another issue with having this on oss-security is that it's unclear
+whether the OpenRTB implementation in question is Open Source or not.
 
-COSCO Shipping Lines DIC (finder)
-sw0rd1ight (https://github.com/sw0rd1ight) (finder)
+The OpenRTB specification is on GitHub:
 
-References:
+http://openrtb.github.io/OpenRTB/
+https://github.com/openrtb/OpenRTB
 
-https://lists.apache.org/thread/j5fkjv2k477os90nczf2v9l61fb0kkgq
-https://tomcat.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2025-24813
+but it is unclear where implementations are, and which one is affected.
+
+Overall, I'd like oss-security to be more focused on technical detail,
+and less on CVEs.  I can tolerate postings that include both technical
+detail and CVE IDs or requests (and if getting a CVE ID is why someone
+posts, that's fine, as long as the very same message also brings
+valuable detail to this community).  I won't tolerate CVE-only postings
+lacking any detail at all (and referencing an external PDF without even
+mentioning the software or technology in question is not good enough).
+
+Alexander
