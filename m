@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2202" "Friday" "10" "April" "2015" "23:22:42" "+0000" "Jeremy Stanley" "fungi@yuggoth.org" "<20150410232241.GS2456@yuggoth.org>" "57" "[oss-security] CVE Request for read-only directory traversal in Etherpad Minify" nil nil nil "4" "2015041023:22:42" "[oss-security] CVE Request for read-only directory traversal in Etherpad Minify" (number mark "        fungi@yuggot Apr 10   57/2202  " thread-indent "\"[oss-security] CVE Request for read-only directory traversal in Etherpad Minify\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1260" "Thursday" "19" "November" "2015" "12:08:21" "+0100" "Jonathan Salwan" "jonathan.salwan@gmail.com" "<CAEmQOhDewaU7prOS2808qAPrqj+edo9rZGB8_J_M0DCTD=g6cw@mail.gmail.com>" "31" "Re: [oss-security] Re: Fwd: x86 ROP mitigation" nil nil nil "11" "2015111911:08:21" "[oss-security] Re: Fwd: x86 ROP mitigation" (number mark "U       jonathan.sal Nov 19   31/1260  " thread-indent "\"Re: [oss-security] Re: Fwd: x86 ROP mitigation\"\n") "<1673938.GaGbo5rB5J@x2>" ("<20151117153951.GA28672@openwall.com>" "<20151118021008.GB31188@openwall.com>" "<564C582B.6080803@redhat.com>" "<1673938.GaGbo5rB5J@x2>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 23785 invoked by uid 550); 10 Apr 2015 23:22:56 -0000
+Received: (qmail 20060 invoked by uid 550); 19 Nov 2015 11:09:14 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,81 +11,62 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 23761 invoked from network); 10 Apr 2015 23:22:55 -0000
-Message-ID: <20150410232241.GS2456@yuggoth.org>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="gLcqQrOcczDba7nC"
-Content-Disposition: inline
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-SA-Exim-Connect-IP: 2001:4802:7801:102:be76:4eff:fe20:63e0
-X-SA-Exim-Rcpt-To: oss-security@lists.openwall.com, cve-assign@mitre.org, security@etherpad.org, John@mclear.co, tom@furycodes.com, stefan@stefans-entwicklerecke.de
-X-SA-Exim-Mail-From: fungi@yuggoth.org
-X-SA-Exim-Scanned: No (on azathoth.yuggoth.org); SAEximRunCond expanded to false
-Cc: CVE Request <cve-assign@mitre.org>,
-	Etherpad Security <security@etherpad.org>,
-	John McLear <John@mclear.co>, Tom Hunkapiller <tom@furycodes.com>,
-	Stefan =?utf-8?Q?M=C3=BCller?= <stefan@stefans-entwicklerecke.de>
-Date: Fri, 10 Apr 2015 23:22:42 +0000
-From: Jeremy Stanley <fungi@yuggoth.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE Request for read-only directory traversal in Etherpad Minify
-To: OSS Security <oss-security@lists.openwall.com>
+Received: (qmail 20010 invoked from network); 19 Nov 2015 11:09:12 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=lRjMhcsWw8gI8nuwy7S3lww3222KWSmaSBPipsoi1AM=;
+        b=bkDVPzwKzTCCDlu4bgO9kBhhUs5mfcB5ahqHoJXKIvUaSuKKdikY+JQZJxGmHMxscN
+         7hBPF6UnsUBFDWRBFZKE6RJQka++cvM1NvXAG227zXEBLCdZ4l3bjyTwBlEcbzp4FtBq
+         iqzTkl69a+ectuSIkPI3iC+VOG4DD2fZOU+ioU4q6uaASmYV/owIC9YEx+hlPshll2LJ
+         Vc8Nzd0jqMWW9p1+Yz3x3/IMjFlU5DK+V8U5+dbqM+mEUepvMJRHby0mKpkWbuUBVobx
+         75/ELEQ0eMS/D0hxYcyF+MBZoZ5KReCQg0ILk7ncc4HZp1+W4ZohBxjEuyNEUiTFUgHP
+         BHfQ==
+X-Received: by 10.194.188.112 with SMTP id fz16mr8603409wjc.65.1447931341417;
+ Thu, 19 Nov 2015 03:09:01 -0800 (PST)
+MIME-Version: 1.0
+In-Reply-To: <1673938.GaGbo5rB5J@x2>
+References: <20151117153951.GA28672@openwall.com> <20151118021008.GB31188@openwall.com>
+ <564C582B.6080803@redhat.com> <1673938.GaGbo5rB5J@x2>
+From: Jonathan Salwan <jonathan.salwan@gmail.com>
+Date: Thu, 19 Nov 2015 12:08:21 +0100
+Message-ID: <CAEmQOhDewaU7prOS2808qAPrqj+edo9rZGB8_J_M0DCTD=g6cw@mail.gmail.com>
+To: sgrubb@redhat.com
+Cc: Florian Weimer <fweimer@redhat.com>, Solar Designer <solar@openwall.com>, Jeff Law <law@redhat.com>, 
+	Bernd Schmidt <bschmidt@redhat.com>, oss-security@lists.openwall.com
+Content-Type: text/plain; charset=UTF-8
+Subject: Re: [oss-security] Re: Fwd: x86 ROP mitigation
 
---gLcqQrOcczDba7nC
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Hey Steve,
 
-A vulnerability was discovered in Etherpad (see below). In order to
-ensure full traceability, we need a CVE number assigned that we can
-attach to further notifications. This issue is already public.
+> What I found was that the list of libraries or programs that ROPgadget could
+> build a chain for is fairly small. I thought about reasons why that might be
+> the case and then considered that maybe if the gadgets from several libraries
+> were combined, maybe it would find more.
 
-Title: Read-only directory traversal in Etherpad Minify
-Reporter: Tom Hunkapiller
-Versions: 1.1.2 through 1.5.2
+The build chain of ROPgadget is pretty "stupid", we search a series of
+patterns [1] which would allow us to build our payload. If these
+patterns are not present we don't build the payload. Then, we don't
+search through others libraries. That's why you got a small list. The
+best way to build a ROP-chain automatically, is to build the chain
+from the instruction semantics (take a look from slide 53 to 62 of
+this lecture [2]).
 
-Description:
-Tom Hunkapiller reported a vulnerability in the minify feature of
-current Etherpad releases. Backslashes are replaced with slashes in
-the path parameter of HTTP API calls after path normalization is
-applied, allowing an attacker supplying specially-crafted requests
-to remotely read arbitrary files on the server's filesystem with the
-privileges of the account running the service.
+> But I think ASLR would make too many
+> moving parts for that to be practical. If you use a whole library or
+> application, then everything moves together up or down as a unit to the new
+> offset.
 
-Notes:
-This bug was introduced in commit a97b83b which was initially
-included in the 1.1.2 release, and is fixed in commit 9d4e5f6 which
-will appear in a future 1.5.3 release.
+If you find the base address from the plt/got you win. Florian
+Gaultier proved that it was possible [3].
 
-References:
-https://github.com/ether/etherpad-lite/commit/9d4e5f6
+> Another thought in explaining why the list was so small is that the quality of
+> the chaining that ROPgadget has needs a lot of improvement.
 
---=20
-Jeremy Stanley
+So true :).
 
---gLcqQrOcczDba7nC
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQJ8BAEBCgBmBQJVKFtBXxSAAAAAAC4AKGlzc3Vlci1mcHJAbm90YXRpb25zLm9w
-ZW5wZ3AuZmlmdGhob3JzZW1hbi5uZXQ5N0FFNDk2RkMwMkRFQzlGQzM1M0IyRTc0
-OEY5OTYxMTQzNDk1ODI5AAoJEEj5lhFDSVgpRCwQAJGM5thLNzDKfPIZzwgfw9Uf
-qK7LD31P0oE1Y6JxVpy7LyySI6gIpqrzqoJcrN5y6cCfGn8fvP2/DylVmxsDlbaq
-WnqYAiDYNIuigdHZZUDsfzK7u8xXSqILOSGFTVxAyQNl2q3zddhZ8qq29q/XoIiP
-mJKDKb0kcic5eB7mQIJurK+aS7hGOBYY8siDZuEern/Fjlt6mXA3Gqo0Z0wZJ8yu
-lpEezeUksbyR8U/ooAfZmWUS+3iA1YSDFNc6JEdLw3wZGuwyAODZvveLS8NcAk/A
-ts6zONs5BoFy0JJ6QtveQdQqi0lh0t1XJ3TBVaTTD3hpq/YnXDEzPQIa3C/MRTMN
-EhyLgbvKFjuzSRPhAWgRgum8QTMIKsYrI3I0uNlpxB31mDo3OtfnjO6ARp1HwiK+
-HMumpp3GPdrl/MOfpDXKvFYCKSkqCaaOiwaZXHV8unKCwdGPJylfb+wj1YpVK5py
-IPoguZxmNU7TpR8iPTDOeLrfQEwj7d0UI683bituB0SlxDBcvUILgIEIzqQ6b5n2
-KCwN+ceRNJvUKn5h3S2MqM8dX63RFcgZZFwrSB6KvvkVvyiq7kUbZB7uctBw0ZkN
-QNarGAYoczB2giNQEevxoh1UmmzjfB3r0/JRCtNQ318NfY8T72z+kx+4kMuLgdKg
-Qn9OP+r1UnZg8Rgj5Bjh
-=YTWE
------END PGP SIGNATURE-----
-
---gLcqQrOcczDba7nC--
+[1] https://goo.gl/faO3VC
+[2] http://goo.gl/ttpr5S
+[3] http://goo.gl/kDTa1A
