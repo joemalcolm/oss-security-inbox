@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["665" "Tuesday" "16" "May" "2017" "16:59:51" "+0100" "Colm O hEigeartaigh" "coheigea@apache.org" "<CAB8XdGCdm4KJXhayd5tRcB0Fvzb7_nQiaEvi=azzSTqzbjys8A@mail.gmail.com>" "27" "[oss-security] Two new security advisories for Apache CXF Fediz" nil nil nil "5" "2017051615:59:51" "[oss-security] Two new security advisories for Apache CXF Fediz" (number mark "U       coheigea@apa May 16   27/665   " thread-indent "\"[oss-security] Two new security advisories for Apache CXF Fediz\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2517" "Friday" "20" "November" "2015" "13:26:53" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151120182653.E2A5734E0F9@smtpvbsrv1.mitre.org>" "54" "[oss-security] Re: LXDM X authentication issues" nil nil nil "11" "2015112018:26:53" "[oss-security] Re: LXDM X authentication issues" (number mark "U       cve-assign@m Nov 20   54/2517  " thread-indent "\"[oss-security] Re: LXDM X authentication issues\"\n") "<20151120140451.28635bdc@redhat.com>" ("<20151120140451.28635bdc@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 11533 invoked by uid 550); 16 May 2017 16:02:36 -0000
+Received: (qmail 17971 invoked by uid 550); 20 Nov 2015 18:27:06 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,44 +12,66 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 10030 invoked from network); 16 May 2017 16:00:08 -0000
-X-Gm-Message-State: AODbwcCmSqkI46EThoXhhp0Q7YAZdORhS+ICVQMikxaf0J03nC9bk7F1
-	R/a7xFrTvwiC5G6pJknZaCpzlK+tcQ==
-X-Received: by 10.98.76.155 with SMTP id e27mr12614587pfj.77.1494950392091;
- Tue, 16 May 2017 08:59:52 -0700 (PDT)
-MIME-Version: 1.0
-From: Colm O hEigeartaigh <coheigea@apache.org>
-Date: Tue, 16 May 2017 16:59:51 +0100
-X-Gmail-Original-Message-ID: <CAB8XdGCdm4KJXhayd5tRcB0Fvzb7_nQiaEvi=azzSTqzbjys8A@mail.gmail.com>
-Message-ID: <CAB8XdGCdm4KJXhayd5tRcB0Fvzb7_nQiaEvi=azzSTqzbjys8A@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="001a1135da9a13e03b054fa64326"
-Subject: [oss-security] Two new security advisories for Apache CXF Fediz
+Received: (qmail 17949 invoked from network); 20 Nov 2015 18:27:05 -0000
+From: cve-assign@mitre.org
+To: thoger@redhat.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <20151120140451.28635bdc@redhat.com>
+Message-Id: <20151120182653.E2A5734E0F9@smtpvbsrv1.mitre.org>
+Date: Fri, 20 Nov 2015 13:26:53 -0500 (EST)
+Subject: [oss-security] Re: LXDM X authentication issues
 
---001a1135da9a13e03b054fa64326
-Content-Type: text/plain; charset="UTF-8"
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-All,
+> LXDM before 0.5.2 did not start X server with -auth parameter.
+> Therefore any user able to connect to it (typically all local users)
+> would have their X connections accepted.  The issue was fixed via:
+> 
+> http://git.lxde.org/gitweb/?p=lxde/lxdm.git;a=commit;h=e8f387089e241360bdc6955d3e479450722dcea3
 
-Two new security advisories are released that are fixed in the latest
-Apache CXF Fediz releases:
+>> pass xauth file to xserver command
 
-a) CVE-2017-7661: The Apache CXF Fediz Jetty and Spring plugins are
-vulnerable to CSRF attacks.
-
-b) CVE-2017-7662: The Apache CXF Fediz OIDC Client Registration Service is
-vulnerable to CSRF attacks
-
-The security advisory texts are available at the following link - please
-read them carefully if you are an Apache CXF Fediz user:
-
-http://cxf.apache.org/security-advisories.html
+It appears that this is the major finding. Use CVE-2015-8308.
 
 
--- 
-Colm O hEigeartaigh
+> LXDM also defaults to not restarting X server between sessions, and
+> does not change authentication cookies or remove xhost authorizations.
+> This allows local user to be able to connect to the X server after they
+> logged out. The 'reset' option in lxdm.conf controls whether X server
+> is restarted on session user close.
 
-Talend Community Coder
-http://coders.talend.com
+This possibly can be included in CVE but, if so, the CVE ID would be
+different. Is there any other information, e.g., why was there a
+decision to make reset an optional behavior rather than a required
+behavior? Is there a possible attack by a different local user, or is
+the relevant attack that someone could steal the computer and recover
+the authentication cookies (possibly violating an expectation of the
+legitimate user who believed they were safely logged out)? Is the
+behavior different from all major display managers?
+http://wiki.lxde.org/en/LXDM says "LXDM is the lightweight display
+manager ..." -- is the design tradeoff possibly different on a
+low-resource machine where it's very expensive to restart the X server?
 
---001a1135da9a13e03b054fa64326--
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJWT2WBAAoJEL54rhJi8gl50F8QAIGlLgPJfDdmpJy6jGd32eEd
+S20uQCZUpZY9OADmAm5TNJsXCuCxoypnPb6/RDNymiTl+Z22qtmwiXDQqMFWD5EN
+nwxJfVJHM2eWEpCo0ZF8Ocn7yZm/MQKGbPEMqKIXe3TjOEAn92is4bzOq2DFCRe3
+g9aKxKCOG0B6zv8T7z3pO/BF9HvkFskmEopMA6DCDCQVJjZ0eE7p/oF9U/XCoG1v
+4TQVsuPl2ojAYmowZ4kFGgMnWcA5QKL3bwlddCWVbaEFpj59uznWvcFpfzc7WEnW
+WVPFyqeTMaIsCC8APVRNXvKfi6xKxngofA5V0lFGOMvltCEIyJVOP1quHJuyyEMh
+7B3246JT0Gt7Z2rlKpfRuTIM5sas0GWdODCtVhE6+h2Ym2gcKmdnspgfBEsqoSAJ
+IgqVoO1Hhjv0ozoNOgcgw+JyBLS7yus6jHWrhzlCeKGN0RXpEQlrEzHLTGKJq7K3
+sd8sTwFFntIfpDDwUqeC+8JUhaLB7AGzVYJtfPeHRQAI5OxGSRxhVd51bDREfRtl
+BVVSVb9lYV81NQkAqHluT6MIHQWGGXdo/DocpbJsRUiWYqSUVXTLk3VcUnKRPtYY
+3pZHzWjzuU+/jSg123onftMond/HBqYEC9pRICbRQScv7QE/eOSuUHzP5FovW30N
+71swFR6kDua+AGm6F6rY
+=59AY
+-----END PGP SIGNATURE-----
