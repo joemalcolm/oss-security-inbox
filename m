@@ -1,4 +1,9 @@
-Received: (qmail 26402 invoked by uid 550); 26 Feb 2026 00:12:05 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3411" "Friday" "20" "November" "2015" "15:54:35" "+0100" "Curesec Research Team (CRT)" "crt@curesec.com" "<564F342B.7040105@curesec.com>" "139" "[oss-security] CVE Request: Various" nil nil nil "11" "2015112014:54:35" "[oss-security] CVE Request: Various" (number mark "U       crt@curesec. Nov 20  139/3411  " thread-indent "\"[oss-security] CVE Request: Various\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 29780 invoked by uid 550); 20 Nov 2015 14:55:40 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,109 +12,168 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 28408 invoked from network); 25 Feb 2026 23:04:38 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sdaoden.eu;
- s=citron; t=1772060669; x=1772727335; h=date:author:from:to:subject:
-  message-id:in-reply-to:references:mail-followup-to:openpgp:blahblahblah:
-  author:from:subject:date:to:cc:resent-author:resent-date:resent-from:
-  resent-sender:resent-to:resent-cc:resent-reply-to:resent-message-id:
-  in-reply-to:references:mime-version:content-type:
-  content-transfer-encoding:content-disposition:content-id:
-  content-description:message-id:mail-followup-to:openpgp:blahblahblah;
- bh=S5+/D4YBPlcfmJHQkO0LkXp379kjcdIxc3m2iPBQVZE=;
- b=NAcExqtYKGCiDH6kxsOy7uDmqYsmCJlo6OrsZq9RfH+Os7kn8kbVjXrwiayI63GIKOjlXwJA
-  6HdX1c6WrP+wbkRY0z+aVAB6EfERnDWH/92ATmBTL2pFdjDmVp9PO5rFs+PqLU9pKGOk3rz+L2
-  2DWyBSn6l/Y8YfiKgj4wOYA9x9OAa0ycbYvux/pWAl2ZZ1EHDHtSuNSRisVYbXX05oJ7i98qW7
-  x+h8kRsxYA8/OuYG/emJ2SUgqj8WnHTgzHiYrOZGKreqH0UNZX82qoKeT9uDfe4a/5yaZLgf4Q
-  nWpl5x2YKGnbdJccqbtOYX6bFEqxua/SXompOTfnIbz1c5AQ==
-Date: Thu, 26 Feb 2026 00:04:28 +0100
-Author: Steffen Nurpmeso <steffen@sdaoden.eu>
-From: Steffen Nurpmeso <steffen@sdaoden.eu>
+Received: (qmail 28260 invoked from network); 20 Nov 2015 14:54:16 -0000
 To: oss-security@lists.openwall.com
-Message-ID: <20260225230428.yNKndtKS@steffen%sdaoden.eu>
-In-Reply-To: <20260225210354.2bbf0d04@stinkedores.dorfdsl.de>
-References: <CAB1hGqQwnSzEqtrefwqAxD+rWGu_EXVDmu-btMrNYqMzkzc9Kw@mail.gmail.com>
- <20260206172730.GA12303@unix-ag.uni-kl.de> <877bso8mhf.fsf@josefsson.org>
- <20260224011702.27987-1-justin.swartz@risingedge.co.za>
- <B72B4221-75D0-4C28-840F-9CF7B1A53E66.1@smtp-inbound1.duck.com>
- <27E138FE-A205-4EDD-9A9B-1F84BFAEC100.1@smtp-inbound1.duck.com>
- <20260224203337.GA17345@openwall.com> <a0bad9ebbf4507c4@orthanc.ca>
- <CAA748E8-86CC-4C46-AD03-319F6690252B.1@smtp-inbound1.duck.com>
- <4A24F620-6FA6-4F2B-A1F9-B4781E391989.1@smtp-inbound1.duck.com>
- <20260225165449.GA23380@openwall.com>
- <20260225194709.3XDsVdwv@steffen%sdaoden.eu>
- <20260225210354.2bbf0d04@stinkedores.dorfdsl.de>
-Mail-Followup-To: oss-security@lists.openwall.com
-User-Agent: s-nail v14.9.25-746-g512f6a7e26
-OpenPGP: id=EE19E1C1F2F7054F8D3954D8308964B51883A0DD;
- url=https://ftp.sdaoden.eu/steffen.asc; preference=signencrypt
-BlahBlahBlah: Any stupid boy can crush a beetle. But all the professors in
- the world can make no bugs.
-Subject: Re: [oss-security] Telnetd Vulnerability Report
+From: "Curesec Research Team (CRT)" <crt@curesec.com>
+Message-ID: <564F342B.7040105@curesec.com>
+Date: Fri, 20 Nov 2015 15:54:35 +0100
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:em/fqGLk5K1ALrovxO+IJcX4VlY87eK2vIOKXY4XGRJ4U1LVber
+ 4I38PBAVx8het3HR8sM2wPdol2pKAWMcrP/eajmIT5hS+QlAe8B1W08m9c3AVqseJ9nn0zR
+ NCutxhbkl67HOiXRqpxracZ9BC/NcPoVX3HaD/qBNrxT5c6VJgnfilbZyRpq8j1wvJxbJ+8
+ dptnNZG6xDqBxFmNFE3kg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:w6xi8Zg+s7A=:iKt1coKq4+2Fbimk9F7tou
+ aFJpEJXEMXuBPfohNhmvVPaJKwbdCr2I8qn6d5D2FWzClBkSZEpLDnp2j0/OIKtUXntXstH+q
+ 0/KdnhHfsqZQ0mvIrZE7ixjyDRnaw9PwQutuZIKHS1GREogRzCCo6yMBzHzIH37FwvtbPs/vq
+ jWblEcl8sciFXkBtCWEIXbIQ4P/jDrGPMChkF/s729XBCTsKt99yY/kO+ZvwfJD4A1JLcLtEg
+ 277Cj37aOoYyWCObZDG9h/UxE1U5sRsvtI81EupagY9iDtiUnx1XJhi+6KoUsOm6wFDnmzjXi
+ j097SiI5V4SYfgoeypMolyj0VHSYIWb8I6ddqEyYWp3OylYzrjKr/Z1zmyI+7h8yVWnXaZdWs
+ 9498y18J24eJo6i1BFOh8Bm8yvj8c2IJHF0g976+6k7Dk1qsjbjhDIbMHuik3tWqvS26HKhc9
+ RU+SFBsFpBsbpZoxEvvB1J25q3zMccNQbnaQnGOL6L2YKyfm2MpRt9DveTPoGE2BaS9m/4MzK
+ VXtBzAofTTQ81A+ZtPEkCE0npH895b1KP1HVKkhUY7Yqt16M9Y1IgfCcX2cyqHxNdyNVai/jO
+ Y06dQT84hxi4dJbOF6xGfjV8PDzfzR5xnL3ZRUnehUFV1Gy9cT1JRP1RBQLYJHHkYNfbwya5z
+ j8wGjP/aezHLEYCSg0mpyn6BZHhwfQ9/NyKsYEqIJ+zFJ24/WMm8xBNdVTmxBkbuMk9drUA2k
+ iOsmLrekZcAGwoI7
+Subject: [oss-security] CVE Request: Various
 
-Marco Moock wrote in
- <20260225210354.2bbf0d04@stinkedores.dorfdsl.de>:
- |Am 25.02.2026 um 20:47:09 Uhr schrieb Steffen Nurpmeso:
- |
- |> It seems to me one reason to use telnet(1) arises from the fact
- |> that there is no nc(1) around.  busybox has one, but it is not
- |> feature rich enough.  And the one of LibreSSL, which is, as it
- |> says, a swiss-army-knife, is very often not available at all.
- |
- |IIRC this issue is only about the telnetd telnet server daemon, not the
- |client. This service is only in use if enabled in inetd (or
- |replacements) by the administrator.
+CVE request: Various
 
-Already open socket aka standard descriptors.
-If executables can be replaced, some specialized dropbear, or even
-openssh seems better to me.
-I never have used telnetd by myself, yet the telnet client i am
-using pretty regulary, it comes from the same package
+I would like to request CVE Identifiers for the following issues which
+do not yet have an id assigned:
 
-  $ pkginfo -o /usr/bin/telnet
-  Package    File
-  inetutils  usr/bin/telnet
+http://seclists.org/fulldisclosure/2015/Aug/28
+BigTree CMS 4.2.3 XSS
 
-but which the Linux distribution (mostly old-hand admins driven)
-i use massively restricts
+http://seclists.org/fulldisclosure/2015/Aug/30
+BigTree CMS 4.2.3 SQL Injection
 
-        --disable-{servers,clients} \
-        --enable-{hostname,ifconfig,inetd,ftp,telnet,traceroute}
+http://seclists.org/fulldisclosure/2015/Aug/31
+CodoForum 3.3.1 XSS
 
-which is why i do not easily (without build overlay) can be
-embarrased in a situation of necessity, to use telnetd, you know.
+http://seclists.org/fulldisclosure/2015/Aug/32
+CodoForum 3.3.1 SQL Injection
 
-Since i have seen Lyndon Nerenberg's message already, yes,
-plenty of possibilities there may be (i wonder how many of those
-could be driven via nc, especially so with an nc which could
-be sliced into some inetd (fwiw) and have an -e, or what about
-introduction of a pty layer), but the security layer algorithms
-(RFC 2953) seem historic -- and, generally speaking, to me it
-looks like a layer abstraction error, so *if*, then maybe that
-IANA registered port 992 for telnets should become used, should
-become an official RFC (except in the email area less harcore
-SMTP the IETF is a great thing *imho* (except for the "I" being
-"not so" "I"), but anyway, no notion of telnets or port 992 in
-inetutils whatsoever, so that would require an external wrapper.
-Maybe nc can provide the necessary TLS wrapper for plain telnetd.
-But Linux/Unix is not Plan9, and wrapper programs are expensive,
-all those context-switches (surely), and data copying (likely).
-(Yet Johnson of dropbear refused a patch that simply did some FD
-exchange, instead he insisted on command line wrapper mode via
-nc(1), a decade or more ago.)
+http://seclists.org/fulldisclosure/2015/Aug/67
+ModX Revolution 2.3.5-pl XSS
 
-So to reiterate that in my opinion nc is a good thing, except for
-not using "network newline" aka \r\n but .. i think plain Unix \n.
-Surely the OpenBSD people will not add -e, and i am afraid there
-will be no pty mode either.  But i personally would always refrain
-from spreading crypto to anywhere, there are too many libraries
-around already *imho*, which need to share the eyes which can look
-and see, so that is that.
+http://seclists.org/fulldisclosure/2015/Aug/65
+Phorum 5.2.19 XSS
 
---steffen
-|
-|Der Kragenbaer,                The moon bear,
-|der holt sich munter           he cheerfully and one by one
-|einen nach dem anderen runter  wa.ks himself off
-|(By Robert Gernhardt)
+http://seclists.org/fulldisclosure/2015/Sep/53
+Anchor CMS 0.9.2: XSS
+
+http://seclists.org/fulldisclosure/2015/Sep/54
+Zen Cart 1.5.4: Code Execution
+
+http://seclists.org/fulldisclosure/2015/Sep/55
+ZeusCart 4.0: XSS
+
+http://seclists.org/fulldisclosure/2015/Sep/60
+ZeusCart 4.0: SQL Injection
+
+http://seclists.org/fulldisclosure/2015/Sep/62
+ZeusCart 4.0: CSRF
+
+http://seclists.org/fulldisclosure/2015/Sep/61
+ZeusCart 4.0: Code Execution
+
+http://seclists.org/fulldisclosure/2015/Oct/107
+Pligg CMS 2.0.2 Code Execution & CSRF
+
+http://seclists.org/fulldisclosure/2015/Oct/108
+Pligg CMS 2.0.2 Directory Traversal
+
+http://seclists.org/fulldisclosure/2015/Oct/110
+Pligg CMS 2.0.2 Multiple SQL Injections
+
+http://seclists.org/fulldisclosure/2015/Nov/2
+SQL Buddy 1.3.3 XSS
+
+http://seclists.org/fulldisclosure/2015/Nov/1
+SQL Buddy 1.3.3 CSRF
+
+http://seclists.org/fulldisclosure/2015/Nov/5
+Chyrp CMS 2.5.2  XSS
+
+http://seclists.org/fulldisclosure/2015/Nov/19
+MiniBB 3.1.1 XSS
+
+http://seclists.org/fulldisclosure/2015/Nov/20
+MyWebSQL 3.6 CSRF
+
+http://seclists.org/fulldisclosure/2015/Nov/24
+CubeCart 6.0.7 Code Execution
+
+http://seclists.org/fulldisclosure/2015/Nov/25
+CubeCart 6.0.7 XSS
+
+http://seclists.org/fulldisclosure/2015/Nov/26
+Quick.Cart 6.6 CSRF
+
+http://seclists.org/fulldisclosure/2015/Nov/27
+Quick.Cart 6.6 XSS
+
+http://seclists.org/fulldisclosure/2015/Nov/28
+TheHostingTool 1.2.6 Code Execution
+
+http://seclists.org/fulldisclosure/2015/Nov/29
+TheHostingTool 1.2.6 SQL Injection
+
+http://seclists.org/fulldisclosure/2015/Nov/30
+TheHostingTool 1.2.6 XSS
+
+http://seclists.org/fulldisclosure/2015/Nov/49
+XCart 5.2.6 XSS
+
+http://seclists.org/fulldisclosure/2015/Nov/50
+XCart 5.2.6 Path Traversal
+
+http://seclists.org/fulldisclosure/2015/Nov/51
+XCart 5.2.6 Code Execution
+
+http://seclists.org/fulldisclosure/2015/Nov/53
+TomatoCart v1.1.8.6.1 Code Execution
+
+http://seclists.org/fulldisclosure/2015/Nov/54
+TomatoCart v1.1.8.6.1 XSS
+
+http://seclists.org/fulldisclosure/2015/Nov/55
+Thelia 2.2.1 XSS
+
+http://seclists.org/fulldisclosure/2015/Nov/56
+Sitemagic CMS 4.1 XSS
+
+http://seclists.org/fulldisclosure/2015/Nov/57
+Open Source Social Network 3.5 XSS
+
+http://seclists.org/fulldisclosure/2015/Nov/58
+dotclear 2.8.1 Code Execution
+
+http://seclists.org/fulldisclosure/2015/Nov/60
+ClipperCMS 1.3.0 Code Execution
+
+http://seclists.org/fulldisclosure/2015/Nov/62
+ClipperCMS 1.3.0 CSRF
+
+http://seclists.org/fulldisclosure/2015/Nov/64
+ClipperCMS 1.3.0 Path Traversal
+
+http://seclists.org/fulldisclosure/2015/Nov/63
+ClipperCMS 1.3.0 SQL Injection
+
+http://seclists.org/fulldisclosure/2015/Nov/65
+ClipperCMS 1.3.0 XSS
+
+http://seclists.org/fulldisclosure/2015/Nov/66
+LiteCart 1.3.2 XSS
+
+http://seclists.org/fulldisclosure/2015/Nov/67
+AlegroCart 1.2.8 LFI/RFI
+
+http://seclists.org/fulldisclosure/2015/Nov/68
+AlegroCart 1.2.8 SQL Injection
+
+Thanks,
+Curesec Research Team
