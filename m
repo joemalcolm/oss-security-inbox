@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1383" "Monday" "17" "May" "2021" "15:34:12" "-0400" "Ana McTaggart" "amctagga@redhat.com" nil "66" "[oss-security] Re: CVE-2021-3531: Ceph: RGW unauthenticated denial of service" nil nil nil "5" nil nil (number mark "U       amctagga@red May 17   66/1383  " thread-indent "\"[oss-security] Re: CVE-2021-3531: Ceph: RGW unauthenticated denial of service\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Re: CVE-2021-3531: Ceph: RGW unauthenticated denial of service" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1021" "Friday" "20" "November" "2015" "11:39:54" "-0800" "Joe Bowser" "bowserj@gmail.com" "<CAOBL_k4PP6sjMSS3HdAodiLQUWO7F+=T4KX9hrHX-DjRyLN7UQ@mail.gmail.com>" "31" "[oss-security] CVE-2015-5256: Apache Cordova vulnerable to improper application of whitelist restrictions" nil nil nil "11" "2015112019:39:54" "[oss-security] CVE-2015-5256: Apache Cordova vulnerable to improper application of whitelist restrictions" (number mark "U       bowserj@gmai Nov 20   31/1021  " thread-indent "\"[oss-security] CVE-2015-5256: Apache Cordova vulnerable to improper application of whitelist restrictions\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 22153 invoked by uid 550); 17 May 2021 19:57:24 -0000
+Received: (qmail 13365 invoked by uid 550); 20 Nov 2015 19:57:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,113 +12,58 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 6067 invoked from network); 17 May 2021 19:34:40 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1621280068;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=mpHfU47ytWvlKOlEeYHf2CeTsnO8dNF9IS4QAmxAHXE=;
-	b=Ha/30AkkSRSHmROkPF2YlFFL0XUuvvu6M2mhQQpwIqplzUX6zNcg53IHiAvgjyif2kImSA
-	2XYHF9wLSsbnqgHEcT1XP5JLIHThvRh1RSfb6OQCaQil+N4Wo9XI8ReHKOB35s6G3i6dcb
-	/IRmU0mh/MwNhStGd/6bbWzGGrQ7G/Q=
-X-MC-Unique: pPc7ebkhNheylgawnHugcw-1
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=mpHfU47ytWvlKOlEeYHf2CeTsnO8dNF9IS4QAmxAHXE=;
-        b=aBjZoQAbQ0xDFvQyk1QgTOZPQAzmZDLoj1GM9LoK1YDfr2wRQtuUKKPz5d6ICpby6A
-         f/4ZqkpAyR02vvAEq2hWT2S8MUDC8zuJualX/8tvIWSaaYuObj+26tX7tdDjCyFUI2d4
-         TtypS2P4F+oFGZH9faou7tXw76LWEW5fxWtDR4Q8dV5H0By+/kjTMoHdsPYHFvH10Ih0
-         QyBJZP3RjiJ2DpeXtRUJid2NTnZEZlKJCmts6VE9rJtYZzMspOfZPEx7yKWP08AI4lf/
-         x6OQPP1PdvqMtcL01rfo5DKNpTeM7w50zclYvzqQxGKuhab3EvhWz0rGW87N3ExrIBYL
-         f8dQ==
-X-Gm-Message-State: AOAM532cOM/t5yr5icUxBu2ni/FOTYbsuFbSlVpsWyXMkuBeZdCVmQD3
-	sRGYxq/qofZFsO9wNkD57+CnQhGmpakpc8yXNt69fap1JBiHoPMjTxkwQCkgtefO6SQ7ssASu92
-	u0X2/RhVYGrdBm//FVBYQSsnSWI4acDZXp8wnd4s0Q9+4
-X-Received: by 2002:a05:6214:18c4:: with SMTP id cy4mr1308098qvb.31.1621280063724;
-        Mon, 17 May 2021 12:34:23 -0700 (PDT)
-X-Google-Smtp-Source: ABdhPJzrIS3kb6w7PmbFlq9UBRJ350ROG7AamuOK9hbuWbq3L1MNHUQLZVSL3vwxDiiO1r5WAqQNVYwKM1+ZejVUBq8=
-X-Received: by 2002:a05:6214:18c4:: with SMTP id cy4mr1308076qvb.31.1621280063443;
- Mon, 17 May 2021 12:34:23 -0700 (PDT)
+Received: (qmail 25938 invoked from network); 20 Nov 2015 19:40:07 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=muLVmHo3ZPriRvxU2+8Pz3khQIWFEE/zrU2nS/MD1go=;
+        b=WHV3npf1fo6HnrktZbo3weXTVNTrz+B+rZrXTusSXZNZm8elSMM5VxW6TYV4c2BL3j
+         JRfMsxcOWAoBfQ6+Ge0spY/NA72wc/AHqLetFuR381BhCRI6luqHbL+VrPBwzWa+3N0C
+         ilJBeNQaZyrxQtzrGQP9B9LMZSpTh4cFxl/79wy8YEMH9TKrm/ezVPo+7bCbOxJHlUe6
+         A4o8/MGQpgq2JqcNPisFBBFceirMBUSph9qjgwD5niDOZWw5s7MREJN0fHEvoSfcQC+l
+         6PDjfotBLaQVplnHlZue7o20eGYYWoak+jhHZX153/dPaHXnTsAdLob4WsQWfLyB6hOP
+         exUw==
 MIME-Version: 1.0
-References: <CABBoStjJjmxfF-4OLiBq4D_uJ4LuUqrxftAeh5UCxntLsyoshQ@mail.gmail.com>
-In-Reply-To: <CABBoStjJjmxfF-4OLiBq4D_uJ4LuUqrxftAeh5UCxntLsyoshQ@mail.gmail.com>
-From: Ana McTaggart <amctagga@redhat.com>
-Date: Mon, 17 May 2021 15:34:12 -0400
-Message-ID: <CABBoStiNOoDZWc+ehgQSYDLaLSz0prSGR+fTS0wbuyCmB9muwQ@mail.gmail.com>
-To: oss-security@lists.openwall.com, felix.huettner@mail.schwarz
-Authentication-Results: relay.mimecast.com;
-	auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=amctagga@redhat.com
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Type: multipart/alternative; boundary="00000000000043691b05c28bae4b"
-Subject: [oss-security] Re: CVE-2021-3531: Ceph: RGW unauthenticated denial of service
+X-Received: by 10.107.9.219 with SMTP id 88mr16261808ioj.6.1448048395146; Fri,
+ 20 Nov 2015 11:39:55 -0800 (PST)
+Date: Fri, 20 Nov 2015 11:39:54 -0800
+Message-ID: <CAOBL_k4PP6sjMSS3HdAodiLQUWO7F+=T4KX9hrHX-DjRyLN7UQ@mail.gmail.com>
+From: Joe Bowser <bowserj@gmail.com>
+To: vuls@jpcert.or.jp, "security@apache.org" <security@apache.org>, dev <dev@cordova.apache.org>, 
+	"private@cordova.apache.org" <private@cordova.apache.org>, bugtraq@securityfocus.com, 
+	oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary=001a113eb12635de7d0524fe0aed
+Subject: [oss-security] CVE-2015-5256: Apache Cordova vulnerable to improper application of
+ whitelist restrictions
 
---00000000000043691b05c28bae4b
-Content-Type: text/plain; charset="UTF-8"
+--001a113eb12635de7d0524fe0aed
+Content-Type: text/plain; charset=UTF-8
 
-To clarify, the correct patch may be found in the following commit.
-https://github.com/ceph/ceph/commit/f44a8ae8aa27ecef69528db9aec220f12492810e
+======================================================================
+CVE-2015-5256: Apache Cordova vulnerable to improper application of
+whitelist restrictions
 
-Ana McTaggart
+Severity: Medium
 
-Red Hat Product Security
+Vendor:
+The Apache Software Foundation
 
-Red Hat Remote <https://www.redhat.com>
+Versions Affected:
+Cordova Android 3.7.2 and earlier
 
+Description:
+Android applications created using Apache Cordova that use a remote server
+contain a vulnerability where whitelist restrictions are not properly
+applied.
+Improperly crafted URIs could be used to circumvent the whitelist, allowing
+for the execution of non-whitelisted Javascript.
 
-secalert@redhat.com for urgent response
+Upgrade path:
+Developers who are concerned about this should rebuild their applications
+with Cordova Android 4.1.1 or later and use the new whitelist.  Developers
+using remote content roots should also use SSL, as well as Content Security
+Policy to further mitigate this issue.
 
+Credit: Muneaki Nishimura of Sony Digital Network Applications, Inc
 
-amct@redhat.com
-
-
-M: +1 (774)279-0791 <7742790791>     IM: amctagga
-
-
-Pronouns:They/Them/Theirs
-
-
-
-On Fri, May 14, 2021 at 3:16 PM Ana McTaggart <amctagga@redhat.com> wrote:
-
-> Hello,
-> A flaw was found in the Red Hat Ceph Storage RGW. When processing a GET
-> Request for a swift URL that ends with two slashes it can cause the rgw to
-> crash, resulting in a denial of service.
->
-> We have assigned it a CVE of CVE-2021-3531 and a patch is attached.
->
-> Fixes may be found here:
->
-> Nautilus:
-> https://github.com/ceph/ceph/commit/f44a8ae8aa27ecef69528db9aec220f12492810e
-> Octopus:
-> https://github.com/ceph/ceph/commit/b87e64e3206210580f4a6df2d77f9ae3f1033039
-> Pacific:
-> https://github.com/ceph/ceph/commit/bf06990ab41d7ac299e4441ad9cd434e926a18e7
->
-> Ana McTaggart
->
-> Red Hat Product Security
->
-> Red Hat Remote <https://www.redhat.com>
->
->
-> secalert@redhat.com for urgent response
->
->
-> amct@redhat.com
->
->
-> M: +1 (774)279-0791 <7742790791>     IM: amctagga
->
->
-> Pronouns:They/Them/Theirs
->
->
-
---00000000000043691b05c28bae4b--
-
+--001a113eb12635de7d0524fe0aed--
