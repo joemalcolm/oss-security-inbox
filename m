@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2135" "Thursday" "29" "June" "2017" "16:23:46" "+0200" "Solar Designer" "solar@openwall.com" "<20170629142346.GA30874@openwall.com>" "52" "Re: [oss-security] TIOCSTI not going away" "^Date:" nil nil "6" "2017062914:23:46" "[oss-security] TIOCSTI not going away" (number mark "        solar@openwa Jun 29   52/2135  " thread-indent "\"Re: [oss-security] TIOCSTI not going away\"\n") "<20170603165813.GA20708@openwall.com>" ("<20170603165813.GA20708@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1412" "Monday" "23" "November" "2015" "13:13:08" "+0100" "Jan Rusnacko" "jrusnack@redhat.com" "<565302D4.2020900@redhat.com>" "32" "Re: [oss-security] CVE Request: git" nil nil nil "11" "2015112312:13:08" "[oss-security] CVE Request: git" (number mark "U       jrusnack@red Nov 23   32/1412  " thread-indent "\"Re: [oss-security] CVE Request: git\"\n") "<20151006035647.GG16643@hunt>" ("<20151006035647.GG16643@hunt>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 8076 invoked by uid 550); 29 Jun 2017 14:24:21 -0000
+Received: (qmail 32337 invoked by uid 550); 23 Nov 2015 12:11:46 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,69 +11,52 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 7853 invoked from network); 29 Jun 2017 14:23:56 -0000
-Message-ID: <20170629142346.GA30874@openwall.com>
-References: <20170603165813.GA20708@openwall.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20170603165813.GA20708@openwall.com>
-User-Agent: Mutt/1.4.2.3i
-Date: Thu, 29 Jun 2017 16:23:46 +0200
-From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] TIOCSTI not going away
-To: oss-security@lists.openwall.com
+Received: (qmail 32303 invoked from network); 23 Nov 2015 12:11:45 -0000
+To: oss-security@lists.openwall.com,
+        Assign a CVE Identifier <cve-assign@mitre.org>
+References: <20151006035647.GG16643@hunt>
+From: Jan Rusnacko <jrusnack@redhat.com>
+Message-ID: <565302D4.2020900@redhat.com>
+Date: Mon, 23 Nov 2015 13:13:08 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.3.0
+MIME-Version: 1.0
+In-Reply-To: <20151006035647.GG16643@hunt>
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.24
+Subject: Re: [oss-security] CVE Request: git
 
-On Sat, Jun 03, 2017 at 06:58:13PM +0200, Solar Designer wrote:
-> On LKML, CC'ed to the kernel-hardening mailing list, Matt Brown has been
-> pushing for the upstream Linux kernel to introduce an option (likely to
-> be disabled by default) that would block the TIOCSTI ioctl.  Alan Cox
-> repeatedly NAK'ed this:
+On 10/06/2015 05:56 AM, Seth Arnold wrote:
+> Hello MITRE, all,
 > 
-> http://www.openwall.com/lists/kernel-hardening/2017/05/
+> The git project announced v2.6.1 https://lkml.org/lkml/2015/10/5/683
+> and included the following text:
 > 
-> Sorry there's no one specific message/thread to link to - there were
-> multiple patch revisions, and multiple NAKs with different wording.
+> 	 * Some protocols (like git-remote-ext) can execute arbitrary code
+> 	   found in the URL. The URLs that submodules use may come
+> 	   from arbitrary sources (e.g., .gitmodules files in a remote
+> 	   repository), and can hurt those who blindly enable recursive
+> 	   fetch. Restrict the allowed protocols to well known and
+> 	   safe ones.
 > 
-> Alan's reasoning is that userspace apps like this have to be allocating
-> a new pty anyway, and the kernel change wouldn't help much since TIOCSTI
-> isn't the only way to cause trouble (although per my reading of the
-> examples given, other ways/troubles are either not exactly as bad or not
-> exactly as generic).
+> The following commits appear to implement the restrictions:
+> 
+> https://kernel.googlesource.com/pub/scm/git/git/+/a5adaced2e13c135d5d9cc65be9eb95aa3bacedf%5E%21/
+> https://kernel.googlesource.com/pub/scm/git/git/+/33cfccbbf35a56e190b79bdec5c85457c952a021%5E%21/
+> https://kernel.googlesource.com/pub/scm/git/git/+/5088d3b38775f8ac12d7f77636775b16059b67ef%5E%21/
+> https://kernel.googlesource.com/pub/scm/git/git/+/f4113cac0c88b4f36ee6f3abf3218034440a68e3%5E%21/
+> https://kernel.googlesource.com/pub/scm/git/git/+/b258116462399b318c86165c61a5c7123043cfd4%5E%21/
+> 
+> I do not know if this is exhaustive.
+> 
+> The announcement also mentions some int-based overflows but does not
+> describe any situations that would allow crossing privilege boundaries.
+> 
+> Please assign CVEs as appropriate.
 
-While TIOCSTI is apparently not going away on Linux, it is on OpenBSD,
-and here's some analysis of the apparently almost non-existent impact
-this will have on Emacs (which was one of the primary examples cited for
-keeping TIOCSTI on Linux):
+Can CVE be assigned to this vulnerability please?
 
-https://marc.info/?l=openbsd-tech&m=149868123704451
-
-Theo de Raadt wrote:
-
-"There are indications that a few ports use TIOCSTI.  The list is
-pretty small, and I have not reviewed whether the use of TIOCSTI
-actually occurs during runtime on OpenBSD:
-
-    x11vnc tcsh ucblogo brltty epic4 trn libsanitizer
-    jvim2.0r+onew2.2.10-wnn4 emacs qemu ngspice
-
-I hope those programs get fixed quickly"
-
-Jeremie Courreges-Anglas wrote:
-
-"TIOCSTI is only used once in editors/emacs.  The return value of
-ioctl(2) isn't checked.  This is in the "suspend-emacs" function, ie
-what's called when pressing ^Z, can take an optional string to be sent
-to the parent process.
-
-I could spot only one place in emacs-25.2 where this optional string is
-used, lisp/obsolete/ledit.el, an obsolete mode for Franz Lisp"
-
-Maybe Christos could comment on tcsh?
-
-Whatever happens (or doesn't happen) for upstream Linux, there will be
-system(s) dropping TIOCSTI or at least introducing a way to disable it,
-so reducing userspace programs' dependencies on TIOCSTI makes sense.
-
-Alexander
+-- 
+Jan Rusnacko, Red Hat Product Security
