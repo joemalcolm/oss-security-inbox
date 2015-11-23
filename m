@@ -1,4 +1,9 @@
-Received: (qmail 19600 invoked by uid 550); 27 Oct 2025 19:22:03 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2427" "Monday" "23" "November" "2015" "16:27:48" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151123212748.4C2036C01B3@smtpvmsrv1.mitre.org>" "56" "[oss-security] Re: CVE request -- linux kernel: Null pointer dereference when mounting ext4 filesystem" nil nil nil "11" "2015112321:27:48" "[oss-security] Re: CVE request -- linux kernel: Null pointer dereference when mounting ext4 filesystem" (number mark "U       cve-assign@m Nov 23   56/2427  " thread-indent "\"[oss-security] Re: CVE request -- linux kernel: Null pointer dereference when mounting ext4 filesystem\"\n") "<156275171.20653603.1448277357841.JavaMail.zimbra@redhat.com>" ("<156275171.20653603.1448277357841.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 30333 invoked by uid 550); 23 Nov 2015 21:28:01 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,30 +12,68 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 19569 invoked from network); 27 Oct 2025 19:22:03 -0000
-Date: Mon, 27 Oct 2025 19:21:54 +0000
-From: Moritz =?iso-8859-1?Q?M=FChlenhoff?= <jmm@inutil.org>
-To: oss-security@lists.openwall.com
-Message-ID: <aP_GUo51BVldIFVQ@inutil.org>
-References: <2ccbcc13-fc25-484c-a34d-56f27ac87db7@oracle.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <2ccbcc13-fc25-484c-a34d-56f27ac87db7@oracle.com>
-Subject: Re: [oss-security] Questionable CVE's reported against dnsmasq
+Received: (qmail 30313 invoked from network); 23 Nov 2015 21:28:00 -0000
+From: cve-assign@mitre.org
+To: vdronov@redhat.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <156275171.20653603.1448277357841.JavaMail.zimbra@redhat.com>
+Message-Id: <20151123212748.4C2036C01B3@smtpvmsrv1.mitre.org>
+Date: Mon, 23 Nov 2015 16:27:48 -0500 (EST)
+Subject: [oss-security] Re: CVE request -- linux kernel: Null pointer dereference when mounting ext4 filesystem
 
-On Mon, Oct 27, 2025 at 09:34:03AM -0700, Alan Coopersmith wrote:
-> Among the new CVE's published this weekend were these from the VulDB CNA:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
+
+> It was reported that there are some exit paths in ext4_fill_super() which result
+> in destruction of workqueue which is not yet initialized, leading to kernel NULL
+> pointer dereference. A privileged user with permission to mount a filesystem or
+> anybody having physical access to the system's USB port and prepared filesystem
+> on USB disk which will be automatically mounted can cause system panic and thus
+> DoS.
 > 
-> For all three bugs, the documented "exploit" requires "Replace the default
-> configuration file (/etc/dnsmasq.conf) with the provided malicious file."
-> and if you can replace the server's configuration file you don't need to
-> play games with putting invalid contents in to break the parser, but can
-> simply change the configuration directly.
+> https://bugs.openvz.org/browse/OVZ-6541 - initial public disclosure
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=1267261 - red hat public bug
+> 
+> commit 744692dc059845b2a3022119871846e74d4f6e11 - upstream Linux kernel commit
+> which fixes the issue (only part of the commit is related).
 
-The same nonsense also happened for the Kamailio SIP server (CVE-2025-12204,
-CVE-2025-12205, CVE-2025-12206 and CVE-2025-12207).
+>> http://ftp.linux.org.uk/pub/linux/linux-2.6/ChangeLog-2.6.34
+>> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=744692dc059845b2a3022119871846e74d4f6e11
 
-Cheers,
-        Moritz
+As far as we can tell, what you mean is that:
+
+  - "[media] usbvision: usbvision_probe() can trigger a kernel NULL
+    pointer dereference" in the "Thread-Topic" header of your message
+    is completely unrelated to the vulnerability. That header
+    apparently originated in a message you composed a few weeks ago.
+
+  - this is an ext4 issue that was fixed in 2.6.34 in May 2010
+
+  - the possible security relevance wasn't publicly described until
+    2015
+
+Use CVE-2015-8324.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJWU4RmAAoJEL54rhJi8gl5750P/35CCN2s9KIAsEXcMmxtyXQh
+kF9RUSoIm/jjBJHr2BYNnuzKXuk62InfdsgPPI4zFRTFXfLZaY+XJootyv4iSwVO
+a9u4hYuVktm4HdEnRmKcOwTjXVGnVKXT+Ax9rMWD8w/OeZTyjVAf4EI/ETvyRlFl
+unuRQ9XqlEUr44iF+FmgqFXBUxCghZPGBTFlAZxgvEiXN7md4mtUOgmnSyD+fdbR
+wHDQxqh70ErQ+qUajK1wDxDT52YcwnzK9MRf44AiE7+HFMtANGB1fzhOUJM6h0aD
+lHPsn+N9+QjZlcCz2sEYBQakJaGoUzZl0//J//CZWNGmUwDxGopNSBdEDVfCWshD
+8opUhDMkWQfr2Tk9WOrjas4ZMiSjN6qksJqWzDzvJjdSqn3jX3Z7ougFl7TUN9Mb
+ItPHWRNlUYHGFgBp4A9MjADwib/LxSQ+lbC5FM/T5E+kwTU7Umf1P0fr6LRpbASU
+IEJDgy3l25NlGeZ6bzYsUwzNgoUqvY6o9O/yvh2kwP4wHgIBSYrW2Or2xx7P5TAj
++dab6qsJ019bZW56m8gWnGTf/hD0pgIMGSQGaOQOe5mtocfVohZm0ZZfyltRhJqO
+ZOLLtjmtlL9FSSEJtQqiUWCvFztp5C/WFSWkfsLjCm5Yoy3bHbTK9HJ+aIlI7hJq
+O90sihjXAtWBittcww4m
+=Iq/e
+-----END PGP SIGNATURE-----
