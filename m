@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1483" "Sunday" "14" "February" "2016" "12:57:44" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160214175744.C280F332032@smtpvbsrv1.mitre.org>" "40" "[oss-security] Re: CVE Request: Linux: ALSA: usb-audio: double-free triggered by invalid USB descriptor" nil nil nil "2" "2016021417:57:44" "[oss-security] Re: CVE Request: Linux: ALSA: usb-audio: double-free triggered by invalid USB descriptor" (number mark "U       cve-assign@m Feb 14   40/1483  " thread-indent "\"[oss-security] Re: CVE Request: Linux: ALSA: usb-audio: double-free triggered by invalid USB descriptor\"\n") "<20160214153152.GA27269@eldamar.local>" ("<20160214153152.GA27269@eldamar.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2131" "Monday" "23" "November" "2015" "02:59:50" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151123075950.3224E6C0934@smtpvmsrv1.mitre.org>" "50" "[oss-security] Re: CVE-2015-5257 - Weak Randomization of BridgeSecret for Apache Cordova Android" nil nil nil "11" "2015112307:59:50" "[oss-security] Re: CVE-2015-5257 - Weak Randomization of BridgeSecret for Apache Cordova Android" (number mark "U       cve-assign@m Nov 23   50/2131  " thread-indent "\"[oss-security] Re: CVE-2015-5257 - Weak Randomization of BridgeSecret for Apache Cordova Android\"\n") "<20151122175003.GA13876@eldamar.local>" ("<20151122175003.GA13876@eldamar.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 3557 invoked by uid 550); 14 Feb 2016 17:57:58 -0000
+Received: (qmail 4085 invoked by uid 550); 23 Nov 2015 08:00:07 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,32 +12,42 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3530 invoked from network); 14 Feb 2016 17:57:56 -0000
+Received: (qmail 4044 invoked from network); 23 Nov 2015 08:00:02 -0000
 From: cve-assign@mitre.org
 To: carnil@debian.org
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, benh@debian.org
-In-Reply-To: <20160214153152.GA27269@eldamar.local>
-Message-Id: <20160214175744.C280F332032@smtpvbsrv1.mitre.org>
-Date: Sun, 14 Feb 2016 12:57:44 -0500 (EST)
-Subject: [oss-security] Re: CVE Request: Linux: ALSA: usb-audio: double-free triggered by invalid USB descriptor
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, DAVIDKA@il.ibm.com, ROEEH@il.ibm.com, private@cordova.apache.org, dev@cordova.apache.org, security@apache.org
+In-Reply-To: <20151122175003.GA13876@eldamar.local>
+Message-Id: <20151123075950.3224E6C0934@smtpvmsrv1.mitre.org>
+Date: Mon, 23 Nov 2015 02:59:50 -0500 (EST)
+Subject: [oss-security] Re: CVE-2015-5257 - Weak Randomization of BridgeSecret for Apache Cordova Android
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> https://git.kernel.org/linus/07d86ca93db7e5cdf4743564d98292042ec21af7
-> https://lkml.org/lkml/2016/2/13/11
-> ALSA: usb-audio: avoid freeing umidi object twice
->
-> The 'umidi' object will be free'd on the error path by snd_usbmidi_free()
-> when tearing down the rawmidi interface. So we shouldn't try to free it
-> in snd_usbmidi_create()
+>> CVE-2015-5257: Weak Randomization of BridgeSecret for Apache Cordova Android
 
-> sound/usb/midi.c
-> snd_usbmidi_create
-> 
-> -   snd_usbmidi_free(umidi);
+> Is there a typo here? CVE-2015-5257 was already assigned for an issue
+> in drivers/usb/serial/whiteheat.c in the Linux kernel. see
+> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-5257
 
-Use CVE-2016-2384.
+The outcome here is that this BridgeSecret vulnerability is now known
+as CVE-2015-8320, not CVE-2015-5257. (Nobody working on Cordova was
+involved in any typo or misuse of a CVE ID; however, that does not
+change the outcome.) CVE-2015-5256 is unaffected by this event.
+
+For additional details, see some or all of the following URLs
+later today or tomorrow:
+
+  http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-5257
+
+  https://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2015-5256
+  http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-5256
+
+  https://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2015-8320
+  http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-8320
+
+  https://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2015-5275
+  http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-5275
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -47,17 +57,17 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJWwL7rAAoJEL54rhJi8gl5aVwP/0NkRkHIt/v2RbQ3hDt/zD7S
-gP6sasJfZV2T5GyqoCzqZ87gtgdBhgphX2YNS7s+BFwxvRHLmY9wXVYFpQgVzaNn
-6mvSfz1rrWfjmpIAkcqWrH+LcDsXB4jfnRqu/n3VBPvm7dPdFDydNl87fqzzUxuE
-mzOx+nJZu8fGfOJZCEQM1OCkGCOZwxNtH4XPdhkjuzfBrCUhWOKHwc2yfwsBcBv/
-tsfthuJpffxLm3Dr3HFrkr9CJS/JPUBxNXZHYrHP359id2NZkoq2wp0i4y9DWhwg
-ddHIEdeqO5U6gZB+WolAZL284O5WnVdbHzjZO4Gx6Ik240Ab5rQWmX4WJabSnDwf
-pMr7k5LZWc4lWSE7vJ9Akrz0ZFkZsfqNaCV1RjitRgXQ+F4sm76PaQj/0vAieeaJ
-38JOc4sDQYcvhRvMVjyNyAaaB78fdsoOGkwt7sZR7q+syUDkRaFdrNaeerYk+8Gx
-ojPmweX0ELnw1taN/CwEfBJ6LDDBJfuZmYyPjABKjdaHIvAHzOdZRAez1HDdLX6C
-9hDt/Zq4foSJdZsIpvwDUOUzmLf4tEkBofbQXtz/H7mVrcimNIHInvXHdwLxghop
-XjflF9+S+3n0I+QsJ6p0mNQXm+O0+PiR7ppEZhTqt+GOCGWZEIzJoK4xz8cU0BAV
-Xrgkzti6q4qA2mCEvj+H
-=EO2f
+iQIcBAEBCAAGBQJWUsYoAAoJEL54rhJi8gl5ymkQAJftRBBnk52E/5xni8vgGSBR
+Ar0ihQ2/SwiTh4cu/N2FvxPWtdw1G+xHsFyiknW3tDlUJhVy04HJ23gYf5AJTXn6
+31yL1mPZz+AsM87sCupr9lqKzS+/HBbuVBPzz+Zs8Vb4pQYiuz/8Z0yCD4HR6iH8
+OGLf9K+mZ07TqyaZkI8a23PjX5BaYqRxNR+vRsRNVuiFTiPq86++mrMUm+AUTNMJ
+I1MyOZITMTCdITonmWIZj2XaFjyRZNd285bf/UqSirYAatinyuptEBlgHmgefYyU
+UT/hYMnwiE6ajP5Ep8wbWBEmGqq22LFpaEVAkcTg3kFHxnYV/vt3Wt7l33yLPDwL
+Gl3sQ71Njf681afx31ztv9CY+No2GTUtUjpUw074d/8SrIj0VWi+uzxNKtHtNaPR
+jCfYVWWdbWm7wOfxjRk4O6F0SLh1fnkeVlHUpLTFJ/+j6j3c5BYrnTDL87+Uv/Bc
+5WPjQ9xvctATout0bKszsgL70nOpSBYaFhct9wX5cdPgKiWB9upjW0nM25EMPK42
+EE4Q2bgeDGGLfUubn//NSR33zI9OrglQNn9VeY9BrvyvKZ97nS2YRs5ZvTpY6miu
+YjOe+NTzr0NcurMOVg/8Jx17UNVcbawd8lg0fA7AUqIzIMoJgI6k6MF+sIipfhj0
+oEUUJNT0CzLYuIhkEB5n
+=MJhw
 -----END PGP SIGNATURE-----
