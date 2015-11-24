@@ -1,4 +1,9 @@
-Received: (qmail 23720 invoked by uid 550); 16 Apr 2026 00:32:30 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1942" "Tuesday" "24" "November" "2015" "09:47:42" "-0800" "Tim Graham" "timograham@gmail.com" "<9fb0c4f7-6f07-4fa9-b5d9-15137d077b08@googlegroups.com>" "32" "[oss-security] [ANNOUNCE] Django security releases issued (1.7.11, 1.8.7, and 1.9rc2)" nil nil nil "11" "2015112417:47:42" "[oss-security] [ANNOUNCE] Django security releases issued (1.7.11, 1.8.7, and 1.9rc2)" (number mark "U       timograham@g Nov 24   32/1942  " thread-indent "\"[oss-security] [ANNOUNCE] Django security releases issued (1.7.11, 1.8.7, and 1.9rc2)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 19500 invoked by uid 550); 24 Nov 2015 17:48:01 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,133 +12,67 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 18086 invoked from network); 16 Apr 2026 00:21:53 -0000
+Received: (qmail 18395 invoked from network); 24 Nov 2015 17:47:55 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1776298904; x=1776903704; darn=lists.openwall.com;
-        h=content-transfer-encoding:mime-version:user-agent:message-id:date
-         :references:in-reply-to:subject:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=9/oTnOniZSBDMvaYEQIK+fmmhbtLdsco7LFulC3PYS8=;
-        b=BRBaPN17ZdVB9OvWoA88srsSt+TPPj9b8ZCBjuyG+FNoIF84q1FGkpurq5AGOa4osO
-         FQBZ6U3MSpJ6uR9+Q9AjPZ44pK/k1oHw0nhKb5mbCjYylev0wkiyohW94Yx7yAp/f6JJ
-         wkJuf4nMjfXdG56ie6KbTn4N1rRhFyV37FBRGmF8zQwdY3UiQQeEgrRquGD8D+gVeNMo
-         yeCFxKuRRwh1X/NX3Uvdx1vI4dQX60uid8leDjBv899IZPxFZxVd2Wk2NVvx1ZyBdZln
-         qHR8pNLxSKZNahJ3Map5A9aIctMnIJ5xXwJa5lfrJfzJlYpKqWKapAKPTtMync0F0b+Z
-         tOzg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776298904; x=1776903704;
-        h=content-transfer-encoding:mime-version:user-agent:message-id:date
-         :references:in-reply-to:subject:to:from:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=9/oTnOniZSBDMvaYEQIK+fmmhbtLdsco7LFulC3PYS8=;
-        b=o6fD8Np+g5vxYBWhUq4sAa1cwSZfSPkNjCr/fRVCGzOEGrLWFYdqD8DmzkVHergZI+
-         scTm+2aDiv3Kz0LhtHER/nBCRrNd+/0HYo3x8BFiVLgG1Tc3PNlKfqbB8PV4HU90y5TD
-         Gss5hdl8NIQJZ6GJeVWkf2OaX6uWJmrZrG3xZ5OVZEYyHlWTKcrZbfSlScpdevmUSmKH
-         iLss805z1HgRyJ7ENLkB8r4GemDZ5k+aZbIXd2VqXDVs0tM+3DfFMQ2lZSwlDIW+8oxy
-         AEQUoWalzzAuszflgQlSFDi0bK+IcgFKr8ah9LyowQ4Y/b1RTyJflkE9YR0yy8a60h9q
-         sREA==
-X-Gm-Message-State: AOJu0Yx/sn39LMO7wBvxebVChlRSViwtWWPQdcm0iR/J5VY4M/jPJGSQ
-	Af/BbxSGsGALQYw7g0J1iMSbbNkb9hoeqDpveiVJAMOE5BbEO96djib6OqEmbQ==
-X-Gm-Gg: AeBDiesmhW0ZLLDu1SCPvWRlhWykiWJGdhdsSSnX2Nwy5OFJdsh1SzuxJ2g2S5NEVhF
-	/O8muUpIjpfweFaHmZoS+4WjaCQuXidCLdd3APL1jRfpt5VIzb5ZEQQGeF7Zn64ZQ+XKoboLf9J
-	FZ6GHsdzETg5SE8gpQdK8p+gMY1urVzbCOlCrAudLCduhoVhiSZP3PHY8n6Zys1qOoLZ/usHohY
-	6yM3qv+Q/a1r3X1CpEmZ/qfoC1ntEEpQK9oX2s6AQsouBZKiUYeAUs2Mi6N2xjlLRdN40dd0Ub1
-	Fi/dn2eeeBOdy8cgoh7iJUdviSr4AhGTMX/Zhhm4xh+I7XNu9IsseirZE2R7GJklGxjJodywXDA
-	1XGhTnSXdE3/9/rZqV4C1NgRncp6ZUBgtyb4jBUaF6wl0NyhN+J+YxyhTolAemYji2mObZy8HW2
-	XwSmWH
-X-Received: by 2002:a05:7300:7c0c:b0:2d4:94cc:eebb with SMTP id 5a478bee46e88-2d586ea78eamr14555059eec.13.1776298903581;
-        Wed, 15 Apr 2026 17:21:43 -0700 (PDT)
-From: Collin Funk <collin.funk1@gmail.com>
-To: oss-security@lists.openwall.com
-In-Reply-To: <c9bd5dbd-7b11-4637-80cd-5dec79dd491f@oracle.com>
-References: <c9bd5dbd-7b11-4637-80cd-5dec79dd491f@oracle.com>
-Date: Wed, 15 Apr 2026 17:21:42 -0700
-Message-ID: <87qzofoiuh.fsf@gmail.com>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:message-id:subject:mime-version:content-type;
+        bh=K93Ai8mibg0Rr7JpSqrpb8QQSC4T+KOIlu8oZtNqBIY=;
+        b=k89AN0OYwIue3+g2xBuor4rZwLtiPekGNohnFDiuOL14AWmz89pfEOh/2yexq5pXpk
+         319eE3/tufa5dvuY2tpfQn0pWN3lwMW5CB3KbdkfqjW2XK6/7/MAG5Y+OvSV335NCI62
+         ENcI2kuoPMOtra248H2us/bmiV/EycCO6x+oT/vOagA+vmbx7koYibNwZno7cqk5fZQB
+         xhpx2DQrkR/cC02JYEvExeRetdh5oNap870PsnEaWRi2PIeqni0OmiDOHEi8B4y9g9z7
+         zKfiAH5dlH/O0y31h0a1S5dkCptBAg2RQdg8GjmfKb0M/5Cj4dgqMxPpsylkQrEWwGnf
+         cEEw==
+X-Received: by 10.50.13.105 with SMTP id g9mr110301igc.5.1448387263556;
+        Tue, 24 Nov 2015 09:47:43 -0800 (PST)
+X-Google-Doc-Id: 98ed80c53d2b
+X-Google-Thread-Id: aad1435ddfed50cc
+X-Google-Message-Url: http://groups.google.com/group/django-announce/msg/98ed80c53d2b
+X-Google-Thread-Url: http://groups.google.com/group/django-announce/t/aad1435ddfed50cc
+X-Google-Web-Client: true
+Date: Tue, 24 Nov 2015 09:47:42 -0800 (PST)
+From: Tim Graham <timograham@gmail.com>
+To: django-announce <django-announce@googlegroups.com>
+Cc: django-developers@googlegroups.com, django-users@googlegroups.com, 
+	oss-security@lists.openwall.com
+Message-Id: <9fb0c4f7-6f07-4fa9-b5d9-15137d077b08@googlegroups.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [oss-security] 7 vulnerabilities disclosed & patched in jq
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_5674_97398159.1448387262661"
+X-Google-Token: EL7F0rIFVcEyT_GGlC80
+X-Google-IP: 72.94.185.243
+Subject: [oss-security] [ANNOUNCE] Django security releases issued (1.7.11, 1.8.7, and
+ 1.9rc2)
 
-Alan Coopersmith <alan.coopersmith@oracle.com> writes:
+------=_Part_5674_97398159.1448387262661
+Content-Type: multipart/alternative; 
+	boundary="----=_Part_5675_1919951058.1448387262661"
 
-> https://github.com/jqlang/jq/security/advisories/GHSA-xwrw-4f8h-rjvg stat=
-es:
->> Unbounded Recursion in jv_setpath() / jv_getpath() / delpaths_sorted()
->> Affected versions:  <=3D 1.8.1
->> Summary
->> -------
->> The jv_setpath(), jv_getpath(), and delpaths_sorted() functions in
->> src/jv_aux.c use unbounded recursion where the recursion depth equals the
->> length of a caller-supplied path array. There is no depth limit check.
->> When a path array with ~60,000 or more elements is supplied =E2=80=94 ei=
-ther constructed
->> by a jq filter expression or provided directly in attacker-controlled JS=
-ON input
->> =E2=80=94 the C call stack is exhausted, causing a segmentation fault (S=
-IGSEGV) and
->> immediate process crash.
->> This vulnerability bypasses the MAX_PARSING_DEPTH (10,000) limit
->> that protects
->> the JSON parser, because path arrays can be constructed programmatically=
- to
->> arbitrary lengths without being constrained by parsing depth. Critically=
-, the
->> path array can be sourced entirely from attacker-controlled JSON input, =
-making
->> this exploitable in scenarios where a trusted jq filter processes untrus=
-ted data.
->>=20
-> [See GHSA for code analysis and PoC]
->> Impact
->> ------
->> - Denial of Service (Crash): Any jq process that calls setpath, getpath,=
- or
->>   delpaths with a sufficiently long path array will crash with SIGSEGV.
->>   This is an unrecoverable crash =E2=80=94 no error handling is possible.
->> - Bypass of existing depth limits: The JSON parser's MAX_PARSING_DEPTH (=
-10,000)
->>   does not protect against this because path arrays are constructed at t=
-he jq
->>   runtime level, not during JSON parsing. An attacker can embed a flat a=
-rray
->>   of 65,000 integers in a JSON document (only ~200 KB) that causes a cra=
-sh
->>   when used as a path.
->> - Affected real-world scenarios:
->>   - Web services using jq to transform or extract data from user-submitt=
-ed JSON
->>   - CI/CD pipelines processing untrusted configuration or API responses =
-with jq
->>   - Shell scripts that use setpath/getpath/delpaths on paths derived fro=
-m input
->>     data
->>   - Any application embedding libjq where path arguments can be influenc=
-ed by
->>     external input
->> - Note: Unlike memory corruption vulnerabilities, stack overflow from re=
-cursion
->>   is generally not exploitable for code execution on modern systems with=
- guard
->>   pages. The impact is limited to denial of service.
->> Severity: Moderate - 6.2 / 10
->> CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H
->> CVE ID: CVE-2026-33947
->> Weaknesses: CWE-674 Uncontrolled Recursion
->> Credits: @bg0d-glitch
->
-> https://github.com/jqlang/jq/commit/fb59f1491058d58bdc3e8dd28f1773d1ac690=
-a1f
-> declares that it fixes CVE-2026-33947.
+------=_Part_5675_1919951058.1448387262661
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-I can see the argument that this a vulnerability if it actually affects
-libjq.
+Today the Django team issued multiple releases -- Django 1.7.11, 1.8.7, and 
+1.9rc2 -- as part of our security process. These releases address a 
+security issue, and we encourage all users to upgrade as soon as possible.
 
-However, I hope it does not become a trend to file CVEs for any stack
-overflow in command-line programs. Generally the only way to work around
-that is to force the developer to place arbitrary limits on their
-program. Note that some systems may have a small stack which crashes
-before hitting the limit added in the fixed commit.
+More details can be found on our blog:
 
-Collin
+https://www.djangoproject.com/weblog/2015/nov/24/security-releases-issued/
+
+As a reminder, we ask that potential security issues be reported via 
+private email to security@djangoproject.com and not via Django's Trac 
+instance or the django-developers list. Please see 
+https://www.djangoproject.com/security for further information.
+
+------=_Part_5675_1919951058.1448387262661
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: 7bit
+
+<div dir="ltr">Today the Django team issued multiple releases -- Django 1.7.11, 1.8.7, and 1.9rc2 -- as part of our security process. 
+These releases address a security issue, and we encourage all users to upgrade as soon as possible.<br>
+<br>More details can be found on our blog:<br><br><a href="https://www.djangoproject.com/weblog/2015/nov/24/security-releases-issued/">https://www.djangoproject.com/weblog/2015/nov/24/security-releases-issued/</a><br><br>
+As a reminder, we ask that potential security issues be reported via private email to <a href="mailto:security@djangoproject.com" rel="nofollow" target="_blank">security@djangoproject.com</a> and not via Django&#39;s Trac instance or the django-developers list. Please see <a href="https://www.djangoproject.com/security" rel="nofollow" target="_blank">https://www.djangoproject.com/<wbr>security</a> for further information.</div>
+------=_Part_5675_1919951058.1448387262661--
+
+------=_Part_5674_97398159.1448387262661--
