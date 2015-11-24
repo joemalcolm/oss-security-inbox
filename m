@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["424" "Monday" "14" "September" "2020" "12:33:10" "+0200" "=?UTF-8?B?RnJhbmNlc2NvIENoaWNjaGlyaWNjw7I=?=" "ilgrosso@apache.org" "<5d3591e4-ce5b-77ca-eebe-69651d696f11@apache.org>" "17" "[oss-security] [CVE-2020-11977] Apache Syncope: Remote Code Execution via Flowable workflow definition" nil nil nil "9" "2020091410:33:10" "[oss-security] [CVE-2020-11977] Apache Syncope: Remote Code Execution via Flowable workflow definition" (number mark "U       ilgrosso@apa Sep 14   17/424   " thread-indent "\"[oss-security] [CVE-2020-11977] Apache Syncope: Remote Code Execution via Flowable workflow definition\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [CVE-2020-11977] Apache Syncope: Remote Code Execution via Flowable workflow definition" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2405" "Tuesday" "24" "November" "2015" "12:16:55" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151124171655.1DABC6C002B@smtpvmsrv1.mitre.org>" "54" "[oss-security] Re: CVE Request: IPTables-Parse: Use of predictable names for temporary files" nil nil nil "11" "2015112417:16:55" "[oss-security] Re: CVE Request: IPTables-Parse: Use of predictable names for temporary files" (number mark "U       cve-assign@m Nov 24   54/2405  " thread-indent "\"[oss-security] Re: CVE Request: IPTables-Parse: Use of predictable names for temporary files\"\n") "<20151124115711.GA22119@eldamar.local>" ("<20151124115711.GA22119@eldamar.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 19468 invoked by uid 550); 14 Sep 2020 10:56:42 -0000
+Received: (qmail 18278 invoked by uid 550); 24 Nov 2015 17:17:08 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,58 +12,66 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11844 invoked from network); 14 Sep 2020 10:33:24 -0000
-From: =?UTF-8?Q?Francesco_Chicchiricc=c3=b2?= <ilgrosso@apache.org>
-To: oss-security@lists.openwall.com
-Autocrypt: addr=ilgrosso@apache.org; prefer-encrypt=mutual; keydata=
- mQENBE9EncsBCAC02uAixULU/lI6u7y2a4hPLZ+J9eb1ZNVrg4iockEktP39C8zsve4rxltc
- 9SnT5wa2XwVTwiSl8HjxFGmc/CyMP4l+JLYLqAxvN25BXzoC7pvIpH5VcXMnTKP2bqIcIQ3H
- bR2gLxjxlEzRBgmzsnrtNWhlCi4DNuUcarMrzaWbQkW5DiieW/V7BNEKw7L/WESXWbXTC9zj
- vyf9JQ/Ql3ys7n7y+/C7nnnnRys9kJahJkYbiLasJTxRMm/ENjzwamE1s2khxNDhYXmeXyUf
- PYDv46rVP39TNNbecG9EuHbZZ1pRRSkGZJZnpWBu0O6VWOfn0aF2rR5mfbGHsQA8CQWlABEB
- AAG0OEZyYW5jZXNjbyBDaGljY2hpcmljY8OyIChpbGdyb3NzbykgPGlsZ3Jvc3NvQGFwYWNo
- ZS5vcmc+iQE4BBMBAgAiBQJPRJ3LAhsDBgsJCAcDAgYVCAIJCgsEFgIDAQIeAQIXgAAKCRBr
- QxPtJz3yh5j3B/46VEpC62uq3wiwDaUYI2fl6DYjlAuSGbI9Q7Avxpz+yDieaPE7Q3C19Xx+
- wTFrHyPOswbltmT5KDNqEpe5C9IpqoSyu7UIkqHtlXTxhsu+rFWpfABnI4sfQ0ui1VOLN3JB
- xG7G8PHCmIdYThSCRoM14u4KSU1ytd3SFtOpNLVU5TVBGm+aJWOu++XPSICn97101ndn8AJm
- JDTlHQwqMzpQTejLQnv020SouLq5cB2O6HSuSmSDpctFCdYkYLzHA6p3WzKgVXt9c3CV7Zhf
- w/XufaqXQQIkr1VLN/l13PlbPPnLluzPO+agDuCsJReFzF2JwxJYBLUIu0T8A+yrfTIzuQEN
- BE9EncsBCADQrFXb7lIhSSaTIkNnE987DGgLn9QRUEvSa+132lWcZYx+knLehdH0++F/cqUc
- 2KT17anzbOidGo0rvxwj5s42NV3lOUWIFBM7pUCwN2ef2CM3TVwA+/WrKGRFq/+cwAhSfDoc
- jtN4+vYd4NbIgzSA7ZuoaT4vKRpBex0fAN2J8tLOzXSbXdsoWRj4pVBnJ0N6WHRlaqLQnQ7o
- F1E6ZrNREMWasjxRuZ38mlpfbArnqw+lAbHL6T/BsKXOEjASe5iOPN9r95HW6dH1vmef1mOk
- /Pu6wr+eIcqwPIBUQRvHw5UnOrMugUf1ohgnx2NvggLOSlvgGBnZo47MphpOd5DVABEBAAGJ
- AR8EGAECAAkFAk9EncsCGwwACgkQa0MT7Sc98oeFHggAro4b3tGyKCV7tMz8q9drqigl/6n+
- /2riaumndUcPFZOsewDmg/75jszjc6hoe7wreBkJi0u8kvm6F0RpIlGk5WpCa7bljEc6Erm9
- GLON/DoYn1MSpdMZdwucairqvMK1YWg/7wI/xjgq6br5FBoLegVE8bd3Iy4SVWKUIRURBF7q
- Ft3rVRUJdcmqHvCWpxDJ1VKPRDHf5szVkWXFJI0xiU6KuICWidZ9Hg3WXUsm3SePD7FtokiK
- 0Y9SBzHpd9EZe8KRIHekl5gVS2Xe83GC5GvPHEXE0usYUNRDArOXqIkGUCWHZ7gzueMBcWqW
- x+uxeS7bQfZZO/7ew7lIDf4gYA==
-Message-ID: <5d3591e4-ce5b-77ca-eebe-69651d696f11@apache.org>
-Date: Mon, 14 Sep 2020 12:33:10 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-Subject: [oss-security] [CVE-2020-11977] Apache Syncope: Remote Code Execution via Flowable
- workflow definition
+Received: (qmail 18257 invoked from network); 24 Nov 2015 17:17:07 -0000
+From: cve-assign@mitre.org
+To: carnil@debian.org
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <20151124115711.GA22119@eldamar.local>
+Message-Id: <20151124171655.1DABC6C002B@smtpvmsrv1.mitre.org>
+Date: Tue, 24 Nov 2015 12:16:55 -0500 (EST)
+Subject: [oss-security] Re: CVE Request: IPTables-Parse: Use of predictable names for temporary files
 
-Description:
-When the Flowable extension is enabled, an administrator with workflow entitlements can use Shell Service Tasks to perform malicious operations, including but not limited to file read, file write, and code execution.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Severity: Low
+> https://github.com/mtrmac/IPTables-Parse/commit/b400b976d81140f6971132e94eb7657b5b0a2b87
+> https://metacpan.org/source/MRASH/IPTables-Parse-1.6/Changes
 
-Vendor: The Apache Software Foundation
+> - _iptout => $args{'iptout'} || '/tmp/ipt.out' . $$,
+> - _ipterr => $args{'ipterr'} || '/tmp/ipt.err' . $$,
+> + _iptout => $args{'iptout'} || mktemp('/tmp/ipt.out.XXXXXX'),
+> + _ipterr => $args{'ipterr'} || mktemp('/tmp/ipt.err.XXXXXX'),
 
-Affects:
-2.1.X releases prior to 2.1.7
-
-Solution:
-2.1.X users: upgrade to 2.1.7
-
-Credit:
-This issue was discovered by ch0wn of Orz Lab.
+Use CVE-2015-8326 for the vulnerability with the above fix.
 
 
+> If a user manually overrides the temporary file
+> locations with the 'iptout' and 'ipterr' hash keys, it is recommended to
+> not use predictable names either.
+
+> - 'iptout' => '/tmp/iptables.out',
+> - 'ipterr' => '/tmp/iptables.err',
+
+The deletion of the /tmp/iptables.out and /tmp/iptables.err lines is a
+documentation change. In some cases, there can be a CVE ID when
+documentation indicates an unsafe way to use a product, and a CVE ID
+for documentation would typically be separate from a CVE ID for code.
+Here, however, there is no CVE ID for the documentation change. We
+feel that a reader's most likely interpretation of those lines was
+simply that configuration was possible, not that it was a good
+configuration for a multi-user system. In general, it seems that a CVE
+ID for documentation would be more useful if a documented usage
+example were dangerous in an unexpected or subtle way.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJWVJsVAAoJEL54rhJi8gl5v4EQAMsL6bSZx9YHmeP1V/Mg1+Bl
++/4JD0hoPGHzpnCWBge9It2yjz0Qyg9VdqLHPQhyuZbO84l56bq4KrznhS9BjvwS
+bRi7toqCZ5VUqyCKDR67KU23enz2peNRuUkcTBHcen2YIsbLdUhpbkLgfhxgFWDV
+zAeTjpf7QEEiiG/kKchq0kOp5/zC0INy7AuhOOaxrv+qfrqFZhcpA4Jx+aiMHbFh
+/I+QkEDoarnV9lLQh0/3LePvfZ4RZm4TrqAT/NMlhJrM762iQ6qMsasgnR3Q3Yf6
+y61uYuTZZfRcRPsykQQTNOV8VQYSsR1gRoJqalD2S0pMehQEOcckstUVxcfAqjQc
+lXn4lLd7y7OWd4ZYDfHl4UDXXvDt8urxt0OCh1J/skdsQwK6QvrUEJLiqD6++iVC
+DQ4j2zyGIAS+Aqtjk0xSZCPZiSdNkF8GtouQVWIrv6hOJiuWG2LiRSoic8sdFeK3
+5Kta/FF/bp3YCPHlTnBHxLEzs4UgcmO/bG42v4cySBrmaeqA4hyJUWsKGxFPfPab
+8q9eAj+bWJA5fPw/YQ4mpwSkPbs8ut2DoZ1z3gXQBwlTFayJxx36sqh8NH0kZVts
+GdL46xuiHlpEnAzFOhI5nDq6uqHPU4Swi+Jj7QWrwHpD2Vb/5qxXccKEH1c5GVwC
+yWF6xKDli3IDwDGl+pbr
+=Nw8v
+-----END PGP SIGNATURE-----
