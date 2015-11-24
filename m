@@ -1,4 +1,9 @@
-Received: (qmail 3611 invoked by uid 550); 2 Jul 2025 17:13:42 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1463" "Monday" "23" "November" "2015" "21:11:31" "-0500" "Josh Bressers" "bressers@redhat.com" "<538567108.21747548.1448331091442.JavaMail.zimbra@redhat.com>" "35" "Re: [oss-security] Instruction encoding which prevents execution of a suffix" "^Date:" nil nil "11" "2015112402:11:31" "[oss-security] Instruction encoding which prevents execution of a suffix" (number mark "        bressers@red Nov 23   35/1463  " thread-indent "\"Re: [oss-security] Instruction encoding which prevents execution of a suffix\"\n") "<564EF9B1.4050908@redhat.com>" ("<564EF9B1.4050908@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 22087 invoked by uid 550); 24 Nov 2015 02:11:45 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,229 +11,56 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 19456 invoked from network); 2 Jul 2025 17:02:04 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=stbuehler.de;
-	s=stbuehler1; t=1751475715;
-	bh=m1zm+XbRSODCChLAbP4tvt+PEL3LFSY4/i66spvIg3I=;
-	h=Date:To:From:Subject:From;
-	b=w+MS+Oc/pwQWtXcSPte5ftpzr8j8th/TuOHYgQHvRpuHl5uw8MC9zSPbyEf5BTd+M
-	 fKBlOaqhIBk98VKAvgSqyhkmAMsnwkdH+jeoZVA06FbbxfJDxPI6htt+IrRPtt0dsf
-	 xD7+CloT9AOiP/Zr4HBz0K7LVvDSZsi8YgkKRovM=
-Content-Type: multipart/mixed; boundary="------------7zSakF9aDhZjCiIrdz3lFNsb"
-Message-ID: <ded8a9b9-fd84-4744-8704-5d2faf1a9ac2@stbuehler.de>
-Date: Wed, 2 Jul 2025 19:01:52 +0200
+Received: (qmail 22060 invoked from network); 24 Nov 2015 02:11:43 -0000
+Message-ID: <538567108.21747548.1448331091442.JavaMail.zimbra@redhat.com>
+In-Reply-To: <564EF9B1.4050908@redhat.com>
+References: <564EF9B1.4050908@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Originating-IP: [10.5.30.88]
+X-Mailer: Zimbra 8.0.6_GA_5922 (ZimbraWebClient - FF41 (Linux)/8.0.6_GA_5922)
+Thread-Topic: Instruction encoding which prevents execution of a suffix
+Thread-Index: lRrGGZdeSf33eHlJeiGcO8O4gBbPrQ==
+Date: Mon, 23 Nov 2015 21:11:31 -0500 (EST)
+From: Josh Bressers <bressers@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Instruction encoding which prevents execution of
+ a suffix
 To: oss-security@lists.openwall.com
-From: =?UTF-8?Q?Stefan_B=C3=BChler?= <source@stbuehler.de>
-Autocrypt: addr=source@stbuehler.de; keydata=
- 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
- zK9Azz7q5+pSjNr3O1HGHM9n1A==
-Subject: [oss-security] DoS segfault (NULL pointer deref) in SOPE / SOGo
 
---------------7zSakF9aDhZjCiIrdz3lFNsb
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+----- Original Message -----
+> Suppose you have some critical kernel operation you want to protect
+> against execution if some preconditions are not met.  Therefore, you
+> check the precondition, and abort if it is not met.  But this does not
+> really work because if attackers have control over the program counter,
+> they can just enter the function after the checks.
+>=20
+> What generic transformations exist (on x86_64) to make sure that an
+> attacker cannot jump over the checks and execute only a suffix of the
+> function?  I know of one approach=E2=80=94move the check into the kernel,=
+ before
+> the critical operation=E2=80=94but this is not always desirable for
+> architectural reasons.
+>=20
+> I'd also prefer solutions which do not require changing *all* indirect
+> jumps in the process image, and something that does not involve dynamic
+> code generation (JIT).
+>=20
 
-Hello,
+I'm certainly not an expert here, but I know enough to be dangerous.
 
-I found a DoS bug in SOPE, the set of Objective-C frameworks powering
-SOGo [1].
+If an attacker has full control (and in this case that should be the
+assumption), there's nothing you can do short of some sort of processor
+magic that doesn't exist today (that I'm aware of).
 
-It is way too easy to trigger with curl:
+What if you did the checks inside the kernel operation. Some sort of
+pre-shared secret of sorts to ensure the caller isn't new code.
 
-     curl -d 'x=' 'https://.../SOGo/?x='
+Of course this would require a kernel patch that I imagine wouldn't be a
+welcome change. Sometimes it's worth talking through problems like this
+with silly ideas though.
 
-As far as I can tell all versions since SOGo-2.0.2 (2012-10-29) are
-affected.
+--=20
+    JB
 
-# Details
-
-I found it inspecting multiple SOGo crashes triggered by someone
-hitting URLs like `/OA_HTML/BneViewerXMLService?bne:uueupload=TRUE`
-with `POST` that my search engine associates with "Oracle E-Business
-Suite (EBS)".
-
-The crash happens in NGHashMap.m line 790 [2], as root->last is NULL:
-
-     root->last->next = element;
-
-NGHashMap maps a key to a single-linked list of values.
-
-It turns out `-[NGMutableHashMap addObjects:count:forKey:]` is the
-only function maintaining the `root->last` pointer; everything else in
-this file doesn't touch it.
-
-The SOPE request handling first parses the POST body for
-"formParameters", then clones that NGHashMap (the copied nodes have
-`last == NULL`), and then merges the query string parameters into it;
-if there is a duplicate key the bug triggers.
-
-I'd like to point out that the linked-list implementation is quite
-bad.  It wastes memory by using the same struct for the root node
-(with count and last metadata) and the member nodes, and seems to
-throw exceptions (e.g. when values are nil) but isn't exception
-safe (metadata isn't updated consistently).
-
-See attached patch for an attempt to maintain the `last` pointer
-properly across all methods; it seems to work for me (on top of
-5.8.0-1 in debian/bookworm); submitted to upstream in [4].
-
-In the long run at least the linked-list implementation should
-probably be replaced by using some properly tested library.
-
-The `last` handling was introduced in dfceefc 2012-10-15 [3], and I
-think it has been broken since then.
-
-(I haven't actually tried to reproduce it with latest upstream, but I
-don't think any of the code has been touched in relevant ways.)
-
-cheers,
-Stefan
-
-[1] https://www.sogo.nu/
-[2] https://github.com/Alinto/sope/blob/3146fbdb6ff3314e37e5c3682deeeef7d0f32064/sope-core/NGExtensions/NGHashMap.m#L790
-[3] https://github.com/Alinto/sope/commit/dfceefcb141c1b31b26eea19ca07d3916d663315
-[4] https://github.com/Alinto/sope/pull/69
---------------7zSakF9aDhZjCiIrdz3lFNsb
-Content-Type: text/x-diff; charset=UTF-8;
- name="0001-NGHashMap-keep-root-last-consistent-to-fix-segfault-.patch"
-Content-Disposition: attachment;
- filename*0="0001-NGHashMap-keep-root-last-consistent-to-fix-segfault-.pa";
- filename*1="tch"
-Content-Transfer-Encoding: base64
-
-RnJvbSAyODAxMDRlNDVjMjA1MTlhYzQ4NDllYmY4YmNhMTE0ZDkxMzgzNTQzIE1vbiBTZXAgMTcg
-MDA6MDA6MDAgMjAwMQpGcm9tOiA9P1VURi04P3E/U3RlZmFuPTIwQj1DMz1CQ2hsZXI/PSA8c291
-cmNlQHN0YnVlaGxlci5kZT4KRGF0ZTogU3VuLCAyOSBKdW4gMjAyNSAxMDoyMTozMiArMDIwMApT
-dWJqZWN0OiBbUEFUQ0hdIE5HSGFzaE1hcDoga2VlcCByb290LT5sYXN0IGNvbnNpc3RlbnQgdG8g
-Zml4IHNlZ2ZhdWx0IGFkZGluZwogZHVwbGljYXRlIGtleSBhZnRlciBjb3B5CgpzZWdmYXVsdCBi
-ZWNhdXNlIHJvb3QtPmxhc3QgaXMgTlVMTDoKICAgICMwIC1bTkdNdXRhYmxlSGFzaE1hcCBhZGRP
-YmplY3RzOmNvdW50OmZvcktleTpdCiAgICAjMSAtW05HTXV0YWJsZUhhc2hNYXAgYWRkT2JqZWN0
-OmZvcktleTpdCiAgICAjMiAtW05HSHR0cFJlcXVlc3QoV09TdXBwb3J0KSBfZGVjb2RlRm9ybUNv
-bnRlbnRVUkxQYXJhbWV0ZXJzOl0KICAgICMzIC1bTkdIdHRwUmVxdWVzdChXT1N1cHBvcnQpIGZv
-cm1QYXJhbWV0ZXJzXQoKd2hlbiBQT1NUIGFuZCBHRVQgc2V0IHRoZSBzYW1lIHBhcmFtZXRlcjsg
-dHJpZ2dlciBsaWtlIHRoaXM6CgogICAgY3VybCAtZCAneD0nICdodHRwczovLy4uLi9TT0dvLz94
-PScKLS0tCiBzb3BlLWNvcmUvTkdFeHRlbnNpb25zL05HSGFzaE1hcC5tIHwgMzMgKysrKysrKysr
-KysrKysrKysrKysrKy0tLS0tLS0tCiAxIGZpbGUgY2hhbmdlZCwgMjUgaW5zZXJ0aW9ucygrKSwg
-OCBkZWxldGlvbnMoLSkKCmRpZmYgLS1naXQgYS9zb3BlLWNvcmUvTkdFeHRlbnNpb25zL05HSGFz
-aE1hcC5tIGIvc29wZS1jb3JlL05HRXh0ZW5zaW9ucy9OR0hhc2hNYXAubQppbmRleCA4YjA1ZWJi
-Li5mOGRmNzIyIDEwMDY0NAotLS0gYS9zb3BlLWNvcmUvTkdFeHRlbnNpb25zL05HSGFzaE1hcC5t
-CisrKyBiL3NvcGUtY29yZS9OR0V4dGVuc2lvbnMvTkdIYXNoTWFwLm0KQEAgLTIxNiw2ICsyMTYs
-NyBAQCBzdGF0aWMgaW5saW5lIHVuc2lnbmVkIF9fY291bnRPYmplY3RzRm9yS2V5KE5HSGFzaE1h
-cCAqc2VsZiwgaWQgX2tleSkgewogICBOU0VudW1lcmF0b3IgKmtleXMgICAgPSBuaWw7CiAgIGlk
-ICAgICAgICAgICAga2V5ICAgICA9IG5pbDsKICAgTExpc3QgKmxpc3QgICAgPSBOVUxMOworICBM
-TGlzdCAqcm9vdCAgICA9IE5VTEw7CiAgIExMaXN0ICpuZXdMaXN0ID0gTlVMTDsKICAgTExpc3Qg
-Km9sZExpc3QgPSBOVUxMOwogCkBAIC0yMjMsNyArMjI0LDcgQEAgc3RhdGljIGlubGluZSB1bnNp
-Z25lZCBfX2NvdW50T2JqZWN0c0ZvcktleShOR0hhc2hNYXAgKnNlbGYsIGlkIF9rZXkpIHsKICAg
-ICBrZXlzICA9IFtfaGFzaE1hcCBrZXlFbnVtZXJhdG9yXTsKICAgICB3aGlsZSAoKGtleSA9IFtr
-ZXlzIG5leHRPYmplY3RdKSkgewogICAgICAgbGlzdCAgICAgICAgICAgPSBbX2hhc2hNYXAgX19z
-dHJ1Y3RGb3JLZXk6a2V5XTsKLSAgICAgIG5ld0xpc3QgICAgICAgID0gaW5pdExMaXN0RWxlbWVu
-dChsaXN0LT5vYmplY3QsTlVMTCk7CisgICAgICByb290ID0gbmV3TGlzdCA9IGluaXRMTGlzdEVs
-ZW1lbnQobGlzdC0+b2JqZWN0LE5VTEwpOwogICAgICAgbmV3TGlzdC0+Y291bnQgPSBsaXN0LT5j
-b3VudDsKICAgICAgIE5TTWFwSW5zZXJ0KHNlbGYtPnRhYmxlLGtleSxuZXdMaXN0KTsKICAgICAg
-IHdoaWxlIChsaXN0LT5uZXh0KSB7CkBAIC0yMzIsNiArMjMzLDcgQEAgc3RhdGljIGlubGluZSB1
-bnNpZ25lZCBfX2NvdW50T2JqZWN0c0ZvcktleShOR0hhc2hNYXAgKnNlbGYsIGlkIF9rZXkpIHsK
-ICAgICAgICAgbmV3TGlzdCAgICAgICA9IGluaXRMTGlzdEVsZW1lbnQobGlzdC0+b2JqZWN0LE5V
-TEwpOwogICAgICAgICBvbGRMaXN0LT5uZXh0ID0gbmV3TGlzdDsKICAgICAgIH0KKyAgICAgIHJv
-b3QtPmxhc3QgPSBuZXdMaXN0OwogICAgIH0KICAgfQogICByZXR1cm4gc2VsZjsKQEAgLTI1Nyw2
-ICsyNTksNyBAQCBzdGF0aWMgaW5saW5lIHVuc2lnbmVkIF9fY291bnRPYmplY3RzRm9yS2V5KE5H
-SGFzaE1hcCAqc2VsZiwgaWQgX2tleSkgewogICAgICAgcHJlZCAgICAgICA9IGVsZW1lbnQ7CiAg
-ICAgfQogICAgIHJvb3QtPmNvdW50ID0gaTsKKyAgICByb290LT5sYXN0ICA9IHByZWQ7CiAgICAg
-TlNNYXBJbnNlcnQoc2VsZi0+dGFibGUsX2tleSwgcm9vdCk7CiAgIH0KICAgTlNBc3NlcnQoc2Vs
-Zi0+dGFibGUsIEAibWlzc2luZyB0YWJsZSBmb3IgaGFzaG1hcCAuLiIpOwpAQCAtNzEyLDYgKzcx
-NSw3IEBAIHN0YXRpYyBpbmxpbmUgdW5zaWduZWQgX19jb3VudE9iamVjdHNGb3JLZXkoTkdIYXNo
-TWFwICpzZWxmLCBpZCBfa2V5KSB7CiB7CiAgIGlkICAgICAgICAgICAgb2JqZWN0ICA9IG5pbDsK
-ICAgTExpc3QgKnJvb3QgICAgPSBOVUxMOworICBMTGlzdCAqaW5zZXJ0ICA9IE5VTEw7CiAgIExM
-aXN0ICplbGVtZW50ID0gTlVMTDsKICAgdW5zaWduZWQgaSA9IDA7CiAgIApAQCAtNzI4LDEwICs3
-MzIsMTMgQEAgc3RhdGljIGlubGluZSB1bnNpZ25lZCBfX2NvdW50T2JqZWN0c0ZvcktleShOR0hh
-c2hNYXAgKnNlbGYsIGlkIF9rZXkpIHsKICAgICB9CiAKICAgICByb290ICAgICAgICA9IGluaXRM
-TGlzdEVsZW1lbnQoX29iamVjdHNbMF0sIE5VTEwpOworICAgIGluc2VydCA9IHJvb3Q7CiAgICAg
-cm9vdC0+Y291bnQgPSBfY291bnQ7CisgICAgLy8gc2V0IHJvb3QtPmxhc3QgdG8gbGFzdCBpbnNl
-cnRlZCBlbGVtZW50IGxhdGVyCiAgICAgTlNNYXBJbnNlcnQoc2VsZi0+dGFibGUsIF9rZXksIHJv
-b3QpOwogICB9CiAgIGVsc2UgeworICAgIGluc2VydCA9IHJvb3Q7CiAgICAgaWYgKCEoX2luZGV4
-IDwgcm9vdC0+Y291bnQpKSB7CiAgICAgICBbTlNFeGNlcHRpb24gcmFpc2U6TlNSYW5nZUV4Y2Vw
-dGlvbgogICAgICAgICAgICAgICAgICAgZm9ybWF0OkAiaW5kZXggJSJQUkl1UFRSIiBvdXQgb2Yg
-cmFuZ2UgaW4gbWFwIDB4JXAgbGVuZ3RoICVkIiwKQEAgLTc0MSwzMCArNzQ4LDM4IEBAIHN0YXRp
-YyBpbmxpbmUgdW5zaWduZWQgX19jb3VudE9iamVjdHNGb3JLZXkoTkdIYXNoTWFwICpzZWxmLCBp
-ZCBfa2V5KSB7CiAgICAgCiAgICAgcm9vdC0+Y291bnQgKz0gX2NvdW50OwogICAgIGlmIChfaW5k
-ZXggPT0gMCkgeworICAgICAgLy8gbW92ZSBjdXJyZW50IGRhdGEgYXQgcG9zIDAgdG8gbmV3IGVs
-ZW1lbnQgKHByZXBlbmRpbmcKKyAgICAgIC8vIGEgbmV3IGVsZW1lbnQgd291bGQgcmVxdWlyZSBy
-ZXBsYWNpbmcgZW50cnkgaW4gTlNNYXBUYWJsZSkKICAgICAgIGVsZW1lbnQgICAgICAgICA9IGlu
-aXRMTGlzdEVsZW1lbnQoX29iamVjdHNbMF0sTlVMTCk7CiAgICAgICBvYmplY3QgICAgICAgICAg
-PSBlbGVtZW50LT5vYmplY3Q7CiAgICAgICBlbGVtZW50LT5uZXh0ICAgPSByb290LT5uZXh0Owog
-ICAgICAgZWxlbWVudC0+b2JqZWN0ID0gcm9vdC0+b2JqZWN0OyAgICAgIAogICAgICAgcm9vdC0+
-b2JqZWN0ICAgID0gb2JqZWN0OwogICAgICAgcm9vdC0+bmV4dCAgICAgID0gZWxlbWVudDsKKyAg
-ICAgIGlmIChyb290LT5sYXN0ID09IHJvb3QpCisgICAgICAgIHJvb3QtPmxhc3QgPSBlbGVtZW50
-OyAvLyBpbnNlcnRlZCBhdCBwb3MgMCBiZWZvcmUgdGhlIG9ubHkgaXRlbQogICAgIH0KICAgICBl
-bHNlIHsKICAgICAgIHdoaWxlICgtLV9pbmRleCkKLSAgICAgICAgcm9vdCA9IHJvb3QtPm5leHQ7
-CisgICAgICAgIGluc2VydCA9IGluc2VydC0+bmV4dDsKKyAgICAgIGlmIChyb290LT5sYXN0ID09
-IGluc2VydCkKKyAgICAgICAgcm9vdC0+bGFzdCA9IE5VTEw7IC8vIHNldCB0byBsYXN0IGluc2Vy
-dGVkIGVsZW1lbnQgbGF0ZXIKIAogICAgICAgZWxlbWVudCAgICAgICA9IGluaXRMTGlzdEVsZW1l
-bnQoX29iamVjdHNbMF0sIE5VTEwpOwotICAgICAgZWxlbWVudC0+bmV4dCA9IHJvb3QtPm5leHQ7
-Ci0gICAgICByb290LT5uZXh0ICAgID0gZWxlbWVudDsKLSAgICAgIHJvb3QgICAgICAgICAgPSBy
-b290LT5uZXh0OworICAgICAgZWxlbWVudC0+bmV4dCA9IGluc2VydC0+bmV4dDsKKyAgICAgIGlu
-c2VydC0+bmV4dCAgICA9IGVsZW1lbnQ7CisgICAgICBpbnNlcnQgICAgICAgICAgPSBpbnNlcnQt
-Pm5leHQ7CiAgICAgfQogICB9CiAgIGZvciAoaSA9IDE7IGkgPCBfY291bnQ7IGkrKykgewogICAg
-IGNoZWNrRm9yQWRkRXJyb3JNZXNzYWdlKHNlbGYsIF9vYmplY3RzW2ldLCBfa2V5KTsKICAgICBl
-bGVtZW50ICAgICAgID0gaW5pdExMaXN0RWxlbWVudChfb2JqZWN0c1tpXSwgTlVMTCk7Ci0gICAg
-ZWxlbWVudC0+bmV4dCA9IHJvb3QtPm5leHQ7Ci0gICAgcm9vdC0+bmV4dCAgICA9IGVsZW1lbnQ7
-Ci0gICAgcm9vdCAgICAgICAgICA9IGVsZW1lbnQ7CisgICAgZWxlbWVudC0+bmV4dCA9IGluc2Vy
-dC0+bmV4dDsKKyAgICBpbnNlcnQtPm5leHQgICAgPSBlbGVtZW50OworICAgIGluc2VydCAgICAg
-ICAgICA9IGVsZW1lbnQ7CiAgIH0KKyAgaWYgKHJvb3QtPmxhc3QgPT0gTlVMTCkKKyAgICByb290
-LT5sYXN0ID0gaW5zZXJ0OwogfQogCiAvKiBhZGRpbmcgb2JqZWN0cyAqLwpAQCAtODY0LDYgKzg3
-OSw3IEBAIHN0YXRpYyBpbmxpbmUgdW5zaWduZWQgX19jb3VudE9iamVjdHNGb3JLZXkoTkdIYXNo
-TWFwICpzZWxmLCBpZCBfa2V5KSB7CiAgICAgICByb290LT5uZXh0ICAgPSBsaXN0LT5uZXh0Owog
-ICAgICAgcm9vdC0+b2JqZWN0ID0gbGlzdC0+b2JqZWN0OwogICAgICAgcm9vdC0+Y291bnQtLTsK
-KyAgICAgIC8vIGNsZWFudXAgcm9vdC0+bGFzdCAoY291bGQgYmUgbGlzdCEpIGFmdGVyIGxvb3Ag
-YmVsb3cKICAgICAgIGlmIChsaXN0KSBmcmVlKGxpc3QpOwogICAgICAgbGlzdCA9IE5VTEw7CiAg
-ICAgfQpAQCAtODgwLDYgKzg5Niw3IEBAIHN0YXRpYyBpbmxpbmUgdW5zaWduZWQgX19jb3VudE9i
-amVjdHNGb3JLZXkoTkdIYXNoTWFwICpzZWxmLCBpZCBfa2V5KSB7CiAgICAgICAgIGxpc3QgPSBv
-bGRMaXN0OwogICAgICAgfQogICAgIH0KKyAgICByb290LT5sYXN0ID0gbGlzdDsgLy8gbGlzdC0+
-bmV4dCBpcyBOVUxMLCBpLmUuIGl0IGlzIHRoZSBsYXN0CiAgICAgcm9vdC0+Y291bnQgLT0gY250
-OwogICB9CiB9Ci0tIAoyLjQ5LjAKCg==
-
---------------7zSakF9aDhZjCiIrdz3lFNsb--
