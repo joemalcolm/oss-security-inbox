@@ -1,4 +1,9 @@
-Received: (qmail 28512 invoked by uid 550); 30 Mar 2024 12:45:09 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2651" "Tuesday" "24" "November" "2015" "11:03:19" "+0100" "Florian Weimer" "fweimer@redhat.com" "<565435E7.3000007@redhat.com>" "57" "Re: [oss-security] Instruction encoding which prevents execution of a suffix" "^Date:" nil nil "11" "2015112410:03:19" "[oss-security] Instruction encoding which prevents execution of a suffix" (number mark "        fweimer@redh Nov 24   57/2651  " thread-indent "\"Re: [oss-security] Instruction encoding which prevents execution of a suffix\"\n") "<538567108.21747548.1448331091442.JavaMail.zimbra@redhat.com>" ("<564EF9B1.4050908@redhat.com>" "<538567108.21747548.1448331091442.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 25949 invoked by uid 550); 24 Nov 2015 10:03:37 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,256 +11,78 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3395 invoked from network); 30 Mar 2024 03:34:28 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.ch;
-	s=s31663417; t=1711769659; x=1712374459; i=sjw@gmx.ch;
-	bh=wqEbZUGA97IVQ2xP4vjcBB/tciNV4fMnijVK+Tu75Lw=;
-	h=X-UI-Sender-Class:Date:From:Subject:To:References:In-Reply-To;
-	b=W1heORwlH/XAtw1IVW8PDoyCvoPHBaVq1FAHeG5C8vgjatG2LcSq+naftgnXX03t
-	 hqZi1H8vX5cjDmykuejlu72vQOlyLWfWrr1/7mZor+Mk0dTvpjLT6UU2tXrtFp+4l
-	 p6Ky1uU0cOGZTSBXKaoD5t2F03Iz+X23dDw6xuZb/zl8pqnu2+zxSg5Dw8/eJOXQr
-	 IO1B964aFFEZfjqQN3mtBu63cG0oaKsaT8b3Rzhs6kYl02Hu6uMbz/VniNhVt/D0D
-	 9ERyYY547o4BM7nsh8Lb/GZvRdCXjh3kInc0jygR/SAEENnW2DdBYK3b1wK0+cdKK
-	 sEEI38JxRKSsJua9eQ==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Message-ID: <f6eb25d2-2c22-4c04-a97c-249ab1be5505@gmx.ch>
-Date: Sat, 30 Mar 2024 04:34:11 +0100
+Received: (qmail 25903 invoked from network); 24 Nov 2015 10:03:34 -0000
+References: <564EF9B1.4050908@redhat.com>
+ <538567108.21747548.1448331091442.JavaMail.zimbra@redhat.com>
+Message-ID: <565435E7.3000007@redhat.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.3.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: sjw@gmx.ch
+In-Reply-To: <538567108.21747548.1448331091442.JavaMail.zimbra@redhat.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
+Date: Tue, 24 Nov 2015 11:03:19 +0100
+From: Florian Weimer <fweimer@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Instruction encoding which prevents execution of a
+ suffix
 To: oss-security@lists.openwall.com
-References: <20240329155126.kjjfduxw2yrlxgzm@awork3.anarazel.de>
- <d9f8fe3e-4403-422e-be02-cdbae7d43e77@gmx.ch>
-Autocrypt: addr=sjw@gmx.ch; keydata=
- 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
-Content-Language: en-DK
-In-Reply-To: <d9f8fe3e-4403-422e-be02-cdbae7d43e77@gmx.ch>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------sQFsywoZoZsijrMMRz1ILrWU"
-X-Provags-ID: V03:K1:hMyTluCYTZ6D23AY/0Uc8H2wXb77klAbmfMwWCnR/p3taf65Wj9
- ltvIqoMUkTkU59H1GfwvkH7bJK2AtM2fPEEQyYTE/Te5GHOpMlWNgwdBKfxfJxf3ZiVJIQK
- yHyBAMVsUc5st6g9qreRd5bRJqW6wv+BCh4KYRuqno3adM+hTAhLTSaQtGeSRbOZuw8WLXB
- nQzYDr5tGZIN25TFwJwFg==
-UI-OutboundReport: notjunk:1;M01:P0:9jOONnz+oy4=;wNiy4J5nEu3JRD+JIi0FgOBAjsl
- E5VUBhTSr2zf+XNMPRE7cD1wwTAeJ8d3C56Mm2CzCBfO+8pPFF/gKxLnJDd+woeWjmWzHx3mc
- rLrZjXX6Sxohfd3By2qxkIdgWIMFDfhGYAatXe7oYQo7W/I692ffKo7g0xqcW0U4zgi4ylfx6
- UJeYFiN78XrhBA/1xfXg1pIkTzq6ZsLmXKmHSP0Cf0lce5OJg2MCCcvbyPb7Wb0LCQbKBj8+f
- LYzJApSyyoD28ZbvvcQC7njCC8t8WzJyFI9ZK3eABCJNdASoHR0OKevMi4tZf+KAKtxxqxjQb
- k9xIXey/v5sDBOOpTqhl6KWG5wYl/QUAw3EbGJDmoldU2RA8XAAPV69PCFYZtyH8haBmymCw1
- stgP7D4ACzHKa2ERvCn89Qv1KmYM8P42BAgCEBfZ6IPJPuOhEVO36LT2yVraXe2vEcL0hiT/i
- H3kQuuKsqq/0N6623pvTYDPaA2YJIbsgcRCVb3lv6PAL438jxt3N6cpVpncXv3pvx8cS8Zs3F
- 8UtViKZbzQHS95xwLoIx/U+9MbWD6mZtNrzd6vSKhhzQxFKc6pX8wjBtIeMLfXi/BOTOPMEP+
- zYFV+hlRIh2j7iYuutpk4ngX+PPhY9dlIFo1BEL3cxBGxBlKlnb2g+MpSTQWv6Etx8+zm/3ID
- WwHGZW5sqrGI5D85L+6iryKNg7iKLV9sj8OEA6LZP8t3GQ5cbhj+Y1zcY8TUVCXgPKgioAmy6
- Zs57raRQ598g4WYEn7OFG9QW4orP2QAgmahRGJ6s0+NrulwqeaVNskXKnAR8F85iAxanxBFMu
- O+xZ5szG/I4I4UCFEWXH7rgsYd/K0HbIvT8ve3vE0hIDs=
-Subject: Re: [oss-security] backdoor in upstream xz/liblzma leading to ssh
- server compromise
 
---------------sQFsywoZoZsijrMMRz1ILrWU
-Content-Type: multipart/mixed; boundary="------------eNBtMRBZyDcyK9d1RsaaU4hh";
- protected-headers="v1"
-From: sjw@gmx.ch
-To: oss-security@lists.openwall.com
-Message-ID: <f6eb25d2-2c22-4c04-a97c-249ab1be5505@gmx.ch>
-Subject: Re: [oss-security] backdoor in upstream xz/liblzma leading to ssh
- server compromise
-References: <20240329155126.kjjfduxw2yrlxgzm@awork3.anarazel.de>
- <d9f8fe3e-4403-422e-be02-cdbae7d43e77@gmx.ch>
-In-Reply-To: <d9f8fe3e-4403-422e-be02-cdbae7d43e77@gmx.ch>
+On 11/24/2015 03:11 AM, Josh Bressers wrote:
 
---------------eNBtMRBZyDcyK9d1RsaaU4hh
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
+> If an attacker has full control (and in this case that should be the
+> assumption), there's nothing you can do short of some sort of processor
+> magic that doesn't exist today (that I'm aware of).
+> 
+> What if you did the checks inside the kernel operation. Some sort of
+> pre-shared secret of sorts to ensure the caller isn't new code.
+> 
+> Of course this would require a kernel patch that I imagine wouldn't be a
+> welcome change. Sometimes it's worth talking through problems like this
+> with silly ideas though.
 
-QW5vdGhlciBzdXNwaWNpb3VzIGNvbW1pdCBnb3Qgc29tZSBhdHRlbnRpb24g
-b24gR2l0SHViLiBVbmZvcnR1bmF0ZWx5IA0KR2l0SHViIGp1c3QgZGlzYWJs
-ZWQgdGhlIHByb2plY3QsIG1ha2luZyB0aGlzIGNvbW1lbnRzIGluYWNjZXNz
-aWJsZSwgYnV0IA0KY3JlZGl0cyBmb3IgdGhpcyBmaW5kaW5nIGdvZXMgdG8g
-dGhlbS4NCg0KSWYgeW91IG5lZWQgdGhlIHNvdXJjZXMgdG8gcm9sbGJhY2sg
-eW91ciBidWlsZCB0byBhIHZlcnNpb24gYmVmb3JlIDUuNi4wIA0Kb3IgYWNj
-ZXNzIHRvIHRoZSBjb21taXQgaGlzdG9yeSBmb3IgZnVydGhlciByZXNlYXJj
-aCwgeW91IGNvdWxkIHVzZSANCnRoZWlyIG1pcnJvciBbMV0uDQoNCkNvbW1p
-dCAzMjhjNTJkYThhMmJiYjgxMzA3NjQ0ZWZkYjU4ZGIyYzQyMmQ5YmE3IFsy
-XSBpbnRyb2R1Y2VkIGEgZmF1bHR5IA0KJy4nIGluIGxpbmUgMTAwNCBvZiBD
-TWFrZUxpc3RzLnR4dC4gVGhpcyBjYXVzZXMgdGhlIHByZXZpb3VzIGxhbmRs
-b2NrLmggDQpjaGVjayB0byBhbHdheXMgZmFpbCBhbmQgbmV2ZXIgYnVpbGQg
-eHogd2l0aCB0aGUgTGFuZGxvY2sgc2FuZGJveGluZyANCmZlYXR1cmUuIElm
-IHRoZSBzYW5kYm94IGlzIG5vdCBleHBsaWNpdGx5IGVuZm9yY2VkIGluIGJ1
-aWxkIG9wdGlvbnMsIA0KdGhpcyB3aWxsIGZhaWwgc2lsZW50bHkuDQoNCnh6
-IDUuNC42IGRvZXMgbm90IHN1cHBvcnQgdGhlIExhbmRsb2NrIHNhbmRib3gg
-YXQgYWxsLiBUaGUgc3VzcGljaW91cyANCmNvbW1pdCB3YXMgb25seSBpbnRy
-b2R1Y2VkIGluIDUuNi4xLCA1LjYuMCB3YXMgbm90IGFmZmVjdGVkIGJ5IHRo
-aXMuDQpJJ20gbm90IGF3YXJlIG9mIGFueSBkaXN0cm8gdGhhdCB3YXMgYWxy
-ZWFkeSB1c2luZyB0aGUgY21ha2UgYnVpbGQgDQpzeXN0ZW0uIEkgd2FzIG5v
-dCBhYmxlIHRvIHJlcHJvZHVjZSB0aGlzIHdpdGggdGhlIGNvbW1vbiBhdXRv
-dG9vbHMgYnVpbGQgDQpzeXN0ZW0uDQoNCg0KLS0tIGEvQ01ha2VMaXN0cy50
-eHQNCisrKyBiL0NNYWtlTGlzdHMudHh0DQpAQCAtOTAxLDEwICs5MDEsMjkg
-QEAgZW5kaWYoKQ0KDQogICAjIFNhbmRib3hpbmc6IExhbmRsb2NrDQogICBp
-ZihOT1QgU0FOREJPWF9GT1VORCBBTkQgRU5BQkxFX1NBTkRCT1ggTUFUQ0hF
-UyAiXk9OJHxebGFuZGxvY2skIikNCi0gICAgY2hlY2tfaW5jbHVkZV9maWxl
-KGxpbnV4L2xhbmRsb2NrLmggSEFWRV9MSU5VWF9MQU5ETE9DS19IKQ0KKyAg
-ICAjIEEgY29tcGlsZSBjaGVjayBpcyBkb25lIGhlcmUgYmVjYXVzZSBzb21l
-IHN5c3RlbXMgaGF2ZQ0KKyAgICAjIGxpbnV4L2xhbmRsb2NrLmgsIGJ1dCBk
-byBub3QgaGF2ZSB0aGUgc3lzY2FsbHMgZGVmaW5lZA0KKyAgICAjIGluIG9y
-ZGVyIHRvIGFjdHVhbGx5IHVzZSBMaW51eCBMYW5kbG9jay4NCisgICAgY2hl
-Y2tfY19zb3VyY2VfY29tcGlsZXMoIg0KKyAgICAgICAgI2luY2x1ZGUgPGxp
-bnV4L2xhbmRsb2NrLmg+DQorICAgICAgICAjaW5jbHVkZSA8c3lzL3N5c2Nh
-bGwuaD4NCisgICAgICAgICNpbmNsdWRlIDxzeXMvcHJjdGwuaD4NCisuDQor
-ICAgICAgICB2b2lkIG15X3NhbmRib3godm9pZCkNCisgICAgICAgIHsNCisg
-ICAgICAgICAgICAodm9pZClwcmN0bChQUl9TRVRfTk9fTkVXX1BSSVZTLCAx
-LCAwLCAwLCAwKTsNCisgICAgICAgICAgICAodm9pZClTWVNfbGFuZGxvY2tf
-Y3JlYXRlX3J1bGVzZXQ7DQorICAgICAgICAgICAgKHZvaWQpU1lTX2xhbmRs
-b2NrX3Jlc3RyaWN0X3NlbGY7DQorICAgICAgICAgICAgKHZvaWQpTEFORExP
-Q0tfQ1JFQVRFX1JVTEVTRVRfVkVSU0lPTjsNCisgICAgICAgICAgICByZXR1
-cm47DQorICAgICAgICB9DQorDQorICAgICAgICBpbnQgbWFpbih2b2lkKSB7
-IHJldHVybiAwOyB9DQorICAgICAgICAiDQorICAgIEhBVkVfTElOVVhfTEFO
-RExPQ0spDQoNCi0gICAgaWYoSEFWRV9MSU5VWF9MQU5ETE9DS19IKQ0KLSAg
-ICAgICAgc2V0KFNBTkRCT1hfQ09NUElMRV9ERUZJTklUSU9OICJIQVZFX0xJ
-TlVYX0xBTkRMT0NLX0giKQ0KKyAgICBpZihIQVZFX0xJTlVYX0xBTkRMT0NL
-KQ0KKyAgICAgICAgc2V0KFNBTkRCT1hfQ09NUElMRV9ERUZJTklUSU9OICJI
-QVZFX0xJTlVYX0xBTkRMT0NLIikNCiAgICAgICAgICAgc2V0KFNBTkRCT1hf
-Rk9VTkQgT04pDQoNCiAgICAgICAgICAgIyBPZiBvdXIgdGhyZWUgc2FuZGJv
-eCBtZXRob2RzLCBvbmx5IExhbmRsb2NrIGlzIGluY29tcGF0aWJsZQ0KDQoN
-Cg0KDQpJIGZvdW5kIGFub3RoZXIgb2JmdXNjYXRlZCBmdW5jdGlvbiBpbiBi
-dWlsZC10by1ob3N0Lm00IFszXToNCg0KICAgZ2xfYW1fY29uZmlnbWFrZT1g
-Z3JlcCAtYUVybHMgIiN7NH1bWzphbG51bTpdXXs1fSN7NH0kIiAkc3JjZGly
-LyANCjI+L2Rldi9udWxsYA0KICAgaWYgdGVzdCAtbiAiJGdsX2FtX2NvbmZp
-Z21ha2UiOyB0aGVuDQogICAgIEhBVkVfUEtHX0NPTkZJR01BS0U9MQ0KICAg
-ZWxzZQ0KICAgICBIQVZFX1BLR19DT05GSUdNQUtFPTANCiAgIGZpDQoNCg0K
-VGhlIGNvcnJ1cHQgYmFkLTMtY29ycnVwdF9sem1hMi54eiBmaWxlIGlzIHRo
-ZSBvbmUgbWF0Y2hpbmcgdGhlIGdyZXAgDQpleHByZXNzaW9uIGFuZCB0aGVy
-ZWZvcmUgdGhlIEhBVkVfUEtHX0NPTkZJR01BS0UgaXMgc2V0LiBIb3dldmVy
-LCBJIA0KZm91bmQgbm8gb3RoZXIgcmVmZXJlbmNlcyB0byB0aGlzIHZhcmlh
-YmxlLg0KDQpXaGlsZSBidWlsZC10by1ob3N0Lm00IGl0c2VsZiBpcyBub3Qg
-cGFydCBvZiB0aGUgcmVwb3NpdG9yeSwgaXQgd2FzIA0KYWRkZWQgdG8gZ2l0
-aWdub3JlIGluIGNvbW1pdCA0MzIzYmMzZTBjMWUxZDIwMzdkNWU2NzBhM2Jm
-NjYzM2U4YTMwMzFlLg0KVGhlIG9yaWdpbmFsIGJ1aWxkLXRvLWhvc3QubTQg
-d2FzIHRha2VuIGZyb20gZ251bGliIFs1XSBhbmQgb25seSBhIGZldyANCmNo
-YW5nZXMgd2VyZSBtYWRlIHRvIGluamVjdCB0aGUgYmFja2Rvb3IuDQoNCi0t
-LSBhL2J1aWxkLXRvLWhvc3QubTQNCisrKyBiL2J1aWxkLXRvLWhvc3QubTQN
-CkBAIC0xLDQgKzEsNCBAQA0KLSMgYnVpbGQtdG8taG9zdC5tNCBzZXJpYWwg
-Mw0KKyMgYnVpbGQtdG8taG9zdC5tNCBzZXJpYWwgMzANCiAgZG5sIENvcHly
-aWdodCAoQykgMjAyMy0yMDI0IEZyZWUgU29mdHdhcmUgRm91bmRhdGlvbiwg
-SW5jLg0KICBkbmwgVGhpcyBmaWxlIGlzIGZyZWUgc29mdHdhcmU7IHRoZSBG
-cmVlIFNvZnR3YXJlIEZvdW5kYXRpb24NCiAgZG5sIGdpdmVzIHVubGltaXRl
-ZCBwZXJtaXNzaW9uIHRvIGNvcHkgYW5kL29yIGRpc3RyaWJ1dGUgaXQsDQpA
-QCAtMzcsNiArMzcsNyBAQA0KDQogICAgZG5sIERlZmluZSBzb21lZGlyX2Mu
-DQogICAgZ2xfZmluYWxfWyQxXT0iJFskMV0iDQorICBnbF9bJDFdX3ByZWZp
-eD1gZWNobyAkZ2xfYW1fY29uZmlnbWFrZSB8IHNlZCAicy8uKlwuLy9nImAN
-CiAgICBkbmwgVHJhbnNsYXRlIGl0IGZyb20gYnVpbGQgc3ludGF4IHRvIGhv
-c3Qgc3ludGF4Lg0KICAgIGNhc2UgIiRidWlsZF9vcyIgaW4NCiAgICAgIGN5
-Z3dpbiopDQpAQCAtNTgsMTQgKzU5LDQwIEBADQogICAgaWYgdGVzdCAiJFsk
-MV1fY19tYWtlIiA9ICdcIiciJHtnbF9maW5hbF9bJDFdfSInXCInOyB0aGVu
-DQogICAgICBbJDFdX2NfbWFrZT0nXCIkKFskMV0pXCInDQogICAgZmkNCisg
-IGlmIHRlc3QgIngkZ2xfYW1fY29uZmlnbWFrZSIgIT0gIngiOyB0aGVuDQor
-ICAgIGdsX1skMV1fY29uZmlnPSdzZWQgXCJyXG5cIiAkZ2xfYW1fY29uZmln
-bWFrZSB8IGV2YWwgJGdsX3BhdGhfbWFwIHwgDQokZ2xfWyQxXV9wcmVmaXgg
-LWQgMj4vZGV2L251bGwnDQorICBlbHNlDQorICAgIGdsX1skMV1fY29uZmln
-PScnDQorICBmaQ0KKyAgX0xUX1RBR0RFQ0woW10sIFtnbF9wYXRoX21hcF0s
-IFsyXSlkbmwNCisgIF9MVF9UQUdERUNMKFtdLCBbZ2xfWyQxXV9wcmVmaXhd
-LCBbMl0pZG5sDQorICBfTFRfVEFHREVDTChbXSwgW2dsX2FtX2NvbmZpZ21h
-a2VdLCBbMl0pZG5sDQorICBfTFRfVEFHREVDTChbXSwgW1skMV1fY19tYWtl
-XSwgWzJdKWRubA0KKyAgX0xUX1RBR0RFQ0woW10sIFtnbF9bJDFdX2NvbmZp
-Z10sIFsyXSlkbmwNCiAgICBBQ19TVUJTVChbJDFfY19tYWtlXSkNCisNCisg
-IGRubCBJZiB0aGUgaG9zdCBjb252ZXJzaW9uIGNvZGUgaGFzIGJlZW4gcGxh
-Y2VkIGluICRnbF9jb25maWdfZ3QsDQorICBkbmwgaW5zdGVhZCBvZiBkdXBs
-aWNhdGluZyBpdCBhbGwgb3ZlciBhZ2FpbiBpbnRvIGNvbmZpZy5zdGF0dXMs
-DQorICBkbmwgdGhlbiB3ZSB3aWxsIGhhdmUgY29uZmlnLnN0YXR1cyBydW4g
-JGdsX2NvbmZpZ19ndCBsYXRlciwgc28gaXQNCisgIGRubCBuZWVkcyB0byBr
-bm93IHdoYXQgbmFtZSBpcyBzdG9yZWQgdGhlcmU6DQorICBBQ19DT05GSUdf
-Q09NTUFORFMoW2J1aWxkLXRvLWhvc3RdLCBbZXZhbCAkZ2xfY29uZmlnX2d0
-IHwgJFNIRUxMIA0KMj4vZGV2L251bGxdLCBbZ2xfY29uZmlnX2d0PSJldmFs
-IFwkZ2xfWyQxXV9jb25maWciXSkNCiAgXSkNCg0KICBkbmwgU29tZSBpbml0
-aWFsaXphdGlvbnMgZm9yIGdsX0JVSUxEX1RPX0hPU1QuDQogIEFDX0RFRlVO
-KFtnbF9CVUlMRF9UT19IT1NUX0lOSVRdLA0KICBbDQorICBkbmwgU2VhcmNo
-IGZvciBBdXRvbWFrZS1kZWZpbmVkIHBrZyogbWFjcm9zLCBpbiB0aGUgb3Jk
-ZXINCisgIGRubCBsaXN0ZWQgaW4gdGhlIEF1dG9tYWtlIDEuMTBhKyBkb2N1
-bWVudGF0aW9uLg0KKyAgZ2xfYW1fY29uZmlnbWFrZT1gZ3JlcCAtYUVybHMg
-IiN7NH1bWzphbG51bTpdXXs1fSN7NH0kIiAkc3JjZGlyLyANCjI+L2Rldi9u
-dWxsYA0KKyAgaWYgdGVzdCAtbiAiJGdsX2FtX2NvbmZpZ21ha2UiOyB0aGVu
-DQorICAgIEhBVkVfUEtHX0NPTkZJR01BS0U9MQ0KKyAgZWxzZQ0KKyAgICBI
-QVZFX1BLR19DT05GSUdNQUtFPTANCisgIGZpDQorDQogICAgZ2xfc2VkX2Rv
-dWJsZV9iYWNrc2xhc2hlcz0ncy9cXC9cXFxcL2cnDQogICAgZ2xfc2VkX2Vz
-Y2FwZV9kb3VibGVxdW90ZXM9J3MvIi9cXCIvZycNCisgIGdsX3BhdGhfbWFw
-PSd0ciAiXHQgXC1fIiAiIFx0X1wtIicNCiAgY2hhbmdlcXVvdGUoLClkbmwN
-CiAgICBnbF9zZWRfZXNjYXBlX2Zvcl9tYWtlXzE9InMsXFwoWyBcIiYnKCk7
-PD5cXFxcXGB8XVxcKSxcXFxcXFwxLGciDQogIGNoYW5nZXF1b3RlKFssXSlk
-bmwNCg0KDQoNCg0KWzFdIGh0dHBzOi8vZ2l0LnR1a2Fhbmkub3JnLw0KWzJd
-IA0KaHR0cHM6Ly9naXQudHVrYWFuaS5vcmcvP3A9eHouZ2l0O2E9Y29tbWl0
-ZGlmZjtoPTMyOGM1MmRhOGEyYmJiODEzMDc2NDRlZmRiNThkYjJjNDIyZDli
-YTcNClszXSANCmh0dHBzOi8vc2Fsc2EuZGViaWFuLm9yZy9kZWJpYW4veHot
-dXRpbHMvLS9ibG9iLzQ2Y2IyOGFkYmJmYjhmNTBhMTA3MDRjMWI4NmYxMDdk
-MDc3ODc4ZTYvbTQvYnVpbGQtdG8taG9zdC5tNCNMODYtOTENCls0XSANCmh0
-dHBzOi8vZ2l0LnR1a2Fhbmkub3JnLz9wPXh6LmdpdDthPWNvbW1pdGRpZmY7
-aD00MzIzYmMzZTBjMWUxZDIwMzdkNWU2NzBhM2JmNjYzM2U4YTMwMzFlDQpb
-NV0gDQpodHRwczovL2dpdC5zYXZhbm5haC5nbnUub3JnL2dpdHdlYi8/cD1n
-bnVsaWIuZ2l0O2E9YmxvYjtmPW00L2J1aWxkLXRvLWhvc3QubTQ7aGI9NWI5
-MmRkMGE0NWM4ZDI3ZjEzYTIxMDc2YjU3MDk1ZWE1ZTIyMDg3MA0K
+Indeed.  The silly idea I came up covers the special case where the
+protected block ends in a system call.  It involves a pseudo-system call
+defined with seccomp, which returns the cookie using SECCOMP_RET_ERRNO
+and verifies it in the system call at the end of the block.  Or, in more
+detail:
 
---------------eNBtMRBZyDcyK9d1RsaaU4hh--
+A partial solution is known for the case where the code sequence that
+needs protection ends in a system call:
+\begin{itemize}
+\item At process startup, execute the following steps:
+  \begin{enumerate}
+  \item Generate a secret cookie.
+  \item Find an unused system call number.
+  \item Using seccomp, install a system call filter for the unused
+    system call which returns the secret cookie via the
+    \verb|SECCOMP_RET_ERRNO| filter return value, after validating the
+    the program counter has the appropriate value (that is, it belongs
+    to the code sequence below).
+  \item Install a seccomp filter for the actual target system call (at
+    the end of the protected block) which checks the secret cookie and
+    the program counter (the latter has to match the code sequence
+    below).
+  \item Wipe the secret cookie and the generated seccomp programs from
+    memory.
+  \end{enumerate}
+\item The protected block has to perform these steps:
+  \begin{enumerate}
+  \item Load the secret cookie using the special, originally unused
+    system call identified at process startup.  Make sure that this
+    value stays in a register and is not spilled to the stack.
+  \item Perform the desired pre-condition checks.
+  \item Perform the original target system call, passing the cookie as
+    an additional system call argument.
+  \item Clear the register in which the secret cookie value us start.
+  \end{enumerate}
+\end{itemize}
 
---------------sQFsywoZoZsijrMMRz1ILrWU
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature.asc"
+However, this only works for system calls which have an unused
+argument slot available.  The critical \texttt{mmap} system takes six
+arguments, so this technique does not work there.  There is also a
+potential race condition where the cookie value leaks to signal
+handlers which interrupt the execution of the protected block or its
+following system call.
 
------BEGIN PGP SIGNATURE-----
-
-wsF5BAABCAAjFiEEf0BaT/qj9Rv+/e4vzoKyyG3Ou58FAmYHiDMFAwAAAAAACgkQzoKyyG3Ou58T
-thAAuQGqIw3S1JshyVeCKFUCj8578seblB21oMTLS6svwzzBqgrd0sMWuEbCL8/bLp6pugdR+weU
-3sAWIDXtly072ZHsCF8LZ/jlOot+0HI3RKYdH7tWmQY2xXs66aF6fVWNZGRnWC8K3eRew4d7xy+O
-nnAnp/H4jV/k6ojXcKgyZWke4nChTHLruWz4iYlIeSDIPxnp0HwEb9F1H4kcuWZ0XEdXC3NuRg0W
-8UnhkTarbCXpfS/w1vxHjk0/Kj+qk5nhvdAjJjqCfFUXLClaPTjV4slEbvR6oBZdSfmmvHCeUtKi
-VpHq3bCdZ5ESQCO64GjhvVgqJ2FNqvQ+nrvUTDUMfMP+yl91n+wQbPq0sDKXZv9HUUXGjd4+yqz3
-NM912zAEmQMT7zNwg9oKirzR/WfInw3725Y+47+sZXIVLWIwuS3eql1k9Adw7C3ybXaoXSIVCeWI
-KmGdhqvVV/Mw7joYKFLtQpNWTi0tQzDSVI9dJd6x9AC7+9hNH+VR/CrvKAt1Y9BdNEsofiXCUa3V
-wwJ0fFI/zw6VGICkMdmSYlRJID3lj3AJgY1eXN72xDYB+3wA0z9E7WtcX2lvRtj0oeb3ZeY6ETvm
-KMqQ4jQQ5C01n72f1qFRJDEhkKnyrfo7wUxPWGKepTdcrkh1Cb3l8YJxQwYL6itcBH0kC1CQ8hTy
-rPs=
-=YSru
------END PGP SIGNATURE-----
-
---------------sQFsywoZoZsijrMMRz1ILrWU--
