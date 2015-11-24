@@ -1,4 +1,9 @@
-Received: (qmail 18029 invoked by uid 550); 6 Jul 2022 13:55:50 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["793" "Tuesday" "24" "November" "2015" "12:57:11" "+0100" "Salvatore Bonaccorso" "carnil@debian.org" "<20151124115711.GA22119@eldamar.local>" "21" "[oss-security] CVE Request: IPTables-Parse: Use of predictable names for temporary files" nil nil nil "11" "2015112411:57:11" "[oss-security] CVE Request: IPTables-Parse: Use of predictable names for temporary files" (number mark "U       carnil@debia Nov 24   21/793   " thread-indent "\"[oss-security] CVE Request: IPTables-Parse: Use of predictable names for temporary files\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 17574 invoked by uid 550); 24 Nov 2015 11:57:26 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,43 +12,51 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17491 invoked from network); 6 Jul 2022 13:54:59 -0000
-Date: Wed, 6 Jul 2022 16:54:47 +0300 (EEST)
-From: Aki Tuomi <aki.tuomi@dovecot.fi>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Message-ID: <185548807.26514.1657115687920@appsuite-dev.open-xchange.com>
+Received: (qmail 17538 invoked from network); 24 Nov 2015 11:57:25 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:date:from:to:subject:message-id:mime-version:content-type
+         :content-disposition:content-transfer-encoding:user-agent;
+        bh=y7jhg6usNuNz5J7j2KVkwccTyWUQofVtl34+Rwp3FUw=;
+        b=uH7wtE6fz6/vLPucQgZGohAZHAtl3cdN0LguhGixzdsA/lyCXJctw5x9xMAY9HBQrn
+         2x5P0KZjQf04A9bgugxIdYi+c+XPTiAE/gKJ1I/Y35Ky2PqkcuDXB9Td4RJbQwuWq04d
+         lSRJQfiRl6LE40tdnJWtVMPGKtAUFo/vN2aXsRrM3YGRI86Jcr+a+0Y2s0Th7vWF5Y/L
+         rbPMP0niii8xaRLJJZgpdF563jnbvCjvdOxOvD70wNNE6Mxe3X2Oi4SOxE3FBJMmdYHe
+         CXNVD4KLffY/NBIaaM1qBKjLuxRu4f+SMlTLsr9EeGKN1NtUYQRPtNWm7HduxQiqOSqP
+         UJdQ==
+X-Received: by 10.28.142.83 with SMTP id q80mr5808993wmd.66.1448366234232;
+        Tue, 24 Nov 2015 03:57:14 -0800 (PST)
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Date: Tue, 24 Nov 2015 12:57:11 +0100
+From: Salvatore Bonaccorso <carnil@debian.org>
+To: OSS Security Mailinglist <oss-security@lists.openwall.com>
+Message-ID: <20151124115711.GA22119@eldamar.local>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Priority: 3
-Importance: Normal
-X-Mailer: Open-Xchange Mailer v7.10.6-Rev15
-X-Originating-Client: open-xchange-appsuite
-Subject: [oss-security] CVE-2022-30550: Privilege escalation possible in dovecot when
- similar master and non-master passdbs are used
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+User-Agent: Mutt/1.5.24 (2015-08-30)
+Subject: [oss-security] CVE Request: IPTables-Parse: Use of predictable names for temporary
+ files
 
-Affected product: Dovecot IMAP Server 
-Internal reference: DOV-5320
-Vulnerability type: Improper Access Control (CWE-284) 
-Vulnerable version: 2.2
-Vulnerable component: submission 
-Report confidence: Confirmed 
-Solution status: Fixed in main
-Researcher credits: Julian Brook (julezman)
-Vendor notification: 2022-05-06 
-CVE reference: CVE-2022-30550
-CVSS: 6.8 (CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:N) 
+Hi
 
-Vulnerability Details: 
-When two passdb configuration entries exist in Dovecot configuration, which have the same driver and args settings, the incorrect username_filter and mechanism settings can be applied to passdb definitions. These incorrectly applied settings can lead to an unintended security configuration and can permit privilege escalation with certain configurations involving master user authentication.
+IPTables-Parse up to 1.6 used temporary files in insecure way, since
+it used predictable filenames. This issue was fixed in 1.6 with the
+following commit:
 
-Dovecot documentation does not advise against the use of passdb definitions which have the same driver and args settings. One such configuration would be where an administrator wishes to use the same pam configuration or passwd file for both normal and master users but use the username_filter setting to restrict which of the users is able to be a master user.
+https://github.com/mtrmac/IPTables-Parse/commit/b400b976d81140f6971132e94eb7657b5b0a2b87
 
-Risk: 
-If same passwd file or PAM is used for both normal and master users, it is possible for attacker to become master user.
+Upstream Changelog:
+https://metacpan.org/source/MRASH/IPTables-Parse-1.6/Changes
+> (Miloslav Trmač) Fixed a vulnerability to not use predictable names
+> for temporary files. This vulnerability would allow an attacker on a
+> multi- user system to set up symlinks to overwrite any file the
+> current user has write access to. If a user manually overrides the
+> temporary file locations with the 'iptout' and 'ipterr' hash keys,
+> it is recommended to not use predictable names either.
 
-Workaround:
-Always authenticate master users from different source than regular users, e.g. using a separate passwd file. Alternatively, you can use global ACLs to ensure that only legimate master users have priviledged access.
+Can a CVE be assigned for this issue?
 
-Fix:
-This has been fixed in main branch. See https://github.com/dovecot/core/compare/7bad6a24%5E..a1022072.patch
+Regards,
+Salvatore
