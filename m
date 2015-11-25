@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5503" "Thursday" "4" "June" "2020" "16:09:59" "+0200" "Matthias Gerstner" "mgerstner@suse.de" "<20200604140959.GA436@f195.suse.de>" "165" "[oss-security] xawtv: CVE-2020-13696: v4l-conf setuid-root program allows file existence tests and open(..., O_RDRW) on arbitrary files" nil nil nil "6" "2020060414:09:59" "[oss-security] xawtv: CVE-2020-13696: v4l-conf setuid-root program allows file existence tests and open(..., O_RDRW) on arbitrary files" (number mark "U       mgerstner@su Jun  4  165/5503  " thread-indent "\"[oss-security] xawtv: CVE-2020-13696: v4l-conf setuid-root program allows file existence tests and open(..., O_RDRW) on arbitrary files\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] xawtv: CVE-2020-13696: v4l-conf setuid-root program allows file existence tests and open(..., O_RDRW) on arbitrary files" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2201" "Wednesday" "25" "November" "2015" "12:57:31" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151125175731.1FBB333204D@smtpvbsrv1.mitre.org>" "51" "[oss-security] Re: CVE request Qemu: net: eepro100: infinite loop in processing command block list" nil nil nil "11" "2015112517:57:31" "[oss-security] Re: CVE request Qemu: net: eepro100: infinite loop in processing command block list" (number mark "U       cve-assign@m Nov 25   51/2201  " thread-indent "\"[oss-security] Re: CVE request Qemu: net: eepro100: infinite loop in processing command block list\"\n") "<alpine.LFD.2.20.1511251422050.31323@wniryva>" ("<alpine.LFD.2.20.1511251422050.31323@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 26577 invoked by uid 550); 4 Jun 2020 14:10:11 -0000
+Received: (qmail 24196 invoked by uid 550); 25 Nov 2015 17:57:43 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,181 +12,63 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26559 invoked from network); 4 Jun 2020 14:10:11 -0000
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Date: Thu, 4 Jun 2020 16:09:59 +0200
-From: Matthias Gerstner <mgerstner@suse.de>
-To: oss-security@lists.openwall.com
-Message-ID: <20200604140959.GA436@f195.suse.de>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="Y7xTucakfITjPcLV"
-Content-Disposition: inline
-Subject: [oss-security] xawtv: CVE-2020-13696: v4l-conf setuid-root program allows file
- existence tests and open(..., O_RDRW) on arbitrary files
+Received: (qmail 24176 invoked from network); 25 Nov 2015 17:57:43 -0000
+From: cve-assign@mitre.org
+To: ppandit@redhat.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, luodalongde@gmail.com
+In-Reply-To: <alpine.LFD.2.20.1511251422050.31323@wniryva>
+Message-Id: <20151125175731.1FBB333204D@smtpvbsrv1.mitre.org>
+Date: Wed, 25 Nov 2015 12:57:31 -0500 (EST)
+Subject: [oss-security] Re: CVE request Qemu: net: eepro100: infinite loop in processing command block list
 
---Y7xTucakfITjPcLV
-Content-Type: multipart/mixed; boundary="ibTvN161/egqYuK8"
-Content-Disposition: inline
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
+> Qemu emulator built with the i8255x (PRO100) emulation support is vulnerable
+> to an infinite loop issue. It could occur while processing a chain of commands
+> located in the Command Block List(CBL). Each Command Block(CB) points to the
+> next command in the list. An infinite loop unfolds if the link to the next
+> CB points to the same block or there is a closed loop in the chain.
+> 
+> A privileged(CAP_SYS_RAWIO) user inside guest could use this flaw to crash
+> the Qemu instance resulting in DoS.
+> 
+> https://lists.gnu.org/archive/html/qemu-devel/2015-10/msg03911.html
+> 
+> hw/net/eepro100.c
+> action_command
 
---ibTvN161/egqYuK8
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+This is not yet available at
+http://git.qemu.org/?p=qemu.git;a=history;f=hw/net/eepro100.c but that
+may be an expected place for a later update. eepro100.c mentions
+"Portions of the code are copies from ... linux e100.c" at the top. We
+have not researched this, but it appears that this QEMU vulnerability
+is not present in
+http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/tree/drivers/net/ethernet/intel/e100.c
+and thus we don't see any indication that the Linux kernel is another
+affected product.
 
-Hallo,
+Use CVE-2015-8345.
 
-xawtv [1] contains a setuid-root program called `v4l-conf` that is
-supposed to allow regular users to configure v4l devices. xawtv is
-pretty old code but it is stilled shipped on some distributions like
-Debian and openSUSE.
-
-Vulnerability Description
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-While checking the source code of `v4l-conf` I noticed that it allows
-regular users to perform arbitrary file existence tests and also to
-perform `open(..., O_RDWR)` and `fstat()` system calls on arbitrary
-files. The issue is found in the `dev_open()` function which only
-contains a naive security check:
-
-```
-    if (strncmp(device, "/dev/", 5)) {
-	fprintf(stderr, "error: %s is not a /dev file\n", device);
-	exit(1);
-    }
-```
-
-This check is not safe against relative path components or symlinks in
-/dev/shm. Example:
-
-```
-# in this case the file does not exist
-user $ v4l-conf -c /dev/../root/.bashrc
-VT_GETSTATE is not supported: Inappropriate ioctl for device
-mode: 0x0, depth=3D0, bpp=3D0, bpl=3D0, base=3Dunknown
-can't open /dev/../root/.bashrc: No such file or directory
-
-# in this case the file exists
-user $ v4l-conf -c /dev/../root/.bash_history
-VT_GETSTATE is not supported: Inappropriate ioctl for device
-mode: 0x0, depth=3D0, bpp=3D0, bpl=3D0, base=3Dunknown
-/dev/../root/.bash_history: wrong device
-```
-
-Some devices in /dev might also trigger code paths upon open() in the
-kernel that are usually not reachable to regular users.
-
-Bugfix
-=3D=3D=3D=3D=3D=3D
-
-Upstream added two fixes in their Git repository [2]:
-
-- commit 31f31f9cbaee7be806cba38e0ff5431bd44b20a3
-- commit 36dc44e68e5886339b4a0fbe3f404fb1a4fd2292
-
-The fix is still incomplete though. It avoids to perform an `open()` on
-unintended files. But it still allows the file existence test to be
-performed. Attached is a small patch that fixes also that.
-
-Timeline
-=3D=3D=3D=3D=3D=3D=3D=3D
-
-2020-05-14: I privately reported the finding to
-            mchehab+samsung@kernel.org, one of the xawtv maintainers
-	    denoted in [3].
-2020-05-14 - 2020-05-29: various discussions with the maintainer about
-            the fix. He published the partial fixes in the Git
-	    repository right away.
-2020-05-29  I reported to the maintainer that the fix is still
-            incomplete but did not hear back since then.
-2020-05-29  I requested and obtained a CVE from Mitre for this issue.
-
-[1]: https://www.linuxtv.org/wiki/index.php/Xawtv
-[2]: https://git.linuxtv.org/xawtv3.git
-[3]: https://www.linuxtv.org/wiki/index.php/Media_Maintainers#XawTV
-
-Cheers
-
-Matthias
-
---=20
-Matthias Gerstner <matthias.gerstner@suse.de>
-Dipl.-Wirtsch.-Inf. (FH), Security Engineer
-https://www.suse.com/security
-Phone: +49 911 740 53 290
-GPG Key ID: 0x14C405C971923553
-
-SUSE Software Solutions Germany GmbH
-HRB 36809, AG N=FCrnberg
-Gesch=E4ftsf=FChrer: Felix Imend=F6rffer
-
-
---ibTvN161/egqYuK8
-Content-Type: text/x-diff; charset=us-ascii
-Content-Disposition: attachment;
-	filename="0001-v4l-conf-use-the-same-error-messages-for-stat-and-ty.patch"
-Content-Transfer-Encoding: quoted-printable
-
-=46rom 693b157c3e290bd72588be058b1fc61429ceb3dd Mon Sep 17 00:00:00 2001
-From: Matthias Gerstner <matthias.gerstner@suse.de>
-Date: Thu, 4 Jun 2020 15:59:08 +0200
-Subject: [PATCH] v4l-conf: use the same error messages for stat() and type
- errors
-
-Only this way arbitrary file existence tests can be avoided. Otherwise
-an unprivileged user will get different messages for existing files of
-the wrong type than for non-existing files.
----
- console/v4l-conf.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/console/v4l-conf.c b/console/v4l-conf.c
-index 0e8d3e3..aee5bda 100644
---- a/console/v4l-conf.c
-+++ b/console/v4l-conf.c
-@@ -143,12 +143,12 @@ dev_open(const char *device, int major)
-=20
-     /* First check if the device is really a devnode of the right type */
-     if (-1 =3D=3D stat(device, &stb)) {
--	fprintf(stderr, "stat failed on %s\n", device);
-+	fprintf(stderr, "%s: invalid path or file is not of the right type\n", de=
-vice);
- 	exit(1);
-     }
-=20
-     if (!S_ISCHR(stb.st_mode) || (major(stb.st_rdev) !=3D major)) {
--	fprintf(stderr, "%s: wrong device\n", device);
-+	fprintf(stderr, "%s: invalid path or file is not of the right type\n", de=
-vice);
- 	exit(1);
-     }
-=20
---=20
-2.26.2
-
-
---ibTvN161/egqYuK8--
-
---Y7xTucakfITjPcLV
-Content-Type: application/pgp-signature; name="signature.asc"
-
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-iQIzBAABCAAdFiEE82oG1A8ab1eESZdjFMQFyXGSNVMFAl7ZALYACgkQFMQFyXGS
-NVPy+w//YlFXQCTbjtrq+hr0QGMc8XPE+Gyl42Hok8qdu/UXLrLYYisHk81tEJ/N
-MeC/dbvjgw6SbxGNsJwqd0t2uItLTq3AM5t0Sat+gWWg941hLm5B8Ha6YcsqS4gP
-AVfYXWmLUsVyV+qSUfSGSKXca/KI1Pa9KHtfCQzvC+rYU8z8brug+FlK5fwcjvvC
-9DfscU73cO8GAZExMWg4Jzy7OFOxaQJDeDeFSWHi5II49YkmwI6O6jh+lKUdE4Xu
-veEdukJ0PaaYiE/321oZVluvLR5IiyGUepwtZSIReTMeiVPQI+vYZMDfwaqZIiJa
-4MlcwA1DbvbkhNQVdx53lRGza/DQYeZZcUjc8jcVWeJPQEqecJKNA/AermXWzgzu
-j1zQ8/cRFT1fHyh1bBXHJWubNiYhQQznKtonCc4f9gxoPX35yokCPoXitPy5MGwT
-sM4a0aPxEm+yTG5OldaIIuZfkN8QuIxgtgAdeMBzbS3fcpxQg/A7ZRYtWhRd9Vg8
-4/TsorVZJDN3vRH63zX5h0bLcITCTaAi9yy9quybQnrpJ/7oNHAVnSmYRYf7floX
-AYniD1ItcJo1LUcXMHQib0q14m4okN3LqRkkpNMpvp4+/Qpx+Bef4eyu+XRR8fUS
-8eO/2gxymp0RA5JtmLuCZVQbNLinbb7VY36JcLIuxQo2fSrTPkg=
-=OuSP
+iQIcBAEBCAAGBQJWVfWTAAoJEL54rhJi8gl591EP/06FBlgbq3Aer+TcCq+wOM9M
+2lAH/ssbE4otGXM73jUMxkOLfrFa86Fm8z59xVgFLHyFzJJhUpBRHsfi+qQxiXgn
+YkriJMmr5bQOQDJxqWq+lY3AG56HgtCHps646AoO1xEPUAu0hP/n6mpwL8yj0R7x
+az9lPKY5heBt7NL7RZJ83U8BSm85Wt9CICO3qawb9R0Yj7iWVk0E1OWbMaRsf5if
+OoJw52/c5cTfPAsGHu003E5vREvNrEL29I0+luCVJeRusjXsr3/nldnnN8Anvp7b
+BbNmKraOmpmc2qsVjnkwpkmvX3XROXKUQOBQdbqpheJ/VBSoGqT+A2rCeO3Ba8m7
+KHI4CB6eccC9SeFi1DjV5ZWdCWSIiaofzw8y/4ZHUOSIFMaoaEJyKKVb68/++bA0
+mZN85P24QqDGEwLoWHWVit0WQ/aWBcJrSP7yKlvdtQQ65pIn5GEmp2rvmLID0RlS
+JssEis9JgDZ98/sEjVuWufK4c5w2S7kGi0Ebiy83N7HIbbG51Ix2+1UrPYq15vtV
+WiLdLaILOkeu4jOnmz+gaeBFVy6TFTIZhIeV7Az3QCCY1xDv7Woxvw4UM+w5OXiG
+m/S82BI+qOvyfs7Bsdn1RIWJtFga4aefs0CKsPwlwC+sLduslxdUcN9ecivKqBzb
+//6yZbXJRI/ZzPCaHKIx
+=c5ap
 -----END PGP SIGNATURE-----
-
---Y7xTucakfITjPcLV--
