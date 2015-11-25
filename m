@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4003" "Thursday" "9" "February" "2017" "14:42:25" "+0100" "Agostino Sarubbo" "ago@gentoo.org" "<23235157.DjIO37ESfJ@blackgate>" "107" "[oss-security] zziplib: heap-based buffer overflow in __zzip_get64 (fetch.c)" nil nil nil "2" "2017020913:42:25" "[oss-security] zziplib: heap-based buffer overflow in __zzip_get64 (fetch.c)" (number mark "U       ago@gentoo.o Feb  9  107/4003  " thread-indent "\"[oss-security] zziplib: heap-based buffer overflow in __zzip_get64 (fetch.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1659" "Wednesday" "25" "November" "2015" "14:26:22" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1511251422050.31323@wniryva>" "43" "[oss-security] CVE request Qemu: net: eepro100: infinite loop in processing command block list" nil nil nil "11" "2015112508:56:22" "[oss-security] CVE request Qemu: net: eepro100: infinite loop in processing command block list" (number mark "U       ppandit@redh Nov 25   43/1659  " thread-indent "\"[oss-security] CVE request Qemu: net: eepro100: infinite loop in processing command block list\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 25643 invoked by uid 550); 9 Feb 2017 13:42:44 -0000
+Received: (qmail 24084 invoked by uid 550); 25 Nov 2015 08:56:51 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,121 +12,59 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 24567 invoked from network); 9 Feb 2017 13:42:42 -0000
-From: Agostino Sarubbo <ago@gentoo.org>
-To: oss-security@lists.openwall.com
-Date: Thu, 09 Feb 2017 14:42:25 +0100
-Message-ID: <23235157.DjIO37ESfJ@blackgate>
-User-Agent: KMail/4.14.10 (Linux/4.4.39-gentoo; KDE/4.14.24; x86_64; ; )
+Received: (qmail 24060 invoked from network); 25 Nov 2015 08:56:50 -0000
+Date: Wed, 25 Nov 2015 14:26:22 +0530 (IST)
+From: P J P <ppandit@redhat.com>
+X-X-Sender: pjp@javelin
+To: oss security list <oss-security@lists.openwall.com>
+cc: Qinghao Tang <luodalongde@gmail.com>
+Message-ID: <alpine.LFD.2.20.1511251422050.31323@wniryva>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"
-Subject: [oss-security] zziplib: heap-based buffer overflow in __zzip_get64 (fetch.c)
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.23
+Subject: [oss-security] CVE request Qemu: net: eepro100: infinite loop in processing command
+ block list
 
-Description:
-zziplib is an intentionally lightweight library that offers the ability to 
-easily extract data from files archived in a single zip file.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-A fuzz on it discovered an heap overflow.
+   Hello,
 
-The complete ASan output:
+Qemu emulator built with the i8255x (PRO100) emulation support is vulnerable
+to an infinite loop issue. It could occur while processing a chain of commands
+located in the Command Block List(CBL). Each Command Block(CB) points to the
+next command in the list. An infinite loop unfolds if the link to the next
+CB points to the same block or there is a closed loop in the chain.
 
-# unzzipcat-mem $FILE
-READ of size 1 at 0x60400000dff3 thread T0
-    #0 0x7ff28ab675dc in __zzip_get64 /tmp/portage/dev-libs/zziplib-0.13.62-
-r1/work/zziplib-0.13.62/zzip/fetch.c:59:10
-    #1 0x7ff28ab64968 in zzip_mem_entry_new /tmp/portage/dev-
-libs/zziplib-0.13.62-r1/work/zziplib-0.13.62/zzip/memdisk.c:221:30
-    #2 0x7ff28ab64968 in zzip_mem_disk_load /tmp/portage/dev-
-libs/zziplib-0.13.62-r1/work/zziplib-0.13.62/zzip/memdisk.c:137
-    #3 0x7ff28ab638b7 in zzip_mem_disk_open /tmp/portage/dev-
-libs/zziplib-0.13.62-r1/work/zziplib-0.13.62/zzip/memdisk.c:89:5
-    #4 0x50982d in main /tmp/portage/dev-libs/zziplib-0.13.62-
-r1/work/zziplib-0.13.62/bins/unzzipcat-mem.c:82:12
-    #5 0x7ff289ca361f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
-    #6 0x419748 in _init (/usr/bin/unzzipcat-mem+0x419748)
+A privileged(CAP_SYS_RAWIO) user inside guest could use this flaw to crash
+the Qemu instance resulting in DoS.
 
-0x60400000dff3 is located 0 bytes to the right of 35-byte region 
-[0x60400000dfd0,0x60400000dff3)
-allocated by thread T0 here:
-    #0 0x4d2508 in malloc /tmp/portage/sys-devel/llvm-3.9.0-
-r1/work/llvm-3.9.0.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:64
-    #1 0x7ff28ab64187 in zzip_mem_entry_new /tmp/portage/dev-
-libs/zziplib-0.13.62-r1/work/zziplib-0.13.62/zzip/memdisk.c:200:25
-    #2 0x7ff28ab64187 in zzip_mem_disk_load /tmp/portage/dev-
-libs/zziplib-0.13.62-r1/work/zziplib-0.13.62/zzip/memdisk.c:137
-    #3 0x7ff28ab638b7 in zzip_mem_disk_open /tmp/portage/dev-
-libs/zziplib-0.13.62-r1/work/zziplib-0.13.62/zzip/memdisk.c:89:5
-    #4 0x7ff289ca361f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+Upstream patch:
+- ---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2015-10/msg03911.html
 
-SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/portage/dev-
-libs/zziplib-0.13.62-r1/work/zziplib-0.13.62/zzip/fetch.c:59:10 in 
-__zzip_get64
-Shadow bytes around the buggy address:
-  0x0c087fff9ba0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c087fff9bb0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c087fff9bc0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c087fff9bd0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c087fff9be0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-=>0x0c087fff9bf0: fa fa fa fa fa fa fa fa fa fa 00 00 00 00[03]fa
-  0x0c087fff9c00: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c087fff9c10: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c087fff9c20: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c087fff9c30: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c087fff9c40: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Heap right redzone:      fb
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack partial redzone:   f4
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==7924==ABORTING
 
-Affected version:
-0.13.62
+This issue was discovered by Qinghao Tang of QIHU 360 Marvel Team.
 
-Fixed version:
-N/A
+Thank you.
+- --
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
 
-Commit fix:
-N/A
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-N/A
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00151-zziplib-heapoverflow-__zzip_get64
-
-Timeline:
-2017-01-17: bug discovered and poked upstream
-2017-02-09: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/02/09/zziplib-heap-based-buffer-overflow-in-__zzip_get64-fetch-c
-
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+iQIcBAEBAgAGBQJWVXe3AAoJEN0TPTL+WwQfIo4QALVYkf11kp4qH+XI8b9gpeyK
+CmidvlMj5EAXNN0JB6HiUpgQ3PYfg3VrCzNC5miYvR5H7P5yWLdSyEA6nnEdA5sH
+qO5dHzt7iXFYw7xcndu7sBAzrFGOBmGxyD+8EM4/CI8gyI1eaJqS0raKAPwYbWrT
+ZKR5AmjMYNlxx2AgvRGJGsTIeskKwVXyUxrD1H1TNDLFbwgoSII3NsC8chvpt7jO
+QtcDL2FRthZly724Xzh3+LA2LD6lyk2CWO83Bpysfs1+L0gZ5wkQsIqL7u1kS+Z3
+kbSwOM7o+XbfL/gFCvPVPH45P7ugxe7wN7piHnYOHB9FpQ+V8GsSAONMpvRSkB/k
+IU+tbk6ovxZPrmJXoK7ysHogc2mtLqykPuf6LOzPmgRC0LW7FMkYsfeg2Vd9Xe+6
+ua/IE2qyGCK+R/JePl72f53PFK9MAeCZ/6sOeME4/WQyEYf837AAr2/ox7ClbmJ4
+eGbYl3NZFH9t+t7mI8zJ5Nd0QTNdxNzSZ2eUIlvj4DhaGHAXlXB78QC0Ctafhhdt
+sebseaJGaTbUlqijm7IgaE/XT42Z97Y5E681ktNjeOsc312RZpBoMQJM7hNJ71sQ
+T0KA9Otr7oqy/6TSkN/4FdlzuK/vKGyjb5x4t2687Ldqb8j/RgEFqe3pBa8FyGqD
+PXqw/kJ82DbS3RbCGXoz
+=1Pb0
+-----END PGP SIGNATURE-----
