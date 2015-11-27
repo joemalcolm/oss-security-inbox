@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3311" "Tuesday" "19" "December" "2017" "00:14:21" "+0000" "halfdog" "me@halfdog.net" "<1453-1513642461.788845@V4Go.Zsn0.ZlLm>" "72" "Re: [oss-security] Recommendations GnuPG-2 replacement" "^Date:" nil nil "12" "2017121900:14:21" "[oss-security] Recommendations GnuPG-2 replacement" (number mark "        me@halfdog.n Dec 19   72/3311  " thread-indent "\"Re: [oss-security] Recommendations GnuPG-2 replacement\"\n") "<20171218220414.GA10960@takahe.colorado.edu>" ("<20171207210134.GA7079@openwall.com>" "<2172-1513501568.968862@pLoG.Le7g.f3CQ>" "<87tvwoowng.fsf@fifthhorseman.net>" "<814-1513628516.856754@MaI1.D5wz.7Roo>" "<20171218220414.GA10960@takahe.colorado.edu>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3801" "Friday" "27" "November" "2015" "14:23:55" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151127192355.9F61D6C008D@smtpvmsrv1.mitre.org>" "78" "[oss-security] Re: CVE request: Linux kernel, information disclosure after file truncate on BTRFS" nil nil nil "11" "2015112719:23:55" "[oss-security] Re: CVE request: Linux kernel, information disclosure after file truncate on BTRFS" (number mark "U       cve-assign@m Nov 27   78/3801  " thread-indent "\"[oss-security] Re: CVE request: Linux kernel, information disclosure after file truncate on BTRFS\"\n") "<20151127145423.GI5585@suse.de>" ("<20151127145423.GI5585@suse.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 21992 invoked by uid 550); 19 Dec 2017 00:14:50 -0000
+Received: (qmail 24532 invoked by uid 550); 27 Nov 2015 19:24:08 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,89 +11,91 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 21968 invoked from network); 19 Dec 2017 00:14:50 -0000
-In-reply-to: <20171218220414.GA10960@takahe.colorado.edu>
-References: <20171207210134.GA7079@openwall.com> <2172-1513501568.968862@pLoG.Le7g.f3CQ> <87tvwoowng.fsf@fifthhorseman.net> <814-1513628516.856754@MaI1.D5wz.7Roo> <20171218220414.GA10960@takahe.colorado.edu>
-Comments: In-reply-to Leonid Isaev <leonid.isaev@jila.colorado.edu>
-   message dated "Mon, 18 Dec 2017 15:04:14 -0700."
-MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Message-ID: <1453-1513642461.788845@V4Go.Zsn0.ZlLm>
-Date: Tue, 19 Dec 2017 00:14:21 +0000
-From: halfdog <me@halfdog.net>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Recommendations GnuPG-2 replacement
-To: oss-security@lists.openwall.com
+Received: (qmail 24506 invoked from network); 27 Nov 2015 19:24:07 -0000
+From: cve-assign@mitre.org
+To: jsegitz@suse.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <20151127145423.GI5585@suse.de>
+Message-Id: <20151127192355.9F61D6C008D@smtpvmsrv1.mitre.org>
+Date: Fri, 27 Nov 2015 14:23:55 -0500 (EST)
+Subject: [oss-security] Re: CVE request: Linux kernel, information disclosure after file truncate on BTRFS
 
-Leonid Isaev writes:
-> On Mon, Dec 18, 2017 at 08:21:56PM +0000, halfdog wrote:
->> The point in starting this thread was, that GnuPG does NOT
->> conveniently cover usecases for headless or scripting operation.
->> Thus it seems that the time has come to look for replacement,
->> as GnuPG is moving more in the "desktop" direction, as also
->> your comments indicate.
->
-> You are talking about policies here, not technical issues.
-> Gnupg is perfectly scriptable, see pacman-key(1) tool in Arch
-> Linux. Moreover, gpg-agent is easily usable on a headless machine.
-> At least, I mostly use it this way when checking email...
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-So maybe SSH cares for you to have sane pty with all the features
-needed to make gnupg run smoothly? Perhaps you may want to respond,
-that it is not gnupg at fault, if e.g. an embedded boot image
-does not use openvt and /dev/tty[1-6] during early boot in correct
-ways, thus causing problems. But the way gnupg reacts in that
-situation (not working and not giving meaningful error messages
-either) does not really help the user and gave me the impression,
-that those usecases are out of scope - and hence also of scope
-for testing.
+> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=0305cd5f7fca85dae392b9ba85b116896eb7c1c7
 
-You may want to read [0] to see how another user on "gnupg-users"
-describes in more detail the "user experience" when trying
-to get TTYs, pinentry, gpg-agent ... up and running. The post
-quite reflects also my user experience, the difference is just
-that he writes lengthy mails to get things running, I write them
-to see if there are alternatives.
+Use CVE-2015-8374 for the vulnerability with the impact of "User B now
+gets to see the 1000 bytes that user A truncated from its file before
+it made its file world readable" (aka "being able to read old and
+stale data from foo that should not be possible to read anymore
+through normal filesystem operations" -- these are the 0x2a byte
+values).
 
-> You will lose nothing if you just pkill(1) gpg-agent though. So
-> I don't understand why you claim that gpg is moving towards
-> desktop.
+We also have the following four types of comments. As far as we know,
+only the first comment can affect the number of CVE IDs.
 
-Well, on a server running multiple concurring tasks, I feel somehow
-uncomfortable killing a process just by UID and process name.
-How to make sure, that not a parallel task is still using the
-agent?
+(first comment)
 
-Signals are just fine for control: when a parent knows exactly
-its children and signals them. For processes starting automagically
-I just do not want to care about how their daemonizing works
-and if there might be races during that procedure, how to craft
-pkill regex to reduce the risk of killing the wrong agent under
-some circumstances, ...
+"We were also not correctly decrementing the number of bytes used by
+the inode, we were setting it to zero, giving a wrong report for
+callers of the stat(2) syscall" seems to be an entirely different type
+of problem, and the attacker role is different (i.e., the attacker is
+the user who does the truncating, not the user who does the cloning).
+Also, this problem could have been fixed independently. It seems that
+the ability of an unprivileged user to trigger incorrect data from the
+stat syscall can be considered a vulnerability, at least if the data
+can be arbitrarily incorrect. For example, in some applications, the
+size of a single file is critically important (e.g., a user is not
+allowed to have a file larger than 5 Gb because the application later
+directly operates on the file as a Swift object), and it's realistic
+to expect that privileged code sometimes uses the stat syscall to
+enforce this. Are there any special factors related to compressed
+inline extents that would cause this stat issue never to be
+realistically exploitable? Otherwise, we would like to assign a second
+CVE ID for the ability of a user to falsify stat data by truncating a
+file.
 
->> That's really a strange argument. You fear PTRACING for key
->> extraction of a short-lived, per-key instance of gpg1 process
->> and solve that by putting all the key material into a single
->> long-lived gpg-agent process, not even providing convenient
->> commands to flush the keys from there?
->
-> pkill -hup gpg-agent. Please read the manpages.
+(other comments)
 
-Please give realistic answers. And if you try, you may notice,
-that things are not just as simple as "send a signal to any process
-with a given name". Your backup system vendor and your colleagues
-will love you, when killing the sign/encryption process that way,
-yielding spurious errors from time to time. Could be quite some
-beer to spend when they completed their root cause analysis.
+We don't think that "User B also lost the bytes in the range [1000,
+2000[ bytes from its own file" is necessarily a critical impact. User
+B intentionally chose "length argument of 0, clone the whole range"
+and could have instead chosen a specific length that was known to be
+safe. (At least in some scenarios, "clone the whole range" is
+dangerous if there's an application with a race condition in which
+User A could have made the file larger after User B observed how large
+the whole range was.)
 
-Maybe your pkill would not cause those side effects, but I just
-do not want to care about them. I am quite sure, that they are
-ignorable on desktop environments or for e-mail reading, in a
-production environment they might just be a risk and an annoyance.
-Hence my argument about desktop and server.
+We didn't understand "our file bar got the whole inline extent copied
+from foo." It seems that bar got a total of 256 bytes from foo, not
+the whole 512 bytes. As far as we could tell, bytes 256 through 511 of
+foo remained private after the attack.
 
-hd
+In general, giving one example in which everything is a multiple of
+1000, followed by a mostly analogous example in which everything is a
+multiple of 128, might not be useful for clarifying a vulnerability.
 
-[0] https://lists.gnupg.org/pipermail/gnupg-users/2017-December/059600.html
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-
+iQIcBAEBCAAGBQJWWK1NAAoJEL54rhJi8gl5qnAP+gKzPapdFczs/L/cIz88G8Ei
++Ff9MOOrrItBitl0QUat19ii1OMR3hazmO24GBjoJQlPvVp0wjC+eTa2uHp3wH8G
+aPNPdNcL1hhuhXkpWTiHaAcDkNrdpytVHDVnMLeBpQnOR6djQJS0JUXF5DFQICfs
+9cdNyymwwqVTaRw7I/3KG7rj/1maReRhmRaihZtlgKauZhnjd9Fjnf8izwFLLA8i
+FaRFQDrAWQwpC7wg4sJmYto4FjilnxcuuvpBWLZXeMVeW05662WxYmuj0V5bXub3
+vH0JAy0nii12fiNSPhHyV2jZ6+qQ4Ro1q/ZLtaYqrt5zVvRz9/dWSc4mNmSRsnFu
+4pWgCIcFzM+IXfHlbuMFp8P+maazdy8pKRcoRzZ1hi/9iqoqQB/8njqls/YILP7Y
+eZEGAYNdHTarFpY//1L2BB2No6tLwctXQKuH98ark4uStw3bDhrj5deVXie0ccWR
+tsGK1sEER9da2mcPYjvuAWVQIYmsRQ1IqEK0ChIcIrozbgQxe31UHX3zHxmiWaCR
+BOntlbR3CapmJ7yKqnYG8WJEf+o94YpsB9GEDDF5nZPEIHKy35LYRS1+mRfbfwtq
+JhMkd5QYg+DRRvkYXhEkaJuZcNndAUOlQUXslvEGPXHVIotUJcZNI0oWI5fvC+zP
+XehYFV5DVvNH0I6wlpX0
+=3ftC
+-----END PGP SIGNATURE-----
