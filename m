@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1780" "Thursday" "30" "July" "2020" "17:47:14" "+0100" "Szabolcs Nagy" "szabolcs.nagy@arm.com" nil "34" nil "^Cc:" nil nil "7" nil nil (number mark "        szabolcs.nag Jul 30   34/1780  " thread-indent "\"[oss-security] Re: Alternative CET ABI\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Re: Alternative CET ABI" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5117" "Saturday" "28" "November" "2015" "23:01:03" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151129040103.E8DA86C018F@smtpvmsrv1.mitre.org>" "122" "[oss-security] Re: Heap Overflow in PCRE" "^Cc:" nil nil "11" "2015112904:01:03" "[oss-security] Re: Heap Overflow in PCRE" (number mark "        cve-assign@m Nov 28  122/5117  " thread-indent "\"[oss-security] Re: Heap Overflow in PCRE\"\n") "<20151124113343.4382bed3@pc1>" ("<20151124113343.4382bed3@pc1>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 28328 invoked by uid 550); 30 Jul 2020 17:25:06 -0000
+Received: (qmail 21998 invoked by uid 550); 29 Nov 2015 04:01:22 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,134 +11,135 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 32151 invoked from network); 30 Jul 2020 16:47:37 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=armh.onmicrosoft.com;
- s=selector2-armh-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=J6TQ1WvKcdKD1vO9QvW67/iJTr6UdXe18GT+VABVOeQ=;
- b=0Md3LILNS6uENpJuB6YvPwDb/4JU4s/7Ssh5vZJHkA6cKdPOSjvSkUt7DzEKKwVHpE2V/tjlWipWW645RQptYmsgu/0tAvgA6E7kr5+Zpz+FlGN5iUjctbQUIRipZmTokqAN4JZyCq7HMuPINzDJ2Z8vVaWXdVXoqTBBhG9zJCg=
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 63.35.35.123)
- smtp.mailfrom=arm.com; lists.openwall.com; dkim=pass (signature was verified)
- header.d=armh.onmicrosoft.com;lists.openwall.com; dmarc=bestguesspass
- action=none header.from=arm.com;
-Received-SPF: Pass (protection.outlook.com: domain of arm.com designates
- 63.35.35.123 as permitted sender) receiver=protection.outlook.com;
- client-ip=63.35.35.123; helo=64aa7808-outbound-1.mta.getcheckrecipient.com;
-X-CheckRecipientChecked: true
-X-CR-MTA-CID: 0a2ef7972e378601
-X-CR-MTA-TID: 64aa7808
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=Jr0x+6R4x8rhI/0gpJe66QMuy8WqeDFU4Q+BaVNbAzGix0lCIc1L2sSSNm3PWzmYS8Q4cFAhv+uCi0Ek55WPVj3HLuwnitTGiR+p8hvXy+ZbucoOLXWhC4Nqe8vk6lm6yImKec/gLzKx5+ySls2dgcaurB817e54GEbiKXqRHujitgtQhYZ7Emt7zSqUbDWCrWuD5vRrXITLGNAC3q3EhQSZdv8NkJl5i9O/dtNW8CkHCj4fMj65TKlopqRNPu/etDkfTsC1duy8onxhhIeTNy7CixaEm2aq1qvWc6BW6ZhXmE0NFnMLaIVRkVhERFim/mn/e+YdTGann5WWdBP2eQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=J6TQ1WvKcdKD1vO9QvW67/iJTr6UdXe18GT+VABVOeQ=;
- b=GqZFGG1fUhsoP45tPwvfBlk8y5ffyfpumjje+DIdc0sDhdrpoFJEtQyyUP4AeIZF2wvHhYev3skyIUPvVxjbkWkOpD7vdDLrT3YjV5Y/J7N6SICWAsH+L/uM58HxIF7CaMkUZS2E1paZ3tirPISACeh4vyZBHq7QSTD56IIKXhYiM3HofyhSHVeucqqIhjDGi84YXGVIz1xNabU5ZybLY2DG8BHmUI18Hydh5X1yMUBcPkcikspu5IrJD4ZJy9r6aKv5fUe0e30tlpQTQXHbQQfWCugyBBmTaHnOpnqCX85brYKvNIKaAlpG8BIRerRhHZgf0Hhr2oDTnoKQ+0EpqQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=arm.com; dmarc=pass action=none header.from=arm.com; dkim=pass
- header.d=arm.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=armh.onmicrosoft.com;
- s=selector2-armh-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=J6TQ1WvKcdKD1vO9QvW67/iJTr6UdXe18GT+VABVOeQ=;
- b=0Md3LILNS6uENpJuB6YvPwDb/4JU4s/7Ssh5vZJHkA6cKdPOSjvSkUt7DzEKKwVHpE2V/tjlWipWW645RQptYmsgu/0tAvgA6E7kr5+Zpz+FlGN5iUjctbQUIRipZmTokqAN4JZyCq7HMuPINzDJ2Z8vVaWXdVXoqTBBhG9zJCg=
-Authentication-Results-Original: google.com; dkim=none (message not signed)
- header.d=none;google.com; dmarc=none action=none header.from=arm.com;
-Message-ID: <20200730164713.GF24636@arm.com>
-References: <87k0ylgff0.fsf@oldenburg2.str.redhat.com>
- <CAG48ez3OF7DPupKv9mBBKmg-9hDVhVe83KrJ4Jk=CL0nOc7=Jg@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAG48ez3OF7DPupKv9mBBKmg-9hDVhVe83KrJ4Jk=CL0nOc7=Jg@mail.gmail.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
-X-ClientProxiedBy: LO2P265CA0413.GBRP265.PROD.OUTLOOK.COM
- (2603:10a6:600:a0::17) To AM6PR08MB3047.eurprd08.prod.outlook.com
- (2603:10a6:209:4c::23)
-MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-Originating-IP: [217.140.106.49]
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-HT: Tenant
-X-MS-Office365-Filtering-Correlation-Id: 64338ccb-2927-4cd8-56cf-08d834a83bba
-X-MS-TrafficTypeDiagnostic: AM6PR08MB5000:|DB8PR08MB5084:
-X-Microsoft-Antispam-PRVS: 
-	<DB8PR08MB5084760223E92572E248A1DEED710@DB8PR08MB5084.eurprd08.prod.outlook.com>
-x-checkrecipientrouted: true
-Content-Transfer-Encoding: quoted-printable
-NoDisclaimer: true
-X-MS-Oob-TLC-OOBClassifiers: OLM:10000;OLM:10000;
-X-MS-Exchange-SenderADCheck: 1
-X-Microsoft-Antispam-Untrusted: BCL:0;
-X-Microsoft-Antispam-Message-Info-Original: 
- B9xfJZXIC33S+nPSaR0ftAs04Vw/qQaYi4CATNdIiW2LM2L/mH5qB96HqByPdHmBdr2pLfHznlVnGJFPdN2ljkk1QiYfymBTtrrxHBBMexwx6T36kwf+XZRPUidHqXwcE4FciOX0rUFuDAL0VrXEGUSVoF+A/qiaPtNWMihRXgm7hKOiE0LUnkPbfOm8PnH8btq5yRfJWrniDHHtwWpd6PPhUy37AX0DTumtsrHHK+gd46x1hl9j6m5n/XK6HRm9CELmy/6dOm6F0dU4LluJtnSfpRHNznhSwoS3GX3xZP6sPbnMbyG1G3sXmF/JSThSY3AluqMSWhWeXTASnwOuQQ==
-X-Forefront-Antispam-Report-Untrusted: 
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AM6PR08MB3047.eurprd08.prod.outlook.com;PTR:;CAT:NONE;SFTY:;SFS:(4636009)(396003)(366004)(346002)(39860400002)(376002)(136003)(8886007)(478600001)(55016002)(44832011)(3480700007)(54906003)(316002)(1076003)(16526019)(2906002)(6916009)(186003)(2616005)(26005)(956004)(8936002)(8676002)(66476007)(7116003)(52116002)(53546011)(7696005)(66946007)(86362001)(83380400001)(5660300002)(4326008)(33656002)(36756003)(66556008);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData: 
- EOKm7TqLgcdc5dJqEgJYJGJnf5cLxV9wjE7BrMHrfn0jZ1uuggc8uul2QNh2FURjFivzslFwkmwTLGVT1htrtKB6XyiORdAejTdT0kMRQ/C/z6vVUE63zPsB0EueXiTvjgxx+dE8ws0rz6XK/g7qBfVZq1Qnmj0acjeDjaTnDQOi2lzgcNV4GLIeia3Cjz+2HuvfY2i6Td0eUFCsy1wWFxZcf25JW64GBV2K5YjNuMz+yvAe1jKB36sb3TQUzDUwTeiFDPn0zmxDDq3j4jAFeaFjbBWpuB3r8+Ui12DJQFXdY72Lim3L6pHvnd2PDSEs2cJPnEl1GxV/1EYr0YJUjZDGcbMTcK07yy29cb9pPjeSxMsAWXBNgri1/w1cHYcrg9DZ2aEOherQWim7aoRDl0eGox6D3JZLKrkj9H11XubkiFwOW4KRPLGNgdb7Aakgd1d446+IWZ5CsYSDz/XdQTeIhcBK3pv6bDSccvlOstgDtuE3+DOqDHReKmpVIslI
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM6PR08MB5000
-Original-Authentication-Results: google.com; dkim=none (message not signed)
- header.d=none;google.com; dmarc=none action=none header.from=arm.com;
-X-EOPAttributedMessage: 0
-X-MS-Exchange-Transport-CrossTenantHeadersStripped: 
- AM5EUR03FT023.eop-EUR03.prod.protection.outlook.com
-X-MS-Office365-Filtering-Correlation-Id-Prvs: 
-	20866a1a-49a5-45af-c2a5-08d834a83736
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: 
-	DvtKFEp81f3NwkokPu14YZgQlT8Aha02ZewJyo9u+dncp3NF3Cdc88tdkllYqYlgU/GlC7NI+KacOSF2AJqp2KBPZ5p0sZSYsIubo4DSbpx0185mJ6u1UkUUSqFtK+FpU6f4f8L82oxy7eztDr1nn8MmiMn1Wgru1ahMfT1pQzqboagXtsuiDXWnF1xYjKaQeCeBz9hNz6s/61kkf0gAcqCDifGuApliFJTg3rIR6oSh7Uh6Z+LALHx35UoZNzV5hSyPa/brlwruuYJxvjXxNSNht7tx4XatA5Y8fOPE5ijeUvVTZBHR9eyWy7QvkR9ifuIn5zzp6HAAmJ14QCKShbKoRZjOvETpplxi282C6c6YG4XGhXZnVZUimeNBsbK6XPuh1yYeFPrnBx/O5E8mJQ==
-X-Forefront-Antispam-Report: 
-	CIP:63.35.35.123;CTRY:IE;LANG:en;SCL:1;SRV:;IPV:CAL;SFV:NSPM;H:64aa7808-outbound-1.mta.getcheckrecipient.com;PTR:ec2-63-35-35-123.eu-west-1.compute.amazonaws.com;CAT:NONE;SFTY:;SFS:(4636009)(396003)(39860400002)(136003)(346002)(376002)(46966005)(83380400001)(7116003)(1076003)(53546011)(36756003)(8676002)(956004)(82310400002)(16526019)(47076004)(26005)(186003)(7696005)(82740400003)(8936002)(2616005)(33656002)(86362001)(44832011)(356005)(81166007)(3480700007)(316002)(4326008)(70206006)(70586007)(478600001)(6862004)(5660300002)(36906005)(336012)(54906003)(55016002)(2906002)(450100002)(8886007);DIR:OUT;SFP:1101;
-X-OriginatorOrg: arm.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Jul 2020 16:47:23.3404
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 64338ccb-2927-4cd8-56cf-08d834a83bba
-X-MS-Exchange-CrossTenant-Id: f34e5979-57d9-4aaa-ad4d-b122a662184d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=f34e5979-57d9-4aaa-ad4d-b122a662184d;Ip=[63.35.35.123];Helo=[64aa7808-outbound-1.mta.getcheckrecipient.com]
-X-MS-Exchange-CrossTenant-AuthSource: 
-	AM5EUR03FT023.eop-EUR03.prod.protection.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB8PR08MB5084
-Cc: Florian Weimer <fweimer@redhat.com>, oss-security@lists.openwall.com,
-	x86-64-abi@googlegroups.com,
-	Kernel Hardening <kernel-hardening@lists.openwall.com>
-Date: Thu, 30 Jul 2020 17:47:14 +0100
-From: Szabolcs Nagy <szabolcs.nagy@arm.com>
+Received: (qmail 21960 invoked from network); 29 Nov 2015 04:01:16 -0000
+In-Reply-To: <20151124113343.4382bed3@pc1>
+Message-Id: <20151129040103.E8DA86C018F@smtpvmsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Sat, 28 Nov 2015 23:01:03 -0500 (EST)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: Alternative CET ABI
-To: Jann Horn <jannh@google.com>
+Subject: [oss-security] Re: Heap Overflow in PCRE
+To: hanno@hboeck.de
 
-The 07/30/2020 18:41, Jann Horn wrote:
-> On Thu, Jul 30, 2020 at 6:02 PM Florian Weimer <fweimer@redhat.com> wrote:
-> > Functions no longer start with the ENDBR64 prefix.  Instead, the link
-> > editor produces a PLT entry with an ENDBR64 prefix if it detects any
-> > address-significant relocation for it.  The PLT entry performs a NOTRACK
-> > jump to the target address.  This assumes that the target address is
-> > subject to RELRO, of course, so that redirection is not possible.
-> > Without address-significant relocations, the link editor produces a PLT
-> > entry without the ENDBR64 prefix (but still with the NOTRACK jump), or
-> > perhaps no PLT entry at all.
->
-> How would this interact with function pointer comparisons? As in, if
-> library A exports a function func1 without referencing it, and
-> libraries B and C both take references to func1, would they end up
-> with different function pointers (pointing to their respective PLT
-> entries)? Would this mean that the behavior of a program that compares
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-ld.so only needs to generate one plt entry
-for a function in a process and that entry
-can provided the canonical address that is
-loaded from some got entry when the address
-is used, so there is double indirection, but
-it works.
+This is a somewhat complex situation for several reasons, including
+previously assigned CVE IDs that may be related to duplicate
+discoveries, and the nature of the findings themselves.
 
-> function pointers obtained through different shared libraries might
-> change?
->
-> I guess you could maybe canonicalize function pointers somehow, but
-> that'd probably at least break dlclose(), right?
-IMPORTANT NOTICE: The contents of this email and any attachments are confid=
-ential and may also be privileged. If you are not the intended recipient, p=
-lease notify the sender immediately and do not disclose the contents to any=
- other person, use it for any purpose, or store or copy the information in =
-any medium. Thank you.
+Most PCRE findings have a requirement that the attacker is able to
+provide an arbitrary regular expression in a way that crosses a
+privilege boundary.
+http://www.pcre.org/current/doc/html/pcre2pattern.html implies that
+this is relevant to the PCRE security model, i.e., the reference to
+"applications that allow their users to supply patterns." We've
+mentioned this before in
+http://www.openwall.com/lists/oss-security/2015/09/08/8 but we're
+still unaware of any specific application that meets this requirement
+(the closest we found was http://stackoverflow.com/questions/2371445).
+Also, these PCRE problems are not the same as a "regex injection"
+problem within an application (see IDS08-J on the
+securecoding.cert.org web site); they are cases where the legitimate
+user is supposed to know what a regular expression is, and is expected
+to construct a useful one. Accordingly, CVE IDs might have little
+practical value.
+
+Because mitigating the CVEs is rarely necessary, it might be reasonable
+to restrict CVE ID assignments to cases with certain types of impacts.
+
+Another factor that is relevant here is that some PCRE CVEs have been
+based on information that wasn't public at the time of CVE ID
+assignments.
+
+> https://blog.fuzzing-project.org/29-Heap-Overflow-in-PCRE.html
+
+This report relates to the PCRE changelog:
+
+   http://vcs.pcre.org/pcre/code/trunk/ChangeLog?view=markup
+
+> Fuzzing the pcretest tool uncovered an input leading to a heap
+> overflow in the function pcre_exec. This bug was found with
+> the help of american fuzzy lop and address sanitizer.
+> Upstream bug #1637
+
+This seems to be changelog item 10 in 8.38.
+
+> Apart from that a couple of other vulnerabilities found by
+> other people have been fixed in this release:
+
+> Heap overflow in compile_regex (bug #1667)
+> Heap overflow in compile_regex (bug #1672)
+
+Both of these seem to be changelog item 7 in 8.38.
+
+> Stack overflow in compile_regex (bug #1515)
+
+Another one from a similar time was bug #1503.
+
+Although 8.38 has these fixed, it seems that they are earlier bugs
+that were originally fixed in 8.36: 1503 is changelog item 19 in 8.36,
+whereas 1515 is changelog item 20 in 8.36. MITRE happens to have
+received multiple credible reports of discovering these issues. 1503
+was assigned CVE-2015-2327 months ago, and 1515 was assigned
+CVE-2015-2328 at the same time. These CVE IDs are used, at least, in:
+
+  http://www.fortiguard.com/advisory/FG-VD-15-010/
+  http://www.fortiguard.com/advisory/FG-VD-15-014/
+
+Several other 8.38 changelog entries appear to meet an arbitrary
+cutoff of impact specificity that might be reasonable for this type of
+the-input-might-be-untrusted-but-usually-isn't scenario:
+
+  3, 4, 5, 6, 8, 18, 21, 22, 23, 27, 28, 31, 36
+
+28 is unlike the others. A possible threat model is that "pcregrep -q"
+is called from a CGI script, and the attacker is able to provide a
+binary file in an attempt to learn details about what the script is
+looking for. (This isn't expected to be very common, but may be more
+common than an attacker who is able to provide an arbitrary regular
+expression.)
+
+Finally, here are two other PCRE issues that have been discussed on
+oss-security recently:
+
+ - https://bugs.exim.org/show_bug.cgi?id=1537 (this is changelog item
+   1 in 8.37)
+
+ - https://bugs.php.net/bug.php?id=70345 [2015-08-25 11:10 UTC] says
+   "the PCRE dev does not consider this a bug. So it probably hasn't
+   been/won't be changed in PCRE."
+
+We think what would be reasonable is for us to assign CVE IDs soon so
+that there is coverage of all of the PCRE issues listed above, i.e.,
+
+  8.38 changelog items:  3, 4, 5, 6, 7, 8, 10, 18, 21, 22, 23, 27, 28, 31, 36
+
+  8.37 changelog item:  1
+
+(It is possible that we may need to change the strategy for PCRE CVE
+coverage in the future.) If there's something wrong -- especially if
+1503 or 1515 wasn't fixed in 8.36 -- please let us know.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJWWndbAAoJEL54rhJi8gl5Ki8QAMXLzwar3Bn+C8nCnU6WNgKg
+QyeOOXjnDrXxUAFlw5SsMgKMecEPBLyXjav6Zr7d4b29VmvT3Y1lbiimXC1Funkd
+dtT/UOlMmrWhcW8PvetbgS4YMc/YOIa+XDHoEka+fUafzEdXOQXilNH5xoMQJb0+
+uoFNjrtoo/sXzG9tuuZ6NxGNsUrC3c/sdGboAImQWhFBG3pl98dHyJdIkURNVVaY
+iYH+m+wDuija8tcq0U+sX7SKyh/gGOho07oYK7Cpe2grXQpbeEU+bhrTD4BL//SQ
+f+hvXJMrdVUVdvd6/owMvDVOdGMN9WBq/+azRY3sN8de+nGxpNv3yy7NcDyScDQg
+SUevQbp9WyPJWJOtvvB0Dsx9XL0EWgW0wMqBFx/35CtSxbgVwEJczd1T6sqDE3w7
+6EUCmxirhjJFE+ppgr9Q17E4V5Jtsh3Wf7L+R8dVvRMMFmFvIjtqHmbAu9MkDukP
+/trl//ApdrntKykhVxrkqROTmTS5OZX3nQ3G49VR+eAHwWXfHLIV09DXOi9YbEo6
+efmaB1cLyN6C6vvLHewwytpFzLdjX9Mtd1mCaCETDCKd/m4ak425XHfQIVd9OOPv
+gVsGSETPyI3wNyginhnqnUe9QY8ygI9Til9HSl58Q3zX3L+95ZGiTjICPagO1guL
+MoiX6BkJiBSD+aCt3Olh
+=HdYk
+-----END PGP SIGNATURE-----
