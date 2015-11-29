@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2228" "Sunday" "11" "December" "2016" "17:29:13" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<7b789ec9b990495db739639f907b2366@imshyb02.MITRE.ORG>" "50" "[oss-security] Re: CVE Request: MCabber: remote attackers can modify the roster and intercept messages via a crafted roster-push IQ stanza" nil nil nil "12" "2016121122:29:13" "[oss-security] Re: CVE Request: MCabber: remote attackers can modify the roster and intercept messages via a crafted roster-push IQ stanza" (number mark "U       cve-assign@m Dec 11   50/2228  " thread-indent "\"[oss-security] Re: CVE Request: MCabber: remote attackers can modify the roster and intercept messages via a crafted roster-push IQ stanza\"\n") "<20161209201906.ltauap7fydkc62f6@eldamar.local>" ("<20161209201906.ltauap7fydkc62f6@eldamar.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["886" "Saturday" "28" "November" "2015" "21:06:01" "-0800" "Michal Zalewski" "lcamtuf@coredump.cx" "<CALx_OUAUgrpm0W0E=qDq_hw_3tZ3e+wiRjfQ99pg+n4xO-93cw@mail.gmail.com>" "18" "Re: [oss-security] Re: Heap Overflow in PCRE" "^Cc:" nil nil "11" "2015112905:06:01" "[oss-security] Re: Heap Overflow in PCRE" (number mark "        lcamtuf@core Nov 28   18/886   " thread-indent "\"Re: [oss-security] Re: Heap Overflow in PCRE\"\n") "<20151129040103.E8DA86C018F@smtpvmsrv1.mitre.org>" ("<20151124113343.4382bed3@pc1>" "<20151129040103.E8DA86C018F@smtpvmsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 19949 invoked by uid 550); 11 Dec 2016 22:29:26 -0000
+Received: (qmail 1420 invoked by uid 550); 29 Nov 2015 05:06:33 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,65 +11,60 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 19930 invoked from network); 11 Dec 2016 22:29:25 -0000
-From: <cve-assign@mitre.org>
-To: <carnil@debian.org>
-CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
-In-Reply-To: <20161209201906.ltauap7fydkc62f6@eldamar.local>
-Message-ID: <7b789ec9b990495db739639f907b2366@imshyb02.MITRE.ORG>
-Date: Sun, 11 Dec 2016 17:29:13 -0500
+Received: (qmail 1398 invoked from network); 29 Nov 2015 05:06:32 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=coredump-cx.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=wAa2Q5DK91QYiQQtMdeEVWbxoE5KP//i4rXJnLCBnoo=;
+        b=uTGQbYlJqAk0CWFwbqUF/DxGeB5npSvugOsy3wsRRbPKiXDlYV4Cjg+MefgeiNpyVZ
+         qRtdFrdWgDvMg6rS5BUPYuds7/9p8Np8ZOCepo9KbZ+sZPJ8/pcfU9yuILLq8eeom1A8
+         uaPpYSuEnCFujroNu7+a0Ou3YDeZ6ljfNgUIgrWZWQTKXfpzobuehWyk1J/UL0CJ4j/n
+         krXP7G5hb1a09ucborEa5xSI1dC5brCNsK8X3TXoVBPz9cLL8pm9JMw/u2E4YDFZVU0V
+         jbR1fhIKzyFysuSMwaWC001F0qcHVG2FmROQpKtrwXEVmEs3cKtuVNNY1J5qPpubFK7R
+         V0ew==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=wAa2Q5DK91QYiQQtMdeEVWbxoE5KP//i4rXJnLCBnoo=;
+        b=J0xVpqln+EiSUjSWUiEmbBabJKbg7quLrSnp2uM0CWay13BOBlmDdjyPQmPmLSgdt0
+         PNqEqR4ZP4fJKyGy3Vmk4K4el61TqKd51qNE/5uBbp+yXLlpd8ZUupVkMPBewmHGWrRU
+         utodPDdLWmZDjkWxQDZU4rQtUMLGMDrK19yTSHLj4yTDr4CWITE7i/QmHYqLeHbuqU+w
+         oy9wP0V10c19afQGT5kQsSUY4Y7j9VITNEZrQDVzLJ0SeJnLUlwjRJJZe8NZLtMHrOmy
+         vxsEys4vJQ9KCvrBDi46EmodV05KT//yasiD1d/Z3B/34WVl/E509uf1zDm5NuKQXgND
+         /Uvw==
+X-Gm-Message-State: ALoCoQmAMzM++P2cQM/iTymXuvpaXsmoKPnPmiPEOuGY2J9AMVOwRfV4hM1ACRyGAYxhjyN91XPS
+X-Received: by 10.107.4.213 with SMTP id 204mr60212273ioe.195.1448773581175;
+ Sat, 28 Nov 2015 21:06:21 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-Subject: [oss-security] Re: CVE Request: MCabber: remote attackers can modify the roster and intercept messages via a crafted roster-push IQ stanza
+In-Reply-To: <20151129040103.E8DA86C018F@smtpvmsrv1.mitre.org>
+References: <20151124113343.4382bed3@pc1> <20151129040103.E8DA86C018F@smtpvmsrv1.mitre.org>
+Message-ID: <CALx_OUAUgrpm0W0E=qDq_hw_3tZ3e+wiRjfQ99pg+n4xO-93cw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Cc: =?UTF-8?Q?Hanno_B=C3=B6ck?= <hanno@hboeck.de>, 
+	Assign a CVE Identifier <cve-assign@mitre.org>
+Date: Sat, 28 Nov 2015 21:06:01 -0800
+From: Michal Zalewski <lcamtuf@coredump.cx>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Re: Heap Overflow in PCRE
+To: oss-security <oss-security@lists.openwall.com>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+> Most PCRE findings have a requirement that the attacker is able to
+> provide an arbitrary regular expression in a way that crosses a
+> privilege boundary.
+> http://www.pcre.org/current/doc/html/pcre2pattern.html implies that
+> this is relevant to the PCRE security model, i.e., the reference to
+> "applications that allow their users to supply patterns." We've
+> mentioned this before in
+> http://www.openwall.com/lists/oss-security/2015/09/08/8 but we're
+> still unaware of any specific application that meets this requirement
 
-> Sam Whited discovered that MCabber versions 1.0.3 and before, was
-> vulnerable to an attack identical to Gajim's CVE-2015-8688 which
-> can lead to a malicious actor MITMing a conversation, or adding
-> themselves as an entity on a third parties roster (thereby granting
-> themselves the associated privileges
-> 
-> https://gultsch.de/gajim_roster_push_and_message_interception.html
-> https://bitbucket.org/McKael/mcabber-crew/commits/6e1ead98930d7dd0a520ad17c720ae4908429033/raw
-> https://bugs.debian.org/845258
+Languages such as Flash or JavaScript, where untrusted parties are
+allowed to specify regular expression patterns that are compiled by an
+underlying regex library - be it PCRE or something else. Examples:
 
-Use CVE-2016-9928.
+https://code.google.com/p/google-security-research/issues/detail?id=225
+https://code.google.com/p/google-security-research/issues/detail?id=208
 
-At present, we do not understand whether the behavior of other
-mentioned products, such as slixmpp and SleekXMPP, should be
-considered a vulnerability. If the situation is essentially "the
-product could be improved to make it less likely for third-party code
-authors to accidentally create an unsafe interaction," then typically
-a CVE ID is not required.
-
-However, if (for example) there is going to be a DSA for the
-python-sleekxmpp and python3-sleekxmpp packages, then we can assign an
-ID. As far as we can tell, the python3-slixmpp* packages are not
-available in jessie, and poezio is packaged for Fedora but not for any
-Debian distribution.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYTdLcAAoJEHb/MwWLVhi2fMwQALgaLk/cdN/g6ETDkT9L5bQp
-hq/oRUmZtIZOVOa/qY5cVSuS30aaGwDA2SwV9KCbb7oi0G1pRGk5/HSD+i34+SVx
-Y2PH6faXAnvtbOV808IItGWS2Y4wqQXH1bEm4pwY8abLyUsraO4I0vUip3/GSImj
-vy0qSkMBI9OadLJS1LSVIProiwZlI33NqFJOF0cPaWpChJpMfoPNJdn2qUUgJR2F
-F14MgvAjK/V1bDps/tLVNn7Rxvy7d10gBBgc0DHtNNCjLQSeZVdVkv88cDO0SZga
-QeARph2MVTPNcd2GjHcubT+FHL91mgWCyz6GGQK3/qkvq7elhmHXeR+Na7LHn5VJ
-vMrrq159mJCIKto+ThHNXLDxEqSXL83vi6x4luECf4FZrqW4GN904uvp07gtGTHW
-CsQbKQXVHsjWnojcX527MkTEVeWPE9/WslSXbWixgdlN4mKbwPlbZ8dC22xmGQqm
-TiEnn2ZmJyLLirixXFGrauRxcbFQm5byURSsJd3IfNphIwyk2jU/o4nj5HqLKGWo
-xwcLstCeVoeQntVYMjapmev7CG+NYSWoB7gq+Lf9Z93hL7xE71FM11o5M4FaCjyo
-z/rkgEm4cUaJ76S7jjURtOsillPTVb13fHTR+F04B7c4aaVXvvicIR26FdEQENc8
-iggKnJPJaFpxWZK5+T7P
-=X469
------END PGP SIGNATURE-----
+/mz
