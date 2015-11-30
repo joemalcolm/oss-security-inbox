@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["8091" "Tuesday" "15" "August" "2017" "12:06:00" "+0000" "Xen.org security team" "security@xen.org" "<E1dhabg-0006i6-PG@xenbits.xenproject.org>" "194" "[oss-security] Xen Security Advisory 230 - grant_table: possibly premature clearing of GTF_writing / GTF_reading" nil nil nil "8" "2017081512:06:00" "[oss-security] Xen Security Advisory 230 - grant_table: possibly premature clearing of GTF_writing / GTF_reading" (number mark "U       security@xen Aug 15  194/8091  " thread-indent "\"[oss-security] Xen Security Advisory 230 - grant_table: possibly premature clearing of GTF_writing / GTF_reading\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1393" "Monday" "30" "November" "2015" "10:08:04" "-0700" "Kurt Seifried" "kseifried@redhat.com" "<CANO=Ty39wcH4XYEcE6FGcqtWq5mGkaTtCHWAevHV3CK+_6Vdtw@mail.gmail.com>" "45" "Re: [oss-security] Announcing https://github.com/RedHatProductSecurity/Certificates-Shipped/" nil nil nil "11" "2015113017:08:04" "[oss-security] Announcing https://github.com/RedHatProductSecurity/Certificates-Shipped/" (number mark "U       kseifried@re Nov 30   45/1393  " thread-indent "\"Re: [oss-security] Announcing https://github.com/RedHatProductSecurity/Certificates-Shipped/\"\n") "<CAMX=T6m2Qom8P7Os=htdpKyst_TRihTrXDuuSVy=XhA42GxnTg@mail.gmail.com>" ("<CANO=Ty2=+8uiYPoe06j3DEVd6uSBCNiaH5LoWyCqg18jWTZu6w@mail.gmail.com>" "<20151125180702.6d3d075d@pc1>" "<CANO=Ty3=D5hum6sjTJhN4NjuhAH9yjLNDgDdsL3FXSeVwMOVdw@mail.gmail.com>" "<5656263F.80101@gmail.com>" "<CANO=Ty2KagFAAbV02zSEgm_TrXg5b2ckHqLXbz2BG_dWZoH8ww@mail.gmail.com>" "<CAMX=T6m2Qom8P7Os=htdpKyst_TRihTrXDuuSVy=XhA42GxnTg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 20047 invoked by uid 550); 15 Aug 2017 12:06:29 -0000
+Received: (qmail 17948 invoked by uid 550); 30 Nov 2015 17:08:17 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,211 +12,78 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 19668 invoked from network); 15 Aug 2017 12:06:24 -0000
-Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
-Content-Transfer-Encoding: binary
+Received: (qmail 17930 invoked from network); 30 Nov 2015 17:08:16 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:content-type;
+        bh=Pro6QDa6DxlzTdfvOurE88OSrJGzGt4Vq2Yadmbyx88=;
+        b=lYYoBDGqPHd8bVT1zFKm365LO0isu0f6MPF8CEtkUN5AuDdBG/qqgFk7XFR+xcIG1W
+         gpXjtmFrpGPPLjV4nTWgGIaqkmlwatPXenoPMtKKKwrh8aUS9UI5NnPxVriGTAk4sjsp
+         L1rBH6xkQ9nDBLte5xRBDKaSZTvpPYu0ujS6SKbA/jHFRMTtE4Lxv2JIIaYyCspCHWSU
+         SOFOc2hjLH9uQQhiEt2cKsh+vLVf2fYd/NE+vUM9Kzkk/+eGyeY+Ky3GuzGVkHjAO3xL
+         IgxO+aBdPwhz3BNJMfiV7Lk1320pzcRXakaUKDSRGur6bkGR0cdsv2kQ+fS/HQMLkysJ
+         3Lfw==
+X-Gm-Message-State: ALoCoQmGrBfpXzL0ls/qhFlCEUsCnGj2+cXNUediIodwTSy3AwD3ZeVF8F8SDUMTctQDs86mI2wY
 MIME-Version: 1.0
-X-Mailer: MIME-tools 5.505 (Entity 5.505)
-To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
- xen-users@lists.xen.org, oss-security@lists.openwall.com
-From: Xen.org security team <security@xen.org>
-CC: Xen.org security team <security-team-members@xen.org>
-Message-Id: <E1dhabg-0006i6-PG@xenbits.xenproject.org>
-Date: Tue, 15 Aug 2017 12:06:00 +0000
-Subject: [oss-security] Xen Security Advisory 230 - grant_table: possibly premature
- clearing of GTF_writing / GTF_reading
+X-Received: by 10.129.77.67 with SMTP id a64mr60333183ywb.47.1448903284860;
+ Mon, 30 Nov 2015 09:08:04 -0800 (PST)
+In-Reply-To: <CAMX=T6m2Qom8P7Os=htdpKyst_TRihTrXDuuSVy=XhA42GxnTg@mail.gmail.com>
+References: <CANO=Ty2=+8uiYPoe06j3DEVd6uSBCNiaH5LoWyCqg18jWTZu6w@mail.gmail.com>
+	<20151125180702.6d3d075d@pc1>
+	<CANO=Ty3=D5hum6sjTJhN4NjuhAH9yjLNDgDdsL3FXSeVwMOVdw@mail.gmail.com>
+	<5656263F.80101@gmail.com>
+	<CANO=Ty2KagFAAbV02zSEgm_TrXg5b2ckHqLXbz2BG_dWZoH8ww@mail.gmail.com>
+	<CAMX=T6m2Qom8P7Os=htdpKyst_TRihTrXDuuSVy=XhA42GxnTg@mail.gmail.com>
+Date: Mon, 30 Nov 2015 10:08:04 -0700
+Message-ID: <CANO=Ty39wcH4XYEcE6FGcqtWq5mGkaTtCHWAevHV3CK+_6Vdtw@mail.gmail.com>
+From: Kurt Seifried <kseifried@redhat.com>
+To: oss-security <oss-security@lists.openwall.com>
+Content-Type: multipart/alternative; boundary=001a1140c36c9be6300525c5153f
+Subject: Re: [oss-security] Announcing https://github.com/RedHatProductSecurity/Certificates-Shipped/
 
---=separator
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
-Content-Transfer-Encoding: 7bit
+--001a1140c36c9be6300525c5153f
+Content-Type: text/plain; charset=UTF-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Mon, Nov 30, 2015 at 8:52 AM, Josh Matthews <josh@apkudo.com> wrote:
 
-                    Xen Security Advisory XSA-230
-                              version 2
+> On Wed, Nov 25, 2015 at 4:49 PM, Kurt Seifried <kseifried@redhat.com>
+> wrote:
+>
+> > On Wed, Nov 25, 2015 at 2:21 PM, Gsunde Orangen <
+> gsunde.orangen@gmail.com>
+> > wrote:
+> >
+> > > Totally reasonable, Kurt.
+> > > Where would you actually see the border between what's in and what's
+> > > out? Actually there are lots of (proprietary source) vendor products
+> out
+> > > there that are heavily built on open source (e.g. virtually all linux
+> > > kernel based embedded devices)
+> > > Not saying someone should go through the hassles to chase for it - but
+> > > if the info is brought to you/to the repository...
+> > >
+> > >
+> > So in short: only stuff that is Open Source licensed.
+>
+>
+> Kurt - we can contribute listings for all Android AOSP versions, and for
+> most US-shipped Android devices. Let me know if you feel that's within
+> scope for the project.
+>
+> --
+> Josh Matthews | Co-founder and CEO | Apkudo
+>
 
- grant_table: possibly premature clearing of GTF_writing / GTF_reading
+As far as I know Android is OpenSource
+https://source.android.com/source/licenses.html so yes, please send pull
+requests =).
 
-UPDATES IN VERSION 2
-====================
+-- 
 
-Public release.  (A CVE request for this issue is currently outstanding.)
+--
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@redhat.com
 
-ISSUE DESCRIPTION
-=================
-
-Xen maintains the _GTF_{read,writ}ing bits as appropriate, to inform the
-guest that a grant is in use.  A guest is expected not to modify the
-grant details while it is in use, whereas the guest is free to
-modify/reuse the grant entry when it is not in use.
-
-Under some circumstances, Xen will clear the status bits too early,
-incorrectly informing the guest that the grant is no longer in use.
-
-IMPACT
-======
-
-A guest may prematurely believe that a granted frame is safely private
-again, and reuse it in a way which contains sensitive information, while
-the domain on the far end of the grant is still using the grant.
-
-VULNERABLE SYSTEMS
-==================
-
-All systems are vulnerable.
-
-MITIGATION
-==========
-
-There are no mitigations.
-
-CREDITS
-=======
-
-This issue was discovered by Jan Beulich of SUSE.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa230.patch           xen-unstable, 4.9, 4.8, 4.7, 4.6, 4.5
-
-$ sha256sum xsa230*
-912c24771dc9e9b305be630b7771505abb3db735564c5574fc30b58a5da0139e  xsa230.meta
-77a73f1c32d083e315ef0b1bbb119cb8840ceb5ada790cad76cbfb9116f725cc  xsa230.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
-
-
-NOTE REGARDING SHORT EMBARGO
-============================
-
-This issue was discovered while investigating problems with the initial
-version of XSA-226.  Accordingly, XSA-230 is embargoed and the embargo
-will end at the same time as that of XSA-226.
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQEcBAEBCAAGBQJZkuNZAAoJEIP+FMlX6CvZ+UwH/AjbZSL+HVazwku2f5qtV4SK
-tBO0oiA4+o4hC9N71jV2JroQub37zEKBahpVIe0YpZ7QmedNme9URTnndkI7J9xj
-qarVafofxbtgqHA8Dqe8TcvOiU0PgmR3JgJYUbXIQYwsPRpJsCtTgWB/IOwYZlcM
-FpQSdPhvfVUAONTcM8bGqqe8pww40kW61dvwu4qlqyA1W4nj+Et4Yu9yn+Ga5H94
-E8BjHgVE26sh5Q4D8JL70IpgQeuHPQ3wgRvnmzQgnpc5192zUC9ybDC5j9L17O1r
-ckJlbaSNKgEHrYhflog/Haa55ZfyiYJF67KIQAYcOa5em0jvgCr7zIzPUPprsT0=
-=eYJA
------END PGP SIGNATURE-----
-
---=separator
-Content-Type: application/octet-stream; name="xsa230.meta"
-Content-Disposition: attachment; filename="xsa230.meta"
-Content-Transfer-Encoding: base64
-
-ewogICJYU0EiOiAyMzAsCiAgIlN1cHBvcnRlZFZlcnNpb25zIjogWwogICAg
-Im1hc3RlciIsCiAgICAiNC45IiwKICAgICI0LjgiLAogICAgIjQuNyIsCiAg
-ICAiNC42IiwKICAgICI0LjUiCiAgXSwKICAiVHJlZXMiOiBbCiAgICAieGVu
-IgogIF0sCiAgIlJlY2lwZXMiOiB7CiAgICAiNC41IjogewogICAgICAiWGVu
-VmVyc2lvbiI6ICI0LjUiLAogICAgICAiUmVjaXBlcyI6IHsKICAgICAgICAi
-eGVuIjogewogICAgICAgICAgIlN0YWJsZVJlZiI6ICIzMjE3MTI5ZWI2NWMw
-ZDQ5OTVlZDA4ZmI4OTE5ZTNjMzM0Y2FkNTQ4IiwKICAgICAgICAgICJQcmVy
-ZXFzIjogWwogICAgICAgICAgICAyMjYsCiAgICAgICAgICAgIDIyNwogICAg
-ICAgICAgXSwKICAgICAgICAgICJQYXRjaGVzIjogWyAieHNhMjMwLnBhdGNo
-IiBdCiAgICAgICAgfQogICAgICB9CiAgICB9LAogICAgIjQuNiI6IHsKICAg
-ICAgIlhlblZlcnNpb24iOiAiNC42IiwKICAgICAgIlJlY2lwZXMiOiB7CiAg
-ICAgICAgInhlbiI6IHsKICAgICAgICAgICJTdGFibGVSZWYiOiAiZDcwOGI2
-OTVhMzZiNGZkY2Q4ZTQ4ZTZmYzhlNjExZTAxMGY1MjgwYiIsCiAgICAgICAg
-ICAiUHJlcmVxcyI6IFsKICAgICAgICAgICAgMjI2LAogICAgICAgICAgICAy
-MjcsCiAgICAgICAgICAgIDIyOAogICAgICAgICAgXSwKICAgICAgICAgICJQ
-YXRjaGVzIjogWyAieHNhMjMwLnBhdGNoIiBdCiAgICAgICAgfQogICAgICB9
-CiAgICB9LAogICAgIjQuNyI6IHsKICAgICAgIlhlblZlcnNpb24iOiAiNC43
-IiwKICAgICAgIlJlY2lwZXMiOiB7CiAgICAgICAgInhlbiI6IHsKICAgICAg
-ICAgICJTdGFibGVSZWYiOiAiNGZiZmEzNGIxYTBiYjMyOWFhNTcyNzU0MjFl
-MmU5MDI3ZDMyYWFkNSIsCiAgICAgICAgICAiUHJlcmVxcyI6IFsKICAgICAg
-ICAgICAgMjI2LAogICAgICAgICAgICAyMjcsCiAgICAgICAgICAgIDIyOAog
-ICAgICAgICAgXSwKICAgICAgICAgICJQYXRjaGVzIjogWyAieHNhMjMwLnBh
-dGNoIiBdCiAgICAgICAgfQogICAgICB9CiAgICB9LAogICAgIjQuOCI6IHsK
-ICAgICAgIlhlblZlcnNpb24iOiAiNC44IiwKICAgICAgIlJlY2lwZXMiOiB7
-CiAgICAgICAgInhlbiI6IHsKICAgICAgICAgICJTdGFibGVSZWYiOiAiMWU2
-Yzg4ZmFmY2I0NjY0YTUwMTIzOWQxZDg2NjVjMzRiNTM4NDY0OCIsCiAgICAg
-ICAgICAiUHJlcmVxcyI6IFsKICAgICAgICAgICAgMjI2LAogICAgICAgICAg
-ICAyMjcsCiAgICAgICAgICAgIDIyOAogICAgICAgICAgXSwKICAgICAgICAg
-ICJQYXRjaGVzIjogWyAieHNhMjMwLnBhdGNoIiBdCiAgICAgICAgfQogICAg
-ICB9CiAgICB9LAogICAgIjQuOSI6IHsKICAgICAgIlhlblZlcnNpb24iOiAi
-NC45IiwKICAgICAgIlJlY2lwZXMiOiB7CiAgICAgICAgInhlbiI6IHsKICAg
-ICAgICAgICJTdGFibGVSZWYiOiAiMGZhZGEwNTlhNzk0ODE1Mzk3NmNjMTUy
-ZTM2NjMzZGVlM2Q1YjI3MyIsCiAgICAgICAgICAiUHJlcmVxcyI6IFsKICAg
-ICAgICAgICAgMjI2LAogICAgICAgICAgICAyMjcsCiAgICAgICAgICAgIDIy
-OAogICAgICAgICAgXSwKICAgICAgICAgICJQYXRjaGVzIjogWyAieHNhMjMw
-LnBhdGNoIiBdCiAgICAgICAgfQogICAgICB9CiAgICB9LAogICAgIm1hc3Rl
-ciI6IHsKICAgICAgIlhlblZlcnNpb24iOiAibWFzdGVyIiwKICAgICAgIlJl
-Y2lwZXMiOiB7CiAgICAgICAgInhlbiI6IHsKICAgICAgICAgICJTdGFibGVS
-ZWYiOiAiNTU5MjRiYWYyMjExZGRjZjViYThmNzAyYzlhNGMwNzczMGUwYzhl
-OCIsCiAgICAgICAgICAiUHJlcmVxcyI6IFsKICAgICAgICAgICAgMjI2LAog
-ICAgICAgICAgICAyMjcsCiAgICAgICAgICAgIDIyOAogICAgICAgICAgXSwK
-ICAgICAgICAgICJQYXRjaGVzIjogWyAieHNhMjMwLnBhdGNoIiBdCiAgICAg
-ICAgfQogICAgICB9CiAgICB9CiAgfQp9
-
---=separator
-Content-Type: application/octet-stream; name="xsa230.patch"
-Content-Disposition: attachment; filename="xsa230.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbTogSmFuIEJldWxpY2ggPGpiZXVsaWNoQHN1c2UuY29tPgpTdWJqZWN0
-OiBnbnR0YWI6IGNvcnJlY3QgcGluIHN0YXR1cyBmaXh1cCBmb3IgY29weQoK
-UmVnYXJkbGVzcyBvZiBjb3B5IG9wZXJhdGlvbnMgb25seSBzZXR0aW5nIEdO
-VFBJTl9oc3QqLCBHTlRQSU5fZGV2KgphbHNvIG5lZWQgdG8gYmUgdGFrZW4g
-aW50byBhY2NvdW50IHdoZW4gZGVjaWRpbmcgd2hldGhlciB0byBjbGVhcgpf
-R1RGX3tyZWFkLHdyaXR9aW5nLiBBdCBsZWFzdCBmb3IgY29uc2lzdGVuY3kg
-d2l0aCBjb2RlIGVsc2V3aGVyZSB0aGUKcmVhZCBwYXJ0IGJldHRlciBkb2Vz
-bid0IHVzZSBhbnkgbWFzayBhdCBhbGwuCgpUaGlzIGlzIFhTQS0yMzAuCgpT
-aWduZWQtb2ZmLWJ5OiBKYW4gQmV1bGljaCA8amJldWxpY2hAc3VzZS5jb20+
-ClJldmlld2VkLWJ5OiBBbmRyZXcgQ29vcGVyIDxhbmRyZXcuY29vcGVyM0Bj
-aXRyaXguY29tPgpkaWZmIC0tZ2l0IGEveGVuL2NvbW1vbi9ncmFudF90YWJs
-ZS5jIGIveGVuL2NvbW1vbi9ncmFudF90YWJsZS5jCmluZGV4IGFlMzQ1NDcu
-LjljOWQzM2MgMTAwNjQ0Ci0tLSBhL3hlbi9jb21tb24vZ3JhbnRfdGFibGUu
-YworKysgYi94ZW4vY29tbW9uL2dyYW50X3RhYmxlLmMKQEAgLTIxMDcsMTAg
-KzIxMDcsMTAgQEAgX19yZWxlYXNlX2dyYW50X2Zvcl9jb3B5KAogc3RhdGlj
-IHZvaWQgX19maXh1cF9zdGF0dXNfZm9yX2NvcHlfcGluKGNvbnN0IHN0cnVj
-dCBhY3RpdmVfZ3JhbnRfZW50cnkgKmFjdCwKICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgdWludDE2X3QgKnN0YXR1cykKIHsKLSAgICBp
-ZiAoICEoYWN0LT5waW4gJiBHTlRQSU5faHN0d19tYXNrKSApCisgICAgaWYg
-KCAhKGFjdC0+cGluICYgKEdOVFBJTl9oc3R3X21hc2sgfCBHTlRQSU5fZGV2
-d19tYXNrKSkgKQogICAgICAgICBnbnR0YWJfY2xlYXJfZmxhZyhfR1RGX3dy
-aXRpbmcsIHN0YXR1cyk7CiAKLSAgICBpZiAoICEoYWN0LT5waW4gJiBHTlRQ
-SU5faHN0cl9tYXNrKSApCisgICAgaWYgKCAhYWN0LT5waW4gKQogICAgICAg
-ICBnbnR0YWJfY2xlYXJfZmxhZyhfR1RGX3JlYWRpbmcsIHN0YXR1cyk7CiB9
-CiAKQEAgLTIzMTgsNyArMjMxOCw3IEBAIF9fYWNxdWlyZV9ncmFudF9mb3Jf
-Y29weSgKICAKICB1bmxvY2tfb3V0X2NsZWFyOgogICAgIGlmICggIShyZWFk
-b25seSkgJiYKLSAgICAgICAgICEoYWN0LT5waW4gJiBHTlRQSU5faHN0d19t
-YXNrKSApCisgICAgICAgICAhKGFjdC0+cGluICYgKEdOVFBJTl9oc3R3X21h
-c2sgfCBHTlRQSU5fZGV2d19tYXNrKSkgKQogICAgICAgICBnbnR0YWJfY2xl
-YXJfZmxhZyhfR1RGX3dyaXRpbmcsIHN0YXR1cyk7CiAKICAgICBpZiAoICFh
-Y3QtPnBpbiApCg==
-
---=separator--
+--001a1140c36c9be6300525c5153f--
