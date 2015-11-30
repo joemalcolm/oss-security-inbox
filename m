@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["702" "Friday" "3" "November" "2017" "11:12:43" "-0700" "Ian Zimmerman" "itz@very.loosely.org" "<20171103181243.lwtf3a5f4zjr4pzi@matica.foolinux.mooo.com>" "15" "[oss-security] Re: Security risk of server side text editing in general and vim.tiny specifically" "^Date:" nil nil "11" "2017110318:12:43" "[oss-security] Re: Security risk of server side text editing in general and vim.tiny specifically" (number mark "        itz@very.loo Nov  3   15/702   " thread-indent "\"[oss-security] Re: Security risk of server side text editing in general and vim.tiny specifically\"\n") "<2ECE9D9EEF1F524185270138AE23265955B0B9CE@S0MSMAIL112.arc.local>" ("<2ECE9D9EEF1F524185270138AE23265955B0B9CE@S0MSMAIL112.arc.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2088" "Monday" "30" "November" "2015" "17:04:22" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151130220422.09CD46C0211@smtpvmsrv1.mitre.org>" "48" "[oss-security] Re: CVE request for keepassx password database export" "^Cc:" nil nil "11" "2015113022:04:22" "[oss-security] Re: CVE request for keepassx password database export" (number mark "        cve-assign@m Nov 30   48/2088  " thread-indent "\"[oss-security] Re: CVE request for keepassx password database export\"\n") "<1448877939.5015.30.camel@debian.org>" ("<1448877939.5015.30.camel@debian.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 1974 invoked by uid 550); 3 Nov 2017 18:57:19 -0000
+Received: (qmail 26574 invoked by uid 550); 30 Nov 2015 22:04:34 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,35 +11,61 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5643 invoked from network); 3 Nov 2017 18:13:03 -0000
-Message-ID: <20171103181243.lwtf3a5f4zjr4pzi@matica.foolinux.mooo.com>
-Mail-Followup-To: oss-security@lists.openwall.com
-References: <2ECE9D9EEF1F524185270138AE23265955B0B9CE@S0MSMAIL112.arc.local>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <2ECE9D9EEF1F524185270138AE23265955B0B9CE@S0MSMAIL112.arc.local>
-X-Loosely-Listed: yes
-User-Agent: NeoMutt/20170707-dirty (1.8.3)
-Date: Fri, 3 Nov 2017 11:12:43 -0700
-From: Ian Zimmerman <itz@very.loosely.org>
+Received: (qmail 26543 invoked from network); 30 Nov 2015 22:04:34 -0000
+In-Reply-To: <1448877939.5015.30.camel@debian.org>
+Message-Id: <20151130220422.09CD46C0211@smtpvmsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, dev@keepassx.org, siretart@tauware.de
+Date: Mon, 30 Nov 2015 17:04:22 -0500 (EST)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: Security risk of server side text editing in general and
- vim.tiny specifically
-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: CVE request for keepassx password database export
+To: corsac@debian.org
 
-On 2017-11-03 11:07, Fiedler Roman wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-> Due to the recent discussion on vim swap file use, I expected also
-> attraction of of evil-minded to the topic of text editing security and
-> thus an increase in attack probability on server side text editing in
-> general. Therefore I wanted to review our software qualification
-> criteria for text editing on servers, where vim/vim.tiny is used and
-> probably update the SOPs and guidelines.
+> it seems that keepassx 0.4.3 export function are a bit buggy. Starting an
+> export (using File / Export to / KeepassX XML file) and cancelling it leads to
+> KeepassX saving a cleartext XML file in ~/.xml without any warning.
+> 
+> This was reported privately to the Debian security team today, but it was
+> actually reported publicly earlier in the Debian BTS. Unfortunately the
+> maintainer didn't acknowledge the bug or forwarded it upstream, apparently.
+> 
+> It's not a terrible bug per se because leaking a user password file on purpose
+> would still require a lot of social engineering skills, but it still look like
+> it should get a CVE (an user explicitly cancelling the export surely doesn't
+> expect its passwords to be there in a hidden file.
 
-How much of this (and the parallel thread of course) applies to nvi?
+> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=791858
 
--- 
-Please don't Cc: me privately on mailing lists and Usenet,
-if you also post the followup to the list or newsgroup.
-To reply privately _only_ on Usenet, fetch the TXT record for the domain.
+>> canceling export operation creates cleartext copy of all of the user's
+>> KeePassX password database entries
+
+>> with Debian's default umask, the file is even world-readable in 
+>> multiuser machines
+
+Use CVE-2015-8378.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJWXMX0AAoJEL54rhJi8gl568AQAMPk+Vtell3O4tGMdvlKi2RE
+BOXFZA9wA6TtVqFWtQ+Kbgsi70ix2Cwc+vVvZIunPyAWGXaQ5jb9XtZ0G0YQ/K8O
+/SIsOIgaObO59DPI8JUWvb7Pfj5C3ltb80gIV5+G/3exeWeEp4F8Q9T9SglZhpga
+Av351FYWgkHS28l2Kgh832nrAl3aRjMOGxhgw758oXaU7IeJzSAtRv79fDMBuziR
+7yQ8M7uD/VO9ZJSt1BPzMluz+B5cPzUqSuhxVor4SvxIxhFQWmo4eAiy3d4CD2Qr
+B2qp77ity537ZXto/L4fPomAoZZbB9nEJJCaudWvdlCVj859KKiUU6zW6T89HvB1
+iBo3p0N+4WDTe2/btkfXh0OFizmC2XP1qSR5BqfgoRCBNTohSAf/Al67d8RoZpx+
+sLAZwCWs8w8z0RZsHvkexPv7V9BTOn5enzDrEqvdBsO5CPWdIuY+CVo0WWuo53ag
+ESufvOqo8awLO+XDuI+3GXcKYPFAKrrreBiIeHS3NgT/mkXQT8OkhqUnQk10j0Z0
+TK5k9zoMhPEu2MOJDbvJdbtgEFe1He2ZdsjlAGrWd8V5fzCTA7Sf/tH5Hz6GiJft
+ZppT3OTzmNokQ2QR4xE5M0RwAnxxnfu0hsGqvLblajX0eG/6YpoOybqy/WOemaok
+mS14P6ybQKUxW+XbN9YK
+=kZt7
+-----END PGP SIGNATURE-----
