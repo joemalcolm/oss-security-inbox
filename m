@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["886" "Sunday" "28" "June" "2015" "12:20:52" "+0100" "Matthew Wilkes" "matt@matthewwilkes.name" "<558FD894.7060901@matthewwilkes.name>" "26" "[oss-security] Re: CVE Request: Django CMS" nil nil nil "6" "2015062811:20:52" "[oss-security] Re: CVE Request: Django CMS" (number mark "        matt@matthew Jun 28   26/886   " thread-indent "\"[oss-security] Re: CVE Request: Django CMS\"\n") "<20150628105507.210D96C00E7@smtpvmsrv1.mitre.org>" ("<20150628105507.210D96C00E7@smtpvmsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["972" "Monday" "30" "November" "2015" "10:52:57" "-0500" "Josh Matthews" "josh@apkudo.com" "<CAMX=T6m2Qom8P7Os=htdpKyst_TRihTrXDuuSVy=XhA42GxnTg@mail.gmail.com>" "28" "Re: [oss-security] Announcing https://github.com/RedHatProductSecurity/Certificates-Shipped/" nil nil nil "11" "2015113015:52:57" "[oss-security] Announcing https://github.com/RedHatProductSecurity/Certificates-Shipped/" (number mark "U       josh@apkudo. Nov 30   28/972   " thread-indent "\"Re: [oss-security] Announcing https://github.com/RedHatProductSecurity/Certificates-Shipped/\"\n") "<CANO=Ty2KagFAAbV02zSEgm_TrXg5b2ckHqLXbz2BG_dWZoH8ww@mail.gmail.com>" ("<CANO=Ty2=+8uiYPoe06j3DEVd6uSBCNiaH5LoWyCqg18jWTZu6w@mail.gmail.com>" "<20151125180702.6d3d075d@pc1>" "<CANO=Ty3=D5hum6sjTJhN4NjuhAH9yjLNDgDdsL3FXSeVwMOVdw@mail.gmail.com>" "<5656263F.80101@gmail.com>" "<CANO=Ty2KagFAAbV02zSEgm_TrXg5b2ckHqLXbz2BG_dWZoH8ww@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 1956 invoked by uid 550); 28 Jun 2015 11:25:05 -0000
+Received: (qmail 5852 invoked by uid 550); 30 Nov 2015 17:05:28 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,60 +11,70 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 32686 invoked from network); 28 Jun 2015 11:21:07 -0000
+Reply-To: oss-security@lists.openwall.com
+Received: (qmail 21639 invoked from network); 30 Nov 2015 15:53:29 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=apkudo-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :content-type;
+        bh=jcIuuHbmAmyDd3v555fWdV/lfiDz7uGC29ASeX9wDpU=;
+        b=f7i5TKZs6zDTThd8UPfq+BfIcx5ytRFG6G6mzhdu56Lx/ry2/mLos4OTipnyq9QD60
+         0g/Fz4MKqQyc13av7rq/+IdDrJyMEvwOm7NZ70DvcERETbfvRb1P4mfWrXnw+R0CKxvd
+         lrQoeyxAEX9xfvV0e+u+rvXCc1gbKlMnxyz1uhsTBYLxFlQVp8k041RW2jeRI5bTCnAA
+         I6SEufi3Xi0e6iVTm8doTi9jpGZav9VB+S5RcRo9PMyV1yhxBMkJzSvboSxxl8A3xLDW
+         D6gI8RLNtt0xUB5Fdr92QV0MEYVxIQjmVVirYbELcTOtQANyHPq4PZoMCBRH1bNPCoPU
+         NIWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=2dLR9iweeN6Qdaf2PZojx9NjaBuG/KX0QfhfWtr/SZI=;
-        b=jzBQSRNK9KEtTPSFOgAyhvqdXWsNRA0uyYhBvDFaNSY73HtlcjCqBw4KWcyoxbXNFl
-         YrRrecCIusqJb33DdTZF08oN3e5iIM7bwXgjVNhZYmol834dP0ar4ZQFxI2WdICLSPPw
-         PBlGtURqQ4v6JL5ohNz3Q+4Bl6t0C/3dOHPMxgqe/BtujgEk78Zw7JE4QFZZAmGCd/Vq
-         hZ9RGlbDLyVNG3U8wKoMNc2pKwm3h7aYM4sJbAoNNyrnHffEhmORyMySaNP+K1iVRnKT
-         XnF0/e7BOTrvwlhNV8D3ZzUWJYj7qhbIT7Q+KUNttFkS7QDFK59I6ka0loz9kHc1GZuV
-         pJHQ==
-X-Gm-Message-State: ALoCoQlyVEZDJKW/ITD1e5hBx04cQ22mj40a+Rz1SWA5bLOxs0LYQwsyO6tDB5WiSZNUDeWB5eYQ
-X-Received: by 10.195.13.113 with SMTP id ex17mr20210787wjd.17.1435490454870;
-        Sun, 28 Jun 2015 04:20:54 -0700 (PDT)
-References: <20150628105507.210D96C00E7@smtpvmsrv1.mitre.org>
-Message-ID: <558FD894.7060901@matthewwilkes.name>
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:40.0)
- Gecko/20100101 Thunderbird/40.0a2
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:content-type;
+        bh=jcIuuHbmAmyDd3v555fWdV/lfiDz7uGC29ASeX9wDpU=;
+        b=MHkTPPPL5vVI6MNthuJ1oviu5WfRduMkDV4/Eepay32Wo7grzsSoe+jAW2Gd8y94Wd
+         OkjJWnxoKdtk8g4j/eZp+l3zz6kbSCNxjfWgI0e83e0YRC/qQ0/9CeCmOZnVJEN08AAR
+         JZWRTLqCz4lPRWzD3g1wIHXAYvdJjTD899DeA5eiaa8hheADAfG0nx74vlj19kj9N3Hu
+         nadiZ59w3UTtqN3pv/dBgqW0mI9ass/c9uREcKwSVvZWUDxGI6hRUUwjyIZ5E1nJ7wuB
+         ijN/jBIS0SyDrvy19do3zEwlb6/Q3DZK0S02PSZFyGJ5uyldEvy2xbjIw+5VEh5uGdE3
+         Km+Q==
+X-Gm-Message-State: ALoCoQnK7aGJV3lMjYqvzrQOHdFADmDa7TmJEhrAlw63HU5O3dqdBRLkHn1j5rA3NeaFij6+T/yN
+X-Received: by 10.107.6.152 with SMTP id f24mr59432805ioi.50.1448898797048;
+ Mon, 30 Nov 2015 07:53:17 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <20150628105507.210D96C00E7@smtpvmsrv1.mitre.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: oss-security@lists.openwall.com
-Date: Sun, 28 Jun 2015 12:20:52 +0100
-From: Matthew Wilkes <matt@matthewwilkes.name>
-Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE Request: Django CMS
-To: cve-assign@mitre.org, matthew@matthewwilkes.co.uk
+In-Reply-To: <CANO=Ty2KagFAAbV02zSEgm_TrXg5b2ckHqLXbz2BG_dWZoH8ww@mail.gmail.com>
+References: <CANO=Ty2=+8uiYPoe06j3DEVd6uSBCNiaH5LoWyCqg18jWTZu6w@mail.gmail.com>
+ <20151125180702.6d3d075d@pc1> <CANO=Ty3=D5hum6sjTJhN4NjuhAH9yjLNDgDdsL3FXSeVwMOVdw@mail.gmail.com>
+ <5656263F.80101@gmail.com> <CANO=Ty2KagFAAbV02zSEgm_TrXg5b2ckHqLXbz2BG_dWZoH8ww@mail.gmail.com>
+From: Josh Matthews <josh@apkudo.com>
+Date: Mon, 30 Nov 2015 10:52:57 -0500
+Message-ID: <CAMX=T6m2Qom8P7Os=htdpKyst_TRihTrXDuuSVy=XhA42GxnTg@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary=001a113ee4981d774b0525c40aea
+Subject: Re: [oss-security] Announcing https://github.com/RedHatProductSecurity/Certificates-Shipped/
 
-> Use CVE-2015-5081 for the CSRF issue.
+--001a113ee4981d774b0525c40aea
+Content-Type: text/plain; charset=UTF-8
 
-Thank you!
+On Wed, Nov 25, 2015 at 4:49 PM, Kurt Seifried <kseifried@redhat.com> wrote:
 
-> The cms.changelist.js and cms.toolbar.js changes include a comment
-> "send post request to prevent xss attacks." The "xss" word choice
-> might be a mistake. We are not currently assigning a CVE ID for a
-> separate XSS issue.
+> On Wed, Nov 25, 2015 at 2:21 PM, Gsunde Orangen <gsunde.orangen@gmail.com>
+> wrote:
+>
+> > Totally reasonable, Kurt.
+> > Where would you actually see the border between what's in and what's
+> > out? Actually there are lots of (proprietary source) vendor products out
+> > there that are heavily built on open source (e.g. virtually all linux
+> > kernel based embedded devices)
+> > Not saying someone should go through the hassles to chase for it - but
+> > if the info is brought to you/to the repository...
+> >
+> >
+> So in short: only stuff that is Open Source licensed.
 
-I believe you are correct.
 
-> CVE IDs were not assigned on a per-discoverer basis here because there
-> was no available information suggesting that different persons
-> independently discovered different CSRF problems.
+Kurt - we can contribute listings for all Android AOSP versions, and for
+most US-shipped Android devices. Let me know if you feel that's within
+scope for the project.
 
-I don't believe that they were different, having read the public 
-information. I've asked for clarification from the vendor, though.
+--
+Josh Matthews | Co-founder and CEO | Apkudo
 
-If anything, my logic for including the information about credit was to 
-emphasise that it was one issue reported by two people and make us both 
-searchable, in case there is confusion if one or both of us write up the 
-issue in future.
-
-Thanks,
-
-Matt
+--001a113ee4981d774b0525c40aea--
