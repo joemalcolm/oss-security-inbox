@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["842" "Thursday" "23" "February" "2017" "08:46:30" "+0100" "Marcus Meissner" "meissner@suse.de" "<20170223074630.GB26098@suse.de>" "22" "[oss-security] util-linux 2.29.2 fixes CVE-2017-2616" nil nil nil "2" "2017022307:46:30" "[oss-security] util-linux 2.29.2 fixes CVE-2017-2616" (number mark "U       meissner@sus Feb 23   22/842   " thread-indent "\"[oss-security] util-linux 2.29.2 fixes CVE-2017-2616\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1790" "Monday" "30" "November" "2015" "14:35:14" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1511301432330.21944@wniryva>" "46" "[oss-security] CVE-2015-7512 Qemu: net: pcnet: buffer overflow in non-loopback mode" nil nil nil "11" "2015113009:05:14" "[oss-security] CVE-2015-7512 Qemu: net: pcnet: buffer overflow in non-loopback mode" (number mark "U       ppandit@redh Nov 30   46/1790  " thread-indent "\"[oss-security] CVE-2015-7512 Qemu: net: pcnet: buffer overflow in non-loopback mode\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 5186 invoked by uid 550); 23 Feb 2017 07:46:43 -0000
+Received: (qmail 27977 invoked by uid 550); 30 Nov 2015 09:05:51 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,40 +12,62 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5165 invoked from network); 23 Feb 2017 07:46:42 -0000
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Date: Thu, 23 Feb 2017 08:46:30 +0100
-From: Marcus Meissner <meissner@suse.de>
-To: OSS Security List <oss-security@lists.openwall.com>
-Message-ID: <20170223074630.GB26098@suse.de>
+Received: (qmail 27953 invoked from network); 30 Nov 2015 09:05:50 -0000
+Date: Mon, 30 Nov 2015 14:35:14 +0530 (IST)
+From: P J P <ppandit@redhat.com>
+X-X-Sender: pjp@javelin
+To: oss security list <oss-security@lists.openwall.com>
+cc: Qinghao Tang <luodalongde@gmail.com>, Liu Ling <liuling-it@360.cn>
+Message-ID: <alpine.LFD.2.20.1511301432330.21944@wniryva>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Organization: SUSE Linux GmbH, GF: =?iso-8859-1?Q?Felix_?=
- =?iso-8859-1?Q?Imend=F6rffer=2C_Jane_Smithard=2C_Graham_Norton=2C_HRB_212?=
- =?iso-8859-1?Q?84_=28AG_N=FCrnberg=29?=
-User-Agent: Mutt/1.5.24 (2015-08-30)
-Subject: [oss-security] util-linux 2.29.2 fixes CVE-2017-2616
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.27
+Subject: [oss-security] CVE-2015-7512 Qemu: net: pcnet: buffer overflow in non-loopback
+ mode
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-util-linux 2.29.2 fixes CVE-2017-2616, a race condition which allowed local users
-to kill other processes.
+   Hello,
 
-https://www.kernel.org/pub/linux/utils/util-linux/v2.29/v2.29.2-ReleaseNotes
+The AMD PC-Net II emulator(hw/net/pcnet.c), while receiving packets from a 
+remote host(non-loopback mode), fails to validate the received data size, thus 
+resulting in a buffer overflow issue. It could potentially lead to arbitrary 
+code execution on the host, with privileges of the Qemu process. It requires 
+the guest NIC to have larger MTU limit.
 
-"
-  It is possible for any local user to send SIGKILL to other processes with root
-  privileges.  To exploit this, the user must be able to perform su with a
-  successful login.  SIGKILL can only be sent to processes which were executed
-  after the su process.  It is not possible to send SIGKILL to processes which
-  were already running.
-"
+A remote user could use this flaw to crash the guest instance resulting in DoS 
+or potentially execute arbitrary code on a remote host with privileges of the 
+Qemu process.
 
-Root cause of the flaw that a regular exit of the child process and the su ctrl-c kill of the
-child PID could race and so you would be able to later started process with this specific PID.
+Upstream fix:
+- -------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2015-11/msg06341.html
 
-The fix is here:
-https://github.com/karelzak/util-linux/commit/dffab154d29a288aa171ff50263ecc8f2e14a891
+CVE-2015-7512 has been assigned to this issue by Red Hat Inc.
 
-Ciao, Marcus
+This issue was independently discovered by Ling Liu of Qihoo 360 Inc. and 
+Jason Wang of Red Hat Inc.
+
+Thank you.
+- --
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBAgAGBQJWXBFKAAoJEN0TPTL+WwQfTU8QAKPQfjNgSOI4C/Kh+LCQKQJn
+vOt9sAShWauYW/rVrNhMp9j3fV8+h5NX8/l3MkHhHIa/+NiDxdfKQWAdfbQp18iI
+rB10ccI95j+vzbcj56klwkW21dPHN1Tm1mvUOTmuB1pBEAmvFQiwcoZHxf8V0hsQ
+FzOdG6iyqVDpW07vim3/imOSzdBXLUppth3TioTfZvvVLkHoSanADaAj8ntXm6r2
+MqdZU12rWJJaixp8K5lKM8JdBzCCxhvdYTPp6WIXLztB8HvGJAG36wSzzxa/WoTw
+GZMB8hpzjUJxWTRM9BQcd84gTeEe2Ow71AqU2cN10pKwgJEiDFHIpoOxnAs39WcA
+i9LGS/z+NYx1b/5htT9qYbDt1cpd5T79ZwIcn52gCQaDg8zli9bpdT9Zh7kXIEWD
+gTquq6pJXouERaXEIRhj3DcEc3PSRohO9p/hMS7ftJDLc7gJ5FBjr8xTld4CxTrc
+AD+s1tHNfMxyxxS9bgnujW1UwuBE6hs1dQsa4zdWqEZf9dPts3IeuB+dfArm0rlk
+m1EF9/71a0ug4SH0M4vdqBfBto40kSSZcor4zj+qJWMfJdfRBS8BvKvu9PNxuuc/
+4EGKK77ECX5scwom5h02Zt2FHx01K1B+MQCHtnwFnTIM7kS+mbZuN4aj6EO5k+qg
+olWvyKLp2Q1RnQWUwJh/
+=ht+0
+-----END PGP SIGNATURE-----
