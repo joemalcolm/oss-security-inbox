@@ -1,4 +1,9 @@
-Received: (qmail 11363 invoked by uid 550); 24 May 2022 12:59:38 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2663" "Tuesday" "1" "December" "2015" "23:58:47" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151202045847.129B06C0063@smtpvmsrv1.mitre.org>" "57" "[oss-security] Re: CVE Request: dhcpcd 3.x, potentially other versions too" "^Cc:" nil nil "12" "2015120204:58:47" "[oss-security] Re: CVE Request: dhcpcd 3.x, potentially other versions too" (number mark "        cve-assign@m Dec  1   57/2663  " thread-indent "\"[oss-security] Re: CVE Request: dhcpcd 3.x, potentially other versions too\"\n") "<20151202015146.GJ24908@hunt>" ("<20151202015146.GJ24908@hunt>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 13424 invoked by uid 550); 2 Dec 2015 04:58:59 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,73 +11,70 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 13406 invoked from network); 2 Dec 2015 04:58:58 -0000
+In-Reply-To: <20151202015146.GJ24908@hunt>
+Message-Id: <20151202045847.129B06C0063@smtpvmsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, guidovranken@gmail.com
+Date: Tue,  1 Dec 2015 23:58:47 -0500 (EST)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9251 invoked from network); 24 May 2022 12:58:16 -0000
-Date: Tue, 24 May 2022 14:58:04 +0200
-From: Solar Designer <solar@openwall.com>
-To: oss-security@lists.openwall.com
-Message-ID: <20220524125804.GA29146@openwall.com>
-References: <20220515162740.GA20526@openwall.com> <YoKiGWAX4E/mbGWB@kroah.com> <1be21670-921c-9f0a-d99c-a9f6fd02b9b2@oracle.com> <20220522191951.GA21330@openwall.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220522191951.GA21330@openwall.com>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] linux-distros list policy and Linux kernel
+Subject: [oss-security] Re: CVE Request: dhcpcd 3.x, potentially other versions too
+To: seth.arnold@canonical.com
 
-On Sun, May 22, 2022 at 09:19:51PM +0200, Solar Designer wrote:
-> I think now we need to come up with a specific edit to the policy, and I
-> think the exception should ideally be limited to Linux kernel issues
-> currently/recently handled with the kernel's security team involved.
-> Ideally, we'd also manage to simplify rather than further complicate the
-> policy - a goal inconsistent with granting only a limited exception?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-I've just added the exception to:
+> Guido included a patch along with AFL-discovered inputs to trigger the
+> issues:
+> 
+> https://launchpadlibrarian.net/228152582/dhcp.c.patch
+> 
+> Roy Marples has already addressed these issues in upstream dhcpcd
+> packages; I believe these issues may require 2012-era CVE identifiers:
+> 
+> http://roy.marples.name/projects/dhcpcd/finfo?name=dhcp.c&ci=27a92c6a825d6e74
+> 
+> I believe this represents three distinct flaws: out of bounds reads beyond
+> the end of the supplied packet, out of bounds write before the start of
+> the 'out' parameter, and a use-after-free.
 
-https://oss-security.openwall.org/wiki/mailing-lists/distros#list-policy-and-instructions-for-reporters
+MITRE will assign CVE IDs. Do the above references mean that most of
+the changed code lines in dhcp.c.patch correspond to out-of-bounds
+reads shown in the
+http://roy.marples.name/projects/dhcpcd/fdiff?sbs=1&v1=63689c50411b0920&v2=dad877391ea5b128
+diff, the change from "(l = *q++)" to "(l = *q++) && q - p < len"
+corresponds to an out-of-bounds write, the deletion of "free
+(dhcp->dnssearch)" corresponds to a use-after-free, and nothing else
+in the 2012 part of the http://roy.marples.name reference is a new
+vulnerability? (This is just a guess.)
 
-The paragraph now reads:
+The reason we're asking this and not immediately sending three CVE IDs
+is that someone at MITRE will ultimately use, or at least consider
+using, both https://launchpadlibrarian.net/228152582/dhcp.c.patch and
+http://roy.marples.name/projects/dhcpcd/finfo?name=dhcp.c&ci=27a92c6a825d6e74
+to describe what the CVEs mean. If there's already information about
+the equivalences between these references, that will make this process
+easier, and also further confirm that three IDs is the right number.
 
-"Please note that in case a fix for an issue is already in a publicly
-accessible source code repository, we generally consider the issue
-public (and thus you should post to oss-security right away, not report
-the issue to (linux-)distros as we'd merely redirect you to oss-security
-anyway and insist that you make the required posting ASAP).  There can
-be occasional exceptions to this, such as if the publicly accessible fix
-doesn't look like it's for a security issue and not revealing this
-publicly right away is somehow deemed desirable.  In particular, we
-grant such exceptions to Linux kernel issues concurrently or very
-recently handled by the Linux kernel security team.  In all other cases,
-you'd have to have very sound reasoning to claim an exception like this
-and be prepared to lose your argument and if so to post to oss-security
-ASAP anyway."
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-It was:
-
-"Please note that in case a fix for an issue is already in a publicly
-accessible source code repository, we generally consider the issue
-public (and thus you should post to oss-security right away, not report
-the issue to (linux-)distros as we'd merely redirect you to oss-security
-anyway and insist that you make the required posting ASAP).  There can
-be occasional (rare) exceptions to this, such as if the publicly
-accessible fix doesn't look like it's for a security issue (e.g., if the
-corresponding changes were initially made for unrelated reasons and were
-only later realized to have fixed a non-public security issue) and not
-revealing this publicly right away is somehow desirable.  You'd have to
-have very sound reasoning to claim an exception like this and be
-prepared to lose your argument and if so to post to oss-security ASAP
-anyway."
-
-The policy above doesn't explicitly say that equivalent terms apply when
-determining whether an embargo has ended (if before a pre-agreed date).
-However, we do have a paragraph that start with:
-
-"When the security issue is finally (to be made) public, "
-
-Previously, there were no braces around "to be made" - I've just added
-those.  Hopefully, it is obvious enough that if we accepted an issue as
-non-public under the new exception, then it is considered public when
-the new exception would have no longer applied.  We can, however, add
-explicit wording if that becomes necessary.
-
-Alexander
+iQIcBAEBCAAGBQJWXnlaAAoJEL54rhJi8gl5Q/0QAJzOV3xnzo16eq+p9b8MJSC1
+ZLSo7294EIeH1CzEDI4oQ2xS131awBKe8vBZl3zkp/LAaRyX6RJlIaaryAXKY6/v
+UleGiE/PoEewBUzrP1CkavScF+u8u/xq3lhSWA21v7p5QQrTal90S/aOxkEErNNJ
+OEnS8PEFBJLq3bI5K/jlUz0rlc3WA1yjIMws0rRjPwqJ+ZvHMKhfXRG8/pYgIyYi
+UEvVF4IBZ015GQVuomkidtPJFB2R3a9YkAT2Kv7HER0Ub071uLU/J2+HeOV79KBu
+Dg36gKbJDgXXBLP/UombCVgXZWURwPH/tUg62Ilq8J9GSJAaHuLStjdWXMwhFyJJ
+bVTX6BJ5pM9qkZ3V0alTBBILVvqBNR6Pc/uMIsxVF38nr3aa2daUUXhAaMvKLgE0
+1X+5oAvQE3GHn6i2aLCBziKNMx3y5n5kNdDfcmzEPSWnciOAcmWDxXjgh6I2X51r
+/KmD/An5wkriQqCbzGAzB5lUw/OIYN5YrJIpkvJNC5aCWZOT/e7W1eswEvf0falx
+Q1ZRmDU5HulEtyA5mKGenaNWfxs5BsDwhwwkTEvn9+Gi4gx9LoyNeGDTg7THzcdB
+vOKOldjBEEgmr4Z5bFJulCMa38SZUw2Idiv2CR30i/YGFYZX2L8s1NOuG9W3J7YK
+r8NaHJ5vFJeH+sNqOhZf
+=jJ31
+-----END PGP SIGNATURE-----
