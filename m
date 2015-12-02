@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1203" "Friday" "10" "February" "2017" "16:58:30" "-0700" "Mats Wichmann" "mats@wichmann.us" "<84318934-d1c8-8b9a-afe1-641e47d166d2@wichmann.us>" "31" "Re: [oss-security] MITRE is adding data intake to its CVE ID process" "^Date:" nil nil "2" "2017021023:58:30" "[oss-security] MITRE is adding data intake to its CVE ID process" (number mark "        mats@wichman Feb 10   31/1203  " thread-indent "\"Re: [oss-security] MITRE is adding data intake to its CVE ID process\"\n") "<MWHPR01MB2237C510B601793B63595572F1440@MWHPR01MB2237.prod.exchangelabs.com>" ("<e159bb7e5d3a4352be4cc9c401b0e081@imshyb02.MITRE.ORG>" "<616FD56C-60C1-48B6-983B-08FBD515343D@lanl.gov>" "<20170210205916.GB28439@hunt>" "<D999895D83BF47489B7647E60E228B4702FE7609@EX10MBOX05.pnnl.gov>" "<20170210224910.neeqi3e5265dgnxh@sentinelchicken.org>" "<MWHPR01MB2237C510B601793B63595572F1440@MWHPR01MB2237.prod.exchangelabs.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1691" "Tuesday" "1" "December" "2015" "17:51:46" "-0800" "Seth Arnold" "seth.arnold@canonical.com" "<20151202015146.GJ24908@hunt>" "50" "[oss-security] CVE Request: dhcpcd 3.x, potentially other versions too" "^Cc:" nil nil "12" "2015120201:51:46" "[oss-security] CVE Request: dhcpcd 3.x, potentially other versions too" (number mark "        seth.arnold@ Dec  1   50/1691  " thread-indent "\"[oss-security] CVE Request: dhcpcd 3.x, potentially other versions too\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 8179 invoked by uid 550); 11 Feb 2017 00:01:49 -0000
+Received: (qmail 13896 invoked by uid 550); 2 Dec 2015 01:52:01 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,53 +11,68 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5661 invoked from network); 10 Feb 2017 23:58:43 -0000
-References: <e159bb7e5d3a4352be4cc9c401b0e081@imshyb02.MITRE.ORG>
- <616FD56C-60C1-48B6-983B-08FBD515343D@lanl.gov> <20170210205916.GB28439@hunt>
- <D999895D83BF47489B7647E60E228B4702FE7609@EX10MBOX05.pnnl.gov>
- <20170210224910.neeqi3e5265dgnxh@sentinelchicken.org>
- <MWHPR01MB2237C510B601793B63595572F1440@MWHPR01MB2237.prod.exchangelabs.com>
-Message-ID: <84318934-d1c8-8b9a-afe1-641e47d166d2@wichmann.us>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.7.0
+Received: (qmail 13869 invoked from network); 2 Dec 2015 01:52:00 -0000
+Message-ID: <20151202015146.GJ24908@hunt>
+Mail-Followup-To: oss-security@lists.openwall.com, guidovranken@gmail.com
 MIME-Version: 1.0
-In-Reply-To: <MWHPR01MB2237C510B601793B63595572F1440@MWHPR01MB2237.prod.exchangelabs.com>
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-Date: Fri, 10 Feb 2017 16:58:30 -0700
-From: Mats Wichmann <mats@wichmann.us>
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="VBq/nvTu32OVLBUP"
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
+Cc: guidovranken@gmail.com
+Date: Tue, 1 Dec 2015 17:51:46 -0800
+From: Seth Arnold <seth.arnold@canonical.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] MITRE is adding data intake to its CVE ID process
+Subject: [oss-security] CVE Request: dhcpcd 3.x, potentially other versions too
 To: oss-security@lists.openwall.com
 
-On 02/10/2017 04:39 PM, Williams, Ken wrote:
-> Tim,
-> 
-> Your perception is incorrect.  I can assure you there is no 
-> CVE-related bias whatsoever towards commercial software, or against 
-> OSS.  Never has been any CVE-related bias against OSS, and I can't 
-> imagine there ever will be.
-> 
-> I'm a big OSS fan and advocate, and although I will only speak for 
-> myself, I'd be willing to bet that everybody else involved with the 
-> CVE project is too.
-> 
-> As far as sending copies of CVE web form submissions to oss-sec, or 
-> posting anywhere else, keep in mind that much of that info needs to 
-> be embargoed until a vendor security advisory is published.
-> 
-> Regards,
-> Ken Williams
-> 
-> Disclaimer: I've been on the CVE Board for 17 years.
+--VBq/nvTu32OVLBUP
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-It's hard to see how this change doesn't completely cut the legs out
-from under this list... for those things which were sent here, and thus
-subject to discussion on the list (a lot of which in my simplistic world
-view has often been very useful), now in order to get any attention it
-has to go to a web form, and those submissions are immediately caught in
-the "embargo" net, and thus won't come here at all.  Am I
-misunderstanding this completely?
+Hello MITRE, all.
+
+Guido Vranken reported several flaws to Ubuntu's launchpad bugtracker
+in the dhcpcd3 package that is shipped in Ubuntu, Debian, and potentially
+other distributions.
+
+https://bugs.launchpad.net/ubuntu/+source/dhcpcd/+bug/1517226
+
+Guido included a patch along with AFL-discovered inputs to trigger the
+issues:
+
+https://launchpadlibrarian.net/228152582/dhcp.c.patch
+
+https://bugs.launchpad.net/ubuntu/+source/dhcpcd/+bug/1517226/+attachment/4520925/+files/patch-payloads-dhcpcd.c.tar.xz
+
+Roy Marples has already addressed these issues in upstream dhcpcd
+packages; I believe these issues may require 2012-era CVE identifiers:
+
+http://roy.marples.name/projects/dhcpcd/finfo?name=dhcp.c&ci=27a92c6a825d6e74
 
 
+I believe this represents three distinct flaws: out of bounds reads beyond
+the end of the supplied packet, out of bounds write before the start of
+the 'out' parameter, and a use-after-free.
 
+I brought this issue to the distros list on Wed, 18 Nov 2015.
+
+Thanks
+
+--VBq/nvTu32OVLBUP
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBAgAGBQJWXk6yAAoJEPMhclmdjS6Xg9YH/j/vthUgi0YG3oQ/oWh7O6LJ
+vKmJJeBFT6hhiSbJSD7RnHTJXPU798NHdjTRqawOH5xb90iyEseD0QareAEYXJ4B
+EJPhDIi3hyHQ6Ho03dUBNEkHaCZLSE1qSz9YYp3h4cHD8zg9nTvv1AK2x1CIS1Sl
+wWuMF9qTx6KkZtaplZVuCQOeiNYbO1pU72Oo/gvtDYJa3/rhenSQbVtq3NyhElOd
+6J1zeW38Gj49ddYfB2nz2aOTXVpFl2BqrtmOXnUJZMdnom+fC3zQDLP6lpnFE5J3
+u5BogZZwrMqDdh3De46uv9dy0e0DPpUXEBs/i5nkGpVRobgonB1vwdQuura6KBA=
+=wH9B
+-----END PGP SIGNATURE-----
+
+--VBq/nvTu32OVLBUP--
