@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2764" "Tuesday" "3" "January" "2017" "12:06:15" "+0100" "Sebastian Krahmer" "krahmer@suse.com" "<20170103110615.GA22538@suse.de>" "77" "Re: [oss-security] Nagios Core < 4.2.4 Root Privilege Escalation [CVE-2016-9566]" nil nil nil "1" "2017010311:06:15" "[oss-security] Nagios Core < 4.2.4 Root Privilege Escalation [CVE-2016-9566]" (number mark "U       krahmer@suse Jan  3   77/2764  " thread-indent "\"Re: [oss-security] Nagios Core < 4.2.4 Root Privilege Escalation [CVE-2016-9566]\"\n") "<CADSYzsv6ptE2mLgXJUBDqm5HNbi=qC7BRpGr3mrcmx-zF3trJw@mail.gmail.com>" ("<CADSYzsv6ptE2mLgXJUBDqm5HNbi=qC7BRpGr3mrcmx-zF3trJw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2335" "Thursday" "3" "December" "2015" "00:18:51" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151203051851.C50F942E05C@smtpvbsrv1.mitre.org>" "57" "[oss-security] Re: CVE Request: dhcpcd 3.x, potentially other versions too" "^Cc:" nil nil "12" "2015120305:18:51" "[oss-security] Re: CVE Request: dhcpcd 3.x, potentially other versions too" (number mark "        cve-assign@m Dec  3   57/2335  " thread-indent "\"[oss-security] Re: CVE Request: dhcpcd 3.x, potentially other versions too\"\n") "<20151202015146.GJ24908@hunt>" ("<20151202015146.GJ24908@hunt>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 3593 invoked by uid 550); 3 Jan 2017 11:06:28 -0000
+Received: (qmail 32680 invoked by uid 550); 3 Dec 2015 05:19:04 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,100 +11,70 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 32661 invoked from network); 3 Dec 2015 05:19:03 -0000
+In-Reply-To: <20151202015146.GJ24908@hunt>
+Message-Id: <20151203051851.C50F942E05C@smtpvbsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, guidovranken@gmail.com
+Date: Thu,  3 Dec 2015 00:18:51 -0500 (EST)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3568 invoked from network); 3 Jan 2017 11:06:27 -0000
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Date: Tue, 3 Jan 2017 12:06:15 +0100
-From: Sebastian Krahmer <krahmer@suse.com>
-To: oss-security@lists.openwall.com
-Cc: jfrickson@nagios.com
-Message-ID: <20170103110615.GA22538@suse.de>
-References: <CADSYzsv6ptE2mLgXJUBDqm5HNbi=qC7BRpGr3mrcmx-zF3trJw@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CADSYzsv6ptE2mLgXJUBDqm5HNbi=qC7BRpGr3mrcmx-zF3trJw@mail.gmail.com>
-Organization: SUSE Linux GmbH, GF: Felix =?utf-8?Q?Imend?=
- =?utf-8?Q?=F6rffer?= =?utf-8?Q?=2C?= Jane Smithard, Graham Norton, HRB 21284
- (AG Nuernberg)
-User-Agent: Outlook
-Subject: Re: [oss-security] Nagios Core < 4.2.4 Root Privilege Escalation
- [CVE-2016-9566]
+Subject: [oss-security] Re: CVE Request: dhcpcd 3.x, potentially other versions too
+To: seth.arnold@canonical.com
 
-Hi
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-On Tue, Dec 20, 2016 at 05:16:39PM -0200, Dawid Golunski wrote:
-> Vulnerability:
-> Nagios Core < 4.2.4  Root Privilege Escalation CVE-2016-9566
-> 
-> Discovered by: Dawid Golunski (@dawid_golunski)
-> https://legalhackers.com
-> 
-> Severity: High
+> https://launchpadlibrarian.net/228152582/dhcp.c.patch
 
-[...]
+>> I had expected this part of the diff to address the out-of-bounds writes:
+>>
+>>               if (out && out != start)
+>>                       *(out - 1) = ' ';
 
-> 
-> Nagios daemon was found to open the log file before dropping its root 
-> privileges on startup:
-> 
-> 8148  open("/usr/local/nagios/var/nagios.log",
-> O_RDWR|O_CREAT|O_APPEND, 0666) = 4
-> 8148  fcntl(4, F_SETFD, FD_CLOEXEC)     = 0
-> 8148  fchown(4, 1001, 1001)             = 0
-> 8148  getegid()                         = 0
-> 8148  setgid(1001)                      = 0
-> 8148  geteuid()                         = 0
-> [...]
+>>> Ack, looks like heap[-1] OOB write to me.
 
-I have had a look at the upstream patch:
-
-https://github.com/NagiosEnterprises/nagioscore/commit/c29557dec91eba2306f5fb11b8da4474ba63f8c4
-
-I think the patch is insufficient in many ways.
+Use CVE-2012-6698 for the vulnerability in which the possibility of
+"out == start" wasn't considered, leading to an out-of-bounds write.
 
 
-Basically the patch is introducing a O_NOFOLLOW and an fstat()
-afterwards. O_NOFOLLOW only works for symlinks, but attackers
-may also create hardlinks (on the same FS, lets put
-Linux link restrictions aside since it may affects other OS's too).
+>>> Recalling from my last analyse, I think this is just an OOB read, because
+>>> decode_search() is called with out being NULL to count the amount of data
+>>> to be copied later. Unless this data is somehow modified the next call
+>>> to decode_search() should have sufficient amount of heap allocated for
+>>> the memcpy() to be correct. But the loop has an OOB read when counting
+>>> the data (and later when copying it and there wasnt already a SIGSEGV).
 
-The fstat() check comes too late, the open() already happened
-and may caused side-effects (driver files etc.). OTOH, a stat()
-before open would be racy. Then, any of the path components
-of the logdir may be nagios owned and flipped with symlinks inside subdirs,
-since O_NOFOLLOW only fails on the last component being a symlink.
-
-Then, IMHO its not a good idea to have the fix_log_file_owner(uid, gid)
-call inside drop_privileges(), since when drop_privileges() fails,
-for example because nagios attacker is spawning many zombies,
-making setuid() fail, the following logit() call may be invoked as root, ending again in
-open_log_file():
-
-597 if(drop_privileges(nagios_user, nagios_group) == ERROR) {
-598      logit(NSLOG_PROCESS_INFO | NSLOG_RUNTIME_ERROR,...  Aborting.");
-
-Also, the fix_log_file_owner(uid, gid); call may fail and no error
-is checked on return. The call may fail because its calling
-open_log_file(). IMHO, dropping privs and setting up the logfiles
-should really be separated.
- 
-There is also this prctl(PR_SET_DUMPABLE, 1) call which may
-be dangerous as its a potential attack vector for ptrace injections.
-
-TL;DR: there is no safe way of creating/chowning files inside user owned
-directories when running as root. Theres almost in all cases a race, since you
-have no fix point. Or at least making some fix point creates a lot
-of effort and headache. Its much cleaner to drop to user and then doing
-the file-related work. Since the logdir is nagios owned anyway,
-I dont see why there is this root/chown approach.
+Use CVE-2012-6699 for this loop error that results in an out-of-bounds read.
 
 
-Sebastian
+>	     case DHCP_DNSSEARCH:
+>                     MIN_LENGTH (1);
+> -                   free (dhcp->dnssearch);
+>                     len = decode_search (p, length, NULL);
+>                     if (len > 0) {
+> +                           free (dhcp->dnssearch);
 
--- 
+Use CVE-2012-6700 for the presence of the free call in an incorrect place.
 
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@suse.com - SuSE Security Team
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
+iQIcBAEBCAAGBQJWX8+7AAoJEL54rhJi8gl5KlMP/08/QI7yfbHAe8VVpuJiOyIN
+Df9xi8dVZ0FhzJTbab+RXfHF5BMmLhljj8GGjOWaal3+8nnWHJsC/cwuho+tDWZh
+xTJEUFPUHouK341v2HMq6Y2wbi4NHmsZkysFzunsQfWiMp5KhftCG8pxx03CSrIX
+nM4xrgb3iiHFsMoLLm2WsUa41tP2kNSHQ7vGmMxhuxUmKIHbTzq24ljnMC1yAMps
+GWxMI3xNEcMO6fl5bIJmn5AkjL5vG0dhbC5OQa6hrCpyaqCIAah9xNRFLCIKOfaY
+FlfnbRRCqOyFB2ZxNcUKZSEutb2xRJ3QiHtA2+QZiick2nGVdywltbxKSMlnNI41
+MFR033IISjE10okoMTaSdjv6nNyFjkhMOlBcqkT2EQqPjB1xFUq/vVtla3gKLzb3
+JOCugDG3ZJ/LJHb8/ZSCWDyGoaPJrtkiiJ8WTOksBq9mUTHbOm4LhOyb1yUatgYo
+UBW12MVf/8PvkC/La4rAFX4aqbsxsvm0+zMcvDhBXX1AJnEMHRHyi5zX+SjR7E5u
+EFapH8sUj92ejG5iXFndgR13MHbAIzvScpFNova4b5e9WwiN/QVjX8elEf/5aZXs
+TUfW/Sv6Ldj7I4H0RcANJHhmoq6FI59673RrTNJ6/tnTUNhrR4v7rqazYXJZiW4+
+O5Hs/K+vI9HpOyY8JaAo
+=bJBu
+-----END PGP SIGNATURE-----
