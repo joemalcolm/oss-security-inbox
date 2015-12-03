@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2944" "Tuesday" "25" "September" "2018" "19:10:23" "+0000" "Jeremy Stanley" "fungi@yuggoth.org" "<20180925191022.bqfadai7rfsu46nf@yuggoth.org>" "63" "Re: [oss-security] bounties" "^Date:" nil nil "9" "2018092519:10:23" "[oss-security] bounties" (number mark "        fungi@yuggot Sep 25   63/2944  " thread-indent "\"Re: [oss-security] bounties\"\n") "<CABejAM+hhgCipLzUycSV-RszcF6un45CncGFT9w0Yc69qNcbjQ@mail.gmail.com>" ("<CABejAM+hhgCipLzUycSV-RszcF6un45CncGFT9w0Yc69qNcbjQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1234" "Thursday" "3" "December" "2015" "08:26:42" "-0800" "Devananda van der Veen" "devananda.vdv@gmail.com" "<56606D42.7070205@gmail.com>" "52" "[oss-security] OpenStack Ironic does not honor clean steps (CVE-2015-7514)" nil nil nil "12" "2015120316:26:42" "[oss-security] OpenStack Ironic does not honor clean steps (CVE-2015-7514)" (number mark "U       devananda.vd Dec  3   52/1234  " thread-indent "\"[oss-security] OpenStack Ironic does not honor clean steps (CVE-2015-7514)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 32439 invoked by uid 550); 25 Sep 2018 19:10:36 -0000
+Received: (qmail 32092 invoked by uid 550); 3 Dec 2015 16:27:54 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,85 +11,82 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 32421 invoked from network); 25 Sep 2018 19:10:36 -0000
-Message-ID: <20180925191022.bqfadai7rfsu46nf@yuggoth.org>
-References: <CABejAM+hhgCipLzUycSV-RszcF6un45CncGFT9w0Yc69qNcbjQ@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="mhegtekaps6jmhmi"
-Content-Disposition: inline
-In-Reply-To: <CABejAM+hhgCipLzUycSV-RszcF6un45CncGFT9w0Yc69qNcbjQ@mail.gmail.com>
-User-Agent: NeoMutt/20170113 (1.7.2)
-X-SA-Exim-Connect-IP: 2001:4802:7801:102:be76:4eff:fe20:63e0
-X-SA-Exim-Rcpt-To: oss-security@lists.openwall.com
-X-SA-Exim-Mail-From: fungi@yuggoth.org
-X-SA-Exim-Scanned: No (on azathoth.yuggoth.org); SAEximRunCond expanded to false
-Date: Tue, 25 Sep 2018 19:10:23 +0000
-From: Jeremy Stanley <fungi@yuggoth.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] bounties
+Received: (qmail 31756 invoked from network); 3 Dec 2015 16:27:01 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:subject:to:message-id:date:user-agent:mime-version
+         :content-type:content-transfer-encoding;
+        bh=xUrLbNJnErH+nl0yGQ+9f1L77OEYJqCI2qEoSGKPXa0=;
+        b=eGPUc0GqCMIUiZbnXGpcsG5t1uaJxVOfsohlnecU0mzbYNDh4z058wv+Vb/FbQaZZQ
+         1TgHmlwitwYgphrcMSjBS4UPETkyuQj6j2MGAAqnJhyDqV5e9L0CXOeslLG0YMSNDvIY
+         TohY5bS5deVff32+exVCKys0K3kLjWzS7tae4t+3BE1vwe5v2FnOff9i7pANJSeRjCen
+         hhiH6S4UcofS6mXScHKx2tOgfRJty6WXlsqcmT0STfLlmn692mGw9hILDWSg0f77Juif
+         MTmHM1jroyPPmWwGpYuUkFcgO8ry+DBlzOIIBn7xt5oT1PVQiK0bwkMHBaibOODyLCAJ
+         hY4w==
+X-Received: by 10.98.17.14 with SMTP id z14mr14481028pfi.55.1449160008956;
+        Thu, 03 Dec 2015 08:26:48 -0800 (PST)
+From: Devananda van der Veen <devananda.vdv@gmail.com>
+X-Enigmail-Draft-Status: N1110
 To: oss-security@lists.openwall.com
+Message-ID: <56606D42.7070205@gmail.com>
+Date: Thu, 3 Dec 2015 08:26:42 -0800
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.4.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+Subject: [oss-security] OpenStack Ironic does not honor clean steps (CVE-2015-7514)
 
---mhegtekaps6jmhmi
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-[Full Disclosure ML dropped from followup]
+===========================================
+OpenStack Ironic does not honor clean steps
+===========================================
 
-On 2018-09-21 21:12:15 -0700 (-0700), Justin Ferguson wrote:
-> I was curious about peoples experiences with bug bounties
-> particularly those through the prominent clearing houses for them.
-> My experience is that I have been either ripped off or extremely
-> slow-walked in payment that was substantially below the listed
-> payout in every single instance. I'm curious how accurately that
-> reflects other peoples experiences.
-[...]
+:Date: December 03, 2015
+:CVE: CVE-2015-7514
 
-As someone handling intake of suspected vulnerability reports for a
-large community of free/libre open source software projects, I've
-seen another side of it. The projects I work on have been
-incorrectly added and re-added to lists of supposed bug bounty
-targets over the years, and it's caused us to deal with floods of
-useless reports from everyone who can figure out how to run a static
-code analyzer, fuzzer or vulnerability scanner (and also people who
-can't even figure out the difference between the projects and the
-code which powers their community Web sites).
 
-Convincing the people who maintain those clearing house lists to
-de-list your projects can be a challenge, as they're just as likely
-to ignore you, or even simply be abandoned Web sites with nobody at
-the helm. If this is the sort of experience other projects endure, I
-can't imagine why any would willingly put themselves on such bounty
-registries. I have much more interest in dealing with reports of
-suspected vulnerabilities from engaged users of the software than
-from people out to make a quick buck, disinterested in even
-following up enough on the bugs they think they've found to
-determine they're unreachable cruft or even intentional features of
-the software.
---=20
-Jeremy Stanley
+Affects
+~~~~~~~
+- - Ironic: >= 4.2.0, <= 4.2.1
 
---mhegtekaps6jmhmi
-Content-Type: application/pgp-signature; name="signature.asc"
 
+Description
+~~~~~~~~~~~
+Brad Morgan from Rackspace reported a vulnerability in Ironic. To
+prevent user data leak, Ironic is expected to "clean" a server after
+use, however that is transparently not happening. Previous tenant's data
+may be left behind on the disk and may be available to new users. All
+Ironic setups are affected.
+
+Patches
+~~~~~~~
+- - https://review.openstack.org/#/c/253001 (Liberty)
+- - https://review.openstack.org/#/c/252993 (Mitaka)
+
+
+Credits
+~~~~~~~
+- - Brad Morgan from Rackspace (CVE-2015-7514)
+
+
+References
+~~~~~~~~~~
+- - https://bugs.launchpad.net/bugs/1517277
+- - http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-7514
+
+
+Notes
+~~~~~
+- - This fix will be included in a future 4.2.2 release.
+- - This fix will be included in a future 4.3 release.
 -----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-iQKTBAABCgB9FiEEl65Jb8At7J/DU7LnSPmWEUNJWCkFAluqiBlfFIAAAAAALgAo
-aXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5maWZ0aGhvcnNlbWFuLm5ldDk3
-QUU0OTZGQzAyREVDOUZDMzUzQjJFNzQ4Rjk5NjExNDM0OTU4MjkACgkQSPmWEUNJ
-WCnDNA/+Im5jdvMOF+1PTqtcRw+ekoapEd3XW28yFEHax9TBpP2S2U1TxGR0FZRS
-qm+n50XM7v61oKRffFF+rF3FYPSPeZyrQQkAYfQAfVR9TPIIZWMwkibt2J5kiNQF
-q+fSjSMHN0I3hXPv+kicOoiM7MDzKcjYWqwokXSl9+IUINoQEwVl7qQD48Pk2237
-P3YHtq/8p9QFqUgXZGjQarZVtzBNQqk/IO9+Ky5AtrfDn7GHoYcfgvLmqjx2E6La
-mSoaPo+o7rYT8mxxSysBMRO7Cyw4DOlylO9GSWpJWoxoWNbZo6xG6MP4hOpndFbS
-WhpUnskxrlKN+rJ06njoZDCbWlEwYF7puQjJ03FWh8BGYcTnhrS4PpTfFehqiVSu
-uExxoTRQ3Mr5ciIc3h/AqSEf9IUOmr3bXWvCSv4z77U7P6m9wPE5lTCVxme4ujFH
-bXzf1C2gCYSeXVTIiZ0qw4HQPDTHEhevDyIbG9T1VW1nLQbZ43r8UOHMy5tWgb97
-XD0zi39Sf4Lce2gioVHKQcNw2ZGfsSkBHDVZv2F2L/SNsp0YrqksBE1FxHO4sYkA
-kSf5jrmFmd5KwC9ADfCYBOJzclKIoNiD34WC+J1YaXGgexWThCdBUTmqWTVLwute
-+Rmc4KsVU1zf70tHMrpksTXzhZ78tx7dJa231tRqzg3ccE4CXIc=
-=qtbd
+iEYEARECAAYFAlZgbUIACgkQhFvuBniJg6cbxwCgl9eepjJWbkWXsZsPDjhN/bDR
+rCkAoOLlZYGgItR7LirG4u6uvDaljOby
+=rXfP
 -----END PGP SIGNATURE-----
-
---mhegtekaps6jmhmi--
