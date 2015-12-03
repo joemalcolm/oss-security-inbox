@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1295" "Tuesday" "6" "September" "2016" "20:50:23" "-0500" "Bob Friesenhahn" "bfriesen@simple.dallas.tx.us" "<alpine.GSO.2.20.1609062029590.6469@freddy.simplesystems.org>" "31" "[oss-security] GraphicsMagick 1.3.25 fixes some security issues" "^Date:" nil nil "9" "2016090701:50:23" "[oss-security] GraphicsMagick 1.3.25 fixes some security issues" (number mark "        bfriesen@sim Sep  6   31/1295  " thread-indent "\"[oss-security] GraphicsMagick 1.3.25 fixes some security issues\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["969" "Thursday" "3" "December" "2015" "22:56:32" "+0100" "Matthias Geerdsen" "matthias@vorlons.info" "<5660BA90.3080205@vorlons.info>" "27" "[oss-security] CVE request - redmine: Issues API may disclose changeset messages that are not visible" nil nil nil "12" "2015120321:56:32" "[oss-security] CVE request - redmine: Issues API may disclose changeset messages that are not visible" (number mark "U       matthias@vor Dec  3   27/969   " thread-indent "\"[oss-security] CVE request - redmine: Issues API may disclose changeset messages that are not visible\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 7232 invoked by uid 550); 7 Sep 2016 01:50:38 -0000
+Received: (qmail 7651 invoked by uid 550); 3 Dec 2015 22:00:57 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,47 +11,51 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 7206 invoked from network); 7 Sep 2016 01:50:36 -0000
-X-X-Sender: bfriesen@freddy.simplesystems.org
-Message-ID: <alpine.GSO.2.20.1609062029590.6469@freddy.simplesystems.org>
-User-Agent: Alpine 2.20 (GSO 67 2015-01-07)
-MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (smtp.simplesystems.org [65.66.246.90]); Tue, 06 Sep 2016 20:50:23 -0500 (CDT)
-Date: Tue, 6 Sep 2016 20:50:23 -0500 (CDT)
-From: Bob Friesenhahn <bfriesen@simple.dallas.tx.us>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] GraphicsMagick 1.3.25 fixes some security issues
+Received: (qmail 5539 invoked from network); 3 Dec 2015 21:56:44 -0000
+X-Virus-Scanned: Debian amavisd-new at mail.vorlons.info
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vorlons.info;
+	s=mail; t=1449179792;
+	bh=vzDKJa+gDzb+ssXcLDu1Rxs2tlky2+oJxi14+ckKFnQ=;
+	h=Date:From:To:Subject:From;
+	b=sUJGWG4u7S9Omb0zbXiwVVLoT1wEPNyxOe/12oklsj/aXpzx0t1mQ8CUH/kHleyxR
+	 JpITPw7AI0vUUmj7wXrDeeJDm93/B3B/AHHswF7WOsJBmQ0Oaw/J5HqplXy+XPfj56
+	 E96hj/W1T7NOvDQroFMjLZpOl7tzbgJd2lCEPAjc=
+Message-ID: <5660BA90.3080205@vorlons.info>
+Date: Thu, 03 Dec 2015 22:56:32 +0100
+From: Matthias Geerdsen <matthias@vorlons.info>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.8.0
+MIME-Version: 1.0
 To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] CVE request - redmine: Issues API may disclose changeset messages
+ that are not visible
 
-Yesterday GraphicsMagick 1.3.25 was released.  It fixes several 
-security issues:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-1. A last instance of CVE-2016-2317 (heap buffer overflow) in the MVG 
-rendering code (also impacts SVG).  This problem was originally 
-reported by Gustavo Grieco.
+Hi,
 
-2. A possible heap overflow of the EscapeParenthesis() function. 
-While I was not able to reproduce it for myself, the implementation is 
-replaced with a different algorithm.  This problem was reported by 
-Gustavo Grieco.
+please assign a CVE ID for another information disclosure issue fixed
+in the latest Redmine releases (2.6.8, 3.0.6 and 3.1.2) [1]. The bug
+report [2] links to the relevant diff [3].
 
-3. The Utah RLE reader did not validate that header information was 
-reasonable given the file size and so it could cause huge memory 
-allocations and/or consume huge amounts of CPU.  This problem was 
-reported by Agostino Sarubbo.
+Cheers
+Matthias
 
-4. The TIFF reader had a bug pertaining to use of TIFFGetField() when 
-a 'count' value is returned.  The bug caused a heap read overflow (due 
-to using strlcpy() to copy a possibly unterminated string) which could 
-allow an untrusted file to crash the software.
+[1] <http://www.redmine.org/projects/redmine/wiki/Changelog>
+[2] <https://www.redmine.org/issues/21136>
+[3]
+<http://www.redmine.org/projects/redmine/repository/revisions/14794/diff/trunk/app/views/issues/show.api.rsb?utf8=%E2%9C%93&type=sbs>
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
 
-The project appreciates the time and effort that various security 
-researchers have expended to identify security issues with the 
-software so that they may be fixed.
-
-Bob
--- 
-Bob Friesenhahn
-bfriesen@simple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
-GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
+iQEcBAEBCAAGBQJWYLqLAAoJEDVYuxv9Aw7qFH8IAKjfJv7Q8rBpNw7T8WagFXOT
+412u2iUYtc3mJ3t87C2FI+mxmtRfyxSIWgum+SSPMHdHIqxkpVa2BGmHfA3NWbLm
+Wv9zGehWl9Z9wUvfK/5/Cw1scUabQvrXJZgK3YfEKfrk3XC2DCo3SiEXECzbtoiD
+Eq6OTD+jCcB7XiHQL9IMFrOxzHp8tzQ/H6rZwYIhqNVXtsAlehribQliTJCxH6D6
+h7kyeFktfxL9gu6/ye0KRGF+gfdeTv9ANXeJ41xPZDSZwu41dwGSd1eOO5jOEWlU
+Nfu9NJdlb76yPTVi+KJAH5vAo+Yzj5yCw/fWEyzYLPg+xSIAg+Nwb8fhaze/SXg=
+=1Xvp
+-----END PGP SIGNATURE-----
