@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1817" "Monday" "30" "May" "2016" "19:14:11" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160530231411.B89C63320B3@smtpvbsrv1.mitre.org>" "45" "[oss-security] Re: CVE Request Qemu: block: iscsi: buffer overflow in iscsi_aio_ioctl" nil nil nil "5" "2016053023:14:11" "[oss-security] Re: CVE Request Qemu: block: iscsi: buffer overflow in iscsi_aio_ioctl" (number mark "U       cve-assign@m May 30   45/1817  " thread-indent "\"[oss-security] Re: CVE Request Qemu: block: iscsi: buffer overflow in iscsi_aio_ioctl\"\n") "<alpine.LFD.2.20.1605302310440.13154@wniryva>" ("<alpine.LFD.2.20.1605302310440.13154@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["879" "Friday" "4" "December" "2015" "20:04:30" "+0100" "Gsunde Orangen" "gsunde.orangen@gmail.com" "<5661E3BE.1050203@gmail.com>" "22" "[oss-security] CVE Request: PHPMailer Message Injection Vulnerability" nil nil nil "12" "2015120419:04:30" "[oss-security] CVE Request: PHPMailer Message Injection Vulnerability" (number mark "U       gsunde.orang Dec  4   22/879   " thread-indent "\"[oss-security] CVE Request: PHPMailer Message Injection Vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 32737 invoked by uid 550); 30 May 2016 23:14:24 -0000
+Received: (qmail 14014 invoked by uid 550); 4 Dec 2015 19:17:26 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,57 +12,51 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32716 invoked from network); 30 May 2016 23:14:23 -0000
-From: cve-assign@mitre.org
-To: ppandit@redhat.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <alpine.LFD.2.20.1605302310440.13154@wniryva>
-Message-Id: <20160530231411.B89C63320B3@smtpvbsrv1.mitre.org>
-Date: Mon, 30 May 2016 19:14:11 -0400 (EDT)
-Subject: [oss-security] Re: CVE Request Qemu: block: iscsi: buffer overflow in iscsi_aio_ioctl
+Received: (qmail 7987 invoked from network); 4 Dec 2015 19:04:37 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=to:from:subject:message-id:date:user-agent:mime-version
+         :content-type:content-transfer-encoding;
+        bh=NUnN8/YgPplIPE3+fbzMTLDWrf8/OROAAbAH7+tQD9o=;
+        b=ewZgrEsz4DhCF/Z/qTFz3oEo04lrlI3PxPZ3yY9ci+6VuddWH3yHk61WpTzPw+Oull
+         Qcrf6XciZ9xnxM02brDKMxUHzcj25MIzLbORHFHR6Xwx4PiwGKbp4vqgHSSwDWC4pn+h
+         pCJdBLOpkIJeeyWZV9n2GapBB18OjgBUNqRPiEK7kGgvP6iGztGuquid+pKW2H3wlXXi
+         CuyuiwGqsRv3WT2D7wLNPPvwKv+w/fZU6WxKi4Gx3Q3TyJumQioJVAyqLUMJJoef9Z4W
+         weQ84UIZ2uCmwzEc6dCHg5Mpjhfw/wykze1LAqkkUmhGK/dC/LYqYTa8yiDlkfjv72yT
+         mZ5Q==
+X-Received: by 10.28.189.5 with SMTP id n5mr7154394wmf.76.1449255866227;
+        Fri, 04 Dec 2015 11:04:26 -0800 (PST)
+To: oss-security@lists.openwall.com
+From: Gsunde Orangen <gsunde.orangen@gmail.com>
+X-Enigmail-Draft-Status: N1110
+Message-ID: <5661E3BE.1050203@gmail.com>
+Date: Fri, 4 Dec 2015 20:04:30 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:38.0) Gecko/20100101
+ Thunderbird/38.4.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+Subject: [oss-security] CVE Request: PHPMailer Message Injection Vulnerability
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Given the widespread use of PHPMailer I believe this merits a CVE ID:
 
-> Quick Emulator(Qemu) built with the Block driver for iSCSI images(virtio-blk)
-> support is vulnerable to a heap buffer overflow flaw. It could occur while
-> processing iSCSI asynchronous I/O ioctl(2) calls.
+>From https://github.com/PHPMailer/PHPMailer/releases/tag/v5.2.14:
 
-> A user inside guest could use this flaw to crash the Qemu process resulting in
-> DoS OR potentially leverage it to execute arbitrary code with privileges of
-> the Qemu process on the host.
+"Takeshi Terada discovered that PHPMailer accepted addresses containing
+line breaks. This is valid in RFC5322, but allowing such addresses
+resulted in invalid RFC5321 SMTP commands, permitting a kind of message
+injection attack. These addresses were allowed by the pcre8 validator
+pattern (the default in recent PHP versions).
+This has been mitigated by rejecting line breaks during address
+validation, and also by rejecting line breaks in SMTP commands, which
+addresses the problem for applications using the SMTP class directly."
 
-> https://bugzilla.redhat.com/show_bug.cgi?id=1340924
-> https://lists.gnu.org/archive/html/qemu-block/2016-05/msg00779.html
+Fixed in PHPMailer 5.2.14
 
->> at least in the path via virtio-blk the maximum size is not
->> restricted.
+My (non-authoritative) guess for a CVSSv3 score:
+Base Score: 3.7 (Low)
+Temporal Score: 3.2 (Low)
+Vector: CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:L/A:N/E:U/RL:O/RC:C
 
-Use CVE-2016-5126.
-
-This is not yet available at
-http://git.qemu.org/?p=qemu.git;a=history;f=block/iscsi.c but
-that may be an expected place for a later update.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXTMkCAAoJEHb/MwWLVhi24uQQAJ4N5kMcseYpiFJFYmP8Ytmy
-itkiZjCmNUWkPJqyIcYXCPK4Ro50yVRVenEem/9sgD9gRIQ+3qfTzEHKSnOqBAd8
-s4cVhhqse3hY9JIk4x+Bt/p75siub51ulE00X2joAdcJZJsWqZpzW/luYUjaiuV7
-7tWJ7PMZONe49nsc5mOe4c04QusPDCLyLXcVLKVKdthqQVp3vdWT/0i8GnvuTtQg
-2kNOCRogxxZMHQnp5MwfujZ+BnwiHhMNgbaaM+LBou0eNhmST8AVwFAjRL4s0zeK
-MguYFDQLocCFgHKGFolNY6536Sdh4s3tj3omN3gniZMhxtqNkOrJGcPV1Mti8UUU
-sbbDyPrt/d63GIvBYNUNNWlE9rRsmnFn5pIhG30sLIdXOKNnK2RZO0mnQBBlXbUr
-IrE0WCe4r6sLjL9BDcJPqteODgpM+8MQIHwTdUuTKT9/NWy2DRw14msNph9QYZFa
-BjQQ8XrdbOrPqNO6awSax8ooUp9ZbqI3Blb5CYPgDRTslBdR85G9qzziEs7Yb9m2
-Eb0LpZAuvCuye8iC2Maa116MrNXigMTMFt0hTBCvkLDFmhLmSbtY3DbIckTMErJN
-F1H3iTFAIHdN9bOc185TZIGyYOSgfnAIEMEAk77Miajy2I9daKb6h6jU/mGeSuLs
-EtF3PrQSiMjrSTr6a52D
-=ZB0r
------END PGP SIGNATURE-----
+Thanks,
+Gsunde
