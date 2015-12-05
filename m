@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["9891" "Tuesday" "15" "December" "2020" "12:20:18" "+0000" "Xen.org security team" "security@xen.org" "<E1kp9JS-00071M-L4@xenbits.xenproject.org>" "225" "[oss-security] Xen Security Advisory 324 v3 (CVE-2020-29484) - Xenstore: guests can crash xenstored via watchs" nil nil nil "12" "2020121512:20:18" "[oss-security] Xen Security Advisory 324 v3 (CVE-2020-29484) - Xenstore: guests can crash xenstored via watchs" (number mark "U       security@xen Dec 15  225/9891  " thread-indent "\"[oss-security] Xen Security Advisory 324 v3 (CVE-2020-29484) - Xenstore: guests can crash xenstored via watchs\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Xen Security Advisory 324 v3 (CVE-2020-29484) - Xenstore: guests can crash xenstored via watchs" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1299" "Friday" "4" "December" "2015" "23:37:18" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151205043718.CAC3172E153@smtpvbsrv1.mitre.org>" "31" "[oss-security] Re: CVE request - redmine: Issues API may disclose changeset messages that are not visible" nil nil nil "12" "2015120504:37:18" "[oss-security] Re: CVE request - redmine: Issues API may disclose changeset messages that are not visible" (number mark "U       cve-assign@m Dec  4   31/1299  " thread-indent "\"[oss-security] Re: CVE request - redmine: Issues API may disclose changeset messages that are not visible\"\n") "<5660BA90.3080205@vorlons.info>" ("<5660BA90.3080205@vorlons.info>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 22006 invoked by uid 550); 15 Dec 2020 12:20:39 -0000
+Received: (qmail 29895 invoked by uid 550); 5 Dec 2015 04:37:31 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,248 +12,43 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21845 invoked from network); 15 Dec 2020 12:20:36 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=xen.org;
-	s=20200302mail; h=Date:Message-Id:Subject:CC:From:To:MIME-Version:
-	Content-Transfer-Encoding:Content-Type;
-	bh=sFsBolSRPNjeYw9DvQPhXm69yPmYRcRSCuSvqENNVoc=; b=ocof4P2UiDxXaCf5aodT+7C73t
-	WurKV3ign8eBilaYTliqqxrEcJVofiVSa4zUDBf2RR8HGsWKDDh+SIfoValM0/pFGIo7ktImghKw2
-	vh29XyNP6T/T5ja+6VhALGwX0sSH2DuODv62zLeYDLSUa5GPmA0DKnTwC7lR5MMDlU7c=;
-Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
-Content-Transfer-Encoding: binary
-MIME-Version: 1.0
-X-Mailer: MIME-tools 5.509 (Entity 5.509)
-To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
- xen-users@lists.xen.org, oss-security@lists.openwall.com
-From: Xen.org security team <security@xen.org>
-CC: Xen.org security team <security-team-members@xen.org>
-Message-Id: <E1kp9JS-00071M-L4@xenbits.xenproject.org>
-Date: Tue, 15 Dec 2020 12:20:18 +0000
-Subject: [oss-security] Xen Security Advisory 324 v3 (CVE-2020-29484) - Xenstore: guests
- can crash xenstored via watchs
-
---=separator
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
-Content-Transfer-Encoding: 7bit
+Received: (qmail 29874 invoked from network); 5 Dec 2015 04:37:30 -0000
+From: cve-assign@mitre.org
+To: matthias@vorlons.info
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <5660BA90.3080205@vorlons.info>
+Message-Id: <20151205043718.CAC3172E153@smtpvbsrv1.mitre.org>
+Date: Fri,  4 Dec 2015 23:37:18 -0500 (EST)
+Subject: [oss-security] Re: CVE request - redmine: Issues API may disclose changeset messages that are not visible
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-            Xen Security Advisory CVE-2020-29484 / XSA-324
-                               version 3
+> http://www.redmine.org/projects/redmine/wiki/Changelog
+> https://www.redmine.org/issues/21136
+> http://www.redmine.org/projects/redmine/repository/revisions/14794/diff/trunk/app/views/issues/show.api.rsb?utf8=%E2%9C%93&type=sbs
 
-            Xenstore: guests can crash xenstored via watchs
+Use CVE-2015-8473.
 
-UPDATES IN VERSION 3
-====================
-
-Public release.
-
-ISSUE DESCRIPTION
-=================
-
-When a Xenstore watch fires, the xenstore client which registered the
-watch will receive a Xenstore message containing the path of the
-modified Xenstore entry which triggered the watch, and the tag which
-was specified when registering the watch.
-
-Any communication with xenstored is done via Xenstore messages,
-consisting of a message header and the payload. The payload length is
-limited to 4096 bytes. Any request to xenstored resulting in a
-response with a payload longer than 4096 bytes will result in an
-error.
-
-When registering a watch the payload length limit applies to the
-combined length of the watched path and the specified tag. As watches
-for a specific path are also triggered for all nodes below that path,
-the payload of a watch event message can be longer than the payload
-needed to register the watch.
-
-A malicious guest which registers a watch using a very large tag (ie
-with a registration operation payload length close to the 4096 byte
-limit) can cause the generation of watch events with a payload length
-larger than 4096 bytes, by writing to Xenstore entries below the
-watched path.
-
-This will result in an error condition in xenstored.  This error can
-result in a NULL pointer dereference leading to a crash of xenstored.
-
-IMPACT
-======
-
-A malicious guest administrator can cause xenstored to crash, leading
-to a denial of service.  Following a xenstored crash, domains may
-continue to run, but management operations will be impossible.
-
-VULNERABLE SYSTEMS
-==================
-
-All Xen versions are affected.
-
-Only C xenstored is affected, oxenstored is not affected.
-
-MITIGATION
-==========
-
-There are no mitigations.
-
-Changing to use of Ocaml xenstored would avoid this vulnerability.
-However, given the other vulnerabilities in both versions of xenstored
-being reported at this time, changing xenstored implementation is not a
-recommended approach to mitigation of individual issues.
-
-CREDITS
-=======
-
-This issue was discovered by Jürgen Groß of SUSE.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-Note that patches for released versions are generally prepared to
-apply to the stable branches, and may not apply cleanly to the most
-recent release tarball.  Downstreams are encouraged to update to the
-tip of the stable branch before applying these patches.
-
-xsa324.patch           xen-unstable - 4.10
-
-$ sha256sum xsa324*
-78932f0a83b479902553b1acdf601f7625b383497c03c6e834a0a2b847f1a72e  xsa324.meta
-8dba79842fa913290c7043d065a50abb0efe27fa5a173e421c21c544cc1e264c  xsa324.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl/Yqd4MHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZBoIH/ir2NdOiUg6JFoa/DXgtMBosLXRkRRjikvlaMJTY
-krz3r/aBZ0nLn8wsF5u+BctJYdHrIQDrt3N7GGv1wyvnLA18HrtupsxqrHj+CCMD
-pogl6QxRmmqRina7+EzRTt8N8qe6fhi8tuVmH3TYlsL1PeHyqNurwwTZizHL9BFx
-uCY10qNUV0FTY05tUhdP0FD3yiNfN8QwytARo/LRhELbUMx7D+N/CmUtCKh5uklr
-KfBBHy3Vb4MDlGPN7pa5vdEjZGFVj4xHWxUP+72C+bdhvLEiDi+IKkvy/TVbjoAN
-eQEfFVjBpj21MeQV+3mHJMJGknaJ8NTc00txrLM5D+WscHM=
-=KypE
+iQIcBAEBCAAGBQJWYmmsAAoJEL54rhJi8gl5fswP/i2j555i4sEqYzN6EAu/a5CC
+kvLcHmlmDJNnjQrXrlhxt5ZHzC757BmlSxiOL6KQJFBPWAm6YOH3+RsKcxcBYgiT
+dhDdqkmFDKMv28xmidC8PDaI+ZqdSTI8e1sGOj2nk4m9Z/faXWTJWUWsSeVBW4s+
+elkdbbmLO6AVrmkxiXqooeEK0xOCE6bUYadC35Jm693LBeDTDmT87z+Pf/n3uV50
++RHQKqJZt+ZGgv6eUo1AJtfc38Jx9cq/AmFclCa+4Os4a9U3l2nXfODzAKUHwxyj
+OPG8v1YjDJW+OPzYQeCqZ2/YHHCIxJZIX+/uWdkWOZbXz5HPzrp2HZ/VkDBgSRQY
+puAt+30WkoCBdKkxBRWDElbiQuEYlvrnZ+Rh5js1jM+j7jkGC7IgHIRH9F36WzBm
+OmXNsKunXkrIdNyC+X7/9z9e8d5ias20R3gFFCe0rV0WyHOYMx0rQWz9o0HH2ATn
+Pajx8Ld0i3dGp5yC4ddEwrfQ4c/s90K13GAO3zh4IPU/iXkR9sL7a+cqXTdkItaq
+CJ7wfzI5eRXtCvnb+Sn0KZRyYK4VCK179gZ01OEdjPCdXgqUBPeScXN1f6iISbrB
+eVVItZLp1VfULcBhO08F0RMfflpzPz4cLfik6xqNXxttfQmVOwcIXpSK+NbJod1r
+j0YDlc5j1oq6jqQFU2G/
+=gPVa
 -----END PGP SIGNATURE-----
-
---=separator
-Content-Type: application/octet-stream; name="xsa324.meta"
-Content-Disposition: attachment; filename="xsa324.meta"
-Content-Transfer-Encoding: base64
-
-ewogICJYU0EiOiAzMjQsCiAgIlN1cHBvcnRlZFZlcnNpb25zIjogWwogICAg
-Im1hc3RlciIsCiAgICAiNC4xNCIsCiAgICAiNC4xMyIsCiAgICAiNC4xMiIs
-CiAgICAiNC4xMSIsCiAgICAiNC4xMCIKICBdLAogICJUcmVlcyI6IFsKICAg
-ICJ4ZW4iCiAgXSwKICAiUmVjaXBlcyI6IHsKICAgICI0LjEwIjogewogICAg
-ICAiUmVjaXBlcyI6IHsKICAgICAgICAieGVuIjogewogICAgICAgICAgIlN0
-YWJsZVJlZiI6ICIxZDcyZDk5MTVlZGZmMGRkNDFmNjAxYmJiMGIxZjgzYzAy
-ZmYxNjg5IiwKICAgICAgICAgICJQcmVyZXFzIjogWwogICAgICAgICAgICAz
-NTMsCiAgICAgICAgICAgIDExNSwKICAgICAgICAgICAgMzIyLAogICAgICAg
-ICAgICAzMjMKICAgICAgICAgIF0sCiAgICAgICAgICAiUGF0Y2hlcyI6IFsK
-ICAgICAgICAgICAgInhzYTMyNC5wYXRjaCIKICAgICAgICAgIF0KICAgICAg
-ICB9CiAgICAgIH0KICAgIH0sCiAgICAiNC4xMSI6IHsKICAgICAgIlJlY2lw
-ZXMiOiB7CiAgICAgICAgInhlbiI6IHsKICAgICAgICAgICJTdGFibGVSZWYi
-OiAiNDFhODIyYzM5MjYzNTBmMjY5MTdkNzQ3YzhkZmVkMWM0NGEyY2Y0MiIs
-CiAgICAgICAgICAiUHJlcmVxcyI6IFsKICAgICAgICAgICAgMzUzLAogICAg
-ICAgICAgICAxMTUsCiAgICAgICAgICAgIDMyMiwKICAgICAgICAgICAgMzIz
-CiAgICAgICAgICBdLAogICAgICAgICAgIlBhdGNoZXMiOiBbCiAgICAgICAg
-ICAgICJ4c2EzMjQucGF0Y2giCiAgICAgICAgICBdCiAgICAgICAgfQogICAg
-ICB9CiAgICB9LAogICAgIjQuMTIiOiB7CiAgICAgICJSZWNpcGVzIjogewog
-ICAgICAgICJ4ZW4iOiB7CiAgICAgICAgICAiU3RhYmxlUmVmIjogIjgxNDVk
-MzhiNDgwMDkyNTVhMzJhYjg3YTAyZTQ4MWNkMDljODExZjkiLAogICAgICAg
-ICAgIlByZXJlcXMiOiBbCiAgICAgICAgICAgIDM1MywKICAgICAgICAgICAg
-MTE1LAogICAgICAgICAgICAzMjIsCiAgICAgICAgICAgIDMyMwogICAgICAg
-ICAgXSwKICAgICAgICAgICJQYXRjaGVzIjogWwogICAgICAgICAgICAieHNh
-MzI0LnBhdGNoIgogICAgICAgICAgXQogICAgICAgIH0KICAgICAgfQogICAg
-fSwKICAgICI0LjEzIjogewogICAgICAiUmVjaXBlcyI6IHsKICAgICAgICAi
-eGVuIjogewogICAgICAgICAgIlN0YWJsZVJlZiI6ICJiNTMwMjI3M2UyYzUx
-OTQwMTcyNDAwNDg2NjQ0NjM2ZjJmNGZjNjRhIiwKICAgICAgICAgICJQcmVy
-ZXFzIjogWwogICAgICAgICAgICAzNTMsCiAgICAgICAgICAgIDExNSwKICAg
-ICAgICAgICAgMzIyLAogICAgICAgICAgICAzMjMKICAgICAgICAgIF0sCiAg
-ICAgICAgICAiUGF0Y2hlcyI6IFsKICAgICAgICAgICAgInhzYTMyNC5wYXRj
-aCIKICAgICAgICAgIF0KICAgICAgICB9CiAgICAgIH0KICAgIH0sCiAgICAi
-NC4xNCI6IHsKICAgICAgIlJlY2lwZXMiOiB7CiAgICAgICAgInhlbiI6IHsK
-ICAgICAgICAgICJTdGFibGVSZWYiOiAiMWQxZDFmNTM5MTk3NjQ1NmE3OWRh
-YWMwZGNmZTcxNTdkYTFlNTRmNyIsCiAgICAgICAgICAiUHJlcmVxcyI6IFsK
-ICAgICAgICAgICAgMzUzLAogICAgICAgICAgICAxMTUsCiAgICAgICAgICAg
-IDMyMiwKICAgICAgICAgICAgMzIzCiAgICAgICAgICBdLAogICAgICAgICAg
-IlBhdGNoZXMiOiBbCiAgICAgICAgICAgICJ4c2EzMjQucGF0Y2giCiAgICAg
-ICAgICBdCiAgICAgICAgfQogICAgICB9CiAgICB9LAogICAgIm1hc3RlciI6
-IHsKICAgICAgIlJlY2lwZXMiOiB7CiAgICAgICAgInhlbiI6IHsKICAgICAg
-ICAgICJTdGFibGVSZWYiOiAiM2FlNDY5YWY4ZTY4MGRmMzFlZWNkMGEyYWM2
-YTgzYjU4YWQ3Y2U1MyIsCiAgICAgICAgICAiUHJlcmVxcyI6IFsKICAgICAg
-ICAgICAgMzUzLAogICAgICAgICAgICAxMTUsCiAgICAgICAgICAgIDMyMiwK
-ICAgICAgICAgICAgMzIzCiAgICAgICAgICBdLAogICAgICAgICAgIlBhdGNo
-ZXMiOiBbCiAgICAgICAgICAgICJ4c2EzMjQucGF0Y2giCiAgICAgICAgICBd
-CiAgICAgICAgfQogICAgICB9CiAgICB9CiAgfQp9
-
---=separator
-Content-Type: application/octet-stream; name="xsa324.patch"
-Content-Disposition: attachment; filename="xsa324.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbTogSnVlcmdlbiBHcm9zcyA8amdyb3NzQHN1c2UuY29tPgpTdWJqZWN0
-OiB0b29scy94ZW5zdG9yZTogZHJvcCB3YXRjaCBldmVudCBtZXNzYWdlcyBl
-eGNlZWRpbmcgbWF4aW11bSBzaXplCgpCeSBzZXR0aW5nIGEgd2F0Y2ggd2l0
-aCBhIHZlcnkgbGFyZ2UgdGFnIGl0IGlzIHBvc3NpYmxlIHRvIHRyaWNrCnhl
-bnN0b3JlZCB0byBzZW5kIHdhdGNoIGV2ZW50IG1lc3NhZ2VzIGV4Y2VlZGlu
-ZyB0aGUgbWF4aW11bSBhbGxvd2VkCnBheWxvYWQgc2l6ZS4gVGhpcyBtaWdo
-dCBpbiB0dXJuIGxlYWQgdG8gYSBjcmFzaCBvZiB4ZW5zdG9yZWQgYXMgdGhl
-CnJlc3VsdGluZyBlcnJvciBjYW4gY2F1c2UgZGVyZWZlcmVuY2luZyBhIE5V
-TEwgcG9pbnRlciBpbiBjYXNlIHRoZXJlCmlzIG5vIGFjdGl2ZSByZXF1ZXN0
-IGJlaW5nIGhhbmRsZWQgYnkgdGhlIGd1ZXN0IHRoZSB3YXRjaCBldmVudCBp
-cwpiZWluZyBzZW50IHRvLgoKRml4IHRoYXQgYnkganVzdCBkcm9wcGluZyBz
-dWNoIHdhdGNoIGV2ZW50cy4gQWRkaXRpb25hbGx5IG1vZGlmeSB0aGUKZXJy
-b3IgaGFuZGxpbmcgdG8gdGVzdCB0aGUgcG9pbnRlciB0byBiZSBub3QgTlVM
-TCBiZWZvcmUgZGVyZWZlcmVuY2luZwppdC4KClRoaXMgaXMgWFNBLTMyNC4K
-ClNpZ25lZC1vZmYtYnk6IEp1ZXJnZW4gR3Jvc3MgPGpncm9zc0BzdXNlLmNv
-bT4KQWNrZWQtYnk6IEp1bGllbiBHcmFsbCA8amdyYWxsQGFtYXpvbi5jb20+
-CgpkaWZmIC0tZ2l0IGEvdG9vbHMveGVuc3RvcmUveGVuc3RvcmVkX2NvcmUu
-YyBiL3Rvb2xzL3hlbnN0b3JlL3hlbnN0b3JlZF9jb3JlLmMKaW5kZXggMzNm
-OTVkY2YzYy4uM2Q3NGRiYmI0MCAxMDA2NDQKLS0tIGEvdG9vbHMveGVuc3Rv
-cmUveGVuc3RvcmVkX2NvcmUuYworKysgYi90b29scy94ZW5zdG9yZS94ZW5z
-dG9yZWRfY29yZS5jCkBAIC02NzQsNiArNjc0LDkgQEAgdm9pZCBzZW5kX3Jl
-cGx5KHN0cnVjdCBjb25uZWN0aW9uICpjb25uLCBlbnVtIHhzZF9zb2NrbXNn
-X3R5cGUgdHlwZSwKIAkvKiBSZXBsaWVzIHJldXNlIHRoZSByZXF1ZXN0IGJ1
-ZmZlciwgZXZlbnRzIG5lZWQgYSBuZXcgb25lLiAqLwogCWlmICh0eXBlICE9
-IFhTX1dBVENIX0VWRU5UKSB7CiAJCWJkYXRhID0gY29ubi0+aW47CisJCS8q
-IERyb3AgYXN5bmNocm9ub3VzIHJlc3BvbnNlcywgZS5nLiBlcnJvcnMgZm9y
-IHdhdGNoIGV2ZW50cy4gKi8KKwkJaWYgKCFiZGF0YSkKKwkJCXJldHVybjsK
-IAkJYmRhdGEtPmluaGRyID0gdHJ1ZTsKIAkJYmRhdGEtPnVzZWQgPSAwOwog
-CQljb25uLT5pbiA9IE5VTEw7CmRpZmYgLS1naXQgYS90b29scy94ZW5zdG9y
-ZS94ZW5zdG9yZWRfd2F0Y2guYyBiL3Rvb2xzL3hlbnN0b3JlL3hlbnN0b3Jl
-ZF93YXRjaC5jCmluZGV4IDcxYzEwOGVhOTkuLjlmZjIwNjkwYzAgMTAwNjQ0
-Ci0tLSBhL3Rvb2xzL3hlbnN0b3JlL3hlbnN0b3JlZF93YXRjaC5jCisrKyBi
-L3Rvb2xzL3hlbnN0b3JlL3hlbnN0b3JlZF93YXRjaC5jCkBAIC05Miw2ICs5
-MiwxMCBAQCBzdGF0aWMgdm9pZCBhZGRfZXZlbnQoc3RydWN0IGNvbm5lY3Rp
-b24gKmNvbm4sCiAJfQogCiAJbGVuID0gc3RybGVuKG5hbWUpICsgMSArIHN0
-cmxlbih3YXRjaC0+dG9rZW4pICsgMTsKKwkvKiBEb24ndCB0cnkgdG8gc2Vu
-ZCBvdmVyLWxvbmcgZXZlbnRzLiAqLworCWlmIChsZW4gPiBYRU5TVE9SRV9Q
-QVlMT0FEX01BWCkKKwkJcmV0dXJuOworCiAJZGF0YSA9IHRhbGxvY19hcnJh
-eShjdHgsIGNoYXIsIGxlbik7CiAJaWYgKCFkYXRhKQogCQlyZXR1cm47Cg==
-
---=separator--
