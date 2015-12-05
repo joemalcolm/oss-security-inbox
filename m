@@ -1,4 +1,9 @@
-Received: (qmail 32277 invoked by uid 550); 9 Apr 2026 15:28:34 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1370" "Saturday" "5" "December" "2015" "22:07:46" "+0200" "Henri Salo" "henri@nerv.fi" "<20151205200746.GA28593@lakka.kapsi.fi>" "35" "Re: [oss-security] Re: CVE request: Redmine: cross-site scripting vulnerability fixed in 3.0.0 and 2.6.2" nil nil nil "12" "2015120520:07:46" "[oss-security] Re: CVE request: Redmine: cross-site scripting vulnerability fixed in 3.0.0 and 2.6.2" (number mark "U       henri@nerv.f Dec  5   35/1370  " thread-indent "\"Re: [oss-security] Re: CVE request: Redmine: cross-site scripting vulnerability fixed in 3.0.0 and 2.6.2\"\n") "<20151205144023.D7E276C0237@smtpvmsrv1.mitre.org>" ("<20151205073937.GB14618@lakka.kapsi.fi>" "<20151205144023.D7E276C0237@smtpvmsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 28388 invoked by uid 550); 5 Dec 2015 20:07:58 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,124 +12,56 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 30489 invoked from network); 9 Apr 2026 06:27:42 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1775716050;
-	bh=Ocg8AMWvNi0N40V64z6rRrshGWhcVL+NtgshrrFZhZQ=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=EdB01c1+mnt9XDLFnp4PnsMs9ltyDMS3+qcRwuDe39obOz9jgeaC0A52jGHXRvmuh
-	 uUeLPYTVJH5j+PYiyKb7C5EOx0K4qjB1DJeUWAyT0FpCRIpEPSnbvYtwm2ordLSiqP
-	 E/PFDkumLjOwX0e31CMCeFGDUKa01l8hefzr0W0RYInD2Fm2Z7LggC8UHpae+DvTPA
-	 3jGaZN54XpzmdiojnNEfpcWz11rs85i+TotW5fhrwk3yL0xSFNLh4P8zGsP4mFO46W
-	 Ej2u7wxtD8BWZKkBOHdO+nNCboo4XLTfNMPbtYxhk9uyntVgA5HxwOhcIaP/0STmpk
-	 g+E5RaZaltyTA==
-X-Gm-Message-State: AOJu0Yx9k9XUK4N3gdtpuhYA7Q8pGiIOD4PEo5C991puEgB1EaGLI85I
-	hyhKMJ87Dik11TPFLFCHAD57DbiO+t2QWbZp4U7laxUpqJEE11aSAPfvUfLS82b9IBKeNqM3bJE
-	U3bL6n+agNNor1qIWNED3HXJL3YKRIYI=
-X-Received: by 2002:a17:90b:4f43:b0:359:f3b1:6811 with SMTP id
- 98e67ed59e1d1-35de67db862mr22693994a91.1.1775716050352; Wed, 08 Apr 2026
- 23:27:30 -0700 (PDT)
+Received: (qmail 28367 invoked from network); 5 Dec 2015 20:07:58 -0000
+Date: Sat, 5 Dec 2015 22:07:46 +0200
+From: Henri Salo <henri@nerv.fi>
+To: cve-assign@mitre.org
+Cc: oss-security@lists.openwall.com
+Message-ID: <20151205200746.GA28593@lakka.kapsi.fi>
+References: <20151205073937.GB14618@lakka.kapsi.fi>
+ <20151205144023.D7E276C0237@smtpvmsrv1.mitre.org>
 MIME-Version: 1.0
-References: <CACmP8U+CbkozUQ1OqxsXMxLgMYvQS85QsWaGtVGBD8BFox34=w@mail.gmail.com>
- <fa4662c4-ce58-48ec-85a4-b0272ca9931a@seltendoof.de> <20260409013620.GA13098@openwall.com>
- <CACmP8UKMsyDGzMSbuu_tORKR9p2EUhCE_qY6YcFf_w19ZcZaqw@mail.gmail.com> <20260409035050.GA14884@openwall.com>
-In-Reply-To: <20260409035050.GA14884@openwall.com>
-From: "Andrew G. Morgan" <morgan@kernel.org>
-Date: Wed, 8 Apr 2026 23:27:18 -0700
-X-Gmail-Original-Message-ID: <CACmP8U+8jmiyE5GuF-JF=SEPaBHgLx8wy53Q5m_8tmv6n+ivtA@mail.gmail.com>
-X-Gm-Features: AQROBzDX1g6MtQGdYa0_7z-FkhA8CIK35CG58JtF2LUUYA39G6iSaR2NstEqw98
-Message-ID: <CACmP8U+8jmiyE5GuF-JF=SEPaBHgLx8wy53Q5m_8tmv6n+ivtA@mail.gmail.com>
-To: Solar Designer <solar@openwall.com>
-Cc: oss-security@lists.openwall.com, Ali Raza <elirazamumtaz@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [oss-security] libcap-2.77 (since libcap-2.04) has TOCTOU
- privilege escalation issue
+Content-Type: text/plain; charset=us-ascii; x-action=pgp-signed
+In-Reply-To: <20151205144023.D7E276C0237@smtpvmsrv1.mitre.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-SA-Exim-Connect-IP: 2001:1bc8:1004::1
+X-SA-Exim-Mail-From: fgeek@kapsi.fi
+X-SA-Exim-Scanned: No (on mail.kapsi.fi); SAEximRunCond expanded to false
+Subject: Re: [oss-security] Re: CVE request: Redmine: cross-site scripting
+ vulnerability fixed in 3.0.0 and 2.6.2
 
-On Wed, Apr 8, 2026 at 8:57=E2=80=AFPM Solar Designer <solar@openwall.com> =
-wrote:
->
-> On Wed, Apr 08, 2026 at 07:19:31PM -0700, Andrew G. Morgan wrote:
-> > On Wed, Apr 8, 2026 at 6:53=E2=80=AFPM Solar Designer <solar@openwall.c=
-om> wrote:
-> > > On Tue, Apr 07, 2026 at 10:14:42PM +0200, Christian G=C3=B6ttsche wro=
-te:
-> > > > Apr 7, 2026 18:54:22 Andrew G. Morgan <morgan@kernel.org>:
-> > > > > The fix for pretty much that whole range of libcap releases is th=
-is commit:
-> > > > >
-> > > > > https://git.kernel.org/pub/scm/libs/libcap/libcap.git/commit/?id=
-=3D286ace1259992bd0c5d9016715833f2e148ac596
-> > > >
-> > > > Hi,
-> > > >
-> > > > the new code suppports changing the file capabilities of all kinds =
-of files (not just regular)(given that the caller has read permissions).
-> > > > Is that intended?
-> > >
-> > > Andrew, please comment on this.  I do also see it in the patch that t=
-he
-> > > S_ISREG check is now below the added fast path code for readable file=
-s.
-> > > It doesn't matter that the S_ISLNK check is also below (in fact, it's
-> > > now redundant anyway) due to O_NOFOLLOW,
->
-> Correcting myself: not redundant due to O_NOFOLLOW because
-> O_PATH|O_NOFOLLOW can actually open a symlink as such, but still
-> redundant with "|| !S_ISREG".  Anyway, fine to keep it.
->
-> I don't get why you wanted to use O_PATH instead of just letting the
-> open() fail on symlinks with plain O_NOFOLLOW.  Just to set a different
-> errno and debug message maybe.  Anyway, that's also fine.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-The prior xattr code didn't care if you have read access to the file
-content, so using O_PATH was a way to preserve that legacy feature. It
-is pretty convoluted since we're only really using that to lock the
-file connection in place.
+On Sat, Dec 05, 2015 at 09:40:23AM -0500, cve-assign@mitre.org wrote:
+> Is there any public information that associates 19117 with the
+> 
+>   "Potential XSS vulnerability when rendering some flash messages" "2.6.2 and 3.0.0"
+> 
+> line, or are you providing this association based on your own involvement with the
+> vulnerability disclosure?
 
->
-> > > but bypass of the S_ISREG check
-> > > appears to be a functional change.
-> >
-> > Not sure I follow. This check is in the cap_set_fd() function itself.
->
-> Oh, indeed.  I didn't look beyond patch context, maybe Christian did not
-> either.  I think this addresses the concern.
->
-> int cap_set_fd(int fildes, cap_t cap_d)
-> {
->     struct vfs_ns_cap_data rawvfscap;
->     int sizeofcaps;
->     struct stat buf;
->
->     if (fstat(fildes, &buf) !=3D 0) {
->         _cap_debug("unable to stat file descriptor %d", fildes);
->         return -1;
->     }
->     if (S_ISLNK(buf.st_mode) || !S_ISREG(buf.st_mode)) {
->         _cap_debug("file descriptor %d for non-regular file", fildes);
->         errno =3D EINVAL;
->         return -1;
->     }
->
-> > Just to be clear, and credit where it is due, the text of this was
-> > authored by Ali Raza.
-> >
-> > The markdown source is as follows:
->
-> Thank you both.
->
-> I would still like to know if there's a way I could extract Markdown
-> source from third-party GitHub advisories, if anyone knows.
+File ./doc/CHANGELOG says:
 
-I had to open it to edit the advisory to get the markdown. I couldn't
-see any other way (canceled the edit, so no change, but that is how I
-got the markdown).
+== 2015-02-19 v2.6.2
+* Defect #19117: Potential XSS vulnerability in some flash messages rendering
 
-Cheers
+- -- 
+Henri Salo
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-Andrew
-
->
-> Alexander
+iQIcBAEBAgAGBQJWY0QSAAoJECet96ROqnV0Eu4QAMpX7Xkqs0e5mOltgTuzDs1j
+ML7q9L1VVJylflXcuRvAnJEVDS4LVNylBomlCZmZl8nY88vjZnwUXXh8h0ZRakfY
+bUQjrmSQVZrecpO/UVuYQLJUeOO7MvTJFFVsCIQKHA8Y6nGsxtixgTNDOnWHrckn
+NVqOf8wg29drsqAXTMoQrDofRJ2l9KgAA52gIdqw3aLx7I1PKyxmscWFuReDfdFt
+o9YYl6Z4+Vynre4TfFXFS8h+6U/4zOGUoHo+LbLgjhebQwRXG2sXABB9qJ71aH9K
+n8xwTWjKV3M3VjY7bf7tv4O+GCxsC1KMylqZtS3quQjSEKsS2fGuj7Nrd/2J+HqC
+4d15fAgg0JRVfZcEmsi0WYVNfN25PrQHpPP7Urh3YhuwL3dDQtHTaqv3Jafx49JG
+W0ZLtYRGi5d9a1ZHPt4cpnTDl+eSFLX1Jxcm3LEONBeilnXVYyk689U8P0US4dbj
+1iqD/UXMoKs3hpEvi+yRdaPy0OB3DQvdc1k0BdAkbaCYpK7SVQpGed991mtc43MK
+t5HhZUXBodlIouEeJkdFB/l33SkhkAnoYwFPJXN+hIkxn/H71+q7uZV7O0QxVtWT
+AaalcKRd11ch0q9JpSO1Jh/hCvor85Oib6o8a3v7nu6WMCXxqReICl2SFF8QpRA/
+2cBSXbWVcCZTg9gTav85
+=/k8P
+-----END PGP SIGNATURE-----
