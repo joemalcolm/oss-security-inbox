@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1103" "Sunday" "19" "July" "2020" "00:24:26" "+0200" "ali.of.south@keemail.me" "ali.of.south@keemail.me" "<MCZ-_KW--3-2@keemail.me>" "30" "[oss-security] CVE-2018-21036: Sails.js before v1.0.0-46 DoS" nil nil nil "7" "2020071822:24:26" "[oss-security] CVE-2018-21036: Sails.js before v1.0.0-46 DoS" (number mark "U       ali.of.south Jul 19   30/1103  " thread-indent "\"[oss-security] CVE-2018-21036: Sails.js before v1.0.0-46 DoS\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2018-21036: Sails.js before v1.0.0-46 DoS" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4234" "Monday" "7" "December" "2015" "16:07:23" "+0100" "Andreas Stieger" "astieger@suse.com" "<5665A0AB.5050904@suse.com>" "109" "[oss-security] CVE-2015-7519: Phusion Passenger Header overwriting issue" nil nil nil "12" "2015120715:07:23" "[oss-security] CVE-2015-7519: Phusion Passenger Header overwriting issue" (number mark "U       astieger@sus Dec  7  109/4234  " thread-indent "\"[oss-security] CVE-2015-7519: Phusion Passenger Header overwriting issue\"\n") "<56573AB6.7080506@suse.com>" ("<56573AB6.7080506@suse.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 23559 invoked by uid 550); 19 Jul 2020 08:23:50 -0000
+Received: (qmail 30625 invoked by uid 550); 7 Dec 2015 15:08:24 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,53 +12,129 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 27687 invoked from network); 18 Jul 2020 22:24:37 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1595111066;
-	s=s1; d=keemail.me;
-	h=From:From:To:To:Subject:Subject:Content-Description:Content-ID:Content-Type:Content-Type:Content-Transfer-Encoding:Cc:Date:Date:In-Reply-To:MIME-Version:MIME-Version:Message-ID:Message-ID:Reply-To:References:Sender;
-	bh=XAAgma5saMgFi+U2IH2di2+Pf37VuY+hoJHCJG4w95w=;
-	b=Fac0q3ZgNa/1KGXVWusGVDVe8vIByyHRfI0TO5xiIYvq33CUl/2BZGUX7QBgVvjs
-	W8i3avAH4lEq6/d+Gx7Eu/KZDXJjtJui3DhDUFZy8afHZcvUUBO+LRn7UreJLpy131M
-	vUzFs0USUSZ4EMGi89r67zW+utLZXb4t/DPRXrVRzHWCsXyfU1dezqrkvysgGM6qowv
-	9f/tbOoBiOlS+CsEemjLfZDigbsXTWxaFjUUg/4PGI68WKDqKASw/7g+YTGz4/4HyVv
-	6Yqp4uRq3NgFqZNfBNxVSi80JWV2rsZF8j5CST8m1DCZJSWwEPUsfmKBXSwin8Ley+k
-	llQYWBGTpA==
-Date: Sun, 19 Jul 2020 00:24:26 +0200 (CEST)
-From: ali.of.south@keemail.me
+Received: (qmail 30567 invoked from network); 7 Dec 2015 15:08:17 -0000
+References: <56573AB6.7080506@suse.com>
 To: oss-security@lists.openwall.com
-Message-ID: <MCZ-_KW--3-2@keemail.me>
+From: Andreas Stieger <astieger@suse.com>
+Organization: SUSE Linux GmbH
+X-Forwarded-Message-Id: <56573AB6.7080506@suse.com>
+Message-ID: <5665A0AB.5050904@suse.com>
+Date: Mon, 7 Dec 2015 16:07:23 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.4.0
 MIME-Version: 1.0
-Content-Type: multipart/alternative; 
-	boundary="----=_Part_95967_2109002798.1595111066050"
-Subject: [oss-security] CVE-2018-21036: Sails.js before v1.0.0-46 DoS
+In-Reply-To: <56573AB6.7080506@suse.com>
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature";
+ boundary="cnHioiE15R6i5nCBEE9ckvpPdopDjupdi"
+Subject: [oss-security] CVE-2015-7519: Phusion Passenger Header overwriting issue
 
-------=_Part_95967_2109002798.1595111066050
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+--cnHioiE15R6i5nCBEE9ckvpPdopDjupdi
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Hello,
 
-Sails.js (https://sailsjs.com/) <https://sailsjs.com/> before v1.0.0-46 allows attackers to cause a denial of service with a single request because there is no error handler in sails-hook-sockets to handle an empty pathname in a WebSocket request.
-[Affected Product Code Base]
-Sails.js - < v1.0.0-46
-sails-hook-sockets - < 1.5.5
+Header overwriting issue in Phusion Passenger
+https://www.phusionpassenger.com/ - https://github.com/phusion/passenger
+CRD was 2015-12-07 11:00 UTC / 12:00 CET.
+Upstream developers were informed and agreed, and issued the text below and=
+ the attached patch. Fixed in release 5.0.22.
+Discovered by Moises Deniz, Michael Schr=C3=B6der, Adrian Schr=C3=B6ter of =
+SUSE Linux.
+SUSE bug: https://bugzilla.suse.com/show_bug.cgi?id=3D956281
 
-[Attack Vectors]
-To exploit vulnerability, attacker should make a request with malformed URL to the socket.
+https://github.com/phusion/passenger/commit/ddb8ecc4ebf260e4967f57f271d4f57=
+61abeac3e
 
-[Reproducing]
-1. generate a default sails app.
-2. sails lift
-3. open app in the browser.
-4. open the browser console.
-5. execute this code: io.socket.get('?').
+CVE-2015-7519 was assigned to this issue.
 
-[Reference]
-- https://github.com/balderdashy/sails-hook-sockets/commit/ff02114eaec090ee51db48435cc32d451662606e
-- https://github.com/balderdashy/sails-hook-sockets/commit/0533a4864b1920fd8fbb5287bc0889193c5faf44
-- https://github.com/balderdashy/sails/blob/56f8276f6501a144a03d1f0f28df4ccdb4ad82e2/CHANGELOG.md
+------------ issue -------------
+1. Given the precondition that the SCGI protocol is used (in Passenger
+this means Rack/Rails or Python), and an app depends on a header set by
+a trusted server (here: Apache) that includes a dash, for example:
+Foobar-User: user
 
-Thanks,
-Ali Norouzi
+2. It is possible for an untrusted remote client to set a "colliding"
+header:
+Foobar_User: impersonation
 
-------=_Part_95967_2109002798.1595111066050--
+3. The colliding header appears different to the server (_ instead of -)
+and is thus not overwritten but preserved.
+
+4. Conversion of the headers for SCGI requires dropping the (_ -)
+difference, which results in Passenger sending two headers with the same
+key:
+HTTP_FOOBAR_USER: user
+HTTP_FOOBAR_USER: impersonation
+
+The exploit is then that the value "impersonation" of the second
+HTTP_FOOBAR_USER may overwrite the value of the first (if a hashmap is
+used), making the application believe a different value was set by the
+server.
+
+Indeed, we can make request.headers["HTTP_FOOBAR_USER"] show
+"impersonation" instead of "user", confirming the issue, which can have
+security implications, e.g. if the header is used for authentication.
+
+------------ affected use-cases -------------
+As far as we can see, affected use-cases are:
+- Passenger, with Apache (Nginx already filters) or standalone/builtin,
+using a Ruby or Python app (Node.js/Meteor/io.js don't use SCGI),
+whereby the app depends on a server-set variable containing one or more
+dashes.
+
+------------ resolution -------------
+We propose a different patch; not in the apache module but at the point
+where the SCGI conversion occurs. The main reason is that this covers
+the second affected path: standalone mode using the 'builtin' engine.
+See attached (N.B. the httpToEnv you patched is unreferenced code and
+has now been cleaned up).
+
+The patch has been committed to the (internal) cgi_header_collision
+passenger branch and is pending merge to stable, to be included in the
+upcoming 5.0.22 release (ASAP).
+
+------------ side-effects -------------
+Like the patch in the mod_cgi mailing list, this one still breaks
+applications that depend on non-standard (e.g. underscored) client
+headers. Similarly, the workaround is the same, rewrite the necessary
+header(s):
+SetEnvIfNoCase ^X.Underscored.Header $ ^(.*)$ fix_header=3D$1
+RequestHeader set X-Underscored-Header %{fix_header}e env=3Dfix_header
+
+
+
+--=20
+Andreas Stieger <astieger@suse.com>
+Project Manager Security
+SUSE Linux GmbH, GF: Felix Imend=C3=B6rffer, Jane Smithard, Graham Norton,
+HRB 21284 (AG N=C3=BCrnberg)
+
+
+
+
+
+
+--cnHioiE15R6i5nCBEE9ckvpPdopDjupdi
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIcBAEBCgAGBQJWZaC6AAoJECzWqVXhWUVGYw4P/jP0FfiU5y+6AtmIl77lP+yt
+dPfDjfcOLwBQXoyoJYM+sxZK7LlIFWaSWv8p6ZqHRi1tz4XSJNpVU3IGfjb241fH
+/8AaAXYJOQlykZcHfhr8Iymb5htyLZiLmiGHKJhiG6WDkie5mLLB6aZPWNHeBT4L
+fjdvW/MnjSpuheO4JxY+Ru3f0ExAw31e+iUGtOOlhXS0PG7J360ZqyJkkE8uC64J
+Fx1vL0VzX5Nd3No4KBjMUOuFwl4k1chBKN5dyNNTG7xZ4pVtTO71vDv73OkBl0rM
+SecfKP5KxWyeLBv/F3t3q86QkV9CSDNAXCY2bWXqAk3/RucgX5JJ+wkGI18VqylG
+BUXivq9+2xvThOrFfThHH5+xEsnYnz3qpI5xryXTrSRHP3/rCtDC/sHbi7qFUZ5F
+9FrxIV9M1ABsXVeSt7VLZs3iGt0x1MAMbHrCEccnLTPCJngMbfnqIsQcNr+TTPg5
+nse13D4NfRYhtmBBq+wdyOgrsLSBefhNdgPf42YvpFcdcgMxRFlXf+c4IwWABGB8
+1klkKkE7gzynXKpZLUxvHoZuK/pj8tujV+pDmJst+GflvjvgXWYzLJqEJeBAk+NI
+kYqt6WyN11LXmMoIaYlu/7k0A2mcIxLkfetZ/Q+fOPk8a5Wkhd1auN/4Yz8WtC1B
+4IWEBxB1BXwBxZ4i5czZ
+=JsQI
+-----END PGP SIGNATURE-----
+
+--cnHioiE15R6i5nCBEE9ckvpPdopDjupdi--
