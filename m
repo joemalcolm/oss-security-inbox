@@ -1,4 +1,9 @@
-Received: (qmail 1822 invoked by uid 550); 6 Jul 2023 22:28:20 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1827" "Tuesday" "8" "December" "2015" "13:36:37" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151208183637.6D2F742E0A8@smtpvbsrv1.mitre.org>" "48" "[oss-security] Re: CVE request: Qemu: ui: vnc: avoid floating point exception" nil nil nil "12" "2015120818:36:37" "[oss-security] Re: CVE request: Qemu: ui: vnc: avoid floating point exception" (number mark "U       cve-assign@m Dec  8   48/1827  " thread-indent "\"[oss-security] Re: CVE request: Qemu: ui: vnc: avoid floating point exception\"\n") "<alpine.LFD.2.20.1512081741500.9091@wniryva>" ("<alpine.LFD.2.20.1512081741500.9091@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 11479 invoked by uid 550); 8 Dec 2015 18:36:50 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,130 +12,60 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1804 invoked from network); 6 Jul 2023 22:28:19 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=netmeister.org;
-	s=2023; t=1688682488;
-	bh=+8L9bJZ0n76svXOkDRezkGkYUb+qHkG0NfdXBXO0s2E=;
-	h=From:To:Subject:Content-Type:From:To:Subject;
-	b=IC7GDwoURykAsr14cA+BD1/ybaZGLKbHk1B4/Zqb67WsnrMZ5vINeDjlzKMrdZqyR
-	 VuySq6Ex7nIhqmRQRRjUznZ2dAZpm3WY0QErVwoIAHTvqzBKnCRvA8LcXZ41W/cS5c
-	 PEZfa7vwsJeDm1aT7jIeyirx9bYxlzMLzIv/GqEq7cj3OwFuUMMlHGFg/bYLuU6caN
-	 nUBUra6Ne3eLM8OpWUzv8OjuqYfnjoTwzj4JoOPNBM2dvcRcarDOVIgJnVC0JkzS4S
-	 uZn0BlJVNxiM3HMuSaYDgH11Lne0n5dsnuwwADWEpKyLAdOWEG0v+g5rS2RTTUzdru
-	 nTZsci1LDeLhA==
-Date: Thu, 6 Jul 2023 18:28:07 -0400
-From: Jan Schaumann <jschauma@netmeister.org>
-To: oss-security@lists.openwall.com
-Message-ID: <ZKc/9yBX5LUezfUH@netmeister.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Subject: [oss-security] CVE-2023-28853: mastodon: Blind LDAP injection in login
+Received: (qmail 11455 invoked from network); 8 Dec 2015 18:36:49 -0000
+From: cve-assign@mitre.org
+To: ppandit@redhat.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, lianyihan@360.cn
+In-Reply-To: <alpine.LFD.2.20.1512081741500.9091@wniryva>
+Message-Id: <20151208183637.6D2F742E0A8@smtpvbsrv1.mitre.org>
+Date: Tue,  8 Dec 2015 13:36:37 -0500 (EST)
+Subject: [oss-security] Re: CVE request: Qemu: ui: vnc: avoid floating point exception
 
-(I have no affiliation with the project, but posting
-this here because it seems to me that increasingly
-non-packaged / GitHub distributed projects tend not to
-send out announcements here.)
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-https://github.com/mastodon/mastodon/security/advisories/GHSA-38g9-pfm9-gfqv
+> Qemu emulator built with the VNC display driver support is vulnerable to an
+> arithmetic exception flaw. It occurs on the VNC server side while processing
+> the 'SetPixleFormat' messages from a client.
 
-Summary
-Mastodon allows configuration of LDAP for
-authentication. The LDAP query made during login is
-insecure and the attacker can perform LDAP injection
-attack to leak arbitrary attributes from LDAP
-database.
+We think SetPixleFormat is a typo of SetPixelFormat.
 
+> A privileged remote client could use this flaw to crash the guest resulting in
+> DoS.
 
-CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:N/A:N
+> http://git.qemu.org/?p=qemu.git;a=commit;h=4c65fed8bdf96780735dbdb92a8bd0d6b6526cc3
+> 
+> ui: vnc: avoid floating point exception
+> 
+> While sending 'SetPixelFormat' messages to a VNC server,
+> the client could set the 'red-max', 'green-max' and 'blue-max'
+> values to be zero. This leads to a floating point exception in
+> write_png_palette while doing frame buffer updates.
+> 
+> ui/vnc.c
+> set_pixel_format
 
-Severity: 7.7/10
+Use CVE-2015-8504.
 
-CVE-2023-28853
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Affected versions: >= 2.5.0
-Patched versions:  4.1.3, 4.0.5, 3.5.9
-
-Details
-
-These are the default variables initiated if LDAP is
-configured:
-
-mastodon/config/initializers/devise.rb
-Lines 398 to 414 in 94cbd80
-
- if ENV['LDAP_ENABLED'] == 'true'
-   config.ldap_authentication = true
-   config.check_at_sign       = true
-   config.ldap_host           = ENV.fetch('LDAP_HOST', 'localhost')
-   config.ldap_port           = ENV.fetch('LDAP_PORT', 389).to_i
-   config.ldap_method         = ENV.fetch('LDAP_METHOD', :simple_tls).to_sym
-   config.ldap_base           = ENV.fetch('LDAP_BASE')
-   config.ldap_bind_dn        = ENV.fetch('LDAP_BIND_DN')
-   config.ldap_password       = ENV.fetch('LDAP_PASSWORD')
-   config.ldap_uid            = ENV.fetch('LDAP_UID', 'cn')
-   config.ldap_mail           = ENV.fetch('LDAP_MAIL', 'mail')
-   config.ldap_tls_no_verify  = ENV['LDAP_TLS_NO_VERIFY'] == 'true'
-   config.ldap_search_filter  = ENV.fetch('LDAP_SEARCH_FILTER', '(|(%{uid}=%{email})(%{mail}=%{email}))')
-   config.ldap_uid_conversion_enabled  = ENV['LDAP_UID_CONVERSION_ENABLED'] == 'true'
-   config.ldap_uid_conversion_search   = ENV.fetch('LDAP_UID_CONVERSION_SEARCH', '.,- ')
-   config.ldap_uid_conversion_replace  = ENV.fetch('LDAP_UID_CONVERSION_REPLACE', '_')
- end
-
-
-Then, during the authentication, this line is
-executed:
-
-def authenticate_with_ldap(params = {})
-   ldap   = Net::LDAP.new(ldap_options)
-   filter = format(Devise.ldap_search_filter, uid: Devise.ldap_uid, mail: Devise.ldap_mail, email: params[:email])
-
-   if (user_info = ldap.bind_as(base: Devise.ldap_base, filter: filter, password: params[:password]))
-     ldap_get_user(user_info.first)
-   end
- end
-
-So this query is filled with untrusted input, namely
-user's login:
-
-(|(cn=%{email})(mail=%{email}))
-User can inject LDAP query here. I didn't find a way
-to login as arbitrary user because there are two
-queries - one for fetching the user object and the
-second one for authentication and the injection exists
-in the first one.
-
-However, the attacker can use blind injection
-technique to exfiltrate one bit of information at a
-time.
-
-PoC
-1. Set up Mastodon and LDAP authentication
-2. Create a user admin with any password. The information
-   that we want to leak is the description=LDAP
-   Administrator attribute but it can be any (I'm not yet
-   able to leak password hash but I'm working on it).
-3. Now, as the attacker, create a new account. In my case
-   it's adminmalicious and password test.
-4. Now when we try to log in with the login
-   adminmalicious)(&(cn=admin)(description=A*) and
-   password test. The full query will look like this:
-   (|(cn=adminmalicious)(&(cn=admin)(description=A*))(mail=adminmalicious)(&(cn=admin)(description=A*))).
-   In plain english this query means "If the description
-   of the user admin starts with A, the query will return
-   both admin and adminmalicious". In my example, the
-   admin description does not start with A so only
-   adminmalicious will be returned from the LDAP query
-   and we'll be logged in as adminmalicious.
-5. When we try to log in with
-   adminmalicious)(&(cn=admin)(description=L*), the query
-   will return both admin and adminmalicious but admin
-   will be first and the app will try to login to user
-   admin with the password test which will fail and we
-   will see Invalid E-mail address or password..
-
-Impact
-This way we've leaked one bit of information of other
-user from the database. Of course, this is easy to
-script and leak whole attribute values.
-
+iQIcBAEBCAAGBQJWZyLpAAoJEL54rhJi8gl5uUUP/ArhiKUMu9CInCLLiz8fo9Ou
+ey74+W5oaMoSwgP2PzCS6AbGj+ZK28t/8DbuhXz1FAJVChZlaa0v4yJkiw90B41g
+1y8mI2CjB+vCgYPWF7Aqh8YqwlO3mY7XMflbvzmjKxUkdgYt5zha+dCmQ7P5Vet1
+j+JZQkKZIU6VDnKQiUmvVz6BCtS7khsNYTFjqCs2F3PuUQnBZTKXjTxcO5tAcqcI
+4wlLeB2QgJcZHRYcRkLAyfNpQ9IeJtzgqk5oc7Ms3gfwPzvQAxQYHH829aKPL7M9
+GOe+fQH9ITuOlBohPNthAtNiZUq/A64nRKaZ4KekfR/6Hb2DWOKKMJ0injJflQaa
+h7zF+zwccF9Z2meEg6bKcJyfcL7J6Qb0BOvUpmN0sT2JLKmQJvH4M8svWmBj3FiX
+7Vj/DixcbLdeokQOz42a8ph51sWeghHRPdy1wYh87Kxv51RzaOyjCtMTH7nk7ae4
+jzKJDFcKy0+qEoj95qO9DvhdFFTCAu7A+YB4+KvfGaFospbW/1UeprRpCgVrEzY/
+YTT2d9PnFbns4zXJHK+T5XhxrhxNbsP0FnQPhwAxg1ruroyCJBrAA5Zemah3rNwF
+HayZogYm0nkoEwnGB263CYI87fqOSZ+y4E/dXZVl37zttZ3ixqU764Z/2UAaSRea
+kVSLWiCTRm/Gg+o4PRgK
+=0JpL
+-----END PGP SIGNATURE-----
