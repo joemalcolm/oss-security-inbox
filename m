@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["7012" "Saturday" "19" "September" "2015" "22:28:11" "-0400" "Rich Felker" "dalias@libc.org" "<20150920022811.GJ17773@brightrain.aerifal.cx>" "157" "Re: [oss-security] s/party/hack like it's 1999" nil nil nil "9" "2015092002:28:11" "[oss-security] s/party/hack like it's 1999" (number mark "        dalias@libc. Sep 19  157/7012  " thread-indent "\"Re: [oss-security] s/party/hack like it's 1999\"\n") "<20150919233415.GA31305@openwall.com>" ("<20150917180319.1933609esmj3aaw4@webmail.alunos.dcc.fc.up.pt>" "<CAJWnFaP4QGvJxsJes7fmud787xG=vuh+AFiYPh79kiSLOe-rOA@mail.gmail.com>" "<20150919233415.GA31305@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["662" "Tuesday" "8" "December" "2015" "17:57:28" "+0100" "Dejan Bosanac" "dejan@nighttale.net" "<CAGeh-pF5rGAVCm8BjuqjBv_2zCryLHtTaHvYdDPxGGcfWCooUQ@mail.gmail.com>" "22" "[oss-security] [ANNOUNCE] CVE-2015-5254 - Unsafe deserialization in ActiveMQ" nil nil nil "12" "2015120816:57:28" "[oss-security] [ANNOUNCE] CVE-2015-5254 - Unsafe deserialization in ActiveMQ" (number mark "U       dejan@nightt Dec  8   22/662   " thread-indent "\"[oss-security] [ANNOUNCE] CVE-2015-5254 - Unsafe deserialization in ActiveMQ\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 23830 invoked by uid 550); 20 Sep 2015 02:28:27 -0000
+Received: (qmail 7634 invoked by uid 550); 8 Dec 2015 16:57:46 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,178 +11,52 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 23792 invoked from network); 20 Sep 2015 02:28:26 -0000
-Message-ID: <20150920022811.GJ17773@brightrain.aerifal.cx>
-References: <20150917180319.1933609esmj3aaw4@webmail.alunos.dcc.fc.up.pt>
- <CAJWnFaP4QGvJxsJes7fmud787xG=vuh+AFiYPh79kiSLOe-rOA@mail.gmail.com>
- <20150919233415.GA31305@openwall.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20150919233415.GA31305@openwall.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-Date: Sat, 19 Sep 2015 22:28:11 -0400
-From: Rich Felker <dalias@libc.org>
 Reply-To: oss-security@lists.openwall.com
-Sender: Rich Felker <dalias@aerifal.cx>
-Subject: Re: [oss-security] s/party/hack like it's 1999
-To: oss-security@lists.openwall.com
+Received: (qmail 7590 invoked from network); 8 Dec 2015 16:57:40 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:date:message-id:subject:from:to:content-type;
+        bh=5s+Wl7c7QgTuIMLYe/az0U3rwtn4OUMjQQdqvwHv2MY=;
+        b=LcIskrQwD0l9o+bi/TKt2v7W6fJwed6b1g2xsrep+58kVZC6wtCiDMdoTjSHcKbvbW
+         XkRD5Qu4FCf5fHAv1PnWK2f8cO2Oc4+l2Lk3pezb5inPjAQaeQC45Voe/Dpos4eby4WE
+         CDbftZcod4B3U6cHt8sECoLWYhIzfrFqa0fF2f40IjookWsdlr5hKD7jLDFBFl/mqfsa
+         J4cR7EiOqDglG/0isVjfJRni+tC1sgY5Y6XWGbwb9biW+ghak5A4M/kLX0Z6bAS+KMfg
+         QGuKR8tBzxeSsDHbRwR2cU57/KM2upM5EmFSp7/R/crDFCybNWT19uPSN6AxuqmEsAqm
+         I32Q==
+MIME-Version: 1.0
+X-Received: by 10.202.97.11 with SMTP id v11mr509563oib.12.1449593848546; Tue,
+ 08 Dec 2015 08:57:28 -0800 (PST)
+Sender: chubrilo@gmail.com
+Date: Tue, 8 Dec 2015 17:57:28 +0100
+X-Google-Sender-Auth: hMbrajzadaPr-O4Ynx7I7U_qSW0
+Message-ID: <CAGeh-pF5rGAVCm8BjuqjBv_2zCryLHtTaHvYdDPxGGcfWCooUQ@mail.gmail.com>
+From: Dejan Bosanac <dejan@nighttale.net>
+To: "dev@activemq.apache.org" <dev@activemq.apache.org>, 
+	"users@activemq.apache.org" <users@activemq.apache.org>, 
+	Apache Security Response Team <security@apache.org>, oss-security@lists.openwall.com, 
+	bugtraq@securityfocus.com
+Content-Type: multipart/alternative; boundary=001a113d4724694d60052665de6b
+Subject: [oss-security] [ANNOUNCE] CVE-2015-5254 - Unsafe deserialization in ActiveMQ
 
-On Sun, Sep 20, 2015 at 02:34:15AM +0300, Solar Designer wrote:
-> On Thu, Sep 17, 2015 at 12:33:28PM -0430, Manuel Gomez wrote:
-> > There is absolutely nothing wrong with `head`, `tail`, `more`, `curl`,
-> > `wget` or `diff`.
-> 
-> I agree that Federico's examples show nothing wrong with these tools.
-> 
-> However, out of these tools, I think we should test curl and wget for
-> their handling of metadata such as filenames and HTTP responses when
-> printing them (likely) to the terminal.  Federico's examples do not test
-> this (they explicitly request the remote file's content to be printed,
-> so having it printed verbatim and interpreted by the terminal, if any,
-> is expected behavior).
-> 
-> In processing of metadata, I think such tools that are commonly run on a
-> terminal should prevent character codes in the typical controls ranges
-> (ranges C0 and C1, and DEL character) from being sent to the terminal.
-> 
-> https://en.wikipedia.org/wiki/C0_and_C1_control_codes
-> 
-> What exactly such programs should do is debatable, though.  For example,
-> the ps command from Linux procps prints question marks.  Its detection
-> of control characters is locale and multibyte character aware, which
-> doesn't make me confident: it relies on libc and on locale data, neither
-> of which is directly related to a terminal one is using.  It's also more
+--001a113d4724694d60052665de6b
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-They're supposed to match; if they don't, this is user error. It would
-be nice if we could just assume everything is UTF-8, but doing that
-would actually break one case: where the user has properly configured
-both their locale and terminal for a non-UTF-8 encoding, just assuming
-UTF-8 would happily let C1 characters through. So trusting the locale
-really is the right thing to do here, IMO.
+A security vulnerabilities is reported against Apache ActiveMQ 5.12.1 and
+older versions
 
-> complex (especially including libc and locale data), and hence poses a
-> higher risk of implementation bugs, than a direct check for C0 and C1
-> ranges and DEL would have been.  Maybe this complexity is a price to pay
-> for supporting arbitrary printable UTF-8, which includes codes in the C1
-> range in continuation bytes.
+Please check the following document and see if you=E2=80=99re affected
 
-"The C1 range in continuation bytes" is a complex concept that needs
-to be explained.
+http://activemq.apache.org/security-advisories.data/CVE-2015-5254-announcem=
+ent.txt
 
-Traditionally, the way terminals supported character sets with
-printable characters in the "C1 range" was by having an option
-(separate from character encoding, which the terminal often did not
-even know or care about) to disable processing of C1 characters and
-treat them as printable. This worked, but it was the wrong model, and
-precluded use of C1 in UTF-8.
+Apache ActiveMQ 5.13.0 with appropriate fixes is released and available for
+upgrade. Please take a look at http://activemq.apache.org/objectmessage.html
+and https://issues.apache.org/jira/browse/AMQ-6013 for more details.
 
-The right way for a terminal to behave is to put the byte to character
-conversion step before the escape processing step. In this way,
-character sets like cp1252 or koi8-r that have printable characters in
-the "C1 range" naturally work just fine, because the bytes 80-9F _are
-not C1 character_ but rather bytes which correspond to other
-characters. Likewise, in UTF-8, the bytes 80-9F are not even
-characters at all, but the C1 characters do exist: they're represented
-by sequences C2 80 ... C2 9F, and when you perform the bytes to
-characters step first, you end up with U+0080 ... U+009F, which then
-perform their expected (and dangerous, as we will see) functions.
+Regards
+--
+Dejan Bosanac
+about.me/dejanb
 
-It's easy to play with this on a UTF-8 terminal with the printf
-command, e.g.:
-
-printf '\xc2\x9b1mhello\xc2\x9b0m\n'
-
-to see what happens. At least on GNU screen, the C1 characters are
-processed by default, but can be disabled per-window with the "c1 off"
-command or globally for new windows with "defc1 off". I haven't widely
-tested other terminals, but at least my uuterm also processes UTF-8 C1
-this way.
-
-> Perhaps we can pay a lower code complexity price by checking for a UTF-8
-> locale and then validating the UTF-8 characters explicitly (assuming
-> that if a UTF-8 locale is chosen, the terminal is also set to UTF-8).
-> Maybe we need a generic code snippet or library of this sort?
-
-As long as you're following the locale, mbrtowc+iswprint should
-suffice.
-
-> Then, besides terminal escapes there are UTF-8 control characters: BOM,
-> LRM, RLM (any others?)
-> 
-> https://en.wikipedia.org/wiki/Byte_order_mark
-> https://en.wikipedia.org/wiki/Left-to-right_mark
-> https://en.wikipedia.org/wiki/Right-to-left_mark
-
-I don't think bidi controls are a particularly high risk since most
-terminals I've used fail to support them properly, but this could
-change (or maybe already has changed on some of the more
-desktop-environment-type terminals people use these days). This should
-probably be checked.
-
-> With UTF-8, it might be different how to s/party/hack/ now than in 1999.
-
-Solar and I just discussed this and I believe there's at least one
-interesting attack that's possible even when applications have
-validated that they have printable data. It involves interleaving of
-data from multiple writers. Consider the following example:
-
-Writer 1: "©"
-Writer 2: "Û1m"
-
-As bytes, these are:
-
-Writer 1: C2 A9
-Writer 2: C3 9B 31 6D
-
-One possible interleaving (writes to terminals have _no_ atomicity at
-all) is:
-
-C3 C2 9B 31 6D A9
-
-This of course contails illegal sequences. The standard practice for
-processing the above sequence of bytes is to drop or replace truncated
-or illegal sequences. The exact manner in which this is done varies,
-but since most software tries to minimize data loss in the case of
-dropped or corrupt bytes, the usual interpretation is:
-
-[illegal C3] [valid C2 9B] [valid 31] [valid 6D] [illegal A9]
-
-Regardless of how the illegal sequences are dropped/replaced, then,
-the characters in the middle are:
-
-U+009B U+0031 U+006D
-
-or:
-
-CSI '1' 'm'
-
-If C1 characters are processed, that put your terminal in bold mode.
-
-Note that all that was needed for this to happen was for a stray C2
-byte from one writer to get injected just before the character-final
-9B byte of a multibyte character from another writer. I specifically
-chose my example so that both writers output data which is well-formed
-and printable UTF-8, but that was not necessary.
-
-Since I see no reasonable application-side mitigation for this, I
-think the right recommendation should be disabling C1 control codes in
-terminal emulators, at least in UTF-8 mode, but preferably just across
-the board. AFAIK nothing is using them. They don't even work reliably
-across all terminal emulators; many users have C1 disabled from the
-old days where that was the right way to use certain legacy 8-bit
-encodings, and some UTF-8 terminal emulators probably don't even
-support them at all.
-
-Note that when considering disabling C1 controls in screen or tmux,
-it's important that the attaching terminal also has them disabled.
-Otherwise screen/tmux will treat them as printable and pass them
-through to be interpreted by the attaching terminal, which is
-potentially even more dangerous. It would be nice to see an option in
-screen/tmux not to treat C1 as printable but rather filter out these
-characters, so that users running everything in screen/tmux don't have
-to worry about potentially dangerous settings on the terminal they
-attach from.
-
-Rich
+--001a113d4724694d60052665de6b--
