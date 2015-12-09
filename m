@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1346" "Saturday" "4" "February" "2017" "21:37:33" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<b5c385d79e4a496c93b95cd3e1f543b8@imshyb01.MITRE.ORG>" "33" "[oss-security] Re: podofo: heap-based buffer overflow in PoDoFo::PdfTokenizer::GetNextToken (PdfTokenizer.cpp)" nil nil nil "2" "2017020502:37:33" "[oss-security] Re: podofo: heap-based buffer overflow in PoDoFo::PdfTokenizer::GetNextToken (PdfTokenizer.cpp)" (number mark "U       cve-assign@m Feb  4   33/1346  " thread-indent "\"[oss-security] Re: podofo: heap-based buffer overflow in PoDoFo::PdfTokenizer::GetNextToken (PdfTokenizer.cpp)\"\n") "<1611643.gXHh0u0goj@blackgate>" ("<1611643.gXHh0u0goj@blackgate>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1112" "Wednesday" "9" "December" "2015" "15:31:32" "+0100" "Hannes Frederic Sowa" "hannes@stressinduktion.org" "<56683B44.1070305@stressinduktion.org>" "39" "Re: [oss-security] CVE request - Android kernel - IPv6 connect cause a denial of service" nil nil nil "12" "2015120914:31:32" "[oss-security] CVE request - Android kernel - IPv6 connect cause a denial of service" (number mark "U       hannes@stres Dec  9   39/1112  " thread-indent "\"Re: [oss-security] CVE request - Android kernel - IPv6 connect cause a denial of service\"\n") "<2166DED8C457614D95A6AAC18B144F082B530E@EX02.corp.qihoo.net>" ("<2166DED8C457614D95A6AAC18B144F082B530E@EX02.corp.qihoo.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 24377 invoked by uid 550); 5 Feb 2017 02:37:46 -0000
+Received: (qmail 8035 invoked by uid 550); 9 Dec 2015 14:31:46 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,47 +12,72 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 24351 invoked from network); 5 Feb 2017 02:37:45 -0000
-From: <cve-assign@mitre.org>
-To: <ago@gentoo.org>
-CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
-In-Reply-To: <1611643.gXHh0u0goj@blackgate>
-Message-ID: <b5c385d79e4a496c93b95cd3e1f543b8@imshyb01.MITRE.ORG>
-Date: Sat, 4 Feb 2017 21:37:33 -0500
+Received: (qmail 8010 invoked from network); 9 Dec 2015 14:31:46 -0000
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	stressinduktion.org; h=content-transfer-encoding:content-type
+	:date:from:in-reply-to:message-id:mime-version:references
+	:subject:to:x-sasl-enc:x-sasl-enc; s=mesmtp; bh=pSPLIqmaU07GeaDU
+	aGSgCPI76a8=; b=pYa7jm1Grjdh+JrIVdw9Tfdm38jSc/4RwU3e0z8PoApxu5hJ
+	JQHbIs29kyqIy10Xm/zrnnL1lWSGOshPJlIlDD+Qe7kEN5Zv09KT/w4LGq87512r
+	rv6r4XTcbSIfKhvNU1rxEM1thE1PJ0Um3kEs2jGnyuMqf6jI2Ay4kjqK5mA=
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=content-transfer-encoding:content-type
+	:date:from:in-reply-to:message-id:mime-version:references
+	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=pSPLIqmaU07GeaD
+	UaGSgCPI76a8=; b=ErUBvCwDy4u2HtqXx5glogwEgNfmWxY9EaTSI34HSip31pr
+	zZzVPeuHz1pxv3MZtiy188u3ybb9//cx1eb9lstYafaMB8yiwpUfZR6EJeUy2Agc
+	U6qXqe4xW1KiSBJs+3qLILaVUzmCQ0LLkMwkTIOsiSzzg4RRK/SJOVDJqJcQ=
+X-Sasl-enc: djGZ3yNa1jK2RwLaFhUwbUZpWrkitNkBQZl19nG00jj1 1449671493
+To: oss-security@lists.openwall.com
+References: <2166DED8C457614D95A6AAC18B144F082B530E@EX02.corp.qihoo.net>
+From: Hannes Frederic Sowa <hannes@stressinduktion.org>
+Message-ID: <56683B44.1070305@stressinduktion.org>
+Date: Wed, 9 Dec 2015 15:31:32 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.4.0
 MIME-Version: 1.0
-Content-Type: text/plain
-Subject: [oss-security] Re: podofo: heap-based buffer overflow in PoDoFo::PdfTokenizer::GetNextToken (PdfTokenizer.cpp)
+In-Reply-To: <2166DED8C457614D95A6AAC18B144F082B530E@EX02.corp.qihoo.net>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+Subject: Re: [oss-security] CVE request - Android kernel - IPv6 connect cause
+ a denial of service
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hello,
 
-> https://blogs.gentoo.org/ago/2017/02/03/podofo-heap-based-buffer-overflow-in-podofopdftokenizergetnexttoken-pdftokenizer-cpp
+On 09.12.2015 11:15, 郭永刚 wrote:
 > 
-> AddressSanitizer: heap-buffer-overflow ... WRITE of size 1
-> PoDoFo::PdfTokenizer::GetNextToken
-> podofo-0.9.4/src/base/PdfTokenizer.cpp:319:35
+> Analysis of causes:
+> In the file net/ipv4/af_inet.c , It will cause pc is 0x0  , if the sk->sk_prot->get_port is NULL.
+> static int inet_autobind(struct sock *sk)
+> {
+>          struct inet_sock *inet;
+>          /* We may need to bind the socket. */
+>          lock_sock(sk);
+>          inet = inet_sk(sk);
+>          if (!inet->inet_num) {
+>                    if (sk->sk_prot->get_port(sk, 0)) {
+>                             release_sock(sk);
+>                             return -EAGAIN;
+>                    }
+>                    inet->inet_sport = htons(inet->inet_num);
+>          }
+>          release_sock(sk);
+>          return 0;
+> }
+> 
+> Solution:
+> 
+>          Add check as follow:
+>                   if (sk->sk_prot->get_port &&sk->sk_prot->get_port(sk, 0)) {
+>                             release_sock(sk);
+>                             return -EAGAIN;
+>                    }
+> 
 
-Use CVE-2017-5886.
+Thanks for the report, I will look into that. But I fear your solution
+just papers over the bug and will leave the port in a half initialized
+state.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Bye,
+Hannes
 
-iQIcBAEBCAAGBQJYlo4QAAoJEHb/MwWLVhi2T54P/3G4AZvxhRQ/saMpglz/74oO
-pJJlK/9Jyz2XS6dVOtl9TvZEKeoBDMBRVLSn/pmmd0+4Xc6xJH6jHOFJ7aj3uBYa
-zsezTQ//REBWTqGj4KzVv5rDnWzHgjxQOVXKlgpE7Hjk33Qj0MpBFOMLohhcJvRb
-hQDDVX5ESBPd8QqId3LeH7Shvuwmc2BdzmnmPIKIQhyhX0Bko15cv6HNkMi3Glwm
-iNKyLBYfAG6SqxL79+R6nA1Lwwuiggei1o+D0KCJnbNyseSmN5+3/BwEYV1NCKk+
-gOBVFQzQZCNEDhOjm4jniIvayq7Xz9CcdU2UrNw9zz8Wqbo2zpDnOK45/Bc8A0VK
-6PT8E+4ZIRHCpawKI6ahLa/2R4JX+0cbgVvBAsXi8ag0hv/GaCB07tpwmNixUGpU
-gAGiTdhLkYgaggFxl/Lhy98YJ+nylxda53X+p5oufLKeNDNG++eNoCdK/G4Xe1cs
-DDO2NO+bJgVuS1F3LnUkPKICAOB2oX3uyTvNZYf4HyT1siE5xAexW74aPgzgBBAo
-XHop6F9+UfPXoirsjYYf7eXg11/nsgWOMaQGMhOiTRtmO1vCtnvPivzQQFddOzAo
-dzVyY4vauylo3u3uHvGZ55cdGQlOI3zqCfuxMrTiy/5oeDAUm0gJbY+8JZ8gQa55
-WhzHoLiuILdVj/UH9Uo7
-=Si1S
------END PGP SIGNATURE-----
