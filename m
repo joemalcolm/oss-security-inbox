@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1912" "Saturday" "6" "March" "2021" "10:08:56" "+0100" "Fabian Keil" "freebsd-listen@fabiankeil.de" nil "60" "[oss-security] Re: Multiple DoS issues fixed in Privoxy 3.0.32 stable" nil nil nil "3" nil nil (number mark "U       freebsd-list Mar  6   60/1912  " thread-indent "\"[oss-security] Re: Multiple DoS issues fixed in Privoxy 3.0.32 stable\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Re: Multiple DoS issues fixed in Privoxy 3.0.32 stable" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1082" "Tuesday" "8" "December" "2015" "20:32:03" "-0500" "Wade Mealing" "wmealing@redhat.com" "<273719694.18743924.1449624723028.JavaMail.zimbra@redhat.com>" "35" "[oss-security] CVE request - Linux kernel - Fix handling of stored error in a negatively instantiated user key" nil nil nil "12" "2015120901:32:03" "[oss-security] CVE request - Linux kernel - Fix handling of stored error in a negatively instantiated user key" (number mark "U       wmealing@red Dec  8   35/1082  " thread-indent "\"[oss-security] CVE request - Linux kernel - Fix handling of stored error in a negatively instantiated user key\"\n") "<2042161085.18731932.1449618892880.JavaMail.zimbra@redhat.com>" ("<2042161085.18731932.1449618892880.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 3213 invoked by uid 550); 6 Mar 2021 09:17:26 -0000
+Received: (qmail 7491 invoked by uid 550); 9 Dec 2015 01:32:16 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,76 +12,55 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3180 invoked from network); 6 Mar 2021 09:17:25 -0000
-Date: Sat, 6 Mar 2021 10:08:56 +0100
-From: Fabian Keil <freebsd-listen@fabiankeil.de>
+Received: (qmail 7462 invoked from network); 9 Dec 2015 01:32:15 -0000
+Date: Tue, 8 Dec 2015 20:32:03 -0500 (EST)
+From: Wade Mealing <wmealing@redhat.com>
 To: oss-security@lists.openwall.com
-Message-ID: <20210306100856.1cdc126e@fabiankeil.de>
-In-Reply-To: <20210228102346.65e49420@fabiankeil.de>
-References: <20210228102346.65e49420@fabiankeil.de>
+Cc: cve-assign@mitre.org
+Message-ID: <273719694.18743924.1449624723028.JavaMail.zimbra@redhat.com>
+In-Reply-To: <2042161085.18731932.1449618892880.JavaMail.zimbra@redhat.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="Sig_/e_cSaCmI/yBP_CV2R=bgKf_";
- protocol="application/pgp-signature"; micalg=pgp-sha1
-X-Df-Sender: Nzc1MDY3
-Subject: [oss-security] Re: Multiple DoS issues fixed in Privoxy 3.0.32 stable
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.64.48.128]
+X-Mailer: Zimbra 8.0.6_GA_5922 (ZimbraWebClient - GC46 (Mac)/8.0.6_GA_5922)
+Thread-Topic: CVE request - Linux kernel - Fix handling of stored error in a negatively instantiated user key
+Thread-Index: KcEEdCCRBo4sBuUh0QXaKa4ybKWCew==
+Subject: [oss-security] CVE request - Linux kernel - Fix handling of stored error in a
+ negatively instantiated user key
 
---Sig_/e_cSaCmI/yBP_CV2R=bgKf_
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: quoted-printable
+Gday,
 
-Fabian Keil <freebsd-listen@fabiankeil.de> wrote on 2021-02-28:
+A bug was found by Dmitry Vyukov (of Google engineering) in the Linux
+kernel key management code.
 
-> Privoxy 3.0.32 fixes multiple DoS issues and a couple of other bugs.
-> The issues also affect earlier Privoxy releases.
-[...]
->   - ssplit(): Remove an assertion that could be triggered with a
->     crafted CGI request.
->     Commit 2256d7b4d67. OVE-20210203-0001.
->     Reported by: Joshua Rogers (Opera)
+A malicious user with a local account may be able to escalate privileges
+and take control of local system by abusing the user key subsystem.
 
-CVE-2021-20272.
+>From the patch: 
 
->   - cgi_send_banner(): Overrule invalid image types. Prevents a
->     crash with a crafted CGI request if Privoxy is toggled off.
->     Commit e711c505c48. OVE-20210206-0001.
->     Reported by: Joshua Rogers (Opera)
+--
+If a user key gets negatively instantiated, an error code is cached in the
+payload area.  A negatively instantiated key may be then be positively
+instantiated by updating it with valid data.  However, the ->update key
+type method must be aware that the error code may be there.
+--
 
-CVE-2021-20273.
+The paging address is predictable and mappable as userspace memory and can
+be used by abused by an attacker to escalate privileges.
 
->   - socks5_connect(): Don't try to send credentials when none are
->     configured. Fixes a crash due to a NULL-pointer dereference
->     when the socks server misbehaves.
->     Commit 85817cc55b9. OVE-20210207-0001.
->     Reported by: Joshua Rogers (Opera)
+This is not the same issue as CVE-2015-7872, this issue persists
+after the fix is applied.  I have only seen this affected on the 4.4 
+release candidates.
 
-CVE-2021-20274.
 
->   - chunked_body_is_complete(): Prevent an invalid read of size two.
->     Commit a912ba7bc9c. OVE-20210205-0001.
->     Reported by: Joshua Rogers (Opera)
+Thanks,
 
-CVE-2021-20275.
+Wade Mealing
 
->   - Obsolete pcre: Prevent invalid memory accesses with an invalid
->     pattern passed to pcre_compile(). Note that the obsolete pcre code
->     is scheduled to be removed before the 3.0.33 release. There has been
->     a warning since 2008 already.
->     Commit 28512e5b624. OVE-20210222-0001.
->     Reported by: Joshua Rogers (Opera)
+Upstream fix
+------------
+- https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=096fe9eaea40a17e125569f9e657e34cdb6d73bd
 
-CVE-2021-20276.
-
-Fabian
-
---Sig_/e_cSaCmI/yBP_CV2R=bgKf_
-Content-Type: application/pgp-signature
-Content-Description: OpenPGP digital signature
-
------BEGIN PGP SIGNATURE-----
-
-iF0EARECAB0WIQTKUNd6H/m3+ByGULIFiohV/3dUnQUCYENGqQAKCRAFiohV/3dU
-nYCMAJsF1ifOeDSI3uDsY2bgnZMe86xSIACfaA4IBO+wpXknXlO50LoFBruxDts=
-=uY3i
------END PGP SIGNATURE-----
-
---Sig_/e_cSaCmI/yBP_CV2R=bgKf_--
+Red Hat Bugzilla:
+- https://bugzilla.redhat.com/show_bug.cgi?id=1284450
