@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4808" "Tuesday" "14" "March" "2017" "12:17:53" "-0400" "Stiepan" "stie@itk.swiss" "<9C8Q126sS901vkG8mMxgQPigkx5gBFpDrXBZJqzB9mfVVKvASCmxDOcSAiq9IjkGPjKbAm7r44vrPcqypgDoadrQ2Wuo4wYXFHdQ8amAvwk=@itk.swiss>" "84" "Re: [oss-security] LXC: CVE-2017-5985: lxc-user-nic didn't verify network namespace ownership" "^Cc:" nil nil "3" "2017031416:17:53" "[oss-security] LXC: CVE-2017-5985: lxc-user-nic didn't verify network namespace ownership" (number mark "        stie@itk.swi Mar 14   84/4808  " thread-indent "\"Re: [oss-security] LXC: CVE-2017-5985: lxc-user-nic didn't verify network namespace ownership\"\n") "<831d5907-bf61-70c2-9501-f57923e5ae07@canonical.com>" ("<8919f274-0c56-2c12-649f-2561d6cd59d8@canonical.com>" "<Ya92X4yQVrEDADDRD-xy-FeIBfDkxTwkyuxI1ATPJl5YbwqpJDwGpa-5HQzKiS09u8o1yNNyHK9G-fzxNDU5NqURXqe49zTp4--EQYjHh8g=@itk.swiss>" "<831d5907-bf61-70c2-9501-f57923e5ae07@canonical.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1114" "Wednesday" "9" "December" "2015" "16:12:01" "+0000" "Dominic Cleal" "dominic@cleal.org" "<566852D1.7000504@cleal.org>" "37" "[oss-security] CVE-2015-7518: Foreman stored XSS in parameter information popup" nil nil nil "12" "2015120916:12:01" "[oss-security] CVE-2015-7518: Foreman stored XSS in parameter information popup" (number mark "U       dominic@clea Dec  9   37/1114  " thread-indent "\"[oss-security] CVE-2015-7518: Foreman stored XSS in parameter information popup\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 30030 invoked by uid 550); 14 Mar 2017 16:19:05 -0000
+Received: (qmail 5344 invoked by uid 550); 9 Dec 2015 16:12:28 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,105 +11,55 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 28511 invoked from network); 14 Mar 2017 16:18:09 -0000
-Authentication-Results: mail1.protonmail.ch; dkim=none
-Message-ID: <9C8Q126sS901vkG8mMxgQPigkx5gBFpDrXBZJqzB9mfVVKvASCmxDOcSAiq9IjkGPjKbAm7r44vrPcqypgDoadrQ2Wuo4wYXFHdQ8amAvwk=@itk.swiss>
-In-Reply-To: <831d5907-bf61-70c2-9501-f57923e5ae07@canonical.com>
-References: <8919f274-0c56-2c12-649f-2561d6cd59d8@canonical.com>
- <Ya92X4yQVrEDADDRD-xy-FeIBfDkxTwkyuxI1ATPJl5YbwqpJDwGpa-5HQzKiS09u8o1yNNyHK9G-fzxNDU5NqURXqe49zTp4--EQYjHh8g=@itk.swiss>
- <831d5907-bf61-70c2-9501-f57923e5ae07@canonical.com>
-Feedback-ID: wnsnnc8Us3MVqt1IALGduDJl-d16B_hEkg50pF7qo11mpeysEHmUOGy-yvw8MEApAPX3TXcPDHQwu7hti-kzSw==:Ext:ProtonMail
-MIME-Version: 1.0
-Content-Type: multipart/alternative;
-	boundary="b1_bf4fd54a5c88856c0261bfc83dd6b9de"
-Cc: =?UTF-8?Q?St=C3=A9phane_Graber?= <stgraber@ubuntu.com>, serge.hallyn@ubuntu.com
-Date: Tue, 14 Mar 2017 12:17:53 -0400
-From: Stiepan <stie@itk.swiss>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] LXC: CVE-2017-5985: lxc-user-nic didn't verify network namespace ownership
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>, "857295@bugs.debian.org" <857295@bugs.debian.org>
+Received: (qmail 5249 invoked from network); 9 Dec 2015 16:12:15 -0000
+From: Dominic Cleal <dominic@cleal.org>
+X-Enigmail-Draft-Status: N1110
+To: oss-security@lists.openwall.com
+Cc: foreman-security@googlegroups.com
+Message-ID: <566852D1.7000504@cleal.org>
+Date: Wed, 9 Dec 2015 16:12:01 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.2.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+Subject: [oss-security] CVE-2015-7518: Foreman stored XSS in parameter information popup
 
---b1_bf4fd54a5c88856c0261bfc83dd6b9de
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-WW91IGFyZSB3ZWxjb21lLiBBcyBzdGF0ZWQgaW4gbXkgcmVwbHkgdG8gU2Vy
-Z2UgSC4gSGFsbHluJ3Mgb2ZmLWxpc3QgbWVzc2FnZSwgaW4gdGhlIG1lYW50
-aW1lIEkgaGF2ZSBpbnN0YWxsZWQgdmVyc2lvbiAyLjAuNyBmcm9tIGplc3Np
-ZS1iYWNrcG9ydHMgYW5kIGFtIHVuYWJsZSB0byByZXByb2R1Y2UgdGhlIGlz
-c3VlLCBhcyBJIGNhbm5vdCBzdGFydCB1bnByaXZpbGVnZWQgY29udGFpbmVy
-cyBhbnltb3JlIChkdWUgdG8gYSBuZXR3b3JrIGVycm9yKS4gQWNjb3JkaW5n
-IHRvIERlYmlhbidzIHRyYWNrZXIgcGFnZSBmb3IgbHhjLCB0aGUgdmVyc2lv
-biB0aGF0IEkgaGF2ZSBpbnN0YWxsZWQgZnJvbSBiYWNrcG9ydHMgaXMgMi4w
-LjctMSwgd2hpY2ggZG9lcyBub3QgaW5jbHVkZSBsYXRlc3QgdXBzdHJlYW0g
-Zml4ZXMuIEkgZ3Vlc3MgdGhhdCBJIGhhdmUgdG8gd2FpdCBmb3IgdGhlIDIu
-MC43LTIgcGFja2FnZSAtIHdoaWNoIGluY2x1ZGVzIGxhdGVzdCB1cHN0cmVh
-bSBmaXhlcyAtIHRvIGxhbmQgaW4gamVzc2llLWJhY2twb3J0cyBmb3IgdGhl
-c2UgaXNzdWVzIChib3RoIHNlY3VyaXR5IGFuZCBmdW5jdGlvbmFsKSB0byBi
-ZSBmaXhlZC4KCkNDLWluZyB0aGUgRGViaWFuIGFkZHJlc3MgZm9yIHRoaXMg
-YnVnLCBhcyB0aGV5IGV4cGxpY2l0bHkgYXNrZWQgdG8gZG8gdGhpcyBpbiBj
-YXNlIHRoZXJlIGlzIGEgbmVlZCB0byByZW9wZW4gdGhlIERlYmlhbiBidWcs
-IHdoaWNoIHNlZW1zIHRvIGJlIHRoZSBjYXNlIGhlcmUgKGF0IGxlYXN0LCBm
-b3IgSmVzc2llLCBzaW5jZSB0aGUgaW50ZXJtZWRpYXJ5IDIuMC43LTEgLmRl
-YiBhcHBhcmVudGx5IGJyZWFrcyB1bnByaXZpbGVnZWQgbmV0d29ya2luZywg
-YmVzaWRlcyBub3QgZml4aW5nIHRoZSBzZWN1cml0eSBpc3N1ZSkuClRvIHRo
-ZSBEZWJpYW4gdGVhbSBpbiBjaGFyZ2Ugb2YgdGhpcyBidWc6CkFzIHVucHJp
-dmlsZWdlZCBtb2RlIGlzIG5vdCBhY3RpdmF0ZWQgYnkgZGVmYXVsdCBvbiBE
-ZWJpYW4sIEkgdW5kZXJzdGFuZCB0aGF0IHRoaXMgaXMgbm90IGEgcHJpb3Jp
-dHksIGJ1dCBpdCB3b3VsZCBzdGlsbCBiZSBuaWNlIHRvIGhhdmUgdGhpcyBm
-aXhlZCBxdWlja2x5LgpCeSB0aGUgd2F5LCBub3QgZGlyZWN0bHkgcmVsYXRl
-ZCB0byB0aGlzIHNwZWNpZmljIGJ1ZywgYnV0IEkgaG9wZSB0aGF0IHNuYXBk
-ICsgTFhEIHNvbWVob3cgZmluZHMgaXRzIHdheSBpbnRvIGplc3NpZS1iYWNr
-cG9ydHM6IHRoYXQgd291bGQgYmUgZ3JlYXQhCgpTdGllcGFuCgoKLS0tLS0t
-LS0gT3JpZ2luYWwgTWVzc2FnZSAtLS0tLS0tLQpTdWJqZWN0OiBSZTogW29z
-cy1zZWN1cml0eV0gTFhDOiBDVkUtMjAxNy01OTg1OiBseGMtdXNlci1uaWMg
-ZGlkbid0IHZlcmlmeSBuZXR3b3JrIG5hbWVzcGFjZSBvd25lcnNoaXAKTG9j
-YWwgVGltZTogMTQgTWFyY2ggMjAxNyAyOjA2IEFNClVUQyBUaW1lOiAxNCBN
-YXJjaCAyMDE3IDAxOjA3CkZyb206IHR5aGlja3NAY2Fub25pY2FsLmNvbQpU
-bzogb3NzLXNlY3VyaXR5QGxpc3RzLm9wZW53YWxsLmNvbQpTdMOpcGhhbmUg
-R3JhYmVyIDxzdGdyYWJlckB1YnVudHUuY29tPiwgc2VyZ2UuaGFsbHluQHVi
-dW50dS5jb20KCk9uIDAzLzEwLzIwMTcgMDY6MDMgQU0sIFN0aWVwYW4gd3Jv
-dGU6Cj4gSSBkb24ndCBrbm93IHdoZXRoZXIgdGhhdCBpcyB0aGUgc2FtZSBi
-dWcsIG9yIGEgcmVsYXRlZCBvbmUsIGJ1dCBvbiBEZWJpYW44IHVzaW5nIExY
-QyBmcm9tIGplc3NpZS1iYWNrcG9ydHMsIHNldHRpbmcgdGhlIGRlZmF1bHQg
-cm91dGUgaW4gYSBjb250YWluZXIgYWZmZWN0cyB0aGUgaG9zdCAtIG5hbWVs
-eSwgZnJvbSBhbiB1bnByaXYuIGNvbnRhaW5lciwgc2V0dGluZyB0aGUgcm91
-dGUgc2V0cyB0aGUgaG9zdCdzIHJvdXRlIGFzIHdlbGwuCj4gbHhjLWluZm8g
-LS12ZXJzaW9uIG91dHB1dHMgMi4wLjYgYW5kIG5vIHVwZGF0ZSBpcyBjdXJy
-ZW50bHkgYXZhaWxhYmxlIChvbiBEZWJpYW4pLgoKVGhhbmtzIGZvciB0aGUg
-cmVwb3J0LiBJIGp1c3QgdHJpZWQgdG8gcmVwcm9kdWNlIHRoZSBpc3N1ZSBv
-biBVYnVudHUKMTYuMDQgd2l0aCAyLjAuNy0wdWJ1bnR1MX4xNi4wNC4yLCB3
-aGljaCBpcyB0aGUgcGFja2FnZSBwYXRjaGVkIGZvciB0aGUKaXNzdWUgdGhh
-dCBJIGFubm91bmNlZCBpbiB0aGlzIHRocmVhZC4gSSBjb3VsZG4ndCByZXBy
-b2R1Y2UgaXQuCgpJIHRoZW4gaW5zdGFsbGVkIGFuIG9sZCAyLjAuNiBiYXNl
-ZCBkZWIgKDIuMC42LTB1YnVudHUxfnVidW50dTE2LjA0LjEpCmFuZCBzdGls
-bCBjb3VsZG4ndCByZXByb2R1Y2UgaXQuCgpJJ2Qgc3VnZ2VzdCBvcGVuaW5n
-IGFuIHVwc3RyZWFtIGJ1ZyBoZXJlOgoKaHR0cHM6Ly9naXRodWIuY29tL2x4
-Yy9seGMvaXNzdWVzL25ldwoKKE5vcm1hbGx5LCB0aGV5IHByZWZlciBwcml2
-YXRlIHNlY3VyaXR5IGJ1Z3Mgb24gTGF1bmNocGFkIGJ1dCB5b3VyCnJlcG9y
-dCB0byB0aGlzIGxpc3QgaXMgYWxyZWFkeSBwdWJsaWMgc28gSSBkb24ndCBz
-ZWUgYSBuZWVkLikKClR5bGVyCgo+IFN0aWVwYW4KPgo+Cj4KPiAtLS0tLS0t
-LSBPcmlnaW5hbCBNZXNzYWdlIC0tLS0tLS0tCj4gU3ViamVjdDogW29zcy1z
-ZWN1cml0eV0gTFhDOiBDVkUtMjAxNy01OTg1OiBseGMtdXNlci1uaWMgZGlk
-bid0IHZlcmlmeSBuZXR3b3JrIG5hbWVzcGFjZSBvd25lcnNoaXAKPiBMb2Nh
-bCBUaW1lOiA5IE1hcmNoIDIwMTcgNTo1NCBQTQo+IFVUQyBUaW1lOiA5IE1h
-cmNoIDIwMTcgMTY6NTUKPiBGcm9tOiB0eWhpY2tzQGNhbm9uaWNhbC5jb20K
-PiBUbzogb3NzLXNlY3VyaXR5QGxpc3RzLm9wZW53YWxsLmNvbQo+IFN0w6lw
-aGFuZSBHcmFiZXIgPHN0Z3JhYmVyQHVidW50dS5jb20+Cj4KPiBKYW5uIEhv
-cm4gZGlzY292ZXJlZCB0aGF0IHRoZSBseGMtdXNlci1uaWMgcHJvZ3JhbSBj
-b3VsZCBiZSB0cmlja2VkIGludG8KPiBvcGVyYXRpbmcgb24gYSBuZXR3b3Jr
-IG5hbWVzcGFjZSBvdmVyIHdoaWNoIHRoZSBjYWxsZXIgZGlkIG5vdCBob2xk
-Cj4gcHJpdmlsZWdlLgo+Cj4gVGhlIGJlaGF2aW9yIGRpZG4ndCBmb2xsb3cg
-d2hhdCB3YXMgZG9jdW1lbnRlZCBpbiB0aGUgbHhjLXVzZXItbmljKDEpCj4g
-bWFuIHBhZ2U6Cj4KPiBJdCBlbnN1cmVzIHRoYXQgdGhlIGNhbGxpbmcgdXNl
-ciBpcyBwcml2aWxlZ2VkIG92ZXIgdGhlIG5ldHdvcmsKPiBuYW1lc3BhY2Ug
-dG8gd2hpY2ggdGhlIGludGVyZmFjZSB3aWxsIGJlIGF0dGFjaGVkLgo+Cj4g
-VGhpcyBpc3N1ZSBpcyBDVkUtMjAxNy01OTg1Lgo+Cj4gaHR0cHM6Ly9saXN0
-cy5saW51eGNvbnRhaW5lcnMub3JnL3BpcGVybWFpbC9seGMtdXNlcnMvMjAx
-Ny1NYXJjaC8wMTI5MjUuaHRtbAo+IGh0dHBzOi8vbGF1bmNocGFkLm5ldC9i
-dWdzLzE2NTQ2NzYKPiBodHRwczovL2dpdGh1Yi5jb20vbHhjL2x4Yy9jb21t
-aXQvMTZhZjIzODAzNmE1NDY0YWU4ZjI0MjBlZDNhZjIxNGYwZGU4NzVmOQo+
-Cj4gVHlsZXIKPg==
+CVE-2015-7518: Foreman is affected by a stored XSS vulnerability in
+parameter information popups in the web UI.
 
---b1_bf4fd54a5c88856c0261bfc83dd6b9de--
+Extra information stored on parameters inherited by hosts in Foreman
+is shown in the web UI, in a popup for users.  The user-editable parts
+of this information, such as a description, matcher and source name
+can allow stored HTML/JS to be evaluated when a user opens the
+information popup for a parameter.
 
+Thanks to Tomer Brisker for reporting it to the foreman-security team,
+and for fixing the issue.
+
+Affects: at least Foreman 1.2.0 and higher (all modern versions)
+Fix to be released in Foreman 1.10.0
+
+Patch:
+https://github.com/theforeman/foreman/commit/32468bce938067b1bbde1c20257
+71b5b83ce88ec
+
+More information:
+http://theforeman.org/security.html#2015-7518
+http://projects.theforeman.org/issues/12611
+http://theforeman.org/
+
+- -- 
+Dominic Cleal
+dominic@cleal.org
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iEYEARECAAYFAlZoUsoACgkQfH0ybywrcszGbACgxVFqMU6/fevuwG8zmxLAHGbU
+HzEAn1Rkf4J0rt/GuBGCHC61HX9R+auy
+=SfOR
+-----END PGP SIGNATURE-----
