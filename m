@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["517" "Wednesday" "1" "April" "2020" "07:54:12" "-0500" "Daniel Ruggeri" "druggeri@apache.org" nil "24" nil "^Date:" nil nil "4" nil nil (number mark "U       druggeri@apa Apr  1   24/517   " thread-indent "\"[oss-security] CVE-2020-1934: mod_proxy_ftp use of uninitialized value\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2020-1934: mod_proxy_ftp use of uninitialized value" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1681" "Thursday" "10" "December" "2015" "01:13:24" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151210061324.38C558BC1F7@smtpvmsrv1.mitre.org>" "40" "[oss-security] Re: CVE request: Redmine - Data disclosure in atom feed" nil nil nil "12" "2015121006:13:24" "[oss-security] Re: CVE request: Redmine - Data disclosure in atom feed" (number mark "U       cve-assign@m Dec 10   40/1681  " thread-indent "\"[oss-security] Re: CVE request: Redmine - Data disclosure in atom feed\"\n") "<56673E2E.6080702@vorlons.info>" ("<56673E2E.6080702@vorlons.info>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 1078 invoked by uid 550); 1 Apr 2020 13:31:43 -0000
+Received: (qmail 11676 invoked by uid 550); 10 Dec 2015 06:13:37 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,35 +11,53 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 11265 invoked from network); 1 Apr 2020 12:58:56 -0000
-Message-ID: <1585745652.NZ0EOPOJ@httpd.apache.org>
-Date: Wed, 01 Apr 2020 07:54:12 -0500
-From: Daniel Ruggeri <druggeri@apache.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE-2020-1934: mod_proxy_ftp use of uninitialized value
-To: oss-security@lists.openwall.com
+Received: (qmail 11652 invoked from network); 10 Dec 2015 06:13:36 -0000
+From: cve-assign@mitre.org
+To: matthias@vorlons.info
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <56673E2E.6080702@vorlons.info>
+Message-Id: <20151210061324.38C558BC1F7@smtpvmsrv1.mitre.org>
+Date: Thu, 10 Dec 2015 01:13:24 -0500 (EST)
+Subject: [oss-security] Re: CVE request: Redmine - Data disclosure in atom feed
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-CVE-2020-1934: mod_proxy_ftp use of uninitialized value
+> http://www.redmine.org/projects/redmine/wiki/Changelog_3_1
+> http://www.redmine.org/projects/redmine/wiki/Changelog_3_0
+> http://www.redmine.org/projects/redmine/wiki/Changelog_2_6
+> http://www.redmine.org/news/103
+> http://www.redmine.org/issues/21419 "Information leak in Atom feed"
+> https://github.com/redmine/redmine/commit/7e423fb4538247d59e01958c48b491f196a1de56
+> http://www.redmine.org/projects/redmine/wiki/Security_Advisories
 
-Severity: low
+> app/views/journals/index.builder
+> 
+> - details_to_strings(change.details, false).each do |string|
+> + details_to_strings(change.visible_details, false).each do |string|
 
-Vendor: The Apache Software Foundation
+Use CVE-2015-8537.
 
-Versions Affected:
-httpd 2.4.0-2.4.41
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Description:
-Apache HTTP Server 2.4.0 to 2.4.41
-mod_proxy_ftp may use uninitialized memory when proxying to a malicious
-FTP server.
-    
-Mitigation:
-Don't proxy to untrusted FTP servers prior to applying the fix.
-
-Credit:
-The issue was discovered by Chamal De Silva <chamal.desilva@gmail.com>
-
-References:
-https://httpd.apache.org/security/vulnerabilities_24.html
-
+iQIcBAEBCAAGBQJWaReYAAoJEL54rhJi8gl5K3sP/R/g6WGKgw/6KrtE4QKlZM9g
+aUO09K1JRHSBV+bpkVe85MhvJneYWqpHOujdNmrU02JIifkYYKARMliWXjd2sudD
+btQx3NXB/dbxwf/+RKI5HFoUYrv1BzxbTtuKRab3LrJRrUyJu2IHv397pEPRC34/
+RdJMGbaeNQjQSydAjUV/SV/LaRt6lF0dmkeO4mb6DKIy8YshmkwYw2XeY2wZ4M1I
+K8rrm20KxyT3/JHiq9xsIRbjfYQRJXQoZA5rFL15wl1/m9VSLXEZp+UAQcAAKQqc
+W+0eGq1o9u6iytOhh1k4p5PP9POxcw5XrX+aMFioOppDfMyQ44UXsBbV2rYeKtZY
+K2lk4glgBS9g+4bxYbt8pxGjeovy0RoGySP0JQsYMSisO81fD4Oi8NqQCVbbvygD
+tcMSepJit7S7WzDta561ZfaQ8WdTw7AxUudE258HsgQZXdLA4Wm72jblMlcfaiLu
+ee66OoZFsPPz8xft1fZH9MF/NlK19RPGxspGNrSmYJX6d/JJs7/I/H25BzxGjpSL
+cl5WlqvRdtwravchAl5+DjTB/M131RiiYaIuZakGgdsOk+vZ6FrP5qAPRJd2cnAE
++E6TTuaabHothY52xtLpw0pwf44WjKxnxFuA9GFVJTsM3Mp1vAxUZxDMolVXsCKM
+g0fvBBOtHSFzApUV7fUx
+=nSzw
+-----END PGP SIGNATURE-----
