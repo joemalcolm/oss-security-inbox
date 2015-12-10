@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2271" "Monday" "5" "December" "2016" "08:15:09" "+0100" "Marcus Meissner" "meissner@suse.de" "<20161205071509.GB26169@suse.de>" "51" "[oss-security] CVE Request: zlib security issues found during audit" nil nil nil "12" "2016120507:15:09" "[oss-security] CVE Request: zlib security issues found during audit" (number mark "U       meissner@sus Dec  5   51/2271  " thread-indent "\"[oss-security] CVE Request: zlib security issues found during audit\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["513" "Thursday" "10" "December" "2015" "09:13:38" "+0800" "xiaoqixue_1" "xiaoqixue_1@163.com" "<7e08d39e.3024.15189735e32.Coremail.xiaoqixue_1@163.com>" "9" "[oss-security] CVE request - a out of bound read bug is found in libdwarf" nil nil nil "12" "2015121001:13:38" "[oss-security] CVE request - a out of bound read bug is found in libdwarf" (number mark "U       xiaoqixue_1@ Dec 10    9/513   " thread-indent "\"[oss-security] CVE request - a out of bound read bug is found in libdwarf\"\n") "<245dc37c.114c5.15186364547.Coremail.xiaoqixue_1@163.com>" ("<273719694.18743924.1449624723028.JavaMail.zimbra@redhat.com>" "<245dc37c.114c5.15186364547.Coremail.xiaoqixue_1@163.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 27982 invoked by uid 550); 5 Dec 2016 07:15:21 -0000
+Received: (qmail 3381 invoked by uid 550); 10 Dec 2015 01:13:54 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,70 +12,40 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 27957 invoked from network); 5 Dec 2016 07:15:21 -0000
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Date: Mon, 5 Dec 2016 08:15:09 +0100
-From: Marcus Meissner <meissner@suse.de>
-To: OSS Security List <oss-security@lists.openwall.com>,
-	cve-assign@mitre.org
-Message-ID: <20161205071509.GB26169@suse.de>
+Received: (qmail 3351 invoked from network); 10 Dec 2015 01:13:53 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+	s=s110527; h=Date:From:Subject:MIME-Version:Message-ID; bh=vANgv
+	v5TAYrZWoy19bH6fgH5SqAH/F4dN8ziozWecCw=; b=adTQgYWvndSEZOFdHpxxL
+	rAVc8epVBBON2TnOwC/9q1cfzJo/qC4JQjXelb4O0oxvlq+MAD3s9WqykTfKS0+d
+	QURH0pBvJ/GftF+Pcar7UftP6L/GimsJiDBlPWDp5MJHGSPU/Z4sdQrcfHDthIzH
+	ViLvMcS907jIowyvjgCLjM=
+X-Originating-IP: [166.111.131.12]
+Date: Thu, 10 Dec 2015 09:13:38 +0800 (CST)
+From: xiaoqixue_1  <xiaoqixue_1@163.com>
+To: oss-security@lists.openwall.com
+Cc: cve-assign@mitre.org
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version SP_ntes V3.5 build
+ 20150911(74783.7961) Copyright (c) 2002-2015 www.mailtech.cn 163com
+In-Reply-To: <245dc37c.114c5.15186364547.Coremail.xiaoqixue_1@163.com>
+References: <273719694.18743924.1449624723028.JavaMail.zimbra@redhat.com>
+ <245dc37c.114c5.15186364547.Coremail.xiaoqixue_1@163.com>
+Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset=UTF-8
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Organization: SUSE Linux GmbH, GF: =?iso-8859-1?Q?Felix_?=
- =?iso-8859-1?Q?Imend=F6rffer=2C_Jane_Smithard=2C_Graham_Norton=2C_HRB_212?=
- =?iso-8859-1?Q?84_=28AG_N=FCrnberg=29?=
-User-Agent: Mutt/1.5.24 (2015-08-30)
-Subject: [oss-security] CVE Request: zlib security issues found during audit
+Message-ID: <7e08d39e.3024.15189735e32.Coremail.xiaoqixue_1@163.com>
+X-CM-TRANSID:YcGowAD3_6PD0WhW87QCAA--.8435W
+X-CM-SenderInfo: 50ld015l0xvsqr6rljoofrz/1tbiJRTMvVUL8sBR4QACse
+X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+Subject: [oss-security] CVE request - a out of bound read bug is found in
+ libdwarf
 
-Hi,
-
-Mozilla has asked Trail of Bits / TrustInSoft to audit zlib 
-https://wiki.mozilla.org/MOSS/Secure_Open_Source/Completed#zlib
-
-which had some findings (1 medium, 4 low):
-
-https://wiki.mozilla.org/images/0/09/Zlib-report.pdf
-
-extracting from the referenced document:
-
-https://docs.google.com/document/d/10i1KZS5so8xDqH2rplRa2xet0tyTvvJlLbQQmZIUIKE/edit
-
-zlib SOS Fund Audit Fix Log
-Identified Issues
-
-Finding 1: Incompatible declarations for external linkage function deflate (Medium)
-Fix: https://github.com/madler/zlib/commit/3fb251b363866417122fe54a158a1ac5a7837101
-VERIFIED
-
-
-Finding 2: Accessing a buffer of char via a pointer to unsigned int (Low)
-Mark Adler (zlib): [This] will remain as is. Yes, speed matters a great deal. The comment in
-the report: "In the longer term, platform specific micro-optimizations should be deprecated.
-These optimizations may no longer be necessary: modern compilers are much better at
-optimizing and vectorizing code than they used to be." does not apply. This is not a
-micro-optimization, and unless the compiler has the intelligence and creativity of a good
-mathematician well-versed in discrete mathematics, can detect the application of Galois
-Fields in the code, know somehow to postulate a theorem for an equivalent calculation over
-GF(2) that will, in the end, improve the speed, prove that theorem, and then generate on its
-own the additional tables to apply that theorem, then no, there is no way that a compiler is
-coming up with that one.
-UNRESOLVED:This issue remains under discussion to determine whether there is a way
-which removes the mismatched pointer without affecting performance.
-
-
-Finding 3: Out-of-bounds pointer arithmetic in inftrees.c (Low)
-Fix: https://github.com/madler/zlib/commit/6a043145ca6e9c55184013841a67b2fef87e44c0
-     https://github.com/madler/zlib/commit/9aaec95e82117c1cb0f9624264c3618fc380cecb
-VERIFIED
-
-Finding 4: Undefined left shift of negative number (Low)
-Fix: https://github.com/madler/zlib/commit/e54e1299404101a5a9d0cf5e45512b543967f958
-(This was already fixed on the development branch before being discovered.)
-VERIFIED
-
-Finding 5: Big-endian out-of-bounds pointer (Low)
-Fix: https://github.com/madler/zlib/commit/d1d577490c15a0c6862473d7576352a9f18ef811
-VERIFIED
-
-Ciao, Marcus
+CgpTb3JyeSBmb3IgdGhlIHdyb25nIHRpdGxlIGluIGxhc3QgbWFpbC4KCgoK
+Pgo+YSBvdXQgb2YgYm91bmQgcmVhZCBidWcgaXMgZm91bmQgaW7CoCAgbGF0
+ZXN0IHJlbGVhc2UgdmVyc2lvbiBkd2FyZi0yMDE1MTExNCBieSBYaWFvIFFp
+eHVlIGFuZCBMaXV5dWUuCj7CoGFuZCB3ZSBoYXZlIHRlc3RlZCB0aGUgb3Ro
+ZXIgdmVyc2lvbiBkd2FyZi0yMDE0MDgwNSB3aGljaCBpcyBhbHNvIGFmZmVj
+dGVkLgo+Cj4KPlJlZCBIYXQgQnVnemlsbGE6Cj5odHRwczovL2J1Z3ppbGxh
+LnJlZGhhdC5jb20vc2hvd19idWcuY2dpP2lkPTEyODkzODUKPgo+Cj5VcHN0
+cmVhbSBwYXRjaCBhcHBsaWVkIGluIGxpYmR3YXJmLTIwMTUxMTE0LTIuZmMy
+NCBidWlsZC4KPsKgCj4gCg==
