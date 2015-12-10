@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2003" "Monday" "11" "January" "2021" "22:09:18" "+0100" "Thomas Deutschmann" "whissi@gentoo.org" "<f74590e7-e57b-08cf-aec0-9ebd251ca9ac@gentoo.org>" "55" "Re: [oss-security] Gentoo's \"contributing back\" linux-distros tasks" nil nil nil "1" "2021011121:09:18" "[oss-security] Gentoo's \"contributing back\" linux-distros tasks" (number mark "U       whissi@gento Jan 11   55/2003  " thread-indent "\"Re: [oss-security] Gentoo's \"contributing back\" linux-distros tasks\"\n") "<20210110184458.GA2808@openwall.com>" ("<20201012123020.GA26643@openwall.com>" "<cig3321ri3ihti.fsf@u54e1add816995a33037d.ant.amazon.com>" "<20210110184458.GA2808@openwall.com>") nil nil nil nil nil nil nil "Re: [oss-security] Gentoo's \"contributing back\" linux-distros tasks" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1278" "Thursday" "10" "December" "2015" "01:16:16" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151210061616.87FBA8BC232@smtpvmsrv1.mitre.org>" "33" "[oss-security] Re: CVE request - a out of bound read bug is found in libdwarf" nil nil nil "12" "2015121006:16:16" "[oss-security] Re: CVE request - a out of bound read bug is found in libdwarf" (number mark "U       cve-assign@m Dec 10   33/1278  " thread-indent "\"[oss-security] Re: CVE request - a out of bound read bug is found in libdwarf\"\n") "<7e08d39e.3024.15189735e32.Coremail.xiaoqixue_1@163.com>" ("<7e08d39e.3024.15189735e32.Coremail.xiaoqixue_1@163.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 26591 invoked by uid 550); 11 Jan 2021 22:39:09 -0000
+Received: (qmail 21841 invoked by uid 550); 10 Dec 2015 06:16:28 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,76 +12,45 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32196 invoked from network); 11 Jan 2021 21:09:37 -0000
-To: oss-security@lists.openwall.com
-References: <20201012123020.GA26643@openwall.com>
- <cig3321ri3ihti.fsf@u54e1add816995a33037d.ant.amazon.com>
- <20210110184458.GA2808@openwall.com>
-From: Thomas Deutschmann <whissi@gentoo.org>
-Organization: Gentoo Linux
-Message-ID: <f74590e7-e57b-08cf-aec0-9ebd251ca9ac@gentoo.org>
-Date: Mon, 11 Jan 2021 22:09:18 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.6.0
-MIME-Version: 1.0
-In-Reply-To: <20210110184458.GA2808@openwall.com>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="2cYo8il2K5DauoRPes9UT1E1Mas3wDpOK"
-Subject: Re: [oss-security] Gentoo's "contributing back" linux-distros tasks
+Received: (qmail 21823 invoked from network); 10 Dec 2015 06:16:27 -0000
+From: cve-assign@mitre.org
+To: xiaoqixue_1@163.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <7e08d39e.3024.15189735e32.Coremail.xiaoqixue_1@163.com>
+Message-Id: <20151210061616.87FBA8BC232@smtpvmsrv1.mitre.org>
+Date: Thu, 10 Dec 2015 01:16:16 -0500 (EST)
+Subject: [oss-security] Re: CVE request - a out of bound read bug is found in libdwarf
 
---2cYo8il2K5DauoRPes9UT1E1Mas3wDpOK
-Content-Type: multipart/mixed; boundary="xdVUBY8RhzytIZFQjWk1q77nZ5C7vN6Lx";
- protected-headers="v1"
-From: Thomas Deutschmann <whissi@gentoo.org>
-To: oss-security@lists.openwall.com
-Message-ID: <f74590e7-e57b-08cf-aec0-9ebd251ca9ac@gentoo.org>
-Subject: Re: [oss-security] Gentoo's "contributing back" linux-distros tasks
-References: <20201012123020.GA26643@openwall.com>
- <cig3321ri3ihti.fsf@u54e1add816995a33037d.ant.amazon.com>
- <20210110184458.GA2808@openwall.com>
-In-Reply-To: <20210110184458.GA2808@openwall.com>
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
---xdVUBY8RhzytIZFQjWk1q77nZ5C7vN6Lx
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
+> https://bugzilla.redhat.com/show_bug.cgi?id=1289385
 
-Hi,
+> if an elf file is passed to dwarfdump, a SIGSEGV will occur in libdwarf/dwarf_leb.c
 
-On 2021-01-10 19:44, Solar Designer wrote:
-> Gentoo, please let us all know whether you'd like to stay primary for
-> these tasks, be moved to backup, or something else?
+> The actual problem is this seemingly corrupt abbreviation entry:
 
-I think we will be able to act as backup.
+Use CVE-2015-8538.
 
-We will need to figure out a workflow to ensure we notice when we are on=20
-call but I am sure we will find a way. I'll contact Anthony directly for=20
-the details.
-
-
---=20
-Regards,
-Thomas Deutschmann / Gentoo Security Team
-fpr: C4DD 695F A713 8F24 2AA1 5638 5849 7EE5 1D5D 74A5
-
-
---xdVUBY8RhzytIZFQjWk1q77nZ5C7vN6Lx--
-
---2cYo8il2K5DauoRPes9UT1E1Mas3wDpOK
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature"
-
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-wsB5BAABCAAjFiEEExKRzo+LDXJgXHuURObr3Jv2BVkFAl/8vn4FAwAAAAAACgkQRObr3Jv2BVkn
-qQf/YzgBCFktzp1xx1unMvgFVReMdXSMFCIQUdMSSNq1wdrE5xHXXfrlpKTtt8KVAiIOpTi82ckR
-PV5P+HGpYwKJPDn8s92Z6WVBBR7R+B83BAWenHBPuM9MCNrp0PfSLf/hpYdgnX13rZt8NZ0GXGtX
-RrRgO3UelFTkt82dL5N/AfzQxuPZ1RrPUOUzSOyAMCe+tkjCfwlQ1qStdrNXFL+zZtDMnxIUjTWY
-sxOB2dAmXpNeSgaF22rLlMf/WdMrMdE3os7esjXbdVhUsRYvOJULzX2AR4juQ+h80Mpha7+9zRV1
-Qn2oXXXxUJZ4bF5mxm4oLUQXooC2CYJ/68X/cBr/oA==
-=b8Mz
+iQIcBAEBCAAGBQJWaRhNAAoJEL54rhJi8gl5zsMQAJTvBRQAkohxJslPhvlqAY1X
+FIwHDq7SE92ETTjdzIIx0fYl08B1IeypEDHU9jXFWV82HTKod+B+AKZdSr7AK3/d
+xG/U+3c5ZCqc9eh37H+Qsjnu1+ep5YeP3suCGcVc3y0Rg/7NwYopJf0u8dp97LdN
+P0VEpe9wpW4YXjIzx3kglYEo50T+dCq0ogQu2qbdJ5e/GERyF8r+uVaQt3N3BGOw
+KaR9iG6dHni4pQngQwyTZ1L8u+zZZN3HQYi39QAU4duIizCZ64eO+WZfBT/SZZSR
+2Y9oBE3ofIZzPtmUhkl2AJBnVzbcIeQ5AgpQelygdXhEEf/f3qAeGx3WP3260klp
+JfRIwIaoAsUh26AGBoS4wLDN3eQWtDs0nW/pS7oOkui5SgNezNpHk4GWfwjBN8wN
+9j5oD2QCMI96FN1U7l03rkQqo1tu7kofyIRYbrNNiGrDHS+06Ms7Dk3eZR94+luK
+Kli9QP9D0RWI/B1kGWswtmjzW371arETtcnW8SyfEMxlw6pdRRR3XW9Ju3LYH+lA
+YOU9Y10bRqPDdZlBbQ+MR7tPpGENZ0YunF+M42xkwrThmlThr1yRkQfC6Ycj7z91
+1OZuvF/JkC7wNsgRCxWvkwphNdCzGyZMADP+denGtRRvXS4QbyhNEs/qvf3VPmuV
+vM5pS7axMWA6nnbII5Q3
+=G32C
 -----END PGP SIGNATURE-----
-
---2cYo8il2K5DauoRPes9UT1E1Mas3wDpOK--
