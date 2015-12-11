@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6400" "Tuesday" "8" "November" "2016" "13:07:43" "+0800" "tyrande000@gmail.com" "tyrande000@gmail.com" "<2016110813073850221313@gmail.com>" "111" "[oss-security] CVE-2016-8632 -- Linux kernel: tipc_msg_build() doesn't validate MTU that can trigger heap overflow" nil nil nil "11" "2016110805:07:43" "[oss-security] CVE-2016-8632 -- Linux kernel: tipc_msg_build() doesn't validate MTU that can trigger heap overflow" (number mark "U       tyrande000@g Nov  8  111/6400  " thread-indent "\"[oss-security] CVE-2016-8632 -- Linux kernel: tipc_msg_build() doesn't validate MTU that can trigger heap overflow\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1863" "Friday" "11" "December" "2015" "15:33:31" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151211203331.ECA5B42E177@smtpvbsrv1.mitre.org>" "44" "[oss-security] Re: CVE for git issue - please use CVE-2015-7545" "^Cc:" nil nil "12" "2015121120:33:31" "[oss-security] Re: CVE for git issue - please use CVE-2015-7545" (number mark "        cve-assign@m Dec 11   44/1863  " thread-indent "\"[oss-security] Re: CVE for git issue - please use CVE-2015-7545\"\n") "<DM2PR09MB027022D8FA55B820E2975AF0CCE80@DM2PR09MB0270.namprd09.prod.outlook.com>" ("<DM2PR09MB027022D8FA55B820E2975AF0CCE80@DM2PR09MB0270.namprd09.prod.outlook.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 10159 invoked by uid 550); 8 Nov 2016 11:29:04 -0000
+Received: (qmail 17743 invoked by uid 550); 11 Dec 2015 20:34:35 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,154 +11,57 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 17467 invoked from network); 11 Dec 2015 20:33:45 -0000
+In-Reply-To: <DM2PR09MB027022D8FA55B820E2975AF0CCE80@DM2PR09MB0270.namprd09.prod.outlook.com>
+Message-Id: <20151211203331.ECA5B42E177@smtpvbsrv1.mitre.org>
+Cc: cve-assign@mitre.org
+Date: Fri, 11 Dec 2015 15:33:31 -0500 (EST)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7571 invoked from network); 8 Nov 2016 05:08:00 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:mime-version:message-id;
-        bh=AR359UhEy7rzJ6RJ4UvZP+cYBfv+LLw/6GrGTFScp8Y=;
-        b=vyzGBm+VqYsOenE1VEsr8uZAffZw+W2b0WdXd0ZCXFtmwOJaGFhssxLsPT5guPcR8k
-         ac9zHJzcjqiX/5oSNpEnX/bHPsQA47mr44sbIO6KQ/o3vfYqumwkeWqs6Vx+7o4zYRaU
-         ZU1Iww0jaZ9FuWAWKWKF1Zy8lpjK6hLHnm+sJpvCyG1p+uNRrPqfFEiNsdsgrxwAZNff
-         jYV7F8vQPdS8f5qGCIrlgo1H7YHT6niImR4nERXn8A30eZ7kdDiy8Gen5rBHo2WdJDMD
-         XnKKG+8ryYQme79zrmiquJHAUWOuo+AF34g6b7u61DmqC5gfTnpWDNHC/IUvZb+CplJM
-         hHlQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:cc:subject:mime-version:message-id;
-        bh=AR359UhEy7rzJ6RJ4UvZP+cYBfv+LLw/6GrGTFScp8Y=;
-        b=jNQViWpx24krVEmMFKpjPVLy0qQjjGUkHzbnqZRrm1kh3T0uUVZzRKG6zcFSwLEJkZ
-         Vpt/4Rcn8NzFHAyIf5ttzz/Fm3VbMYDXyYUZThxZoXe+m4N5Rw782T6XDT8v+XMBxPQ1
-         6dzTyi8/InufnTgMp/+KkpQWSvCQJJ6zCP4Cd63k+Tt9GinTO94Sb9EPYXAIY1pwH1o9
-         AIlQtgGsPQrgsGAjCbEW+276kzDBZISia+5YOx8i0PDmYKzUqTcYHfm5Vg2GD++xGLgQ
-         uY5qG1VDOguxZvb7ocd5gQNTYVvDImua3qJfjBRlW/pmyUGbwHjrcNSFJCSjbBVIUeic
-         WCHA==
-X-Gm-Message-State: ABUngveA3eV1Gc8StkUojJwtmj3knFH1lPnvH3gtdq3xTfV03s8qZv8+2F5q35MRokb8WA==
-X-Received: by 10.107.46.227 with SMTP id u96mr12903923iou.58.1478581668233;
-        Mon, 07 Nov 2016 21:07:48 -0800 (PST)
-Date: Tue, 8 Nov 2016 13:07:43 +0800
-From: "tyrande000@gmail.com" <tyrande000@gmail.com>
-To: oss-security <oss-security@lists.openwall.com>
-Cc: secalert <secalert@redhat.com>, 
-	zhangqian-c <zhangqian-c@360.cn>
-X-Priority: 3
-X-GUID: E32CB400-9DBD-4B84-8845-4441F34CB7A3
-X-Has-Attach: no
-X-Mailer: Foxmail 7, 2, 7, 174[cn]
-Mime-Version: 1.0
-Message-ID: <2016110813073850221313@gmail.com>
-Content-Type: multipart/alternative;
-	boundary="----=_001_NextPart383584363527_=----"
-Subject: [oss-security] CVE-2016-8632 -- Linux kernel: tipc_msg_build() doesn't validate MTU that can trigger heap overflow
+Subject: [oss-security] Re: CVE for git issue - please use CVE-2015-7545
+To: oss-security@lists.openwall.com
 
-------=_001_NextPart383584363527_=----
-Content-Type: text/plain;
-	charset="GB2312"
-Content-Transfer-Encoding: base64
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-SGkgYWxsLA0KIA0KUmVjZW50bHkgSSBmb3VuZCBhIGZsYXcgaW4gdGhlIFRJ
-UEMgbmV0d29ya2luZyBzdWJzeXN0ZW0gd2hpY2ggY291bGQgYWxsb3cgZm9y
-IG1lbW9yeSBjb3JydXB0aW9uIGFuZCBwb3NzaWJsZSBwcml2aWxlZ2UgZXNj
-YWxhdGlvbiAoQ1ZFLTIwMTYtODYzMikuDQpJIG1hZGUgdGhpcyBwb3N0IHRv
-IG9zcy1zZWMgZm9yIG91dGxpbmluZyB0aGUgZmxhdyBhbmQgbGV0dGluZyBw
-ZW9wbGUga25vdyB0aGUgQ1ZFLg0KIA0KRmlyc3QgdXBzdHJlYW0gcGF0Y2go
-aXQgaGFzbid0IGJlZW4gcHVzaGVkIHVwc3RyZWFtIHlldCk6DQpodHRwczov
-L3d3dy5tYWlsLWFyY2hpdmUuY29tL25ldGRldkB2Z2VyLmtlcm5lbC5vcmcv
-bXNnMTMzMjA1Lmh0bWwNCiANCiANClZVTE5FUkFCSUxJVFkNCi0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tDQpSZWNlbnRseSBpIHRvb2sgYSBnbGFuY2UgZm9y
-IGZ1bmN0aW9uIHRpcGNfbXNnX2J1aWxkKCkgYXQgbmV0L3RpcGMvbXNnLmM6
-MjQ0IG9uIGxpbnV4IGtlcm5lbCA0LjguMS4NCkl0IHNlZW1zIGxpa2UgdGlw
-Y19tc2dfYnVpbGQoKSBkb2Vzbid0IHZhbGlkYXRlIHRoZSBwYXJhbWV0ZXIg
-cGt0bWF4KE1UVSkgcGFzc2VkIGZyb20gdGlwY19zZW5kbWNhc3QoKSwgYW5k
-IGlmIEkgY291bGQgY2hhbmdlIHRoaXMgdmFsdWUgbG93ZXIgdGhhbiAoSU5U
-X0hfU0laRSArIG1oc3opLCBJdCBtYXliZSBjYW4gdHJpZ2dlciBoZWFwIG92
-ZXJmbG93IGluIHNrYi0+ZGF0YS4NCiANCnN0YXRpYyBpbnQgdGlwY19zZW5k
-bWNhc3Qoc3RydWN0ICBzb2NrZXQgKnNvY2ssIHN0cnVjdCB0aXBjX25hbWVf
-c2VxICpzZXEsDQogICAgICAgICAgICAgICAgICBzdHJ1Y3QgbXNnaGRyICpt
-c2csIHNpemVfdCBkc3osIGxvbmcgdGltZW8pIA0Kew0KICAgICAgICAgLiAu
-IC4NCiANCm5ld19tdHU6DQogICAgICAgICBtdHUgPSB0aXBjX2JjYXN0X2dl
-dF9tdHUobmV0KTsNCiAgICAgICAgIHJjID0gdGlwY19tc2dfYnVpbGQobWhk
-ciwgbXNnLCAwLCBkc3osIG10dSwgJnBrdGNoYWluKTsNCiANCiAgICAgICAg
-IC4gLiAuDQp9DQogDQppbnQgdGlwY19tc2dfYnVpbGQoc3RydWN0IHRpcGNf
-bXNnICptaGRyLCBzdHJ1Y3QgbXNnaGRyICptLA0KICAgICAgICAgICAgICAg
-ICAgICAgIGludCBvZmZzZXQsIGludCBkc3osIGludCBwa3RtYXgsIHN0cnVj
-dCBza19idWZmX2hlYWQgKmxpc3QpDQp7DQogICAgICAgICBpbnQgbWhzeiA9
-IG1zZ19oZHJfc3oobWhkcik7DQogICAgICAgICBpbnQgbXN6ID0gbWhzeiAr
-IGRzejsNCiAgICAgICAgIGludCBwa3RubyA9IDE7DQogICAgICAgICBpbnQg
-cGt0c3o7DQogICAgICAgICBpbnQgcGt0cmVtID0gcGt0bWF4Ow0KICAgICAg
-ICAgaW50IGRyZW0gPSBkc3o7DQogICAgICAgICBzdHJ1Y3QgdGlwY19tc2cg
-cGt0aGRyOw0KICAgICAgICAgc3RydWN0IHNrX2J1ZmYgKnNrYjsNCiAgICAg
-ICAgIGNoYXIgKnBrdHBvczsNCiAgICAgICAgIGludCByYzsNCiANCiAgICAg
-ICAgIG1zZ19zZXRfc2l6ZShtaGRyLCBtc3opOw0KIA0KICAgICAgICAgLiAu
-IC4NCiANCiAgICAgICAgIC8qIFByZXBhcmUgZmlyc3QgZnJhZ21lbnQgKi8N
-CiAgICAgICAgIHNrYiA9IHRpcGNfYnVmX2FjcXVpcmUocGt0bWF4KTsNCiAg
-ICAgICAgIGlmICghc2tiKQ0KICAgICAgICAgICAgICAgICAgIHJldHVybiAt
-RU5PTUVNOw0KICAgICAgICAgc2tiX29ycGhhbihza2IpOw0KICAgICAgICAg
-X19za2JfcXVldWVfdGFpbChsaXN0LCBza2IpOw0KICAgICAgICAgcGt0cG9z
-ID0gc2tiLT5kYXRhOw0KICAgICAgICAgc2tiX2NvcHlfdG9fbGluZWFyX2Rh
-dGEoc2tiLCAmcGt0aGRyLCBJTlRfSF9TSVpFKTsNCiAgICAgICAgIHBrdHBv
-cyArPSBJTlRfSF9TSVpFOw0KICAgICAgICAgcGt0cmVtIC09IElOVF9IX1NJ
-WkU7DQogICAgICAgICBza2JfY29weV90b19saW5lYXJfZGF0YV9vZmZzZXQo
-c2tiLCBJTlRfSF9TSVpFLCBtaGRyLCBtaHN6KTsNCiAgICAgICAgIHBrdHBv
-cyArPSBtaHN6Ow0KICAgICAgICAgcGt0cmVtIC09IG1oc3o7DQogDQogICAg
-ICAgICAuIC4gLg0KfQ0KIA0KVGhlIE1UVSB2YWx1ZSBjYW4gb2J0YWluZWQg
-ZnJvbSB0aXBjX2JjYXN0X2dldF9tdHUoKSwgYW5kIHRoaXMgdmFsdWUgY2Fu
-IGJlIHNldHRsZWQgYnkgdGlwY19saW5rX3NldF9tdHUoKSwgSSBzZWFyY2gg
-YXJvdW5kIHdpdGhpbmcgdGhlIHNvdXJjZSBjb2RlIG9mIDQuOC4xLCBmb3Vu
-ZGVkIHRoYXQgb25seSB0aXBjX2JjYmFzZV9zZWxlY3RfcHJpbWFyeSgpIGlu
-dm9rZXMgdGlwY19saW5rX3NldF9tdHUoKS4NCiANCnN0YXRpYyB2b2lkIHRp
-cGNfYmNiYXNlX3NlbGVjdF9wcmltYXJ5KHN0cnVjdCBuZXQgKm5ldCkNCnsN
-CiAgICAgICAgIC4gLiAuDQogDQogICAgICAgICBmb3IgKGkgPSAwOyBpIDwg
-TUFYX0JFQVJFUlM7IGkrKykgew0KICAgICAgICAgICAgICAgICAgIGlmICgh
-YmItPmRlc3RzW2ldKQ0KICAgICAgICAgICAgICAgICAgICAgICAgICAgIGNv
-bnRpbnVlOw0KIA0KICAgICAgICAgICAgICAgICAgIG10dSA9IHRpcGNfYmVh
-cmVyX210dShuZXQsIGkpOw0KICAgICAgICAgICAgICAgICAgIGlmIChtdHUg
-PCB0aXBjX2xpbmtfbXR1KGJiLT5saW5rKSkNCiAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICB0aXBjX2xpbmtfc2V0X210dShiYi0+bGluaywgbXR1KTsN
-CiANCiAgICAgICAgICAgICAgICAgICAuIC4gLg0KICAgICAgICAgfQ0KfQ0K
-IA0KaW50IHRpcGNfYmVhcmVyX210dShzdHJ1Y3QgbmV0ICpuZXQsIHUzMiBi
-ZWFyZXJfaWQpDQp7DQogICAgICAgICBpbnQgbXR1ID0gMDsNCiAgICAgICAg
-IHN0cnVjdCB0aXBjX2JlYXJlciAqYjsNCiANCiAgICAgICAgIHJjdV9yZWFk
-X2xvY2soKTsNCiAgICAgICAgIGIgPSByY3VfZGVyZWZlcmVuY2VfcnRubCh0
-aXBjX25ldChuZXQpLT5iZWFyZXJfbGlzdFtiZWFyZXJfaWRdKTsNCiAgICAg
-ICAgIGlmIChiKQ0KICAgICAgICAgICAgICAgICAgIG10dSA9IGItPm10dTsN
-CiAgICAgICAgIHJjdV9yZWFkX3VubG9jaygpOw0KICAgICAgICAgcmV0dXJu
-IG10dTsNCn0NCiANCk9idmlvdXNseSB0aXBjX2JlYXJlcl9tdHUoKSByZXR1
-cm4gTVRVIHZhbHVlIGJ5IG9iamVjdCB0aXBjX2JlYXJlciB3aGljaCBkaXJl
-Y3RseSBpbmhlcml0ZWQgZnJvbSBuZXQgZGV2aWNlIE1UVS4oZXRoMCBNVFUg
-b24gbXkgc2l0dWF0aW9uKQ0KIA0KIA0KSU5GTw0KLS0tLS0tLQ0KUmVkIEhh
-dCBQcm9kdWN0IFNlY3VyaXR5IGhhcyBhc3NpZ25lZCBDVkUtMjAxNi04NjMy
-IHRvIHRoaXMgdnVsbmVyYWJpbGl0eS4NClRoaXMgaXNzdWUgbWF5IGNhdXNl
-IG1lbW9yeSBjb3JydXB0aW9uIGFuZCBldmVuIGVzY2FsYXRlIHByaXZpbGVn
-ZSBpZiB3ZSBsYXlvdXQgdGhlIGFwcHJvcHJpYXRlIGhlYXAgc3BhY2UgYnkg
-YW55IHVzZXIgd2l0aCBDQVBfTkVUX0FETUlOLg0KIA0KIA0KQUZGRUNURUQg
-VkVSU0lPTg0KLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0NCkkgdXNlIGtlcm5l
-bCA0LjYuMiB4ODZfNjQgdG8gcmVwcm9kdWNlIHRoZSBpc3N1ZSwgYnV0IGl0
-IGFsc28gc2VlbXMgbGlrZSB2dWxuZXJhYmxlIGluIHRoZSBsYXRlc3Qga2Vy
-bmVsIHZlcnNpb24oNC45LXJjNCkuDQoNCg0KU09MVVRJT04NCi0tLS0tLS0t
-LS0tLS0tLQ0KRmlyc3QgdXBzdHJlYW0gcGF0Y2g6DQpodHRwczovL3d3dy5t
-YWlsLWFyY2hpdmUuY29tL25ldGRldkB2Z2VyLmtlcm5lbC5vcmcvbXNnMTMz
-MjA1Lmh0bWwNCiANCiANCkNSRURJVFMNCi0tLS0tLS0tLS0tLQ0KVGhpcyB2
-dWxuZXJhYmlsaXR5IHdhcyBmb3VuZCBieSBRaWFuIFpoYW5nIGZyb20gTWFy
-dmVsVGVhbSBRaWhvbyAzNjAuDQogDQogDQpPbiBNb24sIE5vdiA3LCAyMDE2
-IGF0IDk6MjkgQU0sIFJlZCBIYXQgUHJvZHVjdCBTZWN1cml0eSA8c2VjYWxl
-cnRAcmVkaGF0LmNvbT4gd3JvdGU6DQogDQo+R2RheSwNCiANCj5JJ3ZlIGFz
-a2VkIG91ciB0ZWFtIHRvIGFzc2lnbiB5b3Ugb25lIGZyb20gdGhlIGludGVy
-bmFsIHBvb2wuIFBsZWFzZSwgdXNlIENWRS0yMDE2LTg2MzIuDQo+VGhlIG5l
-eHQgc3RlcCBpcyB1c3VhbGx5IG1ha2luZyBhIHBvc3QgZXhwbGFpbmluZyB0
-aGlzIGlzc3VlIHRvIE9TUy1zZWMgbGlzdC4gQmVuICh1cHN0cmVhbSkgbWVu
-dGlvbnMgdGhhdCB0aGlzIHBhdGNoIGlzIGFscmVhZHkgcHVibGljICggaHR0
-cHM6Ly93d3cubWFpbC1hcmNoaXZlLmNvbS9uZXRkZXZAdmdlci5rZXJuZWwu
-b3JnL21zZzEzMzIwNS5odG1sICkgSSB3YXMgcGxhbm5pbmcgdG8gdW5lbWJh
-cmdvIHRoaXMgZmxhdy4NCiANCj5UaGUgbmV4dCBzdGVwIGFzIHdlIGRpc2N1
-c3NlZCB3b3VsZCBiZSBmb3IgeW91IHRvIG1ha2UgYSBwb3N0IHRvIG9zcy1z
-ZWMgb3V0bGluaW5nIHRoZSBmbGF3IGFuZCBsZXR0aW5nIHBlb3BsZSBrbm93
-IHRoZSBDVkUuIFBsZWFzZSBtYWtlIHRoZSBwb3N0IHRvIG9zcy1zZWMgZXhw
-bGFpbmluZyB0aGUgZmxhdyBhbmQgcmVmZXJlbmNpbmcgdGhlIGZpcnN0IHVw
-c3RyZWFtIHBhdGNoLg0KPmh0dHBzOi8vd3d3Lm1haWwtYXJjaGl2ZS5jb20v
-bmV0ZGV2QHZnZXIua2VybmVsLm9yZy9tc2cxMzMyMDUuaHRtbA0KIA0KPlRo
-YW5rcywgbGV0IG1lIGtub3cgaWYgSSBjYW4gaGVscC4NCiANCj5XYWRlIE1l
-YWxpbmcNCiANCg==
+> MITRE has been actively working with the upstream vendor to determine the
+> appropriate number of CVEs for the vulnerabilities.
 
-------=_001_NextPart383584363527_=------
+This was completed today.
 
+
+>> CVE-2015-7545 Git: Some protocols (like git-remote-ext) can execute
+>> arbitrary code found in the URL
+
+MITRE has accepted this CVE-2015-7545 ID for this vulnerability
+disclosed by the upstream vendor in these references:
+
+  https://kernel.googlesource.com/pub/scm/git/git/+/33cfccbbf35a56e190b79bdec5c85457c952a021
+  https://lkml.org/lkml/2015/10/5/683
+  https://github.com/git/git/blob/master/Documentation/RelNotes/2.3.10.txt
+  https://github.com/git/git/blob/master/Documentation/RelNotes/2.4.10.txt
+  https://github.com/git/git/blob/master/Documentation/RelNotes/2.5.4.txt
+  https://github.com/git/git/blob/master/Documentation/RelNotes/2.6.1.txt
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJWazJoAAoJEL54rhJi8gl5plgP/jFffZBtqZbaDBbKk4b8a+tH
+Jo+eBQtn/rj8SHrGGos3Or548rGNAjtm7cYZ/fYZOOQiJReUnkIzBHdBmUMqqFZy
+2r55+Mok7o7vpVYAvxqooZ8ay3RlHOmuixhw8ZwKTwITKVu7OWsCE2qpaXCB7QzV
+lpSh+t0xn9o6Jc+kF/eVP/J4R0X8qX6EU/JtAHHDhl1CEORujH/0bb4pAie/kJ3h
+vlCxn51UwQwd9q3mVrxTjFziEZOG/9UV7XowdSS1bQxt0BhTkQH42DnHDrBZCQHc
+3vP9pN/23khsRQ3swUmcWD3Z7fmazqG3Q5UIPPQhrTmeYrzbryCBUAgrzWnmVbzN
++OHYQWYv+JwVO/u9b3h5MFwqx0bdWcNAX2/3Bbrw8POx8c2d4+QPwX+BgQ+RfeEX
+z6nrfiMCj+C8vwClHzX46ipw9WiCTb+aSj22fOFPESbz+STC1QCNuO3qu4QYsuvO
+8nchEB4LBtZ8FJBZtTTd0UMp4j/ojfXA/vm9qP+G/fwzaAzBtK9ncr9BHh+kEqQt
+iaUCHm7C10vKZ95q9s5cRz9AiCbmJK93aij1YYZxquHITP3HJUSK4L2gyHdc0jXO
+yqK4CHxWavslXfksnlEeRviaqNy52W429QJ/HYE6i83IQxE6tLGN7gHk5BF1LaK2
+wtl1kFSYHF16UWCGzns7
+=ESLW
+-----END PGP SIGNATURE-----
