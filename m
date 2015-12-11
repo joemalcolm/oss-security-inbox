@@ -1,4 +1,9 @@
-Received: (qmail 32164 invoked by uid 550); 27 Jan 2026 17:19:43 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1034" "Friday" "11" "December" "2015" "18:47:35" "+0100" "Hannes Frederic Sowa" "hannes@stressinduktion.org" "<566B0C37.9020603@stressinduktion.org>" "35" "Re: [oss-security] Re: CVE request - Android kernel - IPv6 connect cause a denial of service" nil nil nil "12" "2015121117:47:35" "[oss-security] Re: CVE request - Android kernel - IPv6 connect cause a denial of service" (number mark "U       hannes@stres Dec 11   35/1034  " thread-indent "\"Re: [oss-security] Re: CVE request - Android kernel - IPv6 connect cause a denial of service\"\n") "<20151211164118.344948BC165@smtpvmsrv1.mitre.org>" ("<20151211164118.344948BC165@smtpvmsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 11513 invoked by uid 550); 11 Dec 2015 17:47:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,110 +12,69 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 13895 invoked from network); 27 Jan 2026 16:44:26 -0000
-From: Sam James <sam@gentoo.org>
-To: oss-security@lists.openwall.com
-Organization: Gentoo
-User-Agent: mu4e 1.12.15; emacs 31.0.50
-Date: Tue, 27 Jan 2026 16:44:11 +0000
-Message-ID: <87343rqa3o.fsf@gentoo.org>
+Received: (qmail 11490 invoked from network); 11 Dec 2015 17:47:53 -0000
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	stressinduktion.org; h=cc:content-transfer-encoding:content-type
+	:date:from:in-reply-to:message-id:mime-version:references
+	:subject:to:x-sasl-enc:x-sasl-enc; s=mesmtp; bh=mP8eS2EVcGn8CIqw
+	lIaMsWL/9xM=; b=Ky0AfD2/779SsqHSws5NT9QF0QFs6GnpykvjXZzX3bCXYuaH
+	KLrtufTZZD7igQd7rYQ3o2A3YoQaE0guRrCxz/oX4m1inGYFhIU+bON7lchqoBYm
+	oA5+iRwaDgJpip3P0ADuYVUNGl+4ghteQ5LzkbdD/3eYnsgsmMcyHc3iMyQ=
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:date:from:in-reply-to:message-id:mime-version:references
+	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=mP8eS2EVcGn8CIq
+	wlIaMsWL/9xM=; b=beafv9qMi8tb2az0M5XemeB2LvRlWdjK6LAHd3my4dB0Uk1
+	lWUTlIASqCBlFGbBqwsx2JP/pJUa201W/W5H4uSrDng8R0qnNs556JgKOT3YGcgF
+	1Iyh8pnjLKbrVZ/8tSTmadLyRoEGrv3diWUJZInZY12HO2kP8V3GCCBHEumc=
+X-Sasl-enc: L3QTGuIFjytb6vn0mb1VwqT5WSywCdWUWruB+JIM423X 1449856057
+To: oss-security@lists.openwall.com, guoyonggang@360.cn
+References: <20151211164118.344948BC165@smtpvmsrv1.mitre.org>
+Cc: cve-assign@mitre.org
+From: Hannes Frederic Sowa <hannes@stressinduktion.org>
+Message-ID: <566B0C37.9020603@stressinduktion.org>
+Date: Fri, 11 Dec 2015 18:47:35 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.4.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
-	micalg=pgp-sha512; protocol="application/pgp-signature"
-Subject: [oss-security] GnuPG security release
-
---=-=-=
+In-Reply-To: <20151211164118.344948BC165@smtpvmsrv1.mitre.org>
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 7bit
+Subject: Re: [oss-security] Re: CVE request - Android kernel - IPv6 connect
+ cause a denial of service
 
-GnuPG 2.5.17 has been released to fix a possible RCE:
-* https://dev.gnupg.org/T8044 ("gpg-agent stack buffer overflow in pkdecryp=
-t using KEM")
+Hello,
 
-[Description for this one at the end, for the full quoted advisory.]
+On 11.12.2015 17:41, cve-assign@mitre.org wrote:
+>> net/ipv4/af_inet.c
+>> inet_autobind
+> 
+>> if (sk->sk_prot->get_port(sk, 0)) {
+> 
+>>> if the sk->sk_prot->get_port is NULL
+> 
+>>> [ an unanticipated condition ]
+> 
+>>> Solution:
+>>> if (sk->sk_prot->get_port &&sk->sk_prot->get_port(sk, 0)) {
+> 
+>>>> From: Hannes Frederic Sowa <hannes@stressinduktion.org>
+>>>> Date: Wed, 9 Dec 2015 15:31:32 +0100
+> 
+>>>> I fear your solution
+>>>> just papers over the bug and will leave the port in a half initialized
+>>>> state.
+> 
+> Use CVE-2015-8543 for the originally identified bug. We realize that,
+> for example,
+> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/log/net/ipv4/af_inet.c
+> has not yet been changed. If Linux kernel developers determine that
+> multiple independent bugs result in situations where
+> sk->sk_prot->get_port is NULL above, then it is possible that
+> additional CVE IDs will be assigned later.
 
-There's two other security-relevant bugs too:
-* https://dev.gnupg.org/T8045 ("Stack-based buffer overflow in TPM2 `PKDECR=
-YPT`")
+I have a fix in my queue and push it to stable, soon. Thanks again for
+this report!
 
-> A stack-based buffer overflow exists in GnuPG=E2=80=99s tpm2daemon when h=
-andling
-> the PKDECRYPT command for TPM-backed RSA and ECC keys. A local attacker
-> who can access the daemon=E2=80=99s Assuan socket can send an oversized c=
-iphertext
-> and trigger memory corruption, resulting in a crash and potentially
-> arbitrary code execution. When a user stores private keys inside a TPM,
-> GnuPG runs a helper process called tpm2daemon to perform cryptographic
-> operations on their behalf. Other GnuPG components communicate with this
-> daemon over Assuan, a local IPC protocol. During a PKDECRYPT request,
-> tpm2daemon copies the attacker-supplied ciphertext into fixed-size TPM
-> work buffers without validating that the ciphertext fits. If the supplied
-> ciphertext is larger than the TPM buffer, the copy operation writes past
-> the end of the stack buffer and corrupts adjacent stack memory. This
-> affects both supported TPM decrypt paths: RSA (tpm2_rsa_decrypt) and ECC
-> (tpm2_ecc_decrypt). Because the overflow occurs on the stack and is
-> attacker-controlled, it is potentially exploitable for code execution
-> inside the tpm2daemon process.
-
-* https://dev.gnupg.org/T8049 ("Null pointer dereference with overlong
-signature packet")
-
-> Overlong signature packet length causes parse_signature to return
-> success with sig->data[] left NULL, leading to a crash in later
-> consumers.
-
-The advisory is at https://dev.gnupg.org/T7996#212268 (not yet on
-gnupg-announce ML). Quoting that, which discusses the main bug (T8044):
-
-> These versions are affected:
->
->    GnuPG 2.5.16 (released 2025-12-30)
->    GnuPG 2.5.15 (released 2025-12-29)
->    GnuPG 2.5.14 (released 2025-11-19)
->    GnuPG 2.5.13 (released 2025-10-22)
->    Gpg4win 5.0.0 (released 2026-01-14)
->    Gpg4win 5.0.0-beta479 (released 2026-01-02)
->    Gpg4win 5.0.0-beta476 (released 2025-12-22)
->    Gpg4win 5.0.0-beta395 (released 2025-10-22)
->
-> All other versions are not affected.
->
-> A crafted CMS (S/MIME) EnvelopedData message carrying an oversized
-> wrapped session key can cause a stack buffer overflow in gpg-agent
-> during the PKDECRYPT--kem=3DCMS handling. This can easily be used for a
-> DoS but, worse, the memory corruption can very likley also be used to
-> mount a remote code execution attack.
->
-> A CVE-id has not been assigned. We track this bug as T8044 under
-> https://dev.gnupg.org/T8044. This vulnerability was discovered by:
-> OpenAI Security Research. Their report was received on 2026-01-18;
-> fixed versions released 2026-01-27.
->
-> Solution:
->
-> If an affected GnuPG version is used please update ASAP to the new
-> version 2.5.17.
->
-> If an affected version of Gpg4win is used please update ASAP to the new
-> version 5.0.1.
->
-> If an immediate update is not possible please remove the gpgsm or
-> gpgsm.exe binary, this way the the bug can't be remotely triggered.
-
-sam
-
---=-=-=
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEBBAEWCgCpFiEEJaa7iN2bdkxrVUHCc4QJ9SDfkZAFAml461sbFIAAAAAABAAO
-bWFudTIsMi41KzEuMTEsMiwyXxSAAAAAAC4AKGlzc3Vlci1mcHJAbm90YXRpb25z
-Lm9wZW5wZ3AuZmlmdGhob3JzZW1hbi5uZXQyNUE2QkI4OEREOUI3NjRDNkI1NTQx
-QzI3Mzg0MDlGNTIwREY5MTkwDxxzYW1AZ2VudG9vLm9yZwAKCRBzhAn1IN+RkIIP
-AP0bYX5i3luQFnpz2aKvKOTvG+IfEC5lMuwitG1gCeoJ8AEAm8u/bh3MmZA5bhX8
-ip78XlUrAYpjTsUcKynlAhcpQAQ=
-=xmkk
------END PGP SIGNATURE-----
---=-=-=--
+Bye,
+Hannes
