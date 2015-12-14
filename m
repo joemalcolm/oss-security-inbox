@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1671" "Monday" "4" "January" "2016" "20:30:47" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160105013047.A350C36E0DE@smtpvbsrv1.mitre.org>" "40" "[oss-security] Re: CVE Request: python-rsa signature forgery" nil nil nil "1" "2016010501:30:47" "[oss-security] Re: CVE Request: python-rsa signature forgery" (number mark "U       cve-assign@m Jan  4   40/1671  " thread-indent "\"[oss-security] Re: CVE Request: python-rsa signature forgery\"\n") "<1451953836.236177.482914922.46C7D6CD@webmail.messagingengine.com>" ("<1451953836.236177.482914922.46C7D6CD@webmail.messagingengine.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["260" "Monday" "14" "December" "2015" "12:05:57" "+0100" "=?utf-8?B?RGFnLUVybGluZyBTbcO4cmdyYXY=?=" "des@des.no" "<86fuz570iy.fsf@desk.des.no>" "10" "Re: [oss-security] User man Local Root Exploit/Linux Kernel setgid Directory Privilege Escalation/PAM Owner Check Weakness" "^Cc:" nil nil "12" "2015121411:05:57" "[oss-security] User man Local Root Exploit/Linux Kernel setgid Directory Privilege Escalation/PAM Owner Check Weakness" (number mark "        des@des.no   Dec 14   10/260   " thread-indent "\"Re: [oss-security] User man Local Root Exploit/Linux Kernel setgid Directory Privilege Escalation/PAM Owner Check Weakness\"\n") "<566E0678.1080808@halfdog.net>" ("<565F679F.9050600@halfdog.net>" "<566E0678.1080808@halfdog.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 9890 invoked by uid 550); 5 Jan 2016 01:31:00 -0000
+Received: (qmail 25686 invoked by uid 550); 14 Dec 2015 11:06:10 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,53 +11,29 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 25666 invoked from network); 14 Dec 2015 11:06:10 -0000
+References: <565F679F.9050600@halfdog.net> <566E0678.1080808@halfdog.net>
+In-Reply-To: <566E0678.1080808@halfdog.net> (halfdog's message of "Sun, 13 Dec
+	2015 23:59:52 +0000")
+Message-ID: <86fuz570iy.fsf@desk.des.no>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.5 (berkeley-unix)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Cc: oss-security@lists.openwall.com
+Date: Mon, 14 Dec 2015 12:05:57 +0100
+From: =?utf-8?Q?Dag-Erling_Sm=C3=B8rgrav?= <des@des.no>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9860 invoked from network); 5 Jan 2016 01:30:59 -0000
-From: cve-assign@mitre.org
-To: ml@filippo.io
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <1451953836.236177.482914922.46C7D6CD@webmail.messagingengine.com>
-Message-Id: <20160105013047.A350C36E0DE@smtpvbsrv1.mitre.org>
-Date: Mon,  4 Jan 2016 20:30:47 -0500 (EST)
-Subject: [oss-security] Re: CVE Request: python-rsa signature forgery
+Subject: Re: [oss-security] User man Local Root Exploit/Linux Kernel setgid Directory Privilege Escalation/PAM Owner Check Weakness
+To: halfdog <me@halfdog.net>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+halfdog <me@halfdog.net> writes:
+> http://www.halfdog.net/Security/2015/MandbSymlinkLocalRootPrivilegeEscala=
+tion/
+> http://www.halfdog.net/Security/2015/SetgidDirectoryPrivilegeEscalation/
 
-> please assign a CVE to this signature forgery vulnerability in
-> python-rsa. It allows an attacker to fake signatures for arbitrary
-> messages for any key with low exponent "e" (like the common 3).
-> 
-> https://blog.filippo.io/bleichenbacher-06-signature-forgery-in-python-rsa/
-> https://bitbucket.org/sybren/python-rsa/pull-requests/14/security-fix-bb06-attack-in-verify-by/diff
+And the PAM issue?
 
->> The python-rsa bug is not a vanilla BB'06, because the hash is
->> compared to all the data following the ASN.1 blob, but a simple
->> variant.
-
->>> Fix BB'06 attack in verify() by switching from parsing to comparison
-
-Use CVE-2016-1494.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJWixxfAAoJEL54rhJi8gl5dXQP/3nTIh9mmGj+pMQ4S6RNwovk
-6M4IUz0RtOSf9W0BlqlCxtKrzC6E/aoYVUVnJARxKQupWbQBFrXBnwDk6/Rlfbgu
-25wyJ49aXDFHde96VBgjdGok2XJJHqm3Q/vlHJZcISA1KOos1ioOYHUHea9VIh6k
-KEc/dfnpObnnBgPMWZbQPk7WaJZj3QJHJYr/pzttUIBfbf6sHV5JuPje8Bz93ege
-g4MoHe7GdWPIMHwQYDjrgoG7FHowkArd3bcVskXUYrnFMwpCiSbmm/GfFzxy0bIL
-XtrQnnW+/qDzkBl++GaUkVdbS2l79LfMPbjjdmlm40Sef7T54M2fpM/f3AINcAzh
-dGt8+tJwUmtuUP7foseimKC7mJyH44DJK7Ydu40AYGZIQ/xMxniBA8hZaUeeLmP1
-xxuyK6LdwI4pzMSQBxs75IpnH38bGXpxdkLZmAgjjNfI17wC8t0fA7s/0evocxPJ
-Apw+aYqcwb3a41aZFhE2HkWZzvWFpxqf8G/LvDgaEck9aImahIHvL5m7pft0GBwj
-tR/q+LWPFhZrEXPxErn1zoPGZlNu8btOgWls2BaRX7ZA6Hd2fMEg3+XZ1LMqTolf
-5W9e8iycj8/xApHzN05XRj761keCkSEwuxKQGKvrvgV12YgICP8fY12Yi1gxv0fh
-Ks2yXevb3Odkh4wZBKdd
-=FYyY
------END PGP SIGNATURE-----
+DES
+--=20
+Dag-Erling Sm=C3=B8rgrav - des@des.no
