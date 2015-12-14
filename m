@@ -1,4 +1,9 @@
-Received: (qmail 12049 invoked by uid 550); 18 Apr 2023 01:29:58 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1619" "Monday" "14" "December" "2015" "20:40:29" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1512142033580.2864@wniryva>" "42" "[oss-security] CVE request Qemu: usb: infinite loop in ehci_advance_state results in DoS" nil nil nil "12" "2015121415:10:29" "[oss-security] CVE request Qemu: usb: infinite loop in ehci_advance_state results in DoS" (number mark "U       ppandit@redh Dec 14   42/1619  " thread-indent "\"[oss-security] CVE request Qemu: usb: infinite loop in ehci_advance_state results in DoS\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 13834 invoked by uid 550); 14 Dec 2015 15:10:54 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,78 +12,58 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11919 invoked from network); 18 Apr 2023 01:29:56 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-	s=20210705; t=1681781384;
-	bh=/mbMVJKdo0hKhf+YHhP2HBugG9Qw8AHA5z1A9+PaorY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:In-Reply-To;
-	b=uglTxSXoyyk5IiuekODgeS2hTM8wUXUll8x8KAKEqHQ0bblUB9AWMs3fteJuBLzeq
-	 w7TqBht1+HdDwmd+uy/cBogKfVoCtKqEQG4v7VCHgxr1MBBX60eDN5XJLO7PVARQrk
-	 gZKJEYvsJ/oqGXjyP3ct+qjncDg+rD4kMWaZye6JUCILMNPVtThg9y+EssvBQUppMi
-	 8Fq+LgX7Lje2GjlnrF2rhinL4OHGf7aK228yGhrksK22woFgphr8w6p9miuGVIaIwW
-	 pquu+1vd1/gtnhIPTkhFiS2bSRgxLwZyJtxYzzOPgcr2pn7Hj8JmvVI+HB0nI7JBJV
-	 Ls2jvs0W7Cv9w==
-Date: Tue, 18 Apr 2023 01:29:42 +0000
-From: Seth Arnold <seth.arnold@canonical.com>
-To: Daniel Gaspar <dpgaspar@apache.org>
-Cc: oss-security@lists.openwall.com
-Message-ID: <20230418012942.GL1655348@millbarge>
-Mail-Followup-To: Daniel Gaspar <dpgaspar@apache.org>,
-	oss-security@lists.openwall.com
-References: <8b244a2b-5079-02db-135d-f584af57add3@apache.org>
+Received: (qmail 13810 invoked from network); 14 Dec 2015 15:10:53 -0000
+Date: Mon, 14 Dec 2015 20:40:29 +0530 (IST)
+From: P J P <ppandit@redhat.com>
+X-X-Sender: pjp@javelin
+To: oss security list <oss-security@lists.openwall.com>
+cc: Qinghao Tang <luodalongde@gmail.com>, Gerd Hoffmann <kraxel@redhat.com>
+Message-ID: <alpine.LFD.2.20.1512142033580.2864@wniryva>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="eWbcAUUbgrfSEG1c"
-Content-Disposition: inline
-In-Reply-To: <8b244a2b-5079-02db-135d-f584af57add3@apache.org>
-Subject: Re: [oss-security] CVE-2023-25504: Apache Superset: Possible SSRF on
- import datasets
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
+Subject: [oss-security] CVE request Qemu: usb: infinite loop in ehci_advance_state results
+ in DoS
 
---eWbcAUUbgrfSEG1c
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On Mon, Apr 17, 2023 at 09:57:11AM +0000, Daniel Gaspar wrote:
-> https://superset.apache.org
-> https://www.cve.org/CVERecord?id=CVE-2023-25504
+   Hello,
 
-Hello Daniel, thanks for contacting the oss-security mail list about this
-security issue in an Apache project.
+Qemu emulator built with the USB EHCI emulation support is vulnerable to an 
+infinite loop issue. It occurs during communication between host controller 
+interface(EHCI) and a respective device driver. These two communicate via a 
+isochronous transfer descriptor list(iTD) and an infinite loop unfolds if 
+there is a closed loop in this list.
 
-I'd like to suggest that your email would be far more useful if
-it included some details like affected versions: ideally, when a
-vulnerability was introduced, and definitely, when it was fixed, if a
-fix is available. Best would be a direct link to a patch in a source
-control system, or attaching the patch directly.
+A privileges user inside guest could use this flaw to consume excessive CPU 
+cycles & resources on the host.
 
-This particular email has very few details and no references for a fix so
-it is very difficult for anyone to take concrete actions.
+Upstream fix:
+- -------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2015-12/msg02124.html
 
-Here's two recent postings that are far easier for downstream distributors
-and consumers alike to use:
-https://www.openwall.com/lists/oss-security/2023/04/04/1
-https://www.openwall.com/lists/oss-security/2023/03/21/3
+This issue was discovered by Qinghao Tang of QIHU 360 Marvel Team.
 
-I'd like to encourage Apache to use these as inspiration for future
-oss-security postings.
-
-Thanks
-
-
---eWbcAUUbgrfSEG1c
-Content-Type: application/pgp-signature; name="signature.asc"
+Thank you.
+- --
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
 
 -----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-iQEzBAABCgAdFiEEQVAQ8bojyMcg37H18yFyWZ2NLpcFAmQ98oYACgkQ8yFyWZ2N
-LpeqiQgAjeOJ0D+gQGQAJbriuuanRK4l71H5YO0w7/JLrXcG4dRZBzcXRxzmfGMT
-xI18T9dBwtPRLCEoYz1h8h4/IBCQ/6rIvi6t5hVQC96DCtNLjItUp1u9hHKpPHf/
-/B1e0puIkYTN/Uq4xYB6octyh0RbRtrY4DUvIhwDiQiW4p7Q+UxZiYWzwFEkoGu6
-YazoO4w25N6Bh+auUDOIUK8TvzcLCYX5oiRdsJP2bBbvsMdCoKA9QLQ9K/9M6VZN
-hWU8ubQmprjPPS5JPUVIsEz5T5zrie8d3+zGcqdkWO4Qmvo94IbDadHeECcwB0l5
-07CNz7xU7VWFZM1h9SdtjBItARIi6g==
-=Yob7
+iQIcBAEBAgAGBQJWbtvmAAoJEN0TPTL+WwQf3MIQAJDWcJuiUFDPuHWQU1iVoUT3
+Cp0PUxY37ldRTq3TYGw/7UEIJscULwDiVqtmkso+f67v70BRh8cQf/HiIDM93Zq8
+fb9q4l3JSZZu6pSGiJKe2C7iwoIT5SA0JqzYhQQFlZvt/osFIxFtcAg+ribl092b
+QMtNksA2/mUL7L+LP4mHgzAy0tTDNMp/fPE189bZID6iLvul1sQxE1HdBsRhYVDU
+4Q0FWSO62If21/GyI5Rqrh11tpeXeWdqIYfJVETxdSzLzgqHlT6GyH5iZfnoTMxI
+3H8yrqsFGFZhJP7caFd51cK+CbBAN/PP4z6SRfKJsPjX9eJp8YX1+u3WrvU/sMTA
+f8dPDRnD0VZgW9dku0ETxXGuV4rXN17CgNm6i7Qft1JHZA5OGlxewMX2pgAcp/cM
+9eVaBWPUKAjei1GUNfhxX3DLeSDt5cC83ICEedNhozY5k9UuwUGTl/p5I5UQVuqY
+Z4xiDzuUE3O0IVpEQvyF3eiYd5dRFrq3qo6NG/KEd+A7dCmVprJLWGzMjbp/Onmz
+LQFyw8eI+Q2znFqpSKNnYDjZemw2cTEkuHBXnWKOgtPb7iisWE3ke9WLVhgcc3O7
+nT9raTZXn3feowabwDpBu+BOmejiN1TXkNR3e/CpBLqvZlatGdc1KCPm58zxTMWs
+SZm4zSvaSyky/pMJonCU
+=SYEW
 -----END PGP SIGNATURE-----
-
---eWbcAUUbgrfSEG1c--
