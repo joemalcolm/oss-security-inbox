@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1788" "Thursday" "28" "January" "2016" "11:45:12" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160128164512.6AF96B2E1AC@smtpvbsrv1.mitre.org>" "44" "[oss-security] Re: an out of bound read is found in libdwarf -20151114" "^Cc:" nil nil "1" "2016012816:45:12" "[oss-security] Re: an out of bound read is found in libdwarf -20151114" (number mark "        cve-assign@m Jan 28   44/1788  " thread-indent "\"[oss-security] Re: an out of bound read is found in libdwarf -20151114\"\n") "<5e818bea.124fe.15259ebc9f3.Coremail.xiaoqixue_1@163.com>" ("<5e818bea.124fe.15259ebc9f3.Coremail.xiaoqixue_1@163.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["720" "Monday" "14" "December" "2015" "12:14:39" "+0100" "Jason A. Donenfeld" "Jason@zx2c4.com" "<CAHmME9rjqikpOLkw50Ug0a2gYNkRbB_z9gY7LXmvnjQ=0h2edw@mail.gmail.com>" "24" "[oss-security] CVE Request: Local Privilege Escalation in QEMU virtfs-proxy-helper" nil nil nil "12" "2015121411:14:39" "[oss-security] CVE Request: Local Privilege Escalation in QEMU virtfs-proxy-helper" (number mark "U       Jason@zx2c4. Dec 14   24/720   " thread-indent "\"[oss-security] CVE Request: Local Privilege Escalation in QEMU virtfs-proxy-helper\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 32439 invoked by uid 550); 28 Jan 2016 16:45:46 -0000
+Received: (qmail 15455 invoked by uid 550); 14 Dec 2015 11:14:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,57 +11,49 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 32340 invoked from network); 28 Jan 2016 16:45:24 -0000
-In-Reply-To: <5e818bea.124fe.15259ebc9f3.Coremail.xiaoqixue_1@163.com>
-Message-Id: <20160128164512.6AF96B2E1AC@smtpvbsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Thu, 28 Jan 2016 11:45:12 -0500 (EST)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: an out of bound read is found in libdwarf -20151114
-To: xiaoqixue_1@163.com
+Received: (qmail 15430 invoked from network); 14 Dec 2015 11:14:53 -0000
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
+	:date:message-id:subject:from:to:cc:content-type; s=mail; bh=sSV
+	0eh3JINHRQBG6DaEjj3/E3Iw=; b=dHL2Hdxo/K9uoSyFH+d6/pETqAECOhHv/yx
+	f4DblMiF64r/OG259Yw3f2W3AMwuS9d6esZ13hzbO/5Ecr5wxCVslLdacIURTNv0
+	hwFSFadShfnkUTkmL4Ppb3tqg5rqoWjs139sAHvWmVIGtNXlxAiZRIE9gyRQCDbX
+	hoguBwIfmWy79VCRc+dpcnQB9GP8BkMQbxADVyQkR0SyUXy/HUDo07ROqnpAQAn3
+	zo1a63qz8K/eg4C5lS1cHImYMLolr0imf6AfOt/ThTTfK8B9DBzN8IqO6aJzv73D
+	88tFQzsRg8brh2FavyG9PncP8HMSUI9OKI5LGuAvKCTh1bp7Zbw==
+MIME-Version: 1.0
+X-Received: by 10.28.85.129 with SMTP id j123mr25194176wmb.77.1450091679892;
+ Mon, 14 Dec 2015 03:14:39 -0800 (PST)
+Date: Mon, 14 Dec 2015 12:14:39 +0100
+X-Gmail-Original-Message-ID: <CAHmME9rjqikpOLkw50Ug0a2gYNkRbB_z9gY7LXmvnjQ=0h2edw@mail.gmail.com>
+Message-ID: <CAHmME9rjqikpOLkw50Ug0a2gYNkRbB_z9gY7LXmvnjQ=0h2edw@mail.gmail.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+To: oss-security <oss-security@lists.openwall.com>
+Cc: Gentoo Security <security@gentoo.org>
+Content-Type: text/plain; charset=UTF-8
+Subject: [oss-security] CVE Request: Local Privilege Escalation in QEMU virtfs-proxy-helper
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi folks,
 
-[ The Subject line was changed from the original
-"Re:Re: Buffer Overflow in lha compression utility" because that
-was unrelated to the topic. ]
+Some distros make qemu's virtfs-proxy-helper binary either SUID or
+give it filesystem capabilities such as cap_chown. This is completely
+insane for a wide variety of reasons; there are quite a few ways of
+abusing this to elevate privileges.
 
-> http://www.openwall.com/lists/oss-security/2016/01/19/3
+This commit fixes the issue in Gentoo:
 
-> an out of bound read is found in libdwarf -20151114.
-> 
-> *** DWARF CHECK: DW_DLE_DEBUG_FRAME_LENGTH_NOT_MULTIPLE
-> len=0x00000010, len size=0x00000004, extn size=0x00000000, totl
-> length=0x00000014, addr size=0x00000008, mod=0x00000004 must be zero
-> in cie, offset 0x00000000. ***
-> 7   ==53495== Invalid read of size 2
->   1 ==53495==    at 0x4C2F7E0: memcpy@@GLIBC_2.14 (in
-> /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
->   2 ==53495==    by 0x43287F: dwarf_read_cie_fde_prefix (dwarf_frame2.c:934)
+https://gitweb.gentoo.org/repo/gentoo.git/commit/?id=183dd7394703b49c7af441a9c4227b4b91453510
 
-Use CVE-2016-2091.
+The commit message contains a TOCTOU PoC.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Can we get a CVE for this blunder?
 
-iQIcBAEBCAAGBQJWqkTOAAoJEL54rhJi8gl5rSQP/jeiWzTqajFg+zQat/7oiqrF
-dEclF+0xce6DBqrRwdqW+K5rYDiOFgjpXTzIJytQ02ekrsL0kgKuBOJIDtde8C3/
-wx2anCEr+AbdUwyUjGvKnfyq+VO5ArA/tgvzNuOE5lLS/UlUUDKoYeJQK4olahAc
-k7Lw16y6u61d4eNzDfdE85RFa4ze+TVEC1rIt2rq3dXCxIf81GFvifVXvesgG2td
-EEwnDJUMRAL4fFBsYqZf5uU19B6QqWIRj9Yxmaeo6Levk5ssAqWk88DJgJcaxM2s
-S8hUjMKT25vvXRLmwqklA9Mg6Fv4eAdeQQ9jJ8l7u/g7u/jDr+MC+6FWuP02aO1S
-xbAf4PIFHp/e/zjmUJ2V52nbcYuIWjo5HdacTuHNEJS7HkmGfOTbwPHYqiAGzm00
-zi8bdXgfZnndgFYwzRB1uNIRaqjdZH1RkA7CK9CDUmbRq4y2y3k310kuVhwZBxAQ
-rNCUiY8uIYUay07nYK7947R2a8KYHxGrHpZAbjd5knONwi7Req0h/B063i7xYOzM
-K2Qs8bny21qZxOXei0Daej7tWAjzmV7d4KQm5IeZN0nvRiqKOCuc1V4qMvGvikH1
-Mtu8XuhHYEP1TGEg0NbgJVUpAXirsgphJF/+RueC4P0bVXfrlLkmDGjljC9kHdGv
-VkDBB/uOHOFYYZ+Fa7O9
-=Xfoe
------END PGP SIGNATURE-----
+Other distributions - you might want to double check that you're not
+making a similar mistake.
+
+I have no idea if QEMU upstream recommends suid/fscaps in some
+documentation, or something similar, in which case that'll need to be
+changed.
+
+Thanks,
+Jason
