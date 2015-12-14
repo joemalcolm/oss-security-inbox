@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["612" "Tuesday" "6" "October" "2015" "14:10:09" "-0700" "robert@robert.io" "robert@robert.io" "<1444165809.2991126.403145441.2CAE05C4@webmail.messagingengine.com>" "14" "[oss-security] CVE request for sqlalchemy-utils" nil nil nil "10" "2015100621:10:09" "[oss-security] CVE request for sqlalchemy-utils" (number mark "        robert@rober Oct  6   14/612   " thread-indent "\"[oss-security] CVE request for sqlalchemy-utils\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["775" "Monday" "14" "December" "2015" "13:44:43" "+0300" "Lucid Lynx" "luc.lynx@yandex.ru" "<566E9D9B.40302@yandex.ru>" "17" "[oss-security] CVE Request: two issues in bee2 crypto library" nil nil nil "12" "2015121410:44:43" "[oss-security] CVE Request: two issues in bee2 crypto library" (number mark "U       luc.lynx@yan Dec 14   17/775   " thread-indent "\"[oss-security] CVE Request: two issues in bee2 crypto library\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 21651 invoked by uid 550); 6 Oct 2015 21:56:30 -0000
+Received: (qmail 7917 invoked by uid 550); 14 Dec 2015 14:29:35 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,44 +11,41 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 32358 invoked from network); 6 Oct 2015 21:10:20 -0000
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=robert.io; h=
-	content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to:x-sasl-enc:x-sasl-enc; s=mesmtp; bh=fYs
-	YpprPINiG1oroze8LDKfBWdI=; b=GyJ1+fMJFQK/0fiPqTOfoJfWN0213YhTzqj
-	oIkcVVRIBm4TbLBuc9JlaSXDl0TRbkY50i7PLrqORxc8p5AnzjJjdO6A/AHMeI7Y
-	tGnXFUGOF0R3L4YZTwZj+r39+HkTWjugSRDjrX+y0DizA+wzbrY7MKOPf4gS7MoC
-	0EWo3tbc=
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=content-transfer-encoding:content-type
-	:date:from:message-id:mime-version:subject:to:x-sasl-enc
-	:x-sasl-enc; s=smtpout; bh=fYsYpprPINiG1oroze8LDKfBWdI=; b=ghBCA
-	cer+wzuNnJ2tMqtJIzzi0R9U+x0Gz55dlw4oLNZFbxh3b1ztdqNQMKotq8ZbZRAW
-	xlkZqsv/igp16N/bvYZ72cOawzuhKdvyHpBd3ebjGAXzo0g4jeiG829hVHYvOLQ6
-	q9GtPbcqPo7hrPZMgHBpDHYD9Gpp6pT5mTKbyE=
-Message-Id: <1444165809.2991126.403145441.2CAE05C4@webmail.messagingengine.com>
-X-Sasl-Enc: WBvKuLhNvvFGK/zepxgHEGuFwNMRsWcApqSF8PdyRUzD 1444165809
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Content-Type: text/plain
-X-Mailer: MessagingEngine.com Webmail Interface - ajax-b54601fa
-Date: Tue, 06 Oct 2015 14:10:09 -0700
-From: robert@robert.io
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE request for sqlalchemy-utils
+Received: (qmail 13680 invoked from network); 14 Dec 2015 10:45:10 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail; t=1450089898;
+	bh=VXcyo3ozOEb6MngDCaNoRjCupodelJbVTgKl8a3PS6I=;
+	h=To:From:Subject:Message-ID:Date:User-Agent:MIME-Version:
+	 Content-Type:Content-Transfer-Encoding;
+	b=EVu9BgGRXWsBxBSGu3B1mKdv3fPkTBMsOmKVx4DGhiPuBgjvtNkpDe+W4hbm8d1bq
+	 BmnZBWjPKg61Yoytb02Q2cht4k60waYVFAORZMh1a/2ZaJHds9NukKO0C6Cv8RUhxs
+	 IIDQUuWTwPOlOljfQIAc7koZnfL9XMh4ivPk7dEY=
+Authentication-Results: smtp4o.mail.yandex.net; dkim=pass header.i=@yandex.ru
 To: oss-security@lists.openwall.com
+From: Lucid Lynx <luc.lynx@yandex.ru>
+Message-ID: <566E9D9B.40302@yandex.ru>
+Date: Mon, 14 Dec 2015 13:44:43 +0300
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:38.0)
+ Gecko/20100101 Thunderbird/38.4.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] CVE Request: two issues in bee2 crypto library
 
-Description: I noticed that the sqlalchemy-utils package's EncryptedType
-does not use a random IV when encrypting with AES in CBC mode. It
-generates a SHA256 hash of the user's key and uses the first 16 bytes of
-that hash as the IV (and the full hash as the encryption key). The
-result is that for a given key, the IV will always be the same.
+Hello!
+I found two issues in the 2015.10.29 version of bee2 crypto library that 
+can be found at https://github.com/agievich/bee2. The library implements 
+cryptographic algorithms standardized in Belarus and it is maintained by 
+Belarussian State University.
+The first iisue is possible leakage of sensitive data, the report can be 
+found at https://github.com/agievich/bee2/issues/5
 
-Reported here: https://github.com/kvesteri/sqlalchemy-utils/issues/166
-Version: Current. I'm not sure what the version history of this package
-looks like, though.
-Reporter: Robert Picard
-
-Please assign a CVE if you feel it would be appropriate for this bug.
-
-- Robert
+Another one is memory leak that can lead to DoS, the report can be found 
+at https://github.com/agievich/bee2/issues/6
+The both vulnerabilities were reported to maintainers and were fixed 
+several days ago.
+Please assign CVE IDs for these bugs if you think they are worth it in 
+this case (right now the library is'n very popular though it can be used 
+in some proprietary software).
+--
+LL
