@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1393" "Monday" "25" "July" "2016" "15:13:51" "+0300" "Solar Designer" "solar@openwall.com" "<20160725121351.GA746@openwall.com>" "27" "Re: [oss-security] Re: [Pkg-shadow-devel] subuid security patches for shadow package" nil nil nil "7" "2016072512:13:51" "[oss-security] Re: [Pkg-shadow-devel] subuid security patches for shadow package" (number mark "U       solar@openwa Jul 25   27/1393  " thread-indent "\"Re: [oss-security] Re: [Pkg-shadow-devel] subuid security patches for shadow package\"\n") "<20160725083930.GA31840@suse.de>" ("<20160719093915.GA29047@suse.de>" "<20160719125119.GA7146@suse.de>" "<871t2pycqx.fsf_-_@x220.int.ebiederm.org>" "<20160720214852.GA23823@nekral.nekral.homelinux.net>" "<20160725080331.GB24232@suse.de>" "<20160725083930.GA31840@suse.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["717" "Monday" "14" "December" "2015" "12:13:21" "+0100" "Jason A. Donenfeld" "Jason@zx2c4.com" "<CAHmME9r6jQX-Zwaub6J=C2WavsFiGMR0GR19aWppUZkYztcYfw@mail.gmail.com>" "22" "[oss-security] CVE Request: Local Privilege Escalation in QEMU virtfs-proxy-helper" nil nil nil "12" "2015121411:13:21" "[oss-security] CVE Request: Local Privilege Escalation in QEMU virtfs-proxy-helper" (number mark "U       Jason@zx2c4. Dec 14   22/717   " thread-indent "\"[oss-security] CVE Request: Local Privilege Escalation in QEMU virtfs-proxy-helper\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 23559 invoked by uid 550); 25 Jul 2016 12:13:55 -0000
+Received: (qmail 5916 invoked by uid 550); 14 Dec 2015 11:13:36 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,45 +12,46 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 22515 invoked from network); 25 Jul 2016 12:13:55 -0000
-Date: Mon, 25 Jul 2016 15:13:51 +0300
-From: Solar Designer <solar@openwall.com>
-To: oss-security@lists.openwall.com
-Cc: "Eric W. Biederman" <ebiederm@xmission.com>,
-	pkg-shadow-devel@lists.alioth.debian.org
-Message-ID: <20160725121351.GA746@openwall.com>
-References: <20160719093915.GA29047@suse.de> <20160719125119.GA7146@suse.de> <871t2pycqx.fsf_-_@x220.int.ebiederm.org> <20160720214852.GA23823@nekral.nekral.homelinux.net> <20160725080331.GB24232@suse.de> <20160725083930.GA31840@suse.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20160725083930.GA31840@suse.de>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] Re: [Pkg-shadow-devel] subuid security patches for shadow package
+Received: (qmail 5879 invoked from network); 14 Dec 2015 11:13:36 -0000
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
+	:date:message-id:subject:from:to:cc:content-type; s=mail; bh=voy
+	cuaaCbkbune+D4FUc6/dQ288=; b=IOxwmrCV3oA78RstSbYnAdZn0AVbjRQTrDI
+	OxV42IBgnShUieHJFL7ad+Wo9kpDaGOWMkpzGAnhWvafU1vEZgds+ug1QTDQCdg7
+	ejh18my7CluEtHVUZ9QTq2Mklgx2Xc4a40bJNgxhseWXVrbSCSyuYdBZRDJ8DP9r
+	ja4b2+nQpb2yp+Y7e5qVfmkr3eiK92N/Nr6IBeIsyueOpwCOCzfooySyjJZZ1uyI
+	nxVrmqIEh/3dDuhylZQLK0K6XQI11h++xqYPXKweSnLendgzjIahaVbl/eRc/Ndm
+	Y3Ecx1Q7YwvMdQk3pxaI4RCkmiv3GVYiC6xvOGr+Hqyu9rlMchQ==
+MIME-Version: 1.0
+X-Received: by 10.28.226.86 with SMTP id z83mr25179252wmg.77.1450091602008;
+ Mon, 14 Dec 2015 03:13:22 -0800 (PST)
+Date: Mon, 14 Dec 2015 12:13:21 +0100
+X-Gmail-Original-Message-ID: <CAHmME9r6jQX-Zwaub6J=C2WavsFiGMR0GR19aWppUZkYztcYfw@mail.gmail.com>
+Message-ID: <CAHmME9r6jQX-Zwaub6J=C2WavsFiGMR0GR19aWppUZkYztcYfw@mail.gmail.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+To: oss-security <oss-security@lists.openwall.com>
+Cc: Gentoo Security <security@gentoo.org>
+Content-Type: text/plain; charset=UTF-8
+Subject: [oss-security] CVE Request: Local Privilege Escalation in QEMU virtfs-proxy-helper
 
-Replying out of context (not related to the specific getlogin() issue):
+Hi folks,
 
-On Mon, Jul 25, 2016 at 10:39:30AM +0200, Sebastian Krahmer wrote:
-> Err, sorry. Shared UID, different name
+Some distros make qemu's virtfs-proxy-helper binary either SUID or
+give it filesystem capabilities such as cap_chown. This is completely
+insane for a wide variety of reasons; there are quite a few ways of
+abusing this to elevate privileges.
 
-As a special case, this is common practice for UID 0 (root) accounts of
-multiple sysadmins, providing poor man's accountability (due to the
-different account names getting in all the usual logs, without having to
-check which specific SSH key, etc. was used for a given login session).
-We even have a tool to support it for single-user mode logins as well:
+This commit fixes the issue in Gentoo:
+https://gitweb.gentoo.org/repo/gentoo.git/commit/?id=183dd7394703b49c7af441a9c4227b4b91453510The
+commit message contains a TOCTOU PoC.
 
-http://www.openwall.com/msulogin/
+Can we get a CVE for this blunder?
 
-The far more common alternative to it is to use su or sudo from the
-multiple sysadmins' non-root accounts.  A problem with it is that if use
-of those non-root accounts is not restricted solely to su/sudo from
-them, but they are also used to run other programs as non-root, then any
-of those other programs may take over the root account (possibly in
-multiple steps, such as by substituting shell aliases and waiting for
-the sysadmin to run su/sudo next time).  To avoid this, we'd arrive at
-the need to have two non-root accounts per sysadmin (and to have su/sudo
-available to only one set of those accounts, so as not to expose those
-programs' vulnerabilities to the other set of accounts, nor to regular
-users of the system, unnecessarily), - or to have per-sysadmin root
-accounts.  The latter is simpler.
+Other distributions - you might want to double check that you're not
+making a similar mistake.
 
-Alexander
+I have no idea if QEMU upstream recommends suid/fscaps in some
+documentation, or something similar, in which case that'll need to be
+changed.
+
+Thanks,
+Jason
