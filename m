@@ -1,4 +1,9 @@
-Received: (qmail 18117 invoked by uid 550); 9 Apr 2024 13:06:51 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1835" "Monday" "14" "December" "2015" "16:37:45" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151214213745.7C3376C0176@smtpvmsrv1.mitre.org>" "44" "[oss-security] Re: CVE request: Shell Injection in Pygments FontManager._get_nix_font_path" nil nil nil "12" "2015121421:37:45" "[oss-security] Re: CVE request: Shell Injection in Pygments FontManager._get_nix_font_path" (number mark "U       cve-assign@m Dec 14   44/1835  " thread-indent "\"[oss-security] Re: CVE request: Shell Injection in Pygments FontManager._get_nix_font_path\"\n") "<20151214150939.3f80b012@redhat.com>" ("<20151214150939.3f80b012@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 1894 invoked by uid 550); 14 Dec 2015 21:37:57 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,40 +12,56 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11330 invoked from network); 9 Apr 2024 02:38:37 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Jongyoul Lee <jongyoul@apache.org>
-To: oss-security@lists.openwall.com
-Message-ID: <5790cb04-9f4f-19c2-2586-1b6d6dc87bd7@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 09 Apr 2024 02:37:39 +0000
-MIME-Version: 1.0
-Subject: [oss-security] CVE-2024-31862: Apache Zeppelin: Denial of service with invalid
- notebook name 
+Received: (qmail 1827 invoked from network); 14 Dec 2015 21:37:56 -0000
+From: cve-assign@mitre.org
+To: scorneli@redhat.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <20151214150939.3f80b012@redhat.com>
+Message-Id: <20151214213745.7C3376C0176@smtpvmsrv1.mitre.org>
+Date: Mon, 14 Dec 2015 16:37:45 -0500 (EST)
+Subject: [oss-security] Re: CVE request: Shell Injection in Pygments FontManager._get_nix_font_path
 
-Severity: moderate
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Affected versions:
+> http://seclists.org/fulldisclosure/2015/Oct/4
+> https://bugzilla.redhat.com/show_bug.cgi?id=1276321
 
-- Apache Zeppelin 0.10.1 before 0.11.0
+Use CVE-2015-8557.
 
-Description:
 
-Improper Input Validation vulnerability in Apache Zeppelin when creating a =
-new note from Zeppelin's UI.This issue affects Apache Zeppelin: from 0.10.1=
- before 0.11.0.
+> https://bugzilla.redhat.com/show_bug.cgi?id=1276321#c2
+> python-pygments-2.0.2-3.fc23 has been pushed to the Fedora 23 stable repository
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=1276321#c5
+> The old patch caused problems. Here's a better upstream patch
 
-Users are recommended to upgrade to version 0.11.0, which fixes the issue.
+As far as we can tell, the old patch used shlex.quote whereas the new
+patch has a different solution involving subprocess.Popen. If
+python-pygments-2.0.2-3.fc23 had a vulnerability because shlex.quote
+didn't adequately protect against command injection, then there should
+be a second CVE ID for that vulnerability. Otherwise, we'll interpret
+"old patch caused problems" to mean usability problems.
 
-Credit:
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Esa Hiltunen (finder)
-https://teragrep.com (finder)
-
-References:
-
-https://github.com/apache/zeppelin/pull/4632
-https://zeppelin.apache.org/
-https://www.cve.org/CVERecord?id=3DCVE-2024-31862
-
+iQIbBAEBCAAGBQJWbzOhAAoJEL54rhJi8gl5AH4P93kGsVRmy5xreW4IaM1cI09g
+3WYA0b2JIDcrJXsNPT1KE4MFON5BKResTBbv+PKde0WRqHKgDUf4q5WexcaPFCjs
+WgMo0mIj1Ab0P6j1xGeu6WNzmAMFdE1e0+9rupmDd0V1Aq1PnvYTVIxmKugvaV00
+hK5tnY0jkYIyO7GfGTY3PGBmE8juFVA60aEsAozRGlETYHS3XqE3bMBzvHlarZ8o
+7ZRWV8VEoh+j3mxTV6ib7WLTZhT4Rzf+phwQSaEDrnGAJYy7RLh1VHZzsgdBdCyZ
+cBYBcV0hPfXg3sC81zxYUPTB8L3Z701nnAJ0kV3tzUQiHjFEgI4P8kNVslOy+jrX
+IuXFMlh4Vba1mmkMfGjf633MP0HVhqmIyBgngyV50dL8Kc4lSAnKB1Ict8ruwDI+
+bz9F/MEez5y1HTC1wniR3IwbxuMaobCjYfF7NhJe0gXcC7V+DpwMOUFTwIvIFeFc
+lrt4MyRCvh9DUzp70Kz++WGIEs59h4P9MpX/AzL2J/85UPJOPLvRVm+GSh1zIL13
+YNJRCpN0Q/SdBa5US2pPDccVcHpxKFXqu/ETS518yJDKpElXqKkmvXgy6P0yege9
+slhUQg1Ol6k4axkeo/BlO6z1CqHuT4EM1mzPM4ujINZXX2bKBRMxaZVyL1xVnL89
+XVfC0et5dVwCnahrD48=
+=sPew
+-----END PGP SIGNATURE-----
