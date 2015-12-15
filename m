@@ -1,4 +1,9 @@
-Received: (qmail 17556 invoked by uid 550); 22 Sep 2022 13:04:09 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2798" "Tuesday" "15" "December" "2015" "08:50:43" "+0100" "Hannes Frederic Sowa" "hannes@stressinduktion.org" "<566FC653.1070001@stressinduktion.org>" "67" "Re: [oss-security] Re: CVE request - Android kernel - IPv6 connect cause a denial of service" nil nil nil "12" "2015121507:50:43" "[oss-security] Re: CVE request - Android kernel - IPv6 connect cause a denial of service" (number mark "U       hannes@stres Dec 15   67/2798  " thread-indent "\"Re: [oss-security] Re: CVE request - Android kernel - IPv6 connect cause a denial of service\"\n") "<CAP145phM81D08ZaeKXXtWNQQktGSuXRR85TY_=jhQYcdruGTpA@mail.gmail.com>" ("<20151211164118.344948BC165@smtpvmsrv1.mitre.org>" "<566F35F9.4070106@stressinduktion.org>" "<CAP145phM81D08ZaeKXXtWNQQktGSuXRR85TY_=jhQYcdruGTpA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 19772 invoked by uid 550); 15 Dec 2015 07:50:58 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,79 +12,104 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30693 invoked from network); 22 Sep 2022 12:55:24 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-language:thread-index:content-transfer-encoding
-         :mime-version:message-id:date:subject:to:from:from:to:cc:subject
-         :date;
-        bh=U5q3TeOPiAOn0mEp7nsu+7zzpzlEaoIlB1JfrDZ/ck4=;
-        b=YV0iSpLDF9pGEZxkMhZNQRSIN7dxKWXA1jvqwYWWTBVVm+jzKssW+73flYi6pdYpID
-         NgQtcct/Ne7wdWhd2aIPExtaDUkODNG5H1OEoIu7xAI/Pe/9/+H8nYhjXQ0NBhWm1Xdm
-         +wI5Sd98loSnTTK2kAuZ1igfSVTly/1/xvAHzfAszz4ewG3F0Eib2P1BkK8DjSGY2l8I
-         Y3qKx0hSDtQqtmzs49kFhYgiv8h19afNnTX6HQzARuLecXGHEHSyTjzq1S23ywr7+aZT
-         FbommVGpgtxN6ey8/SGmu+WHo2RL8kRW7o538hTTw2me4u9DMxX6H+3ApCTY5Hdf9ELh
-         9v5w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-language:thread-index:content-transfer-encoding
-         :mime-version:message-id:date:subject:to:from:x-gm-message-state
-         :from:to:cc:subject:date;
-        bh=U5q3TeOPiAOn0mEp7nsu+7zzpzlEaoIlB1JfrDZ/ck4=;
-        b=19w2US4cQlLibnRDtnKooVLGGnwEhp8fIFFdtZICRtdN7NgGSgGeTyQIl+sq1aMBEf
-         bnLIbOm/RybjFz+d369CeNT21SNarej+0j569aOKwQyAjwCIQUXWwOMD6jprGrufniUf
-         QpwMJnrktLWOh5g3/DOLS7UIEwgH/5iYfpisGZq06i5KxfAtoO27bMWCekvWzeNqlzsn
-         3wrxvZOSXSG8IFQQ5YYa6ZfsGcUOE67nZBM03Ao+LUGvEdCjhD9qzqiduCqLA8iSbWGq
-         QIqnLtPDVyrjr5gY5ODiWR7aNECGrE+5JKyhGYVxsSRHAnv+RBK/GNl2w5oeror/XFZy
-         HNXA==
-X-Gm-Message-State: ACrzQf3pfMV8mgetsJZhicBcn66crbXH+U7NX023T+LZ0abN6JwB6bTd
-	vAgcJDc5hHKhNxbr+Myn1G7tlHjmoY88/RBR
-X-Google-Smtp-Source: AMsMyM6AFhhwS1MmaagGEdfx5qSAb0/o6jbYzhvk9BRuxozlHIRChOgdT8SvOAPfYf+eXvH5uXc5Eg==
-X-Received: by 2002:adf:d1cc:0:b0:22a:450c:6208 with SMTP id b12-20020adfd1cc000000b0022a450c6208mr2055004wrd.696.1663851313317;
-        Thu, 22 Sep 2022 05:55:13 -0700 (PDT)
-From: "Simon Steiner" <simonsteiner1984@gmail.com>
-To: <general@xmlgraphics.apache.org>,
-	<batik-dev@xmlgraphics.apache.org>,
-	<batik-users@xmlgraphics.apache.org>,
-	"'Apache Security Team'" <security@apache.org>,
-	<oss-security@lists.openwall.com>
-Date: Thu, 22 Sep 2022 13:55:12 +0100
-Message-ID: <001501d8ce82$8df67800$a9e36800$@gmail.com>
+Received: (qmail 19754 invoked from network); 15 Dec 2015 07:50:57 -0000
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	stressinduktion.org; h=cc:content-transfer-encoding:content-type
+	:date:from:in-reply-to:message-id:mime-version:references
+	:subject:to:x-sasl-enc:x-sasl-enc; s=mesmtp; bh=+8vi214HJta5sdaG
+	tsg7pJGMxhM=; b=ckBNUL0fvpRQGT0QCMazrDwdscIYTKR+9bqynqrooACRKN/G
+	V7MgG2Nmdt4Fflr35qCX/R2lMo1NBUl76vdaH/VZSCmbnAVu/vrDow8x73cePrjB
+	nv2Qc1xv7n4mmoCsf/uHXEpZ39hD9/lmijPWB+56btK3qhrmHZ2bANfSjVQ=
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:date:from:in-reply-to:message-id:mime-version:references
+	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=+8vi214HJta5sda
+	Gtsg7pJGMxhM=; b=JSIKn8vW7fpWoh/PR+iSzB3QS2y33pDE/8tGyO3vLAZ1vx1
+	jMauWY5+2RKOk+fSeoq+CdexudFU/SKrjn9rII9QJaVE8hA1icqN7U9mAgywKXB1
+	LaE2BUQn9NLJywgiMvyVUwvNXqAPWsWY2Q77yiTF3b43SF55iM6tG1zVKgUs=
+X-Sasl-enc: rAGmg71ah8cXAFQzYpT//sILzvrLupj+CqdtuijwvC4K 1450165845
+To: oss-security@lists.openwall.com
+References: <20151211164118.344948BC165@smtpvmsrv1.mitre.org>
+ <566F35F9.4070106@stressinduktion.org>
+ <CAP145phM81D08ZaeKXXtWNQQktGSuXRR85TY_=jhQYcdruGTpA@mail.gmail.com>
+Cc: guoyonggang@360.cn, cve-assign@mitre.org
+From: Hannes Frederic Sowa <hannes@stressinduktion.org>
+X-Enigmail-Draft-Status: N1110
+Message-ID: <566FC653.1070001@stressinduktion.org>
+Date: Tue, 15 Dec 2015 08:50:43 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.4.0
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AdjOgn98119SstJ9T4auurAEzrkIVQ==
-Content-Language: en-gb
-Subject: [oss-security] [CVE-2022-38648] Apache Batik information disclosure vulnerability
+In-Reply-To: <CAP145phM81D08ZaeKXXtWNQQktGSuXRR85TY_=jhQYcdruGTpA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+Subject: Re: [oss-security] Re: CVE request - Android kernel - IPv6 connect
+ cause a denial of service
 
-CVE-2022-38648:
-        Apache Batik information disclosure vulnerability
+Hi,
 
-Severity:
-        Medium
+On 15.12.2015 04:48, Robert Święcki wrote:
+>>> Use CVE-2015-8543 for the originally identified bug. We realize that,
+>>> for example,
+>>> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/log/net/ipv4/af_inet.c
+>>> has not yet been changed. If Linux kernel developers determine that
+>>> multiple independent bugs result in situations where
+>>> sk->sk_prot->get_port is NULL above, then it is possible that
+>>> additional CVE IDs will be assigned later.
+>>
+>> The following patch fixes this issue:
+>>
+>> https://git.kernel.org/cgit/linux/kernel/git/davem/net.git/commit/?id=79462ad02e861803b3840cc782248c7359451cd9
+>>
+>> It is queued up for -stable.
+>>
+> 
+> Not sure if it's important for you, but the description of this diff
+> may not be exactly correct:
+> 
+> a) ... as root ..
+> 
+> If a given kernel supports CLONE_NEWUSER then everybody can create
+> SOCK_RAW sockets. And CLONE_NEWUSER seems to be enabled with most
+> modern Linux distros.
 
-Vendor:
-        The Apache Software Foundation
+Yep, that is true. You can create a new user namespace and a new
+net-namespace in which an ordinary user is allowed to use raw sockets.
 
-Versions Affected:
-        Batik 1.0 - 1.14
+> b). .. could simply crash the kernel ..
+> 
+> It'll cause GPF in the supervisor mode, and it seems that with most of
+> supported CPU architectures under Linux, this will actually cause
+> SIGSEGV to be sent to the user-land counterpart of the kernel thread
+> which caused such GPF. So, it's not really crash of the kernel in most
+> cases (may depend on sysctl and CPU architecture in use though).
+> However, given that such GPF can happen when the socket struct seems
+> to be locked, this could potentially cause some kernel dead-locks with
+> subsequent accesses to sk (may result in unkillable processes and
+> similar artifacts)
 
-Description:
-        Block external resource before calling fop
+This is what I meant by simply crashing the kernel. :) In most kernel
+crashes we hold some locks or are in a rcu critical section, which makes
+the rest of kernel execution pretty much indeterministic.
 
-Mitigation:
-        Users should upgrade to Batik 1.15+
+Red Hat kernel always set panic_on_ooops because of this.
 
-Credit:
-        This issue was independently reported by Adam Rauch
+> Also, it could be potentially turned into a privilege escalation
+> problem if there was a way to map the NULL page. Under x86/x86-64 I
+> reviewed the code (install_special_mapping() and friends from mmap.c)
+> and it seems to be correctly protected. But if anybody is using any
+> alternative CPU architecture, I'd suggest looking at their
+> arch-specific vdso/vvar mapping code. In case the address is
+> controllable by user, this could likely allow for mapping of the NULL
+> page and pwning the kernel.
 
-References:
-        http://xmlgraphics.apache.org/security.html
-        https://issues.apache.org/jira/browse/BATIK-1333
+Even on x86_64 a NULL address should be installable if you lower
+/proc/sys/vm/mmap_min_addr as root before. Some software might need this.
 
-The Apache XML Graphics team.
+Thanks for the following up. Unfortunately I can't edit the commit
+anymore but it will be hopefully useful for the description of the CVE
+entry.
 
-
+Bye,
+Hannes
 
