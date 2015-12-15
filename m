@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2522" "Monday" "2" "November" "2015" "17:52:45" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151102225245.3B9DC42E007@smtpvbsrv1.mitre.org>" "54" "[oss-security] Re: hostapd/wpa_supplicant - Incomplete WPS and P2P NFC NDEF record payload length validation" nil nil nil "11" "2015110222:52:45" "[oss-security] Re: hostapd/wpa_supplicant - Incomplete WPS and P2P NFC NDEF record payload length validation" (number mark "U       cve-assign@m Nov  2   54/2522  " thread-indent "\"[oss-security] Re: hostapd/wpa_supplicant - Incomplete WPS and P2P NFC NDEF record payload length validation\"\n") "<20150708144853.GE10457@w1.fi>" ("<20150708144853.GE10457@w1.fi>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4048" "Tuesday" "15" "December" "2015" "18:10:13" "-0500" "Michael McNally" "mcnally@isc.org" "<56709DD5.8010609@isc.org>" "110" "[oss-security] CVE-2015-8461: A race condition when handling socket errors can lead to an assertion failure in resolver.c" "^Date:" nil nil "12" "2015121523:10:13" "[oss-security] CVE-2015-8461: A race condition when handling socket errors can lead to an assertion failure in resolver.c" (number mark "U       mcnally@isc. Dec 15  110/4048  " thread-indent "\"[oss-security] CVE-2015-8461: A race condition when handling socket errors can lead to an assertion failure in resolver.c\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 21721 invoked by uid 550); 2 Nov 2015 22:53:03 -0000
+Received: (qmail 1612 invoked by uid 550); 15 Dec 2015 23:10:40 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,67 +11,127 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 32424 invoked from network); 15 Dec 2015 23:10:30 -0000
+Message-ID: <56709DD5.8010609@isc.org>
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:38.0)
+ Gecko/20100101 Thunderbird/38.4.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Date: Tue, 15 Dec 2015 18:10:13 -0500
+From: Michael McNally <mcnally@isc.org>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21629 invoked from network); 2 Nov 2015 22:52:56 -0000
-From: cve-assign@mitre.org
-To: j@w1.fi
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <20150708144853.GE10457@w1.fi>
-Message-Id: <20151102225245.3B9DC42E007@smtpvbsrv1.mitre.org>
-Date: Mon,  2 Nov 2015 17:52:45 -0500 (EST)
-Subject: [oss-security] Re: hostapd/wpa_supplicant - Incomplete WPS and P2P NFC NDEF record payload length validation
+Subject: [oss-security] CVE-2015-8461: A race condition when handling socket errors can lead
+ to an assertion failure in resolver.c
+To: oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+CVE:                CVE-2015-8461
+Document Version:   2.0
+Posting date:       15 December 2015
+Program Impacted:   BIND
+Versions affected:  9.9.8 -> 9.9.8-P1, 9.9.8-S1 -> 9.9.8-S2, 9.10.3 ->
+9.10.3-P1
+Severity:           Medium
+Exploitable:        Remotely
 
-> http://w1.fi/security/2015-5/incomplete-wps-and-p2p-nfc-ndef-record-payload-length-validation.txt
+Description:
 
->> Note: No NFC stack implementation has yet been identified with
->> capability to pass the malformed NDEF record to
->> hostapd/wpa_supplicant. As such, it is not known whether this issue can
->> be triggered in practice.
+   Beginning with the September 2015 maintenance releases 9.9.8 and
+   9.10.3, an error was introduced into BIND 9 which can cause a
+   server to exit after encountering an INSIST assertion failure
+   in resolver.c
 
->> While such validation is likely done in the NFC
->> stack that needs to parse the NFC messages before further processing,
->> hostapd/wpa_supplicant should have (re)confirmed NDEF message validity
->> properly.
+Impact:
 
-> https://w1.fi/cgit/hostap/commit/src/wps/ndef.c?id=df9079e72760ceb7ebe7fb11538200c516bdd886
+   An uncommonly occurring condition can cause affected servers to
+   exit with an INSIST failure depending on the outcome of a race
+   condition in resolver.c  While difficult to exploit reliably, a
+   malicious party could, through deliberate behavior, significantly
+   increase the probability of encountering the triggering condition,
+   resulting in denial-of-service to clients if successful.
 
->> It was possible for the 32-bit record->total_length value to end up
->> wrapping around due to integer overflow if the longer form of payload
->> length field is used and record->payload_length gets a value close to
->> 2^32.
+CVSS Score:         5.4
+CVSS Vector:        (AV:N/AC:H/Au:N/C:N/I:N/A:C)
 
-Use CVE-2015-8041 for this integer overflow (with various possible
-impacts). The vendor's report is listed under "security advisories" on
-the http://w1.fi/security page, and it may be reasonable to interpret
-"hostapd/wpa_supplicant should have (re)confirmed NDEF message
-validity properly" to mean "hostapd/wpa_supplicant had a vulnerability
-because they did not (re)confirm NDEF message validity properly." In
-other words, although the issue is not exploitable with any known NFC
-implementation, the hostapd/wpa_supplicant design goal was to operate
-safely even if validation were missing in an NFC implementation.
+For more information on the Common Vulnerability Scoring System and
+to obtain your specific environmental score please visit:
+https://nvd.nist.gov/cvss.cfm?calculator&version=2&vector=(AV:N/AC:H/Au:N/C:N/I:N/A:C)
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Workarounds:        None.
+Active exploits:    None known.
 
-iQIcBAEBCAAGBQJWN+iXAAoJEL54rhJi8gl5WPQP/jCEUAEaL41RDQtIr+z8AQ9K
-0eCZvwc3aenIJBe77KaU8f77VHbyM3pCatheArzv1KHOEyRvezr5KKscVcYxi6bj
-20NnNXpWRTLoxduU0tz/2C6mUNv05VsZaRwFe1nsPHH+yDwMfzcOD6MB5esJ64l6
-ZI+SbA6QMEGzq5oflWtIrijLif/YcevYyIlVJyDQjXrnvL/+g/ZfegnWruaJjWaU
-CUrkAfHdeXdfk260b1hVoqncPrqIASRm2GQGhR9EzpqNWDZNcF8iGtc8LBUzSlk7
-2ZmRaID4Yw57MNlFXPgn+q6scCpGWuDPAXIeJ5uBNcp4V8VVQp3zPmE9KdRzDQ1c
-oypYxFfsu0/B7oW/q8nIfuz/UZge+2DZD+etPaN1jG5IpSOJhFCIgiJ8PNl6UlUU
-yJNwXAMUy5+xBLULHyBhlsPc6sjJppnzP4YD/vPnzQ0uhKAXXIF/rjfi2fhX0lF7
-iGikGwCXqejP4uwqJ7zE/oOh6oEEkSVYN4sqERsHmnhdE5teLMF/XOodv5P8afNX
-sPbnrh67/G7PopFTCH6N4wXZrJPbi+YzETI+GXpgu1nEOkC5jtycYqV9lKnTBjQT
-e6wxWk0OGdXeettqRZUhB1LTNm7OIoEjBb/+63AEyl8P6z6aqM+xXUQlNLcQHU1m
-GDmrNOp6JAhzg1+xMggO
-=1n9O
------END PGP SIGNATURE-----
+Solution:
+
+   Upgrade to the patched release most closely related to your
+   current version of BIND. Public open-source branches can be
+   downloaded from http://www.isc.org/downloads.
+
+     BIND 9 version 9.9.8-P2
+     BIND 9 version 9.10.3-P2
+
+   BIND 9 Supported Preview edition is a feature preview version
+   of BIND provided exclusively to eligible ISC Support customers.
+
+     BIND 9 version 9.9.8-S3
+
+Acknowledgements:
+
+   ISC would like to thank John O'Brien of the University of
+   Pennsylvania for discovering this issue.
+
+Document Revision History:
+
+   1.0 Advance Notification 8 December 2015
+   2.0 Public Disclosure, 15 December 2015
+
+Related Documents:
+
+   See our BIND9 Security Vulnerability Matrix at
+   https://kb.isc.org/article/AA-00913 for a complete listing of
+   Security Vulnerabilities and versions affected.
+
+If you'd like more information on ISC Subscription Support and
+Advance Security Notifications, please visit http://www.isc.org/support/.
+
+Do you still have questions?  Questions regarding this advisory
+should go to security-officer@isc.org.  To report a new issue,
+please encrypt your message using security-officer@isc.org's PGP
+key which can be found here:
+   https://www.isc.org/downloads/software-support-policy/openpgp-key/.
+If you are unable to use encrypted email, you may also report new
+issues at: https://www.isc.org/community/report-bug/.
+
+Note:
+
+   ISC patches only currently supported versions. When possible we
+   indicate EOL versions affected.  (For current information on
+   which versions are actively supported, please see
+   http://www.isc.org/downloads/).
+
+ISC Security Vulnerability Disclosure Policy:
+
+   Details of our current security advisory policy and practice can
+   be found here: https://kb.isc.org/article/AA-00861
+
+This Knowledge Base article https://kb.isc.org/article/AA-01319 is
+the complete and official security advisory document.
+
+Legal Disclaimer:
+
+   Internet Systems Consortium (ISC) is providing this notice on
+   an "AS IS" basis. No warranty or guarantee of any kind is expressed
+   in this notice and none should be implied. ISC expressly excludes
+   and disclaims any warranties regarding this notice or materials
+   referred to in this notice, including, without limitation, any
+   implied warranty of merchantability, fitness for a particular
+   purpose, absence of hidden defects, or of non-infringement. Your
+   use or reliance on this notice or materials referred to in this
+   notice is at your own risk. ISC may change this notice at any
+   time.  A stand-alone copy or paraphrase of the text of this
+   document that omits the document URL is an uncontrolled copy.
+   Uncontrolled copies may lack important information, be out of
+   date, or contain factual errors.
+
+
+(c) 2001-2015 Internet Systems Consortium
+
