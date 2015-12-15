@@ -1,4 +1,9 @@
-Received: (qmail 13322 invoked by uid 550); 9 Jul 2025 07:32:52 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["515" "Tuesday" "15" "December" "2015" "15:30:02" "+0100" "Marcus Meissner" "meissner@suse.de" "<20151215143002.GM11263@suse.de>" "13" "[oss-security] CVE Request: Linux Kernel: information leak from getsockname" "^Date:" nil nil "12" "2015121514:30:02" "[oss-security] CVE Request: Linux Kernel: information leak from getsockname" (number mark "        meissner@sus Dec 15   13/515   " thread-indent "\"[oss-security] CVE Request: Linux Kernel: information leak from getsockname\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 11298 invoked by uid 550); 15 Dec 2015 14:30:15 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,62 +11,32 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 12246 invoked from network); 9 Jul 2025 07:32:52 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hboeck.de; s=key1;
-	t=1752046360; bh=AlSNmyJVnDg5deDvQwMRioNrDtjyvXHWSjNoTKb83Go=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding;
-	b=UVc1sug0mqtPE4sN+78krjb6R1eHmZ5yAbRJ6beJCKg1FdioFxoLrjo+rZ/7CPnXs
-	 411K2gaXpuDkcBXtYpqx3gu0kL+iwKS5WOhIbVYOV2h4R70gWesbMN3stgRYPvvYlO
-	 SSjT/P5PnpTEgturt9AP2hom8yUM+JRVjcg/KIOW1QGAevwotaAhWvESiS7naYuWY5
-	 YJAsMxRzRLO9D0OmRS7j2iMsDVrx63inE/FX/AsU+J1wrDtcbs/Gc8WfGnJC0FBHwV
-	 8dPJ6LhBbOidgiNJ7Y9IQyvEWYp4kszIMCxKeae74G7s4+QntiP7g0V5EsZqqAisdC
-	 hHJiYadqGAIGA==
-Original-Subject: Opossum attack / Opportunistic HTTP (RFC 2817) insecure
-Author: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
-Date: Wed, 9 Jul 2025 09:32:38 +0200
-From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
-To: oss-security@lists.openwall.com
-Message-ID: <20250709093238.7a9d50d9@hboeck.de>
-X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-pc-linux-gnu)
+Received: (qmail 11270 invoked from network); 15 Dec 2015 14:30:14 -0000
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Message-ID: <20151215143002.GM11263@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Subject: [oss-security] Opossum attack / Opportunistic HTTP (RFC 2817) insecure
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Organization: SUSE Linux GmbH, GF: =?iso-8859-1?Q?Felix_?=
+ =?iso-8859-1?Q?Imend=F6rffer=2C_Jane_Smithard=2C_Graham_Norton=2C_HRB_212?=
+ =?iso-8859-1?Q?84_=28AG_N=FCrnberg=29?=
+User-Agent: Mutt/1.5.21 (2010-09-15)
+Date: Tue, 15 Dec 2015 15:30:02 +0100
+From: Marcus Meissner <meissner@suse.de>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE Request: Linux Kernel: information leak from getsockname
+To: OSS Security List <oss-security@lists.openwall.com>
 
-This is an interesting new attack on some TLS configurations:
-https://opossum-attack.com/
+Hi,
 
-It exposes the fact that some protocols support an opportunistic TLS
-variant that has a slightly different underlying protocol than the
-implicit TLS variant.
+spotted by grsecurity
+https://twitter.com/grsecurity/status/676744240802750464
 
-The practical impact this has on servers supporting opportunistic
-HTTP (RFC 2817) is that a man-in-the-middle attacker can serve a
-different file from a server to an HTTPS request.
-It may impact other protocols that support STARTTLS, but one would have
-to find an exploitable protocol difference.
+https://lkml.org/lkml/2015/12/14/252
+http://git.kernel.org/cgit/linux/kernel/git/davem/net.git/commit/?id=09ccfd238e5a0e670d8178cf50180ea81ae09ae1
 
-For any software implementing Opportunistic HTTP / RFC 2817,
-particularly on the server side, it is advisable to completely remove
-that support to prevent this attack.
+getsockname() for some socket families did not check the length of the passed sockaddr,
+copying out more kernel memory than required, leaking information from the kernel stack,
+including kernel addresses. This can be used for KASLR bypass or other information leaks. 
 
-Opportunistic HTTP / RFC 2817 is not widely used or supported. It can
-be enabled in Apache httpd, according to the Opossum web page,  Apache
-plans deprecation of that feature (CVE-2025-49812). The web page also
-mentions Icecast and CUPS as "Patch in progress", and Cyrus IMAPD
-disabled STARTTLS by default in response to this research.
-
-This shows again that "upgrading" an unencrypted connection to TLS can
-be the cause of surprising security issues.
-(I've been involved in some research a few years ago showing security
-issues in STARTTLS for e-mail, which is a closely related issue:
-https://nostarttls.secvuln.info/
-)
-
---=20
-Hanno B=C3=B6ck - Independent security researcher
-https://itsec.hboeck.de/
-https://badkeys.info/
+Ciao, Marcus
