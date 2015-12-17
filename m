@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1194" "Tuesday" "23" "June" "2015" "16:07:49" "-0400" "Larry W. Cashdollar" "larry0@me.com" "<B84727D4-14F8-42D7-B115-D5AD2D9DCCF4@me.com>" "34" "[oss-security] Remote file download vulnerability in download-zip-attachments v1.0" nil nil nil "6" "2015062320:07:49" "[oss-security] Remote file download vulnerability in download-zip-attachments v1.0" (number mark "U       larry0@me.co Jun 23   34/1194  " thread-indent "\"[oss-security] Remote file download vulnerability in download-zip-attachments v1.0\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["815" "Thursday" "17" "December" "2015" "10:27:59" "+0100" "Claus Ibsen" "claus.ibsen@gmail.com" "<CAGB5yNn7OimVkJ_mArRWQXQ4aOOGko=uxV_Zhf7U79SONY=kGA@mail.gmail.com>" "27" "[oss-security] CVE-2015-5348 - Apache Camel medium disclosure vulnerability" nil nil nil "12" "2015121709:27:59" "[oss-security] CVE-2015-5348 - Apache Camel medium disclosure vulnerability" (number mark "U       claus.ibsen@ Dec 17   27/815   " thread-indent "\"[oss-security] CVE-2015-5348 - Apache Camel medium disclosure vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 3440 invoked by uid 550); 23 Jun 2015 20:08:08 -0000
+Received: (qmail 24473 invoked by uid 550); 17 Dec 2015 10:32:02 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,54 +12,53 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3405 invoked from network); 23 Jun 2015 20:08:02 -0000
-X-Proofpoint-Virus-Version: vendor=fsecure
- engine=2.50.10432:5.14.151,1.0.33,0.0.0000
- definitions=2015-06-23_07:2015-06-23,2015-06-23,1970-01-01 signatures=0
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
- suspectscore=0 phishscore=0 adultscore=0 bulkscore=0 classifier=spam adjust=0
- reason=mlx scancount=1 engine=7.0.1-1412110000 definitions=main-1506230320
-From: "Larry W. Cashdollar" <larry0@me.com>
-Content-type: text/plain; charset=utf-8
-Content-transfer-encoding: quoted-printable
-Message-id: <B84727D4-14F8-42D7-B115-D5AD2D9DCCF4@me.com>
-Date: Tue, 23 Jun 2015 16:07:49 -0400
-To: Open Source Security <oss-security@lists.openwall.com>
-MIME-version: 1.0 (Mac OS X Mail 8.2 \(2098\))
-X-Mailer: Apple Mail (2.2098)
-Subject: [oss-security] Remote file download vulnerability in download-zip-attachments v1.0
+Received: (qmail 22103 invoked from network); 17 Dec 2015 09:28:31 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=B9J/FU9PasV5zdGR73hjOGleazWS6d/e9R7uG3kJ5zM=;
+        b=V3JTNgRMWOmOE+COwlZhemTlCcZyebM4PWfhHXkIyv2eO6WoMiR0tcFZJKyHcUVuJ5
+         tV0ZAxbaI8y5EMEkvpu0HR061jTYxKMJ3UiZBnc/ON/CDqL6U/dUH6sNpAgiVDqNT1OR
+         QR/A1N1Uo27QIOjl7xbHmdvh7DV3sQjc7c5bwRZTCmBZzMLWRfAuq5FbJ2xbYZIavid0
+         S89V41zov9+AtVrLarOD0chG9y5plDcJSvTXcpNb2p0Vb2/NuVV9S+XUBxGLdvocmxjV
+         KLYuJzHc6X720VB38Ht3IE91m79jdxQf0uNq0qJ1Gj4zbSa2VGJBJB7K5nz08jNG6VgW
+         4ydQ==
+X-Received: by 10.107.149.205 with SMTP id x196mr30593706iod.181.1450344499369;
+ Thu, 17 Dec 2015 01:28:19 -0800 (PST)
+MIME-Version: 1.0
+From: Claus Ibsen <claus.ibsen@gmail.com>
+Date: Thu, 17 Dec 2015 10:27:59 +0100
+Message-ID: <CAGB5yNn7OimVkJ_mArRWQXQ4aOOGko=uxV_Zhf7U79SONY=kGA@mail.gmail.com>
+To: dev <dev@camel.apache.org>, "users@camel.apache.org" <users@camel.apache.org>, 
+	oss-security@lists.openwall.com, bugtraq@securityfocus.com, 
+	security <security@apache.org>
+Content-Type: text/plain; charset=UTF-8
+Subject: [oss-security] CVE-2015-5348 - Apache Camel medium disclosure vulnerability
 
-Title: Remote file download vulnerability in download-zip-attachments v1.0
-Author: Larry W. Cashdollar, @_larry0
-Date: 2015-06-10
-Download Site: https://wordpress.org/plugins/download-zip-attachments/
-Vendor: rivenvirus
-Vendor Notified: 2015-06-15
-Vendor Contact: https://profiles.wordpress.org/rivenvirus/
-Advisory: http://www.vapid.dhs.org/advisory.php?v=3D129
-Description:=20
-Download all attachments from the post into a zip file.
+Apache Camel's Jetty/Servlet usage is vulnerable to Java object
+de-serialisation vulnerability
 
-Vulnerability:
-from download-zip-attachments/download.php makes no checks to verify the do=
-wnload path is with in the specified upload directory.
+If using camel-jetty, or camel-servlet as a consumer in Camel routes,
+then Camel will automatic de-serialize HTTP requests that uses the
+content-header: application/x-java-serialized-object.
 
-<?php
-if(isset($_REQUEST['File']) && !empty($_REQUEST['File'])){
-   define('WP_USE_THEMES', false);
-   require('../../../wp-load.php');=20=20=20=20
-   require "create_zip_file.php";
-   $uploads =3D wp_upload_dir();=20
-   $tmp_location =3D $uploads['path']."/".$_REQUEST['File'];
-   //echo $tmp_location;
-   $zip =3D new CreateZipFile;
-   $zip->forceDownload($tmp_location,false);=20=20=20=20=20
-   unlink($tmp_location);=20
-   exit;
-}
+Please study this security vulnerability carefully!
 
-CVEID: 2015-4704
-OSVDB:
-Exploit Code:
-	=E2=80=A2 http://www.example.com/wp-content/plugins/download-zip-attachmen=
-ts/download.php?File=3D../../../../../../../../etc/passwd=
+CVE-2015-5348 - [1]
+
+You can download the fixed Apache Camel 2.15.x and 2.16.x version from the
+Apache mirrors [2] or from the Central Maven repository.
+
+
+[1] http://camel.apache.org/security-advisories.data/CVE-2015-5348.txt.asc?version=1&modificationDate=1450340845000&api=v2
+[2] http://camel.apache.org/download
+
+
+On behalf of the Camel PMC,
+Claus Ibsen
+
+-- 
+Claus Ibsen
+-----------------
+http://davsclaus.com @davsclaus
+Camel in Action 2: https://www.manning.com/ibsen2
