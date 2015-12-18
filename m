@@ -1,4 +1,9 @@
-Received: (qmail 16247 invoked by uid 550); 17 Feb 2026 17:04:47 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2295" "Friday" "18" "December" "2015" "01:00:19" "+0100" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20151218010019.37009bbd@pc1>" "56" "[oss-security] Out of bounds read in OpenVPN before 2.3.9" nil nil nil "12" "2015121800:00:19" "[oss-security] Out of bounds read in OpenVPN before 2.3.9" (number mark "U       hanno@hboeck Dec 18   56/2295  " thread-indent "\"[oss-security] Out of bounds read in OpenVPN before 2.3.9\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 17596 invoked by uid 550); 18 Dec 2015 00:00:16 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,67 +12,70 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 15510 invoked from network); 17 Feb 2026 10:48:40 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Antoine Pitrou <apitrou@apache.org>
+Received: (qmail 17547 invoked from network); 18 Dec 2015 00:00:11 -0000
+Date: Fri, 18 Dec 2015 01:00:19 +0100
+From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
 To: oss-security@lists.openwall.com
-Message-ID: <c990a994-e29d-59b3-e5ab-bdbd30cc5088@apache.org>
+Cc: cve-assign@mitre.org
+Message-ID: <20151218010019.37009bbd@pc1>
+X-Mailer: Claws Mail 3.13.0 (GTK+ 2.24.29; x86_64-pc-linux-gnu)
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512; protocol="application/pgp-signature"; boundary="=_zucker.schokokeks.org-30589-1450396799-0001-2"
+Subject: [oss-security] Out of bounds read in OpenVPN before 2.3.9
+
+--=_zucker.schokokeks.org-30589-1450396799-0001-2
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-Date: Tue, 17 Feb 2026 10:48:28 +0000
-MIME-Version: 1.0
-Subject: [oss-security] CVE-2026-25087: Apache Arrow: Potential use-after-free when
- reading IPC file with pre-buffering 
 
-Severity: moderate=20
+https://blog.fuzzing-project.org/32-Out-of-bounds-read-in-OpenVPN.html
 
-Affected versions:
+OpenVPN versions before 2.3.9 contain an out of bounds read error. The
+bug happens in the function resolve_remote() in the file socket.c.
 
-- Apache Arrow 15.0.0 through 23.0.0
-- Apache Arrow 23.0.1 unaffected
+I reported this bug to the OpenVPN security team on December 6th. I was
+informed that this was already reported to them previously and fixed in
+the repository. The new release 2.3.9 fixes this. The current git head
+code of OpenVPN has this code part completely reworked, it is thus not
+affected.
+http://permalink.gmane.org/gmane.network.openvpn.devel/10479
+https://community.openvpn.net/openvpn/wiki/ChangesInOpenvpn23#OpenVPN2.3.9
 
-Description:
+The reason for this bug is that for both IPv4 and IPv6 connections
+OpenVPN will read a struct sockaddr_in6, but in the IPv4 case the data
+structure is smaller than in the IPv6 case. The bug was found by trying
+to run OpenVPN with Address Sanitizer.
 
-Use After Free vulnerability in Apache Arrow C++.
+I don't know whether this is in any way exploitable, but as OpenVPN is
+a security sensitive software I found it worthy to make it public.
 
-This issue affects Apache Arrow C++ from 15.0.0 through 23.0.0. It can be t=
-riggered when reading an Arrow IPC file (but not an IPC stream) with pre-bu=
-ffering enabled, if the IPC file contains data with variadic buffers (such =
-as Binary View and String View data). Depending on the number of variadic b=
-uffers in a record batch column and on the temporal sequence of multi-threa=
-ded IO, a write to a dangling pointer could occur. The value (a `std::share=
-d_ptr<Buffer>` object)=C2=A0that is written to the dangling pointer is not =
-under direct control of the attacker.
+--=20
+Hanno B=C3=B6ck
+http://hboeck.de/
 
-Pre-buffering is disabled by default but can be enabled using a specific C+=
-+ API call (`RecordBatchFileReader::PreBufferMetadata`). The functionality =
-is not exposed in language bindings (Python, Ruby, C GLib), so these bindin=
-gs are not vulnerable.
+mail/jabber: hanno@hboeck.de
+GPG: BBB51E42
 
-The most likely consequence of this issue would be random crashes or memory=
- corruption when reading specific kinds of IPC files. If the application al=
-lows ingesting IPC files from untrusted sources, this could plausibly be ex=
-ploited for denial of service. Inducing more targeted kinds of misbehavior =
-(such as confidential data extraction from the running process) depends on =
-memory allocation and multi-threaded IO temporal patterns that are unlikely=
- to be easily controlled by an attacker.
+--=_zucker.schokokeks.org-30589-1450396799-0001-2
+Content-Type: application/pgp-signature
+Content-Transfer-Encoding: 7bit
+Content-Description: OpenPGP digital signature
 
-Advice for users of Arrow C++:
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
 
-1. check whether you enable pre-buffering on the IPC file reader (using=C2=
-=A0`RecordBatchFileReader::PreBufferMetadata`)
+iQIcBAEBCgAGBQJWc0yTAAoJEKWIAHK7tR5CQVwP+wde+Fp46vjoaTOMdRMLWf+5
+RZ7uSIiSukgw9dDLimYUVparxyT1WCy1tfXmGc5Ep9qtPaxtsDFmTWXI4ATt0GRp
+ua1gmzfsrORy4PjairO2OyAcpzAs4K/xb5tE7jxur42DP1r4+Qye2OmcjHkMS/ET
+V9ihffNPm8sMKvrpjYgicGDY69acChg2AX/6ba+UKYq3QLPTvRykY2pAK1mcYuLq
+nkV8VTAoITf890xnUEO7117WiFYNskegEPm5XrDTc3VMhOshv7aFWjpmA84Q+WCc
+tRohJdz5ArWmD/4ehzlbVtuRVNaNBDSYRgg0rQ5hgxWtPZWYVxQV0vKp2Cq9J+9A
+2P8kxa4O+Fna3xR3WwFCnAxnzCo+/g65CNB9x5Lt/3LIZ8YqbYCpJvf0Hs8WHfGn
+R9nV18Pa1vCs1cr1fl/OfP8kw5GYR78m5exnvHfr/j0BQxwiusotRmII8Jokm7dK
+yxBZdgHYEgRd4vLT5ag3aUVeY1+h1eZNhI+RA9iwTWDOIds5YbkBsNS10y8i6fSY
+WySaOlsvBMR9wn//diDc2iEtSJULtnkzXU4+QhEl9dHaefd8uDKYfRWIZxZGHD6d
+Y5xNfySWsbvA0HR/5kgmtMjc4qzYainAMuHwlvpiWdydnotr5swzxFyyHhDcfA0B
+MjDEnKGzSx0twr2kyA1O
+=aR8R
+-----END PGP SIGNATURE-----
 
-2. if so, either disable pre-buffering (which may have adverse performance =
-consequences), or switch to Arrow 23.0.1 which is not vulnerable
-
-Credit:
-
-"emi" / "rootkid19" (reporter)
-
-References:
-
-https://github.com/apache/arrow/pull/48925
-https://arrow.apache.org/
-https://www.cve.org/CVERecord?id=3DCVE-2026-25087
-
+--=_zucker.schokokeks.org-30589-1450396799-0001-2--
