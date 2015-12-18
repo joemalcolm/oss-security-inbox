@@ -1,4 +1,9 @@
-Received: (qmail 32629 invoked by uid 550); 10 Sep 2025 19:08:01 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5402" "Friday" "18" "December" "2015" "03:49:04" "+0300" "Solar Designer" "solar@openwall.com" "<20151218004904.GA18946@openwall.com>" "115" "Re: [oss-security] CVE Request: Linux kernel: privilege escalation in user namespaces" "^Cc:" nil nil "12" "2015121800:49:04" "[oss-security] CVE Request: Linux kernel: privilege escalation in user namespaces" (number mark "        solar@openwa Dec 18  115/5402  " thread-indent "\"Re: [oss-security] CVE Request: Linux kernel: privilege escalation in user namespaces\"\n") "<567339BE.3090404@canonical.com>" ("<567339BE.3090404@canonical.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 23564 invoked by uid 550); 18 Dec 2015 00:49:10 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,60 +11,133 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 22517 invoked from network); 18 Dec 2015 00:49:10 -0000
+Message-ID: <20151218004904.GA18946@openwall.com>
+References: <567339BE.3090404@canonical.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <567339BE.3090404@canonical.com>
+User-Agent: Mutt/1.4.2.3i
+Cc: Andrey Vagin <avagin@odin.com>, Sergey Bronnikov <sergeyb@openvz.org>
+Date: Fri, 18 Dec 2015 03:49:04 +0300
+From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 23757 invoked from network); 10 Sep 2025 15:13:57 -0000
-ARC-Filter: OpenARC Filter v1.0.0 mx.pao1.isc.org 05F544D075A
-Authentication-Results: mx.pao1.isc.org; arc=none smtp.remote-ip=149.20.2.90
-ARC-Seal: i=1; a=rsa-sha256; d=isc.org; s=ostpay; t=1757517227; cv=none; b=J8RRpggozXM6fawMPi4sk7nlRFV8ng6c99lz7jJJX9TR2sihJDF09b193WafzD+rFNt3Iwgt+S2Meh1ypNyJPiNAZ7sGHclv9qERvrqx3wGcSXcskt/piq4rKkHbvsMwaRW22WqRagMARdIrJ8Uq990Uu7I1pg3huq7hqmbelpI=
-ARC-Message-Signature: i=1; a=rsa-sha256; d=isc.org; s=ostpay; t=1757517227;
-	c=relaxed/relaxed; bh=0tfwoqPltCFRlFnSSKf+KRxFYRkSq0Gpgnukkou1/OE=;
-	h=DKIM-Signature:DKIM-Signature:Date:From:To:Message-ID:Subject:
-	 MIME-Version; b=qrmCxM8+lz4085OBcKjCY7Fuztmf88f8g6xV071qRpzHEQE7TC8ifsMNKqb0hkojxejSR1AFlXLKudnU3jPNmYvwwrFg3oEL2UdefQgD/zIeHwai1msLyFlFVL36Xyrrn6zAyZvskzt1e8IAnHWiUVlMV52Yjem0qEWBZdQEJiQ=
-ARC-Authentication-Results: i=1; mx.pao1.isc.org
-DKIM-Filter: OpenDKIM Filter v2.10.3 mx.pao1.isc.org 05F544D075A
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=isc.org; s=ostpay;
-	t=1757517227; bh=GfwMNLoWIRM6jZYTBU6NX2C+xTgJfPTOTfEJZyns0PY=;
-	h=Date:From:To:Cc:Subject;
-	b=ZRhGtyFZvSSLl19hws3uf1sNTCG+Nx4U7b619QuITGD6CggELhrPMGqrMEN0xSJM0
-	 N3KCfP6G1/FjMSVZ00hIIkt6fDmxG5a3oPFa5rvW/2Q1HSoCTiXaDdl9hZUedQ93Y8
-	 ptLwpZZ+TAGdBtJnZ/fGJeVgxwzUW1hjZ9XWc0bg=
-DKIM-Filter: OpenDKIM Filter v2.10.3 zimbra10.isc.org E212E2E600A9
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=isc.org;
-	s=05DFB016-56A2-11EB-AEC0-15368D323330; t=1757517226;
-	bh=0tfwoqPltCFRlFnSSKf+KRxFYRkSq0Gpgnukkou1/OE=;
-	h=Date:From:To:Message-ID:MIME-Version;
-	b=Wufy0rwKO/K9rgEvjlz0Ve+bCLcAyh08vrTBRRd8+OWrYnWWlaOEbkGnT6ndQ5XIy
-	 oKopzSZSLnp+KxGEbiKbo1GS/PMMpILO2DRlDp4PjVBVIKAt/rBrZZQCRGYbZLGFAa
-	 /ybVUHad6l/9xlo51kzS0angJZiYXRnG3XZIO/mY=
-Date: Wed, 10 Sep 2025 15:13:46 +0000 (UTC)
-From: Ben Scott <bscott@isc.org>
+Subject: Re: [oss-security] CVE Request: Linux kernel: privilege escalation in user namespaces
 To: oss-security@lists.openwall.com
-Cc: security-officer@isc.org
-Message-ID: <1232558782.642728.1757517226656.JavaMail.zimbra@isc.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [50.187.20.181]
-X-Mailer: Zimbra 10.1.10_GA_4785 (ZimbraWebClient - FF142 (Linux)/10.1.10_GA_4785)
-Thread-Index: eYsWAPH1Zqj0PJgCSgNuCytt83djPw==
-Thread-Topic: ISC has disclosed one vulnerability in Stork (CVE-2025-8696)
-Subject: [oss-security] ISC has disclosed one vulnerability in Stork (CVE-2025-8696)
 
+On Thu, Dec 17, 2015 at 02:39:58PM -0800, John Johansen wrote:
+> Jann Horn reported a privilege escalation in user namespaces to the
+> lkml mailing list
+> 
+> https://lkml.org/lkml/2015/12/12/259
+> 
+> if a root-owned process wants to enter a user
+> namespace for some reason without knowing who owns it and
+> therefore can't change to the namespace owner's uid and gid
+> before entering, as soon as it has entered the namespace,
+> the namespace owner can attach to it via ptrace and thereby
+> gain access to its uid and gid.
 
-On 10 September 2025 we (Internet Systems Consortium) disclosed one vulnerability affecting our Stork software:
+This appears related:
 
-- CVE-2025-8696:        DoS attack against the Stork UI from an unauthorized user https://kb.isc.org/docs/cve-2025-8696
+Back in 2005, I performed a security audit of soon-to-be-released
+OpenVZ.  (It was very nice of SWsoft/Parallels to put the effort and
+funding into this before making the project public.)  The security audit
+report has finally been made public here:
 
-New version(s) of Stork are available at the following URL(s):
+https://lists.openvz.org/pipermail/users/2015-October/006563.html
 
-Stable: https://downloads.isc.org/isc/stork/2.2.1/
+As I recall, one of the changes OpenVZ developers made during the audit,
+in response to very early findings, was prevent a process entering a
+container (called VPS or VE at the time, for Virtual Environment) from
+being ptrace'd by a process already running in the container.  This
+scenario would be relevant when using the "vzctl enter ..." and "vzctl
+exec ..." commands.  As something fixed before audit end, this isn't
+fully reflected in the audit report (which I now regret, as it would
+have helped refresh my memory), except for this indirect note about vzctl:
 
-With the public announcement of these vulnerabilities, the embargo period is ended and any updated software packages that have been prepared may be released.
+| 2.2. Testing and review of "strace" logs revealed that only the first 16
+| fd's were being closed on VPS entry.  This needs to be corrected.  Also,
+| the fd's are being closed _after_ the ioctl call, which is not great,
+| although the risk is now mitigated by having the VPS-entering process
+| protected from ptrace(2).
 
-Please note that CVE-2025-8696 also affects the current Stork development version, 2.3.0. Anyone who has Stork 2.3.0 deployed is advised to employ mitigations until 2.3.1 is released, currently planned for October 6, 2025.
+My point is that it does make sense to protect a container- or
+namespace-entering process from attacks by the container/namespace.
+There are attacks this may mitigate.  (Other mitigations are also
+needed, though: including e.g. closing the fd's, as mentioned above, and
+allocating a new pty, if applicable.  vzctl does these things.  And the
+specific "first 16 fd's" issue was corrected at the time, as well.)
 
--- 
-Ben Scott 
-Support Engineer
-Internet Systems Consortium
+Then, one of the recommendations for hardening OpenVZ security that I
+listed in the report was:
+
+| 3. The most reliable way to deal with attacks based on matching UIDs is
+| to simply not have those, but rather translate full 32-bit unique
+| UIDs/GIDs to VPS-specific ones on kernel interfaces.  This has been
+| briefly discussed on the mailing list.  The biggest disadvantage that
+| was mentioned is that it would make it harder to migrate VPSes across
+| nodes.
+| 
+| It was suggested that matching UIDs/GIDs could continue to be used in
+| different VPSes, but they would be different from those the host system
+| would use.  In order to ensure cross-VPS security even if an attacker
+| would manage to escape from a VPS' chroot jail, permissions on
+| /vz/private would need to be set to 700 (with host root as the owner),
+| which is being recommended above for other reasons anyway.  Additionally,
+| the meaning of certain capabilities (CAP_DAC_OVERRIDE, etc.) would need
+| to be "virtualized" when in VE context.  That is, the DAC override would
+| apply only to files whose owner UIDs fall within the VPS' range, etc.
+| 
+| Unfortunately, with all these considerations, this does appear to be not
+| so trivial to implement.  So this is more of an idea for further
+| discussion rather than a final recommendation.
+
+As far as I'm aware, this was never implemented.
+
+Fast forward to 2015, OpenVZ is experimenting with user namespaces:
+
+https://twitter.com/_openvz_/status/654625273313255425
+
+| 15 Oct 2015
+| "Call for testing: Start CT in a new user namespace: 1:1 user mapping"
+
+https://openvz.org/Start_CT_in_a_new_user_namespace:_1:1_user_mapping
+https://lists.openvz.org/pipermail/devel/2015-October/033354.html
+
+| Now CT starts in a new user namespace. This allows us
+| * to remove our capabilities (CAP_VE_*)
+| * to improve security of our containers, because a process doesn't have privileges outside the container
+
+| Testing
+| * need to execute tests to check security of containers
+| * execute all tests, because these changes are touching very general parts
+
+I think this applies to experimental RHEL7-based OpenVZ kernels, rather
+than to the RHEL6-based (let alone RHEL5-based) OpenVZ kernels that most
+people (who use OpenVZ at all) use now.
+
+I found no time to look into this yet, but I recognize now might be the
+right time to review this and make it right.
+
+A concern is that old, previously-fixed issues like ptrace'ing a
+container-entering process might be opened up.  Another concern is that
+unprivileged user namespaces are a (well-known by now?) risk on their
+own.  Thus, there needs to be a way to configure a RHEL7/OpenVZ kernel
+such that it can use user namespaces to enhance container security, but
+users (including host system non-root users) can't use and abuse those -
+and this must be the default.
+
+Other than that, it looks like this is a way and an opportunity to
+address this long-standing OpenVZ hardening recommendation of mine.
+
+I am not yet looking at Linux containers beyond OpenVZ, but as they
+mature I think they'll need to consider the same issues, and my 2005
+audit report might still be a relevant checklist.
+
+I'd appreciate comments from people who are more up-to-date on this.
+
+Thanks,
+
+Alexander
