@@ -1,4 +1,9 @@
-Received: (qmail 10003 invoked by uid 550); 10 Nov 2022 17:30:40 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3412" "Saturday" "19" "December" "2015" "08:47:01" "+0000" "CSW Research Lab" "disclose@cybersecurityworks.com" "<CAMWaY3ODBO6FAWzz21nDrc4x9+kMboe+RSGjWHyoxLWizoO+6A@mail.gmail.com>" "68" "[oss-security] Cross site vulnerability (XSS) in OcPortal CMS 9.0.20" "^Date:" nil nil "12" "2015121908:47:01" "[oss-security] Cross site vulnerability (XSS) in OcPortal CMS 9.0.20" (number mark "U       disclose@cyb Dec 19   68/3412  " thread-indent "\"[oss-security] Cross site vulnerability (XSS) in OcPortal CMS 9.0.20\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 30578 invoked by uid 550); 19 Dec 2015 10:01:09 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,132 +11,106 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5175 invoked from network); 10 Nov 2022 17:26:24 -0000
+Received: (qmail 5769 invoked from network); 19 Dec 2015 08:47:22 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=/h/ezgUkHPb53qBEpxeEiHpCMemPKV1skCjnRGkwHLE=;
-        b=f5WaTzvol8lAB/nLVMFTHrGzQsnftFrycQ52u2BHVg4deoycfbiaWGMxkMlJHI0fXY
-         VSpqbVMFXgvSGtCtJM4cXG5OerRfyLndgmFlWRA0zDa97aDS8e7qW9/dvh3mTZPGYkuY
-         D2LB3iCtzqT0ABCCGYtFE3N95yoTULnueDil5hMJsWOw3j0bkS+D3OrEdMOaYjZgeJeT
-         M9v3e7wOHgVonWEZ8PNx4eKOAgeorywCxB9qwE1x85PWexoKHRtqT/SzzVlGRgS8cWWG
-         EhBuW50Lf8xoTPuhxZVJMlnTLmCWNLZ33iRM+4js1MBYWfA/rPehC4m5Aq/R1YScr35b
-         Ybng==
+        d=cybersecurityworks-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=KnyenOtItG9baRC8HQEaopWvPCcaaUBvb4X5ixd4pRg=;
+        b=FbzuRD8qe9TVpv30GvtKz8QYZu6e8XJvmnhEwR0madar0RQwojRj0kJkVP01VudCgi
+         JUq7+Mn4cFjY5KV/QXQn2VaIz8NmGHkkt+UAmTAEhXv4z3Ehr1kvylrRweT/Cb7md/N0
+         X5Gj6rgqqpyWAsmy4Gm+5q0ac0uK5A+F/M6vR+gbfb1KzEsb6wHM9nb/ZNetTQFg1ms1
+         FW+7DoeFhMaYRvgRpVsbiJIunaM19is2UKjG3OFIoGFVa1PJ7oBIcct1zJZ1Bx4nKQOm
+         Vd+rIK91RciXP08N2h1rPOOL1siWXrs9Xr/i/NB4EnjSLSHyjUTbO49vm5TcsPQzqsyY
+         aM7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=/h/ezgUkHPb53qBEpxeEiHpCMemPKV1skCjnRGkwHLE=;
-        b=ekxKZMHM2ViCLF42ZL+hZhSXFEdreKJG2nWe/yEMJR9fh4h8M4M3b7UjiTfDTTXpND
-         s6I/5ss4/yAmCQNjXLIHDb0hyUtzbhq4/j3diniSjODU/7YuQDDtwXtXdIqcD+lCrAHl
-         l/kDYsK1ZQdAcr+RV3kIxOvqUKGi25uZk5ogClF8etHufB35jKo0BLTKyxenTzkNiNVE
-         dbofL6wZutAtDtwDTcsQ6zIgKSxrIzEO9S6hVICeKtdTR9UYGgG+2d1gtN2TCRl3S1Xr
-         P6/nDtF73Znx0Zg5AotjKhcNk8TaKzx6R+M9lRlSWn6NwfoDJ5EB/1ZbxW4lhR6qMNd6
-         31Kg==
-X-Gm-Message-State: ACrzQf30M3sxQyUJmrtPAZzXFJxIE8Wr8xImjeNusyiSOxJkCKHUHRs3
-	v+L8Q4I8IvHIFLzQp3c4oZYokY0T1+KhsS/qKv7AfkSUwbM=
-X-Google-Smtp-Source: AMsMyM7UXhi7c1cPS7mZqV3yaNXMd4o+/sMBMA4Xn7ArAj/dX9yCi0ZAPYcnNe/AnS4F+hnoV300tOcEgXHnOXBl0EU=
-X-Received: by 2002:a17:907:9546:b0:7ad:4a55:5e19 with SMTP id
- ex6-20020a170907954600b007ad4a555e19mr3351731ejc.65.1668101172991; Thu, 10
- Nov 2022 09:26:12 -0800 (PST)
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
+         :content-type;
+        bh=KnyenOtItG9baRC8HQEaopWvPCcaaUBvb4X5ixd4pRg=;
+        b=h/wpFvK4iNSQUeyImOQSRdzGDxA98abFu1Rq5Xcqd/0mj6puigqhaz+T4cCJqfaMNN
+         RheERCoIWODiEaKm+j9zqF3Icyay+3E1lgcfye9i08ql+r/6ASkDNtcStUoacJN6/LPv
+         UyONecWe30Ual0wuChexSffq7lYiB+HKv1Iznm7NG/mNSwghlu83pJyb5F3lTp8mujET
+         01BaEq8JPmgrm0Jc/YxUHNuSyK7fdWSJKzjgpEvts4zO2Ks+FquZvByAZfi0+1Rns1Wg
+         X+4sUEXAwca2+L6uVsJRKDNSOuWnJjiHNFfv0YAOVtb8lagtXOUcfjbSRFnyDOvfUDOy
+         2+ZQ==
+X-Gm-Message-State: ALoCoQnIXyK40ENNBHyVA/r6B9Rgfqkiz9OPvZJ3/AFo1qdenN/J/etf+c4ZgYq/Wf+OCLcn/rfRa+1bll3EHmh11FtxELIFoA==
+X-Received: by 10.107.34.199 with SMTP id i190mr9946838ioi.150.1450514830866;
+ Sat, 19 Dec 2015 00:47:10 -0800 (PST)
 MIME-Version: 1.0
-From: Tim Allclair <timallclair@gmail.com>
-Date: Thu, 10 Nov 2022 09:25:36 -0800
-Message-ID: <CALXpagykvZnnXHHPk6DP6O_qX5O=TBQK6_j-vO5ZFot5HY1NsQ@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="000000000000dd9c8705ed2111ab"
-Subject: [oss-security] [kubernetes] CVE-2022-3162: Unauthorized read of Custom Resources
+Message-ID: <CAMWaY3ODBO6FAWzz21nDrc4x9+kMboe+RSGjWHyoxLWizoO+6A@mail.gmail.com>
+Content-Type: multipart/related; boundary=001a1140d9443d98ae05273c4d70
+Date: Sat, 19 Dec 2015 08:47:01 +0000
+From: CSW Research Lab <disclose@cybersecurityworks.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Cross site vulnerability (XSS) in OcPortal CMS 9.0.20
+To: "cve-assign@mitre.org" <cve-assign@mitre.org>, 
+	"oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
 
---000000000000dd9c8705ed2111ab
-Content-Type: text/plain; charset="UTF-8"
+--001a1140d9443d98ae05273c4d70
+Content-Type: multipart/alternative; boundary=001a1140d9443d98ab05273c4d6f
 
-Hello Kubernetes Community,
+--001a1140d9443d98ab05273c4d6f
+Content-Type: text/plain; charset=UTF-8
 
-A security issue was discovered in Kubernetes where users authorized to
-list or watch one type of namespaced custom resource cluster-wide can read
-custom resources of a different type in the same API group without
-authorization.
+Hi all
 
-This issue has been rated Medium (
-CVSS:3.0/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N
-<https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N>),
-and assigned CVE-2022-3162
-Am I vulnerable?
+can you please assign CVE for this issue ?
+http://ocportal.com/site/news/view/security_issues/security-patch-for-xss.htm?filter=1%2C2%2C3%2C29%2C30
 
-Clusters are impacted by this vulnerability if all of the following are
-true:
+Proof of Concept URL
+***************************
+[+] http://localhost/ocportal
+/data/emoticons.php?field_name=post&keep_session=1
+840048647&utheme=default&overlay=1/
+[image: XSS on Data_emotions_browser.PNG]
 
-   1.
+Vulnerable Parameter(s):
+******************************
+[+]  Field_Name
 
-   There are 2+ CustomResourceDefinitions sharing the same API group
-   2.
+Credits & Authors
+--------------------
+Arjun Basnet from Cyber Security Works Pvt. Ltd. (
+http://cybersecurityworks.com)
 
-   Users have cluster-wide list or watch authorization on one of those
-   custom resources.
-   3.
+--001a1140d9443d98ab05273c4d6f
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-   The same users are not authorized to read another custom resource in the
-   same API group.
+<div dir=3D"ltr">Hi all=C2=A0<div><br></div><div>can you please assign CVE =
+for this=C2=A0issue ?</div><div><a href=3D"http://ocportal.com/site/news/vi=
+ew/security_issues/security-patch-for-xss.htm?filter=3D1%2C2%2C3%2C29%2C30"=
+ target=3D"_blank">http://ocportal.com/site/news/view/security_issues/secur=
+ity-patch-for-xss.htm?filter=3D1%2C2%2C3%2C29%2C30</a><br></div><div><br></=
+div><div><div style=3D"font-size:12.8px"><span style=3D"font-size:12.8px">P=
+roof of Concept URL</span><br style=3D"font-size:12.8px"><span style=3D"fon=
+t-size:12.8px">***************************</span></div><div style=3D"font-s=
+ize:12.8px"><div><span style=3D"font-size:12.8px">[+]=C2=A0</span><font col=
+or=3D"#1155cc"><span style=3D"font-size:12.8px"><a href=3D"http://localhost=
+/ocportal/data/emoticons.php?field_name=3Dpost&amp;keep_session=3D1" target=
+=3D"_blank">http://localhost/<span>ocportal</span>/data/emoticons.php?field=
+_name=3Dpost&amp;keep_session=3D1</a></span></font><span style=3D"font-size=
+:12.8px;color:rgb(17,85,204)">840048647&amp;utheme=3Ddefault&amp;overlay=3D=
+1/</span></div><div><span style=3D"font-size:12.8px;color:rgb(17,85,204)"><=
+img src=3D"cid:151b96a6892346304b84" alt=3D"XSS on Data_emotions_browser.PN=
+G" class=3D"kr" style=3D"max-width: 100%; opacity: 1;"><br></span></div><br=
+ style=3D"font-size:12.8px"><span style=3D"font-size:12.8px">Vulnerable Par=
+ameter(s):</span><br></div></div><div style=3D"font-size:12.8px"><span styl=
+e=3D"font-size:12.8px">******************************</span></div><div styl=
+e=3D"font-size:12.8px"><div style=3D"font-size:12.8px"><span style=3D"font-=
+size:12.8px">[+] =C2=A0Field_Name</span></div><div style=3D"font-size:12.8p=
+x"><span style=3D"font-size:12.8px"><br></span></div><div style=3D"font-siz=
+e:12.8px"><span style=3D"font-size:12.8px;line-height:19.2px">Credits &amp;=
+ Authors</span><br style=3D"font-size:12.8px;line-height:19.2px"><span styl=
+e=3D"font-size:12.8px;line-height:19.2px">--------------------</span><br st=
+yle=3D"font-size:12.8px;line-height:19.2px"><span style=3D"font-size:12.8px=
+;line-height:19.2px">Arjun Basnet from Cyber Security Works Pvt. Ltd. (<a h=
+ref=3D"http://cybersecurityworks.com/" target=3D"_blank">http://cybersecuri=
+tyworks.com</a>)</span><span style=3D"font-size:12.8px"><br></span></div><d=
+iv style=3D"font-size:12.8px"><span style=3D"font-size:12.8px"><br></span><=
+/div><div style=3D"font-size:12.8px"><span style=3D"font-size:12.8px"><br><=
+/span></div></div></div>
 
-Affected Versions
+--001a1140d9443d98ab05273c4d6f--
 
-   -
-
-   Kubernetes kube-apiserver <= v1.25.3
-   -
-
-   Kubernetes kube-apiserver <= v1.24.7
-   -
-
-   Kubernetes kube-apiserver <= v1.23.13
-   -
-
-   Kubernetes kube-apiserver <= v1.22.15
-
-How do I mitigate this vulnerability?
-
-Upgrading the kube-apiserver to a fixed version mitigates this
-vulnerability.
-
-Prior to upgrading, this vulnerability can be mitigated by avoiding
-granting cluster-wide list and watch permissions.
-Fixed Versions
-
-   -
-
-   Kubernetes kube-apiserver v1.25.4
-   -
-
-   Kubernetes kube-apiserver v1.24.8
-   -
-
-   Kubernetes kube-apiserver v1.23.14
-   -
-
-   Kubernetes kube-apiserver v1.22.16
-
-These releases will be published over the course of today, November 10th.
-Detection
-
-Requests containing `..` in the request path are a likely indicator of
-exploitation. Request paths may be captured in API audit logs, or in
-kube-apiserver HTTP logs.
-
-If you find evidence that this vulnerability has been exploited, please
-contact security@kubernetes.io
-Additional Details
-
-See the GitHub issue for more details:
-https://github.com/kubernetes/kubernetes/issues/113756
-Acknowledgements
-
-This vulnerability was reported by Richard Turnbull of NCC Group as part of
-the Kubernetes Audit.
-
-Thank You,
-
-Tim Allclair on behalf of the Kubernetes Security Response Committee
-
---000000000000dd9c8705ed2111ab--
+--001a1140d9443d98ae05273c4d70--
