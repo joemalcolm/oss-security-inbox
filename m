@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["305" "Monday" "1" "February" "2016" "12:00:04" "+0800" "Lucas Leong" "wmliang.tw@gmail.com" "<CAFC7fYSmWcbfC+puEU7gxS+6+o3pfaQUoTCCef3jm9D-8rWc2g@mail.gmail.com>" "13" "[oss-security] CVE Request: FFmpeg issue" "^Date:" nil nil "2" "2016020104:00:04" "[oss-security] CVE Request: FFmpeg issue" (number mark "        wmliang.tw@g Feb  1   13/305   " thread-indent "\"[oss-security] CVE Request: FFmpeg issue\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1048" "Monday" "21" "December" "2015" "13:41:16" "-0700" "Kurt Seifried" "kseifried@redhat.com" "<CANO=Ty30N=AwTvdU6Hj2ySS=doE7Nt2ptkExN61KOfho5FR9RQ@mail.gmail.com>" "28" "[oss-security] mail-client/claws-mail-3.13.1: Stack Overflow - CVE needed?" "^Date:" nil nil "12" "2015122120:41:16" "[oss-security] mail-client/claws-mail-3.13.1: Stack Overflow - CVE needed?" (number mark "        kseifried@re Dec 21   28/1048  " thread-indent "\"[oss-security] mail-client/claws-mail-3.13.1: Stack Overflow - CVE needed?\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 11915 invoked by uid 550); 1 Feb 2016 08:50:00 -0000
+Received: (qmail 3544 invoked by uid 550); 21 Dec 2015 20:41:29 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,52 +11,55 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 18319 invoked from network); 1 Feb 2016 04:00:16 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:date:message-id:subject:from:to:content-type;
-        bh=HyRED28F9W2a8dqYoWdiIpYt8imzVgKl2zYx/+LsLLU=;
-        b=Inpx3e4/NwxfJIQo2aky6eXnmHF6AeGcsZuDFmGQO1vpBfjmeo+DNuMRGeJkp1V4VD
-         JvSjrfiLnRMxPr91ZE5AihrixQGwDiGE68mWGl6PmP6I5E0pp989UgM+JZQTlx0ftPVW
-         NPfkP1w2UP8fCn4CwXW03gQcaOs1Ox0awjmAsj16BfmOpLO9wyMblxg8U4NAbZYqGGgE
-         u3lZLJDi+pXL7wV0sIFDfDf+GSMD+hTjQTHJU8TcxvLLXtT+Gtq6QiXjRWDPcYH6hwuz
-         xXuXDYXzsqXYYAzhTY9WuOGXpQdL/uokNW6gIdWnP1cPUE1/C8jHwGjSx7Vl+brwkVyt
-         9shw==
+Received: (qmail 3517 invoked from network); 21 Dec 2015 20:41:28 -0000
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:date:message-id:subject:from
-         :to:content-type;
-        bh=HyRED28F9W2a8dqYoWdiIpYt8imzVgKl2zYx/+LsLLU=;
-        b=K6lJqdn5wkstaQA0ZW1gdwBX4cV2vKTBtRKXJFR0I1/rnt//q6XJFSEtTcwQCYtEWF
-         uHV9sv0E+dpS43fgL2y8uRDn4I8lkVWQUHTrLHLyB5AHFt0PbflCGFKe3NKyze706Tgb
-         fSD14CSS9MQbFaKuVSg6v/jMHl9Ps9TXa/IjY+ewMZQedwBRrdl3JnShwWnrAiM6+1zz
-         CY786crQXl6AnvsW0EEBYkeSfhADZ6KN7ru4HyZMQh7jYKsM+SfHhns2NmiY/YzIOiaE
-         bDHLaclole8nHCLGy0dks6QZgO5++0Rpmozz+wb3uzppp+BzTL4w0HCAjSBXITdCFFzj
-         Ct4A==
-X-Gm-Message-State: AG10YOQT/0XHXWnYSWKKECO/lJWmeDIDwoxAsATdfZ49UkJLM5nwu0Tac1oJFsm4eADdqwxXublthv4a5Y2IkQ==
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
+         :content-type;
+        bh=1bFBPigP65TDZdpKk2o/gywWuTSra5ZT5C4cOuvmYXg=;
+        b=GZ6pWGJi0X0E/DY5W+u7AN5LlcODjQmgExaAEWi5fDxlcntvXjZ42VPudb4hSDWh2Z
+         vGFg9JYhFYatqAD7oy9INyyup6D6QcUVkSIL5zRpLx0FA/0WmI/SoGclomfdqvSCOa+K
+         t6KCbBVNboXMfxFqDj3AeQ48qX5P2NX0wQs5HBEun4yc91y21pJ2LSQWCF315B1Z5OUy
+         6YZmK0ehaMJBsGhAJq6VQa8oGg3Pg+vXEuKE+WBLFLK7oHOxzXB/eLvUun078KyXZKeF
+         xzYI1Z0dy4S8/0L7Lu+6QQ5hGH+ageLCH3t72cSrGoTuVR5Q4qSgdIPh0cSZWNFdUHkj
+         b4Cw==
+X-Gm-Message-State: ALoCoQnKP2BB1v8EWxuy2o2NjYfSWRqtfl7r3mFrmySwV5AgAVzdb+m/HBjLMl09GgSI5wmyn3+QXEKSF+4BX1u20KRP8FKEwy7s3uwVem8sHiW8PdoJnL4=
 MIME-Version: 1.0
-X-Received: by 10.31.162.3 with SMTP id l3mr14548899vke.68.1454299204721; Sun,
- 31 Jan 2016 20:00:04 -0800 (PST)
-X-Google-Sender-Auth: Po2g0E-Ge-xFReVhJuT1HVrAmOE
-Message-ID: <CAFC7fYSmWcbfC+puEU7gxS+6+o3pfaQUoTCCef3jm9D-8rWc2g@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=001a114406ea7ea490052aad6be6
-Date: Mon, 1 Feb 2016 12:00:04 +0800
-From: Lucas Leong <wmliang.tw@gmail.com>
+X-Received: by 10.13.223.21 with SMTP id i21mr16577871ywe.20.1450730476318;
+ Mon, 21 Dec 2015 12:41:16 -0800 (PST)
+Message-ID: <CANO=Ty30N=AwTvdU6Hj2ySS=doE7Nt2ptkExN61KOfho5FR9RQ@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=001a114e43bab4eb2105276e8217
+Date: Mon, 21 Dec 2015 13:41:16 -0700
+From: Kurt Seifried <kseifried@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Sender: star03629@gmail.com
-Subject: [oss-security] CVE Request: FFmpeg issue
-To: oss-security@lists.openwall.com, cve-assign@mitre.org
+Subject: [oss-security] mail-client/claws-mail-3.13.1: Stack Overflow - CVE needed?
+To: oss-security <oss-security@lists.openwall.com>
 
---001a114406ea7ea490052aad6be6
+--001a114e43bab4eb2105276e8217
 Content-Type: text/plain; charset=UTF-8
 
-Hi
+As per https://bugs.gentoo.org/show_bug.cgi?id=569010
 
-Id like to request CVE for the following issue in ffmpeg 2.8.5 release
+Hanno Boeck [image: gentoo-dev] 2015-12-21 15:15:17 UTC
 
-Fixes out of array read
-http://git.videolan.org/?p=ffmpeg.git;a=commit;h=0aada30510d809bccfd539a90ea37b61188f2cb4
+This upstream bug was fixed in
+3.13.1:http://www.thewildbeast.co.uk/claws-mail/bugzilla/show_bug.cgi?id=3557
 
-Regards
+The title is "Remotely exploitable bug", but the information is a bit
+unclear. It looks like this is a stack overflow. Anyway, probably
+means 3.13.1 should receive fast stabilization and a GLSA.
 
---001a114406ea7ea490052aad6be6--
+This version also fixes two oob errors I reported, I don't think
+they're security risks, but for completeness here they are (some
+consider every oob issue to be worthy of treating as a potential
+security issue):http://www.thewildbeast.co.uk/claws-mail/bugzilla/show_bug.cgi?id=3559http://www.thewildbeast.co.uk/claws-mail/bugzilla/show_bug.cgi?id=3563
+
+
+-- 
+
+--
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@redhat.com
+
+--001a114e43bab4eb2105276e8217--
