@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3295" "Tuesday" "29" "August" "2017" "15:23:50" "-0400" "cve-request@mitre.org" "cve-request@mitre.org" "<0295d4de82454ac79e4bc834c30d39b3@imshyb01.MITRE.ORG>" "68" "[oss-security] Re: [scr379303] A bunch of duplicate CVEs requested for?? bho.." nil nil nil "8" "2017082919:23:50" "[oss-security] Re: [scr379303] A bunch of duplicate CVEs requested for?? bho.." (number mark "U       cve-request@ Aug 29   68/3295  " thread-indent "\"[oss-security] Re: [scr379303] A bunch of duplicate CVEs requested for?? bho..\"\n") "<6609652.OIiHvm4qLd@wanheda>" ("<6609652.OIiHvm4qLd@wanheda>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1538" "Monday" "21" "December" "2015" "23:53:41" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1512212349450.26574@wniryva>" "42" "[oss-security] CVE request: Qemu: scsi: stack based buffer overflow in megasas_ctrl_get_info" "^cc:" nil nil "12" "2015122118:23:41" "[oss-security] CVE request: Qemu: scsi: stack based buffer overflow in megasas_ctrl_get_info" (number mark "        ppandit@redh Dec 21   42/1538  " thread-indent "\"[oss-security] CVE request: Qemu: scsi: stack based buffer overflow in megasas_ctrl_get_info\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 7288 invoked by uid 550); 29 Aug 2017 19:24:03 -0000
+Received: (qmail 1900 invoked by uid 550); 21 Dec 2015 18:24:07 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,84 +11,59 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7248 invoked from network); 29 Aug 2017 19:24:02 -0000
-From: <cve-request@mitre.org>
-To: <ago@gentoo.org>
-CC: <cve-request@mitre.org>, <oss-security@lists.openwall.com>
-In-Reply-To: <6609652.OIiHvm4qLd@wanheda>
-Message-ID: <0295d4de82454ac79e4bc834c30d39b3@imshyb01.MITRE.ORG>
-Date: Tue, 29 Aug 2017 15:23:50 -0400
+Received: (qmail 1877 invoked from network); 21 Dec 2015 18:24:06 -0000
+X-X-Sender: pjp@javelin
+Message-ID: <alpine.LFD.2.20.1512212349450.26574@wniryva>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-MITRE: 8GQsMWxq66rxk57w
-Subject: [oss-security] Re: [scr379303] A bunch of duplicate CVEs requested for?? bho..
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.23
+cc: Qinghao Tang <luodalongde@gmail.com>
+Date: Mon, 21 Dec 2015 23:53:41 +0530 (IST)
+From: P J P <ppandit@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE request: Qemu: scsi: stack based buffer overflow in
+ megasas_ctrl_get_info
+To: oss security list <oss-security@lists.openwall.com>
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hash: SHA1
 
-> https://nvd.nist.gov/vuln/detail/CVE-2017-13753 duplicate of:
-> https://nvd.nist.gov/vuln/detail/CVE-2016-9396
+   Hello,
 
-Yes, these are duplicates; we will reject CVE-2017-13753 and update
-CVE-2016-9396.
+Qemu emulator built with the SCSI MegaRAID SAS HBA emulation support is 
+vulnerable to a stack buffer overflow issue. It occurs while processing the 
+SCSI controller's CTRL_GET_INFO command. A privileged guest user could use 
+this flaw to crash the Qemu process instance resulting in DoS.
 
-This occurred because the MITRE CVE team inadvertently populated
-CVE-2016-9396 with incorrect version information, and because the code
-changed between the two tested versions.
+Upstream patch:
+- ---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2015-12/msg03737.html
 
-Specifically, CVE-2016-9396 had said "in JasPer before 1.900.12" but
-actually there was no reference stating that 1.900.12 was a fixed
-version. Also, the CVE-2017-13753 reference said "Assertion `qmfbid ==
-JPC_COX_RFT' failed" but the CVE-2016-9396 reference said "Assertion
-`qmfbid == 0x01' failed." These happen to be the same (there's a
-"#define JPC_COX_RFT 0x01" elsewhere), but it initially looked like
-the new report was about a different assertion that was problematic in
-1.900.12 and later versions.
+Reference:
+- ----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1284008
 
-> months later we have:
-> https://nvd.nist.gov/vuln/detail/CVE-2017-11720
-> "There is a division-by-zero vulnerability in LAME 3.99.5, caused by a
-> malformed input file."
+This issue was discovered by Mr Qinghao Tang of Qihoo 360 Inc.
 
-When we worked on your CVE ID request for the
-https://blogs.gentoo.org/ago/2017/06/17/lame-divide-by-zero-in-parse_wave_header-get_audio-c/
-report, we had the information about the affected source-code pathname
-frontend/get_audio.c, and we had found the
-https://bugs.debian.org/777159 information about "this is all in the
-frontend code in frontend/get_audio.c:parse_wave_header() and not in
-the library." By contrast, the CVE-2017-11720 request had less
-technical detail about the source-code location, and the requester had
-checked the "Has vendor confirmed or acknowledged the vulnerability?"
-Yes box on our https://cveform.mitre.org web site. In general, if a
-problem is only a divide-by-zero in a command-line program, but the
-upstream vendor decided to categorize it as a vulnerability, then it
-gets a CVE. Admittedly, there was no direct proof of "decided to
-categorize it as a vulnerability" here. Also, if a CVE is already
-populated, and is about this type of valid crash report, then we do
-not retroactively reject it, even if we learn more about exploitation
-relevance. We will update CVE-2017-11720 with your reference, to help
-to show that you were the original discoverer.
+Thank you.
+- --
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJZpb6gAAoJEHb/MwWLVhi22IwQAJe2UP55hrbdFS8RK0ZNLws+
-4O2z1FQQV8MVcVAM0K7gFdliJzuhFcvhN9Ta1/N078f0tlAMIy9/nqcVnGXzi08/
-Xwce5Y8n0jivXEKeqSyH73k9hurcGeEhSiB/WdxrOeXq9Xnddt0QhUMkKmd6/RtO
-bxWIYSAYegx3i7fAb50oXb0e0hF44rcZoHq/iRMj1Ev8WoIJbZkV0TrNPsHmjJrI
-+hGWpAyfD2/T+FE1Q1WUpwcf6Pp1XXZcGrGxE52FE1SpfNuW9MhLXSdiM0Afa/DN
-OGtARAd7qjWN1tC68xr1KZu1coHgsC8KTtyy5g6K/M5gKnlqKpvx/LMWkzsoMSpU
-FUixt9Jyh9umO2j/tF3KXiPWq1rQo1wSY5ib9ULDigqmvMp/hUarTlPysLe/ddBL
-nHo+StZVqhu8NhIaR+XZBy/kr7D5UpTMpBmDXUtRYbxVLc7cUySVd8xJfAqHtdfv
-z1tUMWkCKb8lPJa6Mx+fVE6/tuOuUYBml9l+1/wtktwTfuV9f6Xvt9ZlxWPwuCvI
-/ZV5tM+5Pj8NY94YjYkRSsAbyeYRLJyxqpmqJhfapknR8Ib0RHMxmkS8Uh7bWjq7
-ycDToRIFjgDqJexExwtaOZybdaSVNCzj/lqt/N9xhIZE8w0jYQ8WtEmPY5y8OIug
-04kqg2X2uxrUI/8R1fnj
-=aEt4
+iQIcBAEBAgAGBQJWeEOtAAoJEN0TPTL+WwQfobUQALM8V93og7NcHj15LiRqXKOD
+UnisLDqo2VeX0MmEHaQ5sYmoJbvYEDebGAqnqfYSfw5LkmfUVfKgzGkIFdywpNva
+e80b/k3QLvuDJNiZMWGHzNe5fQUzW2faV07zGag1Bw8RsFvjv72Hq+T0Il9InJHE
+9EvcP9LdO4U0Ztqj0ATr5HeejDg09lKIEjwdA9h1UZJp89BghS1+QlFLUstRUtx2
+28h24bYL/NMjwpjd4UBU3Fdgn2S3NpC/AsmngVfuTaUtZ6XIORnMHLpvrTvbEjDD
+XV864kQbq7KEe1RF8htrBp13n0ugZ63ThHTE46ISiwuHXF9YIG49Eugig98IIrXw
+zdMgWlPnh5/fem+hzryx1CpMHu4GePbRdwrjC4ydciTHVoNO1ZqNjj57bsoj3Oiy
+rjHraGA6ZkU8hYnNUknXCCY5AN/sBUj/+rU05tE7qmZ0HTJkgNwcuCGX3w6CjhVu
+cfbmfOJH1v+dTqCnjTTtRG1fKCVy8webaiNegHqEl+wi21SU23BYmw2mHkOfbPvo
+lntNUopd/e+GR6uCSUKdqwofkCzVhc3iisRqwS88dPK1qh5wcZaGfi1+gJAemYaR
+qbSA7SJzUemjiJM3ShhnRsXAsSkqsromSEuVh2GuW5RSa2v+WFRS+A5upRXwAaqN
+QXM1s/NRQTFIEfxDQcqL
+=W+H1
 -----END PGP SIGNATURE-----
