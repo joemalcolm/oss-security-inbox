@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1778" "Thursday" "23" "April" "2015" "07:44:12" "+0200" "Salvatore Bonaccorso" "carnil@debian.org" "<20150423054412.GA6935@lorien.valinor.li>" "45" "Re: [oss-security] CVE request: Module::Signature before 0.75 - multiple vulnerabilities" nil nil nil "4" "2015042305:44:12" "[oss-security] CVE request: Module::Signature before 0.75 - multiple vulnerabilities" (number mark "        carnil@debia Apr 23   45/1778  " thread-indent "\"Re: [oss-security] CVE request: Module::Signature before 0.75 - multiple vulnerabilities\"\n") "<55236279.8060709@nixnuts.net>" ("<55236279.8060709@nixnuts.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2306" "Monday" "21" "December" "2015" "11:37:14" "-0800" "Chris Steipp" "csteipp@wikimedia.org" "<CAKcmtDwuatO7TaTOdeun9q4s9Wv_SfWK6Hzk24b2J227YnL23Q@mail.gmail.com>" "47" "[oss-security] CVE requests for MediaWiki 1.26.1, 1.25.4, 1.24.5 and 1.23.12" nil nil nil "12" "2015122119:37:14" "[oss-security] CVE requests for MediaWiki 1.26.1, 1.25.4, 1.24.5 and 1.23.12" (number mark "U       csteipp@wiki Dec 21   47/2306  " thread-indent "\"[oss-security] CVE requests for MediaWiki 1.26.1, 1.25.4, 1.24.5 and 1.23.12\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 9731 invoked by uid 550); 23 Apr 2015 05:44:26 -0000
+Received: (qmail 15405 invoked by uid 550); 21 Dec 2015 19:37:28 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,78 +11,81 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 9713 invoked from network); 23 Apr 2015 05:44:26 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=r6J3uIO+BsxghXQxwyacZNkmg7paVdj15XdZ/anb8dg=;
-        b=g7e+PsLF73GK0MmxjSql4zT0e2u5jpPpPEWGmeYUX19pd4rzqKNdpes4jFAqsDEr/2
-         x61phSW3tfn7kcJbIxyE5YUggP1rM/iGmUWKzi9tKSdiaZsy8ILQFENJ6daAO4W+TT8b
-         NPks/e2U7dUvdus8mpr0LpOkw2h+jKdHc8ecgYp6lLY1LkyO70OWlxvOrPZOV8G0jsoq
-         KjPJ8pBwoHIS00VsZ84rmcLmXmlKDXMlqRRuhC1h9OGrViJ6/KrL313rIEa/BGAZZzXj
-         YDADmU9XtGbZxgcvPAh6I50BcEbeYUc8z6MBBzCY6mqtt79PTAOjnSkfqfN/ChdTzcuV
-         /DCw==
-X-Received: by 10.194.157.39 with SMTP id wj7mr1990906wjb.57.1429767854869;
-        Wed, 22 Apr 2015 22:44:14 -0700 (PDT)
-Message-ID: <20150423054412.GA6935@lorien.valinor.li>
-References: <55236279.8060709@nixnuts.net>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <55236279.8060709@nixnuts.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-Cc: CVE Assignments MITRE <cve-assign@mitre.org>
-Date: Thu, 23 Apr 2015 07:44:12 +0200
-From: Salvatore Bonaccorso <carnil@debian.org>
 Reply-To: oss-security@lists.openwall.com
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Subject: Re: [oss-security] CVE request: Module::Signature before 0.75 -
- multiple vulnerabilities
+Received: (qmail 15382 invoked from network); 21 Dec 2015 19:37:27 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=wikimedia.org; s=google;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=FpeFCoqC62gKWKXdhlMLNf8rd52wZ8KDlrK0dMqA5mU=;
+        b=Tzdi0Jd86hobeE4sPE5gjfUos6pdzL6uQP31sIxGW7SKJYB3FBLiYXWfbQopw8DXim
+         lFi7oCht8qvNvpCfPr4FCT3Mz0pK/Os+5BSmt0blraS/hSKG1qZp4AWu9f0K99luSjpE
+         PlTz1rJf0N684NrEmBPsWi8DPcG5s4jg/7tXQ=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
+         :content-type;
+        bh=FpeFCoqC62gKWKXdhlMLNf8rd52wZ8KDlrK0dMqA5mU=;
+        b=HQyhUeLECRYTwtM5pzmyveDx9lqDsMRmKFkswUsi+LLikUnbdWplqRCC/OJisloPnB
+         qv/UD3d4HDffqOGYPKkJOe8URoAWRPxrwrfwrUVp2de/8Z37iQ6RCwNp9QBHXcSWWkxA
+         ukWWB6n4/PZbVKX+owdG/YXZdZJRM18l+1o1dtFx2zzqTJ3TQR1NHU8ar11sQmH5W6Z7
+         bWYDiVpBCPjkgWQumg+tBnwirzwcZNxPEnVzCzKe9ZX0h873n4c+eBP4iB1ZmHIc7rfu
+         WFO24dTGJyDuXYnO73dSDSHVXauz5WC/N6w1IgBZxsyHERZ6se+aV/BaPyuD2jHvuYpP
+         SnUA==
+X-Gm-Message-State: ALoCoQnLaL8/iJ8GnOiD7tlXPJ4y3Edwv733ML5REFO8GfpWysn505+QpE3PQxijuVO5V0m7bjR4eaHWJ7jEQwRhhIGTExxjFjllKAekBHHJnq888FLNF14=
+MIME-Version: 1.0
+X-Received: by 10.140.81.112 with SMTP id e103mr26446904qgd.99.1450726634387;
+ Mon, 21 Dec 2015 11:37:14 -0800 (PST)
+Date: Mon, 21 Dec 2015 11:37:14 -0800
+Message-ID: <CAKcmtDwuatO7TaTOdeun9q4s9Wv_SfWK6Hzk24b2J227YnL23Q@mail.gmail.com>
+From: Chris Steipp <csteipp@wikimedia.org>
 To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary=001a11c12c3cb5945f05276d9d4e
+Subject: [oss-security] CVE requests for MediaWiki 1.26.1, 1.25.4, 1.24.5 and 1.23.12
 
-Hi,
+--001a11c12c3cb5945f05276d9d4e
+Content-Type: text/plain; charset=UTF-8
 
-On Mon, Apr 06, 2015 at 11:52:09PM -0500, John Lightsey wrote:
-> Hi there,
-> 
-> A new version of Module::Signature, was released to fix multiple
-> vulnerabilities. Module::Signature is used by most CPAN clients to
-> validate PAUSE GPG signature files on the CPAN mirrors and GPG signature
-> files inside individual Perl module tarballs.
-> 
-> The changelog for the 0.75 version is here:
-> 
-> https://metacpan.org/changes/distribution/Module-Signature
-> 
-> This commit fixes three flaws:
-> 
-> https://github.com/audreyt/module-signature/commit/8a9164596fa5952d4fbcde5aa1c7d1c7bc85372f
-> 
-> - Module::Signature could be tricked into interpreting the unsigned
-> portion of a SIGNATURE file as the signed portion due to faulty parsing
-> of the PGP signature boundaries.
-> 
-> - When verifying the contents of a CPAN module, Module::Signature
-> ignored some files in the extracted tarball that were not listed in the
-> signature file. This included some files in the t/ directory that would
-> execute automatically during "make test"
-> 
-> - When generating checksums from the signed manifest, Module::Signature
-> used two argument open() calls to read the files. This allowed embedding
-> arbitrary shell commands into the SIGNATURE file that would execute
-> during the signature verification process.
-> 
-> This commit fixes one more flaw:
-> 
-> https://github.com/audreyt/module-signature/commit/c41e8885b862b9fce2719449bc9336f0bea658ef
-> 
-> - Several modules were loaded at runtime inside the extracted module
-> directory. Modules like Text::Diff are not guaranteed to be available on
-> all platforms and could be added to a malicious module so that they
-> would load from the '.' path in @INC.
+We recently released security fixes for MediaWiki. I believe the first five
+issues should have CVE's assigned. The last issue (T109724) requires that
+the organization running the wiki also releases detailed page view data
+publicly, and probably not worth tracking with a CVE. However I'm happy for
+mitre to assign one of they think this generally qualifies.
 
-Adding explicitly CVE assignment team from MITRE into the loop.
+* (T117899) XSS from wikitext when $wgArticlePath='$1'. Internal review
+discovered an XSS vector when MediaWiki is configured with a non-standard
+configuration.
+<https://phabricator.wikimedia.org/T117899>
 
-Regards,
-Salvatore
+* (T119309) User::matchEditToken should use constant-time string
+comparison. Internal review discovered that tokens were being compared as
+strings, which could allow a timing attack. This should possibly have 2
+CVE's assigned, one for the original patch to use hash_equals in
+https://gerrit.wikimedia.org/r/#/c/156336/5/includes/User.php (released as
+part of MediaWiki 1.25, and backported to 1.24 and 1.23 as part of this
+patch) and one to fix T119309, related to the debugging statement.
+<https://phabricator.wikimedia.org/T119309>
+
+* (T118032) Error thrown by VirtualRESTService when POST variable starts
+with '@'. Internal review discovered that MediaWiki was not sanitizing
+parameters passed to the curl library, which could cause curl to upload
+files from the webserver to an attacker.
+<https://phabricator.wikimedia.org/T118032>
+
+* (T115522) Passwords generated by User::randomPassword() may be shorter
+than $wgMinimalPasswordLength. MediaWiki user Frank R. Farmer reported that
+the password reset token could be shorter than the minimum required
+password length.
+<https://phabricator.wikimedia.org/T115522>
+
+* (T97897) Incorrect parsing of IPs for global block. Wikimedia steward
+Vituzzu reported that blocking IP addresses with zero-padded octets
+resulted in a failure to block the IP address.
+<https://phabricator.wikimedia.org/T97897>
+
+* (T109724) A combination of Special:MyPage redirects and pagecounts allows
+an external site to know the wikipedia login of an user. Wikimedia
+user Xavier Combelle reported a way to identify user, when detailed page
+view data is also released.
+<https://phabricator.wikimedia.org/T109724>
+
+--001a11c12c3cb5945f05276d9d4e--
