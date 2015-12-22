@@ -1,4 +1,9 @@
-Received: (qmail 11617 invoked by uid 550); 9 Aug 2022 17:14:51 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1506" "Tuesday" "22" "December" "2015" "22:31:05" "+0100" "ISC Security Officer" "security-officer@isc.org" "<5679C119.9070402@isc.org>" "42" "[oss-security] New vulnerability in Kea DHCP servers (CVE-2015-8373) is now public" nil nil nil "12" "2015122221:31:05" "[oss-security] New vulnerability in Kea DHCP servers (CVE-2015-8373) is now public" (number mark "U       security-off Dec 22   42/1506  " thread-indent "\"[oss-security] New vulnerability in Kea DHCP servers (CVE-2015-8373) is now public\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 12064 invoked by uid 550); 22 Dec 2015 21:31:33 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,42 +12,60 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7850 invoked from network); 9 Aug 2022 17:10:51 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-	s=20210705; t=1660065039;
-	bh=lHcaz7UcD45ZCKQwSdvK3w7Z04z+2gLfnAKY3pfYPNI=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type;
-	b=SvZHdR/be+ziZseQgobTClhcBXa8Fq5APdvoKNMvthAXxIm1zeXSVHb7nIrujjB5X
-	 TPgltJlbnHu9JsK4bMrwwlLvglTU5UkZPVDJwjMptx70BAqlUTP1GhWICIAFVR6lXD
-	 G6T/roLcEcBAttfuUxcAdukcWafCGLMbNuxE5FD5bfBQp+eDNbnssBFnUiPb2UsoOd
-	 /kVMFTicvmHam28BP37U/OfPMfVaoMnR73dqOOPWXfe8YpYWRCg3rqEVFQyi415fw5
-	 vKTjqfb64GhPVm2LiW1fKknfCUhcu6fP8XeLeHd0mGPbPSmVdQ5jTvyoain3AxteBF
-	 3SExAIklTfdtw==
-Date: Tue, 9 Aug 2022 14:10:35 -0300
-From: Thadeu Lima de Souza Cascardo <cascardo@canonical.com>
+Received: (qmail 12011 invoked from network); 22 Dec 2015 21:31:27 -0000
 To: oss-security@lists.openwall.com
-Message-ID: <YvKVC/O+tGfNNm35@quatroqueijos>
+Cc: ISC Security Officer <security-officer@isc.org>
+From: ISC Security Officer <security-officer@isc.org>
+X-Enigmail-Draft-Status: N1210
+Message-ID: <5679C119.9070402@isc.org>
+Date: Tue, 22 Dec 2015 22:31:05 +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:38.0)
+ Gecko/20100101 Thunderbird/38.4.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Subject: [oss-security] CVE-2022-2586 - Linux kernel nf_tables cross-table reference UAF
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="PLvGV9uVrPv4rCg6aJO5SIiD36TworOgW"
+Subject: [oss-security] New vulnerability in Kea DHCP servers (CVE-2015-8373) is now public
 
-CVE-2022-2586 - Linux kernel nf_tables cross-table reference UAF
+--PLvGV9uVrPv4rCg6aJO5SIiD36TworOgW
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-It was discovered that a nft object or expression could reference a nft set on
-a different nft table, leading to a use-after-free once that table was deleted.
+Please be advised that ISC publicly announced a critical vulnerability
+in the Kea DHCP servers.
 
-Team Orca of Sea Security (@seasecresponse) working with Trend Micro's Zero Day
-Initiative discovered that this vulnerability could be exploited for Local
-Privilege Escalation. This has been reported as ZDI-CAN-17470, and assigned
-CVE-2022-2586.
+The CVE-2015-8373 is a denial-of-service vector which can be exploited
+remotely against DHCPv4 and DHCPv6 servers by sending malformed packet.
+Please find the details in the security advisory.
+https://kb.isc.org/article/AA-01318
 
-This bug was introduced by commit 958bee14d071 ("netfilter: nf_tables: use new
-transaction infrastructure to handle sets"), which is present since v3.16-rc1.
+New releases of Kea, including security fixes for this vulnerability,
+are available at: www.isc.org/downloads/
 
-Exploiting it requires CAP_NET_ADMIN in any user or network namespace.
+Release notes can be obtained using the following links:
 
-A PoC that will trigger KASAN is going to be posted in a week.
+ftp://ftp.isc.org/isc/kea/0.9.2-P1/KeaReleaseNotes092P1.txt
+ftp://ftp.isc.org/isc/kea/1.0.0-beta2/KeaReleaseNotes100beta2.txt
 
-Fixes have been sent to netfilter-devel@vger.kernel.org and are at
-https://lore.kernel.org/netfilter-devel/20220809170148.164591-1-cascardo@canonical.com/T/#t.
+Marcin Siodelski
+(as ISC Security Officer)
+
+
+--PLvGV9uVrPv4rCg6aJO5SIiD36TworOgW
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iQEcBAEBCAAGBQJWecEZAAoJEL2X3GOe6MR7HcEH/3Wl5sfXYvj37l3LRaJgbrub
+J/lj48y1S9KVuwo1tPRMOMvshWlCwA5cIDb9bZtc7LsoE+lctxNHeqUCgVtKYGk1
+iUSGIxD7n7DtAeUsrLsrquTovmsGQv0C2Hk9uJ3DuNbbzn3YqbtKhKGil/jjYj5k
+0mZObv9XD+1CBz0rrsd/WZj0967FFv2xqpIQP1OCLGQ+IQnYo02c0c/MkT9UVNOJ
+pP0Qp+LgATopOP1GmZMSoBkC8nsiDHxvNiHumxDwJUqd52IzbX6kD6AKX2hhH1qW
+3edzxiXr2WJLcnFTr3VB2U9IHjx7VYbOhH/mRRAgn8/mE5+seml00p2HLq9ph4M=
+=/px1
+-----END PGP SIGNATURE-----
+
+--PLvGV9uVrPv4rCg6aJO5SIiD36TworOgW--
