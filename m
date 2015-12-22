@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1023" "Saturday" "2" "May" "2015" "05:54:33" "+0200" "Michael Scherer" "misc@zarb.org" "<20150502035433.GA6750@sisay.ephaone.org>" "28" "[oss-security] CVE Request / Ansible: insecure permission on a directory when using spacewalk inventory" nil nil nil "5" "2015050203:54:33" "[oss-security] CVE Request / Ansible: insecure permission on a directory when using spacewalk inventory" (number mark "        misc@zarb.or May  2   28/1023  " thread-indent "\"[oss-security] CVE Request / Ansible: insecure permission on a directory when using spacewalk inventory\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4558" "Tuesday" "22" "December" "2015" "18:47:18" "+0000" "Xen.org security team" "security@xen.org" "<E1aBRxu-0003xS-QB@xenbits.xen.org>" "128" "[oss-security] Xen Security Advisory 169 (CVE-2015-8615) - x86: unintentional logging upon guest changing callback method" "^CC:" nil nil "12" "2015122218:47:18" "[oss-security] Xen Security Advisory 169 (CVE-2015-8615) - x86: unintentional logging upon guest changing callback method" (number mark "        security@xen Dec 22  128/4558  " thread-indent "\"[oss-security] Xen Security Advisory 169 (CVE-2015-8615) - x86: unintentional logging upon guest changing callback method\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 1952 invoked by uid 550); 2 May 2015 03:54:45 -0000
+Received: (qmail 15845 invoked by uid 550); 22 Dec 2015 18:47:44 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,45 +11,146 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 1934 invoked from network); 2 May 2015 03:54:45 -0000
-Message-ID: <20150502035433.GA6750@sisay.ephaone.org>
+Received: (qmail 15787 invoked from network); 22 Dec 2015 18:47:38 -0000
+Message-Id: <E1aBRxu-0003xS-QB@xenbits.xen.org>
+Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
+Content-Transfer-Encoding: binary
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-User-Agent: Mutt/1.5.20 (2009-06-14)
-Cc: security@ansible.com
-Date: Sat, 2 May 2015 05:54:33 +0200
-From: Michael Scherer <misc@zarb.org>
+X-Mailer: MIME-tools 5.428 (Entity 5.428)
+CC: Xen.org security team <security@xen.org>
+Date: Tue, 22 Dec 2015 18:47:18 +0000
+From: Xen.org security team <security@xen.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE Request / Ansible: insecure permission on a directory when
- using spacewalk inventory
-To: oss-security@lists.openwall.com
+Subject: [oss-security] Xen Security Advisory 169 (CVE-2015-8615) - x86: unintentional
+ logging upon guest changing callback method
+To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
+ xen-users@lists.xen.org, oss-security@lists.openwall.com
 
-Hi,
+--=separator
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+Content-Transfer-Encoding: 7bit
 
-Could a CVE be assigned for this problem :
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Ansible inventory script for spacewalk create a file in the current
-directory with incorrect permission due to a error in a chmod specification.
+            Xen Security Advisory CVE-2015-8615 / XSA-169
+                              version 2
 
-https://github.com/ansible/ansible/blob/devel/plugins/inventory/spacewalk.py#L63
+    x86: unintentional logging upon guest changing callback method
 
-In python, os.chmod need to be in octal, and 2755 is not octal. 
-So in the end, we manage to have permission like this :
+UPDATES IN VERSION 2
+====================
 
-d-ws-w-rwt.
+CVE assigned.
 
-And o+rw and u+s kinda sound bad. The directory is created in $PWD if 
-I read the code right, so that's likely the homedir of 1 admin.
-However, that's executed locally, or from a bastion, so there
-isn't much venue to attack ( even if shared shell server still exist nowadays ),
-and this requires to use spacewalk.
+ISSUE DESCRIPTION
+=================
 
-I pushed a commit there :
-https://github.com/mscherer/ansible/commit/251197f11de7c7a3c5d81141970dd8f2ef16c0ee
+HYPERVISOR_hvm_op sub-op HVMOP_set_param's HVM_PARAM_CALLBACK_IRQ
+operation intends to log the new callback method in debug builds only.
+The full message, however, is split into two parts, the second one of
+which didn't get suppressed on non-debug builds as would have been
+intended.
 
-I will wait for a CVE to be assigned before fixing the commit message, and push a 
-PR ( cause i am quite bothered when I cannot find the CVE in the commit message)
+These log messages are not rate-limited and can be triggered by guests.
 
--- 
-Michael Scherer
+IMPACT
+======
+
+A malicious guest could cause repeated logging to the hypervisor
+console, leading to a Denial of Service attack.
+
+VULNERABLE SYSTEMS
+==================
+
+Xen version 4.6 is affected.  Older Xen versions are unaffected.
+
+ARM systems are not affected.
+
+Only x86 HVM guests can expose this vulnerability.
+
+MITIGATION
+==========
+
+Running only PV guests will avoid this issue.
+
+The problematic log messages are issued with priority Warning.
+Therefore they can be rate limited by adding "loglvl=error/warning" to
+the hypervisor command line or suppressed entirely by adding
+"loglvl=error".
+
+On systems where the guest kernel is controlled by the host rather
+than guest administrator, running only kernels which do not excessively
+invoke this operation will also prevent untrusted guest users from
+exploiting this issue. However untrusted guest administrators can still
+trigger it unless further steps are taken to prevent them from loading
+code into the kernel (e.g. by disabling loadable modules etc) or from
+using other mechanisms which allow them to run code at kernel privilege.
+
+NOTE REGARDING LACK OF EMBARGO
+==============================
+
+The fix for this bug was publicly posted on xen-devel, before it was
+appreciated that there was a security problem.
+
+CREDITS
+=======
+
+This issue was discovered as a bug by Malcolm Crossley of Citrix; the
+security impact was recognised by Jan Beulich of SuSE.
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue.
+
+xsa169.patch        xen-unstable, Xen 4.6.x
+
+$ sha256sum xsa169*
+b818922880313cdbc12ea68ae757da5eabed9b3c9e1f8acefe1653683545ccbe  xsa169.patch
+$
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQEcBAEBAgAGBQJWeZqAAAoJEIP+FMlX6CvZ/HcIAMLIVFDrwUahqNkGIaS0rXrn
+LJG6+oMewioAm05NEKI+2wkJn6T4ycJsn+rVWMyOTHpS39vA1kMZK3/Pb/smV3B1
+2K+g8avmSjB22VEhjEoKIGniozkPIInB5Pvchf0GY6C30/LJM2ef3hJeQHUA+W9q
+68HiXZrwFUUBRcpjoSX3ru954Fcfe0VDpEvIRJRS1O4v/XXJeesavt/0/5PnaP34
+sRXr9+l7Ku+Q9z7sh9V87W9Lv98qXnuVns7c3GKIcmDEcvWDihwazCbvuVOZsvQW
+UoV4/LTiJ2bTqnGp2woUqlTfe7MIOHPzjmR88Pj+/ibveObkcVMDxyz4r34wyxw=
+=D97B
+-----END PGP SIGNATURE-----
+
+--=separator
+Content-Type: application/octet-stream; name="xsa169.patch"
+Content-Disposition: attachment; filename="xsa169.patch"
+Content-Transfer-Encoding: base64
+
+eDg2OiBtYWtlIGRlYnVnIG91dHB1dCBjb25zaXN0ZW50IGluIGh2bV9zZXRf
+Y2FsbGJhY2tfdmlhCgpUaGUgdW5jb25kaXRpb25hbCBwcmludGtzIGluIHRo
+ZSBzd2l0Y2ggc3RhdGVtZW50IG9mIHRoZQpodm1fc2V0X2NhbGxiYWNrX3Zp
+YSBmdW5jdGlvbiByZXN1bHRzIGluIFhlbiBsb2cgc3BhbSBpbiBub24gZGVi
+dWcKdmVyc2lvbnMgb2YgWGVuLiBUaGUgcHJpbnRrcyBhcmUgZm9yIGRlYnVn
+IG91dHB1dCBvbmx5IHNvIGNvbmRpdGlvbmFsbHkKY29tcGlsZSB0aGUgZW50
+aXJlIHN3aXRjaCBzdGF0ZW1lbnQgb24gZGVidWcgdmVyc2lvbnMgb2YgWGVu
+IG9ubHkuCgpUaGlzIGlzIFhTQS0xNjkuCgpTaWduZWQtb2ZmLWJ5OiBNYWxj
+b2xtIENyb3NzbGV5IDxtYWxjb2xtLmNyb3NzbGV5QGNpdHJpeC5jb20+ClJl
+dmlld2VkLWJ5OiBKYW4gQmV1bGljaCA8amJldWxpY2hAc3VzZS5jb20+CkFj
+a2VkLWJ5OiBJYW4gQ2FtcGJlbGwgPGlhbi5jYW1wYmVsbEBjaXRyaXguY29t
+PgoKLS0tIGEveGVuL2FyY2gveDg2L2h2bS9pcnEuYworKysgYi94ZW4vYXJj
+aC94ODYvaHZtL2lycS5jCkBAIC0zODYsNyArMzg2LDggQEAgdm9pZCBodm1f
+c2V0X2NhbGxiYWNrX3ZpYShzdHJ1Y3QgZG9tYWluCiAKICAgICBzcGluX3Vu
+bG9jaygmZC0+YXJjaC5odm1fZG9tYWluLmlycV9sb2NrKTsKIAotICAgIGRw
+cmludGsoWEVOTE9HX0dfSU5GTywgIkRvbSV1IGNhbGxiYWNrIHZpYSBjaGFu
+Z2VkIHRvICIsIGQtPmRvbWFpbl9pZCk7CisjaWZuZGVmIE5ERUJVRworICAg
+IHByaW50ayhYRU5MT0dfR19JTkZPICJEb20ldSBjYWxsYmFjayB2aWEgY2hh
+bmdlZCB0byAiLCBkLT5kb21haW5faWQpOwogICAgIHN3aXRjaCAoIHZpYV90
+eXBlICkKICAgICB7CiAgICAgY2FzZSBIVk1JUlFfY2FsbGJhY2tfZ3NpOgpA
+QCAtNDAyLDYgKzQwMyw3IEBAIHZvaWQgaHZtX3NldF9jYWxsYmFja192aWEo
+c3RydWN0IGRvbWFpbgogICAgICAgICBwcmludGsoIk5vbmVcbiIpOwogICAg
+ICAgICBicmVhazsKICAgICB9CisjZW5kaWYKIH0KIAogc3RydWN0IGh2bV9p
+bnRhY2sgaHZtX3ZjcHVfaGFzX3BlbmRpbmdfaXJxKHN0cnVjdCB2Y3B1ICp2
+KQo=
+
+--=separator--
