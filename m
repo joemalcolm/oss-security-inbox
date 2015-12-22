@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3773" "Tuesday" "17" "March" "2015" "13:24:31" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150317172431.E3EBC6C0029@smtpvmsrv1.mitre.org>" "87" "[oss-security] Re: Mono TLS vulnerabilities" nil nil nil "3" "2015031717:24:31" "[oss-security] Re: Mono TLS vulnerabilities" (number mark "        cve-assign@m Mar 17   87/3773  " thread-indent "\"[oss-security] Re: Mono TLS vulnerabilities\"\n") "<54FAE77A.1000901@apebox.org>" ("<54FAE77A.1000901@apebox.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1576" "Wednesday" "23" "December" "2015" "01:48:09" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1512230141060.10838@wniryva>" "45" "[oss-security] CVE request Qemu: hmp: stack based OOB write in hmp_sendkey routine" "^cc:" nil nil "12" "2015122220:18:09" "[oss-security] CVE request Qemu: hmp: stack based OOB write in hmp_sendkey routine" (number mark "        ppandit@redh Dec 23   45/1576  " thread-indent "\"[oss-security] CVE request Qemu: hmp: stack based OOB write in hmp_sendkey routine\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 28434 invoked by uid 550); 17 Mar 2015 17:24:53 -0000
+Received: (qmail 30667 invoked by uid 550); 22 Dec 2015 20:18:44 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,100 +11,62 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 28371 invoked from network); 17 Mar 2015 17:24:43 -0000
-In-Reply-To: <54FAE77A.1000901@apebox.org>
-Message-Id: <20150317172431.E3EBC6C0029@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, directhex@apebox.org
-Date: Tue, 17 Mar 2015 13:24:31 -0400 (EDT)
-From: cve-assign@mitre.org
+Received: (qmail 30649 invoked from network); 22 Dec 2015 20:18:43 -0000
+X-X-Sender: pjp@javelin
+Message-ID: <alpine.LFD.2.20.1512230141060.10838@wniryva>
+MIME-Version: 1.0
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.26
+cc: Ling Liu <liuling-it@360.cn>
+Date: Wed, 23 Dec 2015 01:48:09 +0530 (IST)
+From: P J P <ppandit@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: Mono TLS vulnerabilities
-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE request Qemu: hmp: stack based OOB write in hmp_sendkey
+ routine
+To: oss security list <oss-security@lists.openwall.com>
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> A TLS impersonation attack was discovered in Mono's TLS stack by
-> researchers at Inria. During checks on our TLS stack, we have
-> discovered two further issues which we have fixed - SSLv2 support, and
-> vulnerability to FREAK. These vulnerabilities affect basically every
-> Mono version ever released.
-> 
-> All three issues should be addressed in the following patches:
-> 
-> https://github.com/mono/mono/commit/1509226c41d74194c146deb173e752b8d3cdeec4
-> https://github.com/mono/mono/commit/9c38772f094168d8bfd5bc73bf8925cd04faad10
-> https://github.com/mono/mono/commit/b371da6b2d68b4cdd0f21d6342af6c42794f998b
-> 
-> These patches should apply to all Mono versions from 3.4.0 or so
-> onwards. The EXPORT cipher removal patch requires slight modification
-> in order to apply to Mono releases prior to 3.x -
-> https://gist.github.com/directhex/728af6f96d1b8c976659 should work for
-> these users. The Impersonation patch requires slight modification to
-> apply to Mono releases prior to 3.4 -
-> https://gist.github.com/directhex/f8c6e67f551d8a608154 should work
+   Hello,
 
-As far as we can tell, this can be interpreted as a request for CVE
-IDs for vulnerabilities in Mono, which has its own independent SSL/TLS
-implementation.
+Qemu emulator built with the Human Monitor Interface(HMP) support is 
+vulnerable to an OOB write issue. It occurs while processing 'sendkey' command 
+in hmp_sendkey routine, if the command argument is longer than the 
+'keyname_buf' buffer size.
 
-The message is about three patches, but the patches are mentioned with
-inconsistent terminology. What we think was meant is:
+A user/process could use this flaw to crash the Qemu process instance 
+resulting in DoS.
 
-https://github.com/mono/mono/commit/1509226c41d74194c146deb173e752b8d3cdeec4
+Upstream fix:
+- -------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2015-12/msg02930.html
 
-The commit message says "TLS protocol: add handshake state validation"
-but this is also referenced as "The Impersonation patch" and "A TLS
-impersonation attack was discovered in Mono's TLS stack by researchers
-at Inria." Although there isn't a description of what impersonation
-vulnerability existed, almost certainly it is "SKIP-TLS ... Mono:
-default TLS library vulnerable to client impersonation. Version 3.12.1
-prevents the attack" as listed on the https://www.smacktls.com web
-site.
+Reference:
+- ----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1283926
 
+This issue was discovered by Mr Ling Liu of Qihoo 360 Inc.
 
-https://github.com/mono/mono/commit/9c38772f094168d8bfd5bc73bf8925cd04faad10
+Thank you.
+- --
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
 
-The commit message says "Remove the EXPORT ciphers and related code
-path" - this directly matches "The EXPORT cipher removal patch" but it
-is apparently also referenced as "FREAK patch" and "vulnerability to
-FREAK." (It is conceivable that
-1509226c41d74194c146deb173e752b8d3cdeec4 would also be applicable to
-FREAK attacks.)
-
-
-https://github.com/mono/mono/commit/b371da6b2d68b4cdd0f21d6342af6c42794f998b
-
-The commit message says "Remove the client-side SSLv2 fallback," which
-apparently matches both "SSLv2 support" and "SSLv2 patch." MITRE does
-currently accept reports from authors of SSL/TLS code who want to
-characterize their own SSLv2 support, after a recent drop of support,
-as a vulnerability (i.e., "These vulnerabilities affect ..." in
-http://www.openwall.com/lists/oss-security/2015/03/07/2 together with
-https://uk.linkedin.com/in/directhex).
-
-
-Use CVE-2015-2318 for the https://www.smacktls.com SKIP-TLS issue in
-Mono.
-
-Use CVE-2015-2319 for the https://www.smacktls.com FREAK issue in
-Mono.
-
-Use CVE-2015-2320 for b371da6b2d68b4cdd0f21d6342af6c42794f998b.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Version: GnuPG v1
 
-iQEcBAEBAgAGBQJVCGJ7AAoJEKllVAevmvmsBbUH/j0DEf0vfW282XefkhvCGHdY
-gDcUlyVWgeBk/GJ0FXRsycYmZWrsL5YSJpWnIrK4cXXNaB46cgvu7U3bN5HQPj2p
-MQyJ/WlR0EpDvjTMvzZTPGbNcrBo4jQIkOoB4J6dby75OXrSjmTVLPFXMiqvBdYV
-eAAjOd0ZPGVLJom8K2mJKkiD6T94p7wkH4bJXejAQk5V4VWRK2xVjMHsZv2csuA1
-EjoMSd8v78T6jPyLjh/nuw9mn8YD9ikdh+2jJax7JIOHKykylzlkyE3288vMY9Pc
-LD8zsFrezUW7EgInBh0OUZExNuNEfyzBxyl4rvVcsOI4lXFi63jGcSDh9rgK7VQ=
-=JinB
+iQIcBAEBAgAGBQJWebACAAoJEN0TPTL+WwQfKkEP/R/yWa0pC7a1nky6EWrcuuKC
+d4Sd9cN0q4LjOGAZB+Csfb33HWWbnRZWKiBQuc9v0Ivh4xE7rP605Hh+it+mYzA6
+YCt5vnT0tmwSf6Uq4gS+Ap1G1L7e0aVq/8SaPkaIT59nFfDRRVMPD6xBMy/ZBftT
+ilKmR7O4aE8xK5IvZY2Q857ywrp0FkLzH5MFKrU9aFqSWshtEl+E27cQZoaNPY6q
+B39m1ZY0mW5d0JBJiq5RZbz9qBqKNqTFumQ9femE6uzPlxwVDvWEt8QAhl6EuxXh
+QU+zVoD+nrA7EFZL96cdKHcZEgyF+tCOkyA80wF/fHzPM+wRpWWbydgFCXS13ChN
+L8jGvMIRAhx+leIinpXj/fDDtXrcCFxf8XoE+G0THYoF6SCw2ukh5FBXUWKL1Wsi
+VL1tsVgZdemdGX/PifZ7WrZHyvjb9xJg1uLZctCuXRLNZe5f/EZlXrdSAdc6HsJH
+a/+i3o1SSJ8RHFBLn1Ve+bldEmJFA7cEJPB9nz8lRj77A8Pivy10+38Nfuuo9kXy
+dEL6mlfq2JrMp7pgGgIVtJChjH0+mwETrkUd/yYPgp1AmTBLkum7M76Jxwli7AVX
+OFRfGAmEUxnzXs6cJSP4tW1QXidUHsSwOCInZpiRNweU/azBtsrK6EexQIx0IceJ
+egafyYsnZIEpcKyeGrld
+=j7pK
 -----END PGP SIGNATURE-----
