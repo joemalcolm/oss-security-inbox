@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1640" "Sunday" "4" "December" "2016" "22:21:05" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<e510445958b0452499da785a4d64ab4b@imshyb02.MITRE.ORG>" "49" "[oss-security] Re: Xen Security Advisory 201 - ARM guests may induce host asynchronous abort" nil nil nil "12" "2016120503:21:05" "[oss-security] Re: Xen Security Advisory 201 - ARM guests may induce host asynchronous abort" (number mark "U       cve-assign@m Dec  4   49/1640  " thread-indent "\"[oss-security] Re: Xen Security Advisory 201 - ARM guests may induce host asynchronous abort\"\n") "<E1cBjhk-0000Fg-Ct@xenbits.xenproject.org>" ("<E1cBjhk-0000Fg-Ct@xenbits.xenproject.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1220" "Tuesday" "22" "December" "2015" "15:36:55" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151222203655.5C8F152E07C@smtpvbsrv1.mitre.org>" "33" "[oss-security] Re: CVE request for math/big.Exp" "^Cc:" nil nil "12" "2015122220:36:55" "[oss-security] Re: CVE request for math/big.Exp" (number mark "        cve-assign@m Dec 22   33/1220  " thread-indent "\"[oss-security] Re: CVE request for math/big.Exp\"\n") "<CA+s3sfFMSqi3-5b=4-=gx_nXYye=0oWuWtpwsgEe6mdiq8a_Ew@mail.gmail.com>" ("<CA+s3sfFMSqi3-5b=4-=gx_nXYye=0oWuWtpwsgEe6mdiq8a_Ew@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 9933 invoked by uid 550); 5 Dec 2016 03:21:20 -0000
+Received: (qmail 17414 invoked by uid 550); 22 Dec 2015 20:37:08 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,64 +11,46 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 16369 invoked from network); 22 Dec 2015 20:37:07 -0000
+In-Reply-To: <CA+s3sfFMSqi3-5b=4-=gx_nXYye=0oWuWtpwsgEe6mdiq8a_Ew@mail.gmail.com>
+Message-Id: <20151222203655.5C8F152E07C@smtpvbsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Tue, 22 Dec 2015 15:36:55 -0500 (EST)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9902 invoked from network); 5 Dec 2016 03:21:17 -0000
-From: <cve-assign@mitre.org>
-To: <security@xen.org>
-CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
-In-Reply-To: <E1cBjhk-0000Fg-Ct@xenbits.xenproject.org>
-Message-ID: <e510445958b0452499da785a4d64ab4b@imshyb02.MITRE.ORG>
-Date: Sun, 4 Dec 2016 22:21:05 -0500
-MIME-Version: 1.0
-Content-Type: text/plain
-Subject: [oss-security] Re: Xen Security Advisory 201 - ARM guests may induce host asynchronous abort
+Subject: [oss-security] Re: CVE request for math/big.Exp
+To: jbuberel@google.com
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> A malicious guest may be able to crash the host.
+> The problem that was
+> identified is similar to CVE-2015-3193
 
-> x86 systems are not affected.
+>> math/big: fix carry propagation in Int.Exp Montgomery code 
+>> src/math/big/nat.go
 
-> ffdefdaa67748df7fccbc82011202724c622ca432cd121853ecab45ff4657406  xsa201-1.patch
-
-Use CVE-2016-9815.
-
-
-> 0665eb575b056f98d5330ef23f497b2b3de1a15319e2012005890a17df32a7ed  xsa201-2.patch
-
-Use CVE-2016-9816.
-
-
-> 4486d5efb59c1f1fff04a3cb697f948d5bf680e2a1c0d76cd44382ad8fa9095e  xsa201-3.patch
-> ca82c82acd51bf3cb8114d1843519c28e3df26243bd45eb712ff10ba11061b93  xsa201-3-4.7.patch
-
-Use CVE-2016-9817.
-
-
-> 1de6ddb4b5b46ae390ec4587e588c00a706f4a68365d379db7ad54234f770d48  xsa201-4.patch
-
-Use CVE-2016-9818.
+Use CVE-2015-8618.
 
 - -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJYRNkEAAoJEHb/MwWLVhi2qkoP+gPLRp8bs5dFIQelz0NUnFgh
-TVuE883HifFhNiWgAk+L7D7+COlgqJcK+SChwjdCtfMTMfLUv6KRUJGExd3lXmqF
-AZ9cJr1Qfp0xGStwdyeOTXi6mHnQAdr4zw8em2rQQE72quJSesxhm9I2LOLGnWAr
-2zq5TZeAPmu27wdzkT+nakz7XWyD8ecxlypRhCn+Y1aCWi/KMME4blEsjGGW7+vU
-RoXbPyB1eF5bVhq6PQA2mnyZw8X2r02xUux0TACbNvG3SCa2DvlVVMOTitBbmmUv
-rL4ptE71hKfhV5uds7Ptf+hJNJLLBwRemjQ1cd+j7iTRC2Mb4TUOr5kKYAHaZRxi
-C25wKWjpM8957eeS7+EnY3o7XYfI0fVRLgyZNKDinuJUUAqEgtLVMyMu7coUsWCr
-Yl68yJ6je392WmQmW3fffHk4d3Rl/GnVVOQy3qnVTcLZp2McM67IwCnHDFqBMRwb
-6mGN6nc2MPSDPhZgOb5nmR44ho/JjSJoHYktudamJIEhr4WTpZuoKnUIOadQyc91
-x/WFi/IVarv06SN4OEfT/grE0ujZmBnlefdLmee5R247V5E52unS4g/z1CNqTgNm
-X+u7bfvxbxIzZf8GdtJrf98apo9mDcdwfmdRuuPSUOG13ySlKxj8SY/3NSE6o30j
-4XyiforlM4vWauldBk3V
-=OdPm
+iQIcBAEBCAAGBQJWebPbAAoJEL54rhJi8gl5LMsP/20/WzubhID16KKW84qnlMAo
+F6w3/kPkfTTBr+42W3bNZYSCY0ieVwQsvTN6uz8GrMxJ6H/Vko3H17ltXZAx0nxP
+Vc53H2QbAiyCaaUA6+vqAeosjBbBhvXNkw7Dj9utDu1hJ2rbBtf5ujddF48CxjoJ
++Fsrr7TYHX3Su/4r7MNtBtcMjOeWfD3xB+h++Lp5CL/z4tRKXBS02OM+tlVvdGvq
+llQQ8dwGIYaJv8v3ZIIdXk1dzurws2B6gvF6uDeaseXtbFpMbRpXxgeFddLowjtZ
+th9I7oxQUvFASrraIQrobaKPpEOfDJrMjhVzFHPtEFtTvrR71qYqq58NXaoflGV1
+gEtSptbjm5sAwsjxOWhOVO+wA9JHA8upV2ZVxczdeFGlvyko2KBWdMorjEIWLQGI
+x2DbkL2+hXlCJfZZUfNy0BjyGpZPGlmT7ZAYguxz6VTT/EC67gJ6pkiv5mZKOeBY
+PHtH7UaYVBYwh6h5opdmvhkhTJ/a9lXhIez5s5HhX01P31DHmx6RLUMeTBikjwmz
+IFOEulqQhAH0Qtp2XvPAMKeICXpEv7iWmoP8yNAYQ0SzS4awc7ZjK1mcRka1hcY5
+Bc5nbQvbZGPag0QeyYPdKyYuNqugj6d3J81kIlcpNfjCT1lSVhxxwjQQzlpi0FCR
+YJqwm2p3NhpjW57fGRux
+=HP2t
 -----END PGP SIGNATURE-----
