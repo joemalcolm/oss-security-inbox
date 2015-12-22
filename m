@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1939" "Wednesday" "17" "May" "2017" "12:51:57" "+0200" "=?UTF-8?B?Um9iZXJ0IMWad2nEmWNraQ==?=" "robert@swiecki.net" "<CAP145pjXuwa2QwR18Vq29i4aBYqSweHTWt-QYge=JrDxEmZnSQ@mail.gmail.com>" "57" "Re: [oss-security] terminal emulators' processing of escape sequences" "^Cc:" nil nil "5" "2017051710:51:57" "[oss-security] terminal emulators' processing of escape sequences" (number mark "        robert@swiec May 17   57/1939  " thread-indent "\"Re: [oss-security] terminal emulators' processing of escape sequences\"\n") "<20170517012314.vyjnu3k7pgh5ey6s@schmorp.de>" ("<20170501164428.GA12322@openwall.com>" "<CALx_OUDauCKOg20Lp5wumy_JUiu7Cj3=-d-HJSci+nROrK8BRw@mail.gmail.com>" "<CAP145pgb85EujmBuvCnFq-W9RRmK8NxsoJ3327JSy03gcU-F6w@mail.gmail.com>" "<20170516220345.GA10874@openwall.com>" "<CAHmME9p-tvS=nc5J9REB6kRurCHXLUSR6r+hxcFzPHwWFuVDGw@mail.gmail.com>" "<20170517012314.vyjnu3k7pgh5ey6s@schmorp.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1540" "Tuesday" "22" "December" "2015" "21:24:18" "+0000" "Jason Buberel" "jbuberel@google.com" "<CA+s3sfEYAD1bLbTMR0ccvGS8qNOfFu6fj2vtnoxeB+LFi9+30g@mail.gmail.com>" "44" "[oss-security] Re: CVE request for math/big.Exp" "^Cc:" nil nil "12" "2015122221:24:18" "[oss-security] Re: CVE request for math/big.Exp" (number mark "        jbuberel@goo Dec 22   44/1540  " thread-indent "\"[oss-security] Re: CVE request for math/big.Exp\"\n") "<20151222203655.5C8F152E07C@smtpvbsrv1.mitre.org>" ("<CA+s3sfFMSqi3-5b=4-=gx_nXYye=0oWuWtpwsgEe6mdiq8a_Ew@mail.gmail.com>" "<20151222203655.5C8F152E07C@smtpvbsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 32051 invoked by uid 550); 17 May 2017 10:52:11 -0000
+Received: (qmail 32354 invoked by uid 550); 22 Dec 2015 21:24:40 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,100 +11,86 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 32029 invoked from network); 17 May 2017 10:52:10 -0000
+Received: (qmail 32336 invoked from network); 22 Dec 2015 21:24:40 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=swiecki.net; s=google;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=FTzzNiIETSm1jDnlkynI/tOv+Utzy0ktNcBbZptQXI0=;
-        b=V/9SRr6hsByKcnY86LS3iQemfYlUIK4jf7K5BpbKo7kLkckc4xNGJlN7ZXY0mz7hsr
-         jUTIWv8DkYweFriA0Fi8cAOHSlwMsVyaUFnNUknaOrcWX90tzmc3LMG85BrcwYXHveps
-         3Mn02ssNFkXd5NA5hBE7OgqC+DelO23PAdZlo=
+        d=google.com; s=20120113;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=Y9zXUofwoYRq6LBIUdpOohWX/d9ds09vDcUqQOzPwp4=;
+        b=PoiPt63zCJOEChEwDxOQ5U/wU/lSZvbT64qafKvKYP9ict4qC6m+Dqi06lxIA4JWgE
+         NJxVeJ9pFEuV3Bfgp3BJPpp371YwAOo+VBinJOMAddCxoD274YVj/KkQ7aFSrQENgGEI
+         u5IJ1WIWbYlRjFq0BVBDFSK3kmgtfBBXHzBpyAVcCd+SUJE+qJfcqVxRqxWSJxXpgnhv
+         y5H5HxYSSgkxgzDqWO+MMKLTmPY6MQiQO4PulsJlw/uD0ZuRcuTDDJUbpw5Cspsz6k+e
+         nZZrZOvIomPYdZe7Ywx5vg7B0XKOY7NpPbohQb1Ns7uqO5xAoDTCkBE2ZPcrV2GWoW9e
+         dkkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=FTzzNiIETSm1jDnlkynI/tOv+Utzy0ktNcBbZptQXI0=;
-        b=mmkfss4oo3a34mzuqFN4aQTDxLzEVVg1WL+8XD7gUOExlnGOHNKNrU6BeLfC7BY4ft
-         6P0HaKIt3OdQ4DJ8E8f3hztUuh3CVSDUNtUyW7+0KbL/m2+QkQlH9eacuUPX/fAE/bgn
-         PV7pJS81mJrWeAyhcYQDeEcHGVNaMpr1nSSldGLpK8NkFQTjKxyu0d25ZNVOvf4Vz9CH
-         izjVUr60ZIZJs6GjjVIfRi1KOUJqHQTY1wouwgOnwjqz02P0LibEJY4tsVJOloI10tcT
-         +fqFjQDz1ArcXgOC+6EoFvyItpd8RHr7M/3S5ZmxqSWnXP8tF8Dbfrkb8Bfabsj4q1er
-         j0Nw==
-X-Gm-Message-State: AODbwcAo75/BWEpNOeSOA2RQvtsY0JU4uLQNhewEj0VsAFc9i5rwdqaf
-	KBOuspQ0zauvgyHjcxPJf1NIDBx6QXUA
-X-Received: by 10.98.7.149 with SMTP id 21mr889502pfh.54.1495018318618; Wed,
- 17 May 2017 03:51:58 -0700 (PDT)
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=Y9zXUofwoYRq6LBIUdpOohWX/d9ds09vDcUqQOzPwp4=;
+        b=lWVyEFTEd1UUQEVdacgDLFUNXgxPhkdDk9yviIczqmJWcploue7S6VWckoN9RRBQzA
+         J+imfIkG4Rr3sOQfUHI7vZlBbS5taUw9VWiP2ZcJ+KQJ5RobRv7nD/W5YTYI/nOimZ9b
+         yTRcoJ8lQBHeXQsVVnhCuvZtelfPQQzkzAiBjnadjSfnxt/9DkuzgI05UkFdnVypyaNB
+         znYGLntWEm9UJLLRrebXLGmt6EPerQhPOkwypH6oX1VNpvqw322UjgAPDT+XLjCrhd/1
+         b/xNnvXVSmD+TilVV1qyO1NRIXhMiOJWJtMoVAAJMpEjrYzIup/rpfp7OQkbd3jjP856
+         twUQ==
+X-Gm-Message-State: ALoCoQn+mkHQPX/Wo5BRDpGu+1g2XNl1lnuyHPtmH0OVAi3J0e4RwF3vvTO7gZ2o4Pip+NT4fndvi4zP/bAgKNI5B+wA2CzydiuGvh+KQ5lR/lVDnDwXnwE=
+X-Received: by 10.13.227.193 with SMTP id m184mr23474039ywe.16.1450819467833;
+ Tue, 22 Dec 2015 13:24:27 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <20170517012314.vyjnu3k7pgh5ey6s@schmorp.de>
-References: <20170501164428.GA12322@openwall.com> <CALx_OUDauCKOg20Lp5wumy_JUiu7Cj3=-d-HJSci+nROrK8BRw@mail.gmail.com>
- <CAP145pgb85EujmBuvCnFq-W9RRmK8NxsoJ3327JSy03gcU-F6w@mail.gmail.com>
- <20170516220345.GA10874@openwall.com> <CAHmME9p-tvS=nc5J9REB6kRurCHXLUSR6r+hxcFzPHwWFuVDGw@mail.gmail.com>
- <20170517012314.vyjnu3k7pgh5ey6s@schmorp.de>
-Message-ID: <CAP145pjXuwa2QwR18Vq29i4aBYqSweHTWt-QYge=JrDxEmZnSQ@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>, rxvt-unicode@lists.schmorp.de, rxvt@schmorp.de
-Date: Wed, 17 May 2017 12:51:57 +0200
-From: =?UTF-8?B?Um9iZXJ0IMWad2nEmWNraQ==?= <robert@swiecki.net>
+References: <CA+s3sfFMSqi3-5b=4-=gx_nXYye=0oWuWtpwsgEe6mdiq8a_Ew@mail.gmail.com>
+ <20151222203655.5C8F152E07C@smtpvbsrv1.mitre.org>
+In-Reply-To: <20151222203655.5C8F152E07C@smtpvbsrv1.mitre.org>
+Message-ID: <CA+s3sfEYAD1bLbTMR0ccvGS8qNOfFu6fj2vtnoxeB+LFi9+30g@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=94eb2c0773ba03d8bc0527833bea
+Cc: oss-security@lists.openwall.com
+Date: Tue, 22 Dec 2015 21:24:18 +0000
+From: Jason Buberel <jbuberel@google.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] terminal emulators' processing of escape sequences
-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: CVE request for math/big.Exp
+To: cve-assign@mitre.org
 
-Hi,
+--94eb2c0773ba03d8bc0527833bea
+Content-Type: text/plain; charset=UTF-8
 
->> > On Tue, May 02, 2017 at 12:05:27AM +0200, Robert ??wi??cki wrote:
->> >> A harmless example from rxvt - pushing back the new-line character:
->> >>
->> >> $ echo -ne "\eGQ;"
->> >> ;$ 0
->> >> bash: 0: command not found
->> >
->> > Does this also affect rxvt-unicode?
->>
->> It does, actually. I've CCd rxvt-unicode upstream on this in order to
->> hear their assessment.
+The Go team plans to release Go 1.5.3 on Wednesday, January 13th to address
+this issue.
+
+On Tue, Dec 22, 2015 at 12:36 PM <cve-assign@mitre.org> wrote:
+
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA256
 >
-> There can't be an assessment without knowledge of what to assess - there
-> is little to no information in your mail. I can only guess that somebody
-> for the hundredth time found out that terminals are more than dumb
-> display devices and got excited that, somehow, this might be a security
-> issue. Without knowing details, I can't say for sure, but most likely,
-> this is a security issue the same way blindly feeding unknown commands to
-> your shell is,
-
-Given that arbitrary data can be pushed to terminal emulators via
-seemingly harmless commands (like ping, whois) that people rather
-trust to be robust enough to intetract with arbitrary whois or DNS
-servers, this might be some problem.
-
-Please consider the following example:
-
-$ tail -n1 /etc/hosts | xxd
-00000000: 3132 372e 302e 302e 3309 1b47 513b 205a  127.0.0.3..GQ; Z
-00000010: 5a5a 0a                                  ZZ.
-$ ping ZZZ
-PING ; (127.0.0.3) 56(84) bytes of data.
-^[G0
-64 bytes from ; (127.0.0.3): icmp_seq=3D1 ttl=3D64 time=3D0.039 ms
-^[G0
-64 bytes from ; (127.0.0.3): icmp_seq=3D2 ttl=3D64 time=3D0.032 ms
-^[G0
-^C
---- ; ping statistics ---
-2 packets transmitted, 2 received, 0% packet loss, time 1014ms
-rtt min/avg/max/mdev =3D 0.032/0.035/0.039/0.006 ms
-^[G0
-$ 0
-bash: 0: command not found
-
-I'm not sure if this works with real reverse DNS look-ups, but with
-/etc/hosts it seems so.
-
-> i.e., it's a problem somewhere else - the protocol between
-> terminals and programs is not a (strong) security barrier.
+> > The problem that was
+> > identified is similar to CVE-2015-3193
 >
-> (your echo command is bash-specific, btw.)
+> >> math/big: fix carry propagation in Int.Exp Montgomery code
+> >> src/math/big/nat.go
+>
+> Use CVE-2015-8618.
+>
+> - --
+> CVE assignment team, MITRE CVE Numbering Authority
+> M/S M300
+> 202 Burlington Road, Bedford, MA 01730 USA
+> [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1
+>
+> iQIcBAEBCAAGBQJWebPbAAoJEL54rhJi8gl5LMsP/20/WzubhID16KKW84qnlMAo
+> F6w3/kPkfTTBr+42W3bNZYSCY0ieVwQsvTN6uz8GrMxJ6H/Vko3H17ltXZAx0nxP
+> Vc53H2QbAiyCaaUA6+vqAeosjBbBhvXNkw7Dj9utDu1hJ2rbBtf5ujddF48CxjoJ
+> +Fsrr7TYHX3Su/4r7MNtBtcMjOeWfD3xB+h++Lp5CL/z4tRKXBS02OM+tlVvdGvq
+> llQQ8dwGIYaJv8v3ZIIdXk1dzurws2B6gvF6uDeaseXtbFpMbRpXxgeFddLowjtZ
+> th9I7oxQUvFASrraIQrobaKPpEOfDJrMjhVzFHPtEFtTvrR71qYqq58NXaoflGV1
+> gEtSptbjm5sAwsjxOWhOVO+wA9JHA8upV2ZVxczdeFGlvyko2KBWdMorjEIWLQGI
+> x2DbkL2+hXlCJfZZUfNy0BjyGpZPGlmT7ZAYguxz6VTT/EC67gJ6pkiv5mZKOeBY
+> PHtH7UaYVBYwh6h5opdmvhkhTJ/a9lXhIez5s5HhX01P31DHmx6RLUMeTBikjwmz
+> IFOEulqQhAH0Qtp2XvPAMKeICXpEv7iWmoP8yNAYQ0SzS4awc7ZjK1mcRka1hcY5
+> Bc5nbQvbZGPag0QeyYPdKyYuNqugj6d3J81kIlcpNfjCT1lSVhxxwjQQzlpi0FCR
+> YJqwm2p3NhpjW57fGRux
+> =HP2t
+> -----END PGP SIGNATURE-----
+>
 
---=20
-Robert =C5=9Awi=C4=99cki
+--94eb2c0773ba03d8bc0527833bea--
