@@ -1,4 +1,9 @@
-Received: (qmail 9286 invoked by uid 550); 26 May 2026 23:49:53 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["866" "Tuesday" "22" "December" "2015" "10:49:39" "+0000" "CSW Research Lab" "disclose@cybersecurityworks.com" "<CAMWaY3NgKkaktuxkBLFX0mA=+FJQPu-vzEQAckVHp2vGU-xUrg@mail.gmail.com>" "31" "[oss-security] Symphony CMS 2.6.3 - Multiple Reflected Cross-site Scripting Vulnerability" "^Date:" nil nil "12" "2015122210:49:39" "[oss-security] Symphony CMS 2.6.3 - Multiple Reflected Cross-site Scripting Vulnerability" (number mark "U       disclose@cyb Dec 22   31/866   " thread-indent "\"[oss-security] Symphony CMS 2.6.3 - Multiple Reflected Cross-site Scripting Vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 1644 invoked by uid 550); 22 Dec 2015 10:58:22 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,85 +11,70 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 24495 invoked from network); 26 May 2026 22:55:40 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cpansec.org; s=gm1;
-	t=1779836131;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=ILcQe5LPbGd0tiSskspJcpJJ8dvcLf6D4+oQlCRSPhk=;
-	b=mb+NcB+MLskdLfityd5PuJ5RJp5qnHXRgl3n0wcgjhjt3hQqJULFazlK2/LztbG2gX4C+s
-	Xsmc6CN9jWOCFEB2RL0Ww8NeW+KmsnObQzS9/ZvIJ3ZCogJN35z3Sg3TUXNCLoMPXKk5eU
-	4rAET1jqUIikaA4FYmyfANG/wt+oPM7bTTjWKkqIgRp9ioxtyVrIHm/0B7BPr5ScneuUCt
-	VMqHoZZ2+pKfkbi6+bxjrrxwGaiY/2EUXi2EvEtkXK+d9kXFzE6Xvt9iOBHjCBecGRoG8Q
-	3J3rHKEMWQ5gFE7qi4urYLZU5T6FlU7BST/zwu/fOR1SOjy6v03GqWNKx0d2TA==
-Message-ID: <8bbe89c1-a955-4334-8da9-67b4c131e293@cpansec.org>
-Date: Tue, 26 May 2026 23:55:30 +0100
+Received: (qmail 28555 invoked from network); 22 Dec 2015 10:50:00 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=cybersecurityworks-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=KGn3OMVwPAW138FxR5/8NCegdyokqjleRkQ9806K8t4=;
+        b=ZCWlElA1DMrQj98VwQgGxE06KY0yNPQbxkncApAR8PW04yGJ0Q5g2GjkG/0Mp5RPlb
+         oopGZ74HubZneeLo99oUv2t50dBd/7qq0/9IJsbI4vjOloJIF1WhejLeNlUaGp5Nc2DD
+         Y4T6O8CjdshTReerzYRNmfypWMCAxqbaRfPEvLBXdbekSehFJVR41nlx/4uR0iaiNWST
+         SWiAf3QOb/ktQQyu/YSg8HVVgvsVShPyZXgZrT8gN+MhQ5LQefnn01lGa2n2EHO0FdGk
+         SbNSm5iAtG/5K0EfbRSeeUc/kBAj4udfnl6J5s1xd9Z9bMHmkIEMJEojIZrhPQx1qDvt
+         jayQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
+         :content-type;
+        bh=KGn3OMVwPAW138FxR5/8NCegdyokqjleRkQ9806K8t4=;
+        b=UCTlwBSJgEkN+YRMpNCHB4D4d68U7uh3UAxQnFtAzrCXoGVPK65pJt7J8TwiBhtXWL
+         Vzb+Yqku5jcQAFpFkOvRPxuRKmlX2fkLHPkGTuE3m8kf1M53+yFO5OwfkLHOjaj4VHat
+         h4u53fsmt+t4tIxTn/f8hjS4CO3b6pizfAwqPBCaHH/8qzl0rQDx10MvL0H2k4byWUzs
+         M0FW6e9SuCHU3yKLpDgc7wL7kwEQoR2lJYaFLxiqXU1BTOaUgpVuO4AK0P0va7FhJuLZ
+         P4qLS05jsm0uXLnu2XeNEyAnNKPSB+GDwRl5RmLqpIhoRabHGFYp+NOmHM9CZhmrpZvp
+         rMlg==
+X-Gm-Message-State: ALoCoQnJIagFFDZaYI7V4n7rVeosf0K1X3Yt5dBFT76VGXJ7yA0p6S2ErxUsQnFOXz74uVG7zAceBL5cou9Z1sBBMmEVCbMaLw==
+X-Received: by 10.107.34.133 with SMTP id i127mr13737672ioi.150.1450781388660;
+ Tue, 22 Dec 2015 02:49:48 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Robert Rothenberg <rrwo@cpansec.org>
-Content-Language: en-GB, en-ZA
-To: cve-announce@security.metacpan.org, oss-security@lists.openwall.com
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-GND-Sasl: rrwo@cpansec.org
-X-GND-Score: 0
-X-GND-Cause: dmFkZTFbns30y4IS7vBZJoZ9ztBHhxwoEKlI8PpmVrVMA3xu4ao+95dp1GrBYB8rSQqvH3F3m1exXnDFwrFyEL7PafOFL0LLXbydFwBv/ynwFFMGqFm08sWyuJ5jRBrSgf3rkKm3c4pNyPdL6B5gBw7Mzrfqabq2Q3Y++3/kWB+QasiosqNgCH/8ia63Sd85jgqpsKBB5OyjdGlp5aNyZvJjYei4jnY4S08dUST7gusZMoRmPhAXFXW6SPbp0cK2MDZ4Tdz6BoYytytoHVW78/6H5kt0RSmzaRZINJ2R6P6wEo8Y0hEA3FY8QrtTa29SOEZkAoIuw3NvsolEn7MI87kKponeAS1OtKqNp4gpCh0e3gQni23LiYb52LkIX+vB4tQf8H0QT6P48oXe8n4DM1QYBZ5PcegKSSM7QEYPnyJMu4HqQhMyoz+u7k/Q3mR7RjZ3qVPl0fLBF2N8caFcptLML3clzfllXN6ydH7x3w25YDxY//W8G1IrZ3VTPsRnV+oFVYnsBbbPkKK0bcanQhepr0PN746neJI4RMsKVrN5++BVJQ+5Fs8okAS6OweUXJjdD5MYEzqeOV2E+pt+N2cMHhP7//OVjn+m3Qr6e2cFxHnjdMc8iN5quDMnhMcPyQYes04f2XJEixea2PtuiC6V5E6FC0idlYOs8JINE3KiRM3iRg
-X-GND-State: clean
-Subject: [oss-security] CVE-2026-8647: Crypt::ScryptKDF versions through 0.010 for Perl uses
- insecure random number source when no CSPRNG module is available
+Message-ID: <CAMWaY3NgKkaktuxkBLFX0mA=+FJQPu-vzEQAckVHp2vGU-xUrg@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=001a1140ef84516ee205277a5dc2
+Date: Tue, 22 Dec 2015 10:49:39 +0000
+From: CSW Research Lab <disclose@cybersecurityworks.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Symphony CMS 2.6.3 - Multiple Reflected Cross-site
+ Scripting Vulnerability
+To: "cve-assign@mitre.org" <cve-assign@mitre.org>, 
+	"oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
 
-========================================================================
-CVE-2026-8647                                        CPAN Security Group
-========================================================================
+--001a1140ef84516ee205277a5dc2
+Content-Type: text/plain; charset=UTF-8
 
-         CVE ID:  CVE-2026-8647
-   Distribution:  Crypt-ScryptKDF
-       Versions:  through 0.010
+Hi all
 
-       MetaCPAN:  https://metacpan.org/dist/Crypt-ScryptKDF
-       VCS Repo:  https://github.com/DCIT/perl-Crypt-ScryptKDF
-
-
-Crypt::ScryptKDF versions through 0.010 for Perl uses insecure random
-number source when no CSPRNG module is available
+can you please assign CVE for this issue ?
 
 Description
------------
-Crypt::ScryptKDF versions through 0.010 for Perl uses insecure random
-number source when no CSPRNG module is available.
-
-The random_bytes function fell back to using the built-in rand()
-function when none of the Perl modules Crypt::PRNG,
-Crypt::OpenSSL::Random, Net::SSLeay, Crypt::Random, or
-Bytes::Random::Secure were available.
-
-Problem types
--------------
-- CWE-338 Use of Cryptographically Weak Pseudo-Random Number Generator
-
-Workarounds
------------
-Install one of the recommended Perl modules, such as Crypt::PRNG.
+***************
+Symphony CMS 2.6.3 is prone to Cross-site scripting vulnerability because
+it fails to sanitize user-supplied input in default email settings.An
+attacker may leverage this issue to execute arbitrary script code in the
+browser of an unsuspecting user of the affected site.
 
 
-Solutions
----------
-Upgrade to version 0.011 or later.
+Proof of Concept URL
+***************************
+[+] http://192.168.56.101/symphony/symphony/system/preferences/
 
+Vulnerable Parameter
+**************************
+[+] email_sendmail[from_name]
+[+] email_sendmail[from_address]
+[+] email_smtp[from_name]
+[+] email_smtp[from_address]
+[+] email_smtp[host]
+[+] email_smtp[port]
+[+] it_image_manipulation[trusted_external_sites]
+[+] maintenance_mode[ip_whitelist]
 
-References
-----------
-https://metacpan.org/release/MIK/Crypt-ScryptKDF-0.011/changes
-https://metacpan.org/release/MIK/Crypt-ScryptKDF-0.011/diff/MIK/Crypt-ScryptKDF-0.010#lib/Crypt/ScryptKDF.pm
-
-Timeline
---------
-- 2026-05-13: Issue reported to CPANSec
-- 2026-05-14: Issue reported to maintainer
-- 2026-05-16: Version 0.011 with fix released.
-
-
-
+--001a1140ef84516ee205277a5dc2--
