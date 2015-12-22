@@ -1,4 +1,9 @@
-Received: (qmail 14263 invoked by uid 550); 24 Jan 2025 00:11:56 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1761" "Tuesday" "22" "December" "2015" "14:50:51" "-0800" "Jessie Frazelle" "jess@docker.com" "<CAKPjEProU-z8yLBZLuPAMGW0iWZtewaKwJVLbHNJqWGVD7xNnA@mail.gmail.com>" "49" "Re: [oss-security] Re: CVE request for math/big.Exp" "^Cc:" nil nil "12" "2015122222:50:51" "[oss-security] Re: CVE request for math/big.Exp" (number mark "        jess@docker. Dec 22   49/1761  " thread-indent "\"Re: [oss-security] Re: CVE request for math/big.Exp\"\n") "<CA+s3sfEYAD1bLbTMR0ccvGS8qNOfFu6fj2vtnoxeB+LFi9+30g@mail.gmail.com>" ("<CA+s3sfFMSqi3-5b=4-=gx_nXYye=0oWuWtpwsgEe6mdiq8a_Ew@mail.gmail.com>" "<20151222203655.5C8F152E07C@smtpvbsrv1.mitre.org>" "<CA+s3sfEYAD1bLbTMR0ccvGS8qNOfFu6fj2vtnoxeB+LFi9+30g@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 3783 invoked by uid 550); 23 Dec 2015 03:20:29 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,176 +11,88 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 26211 invoked from network); 24 Jan 2025 00:08:28 -0000
-X-Virus-Status: Clean
-X-Virus-Scanned: clamav-milter 1.3.0 at rivendell.linuxfromscratch.org
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfromscratch.org;
-	s=cert4; t=1737677299;
-	bh=B77npU6KT/qeuN9dqo8jfpJ4LB08oEVuQcaUxnrBf/s=;
-	h=Date:Subject:To:References:From:In-Reply-To;
-	b=XVoWtXUJuVHivTnVXATiKDKl8kS8mWC3j/rcCeL7bed7E2RUyskM1F4tg2xPRtztx
-	 xnuN5AXlTMPmsDuuaTU6BWtLJvJKQDBaSnFg1pBJHBHbrjMBiHyuT/vdbE4cjpZZpu
-	 KQonlA4FpoJmlVKdz+vBJqhkIQ2T9PzLmBRzzVBcg5Q4xiUY2DENE+0aIIz/kOejQR
-	 VdnXhrkJ8QFECTScH7khkCr3ZkiJmLa/LsfjkW+fVhfojfhYp5s/KS/NDqjMTtIQ1x
-	 lSVWrZhxuoPPkF8qSYRDAnF0ZFp+rWoRNOiNH404qkLJ8X5tewbxzWDUMsQ+uQlgba
-	 8gOkAtOhf5iIQ==
-Message-ID: <e6c0aa51-2e58-40ed-965d-3e0328ef6fa9@linuxfromscratch.org>
-Date: Thu, 23 Jan 2025 18:08:18 -0600
+Received: (qmail 24179 invoked from network); 22 Dec 2015 22:51:22 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=docker.com; s=google;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=wRXiU3xFe6VbeHsZnKFOdJbCqBo4UrGkQ3Nq3MmjL5I=;
+        b=GSIOuPInM3Y/mn3mQA34UlsCTqZxUo8L9oBSkxHKMJByxFfHIGC3Rfw6f0vqehmdHX
+         p8MGUFk2lJzTuJDL/fwZIcd86SC9jNF7gwE/RdyRwub80Wi5Ug0E253Ss4UDru3w9iuY
+         W7wtyRiVonS4t5l3gyKnonGUArW9Hh8EmfDQc=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=wRXiU3xFe6VbeHsZnKFOdJbCqBo4UrGkQ3Nq3MmjL5I=;
+        b=W/yAqS6j6Xzz62/hdaqBsQjAAu1Sk0aE3BdSe9wS6Q7cSmsbOZx8NIVYL3zhyzPQlj
+         j+P7rxZfqraxayUjAAjY4pq/o9E8WM6dmaRkAxdoD5A8FSs/umgcyKJi1Z1sqwfyQX0d
+         sBUmzxz43DIWKEL4HquqANVkCc7yRc0ccGTdyi4rTwXm8BzZUb98bROJD4K8trw8uUEg
+         LyGPh0UKhjXqmkwixLRkeOSzGk7rto2xXt96Zyv4nQgn0GiHxooVcIjNqidViTSLuPkp
+         nOwwwrmA0fboH+/c53lE/psyw64JyLO6HmMnO839m1r4PnvnYCvlOjRfxetX9BbBK3Wm
+         iTGQ==
+X-Gm-Message-State: ALoCoQkR4lwFuXxUOH0xNzGhWa7iT6AiGLTJz+rH0vlqddfHdL9yU68d5jzoS9bqyg5nPdVatrnRzEkei51nCtIkJucr468or/l+eS19hpbdEgafOYCficY=
+X-Received: by 10.182.60.170 with SMTP id i10mr11743595obr.62.1450824670964;
+ Tue, 22 Dec 2015 14:51:10 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: oss-security@lists.openwall.com
-References: <20250123024222.GA16803@openwall.com>
- <31A9EE0D-3415-46F5-BDC0-8AF758D9A0AC@edvina.net>
- <5c74b424-0c6d-49e8-b53e-bd637a1f9ebb@oracle.com>
- <20250123235736.GA22781@openwall.com>
-Content-Language: en-US
-From: "Douglas R. Reno" <renodr@linuxfromscratch.org>
-In-Reply-To: <20250123235736.GA22781@openwall.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Subject: Re: [oss-security] Re: [External] : Fwd: [oss-security] Oracle
- January 2025 Critical Patch Update
+In-Reply-To: <CA+s3sfEYAD1bLbTMR0ccvGS8qNOfFu6fj2vtnoxeB+LFi9+30g@mail.gmail.com>
+References: <CA+s3sfFMSqi3-5b=4-=gx_nXYye=0oWuWtpwsgEe6mdiq8a_Ew@mail.gmail.com>
+ <20151222203655.5C8F152E07C@smtpvbsrv1.mitre.org> <CA+s3sfEYAD1bLbTMR0ccvGS8qNOfFu6fj2vtnoxeB+LFi9+30g@mail.gmail.com>
+Message-ID: <CAKPjEProU-z8yLBZLuPAMGW0iWZtewaKwJVLbHNJqWGVD7xNnA@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=001a11c1bd4224fccf052784714d
+Cc: cve-assign@mitre.org
+Date: Tue, 22 Dec 2015 14:50:51 -0800
+From: Jessie Frazelle <jess@docker.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Re: CVE request for math/big.Exp
+To: oss-security@lists.openwall.com, fweimer@redhat.com
 
-Hi Solar,
+--001a11c1bd4224fccf052784714d
+Content-Type: text/plain; charset=UTF-8
 
-As a maintainer of Linux From Scratch and the person in charge of 
-security there, I monitor this list
-as well as a few others. Every quarter we also check the Oracle Critical 
-Product Update pages
-for vulnerabilities pertaining to MySQL and Java SE (which also impact 
-OpenJDK).
+do you plan on backporting the commit Florian mentioned as well?
 
-I'd like to volunteer to bring these to oss-security quarterly since I 
-already check these
-every quarter, I could do it after my initial reading!
+On Tue, Dec 22, 2015 at 1:24 PM, Jason Buberel <jbuberel@google.com> wrote:
 
-Thank you,
+> The Go team plans to release Go 1.5.3 on Wednesday, January 13th to address
+> this issue.
+>
+> On Tue, Dec 22, 2015 at 12:36 PM <cve-assign@mitre.org> wrote:
+>
+> > -----BEGIN PGP SIGNED MESSAGE-----
+> > Hash: SHA256
+> >
+> > > The problem that was
+> > > identified is similar to CVE-2015-3193
+> >
+> > >> math/big: fix carry propagation in Int.Exp Montgomery code
+> > >> src/math/big/nat.go
+> >
+> > Use CVE-2015-8618.
+> >
+> > - --
+> > CVE assignment team, MITRE CVE Numbering Authority
+> > M/S M300
+> > 202 Burlington Road, Bedford, MA 01730 USA
+> > [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+> > -----BEGIN PGP SIGNATURE-----
+> > Version: GnuPG v1
+> >
+> > iQIcBAEBCAAGBQJWebPbAAoJEL54rhJi8gl5LMsP/20/WzubhID16KKW84qnlMAo
+> > F6w3/kPkfTTBr+42W3bNZYSCY0ieVwQsvTN6uz8GrMxJ6H/Vko3H17ltXZAx0nxP
+> > Vc53H2QbAiyCaaUA6+vqAeosjBbBhvXNkw7Dj9utDu1hJ2rbBtf5ujddF48CxjoJ
+> > +Fsrr7TYHX3Su/4r7MNtBtcMjOeWfD3xB+h++Lp5CL/z4tRKXBS02OM+tlVvdGvq
+> > llQQ8dwGIYaJv8v3ZIIdXk1dzurws2B6gvF6uDeaseXtbFpMbRpXxgeFddLowjtZ
+> > th9I7oxQUvFASrraIQrobaKPpEOfDJrMjhVzFHPtEFtTvrR71qYqq58NXaoflGV1
+> > gEtSptbjm5sAwsjxOWhOVO+wA9JHA8upV2ZVxczdeFGlvyko2KBWdMorjEIWLQGI
+> > x2DbkL2+hXlCJfZZUfNy0BjyGpZPGlmT7ZAYguxz6VTT/EC67gJ6pkiv5mZKOeBY
+> > PHtH7UaYVBYwh6h5opdmvhkhTJ/a9lXhIez5s5HhX01P31DHmx6RLUMeTBikjwmz
+> > IFOEulqQhAH0Qtp2XvPAMKeICXpEv7iWmoP8yNAYQ0SzS4awc7ZjK1mcRka1hcY5
+> > Bc5nbQvbZGPag0QeyYPdKyYuNqugj6d3J81kIlcpNfjCT1lSVhxxwjQQzlpi0FCR
+> > YJqwm2p3NhpjW57fGRux
+> > =HP2t
+> > -----END PGP SIGNATURE-----
+> >
+>
 
-Douglas Reno
-Linux From Scratch
-
-On 1/23/25 5:57 PM, Solar Designer wrote:
-> Bruce,
->
-> Thank you very much for your reply.  My reading of it is that Oracle is
-> already doing a lot (publication in 3 formats) and isn't willing to do
-> more (also separately send info pertaining to Oracle's Open Source
-> projects to oss-security).  Is that correct?
->
-> If so, maybe someone external should start doing that... or someone from
-> Oracle on one's own time... or people with the individual projects
-> (e.g., someone involved in MySQL and someone involved in VirtualBox
-> development)?
->
-> Related to the last point/idea, I notice that the individual projects do
-> not appear to include security/CVE info in their release announcements.
-> For example, here are the recent ones for MySQL and VirtualBox with no
-> mention of the security issues/fixes at all:
->
-> https://dev.mysql.com/doc/relnotes/mysql/9.2/en/news-9-2-0.html
-> https://dev.mysql.com/doc/refman/9.2/en/mysql-nutshell.html
->
-> https://www.virtualbox.org/wiki/Changelog-7.1
-> https://www.virtualbox.org/wiki/Changelog-7.0
->
-> Maybe that's because the embargo end is coordinated centrally for the
-> Critical Patch Update, and the projects end up never being given a green
-> light to release the info on their own as well?  Or just do not go back
-> and add previously-suppressed change log entries?  If so, could this be
-> corrected?  Just guessing here, I could as well be wrong about it.
->
-> Thanks again,
->
-> Alexander
->
-> On Thu, Jan 23, 2025 at 06:47:29AM -0800, Bruce Lowenthal wrote:
->> Olle, Solar Designer, oss-security list:
->>
->> I am responsible for the content and publication of Oracle Critical
->> Patch Updates.   These are published quarterly in three formats: Tabular
->> format HTML "AKA risk matrix", English Language HTML format and Oasis
->> Standard CSAF format via references at Oracle's Critical Patch Updates,
->> Security Alerts and Bulletins home page at
->>
->>   * https://www.oracle.com/security-alerts/
->>
->> This home page references individual quarterly reports and provides
->> other information regarding our security program.   In addition, that
->> page provides instructions allowing anyone to sign up to receive eMail
->> announcing when Oracle Critical Patch Updates and other security
->> advisories are published.    See:
->>
->>   * Instructions for subscribing to email notifications
->>     <https://www.oracle.com/security-alerts/securityemail.html>of
->>     Critical Patch Update Advisories and Security Alerts.
->>
->> If you have any questions, feel free to contact me directly.
->>
->> Bruce
->> -----
->>
->> On 1/22/25 11:50 PM, Olle E. Johansson wrote:
->>> Bruce,
->>> For your information.
->>>
->>> /O
->>>
->>>> Begin forwarded message:
->>>>
->>>> *From: *Solar Designer <solar@openwall.com>
->>>> *Subject: **[oss-security] Oracle January 2025 Critical Patch Update*
->>>> *Date: *23 January 2025 at 03:42:22 CET
->>>> *To: *oss-security@lists.openwall.com
->>>> *Reply-To: *oss-security@lists.openwall.com
->>>>
->>>> Hi,
->>>>
->>>> Once in a while, Oracle publishes what they call Critical Patch Update
->>>> documents, which list many vulnerabilities addressed across many Oracle
->>>> products, some of them Open Source and some not.  This is great, but it
->>>> would be even better if Oracle also communicated to oss-security about
->>>> those vulnerabilities in its Open Source products, perhaps one message
->>>> per product (e.g., MySQL separately from VirtualBox).  I hope someone
->>> >from Oracle reads this and will get the wheels moving.  Anyone?
->>>> Meanwhile, the latest Critical Patch Update is:
->>>>
->>>> https://blogs.oracle.com/security/post/january-2025-cpu-released
->>>> https://www.oracle.com/security-alerts/cpujan2025.html
->>>>
->>>> For MySQL, it says:
->>>>
->>>> https://www.oracle.com/security-alerts/cpujan2025.html#AppendixMSQL
->>>>
->>>> "Oracle MySQL Risk Matrix
->>>>
->>>> This Critical Patch Update contains 39 new security patches, plus
->>>> additional third party patches noted below, for Oracle MySQL.  4 of
->>>> these vulnerabilities may be remotely exploitable without
->>>> authentication, i.e., may be exploited over a network without requiring
->>>> user credentials.  The English text form of this Risk Matrix can be
->>>> found here."
->>>>
->>>> and links to:
->>>>
->>>> https://www.oracle.com/security-alerts/cpujan2025verbose.html#MSQL
->>>>
->>>> and lists additional information on some CVEs not included in the matrix
->>>> itself (duplicate or not vulnerable).  With so many CVEs, all of this is
->>>> rather long, but I imagine someone from Oracle - or someone external -
->>>> could copy-paste the "English text form of this Risk Matrix" and the
->>>> extra notes on a few CVEs to a separate message focusing on MySQL.
->>>>
->>>> Similarly, there's info on a couple of VirtualBox CVEs here, which would
->>>> ideally be a separate message with copy-pasted detail:
->>>>
->>>> https://www.oracle.com/security-alerts/cpujan2025.html#AppendixOVIR
->>>> https://www.oracle.com/security-alerts/cpujan2025verbose.html#OVIR
->>>>
->>>> Perhaps there's more Open Source software listed in there, which needs
->>>> similar treatment.  Not only this time, but each time, please.
->>>>
->>>> Alexander
-
-
+--001a11c1bd4224fccf052784714d--
