@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4269" "Thursday" "1" "September" "2016" "03:13:06" "+0000" "=?utf-8?B?5byg5byA57+U?=" "zhangkaixiang@360.cn" "<5EDB84F4B23F5B4DB6500A89258280E0BEB7C1@EX02.corp.qihoo.net>" "73" "[oss-security] cve request: docker swarm node Dos occurs when join a cluster failed using local CA certificate" nil nil nil "9" "2016090103:13:06" "[oss-security] cve request: docker swarm node Dos occurs when join a cluster failed using local CA certificate" (number mark "U       zhangkaixian Sep  1   73/4269  " thread-indent "\"[oss-security] cve request: docker swarm node Dos occurs when join a cluster failed using local CA certificate\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["473" "Tuesday" "22" "December" "2015" "23:29:54" "+1300" "Emmanuel Law" "emmanuel.law@gmail.com" "<CA+KTh2zX+FrBinNUikbOE5HBgzRpDbo9XxZ-iUBeOhbqaqUEEg@mail.gmail.com>" "18" "[oss-security] CVE Request: Use after free in PHP Collator::sortWithSortKeys function" nil nil nil "12" "2015122210:29:54" "[oss-security] CVE Request: Use after free in PHP Collator::sortWithSortKeys function" (number mark "U       emmanuel.law Dec 22   18/473   " thread-indent "\"[oss-security] CVE Request: Use after free in PHP Collator::sortWithSortKeys function\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 9440 invoked by uid 550); 1 Sep 2016 07:08:49 -0000
+Received: (qmail 9507 invoked by uid 550); 22 Dec 2015 10:30:07 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,96 +12,43 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13647 invoked from network); 1 Sep 2016 03:13:21 -0000
-From: =?utf-8?B?5byg5byA57+U?= <zhangkaixiang@360.cn>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-CC: "cve-assign@mitre.org" <cve-assign@mitre.org>
-Thread-Topic: cve request: docker swarm node Dos occurs when join a cluster
- failed using local CA certificate
-Thread-Index: AdID+QyEfy+uZKcLQcS8vM2Ih+RFyQ==
-Date: Thu, 1 Sep 2016 03:13:06 +0000
-Message-ID: <5EDB84F4B23F5B4DB6500A89258280E0BEB7C1@EX02.corp.qihoo.net>
-Accept-Language: zh-CN, en-US
-Content-Language: zh-CN
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-x-originating-ip: [10.18.25.62]
-Content-Type: multipart/alternative;
-	boundary="_000_5EDB84F4B23F5B4DB6500A89258280E0BEB7C1EX02corpqihoonet_"
+Received: (qmail 9489 invoked from network); 22 Dec 2015 10:30:06 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:cc:content-type;
+        bh=Rzt0ZsTuTXGd/NaDnbNKe0NKovqWX6lJocyMK1QRaq4=;
+        b=pjd6heew+4shmMgKtRkEyMytvQQaKJis/isu44Cv4RHS8DDJjQEOU4kueESowWWM3f
+         5Ka/gTjBcUReWrvWpcRsb3YPy9Rd6WHGfTABkUNtaka6P67LTi05IipQVownnSEvWXu8
+         vw5A8p5Vn9juZ1UNmEGvcy9md5WEL75vFawbMxTTfDbwqKuT7T8vkuAzzxIPXq5YJm5k
+         2djoBvNLmLtIO+j8ORWeWixODsDGfNyRYK3jGTkKT8jDDrYJpAMYM90tpzS+Kblby3hG
+         /6d6PZxQXZkN5naZOjRB92PkKSGSeYJgduGJUuF+jgEcjL8EcdjURdVFuPalUfGMlCZw
+         iA4g==
 MIME-Version: 1.0
-Subject: [oss-security] cve request: docker swarm node Dos occurs when join a cluster
- failed using local CA certificate
+X-Received: by 10.50.111.8 with SMTP id ie8mr24359655igb.65.1450780194852;
+ Tue, 22 Dec 2015 02:29:54 -0800 (PST)
+Date: Tue, 22 Dec 2015 23:29:54 +1300
+Message-ID: <CA+KTh2zX+FrBinNUikbOE5HBgzRpDbo9XxZ-iUBeOhbqaqUEEg@mail.gmail.com>
+From: Emmanuel Law <emmanuel.law@gmail.com>
+To: oss-security@lists.openwall.com, cve-assign@mitre.org
+Cc: security@php.net
+Content-Type: multipart/alternative; boundary=089e0149c0282955a205277a16fa
+Subject: [oss-security] CVE Request: Use after free in PHP Collator::sortWithSortKeys function
 
---_000_5EDB84F4B23F5B4DB6500A89258280E0BEB7C1EX02corpqihoonet_
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+--089e0149c0282955a205277a16fa
+Content-Type: text/plain; charset=UTF-8
 
-RG9ja2VyIHN3YXJtIG1vZGUgaXMgdXNlZCB0byBmb3JtIGEgc3dhcm0sIGNv
-b3JkaW5hdGluZyB0YXNrcy4gT25jZSBhIG1hY2hpbmUgam9pbnMsIGl0IGJl
-Y29tZXMgYSBTd2FybSBOb2RlLiBOb2RlcyBjYW4gZWl0aGVyIGJlIHdvcmtl
-ciBub2RlcyBvciBtYW5hZ2VyIG5vZGVzLg0KSSBmb3VuZCBhIHZ1bG5lcmFi
-aWxpdHkgaW4gZG9ja2VyIG9mIHRoZSBsYXRlc3QgdmVyc2lvbiB3aGljaCBj
-b3VsZCBjYXVzZSBhIERlbmlhbCBvZiBTZXJ2aWNlLCBJIGNyZWF0ZWQgYSBD
-QSBjZXJ0aWZpY2F0ZSBhcyB0aGUgc2FtZSB3YXkgd2l0aCBkb2NrZXIsIGxv
-YWRpbmcgaXQgd2hlbg0KZXhlY3V0ZSB0aGUgY29tbWFuZCAiZG9ja2VyIHN3
-YXJtIGpvaW4gLS10b2tlbiBTV01US04tMS14eCBpcDpwb3J0IiwgaG93ZXZl
-ciAsIGRpc3RydXN0IGNlcnRpZmljYXRlIHJlc3VsdHMgdGhlIHN3YXJtIG1h
-bmdlciBmYWlsZWQgdG8gYXV0aGVudGljYXRlIGR1cmluZw0KVExTIGhhbmRz
-aGFrZSwgdHJhcHBpbmcgaW50byBpbmZpbml0ZSBsb29wIG9mIHNlc3Npb24g
-cmVidWlsZGluZyAsIHRodXMgYSByZW1vdGUgbm9kZSBjb3VsZCBub3Qgam9p
-biB0aGUgc3dhcm0gY2x1c3RlciBhbmQgZXZlbiBmb3JjZSB0byBsZWF2ZSBp
-cyBpbiB2YWluLCB0aGlzIGlzc3VlIHBlcnNpc3RzDQphZnRlciByZXN0YXJ0
-cyBkb2NrZXIgZGFlbW9uIG9uIHRoZSByZW1vdGUgbm9kZS4NCg0KIyBkb2Nr
-ZXIgdmVyc2lvbg0KQ2xpZW50Og0KVmVyc2lvbjogICAgICAxLjEyLjAtZGV2
-DQpBUEkgdmVyc2lvbjogIDEuMjUNCkdvIHZlcnNpb246ICAgZ28xLjYuMw0K
-R2l0IGNvbW1pdDogICA5YzFiZTU0LXVuc3VwcG9ydGVkDQpCdWlsdDogICAg
-ICAgIEZyaSBKdWwgMjkgMTU6NDA6NTIgMjAxNg0KT1MvQXJjaDogICAgICBs
-aW51eC9hbWQ2NA0KDQpTZXJ2ZXI6DQpWZXJzaW9uOiAgICAgIDEuMTIuMC1k
-ZXYNCkFQSSB2ZXJzaW9uOiAgMS4yNQ0KR28gdmVyc2lvbjogICBnbzEuNi4z
-DQpHaXQgY29tbWl0OiAgIDljMWJlNTQtdW5zdXBwb3J0ZWQNCkJ1aWx0OiAg
-ICAgICAgRnJpIEp1bCAyOSAxNTo0MDo1MiAyMDE2DQpPUy9BcmNoOiAgICAg
-IGxpbnV4L2FtZDY0DQoNCiMgZG9ja2VyIHN3YXJtIGluaXQNClN3YXJtIGlu
-aXRpYWxpemVkOiBjdXJyZW50IG5vZGUgKDIzbTZrc3I5Nndoc3Z1bzhsem9r
-ZW5qdTMpIGlzIG5vdyBhIG1hbmFnZXIuDQoNClRvIGFkZCBhIHdvcmtlciB0
-byB0aGlzIHN3YXJtLCBydW4gdGhlIGZvbGxvd2luZyBjb21tYW5kOg0KICAg
-IGRvY2tlciBzd2FybSBqb2luIFwNCiAgICAtLXRva2VuIFNXTVRLTi0xLTMw
-ZjZpYnpwc2NxaDA1cXFkb2c4NWt0cjhwdGN3N3R0bjR3eTVjd2l4eTF3ZmNo
-aGI5LWFsamV3dGRuNTcyN2cxcGxkeG5ldmpoNTEgXA0KICAgIHh4Lnh4Lnh4
-Lnh4OjIzNzcNCg0KVG8gYWRkIGEgbWFuYWdlciB0byB0aGlzIHN3YXJtLCBy
-dW4gdGhlIGZvbGxvd2luZyBjb21tYW5kOg0KICAgIGRvY2tlciBzd2FybSBq
-b2luIFwNCiAgICAtLXRva2VuIFNXTVRLTi0xLTMwZjZpYnpwc2NxaDA1cXFk
-b2c4NWt0cjhwdGN3N3R0bjR3eTVjd2l4eTF3ZmNoaGI5LTBwMDg2ejJzZGJu
-cHZvZ25qbXU3NmdwaTYgXA0KICAgIHh4Lnh4Lnh4Lnh4IDoyMzc3DQoNCkxv
-Z2luIGluIHJlbW90ZSBub2RlICxjcmVhdGUgYSBDQSBjZXJ0aWZpY2F0ZSBh
-bmQgcHJpdmF0ZSBrZXkgYXMgdGhlIGRvY2tlcuKAmXMgd2F5LCB0aGVuIHB1
-dHMgdGhlbSB0byAvdmFyL2xpYi9kb2NrZXIvc3dhcm0vY2VydGlmaWNhdGUN
-CmFuZCBuYW1lZCB3aXRoIOKAnGRvY2tlci1zd2FybS1jYS54eHjigJ0sIGV4
-ZWN1dGUgdGhlIGZvbGxvd2luZyBjb21tYW5kczoNCi0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQojIGRv
-Y2tlciBzd2FybSBqb2luIC0tdG9rZW4gU1dNVEtOLTEtMzBmNmlienBzY3Fo
-MDVxcWRvZzg1a3RyOHB0Y3c3dHRuNHd5NWN3aXh5MXdmY2hoYjktYWxqZXd0
-ZG41NzI3ZzFwbGR4bmV2amg1MSB4eC54eC54eC54eDoyMzc3DQpFcnJvciBy
-ZXNwb25zZSBmcm9tIGRhZW1vbjogVGltZW91dCB3YXMgcmVhY2hlZCBiZWZv
-cmUgbm9kZSB3YXMgam9pbmVkLiBBdHRlbXB0IHRvIGpvaW4gdGhlIGNsdXN0
-ZXIgd2lsbCBjb250aW51ZSBpbiB0aGUgYmFja2dyb3VuZC4gVXNlICJkb2Nr
-ZXIgaW5mbyIgY29tbWFuZCB0byBzZWUgdGhlIGN1cnJlbnQgc3dhcm0gc3Rh
-dHVzIG9mIHlvdXIgbm9kZQ0KDQpTb21lIGRlYnVnZ2luZyBpbmZvcm1hdGlv
-biBvZiBkb2NrZXIgZGFlbW9uLg0KICAgICAgICAtLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0NCnRp
-bWU9IjIwMTYtMDktMDFUMTE6MDc6MjEuMDMzMjA5MDI5KzA4OjAwIiBsZXZl
-bD1kZWJ1ZyBtc2c9Iigqc2Vzc2lvbikuc3RhcnQiIG1vZHVsZT1hZ2VudA0K
-dGltZT0iMjAxNi0wOS0wMVQxMTowNzoyNi4wNDM2NzEzOTkrMDg6MDAiIGxl
-dmVsPWVycm9yIG1zZz0iYWdlbnQ6IHNlc3Npb24gZmFpbGVkIiBlcnJvcj0i
-c2Vzc2lvbiBpbml0aWF0aW9uIHRpbWVkIG91dCIgbW9kdWxlPWFnZW50DQp0
-aW1lPSIyMDE2LTA5LTAxVDExOjA3OjI2LjA0MzcxNzI2NCswODowMCIgbGV2
-ZWw9ZGVidWcgbXNnPSJhZ2VudDogcmVidWlsZCBzZXNzaW9uIiBtb2R1bGU9
-YWdlbnQNCnRpbWU9IjIwMTYtMDktMDFUMTE6MDc6MjguOTMxNzI0MzMzKzA4
-OjAwIiBsZXZlbD1kZWJ1ZyBtc2c9Iigqc2Vzc2lvbikuc3RhcnQiIG1vZHVs
-ZT1hZ2VudA0KdGltZT0iMjAxNi0wOS0wMVQxMTowNzozMy45NDMwMjY2NjUr
-MDg6MDAiIGxldmVsPWVycm9yIG1zZz0iYWdlbnQ6IHNlc3Npb24gZmFpbGVk
-IiBlcnJvcj0ic2Vzc2lvbiBpbml0aWF0aW9uIHRpbWVkIG91dCIgbW9kdWxl
-PWFnZW50DQp0aW1lPSIyMDE2LTA5LTAxVDExOjA3OjMzLjk0MzQ3NDA1MSsw
-ODowMCIgbGV2ZWw9ZGVidWcgbXNnPSJhZ2VudDogcmVidWlsZCBzZXNzaW9u
-IiBtb2R1bGU9YWdlbnQNCuKApiDigKYNCg0K
+Hi,
 
---_000_5EDB84F4B23F5B4DB6500A89258280E0BEB7C1EX02corpqihoonet_--
+I reported a use after free in PHP's Intl extension. The vulnerability is
+in Collator::sortWithSortKeys function. Only Php 7.0.0 is affected.
+
+https://bugs.php.net/bug.php?id=71020
+
+This can potentially be remotely exploitable if the sorting function is
+called on a user supplied array.
+
+Not sure If this is CVE worthy. But if so, please assign it one.
+
+Thanks.
+
+--089e0149c0282955a205277a16fa--
