@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2017" "Wednesday" "3" "August" "2016" "08:16:04" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160803121604.097D66C19BE@smtpvmsrv1.mitre.org>" "52" "[oss-security] Re: CVE request:Heap overflow vulns in MuPDF" nil nil nil "8" "2016080312:16:04" "[oss-security] Re: CVE request:Heap overflow vulns in MuPDF" (number mark "U       cve-assign@m Aug  3   52/2017  " thread-indent "\"[oss-security] Re: CVE request:Heap overflow vulns in MuPDF\"\n") "<CAPGxrc9YpXo-DHd-oSOker5MhCAH1QoCW-6O4JE+pZScG79vng@mail.gmail.com>" ("<CAPGxrc9YpXo-DHd-oSOker5MhCAH1QoCW-6O4JE+pZScG79vng@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["380" "Monday" "21" "December" "2015" "22:06:56" "-0500" "David Dworken" "david@daviddworken.com" "<CA+b2-LeWL5aAufoN-v5N=VDFyqi817UQgMrkF0tWG7aVK06nUw@mail.gmail.com>" "15" "[oss-security] CVE Request: Reflected XSS in OpenMRS Login Page" nil nil nil "12" "2015122203:06:56" "[oss-security] CVE Request: Reflected XSS in OpenMRS Login Page" (number mark "U       david@davidd Dec 21   15/380   " thread-indent "\"[oss-security] CVE Request: Reflected XSS in OpenMRS Login Page\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 5255 invoked by uid 550); 3 Aug 2016 12:16:16 -0000
+Received: (qmail 3975 invoked by uid 550); 22 Dec 2015 03:39:22 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,64 +12,51 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5233 invoked from network); 3 Aug 2016 12:16:16 -0000
-From: cve-assign@mitre.org
-To: rootredrain@gmail.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <CAPGxrc9YpXo-DHd-oSOker5MhCAH1QoCW-6O4JE+pZScG79vng@mail.gmail.com>
-Message-Id: <20160803121604.097D66C19BE@smtpvmsrv1.mitre.org>
-Date: Wed,  3 Aug 2016 08:16:04 -0400 (EDT)
-Subject: [oss-security] Re: CVE request:Heap overflow vulns in MuPDF
+Received: (qmail 20297 invoked from network); 22 Dec 2015 03:07:08 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=daviddworken-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=cpvfIa5blEke2HBu/p0JLYL8Q66t8sL7wec4qG4aJv4=;
+        b=ERf68IOnLpqklsFLN+d4eddJpf8HvsG6KE9CT21VTdubgQ9aO+/cTZaKmdFOankUy3
+         +SsZBroCo+8/6dI0GiPf2NAUtLoPe0Fqm1m0nCR2MhjHWOri7/wIUYHWn//6I1sDzySN
+         3vSwJPvPuCkKN/P+LiwVGiAKHOVxFLvfon2X8Eh+DInjmbtt8fXg7+90V2cdUsOEDML+
+         hjX69DcJexb7UhhHoZHq1x3IIZeoLhZbLvVbHNi194vYSQMIzJFN9J884fzZHogW3mno
+         3Rf2j3cNyjRKkjG5ttVw5SH+TKIZEdkjmtNXKBk9cboIa/snunsws8yYD6HEIkVWckS4
+         +YUw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
+         :content-type;
+        bh=cpvfIa5blEke2HBu/p0JLYL8Q66t8sL7wec4qG4aJv4=;
+        b=hCdF95I7EnqWFMcHBMFRVX9ISZG0+dz+tshailSbfEdthJoJjeode1+jzv6hjlw4L9
+         9G6X3+zhFOQhyU/chboBA9ussFv8n4CuH8/5IxFnCqRIRXQ72oG4XQt9iMfiWUT0/23d
+         Ojkj9Rgk4jwp7pHKoUYi8cF1TMFtkS1Atw11sVeMOyp63ZefTNwgR7DYNz+xmTuxN+yo
+         pCKoPHjh6Rn1zP4Pvy5KitOi+T9YsewMNxqWQ4/EptBQjZKzo6NSnFTpYnUQvmhh+xnV
+         vbkQuHEPIrh840/dnifsqbXtEZSp2kaE6SU5/2U3v2nocWzvqyforWz49HC/8Rh8t5n4
+         ys6g==
+X-Gm-Message-State: ALoCoQnEdxYVvPErfdRF74f6omwm8Ls1GnGoujoe4Mu6n6f5xKFZtgtiRk+UyO3n5iViSeVqjr9Bb89o87P/6DHesIQGvkzv2Q==
+MIME-Version: 1.0
+X-Received: by 10.107.157.148 with SMTP id g142mr21555900ioe.151.1450753616685;
+ Mon, 21 Dec 2015 19:06:56 -0800 (PST)
+Date: Mon, 21 Dec 2015 22:06:56 -0500
+Message-ID: <CA+b2-LeWL5aAufoN-v5N=VDFyqi817UQgMrkF0tWG7aVK06nUw@mail.gmail.com>
+From: David Dworken <david@daviddworken.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary=001a11408a60fac683052773e570
+Subject: [oss-security] CVE Request: Reflected XSS in OpenMRS Login Page
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--001a11408a60fac683052773e570
+Content-Type: text/plain; charset=UTF-8
 
-> The location of this vulnerability is at pdf_load_mesh_params function, at
-> source/pdf/pdf-shade.c
-> 
-> n = (pdf_array_len(ctx, obj) - 4) / 2;
-> 
-> the length of array return from pdf_array_len not be checked. But the
-> max size of "shade->u.m.C0/C1" is defined as a macro(32 as default). So if
-> I make a pdf which have a large decode array. This code will cause a heap
-> overflow.
-> 
-> And the overflow data could be control, And on the memory I overflow, I
-> found a struct which full of function point. Maybe I can let it point to
-> got table for a chance to call "system"
-> 
-> issue:
-> http://bugs.ghostscript.com/show_bug.cgi?id=696954
-> 
-> fix code:
-> http://git.ghostscript.com/?p=mupdf.git;h=39b0f07dd960f34e7e6bf230ffc3d87c41ef0f2e
+Hello,
 
->> Make sure that number of colors in mesh params is valid.
+OpenMRS has a reflected XSS vulnerability in the login page that is
+exploitable through injection into the referer header.
 
->> -               n = (pdf_array_len(ctx, obj) - 4) / 2;
->> +               n = fz_mini(FZ_MAX_COLORS, (pdf_array_len(ctx, obj) - 4) / 2);
+Patch:
+https://github.com/ddworken/openmrs-module-referenceapplication/commit/65fefcb8dfbd069ca611ab3f17084fd8dc92a048
 
-Use CVE-2016-6525.
+Thanks,
+David Dworken
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXod95AAoJEHb/MwWLVhi2vJsP/3mNzGB1iKiPpJuwf/CV+WTk
-Y1wTcD45iQMF5BxDWKaLbZkTzqIhLw7elQFn0EW5Yybc/v9h11Ok3qSP3vm4m7AY
-WIN/2r3T2JWaFyjogmvRn2o5+N5ffaqMFNxL5xV4DclQHqitSdztic9Ud0Kthpqu
-9rT/91hFTWzS7jzlwmMrurrTWQ4fDD7H8/c4QXGNu4E3iaYLEJuz6OUbyAn5N2/j
-B4dKCnDrkd+4nEneBFGS5FWak90g7BZQ7No9XugmsufiO26CzCv4SYDT2P+HGSul
-UDxUIJLxM2Uo7vL25UMiSTRT04jzpggdL/95QFUVzjvYZ/5Srpv/lYCoKV6+CpOF
-FIFGoeqMegIMKUcm7oGwRLpiJRZ7e2OUyZ3vVkCtohgmWHHq5UZ025FopRQZiYTi
-MlCjJm61RGZGQRefVuC56UH2GgQ7VWEtT7T4Lbqtyu9Oyuy7GM/YrDhgu8GFp16K
-L51V/3ohw3HrYtMlVIBP4orrhm7LLOZOG5jSO3yy88TgHGByqjlnhcMtvsWHsP1y
-NSG+xZGr85tx71Bpp8rvEKbsZKY0q7bJ/05kF1CrPeeJfex2nUX0TocUFKkZsqwh
-NKVXeOkjMv4TLpZ2z6dH5CX0NNVPZodBJJ5sJQW9Mk0lPnIOLS+Argm9OI7CKFbY
-h/Vh2BSu7slwycmNpQjZ
-=ZFaZ
------END PGP SIGNATURE-----
+--001a11408a60fac683052773e570--
