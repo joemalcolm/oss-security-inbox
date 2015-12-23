@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3045" "Tuesday" "14" "June" "2016" "08:14:30" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160614121430.54A8F6C0643@smtpvmsrv1.mitre.org>" "65" "[oss-security] Re: CVE Request for Denial of Service in pacman 5.0.1" nil nil nil "6" "2016061412:14:30" "[oss-security] Re: CVE Request for Denial of Service in pacman 5.0.1" (number mark "U       cve-assign@m Jun 14   65/3045  " thread-indent "\"[oss-security] Re: CVE Request for Denial of Service in pacman 5.0.1\"\n") "<20160611075017.GA268@pepper.home.stoeckmann.org>" ("<20160611075017.GA268@pepper.home.stoeckmann.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1652" "Wednesday" "23" "December" "2015" "17:59:17" "+0100" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20151223175917.722a720a@pc1>" "45" "[oss-security] Use after free in nghttp2" nil nil nil "12" "2015122316:59:17" "[oss-security] Use after free in nghttp2" (number mark "U       hanno@hboeck Dec 23   45/1652  " thread-indent "\"[oss-security] Use after free in nghttp2\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 9530 invoked by uid 550); 14 Jun 2016 12:14:42 -0000
+Received: (qmail 10104 invoked by uid 550); 23 Dec 2015 16:59:10 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,77 +12,58 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9512 invoked from network); 14 Jun 2016 12:14:42 -0000
-From: cve-assign@mitre.org
-To: tobias@stoeckmann.org
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <20160611075017.GA268@pepper.home.stoeckmann.org>
-Message-Id: <20160614121430.54A8F6C0643@smtpvmsrv1.mitre.org>
-Date: Tue, 14 Jun 2016 08:14:30 -0400 (EDT)
-Subject: [oss-security] Re: CVE Request for Denial of Service in pacman 5.0.1
+Received: (qmail 10063 invoked from network); 23 Dec 2015 16:59:05 -0000
+Date: Wed, 23 Dec 2015 17:59:17 +0100
+From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
+To: oss-security@lists.openwall.com, cve-assign@mitre.org
+Message-ID: <20151223175917.722a720a@pc1>
+X-Mailer: Claws Mail 3.13.1 (GTK+ 2.24.29; x86_64-pc-linux-gnu)
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512; protocol="application/pgp-signature"; boundary="=_zucker.schokokeks.org-23795-1450889933-0001-2"
+Subject: [oss-security] Use after free in nghttp2
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--=_zucker.schokokeks.org-23795-1450889933-0001-2
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-> The package manager of Arch Linux, pacman, is vulnerable to a denial of
-> service attack based on signature files. This issue is located in libalpm
-> and therefore affects any other frontend
-> 
-> While an endless loop on itself is no security issue per-se
+https://nghttp2.org/blog/2015/12/23/nghttp2-v1-6-0/
 
-We assign CVE IDs to infinite loops in libraries, as long as a real or
-plausible library-using application runs unattended, and presents an
-attack surface in which the loop may be triggered by not-fully-trusted
-input.
+Quote from release announcement:
+"This release fixes heap-use-after-free bug in idle stream handling
+code. We strongly recommend to upgrade the older installation to this
+latest version as soon as possible."
 
-Use CVE-2016-5434 for this libalpm vulnerability.
+Given nghttp2 is used for many (most?) http2 deployments and these
+become more and more common I think this is rather serious.
 
-(For example, someone may plausibly use libalpm as part of a web
-application that receives packages with signatures from authors and,
-after validity checks, hosts those packages for public download.)
+--=20
+Hanno B=C3=B6ck
+http://hboeck.de/
 
+mail/jabber: hanno@hboeck.de
+GPG: BBB51E42
 
-> such a
-> crafted file might trick the end-user to disable signature verification
-> to get his updates installed. This, on the other hand, would open up
-> possibilities for malicious packages to be installed.
+--=_zucker.schokokeks.org-23795-1450889933-0001-2
+Content-Type: application/pgp-signature
+Content-Transfer-Encoding: 7bit
+Content-Description: OpenPGP digital signature
 
-Maybe, but this would not, by itself, be a reason to assign a CVE ID
-unless the package manager suggested that course of action, e.g., a
-dialog stating "A signature-verification process is running slowly.
-Terminate that process and disable all future verification? [y/N]."
-For example, if there were a signature-verification infinite loop that
-only affected a GUI package manager, without that type of dialog, then
-a CVE ID seems unlikely. First, it's unclear whether there are many
-end users who have the expertise to determine that a loop is related
-to signature verification, but also would jump to the conclusion that
-disabling signature verification was a reasonable solution to their
-immediate problem. More generally, any DoS bug in any package manager
-might trick a non-expert end user into not bothering to install new
-packages, and instead leaving old vulnerable packages installed
-permanently. That is arguably a security impact, but it seems much too
-indirect, so we don't want to assign CVE IDs to 100% of DoS bugs in
-all package managers.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Version: GnuPG v2
 
-iQIcBAEBCAAGBQJXX/SSAAoJEHb/MwWLVhi2koIP/0JPOJFLF7Fs582+6wD8RvFD
-PsTEcWc5X/80uL0yGREFI8Hvm1n7YBuINexgTWoEMfwHPoxvrwtUY2aNDrhAY77X
-SnBobg5B4mrFDGZh0VcmU0vYhriwCx8KDTWF5AfVyQZ4mjmru2MBxF5KyQEQuBuY
-SqhohAlc856KjO0vns17Kw284Eqs34iwQXIZ3nxSwBkJhfrokRaMunA3jGawdJku
-BjQi8RK0TXir2wdyGA95ySIQP6Z5HlsaCjoUa+miuA8Fu7TITBCo31aKxEHfrIFn
-F3zai0bxXz0jaly1TWz4uyAn2P7WL24V2rLlmFIH0z8+tzEKiIiaXjIlzz3JasKp
-0yTI8uUSvUu61WIcBSQcAwRmTYTZ+Rz8IYVsbAS8pnWysXwySBReEnR/rkaKzLX+
-qbREp2oMEoAiEjDAZMM20ObuXzn7NW2S/sLx9jMTdr8OJW7n567SBCO31IbN5Inu
-lopHPR8d5sA3EYL17MGfgkLH9DdHbeZaxDPw41smmNdA04G//bZFChgab02H8uai
-DLWOeaiS1m1zmGpRWCvcS4xm55G1kEdTfJVvj45w9G63BZZuYqzgun1ejG3eTIfz
-zw4Ot7TzyZ7icGAWbrb68eBCisHmzNM7hVHuhRlj5EUuGsrAVHD5fgUGDaV1wvC/
-6XwLFN7kxp5XkLVuq/V3
-=UySW
+iQIcBAEBCgAGBQJWetLlAAoJEKWIAHK7tR5C+T8QALkdifxeGNAvFAzDrTxGbQhA
+LoOeehWeuw3WqKFwJbgXUjmGEF7u1gbJJWrcTfXyZ8tDKzrICFRQF/zzw6AaWkec
+JtSUKFUSpIcxTgxtgLLMBCIaNAFOWja6wYhKr0KRAcBmvgbQpqgSRDAavBQHWsDy
+ftZOWtaN64pjWN15RXGEZ8ezI0Z7YMFPgTJSjgqKJ988lztQZmr+Ek4XUdXkyPT3
+oSQP64UyeXMmZVYi1kDwOqEeYXcvyDDONAo5y9MijcawEi1KjBjIRrafNDZqD+xR
+Inz9qD3UIMzVf6JZ3zaPBtg2+amlFHljSIgz8N79vsEJMC96CZQDjREhZcydwBaX
+TEwzdFcMWCySJ/5Een3PlQJ1/nN6bc/Q3Huybh9skyfXFs2eEkxWLuZ54NQDm9ux
+k381hAOpldFHdK3f92u4ycevmCJrptqns9JYE2FApGFLrGwPUTQwfSwkaYuRBKnq
+gQLHSgu+XUa6/eCQK+BsYxIBYlxlK+UfwwwbhBbBBA9Q5d4h2wKuVupp5imUhfkK
+KDXjWJ/DIxWAgxFSqJGdQ6JGtpMqGIOmn+I2EnFCCYIGN+S2XPBL3pLXjazI7hza
+Op/xhMA0QJ8eG/L5+9NREXrfuVtIuNGXZScxe5dRRQhKenEI9h9D5ZKwTDTkhr/A
+v9UYZVvWGlGw2q3oQArg
+=fMk+
 -----END PGP SIGNATURE-----
+
+--=_zucker.schokokeks.org-23795-1450889933-0001-2--
