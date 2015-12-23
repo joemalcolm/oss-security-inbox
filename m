@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1919" "Thursday" "11" "July" "2019" "18:26:01" "+0200" "Steffen Nurpmeso" "steffen@sdaoden.eu" "<20190711162601.RE3Tr%steffen@sdaoden.eu>" "43" "Re: [oss-security] Privileged File Access from Desktop Applications" "^Cc:" nil nil "7" "2019071116:26:01" "[oss-security] Privileged File Access from Desktop Applications" (number mark "        steffen@sdao Jul 11   43/1919  " thread-indent "\"Re: [oss-security] Privileged File Access from Desktop Applications\"\n") "<20190711114710.09ab5ad9@jabberwock.cb.piermont.com>" ("<200975c0f23706ce513744052225ea7dc9842206.camel@suse.com>" "<20190709113036.0f12d057@jabberwock.cb.piermont.com>" "<9148ee55db2cabb111f790513413823996d04cb6.camel@suse.com>" "<20190711093326.328948dc@jabberwock.cb.piermont.com>" "<de14296ba908c162036a15b1aeda95586ff8ba14.camel@suse.com>" "<20190711114710.09ab5ad9@jabberwock.cb.piermont.com>") nil nil nil nil nil nil nil "Re: [oss-security] Privileged File Access from Desktop Applications" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1816" "Wednesday" "23" "December" "2015" "16:46:03" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151223214603.D60E56C04DB@smtpvmsrv1.mitre.org>" "43" "[oss-security] Re: CVE request -- linux kernel: overlay: fix permission checking for setattr" "^Cc:" nil nil "12" "2015122321:46:03" "[oss-security] Re: CVE request -- linux kernel: overlay: fix permission checking for setattr" (number mark "        cve-assign@m Dec 23   43/1816  " thread-indent "\"[oss-security] Re: CVE request -- linux kernel: overlay: fix permission checking for setattr\"\n") "<996765221.2010506.1450889714081.JavaMail.zimbra@redhat.com>" ("<996765221.2010506.1450889714081.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 26100 invoked by uid 550); 11 Jul 2019 21:26:34 -0000
+Received: (qmail 9529 invoked by uid 550); 23 Dec 2015 21:46:16 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,73 +11,56 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 25997 invoked from network); 11 Jul 2019 16:26:15 -0000
-Message-ID: <20190711162601.RE3Tr%steffen@sdaoden.eu>
-In-Reply-To: <20190711114710.09ab5ad9@jabberwock.cb.piermont.com>
-References: <200975c0f23706ce513744052225ea7dc9842206.camel@suse.com>
- <20190709113036.0f12d057@jabberwock.cb.piermont.com>
- <9148ee55db2cabb111f790513413823996d04cb6.camel@suse.com>
- <20190711093326.328948dc@jabberwock.cb.piermont.com>
- <de14296ba908c162036a15b1aeda95586ff8ba14.camel@suse.com>
- <20190711114710.09ab5ad9@jabberwock.cb.piermont.com>
-Mail-Followup-To: "Perry E. Metzger" <perry@piermont.com>,
- oss-security@lists.openwall.com, Malte Kraus <malte.kraus@suse.com>
-User-Agent: s-nail v14.9.13-111-g4bb54f29
-OpenPGP: id=EE19E1C1F2F7054F8D3954D8308964B51883A0DD;
- url=https://ftp.sdaoden.eu/steffen.asc; preference=signencrypt
-BlahBlahBlah: Any stupid boy can crush a beetle. But all the professors in
- the world can make no bugs.
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-Cc: oss-security@lists.openwall.com, Malte Kraus <malte.kraus@suse.com>
-Date: Thu, 11 Jul 2019 18:26:01 +0200
-From: Steffen Nurpmeso <steffen@sdaoden.eu>
+Received: (qmail 9508 invoked from network); 23 Dec 2015 21:46:16 -0000
+In-Reply-To: <996765221.2010506.1450889714081.JavaMail.zimbra@redhat.com>
+Message-Id: <20151223214603.D60E56C04DB@smtpvmsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Wed, 23 Dec 2015 16:46:03 -0500 (EST)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Privileged File Access from Desktop
- Applications
-To: "Perry E. Metzger" <perry@piermont.com>
+Subject: [oss-security] Re: CVE request -- linux kernel: overlay: fix permission checking for setattr
+To: vdronov@redhat.com
 
-Perry E. Metzger wrote in <20190711114710.09ab5ad9@jabberwock.cb.piermon\
-t.com>:
- |On Thu, 11 Jul 2019 13:57:19 +0000 Malte Kraus <malte.kraus@suse.com>
- |wrote:
- |> On Thu, 2019-07-11 at 09:33 -0400,  Perry E. Metzger wrote:
- ...
- |> I didn't (intend to) say there is an (additional) security problem.
- |> I just tried to succinctly explain why the desktop environments are
- |> coming up with these D-Bus interfaces now.
- |
- |It seems like a bad idea.
- |
- |If one wants to have mechanisms by which the operating system can
- |allow unprivileged programs to temporarily assume privileges (which
- |is a frequent idea in security), then they should be carefully
- |designed and part of the OS, rather than creating an ad hoc facility
- |via a subsystem that isn't intended for it. There are good ways to do
- |that, like capabilities.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Sending this remark because a few days ago i posted something
-similar to a gnupg ML.
+> A flaw was found in the overlay filesystem of the Linux kernel which allows
+> an unprivileged user to change attributes of the files in the overlay,
+> particularly allowing access to root-only-accessible files like '/etc/shadow'.
 
-=46rom my point of view there is root user hysteria in Unix and
-clones, maybe forever, but i see it consciously in the last years.
-If the solution against SETUID programs or other, finer grained
-privileges, but which anyway can be detected via file system
-tools, is that privilege adjustments u-boat away to something that
-needs source code or over-the-wire analysis to being detected at
-all, i fail to see how this leads to something better.
+> https://bugzilla.redhat.com/show_bug.cgi?id=1291329
 
-Without personally having made it there yet, i think the
-traditional way of in-application sandboxing fits better, even
-with SETUID programs which first perform some higher-privilege
-setup before going more secure, like capsicum on FreeBSD,
-pledge/unveil on OpenBSD, or prctl, seccomp (and apparmor) on
-Linux.  Or even interesting entire frameworks like CloudABI.
+>> A security issue was fixed in kernel 4.4-rc4 resolving the bypassing
+>> of filesystem permission checks in overlayfs during the initial
+>> copy_up.
 
---steffen
-|
-|Der Kragenbaer,                The moon bear,
-|der holt sich munter           he cheerfully and one by one
-|einen nach dem anderen runter  wa.ks himself off
-|(By Robert Gernhardt)
+> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=acff81ec2c79492b180fade3c2894425cd35a545
+
+>> Having these two ->setattr() (one to set verbatim copy of metadata,
+>> another to do what overlayfs ->setattr() had been asked to do in the
+>> first place) combined is where it breaks.
+
+Use CVE-2015-8660.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJWexUMAAoJEL54rhJi8gl5IEsQAMv5QaeC971YMHtFge/V5U+A
+8YW0e6efEGffyK8VMPAxDsaXmaCfzw/tSPQvyERnU1dpBaleYq9XxBQ5nmDlOjV0
+0StYAYlWt+WWuKxbcGM0YeQA6oNTnA0repZ/BRztGGYsXmshi/4X/UKSCyM08Ii7
+vh/kWCfA9B3XpCyAB/Iqk3WUHJSULP0hJTvRXA31857+GNav/F4SwkyHRqoQR2G7
+5A4MkGK8OPpRjarCyFRqkSogQc3b3lOkxwoBHFSzOREL2r67xDVPdD3ZDWU0MLSs
+5V+qV+YmQvPOHNGVa3LuKHEmkgY0eLsSivEatgEb8JHjBLPD2+d+PRVg9fltC+Vi
+/hlXWAIjIYhaKK8D/dt8wEJjosdSA4rcS2VrCX3XYQgd5GBqYWQWftoT5dBTPnDk
+1XZrkwo2cJSt/55GwGgBLuN/NF1G/nfEesqIHRg1u4rl3+Zg/SfWhtBE6qGG5BOI
+ei1c1GHi2HuqiAMzonFpkANNMEYwOTajfHfwI2ueMCWZ6L7kX279ZJYj1y1E0l5t
+vtcVb30TvCzkfaul1UmfomYpR38eVAvhX6XT4xziGPTzgWcdO4EYvxVPyLYYo3FE
+lE8iPTiVtkAyjb+jEN2hW9nRQ5bjTgbQ9tSXWCjqdxkcLCY3gmQ0BvaG7r20HkoM
+qX0+9OIXeKUYum3VRc1l
+=OtE0
+-----END PGP SIGNATURE-----
