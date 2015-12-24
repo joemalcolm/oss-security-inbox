@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["203" "Monday" "24" "April" "2017" "20:00:10" "+0200" "Jason A. Donenfeld" "Jason@zx2c4.com" "<CAHmME9r_F44PvenZbTK4LyqTucMpV+o75t3FH8CcWF8TyQuhgQ@mail.gmail.com>" "9" "[oss-security] CVE request: remote heap overflow in linux networking stack" "^Date:" nil nil "4" "2017042418:00:10" "[oss-security] CVE request: remote heap overflow in linux networking stack" (number mark "        Jason@zx2c4. Apr 24    9/203   " thread-indent "\"[oss-security] CVE request: remote heap overflow in linux networking stack\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1347" "Thursday" "24" "December" "2015" "11:37:53" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151224163753.8217233217A@smtpvbsrv1.mitre.org>" "36" "[oss-security] Re: CVE request --  Out-of-bounds Read in libtiff" nil nil nil "12" "2015122416:37:53" "[oss-security] Re: CVE request -- Out-of-bounds Read in libtiff" (number mark "U       cve-assign@m Dec 24   36/1347  " thread-indent "\"[oss-security] Re: CVE request --  Out-of-bounds Read in libtiff\"\n") "<3626D6E697A150459C44C0E5D8D8D00E0D239D83@EX01.corp.qihoo.net>" ("<3626D6E697A150459C44C0E5D8D8D00E0D239D83@EX01.corp.qihoo.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 3996 invoked by uid 550); 24 Apr 2017 18:00:59 -0000
+Received: (qmail 7308 invoked by uid 550); 24 Dec 2015 16:38:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,35 +11,49 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3774 invoked from network); 24 Apr 2017 18:00:25 -0000
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
-	:from:date:message-id:subject:to:content-type; s=mail; bh=EU4CAE
-	CEIz2tVRyVmTe+fnUPuao=; b=s1/cPDryG/fKB1pNKOI10In/lyHluJkIZj8wL/
-	YIeA0PJ87yqwjN7dkxME1BYXWetfZcpGbglrt+hNPZIRKy+q4pE2NbSxPATZOW+j
-	tPToZXRzO+q/cqqhjf9/CulK/Zi21ICB81SGMRJmXk+aOWhI8aWNdQkLYgftGVpN
-	ZuJSzLv7crt4i7wlAeigPlyfne9aNXuXLYpLWP9kvDqzftRGO+OfWwaJXupm4kfl
-	ZJR1nzmwoYIXZeQDxL20qeBgkCo0Z4s/xqwd6FdEqsRrL6sk7ujrSX9VdgrStOVx
-	gmhwRc8qvnclozc/2Q2aU0gxHYVWOqUDlSaQXyUyWBoJJnbQ==
-X-Gm-Message-State: AN3rC/4piFriahdORYquumhxzL+gciIEefHprIEsjsEeISDh6kErHl3e
-	pboyf7WuRLfv7jFA6gFJoSSMLxNlRA==
-X-Received: by 10.202.64.213 with SMTP id n204mr12501622oia.78.1493056810515;
- Mon, 24 Apr 2017 11:00:10 -0700 (PDT)
-MIME-Version: 1.0
-X-Gmail-Original-Message-ID: <CAHmME9r_F44PvenZbTK4LyqTucMpV+o75t3FH8CcWF8TyQuhgQ@mail.gmail.com>
-Message-ID: <CAHmME9r_F44PvenZbTK4LyqTucMpV+o75t3FH8CcWF8TyQuhgQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Date: Mon, 24 Apr 2017 20:00:10 +0200
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE request: remote heap overflow in linux networking stack
-To: oss-security <oss-security@lists.openwall.com>
+Received: (qmail 7290 invoked from network); 24 Dec 2015 16:38:05 -0000
+From: cve-assign@mitre.org
+To: limingxing@360.cn
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, huangyonggang@360.cn
+In-Reply-To: <3626D6E697A150459C44C0E5D8D8D00E0D239D83@EX01.corp.qihoo.net>
+Message-Id: <20151224163753.8217233217A@smtpvbsrv1.mitre.org>
+Date: Thu, 24 Dec 2015 11:37:53 -0500 (EST)
+Subject: [oss-security] Re: CVE request --  Out-of-bounds Read in libtiff
 
-Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Requesting a CVE for [1], a heap overflow I found in Linux.
+> We want to report 1 vulnerability in libtiff 4.0.6!
+> The issue is about  tif_getimage.c line: 1403
+> 
+> UNROLL8(w, NOP,
+>             *cp++ = PACK4(pp[0], pp[1], pp[2], pp[3]);
+>             pp += samplesperpixel);
+> 
+> if  samplesperpixel = 3 pp[3] cause Out-of-bounds Read
 
-Thanks,
-Jason
+Use CVE-2015-8665.
 
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-[1] https://git.kernel.org/pub/scm/linux/kernel/git/davem/net.git/commit/?id=4d6fa57b4dab0d77f4d8e9d9c73d1e63f6fe8fee
+iQIcBAEBCAAGBQJWfB6qAAoJEL54rhJi8gl5ykkQAJ/DbleEiFDmzK2QUNmZDkuZ
+kT7WFzYqcsvTXi0FJfzkTfrNpYwJzS72CNkCjbTpeS24oSvTJ9gAqo7YN3uVe/bw
+YdkTa4RTKw3QpRdHOr5/NfKBZuzyAv0WYVwKqonYyTKblLrP11ViDr6Itb7BVDUw
+C1NbQ94PS+Tz/pPrrBODrsWtbjBRUnUf6qt3v1ufbxcObIuwsNeMI6VWOwOdGFdv
+1urHQ35RHojMD5hicNej2TW8chWWyPDnR2h6uTD2TVvcSQfIy5+Lc0Tcxc9brRN/
+5tsEYmG1brj4BN6M6+x7/48D2lgZyNPYl6xRmmf79wfsSo02sm3JKbcsvORvP9YS
+XBSoWOlX609kHPNzPPt9g0+3TDoWvaq8hkiJ29fP1v1ZFQASPbLu/wlyZdoVqnZ2
+/XTmm657bxOGxake6VT+2SJmoZEuh5cxTQb5Y4/TAd7uK8AW6ARAxwbMltcPLxX9
+1DzK3EmPK6X/bGhNlEuEQiRa1G6+o7eKzzlaOciG0vo0UjEaIYrkZO3pgQKanFeZ
+8odBAstpXuvJsOwHNz3hAYBLzJ5xjRjTZZPrHcZzELGZZiW07yRKrXEf58ygavno
+sh5jakTVnFdMyrJRYumgg5CjtJ+W1ujys14p3hHSIxj0bootrdoa4w9FD7lce64X
+fsmM+pCAHv0eIFYhKvr5
+=7xPe
+-----END PGP SIGNATURE-----
