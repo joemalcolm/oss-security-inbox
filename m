@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4681" "Wednesday" "15" "April" "2015" "11:36:22" "-0500" "Tyler Hicks" "tyhicks@canonical.com" "<20150415163622.GC15511@boyd>" "131" "Re: [oss-security] Re: Problems in automatic crash analysis frameworks" nil nil nil "4" "2015041516:36:22" "[oss-security] Re: Problems in automatic crash analysis frameworks" (number mark "        tyhicks@cano Apr 15  131/4681  " thread-indent "\"Re: [oss-security] Re: Problems in automatic crash analysis frameworks\"\n") "<CAJ_zFkJ77jRVKqeM7oA52Etvp67AFvLPc+CUnBH2J6g+rs0NOg@mail.gmail.com>" ("<20150414155515.BFCAD6C0075@smtpvmsrv1.mitre.org>" "<552D3A20.8040909@canonical.com>" "<CAJ_zFkLtZteX-ge_=9jE8KHxDmKZ=7cwWUmwkHwGHbnCpiQWZA@mail.gmail.com>" "<CAJ_zFk+7eV52Ui1+aV+BKhc68zKi3pmPsgPmFoOsw8Qg6dHPAQ@mail.gmail.com>" "<CAJ_zFkLA=Qn_exvDW8Rym1jx_jS0vo=vuTJ7ON71qk8BSB=1dw@mail.gmail.com>" "<20150414221607.GA5795@boyd>" "<20150415160557.GA15511@boyd>" "<CAJ_zFkJ77jRVKqeM7oA52Etvp67AFvLPc+CUnBH2J6g+rs0NOg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2736" "Thursday" "24" "December" "2015" "12:05:10" "-0600" "Austin English" "austinenglish@gmail.com" "<CACC5Q1cpNSrJ-OqwKEj_tO3BZRtppzYZ1yxzf_D-a2YZWN9-tA@mail.gmail.com>" "69" "Re: [oss-security] Re: CVE request for wget" "^Date:" nil nil "12" "2015122418:05:10" "[oss-security] Re: CVE request for wget" (number mark "        austinenglis Dec 24   69/2736  " thread-indent "\"Re: [oss-security] Re: CVE request for wget\"\n") "<CACC5Q1f5f2j6GCpBidR44=HY=2UAwZEJhtV+adJa1i7TK+76SQ@mail.gmail.com>" ("<CACC5Q1eQ8jf-nxub=viXgnSt6pZGzSzbV=RD2YXV76NVHw7WTQ@mail.gmail.com>" "<20151001225726.9EF7AB2E0A6@smtpvbsrv1.mitre.org>" "<20151001231046.GB16643@hunt>" "<CACC5Q1dPzS3C_9L_vVx4scx7UaE38OqXcC0g6zFPE-Eb-tYRSw@mail.gmail.com>" "<CACC5Q1dRGnLHyxwEznn5Hm+Pym_ijXAsQuAT=AD16zaeUWSLgw@mail.gmail.com>" "<CACC5Q1f5f2j6GCpBidR44=HY=2UAwZEJhtV+adJa1i7TK+76SQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 5238 invoked by uid 550); 15 Apr 2015 16:36:37 -0000
+Received: (qmail 18056 invoked by uid 550); 24 Dec 2015 18:06:01 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,161 +11,101 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5205 invoked from network); 15 Apr 2015 16:36:37 -0000
-Message-ID: <20150415163622.GC15511@boyd>
-References: <20150414155515.BFCAD6C0075@smtpvmsrv1.mitre.org>
- <552D3A20.8040909@canonical.com>
- <CAJ_zFkLtZteX-ge_=9jE8KHxDmKZ=7cwWUmwkHwGHbnCpiQWZA@mail.gmail.com>
- <CAJ_zFk+7eV52Ui1+aV+BKhc68zKi3pmPsgPmFoOsw8Qg6dHPAQ@mail.gmail.com>
- <CAJ_zFkLA=Qn_exvDW8Rym1jx_jS0vo=vuTJ7ON71qk8BSB=1dw@mail.gmail.com>
- <20150414221607.GA5795@boyd>
- <20150415160557.GA15511@boyd>
- <CAJ_zFkJ77jRVKqeM7oA52Etvp67AFvLPc+CUnBH2J6g+rs0NOg@mail.gmail.com>
+Received: (qmail 18036 invoked from network); 24 Dec 2015 18:06:01 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :content-type;
+        bh=oFU17cXOePs1bcLzWZErO8fg7WLpo0VEojwqFEbu51k=;
+        b=qzLfLFuWYMSM6AkrSbjvlTn/Sa8i3BHo4+6uAO+yJ9pMzmMbj1cRI7QtWH1HoWy+sP
+         AcvlQ9WapRPg8uWoBtmhLCWaKoP/3cmkRut941aGKrk8aPGkKpsTEVnls0+iSNltQC6d
+         1+Eu+Cql7fhbb0JxjikC0NCwg9h9WSAl+oA/OO0SfAWayd5YcbIfkjORHLjUWOveeBqN
+         89bAvAbakSJNh6JJIymkzpFpohTzAIaGvGn9ooAx/EZUDy2h5p9LJrgALtBaZioxzInB
+         pHoUn3bfsUG4t+IU4vFPrRN+EgiA6ZXjcU5ISF0fJAx7vTZhMzhfRT3QDfjwsGKAB/9z
+         Q0hg==
+X-Received: by 10.50.124.9 with SMTP id me9mr37354069igb.24.1450980349527;
+ Thu, 24 Dec 2015 10:05:49 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="Bu8it7iiRSEf40bY"
-Content-Disposition: inline
-In-Reply-To: <CAJ_zFkJ77jRVKqeM7oA52Etvp67AFvLPc+CUnBH2J6g+rs0NOg@mail.gmail.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-Cc: oss-security@lists.openwall.com,
-	Assign a CVE Identifier <cve-assign@mitre.org>,
-	security <security@ubuntu.com>,
-	=?iso-8859-1?Q?St=E9phane?= Graber <stgraber@ubuntu.com>
-Date: Wed, 15 Apr 2015 11:36:22 -0500
-From: Tyler Hicks <tyhicks@canonical.com>
+In-Reply-To: <CACC5Q1f5f2j6GCpBidR44=HY=2UAwZEJhtV+adJa1i7TK+76SQ@mail.gmail.com>
+References: <CACC5Q1eQ8jf-nxub=viXgnSt6pZGzSzbV=RD2YXV76NVHw7WTQ@mail.gmail.com>
+ <20151001225726.9EF7AB2E0A6@smtpvbsrv1.mitre.org> <20151001231046.GB16643@hunt>
+ <CACC5Q1dPzS3C_9L_vVx4scx7UaE38OqXcC0g6zFPE-Eb-tYRSw@mail.gmail.com>
+ <CACC5Q1dRGnLHyxwEznn5Hm+Pym_ijXAsQuAT=AD16zaeUWSLgw@mail.gmail.com> <CACC5Q1f5f2j6GCpBidR44=HY=2UAwZEJhtV+adJa1i7TK+76SQ@mail.gmail.com>
+Message-ID: <CACC5Q1cpNSrJ-OqwKEj_tO3BZRtppzYZ1yxzf_D-a2YZWN9-tA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Date: Thu, 24 Dec 2015 12:05:10 -0600
+From: Austin English <austinenglish@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: Problems in automatic crash analysis
- frameworks
-To: Tavis Ormandy <taviso@google.com>
+Subject: Re: [oss-security] Re: CVE request for wget
+To: cve-assign@mitre.org, Austin English <austinenglish@gmail.com>, 
+	oss-security@lists.openwall.com
 
---Bu8it7iiRSEf40bY
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Tue, Nov 3, 2015 at 10:19 PM, Austin English <austinenglish@gmail.com> wrote:
+> And 1.7 is now out as well:
+> https://tails.boum.org/news/version_1.7/index.en.html
+>
+> With the fix included and documented
+>
+> On Mon, Nov 2, 2015 at 2:37 AM, Austin English <austinenglish@gmail.com>
+> wrote:
+>>
+>> The fix has been released in 1.7-rc1,
+>> https://tails.boum.org/news/test_1.7-rc1/index.en.html
+>>
+>> On Mon, Oct 26, 2015 at 3:21 PM, Austin English <austinenglish@gmail.com>
+>> wrote:
+>>>
+>>> On Thu, Oct 1, 2015 at 6:10 PM, Seth Arnold <seth.arnold@canonical.com>
+>>> wrote:
+>>> > On Thu, Oct 01, 2015 at 06:57:26PM -0400, cve-assign@mitre.org wrote:
+>>> >> If there is any additional Tails vulnerability related to this,
+>>> >> another CVE ID may be needed. For example,
+>>> >>
+>>> >>   https://lists.gnu.org/archive/html/bug-wget/2015-08/msg00050.html
+>>> >>
+>>> >> says
+>>> >>
+>>> >>   to be 100% sure, you should add --passive-ftp to your command line.
+>>> >>   If you don't do that, your /etc/wgetrc or ~/.wgetrc could include
+>>> >>   --no-passive-ftp (or passiveftp = off).
+>>> >>
+>>> >> If Tails is supposed to try to ensure that, perhaps there's a
+>>> >> requirement to have something like:
+>>> >>
+>>> >>   alias wget="wget --passive-ftp"
+>>> >>
+>>> >> in a system-wide location (possibly /etc/bash.bashrc). The concept of
+>>> >> CVE IDs for "failure of a torify step" issues is new, and we aren't
+>>> >> sure of the best approach.
+>>> >
+>>> > I suspect using a bash alias in a site-wide config might then qualify
+>>> > for
+>>> > another CVE in the future, along the lines of "programs that spawn wget
+>>> > via system(3), popen(3), or exec family of functions can use unsafe
+>>> > active
+>>> > mode by accident". If Tails is in the business of fixing these things
+>>> > for safety, removing active ftp support from tools seems like better
+>>> > fix.
+>>> >
+>>> > Thanks
+>>>
+>>> A fix has been applied to Tails git:
+>>>
+>>> https://labs.riseup.net/code/projects/tails/repository/revisions/b9fd6312435d55dd0bc0b6abdb7994da4d66e2b2
+>>>
+>>> In short, the wget binary is moved to /usr/lib/wget/wget, and a
+>>> wrapper script is put in place in /usr/bin/wget. The wrapper ensures
+>>> that wget is called via torsocks, and additionally, also forces
+>>> --passive-ftp.
+>>>
+>>> Moving wget to /usr/lib/wget/wget gets the potentially dangerous wget
+>>> binary out of $PATH. A dedicated attacker could check if /usr/bin/wget
+>>> is a script and then parse it to find the actual binary, but that
+>>> would need to be a very dedicated attacker and at that point, there
+>>> are more feasible attacks available.
 
-On 2015-04-15 09:21:39, Tavis Ormandy wrote:
-> On Wed, Apr 15, 2015 at 9:05 AM, Tyler Hicks <tyhicks@canonical.com> wrot=
-e:
-> > On 2015-04-14 17:16:08, Tyler Hicks wrote:
-> >> On 2015-04-14 14:10:12, Tavis Ormandy wrote:
-> >> > On Tue, Apr 14, 2015 at 2:08 PM, Tavis Ormandy <taviso@google.com> w=
-rote:
-> >> > > On Tue, Apr 14, 2015 at 1:35 PM, Tavis Ormandy <taviso@google.com>=
- wrote:
-> >> > >> On Tue, Apr 14, 2015 at 9:02 AM, Marc Deslauriers
-> >> > >> <marc.deslauriers@canonical.com> wrote:
-> >> > >>> Hi,
-> >> > >>>
-> >> > >>> On 2015-04-14 11:55 AM, cve-assign@mitre.org wrote:
-> >> > >>>> This is mostly a question for the persons who assigned CVE-2015=
--1318
-> >> > >>>> and CVE-2015-1862. Should these CVE assignments be interpreted =
-to
-> >> > >>>> mean:
-> >> > >>>>
-> >> > >>>>   CVE-2015-1318 - in Apport, an unprivileged user can use a
-> >> > >>>>                   namespace-based attack because there is an ex=
-ecve by
-> >> > >>>>                   root after a chroot into a user-specified dir=
-ectory
-> >> > >>>
-> >> > >>> Yes, I assigned CVE-2015-1318 to that specific issue in Apport.
-> >> > >>>
-> >> > >>> Marc.
-> >> > >>
-> >> > >> It looks like this is the patch for Apport:
-> >> > >>
-> >> > >> http://bazaar.launchpad.net/~apport-hackers/apport/trunk/revision=
-/2943#data/apport
-> >> > >>
-> >> > >> It's far more complicated than I expected, and not obviously corr=
-ect.
-> >> > >> It could probably use some review, I'll think about it today.
-> >> > >>
-> >> > >> Tavis.
-> >> > >
-> >> > > Wait, my first thought is that it's not obvious to me that
-> >> > > /proc/net/unix is guaranteed to be newline delimited, newline is a
-> >> > > perfectly valid name in a filename, no?
-> >> > >
-> >> > >>>> import socket
-> >> > >>>> socket.socket(socket.AF_UNIX, socket.SOCK_STREAM).bind('test\nt=
-est')
-> >> > >>>> sock =3D socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
-> >> > >>>> sock.bind('/tmp/foo\nbar')
-> >> > >>>> sock.listen(1)
-> >> > >
-> >> > > $ grep -A1 foo /proc/net/unix
-> >> > > 0000000000000000: 00000002 00000000 00010000 0001 01 4772228 /tmp/=
-foo
-> >> > > bar
-> >> >
-> >> > And with complete control over this line, it seems like it's game ov=
-er.
-> >> >
-> >> >                 container =3D lxc.Container(path[-2], real_path)
-> >> >
-> >> > I'm calling this re-broken.
-> >>
-> >> I've pointed St=E9phane Graber to your analysis (and put him on cc). H=
-e's
-> >> working on a fix.
-> >>
-> >> Even though it isn't clear if all of the checks added in revision 2943
-> >> can be bypassed, it is worth coming up with another approach.
-> >
-> > Hi Tavis - We've opened a bug to track the issue that you discovered:
-> >
-> >   https://launchpad.net/bugs/1444518
-> >
-> > St=E9phane has prepared a patch that is more resilient to a malicious
-> > /proc/net/unix:
-> >
-> >   https://launchpadlibrarian.net/203372380/apport.diff
-> >
-> > Any feedback that you have would be appreciated. Thanks again!
-> >
-> > Tyler
->=20
-> Thanks Tyler, I'll think about this morning. I'm not sure if these
-> observations are important, but my first thought is It's definitely
-> possible to make the st_uid of /proc/ppid 0, you could just do su
-> $USER for example.
+This CVE has been fixed in a released version for quite some time,
+what is needed to get this published/resolved?
 
-Ah, right. Looking at the real uid in /proc/ppid/status is the way to do
-it.
-
->=20
-> Also, you can at least trust /proc/pid is stopped while the core
-> handler is running, but ppid is still running. I think this matters,
-> because the pid might be recycled.
-
-That's why I suggested that he chdir('/proc/ppid') and then only work
-off of relative paths. I assumed that would be sufficient but I'll
-verify that.
-
-Tyler
-
---Bu8it7iiRSEf40bY
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCgAGBQJVLpOFAAoJENaSAD2qAscKl/8QAJLGY3G9G5uomz8yj2DLMZQc
-ZKuHZSmZ0Pu8o/TTH5yH7KkUgmxhKT4121R5cVy8ZHKCrdj6ryvQqXm0h8w3Q6d9
-BAjyjg2yjWf1tnDc2LGfeUiSQy/WG66ByQd+GpBJsBr5K2FVK2JsRH4HD5MWD5B+
-UYYEMwj1YdcFkV3fNEFdAURWp3vMbmJsROzHvAlO7QsobmZTICI4xhvRz1y5iLjO
-aBpqGkJOSqztVL3qgnLWz3OB+LmSMLRaBzX/p4dWcYVh6LQ8ALOu7vfA/QUfRMhD
-0S7gwm0wVOf/xYYprXG9Vwg74DQYxRXuEIJKyFdXvp1u5I9exVsAkK6DX6XQrTW2
-/HivnrygByJITI/3th9zYv8OOmYNj42hWnH3NMWacjGn9jQ3wrVrxSEQFZMGrQkW
-HKhpL8kAhxyvEMETsvXf58KXpvDWWp583gJMWA/w6ekgyzqNn+n7qp7i463VSi2Z
-9E9bg6Yo3LjO4BBwnowiODUrH9O1fYjNlIINBXHgpedi5QF1k+dIpYLgC7Z26CMS
-sfxidks3KKNEPgd/hd2ZHA70c/HBil7NFowGrCnhN6XMZWlJ4BwruZoEBTQofOzV
-uBR7TGWkEPBuZhvJtBpDtH7exumwWETJ8gXWeTSd99XPP6mJfEbpIPKoacj+XN+n
-MGCJEmNxGh7EyWW0xPcT
-=pt26
------END PGP SIGNATURE-----
-
---Bu8it7iiRSEf40bY--
+-- 
+-Austin
