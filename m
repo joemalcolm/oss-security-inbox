@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4401" "Monday" "12" "October" "2020" "15:53:06" "+0000" "=?gb2312?B?a2l5aW4o0vzBwSk=?=" "kiyin@tencent.com" "<5a3464785c26496ea796470a1a0d82d1@tencent.com>" "76" "[oss-security] Linux kernel: crypto: bcm - Verify GCM/CCM key length in setkey" nil nil nil "10" "2020101215:53:06" "[oss-security] Linux kernel: crypto: bcm - Verify GCM/CCM key length in setkey" (number mark "U       kiyin@tencen Oct 12   76/4401  " thread-indent "\"[oss-security] Linux kernel: crypto: bcm - Verify GCM/CCM key length in setkey\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Linux kernel: crypto: bcm - Verify GCM/CCM key length in setkey" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["479" "Saturday" "26" "December" "2015" "07:28:52" "+0000" "Sevan Janiyan" "venture37@geeklan.co.uk" "<567E41B4.2010606@geeklan.co.uk>" "15" "[oss-security] Being vulnerable to POODLE" "^Date:" nil nil "12" "2015122607:28:52" "[oss-security] Being vulnerable to POODLE" (number mark "        venture37@ge Dec 26   15/479   " thread-indent "\"[oss-security] Being vulnerable to POODLE\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 21519 invoked by uid 550); 12 Oct 2020 16:39:53 -0000
+Received: (qmail 21975 invoked by uid 550); 26 Dec 2015 10:12:28 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,105 +11,32 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 18305 invoked from network); 12 Oct 2020 15:53:18 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tencent.com;
-	s=s202002; t=1602518076;
-	bh=KBgMwaXF7nm3/UNmg8P8rWKHXtF1Zz9m4E4pZ72z3kw=;
-	h=From:To:CC:Subject:Date;
-	b=HNOWxh3vxfb+m12ZeSkmy0DA9NuNnHbpwfFOJqoL1Fj2INLyW5Unkm/Uh1esKEJ00
-	 0b6ulQ4G5YPGCGrFucPyWsoiB+k+wxZNE47S3uJpubxfVudlko+VzMngaK8RTeTRf8
-	 nzwVCmv5dZIyx3AOABcsXBaePtVWwQnnumcFunDI=
-From: =?gb2312?B?a2l5aW4o0vzBwSk=?= <kiyin@tencent.com>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-CC: Anthony Liguori <aliguori@amazon.com>, Solar Designer <solar@openwall.com>
-Thread-Topic: [PATCH] crypto: bcm - Verify GCM/CCM key length in setkey
-Thread-Index: Adagr69BtZLJx7+YRNqprkDKOhO4Tw==
-Date: Mon, 12 Oct 2020 15:53:06 +0000
-Message-ID: <5a3464785c26496ea796470a1a0d82d1@tencent.com>
-Accept-Language: zh-CN, en-US
-Content-Language: zh-CN
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [9.19.161.113]
-Content-Type: multipart/alternative;
-	boundary="_000_5a3464785c26496ea796470a1a0d82d1tencentcom_"
+Received: (qmail 13816 invoked from network); 26 Dec 2015 07:29:05 -0000
+X-Enigmail-Draft-Status: N1110
+Message-ID: <567E41B4.2010606@geeklan.co.uk>
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:38.0)
+ Gecko/20100101 Thunderbird/38.5.0
 MIME-Version: 1.0
-Subject: [oss-security] Linux kernel: crypto: bcm - Verify GCM/CCM key length in setkey
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Date: Sat, 26 Dec 2015 07:28:52 +0000
+From: Sevan Janiyan <venture37@geeklan.co.uk>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Being vulnerable to POODLE
+To: oss-security@lists.openwall.com
 
---_000_5a3464785c26496ea796470a1a0d82d1tencentcom_
-Content-Type: text/plain; charset="gb2312"
-Content-Transfer-Encoding: base64
+Hi,
+If you have a piece of software which is vulnerable to POODLE, should a
+CVE be requested for it or should CVE-2014-3566 just be referenced in
+any advisories published?
 
-VGhlcmUgYXJlIGZvdXIgc2VjdXJpdHkgYnVncyBpbiBCcm9hZGNvbSBTUFUg
-ZHJpdmVyLiBUaGUgcGF0Y2ggd2FzIHB1YmxpYyBpbiBodHRwczovL3d3dy5z
-cGluaWNzLm5ldC9saXN0cy9saW51eC1jcnlwdG8vbXNnNTA4MzkuaHRtbC4g
-Q1ZFIElEIHJlcXVlc3QgaXMgaW4gcHJvZ3Jlc3MuDQoNCkhlcmUgaXMgdGhl
-IHBhdGNoIGRldGFpbDoNCg0KDQoNClRoZSBzZXRrZXkgZnVuY3Rpb24gZm9y
-IEdDTS9DQ00gYWxnb3JpdGhtcyBkaWRuJ3QgdmVyaWZ5IHRoZSBrZXkNCg0K
-bGVuZ3RoIGJlZm9yZSBjb3B5aW5nIHRoZSBrZXkgYW5kIHN1YnRyYWN0aW5n
-IHRoZSBzYWx0IGxlbmd0aC4NCg0KDQoNClRoaXMgcGF0Y2ggZGVsYXlzIHRo
-ZSBjb3B5aW5nIG9mIHRoZSBrZXkgdGlsIGFmdGVyIHRoZSB2ZXJpZmljYXRp
-b24NCg0KaGFzIGJlZW4gZG9uZS4gIEl0IGFsc28gYWRkcyBjaGVja3Mgb24g
-dGhlIGtleSBsZW5ndGggdG8gZW5zdXJlDQoNCnRoYXQgaXQncyBhdCBsZWFz
-dCBhcyBsb25nIGFzIHRoZSBzYWx0Lg0KDQoNCg0KRml4ZXM6IDlkMTJiYTg2
-ZjgxOCAoImNyeXB0bzogYnJjbSAtIEFkZCBCcm9hZGNvbSBTUFUgZHJpdmVy
-IikNCg0KQ2M6IDxzdGFibGVAeHh4eHh4eHh4eHh4eHh4Pg0KDQpSZXBvcnRl
-ZC1ieToga2l5aW4o0vzBwSkgPGtpeWluQHh4eHh4eHh4eHh4Pg0KDQpTaWdu
-ZWQtb2ZmLWJ5OiBIZXJiZXJ0IFh1IDxoZXJiZXJ0QHh4eHh4eHh4eHh4eHh4
-eHh4eHg+DQoNCg0KDQpkaWZmIC0tZ2l0IGEvZHJpdmVycy9jcnlwdG8vYmNt
-L2NpcGhlci5jIGIvZHJpdmVycy9jcnlwdG8vYmNtL2NpcGhlci5jDQoNCmlu
-ZGV4IDVkMzhiODdiOWQ3Ny4uNTBkMTY5ZTYxYjQxIDEwMDY0NA0KDQotLS0g
-YS9kcml2ZXJzL2NyeXB0by9iY20vY2lwaGVyLmMNCg0KKysrIGIvZHJpdmVy
-cy9jcnlwdG8vYmNtL2NpcGhlci5jDQoNCkBAIC0yODY3LDcgKzI4NjcsNiBA
-QCBzdGF0aWMgaW50IGFlYWRfZ2NtX2NjbV9zZXRrZXkoc3RydWN0IGNyeXB0
-b19hZWFkICpjaXBoZXIsDQoNCg0KDQogICAgICAgIGN0eC0+ZW5ja2V5bGVu
-ID0ga2V5bGVuOw0KDQogICAgICAgIGN0eC0+YXV0aGtleWxlbiA9IDA7DQoN
-Ci0gICAgICAgbWVtY3B5KGN0eC0+ZW5ja2V5LCBrZXksIGN0eC0+ZW5ja2V5
-bGVuKTsNCg0KDQoNCiAgICAgICAgc3dpdGNoIChjdHgtPmVuY2tleWxlbikg
-ew0KDQogICAgICAgIGNhc2UgQUVTX0tFWVNJWkVfMTI4Og0KDQpAQCAtMjg4
-Myw2ICsyODgyLDggQEAgc3RhdGljIGludCBhZWFkX2djbV9jY21fc2V0a2V5
-KHN0cnVjdCBjcnlwdG9fYWVhZCAqY2lwaGVyLA0KDQogICAgICAgICAgICAg
-ICBnb3RvIGJhZGtleTsNCg0KICAgICAgICB9DQoNCg0KDQorICAgICAgIG1l
-bWNweShjdHgtPmVuY2tleSwga2V5LCBjdHgtPmVuY2tleWxlbik7DQoNCisN
-Cg0KICAgICAgICBmbG93X2xvZygiICBlbmNrZXlsZW46JXUgYXV0aGtleWxl
-bjoldVxuIiwgY3R4LT5lbmNrZXlsZW4sDQoNCiAgICAgICAgICAgICAgICBj
-dHgtPmF1dGhrZXlsZW4pOw0KDQogICAgICAgIGZsb3dfZHVtcCgiICBlbmM6
-ICIsIGN0eC0+ZW5ja2V5LCBjdHgtPmVuY2tleWxlbik7DQoNCkBAIC0yOTM3
-LDYgKzI5MzgsMTAgQEAgc3RhdGljIGludCBhZWFkX2djbV9lc3Bfc2V0a2V5
-KHN0cnVjdCBjcnlwdG9fYWVhZCAqY2lwaGVyLA0KDQogICAgICAgIHN0cnVj
-dCBpcHJvY19jdHhfcyAqY3R4ID0gY3J5cHRvX2FlYWRfY3R4KGNpcGhlcik7
-DQoNCg0KDQogICAgICAgIGZsb3dfbG9nKCIlc1xuIiwgX19mdW5jX18pOw0K
-DQorDQoNCisgICAgICAgaWYgKGtleWxlbiA8IEdDTV9FU1BfU0FMVF9TSVpF
-KQ0KDQorICAgICAgICAgICAgICAgcmV0dXJuIC1FSU5WQUw7DQoNCisNCg0K
-ICAgICAgICBjdHgtPnNhbHRfbGVuID0gR0NNX0VTUF9TQUxUX1NJWkU7DQoN
-CiAgICAgICAgY3R4LT5zYWx0X29mZnNldCA9IEdDTV9FU1BfU0FMVF9PRkZT
-RVQ7DQoNCiAgICAgICAgbWVtY3B5KGN0eC0+c2FsdCwga2V5ICsga2V5bGVu
-IC0gR0NNX0VTUF9TQUxUX1NJWkUsIEdDTV9FU1BfU0FMVF9TSVpFKTsNCg0K
-QEAgLTI5NjUsNiArMjk3MCwxMCBAQCBzdGF0aWMgaW50IHJmYzQ1NDNfZ2Nt
-X2VzcF9zZXRrZXkoc3RydWN0IGNyeXB0b19hZWFkICpjaXBoZXIsDQoNCiAg
-ICAgICAgc3RydWN0IGlwcm9jX2N0eF9zICpjdHggPSBjcnlwdG9fYWVhZF9j
-dHgoY2lwaGVyKTsNCg0KDQoNCiAgICAgICAgZmxvd19sb2coIiVzXG4iLCBf
-X2Z1bmNfXyk7DQoNCisNCg0KKyAgICAgICBpZiAoa2V5bGVuIDwgR0NNX0VT
-UF9TQUxUX1NJWkUpDQoNCisgICAgICAgICAgICAgIHJldHVybiAtRUlOVkFM
-Ow0KDQorDQoNCiAgICAgICAgY3R4LT5zYWx0X2xlbiA9IEdDTV9FU1BfU0FM
-VF9TSVpFOw0KDQogICAgICAgIGN0eC0+c2FsdF9vZmZzZXQgPSBHQ01fRVNQ
-X1NBTFRfT0ZGU0VUOw0KDQogICAgICAgIG1lbWNweShjdHgtPnNhbHQsIGtl
-eSArIGtleWxlbiAtIEdDTV9FU1BfU0FMVF9TSVpFLCBHQ01fRVNQX1NBTFRf
-U0laRSk7DQoNCkBAIC0yOTk0LDYgKzMwMDMsMTAgQEAgc3RhdGljIGludCBh
-ZWFkX2NjbV9lc3Bfc2V0a2V5KHN0cnVjdCBjcnlwdG9fYWVhZCAqY2lwaGVy
-LA0KDQogICAgICAgIHN0cnVjdCBpcHJvY19jdHhfcyAqY3R4ID0gY3J5cHRv
-X2FlYWRfY3R4KGNpcGhlcik7DQoNCg0KDQogICAgICAgIGZsb3dfbG9nKCIl
-c1xuIiwgX19mdW5jX18pOw0KDQorDQoNCisgICAgICAgaWYgKGtleWxlbiA8
-IENDTV9FU1BfU0FMVF9TSVpFKQ0KDQorICAgICAgICAgICAgICByZXR1cm4g
-LUVJTlZBTDsNCg0KKw0KDQogICAgICAgIGN0eC0+c2FsdF9sZW4gPSBDQ01f
-RVNQX1NBTFRfU0laRTsNCg0KICAgICAgICBjdHgtPnNhbHRfb2Zmc2V0ID0g
-Q0NNX0VTUF9TQUxUX09GRlNFVDsNCg0KICAgICAgICBtZW1jcHkoY3R4LT5z
-YWx0LCBrZXkgKyBrZXlsZW4gLSBDQ01fRVNQX1NBTFRfU0laRSwgQ0NNX0VT
-UF9TQUxUX1NJWkUpOw0KDQotLQ0KDQpFbWFpbDogSGVyYmVydCBYdSA8aGVy
-YmVydEB4eHh4eHh4eHh4eHh4eHh4eHh4Pg0KDQpIb21lIFBhZ2U6IGh0dHA6
-Ly9nb25kb3IuYXBhbmEub3JnLmF1L35oZXJiZXJ0Lw0KDQpQR1AgS2V5OiBo
-dHRwOi8vZ29uZG9yLmFwYW5hLm9yZy5hdS9+aGVyYmVydC9wdWJrZXkudHh0
-DQoNCg0K
+It turns out that CoovaChilli[1] is vulnerable to POODLE & I'd like to
+follow the correct procedure regarding disclosure. There's a fix pending
+due to needing further testing at which point an advisory will be
+published with the necessary details.
 
---_000_5a3464785c26496ea796470a1a0d82d1tencentcom_--
+Regards,
+
+
+Sevan
+[1] http://coova.github.io/CoovaChilli/
