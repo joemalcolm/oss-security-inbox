@@ -1,10 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1487" "Wednesday" "22" "June" "2016" "10:09:55" "-0500" "John Lightsey" "john@nixnuts.net" "<1466608195.2458.5.camel@nixnuts.net>" "39" "[oss-security] CVE request: SQL injection in MovableType xml-rpc interface" nil nil nil "6" "2016062215:09:55" "[oss-security] CVE request: SQL injection in MovableType xml-rpc interface" (number mark "U       john@nixnuts Jun 22   39/1487  " thread-indent "\"[oss-security] CVE request: SQL injection in MovableType xml-rpc interface\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1707" "Tuesday" "29" "December" "2015" "11:31:04" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151229163104.719956C06B8@smtpvmsrv1.mitre.org>" "43" "[oss-security] Re: Inspircd <2.0.19 DoS" nil nil nil "12" "2015122916:31:04" "[oss-security] Re: Inspircd <2.0.19 DoS" (number mark "U       cve-assign@m Dec 29   43/1707  " thread-indent "\"[oss-security] Re: Inspircd <2.0.19 DoS\"\n") "<1451395927.2773687.478399178.47F1803A@webmail.messagingengine.com>" ("<1451395927.2773687.478399178.47F1803A@webmail.messagingengine.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-X-Quarantine-ID: <O9V8AZ9rdx_e>
-Received: (qmail 21909 invoked by uid 550); 22 Jun 2016 15:10:14 -0000
+Received: (qmail 26394 invoked by uid 550); 29 Dec 2015 16:31:54 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -13,71 +12,55 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21885 invoked from network); 22 Jun 2016 15:10:14 -0000
-Message-ID: <1466608195.2458.5.camel@nixnuts.net>
-From: John Lightsey <john@nixnuts.net>
-To: oss-security <oss-security@lists.openwall.com>
-Date: Wed, 22 Jun 2016 10:09:55 -0500
-Content-Type: multipart/signed; micalg="pgp-sha512";
-	protocol="application/pgp-signature"; boundary="=-Taq06jMcBqYjCvmgpTgB"
-X-Mailer: Evolution 3.20.3-1 
-Mime-Version: 1.0
-X-Spam_score: -1.5
-X-Spam_score_int: -14
-X-Spam_bar: -
-X-Spam_report: Spam detection software, running on the system "nixnuts.net",
- has NOT identified this incoming email as spam.  The original
- message has been attached to this so you can view it or label
- similar future email.  If you have any questions, see
- the administrator of that system for details.
- Content preview:  Hi there, SixApart just released new versions of MovableType
-    6.2 and 6.1 to fix an SQL injection in the xml-rpc interface. The vulnerability
-    also affects the older GPLv2 licensed MovableType 5.2.13. Could you please
-    assign a CVE identifier for tracking this issue? [...] 
- Content analysis details:   (-1.5 points, 3.0 required)
-  pts rule name              description
- ---- ---------------------- --------------------------------------------------
- -1.0 ALL_TRUSTED            Passed through trusted hosts only via SMTP
- -0.5 BAYES_00               BODY: Bayes spam probability is 0 to 1%
-                             [score: 0.0000]
-Subject: [oss-security] CVE request: SQL injection in MovableType xml-rpc interface
+Received: (qmail 26258 invoked from network); 29 Dec 2015 16:31:16 -0000
+From: cve-assign@mitre.org
+To: feld@feld.me
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <1451395927.2773687.478399178.47F1803A@webmail.messagingengine.com>
+Message-Id: <20151229163104.719956C06B8@smtpvmsrv1.mitre.org>
+Date: Tue, 29 Dec 2015 11:31:04 -0500 (EST)
+Subject: [oss-security] Re: Inspircd <2.0.19 DoS
 
---=-Taq06jMcBqYjCvmgpTgB
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Hi there,
+> Inspircd <2.0.19 has a DoS caused by PTR lookup of connecting users.
 
-SixApart just released new versions of MovableType 6.2 and 6.1 to fix an SQL
-injection in the xml-rpc interface. The vulnerability also affects the older
-GPLv2 licensed MovableType 5.2.13.
+> From their changelog: "...including a fix for a bug which allowed
+> malformed DNS records to cause netsplits on a network. Triggering this
+> issue is non-trivial and it may not occur in all circumstances, but all
+> users are advised to upgrade."
 
-Could you please assign a CVE identifier for tracking this issue?
+> http://www.inspircd.org/2015/04/16/v2019-released.html
+> https://github.com/inspircd/inspircd/commit/6058483d9fbc1b904d5ae7cfea47bfcde5c5b559
 
-https://movabletype.org/news/2016/06/movable_type_626_and_613_released.html=
+>> src/dns.cpp
 
---=-Taq06jMcBqYjCvmgpTgB
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-Content-Transfer-Encoding: 7bit
+>> if (resultstr.find_first_not_of("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ.-") != std::string::npos)
 
+>> "Invalid char(s) in reply"
+
+Use CVE-2015-8702.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
+Version: GnuPG v1
 
-iQIcBAABCgAGBQJXaqpEAAoJEORPgBbTYw+JbewP/iwpVv7XAWI5gGzXgcbfPQdc
-LKsuVikQj0duRzaPYEX7Y0sjgaVNixb836Q7JT/pMo50W+LnEDlnAmC+w2hQcQwR
-xv+yY9K4GI1YOWtiyol2P1fLR/yA+abFCMii1pTkVbLdYExO/hJBH8Gk4/ttUQuI
-Hl7ZyPi23TCh4seR7GN4niXFn2oPxtOCSp5VBOrl2+w0caBV2ewdUV97jxG/OiTW
-0fDoJ/6/G64NTFsSZX5UCGjgBxU3RiBJJwpeJ67eFkHhEY+EVrZCywq4lPwV+g2e
-buxyXOlsq9iPH11iPh3gEPF9DjjPQMNTzfoyqkqlj6f0KTIgCprp1SZBl0pFtTMx
-+QKPTRnBTJ+WvZAnG8WPzrTyZ4FyGTF2Bm+xJgb/Vrxl8UocOl1SsHSXuCVsTyDf
-vZC00QNunDlXJKkNGAKKUpOhR+y7BumDEYko7ETabTWDTRadvDSFq58kleSqsW2R
-k/1d4pJpMPHomgbzaCexcKyO98m3rc4/NLDbCqD5L26i+bcoePyHTarfK/ELVoOD
-h1iZ1dCmh+0GpiLB7DvUIplTg1GiT0ax4bjb9y0akVdGbe/4NsovhEaHPcc8oqLU
-ljawqNTkrS8bzCP9g++W3QS001ixA2axtpz+DSyUvjVMuBrhavCKW3jeSEo+b1xQ
-NvboMvm5ysv5iwqrGY7q
-=SGUj
+iQIcBAEBCAAGBQJWgrTBAAoJEL54rhJi8gl5aIEP/2g9jqgkUoPvyEMPgZIITKYx
+tWXKCweTow3+G5fIkMMYiPZhwBqc5eGG6JS0fGOjFWb5+WLvtnTZh8I2xZrYJ4QF
+uOgbvky3WJ73WjmoPkEfv6VGIAjyRx3eVDvdZkng4vmnDciIM0DF/9JQxTMUuI/5
+MdegRN6O9frCcFBcBThK8F+cTSeOwG6dHRc9IQfYvIVYm8ZummOZz0dSS5b8Zd4y
++/cUeVmlkZrAEBf3t9REzK1JjiYbmlMXSsuyHdYcYIAE57VJG335EAVTA91BgkBG
+GI5DZBJC8yvsR5rCnYy9USWJdvzWmhL9/Ij77ODzC4kwpI8tiU0VXW0FXA1KOdI1
+UWcWeSlhTKidJTpcPA/dcDyZ1g8CYZsjNdvl04Ma+SGYncMI/oUNFx1Mqixr1o1Z
++npuV0JtTk1dyc+YXXVLptR8wpyiBe+t7Y+Vpw2Ul1YG/itz4tQXPa+/APmcxezy
+aAQGEfEBMUYIQ9vuJ0N+VJSqQ70w74QS6m1Da9QENjPO6OpAWDeNApMsybv/aWGT
+xgMr+np6EMAImvwCHJ5YMwUIj3d0G8ZKVjgPBOokauX8ueM5h6byeyUalptcYxtl
+fvpNjfIGxBtDxRullUEDYfXYpenhKnP8/aPcvp+MjBBz0Ml2LJI1+Yi8nxs1qlO/
+JWH+/E/bYvFwwqR8JnH0
+=GVyG
 -----END PGP SIGNATURE-----
-
---=-Taq06jMcBqYjCvmgpTgB--
-
