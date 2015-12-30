@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1975" "Tuesday" "9" "May" "2017" "08:18:49" "+0800" "Medical Wei" "mwei@lxde.org" "<326CB1CB-DD02-4B07-9420-01E8685C1A28@lxde.org>" "49" "[oss-security] lxterminal: insecurely uses /tmp for a socket file" nil nil nil "5" "2017050900:18:49" "[oss-security] lxterminal: insecurely uses /tmp for a socket file" (number mark "U       mwei@lxde.or May  9   49/1975  " thread-indent "\"[oss-security] lxterminal: insecurely uses /tmp for a socket file\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2421" "Wednesday" "30" "December" "2015" "15:37:23" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151230203723.D7A576C0192@smtpvmsrv1.mitre.org>" "58" "[oss-security] Re: CVE Request: Squashfs 4.2 Race Condition" nil nil nil "12" "2015123020:37:23" "[oss-security] Re: CVE Request: Squashfs 4.2 Race Condition" (number mark "U       cve-assign@m Dec 30   58/2421  " thread-indent "\"[oss-security] Re: CVE Request: Squashfs 4.2 Race Condition\"\n") "<EECDD1E6-9C66-47B4-AB55-D64951749EEB@member.fsf.org>" ("<EECDD1E6-9C66-47B4-AB55-D64951749EEB@member.fsf.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 18221 invoked by uid 550); 9 May 2017 02:53:59 -0000
+Received: (qmail 28295 invoked by uid 550); 30 Dec 2015 20:37:36 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,64 +12,70 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32534 invoked from network); 9 May 2017 00:19:08 -0000
-From: Medical Wei <mwei@lxde.org>
-Content-Type: multipart/signed;
- boundary="Apple-Mail=_60D9093E-C6A2-40A7-B54C-6FAA7E77E3D7";
- protocol="application/pgp-signature"; micalg=pgp-sha512
-Mime-Version: 1.0 (Mac OS X Mail 10.3 \(3273\))
-Message-Id: <326CB1CB-DD02-4B07-9420-01E8685C1A28@lxde.org>
-Date: Tue, 9 May 2017 08:18:49 +0800
-To: oss-security@lists.openwall.com
-X-Mailer: Apple Mail (2.3273)
-Subject: [oss-security] lxterminal: insecurely uses /tmp for a socket file
+Received: (qmail 28271 invoked from network); 30 Dec 2015 20:37:35 -0000
+From: cve-assign@mitre.org
+To: limeburst@member.fsf.org
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <EECDD1E6-9C66-47B4-AB55-D64951749EEB@member.fsf.org>
+Message-Id: <20151230203723.D7A576C0192@smtpvmsrv1.mitre.org>
+Date: Wed, 30 Dec 2015 15:37:23 -0500 (EST)
+Subject: [oss-security] Re: CVE Request: Squashfs 4.2 Race Condition
 
---Apple-Mail=_60D9093E-C6A2-40A7-B54C-6FAA7E77E3D7
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=us-ascii
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-A vulnerability has been found that unixsocket.c in lxterminal insecurely u=
-ses
-/tmp for a socket file, allowing a local user to cause a denial of service
-(preventing terminal launch) or possibly have other impact.
+> A malformed Squashfs filesystem can cause a race condition in unsquashfs.
+> 
+> This is caused by the decompress thread attempting to access a shared
+> queue, resulting in a SIGSEGV.
+> 
+>     struct cache_entry *entry = queue_get(to_deflate);
 
-This bug has been assigned to CVE-2016-10369 [1], and has been publicly
-discussed in Stackexchange website [2].
+Do you have any information about a scenario in which this bug crosses
+a privilege boundary?
 
-A bug fix has been committed to the lxterminal's git repository [3], and LX=
-DE
-developers are working on a release.
+Do you mean that, because of the details of the SIGSEGV, there's a
+reasonable likelihood of code execution when a victim runs unsquashfs
+on an untrusted SquashFS filesystem image?
 
-[1]: https://cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2016-10369
-[2]: https://unix.stackexchange.com/questions/333539/lxterminal-in-the-nets=
-tat-output/333578
-[3]: https://git.lxde.org/gitweb/?p=3Dlxde/lxterminal.git;a=3Dcommit;h=3Df9=
-9163c6ff8b2f57c5f37b1ce5d62cf7450d4648
+Other possibilities in which there could be a CVE ID assigned include:
 
---Apple-Mail=_60D9093E-C6A2-40A7-B54C-6FAA7E77E3D7
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment;
-	filename=signature.asc
-Content-Type: application/pgp-signature;
-	name=signature.asc
-Content-Description: Message signed with OpenPGP
+  - if the affected unsquashfs code were also available as a library
+    that was used to build a program that was supposed to remain
+    running to handle multiple unsquash operations
 
+  - if the affected unsquashfs code were also used to support a
+    SquashFS filesystem that was mounted on a system, and an
+    unprivileged user could crash the system by reading from the
+    filesystem
+
+  - (again for this use of the affected code) if a system exists that
+    automatically mounts SquashFS filesystems found on removable
+    media, and inserting removable media could crash the system
+
+  - (again for this use of the affected code) maybe a scenario in
+    which the SIGSEGV ultimately leads to disclosure of private data
+    that wasn't contained in the SquashFS filesystem
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-iQIcBAEBCgAGBQJZEQrpAAoJEM+7/OC3TxsUkgAP/jvzCdqarZdyf+nsvKOw4Kuv
-ONwUh/Egn4AbagSNi5lnADWdRUQEjA1BR//VeG0dqgPYgOUxi1WfEvk9BjdwVd31
-pd15PqXUbEE7m2wKKXaIqn6LbrK8Ip5PaXmATMo9xi7scGDp9DlgFDpaSWa2MlWh
-C/VHUtk19+wV3WtKSOadJT0cA+ESHnwkXLHVrDdGaRHo8RNYi4HadrCYZ3R5vhJa
-msva86F2n7U/lJGz/6hL7e/jCYS2nWytdql3TmwVeYm8kzmpiySIw/DGvMl39EN/
-swDma0v7RQm8GZcRdxNJNt0MGEs0hZRCce17o6M/qV1irBbnpw1OM0m8pXaQx4Yy
-UYzmEFygrbhBTQqnKmrRj/AohwbB8VdEeAsrhqux4HaN5FwbOx2Y/p1dDs2rrBuh
-xxU7Zmw8nzNc4i7uhO4NDYpUH8pnu3cIBQhayX9ct1uWJQhtxKqNrC5f5oYIUGAq
-E0Tvrne9BtLWxaAiLJU3QaPtWScSAr8vjVk5t7nmNVS3uUuA7QNHjTNL7CqTuzDj
-POz0QAq1lyZugwhriha68Nebgcfnnw1efEEaqBt+CAsyiFESsK6Rccu1lrFBPiwk
-YUW69etvmvdzmWmm8VrDdaSPrKQsGTtdOTqsLbBuXJLtuu7nI9s/375+whjrIwmB
-rgplDYPz40ym+bY+0EIS
-=Q9dx
+iQIcBAEBCAAGBQJWhEAZAAoJEL54rhJi8gl51ikP/icQQJUyV/Zw43KeOs5BmVJg
+dWCI2KqVbhjDWW0esdrzL/LAzYMSvH+jXfNBZthzg2e5pFb3+YjkvKiejS5CZszT
+DTfWTFEfbjDKtIbrISqMAOM7SS9dCy3Zqu37VA1riqzpDRjD4PyoQTn5d95ck8Y9
+1aPEEgkTv9Z+VbAv1ONvOK6vLeHXcyovkyXyBdJxPYoXXCQjn3CC6TAYW9HF9qrL
+AYgSLCogHI3e1PnjA+EHsBqRBYeh70nkH8yrYWj0WDxZFwmnMTb1p+KE5rOwJw/a
+Gpvq5cM4rtWdV//XFMdBsyg4q/hbJ1leY9W5invnAeeqe8wkVGuJCApS7neRB5pU
+TV9wvGudvn73hkE61yDSR6Hp2qUGcIYZ1FHK9+uSrYmO6zczJJy7F6lax90BmgWD
+bvJUvquYRCwV+OUWLMkN7vctY5BXTiM47wLIi6bJMUma65e3Q5TXHcBd6F3p8pCe
+7OoNfuzqSDRU1FHz8oxuzLtVMIEzRT9sz9JMTo6ZtdLfzDZBet1qM9p9dXo8Nyej
+2Kpm1jN2mlvlnHCQzN1XtweCM/eAbQaxM0/WZzhJ3ipIJQnMLCFSeZH7QS6BbuDC
+AAnHD8BIH70VYhmZrHLDaRrW08RYWtyaAdiJMeygsiFIxdNxpPUjmFOHHvElkzw1
+LhwDS57lxKg9o5p1S+zH
+=riOK
 -----END PGP SIGNATURE-----
-
---Apple-Mail=_60D9093E-C6A2-40A7-B54C-6FAA7E77E3D7--
