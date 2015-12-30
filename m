@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4785" "Saturday" "14" "January" "2017" "17:42:11" "+0100" "Solar Designer" "solar@openwall.com" "<20170114164211.GA17377@openwall.com>" "117" "[oss-security] Re: [Security] Qt QXmlSimpleReader" "^Cc:" nil nil "1" "2017011416:42:11" "[oss-security] Re: [Security] Qt QXmlSimpleReader" (number mark "        solar@openwa Jan 14  117/4785  " thread-indent "\"[oss-security] Re: [Security] Qt QXmlSimpleReader\"\n") "<3373460.x0yP8h7b03@tjmaciei-mobl1>" ("<20161224151833.GA6612@openwall.com>" "<3373460.x0yP8h7b03@tjmaciei-mobl1>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3065" "Thursday" "31" "December" "2015" "06:29:55" "+0900" "Jihyeok Seo" "limeburst@member.fsf.org" "<A1D60BD4-70C3-481D-87A2-5F1B40F0CF3E@member.fsf.org>" "70" "[oss-security] Re: CVE Request: Squashfs 4.2 Race Condition" nil nil nil "12" "2015123021:29:55" "[oss-security] Re: CVE Request: Squashfs 4.2 Race Condition" (number mark "U       limeburst@me Dec 31   70/3065  " thread-indent "\"[oss-security] Re: CVE Request: Squashfs 4.2 Race Condition\"\n") "<20151230203723.D7A576C0192@smtpvmsrv1.mitre.org>" ("<20151230203723.D7A576C0192@smtpvmsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 15463 invoked by uid 550); 14 Jan 2017 16:43:05 -0000
+Received: (qmail 27955 invoked by uid 550); 30 Dec 2015 21:30:11 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,135 +11,96 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 14095 invoked from network); 14 Jan 2017 16:42:22 -0000
-Message-ID: <20170114164211.GA17377@openwall.com>
-References: <20161224151833.GA6612@openwall.com> <3373460.x0yP8h7b03@tjmaciei-mobl1>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <3373460.x0yP8h7b03@tjmaciei-mobl1>
-User-Agent: Mutt/1.4.2.3i
-Cc: security@qt-project.org, oss-security@lists.openwall.com
-Date: Sat, 14 Jan 2017 17:42:11 +0100
-From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: [Security] Qt QXmlSimpleReader
-To: Thiago Macieira <thiago@macieira.org>
+Received: (qmail 27935 invoked from network); 30 Dec 2015 21:30:10 -0000
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:date:from:in-reply-to:message-id:mime-version:references
+	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=ufU85YlWFOyDwyi
+	zJ2nmWcavt1c=; b=egpc2kso+Wskr4gAkBnOwojVjmEhsZ9SmgeBfjD2T0Y0tiC
+	IVXvTAJAihPh7ei/uoDI8eaDILiEdjt9OW6W7GnzpQFHyNBf6Xtd3B8QY4LQNF8B
+	lale663r0o0boQKk55KVTznYKc2KPDAs98nE4uhteH5OlrkM7TO3zZPfasNY=
+X-Sasl-enc: /cAS+88oLyMLE6RRhguJ1brifR1vyc8rN0L/PJuD1z5i 1451510998
+Content-Type: text/plain; charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 9.2 \(3112\))
+From: Jihyeok Seo <limeburst@member.fsf.org>
+In-Reply-To: <20151230203723.D7A576C0192@smtpvmsrv1.mitre.org>
+Date: Thu, 31 Dec 2015 06:29:55 +0900
+Cc: oss-security@lists.openwall.com
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <A1D60BD4-70C3-481D-87A2-5F1B40F0CF3E@member.fsf.org>
+References: <20151230203723.D7A576C0192@smtpvmsrv1.mitre.org>
+To: cve-assign@mitre.org
+X-Mailer: Apple Mail (2.3112)
+Subject: [oss-security] Re: CVE Request: Squashfs 4.2 Race Condition
 
-Hi Thiago,
+Privilege boundary crossing does not necessarily happen. However, since uns=
+quashfs is often run with sudo (Squashfs filesystem containing files owned =
+by root), it is a possibility. I do not know if this bug can lead to code e=
+xecution.
 
-Thank you for your helpful response.
+However, firmware upgrade procedures (remote or local) which uses unsquashf=
+s, on devices such as network routers, could be crashed with an untrusted S=
+quashfs filesystem image and lead to denial of service.
 
-On Mon, Jan 09, 2017 at 09:24:51AM -0800, Thiago Macieira wrote:
-> On s?bado, 24 de dezembro de 2016 16:18:33 PST Solar Designer wrote:
-> > To what extent has Qt's QXmlSimpleReader class been reviewed for
-> > vulnerabilities?  I found only Florian Weimer's CVE-2013-4549
-> > "XML entity expansion denial of service", which Red Hat somehow chose
-> > not to fix (no intent to parse untrusted XML?) even though they got
-> > upstream to fix it.
-> 
-> It has not been at all reviewed. That class is deprecated and we have zero 
-> resources paying attention to it.
-[...]
-> We don't have anyone who knows the source code anymore, so we simply 
-> can't tell you how much it may or may not cache.
-> 
-> The only recommended class for reading XML is QXmlStreamReader. Using any of 
-> the classes from the QtXml library should only happen with trusted sources.
+> On Dec 31, 2015, at 5:37 AM, cve-assign@mitre.org wrote:
+>=20
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA256
+>=20
+>> A malformed Squashfs filesystem can cause a race condition in unsquashfs.
+>>=20
+>> This is caused by the decompress thread attempting to access a shared
+>> queue, resulting in a SIGSEGV.
+>>=20
+>>    struct cache_entry *entry =3D queue_get(to_deflate);
+>=20
+> Do you have any information about a scenario in which this bug crosses
+> a privilege boundary?
+>=20
+> Do you mean that, because of the details of the SIGSEGV, there's a
+> reasonable likelihood of code execution when a victim runs unsquashfs
+> on an untrusted SquashFS filesystem image?
+>=20
+> Other possibilities in which there could be a CVE ID assigned include:
+>=20
+>  - if the affected unsquashfs code were also available as a library
+>    that was used to build a program that was supposed to remain
+>    running to handle multiple unsquash operations
+>=20
+>  - if the affected unsquashfs code were also used to support a
+>    SquashFS filesystem that was mounted on a system, and an
+>    unprivileged user could crash the system by reading from the
+>    filesystem
+>=20
+>  - (again for this use of the affected code) if a system exists that
+>    automatically mounts SquashFS filesystems found on removable
+>    media, and inserting removable media could crash the system
+>=20
+>  - (again for this use of the affected code) maybe a scenario in
+>    which the SIGSEGV ultimately leads to disclosure of private data
+>    that wasn't contained in the SquashFS filesystem
+>=20
+> - --=20
+> CVE assignment team, MITRE CVE Numbering Authority
+> M/S M300
+> 202 Burlington Road, Bedford, MA 01730 USA
+> [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1
+>=20
+> iQIcBAEBCAAGBQJWhEAZAAoJEL54rhJi8gl51ikP/icQQJUyV/Zw43KeOs5BmVJg
+> dWCI2KqVbhjDWW0esdrzL/LAzYMSvH+jXfNBZthzg2e5pFb3+YjkvKiejS5CZszT
+> DTfWTFEfbjDKtIbrISqMAOM7SS9dCy3Zqu37VA1riqzpDRjD4PyoQTn5d95ck8Y9
+> 1aPEEgkTv9Z+VbAv1ONvOK6vLeHXcyovkyXyBdJxPYoXXCQjn3CC6TAYW9HF9qrL
+> AYgSLCogHI3e1PnjA+EHsBqRBYeh70nkH8yrYWj0WDxZFwmnMTb1p+KE5rOwJw/a
+> Gpvq5cM4rtWdV//XFMdBsyg4q/hbJ1leY9W5invnAeeqe8wkVGuJCApS7neRB5pU
+> TV9wvGudvn73hkE61yDSR6Hp2qUGcIYZ1FHK9+uSrYmO6zczJJy7F6lax90BmgWD
+> bvJUvquYRCwV+OUWLMkN7vctY5BXTiM47wLIi6bJMUma65e3Q5TXHcBd6F3p8pCe
+> 7OoNfuzqSDRU1FHz8oxuzLtVMIEzRT9sz9JMTo6ZtdLfzDZBet1qM9p9dXo8Nyej
+> 2Kpm1jN2mlvlnHCQzN1XtweCM/eAbQaxM0/WZzhJ3ipIJQnMLCFSeZH7QS6BbuDC
+> AAnHD8BIH70VYhmZrHLDaRrW08RYWtyaAdiJMeygsiFIxdNxpPUjmFOHHvElkzw1
+> LhwDS57lxKg9o5p1S+zH
+> =3DriOK
+> -----END PGP SIGNATURE-----
 
-Oh.  Is this stated somewhere in the documentation for QXmlSimpleReader,
-along with the suggestion to use QXmlStreamReader instead?  Perhaps it
-should be.
-
-Right now, I see this:
-
-http://doc.qt.io/qt-5/qxmlsimplereader.html#details
-
-"The QXmlSimpleReader class provides an implementation of a simple XML
-parser.
-
-This XML reader is suitable for a wide range of applications.  It is
-able to parse well-formed XML and can report the namespaces of elements
-to a content handler; however, it does not parse any external entities."
-
-http://doc.qt.io/qt-5/qxmlstreamreader.html#details
-
-"The QXmlStreamReader class provides a fast parser for reading
-well-formed XML via a simple streaming API.
-
-QXmlStreamReader is a faster and more convenient replacement for Qt's
-own SAX parser (see QXmlSimpleReader).  In some cases it might also be a
-faster and more convenient alternative for use in applications that
-would otherwise use a DOM tree"
-
-This doesn't give the impression that either one is deprecated.  Also,
-both say they're only for "well-formed" XML, suggesting they might be
-unsuitable for use on untrusted input, but not explicitly stating so.
-In fact, QXmlStreamReader has this "well-formed" requirement in the
-one-sentence summary seen at top of page, whereas for QXmlSimpleReader
-this requirement is only included in the details (second paragraph).
-
-FYI, the stack overflow from recursive calls between parseElement() and
-parseContent() got assigned CVE-2016-10040 here:
-
-http://www.openwall.com/lists/oss-security/2016/12/24/2
-
-> > Then there's value.resize(), which also accepts a signed int (so the
-> > above code's use of signed int may have been justified, after all):
-> > 
-> > http://doc.qt.io/qt-4.8/qstring.html#resize
-> > 
-> > "If size is greater than the current size, the string is extended to
-> > make it size characters long with the extra characters added to the end.
-> > The new characters are uninitialized.
-> > 
-> > If size is less than the current size, characters are removed from the end."
-> > 
-> > No clear explanation on what will happen on a negative size, and besides
-> > it might also be possible to exceed 4 GB and get to positive values again.
-> 
-> Negative sizes are the same as zero. You can't exceed 4 GB with a signed int 
-> in QString.
-
-I see this is now documented:
-
-http://doc.qt.io/qt-4.8/qstring.html#resize
-
-"If size is negative, it is equivalent to passing zero."
-
-Either I overlooked this detail before, or you improved the
-documentation since.
-
-If I understand correctly, this means that in this piece I quoted before:
-
- 8187 inline static void updateValue(QString &value, const QChar *array, int &arrayPos, int &valueLen)
- 8188 {
- 8189     value.resize(valueLen + arrayPos);
- 8190     memcpy(value.data() + valueLen, array, arrayPos * sizeof(QChar));
- 8191     valueLen += arrayPos;
- 8192     arrayPos = 0;
- 8193 }
-
-it will be an up to 256 bytes write with the memcpy() at about 2 GiB
-beyond the allocation, which value.resize() would reduce to 0 bytes.
-(And if this somehow succeeds, then the second time it may be a similar
-write at about 2 GiB below that allocation.)
-
-Is this right?  Is it really that bad?
-
-> > Is there anything at higher layers, yet applicable to all published Qt's
-> > APIs, consistenly limiting XML inputs to below 2 GB?  If so, this may be
-> > OK (but a comment would be nice).  If not, we have a problem.
-> 
-> No, there's no such limitation, but many classes will impose 2 GB limits due 
-> to array sizes. The only problem is that getting close to that limit will 
-> already run into code we don't usually test. There are also some problems with 
-> UB on signed overflow on Qt 4.8 and in early Qt 5 versions (I think I fixed it 
-> in 5.4 or 5.5). 
-
-In general, are applications using Qt supposed to sanity-check the sizes
-to be significantly below 2 GiB before passing such data on to Qt?
-
-Thanks again,
-
-Alexander
