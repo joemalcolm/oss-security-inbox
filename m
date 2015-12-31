@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1375" "Wednesday" "11" "September" "2019" "12:43:19" "+0200" "Hanno =?iso-8859-1?Q?B=F6ck?=" "hanno@hboeck.de" "<20190911124319.23022e80@computer>" "34" "[oss-security] OpenDMARC signature bypass with multiple From addresses" nil nil nil "9" "2019091110:43:19" "[oss-security] OpenDMARC signature bypass with multiple From addresses" (number mark "U       hanno@hboeck Sep 11   34/1375  " thread-indent "\"[oss-security] OpenDMARC signature bypass with multiple From addresses\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] OpenDMARC signature bypass with multiple From addresses" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["812" "Thursday" "31" "December" "2015" "16:35:49" "-0500" "Glenn Randers-Pehrson" "glennrp@gmail.com" "<CA+PdXctz7Cw884CLQ_i7_079uR_yO-74dDjSNav2hDa2P9E7oA@mail.gmail.com>" "27" "[oss-security] Re: CVE request: pngcrush-1.3.35 through 1.7.88 segfault when run with \"-loco\" option" nil nil nil "12" "2015123121:35:49" "[oss-security] Re: CVE request: pngcrush-1.3.35 through 1.7.88 segfault when run with \"-loco\" option" (number mark "U       glennrp@gmai Dec 31   27/812   " thread-indent "\"[oss-security] Re: CVE request: pngcrush-1.3.35 through 1.7.88 segfault when run with \"-loco\" option\"\n") "<20151231203311.CA5BA332073@smtpvbsrv1.mitre.org>" ("<CA+PdXcsSzW3-Ocn0ZUzARJ0Gkt-1Sg23V5K7m_3OzSQHBXA0aw@mail.gmail.com>" "<20151231203311.CA5BA332073@smtpvbsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 17766 invoked by uid 550); 11 Sep 2019 10:43:32 -0000
+Received: (qmail 7318 invoked by uid 550); 31 Dec 2015 21:36:01 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,48 +12,58 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17734 invoked from network); 11 Sep 2019 10:43:32 -0000
-Date: Wed, 11 Sep 2019 12:43:19 +0200
-From: Hanno =?iso-8859-1?q?B=F6ck?= <hanno@hboeck.de>
-To: oss-security@lists.openwall.com
-Message-ID: <20190911124319.23022e80@computer>
-X-Mailer: Claws Mail 3.17.4 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
+Received: (qmail 7300 invoked from network); 31 Dec 2015 21:36:01 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=tsdeWTSfW8sISJMNHeluGloSMJD4zlCWtC17iJEfXkM=;
+        b=WN5QTby0NV/FfSbsBUd4/1xXNPtljkEGWsrRX/4oitP/XO46OEXw3HcRYzOI6yuEzN
+         FqF5KiRau401fNXqHrUxxjP31lgTkkq3g7h8Qa9ZuBBGa8AowMkfnSthU/2ifw583YR4
+         6RBOBAmO/5lZoHuTnLxVK7GqDQXx92eJiZzgtLOcUzp/80LqXoAuJ7Qu8WtATSc7lpn/
+         yIOh0tqi7FqWdXsTcvJXB2TkPvphcEwivwQ9hWm4OjGhPKD/csGTwtY3ZzAUXsk7+Fxa
+         /O+bkwju1U22jUHaf48R5NGVnliPXeBBbnskkPLK90PCSP2+6iUWqgDPtaM50kLyGpUC
+         vlgA==
 MIME-Version: 1.0
+X-Received: by 10.140.167.86 with SMTP id n83mr21115800qhn.41.1451597749711;
+ Thu, 31 Dec 2015 13:35:49 -0800 (PST)
+In-Reply-To: <20151231203311.CA5BA332073@smtpvbsrv1.mitre.org>
+References: <CA+PdXcsSzW3-Ocn0ZUzARJ0Gkt-1Sg23V5K7m_3OzSQHBXA0aw@mail.gmail.com>
+	<20151231203311.CA5BA332073@smtpvbsrv1.mitre.org>
+Date: Thu, 31 Dec 2015 16:35:49 -0500
+Message-ID: <CA+PdXctz7Cw884CLQ_i7_079uR_yO-74dDjSNav2hDa2P9E7oA@mail.gmail.com>
+From: Glenn Randers-Pehrson <glennrp@gmail.com>
+To: cve-assign@mitre.org
+Cc: oss-security@lists.openwall.com, 
+	Brian Carpenter <brian.carpenter@gmail.com>
+Content-Type: multipart/alternative; boundary=001a113a64dc3a78a0052838701d
+Subject: [oss-security] Re: CVE request: pngcrush-1.3.35 through 1.7.88 segfault when run
+ with "-loco" option
+
+--001a113a64dc3a78a0052838701d
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Subject: [oss-security] OpenDMARC signature bypass with multiple From addresses
 
-Hi,
+On Thu, Dec 31, 2015 at 3:33 PM, <cve-assign@mitre.org> wrote:
 
-Protonmail reported about a phishing incident in July:
-https://protonmail.com/blog/bellingcat-cyberattack-phishing/
+>
+> Our understanding is that pngcrush is a command-line program, and that
+> the bug is largely equivalent to a scenario in which the "-loco"
+> functionality had not been implemented.
+>
 
-This had this somewhat mysterious chapter:
-"Furthermore, the attackers attempted to exploit an unpatched
-vulnerability in an open source software that is widely used by email
-providers in an effort to bypass spam and abuse filters. We were
-previously aware of this vulnerability and have already been watching
-it for some time, but we will not disclose it here because the software
-in question is not developed by ProtonMail, and it has not yet been
-patched by the software maintainers. This vulnerability, however, is
-not widely known and indicates a higher level of sophistication on the
-part of the attackers."
+There are web services that compress PNG files, using pngcrush
+as their compression engine.  I haven't found any that allow users
+to specify the "-loco" option, though.
 
-After asking protonmail multiple times for a statement they answered
-and I learned that it's about this issue in OpenDMARC:
-https://github.com/trusteddomainproject/OpenDMARC/pull/48
 
-It's an issue where by specifying multiple From addresses only one of
-them gets DMARC-checked.
+> We probably would need a threat model in which the victim cannot
+> recover from the attack by simply avoiding all subsequent use of the
+> "-loco" option, e.g., a segfault that realistically could lead to code
+> execution.
+>
 
-There's no reaction from the OpenDMARC developers and it's unclear
-whether it's still actively developed. Given this is already actively
-exploited I think people should be aware of it and distros should
-probably apply the patch from the PR.
+OK, I'm withdrawing the request for a CVE number.
 
---=20
-Hanno B=C3=B6ck
-https://hboeck.de/
+Glenn
 
-mail/jabber: hanno@hboeck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+--001a113a64dc3a78a0052838701d--
