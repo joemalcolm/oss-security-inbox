@@ -1,46 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/31/4
-Message-ID: <20161031151149.4waow4btnxoevnax@eldamar.local>
-Date: Mon, 31 Oct 2016 16:11:49 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/02/1
+Message-ID: <n69hag$2if$1@ger.gmane.org>
+Date: Sat, 2 Jan 2016 23:00:47 +0100
+From: Damien Regad <dregad@...tisbt.org>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: Re: Handful of libass issues
+Subject: CVE Request: MantisBT SOAP API can be used to disclose confidential settings
 Content-Type: text/plain; charset=utf-8
 
-Hi
+Greetings,
 
-Apologies for the late reply.
+Please assign a CVE ID for the following issue.
 
-On Thu, Oct 27, 2016 at 08:24:24AM -0500, Brandon Perry wrote:
-> 
-> > On Oct 27, 2016, at 3:39 AM, Salvatore Bonaccorso <carnil@...ian.org> wrote:
-> > 
-> > Hi,
-> > 
-> > On Tue, Oct 04, 2016 at 10:23:22PM -0400, cve-assign@...re.org wrote:
-> >>> The third is a huge memory allocation leading to a crash that wasn't
-> >>> fixed because a good solution is unavailable at the moment.
-> >> 
-> >> Use CVE-2016-7971.
-> > 
-> > It looks from the discussion in
-> > https://github.com/libass/libass/pull/240 that this issue is disputed
-> > to be actually in libass.
-> > 
-> 
-> For context, while the input caused a crash with AFL (not fuzzing
-> with ASAN) and it crashes with ASAN, I was unable to reproduce the
-> crash with libass externally. I was only able to take up a hug
-> amount of memory and take a long time to finish parsing the input.
-> 
-> I asked if they dev wanted to reject the CVE but got no strong
-> response either way, so I decided to not pursue it.
 
-Sure understand that. Currently, still the CVE is associated with libass.
+Description:
 
-@MITRE CVE team, could you clarify the above? Is it still desired to
-have the CVE associated with libass, or shoult it be rejected?
+Until now, MantisBT sensitive config options were blacklisted to prevent 
+their access via SOAP API (see config_is_private() function).
 
-Regards,
-Salvatore
+When a new config is added or an existing one is renamed, the black list 
+must be updated accordingly. If this is not or incorrectly done, the 
+config becomes available via SOAP API.
+
+This was the case with the MantisBT master cryptographic salt 
+(crypto_master_salt): it was incorrectly spelt.
+
+To fix the problem as well as avoid future occurences, we are switching 
+to a whitelist approach, i.e. listing all configs that *can* be accessed 
+via SOAP.
+
+Any MantisBT installation with SOAP API enabled should be patched, and 
+immediately generate a new salt.
+
+
+Affected versions:
+ >= 1.3.0-beta.1
+
+Fixed in versions:
+1.3.0 (not yet released), possibly 1.3.0-rc.2 if we decide we need 
+another release candidate before that.
+
+Patch:
+See Github [1]
+
+Credits:
+The issue was discovered by Paul Richards [2] and fixed by Roland Becker
+(MantisBT Developer).
+
+References:
+Further details available in our issue tracker [3]
+
+
+Best regards,
+D. Regad
+MantisBT Developer
+http://www.mantisbt.org
+
+
+[1] http://github.com/mantisbt/mantisbt/commit/7927c275
+[2] https://sourceforge.net/p/mantisbt/mailman/message/32948048/
+[3] https://mantisbt.org/bugs/view.php?id=20277
+
