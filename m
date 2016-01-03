@@ -1,52 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/07/3
-Message-Id: <20160307025938.A687152E014@smtpvbsrv1.mitre.org>
-Date: Sun,  6 Mar 2016 21:59:38 -0500 (EST)
-From: cve-assign@...re.org
-To: ppandit@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, liuling-it@....cn
-Subject: Re: CVE request Qemu: net: out of bounds read in net_checksum_calculate
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/03/1
+Message-ID: <20160103133828.GA24661@tunkki>
+Date: Sun, 3 Jan 2016 15:38:28 +0200
+From: Henri Salo <henri@...v.fi>
+To: cve-assign@...re.org
+Cc: oss-security@...ts.openwall.com, Curesec Research Team <crt@...esec.com>
+Subject: CVE request: esoTalk 1.0.0g4 cross-site scripting vulnerability
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hash: SHA1
 
-> Qemu emulator built with the IP checksum routines is vulnerable to an OOB read
-> access issue. It could occur while computing checksum for TCP/UDP packets, as
-> the function uses payload length from the packet without checking against the
-> data buffer size.
-> 
-> A user inside guest could use this flaw to read excessive bytes or crash the
-> Qemu process resulting in DoS.
-> 
-> https://lists.gnu.org/archive/html/qemu-devel/2016-03/msg00671.html
-> https://bugzilla.redhat.com/show_bug.cgi?id=1296567
+Hi,
 
-Use CVE-2016-2857.
+Please assign 2015 CVE identifier for esoTalk cross-site scripting
+vulnerability, thanks.
 
-This is not yet available at
-http://git.qemu.org/?p=qemu.git;a=history;f=net/checksum.c but
-that may be an expected place for a later update.
+Advisory: http://seclists.org/fulldisclosure/2015/Dec/112
+Curesec blog: https://blog.curesec.com/article/blog/esoTalk-100g4-XSS-124.html
+PoC: /conversations/a'";><img src=no onerror=alert(1)>?search=test
+Fix: https://github.com/esotalk/esoTalk/commit/b938c39a83b55ecddc74b09d1116c37df1f2567e
 
 - -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
+Henri Salo
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJW3O3wAAoJEL54rhJi8gl56hUP/RyxPOoTlX09iR6D5mvAkzdX
-OZSZuybX3W9X4kkZj4+TXUEAQxEBY7AN1j2QY3uPwb9N9QVXUF827vy+WLiXV0SG
-dIYHazeMKeGd5fLthf/DI1PFXxtezOkPkBmE33jlX8bn5O9zpcoSATSl8HKqQQCh
-iMdgOf1q1Y7rzz+qQrCbXZTKk7R9j5Q3hLkX8TaMlhdo9sUZwAaxiEuRIbGeuqds
-7Id2nu1wfeOy4tptpEzfSYp6d8E9t2VHpnNnL3U5iFrdwc6SnKuKu0okwEIpnHJ3
-mDb2FH2SPj2SWO4rdsJh/9WIzL6IvfELwq2tLp5aAsIDIsEgF68/0eawGID9wBDL
-+Am7yUyqvogKrFfWYRNo74adbRRsO5Jzda8+MMFvuCGctIHRZCXUSNd7GOHCdkia
-FMB7pcfAAZN/GPfAdVHpEZfk4aZqmy3iF28z7kOhFSalw74QQXTbAcoZiybyOJmh
-ADcEnIoDfvWhxUG3DBocf05a+5Pp1qLNbvYl9NzBEDkNJxcgVQEnMr4gN/QyFXDI
-At/gfwOEh3oCDN3mGvUk9d1lIDuu7yARXVcAPsrePHbpB9bmFLEgQRw0SCg+ezFe
-QgdYHQ2dquUBcuTcIrT5wDVGgKNwuCyf+h3PZwMXhIFEcTZJyQgldfJXXiXHfpX+
-Ggfm4NI0fXZ8NtgMHo2P
-=ObQr
+iQIcBAEBAgAGBQJWiSRUAAoJECet96ROqnV07PsQAJzRKRiQnLQ8cO6s0TAS5RVu
+UWM0xDrF+nEitcT8yIF1IXp7eBR9IUD31HOb1aRL0bt0lK0eC8JwZkidf/5ejaUU
+Mn8oTJWWfvHFe5dUAfuCEMnicd4YiJQ2s/+RA9kpo2MpV66mZvUxIvPqa4BdZeAQ
+ew/QWFFUbNTGbAD+LDX0Q6SE46Pp/yn3acfkrEdSSR3aylMS9J+CAgP4cZmIyQYD
+Itqqqgr4fl4SVLLP8VVcLmUyp0A6wGEeg1eqVf4Bn5r+ylfIpKcmMb2HgM+DX/oD
+fIpjMvasn1fA9t/j4dZgZZwfC/cQM+l6ZYARaykSess/Pfj7nnGT4gKA42rZdfWj
+36qFh1KJU4f6Z6VUYvXljKfddhhkyiHtfBdV38Rp1oRSX8PrFJkgolbrRSF/du6E
+ROKeIKy6nT7ZUYLEVBTOGrrO4M8J+TMxsFJ4/1JUE8JvxK2xz2t4/PTuhDyeLFTP
+oyUXl2xiXJDyMuPi9gQWP701h/gAi2QkjF5kpaK5Onn7EunP760i9/iD5KbgEd0f
+ALSBIfzAZI3U2eWA5soOkJ99lsX0sxvzcF9pk9ufk+wz0nCfI+yv45I2A5l6c2oy
++ILTr5DGPtJU5hdd7zlpgepBKvc9rJmBDuNP4B7QhNYDREkpS9TVjjA//R/DfAT1
+LVMjYYTCftN/5jS+ReLC
+=Q5nX
 -----END PGP SIGNATURE-----
