@@ -1,119 +1,109 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/22/8
-Message-Id: <E1c99m8-00085A-U9@xenbits.xenproject.org>
-Date: Tue, 22 Nov 2016 12:02:12 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 192 (CVE-2016-9382) - x86 task switch to VM86 mode mis-handled
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/03/3
+Message-ID: <CAKws9z1XM6UFJFwq6Viqr3gdtQ4b-irsF1SHmfGHsBGTe3tFjg@mail.gmail.com>
+Date: Sun, 3 Jan 2016 17:54:35 -0500
+From: Paragon Initiative Enterprises Security Team <security@...agonie.com>
+To: oss-security@...ts.openwall.com
+Subject: phpecc/phpecc - Timing side-channel in ECDSA signature verification
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Happy new year, OSS-Sec!
 
-            Xen Security Advisory CVE-2016-9382 / XSA-192
-                              version 3
+We've got something we hope you find interesting.
 
-               x86 task switch to VM86 mode mis-handled
+In the process of auditing a PHP JWT library, we took a look at one of
+its dependencies, phpecc. https://github.com/phpecc/phpecc
 
-UPDATES IN VERSION 3
-====================
+Phpecc describes itself as "Pure PHP Elliptic Curve DSA and DH", and
+the JWT library was using it to facilitate ECDSA (over NIST P-256 with
+a SHA2-family hash function, of course).
 
-Public release.
+We quickly discovered that the method they were using for signature
+verification was not implemented in constant-time.
 
-ISSUE DESCRIPTION
-=================
+Our analysis: https://github.com/phpecc/phpecc/issues/113
+Our proposed patch: https://github.com/phpecc/phpecc/pull/114
 
-LDTR, just like TR, is purely a protected mode facility.  Hence even
-when switching to a VM86 mode task, LDTR loading needs to follow
-protected mode semantics.  This was violated by the code.
+The takeaway, for anyone who ever needs to touch PHP and is thinking
+of implementing their own crypto:
 
-IMPACT
-======
+> gmp_cmp() is not suitable for cryptography, you want hash_equals()
 
-On SVM (AMD hardware): a malicious unprivileged guest process can
-escalate its privilege to that of the guest operating system.
+On a related note, we opened
+https://github.com/phpecc/phpecc/issues/115 to address a common
+problem in projects that aim to implement cryptography primitives in
+PHP: Function overloading.
 
-On both SVM and VMX (Intel hardware): a malicious unprivileged guest
-process can crash the guest.
+"What is function overloading?" you might ask. It's one of the
+unresolved PHP design warts from a related school of thought that
+brought us magic_quotes in PHP 4.
 
-VULNERABLE SYSTEMS
-==================
+If you set mbstring.func_overload = 2 in your PHP configuration,
+strlen() and substr() no longer operate over binary strings (the
+default behavior). Instead, they assume that they're being given
+Unicode text, which can fit more bytes into each character.
 
-Only 32-bit x86 HVM guests are vulnerable.  Furthermore, only guest
-operating systems which actually make use of hardware task switching,
-and allow a new task to start in VM86 mode, are vulnerable.  We are
-not aware of any such operating systems.
+To test this, run:
 
-The vulnerability is NOT exposed on any PV guests.
-The vulnerability is NOT exposed on any 64-bit guests,
+    var_dump(strlen("\xF0\x9D\x92\xB3"));
 
-ARM systems are NOT vulnerable.
+Without mbstring.func_overload, you get int(4). With it set to 2, and
+your locale set to UTF-8, you get int(1) instead.
 
-Xen versions from 4.0 onwards are affected.  Xen versions 3.4 and
-earlier are not affected.
+"What does this have to do with cryptography?"
 
-MITIGATION
-==========
+A typical hash_equals() polyfill, e.g. for verifying the HMAC in a
+cryptography protocol, looks like this:
 
-For guests which are affected, the vulnerability could possibly be
-mitigated by disabling access to VM86 mode by unprivileged guest
-programs.  Details would depend on the (so far hypothetical)
-vulnerable guest kernel.
+    function hash_equals($a, $b)
+    {
+        $d = 0;
+        $lenA = strlen($a);
+        $lenB = strlen($b);
+        if ($lenA !== $lenB) {
+            return false;
+        }
+        for ($i = 0; $i < $lenA; ++$i) {
+            $d |= ord($a[$i]) ^ ord($b[$i]);
+        }
+        return $d === 0;
+    }
 
-CREDITS
-=======
+But with mbstring.func_overload, depending on the structure of the
+expected HMAC output, strlen($a) could become 8.
 
-This issue was discovered by Jan Beulich of SUSE.
+It's much easier to brute force 2^64 possible values (especially if
+you know the resulting hash must conform to a a sequence of eight
+4-byte UTF-8 characters) than it is to brute force 2^256 possible
+values.
 
-RESOLUTION
-==========
+The fix is to be explicit about operating over raw binary:
 
-Applying the appropriate attached patch resolves this issue.
+* strlen($x) -> mb_strlen($x, '8bit')
+* substr($x, $y, $z) -> mb_substr($x, $y, $z, '8bit')
 
-xsa192.patch           xen-unstable, Xen 4.7.x, Xen 4.6.x
-xsa192-4.5.patch       Xen 4.5.x, Xen 4.4.x
+In sum:
 
-$ sha256sum xsa192*
-687b0216eefd5ecef8a3135cc6f542cb3d9ff35e8e9696a157703e84656c35e8  xsa192.patch
-bb0c6622c6f5c5eb9a680020d865802069446830b4a170bcb82336f6c3b77f55  xsa192-4.5.patch
-$
+* Don't use gmp_cmp() to compare hashes or signatures
+* If you don't explicitly handle function overloading (like our patch
+does), you're almost certainly weakening your protocol somewhere
+* In fact, you should strongly consider NEVER writing cryptography
+primitives in PHP
 
-DEPLOYMENT DURING EMBARGO
-=========================
+This last bit of advice is brought to you by one of the few teams
+experienced enough to develop PHP cryptography features. We don't even
+dare write primitives in PHP. It's a mistake that many make (we're
+looking at you, php-gpg).
 
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
+Further reading:
 
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
+* https://secure.php.net/manual/en/mbstring.overload.php - Function overloading
+* https://github.com/sarciszewski/php-future/blob/master/src/BaseFuture.php
+- Mitigation for function overloading
+* https://blog.ircmaxell.com/2014/11/its-all-about-time.html - All
+about timing attacks
+* https://paragonie.com/audit/UGCwpFmaIkQ085l7 - The audit for lcobucci/jwt
+* https://github.com/jasonhinkle/php-gpg - An attempt to port GnuPG to PHP
 
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQEcBAEBAgAGBQJYNDJ9AAoJEIP+FMlX6CvZy5gIALU7weBZNJeQzBUMoQn6fAG/
-KNP3Br3BDYHC/MMbyIAkkEyHTfsR1xFNAHHb2Tb/Wl7v081owV7JwO3bkf0FJ88w
-K8RXFeUbt1z5rAdt1B088CbZA4/KkGRBd32vicUIE7+9EnkgSOlLc8abjind+yQ9
-2CtOHwDL0LVbjjGF6VdME9pooDZf2ZT1fHfClUbwPFsfTMKjUeJcfoVFqenifmYR
-wTYPtw6z+cCrjBlPyleglh/2uAc6ncTIQAC8Ee2dJyKv4wMqP60u97ANylnN3DpZ
-DTl+VUYdNsy78R9/xbqF7dT5gCeDV9y1rDoqHQwwtSGL/lvjU0ujbEtG7XS2/7M=
-=chON
------END PGP SIGNATURE-----
-
-Download attachment "xsa192.patch" of type "application/octet-stream" (2335 bytes)
-
-Download attachment "xsa192-4.5.patch" of type "application/octet-stream" (2310 bytes)
+Security Team
+Paragon Initiative Enterprises <https://paragonie.com>
