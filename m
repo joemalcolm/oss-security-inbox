@@ -1,37 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/27/8
-Message-ID: <a2f2721f-41e3-ee84-589f-e74bda03810a@isc.org>
-Date: Tue, 27 Sep 2016 12:38:33 -0500
-From: ISC Security Officer <security-officer@....org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/03/4
+Message-ID: <CACn5sdSbgx9CwoHb6Cfd2mZNU8-+vtfaN4FW2MRM_bVBFFPOQQ@mail.gmail.com>
+Date: Mon, 4 Jan 2016 00:24:41 +0100
+From: Gustavo Grieco <gustavo.grieco@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: ISC Security Officer <security-officer@....org>
-Subject: BIND9 CVE-2016-2776: Assertion Failure in buffer.c While Building Responses to a Specifically Constructed Request
+Subject: use-after-free in tidy-html5
 Content-Type: text/plain; charset=utf-8
 
-Please be advised that ISC publicly announced a vulnerability in the
-BIND 9 software.
+A use-after-free was discovered in tidy-html5 (5.1.25) using afl. Technical
+details are available here:
 
-CVE-2016-2776 is a denial-of-service vector which can potentially be
-exploited against BIND 9 servers.  All versions prior to the current
-releases are vulnerable.
+https://github.com/htacg/tidy-html5/issues/341
 
-Our full CVE text can be found at https://kb.isc.org/article/AA-01419/0
+Regards,
+Gus
 
-New releases of BIND, including security fixes for this vulnerability,
-are available at: www.isc.org/downloads/
-
-Release notes can be obtained using the following links:
-
-ftp://ftp.isc.org/isc/bind9/9.9.9-P3/
-ftp://ftp.isc.org/isc/bind9/9.10.4-P3/
-ftp://ftp.isc.org/isc/bind9/9.11.0rc3/
-
--- 
-Brian Conry
-ISC Support
-Acting Security Officer
-
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (456 bytes)
