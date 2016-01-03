@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1176" "Sunday" "11" "February" "2018" "09:59:35" "+0100" "Philippe Mouawad" "pmouawad@apache.org" "<CAH9fUpYsFx1+rwz1A=mc7wAgbDHARyj1VrWNg41y9OySuL1mqw@mail.gmail.com>" "47" "[oss-security] CVE-2018-1287: Apache JMeter binds RMI server to wildcard in distributed mode (based on RMI)" "^Date:" nil nil "2" "2018021108:59:35" "[oss-security] CVE-2018-1287: Apache JMeter binds RMI server to wildcard in distributed mode (based on RMI)" (number mark "        pmouawad@apa Feb 11   47/1176  " thread-indent "\"[oss-security] CVE-2018-1287: Apache JMeter binds RMI server to wildcard in distributed mode (based on RMI)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2266" "Sunday" "3" "January" "2016" "12:03:46" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160103170346.0AA4933213E@smtpvbsrv1.mitre.org>" "60" "[oss-security] Re: CVE Request: MantisBT SOAP API can be used to disclose confidential settings" nil nil nil "1" "2016010317:03:46" "[oss-security] Re: CVE Request: MantisBT SOAP API can be used to disclose confidential settings" (number mark "U       cve-assign@m Jan  3   60/2266  " thread-indent "\"[oss-security] Re: CVE Request: MantisBT SOAP API can be used to disclose confidential settings\"\n") "<n69hag$2if$1@ger.gmane.org>" ("<n69hag$2if$1@ger.gmane.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 18355 invoked by uid 550); 11 Feb 2018 09:01:27 -0000
+Received: (qmail 17739 invoked by uid 550); 3 Jan 2016 17:03:58 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,69 +11,73 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 15883 invoked from network); 11 Feb 2018 08:59:48 -0000
-X-Gm-Message-State: APf1xPDZ4Xa+QshIqI2546pt0G6NzIoaM09bz6qMY0CAJRBYGblfQohA
-	DxghcEKWxdJiwmUKV8PRnB+WPiDTg6pv69ONDnw=
-X-Google-Smtp-Source: AH8x227bqzVlufW7nilOQJEU2OGAoTMyGTgU/dMWX77wZ/7/ZqTNqhDHDw4D840g58ev0Ijz02GRA83V9wgxtbj0/+4=
-X-Received: by 10.237.45.129 with SMTP id i1mr13374162qtd.126.1518339575674;
- Sun, 11 Feb 2018 00:59:35 -0800 (PST)
-MIME-Version: 1.0
-X-Gmail-Original-Message-ID: <CAH9fUpYsFx1+rwz1A=mc7wAgbDHARyj1VrWNg41y9OySuL1mqw@mail.gmail.com>
-Message-ID: <CAH9fUpYsFx1+rwz1A=mc7wAgbDHARyj1VrWNg41y9OySuL1mqw@mail.gmail.com>
-Content-Type: multipart/alternative; boundary="94eb2c0c642c0e7c750564ebfb7e"
-Date: Sun, 11 Feb 2018 09:59:35 +0100
-From: Philippe Mouawad <pmouawad@apache.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE-2018-1287: Apache JMeter binds RMI server to wildcard in
- distributed mode (based on RMI)
-To: JMeter Users List <user@jmeter.apache.org>, dev@jmeter.apache.org, announce@apache.org, 
-	asf-security <security@apache.org>, oss-security@lists.openwall.com, 
-	Brenden Meeder <fishing.for.jormungandr@gmail.com>
+Received: (qmail 17721 invoked from network); 3 Jan 2016 17:03:57 -0000
+From: cve-assign@mitre.org
+To: dregad@mantisbt.org
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <n69hag$2if$1@ger.gmane.org>
+Message-Id: <20160103170346.0AA4933213E@smtpvbsrv1.mitre.org>
+Date: Sun,  3 Jan 2016 12:03:46 -0500 (EST)
+Subject: [oss-security] Re: CVE Request: MantisBT SOAP API can be used to disclose confidential settings
 
---94eb2c0c642c0e7c750564ebfb7e
-Content-Type: text/plain; charset="UTF-8"
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Severity: Important
-
-Vendor: The Apache Software Foundation
-
-Versions Affected: JMeter 2.X, 3.X
-
-Description:
-
-When using Distributed Test only (RMI based), jmeter server binds RMI
-Registry to wildcard host.
-This could allow an attacker to get Access to JMeterEngine and send
-unauthorized code.
-This only affect tests running in Distributed mode.
-
-Mitigation:
-
-  * Users must use last version of Java 8 or Java 9
-  * Users must upgrade to last JMeter 4.0 version
-
-Besides, we remind users that in distributed mode, JMeter makes an
-Architectural assumption
-that it is operating on a 'safe' network. i.e. everyone with access to the
-network is considered trusted.
-
-This typically means a dedicated VPN or similar is being used.
+> This was the case with the MantisBT master cryptographic salt
+> (crypto_master_salt): it was incorrectly spelt.
+> 
+> Affected versions:
+>  >= 1.3.0-beta.1
+> 
+> Fixed in versions:
+> 1.3.0 (not yet released), possibly 1.3.0-rc.2 if we decide we need
+> another release candidate before that.
 
 
-Example:
+>> http://sourceforge.net/p/mantisbt/mailman/message/32948048/
+>> 2014-10-19
+>> - case 'master_crypto_salt':
+>> + case 'crypto_master_salt':
 
-  * Start JMeter server using either jmeter-server or jmeter -s
-  * If JMeter listens on *:1099, you are vulnerable
+In general, a vendor can choose to request a CVE ID for a
+vulnerability in beta software. This is unusual and (in cases of many
+other products) often not a good idea, but there is no absolute
+restriction on having a CVE ID. In this case, the 1.3 development code
+in question was apparently noted in 2014.
 
+Use CVE-2014-9759 for the vulnerability caused by the
+master_crypto_salt spelling.
 
-Credit:
-This issue was reported responsibly to the Apache Tomcat Security Team
-by Brenden Meeder.
+There is no CVE ID for the general issue of "Implement a white list of
+options ... This is a safer approach than the previous blacklist
+method," which seems to be a pre-release design change, not
+specifically a vulnerability fix on its own.
 
-- Philippe Mouawad
+> Further details available in our issue tracker [3]
+> [3] https://mantisbt.org/bugs/view.php?id=20277
 
-on behalf of the Apache JMeter PMC
+It currently gives an "Access Denied." error.
 
-[0] https://bz.apache.org/bugzilla/show_bug.cgi?id=62039
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
---94eb2c0c642c0e7c750564ebfb7e--
+iQIcBAEBCAAGBQJWiVOFAAoJEL54rhJi8gl58iIQALSkEnUs34DR9JM6DQUfTTS6
+VePVAgUo25rpfQkqL7HpsuWEo/L4nYw7E9PCI7P0yHMmOH5O1uY1cucA5PEsukXK
+FaPjLZU0GHtbSAG1ioaincMVJ8W+YidMJyUNGrxLRnL3W+bjE63HZLNNiswSuUFK
+NTKrzOZtSHRDVRKbdvak3pVvKQ5MXPwM6BRYVZBK5UetaOkKLkQJMH3RjGkyl9AM
+yhtIF3XEKNXrIoVtLRka9/OabS1FG9ULE6oL8jqA2S8jL0D0ABo8QOYC2rH3wR3Z
+8CaJig5h8ximZIvA0Cg5xSiIQMhk3En7W3QSB1kyAAkrviz0H2f1XJenyifXMkM6
+IfXw0d5k9KSglJxpxd/VYBmZhz7rCWwa/0f5vnSpL278u6Sxccfh36EdBmoASs4X
+BAjdaEkGZJpoa+KGFKx7lGfSHMMvVGdM8j0ybaDEzruSL/0C8w4OZZxmE4Abbbu7
+3Nt1Pmq7YDVWNA6RxXwxp8C32hpxMLhNjNYzsgEZ8lBB2Og3vjSydY2FAav0Zsb+
+buyYkSqPqlnUJTMW0nYWnhXRfSOq0H1ndsdpAiSIvRKM28sDjIJnRyIe6QhN+h/u
+bF4wu44H2pOqtT69k6wJ7kW/CznpxBdwGcC+jKZKAQT9dXszQdaBrCv5kOGpDRK1
+v0DW5xesLDZMu/sbqrLk
+=r4cR
+-----END PGP SIGNATURE-----
