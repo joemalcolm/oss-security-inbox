@@ -1,28 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/15/9
-Message-ID: <CAHmME9rP34SMoyhxrSMqBPuy+bMn-1kkZijiVGAOMuHf6ztMKQ@mail.gmail.com>
-Date: Fri, 15 Jan 2016 16:58:07 +0100
-From: "Jason A. Donenfeld" <Jason@...c4.com>
-To: oss-security <oss-security@...ts.openwall.com>,  Qualys Security Advisory <qsa@...lys.com>
-Subject: Re: Qualys Security Advisory - Roaming through the OpenSSH client: CVE-2016-0777 and CVE-2016-0778
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/03/2
+Message-Id: <20160103170346.0AA4933213E@smtpvbsrv1.mitre.org>
+Date: Sun,  3 Jan 2016 12:03:46 -0500 (EST)
+From: cve-assign@...re.org
+To: dregad@...tisbt.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: MantisBT SOAP API can be used to disclose confidential settings
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jan 15, 2016 at 4:56 PM, Jason A. Donenfeld <Jason@...c4.com> wrote:
-> Great work Qualys. One question about the PoC:
->
-> On Thu, Jan 14, 2016 at 6:13 PM, Qualys Security Advisory
-> <qsa@...lys.com> wrote:
->> # env ROAMING="heap_massaging:linux" "`pwd`"/sshd -o ListenAddress=127.0.0.1:222 -o
->> UsePrivilegeSeparation=no -f /etc/ssh/sshd_config -h /etc/ssh/ssh_host_rsa_key
->
-> Does your proof of concept patch actually include support for this
-> heap_massaging mode?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Read more carefully, answered my own question:
+> This was the case with the MantisBT master cryptographic salt
+> (crypto_master_salt): it was incorrectly spelt.
+> 
+> Affected versions:
+>  >= 1.3.0-beta.1
+> 
+> Fixed in versions:
+> 1.3.0 (not yet released), possibly 1.3.0-rc.2 if we decide we need
+> another release candidate before that.
 
-> - Massage the client's heap before roaming_reply() malloc()ates out_buf,
->   and force malloc() to return a previously free()d but uncleansed chunk
->   of sensitive information. The simple proof-of-concept in this advisory
->   does not implement heap massaging.
 
-That's a shame. Please reconsider.
+>> http://sourceforge.net/p/mantisbt/mailman/message/32948048/
+>> 2014-10-19
+>> - case 'master_crypto_salt':
+>> + case 'crypto_master_salt':
+
+In general, a vendor can choose to request a CVE ID for a
+vulnerability in beta software. This is unusual and (in cases of many
+other products) often not a good idea, but there is no absolute
+restriction on having a CVE ID. In this case, the 1.3 development code
+in question was apparently noted in 2014.
+
+Use CVE-2014-9759 for the vulnerability caused by the
+master_crypto_salt spelling.
+
+There is no CVE ID for the general issue of "Implement a white list of
+options ... This is a safer approach than the previous blacklist
+method," which seems to be a pre-release design change, not
+specifically a vulnerability fix on its own.
+
+> Further details available in our issue tracker [3]
+> [3] https://mantisbt.org/bugs/view.php?id=20277
+
+It currently gives an "Access Denied." error.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJWiVOFAAoJEL54rhJi8gl58iIQALSkEnUs34DR9JM6DQUfTTS6
+VePVAgUo25rpfQkqL7HpsuWEo/L4nYw7E9PCI7P0yHMmOH5O1uY1cucA5PEsukXK
+FaPjLZU0GHtbSAG1ioaincMVJ8W+YidMJyUNGrxLRnL3W+bjE63HZLNNiswSuUFK
+NTKrzOZtSHRDVRKbdvak3pVvKQ5MXPwM6BRYVZBK5UetaOkKLkQJMH3RjGkyl9AM
+yhtIF3XEKNXrIoVtLRka9/OabS1FG9ULE6oL8jqA2S8jL0D0ABo8QOYC2rH3wR3Z
+8CaJig5h8ximZIvA0Cg5xSiIQMhk3En7W3QSB1kyAAkrviz0H2f1XJenyifXMkM6
+IfXw0d5k9KSglJxpxd/VYBmZhz7rCWwa/0f5vnSpL278u6Sxccfh36EdBmoASs4X
+BAjdaEkGZJpoa+KGFKx7lGfSHMMvVGdM8j0ybaDEzruSL/0C8w4OZZxmE4Abbbu7
+3Nt1Pmq7YDVWNA6RxXwxp8C32hpxMLhNjNYzsgEZ8lBB2Og3vjSydY2FAav0Zsb+
+buyYkSqPqlnUJTMW0nYWnhXRfSOq0H1ndsdpAiSIvRKM28sDjIJnRyIe6QhN+h/u
+bF4wu44H2pOqtT69k6wJ7kW/CznpxBdwGcC+jKZKAQT9dXszQdaBrCv5kOGpDRK1
+v0DW5xesLDZMu/sbqrLk
+=r4cR
+-----END PGP SIGNATURE-----
