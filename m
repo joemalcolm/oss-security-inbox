@@ -1,93 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/29/4
-Message-ID: <CAA0W1bQ9jnVcNYZK8i-fGYtc=VUiYm_H+TxqkjY3Tfuwb1kwMQ@mail.gmail.com>
-Date: Tue, 29 Nov 2016 07:15:36 -0800
-From: Yongjun Zhang <yzhang@...udera.com>
-To: Zhe Zhang <zhe.zhang.research@...il.com>
-Cc: security@...che.org, oss-security@...ts.openwall.com,  bugtraq@...urityfocus.com, general@...oop.apache.org
-Subject: Re: CVE-2016-5393: Apache Hadoop Privilege escalation vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/04/4
+Message-ID: <alpine.LFD.2.20.1601041941480.17635@wniryva>
+Date: Mon, 4 Jan 2016 19:44:03 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+Subject: CVE request Qemu: net: vmxnet3: reading IMR registers leads to a crash 
 Content-Type: text/plain; charset=utf-8
 
-Hi Zhe,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Please refer to  https://www.apache.org/security/ for details.
+   Hello,
 
-Thanks.
+Qemu emulator built with a VMWARE VMXNET3 paravirtual NIC emulator support is 
+vulnerable to crash issue. It could occur while reading Interrupt Mask 
+Registers(IMR).
 
---Yongjun
+A privileged(CAP_SYS_RAWIO) guest user could use this flaw to crash the Qemu 
+process instance resulting in DoS.
 
-On Mon, Nov 28, 2016 at 10:26 PM, Zhe Zhang <zhe.zhang.research@...il.com>
-wrote:
+Upstream patch:
+- ---------------
+   -> http://git.qemu.org/?p=qemu.git;a=commit;h=c6048f849c7e3f009786df76206e895
 
-> Thanks for the note Yongjun! Does HADOOP-13434
-> <https://issues.apache.org/jira/browse/HADOOP-13434> fix the problem?
->
-> On Mon, Nov 28, 2016 at 4:04 PM Yongjun Zhang <yjzhangal@...che.org>
-> wrote:
->
-> > Hi,
-> >
-> > Please see below the official announcement of a critical security
-> > vulnerability that's discovered and subsequently fixed in Apache Hadoop
-> > releases.
-> >
-> > Thanks and best regards,
-> >
-> > --Yongjun
-> >
-> > ----------
-> >
-> > CVE-2016-5393: Apache Hadoop Privilege escalation vulnerability
-> >
-> > Severity: Critical
-> >
-> >
-> >
-> > Vendor:
-> >
-> > The Apache Software Foundation
-> >
-> >
-> >
-> > Versions Affected:
-> >
-> > Hadoop 2.6.x, 2.7.x
-> >
-> >
-> >
-> > Description:
-> >
-> > A remote user who can authenticate with the HDFS NameNode can possibly
-> run
-> > arbitrary commands as the hdfs user.
-> >
-> >
-> >
-> > Mitigation:
-> >
-> > 2.7.x users should upgrade to 2.7.3
-> >
-> > 2.6.x users should upgrade to 2.6.5
-> >
-> >
-> >
-> > Impact:
-> >
-> > A remote user who can authenticate with the HDFS NameNode can possibly
-> run
-> > arbitrary commands with the same privileges as HDFS service.
-> >
-> >
-> >
-> > Credit:
-> >
-> > This issue was discovered by Freddie Rice.
-> >
-> > ----------
-> >
-> --
-> Zhe Zhang
-> Apache Hadoop Committer
-> http://zhe-thoughts.github.io/about/ | @oldcap
->
+Reference:
+- ----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1270876
 
+Thank you.
+- --
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBAgAGBQJWin4rAAoJEN0TPTL+WwQf9tsP/jdNbRX2Gu5iIS69tRuYSc5x
+yYWJHosD9akCxj4pZYMbrjoiQeKs7xuVrqhZnKSDzXWnHjfH8tC41s6aWRcP4qp9
+xqooML+OtIAoPFq6El4iBCp7lrp70rPatY+YXfI7IhxLNF6kFoUqBrWJe+aAxMod
+shL3yDKv8J+dgRIc9j36odJpTVgsIyYojRr3Bb1IwfKsHmltVNxNqzHyOPGGU02G
+B1c02Gy2atxkJqRNjrdmze6A1vSlyJiXHbCQxin9BNzc9EJqYer1KdIyztyeTBD0
+OLuBvEZ872iKyCqgj/qQpdKAagQPXNcOG9VREcdoOCW38GFHXNSP1/n4ZbfjsUYX
+oZqLbYnm9Mwq73eIBDJxzpzqwlDQqWFzdXgcPu82KvJt+Q2/Ms718N+0euOuDVOm
+5U8f2VE+0hhCvkNakdKrRq4iy9E2vJLJ5x5yYgSj35rMMAKsx3fuEU8k9a5iyeWz
+dp0VqAE2ene2RnibHrlBR4XXyu20Tvmh3gdDedTj71hCSOZ2o9AgmmIRERLlCZC6
+L9hnOjbNRckIF8GjP9wgEcyzn+Jv2BWzBz1Ea+UEqXlPYtNzBYDHfouRf4/7ncMK
+dTscla0o8lN92phhGmKporhosP3XwydezHbawKWiBenUHWkduKFAwqtMLwRLhbeG
+r7TAUzpYU9gm9WLOCGrt
+=SzBR
+-----END PGP SIGNATURE-----
