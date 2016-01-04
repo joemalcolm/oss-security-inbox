@@ -1,39 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/05/12
-Message-ID: <alpine.GSO.2.20.1610051214000.29692@freddy.simplesystems.org>
-Date: Wed, 5 Oct 2016 12:24:46 -0500 (CDT)
-From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request - multiple ghostscript -dSAFER sandbox problems
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/04/6
+Message-Id: <20160104165801.C12373323FC@smtpvbsrv1.mitre.org>
+Date: Mon,  4 Jan 2016 11:58:01 -0500 (EST)
+From: cve-assign@...re.org
+To: ppandit@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request Qemu: net: vmxnet3: incorrect l2 header validation leads to a crash
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 5 Oct 2016, Hanno Böck wrote:
->
-> I was surprised to see evince in this list. It uses poppler for pdf and
-> libspectre for postscript, so there seems to be no use of
-> ghostscript (maybe in an older version).
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-There is only one open-sourced Postscript interpreter (Ghostscript) 
-that I am aware of.
+> Qemu emulator built with a VMWARE VMXNET3 paravirtual NIC emulator support is
+> vulnerable to crash issue. It occurs when a guest sends a Layer-2 packets
+> smaller than 22 bytes.
+> 
+> A privileged(CAP_SYS_RAWIO) guest user could use this flaw to crash the Qemu
+> process instance resulting in DoS.
+> 
+> http://git.qemu.org/?p=qemu.git;a=commit;h=a7278b36fcab9af469563bd7b9dadebe2ae25e48
+> https://bugzilla.redhat.com/show_bug.cgi?id=1270871
 
-There are perhaps two open-sourced PDF interpreters available 
-(Ghostscript and derivatives of 'xpdf' like 'poppler').
+>> 'tx_pkt->packet_type' hasn't been assigned for such packets, and
+>> 'vmxnet3_on_tx_done_update_stats()' expects it to be properly set.
 
-ImageMagick and GraphicsMagick are depending on Ghostscript.
+Use CVE-2015-8744.
 
-Since Postscript is a format commonly sent to printers, many programs 
-produce it, and thus it is used as an intermediate format.  The 
-typical use case is for ImageMagick/GraphicsMagick to automatically 
-run an external utility which converts from the format being read into 
-Postscript, then Ghostscript is used to convert it to a raster format 
-(e.g. PNM), and then the raster format is read by 
-ImageMagick/GraphicsMagick before being output to the final format.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Disabling Ghostscript or requiring user input to proceed will cause a 
-lot of breakage.
-
-Bob
--- 
-Bob Friesenhahn
-bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
-GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
+iQIcBAEBCAAGBQJWiqQOAAoJEL54rhJi8gl58u0QAJHr+J/tR96tT+LyDMUQWhaP
+Si58acKWZEkk9nV55TwaS6uJw0VriHu1QRB7gtU5VYWNPI6rRZk3sc52hoKJyLe9
+GA1c4bvCekExsnUOIIV5MNcqa2o53uQCRfhtcfNTVwSn31tgmJud5PT3xIuJH5z6
+cDR94YqJGdrOGbCxm7CH9NlGLQsy8cCXzMcCezkGogGxv16jg614PWjwOEvemEgT
+Fbc03MHFquCULWF5QD0ZU0TIoFXQcS6KGtc2kvCmUEu6uPH+8NIUdj0bAOu47Yje
+wzzOFf/dIoa0zO3trrSa1qznFlK/kyWmF2Ls3qZgojrc1IP79yCl9Q9ZoIE6NzF2
+p8zzMoabvC8SzoRlCg2pJjJkmAyJR/bNbgw523/rvSz9q+6QzEtkYnNE26brITb3
+v7GIJlfT9W+qrylm5nu01bb0U42E+uB/lA+M8s1ZpjPjQps2tUufr/XE/EGqdJvB
+Za+tNNVPZeFGOEYIBYSrdhdKQQOkBLA0p7Ebcf8ZnHrPFEF7v14yRBgnlywf2kHD
+wK6y91YEji25WjIIQQgmgaXmixUcwzS+y52ET0gEKcAO07IYKnOUexd+fMV2YBEW
+aAC0Ch2xpR6bBn3SJye5avUIbML7B1M4VQlpSUZwn46DFir5dqHf0ssdYasO+DBU
+eF6FHB0afcV5gGrTIozR
+=O+Vj
+-----END PGP SIGNATURE-----
