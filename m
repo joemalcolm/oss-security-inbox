@@ -1,28 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/29/6
-Message-ID: <61e85725-da6a-a89e-f757-e5479736f0d5@redhat.com>
-Date: Tue, 29 Nov 2016 17:33:42 +0100
-From: Adam Maris <amaris@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2016-8654 jasper: Heap-based buffer overflow in QMFB code in JPC codec
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/04/1
+Message-ID: <alpine.LFD.2.20.1601041714500.15987@wniryva>
+Date: Mon, 4 Jan 2016 17:23:02 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Ling Liu <liuling-it@....cn>
+Subject: CVE request Qemu: net: ne2000: OOB r/w in ioport operations
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+   Hello,
 
-Red Hat Product Security assigned CVE-2016-8654 for following issues 
-(CVE merge as per merge/split rules):
+Qemu emulator built with the NE2000 device emulation support is vulnerable to 
+an OOB r/w access issue. It could occur while performing 'ioport' r/w 
+operations.
 
-https://github.com/mdadams/jasper/issues/93
-https://github.com/mdadams/jasper/issues/94
+A privileged(CAP_SYS_RAWIO) user/process could use this flaw to leak or 
+corrupt Qemu memory bytes(3).
 
-that were addressed by following commit:
+Upstream fix:
+-------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2016-01/msg00050.html
 
-https://github.com/mdadams/jasper/commit/4a59cfaf9ab3d48fca4a15c0d2674bf7138e3d1a
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1264929
 
-Best Regards,
+This issue was discovered by Ling Liu of Qihoo 360 Inc.
 
--- 
-Adam Mariš, Red Hat Product Security
-1CCD 3446 0529 81E3 86AF  2D4C 4869 76E7 BEF0 6BC2
-
-
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
