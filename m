@@ -1,123 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/12/5
-Message-ID: <20161012131247.GB14056@suse.de>
-Date: Wed, 12 Oct 2016 15:12:47 +0200
-From: Sebastian Krahmer <krahmer@...e.com>
-To: oss-security@...ts.openwall.com
-Subject: bubblewrap LPE
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/04/9
+Message-Id: <20160104235855.D96FB52E01B@smtpvbsrv1.mitre.org>
+Date: Mon,  4 Jan 2016 18:58:55 -0500 (EST)
+From: cve-assign@...re.org
+To: carnil@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, elbrus@...ian.org
+Subject: Re: CVE Request: cacti: SQL injection vulnerability in graphs_new.php
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Hi
+> Another SQL injection vulnerability via graphs_new.php in cacti was
+> found, reported to the bug http://bugs.cacti.net/view.php?id=2652
 
-There is a beautiful, easy to exploit, logical bug within the
-bubblewrap program, thats part of the flatpak container-app framework,
-but also used with other container solutions.
+http://bugs.cacti.net/view.php?id=2652 is CVE-2015-8604.
 
-/usr/bin/bwrap may be installed mode 04755 or with cap_sys_admin and other
-file caps. I dont know if there are any dists already shipping it that way,
-but the Makefile and some RedHat spec files contain file caps for it.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-bubblewrap's aim is to setup a container and seccomp sandbox for programs to be run
-as user.
-
-For some reason it sets the PR_SET_DUMPABLE flag, as seen below. The comment about
-it looks strange to me. If thats really true, suid programs shouldn't
-be forced to play with the dumpable flag to achieve their goal.
-
-Once the dumpable flag is set, there is a chance we could attach to the process,
-once the remaining caps are dropped and the whole process runs as user.
-
-Luckily, that happens at line 1707, right after a PrivSep socket has been opened!
-
-Once attached to the (now running as unprived user) process, we can inject
-commands into that socket. We could do arbitrary mounts, but won't achieve much, since
-the bwrap process is running in its own mount namespace. However, there is
-a sethostname() OP, that we can use to affect the hostname of the entire system
-(not restricted to UTS namespace). Now, just wait for root or other users to
-login and execute bash to use one of the PS expansion bugs to execute code.
-
-(I wonder that has been re-discovered recently, it was already part of the
-CVE-2011-0966 attack vector.)
-
-
- 383 acquire_caps (void)
- 384 {
-
-[...]
-
- 422   /* We need the process to be dumpable, or we can't access /proc/self/uid_map */
- 423   if (prctl (PR_SET_DUMPABLE, 1, 0, 0, 0) < 0)
- 424     die_with_error ("prctl(PR_SET_DUMPABLE) failed");
- 425 }
-
-
-[...]
-
-
-1422 int
-1423 main (int    argc,
-1424       char **argv)
-1425 {
-
-[...]
-
-1440   /* Get the (optional) capabilities we need, drop root */
-1441   acquire_caps ();
-
-[...]
-
-1692   if (is_privileged)
-1693     {
-1694       pid_t child;
-1695       int privsep_sockets[2];
-1696
-1697       if (socketpair (AF_UNIX, SOCK_SEQPACKET | SOCK_CLOEXEC, 0, privsep_sockets) != 0)
-1698         die_with_error ("Can't create privsep socket");
-1699
-1700       child = fork ();
-1701       if (child == -1)
-1702         die_with_error ("Can't fork unprivileged helper");
-1703
-1704       if (child == 0)
-1705         {
-1706           /* Unprivileged setup process */
-1707           drop_caps ();                                                            // BOOM
-1708           close (privsep_sockets[0]);
-1709           setup_newroot (opt_unshare_pid, privsep_sockets[1]);
-1710           exit (0);
-1711         }
-1712       else
-1713         {
-1714           uint32_t buffer[2048];  /* 8k, but is int32 to guarantee nice alignment */
-1715           uint32_t op, flags;
-1716           const char *arg1, *arg2;
-1717           cleanup_fd int unpriv_socket = -1;
-1718
-1719           unpriv_socket = privsep_sockets[0];
-1720           close (privsep_sockets[1]);
-1721
-1722           do
-1723             {
-1724               op = read_priv_sec_op (unpriv_socket, buffer, sizeof (buffer),
-1725                                      &flags, &arg1, &arg2);
-1726               privileged_op (-1, op, flags, arg1, arg2);
-1727               if (write (unpriv_socket, buffer, 1) != 1)
-1728                 die ("Can't write to op_socket");
-1729             }
-1730           while (op != PRIV_SEP_OP_DONE);
-1731
-1732           /* Continue post setup */
-1733         }
-1734     }
-
-
-
--s
-
--- 
-
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.com - SuSE Security Team
-
+iQIcBAEBCAAGBQJWiwbkAAoJEL54rhJi8gl5tZUQAKEO6dFY8Z3fOwqhJpTTtJSc
+iJrb8S/jepSeARVymuBTjXxAKLnSJn44IYU9+ZG1nYF1hCNFZxPJBmf6FZosRjYW
+/tQYO9o8x/ywkbycQnyyephmNMzh+vDHIThYZN86Y2i8uaOjmCapo9Nxmma6UM4I
+pN475YyIbTDf7z5mipP7fpj3COYA2rRCceE6KKLRNB2VGMqSMQa3Lb1aTZN8ehER
+zglqkVy+vgYtbCke/lLEypxLlEzEEqY9nbbW8Q+FRzlWyiAKi6gl4XFUZzg7hJsX
+goK4MCw8CffWYv4CWUfTf7X7Z5loMRKLiqPHDIkI3EDKDYL5ax+PJaixoidi1DSI
+6CSMp9/shrqY5p9X6v95soPNMSQwOUlhSqheD9Rak9QK2ckfQPN9MV6jQh4mkBke
+7GeyslU8qvnWtPp7QBiTPLZtO5nTRl38Mm+TsLGg7N3V3xfj1UlfrewOThXSj6Fc
+EvLWYw/a4I8tVber6yCy0hq1VxGjyYQcItUHlrnrsZgDRv/ob92jKkJnWxulww3V
+3OdiGvu2gHtwLoYH8ZfXDTlE6Y8u/IhCsVW4rpj4rOoBbTspD/QjKLsCspvtKdjv
+eAtmaFDaexEUD48tob6EQAI7/fs0SZs55qbHba68jNujE4g2rL5OXwZdYJDwF6R4
+ppe2UCo6UA2dMlVkeaH+
+=lOoB
+-----END PGP SIGNATURE-----
