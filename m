@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3468" "Monday" "26" "December" "2016" "16:10:09" "-0800" "Tracy Reed" "treed@ultraviolet.org" "<20161227001009.GS20382@tracyreed.org>" "106" "Re: [oss-security] PHPMailer < 5.2.18 Remote Code Execution [CVE-2016-10033]" nil nil nil "12" "2016122700:10:09" "[oss-security] PHPMailer < 5.2.18 Remote Code Execution [CVE-2016-10033]" (number mark "U       treed@ultrav Dec 26  106/3468  " thread-indent "\"Re: [oss-security] PHPMailer < 5.2.18 Remote Code Execution [CVE-2016-10033]\"\n") "<CADSYzsubAm_GzSJ1S3uoskp1JNJe5Jemb0jtt8waA8QMdcbHOw@mail.gmail.com>" ("<CADSYzsubAm_GzSJ1S3uoskp1JNJe5Jemb0jtt8waA8QMdcbHOw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1566" "Monday" "4" "January" "2016" "11:59:33" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160104165933.8E8EA332405@smtpvbsrv1.mitre.org>" "39" "[oss-security] Re: CVE request Qemu: net: vmxnet3: reading IMR registers leads to a crash" "^Cc:" nil nil "1" "2016010416:59:33" "[oss-security] Re: CVE request Qemu: net: vmxnet3: reading IMR registers leads to a crash" (number mark "U       cve-assign@m Jan  4   39/1566  " thread-indent "\"[oss-security] Re: CVE request Qemu: net: vmxnet3: reading IMR registers leads to a crash\"\n") "<alpine.LFD.2.20.1601041941480.17635@wniryva>" ("<alpine.LFD.2.20.1601041941480.17635@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 5496 invoked by uid 550); 27 Dec 2016 00:57:02 -0000
+Received: (qmail 31941 invoked by uid 550); 4 Jan 2016 16:59:46 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,125 +11,52 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 31913 invoked from network); 4 Jan 2016 16:59:45 -0000
+In-Reply-To: <alpine.LFD.2.20.1601041941480.17635@wniryva>
+Message-Id: <20160104165933.8E8EA332405@smtpvbsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Mon,  4 Jan 2016 11:59:33 -0500 (EST)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11335 invoked from network); 27 Dec 2016 00:10:23 -0000
-Date: Mon, 26 Dec 2016 16:10:09 -0800
-From: Tracy Reed <treed@ultraviolet.org>
-To: oss-security@lists.openwall.com
-Message-ID: <20161227001009.GS20382@tracyreed.org>
-References: <CADSYzsubAm_GzSJ1S3uoskp1JNJe5Jemb0jtt8waA8QMdcbHOw@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="90wTzOiXAbbhNsuN"
-Content-Disposition: inline
-In-Reply-To: <CADSYzsubAm_GzSJ1S3uoskp1JNJe5Jemb0jtt8waA8QMdcbHOw@mail.gmail.com>
-User-Agent: Mutt/1.7.1 (2016-10-04)
-Subject: Re: [oss-security] PHPMailer < 5.2.18 Remote Code Execution
- [CVE-2016-10033]
+Subject: [oss-security] Re: CVE request Qemu: net: vmxnet3: reading IMR registers leads to a crash
+To: ppandit@redhat.com
 
---90wTzOiXAbbhNsuN
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Note that confining the http process using SELinux or similar MAC system
-can go a long way to constraining and limiting the damage of inevitable
-vulnerabilities such as this. Particularly since this is command
-injection which is precisely what SELinux is good at limiting (as
-opposed to SQL injection).
+> Qemu emulator built with a VMWARE VMXNET3 paravirtual NIC emulator support is
+> vulnerable to crash issue. It could occur while reading Interrupt Mask
+> Registers(IMR).
+> 
+> A privileged(CAP_SYS_RAWIO) guest user could use this flaw to crash the Qemu
+> process instance resulting in DoS.
+> 
+> http://git.qemu.org/?p=qemu.git;a=commit;h=c6048f849c7e3f009786df76206e895a69de032c
+> https://bugzilla.redhat.com/show_bug.cgi?id=1270876
 
-My shop has a policy that SELinux will be enabled on all web
-applications and it has already saved us a few times despite being very
-good at getting things patched up promptly.=20
+>> Instead of asserting, return the actual IMR register value.
 
-On Sun, Dec 25, 2016 at 06:21:07PM PST, Dawid Golunski spake thusly:
-> PHPMailer < 5.2.18 Remote Code Execution [CVE-2016-10033]
->=20
-> Severity: CRITICAL
->=20
-> Discovered by:
-> Dawid Golunski (@dawid_golunski)
-> https://legalhackers.com
->=20
->=20
-> PHPMailer
-> "Probably the world's most popular code for sending email from PHP!
-> Used by many open-source projects: WordPress, Drupal, 1CRM, SugarCRM, Yii,
-> Joomla! and many more"
->=20
-> Desc:
-> An independent research uncovered a critical vulnerability in PHPMailer t=
-hat
-> could potentially be used by (unauthenticated) remote attackers to achieve
-> remote arbitrary code execution in the context of the web server user and
-> remotely compromise the target web application.
-> To exploit the vulnerability an attacker could target common website
-> components such as contact/feedback forms, registration forms, password
-> email resets and others that send out emails with the help of a vulnerable
-> version of the PHPMailer class.
->=20
->=20
-> Patching:
-> Responsibly disclosed to PHPMailer team.
-> They've released a critical security release.
-> If you are using an affected release update to the 5.2.18 security
-> release as advised at:
-> https://github.com/PHPMailer/PHPMailer/blob/master/changelog.md
->=20
-> Notes:
-> I know this is a bad timing and a short notice (for everyone probably ;)
-> I've spent most of my Christmas break working on this issue with
-> affected vendors.
-> This has been quite a rush as one of the vendors leaked excessive
-> information on this vulnerability at one point which could aid
-> potential attackers.
->=20
-> I've released a limited advisory at the link below:
->=20
-> https://legalhackers.com/advisories/PHPMailer-Exploit-Remote-Code-Exec-CV=
-E-2016-10033-Vuln.html
->=20
-> This is to give people a chance to immediately patch or at least be
-> aware of the issue before we get closer to a working day/end of
-> holiday for affected users to act on this issue.
->=20
-> I'm planning to release the full advisory and a PoC exploit shortly so
-> that everyone is on the same page.
->=20
-> Upcoming video PoC:
->=20
-> https://legalhackers.com/videos/PHPMailer-Exploit-Remote-Code-Exec-Vuln-C=
-VE-2016-10033-PoC.html
->=20
->=20
-> For updates follow:
->=20
-> https://twitter.com/dawid_golunski
->=20
-> I'll also send another email to the list once it is published.
->=20
-> For now,
-> Patch it now before someone else patches it for you (through a reverse sh=
-ell ;)
->=20
-> --=20
-> Regards,
-> Dawid Golunski
-> https://legalhackers.com
-> t: @dawid_golunski
+Use CVE-2015-8745.
 
---=20
-Tracy Reed
-
---90wTzOiXAbbhNsuN
-Content-Type: application/pgp-signature; name="signature.asc"
-
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.22 (GNU/Linux)
+Version: GnuPG v1
 
-iEYEARECAAYFAlhhsWEACgkQBhSTPg0d/nSVjgCcDh63xRPsSs0GFmpQ3iDzIMQE
-LaoAn1RkOVzVwawAn3nUjmVhaBBSYweF
-=+24T
+iQIcBAEBCAAGBQJWiqQVAAoJEL54rhJi8gl52usP/R53hBnStbF9uMh/QOzBjtvc
+o2jmKr2Az1WXYAeTs08Mui/6bC+c8VW7OSBbnOgfy/vn7D6ddXC6qEAgq0+ngJ/8
+FZfxYPFXIfJdTKGed7nsG5YhI7ckEEnxIWxsmW7EmQDXj3UInpvEBfNOR7ogM0WT
+1bW5lMhJz90HxKtWqGc3Fcmpk5+tEWZXgWJfTxD7QejFG5g9HKBCWqYj3muQ6/af
+HRoJOoonmsFbk6ZmOboIDcIQQU4WiCmaNcKNNy3fyIvlQjABfYLTgwzIH+eeMpN1
+FpXwG7ogVczqyes2cVzVS36l7U1EXRd5vUtUi7GDOKRjuuSxckjx2YUea//Ejml0
+CTF+7WNGA1kwlywsQJeXOELhhSPvs+Wb9TIdkoZWrG/Sa719G+vcFey+bKC3VXTw
+zAG0rHRDOktRKw5x8tAV+mtzcKrMWd3iUH43cvQtYpU9TOPEtytT2ckU2p/zkAEp
+Xp9iARSzMeQbHSwAw+2qC6ElAouVItealoH6JpJte5idOTzZkrZOmRP+umpYRJli
+dh2vTqMkHCR6AZlrgEjrBzUSNDYRAbVl7oSGgnXjwg+pip7umbWsY7gNAYgJbhpV
+ULxqgi1wGLWp/nsfKhWhtLYuv15Uah06G/mJUyoHjqKWJEcaImR9JNu8Q+eqiTOL
+haSycTu8WkHEUkHol1QT
+=8aFM
 -----END PGP SIGNATURE-----
-
---90wTzOiXAbbhNsuN--
