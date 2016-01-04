@@ -1,4 +1,9 @@
-Received: (qmail 27728 invoked by uid 550); 25 Aug 2024 19:43:57 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1651" "Monday" "4" "January" "2016" "11:58:01" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160104165801.C12373323FC@smtpvbsrv1.mitre.org>" "40" "[oss-security] Re: CVE request Qemu: net: vmxnet3: incorrect l2 header validation leads to a crash" nil nil nil "1" "2016010416:58:01" "[oss-security] Re: CVE request Qemu: net: vmxnet3: incorrect l2 header validation leads to a crash" (number mark "U       cve-assign@m Jan  4   40/1651  " thread-indent "\"[oss-security] Re: CVE request Qemu: net: vmxnet3: incorrect l2 header validation leads to a crash\"\n") "<alpine.LFD.2.20.1601041939440.17635@wniryva>" ("<alpine.LFD.2.20.1601041939440.17635@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 22021 invoked by uid 550); 4 Jan 2016 16:58:19 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,68 +12,52 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 27695 invoked from network); 25 Aug 2024 19:43:57 -0000
-Date: Sun, 25 Aug 2024 21:43:39 +0200
-From: Christian Brabandt <cb@256bit.org>
-To: oss-security@lists.openwall.com
-Cc: Yee Cheng Chin <ychin.macvim@gmail.com>, "T.J. Townsend" <tj@mrsk.me>,
-	Ken Takata <ktakata65536@gmail.com>,
-	Jiaqi Zhou <zeertzjq@outlook.com>, dominique.pelle@gmail.com,
-	mattn.jp@gmail.com, sthen@openbsd.org, adamw@freebsd.org,
-	James McCoy <jamessan@jamessan.com>,
-	Yegappan Lakshmanan <yegappanl@gmail.com>,
-	oss-security@lists.openwall.com, dougkearns@gmail.com
-Message-ID: <ZsuJa1nZS1l/g/IS@256bit.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: cb@256bit.org
-X-SA-Exim-Scanned: No (on 256bit.org); SAEximRunCond expanded to false
-Subject: [oss-security] [vim-security] heap-buffer-overflow in ins_typebuf() in Vim <
- 9.1.0697
+Received: (qmail 22003 invoked from network); 4 Jan 2016 16:58:18 -0000
+From: cve-assign@mitre.org
+To: ppandit@redhat.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <alpine.LFD.2.20.1601041939440.17635@wniryva>
+Message-Id: <20160104165801.C12373323FC@smtpvbsrv1.mitre.org>
+Date: Mon,  4 Jan 2016 11:58:01 -0500 (EST)
+Subject: [oss-security] Re: CVE request Qemu: net: vmxnet3: incorrect l2 header validation leads to a crash
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-heap-buffer-overflow in ins_typebuf() in Vim < 9.1.0697
-=======================================================
-Date: 25.08.2024
-Severity: Low
-CVE: <not-yet-assigned>
-CWE: Heap-based buffer overlow (CWE-122)
+> Qemu emulator built with a VMWARE VMXNET3 paravirtual NIC emulator support is
+> vulnerable to crash issue. It occurs when a guest sends a Layer-2 packets
+> smaller than 22 bytes.
+> 
+> A privileged(CAP_SYS_RAWIO) guest user could use this flaw to crash the Qemu
+> process instance resulting in DoS.
+> 
+> http://git.qemu.org/?p=qemu.git;a=commit;h=a7278b36fcab9af469563bd7b9dadebe2ae25e48
+> https://bugzilla.redhat.com/show_bug.cgi?id=1270871
 
-When flushing the typeahead buffer, Vim moves the current position in
-the typeahead buffer but does not check whether there is enough space
-left in the buffer to handle the next characters.  So this may lead to
-the tb_off position within the typebuf variable to point outside of the
-valid buffer size, which can then later lead to a heap-buffer overflow
-in e.g. ins_typebuf().
+>> 'tx_pkt->packet_type' hasn't been assigned for such packets, and
+>> 'vmxnet3_on_tx_done_update_stats()' expects it to be properly set.
 
-Therefore, when flushing the typeahead buffer, check if there is enough
-space left before advancing the off position. If not, fall back to flush
-current typebuf contents.
+Use CVE-2015-8744.
 
-It's not quite clear yet, what can lead to this situation. It seems to
-happen when error messages occur (which will cause Vim to flush the
-typeahead buffer) in comnination with several long mappgins and so it
-may eventually move the off position out of a valid buffer size.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Impact is low since it is not easily reproducable and requires to have
-several mappings active and run into some error condition. But when this
-happens, this will cause a crash.
-
-The Vim project would like to thank github user SuyueGuo for reporting
-this issue.
-
-The issue has been fixed as of Vim patch v9.1.0697
-
-References:
-https://github.com/vim/vim/commit/322ba9108612bead5eb
-https://github.com/vim/vim/security/advisories/GHSA-4ghr-c62x-cqfh
-
-Thanks,
-Chris
--- 
-Arbeit, die wir lieben ist das einzige, was uns mit dem Leben
-versöhnen kann.
-		-- Hermann J. Bang
+iQIcBAEBCAAGBQJWiqQOAAoJEL54rhJi8gl58u0QAJHr+J/tR96tT+LyDMUQWhaP
+Si58acKWZEkk9nV55TwaS6uJw0VriHu1QRB7gtU5VYWNPI6rRZk3sc52hoKJyLe9
+GA1c4bvCekExsnUOIIV5MNcqa2o53uQCRfhtcfNTVwSn31tgmJud5PT3xIuJH5z6
+cDR94YqJGdrOGbCxm7CH9NlGLQsy8cCXzMcCezkGogGxv16jg614PWjwOEvemEgT
+Fbc03MHFquCULWF5QD0ZU0TIoFXQcS6KGtc2kvCmUEu6uPH+8NIUdj0bAOu47Yje
+wzzOFf/dIoa0zO3trrSa1qznFlK/kyWmF2Ls3qZgojrc1IP79yCl9Q9ZoIE6NzF2
+p8zzMoabvC8SzoRlCg2pJjJkmAyJR/bNbgw523/rvSz9q+6QzEtkYnNE26brITb3
+v7GIJlfT9W+qrylm5nu01bb0U42E+uB/lA+M8s1ZpjPjQps2tUufr/XE/EGqdJvB
+Za+tNNVPZeFGOEYIBYSrdhdKQQOkBLA0p7Ebcf8ZnHrPFEF7v14yRBgnlywf2kHD
+wK6y91YEji25WjIIQQgmgaXmixUcwzS+y52ET0gEKcAO07IYKnOUexd+fMV2YBEW
+aAC0Ch2xpR6bBn3SJye5avUIbML7B1M4VQlpSUZwn46DFir5dqHf0ssdYasO+DBU
+eF6FHB0afcV5gGrTIozR
+=O+Vj
+-----END PGP SIGNATURE-----
