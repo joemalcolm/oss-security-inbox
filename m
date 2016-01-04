@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3184" "Thursday" "1" "June" "2017" "21:13:52" "+0200" "Solar Designer" "solar@openwall.com" "<20170601191352.GA6332@openwall.com>" "58" "Re: [oss-security] unresponsive distros" "^Date:" nil nil "6" "2017060119:13:52" "[oss-security] unresponsive distros" (number mark "        solar@openwa Jun  1   58/3184  " thread-indent "\"Re: [oss-security] unresponsive distros\"\n") "<1496341589723.65404@amazon.com>" ("<20170601180053.GA4752@openwall.com>" "<1496341589723.65404@amazon.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1473" "Monday" "4" "January" "2016" "19:44:03" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1601041941480.17635@wniryva>" "42" "[oss-security] CVE request Qemu: net: vmxnet3: reading IMR registers leads to a crash " nil nil nil "1" "2016010414:14:03" "[oss-security] CVE request Qemu: net: vmxnet3: reading IMR registers leads to a crash" (number mark "U       ppandit@redh Jan  4   42/1473  " thread-indent "\"[oss-security] CVE request Qemu: net: vmxnet3: reading IMR registers leads to a crash \"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 18074 invoked by uid 550); 1 Jun 2017 19:14:17 -0000
+Received: (qmail 1830 invoked by uid 550); 4 Jan 2016 14:14:31 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,75 +11,58 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 17928 invoked from network); 1 Jun 2017 19:14:08 -0000
-Message-ID: <20170601191352.GA6332@openwall.com>
-References: <20170601180053.GA4752@openwall.com> <1496341589723.65404@amazon.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1496341589723.65404@amazon.com>
-User-Agent: Mutt/1.4.2.3i
-Date: Thu, 1 Jun 2017 21:13:52 +0200
-From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] unresponsive distros
-To: oss-security@lists.openwall.com
+Received: (qmail 1812 invoked from network); 4 Jan 2016 14:14:30 -0000
+Date: Mon, 4 Jan 2016 19:44:03 +0530 (IST)
+From: P J P <ppandit@redhat.com>
+X-X-Sender: pjp@javelin
+To: oss security list <oss-security@lists.openwall.com>
+Message-ID: <alpine.LFD.2.20.1601041941480.17635@wniryva>
+MIME-Version: 1.0
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.23
+Subject: [oss-security] CVE request Qemu: net: vmxnet3: reading IMR registers leads to a
+ crash 
 
-On Thu, Jun 01, 2017 at 06:26:29PM +0000, Liguori, Anthony wrote:
-> To be a bit more transparent.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I appreciate that!
+   Hello,
 
-> The ideal thing for us would be to use a non-personally owned key for decryption so we could automate ingestion.  Encryption is fine but I will not tie my personal key into Amazon infrastructure.
-> 
-> Normally what we do with disclosure lists is have automation that pages people on every message.  As an example, I get paged for every email sent to the Xen disclosure list.
+Qemu emulator built with a VMWARE VMXNET3 paravirtual NIC emulator support is 
+vulnerable to crash issue. It could occur while reading Interrupt Mask 
+Registers(IMR).
 
-The use of per-person keys is in part to discourage the kinds of setup
-you describe.  Yes, automation is great, but it's also elevated risk.
+A privileged(CAP_SYS_RAWIO) guest user could use this flaw to crash the Qemu 
+process instance resulting in DoS.
 
-If by "automate ingestion" you mean creating tracking tickets in some
-system even for issues that upon your reading would clearly be
-irrelevant to Amazon (so you wouldn't be creating tickets for them now),
-then I'm glad the current setup prevents that.  Leaks via bug trackers
-is currently my primary concern.
+Upstream patch:
+- ---------------
+   -> http://git.qemu.org/?p=qemu.git;a=commit;h=c6048f849c7e3f009786df76206e895
 
-> The encrypted thread is a single thread with a high volume of messages.  The later part of the thread loses the context of you explicitly asking for a response.
-> 
-> Coupled with the holiday weekend, that meant when I read through the thread I read too quickly and missed your explicit request.
+Reference:
+- ----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1270876
 
-Fair enough, although I think the need for a response from all
-resurfaced in several messages.
+Thank you.
+- --
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
 
-> Had you changed the subject of the thread for the request, it would have been noticed immediately but I don't mean to point too many fingers here.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Not changing the Subject was part of the test, and it's not an arbitrary
-test: in this very same thread, several other/new issues were brought up
-also without a Subject change (including something new today).  So I was
-wondering: is this working?  Now I know: works for most distros, but not
-for all.  I don't know whether it works for 50%+ of people, though,
-since many of the distros have multiple people subscribed, whereas I
-only required one response per distro.  Maybe I'll do a per-person test
-another time. ;-)
-
-For new software issues, maybe we should be bringing the additional
-affected component names into the Subject each time.  After all, it's
-not sensitive info that any and all software has bugs.  By saying e.g.
-"Sudo" in the Subject, we merely reveal what we currently discuss, not
-that there's suddenly anything special about Sudo.  No one sane would
-have expected Sudo not to contain any more vulnerabilities ever, so the
-very fact there's another vulnerability is mostly not actionable for an
-attacker (unless they'd use it to decide on whether/when to attack the
-distros list infrastructure or/and specific list members maybe? seems
-far-fetched - in practice, either they'd attack and try to retain
-access, or fail at it, or not do that at all).  We reveal the same by
-CC'ing Todd anyway.  Things get trickier when e.g. a new issue is found
-in the same component - do we use e.g. "Sudo another issue", not to
-reveal the specifics?
-
-It's tough.  What's clearer to me is that I should insist on fewer and
-shorter embargoes.
-
-To summarize: I am speaking out loud, and not suggesting any particular
-change right now.  Amazon will stay subscribed as-is for now.
-
-Alexander
+iQIcBAEBAgAGBQJWin4rAAoJEN0TPTL+WwQf9tsP/jdNbRX2Gu5iIS69tRuYSc5x
+yYWJHosD9akCxj4pZYMbrjoiQeKs7xuVrqhZnKSDzXWnHjfH8tC41s6aWRcP4qp9
+xqooML+OtIAoPFq6El4iBCp7lrp70rPatY+YXfI7IhxLNF6kFoUqBrWJe+aAxMod
+shL3yDKv8J+dgRIc9j36odJpTVgsIyYojRr3Bb1IwfKsHmltVNxNqzHyOPGGU02G
+B1c02Gy2atxkJqRNjrdmze6A1vSlyJiXHbCQxin9BNzc9EJqYer1KdIyztyeTBD0
+OLuBvEZ872iKyCqgj/qQpdKAagQPXNcOG9VREcdoOCW38GFHXNSP1/n4ZbfjsUYX
+oZqLbYnm9Mwq73eIBDJxzpzqwlDQqWFzdXgcPu82KvJt+Q2/Ms718N+0euOuDVOm
+5U8f2VE+0hhCvkNakdKrRq4iy9E2vJLJ5x5yYgSj35rMMAKsx3fuEU8k9a5iyeWz
+dp0VqAE2ene2RnibHrlBR4XXyu20Tvmh3gdDedTj71hCSOZ2o9AgmmIRERLlCZC6
+L9hnOjbNRckIF8GjP9wgEcyzn+Jv2BWzBz1Ea+UEqXlPYtNzBYDHfouRf4/7ncMK
+dTscla0o8lN92phhGmKporhosP3XwydezHbawKWiBenUHWkduKFAwqtMLwRLhbeG
+r7TAUzpYU9gm9WLOCGrt
+=SzBR
+-----END PGP SIGNATURE-----
