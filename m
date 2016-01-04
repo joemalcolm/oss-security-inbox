@@ -1,29 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/06/5
-Message-ID: <CACn5sdQxo7hS2_7m4_tMS2iK_b2YZSjmCL41yYof6J7qwWtN1w@mail.gmail.com>
-Date: Thu, 6 Oct 2016 12:09:05 -0300
-From: Gustavo Grieco <gustavo.grieco@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: DoS loading a SVG in Firefox
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/04/3
+Message-ID: <alpine.LFD.2.20.1601041939440.17635@wniryva>
+Date: Mon, 4 Jan 2016 19:41:27 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+Subject: CVE request Qemu: net: vmxnet3: incorrect l2 header validation leads to a crash
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Some months ago, we found that just loading this image:
+   Hello,
 
-https://dcc.fceia.unr.edu.ar/~ggrieco/oom.svg (518K)
+Qemu emulator built with a VMWARE VMXNET3 paravirtual NIC emulator support is 
+vulnerable to crash issue. It occurs when a guest sends a Layer-2 packets 
+smaller than 22 bytes.
 
-will cause Firefox to consume all your memory. Once you click, you
-cannot stop the memory constant memory leak. It can take a few minutes
-(we tested in a desktop computer with 16GB). At the end, Firefox will
-abort or it will be terminated by the OS.
+A privileged(CAP_SYS_RAWIO) guest user could use this flaw to crash the Qemu 
+process instance resulting in DoS.
 
-At least Firefox 49 and 51 in several platforms are affected. A report
-in the Mozilla bug tracker was filled:
+Upstream patch:
+- ---------------
+   -> http://git.qemu.org/?p=qemu.git;a=commitdiff;h=a7278b36fcab9af469563bd7b
 
-https://bugzilla.mozilla.org/show_bug.cgi?id=1297206
+Reference:
+- ----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1270871
 
-Please assign a CVE if suitable.
 
-Regards,
-Gustavo.
+Thank you.
+- --
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBAgAGBQJWin2PAAoJEN0TPTL+WwQfHrUP/0ajI7Q7nqHauOGJdNUQ2aLV
+bah+jF6iJyS6VtP5ZM3JQWGa3n2sWw1foRi+IKfmH4AqX7VxZnQZh28K+qUJV26G
+nNWmDvuk468gL1u6GYZqjr8veyQrILJxJujVj5MDiZLiVIerCi+1nvhSu/aTgJBz
+8BgSvpPD8KoQHHmLNjlGs8hoBJRctT0MIAZMXFcsKivzPJZ0YaWKIXvsveHsbkxf
+d25lrjki7ppTirDa1Bxn41iKVNHH7RhzHcF2luCnOxNGn+X/Ltg3zcFi+v096tqn
+HGQkG8iUdAfE8tKYonnxijAzUQo5c8W7Pq945yggK60Y/RpZc0j17u0F4YEiIs/e
+ZBWSvczm2n8yiMAmhiSGVi9mnuYtJ1t36GmnYw4y7zLS8LqdFo7Ncere1o0D9555
+7gBZbjQh2RgHafQtpqnZxTpXSSrwSso/yWzcXgzTxleTiqR1Ck4UlzIDi0aIQc++
+QwKB5P0e5awmLXkxnYeduPRFpj3edu3A1xT32ZQo7sW2n/ytbdg3XuOCPoer0ut0
+QsXGdXkS6qK1oMrXAZhW/+mA/nMH++ifiT8+gjWNKYPP/t4MdSKh+GXYUECbMOAI
+F9qulVB86aQF9ACvV9IEzGj4qWynZHcIPRRo3bFE/gbMW14slSZTvEF81c5ZVeKA
+Rl3wUtnr0i+DCmAUdfoZ
+=8rAy
+-----END PGP SIGNATURE-----
