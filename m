@@ -1,31 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/21/1
-Message-ID: <a55a2a8b-31c4-d454-376a-fe85302c9b29@gmail.com>
-Date: Sat, 21 May 2016 19:21:56 +0800
-From: Baozeng Ding <sploving1@...il.com>
-To: oss-security@...ts.openwall.com, cve-assign@...re.org
-Cc: richard.alpe@...csson.com
-Subject: CVE request: -- Linux kernel: Null pointer dereference in tipc_nl_publ_dump
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/04/7
+Message-Id: <20160104165933.8E8EA332405@smtpvbsrv1.mitre.org>
+Date: Mon,  4 Jan 2016 11:59:33 -0500 (EST)
+From: cve-assign@...re.org
+To: ppandit@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request Qemu: net: vmxnet3: reading IMR registers leads to a crash
 Content-Type: text/plain; charset=utf-8
 
-Hello,
-Without checking the pointer to the netlink socket attribute, it could 
-cause a null pointer dereference when parsing the nested attributes in 
-function tipc_nl_publ_dump. It allows local users to cause a denial of 
-service. This vulnerability affects Linux kernel versions from 3.19 to 4.6.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-References:
-http://lists.openwall.net/netdev/2016/05/14/28
-http://lists.openwall.net/netdev/2016/05/16/26
+> Qemu emulator built with a VMWARE VMXNET3 paravirtual NIC emulator support is
+> vulnerable to crash issue. It could occur while reading Interrupt Mask
+> Registers(IMR).
+> 
+> A privileged(CAP_SYS_RAWIO) guest user could use this flaw to crash the Qemu
+> process instance resulting in DoS.
+> 
+> http://git.qemu.org/?p=qemu.git;a=commit;h=c6048f849c7e3f009786df76206e895a69de032c
+> https://bugzilla.redhat.com/show_bug.cgi?id=1270876
 
-Fixed via:
-https://github.com/torvalds/linux/commit/45e093ae2830cd1264677d47ff9a95a71f5d9f9c
+>> Instead of asserting, return the actual IMR register value.
 
-Introduce by:
-https://github.com/torvalds/linux/commit/1a1a143daf84db95dd7212086042004a3abb7bc2
+Use CVE-2015-8745.
 
-Could you please assign a CVE for this vulnerability? Thank you.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Best Regards,
-Baozeng Ding,  Alibaba Mobile Security Team
-
+iQIcBAEBCAAGBQJWiqQVAAoJEL54rhJi8gl52usP/R53hBnStbF9uMh/QOzBjtvc
+o2jmKr2Az1WXYAeTs08Mui/6bC+c8VW7OSBbnOgfy/vn7D6ddXC6qEAgq0+ngJ/8
+FZfxYPFXIfJdTKGed7nsG5YhI7ckEEnxIWxsmW7EmQDXj3UInpvEBfNOR7ogM0WT
+1bW5lMhJz90HxKtWqGc3Fcmpk5+tEWZXgWJfTxD7QejFG5g9HKBCWqYj3muQ6/af
+HRoJOoonmsFbk6ZmOboIDcIQQU4WiCmaNcKNNy3fyIvlQjABfYLTgwzIH+eeMpN1
+FpXwG7ogVczqyes2cVzVS36l7U1EXRd5vUtUi7GDOKRjuuSxckjx2YUea//Ejml0
+CTF+7WNGA1kwlywsQJeXOELhhSPvs+Wb9TIdkoZWrG/Sa719G+vcFey+bKC3VXTw
+zAG0rHRDOktRKw5x8tAV+mtzcKrMWd3iUH43cvQtYpU9TOPEtytT2ckU2p/zkAEp
+Xp9iARSzMeQbHSwAw+2qC6ElAouVItealoH6JpJte5idOTzZkrZOmRP+umpYRJli
+dh2vTqMkHCR6AZlrgEjrBzUSNDYRAbVl7oSGgnXjwg+pip7umbWsY7gNAYgJbhpV
+ULxqgi1wGLWp/nsfKhWhtLYuv15Uah06G/mJUyoHjqKWJEcaImR9JNu8Q+eqiTOL
+haSycTu8WkHEUkHol1QT
+=8aFM
+-----END PGP SIGNATURE-----
