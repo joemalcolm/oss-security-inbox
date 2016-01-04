@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1050" "Wednesday" "1" "November" "2017" "11:31:57" "-0400" "Jeffrey Walton" "noloader@gmail.com" "<CAH8yC8=KKh8SPtDUUSAL_GuDHT7eYBrmHvVjzeQ5n4ocFh4m5Q@mail.gmail.com>" "22" "Re: [oss-security] Fw: Security risk of vim swap files" "^Date:" nil nil "11" "2017110115:31:57" "[oss-security] Fw: Security risk of vim swap files" (number mark "        noloader@gma Nov  1   22/1050  " thread-indent "\"Re: [oss-security] Fw: Security risk of vim swap files\"\n") "<20171101144927.srk7stiwoia4qt57@sentinelchicken.org>" ("<20171031132352.2df6d2ad@pc1>" "<20171031175407.jcniviupwyab6qcl@sentinelchicken.org>" "<20171101023330.GK30551@takahe.colorado.edu>" "<20171101144927.srk7stiwoia4qt57@sentinelchicken.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["390" "Monday" "4" "January" "2016" "22:30:05" "+0100" "Salvatore Bonaccorso" "carnil@debian.org" "<20160104213005.GA15178@eldamar.local>" "14" "[oss-security] CVE Request: cacti: SQL injection vulnerability in graphs_new.php" "^Cc:" nil nil "1" "2016010421:30:05" "[oss-security] CVE Request: cacti: SQL injection vulnerability in graphs_new.php" (number mark "U       carnil@debia Jan  4   14/390   " thread-indent "\"[oss-security] CVE Request: cacti: SQL injection vulnerability in graphs_new.php\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 19986 invoked by uid 550); 1 Nov 2017 15:47:04 -0000
+Received: (qmail 3410 invoked by uid 550); 4 Jan 2016 21:30:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,65 +11,44 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 1602 invoked from network); 1 Nov 2017 15:32:09 -0000
+Received: (qmail 3375 invoked from network); 4 Jan 2016 21:30:19 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to;
-        bh=XKTDN8PBH/3uh3CtjfSYz480agRyb3zmulzJSa3Fq24=;
-        b=FfcZjQUMpc8Iy1MygoKhC2UHxsK58GCRzq5oPIIesNygd4TR+LWXIXYAW0UoQXxxBX
-         t9laExDcEM8iKm0J1JsznT8Jfc52koV1+ce4G5PrAuZ+rCjkXZfy+U9pdfubz0FIUZxq
-         XJv9tjedB7bLexOFNi3Kza79yH5Mf/ivAxFyjwyl7j11TIq/PvuSYeBv6+3WpX/t2GXI
-         1iEfHNAZaVixoeBp2WZneLG6kR7JDIkGmAsY1ptvtjrvoft1oEo6i/kGRlpyMHMU2+T1
-         L+nNPmQGxgL4LYMhbtQJs15GH4tjtvQYI2qT3p6KQD4IiD2KjziwDagIaWoSWdaLGQ2r
-         UK5Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:in-reply-to:references
-         :from:date:message-id:subject:to;
-        bh=XKTDN8PBH/3uh3CtjfSYz480agRyb3zmulzJSa3Fq24=;
-        b=Qxmw1jomMdJpLkbccFp1m4Zeonc+Mo8Xwwrm/MuTeVYPjxAavEhnl1GBSFk9aKGtxz
-         mtEqvLns/LhJoe0jBmkmzKoJXBrt3REbpCwXKIXQdKc9wMBjLEgFUBKki7iXd6ap+pmb
-         KYGJzeyxYHXzvl+lCzoDRJO7U3qXc6BKh47q4onxjVSXyO4MAjRvsroTfBMwBzytvdQl
-         we/1rdazquPuZ/gwpSpYA81ymZqzWq9CaC/81skFmRg9xy+lwtHdfAqUnM+X0nIO+PfY
-         83zEphGGa03CExJfqCZ6j9VdZ92HKtpan051w9GVPZBZ31chvVsZjl+5vfLTOIZjlUy/
-         zcMA==
-X-Gm-Message-State: AJaThX5Fr7qcfOqI54LYl2X1reoFYNO7oCxUo+L5fc1YK0jGdOP6olNI
-	BxQZ9X6YE0/1fGTO7YI038LW/T6uPKEK24RE8xeBXzGy
-X-Google-Smtp-Source: ABhQp+Rr6XoPCXAsm1UKKpBMWM32P4LAtJcFcJq+h7XXyg1EHuBYPqlUK+xfhQZI5sJOBzbRtWMVJlTn0tij+3aHDHg=
-X-Received: by 10.157.44.7 with SMTP id f7mr140974otb.378.1509550317893; Wed,
- 01 Nov 2017 08:31:57 -0700 (PDT)
+        d=gmail.com; s=20120113;
+        h=sender:date:from:to:cc:subject:message-id:mime-version:content-type
+         :content-disposition:user-agent;
+        bh=Mf8Eda/WIL0L3tK7ndEhzGK5Ny/5XkAArym++qZjMsA=;
+        b=GXavPNzn9jFtUWgCIyopNj1WampH9NBQTU2W+xpfTmgiZsgUx2RbROWI96vQmKJn+3
+         dXL93O75qWyGngA76BdrYIVCVZgVINGcWQ+bWByPMczdbDxYtn7sOI4D89rIfmiO7R9M
+         ayS1RS0zX4AOmuqasxBOzQWh3JXl4BWzA1XixyirWlFHzZSYEebd8oOmsXG7kkgc4p9H
+         Fg5OwDkt5ogo1qt9sJbn4vrOTHq9a66CJLPqHNsZp9jngnbZe9fvB6H2iG++tBNxJQnm
+         wzBfgcY9gQgsas8Q01HsTa68Jo5o55vL2mDkiAy1YAXHBdg7nRodnn5Ghm9nnWfHqEv5
+         Brfg==
+X-Received: by 10.194.78.175 with SMTP id c15mr56526590wjx.16.1451943007901;
+        Mon, 04 Jan 2016 13:30:07 -0800 (PST)
+Message-ID: <20160104213005.GA15178@eldamar.local>
 MIME-Version: 1.0
-In-Reply-To: <20171101144927.srk7stiwoia4qt57@sentinelchicken.org>
-References: <20171031132352.2df6d2ad@pc1> <20171031175407.jcniviupwyab6qcl@sentinelchicken.org>
- <20171101023330.GK30551@takahe.colorado.edu> <20171101144927.srk7stiwoia4qt57@sentinelchicken.org>
-Message-ID: <CAH8yC8=KKh8SPtDUUSAL_GuDHT7eYBrmHvVjzeQ5n4ocFh4m5Q@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Date: Wed, 1 Nov 2017 11:31:57 -0400
-From: Jeffrey Walton <noloader@gmail.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.5.24 (2015-08-30)
+Cc: Paul Gevers <elbrus@debian.org>
+Date: Mon, 4 Jan 2016 22:30:05 +0100
+From: Salvatore Bonaccorso <carnil@debian.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Fw: Security risk of vim swap files
-To: oss-security@lists.openwall.com
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Subject: [oss-security] CVE Request: cacti: SQL injection vulnerability in graphs_new.php
+To: OSS Security Mailinglist <oss-security@lists.openwall.com>
 
-On Wed, Nov 1, 2017 at 10:49 AM, Tim <tim-security@sentinelchicken.org> wrote:
->> > Also, it almost never makes sense to put things in /tmp, for several
->> > reasons pointed out by others.  Making ~/.vim/... the default location
->> > clearly is the best solution.
->>
->> And all those reasons make no sense. /tmp has a sticky bit precisely so that
->> people could put stuff there, as opposed to /run.
->
-> We've been spending decades fixing filesystem races that arise from
-> cases where people use temporary files in world-writable directories.
-> You have to get a half dozen things exactly correct in order to use
-> /tmp.  Why take the risk?  Doesn't every normal (human) user account
-> have a home directory that is already protected?
+Hi,
 
-Some installs don't allow users to write to /tmp. For example, some
-machines on GCC's compile farm do not allow it. I seem to recall the
-error was a RO mount. Also see https://gcc.gnu.org/wiki/CompileFarm.
+Another SQL injection vulnerability via graphs_new.php in cacti was
+found, reported to the bug http://bugs.cacti.net/view.php?id=2652 .
 
-Code and scripts certainly need to check TMPDIR and then have a
-fallback strategy if it is missing.
+No upstream commit to fix the issue is available yet.
 
-Jeff
+This seems different to CVE-2015-8377, which was assigned for
+http://seclists.org/fulldisclosure/2015/Dec/att-57/cacti_sqli%281%29.txt
+
+Can you assign a CVE for this issue?
+
+Regards,
+Salvatore
