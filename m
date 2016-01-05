@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1243" "Friday" "11" "September" "2015" "10:32:48" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150911143248.8F3F66C01C7@smtpvmsrv1.mitre.org>" "30" "[oss-security] Re: CVE Request: OpenLDAP: ber_get_next denial of service vulnerability" nil nil nil "9" "2015091114:32:48" "[oss-security] Re: CVE Request: OpenLDAP: ber_get_next denial of service vulnerability" (number mark "        cve-assign@m Sep 11   30/1243  " thread-indent "\"[oss-security] Re: CVE Request: OpenLDAP: ber_get_next denial of service vulnerability\"\n") "<20150911060846.GA1605@lorien.valinor.li>" ("<20150911060846.GA1605@lorien.valinor.li>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["915" "Tuesday" "5" "January" "2016" "12:12:46" "+0100" "Salvatore Bonaccorso" "carnil@debian.org" "<20160105111246.GA4592@eldamar.local>" "27" "Re: [oss-security] Re: CVE Request: cacti: SQL injection vulnerability in graphs_new.php" nil nil nil "1" "2016010511:12:46" "[oss-security] Re: CVE Request: cacti: SQL injection vulnerability in graphs_new.php" (number mark "U       carnil@debia Jan  5   27/915   " thread-indent "\"Re: [oss-security] Re: CVE Request: cacti: SQL injection vulnerability in graphs_new.php\"\n") "<568B8AD7.3000905@suse.com>" ("<20160104235855.D96FB52E01B@smtpvbsrv1.mitre.org>" "<568B8AD7.3000905@suse.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 32753 invoked by uid 550); 11 Sep 2015 14:33:01 -0000
+Received: (qmail 13872 invoked by uid 550); 5 Jan 2016 11:13:00 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,43 +11,62 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 32721 invoked from network); 11 Sep 2015 14:33:00 -0000
-In-Reply-To: <20150911060846.GA1605@lorien.valinor.li>
-Message-Id: <20150911143248.8F3F66C01C7@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Fri, 11 Sep 2015 10:32:48 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE Request: OpenLDAP: ber_get_next denial of service vulnerability
-To: carnil@debian.org
+Received: (qmail 13854 invoked from network); 5 Jan 2016 11:13:00 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=XIWh1If76GQ45ZGF4cOu35FOdxZeTTc9lis0WKnajWg=;
+        b=axWYf0bk0E9kJBLJmt/g/wNOaZMwWg3vxY7AwULfTeLMrO1J19ncYOsmVdbnv3qYdk
+         ZLrgiCYI6GjMROhsOe9y4PNagI3J5Yku/PqiRmjK2JrUWx/WoAVvC9brS48u/MxFC7dy
+         XrrWAJso8hEeZ1A5+YrfqQ4J4husl3Egqgrh1jCWVvU22JmCd/VolyFfznVFsqHdpP0p
+         Uynvp73ZtwhyrbMi11/jc8q48w8JX7pGegSn9tgIHpNRfVF/KH52zUs/qXZVmFzLOOF2
+         /85Z0MQfm3ANxjTSuzg+E32hzGuOEto7dLkJlQZsgu5TIB0aEzConiqo+oedk2SNTB3e
+         GMMA==
+X-Received: by 10.194.80.200 with SMTP id t8mr92923160wjx.74.1451992368835;
+        Tue, 05 Jan 2016 03:12:48 -0800 (PST)
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Date: Tue, 5 Jan 2016 12:12:46 +0100
+From: Salvatore Bonaccorso <carnil@debian.org>
+To: Andreas Stieger <astieger@suse.com>
+Cc: oss-security@lists.openwall.com, cve-assign@mitre.org,
+	elbrus@debian.org
+Message-ID: <20160105111246.GA4592@eldamar.local>
+References: <20160104235855.D96FB52E01B@smtpvbsrv1.mitre.org>
+ <568B8AD7.3000905@suse.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <568B8AD7.3000905@suse.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
+Subject: Re: [oss-security] Re: CVE Request: cacti: SQL injection
+ vulnerability in graphs_new.php
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi Andreas,
 
-> http://www.openldap.org/its/index.cgi/Software%20Bugs?id=8240
-> http://www.openldap.org/devel/gitweb.cgi?p=openldap.git;a=commit;h=6fe51a9ab04fd28bbc171da3cf12f1c1040d6629
+On Tue, Jan 05, 2016 at 10:20:23AM +0100, Andreas Stieger wrote:
+> Hello,
+> 
+> On 01/05/2016 12:58 AM, cve-assign@mitre.org wrote:
+> > > Another SQL injection vulnerability via graphs_new.php in cacti was
+> > > found, reported to the bug http://bugs.cacti.net/view.php?id=2652
+> >
+> > http://bugs.cacti.net/view.php?id=2652 is CVE-2015-8604.
+> 
+> Check against a possible duplicate assignment with CVE-2015-8377?
+> 
+> http://seclists.org/fulldisclosure/2015/Dec/att-57/cacti_sqli%281%29.txt
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=1291222
+> http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2015-8377
+> http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-8377
 
-Use CVE-2015-6908.
+Theree are two different vulnerabilities here, see second comment in
+http://bugs.cacti.net/view.php?id=2652 which describe both, the
+CVE-2015-8377 and the new assigned one (CVE-2015-8604).
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Does this helps?
 
-iQIcBAEBCAAGBQJV8uW3AAoJEL54rhJi8gl5qwcQAMVm7kZAkysbDaYNlWh05JCW
-shc7xWQbnQLIa46Qq35wswf+cKAYlRWuuNm3+EnyB6Iw8tKhPWpOgbm7BAOAmKci
-NIyy6dz6kcuzSkJ/tYjJgNtghHP/hyy/pvKe0flpldrknDDOsE6jBK4sQQ6PRrxy
-O9d+P73uyANZY73Id7z9+eW3Mh5nn20uUxG9pVVoD6X1zQH/WkWjH91CKwS/ZsIo
-PuqlEAvedhNCHbdYtin74J8xFYMLkyX4RjdGyr88ZobkARMs+C5sfEJcAOH3dMgQ
-S9XpnLPMnQaFfuL07Pnzzb4J0n6xVjfF4Dp8tu3XbZ6RLLPh8BCBNCBP3kf19wTM
-mzp7vBm/PK68Ab9EftlPqbs3cBOayyNVTpXxbcnstcALyoOvxmVIAJ18PDD7Th4a
-KC1YP8qq06AwLaGua0IJ6bKcjG2q7CKnIV0VFUnZ7c2ZCwMlIhyDiKTdNr2XLxCG
-gs7x/1s/TAExE5kGKp3pRdxR22lJ/7X3NgNg57w4gu4z9rxM8mQchInnnMBH0JcF
-qN54kYVxCqIj3C+svOsmoMiMdjgPSr1NFfZsQl1brwWmK/CHhjbzL6O5dc13t1yd
-9TJVWsr0sCia9EwAAYm2iQbk2djVhbvANzb0j09V2qIfcLtr48KHJUlNj56zy2gm
-gBxqERu3dehEXetIbahH
-=1tbp
------END PGP SIGNATURE-----
+Regards,
+Salvatore
