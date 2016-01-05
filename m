@@ -1,4 +1,9 @@
-Received: (qmail 32653 invoked by uid 550); 28 Oct 2023 15:51:37 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1419" "Monday" "4" "January" "2016" "17:09:15" "-0800" "Reed Loden" "reed@reedloden.com" "<CALPTtNUfEJ3Kx9oSt0BdykkoOPsmm+qKc9N3NOWThQSgY23M6Q@mail.gmail.com>" "42" "[oss-security] Remote Command Injection in Ruby Gem colorscore <=0.0.4" "^Date:" nil nil "1" "2016010501:09:15" "[oss-security] Remote Command Injection in Ruby Gem colorscore <=0.0.4" (number mark "U       reed@reedlod Jan  4   42/1419  " thread-indent "\"[oss-security] Remote Command Injection in Ruby Gem colorscore <=0.0.4\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 21935 invoked by uid 550); 5 Jan 2016 01:09:56 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,66 +11,76 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32632 invoked from network); 28 Oct 2023 15:51:36 -0000
+Received: (qmail 21882 invoked from network); 5 Jan 2016 01:09:46 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1698508285; x=1699113085; darn=lists.openwall.com;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=S1kc6dv5JraOhNgrSt40knRqone/Z4Yjh1eCXPTSlRE=;
-        b=K0dWVOx8X/A6rS+fIEV2XnPKkNrJKeiemQ6MyAjATrscQwuHHtlNgNCrl952VYGPe7
-         ALFTqYpQUAFVDuR2Eh2gn+8L2Do0InJeYHouzySyNv+EwWBNcXSeX/IYwrlpU+I6+Pt0
-         ktfQ5ARHJnfpY9y5Gew/qy0kfSKr7wpaSw0XT2232fmF1sEI5JKd9ODw6pVKesCPLKxU
-         6DSmGVtFx49h+xyhh8orHUzsmEhdqncY/QG0zDjLEba3WufeXuqemWZcAmuSPsudkGIj
-         Hybe+Cr6tU7lIuMM0DMCRsNAi3f5SN3wg/mI3YXQfhpRe37pUXZepSh/mVZ5THGZ6uyH
-         ZYug==
+        d=reedloden.com; s=google;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=O3WJldxybPnxoN+4O5u6uc50sZVbltZtsqBENefe3vg=;
+        b=Jw62W2KGaj8JcoimAmFjVCHzRfkQbMGRZE4lLhHkep4jPyKr0YisNU4o9gUYmUdoWQ
+         vfBHDiay0q2KJewXtzsCFB7QQtU5DIqiuQwdR3jJkBW3VNMcRNlWvQd6KmkOeU34+u4o
+         zsARR7lO+S7n1DFfNrixsnygjwY/g2c3nJgSY=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698508285; x=1699113085;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=S1kc6dv5JraOhNgrSt40knRqone/Z4Yjh1eCXPTSlRE=;
-        b=JAIKSrEmnPvV+yV1RwOdMoo/NP3WGI1Ky/v0pQB+7kS67IFvquzMsiAYL8/bwcP1Eo
-         ef3qeXKWSrHLvPCwAcEjmFhZX5apfsT6uoRGpCwe70A94X2//UBt9cmslp+BTjkZ7LHL
-         LiAYj4rMzc3/amTOxkkppdqp04jRrrj7OexrUHyYMxv+CsKW5yueDshEtMTV9znR4c+D
-         TSKBNf6PiGaR0tbV7Oa8m4BQM1PtnzNQwycrNOgvPMRH2a4eH74IfLE42yh2r/Be6ZZT
-         wyqOuajthwcQZGWAxOFrcmJIYsbBG72KlLOGAV/JmLVAUK/TzsthSiyvZY128qMboKkb
-         870A==
-X-Gm-Message-State: AOJu0Yxv12C6g/rJR+dOvtAQeUPF8Tpxn+SgZ68vsU116Ech/fiwda15
-	6vZaLdkEdX3i8sTlWhdBzj//ncUswpRGUA==
-X-Google-Smtp-Source: AGHT+IFjZ5fQgvum90SS3SOgJUGxfUMF2DiNccYFbVYnhcOS0GkYV9WbOD9yS8/b/SAfTINMW9tmKg==
-X-Received: by 2002:a17:906:641:b0:9d1:73da:e4fc with SMTP id t1-20020a170906064100b009d173dae4fcmr1142570ejb.73.1698508284696;
-        Sat, 28 Oct 2023 08:51:24 -0700 (PDT)
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Date: Sat, 28 Oct 2023 17:51:23 +0200
-From: Salvatore Bonaccorso <carnil@debian.org>
-To: oss-security@lists.openwall.com
-Cc: pdp@nats.io
-Message-ID: <ZT0t-5HDT_cAcgC2@eldamar.lan>
-References: <ZSit-X8iB2gx54hq@fullerene.field.pennock-tech.net>
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
+         :content-type;
+        bh=O3WJldxybPnxoN+4O5u6uc50sZVbltZtsqBENefe3vg=;
+        b=AsB3UtL9veVdoxdAUiptVJG1vg7uM7/3uL7Tgu0pDBvXwaUiP5ZlLUxVnVSgcertEU
+         JqY0OJsTAAxTh+tRTqtxuYAWWGLHCLS4QdFvQAQh7Dxa/PQgDRzFNFQhdzJLFoULWk8A
+         ZBjdgOOVwB9NzGpYFxaiXfqu6La3I4XvJvHWwiN7sbA+Po0T1KgC/C28QlQB5H2Do9qF
+         YwzQLtItpWCvbQ/nYJna91JngWzO0KlIkoLgKmGVWBOSkaAF1Da/YKWcxdZZMN3bdD6H
+         hcaAgn26jVbTw0hHNvQSF4HgXFTAAqSzwOXkIOfVk4Yed4RuF0mKH5j+WCshGZyzxl2p
+         tyWw==
+X-Gm-Message-State: ALoCoQnibz/Ll0UnC+eBbNh+pEtA1OtoC9aRoUcJQMNGQUubMB91HYmUI1S5nml8wiIvrbcqMnD6jN9e9rVO2/J/KbEpNj6jnKxiLfRa3Ec/tjnIfjX0H9U=
+X-Received: by 10.129.54.16 with SMTP id d16mr64798939ywa.41.1451956174978;
+ Mon, 04 Jan 2016 17:09:34 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZSit-X8iB2gx54hq@fullerene.field.pennock-tech.net>
-Subject: Re: [oss-security] NATS: 2023-01: Adding accounts for just the
- system account adds auth bypass
+Message-ID: <CALPTtNUfEJ3Kx9oSt0BdykkoOPsmm+qKc9N3NOWThQSgY23M6Q@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=001a1142738c0a3e5805288be4cc
+Date: Mon, 4 Jan 2016 17:09:15 -0800
+From: Reed Loden <reed@reedloden.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Remote Command Injection in Ruby Gem colorscore <=0.0.4
+To: oss-security@lists.openwall.com
 
-Hi,
+--001a1142738c0a3e5805288be4cc
+Content-Type: text/plain; charset=UTF-8
 
-On Thu, Oct 12, 2023 at 10:39:53PM -0400, Phil Pennock wrote:
-> [ CVE has been requested, still waiting for assignment, so we're just
->   inventing our own in-house numbering for advisories; we'll make sure
->   this one continues to work after the CVE is issued ]
-> 
-> NATS-advisory-ID: 2023-01
-> CVE: pending
-> Date: 2023-10-12
-> Fixed in: 2.9.23, 2.10.2
+Title: Remote Command Injection in Ruby Gem colorscore <=0.0.4
 
-While I see the later NATS-advisory-ID 2023-02 has a CVE assigned, for
-the 2023-01 was above with CVE pending. has one been assigned in
-meanwhile?
+Description: Finds the dominant colors in an image and scores them against
+a user-defined palette, using the CIE2000 Delta E formula.
 
-Regards,
-Salvatore
+Homepage: https://github.com/quadule/colorscore
+
+Download: https://rubygems.org/gems/colorscore
+
+Affected versions: All (<=0.0.4 currently)
+
+Vulnerability:
+The contents of the `image_path`, `colors`, and `depth` variables generated
+from possibly user-supplied input are passed directly to the shell on line
+4. If a user supplies a value that includes shell metacharacters such as
+';', an attacker may be able to execute shell commands on the remote system
+as the user id of the Ruby process.
+
+To resolve this issue, the aforementioned variables (especially
+`image_path`) must be sanitized for shell metacharacters.
+
+1  module Colorscore
+2    class Histogram
+3      def initialize(image_path, colors=16, depth=8)
+4        output = `convert #{image_path} -resize 400x400 -format %c -dither
+None -quantize YIQ -colors #{colors} -depth #{depth} histogram:info:-`
+5        @lines = output.lines.sort.reverse.map(&:strip).reject(&:empty?)
+6      end
+
+CVE: CVE-2015-7541
+
+Credits: Dirk Zittersteyn (@DZittersteyn)
+
+History:
+* 2015-12-04 -- Vendor notified
+* 2015-12-05 -- CVE requested
+* 2016-01-04 -- Publicly disclosed
+
+--001a1142738c0a3e5805288be4cc--
