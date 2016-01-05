@@ -1,37 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/21/4
-Message-ID: <513503eb-a66d-9999-0cb2-59fa300fbf5f@googlemail.com>
-Date: Wed, 21 Dec 2016 11:39:26 +0000
-From: tapper <lancett01@...glemail.com>
-To: oss-security@...ts.openwall.com, oss-security@...ts.openwall.com
-Subject: Curious about the security of my router fermwair.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/05/2
+Message-ID: <CALPTtNUfEJ3Kx9oSt0BdykkoOPsmm+qKc9N3NOWThQSgY23M6Q@mail.gmail.com>
+Date: Mon, 4 Jan 2016 17:09:15 -0800
+From: Reed Loden <reed@...dloden.com>
+To: oss-security@...ts.openwall.com
+Subject: Remote Command Injection in Ruby Gem colorscore <=0.0.4
 Content-Type: text/plain; charset=utf-8
 
-	Hi my name is Jonathan. I don't know if this is the write place to ask 
-about this but here gos.
+Title: Remote Command Injection in Ruby Gem colorscore <=0.0.4
 
-I would like to know if any one would like to have a poke around at the 
-third party router firmware I use on my router called Gargoyle.
-Its a easy to use interface built on top of Openwrt.
+Description: Finds the dominant colors in an image and scores them against
+a user-defined palette, using the CIE2000 Delta E formula.
 
-I use this firmware because it has some grate plug ins and the user 
-interface has grate a11y. I use a screen reader as I am blind and the 
-html5 interface is easy for me to get around in.
+Homepage: https://github.com/quadule/colorscore
 
-It's homepage
-https://www.gargoyle-router.com/index.php
-GitHub
-https://github.com/ericpaulbishop/gargoyle
-forum
-https://www.gargoyle-router.com/phpbb/index.php
+Download: https://rubygems.org/gems/colorscore
 
-The devs behind Gargoyle are really nice people and have helped me out 
-with bugs and made me a mod on the forum.
-What I would really like to know is just how secure is this firmware?
+Affected versions: All (<=0.0.4 currently)
 
-I'm not a coder. I am just interested in how safe is my router firmware 
-keeping me?
+Vulnerability:
+The contents of the `image_path`, `colors`, and `depth` variables generated
+from possibly user-supplied input are passed directly to the shell on line
+4. If a user supplies a value that includes shell metacharacters such as
+';', an attacker may be able to execute shell commands on the remote system
+as the user id of the Ruby process.
 
-If any one finds any sacurety bugs I know they will get fix.
+To resolve this issue, the aforementioned variables (especially
+`image_path`) must be sanitized for shell metacharacters.
 
-Thanks and sorry about my spelling Jonathan				
+1  module Colorscore
+2    class Histogram
+3      def initialize(image_path, colors=16, depth=8)
+4        output = `convert #{image_path} -resize 400x400 -format %c -dither
+None -quantize YIQ -colors #{colors} -depth #{depth} histogram:info:-`
+5        @lines = output.lines.sort.reverse.map(&:strip).reject(&:empty?)
+6      end
+
+CVE: CVE-2015-7541
+
+Credits: Dirk Zittersteyn (@DZittersteyn)
+
+History:
+* 2015-12-04 -- Vendor notified
+* 2015-12-05 -- CVE requested
+* 2016-01-04 -- Publicly disclosed
+
