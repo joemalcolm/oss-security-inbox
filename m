@@ -1,24 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/13/4
-Message-ID: <569640E3.3080009@openwall.com>
-Date: Wed, 13 Jan 2016 15:19:47 +0300
-From: Alexander Cherepanov <ch3root@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Fwd: FFmpeg: stealing local files with HLS+concat
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/05/3
+Message-Id: <20160105013047.A350C36E0DE@smtpvbsrv1.mitre.org>
+Date: Mon,  4 Jan 2016 20:30:47 -0500 (EST)
+From: cve-assign@...re.org
+To: ml@...ippo.io
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: python-rsa signature forgery
 Content-Type: text/plain; charset=utf-8
 
-On 2016-01-13 14:01, Vladimir Dubrovin wrote:
-> I've underestimated the impact of this bug, so it was full disclosured
-> in this article (Russian language, but google translate works fine with
-> it) - http://habrahabr.ru/company/mailru/blog/274855
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-By following links from there:
-slides: http://www.slideshare.net/MailRuGroup/security-meetup-22-mailru
-video: https://www.youtube.com/watch?v=HRNPnbxrSCo
-(still both in Russian)
+> please assign a CVE to this signature forgery vulnerability in
+> python-rsa. It allows an attacker to fake signatures for arbitrary
+> messages for any key with low exponent "e" (like the common 3).
+> 
+> https://blog.filippo.io/bleichenbacher-06-signature-forgery-in-python-rsa/
+> https://bitbucket.org/sybren/python-rsa/pull-requests/14/security-fix-bb06-attack-in-verify-by/diff
 
-Somewhat related:
-https://github.com/ctfs/write-ups-2015/tree/master/9447-ctf-2015/web/super-turbo-atomic-gif-converter
+>> The python-rsa bug is not a vanilla BB'06, because the hash is
+>> compared to all the data following the ASN.1 blob, but a simple
+>> variant.
 
--- 
-Alexander Cherepanov
+>>> Fix BB'06 attack in verify() by switching from parsing to comparison
+
+Use CVE-2016-1494.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJWixxfAAoJEL54rhJi8gl5dXQP/3nTIh9mmGj+pMQ4S6RNwovk
+6M4IUz0RtOSf9W0BlqlCxtKrzC6E/aoYVUVnJARxKQupWbQBFrXBnwDk6/Rlfbgu
+25wyJ49aXDFHde96VBgjdGok2XJJHqm3Q/vlHJZcISA1KOos1ioOYHUHea9VIh6k
+KEc/dfnpObnnBgPMWZbQPk7WaJZj3QJHJYr/pzttUIBfbf6sHV5JuPje8Bz93ege
+g4MoHe7GdWPIMHwQYDjrgoG7FHowkArd3bcVskXUYrnFMwpCiSbmm/GfFzxy0bIL
+XtrQnnW+/qDzkBl++GaUkVdbS2l79LfMPbjjdmlm40Sef7T54M2fpM/f3AINcAzh
+dGt8+tJwUmtuUP7foseimKC7mJyH44DJK7Ydu40AYGZIQ/xMxniBA8hZaUeeLmP1
+xxuyK6LdwI4pzMSQBxs75IpnH38bGXpxdkLZmAgjjNfI17wC8t0fA7s/0evocxPJ
+Apw+aYqcwb3a41aZFhE2HkWZzvWFpxqf8G/LvDgaEck9aImahIHvL5m7pft0GBwj
+tR/q+LWPFhZrEXPxErn1zoPGZlNu8btOgWls2BaRX7ZA6Hd2fMEg3+XZ1LMqTolf
+5W9e8iycj8/xApHzN05XRj761keCkSEwuxKQGKvrvgV12YgICP8fY12Yi1gxv0fh
+Ks2yXevb3Odkh4wZBKdd
+=FYyY
+-----END PGP SIGNATURE-----
