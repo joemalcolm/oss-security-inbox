@@ -1,51 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/28/6
-Message-ID: <abec12ab-d311-cbe6-f256-5c9df0af2008@gmail.com>
-Date: Thu, 28 Jul 2016 06:31:20 -0700
-From: lazytyped <lazytyped@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/05/8
+Message-ID: <568BB21D.1060200@suse.de>
+Date: Tue, 5 Jan 2016 13:07:57 +0100
+From: Andreas Stieger <astieger@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: hanno@...eck.de
-Subject: Re: Re: Use after free in my_login() function of DBD::mysql (Perl module)
+Subject: Re: Re: CVE Request: cacti: SQL injection vulnerability in graphs_new.php
 Content-Type: text/plain; charset=utf-8
 
+Hello,
 
-
-On 7/26/16 6:32 PM, cve-assign@...re.org wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA256
->
->> https://blog.fuzzing-project.org/50-Use-after-free-in-my_login-function-of-DBDmysql-Perl-module.html
+On 01/05/2016 12:12 PM, Salvatore Bonaccorso wrote:
+> On Tue, Jan 05, 2016 at 10:20:23AM +0100, Andreas Stieger wrote:
+>> On 01/05/2016 12:58 AM, cve-assign@...re.org wrote:
+>>>> Another SQL injection vulnerability via graphs_new.php in cacti was
+>>>> found, reported to the bug http://bugs.cacti.net/view.php?id=2652
+>>> http://bugs.cacti.net/view.php?id=2652 is CVE-2015-8604.
+>> Check against a possible duplicate assignment with CVE-2015-8377?
 >>
->> DBD::mysql versions 4.033 and earlier have a use after free bug in the
->> my_login() function. DBD::mysql is a Perl module providing bindings to
->> the mysql database. The issue was fixed in version 4.034.
+>> http://seclists.org/fulldisclosure/2015/Dec/att-57/cacti_sqli%281%29.txt
 >>
->> https://github.com/perl5-dbi/DBD-mysql/pull/45
->>> When my_login fails the code tries to call mysql_errno on the mysql
->>> connection. However my_login has already free'd that connection
->>> variable, therefore causing a use-after-free error.
->>>
->>> This patch changes that so that the free happens after the call to the
->>> error functions.
->>>
->>> https://github.com/perl5-dbi/DBD-mysql/commit/cf0aa7751f6ef8445e9310a64b14dc81460ca156
-> Use CVE-2015-8949.
+>> https://bugzilla.redhat.com/show_bug.cgi?id=1291222
+>> http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2015-8377
+>> http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-8377
+> Theree are two different vulnerabilities here, see second comment in
+> http://bugs.cacti.net/view.php?id=2652 which describe both, the
+> CVE-2015-8377 and the new assigned one (CVE-2015-8604).
 
-Quick question:
+Thanks for the clarification,
+Andreas
 
-- I guess the affecting function call is the following:
-
-   do_error(dbh, mysql_errno(imp_dbh->pmysql),
-                  mysql_error(imp_dbh->pmysql) 
-,mysql_sqlstate(imp_dbh->pmysql));
-
-which one of those calls provides an exploitation path? They seem all 
-reads off the free'd structure.
-
-I see in the bug report: " (I think use after free's can be serious and 
-potentially lead to malfunction and security issues)" and would like to 
-understand more about the rationale.
+-- 
+Andreas Stieger <astieger@...e.de>
+Project Manager Security
+SUSE Linux GmbH, GF: Felix Imendörffer, Jane Smithard, Graham Norton,
+HRB 21284 (AG Nürnberg)
 
 
-            -  twiz
 
+Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
