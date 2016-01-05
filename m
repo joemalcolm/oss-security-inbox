@@ -1,30 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/09/4
-Message-ID: <3759921.lnTCqWLM8G@tony>
-Date: Wed, 09 Nov 2016 13:20:55 +0100
-From: Marek Hulán <mhulan@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/05/7
+Message-ID: <1451995511.3914.25.camel@debian.org>
+Date: Tue, 05 Jan 2016 13:05:11 +0100
+From: Yves-Alexis Perez <corsac@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: foreman-security@...glegroups.com
-Subject: CVE-2016-7077: information disclosure from association lists shown without authorization
+Subject: CVE request for radicale
 Content-Type: text/plain; charset=utf-8
 
-CVE-2016-7077: information disclosure from association lists shown without 
-authorization
+Hi,
 
-Lists of associated resources, such as operating systems associated to a new 
-architecture, are not restricted to listing resources that the user is 
-authorized to view, when rendering with fewer than six items. The list will 
-show all possible associated resources, disclosing their names.
+multiple security fixes were done in radicale (a calendar/contact server) 1.1,
+released on dec 31st:
 
-Affects Foreman 1.1 and higher, but was first mitigated against in Foreman 
-1.9.0 for some cases
+https://github.com/Kozea/Radicale/pull/343
+http://radicale.org/news/#2015-12-31@11:54:03
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=809920
 
-Patch available at https://github.com/theforeman/foreman/pull/3955
-Fix will be released in Foreman 1.14 (to be released)
-For more information please see Redmine issue 
-http://projects.theforeman.org/issues/16971
+Can CVE be assigned for those issues?
 
---
-Marek
+Thank in advance,
+-- 
+Yves-Alexis
 
 
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
