@@ -1,43 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/21/5
-Message-Id: <20161021073042.173846C09DC@smtpvmsrv1.mitre.org>
-Date: Fri, 21 Oct 2016 03:30:42 -0400 (EDT)
-From: cve-assign@...re.org
-To: ago@...too.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: imagemagick: memory allocation failure in AcquireMagickMemory (memory.c) (incomplete fix for CVE-2016-8862)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/05/5
+Message-ID: <20160105101345.GA13653@lorien.valinor.li>
+Date: Tue, 5 Jan 2016 11:13:46 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Subject: CVE Request: netfilter-persistent: (local) information leak due to world-readable rules files
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi,
 
-> https://blogs.gentoo.org/ago/2016/10/20/imagemagick-memory-allocation-failure-in-acquiremagickmemory-memory-c-incomplete-fix-for-cve-2016-8862/
->
-> still reproducible in the 7.0.3.4 version
-> 
-> #9 0x7f467fd11c67 in AcquireMagickMemory ... ImageMagick-7.0.3-4/MagickCore/memory.c:460:10
+iptables-persistent (in Debian) is a loader for netfilter configuration
+using a plugin-based architecture.
 
-Use CVE-2016-8866.
+iptables-persistent is vulnerable to a (local) information leak due to
+world-readable rules files. It was reported in Debian in
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+https://bugs.debian.org/764645
 
-iQIcBAEBCAAGBQJYCcNeAAoJEHb/MwWLVhi20/wP/1iiGZqIk9G4dz6hhSnnOnbe
-4rirHjWzkaudO10CibTukcsMKtRDA+1MiluIX4pwgmSiy2F6oFtJK2QH8/Q0/xeD
-tGXs6+r8glxDEpaOxuhWeYZTs811Jln1VFZ9ma0qJ5dcciUZ6ArncwOUojuY9PFj
-QiaZZKurbMj7sbsUwleYU4z7GQjljvQDSYX2BWVsOxgvy1IxXZN5370Dk3cGvfBj
-hU9LNyxSxiTNYrDzL/oU2VraGwcSonpbQQvZ+v3gwVbAzB8CPTWEL4PE2Q/0CKem
-+kmoRPL0sKBl73ZPQldOt5FCseOH/RVPIHHFgbsktUKFOipc70nssrPjaOVCBb+D
-JkAWN3+JOIjs0DkDsmHu04d5hg6I4s9fQ3XHNAWf/IRHd1E13F0Oi3lZnCcD+91d
-+MHl5q2DA3mRb5tQwugG3YE8Xq6iWJhPsAumBLy50HBSqPBThGNEY9j6l6LxvoHh
-+EE5s3kR7VT3RFVWZzxS14s5dkkxeg5Szd/vX3yxug5PV/FQ9OtteBEJSuLBmfci
-LB5AMIo66vyWcHDRPAkJCXO00Bw/J+RdNxITTJn47poBa2gSh08rdx0XRlzb4B/3
-n9ToPs2ABty9XzRxOpNHK9/06X0IqAzCsV09l0MGMtdLjfg/cxoKEWI+jVbFGeeP
-PjCoB0Arz8xQohWdPz9g
-=AyGH
------END PGP SIGNATURE-----
+And fixed via
+
+https://anonscm.debian.org/cgit/collab-maint/iptables-persistent.git/commit/?id=37905034f07e94c4298a1762b39b7bbd4063c0df
+
+Could you assign a CVE for this issue?
+
+p.s.: There is a fork of iptables-persistent. But I have not checked
+if the fork https://github.com/zertrin/iptables-persistent is as well
+affected by this issue).
+
+Regards,
+Salvatore
