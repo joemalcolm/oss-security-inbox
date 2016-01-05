@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["441" "Tuesday" "16" "February" "2016" "15:17:05" "+0100" "Florian Weimer" "fweimer@redhat.com" "<56C32F61.1010306@redhat.com>" "16" "[oss-security] CVE-2015-7547: stack-based buffer overflow in glibc's getaddrinfo function" nil nil nil "2" "2016021614:17:05" "[oss-security] CVE-2015-7547: stack-based buffer overflow in glibc's getaddrinfo function" (number mark "U       fweimer@redh Feb 16   16/441   " thread-indent "\"[oss-security] CVE-2015-7547: stack-based buffer overflow in glibc's getaddrinfo function\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1671" "Monday" "4" "January" "2016" "20:30:47" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160105013047.A350C36E0DE@smtpvbsrv1.mitre.org>" "40" "[oss-security] Re: CVE Request: python-rsa signature forgery" nil nil nil "1" "2016010501:30:47" "[oss-security] Re: CVE Request: python-rsa signature forgery" (number mark "U       cve-assign@m Jan  4   40/1671  " thread-indent "\"[oss-security] Re: CVE Request: python-rsa signature forgery\"\n") "<1451953836.236177.482914922.46C7D6CD@webmail.messagingengine.com>" ("<1451953836.236177.482914922.46C7D6CD@webmail.messagingengine.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 30010 invoked by uid 550); 16 Feb 2016 14:17:19 -0000
+Received: (qmail 9890 invoked by uid 550); 5 Jan 2016 01:31:00 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,33 +12,52 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 29986 invoked from network); 16 Feb 2016 14:17:19 -0000
-To: oss-security@lists.openwall.com
-From: Florian Weimer <fweimer@redhat.com>
-Message-ID: <56C32F61.1010306@redhat.com>
-Date: Tue, 16 Feb 2016 15:17:05 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.5.0
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.23
-Subject: [oss-security] CVE-2015-7547: stack-based buffer overflow in glibc's getaddrinfo
- function
+Received: (qmail 9860 invoked from network); 5 Jan 2016 01:30:59 -0000
+From: cve-assign@mitre.org
+To: ml@filippo.io
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <1451953836.236177.482914922.46C7D6CD@webmail.messagingengine.com>
+Message-Id: <20160105013047.A350C36E0DE@smtpvbsrv1.mitre.org>
+Date: Mon,  4 Jan 2016 20:30:47 -0500 (EST)
+Subject: [oss-security] Re: CVE Request: python-rsa signature forgery
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-today, we are disclosing a vulnerability in the nss_dns backend for
-getaddrinfo, related to handling dual A/AAAA queries:
+> please assign a CVE to this signature forgery vulnerability in
+> python-rsa. It allows an attacker to fake signatures for arbitrary
+> messages for any key with low exponent "e" (like the common 3).
+> 
+> https://blog.filippo.io/bleichenbacher-06-signature-forgery-in-python-rsa/
+> https://bitbucket.org/sybren/python-rsa/pull-requests/14/security-fix-bb06-attack-in-verify-by/diff
 
-The security impact of this issue was discovered roughly at the same
-time by the Google Security Team and Red Hat.
+>> The python-rsa bug is not a vanilla BB'06, because the hash is
+>> compared to all the data following the ASN.1 blob, but a simple
+>> variant.
 
-Background information:
+>>> Fix BB'06 attack in verify() by switching from parsing to comparison
 
-  https://sourceware.org/ml/libc-alpha/2016-02/msg00416.html
+Use CVE-2016-1494.
 
-https://googleonlinesecurity.blogspot.com/2016/02/cve-2015-7547-glibc-getaddrinfo-stack.html
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Thanks,
-Florian
+iQIcBAEBCAAGBQJWixxfAAoJEL54rhJi8gl5dXQP/3nTIh9mmGj+pMQ4S6RNwovk
+6M4IUz0RtOSf9W0BlqlCxtKrzC6E/aoYVUVnJARxKQupWbQBFrXBnwDk6/Rlfbgu
+25wyJ49aXDFHde96VBgjdGok2XJJHqm3Q/vlHJZcISA1KOos1ioOYHUHea9VIh6k
+KEc/dfnpObnnBgPMWZbQPk7WaJZj3QJHJYr/pzttUIBfbf6sHV5JuPje8Bz93ege
+g4MoHe7GdWPIMHwQYDjrgoG7FHowkArd3bcVskXUYrnFMwpCiSbmm/GfFzxy0bIL
+XtrQnnW+/qDzkBl++GaUkVdbS2l79LfMPbjjdmlm40Sef7T54M2fpM/f3AINcAzh
+dGt8+tJwUmtuUP7foseimKC7mJyH44DJK7Ydu40AYGZIQ/xMxniBA8hZaUeeLmP1
+xxuyK6LdwI4pzMSQBxs75IpnH38bGXpxdkLZmAgjjNfI17wC8t0fA7s/0evocxPJ
+Apw+aYqcwb3a41aZFhE2HkWZzvWFpxqf8G/LvDgaEck9aImahIHvL5m7pft0GBwj
+tR/q+LWPFhZrEXPxErn1zoPGZlNu8btOgWls2BaRX7ZA6Hd2fMEg3+XZ1LMqTolf
+5W9e8iycj8/xApHzN05XRj761keCkSEwuxKQGKvrvgV12YgICP8fY12Yi1gxv0fh
+Ks2yXevb3Odkh4wZBKdd
+=FYyY
+-----END PGP SIGNATURE-----
