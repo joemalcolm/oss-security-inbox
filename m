@@ -1,48 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/24/3
-Message-ID: <58bfcc2f68c14d9794d8bdd65e9d6266@imshyb02.MITRE.ORG>
-Date: Wed, 23 Nov 2016 22:49:22 -0500
-From: <cve-assign@...re.org>
-To: <oss-security@...ts.openwall.com>
-CC: <cve-assign@...re.org>
-Subject: Linux kernel net/ipv4/ip_tunnel.c issue mentioned on netdev
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/05/4
+Message-ID: <568B8AD7.3000905@suse.com>
+Date: Tue, 5 Jan 2016 10:20:23 +0100
+From: Andreas Stieger <astieger@...e.com>
+To: oss-security@...ts.openwall.com, carnil@...ian.org
+Cc: cve-assign@...re.org, elbrus@...ian.org
+Subject: Re: Re: CVE Request: cacti: SQL injection vulnerability in graphs_new.php
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hello,
 
-In case anyone wants to be aware of CVE ID requests that appeared
-on other public mailing lists:
+On 01/05/2016 12:58 AM, cve-assign@...re.org wrote:
+> > Another SQL injection vulnerability via graphs_new.php in cacti was
+> > found, reported to the bug http://bugs.cacti.net/view.php?id=2652
+>
+> http://bugs.cacti.net/view.php?id=2652 is CVE-2015-8604.
 
-  http://marc.info/?l=linux-netdev&m=147995726821221&w=2
+Check against a possible duplicate assignment with CVE-2015-8377?
 
-wanted an ID for an integer overflow in this:
+http://seclists.org/fulldisclosure/2015/Dec/att-57/cacti_sqli%281%29.txt
 
-  https://github.com/torvalds/linux/blob/cfc7381b3002756b1dcada32979e942aa3126e31/net/ipv4/ip_tunnel.c#L396-L404
+https://bugzilla.redhat.com/show_bug.cgi?id=1291222
+http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2015-8377
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-8377
 
-Because the report was simultaneously sent to security@...nel.org and
-may have other people contributing analysis, we may be waiting a short
-time before assigning a CVE ID.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Andreas
 
-iQIcBAEBCAAGBQJYNmLPAAoJEHb/MwWLVhi2nVYQALYW1yBzHzv/hVdWIsUHKLQC
-5gNQoTyazj6zw4fTiXfkg8MESzeTHPEY3IygWE0UhvdnZG6SjfS5HVBONsZtLPMu
-MBzgJ8nLefUeonhqAKaMYzbi4Ntt1Cf/AWGoiA5Dd8+MTmwc4hOCvkyhQwZsKjJh
-DyIIsNGgFd0glItqicNhNCEwXcdmPeeWGHqi9vN4n6ZjVkra1rEUlZ44dnPkTxNa
-9Y9m0+ETP4CrufvWnPv2E4rAEuqqRzHiEX1gPWNT/Rabf/VCMVPZHXyiXxdCYlnR
-vOyY9DzpO3NeI5yxGqME8/A5H0RkgvWsnrFOxqgaHOV1odTaseA8s6K3FAQY2Z9Z
-tQfM3lHRq80TkfAp7SelwjWk9kH+gWOYGdcDER2vjv45WO9ETdRcrfIV4X07fWJ7
-YDU1T+qc/0647OP6un/lEnVBQX2AoFfY25IhloYUpKHGxNxxUFJIurVpTIN+qksf
-2gAJcMTF4MDfNmAaENi97tL4CwkJmvGswncPG4Cy3V+hsvRNqgp0VWuYFVfv/MtT
-SIb80ErscC1+ltKJBUka4Pi9C3Q0fx4f51/gf0XLrjQBUhtwUwl889yr5lM1Cf4X
-e1Wja9saMPGcYWZudIvTameli18G+5Z1Hh/Iu9NR5HxYUHOIEVoGWaRCt2LxkRR6
-9sos50TA6UaxylJ3PdAn
-=5/Wi
------END PGP SIGNATURE-----
+
+-- 
+Andreas Stieger <astieger@...e.com>
+Project Manager Security
+SUSE Linux GmbH, GF: Felix Imendörffer, Jane Smithard, Graham Norton,
+HRB 21284 (AG Nürnberg)
+
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
