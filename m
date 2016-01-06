@@ -1,53 +1,119 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/29/21
-Message-ID: <CAM1yOjZV28=4LFjZtYWPB5W6HXRzxVttU2eXaUzCfUyLakN4Zg@mail.gmail.com>
-Date: Thu, 29 Sep 2016 11:50:28 -0400
-From: Mike Kienenberger <mkienenb@...il.com>
-To: announce@...aces.apache.org, MyFaces Development <dev@...aces.apache.org>,  MyFaces Discussion <users@...aces.apache.org>
-Cc: "security@...che.org" <security@...che.org>, oss-security@...ts.openwall.com,  bugtraq@...urityfocus.com
-Subject: CVE-2016-5019: MyFaces Trinidad view state deserialization security vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/06/6
+Message-ID: <87vb76dh98.fsf@x220.int.ebiederm.org>
+Date: Wed, 06 Jan 2016 06:28:19 -0600
+From: ebiederm@...ssion.com (Eric W. Biederman)
+To: Serge Hallyn <serge.hallyn@...ntu.com>
+Cc: oss-security@...ts.openwall.com,  cve-assign@...re.org,  john.johansen@...onical.com
+Subject: Re: Re: CVE Request: Linux kernel: privilege escalation in user namespaces
 Content-Type: text/plain; charset=utf-8
 
-CVE-2016-5019 Apache MyFaces Trinidad information disclosure vulnerability
+Serge Hallyn <serge.hallyn@...ntu.com> writes:
 
-Severity: Important
+> Quoting Eric W. Biederman (ebiederm@...ssion.com):
+>> cve-assign@...re.org writes:
+>> 
+>> > Use CVE-2015-8709 for the issue fixed in the
+>> > https://lkml.org/lkml/2015/12/25/71 post.
+>> >
+>> > (This is not yet available at
+>> > http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/log/kernel/ptrace.c
+>> > and http://marc.info/?l=linux-kernel&m=145118185526359 might be the
+>> > current end of the earlier discussion.)
+>> >
+>> > This issue has been covered in security advisories from one or more
+>> > Linux distributions, e.g.,
+>> >
+>> >>> http://www.ubuntu.com/usn/usn-2847-1
+>> >>> 
+>> >>> Jann Horn discovered a ptrace issue with user namespaces in the Linux
+>> >>> kernel. The namespace owner could potentially exploit this flaw by ptracing
+>> >>> a root owned process entering the user namespace to elevate its privileges
+>> >>> and potentially gain access outside of the namespace.
+>> >>> (http://bugs.launchpad.net/bugs/1527374)
+>> >
+>> >
+>> > There has been some discussion of whether the finding was a
+>> > vulnerability discovery, e.g.,
+>> >
+>> >>>> Date: Fri, 18 Dec 2015 00:07:19 +0100
+>> >>>> From: Jann Horn <jann@...jh.net>
+>> >>>> 
+>> >>>> I'm not sure whether this is CVE-worthy - the user_namespaces
+>> >>>> manpage says "the process has full privileges for operations
+>> >>>> inside the user namespace, but is unprivileged for operations
+>> >>>> outside the namespace". ptrace()ing a process in the
+>> >>>> namespace can reasonably be considered an "operation inside
+>> >>>> the user namespace" ...
+>> >>>> 
+>> >>>> In my opinion, this patch is somewhere between hardening and
+>> >>>> a security feature, but I wouldn't really call it a vuln fix.
+>> >
+>> >
+>> >>>>> Date: Thu, 17 Dec 2015 23:54:03 +0000
+>> >>>>> From: Serge Hallyn <serge.hallyn@...ntu.com>
+>> >>>>> 
+>> >>>>>> ptrace()ing a process in the
+>> >>>>>> namespace can reasonably be considered an "operation inside
+>> >>>>>> the user namespace"
+>> >>>>> 
+>> >>>>> Except by creating a file in the host namespace, you were, as
+>> >>>>> root in the container, able to escape your namespace, right?
+>> >
+>> > We feel that, more generally, the usn-2847-1 mention of "and
+>> > potentially gain access outside of the namespace" is a realistic
+>> > concern.
+>> 
+>> My mind is boggling at some of the logic involved here.
+>> 
+>> There is no potentially gaining access outside of the namespace when it
+>> is access to things that were put inside the namespace.
+>> 
+>> The discussion was about how to make it easier for userspace not to do
+>> stupid things, not how to fix a bug in the kernel.
+>> 
+>> The code we have been discussing most definitely does not make it safe
+>> for a arbitrary root owned processes to call setns and enter a user
+>> namespace with a hostile user namespace root.  You have to close file
+>> descriptors, unmap files and do I don't know what else.  Properly
+>> and safely dropping privileges is a challenging problem.
+>> 
+>> Calling bug because it is possible to use a kernel feature wrong feels
+>> completely inappropriate.
+>
+> I could be wrong but think you are misunderstanding the cve.
+>
+> IIRC the situation was:  if you setns(some-userns); setresgid(0,0);
+> setresuid(0,0); then between the setns and the setuids the container
+> can ptrace your task and do things using the host uids.  That's bad.
 
-Vendor:
-The Apache Software Foundation
+It is a pain but it is perfectly possible to:
+	/* Mess with caps so the next line does not clear CAP_SYS_ADMIN */
+	setresuid(container_root_uid, container_root_uid);
+	setns(some_userns);
 
-Versions Affected:
-Trinidad from 1.0.0 to 1.0.13
-Trinidad from 1.2.1 to 1.2.14
-Trinidad from 2.0.0 to 2.0.1
-Trinidad from 2.1.0 to 2.1.1
+And it all works without issue.
 
-Description:
+> You can't stop the container from messing with you in general (by
+> ptracing later - though as you say we could set nodump, but I don't
+> think people would want htat), but it shouldn't be able to mess with the
+> host root uid.
 
-Trinidad’s CoreResponseStateManager both reads and writes view state
-strings using
-ObjectInputStream/ObjectOutputStream directly.  By doing so, Trinidad
-bypasses the
-view state security features provided by the JSF implementations - ie. the view
-state is not encrypted and is not MAC’ed.
+It is a very reasonable extension and it makes it much harder to get it
+all wrong.  But that is very different from saying the kernel today is
+broken.
 
-Trinidad’s CoreResponseStateManager will blindly deserialize untrusted
-view state
-strings, which makes Trinidad-based applications vulnerable to deserialization
-attacks.
+It really is the responsibility of the party that calls
+setns(some_userns) to make certain their process does not have anything
+you don't want the root user in the container to get his hands on.  That
+goes way beyond the root uid.
 
-Mitigation:
+In the original conversation about all of this the issue that was raised that
+we might not know which process the user namespace belongs to and so
+might not be able to call setresuid(container_root_uid, container_root_uid) 
+ahead of time because of lack of knowledge.
 
-All users of Apache Trinidad should upgrade to either 2.1.2, 2.0.2, or
-1.2.15 and
-enable view state encryption using org.apache.myfaces.USE_ENCRYPTION and related
-web configuration parameters.
-See http://wiki.apache.org/myfaces/Secure_Your_Application for details.
+I am concerned that the responsibility to not be stupid when you call
+setns(some_userns) is being lost.
 
-Upgrading all Commons Collections jars on the class path to 3.2.2/4.1
-will prevent
-certain well-known vectors of attack, but will not entirely resolve this issue.
-
-References:
-https://issues.apache.org/jira/browse/TRINIDAD-2542
-
-This issue was discovered by Teemu Kääriäinen and reported by Andy Schwartz
+Eric
