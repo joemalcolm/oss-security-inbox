@@ -1,65 +1,93 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/27/3
-Message-ID: <3a4fbbc4-be6e-e410-21f0-0f32d12bafd9@gmail.com>
-Date: Fri, 27 May 2016 14:25:09 +0100
-From: Patrick Coleman <blinken@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/06/2
+Message-ID: <20160106030759.GB512@ubuntumail>
+Date: Wed, 6 Jan 2016 03:07:59 +0000
+From: Serge Hallyn <serge.hallyn@...ntu.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: VLC - crash and potential code execution when processing QuickTime IMA files
+Cc: cve-assign@...re.org, john.johansen@...onical.com
+Subject: Re: Re: CVE Request: Linux kernel: privilege escalation in user namespaces
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Quoting Eric W. Biederman (ebiederm@...ssion.com):
+> cve-assign@...re.org writes:
+> 
+> > Use CVE-2015-8709 for the issue fixed in the
+> > https://lkml.org/lkml/2015/12/25/71 post.
+> >
+> > (This is not yet available at
+> > http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/log/kernel/ptrace.c
+> > and http://marc.info/?l=linux-kernel&m=145118185526359 might be the
+> > current end of the earlier discussion.)
+> >
+> > This issue has been covered in security advisories from one or more
+> > Linux distributions, e.g.,
+> >
+> >>> http://www.ubuntu.com/usn/usn-2847-1
+> >>> 
+> >>> Jann Horn discovered a ptrace issue with user namespaces in the Linux
+> >>> kernel. The namespace owner could potentially exploit this flaw by ptracing
+> >>> a root owned process entering the user namespace to elevate its privileges
+> >>> and potentially gain access outside of the namespace.
+> >>> (http://bugs.launchpad.net/bugs/1527374)
+> >
+> >
+> > There has been some discussion of whether the finding was a
+> > vulnerability discovery, e.g.,
+> >
+> >>>> Date: Fri, 18 Dec 2015 00:07:19 +0100
+> >>>> From: Jann Horn <jann@...jh.net>
+> >>>> 
+> >>>> I'm not sure whether this is CVE-worthy - the user_namespaces
+> >>>> manpage says "the process has full privileges for operations
+> >>>> inside the user namespace, but is unprivileged for operations
+> >>>> outside the namespace". ptrace()ing a process in the
+> >>>> namespace can reasonably be considered an "operation inside
+> >>>> the user namespace" ...
+> >>>> 
+> >>>> In my opinion, this patch is somewhere between hardening and
+> >>>> a security feature, but I wouldn't really call it a vuln fix.
+> >
+> >
+> >>>>> Date: Thu, 17 Dec 2015 23:54:03 +0000
+> >>>>> From: Serge Hallyn <serge.hallyn@...ntu.com>
+> >>>>> 
+> >>>>>> ptrace()ing a process in the
+> >>>>>> namespace can reasonably be considered an "operation inside
+> >>>>>> the user namespace"
+> >>>>> 
+> >>>>> Except by creating a file in the host namespace, you were, as
+> >>>>> root in the container, able to escape your namespace, right?
+> >
+> > We feel that, more generally, the usn-2847-1 mention of "and
+> > potentially gain access outside of the namespace" is a realistic
+> > concern.
+> 
+> My mind is boggling at some of the logic involved here.
+> 
+> There is no potentially gaining access outside of the namespace when it
+> is access to things that were put inside the namespace.
+> 
+> The discussion was about how to make it easier for userspace not to do
+> stupid things, not how to fix a bug in the kernel.
+> 
+> The code we have been discussing most definitely does not make it safe
+> for a arbitrary root owned processes to call setns and enter a user
+> namespace with a hostile user namespace root.  You have to close file
+> descriptors, unmap files and do I don't know what else.  Properly
+> and safely dropping privileges is a challenging problem.
+> 
+> Calling bug because it is possible to use a kernel feature wrong feels
+> completely inappropriate.
 
-Hi,
+I could be wrong but think you are misunderstanding the cve.
 
-In modules/codec/adpcm.c, VLC can be made to perform an out-of-bounds
-write with user-controlled input.
+IIRC the situation was:  if you setns(some-userns); setresgid(0,0);
+setresuid(0,0); then between the setns and the setuids the container
+can ptrace your task and do things using the host uids.  That's bad.
 
-The function DecodeAdpcmImaQT at adpcm.c:595 allocates a buffer which
-is filled with bytes from the input stream. However, it does not check
-that the number of channels in the input stream is less than or equal
-to the size of the buffer, resulting in an out-of-bounds write. The
-number of channels is clamped at <= 5.
+You can't stop the container from messing with you in general (by
+ptracing later - though as you say we could set nodump, but I don't
+think people would want htat), but it shouldn't be able to mess with the
+host root uid.
 
-adpcm_ima_wav_channel_t channel[2];
-...
-for( i_ch = 0; i_ch < p_dec->fmt_in.audio.i_channels; i_ch++ )
-{
-    channel[i_ch].i_predictor  = (int16_t)((( ( p_buffer[0] << 1 )|(
-p_buffer[1] >> 7 ) ))<<7);
-    channel[i_ch].i_step_index = p_buffer[1]&0x7f;
-...
-
-The mangling of the input p_buffer above and in
-AdpcmImaWavExpandNibble() makes this difficult to exploit, but there
-is a potential for remote code execution via a malicious media file.
-
-Please find attached a POC which crashes VLC[1].
-
-The vendor has confirmed the issue has been resolved and will be fixed
-in VLC 2.2.4 and VLC 3.0.0.
-
-Please allocate a CVE for this issue. If you require any further
-information, please let me know.
-
-Regards,
-
-Patrick
-
-1. Also <https://blinken.co/20160527_vlc_poc_chans4.mov>. SHA1
-08e1e74cf4edf19dddcea1c4da14798654d16097
-
-
-
-
------BEGIN PGP SIGNATURE-----
-
-iQEcBAEBCAAGBQJXSEqFAAoJEFQwhhLHo8khRWYIAIEYBsLg+0nSeiUP2lBqqEEI
-d3zt0QhlcZD4Jk5U/HDcdu6QvSI/cMLNBxEwLbgPJt/hyYWEaQbfYzxcHLYr0Sgs
-VAK8hEr/XXNcgi7iU6ApLuHXXzHQ4bJrzk1QJhAgp6G7bhzwDm8qcU7VvifjZaCo
-hNsHT3w7kmBC2s7tIfGu09ufhW1Nzvf86DPRvF3xS2R90TGM8jdvRpAFrrjmp7jY
-tHJVCiM1Ln19BlkglNShtd53nGT7Y0pEUrmAcMdqxuUGFRGAQplbfJ5HNnxhPZsd
-FpXfktaHotBhf4OcbU0W4c5hg4fP2ajaPRPpkqAKukr+izHKxYZ7J5qn1OI6k3o=
-=GERz
------END PGP SIGNATURE-----
-
+-serge
