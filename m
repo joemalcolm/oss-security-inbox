@@ -1,68 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/15/1
-Message-ID: <CAJpd-bG6nP=mA6dCaQfTcKrhGSQOxPJg=SM0Ao34thtidyHZKQ@mail.gmail.com>
-Date: Tue, 15 Mar 2016 12:09:42 +0100
-From: Salva Peiró <speirofr@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/06/7
+Message-Id: <1452088437.1365.2@smtp.gmail.com>
+Date: Wed, 06 Jan 2016 14:53:57 +0100
+From: Guillaume Ayoub <guillaume.ayoub@...ea.fr>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: The minissdpd (v 1.2.20130907-3) is affected by an improper validation of array index weakness
+Subject: Re: CVE request for radicale
 Content-Type: text/plain; charset=utf-8
 
-Is there a CVE for this? If not, could one be assigned, please?
+(Sorry if this mail is not in the original thread, I wasn't following 
+the mailing-list before today)
 
-The affected version is
-minissdpd version: 1.2.20130907-3
+Hi,
 
-The bug is reported at
-https://bugs.debian.org/816759
-
-The fixes are applied upstream at
-https://github.com/miniupnp/miniupnp/commit/b238cade9a173c6f751a34acf8ccff838a62aa47#diff-00d21a1eaced371eee67e083a3ff866c
-
-  DECODELENGTH_CHECKLIMIT(l, p, buf + n);
-- if(p+l > buf+n) {
-+ if(l > (unsigned)(buf+n-p)) {
-  syslog(LOG_WARNING, "bad request (length encoding l=%u n=%u)",
-         l, (unsigned)n);
-  goto error;
-
-https://github.com/miniupnp/miniupnp/commit/140ee8d2204b383279f854802b27bdb41c1d5d1a#diff-00d21a1eaced371eee67e083a3ff866c
+I'm the main developer of Radicale, I've merged the different fixes, 
+but I'm not the author of these fixes. So, I know the software quite 
+well, but I'm definitely no security expert.
 
 
-+ memset(newserv, 0, sizeof(struct service)); /* set pointers to NULL */
-  if(containsForbiddenChars(p, l)) {
-  syslog(LOG_ERR, "bad request (st contains forbidden chars)");
-  goto error;
+That being said, here are for me the 3 real independent vulnerabilities 
+reported and fixed in 1.1:
+
+1. "The multifilesystem backend allows access to arbitrary files on all 
+platforms."
+
+This storage backend is not the default backend used, it's even marked 
+as "not ready for production" in the configuration file. But when used, 
+this backend could allow anybody to read/write anything anywhere, by 
+sending requests with particular paths and contents.
+
+2. "Prevent regex injection in rights management."
+
+If an attacker is able to authenticate with a user name like .*, he can 
+bypass read/write limitations imposed by regex-based rules, including 
+the built-in rules called owner_write (read for everybody, write for 
+the owner of the calendar) and owner_only (read and write for the owner 
+of the calendr).
+
+3. "On MS Windows the filesystem backend allows access to the first 
+level of files on a drive."
+
+The filesystem backend is the default storage backend. When used, it 
+converts paths like /c:/filename/dummy to c:\filename, and allowing 
+anybody to read/write anything anywhere, by sending requests with 
+particular paths and contents.
+
+
+For me, the other ones are theoretical vulnerabilities, but I'm not 
+sure that they can lead to real life consequences:
+
+- "Paths like .., ../.. or // are not sanitized correctly". But when 
+translated into a filesystem path, I think that it could only enable to 
+read/write files in the default storage directory, like "normal" 
+requests do.
+
+- "The program crashes if a path doesn't start with base_prefix instead 
+of showing an error message." It was actually raising an exception, but 
+didn't "crash". That's bad for sure, but not related to security.
+
+- "Improve the regex used for well-known URIs." It wasn't really 
+harmful because of Radicale's code at this moment, but may have become 
+a problem later.
+
+- "Decouple the daemon from its parent environment." Always a good 
+idea, but I can't find a related possible attack.
+
+- "Avoid race condition in PID file creation." No possible attack for 
+me.
+
+- "Prevent crafted HTTP request from calling arbitrary functions". In 
+real life, no way to attack because of the signature of the other 
+methods, but may have enabled an attacker to call a method called "a" 
+by sending an HTTP "a" request, if "a" had had the good signature.
+
+
+Hope that it helps!
 
 Regards,
-Salva Peiró
---
-Salva Peiró @ https://speirofr.appspot.com
-CS Researcher & Software Engineer
-Universitat Politècnica de València, Spain.
-
-On Mon, Mar 7, 2016 at 1:04 PM, Salva Peiró <speirofr@...il.com> wrote:
-
-> Hi everyone,
->
-> A vulnerability in the minissdpd daemon has been found that affects
-> minissdpd version 1.2.20130907-3 available in Debian and Ubuntu.
-> The vulnerability can be exploited by a local unprivileged user
-> with write access to /var/run/minissdpd.sock to crash the minissdpd
-> daemon that runs with superuser privileges.
->
-> More details at:
-> https://speirofr.appspot.com/files/advisory/SPADV-2016-02.md
-> https://bugs.debian.org/cgi-bin/pkgreport.cgi?pkg=minissdpd;dist=unstable.
->
-> Is there a CVE for this? If not, could one be assigned, please?
->
-> Regards,
-> Salva Peiró
->
-> --
-> Salva Peiró @ https://speirofr.appspot.com
-> CS Researcher & Software Engineer
-> Universitat Politècnica de València, Spain.
->
->
+-- 
+Guillaume Ayoub
+Kozea - Directeur associé
 
