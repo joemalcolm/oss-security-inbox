@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["8479" "Wednesday" "9" "November" "2016" "15:39:17" "+0100" "Agostino Sarubbo" "ago@gentoo.org" "<3336940.KQUNr6ohDW@blackgate>" "174" "[oss-security] elfutils: memory allocation failure in allocate_elf (common.h)" nil nil nil "11" "2016110914:39:17" "[oss-security] elfutils: memory allocation failure in allocate_elf (common.h)" (number mark "U       ago@gentoo.o Nov  9  174/8479  " thread-indent "\"[oss-security] elfutils: memory allocation failure in allocate_elf (common.h)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["369" "Wednesday" "6" "January" "2016" "18:26:07" "+0800" "xiaoqixue_1" "xiaoqixue_1@163.com" "<716e2c96.f09e.1521678e486.Coremail.xiaoqixue_1@163.com>" "11" "[oss-security] CVE request --  NULL dereference in libdwarf" nil nil nil "1" "2016010610:26:07" "[oss-security] CVE request -- NULL dereference in libdwarf" (number mark "U       xiaoqixue_1@ Jan  6   11/369   " thread-indent "\"[oss-security] CVE request --  NULL dereference in libdwarf\"\n") "<20151224163753.8217233217A@smtpvbsrv1.mitre.org>" ("<20151224163753.8217233217A@smtpvbsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 13317 invoked by uid 550); 9 Nov 2016 14:39:36 -0000
+Received: (qmail 31956 invoked by uid 550); 6 Jan 2016 10:26:47 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,189 +12,41 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 12130 invoked from network); 9 Nov 2016 14:39:33 -0000
-From: Agostino Sarubbo <ago@gentoo.org>
+Received: (qmail 31935 invoked from network); 6 Jan 2016 10:26:46 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+	s=s110527; h=Date:From:Subject:MIME-Version:Message-ID; bh=fVu2p
+	pWV2rm2Tq8eYYxgchpMv8cp4R3b7Kmxxq1NHEM=; b=S9wGz0Hbdu+7IK4lR8srh
+	Efbnn6duWthaycO9Z0xqGWRph++JpLqVghU5Bgbqhpey9uUeQ1nWNGL5iAbMpS3y
+	VhjHlhIwZD+x7j4SVfBW0xTkWA06y3mmGqeIC0v/7F2KRZHq+TEO2GLwlFIrbKQN
+	pBPZMQH4sLf3+G2AVkPUdI=
+X-Originating-IP: [166.111.131.12]
+Date: Wed, 6 Jan 2016 18:26:07 +0800 (CST)
+From: xiaoqixue_1  <xiaoqixue_1@163.com>
 To: oss-security@lists.openwall.com
 Cc: cve-assign@mitre.org
-Date: Wed, 09 Nov 2016 15:39:17 +0100
-Message-ID: <3336940.KQUNr6ohDW@blackgate>
-User-Agent: KMail/4.14.10 (Linux/4.4.26-gentoo; KDE/4.14.24; x86_64; ; )
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version SP_ntes V3.5 build
+ 20150911(74783.7961) Copyright (c) 2002-2016 www.mailtech.cn 163com
+In-Reply-To: <20151224163753.8217233217A@smtpvbsrv1.mitre.org>
+References: <20151224163753.8217233217A@smtpvbsrv1.mitre.org>
+X-CM-CTRLDATA: vX4cDWZvb3Rlcl9odG09NDUxOjU2
+Content-Type: multipart/alternative; 
+	boundary="----=_Part_254241_127037022.1452075967622"
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"
-Subject: [oss-security] elfutils: memory allocation failure in allocate_elf (common.h)
+Message-ID: <716e2c96.f09e.1521678e486.Coremail.xiaoqixue_1@163.com>
+X-CM-TRANSID:g8GowEC5YUK_64xWVtklAA--.15186W
+X-CM-SenderInfo: 50ld015l0xvsqr6rljoofrz/1tbiJR-nvVUL9Q1omgAAs0
+X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+Subject: [oss-security] CVE request --  NULL dereference in libdwarf
 
-If it is suitable for a CVE please assign one. Thanks.
+------=_Part_254241_127037022.1452075967622
+Content-Type: text/plain; charset=GBK
+Content-Transfer-Encoding: base64
 
-Description:
-elfutils is a set of libraries/utilities to handle ELF objects (drop in 
-replacement for libelf).
+Cgp3ZSByZXBvcnQgIGEgTlVMTCBkZXJlZmVyZW5jZSBpbiBsaWJkd2FyZiAg
+d2hpY2ggaXMgZm91bmQgYnkgUWl4dWUgWGlhby4KCgpQbGVhc2Ugc2VlIDoK
+aHR0cHM6Ly9idWd6aWxsYS5yZWRoYXQuY29tL3Nob3dfYnVnLmNnaT9pZD0x
+Mjk0MjY0CgoKCgoKCg==
 
-During the fuzz of libdwarf, I noticed a memory allocation failure which 
-involves elfutils.
-Actually there is a proposed patch on the elfutils mailing list, but nobody 
-commented.
+------=_Part_254241_127037022.1452075967622--
 
-The complete ASan output:
-
-# dwarfdump $FILE
-==21982==ERROR: AddressSanitizer failed to allocate 0x3401fb3000 
-(223371538432) bytes of LargeMmapAllocator (error code: 12)
-==21982==Process memory map follows:
-        0x000000400000-0x0000006bc000   /usr/bin/dwarfdump-asan
-        0x0000008bb000-0x0000008c3000   /usr/bin/dwarfdump-asan
-        0x0000008c3000-0x000000900000   /usr/bin/dwarfdump-asan
-        0x000000900000-0x0000015a4000
-        0x00007fff7000-0x00008fff7000
-        0x00008fff7000-0x02008fff7000
-        0x02008fff7000-0x10007fff8000
-        0x600000000000-0x603000000000
-        0x603000000000-0x603000010000
-        0x603000010000-0x604000000000
-        0x604000000000-0x604000010000
-        0x604000010000-0x619000000000
-        0x619000000000-0x619000020000
-        0x619000020000-0x624000000000
-        0x624000000000-0x624000020000
-        0x624000020000-0x640000000000
-        0x640000000000-0x640000003000
-        0x7f9f19d00000-0x7f9f19e00000
-        0x7f9f19f00000-0x7f9f1a000000
-        0x7f9f1a0a9000-0x7f9f1c3fb000
-        0x7f9f1c3fb000-0x7f9f1c58e000   /lib64/libc-2.22.so
-        0x7f9f1c58e000-0x7f9f1c78e000   /lib64/libc-2.22.so
-        0x7f9f1c78e000-0x7f9f1c792000   /lib64/libc-2.22.so
-        0x7f9f1c792000-0x7f9f1c794000   /lib64/libc-2.22.so
-        0x7f9f1c794000-0x7f9f1c798000
-        0x7f9f1c798000-0x7f9f1c7ae000   /usr/lib64/gcc/x86_64-pc-linux-
-gnu/4.9.3/libgcc_s.so.1
-        0x7f9f1c7ae000-0x7f9f1c9ad000   /usr/lib64/gcc/x86_64-pc-linux-
-gnu/4.9.3/libgcc_s.so.1
-        0x7f9f1c9ad000-0x7f9f1c9ae000   /usr/lib64/gcc/x86_64-pc-linux-
-gnu/4.9.3/libgcc_s.so.1
-        0x7f9f1c9ae000-0x7f9f1c9af000   /usr/lib64/gcc/x86_64-pc-linux-
-gnu/4.9.3/libgcc_s.so.1
-        0x7f9f1c9af000-0x7f9f1c9b1000   /lib64/libdl-2.22.so
-        0x7f9f1c9b1000-0x7f9f1cbb1000   /lib64/libdl-2.22.so
-        0x7f9f1cbb1000-0x7f9f1cbb2000   /lib64/libdl-2.22.so
-        0x7f9f1cbb2000-0x7f9f1cbb3000   /lib64/libdl-2.22.so
-        0x7f9f1cbb3000-0x7f9f1ccb0000   /lib64/libm-2.22.so
-        0x7f9f1ccb0000-0x7f9f1ceaf000   /lib64/libm-2.22.so
-        0x7f9f1ceaf000-0x7f9f1ceb0000   /lib64/libm-2.22.so
-        0x7f9f1ceb0000-0x7f9f1ceb1000   /lib64/libm-2.22.so
-        0x7f9f1ceb1000-0x7f9f1ceb7000   /lib64/librt-2.22.so
-        0x7f9f1ceb7000-0x7f9f1d0b7000   /lib64/librt-2.22.so
-        0x7f9f1d0b7000-0x7f9f1d0b8000   /lib64/librt-2.22.so
-        0x7f9f1d0b8000-0x7f9f1d0b9000   /lib64/librt-2.22.so
-        0x7f9f1d0b9000-0x7f9f1d0d0000   /lib64/libpthread-2.22.so
-        0x7f9f1d0d0000-0x7f9f1d2cf000   /lib64/libpthread-2.22.so
-        0x7f9f1d2cf000-0x7f9f1d2d0000   /lib64/libpthread-2.22.so
-        0x7f9f1d2d0000-0x7f9f1d2d1000   /lib64/libpthread-2.22.so
-        0x7f9f1d2d1000-0x7f9f1d2d5000
-        0x7f9f1d2d5000-0x7f9f1d2ea000   /lib64/libz.so.1.2.8
-        0x7f9f1d2ea000-0x7f9f1d4e9000   /lib64/libz.so.1.2.8
-        0x7f9f1d4e9000-0x7f9f1d4ea000   /lib64/libz.so.1.2.8
-        0x7f9f1d4ea000-0x7f9f1d4eb000   /lib64/libz.so.1.2.8
-        0x7f9f1d4eb000-0x7f9f1d502000   /usr/lib64/libelf-0.166.so
-        0x7f9f1d502000-0x7f9f1d702000   /usr/lib64/libelf-0.166.so
-        0x7f9f1d702000-0x7f9f1d703000   /usr/lib64/libelf-0.166.so
-        0x7f9f1d703000-0x7f9f1d704000   /usr/lib64/libelf-0.166.so
-        0x7f9f1d704000-0x7f9f1d726000   /lib64/ld-2.22.so
-        0x7f9f1d8b2000-0x7f9f1d91a000
-        0x7f9f1d91a000-0x7f9f1d925000
-        0x7f9f1d925000-0x7f9f1d926000   /lib64/ld-2.22.so
-        0x7f9f1d926000-0x7f9f1d927000   /lib64/ld-2.22.so
-        0x7f9f1d927000-0x7f9f1d928000
-        0x7ffc7e844000-0x7ffc7e865000   [stack]
-        0x7ffc7e905000-0x7ffc7e907000   [vvar]
-        0x7ffc7e907000-0x7ffc7e909000   [vdso]
-        0xffffffffff600000-0xffffffffff601000   [vsyscall]
-==21982==End of process memory map.
-==21982==AddressSanitizer CHECK failed: /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-
-rt/lib/sanitizer_common/sanitizer_common.cc:183 "((0 && "unable to mmap")) != 
-(0)" (0x0, 0x0)
-    #0 0x4ca3ed in __asan::AsanCheckFailed(char const*, int, char const*, 
-unsigned long long, unsigned long long) /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_rtl.cc:67
-    #1 0x4d0f23 in __sanitizer::CheckFailed(char const*, int, char const*, 
-unsigned long long, unsigned long long) /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-
-rt/lib/sanitizer_common/sanitizer_common.cc:159
-    #2 0x4d1111 in __sanitizer::ReportMmapFailureAndDie(unsigned long, char 
-const*, char const*, int, bool) /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-
-rt/lib/sanitizer_common/sanitizer_common.cc:183
-    #3 0x4da14a in __sanitizer::MmapOrDie(unsigned long, char const*, bool) 
-/var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-
-rt/lib/sanitizer_common/sanitizer_posix.cc:122
-    #4 0x42493a in 
-__sanitizer::LargeMmapAllocator::Allocate(__sanitizer::AllocatorStats*, 
-unsigned long, unsigned long) /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-
-rt/lib/asan/../sanitizer_common/sanitizer_allocator.h:1033
-    #5 0x42493a in 
-__sanitizer::CombinedAllocator<__sanitizer::SizeClassAllocator64<105553116266496ul, 
-4398046511104ul, 0ul, __sanitizer::SizeClassMap, 
-__asan::AsanMapUnmapCallback>, 
-__sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<105553116266496ul, 
-4398046511104ul, 0ul, __sanitizer::SizeClassMap, __asan::AsanMapUnmapCallback> 
->, __sanitizer::LargeMmapAllocator 
->::Allocate(__sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<105553116266496ul, 
-4398046511104ul, 0ul, __sanitizer::SizeClassMap, __asan::AsanMapUnmapCallback> 
->*, unsigned long, unsigned long, bool, bool) /var/tmp/portage/sys-
-devel/llvm-3.8.1-r2/work/llvm-3.8.1.src/projects/compiler-
-rt/lib/asan/../sanitizer_common/sanitizer_allocator.h:1302
-    #6 0x42493a in __asan::Allocator::Allocate(unsigned long, unsigned long, 
-__sanitizer::BufferedStackTrace*, __asan::AllocType, bool) 
-/var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_allocator.cc:368
-    #7 0x420003 in __asan::Allocator::Calloc(unsigned long, unsigned long, 
-__sanitizer::BufferedStackTrace*) /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_allocator.cc:557
-    #8 0x420003 in __asan::asan_calloc(unsigned long, unsigned long, 
-__sanitizer::BufferedStackTrace*) /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_allocator.cc:722
-    #9 0x4c0c3a in calloc /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:67
-    #10 0x7f9f1d4ee5e0 in allocate_elf /tmp/portage/dev-
-libs/elfutils-0.166/work/elfutils-0.166/libelf/common.h:74
-    #11 0x7f9f1d4ee5e0 in file_read_elf /tmp/portage/dev-
-libs/elfutils-0.166/work/elfutils-0.166/libelf/elf_begin.c:282
-    #12 0x7f9f1d4ef2b8 in read_unmmaped_file /tmp/portage/dev-
-libs/elfutils-0.166/work/elfutils-0.166/libelf/elf_begin.c:584
-    #13 0x7f9f1d4ef2b8 in read_file /tmp/portage/dev-
-libs/elfutils-0.166/work/elfutils-0.166/libelf/elf_begin.c:670
-    #14 0x4f9676 in main /tmp/dwarf-20161021/dwarfdump/dwarfdump.c:585:11
-    #15 0x7f9f1c41b61f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
-    #16 0x419588 in _start (/usr/bin/dwarfdump-asan+0x419588)
-
-Affected version:
-0.166
-
-Fixed version:
-N/A
-
-Proposed patch:
-https://lists.fedorahosted.org/archives/list/elfutils-devel@lists.fedorahosted.org/message/EJWVY7TMRDEMWPAPNVU3V4MZYG5HANF2/
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-N/A
-
-Reproducer:
-https://github.com/asarubbo/poc/raw/master/00011-elfutils-memalloc-allocate_elf
-
-Timeline:
-2016-10-24: bug discovered and reported to upstream
-2016-11-04: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2016/11/04/elfutils-memory-allocation-failure-in-allocate_elf-common-h
