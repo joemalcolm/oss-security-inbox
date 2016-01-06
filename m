@@ -1,27 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/30/2
-Message-ID: <CAMoU6uYcJu7-RbCRQ1O9zqOHF14fD+CyMB+=y6Xt21UQiiJjVQ@mail.gmail.com>
-Date: Sat, 30 Apr 2016 14:41:03 +0200
-From: Bas Pape <baspape@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/06/10
+Message-ID: <568D9DEC.7030306@halfdog.net>
+Date: Wed, 6 Jan 2016 23:06:20 +0000
+From: halfdog <me@...fdog.net>
 To: oss-security@...ts.openwall.com
-Subject: CVE request - Quassel IRC denial of service
+Subject: Discuss: Daily/weekly cron jobs best practices
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-It was found that quasselcore is vulnerable to a denial of service
-attack by unauthenticated clients. The protocol negotiation did not
-take into account lack of a match, in which case
-PeerFactory::createPeer returns a nullptr, which is immediately
-dereferenced [1].
-This issue was introduced in commit d1bf207 [2] (version 0.10.0 and
-later), and fixed in commit e678873 [3] (tagged as version 0.12.4).
+Hello List,
 
-Can a CVE be assigned to this issue?
+Different Linux software packages use cron jobs for basic maintenance
+activities, e.g.
 
-[1] https://github.com/quassel/quassel/blob/f64ac93/src/core/coreauthhandler.cpp#L100
-[2] https://github.com/quassel/quassel/commit/d1bf207
-[3] https://github.com/quassel/quassel/commit/e678873
+* rotating/compressing/deleting logs (syslog, ntp)
+* cleanup of caches (man, php)
+* notifications (calender, SMART disk check)
 
--- 
-Bas Pape (Tucos)
+Especially interesting are those cron job scripts run as user root but
+processing files owned by dedicated service users. But shell scripts
+often have their problems processing untrusted input:
+
+* the tools invoked in shell scripts often have no or little
+protection against file system modification races
+
+* data processing with multiple separate processes, as usually
+employed when using pipes in shell scripts, are inherently racy.
+
+* the tools do not protect against symlink attacks
+
+Due to that risks, what would be best practices, e.g. for a script
+cleaning up log files for a daemon.
+
+a) run shell script as daemon user. Ignore script security: a
+malicious daemon user can already perform all those actions by
+himself, not relying on insecure scripts. Pro: no need to perform
+security audits on scripts. Con: below
+
+b) run shell script as daemon user and also try to get it secured.
+Pro: attackers without code execution possibilities but ability to
+make daemon e.g. to create problematic files via the daemon are also
+blocked.
+
+c) try to make shell script secure, but still run as root. Pro: no
+overhead due to uid-switch (pam/audit logging with su in scripts), no
+risk to leak privileged resources, e.g. open FDs, to lower-priv daemon
+context. Con: any script coding mistake or change in tool behaviour
+(gzip, find, tar, ls, ....) might create privilege escalation hole.
+
+d) do not use shell scripts for that kind of task, use OS-near
+programming language, e.g. C, python, to write specialized helper.
+Pro: Perfect protection possible (openat/fstat/O_NOFOLLOW...). Con:
+higher maintenance effort.
+
+Are there more variants, arguments? In my opinion, b) is a good
+trade-off between maintainability and security.
+
+Currently the cron scripts seem to be a weak point. I looked at the 8
+daily scripts on my machine, 2 of them belonged to the "daemon"
+example class from above and both were vulnerable to daemon to root
+privilege escalation, see e.g. [1].
+
+hd
+
+[1]
+http://www.halfdog.net/Security/2015/MandbSymlinkLocalRootPrivilegeEscalation/
+
+- -- 
+http://www.halfdog.net/
+PGP: 156A AE98 B91F 0114 FE88  2BD8 C459 9386 feed a bee
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iEYEARECAAYFAlaNneMACgkQxFmThv7tq+5K8ACgk4cZa5OftLi1uIZ0LQkXH+Qw
+EfsAmwbrYKeQGSkPULQ/NvHroMOhaJ+g
+=tCPm
+-----END PGP SIGNATURE-----
