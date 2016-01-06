@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2910" "Thursday" "6" "August" "2015" "10:55:39" "+0200" "Martin Prpic" "mprpic@redhat.com" "<87io8s23uc.fsf@redhat.com>" "75" "Re: [oss-security] Re: CVE Request - Go net/http library - HTTP smuggling" nil nil nil "8" "2015080608:55:39" "[oss-security] Re: CVE Request - Go net/http library - HTTP smuggling" (number mark "        mprpic@redha Aug  6   75/2910  " thread-indent "\"Re: [oss-security] Re: CVE Request - Go net/http library - HTTP smuggling\"\n") "<20150805163639.18AE06CC065@smtpvmsrv1.mitre.org>" ("<CA+s3sfHhUWzMvW5FikvWnCq6jqt6ZQFnk++zZrr3P9V3WVWeAg@mail.gmail.com>" "<20150805163639.18AE06CC065@smtpvmsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3466" "Wednesday" "6" "January" "2016" "03:07:59" "+0000" "Serge Hallyn" "serge.hallyn@ubuntu.com" "<20160106030759.GB512@ubuntumail>" "83" "Re: [oss-security] Re: CVE Request: Linux kernel: privilege escalation in user namespaces" "^Cc:" nil nil "1" "2016010603:07:59" "[oss-security] Re: CVE Request: Linux kernel: privilege escalation in user namespaces" (number mark "        serge.hallyn Jan  6   83/3466  " thread-indent "\"Re: [oss-security] Re: CVE Request: Linux kernel: privilege escalation in user namespaces\"\n") "<87bn8zjxmg.fsf@x220.int.ebiederm.org>" ("<20151231194350.6E71936E244@smtpvbsrv1.mitre.org>" "<87bn8zjxmg.fsf@x220.int.ebiederm.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 25890 invoked by uid 550); 6 Aug 2015 08:55:54 -0000
+Received: (qmail 21764 invoked by uid 550); 6 Jan 2016 03:08:13 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,94 +11,103 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 25863 invoked from network); 6 Aug 2015 08:55:53 -0000
-References: <CA+s3sfHhUWzMvW5FikvWnCq6jqt6ZQFnk++zZrr3P9V3WVWeAg@mail.gmail.com> <20150805163639.18AE06CC065@smtpvmsrv1.mitre.org>
-User-agent: mu4e 0.9.9.5; emacs 24.3.1
-In-reply-to: <20150805163639.18AE06CC065@smtpvmsrv1.mitre.org>
-Message-ID: <87io8s23uc.fsf@redhat.com>
+Received: (qmail 21746 invoked from network); 6 Jan 2016 03:08:13 -0000
+Message-ID: <20160106030759.GB512@ubuntumail>
+References: <20151231194350.6E71936E244@smtpvbsrv1.mitre.org>
+ <87bn8zjxmg.fsf@x220.int.ebiederm.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.27
-Cc: jbuberel@google.com, cve-assign@mitre.org
-Date: Thu, 06 Aug 2015 10:55:39 +0200
-From: Martin Prpic <mprpic@redhat.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <87bn8zjxmg.fsf@x220.int.ebiederm.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+Cc: cve-assign@mitre.org, john.johansen@canonical.com
+Date: Wed, 6 Jan 2016 03:07:59 +0000
+From: Serge Hallyn <serge.hallyn@ubuntu.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: CVE Request - Go net/http library - HTTP smuggling
+Subject: Re: [oss-security] Re: CVE Request: Linux kernel: privilege
+ escalation in user namespaces
 To: oss-security@lists.openwall.com
 
-Hi, this looks like it needs a CVE as well:
+Quoting Eric W. Biederman (ebiederm@xmission.com):
+> cve-assign@mitre.org writes:
+> 
+> > Use CVE-2015-8709 for the issue fixed in the
+> > https://lkml.org/lkml/2015/12/25/71 post.
+> >
+> > (This is not yet available at
+> > http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/log/kernel/ptrace.c
+> > and http://marc.info/?l=linux-kernel&m=145118185526359 might be the
+> > current end of the earlier discussion.)
+> >
+> > This issue has been covered in security advisories from one or more
+> > Linux distributions, e.g.,
+> >
+> >>> http://www.ubuntu.com/usn/usn-2847-1
+> >>> 
+> >>> Jann Horn discovered a ptrace issue with user namespaces in the Linux
+> >>> kernel. The namespace owner could potentially exploit this flaw by ptracing
+> >>> a root owned process entering the user namespace to elevate its privileges
+> >>> and potentially gain access outside of the namespace.
+> >>> (http://bugs.launchpad.net/bugs/1527374)
+> >
+> >
+> > There has been some discussion of whether the finding was a
+> > vulnerability discovery, e.g.,
+> >
+> >>>> Date: Fri, 18 Dec 2015 00:07:19 +0100
+> >>>> From: Jann Horn <jann@thejh.net>
+> >>>> 
+> >>>> I'm not sure whether this is CVE-worthy - the user_namespaces
+> >>>> manpage says "the process has full privileges for operations
+> >>>> inside the user namespace, but is unprivileged for operations
+> >>>> outside the namespace". ptrace()ing a process in the
+> >>>> namespace can reasonably be considered an "operation inside
+> >>>> the user namespace" ...
+> >>>> 
+> >>>> In my opinion, this patch is somewhere between hardening and
+> >>>> a security feature, but I wouldn't really call it a vuln fix.
+> >
+> >
+> >>>>> Date: Thu, 17 Dec 2015 23:54:03 +0000
+> >>>>> From: Serge Hallyn <serge.hallyn@ubuntu.com>
+> >>>>> 
+> >>>>>> ptrace()ing a process in the
+> >>>>>> namespace can reasonably be considered an "operation inside
+> >>>>>> the user namespace"
+> >>>>> 
+> >>>>> Except by creating a file in the host namespace, you were, as
+> >>>>> root in the container, able to escape your namespace, right?
+> >
+> > We feel that, more generally, the usn-2847-1 mention of "and
+> > potentially gain access outside of the namespace" is a realistic
+> > concern.
+> 
+> My mind is boggling at some of the logic involved here.
+> 
+> There is no potentially gaining access outside of the namespace when it
+> is access to things that were put inside the namespace.
+> 
+> The discussion was about how to make it easier for userspace not to do
+> stupid things, not how to fix a bug in the kernel.
+> 
+> The code we have been discussing most definitely does not make it safe
+> for a arbitrary root owned processes to call setns and enter a user
+> namespace with a hostile user namespace root.  You have to close file
+> descriptors, unmap files and do I don't know what else.  Properly
+> and safely dropping privileges is a challenging problem.
+> 
+> Calling bug because it is possible to use a kernel feature wrong feels
+> completely inappropriate.
 
-https://github.com/golang/go/commit/26049f6f9171d1190f3bbe05ec304845cfe6399f
-https://github.com/golang/go/issues/12027
+I could be wrong but think you are misunderstanding the cve.
 
-Can you please assign one? Thank you!
+IIRC the situation was:  if you setns(some-userns); setresgid(0,0);
+setresuid(0,0); then between the setns and the setuids the container
+can ptrace your task and do things using the host uids.  That's bad.
 
--- 
-Martin Prpič / Red Hat Product Security
+You can't stop the container from messing with you in general (by
+ptracing later - though as you say we could set nodump, but I don't
+think people would want htat), but it shouldn't be able to mess with the
+host root uid.
 
-
-cve-assign@mitre.org writes:
-
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA256
->
->> https://github.com/golang/go/commit/117ddcb83d7f42d6aa72241240af99ded81118e9
->> 
->> * Invalid headers are parsed as valid headers (like "Content Length:" with a
->> space in the middle)
->
-> For purposes of CVE assignments, we feel that this needs to be
-> categorized separately from the other parts of the report. The primary
-> factor is that there are different sets of affected versions. This
-> behavior apparently was not present in all versions of Go: it was
-> added in February 2012. Also, it is not really an error in determining
-> the semantics of a set of headers; it's a security-relevant error in
-> interpretation of the syntax of an individual header.
->
-> Use CVE-2015-5739.
->
->
->> https://github.com/golang/go/commit/300d9a21583e7cf0149a778a0611e76ff7c6680f
->> 
->> * Double Content-length headers in a request does not generate a 400 error,
->> the second Content-length is ignored
->
-> Use CVE-2015-5740 for the reporter's finding of a security-relevant
-> RFC 7230 3.3.3 4 violation ("MUST respond with a 400 (Bad Request)
-> status code").
->
->
-> 300d9a21583e7cf0149a778a0611e76ff7c6680f also has code changes that
-> were not mentioned in your "as provided by the reporter" section. Our
-> interpretation is that there were separate internal discoveries of
-> other security-relevant RFC 7230 violations, such as "MUST NOT send a
-> Content-Length header field in any message that contains a
-> Transfer-Encoding header field." Use CVE-2015-5741 for one or more
-> internal discoveries reflected in
-> 300d9a21583e7cf0149a778a0611e76ff7c6680f.
->
->
-> Finally, if there is a code change in
-> 300d9a21583e7cf0149a778a0611e76ff7c6680f that is exclusively for the
-> purposes of hardening (i.e., no RFC requires the change as a smuggling
-> security fix, and the code change is not for addressing an
-> individually exploitable problem), then that code change is outside
-> the scope of CVE.
->
-> - -- 
-> CVE assignment team, MITRE CVE Numbering Authority
-> M/S M300
-> 202 Burlington Road, Bedford, MA 01730 USA
-> [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1
->
-> iQEcBAEBCAAGBQJVwjr0AAoJEKllVAevmvms4SgH/1K26OmJwLV0/D+IgSIcWq8q
-> ecN2DlngcNpU7W/fq9o/brN4hoMGVzh/aEPU3JIqC0JbY0OhidPe/DZmqLcndnwb
-> iQ4wS4r89akrzZpdOYc09oBlqyxKtto1exwFHWqqdVIbBjHdq+nQhEBwYGyjf/XK
-> 0DyEX6f72Msa//HFhNKycOKM4KPKsi1Gh5Dl+L9nddWnPdTnTSHoIdD+RGmXDDkD
-> 8i6WI/e5QVrGL2g24mrpefDUWX/p9T/cx9LR1hiiUUDuvns40NVz11E1i8PD2fv3
-> wRzEjUqyt94syYh9PNa0+ZFH7sPUyYOhnpi3/1UzRkSUSI++FfpDFrq3rOEZ4Jk=
-> =rNSr
-> -----END PGP SIGNATURE-----
+-serge
