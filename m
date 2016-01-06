@@ -1,70 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/08/1
-Message-Id: <20160108005424.5F00C6C005A@smtpvmsrv1.mitre.org>
-Date: Thu,  7 Jan 2016 19:54:24 -0500 (EST)
-From: cve-assign@...re.org
-To: carnil@...ian.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: netfilter-persistent: (local) information leak due to world-readable rules files
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/06/1
+Message-ID: <87bn8zjxmg.fsf@x220.int.ebiederm.org>
+Date: Tue, 05 Jan 2016 19:38:15 -0600
+From: ebiederm@...ssion.com (Eric W. Biederman)
+To: cve-assign@...re.org
+Cc: john.johansen@...onical.com,  oss-security@...ts.openwall.com
+Subject: Re: Re: CVE Request: Linux kernel: privilege escalation in user namespaces
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+cve-assign@...re.org writes:
 
-> iptables-persistent (in Debian) is a loader for netfilter configuration
-> using a plugin-based architecture.
-> 
-> iptables-persistent is vulnerable to a (local) information leak due to
-> world-readable rules files. It was reported in Debian in
-> 
-> https://bugs.debian.org/764645
-> 
-> And fixed via
-> 
-> https://anonscm.debian.org/cgit/collab-maint/iptables-persistent.git/commit/?id=37905034f07e94c4298a1762b39b7bbd4063c0df
+> Use CVE-2015-8709 for the issue fixed in the
+> https://lkml.org/lkml/2015/12/25/71 post.
+>
+> (This is not yet available at
+> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/log/kernel/ptrace.c
+> and http://marc.info/?l=linux-kernel&m=145118185526359 might be the
+> current end of the earlier discussion.)
+>
+> This issue has been covered in security advisories from one or more
+> Linux distributions, e.g.,
+>
+>>> http://www.ubuntu.com/usn/usn-2847-1
+>>> 
+>>> Jann Horn discovered a ptrace issue with user namespaces in the Linux
+>>> kernel. The namespace owner could potentially exploit this flaw by ptracing
+>>> a root owned process entering the user namespace to elevate its privileges
+>>> and potentially gain access outside of the namespace.
+>>> (http://bugs.launchpad.net/bugs/1527374)
+>
+>
+> There has been some discussion of whether the finding was a
+> vulnerability discovery, e.g.,
+>
+>>>> Date: Fri, 18 Dec 2015 00:07:19 +0100
+>>>> From: Jann Horn <jann@...jh.net>
+>>>> 
+>>>> I'm not sure whether this is CVE-worthy - the user_namespaces
+>>>> manpage says "the process has full privileges for operations
+>>>> inside the user namespace, but is unprivileged for operations
+>>>> outside the namespace". ptrace()ing a process in the
+>>>> namespace can reasonably be considered an "operation inside
+>>>> the user namespace" ...
+>>>> 
+>>>> In my opinion, this patch is somewhere between hardening and
+>>>> a security feature, but I wouldn't really call it a vuln fix.
+>
+>
+>>>>> Date: Thu, 17 Dec 2015 23:54:03 +0000
+>>>>> From: Serge Hallyn <serge.hallyn@...ntu.com>
+>>>>> 
+>>>>>> ptrace()ing a process in the
+>>>>>> namespace can reasonably be considered an "operation inside
+>>>>>> the user namespace"
+>>>>> 
+>>>>> Except by creating a file in the host namespace, you were, as
+>>>>> root in the container, able to escape your namespace, right?
+>
+> We feel that, more generally, the usn-2847-1 mention of "and
+> potentially gain access outside of the namespace" is a realistic
+> concern.
 
-Do you have any further information about why this should be
-considered a vulnerability in general? We realize that it might, at
-least, be considered a vulnerability for Debian systems because of
-"Tags: security" in the original report.
+My mind is boggling at some of the logic involved here.
 
-For example, is there a specific piece of data in the files that is
-always supposed to be private?
+There is no potentially gaining access outside of the namespace when it
+is access to things that were put inside the namespace.
 
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=764645#5 indicates
-that an unprivileged user can obtain information by directly opening
-the files, but cannot obtain this information with an
-"/sbin/iptables -L" command. This does not, by itself, establish that
-a security feature has been defeated. It is possible that it was
-simply inconvenient to implement the -L option in a way that provided
-access to unprivileged users.
+The discussion was about how to make it easier for userspace not to do
+stupid things, not how to fix a bug in the kernel.
 
-What we are trying to avoid is a situation in which CVE IDs are
-assigned solely because a system administrator might not want files to
-be readable by unprivileged users. For example, maybe someone would
-prefer stricter /etc/hosts.allow permissions to prevent rogue local
-users from discovering the names of other hosts that possibly have
-symmetric "allow" policies.
+The code we have been discussing most definitely does not make it safe
+for a arbitrary root owned processes to call setns and enter a user
+namespace with a hostile user namespace root.  You have to close file
+descriptors, unmap files and do I don't know what else.  Properly
+and safely dropping privileges is a challenging problem.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Calling bug because it is possible to use a kernel feature wrong feels
+completely inappropriate.
 
-iQIcBAEBCAAGBQJWjwg3AAoJEL54rhJi8gl5KeEP/jez+zmk3CO4xMx9f5yWwSSR
-1NHAQ6YpSOWBrrBz1BKvdVYYkfS+OgjvI7Y7XMTPgXG6QRYrYGVa8QqLkE1TlFUr
-7q3pgONQ9+O+B15J8cZNSYXcu8paEi641Jrui25jyltadL++FYblJ0kF7uL9q7fF
-H/lAsZPKNAID3QBEmhtF7kMrHPmL5+VpWzaxRnnr71nO8v0V5sdUJToXCXI9ZOT8
-GQVkAajWcFZX7EqHRchXGGTC2bVXm4UThTLm/HxKTev1rUKt3FbFxJRtLA1KYNBM
-jO8ZZ+/zJuY1Yn8UsLhPCornccafv1oOqsxSh0WXWDhYpedM9onlqUeZqeTip/yi
-K6nbK1WgcUD7fKJVRjBgmzJbcIw1WtYk0BQg51nXnURcbztZ1ICQwCtEvHwC4xsP
-kXBTsXCYHHyzTIPRN2LWWVWzFUMxeDL7PGv8Glf+HGx2OQdycHZlhdKO/eVLy/o0
-k/QfcoNxoO4xh42Q9LkyLM/NQ+DNk1bpfMsfOBiFVPdzyzThU5l610EIxVWBumdG
-DWWefmwjSryUtuTL7PoGkbUvvExCHmpgzoGTcBAiRHwoA+CZDxqZi0epoODGUkTo
-eUbVFKkepd3hO6Bv3v5O0NLIQ3SCRtUSfp7JTFaWLRfxdlDuod7V4Khxwvwwj6lA
-QBOU0aocrXDg6aAoneV5
-=FspR
------END PGP SIGNATURE-----
+Eric
+
