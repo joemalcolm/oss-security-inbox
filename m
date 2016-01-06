@@ -1,4 +1,9 @@
-Received: (qmail 11925 invoked by uid 550); 14 Oct 2023 20:52:23 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3871" "Wednesday" "6" "January" "2016" "14:40:22" "+0530" "CSW Research Lab" "disclose@cybersecurityworks.com" "<CAMWaY3N67=JovC3e4-9AvA7fiRXtMprqRfOxhxerLHdjDj0VKQ@mail.gmail.com>" "103" "[oss-security] CVE Request: Cross Site Scripting (XSS) & Cross Site Request Forgery (CSRF) in Crony Cronjob Manager Version 0.4.4" "^Date:" nil nil "1" "2016010609:10:22" "[oss-security] CVE Request: Cross Site Scripting (XSS) & Cross Site Request Forgery (CSRF) in Crony Cronjob Manager Version 0.4.4" (number mark "U       disclose@cyb Jan  6  103/3871  " thread-indent "\"[oss-security] CVE Request: Cross Site Scripting (XSS) & Cross Site Request Forgery (CSRF) in Crony Cronjob Manager Version 0.4.4\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 7668 invoked by uid 550); 6 Jan 2016 14:38:01 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,82 +11,141 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11902 invoked from network); 14 Oct 2023 20:52:23 -0000
+Received: (qmail 23609 invoked from network); 6 Jan 2016 09:10:34 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1697316731; x=1697921531; darn=lists.openwall.com;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=G6VqWPvHZMyiNbjmMV/JV0Z+YGrpe1Wx8K/gnKRwe7E=;
-        b=byIZJ3r38SY4DkBOkf69m3E5EqEE4xMSX9KWVFHAcoQfOhDM7s7tRScmfKg1nr46L5
-         f6tITw3j18M3tfBvuFQ1aoOJS7GuDWc+Y203Ur2gbLz9somrzxM9yIRUWbSKZOHcJ3uo
-         xPaO3pYKfQp2jFlSJmwIqzy/Eh3CmIwSXQxorc3P45+5HvOVlJYrmaY6daEXSqvP/BB1
-         zYaI8/YHjNJP7tZtJM2mKCh8lgxumAZMZzJQIl+VRS6qxLWs9bOVMaQ8N8VsLZsKWesW
-         iLorJe04bU4kIwzxTFH7W3Y76JQxpZb0uyB6UuMcmeaPe07V6cwt9Db2MH4tNCyD2mHY
-         0Mkg==
+        d=cybersecurityworks-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=VK1aR6MP0tZBvM/K0Wz/ytjKTcnUM7lQdMg5dkvfawQ=;
+        b=haaVLGKN5iJ09FIK4CYDkGDp7h8I5S3beQenG9RWbnCQ0EKvrhwp7P/I3ylDy1JqlN
+         gn9OcJmnVT3MVXmBorDIPLWUEJ/rsZU7KbnK+dnrGwjt9qohfGTbfMiYD6iAnjPuz1GT
+         PhzGIuFR8XSEqyn+odZfryO0fjXSu3HPPKojtF5nD5tsE7XIf4rmyiZACt4KsTAVyebm
+         faLFCKi09B72F7wp2zNhALpzc9nTM5dTL6aUWCJRW9gN8xCkt1WvFbrie88IAZ7xOhLH
+         DdM7j9/3D/grQfqfKjsjic/Z8n+XIWjTKiCO2fDGNXYFQ379ObB6v8zBMYpWFTwaEVFu
+         WMhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697316731; x=1697921531;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=G6VqWPvHZMyiNbjmMV/JV0Z+YGrpe1Wx8K/gnKRwe7E=;
-        b=NXBGMYjet0ira5RgylnputNNvbUryhH5s5YIIcXQBjsg0SVopWZHq7YKp+9+8yU+R0
-         eJyOncIljyVUL0PPYhcTsLORWesvKmljJDSiwMDKrhX+3q+k+UW6wQzmOjw5hc6oaVms
-         WTjOiiu8jrqxnEub3wvWFZAZ/rUcnQsqOAE3ataKKxLV83Dv5FZOKr9SlPI61rZvbH46
-         eKpYlw60VtYVHQCiXyAW+IIzB/231Qs6au8kIlEse0BetwF8WgZ7s9yZVrVq31sdcvvc
-         lgQ2kfjvlaMKO+TgNIvk6FUS+kzuGzi1pZlFoS39hwd2b0u0IkumNHKzkKXMiq4iDXGo
-         s1qA==
-X-Gm-Message-State: AOJu0YzzVZ3hNXhk+8Jl7t6s7E7blxjsXKlO7OToMV9l/LV/bTGfRwJC
-	4eWVtj1pLJWTUL3jJxjamWjBJ3bO+3ZQnA==
-X-Google-Smtp-Source: AGHT+IE3A8yYdn9p112/nmBJH0+7ZOIDpbP/A0b1QHvE04gHmipnAP8gbL+rrLN0/qltAi9mRlz6Fg==
-X-Received: by 2002:a25:949:0:b0:d9a:4f26:68bb with SMTP id u9-20020a250949000000b00d9a4f2668bbmr13871280ybm.6.1697316730921;
-        Sat, 14 Oct 2023 13:52:10 -0700 (PDT)
-Message-ID: <5492404f-bfed-d812-85b5-a871d46e1a79@gmail.com>
-Date: Sun, 15 Oct 2023 07:52:07 +1100
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
+         :content-type;
+        bh=VK1aR6MP0tZBvM/K0Wz/ytjKTcnUM7lQdMg5dkvfawQ=;
+        b=d8pljXDzDPcLp25Bj8wYjw0IYxP/JSa4rkaTXvbs8KoAmG6ug5oZuiceN5qVkjhxRc
+         d7vYZQb2yEt0wzx+6nmmZMblvwIvZKBVa86KX57Xmu3+QcG44W5qh0y5BYuQ2VymdTnO
+         BrEQ1v4xH3V1mX2/W1laX829OwFzOdPj85B9/aJ9m4O4aUx+nc3v8ttBxLsDUjAyjdY0
+         PZCh+Yt6PtT8Jo4VAUPhN27V13q+rgiX1omLXATkOlrcf+F2I7NG7SlutaD/NyO2CF3y
+         LQjDwuS0rNASz7RAqsNkDgJMeQDxUI6aBkkEXMqfErRGPWrkELi3hpOwuwAi7pjKp2Ml
+         8bRg==
+X-Gm-Message-State: ALoCoQmDUQg9s8YLDaBMMOJxyWgbJKjCNAQRCwUnCbF4HAh4ByWde9nzFW9nddxo33iiUAzvemttyI0gdczXeqCf8s2yJaMO0A==
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
+X-Received: by 10.107.28.13 with SMTP id c13mr90064303ioc.149.1452071422570;
+ Wed, 06 Jan 2016 01:10:22 -0800 (PST)
+Message-ID: <CAMWaY3N67=JovC3e4-9AvA7fiRXtMprqRfOxhxerLHdjDj0VKQ@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=001a1140a73a54c7fd0528a6b9d0
+Date: Wed, 6 Jan 2016 14:40:22 +0530
+From: CSW Research Lab <disclose@cybersecurityworks.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE Request: Cross Site Scripting (XSS) & Cross Site Request Forgery
+ (CSRF) in Crony Cronjob Manager Version 0.4.4
 To: oss-security@lists.openwall.com
-References: <56c8798b-0ad7-652b-d034-90229b6768f7@gmail.com>
- <ZSrK1GqJsL8oD7y+@itl-email>
-Content-Language: en-US
-From: Matthew Fernandez <matthew.fernandez@gmail.com>
-In-Reply-To: <ZSrK1GqJsL8oD7y+@itl-email>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Subject: Re: [oss-security] sandboxing,of upstream programs by distros
+
+--001a1140a73a54c7fd0528a6b9d0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+Hi,
+
+Please assign CVE as appropriate. Thanks for your valuable time & effort
+taken.
+
+Details
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+# Title : Cross Site Scripting (XSS) & Cross Site Request Forgery (CSRF) in
+Crony Cronjob Manager Version 0.4.4
+# Affected Product :  Crony Cronjob Manager Wordpress plugin Version 0.4.4
+# Vendor Homepage : https://wordpress.org/plugins/crony/developers/
+# Vulnerability Type :  Cross Site Scripting (XSS) & Cross Site Request
+Forgery (CSRF)
+# Risk :  High
+# POC URL               :
+https://github.com/cybersecurityworks/Disclosed/issues/9
+# Video URL : https://www.youtube.com/watch?v=3DMY5l91pX-tY
+# Status : Fixed
+# CVE                      : not assigned
+
+Description
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+By exploiting a Cross-site scripting vulnerability along with Cross Site
+Request forgery will gives an easy access to an attacker for hijacking a
+logged in user=E2=80=99s session by stealing cookies. This means that the m=
+alicious
+hacker can change the logged in user=E2=80=99s password and invalidate the =
+session
+of the victim while the hacker maintains access.
+
+Technical Details
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+   1. Logon into any wordpress application (attacker)
+   2. Click to =E2=80=9CAdd new cronjob=E2=80=9D in Crony Cronjob Manager V=
+ersion 0.4.4
+   Plugin and capture the request in intercepting proxy.
+   3. Now, Generate a CSRF Request with attacker logged in account.
+   4. Modify the request with the code you required to get executed in
+   victim=E2=80=99s browser.
+   5. Enter the value for the name variable with =E2=80=9CXSS&CSRF=E2=80=9D=
+ and add any
+   scripts, malicious code or payload.
+   6. Here, its <script>alert(=E2=80=98Vulnerable2CSRF&XSS=E2=80=99)</scrip=
+t> which an
+   attacker wants to get executed in victim=E2=80=99s browser and sends the=
+ link to
+   victim.
+   7. Now, once the victim opens the link in the user logged in browser.
+   Then, immediately the added XSS payload will be executed whenever we rev=
+iew
+   it.
 
 
+Advisory Timeline
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
 
-On 10/15/23 04:07, Demi Marie Obenour wrote:
-> 
-> Which software is this?  Are there plans to at least fix the known
-> memory safety problems?  If not, I think it would be best to disable the
-> known-vulnerable features by default.  If the entire software package is
-> vulnerable, I recommend deprecating it and recommending that downstream
-> users migrate to a more secure alternative.
+2015-08-28 =E2=80=93 Discovered in Crony Cronjob Manager Version 0.4.4.
+2015-08-28 =E2=80=93 Reported to plugins@wordpress.org & lol@scottkclark.com
+2015-08-28 =E2=80=93 lol@scottkclark.com replied, "I'll check it out, thank=
+s for
+the heads up."
+2015-08-28 =E2=80=93 Requested for Advance CVE
+2015-09-08 =E2=80=93 Another response from developer, "I'll be back into th=
+ings
+tomorrow morning, will let you know once it's up."
+2015-09-27 =E2=80=93 Issues fixed in version 0.4.6
+<https://wordpress.org/plugins/crony/changelog/>, developer responded.
+2015-11-30 - Issues were reported again. Since, not fixed in the released
+version (0.4.6)
+2015-12-09 - Developer responded.
+2016-01-04 - Fixed in version 0.4.7
+<https://downloads.wordpress.org/plugin/crony.0.4.7.zip> now.
 
-I deliberately did not name it to avoid getting into a discussion like 
-this. The short answer is that we’re doing our best but the history of 
-the project includes 10+ year old bugs that no one has had the time or 
-resources to address. “fix all the bugs” simply is not a strategy that 
-survives contact with the real world.
+Fix
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+https://www.owasp.org/index.php/Cross-Site_Request_Forgery_(CSRF)
+https://www.owasp.org/index.php/Cross-site_Scripting_(XSS)
 
-> You have to be willing to break compatibility to at least some degree.
-> If you try to support everything, you wind up with something like Qubes
-> OS’s “convert to trusted image”, which creates and destroys an entire
-> virtual machine for every operation.  Even then, you will still break
-> a (hypothetical) plugin that accesses the Internet, because that VM
-> should not have network access.
-> 
-> What I would do is compile a list of system calls that are reasonable to
-> make after startup.  Once all plugins have been loaded and all
-> configuration files have been read, no plugin should be opening files or
-> making network connections.  If it does, that plugin is broken and needs
-> to be fixed.  You can have these system calls fail rather than killing
-> the entire process, but you cannot try to support arbitrary plugins.
-> That said, I expect most existing plugins will work fine with
-> sandboxing.
+Credits & Authors
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+sathish@cybersecurityworks.com from cybersecurityworks Pvt Ltd
+<http://www.cybersecurityworks.com/>
 
-Sure, but you’re answering a different question than the one I asked.
+About Cybersecurityworks
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Cybersecurity Works is basically an auditing company passionate working on
+findings & reporting security flaws & vulnerabilities on web application
+and network. As professionals, we handle each client differently based on
+their unique requirements. Visit our website
+<http://www.cybersecurityworks.com/> for more information.
+
+--=20
+----------
+Cheers !!!
+
+Team CSW Research Lab <http://www.cybersecurityworks.com>
+
+--001a1140a73a54c7fd0528a6b9d0--
