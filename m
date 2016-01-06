@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5606" "Friday" "2" "November" "2018" "12:46:56" "+0100" "Solar Designer" "solar@openwall.com" "<20181102114655.GA2758@openwall.com>" "130" "Re: [oss-security] CVE-2018-5407: new side-channel vulnerability on SMT/Hyper-Threading architectures" "^Date:" nil nil "11" "2018110211:46:56" "[oss-security] CVE-2018-5407: new side-channel vulnerability on SMT/Hyper-Threading architectures" (number mark "        solar@openwa Nov  2  130/5606  " thread-indent "\"Re: [oss-security] CVE-2018-5407: new side-channel vulnerability on SMT/Hyper-Threading architectures\"\n") "<CAFeDd5Ya=q28T2b0v9Z2guTGjwccaq8AU_5OnybvuEVABWnFJA@mail.gmail.com>" ("<CAFeDd5Ya=q28T2b0v9Z2guTGjwccaq8AU_5OnybvuEVABWnFJA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2591" "Wednesday" "6" "January" "2016" "23:06:20" "+0000" "halfdog" "me@halfdog.net" "<568D9DEC.7030306@halfdog.net>" "71" "[oss-security] Discuss: Daily/weekly cron jobs best practices" "^Date:" nil nil "1" "2016010623:06:20" "[oss-security] Discuss: Daily/weekly cron jobs best practices" (number mark "        me@halfdog.n Jan  6   71/2591  " thread-indent "\"[oss-security] Discuss: Daily/weekly cron jobs best practices\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 3465 invoked by uid 550); 2 Nov 2018 11:47:35 -0000
+Received: (qmail 17632 invoked by uid 550); 6 Jan 2016 23:03:49 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,147 +11,86 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3272 invoked from network); 2 Nov 2018 11:47:02 -0000
-Message-ID: <20181102114655.GA2758@openwall.com>
-References: <CAFeDd5Ya=q28T2b0v9Z2guTGjwccaq8AU_5OnybvuEVABWnFJA@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAFeDd5Ya=q28T2b0v9Z2guTGjwccaq8AU_5OnybvuEVABWnFJA@mail.gmail.com>
-User-Agent: Mutt/1.4.2.3i
-Date: Fri, 2 Nov 2018 12:46:56 +0100
-From: Solar Designer <solar@openwall.com>
+Received: (qmail 17558 invoked from network); 6 Jan 2016 23:03:38 -0000
+Message-ID: <568D9DEC.7030306@halfdog.net>
+User-Agent: Mozilla/5.0 (Windows NT 6.3; rv:36.0) Gecko/20100101 Firefox/36.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Date: Wed, 6 Jan 2016 23:06:20 +0000
+From: halfdog <me@halfdog.net>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE-2018-5407: new side-channel vulnerability on SMT/Hyper-Threading architectures
+Subject: [oss-security] Discuss: Daily/weekly cron jobs best practices
 To: oss-security@lists.openwall.com
 
-Hi BBB,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On Fri, Nov 02, 2018 at 12:12:27AM +0200, Billy Brumley wrote:
-> We recently discovered a new CPU microarchitecture attack vector. The
-> nature of the leakage is due to execution engine sharing on SMT (e.g.
-> Hyper-Threading) architectures. More specifically, we detect port
-> contention to construct a timing side channel to exfiltrate
-> information from processes running in parallel on the same physical
-> core. Report is below.
+Hello List,
 
-I think your work is top-notch and much needed.  Thank you!
+Different Linux software packages use cron jobs for basic maintenance
+activities, e.g.
 
-I'm surprised this specific side-channel wasn't(?) explored in academic
-papers before.  I had suggested it should be:
+* rotating/compressing/deleting logs (syslog, ntp)
+* cleanup of caches (man, php)
+* notifications (calender, SMART disk check)
 
-https://www.openwall.com/lists/oss-security/2015/08/12/8
+Especially interesting are those cron job scripts run as user root but
+processing files owned by dedicated service users. But shell scripts
+often have their problems processing untrusted input:
 
-"Yet another thing to target, and one I considered
-and briefly played with on P4 with HT in 2005 when I saw Colin
-Percival's paper, would be utilization of different execution units
-within a core, which is measurable from another hardware thread running
-on the same core.  Surprisingly, I am still unaware of published
-research on that."
+* the tools invoked in shell scripts often have no or little
+protection against file system modification races
 
-As you correctly point out, it's (also) execution port contention,
-rather than only execution unit contention.
+* data processing with multiple separate processes, as usually
+employed when using pipes in shell scripts, are inherently racy.
 
-However, I feel the blame might be misplaced here.  I think the
-existence of this side-channel in SMT should be obvious to the extent
-that it's not considered a vulnerability, but a fully expected by-design
-property.  Maybe the problem is it wasn't documented as such.  Maybe we
-should have put more effort into making it more obvious to everyone in
-2005, like it's finally done now.
+* the tools do not protect against symlink attacks
 
-[ Non-security:
-A related area for further research is looking into use of this
-side-channel for performance optimization - to probabilistically
-(de)synchronize hardware threads sharing a physical core in a way
-minimizing their competition for resources.  I'm already parsing
-OS-provided info and use per-core mutexes for this, achieving a few
-percent speedup in a certain production setup, but maybe an
-OS-independent and/or lower-overhead approach can be developed. ]
+Due to that risks, what would be best practices, e.g. for a script
+cleaning up log files for a daemon.
 
-> We steal an OpenSSL (<= 1.1.0h) P-384 private key from a TLS server
-> using this new side-channel vector. It is a local attack in the sense
-> that the malicious process must be running on the same physical core
-> as the victim (an OpenSSL-powered TLS server in this case).
+a) run shell script as daemon user. Ignore script security: a
+malicious daemon user can already perform all those actions by
+himself, not relying on insecure scripts. Pro: no need to perform
+security audits on scripts. Con: below
 
-Are you also releasing manuscript.pdf you had attached to your distros
-list posting?  You must be.
+b) run shell script as daemon user and also try to get it secured.
+Pro: attackers without code execution possibilities but ability to
+make daemon e.g. to create problematic files via the daemon are also
+blocked.
 
-I only skimmed it, but as I understand the OpenSSL code in question
-is branching upon a secret.  This is generally considered high-risk
-even without SMT.  While it'd be harder and less practical to exploit
-without SMT, the state of instruction cache changes in a way visible to
-other processes that might be scheduled to run on the same core.
-Perhaps it'd take orders of magnitude more observations since the OS
-scheduler won't kick in very frequently, but eventually the secret
-should be obtainable.
+c) try to make shell script secure, but still run as root. Pro: no
+overhead due to uid-switch (pam/audit logging with su in scripts), no
+risk to leak privileged resources, e.g. open FDs, to lower-priv daemon
+context. Con: any script coding mistake or change in tool behaviour
+(gzip, find, tar, ls, ....) might create privilege escalation hole.
 
-I guess this commit is (part of?) the fix:
+d) do not use shell scripts for that kind of task, use OS-near
+programming language, e.g. C, python, to write specialized helper.
+Pro: Perfect protection possible (openat/fstat/O_NOFOLLOW...). Con:
+higher maintenance effort.
 
-https://github.com/openssl/openssl/commit/5d92b853f6b875ba8d1a1b51b305f14df5adb8aa
+Are there more variants, arguments? In my opinion, b) is a good
+trade-off between maintainability and security.
 
-In there, we see a ladder of function calls separated by "||", which in
-C guarantees short-circuit evaluation.  This is data-dependent
-branching, and it remains such after that commit.  Being unfamiliar with
-ECC and with this code, I don't know whether the branching is (still) by
-secret or not (anymore).  I'd appreciate your comments on this.
+Currently the cron scripts seem to be a weak point. I looked at the 8
+daily scripts on my machine, 2 of them belonged to the "daemon"
+example class from above and both were vulnerable to daemon to root
+privilege escalation, see e.g. [1].
 
-> Upgrade to OpenSSL 1.1.1 (or >= 1.1.0i if you are looking for patches)
+hd
 
-OpenSSL recently issued two security advisories suggesting a further
-upgrade to 1.1.1a or 1.1.0j, but then mentioning that "a new side
-channel attack was created" and listing commits with even further fixes
-(not releases):
+[1]
+http://www.halfdog.net/Security/2015/MandbSymlinkLocalRootPrivilegeEscalation/
 
-https://www.openssl.org/news/secadv/20181029.txt
+- -- 
+http://www.halfdog.net/
+PGP: 156A AE98 B91F 0114 FE88  2BD8 C459 9386 feed a bee
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
----
-Timing vulnerability in ECDSA signature generation (CVE-2018-0735)
-==================================================================
-
-Severity: Low
-
-The OpenSSL ECDSA signature algorithm has been shown to be vulnerable to a
-timing side channel attack. An attacker could use variations in the signing
-algorithm to recover the private key.
-
-Due to the low severity of this issue we are not issuing a new release
-of OpenSSL 1.1.1 or 1.1.0 at this time. The fix will be included in
-OpenSSL 1.1.1a and OpenSSL 1.1.0j when they become available. The fix
-is also available in commit b1d6d55ece (for 1.1.1) and commit 56fb454d28
-(for 1.1.0) in the OpenSSL git repository.
-
-This issue was reported to OpenSSL on 25th October 2018 by Samuel Weiser.
----
-
-https://www.openssl.org/news/secadv/20181030.txt
-
----
-Timing vulnerability in DSA signature generation (CVE-2018-0734)
-================================================================
-
-Severity: Low
-
-The OpenSSL DSA signature algorithm has been shown to be vulnerable to a
-timing side channel attack. An attacker could use variations in the signing
-algorithm to recover the private key.
-
-Due to the low severity of this issue we are not issuing a new release
-of OpenSSL 1.1.1, 1.1.0 or 1.0.2 at this time. The fix will be included
-in OpenSSL 1.1.1a, OpenSSL 1.1.0j and OpenSSL 1.0.2q when they become
-available. The fix is also available in commit 8abfe72e8c (for 1.1.1),
-ef11e19d13 (for 1.1.0) and commit 43e6a58d49 (for 1.0.2) in the OpenSSL
-git repository.
-
-This issue was reported to OpenSSL on 16th October 2018 by Samuel Weiser.
-
-As a result of the changes made to mitigate this vulnerability, a new
-side channel attack was created.  The mitigation for this new vulnerability
-can be found in these commits: 6039651c43 (for 1.1.1), 26d7fce13d (for 1.1.0)
-and 880d1c76ed (for 1.0.2)
----
-
-I don't know to what extent this is related or not.
-
-Thanks again,
-
-Alexander
+iEYEARECAAYFAlaNneMACgkQxFmThv7tq+5K8ACgk4cZa5OftLi1uIZ0LQkXH+Qw
+EfsAmwbrYKeQGSkPULQ/NvHroMOhaJ+g
+=tCPm
+-----END PGP SIGNATURE-----
