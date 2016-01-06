@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["817" "Thursday" "15" "October" "2015" "12:39:44" "-0700" "Blibbet" "blibbet@gmail.com" "<56200100.8010400@gmail.com>" "22" "Re: [oss-security] Re: CVE Request - Linux kernel - securelevel/secureboot bypass." nil nil nil "10" "2015101519:39:44" "[oss-security] Re: CVE Request - Linux kernel - securelevel/secureboot bypass." (number mark "        blibbet@gmai Oct 15   22/817   " thread-indent "\"Re: [oss-security] Re: CVE Request - Linux kernel - securelevel/secureboot bypass.\"\n") "<20151015165850.69C4A3AE01F@smtpvbsrv1.mitre.org>" ("<20151015165850.69C4A3AE01F@smtpvbsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2438" "Wednesday" "6" "January" "2016" "03:25:13" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160106082513.E5702332074@smtpvbsrv1.mitre.org>" "71" "[oss-security] Re: CVE request for radicale" nil nil nil "1" "2016010608:25:13" "[oss-security] Re: CVE request for radicale" (number mark "U       cve-assign@m Jan  6   71/2438  " thread-indent "\"[oss-security] Re: CVE request for radicale\"\n") "<1451995511.3914.25.camel@debian.org>" ("<1451995511.3914.25.camel@debian.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 11549 invoked by uid 550); 15 Oct 2015 19:42:47 -0000
+Received: (qmail 21769 invoked by uid 550); 6 Jan 2016 08:25:26 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,54 +11,84 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 9910 invoked from network); 15 Oct 2015 19:39:59 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-type:content-transfer-encoding;
-        bh=AbdBZHmlBOdBWi34azaTU/mbARZNIK+XeFf6jTEqYhc=;
-        b=UzbNU8UbqpKr0Bz7l7PBsQF91NK3/IXzHKK5ll4GNBQSMYygsxPG0KH+27AinV0MJy
-         tEXqV3lVvGKxXW7xPRMnTglbyGUC21IN4ORYPTb4hPyTbgw1JFocLn5b1B/BeQHTnD2x
-         pXjEwJFLYMl1AUDgoLIPTZ8iW3+TCNUwCfG9SFD3mVHnl3z0DRKswPS8YKHlUm99wV4X
-         MjPNT57qUzEh42bjgsXJS1p6RVmvxvThxZ/uXHu6HyCJWjH61P42LsmnL3Pbsob8HxWV
-         KYCOzm8eaydkIii5f7L4qOibOiD+86TLJt5P4vWE5uoeVzZv+gtdDnECIex9mEVPvaIa
-         2IpA==
-X-Received: by 10.68.93.227 with SMTP id cx3mr11730615pbb.155.1444937987003;
-        Thu, 15 Oct 2015 12:39:47 -0700 (PDT)
-References: <20151015165850.69C4A3AE01F@smtpvbsrv1.mitre.org>
-Message-ID: <56200100.8010400@gmail.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.3.0
-MIME-Version: 1.0
-In-Reply-To: <20151015165850.69C4A3AE01F@smtpvbsrv1.mitre.org>
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-Date: Thu, 15 Oct 2015 12:39:44 -0700
-From: Blibbet <blibbet@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: CVE Request - Linux kernel -
- securelevel/secureboot bypass.
-To: oss-security@lists.openwall.com
+Received: (qmail 21749 invoked from network); 6 Jan 2016 08:25:25 -0000
+From: cve-assign@mitre.org
+To: corsac@debian.org
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <1451995511.3914.25.camel@debian.org>
+Message-Id: <20160106082513.E5702332074@smtpvbsrv1.mitre.org>
+Date: Wed,  6 Jan 2016 03:25:13 -0500 (EST)
+Subject: [oss-security] Re: CVE request for radicale
+
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
+
+> https://github.com/Kozea/Radicale/pull/343
+> http://radicale.org/news/#2015-12-31@11:54:03
+> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=809920
+
+>> This fixes a number of issues with dodgy path handling
+
+>> Many improvements in this release are related to security
+
+We do not see a straightforward way to determine the total number of
+independent vulnerabilities. For example:
+
+  Paths like .., ../.. or // are not sanitized correctly
+
+  The program crashes if a path doesn't start with base_prefix instead of showing an error message
+
+  On MS Windows the filesystem backend allows access to the first level of files on a drive.
+
+  Improve the regex used for well-known URIs
+
+  Decouple the daemon from its parent environment
+
+  Avoid race condition in PID file creation
+
+are missing information about the attacker and/or the impact.
 
 
 
-On 10/15/2015 09:58 AM, cve-assign@mitre.org wrote:
-> As far as we can tell, you are reporting an issue in functionality
-> that was developed for a Red Hat product. Because identical
-> functionality is not currently offered elsewhere, a CVE ID can be
-> assigned without considering the details of the securelevel behavior
-> that may later be implemented (or considered optimal) outside of Red
-> Hat.
+These might potentially be overlapping observations:
 
-I haven't seen Red Hat's new patch yet, but does this count? It sounds
-like similar functionality, at least.
-https://github.com/mjg59/linux/commit/4980702888a73e0fd4b48ef6f6683345011aa3a6
+  Paths like .., ../.. or // are not sanitized correctly
 
-More URLs here:
-http://firmwaresecurity.com/2015/10/06/matthew-garretts-new-linux-fork/
-http://firmwaresecurity.com/2015/10/09/clarification-of-matthew-garretts-linux-fork/
+  Improve the regex used for well-known URIs
 
-Thanks,
-Lee
-RSS: http://firmwaresecurity.com/feed
+  Prevent crafted HTTP request from calling arbitrary functions
 
+  Improve URI sanitation and conversion to filesystem path
+
+  
+
+For now, we will start with two CVE IDs for the change information that
+seems somewhat more clear:
+
+CVE-2015-8747 - The multifilesystem backend allows access to arbitrary files on all platforms.
+
+CVE-2015-8748 - Prevent regex injection in rights management
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJWjM5nAAoJEL54rhJi8gl5CT8P/3BdMvzOj6xjmM/jITW6Xabs
+F4KoH+xeoN8dABnJLMYoFxJSokjVlvNu2CbdQo4JIdE76iTLTG48s5BPOlga/6Nh
+fbEDGk+lrEsWro86FUDQh0oJYFcJCQdOS+GNSi3KW2I7DQVKvsvO5lTvG8zUNH8k
+ELJ67CVjFR2g1DeiTnJaXYIeGoDPf0YckjagpGnxZKR6ZFjKi0YOTSPThWNSqIVG
+I0NZxXpcno+MMylsSg7f9KObwkti8eFl6oFHzxOTuyugJjQbkpkdXBfY08ZiVBOq
+Ik44z97aIZqaGKpiDdYPZnLhSfeBAT8i0kDZn5SH5Am0Oacb5WF2774Vj1NOQtdT
+D4Z2q+KpydU9hMeIeaEz84IjF2JoZapZax32zY+vQI28jzrbWmJ2EFiMIHh29fHk
+h97+pz/nRlebbLcUcwvs9we6Bec0ZyA74+XCPH68UferVg5YUD85mbTl+elIB9x7
+VAD/9hKGzqEnuQNfaOEur6H+gfik6667qpcelYnpxa+ReidcUwtkq0MmkmZwaGBl
+Jw5mji3a77BhbakfMAc18OfJ16Xrd+bV5ffd/mFA0jegQDtd8HiY5+mMPDdKU5Sx
+kePOeaQxTM22mnFvYuyHekW/tZR8zWIajSbFpG/wQwM5E05Kr/KuIyozlU5oZWDj
+/Xvt2kqc2sHESQq+kDhG
+=HPXl
+-----END PGP SIGNATURE-----
