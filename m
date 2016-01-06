@@ -1,59 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/02/2
-Message-ID: <20160202105622.08d2d62c@pc1>
-Date: Tue, 2 Feb 2016 10:56:22 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: Miscomputations of elliptic curve scalar multiplications in Nettle
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/06/3
+Message-Id: <20160106081546.6A66333E02F@smtpvbsrv1.mitre.org>
+Date: Wed,  6 Jan 2016 03:15:46 -0500 (EST)
+From: cve-assign@...re.org
+To: vdronov@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request -- linux kernel: nfs: kernel panic occurs at nfs client when nfsv4.2 migration is executed
 Content-Type: text/plain; charset=utf-8
 
-https://blog.fuzzing-project.org/38-Miscomputations-of-elliptic-curve-scalar-multiplications-in-Nettle.html
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-The Nettle library is a library for basic cryptographic functions. Its
-most prominent user is GnuTLS.
+> https://bugzilla.redhat.com/show_bug.cgi?id=1295802
+> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=18e3b739fdc826481c6a1335ce0c5b19b3d415da
 
-Through fuzzing of elliptic curve scalar multiplications (multiplying a
-point on an elliptic curve with a scalar number) I discovered two carry
-propagation bugs that would lead the cauculations to produce wrong
-results. They affect the NIST P-256 and P-384 curves. The P-256 bug is
-in the C code and affects multiple architectures. The P-384 bug is in
-the assembly code and only affects 64 bit x86.
+>> NFS: Fix a NULL pointer dereference of migration recovery ops for v4.2 client
 
-While analyzing these bugs Nettle developer Niels Möller discovered
-another carry propagation bug in P-256 that was fixed in the same
-commit. Nettle 3.2 fixes all three bugs.
+Use CVE-2015-8746.
 
-The impact is currently unclear, but miscalculations in cryptographic
-functions should generally be considered security issues. I'd like to
-encourage cryptographers to try to analyze whether these bugs can lead
-to cryptographic breaks.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-https://github.com/hannob/bignum-fuzz/blob/master/point-fuzz.c
-I have published a code example on how to fuzz elliptic curve
-multiplications. It can compare the output of OpenSSL with either
-Nettle or NSS. It currently works only with prime field curves, but it
-can probably be adapted to other curves.
-
-P-256 bug:
-https://lists.lysator.liu.se/pipermail/nettle-bugs/2015/003028.html
-Mailing list post with code sample
-https://git.lysator.liu.se/nettle/nettle/commit/c71d2c9d20eeebb985e3872e4550137209e3ce4d
-Commit / fix for P-256 bug
-
-P-384 bug:
-https://lists.lysator.liu.se/pipermail/nettle-bugs/2015/003024.html
-Mailing list post with code sample
-https://git.lysator.liu.se/nettle/nettle/commit/fa269b6ad06dd13c901dbd84a12e52b918a09cd7
-Commit / fix for P-384 bug
-
-https://lists.gnu.org/archive/html/info-gnu/2016-01/msg00006.html
-Nettle 3.2 release notes
-
--- 
-Hanno Böck
-http://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
-
-Content of type "application/pgp-signature" skipped
+iQIcBAEBCAAGBQJWjMxnAAoJEL54rhJi8gl5XlEP/3mgM7uIvnkPzcP00tYANwWd
+EjpngZqCRZ/T2UP+5mhlAO3rVWoFPpRyS9ATk1ytIzAuq9PvlkiORZFzSJF/fQNY
+p3H4GPRfBFya8I0/Mo/UdHarumk4MrpW4wd3osDW+pJWETqa4HSDgBil63bImifC
+dj4A3KAUzHSLvK818hHuQLMQ3GVi4Tws3Yyv4mrnj5bYodWuBwehEdtLMq7M3LJS
+D2x8Io1tFAmzS7UZqx8XOBknoG09eTYdsyaONasmH2dkx9XsftuA0afUKwc99KiE
+vZ4kvMmSnidKmj0bVAjQthJgLiVvU29Pd9dbI0cZg3y2utiWvr7VmildChssCT7y
+YxMHwG7vpzHZ7S7Ebd7+hJ12BxPX4rDXks0fxw4E9U/a4GY7LvF1y+lwQnWVcLQG
+kKlq35kINboc2n0ktNvqGEhPmlriZABoQUuCMsrD46XsEDnr5UFkURdjhOAHtJI8
+Zy1NsAbOIeO+nfmN4D5rtu+LZF1z3dpG85IoHB1cOXuMD1ViZ0q7rMJkL9Q7QWE3
+GMxpj/l7ahY2+/KYotCMMKA8wHB237HcVmd3wNPCIQoSZI+QzX8+DzD8dmWP6b1U
+U2194pDrcX78mzrWNM5RMPzcNWw5JuQeAbRcrxTBKpHMoh3vJFCF6sxrgg8uy532
+Ue7fi6vMIrYWqtL8wbxZ
+=gz1q
+-----END PGP SIGNATURE-----
