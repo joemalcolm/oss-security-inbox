@@ -1,4 +1,9 @@
-Received: (qmail 22460 invoked by uid 550); 29 Sep 2023 14:35:26 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1323" "Wednesday" "6" "January" "2016" "03:15:46" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160106081546.6A66333E02F@smtpvbsrv1.mitre.org>" "32" "[oss-security] Re: CVE request -- linux kernel: nfs: kernel panic occurs at nfs client when nfsv4.2 migration is executed" nil nil nil "1" "2016010608:15:46" "[oss-security] Re: CVE request -- linux kernel: nfs: kernel panic occurs at nfs client when nfsv4.2 migration is executed" (number mark "U       cve-assign@m Jan  6   32/1323  " thread-indent "\"[oss-security] Re: CVE request -- linux kernel: nfs: kernel panic occurs at nfs client when nfsv4.2 migration is executed\"\n") "<2020545490.4983210.1452003849662.JavaMail.zimbra@redhat.com>" ("<2020545490.4983210.1452003849662.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 9324 invoked by uid 550); 6 Jan 2016 08:15:59 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,88 +12,44 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 22439 invoked from network); 29 Sep 2023 14:35:26 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1695998114; x=1696602914; darn=lists.openwall.com;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=eGKrvKsVeWvCQJacI8JCGoKiUQfjIJc/bdohHEGI2MY=;
-        b=Doiakpq/0sE2HQWZ3AiCw0OkGn6HKZnhGMMRFwt7dsAl3GTa+A65MyrjldR/fAEYRG
-         fPRHo6MD5I9YKeBRZMnFpyP6aj241667yPoRdcsLEs4x7iB0M31YzEcZ3E+tmYpCI0ME
-         I6V/weuILV9CMM6rtnjXG5ACyDAjZ34FbZG6QMwM+/iFp1GYjRBfHbObvhzx6IDXWYB/
-         yFoP2bNQLN4yC9Kailm6Pdc125fb3pwtJt9BUlJB2bpIAT9Nyqw4ZuovHdKV5vAb7pcC
-         5YUCnl1lJSviiLPa17I4VqyqcaCGSVPJ4HLpUfvElgmdOtDa3YtfykYnEOg5Te7KbFTb
-         aXoA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695998114; x=1696602914;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=eGKrvKsVeWvCQJacI8JCGoKiUQfjIJc/bdohHEGI2MY=;
-        b=Hbp19Sugh5rCw7WGFC9KXmJrmUBQDV0kyQ3kW6PytvyPJdwO0BSSl7KxEBTtLrjymv
-         rB/rrYRxMJzRXMj290c8KOzZrr0jIJsElL7eX2xQ3nMaQVqzxJcGJXNsnPWL8pl03tlm
-         yK+4bjSoob/TW66g1IL35+Xd2sSzQ7vRKXoRSbrerzCkM1FPBTX2mI9eeZtUFZ9auLw0
-         +TNJAnnwLkZLh8fD2Vy85KdrKT2i+HnjG9DBuc5zWfOtggu2YsN7HnpnMV8zgFTfNzWi
-         r7YRYeG2zDr+X2bAYdeAmEYr6j9seUe+PKEuVkDMc3oS/nCp+IMgkcfCITg2/JlSRtV0
-         1eZw==
-X-Gm-Message-State: AOJu0YwmD9R3/BBJUKbkO1BrRHHAn9rOFKfG7qbTtSkKif/+ggb0ce+6
-	J6Qce2kOhEHWpGReMj9ZAZGO9QsnIT0ZXvID4h321/m7
-X-Google-Smtp-Source: AGHT+IHHrbhkarfuhgTjwfUeJ+o6AsJnPtKkvcCKTHdmkM9tJi67CDAkT95m7sT7NYjGx7wommZ55rmpFbd+jIYdUmk=
-X-Received: by 2002:a05:6358:590d:b0:14a:ddb8:9a12 with SMTP id
- g13-20020a056358590d00b0014addb89a12mr4750703rwf.6.1695998114055; Fri, 29 Sep
- 2023 07:35:14 -0700 (PDT)
-MIME-Version: 1.0
-References: <7b2e3fb3afc05aa39864e62b0c87a631b746f5c7.camel@runout.at>
-In-Reply-To: <7b2e3fb3afc05aa39864e62b0c87a631b746f5c7.camel@runout.at>
-From: Alex Gaynor <alex.gaynor@gmail.com>
-Date: Fri, 29 Sep 2023 10:35:02 -0400
-Message-ID: <CAFRnB2ULCAXn6y0b5jGKqf+G11iX+CYCrH8DfraPRQfRAfCtxA@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [oss-security] Multiple Exim4 Zero Days
+Received: (qmail 9306 invoked from network); 6 Jan 2016 08:15:58 -0000
+From: cve-assign@mitre.org
+To: vdronov@redhat.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <2020545490.4983210.1452003849662.JavaMail.zimbra@redhat.com>
+Message-Id: <20160106081546.6A66333E02F@smtpvbsrv1.mitre.org>
+Date: Wed,  6 Jan 2016 03:15:46 -0500 (EST)
+Subject: [oss-security] Re: CVE request -- linux kernel: nfs: kernel panic occurs at nfs client when nfsv4.2 migration is executed
 
-Do I understand correctly that none of these are fixed upstream?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Alex
+> https://bugzilla.redhat.com/show_bug.cgi?id=1295802
+> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=18e3b739fdc826481c6a1335ce0c5b19b3d415da
 
-PS: I'd be remiss if I did not note that it appears that 5/6 of these
-vulnerabilities have "C is not a memory safe language" as a proximate
-cause.
+>> NFS: Fix a NULL pointer dereference of migration recovery ops for v4.2 client
 
-On Fri, Sep 29, 2023 at 10:27=E2=80=AFAM Markus Gschwendt
-<office+osssecurity@runout.at> wrote:
->
-> I bring this up as I have not yet seen any information here about
-> several CVEs related to Exim Mailserver which were published by ZDI on
-> 2023-09-27 [1]:
->
-> * CVE-2023-42114 [CVSS 3.7]
-> * CVE-2023-42115 [CVSS 9.8]
-> * CVE-2023-42116 [CVSS 8.1]
-> * CVE-2023-42117 [CVSS 8.1]
-> * CVE-2023-42118 [CVSS 7.5]
-> * CVE-2023-42119 [CVSS 3.1]
->
-> There also seem to be issues in Exim's bug tracker related to those:
-> https://bugs.exim.org/show_bug.cgi?id=3D2999
-> https://bugs.exim.org/show_bug.cgi?id=3D3000
-> https://bugs.exim.org/show_bug.cgi?id=3D3001
-> https://bugs.exim.org/show_bug.cgi?id=3D3002
-> https://bugs.exim.org/show_bug.cgi?id=3D3003
->
-> According to ZDI the original reports were sent in June 2022.
->
-> I'm wondering if somebody knows anything about mitigations and/or why
-> there are still no fixes for these issues after more than a year.
->
-> Markus
->
-> [1] https://www.zerodayinitiative.com/advisories/published/
->     search for exim
->
+Use CVE-2015-8746.
 
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
---=20
-All that is necessary for evil to succeed is for good people to do nothing.
+iQIcBAEBCAAGBQJWjMxnAAoJEL54rhJi8gl5XlEP/3mgM7uIvnkPzcP00tYANwWd
+EjpngZqCRZ/T2UP+5mhlAO3rVWoFPpRyS9ATk1ytIzAuq9PvlkiORZFzSJF/fQNY
+p3H4GPRfBFya8I0/Mo/UdHarumk4MrpW4wd3osDW+pJWETqa4HSDgBil63bImifC
+dj4A3KAUzHSLvK818hHuQLMQ3GVi4Tws3Yyv4mrnj5bYodWuBwehEdtLMq7M3LJS
+D2x8Io1tFAmzS7UZqx8XOBknoG09eTYdsyaONasmH2dkx9XsftuA0afUKwc99KiE
+vZ4kvMmSnidKmj0bVAjQthJgLiVvU29Pd9dbI0cZg3y2utiWvr7VmildChssCT7y
+YxMHwG7vpzHZ7S7Ebd7+hJ12BxPX4rDXks0fxw4E9U/a4GY7LvF1y+lwQnWVcLQG
+kKlq35kINboc2n0ktNvqGEhPmlriZABoQUuCMsrD46XsEDnr5UFkURdjhOAHtJI8
+Zy1NsAbOIeO+nfmN4D5rtu+LZF1z3dpG85IoHB1cOXuMD1ViZ0q7rMJkL9Q7QWE3
+GMxpj/l7ahY2+/KYotCMMKA8wHB237HcVmd3wNPCIQoSZI+QzX8+DzD8dmWP6b1U
+U2194pDrcX78mzrWNM5RMPzcNWw5JuQeAbRcrxTBKpHMoh3vJFCF6sxrgg8uy532
+Ue7fi6vMIrYWqtL8wbxZ
+=gz1q
+-----END PGP SIGNATURE-----
