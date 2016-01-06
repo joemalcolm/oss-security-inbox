@@ -1,11 +1,98 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/22/6
-Message-ID: <8760qtaza4.fsf@wheatstone.g10code.de>
-Date: Mon, 22 Aug 2016 12:11:47 +0200
-From: Werner Koch <wk@...pg.org>
-To: Pascal Cuoq <cuoq@...st-in-soft.com>
-Cc: "oss-security\@lists.openwall.com" <oss-security@...ts.openwall.com>, Raphaël Rieu-Helft <raphael.rieu-helft@...st-in-soft.com>
-Subject: Re: memory issues in libksba 1.3.4 and git
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/06/8
+Message-ID: <CAMWaY3N67=JovC3e4-9AvA7fiRXtMprqRfOxhxerLHdjDj0VKQ@mail.gmail.com>
+Date: Wed, 6 Jan 2016 14:40:22 +0530
+From: CSW Research Lab <disclose@...ersecurityworks.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request: Cross Site Scripting (XSS) & Cross Site Request Forgery (CSRF) in Crony Cronjob Manager Version 0.4.4
 Content-Type: text/plain; charset=utf-8
 
-Content of type "application/pgp-signature" skipped
+Hi,
+
+Please assign CVE as appropriate. Thanks for your valuable time & effort
+taken.
+
+Details
+================
+# Title : Cross Site Scripting (XSS) & Cross Site Request Forgery (CSRF) in
+Crony Cronjob Manager Version 0.4.4
+# Affected Product :  Crony Cronjob Manager Wordpress plugin Version 0.4.4
+# Vendor Homepage : https://wordpress.org/plugins/crony/developers/
+# Vulnerability Type :  Cross Site Scripting (XSS) & Cross Site Request
+Forgery (CSRF)
+# Risk :  High
+# POC URL               :
+https://github.com/cybersecurityworks/Disclosed/issues/9
+# Video URL : https://www.youtube.com/watch?v=MY5l91pX-tY
+# Status : Fixed
+# CVE                      : not assigned
+
+Description
+================
+By exploiting a Cross-site scripting vulnerability along with Cross Site
+Request forgery will gives an easy access to an attacker for hijacking a
+logged in user’s session by stealing cookies. This means that the malicious
+hacker can change the logged in user’s password and invalidate the session
+of the victim while the hacker maintains access.
+
+Technical Details
+================
+
+   1. Logon into any wordpress application (attacker)
+   2. Click to “Add new cronjob” in Crony Cronjob Manager Version 0.4.4
+   Plugin and capture the request in intercepting proxy.
+   3. Now, Generate a CSRF Request with attacker logged in account.
+   4. Modify the request with the code you required to get executed in
+   victim’s browser.
+   5. Enter the value for the name variable with “XSS&CSRF” and add any
+   scripts, malicious code or payload.
+   6. Here, its <script>alert(‘Vulnerable2CSRF&XSS’)</script> which an
+   attacker wants to get executed in victim’s browser and sends the link to
+   victim.
+   7. Now, once the victim opens the link in the user logged in browser.
+   Then, immediately the added XSS payload will be executed whenever we review
+   it.
+
+
+Advisory Timeline
+================
+
+2015-08-28 – Discovered in Crony Cronjob Manager Version 0.4.4.
+2015-08-28 – Reported to plugins@...dpress.org & lol@...ttkclark.com
+2015-08-28 – lol@...ttkclark.com replied, "I'll check it out, thanks for
+the heads up."
+2015-08-28 – Requested for Advance CVE
+2015-09-08 – Another response from developer, "I'll be back into things
+tomorrow morning, will let you know once it's up."
+2015-09-27 – Issues fixed in version 0.4.6
+<https://wordpress.org/plugins/crony/changelog/>, developer responded.
+2015-11-30 - Issues were reported again. Since, not fixed in the released
+version (0.4.6)
+2015-12-09 - Developer responded.
+2016-01-04 - Fixed in version 0.4.7
+<https://downloads.wordpress.org/plugin/crony.0.4.7.zip> now.
+
+Fix
+================
+https://www.owasp.org/index.php/Cross-Site_Request_Forgery_(CSRF)
+https://www.owasp.org/index.php/Cross-site_Scripting_(XSS)
+
+Credits & Authors
+================
+sathish@...ersecurityworks.com from cybersecurityworks Pvt Ltd
+<http://www.cybersecurityworks.com/>
+
+About Cybersecurityworks
+================
+Cybersecurity Works is basically an auditing company passionate working on
+findings & reporting security flaws & vulnerabilities on web application
+and network. As professionals, we handle each client differently based on
+their unique requirements. Visit our website
+<http://www.cybersecurityworks.com/> for more information.
+
+-- 
+----------
+Cheers !!!
+
+Team CSW Research Lab <http://www.cybersecurityworks.com>
+
