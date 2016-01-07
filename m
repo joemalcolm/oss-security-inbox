@@ -1,4 +1,9 @@
-Received: (qmail 5312 invoked by uid 550); 14 Jun 2023 22:33:39 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["538" "Thursday" "7" "January" "2016" "12:10:37" "+0100" "Nico Golde" "oss-security+ml@ngolde.de" "<20160107111037.GO8020@coredump>" "10" "[oss-security] CVE id request: dhcpcd" nil nil nil "1" "2016010711:10:37" "[oss-security] CVE id request: dhcpcd" (number mark "U       oss-security Jan  7   10/538   " thread-indent "\"[oss-security] CVE id request: dhcpcd\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 32282 invoked by uid 550); 7 Jan 2016 11:11:11 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,46 +12,27 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5268 invoked from network); 14 Jun 2023 22:33:38 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=netmeister.org;
-	s=2023; t=1686782006;
-	bh=Gdmio0qgiYQec7JgSFi8MP33gN5LeAlqdtZ+wFzm6ZQ=;
-	h=From:To:Subject:Content-Type:From:To:Subject;
-	b=omlGqMtS9+GeXtYJ+Dmh03/l5uDwyEj09tM98nonJPtwIFMCt5olqm4voeeM7Y8iJ
-	 OpCuJ/QOXdgSNd/TsgDKGa0jbZD0uJz3xW+1RhTz1kFo4VWNKmX1ZYfFDykSbwcc8w
-	 L7eeEnNMqmdUXK63Y/z+ZOysjcqTgcP+WzmxGE1GnjTkqmE58Qu2ctfcmPXmH76De+
-	 N4APGs6g58D+poKnjiVhQdxDlZHsesAqw5a6YxJ9qkHLJqFhArVa6mZSX8eyAUoh9u
-	 k/zDVvmlWj3SuOjGr1e88G8t0S4PEqslNAR9fcZlx9dqPatjkogb5cqLJfC6X5mCac
-	 SDztwdmDMGnaA==
-Date: Wed, 14 Jun 2023 18:33:25 -0400
-From: Jan Schaumann <jschauma@netmeister.org>
+Received: (qmail 32174 invoked from network); 7 Jan 2016 11:10:50 -0000
+Date: Thu, 7 Jan 2016 12:10:37 +0100
+From: Nico Golde <oss-security+ml@ngolde.de>
 To: oss-security@lists.openwall.com
-Message-ID: <ZIpANf8DGHFYVBFR@netmeister.org>
+Cc: cve-assign@mitre.org
+Message-ID: <20160107111037.GO8020@coredump>
+Mail-Followup-To: oss-security@lists.openwall.com, cve-assign@mitre.org
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Subject: [oss-security] RCE in acme.sh < 3.0.6
+X-Mailer: netcat 1.10
+X-GPG: 0xA0A0AAAA
+Subject: [oss-security] CVE id request: dhcpcd
 
-Hi,
+dhcpcd recently fixed two security issues. Can you assign CVE ids to these?
 
-I don't think this has been raised here:
+http://roy.marples.name/projects/dhcpcd/info/76a1609352263bd9
+can lead to a heap overflow via malformed dhcp responses later in print_option (via dhcp_envoption1) due to incorrect option length values. exploitation is non-trivial, but i'd love to be proven wrong.
 
-The acme.sh ACME client[1] prior to version 3.0.6[2] has
-an RCE vulnerability allowing a hostile server to
-execute arbitrary commands on the client[3].
+http://roy.marples.name/projects/dhcpcd/info/595883e2a431f65d
+can lead to an invalid read/crash via malformed dhcp responses. not exploitable beyond DoS as far as I can judge.
 
-I was unable to determine whether a CVE has been
-requested for this issue; both the original discussion
-and a second GitHub issue[4] have been inconclusively
-closed for comments (I've reached out to the author).
-
-The issue is also being discussed on Mozilla's
-dev-security-policy[5].
-
--Jan
-
-[1] https://github.com/acmesh-official/acme.sh
-[2] https://github.com/acmesh-official/acme.sh/releases
-[3] https://github.com/acmesh-official/acme.sh/issues/4659
-[4] https://github.com/acmesh-official/acme.sh/issues/4665
-[5] https://groups.google.com/a/mozilla.org/g/dev-security-policy/c/heXVr8o83Ys
+Kind regards,
+Nico
