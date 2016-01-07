@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1050" "Thursday" "8" "February" "2018" "22:23:10" "+0100" "Solar Designer" "solar@openwall.com" "<20180208212310.GA12669@openwall.com>" "23" "Re: [oss-security] SEC Consult SA-20180207-0 :: Multiple buffer overflow vulnerabilities in InfoZip UnZip" "^Cc:" nil nil "2" "2018020821:23:10" "[oss-security] SEC Consult SA-20180207-0 :: Multiple buffer overflow vulnerabilities in InfoZip UnZip" (number mark "        solar@openwa Feb  8   23/1050  " thread-indent "\"Re: [oss-security] SEC Consult SA-20180207-0 :: Multiple buffer overflow vulnerabilities in InfoZip UnZip\"\n") "<3e9d24ce-dfc7-bea5-83f2-3e195e9ee2f8@sec-consult.com>" ("<3e9d24ce-dfc7-bea5-83f2-3e195e9ee2f8@sec-consult.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1506" "Thursday" "7" "January" "2016" "15:40:53" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160107204053.68482332272@smtpvbsrv1.mitre.org>" "37" "[oss-security] Re: CVE request for vulnerability in OpenStack Nova" nil nil nil "1" "2016010720:40:53" "[oss-security] Re: CVE request for vulnerability in OpenStack Nova" (number mark "U       cve-assign@m Jan  7   37/1506  " thread-indent "\"[oss-security] Re: CVE request for vulnerability in OpenStack Nova\"\n") "<20160107192555.GA82350@hpe.com>" ("<20160107192555.GA82350@hpe.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 16050 invoked by uid 550); 8 Feb 2018 21:24:29 -0000
+Received: (qmail 1819 invoked by uid 550); 7 Jan 2016 20:41:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,41 +11,50 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 13730 invoked from network); 8 Feb 2018 21:23:17 -0000
-Message-ID: <20180208212310.GA12669@openwall.com>
-References: <3e9d24ce-dfc7-bea5-83f2-3e195e9ee2f8@sec-consult.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <3e9d24ce-dfc7-bea5-83f2-3e195e9ee2f8@sec-consult.com>
-User-Agent: Mutt/1.4.2.3i
-Cc: SEC Consult Vulnerability Lab <research@sec-consult.com>
-Date: Thu, 8 Feb 2018 22:23:10 +0100
-From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] SEC Consult SA-20180207-0 :: Multiple buffer overflow vulnerabilities in InfoZip UnZip
-To: oss-security@lists.openwall.com
+Received: (qmail 1791 invoked from network); 7 Jan 2016 20:41:05 -0000
+From: cve-assign@mitre.org
+To: grant.murphy@hpe.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <20160107192555.GA82350@hpe.com>
+Message-Id: <20160107204053.68482332272@smtpvbsrv1.mitre.org>
+Date: Thu,  7 Jan 2016 15:40:53 -0500 (EST)
+Subject: [oss-security] Re: CVE request for vulnerability in OpenStack Nova
 
-On Thu, Feb 08, 2018 at 08:19:20AM +0100, SEC Consult Vulnerability Lab wrote:
-> 2018-01-17: Informing distros@vs.openwall.org about the upcoming advisory.
-> 2018-02-01: Received CVE numbers.
-> 2018-02-07: Publication of the advisory
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Thanks for including the timeline.
+> Xen connection password leak in logs via StorageError
+> 
+> If a StorageError occurs when attempting to connect a volume
+> using the Xen API, the connection parameters will be logged. These
+> parameters may include credentials that are not masked.
+> 
+> https://launchpad.net/bugs/1516765
 
-So this is a violation of the distros list policy on maximum embargo
-time.  Per list policy the reporter must have made the issue public in
-at most 14 days, and per the tasks the distros had volunteered for
-Gentoo (primary) and Amazon (backup) should have been posting reminders
-for this to happen.  Instead, other distros posted such reminders
-(thanks!) when it was already too late.
+Use CVE-2015-8749 for the lack of strutils.mask_password use. There is
+no CVE ID for the https://bugs.launchpad.net/bugs/1321785 related
+discussion of a design issue.
 
-As list admin, I apologize for allowing this delay.  Yet I am not going
-to watch the watchers all the time, which would be quite pointless (if I
-were to do that, I could as well be taking care of all the tasks myself,
-without asking the distros to volunteer for any).
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Gentoo have already acknowledged the omission, and are taking measures.
-I haven't heard from Amazon on this yet.
-
-Alexander
+iQIcBAEBCAAGBQJWjszMAAoJEL54rhJi8gl5RMAP/RcP2koL8KmPcmnknO/jFAGp
+ZARI12CsqoS6u+lKUsr0ZnNLbOoJHzIyiinEtRSTrisyrZIF9pLjlCVQ3xwPDZUr
+IIVpW5clK3WWsl4838LgtIFfQwTHot8slglIIvWMyfPh/VVMqNA4rWU/i8+loscw
+82WnO+rgaMnZDH68IKyEBFkrrvdvrP0ixB3Q0ImjxfnjXqy74PwNzeRWCi26D5+8
+FEJEmmaXjkP0nWr1HoKkGuDb2A8TS8ZrNNDCFKJXbQccVv3EikPMAwCdp8yVROmo
+jFALhLJSsiyDqOFVFNYQKb6pCTOGQOXunba8AFnTK2XzGOVx/bSQOUVUQn84B7Fo
+CC7vneB6upaPNH2lYj8De0Iiw1asPQh1KJhhFR7/3qHZ/9H6WX13GHGfs4/tqDT4
+PS5aYJvcW8klwOoy2x2w5bHS2n1fQkvbOzJ1u61xlAleyA0+LICyU/l3nrhz9R+7
+V/s8M3sFMh5/eLfYIJEa24fITUnJxU5jt6DiPFgsz1f34msek8x2GitK1NsCMEkO
+4Vz6Fp2D6sQlEiTkA/vkUbHMZRcgmbw13If+kWRFevDA1epXWn2h+ikHV687ENvD
+dnm6bCUrLYzV4o204hVnrN7G9IzuOYawgrZ3ZC76tkGBJoBDeWiM1UK2TB3b9qvY
+3ixDLcVIthDIaJTmNEds
+=Zujb
+-----END PGP SIGNATURE-----
