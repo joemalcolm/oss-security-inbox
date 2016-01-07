@@ -1,85 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/17/6
-Message-ID: <2ECE9D9EEF1F524185270138AE23265954F00D33@S0MSMAIL112.arc.local>
-Date: Wed, 17 Feb 2016 15:39:13 +0000
-From: Fiedler Roman <Roman.Fiedler@....ac.at>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Feedback and mentoring (reviewer) for logdata-anomaly-miner
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/07/5
+Message-ID: <CADLX=aHqBcivip=qZkCMu94Nzv1rnvN7eJSym1CStDTOdmUSKQ@mail.gmail.com>
+Date: Thu, 7 Jan 2016 16:40:03 +0530
+From: Rahul Pratap Singh <techno.rps@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: WP Symposium Pro Social Network plugin XSS and Critical CSRF
 Content-Type: text/plain; charset=utf-8
 
-Hello List,
+Hi,
 
-We want to share a part of a log-data analysis pipeline tool as open source
-Debian package. As we are especially interested in feedback from security
-engineers, we want to have it easily to install and remove on common
-distributions to lower the barrier for testing.
+During my research, I found some vulnerabilites in "WP Symposium Pro Social
+Network plugin" version 15.12 (latest) and wanted to request you to assign
+CVE-id for them. I've already contacted vendor, who has deployed a patch.
 
-<?Timesaver: in short, who is interested in package review, mentoring?
-Others may stop reading here. ?>
 
-Motivation: Have toolset to allow construction of lightweight and very
-flexible processing pipelines for purposes ranging from simple value checks
-(e.g. like logcheck on single machine but with data streaming operation (not
-batch), O(log(n)) instead of O(n) CPU resources due to tree-shaped parsing
-models, mail alerting with exponential backoff, ...) but also to find
-atypical sequences of commands (correlation based whitelisting of logdata -
-AECID approach) or analyse action sequences in normal operation, that could
-be exploited in malicious environments (blacklisting approach, e.g. to fully
-automate detection of issues similar to those reported by us last year [1],
-[2], [3]). This should all run smoothly with limited resources and limited
-risks even on production machines, e.g. to set intelligent probes on those
-machines.
+vendor: https://wordpress.org/support/plugin/wp-symposium-pro
 
-The package contains the initial standalone version of the distributed
-mining component, ported from Java. The idea is to distribute the
-security-critical core as reviewed lightweight package to allow simple
-update in case security issues were found. Rulesets and configuration
-packages for complex scenarios will follow in separate packages. As they do
-not contain root-executed code, review requirements are far less strict.
+Patch: Update to version 16.1
 
-Configuration format of unprivileged analysis pipeline is currently plain
-Python. This will be augmented with configuration generators/better
-generation format as soon as it becomes clear, if there is a community use
-for it and which usecases are most relevant for them. (we use it for
-research and have no problem with current semi-automatic config generation
-for that purpose).
+Pls, let me know, if any additional information is needed.
 
-Is there someone on this list also mentoring for Debian, e.g. on [4] to
-review and mentor the code in [5], especially regarding security
-implications? Apart from the packaging and standard distribution-related
-issues, I would be glad to point to all the problematic spots with security
-impact I already known, hopefully to detect all security weaknesses before
-publication of the package.
+Ref:
+https://wordpress.org/plugins/wp-symposium-pro/changelog/
+http://www.wpsymposiumpro.com/wp-symposium-pro-16-01-critical-update/
 
-Kind Regards,
-Roman Fiedler
-
-[1] https://bugs.launchpad.net/ubuntu/+source/lxc/+bug/1476662
-[2] https://bugs.launchpad.net/ubuntu/+source/lxc/+bug/1475050
-[3] https://bugs.launchpad.net/ubuntu/+source/lxc/+bug/1470842
-[4] http://mentors.debian.net/
-[5] http://mentors.debian.net/package/logdata-anomaly-miner
-[6] https://launchpad.net/logdata-anomaly-miner
-[7]
-http://bazaar.launchpad.net/~roman-fiedler/logdata-anomaly-miner/roman-fiedl
-er/view/head:/source/root/usr/share/doc/aminer/Readme.txt
-
-PS: See [6] for package description, [7] for intro, manpage attached (nroff
--man AMiner.1)
-
-DI Roman Fiedler
-Scientist
-Digital Safety & Security Department
-Assistive Healthcare Information Technology
-
-AIT Austrian Institute of Technology GmbH
-Reininghausstraße 13/1 | 8020 Graz | Austria
-T +43(0) 50550 2957 | M +43(0) 664 8561599 | F +43(0) 50550 2950
-roman.fiedler@....ac.at | http://www.ait.ac.at/
-
-FN: 115980 i HG Wien  |  UID: ATU14703506
-http://www.ait.ac.at/Email-Disclaimer
-
-Download attachment "AMiner.1" of type "application/octet-stream" (4018 bytes)
-
-Download attachment "smime.p7s" of type "application/pkcs7-signature" (6344 bytes)
