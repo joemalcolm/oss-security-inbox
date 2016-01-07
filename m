@@ -1,23 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/02/4
-Message-ID: <CACn5sdRoP9Aek2NFS84gCQjiNA-cK0udHRZaZxsJ4mq2ivR81Q@mail.gmail.com>
-Date: Thu, 2 Jun 2016 11:40:37 +0200
-From: Gustavo Grieco <gustavo.grieco@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/07/10
+Message-ID: <20160107234606.GB18482@openwall.com>
+Date: Fri, 8 Jan 2016 02:46:06 +0300
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: DoS in phantomjs 2.1.1 rasterizing websites
+Subject: Fwd: Integer overflow in the JasPer's jas_matrix_create() function
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+The following message didn't make it to the list in time, getting stuck
+in a temporary spam folder (so the moderators did not see it until I
+just happened to find it in there today).
 
-A denegation of service vulnerability was found in phantomjs when it
-is processing a particular svg file. This crash caused by a null
-pointer derreference can be easily used by a malicious website to
-avoid rasterizing when it is crawled using phantomjs 2.1.1. Previous
-versions like 1.9.x are not affected. A reproducer is available here:
+I've also re-attached the PoC that was attached to the original message.
 
-https://github.com/ariya/phantomjs/issues/14244
+Apparently, the issue was also reported on December 24 here:
 
-Please assign a CVE if suitable.
+https://bugzilla.redhat.com/show_bug.cgi?id=1294039
 
-Regards,
-Gustavo.
+The reason for the false spam detection turned out to be the Chinese
+gb2312 charset.  We expect only English messages on most Openwall
+mailing lists, so the following non-English charsets commonly seen in
+spam arriving to our lists are currently treated as spam indicators:
+
+koi8-*
+windows-1251
+shift_jis
+iso-2022-jp
+big-5
+gb2312
+
+These may or may not trigger spam detection depending on more factors,
+which is why some other messages by the same sender made it through.
+
+Unfortunately, this detection may sometimes be triggered on
+mostly-English messages that have one of these charsets specified for
+the message body (as it was in this case) or the message Subject.
+
+For now, my advice is to avoid using these non-English charsets when
+posting to English-only mailing lists.  We might reconsider the
+anti-spam settings, although so far they've been reasonably effective
+and such misdetection appears rare.
+
+----- Forwarded message from limingxing <limingxing@....cn> -----
+
+From: limingxing <limingxing@....cn>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+CC: ?????? <huangyonggang@....cn>
+Subject: Integer overflow in the JasPer's jas_matrix_create() function
+Date: Thu, 31 Dec 2015 02:05:38 +0000
+
+Hello,
+We find a vulnerability in the way JasPer's jas_matrix_create() function parsed certain JPEG 2000 image files. 
+
+jas_matrix_t *jas_matrix_create(int numrows, int numcols)
+{
+	.......
+
+	if (matrix->maxrows_ > 0) {
+		if (!(matrix->rows_ = jas_malloc(matrix->maxrows_ *
+		  sizeof(jas_seqent_t *)))) {
+
+        ................
+
+matrix->maxrows_ > 0 ,but matrix->maxrows_ *sizeof(jas_seqent_t *) can cause Integer overflow.
+
+Despite this library is used by many programs (http://www.ece.uvic.ca/~frodo/jasper/#overview), there is no one providing support.
+
+
+This vulnerability was found by Qihoo 360 Codesafe Team
+
+----- End forwarded message -----
+
+Download attachment "poc.jp2" of type "application/octet-stream" (212 bytes)
