@@ -1,44 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/07/5
-Message-ID: <20160607074900.GA10065@lorien.valinor.li>
-Date: Tue, 7 Jun 2016 09:49:00 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: oss-security@...ts.openwall.com
-Cc: Mitre CVE assign department <cve-assign@...re.org>
-Subject: Re: Please reject duplicate CVE for libxml2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/07/7
+Message-Id: <20160107182324.DD9B272E06A@smtpvbsrv1.mitre.org>
+Date: Thu,  7 Jan 2016 13:23:24 -0500 (EST)
+From: cve-assign@...re.org
+To: guillaume.ayoub@...ea.fr
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request for radicale
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-On Tue, Jun 07, 2016 at 09:34:51AM +0200, Martin Prpic wrote:
-> Hi, it seems two CVEs were assigned for the same issue in libxml2:
-> 
-> http://seclists.org/oss-sec/2016/q1/683
-> http://seclists.org/oss-sec/2016/q2/214
-> 
-> Daniel Veillard reported to us that these issues are the same and fixed
-> by:
-> 
-> https://git.gnome.org/browse/libxml2/commit/?id=bdd66182ef53fe1f7209ab6535fda56366bd7ac9
-> 
-> The upstream bug is:
-> 
-> https://bugzilla.gnome.org/show_bug.cgi?id=762100
-> 
-> Can CVE-2016-4483 please be rejected as a duplicate of CVE-2016-3627?
+> here are for me the 3 real independent vulnerabilities
+> reported and fixed in 1.1:
 
-What though is confusing is that the two commits are tagged
-accordingly in the upstream git repository:
+OK, we will keep the two CVE IDs already assigned in
 
-Tagged for CVE-2016-4483:
-https://git.gnome.org/browse/libxml2/commit/?id=c97750d11bb8b6f3303e7131fe526a61ac65bcfd
+  http://www.openwall.com/lists/oss-security/2016/01/06/4
 
-Tagged for CVE-2016-3627:
-https://git.gnome.org/browse/libxml2/commit/?id=bdd66182ef53fe1f7209ab6535fda56366bd7ac9
+and add one more CVE ID for the third issue.
 
-For the updates in Debian thus we have used both and referenced both
-CVEs, think Ubuntu has done the same in USN 2994
-(http://www.ubuntu.com/usn/usn-2994-1/)
 
-Regards,
-Salvatore
+> 3. "On MS Windows the filesystem backend allows access to the first
+> level of files on a drive."
+> 
+> The filesystem backend is the default storage backend. When used, it 
+> converts paths like /c:/filename/dummy to c:\filename, and allowing 
+> anybody to read/write anything anywhere, by sending requests with 
+> particular paths and contents.
+
+Use CVE-2016-1505.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJWjqzGAAoJEL54rhJi8gl5ls8P/3X6IIeZYgpQ9bwDGeVTdPiu
+qkeJl0cLsikGu2+uyfSTVA5s869DUXERPHLAAVq96LJBm6uWK/w22Z+3D8QPZBqF
+IjfR5uMe6HMizpBEiJb2MXWBS1kcjKBOU7kJKBHbToYnJCzhX8WIPW7EG69W/d+/
+K4ILFTTXwO/bZunY4wdIM08mE+LQZZEvdGTLm8roIGoorl/qC/ox0ZSWx+mmkf2p
+PY/KPSnIPG/4gfF+50lCtluV73fI0i1m9si6IBSlwaWA9Bij1tBrtmj+TnBCKu5n
+KW8nRQYwGK6WKh9xZ87fxavRh7jnrwWUYNGpK/NC11DANGa9PLkz4w/oufEm3G00
+4Zxd7orjvO81bD3UHiv8hYPEAHtkqBxyoDItctR+yZ0owFDd/EbrIie9yPGheeW8
+EgosX7xs5nQ/YNIip2FdGZvS+kjhMvf0O/teO6exdMGlPv1UnFwCl67XyRbp8qt3
++8kaEzAgib84Jg/jEvE353MJ+kHS0FJaA6GI282lRC13OZfLVqi621KXr7xVqstD
+WCb0wOza2tCsmcE3nvMqmqKpIrWk+O5MPtcq5yXmpQV/LonJIqF5gQUcrW0iKEdM
+LFrSp20MgnrX31nRSlSvNiTijcZBCPqgi+yBhuFLbtYs95YAlLhXen7oB53NF8zn
+YEwGYy/Oa476zqRq3/FP
+=SRvk
+-----END PGP SIGNATURE-----
