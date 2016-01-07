@@ -1,27 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/24/1
-Message-ID: <CANK7Sy-z=M=S+SPfy1x4Mkz4rUb5aFUtquhJujQnm+60DQr4ng@mail.gmail.com>
-Date: Tue, 24 May 2016 16:01:42 +0800
-From: Yue Liu <liuyue0310@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: David Anderson <davea42@...uxmail.org>
-Subject: CVE request: Multiple vunerabilities in libdwarf & dwarfdump
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/07/1
+Message-ID: <CALPTtNW1aQq5JkniYnFJzox6Pz_ygbWGmapEK0fXPN1SWGBFkw@mail.gmail.com>
+Date: Wed, 6 Jan 2016 16:17:57 -0800
+From: Reed Loden <reed@...dloden.com>
+To: oss-security@...ts.openwall.com,  Assign a CVE Identifier <cve-assign@...re.org>
+Subject: CVE request: Missing normalization in ruby gem rack-attack <4.3.1 when used with ruby on rails
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Saw this tweeted. No public security notification outside of the release
+notes and a few tweets, it seems. :(
 
-There are multiple vunerabilities in libdwarf&dwarfdump which were
-discovered by Yue Liu(lieanu <liuyue0310@...il.com>) and Qixue Xiao.
+Rack::Attack <4.3.1 does not normalize paths before processing them,
+meaning that if there is a throttle or block rule for /login, a malicious
+user could use /login/ to bypass the check. This only affects Rails
+applications.
 
-Vulnerabilities DW201605-001 to DW201605-019 in
-https://www.prevanders.net/dwarfbug.html
-And anther one https://bugzilla.redhat.com/show_bug.cgi?id=1330237
-All vulnerabilities have been fixed in upstream.
+More details: https://github.com/kickstarter/rack-attack/releases/tag/v4.3.1
 
-POC: https://sourceforge.net/p/libdwarf/regressiontests/ci/master/tree/liu/
+Fixed by:
+https://github.com/kickstarter/rack-attack/commit/76c2e3143099d938883ae5654527b47e9e6a8977
 
-Could you please assign CVE ids for these issue? Thanks.
+Related tweets:
 
-Regards,
-Yue Liu
+https://twitter.com/rorsecurity/status/678878091314335744
+https://twitter.com/IncludeSecurity/status/677905982391984129
+
+This could almost be categorized as CWE-289 "Authentication Bypass by
+Alternate Name", but it's not really authentication here. I couldn't find a
+better CWE without getting too generic.
+
+Needs a CVE assigned.
+
+~reed
 
