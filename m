@@ -1,51 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/22/5
-Message-ID: <2630257.ZRS1qYvz9N@blackgate>
-Date: Thu, 22 Dec 2016 09:51:41 +0100
-From: Agostino Sarubbo <ago@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/07/3
+Message-ID: <20160107111037.GO8020@coredump>
+Date: Thu, 7 Jan 2016 12:10:37 +0100
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Cc: tapper <lancett01@...glemail.com>
-Subject: Re: Curious about the security of my router fermwair.
+Cc: cve-assign@...re.org
+Subject: CVE id request: dhcpcd
 Content-Type: text/plain; charset=utf-8
 
-On Wednesday 21 December 2016 11:39:26 tapper wrote:
-> 	Hi my name is Jonathan. I don't know if this is the write place to ask
-> about this but here gos.
-> 
-> I would like to know if any one would like to have a poke around at the
-> third party router firmware I use on my router called Gargoyle.
-> Its a easy to use interface built on top of Openwrt.
-> 
-> I use this firmware because it has some grate plug ins and the user
-> interface has grate a11y. I use a screen reader as I am blind and the
-> html5 interface is easy for me to get around in.
-> 
-> It's homepage
-> https://www.gargoyle-router.com/index.php
-> GitHub
-> https://github.com/ericpaulbishop/gargoyle
-> forum
-> https://www.gargoyle-router.com/phpbb/index.php
-> 
-> The devs behind Gargoyle are really nice people and have helped me out
-> with bugs and made me a mod on the forum.
-> What I would really like to know is just how secure is this firmware?
-> 
-> I'm not a coder. I am just interested in how safe is my router firmware
-> keeping me?
-> 
-> If any one finds any sacurety bugs I know they will get fix.
-> 
-> Thanks and sorry about my spelling Jonathan
+dhcpcd recently fixed two security issues. Can you assign CVE ids to these?
 
-I'm using it too.
+http://roy.marples.name/projects/dhcpcd/info/76a1609352263bd9
+can lead to a heap overflow via malformed dhcp responses later in print_option (via dhcp_envoption1) due to incorrect option length values. exploitation is non-trivial, but i'd love to be proven wrong.
 
-Basically is what Seth said, but apart ffmpeg some more important packages are 
-not up to date, for example:
+http://roy.marples.name/projects/dhcpcd/info/595883e2a431f65d
+can lead to an invalid read/crash via malformed dhcp responses. not exploitable beyond DoS as far as I can judge.
 
-root@...goyle:~# openvpn --version 
-OpenVPN 2.3.6 mips-openwrt-linux-gnu [SSL (OpenSSL)] [LZO] [EPOLL] [MH] [IPv6] 
-built on Nov  7 2015 
-library versions: OpenSSL 1.0.2d 9 Jul 2015, LZO 2.08
-
-
+Kind regards,
+Nico
