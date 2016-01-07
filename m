@@ -1,38 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/10/3
-Message-ID: <alpine.GSO.2.20.1611092039190.23214@freddy.simplesystems.org>
-Date: Wed, 9 Nov 2016 20:41:09 -0600 (CST)
-From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/07/6
+Message-ID: <568EA307.7070605@redhat.com>
+Date: Thu, 7 Jan 2016 17:40:23 +0000
+From: Tristan Cacqueray <tdecacqu@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE Request: libtiff: heap buffer overflow/read outside of array
+Subject: [OSSA 2016-001] Nova host data leak through snapshot (CVE-2015-7548)
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 9 Nov 2016, Ian Zimmerman wrote:
+===================================================
+OSSA-2016-001: Nova host data leak through snapshot
+===================================================
 
-> On 2016-11-09 17:32, Brian 'geeknik' Carpenter wrote:
->
->> http://bugzilla.maptools.org/show_bug.cgi?id=2587
->> Fixed per
->>>> 2016-11-10 Even Rouault <even.rouault at spatialys.com>
->
-> I tried to check out the sources to patch this for myself, following the
-> recipe from the webpage:
+:Date: January 07, 2016
+:CVE: CVE-2015-7548
 
-At the moment, "the web page" should be one of:
 
-  	http://www.simplesystems.org/libtiff/
-  	http://libtiff.maptools.org/
+Affects
+~~~~~~~
+- Nova: <=2015.1.2, ==12.0.0
 
-And this is the description of how to obtain files from CVS:
 
-export CVSROOT=:pserver:cvsanon@....maptools.org:/cvs/maptools/cvsroot
-cvs login
-(use empty password)
-cvs checkout libtiff
-to get the stable libtiff code
+Description
+~~~~~~~~~~~
+Matthew Booth from Red Hat reported a vulnerability in Nova instance
+snapshot. By overwriting the disk inside an instance with a malicious
+image and requesting a snapshot, an authenticated user would be able
+to read an arbitrary file from the compute host. Note that the host
+file needs to be readable by the nova user to be exposed except when
+using lvm for instance storage, when all files readable by root are
+exposed. Only setups using libvirt to spawn instances are vulnerable.
+Of these, setups which use filesystem storage, and do not set
+"use_cow_images = False" in Nova configuration are not affected.
+Setups which use ceph or lvm for instance storage, and setups which
+use filesystem storage with "use_cow_images = False" are all affected.
 
-Bob
--- 
-Bob Friesenhahn
-bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
-GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
+
+Patches
+~~~~~~~
+- https://review.openstack.org/264819 (Kilo)
+- https://review.openstack.org/264820 (Kilo)
+- https://review.openstack.org/264821 (Kilo)
+- https://review.openstack.org/264815 (Liberty)
+- https://review.openstack.org/264816 (Liberty)
+- https://review.openstack.org/264817 (Liberty)
+- https://review.openstack.org/264812 (Mitaka)
+- https://review.openstack.org/264813 (Mitaka)
+- https://review.openstack.org/264814 (Mitaka)
+
+
+Credits
+~~~~~~~
+- Matthew Booth from Red Hat (CVE-2015-7548)
+
+
+References
+~~~~~~~~~~
+- https://bugs.launchpad.net/bugs/1524274
+- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-7548
+
+
+Notes
+~~~~~
+- This fix will be included in future 2015.1.3 (kilo) and 12.0.1
+(liberty) releases.
+
+--
+Tristan Cacqueray
+OpenStack Vulnerability Management Team
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
