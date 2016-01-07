@@ -1,42 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/12/6
-Message-ID: <CAKG8Do4-EQkguy1Q+=khZsnPNXLDn5bueBAgPg+FuDvffLST8A@mail.gmail.com>
-Date: Tue, 12 Jul 2016 17:20:57 +0200
-From: Cedric Buissart <cbuissar@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/07/8
+Message-ID: <20160107192555.GA82350@hpe.com>
+Date: Thu, 7 Jan 2016 11:25:55 -0800
+From: Grant Murphy <grant.murphy@....com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2016-5011: util-linux: Extended partition loop in MBR partition table leads to DoS
+Cc: cve-assign@...re.org
+Subject: CVE request for vulnerability in OpenStack Nova
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jul 11, 2016 at 5:19 PM, Florian Weimer <fweimer@...hat.com> wrote:
+A vulnerability was discovered in OpenStack (see below). In order to
+ensure full traceability, we need a CVE number assigned that we can
+attach to further notifications. This issue is already public, although
+an advisory was not sent yet.
 
-> On 07/11/2016 01:32 PM, Cedric Buissart wrote:
->
-> I looked at other projects to see what is being done to prevent this
->> particular loop from happening. Until now, tools I checked are protected
->> either by detecting the loop (i.e.: actively searching for a relative
->> offset of 0 for the next EBR, as done by this util-linux patch; partprobe
->> and fdisk are doing that), or enforcing a limit on the maximum number of
->> partitions for a device (Linux kernel, kpartx & other tools I currently
->> checked)
->>
->
-> How does util-linux protect against loops which are non-empty?  Does it
-> reject negative offsets?
->
-Indeed, the the patch wasn't sufficient.
-The following has been added, in order to prevent jumping back to a
-precedent EBR :
-https://github.com/karelzak/util-linux/commit/50d1594c2e6142a3b51d2143c74027480df082e0
+Title: Xen connection password leak in logs via StorageError
+Reporter: Matt Riedemann (IBM)
+Products: Nova
+Affects: >= 2014.2 <= 2015.1.2, ==12.0.0
 
+Description:
+Matt Riedemann from IBM reported an information disclosure vulnerability
+in Nova. If a StorageError occurs when attempting to connect a volume
+using the Xen API, the connection parameters will be logged. These
+parameters may include credentials that are not masked. An attacker
+with read access to Nova logs could use these credentials with the
+Xen API directly. Only Nova deployments using the Xen backend are
+affected by this flaw.
 
->
-> Thanks,
-> Florian
->
+References:
+https://launchpad.net/bugs/1516765
 
+Thanks in advance,
 
+--
+Grant Murphy
+OpenStack Vulnerability Management Team
 
--- 
-Cedric Buissart,
-Product Security
-
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
