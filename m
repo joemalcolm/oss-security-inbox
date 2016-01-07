@@ -1,56 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/29/2
-Message-ID: <20160629090849.1bdac2cc@pc1>
-Date: Wed, 29 Jun 2016 09:08:49 +0200
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: MatrixSSL lack of RSA-CRT hardening
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/07/11
+Message-Id: <20160107235525.A35F6332283@smtpvbsrv1.mitre.org>
+Date: Thu,  7 Jan 2016 18:55:25 -0500 (EST)
+From: cve-assign@...re.org
+To: xiaoqixue_1@....com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request --  NULL dereference in libdwarf
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 27 Jun 2016 08:08:14 +0200
-Florian Weimer <fw@...eb.enyo.de> wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-> (There are some other changes whose description suggests they would
-> warrant CVE assignment as well, but I have not looked at those.)
+> we report  a NULL dereference in libdwarf  which is found by Qixue Xiao.
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=1294264
 
-This (from CHANGES.md) seems notable and probably deserves a CVE:
+>> https://bugzilla.redhat.com/show_bug.cgi?id=1294264#c2
 
--------------
-##Side Channel Vulnerability on RSA Cipher Suites
-A Bleichenbacher variant attack, where certain information is leaked
-from the results of a RSA private key operation has been reported by a
-security researcher. The code has been updated to error without
-providing any information on the premaster contents.
+>> The problem is that the debug_abbrev section is marked as NOBITS in
+>> the ELF file - in other words as a zero-init section rather than a
+>> section with contents in the file.
 
-> Note that other side channel attacks may still be possible as
-> MatrixSSL non-FIPS crypto is not always constant-time.
--------------
+>> That is clearly bogus, but obviously shouldn't crash
 
+>>> http://www.prevanders.net/dwarf.html
 
-This also:
--------------
-##Access Violation on Malicious TLS Record
-TLS cipher suites with CBC mode in TLS 1.1 and 1.2 could have an access
-violation (read beyond memory) with a maliciously crafted message.
--------------
+>>> Work In Progress 2015-12-30
 
-This is probably the same bug as described here:
-https://web-in-security.blogspot.no/2016/05/curious-padding-oracle-in-openssl-cve.html
+>>> Thanks to Tom Hughes for bringing a problem reading a
+>>> badly-damaged (fuzzed) elf object to my attention: now libdwarf
+>>> gets an error not a coredump.
 
-Quote
--------------
-OpenSSL is not alone. I found a similar problem in the MatrixSSL
-library, see
-https://github.com/matrixssl/matrixssl/blob/master/CHANGES.md. In that
-case, unfortunately, a bad patch of Lucky 13 lead even to a buffer
-overread vulnerability.
--------------
+>>>> https://github.com/tomhughes/libdwarf/commit/11750a2838e52953013e3114ef27b3c7b1780697
 
--- 
-Hanno Böck
-https://hboeck.de/
+Use CVE-2015-8750.
 
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Content of type "application/pgp-signature" skipped
+iQIcBAEBCAAGBQJWjvojAAoJEL54rhJi8gl5BwoP/2yl38aXiRB772a3+OhHyfsa
+1DiUFglVG5/1QnLAcG3jOzTnXxHje7f3pTKbCv2csbBtiQmAMDT70OKSCxA2E96q
+rbpKnysRbfT8AYZ76mSQCKE1tPwE+ZBG730DrHyhsUWm+cTLh+gYUX6tV7BFPbU2
+mQOhI00YpFZ8U/20W1ri8cAHvQ4CJCi2Ta2EViZ4Y7v58fbapeI3MUnR0DifKlUj
+ob1tpmfIL3N1OAFFo9vYNGM6xgxfuZoVbNOUoAYeXagsAsHfivpDwhSeeZNCeUsf
+58qfI9OhYZWj6xHopPDQ8K1QD+e9g9VpnUepgB319OssgI6pcjG49i4tNVva4JO3
+jTNQ+UpvbeoLYOOr80FtYjr51CfwgX3XkcZvz/wsSulLDPhTeqKZz4Q69JKCC2Ib
+R2Oby2Hs9476yj28jF9Sg9Ekf2y2vVpqfv5JhQy08Nhx43xUurhgCsBUhixoHgwQ
+5E7NT+iMQtRiJN2Ucu/2mK9A9z6RYmEAmaHQx/aRWUfLFNeoynWE/1xJ/3tUvPJT
+FsVP8bI6OAq0VDzqNhMJIDTOLlQjfLo6gUTEmuiuW0jjWh5NUV96EJBaZSfQsoFx
+//oSh9MOJfiQlfPhb7ws+l/Ae13QwUeOVZ77jkWKxgPlxC2ZzMtQJrsx0MVI+7wM
+s9ovDcDoapmCIhtkv/JQ
+=oEHA
+-----END PGP SIGNATURE-----
