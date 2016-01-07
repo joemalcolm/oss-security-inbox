@@ -1,43 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/11/10
-Message-Id: <20160511154358.8C88E3AE008@smtpvbsrv1.mitre.org>
-Date: Wed, 11 May 2016 11:43:58 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/07/4
+Message-Id: <20160107160502.5193472E077@smtpvbsrv1.mitre.org>
+Date: Thu,  7 Jan 2016 11:05:02 -0500 (EST)
 From: cve-assign@...re.org
-To: astieger@...e.com
+To: oss-security+ml@...lde.de
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: libksba out-of-bouds read remote DOS issue fixed in 1.3.4
+Subject: Re: CVE id request: dhcpcd
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> http://git.gnupg.org/cgi-bin/gitweb.cgi?p=libksba.git;a=commit;h=a7eed17a0b2a1c09ef986f3b4b323cd31cea2b64
+> http://roy.marples.name/projects/dhcpcd/info/76a1609352263bd9def1300d7ba990679571fa30
 
-> The returned length of the object from _ksba_ber_parse_tl (ti.length)
-> was not always checked against the actual buffer length, thus leading
-> to a read access after the end of the buffer
+> dhcp_optlen now returns the length of the data we can sanely work on
+> given the option definition and data length. Call dhcp_optlen in
+> dhcp_envoption1 to take into ensure these bounds are not overstepped.
+> Fixes an issue reported by Nico Golde where extra undersized data was
+> present in the option. An example of this would be an array of
+> uint16's with a trailing byte.
 
-Use CVE-2016-4579.
+>> can lead to a heap overflow via malformed dhcp responses later in
+>> print_option (via dhcp_envoption1) due to incorrect option length
+>> values
+
+Use CVE-2016-1503.
+
+
+> http://roy.marples.name/projects/dhcpcd/info/595883e2a431f65d8fabf33059aa4689cca17403
+
+> Ensure that option length fits inside data length less option size.
+> Thanks to Nico Golde for the report.
+
+>> can lead to an invalid read/crash via malformed dhcp responses
+
+Use CVE-2016-1504.
 
 - -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJXM1LfAAoJEHb/MwWLVhi2N10P/0+rxmJVD8dNcnKtGuVt4lUc
-R3TTBT9/FzmRzBOqe2sn/2GCgiZVuV1tBKvem16qrQI9wM8tndw8q1Osi+sYcN9q
-bZetnnk0Upi0ix/Zbyx01D8ENCoUTXShhIf5rU4tSZKSInD79KxyzqKWbxCG5Ecd
-5ncqcTApwWdSpmwDJRbZDZ4K38nT8QCAp6DrLUKaMmnOtuYsgdsx/Yc2bZ1gWdIQ
-Jgk7dTrIchh7d88igd6nWRewwmh2WX8dh+iSegs9x6xrEJallqCdqBzWs7kU3edJ
-04jNhqaJIMZcHJrxLV6ozyEA9PdWyMc3+WDaOEQ+T2aPfrnm3+VQl6xRf3vNjins
-eNmYLneyYPAGjJvRL+mzchcb5SOLspNO+GUcN/814RWM90st3U6OTVxl8A6LmAtF
-4ARmrKWClz1vBYAZrXDFIZaECWR2GnkAOO0pEPtn1/WCu/Nq+/h0KAFxH9LQObtG
-EtrbOs04/66Ny2TR0yw2TWnlqJoI5vzXuSE3ofpOxDX6ComyCypURsqIzO3xP/xg
-8WxCuMDaD5ZRqSPavsKXnvPrYvCTr2P+tysqfwc50wiNKBmE7cj3ZmRB3jWQE79w
-4T8k6H7h+8SYwHkmfhV0m8yA8slKYXfOK6+TaVf6ZmCIySpb7WcdHa7Xk2mz2ric
-0myN/q9o1w35t7c230xx
-=UcFl
+iQIcBAEBCAAGBQJWjovzAAoJEL54rhJi8gl5qPoP/09Wz1OS85Nf+AvNIW+/8W2p
+K/P2rZtH5LFO5Q372bnGNqwJZchiWn2GF/luo5WNv9tD8YnGOc4FpG/q3Ib7OimO
+3ZlREA6SmpCis0Xm/coLp8OeKyKJyBnLzPY2F0f3fzNvxMm7+bLT+qNcl/gxUv3K
+uPbRsSJlm7pJGX/mDIhEzlsgbVFJAxEa6/DMPnPMQYt6nRE84h7E5+baha7kTss2
+FCSI0fvDM6pM0424hF2tJ7KxVjatpr89gs8GM/esJ/7O84dSxbfuHIuhRnO3Cdz2
+GZshNjPg1mVg5PVZ8KlgKHR7K16cGjCBg6MVvZ4PO1R+gCJeWTEUuwIZstNYNLr5
+86ikcvgmLIA6gBv4urTq5f4qk9cMd9bT9HoTuGEvcNjQUkXxH3r2b2m6Z5iFTBHA
+Yz3V2+qC667Dz2Cc6u7XRbdytFDHBdRVdN75kL4e49i3T1h2e1hL6OUywh9mcTVW
+WRBFUMfjb/6ygG1e8uAt11dvu0hPKFLjhra3kupnkvsPSoS7Q+cFIpZp8wxI178n
+yyjRJtXJg1SwQgxAvjz/mxdDVaNYy+/l9DROO/PtJkvLapnXBSGr6X7ETRbbt3bp
+wIiDA3XsCx89wdg04BroekQQj2LuTqal0ka7deq2zlESe8Lp318ZvddHydNvhLBP
+v+u2ckznzWdtquNvh3Fe
+=4+1K
 -----END PGP SIGNATURE-----
