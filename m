@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1398" "Tuesday" "8" "September" "2020" "08:33:00" "-0700" "Andy Lutomirski" "luto@kernel.org" "<CALCETrXCbDDPe_Z2xxycPPaFC4pxaJYYkGLC4CsiDaRB9BVgMg@mail.gmail.com>" "34" "[oss-security] CVE Request: Linux kernel vsyscall page refcounting error" nil nil nil "9" "2020090815:33:00" "[oss-security] CVE Request: Linux kernel vsyscall page refcounting error" (number mark "U       luto@kernel. Sep  8   34/1398  " thread-indent "\"[oss-security] CVE Request: Linux kernel vsyscall page refcounting error\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE Request: Linux kernel vsyscall page refcounting error" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3094" "Friday" "8" "January" "2016" "14:55:17" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160108195517.AE8F26C00A6@smtpvmsrv1.mitre.org>" "75" "[oss-security] Re: CVE Request: freeradius: the EAP-PWD module performs insufficient validation on packets received from an EAP peer" nil nil nil "1" "2016010819:55:17" "[oss-security] Re: CVE Request: freeradius: the EAP-PWD module performs insufficient validation on packets received from an EAP peer" (number mark "U       cve-assign@m Jan  8   75/3094  " thread-indent "\"[oss-security] Re: CVE Request: freeradius: the EAP-PWD module performs insufficient validation on packets received from an EAP peer\"\n") "<55BB16DD.2000206@redhat.com>" ("<55BB16DD.2000206@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 29828 invoked by uid 550); 8 Sep 2020 15:33:26 -0000
+Received: (qmail 30201 invoked by uid 550); 8 Jan 2016 19:55:30 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,59 +12,87 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 29807 invoked from network); 8 Sep 2020 15:33:25 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1599579193;
-	bh=0BuOV5GgWYEdp5dYq0rKyPZod2iLNQ+hKKLcTmDvEHU=;
-	h=From:Date:Subject:To:From;
-	b=mSLlHBv2mAYux6NzQGZwSbA8/VSg8LE2Wm/vMG5bhWYsLmOMO8PlO7qKdkSE+uLAN
-	 QuFkDDIV2ukFkbJUj/W6XsAU3IhHgNjj9MdkjmztubxuR/hjUKxGjCtC8hFDNiAL7y
-	 +c5d9J9kWO2UXOVNCkwNXZuRwxRpViVtffI6gVt4=
-X-Gm-Message-State: AOAM531zzULN9vE/RBrKs4ykNx1n7Fl1GN4IcMcA5y+TqjAWP3oX9cN0
-	DAMo1mLOFk8pBZ4zDqHIxR+ncFAP1rIAJPjdKKqDRA==
-X-Google-Smtp-Source: ABdhPJzIXvqxGn8SGqfw5fZ4GTZchmpIPVBaaBUQFaxvNLQsOOZHZZo+MSLh9SJnLNBrhOwgY29w4R4j1HX4f9f5bWI=
-X-Received: by 2002:a5d:5111:: with SMTP id s17mr239570wrt.70.1599579191922;
- Tue, 08 Sep 2020 08:33:11 -0700 (PDT)
-MIME-Version: 1.0
-From: Andy Lutomirski <luto@kernel.org>
-Date: Tue, 8 Sep 2020 08:33:00 -0700
-X-Gmail-Original-Message-ID: <CALCETrXCbDDPe_Z2xxycPPaFC4pxaJYYkGLC4CsiDaRB9BVgMg@mail.gmail.com>
-Message-ID: <CALCETrXCbDDPe_Z2xxycPPaFC4pxaJYYkGLC4CsiDaRB9BVgMg@mail.gmail.com>
-To: oss security list <oss-security@lists.openwall.com>
-Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] CVE Request: Linux kernel vsyscall page refcounting error
+Received: (qmail 30180 invoked from network); 8 Jan 2016 19:55:29 -0000
+From: cve-assign@mitre.org
+To: huzaifas@redhat.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, jmm@debian.org
+In-Reply-To: <55BB16DD.2000206@redhat.com>
+Message-Id: <20160108195517.AE8F26C00A6@smtpvmsrv1.mitre.org>
+Date: Fri,  8 Jan 2016 14:55:17 -0500 (EST)
+Subject: [oss-security] Re: CVE Request: freeradius: the EAP-PWD module performs insufficient validation on packets received from an EAP peer
 
-Linux 5.7 and 5.8 have a bug in the reference counting of the struct
-page that backs the vsyscall page.  The result is a refcount
-underflow.  This can be triggered by any 64-bit process that is
-permitted to use ptrace() or process_vm_readv().  A creative attacker
-can probably achieve kernel code escalation by using this bug.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-You can prevent the issue from triggering by booting with
-vsyscall=xonly or vsyscall=none.  You can also effectively hotpatch a
-kernel with suitable hardening options by running the updated test
-case noted below -- the test case will underflow the refcount past
-zero, preventing further use of the page.  (A real attacker would
-carefully underflow it exactly to zero but not past.)  Or you can fix
-your kernel.
+> The FreeRADIUS project has reported a flaw that affects the EAP-PWD
+> module of the freeradius package versions 3.0 up to 3.0.8. This module
+> is not enabled by default, so administrators must have manually enabled
+> it for their servers to be vulnerable.
+> 
+> http://freeradius.org/security.html#eap-pwd-2015
 
-(No one should be using vsyscall=emulate any more unless they have a
-very specific use case that requires it.  vsyscall=xonly is better in
-almost all cases.  For some reason, Fedora still seems to be using
-emulate mode, though.)
+We have revisited this and decided that it needs unique CVE IDs. As
+mentioned on that security.html page, "These issues were found by
+Jouni Malinen as part of investigating
+http://w1.fi/security/2015-4/" - this suggested a possibility that the
+CVE IDs listed in
+http://www.openwall.com/lists/oss-security/2015/05/31/6 would be
+applicable. However, FreeRADIUS apparently has an independent
+implementation of EAP-pwd. This led to a somewhat unusual situation in
+which most of the vulnerability findings were, at a high level, the
+same -- but resulted from a different set of mistakes within a
+different codebase. The applicable FreeRADIUS changes can be found in
+the "Commits on May 4, 2015" section of:
 
-Fixed by:
+  https://github.com/FreeRADIUS/freeradius-server/commits/v3.0.x/src/modules/rlm_eap/types/rlm_eap_pwd
 
-commit 9fa2dd946743ae6f30dc4830da19147bf100a7f2
-Author: Dave Hansen <dave.hansen@linux.intel.com>
-Date:   Thu Sep 3 13:40:28 2020 -0700
+and are distinct from the changes in the http://w1.fi/security/2015-4/
+patches.
 
-    mm: fix pin vs. gup mismatch with gate pages
+We are associating the three CVE IDs below with the items on the
+security.html list, not with the specific FreeRADIUS commits.
 
-and tested a little better by:
 
-commit 8891adc61dce2a8a41fc0c23262b681c3ec4b73a
-Author: Andy Lutomirski <luto@kernel.org>
-Date:   Thu Sep 3 13:40:30 2020 -0700
+>> The EAP-PWD packet length is not checked before the first byte is
+>> dereferenced. A zero-length EAP-PWD packet will cause the module to
+>> dereference a NULL pointer, and will cause the server to crash.
 
-    selftests/x86/test_vsyscall: Improve the process_vm_readv() test
+Use CVE-2015-8762.
+
+
+>> The commit message payload length is not validated before the packet
+>> is decoded. This can result in a read overflow in the server.
+>> 
+>> The confirm message payload length is not validated before the packet
+> is decoded. This can result in a read overflow in the server.
+
+Use CVE-2015-8763 for both of these issues.
+
+
+>> A strcpy() was used to pack a C string into an EAP-PWD packet. This
+>> would result in an over-run of the destination buffer by one byte.
+
+Use CVE-2015-8764.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJWkBOHAAoJEL54rhJi8gl5Od0P/1Y8DafilHgNgmQP4D5DfdfB
+x9yuBDJt/rr8NnrbXsIjkuQMIB+UolyAcgEB4CDqiwh4SyYeZSbO1rj3zP0/1uS1
+TyjLGLLiKHc3B53vEK/m3tAZ1M5GEsp3rIH+McCsbip+WlDpkuKexJ8E0kBleWiH
+Mg5UslARv6b7yS5QIoH93MiiZSl+w0V0UtWIkEP1BfCskJhj9DvVd161hyRDcT7m
+ZG52NdBYzCUYP4BC58qEPYtGwM1+OMjaHa6MjkpzqvubMwtdzGK15zcljy/yvN6k
+oY7euhV55PbPsajuzHihBWWp0oejl5gBEiGX6fqCUS8BIoadaOFI9hKkWEBVKnav
+wrE7+f03C2GO/rs46jp1737qtNzIrBklyTblDItLDA1QDqpc5q/Sb9xlLycZ9o8H
+v++vSz3ZQILfi72T7BhhdMl5SQlfNuxdDw0BJBA6tC2+1thZWZBpIg/lXajHo9r9
+E3qszBo0cmh5MSAEdWOMGEInt9DvHymPTcXEtZYFQph54Xb1YS/YYpItX9w5e7e+
+nciRvLRFQwWzC0XJKv9klliStJygxW0g27StoMXncnDchRiIiBV4ypgPJITawi0L
+9LWMSpAhS2VYAAJQjchLaUHFAHgmXwsIKEJJ2k7iuUXF6Qytee3k2uRieRQ3Rvx0
+XhrlBiLeO/vhmZJ8trch
+=16O5
+-----END PGP SIGNATURE-----
