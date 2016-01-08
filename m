@@ -1,33 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/16/5
-Message-ID: <20160316094336.44ade7ea@redhat.com>
-Date: Wed, 16 Mar 2016 09:43:36 +0100
-From: Tomas Hoger <thoger@...hat.com>
-To: Gsunde Orangen <gsunde.orangen@...il.com>
-Cc: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: Re: Re: Announce: Portable OpenSSH 7.2p2 released
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/08/6
+Message-ID: <20160108162259.GB2667@pisco.westfalen.local>
+Date: Fri, 8 Jan 2016 17:22:59 +0100
+From: Moritz Muehlenhoff <jmm@...ian.org>
+To: oss-security@...ts.openwall.com
+Cc: Mitre CVE assign department <cve-assign@...re.org>
+Subject: Re: CVE Request: freeradius: the EAP-PWD module performs insufficient validation on packets received from an EAP peer
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 11 Mar 2016 12:34:58 +0100 Gsunde Orangen wrote:
+On Tue, Aug 04, 2015 at 10:41:52AM +0530, Huzaifa Sidhpurwala wrote:
+> On 07/31/2015 12:04 PM, Huzaifa Sidhpurwala wrote:
+> > The FreeRADIUS project has reported a flaw that affects the EAP-PWD
+> > module of the freeradius package versions 3.0 up to 3.0.8. This module
+> > is not enabled by default, so administrators must have manually enabled
+> > it for their servers to be vulnerable.
+> > 
+> > Reference:
+> > http://freeradius.org/security.html#eap-pwd-2015
+> > 
+> > Can a CVE id be please assigned to this flaw?
+> > 
+> > 
+> Copying cve-assign this time to see if this gets picked up :)
 
-> It should be noted, that the new openSSH 7.2p2 also includes the fix for
-> CVE-2016-1908 as it had been assigned here:
-> http://seclists.org/oss-sec/2016/q1/115
-> 
-> * SECURITY: Eliminate the fallback from untrusted X11-forwarding to
->   trusted forwarding for cases when the X server disables the
->   SECURITY extension. Reported by Thomas Hoger.
+This seems to have fallen through the cracks?
 
-7.2p2 includes the fix, but it's not the first version that includes
-it.  I see it documented in 7.2 release:
-
-http://www.openssh.com/txt/release-7.2
-
- * ssh(1): eliminate fallback from untrusted X11 forwarding to
-   trusted forwarding when the X server disables the SECURITY
-   extension.
-
-and patches included in 7.2p1 already.
-
--- 
-Tomas Hoger / Red Hat Product Security
+Cheers,
+        Moritz
