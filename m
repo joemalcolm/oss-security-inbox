@@ -1,66 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/14/2
-Message-ID: <20160114083328.GA27255@openwall.com>
-Date: Thu, 14 Jan 2016 11:33:28 +0300
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Cc: Jason Buberel <jbuberel@...gle.com>
-Subject: Re: [security] Go security release v1.5.3
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/08/3
+Message-ID: <20160108140715.GA25718@eldamar.local>
+Date: Fri, 8 Jan 2016 15:07:15 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Subject: CVE Request: WordPress: cross-site scripting vulnerability fixed in new 4.4.1 release
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jan 13, 2016 at 09:06:57PM +0000, Jason Buberel wrote:
-> A security-related issue has been reported in Go's math/big package. The
-> issue was introduced in Go 1.5. We recommend that all users upgrade to Go
-> 1.5.3, which fixes the issue. Go programs must be recompiled with Go 1.5.3
-> in order to receive the fix.
-> 
-> The Go team would like to thank Nick Craig-Wood for identifying the issue.
-> 
-> This issue can affect RSA computations in crypto/rsa, which is used by
-> crypto/tls. TLS servers on 32-bit systems could plausibly leak their RSA
-> private key due to this issue. Other protocol implementations that create
-> many RSA signatures could also be impacted in the same way.
-> 
-> Specifically, incorrect results in one part of the RSA Chinese Remainder
-> computation can cause the result to be incorrect in such a way that it
-> leaks one of the primes. While RSA blinding should prevent an attacker from
-> crafting specific inputs that trigger the bug, on 32-bit systems the bug
-> can be expected to occur at random around one in 2^26 times. Thus
-> collecting around 64 million signatures (of known data) from an affected
-> server should be enough to extract the private key used.
-> 
-> On 64-bit systems, the frequency of the bug is so low (less than one in
-> 2^50) that it would be very difficult to exploit. Nonetheless, everyone is
-> strongly encouraged to upgrade.
-> 
-> Go 1.6 will include include a change to double-check the RSA computation,
-> which is a generic countermeasure to this class of bug.
+Hi
 
-A concern here is that this might increase side-channel leaks.  Related
-discussion:
+On 6th of January 2016, a new release of WordPress was posted,
+https://wordpress.org/news/2016/01/wordpress-4-4-1-security-and-maintenance-release/
 
-http://www.openwall.com/lists/oss-security/2014/07/10/3
-http://www.openwall.com/lists/oss-security/2014/07/10/5
+> WordPress versions 4.4 and earlier are affected by a cross-site
+> scripting vulnerability that could allow a site to be compromised.
+> This was reported by Crtc4L.
 
-I guess you intend to be careful with that?
+There is no reference to the fix, but the change seems to be
 
-> The CVE issue descriptions and fixes are linked below. Downloads are
-> available at http://golang.org/dl for all supported platforms.
-> 
-> CVE-2015-8618
-> 
-> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-8618
-> 
-> CLs fixing the issue:
-> 
-> https://go-review.googlesource.com/#/c/17672/
-> https://go-review.googlesource.com/#/c/18491/
+https://core.trac.wordpress.org/changeset/36185
 
-"Gerrit requires a JavaScript enabled browser."
-OK, launched another browser. ;-)
+Cf. as well https://twitter.com/brutelogic/status/685105483397619713
 
-Alexander
+Can a CVE be assigned for this WordPress issue?
 
-P.S. My extra excuse to post this and to over-quote is DMARC, which has
-likely prevented delivery of the original @google.com message to some
-recipients.  I know I got to workaround it in list configuration soon.
+Regards,
+Salvatore
