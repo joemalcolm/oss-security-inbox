@@ -1,32 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/09/4
-Message-ID: <1481298257.3173.4.camel@redhat.com>
-Date: Fri, 09 Dec 2016 16:44:17 +0100
-From: Adam Maris <amaris@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2016-9580 CVE-2016-9581 openjpeg2: heap buffer oevrflows
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/08/4
+Message-Id: <20160108153837.733EF6C00E2@smtpvmsrv1.mitre.org>
+Date: Fri,  8 Jan 2016 10:38:37 -0500 (EST)
+From: cve-assign@...re.org
+To: carnil@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: WordPress: cross-site scripting vulnerability fixed in new 4.4.1 release
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-We've assigned CVEs for following issues:
+> https://wordpress.org/news/2016/01/wordpress-4-4-1-security-and-maintenance-release/
+> 
+>> WordPress versions 4.4 and earlier are affected by a cross-site
+>> scripting vulnerability that could allow a site to be compromised.
+>> This was reported by Crtc4L.
+> 
+> There is no reference to the fix, but the change seems to be
+> 
+> https://core.trac.wordpress.org/changeset/36185
+> 
+> Cf. as well https://twitter.com/brutelogic/status/685105483397619713
 
-> https://github.com/uclouvain/openjpeg/issues/871
+Use CVE-2016-1564. This ID applies to the entirety of changeset/36185
+(for example, we do not know whether the change involving
+$this->stylesheet corresponds to a separate discovery).
 
-CVE-2016-9580 integer overflow in tiftoimage resulting into heap buffer
-overflow
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-> https://github.com/uclouvain/openjpeg/issues/872
-
-CVE-2016-9581 infinite loop in tiftoimage resulting into heap buffer
-overflow in convert_32s_C1P1
-
-Both were fixed by https://github.com/szukw000/openjpeg/commit/cadff5fb
-6e73398de26a92e96d3d7cac893af255
-
-Regards,
-
--- 
-Adam Mariš, Red Hat Product Security
-1CCD 3446 0529 81E3 86AF  2D4C 4869 76E7 BEF0 6BC2 
-
+iQIcBAEBCAAGBQJWj9b9AAoJEL54rhJi8gl5xCoQAIjZVJGRAEUNc3NK8wGYyKi6
+jngwkTCRRaStqGwP5sGuiyAGGHB1kvSnzIn12Ptr2/aXuQszGLXYjNUjO9wp0DUV
+zHyDHNje+pzaQ+fTmplH+jdqmLWhxfNXI1S691NZ1HzrtqJ3LolrzMgH+XkQKWII
+iICBqr2xRLhSi7bAoFSKAV0ng4jE2f9IDpi+Eab0DKQHo5JKR5bFobvU6vq0dLhX
+uQyO/k20thjj4OCw7VXZLfGky1PSy5314ruPaTZwghWTWylX6Vr9pXU8RhobKOYT
+cGdfC1HHwydcYJOTx5vAAh2QQlobCRY1h35Qdcd1FQjPdSTuuki80+zaPVdpBtOM
+Oyq1idcHDk+ApWtj15BwSb6ujWlbBcNvWGjQx49WBE0a3o1XIaZmD/LG5QuMFuJi
+4FQhSvA2095UTJaa28Vo+DlV4zcZWnxQBgTOQAQ6fZnCKmLePGPTugKaHWWDhlVP
+LWC4Q5T27x/hTTFaph615V/ttJ09y+ULxwwx4ghbOrn9R6HZ5jFhJ+oNGjN9K72I
+tVqieqwwPctQKujb7rtIZBakJQRhMQrHB5mlgwN7uwoAfcLu5VbA2IsKWGQtPBwU
+PoL/wb60/S7sj3Z/KbKj4e28hKn66y/Fh5yL+5hPhpugoVtJqNhObCr5CSGJ5Sdk
+7lNVEZxFLFZbtqmfkjrD
+=MSDs
+-----END PGP SIGNATURE-----
