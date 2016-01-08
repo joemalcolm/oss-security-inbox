@@ -1,45 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/16/15
-Message-Id: <20160316194342.BC8FE6C4055@smtpvmsrv1.mitre.org>
-Date: Wed, 16 Mar 2016 15:43:42 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/08/2
+Message-Id: <20160108024157.4D16F6C0316@smtpvmsrv1.mitre.org>
+Date: Thu,  7 Jan 2016 21:41:57 -0500 (EST)
 From: cve-assign@...re.org
-To: winsonliu@...cent.com
+To: limingxing@....cn
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request - OpenJPEG : Out-Of-Bounds Read in opj_tcd_free_tile function
+Subject: Re: Integer overflow in the JasPer's jas_matrix_create() function
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> A specially crafted JPEG2000 image file can force Out-Of-Bounds Read
+>> https://bugzilla.redhat.com/show_bug.cgi?id=1294039
 
-> opj_decompress -o image.pgm -i oob_opj_tcd_free_tile.jp2
+> We find a vulnerability in the way JasPer's jas_matrix_create()
+> function parsed certain JPEG 2000 image files.
+> 
+> jas_matrix_t *jas_matrix_create(int numrows, int numcols)
+> {
+>         .......
+> 
+>         if (matrix->maxrows_ > 0) {
+>                 if (!(matrix->rows_ = jas_malloc(matrix->maxrows_ *
+>                   sizeof(jas_seqent_t *)))) {
+> 
 
-> precision 31 is larger than 16
+> matrix->maxrows_ > 0 ,but matrix->maxrows_ *sizeof(jas_seqent_t *)
+> can cause Integer overflow.
+> 
+> Despite this library is used by many programs
+> (http://www.ece.uvic.ca/~frodo/jasper/#overview), there is no one
+> providing support.
 
-> Program received signal SIGSEGV, Segmentation fault.
-
-Use CVE-2016-3181.
+Use CVE-2015-8751.
 
 - -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJW6bbDAAoJEL54rhJi8gl5zMcP/12As0D1ZFaAB/OX9zTMWPRM
-ttAJ3Pd3BAkPH9K+hoGzIwY4Net+ClIP3E4yLYWqqfcuoDbbh0X7t0ZpVVs+nP6V
-9oLkNTEeSD/5eyFWPcz1niXGi/Gx1KvbihsS3vcR7/cGpHzly8EDrXAytS1EbWkr
-PSynB3gE2w1nnO8/Oq1toRhoSqKk9+5U3KAaI7tDl6tkilBs+edT1AxLwfAC8T80
-3JThnjBr1Ee6HW4f5PZhkDUpVHFFdltsVCKkPZwgEdYRcDac8/Ia7nMnFGmRrcH7
-mDdI/d/peHyAdR1E8ageG/GZOOm5P6vF9fn8GZZyRbMSHMOueLOpc1jlXF/GArPx
-TQO4UhWj4QUP1NEfDe3nH/tHPV12Z4TqtNSy5Ea6EP6+Wzn16851G27WpYlFV65o
-tbAKDrDX6in4Y3j/HMCc9VG/IPPVwZPwefQVPTLPVe+JaKZmbuD68RgREA/3thBd
-gHIZsSgBuLoXGVnFwYCzJ7J/NFmJhuFBTCiPp5GEnFPTH9l3VuhO2jictuWzyc1H
-/GKGwZOL4U8i7xDlwVDmaio0uSHtB6VoIvIAprK7dauevop/hjIhsVVhJvxImcR+
-QGRnn228hS5dHZ+j01ErisFBLpqfcWazRnnNuPxvpVIBG4BIgraWj7g8cyPLVJji
-YwftmPV2DEwNLl5q1zPA
-=felc
+iQIcBAEBCAAGBQJWjyCOAAoJEL54rhJi8gl5RR4P/3pDkCnol/Y59Nv9pK1kgVr0
+Mas2O+hkbbbQRKBtgPs01mACYZDjEontPtUib+oA2F0hFcb/TisQHf611b3SoDI+
+vxoSMA/qCXO66l7wpE7FmTOPYDCErpLtWEuYGC152BtEsaENE1vIwRYWx4Jshlem
+5XT8LATuUxAC82TObRMr1A5gvDcdgNV9vqmyoDtyAGU725wA9VXWgFAG/CYBbLUC
+wzdqAQ3v1p0cDL63MWfg1vGIxkpY6P7dU8yfQUbBflstfKg5m+z6WmFZdmalJbeO
+uo3bknyP651xKge8PDN6ftfJbsW15fOFM4M1a3Ei+hqylgbqDF0GbfHn7XP3cMZy
+KN2a18Xpj09EWcmZAccaYR26Bc6KY5/9ss8akviQ/BkW2dhoDBdk5Rtt4Fj/w34e
+o//6kv40U8BXa5HAwizagP3Ifzgc8SDXi1RRJgx42bKECrs2YWDNIG5h/+6rNVaV
++NV3wRvVc98akqsAz85h4M/OEYHEuhOTnN1TNolD6HqsLU3cQV/r36zXF9xzYOcw
+m8Oc+Yyb6sWaMSmNQhwvVuyhtc7qtIA8yKEpeRfzIjJf861nYp+N9cTUbjW3+elx
+zSOuxO6sWcJwQ91igQCILNe3CGPmUtQ1DIpdLPFNTUZ4EJyAuHQ6efqB3+U16kjb
+6Suu6bvueINOqi+9q0Ff
+=1CNW
 -----END PGP SIGNATURE-----
