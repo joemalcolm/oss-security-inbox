@@ -1,93 +1,126 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/30/3
-Message-ID: <CACn5sdT-4XY61ykApQ8nPBktGJG=9kF040EbqK3G68oqeaVBiQ@mail.gmail.com>
-Date: Sat, 30 Apr 2016 20:33:59 +0200
-From: Gustavo Grieco <gustavo.grieco@...il.com>
-To: cve-assign@...re.org
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE requests: DoS in librsvg parsing SVGs with circular definitions
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/08/5
+Message-ID: <CAJt9-x7_03rk-ogT2EVgzs3NeNTF9EZRTbQfaFjn3CJMGDrqgg@mail.gmail.com>
+Date: Fri, 8 Jan 2016 15:40:14 +0000
+From: Matthew Wild <mwild1@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2016-1231, CVE-2016-1232: Prosody XMPP server multiple vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-2016-04-28 18:46 GMT+02:00 <cve-assign@...re.org>:
+Two vulnerabilities have been discovered and fixed in the Prosody XMPP
+server. Details below.
 
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA256
->
-> > Two DoS in librsvg 2.40.2 parsing SVGs with circular definitions were
-> found
-> > (they will produce stack exhaustion). Other versions can be vulnerable
-> too.
->
-> > these issues are solved in the last git revision of librsvg2
->
-> Probably the best we can reasonably do here is assign separate CVE IDs
-> to the separate reproducers. Are there any other details that might
-> enable a wider set of readers to use your report for risk management?
->
+CVE-2016-1231 prosody: path traversal vulnerability in the built-in
+HTTP server's file-serving module
+-------------
 
+Project: Prosody XMPP server
+URL: https://prosody.im/
+Affected versions:
+    0.9.x (before 0.9.9), 0.10 (unreleased)
+Affected Prosody modules:
+    mod_http_files (and community modules that depend on it)
+Fixed versions:
+    0.9.9, 0.10 nightly build 196, trunk nightly build 608
 
-This version of librsvg is still deployed in Ubuntu (trusty) and Debian
-(wheezy). Imagemagick is using librsvg2 so a vulnerability there can affect
-even when you receive an untrusted image.  Also, Evolution was rendering
-SVG attached images:
+Description
+-----------
 
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=361540
+A flaw was found in Prosody's HTTP file-serving module (mod_http_files)
+that allows it to serve requests outside of the configured public root
+directory. This could allow attackers access to private files including
+sensitive data.
 
-(this bug is quite old and it is fixed, hopefully Evolution is not
-rendering SVG images using librsvg now)
+Affected configurations
+-----------------------
 
+The default configuration has mod_http_files disabled, and is not
+vulnerable. Additionally, configurations where mod_http_files serves
+files at the root URL (e.g. not /files/ prefix, using http_paths) are
+not vulnerable.
 
+Temporary mitigation
+--------------------
 
-> 2.40.2 is apparently a version from late 2013. Is this related to
->
-> https://git.gnome.org/browse/librsvg/commit/?id=8ee18b22ece0f869cb4e2e021c01138cbb8a0226
-> (from 2015-02-06): "If a chain of paint servers, defined through the
-> xlink:href attribute, has a cycle, then we would loop infinitely"?
->
+Disable mod_http_files and any community modules that depend on it.
 
-Most likely yes. It is also related with CVE-2015-7558, which was fixed
-here:
+Advice
+------
 
-https://git.gnome.org/browse/librsvg/commit/?id=a51919f7e1ca9c535390a746fbf6e28c8402dc61
+All users should upgrade to 0.9.9, or check their OS distribution for
+security updates. Users of development branches (0.10, trunk) should
+upgrade to the latest nightly builds.
 
-The only way to know for sure is to use git-bisect. I can only advise to
-upgrade to 2.40.15 where all these issues are solved.
+Credits
+-------
 
+The flaw was discovered by Kim Alvefur, a member of the Prosody team.
 
->
-> > They affect the following functions:
->
-> > * rsvg_cairo_pop_discrete_layer - rsvg_cairo_pop_render_stack -
-> > rsvg_cairo_generate_mask: reproducible using circular-1.svg
->
-> Use CVE-2016-4347.
->
->
-> > * _rsvg_css_normalize_font_size: reproducible using circular-2.svg
->
-> Use CVE-2016-4348.
->
-> - --
-> CVE Assignment Team
-> M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-> [ A PGP key is available for encrypted communications at
->   http://cve.mitre.org/cve/request_id.html ]
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1
->
-> iQIcBAEBCAAGBQJXIj3tAAoJEHb/MwWLVhi28asP/ind5vax8Ln+o2RusWj8E+LS
-> Q/R1pAJgj20Duo6s23zx/iWicsyTudMMdeBQwhnpPbnDOvUtVUqn5jjtD2xTZkBG
-> zKdKNw3QpJYYC4BSaNp3r+VVEuIlWiNlXYfmWu8hThzgRJL8HjQhQd9sE/WcA6xo
-> XX5639p6TRA5leTIXPWHaQ8HxB/9cSufkTZ2nH4WTBJcwh45iKVczsPAh1nuabnF
-> FmghWc83c9woO4ImKdDa+/wF/yaO2asrztAedtxCNDQQZTxZRtU7e/IcIbdW9VNU
-> VM41OImZG8k8JzO0r7/Bg2XnRuVUvoJdK0pRNnS0LPfzDX38HCWlKZnKKFJkZjTT
-> vQ+sErtM+I33NR+hc4o2wsMnzL8L0oln4q1zYepu0SLZaPTwDN6L6X/Gz1gKL4Zi
-> Uxowp0OF+8nknnVlhnySHcOGr5tfjT+Q1RdtUmZie0vW+5m9iPubBUHFBLuC6GYF
-> 5rp4JqaDFxHUVwX+gXz+jT8+O489ASVlb6NS2bPoC2K/aUl6MYcQygeIZky0GfdP
-> 9OKoYWrUq2JUkzQMhI9FML0F64Pt4blZksSQ5tHa24xxMCRl/nkR4OEPIg/eMW1f
-> D6hr+/mR9saLzv8pao0Qf+k+Kuig2R+7F8be673J8QXcowJX5/tHYQWbS7Ai0CAI
-> v7jIqoYfMx9CP7ccozvg
-> =hvLp
-> -----END PGP SIGNATURE-----
->
+//////////////////////////
 
+CVE-2016-1232 prosody: using a weak PRNG to generate the
+authentication secret used when verifying server-to-server connections
+using the dialback method.
+-------------
+
+Project: Prosody XMPP server
+URL: https://prosody.im/
+Affected versions:
+    All
+Affected Prosody modules:
+    mod_dialback
+Fixed versions:
+    0.9.9, 0.10 nightly build 196, trunk nightly build 608
+
+Description
+-----------
+
+It was discovered that Prosody's generation of the secret token for
+server-to-server dialback authentication relied upon a weak random
+number generator that was not cryptographically secure. This allows an
+attacker to guess at probable values of the secret key. A successful
+guess allows impersonation of the affected domain to other servers on
+the network.
+
+Affected configurations
+-----------------------
+
+Configurations with mod_dialback loaded (default configuration) are
+affected.
+
+Servers with s2s_secure_auth = true will not be susceptible to incoming
+attempts to spoof other domains on the network. However if mod_dialback
+is loaded, a server's domain's may still be spoofed by an attacker in
+connections to other servers.
+
+Not affected are configurations with a strong custom dialback_secret set
+(though periodically regenerating the dialback_secret is still
+advisable).
+
+Temporary mitigation
+--------------------
+
+Set the 'dialback_secret' option in your configuration file to a long
+random string.
+
+A strong dialback_secret can be generated (for example) using the
+command:
+
+head -c 32 /dev/urandom | base64
+
+Alternatively disable mod_dialback by adding it to your modules_disabled
+option in your configuration file. In this case communication with
+servers that only support dialback or have untrusted certificates will
+not be possible.
+
+Advice
+------
+
+All users should upgrade to 0.9.9, or check their OS distribution for
+security updates. Users of development branches (0.10, trunk) should
+upgrade to the latest nightly builds.
+
+Credits
+-------
+
+The flaw was discovered and reported by Thijs Alkemade.
