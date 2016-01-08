@@ -1,18 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/01/3
-Message-ID: <CAFC7fYSmWcbfC+puEU7gxS+6+o3pfaQUoTCCef3jm9D-8rWc2g@mail.gmail.com>
-Date: Mon, 1 Feb 2016 12:00:04 +0800
-From: Lucas Leong <wmliang.tw@...il.com>
-To: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: CVE Request: FFmpeg issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/08/1
+Message-Id: <20160108005424.5F00C6C005A@smtpvmsrv1.mitre.org>
+Date: Thu,  7 Jan 2016 19:54:24 -0500 (EST)
+From: cve-assign@...re.org
+To: carnil@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: netfilter-persistent: (local) information leak due to world-readable rules files
 Content-Type: text/plain; charset=utf-8
 
-Hi
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Id like to request CVE for the following issue in ffmpeg 2.8.5 release
+> iptables-persistent (in Debian) is a loader for netfilter configuration
+> using a plugin-based architecture.
+> 
+> iptables-persistent is vulnerable to a (local) information leak due to
+> world-readable rules files. It was reported in Debian in
+> 
+> https://bugs.debian.org/764645
+> 
+> And fixed via
+> 
+> https://anonscm.debian.org/cgit/collab-maint/iptables-persistent.git/commit/?id=37905034f07e94c4298a1762b39b7bbd4063c0df
 
-Fixes out of array read
-http://git.videolan.org/?p=ffmpeg.git;a=commit;h=0aada30510d809bccfd539a90ea37b61188f2cb4
+Do you have any further information about why this should be
+considered a vulnerability in general? We realize that it might, at
+least, be considered a vulnerability for Debian systems because of
+"Tags: security" in the original report.
 
-Regards
+For example, is there a specific piece of data in the files that is
+always supposed to be private?
 
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=764645#5 indicates
+that an unprivileged user can obtain information by directly opening
+the files, but cannot obtain this information with an
+"/sbin/iptables -L" command. This does not, by itself, establish that
+a security feature has been defeated. It is possible that it was
+simply inconvenient to implement the -L option in a way that provided
+access to unprivileged users.
+
+What we are trying to avoid is a situation in which CVE IDs are
+assigned solely because a system administrator might not want files to
+be readable by unprivileged users. For example, maybe someone would
+prefer stricter /etc/hosts.allow permissions to prevent rogue local
+users from discovering the names of other hosts that possibly have
+symmetric "allow" policies.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJWjwg3AAoJEL54rhJi8gl5KeEP/jez+zmk3CO4xMx9f5yWwSSR
+1NHAQ6YpSOWBrrBz1BKvdVYYkfS+OgjvI7Y7XMTPgXG6QRYrYGVa8QqLkE1TlFUr
+7q3pgONQ9+O+B15J8cZNSYXcu8paEi641Jrui25jyltadL++FYblJ0kF7uL9q7fF
+H/lAsZPKNAID3QBEmhtF7kMrHPmL5+VpWzaxRnnr71nO8v0V5sdUJToXCXI9ZOT8
+GQVkAajWcFZX7EqHRchXGGTC2bVXm4UThTLm/HxKTev1rUKt3FbFxJRtLA1KYNBM
+jO8ZZ+/zJuY1Yn8UsLhPCornccafv1oOqsxSh0WXWDhYpedM9onlqUeZqeTip/yi
+K6nbK1WgcUD7fKJVRjBgmzJbcIw1WtYk0BQg51nXnURcbztZ1ICQwCtEvHwC4xsP
+kXBTsXCYHHyzTIPRN2LWWVWzFUMxeDL7PGv8Glf+HGx2OQdycHZlhdKO/eVLy/o0
+k/QfcoNxoO4xh42Q9LkyLM/NQ+DNk1bpfMsfOBiFVPdzyzThU5l610EIxVWBumdG
+DWWefmwjSryUtuTL7PoGkbUvvExCHmpgzoGTcBAiRHwoA+CZDxqZi0epoODGUkTo
+eUbVFKkepd3hO6Bv3v5O0NLIQ3SCRtUSfp7JTFaWLRfxdlDuod7V4Khxwvwwj6lA
+QBOU0aocrXDg6aAoneV5
+=FspR
+-----END PGP SIGNATURE-----
