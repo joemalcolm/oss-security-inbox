@@ -1,105 +1,85 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/04/4
-Message-ID: <5752E2F8.10805@pipping.org>
-Date: Sat, 4 Jun 2016 16:17:28 +0200
-From: Sebastian Pipping <sebastian@...ping.org>
-To: cve-assign@...re.org
-Cc: oss-security@...ts.openwall.com
-Subject: Re: expat hash collision fix too predictable?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/08/7
+Message-Id: <20160108195517.AE8F26C00A6@smtpvmsrv1.mitre.org>
+Date: Fri,  8 Jan 2016 14:55:17 -0500 (EST)
+From: cve-assign@...re.org
+To: huzaifas@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, jmm@...ian.org
+Subject: Re: CVE Request: freeradius: the EAP-PWD module performs insufficient validation on packets received from an EAP peer
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-
-On 04.06.2016 04:56, cve-assign@...re.org wrote:
-> The text below assigns one CVE ID to this expat vulnerability.
-
-Thank you.  Please see my questions below.
-
-
->>> https://bugzilla.redhat.com/show_bug.cgi?id=1197087#c6
->>>
->>> Expat is calling srand ... [if] the code using Expat ... never called
->>> XML_SetHashSalt on that parser ... the arrival of XML_SetHashSalt
->>> bypassed the Expat user's radar
+> The FreeRADIUS project has reported a flaw that affects the EAP-PWD
+> module of the freeradius package versions 3.0 up to 3.0.8. This module
+> is not enabled by default, so administrators must have manually enabled
+> it for their servers to be vulnerable.
 > 
->>>> https://sourceforge.net/p/expat/bugs/499/
->>>> 2012-04-05
->>>> In any case, you can supply your own hash salt - after creating the
->>>> parser, but before parsing is started. See the new API function XML_SetHashSalt.
-> 
-> The higher-level issue, from our perspective, is that a library
-> (intended for use in arbitrary applications) should not have
-> potentially unavoidable calls to the srand function unless this is
-> documented. The library might be used by an application in which srand
-> was already called exactly once, and srand/rand happens to be the
-> right choice for that application because of a minimal need for
-> randomness, and this minimal need for randomness is no longer
-> satisfied if there are unexpected extra calls to srand.
-> 
-> In other words, good options for a library include:
-> 
->   - never call srand under any circumstances
-> 
->   - call srand only if the application calls a library function that
->     is documented as triggering an srand call
-> 
->   - call srand whenever it wants, as long as the documentation warns
->     application authors about potential incompatibility with any use
->     of srand within an application
-> 
-> We really don't know whether the above is a generally accepted
-> principle for all libraries.
+> http://freeradius.org/security.html#eap-pwd-2015
 
-Agreed.
+We have revisited this and decided that it needs unique CVE IDs. As
+mentioned on that security.html page, "These issues were found by
+Jouni Malinen as part of investigating
+http://w1.fi/security/2015-4/" - this suggested a possibility that the
+CVE IDs listed in
+http://www.openwall.com/lists/oss-security/2015/05/31/6 would be
+applicable. However, FreeRADIUS apparently has an independent
+implementation of EAP-pwd. This led to a somewhat unusual situation in
+which most of the vulnerability findings were, at a high level, the
+same -- but resulted from a different set of mistakes within a
+different codebase. The applicable FreeRADIUS changes can be found in
+the "Commits on May 4, 2015" section of:
+
+  https://github.com/FreeRADIUS/freeradius-server/commits/v3.0.x/src/modules/rlm_eap/types/rlm_eap_pwd
+
+and are distinct from the changes in the http://w1.fi/security/2015-4/
+patches.
+
+We are associating the three CVE IDs below with the items on the
+security.html list, not with the specific FreeRADIUS commits.
 
 
-> However, it appears that the expat vendor
-> is recognizing the old behavior (i.e., the behavior before
-> XML_SetHashSalt was available and documented) as a security-relevant
-> implementation error. Use CVE-2012-6702.
-> 
-> An entirely separate question is whether generate_hash_secret_salt
-> should ultimately be using the rand function to attempt to provide a
-> random number, or whether it should provide a better quality random
-> number. There is no CVE ID for this yet. If the expat upstream
-> maintainer is announcing a new expat release, specifically stating
-> that discontinuing use of the rand function represents a vulnerability
-> fix, then a CVE ID can be assigned.
+>> The EAP-PWD packet length is not checked before the first byte is
+>> dereferenced. A zero-length EAP-PWD packet will cause the module to
+>> dereference a NULL pointer, and will cause the server to crash.
 
-I am not sure if I get that right.
+Use CVE-2015-8762.
 
 
-The hash DoS vulnerability CVE-2012-0876 was fixed to some extend in
-Expat 2.1.0, commit e3e81a6d -- the place where Expat started calling
-srand.  While XML_SetHashSalt was introducd a bit later, it did arrive
-with Expat 2.1.0 still.
+>> The commit message payload length is not validated before the packet
+>> is decoded. This can result in a read overflow in the server.
+>> 
+>> The confirm message payload length is not validated before the packet
+> is decoded. This can result in a read overflow in the server.
 
-srand was called (by generate_hash_secret_salt) since Expat 2.1.0 if
-
- a) the app using Expat did not call XML_SetHashSalt
-    prior to starting to parse with that XML_Parser instance
-    (XML_SetHashSalt existing or not) or
-
- b) the app using Expat called XML_SetHashSalt with
-    hash_salt of value 0 (which is documented since Expat 2.1.1,
-    commit 891ec14f).
-
-The next release of Expat will not do internal calls to srand (or rand)
-any more but extract and use entropy from other sources.
+Use CVE-2015-8763 for both of these issues.
 
 
-Please confirm that using CVE-2012-6702 for consequences of
-"unanticipated internal calls to srand" is what you intended.
+>> A strcpy() was used to pack a C string into an EAP-PWD packet. This
+>> would result in an over-run of the destination buffer by one byte.
 
-Also I suppose hash initialization with (too little /) second-based
-entropy still is part of the original CVE-2012-0876 (or the same again).
- If not, it may not fit CVE-2012-6702 semantically.
+Use CVE-2015-8764.
 
-Thank you!
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Best
-
-
-
-Sebastian
+iQIcBAEBCAAGBQJWkBOHAAoJEL54rhJi8gl5Od0P/1Y8DafilHgNgmQP4D5DfdfB
+x9yuBDJt/rr8NnrbXsIjkuQMIB+UolyAcgEB4CDqiwh4SyYeZSbO1rj3zP0/1uS1
+TyjLGLLiKHc3B53vEK/m3tAZ1M5GEsp3rIH+McCsbip+WlDpkuKexJ8E0kBleWiH
+Mg5UslARv6b7yS5QIoH93MiiZSl+w0V0UtWIkEP1BfCskJhj9DvVd161hyRDcT7m
+ZG52NdBYzCUYP4BC58qEPYtGwM1+OMjaHa6MjkpzqvubMwtdzGK15zcljy/yvN6k
+oY7euhV55PbPsajuzHihBWWp0oejl5gBEiGX6fqCUS8BIoadaOFI9hKkWEBVKnav
+wrE7+f03C2GO/rs46jp1737qtNzIrBklyTblDItLDA1QDqpc5q/Sb9xlLycZ9o8H
+v++vSz3ZQILfi72T7BhhdMl5SQlfNuxdDw0BJBA6tC2+1thZWZBpIg/lXajHo9r9
+E3qszBo0cmh5MSAEdWOMGEInt9DvHymPTcXEtZYFQph54Xb1YS/YYpItX9w5e7e+
+nciRvLRFQwWzC0XJKv9klliStJygxW0g27StoMXncnDchRiIiBV4ypgPJITawi0L
+9LWMSpAhS2VYAAJQjchLaUHFAHgmXwsIKEJJ2k7iuUXF6Qytee3k2uRieRQ3Rvx0
+XhrlBiLeO/vhmZJ8trch
+=16O5
+-----END PGP SIGNATURE-----
