@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["832" "Saturday" "17" "September" "2016" "03:00:10" "+0800" "Marco Grassi" "marco.gra@gmail.com" "<CAFkTri+FwSj8n_sMckcY1PZLjAjcaizLmeDiJsRFmcZiDKjD9w@mail.gmail.com>" "33" "[oss-security] linux kernel SCSI arcmsr driver: buffer overflow in arcmsr_iop_message_xfer()" nil nil nil "9" "2016091619:00:10" "[oss-security] linux kernel SCSI arcmsr driver: buffer overflow in arcmsr_iop_message_xfer()" (number mark "U       marco.gra@gm Sep 17   33/832   " thread-indent "\"[oss-security] linux kernel SCSI arcmsr driver: buffer overflow in arcmsr_iop_message_xfer()\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2609" "Thursday" "7" "January" "2016" "19:54:24" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160108005424.5F00C6C005A@smtpvmsrv1.mitre.org>" "60" "[oss-security] Re: CVE Request: netfilter-persistent: (local) information leak due to world-readable rules files" nil nil nil "1" "2016010800:54:24" "[oss-security] Re: CVE Request: netfilter-persistent: (local) information leak due to world-readable rules files" (number mark "U       cve-assign@m Jan  7   60/2609  " thread-indent "\"[oss-security] Re: CVE Request: netfilter-persistent: (local) information leak due to world-readable rules files\"\n") "<20160105101345.GA13653@lorien.valinor.li>" ("<20160105101345.GA13653@lorien.valinor.li>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 1513 invoked by uid 550); 16 Sep 2016 19:00:24 -0000
+Received: (qmail 24572 invoked by uid 550); 8 Jan 2016 00:54:37 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,69 +12,72 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1451 invoked from network); 16 Sep 2016 19:00:23 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=x67WpV2yAJ9qIH756NPefaZSoaWqlQDCK86HSC67Phs=;
-        b=Vl6TNcQ04adi8C0CDXXJStxCG67Jk/+oLEyzh4vMNtNDw86lZOoXag0PAmrH7JlIRP
-         sSfnhC91iNUUVdNZ0dwOViL2Fj+3QWBoHZv6SgV+vuvfOqALdY/PFOk8ycZOP0mus0rZ
-         ZNdS7VM8roYzFjqD5VA6Olms49SxBXWL8x6aeFry9XQFjPS8frEXlP5GxLAEYVhSVS8Y
-         i/jAzbLkLOkAKxX7CsLxFqrH8Js9SdFW7mDjaNX8EA2XsP+4a/ny3kiAIVVFKqcukGyr
-         QGuOFkzStDNBWFrXpk3XKz4grKIeCMhZJLBZr/s8EGQPgPymheIv63KV46RvpKl2+MdE
-         W6dA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=x67WpV2yAJ9qIH756NPefaZSoaWqlQDCK86HSC67Phs=;
-        b=YVzNz6hvG5vNv8jrMtc3mgwe590/wCkg7ZOU0DrNB1G1mBENZkyUqlLyDMd92GYfBO
-         lGE/4DsgNt9XWsvHA/9P4SQP9Wqp9puSUoZ792ikC6AS4oHGmAtWrDEsiaurcV2h9DQT
-         Yr1188Zm75WU68ddp5rvK7XF8roielhJQjQSmvaCc/uUxq/kNCuhm9/d2BViScB6WCC/
-         C54xVeJDlTj1wkWqhgBYBfNt+VpXzEbQVCRog7CUAfn45at/fWWpWnq9xzok+iwuMu3r
-         /YWJPt861gPnHNyNN4HTGmcBO2EYM0YMOwHkrQSPV/mKdVNoeV+0uXOOeXL2A64PF99z
-         p0YQ==
-X-Gm-Message-State: AE9vXwN8pd7ro4XWcA28uHxlwEYT+QTAsqTAJDZzyQQHekQvYdeqZrhphatsVfLFGPOOG0KNFjrCR3NRHIrRsw==
-X-Received: by 10.36.107.211 with SMTP id v202mr7573078itc.51.1474052411216;
- Fri, 16 Sep 2016 12:00:11 -0700 (PDT)
-MIME-Version: 1.0
-From: Marco Grassi <marco.gra@gmail.com>
-Date: Sat, 17 Sep 2016 03:00:10 +0800
-Message-ID: <CAFkTri+FwSj8n_sMckcY1PZLjAjcaizLmeDiJsRFmcZiDKjD9w@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Cc: cve-assign@mitre.org
-Content-Type: text/plain; charset=UTF-8
-Subject: [oss-security] linux kernel SCSI arcmsr driver: buffer overflow in arcmsr_iop_message_xfer()
+Received: (qmail 24551 invoked from network); 8 Jan 2016 00:54:36 -0000
+From: cve-assign@mitre.org
+To: carnil@debian.org
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <20160105101345.GA13653@lorien.valinor.li>
+Message-Id: <20160108005424.5F00C6C005A@smtpvmsrv1.mitre.org>
+Date: Thu,  7 Jan 2016 19:54:24 -0500 (EST)
+Subject: [oss-security] Re: CVE Request: netfilter-persistent: (local) information leak due to world-readable rules files
 
-Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-inspecting this code you can notice that:
+> iptables-persistent (in Debian) is a loader for netfilter configuration
+> using a plugin-based architecture.
+> 
+> iptables-persistent is vulnerable to a (local) information leak due to
+> world-readable rules files. It was reported in Debian in
+> 
+> https://bugs.debian.org/764645
+> 
+> And fixed via
+> 
+> https://anonscm.debian.org/cgit/collab-maint/iptables-persistent.git/commit/?id=37905034f07e94c4298a1762b39b7bbd4063c0df
 
-http://lxr.free-electrons.com/source/drivers/scsi/arcmsr/arcmsr_hba.c#L2399
+Do you have any further information about why this should be
+considered a vulnerability in general? We realize that it might, at
+least, be considered a vulnerability for Debian systems because of
+"Tags: security" in the original report.
 
-the int32_t user_len is taken from the scsi command
+For example, is there a specific piece of data in the files that is
+always supposed to be private?
 
-user_len = pcmdmessagefld->cmdmessage.Length;
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=764645#5 indicates
+that an unprivileged user can obtain information by directly opening
+the files, but cannot obtain this information with an
+"/sbin/iptables -L" command. This does not, by itself, establish that
+a security feature has been defeated. It is possible that it was
+simply inconvenient to implement the -L option in a way that provided
+access to unprivileged users.
 
-and used directly without sanitization in a memcpy to a heap buffer of
-fixed size 1032
+What we are trying to avoid is a situation in which CVE IDs are
+assigned solely because a system administrator might not want files to
+be readable by unprivileged users. For example, maybe someone would
+prefer stricter /etc/hosts.allow permissions to prevent rogue local
+users from discovering the names of other hosts that possibly have
+symmetric "allow" policies.
 
-memcpy(ptmpuserbuffer, pcmdmessagefld->messagedatabuffer, user_len);
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-potentially causing kernel heap corruption and arbitrary kernel code execution.
-
-
-The issue has been already acknowledged and patched in a development
-branch, the patch is here:
-
-http://marc.info/?l=linux-scsi&m=147394713328707&w=2
-
-this patch have been applied to a 4.9 scsi branch here
-(4.9/scsi-queue), and at some point it will land in master
-
-http://marc.info/?l=linux-scsi&m=147394796228991&w=2
-
-Thanks
-
-Marco
-
-https://marcograss.github.io
+iQIcBAEBCAAGBQJWjwg3AAoJEL54rhJi8gl5KeEP/jez+zmk3CO4xMx9f5yWwSSR
+1NHAQ6YpSOWBrrBz1BKvdVYYkfS+OgjvI7Y7XMTPgXG6QRYrYGVa8QqLkE1TlFUr
+7q3pgONQ9+O+B15J8cZNSYXcu8paEi641Jrui25jyltadL++FYblJ0kF7uL9q7fF
+H/lAsZPKNAID3QBEmhtF7kMrHPmL5+VpWzaxRnnr71nO8v0V5sdUJToXCXI9ZOT8
+GQVkAajWcFZX7EqHRchXGGTC2bVXm4UThTLm/HxKTev1rUKt3FbFxJRtLA1KYNBM
+jO8ZZ+/zJuY1Yn8UsLhPCornccafv1oOqsxSh0WXWDhYpedM9onlqUeZqeTip/yi
+K6nbK1WgcUD7fKJVRjBgmzJbcIw1WtYk0BQg51nXnURcbztZ1ICQwCtEvHwC4xsP
+kXBTsXCYHHyzTIPRN2LWWVWzFUMxeDL7PGv8Glf+HGx2OQdycHZlhdKO/eVLy/o0
+k/QfcoNxoO4xh42Q9LkyLM/NQ+DNk1bpfMsfOBiFVPdzyzThU5l610EIxVWBumdG
+DWWefmwjSryUtuTL7PoGkbUvvExCHmpgzoGTcBAiRHwoA+CZDxqZi0epoODGUkTo
+eUbVFKkepd3hO6Bv3v5O0NLIQ3SCRtUSfp7JTFaWLRfxdlDuod7V4Khxwvwwj6lA
+QBOU0aocrXDg6aAoneV5
+=FspR
+-----END PGP SIGNATURE-----
