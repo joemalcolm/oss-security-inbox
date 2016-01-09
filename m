@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["450" "Friday" "13" "November" "2015" "09:16:10" "-0800" "Tim" "tim-security@sentinelchicken.org" "<20151113171610.GA21683@sentinelchicken.org>" "11" "Re: [oss-security] CVE-Request: Assign CVE for common-collections remote code execution on deserialisation flaw" "^Cc:" nil nil "11" "2015111317:16:10" "[oss-security] CVE-Request: Assign CVE for common-collections remote code execution on deserialisation flaw" (number mark "        tim-security Nov 13   11/450   " thread-indent "\"Re: [oss-security] CVE-Request: Assign CVE for common-collections remote code execution on deserialisation flaw\"\n") "<1447424478.3340657.438908521.6EB6C975@webmail.messagingengine.com>" ("<5640442C.1050501@redhat.com>" "<20151109215303.GN1213@sentinelchicken.org>" "<5641360D.8070102@eenterphace.org>" "<20151111002307.GP1213@sentinelchicken.org>" "<56431D4F.7090006@eenterphace.org>" "<20151111160641.GQ1213@sentinelchicken.org>" "<56445609.9050301@gmail.com>" "<1447365167.1146869.438300073.116F736D@webmail.messagingengine.com>" "<20151112232245.GA1213@sentinelchicken.org>" "<1447424478.3340657.438908521.6EB6C975@webmail.messagingengine.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1991" "Saturday" "9" "January" "2016" "08:57:03" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160109135703.17FCF33217A@smtpvbsrv1.mitre.org>" "48" "[oss-security] Re: Qemu: ide: ahci use-after-free vulnerability in aio port commands" "^Cc:" nil nil "1" "2016010913:57:03" "[oss-security] Re: Qemu: ide: ahci use-after-free vulnerability in aio port commands" (number mark "        cve-assign@m Jan  9   48/1991  " thread-indent "\"[oss-security] Re: Qemu: ide: ahci use-after-free vulnerability in aio port commands\"\n") "<alpine.LFD.2.20.1601091310350.6880@wniryva>" ("<alpine.LFD.2.20.1601091310350.6880@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 28454 invoked by uid 550); 13 Nov 2015 17:16:30 -0000
+Received: (qmail 23853 invoked by uid 550); 9 Jan 2016 13:57:15 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,39 +11,61 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 28433 invoked from network); 13 Nov 2015 17:16:29 -0000
-Message-ID: <20151113171610.GA21683@sentinelchicken.org>
-References: <5640442C.1050501@redhat.com>
- <20151109215303.GN1213@sentinelchicken.org>
- <5641360D.8070102@eenterphace.org>
- <20151111002307.GP1213@sentinelchicken.org>
- <56431D4F.7090006@eenterphace.org>
- <20151111160641.GQ1213@sentinelchicken.org>
- <56445609.9050301@gmail.com>
- <1447365167.1146869.438300073.116F736D@webmail.messagingengine.com>
- <20151112232245.GA1213@sentinelchicken.org>
- <1447424478.3340657.438908521.6EB6C975@webmail.messagingengine.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1447424478.3340657.438908521.6EB6C975@webmail.messagingengine.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-Cc: cve-assign@mitre.org
-Date: Fri, 13 Nov 2015 09:16:10 -0800
-From: Tim <tim-security@sentinelchicken.org>
+Received: (qmail 23832 invoked from network); 9 Jan 2016 13:57:15 -0000
+In-Reply-To: <alpine.LFD.2.20.1601091310350.6880@wniryva>
+Message-Id: <20160109135703.17FCF33217A@smtpvbsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, luodalongde@gmail.com
+Date: Sat,  9 Jan 2016 08:57:03 -0500 (EST)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE-Request: Assign CVE for common-collections
- remote code execution on deserialisation flaw
-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: Qemu: ide: ahci use-after-free vulnerability in aio port commands
+To: ppandit@redhat.com
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-> The patch[1] attached to that JIRA report would disable serialization by
-> default. Any application that needs it would require a code change to
-> re-enable it. This would break existing applications.
+> Qemu emulator built with the IDE AHCI Emulation support is vulnerable to a use
+> after free(kind of) issue. It could occur after processing AHCI Native Command
+> Queuing(NCQ) AIO commands.
+> 
+> A privileged user inside guest could use this flaw to crash the Qemu process
+> instance or might potentially execute arbitrary code with privileges of the
+> Qemu process on the host.
+> 
+> https://lists.gnu.org/archive/html/qemu-devel/2016-01/msg01184.html
+> https://bugzilla.redhat.com/show_bug.cgi?id=1288532
 
-Right... so that's still speculation.  Speculation that apps actually
-need to serialize objects of those particular classes.  There may very
-well be applications that do that, but I just want to be sure we're
-not overstating the downsides.
+>> when the NCQ
+>> command is invalid, the 'aiocb' object is not assigned, and NCQ
+>> transfer object is left as 'used'. This leads to a use after
+>> free kind of error in 'bdrv_aio_cancel_async' via 'ahci_reset_port'.
+>> Reset NCQ transfer object to 'unused' to avoid it.
 
-tim
+Use CVE-2016-1568.
+
+This is not yet available at
+http://git.qemu.org/?p=qemu.git;a=history;f=hw/ide/ahci.c but
+that may be an expected place for a later update.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJWkRD7AAoJEL54rhJi8gl5S1YP/2Nj8+B8iR1aFHR0GXUCsCWk
+nKQYEphcDT0iyFkJ+1iazUA/72yIYp3U+wQaC5BpkUlT+KSWRKoSDCypjTKfXKUn
+HwfAsrio3NAtnpJTapalqVWN4i9fUrzCrRdMDHO+4qgxk/ph0gjxnrGldMhKN7Sz
+BTVqrY802SUFfHcKyX8Mdk7ixqq0V+grix0qRUd5q5cwrGgLsmNyWygU6gHz6rNR
+UfB2ZQLAbybR7nUcdmYFv4oTfc4voCerLS2cWP/KGmput4vnBoZvNgkXxSysTVBE
+dg54hk0xMQJzOjrec05M99wQ0kK7nhIvPyIF6D0zz3aBCJ6gyYHhipfl4skxoGNn
+RE5ljb4483sbyLFBqzj9SmrDbdiPN+1aN8dbh2yelLP5y1ccMwOXxyY3vfxiXbyy
+qsVdyO0dEA9A2s7OsSbROTwR/wHuT6PYyUOxgWx/0+waj/NuwC+znpKjgILoV7Hv
+fGkRtIDGH1UhnlfUlweIKAKnpCYFuJpZhrnDc9Ldtzagw7eveIDUlXjgAE/E/vmc
++7ySSt2T6d6+J7vDqCyyfjVTSbIaC4EGlpxnAOdLnPf0cFUPxZfPytJLGUthzRpA
+FUMVK8yNErYQEu8T07rfDXbPvk5lJoxPpoC4M1Wfkco33z1EeA03ic0W+dVnRfCC
+VTZRXik6y0D06HcjIrRp
+=iYts
+-----END PGP SIGNATURE-----
