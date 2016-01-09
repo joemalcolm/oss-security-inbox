@@ -1,34 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/05/19
-Message-ID: <1afe70a0.13380.154810ba449.Coremail.pengdawei521@163.com>
-Date: Thu, 5 May 2016 21:11:44 +0800 (CST)
-From: Vinc3nt4H <pengdawei521@....com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: CVE request - samsumg android phone TvoutService_C binder service DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/09/1
+Message-ID: <alpine.LFD.2.20.1601091310350.6880@wniryva>
+Date: Sat, 9 Jan 2016 13:18:58 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Qinghao Tang <luodalongde@...il.com>
+Subject: Qemu: ide: ahci use-after-free vulnerability in aio port commands
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-Description of the potential vulnerability:
-When a app send a evil data to com. TvoutService_C service by service command (Android system command) , can cause to TvoutService_C service crash.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
+   Hello,
 
-Steps to reproduce the issue:
-1 A PC connect S6 device;
-2 Input command: adb shell;
-3 Android Input command:
-service call TvoutService_C 22 i32 1090056453 i32 1428574234 i32 836766018 i32 779588542
+Qemu emulator built with the IDE AHCI Emulation support is vulnerable to a use 
+after free(kind of) issue. It could occur after processing AHCI Native Command 
+Queuing(NCQ) AIO commands.
 
+A privileged user inside guest could use this flaw to crash the Qemu process 
+instance or might potentially execute arbitrary code with privileges of the 
+Qemu process on the host.
 
-Affected versions: KK(4.4), L(5.0/5.1), M(6.0) 
+Upstream fix:
+- -------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2016-01/msg01184.html
 
+Reference:
+- ----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1288532
 
-Fix:
-http://security.samsungmobile.com/smrupdate.html#SMR-FEB-2016
-SVE-2016-5134: TvoutService_C service DoS
+This issue was discovered by Mr Qinghao Tang of Qihoo 360 Marvel Team.
 
+Thank you.
+- --
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
 
-We report this to samsung, samsung reply to us if we want to get CVE request it by ourself.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-
-Best regards,
-Vinc3nt4H of Alibaba Mobile Security Team
+iQIcBAEBAgAGBQJWkLtqAAoJEN0TPTL+WwQf5mAQAL1fjaFzwWBYPcDeqo3V7cFv
+qi+SQmltTf5GAbLPYXnzvfJpJeE7r6vsaEkOklgMTLceBysCjyfvjU+yEJHxMQcD
+B4ZgbqcCANXRNlmNgeL2+nXCkOs1W8Af9XeJ7KL53PP6vRMaLt3seEYZ5wsm2YUq
+yBQRd1PTayNhho8rJnZZA7bert87hZGKcRYcClqwddzW92d+y2Y8MkymjJxJQljB
+TJPBCWTHiFqwV8iLhDffcCmXdd2I0XnghX0ZzYG1bK6Dl6zIXfI91nyFFDEwxgeI
+R5tHx9bPvATl15AQZVkfuLPAh7KjH+JRPuDrM8d3HW6fyC04yS0Z4XQKZvRBVbtk
+fdvVK1kWhdTVXlulCu7M86jr61KeY7Vkkp9bNkRa5nF+yrSSvf/SKtmfRH9UJt4R
+NGhlXxoZgwyDyRM2dcthKQHnms0qPyU/giyillrbr42wKbpyzasFZKQDWW5QfsGY
+LjiV+Cj30ETINgO08i2aIMyyWVdAihpqiP5qk+LtnRiFYpsevGPVYZhF99aDMgmA
+2wmHVRtPfeSClPIJiK9b83GH45cZfZQ7SCYkLX1QoAK2C10SCUBUl1GHAS+hjmBC
+5wXTas9aooRxfxYyEqC5/cRCZmmKo8hJfFPjg3U8hZ8OTFsbrJB8glpUveYCM60k
+Eq47WaH27GAV/oKSWtkl
+=0a5q
+-----END PGP SIGNATURE-----
