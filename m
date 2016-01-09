@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3076" "Friday" "1" "December" "2017" "09:57:19" "-0500" "Scott Court" "z5t1@z5t1.com" "<73d526b8-5895-0f1b-e15b-ad683f3f2574@Z5T1.com>" "70" "Re: [oss-security] Re: Security risk of server side text editing ..." "^Cc:" nil nil "12" "2017120114:57:19" "[oss-security] Re: Security risk of server side text editing ..." (number mark "        z5t1@z5t1.co Dec  1   70/3076  " thread-indent "\"Re: [oss-security] Re: Security risk of server side text editing ...\"\n") "<201711281319.vASDJxWP010037@masaka.moolenaar.net>" ("<201711281319.vASDJxWP010037@masaka.moolenaar.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1622" "Saturday" "9" "January" "2016" "13:18:58" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1601091310350.6880@wniryva>" "45" "[oss-security] Qemu: ide: ahci use-after-free vulnerability in aio port commands" "^cc:" nil nil "1" "2016010907:48:58" "[oss-security] Qemu: ide: ahci use-after-free vulnerability in aio port commands" (number mark "        ppandit@redh Jan  9   45/1622  " thread-indent "\"[oss-security] Qemu: ide: ahci use-after-free vulnerability in aio port commands\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 3091 invoked by uid 550); 1 Dec 2017 15:01:16 -0000
+Received: (qmail 26477 invoked by uid 550); 9 Jan 2016 07:49:24 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,119 +11,61 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 32335 invoked from network); 1 Dec 2017 14:57:14 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=z5t1-com.20150623.gappssmtp.com; s=20150623;
-        h=from:subject:to:cc:references:message-id:date:user-agent
-         :mime-version:in-reply-to;
-        bh=+EO7drX3bldwSH5KnNIIR+SP/LBrRvCUHMiAzL93yUI=;
-        b=wnAbGK+gBaKqJ326egee9cWMXb5pDnqyIr/ja8nQ7TZiXgCjgiEVzGQT9qpRaQvLTE
-         yKg4i9pO6E5KfJ/RwFNQ7LhCDsoD0VVMYkEiBeI0VLj96XQ9/T+f2M3gQIjQLh2321Do
-         4BzFjQ8sPl1afpwd+82+LvwkZD3G8fgaVkHvyFCA0V01thjaFaF71NYUE7lnJtbVEwim
-         p+7dd9vAZddfbYBz8vm5yVczT2lLeWluDiqS5DoLyY2iW2G/6OJycdo9DcTQtgOk+xs8
-         KnWAaDYN52JtagI9cNwNF/GK3RN9z9vdyITksxRygtG4Jw6S70IUArnTaA30LrHOCsWM
-         MvQQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:subject:to:cc:references:message-id:date
-         :user-agent:mime-version:in-reply-to;
-        bh=+EO7drX3bldwSH5KnNIIR+SP/LBrRvCUHMiAzL93yUI=;
-        b=CHfdtiHrTQ0RxviJSgVfEqUG/K6QP0QQpisUDAsRehyxYNiTp2jkM65lym4yjr6hbG
-         HOrSXI6QO6r5s8fltGqyZ5JpiY8WzDsE/CvB+AWy+EKa5ewWKKcq9eHVy5Isr4q9S/mT
-         SefFtZmy0wEaAv+5owvWNo1GZ75iPFQHNn6q+FscCFsZPFD2zRwg7zcQme0G33aU1XdQ
-         FEhEl6r0F3Wq3ztmcnsKKJUNv6uVxY/6rhjlB+4j9kpRmOMZBlMGIKkw+UeLjNvcMKH9
-         Yz/CoIPZhJnv+S2sMvJc0u7wL9TkAXZ4/gmPBRZGP5rCN7HgsK+2Ym7Iws4XhvN8nnDc
-         HaCQ==
-X-Gm-Message-State: AKGB3mK7WPKyRg4bCGwLGPUsNvD9pHV1fs85+wJH+sUvjrzxUSM8TVgn
-	/enCsiald5OnIywVDhL9RiZBHg==
-X-Google-Smtp-Source: AGs4zMa2CEISymo9iPmRWmIn8c28wG/xvkZPQvV3Nb0Pl6+XMI/76e9c2AdISjDDbN1JT8gUTSb1yQ==
-X-Received: by 10.237.60.46 with SMTP id t43mr8903610qte.294.1512140223261;
-        Fri, 01 Dec 2017 06:57:03 -0800 (PST)
-X-Google-Original-From: Scott Court <Z5T1@Z5T1.com>
-References: <201711281319.vASDJxWP010037@masaka.moolenaar.net>
-Message-ID: <73d526b8-5895-0f1b-e15b-ad683f3f2574@Z5T1.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.5.0
+Received: (qmail 26456 invoked from network); 9 Jan 2016 07:49:23 -0000
+X-X-Sender: pjp@javelin
+Message-ID: <alpine.LFD.2.20.1601091310350.6880@wniryva>
 MIME-Version: 1.0
-In-Reply-To: <201711281319.vASDJxWP010037@masaka.moolenaar.net>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="sT5BHr2kS8tigqT1t3tBfWn2uoWTOAahq"
-Cc: Kurt Seifried <kseifrie@redhat.com>, oss-security@lists.openwall.com,
- vim_dev@googlegroups.com
-Date: Fri, 1 Dec 2017 09:57:19 -0500
-From: Scott Court <z5t1@z5t1.com>
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
+cc: Qinghao Tang <luodalongde@gmail.com>
+Date: Sat, 9 Jan 2016 13:18:58 +0530 (IST)
+From: P J P <ppandit@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: Security risk of server side text editing ...
-To: Bram Moolenaar <Bram@moolenaar.net>
+Subject: [oss-security] Qemu: ide: ahci use-after-free vulnerability in aio port commands
+To: oss security list <oss-security@lists.openwall.com>
 
---sT5BHr2kS8tigqT1t3tBfWn2uoWTOAahq
-Content-Type: multipart/mixed; boundary="OC0BRiFEJ0ePsvHKVvsCX4o7IL2cxs33b";
- protected-headers="v1"
-From: Scott Court <Z5T1@Z5T1.com>
-To: Bram Moolenaar <Bram@moolenaar.net>
-Cc: Kurt Seifried <kseifrie@redhat.com>, oss-security@lists.openwall.com,
- vim_dev@googlegroups.com
-Message-ID: <73d526b8-5895-0f1b-e15b-ad683f3f2574@Z5T1.com>
-Subject: Re: [oss-security] Re: Security risk of server side text editing ...
-References: <201711281319.vASDJxWP010037@masaka.moolenaar.net>
-In-Reply-To: <201711281319.vASDJxWP010037@masaka.moolenaar.net>
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
---OC0BRiFEJ0ePsvHKVvsCX4o7IL2cxs33b
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Content-Language: en-US
+   Hello,
 
-This has been assigned CVE-2017-17087
->>     2. Vim .swp file group (Doesn't have a CVE ID)
->>
->> This vulnerability was discovered by me. When Vim creates a .swp file,
->> the .swp file is created with the owner and group set to the editor and
->> editor's primary group respectively. The .swp file is the set to the
->> same permissions as the original file (i.e. chmod 640). This creates a
->> security vulnerability when the editor's primary group is not the same
->> as the original file's group.
->>
->> For example, say the root user's primary group is "users", which every
->> user is a member of. If root goes to edit /etc/shadow, the
->> /etc/.shadow.swp file is created with permissions 640 and user:group set
->> to root:users. The original /etc/shadow file had user:group set to
->> root:shadow though; this now exposes the /etc/shadow file (which mind
->> you contains hashes of every user's password) to every user on the syste=
-m.
->>
->> Originally, I thought this was an extension of CVE-2017-1000382 so I
->> didn't bother trying to get a CVE ID for it; however, upon looking at it
->> for a second time, it seems that this is indeed a different
->> vulnerability. It is possible to patch this vulnerability without
->> patching CVE-2017-1000382.
->
+Qemu emulator built with the IDE AHCI Emulation support is vulnerable to a use 
+after free(kind of) issue. It could occur after processing AHCI Native Command 
+Queuing(NCQ) AIO commands.
 
+A privileged user inside guest could use this flaw to crash the Qemu process 
+instance or might potentially execute arbitrary code with privileges of the 
+Qemu process on the host.
 
+Upstream fix:
+- -------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2016-01/msg01184.html
 
---OC0BRiFEJ0ePsvHKVvsCX4o7IL2cxs33b--
+Reference:
+- ----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1288532
 
---sT5BHr2kS8tigqT1t3tBfWn2uoWTOAahq
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
+This issue was discovered by Mr Qinghao Tang of Qihoo 360 Marvel Team.
+
+Thank you.
+- --
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
 
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
+Version: GnuPG v1
 
-iQIcBAEBCAAGBQJaIW3SAAoJEI1dl2DAZNZc8IIP/iUWdPfbK6i+sVrYVZFDuFsC
-TZkOo60hsdIULDkoPeagbUc1WAFmb1PLveoATaxLvTA/Cm01aZKVAvHdaMKLWcRA
-dmAYKdA5Z4OTNkgkdBsTObMAtHT4vZoFOxqs8xvnG1zSG6whxxjDr1f5mP1OStWG
-9WLJXwykqKyXoXz/6JCLU9PTpMxAKmJ6Wm3dgs22IZmvCP5JTnmFyxI/SXl6KTkJ
-oeIoNV+1CP44QBgdn5VhZSewXvmh8LDYIiltiZ7gqUpEU/3bwmrxNlPrBYrXDEIc
-VV1mgDd7qnK2QrFIoMJ0RRuFC1xpmpNGrXes64A4Z5WjuTRfqOmuVOz5fm/Jx2YO
-OsVz4Tvl6ajYpVyf7CS4nMZhg/VDxXxm+fDd91GEH67C5j55Xm6vDZ6KWnDeqCZ3
-ZlAe2rOiUjQXY49DPvg1K//SjZbMGIgOMP3lH/gdM0x7+IlYRu5+dzIfg4pKOl5F
-Na8SsDcMIjdpDPSYnghovCLpvsA6Fh8IUyIqnUPw35JeD5z18aSkxJ6kbQFl7Obd
-0Ch4N2hBMLD/Eguvdy6Me06aTCnUmEiTRHEhpM1XBzgBfqA/WDErdgtQ1li+2B+H
-iGAAe1Vbq1+fPWK3qKPpMYJgho9Hs55oNhEA1gRAvf/VNGBcGofgeGtIOMklIr8v
-SB7ZNn94oss/zlZ/x4PT
-=PEH5
+iQIcBAEBAgAGBQJWkLtqAAoJEN0TPTL+WwQf5mAQAL1fjaFzwWBYPcDeqo3V7cFv
+qi+SQmltTf5GAbLPYXnzvfJpJeE7r6vsaEkOklgMTLceBysCjyfvjU+yEJHxMQcD
+B4ZgbqcCANXRNlmNgeL2+nXCkOs1W8Af9XeJ7KL53PP6vRMaLt3seEYZ5wsm2YUq
+yBQRd1PTayNhho8rJnZZA7bert87hZGKcRYcClqwddzW92d+y2Y8MkymjJxJQljB
+TJPBCWTHiFqwV8iLhDffcCmXdd2I0XnghX0ZzYG1bK6Dl6zIXfI91nyFFDEwxgeI
+R5tHx9bPvATl15AQZVkfuLPAh7KjH+JRPuDrM8d3HW6fyC04yS0Z4XQKZvRBVbtk
+fdvVK1kWhdTVXlulCu7M86jr61KeY7Vkkp9bNkRa5nF+yrSSvf/SKtmfRH9UJt4R
+NGhlXxoZgwyDyRM2dcthKQHnms0qPyU/giyillrbr42wKbpyzasFZKQDWW5QfsGY
+LjiV+Cj30ETINgO08i2aIMyyWVdAihpqiP5qk+LtnRiFYpsevGPVYZhF99aDMgmA
+2wmHVRtPfeSClPIJiK9b83GH45cZfZQ7SCYkLX1QoAK2C10SCUBUl1GHAS+hjmBC
+5wXTas9aooRxfxYyEqC5/cRCZmmKo8hJfFPjg3U8hZ8OTFsbrJB8glpUveYCM60k
+Eq47WaH27GAV/oKSWtkl
+=0a5q
 -----END PGP SIGNATURE-----
-
---sT5BHr2kS8tigqT1t3tBfWn2uoWTOAahq--
