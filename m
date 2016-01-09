@@ -1,44 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/29/12
-Message-ID: <CACn5sdSmJz5Waf2nL2pHYrRsw1OvmS7uny-_KZuXi4tFc5ROZQ@mail.gmail.com>
-Date: Fri, 29 Jan 2016 18:43:32 -0300
-From: Gustavo Grieco <gustavo.grieco@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE request: out-of-bounds write with cpio 2.11
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/09/2
+Message-Id: <20160109135703.17FCF33217A@smtpvbsrv1.mitre.org>
+Date: Sat,  9 Jan 2016 08:57:03 -0500 (EST)
+From: cve-assign@...re.org
+To: ppandit@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, luodalongde@...il.com
+Subject: Re: Qemu: ide: ahci use-after-free vulnerability in aio port commands
 Content-Type: text/plain; charset=utf-8
 
-2016-01-29 17:52 GMT-03:00 anarcat <anarcat@...ngeseeds.org>:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-> I can't actually reproduce this on Debian, which runs 2.11 all the way
-> back to squeeze:
->
-> (gdb) run -i < ../overflow.cpio
-> Starting program: /bin/cpio -i < ../overflow.cpio
-> [Thread debugging using libthread_db enabled]
-> Using host libthread_db library
-> "/lib/x86_64-linux-gnu/libthread_db.so.1".
-> /bin/cpio: Malformed number0000000
-> /bin/cpio: warning: skipped 8 bytes of junk
-> /bin/cpio: Substituting `.' for empty member name
-> /bin/cpio: . not created: newer or same age version exists
-> /bin/cpio: premature end of file
-> [Inferior 1 (process 191) exited with code 02]
->
-> Did i miss something?
->
+> Qemu emulator built with the IDE AHCI Emulation support is vulnerable to a use
+> after free(kind of) issue. It could occur after processing AHCI Native Command
+> Queuing(NCQ) AIO commands.
+> 
+> A privileged user inside guest could use this flaw to crash the Qemu process
+> instance or might potentially execute arbitrary code with privileges of the
+> Qemu process on the host.
+> 
+> https://lists.gnu.org/archive/html/qemu-devel/2016-01/msg01184.html
+> https://bugzilla.redhat.com/show_bug.cgi?id=1288532
 
-Yeap, you need to user valgrind to expose this issue:
+>> when the NCQ
+>> command is invalid, the 'aiocb' object is not assigned, and NCQ
+>> transfer object is left as 'used'. This leads to a use after
+>> free kind of error in 'bdrv_aio_cancel_async' via 'ahci_reset_port'.
+>> Reset NCQ transfer object to 'unused' to avoid it.
 
-$ valgrind cpio -i < ../overflow.cpio
+Use CVE-2016-1568.
 
+This is not yet available at
+http://git.qemu.org/?p=qemu.git;a=history;f=hw/ide/ahci.c but
+that may be an expected place for a later update.
 
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
->
-> a.
-> --
-> The United States is a nation of laws:
-> badly written and randomly enforced.
->                         - Frank Zappa
->
->
-
+iQIcBAEBCAAGBQJWkRD7AAoJEL54rhJi8gl5S1YP/2Nj8+B8iR1aFHR0GXUCsCWk
+nKQYEphcDT0iyFkJ+1iazUA/72yIYp3U+wQaC5BpkUlT+KSWRKoSDCypjTKfXKUn
+HwfAsrio3NAtnpJTapalqVWN4i9fUrzCrRdMDHO+4qgxk/ph0gjxnrGldMhKN7Sz
+BTVqrY802SUFfHcKyX8Mdk7ixqq0V+grix0qRUd5q5cwrGgLsmNyWygU6gHz6rNR
+UfB2ZQLAbybR7nUcdmYFv4oTfc4voCerLS2cWP/KGmput4vnBoZvNgkXxSysTVBE
+dg54hk0xMQJzOjrec05M99wQ0kK7nhIvPyIF6D0zz3aBCJ6gyYHhipfl4skxoGNn
+RE5ljb4483sbyLFBqzj9SmrDbdiPN+1aN8dbh2yelLP5y1ccMwOXxyY3vfxiXbyy
+qsVdyO0dEA9A2s7OsSbROTwR/wHuT6PYyUOxgWx/0+waj/NuwC+znpKjgILoV7Hv
+fGkRtIDGH1UhnlfUlweIKAKnpCYFuJpZhrnDc9Ldtzagw7eveIDUlXjgAE/E/vmc
++7ySSt2T6d6+J7vDqCyyfjVTSbIaC4EGlpxnAOdLnPf0cFUPxZfPytJLGUthzRpA
+FUMVK8yNErYQEu8T07rfDXbPvk5lJoxPpoC4M1Wfkco33z1EeA03ic0W+dVnRfCC
+VTZRXik6y0D06HcjIrRp
+=iYts
+-----END PGP SIGNATURE-----
