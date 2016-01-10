@@ -1,26 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/11/5
-Message-ID: <CACn5sdRB_hxr90kYdZnESVrCA99t6FOgGpBygXDeHzqcySCMZw@mail.gmail.com>
-Date: Mon, 11 Apr 2016 19:37:51 +0200
-From: Gustavo Grieco <gustavo.grieco@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Large amount of uninitialized values in svg parsing and processing
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/10/2
+Message-ID: <20160110143712.GA13963@eldamar.local>
+Date: Sun, 10 Jan 2016 15:37:12 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Cc: Damyan Ivanov <dmn@...ian.org>
+Subject: CVE Request: FireBird RDBMS: authenticated clients crash FireBird when running gbak with invalid parameter
 Content-Type: text/plain; charset=utf-8
 
 Hi,
 
-A large amount of uninitialized values in the parsing and processing of svg
-files using librsvg and related libraries (e.g, libcairo) are causing
-undefined behaviors. Some of these issues are originated in librsvg, some
-in libcairo and others (libpixman maybe). Some relevant technical details
-are available here:
+The FireBird RDBMS can be crashed remotely by an authenticated client
+by invoking gbak via the service manager using invalid command line
+switch and lead to denial of service.
 
-https://bugs.freedesktop.org/show_bug.cgi?id=92904
+The issue was introduced in version 2.5.5.
 
-As a result of this, just browsing svg files using the open dialog of
-Firefox/Chromium can lead to unexpected or undefined behavior. Other
-applications using librsvg are likely affected.
+Upstream report:
+http://tracker.firebirdsql.org/browse/CORE-5068
+
+Upstream fix: 
+http://sourceforge.net/p/firebird/code/62783/
+
+Debian bug:
+https://bugs.debian.org/810599
+
+Can a CVE be assigned for his issue?
 
 Regards,
-Gus.
-
+Salvatore
