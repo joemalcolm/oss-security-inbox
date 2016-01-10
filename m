@@ -1,47 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/19/7
-Message-Id: <20160219200520.2D1413321C7@smtpvbsrv1.mitre.org>
-Date: Fri, 19 Feb 2016 15:05:20 -0500 (EST)
-From: cve-assign@...re.org
-To: mouzannar@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, yarolig@...il.com, security@...ian.org
-Subject: Re: CVE request: didiwiki path traversal vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/10/1
+Message-ID: <20160110142405.GA11741@eldamar.local>
+Date: Sun, 10 Jan 2016 15:24:05 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: cve-assign@...re.org
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: netfilter-persistent: (local) information leak due to world-readable rules files
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi!
 
->>> https://github.com/OpenedHand/didiwiki/pull/1/files
->>> https://github.com/yarolig/didiwiki/commit/5e5c796617e1712905dc5462b94bd5e6c08d15ea
->>> curl http://localhost:8000/api/page/get?page=/etc/passwd
+Thanks for your reply, really appreciated that you took time to review
+the request.
 
->> We can assign a CVE ID if there is going to be a DSA.
+On Thu, Jan 07, 2016 at 07:54:24PM -0500, cve-assign@...re.org wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA256
+> 
+> > iptables-persistent (in Debian) is a loader for netfilter configuration
+> > using a plugin-based architecture.
+> > 
+> > iptables-persistent is vulnerable to a (local) information leak due to
+> > world-readable rules files. It was reported in Debian in
+> > 
+> > https://bugs.debian.org/764645
+> > 
+> > And fixed via
+> > 
+> > https://anonscm.debian.org/cgit/collab-maint/iptables-persistent.git/commit/?id=37905034f07e94c4298a1762b39b7bbd4063c0df
+> 
+> Do you have any further information about why this should be
+> considered a vulnerability in general? We realize that it might, at
+> least, be considered a vulnerability for Debian systems because of
+> "Tags: security" in the original report.
+> 
+> For example, is there a specific piece of data in the files that is
+> always supposed to be private?
+> 
+> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=764645#5 indicates
+> that an unprivileged user can obtain information by directly opening
+> the files, but cannot obtain this information with an
+> "/sbin/iptables -L" command. This does not, by itself, establish that
+> a security feature has been defeated. It is possible that it was
+> simply inconvenient to implement the -L option in a way that provided
+> access to unprivileged users.
+> 
+> What we are trying to avoid is a situation in which CVE IDs are
+> assigned solely because a system administrator might not want files to
+> be readable by unprivileged users. For example, maybe someone would
+> prefer stricter /etc/hosts.allow permissions to prevent rogue local
+> users from discovering the names of other hosts that possibly have
+> symmetric "allow" policies.
 
-> The Debian Security team is planning on publishing a DSA
+I can follow the reasoning. I agree that it might be borderline to
+actually request a CVE for this issue. The situation which I had in
+mind is a multi-user system, where the administrator has set some
+iptables rules up, and the regular users of the system should not
+know about how they are set up. If the admin uses iptables-persistent
+from Debian these set rules (restored after boot) are disclosed though
+to the users via the files /etc/iptables/rules.{v4,v6}.
 
-Use CVE-2013-7448.
-
-There is no CVE ID for the theoretical C:\file.txt attack on Windows.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJWx3R3AAoJEL54rhJi8gl56FIQAKhiDXHz+ZfYJW3Q8yQsOTGY
-NCWQd87pKkg9glEACwCi/G+xbuPAW2MabkvYu5EPVvggtiIl0HHcVal+NCg4k8wW
-1ObCjslioox7lU4O/AZMiSfv7RwfadM2Bsg16jKIo1E6MmkaTcFepOwJK3G5NWuA
-HavNfY28wH1XzGp5SH6TDW343dXaJb9yzOBsGxn5UlEbs5piS5tiPe11+l1vO/eW
-rEA2USyXgtsSxu/vJruGzYxRiztwDaiJkT9n6avTKTcwO2Y7qkVeeDxzLAOG1iq2
-zM6Xvc2ejB5qmMBU0Oo75CE1MdcXZKhQ/62+zs3JrlKamD+8MoObW4YUWUKHQmLm
-/XOQ+lbFYhNkuaPz/xvZwiCT68acVuaSQomEge2bcDHPbAALO2v6WYubGlZO/h1g
-NARKJsPHYJfV4zIqtslReCbPAGW4caWkCnfJXLm0AqlGWXIKrjx2U/XtDCm00fy+
-4AA4b2THlYjFkvnzQaZzpkYjZH8V15VgockWctCUHmiY8HVQR8SDagNB0vcNN7yU
-e10DNt2PVwzS2iXewwx4P7sZmEPampGD3cOlH1bQklA4qBMcd2erRdoeL8N+aWAs
-XBBcuZVFHXNP6F4HAg/1ZM1sxxFmirFnQ9TTsCk8Lu6pT4XJWYk7s83e3yrwjslc
-AKbuwf1evPPl83oPO1Bs
-=jQSe
------END PGP SIGNATURE-----
+Regards,
+Salvatore
