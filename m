@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["728" "Wednesday" "17" "February" "2021" "14:09:11" "+0000" "Kaxil Naik" "kaxilnaik@gmail.com" nil "23" "[oss-security] CVE-2021-26697: Apache Airflow: Lineage API endpoint for Experimental API missed authentication check" nil nil nil "2" nil nil (number mark "U       kaxilnaik@gm Feb 17   23/728   " thread-indent "\"[oss-security] CVE-2021-26697: Apache Airflow: Lineage API endpoint for Experimental API missed authentication check\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-26697: Apache Airflow: Lineage API endpoint for Experimental API missed authentication check" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1659" "Sunday" "10" "January" "2016" "12:43:58" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160110174358.54BB66C000F@smtpvmsrv1.mitre.org>" "43" "[oss-security] Re: CVE Request: FireBird RDBMS: authenticated clients crash FireBird when running gbak with invalid parameter" nil nil nil "1" "2016011017:43:58" "[oss-security] Re: CVE Request: FireBird RDBMS: authenticated clients crash FireBird when running gbak with invalid parameter" (number mark "U       cve-assign@m Jan 10   43/1659  " thread-indent "\"[oss-security] Re: CVE Request: FireBird RDBMS: authenticated clients crash FireBird when running gbak with invalid parameter\"\n") "<20160110143712.GA13963@eldamar.local>" ("<20160110143712.GA13963@eldamar.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 10030 invoked by uid 550); 17 Feb 2021 14:11:47 -0000
+Received: (qmail 21638 invoked by uid 550); 10 Jan 2016 17:44:10 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,61 +12,55 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9341 invoked from network); 17 Feb 2021 14:09:35 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=wEY9RI9l/b+/5OJGaqFEzeKQc1mlLLfsWDY3lMmnpsw=;
-        b=MnQcZ1XXbOBv2cmJhjZIkBtK2/bb4qYzcKoBccy6XFPMw6MbFvGgmyTgDjMNGqHc3B
-         aBWt773xkWQ/x/Iw2OYLMeeENcqmfPOeweD6B8cHoI2be0CCK5YitznJHB90OLg7ItfF
-         UNKw4kCAeRKMHvBvw2yde7TcH0Rste87PV0ARUMCvUgMrgWXw7qu7cFjb1O2zhs86h1m
-         mnbPav4UDVIxYEMKqMzqHw0Knywc3DsPBuKtTUKZqwGvgnJmg29L2rkN9uxxBBnGJabh
-         z178sNsETFzMQ8ghBWNuE7PYh35D91K+2DdT+zNEI3j3cRRFqmIaTIGbouA9/FXigh0a
-         nPFA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=wEY9RI9l/b+/5OJGaqFEzeKQc1mlLLfsWDY3lMmnpsw=;
-        b=ugQBxjit33jHeGZjp0Cei1++E6lL0odYzd4lgaLfgZbBl1KWc9reRu1dzKD5QpZinH
-         j7m+FuEsflF7aclbO3JOSnt25cx39YoWi8fAuDv9iHoYr21RAePPJpJ8aMlvvI6KH1/q
-         OsYxK+d/FDOcyS8WCA3u68FRwOrSocJ+SY4M/gPi76pSnG3tkMXd+Cg38dYGSWkzPrKR
-         yPiR5ShduUTE9Mkw4JXNpQhkDBZNlcTq19Wwq3N9Z3rwKLH8qOP8lx9k/ECQtqBSuCcx
-         qx96hHz9CH3xCGKM/rmIk/gbg8UWZetr0hgoUUWxHAQexPTIzam0lNSTr989dCv9XYCs
-         abvg==
-X-Gm-Message-State: AOAM533PFy/uYfS6RejvR/Lmc4I3wrplgPwW5Bw28lcp+XzsYISKx6II
-	q/GkxaOOZ2lqlUo4LFJy4QLIXWDaVBlJDd3qxZ1BLenFD6MSLz6Cq5Q=
-X-Google-Smtp-Source: ABdhPJy+ZVKAFMuXkzo5u/3yqka655lMGD9h0m6Y68Je6jjduEJXzLuBdZcUdX/b4q4zbIPcb4cjTJ3jMKLTM5F5DuI=
-X-Received: by 2002:a50:9556:: with SMTP id v22mr1961306eda.336.1613570962695;
- Wed, 17 Feb 2021 06:09:22 -0800 (PST)
-MIME-Version: 1.0
-From: Kaxil Naik <kaxilnaik@gmail.com>
-Date: Wed, 17 Feb 2021 14:09:11 +0000
-Message-ID: <CAH5JyZq1We7GoJGuOu5jzgRiOQ-iQf46yYdO=rWw8Cf-8KR=5g@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="0000000000000d7b5405bb88c498"
-Subject: [oss-security] CVE-2021-26697: Apache Airflow: Lineage API endpoint for Experimental
- API missed authentication check
+Received: (qmail 21617 invoked from network); 10 Jan 2016 17:44:10 -0000
+From: cve-assign@mitre.org
+To: carnil@debian.org
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, dmn@debian.org
+In-Reply-To: <20160110143712.GA13963@eldamar.local>
+Message-Id: <20160110174358.54BB66C000F@smtpvmsrv1.mitre.org>
+Date: Sun, 10 Jan 2016 12:43:58 -0500 (EST)
+Subject: [oss-security] Re: CVE Request: FireBird RDBMS: authenticated clients crash FireBird when running gbak with invalid parameter
 
---0000000000000d7b5405bb88c498
-Content-Type: text/plain; charset="UTF-8"
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Description:
+> The FireBird RDBMS can be crashed remotely by an authenticated client
+> by invoking gbak via the service manager using invalid command line
+> switch and lead to denial of service.
+> 
+> http://tracker.firebirdsql.org/browse/CORE-5068
+> http://sourceforge.net/p/firebird/code/62783/
+> https://bugs.debian.org/810599
 
-The lineage endpoint of the deprecated Experimental API was not
-protected by authentication in Airflow 2.0.0. This allowed
-unauthenticated users to hit that endpoint.
+>> Typo in gbak's command line parameter causes Firebird process to crash
 
-This is low-severity CVE as the attacker needs to be aware of certain
-parameters to pass to that endpoint and even after can just get some
-metadata about a DAG and a Task.
+>> Bug happens only when backup\restore is made using services and when wrong switch is passed. 
 
-This issue affects Apache Airflow 2.0.0.
+>>> burp/burp.cpp
+>>> - BURP_print(true, 137, sw.c_str());
+>>> + BURP_error(137, true, sw.c_str());
 
-Credit:
+Use CVE-2016-1569.
 
-Apache Airflow would like to thank Ian Carroll for reporting this issue.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-References:
-https://lists.apache.org/thread.html/re21fec81baea7a6d73b0b5d31efd07cc02c61f832e297f65bb19b519%40%3Cusers.airflow.apache.org%3E
-
---0000000000000d7b5405bb88c498--
+iQIcBAEBCAAGBQJWkpewAAoJEL54rhJi8gl5JdUP/1Nf5ObCY4KGqcm2AAHx43a0
+8f9TWuE/FVfNNVVsfAHqLRacUte+KHvVCY7+UUiIYsXRymoJeKc+JqaqgDIhBW0L
+0/5FUiDt8YG4eGFLm3jDlfOz8em9Mk2lvOnFxh98rDwjn7HTh/B8rutnbIUeNE8X
+W5pKo/GzO3N68UcSZrJnzy6oPvO2aoWbt1fXiJEnvh9Ff2NEaPkFG4yE3fvPDmLO
+cR6O3ZCVJNhRJMEbayIqwpeTF6susR7BjRQBSB5XXR4weN9ulIXmKb29pJz9Ioqx
+WxrDPvD3Z4LaEMdFRkylEo4lTEiAJQVlSt316xFoqVmh7kPri7DdzJmU7920i7YH
+Gh8lOXO4yzW30ek3jRRs5FBbyrEUPjqwRP2ejnJ7fwB4jQwauSU98yt0MpEztOHr
+I59XcF0TpyEHe3fK8CLdeRMVVBveJKmsbmIUzzA37jLoYoZim1VuQB3CbSQPE7k5
+RBOGUWTa/npMrWkANojT5DTmfGb/oFfsculXDDc1svILWy+CQxxK8/qg4w8Gm+al
+XccUo7ZVV2JeNKX8F7Chmw6jPhWSpJgrl1i7HoXA/DRKUMnM+R13gXbcX/yR+dyO
+VWViItsI/eY/d7LRJ5vP8OHNJuYYxYmTF6dlXWXjemUMs9/m42qBaIzI+hGD9c8d
+iXS62wvm5sQXtNWmIm4P
+=tXFp
+-----END PGP SIGNATURE-----
