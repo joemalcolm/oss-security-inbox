@@ -1,49 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/11/1
-Message-Id: <20160411043901.70E186C017B@smtpvmsrv1.mitre.org>
-Date: Mon, 11 Apr 2016 00:39:01 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/10/3
+Message-Id: <20160110174358.54BB66C000F@smtpvmsrv1.mitre.org>
+Date: Sun, 10 Jan 2016 12:43:58 -0500 (EST)
 From: cve-assign@...re.org
-To: matthias@...lons.info
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: imlib2 - potential divide-by-zero in imlib_image_draw_ellipse
+To: carnil@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, dmn@...ian.org
+Subject: Re: CVE Request: FireBird RDBMS: authenticated clients crash FireBird when running gbak with invalid parameter
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> please provide a CVE ID for this issue in imlib2:
+> The FireBird RDBMS can be crashed remotely by an authenticated client
+> by invoking gbak via the service manager using invalid command line
+> switch and lead to denial of service.
 > 
-> https://git.enlightenment.org/legacy/imlib2.git/commit/?id=c94d83ccab15d5ef02f88d42dce38ed3f0892882
+> http://tracker.firebirdsql.org/browse/CORE-5068
+> http://sourceforge.net/p/firebird/code/62783/
+> https://bugs.debian.org/810599
 
->> Attempting to draw a 2x1 ellipse with e.g. imlib_image_draw_ellipse(x, y, 2, 1) causes a divide-by-zero.
+>> Typo in gbak's command line parameter causes Firebird process to crash
 
-> Debian bug report from 2011:
-> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=639414
+>> Bug happens only when backup\restore is made using services and when wrong switch is passed. 
 
->> this bug has minor security implications (DoS for 
->> applications that issue draw command based on untrusted input).
+>>> burp/burp.cpp
+>>> - BURP_print(true, 137, sw.c_str());
+>>> + BURP_error(137, true, sw.c_str());
 
-Use CVE-2011-5326.
+Use CVE-2016-1569.
 
 - -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJXCyibAAoJEL54rhJi8gl5VRgP/ipfgG1QiVj0ZOxfVHta2T3t
-yeIEMjWLpG9zFo1rGmJyDN/h0+UG/JSOQzM87l11INxceeUjHdN9FFSTDk3bN0rY
-r9a1rUwrPUc/CV8F9Y90lA6AQ69pwj73mf3ylu66H5C5wWBo5ZNvjyqxvNaInIgO
-o5SAKeiNMUdfjPryIK47GtBR/xp48Sl0GbG8S8GzYrhpA/lze39QG5RdmzYLJVWd
-ktMlt5jE+oomypwtiJpe+MvpXHHu92AaVbZ6xnmk3Gv5/dttumU47xXLjAHCmz2i
-cXJe4BVkB5hXWlQmg49V05Muivaec84blpN+OyRDfCnqWRp2dP6yBiWFBOJ/7KDX
-zcWagbUHUoHR2GefHt9FSkiI65J/HINYYefhpSrNZK9gJxiE/ouJQXMyFV3eNvWm
-IBGjoXR4wMcjuhx9W2bwRwTa9ILmWq375UVWm137cwOa/0QF0vo06qnFeuogtWlb
-+OwV6m8/J+KZAYDQKR3viKOCTJGiUl/bB5CKdAGHpdXR1vbRqkydhc4tuLuQ64tn
-fLXLdpAFDl/xGkRxcJu+7Ww7QHTvwH2daTfcVfzYQ8SSFuOWDx5ii31CPr1BkoOl
-PcInntz6lAXdpgjqMaRUyP1QAD60H/la9/N6j2k4w1JN3EKKGsaZrQPhgN9aNNs2
-8v8DY7QKNuVdyqT8idPB
-=/w1g
+iQIcBAEBCAAGBQJWkpewAAoJEL54rhJi8gl5JdUP/1Nf5ObCY4KGqcm2AAHx43a0
+8f9TWuE/FVfNNVVsfAHqLRacUte+KHvVCY7+UUiIYsXRymoJeKc+JqaqgDIhBW0L
+0/5FUiDt8YG4eGFLm3jDlfOz8em9Mk2lvOnFxh98rDwjn7HTh/B8rutnbIUeNE8X
+W5pKo/GzO3N68UcSZrJnzy6oPvO2aoWbt1fXiJEnvh9Ff2NEaPkFG4yE3fvPDmLO
+cR6O3ZCVJNhRJMEbayIqwpeTF6susR7BjRQBSB5XXR4weN9ulIXmKb29pJz9Ioqx
+WxrDPvD3Z4LaEMdFRkylEo4lTEiAJQVlSt316xFoqVmh7kPri7DdzJmU7920i7YH
+Gh8lOXO4yzW30ek3jRRs5FBbyrEUPjqwRP2ejnJ7fwB4jQwauSU98yt0MpEztOHr
+I59XcF0TpyEHe3fK8CLdeRMVVBveJKmsbmIUzzA37jLoYoZim1VuQB3CbSQPE7k5
+RBOGUWTa/npMrWkANojT5DTmfGb/oFfsculXDDc1svILWy+CQxxK8/qg4w8Gm+al
+XccUo7ZVV2JeNKX8F7Chmw6jPhWSpJgrl1i7HoXA/DRKUMnM+R13gXbcX/yR+dyO
+VWViItsI/eY/d7LRJ5vP8OHNJuYYxYmTF6dlXWXjemUMs9/m42qBaIzI+hGD9c8d
+iXS62wvm5sQXtNWmIm4P
+=tXFp
 -----END PGP SIGNATURE-----
