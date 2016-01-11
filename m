@@ -1,31 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/02/1
-Message-ID: <CA+q1=fSKUpSWOGusA99-_KkBZOxqjUzVZFSOQECgjAP+QMzuig@mail.gmail.com>
-Date: Thu, 1 Sep 2016 16:17:52 -0700
-From: Diogo Mónica <diogo.monica@...ker.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/11/8
+Message-ID: <5693E986.2010705@canonical.com>
+Date: Mon, 11 Jan 2016 11:42:30 -0600
+From: Jamie Strandboge <jamie@...onical.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: cve request: docker swarmkit Dos occurs by repeatly joining and quitting swam cluster as a node
+Cc: security <security@...ntu.com>
+Subject: CVE Request: click
 Content-Type: text/plain; charset=utf-8
 
-A few weeks ago (Aug 4, 2016), a CVE (CVE-2016-6595) describing a DoS on
-docker swarm got issued. We believe this not a real issue, and would like
-to have the CVE rescinded.
 
-The person reporting this "vulnerability" is exhausting the resources of a
-remote manager by doing hundreds of join/leave operations without removing
-the state that is left by old nodes. At some point the manager obviously
-stops being able to accept new nodes, since it runs out of memory.
+Hi MITRE, all,
 
-Given that both for Docker swarm and for Docker Swarmkit nodes are
-*required* to provide a secret token (it's actually the only mode of
-operation), this means that no adversary can simply join nodes and exhaust
-manager resources.
+A vulnerability was discovered in the click package system:
+https://launchpad.net/bugs/1506467
+http://www.ubuntu.com/usn/usn-2771-1/
 
-We can't do anything about a manager running out of memory and not being
-able to add new legitimate nodes to the system. This is merely a resource
-provisioning issue, and definitely not a CVE worthy vulnerability.
+It was fixed in 0.4.42 with:
+https://code.launchpad.net/~cjwatson/click/audit-missing-dot-slash/+merge/274554
 
-Thank you,
+This is an input sanitization bug where click assumed leading paths were always
+prefixed with './' which, for example, allows a crafted click to ship a '.click'
+directory to manipulate the click install process.
+
+Can we get a CVE for this?
+
+Thanks!
+
 -- 
-Diogo Mónica
+Jamie Strandboge                 http://www.ubuntu.com/
 
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
