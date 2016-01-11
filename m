@@ -1,4 +1,9 @@
-Received: (qmail 3123 invoked by uid 550); 24 Feb 2026 23:32:33 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1868" "Monday" "11" "January" "2016" "00:43:00" "+0000" "VeraCrypt Team" "veracrypt@idrix.fr" "<C6CF5360-68D8-4FFF-864A-D777F1A9740E@idrix.fr>" "42" "[oss-security] CVE-2016-1281: TrueCrypt and VeraCrypt Windows installers allow arbitrary code execution with elevation of privilege" nil nil nil "1" "2016011100:43:00" "[oss-security] CVE-2016-1281: TrueCrypt and VeraCrypt Windows installers allow arbitrary code execution with elevation of privilege" (number mark "U       veracrypt@id Jan 11   42/1868  " thread-indent "\"[oss-security] CVE-2016-1281: TrueCrypt and VeraCrypt Windows installers allow arbitrary code execution with elevation of privilege\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 30279 invoked by uid 550); 11 Jan 2016 00:43:28 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,59 +12,69 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 31767 invoked from network); 24 Feb 2026 23:18:50 -0000
-DKIM-Filter: OpenDKIM Filter v2.10.3 james.steelbluetech.co.uk E827CBFC1C
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ehuk.net; s=default;
-	t=1771975120; bh=zK0Dyh1CgOMdQFMbDTjzWvOu7nJGwOdrD+NoXVj4hfk=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=BZj5cMGBkpQAriGW5ZpS99XzvOqO88qcfN4U+efJd+6EABEghyJYuRGar0SijK8Ob
-	 D8vwShE6x+9McSVVx9R3qliQhMhJmFEV4HTVlCSYPm3es5MDTHazollJUMvb1X1IX9
-	 sINX0nnV7jCh/z9gx7UV5r3SwW2pGWScwv9DX1/1PUV2I9Mhd43Xj2jsNM4MmvPbK0
-	 hU7rEhFdll3F2CCFet+PMtg2Jl1y3xrZQYSID+onUlMAeKgZdRDv+qzW/MBow7xY7m
-	 6IT9I/coCCNNhJuYJcgANbnHLwmAMxL3gteCLYRGYnpqqjiQ/LzBLulLuiWVTF84cS
-	 zdcDPbqJTzigg==
-Message-ID: <ae76aeaf-88e5-459d-95ca-fcab8de948e2@ehuk.net>
-Date: Tue, 24 Feb 2026 23:18:39 +0000
+Received: (qmail 30261 invoked from network); 11 Jan 2016 00:43:27 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=idrix.fr; s=mail;
+	t=1452472996; bh=TMHQ2/f5AfcmC7lf94pbR7BuMrCmJKul68ah0tvhjfI=;
+	h=Subject:From:Date:To:From;
+	b=hDF655TyOVmSr7hmjp2Lda6dzcgRwDtJLXbv5zNCIi1xAiV9wXWojl9FlhO3/+Inr
+	 jrkT/78XNkBrpDHaqX/ivND5sjPKlLQsU1q7BysGaXr1TK9UR727O73TviSXviJ88v
+	 yBs7gfnQsfJgBLNbaEFkunZ1+G7Z/qiqQcDYMDV0=
+X-Virus-Scanned: Debian amavisd-new at ext.idrix.fr
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=idrix.fr; s=mail;
+	t=1452472995; bh=TMHQ2/f5AfcmC7lf94pbR7BuMrCmJKul68ah0tvhjfI=;
+	h=Subject:From:Date:To:From;
+	b=VPbeqwjp/6Slt8h/2kbUiZCRnkEztYx8NAxjePpqYm2nwLr6SA7ErIqQHO7hrVRJu
+	 DWy2uyY0x3bL2MucZeyYRLo0hlLxzoSCfu7F5q8yfFMAiHmypsGuon4H8BUo3XRPHU
+	 MjsbBTu+2pc4EnEzFFiaQp5SK3x7uzWmo37Wsie8=
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: oss-security@lists.openwall.com, Solar Designer <solar@openwall.com>,
- kf503bla@duck.com
-Cc: "bug-inetutils@gnu.org" <bug-inetutils@gnu.org>,
- "ron.benyizhak@safebreach.com" <ron.benyizhak@safebreach.com>,
- "simon@josefsson.org" <simon@josefsson.org>,
- "auerswal@unix-ag.uni-kl.de" <auerswal@unix-ag.uni-kl.de>,
- "justin.swartz@risingedge.co.za" <justin.swartz@risingedge.co.za>
-References: <CAB1hGqQwnSzEqtrefwqAxD+rWGu_EXVDmu-btMrNYqMzkzc9Kw@mail.gmail.com>
- <20260206172730.GA12303@unix-ag.uni-kl.de> <877bso8mhf.fsf@josefsson.org>
- <20260224011702.27987-1-justin.swartz@risingedge.co.za>
- <B72B4221-75D0-4C28-840F-9CF7B1A53E66.1@smtp-inbound1.duck.com>
- <27E138FE-A205-4EDD-9A9B-1F84BFAEC100.1@smtp-inbound1.duck.com>
- <20260224203337.GA17345@openwall.com>
-Content-Language: en-GB
-From: Eddie Chapman <eddie@ehuk.net>
-In-Reply-To: <20260224203337.GA17345@openwall.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang
-Subject: Re: [oss-security] Telnetd Vulnerability Report
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain;
+ charset=UTF-8
+From: VeraCrypt Team <veracrypt@idrix.fr>
+Date: Mon, 11 Jan 2016 00:43:00 +0000
+To: oss-security@lists.openwall.com,cve-assign@mitre.org
+Message-ID: <C6CF5360-68D8-4FFF-864A-D777F1A9740E@idrix.fr>
+Subject: [oss-security] CVE-2016-1281: TrueCrypt and VeraCrypt Windows installers allow arbitrary code execution with elevation of privilege
 
-On 24/02/2026 20:33, Solar Designer wrote:
-> On Tue, Feb 24, 2026 at 05:05:58AM -0500, kf503bla@duck.com wrote:
->> Who uses telnet anyway? It's deprecated. Everyone uses ssh for any kind of remote access.
-> 
-> Indeed.  Yet:
-> 
-> Quite many people surely do still use a telnet client to access various
-> older/smaller devices
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
 
-Yes. I would hazard a guess that the largest cohort of devices running a 
-telnet server are enterprise switches, gateways & routers. So many times 
-over the years I've been surprised to find a switch I'm configuring has 
-a telnet as well as the obligatory http(s) server available for the 
-admin to login via.
+Hi,
 
-Albeit to a lesser extent these days, and more likely BusyBox telnetd 
-than InetUtils. But switches are one of the most likely pieces of kit to 
-be forgotten about and left running for 10+ years in a closet without a 
-firmware update. There are a LOT of old switches running out there.
+The Windows installers of TrueCrypt 7.1a (latest version) and its fork VeraCrypt 1.16 (latest version) are vulnerable to Dll Hijacking that allows arbitrary code execution with elevation of privilege.
+This vulnerability affects on all version of Windows.
+
+More information can be found at: http://seclists.org/fulldisclosure/2016/Jan/22
+
+The patches applied to fix this issue in VeraCrypt are:
+ - https://github.com/veracrypt/VeraCrypt/commit/5872be28a243acb3b5aafdf13248e07d30471893
+ - https://github.com/veracrypt/VeraCrypt/commit/7a15ff2083d75cdfe343de154715442dce635492
+
+The fix has been included in VeraCrypt 1.17-BETA (Build 15) which is available at: https://veracrypt.codeplex.com/releases/view/619351.
+
+Many thanks to Stefan Kanthak (http://home.arcor.de/skanthak) for reporting this issue and for his help in verifying the correctness of the fix.
+
+Regards,
+- --
+Mounir IDRASSI
+https://veracrypt.codeplex.com
+https://www.idrix.fr
+-----BEGIN PGP SIGNATURE-----
+Version: APG v1.1.1
+
+iQJBBAEBCgArBQJWkvqUJBxWZXJhQ3J5cHQgVGVhbSA8dmVyYWNyeXB0QGlkcml4
+LmZyPgAKCRDrVZx8VN3Tk6yKEAC55GJk9X0hanR7sOwUjLBDoH7tbeGrQhSq0FkQ
+qV9Tws0EnXSvRhCbMCgZcbm/T6x6fcRBOVuUUv5QGWZoRX0QISRnNASbYA0LM82v
+QJ6g11uW0BEBdQ/VK7Gb5l8g3c6cDGT4zvJc8dduqK42Ri+Thl+uB3i8mdDDfNS7
+BJQdvULXZsurqDFZthsQIuHPvyH5EfJkFAJ4Cqc6f/uWDQWd1o/KcMK4dd2VAc0S
+cEEGMhcYUJDFepPcYzRG9RW74bS7zH7bPcA3WnBEEy2cVuLg5BAolLBFL8hSdfDz
+jYsj8B/DHdUP66I0zoMh1Cw9kugYSr1W2CUNKA2YeKb8D41HfdjzpRw9WIf5o/Fb
+ldnvpojwj5g5e4Pn46D+YUlrWmUWqcWaYR962e+cN8pS+jflBBo8VzYKjKn8UaHK
+8tq+86t6y6tqYSHLiD1SgCyjf+Bs9Vr4koL4bvT+/AMGAvKrj0bv/lfQHGhPrerX
+SigYMWoSJ/v1LmKZWBM6YWfOITEPCSSn/Uycr1tAwNsYhcirDgOi/SLel4l0le/2
+OmOkmxOQHzK7usROHaDL5s6P/odtlkjyMTnr4SQ6PRRalLL8AcabOaZIm+5CVkA9
+FrV6/gsYpIW8Oj1lAmDt6Z3OQFyaKxc20YJ+DaK+yOPEomkLzRArMQd0GWvoKhEL
++wSLGw==
+=uVgl
+-----END PGP SIGNATURE-----
+
