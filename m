@@ -1,49 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/23/8
-Message-Id: <20160223164242.E296172E035@smtpvbsrv1.mitre.org>
-Date: Tue, 23 Feb 2016 11:42:42 -0500 (EST)
-From: cve-assign@...re.org
-To: ppandit@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, luodalongde@...il.com
-Subject: Re: CVE request Qemu: usb: integer overflow in remote NDIS control message handling
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/11/1
+Message-ID: <C6CF5360-68D8-4FFF-864A-D777F1A9740E@idrix.fr>
+Date: Mon, 11 Jan 2016 00:43:00 +0000
+From: VeraCrypt Team <veracrypt@...ix.fr>
+To: oss-security@...ts.openwall.com,cve-assign@...re.org
+Subject: CVE-2016-1281: TrueCrypt and VeraCrypt Windows installers allow arbitrary code execution with elevation of privilege
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hash: SHA512
 
-> Qemu emulator built with the USB Net device emulation support is vulnerable to
-> an integer overflow issue. It could occur while processing remote NDIS control
-> message packets. As the incoming informationBufferOffset & Length combination
-> could cross the integer range.
-> 
-> A privileged user inside guest could use this flaw to leak host memory bytes
-> to guest or crash the Qemu process instance resulting in DoS.
-> 
-> https://lists.gnu.org/archive/html/qemu-devel/2016-02/msg03658.html
-> https://bugzilla.redhat.com/show_bug.cgi?id=1303120
-> http://git.qemu.org/?p=qemu.git;a=commit;h=fe3c546c5ff2a6210f9a4d8561cc64051ca8603e
+Hi,
 
-Use CVE-2016-2538.
+The Windows installers of TrueCrypt 7.1a (latest version) and its fork VeraCrypt 1.16 (latest version) are vulnerable to Dll Hijacking that allows arbitrary code execution with elevation of privilege.
+This vulnerability affects on all version of Windows.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+More information can be found at: http://seclists.org/fulldisclosure/2016/Jan/22
+
+The patches applied to fix this issue in VeraCrypt are:
+ - https://github.com/veracrypt/VeraCrypt/commit/5872be28a243acb3b5aafdf13248e07d30471893
+ - https://github.com/veracrypt/VeraCrypt/commit/7a15ff2083d75cdfe343de154715442dce635492
+
+The fix has been included in VeraCrypt 1.17-BETA (Build 15) which is available at: https://veracrypt.codeplex.com/releases/view/619351.
+
+Many thanks to Stefan Kanthak (http://home.arcor.de/skanthak) for reporting this issue and for his help in verifying the correctness of the fix.
+
+Regards,
+- --
+Mounir IDRASSI
+https://veracrypt.codeplex.com
+https://www.idrix.fr
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Version: APG v1.1.1
 
-iQIcBAEBCAAGBQJWzIuYAAoJEL54rhJi8gl5DgIP/0fv8AMSd2UpPw15iW5ZHpMW
-Zf3Jhk66jJthy3CWUcZmdnjX9JWCOcVsbSbRbuGcVnuh4neNV1hQrWJk5VO/IuSl
-fLD6OiiMk/3vgjfJwjkDLEXgFZdobTh/kM5pGKeNz24g/9erPImMyQrvx6jDIMkH
-4+k7qm/fQrOaC7jYgNkF3ftulD7cTyDe1rJkuCGnxG0I0kOLzxsqWUEoCYZn3GJC
-HBgv+mT0O+Z1Q6YkBV4a75mTnq4/sj+bpz+KCqX2cNXnddn4KvNPDufb75FVuBEa
-EiQjnBpp1O2LukBs4Z39d9+EFYIlUQgrtjeN2m1jeWZmtGBpwa7N51NGUp1ybIKQ
-6wQ+AlB3HIAMKXXMXK94jw6zj+KQwioT7PR6D0hKMY/8VbVvm8Q4Wwx7da9jzP/l
-rjJzBQUw6BZf67z/0HAS0R/150Kw6KTzH4k5a2Qf5aY0V4KUAEEKCZisfEEiCZ/4
-LwAMcoZmu/8SMGdVPZPsZ+K2BUEdWF8j5o2y9Ki9I8kTEGMffE81uj88TZte9R/j
-VrQQ4Rtg+A2NQHcpg1cf37vEKP+uEFWnRH42LKkffsrfK9ULsPe+4hc93f6M9Ggo
-ja8lzqaio5iMPcU6AHY7CsW3TR66P73809RdjiIqOh5Izg19qdZxvk6OvYqDZ3Bq
-e4YbRFlNvht23xUA1jnD
-=at9D
+iQJBBAEBCgArBQJWkvqUJBxWZXJhQ3J5cHQgVGVhbSA8dmVyYWNyeXB0QGlkcml4
+LmZyPgAKCRDrVZx8VN3Tk6yKEAC55GJk9X0hanR7sOwUjLBDoH7tbeGrQhSq0FkQ
+qV9Tws0EnXSvRhCbMCgZcbm/T6x6fcRBOVuUUv5QGWZoRX0QISRnNASbYA0LM82v
+QJ6g11uW0BEBdQ/VK7Gb5l8g3c6cDGT4zvJc8dduqK42Ri+Thl+uB3i8mdDDfNS7
+BJQdvULXZsurqDFZthsQIuHPvyH5EfJkFAJ4Cqc6f/uWDQWd1o/KcMK4dd2VAc0S
+cEEGMhcYUJDFepPcYzRG9RW74bS7zH7bPcA3WnBEEy2cVuLg5BAolLBFL8hSdfDz
+jYsj8B/DHdUP66I0zoMh1Cw9kugYSr1W2CUNKA2YeKb8D41HfdjzpRw9WIf5o/Fb
+ldnvpojwj5g5e4Pn46D+YUlrWmUWqcWaYR962e+cN8pS+jflBBo8VzYKjKn8UaHK
+8tq+86t6y6tqYSHLiD1SgCyjf+Bs9Vr4koL4bvT+/AMGAvKrj0bv/lfQHGhPrerX
+SigYMWoSJ/v1LmKZWBM6YWfOITEPCSSn/Uycr1tAwNsYhcirDgOi/SLel4l0le/2
+OmOkmxOQHzK7usROHaDL5s6P/odtlkjyMTnr4SQ6PRRalLL8AcabOaZIm+5CVkA9
+FrV6/gsYpIW8Oj1lAmDt6Z3OQFyaKxc20YJ+DaK+yOPEomkLzRArMQd0GWvoKhEL
++wSLGw==
+=uVgl
 -----END PGP SIGNATURE-----
+
