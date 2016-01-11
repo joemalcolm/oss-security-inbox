@@ -1,78 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/25/12
-Message-ID: <20160125193537.GE14069@TC.local>
-Date: Mon, 25 Jan 2016 11:35:37 -0800
-From: Aaron Patterson <tenderlove@...y-lang.org>
-To: security@...e.de, rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com, ruby-security-ann@...glegroups.com
-Subject: [CVE-2015-7579] XSS vulnerability in rails-html-sanitizer
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/11/5
+Message-ID: <5693649D.2050802@census-labs.com>
+Date: Mon, 11 Jan 2016 10:15:25 +0200
+From: Stelios Tsampas <stelios@...sus-labs.com>
+To: oss-security@...ts.openwall.com
+Cc: fulldisclosure@...lists.org, bugtraq@...urityfocus.com
+Subject: CVE-2015-8396: GDCM buffer overflow in ImageRegionReader::ReadIntoBuffer
 Content-Type: text/plain; charset=utf-8
 
-XSS vulnerability in rails-html-sanitizer
+Grassroots DICOM (GDCM) is a C++ library for processing DICOM medical
+images.
+It provides routines to view and manipulate a wide range of image formats
+and can be accessed through many popular programming languages like Python,
+C#, Java and PHP.
 
-There is a XSS vulnerability in `Rails::Html::FullSanitizer` used by Action View's `strip_tags`.
-This vulnerability has been assigned the CVE identifier CVE-2015-7579.
+GDCM versions 2.6.0 and 2.6.1 (and possibly previous versions) are prone
+to an
+integer overflow vulnerability which leads to a buffer overflow and
+potentially to remote code execution. The vulnerability is triggered by the
+exposed function gdcm::ImageRegionReader::ReadIntoBuffer, which copies
+DICOM
+image data to a buffer. ReadIntoBuffer checks whether the supplied
+buffer is
+large enough to hold the necessary data, however in this check it fails to
+detect the occurrence of an integer overflow, which leads to a buffer
+overflow
+later on in the code. The buffer overflow will occur regardless of the
+size of
+the buffer supplied to the ReadIntoBuffer call.
 
-Versions Affected:  1.0.2
-Not affected:       1.0.0, 1.0.1
-Fixed Versions:     1.0.3
+More information about this vulnerability can be found at
+http://census-labs.com/news/2016/01/11/gdcm-buffer-overflow-imageregionreaderreadintobuffer/
 
-Impact
-------
-Due to the way that `Rails::Html::FullSanitizer` is implemented, if an attacker
-passes an already escaped HTML entity to the input of Action View's `strip_tags`
-these entities will be unescaped what may cause a XSS attack if used in combination
-with `raw` or `html_safe`.
+The GDCM project has released version 2.6.2 that addresses this issue.
+It is advised to upgrade all GDCM installations to the latest stable
+release.
 
-For example:
+Disclosure Timeline
+-------------------
+CVE assignment:    December 2nd, 2015
+Vendor Contact:    December 4th, 2015
+Vendor Patch Release: December 23rd, 2015
+Public Advisory: January 11th, 2016
 
-    strip_tags("&lt;script&gt;alert('XSS')&lt;/script&gt;")
+Regards,
 
-Would generate:
+Stelios Tsampas
 
-    <script>alert('XSS')</script>
-
-After the fix it will generate:
-
-    &lt;script&gt;alert('XSS')&lt;/script&gt;
-
-All users running an affected release should either upgrade or use one of the
-workarounds immediately.
-
-Releases
---------
-The FIXED releases are available at the normal locations.
-
-Workarounds
------------
-If you can't upgrade, please use the following monkey patch in an initializer
-that is loaded before your application:
-
-```
-$ cat config/initializers/strip_tags_fix.rb
-class ActionView::Base
-  def strip_tags(html)
-    self.class.full_sanitizer.sanitize(html)
-  end
-end
-```
-
-Patches
--------
-To aid users who aren't able to upgrade immediately we have provided patches
-for the two supported release series. They are in git-am format and consist
-of a single changeset.
-
-* Do-not-unescape-already-escaped-HTML-entities.patch
-
-Credits
--------
-Thank you to Arthur Neves from GitHub and Spyros Livathinos from Zendesk for
-reporting the problem and working with us to fix it.
-
--- 
-Aaron Patterson
-http://tenderlovemaking.com/
-
-View attachment "Do-not-unescape-already-escaped-HTML-entities.patch" of type "text/plain" (5012 bytes)
-
-Content of type "application/pgp-signature" skipped
+IT Security Researcher
+CENSUS S.A.
