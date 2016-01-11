@@ -1,46 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/05/23
-Message-Id: <20160505215943.1BD3972E002@smtpvbsrv1.mitre.org>
-Date: Thu,  5 May 2016 17:59:43 -0400 (EDT)
-From: cve-assign@...re.org
-To: carnil@...ian.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: OpenAFS: OPENAFS-SA-2016-002 - various client functionality leak stack data onto the wire in the clear
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/11/4
+Message-ID: <993560327.6397475.1452519141475.JavaMail.zimbra@redhat.com>
+Date: Mon, 11 Jan 2016 08:32:21 -0500 (EST)
+From: Wade Mealing <wmealing@...hat.com>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Cc: cve-assign@...re.org
+Subject: CVE Request: Linux kernel -  SCTP denial of service during heartbeat timeout functions.
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Gday all,
 
-> https://www.openafs.org/pages/security/OPENAFS-SA-2016-002.txt
+>From the patch[1] commit comments:
 
-> Several structures used as RPC arguments contain a mask field that
-> indicates which other fields should be processed by the server. In
-> some cases, fields not not indicated in the mask were transmitted over
-> the network without being written to, exposing the previous contents
-> of that memory. Both kernel stack and userspace stack data can be
-> leaked.
+--
+A case can occur when sctp_accept() is called by the user during
+a heartbeat timeout event after the 4-way handshake.  Since
+sctp_assoc_migrate() changes both assoc->base.sk and assoc->ep, the
+bh_sock_lock in sctp_generate_heartbeat_event() will be taken with
+the listening socket but released with the new association socket.
+The result is a deadlock on any future attempts to take the listening
+socket lock.
 
-Use CVE-2016-4536.
+Note that this race can occur with other SCTP timeouts that take
+the bh_lock_sock() in the event sctp_accept() is called.
+---
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+TLDR: ensure that the lock on the socket taken is also the
+same one that is released by saving a copy of the socket 
+before entering the heartbeat event critical section.
 
-iQIcBAEBCAAGBQJXK8F+AAoJEHb/MwWLVhi2FPwP/jGfRJCE7dylxZoUxSekgILk
-Q/eRTyo1/UYSEB1/TohhY9ESNntbPmVKn1tXGrcjP7199IV1B6HV4w0umCl/bf9A
-WZFelcXoSs0Jjjd7ddeKGMg4eCd0c4smTjJosIB7p8idvf7lY9dSGgnUXFh57AAG
-g5Kj7kzZCRlkRdZTSXnHxcsaFfcBe8rSUG2WPiY/mHbH+LD17pyG9krYdmdEE9oJ
-cYms9nSMeCxn2Ibh1lJXv7qRMM4WhvelWAA4ti59Ier6bnRY92cnSLFUmtuShZj+
-f9M5MI6FbnDL/sawzCY855ywwOhcVddsHSdiQAYsBoPStMhMqutCxu7aLl3BEbEr
-UkaY2uoeY3uSwgU5u1ap4CGGMEqwyVWSS34lD+0Bj9l5QfzCLw0HXQmPcJbKLQLb
-dMi+/gdBtL8B8PgBtj2v8QCjfJRhoqVTIFnMsl9ssSITypJ1s35lpVzXkvsdMeNc
-7UH09028O7fsMXRtRQpL+9D+xOz1PadkFE96hm9n5vKnCDM0UVp7hbBMzldqpHZu
-l9No2d2oc33flPVcgLW6W4nOtvz4zvh7o4qjPdY6QloAjTFiazL8oNlmJQ90F3s6
-wB7XeWsMkUHaYaNpVxldGdbQjZFMokjYU7jupWgWZgAuLbGQa+7zNRnGn3fIU6pE
-vt58CYD8DBZezU9vLwF3
-=cQap
------END PGP SIGNATURE-----
+I'd like a CVE for this issue. 
+
+Thanks !
+
+Wade Mealing
+Red Hat Product Security
+
+Resources:
+https://bugzilla.redhat.com/show_bug.cgi?id=1297389
+https://patchwork.ozlabs.org/patch/522412/
+
+Patch commit notes (net-next.git):
+[1] https://kernel.googlesource.com/pub/scm/linux/kernel/git/horms/ipvs/+/635682a14427d241bab7bbdeebb48a7d7b91638e
