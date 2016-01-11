@@ -1,40 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/21/1
-Message-ID: <20161121054348.GA632@lorien.valinor.li>
-Date: Mon, 21 Nov 2016 06:43:48 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/11/3
+Message-ID: <20160111140335.01d4a4f6@redhat.com>
+Date: Mon, 11 Jan 2016 14:03:35 +0100
+From: Stefan Cornelius <scorneli@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: LibTIFF tiffcrop: Heap buffer overflow via writeBufferToSeparateStrips
+Subject: Re: Re: Integer overflow in the JasPer's jas_matrix_create() function
 Content-Type: text/plain; charset=utf-8
+
+On Thu,  7 Jan 2016 21:41:57 -0500 (EST)
+cve-assign@...re.org wrote:
+
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA256
+> 
+> >> https://bugzilla.redhat.com/show_bug.cgi?id=1294039  
+> 
+> > We find a vulnerability in the way JasPer's jas_matrix_create()
+> > function parsed certain JPEG 2000 image files.
+> > 
+> > jas_matrix_t *jas_matrix_create(int numrows, int numcols)
+> > {
+> >         .......
+> > 
+> >         if (matrix->maxrows_ > 0) {
+> >                 if (!(matrix->rows_ = jas_malloc(matrix->maxrows_ *
+> >                   sizeof(jas_seqent_t *)))) {
+> >   
+> 
+> > matrix->maxrows_ > 0 ,but matrix->maxrows_ *sizeof(jas_seqent_t *)
+> > can cause Integer overflow.
+> > 
+> > Despite this library is used by many programs
+> > (http://www.ece.uvic.ca/~frodo/jasper/#overview), there is no one
+> > providing support.  
+> 
+> Use CVE-2015-8751.
+> 
 
 Hi,
 
-On Fri, Nov 11, 2016 at 10:57:56PM +0200, Henri Salo wrote:
-> Please assign CVE identifier for LibTIFF tiffcrop heap buffer overflow via
-> writeBufferToSeparateStrips, thanks.
-> 
-> Reported in: http://bugzilla.maptools.org/show_bug.cgi?id=2592
-> 
-> Fixed per:
-> 
-> 2016-11-11 Even Rouault <even.rouault at spatialys.com>
-> 
->         * tools/tiffcrop.c: fix multiple uint32 overflows in
->         writeBufferToSeparateStrips(), writeBufferToContigTiles() and
->         writeBufferToSeparateTiles() that could cause heap buffer overflows.
->         Reported by Henri Salo from Nixu Corporation.
->         Fixes http://bugzilla.maptools.org/show_bug.cgi?id=2592
-> 
-> 
-> /cvs/maptools/cvsroot/libtiff/ChangeLog,v  <--  ChangeLog
-> new revision: 1.1152; previous revision: 1.1151
-> /cvs/maptools/cvsroot/libtiff/tools/tiffcrop.c,v  <--  tools/tiffcrop.c
-> new revision: 1.43; previous revision: 1.42
+Just a quick heads-up: We at Red Hat originally fixed this as part of
+the patch for CVE-2008-3520. This was a rather big patch and
+closed a lot of potential integer overflows (originally from
+OpenBSD?). I imagine a lot of distros used the same patch.
 
-FTR, this was included in the 4.0.7 release of LibTIFF.
+The original description for CVE-2008-3520 is quite general, so I'm
+not sure if that's enough to say that CVE-2015-8751 is a dupe or not.
 
-Although it is only in the tools part, this might still need a CVE if
-appropriate to identify the issue.
-
-Regards,
-Salvatore
+-- 
+Stefan Cornelius / Red Hat Product Security
