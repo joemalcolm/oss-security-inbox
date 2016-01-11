@@ -1,51 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/02/13
-Message-Id: <20160802235000.50B4F6CC7DC@smtpvmsrv1.mitre.org>
-Date: Tue,  2 Aug 2016 19:50:00 -0400 (EDT)
-From: cve-assign@...re.org
-To: chenruiqi@....cn
-Cc: cve-assign@...re.org, limingxing@....cn, oss-security@...ts.openwall.com
-Subject: Re: CVE request: XSS vulns in Dotclear v2.9.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/11/10
+Message-ID: <CAMYtjAquOUMj3RB4gwqa11rMyCefH=GYAWSKYvO_7S1ygHNf8Q@mail.gmail.com>
+Date: Mon, 11 Jan 2016 23:10:30 +0100
+From: Pere Orga <pere@...a.cat>
+To: oss-security@...ts.openwall.com
+Cc: Drupal Security Team <security@...pal.org>
+Subject: CVE requests for Drupal contributed modules
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi
 
-> I found some XSS vulns in Dotclear v2.9.1
-> 
-> There are two reflected XSS vulns in Dotclear v2.9.1 media manager
-> 
-> /admin/media.php
-> line 34 $link_type = !empty($_REQUEST['link_type']) ? $_REQUEST['link_type'] : null;
-> line 62 $q = isset($_REQUEST['q']) ? $_REQUEST['q'] : null;
-> 
-> /dotclear/admin/media.php?q=[XSS]
-> /dotclear/admin/media.php?link_type=[XSS]
-> 
-> Fix Code:
-> https://hg.dotclear.org/dotclear/rev/40d0207e520d
+Please can I have CVE IDs assigned to the following vulnerabilities:
 
-Use CVE-2016-6523 for both of these issues.
+SA-CONTRIB-2015-157 - Twilio - Moderately Critical - Access bypass
+https://www.drupal.org/node/2592901
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+SA-CONTRIB-2015-160 - Webform CiviCRM Integration - Moderately
+Critical - Cross Site Scripting (XSS)
+https://www.drupal.org/node/2592901
 
-iQIcBAEBCAAGBQJXoS7KAAoJEHb/MwWLVhi2FuoP/2KQzJImOr3YJbBtmeneygL+
-0I3PRHXCV9rEgnDG5zJKf7ErqWZuC+9NB+yrUc+rHFsaFeCKNobVx+GU/aBN+rUU
-nOKLTdsEU1y2y9GT4PPrD5Sas68ubR858oGRB5vwQluMe/DKnQ0lJhIKJ69o3OdK
-yoRYoGDvytmsgJLXheq2AZGEvIliyqliIhZhyoFLKtrqzGONE4OscJM9QP1WbJSQ
-W7id+L+pBDWw3aKc5RpnKM6jI4olmREJ7pf34qJzmaGqZIQF7dijSlQ9RlRXfulk
-rHsK7R6kn7QbzxYKv5gpQyLlGeGbFI9UKgOqDgz41rXsjRh1Yk3WnJqwqIQ5jek7
-YnJPj45zbcpG6KxYa0UVpqUDHC7MwHZVR4RI1d0o295esApCyI6ExxhXygaEmksR
-HoJCpVwQPMhnqG5VOZgQ2JegFOMiWBonan0a434QyXq1j5Gv0iKCiusg6B5Mxwi1
-Kq8lmIduOUEhvUSNmsoq/MsrdtT0rZ91jN9b8IPKdgAMBS4ecWe9ShE7arLJbERo
-V8v3CuT4s7vEKPnGXPiRGISza7pqEKJ1YTHxPAELH4TQ2o2121eQvcC3qyI9KkyF
-WLlqJ9KTHnU9itqTy/vcrN9/vHWQgGqG2GHGJlXNwXCj0KEuLAdLP7hx9Eupfq9w
-6cOz5yeoD/nf1pC1FkH/
-=wolV
------END PGP SIGNATURE-----
+SA-CONTRIB-2015-166 - Encrypt - Moderately Critical - Weak Encryption
+https://www.drupal.org/node/2618362
+
+SA-CONTRIB-2015-167 - RESTful - Less Critical - Access bypass
+https://www.drupal.org/node/2627444
+
+SA-CONTRIB-2015-170 - Apache Solr Search - Moderately Critical - Access Bypass
+https://www.drupal.org/node/2627580
+
+SA-CONTRIB-2015-173 - Select2 Field Widget - Critical - Cross Site
+Scripting (XSS)
+https://www.drupal.org/node/2636352
+
+SA-CONTRIB-2015-174 - Open Atrium - Critical - Cross Site Scripting (XSS)
+https://www.drupal.org/node/2636380
+
+SA-CONTRIB-2015-175 - Block Class - Critical - Cross Site Scripting (XSS)
+https://www.drupal.org/node/2636502
+
+Regards
+
+--
+Pere Orga on behalf of the Drupal Security team
