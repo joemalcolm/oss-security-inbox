@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["608" "Wednesday" "4" "January" "2017" "23:42:21" "+0000" "KellerFuchs" "KellerFuchs@hashbang.sh" "<20170104234221.GA25962@hashbang.sh>" "23" "Re: [oss-security] Firejail local root exploit" "^Cc:" nil nil "1" "2017010423:42:21" "[oss-security] Firejail local root exploit" (number mark "        KellerFuchs@ Jan  4   23/608   " thread-indent "\"Re: [oss-security] Firejail local root exploit\"\n") "<20170104131248.GA28596@suse.de>" ("<20170104131248.GA28596@suse.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1465" "Monday" "11" "January" "2016" "10:15:25" "+0200" "Stelios Tsampas" "stelios@census-labs.com" "<5693649D.2050802@census-labs.com>" "41" "[oss-security] CVE-2015-8396: GDCM buffer overflow in ImageRegionReader::ReadIntoBuffer" nil nil nil "1" "2016011108:15:25" "[oss-security] CVE-2015-8396: GDCM buffer overflow in ImageRegionReader::ReadIntoBuffer" (number mark "U       stelios@cens Jan 11   41/1465  " thread-indent "\"[oss-security] CVE-2015-8396: GDCM buffer overflow in ImageRegionReader::ReadIntoBuffer\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 8134 invoked by uid 550); 5 Jan 2017 09:15:19 -0000
+Received: (qmail 30362 invoked by uid 550); 11 Jan 2016 14:09:54 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,41 +11,60 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 25992 invoked from network); 4 Jan 2017 23:44:40 -0000
-Message-ID: <20170104234221.GA25962@hashbang.sh>
-References: <20170104131248.GA28596@suse.de>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20170104131248.GA28596@suse.de>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-Cc: netblue30@yahoo.com, team@hashbang.sh
-Date: Wed, 4 Jan 2017 23:42:21 +0000
-From: KellerFuchs <KellerFuchs@hashbang.sh>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Firejail local root exploit
+Received: (qmail 28237 invoked from network); 11 Jan 2016 08:15:51 -0000
 To: oss-security@lists.openwall.com
+Cc: fulldisclosure@seclists.org, bugtraq@securityfocus.com
+From: Stelios Tsampas <stelios@census-labs.com>
+X-Enigmail-Draft-Status: N1110
+Message-ID: <5693649D.2050802@census-labs.com>
+Date: Mon, 11 Jan 2016 10:15:25 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:38.0) Gecko/20100101
+ Thunderbird/38.5.1
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] CVE-2015-8396: GDCM buffer overflow in
+ ImageRegionReader::ReadIntoBuffer
 
-On Wed, Jan 04, 2017 at 02:12:48PM +0100, Sebastian Krahmer wrote:
-> Hi
-> 
-> Please find attached PoC for firejail, which seems to be quite
-> popular sandboxing tool.
-> 
-> Sebastian
+Grassroots DICOM (GDCM) is a C++ library for processing DICOM medical
+images.
+It provides routines to view and manipulate a wide range of image formats
+and can be accessed through many popular programming languages like Python,
+C#, Java and PHP.
 
+GDCM versions 2.6.0 and 2.6.1 (and possibly previous versions) are prone
+to an
+integer overflow vulnerability which leads to a buffer overflow and
+potentially to remote code execution. The vulnerability is triggered by the
+exposed function gdcm::ImageRegionReader::ReadIntoBuffer, which copies
+DICOM
+image data to a buffer. ReadIntoBuffer checks whether the supplied
+buffer is
+large enough to hold the necessary data, however in this check it fails to
+detect the occurrence of an integer overflow, which leads to a buffer
+overflow
+later on in the code. The buffer overflow will occur regardless of the
+size of
+the buffer supplied to the ReadIntoBuffer call.
 
-Hi Sebastian,
+More information about this vulnerability can be found at
+http://census-labs.com/news/2016/01/11/gdcm-buffer-overflow-imageregionreaderreadintobuffer/
 
-Thanks a lot for discovering this issue.
+The GDCM project has released version 2.6.2 that addresses this issue.
+It is advised to upgrade all GDCM installations to the latest stable
+release.
 
-For information:
-- this specific issue can be mitigated by setting `x11 no` in `/etc/firejail/firejail.config`, as in
-  https://github.com/hashbang/shell-etc/pull/133
-- the initial fix commited by netblues (firejail's dev) is racy:
-  https://github.com/netblue30/firejail/commit/60d4b478f65c60bcc825bb56f85fd6c4fd48b250#commitcomment-20366636
+Disclosure Timeline
+-------------------
+CVE assignment:    December 2nd, 2015
+Vendor Contact:    December 4th, 2015
+Vendor Patch Release: December 23rd, 2015
+Public Advisory: January 11th, 2016
 
+Regards,
 
-Best,
+Stelios Tsampas
 
-  Keller Fuchs
+IT Security Researcher
+CENSUS S.A.
