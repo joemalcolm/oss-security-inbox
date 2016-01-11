@@ -1,145 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/02/3
-Message-id: <D2D61482.3331B%larry0@me.com>
-Date: Tue, 02 Feb 2016 08:08:34 -0500
-From: Larry Cashdollar <larry0@...com>
-To: Open Security <oss-security@...ts.openwall.com>
-Subject: Reflected XSS & Blind SQLi in wordpress plugin eshop v6.3.14
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/11/6
+Message-ID: <569364EE.6010709@census-labs.com>
+Date: Mon, 11 Jan 2016 10:16:46 +0200
+From: Stelios Tsampas <stelios@...sus-labs.com>
+To: oss-security@...ts.openwall.com
+Cc: fulldisclosure@...lists.org, bugtraq@...urityfocus.com
+Subject: CVE-2015-8397: GDCM out-of-bounds read in JPEGLSCodec::DecodeExtent
 Content-Type: text/plain; charset=utf-8
 
-Title: Reflected XSS & Blind SQLi in wordpress plugin eshop v6.3.14
-Author: Larry W. Cashdollar, @_larry0
-Date: 2016-01-27
-Download Site: https://wordpress.org/plugins/eshop
-Vendor: Richard Pedley
-Vendor Notified: 2016-01-29
-Vendor Contact: http://elfden.co.uk/
-Description: An accessible Shopping Cart plugin. eShop is an accessible
-shopping cart plugin for WordPress, packed with various features.
-Vulnerability:
-The following code snippets do not sanitize user input before passing back
-to the user’s browser via $_GET request.
+Grassroots DICOM (GDCM) is a C++ library for processing DICOM medical
+images.
+It provides routines to view and manipulate a wide range of image formats
+and can be accessed through many popular programming languages like Python,
+C#, Java and PHP.
 
-http://plugins.svn.wordpress.org/eshop/trunk/eshop-orders.php
+GDCM versions 2.6.0 and 2.6.1 (and possibly previous versions) are prone to
+an out-of-bounds read vulnerability due to missing checks. The vulnerability
+occurs during the decoding of JPEG-LS images when the dimensions of the
+embedded JPEG-LS image (as specified in the JPEG headers) are smaller than
+the ones of the selected region (set by gdcm::ImageRegionReader::SetRegion
+and usually based on DICOM header values).
 
->From eshop-orders.php XSS via page & action variables:
+More information about this vulnerability can be found at
+http://census-labs.com/news/2016/01/11/gdcm-out-bounds-read-jpeglscodec-decodeextent/
 
-144                
-$apge=get_admin_url().'admin.php?page='.$_GET['page'].'&amp;action='.$_GET[
-'action'];
-145                         echo '<ul id="eshopsubmenu" class="stuffbox">';
-146                         echo '<li><span>'.__('Sort Orders by
-&raquo;','eshop').'</span></li>';
-147                         echo '<li><a
-href="'.$apge.'&amp;by=da"'.$cda.'>'.__('Date
-Ascending','eshop').'</a></li>';
-148                         echo '<li><a
-href="'.$apge.'&amp;by=dd"'.$cdd.'>'.__('Date
-Descending','eshop').'</a></li>';
-149                         echo '<li><a
-href="'.$apge.'&amp;by=tn"'.$ctn.'>'.__('ID Number','eshop').'</a></li>';
-150                         echo '<li><a
-href="'.$apge.'&amp;by=ca"'.$cca.'>'.__('Company','eshop').'</a></li>';
-151                         echo '<li><a
-href="'.$apge.'&amp;by=na"'.$cna.'>'.__('Customer','eshop').'</a></li>';
-152                         echo '</ul>';
+The GDCM project has released version 2.6.2 that addresses this issue.
+It is advised to upgrade all GDCM installations to the latest stable
+release.
 
+Disclosure Timeline
+-------------------
+CVE assignment:    December 2nd, 2015
+Vendor Contact:    December 4th, 2015
+Vendor Patch Release: December 23rd, 2015
+Public Disclosure: January 11th, 2016
 
+Regards,
 
-244 <input type="hidden" name="action" value="<?php echo $_GET['action'];
-?>" />
+Stelios Tsampas
 
-
-303 $phpself='?page='.$_GET['page’];
-.
-503         echo "<div id=\"eshopformfloat\"><form id=\"orderstatus\"
-action=\"".$phpself."\" method=\"post\">";
-504         ?>
-.
-515 <input type="hidden" name="action" value="<?php echo $_GET['action'];
-?>" />
-.
-.
-
-586                                 $downloadable .='
-'.$dlinfo->downloads.'<a
-href="'.$phpself.'&amp;view='.$view.'&amp;adddown='.$dlinfo->id.'"
-title="'.__('Increa    se download allowance by
-1','eshop').'">'.__('Increase','eshop').'</a>, <a
-href="'.$phpself.'&amp;view='.$view.'&amp;decdown='.$dlinfo->id.'"
-title="'.__('Decrea    se download allowance by
-1','eshop').'">'.__('Decrease','eshop').'</a></span>';
-587          
-.
-.
-
-642                 echo '<strong>'.__('Email:','eshop').'</strong>'." <a
-href=\"".$phpself."&amp;viewemail=".$view."\" title=\"".__('Send a form
-email','eshop')."\"    >".$drow->email.'</a> <small
-class="noprint">'.__('(sends a form email)','eshop')."</small><br />\n";
-.
-.
-746         if($status=='Deleted'){$delete="<p class=\"delete noprint\"><a
-href=\"".$phpself."&amp;delid=".$view."\">".__('Completely delete this
-order?','eshop')."<    /a><br />".__('<small><strong>Warning:</strong>
-this order will be completely deleted and cannot be recovered at a later
-date.</small>','eshop')."</p>";}else{$de    lete='';};
-
-
-
-
-Blind SQL Injection & requires authenticated user to Wordpress.
-
->From eshop-orders.php, requires admin user:
-
-287 if (!function_exists('deleteorder')) {
-288         function deleteorder($delid){
-289                 global $wpdb;
-290                 $dtable=$wpdb->prefix.'eshop_orders';
-291                 $itable=$wpdb->prefix.'eshop_order_items';
-292                 $dltable=$wpdb->prefix.'eshop_download_orders';
-293                 $checkid=$wpdb->get_var("Select checkid From $dtable
-where id='$delid' && status='Deleted'");
-
-.
-.
-392 eshop_admin_mode();
-
-393 if(isset($_GET['delid']) && !isset($_GET['view'])){
-394         deleteorder($_GET['delid']);
-
-
-
->From eshop-orders.php, Requires a regular logged in user:
-
-The following code allows SQL injection via the unsanitized $view
-variable.
-354 if(isset($_GET['view'])){
-355         $view=$_GET['view'];
-356         $status=$wpdb->get_var("Select status From $dtable where
-id='$view'”);
-
-SQL injection points via POST to mark & change:
-
-421 if(isset($_POST['mark']) && !isset($_POST['change'])){
-422         $mark=$_POST['mark'];
-423         $checkid=$_POST['checkid'];
-424         $query2=$wpdb->get_results("UPDATE $dtable set status='$mark'
-where checkid='$checkid'");
-425         do_action( 'eshop_order_status_updated', $checkid, $mark );
-426         echo '<div class="updated fade">'.__('Order status changed
-successfully.','eshop').'</div>';
-427 }
-.
-.
-429 if(isset($_POST['change'])){
-430         if(isset($_POST['move']) && $_POST['move'][0]!=''){
-431                 foreach($_POST['move'] as $v=>$ch){
-432                         $mark=$_POST['mark'];
-433                         $query2=$wpdb->get_results("UPDATE $dtable set
-status='$mark' where checkid='$ch'");
-434                         do_action( 'eshop_order_status_updated', $ch,
-$mark );
-CVEID: XSS 2016-0765 SQLi 2016-0769
-
-
+IT Security Researcher
+CENSUS S.A.   
