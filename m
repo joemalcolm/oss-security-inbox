@@ -1,4 +1,9 @@
-Received: (qmail 21997 invoked by uid 550); 20 Apr 2023 11:18:02 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1766" "Monday" "11" "January" "2016" "11:42:30" "-0600" "Jamie Strandboge" "jamie@canonical.com" "<5693E986.2010705@canonical.com>" "54" "[oss-security] CVE Request: click" nil nil nil "1" "2016011117:42:30" "[oss-security] CVE Request: click" (number mark "U       jamie@canoni Jan 11   54/1766  " thread-indent "\"[oss-security] CVE Request: click\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 11468 invoked by uid 550); 11 Jan 2016 17:42:44 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,106 +12,71 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21589 invoked from network); 20 Apr 2023 11:15:50 -0000
-Message-ID: <f7586453-d83d-26a6-7d9a-e7a54009209f@innerheight.com>
-Date: Thu, 20 Apr 2023 13:15:38 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Content-Language: en-US
+Received: (qmail 11450 invoked from network); 11 Jan 2016 17:42:44 -0000
+From: Jamie Strandboge <jamie@canonical.com>
 To: oss-security@lists.openwall.com
-References: <CAGUWgD88WiJwryGFt9hQe1rEpLX2PKb=ms-8iONvQ2qhDgtigA@mail.gmail.com>
- <e5fcafc733c2fca7baf25537eca9837a6950beac.camel@wisec.it>
-From: Jan Klopper <janklopper@innerheight.com>
-In-Reply-To: <e5fcafc733c2fca7baf25537eca9837a6950beac.camel@wisec.it>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Subject: Re: [oss-security] Checking existence of firewalled web servers in
- Firefox via iframe.onload
+Cc: security <security@ubuntu.com>
+Message-ID: <5693E986.2010705@canonical.com>
+Date: Mon, 11 Jan 2016 11:42:30 -0600
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.4.0
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature";
+ boundary="rMA0wmruv2CfTMwFd8mCIDGTe3FQ3JGmT"
+Subject: [oss-security] CVE Request: click
 
-Hi
-
-The topic is still relevant.
-
-Combining this attack with webservices that might be present behind a 
-NAT network, eg IOT or appliances can result in various serious issues.
-
-There are loads of devices that do not require csrf, or even POST for 
-requests that update settings or even firmware.
-
-Performing GET requests on those internal ip's, even though no content 
-will be returned is still plenty dangerous.
-Knowing which ip to perform these attacks on, can be found by looking at 
-the timing of various ready/error calls.
-
-However, it begs the question, is it the browser that is in the wrong 
-here, or those appliances/devices. And, should the browser be guarding 
-users against flaws in those appliances? And where then does the scope 
-of the browsers security features stop?
-
-I'm also expecting heaps of these issues to re-discovered when looking 
-at the whole websockets domain.
-
-With regards
-Jan Klopper
+--rMA0wmruv2CfTMwFd8mCIDGTe3FQ3JGmT
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
 
-On 20-04-2023 12:57, Stefano Di Paola wrote:
-> Hello George,
-> 
-> from time to time it happens to rediscover techniques issues.
-> This is one of those times :)
-> 
-> In 2006 there has been a lot of interest around browser based port
-> scans, in particular to pivot internal networks.
-> 
-> The following links are some of them:
-> 
-> http://web.archive.org/web/20060813034434/http://www.spidynamics.com/assets/documents/JSportscan.pdf
-> 
-> https://www.gnucitizen.org/blog/javascript-port-scanner/
-> 
-> https://www.blackhat.com/presentations/bh-usa-06/BH-US-06-Grossman.pdf
-> 
-> 
-> https://www.blackhat.com/presentations/bh-usa-07/Grossman/Whitepaper/bh-usa-07-grossman-WP.pdf
-> 
-> Some of those thecniques have been mitigated, and some it's still
-> there.
-> 
-> There are surely other resources IIRC, although some of them might have
-> been deleted, such as the ones on sla.cke.rs which is a real pity..
-> 
-> Cheers!
-> Stefano
-> 
-> Ps. this email applies to the other Script technique thread/email as
-> well.
-> 
-> On Tue, 2023-04-18 at 15:59 +0300, Georgi Guninski wrote:
->> In short in Firefox 112, it is possible to check existence
->> of firewalled web servers. This doesn't work in Chrome and Chromium
->> 112
->> for me.
->>
->> If user A has tcp connection to web server B, then in the
->> following html:
->>
->> <iframe src="http://B" onload="load()" onerror="alert('error')"
->> id="i1" />
->>
->> the javascript function load() will get executed if B serves
->> valid document to A's browser and will not be executed otherwise.
->>
->> This work for both http and https, and for http it is allowed
->> B to be IP address. Under some configurations of Apache2,
->> it serves http despite having https configured.
->>
->> In some sense, this is close to nmap via javascript in a browser.
->>
->> Potential privacy implication is when the attacker guess the
->> range of firewalled IPs and check them all in a loop.
->>
->> For online test:
->> https://j.ludost.net/onload1.html
->>
+Hi MITRE, all,
+
+A vulnerability was discovered in the click package system:
+https://launchpad.net/bugs/1506467
+http://www.ubuntu.com/usn/usn-2771-1/
+
+It was fixed in 0.4.42 with:
+https://code.launchpad.net/~cjwatson/click/audit-missing-dot-slash/+merge/2=
+74554
+
+This is an input sanitization bug where click assumed leading paths were al=
+ways
+prefixed with './' which, for example, allows a crafted click to ship a '.c=
+lick'
+directory to manipulate the click install process.
+
+Can we get a CVE for this?
+
+Thanks!
+
+--=20
+Jamie Strandboge                 http://www.ubuntu.com/
+
+
+
+--rMA0wmruv2CfTMwFd8mCIDGTe3FQ3JGmT
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iQIcBAEBCgAGBQJWk+mGAAoJEFHb3FjMVZVzqN0P/A/CFM4wJT4+siVyezI+IPWv
+84ljcfhGxjwSemLBU4nzj0PNokgb973kyUMXXBbB2gJA177E2z3U2yCyGrMrjtSz
+XptfWClMhte9GsvdDlK2rE7ryTd+Crf+W95883SN9qpp1Q9Nxdqo/NrIK2lCQwjw
+kU9SnlhJdBSJgOX817E+8i5BKEHUbTILpomnGmQka/NO1bf7174PxAoI75EwnmxT
+rp5TiFlWpPKtVCcuuvaAJkIdTc1iYsPRW3b1stL3WJGlcH9VJUXmkZ4g7hVpueSB
+CLlhTxXjQxonpZsXvD6UWTq8QsU4lb2Bm6wgW6YFrfQnqAW7ZYwb+gwClYPx4Mfd
+yqzfoZxsiepF6SJH5ZaT8GKpr7bdI1ud1tEWhw4IGoYDLKDcf1nmEwaimzpjO9Lu
+oq+vcdDaThudxP5OExxf8J8QcGEhdcDxHME5CPA9rQ9MqXVd39vRjqw1oP4mWHIB
+jMSz/IyVt4gtuOsWCphRxzXlqj9vrg+rHmZMC2R6fbkgeX4dm4YUIosbFmaRzgan
+8iWBrDy0+44TcJs8xuluwE9Du8QqnqkLKOmgZ2trzOFXISpTLrS9ukaEXuINQjjM
+iXpWRm423GRJWi99NM7ofL3oEiW3b+61DvgPaqOV674C3aoTQh3aswdoZ1/1qnpe
+ajA2WhmLxvCnUgSQWJyN
+=y4FO
+-----END PGP SIGNATURE-----
+
+--rMA0wmruv2CfTMwFd8mCIDGTe3FQ3JGmT--
