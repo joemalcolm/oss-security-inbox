@@ -1,71 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/25/3
-Message-ID: <c057cd5bc2774a72a39e851772c10aed@imshyb02.MITRE.ORG>
-Date: Sun, 25 Dec 2016 17:41:40 -0500
-From: <cve-assign@...re.org>
-To: <jwilk@...lk.net>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: tqdm: insecure use of git
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/11/7
+Message-ID: <alpine.LFD.2.20.1601112211500.22978@wniryva>
+Date: Mon, 11 Jan 2016 22:15:59 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Donghai Zdh <donghai.zdh@...baba-inc.com>
+Subject: CVE request Qemu: nvram: OOB r/w access in processing firmware configurations
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hash: SHA1
 
-> But cwd might be a part of an unrelated git repository
+   Hello,
 
-Can you clarify the threat model for this? Our understanding is
-that .git/config is not really a part of a repository that is
-controlled by a remote party, e.g., see the second paragraph of the
-https://git-blame.blogspot.com/2014/12/git-1856-195-205-214-and-221-and.html
-post.
+Qemu emulator built with the Firmware Configuration device emulation support 
+is vulnerable to an OOB r/w access issue. It could occur while processing 
+firmware configurations, if the current configuration entry value was set to 
+be invalid(FW_CFG_INVALID=0xffff).
 
-Is either (or both) of these a valid interpretation of your report?
+A privileged(CAP_SYS_RAWIO) user/process inside guest could use this flaw to 
+crash the Qemu process instance resulting in DoS OR potentially execute 
+arbitrary code with privileges of the Qemu process on the host.
 
-1. You are suggesting that there is a security problem in git because
-the risks of an attacker-controlled config file are not documented
-carefully enough. In other words, you want documentation such as
-https://www.kernel.org/pub/software/scm/git/docs/git-config.html to
-tell the user that they must not use a "repository specific
-configuration file" that is writable by an untrusted local user.
+Upstream fix:
+- -------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2016-01/msg00428.html
 
-2. You are suggesting that there is a security problem in tqdm because
-the victim is not explicitly being told that they are executing a git
-command, and thus they do not realize that there is a need to verify
-that they have a safe cwd before proceeding.
+Reference:
+- ----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1296060
 
-If the latter, then do you mean that:
 
-A. Anyone planning to explicitly enter "git log" from a shell prompt
-is responsible for first verifying that the cwd is safe. It is a known
-property of git that the cwd is critical to security.
+This issue was discovered by Mr Donghai Zhu of Alibaba Inc.
 
-B. No third-party product should ever be executing "git log" in an
-unexpected context. Either the user must somehow be aware that a "git
-log" may be executed, or else the product must somehow force the use
-of a safe local directory. Otherwise, a CVE is needed for each such
-product.
+Thank you.
+- --
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
 
-?
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJYYEqXAAoJEHb/MwWLVhi2hgYP/1z6ZHZTku8bMw+PFzkNfVtV
-0xBjr9/4d4gvzZQfMgs4fLvKAvmTFf/vc8aTEJWpsCHnwEI+tHsoP6eVOTjW/+Kq
-8OG6O01xjKHClrEAIpGM+aYCiSlk1NQSwE8kb9gANJk25rV0LNLrMF20o529WTIL
-c7MciM5vnWPK8pyw5oQTfONCdjuGk7ATQ8TM8UjgNaW48Kk595rUAroD46Dx5zl5
-S/S7I4AxB8p5xZVJIl0tif3FxRWCsd+Or+NigpyFkCXp09Xz4wNGJjh6DR7q5Ppg
-Aw8Vg6OG1mmGbXl2qt7MDYpRiVoXMQH6wbg9tcOmv8HUabc7WucABADw05WArbHv
-DP/CXIrfYiWD1xKP3anqwGb0zx1v4+2N7bWCIMktIO3RoIm579UTNATA/EH5Gk7r
-XFYnA77DzevJ9ulQX+4Ryx2oiS4Fb0GBrx0tUsGM9gsXvOZtnfdSSXLg3dl5Y0mh
-QrcnnSAgvS13so3nGeKWYrjGVLb/eqEhGFBNrjBGr3F+EbcxGh1+0ES2D2o6WUjj
-dTFdyGsP2Pkdh02OgvLNf+Fj5ELBR+jCg05FQs5hJ7OdBYQA5gmKpELHeDPTOj7A
-i8sYwn61WhuMg1Lg8ClHKCNc7pqMG1C52jDIOUhUBOt3tUfCpOyQY2+s4y2EklIo
-jis4UzxON4HtAOu6x/Ae
-=4l/s
+iQIcBAEBAgAGBQJWk9xHAAoJEN0TPTL+WwQfUuEP/1N9SRnLgrZknpztdvU83XJ0
+oWoPuJX2HsNZO1v9DCnwkMkUE4ljsmTyocQ61ACUNv7fP3BxBBWoAeVZPsMC2UED
+EGddY/Q5kne6KqVGJ2JaEOJ9Qlh8uxCoezk12x3oXIoAuj8z9oqpkMXTTgPZIQGU
+M9+MI0FnMm8tIiPuQSpalZrQKp9SZDRvMnQVVNsjM/VdjYJzyT5yrZIDVHGXCqKt
+A4g3u9M6oI+hFhKLwgtfuHbxuARKR/dbtHG6cDXqjrYESb6maRNtmk4ZGxGkVPYL
+IXX+epKa5+ZNCV+3CbIO8foiISVvxUZyhyw2jWKIWryzGJvYk1ZKhMPqJKXPjWBI
+Rn/6WqIcRPZ3qRI9gzwxJ0kVedkwmHwF67Qfgygl+HtMMP3bf6vFHrbqVW/PBh/o
+fbGjOZm84/BNRsIesvOAHxwRz+MF/vs5q2eFkNHMHJRGiDrpyz8HTvRoTJWwbP2+
+Ovi1OTbZu8dhHM6Vbk7OWyUWf0og8XCxkpzI2zxZ6+9UdFPXzUl9ApgHomi/Yrkq
+Je/Q+rsEXK3pDHToeQGS4/Jzm1jEW1Dk75IS89lFdgq/EoL1OjRHT00kBIfVTTu8
+IgY6DlBl4PiUA/GUIC6diUtVfytX7K9LdqnGS9FeyfhJtU4uMLDd5GYDmQ0XC1K6
+rhAqUKOXNseX5rSf3urE
+=XkHE
 -----END PGP SIGNATURE-----
