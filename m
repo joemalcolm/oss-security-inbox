@@ -1,55 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/18/11
-Message-Id: <E82F2B4A-DBD5-4B21-A526-0DCC26093A38@oracle.com>
-Date: Sun, 18 Sep 2016 20:06:57 +0100
-From: John Haxby <john.haxby@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/12/11
+Message-ID: <alpine.LFD.2.20.1601122319510.1476@wniryva>
+Date: Tue, 12 Jan 2016 23:24:36 +0530 (IST)
+From: P J P <ppandit@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Jan Schaumann <jschauma@...meister.org>, "chet.ramey" <chet.ramey@...e.edu>
-Subject: Re: CVE-2016-0634 -- bash prompt expanding $HOSTNAME
+cc: cve-assign@...re.org, donghai.zdh@...baba-inc.com
+Subject: Re: Re: CVE request Qemu: nvram: OOB r/w access in processing firmware configurations
 Content-Type: text/plain; charset=utf-8
 
++-- On Tue, 12 Jan 2016, cve-assign@...re.org wrote --+
+| Use CVE-2016-1714.
 
-> On 16 Sep 2016, at 19:49, Chet Ramey <chet.ramey@...e.edu> wrote:
-> 
-> On 9/16/16 1:38 PM, Jan Schaumann wrote:
->> John Haxby <john.haxby@...cle.com> wrote:
-> 
-> (I didn't get this message.)
+  Thank you.
+ 
+| Note that http://git.qemu.org/?p=qemu.git;a=blob;f=hw/nvram/fw_cfg.c
+| has:
+| 
+|   static void fw_cfg_write(FWCfgState *s, uint8_t value)
+|   {
+|       /* nothing, write support removed in QEMU v2.4+ */
+|   }
+| 
+| and has no fw_cfg_read function.
 
-Sorry about that, I thought I’d cc’d you with the right address.
+  That's right. This issue affects Qemu versions prior to 2.4. Above change 
+was made immediately after the release of v2.3.
 
+ -> http://git.qemu.org/?p=qemu.git;a=commit;h=023e3148567ac898c7258138f8e86c3c2bb40d07
 
-> 
->>> A little while ago, one of our users discovered that by setting the
->>> hostname to $(something unpleasant), bash would run "something
->>> unpleasant" when it expanded \h in the prompt string.
-> 
-> This issue has been public since October, 2015 in Ubuntu's bug tracking
-> system.
-> 
-
-Yes, the message was more to let people know that CVE-2016-0634  had been assigned for this issue.   Do you have a link to the Ubuntu issue and a different CVE number?
-
-> 
->> To clarify: this is only triggered if the hostname has been set, not the
->> $HOSTNAME variable, right?
-> 
-> Bash doesn't use $HOSTNAME; it sets it if it's not already set.  The
-> shell's idea of the current hostname is set using gethostname().  If
-> gethostname() fails, the hostname gets set to "??host??".  The \h
-> prompt expansion uses the shell's idea of the current hostname.
-> 
-> If your privileged application (either a user with privilege or a hostname-
-> setting agent) allows the hostname to be set to any arbitrary string of
-> characters, you're going to have problems regardless.
-
-
-Yes, that’s correct.   A while ago there was a problem that dhcp would let a malicious dhcp server use a hostname of the attackers choosing.   That was bad not least because would expand whatever was given.   The linux sethostname(2) system call doesn’t make any restrictions on what you can use for a system call so any agent (not just that old dhcp version) that sets the hostname could potentially trigger this.   The bar is obviously set quite high for this: you need to find an agent that you can persuade to set the hostname for you — any agent that just blindly sets the hostname to $(do something bad) is broken, but bash shouldn’t make the situation worse by giving you complete control over the machine.
-
-> 
-> Chet
-> -- 
-> ``The lyf so short, the craft so long to lerne.'' - Chaucer
-> 		 ``Ars longa, vita brevis'' - Hippocrates
-> Chet Ramey, UTech, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
-
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
