@@ -1,51 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/01/5
-Message-ID: <56AF7B26.9010700@dest-unreach.org>
-Date: Mon, 1 Feb 2016 16:35:02 +0100
-From: Gerhard Rieger <gerhard@...t-unreach.org>
-To: oss-security@...ts.openwall.com
-Subject: Socat security advisory 8 - Stack overflow in parser
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/12/12
+Message-ID: <CANO=Ty1Gis741iXUVrpYbBXi3S_4bNdTu7tbCb12Zz+5JVnPQg@mail.gmail.com>
+Date: Tue, 12 Jan 2016 11:04:06 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>, CVE ID Requests <cve-assign@...re.org>
+Subject: CVE request for Kubernetes api server: build config to a strategy that isn't allowed by policy
 Content-Type: text/plain; charset=utf-8
 
-Socat security advisory 8 - Stack overflow in parser
+CVE request (one is the problem, the other the fix):
 
-Overview
-  A stack overflow vulnerability was found that can be triggered when
-  command line arguments (complete address specifications, host names,
-  file names) are longer than 512 bytes.
-  Successful exploitation might allow an attacker to execute arbitrary code
-  with the privileges of the socat process.
-  This vulnerability can only be exploited when an attacker is able to
-  inject data into socat's command line.
-  A vulnerable scenario would be a CGI script that reads data from
-  clients and uses (parts of) this data as hostname for a Socat
-  invocation.
+https://github.com/openshift/origin/issues/6556
+https://github.com/openshift/origin/pull/6576
 
-Vulnerability Ids
-    Socat security issue 8
+You can modify a build so that it escalates privileges when built, you
+can't build it yourself (that fails) but if the imagestream trigger is used
+then it would build and you'd have escalated privileges.
 
-Severity: Low
+-- 
 
-Affected versions
-  1.5.0.0 - 1.7.3.0
-  2.0.0-b1 - 2.0.0-b8
+--
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
 
-Not affected or corrected versions
-  1.0.0.0 - 1.4.3.1
-  1.7.3.1 and later
-  2.0.0-b9 and later
-
-Workaround
-  Do not pass unfiltered data from untrusted sources to socat's command line
-
-Download
-  The updated sources can be downloaded from:
-
-    http://www.dest-unreach.org/socat/download/socat-1.7.3.1.tar.gz
-    http://www.dest-unreach.org/socat/download/socat-2.0.0-b9.tar gz
-
-Acknowledgement
-    Takume Akiyma found and reported this issue.
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
