@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["765" "Thursday" "8" "June" "2017" "19:49:46" "-0400" "Qhdwns123" "qhdwns123@protonmail.com" "<5EOR8OtyY9_fUB8CL_yLVwXelHrU0XwXaJsUYwvyvape2Rk2aNA5UVFmF6STrWQKvAh-g5SxLF3MH5oeLiRbsOyWdeXjptEE_8FhX0WbcmI=@protonmail.com>" "17" "[oss-security] Security bug report read-protected" "^Date:" nil nil "6" "2017060823:49:46" "[oss-security] Security bug report read-protected" (number mark "        qhdwns123@pr Jun  8   17/765   " thread-indent "\"[oss-security] Security bug report read-protected\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1886" "Tuesday" "12" "January" "2016" "10:07:25" "-0800" "Grant Murphy" "grant.murphy@hpe.com" "<20160112180725.GB91908@hpe.com>" "67" "[oss-security] [OSSA 2016-002] Xen connection password leak in logs via StorageError (CVE-2015-8749)" "^Date:" nil nil "1" "2016011218:07:25" "[oss-security] [OSSA 2016-002] Xen connection password leak in logs via StorageError (CVE-2015-8749)" (number mark "        grant.murphy Jan 12   67/1886  " thread-indent "\"[oss-security] [OSSA 2016-002] Xen connection password leak in logs via StorageError (CVE-2015-8749)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 17546 invoked by uid 550); 9 Jun 2017 10:09:20 -0000
+Received: (qmail 30063 invoked by uid 550); 12 Jan 2016 18:07:45 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,39 +11,84 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 24461 invoked from network); 8 Jun 2017 23:49:59 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-	s=default; t=1496965787;
-	bh=RrsQwLUmMcrLkE4HPTUuuDNxJQcZf7qfppmE9gLCUVY=;
-	h=To:From:Reply-To:Subject:Feedback-ID:From;
-	b=UkxiLPD8Nue/eJstGnLh0E47SjXzR9bkQyKnrVR6nxDKG1liliGhnGQu0lZtRinbV
-	 7//uffVHEIxLF1eQZf22adZ41LIWN3Cw2OuJwxb0B4JH2116uidtSEcjtE4DrEd879
-	 kUadX/EZG47l1dT9MokfJnIPVzcIMxPVwicZcu5w=
-Message-ID: <5EOR8OtyY9_fUB8CL_yLVwXelHrU0XwXaJsUYwvyvape2Rk2aNA5UVFmF6STrWQKvAh-g5SxLF3MH5oeLiRbsOyWdeXjptEE_8FhX0WbcmI=@protonmail.com>
-Feedback-ID: vXRURrFWGeaheBsGNsaJ1M8AetqoNVBGwyWj2Pttnkyk2mY512lZA5edfaxiLrte64sYuwkYV1fWVZik9fITZw==:Ext:ProtonMail
+Received: (qmail 30023 invoked from network); 12 Jan 2016 18:07:39 -0000
+Message-ID: <20160112180725.GB91908@hpe.com>
 MIME-Version: 1.0
-Content-Type: multipart/alternative;
-	boundary="b1_04186c5c038305f7cbb4583c5cd813cd"
-Date: Thu, 08 Jun 2017 19:49:46 -0400
-From: Qhdwns123 <qhdwns123@protonmail.com>
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="lEGEL1/lMxI0MVQ2"
+Content-Disposition: inline
+User-Agent: Mutt/1.5.24 (2015-08-30)
+Date: Tue, 12 Jan 2016 10:07:25 -0800
+From: Grant Murphy <grant.murphy@hpe.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Security bug report read-protected
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Subject: [oss-security] [OSSA 2016-002] Xen connection password leak in logs via
+ StorageError (CVE-2015-8749)
+To: oss-security@lists.openwall.com
 
---b1_04186c5c038305f7cbb4583c5cd813cd
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
+--lEGEL1/lMxI0MVQ2
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-SGkuCgpJZiB5b3UgYXJlIHJlcG9ydGluZyBidWdzIHRvIHRoZSBidWd6aWxs
-YSBzaXRlLAoKV2hlbiBhbiBhbm9ueW1vdXMgdXNlciBhY2Nlc3NlcyB0aGUg
-cGFnZSwgdGhlIGZvbGxvd2luZyBtZXNzYWdlIGlzIGRpc3BsYXllZCBhbmQg
-YWNjZXNzIGlzIGJsb2NrZWQuCgoiWW91IGFyZSBub3QgYXV0aG9yaXplZCB0
-byBhY2Nlc3MgYnVnICM2MzI1MjEuIFRvIHNlZSB0aGlzIGJ1ZywgeW91IG11
-c3QgZmlyc3QgbG9nIGluIHRvIGFuIGFjY291bnQgd2l0aCB0aGUgYXBwcm9w
-cmlhdGUgcGVybWlzc2lvbnMiCgpBcyBmYXIgYXMgSSBrbm93LCB3aGVuIHlv
-dSByZXF1ZXN0IGEgQ1ZFLCB5b3UgbmVlZCB0byBjcmVhdGUgYW4gYWNjZXNz
-aWJsZSByZWZlcmVuY2UgYWRkcmVzcyBmb3IgYW5vbnltb3VzIHVzZXJzLgoK
-SWYgeW91IGhhdmUgYSBzb2x1dGlvbiwgbGV0IG1lIGtub3cuCgpUaGFua3Mu
+====================================================================
+OSSA-2016-002: Xen connection password leak in logs via StorageError
+====================================================================
 
---b1_04186c5c038305f7cbb4583c5cd813cd--
+:Date: January 11, 2016
+:CVE: CVE-2015-8749
 
+
+Affects
+~~~~~~~
+- Nova: >=2014.2 <= 2015.1.2, == 12.0.0
+
+
+Description
+~~~~~~~~~~~
+Matt Riedemann from IBM reported an information disclosure
+vulnerability in Nova. If a StorageError occurs when attempting to
+connect a volume using the Xen API, the connection parameters will be
+logged. These parameters may include credentials that are not masked.
+An attacker with read access to Nova logs could use these credentials
+with the Xen API directly. Only Nova deployments using the Xen backend
+are affected by this flaw.
+
+
+Patches
+~~~~~~~
+- https://review.openstack.org/249239 (Kilo)
+- https://review.openstack.org/247825 (Liberty)
+- https://review.openstack.org/245987 (Mitaka)
+
+
+Credits
+~~~~~~~
+- Matt Riedemann from IBM (CVE-2015-8749)
+
+
+References
+~~~~~~~~~~
+- https://bugs.launchpad.net/bugs/1516765
+- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-8749
+
+
+Notes
+~~~~~
+- This fix will be included in future 2015.1.3 (kilo) and 12.0.1
+  (liberty) releases.
+
+--lEGEL1/lMxI0MVQ2
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBAgAGBQJWlUDbAAoJEJ3kO55VGiJSUR0H/2wrEQJy9B7DbXQVb0qzoBja
+QIxe9XG4c9bSIbIJv+SEViWiXZyEgIuDJ/5fjTa0eMC8QcW7im5eB2vYTyqXHSgo
+vg3y5gcPOrJ9vCtGrQ7HdnemQzsOgf7DPEDv6CVKgBBYtuxDfmijJSIUw7wAOzLt
+pd4V5Bw3wAOE2zeu7moEXeyjsNUQkEMOJaPSoacrFoRZ7AVykKI10+d6xG5ib2/b
+YWlh6sRgdxGqzHrnfdjTmhjUiF6MrR53TQo/hIvXLgIdtIwZrove88yANtQGHX7q
+UdJIHZqYQZLhhou3atsK+eRjaxqd9YA8g/6nZvE9e0RmENh67p2mcahC3oTJ7qE=
+=p2T+
+-----END PGP SIGNATURE-----
+
+--lEGEL1/lMxI0MVQ2--
