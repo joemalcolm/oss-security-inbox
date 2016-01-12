@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["495" "Monday" "25" "July" "2016" "10:50:30" "+1000" "Wade Mealing" "wmealing@redhat.com" "<CALJHwhS5Qin0-snXT458ARcXDPTHAdpsS3ax1CCPFdWSeLeLAQ@mail.gmail.com>" "15" "[oss-security] CVE-2016-5400 - linux kernel: denial of service in airspy USB driver." "^Date:" nil nil "7" "2016072500:50:30" "[oss-security] CVE-2016-5400 - linux kernel: denial of service in airspy USB driver." (number mark "U       wmealing@red Jul 25   15/495   " thread-indent "\"[oss-security] CVE-2016-5400 - linux kernel: denial of service in airspy USB driver.\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["524" "Monday" "11" "January" "2016" "21:46:16" "-0700" "Kurt Seifried" "kseifried@redhat.com" "<CANO=Ty2__zBT=MeY=6mQaepEM1vr=igkrmeZkX3XM5pwttEbEg@mail.gmail.com>" "24" "[oss-security] CVE for node.js websockets (ws)" "^Date:" nil nil "1" "2016011204:46:16" "[oss-security] CVE for node.js websockets (ws)" (number mark "        kseifried@re Jan 11   24/524   " thread-indent "\"[oss-security] CVE for node.js websockets (ws)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 5412 invoked by uid 550); 25 Jul 2016 00:50:43 -0000
+Received: (qmail 9781 invoked by uid 550); 12 Jan 2016 04:46:29 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,41 +11,51 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5394 invoked from network); 25 Jul 2016 00:50:43 -0000
+Received: (qmail 9763 invoked from network); 12 Jan 2016 04:46:28 -0000
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=ydp/l62/HAJqPO3Jg3UC8o4DW7MYRgTx3TLY15t6W4o=;
-        b=T2NlPMiJmL1Yzo9GidZgOiS1bufPxvfVm33VzSLRHa+Mimo0apbPQPlAElo66O8tWK
-         U4fHbbeIgd282YjiIrP76D/QJm5vyyP0eYsk2ehzdzqInnheJFxtES/GkccgbfX4jYDS
-         ypw2xx1/UQYUxCuWISqqE8UbbD0zneSlaZRvsq4RWMuWpN6Ic/p0pppTliu1e+kHng6u
-         +yTu7W1OB6/d+v2YCjWXxW+g7EDkic3leX543Zk0T3aX9yI0T/z/UtONFFKLH/nF4jhw
-         DVDQJklR2EUbLEqYR32xwvYOPlZ3rFFbMyrAZvNHAtHVCW72p9mVS/4SGAh8LeY6sts4
-         NzCQ==
-X-Gm-Message-State: AEkoouvCq9NiX3D24GMIK7OXdkPU7+BjcxYkm3hSR6cc0G/UjJyxgoY49OdpRdWuiPP6ULg2MG6C1mmi0nz//XJT
-X-Received: by 10.107.197.1 with SMTP id v1mr14963624iof.178.1469407831124;
- Sun, 24 Jul 2016 17:50:31 -0700 (PDT)
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
+         :content-type;
+        bh=Ulp1nTwfcjzUGxTmg+iTYmHNIiwYaFaaSvYm1qHvv3Q=;
+        b=fibBlaJE93vTErZE0WyODUj5IsnkDZssjo7HjAD7XYjAjDjsUAKwI6cdb7qfXyz+Vm
+         qkp33+J2SPtjW/T8+VVbWBf4v6S3IEaIGFdfAz+GxvaU2eKLts4PeIDd8EX/p2IoON5a
+         cCCSnMDISrDRYp5eko4LhYp/5xyCXYrfxk/GljvCM0gnfnTRao22kccXoa+iXxFcvavz
+         1G9VNoC47KErCrnbzHJlFvWY7Oiw+G/bg7RHIsGbe3Q4n8JY5qDhjeYzclmpEwNH18zP
+         +9sxikaHmoSCkqjoybZr3v7rpE+X1z7/3wvJU2BTqhVY/x+Ji+NOYoR+Ja2M/MLJWLWu
+         3OzA==
+X-Gm-Message-State: ALoCoQnT22V8S0C+hbwEUUiqS+HPmYx6qxVvotLNoQF7m8J3CAfE0eZ9wCI6Rsm11CPgcXiA+MA13kta++DV7MOCIEwmx0yAx9fFhmU6IlhmR65bXhrc7nw=
 MIME-Version: 1.0
-Message-ID: <CALJHwhS5Qin0-snXT458ARcXDPTHAdpsS3ax1CCPFdWSeLeLAQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Date: Mon, 25 Jul 2016 10:50:30 +1000
-From: Wade Mealing <wmealing@redhat.com>
+X-Received: by 10.129.39.2 with SMTP id n2mr87732777ywn.303.1452573976783;
+ Mon, 11 Jan 2016 20:46:16 -0800 (PST)
+Message-ID: <CANO=Ty2__zBT=MeY=6mQaepEM1vr=igkrmeZkX3XM5pwttEbEg@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=001a114096eae5aa3905291bbb81
+Date: Mon, 11 Jan 2016 21:46:16 -0700
+From: Kurt Seifried <kseifried@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE-2016-5400 - linux kernel: denial of service in airspy USB driver.
-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE for node.js websockets (ws)
+To: oss-security <oss-security@lists.openwall.com>, CVE ID Requests <cve-assign@mitre.org>
 
-Hello All,
+--001a114096eae5aa3905291bbb81
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-A flaw was found in the linux kernel's implementation of the airspy
-USB device driver in which a leak was found when a subdev or SDR are
-plugged into the host.
+https://nodesecurity.io/advisories/67
 
-An attacker can create an targeted USB device which can emulate 64 of
-these devices. Then by emulating an additional device which
-continuously connects and disconnects, each connection attempt will
-leak memory which can not be recovered.
+Says:
 
-This issue was assigned CVE-2016-5400.
+January 4th, 2016
 
-Wade Mealing
-Red Hat Product Security Team
+CVE-PENDING =E2=80=A2 Credit: Feross Aboukhadijeh / Mathias Buss
+
+
+I assume Mitre got asked for this CVE? If not who is sitting on it?
+
+
+--=20
+
+--
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@redhat.com
+
+--001a114096eae5aa3905291bbb81--
