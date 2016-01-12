@@ -1,55 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/01/2
-Message-ID: <20160601115348.GA22607@openwall.com>
-Date: Wed, 1 Jun 2016 14:53:48 +0300
-From: Solar Designer <solar@...nwall.com>
-To: Mihamina RAKOTOMANDIMBY <mihamina-rakotomandimby@...mb.org>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: "The Blind SQL Injection Issue" explanation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/12/2
+Message-Id: <20160112083910.313881BE690@smtpvbsrv1.mitre.org>
+Date: Tue, 12 Jan 2016 03:39:10 -0500 (EST)
+From: cve-assign@...re.org
+To: kseifried@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE for node.js websockets (ws)
 Content-Type: text/plain; charset=utf-8
 
-Hi Mihamina,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Your message lacks open source focus (is your web app open source? as
-far as I can tell, the security scanner in question is not) and you
-posted the same question to Security Basics, so as a list moderator I
-was reluctant to approve it.  Next time, please post content that is
-more obviously on topic for oss-security, or clarify how whatever you're
-posting is on topic.  If you can't, then please refrain from making
-borderline postings like this.  Security Basics, judging by its name, is
-probably a more appropriate place for your question, but it looks rather
-inactive, I don't know why - no community interested in discussing
-security basics on a mailing list?  If anyone in here has suggestions on
-an appropriate mailing list for questions such as this, please share.
-Maybe full-disclosure, which is used for lots of stuff, even though this
-is a question and not a disclosure?
+> CVE-PENDING - Credit: Feross Aboukhadijeh / Mathias Buss
 
-On Wed, Jun 01, 2016 at 02:15:41PM +0300, Mihamina RAKOTOMANDIMBY wrote:
-> Let's suppose the web app is vulnerable, the reasoning of this test is:
-> 
-> - req. 1 gets resp. 1 and changed database state to state 1
-> - req. 2 gets resp. 2 and changed database state to state "whatever"
-> - req. 3 gets resp. 1 and changed database state to state "whatever"
-> 
-> My questions are:
-> - How could database state "whatever" would give the same response as
->   "state 1" ? (a.k.a "resp. 1")
+> If not who is sitting on it?
 
-I can't speak for authors of a proprietary security scanner, but I guess
-the assumption is that the queries are such that the database state does
-not change (at all, or at least not in a way affecting these specific
-queries).  If the database state changes (in a relevant way), then a
-possible difference in responses to requests 1 and 2 does not indicate
-SQL injection, but more likely indicates a false positive, so the
-purpose of request 3 may be to weed out such false positives (ensure the
-state has not changed from request 1 to request 3, and thus the
-different response to request 2 more likely indicates SQL injection
-rather than a change in response occurring between subsequent requests
-in general).  This is just a guess, which might be wrong.
+In our experience, the string "CVE-PENDING" has little or no
+correlation with whether anyone has done any type of CVE request.
 
-> - As a "blind" one (mostly random input then), how could these
->   assertions work?
+We'll interpret it as a new request to MITRE unless someone else
+happens to have received a request.
 
-"Blind" does not mean "mostly random input".
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Alexander
+iQIcBAEBCAAGBQJWlLsuAAoJEL54rhJi8gl5i4EQAKA7AGwYRYJDipd7vpWlnaqb
+Wv7BkC2i1oDLUbb9xQX9AMTGyQD90Q0XP72EUeSqDUHNRAXobcAavVRmbk14Hib3
+TqL/ckDnwWpXMgRyyyhVTLkr4ajl/T0B+QgAN4UhE5ts0YPqeJnWK2ZTxl+yfYny
+KYhOH3bIQEEuH77XjzsN9dZAI/UnupQRAGFzwGVI4HngxUz2RQdCDrIe0Vk5L/+V
+bL34Gm0h4Ij4/K15FS4DGeuYHTKtBM1uPHt9DKDdqkjy9YxYm3gX4ALh3dtKesnf
+vScCIXXs1M5XGM4oREinaDLwN1ZqV29xzpQ6NWfVPZ/eADLHwRVLCtk/nK/IDeUp
+SAqgWYpCXZluq3KNJLbIwlk9Cw4NpBdzqq3QC2ey5Hy4Dznix+Qq0hXjAzRq/3KB
+ZXqXgQhtcpnWTaOF9j4823UzZtDHY+UbpIkGv/BstWxtaFOwWCLA9pcuhj2VoUal
+voHIJiObb9ji325bD2jsQadmAMGG2tDVU8HkvVXmyCmz28b3jyw0/BoAWcUWfyRa
+qy17X1WGUkWVR3UbW69qMgv5zD+dwv2cZHbP1urylgxVO15mPqwuhSwRjP1DuJU2
+HXZNp3F3oU6y3Zf+9dwaC1vThDlrM/qq731sh/b3A7DAftpXAjkbHzCOwziM/rcs
+8dm8oDFJmGuW1J/mkWaI
+=mvzn
+-----END PGP SIGNATURE-----
