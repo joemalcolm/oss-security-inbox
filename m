@@ -1,37 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/11/1
-Message-ID: <929915505.18990807.1455190810330.JavaMail.zimbra@redhat.com>
-Date: Thu, 11 Feb 2016 06:40:10 -0500 (EST)
-From: Wade Mealing <wmealing@...hat.com>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Cc: cve-assign@...re.org
-Subject: Linux kernel: Flaw in CXGB3 driver.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/12/6
+Message-ID: <CADLX=aGFnZANOuiTC=hp1F7_Kw26NLk0TD6QnRqgEcPPd30vLQ@mail.gmail.com>
+Date: Tue, 12 Jan 2016 21:02:42 +0530
+From: Rahul Pratap Singh <techno.rps@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request: WP Symposium Pro Social Network Plugin 16.1 XSS Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Gday,
+##FULL DISCLOSURE
 
-I would like a CVE for the following issue:
+#Product : WP Symposium Pro Social Network plugin
+#Home page Link : https://wordpress.org/plugins/wp-symposium-pro
+#Version : 16.1
+#Date : 12/Jan/2016
 
-A flaw was found in the CXGB3 kernel driver when the network was considered congested.  The kernel would incorrectly misinterpret the congestion as an error condition and incorrectly free/clean up the skb. When the device would then send the skb's queued, these structures would be referenced and may panic the system or allow an attacker to escalate privileges in a use-after-free scenario.
+XSS Vulnerability:
 
-The bug and the problematic free is shown shown in the patch[1]: 
+Description:
 
-----
+“user_id” parameter is not sanitized, that leads to reflected xss.
 
-The cxgb3_*_send() functions return NET_XMIT_ values, which are
-positive integers values. So don't treat positive return values
-as an error.
-----
+POC:
 
-Thanks,
+https://0x62626262.files.wordpress.com/2016/01/wpsymposiumpro16_1xsspoc.png
 
-Wade Mealing
-Red Hat Product Security Team
+Fix:
+Update to version 16.01.01
 
-== References:
+Disclosure Timeline:
 
-Upstream fix commit[1]:
-https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=67f1aee6f45059fd6b0f5b0ecb2c97ad0451f6b3
+reported to vendor : 12/1/2016
+vendor response : 12/1/2016
+vendor acknowledged : 12/1/2016
+vendor deployed a patch: 12/1/2016
 
-Red Hat bug:
-https://bugzilla.redhat.com/show_bug.cgi?id=1303532
+Pub Ref:
+http://www.wpsymposiumpro.com/wp-symposium-pro-16-01-01-security-release/
+https://wordpress.org/plugins/wp-symposium-pro/
+https://0x62626262.wordpress.com/2016/01/12/wp-symposium-pro-social-network-plugin-xss-vulnerability
+
