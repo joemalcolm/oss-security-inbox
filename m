@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1298" "Sunday" "18" "February" "2018" "22:44:31" "+0100" "Solar Designer" "solar@openwall.com" "<20180218214431.GA23494@openwall.com>" "35" "Re: [oss-security] LibVNCServer rfbserver.c: rfbProcessClientNormalMessage() case rfbClientCutText doesn't sanitize msg.cct.length" "^Date:" nil nil "2" "2018021821:44:31" "[oss-security] LibVNCServer rfbserver.c: rfbProcessClientNormalMessage() case rfbClientCutText doesn't sanitize msg.cct.length" (number mark "U       solar@openwa Feb 18   35/1298  " thread-indent "\"Re: [oss-security] LibVNCServer rfbserver.c: rfbProcessClientNormalMessage() case rfbClientCutText doesn't sanitize msg.cct.length\"\n") "<20180218180945.GA22931@openwall.com>" ("<20180218180945.GA22931@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2145" "Tuesday" "12" "January" "2016" "12:35:42" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160112173542.66C5A34E014@smtpvbsrv1.mitre.org>" "55" "[oss-security] Re: CVE request Qemu: nvram: OOB r/w access in processing firmware configurations" nil nil nil "1" "2016011217:35:42" "[oss-security] Re: CVE request Qemu: nvram: OOB r/w access in processing firmware configurations" (number mark "U       cve-assign@m Jan 12   55/2145  " thread-indent "\"[oss-security] Re: CVE request Qemu: nvram: OOB r/w access in processing firmware configurations\"\n") "<alpine.LFD.2.20.1601112211500.22978@wniryva>" ("<alpine.LFD.2.20.1601112211500.22978@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 32200 invoked by uid 550); 18 Feb 2018 21:44:45 -0000
+Received: (qmail 20414 invoked by uid 550); 12 Jan 2016 17:35:54 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,52 +11,68 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 32116 invoked from network); 18 Feb 2018 21:44:37 -0000
-Message-ID: <20180218214431.GA23494@openwall.com>
-References: <20180218180945.GA22931@openwall.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20180218180945.GA22931@openwall.com>
-User-Agent: Mutt/1.4.2.3i
-Date: Sun, 18 Feb 2018 22:44:31 +0100
-From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] LibVNCServer rfbserver.c: rfbProcessClientNormalMessage() case rfbClientCutText doesn't sanitize msg.cct.length
-To: oss-security@lists.openwall.com
+Received: (qmail 20396 invoked from network); 12 Jan 2016 17:35:54 -0000
+From: cve-assign@mitre.org
+To: ppandit@redhat.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, donghai.zdh@alibaba-inc.com
+In-Reply-To: <alpine.LFD.2.20.1601112211500.22978@wniryva>
+Message-Id: <20160112173542.66C5A34E014@smtpvbsrv1.mitre.org>
+Date: Tue, 12 Jan 2016 12:35:42 -0500 (EST)
+Subject: [oss-security] Re: CVE request Qemu: nvram: OOB r/w access in processing firmware configurations
 
-On Sun, Feb 18, 2018 at 07:09:45PM +0100, Solar Designer wrote:
-> vcSetXCutTextProc() came from LibVNCServer-0.9.9/vncterm/VNConsole.c, so its
-> shortcomings also need to be reported to LibVNCServer upstream.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-> vncterm exists as a separate repo,
-> so I might report its issues in there: https://github.com/LibVNC/vncterm
+> https://lists.gnu.org/archive/html/qemu-devel/2016-01/msg00428.html
+> https://bugzilla.redhat.com/show_bug.cgi?id=1296060
 
-Reported vncterm: VNConsole.c: vcSetXCutTextProc() integer overflow and
-unchecked malloc():
+> Qemu emulator built with the Firmware Configuration device emulation support
+> is vulnerable to an OOB r/w access issue. It could occur while processing
+> firmware configurations, if the current configuration entry value was set to
+> be invalid(FW_CFG_INVALID=0xffff).
+> 
+> A privileged(CAP_SYS_RAWIO) user/process inside guest could use this flaw to
+> crash the Qemu process instance resulting in DoS OR potentially execute
+> arbitrary code with privileges of the Qemu process on the host.
 
-https://github.com/LibVNC/vncterm/issues/6
+>> if 's->cur_entry' is set to be invalid(FW_CFG_INVALID=0xffff)
 
-vncterm's implementation of the callback is:
+Use CVE-2016-1714.
 
-void vcSetXCutTextProc(char* str,int len, struct _rfbClientRec* cl)
-{
-  vncConsolePtr c=(vncConsolePtr)cl->screen->screenData;
+This is not yet available at
+http://git.qemu.org/?p=qemu.git;a=history;f=hw/nvram/fw_cfg.c;hb=stable-2.3
+but that may be an expected place for a later update.
 
-  if(c->selection) free(c->selection);
-  c->selection=(char*)malloc(len+1);
-  memcpy(c->selection,str,len);
-  c->selection[len]=0;
-}
+Note that http://git.qemu.org/?p=qemu.git;a=blob;f=hw/nvram/fw_cfg.c
+has:
 
-Besides the conversion to signed int during the call (a LibVNCServer API
-issue), there's also len+1 in the implementation, which may cause an
-integer overflow resulting in e.g. malloc(0) (which succeeds) followed
-by memcpy(..., ..., -1) (which writes beyond the allocated memory).  And
-there's no check for malloc() possibly returning NULL.
+  static void fw_cfg_write(FWCfgState *s, uint8_t value)
+  {
+      /* nothing, write support removed in QEMU v2.4+ */
+  }
 
-I did not request CVE ID(s) for this, and I don't intend to do so.  If
-you need to, please feel free to track the vncterm vcSetXCutTextProc()
-issues above as OVE-20180218-0002.
+and has no fw_cfg_read function.
 
-Alexander
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJWlTjSAAoJEL54rhJi8gl5roYP/AzQYLE2xxnFP0kaeW6eDY6R
+vXeoENyOmZeaB7MTYEAYEzt5Pm9bPaAzwpJAudIGkwHNymtrrO8qCTI4xMsWvoyq
+yq5zgUBvC/2ZX+8spL4J3wCnX40iBTEtJTcxFtQhbyVwkEdSrsi8Y9NwvtB/4sVa
+LiCqOv9c6qK0QDx5SDSpbhg0tyBdFRDY4SgPBkADT5XA8FuT9AtqHcZC2ICY4G/Q
+RVAvfhQii151fs3lYHufc2X6gTzqQLYNRqcfbhxH72g3K/ca0UXyj7E4fm1OrpU/
+9Wdyp2MXgthjL8XiWs6mHxrlTnfLvVdt07fe2/6MGx76g6nFFNL4UBJueHVojOZC
+HYsSuLSj3LmaCaJOya4aKCko0l7ZKsqfsNvpBDuXWE6dduVNf6HjC7yNUxp00Jty
+M0z3Sf3GAUfOEuPtbxQpPqslmYPHxK30Tf9I3tjM4BZUQ/je+Xk/Z/XcIO1otWL/
+OwVhZiN+zQETUoxzW0vZ33wg3sO++Wo1GWdPF+3zLa6Ucl8KBF3C4Cyk96ySk3rr
++JND3rWFMoYjVkgDyiQXvnFaeK3BFkYAtGjpGah6grNL80LcEffWyisX61LL9+Ym
+KSAQqb2eBWYDOEXbCprMVkB0rLG694HQKxPxzdCsu0VG7lVMHmYueGfNuVT0c6Tg
+9gTsazAsV5w3iSZp36bM
+=tsnL
+-----END PGP SIGNATURE-----
