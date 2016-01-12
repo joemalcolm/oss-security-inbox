@@ -1,4 +1,9 @@
-Received: (qmail 14117 invoked by uid 550); 6 Jul 2022 11:23:11 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3677" "Tuesday" "12" "January" "2016" "12:03:56" "+0100" "Benjamin Daniel Mussler" "sec@ml.fl7.de" "<309844657.20160112120356@fl7.de>" "101" "[oss-security] CVE Request: Vtiger CRM 6.4 Authenticated Remote Code Execution" nil nil nil "1" "2016011211:03:56" "[oss-security] CVE Request: Vtiger CRM 6.4 Authenticated Remote Code Execution" (number mark "U       sec@ml.fl7.d Jan 12  101/3677  " thread-indent "\"[oss-security] CVE Request: Vtiger CRM 6.4 Authenticated Remote Code Execution\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 12000 invoked by uid 550); 12 Jan 2016 13:29:26 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,132 +12,118 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5368 invoked from network); 6 Jul 2022 11:03:20 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	invisiblethingslab.com; h=cc:content-type:date:date:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:sender:subject:subject:to:to; s=fm2; t=1657105386; x=
-	1657191786; bh=iGNhMCVO30rkz2LB4ocSGSHY/tdCsjrBSaRFTLBBnew=; b=c
-	aFwb+GQxs7wXmCr/6uG1voLdFL+3ZHm7+J4AwAX8gmN72yGSpV5Lg6YkrW4BrDdD
-	8eUtRrBPs3UNiIQbLSZ59Vrv6AW1TrwFOfR273/2FDzFvWp4RK2Uj5oEqcCRLpvI
-	ktOFjBRmbaDKHg9y0OJgXhVllInz2HDtvD5qf6rTJ3nIqsiRKIfVVGo1bSLrjMtl
-	d96gBNe9zbd5oTD6MBfvdiOie9V0Xp5Xz420IaAV1geCw2XoHqnYYWbUsepCELwl
-	taLE7qlMXB9e9TpbezRVVufzogHhsMjOQhi47ZHuBrPPpO/c9cIrD1rOT0cq0xIp
-	Bp/11Md8DpVUsfjhqOzhg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:date:date:feedback-id
-	:feedback-id:from:from:in-reply-to:in-reply-to:message-id
-	:mime-version:references:reply-to:sender:subject:subject:to:to
-	:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1657105386; x=1657191786; bh=iGNhMCVO30rkz2LB4ocSGSHY/tdC
-	sjrBSaRFTLBBnew=; b=mk0B0quuJbvh3/u1AaL8e087c/ndrU7OEPSpc/QJG2qJ
-	wmUlaVLvx5yFogGf2lA+YmfHMp9H54or6MeDKqAFAZlwejF1668t2jzx9clW/Dfw
-	aPyByivCZZP9CqHifrFNlULYylzb0FdoDJZ4X3dJEj2GTcQVy/9fh6ShNFHao73M
-	UtNmNRQqJb58Aetj7fISh7vgDoJfAl0J6QUN2cbZwN5THHqMoA9wWDDdYPVgmkVL
-	b+0tpH4nOSc1JF9qwC9sxGHzT2ZkA7DZNcMUYVWfZHbGtIu1vW/aud6Pcpl4Cgqk
-	VR4isz8qlvAYsUJwjPKyP8vlpAj0e93rBpktG86jlQ==
-X-ME-Sender: <xms:6mvFYuyH-WYmBSlHfjn2Zlu40-DCDsAGJc-AdP2Glvdkcg4fs-MYSg>
-    <xme:6mvFYqQD40XIlexb65m-abgxzZXC9wWA8KzJzZgXqIqsGBP0Y0Z3bYb6W5WbhmcqM
-    SP3iKgszBsbso4>
-X-ME-Received: <xmr:6mvFYgU9fkFsBmKouZlNgF0jqvoubNjtHtqGqma04jdTxBSxvnGH0um7zhvc>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrudeifedgfeegucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesghdtre
-    ertddtjeenucfhrhhomhepffgvmhhiucforghrihgvucfqsggvnhhouhhruceouggvmhhi
-    sehinhhvihhsihgslhgvthhhihhnghhslhgrsgdrtghomheqnecuggftrfgrthhtvghrnh
-    epveefteeutdefheetkedtueeuieelheekveduudekfedvfeelffettdeltdeugfelnecu
-    ffhomhgrihhnpehgihhtlhgrsgdrtghomhenucevlhhushhtvghrufhiiigvpedtnecurf
-    grrhgrmhepmhgrihhlfhhrohhmpeguvghmihesihhnvhhishhisghlvghthhhinhhgshhl
-    rggsrdgtohhm
-X-ME-Proxy: <xmx:6mvFYkjlESnaxTbYUY8E1C5VpCVSblw-ytqPN4gzSpzQG1j_jmgdsQ>
-    <xmx:6mvFYgAUQZtK_-DeQQmLgHiaBkA2WHvz3o8SubJ6s_HRnKddLk32SQ>
-    <xmx:6mvFYlIglINM-h9XFZBdafSL-8sDaQj6Pyi3YJRkm-aoNm6YhHsxDg>
-    <xmx:6mvFYjOEAgeaLKmahVdb4NUKOcy1kXjgW9TFlBc_P0up_a-yhkEB_w>
-Feedback-ID: iac594737:Fastmail
-Date: Wed, 6 Jul 2022 07:02:59 -0400
-From: Demi Marie Obenour <demi@invisiblethingslab.com>
+Received: (qmail 25764 invoked from network); 12 Jan 2016 11:09:25 -0000
+X-Virus-Scanned: amavisd-new at heinlein-support.de
+Date: Tue, 12 Jan 2016 12:03:56 +0100
+From: Benjamin Daniel Mussler <sec@ml.fl7.de>
+X-Priority: 3 (Normal)
+Message-ID: <309844657.20160112120356@fl7.de>
 To: oss-security@lists.openwall.com
-Message-ID: <YsVr51JzzpR0A0N9@itl-email>
-References: <YsJ7JjZ/R/jqN+YX@itl-email>
- <939888998.96730.1656936945905@appsuite.open-xchange.com>
- <YsLj+ux2Pgkir5F8@adhil>
- <20220704150029.vcbamih6dlqdxqpl@jwilk.net>
- <ta390o$qi2$1@ciao.gmane.io>
+CC: cve-assign@mitre.org
+X-PGP-Key-URL: <https://fl7.de/pgp/>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="eCguRH52+lbch0K5"
-Content-Disposition: inline
-In-Reply-To: <ta390o$qi2$1@ciao.gmane.io>
-Subject: Re: [oss-security] Re: DO NOT OPEN PREVIOUS MAIL Re: [oss-security]
- Denial of service in  GnuPG
+Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg="pgp-sha1";
+  boundary="----------0461A42390FD262DD"
+Subject: [oss-security] CVE Request: Vtiger CRM 6.4 Authenticated Remote Code Execution
 
---eCguRH52+lbch0K5
-Content-Type: text/plain; protected-headers=v1; charset=utf-8
-Content-Disposition: inline
+------------0461A42390FD262DD
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Wed, 6 Jul 2022 07:02:59 -0400
-From: Demi Marie Obenour <demi@invisiblethingslab.com>
-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: DO NOT OPEN PREVIOUS MAIL Re: [oss-security]
- Denial of service in  GnuPG
 
-On Wed, Jul 06, 2022 at 06:10:32AM -0000, Tavis Ormandy wrote:
-> On 2022-07-04, Jakub Wilk wrote:
-> > As a data point, if Mutt has pgp_auto_decode=3Dyes ("automatically atte=
-mpt=20
-> > to decrypt traditional PGP messages") in the config, it will trigger th=
-e=20
-> > DoS when you view the message.
->=20
-> Hmm - I think you don't even need auto_decode, because x-action parameters
-> can trigger automatic decryption in mutt.
->=20
-> There's an example message here: https://gitlab.com/muttmua/mutt/-/issues=
-/405
->=20
-> > (And it seems that if you lose patience waiting for the message to show=
-=20
-> > up and press ctrl+backslash in attempt to make it quit, it will actuall=
-y=20
-> > hang forever.)
-> >
->=20
-> I think you need at least something like max-output 104857600 in
-> gnupg.conf if you don't want trivial DoS pranks to be possible :)
->=20
-> Tavis.
+=0D
+Please assign a CVE. Thanks.
 
-I don't think this one is impacted by max-output.  Worse, I was told
-=E2=80=9CNot a bug, sorry=E2=80=9D by Werner.
 
-Was adding compression to PGP even a good idea in the first place?
-Becuase it seems to have some of the same problems that compression in
-TLS and SSH do, not to mention creating a trivial DoS.  If it were not
-for OpenPGP being an archival format I would suggest ditching it
-outright.
---=20
-Sincerely,
-Demi Marie Obenour (she/her/hers)
-Invisible Things Lab
+Vtiger CRM 6.4 Authenticated Remote Code Execution
 
---eCguRH52+lbch0K5
-Content-Type: application/pgp-signature; name="signature.asc"
+1. Summary
+2. Vulnerability Details
+3. References
 
------BEGIN PGP SIGNATURE-----
+########## 1. Summary ##########
 
-iQIzBAEBCgAdFiEEdodNnxM2uiJZBxxxsoi1X/+cIsEFAmLFa+gACgkQsoi1X/+c
-IsEEFw/+NuX7ouTI+Gcv7HLrpHePXFKxuSZg5X6JwymDAXGOiQ8BiIVqy9v734Fq
-KjkX0KNEey4EQ6zCQdLvnfC3+l0OSMaJOuvgD7/KzJA7fJqt+sIZJ5h7aVikaPRK
-xhlW3PCALnb6ggMzMASBiDwwdgAD85Sw8UJAeSMpqNQ8CvZmfNw5It28hK4T00is
-z9u1EAxgUdDYnsNyLSyRTdgjeGxm8sDYTsyK8b/IU8PoMndUSFTM5LDhAiITTB4f
-XmqJXV6CPDZm5PgHDbsOV4nKf7uShkahG9eNZYALbfEVGzR3h2MCwmUnnGOyv/2c
-ikA3rLLS1LIW5jShx3XatfyG3efi0Y4QIhZdK4ft71BpH5Y3DjNoHrWT6Zy8NBrN
-IXocj5c6RfafTVsWxu19ekx1oICIW/f1SLrXmdPC1bQ+NkMwELmnoctrMiVNAKYj
-4bJT+/o6pWYer8pW8dQygN//DqtCax3kMFP6rAtBLc2BC2Bj5YSvesf1w7B5icBh
-WTdBjMrywRZV5IJbLVWxpVVv9779wjlAPF+tXWWUz5JjG9CZxwuWcA1EXqWrUMwG
-XJeyj8veZkwX6dEXDfkj21F2mkuKvVymCaAUZUkOWIQ2nn7+qR4xjMVsjftpLwG9
-k0Qcfd3d3Hcv6kKgujiRjiPG4vxGK9oqi63B1pbcruIXYM38KZk=
-=Zczt
------END PGP SIGNATURE-----
+Vtiger CRM  <https://www.vtiger.com/open-source/> is a CRM application.
 
---eCguRH52+lbch0K5--
+Vtiger CRM version 6.4 (=E2=80=9COpen Source=E2=80=9D branch; released on 2=
+015-10-16) is
+vulnerable to Authenticated Remote Code Execution.
+
+This vulnerability is different than CVE-2015-6000 (in fact it is a
+result of an insufficient fix for CVE-2015-6000).
+
+
+########## 2. Vulnerability Details ##########
+
+Vtiger CRM allows for the upload of a "company logo" from within the
+administrative interface.
+
+Multiple flaws in the Settings_Vtiger_CompanyDetailsSave_Action class
+allow attackers to upload files with (almost) arbitrary contents,
+including PHP code passing commands to the underlying operating system.
+
+The previously mentioned vulnerability, CVE-2015-6000, was partially
+caused by an insufficient file type check, relying on the MIME type
+("Content-Type") sent by the client.
+
+In an attempt to mitigate the resulting security issues, the following
+"mime type check" was added with a Vtiger CRM 6.3 security patch
+(released on 2015-10-06) and Vtiger CRM 6.4 (released on 2015-10-16):
+
+//mime type check
+$mimeType =3D mime_content_type($logoDetails['tmp_name']);
+$mimeTypeContents =3D explode('/', $mimeType);
+if (!$logoDetails['size'] || $mimeTypeContents[0] !=3D 'image' || !in_array=
+($mimeTypeContents[1], Settings_Vtiger_CompanyDetails_Model::$logoSupported=
+Formats)) {
+    $saveLogo =3D false;
+}
+
+However, an attacker may choose to embed malicious PHP code within a
+valid image file, for example as EXIF data of a JPEG file. Once the
+server has received the attacker's JPEG file, mime_content_type() will
+process it, correctly consider it to be a valid image file, and return
+the MIME type "image/jpeg" -- which passes Vtiger's "mime type check".
+
+Because Vtiger allows users to freely choose the name of an uploaded
+file, even if the file's extension does not match the previously
+determined MIME type, an attacker can upload the image file with a
+".php" extension.
+
+Vtiger CRM then saves the uploaded file's contents with the
+client-specified file name in the publicly accessible "test/logo/"
+directory.
+
+The code can then be run by accessing the location of the uploaded file
+(=E2=80=9C<Vtiger URL>/test/logo/<attacker-specified file name>=E2=80=9D).
+
+
+########## 3. References ##########
+
+Source: <http://b.fl7.de/2016/01/vtiger-crm-6.4-auth-rce.html>
+
+Description of CVE-2015-6000:
+<http://b.fl7.de/2015/09/vtiger-crm-authenticated-rce-cve-2015-6000.html>=
+
+------------0461A42390FD262DD
+Content-Type: application/pgp-signature
+
+-----BEGIN PGP MESSAGE-----
+Version: GnuPG v2.0.21 (MingW32)
+
+iQIcBAEBAgAGBQJWlN2cAAoJEAg0a3ng3v4fYDEQALS0XvE7bkbuZcyxnEF/DN1F
+3vwlsVfQppvch8i7GpTd8UMcggUxqSnTxZey5uelVv0/F/MJar7D5c/1zeoD0j/F
+xwT8SwW8iM+YjLxxHtUZ0lNhI6JrqU+ZLgFfb+RuJjQsNvW9N5hhaYUrxdFxi+JO
+PhX7KtnIISzg6FEO65cwXjdJMGebILOX/JIdpmoCPYV9ZrWM9VgFK1374b7py+xh
+nxUxYUIHHwRx95CHieV+hgiV9IQHrMJWv+Y63sG+FLhyBxZl79+QZoF4yMIIMGxZ
+cwX6W81ZOAdZEJMSNL5Fg/zkB4rHrFAsSmssrc6+NowM54Z4b+Wi6n4NTLZ9Hjkt
+1weSTr8vyTevcE5RuvFFJtFAw81MDfocMRV1EWqAthxfKOW3cpJIc72+txFTJrSD
+K6dQf3mqaETruOmktZ6LRoilPTp/jINXag+s9nT422rSfyTblSK8TuXR5CIcGOOQ
+g+KN835hVt31xYve0sDZFvH3wZuws7zL2cbzJ4eocIz3g/2JHPRGISfPQ7LPxREq
+0l1o9hgd4h0rbiKbKivvxh8229gz9CVwH/poJXpnJpI62jGJ5MiZ20RYvUYoJ/eK
+kNaFtzwBYryE+KUnxxNFTdqKUkanBM74YTDUpTi7reRueTF+vfwzrtcCXBAd/l47
+zA7E1dCQx3ThX1SnhhlZ
+=gaJV
+-----END PGP MESSAGE-----
+
+------------0461A42390FD262DD--
+
