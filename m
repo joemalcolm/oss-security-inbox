@@ -1,4 +1,9 @@
-Received: (qmail 3530 invoked by uid 550); 6 Aug 2024 15:10:19 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["542" "Tuesday" "12" "January" "2016" "10:20:59" "-0700" "Kurt Seifried" "kseifried@redhat.com" "<CANO=Ty3co85-pb-pwfwESMY8To8njpdN+zYrwyHy7P43o8azkA@mail.gmail.com>" "20" "[oss-security] CVE request for Kubernetes api server: patch operation should use patched object to check admission control" nil nil nil "1" "2016011217:20:59" "[oss-security] CVE request for Kubernetes api server: patch operation should use patched object to check admission control" (number mark "U       kseifried@re Jan 12   20/542   " thread-indent "\"[oss-security] CVE request for Kubernetes api server: patch operation should use patched object to check admission control\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 3980 invoked by uid 550); 12 Jan 2016 17:21:11 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,47 +12,47 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3497 invoked from network); 6 Aug 2024 15:10:19 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=orlitzky.com; s=mail2;
-	t=1722957010; bh=Oi1fuOiOwYj1J8/gitDsbwMy8PTyiCTk5wrw7ykhvoM=;
-	h=Subject:From:To:Date;
-	b=d2eYJxLiFwT7au0/UO9aNLZIFBR330CAfAJpBpkumQTRZopoLRkonsRzcFxn3ZX/N
-	 3Q+QleSH4zM5yck6xHqh9lSTuh5MBxVTD9Fuhm7Z0FavCTpjd0lfUL9T/7smPmrJi3
-	 KHCYyQwBOCq97ojodJGT+kLIJG2WU9DuRPYBb6fI=
-Message-ID: <c4c734f10429230cd935943fd025597b223e027c.camel@orlitzky.com>
-From: Michael Orlitzky <michael@orlitzky.com>
-To: oss-security@lists.openwall.com
-Date: Tue, 06 Aug 2024 11:10:06 -0400
-Autocrypt: addr=michael@orlitzky.com; prefer-encrypt=mutual;
- keydata=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
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.50.2 
+Received: (qmail 3949 invoked from network); 12 Jan 2016 17:21:11 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
+         :content-type;
+        bh=NaN+fOHOJBHj2jKpizL5jtIVsrB3BaQp5WrvrsuZkys=;
+        b=CL00efSWLa2KCCEHmXDHuRhLZ9w6lkw0WxyTfkRzL0qs1nvnCQh+2AjEPjLeyBxHdp
+         Ppf4A1bpzbJpZeB5+Q/8i5lmXenBy8XOYQip6wc9neXDbRGcSrnuRuJpicDDEMgVnm1p
+         cpzXux/cjs0VsJ40jxChcNmGwzIj7pUaPuNhqOMyGvo1xt03Ehs1895INa0iUrNYhfbF
+         CeyCuN1eaGE7+GnhKWeSq0lElKqmN5WWOCfTy6zAJfmgkySl/LPxArRdKA5YXhT9ABpk
+         QZ9oFXcVKiQM/vxZ6Xx8e7WGAvUL6ir4jKvkBzVTPrNCxuTsar1mMZCaoWq2xGVXSsyh
+         zWpw==
+X-Gm-Message-State: ALoCoQmJhwylsAx3+8NUHcrJgQ/wLQWZrZelt1Al7PpQRRqNdzgsFu0GSfKwhMCzzjU+xVTDS9WqtaayTYALcac2pYJIRjZ7bWmUrIoegyuj3qS4NvaZyck=
 MIME-Version: 1.0
-Subject: [oss-security] Tracking down a lost CVE request (MITRE)
+X-Received: by 10.129.133.2 with SMTP id v2mr108691048ywf.76.1452619259266;
+ Tue, 12 Jan 2016 09:20:59 -0800 (PST)
+Date: Tue, 12 Jan 2016 10:20:59 -0700
+Message-ID: <CANO=Ty3co85-pb-pwfwESMY8To8njpdN+zYrwyHy7P43o8azkA@mail.gmail.com>
+From: Kurt Seifried <kseifried@redhat.com>
+To: oss-security <oss-security@lists.openwall.com>, CVE ID Requests <cve-assign@mitre.org>
+Content-Type: multipart/alternative; boundary=001a114f1e88f181a1052926461f
+Subject: [oss-security] CVE request for Kubernetes api server: patch operation should use
+ patched object to check admission control
 
-Couldn't think of a better place to ask this. I requested a CVE back in
-March for an issue with the installed permissions in Nagios's NDOUtils.
-I think the request ID was #1620090.
+--001a114f1e88f181a1052926461f
+Content-Type: text/plain; charset=UTF-8
 
-I received a confirmation, but never got a follow-up response. I've
-since replied to the CVE-Request@ address, and have filled out the form
-with an "other" request asking for an update, but haven't heard back.=20
-New requests are obviously still being issued -- is there some way to
-find out what happened to this one?
+CVE request for Kubernetes api server: patch operation should use patched
+object to check admission control
 
-FWIW:
+https://github.com/kubernetes/kubernetes/issues/19479
 
-Before NDOUtils-2.1.4 (released five days ago), the upstream Makefile
-would install the "ndo2db" daemon executable with the same owner/group
-that it is intended eventually to run as (namely: "nagios"). But the
-daemon is designed to be started as root and drop privileges to that
-user. If the "nagios" user can edit a binary that root will run, he can
-gain root privileges.
+TL;DR:  you can patch your resources and they'll always be allowed, so more
+ram, disk, etc. CWE-285
 
+
+-- 
+
+--
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@redhat.com
+
+--001a114f1e88f181a1052926461f--
