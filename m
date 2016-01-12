@@ -1,45 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/02/2
-Message-ID: <CAComcpPtkMh2t-19KoUFydMdJXHAgqiCB1m2HSNd3Rfe2WyXhQ@mail.gmail.com>
-Date: Tue, 1 Mar 2016 21:03:57 -0700
-From: Bob Beck <beck@...nbsd.org>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security <oss-security@...ts.openwall.com>, CVE ID Requests <cve-assign@...re.org>
-Subject: Re: Re: CVE's for SSLv2 support
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/12/15
+Message-ID: <56957991.40706@isc.org>
+Date: Tue, 12 Jan 2016 16:09:21 -0600
+From: ISC Security Officer <security-officer@....org>
+To: oss-security@...ts.openwall.com
+Cc: ISC Security Officer <security-officer@....org>
+Subject: ISC DHCP CVE-2015-8605: UDP payload length not properly checked
 Content-Type: text/plain; charset=utf-8
 
-> 1) the SSL/TLS protocols encrypt the and the data cannot be read by an
-> attacker
-> 2) the SSL/TLS protocols ensure the data is not altered in transit by an
-> attacker without detection
+Please be advised that ISC publicly announced a vulnerability in the
+DHCP software.
 
-When used correctly..  SSLv2 is not.
+CVE-2015-8605 is a denial-of-service vector which can potentially be
+exploited against ISC DHCP servers, clients, and relays.  All prior 4.x
+releases of ISC DHCP are vulnerable.  Additionally, ISC DHCP 3.x may
+also be vulnerable, but no testing has been done.
 
->
-> Additionally depending on how you configure the servers there are claims
-> that you are talking to the correct server/client (e.g. using certificates)
-> but that is not germane to this discussion.
->
-> SSLv2 is obviously NOT capable of ensuring claim #1 (that data is encrypted
-> and cannot be read by an attacker), due to a wide variety of issues, and I
-> have no doubt more will be found if people keep looking. Hence my thinking
-> is that ANY and ALL use of SSLv2 is CVE worthy, especially when considering
-> that many devices/manufacturers are less than transparent about their
-> configurations/security issues.
+New releases of ISC DHCP, including security fixes for this
+vulnerability, are available at: www.isc.org/downloads/
 
-While you certainly won't see me defending SSLv2 (I think we were the
-first to delete it outright)
-there are many other things that currently fall into that category..
-I'm agreeing with your sentiment
-but if you are to consider usage of SSLv2 as CVE worthy, then you will
-need to do the same for SSH version 1,
-among other things.   So while I certainly appreciate and even agree
-with your sentiment, it seems rather timed
-politically based on a decision made by one implementaiton of SSL/TLS
-that reflects a decision made by most other
-implementations long ago.   So far from me to say what CVE's should
-and shouldn't be used for and issued for, but
-if this is the road we're going down can I please have permission to
-use your above quoted paragraph
-with s/SSLv2/SSH V1/g to request a CVE for *usage or support* of SSH
-version 1? You said it perfectly.
+Release notes can be obtained using the following links:
+
+ftp://ftp.isc.org/isc/dhcp/4.3.3-P1/dhcp-4.3.3-P1-RELNOTES
+ftp://ftp.isc.org/isc/dhcp/4.1-ESV-R12-P1/dhcp-4.1-ESV-R12-P1-RELNOTES
+
+-- 
+Brian Conry
+ISC Support
+Acting Security Officer
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (456 bytes)
