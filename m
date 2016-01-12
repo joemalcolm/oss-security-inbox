@@ -1,22 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/24/6
-Message-ID: <56CD45EE.1000901@oracle.com>
-Date: Tue, 23 Feb 2016 21:55:58 -0800
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Access to /dev/pts devices via pt_chown and user namespaces
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/12/1
+Message-ID: <CANO=Ty2__zBT=MeY=6mQaepEM1vr=igkrmeZkX3XM5pwttEbEg@mail.gmail.com>
+Date: Mon, 11 Jan 2016 21:46:16 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>, CVE ID Requests <cve-assign@...re.org>
+Subject: CVE for node.js websockets (ws)
 Content-Type: text/plain; charset=utf-8
 
-On 02/23/16 09:27 PM, halfdog wrote:
-> That is nice, that this was done already for OWL. Is there a checklist
-> or perhaps even a tool, that can be run, to detect, which weak
-> programs, compile time settings or runtime settings might be applied
-> to a given Linux setup?
+https://nodesecurity.io/advisories/67
 
-Something like OpenSCAP perhaps?
+Says:
 
-https://www.open-scap.org/
+January 4th, 2016
+
+CVE-PENDING • Credit: Feross Aboukhadijeh / Mathias Buss
+
+
+I assume Mitre got asked for this CVE? If not who is sitting on it?
+
 
 -- 
-	-Alan Coopersmith-              alan.coopersmith@...cle.com
-	 Oracle Solaris Engineering - http://blogs.oracle.com/alanc
+
+--
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
+
