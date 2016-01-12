@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["753" "Thursday" "3" "March" "2016" "13:07:39" "+0200" "Georgi Guninski" "guninski@guninski.com" "<20160303110739.GE2384@sivokote.iziade.m$>" "24" "[oss-security] Re: According to www.virustotal.com, lists.debian.org are hosting attachment .DOC virus" "^Cc:" nil nil "3" "2016030311:07:39" "[oss-security] Re: According to www.virustotal.com, lists.debian.org are hosting attachment .DOC virus" (number mark "        guninski@gun Mar  3   24/753   " thread-indent "\"[oss-security] Re: According to www.virustotal.com, lists.debian.org are hosting attachment .DOC virus\"\n") "<56D80A7B.2020902@pilobilus.net>" ("<20160303084422.GD2384@sivokote.iziade.m$>" "<56D80A7B.2020902@pilobilus.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["670" "Tuesday" "12" "January" "2016" "23:24:36" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1601122319510.1476@wniryva>" "24" "Re: [oss-security] Re: CVE request Qemu: nvram: OOB r/w access in processing firmware configurations" nil nil nil "1" "2016011217:54:36" "[oss-security] Re: CVE request Qemu: nvram: OOB r/w access in processing firmware configurations" (number mark "U       ppandit@redh Jan 12   24/670   " thread-indent "\"Re: [oss-security] Re: CVE request Qemu: nvram: OOB r/w access in processing firmware configurations\"\n") "<20160112173542.66C5A34E014@smtpvbsrv1.mitre.org>" ("<20160112173542.66C5A34E014@smtpvbsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 32569 invoked by uid 550); 3 Mar 2016 11:44:46 -0000
+Received: (qmail 6125 invoked by uid 550); 12 Jan 2016 17:54:54 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,45 +11,43 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 10010 invoked from network); 3 Mar 2016 11:07:52 -0000
-Message-ID: <20160303110739.GE2384@sivokote.iziade.m$>
-References: <20160303084422.GD2384@sivokote.iziade.m$>
- <56D80A7B.2020902@pilobilus.net>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <56D80A7B.2020902@pilobilus.net>
-header: best read with a sniffer
-Cc: cypherpunks@cpunks.org, oss-security@lists.openwall.com,
-	debian-legal@lists.debian.org
-Date: Thu, 3 Mar 2016 13:07:39 +0200
-From: Georgi Guninski <guninski@guninski.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: According to www.virustotal.com, lists.debian.org are hosting
- attachment .DOC virus
-To: Steve Kinney <admin@pilobilus.net>
+Received: (qmail 6107 invoked from network); 12 Jan 2016 17:54:53 -0000
+Date: Tue, 12 Jan 2016 23:24:36 +0530 (IST)
+From: P J P <ppandit@redhat.com>
+X-X-Sender: pjp@javelin
+To: oss-security@lists.openwall.com
+cc: cve-assign@mitre.org, donghai.zdh@alibaba-inc.com
+In-Reply-To: <20160112173542.66C5A34E014@smtpvbsrv1.mitre.org>
+Message-ID: <alpine.LFD.2.20.1601122319510.1476@wniryva>
+References: <20160112173542.66C5A34E014@smtpvbsrv1.mitre.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.23
+Subject: Re: [oss-security] Re: CVE request Qemu: nvram: OOB r/w access in
+ processing firmware configurations
 
-On Thu, Mar 03, 2016 at 04:57:15AM -0500, Steve Kinney wrote:
-> phooey.  I wanted to see what ClamAV said about it and what
-> the textual content was, but...
-> 
-> ~/Desktop $ wget
-> https://lists.debian.org/debian-consultants/2016/01/docyrW4BlUhzH.do
-> c
-> 
-> [...]
-> 
-> (lists.debian.org)|82.195.75.100|:443... connected.
-> HTTP request sent, awaiting response... 404 Not Found
-> 2016-03-03 04:49:28 ERROR 404: Not Found.
->
++-- On Tue, 12 Jan 2016, cve-assign@mitre.org wrote --+
+| Use CVE-2016-1714.
 
-Try scanning the .doc urls in virustotal from archive.org:
+  Thank you.
+ 
+| Note that http://git.qemu.org/?p=qemu.git;a=blob;f=hw/nvram/fw_cfg.c
+| has:
+| 
+|   static void fw_cfg_write(FWCfgState *s, uint8_t value)
+|   {
+|       /* nothing, write support removed in QEMU v2.4+ */
+|   }
+| 
+| and has no fw_cfg_read function.
 
-https://web.archive.org/web/20160303105351/https://lists.debian.org/debian-s390/2015/10/msg00002.html
-https://web.archive.org/web/20160303105748/https://lists.debian.org/debian-hurd/2015/10/msg00029.html
+  That's right. This issue affects Qemu versions prior to 2.4. Above change 
+was made immediately after the release of v2.3.
 
+ -> http://git.qemu.org/?p=qemu.git;a=commit;h=023e3148567ac898c7258138f8e86c3c2bb40d07
 
-Make sure then to follow "Go to downloaded file analysis".
-
-
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
