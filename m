@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1244" "Friday" "13" "April" "2018" "09:43:10" "+0200" "Jakub Wilk" "jwilk@jwilk.net" "<20180413074310.rccsuzyslbkm3xag@jwilk.net>" "32" "Re: [oss-security] Terminal Control Chars" nil nil nil "4" "2018041307:43:10" "[oss-security] Terminal Control Chars" (number mark "U       jwilk@jwilk. Apr 13   32/1244  " thread-indent "\"Re: [oss-security] Terminal Control Chars\"\n") "<20180412171327.vc5epogdi7ryc3te@jwilk.net>" ("<20180305175024.16801hoj775zje4g@webmail.alunos.dcc.fc.up.pt>" "<1523346797.16686.6@smtp.gmail.com>" "<20180412171327.vc5epogdi7ryc3te@jwilk.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1370" "Tuesday" "12" "January" "2016" "03:39:10" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160112083910.313881BE690@smtpvbsrv1.mitre.org>" "35" "[oss-security] Re: CVE for node.js websockets (ws)" "^Cc:" nil nil "1" "2016011208:39:10" "[oss-security] Re: CVE for node.js websockets (ws)" (number mark "        cve-assign@m Jan 12   35/1370  " thread-indent "\"[oss-security] Re: CVE for node.js websockets (ws)\"\n") "<CANO=Ty2__zBT=MeY=6mQaepEM1vr=igkrmeZkX3XM5pwttEbEg@mail.gmail.com>" ("<CANO=Ty2__zBT=MeY=6mQaepEM1vr=igkrmeZkX3XM5pwttEbEg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 29920 invoked by uid 550); 13 Apr 2018 07:43:27 -0000
+Received: (qmail 32034 invoked by uid 550); 12 Jan 2016 08:39:22 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,56 +11,48 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 32016 invoked from network); 12 Jan 2016 08:39:21 -0000
+In-Reply-To: <CANO=Ty2__zBT=MeY=6mQaepEM1vr=igkrmeZkX3XM5pwttEbEg@mail.gmail.com>
+Message-Id: <20160112083910.313881BE690@smtpvbsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Tue, 12 Jan 2016 03:39:10 -0500 (EST)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 29899 invoked from network); 13 Apr 2018 07:43:26 -0000
-Date: Fri, 13 Apr 2018 09:43:10 +0200
-From: Jakub Wilk <jwilk@jwilk.net>
-To: oss-security@lists.openwall.com
-Message-ID: <20180413074310.rccsuzyslbkm3xag@jwilk.net>
-Mail-Followup-To: oss-security@lists.openwall.com
-References: <20180305175024.16801hoj775zje4g@webmail.alunos.dcc.fc.up.pt>
- <1523346797.16686.6@smtp.gmail.com>
- <20180412171327.vc5epogdi7ryc3te@jwilk.net>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <20180412171327.vc5epogdi7ryc3te@jwilk.net>
-User-Agent: NeoMutt/20180323
-X-Ovh-Tracer-Id: 6886566783405119398
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: 0
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedtgedriedugdduvdegucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecufedttdenuc
-Subject: Re: [oss-security] Terminal Control Chars
+Subject: [oss-security] Re: CVE for node.js websockets (ws)
+To: kseifried@redhat.com
 
-* Jakub Wilk <jwilk@jwilk.net>, 2018-04-12, 19:13:
->>Perhaps the correct solution would be to prevent the browser from 
->>copying invisible characters.
->
->Do you mean control characters, or something else?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-One reason I asked because for some people knee-jerk reaction upon 
-learning about this issue is to insist that the browser should only copy 
-what the user sees. Cleverly, they never elaborate what that means 
-exactly.
+> CVE-PENDING - Credit: Feross Aboukhadijeh / Mathias Buss
 
-Is a "font-size: 3pt" text visible? Should the browser consult the 
-user's eye exam results before deciding what to copy?
+> If not who is sitting on it?
 
-Does it mean Ctrl+A Ctrl+C would copy only text within the viewport? I 
-guess so, but that's not what browser users expect.
+In our experience, the string "CVE-PENDING" has little or no
+correlation with whether anyone has done any type of CVE request.
 
-And in the PDF world: the user is often shown a scan, and there's a 
-hidden copyable text layer. Should the PDF browser somehow refuse to 
-copy text with recognition errors?
+We'll interpret it as a new request to MITRE unless someone else
+happens to have received a request.
 
->>If you're going to break some basic mechanic of human computer 
->>interaction,
->Huh? Most users don't interact with their terminal-based software by 
->pasting control characters.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-As it was noted elsewhere in this thread, tabs and newlines are control 
-characters, too. People paste them all the time. But I don't think 
-anyone is seriously proposing to filter out these two.
-
--- 
-Jakub Wilk
+iQIcBAEBCAAGBQJWlLsuAAoJEL54rhJi8gl5i4EQAKA7AGwYRYJDipd7vpWlnaqb
+Wv7BkC2i1oDLUbb9xQX9AMTGyQD90Q0XP72EUeSqDUHNRAXobcAavVRmbk14Hib3
+TqL/ckDnwWpXMgRyyyhVTLkr4ajl/T0B+QgAN4UhE5ts0YPqeJnWK2ZTxl+yfYny
+KYhOH3bIQEEuH77XjzsN9dZAI/UnupQRAGFzwGVI4HngxUz2RQdCDrIe0Vk5L/+V
+bL34Gm0h4Ij4/K15FS4DGeuYHTKtBM1uPHt9DKDdqkjy9YxYm3gX4ALh3dtKesnf
+vScCIXXs1M5XGM4oREinaDLwN1ZqV29xzpQ6NWfVPZ/eADLHwRVLCtk/nK/IDeUp
+SAqgWYpCXZluq3KNJLbIwlk9Cw4NpBdzqq3QC2ey5Hy4Dznix+Qq0hXjAzRq/3KB
+ZXqXgQhtcpnWTaOF9j4823UzZtDHY+UbpIkGv/BstWxtaFOwWCLA9pcuhj2VoUal
+voHIJiObb9ji325bD2jsQadmAMGG2tDVU8HkvVXmyCmz28b3jyw0/BoAWcUWfyRa
+qy17X1WGUkWVR3UbW69qMgv5zD+dwv2cZHbP1urylgxVO15mPqwuhSwRjP1DuJU2
+HXZNp3F3oU6y3Zf+9dwaC1vThDlrM/qq731sh/b3A7DAftpXAjkbHzCOwziM/rcs
+8dm8oDFJmGuW1J/mkWaI
+=mvzn
+-----END PGP SIGNATURE-----
