@@ -1,51 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/05/3
-Message-Id: <20160205173700.66743B2E0CA@smtpvbsrv1.mitre.org>
-Date: Fri,  5 Feb 2016 12:37:00 -0500 (EST)
-From: cve-assign@...re.org
-To: daniel@...lgren.se
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request uclibc-ng dns resolver issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/12/5
+Message-ID: <56950F8E.1020907@canonical.com>
+Date: Tue, 12 Jan 2016 08:37:02 -0600
+From: Jamie Strandboge <jamie@...onical.com>
+To: cve-assign@...re.org
+Cc: oss-security@...ts.openwall.com, security <security@...ntu.com>
+Subject: Re: CVE Request: click
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
 
-> The first is a denial of service while parsing compressed items. An
-> attacker can make the application end up in an infinit loop. Fixed by:
+I forgot to CC cve-assign@...re.org on the initial request so bringing them in
+the loop now.
+
+
+On 01/11/2016 11:42 AM, Jamie Strandboge wrote:
 > 
-> http://repo.or.cz/uclibc-ng.git/commit/16719c1a7078421928e6d31dd1dec574825ef515
-
-Use CVE-2016-2224.
-
-
-> The other problem is that a crafted packet will make the parser
-> terminate early. The buffer is never initialized and is later passed to
-> strdup(). Fixed by:
+> Hi MITRE, all,
 > 
-> http://repo.or.cz/uclibc-ng.git/commit/bb01edff0377f2585ce304ecbadcb7b6cde372ac
+> A vulnerability was discovered in the click package system:
+> https://launchpad.net/bugs/1506467
+> http://www.ubuntu.com/usn/usn-2771-1/
+> 
+> It was fixed in 0.4.42 with:
+> https://code.launchpad.net/~cjwatson/click/audit-missing-dot-slash/+merge/274554
+> 
+> This is an input sanitization bug where click assumed leading paths were always
+> prefixed with './' which, for example, allows a crafted click to ship a '.click'
+> directory to manipulate the click install process.
+> 
+> Can we get a CVE for this?
+> 
+> Thanks!
+> 
 
-Use CVE-2016-2225.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+-- 
+Jamie Strandboge                 http://www.ubuntu.com/
 
-iQIcBAEBCAAGBQJWtNzoAAoJEL54rhJi8gl5S9EP/jQ9DVZd0cXk8H0+ZJbgJi78
-3+rQH00Sh5sTlPIPiq5zlE+dTZEIvHHq3eaHqIa6clTiZ8aWMSRy7PzcODWkXRIi
-E1/Kj+IdBg6puYeWWnkJZY7FeeU3PYKo4+fOKwB4O5+DYH9Lo0IN1bsKisiWmIpo
-KXhsK117DPrcMfE5HlrjLIQ1ZHd+c0O9LIaVFbjW75gLCEN553tWls6KU3NFzFUz
-Nh+zASekPfnt8XsTkNA0DT88ZFutiqvznNuy4IHMf65Zz3lWiCqX9gfxprjrR1FV
-aHwp95qN6DOIiw7S9aE/E+UCYZkGF/HVaIkmAZkFAeNWGwICjlBnWhGviIaEPaJC
-Jphp2YGbbY/6wxA2d4pfz7yXd5rwpvSElizHrhUdmlH9c1DvW0kaZVCybvsfU2HN
-+V8S2U/e5DZPLIcQXHV757WAjeMRduHMX2yP7qYO0EwEbor1IaD5LoQ3cIU//eSB
-AWC0rIIl6kaUeSktuwATRApk8OJ+11PX83cTy+XGYHLeP6jgaTgI6l9pRR9BJnIj
-qF4YSs/1kbikQXS6aLMGAeiIvVuxgbp64TRACw6rZNSLrXnbQ7DbcBxjxOAW9CNO
-2Ht/mY5o7hWTLJkyEbb7XHbpj6lx1gSWic+BRn38tmYsHvvLPYdU2hl3cfbtuI0O
-DQDtql0LtIp/P9AKIsCY
-=LXU8
------END PGP SIGNATURE-----
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
