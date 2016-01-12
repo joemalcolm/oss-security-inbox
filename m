@@ -1,21 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/14/6
-Message-Id: <68AD5BF8-0B12-4F1E-8DE0-49E36A769AC3@gmail.com>
-Date: Thu, 14 Apr 2016 13:26:49 -0400
-From: Naser Farhadi <n4ser.farhadi@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/12/13
+Message-ID: <20160112180725.GB91908@hpe.com>
+Date: Tue, 12 Jan 2016 10:07:25 -0800
+From: Grant Murphy <grant.murphy@....com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: OpenCart 2.1.0.2 to 2.2.0.0 - json_decode Function Remote Code Execution
+Subject: [OSSA 2016-002] Xen connection password leak in logs via StorageError (CVE-2015-8749)
 Content-Type: text/plain; charset=utf-8
 
-Hi
+====================================================================
+OSSA-2016-002: Xen connection password leak in logs via StorageError
+====================================================================
 
-OpenCart is prone to an remote code-execution vulnerability.
+:Date: January 11, 2016
+:CVE: CVE-2015-8749
 
-https://www.exploit-db.com/exploits/39679/ <https://www.exploit-db.com/exploits/39679/>
-http://seclists.org/bugtraq/2016/Apr/61 <http://seclists.org/bugtraq/2016/Apr/61>
-https://github.com/opencart/opencart/issues/4220 <https://github.com/opencart/opencart/issues/4220>
 
-Could a CVE please be assigned to this issue?
+Affects
+~~~~~~~
+- Nova: >=2014.2 <= 2015.1.2, == 12.0.0
 
-Regards,
-Naser
+
+Description
+~~~~~~~~~~~
+Matt Riedemann from IBM reported an information disclosure
+vulnerability in Nova. If a StorageError occurs when attempting to
+connect a volume using the Xen API, the connection parameters will be
+logged. These parameters may include credentials that are not masked.
+An attacker with read access to Nova logs could use these credentials
+with the Xen API directly. Only Nova deployments using the Xen backend
+are affected by this flaw.
+
+
+Patches
+~~~~~~~
+- https://review.openstack.org/249239 (Kilo)
+- https://review.openstack.org/247825 (Liberty)
+- https://review.openstack.org/245987 (Mitaka)
+
+
+Credits
+~~~~~~~
+- Matt Riedemann from IBM (CVE-2015-8749)
+
+
+References
+~~~~~~~~~~
+- https://bugs.launchpad.net/bugs/1516765
+- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-8749
+
+
+Notes
+~~~~~
+- This fix will be included in future 2015.1.3 (kilo) and 12.0.1
+  (liberty) releases.
+
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
