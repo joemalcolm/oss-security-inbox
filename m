@@ -1,24 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/22/4
-Message-ID: <20161222070103.GE2660@suse.com>
-Date: Thu, 22 Dec 2016 08:01:03 +0100
-From: Johannes Segitz <jsegitz@...e.com>
-To: Heiko Schlittermann <hs@...littermann.de>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE-2016-9963 Exim private information leak
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/12/7
+Message-Id: <20160112164335.E3FEE3320DE@smtpvbsrv1.mitre.org>
+Date: Tue, 12 Jan 2016 11:43:35 -0500 (EST)
+From: cve-assign@...re.org
+To: sec@...fl7.de
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: Vtiger CRM 6.4 Authenticated Remote Code Execution
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Dec 22, 2016 at 12:24:09AM +0100, Heiko Schlittermann wrote:
-> In case the distros are ready already, we could release on 23rd, but I
-> need feedbeck from the distros and ack from the other developers.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-SUSE would be fine with that
+> This vulnerability is different than CVE-2015-6000 (in fact it is a
+> result of an insufficient fix for CVE-2015-6000).
+> 
+> Vtiger CRM allows for the upload of a "company logo" from within the
+> administrative interface.
+> 
+> Multiple flaws in the Settings_Vtiger_CompanyDetailsSave_Action class
+> allow attackers to upload files with (almost) arbitrary contents,
+> including PHP code passing commands to the underlying operating system.
+> 
+> However, an attacker may choose to embed malicious PHP code within a
+> valid image file, for example as EXIF data of a JPEG file. Once the
+> server has received the attacker's JPEG file, mime_content_type() will
+> process it, correctly consider it to be a valid image file, and return
+> the MIME type "image/jpeg" -- which passes Vtiger's "mime type check".
+> 
+> http://b.fl7.de/2016/01/vtiger-crm-6.4-auth-rce.html
 
-Johannes
--- 
-GPG Key E7C81FA0       EE16 6BCE AD56 E034 BFB3  3ADD 7BF7 29D5 E7C8 1FA0
-Subkey fingerprint:    250F 43F5 F7CE 6F1E 9C59  4F95 BC27 DD9D 2CC4 FD66
-SUSE Linux GmbH, GF: Felix Imendörffer, Jane Smithard, Graham Norton
-HRB 21284 (AG Nürnberg)
+As far as we can tell, the main issue you are reporting is that the
+product attempts to forbid executable content within otherwise safe
+file types, and does this incorrectly.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
+Use CVE-2016-1713.
+
+There are no other CVE IDs for your report. For example, the ability
+of the attacker to use the .php extension, although unusual, does not
+seem to be an entirely separate problem.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJWlSyAAAoJEL54rhJi8gl5Wy0QALHdBn98mgUGkRiZXOA/1KJh
++b7q1rarXguIemZGi1/KU+yuI84gKb7QBpIsJz2ZxEPuJH814oDaDLLi9wnhWWg8
+m1U1DVY5d7+1gGlQa8fJ3Ra6QDcCmyoDEX1VY+suQElPnm9P/CJp/68R6IUCx70A
+2ZKFMFW4vTQvulK4bKfO9TVtKwl2hrGU6AG4Sj4qDCgOau/3xfFNlyzPNrKECJ6g
+cJzjg/eGbQXgkaqqUOyeMe/74kNmWjFWuCd3oHugPZtvehdtJvun7idyXu31AZGN
++hDYOInRl6OL9zEc4eo38tqNk0IFAqpeAiyPuWtk2YgFMheeeTsKzl4kkqTlN56W
+15CbScMyZfcQpd0DL0NAho4MPBXSDmxRBZKoAx37kPx1SCGo+UjbBGCv9UiZ3wmU
+k55CKsppZWv+QyfmB/E8EUKBDerB2+k7scJImRpXGsILxCy+ZdyWt5s+iIUBZbFI
+tGLqGOxEQm/StHoupBZcIxdulcE85RDt9IBXcfoz8anJNPXCF3Qts6TZoW89jpsc
+Gpgawu6PXaUVFrvAsx0P20EJUEU0pz1R1U011KGetPwknmyJM/BMvjyio4JY9eMw
+xoG+yxsD6slrvQFVKbV+5vfrUGvMGKVitUm84hXjPAzJDmmg/ZttjWM9h3LawGju
+v+PULkENNk1Wx2PoQHug
+=N8Vg
+-----END PGP SIGNATURE-----
