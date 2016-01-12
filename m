@@ -1,44 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/04/9
-Message-Id: <BE57ECE4-C327-4C99-993B-D8C96A8E6465@gmail.com>
-Date: Tue, 4 Oct 2016 18:11:42 -0500
-From: Brandon Perry <bperry.volatile@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: fulldisclosure@...lists.org
-Subject: Handful of libass issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/12/8
+Message-Id: <20160112165730.931A4332228@smtpvbsrv1.mitre.org>
+Date: Tue, 12 Jan 2016 11:57:30 -0500 (EST)
+From: cve-assign@...re.org
+To: jamie@...onical.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, security@...ntu.com
+Subject: Re: CVE Request: click
 Content-Type: text/plain; charset=utf-8
 
-The open source libass library is used to read and render subtitles onto images or frames of a movie. It is a popular library used in a few well-known media players. It seems it is usually shipped statically? Not sure.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-https://github.com/libass/libass <https://github.com/libass/libass>
+> https://launchpad.net/bugs/1506467
+> http://www.ubuntu.com/usn/usn-2771-1/
+> https://code.launchpad.net/~cjwatson/click/audit-missing-dot-slash/+merge/274554
+> 
+> assumed leading paths were always
+> prefixed with './' which, for example, allows a crafted click to ship a '.click'
+> directory to manipulate the click install process.
+ 
+>> if data_name != "." and not data_name.startswith("./"):
+>>     raise ClickInstallerAuditError
 
-Attached are 4 test cases and their asan/valgrind results tested against version 0.13.3. 
+Use CVE-2015-8768.
 
-One is in wrap_lines_smart() (https://github.com/libass/libass/pull/240/commits/b72b283b936a600c730e00875d7d067bded3fc26 <https://github.com/libass/libass/pull/240/commits/b72b283b936a600c730e00875d7d067bded3fc26>).
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-One is coeff_blur121() (https://github.com/libass/libass/pull/240/commits/08e754612019ed84d1db0d1fc4f5798248decd75 <https://github.com/libass/libass/pull/240/commits/08e754612019ed84d1db0d1fc4f5798248decd75>).
-
-The third is a huge memory allocation leading to a crash that wasn’t fixed because a good solution is unavailable at the moment.
-
-The fourth is in check_allocations() (https://github.com/libass/libass/pull/240/commits/aa54e0b59200a994d50a346b5d7ac818ebcf2d4b <https://github.com/libass/libass/pull/240/commits/aa54e0b59200a994d50a346b5d7ac818ebcf2d4b>).
-
-These should be fixed in the 0.13.4 release, but are fixed currently on master. Thanks to the libass team for the quick turnaround. 
-
-Of note, there seems to have been an old PR to potentially resolve the wrap_lines_smart() issue, but there seems to be some confusion regarding it.
-
-https://github.com/libass/libass/pull/229 <https://github.com/libass/libass/pull/229>
-
-The PR to fix the issues except the memory DoS is at:
-
-https://github.com/libass/libass/pull/240 <https://github.com/libass/libass/pull/240>
-
-
-Let me know if you have any issues reproducing.
-
-
-
-Content of type "text/html" skipped
-
-Download attachment "samples.zip" of type "application/zip" (21293 bytes)
-
-Content of type "text/html" skipped
+iQIcBAEBCAAGBQJWlS/iAAoJEL54rhJi8gl5tHIQAMyB+enXDpb+lK2WC84HhPLL
+XdlCCbjTSnl9PofiLnvizcJgzy5V7C71mLpFjNT8QMiIr05YjjVW5Wp9uYpcgQPQ
+/+LJ5r88cIt1aTwkrUTZ8wohLw6i6PmGZwSGS/QyZW54TbRKQP4KG4vefvOr2BT5
+9d6upF0reFD+72MJN+oWebNoQg0aIzYraGjf5f/QoBEjVKlCxxZsfOape23jvY5t
+lFpP8uC58PCCVr9r0bUZ+ukiQkTxZM8ccVZjkQhej1lLne1OCXbh7kWabcWGPSUu
+1m+RGADGd3GNEkB6yPzYZP4fxi6TOhdyZM2MzP6q/AAQ9VK3b508EtYY0qgwnIXU
+BoHUNT6o8ZVTaIkjO6VVYipfoY1xR+9aOPHxioKRqfSg76LAfAzVxHwUa9BnMzC8
+h+DuA/LtxWpHzUSgGNy5azTpHX2XDOJ7nFUx90e64GnK6WrSNXbjIqVvmsk8By6b
+UyXu7VnGtQxOgvZyisFYJoSLWCBqtoaxDhXwxi5TItbgxxUbpO2MJHX8JT7E/13J
+LqDFO1P5trolISjUTdLAEaZhdlLOHSpGw0Fifu7BOsiwHbU5XI1o8uz52BfFWJiI
+lvkqu4jBcTbP99HQ2mAjM0IlcJJ+4S5ebEA6VKlECrZKCfIv3hdJAs9G8l+xn+4N
+UQysNOQCezuf9L1x/sjo
+=NCgJ
+-----END PGP SIGNATURE-----
