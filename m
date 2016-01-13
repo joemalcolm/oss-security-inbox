@@ -1,54 +1,134 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/18/1
-Message-ID: <b5d0ce97-9763-2da4-8deb-2ef4d7c94abc@laposte.net>
-Date: Fri, 18 Mar 2016 00:20:27 +0100
-From: Laël Cellier <lael.cellier@...oste.net>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: server and client side remote code execution through a buffer overflow in all git versions before 2.7.1 (unpublished ᴄᴠᴇ-2016-2324 and ᴄᴠᴇ‑2016‑2315)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/13/8
+Message-ID: <b8b828c3-8dc6-1406-7080-7d45aae6c6ad@halfdog.net>
+Date: Wed, 13 Jan 2016 22:27:02 +0000
+From: halfdog <me@...fdog.net>
+To: oss-security@...ts.openwall.com
+Subject: Overlayfs ovl_setattr missing permission checks (CVE-2015-8660)
 Content-Type: text/plain; charset=utf-8
 
-On 16/03/2016 16:40, Stefan Cornelius wrote:
-> Hi,
->
-> I'm Stefan Cornelius of Red Hat Product Security. Obviously, we're
-> currently working on the Git security issues.
->
-> In one of the emails to oss-sec you mention that you have some kind of
-> reproducer for CVE-2016-2315.
->
-> Would you please be kind enough to share this reproducer with us?
-Unfortunately, I can currently only share early work based on a modified 
-version of gitdb which can’t create a packfile (Maybe I will be able to 
-upload the full gitdb version in a few weeks). You can find it as an 
-attachment along an example file.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-This email contains a vulnerable version of git with libasan 
-https://github.com/google/sanitizers and no optimizations which helped 
-me to identify the issue. When I pushed that large repository, libasan 
-printed a stack trace which ended on strcpy() in path_name.c (just cat 
-2GB.txt in a terminal)
+Preamble:
+=========
 
-Either way once you have packfile, you need to create a network payload. 
-Since my vector was ssh I used the good vim editor on the packfile in 
-order to add the missing informations (nul bytes included) (since 
-everything is text based outside the packfile).
-Doing it manually was much faster than trying to create a script. I 
-included an example for ssh which will fill ram if cloned or pushed 
-(without doing anything related to the vulnerability). It should help 
-demonstrating how to produce one for triggering rce.
+This post is just for reference.
 
-For those who don’t want to try it. I included a crafted repo ready for 
-use which will crash affected versions. It will help distributions 
-testing their own patches.
-Of course everything I did was about strcpy() and don’t contains 
-executable code (though putting some shoud be easy). For other 
-vulnerabilities based on that size_t to int truncation, just ask Peff at 
-GitHub, inc. He did is own testing.
-> It would help us tremendously. We will not share the reproducer with
-> third parties and will only use it for our internal testing.
-On the contrary, please make them widely available so other 
-distributions can test their own patches faster.
-> Thank you very much and kind regards,
-regards,
-The attachments being too large, you can download them on 
-http://ytrezq.sdfeu.org/git/reproducer.zip
+Credits and sincere thanks to all the fine people, who discovered the
+vulnerability before me, developed the patches and rolled the whole
+responsible disclosure procedure.
+
+
+Problem description:
+====================
+
+Linux user namespace allows to mount file systems as normal user,
+including the overlayfs. As many of those features were not designed
+with namespaces in mind, this increase the attack surface of the Linux
+kernel interface. Due to missing security checks when changing mode of
+files on overlayfs, a SUID binary can be created within user namespace
+but executed from outside to gain root privileges.
+
+Overlayfs was intended to allow create writeable filesystems when
+running on readonly medias, e.g. on a live-CD. In such scenario, the
+lower filesystem contains the read-only data from the medium, the
+upper filesystem part is mixed with the lower part. This mixture is
+then presented as an overlayfs at a given mount point. When writing to
+this overlayfs, the write will only modify the data in upper, which
+may reside on a tmpfs for that purpose.
+
+One problematic use case is the modification of file or attributes of
+files on the overlayfs within a user namespace. A user without any
+capabilities on the host is given CAP_SYSADMIN within the user
+namespace, thus having capabilities to change the attributes of files
+on the overlayfs when not checking, if the host-system user would also
+have the capability to change the attributes of the file without
+having CAP_SYSADMIN there also. As this check was missing, the process
+within namespace could gain read/write access to arbitrary files.
+Combined with the SUID-write technique from a previous article ([1]),
+modification of host-UID-0 SUID-binaries allows escalation to host
+root user.
+
+
+Exploitation Technique:
+=======================
+
+Exploitation is technically quite simple:
+
+* Create new user and mount namespace using clone with
+CLONE_NEWUSER|CLONE_NEWNS flags.
+
+* Mount an overlayfs using /bin as lower filesystem, some temporary
+directories as upper and work directory.
+
+* Overlayfs mount would only be visible within user namespace, so let
+namespace process change CWD to overlayfs, thus making the overlayfs
+also visible outside the namespace via the proc filesystem.
+
+* Make su on overlayfs world writable without changing the owner
+
+* Let process outside user namespace write arbitrary content to the
+file applying a slightly modified variant of [1].
+
+* Execute the modified su binary
+
+POC:
+====
+
+This exploit uses one parent and one user namespace process. The
+namespace process creates the overlayfs mount, chdirs to the directory
+and makes su writable. Afterwards this process waits until the parent
+has gained root privileges before rolling everything back: unmounting,
+cleanup of helper files. As soon as the parent process notices, that
+the child has prepared su as intended, it uses the technique from
+SetgidDirectoryPrivilegeEscalation [1], that is calling another SUID
+binary, e.g. mount, to use stderr to write to the opened su file
+without loosing SUID bit. Afterwards parent process invokes the
+modified su to create an UID 0 process. The change of the parent's UID
+then triggers the namespace child to start cleanup. See
+UserNamespaceOverlayfsSetuidWriteExec.c [2] for example code.
+
+build# ./UserNamespaceOverlayfsSetuidWriteExec -- /bin/bash
+Setting uid map in /proc/491/uid_map
+Setting gid map in /proc/491/gid_map
+euid: 0, egid: 0
+euid: 0, egid: 0
+Namespace helper waiting for modification completion
+Namespace part completed
+root#
+
+
+Results, Discussion:
+====================
+
+The missing security checks in overlayfs were just a mistake, that
+should not happen, but which by itself would not have those
+devastating effects. By exposing quite some kernel functionality to
+unprivileged users via user namespaces, this increases the attack
+surface of the kernel significantly. Thus it might be a good idea to
+deactivate it on standard kernels by default and grant it only to
+selected users.
+
+For the above exploit to work, not only exposure within the namespace
+is required, a process from outside uses /proc to access the mounts
+which should be visible only to processes within the namespace. This
+is by itself already a risk but might be also a security vulnerability
+by itself, worth fixing.
+
+
+[1]
+http://www.halfdog.net/Security/2015/SetgidDirectoryPrivilegeEscalation/
+[2]
+http://www.halfdog.net/Security/2015/UserNamespaceOverlayfsSetuidWriteExec/
+
+- -- 
+http://www.halfdog.net/
+PGP: 156A AE98 B91F 0114 FE88  2BD8 C459 9386 feed a bee
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iEYEARECAAYFAlaWzy4ACgkQxFmThv7tq+7PuACeNbJJ335/22gZiVGBXSSqYHC2
+hE0An0KyqLXQHozhPS3FQGVSf2IuWTej
+=YHDR
+-----END PGP SIGNATURE-----
