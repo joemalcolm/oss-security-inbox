@@ -1,56 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/22/1
-Message-ID: <20161221232409.GN19629@jumper.schlittermann.de>
-Date: Thu, 22 Dec 2016 00:24:09 +0100
-From: Heiko Schlittermann <hs@...littermann.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2016-9963 Exim private information leak
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/13/2
+Message-ID: <3626D6E697A150459C44C0E5D8D8D00E0DBD5177@EX02.corp.qihoo.net>
+Date: Wed, 13 Jan 2016 03:54:55 +0000
+From: limingxing <limingxing@....cn>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Out-of-bounds Read in the JasPer's jpc_pi_nextcprl() function
 Content-Type: text/plain; charset=utf-8
 
-Kurt H Maier <khm@...ops.net> (Mi 21 Dez 2016 21:59:52 CET):
-…
-> > To be more precise: On Dec, 25th, at 10.00 UTC we'll push the changes to the public
-> > Git repository git://git.exim.org/exim.git and upload the tar balls into the 
-> > FTP area ftp://ftp.exim.org/pub/exim/exim4
-> 
-> Just so we're absolutely clear:
-> 
-> You are releasing the fix for a currently-undisclosed security
-> vulnerability on the day most of the Western world's IT staff is on
-> holiday?
 
-Yes. We're addicted to high quality software. And we can't celebrate
-any holiday while knowing that there are systems outside, that may leak
-private information.
+Hello,
+We find a vulnerability in the way JasPer's jpc_pi_nextcprl() function parsed certain JPEG 2000 image files.
+I was successful in reproducing this issuel in the jasper-1.900.1-31.fc23.src.
+The gdb info was:
+Starting program: ./jasper-1.900.1-31.fc23.src/jasper-1.900.1/src/appl/jasper -f ./jasper_poc/poc.jp2 -F temp.bmp -t jp2 -T bmp
+warning: trailing garbage in marker segment (6 bytes)
 
-We're very sorry for the unfortunate timeing. We got the vulnerability
-report on Dec 15th, and requested the CVE on 16th. On 18th the patch was
-ready and passed our tests. We added 7 days to give the distros a chance
-to prepare their packages and this made up the 25th.
+Program received signal SIGSEGV, Segmentation fault.
+jpc_pi_nextcprl (pi=0x80a4ab0) at jpc_t2cod.c:435
+435			pi->xstep = pi->picomp->hsamp * (1 << (pirlvl->prcwidthexpn +
+(gdb) bt
+#0  jpc_pi_nextcprl (pi=0x80a4ab0) at jpc_t2cod.c:435
+#1  jpc_pi_next (pi=pi@...ry=0x80a4ab0) at jpc_t2cod.c:125
+#2  0x08062d85 in jpc_dec_decodepkts (dec=dec@...ry=0x809a5b8, 
+    pkthdrstream=0x8096308, in=0x8096308) at jpc_t2dec.c:441
+#3  0x0806202a in jpc_dec_process_sod (dec=0x809a5b8, ms=0x0) at jpc_dec.c:591
+#4  0x0806158d in jpc_dec_decode (dec=0x809a5b8) at jpc_dec.c:390
+#5  jpc_decode (in=in@...ry=0x8096308, optstr=optstr@...ry=0x0)
+    at jpc_dec.c:254
+#6  0x08056627 in jp2_decode (in=0x8096308, optstr=0x0) at jp2_dec.c:215
+#7  0x08051a28 in jas_image_decode (in=in@...ry=0x8096308, 
+    fmt=<optimized out>, optstr=0x0) at jas_image.c:379
+#8  0x08048f19 in main (argc=9, argv=0xbffff094) at jasper.c:229
 
-And yes, we know, it is holiday in many countries, maybe in all
-countries of some of all that many worlds.
 
-The decision wasn't an easy one. Delaying some days more would probably
-hit New Year celebration or Дед Мороз. Delaying it even more?
-
-As many users will use their distro's packages, the impact of the update
-should be very minimal. Probaly they will not even notice it. And if you
-build your own Exim packages, the effort to rebuild it (4.87.1 is almost
-the same as 4.87, which you should have running already) is minimal.
-
-In case the distros are ready already, we could release on 23rd, but I
-need feedbeck from the distros and ack from the other developers.
-
-I know, it is Christmas Holiday, for me, my kids, and my family too.
-
-    Best regards from Dresden/Germany
-    Viele Grüße aus Dresden
-    Heiko Schlittermann
--- 
- SCHLITTERMANN.de ---------------------------- internet & unix support -
- Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
- gnupg encrypted messages are welcome --------------- key ID: F69376CE -
- ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
-
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+This vulnerability was found by Qihoo 360 Codesafe Team
+Download attachment "jasper_poc.zip" of type "application/octet-stream" (1150 bytes)
