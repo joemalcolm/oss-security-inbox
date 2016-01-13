@@ -1,46 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/01/9
-Message-ID: <d99995e4f5284443bbb2f7d7e4b9c004@imshyb02.MITRE.ORG>
-Date: Tue, 1 Nov 2016 14:17:05 -0400
-From: <cve-assign@...re.org>
-To: <mprpic@...hat.com>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: RCE in Zabbix 2.2 to 3.0.3
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/13/5
+Message-ID: <CADLX=aE8i3sGRMXGAAXwrgxY47b-QcPMBQoGRPKOAsmWcTJoZA@mail.gmail.com>
+Date: Wed, 13 Jan 2016 19:42:12 +0530
+From: Rahul Pratap Singh <techno.rps@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request: Commentator WordPress Plugin 2.5.2 XSS Vulnerability
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Reflected XSS Vulnerability:
 
-> https://www.exploit-db.com/exploits/39937/
-> Zabbix 2.2 < 3.0.3 - API JSON-RPC Remote Code Execution
+I would request you to assign CVE id to this issue.
 
-> /api_jsonrpc.php
+----------------------------------------
+Description:
+----------------------------------------
+"provider" parameter is not sanitized that leads to Reflected XSS.
 
-> "method": "script.update",
+----------------------------------------
+Vulnerable Code:
+----------------------------------------
+file: commentator.php
 
-> "command": ""+cmd+""
+line:441
+$provider_name = $_REQUEST["provider"];
 
-Use CVE-2016-9140.
+line:544
+<div id="commentator-social-signin" class="commentator-<?php echo
+$provider_name; ?>">
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+----------------------------------------
+Exploit:
+----------------------------------------
+/wp-admin/admin-ajax.php?action=commentator_social_signin&provider=facebook">%20<IMG%20SRC=axc%20onerror=alert(1)>
 
-iQIcBAEBCAAGBQJYGNtZAAoJEHb/MwWLVhi2DQkQALB8gccuZBXkOAwXv3ekuCpi
-cNjh+qEd3pJxkd0EgmeQknO084oLV1rRn6Ss2Uh5FtBOaQJ5K/oiCjcarZ4bT8ro
-oZnBndJwXEVaI1UsH+6ustwZoZSr7dGjw82w82wwVnayGFRMbmWuJNFdPtXUxuKf
-5BWzXo4ZqlZbp5XuGJegm7gbAL56LYTkiMmb5yo+nN/7wApHc0cK8WaXkMW+LXB7
-qlUVefp/uvzG9Ma8Z9TvJnrgAoyCe2L8j2Y2CvZ28TUA4ugg7OaYpZkx/TWf883p
-KSyCiFsomfMwrkKKSZ5c8pFAzOtUdvyVYvgHH9YklhaH6P3s0RZM+DRfmC63rVIG
-kcKN3asrGcP7lawreVsSCZCmMOzwhsmMiRilFmeJ+Tk369T0+B8ZxzgTFQ3QGk6t
-+gWS2P6LAAsHfz0YKf/ROoPdKxd6QmagYsfRGQWE/Qc2quH1zBFypjQ3JDWji7Mb
-5REW4en6zQiaTfJMJpwtSyVPjTpNflIXaMysLWRarm6ca3rWZACIe1Wa1quN/Fj+
-rr07YAG9J8MOraHxaR7/ynn+8rBws0QpGEFrorL9IXUfONpWRxvX1gL2T//6QA6N
-67lISYiiR4+9vrpC4Ioa7tqUHJZeZU6bPeBBQLcF9S9slkpJPSpp4CUNY/5E3bcs
-HOZHKY2M77oOr5Hv9UGw
-=yO7W
------END PGP SIGNATURE-----
+----------------------------------------
+POC:
+----------------------------------------
+https://0x62626262.files.wordpress.com/2016/01/commentatorxsspoc.png
+
+Fix:
+Update to 2.5.3
+
+Disclosure Timeline:
+reported to vendor  : 9/1/2016
+vendor response     : 11/1/2016
+vendor acknowledged : 11/1/2016
+vendor deployed a patch: 11/1/2016
+
+Pub ref:
+http://codecanyon.net/item/commentator-wordpress-plugin/6425752
+https://0x62626262.wordpress.com/2016/01/13/commentator-wordpress-plugin-xss-vulnerability
+
