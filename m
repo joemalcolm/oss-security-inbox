@@ -1,35 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/19/17
-Message-ID: <20160919220600.GA17104@openwall.com>
-Date: Tue, 20 Sep 2016 00:06:00 +0200
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: ezmlm warning
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/13/6
+Message-Id: <20160113175142.1E7576C09BD@smtpvmsrv1.mitre.org>
+Date: Wed, 13 Jan 2016 12:51:42 -0500 (EST)
+From: cve-assign@...re.org
+To: limingxing@....cn
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Out-of-bounds Read in the JasPer's jpc_pi_nextcprl() function
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Sep 19, 2016 at 02:01:08PM -0700, Reed Loden wrote:
-> On Sat, Jul 18, 2015 at 10:40 AM, Solar Designer <solar@...nwall.com> wrote:
-> > On Thu, Jul 16, 2015 at 05:41:35PM -0700, Reed Loden wrote:
-> > > Likely, the ezmlm instance on lists.openwall.com needs to be updated to get
-> > > some of the DMARC compliance changes that were made last year (
-> > > http://untroubled.org/ezmlm/archive/7.2.2/CHANGES).
-> >
-> > Thank you.  I assume you mean primarily this one:
-> >
-> > - Added optional rewritefrom feature to ezmlm-send, automatically
-> >   enabled when the sender has a "reject" DMARC policy.
-> 
-> Alexander,
-> 
-> Any update on getting the ezmlm instance on oss-security updated so people
-> with e-mail providers who have implemented DMARC don't get their e-mails
-> rejected? Would be much appreciated.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-This is on my back burner.  I might approach experimenting with this
-some months later.  I'm afraid I have other priorities right now.  For
-now, I recommend that you don't use DMARC for addresses that you use on
-mailing lists (posting and/or subscribing); in fact, I am likely to
-continue to recommend this even if we do deploy a workaround for the
-lists hosted at Openwall.
+> We find a vulnerability in the way JasPer's jpc_pi_nextcprl() function parsed certain JPEG 2000 image files.
+> I was successful in reproducing this issuel in the jasper-1.900.1-31.fc23.src.
+> 
+> Starting program: ./jasper-1.900.1-31.fc23.src/jasper-1.900.1/src/appl/jasper -f ./jasper_poc/poc.jp2 -F temp.bmp -t jp2 -T bmp
+> warning: trailing garbage in marker segment (6 bytes)
+> 
+> Program received signal SIGSEGV, Segmentation fault.
+> jpc_pi_nextcprl (pi=0x80a4ab0) at jpc_t2cod.c:435
+> 435				  pi->xstep = pi->picomp->hsamp * (1 << (pirlvl->prcwidthexpn +
+> (gdb) bt
+> #0  jpc_pi_nextcprl (pi=0x80a4ab0) at jpc_t2cod.c:435
 
-Alexander
+Use CVE-2016-1867.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJWlos+AAoJEL54rhJi8gl5FlAP/0UvdOa/MOmWwDQeofST/PbE
+Ba+vQZcXSj58kD77fBaq6rfWbmlMGdK+F7hxyICV9ajWS/Pm+aXhXquF9vsqDsIR
+5//jE3TWvmUgxXebX8Qyqp8xGtJH2Gpaqz/bYiCf9RjUPhaPiQkNxTRl08p5yF4H
+DSoDZS8NLfOgI6gAPEsbQRM1XoJM+rzv0VUcDbOMcQGXxjMGN4EMKM4vml5svvLX
+2dn9BDAPMjTxPm62h1PLQFLCV7gyRmBN4Vu+Ya0HHob4jSb4NoPdxVPO9Jd1UdmJ
+y5KTpEYaTBhSrPtvXLS9UixUuUn/1ShkiQEZWpFJ7MUHcet2zRlm6sXj+xWssFbN
+5qW7mXgMZ3bECRKn+hFonj5Z0spZfvA6bQKZJKBTMIIEBdsI/C/Vti6DBSeiRhmT
+HiZmIHs31X+PpVQNrEw0AaCUEyp3GtYOWpuxXETyBdpsl9Ky5ubS5Hw2bPVNsjz6
+i291DcFlYvXlcLgh6JDJrKEYiOU+ZtYZWBpEK4XIPG0yvx1GTbeTnQJ2/yhCj7pU
+i69jRs3NkkG9snEOJbQv5n6ABTinrIB1PwxSYy9ekPIrbJnV+65TRf7wXTXvJ4Gi
+cebpJS8orRbgml1X4Azfc9bFoeZlpHBP90XhmZydvo6cGcYQS6ZQGI0p9uz7ssDF
+FcISpiPnRyny+eqg65Q3
+=FzZr
+-----END PGP SIGNATURE-----
