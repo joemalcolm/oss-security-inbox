@@ -1,25 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/01/5
-Message-ID: <20161101135601.GA990@lorien.valinor.li>
-Date: Tue, 1 Nov 2016 14:56:01 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Subject: CVE Request: OTRS: execution of JavaScript in OTRS context by opening malicious attachment
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/13/4
+Message-ID: <569640E3.3080009@openwall.com>
+Date: Wed, 13 Jan 2016 15:19:47 +0300
+From: Alexander Cherepanov <ch3root@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Fwd: FFmpeg: stealing local files with HLS+concat
 Content-Type: text/plain; charset=utf-8
 
-Hi
+On 2016-01-13 14:01, Vladimir Dubrovin wrote:
+> I've underestimated the impact of this bug, so it was full disclosured
+> in this article (Russian language, but google translate works fine with
+> it) - http://habrahabr.ru/company/mailru/blog/274855
 
->From the OTRS advisory at [1]:
+By following links from there:
+slides: http://www.slideshare.net/MailRuGroup/security-meetup-22-mailru
+video: https://www.youtube.com/watch?v=HRNPnbxrSCo
+(still both in Russian)
 
-> An attacker could trick an authenticated agent or customer into
-> opening a malicious attachment which could lead to the execution of
-> JavaScript in OTRS context.
+Somewhat related:
+https://github.com/ctfs/write-ups-2015/tree/master/9447-ctf-2015/web/super-turbo-atomic-gif-converter
 
-which is fixed in upstream versions OTRS 3.3.16 4.0.19 and 5.0.14.
-
- [1]  https://www.otrs.com/security-advisory-2016-02-security-update-otrs/
-
-Could you please assign a CVE for this issue?
-
-Regards,
-Salvatore
+-- 
+Alexander Cherepanov
