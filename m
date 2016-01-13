@@ -1,27 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/21/9
-Message-ID: <20160721202159.GA32017@eldamar.local>
-Date: Thu, 21 Jul 2016 22:21:59 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: "Eric W. Biederman" <ebiederm@...ssion.com>, Sebastian Krahmer <krahmer@...e.com>, oss-security@...ts.openwall.com, pkg-shadow-devel@...ts.alioth.debian.org, CVE Assignments MITRE <cve-assign@...re.org>
-Subject: Re: Re: [Pkg-shadow-devel] subuid security patches for shadow package
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/13/1
+Message-ID: <op.ya5g8gepn7mcit@hodgins.homeip.net>
+Date: Tue, 12 Jan 2016 19:06:06 -0500
+From: "David W. Hodgins" <davidwhodgins@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Discuss: Daily/weekly cron jobs best practices
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Mon, 11 Jan 2016 05:25:11 -0500, Tim Brown <tmb@...35.com> wrote:
 
-On Wed, Jul 20, 2016 at 11:48:52PM +0200, Nicolas François wrote:
-> Hi,
-> 
-> The first point looks like a non issue to me.
-> 
-> getlogin() is used to differentiate users with the same UID.
-> The result of getlogin() is checked: if it returns a username that do not
-> have the UID returned by getuid(), it will be ignored.
+> Not uncommon, we pop almost every UNIX box we touch this way, I assume you've
+> seen unix-privesc-check?
 
-@MITRE CVE assignment team: This is for CVE-2016-6251. See above and
-https://bugzilla.redhat.com/show_bug.cgi?id=1358622#c2 . 
+Tried it. Too much output to be of any use. With complaints like
+I: [group_writable] /home/dave/home/dave/.gnupg/pubring.gpg is owned
+  by user dave (group dave) and is group-writable (-rwxrwx---)
+W: [setgid] /usr/lib64/kde4/libexec/kdesud is setgid (root, nogroup):
+  -rwxr-sr-x
+W: [setuid] /usr/bin/su is setuid (root, root): -rwsr-xr-x
 
-Should this CVE be REJECTED?
+With 152149 lines going to stdout on my system, a quick skim of the
+output doesn't show anything useful. I don't see anything in the
+output that it's complaining about, that isn't as it should be.
 
-Regards,
-Salvatore
+Regards, Dave Hodgins
