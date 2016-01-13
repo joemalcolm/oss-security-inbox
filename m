@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5829" "Thursday" "17" "August" "2017" "20:11:49" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<352619.356566237-sendEmail@localhost>" "85" "[oss-security] libfpx: divide-by-zero in CDirVector::GetTable (dirfunc.hxx)" nil nil nil "8" "2017081720:11:49" "[oss-security] libfpx: divide-by-zero in CDirVector::GetTable (dirfunc.hxx)" (number mark "U       ago@gentoo.o Aug 17   85/5829  " thread-indent "\"[oss-security] libfpx: divide-by-zero in CDirVector::GetTable (dirfunc.hxx)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3569" "Wednesday" "13" "January" "2016" "03:54:55" "+0000" "limingxing" "limingxing@360.cn" "<3626D6E697A150459C44C0E5D8D8D00E0DBD5177@EX02.corp.qihoo.net>" "72" "[oss-security] Out-of-bounds Read in the JasPer's jpc_pi_nextcprl() function" nil nil nil "1" "2016011303:54:55" "[oss-security] Out-of-bounds Read in the JasPer's jpc_pi_nextcprl() function" (number mark "U       limingxing@3 Jan 13   72/3569  " thread-indent "\"[oss-security] Out-of-bounds Read in the JasPer's jpc_pi_nextcprl() function\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 17848 invoked by uid 550); 17 Aug 2017 20:12:09 -0000
+Received: (qmail 12215 invoked by uid 550); 13 Jan 2016 03:59:09 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,97 +12,92 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17822 invoked from network); 17 Aug 2017 20:12:07 -0000
-Message-ID: <352619.356566237-sendEmail@localhost>
-From: "Agostino Sarubbo" <ago@gentoo.org>
+Received: (qmail 9998 invoked from network); 13 Jan 2016 03:55:17 -0000
+From: limingxing <limingxing@360.cn>
 To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Date: Thu, 17 Aug 2017 20:11:49 +0000
+Thread-Topic: Out-of-bounds Read in the JasPer's jpc_pi_nextcprl() function
+Thread-Index: AQHRTbUgihqFdCVkREi4hh3+NTTsKg==
+Date: Wed, 13 Jan 2016 03:54:55 +0000
+Message-ID: <3626D6E697A150459C44C0E5D8D8D00E0DBD5177@EX02.corp.qihoo.net>
+Accept-Language: zh-CN, en-US
+Content-Language: zh-CN
+X-MS-Has-Attach: yes
+X-MS-TNEF-Correlator:
+x-originating-ip: [10.199.1.109]
+Content-Type: multipart/mixed;
+	boundary="_002_3626D6E697A150459C44C0E5D8D8D00E0DBD5177EX02corpqihoone_"
 MIME-Version: 1.0
-Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-9905.57747809717"
-Subject: [oss-security] libfpx: divide-by-zero in CDirVector::GetTable (dirfunc.hxx)
+Subject: [oss-security] Out-of-bounds Read in the JasPer's jpc_pi_nextcprl() function
 
-------MIME delimiter for sendEmail-9905.57747809717
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-
-Description:
-libfpx is a library for manipulating FlashPIX images.
-
-I’m aware that the link to the upstream website does not work. I’m keeping it as well because in the future the upstream website could appear 
-again.
-Libfpx is not actively developed, I contacted the imagemagick project if they were available to patch security issues, but they said the they 
-are only accepting patches and push new releases.
-This issue was found using the gm command line tool of graphicsmagick.
-
-The complete ASan output of the issue:
-
-# gm identify $FILE
-==11203==ERROR: AddressSanitizer: FPE on unknown address 0x7fc9f8a8a403 (pc 0x7fc9f8a8a403 bp 0x7fffbf287b28 sp 0x7fffbf287ae0 T0)
-    #0 0x7fc9f8a8a402 in CDirVector::GetTable(unsigned int, unsigned int, CDirSect**) /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/oless/h/dirfunc.hxx:250
-    #1 0x7fc9f8a8a402 in CDirectory::GetDirEntry(unsigned int, unsigned int, CDirEntry**) /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/oless/dir.cxx:1102
-    #2 0x7fc9f8a91cff in CDirectory::GetSize(unsigned int, unsigned int*) /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/oless/h/dirfunc.hxx:316
-    #3 0x7fc9f8a91cff in CMStream::Init() /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/oless/mstream.cxx:431
-    #4 0x7fc9f8a912e7 in DllMultiStreamFromStream(CMStream**, ILockBytes**, unsigned int) /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/oless/msf.cxx:88
-    #5 0x7fc9f8a9388b in CRootExposedDocFile::InitRoot(ILockBytes*, unsigned int, unsigned short, unsigned short**) /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/oless/rexpdf.cxx:124
-    #6 0x7fc9f8a8bad6 in DfFromLB(ILockBytes*, unsigned short, unsigned int, unsigned short**, CExposedDocFile**, _XGUID*) /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/oless/docfile.cxx:66
-    #7 0x7fc9f8a8bdfc in DfOpenStorageOnILockBytesW(ILockBytes*, IStorage*, unsigned int, unsigned short**, unsigned int, IStorage**, _XGUID*) /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/oless/docfile.cxx:277
-    #8 0x7fc9f8a88878 in DfOpenStorageOnILockBytes(ILockBytes*, IStorage*, unsigned int, char**, unsigned int, IStorage**, _XGUID*) /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/oless/ascii.cxx:461
-    #9 0x7fc9f8a9458e in StgOpenStorageOnILockBytes /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/oless/storage.cxx:116
-    #10 0x7fc9f8a9461a in StgOpenStorage /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/oless/storage.cxx:70
-    #11 0x7fc9f8a7008e in OLEFile::OpenOLEFile(_XGUID&, OLEStorage**, unsigned int) /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/ole/olefiles.cpp:184
-    #12 0x7fc9f8a70557 in OLEFile::GetCLSID(_XGUID*) /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/ole/olefiles.cpp:346
-    #13 0x7fc9f8a52d64 in PFlashPixImageView::PFlashPixImageView(FicNom&, char const*, mode_Ouverture, long, PSearchHookObject*, FPXStatus*) /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/fpx/fpximgvw.cpp:389
-    #14 0x7fc9f8a55c81 in OpenImageByFilename(FicNom&, char const*, unsigned long, unsigned int*, unsigned int*, unsigned int*, unsigned int*, FPXColorspace*, PFlashPixImageView**) /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/fpx/fpxlibio.cpp:1629
-    #15 0x7fc9f8a55dc9 in FPX_OpenImageByFilename /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/fpx/fpxlibio.cpp:1686
-    #16 0x7fc9f8cc45e6 in ReadFPXImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/coders/fpx.c:226:16
-    #17 0x7fc9fe564e2b in ReadImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/constitute.c:1607:13
-    #18 0x7fc9fe561e8c in PingImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/constitute.c:1370:9
-    #19 0x7fc9fe42dae5 in IdentifyImageCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:8379:17
-    #20 0x7fc9fe434065 in MagickCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:8869:17
-    #21 0x7fc9fe4df7fb in GMCommandSingle /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:17396:10
-    #22 0x7fc9fe4dc931 in GMCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:17449:16
-    #23 0x7fc9fcd47680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #24 0x419cd8 in _init (/usr/bin/gm+0x419cd8)
-
-AddressSanitizer can not provide additional info.
-SUMMARY: AddressSanitizer: FPE /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/oless/h/dirfunc.hxx:250 in CDirVector::GetTable(unsigned int, unsigned int, CDirSect**)
-==11203==ABORTING
-
-Affected version:
-1.3.1_p6
-
-Fixed version:
-N/A
-
-Commit fix:
-N/A
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-CVE-2017-12924
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00313-libfpx-FPE-CDirVector_GetTable
-
-Timeline:
-2017-08-01: bug discovered
-2017-08-09: blog post about the issue
-2017-08-17: CVE assigned
-
-Note:
-This bug was found with American Fuzzy Lop.
-This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/08/09/libfpx-divide-by-zero-in-cdirvectorgettable-dirfunc-hxx/
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
+--_002_3626D6E697A150459C44C0E5D8D8D00E0DBD5177EX02corpqihoone_
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 
 
-------MIME delimiter for sendEmail-9905.57747809717--
+Hello,
+We find a vulnerability in the way JasPer's jpc_pi_nextcprl() function pars=
+ed certain JPEG 2000 image files.
+I was successful in reproducing this issuel in the jasper-1.900.1-31.fc23.s=
+rc.
+The gdb info was:
+Starting program: ./jasper-1.900.1-31.fc23.src/jasper-1.900.1/src/appl/jasp=
+er -f ./jasper_poc/poc.jp2 -F temp.bmp -t jp2 -T bmp
+warning: trailing garbage in marker segment (6 bytes)
 
+Program received signal SIGSEGV, Segmentation fault.
+jpc_pi_nextcprl (pi=3D0x80a4ab0) at jpc_t2cod.c:435
+435			pi->xstep =3D pi->picomp->hsamp * (1 << (pirlvl->prcwidthexpn +
+(gdb) bt
+#0  jpc_pi_nextcprl (pi=3D0x80a4ab0) at jpc_t2cod.c:435
+#1  jpc_pi_next (pi=3Dpi@entry=3D0x80a4ab0) at jpc_t2cod.c:125
+#2  0x08062d85 in jpc_dec_decodepkts (dec=3Ddec@entry=3D0x809a5b8,=20
+    pkthdrstream=3D0x8096308, in=3D0x8096308) at jpc_t2dec.c:441
+#3  0x0806202a in jpc_dec_process_sod (dec=3D0x809a5b8, ms=3D0x0) at jpc_de=
+c.c:591
+#4  0x0806158d in jpc_dec_decode (dec=3D0x809a5b8) at jpc_dec.c:390
+#5  jpc_decode (in=3Din@entry=3D0x8096308, optstr=3Doptstr@entry=3D0x0)
+    at jpc_dec.c:254
+#6  0x08056627 in jp2_decode (in=3D0x8096308, optstr=3D0x0) at jp2_dec.c:215
+#7  0x08051a28 in jas_image_decode (in=3Din@entry=3D0x8096308,=20
+    fmt=3D<optimized out>, optstr=3D0x0) at jas_image.c:379
+#8  0x08048f19 in main (argc=3D9, argv=3D0xbffff094) at jasper.c:229
+
+
+This vulnerability was found by Qihoo 360 Codesafe Team=
+
+--_002_3626D6E697A150459C44C0E5D8D8D00E0DBD5177EX02corpqihoone_
+Content-Type: application/octet-stream; name="jasper_poc.zip"
+Content-Description: jasper_poc.zip
+Content-Disposition: attachment; filename="jasper_poc.zip"; size=1150;
+	creation-date="Wed, 13 Jan 2016 03:47:42 GMT";
+	modification-date="Wed, 13 Jan 2016 03:47:42 GMT"
+Content-Transfer-Encoding: base64
+
+UEsDBBQAAAAIAGdLLUhKLlX5PwEAACcCAAAHAAAAcG9jLmpwMmNgYODJClBQ
+4OVq5wKyRdJKKguyCowUgGwGKG1RWpqZkljAcO9N+1XBTW8ZAlgK/965BJRw
+YGQAgwROBhRgAKF0gfozgLRYZkZKEZAGqWJnYGZnB2vjT87PKYIYIAC1LPm/
+//9ABn2wGAtUAwywo/CZ2RkZIeh/EAMPUICVkZUFqOV/DIOyUr5cPkM+Q96j
+dIZ0hrRH8T5AmOLBDISu/peAMPF/CoMEA2NAanpicWmxgmduYnpmXrqCc35R
+wf94Bn4GRu/E7ESWUt0yYz0ToNK5QIGUUl2fxMrUIl3PvLR8K4Wc/PR4o2qX
+1JySRF0XDd9gV039aKM4QzMtiJCPRlJlSWqxZmytjgKMzaWgoGugZ6CjADQ0
+VdvAwAhJwBRdwBxdwBJVwFDPAiRgyPV/AgMXODwyGBj/T26gGfh/EwBQSwME
+FAAAAAgAXF0tSH/dquknAgAAagQAAAoAAAByZWFkbWUudHh0nZNdb9owFIav
+iZT/cKTewEaCYxJIqlLtZqt6N4lpt8hxnOA2H5ZtWtpfv2NCCgVpkxbJib/O
+876vwWvLtJVtBUp3lWbNLcy2XSNmelbu3t9nT8wooYMozAgJo4thMI/CktN5
+aDS/3OmmmFL1cR6CEsJjf6M6PsMWPikKwQ+wolFh3igILBymfgGOfO+V6Rad
+3YLVTNbOY8V0zioBsoWG6WfEGlE1orUwXkD+ZoWZ+J7v/eyjgBZcyBdRgJFV
+y2pYPz6svz/8nsK6r2JWdi2UbFfb0PeeFN8ouWnF3nKlaxgruSL7lLCY5WQC
+zJnjG0t5V4T8Np4nvoev0WikZHC/N1YoWIHrK8m7RgX3W8Mw1BcYR3B353C6
+fqlxWfNXWdit2KsWvvreuCryCeTW924IwH+4uIk+lR1KlPyGAfXbX2oj6mop
+ANmTlCxokSbuYN2WQhxaVwj1bA2Msb/CNiARmbEkT6fge4APbtoW2lgtWNOv
+LuYEV2V7Gp3JI8lZjyOUn3/IE8rO5fHvyIUxG9MVvf6ZamNwdArU85LM8eKB
+FyVpcR3nAnWBmGcEEQkMU4cCDCHb8+R9tk5ZDLzqPx/LZNKfyCcsTWLELo7O
+ksWCLntn9Fzkmn3KSAdS5H6y5UCKGE0PJGY2ssGL8S/Tvbmysas71JCNfMfL
+0e3s/bXmgHTHssxQNT2qxmkZZf0NxNeY6Yqvsing9wWr8xIfksUDBK+7802R
+8AdQSwECHwAUAAAACABnSy1ISi5V+T8BAAAnAgAABwAkAAAAAAAAACAAAAAA
+AAAAcG9jLmpwMgoAIAAAAAAAAQAYAABFKoihTdEBaURwSa5N0QFpRHBJrk3R
+AVBLAQIfABQAAAAIAFxdLUh/3arpJwIAAGoEAAAKACQAAAAAAAAAIAAAAGQB
+AAByZWFkbWUudHh0CgAgAAAAAAABABgA9ZBFfrRN0QGTpUxjtE3RAZOlTGO0
+TdEBUEsFBgAAAAACAAIAtQAAALMDAAAAAA==
+
+--_002_3626D6E697A150459C44C0E5D8D8D00E0DBD5177EX02corpqihoone_--
