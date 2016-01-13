@@ -1,25 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/15/9
-Message-ID: <2189744.h571I5Sgop@willoughby>
-Date: Thu, 15 Sep 2016 18:05:41 +0200
-From: Agostino Sarubbo <ago@...too.org>
-To: oss-security@...ts.openwall.com, vul@...safe.com
-Subject: Re: CVE request -libdwarf 20160613 heap-buffer-overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/13/7
+Message-ID: <CA+s3sfH_VUEnbiXJtymJZmKD5JNy3hazrZ8y=Ex6Xzrim5bbYg@mail.gmail.com>
+Date: Wed, 13 Jan 2016 21:06:57 +0000
+From: Jason Buberel <jbuberel@...gle.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: [security] Go security release v1.5.3
 Content-Type: text/plain; charset=utf-8
 
-On Wednesday 14 September 2016 00:22:43 vul@...safe, 
-vul@...safe.com wrote:
-> Hello,
-> 
-> A heap-buffer-overflow was found in the latest libdward 
-20160613  version.
+A security-related issue has been reported in Go's math/big package. The
+issue was introduced in Go 1.5. We recommend that all users upgrade to Go
+1.5.3, which fixes the issue. Go programs must be recompiled with Go 1.5.3
+in order to receive the fix.
 
-I forwarded this bug to upstream which was NOT aware of this 
-problem.
+The Go team would like to thank Nick Craig-Wood for identifying the issue.
 
-I guess that drop an e-mail to upstream before the 
-announcement does not cost much.
-Thanks.
+This issue can affect RSA computations in crypto/rsa, which is used by
+crypto/tls. TLS servers on 32-bit systems could plausibly leak their RSA
+private key due to this issue. Other protocol implementations that create
+many RSA signatures could also be impacted in the same way.
 
-Agostino
+Specifically, incorrect results in one part of the RSA Chinese Remainder
+computation can cause the result to be incorrect in such a way that it
+leaks one of the primes. While RSA blinding should prevent an attacker from
+crafting specific inputs that trigger the bug, on 32-bit systems the bug
+can be expected to occur at random around one in 2^26 times. Thus
+collecting around 64 million signatures (of known data) from an affected
+server should be enough to extract the private key used.
+
+On 64-bit systems, the frequency of the bug is so low (less than one in
+2^50) that it would be very difficult to exploit. Nonetheless, everyone is
+strongly encouraged to upgrade.
+
+Go 1.6 will include include a change to double-check the RSA computation,
+which is a generic countermeasure to this class of bug.
+
+The CVE issue descriptions and fixes are linked below. Downloads are
+available at http://golang.org/dl for all supported platforms.
+
+CVE-2015-8618
+
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-8618
+
+CLs fixing the issue:
+
+https://go-review.googlesource.com/#/c/17672/
+https://go-review.googlesource.com/#/c/18491/
 
