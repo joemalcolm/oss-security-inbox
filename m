@@ -1,4 +1,9 @@
-Received: (qmail 8113 invoked by uid 550); 21 May 2026 16:08:09 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2206" "Thursday" "14" "January" "2016" "02:59:05" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160114075905.A27A213A60D@smtpvmsrv1.mitre.org>" "51" "[oss-security] Re: Fwd: FFmpeg: stealing local files with HLS+concat" nil nil nil "1" "2016011407:59:05" "[oss-security] Re: Fwd: FFmpeg: stealing local files with HLS+concat" (number mark "U       cve-assign@m Jan 14   51/2206  " thread-indent "\"[oss-security] Re: Fwd: FFmpeg: stealing local files with HLS+concat\"\n") "<569640E3.3080009@openwall.com>" ("<569640E3.3080009@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 22413 invoked by uid 550); 14 Jan 2016 07:59:23 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,79 +12,63 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 15454 invoked from network); 21 May 2026 03:13:51 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=catalyst.net.nz;
-	s=default; t=1779333221;
-	bh=pPw4k6NP8BA+La9WbdCOFjS3buWTZhnGMUP350MFHNI=;
-	h=Date:Subject:To:References:From:In-Reply-To:From;
-	b=V7ad/5+kTgIIezNu0wxt3e6qypNeOvz1F423wnHlCxGCSjoYo3CICUzM5qSsTGIKZ
-	 4r+YCVLO3FFa2kUYvjJ9FxLqO2KP8JKbsXi49K2pt6crT49Agt/tLjY1hNJ2RSmysR
-	 hlvCKK9GaSLjrcTS6QneUDMPstoaVCJKqicv/fIzNOC5CHjyzTEQ7Oy8BRvPcO9JXV
-	 J0eIVEDkqy9LLiw0cX+n5fVNBZ5ZP4MsL9ja+fNbpgNrX7zPi8o5MWCpTL4rGhjFzH
-	 AR+/DydfsDKjxSdBugIFTyMUfT8pwo4JhRsAtbDNyry63qcPa1D1c63kDsTkUS4qGs
-	 finpX0oevN/tg==
-Message-ID: <f296de5a-8c89-4678-ac2a-02b07dfd89e6@catalyst.net.nz>
-Date: Thu, 21 May 2026 15:13:40 +1200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: oss-security@lists.openwall.com, Clemens Lang <cllang@redhat.com>
-References: <afDLFWVMK-r70PB0@yuggoth.org>
- <521d0295-6a93-4a28-be55-332d663ec457@gmail.com>
- <3CD03E7B-92A9-4C32-AC58-E811FB8A43A6@redhat.com>
-Content-Language: en-NZ
-From: Douglas Bagnall <douglas.bagnall@catalyst.net.nz>
-Autocrypt: addr=douglas.bagnall@catalyst.net.nz; keydata=
- xsBNBFTZNuABCACnBtS+eLzGts68jAJrZstbH5vM0d/4+OsGcvFkrXGPE9D6PsRdVM+jPT1Z
- fASzsarvWkx0b7p6/XTwTo2Al3KRRVLq3FQFPOLyKzSXK8u+vUi/py7Cv133t4Uea7+Pp+YM
- tWjXGwB/y3s5TBwJkYShSTBpAhDnkKjxRSQXIr7gIE0fIPIS1uy19g1q/BuXuj1sfcISRMpp
- z8qs9cAsk45tG1JItaLjO7+K47Q3LEfskChGPbhwh7tWCquDzreQC7q+h3dK6A1AOrorskON
- +Wy3aucRoOw6scNfV2H1y6lDza2lwZxCDRs6zkn7SQVjX62j9kVczShyi5udgqfWsW2jABEB
- AAHNMURvdWdsYXMgQmFnbmFsbCA8ZG91Z2xhcy5iYWduYWxsQGNhdGFseXN0Lm5ldC5uej7C
- wHgEEwECACIFAlTZNuACGwMGCwkIBwMCBhUIAgkKCwQWAgMBAh4BAheAAAoJEHcqM0mxsX5t
- XIoH/jiHvUuw4xrBKuk9KzAE5JNd5rcTQdaRgiIvM/6C6X/uobzO2CDKFEUOmTpYSSXkq0/3
- YmwCRqWMja/5N1886qFrkcrIkTMRb0imxkNVwd7JIPdryK6dFCzCRUC1hByqeI8EwO41ROX+
- qw6DT+H/o6QkPWAB1P8ODVtq0F3TUZ0/Xpe3xYK1QF6Ud0BKWVcKBMAdS7CWTsVRD6m9it80
- Mp4N3y6Ka0vrgZ6IEskBHGVJ/Mm6ONrHIjl4OAbAKK4PuFha5PjPx1YYYOnsp4JvhrSJQDag
- A9vDdm7mbJpxxVY0Rx4t7xRvh+jsZ1f6yVGx5UTpdtvSbriZ2SZ3F29hBGfOwE0EVNk24AEI
- ANSG9xaPHGxr7l1Wcz8J51IDT0EE7ozS3TSYRE80OSH8oB26w5StLbQkC+iWj0GsTveJL9x6
- Vp/dfsPGfG9CP9J0C4ZOwY7+V9ex1d10xzr32zetKiUt7ZEimzIiCnmnR9K54jVbGDvVfJie
- uTOGruqRLIUAO69ZyhplRywyee6MRtgmfLpJlnOySgvihR4kHmq03zHe6whhJ0RmbKSIwb/F
- Ri/ZmpujNZ7PTYcmw7sp/5HpE4taYA0f3QvK9/DTjuoITdugrxhOwBdv6jLAAzI8d0quOFf+
- 5IeGizYTa6HPmBtIUyyzVajjiUpXiB8WuhgTL5pP0BT5j6BtW8Li/YEAEQEAAcLAXwQYAQIA
- CQUCVNk24AIbDAAKCRB3KjNJsbF+bYRnB/94DaFuxGVA65kkr5iubWbwKnaiTWlZLIFQp0RH
- QRk/jgdpuQj3E4D660QdfoMqhTeozOPTBH3cJOCjgN/klI7xrkvdq8sLTMWyM5Bbu+XhDaSr
- 8hnjvdhZM7bHQdaH3FI5zdm2rMbP8nB6IH8wYSxHzywjR9vks6PTsqxqeCoupqdVO/kZ3jsU
- F0LOxxnMTlT8YZIn8lFVptsz5HMOKFnUdR3fYpcO+CTc9vXqcLWqnMwchdSQPp1cjZ5eUl+G
- jmq9xwOWLG/0u5b9stC3cEiCNSZn8Nyy7KaY8fQeKn//sBeyu3htjZ2wZ+oRVuc/XR/+/hl6
- QCGP/4UC6mJGdmU0
-In-Reply-To: <3CD03E7B-92A9-4C32-AC58-E811FB8A43A6@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Subject: Re: [oss-security] Coordinated Disclosure in the LLM Age
+Received: (qmail 22351 invoked from network); 14 Jan 2016 07:59:18 -0000
+From: cve-assign@mitre.org
+To: oss-security@lists.openwall.com
+Cc: cve-assign@mitre.org
+In-Reply-To: <569640E3.3080009@openwall.com>
+Message-Id: <20160114075905.A27A213A60D@smtpvmsrv1.mitre.org>
+Date: Thu, 14 Jan 2016 02:59:05 -0500 (EST)
+Subject: [oss-security] Re: Fwd: FFmpeg: stealing local files with HLS+concat
 
-On 30/04/2026 06:52, Clemens Lang wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
->> In other words, LLM-discovered vulnerabilities should be considered already publicly known.
-> 
-> As a further data point backing up this theory: We’re seeing duplicate reports of the same issue found by multiple independent groups that use LLMs, within the embargo period.
+> http://habrahabr.ru/company/mailru/blog/274855
 
-In Samba we see maybe a third of valid security bugs being reported more 
-than once. So far I think the invalid ones are all invalid in their own 
-ways.
+As far as we can tell, there are two distinct cross-origin issues
+within FFmpeg's URL processing. Use CVE-2016-1897 for the concat issue
+(which is fully described in the blog/274855 reference) and
+CVE-2016-1898 for the subfile issue (which is mentioned but not
+described in the blog/274855 reference).
 
-There is a counter-argument in favour of coordinated fixes, if not 
-disclosure, in that LLMs make it easier to create an exploit from a 
-patch or announcement. This means simultaneous patching is more 
-important, to the extent we worry about opportunistic low-skill attacks.
+The essential problem is that a crafted file forces the victim to
+visit an arbitrary external URL, but this URL is constructed using
+data from the victim's local filesystem.
 
-Perhaps much depends on deployment. There are engineers here whose 
-full-time job seems to be planning openstack upgrades, yet their 
-workstations will update curl or evince without interaction. It might 
-not be that all these projects should have the same security process.
 
-Samba is continuing to muddle along more or less as before, though with 
-an eye to streamlining things.
+> https://github.com/ctfs/write-ups-2015/tree/master/9447-ctf-2015/web/super-turbo-atomic-gif-converter
 
-Douglas
+This might describe a vulnerability, but we aren't sure whether the
+access to file:///home/ctf/flag.txt is really unintended FFmpeg
+behavior. This might be better modeled as a site-specific
+vulnerability in the web service, because it should have arranged for
+the file:///home/ctf/flag.txt URL to be interpreted within an
+appropriately safe sandbox context.
 
+Similarly, the reports of FFmpeg SSRF in blog/274855 might be better
+modeled as site-specific vulnerabilities within the "online video
+conversion" web application.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJWl1TnAAoJEL54rhJi8gl57hIP/jkD+Hfa2TlpnCMaub2I4Nv7
+w8Ij6n1DxQcHIEikSpzGzVjzFF5bM08+cnprML2T9mvv8LfIf9LTKhLA6eGA6o0Y
+Fdx2Plk1gsz/8xG2+bQD/WWwAd0DU+UEPyg9gQ3uq8aCrQU5+umY3/k27FSnBoEw
+/012zKOC/kA7bc3lvMVnEGXjkht48Pjbme4xi/7g8iKJ7Xgp0BJJMITsfUjGQ4wZ
+qWXo1is5g6okqmxxCsxBi6z+HiD4rBYGPKLoykFhZKjbKKZVryu5o9IFmqV0Gcx3
+Yr2qXq55X9VMfUYfwOEbr0khmNvOTWaCeVGRqNKicMrnQ2AuBln0xw0GSx/IC54a
+x871TKEe1K5htx4rgA8yiyeg+HADKBnkBGBsxo9WIen/Jt12JuDQPSEjoWkelUsO
+YHIOj4Bvg44aP0GLkPxDIFW4xSNc2SGUg22WJVsTaTxi07U0eUnMZLqxL0UbLJw2
+NNIkGj0zCY/74helTqH6O+ZQ7pcePLA07DNiRNKjFp8V4do+MglXG63oVgNMRi5D
+Ec89tB57B7ADRqv0k/+HQxa+K4Tur4s4U6ROCBuUxlbg4N/qzzePnJxB8g3ecKr0
+rx791hkbmVqI27gtKdMEIK5GJwPQKsvx48wM3zq1aCiELnqzfuOReQihXs98+KwM
+iVCG+PH+hIf4wO2Wq06i
+=rHFW
+-----END PGP SIGNATURE-----
