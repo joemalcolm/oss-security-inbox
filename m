@@ -1,19 +1,12 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/22/3
-Message-ID: <1466608195.2458.5.camel@nixnuts.net>
-Date: Wed, 22 Jun 2016 10:09:55 -0500
-From: John Lightsey <john@...nuts.net>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE request: SQL injection in MovableType xml-rpc interface
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/14/4
+Message-ID: <CAHmME9poTixFqc3TXGfPReg32rUUw_XVko61sONSZnRdxkLLdQ@mail.gmail.com>
+Date: Thu, 14 Jan 2016 15:46:26 +0100
+From: "Jason A. Donenfeld" <Jason@...c4.com>
+To: "cgit@...ts.zx2c4.com" <cgit@...ts.zx2c4.com>, oss-security <oss-security@...ts.openwall.com>
+Cc: Daniel Chromek <chromek@...t.sk>,  Krzysztof Katowicz-Kowalewski <krzysztof.kowalewski@...t.pl>, Erik Cabetas <erik@...ludesecurity.com>,  Konstantin Ryabitsev <mricon@...nel.org>
+Subject: Re: CVE Request: CGit - Multiple vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Hi there,
-
-SixApart just released new versions of MovableType 6.2 and 6.1 to fix an SQL
-injection in the xml-rpc interface. The vulnerability also affects the older
-GPLv2 licensed MovableType 5.2.13.
-
-Could you please assign a CVE identifier for tracking this issue?
-
-https://movabletype.org/news/2016/06/movable_type_626_and_613_released.html
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+These issues are fixed in the new release, v0.12:
+http://lists.zx2c4.com/pipermail/cgit/2016-January/002817.html
