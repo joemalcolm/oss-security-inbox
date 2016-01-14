@@ -1,4 +1,9 @@
-Received: (qmail 22129 invoked by uid 550); 10 Mar 2025 14:39:16 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["993" "Thursday" "14" "January" "2016" "13:11:29" "-0500" "Jan Schaumann" "jschauma@netmeister.org" "<20160114181128.GD16572@netmeister.org>" "33" "Re: [oss-security] Qualys Security Advisory - Roaming through the OpenSSH client: CVE-2016-0777 and CVE-2016-0778" "^Date:" nil nil "1" "2016011418:11:29" "[oss-security] Qualys Security Advisory - Roaming through the OpenSSH client: CVE-2016-0777 and CVE-2016-0778" (number mark "        jschauma@net Jan 14   33/993   " thread-indent "\"Re: [oss-security] Qualys Security Advisory - Roaming through the OpenSSH client: CVE-2016-0777 and CVE-2016-0778\"\n") "<20160114171301.GH28298@localhost.localdomain>" ("<20160114171301.GH28298@localhost.localdomain>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 3453 invoked by uid 550); 14 Jan 2016 18:11:41 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,136 +11,51 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 22382 invoked from network); 10 Mar 2025 10:32:16 -0000
-From: SBA Research Security Advisory <advisory@sba-research.org>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Thread-Topic: [SBA-ADV-20241209-01] CVE-2024-13918: Laravel 11.9.0-11.35.1
- Reflected XSS via Request Parameter in Debug-Mode Error Page
-Thread-Index: AduRom8kAXwX6qjvQgyoJuwgUVnrIQ==
-Date: Mon, 10 Mar 2025 10:32:06 +0000
-Message-ID: <d3b30d6d7a45424886f6ecc62ee96a41@sba-research.org>
-Accept-Language: de-AT, en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-x-ms-exchange-messagesentrepresentingtype: 1
-x-originating-ip: [10.2.0.45]
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Received: (qmail 3426 invoked from network); 14 Jan 2016 18:11:40 -0000
+Message-ID: <20160114181128.GD16572@netmeister.org>
+References: <20160114171301.GH28298@localhost.localdomain>
 MIME-Version: 1.0
-X-FEAS-Client-IP: 172.16.0.16
-X-FE-Policy-ID: 5:6:0:SYSTEM
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; d=sba-research.org; s=_dkimgw1; c=relaxed/relaxed;
- h=from:to:subject:date:message-id:content-type:mime-version;
- bh=33JVu0fHCa1Vs04CuJFw3fbM7SL0A4ENgKaf5gLfAwg=;
- b=EeTGAjCocEzQuakS5F8vsMmPJY/KbM+ozi+7qTxPl37r/AbQdscE6JiPhxfReQ21L8483HYrZ43e
-	E6qkbpn9TA2DTMFl/2ASXGpKjAU7YT6LtJj5/5tUezf9/fHNadvuW0xpRQ8vNFr+0bj4+WE3cfJ+
-	9WeEx7Hih65HE8KMfPV6G2W3pLOgCWgc5cJ7Egvt4cy9MtzCTUB8j6DFNdxsRhzGdCcZezIePx7d
-	67icPJI3AVegf3PYIb06zaVyoh+383//1qkbylux3TpJyRz9STCit5fPvMmABNZWdgdTr7I9iF18
-	Aly616C8t0z7qNkL2FErXf9kezWUWnN1xZsGpA==
-Subject: [oss-security] [SBA-ADV-20241209-01] CVE-2024-13918: Laravel 11.9.0-11.35.1
- Reflected XSS via Request Parameter in Debug-Mode Error Page
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20160114171301.GH28298@localhost.localdomain>
+User-Agent: Mutt/1.5.24 (2015-08-30)
+Date: Thu, 14 Jan 2016 13:11:29 -0500
+From: Jan Schaumann <jschauma@netmeister.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Qualys Security Advisory - Roaming through the
+ OpenSSH client: CVE-2016-0777 and CVE-2016-0778
+To: oss-security@lists.openwall.com
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkVEIE1FU1NBR0UtLS0tLQ0KSGFzaDogU0hBMjU2DQoNCiMgTGFy
-YXZlbCBSZWZsZWN0ZWQgWFNTIHZpYSBSZXF1ZXN0IFBhcmFtZXRlciBpbiBEZWJ1Zy1Nb2RlIEVy
-cm9yIFBhZ2UgIw0KDQpMaW5rOiBodHRwczovL2dpdGh1Yi5jb20vc2JhcmVzZWFyY2gvYWR2aXNv
-cmllcy90cmVlL3B1YmxpYy8yMDI0L1NCQS1BRFYtMjAyNDEyMDktMDFfTGFyYXZlbF9SZWZsZWN0
-ZWRfWFNTX3ZpYV9SZXF1ZXN0X1BhcmFtZXRlcl9pbl9EZWJ1Zy1Nb2RlX0Vycm9yX1BhZ2UNCg0K
-IyMgVnVsbmVyYWJpbGl0eSBPdmVydmlldyAjIw0KDQpUaGUgTGFyYXZlbCBmcmFtZXdvcmsgdmVy
-c2lvbnMgYmV0d2VlbiAxMS45LjAgYW5kIDExLjM1LjEgYXJlIHN1c2NlcHRpYmxlDQp0byByZWZs
-ZWN0ZWQgY3Jvc3Mtc2l0ZSBzY3JpcHRpbmcgZHVlIHRvIGFuIGltcHJvcGVyIGVuY29kaW5nIG9m
-IHJlcXVlc3QNCnBhcmFtZXRlcnMgaW4gdGhlIGRlYnVnLW1vZGUgZXJyb3IgcGFnZS4NCg0KKiAq
-KklkZW50aWZpZXIqKiAgICAgICAgICAgIDogU0JBLUFEVi0yMDI0MTIwOS0wMQ0KKiAqKlR5cGUg
-b2YgVnVsbmVyYWJpbGl0eSoqIDogQ3Jvc3MtU2l0ZSBTY3JpcHRpbmcNCiogKipTb2Z0d2FyZS9Q
-cm9kdWN0IE5hbWUqKiA6IFtMYXJhdmVsIEZyYW1ld29ya10oaHR0cHM6Ly9naXRodWIuY29tL2xh
-cmF2ZWwvZnJhbWV3b3JrKQ0KKiAqKlZlbmRvcioqICAgICAgICAgICAgICAgIDogW0xhcmF2ZWwg
-SG9sZGluZ3MgSW5jLl0oaHR0cHM6Ly9sYXJhdmVsLmNvbS8pDQoqICoqQWZmZWN0ZWQgVmVyc2lv
-bnMqKiAgICAgOiBiZXR3ZWVuIDExLjkuMCBhbmQgMTEuMzUuMQ0KKiAqKkZpeGVkIGluIFZlcnNp
-b24qKiAgICAgIDogMTEuMzYuMA0KKiAqKkNWRSBJRCoqICAgICAgICAgICAgICAgIDogQ1ZFLTIw
-MjQtMTM5MTgNCiogKipDVlNTIFZlY3RvcioqICAgICAgICAgICA6IENWU1M6My4xL0FWOk4vQUM6
-SC9QUjpOL1VJOlIvUzpDL0M6SC9JOkgvQTpODQoqICoqQ1ZTUyBCYXNlIFNjb3JlKiogICAgICAg
-OiA4LjAgKEhpZ2gpDQoNCiMjIFZlbmRvciBEZXNjcmlwdGlvbiAjIw0KDQo+IExhcmF2ZWwgaXMg
-YSB3ZWIgYXBwbGljYXRpb24gZnJhbWV3b3JrIHdpdGggZXhwcmVzc2l2ZSwgZWxlZ2FudCBzeW50
-YXguDQoNClNvdXJjZTogPGh0dHBzOi8vZ2l0aHViLmNvbS9sYXJhdmVsL2ZyYW1ld29yay9ibG9i
-LzExLngvUkVBRE1FLm1kPg0KDQojIyBJbXBhY3QgIyMNCg0KVGhpcyB2dWxuZXJhYmlsaXR5IGFs
-bG93cyBhdHRhY2tlcnMgdG8gZXhlY3V0ZSBKYXZhU2NyaXB0IGNvZGUgaW4gYSB1c2VyJ3MNCmJy
-b3dzZXIgd2l0aGluIHRoZSBvcmlnaW4gb2YgdGhlIGFmZmVjdGVkIHdlYiBhcHBsaWNhdGlvbi4g
-VGhlIHVzZXIgbmVlZHMgdG8NCmFjY2VzcyB0aGUgYXR0YWNrZXIgcHJvdmlkZWQgbGluayBhbmQg
-dGhlIHdlYiBhcHBsaWNhdGlvbiBuZWVkcyB0byBiZSBpbg0KZGVidWctbW9kZSAoYEFQUF9ERUJV
-Rz10cnVlYCkuDQoNCiMjIFZ1bG5lcmFiaWxpdHkgRGVzY3JpcHRpb24gIyMNCg0KV2hlbiB0aGUg
-ZGVidWcgbW9kZSBpcyBhY3RpdmUgdmlhIGBBUFBfREVCVUc9dHJ1ZWAgYW5kIHRoZSB3ZWIgYXBw
-bGljYXRpb24NCnJldHVybnMgYW4gZXJyb3IgKEhUVFAgc3RhdHVzIDVYWCksIGFuIGVycm9yIHBh
-Z2UgaXMgcmV0dXJuZWQuIFRoaXMgcGFnZQ0KY29udGFpbnMgaW5mb3JtYXRpb24gYWJvdXQgdGhl
-IHJlcXVlc3QgdGhhdCB0cmlnZ2VyZWQgdGhlIGVycm9yLiBUaGUgdmFsdWVzDQppbiB0aGUgVVJM
-IHBhcmFtZXRlcnMgYW5kIGluIHRoZSByZXF1ZXN0IGJvZHkgYXJlIGVtYmVkZGVkIGluIHRoZSBl
-cnJvciBwYWdlDQp3aXRob3V0IHByb3BlciBlbmNvZGluZy4NCg0KVGhlIGZvbGxvd2luZyBjb2Rl
-IHNuaXBwZXQgc2hvd3MgdGhlIHNpbmsuIFRoZSB0ZW1wbGF0aW5nIGVuZ2luZSBkZWFjdGl2YXRl
-cw0KSFRNTC1lbmNvZGluZyBmb3IgZGF0YSBwYXNzZWQgdmlhIGB7ISEgISF9YC4NCg0KYGBgaHRt
-bA0KPGRpdiBjbGFzcz0ibXQtMSByb3VuZGVkIGJvcmRlciBkYXJrOmJvcmRlci1ncmF5LTgwMCI+
-DQogICAgPGRpdiBjbGFzcz0iZmxleCBpdGVtcy1jZW50ZXIiPg0KICAgICAgICA8c3Bhbg0KICAg
-ICAgICAgICAgY2xhc3M9Im1pbi13LTAgZmxleC1ncm93Ig0KICAgICAgICAgICAgc3R5bGU9Ilvi
-gKZdIg0KICAgICAgICA+DQogICAgICAgICAgICA8cHJlIGNsYXNzPSJzY3JvbGxiYXItaGlkZGVu
-IG14LTUgbXktMyBvdmVyZmxvdy15LWhpZGRlbiB0ZXh0LXhzIGxnOnRleHQtc20iPjxjb2RlIGNs
-YXNzPSJvdmVyZmxvdy15LWhpZGRlbiBzY3JvbGxiYXItaGlkZGVuIG92ZXJmbG93LXgtc2Nyb2xs
-IHNjcm9sbGJhci1oaWRkZW4teCI+eyEhICRleGNlcHRpb24tPnJlcXVlc3RCb2R5KCkgPzogJ05v
-IGJvZHkgZGF0YScgISF9PC9jb2RlPjwvcHJlPg0KICAgICAgICA8L3NwYW4+DQogICAgPC9kaXY+
-DQo8L2Rpdj4NCmBgYA0KDQojIyBQcm9vZiBvZiBDb25jZXB0ICMjDQoNCiMjIyBQcmVyZXF1aXNp
-dGVzICMjIw0KDQpGaXJzdCwgbGV0IHVzIG1ha2Ugc3VyZSB0aGF0IHRoZSBkZWJ1ZyBtb2RlIGlz
-IGFjdGl2YXRlZCBlbnN1cmluZyB0aGF0DQpgQVBQX0RFQlVHPXRydWVgIGlzIHNldCBpbiB0aGUg
-YC5lbnZgIGZpbGUuIFNlY29uZCwgYWRkIGFuIGVuZHBvaW50IHRoYXQNCnByb2R1Y2VzIGFuIGVy
-cm9yLCBlLmcuLCBkaXZpc2lvbiBieSB6ZXJvLg0KDQpgYGBwaHANCjw/cGhwDQoNCnVzZSBJbGx1
-bWluYXRlXFN1cHBvcnRcRmFjYWRlc1xSb3V0ZTsNCg0KUm91dGU6OmdldCgnL3BvYy11cmwnLCBm
-dW5jdGlvbiAoKSB7DQogICAgcmV0dXJuIDAvMDsNCn0pOw0KYGBgDQoNCiMjIyBFeHBsb2l0YXRp
-b24gIyMjDQoNCkluIHRoaXMgY2FzZSB0aGUgYXBwbGljYXRpb24gaXMgYXZhaWxhYmxlIHVuZGVy
-IHRoZSBvcmlnaW4NCmBodHRwOi8vbG9jYWxob3N0OjgwMDBgLg0KDQpCeSBjbGlja2luZyB0aGUg
-bGluaw0KYGh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9wb2MtdXJsP3BheWxvYWQ9PHNjcmlwdD5hbGVy
-dCgxKTwvc2NyaXB0PmAgdGhlDQpgcG9jLXVybGAgZnVuY3Rpb24gaXMgZXhlY3V0ZWQsIGEgZGl2
-aXNpb24gYnkgemVybyBleGNlcHRpb24gaXMgdGhyb3duLA0KY2F1c2luZyB0aGUgd2Vic2VydmVy
-IHRvIHJlc3BvbmQgd2l0aCBhIGA1MDAgSW50ZXJuYWwgU2VydmVyIEVycm9yYC4gQW4NCmVycm9y
-IHBhZ2UgaXMgZ2VuZXJhdGVkIGNvbnRhaW5pbmcgdGhlIGZvbGxvd2luZyBIVE1MIGNvZGUuDQoN
-CmBgYGh0bWwNCjxkaXYgY2xhc3M9ImZsZXggaXRlbXMtY2VudGVyIj4NCiAgPHNwYW4gY2xhc3M9
-Im1pbi13LTAgZmxleC1ncm93IiBzdHlsZT0iW+KApl0iPg0KICAgIDxwcmUgY2xhc3M9IlvigKZd
-Ij4NCiAgICAgIDxjb2RlIGNsYXNzPSJb4oCmXSAiPnsNCiJwYXlsb2FkIjogIjxzY3JpcHQ+YWxl
-cnQoMSk8L3NjcmlwdD4iDQp9PC9jb2RlPg0KICAgIDwvcHJlPg0KICA8L3NwYW4+DQo8L2Rpdj4N
-CmBgYA0KDQpBcyB0aGUgYHBheWxvYWRgIHZhbHVlIGlzIG5vdCBlbWJlZGRlZCB3aXRoIHByb3Bl
-ciBlbmNvZGluZywgdGhlIGJyb3dzZXINCmludGVycHJldHMgaXQgYXMgSFRNTCwgZXhlY3V0ZXMg
-dGhlIGluamVjdGVkIEphdmFTY3JpcHQgY29kZSBhbmQsIHRoZXJlZm9yZSwNCm9wZW5zIGFuIGFs
-ZXJ0Lg0KDQojIyBSZWNvbW1lbmRlZCBDb3VudGVybWVhc3VyZXMgIyMNCg0KSWYgcG9zc2libGUg
-dXBncmFkZSB0byB0aGUgZml4ZWQgdmVyc2lvbiAxMS4zNi4wIG9yIGFib3ZlLg0KSWYgeW91IGFy
-ZSB1bmFibGUgdG8gdXBncmFkZSwgZW5zdXJlIHRoYXQgdGhlIGFwcGxpY2F0aW9uIGRvZXMgbm90
-IHJ1biBpbg0KZGVidWctbW9kZSBieSBzZXR0aW5nIGBBUFBfREVCVUc9ZmFsc2VgIGluIHlvdXIg
-Y29uZmlndXJhdGlvbi4NCg0KIyMgVGltZWxpbmUgIyMNCg0KKiBgMjAyNC0xMS0yOGAgSWRlbnRp
-ZmllZCB0aGUgdnVsbmVyYWJpbGl0eSBpbiB2ZXJzaW9uIDExLjM0LjENCiogYDIwMjQtMTItMDlg
-IEluaXRpYWwgY29udGFjdCBhdHRlbXB0IGFuZCBkaXNjbG9zdXJlIG9mIHZ1bG5lcmFiaWxpdHkg
-dG8NCiAgICAgICAgICAgICAgIExhcmF2ZWwncyBzZWN1cml0eSBjb250YWN0DQoqIGAyMDI0LTEy
-LTEzYCBTZWN1cml0eSBwYXRjaCB3YXMgbWVyZ2VkDQoqIGAyMDI0LTEyLTE0YCBDb250YWN0ZWQg
-SmVyZW15IEFuZ2VsZSAoQGFuZ2VsZWopIHdobyBpbmRlcGVuZGVudGx5DQogICAgICAgICAgICAg
-ICBkaXNjb3ZlcmVkIHRoZSB2dWxuZXJhYmlsaXR5IGFuZCBzdWJtaXR0ZWQgdGhlIHBhdGNoIHRv
-IGZpeCBpdA0KKiBgMjAyNC0xMi0xN2AgTGFyYXZlbCBwcm9qZWN0IHJlbGVhc2VzIGZpeGVkIHZl
-cnNpb24gMTEuMzYuMA0KKiBgMjAyNS0wMi0wNWAgU2Vjb25kIGF0dGVtcHQgdG8gY29udGFjdCBM
-YXJhdmVsJ3Mgc2VjdXJpdHkgY29udGFjdA0KKiBgMjAyNS0wMy0xMGAgTm8gcmVhY3Rpb24gZnJv
-bSBMYXJhdmVsJ3Mgc2VjdXJpdHkgY29udGFjdCB0byBhbGwgcHJldmlvdXMNCiAgICAgICAgICAg
-ICAgIGNvbnRhY3QgYXR0ZW1wdHMNCiogYDIwMjUtMDMtMTBgIFNCQSBSZXNlYXJjaCBhc3NpZ25l
-ZCBDVkUtMjAyNC0xMzkxOA0KKiBgMjAyNS0wMy0xMGAgUHVibGljIGRpc2Nsb3N1cmUNCg0KIyMg
-UmVmZXJlbmNlcyAjIw0KDQoqIFNlY3VyaXR5IFBhdGNoOiA8aHR0cHM6Ly9naXRodWIuY29tL2xh
-cmF2ZWwvZnJhbWV3b3JrL3B1bGwvNTM4Njk+DQoNCiMjIENyZWRpdHMgIyMNCg0KKiBGYWJpYW4g
-RnVuZGVyIChbU0JBIFJlc2VhcmNoXShodHRwczovL3d3dy5zYmEtcmVzZWFyY2gub3JnLykpDQoq
-IFBoaWxpcHAgQWRlbHNiZXJnZXIgKFtTQkEgUmVzZWFyY2hdKGh0dHBzOi8vd3d3LnNiYS1yZXNl
-YXJjaC5vcmcvKSkNCi0tLS0tQkVHSU4gUEdQIFNJR05BVFVSRS0tLS0tDQoNCmlRSXpCQUVCQ0FB
-ZEZpRUVMOVdwL3laV0ZEOU9wSXQ2KzdpR0wxajNkYklGQW1mT3Y2QUFDZ2tRKzdpR0wxajMNCmRi
-SnFEUkFBa3hhYUNDTitKUkptcDJ5S2hhNDZTY0lZUVgvSHJoM1ljeW1yYnZhM0xBM1U5STR2eHFi
-MlFxU0cNCktoS0ZQcFdOTG1oYzdWbWZJbzBrZGtnelh3YmR0cmdvbVFMQVNkWmlqMVdGdVpUZzB0
-VkY3bkhPUzBEeDVKUU8NCjBSa2FKazJBNy9ZZnA2dGV1R09zY3h1RHRuVU8vWG91Q2NZRHYwaitt
-QTM5Q0R4YVcwenVoOHRLVjY0Sjd6Y1gNCjBRSlZzb0RmeUl3RWJ4OElBNDRPOFVDa29HVkswVEFC
-Y1hzaDBDWHdaS0pJMEhZSzUvU056ZzEvYlJyZnVDZ0MNCnRqUWxFcGZCM1ZVOUd5eXhkdDFnSVVJ
-WFVyRXAxeVRGNnJGLzJCM2JpK3pOeWVScHAzcGthOFR2Z2tlUVA4Z0YNCmI0bUxmeVdITm91a2lY
-VFlXMndyNSswZUtFZVlPZkt1NTNpUkkvbjZQSzRsQzdScm40UWxDVHVWZUg3Y291UjcNCk9JWmxZ
-VXdQVTFIWitzcGhxZEc3Z05kclZGaFhBOXJzbktwS2dDWmk5clFOSTJ6QVBQK3B4bElWc0NZVWpy
-ZWINCk5LdTE4YmZFclVGS0htckN0aDNOeERlUmhIU01YdWhrdnQrRXlVa0thWGJSWXlSYlFhRjBI
-Nk9EU1Fib2VNWE0NClRrelBSMG55U2tvUWtXMjZvK3ZQVmN3a0tHOVZSc1Z4K2dtZEY3dG5WbmQz
-QmNuUVhNK0pIMDBTTUsreEhzM2YNClRoMnpnNk55VmZQOStGUGpaYm0wYWpRb21KTDNtUjNDcVJk
-N05ISmpIK3F1cDE1amU1RkxtUmtoU1ZubXd1L3oNCkFBUEI2Wk0xSWp3a0JxdFFhOENpUW03eC9I
-TlpFa2lxM05DSVk0aExYUFlCODJ5SEFMRT0NCj0xSjJaDQotLS0tLUVORCBQR1AgU0lHTkFUVVJF
-LS0tLS0NCg==
+Qualys Security Advisory <qsa@qualys.com> wrote:
+ 
+> Since version 5.4 (released on March 8, 2010), the OpenSSH client
+> supports an undocumented feature called roaming:
+
+Why is version 5.3 not affected?
+
+The change appears to have been introduced in
+
+http://cvsweb.openbsd.org/cgi-bin/cvsweb/src/usr.bin/ssh/clientloop.c.diff?r1=1.211&r2=1.212
+
+https://github.com/openssh/openssh-portable/commit/c5564e1c4c41ae9af96973e2996e2a4285acbae8#diff-de6290efbc1504e2b727aee24e88db02
+
+on 2009-05-28.
+
+OpenSSH 5.3 appears to have been named in
+https://github.com/openssh/openssh-portable/commit/cd6b1a27cbb9400565811f908ca536937d875b8f
+on 2009-06-30.
+
+I also see:
+
+$ ssh -V
+OpenSSH_5.3p1, OpenSSL 1.0.0-fips 29 Mar 2010
+$ ssh -o UseSomeBogusOption=yes `hostname` date
+command-line: line 0: Bad configuration option: UseSomeBogusOption
+$ ssh -o UseRoaming=no `hostname` date
+Thu Jan 14 09:27:24 PST 2016
+$ 
+
+which suggests that OpenSSH 5.3p1 at the very least _knows_ about the
+UseRoaming option.
+
+-Jan
