@@ -1,125 +1,87 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/22/7
-Message-ID: <1840743.uk7qesaqqd@willoughby>
-Date: Thu, 22 Sep 2016 17:47:16 +0200
-From: Agostino Sarubbo <ago@...too.org>
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: mupdf: use-after-free in pdf_to_num (pdf-object.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/14/3
+Message-ID: <CAHmME9qMafTAqWTgj6oRHmN9HZtJ8KrghR1U63H=r+jA7M3zyg@mail.gmail.com>
+Date: Thu, 14 Jan 2016 15:21:36 +0100
+From: "Jason A. Donenfeld" <Jason@...c4.com>
+To: "cgit@...ts.zx2c4.com" <cgit@...ts.zx2c4.com>, oss-security <oss-security@...ts.openwall.com>
+Cc: Daniel Chromek <chromek@...t.sk>,  Krzysztof Katowicz-Kowalewski <krzysztof.kowalewski@...t.pl>, Erik Cabetas <erik@...ludesecurity.com>,  Konstantin Ryabitsev <mricon@...nel.org>
+Subject: CVE Request: CGit - Multiple vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-If it is suitable for a CVE please assign one. 
-Thanks.
+Hi folks,
+
+Krzysztof Katowicz-Kowalewski from ESET, Erik Cabetas from Include
+Security, and myself (Jason Donenfeld) from Edge Security, have found
+a few vulnerabilities in CGit:
 
 
-Description:
-mupdf is a lightweight PDF viewer and toolkit written in portable C.
+1. Reflected Cross Site Scripting & Header Injection in Mimetype Query
+String [Katowicz-Kowalewski]
 
-A fuzzing through mutool revealed a use-after-free.
+The ui-blob handler accepted a mimetype as a query string and then
+echoed this string verbatim back. A malicious user could provide a
+string like:
 
-The complete ASan output:
+  http://git.zx2c4.com/cgit/blob/cgit.c?mimetype=text/html%0d%0a%0d%0a<script>xss</script>
 
-# mutool info $FILE
-==5430==ERROR: AddressSanitizer: heap-use-after-free on address 0x60300000ea42 
-at pc 0x7fbc4c3824e5 bp 0x7ffee68ead70 sp 0x7ffee68ead68                                                                                                                                       
-READ of size 1 at 0x60300000ea42 thread T0                                                                                                                                                                                                                                    
-    #0 0x7fbc4c3824e4 in pdf_to_num /var/tmp/portage/app-
-text/mupdf-1.9a/work/mupdf-1.9a/source/pdf/pdf-object.c:375:35                                                                                                                                                       
-    #1 0x53f042 in gatherfonts /var/tmp/portage/app-
-text/mupdf-1.9a/work/mupdf-1.9a/source/tools/pdfinfo.c:259:46                                                                                                                                                             
-    #2 0x53f042 in gatherresourceinfo /var/tmp/portage/app-
-text/mupdf-1.9a/work/mupdf-1.9a/source/tools/pdfinfo.c:595                                                                                                                                                         
-    #3 0x53913a in gatherpageinfo /var/tmp/portage/app-
-text/mupdf-1.9a/work/mupdf-1.9a/source/tools/pdfinfo.c:661:2                                                                                                                                                           
-    #4 0x53913a in showinfo /var/tmp/portage/app-
-text/mupdf-1.9a/work/mupdf-1.9a/source/tools/pdfinfo.c:957                                                                                                                                                                   
-    #5 0x537d46 in pdfinfo_info /var/tmp/portage/app-
-text/mupdf-1.9a/work/mupdf-1.9a/source/tools/pdfinfo.c:1029:3                                                                                                                                                            
-    #6 0x537d46 in pdfinfo_main /var/tmp/portage/app-
-text/mupdf-1.9a/work/mupdf-1.9a/source/tools/pdfinfo.c:1077                                                                                                                                                              
-    #7 0x4f8ace in main /var/tmp/portage/app-
-text/mupdf-1.9a/work/mupdf-1.9a/source/tools/mutool.c:104:12                                                                                                                                                                     
-    #8 0x7fbc4ae1f61f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289                                                                                                                                                       
-    #9 0x41f9c8 in _init (/usr/bin/mutool+0x41f9c8)                                                                                                                                                                                                                           
-                                                                                                                                                                                                                                                                              
-0x60300000ea42 is located 2 bytes inside of 24-byte region 
-[0x60300000ea40,0x60300000ea58)                                                                                                                                                                                    
-freed by thread T0 here:                                                                                                                                                                                                                                                      
-    #0 0x4c6c10 in free /var/tmp/portage/sys-devel/llvm-3.8.0-
-r3/work/llvm-3.8.0.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:38                                                                                                                                    
-    #1 0x7fbc4bf33830 in fz_free /var/tmp/portage/app-
-text/mupdf-1.9a/work/mupdf-1.9a/source/fitz/memory.c:187:2                                                                                                                                                              
-                                                                                                                                                                                                                                                                              
-previously allocated by thread T0 here:                                                                                                                                                                                                                                       
-    #0 0x4c6f18 in malloc /var/tmp/portage/sys-devel/llvm-3.8.0-
-r3/work/llvm-3.8.0.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:52                                                                                                                                  
-    #1 0x7fbc4bf2a86f in do_scavenging_malloc /var/tmp/portage/app-
-text/mupdf-1.9a/work/mupdf-1.9a/source/fitz/memory.c:17:7                                                                                                                                                  
-    #2 0x7fbc4bf2a86f in fz_malloc /var/tmp/portage/app-
-text/mupdf-1.9a/work/mupdf-1.9a/source/fitz/memory.c:57                                                                                                                                                               
-    #3 0x7fbc4c37f94d in pdf_new_indirect /var/tmp/portage/app-
-text/mupdf-1.9a/work/mupdf-1.9a/source/pdf/pdf-object.c:186:8                                                                                                                                                  
-                                                                                                                                                                                                                                                                              
-SUMMARY: AddressSanitizer: heap-use-after-free /var/tmp/portage/app-
-text/mupdf-1.9a/work/mupdf-1.9a/source/pdf/pdf-object.c:375:35 in pdf_to_num                                                                                                                              
-Shadow bytes around the buggy address:                                                                                                                                                                                                                                        
-  0x0c067fff9cf0: fd fd fa fa fd fd fd fa fa fa fd fd fd fa fa fa                                                                                                                                                                                                             
-  0x0c067fff9d00: fd fd fd fd fa fa fd fd fd fa fa fa fd fd fd fa                                                                                                                                                                                                             
-  0x0c067fff9d10: fa fa fd fd fd fd fa fa fd fd fd fa fa fa fd fd                                                                                                                                                                                                             
-  0x0c067fff9d20: fd fa fa fa fd fd fd fd fa fa fd fd fd fa fa fa
-  0x0c067fff9d30: fd fd fd fa fa fa fd fd fd fa fa fa fd fd fd fa
-=>0x0c067fff9d40: fa fa 00 00 00 fa fa fa[fd]fd fd fa fa fa fd fd
-  0x0c067fff9d50: fd fd fa fa 00 00 00 fa fa fa 00 00 00 fa fa fa
-  0x0c067fff9d60: 00 00 00 fa fa fa 00 00 00 00 fa fa 00 00 00 fa
-  0x0c067fff9d70: fa fa 00 00 00 fa fa fa 00 00 00 06 fa fa 00 00
-  0x0c067fff9d80: 01 fa fa fa 00 00 05 fa fa fa 00 00 00 fa fa fa
-  0x0c067fff9d90: 00 00 00 00 fa fa 00 00 00 00 fa fa 00 00 00 fa
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Heap right redzone:      fb
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack partial redzone:   f4
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==5430==ABORTING
+This has been fixed by removing support for the mimetype query string parameter:
+http://git.zx2c4.com/cgit/commit/?id=1c581a072651524f3b0d91f33e22a42c4166dd96
+And then restricting to only generic mimetypes:
+http://git.zx2c4.com/cgit/commit/?id=92996ac2a6fc4e944c3d723e12d5ab244a43508e
+And finally, just in case, setting the IE anti-sniffing header as well
+as a restrictive CSP header:
+http://git.zx2c4.com/cgit/commit/?id=9ca2566972db968df4479108b29bb92551138b57
 
-Affected version:
-1.9a
 
-Fixed version:
-1.10 (not yet released)
+2. Stored Cross Site Scripting & Header Injection in Filename
+Parameter [Donenfeld]
 
-Commit fix:
-http://git.ghostscript.com/?p=mupdf.git;h=1e03c06456d997435019fb3526fa2d4be7dbc6ec
+A user who has write access to the git repository could create
+filenames containing new lines that would result in that filename,
+including the newlines, being included in a header, resulting in
+header injection and eventually XSS.
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
+This has been fixed by properly escaping filenames in headers:
+http://git.zx2c4.com/cgit/commit/?id=513b3863d999f91b47d7e9f26710390db55f9463
+Additionally, while the redirect for the /about -> /about/ page does
+*not* appear to be vulnerable due to mitigating conditions, the
+following commit was made to similarly harden potential injections
+here:
+http://git.zx2c4.com/cgit/commit/?id=4291453ec30656c2f59645d8a74cf295ce0253a9
 
-CVE:
+3. Stored Cross Site Scripting in Git Repo Files [Katowicz-Kowalewski]
 
-Timeline:
-2016-08-05: bug discovered
-2016-08-05: bug reported privately to upstream
-2016-09-22: upstream released a patch
-2016-09-22: blog post about the issue
+A user who has write access to the git repository can add HTML pages
+and then serve them with an HTML mimetype. A user could therefore
+upload pages with malicious javascript executing in the same origin as
+the cgit web site. While this is ordinarily not a problem for
+single-use users - and indeed some users rather like being able to
+serve html from cgit - sites that allow potentially malicious third
+party users may not find this behavior desirable.
 
-Note:
-This bug was found with American Fuzzy Lop.
+This has been fixed by adding a configuration option,
+"enable-html-serving", which is by default off:
+http://git.zx2c4.com/cgit/commit/?id=aaba5f8b925f44f7d5ffb0a45fe349642d478513
+This flag sets anti-sniffing, CSP, and restricts mimetypes to
+non-"application/" (except for application/pdf and
+application/octet-stream) and non-"text/" (except for text/plain). If
+you have a better idea of what sort of white/black list to use for
+this, I am open to suggestions.
 
-Permalink:
-https://blogs.gentoo.org/ago/2016/09/22/mupdf-use-after-free-in-pdf_to_num-pdf-object-c
+4. Integer Overflow resulting in Buffer Overflow [Cabetas]
+
+ctx.env.content_length is an unsigned int, coming from the
+CONTENT_LENGTH environment variable, which is parsed by strtoul. The
+HTTP/1.1 spec says that "any Content-Length greater than or equal to
+zero is a valid value." By storing this unsigned int into an int, we
+potentially overflow it, resulting in the following bounding check
+failing, leading to a buffer overflow.
+
+This has been fixed by this commit:
+http://git.zx2c4.com/cgit/commit/?id=4458abf64172a62b92810c2293450106e6dfc763
+
+
+A new version containing these security fixes will be published shortly.
+
+Thanks,
+Jason
