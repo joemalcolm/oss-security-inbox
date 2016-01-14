@@ -1,66 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/21/3
-Message-ID: <CAKws9z3H+VFO6kO-bEPMtyomuyyumx69+hzB7UUAxpg2o6dT8A@mail.gmail.com>
-Date: Mon, 21 Nov 2016 11:54:33 -0500
-From: Scott Arciszewski <scott@...agonie.com>
-To: oss-security@...ts.openwall.com
-Subject: WordPress (all versions): SPOF, RCE, and Negligence
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/14/11
+Message-ID: <CANO=Ty12XVisk8s8SrAuQoPeNtt2Q=hGWN9bAg0XGZDDMCkMMA@mail.gmail.com>
+Date: Thu, 14 Jan 2016 12:53:53 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>, CVE ID Requests <cve-assign@...re.org>
+Subject: Re: CVE request for Kubernetes api server: build config to a strategy that isn't allowed by policy
 Content-Type: text/plain; charset=utf-8
 
-This is the function that fetches downloads from the WordPress update
-servers: https://github.com/WordPress/WordPress/blob/f5b6731777bbd1dfe290867d2240a2a68e2f0cf1/wp-admin/includes/class-wp-upgrader.php#L252-L283
+Ping, Mitre can I get a CVE here please? Also for the other Kubertes issue.
 
-The only verification it offers is an MD5 checksum, which is sent by
-the server that also serves the file:
-https://github.com/WordPress/WordPress/blob/eeefec932f3d4f3b50369f6523c2cd8fad3d467f/wp-admin/includes/file.php#L482-L525
+On Tue, Jan 12, 2016 at 11:04 AM, Kurt Seifried <kseifried@...hat.com>
+wrote:
 
-At no point lower in the automatic update process is a cryptographic
-signature verified. The update server is trusted explicitly and
-implicitly by every WordPress website online.
+> CVE request (one is the problem, the other the fix):
+>
+> https://github.com/openshift/origin/issues/6556
+> https://github.com/openshift/origin/pull/6576
+>
+> You can modify a build so that it escalates privileges when built, you
+> can't build it yourself (that fails) but if the imagestream trigger is used
+> then it would build and you'd have escalated privileges.
+>
+> --
+>
+> --
+> Kurt Seifried -- Red Hat -- Product Security -- Cloud
+> PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+> Red Hat Product Security contact: secalert@...hat.com
+>
 
-WordPress powers an estimated 26% of websites on the Internet.
 
-Consequently, the WordPress update server is one of the largest single
-points of failure (SPOF) on the Internet. If you manage to hack their
-infrastructure, you can push a false update to millions of WordPress
-blogs and get reliable remote code execution everywhere.
 
-They are aware of this issue, and have been for years:
-https://core.trac.wordpress.org/ticket/25052
+-- 
 
-Additionally, PHP before 5.6.0 had terrible SSL/TLS support. It may
-also be possible to get targeted RCE out of a MitM condition due to
-their stubborn insistence on supporting PHP 5.2.4. I need to do more
-research here.
+--
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
 
-The WordPress culture, for those who are not aware, prioritizes higher
-adoption rates over better security. They see backwards compatibility
-as a usability problem more than a liability.
-
-The WordPress team also promotes the use of the misnomer "responsible
-disclosure" over the more accurate "coordinated disclosure", and
-refuse to entertain suggestions to improve their vernacular.
-
-In short, WordPress is semi-toxic towards improving their own
-security-- mostly out of negligence and stubbornness rather than
-outright hostility (see: OpenCart).
-
-I don't believe there's much chance of fixing this, due to political
-problems rather than technological problems. The first step towards a
-reliable solution would look like this:
-
-1. Up the minimum PHP version to at least 5.6.0.
-2. Use openssl_sign() and openssl_verify() with an RSA keypair
-maintained by their team.
-
-A total solution would incorporate all of the elements listed here for
-both core updates and theme/plugin updates:
-https://paragonie.com/blog/2016/10/guide-automatic-security-updates-for-php-developers#elements-automatic-updates
-
-Should anyone wish to endure the steep uphill battle to try to get
-WordPress to fix this problem _before_ we see headlines titled
-"WormPress: How your blog was hacked" in the news, godspeed.
-
-Scott Arciszewski
-Chief Development Officer
-Paragon Initiative Enterprises <https://paragonie.com>
