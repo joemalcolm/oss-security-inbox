@@ -1,78 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/06/1
-Message-ID: <CACn5sdSpUpBuZK6dXCFfpjWvaSd0NLzEqhfJNacGzMq4VvyWFw@mail.gmail.com>
-Date: Sat, 6 Feb 2016 14:42:36 +0100
-From: Gustavo Grieco <gustavo.grieco@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/14/2
+Message-ID: <20160114083328.GA27255@openwall.com>
+Date: Thu, 14 Jan 2016 11:33:28 +0300
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: Out-of-bound read in the parsing of gif files using GraphicsMagick 1.3.18
+Cc: Jason Buberel <jbuberel@...gle.com>
+Subject: Re: [security] Go security release v1.5.3
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Wed, Jan 13, 2016 at 09:06:57PM +0000, Jason Buberel wrote:
+> A security-related issue has been reported in Go's math/big package. The
+> issue was introduced in Go 1.5. We recommend that all users upgrade to Go
+> 1.5.3, which fixes the issue. Go programs must be recompiled with Go 1.5.3
+> in order to receive the fix.
+> 
+> The Go team would like to thank Nick Craig-Wood for identifying the issue.
+> 
+> This issue can affect RSA computations in crypto/rsa, which is used by
+> crypto/tls. TLS servers on 32-bit systems could plausibly leak their RSA
+> private key due to this issue. Other protocol implementations that create
+> many RSA signatures could also be impacted in the same way.
+> 
+> Specifically, incorrect results in one part of the RSA Chinese Remainder
+> computation can cause the result to be incorrect in such a way that it
+> leaks one of the primes. While RSA blinding should prevent an attacker from
+> crafting specific inputs that trigger the bug, on 32-bit systems the bug
+> can be expected to occur at random around one in 2^26 times. Thus
+> collecting around 64 million signatures (of known data) from an affected
+> server should be enough to extract the private key used.
+> 
+> On 64-bit systems, the frequency of the bug is so low (less than one in
+> 2^50) that it would be very difficult to exploit. Nonetheless, everyone is
+> strongly encouraged to upgrade.
+> 
+> Go 1.6 will include include a change to double-check the RSA computation,
+> which is a generic countermeasure to this class of bug.
 
-We found a read out-of-bound in the parsing of gif files using
-GraphicsMagick. This issue was tested in Ubuntu 14.04 (x86_64) using
-GraphicsMagick 1.3.18. Find attached a specially crafted file to reproduce
-this issue. The AddressSanitizer report showing the faulty code is here:
+A concern here is that this might increase side-channel leaks.  Related
+discussion:
 
-$ ./gm identify overflow.gif
-=================================================================
-==3173==ERROR: AddressSanitizer: heap-buffer-overflow on address
-0x6210000037be at pc 0x0000007e5f56 bp 0x7fffffffa940 sp 0x7fffffffa938
-READ of size 1 at 0x6210000037be thread T0
-    #0 0x7e5f55 in DecodeImage coders/gif.c:276
-    #1 0x7ebdac in ReadGIFImage coders/gif.c:1075
-    #2 0x490fc6 in ReadImage magick/constitute.c:1600
-    #3 0x48fcd0 in PingImage magick/constitute.c:1363
-    #4 0x43fc25 in IdentifyImageCommand magick/command.c:8350
-    #5 0x4427b9 in MagickCommand magick/command.c:8840
-    #6 0x47c4d6 in GMCommandSingle magick/command.c:17253
-    #7 0x47c79c in GMCommand magick/command.c:17306
-    #8 0x40c8c5 in main utilities/gm.c:61
-    #9 0x7ffff3739ec4 in __libc_start_main
-(/lib/x86_64-linux-gnu/libc.so.6+0x21ec4)
-    #10 0x40c7d8
-(/home/vagrant/repos/graphicsmagick-1.3.18/utilities/gm+0x40c7d8)
-AddressSanitizer can not describe address in more detail (wild memory
-access suspected).
-SUMMARY: AddressSanitizer: heap-buffer-overflow coders/gif.c:276 DecodeImage
-Shadow bytes around the buggy address:
-  0x0c427fff86a0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c427fff86b0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c427fff86c0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c427fff86d0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c427fff86e0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-=>0x0c427fff86f0: fa fa fa fa fa fa fa[fa]fa fa fa fa fa fa fa fa
-  0x0c427fff8700: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c427fff8710: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c427fff8720: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c427fff8730: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c427fff8740: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07
-  Heap left redzone:       fa
-  Heap right redzone:      fb
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack partial redzone:   f4
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-==3173==ABORTING
+http://www.openwall.com/lists/oss-security/2014/07/10/3
+http://www.openwall.com/lists/oss-security/2014/07/10/5
 
-This issue is caused by the use of unintialized memory in DecodeImage and
-fortunately it was fixed here:
+I guess you intend to be careful with that?
 
-http://marc.info/?l=graphicsmagick-commit&m=142283721604323&w=2
+> The CVE issue descriptions and fixes are linked below. Downloads are
+> available at http://golang.org/dl for all supported platforms.
+> 
+> CVE-2015-8618
+> 
+> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-8618
+> 
+> CLs fixing the issue:
+> 
+> https://go-review.googlesource.com/#/c/17672/
+> https://go-review.googlesource.com/#/c/18491/
 
-Regards,
-Gus.
+"Gerrit requires a JavaScript enabled browser."
+OK, launched another browser. ;-)
 
+Alexander
+
+P.S. My extra excuse to post this and to over-quote is DMARC, which has
+likely prevented delivery of the original @google.com message to some
+recipients.  I know I got to workaround it in list configuration soon.
