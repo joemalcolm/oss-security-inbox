@@ -1,16 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/07/13
-Message-ID: <CAHmME9rcosK0SkpG5pdbq4jfqCYJ4t3_y-Y8j1vEwNwzibkRWg@mail.gmail.com>
-Date: Mon, 7 Mar 2016 18:53:33 +0100
-From: "Jason A. Donenfeld" <Jason@...c4.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: Cgit XSS "vulnerability" has no CVE?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/14/12
+Message-ID: <20160114223207.GB30647@localhost.localdomain>
+Date: Thu, 14 Jan 2016 14:32:07 -0800
+From: Qualys Security Advisory <qsa@...lys.com>
+To: Jan Schaumann <jschauma@...meister.org>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Qualys Security Advisory - Roaming through the OpenSSH client: CVE-2016-0777 and CVE-2016-0778
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Mar 5, 2016 at 6:41 PM, Peter Bex <peter@...e-magic.net> wrote:
-> This allows for an XSS attack by anyone with write access: If you can
-> push to a git repository for which the "txt2html" converter is activate,
-> you can create a README or README.txt and insert arbitrary HTML.
+On Thu, Jan 14, 2016 at 01:11:29PM -0500, Jan Schaumann wrote:
+> Why is version 5.3 not affected?
 
-The XSS situation in those release notes does not cover what you've
-described here. You're conflating two separate things.
+The information leak is in resend_bytes() ["if (out_start < out_last)"
+should be "if (out_start <= out_last)"], but in OpenSSH 5.3, there is no
+call to resend_bytes(), at all (roaming_client.c does not even exist).
+
+With best regards,
+
+-- 
+the Qualys Security Advisory team
