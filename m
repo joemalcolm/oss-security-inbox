@@ -1,63 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/26/2
-Message-ID: <CADr4Fi-gyCkOT_gv_ZoivJ7JWhMRLm=+2g8BSpP9LKNEJ5f=AQ@mail.gmail.com>
-Date: Mon, 26 Dec 2016 16:08:45 +0700
-From: "Steevee a.k.a Stefanus" <steevee.aka@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Joomla com_blog_calendar SQL Injection Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/14/5
+Message-ID: <CANO=Ty11oyui5QSb_O5-86ajFxn-3uqhDiaLke8arTLRXvSM6Q@mail.gmail.com>
+Date: Thu, 14 Jan 2016 09:28:09 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>, CVE ID Requests <cve-assign@...re.org>
+Subject: nodejs Buffer(number) is unsafe #4660
 Content-Type: text/plain; charset=utf-8
 
-==========================================================================================
-Joomla com_blog_calendar SQL Injection Vulnerability
-==========================================================================================
+From:
 
-:-------------------------------------------------------------------------------------------------------------------------:
-: # Exploit Title : Joomla com_blog_calendar SQL Injection Vulnerability
-: # Date : 26th December 2016
-: # Author : X-Cisadane
-: # CMS Name : Joomla
-: # CMS Developer : http://joomlacode.org/gf/project/blog_calendar/
-: # Category : Web Application
-: # Vulnerability : SQL Injection
-: # Tested On : SQLMap 1.0.12.9#dev
-: # Greetz to : X-Code YogyaFree, ExploreCrew, CodeNesia, Bogor Hackers
-Community, Borneo Crew, Depok Cyber, Mantan
-:-------------------------------------------------------------------------------------------------------------------------:
+https://github.com/nodejs/node/issues/4660
 
-A SQL Injection Vulnerability has been discovered in the Joomla Module
-called com_blog_calendar.
-The Vulnerability is located in the
-index.php?option=com_blog_calendar&modid=xxx Parameter.
-Attackers are able to execute own SQL commands by usage of a GET Method
-Request with manipulated modid Value.
-Attackers are able to read Database information by execution of own SQL
-commands.
+tl;dr
 
-DORKS (How to find the target) :
-================================
-inurl:/index.php?option=com_blog_calendar
-Or use your own Google Dorks :)
+This issue proposes:
 
-Proof of Concept
-================
+Change new Buffer(number) to return safe, zeroed-out memory
 
-SQL Injection
-PoC :
-http://[Site]/[Path]/index.php?option=com_blog_calendar&modid=['SQLi]
+Create a new API for creating uninitialized Buffers, Buffer.alloc(number)
 
-Screenshot (PoC) : http://i64.tinypic.com/2rqhhk4.png
+====
 
-Example of Vuln Sites :
-https://www.zen-road.org/index.php?option=com_blog_calendar&modid=['SQLi]
-http://www3.unitus.it/index.php?option=com_blog_calendar&modid=['SQLi]
-http://chausyleshoz.by/en/index.php?option=com_blog_calendar&modid=['SQLi]
-http://www.foms.kg/index.php?option=com_blog_calendar&modid=['SQLi]
-http://www.iab.com.bd/index.php?option=com_blog_calendar&modid=['SQLi]
-... etc ...
+it then goes into more detail at the URL. Can a CVE be assigned for this
+please?
 
--= Regards =-
- Steevee A.K.A
+-- 
 
-Content of type "text/html" skipped
+--
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
 
-View attachment "poc.txt" of type "text/plain" (2100 bytes)
