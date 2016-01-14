@@ -1,80 +1,127 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/07/3
-Message-ID: <3c64dbd2-0216-88f5-d2d1-b2445c7b63f1@suse.com>
-Date: Mon, 7 Nov 2016 06:35:31 -0500
-From: Andreas Stieger <astieger@...e.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2016-8637: dracut creates world readble initramfs when early cpio is used
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/14/6
+Message-Id: <20160114165546.103516C019E@smtpvmsrv1.mitre.org>
+Date: Thu, 14 Jan 2016 11:55:46 -0500 (EST)
+From: cve-assign@...re.org
+To: Jason@...c4.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, krzysztof.kowalewski@...t.pl, erik@...ludesecurity.com
+Subject: Re: CVE Request: CGit - Multiple vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-An openSUSE community user reported a permissions oddity with his
-initramfs. Upon further analysis this issued turns out to be a local
-information disclosure issue in dracut.
+> 1. Reflected Cross Site Scripting & Header Injection in Mimetype Query
+> String [Katowicz-Kowalewski]
+> 
+> The ui-blob handler accepted a mimetype as a query string and then
+> echoed this string verbatim back. A malicious user could provide a
+> string like:
+> 
+>   http://git.zx2c4.com/cgit/blob/cgit.c?mimetype=text/html%0d%0a%0d%0a<script>xss</script>
+> 
+> This has been fixed by removing support for the mimetype query string parameter:
+> http://git.zx2c4.com/cgit/commit/?id=1c581a072651524f3b0d91f33e22a42c4166dd96
 
-SUSE bug: https://bugzilla.suse.com/show_bug.cgi?id=1008340
-
-Dracut generates initramfs images with world-readable permissions when
-using "early cpio", such as when including microcode updates. Local
-users may use this to obtain information from these files, typically
-encryption keys and network storage credentials.
-
-E.g. in dracut 037 https://github.com/dracutdevs/dracut/blob/037/dracut.sh
-
-if [[ $create_early_cpio = yes ]]; then
-    echo 1 > "$early_cpio_dir/d/early_cpio"
-    # The microcode blob is _before_ the initramfs blob, not after
-    (cd "$early_cpio_dir/d";     find . -print0 | cpio --null
-$cpio_owner_root -H newc -o --quiet > $outfile)
-fi
-if ! ( umask 077; cd "$initdir"; find . -print0 | cpio --null
-$cpio_owner_root -H newc -o --quiet | \
-    $compress >> "$outfile"; ); then
-    dfatal "dracut: creation of $outfile failed"
-    exit 1
-fi
-
-The permissions of the output file depend on umask at creation time, and
-appending to an existing file does not change them. create_early_cpio is
-set to on when microcode updates are being used.
-
-The very similar vulnerability CVE-2012-4453 was reported and fixed in 024:
-http://git.kernel.org/cgit/boot/dracut/dracut.git/commit/?id=e1b48995c26c4f06d1a718539cb1bd5b0179af91
-
-However the addition of microcode update support in 030 re-introduced
-the issue:
-http://git.kernel.org/cgit/boot/dracut/dracut.git/commit/?id=5f2c30d9bcd614d546d5c55c6897e33f88b9ab90
-
-The vulnerability remains in current git master, which does something
-along the lines of:
-
-if [early_cpio]
-   cpio [...] > ${DRACUT_TMPDIR}/initramfs.img
-umask 0077
-cpio [...] >> ${DRACUT_TMPDIR}/initramfs.img
-cp --reflink=auto "${DRACUT_TMPDIR}/initramfs.img" "$outfile"
-
-Our fix in upstream master:
-http://git.kernel.org/cgit/boot/dracut/dracut.git/commit/?id=0db98910a11c12a454eac4c8e86dc7a7bbc764a4
-
-CVE-2016-8637 was assigned to this issue.
-
-The local workaround is to adjust the permissions of the initramfs files
-manually, and all back-ported patches will set umask to a suitable value
-such as 077 prior to first writing the file.
-
-For the SUSE Security Team,
-Andreas Stieger
-
--- 
-Andreas Stieger <astieger@...e.com>
-Project Manager Security
-SUSE Linux GmbH, GF: Felix Imendörffer, Jane Smithard, Graham Norton,
-HRB 21284 (AG Nürnberg)
+Use CVE-2016-1899.
 
 
+> And then restricting to only generic mimetypes:
+> http://git.zx2c4.com/cgit/commit/?id=92996ac2a6fc4e944c3d723e12d5ab244a43508e
+> And finally, just in case, setting the IE anti-sniffing header as well
+> as a restrictive CSP header:
+> http://git.zx2c4.com/cgit/commit/?id=9ca2566972db968df4479108b29bb92551138b57
+
+There is no CVE ID associated with either of these other changes,
+which seem to be for defense-in-depth purposes.
 
 
+> 2. Stored Cross Site Scripting & Header Injection in Filename
+> Parameter [Donenfeld]
+> 
+> A user who has write access to the git repository could create
+> filenames containing new lines that would result in that filename,
+> including the newlines, being included in a header, resulting in
+> header injection and eventually XSS.
+> 
+> This has been fixed by properly escaping filenames in headers:
+> http://git.zx2c4.com/cgit/commit/?id=513b3863d999f91b47d7e9f26710390db55f9463
 
-Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
+Use CVE-2016-1900.
+
+
+> Additionally, while the redirect for the /about -> /about/ page does
+> *not* appear to be vulnerable due to mitigating conditions, the
+> following commit was made to similarly harden potential injections
+> here:
+> http://git.zx2c4.com/cgit/commit/?id=4291453ec30656c2f59645d8a74cf295ce0253a9
+
+There is no CVE ID associated with this additional issue.
+
+
+> 3. Stored Cross Site Scripting in Git Repo Files [Katowicz-Kowalewski]
+> 
+> A user who has write access to the git repository can add HTML pages
+> and then serve them with an HTML mimetype. A user could therefore
+> upload pages with malicious javascript executing in the same origin as
+> the cgit web site. While this is ordinarily not a problem for
+> single-use users - and indeed some users rather like being able to
+> serve html from cgit - sites that allow potentially malicious third
+> party users may not find this behavior desirable.
+> 
+> This has been fixed by adding a configuration option,
+> "enable-html-serving", which is by default off:
+> http://git.zx2c4.com/cgit/commit/?id=aaba5f8b925f44f7d5ffb0a45fe349642d478513
+> This flag sets anti-sniffing, CSP, and restricts mimetypes to
+> non-"application/" (except for application/pdf and
+> application/octet-stream) and non-"text/" (except for text/plain).
+
+There is no CVE ID associated with this report, which seems to be
+about adding new security-related functionality. We realize that other
+perspectives may have existed, especially because the attacker for
+both 2 and 3 is "A user who has write access to the git repository."
+However, we typically don't want to have a CVE for a design change
+that probably breaks a number of existing installations unless
+reconfigured. Also, it seems that another possibility may have been
+creation of a framework for segregating the user-uploaded HTML files
+into a different origin (admittedly this may not be worthwhile because
+running a cgit service with two domain names probably isn't what the
+ordinary cgit customer wants).
+
+
+> 4. Integer Overflow resulting in Buffer Overflow [Cabetas]
+> 
+> ctx.env.content_length is an unsigned int, coming from the
+> CONTENT_LENGTH environment variable, which is parsed by strtoul. The
+> HTTP/1.1 spec says that "any Content-Length greater than or equal to
+> zero is a valid value." By storing this unsigned int into an int, we
+> potentially overflow it, resulting in the following bounding check
+> failing, leading to a buffer overflow.
+> 
+> This has been fixed by this commit:
+> http://git.zx2c4.com/cgit/commit/?id=4458abf64172a62b92810c2293450106e6dfc763
+
+Use CVE-2016-1901.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJWl9JtAAoJEL54rhJi8gl5lQEP/RNIfyGohJ7Z/SHub/OW/Bl0
+39LctMT9FcOTD6WBIvub4bWE6Q/c2FlWfDjeier2cO+pm3xJnXZEvGDMxZEI2wYI
+ErO9spu++XX6JDak0Il9fdxPTTzjSJj+c+8O8fKI3mJyUVxNhmWYUxIdG83or9zx
+ZUko+9LmXStUliIwG7FKGdqbP9gHvFI+ZLdfwtPomNJs9MEzJPipOEuSh6/Ia822
+4rXxn9Jb+wCVWdIhsaGUkuM4wq2SZsMcpJ13ww4IOOnCErfDKbRrODXvt03MRwyE
+yE0R7aI0RoSzqzUAyiqJZZfgVgrPl1Ofx3n6mnbV3Y93Ypo8MparXUXf7+LDTT7I
+Q9M7CWc5YYOnRBg12XFaUmJY25UQRlc4PjVUpX6DZY2vyzuO8cj3k64Vi4wcQ/Nc
+OtyqNuKUJMPH77mVmMZHy7jfbtq/I20H34B57+jfBkCyLs50tQAP+8EAze0yEFF4
+ZXv87eMrUNJJu/qOoZeJaf57PAzuFaoANtYBQ+p/hUfMwsm8iGoy6Ko0ZXO3ZW3k
+9kACdNt3QX0OfNVLws2r6qr+CFERrHMp+ha6JZbBFGAPNO4QP9ATzaixQzJ76nSU
+pPrqObQ6H58Mmq+ACRtBTNLVnccMNLsMDPgSWeLmlXZpe5DP/EPyQuSduC7gDkB/
+8Td7FtAmzPUi1aORc6OK
+=F6i1
+-----END PGP SIGNATURE-----
