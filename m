@@ -1,59 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/23/5
-Message-Id: <20160623125926.22C04B2E154@smtpvbsrv1.mitre.org>
-Date: Thu, 23 Jun 2016 08:59:26 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/14/1
+Message-Id: <20160114075905.A27A213A60D@smtpvmsrv1.mitre.org>
+Date: Thu, 14 Jan 2016 02:59:05 -0500 (EST)
 From: cve-assign@...re.org
-To: meissner@...e.de
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: Python HTTP header injection in urrlib2/urllib/httplib/http.client
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: Re: Fwd: FFmpeg: stealing local files with HLS+concat
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> https://sourceware.org/bugzilla/show_bug.cgi?id=20018
+> http://habrahabr.ru/company/mailru/blog/274855
 
-When we looked at this last week, we concluded that it was intentional
-glibc behavior and therefore a glibc CVE ID should not exist.
+As far as we can tell, there are two distinct cross-origin issues
+within FFmpeg's URL processing. Use CVE-2016-1897 for the concat issue
+(which is fully described in the blog/274855 reference) and
+CVE-2016-1898 for the subfile issue (which is mentioned but not
+described in the blog/274855 reference).
 
-https://bugzilla.redhat.com/show_bug.cgi?id=1303699 Comment 4 is a
-private comment, but there is apparently a copy of it in the public
-https://bugzilla.redhat.com/show_bug.cgi?id=1347549 Comment 3:
+The essential problem is that a crafted file forces the victim to
+visit an arbitrary external URL, but this URL is constructed using
+data from the victim's local filesystem.
 
-   This flexible behaviour is allowed because it makes parsing
-   space-separated lists of addresses (as C strings) easier to manage.
-   You advance the pointer between the address blocks and call
-   inet_aton. In this case getaddrinfo uses inet_aton to determine the
-   validity of the input string, and so considers "127.0.0.1\r\nspam"
-   a valid name parameter and it is immediately converted into the
-   address structure for 127.0.0.1.
 
-The remaining concern is that there's a potentially important
-enhancement to glibc in which functionality would be added that is
-similar to the current inet_addr/inet_aton behavior but with
-"127.0.0.1\r\nspam" rejected as an invalid address. The current
-behavior possibly belongs on a list of glibc oddities but, we think,
-not on the CVE list.
+> https://github.com/ctfs/write-ups-2015/tree/master/9447-ctf-2015/web/super-turbo-atomic-gif-converter
+
+This might describe a vulnerability, but we aren't sure whether the
+access to file:///home/ctf/flag.txt is really unintended FFmpeg
+behavior. This might be better modeled as a site-specific
+vulnerability in the web service, because it should have arranged for
+the file:///home/ctf/flag.txt URL to be interpreted within an
+appropriately safe sandbox context.
+
+Similarly, the reports of FFmpeg SSRF in blog/274855 might be better
+modeled as site-specific vulnerabilities within the "online video
+conversion" web application.
 
 - -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJXa9zNAAoJEHb/MwWLVhi2GWgP/ih9d8dC9pwcQfZ7pSBMkJdI
-r91yFb1D4VcJsxT7cVAnQjAXW8hgz9i27Olm3E3djuoBob68DBKE+0UKSQVy1j7P
-mbVT+sGgXFnYE1cv3HWXSIWowc4+AQVwQfqOJaXwS5wP8+CPx6CCvfOP3SYSrki0
-Eo4MVK/3Ea3FlNwGcXjB9QgNSPm+hHFzK86Ln4JaKNhoD9iQk3skK1q5IclLqm43
-nw1Tg9/778awoWcdvOy6s1I3zz6oUKOc9UnSEzDF8DZDQNBl2+f+IsAiPulggxcG
-dIIcJwGjaqOUNhRtTc9ZlnmfeEDaOKmFzDvY6sAz3CRU9bIHOrx+DBwbQuNpZ5O3
-xU49+NZr1eiS3s16e02QCdh6j9WVZynpXrfNkRoWRaRvb8P3xUOSkqfNVAYIwg1Y
-VaJ090zphhc3K7L8rnmnm0LwJkPlg0yUgv5baQ2RYZ/VneZY7p0HogknBNwxLyUR
-NiJAwyYJAOu/WJNreBdOFRh2pqwATxmFyfaqOPv+Lk/9zDGqH1rVHVQyxvWJoz0k
-6DpzYI7QVzFPVkKl+EItJiE3wsZNPl6q6+E8i/4cAnfj6XK9CrFVHBP4v3RURm7l
-1+2bk/9QZpldSFypHEzSC3QfNr3GDoTJZOSEAZfomiA7ovcj2yC7+3c17nuUmqvj
-axI4BNa4v14fnvU6J7S5
-=2hPX
+iQIcBAEBCAAGBQJWl1TnAAoJEL54rhJi8gl57hIP/jkD+Hfa2TlpnCMaub2I4Nv7
+w8Ij6n1DxQcHIEikSpzGzVjzFF5bM08+cnprML2T9mvv8LfIf9LTKhLA6eGA6o0Y
+Fdx2Plk1gsz/8xG2+bQD/WWwAd0DU+UEPyg9gQ3uq8aCrQU5+umY3/k27FSnBoEw
+/012zKOC/kA7bc3lvMVnEGXjkht48Pjbme4xi/7g8iKJ7Xgp0BJJMITsfUjGQ4wZ
+qWXo1is5g6okqmxxCsxBi6z+HiD4rBYGPKLoykFhZKjbKKZVryu5o9IFmqV0Gcx3
+Yr2qXq55X9VMfUYfwOEbr0khmNvOTWaCeVGRqNKicMrnQ2AuBln0xw0GSx/IC54a
+x871TKEe1K5htx4rgA8yiyeg+HADKBnkBGBsxo9WIen/Jt12JuDQPSEjoWkelUsO
+YHIOj4Bvg44aP0GLkPxDIFW4xSNc2SGUg22WJVsTaTxi07U0eUnMZLqxL0UbLJw2
+NNIkGj0zCY/74helTqH6O+ZQ7pcePLA07DNiRNKjFp8V4do+MglXG63oVgNMRi5D
+Ec89tB57B7ADRqv0k/+HQxa+K4Tur4s4U6ROCBuUxlbg4N/qzzePnJxB8g3ecKr0
+rx791hkbmVqI27gtKdMEIK5GJwPQKsvx48wM3zq1aCiELnqzfuOReQihXs98+KwM
+iVCG+PH+hIf4wO2Wq06i
+=rHFW
 -----END PGP SIGNATURE-----
