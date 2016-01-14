@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2182" "Tuesday" "15" "December" "2015" "16:18:12" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151215211812.7F21A6C010C@smtpvmsrv1.mitre.org>" "44" "[oss-security] Re: User man Local Root Exploit/Linux Kernel setgid Directory Privilege Escalation/PAM Owner Check Weakness" "^Cc:" nil nil "12" "2015121521:18:12" "[oss-security] Re: User man Local Root Exploit/Linux Kernel setgid Directory Privilege Escalation/PAM Owner Check Weakness" (number mark "        cve-assign@m Dec 15   44/2182  " thread-indent "\"[oss-security] Re: User man Local Root Exploit/Linux Kernel setgid Directory Privilege Escalation/PAM Owner Check Weakness\"\n") "<5670692A.4050001@halfdog.net>" ("<5670692A.4050001@halfdog.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5101" "Thursday" "14" "January" "2016" "11:55:46" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160114165546.103516C019E@smtpvmsrv1.mitre.org>" "117" "[oss-security] Re: CVE Request: CGit - Multiple vulnerabilities" nil nil nil "1" "2016011416:55:46" "[oss-security] Re: CVE Request: CGit - Multiple vulnerabilities" (number mark "U       cve-assign@m Jan 14  117/5101  " thread-indent "\"[oss-security] Re: CVE Request: CGit - Multiple vulnerabilities\"\n") "<CAHmME9qMafTAqWTgj6oRHmN9HZtJ8KrghR1U63H=r+jA7M3zyg@mail.gmail.com>" ("<CAHmME9qMafTAqWTgj6oRHmN9HZtJ8KrghR1U63H=r+jA7M3zyg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 19538 invoked by uid 550); 15 Dec 2015 21:18:32 -0000
+Received: (qmail 27886 invoked by uid 550); 14 Jan 2016 16:55:58 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,37 +11,110 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 19489 invoked from network); 15 Dec 2015 21:18:24 -0000
-In-Reply-To: <5670692A.4050001@halfdog.net>
-Message-Id: <20151215211812.7F21A6C010C@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org
-Date: Tue, 15 Dec 2015 16:18:12 -0500 (EST)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: User man Local Root Exploit/Linux Kernel setgid Directory Privilege Escalation/PAM Owner Check Weakness
-To: oss-security@lists.openwall.com
+Received: (qmail 27868 invoked from network); 14 Jan 2016 16:55:57 -0000
+From: cve-assign@mitre.org
+To: Jason@zx2c4.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, krzysztof.kowalewski@eset.pl, erik@includesecurity.com
+In-Reply-To: <CAHmME9qMafTAqWTgj6oRHmN9HZtJ8KrghR1U63H=r+jA7M3zyg@mail.gmail.com>
+Message-Id: <20160114165546.103516C019E@smtpvmsrv1.mitre.org>
+Date: Thu, 14 Jan 2016 11:55:46 -0500 (EST)
+Subject: [oss-security] Re: CVE Request: CGit - Multiple vulnerabilities
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> http://www.halfdog.net/Security/2015/MandbSymlinkLocalRootPrivilegeEscalation/
-> PAM library should not operate on shadow writable by anyone else than root user.
+> 1. Reflected Cross Site Scripting & Header Injection in Mimetype Query
+> String [Katowicz-Kowalewski]
+> 
+> The ui-blob handler accepted a mimetype as a query string and then
+> echoed this string verbatim back. A malicious user could provide a
+> string like:
+> 
+>   http://git.zx2c4.com/cgit/blob/cgit.c?mimetype=text/html%0d%0a%0d%0a<script>xss</script>
+> 
+> This has been fixed by removing support for the mimetype query string parameter:
+> http://git.zx2c4.com/cgit/commit/?id=1c581a072651524f3b0d91f33e22a42c4166dd96
 
-In case there was interest in this report of a possibly unexpected PAM
-behavior: the MITRE CVE team has no current plans to assign a CVE ID.
-This seems to be essentially a design issue where multiple valid
-opinions may exist. In other words, if /etc/shadow is in an incorrect
-state, possibly the ideal outcome would be to halt the system until it
-can be recovered using console access, possibly the ideal outcome is
-to let the system continue running with otherwise normal software
-behaviors in case an authorized user is relying on those behaviors to
-fix the problem, or possibly it's something in between. Another
-example would be a case where /etc/shadow is not critically
-misconfigured (e.g., owned by the man account) but only slightly
-misconfigured (e.g., the root group has read access). Some people may
-prefer a design in which password-based authentication always fails
-until the permissions are fixed; however, that's not necessarily the
-prevailing opinion.
+Use CVE-2016-1899.
+
+
+> And then restricting to only generic mimetypes:
+> http://git.zx2c4.com/cgit/commit/?id=92996ac2a6fc4e944c3d723e12d5ab244a43508e
+> And finally, just in case, setting the IE anti-sniffing header as well
+> as a restrictive CSP header:
+> http://git.zx2c4.com/cgit/commit/?id=9ca2566972db968df4479108b29bb92551138b57
+
+There is no CVE ID associated with either of these other changes,
+which seem to be for defense-in-depth purposes.
+
+
+> 2. Stored Cross Site Scripting & Header Injection in Filename
+> Parameter [Donenfeld]
+> 
+> A user who has write access to the git repository could create
+> filenames containing new lines that would result in that filename,
+> including the newlines, being included in a header, resulting in
+> header injection and eventually XSS.
+> 
+> This has been fixed by properly escaping filenames in headers:
+> http://git.zx2c4.com/cgit/commit/?id=513b3863d999f91b47d7e9f26710390db55f9463
+
+Use CVE-2016-1900.
+
+
+> Additionally, while the redirect for the /about -> /about/ page does
+> *not* appear to be vulnerable due to mitigating conditions, the
+> following commit was made to similarly harden potential injections
+> here:
+> http://git.zx2c4.com/cgit/commit/?id=4291453ec30656c2f59645d8a74cf295ce0253a9
+
+There is no CVE ID associated with this additional issue.
+
+
+> 3. Stored Cross Site Scripting in Git Repo Files [Katowicz-Kowalewski]
+> 
+> A user who has write access to the git repository can add HTML pages
+> and then serve them with an HTML mimetype. A user could therefore
+> upload pages with malicious javascript executing in the same origin as
+> the cgit web site. While this is ordinarily not a problem for
+> single-use users - and indeed some users rather like being able to
+> serve html from cgit - sites that allow potentially malicious third
+> party users may not find this behavior desirable.
+> 
+> This has been fixed by adding a configuration option,
+> "enable-html-serving", which is by default off:
+> http://git.zx2c4.com/cgit/commit/?id=aaba5f8b925f44f7d5ffb0a45fe349642d478513
+> This flag sets anti-sniffing, CSP, and restricts mimetypes to
+> non-"application/" (except for application/pdf and
+> application/octet-stream) and non-"text/" (except for text/plain).
+
+There is no CVE ID associated with this report, which seems to be
+about adding new security-related functionality. We realize that other
+perspectives may have existed, especially because the attacker for
+both 2 and 3 is "A user who has write access to the git repository."
+However, we typically don't want to have a CVE for a design change
+that probably breaks a number of existing installations unless
+reconfigured. Also, it seems that another possibility may have been
+creation of a framework for segregating the user-uploaded HTML files
+into a different origin (admittedly this may not be worthwhile because
+running a cgit service with two domain names probably isn't what the
+ordinary cgit customer wants).
+
+
+> 4. Integer Overflow resulting in Buffer Overflow [Cabetas]
+> 
+> ctx.env.content_length is an unsigned int, coming from the
+> CONTENT_LENGTH environment variable, which is parsed by strtoul. The
+> HTTP/1.1 spec says that "any Content-Length greater than or equal to
+> zero is a valid value." By storing this unsigned int into an int, we
+> potentially overflow it, resulting in the following bounding check
+> failing, leading to a buffer overflow.
+> 
+> This has been fixed by this commit:
+> http://git.zx2c4.com/cgit/commit/?id=4458abf64172a62b92810c2293450106e6dfc763
+
+Use CVE-2016-1901.
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -51,17 +124,17 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJWcIMhAAoJEL54rhJi8gl5oJsQAIZWMm3K94q59jP/HzruZbfn
-WCo8GXY1lRnjWfcfSncS+SgSwI/gNDIQAq2Z+EzPrTd27zmXEQdL77affnWMWojX
-HslCHsAo5jAtk9ytNnalCKQ6Y6dNuoWa61O43F6IOZlksyRMrdapA9B3XXXr4MkA
-YHuEbSFK4tbgmUP/wM0RGZLV4a7LKWoDMKuLBTd56pWBQ7429QV2tVGPgx+xFg03
-zaEiXE8w8s1qGXWQVICJaPhu5mCejDejzF34h0DhcxVJlzFpEaQIO1KZgtYUifDB
-cbPjSfZvdZGSZl3fJC+QBf20g4hyyocqUwzJI0qXpT0L6rhBzZoeRbuO8W/levZG
-oaZuVism8k3wvVC/NzmoG1nrPuNp4hp6hQIzdyPo+WwSyCFYSeZe0DPYh51kURZN
-qAA+R6LjQKPUwiOLpgRy1h19Qc08tfUvrZeTmT8ZB9s9LTpKZRy5N9/jJDne5lLZ
-KuNIu1Lz6LhdELIQdNEMJ/PbjQTUu1Y6us4geDJYaCmPyiqxl/bjXmj4jez2jScK
-1FVWg9Pixdf811xY2FOouBOIeXHBWQlykEZcTFsy12ykolcHi81pXZTeatsoQZ8H
-yVGxe1+reNFULx1Yf3IOd1UWqsPoTE+jwEDO3s5REox7pigK4SGbxntREevkTLnu
-8QvfJp8ra+vE0NgtoUZs
-=Z+Rm
+iQIcBAEBCAAGBQJWl9JtAAoJEL54rhJi8gl5lQEP/RNIfyGohJ7Z/SHub/OW/Bl0
+39LctMT9FcOTD6WBIvub4bWE6Q/c2FlWfDjeier2cO+pm3xJnXZEvGDMxZEI2wYI
+ErO9spu++XX6JDak0Il9fdxPTTzjSJj+c+8O8fKI3mJyUVxNhmWYUxIdG83or9zx
+ZUko+9LmXStUliIwG7FKGdqbP9gHvFI+ZLdfwtPomNJs9MEzJPipOEuSh6/Ia822
+4rXxn9Jb+wCVWdIhsaGUkuM4wq2SZsMcpJ13ww4IOOnCErfDKbRrODXvt03MRwyE
+yE0R7aI0RoSzqzUAyiqJZZfgVgrPl1Ofx3n6mnbV3Y93Ypo8MparXUXf7+LDTT7I
+Q9M7CWc5YYOnRBg12XFaUmJY25UQRlc4PjVUpX6DZY2vyzuO8cj3k64Vi4wcQ/Nc
+OtyqNuKUJMPH77mVmMZHy7jfbtq/I20H34B57+jfBkCyLs50tQAP+8EAze0yEFF4
+ZXv87eMrUNJJu/qOoZeJaf57PAzuFaoANtYBQ+p/hUfMwsm8iGoy6Ko0ZXO3ZW3k
+9kACdNt3QX0OfNVLws2r6qr+CFERrHMp+ha6JZbBFGAPNO4QP9ATzaixQzJ76nSU
+pPrqObQ6H58Mmq+ACRtBTNLVnccMNLsMDPgSWeLmlXZpe5DP/EPyQuSduC7gDkB/
+8Td7FtAmzPUi1aORc6OK
+=F6i1
 -----END PGP SIGNATURE-----
