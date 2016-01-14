@@ -1,69 +1,123 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/01/1
-Message-Id: <20160501011252.5F9896C060D@smtpvmsrv1.mitre.org>
-Date: Sat, 30 Apr 2016 21:12:52 -0400 (EDT)
-From: cve-assign@...re.org
-To: jmm@...ian.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, security@...eshark.org
-Subject: Re: CVE requests: Multiple Wireshark vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/14/8
+Message-ID: <CA+KTh2xTqQrn4NebcfB=xVB8xt8oyS8ZVROj6AXKA5ukpv1_5g@mail.gmail.com>
+Date: Fri, 15 Jan 2016 06:41:29 +1300
+From: Emmanuel Law <emmanuel.law@...il.com>
+To: cve-assign@...re.org, oss-security@...ts.openwall.com
+Cc: security@....net
+Subject: [CVE Request] Multiple PHP issues
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+1) Can we assign a CVE to PHP "Memory Read via gdImageRotateInterpolated
+Array Index Out of Bounds":
 
-CVE-2016-4415
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=11795
-https://www.wireshark.org/security/wnpa-sec-2016-12.html
-https://code.google.com/p/google-security-research/issues/detail?id=647
+Bug report: https://bugs.php.net/bug.php?id=70976
+It is possible to read (almost) arbitrary memory.
 
 
-CVE-2016-4416
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=11818
-https://www.wireshark.org/security/wnpa-sec-2016-13.html
+2) Also CVE  request for PHP "Heap BufferOver Flow in escapeshell
+functions":
+
+Bug report: https://bugs.php.net/bug.php?d=71270
+Patch:
+https://github.com/php/php-src/commit/2871c70efaaaa0f102557a17c727fd4d5204dd4b
+
+=====Copy and Paste of Original Bug Report ======
+
+- There exist a heap-based buffer over flow that allows one to write a user
+tainted data pass an allocated buffer. This vulnerability lies in the
+following functions:
+
+escapeshellarg
+escapeshellcmd
+
+- On a default php installation, the memory limit is set to 128MB and this
+vulnerability is not triggerable. My analysis shows that this is
+triggerable when memory limit is roughly > 1024mb. A quick search on github
+shows that it's not uncommon to see code like "ini_set('memory_limit', -1);"
 
 
-CVE-2016-4417
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=11825
-https://www.wireshark.org/security/wnpa-sec-2016-14.html
+-I've created a POC that triggers the buffer over write with
+0x414141414141.....
+
+- A string of 1024mb is created and passed into escapeshellarg. "l"
+contains the length of this string:
+
+Breakpoint 2, php_escape_shell_arg (str=0x7fffad469028 'A' <repeats 200
+times>...) at /home/elaw/php-7.0.0/ext/standard/exec.c:343
+343             int x, y = 0, l = (int)strlen(str);
+
+gdb-peda$ print l
+$43 = 0x40000000            // 1024mb
 
 
-CVE-2016-4418
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12106
-https://www.wireshark.org/security/wnpa-sec-2016-15.html
+
+-This length "l" is then passed into zend_string_alloc as "4 * l + 2" which
+results in an integer overflow:
+
+Temporary breakpoint 3, php_escape_shell_arg (str=0x7fffad000018 'A'
+<repeats 200 times>...) at /home/elaw/php-7.0.1/ext/standard/exec.c:348
+348             cmd = zend_string_alloc(4 * l + 2, 0); /* worst case */
 
 
-CVE-2016-4419
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12151
-https://www.wireshark.org/security/wnpa-sec-2016-16.html
+gdb-peda$ print 4* l + 2
+$44 = 0x2   //Overflow
+
+- Stepping into zend_string_alloc to verify the integer overflow. Notice
+len=0x2:
+zend_string_alloc (persistent=0x0, len=0x2) at
+/home/elaw/php-7.0.0/Zend/zend_string.h:121
+121             zend_string *ret = (zend_string
+*)pemalloc(ZEND_MM_ALIGNED_SIZE(_ZSTR_STRUCT_SIZE(len)), persistent);
+
+- Lets confirm the overflow again in the allocated (zend_string *) cmd.
+Notice cmd.len=0x2:
+gdb-peda$ p *cmd
+$52 = {
+  gc = {
+    refcount = 0x1,
+    u = {
+      v = {
+        type = 0x6,
+        flags = 0x0,
+        gc_info = 0x0
+      },
+      type_info = 0x6
+    }
+  },
+  h = 0x0,
+  len = 0x2,
+  val = "1"
+}
 
 
-CVE-2016-4420
-https://www.wireshark.org/security/wnpa-sec-2016-17.html
+
+- The loops then writes pass the allocated buffer in
+
+258 for (x = 0, y = 0; x < l; x++) {
+....
+321       ZSTR_VAL(cmd)[y++] = str[x];
 
 
-CVE-2016-4421
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=11822
-https://www.wireshark.org/security/wnpa-sec-2016-18.html
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+- Verifying the buffer overflow in
+gdb-peda$ p (zend_string *)cmd.len
+$9 = (zend_string *) 0x2
+gdb-peda$ x/100b (zend_string *)cmd.val
+0x1625a58:      0x27    0x41    0x41    0x41    0x41    0x41    0x41    0x41
+0x1625a60:      0x41    0x41    0x41    0x41    0x41    0x41    0x41    0x41
+0x1625a68:      0x41    0x41    0x41    0x41    0x41    0x41    0x41    0x41
+0x1625a70:      0x41    0x41    0x41    0x41    0x41    0x41    0x41    0x41
+0x1625a78:      0x41    0x41    0x41    0x41    0x41    0x41    0x41    0x41
+0x1625a80:      0x41    0x41    0x41    0x41    0x41    0x41    0x41    0x41
+0x1625a88:      0x41    0x41    0x41    0x41    0x41    0x41    0x41    0x41
+0x1625a90:      0x41    0x41    0x41    0x41    0x41    0x41    0x41    0x41
+0x1625a98:      0x41    0x41    0x41    0x41    0x41    0x41    0x41    0x41
+0x1625aa0:      0x41    0x41    0x41    0x41    0x41    0x41    0x41    0x41
+0x1625aa8:      0x41    0x41    0x41    0x41    0x41    0x41    0x41    0x41
+0x1625ab0:      0x41    0x41    0x41    0x41    0x41    0x41    0x41    0x41
+0x1625ab8:      0x41    0x41    0x41    0x41
 
-iQIcBAEBCAAGBQJXJVe4AAoJEHb/MwWLVhi2KGcP/0PM0l3c/X6ouWO/ewltfV1N
-zCm0qLM2cGtbmFx1d/Cb4s5BacBtIj3SgMA6tf3Jz8jCYHW2HgBxaR9c53J0v/nZ
-jj0utLopTF9NIK1g/Z5qKiV65enHciuxOUW6le2SzORKGLAujtjhQK3uFUR/Kn0v
-PUFfx1QrN8axi/sct30a2ToI5BbINsfk0tvtb1CBd/3HI/z21H1KZW1mnJD1XwVX
-OWlcMQSPfHUafpDwr9X4EoMZ4jFRRGfJ09dvbSFGiaL+CbYgNBfAMEaT4fqCQIyr
-1uxI9oIqd+ktJFhXE3J6zkVnUXhw2nDT8OtSP+JyPFzZPorDrzwjPv4sKXnW+QYT
-b68rRumEj+ux3pNbV5sKXnjsJMZmUd1d2Y7qY6N89qaA8LL3s9GfxlywbBmCMsCP
-zJZefnmVioIpe3WYnbPcx+OWzbNflNIWi2/UUDfIlPV2bS+RJpDtR6W81onyeTeB
-pySxM/S2id4bmheneGukFefOyBRXqaT2UNq+cKwClJV3DHyezWjPEyXwuC0XBJzu
-jBNAC5oXgBe4h3BOrx03nL0CguMZicr8EdDDvpJZWREKVb9VbsbXk1CD9/k2/sk0
-P9x6aGvB0moHCklRO1lj0DNr+OaV+DM7p1PM6Bt4iOJHtrjO01fL+ckl3nOgTXKi
-LDtPs2LxK0WKxPMcA6sJ
-=Z9Df
------END PGP SIGNATURE-----
+
+- The vulnerability for php_escape_shell_cmd is identical.
+
