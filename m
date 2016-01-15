@@ -1,47 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/08/2
-Message-ID: <20160508221902.04889595@pc1>
-Date: Sun, 8 May 2016 22:19:02 +0200
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: dosfstools / fsck.vfat: Several invalid memory accesses
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/15/11
+Message-Id: <20160115171928.D50296C01EB@smtpvmsrv1.mitre.org>
+Date: Fri, 15 Jan 2016 12:19:28 -0500 (EST)
+From: cve-assign@...re.org
+To: mike.gabriel@...-netzwerkteam.de
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Security issues in GOsa
 Content-Type: text/plain; charset=utf-8
 
-https://blog.fuzzing-project.org/44-dosfstools-fsck.vfat-Several-invalid-memory-accesses.html
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-I lately fuzzed various filesystem check tools. This uncovered a number
-of issues in dosfstools / fsck.fat that have now been fixed in the new
-version 4.0. All issues were found with american fuzzy lop and address
-sanitizer.
+> Possibility of code injection when setting passwords for Samba.
+> https://github.com/gosa-project/gosa-core/commit/a67a047cba2cdae8bccb0f0e2bc6d3eb45cfcbc8
 
-https://github.com/dosfstools/dosfstools/issues/11
-Global out of bounds read file_stat() / check_dir()
-https://github.com/dosfstools/dosfstools/commit/2aad1c83c7d010de36afbe79c9fde22c50aa2f74
-Git commit / fix
+>> command line parameter will be passed base64 encoded to avoid 
+>> complex escaping sequences
 
-https://github.com/dosfstools/dosfstools/issues/12
-Unclear invalid memory access in get_fat()
-https://github.com/dosfstools/dosfstools/commit/07908124838afcc99c577d1d3e84cef2dbd39cb7
-Git commit / fix
-
-https://github.com/dosfstools/dosfstools/issues/25
-Heap overflow in read_fat()
-https://github.com/dosfstools/dosfstools/issues/26
-Heap out of bounds read in get_fat()
-https://github.com/dosfstools/dosfstools/commit/e8eff147e9da1185f9afd5b25948153a3b97cf52
-Git commit / fix for both issues
-
-These bugs can pose a security risk if a system automatically checks
-attached storage media with fsck or in situations where filesystems on
-untrusted devices get checked. The new version dosfstools 4.0 fixes all
-four bugs.
+Use CVE-2015-8771.
 
 
--- 
-Hanno Böck
-https://hboeck.de/
+> XSS vulnerability during session log on.
+> https://github.com/gosa-project/gosa-core/commit/e35b990464a2c2cf64d6833a217ed944876e7732
 
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
+>> escape html entities to fix xss at the login screen
+>> 
+>> - $smarty->assign ('username', $username);
+>> + $smarty->assign ('username', set_post($username));
 
-Content of type "application/pgp-signature" skipped
+Use CVE-2014-9760. The MITRE CVE team has not done any independent
+investigation of whether this crosses a privilege boundary. (For some
+products, a login-screen attack is always a self-XSS attack.)
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJWmSiiAAoJEL54rhJi8gl50fsQAM9lhwPuciW828UBaqzxUUlj
+bhxKnz7G9vhu6K9uzJBs8JmYK9r7q8sUWmCHNdpM3l2Bz3Rg804JZGrdeE/zi3yV
+n9XStP4rBQvS2B6TRpfr4o5KIDg1g6eEfV96dNEZbq99h4mc23RlrtKCJ0w8/RWj
+1ZKrDC2HJKJF4IIfZoobw4CfMbJn6iky/wrIRoozPkx984DIDM5w/13UWGKrChuS
+mop4sGxJcDHDmVHKRCCDsIFp7BVPy2tFhtNi2xx6Eni2fKeiJKDbs+u0I/o6rV+P
+dGIZ1VHLbIn0JOl9Pkm5fOxcqaja7mvuYfikMeG6cmKqIe+aWrHqYnczdeWVP4i/
+17mIWDhih03S/z1Irw3xjaXFRTvDZONBp31bfoiNoh8NoCE4YDL3WkBHSG4mOR+1
+cuWuOuYJs/6HNYonPOedamTGYLIG7C2jCcMSVAlzg81nU6oV8coHikLcRHjCeI/L
+FfpvJ6Yb+XWwMg/DjJqAc5hkJQFicoM0AFIiCOYROovu8B3EYXXiBbTxOJRCb4V7
+POIi4lwRaFTLs3uPkzIg9LX5K7JumyvB+uK2yrz4Hd+jkqUs1c11Fw12u6FYTaMT
+Sq1NULUw19+RmWkx5GWs3JNM7O5wiyj8PMsebtqLsrmcDJfSzziCJzfDKG6c8emn
+MenkHGUnsuUegd8UFil5
+=mw6w
+-----END PGP SIGNATURE-----
