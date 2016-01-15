@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["710" "Sunday" "5" "November" "2017" "22:15:44" "-0800" "Ian Zimmerman" "itz@very.loosely.org" "<20171106061544.apbxborivf4lye7m@matica.foolinux.mooo.com>" "18" "[oss-security] Re: Security risk of vim swap files" "^Date:" nil nil "11" "2017110606:15:44" "[oss-security] Re: Security risk of vim swap files" (number mark "        itz@very.loo Nov  5   18/710   " thread-indent "\"[oss-security] Re: Security risk of vim swap files\"\n") "<20171101181209.GB22752@openwall.com>" ("<20171031132352.2df6d2ad@pc1>" "<20171031175407.jcniviupwyab6qcl@sentinelchicken.org>" "<20171101023330.GK30551@takahe.colorado.edu>" "<20171101144927.srk7stiwoia4qt57@sentinelchicken.org>" "<CAH8yC8=KKh8SPtDUUSAL_GuDHT7eYBrmHvVjzeQ5n4ocFh4m5Q@mail.gmail.com>" "<20171101180222.5j6wqmmqakwvu72q@jwilk.net>" "<20171101181209.GB22752@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1393" "Friday" "15" "January" "2016" "20:32:49" "+0100" "Tomas Hoger" "thoger@redhat.com" "<20160115203249.3acb4153@redhat.com>" "32" "Re: [oss-security] Re: Qualys Security Advisory - Roaming through the OpenSSH client: CVE-2016-0777 and CVE-2016-0778" "^Cc:" nil nil "1" "2016011519:32:49" "[oss-security] Re: Qualys Security Advisory - Roaming through the OpenSSH client: CVE-2016-0777 and CVE-2016-0778" (number mark "        thoger@redha Jan 15   32/1393  " thread-indent "\"Re: [oss-security] Re: Qualys Security Advisory - Roaming through the OpenSSH client: CVE-2016-0777 and CVE-2016-0778\"\n") "<20160115171016.57F5F332003@smtpvbsrv1.mitre.org>" ("<1452866613.15013.86.camel@debian.org>" "<20160115171016.57F5F332003@smtpvbsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 19963 invoked by uid 550); 6 Nov 2017 11:46:28 -0000
+Received: (qmail 5417 invoked by uid 550); 15 Jan 2016 19:33:06 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,43 +11,52 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 22197 invoked from network); 6 Nov 2017 06:16:06 -0000
-Message-ID: <20171106061544.apbxborivf4lye7m@matica.foolinux.mooo.com>
-Mail-Followup-To: oss-security@lists.openwall.com
-References: <20171031132352.2df6d2ad@pc1>
- <20171031175407.jcniviupwyab6qcl@sentinelchicken.org>
- <20171101023330.GK30551@takahe.colorado.edu>
- <20171101144927.srk7stiwoia4qt57@sentinelchicken.org>
- <CAH8yC8=KKh8SPtDUUSAL_GuDHT7eYBrmHvVjzeQ5n4ocFh4m5Q@mail.gmail.com>
- <20171101180222.5j6wqmmqakwvu72q@jwilk.net>
- <20171101181209.GB22752@openwall.com>
+Received: (qmail 5396 invoked from network); 15 Jan 2016 19:33:06 -0000
+Message-ID: <20160115203249.3acb4153@redhat.com>
+In-Reply-To: <20160115171016.57F5F332003@smtpvbsrv1.mitre.org>
+References: <1452866613.15013.86.camel@debian.org>
+	<20160115171016.57F5F332003@smtpvbsrv1.mitre.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20171101181209.GB22752@openwall.com>
-X-Loosely-Listed: yes
-User-Agent: NeoMutt/20170707-dirty (1.8.3)
-Date: Sun, 5 Nov 2017 22:15:44 -0800
-From: Ian Zimmerman <itz@very.loosely.org>
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.23
+Cc: corsac@debian.org, oss-security@lists.openwall.com
+Date: Fri, 15 Jan 2016 20:32:49 +0100
+From: Tomas Hoger <thoger@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: Security risk of vim swap files
-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Re: Qualys Security Advisory - Roaming through
+ the OpenSSH client: CVE-2016-0777 and CVE-2016-0778
+To: cve-assign@mitre.org
 
-On 2017-11-01 19:12, Solar Designer wrote:
+On Fri, 15 Jan 2016 12:10:16 -0500 (EST) cve-assign@mitre.org wrote:
 
-> On Wed, Nov 01, 2017 at 07:02:22PM +0100, Jakub Wilk wrote:
-
-> > Unfortunately, glibc's implementation of tmpfile(3), which is the
-> > most fool-proof interface for dealing with temporary files that the
-> > C library offers, doesn't honour TMPDIR. :(
+> > There's also a fix related to X11 forwarding which seems different than
+> > the fix which went into OpenSSH 6.9. I'm not sure if it deserves a CVE
+> > or not.  
 > 
-> We've been carrying a patch for this for ages:
+> > https://anongit.mindrot.org/openssh.git/commit/?id=ed4ce82dbfa8a3a3c8ea6fa0db113c71e234416c  
+> 
+> >> eliminate fallback from untrusted X11 forwarding to trusted forwarding
+> >> when the X server disables the SECURITY extension; Reported by Thomas
+> >> Hoger  
+> 
+> MITRE is not assigning a CVE ID for
+> ed4ce82dbfa8a3a3c8ea6fa0db113c71e234416c at this time. First, the
+> (misspelled) reporter name suggests that the issue might have already
+> had a CVE ID assigned by Red Hat before the issue became public. Also,
+> http://www.openssh.com/txt/release-7.1p2 does not announce this as a
+> security fix. Finally, the wording suggests that it could possibly be
+> an interoperability fix, not a security fix.
 
-Do you know why this has not been changed upstream?  The code (and
-infopage) mentions "SVID compatibility".  Do you know of any programs
-that break with this change?
+FYI, this issue was announced as a security fix in 7.1p2 release notes:
+
+https://lists.mindrot.org/pipermail/openssh-unix-dev/2016-January/034680.html
+
+However, as the fix was not actually included in 7.1p2, the
+release-7.1p2 announcement as available on the url listed above was
+modified to remove mention of that issue.
+
+https://lists.mindrot.org/pipermail/openssh-unix-dev/2016-January/034684.html
 
 -- 
-Please don't Cc: me privately on mailing lists and Usenet,
-if you also post the followup to the list or newsgroup.
-To reply privately _only_ on Usenet, fetch the TXT record for the domain.
+Tomas Hoger / Red Hat Product Security
