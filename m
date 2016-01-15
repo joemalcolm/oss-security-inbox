@@ -1,55 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/14/2
-Message-ID: <1209678068.4908811.1468512902793.JavaMail.zimbra@redhat.com>
-Date: Thu, 14 Jul 2016 12:15:02 -0400 (EDT)
-From: CAI Qian <caiqian@...hat.com>
-To: Greg KH <greg@...ah.com>
-Cc: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: Re: Re: cve request: local DoS by overflowing kernel mount table using shared bind mount
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/15/6
+Message-ID: <1452862593.9500.48.camel@opteya.com>
+Date: Fri, 15 Jan 2016 13:56:33 +0100
+From: Yann Droneaud <ydroneaud@...eya.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Qualys Security Advisory - Roaming through the OpenSSH client: CVE-2016-0777 and CVE-2016-0778
 Content-Type: text/plain; charset=utf-8
 
-Maybe this is a better reproducer using docker. It is exploitable even with
-user namespace enabled.
+Hi,
 
-# docker run -it -v /mnt/:/mnt/:shared --cap-add=SYS_ADMIN rhel7 /bin/bash
+Le vendredi 15 janvier 2016 à 12:06 +0100, Florian Weimer a écrit :
+> On 01/14/2016 06:13 PM, Qualys Security Advisory wrote:
+> > Internal stdio buffering is the most severe of the three problems
+> > discussed in this section, although GNU/Linux is not affected
+> > because the glibc mmap()s and munmap()s (and therefore cleanses)
+> > stdio buffers.
+> 
+> This will change in glibc 2.23, stdio will use regular malloc and
+> free for its buffers.  I did not expect this change to have security
+> implications.  Considering that the actual bug lies elsewhere, and
+> stdio usage is based on copying out of the buffer (so leaks can still
+> happen elsewhere), I do not wish to revert this change.
+> 
 
-# cat /proc/self/uid_map 
-         0        995      65536
+Would setvbuf(stream, NULL, _IONBF, 0); be used to disable buffer
+before reading/writting sensible data to a stream ?
 
-# cat /proc/self/gid_map 
-         0        992      65536
+What about a buffering flag (_IOSBF) that would enable "secure" 
+handling of the buffer, that is, on fclose() and fflush(), write
+back and cleanse buffer on output stream, cleanse buffer on input
+stream ?
 
-(insider container) # for i in `seq 1 20`; mount -o bind /mnt/1 /mnt/2; done
-   CAI Qian
+Regards.
 
------ Original Message -----
-> From: "Greg KH" <greg@...ah.com>
-> To: oss-security@...ts.openwall.com
-> Cc: caiqian@...hat.com, cve-assign@...re.org
-> Sent: Wednesday, July 13, 2016 6:45:00 PM
-> Subject: Re: [oss-security] Re: cve request: local DoS by overflowing kernel mount table using shared bind mount
-> 
-> On Wed, Jul 13, 2016 at 12:59:40PM -0400, cve-assign@...re.org wrote:
-> > > It was reported that the mount table expands by a power-of-two
-> > > with each bind mount command.
-> > 
-> > > If the system is configured in the way that a non-root user
-> > > allows bind mount even if with limit number of bind mount
-> > > allowed, a non-root user could cause a local DoS by quickly
-> > > overflow the mount table.
-> > 
-> > > it will cause a deadlock for the whole system,
-> > 
-> > >> form of unlimited memory consumption that is causing the problem
-> > 
-> > Use CVE-2016-6213.
-> 
-> A CVE for an "improperly configured system"?  Huh?  What distro has such
-> a configuration set by default?  This isn't a kernel bug, so what is
-> this CVE classified as being "against"?  It better not be against the
-> Linux kernel...
-> 
-> confused,
-> 
-> greg k-h
-> 
+-- 
+Yann Droneaud
+OPTEYA
+
