@@ -1,4 +1,9 @@
-Received: (qmail 1206 invoked by uid 550); 30 Dec 2025 22:16:50 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["401" "Friday" "15" "January" "2016" "16:56:13" "+0100" "Jason A. Donenfeld" "Jason@zx2c4.com" "<CAHmME9p_NYhaR2Oa_3kOwPCnTFsAHZWa_Q2vYXDXLAuf0C7a5A@mail.gmail.com>" "12" "Re: [oss-security] Qualys Security Advisory - Roaming through the OpenSSH client: CVE-2016-0777 and CVE-2016-0778" "^Date:" nil nil "1" "2016011515:56:13" "[oss-security] Qualys Security Advisory - Roaming through the OpenSSH client: CVE-2016-0777 and CVE-2016-0778" (number mark "        Jason@zx2c4. Jan 15   12/401   " thread-indent "\"Re: [oss-security] Qualys Security Advisory - Roaming through the OpenSSH client: CVE-2016-0777 and CVE-2016-0778\"\n") "<20160114171301.GH28298@localhost.localdomain>" ("<20160114171301.GH28298@localhost.localdomain>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 31899 invoked by uid 550); 15 Jan 2016 15:56:28 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,73 +11,42 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 15890 invoked from network); 30 Dec 2025 22:14:45 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=seestieto.com;
-	 h=cc:cc:content-type:content-type:date:date:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm2; t=1767132876; x=
-	1767219276; bh=OCyKiPaZa/LQIQFPDWEu7H+rJ9syJjq3j0K3mld2pjc=; b=W
-	+OGWgRBDP+ERYaH/D2uLiP39Z365kucAE5kMi2YEUtVlLLYVfAkFbWIakOVoooYM
-	M3ulhelb1Z0JpUUUzFwofdjB595nwClhp2cNTCCqP8N0EFCZN6/FPaME8f9f0WmO
-	wsWhJGtwjX5NkOh9GMYJ9p/THpHMfu85BBV77wQN6aBL+/81QKI+eZxyo04jLp8s
-	nMsE6F/guM0QDoPtyzdM9GJXsVTR5lQtlH+9BVb80WlQrcT48lpC+75A2G51pECV
-	vSQIEea6Mv95GFoiSu64PwMvMUwTujjjmvTE0rSgqYWdYrlYhwpjEBBjJBdDd2x5
-	R6jRjR/aWB5XyihFFC+BQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1767132876; x=1767219276; bh=OCyKiPaZa/LQIQFPDWEu7H+rJ9syJjq3j0K
-	3mld2pjc=; b=xvL0Mqp2YDnbq/DGNGCyHAStHXLkcgLZg5gPIRh58CXzR3kwzv5
-	/+OyNamN/UTtk8/8GIBNNzHtsiKF1RCrPQVfQCwDUHhCjGX51lNZF9gr+c+7rp2U
-	sgGoLtnUlO1kDQjUZGpSemkFl8TSadE244iCIXOkDfg1Qvx8hlaKtGNh1RA6o2Iz
-	22nFDtzh/MCpuJsWgyxbBCOmrqfZFD4qzn5nMpBZeO+xhIvwYdX0Pu6bY7KzojB+
-	jIF2JwxEoX0dI3IR8QHJWELEyVi8Txeu0behxRUUfvf1BXwI32KwKaMHdT9y/fq4
-	UH9r2wb1rKtG6MynEwxOlX0uxfiFPsdUQxg==
-X-ME-Sender: <xms:zE5Uaf5cCBROTbGuH2COaa3-p_X0O4FNIdwDlF1tiQ1Effy9RXEIJw>
-    <xme:zE5Uab3g46_uoaAf6Y2JtD761iBl6dI48nyqQ_OgruEe9qje-Cw41gkOLZXb4LY-k
-    AohD7fFMauZgis2bm9rGCbyOokMxgdGIqwoztfhf4Jk5QEdbNs>
-X-ME-Received: <xmr:zE5UacHpTjCUCEfpN0pIoXebT4RjGeez77Rbsa1qrnynUSFM2SCQwQDOvC1WypoMscqd0mGxxv8UnlhcyA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdekuddvtdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurhephffvvefujghffffkgggtsehttdertddttd
-    dtnecuhfhrohhmpefjvghnrhhikhcutehhlhhgrhgvnhcuoehprggslhhosehsvggvshht
-    ihgvthhordgtohhmqeenucggtffrrghtthgvrhhnpeetudduveevgeetveegfeejvdevte
-    evvddvgeejheeuueevtdfggfdtjeevhfeugeenucevlhhushhtvghrufhiiigvpedtnecu
-    rfgrrhgrmhepmhgrihhlfhhrohhmpehprggslhhosehsvggvshhtihgvthhordgtohhmpd
-    hnsggprhgtphhtthhopedupdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehoshhs
-    qdhsvggtuhhrihhthieslhhishhtshdrohhpvghnfigrlhhlrdgtohhm
-X-ME-Proxy: <xmx:zE5UaVRu_ru69y3SVhkX3MmQAI_KE6YNnIlXqJgMaZA9KkDIgu0a-A>
-    <xmx:zE5UaTBnCdECc3uYihpO7MLbBmnggcWUGq3ne0X_jMM8hXeq8XAaRA>
-    <xmx:zE5UaV38oPWddgAodJkrE3xTn8to1HRWYQ8qwEkVQZEACMq7HEWIkQ>
-    <xmx:zE5UaRULApN7bQLTaZvsA8VLglLzc2D6QZHoVLIgeeJ2oH_TGbBiIA>
-    <xmx:zE5UaSZe3it0pQims_TPGIwNeC1PUCLWTgqkAJU0wKoi4GRSO6JqnIvk>
-Feedback-ID: i8ea641e4:Fastmail
-From: Henrik Ahlgren <pablo@seestieto.com>
-To: oss-security@lists.openwall.com
-Cc: 
-In-Reply-To: <SYCPR01MB3661EE9E2D62A122A271AE98EEBCA@SYCPR01MB3661.ausprd01.prod.outlook.com>
-	(Peter Gutmann's message of "Tue, 30 Dec 2025 11:30:21 +0000")
-References: <3318308d-70b1-4ab3-9cca-ab4ea67dd27d@gmail.com>
-	<0bf8169edb12d002a4654c4ccf6aa54d84eba14a.camel@verbuecheln.ch>
-	<SYCPR01MB366178C350BB2649FA5B82D6EEBCA@SYCPR01MB3661.ausprd01.prod.outlook.com>
-	<d46c3c34-0fa8-4b79-a624-b7ccc9662ce8@gmail.com>
-	<SYCPR01MB3661EE9E2D62A122A271AE98EEBCA@SYCPR01MB3661.ausprd01.prod.outlook.com>
-Date: Wed, 31 Dec 2025 00:14:32 +0200
-Message-ID: <87h5t7aa7r.fsf@noux.seestieto.com>
+Received: (qmail 31881 invoked from network); 15 Jan 2016 15:56:27 -0000
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
+	:in-reply-to:references:date:message-id:subject:from:to
+	:content-type; s=mail; bh=3hOoHmneHylCCOgx65KEh1lWaWE=; b=0m+sFl
+	1hea+bPN4o+x3r5Emc4qXvOpTFjmmEeP0B6fzMkurf2eVVfLq/Vox3RTmuakEqlc
+	ARvp6EuBaxBKXWVf5zgAbvoItRoTOPGsEzn/syDbGhqmpsTFGoZGxE+HNJlNwmwJ
+	En/nebNwwhEpzTwDrr0fK/BRyMVNupSaTzCM4z+9btC9f3q9XoLw/RisIlYI9MJ9
+	Z+9qtDiKeEmjdKBzF/wdluiSJcK1zEMe9wjTeB84iNV419MEeQCab1z27z7sTx94
+	DOTMvsD3T+VSupwS/HSvPe/NVKq3gbvqSzAGoKWqr5UOt/wtgf9N9URJwQz+k3Uy
+	MV3HfJeEKKr2w/rw==
+X-Gm-Message-State: AG10YOSxHZjHUPmkFZCi4DkL4yu2CUdOjdCT626bZNSP81mJliplXDk15onm9GRsPQhrHTtp7qsg/3gUFZClFQ==
 MIME-Version: 1.0
-Content-Type: text/plain
-Subject: Re: [oss-security] Many vulnerabilities in GnuPG
+X-Received: by 10.28.16.8 with SMTP id 8mr4438592wmq.77.1452873373920; Fri, 15
+ Jan 2016 07:56:13 -0800 (PST)
+In-Reply-To: <20160114171301.GH28298@localhost.localdomain>
+References: <20160114171301.GH28298@localhost.localdomain>
+X-Gmail-Original-Message-ID: <CAHmME9p_NYhaR2Oa_3kOwPCnTFsAHZWa_Q2vYXDXLAuf0C7a5A@mail.gmail.com>
+Message-ID: <CAHmME9p_NYhaR2Oa_3kOwPCnTFsAHZWa_Q2vYXDXLAuf0C7a5A@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Date: Fri, 15 Jan 2016 16:56:13 +0100
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Qualys Security Advisory - Roaming through the
+ OpenSSH client: CVE-2016-0777 and CVE-2016-0778
+To: oss-security <oss-security@lists.openwall.com>, 
+	Qualys Security Advisory <qsa@qualys.com>
 
-Peter Gutmann <pgut001@cs.auckland.ac.nz> writes:
+Great work Qualys. One question about the PoC:
 
-> Does anything actually use the cobweb of trust, or do you just assume the key
-> you've got is good because doing anything else is too hard?
+On Thu, Jan 14, 2016 at 6:13 PM, Qualys Security Advisory
+<qsa@qualys.com> wrote:
+> # env ROAMING="heap_massaging:linux" "`pwd`"/sshd -o ListenAddress=127.0.0.1:222 -o
+> UsePrivilegeSeparation=no -f /etc/ssh/sshd_config -h /etc/ssh/ssh_host_rsa_key
 
-Perhaps the Debian developer keyring would serve as a compelling
-example? They even organize actual key-signing parties, which many
-cryptography experts today appear to regard as "LARPing" or otherwise
-ridiculous.
+Does your proof of concept patch actually include support for this
+heap_massaging mode?
+
+Thanks,
+Jason
