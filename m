@@ -1,27 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/15/4
-Message-ID: <56C1AD6C.1030902@census-labs.com>
-Date: Mon, 15 Feb 2016 12:50:20 +0200
-From: Stelios Tsampas <stelios@...sus-labs.com>
-To: oss-security@...ts.openwall.com
-Cc: miconda@...il.com, oriolc@...tele.com, jesusr@...tele.com
-Subject: CVE Request: Kamailio 4.3.4 SEAS Module Heap overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/15/7
+Message-ID: <1452866613.15013.86.camel@debian.org>
+Date: Fri, 15 Jan 2016 15:03:33 +0100
+From: Yves-Alexis Perez <corsac@...ian.org>
+To: oss-security@...ts.openwall.com, openssh@...nssh.com
+Subject: Re: Qualys Security Advisory - Roaming through the OpenSSH client: CVE-2016-0777 and CVE-2016-0778
 Content-Type: text/plain; charset=utf-8
 
-Hello all,
+On jeu., 2016-01-14 at 09:13 -0800, Qualys Security Advisory wrote:
+> Qualys Security Advisory
+> 
+> Roaming through the OpenSSH client: CVE-2016-0777 and CVE-2016-0778
 
-a (remotely exploitable) heap overflow vulnerability was found in
-Kamailio v4.3.4. We have notified the developers and they have addressed
-this through commit:
-https://github.com/kamailio/kamailio/commit/f50c9c853e7809810099c970780c30b0765b0643.
+This is not directly related to the Qualys advisory, but the 7.1p2 OpenSSH
+releases [1] fixes another vulnerability, could CVE be assigned?
 
-Could we have a CVE number for this please? A separate advisory will
-follow with the technical details of the bug, referencing the CVE number.
+SECURITY: Fix an out of-bound read access in the packet handling code.
+Reported by Ben Hawkes [2]
 
-Thank you,
+There's also a fix [3] related to X11 forwarding which seems different than
+the fix which went into OpenSSH 6.9 [4,5]. I'm not sure if it deserves a CVE
+or not.
 
-Stelios Tsampas
 
-IT Security Researcher
-CENSUS S.A.
+[1] http://www.openssh.com/txt/release-7.1p2
+[2] https://anongit.mindrot.org/openssh.git/commit/?id=2fecfd486bdba9f51b3a789
+277bb0733ca36e1c0
+[3] https://anongit.mindrot.org/openssh.git/commit/?id=ed4ce82dbfa8a3a3c8ea6fa
+0db113c71e234416c
+[4] http://www.openssh.com/txt/release-6.9
+[5] https://anongit.mindrot.org/openssh.git/commit/?h=V_6_9_P1&id=1bf477d3cdf1
+a864646d59820878783d42357a1d
+-- 
+Yves-Alexis
 
+
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
