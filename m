@@ -1,30 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/03/7
-Message-ID: <87r3a6cakf.fsf@redhat.com>
-Date: Wed, 03 Aug 2016 14:16:00 +0200
-From: Martin Prpic <mprpic@...hat.com>
-To: "oss-security\@lists.openwall.com" <oss-security@...ts.openwall.com>
-Subject: CVE-2016-6301: busybox: NTP server denial of service flaw
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/15/9
+Message-ID: <CAHmME9rP34SMoyhxrSMqBPuy+bMn-1kkZijiVGAOMuHf6ztMKQ@mail.gmail.com>
+Date: Fri, 15 Jan 2016 16:58:07 +0100
+From: "Jason A. Donenfeld" <Jason@...c4.com>
+To: oss-security <oss-security@...ts.openwall.com>,  Qualys Security Advisory <qsa@...lys.com>
+Subject: Re: Qualys Security Advisory - Roaming through the OpenSSH client: CVE-2016-0777 and CVE-2016-0778
 Content-Type: text/plain; charset=utf-8
 
-Miroslav Lichvar of Red Hat reported a flaw in busybox's NTP
-implementation:
+On Fri, Jan 15, 2016 at 4:56 PM, Jason A. Donenfeld <Jason@...c4.com> wrote:
+> Great work Qualys. One question about the PoC:
+>
+> On Thu, Jan 14, 2016 at 6:13 PM, Qualys Security Advisory
+> <qsa@...lys.com> wrote:
+>> # env ROAMING="heap_massaging:linux" "`pwd`"/sshd -o ListenAddress=127.0.0.1:222 -o
+>> UsePrivilegeSeparation=no -f /etc/ssh/sshd_config -h /etc/ssh/ssh_host_rsa_key
+>
+> Does your proof of concept patch actually include support for this
+> heap_massaging mode?
 
-The busybox NTP implementation doesn't check the NTP mode of packets
-received on the server port and responds to any packet with the right
-size. This includes responses from another NTP server. An attacker can
-send a packet with a spoofed source address in order to create an
-infinite loop of responses between two busybox NTP servers. Adding more
-packets to the loop increases the traffic between the servers until one
-of them has a fully loaded CPU and/or network.
+Read more carefully, answered my own question:
 
-Upstream patch:
+> - Massage the client's heap before roaming_reply() malloc()ates out_buf,
+>   and force malloc() to return a previously free()d but uncleansed chunk
+>   of sensitive information. The simple proof-of-concept in this advisory
+>   does not implement heap massaging.
 
-https://git.busybox.net/busybox/commit/?id=150dc7a2b483b8338a3e185c478b4b23ee884e71
-
-RH bug:
-
-https://bugzilla.redhat.com/show_bug.cgi?id=1363710
-
--- 
-Martin Prpič / Red Hat Product Security
+That's a shame. Please reconsider.
