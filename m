@@ -1,79 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/31/3
-Message-ID: <56FD3718.2090502@redhat.com>
-Date: Thu, 31 Mar 2016 09:41:28 -0500
-From: Eric Sandeen <sandeen@...hat.com>
-To: "Theodore Ts'o" <tytso@....edu>, Andreas Dilger <adilger@...ger.ca>
-Cc: Yves-Alexis Perez <corsac@...ian.org>, oss-security@...ts.openwall.com, Theodore Tso <tytso@...gle.com>, linux-ext4@...r.kernel.org
-Subject: Re: CVE Request - Linux kernel (multiple versions) ext2/ext3 filesystem DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/15/10
+Message-Id: <20160115171016.57F5F332003@smtpvbsrv1.mitre.org>
+Date: Fri, 15 Jan 2016 12:10:16 -0500 (EST)
+From: cve-assign@...re.org
+To: corsac@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Qualys Security Advisory - Roaming through the OpenSSH client: CVE-2016-0777 and CVE-2016-0778
 Content-Type: text/plain; charset=utf-8
 
-On 3/30/16 3:43 PM, Theodore Ts'o wrote:
-> On Tue, Mar 29, 2016 at 04:56:11PM -0600, Andreas Dilger wrote:
->> On Mar 29, 2016, at 3:14 PM, Yves-Alexis Perez <corsac@...ian.org> wrote:
->>>
->>> [dropping MITRE from CC since it's not about the CVE]
->>> [adding ext and Theodore to CC]
->>>
->>> On mar., 2016-03-29 at 19:24 +0200, Hugues ANGUELKOV wrote:
->>>> Hello,
->>>>
->>>> The linux kernel is prone to a Denial of service when mounting specially
->>>> crafted ext2/ext3 (possibly ext4) filesystems. This occurs in the function
->>>> ext4_handle_error who call the panic function on precise circumstance.
->>>
->>> Did you contact the upstream maintainers about this? I'm adding them just in
->>> case they're not already aware of that…
->>>
->>>> This was tested on severals linux kernel version: 3.10, 3.18, 3.19, on
->>>> real hardware and Xen DomU PV & HVM (the crash report attached is from a
->>>> Fedora 3.18 PV DomU), from different distribution release: Ubuntu, CentOS,
->>>> Fedora, Linux Mint, QubesOS.
->>>> This a low security impact bug, because generally only root can mount
->>>> image, however on Desktop (or possibly server?) system configured with
->>>> automount the bug is easily triggable (think of android smartphone? Haven't
->>>> test yet).
->>
->> It seems that the important point here is that the filesystem has
->> "s_errors=EXT4_ERRORS_PANIC" set in the superblock?  I don't think
->> the actual corruption that triggered the ext4_error() call is important,
->> since there are any number of other failure cases that could generate
->> a similar error.
->>
->> It seems practical to change s_errors at mount time from EXT4_ERRORS_PANIC
->> to EXT4_ERRORS_RO for filesystems mounted by regular users.  The question
->> is whether there is a way for the ext4 code to know this at mount time?
-> 
-> You can mount the file system with "mount -o errors=continue" and this
-> will override the default behavior specified in the super block.
-> 
-> I would argue that a Desktop or server system that had automount
-> should either (a) mount with -o errors=continue, or (b) force an fsck
-> on the file system before mounting it.
-> 
-> So I think this is a particularly meaningless CVE, which is why I have
-> zero respect for people who try to make any kind of conclusion based
-> on CVE counts.   I certainly don't plan to do anything about this.
-> 
-> You might as well complain that since the system ships with a reboot
-> command that can be executed by a clueless root user, that this is a
-> potential DOS attack scenario deserving of a CVE....
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-First of all, yes, I have always been extremely skeptical of these
-"crafted image" CVEs.  However, I'm not sure the "store errors=panic
-in the superblock" was particularly well thought out either; it certainly
-does make for a tidy little timebomb.
+> SECURITY: Fix an out of-bound read access in the packet handling code.
+> Reported by Ben Hawkes
+> https://anongit.mindrot.org/openssh.git/commit/?id=2fecfd486bdba9f51b3a789277bb0733ca36e1c0
 
-While I really hate to give issues such as this a whole lot more
-credibility, I wonder about a higher level control, such as a sysctl,
-which could [dis]allow errors=panic at a system-wide level.  It could default
-to disallowing, and it's trivial to set it in sysctl.conf if you really
-want it enabled by default.
-
-In the end, errors=panic is really a debug option; a small hoop-jump to
-use it doesn't sound too bad to me.
-
--Eric
+Use CVE-2016-1907.
 
 
+> There's also a fix related to X11 forwarding which seems different than
+> the fix which went into OpenSSH 6.9. I'm not sure if it deserves a CVE
+> or not.
 
+> https://anongit.mindrot.org/openssh.git/commit/?id=ed4ce82dbfa8a3a3c8ea6fa0db113c71e234416c
+
+>> eliminate fallback from untrusted X11 forwarding to trusted forwarding
+>> when the X server disables the SECURITY extension; Reported by Thomas
+>> Hoger
+
+MITRE is not assigning a CVE ID for
+ed4ce82dbfa8a3a3c8ea6fa0db113c71e234416c at this time. First, the
+(misspelled) reporter name suggests that the issue might have already
+had a CVE ID assigned by Red Hat before the issue became public. Also,
+http://www.openssh.com/txt/release-7.1p2 does not announce this as a
+security fix. Finally, the wording suggests that it could possibly be
+an interoperability fix, not a security fix.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJWmSeMAAoJEL54rhJi8gl5QX4P/A53KsJzi3RcvrjKkL/noIW1
+aIe6dGR+F1ORULFbUxUUsNBCk9Kbn4wh5ILJG4NKrMbf96D0Fhc9HHC9PMR5/E4y
+tQdwDLwqpn57k+ma/tiWnO4BewPvu6F67jITus5SPYJHVs6yruGJCZCmxfD8rIjd
+Y2Of21fkCmQTz86EQ0OBHmTZGbme63xP9FEEqS/AZDKmDfb/6HWeFpHf9hvoU/sj
+PDXoUL72veUt/w44qeQCl0nIFEw+c3bkH10lnsyJPXUk0n50fX8+cibt/jVthLZP
+xR349ILvgIHCWvLCjIwUxsH14+01h7n5Bpm/ydwYzCP1asZ5bsu/xkcVmzU0LHKd
+cAlrBTCWurKappKLd1YlXiTtm+WgvGs6zLhjxacDOFm8HldR9Hkul5ppKLRdEHmR
+Y4tcP43C7O+LiTsEoLt9RLn8jNfpYu1Ps3cubvz8Q3H3ckTavlR1ovu/QY/h4ZY+
+EeG6yELDdSwt8a993YwPx5Eex+T5hCZFxt8sMWVAUY5CS6nmYoI3k1JhFZy4W3tD
+fmKZUFzbdHjpJmDDuJIjKiwQqZqGt8yBRSutz7JAo2eCyQ78JYKa6MaFz4Db/V/f
+SX/wBfSSp+sTi/HbN51eAvxn9KejXGOYeCYs/sKpKaORSEuxSsIB6VrlvpHAqsZG
+hPVegxqsnYuZ01x6cvP6
+=x5zR
+-----END PGP SIGNATURE-----
