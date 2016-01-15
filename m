@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["922" "Wednesday" "18" "November" "2015" "17:09:07" "-0700" "Kurt Seifried" "kseifried@redhat.com" "<CANO=Ty1OAd+X0or8CB10a5DAQQw8Ejhn_yc8ROYD=v13UirnUg@mail.gmail.com>" "27" "Re: [oss-security] CVE-2015-7266" nil nil nil "11" "2015111900:09:07" "[oss-security] CVE-2015-7266" (number mark "U       kseifried@re Nov 18   27/922   " thread-indent "\"Re: [oss-security] CVE-2015-7266\"\n") "<564D11E3.2040606@trylinux.us>" ("<564D1096.5070901@trylinux.us>" "<CANO=Ty19Qxu1jMUkpt59eAkfk4_JNLY7o5AzrzhKUx7tgsvQOg@mail.gmail.com>" "<564D11E3.2040606@trylinux.us>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1644" "Friday" "15" "January" "2016" "13:32:42" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160115183242.1A23733E005@smtpvbsrv1.mitre.org>" "43" "[oss-security] Re: Qualys Security Advisory - Roaming through the OpenSSH client: CVE-2016-0777 and CVE-2016-0778" "^Cc:" nil nil "1" "2016011518:32:42" "[oss-security] Re: Qualys Security Advisory - Roaming through the OpenSSH client: CVE-2016-0777 and CVE-2016-0778" (number mark "        cve-assign@m Jan 15   43/1644  " thread-indent "\"[oss-security] Re: Qualys Security Advisory - Roaming through the OpenSSH client: CVE-2016-0777 and CVE-2016-0778\"\n") "<CANO=Ty33aP09VUvRTYncYLOt0ZFNRBw4-PJMau93s7R9SO9H9w@mail.gmail.com>" ("<CANO=Ty33aP09VUvRTYncYLOt0ZFNRBw4-PJMau93s7R9SO9H9w@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 28050 invoked by uid 550); 19 Nov 2015 00:09:20 -0000
+Received: (qmail 26403 invoked by uid 550); 15 Jan 2016 18:32:54 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,58 +11,56 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 26382 invoked from network); 15 Jan 2016 18:32:53 -0000
+In-Reply-To: <CANO=Ty33aP09VUvRTYncYLOt0ZFNRBw4-PJMau93s7R9SO9H9w@mail.gmail.com>
+Message-Id: <20160115183242.1A23733E005@smtpvbsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Fri, 15 Jan 2016 13:32:42 -0500 (EST)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28032 invoked from network); 19 Nov 2015 00:09:19 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:content-type;
-        bh=x0uljgSG7s59ACGcCgXH/GCqNJjmiMRIs9gak8ZHZ5I=;
-        b=EGGSajPvWuAmk21soM0+m9RK3l6jyICn18+P1/Tb0bkYZSeFW+fSxp75CwiJF4IBbX
-         kqs09Xr9F3ZUn9hjpUoJuotue7MacVxyrnF+nflnUD3ZRDp8VcZxfZNQoI4GerRX0z42
-         jn2JTVSTXORIXAtGp7s2e2/pnCAMMQDcWQCoISduBf0PtBE+feWCFpRH9UMhg6oaw/Qn
-         cIC4szjnxkBPWedYKOKzpNlu0TmMYE0ByWLT5hxxoUisYEqLbCFAICropXcjRxURHPIO
-         Q8JAbOE9yB9Tc66IKn910gLl52pWBC3H+7W8pvKCvJpEuJkh0LzgHokB2mfOkO0tzU/1
-         5CsQ==
-X-Gm-Message-State: ALoCoQk9HHXy5QKEWQehQF/Jb6fw5tyGatsIY0FW/QKXopGZkSCGEk/BX5bLubtEf7lyTGh84ySO
-MIME-Version: 1.0
-X-Received: by 10.13.236.150 with SMTP id v144mr4673304ywe.20.1447891747781;
- Wed, 18 Nov 2015 16:09:07 -0800 (PST)
-In-Reply-To: <564D11E3.2040606@trylinux.us>
-References: <564D1096.5070901@trylinux.us>
-	<CANO=Ty19Qxu1jMUkpt59eAkfk4_JNLY7o5AzrzhKUx7tgsvQOg@mail.gmail.com>
-	<564D11E3.2040606@trylinux.us>
-Date: Wed, 18 Nov 2015 17:09:07 -0700
-Message-ID: <CANO=Ty1OAd+X0or8CB10a5DAQQw8Ejhn_yc8ROYD=v13UirnUg@mail.gmail.com>
-From: Kurt Seifried <kseifried@redhat.com>
-To: oss-security <oss-security@lists.openwall.com>
-Content-Type: multipart/alternative; boundary=94eb2c0829824ccffa0524d99175
-Subject: Re: [oss-security] CVE-2015-7266
+Subject: [oss-security] Re: Qualys Security Advisory - Roaming through the OpenSSH client: CVE-2016-0777 and CVE-2016-0778
+To: kseifried@redhat.com, corsac@debian.org
 
---94eb2c0829824ccffa0524d99175
-Content-Type: text/plain; charset=UTF-8
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-On Wed, Nov 18, 2015 at 5:03 PM, Zach W. <kestrel@trylinux.us> wrote:
+>>> https://anongit.mindrot.org/openssh.git/commit/?id=ed4ce82dbfa8a3a3c8ea6fa0db113c71e234416c
 
-> Hey Kurt,
->
-> I figured as much but since the vuln has been made public what happens now?
->
-> Zach W.
->
+>>>> eliminate fallback from untrusted X11 forwarding to trusted forwarding
+>>>> when the X server disables the SECURITY extension; Reported by Thomas
+>>>> Hoger
 
- In what sense? CVE has accomplished it's primary mission, we have an
-identifier for this vulnerability which makes discussing it easy (instead
-of saying "that thing in that other thing, you know function foo(), no the
-other version of that thing" we can just say "CVE-foo").
+> https://bugzilla.redhat.com/show_bug.cgi?id=1298741
 
-As for the CVE (Mitre/NVD) database being updated to contain an entry, we
-wait. Although now that I'm on the CVE board I'm going to see what we can
-do to speed things up/get better coverage/etc.
+>> would lead to remote X clients having more
+>> privileged access to the local X server than intended
 
---
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@redhat.com
+> https://bugzilla.redhat.com/show_bug.cgi?id=1298741#c4
 
---94eb2c0829824ccffa0524d99175--
+>> Actually, openssh-7.1p2 does not fix this issue and it will be as part
+>> of the next release.
+
+Use CVE-2016-1908.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJWmTrRAAoJEL54rhJi8gl5m7EP/2K8TEGoIsd6mqpyzdOhAcb0
+Wep2p3360yu03LOYxybP10LlW20aH5uaWeML9eMGZPuXqrmN20YiUWHBGEmXfU+a
+ySHLKxg1+OORMvxDOy7TKpQVePb8pkq5FNVIspY/LY08tyx8xwFt6ce9IbGhtoud
+RAkHpAAvRIk0n/dIKAT/LzMtlD/8ld0fx2nKm4AbFsk65bIF9zii7dKy4UQ+/q1V
+7bPQoEO5yv5P5h/A+E02FcXfUYuJaT+zo36Opvu3X3SmDUKAMFMjzlzSvrxkOAZZ
+kd7fPuGp7kkkvfA8G4vkpK6005VQ0H8aCbaqiuf6lek2Fk3jWLg8nCYiesSetXCm
+lJtUEeNd07DFU97hgfkW9hQmME3N1/BCR7fIeQeQ2PX6gdNmaqjZLtaAVyYiINEo
+yN9bwf2gD6s2jTzybLZgh8NPuiwzf90YbPVyI5pSmuwSbSH3P0FanDY4spzBsTwu
+9QsA2Z91Xwgb2uAk2y2Yv7vPliw4/AxMR6zOWRcvaht7p8ckswFCIPgpRjuJGN8C
+DaeiveJ2tzAsUtWknkw38bgOo7+Nq7RE8H+0IFGnZdcx++Hfzz8n0gE5T0atf7rs
+vFp2rbS07uq5cLXwGpfusR2pE7Zv1WwI8HkqwvnIM+6qRmpuYJTgj4QuxmSduUy5
+VzoKwYZR3d0WAtFLTQIy
+=EebB
+-----END PGP SIGNATURE-----
