@@ -1,54 +1,110 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/31/1
-Message-ID: <14b76703-8185-dadb-7605-10496331452c@redhat.com>
-Date: Mon, 31 Oct 2016 11:48:45 +0100
-From: Florian Weimer <fweimer@...hat.com>
-To: kernel-hardening@...ts.openwall.com, oss-security@...ts.openwall.com
-Subject: Stack guard canary massaging
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/15/12
+Message-ID: <CANO=Ty33aP09VUvRTYncYLOt0ZFNRBw4-PJMau93s7R9SO9H9w@mail.gmail.com>
+Date: Fri, 15 Jan 2016 10:34:40 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Cc: corsac@...ian.org, CVE ID Requests <cve-assign@...re.org>
+Subject: Re: Re: Qualys Security Advisory - Roaming through the OpenSSH client: CVE-2016-0777 and CVE-2016-0778
 Content-Type: text/plain; charset=utf-8
 
-Sorry for cross-posting.
+On Fri, Jan 15, 2016 at 10:10 AM, <cve-assign@...re.org> wrote:
+>
+> >> eliminate fallback from untrusted X11 forwarding to trusted forwarding
+> >> when the X server disables the SECURITY extension; Reported by Thomas
+> >> Hoger
+>
+> MITRE is not assigning a CVE ID for
+> ed4ce82dbfa8a3a3c8ea6fa0db113c71e234416c at this time. First, the
+> (misspelled) reporter name suggests that the issue might have already
+> had a CVE ID assigned by Red Hat before the issue became public. Also,
+> http://www.openssh.com/txt/release-7.1p2 does not announce this as a
+> security fix. Finally, the wording suggests that it could possibly be
+> an interoperability fix, not a security fix.
+>
 
-glibc does this to set up the stack canary:
+This issue is public on our BZ:
 
-static inline uintptr_t __attribute__ ((always_inline))
-_dl_setup_stack_chk_guard (void *dl_random)
-{
-   union
-   {
-     uintptr_t num;
-     unsigned char bytes[sizeof (uintptr_t)];
-   } ret = { 0 };
+https://bugzilla.redhat.com/show_bug.cgi?id=1298741
 
-   if (dl_random == NULL)
-     {
-       ret.bytes[sizeof (ret) - 1] = 255;
-       ret.bytes[sizeof (ret) - 2] = '\n';
-     }
-   else
-     {
-       memcpy (ret.bytes, dl_random, sizeof (ret));
-#if BYTE_ORDER == LITTLE_ENDIAN
-       ret.num &= ~(uintptr_t) 0xff;
-#elif BYTE_ORDER == BIG_ENDIAN
-       ret.num &= ~((uintptr_t) 0xff << (8 * (sizeof (ret) - 1)));
-#else
-# error "BYTE_ORDER unknown"
-#endif
-     }
-   return ret.num;
-}
+It was discovered that OpenSSH client did not correctly handle
+situations when untrusted X11 forwarding was requested and generation
+of the untrusted authentication cookie failed.  The ssh client
+continued by generating fake authentication cookie and allowed remote
+X clients to connect the local X server.  The decision if client
+connection was accepted was delegated to the X server which, depending
+on its configuration, could allow clients to open trusted X
+connection.  This would lead to remote X clients having more
+privileged access to the local X server than intended.
 
-This is an elaborate way of setting ret.bytes[0] = '\0'.
+This problem can occur when X server does not include or enable X
+Security extension (for X.org X server, this extension is not compiled
+in by default since 2007) and when it has authentication methods
+besides MIT cookies enabled (e.g. localuser authentication allowing
+all X connections from a local user who owns the X session).
 
-The intent (determined from an old commit message) is to make it harder 
-to obtain the canary value through a read buffer overflow of a 
-NUL-terminated string: The read overflow will stop at the NUL byte and 
-not include the random canary value, reducing the risk of inappropriate 
-disclosure.
+Both of these conditions are satisfied on Red Hat Enterprise Linux 7
+and current Fedora versions.  The X server does not have X Security
+extension compiled in and 'xhost +si:localuser:`id -un`' is run from
+the xinit scripts.  Therefore remote X clients are granted trusted
+access to the local X server when 'ssh -X' is used, as if 'ssh -Y' was
+actually used.
 
-But this reduces entropy of the canary to 24 bits on 32-bit systems, so 
-I wonder if this is the right trade-off here.
+The X server on Red Hat Enterprise Linux 6 includes X Security
+extension (as of RHSA-2013:1620 -
+http://rhn.redhat.com/errata/RHSA-2013-1620.html - which was released
+as part of Red Hat Enterprise Linux 6.5) and hence does not fall back
+to the use of fake authentication cookie.
 
-Thanks,
-Florian
+This issue was corrected upstream in version 7.1p2:
+http://www.openssh.com/txt/release-7.1p2
+
+Upstream commit:
+https://anongit.mindrot.org/openssh.git/commit/?id=ed4ce82dbfa8a3a3c8ea6fa0db113c71e234416c
+
+which needs to be applied after:
+https://anongit.mindrot.org/openssh.git/commit/?id=f98a09cacff7baad8748c9aa217afd155a4d493f
+
+=============
+
+We reported it upstream but we did NOT assign a CVE to this issue (I
+think because we're not affected it was going to be left to upstream).
+This issue does appear to need a CVE, however since it is public now
+I'll leave that up to Mitre.
+
+
+
+>
+> - --
+> CVE assignment team, MITRE CVE Numbering Authority
+> M/S M300
+> 202 Burlington Road, Bedford, MA 01730 USA
+> [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1
+>
+> iQIcBAEBCAAGBQJWmSeMAAoJEL54rhJi8gl5QX4P/A53KsJzi3RcvrjKkL/noIW1
+> aIe6dGR+F1ORULFbUxUUsNBCk9Kbn4wh5ILJG4NKrMbf96D0Fhc9HHC9PMR5/E4y
+> tQdwDLwqpn57k+ma/tiWnO4BewPvu6F67jITus5SPYJHVs6yruGJCZCmxfD8rIjd
+> Y2Of21fkCmQTz86EQ0OBHmTZGbme63xP9FEEqS/AZDKmDfb/6HWeFpHf9hvoU/sj
+> PDXoUL72veUt/w44qeQCl0nIFEw+c3bkH10lnsyJPXUk0n50fX8+cibt/jVthLZP
+> xR349ILvgIHCWvLCjIwUxsH14+01h7n5Bpm/ydwYzCP1asZ5bsu/xkcVmzU0LHKd
+> cAlrBTCWurKappKLd1YlXiTtm+WgvGs6zLhjxacDOFm8HldR9Hkul5ppKLRdEHmR
+> Y4tcP43C7O+LiTsEoLt9RLn8jNfpYu1Ps3cubvz8Q3H3ckTavlR1ovu/QY/h4ZY+
+> EeG6yELDdSwt8a993YwPx5Eex+T5hCZFxt8sMWVAUY5CS6nmYoI3k1JhFZy4W3tD
+> fmKZUFzbdHjpJmDDuJIjKiwQqZqGt8yBRSutz7JAo2eCyQ78JYKa6MaFz4Db/V/f
+> SX/wBfSSp+sTi/HbN51eAvxn9KejXGOYeCYs/sKpKaORSEuxSsIB6VrlvpHAqsZG
+> hPVegxqsnYuZ01x6cvP6
+> =x5zR
+> -----END PGP SIGNATURE-----
+>
+
+
+
+-- 
+
+--
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
+
