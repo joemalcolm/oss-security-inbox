@@ -1,24 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/21/9
-Message-ID: <20161121202816.GA26926@tunkki>
-Date: Mon, 21 Nov 2016 22:28:16 +0200
-From: Henri Salo <henri@...v.fi>
-To: Scott Gravelle <scottg@...rezzio.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/15/1
+Message-ID: <20160115014642.GE16572@netmeister.org>
+Date: Thu, 14 Jan 2016 20:46:42 -0500
+From: Jan Schaumann <jschauma@...meister.org>
+To: Qualys Security Advisory <qsa@...lys.com>
 Cc: oss-security@...ts.openwall.com
-Subject: Re: Multiple XSS vulnerabilities affecting five WordPress Plugins
+Subject: Re: Qualys Security Advisory - Roaming through the OpenSSH client: CVE-2016-0777 and CVE-2016-0778
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Nov 21, 2016 at 04:56:13PM +0000, Scott Gravelle wrote:
-> Any plans to get CVEs assigned to these vulnerabilities you guys found?  Our
-> vulnerability scanner does not have a feature to filter off OVE
+Qualys Security Advisory <qsa@...lys.com> wrote:
+> On Thu, Jan 14, 2016 at 01:11:29PM -0500, Jan Schaumann wrote:
+> > Why is version 5.3 not affected?
+> 
+> The information leak is in resend_bytes() ["if (out_start < out_last)"
+> should be "if (out_start <= out_last)"], but in OpenSSH 5.3, there is no
+> call to resend_bytes(), at all (roaming_client.c does not even exist).
 
-Maybe you should start handling OVE and other IDs too. Two reasons:
+Thanks.
 
-1) MITRE is not always assigning CVEs for WordPress plugin and theme
-vulnerabilities for unknown reason. It's not like the CVEs are running out
-2) MITRE is not assigning CVEs to all software that has previously received a
-CVE, silently dropping the software to out-of-scope area. Example case:
-http://www.openwall.com/lists/oss-security/2016/11/10/6
+I see resend_bytes() being added on 2009-06-27 in roaming_common.c:
+https://github.com/openssh/openssh-portable/commit/466df219615d72e48ff9103ec67521447f23a158
 
--- 
-Henri Salo
+"2009/06/27 09:32:43
+
+[roaming_common.c roaming.h]
+It may be necessary to retransmit some data when resuming, so add it
+to a buffer when roaming is enabled.
+"
+
+That's three days before the version was bumped to 5.3.
+
+I'm afraid I haven't had the time to test your PoC against 5.3, but I
+just want to make sure that we're not overlooking a vulnerable version.
+
+-Jan
