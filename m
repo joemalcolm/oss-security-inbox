@@ -1,105 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/19/4
-Message-ID: <CANO=Ty3L-TKMUgRknDGdHGDRDrOpKhQ7oyf_ejOYKX9GoFjfoQ@mail.gmail.com>
-Date: Tue, 18 Oct 2016 20:58:21 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: CVE ID Requests <cve-assign@...re.org>
-Cc: oss-security <oss-security@...ts.openwall.com>,  Huzaifa Sidhpurwala <huzaifas@...hat.com>
-Subject: Re: CVE Request: IKEv1 protocol is vulnerable to DoS amplification attack
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/15/14
+Message-ID: <20160115203249.3acb4153@redhat.com>
+Date: Fri, 15 Jan 2016 20:32:49 +0100
+From: Tomas Hoger <thoger@...hat.com>
+To: cve-assign@...re.org
+Cc: corsac@...ian.org, oss-security@...ts.openwall.com
+Subject: Re: Re: Qualys Security Advisory - Roaming through the OpenSSH client: CVE-2016-0777 and CVE-2016-0778
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Oct 18, 2016 at 6:57 PM, <cve-assign@...re.org> wrote:
->
-> There are at least three different scenarios:
->
->  1. Amplification only exists because of a server-side coding error,
->     and fixing that error has no adverse impact on clients and
->     requires no client-side changes. For example: for the protocol in
->     question, the client simply never needs an unauthenticated UDP
->     request to result in a larger UDP reply.
->
->  2. Amplification is not caused by a coding error, but it is possible
->     to reduce the amplification ratio without completely breaking the
->     ability of clients to communicate with servers.
->
->  3. Amplification is not caused by a coding error, and it is not
->     possible to reduce the amplification ratio without completely
->     breaking the ability of clients to communicate with servers. The
->     only options are to mitigate attacks (as in
->     https://capec.mitre.org/data/definitions/490.html) or to change
->     the protocol.
->
-> If someone can request a CVE ID for any of these three scenarios,
-> should we encourage them to be most liberal with CVE ID requests in
-> scenario 1, and most conservative with CVE ID requests in scenario 3?
-> Or do we ideally want to enumerate everything, even a 1:1.1 ratio
-> that's baked into a protocol design, and can't be fixed without
-> changing every client and server?
->
-> Finally, do we want CVEs for all types of amplification, or only
-> amplification that can be used for DoS attacks against unrelated third
-> parties? For example, there's a class of amplification issues
-> affecting automated error reporting. This can exist in server-side
-> code in which exception handlers (something like "constraint
-> violation: length_a > length_b") are able to send outbound network
-> traffic to a vendor's server. Here, there can be cases where an
-> attacker sends an unauthenticated hundred-byte packet to a customer's
-> server, and the customer's server then immediately sends a
-> million-byte system-health report to the vendor. The attacker
-> generally can repeat this, although there might be a rate limit.
-> Suppose that the customer wants to send these reports, and the vendor
-> wants to receive these reports, and (maybe?) the intervening ISPs can
-> handle the load. Would this be a CVE because of the huge amplification
-> ratio, or is amplification a CVE only in certain special cases?
->
+On Fri, 15 Jan 2016 12:10:16 -0500 (EST) cve-assign@...re.org wrote:
 
-So some additional comments/criteria:
+> > There's also a fix related to X11 forwarding which seems different than
+> > the fix which went into OpenSSH 6.9. I'm not sure if it deserves a CVE
+> > or not.  
+> 
+> > https://anongit.mindrot.org/openssh.git/commit/?id=ed4ce82dbfa8a3a3c8ea6fa0db113c71e234416c  
+> 
+> >> eliminate fallback from untrusted X11 forwarding to trusted forwarding
+> >> when the X server disables the SECURITY extension; Reported by Thomas
+> >> Hoger  
+> 
+> MITRE is not assigning a CVE ID for
+> ed4ce82dbfa8a3a3c8ea6fa0db113c71e234416c at this time. First, the
+> (misspelled) reporter name suggests that the issue might have already
+> had a CVE ID assigned by Red Hat before the issue became public. Also,
+> http://www.openssh.com/txt/release-7.1p2 does not announce this as a
+> security fix. Finally, the wording suggests that it could possibly be
+> an interoperability fix, not a security fix.
 
-1) can this actually be exploited in practice in a reasonable manner (e.g.
-a 1:1000 amplification I think we'd all agree is a realistic problem)
-2) is this being actively used in the wild to exploit systems or cause DoS
-situations? In the case of this IKEv1 issue it sounds like yes
+FYI, this issue was announced as a security fix in 7.1p2 release notes:
 
-and my favorite "should this get a CVE test" question:
+https://lists.mindrot.org/pipermail/openssh-unix-dev/2016-January/034680.html
 
-3) can it be fixed in a way that still lets the service/clients work?
+However, as the fix was not actually included in 7.1p2, the
+release-7.1p2 announcement as available on the url listed above was
+modified to remove mention of that issue.
 
-If it can be fixed in a way that leaves the service/clients working ok then
-chances are the old behavior is not something we want to live with anymore
-and we need to get rid of it.
-
-
->
-> - --
-> CVE Assignment Team
-> M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-> [ A PGP key is available for encrypted communications at
->   http://cve.mitre.org/cve/request_id.html ]
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1
->
-> iQIcBAEBCAAGBQJYBsQAAAoJEL54rhJi8gl56W0P/jtr8bg19CgitqtWv8GwYdKz
-> KiVIsAqVZqu3IYnnBIpwyFQDvSo+utqAn7/heUU7V18JMxsUttPNJVArwLpZZ57s
-> 71HYDuqlhDtqLL2HkwU7bU2XtCbUiO/LAAlnFuKxsbHMoYlkz+Dgfcd5gtdbJhcG
-> WmLcRRgDSZV3w7yWghBThCGAgjRWU3Pw0qqo1p/a+abR8By3NGI1yRiwhj5Jxc/u
-> NYRQLwqbQIu1qH9OJXcOf8TnB1lytTCwKk0u3hXXyIWNSDdRAYQv4712Af7sSuVh
-> +jYOGu3mhrOBjamtZNDMrJ9riFTRnoIbOSE+mCL/Kp+rTq22NX+rY3pkh/VfvCC2
-> /jF4aO1HUjxHKEmKauVoTAO10w6FPzlRmOMj7kM22oy568MD6LygWspNc9c/LvJX
-> N/hEazu2NiUX3wNsLsA4z1mLUebtjjBoL/BgAAkJ1S1aoK2JEn9y5rK4wf1vCbia
-> XkwHxoLu0BMznTIOHiP72G1YZs2FJd/pNw9iFvi6GRxPdLRR8Tr9FCRjv4V7mvRg
-> E8rgYe3Vlz8Y9A1SYwmLLTKqqNgB/GnQNU3qKlUjmAfGiK2VGjvHah3BcOY4Gutq
-> xcyb4Hdy/kyvxOQo6iHpabZPxYHGKVIM+CRTClnEqQM2OWiMxmv/pfVv8sL71uTJ
-> VMx2oAIYBoExovJrb2pG
-> =xNIJ
-> -----END PGP SIGNATURE-----
->
-
-
+https://lists.mindrot.org/pipermail/openssh-unix-dev/2016-January/034684.html
 
 -- 
-
---
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
-
+Tomas Hoger / Red Hat Product Security
