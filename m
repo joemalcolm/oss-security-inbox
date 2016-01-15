@@ -1,67 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/30/8
-Message-ID: <CACn5sdTHZPTK7+u1ANCU-T-czJ_vT_-VQp8CisHreKKPAPpazw@mail.gmail.com>
-Date: Wed, 30 Mar 2016 14:43:21 -0300
-From: Gustavo Grieco <gustavo.grieco@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: Heap overflow in VLC 2.1.6 processing wav files
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/15/2
+Message-Id: <20160115035548.BD2B06C04AB@smtpvmsrv1.mitre.org>
+Date: Thu, 14 Jan 2016 22:55:48 -0500 (EST)
+From: cve-assign@...re.org
+To: kseifried@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request for Kubernetes api server: patch operation should use patched object to check admission control
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-We found a buffer overflow in the parsing and processing of wav files in
-VLC (version 2.1.6-0). It was tested in Ubuntu 14.04 (x86_64), but it will
-probably affects other versions as well. Fortunately, it seems to be fixed
-in the last release of VLC. Here you can see the gdb stack trace:
+> CVE request for Kubernetes api server: patch operation should use patched
+> object to check admission control
+> 
+> https://github.com/kubernetes/kubernetes/issues/19479
 
-__memcpy_sse2_unaligned () at
-../sysdeps/x86_64/multiarch/memcpy-sse2-unaligned.S:116
-116 ../sysdeps/x86_64/multiarch/memcpy-sse2-unaligned.S: No existe el
-archivo o el directorio.
-(gdb) bt
-#0 __memcpy_sse2_unaligned () at
-../sysdeps/x86_64/multiarch/memcpy-sse2-unaligned.S:116
-#1 0x00007ffff71436e9 in memcpy (__len=4290773038, __src=<optimized out>,
-__dest=<optimized out>) at /usr/include/x86_64-linux-gnu/bits/string3.h:51
-#2 AStreamPeekStream (s=<optimized out>, pp_peek=0x7fffea824988,
-i_read=4294967276) at input/stream.c:1115
-#3 0x00007fffdebb42b3 in ChunkFind (p_demux=p_demux@...ry=0x7fffd4c01828,
-fcc=fcc@...ry=0x7fffdebb576b "fmt ", pi_size=pi_size@...ry=0x7fffea824a3c)
-at wav.c:522
-#4 0x00007fffdebb4761 in Open (p_this=0x7fffd4c01828) at wav.c:166
-#5 0x00007ffff716d178 in module_load (obj=obj@...ry=0x7fffd4c01828,
-m=m@...ry=0x7b92b0, init=init@...ry=0x7ffff716d0d0 <generic_start>,
-args=args@...ry=0x7fffea824b50) at modules/modules.c:185
-#6 0x00007ffff716d72e in vlc_module_load (obj=obj@...ry=0x7fffd4c01828,
-capability=capability@...ry=0x7ffff71a4059 "demux", name=0x7ffff71a43bb "",
-name@...ry=0x7fffd4c018e0 "", strict=<optimized out>,
-probe=probe@...ry=0x7ffff716d0d0
-<generic_start>) at modules/modules.c:277
-#7 0x00007ffff716dc04 in module_need (obj=obj@...ry=0x7fffd4c01828,
-cap=cap@...ry=0x7ffff71a4059 "demux", name=name@...ry=0x7fffd4c018e0 "",
-strict=<optimized out>) at modules/modules.c:366
-#8 0x00007ffff712cfbe in demux_New (p_obj=p_obj@...ry=0x7fffd00009b8,
-p_parent_input=p_parent_input@...ry=0x7fffd00009b8,
-psz_access=<optimized out>, psz_demux=0x7ffff71b9ca5 "",
-psz_location=<optimized out>, s=<optimized out>, out=0x7fffd4000aa0,
-b_quick=false)
-at input/demux.c:188
-#9 0x00007ffff7139d5d in InputSourceInit (p_input=p_input@...ry=0x7fffd00009b8,
-in=<optimized out>, psz_mrl=<optimized out>,
-psz_forced_demux=psz_forced_demux@...ry=0x0,
-b_in_can_fail=b_in_can_fail@...ry=false) at input/input.c:2535
-#10 0x00007ffff713ab6b in Init (p_input=p_input@...ry=0x7fffd00009b8) at
-input/input.c:1225
-#11 0x00007ffff713e0e6 in Run (obj=0x7fffd00009b8) at input/input.c:521
-#12 0x00007ffff79a9182 in start_thread (arg=0x7fffea825700) at
-pthread_create.c:312
-#13 0x00007ffff74d247d in clone () at
-../sysdeps/unix/sysv/linux/x86_64/clone.S:111
+>> https://github.com/kubernetes/kubernetes/pull/19481
 
-It is evident that the memcpy operation has an abnormally large size
-parameter (4290773038). Find attached a test case to reproduce it.
+>> This changes the patch implementation to call the admission chain with
+>> an Update using the patched object as the input. This allows all the
+>> correct defaulters and field authorizer to run as expected.
 
-Regards,
-Gustavo.
+> TL;DR:  you can patch your resources and they'll always be allowed, so more
+> ram, disk, etc. CWE-285
 
-Content of type "text/html" skipped
+Use CVE-2016-1905.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJWmGy3AAoJEL54rhJi8gl53ZIQAKbPGrumv0Nk5rSbiloc/Kje
+zFL/7C6ADhN29J1zrelKsXBVh8GFYZNfDZrMGO7yhi3ckPCiLMA1qFU15iUuCUdM
+lKxRxRtnCajlmcOC6mDHsyOTkBLvW0iS0heIt/ATN3rcCGORNZ3eiAU0+/8Lp914
+lTQVH1dhjWtNTv9f1nay+aGkTfhz4fn2A1IcI6xwFiRaC3+o/BZPIzc4CI4zJ1fw
+NE0g9cQ68BFU75zXg5WjWon/Vc4FLosLgF/oRLD8iHu4nththGip+WlKbteuwUrC
+CExv/DGRfumpsDe5pZqjC8HJndWhXvjPG9Pkorsvvh7I2j3+qpooMsJmI6V5E85J
+kOqW1gEn4MXtTdcSWufXbcFC5Qn1LZ54QYKI47H9NKoNRRJyz8TEOF3Puap1FIxV
+ZCSlkv79FQhBLDXkAOWOj41YPPvWa8JCHAsirViZ2Uftt4vXFijoQfsCmrBCrGnI
+dcFPlSZwnczFz5rBy/df/5V69juDWQDd76ckGkUe33numpdENnNa6XztRfgO+ICL
+0l9PjfCz/ANQT/SrgvPalBMyuPYzh7P7o2AVxUM1fQxO7z+juip2xM/k+E3aucb4
+Urzy7whUTvcL1mnMX3gfnXWoSjgmDqsyXYfcD4QWU4WoaDDAw2E9P2LTEPCMqi6R
+c6TKbhJYZXuAatFdmgA1
+=ELu9
+-----END PGP SIGNATURE-----
