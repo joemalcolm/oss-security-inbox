@@ -1,79 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/28/4
-Message-ID: <20160228145356.GA30050@pc.thejh.net>
-Date: Sun, 28 Feb 2016 15:53:56 +0100
-From: Jann Horn <jann@...jh.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/15/5
+Message-ID: <5698D299.6020202@redhat.com>
+Date: Fri, 15 Jan 2016 12:06:01 +0100
+From: Florian Weimer <fweimer@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: security@...nel.org, security@...ntu.com, security@...ian.org, Aurelien Jarno <aurelien@...el32.net>, Florian Weimer <fw@...eb.enyo.de>
-Subject: pt_chown timeline, CVE request [was: Access to /dev/pts devices via pt_chown and user namespaces]
+Subject: Re: Qualys Security Advisory - Roaming through the OpenSSH client: CVE-2016-0777 and CVE-2016-0778
 Content-Type: text/plain; charset=utf-8
 
-Because this can realistically lead to a privilege escalation to root,
-I would like to request CVE identifier allocation if that hasn't
-already happened.
+On 01/14/2016 06:13 PM, Qualys Security Advisory wrote:
+> Internal stdio buffering is the most severe of the three problems
+> discussed in this section, although GNU/Linux is not affected because
+> the glibc mmap()s and munmap()s (and therefore cleanses) stdio buffers.
 
-On Tue, Feb 23, 2016 at 12:03:54PM +0000, halfdog wrote:
-> The logic above is severely flawed, when there can be more than one
-> master/slave pair having the same number and thus same name. But this
-> condition can be easily created by creating an user namespace,
-> mounting devpts with the newinstance option, create master and slave
-> pts pairs until the number overlaps with a target pts outside the
-> namespace on the host, where there is interest to gain ownership and
-> then invoke pt_chown.
-[...]
-> In my opinion, this security bug should be fixed two-fold: At first,
-> kernel should prevent the TIOCGPTN ioctl when invoked called by a
-> process within one namespace but acting on a filedescriptor from a
-> devpts instance mounted in a different namespace.
+This will change in glibc 2.23, stdio will use regular malloc and free
+for its buffers.  I did not expect this change to have security
+implications.  Considering that the actual bug lies elsewhere, and stdio
+usage is based on copying out of the buffer (so leaks can still happen
+elsewhere), I do not wish to revert this change.
 
-As mentioned in the private discussion about the bug (I think), that
-only works if you assume that there are no chroot directories with
-other devpts instances mounted in the init namespace or so.
-
-
-> Additionally
-> pt_chown should check via readlink and stat, that the passed file
-> descriptor really was from the /dev/ptmx or /dev/pts/ptmx device
-> present in the same namespace as the /dev/pts/[num] device is
-> residing.
-
-> This of course is only relevant if pt_chown is going to
-> survive on recent namespace aware systems.
-
-As others figured out in the private bug discussion, pt_chown is
-already not installed as setuid binary by glibc anymore.
-That it is present in Debian and Ubuntu is because of a distro patch
-in Debian, which Debian applied to work around the bug that the
-"[PATCH] devpts: Sensible /dev/ptmx & force newinstance" patch is
-supposed to fix. So with a fix for that issue applied, Debian and
-Ubuntu should be able to just drop the distro patch, fixing the
-vuln by removing pt_chown.
-
-
-> Timeline:
-> =========
-> 
->     20151220: Discovery
->     20151227: Report at Ubuntu Launchpad1529486
->     20160104: Report to distros list
->     20160122: Patch to disable unprivileged userns due to this and
-> other issues LKML
->     20160222: CRD and publication
-
-I also discovered this. Let me share my timeline:
-
-2015-07-28: reported to security@...ian.org
-[some discussion]
-2015-12-04: Florian Weimer suggests public disclosure
-2015-12-05: I report the issue to security@...nel.org, security@...ntu.com,
-  security@...ian.org, Aurelien Jarno <aurelien@...el32.net>,
-  Florian Weimer <fw@...eb.enyo.de> and ask whether anyone can fix it
-2015-12-05 until 2015-12-19: the issue is discussed and fix approaches
-  are considered, mostly by kernel developers, privately
-2015-12-11: Parts of this land on LKML for the first time in the
-  "[PATCH] devpts: Sensible /dev/ptmx & force newinstance" email from
-  Eric W. Biederman to LKML and the participants of the private email
-  thread (https://lkml.org/lkml/2015/12/11/760), and in the following
-  public discussion, it's possible to see mentions of the security issue.
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Florian
