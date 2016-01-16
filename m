@@ -1,45 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/07/1
-Message-ID: <edbc8c359e6b42ed80792307cbb00430@imshyb02.MITRE.ORG>
-Date: Mon, 7 Nov 2016 01:25:23 -0500
-From: <cve-assign@...re.org>
-To: <nicolas@...ud-santoni.eu>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <security@...ian.org>, <ross@...listi.us>
-Subject: Re: CVE request: Escape Sequence Command Execution vulnerability in Terminology 0.7
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/16/4
+Message-ID: <20160116114544.GA19210@tunkki>
+Date: Sat, 16 Jan 2016 13:45:44 +0200
+From: Henri Salo <henri@...v.fi>
+To: Rahul Pratap Singh <techno.rps@...il.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: Commentator WordPress Plugin 2.5.2 XSS Vulnerability
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hash: SHA1
 
-> Terminology 0.7.0 suffers from a bug similar to CVE-2003-0063, where an
-> attacker able to print character escape sequences can modify the window
-> title and then insert it back in the terminal's input buffer, resulting
-> in arbitrary terminal input, including code execution as a local user.
+On Wed, Jan 13, 2016 at 07:42:12PM +0530, Rahul Pratap Singh wrote:
+> I would request you to assign CVE id to this issue.
+> 
+> file: commentator.php
+> 
+> line:441
+> $provider_name = $_REQUEST["provider"];
+> line:544
+> <div id="commentator-social-signin" class="commentator-<?php echo
+> $provider_name; ?>">
+>
+> /wp-admin/admin-ajax.php?action=commentator_social_signin&provider=facebook">%20<IMG%20SRC=axc%20onerror=alert(1)>
+> 
+> https://0x62626262.files.wordpress.com/2016/01/commentatorxsspoc.png
+> http://codecanyon.net/item/commentator-wordpress-plugin/6425752
+> https://0x62626262.wordpress.com/2016/01/13/commentator-wordpress-plugin-xss-vulnerability
+> 
+> Fix: Update to 2.5.3
 
-> https://git.enlightenment.org/apps/terminology.git/commit/?id=b80bedc7c21ecffe99d8d142930db696eebdd6a5
->> src/bin/termptyesc.c
+Are you sure that this plugin is open source software? There is a plugin named
+"commentator" in the WordPress Plugin Directory[1,2], but it seems to be
+different codebase (might be older version) and last update is 2012-10-28. Item
+in codecanyon.net requires paid license.
 
-Use CVE-2015-8971.
+1: http://plugins.svn.wordpress.org/commentator/trunk/
+2: http://plugins.svn.wordpress.org/commentator/trunk/readme.txt
 
 - -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
+Henri Salo
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJYIB3DAAoJEHb/MwWLVhi2sDAP/2SGtSh3lURdWJgTg5e/iTrr
-ts+KS9Gvi4Kzlmz2THht82pnyDyR92ViseaDUYMQRjcFjt2F/blpb3PinUq/O+er
-RUGSgRJBsySNqSt8kDTNL1Xp8Zfld8nVsbH4Ok+pYzDgkj1FozCFv33hlGIOmNrU
-8alWastFxk/1URgDDfHLkvtZe2OPLJhwbLCon4XMOB3KJITvsSbUMhRbVyViub0k
-NUdpKSBrR+gr1NXaExELEWl2zQX2lHUpxw+SPRs8xkUaL4Zkwe5Ofd5Jac6tI+Ei
-T6WynJbtxlxBHCoLrD4r0/dLP3VEdVcyK+BvypTlZwyISYlkqKNusvWRiVZdXdTT
-LyHOl/TQQ60VIBvCEcFhZ15l1tvkzos+qxYUDEqIiJLorciyxsLkPLVHM6rEaJ3a
-zpTKra57+CoWOJr68fwvC9rASc4TdYGEAvIBbld4u5tOSmk6mxOqz4nmv11HxAYk
-oVnjXoGmZ9agErDd9eZN636IT/XWVfaPdCtf54gzfYqC04mb4onc5KU+lasX53hP
-AOJgiUtwM/GbN/ffiCLCWyU5Aar9iPSFLZIc12B5xA/FxK/RktD2FEJ6TDT36vcw
-pEoP1aqgFyTkVqQzxjClLYNnPjkcTsoVZGMM/VQ35zuzmy0M9Q07cFCHHTPj1PQG
-io6f65LmgGjmEq+hvBEW
-=HUD/
+iQIcBAEBAgAGBQJWmi1oAAoJECet96ROqnV0W9MQAM7/GMMtvzWRATSgzTXJhcw3
+HnNwxM37fwyUOxxkAiwI0Qhb5btrZ4mnIK1oOpHZ1d55le/6GBdvxG28lmN9KZBs
+8iiv26hX1D/+tDyXWLtRaZUwC46Mx7geoNoH55dk+MWip1LdhIDjc7eqvB26GT04
+nq8y5gPHUv6VEtS/rgLzW6VVrATVxCTOvHMEzvxgbkHmntDRIaVsDk+krQ8HnlUM
+U7x0REkQmvhM+lAascIaS0vYLz+Had1+Us4F+cA88FPpA2UGzXvRXOcoyYLGu5H+
+99RgnTP1x1Lk6/1E5NYfSnyNwsS8wFsxw8SlUEbRJaEqFJSYjhHq0ho+yVTC9ekx
+z2y0AfOZ/5xjsUZkJgJOwV9ovXVwhe1S55ChmgJRsQ20wc0w8qSgQVd+7+PEiMvb
+ZJxie5x0vsc9X8jQPPBrYCA9RfDIQnNeYcebdECZm/zg0IvGBTKqu2ZSht8ndymC
+W8yZop/BkXO9Ge1SLW2jpRkTJG6moH/k7b0X4Lim1GtaAi21hdUvgOZ8LLQnWk0G
+AphLO8mSauqyEU5sY2g3zHMVbIGzjuQ8Iw2So1WNLdoxss5lm75YEhCij0bpVXSb
+7bCLrlvxPtbphuEA2Mb8R9jPQ7xI66EqjOu+yZfyUnfY27Co7sCUGUnkLGoxfhHU
+t0yWufUCj9ZCW7lfA01K
+=dsWg
 -----END PGP SIGNATURE-----
