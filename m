@@ -1,50 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/08/15
-Message-Id: <20160408173332.997BE6C05DD@smtpvmsrv1.mitre.org>
-Date: Fri,  8 Apr 2016 13:33:32 -0400 (EDT)
-From: cve-assign@...re.org
-To: meissner@...e.de
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: systemd / journald created world readable journal files
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/16/2
+Message-ID: <f4857fec-922c-6f4b-103d-364ea3b170b1@halfdog.net>
+Date: Sat, 16 Jan 2016 07:47:43 +0000
+From: halfdog <me@...fdog.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: Discuss: Daily/weekly cron jobs best practices
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hash: SHA1
 
-> Fixed for volatile journals was done by this commit in v214:
-> https://github.com/systemd/systemd/commit/176f2acf8dee45fee832fd2ab07243f63783a238
+Hi,
 
->> committed Jun 11, 2014
+Sorry for not finding time to come back earlier.
 
-Use CVE-2014-9770.
+Tim Brown wrote:
+> On Wednesday 06 January 2016 23:06:20 halfdog wrote:
+> 
+>> Are there more variants, arguments? In my opinion, b) is a good 
+>> trade-off between maintainability and security.
+> 
+> Create scripts with secure permissions, write only to properly
+> secured locations and execute as dedicated users with minimal
+> privileges. Yes, there will still be problems but a lot of the most
+> significant pain points go away.
 
+@all: So there are no objections to propose variant b) in a short
+howto for all cron scripts, e.g. too much associated logging
+especially if also used for hourly jobs, may upset the IDS/SIEM due to
+larger number of SUID-binary calls, risk to give unprivileged process
+control over privileged resource already opened/accessed before
+changing UID?
 
-> Fixed for the current persistent journal by this commit in v229:
-> https://github.com/systemd/systemd/commit/afae249efa4774c6676738ac5de6aeb4daf4889f
+"b) run shell script as daemon user and also try to get it secured.
+Pro: attackers without code execution possibilities but ability to
+make daemon e.g. to create problematic files via the daemon are also
+blocked."
 
->> committed Nov 29, 2015
+>> Currently the cron scripts seem to be a weak point. I looked at
+>> the 8 daily scripts on my machine, 2 of them belonged to the
+>> "daemon" example class from above and both were vulnerable to
+>> daemon to root privilege escalation, see e.g. [1].
+> 
+> Not uncommon, we pop almost every UNIX box we touch this way, I
+> assume you've seen unix-privesc-check?
 
-Use CVE-2015-8842.
+I have tried it, but it seems too unspecific. Example from the cron
+jobs directory:
+
+W: [privileged_change_privileges] cron-system /etc/cron.daily/dpkg
+(root) and does not attempt to change privileges
+
+This is reported nearly for all scripts, for some it might be a
+correct finding, for others it is simply wrong (they should really
+operate with root permissions in place). So it is not very effective
+in pointing at the really problematic scripts.
+
+Of course a project developer could take all the collected warnings as
+"checklist", if they might apply to his project's scripts also.
+
+(And they could be made a little more targeted by upc: e.g. report
+only if the script uses chown with non-root UIDs or chmod/find/rm ..
+on directories not owned by root. But that needs quite a lot of
+parsing of the scripts.)
+
+Conclusio on upc in that case could be: Good to scan new project
+software as a second line of defense and to get ideas, which errors
+one could have made but not helpful to point at specific locations.
 
 - -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
+http://www.halfdog.net/
+PGP: 156A AE98 B91F 0114 FE88  2BD8 C459 9386 feed a bee
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJXB+sEAAoJEL54rhJi8gl5zhMP/3C4F7RnZztSDKJ2HhG1zuUb
-eOEW8F9mh00jqV3DFBAhl5y+TGUdtiGobbcYzEImxvv4wy7NgiboXn+ENVZN49ci
-Vlw8wPsj3xmwq7x5rq3fsykmqa+iCtI3LFV6mEu3NnzPWd+5O96T1j+5yCVCnahN
-yfcBd4JxevTE46XPXk/Eb058pz6brT+gMJu0AZ0bpT5BAN5g7QuCeD1ZOpxDHxlS
-rfWLaj0gZL3ws+U4wSg4FSvLTJIOmxfFmF9ka/aNOZOU2ifI+1vmkd2rfaAEQhsQ
-Lrt16WGNnBemg5xpOoty5sowYF6t0oC8QKaquixAWholjoRTHBcQSdndqTTQ68S1
-hTocmbMYFKXUSJYG0uy6jhyPPRfrZNKtiCVx9Nk7ctYshM3hmETDVpbTZzndBrVU
-6VwxJckUYO3kpyejfBPz68r1OcW49ZJre6rM7qZNYl1/GESeYjzKXJ8LmpZZZc9Y
-yFuZmp5vKRiHttBuHYWd0qMRb7QWnHPnIcJCT63rcQ44HqNAqxw5coabZ2ATjKS1
-ZLuPGAuVlG+tF37obg+MC3+MJfd2XPTC0uFWIixy7jSMfKFooQx6ndwxnRK7swr2
-8X7E2D4RQvc9vzPyWGGL2SiGmezU7r6iq5s2gA6D+Givc+d3E+Ey21S6eEhyKF4I
-VGnOJyed8E7zg1AKTwc4
-=Rjwg
+iEYEARECAAYFAlaZ9ZQACgkQxFmThv7tq+7b2gCfWCZSkkSNtEETujorj3+4qpd2
+gM8AmgLOPLiErmk36/BJNYRSURG02BWf
+=X8za
 -----END PGP SIGNATURE-----
