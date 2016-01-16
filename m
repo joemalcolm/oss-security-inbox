@@ -1,40 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/16/14
-Message-ID: <7c365a7a-c510-b6e6-2609-da62b69fd62b@case.edu>
-Date: Fri, 16 Sep 2016 14:49:11 -0400
-From: Chet Ramey <chet.ramey@...e.edu>
-To: Jan Schaumann <jschauma@...meister.org>, oss-security@...ts.openwall.com
-Cc: chet.ramey@...e.edu
-Subject: Re: CVE-2016-0634 -- bash prompt expanding $HOSTNAME
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/16/3
+Message-ID: <CAKws9z2psDS2P25SOykpaR0QUiMZd1Pe1q4Q3ia_YyXXh-ptGQ@mail.gmail.com>
+Date: Sat, 16 Jan 2016 03:15:53 -0500
+From: Scott Arciszewski <scott@...agonie.com>
+To: oss-security@...ts.openwall.com, fulldisclosure@...lists.org
+Subject: It essentially wins crypto vulnerability bingo! gilfether/phpcrypt
 Content-Type: text/plain; charset=utf-8
 
-On 9/16/16 1:38 PM, Jan Schaumann wrote:
-> John Haxby <john.haxby@...cle.com> wrote:
+Consider this email the spiritual successor to my most recent post on Full
+Disclosure (http://seclists.org/fulldisclosure/2016/Jan/50).
 
-(I didn't get this message.)
+Today, we're going to talk about this library:
+https://github.com/gilfether/phpcrypt/issues/6
 
->> A little while ago, one of our users discovered that by setting the
->> hostname to $(something unpleasant), bash would run "something
->> unpleasant" when it expanded \h in the prompt string.
+Let's go down the list:
 
-This issue has been public since October, 2015 in Ubuntu's bug tracking
-system.
+- [x] Wrote their own block cipher implementation
+- [x] ...in PHP...
+- [x] ...and forgot to account for function overloading!
+- [x] Chosen-ciphertext attacks (The existence for which is almost implied
+by "PHP crypto". Almost.)
+- [x] Defaults to a weak random number generator (32 bits of entropy is
+enough for AES right?)
+- [x] Defaults to ECB mode (https://blog.filippo.io/the-ecb-penguin/)
+- [x] Offers a laundry list of ciphers available, some of which are stupid
+- [x] ...like SimpleXOR (remember JCrypt?), Vigenere, and Enigma!
 
+Yep, this is almost as bad as it gets. I've attempted to notify everyone on
+Github who used this library, but there might be some people who do that
+aren't on Github. Please spread the word: migrate away from homebrew PHP
+cryptography.
 
-> To clarify: this is only triggered if the hostname has been set, not the
-> $HOSTNAME variable, right?
+Like most "pure PHP" cryptography projects, this code is pure security
+theater. There is no salvaging it.
 
-Bash doesn't use $HOSTNAME; it sets it if it's not already set.  The
-shell's idea of the current hostname is set using gethostname().  If
-gethostname() fails, the hostname gets set to "??host??".  The \h
-prompt expansion uses the shell's idea of the current hostname.
+For PHP developers who would otherwise be left out in the rain by this
+disclosure, here are some PHP cryptography libraries that do it right:
 
-If your privileged application (either a user with privilege or a hostname-
-setting agent) allows the hostname to be set to any arbitrary string of
-characters, you're going to have problems regardless.
+1. https://github.com/jedisct1/libsodium-php (HIGHLY recommended!)
+​2​
+. https://github.com/defuse/php-encryption (recommended!)
+3. https://github.com/paragonie/halite (requires #1)
+4. https://github.com/paragonie/EasyRSA (reluctantly included for people
+that really believe they need RSA)
 
-Chet
--- 
-``The lyf so short, the craft so long to lerne.'' - Chaucer
-		 ``Ars longa, vita brevis'' - Hippocrates
-Chet Ramey, UTech, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
+(Details:
+https://paragonie.com/blog/2015/11/choosing-right-cryptography-library-for-your-php-project-guide
+)
+
+Seriously, folks: Writing cryptography primitives or protocols is hazardous
+in any language. Even if you have a mathematics background.
+
+If you can't afford to hire a cryptography expert to audit your library
+before you publish it, you should seriously consider using one that the
+community has already reviewed for free.
+
+Scott Arciszewski
+Chief Development Officer
+Paragon Initiative Enterprises <https://paragonie.com>​
+
+P.S. MITRE, if you're not busy, could you slap a CVE on the issues? This
+library actually gets a fair bit of use (though hopefully not for long).
+
