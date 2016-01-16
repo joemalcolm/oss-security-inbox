@@ -1,81 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/30/5
-Message-ID: <574C4533.6020504@igalia.com>
-Date: Mon, 30 May 2016 15:50:43 +0200
-From: Carlos Alberto Lopez Perez <clopez@...lia.com>
-To: webkit-gtk@...ts.webkit.org
-Cc: security@...kit.org, distributor-list@...me.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
-Subject: WebKitGTK+ Security Advisory WSA-2016-0004
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/16/5
+Message-ID: <e4945331-396e-5696-1c67-70dbbcd20c32@halfdog.net>
+Date: Sat, 16 Jan 2016 16:39:43 +0000
+From: halfdog <me@...fdog.net>
+To: oss-security@...ts.openwall.com
+Subject: Setgid/Setuid binary writing privilege escalation
 Content-Type: text/plain; charset=utf-8
 
-------------------------------------------------------------------------
-WebKitGTK+ Security Advisory                               WSA-2016-0004
-------------------------------------------------------------------------
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Date reported      : May 30, 2016
-Advisory ID        : WSA-2016-0004
-Advisory URL       : http://webkitgtk.org/security/WSA-2016-0004.html
-CVE identifiers    : CVE-2016-1854, CVE-2016-1856, CVE-2016-1857,
-                     CVE-2016-1858, CVE-2016-1859.
+Hello List,
 
-Several vulnerabilities were discovered in WebKitGTK+.
+As first shown in [0] for escalation from user "man:man" to "man:root"
+and later to "root:root", the issue was assigned low priority. Setgid
+directories are rare, user "man" is rarely used, so escalation risk is
+not so high. Apart from that, it was unclear, what would be correct
+behavior regarding POSIX.
 
-CVE-2016-1854
-    Versions affected: WebKitGTK+ before 2.12.1.
-    Credit to Anonymous working with Trend Micro's Zero Day Initiative.
-    WebKit, as used in Apple iOS before 9.3.2, Safari before 9.1.1, and
-    tvOS before 9.2.1, allows remote attackers to execute arbitrary code
-    or cause a denial of service (memory corruption) via a crafted web
-    site, a different vulnerability than CVE-2016-1855, CVE-2016-1856,
-    and CVE-2016-1857.
+Later on in [1], using the very same method with overlayfs was
+suitable to escalate from any user to root.
 
-CVE-2016-1856
-    Versions affected: WebKitGTK+ before 2.12.1.
-    Credit to lokihardt working with Trend Micro's Zero Day Initiative.
-    WebKit, as used in Apple iOS before 9.3.2, Safari before 9.1.1, and
-    tvOS before 9.2.1, allows remote attackers to execute arbitrary code
-    or cause a denial of service (memory corruption) via a crafted web
-    site, a different vulnerability than CVE-2016-1854, CVE-2016-1855,
-    and CVE-2016-1857.
+After looking at that more closely, I found today another method to
+escalate e.g. on Ubuntu Trusty/Wily to any group to be found with
+"find / -perm -02020", this is e.g. staff, mail, libuuid. As staff is
+has rwx permissions on python dist-packages and /var/local, any root
+process accessing those is at high risk to be used to escalate to uid
+root also.
 
-CVE-2016-1857
-    Versions affected: WebKitGTK+ before 2.12.3.
-    Credit to Jeonghoon Shin@....D and Liang Chen, Zhen Feng, wushi of
-    KeenLab, Tencent working with Trend Micro's Zero Day Initiative.
-    WebKit, as used in Apple iOS before 9.3.2, Safari before 9.1.1, and
-    tvOS before 9.2.1, allows remote attackers to execute arbitrary code
-    or cause a denial of service (memory corruption) via a crafted web
-    site, a different vulnerability than CVE-2016-1854, CVE-2016-1855,
-    and CVE-2016-1856.
+Hence it seems, that the problem [0] increases the attack surface in
+general. Should it therefore be treated as a security vulnerability
+and assigned a CVE?
 
-CVE-2016-1858
-    Versions affected: WebKitGTK+ before 2.12.0.
-    Credit to Anonymous.
-    WebKit, as used in Apple iOS before 9.3.2, Safari before 9.1.1, and
-    tvOS before 9.2.1, improperly tracks taint attributes, which allows
-    remote attackers to obtain sensitive information via a crafted web
-    site.
+[0]
+http://www.halfdog.net/Security/2015/SetgidDirectoryPrivilegeEscalation/
+[1]
+http://www.halfdog.net/Security/2015/UserNamespaceOverlayfsSetuidWriteExec/
 
-CVE-2016-1859
-    Versions affected: WebKitGTK+ before 2.12.1.
-    Credit to Liang Chen, wushi of KeenLab, Tencent working with Trend
-    Micro's Zero Day Initiative.
-    The WebKit Canvas implementation in Apple iOS before 9.3.2, Safari
-    before 9.1.1, and tvOS before 9.2.1 allows remote attackers to
-    execute arbitrary code or cause a denial of service (memory
-    corruption) via a crafted web site.
+- -- 
+http://www.halfdog.net/
+PGP: 156A AE98 B91F 0114 FE88 2BD8 C459 9386 feed a bee
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-
-We recommend updating to the last stable version of WebKitGTK+. It is
-the best way of ensuring that you are running a safe version of
-WebKitGTK+. Please check our website for information about the last
-stable releases.
-
-Further information about WebKitGTK+ Security Advisories can be found
-at: http://webkitgtk.org/security.html
-
-The WebKitGTK+ team,
-May 30, 2016
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (884 bytes)
+iEYEARECAAYFAlaacjYACgkQxFmThv7tq+6wDQCffUVFOpFxKUa+TfUQrJ+0WpLy
+FnwAn3FN/wVZIZiqZABh6obBTaat1VCb
+=Q9HM
+-----END PGP SIGNATURE-----
