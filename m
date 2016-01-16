@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1093" "Wednesday" "7" "March" "2018" "11:09:50" "+0100" "Tomas Hoger" "thoger@redhat.com" "<20180307110950.4eb041a8@redhat.com>" "29" "Re: [oss-security] memcached UDP amplification attacks" "^Cc:" nil nil "3" "2018030710:09:50" "[oss-security] memcached UDP amplification attacks" (number mark "        thoger@redha Mar  7   29/1093  " thread-indent "\"Re: [oss-security] memcached UDP amplification attacks\"\n") "<CANO=Ty0X6iVTG=BUhdUgxYSLN9XnA-NcvH96DgTALQRvsNnn4Q@mail.gmail.com>" ("<20180302124428.440b9c3b@pc1>" "<CANO=Ty09HPfSbp8QsZHU24EnEyzOw1H1C-Zr+7mqwDhOG6=HYg@mail.gmail.com>" "<CANO=Ty0X6iVTG=BUhdUgxYSLN9XnA-NcvH96DgTALQRvsNnn4Q@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1964" "Saturday" "16" "January" "2016" "13:45:44" "+0200" "Henri Salo" "henri@nerv.fi" "<20160116114544.GA19210@tunkki>" "49" "Re: [oss-security] CVE Request: Commentator WordPress Plugin 2.5.2 XSS Vulnerability" "^Cc:" nil nil "1" "2016011611:45:44" "[oss-security] CVE Request: Commentator WordPress Plugin 2.5.2 XSS Vulnerability" (number mark "        henri@nerv.f Jan 16   49/1964  " thread-indent "\"Re: [oss-security] CVE Request: Commentator WordPress Plugin 2.5.2 XSS Vulnerability\"\n") "<CADLX=aE8i3sGRMXGAAXwrgxY47b-QcPMBQoGRPKOAsmWcTJoZA@mail.gmail.com>" ("<CADLX=aE8i3sGRMXGAAXwrgxY47b-QcPMBQoGRPKOAsmWcTJoZA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 12033 invoked by uid 550); 7 Mar 2018 10:10:06 -0000
+Received: (qmail 26531 invoked by uid 550); 16 Jan 2016 11:46:39 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,51 +11,68 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 12013 invoked from network); 7 Mar 2018 10:10:05 -0000
-Message-ID: <20180307110950.4eb041a8@redhat.com>
-In-Reply-To: <CANO=Ty0X6iVTG=BUhdUgxYSLN9XnA-NcvH96DgTALQRvsNnn4Q@mail.gmail.com>
-References: <20180302124428.440b9c3b@pc1>
-	<CANO=Ty09HPfSbp8QsZHU24EnEyzOw1H1C-Zr+7mqwDhOG6=HYg@mail.gmail.com>
-	<CANO=Ty0X6iVTG=BUhdUgxYSLN9XnA-NcvH96DgTALQRvsNnn4Q@mail.gmail.com>
+Received: (qmail 26510 invoked from network); 16 Jan 2016 11:46:39 -0000
+X-Virus-Scanned: Debian amavisd-new at mango.nerv.fi
+Message-ID: <20160116114544.GA19210@tunkki>
+References: <CADLX=aE8i3sGRMXGAAXwrgxY47b-QcPMBQoGRPKOAsmWcTJoZA@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 2.78 on 10.11.54.4
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.11.55.6]); Wed, 07 Mar 2018 10:09:54 +0000 (UTC)
-X-Greylist: inspected by milter-greylist-4.5.16 (mx1.redhat.com [10.11.55.6]); Wed, 07 Mar 2018 10:09:54 +0000 (UTC) for IP:'10.11.54.4' DOMAIN:'int-mx04.intmail.prod.int.rdu2.redhat.com' HELO:'smtp.corp.redhat.com' FROM:'thoger@redhat.com' RCPT:''
+Content-Type: text/plain; charset=us-ascii; x-action=pgp-signed
+In-Reply-To: <CADLX=aE8i3sGRMXGAAXwrgxY47b-QcPMBQoGRPKOAsmWcTJoZA@mail.gmail.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Cc: oss-security@lists.openwall.com
-Date: Wed, 7 Mar 2018 11:09:50 +0100
-From: Tomas Hoger <thoger@redhat.com>
+Date: Sat, 16 Jan 2016 13:45:44 +0200
+From: Henri Salo <henri@nerv.fi>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] memcached UDP amplification attacks
-To: Kurt Seifried <kseifried@redhat.com>
+Subject: Re: [oss-security] CVE Request: Commentator WordPress Plugin 2.5.2
+ XSS Vulnerability
+To: Rahul Pratap Singh <techno.rps@gmail.com>
 
-On Fri, 2 Mar 2018 21:42:30 -0700 Kurt Seifried wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> I have assigned CVE-2018-1000115 to this issue:
+On Wed, Jan 13, 2016 at 07:42:12PM +0530, Rahul Pratap Singh wrote:
+> I would request you to assign CVE id to this issue.
 > 
-> Memcached version 1.5.5 contains an Insufficient Control of Network
-> Message Volume (Network Amplification, CWE-406) vulnerability in the
-> UDP support of the memcached server that can result in denial of
-> service via network flood (traffic amplification of 1:50,000 has been
-> reported by reliable sources). This attack appear to be exploitable
-> via network connectivity to port 11211 UDP. This vulnerability
-> appears to have been fixed in 1.5.6 due to the disabling of the UDP
-> protocol by default.
+> file: commentator.php
+> 
+> line:441
+> $provider_name = $_REQUEST["provider"];
+> line:544
+> <div id="commentator-social-signin" class="commentator-<?php echo
+> $provider_name; ?>">
+>
+> /wp-admin/admin-ajax.php?action=commentator_social_signin&provider=facebook">%20<IMG%20SRC=axc%20onerror=alert(1)>
+> 
+> https://0x62626262.files.wordpress.com/2016/01/commentatorxsspoc.png
+> http://codecanyon.net/item/commentator-wordpress-plugin/6425752
+> https://0x62626262.wordpress.com/2016/01/13/commentator-wordpress-plugin-xss-vulnerability
+> 
+> Fix: Update to 2.5.3
 
-Minor nitpick, the description mentions 1:50,000 ratio, apparently
-based on the information in the following reference:
+Are you sure that this plugin is open source software? There is a plugin named
+"commentator" in the WordPress Plugin Directory[1,2], but it seems to be
+different codebase (might be older version) and last update is 2012-10-28. Item
+in codecanyon.net requires paid license.
 
-> https://blogs.akamai.com/2018/03/memcached-fueled-13-tbps-attacks.html
+1: http://plugins.svn.wordpress.org/commentator/trunk/
+2: http://plugins.svn.wordpress.org/commentator/trunk/readme.txt
 
-where it's mentioned as:
+- -- 
+Henri Salo
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-"""
-Worse, memcached can have an amplification factor of over 50,000,
-meaning a 203 byte request results in a 100 megabyte response.
-"""
-
-However, 200 * 50k = 10m, not 100m.  Wonder if I'm doing my math wrong.
-
--- 
-Tomas Hoger / Red Hat Product Security
+iQIcBAEBAgAGBQJWmi1oAAoJECet96ROqnV0W9MQAM7/GMMtvzWRATSgzTXJhcw3
+HnNwxM37fwyUOxxkAiwI0Qhb5btrZ4mnIK1oOpHZ1d55le/6GBdvxG28lmN9KZBs
+8iiv26hX1D/+tDyXWLtRaZUwC46Mx7geoNoH55dk+MWip1LdhIDjc7eqvB26GT04
+nq8y5gPHUv6VEtS/rgLzW6VVrATVxCTOvHMEzvxgbkHmntDRIaVsDk+krQ8HnlUM
+U7x0REkQmvhM+lAascIaS0vYLz+Had1+Us4F+cA88FPpA2UGzXvRXOcoyYLGu5H+
+99RgnTP1x1Lk6/1E5NYfSnyNwsS8wFsxw8SlUEbRJaEqFJSYjhHq0ho+yVTC9ekx
+z2y0AfOZ/5xjsUZkJgJOwV9ovXVwhe1S55ChmgJRsQ20wc0w8qSgQVd+7+PEiMvb
+ZJxie5x0vsc9X8jQPPBrYCA9RfDIQnNeYcebdECZm/zg0IvGBTKqu2ZSht8ndymC
+W8yZop/BkXO9Ge1SLW2jpRkTJG6moH/k7b0X4Lim1GtaAi21hdUvgOZ8LLQnWk0G
+AphLO8mSauqyEU5sY2g3zHMVbIGzjuQ8Iw2So1WNLdoxss5lm75YEhCij0bpVXSb
+7bCLrlvxPtbphuEA2Mb8R9jPQ7xI66EqjOu+yZfyUnfY27Co7sCUGUnkLGoxfhHU
+t0yWufUCj9ZCW7lfA01K
+=dsWg
+-----END PGP SIGNATURE-----
