@@ -1,119 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/19/7
-Message-Id: <E1cJ1Ml-0004sP-Vs@xenbits.xenproject.org>
-Date: Mon, 19 Dec 2016 17:04:47 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 204 (CVE-2016-10013) - x86: Mishandling of SYSCALL singlestep during emulation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/16/6
+Message-Id: <20160116165153.8AD7F6C035C@smtpvmsrv1.mitre.org>
+Date: Sat, 16 Jan 2016 11:51:53 -0500 (EST)
+From: cve-assign@...re.org
+To: ppandit@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, liuling-it@....cn
+Subject: Re: CVE request Qemu: i386: null pointer dereference in vapic_write
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hash: SHA256
 
-            Xen Security Advisory CVE-2016-10013 / XSA-204
-                              version 2
+> Qemu emulator built with the TPR optimization for 32-bit Windows guests 
+> support is vulnerable to a null pointer dereference flaw. It occurs while 
+> doing I/O port write operations via hmp interface. In that, 'current_cpu' 
+> remains null, which leads to the null pointer dereference.
+> 
+> A user/process could use this flaw to crash the Qemu instance, resulting in 
+> DoS issue.
+> 
+> https://lists.gnu.org/archive/html/qemu-devel/2016-01/msg02812.html
+> https://bugzilla.redhat.com/show_bug.cgi?id=1283934
 
-        x86: Mishandling of SYSCALL singlestep during emulation
+>> When I/O port write operation is called from hmp interface,
+>> 'current_cpu' remains null, as it is not called from cpu_exec()
+>> loop. This leads to a null pointer dereference in vapic_write
+>> routine. Add check to avoid it.
 
-UPDATES IN VERSION 2
-====================
+Use CVE-2016-1922.     
 
-CVE assigned.
+This is not yet available at
+http://git.qemu.org/?p=qemu.git;a=history;f=hw/i386/kvmvapic.c but
+that may be an expected place for a later update.
 
-ISSUE DESCRIPTION
-=================
-
-The typical behaviour of singlestepping exceptions is determined at the
-start of the instruction, with a #DB trap being raised at the end of the
-instruction.
-
-SYSCALL (and SYSRET, although we don't implement it) behave differently
-because the typical behaviour allows userspace to escalate its
-privilege.  (This difference in behaviour seems to be undocumented.)
-
-Xen wrongly raised the exception based on the flags at the start of
-the instruction.
-
-IMPACT
-======
-
-Guest userspace which can invoke the instruction emulator can use this
-flaw to escalate its privilege to that of the guest kernel.
-
-VULNERABLE SYSTEMS
-==================
-
-All Xen versions are affected.
-
-The vulnerability is only exposed to 64-bit x86 HVM guests.
-
-On Xen 4.6 and earlier the vulnerability is exposed to all guest user
-processes, including unprivileged processes, in such guests.
-
-On Xen 4.7 and later, the vulnerability is exposed only to guest user
-processes granted a degree of privilege (such as direct hardware access)
-by the guest administrator; or, to all user processes when the VM has
-been explicitly configured with a non-default cpu vendor string (in
-xm/xl, this would be done with a `cpuid=' domain config option).
-
-A 64-bit guest kernel which uses an IST for #DB handling will most likely
-mitigate the issue, but will have a single unexpected #DB exception
-frame to deal with.  This in practice means that Linux is not
-vulnerable.
-
-The vulnerability is not exposed to 32-bit HVM guests.  This is because
-the emulation bug also matches real hardware behaviour, and a 32-bit
-guest kernel using SYSCALL will already have to be using a Task Gate for
-handling #DB to avoid being susceptible to an escalation of privilege.
-
-The vulnerability is not exposed to PV guests.
-
-ARM systems are not vulnerable.
-
-MITIGATION
-==========
-
-There is no known mitigation.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa204.patch           xen-unstable
-xsa204-4.8.patch       Xen 4.8.x
-xsa204-4.7.patch       Xen 4.7.x, Xen 4.6.x
-xsa204-4.5.patch       Xen 4.5.x, Xen 4.4.x
-
-$ sha256sum xsa204*
-251c33905f86d386cc07240041108ec0664e5e9dddb2b88685d9b4b8ca7fdc24  xsa204.patch
-e523b65ba122c8e22d32004d2035facaf06295094fdc8b67c151b6f44799ef0b  xsa204-4.5.patch
-d0359f26e9be783672896200e14d85a3111c29d7da580313b593fca04688fef2  xsa204-4.7.patch
-fa2a69682868104b6263655abbfc6b326f76deebdac3273b4b65da6673f5d977  xsa204-4.8.patch
-$
-
-NOTE REGARDING EMBARGO
-======================
-
-This issue was discussed publicly on qemu-devel before its impact was
-realised.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQEcBAEBAgAGBQJYWBMjAAoJEIP+FMlX6CvZe2wH/i/tAxpXbIc0xhhA5L6nlGJ9
-fYZY0C6GuujTFIPmF40dMKIZieB+zKxiBseYHw4dHSzs3hbLbYhcP2Qgr2WJ2uJw
-3zuS+OAtOlwzl+KRu6WUZPMf5JTAZp+kWJny3qCymUzXqz4OmUzsqHAORYyAjVi/
-RN0lqgnkoTrGV8YS7fEUC5mB6PQGaEerJWFRLmaEmxV0th70oTuSGELjZ7rJdJg/
-92BZ/GVQNspuSgZCJyEhwSfzBgF1MvAKjUZafh9+0/2G5Ab0Z71ikRX/l8RWop9E
-7B+KC6zeG6DukPME2sJTuL+b0EmZyfOwewDnbdGbzb2nCfOhwsoHvzrAhF9rYwI=
-=ypHy
+iQIcBAEBCAAGBQJWmnRUAAoJEL54rhJi8gl59noQAM/vSEILhzHjyInIECRi5Pa3
+AeMkMitYWVwKxLxy3J6iwItsF3BD6LcpvGHFo0U7v8dhln5vISQIUydx4TojPbtN
+KxF1H8rmpWmf4iJGYaryfqi4frgyUOw1LVzaHKdPSMh4C9EKHE3hiJ2kDOa/6J44
+1VrsmQNjvElfeMMYdlNI7FU1/5MY6HnBGzumu+gjqmdOl/Nz4BzzCMxfUmW7zAIL
+X6DYMReMrSfuSNXUUmwJW5L5VcWQGE90OBSA8izMMtTfvHvGeaTy/iNHwVQncjrw
+oBUpxqstKaAnW0CjuCUefzYQDX0XbXBtgRV5pzIwWg0Kc7WHBz7PrbEDSfHt0Tm7
+N34cM+52zlsuqKo2tvewV+YC4KcvXI1albAxOkt6GNvUK0njhA/H8kykh1UqaSGx
+PvhzZkryc9qD/mgZwpsFLgvNQ257/mwANHwc1F7FtjD3r8YH7Jh+A9EoX26ROKdQ
+AuDNZ3NyfemH6qYvEnmKFuxTyBvM/xB7kLA1pF59rdfWizgSJ2Ceuq2wqKTHdfrZ
+38UPE+X8T6i+z+HEg3kqITuCCe+npMUeDbWUiP0kSw6wYL0OX/SsvtfnNSWAGVZJ
+z477+jMpuUGPspK+rwRbkYvE/xHH1XnbT3rAA/1irXcvGnetlb1nAFPx0Fx06JxZ
+mD1djrzjFtIrW5WGftT1
+=ZYwp
 -----END PGP SIGNATURE-----
-
-Download attachment "xsa204.patch" of type "application/octet-stream" (2719 bytes)
-
-Download attachment "xsa204-4.5.patch" of type "application/octet-stream" (2754 bytes)
-
-Download attachment "xsa204-4.7.patch" of type "application/octet-stream" (2754 bytes)
-
-Download attachment "xsa204-4.8.patch" of type "application/octet-stream" (2208 bytes)
