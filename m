@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2183" "Tuesday" "14" "April" "2015" "14:53:59" "-0400" "Tristan Cacqueray" "tristan.cacqueray@enovance.com" "<552D6247.1030701@enovance.com>" "75" "[oss-security] [OSSA 2015-006] Unauthorized delete of versioned Swift object (CVE-2015-1856)" nil nil nil "4" "2015041418:53:59" "[oss-security] [OSSA 2015-006] Unauthorized delete of versioned Swift object (CVE-2015-1856)" (number mark "        tristan.cacq Apr 14   75/2183  " thread-indent "\"[oss-security] [OSSA 2015-006] Unauthorized delete of versioned Swift object (CVE-2015-1856)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2739" "Saturday" "16" "January" "2016" "07:47:43" "+0000" "halfdog" "me@halfdog.net" "<f4857fec-922c-6f4b-103d-364ea3b170b1@halfdog.net>" "71" "Re: [oss-security] Discuss: Daily/weekly cron jobs best practices" "^Date:" nil nil "1" "2016011607:47:43" "[oss-security] Discuss: Daily/weekly cron jobs best practices" (number mark "        me@halfdog.n Jan 16   71/2739  " thread-indent "\"Re: [oss-security] Discuss: Daily/weekly cron jobs best practices\"\n") "<3412231.rSTmOYfSpU@sarpedon>" ("<568D9DEC.7030306@halfdog.net>" "<3412231.rSTmOYfSpU@sarpedon>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 31980 invoked by uid 550); 14 Apr 2015 18:53:58 -0000
+Received: (qmail 28408 invoked by uid 550); 16 Jan 2016 07:47:23 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,92 +11,88 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 31945 invoked from network); 14 Apr 2015 18:53:53 -0000
-X-Virus-Scanned: amavisd-new at enovance.com
-Message-ID: <552D6247.1030701@enovance.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
+Received: (qmail 28390 invoked from network); 16 Jan 2016 07:47:22 -0000
+References: <568D9DEC.7030306@halfdog.net> <3412231.rSTmOYfSpU@sarpedon>
+Message-ID: <f4857fec-922c-6f4b-103d-364ea3b170b1@halfdog.net>
+User-Agent: Mozilla/5.0 (Windows NT 6.3; rv:36.0) Gecko/20100101 Firefox/36.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="1q5uvSp8jhcjkbCmrv8MCCV4GTV9uWpc1"
-Date: Tue, 14 Apr 2015 14:53:59 -0400
-From: Tristan Cacqueray <tristan.cacqueray@enovance.com>
+In-Reply-To: <3412231.rSTmOYfSpU@sarpedon>
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Date: Sat, 16 Jan 2016 07:47:43 +0000
+From: halfdog <me@halfdog.net>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] [OSSA 2015-006] Unauthorized delete of versioned Swift object (CVE-2015-1856)
+Subject: Re: [oss-security] Discuss: Daily/weekly cron jobs best practices
 To: oss-security@lists.openwall.com
 
---1q5uvSp8jhcjkbCmrv8MCCV4GTV9uWpc1
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-OSSA-2015-006: Unauthorized delete of versioned Swift object
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Hi,
 
-:Date: April 14, 2015
-:CVE: CVE-2015-1856
+Sorry for not finding time to come back earlier.
 
+Tim Brown wrote:
+> On Wednesday 06 January 2016 23:06:20 halfdog wrote:
+> 
+>> Are there more variants, arguments? In my opinion, b) is a good 
+>> trade-off between maintainability and security.
+> 
+> Create scripts with secure permissions, write only to properly
+> secured locations and execute as dedicated users with minimal
+> privileges. Yes, there will still be problems but a lot of the most
+> significant pain points go away.
 
-Affects
-~~~~~~~
-- Swift: versions through 2.2.2
+@all: So there are no objections to propose variant b) in a short
+howto for all cron scripts, e.g. too much associated logging
+especially if also used for hourly jobs, may upset the IDS/SIEM due to
+larger number of SUID-binary calls, risk to give unprivileged process
+control over privileged resource already opened/accessed before
+changing UID?
 
+"b) run shell script as daemon user and also try to get it secured.
+Pro: attackers without code execution possibilities but ability to
+make daemon e.g. to create problematic files via the daemon are also
+blocked."
 
-Description
-~~~~~~~~~~~
-Clay Gerrard from SwiftStack reported a vulnerability in Swift object
-versioning. An authenticated user can delete the most recent version
-of any versioned object whose name is known if the user have listing
-access to the x-versions-location container. Only Swift setups with
-allow_version setting are affected.
+>> Currently the cron scripts seem to be a weak point. I looked at
+>> the 8 daily scripts on my machine, 2 of them belonged to the
+>> "daemon" example class from above and both were vulnerable to
+>> daemon to root privilege escalation, see e.g. [1].
+> 
+> Not uncommon, we pop almost every UNIX box we touch this way, I
+> assume you've seen unix-privesc-check?
 
+I have tried it, but it seems too unspecific. Example from the cron
+jobs directory:
 
-Patches
-~~~~~~~
-- https://review.openstack.org/173366 (Icehouse)
-- https://review.openstack.org/173363 (Juno)
-- https://review.openstack.org/173361 (Kilo)
+W: [privileged_change_privileges] cron-system /etc/cron.daily/dpkg
+(root) and does not attempt to change privileges
 
+This is reported nearly for all scripts, for some it might be a
+correct finding, for others it is simply wrong (they should really
+operate with root permissions in place). So it is not very effective
+in pointing at the really problematic scripts.
 
-Credits
-~~~~~~~
-- Clay Gerrard from SwiftStack (CVE-2015-1856)
+Of course a project developer could take all the collected warnings as
+"checklist", if they might apply to his project's scripts also.
 
+(And they could be made a little more targeted by upc: e.g. report
+only if the script uses chown with non-root UIDs or chmod/find/rm ..
+on directories not owned by root. But that needs quite a lot of
+parsing of the scripts.)
 
-References
-~~~~~~~~~~
-- https://launchpad.net/bugs/1430645
-- http://cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2015-1856
+Conclusio on upc in that case could be: Good to scan new project
+software as a second line of defense and to get ideas, which errors
+one could have made but not helpful to point at specific locations.
 
-
-Notes
-~~~~~
-- This fix will be included in the upcoming 2.3.0 release.
-
---
-Tristan Cacqueray
-OpenStack Vulnerability Management Team
-
-
---1q5uvSp8jhcjkbCmrv8MCCV4GTV9uWpc1
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
+- -- 
+http://www.halfdog.net/
+PGP: 156A AE98 B91F 0114 FE88  2BD8 C459 9386 feed a bee
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
+Version: GnuPG v1
 
-iQEcBAEBAgAGBQJVLWJHAAoJECK5oFySXMXYBwYIALg5v5sDmcVHRgT+49kkmQe5
-wyocSJ2tY2BdjIO/LE40VLHf1tzNGqZSD+wX1e85wXTyfvLM/Q7CjrQozIOgwoPL
-DBTDOddqg5gg/nG7zVKIsGhUcbL2c4fZbKAHSZUv0oPpRwSREK5fzpXcTiiu59uG
-cWidm5a+l3MqKvaDZQ38PS/loP7jlYkbPK3ayPGDIP9xLPE/sRiob/QE1x2PHwy6
-I1fC1o7Hu76FrGfq8uqXtJOHTEBqzjkqSoJZT1AoRf20OXPEWOzSNpEZo68UC12N
-TrgHnQ+LydZHb6UsiNIF7UHu4rI4ojHP82ElLR0ktVDhRl3vZo5rKsF2WyCzt9M=
-=8EXC
+iEYEARECAAYFAlaZ9ZQACgkQxFmThv7tq+7b2gCfWCZSkkSNtEETujorj3+4qpd2
+gM8AmgLOPLiErmk36/BJNYRSURG02BWf
+=X8za
 -----END PGP SIGNATURE-----
-
---1q5uvSp8jhcjkbCmrv8MCCV4GTV9uWpc1--
