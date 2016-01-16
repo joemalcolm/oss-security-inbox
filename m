@@ -1,37 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/05/14
-Message-ID: <CAP9m6Yc06E+Snw_1Wn_7txX+o9jSTcU_0hsf+QDsR1xuv+FqAA@mail.gmail.com>
-Date: Thu, 5 May 2016 08:42:13 -0400
-From: Stanislav Datskovskiy <stas@...er-os.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: broken RSA keys
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/16/1
+Message-ID: <alpine.LFD.2.20.1601161115510.22572@wniryva>
+Date: Sat, 16 Jan 2016 11:21:24 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Ling Liu <liuling-it@....cn>
+Subject: CVE request Qemu: i386: null pointer dereference in vapic_write
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+Hash: SHA1
 
-On Thu, May 5, 2016 at 5:23 AM, Hanno Böck <hanno@...eck.de> wrote:
-> Hi,
->
-> as I know the first ones to use this on publicly available keysets in
-> order to find vulnerable keys. The implementation from Nadia Heninger is
-> freely available [1] and some code to turn a pgp keyserver dump into a
-> mysql database is available from me [2]. So everyone should be able to
-> replicate what I'm saying
+    Hello,
 
-Where, exactly, did you get your public keys? Would you consider sharing?
-Quite a few of your moduli are not in my SKS dumps.
+Qemu emulator built with the TPR optimization for 32-bit Windows guests 
+support is vulnerable to a null pointer dereference flaw. It occurs while 
+doing I/O port write operations via hmp interface. In that, 'current_cpu' 
+remains null, which leads to the null pointer dereference.
 
-Best,
-- -S
+A user/process could use this flaw to crash the Qemu instance, resulting in 
+DoS issue.
+
+Upstream patch:
+- ---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2016-01/msg02812.html
+
+Reference:
+- ----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1283934
+
+This issue was discovered by Mr Ling Liu of Qihoo 360 Inc.
+
+Thank you.
+- --
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
+Version: GnuPG v1
 
-iQEcBAEBCgAGBQJXKz+IAAoJELmCKKABq//HVf8H/1ZpDz5+sS/2cEc/TJXXrb9l
-QuoQpRpRKSzaAJ239zeojqbvLNZ4s/p+CvczqNEQ2QhHxc4cRlcUTeq6f/54py4N
-qemE5A4OUfrIgQzH/UPpXRY+N6IKiXL1wP9hMgKsDVV+x9h2ENdoa2GQlsuDenyU
-OQFQoizVsU2XzOAY4MkEJKdY3oHU1yx14Bs93ayW2aN5K2ZWs9pM3zCAV+kWmH3O
-47vANi7DdBTzBoixzZflruoGe6rRMDfft4vx+ngiGcPBkN5NyEpzTbPM9tAtyncJ
-g8H9ygaHJoLc89iScW4HmQuLW3HEaHaMwPYv2x78X+ubFGQuoWwNADcE6kBJwSw=
-=PLnp
+iQIcBAEBAgAGBQJWmdpcAAoJEN0TPTL+WwQfQFgP/R+7d+gu6FI/vnMOm5GkIrT6
+r4Are28blvOv3rpiFBVhZdZnguM6AnVcxUw0bDFqXx4VRWRr+1efP3NmLHP+WkBm
+UA7Kx5PPvqboB2eDapdFO2IOtkZj65MvfNhQIqRGNZK/Oc+87jLESE4FjcYMewPu
+I496GavUhCvXmwUESVycRlvUt4MG1CLutFrV9oZ3X97P7GjOZZopO38+u6sUKOHG
+k4isp4UxKQ2h4i72uLTnyVf6KvQPotD/Xsu68mLhfLDbC3yY3f2feotKTiSPozbl
+mZqJq8H0Y76re2vkYCYsdyPCrrLMgENlggG+lJlRm695i6kd0/qVVfkTnKFSTBsg
+adHlUBzXx65kR1HW4wkcypVCzP1uP7CWGTvH7dImOs3pw+mYFKpGxPpCc6MQQnXz
+DyensHIEkJE1K4gwXhtFwh98oTGRCgkLhfllt7L8DTqQ8zbiGjZ9YB3TPKIDnXL9
++OeHmH6fxHgG6dKIlnEA9MnyzVzWjAW6niRUJngOvpPPXRc2hkeyq1pQipJzR0jR
+oeqw6GeivT037UVh5gvoc2xUDA0KthLhN286O/P9eGmNXPfoK4cb7WzMswrQCFki
+vF7aUrPB08VrCqNQ6B1BoIslFS1AHox6lYF+D/hS9VpwtHpGpbhN/Puw7lDt877D
+etdsl05ZqHxRIZyzcrXr
+=Rkz7
 -----END PGP SIGNATURE-----
