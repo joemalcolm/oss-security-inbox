@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2124" "Saturday" "21" "March" "2015" "20:27:40" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<550E289C.1060602@redhat.com>" "55" "Re: [oss-security] CVE for Kali Linux" nil nil nil "3" "2015032202:27:40" "[oss-security] CVE for Kali Linux" (number mark "        kseifried@re Mar 21   55/2124  " thread-indent "\"Re: [oss-security] CVE for Kali Linux\"\n") "<CAHZU0yRzjyO78Nan5jgf38Mqt3hPQDDhcsirdVmBFPmRZ=6k9g@mail.gmail.com>" ("<550E21FA.6090704@redhat.com>" "<CAHZU0yRzjyO78Nan5jgf38Mqt3hPQDDhcsirdVmBFPmRZ=6k9g@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1889" "Monday" "18" "January" "2016" "11:56:30" "+0800" "Marina Glancy" "marina@moodle.com" "<CAB_jSYz34azcO7mmL+fotU58he7e6jKxuojbyS4Q3HFPVPQaCw@mail.gmail.com>" "43" "[oss-security] [vs] moodle security release" nil nil nil "1" "2016011803:56:30" "[oss-security] [vs] moodle security release" (number mark "U       marina@moodl Jan 18   43/1889  " thread-indent "\"[oss-security] [vs] moodle security release\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 7524 invoked by uid 550); 22 Mar 2015 02:27:54 -0000
+Received: (qmail 26547 invoked by uid 550); 18 Jan 2016 03:56:47 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,75 +11,77 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 7503 invoked from network); 22 Mar 2015 02:27:54 -0000
-Message-ID: <550E289C.1060602@redhat.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.4.0
-MIME-Version: 1.0
-References: <550E21FA.6090704@redhat.com> <CAHZU0yRzjyO78Nan5jgf38Mqt3hPQDDhcsirdVmBFPmRZ=6k9g@mail.gmail.com>
-In-Reply-To: <CAHZU0yRzjyO78Nan5jgf38Mqt3hPQDDhcsirdVmBFPmRZ=6k9g@mail.gmail.com>
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="WjD4f1PIj2BO4AlvpfxepJuQ7hkEJw58p"
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.23
-CC: Assign a CVE Identifier <cve-assign@mitre.org>
-Date: Sat, 21 Mar 2015 20:27:40 -0600
-From: Kurt Seifried <kseifried@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE for Kali Linux
+Received: (qmail 26507 invoked from network); 18 Jan 2016 03:56:42 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=moodle.com; s=google;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=uAyMkc1c5sIfq7v+tjuLRXUhqLAKH1tuf3ZUmWKUmiM=;
+        b=ggEl49JIO88mPi1dd5JtxBGBBsPEU5oZBfYu2mUXCUteMzesID1361mOgJbQxc6tba
+         D+E72JqnAHSXYZn5HSrvxAX8MlTenxXzV4wa0bMCAwaH3ziIdS9mpXnnowijjCEoh6VZ
+         Q/1HiPrG6XiAAH3c2Z0dsmMPUT6KF5W3lLDkc=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
+         :content-type;
+        bh=uAyMkc1c5sIfq7v+tjuLRXUhqLAKH1tuf3ZUmWKUmiM=;
+        b=PgFbkzL6kFNtY4nihiqOx8LiMzF0GjGcKvidSivVzmsu2dW5AJAVt0PRD6+m1ktHvJ
+         FitKxpbWQpdi+PFKkWV5bdvhCWfkLPlX42zNXnYnqD/2q+/IiCVa6teWYROqBVcPal8t
+         5bWQLIINAkHmRCL8Qo4Mbbx74evEQt+EbncGHZyottOJjnej0iNJigOJZTdiIqVW2ClY
+         XN7po3b0GRmj2KgCbaGHjqbugVzZsikpRcgb6Px+U9i01x1Jo3HVcVdTYiw60r5ZsfJc
+         UfI5qoX0IXhSbq6WrGxpQ15jMVYCO+PR73C9OBreGBaNGiB6ZdxB0KpVNOoH4na9u5EF
+         Al9Q==
+X-Gm-Message-State: AG10YOQO2/KdLgkA7e1bUp0VNwF+5XQk2MneggWv7HEzcJiVh1dJP1mKg6AzIbZGwrLmmiJurS1F1aZyso5TW9Nl
+MIME-Version: 1.0
+X-Received: by 10.28.88.210 with SMTP id m201mr11205393wmb.76.1453089390700;
+ Sun, 17 Jan 2016 19:56:30 -0800 (PST)
+Date: Mon, 18 Jan 2016 11:56:30 +0800
+Message-ID: <CAB_jSYz34azcO7mmL+fotU58he7e6jKxuojbyS4Q3HFPVPQaCw@mail.gmail.com>
+From: Marina Glancy <marina@moodle.com>
 To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset=UTF-8
+Subject: [oss-security] [vs] moodle security release
 
---WjD4f1PIj2BO4AlvpfxepJuQ7hkEJw58p
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+The following security notifications have now been made public. Thanks
+to OSS members for their cooperation.
 
-On 03/21/2015 08:04 PM, Justin Steven wrote:
-> Kali, like its upstream (Debian), signs packages using gpg.
->=20
-> https://wiki.debian.org/SecureApt
->=20
-> Kali provides sha1sums over https at their site to verify the .iso
-> download, as well as providing gpg signatures for .iso files
->=20
-> --
-> Justin
+Marina Glancy
+Development Process Manager
+e: marina@moodle.com
+p: +61 8 9467 4167 w: moodle.com
 
-So I guess we enter uncharted territory here. So my thought is this:
+==============================================================================
+MSA-16-0001: Two enrolment-related web services don't check course visibility
 
-Vendor has front page that recommends doing something completely insane
-and insecure (http/md5s/etc.). On the back end (good lucking finding
-this) vendor does something sort of secure (gpg signing of packages, no
-clue if key distribution is secure) but this is not really documented well.
+Description:       Web services core_enrol_get_course_enrolment_methods and
+                   enrol_self_get_instance_info did not check user permission
+                   to access hidden courses
+Issue summary:     External functions core_enrol_get_course_enrolment_methods
+                   and enrol_self_get_instance_info don't check course
+                   visibility
+Severity/Risk:     Minor
+Versions affected: 3.0 to 3.0.1, 2.9 to 2.9.3, 2.8 to 2.8.9, 2.7 to 2.7.11 and
+                   earlier unsupported versions
+Versions fixed:    3.0.2, 2.9.4, 2.8.10 and 2.7.12
+Reported by:       Juan Leyva
+Issue no.:         MDL-52072
+CVE identifier:    CVE-2016-0724
+Changes (master):
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-52072
 
-Does this win a CVE or not? I personally think yes, yes it does.
+==============================================================================
+MSA-16-0002: XSS Vulnerability in course management search
 
-Mitre as always is the final arbiter of what is cool. I mean what is a CVE.
+Description:       Search string in course management interface was not
+                   escaped when being output creating potential for XSS attack
+Issue summary:     XSS Vulnerability in course management search
+Severity/Risk:     Serious
+Versions affected: 3.0 to 3.0.1, 2.9 to 2.9.3 and 2.8 to 2.8.9
+Versions fixed:    3.0.2, 2.9.4 and 2.8.10
+Reported by:       Oliveira Lima
+Issue no.:         MDL-52552
+CVE identifier:    CVE-2016-0725
+Changes (master):
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-52552
 
---=20
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
-
---WjD4f1PIj2BO4AlvpfxepJuQ7hkEJw58p
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.22 (GNU/Linux)
-
-iQIcBAEBAgAGBQJVDiicAAoJEBYNRVNeJnmT8ucP/2x6vZaUW6EIuSWkbLLHbO3s
-QCSTo2xkxNZeA0nd7fxVaH0QRRko3qroMmdGtr45xx87A15YBsjbry6eBUIB1TSG
-gpMmNA9Mc9ps0ME12MnRs7M8rrYeN4bPReFUZ84DpNMDWKBeXCDG/WdWTsR+7Mcq
-u7unnxuB4ESm81xHGD70At0rWub0kVhsRPpbzSaThn5h9yq0ICdMh3SRki2tydzy
-GC47xeS07LijeeX3uiaNTzX06OFsxqwO4zPFokzcpXOxxISyMyFvfamxJuO1LqYi
-SvYWPbPcKRUONS39YU4fNxo2LGjL7beOOHi+YruKu6Q0zCwe3jVx1TlRT5hy0Un5
-UqSv//BEUk6BQeb4YPCwYDFM4A/cbu1gwm5F5tHKsx2byfW8OPXu6wp6X6ixEwQE
-WTMrrTrZFWqnXjxE9hwH253zBse2QkrWALCE4meJ6lklnTdG/ndxHRwoHvSb50//
-5lDkYjS4FuxESlVULTXV/lj3x67Yp8C1E9mTG0W/pGThHZm207uCEUFZAQ9MH06J
-YR3kcHc8FOxAWa3hcnRUJc7snrKgX+rz05huMrR8NgNY2YxKE8SCvyP7VIsw7k+X
-cRHEPR7JJLU2DHO152JgrTlaQnbuEER31jtEl5lYrVZZenV22s0ZGL9wS6DXN7X7
-U5w8BuwwNUc5BbvQ8086
-=rUj2
------END PGP SIGNATURE-----
-
---WjD4f1PIj2BO4AlvpfxepJuQ7hkEJw58p--
+==============================================================================
