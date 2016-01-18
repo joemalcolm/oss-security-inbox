@@ -1,60 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/04/5
-Message-Id: <20160604145419.70E2B6C037C@smtpvmsrv1.mitre.org>
-Date: Sat,  4 Jun 2016 10:54:19 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/18/8
+Message-Id: <20160118185441.EB3FE6C00B2@smtpvmsrv1.mitre.org>
+Date: Mon, 18 Jan 2016 13:54:41 -0500 (EST)
 From: cve-assign@...re.org
-To: sebastian@...ping.org
+To: pariszoump@...il.com
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: expat hash collision fix too predictable?
+Subject: Re: Buffer Overflow in lha compression utility
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> Please confirm that using CVE-2012-6702 for consequences of
-> "unanticipated internal calls to srand" is what you intended.
+> The header_size variable is determined from the first byte of the lha
+> archive header, which is read by the get_byte function. The returned
+> value is used in:
+> 
+> header_size + 2 - COMMON_HEADER_SIZE
+> 
+> to determine the elements' size used in fread() .
+> 
+> If the header_size is less than abs(2 - COMMON_HEADER_SIZE) = abs(2 -
+> 21) = 19 then the size parameter is overflowed and a buffer overflow
+> occurs in fread.
 
-Yes, we confirm that. (They are unanticipated both because of
-thread-safety concerns, and because it's possible for an application
-to have an important dependency on srand being called exactly once.)
-
-
-> The hash DoS vulnerability CVE-2012-0876 was fixed to some extend in
-> Expat 2.1.0, commit e3e81a6d
-> ...
-> The next release of Expat will not do internal calls to srand (or rand)
-> any more but extract and use entropy from other sources.
-> ...
-> I suppose hash initialization with (too little /) second-based
-> entropy still is part of the original CVE-2012-0876 (or the same again).
-
-Use CVE-2016-5300 for the separate issue in which the original choices
-of entropy source and RNG did not properly address the possibility of
-a successful hash DoS attack. In other words, the code changes (in the
-next release) to fix CVE-2016-5300 are needed because the original fix
-for CVE-2012-0876 was insufficient. (We use separate CVE IDs when
-follow-on work is needed to complete the solution to the same original
-vulnerability finding.)
+Use CVE-2016-1925 for these CWE-130 issues.
 
 - -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJXUuskAAoJEHb/MwWLVhi2/BMP/RmK0mqYwmznhALOJw+m24IY
-PiLec/ly/1kBu4Ng03fo5YCZuNdM15ZIkHlTnNrkEdFvZpFin/5R8vXEZVjOPJgR
-3De4Y/47PWm1v0H0KoOhK1a/zuO8KqL8MUJUlhokMp5SQnbo0u+ANYPVwB2yndmQ
-uaoN2zjOx5aWIb9toDeFcNO2WprzsCVZdqwREHhXAmrXAV2NWfyYLvgk2nQ4wkHF
-OdME+So20qrl+rq9GsvBV12ecjCk4WBtW1k/l9Tt1Q8BXGIr9iMIWtJjDc3+uXap
-Y2DschCUfYd5J/H8GEnsOyRffLpw0cEQNS7+iYfttqJLY08XKfEwTnXdj1kW/Uny
-AwkzgB6X//qmeD5+P90A/mI9ovpuc/MmjHTMqgLT+9DF9MRYLDqT8xwQ6yoo26f0
-CuHvx83T2mSNfFjjWjBNC0YY7d8h/4Xefd43AdEWiX5MT/aGkL2vJCSqUqiVVFq4
-SJQKixQ3C/y0yxqHNCbC9CQqDJYdepFXmIV2LzhWnwNsKtVW4c1xZNlNwsCl02lK
-sTneAV4whgioqj66Du+6fFPifKdkx+ezkEBaauAJRySBtzbgj5+vqvbNKyn0BSLM
-WCvRSyLL4nBc3hWi7JTq76eGwrYeB+xyst6+YehdR6oJ+NaqTsO8Ec6PKQtqicyg
-ktXAm8A5yDPoTcCYOt12
-=r9fV
+iQIcBAEBCAAGBQJWnTRlAAoJEL54rhJi8gl5bdUP/123UJ7W73/BOu1E/j1kKrFJ
+NMHjJZtEwjLmwZLCbV0HQ2l7311hbMZnjNm1lHLJuX695ca7prndMGEV5va5NVRF
+5X6z9OTBkitYTJVTp/RoolXPL+jXQr/LTXiieHl3M/Iq+lUV1fqZvWf5kytnGo2N
+AzQFGpDct0B7JfM6fGn8t6qd+/5ar56EAU01IEwyqSeKzIiQtAUes/y8D7D7RAyk
+O+B2lJMQ92/np8/i0guLoVs9P60xqDF0QPlVLQGKwZsBt/5T432JnUUkP/vyUYqc
+vY7aoe8tM6ib5Y1loSk6hTUynHR34EyQc4ZfyE9OL0ugdz4GDy/QzOWbDfrSlIw1
+u31ac9pRcGwHxToryqFmulPpfQlRclbnHQgqkNmPq0FrR9Q0WAYSiXHdHyqktKTv
+pMMZtO7UF6yABYSWVPyivprflRYbyP+Mm52VnOG/W27bevEeK46UUjlHPYVn/Qi4
+wFNhDvTh+fjkiGcfuR6wfIT2ABipkBeR8opAvz2XS8W7/ukDaIJZ1QVExThxMu57
+9H/uqLcAor7FrQiDfZv+s7SzstS898UeJvTbOn8HRZBerj6OkaPW9xR6v/B5Tf1W
+ssXuU2vaIe/7isYeWV8YzzD9dNJlGneHUBonSucu+buVx84spJqTP9NvRIcy2Z3U
+1IeE6G2X4oMRf3Kxm8Sj
+=h+oU
 -----END PGP SIGNATURE-----
