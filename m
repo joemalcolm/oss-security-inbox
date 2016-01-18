@@ -1,40 +1,102 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/19/5
-Message-ID: <20160819073154.GA21382@kroah.com>
-Date: Fri, 19 Aug 2016 09:31:54 +0200
-From: Greg KH <greg@...ah.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2016-6327 | Linux kernel crash in infiniband subsystem.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/18/6
+Message-ID: <CAKws9z0RM_1BVD1PZoaax0jGi74_nx119-9RzQagjhMqOJYxXQ@mail.gmail.com>
+Date: Mon, 18 Jan 2016 13:38:17 -0500
+From: Scott Arciszewski <scott@...agonie.com>
+To: Bart van Tuil <bvantuil@...argroup.nl>, fulldisclosure@...lists.org,  oss-security@...ts.openwall.com
+Subject: Re: [FD] It essentially wins crypto vulnerability bingo! gilfether/phpcrypt
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Aug 19, 2016 at 05:10:30PM +1000, Wade Mealing wrote:
-> System using the infiniband support module ib_srpt were vulnerable to
-> a denial of service by system crash by a local attacker who is able to
-> abort writes to a device using this initiator.
-> 
-> There were multiple areas in which aborting a scsi command are able to
-> be handled, moving this to the correct location in the state machine
-> ensured that this condition was never triggered through this code
-> path.
-> 
-> The null pointer situation was enabled via a non attacker controlled
-> meset() call, and this is not a use after free.  From my undestanding
-> it is a denial of service only.
-> 
-> Thanks,
-> 
-> Wade Mealing
-> 
-> https://bugzilla.redhat.com/show_bug.cgi?id=1354525
-> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=51093254bf87
+On Mon, Jan 18, 2016 at 4:17 AM, Bart van Tuil <bvantuil@...argroup.nl> wrote:
+>
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>
+> I don't get something:
+>
+> > 4. https://github.com/paragonie/EasyRSA (reluctantly included for
+> > people that really believe they need RSA)
+>
+> ...What's, in your opinion ofcourse, t
+> he wrong thing about
+> implementing RSA in a decent web application? PHP is used for much,
+> much more than building simple frontpages without a backend (where
+> this might be a senseless complication). RSA is still the way to go
+> about implementing accessible asymmetrical crypography...
+>
+> I do agree, wholeheartedly, that building your own cryptographic
+> primitives is just an expensive way of ultimately fooling yourself.
+>
+> Just wondering...
+>
+>
+> All the best,
+>
+>
+> Bart
+>
+>
+> <rant>
+> PS:
+> All this bashing on PHP really tires me - it's getting old and
+> redundant. And no - im not a PHP developer.
+> </rant>
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v2.0.22 (MingW32)
+>
+> iQEcBAEBAgAGBQJWnK2nAAoJEEnUI2SRQ818biYH/1uKMFgwvkj2iBax/0NJlNTH
+> 2Tfd6HLjesvaHUUpQGnvlOILszBoULOlzSsbIXkeLAob/nRyMll7MNI1UExzxub2
+> 3tJzmzXenMCT+3en9vCr1eBkEZBCGKWudTLYoEYSanzK1aKr2N4aZEFxYzKWq+fX
+> v3hZQuqbISnUvk5UzSdpKW8ZHEMdjhdqt9h7q2BH7m/z5o72jHDBkOFpflCRzIu3
+> xlH0ctxFT1F0C071Dk+I5zdAOnERqM/68wDvJ0fHYmobtKPfMDgu8nSqYyB5LpUK
+> U1R4zAe/Jpuxkx9DWZb2f0BK7SrZwX9jDs+BPkDZ1tpN6rV2z3toaXtrWjMbwWM=
+> =o7rc
+> -----END PGP SIGNATURE-----
+>
+>
+> This email and any attached files are confidential and intended solely for the intended recipient(s). If you are not the named recipient you should not read, distribute, copy or alter this email. Any views or opinions expressed in this email are those of the author and do not represent those of the   company. Warning: Although precautions have been taken to make sure no viruses are present in this email, the company cannot accept responsibility for any loss or damage that arise from the use of this email or attachments.
+>
 
-For those playing at home, this was fixed in the 4.6 Linux kernel
-release, as well as the 4.4.7 stable release (released on April 12,
-2016), and all other stable releases around the same time, so the only
-ones to worry about this are those who have not updated their kernel in
-a long time.
+> What's, in your opinion ofcourse, the wrong thing about implementing RSA in a decent web application?
+> ...
+> RSA is still the way to go about implementing accessible asymmetrical crypography...
 
-thanks,
+No it's not. You should, in order of best to worst, choose:
 
-greg k-h
+1. ECDH/EdDSA over Curve25519 or Curve448. Use ECDH for determining a
+shared secret key for symmetric key cryptography (i.e. ChaCha20 +
+Poly1305), use EdDSA for deterministic signatures. This is what
+libsodium's crypto_box() and crypto_sign() do.
 
+2. ECDH/ECDSA over NIST P-256, if you really have to implement support for them.
+
+3. 2048-bit e=65537 RSA, using OAEP for encryption and PSS for
+signatures, with MGF1+SHA256. You should also hire an expert to review
+your implementation and parameter choices.
+
+Most people who implement RSA implement PKCS1v1.5 padding, which has
+been publicly known to be vulnerable to a chosen-ciphertext + padding
+oracle attack. SINCE 1998. Also, e = 3 RSA signature with PKCS1v1.5
+padding is what broke Firefox's certificate validation a few years
+back.
+
+That's a lot of land mines to overcome, and do you really expect a
+line-of-business web developer to dodge them all? Even if they
+succeed, the security of RSA hinges on the difficulty of prime
+factorization; something that improvements in index calculus attacks
+are weakening every year. It's a sinking ship.
+
+Contrast with libsodium. All you need is crypto_sign() and
+crypto_sign_open(). Or crypto_box() and crypto_box_open(). All of
+which uses modern, side-channel-resistant elliptic curve cryptography.
+It couldn't be much simpler while also being conservatively secure.
+
+Stop implementing RSA. You're setting yourself up for failure.
+
+> PHP is used for much, much more than building simple frontpages without a backend (where this might be a senseless complication).
+
+Of course.
+
+Scott Arciszewski
+Chief Development Officer
+Paragon Initiative Enterprises
