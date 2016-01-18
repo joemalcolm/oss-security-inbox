@@ -1,32 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/08/7
-Message-ID: <570748E3.2090203@oracle.com>
-Date: Thu, 7 Apr 2016 23:00:03 -0700
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
-To: wangmei@....cn
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE-2016-3619 libtiff: Out-of-bounds Read in the bmp2tiff tool
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/18/7
+Message-Id: <20160118184959.5815B42E00B@smtpvbsrv1.mitre.org>
+Date: Mon, 18 Jan 2016 13:49:59 -0500 (EST)
+From: cve-assign@...re.org
+To: limingxing@....cn
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Out-of-bounds Read in the OpenJpeg's opj_j2k_update_image_data and opj_tgt_reset function
 Content-Type: text/plain; charset=utf-8
 
-On 04/ 7/16 12:32 AM, 王梅 wrote:
-> Details
-> =======
->
-> Product: libtiff
-> Affected Versions: <= 4.0.6
-> Vulnerability Type: Out-of-bounds Read
-> Vendor URL: http://www.libtiff.org/
-> CVE ID: CVE-2016-3619
-> Credit: Mei Wang of the Cloud Security Team, Qihoo 360
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-> References:
-> [1] http://www.remotesensing.org/libtiff/
-> [2] http://bugzilla.maptools.org/buglist.cgi?product=libtiff
+> opj_j2k_update_image_data
+> AddressSanitizer: heap-buffer-overflow
+> READ of size 4
 
-Instead of pointing to a list of 305 bugs, please just provide a link to the bug
-you filed for each issue so it's easier for distros to check the progress of the
-fix.
+Use CVE-2016-1923.
 
--- 
-	-Alan Coopersmith-              alan.coopersmith@...cle.com
-	 Oracle Solaris Engineering - http://blogs.oracle.com/alanc
+
+> opj_tgt_reset
+> AddressSanitizer: SEGV on unknown address
+
+Use CVE-2016-1924.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJWnTLyAAoJEL54rhJi8gl5TpEP/2nGFLYuk37FXlViClyDElMB
+c03MAy9ToQjW1iLnnRNoLn9nqO15yvxLu28l0hzXnag01v9xaOy4Z8TJWRvXqB3V
+Jn4SU3xD7mnaHbzo0ObU1ywWvXaA3TVbFMmGu2Y4uFDW7/B/ZZFacYwAfT930mg/
+pUWsO8i9QS+7wA899E9RjeewTtskyKXLXXlNaATJEl2hjG8flXUCdB3KN4dsTHl4
+wNX+MWm9NwsSxyMG+3Uj4o6Ec5nhNeF5qqSYuPJtQQOcZZEHR1/sa7mq/7WO60Gx
+ChRoKx2shlKxq8nUkMgDyKIbmXY2l6Lj9y9VyrwnOs7cimqh6F3MoZZ082JMjYX9
+5NRVu3U7eFL3iDkDVKrUto3OiUHCDM7hyLEquFsU3DfcWEXGZC2DH27CjonuA/qV
+VcKrlcB0WH1don4JoBiOh+2keu6Jt9W+W5PEDTjvu1BI2yqaZO+NCsjciNJ1Aiis
+V/ly2mAp/tFpuAJCXWMGBKCCsyzgUcHnUBrKi2xHnY9sXzBUJ1ppO+n+ZI0anO7B
+U70ekz7IvDK2L9YbxP673hTgCst2WM9o+c1GeCSacYL5gB0xMwXRQvKwYgDlVu4c
+A1as0YquprR0pMpjeKlqyilnIRJAzK20tUIfUoSjqjopKZFWrcbInpWqjFUyoSoI
+gcc50NDQB0Wxi2hfVDxk
+=TVQP
+-----END PGP SIGNATURE-----
