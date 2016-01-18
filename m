@@ -1,60 +1,78 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/01/7
-Message-ID: <dc9efac7984445ffb65b2a86012f7255@imshyb02.MITRE.ORG>
-Date: Tue, 1 Nov 2016 12:44:27 -0400
-From: <cve-assign@...re.org>
-To: <kaplanlior@...il.com>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: CVE assignment for PHP 5.6.27 and 7.0.12
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/18/4
+Message-ID: <3626D6E697A150459C44C0E5D8D8D00E0DBD531F@EX02.corp.qihoo.net>
+Date: Mon, 18 Jan 2016 10:33:40 +0000
+From: limingxing <limingxing@....cn>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Out-of-bounds Read in the OpenJpeg's opj_j2k_update_image_data and opj_tgt_reset function
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
 
->> Bug #73147    Use After Free in unserialize()
->> https://bugs.php.net/bug.php?id=73147
->> http://git.php.net/?p=php-src.git;a=commit;h=0e6fe3a4c96be2d3e88389a5776f878021b4c59f
+Hello,
+We find two vulnerabilities in the way OpenJpeg's opj_j2k_update_image_data and opj_tgt_reset function  parsed certain JPEG 2000 image files.
+I was successful in reproducing these issues in the latest version of openjpeg  (https://github.com/uclouvain/openjpeg, 2016.1.18).
 
-> The
-> 0e6fe3a4c96be2d3e88389a5776f878021b4c59f commit adds
-> zend_unset_property for PHP 7.0.12, and arranges for
-> zend_unset_property to be called only from
-> "ZEND_METHOD(CURLFile, __wakeup)" in ext/curl/curl_file.c.
+The crash info about opj_j2k_update_image_data function was:
+==1630==ERROR: AddressSanitizer: heap-buffer-overflow on address 0xb48010d8 at pc 0x8184862 bp 0xbfff8e58 sp 0xbfff8e50
+READ of size 4 at 0xb48010d8 thread T0
+==1630==WARNING: Trying to symbolize code, but external symbolizer is not initialized!
+    #0 0x8184861 (/home/r/fuzz3/openjpeg-master/bin/opj_decompress+0x8184861)
 
-> 73147 discusses other concerns such as "The
-> similar bug can be also triggered via Exception::__toString with
-> DateInterval::__wakeup" and "The problem is that every __wakeup that
-> modifies any property would produce the same problem."
+0xb48010d8 is located 0 bytes to the right of 56-byte region [0xb48010a0,0xb48010d8)
+allocated by thread T0 here:
+    #0 0x80b5f8e (/home/r/fuzz3/openjpeg-master/bin/opj_decompress+0x80b5f8e)
+    #1 0x81ba220 (/home/r/fuzz3/openjpeg-master/bin/opj_decompress+0x81ba220)
+    #2 0x8273db1 (/home/r/fuzz3/openjpeg-master/bin/opj_decompress+0x8273db1)
+    #3 0x827c023 (/home/r/fuzz3/openjpeg-master/bin/opj_decompress+0x827c023)
+    #4 0x81e0709 (/home/r/fuzz3/openjpeg-master/bin/opj_decompress+0x81e0709)
+    #5 0x8212cba (/home/r/fuzz3/openjpeg-master/bin/opj_decompress+0x8212cba)
+    #6 0x82cc849 (/home/r/fuzz3/openjpeg-master/bin/opj_decompress+0x82cc849)
+    #7 0x81ac9b6 (/home/r/fuzz3/openjpeg-master/bin/opj_decompress+0x81ac9b6)
+    #8 0x80dc56e (/home/r/fuzz3/openjpeg-master/bin/opj_decompress+0x80dc56e)
+    #9 0xb7da2a82 (/lib/i386-linux-gnu/libc.so.6+0x19a82)
 
-> 2. 0e6fe3a4c96be2d3e88389a5776f878021b4c59f fixes only the CURLFile
-> implementation. The "other concerns" mentioned above are
-> vulnerabilities that still exist in 7.0.12.
+SUMMARY: AddressSanitizer: heap-buffer-overflow ??:0 ??
+Shadow bytes around the buggy address:
+  0x369001c0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x369001d0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x369001e0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x369001f0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x36900200: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+=>0x36900210: fa fa fa fa 00 00 00 00 00 00 00[fa]fa fa fa fa
+  0x36900220: 00 00 00 00 00 00 00 fa fa fa fa fa 00 00 00 00
+  0x36900230: 00 00 00 fa fa fa fa fa 00 00 00 00 00 00 00 fa
+  0x36900240: fa fa fa fa 00 00 00 00 00 00 00 fa fa fa fa fa
+  0x36900250: 00 00 00 00 00 00 00 fa fa fa fa fa 00 00 00 00
+  0x36900260: 00 00 00 fa fa fa fa fa 00 00 00 00 00 00 00 fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:     fa
+  Heap right redzone:    fb
+  Freed heap region:     fd
+  Stack left redzone:    f1
+  Stack mid redzone:     f2
+  Stack right redzone:   f3
+  Stack partial redzone: f4
+  Stack after return:    f5
+  Stack use after scope: f8
+  Global redzone:        f9
+  Global init order:     f6
+  Poisoned by user:      f7
+  ASan internal:         fe
+==1630==ABORTING
+[Inferior 1 (process 1630) exited with code 01]
 
-Use CVE-2016-9137 for the ext/curl/curl_file.c vulnerability that was
-fixed in 5.6.27 and 7.0.12.
+The crash info about opj_tgt_reset function was:
+ASAN:SIGSEGV
+=================================================================
+==1666==ERROR: AddressSanitizer: SEGV on unknown address 0x00008109 (pc 0x083b06c7 sp 0xbfa06420 bp 0xbfa065b8 T0)
+==1666==WARNING: Trying to symbolize code, but external symbolizer is not initialized!
+    #0 0x83b06c6 (/home/r/fuzz3/openjpeg-master/bin/opj_decompress+0x83b06c6)
 
-Use CVE-2016-9138 for the remaining security problem associated with
-__wakeup that is still present in 5.6.27 and 7.0.12.
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV ??:0 ??
+==1666==ABORTING
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYGMYQAAoJEHb/MwWLVhi20TAP/jruOGY2MR5CzDVn+bNzZ+bv
-0U3pkkcesWCma0H+BC7xq0uxQWT4hXf8gqYfA7cKE55DLBQ3ANbYqeAPZsUVqHSC
-36t0wtxVc0kHB+yfmUKVgTyqmrNa63LYpjeVd11Q74RDfinGve664U7ZPhOdpHeE
-hgXpiR2SBLFIwVl2ZJ4SjHIe6Z6TDL3BIZQROVcxbFBP8MKJhcP1gMPlIActwjiS
-B3ZpB9QTUVIeuDHB9ZX2GiD9cWLiPx6i+ToYW+oPF3pPItdcOI7G0hWiJszHu32t
-egpC/YcQR8s22chiARcPWJLBmWYeV7RO0Z0BuWX5QKLC9YfbPSMXHtInpqUGl5Ce
-s4zbF22EAT4wAI11qOpALcoKW1jvlFVnK3KEdRKmKjD17P73fKNIRg9NeMdmUHf5
-CPh7Lbq6HvdKK1wQwp3NUbwiFjMtSACN+NX2F+DR2LzhltqGj+MX1grOh558Zzfq
-9Gyo8ufsxhqPFcSf6+kjMEVcjU2lloF6HLaij7Vk6+VuA+adUCpJiaFN4VshCwXA
-7sJm9bJVmaJS4w2GaZZ+HDam3FEehmVVBjyuf/MYuwHd5RLjH3Ccqs73yDDumiB9
-h4tiu4UTpBl3F2N/TN3+Xk2L2FhDLvAfo3FbtZSQHWBCIXPP94zCLAkQ31IesbaO
-vvned9Twm3WPJYV1HiGA
-=WLXc
------END PGP SIGNATURE-----
+These vulnerabilities ware found by Qihoo 360 Codesafe Team
+Download attachment "openjpeg_poc.zip" of type "application/octet-stream" (2560 bytes)
