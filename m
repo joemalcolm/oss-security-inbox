@@ -1,28 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/22/9
-Message-ID: <20161222112845.GF5082@jumper.schlittermann.de>
-Date: Thu, 22 Dec 2016 12:28:45 +0100
-From: Heiko Schlittermann <hs@...littermann.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/18/3
+Message-ID: <569CADC1.7000407@gmail.com>
+Date: Mon, 18 Jan 2016 11:17:53 +0200
+From: Paris Zoumpouloglou <pariszoump@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2016-9963 Exim private information leak
+Subject: Buffer Overflow in lha compression utility
 Content-Type: text/plain; charset=utf-8
 
-Jeffrey Walton <noloader@...il.com> (Do 22 Dez 2016 12:06:41 CET):
-…
-> The bad guys already knew about the problem, or the motivated ones
-> found it after the partial disclosure.
+== Overview ==
+LHA for UNIX (https://osdn.jp/projects/lha/) is an open source
+implementation of the LHA compression utility and associated file format.
 
-Partial disclousure? I think, there was no disclosure at all, beside
-requesting a CVE and talking about a possible leak of private
-information. Is this enough to call it "partial disclousure"?
+== Version ==
+All tests were performed using the latest 20b6ba8 commit of the master
+branch from https://osdn.jp/projects/lha/scm/git/lha/
 
-    Best regards from Dresden/Germany
-    Viele Grüße aus Dresden
-    Heiko Schlittermann
--- 
- SCHLITTERMANN.de ---------------------------- internet & unix support -
- Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
- gnupg encrypted messages are welcome --------------- key ID: F69376CE -
- ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
+== Details ==
+Using the afl fuzzer, two cases which triggered a buffer overflow where
+discovered. The problem existed in header.c:797-800 and header.c:913-916
+while parsing level0 and level1 headers accordingly.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+=797-800=
+
+    hdr->header_size = header_size = get_byte();
+    checksum = get_byte();
+
+    if (fread(data + COMMON_HEADER_SIZE,
+              header_size + 2 - COMMON_HEADER_SIZE, 1, fp) == 0) {
+        error("Invalid header (LHarc file ?)");
+        return FALSE;   /* finish */
+    }
+
+=913-916=
+
+    hdr->header_size = header_size = get_byte();
+    checksum = get_byte();
+
+    if (fread(data + COMMON_HEADER_SIZE,
+              header_size + 2 - COMMON_HEADER_SIZE, 1, fp) == 0) {
+        error("Invalid header (LHarc file ?)");
+        return FALSE;   /* finish */
+    }
+
+
+The header_size variable is determined from the first byte of the lha
+archive header, which is read by the get_byte function. The returned
+value is used in:
+
+header_size + 2 - COMMON_HEADER_SIZE
+
+to determine the elements' size used in fread() .
+
+If the header_size is less than abs(2 - COMMON_HEADER_SIZE) = abs(2 -
+21) = 19 then the size parameter is overflowed and a buffer overflow
+occurs in fread.
+
+== Timeline ==
+2016-01-13 - Bug report submitted
+2016-01-16 - Bug fix pushed to master (commit bf2471f)
