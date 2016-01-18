@@ -1,42 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/27/3
-Message-ID: <tencent_62222EFF74B667984E9F8E5B@qq.com>
-Date: Wed, 27 Apr 2016 11:36:32 +0800
-From: "PXO炳林" <271193918@...com>
-To: "oss-security" <oss-security@...ts.openwall.com>
-Subject: 3 bugs refer to buffer overflow in in libtiff 4.0.6
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/18/2
+Message-ID: <569CADA7.8070701@mivargroup.nl>
+Date: Mon, 18 Jan 2016 10:17:27 +0100
+From: Bart van Tuil <bvantuil@...argroup.nl>
+To: Scott Arciszewski <scott@...agonie.com>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "fulldisclosure@...lists.org" <fulldisclosure@...lists.org>
+Subject: Re: [FD] It essentially wins crypto vulnerability bingo! gilfether/phpcrypt
 Content-Type: text/plain; charset=utf-8
 
-Hello oss-security,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+I don't get something:
+
+> 4. https://github.com/paragonie/EasyRSA (reluctantly included for
+> people that really believe they need RSA)
+
+...What's, in your opinion ofcourse, the wrong thing about
+implementing RSA in a decent web application? PHP is used for much,
+much more than building simple frontpages without a backend (where
+this might be a senseless complication). RSA is still the way to go
+about implementing accessible asymmetrical crypography...
+
+I do agree, wholeheartedly, that building your own cryptographic
+primitives is just an expensive way of ultimately fooling yourself.
+
+Just wondering...
 
 
-I did some test and found three bugs refer to buffer overflow: one stack buffer overflow in thumbnail and two buffer overflows in bmp2tiff. 
+All the best,
 
 
-Please let me know whether CVE Identifier number could be assigned.
+Bart
 
 
-Overview:
+<rant>
+PS:
+All this bashing on PHP really tires me - it's getting old and
+redundant. And no - im not a PHP developer.
+</rant>
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.22 (MingW32)
+
+iQEcBAEBAgAGBQJWnK2nAAoJEEnUI2SRQ818biYH/1uKMFgwvkj2iBax/0NJlNTH
+2Tfd6HLjesvaHUUpQGnvlOILszBoULOlzSsbIXkeLAob/nRyMll7MNI1UExzxub2
+3tJzmzXenMCT+3en9vCr1eBkEZBCGKWudTLYoEYSanzK1aKr2N4aZEFxYzKWq+fX
+v3hZQuqbISnUvk5UzSdpKW8ZHEMdjhdqt9h7q2BH7m/z5o72jHDBkOFpflCRzIu3
+xlH0ctxFT1F0C071Dk+I5zdAOnERqM/68wDvJ0fHYmobtKPfMDgu8nSqYyB5LpUK
+U1R4zAe/Jpuxkx9DWZb2f0BK7SrZwX9jDs+BPkDZ1tpN6rV2z3toaXtrWjMbwWM=
+=o7rc
+-----END PGP SIGNATURE-----
 
 
-Running each poc file crashes thumbnail and bmp2tiff made with AddressSanitizer in tiff-4.0.6. I have attached poc and log files . 
+This email and any attached files are confidential and intended solely for the intended recipient(s). If you are not the named recipient you should not read, distribute, copy or alter this email. Any views or opinions expressed in this email are those of the author and do not represent those of the   company. Warning: Although precautions have been taken to make sure no viruses are present in this email, the company cannot accept responsibility for any loss or damage that arise from the use of this email or attachments.
 
-
-Steps to Reproduce:
-
-
-1) download the source code of tiff-4.0.6 from url (http://download.osgeo.org/libtiff/tiff-4.0.6.tar.gz) and compile it with gcc AddressSanitizer
-2) cd the directory where the bmp2tiff with Asan is and put a poc
-3) run a poc file with bmp2tiff made with AddressSanitizer (ASan) in tiff-4.0.6
-4) eg: ./bmp2tiff ./crashes/poc_745.bmp 1.tiff; ./bmp2tiff ./crashes/poc_775.bmp 1.tiff
-
-
-Actual Results: The application thumbnail and bmp2tiff 4.0.6 crashed after run the poc. Asan detect crashes.
-
-
-
-------------------
-From Debug_Orz
-Content of type "text/html" skipped
-
-Download attachment "thumbnail_bmp2tiff_pocs_logs.7z" of type "application/octet-stream" (56644 bytes)
