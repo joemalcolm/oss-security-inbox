@@ -1,48 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/06/4
-Message-Id: <20160706110353.A6EF56C0CFF@smtpvmsrv1.mitre.org>
-Date: Wed,  6 Jul 2016 07:03:53 -0400 (EDT)
-From: cve-assign@...re.org
-To: fweimer@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Malicious primary DNS servers can crash secondaries
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/18/1
+Message-ID: <CAB_jSYz34azcO7mmL+fotU58he7e6jKxuojbyS4Q3HFPVPQaCw@mail.gmail.com>
+Date: Mon, 18 Jan 2016 11:56:30 +0800
+From: Marina Glancy <marina@...dle.com>
+To: oss-security@...ts.openwall.com
+Subject: [vs] moodle security release
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+The following security notifications have now been made public. Thanks
+to OSS members for their cooperation.
 
-> https://lists.dns-oarc.net/pipermail/dns-operations/2016-July/015058.html
-> 
-> BIND 9, knot DNS and Power
-> DNS slave servers received unlimited zone information and died.
-> NSD slave DNS server received unlimited zone data and /tmp became full.
+Marina Glancy
+Development Process Manager
+e: marina@...dle.com
+p: +61 8 9467 4167 w: moodle.com
 
-For consistency, it seems best to provide all of the CVE IDs together:
+==============================================================================
+MSA-16-0001: Two enrolment-related web services don't check course visibility
 
-BIND 9:    CVE-2016-6170
-Knot DNS:  CVE-2016-6171
-PowerDNS:  CVE-2016-6172
-NSD:       CVE-2016-6173
+Description:       Web services core_enrol_get_course_enrolment_methods and
+                   enrol_self_get_instance_info did not check user permission
+                   to access hidden courses
+Issue summary:     External functions core_enrol_get_course_enrolment_methods
+                   and enrol_self_get_instance_info don't check course
+                   visibility
+Severity/Risk:     Minor
+Versions affected: 3.0 to 3.0.1, 2.9 to 2.9.3, 2.8 to 2.8.9, 2.7 to 2.7.11 and
+                   earlier unsupported versions
+Versions fixed:    3.0.2, 2.9.4, 2.8.10 and 2.7.12
+Reported by:       Juan Leyva
+Issue no.:         MDL-52072
+CVE identifier:    CVE-2016-0724
+Changes (master):
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-52072
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+==============================================================================
+MSA-16-0002: XSS Vulnerability in course management search
 
-iQIcBAEBCAAGBQJXfOSvAAoJEHb/MwWLVhi2D40P/Re3q1hB5fMa1xURAlXul+9U
-FordlgC0zRFq/HuE3ZnDqpuCAmcExpp8fxClIwGKFHu0R1bfqYqnlPlsnLShpGfr
-uAN2Ca0KFR/km6TYSpEXk4nRsLB23ynpB+/7+6i8SHzeVYm/T1d2RVy09jBtqzYl
-gCcgSezWDa+CtwoF5aY7MwN5esYu54tPgGX6bvI8RnMhzg8hC+vF3btspcwMQyli
-uA4/mbZKwQgxiXbDdfKeHcDrnpcaWSBEQtEwSEr3QYnEve3AeUCnxRDMqAYUCWy1
-fgPO5ZEWRjzSjXKFvTucupgVMGWjHFReWRqL+K9E4Lw3PtGeeKs1L0gIfizcbWrE
-H3CGmIomD6mBqxg5LaQeYVGWikG6Xym11J+IIP3Y8FV3UkWpdEhA3dk3HSGmYHh+
-PUwFYHcQUfuIkqYR6B3XnaYOa0VBIqhV34ECKY9TQF54oFaEVt1hMj5zrPIFS5ML
-y2z+HsvhGYYwEydwvE110n5BR0cJKtELwAHT/YHPh62Fd+j5K7zaayaQvoccIE6Q
-C75Ez05wugIZUmuRMWcEc4HZ2Ak88Mcc3ke92WSR6dA6o30ZRSXN71F92aAVUuzZ
-vH6e6yJO+lRxpC1xTRiQglgn5sANOWCsW5R8+ZgYG/K7Hc1h+7RTkAux+qn52Bch
-kp4BKN3bOsKMC/RXfK4X
-=R3BK
------END PGP SIGNATURE-----
+Description:       Search string in course management interface was not
+                   escaped when being output creating potential for XSS attack
+Issue summary:     XSS Vulnerability in course management search
+Severity/Risk:     Serious
+Versions affected: 3.0 to 3.0.1, 2.9 to 2.9.3 and 2.8 to 2.8.9
+Versions fixed:    3.0.2, 2.9.4 and 2.8.10
+Reported by:       Oliveira Lima
+Issue no.:         MDL-52552
+CVE identifier:    CVE-2016-0725
+Changes (master):
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-52552
+
+==============================================================================
