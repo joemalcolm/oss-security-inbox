@@ -1,56 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/17/8
-Message-ID: <c8eb591fa67d43db9f8d7543008a59c2@imshyb02.MITRE.ORG>
-Date: Thu, 17 Nov 2016 18:25:03 -0500
-From: <cve-assign@...re.org>
-To: <carnil@...ian.org>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: CVE Request: teeworlds: possible remote code execution on teeworlds client
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/19/10
+Message-ID: <alpine.LFD.2.20.1601192253240.22604@wniryva>
+Date: Tue, 19 Jan 2016 22:56:06 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Laszlo Ersek <lersek@...hat.com>
+Subject: CVE request Qemu: net: e1000 infinite loop in start_xmit and e1000_receive_iov routines
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hash: SHA1
 
-> https://github.com/teeworlds/teeworlds/commit/ff254722a2683867fcb3e67569ffd36226c4bc62
-> https://anonscm.debian.org/cgit/pkg-games/teeworlds.git/commit/?id=bf5e8e2c457013571b02dc97f9ed9f409efdd947
-> https://bugs.debian.org/844546
-> https://www.teeworlds.com/?page=news&id=12086
+   Hello,
 
-> 0.6.4 released ...
-> the security vulnerability is worse, attacker
-> controlled memory-writes and possibly arbitrary code execution on the
-> client, abusable by any server the client joins.
+Qemu emulator built with the e1000 NIC emulation support is vulnerable to an 
+infinite loop issue. It could occur while processing data via transmit or 
+receive descriptors, provided the initial receive/transmit descriptor 
+head(TDH/RDH) is set outside the allocated descriptor buffer.
 
-> - if(Unpacker.Error())
-> + if(Unpacker.Error() || NumParts < 1 || NumParts > CSnapshot::MAX_PARTS || Part < 0 | Part >= NumParts || PartSize < 0 || PartSize > MAX_SNAPSHOT_PACKSIZE)
+A privileged user inside guest could use this flaw to crash the Qemu instance 
+resulting in DoS.
 
-Use CVE-2016-9400.
+Upstream patch
+- --------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2016-01/msg03454.html
 
-Our guess is that neither github.com/teeworlds nor anonscm.debian.org
-intended to commit this with a bitwise OR between "Part < 0" and
-"Part >= NumParts" above. On first glance, though, the code seems to have
-the same effect regardless of whether "Part < 0 | Part >= NumParts" or
-"Part < 0 || Part >= NumParts" is used.
+Reference:
+- ----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1298570
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
+Thank you.
+- --
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJYLjvOAAoJEHb/MwWLVhi2PcEQAJxCENetx/MZu5IHhvHMrk8k
-Bh4sKUbbV5OkxA2k/AY0uEG68f/WqPEsk1q/IDCow//eh56xlgYiEnAxkdYa29vv
-CheoWqqiQJfrKCPIruhxahDVfE6hNRzK3pCMo15SMKfddTHH8hyViYxKVhwKvaYr
-LGWondROY8hCOli8btfNJlxVqaX24LI8OoEjvvKPZxvBkcehgHKFTibsEIi9evHj
-y9XsSoeTxAefRYmkv18q5w3WWKv8TUeFTW9mcRgRueqNVW7aFsysmG/cbz4BBDtm
-5Q+/ipLwx+AazZS8FHZKFvVJtYkwno6C7AzyCezzCCG+UOc1gv8ojqCYLF7r+c+V
-RaT0TkDQkjam3J2IZXewPo7wQUuqMMQI92N0fhHwVXKiKsolyUeAJPUgaF13ZOt8
-EPy5MuvTT9wca42EKWwyLdp8Wz2I0JSk26hmUQ3XrQD8Desoc0/yUmsQR6NDtIr+
-ZR9wT6ChD5hS6gMbPJ6AcPyY3juCXOZVNYrWPc8TzxTn3LfcVgHlscGNB4HW/tc6
-Cq7BJNTGvbbRSgFo0lrL1y9pFPKuZiflfo4HuYmdh7hN/PW67H1DAyMOpEDzTE0F
-/l0NpMnKmFytfDM3ysm4DXSdEaGh+/JATbdxMmHKdxwcfBipmz7msDIf+ACGJwQI
-UN89aY0tNp011ztELlBR
-=HGX3
+iQIcBAEBAgAGBQJWnnGuAAoJEN0TPTL+WwQfM3sP/1VRTdBss1oIFirNs52Tpsyl
+KmZBC5tPP7u+x9KWSQIClCRQcMHV09b5fvFnf7F86tNtFd/7Fhh6OpVQ9gpENpw1
+enYDmDixD5eNJCpTiLAAoKznrvN/PmiFYcuQbCI9nxnEZUb46Ocw0WYQNm6PC9w2
+wHj6oKfAOBCn0nmHZL7mHygRQeJdrufWFWBvx2aJyU+9a/TMAZ58iegj/ymW9V3L
+7+FZMEcEuKDEHf7z06NNAbS+tjJb0DoYoEUxXL8ZvX2P813hr5uoZarXa0wVVNCS
+gfcLPET2UKSlzP88vQyypKWVExofWr7s1VLH93x6CCvqpvoizVRIoDOMNPKUZSMB
+2rTPTT9Z+Dr/c7o84Q2Tan9Yu6+8fd6fasGt7T0tTvOzlhXHFJNpnPriHiTOJBlV
++T2WD8CE7q7uWog+GaxL4Fc5JgHLwF6q1aZVWYcgyDakRRP1SeuajEydSuxcq+EY
+gkNlX6k902JTNjoa3IYcQwe2Kv3zZ7avpbq8LxlyhKo0+FNst2xpaZS0KFIna9cs
+Jiblnrw1E3of8XaZnNObLkNXfDvBanMhf/VTuzxKe1MxvWAzuo9iILLx9U+I8pHU
+H5m5d8/qNlzclcB9atghb15AvMe2ddB997+U8rbhDHV7aqkzwTj0vy0+2tsRwYJ4
+yoXLJL9V6CQzYYdprvlI
+=T2Vb
 -----END PGP SIGNATURE-----
