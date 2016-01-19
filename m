@@ -1,27 +1,133 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/07/2
-Message-ID: <20160607064527.GA20067@lorien.valinor.li>
-Date: Tue, 7 Jun 2016 08:45:27 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Subject: CVE Request: GnuTLS: GNUTLS-SA-2016-1: File overwrite by setuid programs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/19/19
+Message-ID: <alpine.NEB.2.11.1601191505520.10673@t1.m.reedmedia.net>
+Date: Tue, 19 Jan 2016 15:06:51 -0600 (CST)
+From: "Jeremy C. Reed" <jreed@....org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2015-8704: Specific APL data could trigger an INSIST in apl_42.c causing BIND named to exit
 Content-Type: text/plain; charset=utf-8
 
-Hi
+CVE:                   CVE-2015-8704
+Document Version:      2.0
+Posting date:          19 January 2016
+Program Impacted:      BIND
+Versions affected:     9.3.0->9.8.8, 9.9.0->9.9.8-P2,
+                       9.9.3-S1->9.9.8-S3, 9.10.0->9.10.3-P2
+Severity:              High
+Exploitable:           Remotely
 
-GnuTLS 3.4.13 was released addressing GNUTLS-SA-2016-1,
-http://gnutls.org/security.html#GNUTLS-SA-2016-1 :
+Description:
 
-> Setuid programs using GnuTLS 3.4.12 could potentially allow an
-> attacker to overwrite and corrupt arbitrary files in the filesystem.
-> This issue was introduced in GnuTLS 3.4.12 and fixed in GnuTLS 3.4.13.
-> Recommendation: Upgrade to GnuTLS 3.4.13, or later versions.
+   A buffer size check used to guard against overflow could cause
+   named to exit with an INSIST failure In apl_42.c.
 
-The relevant upstream commits seem to be:
+Impact:
 
-https://gitlab.com/gnutls/gnutls/compare/fb2a6baef79f4aadfd95e657fe5a18da20a1410e...86076c9b17b9a32b348cafb8b724f57f7da64d58
+   A server could exit due to an INSIST failure in apl_42.c when
+   performing certain string formatting operations.  Examples include
+   (but may not be limited to):
 
-Can you assign a CVE for this issue?
+    -  Slaves using text-format db files could be vulnerable if
+       receiving a malformed record in a zone transfer from their master.
 
-Regards,
-Salvatore
+    -  Masters using text-format db files could be vulnerable if
+       they accept a malformed record in a DDNS update message.
+
+    -  Recursive resolvers are potentially vulnerable when debug
+       logging, if they are fed a deliberately malformed record by
+       a malicious server.
+
+    -  A server which has cached a specially constructed record
+       could encounter this condition while performing 'rndc dumpdb'.
+
+Please Note:
+
+   Versions of BIND from 9.3 through 9.8 are also affected, but
+   these branches are beyond their "end of life" (EOL) and no longer
+   receive testing or security fixes from ISC. For current information
+   on which versions are actively supported, please see
+   http://www.isc.org/downloads/.
+
+CVSS Score:            6.8
+CVSS Vector:           (AV:N/AC:L/Au:S/C:N/I:N/A:C)
+
+For more information on the Common Vulnerability Scoring System and
+to obtain your specific environmental score please visit:
+http://nvd.nist.gov/cvss.cfm?calculator&adv&version=2&vector=(AV:N/AC:L/Au:S/C:N/I:N/A:C)
+
+Workarounds:
+
+   None
+
+Active exploits:
+
+   No known active exploits.
+
+Solution:
+
+   Upgrade to the patched release most closely related to your
+   current version of BIND.  These can all be downloaded from
+   http://www.isc.org/downloads.
+
+    -  BIND 9 version 9.9.8-P3
+    -  BIND 9 version 9.10.3-P3
+
+   BIND 9 Supported Preview edition is a feature preview version
+   of BIND provided exclusively to eligible ISC Support customers.
+
+    -  BIND 9 version 9.9.8-S4
+
+Document Revision History:
+
+   1.0 Advance Notification 12 January 2016
+   2.0 Public Disclosure  19 January 2016
+
+Related Documents:
+
+   See our BIND9 Security Vulnerability Matrix at
+   https://kb.isc.org/article/AA-00913 for a complete listing of
+   Security Vulnerabilities and versions affected.
+
+If you'd like more information on ISC Subscription Support and
+Advance Security Notifications, please visit http://www.isc.org/support/.
+
+Do you still have questions?  Questions regarding this advisory
+should go to security-officer@....org.  To report a new issue,
+please encrypt your message using security-officer@....org's PGP
+key which can be found here:
+   https://www.isc.org/downloads/software-support-policy/openpgp-key/.
+If you are unable to use encrypted email, you may also report new
+issues at: https://www.isc.org/community/report-bug/.
+
+Note:
+
+   ISC patches only currently supported versions. When possible we
+   indicate EOL versions affected.  (For current information on
+   which versions are actively supported, please see
+   http://www.isc.org/downloads/).
+
+ISC Security Vulnerability Disclosure Policy:
+
+   Details of our current security advisory policy and practice can
+   be found here: https://kb.isc.org/article/AA-00861
+
+This Knowledge Base article: https://kb.isc.org/article/AA-01335
+is the complete and official security advisory document.
+
+Legal Disclaimer:
+
+   Internet Systems Consortium (ISC) is providing this notice on
+   an "AS IS" basis. No warranty or guarantee of any kind is expressed
+   in this notice and none should be implied. ISC expressly excludes
+   and disclaims any warranties regarding this notice or materials
+   referred to in this notice, including, without limitation, any
+   implied warranty of merchantability, fitness for a particular
+   purpose, absence of hidden defects, or of non-infringement. Your
+   use or reliance on this notice or materials referred to in this
+   notice is at your own risk. ISC may change this notice at any
+   time.  A stand-alone copy or paraphrase of the text of this
+   document that omits the document URL is an uncontrolled copy.
+   Uncontrolled copies may lack important information, be out of
+   date, or contain factual errors.
+
+(c) 2001-2016 Internet Systems Consortium
