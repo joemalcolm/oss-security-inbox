@@ -1,25 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/11/11
-Message-ID: <56E2EBCD.2060808@igalia.com>
-Date: Fri, 11 Mar 2016 17:01:17 +0100
-From: Carlos Alberto Lopez Perez <clopez@...lia.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Concerns about CVE coverage shrinking - direct impact to researchers/companies
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/19/12
+Message-ID: <CANO=Ty0CBF_LOa=8+sC1bdGH-6RvvA0YTpeOCdBQuSmG=PE75A@mail.gmail.com>
+Date: Tue, 19 Jan 2016 11:06:32 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Cc: Assign a CVE Identifier <cve-assign@...re.org>
+Subject: Re: CVE assignment request for security bugs fixed in glibc 2.23
 Content-Type: text/plain; charset=utf-8
 
-On 07/03/16 09:10, Markus Vervier wrote:
-> It seems to me MITRE currently wants to improve CVE quality but does not
-> have the resources
-> to do a real and fair validation.
+I'll assign these tomorrow unless Mitre gets to them first, the one
+request swbz#18928
+is already several months old and shouldn't take this long.
 
-According to Wikipedia [1], Mitre has 7,613 employees and a revenue of
-US$ 1.421 billion.
+On Tue, Jan 19, 2016 at 11:04 AM, Florian Weimer <fweimer@...hat.com> wrote:
 
-I fail to understand how a corporation of that size lacks resources for
-improving anything they really want to improve.
+> Hi,
+>
+> we are preparing the glibc 2.23 release upstream and have fixed the
+> following security bugs which, to my best knowledge, lack public CVE
+> assignment so far:
+>
+> Passing out of range data to strftime() causes a segfault
+> https://sourceware.org/bugzilla/show_bug.cgi?id=18985
+>
+> Out-of-range time values passed to the strftime function may cause it to
+> crash, leading to a denial of service, or potentially disclosure
+> information.
+>
+> LD_POINTER_GUARD is not ignored for privileged binaries
+> https://sourceware.org/bugzilla/show_bug.cgi?id=18928
+>
+> LD_POINTER_GUARD was an environment variable which controls
+> security-related behavior, but was not ignored for privileged binaries
+> (in AT_SECURE mode).  This might allow local attackers (who can supply
+> the environment variable) to bypass intended security restrictions.
+>
+> hcreate((size_t)-1) should fail with ENOMEM
+> https://sourceware.org/bugzilla/show_bug.cgi?id=18240
+>
+> This is an integer overflow in hcreate and hcreate_r which can result in
+> an out-of-bound memory access.  This could lead to application crashes
+> or, potentially, arbitrary code execution.
+>
+> nan function unbounded stack allocation
+> https://sourceware.org/bugzilla/show_bug.cgi?id=16962
+>
+> A stack overflow (unbounded alloca) can cause applications which process
+> long strings with the nan function to crash or, potentially, execute
+> arbitrary code.
+>
+> catopen() Multiple unbounded stack allocations
+> https://sourceware.org/bugzilla/show_bug.cgi?id=17905
+>
+> A stack overflow (unbounded alloca) in the catopen function can cause
+> applications which pass long strings to the catopen function to crash
+> or, potentially execute arbitrary code.
+>
+>
+> Several people have asked for CVE assignment for swbz#18928 on
+> oss-security already.
+>
+> Thanks,
+> Florian
+>
 
----
-[1] https://en.wikipedia.org/wiki/Mitre_Corporation
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (884 bytes)
+-- 
+
+--
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
+
