@@ -1,45 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/11/9
-Message-ID: <bf7ce36abd284e80b01f6beff3a9f75e@imshyb02.MITRE.ORG>
-Date: Fri, 11 Nov 2016 12:45:32 -0500
-From: <cve-assign@...re.org>
-To: <ago@...too.org>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: libdwarf: heap-based buffer overflow in dwarf_get_aranges_list (dwarf_arange.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/19/13
+Message-ID: <20160119192412.1a96c226@pc1>
+Date: Tue, 19 Jan 2016 19:24:12 +0100
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: out-of-bounds write with cpio 2.11
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Tue, 19 Jan 2016 13:45:05 -0300
+Gustavo Grieco <gustavo.grieco@...il.com> wrote:
 
-> https://blogs.gentoo.org/ago/2016/11/07/libdwarf-heap-based-buffer-overflow-in-dwarf_get_aranges_list-dwarf_arange-c
-> https://sourceforge.net/p/libdwarf/code/ci/583f8834083b5ef834c497f5b47797e16101a9a6/
-> 
-> AddressSanitizer: heap-buffer-overflow
-> READ of size 2
+> An out-of-bounds write in cpio 2.11 was found in the parsing of cpio
+> files (other version are probably affected).  Find attached a test
+> case to reproduce it. The ASAN report is here:
 
-Use CVE-2016-9276 for this buffer over-read. Although the commit is
-the same as for CVE-2016-9275, fixing CVE-2016-9276 apparently
-requires the dwarf_arange.c part of the commit.
+Is this a duplicate of CVE-2014-9112?
+https://lists.gnu.org/archive/html/bug-cpio/2014-11/msg00007.html
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+cpio is esentially unmaintained upstream.
 
-iQIcBAEBCAAGBQJYJgKbAAoJEHb/MwWLVhi28eMP/01xy9Xb5cx1Nekg36i2fkrn
-rqfRioDonkNhjjB2hHszRn7TJkXKAMzxWdPJhuMTsYlo8R9jwBy0jyZmSNXi+5gL
-1ms14sa2pZnOo6PdO/FfyPSDjBqVR/2tj0E3mrVXtvQWhwZj7F8723y7dEWQJ6FS
-u8RKcqYep/YC+sCNgF2cnSHmHdzOL7DgIBOmDCshfWMx2aAtbKuvysGTfM4Sj7xU
-28ZLvI7EzKyxB0BMfTnl/cNzmOdcVXxUwd8uw1u5U0xKqSqXHcTqpxjZt7Jl+4Jk
-xy3qbyN+O2yrZJVsDhiR+lt0iRmodQov4m4bpHTnET8wglV3Vv6Amtkax79AzxCn
-QKGNy02tL8RiMBLscxETJa5MUm8MNrsASPpKQvhodcOtMCapCb6NctuvNbxII5XQ
-AIeDxn/5ElfNgKaJst4ou9nwuZYfSe91XS97bWX7d3IJnLECFrcDB6NC3LWqgBv9
-Y534JH13OhruCrEuSr1cNUu3k1kLsNUyRHzMpUU+q6A0Q8ni5Kq1cL20BI3zku/f
-ioKxPBUFaO3VGmnVPAOQdF70yokgrelUMxsr0rEbPwz2+R6AgAW2ICF/v2k/EP7D
-sd80M5oB0j/5fUnbhC1mcT/sFVOl4ggi+BXtsF4QRXZ0vt5/rga2F3fy493yRdLw
-NUJoJIaWp3qUr6VViDeP
-=IOf0
------END PGP SIGNATURE-----
+-- 
+Hanno Böck
+http://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
+
+Content of type "application/pgp-signature" skipped
