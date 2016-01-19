@@ -1,47 +1,86 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/20/3
-Message-Id: <20160420025113.512A752E005@smtpvbsrv1.mitre.org>
-Date: Tue, 19 Apr 2016 22:51:13 -0400 (EDT)
-From: cve-assign@...re.org
-To: vangheem@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Bypass Restricted Python - Plone
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/19/4
+Message-ID: <CACn5sdTx4m+mrn6i59Cz4iiAzpbxg=3Qrp6yHxyoaZp8YrS=ZA@mail.gmail.com>
+Date: Tue, 19 Jan 2016 13:45:05 -0300
+From: Gustavo Grieco <gustavo.grieco@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: out-of-bounds write with cpio 2.11
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hello,
 
-> https://plone.org/security/20160419/bypass-restricted-python
-> 
-> A user who can create or edit templates(usually only admins) can
-> bypass Restricted Python.
-> 
-> This vulnerability should only affect site administrators who have ZMI
-> access, or when you gave users permission to edit PloneFormGen
-> templates. Only Chameleon (five.pt) is affected. This package is used
-> by default in Plone 5, and can be added in Plone 4.
+An out-of-bounds write in cpio 2.11 was found in the parsing of cpio files
+(other version are probably affected).  Find attached a test case to
+reproduce it. The ASAN report is here:
 
-Use CVE-2016-4043.
+=================================================================
+==5480==ERROR: AddressSanitizer: heap-buffer-overflow on address
+0x60200000edd0 at pc 0x41f187 bp 0x7fffffffdc50 sp 0x7fffffffdc48
+WRITE of size 2 at 0x60200000edd0 thread T0
+    #0 0x41f186 in cpio_safer_name_suffix
+/home/g/Codigo/cpio-2.11+dfsg/src/util.c:1392
+    #1 0x40b3d7 in process_copy_in
+/home/g/Codigo/cpio-2.11+dfsg/src/copyin.c:1391
+    #2 0x416754 in main /home/g/Codigo/cpio-2.11+dfsg/src/main.c:739
+    #3 0x7ffff6b5eec4 in __libc_start_main
+(/lib/x86_64-linux-gnu/libc.so.6+0x21ec4)
+    #4 0x403408 (/home/g/Codigo/cpio-2.11+dfsg/src/cpio+0x403408)
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+0x60200000edd1 is located 0 bytes to the right of 1-byte region
+[0x60200000edd0,0x60200000edd1)
+allocated by thread T0 here:
+    #0 0x7ffff6f567ef in __interceptor_malloc
+(/usr/lib/x86_64-linux-gnu/libasan.so.1+0x547ef)
+    #1 0x440f3e in xmalloc /home/g/Codigo/cpio-2.11+dfsg/gnu/xmalloc.c:47
+    #2 0x409c74 in read_in_new_ascii
+/home/g/Codigo/cpio-2.11+dfsg/src/copyin.c:1166
+    #3 0x408a26 in read_in_header
+/home/g/Codigo/cpio-2.11+dfsg/src/copyin.c:1043
+    #4 0x40b354 in process_copy_in
+/home/g/Codigo/cpio-2.11+dfsg/src/copyin.c:1361
+    #5 0x416754 in main /home/g/Codigo/cpio-2.11+dfsg/src/main.c:739
+    #6 0x7ffff6b5eec4 in __libc_start_main
+(/lib/x86_64-linux-gnu/libc.so.6+0x21ec4)
 
-iQIcBAEBCAAGBQJXFu1xAAoJEHb/MwWLVhi2I9cP/0SBPz78iiLQw+BDo5O/Veu7
-uKDU4AWcY7G4BXvLpC8aOaTDN19o5RlAp/8cXgZBZ0e0jL4wxqDlakmn5enqDVlB
-FAMzNppGCKPbP7mMhjhp0Y09oqkEBDpcK8VTiYoLCEP8EkyBRVyL2GnM1Y2nRrXj
-RDg/lxskoIE9MnExPAMGzpzWzuQk5GVDSz0hh39IxgQhx0/7rhKSxhN6RT5GdrAx
-Uafip+Vb/ezJKe/TvSr9IDKJ3SZjKVa7nFqlsQaTTIve3MZ81H/4zCbn0X+V6MX6
-USLbOut1LywohvVLmegO/uf8w3arT+szDYThljp0HpraGHQDt/YRaYl4D3BjVcb0
-Q4xhaIWGTPnV5Axoh2yj2RVl6Yx8+sDMQvT6HANcpEU0wcPNvbouTu8EY0mAxToI
-g33vyCkidscrt3PFQuUVbfbxIqclncqKNtf9i7+0jCYQZEIbR7V44rqWwMVCJ1VZ
-a2UunPe0h2COZ0m7WifM2b82i8ox87l7qcw3CppysKOS20i1h4L8KkW2qkdcQJCm
-jng9DWicSo95sxjUBXajYvKHBCALHXqSiKiKq6Vu+vX+y79JW6lb3HRxJzpjhMg2
-imD3xLmh9jCmBiIKqm3oj/tweMlAX1b8llz7AUbkLu3TepzsGhTHNx+QngAg80Bh
-zlAz4kl1XvkyBWijKrEb
-=P6qe
------END PGP SIGNATURE-----
+SUMMARY: AddressSanitizer: heap-buffer-overflow
+/home/g/Codigo/cpio-2.11+dfsg/src/util.c:1392 cpio_safer_name_suffix
+Shadow bytes around the buggy address:
+  0x0c047fff9d60: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff9d70: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff9d80: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff9d90: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff9da0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+=>0x0c047fff9db0: fa fa fa fa fa fa fa fa fa fa[01]fa fa fa 06 fa
+  0x0c047fff9dc0: fa fa 05 fa fa fa 00 04 fa fa 00 04 fa fa 00 04
+  0x0c047fff9dd0: fa fa 00 04 fa fa 00 04 fa fa 00 04 fa fa 00 04
+  0x0c047fff9de0: fa fa 00 04 fa fa 00 04 fa fa 00 04 fa fa 00 04
+  0x0c047fff9df0: fa fa 00 04 fa fa 00 04 fa fa 00 04 fa fa fd fa
+  0x0c047fff9e00: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07
+  Heap left redzone:       fa
+  Heap right redzone:      fb
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack partial redzone:   f4
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Contiguous container OOB:fc
+  ASan internal:           fe
+==5480==ABORTING
+
+
+This issue was found using QuickFuzz.
+
+Regards,
+Gus.
+
+Content of type "text/html" skipped
+
+Download attachment "overflow.cpio" of type "application/x-cpio" (524 bytes)
