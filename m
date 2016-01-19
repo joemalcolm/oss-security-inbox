@@ -1,130 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/03/5
-Message-ID: <alpine.DEB.2.20.1608030902300.2418@tvnag.unkk.fr>
-Date: Wed, 3 Aug 2016 09:05:30 +0200 (CEST)
-From: Daniel Stenberg <daniel@...x.se>
-To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
-Subject: [SECURITY VULNERABILITY] curl: use of connection struct after free
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/19/16
+Message-ID: <CAKws9z00CYYUZMGW9-QaBDoLc42Em4WWy_eGKLoxNk2uDYwnOg@mail.gmail.com>
+Date: Tue, 19 Jan 2016 14:47:10 -0500
+From: Scott Arciszewski <scott@...agonie.com>
+To: oss-security@...ts.openwall.com, fulldisclosure@...lists.org
+Subject: OpenCart users, switch to OpenCart-CE immediately
 Content-Type: text/plain; charset=utf-8
 
-use of connection struct after free
-===================================
+This commit was made against the Community Edition of OpenCart on April 2,
+2014.
 
-Project cURL Security Advisory, August 3rd 2016 -
-[Permalink](https://curl.haxx.se/docs/adv_20160803C.html)
+https://github.com/opencart-ce/opencart-ce/commit/5bc5f7a816aab17f1718e0c09323c74cd7167f35#diff-d0709af23c0fbe35295ee9a1ceb9fd79
 
-VULNERABILITY
--------------
+As you can see from the commit message, it was intended to prevent file
+inclusion attacks.
 
-libcurl is vulnerable to a use-after-free flaw.
+It's January 19, 2016 and OpenCart proper is still doing it wrong.
 
-libcurl works with easy handles using the type 'CURL *' that are objects the
-application creates using curl_easy_init(). They are the handles that are all
-each associated with a single transfer at a time. libcurl also has an internal
-struct that represents and holds most state that is related to a single
-connection. An easy handle can hold references to one or many such connection
-structs depending on the requested operations.
+https://github.com/opencart/opencart/blob/0b8ff2ef74309dd2e1797af762364dab2eef761b/upload/system/engine/action.php#L7
 
-When using libcurl's multi interface, an application performs transfers by
-adding one or more easy handles to the multi handle and then it can drive all
-those transfers in parallel.
+What this line tries to do is prevent directory traversal attacks by
+stripping out ../, but unfortunately it's quite dumb.
 
-Due to a flaw, libcurl could leave a pointer to a freed connection struct
-dangling in an easy handle that was previously added to a multi handle when
-curl_multi_cleanup() is called with an easy handle still added to it. This
-does not seem to cause any notable harm if the handle is then closed properly.
+https://3v4l.org/tMmNK
 
-However, if the easy handle would instead get used again with the easy
-interface and curl_easy_perform() to do another transfer, it would blindly use
-the connection struct pointer now pointing to freed memory.
+This also doesn't defend against NUL byte injections.
 
-An application could be made to allocate its own fake version of the connect
-struct, fill in some data and then have the curl_easy_perform() call do
-something that clearly was not intended by the original code.
+This is a 0day, because Daniel Kerr usually just flames security
+researchers and I didn't feel like subjecting myself to that ever again. To
+wit:
 
-For example, this could be an application using a component or library that
-uses libcurl to do something against fixed URLs or fixed host names or with a
-set of fixed options, but using this flaw the application can then make the
-component to do something completely different and unintended.
+* https://github.com/opencart/opencart/issues/1269
+* https://github.com/opencart/opencart/issues/1279
+* https://github.com/opencart/opencart/issues/1534
+* https://github.com/opencart/opencart/issues/1594
+* https://github.com/opencart/opencart/issues/3721
 
-Pseudo code for a bad application
+I'm sure I missed quite a few instances of him flaming people trying to
+help him secure his project for free. He doesn't seem to ever learn, either.
 
-     easy = curl_easy_init();
-     curl_easy_setopt(easy, CURLOPT_URL, "http://example.com/");
+The OpenCart-CE maintainer, in contrast, is more hospitable towards
+security researchers. So in addition to already having a fix in place,
+their rapport with the community means using the community edition is
+likely to make your system more secure than running OpenCart proper.
 
-     // --- start of code to confuse libcurl ---
-     multi = curl_multi_init();
-     curl_multi_add_handle(multi, easy);
-     curl_multi_perform(multi, &still_running);
-     curl_multi_cleanup(multi);
+In closing, I recommend everyone who runs OpenCart to switch to OpenCart-CE
+today and anyone who does penetration testing read this excellent article
+by Keith Makan about Ordering an RFI via Email:
+http://blog.k3170makan.com/2012/01/ordering-remote-file-inclusion-via-e.html
 
-     // --- attack code
-     allocate_fake_connection_struct()
-     fill_in_fake_connection_struct()
+Scott Arciszewski
+Chief Development Officer
+Paragon Initiative Enterprises <https://paragonie.com>
 
-     // ---- end of confusion code
-
-     // now this is called, it will not use example.com at all even if the
-     // option above asks for it...
-
-     curl_easy_perform(easy);
-
-This flaw can also be exploited using libcurl bindings in other languages.
-
-We are not aware of any exploit of this flaw.
-
-INFO
-----
-
-This flaw does not affect the curl command line tool.
-
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2016-5421 to this issue.
-
-AFFECTED VERSIONS
------------------
-
-- Affected versions: libcurl 7.32.0 to and including 7.50.0
-- Not affected versions: libcurl >= 7.50.1
-
-libcurl is used by many applications, but not always advertised as such!
-
-THE SOLUTION
-------------
-
-In version 7.50.1, curl clears the memory pointer immediately after free thus
-removing this vulnerability.
-
-A [patch for CVE-2016-5421](https://curl.haxx.se/CVE-2016-5421.patch) is
-available.
-
-RECOMMENDATIONS
----------------
-
-We suggest you take one of the following actions immediately, in order of
-preference:
-
-  A - Upgrade curl and libcurl to version 7.50.1
-
-  B - Apply the patch to your version and rebuild
-
-  C - Do not expose easy handles from your libcurl using components
-
-TIME LINE
----------
-
-Reported on July 3, 2016. We contacted distros@...nwall on July 31.
-
-libcurl 7.50.1 was released on August 3 2016, coordinated with the publication
-of this advisory.
-
-CREDITS
--------
-
-Found and explained to us by Marcelo Echeverria and Fernando Muñoz.
-
-Thanks a lot!
-
--- 
-
-  / daniel.haxx.se
