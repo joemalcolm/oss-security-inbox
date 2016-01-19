@@ -1,57 +1,86 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/25/4
-Message-Id: <20160125075349.450551BE0EA@smtpvbsrv1.mitre.org>
-Date: Mon, 25 Jan 2016 02:53:49 -0500 (EST)
-From: cve-assign@...re.org
-To: wmealing@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Linux kernel : Denial of service with specially crafted key file.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/19/17
+Message-ID: <678df6c4-a201-8088-2fc6-737d14905b9d@halfdog.net>
+Date: Tue, 19 Jan 2016 20:10:50 +0000
+From: halfdog <me@...fdog.net>
+To: oss-security@...ts.openwall.com
+Subject: Overlayfs and devpts issues in namespaces
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hash: SHA1
 
-> An issue with ASN1.1 DER decoder was reported that a specially created
-> key can lead to a kernel panic via x509 certificate DER signature
-> parsing.
+<Seems that message did not get through, so resending>
+
+Hi,
+
+Solar Designer wrote:
+> On Wed, Jan 13, 2016 at 10:26:18PM +0000, halfdog wrote:
+>> About the title of the thread: The second topic mentionend in 
+>> initial mail "Overlayfs and devpts issues in namespaces", was
+>> the devpts issue. I combined those two in one thread, because one
+>>  vulnerability makes discovery of second quite simple - that is 
+>> why I discovered both nearly at same time. The later one is
+>> still undisclosed. From the Ubuntu bug report notifications I
+>> know, that they are at least trying to get rid of the
+>> problematic pt_chown SUID binary, but there seem to be other
+>> devpts issues they know about.
 > 
-> Vulnerable code:
+> Since you brought the devpts issue in here on January 4, you must 
+> post about it to oss-security no later than on January 18
+> (Monday), or you may choose to do it today (Thursday).  (Friday and
+> the weekend are worse.)
 
->> crypto/asymmetric_keys/public_key.c
+The writeup is ready since weeks, the first one is out already. The
+user namespaces topic proved more problematic than initially thought:
+two more local root privilege escalation variants were found,
+overlayfs is vulnerable since enabled (e.g. Ubuntu Trusty up to now).
 
-> int public_key_verify_signature(const struct public_key *pk,
->                                 const struct public_key_signature *sig)
-> {
->         const struct public_key_algorithm *algo;
-> 
->         BUG_ON(!pk);
->         BUG_ON(!pk->mpi[0]);
-> 
-> An attacker could craft a BER file without a public key and panic the system.
+This was the first time, I tried to cooperate with others for fixing
+via Linux distros instead only via Ubuntu and upstream, but even with
+patch available, this did not speed up the process from discovery to
+patching. So embargo time has ended but no patch available yet.
 
-> https://bugzilla.redhat.com/show_bug.cgi?id=1300237
+With that in mind, what would be best next steps for all those known
+and also future issues?
 
-Use CVE-2016-2053.
+As I know about the problems with uncoordinated full disclosure, but
+bearing in mind, that full disclosure is also a method of enabling
+those wanting to protect themselves, I am inclined to try this procedure:
+
+* Send a pre-announce about 3 more userns related issues allowing
+local root gain, thus proofing needs to audit the code more closely.
+
+* Request developers to provide a mitigation workaround as kernel
+module, that, as long as loaded a) disables userns as such or variant
+b) just disables mounting within userns when not being host-uid-0.
+Such a module should mitigate worst effects for production
+environments but may leave other platforms (embedded? phones?)
+unprotected.
+
+* Module should be very simple to develop and perhaps distribute as
+e.g. Ubuntu PPA addon-package to current kernel. So give whole public
+2 days time for mitigation module.
+
+* No matter if module is available or not (if not, that means that the
+issues is irrelevant from security perspective). Hence full disclosure
+cannot do any further harm.
+
+Opinions?
+
+hd
+
+PS: As the number of issues currently in processing are way too large
+for sparetime handling, coordination is getting worse. So quite
+likely, different parties might be out of sync already.
 
 - -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+http://www.halfdog.net/
+PGP: 156A AE98 B91F 0114 FE88 2BD8 C459 9386 feed a bee
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJWpdMuAAoJEL54rhJi8gl5SRMP/3rjH4bN46xreT6aN9KS6CR6
-PzOg7gaoVxRKQb6Ygc8NoxLCoSpnetUv14T3CSlN7J6RgVz6jy+CBOyIbkzMgm7S
-Le8DttB6hiv0shB+LqZhVnajET7r6mGyrYYiJ0rgsNaupI1QZMnwHGv2yySvSkWY
-SSp65kpmNqQ4J9SWxJ9EiMYjrhCEa9q9hsTmglosTwVVqR87wyIWFvmvyDCZlt+f
-9or4hrfJjPCLK9q9iJU18SlczTK/VNsJJMHOI6ZQb0lZEjX9MvnwherHnVe5VE1y
-a5ABDMFNgEiFeQWOm+pViwoGDG2EtDOHEqd2ZplPdW9MUwFKMeqAlZ+xy6M/r477
-Wqw25I9iwAVnKJ2c9a/JLQr4vFWXoLGjYmaT3dp8F7NrQO2VB/W0vG2VWlYltrgp
-drRvy0P10xFGsN/CxjgTw9v8CNkRUSRI4wgVNsm+SBS+PNnLwH+FgFOhS6XNFPRy
-R4EvIOec0WHrkPQRfL0qIlqA6sUfNuwQfQO4CvksEtpOPeeDVUwDVXwkMULWWSzL
-3yOE3eMGgP7ALJ88TS2uzMGH0U5AfaBAnDmepo3RI7a4kbqHJt68pKkf3uuF1HIw
-dp35mQ7gGJHtWoPAVZ/F7DdJkgU2hEecTle4ZP3D2c5rTpYQCS0gDkMEqjDvZ+BF
-jbbGSEREYy5xgjenLML7
-=NE0Y
+iEYEARECAAYFAlaemC8ACgkQxFmThv7tq+411wCgjLx73cl3pKj/mvhIJC0EcrYb
+8AAAni5TlXemvoPf/xei0tYHpjNhJA6q
+=klHo
 -----END PGP SIGNATURE-----
