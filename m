@@ -1,4 +1,9 @@
-Received: (qmail 32309 invoked by uid 550); 19 Apr 2023 06:45:21 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1567" "Tuesday" "19" "January" "2016" "22:56:06" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1601192253240.22604@wniryva>" "43" "[oss-security] CVE request Qemu: net: e1000 infinite loop in start_xmit and e1000_receive_iov routines" nil nil nil "1" "2016011917:26:06" "[oss-security] CVE request Qemu: net: e1000 infinite loop in start_xmit and e1000_receive_iov routines" (number mark "U       ppandit@redh Jan 19   43/1567  " thread-indent "\"[oss-security] CVE request Qemu: net: e1000 infinite loop in start_xmit and e1000_receive_iov routines\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 15562 invoked by uid 550); 19 Jan 2016 17:26:30 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,158 +12,59 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 27737 invoked from network); 19 Apr 2023 03:57:54 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=asu-edu.20221208.gappssmtp.com; s=20221208; t=1681876662; x=1684468662;
-        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=27MigfSst87C+RxjI47G8849Sp5TO/29O9Cclfiullk=;
-        b=dY2FiRtestffunc1d8e+UseopZ22nQbgI53Wvj55UN7mlGILnJPOe3D4FVYihsHmE9
-         AVnjb7Nq10jlOJziOGA8HviOkhWr2ECuyNZbalEJDWiN8hiC5v4GCwL+m0TsgieNDx4P
-         0Y72+WIf8UfzA1HiIijmtMWFmnmL/xYOJqckyGmQt32QPw+g8oVnBk5epJjVwP1Xr6Yx
-         9XYkzcs7zp99V+HI6pTTjWrcZOOggXtOqvwgDPeY5DFvxHDV8Vzlw77X1gPfPthADus2
-         HqTEEZC/6FLSyUAorNVb8Z8BEFRFcS5tRukvOs9j4YKn1npkQfsOpEuFp6zdAgUz4Ln4
-         mfNQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681876662; x=1684468662;
-        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=27MigfSst87C+RxjI47G8849Sp5TO/29O9Cclfiullk=;
-        b=f54VJO7wc2FEk2SFDZW9DJsqFN1wm3Gzymp7Bhst/9hCT5IRs3YEr6vDWpKrecyniy
-         Yu9lxB1yvCBncUYpaek1HXm77FK4pA4r6+luQihSASIOJMMF/jC/F6GpOM7rGEjFNESu
-         7Ic/+8VhtdDvLrqo3SuDsnQn3yi2ysgP5oD+ozhp3bgryfD8x4mfjgcFyYxqzlHjmhin
-         ll+MQZr3/JzYAvq5f5VUiAxmG8PEKHsaWu7U/x79VtWqqhXwFp8IGWexL6vpHyCxdPwJ
-         gZ3edfx0IjDjdAO7QGynv8EfgpTWZueNyu+gROC6If/g3db6MDuUk1d7S3t1gLbvwCoo
-         TwJg==
-X-Gm-Message-State: AAQBX9dUMOYquM/gzcXGSUbWnhPf9tm8geDbhkTz9g3Q1+aRcORI2dLO
-	Uwt9HPD1Q3eYto5fE+smFtAwsb0+j3l80l+CrC5m4KJBxThJYdXxYa8grQ==
-X-Google-Smtp-Source: AKy350bAbzRp72q3staEdAOFlXhtG8QoslvVQRwpRjyknAIDC7QYg7hBIMSHgAxYwqPZqPL1NkisOXdqOw3h1JZz9XY=
-X-Received: by 2002:a05:6a20:12c9:b0:f0:a282:a343 with SMTP id
- v9-20020a056a2012c900b000f0a282a343mr2564303pzg.16.1681876662163; Tue, 18 Apr
- 2023 20:57:42 -0700 (PDT)
+Received: (qmail 15539 invoked from network); 19 Jan 2016 17:26:30 -0000
+Date: Tue, 19 Jan 2016 22:56:06 +0530 (IST)
+From: P J P <ppandit@redhat.com>
+X-X-Sender: pjp@javelin
+To: oss security list <oss-security@lists.openwall.com>
+cc: Laszlo Ersek <lersek@redhat.com>
+Message-ID: <alpine.LFD.2.20.1601192253240.22604@wniryva>
 MIME-Version: 1.0
-From: Kyle Zeng <yzeng56@asu.edu>
-Date: Wed, 19 Apr 2023 11:57:31 +0800
-Message-ID: <CADCqBhCB1q4Q+_0zuMG6M=BqizH4dmPwhkyKeOb_Pvd1uzbUGA@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Cc: Fish Wang <fishw@asu.edu>, Akshay Ajayan <aajayan@asu.edu>
-Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] CVE-2023-2124: OOB access in the Linux kernel's XFS subsystem
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.27
+Subject: [oss-security] CVE request Qemu: net: e1000 infinite loop in start_xmit and
+ e1000_receive_iov routines
 
-Hi there,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-We recently found a slab OOB access bug in the Linux kernel's XFS
-subsystem. It can cause denial-of-service and potentially privilege
-escalation.
+   Hello,
 
-The root cause of the bug is a missing metadata validation when
-mounting a user-supplied XFS disk image. More specifically, in a
-corner case where there is a dirty log with a buffer log item for an
-AGF and the on-disk buffer appears to be newer, XFS will discard the
-old dirty log and directly use the newer on-disk buffer without
-validating its content. This can lead to malformed metadata flow into
-the kernel and cause catastrophic results. More details can be found
-in the patch mentioned below.
+Qemu emulator built with the e1000 NIC emulation support is vulnerable to an 
+infinite loop issue. It could occur while processing data via transmit or 
+receive descriptors, provided the initial receive/transmit descriptor 
+head(TDH/RDH) is set outside the allocated descriptor buffer.
 
-The patch for this bug can be found here:
-https://lore.kernel.org/linux-xfs/20230412214034.GL3223426@dread.disaster.area/T/#m1ebbcd1ad061d2d33bef6f0534a2b014744d152d
-It has been merged into linux-next, 22ed903eee23 ("xfs: verify buffer
-contents when we skip log replay") and will be merged into the main
-tree soon.
+A privileged user inside guest could use this flaw to crash the Qemu instance 
+resulting in DoS.
 
-Notice that we are aware of two different crashes this bug can lead to
-(the one we found because of invalid `agi_level`, and the one
-discussed in the patch: invalid refcountbt), it is possible that this
-bug can be exploitable to achieve LPE.
+Upstream patch
+- --------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2016-01/msg03454.html
 
-A crash log is attached to the email.
+Reference:
+- ----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1298570
 
-Best,
-Kyle Zeng
-Akshay Ajayan
-Fish Wang
+Thank you.
+- --
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
 
-=================================================
-root@pwn:~# mount 2 test
-[   11.652439] loop0: detected capacity change from 0 to 32768
-[   11.702972] XFS (loop0): Mounting V5 Filesystem
-58c42324-ea61-4f93-a670-9fa85a561ec4
-[   11.704748] XFS (loop0): null uuid in log - IRIX style log
-[   11.705545] XFS (loop0): Torn write (CRC failure) detected at log
-block 0x9. Truncating head block from 0x10.
-[   11.759259] XFS (loop0): Starting recovery (logdev: internal)
-[   11.760440] XFS (loop0): Metadata corruption detected at
-xfs_btree_lookup_get_block+0x259/0x2d0, xfs_inobt block 0x18
-[   11.760950] XFS (loop0): Unmount and run xfs_repair
-[   11.761195] general protection fault, probably for non-canonical
-address 0x6043be0fbf88a15d: 0000 [#1] PREEMPT SMP NOPTI
-[   11.761740] CPU: 2 PID: 510 Comm: mount Not tainted 6.3.0-rc6 #9
-[   11.762018] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996),
-BIOS 1.15.0-1 04/01/2014
-[   11.762433] RIP: 0010:xfs_trans_brelse+0x1c/0x1b0
-[   11.762668] Code: 90 90 90 90 90 90 90 90 90 90 90 90 90 90 0f 1f
-44 00 00 55 48 89 e5 41 55 41 54 49 89 f4 53 48 89 fb e8 e7 b3 4c ff
-48 85 db <4d> 8b ac 24 e0 00 00 00 0f 84 5b 01 00 00 e8 d1 b3 4c ff 66
-90 e8
-[   11.763497] RSP: 0018:ffffa91541c07ab0 EFLAGS: 00010246
-[   11.763746] RAX: 0000000000000000 RBX: 0000000000000000 RCX: ffffffff939e5529
-[   11.764071] RDX: ffff8d01062b3f80 RSI: 0000000000000000 RDI: 0000000000000000
-[   11.764398] RBP: ffffa91541c07ac8 R08: ffff8d01062b3f80 R09: 0000000000000000
-[   11.764725] R10: 000000006f6c2820 R11: 0000000020534658 R12: 6043be0fbf88a07d
-[   11.765049] R13: 00000000ffffff8b R14: 6043be0fbf88a07d R15: ffff8d0101db2000
-[   11.765375] FS:  00007f06d7a5ee40(0000) GS:ffff8d013ed00000(0000)
-knlGS:0000000000000000
-[   11.765742] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[   11.766009] CR2: 000000000070bdb4 CR3: 0000000006396006 CR4: 0000000000770ee0
-[   11.766336] PKRU: 55555554
-[   11.766467] Call Trace:
-[   11.766590]  <TASK>
-[   11.766706]  xfs_btree_del_cursor+0x45/0x120
-[   11.766918]  xfs_imap_lookup+0x190/0x2d0
-[   11.767111]  ? kmem_cache_alloc+0x17e/0x330
-[   11.767319]  xfs_imap+0x35a/0x4c0
-[   11.767486]  xfs_iget+0x4c7/0x10f0
-[   11.767662]  xfs_mountfs+0x776/0xe00
-[   11.767837]  xfs_fs_fill_super+0x9ee/0xdc0
-[   11.768037]  get_tree_bdev+0x22b/0x350
-[   11.768217]  ? __pfx_xfs_fs_fill_super+0x10/0x10
-[   11.768439]  xfs_fs_get_tree+0x22/0x30
-[   11.768621]  vfs_get_tree+0x35/0x130
-[   11.768797]  path_mount+0xc64/0x1110
-[   11.768973]  __x64_sys_mount+0x19a/0x1f0
-[   11.769164]  do_syscall_64+0x59/0x90
-[   11.769348]  ? syscall_exit_to_user_mode+0x30/0x60
-[   11.769576]  ? do_syscall_64+0x69/0x90
-[   11.769757]  entry_SYSCALL_64_after_hwframe+0x72/0xdc
-[   11.769998] RIP: 0033:0x7f06d6ce948a
-[   11.770168] Code: 48 8b 0d 11 fa 2a 00 f7 d8 64 89 01 48 83 c8 ff
-c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 44 00 00 49 89 ca b8 a5 00 00
-00 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d de f9 2a 00 f7 d8 64 89
-01 48
-[   11.770999] RSP: 002b:00007fffdcf3fae8 EFLAGS: 00000206 ORIG_RAX:
-00000000000000a5
-[   11.771345] RAX: ffffffffffffffda RBX: 0000559716172060 RCX: 00007f06d6ce948a
-[   11.771674] RDX: 0000559716174740 RSI: 0000559716173f40 RDI: 000055971617b2a0
-[   11.772000] RBP: 0000000000000000 R08: 0000000000000000 R09: 0000000000000020
-[   11.772352] R10: 00000000c0ed0000 R11: 0000000000000206 R12: 000055971617b2a0
-[   11.772696] R13: 0000559716174740 R14: 0000000000000000 R15: 00000000ffffffff
-[   11.773022]  </TASK>
-[   11.773130] Modules linked in:
-[   11.773303] ---[ end trace 0000000000000000 ]---
-[   11.773601] RIP: 0010:xfs_trans_brelse+0x1c/0x1b0
-[   11.773825] Code: 90 90 90 90 90 90 90 90 90 90 90 90 90 90 0f 1f
-44 00 00 55 48 89 e5 41 55 41 54 49 89 f4 53 48 89 fb e8 e7 b3 4c ff
-48 85 db <4d> 8b ac 24 e0 00 00 00 0f 84 5b 01 00 00 e8 d1 b3 4c ff 66
-90 e8
-[   11.774693] RSP: 0018:ffffa91541c07ab0 EFLAGS: 00010246
-[   11.774977] RAX: 0000000000000000 RBX: 0000000000000000 RCX: ffffffff939e5529
-[   11.775313] RDX: ffff8d01062b3f80 RSI: 0000000000000000 RDI: 0000000000000000
-[   11.775654] RBP: ffffa91541c07ac8 R08: ffff8d01062b3f80 R09: 0000000000000000
-[   11.775979] R10: 000000006f6c2820 R11: 0000000020534658 R12: 6043be0fbf88a07d
-[   11.776307] R13: 00000000ffffff8b R14: 6043be0fbf88a07d R15: ffff8d0101db2000
-[   11.776636] FS:  00007f06d7a5ee40(0000) GS:ffff8d013ed00000(0000)
-knlGS:0000000000000000
-[   11.777003] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[   11.777269] CR2: 000000000070bdb4 CR3: 0000000006396006 CR4: 0000000000770ee0
-[   11.777595] PKRU: 55555554
-============
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBAgAGBQJWnnGuAAoJEN0TPTL+WwQfM3sP/1VRTdBss1oIFirNs52Tpsyl
+KmZBC5tPP7u+x9KWSQIClCRQcMHV09b5fvFnf7F86tNtFd/7Fhh6OpVQ9gpENpw1
+enYDmDixD5eNJCpTiLAAoKznrvN/PmiFYcuQbCI9nxnEZUb46Ocw0WYQNm6PC9w2
+wHj6oKfAOBCn0nmHZL7mHygRQeJdrufWFWBvx2aJyU+9a/TMAZ58iegj/ymW9V3L
+7+FZMEcEuKDEHf7z06NNAbS+tjJb0DoYoEUxXL8ZvX2P813hr5uoZarXa0wVVNCS
+gfcLPET2UKSlzP88vQyypKWVExofWr7s1VLH93x6CCvqpvoizVRIoDOMNPKUZSMB
+2rTPTT9Z+Dr/c7o84Q2Tan9Yu6+8fd6fasGt7T0tTvOzlhXHFJNpnPriHiTOJBlV
++T2WD8CE7q7uWog+GaxL4Fc5JgHLwF6q1aZVWYcgyDakRRP1SeuajEydSuxcq+EY
+gkNlX6k902JTNjoa3IYcQwe2Kv3zZ7avpbq8LxlyhKo0+FNst2xpaZS0KFIna9cs
+Jiblnrw1E3of8XaZnNObLkNXfDvBanMhf/VTuzxKe1MxvWAzuo9iILLx9U+I8pHU
+H5m5d8/qNlzclcB9atghb15AvMe2ddB997+U8rbhDHV7aqkzwTj0vy0+2tsRwYJ4
+yoXLJL9V6CQzYYdprvlI
+=T2Vb
+-----END PGP SIGNATURE-----
