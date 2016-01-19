@@ -1,47 +1,84 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/10/5
-Message-ID: <575AD7A7.8090302@redhat.com>
-Date: Fri, 10 Jun 2016 15:07:19 +0000
-From: Tristan Cacqueray <tdecacqu@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: CVE request for vulnerability in OpenStack Neutron
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/19/15
+Message-ID: <569E8400.2090107@gmail.com>
+Date: Wed, 20 Jan 2016 02:44:16 +0800
+From: Pray3r <pray3r.z@...il.com>
+To: Dan Rosenberg <dan.j.rosenberg@...il.com>, oss-security@...ts.openwall.com
+Subject: Re: CVE-2015-8088: Heap Overflow Vulnerability in the HIFI Driver of Huawei Smart Phone
 Content-Type: text/plain; charset=utf-8
 
-A vulnerability was discovered in OpenStack (see below). In order to
-ensure full traceability, we need a CVE number assigned that we can
-attach to further notifications. This issue is already public, although
-an advisory was not sent yet.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
 
-Title: Neutron IPTables firewall anti-spoof protection bypass
-Reporter: Romain Aviolat (Nagravision) and
-          Dustin Lundquist (Blue Box Group, Inc)
-Products: Neutron
-Affects: <=7.0.4, >=8.0.0 <=8.1.0
+I reviewed the code(ioremap()) in kernel[1], found get_vm_area_node()
+called ioremap(), and the function always allocate a guard PAGE_SIZE
+page.You are right. ;-)
 
-Description:
-Romain Aviolat from Nagravision and Dustin Lundquist from
-Blue Box Group, Inc independently reported vulnerabilities in Neutron
-anti-spoof protection. By forging DHCP discovery messages or non-IP
-traffic, such as ARP or ICMPv6, an instance may spoof IP or MAC source
-addresses on attached networks resulting in denial of services and/or
-traffic interception. Moreover when L2population isn't used, other
-tenants attached to a shared network are also vulnerable. Neutron
-setups using the IPTables firewall driver are affected.
+Thanks for your pointing.
 
-References:
-https://bugs.launchpad.net/bugs/1502933 (icmpv6)
-https://bugs.launchpad.net/bugs/1558658 (mac, dhcp)
-
-Note:
-The dhcp fix has been included in the 8.0.0 release and this
-request probably needs more than one CVE.
-
-Thanks in advance,
-
---
-Tristan Cacqueray
-OpenStack Vulnerability Management Team
+[1]. http://lxr.free-electrons.com/source/mm/vmalloc.c#L1351
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+On 15/12/18 07:06, Dan Rosenberg wrote:
+> Comments inline below.
+> 
+> On 12/12/2015 09:51 AM, Pray3r wrote:
+> 
+>> First, with a large value set to para.para_size, the smart phone 
+>> will break down because of heap overflow inside kernel space. 
+>> Second, this vulnerability could be used as a kernel information 
+>> disclosure if para.para_in points to kernel objects and the
+>> exploit is wrapped with heap fengshui technique.  Third,
+>> sophisticated exploitation methodology such as heap spray of
+>> thread_info published by Keen Team, an attacker could build a
+>> workable exploit gaining the root privilege of the smart phone.
+> 
+> If para.para_in points to a kernel object, the copy_from_user()
+> call will gracefully fail due to the access_ok() check, so there is
+> no possibility for an information leak like you described. Heap
+> fengshui has nothing to do with it.
+> 
+> The thread_info struct is allocated using the alloc_pages() buddy 
+> allocator, which is different from ioremap(), so this technique
+> does not apply here.
+> 
+> Finally, this bug is most likely not exploitable at all (beyond a
+> local DoS), because ioremap() pages are followed by a guard page,
+> meaning your heap overflow would cause a kernel fault/panic before
+> overwriting anything that could be used to violate kernel
+> integrity.
+> 
+>> Security is a bitch!
+> 
+> True.
+> 
+>> |=-----------------------------------------------------------------=|
+>>
+>> 
+|=-----=[ D O   N O T   F U C K   W I T H   A   H A C K E R ]=-----=|
+>> |=-----------------------------------------------------------------=|
+>
+>> 
+> Sorry for fucking with a hacker, Dan
+> 
+
+- -- 
+Security is a bitch!
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG/MacGPG2 v2.0
+Comment: GPGTools - https://gpgtools.org
+
+iQIcBAEBCgAGBQJWnoQAAAoJEM+cWi9WgY1efBQP/3KwwT+Ap1HoobbGVun6LnHn
+khf0XOhLthXnXIK15iWDihhv+vMNZiXs8htPHBLBtODSTYAmiwBEb2MexQwNGfnW
+ioTzzM1kdhfPyrZiV12gX26/VXWq1vg3gYcRDdGxuGyXJZmsr1QwUXUj5DAdt9X1
+cjWtlw3ZgvSMVBvt0eRomHV+ATkVuPoaGgNpEJMaM0zYH7s5RC9IkevAq64GXsWp
+v2OuuvQK75Qxu13Fvp2tO3+9OemuscnNt7FxYvhh410ExeydFbczACAZvZeD382i
+DGbCq3DwAyTRcY2gqghRNnOnnQyzn3ZrOoDBrCI2pqIj6Gjnvsqli0O27JfeukqS
+juadFPXPnt/kM/BKAkzhn9Z0+98iII2ucnj07evmBiasG7HVw2J/XMX6AOpZ4yjI
+XElX8xW7qOAYUMcb0nPNB5ZdrDHvLf2BMbZszFwra+l+ltyT3AyfSaRmzqfRL492
+eEI1uzdYquKCGqf4RrsqHQ2my7K9t75AyLh0EZYZ2iYTVjJ5A1VFsub/FBWI3fLo
+jzmmweP4sTiIMCT7lcNMtBIslCdiMp3m+ECNCFwWkMVMVw4NzBoov+apBzAwRPVj
+aAR3YZED4G/K5Sanp7NyEagLKH+fmUqca8bsz7sdM1bnMk3z7fxBdslAfCJgk5vt
+/lz/7QCz0b/Z5kNNWWG0
+=BrNh
+-----END PGP SIGNATURE-----
