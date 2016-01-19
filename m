@@ -1,58 +1,88 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/18/5
-Message-ID: <CAP145pg=8HG5oAJqBTY71pVCEBsqACFeN3DV35ANjckixNhyCA@mail.gmail.com>
-Date: Sun, 18 Sep 2016 15:23:32 +0200
-From: Robert Święcki <robert@...ecki.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request - openjpeg null ptr dereference
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/19/1
+Message-ID: <20160119083335.GD24547@suse.de>
+Date: Tue, 19 Jan 2016 09:33:36 +0100
+From: Johannes Segitz <jsegitz@...e.com>
+To: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Security bugs in Linux kernel sound subsystem
 Content-Type: text/plain; charset=utf-8
 
 Hi,
 
-2016-09-18 14:41 GMT+02:00 vul@...safe <vul@...safe.com>:
-> # Vulnerability
+Dmitry Vyukov reported a series of kernel bugs in ALSA core that have been
+triggered by syzkaller fuzzer. These can allow a user to DoS the system.
 
-Would you have an idea who (and how) is exactly *vulnerable* to this
-specific vulnerability?
+Please assign CVEs to the issues listed below. Thanks.
 
-> openjpeg null ptr dereference in convert.c:1331
->
-> # Version
-> 2.1.1  ( http://www.openjpeg.org/ )
->
-> # Address Sanitizer Output
-> ASAN:SIGSEGV
-> =================================================================
-> ==7358==ERROR: AddressSanitizer: SEGV on unknown address 0x00000000 (pc
-> 0x0815d204 bp 0xff846938 sp 0xff846380 T0)
->     #0 0x815d203 in skip_white
-> /home/starlab/fuzzing/openjpeg/src/bin/jp2/convert.c:1331
->     #1 0x8135d81 in main
-> /home/starlab/fuzzing/openjpeg/src/bin/jp2/opj_compress.c:1723
->     #2 0xf7343636 in __libc_start_main ??:?
->     #3 0x807a31b in _start ??:?
->
-> # PoC
-> See poc.ppm
->
-> # Analysis
-> In convert.c:1483 and convert.c:1485, variable s is uncheck after
-> skip_int is called.
-> A null ptr will be passed to skip_int again and will cause a null ptr
-> dereference.
->
-> # Report Timeline
-> 2016-09-16: FB3F15 of STARLAB discovered this issue
-> 2016-09-18:Patch released
->
-> # Credit
-> FB3F15 of STARLAB
->
-> # PoC
-> https://github.com/STARLABSEC/pocs/raw/master/openjpeg-nullptr-github-issue-842.ppm
->
-> # External link
-> https://github.com/uclouvain/openjpeg/issues/843
+(the link
+http://lkml.kernel.org/r/CACT4Y+borJj9XYEtXzLUbH9gUipPi9TQaj_O8Sw3tNUvFODPZA@mail.gmail.com
+is dead, 
+http://www.spinics.net/lists/alsa-devel/msg45102.html should contain the
+information)
 
+----- Forwarded message from Takashi Iwai -----
+
+- NULL dereference via ALSA sequencer access:
+  http://lkml.kernel.org/r/CACT4Y+auYVVmKL37ijBWamQQ7zGKVVFHemyAiELW5DC0Fz7V3g@mail.gmail.com
+  ('sound: GPF in snd_seq_fifo_clear')
+
+  The fix is on Linus tree,
+  commit 030e2c78d3a91dd0d27fef37e91950dde333eba1
+    ALSA: seq: Fix missing NULL check at remove_events ioctl
+
+- Race at ALSA sequencer timer setup and close:
+  http://lkml.kernel.org/r/CACT4Y+borJj9XYEtXzLUbH9gUipPi9TQaj_O8Sw3tNUvFODPZA@mail.gmail.com
+  ('sound: use-after-free in snd_timer_stop')
+
+  The fix is on Linus tree,
+  commit 3567eb6af614dac436c4b16a8d426f9faed639b3
+    ALSA: seq: Fix race at timer setup and close
+
+- Race among ALSA timer ioctls:
+  this is triggered by a few different fuzzer cases, and involved with
+  multiple fix commits.
+
+  http://lkml.kernel.org/r/CACT4Y+ZrVvE3dgcYHRdHDG0X316VgC-=pr2U-233vVn_QbHZHw@mail.gmail.com
+  ('sound: use-after-free in snd_timer_interrupt')
+
+  http://lkml.kernel.org/r/CACT4Y+bC5FMVFuk1VcqVtMyqvDyeKN4NrdxV+5eX93_Zr8L63Q@mail.gmail.com
+  ('sound: GPF in snd_timer_user_params')
+
+  http://lkml.kernel.org/r/CACT4Y+akV9XyDC_kmBQZV-26Py13E6sYASXaP4GKLNbRh6nZnA@mail.gmail.com
+  ('sound: use-after-free in snd_timer_user_ioctl')
+
+  The fixes are the following commits on Linus tree,
+  ee8413b01045c74340aa13ad5bdf905de32be736
+    ALSA: timer: Fix double unlink of active_list
+
+  af368027a49a751d6ff4ee9e3f9961f35bb4fede
+    ALSA: timer: Fix race among timer ioctls
+
+  b5a663aa426f4884c71cd8580adae73f33570f0d
+    ALSA: timer: Harden slave timer list handling
+
+- Deadlock at ALSA hrtimer concurrent accesses:
+  http://lkml.kernel.org/r/CACT4Y+a3YzyNbgeeg2Dr2dDcUtP+=D6DxQ7Dkjn-+rEXEAP5vw@mail.gmail.com
+  ('sound: spinlock lockup in sound/core/timer.c')
+
+  Further tracked at the thread
+  http://lkml.kernel.org/r/CACT4Y+YPVUCTenSZjLfMf08NHJm1u3--Qm6a32oTdCmxUGkC0Q@mail.gmail.com
+
+  The fix is in sound git tree for-linus branch, will send a pull
+  request in a couple of days:
+  git://git.kernel.org/pub/scm/linux/kernel/git/tiwai/sound.git
+  
+  commit 2ba1fe7a06d3624f9a7586d672b55f08f7c670f3
+    ALSA: hrtimer: Fix stall by hrtimer_cancel()
+
+
+----- End forwarded message -----
+
+Johannes
 -- 
-Robert Święcki
+GPG Key E7C81FA0       EE16 6BCE AD56 E034 BFB3  3ADD 7BF7 29D5 E7C8 1FA0
+Subkey fingerprint:    250F 43F5 F7CE 6F1E 9C59  4F95 BC27 DD9D 2CC4 FD66
+SUSE Linux GmbH, GF: Felix Imendörffer, Jane Smithard, Graham Norton
+HRB 21284 (AG Nürnberg)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
