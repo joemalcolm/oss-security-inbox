@@ -1,4 +1,9 @@
-Received: (qmail 32049 invoked by uid 550); 10 Nov 2024 19:39:20 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1814" "Tuesday" "19" "January" "2016" "13:55:31" "-0700" "Kurt Seifried" "kseifried@redhat.com" "<CANO=Ty01JdpAZ8rtXhrOyzZ7EKCV65kzkVQid4420Q6K3mhugw@mail.gmail.com>" "54" "[oss-security] Re: CVE for node.js websockets (ws)" "^Cc:" nil nil "1" "2016011920:55:31" "[oss-security] Re: CVE for node.js websockets (ws)" (number mark "        kseifried@re Jan 19   54/1814  " thread-indent "\"[oss-security] Re: CVE for node.js websockets (ws)\"\n") "<20160112083910.313881BE690@smtpvbsrv1.mitre.org>" ("<CANO=Ty2__zBT=MeY=6mQaepEM1vr=igkrmeZkX3XM5pwttEbEg@mail.gmail.com>" "<20160112083910.313881BE690@smtpvbsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 9305 invoked by uid 550); 19 Jan 2016 20:55:44 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,75 +11,85 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 13540 invoked from network); 10 Nov 2024 18:42:25 -0000
-Authentication-Results: ext-mx-out011.mykolab.com (amavis);
- dkim=pass (2048-bit key) reason="pass (just generated, assumed good)"
- header.d=kolabnow.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kolabnow.com; h=
-	in-reply-to:content-disposition:content-type:content-type
-	:mime-version:references:message-id:subject:subject:from:from
-	:date:date:received:received:received; s=dkim20240523; t=
-	1731264135; x=1733078536; bh=bZHgMjy1KdcrPyeqf8l4b5boLwy5lDGFcnF
-	4oqJdj1I=; b=BnjUi5Tmn6SnuHy/wOsNEmGRc+FqTA8cI/B/7IeJMZu4tByRqk5
-	/3qqpKVSH4qJeZmPN7KKXokOYRux6xWEyquloXVo7nv/njd0i9cH7IJk7wf2L00W
-	exL4Bnz59W/gXBxDIC2F7KV6rCCPhL81iAyXtDbICSe83iIRLAzuvxwyxiHzwFW0
-	bT6O1gJWKW9/9ccz1mXuN/HkSGWxuWDCHGUiBjoL/7WPnf1gunhtqciUqRXMHfoW
-	7XSVRD1zxqJMqFKzKrupRdi6pSOL4R3wDGj+W+yQqcJkpaPea1JzSxhRIoEA9eXN
-	cbE6qXhlF3gEV6xnVs+AcCDrhBNb/e/ccOg==
-X-Virus-Scanned: amavis at mykolab.com
-Date: Sun, 10 Nov 2024 19:42:13 +0100
-From: Fay Stegerman <flx@obfusk.net>
-To: oss-security@lists.openwall.com
-Message-ID: <ZzD-hesVF30H4dLW@nihonium>
-References: <20241106041215.GA4432@openwall.com>
- <CAGUWgD_T4vUhBfkmjm+8ELcuiOD9dx1vSC4HnKG88Py7ip+zPw@mail.gmail.com>
- <CABEVAa0+EE0M3Q2wwpOSX0-VCw95xSjZV-1S4u7hSYY9K=YK7w@mail.gmail.com>
- <21a818cc-d665-43a7-8ff0-c23769f6da04@gentoo.org>
+Received: (qmail 9284 invoked from network); 19 Jan 2016 20:55:44 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=ToB29fSqJRj7x/HWCrDgkDigbDLsjXRR12tmmcUGbBw=;
+        b=XLmr2vCcCs0tPZVnRMs086w5vvDefJqE2Unw2peFTAGpJ+UVVkPIkZMi3iSMSx9iYg
+         w+qHuEBiJlqZ8uG3BoX80Q9YeB7JAv8uM+IH5lqNO/hlI3u5PxhY9rUXyn39VHI7ZeLQ
+         zRWkbg8vHtKUzcAkwEyESWaixy/d5maTgLMVK5OkWMCqCoUR7V/48ZnQTfxXenCTprSw
+         gp2HrbLPziLBxrBaezWoWShmR8mC7QOrLcaHawhbEc5UYPJuKB8eIIFcdcXhh+fjpgUI
+         lQAufenbYAOh9xlDhc0fvhPqCZlZKa7vwmC2pCB50vgaTJ7uRZU6iYmJFLoloehBhcRe
+         6j1Q==
+X-Gm-Message-State: ALoCoQkbF8Mnp8pjL3p1BDwHGdrTruSUsTe/GDAmHxfwBnHbu92y44HuWOSKLmGeCgLkkaLT3UZmQfdSJhlhlu7I07YGu/SiDb4V+Vi5Gg0CNkDaNNf7t9g=
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <21a818cc-d665-43a7-8ff0-c23769f6da04@gentoo.org>
-Subject: Re: [oss-security] shell wildcard expansion (un)safety
+X-Received: by 10.37.29.194 with SMTP id d185mr9042153ybd.109.1453236932019;
+ Tue, 19 Jan 2016 12:55:32 -0800 (PST)
+In-Reply-To: <20160112083910.313881BE690@smtpvbsrv1.mitre.org>
+References: <CANO=Ty2__zBT=MeY=6mQaepEM1vr=igkrmeZkX3XM5pwttEbEg@mail.gmail.com>
+	<20160112083910.313881BE690@smtpvbsrv1.mitre.org>
+Message-ID: <CANO=Ty01JdpAZ8rtXhrOyzZ7EKCV65kzkVQid4420Q6K3mhugw@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=001a11428d0e1bc3500529b6176e
+Cc: oss-security <oss-security@lists.openwall.com>
+Date: Tue, 19 Jan 2016 13:55:31 -0700
+From: Kurt Seifried <kseifried@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: CVE for node.js websockets (ws)
+To: CVE ID Requests <cve-assign@mitre.org>
 
-* Eli Schwartz <eschwartz@gentoo.org> [2024-11-10 00:59]:
-[...]
-> Overall, wildcards are just a classic "here is a programming language
-> footgun, we cannot fix it because the language is backwards compatible
-> to the 90s and earlier" which amounts to:
+--001a11428d0e1bc3500529b6176e
+Content-Type: text/plain; charset=UTF-8
+
+Ping, is there a CVE for this yet?
+
+On Tue, Jan 12, 2016 at 1:39 AM, <cve-assign@mitre.org> wrote:
+
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA256
 >
-> people love bash because it's "simple" and "easy" and "anyone can write
-> a bash script without knowing what they are doing".
-[...]
+> > CVE-PENDING - Credit: Feross Aboukhadijeh / Mathias Buss
+>
+> > If not who is sitting on it?
+>
+> In our experience, the string "CVE-PENDING" has little or no
+> correlation with whether anyone has done any type of CVE request.
+>
+> We'll interpret it as a new request to MITRE unless someone else
+> happens to have received a request.
+>
+> - --
+> CVE assignment team, MITRE CVE Numbering Authority
+> M/S M300
+> 202 Burlington Road, Bedford, MA 01730 USA
+> [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1
+>
+> iQIcBAEBCAAGBQJWlLsuAAoJEL54rhJi8gl5i4EQAKA7AGwYRYJDipd7vpWlnaqb
+> Wv7BkC2i1oDLUbb9xQX9AMTGyQD90Q0XP72EUeSqDUHNRAXobcAavVRmbk14Hib3
+> TqL/ckDnwWpXMgRyyyhVTLkr4ajl/T0B+QgAN4UhE5ts0YPqeJnWK2ZTxl+yfYny
+> KYhOH3bIQEEuH77XjzsN9dZAI/UnupQRAGFzwGVI4HngxUz2RQdCDrIe0Vk5L/+V
+> bL34Gm0h4Ij4/K15FS4DGeuYHTKtBM1uPHt9DKDdqkjy9YxYm3gX4ALh3dtKesnf
+> vScCIXXs1M5XGM4oREinaDLwN1ZqV29xzpQ6NWfVPZ/eADLHwRVLCtk/nK/IDeUp
+> SAqgWYpCXZluq3KNJLbIwlk9Cw4NpBdzqq3QC2ey5Hy4Dznix+Qq0hXjAzRq/3KB
+> ZXqXgQhtcpnWTaOF9j4823UzZtDHY+UbpIkGv/BstWxtaFOwWCLA9pcuhj2VoUal
+> voHIJiObb9ji325bD2jsQadmAMGG2tDVU8HkvVXmyCmz28b3jyw0/BoAWcUWfyRa
+> qy17X1WGUkWVR3UbW69qMgv5zD+dwv2cZHbP1urylgxVO15mPqwuhSwRjP1DuJU2
+> HXZNp3F3oU6y3Zf+9dwaC1vThDlrM/qq731sh/b3A7DAftpXAjkbHzCOwziM/rcs
+> 8dm8oDFJmGuW1J/mkWaI
+> =mvzn
+> -----END PGP SIGNATURE-----
+>
 
-Obviously, shell scripts and wildcards are one of the easiest ways to trip up
-here.  But the underlying issue is that CLI interfaces mix options and
-arguments: the lack of a clean separation between data and code/commands
-(another example is e.g. printing unescaped control characters to stdout,
-something discussed on this list before, and far too common IME, as I recently
-found out playing with control characters in X.509 certificate DNs).
 
-This isn't just a shell problem, it's just that shell scripts call external
-programs much more frequently.  I certainly don't call external tools like grep
-or find from Python the way I do in shell scripts, but it's not exactly uncommon
-to have to call some external program (e.g. git) to do something.
 
-And when I do I always make sure to use "--" before any arguments that come from
-external sources (user, filesystem) to ensure they're not interpreted as
-options, because that problem isn't limited to shell scripts (and for shell
-scripts shellcheck can at least provide warnings in common cases).
+-- 
 
-Nor is it limited to wildcards: e.g. you would have the exact same problem if
-you're reading the arguments as lines from a file instead, or getting them from
-an HTTP request.  The real problem isn't that a wildcard can expand to things
-that start with dashes, the problem is that it matters because the program
-receiving the arguments will interpret those as options.  That's the footgun.
+--
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@redhat.com
 
-Everything that deals with data from external sources and passes it to something
-that may interpret some of that data as code/commands has to
-validate/sanitise/escape that data.  Ideally one would use an interface that
-doesn't mix data and code/commands, which "--" more or less provides (but it's
-easy to forget, and of course not all programs support it).
-
-- Fay
+--001a11428d0e1bc3500529b6176e--
