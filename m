@@ -1,89 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/29/4
-Message-ID: <CAC9YFzc4t0yBuKuZP_7=ciMba2ML0UmnRvJ8O+L+4oeTFKMGYQ@mail.gmail.com>
-Date: Mon, 29 Feb 2016 19:31:20 +0000
-From: Rafael Mendonça França <rafaelmfranca@...il.com>
-To: "rubyonrails-security@...glegroups.com" <rubyonrails-security@...glegroups.com>, security@...e.de,  "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>,  "ruby-security-ann@...glegroups.com" <ruby-security-ann@...glegroups.com>
-Subject: [CVE-2016-2097] Possible Information Leak Vulnerability in Action View.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/19/3
+Message-ID: <5e818bea.124fe.15259ebc9f3.Coremail.xiaoqixue_1@163.com>
+Date: Tue, 19 Jan 2016 20:46:10 +0800 (CST)
+From: xiaoqixue_1  <xiaoqixue_1@....com>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: Re:Re: Buffer Overflow in lha compression utility
 Content-Type: text/plain; charset=utf-8
 
-Possible Information Leak Vulnerability in Action View.
 
-There is a possible directory traversal and information leak vulnerability in
-Action View. This was meant to be fixed on CVE-2016-0752. However the
-3.2 patch was not covering
-all the scenarios. This vulnerability has been assigned the CVE identifier
-CVE-2016-2097.
 
-Versions Affected:  3.2.x, 4.0.x, 4.1.x
-Not affected:       4.2+
-Fixed Versions:     3.2.22.2, 4.1.14.2
+an out of bound read is found in libdwarf -20151114.
 
-Impact
-------
-Applications that pass unverified user input to the `render` method in a
-controller may be vulnerable to an information leak vulnerability.
+please see attachment for poc. the result of valgrind as follows:
 
-Impacted code will look something like this:
+==============================
+===========================
 
-```ruby
-def index
-  render params[:id]
-end
-```
+*** DWARF CHECK: DW_DLE_DEBUG_FRAME_LENGTH_NOT_MULTIPLE
+len=0x00000010, len size=0x00000004, extn size=0x00000000, totl
+length=0x00000014, addr size=0x00000008, mod=0x00000004 must be zero
+in cie, offset 0x00000000. ***
+7   ==53495== Invalid read of size 2
+  1 ==53495==    at 0x4C2F7E0: memcpy@@GLIBC_2.14 (in
+/usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+  2 ==53495==    by 0x43287F: dwarf_read_cie_fde_prefix (dwarf_frame2.c:934)
+  3 ==53495==    by 0x431305: _dwarf_get_fde_list_internal (dwarf_frame2.c:268)
+  4 ==53495==    by 0x42EB5F: dwarf_get_fde_list_eh (dwarf_frame.c:1101)
+  5 ==53495==    by 0x41BABE: print_frames (print_frames.c:1835)
+  6 ==53495==    by 0x40485B: process_one_file (dwarfdump.c:1323)
+  7 ==53495==    by 0x403529: main (dwarfdump.c:630)
+  8 ==53495==  Address 0x548b3c0 is 0 bytes inside a block of size 1 alloc'd
+  9 ==53495==    at 0x4C2AB80: malloc (in
+/usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+ 10 ==53495==    by 0x4E40600: ??? (in
+/usr/lib/x86_64-linux-gnu/libelf-0.158.so)
+ 11 ==53495==    by 0x4E40873: ??? (in
+/usr/lib/x86_64-linux-gnu/libelf-0.158.so)
+ 12 ==53495==    by 0x42A0E1: dwarf_elf_object_access_load_section
+(dwarf_elf_access.c:1230)
+ 13 ==53495==    by 0x437715: _dwarf_load_section (dwarf_init_finish.c:1072)
+ 14 ==53495==    by 0x42EAEB: dwarf_get_fde_list_eh (dwarf_frame.c:1096)
+ 15 ==53495==    by 0x41BABE: print_frames (print_frames.c:1835)
+ 16 ==53495==    by 0x40485B: process_one_file (dwarfdump.c:1323)
+ 17 ==53495==    by 0x403529: main (dwarfdump.c:630)
+ 18 ==53495==
 
-Carefully crafted requests can cause the above code to render files from
-unexpected places like outside the application's view directory, and can
-possibly escalate this to a remote code execution attack.
 
-All users running an affected release should either upgrade or use one of the
-workarounds immediately.
+The vulnerability is found by Qixue Xiao, at Tsinghua University.
 
-Releases
---------
-The FIXED releases are available at the normal locations.
 
-Workarounds
------------
-A workaround to this issue is to not pass arbitrary user input to the `render`
-method. Instead, verify that data before passing it to the `render` method.
 
-For example, change this:
 
-```ruby
-def index
-  render params[:id]
-end
-```
-
-To this:
-
-```ruby
-def index
-  render verify_template(params[:id])
-end
-
-private
-def verify_template(name)
-  # add verification logic particular to your application here
-end
-```
-
-Patches
--------
-To aid users who aren't able to upgrade immediately we have provided patches for
-it. It is in git-am format and consist of a single changeset.
-
-* 3-2-render_data_leak_2.patch - Patch for 3.2 series
-* 4-1-render_data_leak_2.patch - Patch for 4.1 series
-
-Credits
--------
-Thanks to both Jyoti Singh and Tobias Kraze from makandra for
-reporting this and working with us in the patch!
 
 Content of type "text/html" skipped
 
-Download attachment "4-1-render_data_leak_2.patch" of type "application/octet-stream" (9444 bytes)
-
-Download attachment "3-2-render_data_leak_2.patch" of type "application/octet-stream" (15632 bytes)
+Download attachment "awbug5.elf" of type "application/octet-stream" (7875 bytes)
