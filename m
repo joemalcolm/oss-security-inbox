@@ -1,69 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/05/2
-Message-ID: <CACn5sdT2CujMX9oP11jmEHxX-BTCP7O-soxSaf+DMb4SxX=z0w@mail.gmail.com>
-Date: Fri, 5 Aug 2016 13:57:28 -0300
-From: Gustavo Grieco <gustavo.grieco@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Read out-of-bounds parsing bash code in GNU Bash 4.3
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/19/11
+Message-ID: <569E7AA1.1040700@redhat.com>
+Date: Tue, 19 Jan 2016 19:04:17 +0100
+From: Florian Weimer <fweimer@...hat.com>
+To: oss-security@...ts.openwall.com, Assign a CVE Identifier <cve-assign@...re.org>
+Subject: CVE assignment request for security bugs fixed in glibc 2.23
 Content-Type: text/plain; charset=utf-8
 
 Hi,
 
-We recently found a read out-of-bounds parsing bash code in GNU Bash
-4.3. I tested this issue in Ubuntu 14.04.3 (x86_64) but other
-configurations could be affected. To reproduce:
+we are preparing the glibc 2.23 release upstream and have fixed the
+following security bugs which, to my best knowledge, lack public CVE
+assignment so far:
 
-1. Recompile bash with ASAN:
+Passing out of range data to strftime() causes a segfault
+https://sourceware.org/bugzilla/show_bug.cgi?id=18985
 
-  $ ./configure --without-bash-malloc CFLAGS="-fsanitize=address -g
--ggdb"  LDFLAGS="-fsanitize=address"
-  $ make
+Out-of-range time values passed to the strftime function may cause it to
+crash, leading to a denial of service, or potentially disclosure
+information.
 
-(using valgrind will *not* expose this issue)
+LD_POINTER_GUARD is not ignored for privileged binaries
+https://sourceware.org/bugzilla/show_bug.cgi?id=18928
 
-2. Execute:
+LD_POINTER_GUARD was an environment variable which controls
+security-related behavior, but was not ignored for privileged binaries
+(in AT_SECURE mode).  This might allow local attackers (who can supply
+the environment variable) to bypass intended security restrictions.
 
-$ echo 5RzxHp0o0qmZ | base64 -d | ./bash -n
+hcreate((size_t)-1) should fail with ENOMEM
+https://sourceware.org/bugzilla/show_bug.cgi?id=18240
 
-==27143== ERROR: AddressSanitizer: heap-buffer-overflow on address
-0x60040000b8b4 at pc 0x5614be bp 0x7fffffffcad0 sp 0x7fffffffcac8
-READ of size 4 at 0x60040000b8b4 thread T0
-...
+This is an integer overflow in hcreate and hcreate_r which can result in
+an out-of-bound memory access.  This could lead to application crashes
+or, potentially, arbitrary code execution.
 
-Using gdb we can obtain a clear backtrace:
+nan function unbounded stack allocation
+https://sourceware.org/bugzilla/show_bug.cgi?id=16962
 
-Program received signal SIGABRT, Aborted.
-0x00007ffff468fcc9 in __GI_raise (sig=sig@...ry=6) at
-../nptl/sysdeps/unix/sysv/linux/raise.c:56
-56    ../nptl/sysdeps/unix/sysv/linux/raise.c: No existe el archivo o
-el directorio.
-(gdb) bt
-#0  0x00007ffff468fcc9 in __GI_raise (sig=sig@...ry=6) at
-../nptl/sysdeps/unix/sysv/linux/raise.c:56
-#1  0x00007ffff46930d8 in __GI_abort () at abort.c:89
-#2  0x00007ffff4e66829 in ?? () from /usr/lib/x86_64-linux-gnu/libasan.so.0
-#3  0x00007ffff4e5d3ec in ?? () from /usr/lib/x86_64-linux-gnu/libasan.so.0
-#4  0x00007ffff4e64012 in ?? () from /usr/lib/x86_64-linux-gnu/libasan.so.0
-#5  0x00007ffff4e63121 in __asan_report_error () from
-/usr/lib/x86_64-linux-gnu/libasan.so.0
-#6  0x00007ffff4e5d704 in __asan_report_load4 () from
-/usr/lib/x86_64-linux-gnu/libasan.so.0
-#7  0x00000000005614be in ansic_wshouldquote (string=0x60040000b8d0
-"ҩ\231") at strtrans.c:317
-#8  0x000000000056152d in ansic_shouldquote (string=0x60040000b8d0
-"ҩ\231") at strtrans.c:344
-#9  0x0000000000440192 in report_syntax_error (message=0x0) at
-/usr/src/local/bash/bash-4.3-patched/parse.y:5763
-#10 0x000000000043f7ed in yyerror (msg=0x5bb440 "syntax error") at
-/usr/src/local/bash/bash-4.3-patched/parse.y:5637
-#11 0x000000000042cecd in yyparse () at y.tab.c:3417
-#12 0x0000000000423440 in parse_command () at eval.c:238
-#13 0x0000000000423547 in read_command () at eval.c:282
-#14 0x00000000004231aa in reader_loop () at eval.c:145
-#15 0x000000000041f03c in main (argc=3, argv=0x7fffffffdfa8,
-env=0x7fffffffdfc8) at shell.c:755
+A stack overflow (unbounded alloca) can cause applications which process
+long strings with the nan function to crash or, potentially, execute
+arbitrary code.
 
-This issue was found using QuickFuzz. Please assign a CVE if suitable.
+catopen() Multiple unbounded stack allocations
+https://sourceware.org/bugzilla/show_bug.cgi?id=17905
 
-Regards,
-Gustavo.
+A stack overflow (unbounded alloca) in the catopen function can cause
+applications which pass long strings to the catopen function to crash
+or, potentially execute arbitrary code.
+
+
+Several people have asked for CVE assignment for swbz#18928 on
+oss-security already.
+
+Thanks,
+Florian
