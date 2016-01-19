@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3375" "Tuesday" "26" "October" "2021" "20:05:36" "+0100" "Carlos Alberto Lopez Perez" "clopez@igalia.com" nil "73" "[oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2021-0006" nil nil nil "10" nil nil (number mark "U       clopez@igali Oct 26   73/3375  " thread-indent "\"[oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2021-0006\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2021-0006" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4525" "Tuesday" "19" "January" "2016" "15:06:51" "-0600" "Jeremy C. Reed" "jreed@isc.org" "<alpine.NEB.2.11.1601191505520.10673@t1.m.reedmedia.net>" "124" "[oss-security] CVE-2015-8704: Specific APL data could trigger an INSIST in apl_42.c causing BIND named to exit" nil nil nil "1" "2016011921:06:51" "[oss-security] CVE-2015-8704: Specific APL data could trigger an INSIST in apl_42.c causing BIND named to exit" (number mark "U       jreed@isc.or Jan 19  124/4525  " thread-indent "\"[oss-security] CVE-2015-8704: Specific APL data could trigger an INSIST in apl_42.c causing BIND named to exit\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 10185 invoked by uid 550); 26 Oct 2021 19:06:45 -0000
+Received: (qmail 20368 invoked by uid 550); 19 Jan 2016 21:50:21 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,98 +12,139 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 10135 invoked from network); 26 Oct 2021 19:06:44 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com; s=20170329;
-	h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:Message-ID:Subject:From:Cc:To; bh=n8302K4z6T6rcdZGbbCEjgz0tlprj692t12zHcRHg3k=;
-	b=N8xWjA1zejnGPLxmY+Wb9LfMTiXI1L66fLj6YliydLHVuRc3UKC4EOMkCzFszrpOcIlChajkOHWznXnOPX+u/aZQoQ8Su9WGGazzprzQSv+7ESYrVHQpI6C7gQCyEgds1a48s9W14y7sFrP1VNDlA8Y6UOq2OYHIdD7hSZlhYMRcaq6O6SQls3Q1uEYwpqBImgVSA+bfP241Ic8vGykhUQ2gzN5HOEvbImCzJtDvvIUEaZOnNnmVHlBlhHy3miUjcxRE0zJGBfJ84M0K/8Pwpvny3lNSXG1RbmI6qtOeWdvWXVYX8zeWzcSRN+mr8BVBqOOKOtYLpKo3cOZa4bcBjg==;
-To: webkit-gtk@lists.webkit.org, webkit-wpe@lists.webkit.org
-Cc: security@webkit.org, distributor-list@gnome.org,
- oss-security@lists.openwall.com, bugtraq@securityfocus.com
-From: Carlos Alberto Lopez Perez <clopez@igalia.com>
-Organization: Igalia S.L.
-Mail-Followup-To: webkit-gtk@lists.webkit.org, webkit-wpe@lists.webkit.org,
- security@webkit.org, distributor-list@gnome.org,
- oss-security@lists.openwall.com, bugtraq@securityfocus.com
-Message-ID: <03eb1900-5593-09ff-8814-008632c46c5c@igalia.com>
-Date: Tue, 26 Oct 2021 20:05:36 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.10.0
+Received: (qmail 22241 invoked from network); 19 Jan 2016 21:07:02 -0000
+Date: Tue, 19 Jan 2016 15:06:51 -0600 (CST)
+From: "Jeremy C. Reed" <jreed@isc.org>
+X-X-Sender: reed@t1.m.reedmedia.net
+To: oss-security@lists.openwall.com
+Message-ID: <alpine.NEB.2.11.1601191505520.10673@t1.m.reedmedia.net>
+User-Agent: Alpine 2.11 (NEB 23 2013-08-11)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 8bit
-Subject: [oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2021-0006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Subject: [oss-security] CVE-2015-8704: Specific APL data could trigger an INSIST in apl_42.c
+ causing BIND named to exit
 
-------------------------------------------------------------------------
-WebKitGTK and WPE WebKit Security Advisory                 WSA-2021-0006
-------------------------------------------------------------------------
+CVE:                   CVE-2015-8704
+Document Version:      2.0
+Posting date:          19 January 2016
+Program Impacted:      BIND
+Versions affected:     9.3.0->9.8.8, 9.9.0->9.9.8-P2,
+                       9.9.3-S1->9.9.8-S3, 9.10.0->9.10.3-P2
+Severity:              High
+Exploitable:           Remotely
 
-Date reported           : October 26, 2021
-Advisory ID             : WSA-2021-0006
-WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2021-0006.html
-WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2021-0006.html
-CVE identifiers         : CVE-2021-30846, CVE-2021-30848,
-                          CVE-2021-30849, CVE-2021-30851,
-                          CVE-2021-30858, CVE-2021-42762.
+Description:
 
-Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
+   A buffer size check used to guard against overflow could cause
+   named to exit with an INSIST failure In apl_42.c.
 
-CVE-2021-30846
-    Versions affected: WebKitGTK and WPE WebKit before 2.34.0.
-    Credit to Sergei Glazunov of Google Project Zero.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: A memory corruption issue was
-    addressed with improved memory handling.
+Impact:
 
-CVE-2021-30848
-    Versions affected: WebKitGTK and WPE WebKit before 2.32.4.
-    Credit to Sergei Glazunov of Google Project Zero.
-    Impact: Processing maliciously crafted web content may lead to code
-    execution. Description: A memory corruption issue was addressed with
-    improved memory handling.
+   A server could exit due to an INSIST failure in apl_42.c when
+   performing certain string formatting operations.  Examples include
+   (but may not be limited to):
 
-CVE-2021-30849
-    Versions affected: WebKitGTK and WPE WebKit before 2.32.4.
-    Credit to Sergei Glazunov of Google Project Zero.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
+    -  Slaves using text-format db files could be vulnerable if
+       receiving a malformed record in a zone transfer from their master.
 
-CVE-2021-30851
-    Versions affected: WebKitGTK and WPE WebKit before 2.34.0.
-    Credit to Samuel Groß of Google Project Zero.
-    Impact: Processing maliciously crafted web content may lead to code
-    execution. Description: A memory corruption vulnerability was
-    addressed with improved locking.
+    -  Masters using text-format db files could be vulnerable if
+       they accept a malformed record in a DDNS update message.
 
-CVE-2021-30858
-    Versions affected: WebKitGTK and WPE WebKit before 2.32.4.
-    Credit to an anonymous researcher.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Apple is aware of a report that this issue
-    may have been actively exploited. Description: A use after free
-    issue was addressed with improved memory management.
+    -  Recursive resolvers are potentially vulnerable when debug
+       logging, if they are fed a deliberately malformed record by
+       a malicious server.
 
-CVE-2021-42762
-    Versions affected: WebKitGTK and WPE WebKit before 2.34.1.
-    Credit to an anonymous reporter.
-    BubblewrapLauncher.cpp allows a limited sandbox bypass that allows a
-    sandboxed process to trick host processes into thinking the
-    sandboxed process is not confined by the sandbox, by abusing VFS
-    syscalls that manipulate its filesystem namespace. The impact is
-    limited to host services that create UNIX sockets that WebKit mounts
-    inside its sandbox, and the sandboxed process remains otherwise
-    confined. NOTE: this is similar to CVE-2021-41133.
+    -  A server which has cached a specially constructed record
+       could encounter this condition while performing 'rndc dumpdb'.
 
+Please Note:
 
-We recommend updating to the latest stable versions of WebKitGTK and WPE
-WebKit. It is the best way to ensure that you are running safe versions
-of WebKit. Please check our websites for information about the latest
-stable releases.
+   Versions of BIND from 9.3 through 9.8 are also affected, but
+   these branches are beyond their "end of life" (EOL) and no longer
+   receive testing or security fixes from ISC. For current information
+   on which versions are actively supported, please see
+   http://www.isc.org/downloads/.
 
-Further information about WebKitGTK and WPE WebKit security advisories
-can be found at: https://webkitgtk.org/security.html or
-https://wpewebkit.org/security/.
+CVSS Score:            6.8
+CVSS Vector:           (AV:N/AC:L/Au:S/C:N/I:N/A:C)
 
-The WebKitGTK and WPE WebKit team,
-October 26, 2021
+For more information on the Common Vulnerability Scoring System and
+to obtain your specific environmental score please visit:
+http://nvd.nist.gov/cvss.cfm?calculator&adv&version=2&vector=(AV:N/AC:L/Au:S/C:N/I:N/A:C)
+
+Workarounds:
+
+   None
+
+Active exploits:
+
+   No known active exploits.
+
+Solution:
+
+   Upgrade to the patched release most closely related to your
+   current version of BIND.  These can all be downloaded from
+   http://www.isc.org/downloads.
+
+    -  BIND 9 version 9.9.8-P3
+    -  BIND 9 version 9.10.3-P3
+
+   BIND 9 Supported Preview edition is a feature preview version
+   of BIND provided exclusively to eligible ISC Support customers.
+
+    -  BIND 9 version 9.9.8-S4
+
+Document Revision History:
+
+   1.0 Advance Notification 12 January 2016
+   2.0 Public Disclosure  19 January 2016
+
+Related Documents:
+
+   See our BIND9 Security Vulnerability Matrix at
+   https://kb.isc.org/article/AA-00913 for a complete listing of
+   Security Vulnerabilities and versions affected.
+
+If you'd like more information on ISC Subscription Support and
+Advance Security Notifications, please visit http://www.isc.org/support/.
+
+Do you still have questions?  Questions regarding this advisory
+should go to security-officer@isc.org.  To report a new issue,
+please encrypt your message using security-officer@isc.org's PGP
+key which can be found here:
+   https://www.isc.org/downloads/software-support-policy/openpgp-key/.
+If you are unable to use encrypted email, you may also report new
+issues at: https://www.isc.org/community/report-bug/.
+
+Note:
+
+   ISC patches only currently supported versions. When possible we
+   indicate EOL versions affected.  (For current information on
+   which versions are actively supported, please see
+   http://www.isc.org/downloads/).
+
+ISC Security Vulnerability Disclosure Policy:
+
+   Details of our current security advisory policy and practice can
+   be found here: https://kb.isc.org/article/AA-00861
+
+This Knowledge Base article: https://kb.isc.org/article/AA-01335
+is the complete and official security advisory document.
+
+Legal Disclaimer:
+
+   Internet Systems Consortium (ISC) is providing this notice on
+   an "AS IS" basis. No warranty or guarantee of any kind is expressed
+   in this notice and none should be implied. ISC expressly excludes
+   and disclaims any warranties regarding this notice or materials
+   referred to in this notice, including, without limitation, any
+   implied warranty of merchantability, fitness for a particular
+   purpose, absence of hidden defects, or of non-infringement. Your
+   use or reliance on this notice or materials referred to in this
+   notice is at your own risk. ISC may change this notice at any
+   time.  A stand-alone copy or paraphrase of the text of this
+   document that omits the document URL is an uncontrolled copy.
+   Uncontrolled copies may lack important information, be out of
+   date, or contain factual errors.
+
+(c) 2001-2016 Internet Systems Consortium
