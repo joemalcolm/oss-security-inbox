@@ -1,67 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/26/4
-Message-Id: <20160926054327.477DD6DCCBC@smtpvmsrv1.mitre.org>
-Date: Mon, 26 Sep 2016 01:43:27 -0400 (EDT)
-From: cve-assign@...re.org
-To: carnil@...ian.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: irssi: information disclosure vulnerabilit in buf.pl
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/19/9
+Message-ID: <CAL2OCeWit0or+55tkP3-1=Bp+=Sv-Cd5mUeBPqsinQwvZMmOgA@mail.gmail.com>
+Date: Tue, 19 Jan 2016 20:48:10 +0800
+From: Qixue Xiao <s2exqx@...il.com>
+To: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: Fwd: out of bound write in libdwarf -20151114
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+we found  an out of bound write in libdwarf -20151114.
 
-> An information disclosure vulnerability in the buf.pl script
-> 
-> https://irssi.org/2016/09/22/buf.pl-update/
-> https://bugs.debian.org/838762
-> https://github.com/irssi/scripts.irssi.org/commit/f1b1eb154baa684fad5d65bf4dff79c8ded8b65a
+we run it with valgrind , the result as follows:
 
->>> This patch sets a safer umask of 077 for the scrollbuffer dump, and will
->>> remove the temporary file after use to further reduce the attack surface.
+============================================
+$ valgrind ./dwarfdump -ka aw.elf
+==5358== Memcheck, a memory error detector
+==5358== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==5358== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
+==5358== Command: ../../llvm-codes/dwarf-20151114/dwarfdump/dwarfdump -ka aw.elf
+==5358==
+==5358== Invalid write of size 8
+==5358==    at 0x40DA25: get_abbrev_array_info (in
+/home/xqx/test/libdwarf-test/llvm-codes/dwarf-20151114/dwarfdump/dwarfdump)
+==5358==    by 0x40FD92: print_one_die_section (in
+/home/xqx/test/libdwarf-test/llvm-codes/dwarf-20151114/dwarfdump/dwarfdump)
+==5358==    by 0x40ED22: print_infos (in
+/home/xqx/test/libdwarf-test/llvm-codes/dwarf-20151114/dwarfdump/dwarfdump)
+==5358==    by 0x4050DE: process_one_file (in
+/home/xqx/test/libdwarf-test/llvm-codes/dwarf-20151114/dwarfdump/dwarfdump)
+==5358==    by 0x403C1B: main (in
+/home/xqx/test/libdwarf-test/llvm-codes/dwarf-20151114/dwarfdump/dwarfdump)
+==5358==  Address 0x541fc00 is 18,352 bytes inside an unallocated
+block of size 4,156,304 in arena "client"
+==5358==
 
->> Other users on the same machine may be able to retrieve the whole
->> window contents after /UPGRADE when the buf.pl script is loaded.
->> Furthermore, this dump of the windows contents is never removed
->> afterwards.
->>
->> Since buf.pl is also an Irssi core script and we recommended its use
->> to retain your window content, many people could potentially be
->> affected by this.
+please see the attachment for the bug elf.
 
->> buf.pl restores the scrollbuffer between upgrades by writing the
->> contents to a file, and reading that after the new process was
->> spawned. Through that file, the contents of (private) chat
->> conversations may leak to other users.
->>
->> Mitigating facts
->>
->> Careful users with a limited umask (e.g. 077) are not affected by this
->> bug.  However, most Linux systems default to a umask of 022, meaning
->> that files written without further restricting the permissions, are
->> readable by any user.
+the vulnerability is found by Qixue Xiao at Tsinghua University.
 
-Use CVE-2016-7553.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJX6LTCAAoJEHb/MwWLVhi2zq8P/jv2PkFRxBcw1jgDgBMydNuc
-+50A3BrF0Uj83eta6SaLs/oh794JIPBAK4oLo4qQ4y1wF/BTHHH3euawbh+OwTYU
-Uz2LN6tCne6lc/Aig0qdbzrTAYVaLiHX5q7LTP34N7yrVfxtKhoxN15wePu+i4I1
-uWmu7UfmowJrORf1hOQajrLtYXgowVpXFjCSju7ZedvM6vJ4yEUFym+UHh+Smasv
-tLfTDDdyvquKKdyKNKpbTYjvaS5YB109a4+doacyziBbnXH3PR8P97ZiNK6MrBs4
-dfwSV+gfdoTEAyHqg5k49G/EEWM5TgxIPz9ve5SZkTmKLQZ0irWEQOekeTy0Z2XL
-nkqu8Ns/mPMe0wP1yvo5NXo8m8aoPpvhuZBxdLU+oHPFM4USn3N00N23qx8Al7VG
-cYblMi1b/+w9gzGbV7JpyESDyf2e1eYMt96Lqi5Rv5WzOp0vLlFzJBDGn1fvr7ci
-QUldD1AMQ8eqkaYcNJ1tq+4uydDj/Vh8huc/HxDS02Bevma4Kx/xHriX8c7nS0Yp
-+gvhxU+xOK56M0Ab2JgcI/Q65He1O3VVrlbpIlPZRv8kPIn61IrYZSW0A25DcFcm
-eF8SKi8i1u9/kXZayDAve+aspQfaYwozABrqI5V+b3KHSs/jo/7JThMqk1/5g4XY
-oG0zGz58jhOzLNlu3Hgs
-=g0/I
------END PGP SIGNATURE-----
+Download attachment "aw.elf" of type "application/octet-stream" (7875 bytes)
