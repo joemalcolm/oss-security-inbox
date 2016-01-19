@@ -1,63 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/30/1
-Message-Id: <20160530020253.8412F6C0B16@smtpvmsrv1.mitre.org>
-Date: Sun, 29 May 2016 22:02:53 -0400 (EDT)
-From: cve-assign@...re.org
-To: bfriesen@...ple.dallas.tx.us
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: GraphicsMagick and ImageMagick popen() shell vulnerability via filename
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/19/2
+Message-ID: <1889645664.9659032.1453204718551.JavaMail.zimbra@redhat.com>
+Date: Tue, 19 Jan 2016 06:58:38 -0500 (EST)
+From: Wade Mealing <wmealing@...hat.com>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: Linux kernel: use after free in keyring facility.
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Gday,
 
-> if the first character of the file specification is
-> a '|', then the remainder of the filename is passed to the shell for
-> execution using the POSIX popen(3C) function
-> 
-> The simple solution to the problem is to disable the popen support
-> (HAVE_POPEN) in GraphicsMagick's magick/blob.c as is done by the
-> attached patch.
+It was reported that possible use-after-free vulnerability in keyring facility, possibly leading to local privilege escalation was found. The function join_session_keyring in security/keys/process_keys.c holds a reference to the requested keyring, but if that keyring is the same as the one being currently used by the process, the kernel wouldn't decrease keyring->usage before returning to userspace. The usage field can be overflowed causing use-after-free on the keyring object.
 
-Use CVE-2016-5118.
+This was introduced in commit 3a50597de8635cd05133bd12c95681c82fe7b878.
 
+Perception point reported this vulnerability to Red Hat and it has been assigned CVE-2016_0728.  
 
-> Previously supplied recommended patches for GraphicsMagick do
-> successfully block this attack vector in SVG and MVG.
+Red Hat Bugzilla flaw:
+ https://bugzilla.redhat.com/show_bug.cgi?id=1297475
 
-If there was a previous announcement of a vulnerability fix for a
-subset of the exploitation methodologies, then a separate CVE ID is
-also needed. The scope of CVE-2016-5118 is only the new "initial |
-character" information announced in the
-http://www.openwall.com/lists/oss-security/2016/05/29/7 post.
+Investigation:
+ http://perception-point.io/2016/01/14/analysis-and-exploitation-of-a-linux-kernel-vulnerability-cve-2016-0728/
 
-(For example, if there had previously been any type of announcement
-that the
-
-  xlink:href="|
-
-substring was being blocked in the native SVG readers, then that can
-have its own unique CVE ID.)
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXS57cAAoJEHb/MwWLVhi2MksP/j43+PGhpwdmLcAn0snPrMNM
-1uVyeMvOasjPoIWqshe45UUIXUrBN9PdtlueJhsxEl6WtO/QUSRnVk+mVQShnOMq
-K4KRqEk/7k0D7txEkulMwLK8phA2bMUGNX/YbliMBJD0z7YOB2dR7H97TszpJ0p1
-rAudJXHiW4IUyNgZm/jjohhyA70jUl5XhwuAGVLoudrJeGnsJZ5e5Vbp130sGkgD
-R8KUpmy4Bl2c04aWaevkSc4jKfL8qBUwxSZC6cHxo3au+7NnXCZ/fJhejV/p0phA
-vq99kKlT/IqXQ+ON4T6AdzGpn4a+EVhp9pn6pknNg9vHtBpvEQuX8jeJx9jMdtIc
-er9soxqmckeMEwoiJ9Hdm3SHYlH/orb9n3C+Woe18BLR3VjRMZA6PL9SBfVbkET0
-Evtnui7BBUiYtVX62K2OTp+uTc2wfRKj7+paSAT5bGBfspD0p1heOfHeWJzJd28B
-UNbhfS5mhpDKHLDKDeaQQjCE/icPyfsZsvlcsnGeSg1Pta1AtBiZYauiae7jCscX
-BQTBoV7TTSbVfx1VP6jy9jGD30RW0Uj4c85wyDuRYmlOqzCE7/H/SGASjxGqQvLX
-GjDHzDF0xvEbTqMyw+8yn/3eCW8eZy/y50DMc2TLdYpWIHQfMsWMY8K3LOS/tcaF
-iOspq5Qmc+dxTuYQguTz
-=7jWy
------END PGP SIGNATURE-----
+Patches will be available shortly with the upstream fix and are also explained in the investigation link above.
