@@ -1,50 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/30/7
-Message-ID: <6aa34810a3694877b8edb2afbfb85e00@imshyb02.MITRE.ORG>
-Date: Sun, 30 Oct 2016 15:41:46 -0400
-From: <cve-assign@...re.org>
-To: <ppandit@...hat.com>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <liqiang6-s@....cn>
-Subject: Re: CVE request  Qemu: 9pfs: information leakage via xattribute
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/19/18
+Message-ID: <CANO=Ty01JdpAZ8rtXhrOyzZ7EKCV65kzkVQid4420Q6K3mhugw@mail.gmail.com>
+Date: Tue, 19 Jan 2016 13:55:31 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: CVE ID Requests <cve-assign@...re.org>
+Cc: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: CVE for node.js websockets (ws)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Ping, is there a CVE for this yet?
 
-> Quick Emulator(Qemu) built with the VirtFS, host directory sharing via Plan 9
-> File System(9pfs) support, is vulnerable to an information leakage issue. It
-> could occur by accessing xattribute value before it's written to.
-> 
-> A privileged user inside guest could use this flaw to leak host memory bytes.
-> 
-> https://lists.gnu.org/archive/html/qemu-devel/2016-10/msg01790.html
-> http://git.qemu.org/?p=qemu.git;a=commit;h=eb687602853b4ae656e9236ee4222609f3a6887d
+On Tue, Jan 12, 2016 at 1:39 AM, <cve-assign@...re.org> wrote:
 
->> if the guest
->> reads this memory before writing to it, this will leak host heap memory
->> to the guest.
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA256
+>
+> > CVE-PENDING - Credit: Feross Aboukhadijeh / Mathias Buss
+>
+> > If not who is sitting on it?
+>
+> In our experience, the string "CVE-PENDING" has little or no
+> correlation with whether anyone has done any type of CVE request.
+>
+> We'll interpret it as a new request to MITRE unless someone else
+> happens to have received a request.
+>
+> - --
+> CVE assignment team, MITRE CVE Numbering Authority
+> M/S M300
+> 202 Burlington Road, Bedford, MA 01730 USA
+> [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1
+>
+> iQIcBAEBCAAGBQJWlLsuAAoJEL54rhJi8gl5i4EQAKA7AGwYRYJDipd7vpWlnaqb
+> Wv7BkC2i1oDLUbb9xQX9AMTGyQD90Q0XP72EUeSqDUHNRAXobcAavVRmbk14Hib3
+> TqL/ckDnwWpXMgRyyyhVTLkr4ajl/T0B+QgAN4UhE5ts0YPqeJnWK2ZTxl+yfYny
+> KYhOH3bIQEEuH77XjzsN9dZAI/UnupQRAGFzwGVI4HngxUz2RQdCDrIe0Vk5L/+V
+> bL34Gm0h4Ij4/K15FS4DGeuYHTKtBM1uPHt9DKDdqkjy9YxYm3gX4ALh3dtKesnf
+> vScCIXXs1M5XGM4oREinaDLwN1ZqV29xzpQ6NWfVPZ/eADLHwRVLCtk/nK/IDeUp
+> SAqgWYpCXZluq3KNJLbIwlk9Cw4NpBdzqq3QC2ey5Hy4Dznix+Qq0hXjAzRq/3KB
+> ZXqXgQhtcpnWTaOF9j4823UzZtDHY+UbpIkGv/BstWxtaFOwWCLA9pcuhj2VoUal
+> voHIJiObb9ji325bD2jsQadmAMGG2tDVU8HkvVXmyCmz28b3jyw0/BoAWcUWfyRa
+> qy17X1WGUkWVR3UbW69qMgv5zD+dwv2cZHbP1urylgxVO15mPqwuhSwRjP1DuJU2
+> HXZNp3F3oU6y3Zf+9dwaC1vThDlrM/qq731sh/b3A7DAftpXAjkbHzCOwziM/rcs
+> 8dm8oDFJmGuW1J/mkWaI
+> =mvzn
+> -----END PGP SIGNATURE-----
+>
 
-Use CVE-2016-9103.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQIcBAEBCAAGBQJYFktzAAoJEHb/MwWLVhi2bhYQAIL6yUfJTuXN+dfnWKCuqg/Z
-eFf9ZkNoPojFWIe8c/++zXZB7OIdfWBQS3L8cPDGOGersI0AqCbgIfwPtrSkYUAK
-xpqjCQnCMM0Rwcz+vzDkG5WgxsJbaykOaiScWooupXdcbVcun15+la34gDayztRg
-7ZadVB/h+aEMX0G9OVhqb0Iw8AD6fmWbGIxY2+1ecb16FJbd2E48MYMMiud/QDRo
-Map9XS688v5vpEyoxSVXOP2lYlhu7mR2SvCnIBmk8vIFM3rW+bdZIJ1O38xunHRY
-kcPcwsArnzM+9Ww9zQL//Saf7U8dDkbt7GXVfngj7I5hedq9FhiJnDIgFoHjhveN
-9tMSWtJ5GlxfaxLBY17gn2qVD8ufwUTDHzCKM+JIulefDvTA+JmC4OHtUJASRq0r
-gx3uzimWNp08aROJsl2YWVszi43IHjVh2Md3+o8gzbH9X7Z4dsU9IBefwN4fbypH
-W6FKbWLBHlndLUxTrtdehDpqK8B2AX9iP/dLPrLMfTVS/4v7sWUmwBV6AEYrBAqo
-LjuOHfu8RTbBFhXd04mqNl/hErpb+dmPIgnBydx9AXaVnwAaXXZn6qc535s3sblq
-CBgxX9jwShg+bjfSc42QHNE3ysrE96YQHkT16hWMxUbc2pzA9iVdpJsOZBnQNj5f
-z7ekgfP+KudJuOrXXZME
-=Hcjr
------END PGP SIGNATURE-----
+-- 
+
+--
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
+
