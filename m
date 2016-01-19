@@ -1,58 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/10/16
-Message-Id: <20160310173652.D548D33201D@smtpvbsrv1.mitre.org>
-Date: Thu, 10 Mar 2016 12:36:52 -0500 (EST)
-From: cve-assign@...re.org
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/19/5
+Message-ID: <569E6B9D.90904@redhat.com>
+Date: Tue, 19 Jan 2016 17:00:13 +0000
+From: Tristan Cacqueray <tdecacqu@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: Announce: Portable OpenSSH 7.2p2 released
+Subject: [OSSA 2016-003] Heat denial of service through template-validate (CVE-2015-5295)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+===============================================================
+OSSA-2016-003: Heat denial of service through template-validate
+===============================================================
 
->  * sshd(8): sanitise X11 authentication credentials to avoid xauth
->    command injection when X11Forwarding is enabled.
-> 
-> http://www.openssh.com/txt/x11fwd.adv
-> 
-> The contents of the credential's components (authentication
-> scheme and credential data) were not sanitised to exclude
-> meta-characters such as newlines.
-
-Use CVE-2016-3115.
+:Date: January 19, 2016
+:CVE: CVE-2015-5295
 
 
-We also noticed this very recent entry in the Dropbear SSH changelog:
+Affects
+~~~~~~~
+- Heat: <=2015.1.2, ==5.0.0
 
-> https://matt.ucc.asn.au/dropbear/CHANGES
-> 
-> 2016.72 - 9 March 2016
-> 
-> - Validate X11 forwarding input. Could allow bypass of authorized_keys command= restrictions,
->   found by github.com/tintinweb. Thanks for Damien Miller for a patch.
 
-Use CVE-2016-3116.
+Description
+~~~~~~~~~~~
+Steven Hardy from Red Hat reported a vulnerability in Heat template
+validation. By referencing a local file like /dev/zero, an
+authenticated user may trick the heat engine service to load arbitrary
+local file content resulting in a Denial of Service attack through
+memory exhaustion. Note that the file content is not written back to
+the user, though the user can determine if a file exists and if it is
+readable by heat-engine. All Heat setups are affected.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQIcBAEBCAAGBQJW4bBqAAoJEL54rhJi8gl5tQEP/3580WbVSVM7XSOW3IyR5+GY
-ZoMmlEAafKV4BtSc/U/vlbvYSyLTQq7a2RPw8hWQrbjT8GPnE6YAxhYLC338eTIs
-UK0ETcZ04qbEglkvf3DFhWCdqrfQ9N8Qls00pebPa5nlIhUx8tf/qRt39Kle9hfJ
-T9Ni64gWYXIcRp2jXSlAeTHwuPqjZJpwLj1J18L+LKBytU07fxgaebdpeo9enakm
-z9ytFZZ95ibkvOr7aSLJ9QCLhD1pp1Lyuw0dWrcjcz7VZXMyvvAQTJ4aFKLWI/Zl
-Ygo8zBh0dKx82cGD1GyMRGtpryjYoNsq4FKKbe71qbCt2qVapHV9g0AZDf6AOZ2W
-vJ3j5md74cPllo06vuMpm8JhJQwOAqCe5wZG4WvOKy9h8ELy1DUlP+V6TFiF3GOm
-8ehk58oVAu8Isgex3I4uNkTf4vhlufut5TkC+JJAA3klJFVrgq57pSk2PSTpGZR2
-//RudkF3fjivbndn20CRF7Qb1TUh4aQj96+r/yxBYZk18717ACO/MBO/SgCs9DiE
-VOl2Hpo+sDyhenEinwFFu1uJebSQqiAnHAKmWbpKAYWdDErcuN6PE00uYr/RAUW0
-qFo8E6bjy8emNL/Zw16x+dYb41Khh8KJp0ROobxbdbUBTlXUgSX6d301X0ZAVNXT
-JyxLlvwg5t1U9NgpiTEX
-=Wyah
------END PGP SIGNATURE-----
+Patches
+~~~~~~~
+- https://review.openstack.org/269692 (Kilo)
+- https://review.openstack.org/269691 (Liberty)
+- https://review.openstack.org/269689 (Mitaka)
+
+
+Credits
+~~~~~~~
+- Steven Hardy from Red Hat (CVE-2015-5295)
+
+
+References
+~~~~~~~~~~
+- https://bugs.launchpad.net/bugs/1496277
+- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-5295
+
+
+Notes
+~~~~~
+- This fix will be included in future 2015.1.3 (kilo) and 5.0.1
+  (liberty) releases.
+
+--
+Tristan Cacqueray
+OpenStack Vulnerability Management Team
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
