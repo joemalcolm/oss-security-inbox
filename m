@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2362" "Wednesday" "11" "March" "2020" "14:38:14" "-0700" "Goutham Pacha Ravi" "gouthampravi@gmail.com" "<CAKSuTPZu47DqKNfdDViR5p8miHdXa7B99Nz-q_=B5nQqgmbWNg@mail.gmail.com>" "75" "[oss-security] [OSSA-2020-002] Manila: Unprivileged users can retrieve, use and manipulate share networks (CVE-2020-9543)" nil nil nil "3" "2020031121:38:14" "[oss-security] [OSSA-2020-002] Manila: Unprivileged users can retrieve, use and manipulate share networks (CVE-2020-9543)" (number mark "U       gouthampravi Mar 11   75/2362  " thread-indent "\"[oss-security] [OSSA-2020-002] Manila: Unprivileged users can retrieve, use and manipulate share networks (CVE-2020-9543)\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [OSSA-2020-002] Manila: Unprivileged users can retrieve, use and manipulate share networks (CVE-2020-9543)" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6450" "Wednesday" "20" "January" "2016" "12:08:47" "+0000" "Xen.org security team" "security@xen.org" "<E1aLrZ9-0003RR-Dg@xenbits.xen.org>" "171" "[oss-security] Xen Security Advisory 168 (CVE-2016-1571) - VMX: intercept issue with INVLPG on non-canonical address" nil nil nil "1" "2016012012:08:47" "[oss-security] Xen Security Advisory 168 (CVE-2016-1571) - VMX: intercept issue with INVLPG on non-canonical address" (number mark "U       security@xen Jan 20  171/6450  " thread-indent "\"[oss-security] Xen Security Advisory 168 (CVE-2016-1571) - VMX: intercept issue with INVLPG on non-canonical address\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 6008 invoked by uid 550); 12 Mar 2020 10:17:39 -0000
+Received: (qmail 17677 invoked by uid 550); 20 Jan 2016 12:09:06 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,114 +11,189 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11897 invoked from network); 11 Mar 2020 21:38:38 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=oindCM+QNE3ykWHa6JgjSuaMk/oOrG8mUbWE5s2tKOQ=;
-        b=LZBxnfuEK1ToUU2iKkjpCjMCENFtypKfQyo4GnYlG+d1AOq6Mnrofi+NVh8gd/IGNl
-         HJSVOCAGbyQV0Q9WKJtlIdpSc/FR7VfMWVCtQy/RazGCQJWLZSDE79PmOELJ262pywrD
-         MDVwzgbLsS8GLeBdQ5sApmZXPX98QJ6sCqE/xM7xnK7p/jiJzfTUmkRUDK6Sk8Zry2KZ
-         PSl24qpzXB0jY0QtQsxKyI8l38qVl1qW1HGibdp/3o76xuVv59YXzNG47XsE6BdGPezS
-         02udv6m5NTHIbhUXnXwiP54YgK6fQOoxNUcsDSY7DU74emZgS6PUA0qizeyuXyi650qp
-         NBMw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=oindCM+QNE3ykWHa6JgjSuaMk/oOrG8mUbWE5s2tKOQ=;
-        b=LrTxfrwUtttC+c7bK2fofyxocNHmHeXLZMklSLJFYvWUKMqNnXgfpVUJLDinr58VAQ
-         vHhFFHReadwkjyabl5vvbYMc7WacygJj/5FGFct0GXY7rhxnxPyCdVnrNKF+2325a0qz
-         cQSPjSHC84zxqhX3nxrVyFnzfL6DwBZoDh5cCeAOYD82SAs4VSGPDhAZCSCh3FPH8GFT
-         hjHC8DM+KqYM+T+tGBgycZmooE8YJPu3ndT23t2wUSa7lm5I57nZLOaGKwSS3XO51Fhd
-         yTXHLMLf6RcatmiPf9iA3Iz8K6rqJztMl0R4nDa5JNaR6PeOPoIp9SMGUop3V4kQIajn
-         kA/A==
-X-Gm-Message-State: ANhLgQ13HM5WlHr6zEqzeWsZTnu/PU0LYcPCd8YCYVnkLWb2qOQE84Cq
-	Ibv5A3Y/xhvfTRnU8YrtZjJdoJzedZ5j14NNRLO0KifI
-X-Google-Smtp-Source: ADFU+vuEomrs9YhmSOK6mFGoc83aZdICEzvt8ngmbq6Frei6/JYwL+uHnxFdDoKnAM6eKkYpJZhFx70ckqOOVvpIFJ8=
-X-Received: by 2002:a0c:90e1:: with SMTP id p88mr4559697qvp.18.1583962705764;
- Wed, 11 Mar 2020 14:38:25 -0700 (PDT)
+Received: (qmail 17536 invoked from network); 20 Jan 2016 12:09:05 -0000
+Message-Id: <E1aLrZ9-0003RR-Dg@xenbits.xen.org>
+Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
+Content-Transfer-Encoding: binary
 MIME-Version: 1.0
-From: Goutham Pacha Ravi <gouthampravi@gmail.com>
-Date: Wed, 11 Mar 2020 14:38:14 -0700
-Message-ID: <CAKSuTPZu47DqKNfdDViR5p8miHdXa7B99Nz-q_=B5nQqgmbWNg@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] [OSSA-2020-002] Manila: Unprivileged users can retrieve, use and
- manipulate share networks (CVE-2020-9543)
+X-Mailer: MIME-tools 5.428 (Entity 5.428)
+CC: Xen.org security team <security@xen.org>
+Date: Wed, 20 Jan 2016 12:08:47 +0000
+From: Xen.org security team <security@xen.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Xen Security Advisory 168 (CVE-2016-1571) - VMX: intercept issue
+ with INVLPG on non-canonical address
+To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
+ xen-users@lists.xen.org, oss-security@lists.openwall.com
+
+--=separator
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+Content-Transfer-Encoding: 7bit
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hash: SHA1
 
-=================================================================================
-OSSA-2020-002: Unprivileged users can retrieve, use and manipulate
-share networks
-=================================================================================
+            Xen Security Advisory CVE-2016-1571 / XSA-168
+                              version 3
 
-:Date: March 10, 2020
-:CVE: CVE-2020-9543
+       VMX: intercept issue with INVLPG on non-canonical address
 
+UPDATES IN VERSION 3
+====================
 
-Affects
-~~~~~~~
-- - Manila: <7.4.1, >=8.0.0 <8.1.1, >=9.0.0 <9.1.1
+Public release.
 
+ISSUE DESCRIPTION
+=================
 
-Description
-~~~~~~~~~~~
-Tobias Rydberg from City Network Hosting AB reported a vulnerability
-with the manila's share network APIs. An attacker can retrieve and
-manipulate share networks that do not belong to them if they possess
-the share network ID. By exploiting this vulnerability, they can view
-and manipulate share network subnets and use the share network to
-create resources such as shares and share groups.
+While INVLPG does not cause a General Protection Fault when used on a
+non-canonical address, INVVPID in its "individual address" variant,
+which is used to back the intercepted INVLPG in certain cases, fails in
+such cases. Failure of INVVPID results in a hypervisor bug check.
 
+IMPACT
+======
 
-Patches
-~~~~~~~
-- - https://review.opendev.org/712167 (Pike)
-- - https://review.opendev.org/712166 (Queens)
-- - https://review.opendev.org/712165 (Rocky)
-- - https://review.opendev.org/712164 (Stein)
-- - https://review.opendev.org/712163 (Train)
-- - https://review.opendev.org/712158 (Ussuri)
+A malicious guest can crash the host, leading to a Denial of Service.
 
+VULNERABLE SYSTEMS
+==================
 
-Credits
-~~~~~~~
-- - Tobias Rydberg from City Network Hosting AB (CVE-2020-9543)
+Xen versions from 3.3 onwards are affected.
 
+Only systems using Intel or Cyrix CPUs are affected. ARM and AMD
+systems are unaffected.
 
-References
-~~~~~~~~~~
-- - https://launchpad.net/bugs/1861485
-- - http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-9543
+Only HVM guests using shadow mode paging can expose this
+vulnerability.  PV guests, and HVM guests using Hardware Assisted
+Paging (also known as EPT on affected hardware), are unaffected.
 
+Note that while unsupported, guests with enabled nested virtualization
+are vulnerable even when using EPT.
 
-Notes
-~~~~~
-- - The stable/queens and stable/pike branches are under extended
-maintenance and
-  will receive no new point releases, but patches for them are provided as a
-  courtesy.
+CHECKING FOR VULNERABLE CONFIGURATION
+=====================================
 
-- --
-Goutham Pacha Ravi
-PTL, OpenStack Manila
+To discover whether your HVM guests are using HAP, or shadow page
+tables: request debug key `q' (from the Xen console, or with
+`xl debug-keys q').  This will print (to the console, and visible in
+`xl dmesg'), debug information for every domain, containing something
+like this:
+
+  (XEN) General information for domain 2:
+  (XEN)     refcnt=1 dying=2 pause_count=2
+  (XEN)     nr_pages=2 xenheap_pages=0 shared_pages=0 paged_pages=0 dirty_cpus={} max_pages=262400
+  (XEN)     handle=ef58ef1a-784d-4e59-8079-42bdee87f219 vm_assist=00000000
+  (XEN)     paging assistance: hap refcounts translate external
+                               ^^^
+The presence of `hap' here indicates that the host is not
+vulnerable to this domain.  For an HVM domain the presence of `shadow'
+indicates that the domain can exploit the vulnerability.
+
+Note that `General information' will also be printed for PV domains.
+For most PV domains there will be no `paging assistance' reported.
+But PV guests currently being migrated will report
+  (XEN)     paging assistance: shadow log_dirty
+
+Overall: a domain can exploit the vulnerability if this debug output
+contains a `paging assistance' line which reports `translate' and
+which does not report `hap'.
+
+MITIGATION
+==========
+
+Running only PV guests will avoid this vulnerability.
+
+Running HVM guests on only AMD hardware will also avoid this
+vulnerability.
+
+Running HVM guests with Hardware Assisted Paging (HAP) enabled will
+also avoid this vulnerability.  This is the default mode on hardware
+supporting HAP, but can be overridden by hypervisor command line
+option and guest configuration setting.  Such overrides ("hap=0" in
+either case, with variants like "no-hap" being possible in the
+hypervisor command line case) would need to be removed to avoid this
+vulnerability.
+
+CREDITS
+=======
+
+This issue was discovered by Jan Beulich of SUSE.
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue.
+
+xsa168.patch      xen-unstable, Xen 4.6.x, Xen 4.5.x, Xen 4.4.x, Xen 4.3.x
+
+$ sha256sum xsa168*
+c95198a66485d6e538d113ce2b84630d77c15f597113c38fadd6bf1e24e4c8ec  xsa168.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
 -----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-wsFcBAEBCAAGBQJeaVorAAoJEDEySBmyuw9icCYP/jQPltyI04Vr3JMxCVRW
-lkedSvBUrWZSqfk/EXXoFDu7jbEC7v59ewPriXA0YQ3hTJoJxCGDK1mYiIyr
-yoJzNb/Lz8QPsNIMfg0JGxS6Jnz0lRztJJo0zOyAgtVUkJiLGQumYAb3Y9CO
-LYRWIYezcwhFLsH3l1pLq0M2ideXVIHT+9mTGWkHCT16+lGFArYUZK0qvi3U
-Z7cWNeGeU4m6+HR9A30nP304aV14K2/55ELtbvDEYWNM92xdrMPOPfuFrLat
-kVeXNq2QYGP1EuBAHREysKURJHAUPn8pttS+feLzze/MZ50JxoRWi1WcwHsK
-R8w0OjuMceN8WXGSV2Ng4fsCfGimx81ySqjdETZY2ckLxmRxNK3UDh+HLUQh
-XaG2PVD2ZMm7WgDiopdo3QcjpV28XdGjMBCTU2wKFJeePc8ugMAuJ4Dkscxn
-sIp9xZWtpkD5HcV6eSoYG/LvugdGMtn961Fn6I1UkGtjdc1TsjZRU/+wc8pN
-PVJQ3Ws24RCyH4VTHWbruIPHIRWC6HisOgRub3wMdwhaMEpicFuel1TR5qMz
-O8E3eGcN5IWIR0oykG35+YoV+EDTFy9ZeWJeui+KZZfcG5Kfssno0sX2E6dL
-RlJPnDHNWwzT8kr6eCF/wbSiK8dAy2PDwtVqZXKMiNWJMoAWJUnVJ02Ebf/O
-cmWK
-=fVID
+iQEcBAEBAgAGBQJWn3dEAAoJEIP+FMlX6CvZLaAH/A1FzwQebCOF0MCEMcM9V/zK
+At3L0XG5oBiVZVpbXAfYULeKaLtTGLBXqhBJjzej0FypCvEYX6BLBITLsw7kMqoW
+JSYHNHlg4pLH2Wnf6i3fVC7EIHx5XNuDa8Zeyt73wEFJhVpp43PcMwMzBolTUBmP
++f5WDkLYflYXv+0XiHfbBLA2fl+K+A5OdDhKgjPZJouGvdfiZxX7EChR0asmmD1i
+AbSZYTLGhdlSU+fvw+w2XUYSeINS1FEhsZxMbWMVuz7jmPBmOn6u8NLrBdZatYoE
+Z2Fly81pWD7KDwusVscoLBdmBmI1Wr3u975j5EkQLbsCTsqo5ayP3BpfsieijIg=
+=UJX5
 -----END PGP SIGNATURE-----
+
+--=separator
+Content-Type: application/octet-stream; name="xsa168.patch"
+Content-Disposition: attachment; filename="xsa168.patch"
+Content-Transfer-Encoding: base64
+
+eDg2L1ZNWDogcHJldmVudCBJTlZWUElEIGZhaWx1cmUgZHVlIHRvIG5vbi1j
+YW5vbmljYWwgZ3Vlc3QgYWRkcmVzcwoKV2hpbGUgSU5WTFBHIChhbmQgb24g
+U1ZNIElOVkxQR0EpIGRvbid0IGZhdWx0IG9uIG5vbi1jYW5vbmljYWwKYWRk
+cmVzc2VzLCBJTlZWUElEIGZhaWxzIChpbiB0aGUgImluZGl2aWR1YWwgYWRk
+cmVzcyIgY2FzZSkgd2hlbiBwYXNzZWQKc3VjaCBhbiBhZGRyZXNzLgoKU2lu
+Y2Ugc3VjaCBpbnRlcmNlcHRlZCBJTlZMUEcgYXJlIGVmZmVjdGl2ZWx5IG5v
+LW9wcyBhbnl3YXksIGRvbid0IGZpeAp0aGlzIGluIHZteF9pbnZscGdfaW50
+ZXJjZXB0KCksIGJ1dCBpbnN0ZWFkIGhhdmUgcGFnaW5nX2ludmxwZygpIG5l
+dmVyCnJldHVybiB0cnVlIGluIHN1Y2ggYSBjYXNlLgoKVGhpcyBpcyBYU0Et
+MTY4LgoKU2lnbmVkLW9mZi1ieTogSmFuIEJldWxpY2ggPGpiZXVsaWNoQHN1
+c2UuY29tPgpSZXZpZXdlZC1ieTogQW5kcmV3IENvb3BlciA8YW5kcmV3LmNv
+b3BlcjNAY2l0cml4LmNvbT4KQWNrZWQtYnk6IElhbiBDYW1wYmVsbCA8aWFu
+LmNhbXBiZWxsQGNpdHJpeC5jb20+CgotLS0gYS94ZW4vaW5jbHVkZS9hc20t
+eDg2L3BhZ2luZy5oCisrKyBiL3hlbi9pbmNsdWRlL2FzbS14ODYvcGFnaW5n
+LmgKQEAgLTI0NSw3ICsyNDUsNyBAQCBwYWdpbmdfZmF1bHQodW5zaWduZWQg
+bG9uZyB2YSwgc3RydWN0IGNwCiAgKiBvciAwIGlmIGl0J3Mgc2FmZSBub3Qg
+dG8gZG8gc28uICovCiBzdGF0aWMgaW5saW5lIGludCBwYWdpbmdfaW52bHBn
+KHN0cnVjdCB2Y3B1ICp2LCB1bnNpZ25lZCBsb25nIHZhKQogewotICAgIHJl
+dHVybiBwYWdpbmdfZ2V0X2hvc3Rtb2RlKHYpLT5pbnZscGcodiwgdmEpOwor
+ICAgIHJldHVybiBpc19jYW5vbmljYWxfYWRkcmVzcyh2YSkgJiYgcGFnaW5n
+X2dldF9ob3N0bW9kZSh2KS0+aW52bHBnKHYsIHZhKTsKIH0KIAogLyogVHJh
+bnNsYXRlIGEgZ3Vlc3QgdmlydHVhbCBhZGRyZXNzIHRvIHRoZSBmcmFtZSBu
+dW1iZXIgdGhhdCB0aGUK
+
+--=separator--
