@@ -1,35 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/14/15
-Message-ID: <665d3544-22f2-f766-383a-fcb406e96085@enea.com>
-Date: Wed, 14 Dec 2016 19:57:11 +0100
-From: Sona Sarmadi <sona.sarmadi@...a.com>
-To: <oss-security@...ts.openwall.com>
-Subject: Re: vulnerable version: 4.8.12 and previous versions but xml file says: cpe:/o:linux:linux_kernel:4.8.12"/>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/20/2
+Message-ID: <569F4FF2.2090806@redhat.com>
+Date: Wed, 20 Jan 2016 10:14:26 +0100
+From: Florian Weimer <fweimer@...hat.com>
+To: cve-assign@...re.org
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE assignment request for security bugs fixed in glibc 2.23
 Content-Type: text/plain; charset=utf-8
 
+On 01/20/2016 03:51 AM, cve-assign@...re.org wrote:
+> The MITRE CVE team generally can assign IDs for security-fix releases
+> of products where a notable upstream vendor has already made a final
+> determination of what issues are, from their perspective,
+> vulnerabilities that require customers to perform a product update.
 
+In glibc's case, it's more about changes which may deserve backports to
+distribution releases.
 
-On 2016-12-14 15:26, Kurt Seifried wrote:
-> Why are you complaining about a nist.gov website/data on an opensource
-> security mailing list/to MITRE? (hint: we can't fix it and neither can
-> MITRE) Please contact NIST.
->
-Thanks for being so helpful.
+> Based on the set of issues mentioned, however, we probably don't have
+> a shared understanding of what glibc bugs should be considered
+> vulnerabilities and what ones should be considered ordinary bugs.
 
-I was just trying to see of there are other people out there who also
-think this is a problem. This list seemed like a place where I could
-find such people.
-Perhaps someone knows a work around, perhaps some post-processing tool.
-If none exists, I guess we have to try to fix the problem at the source
-or use another CVE databse.
+My understanding is shaped in part by your previous assignments.
+CVE-2015-1473 is a good example, where the stack usage accounting is off
+by a factor of four.
 
-Cheers
-//Sona
-> On Wed, Dec 14, 2016 at 1:19 AM, Sona Sarmadi <sona.sarmadi@...a.com> wrote:
->
->> Hi all,
->>
->> It seems that nvd.xml files (e.g. nvdcve-2.0-2016.xml) does not list
->> vulnerable versions correctly. One example is the following CVE. Vulnerable
->>
+We try to approach this differently on the glibc side, as explained here:
 
+  <https://sourceware.org/glibc/wiki/Security%20Process>
+
+But this policy, requiring actual application impact for (say)
+denial-of-service vulnerabilities, does not match your past assignment
+practice, or indeed general industry expectations.
+
+Approaching this from a completely different angle: If glibc upstream
+marks certain bugs as potential backport material due to their security
+impact, without arranging for CVE assignment, how can we make such
+assignments happen in time for downstream security updates?
+
+I expected that you do not want Red Hat, Debian &c to assign CVE IDs for
+already public issues.  Yet you have failed to provide such assignments
+when they were requested, leading to CVE-less security updates such as
+this one:
+
+  <https://lists.debian.org/debian-lts-announce/2015/09/msg00011.html>
+
+> None of this is going to be resolved today, so here are the five CVE
+> IDs for the listed issues.
+
+Thanks, I will incorporate the assignments into the glibc bug tracker.
+
+We still have a backlog of a few dozen issues fixed in previous releases
+which are clearly vulnerabilities or have been referenced in downstream
+security advisories.  We really should have a discussion about how to
+handle them.  We can have it here, or in response to the multiple
+messages I sent last fall.
+
+Florian
