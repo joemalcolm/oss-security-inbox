@@ -1,147 +1,138 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/20/4
-Message-Id: <E1aLrZ9-0003RR-Dg@xenbits.xen.org>
-Date: Wed, 20 Jan 2016 12:08:47 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 168 (CVE-2016-1571) - VMX: intercept issue with INVLPG on non-canonical address
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/20/1
+Message-Id: <20160120025110.E39DC42E01D@smtpvbsrv1.mitre.org>
+Date: Tue, 19 Jan 2016 21:51:10 -0500 (EST)
+From: cve-assign@...re.org
+To: fweimer@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE assignment request for security bugs fixed in glibc 2.23
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hash: SHA256
 
-            Xen Security Advisory CVE-2016-1571 / XSA-168
-                              version 3
+The MITRE CVE team generally can assign IDs for security-fix releases
+of products where a notable upstream vendor has already made a final
+determination of what issues are, from their perspective,
+vulnerabilities that require customers to perform a product update.
+This is, to some extent, independent of what our perspective otherwise
+would have been.
 
-       VMX: intercept issue with INVLPG on non-canonical address
+Based on the set of issues mentioned, however, we probably don't have
+a shared understanding of what glibc bugs should be considered
+vulnerabilities and what ones should be considered ordinary bugs. This
+doesn't mean that there ought to be a decision process that is
+specific to glibc alone: there are people sending CVE ID requests to
+MITRE for other libraries, including similarly general-purpose
+libraries.
 
-UPDATES IN VERSION 3
-====================
+Possibly part of the glibc vulnerability model is that memory-safety
+issues should be considered vulnerabilities, regardless of how
+unlikely it is for an attack to cross a privilege boundary. Similarly,
+possibly part of the model is that issues in which glibc simply
+provides the wrong answer are not vulnerabilities, regardless of
+whether there's a plausible scenario in which the wrong answer leads
+to a catastrophic security failure. If there should be some CVE IDs
+for wrong-answer issues, we don't know the best way to subdivide the
+space of wrong answers, e.g., wrong results in floating-point math are
+perhaps attackable less often than wrong results in string operations.
+None of this is going to be resolved today, so here are the five CVE
+IDs for the listed issues.
 
-Public release.
 
-ISSUE DESCRIPTION
-=================
+> Passing out of range data to strftime() causes a segfault
+> https://sourceware.org/bugzilla/show_bug.cgi?id=18985
+> 
+> Out-of-range time values passed to the strftime function may cause it to
+> crash, leading to a denial of service, or potentially disclosure
+> information.
 
-While INVLPG does not cause a General Protection Fault when used on a
-non-canonical address, INVVPID in its "individual address" variant,
-which is used to back the intercepted INVLPG in certain cases, fails in
-such cases. Failure of INVVPID results in a hypervisor bug check.
+Use CVE-2015-8776. We don't happen to know of any cases in which a
+reasonable application would, for example, allow a user to enter an
+integer value that refers to the 13th month in a way that crosses a
+privilege boundary. The glibc change might suggest that that
+application should be happy with output of the form "19 ? 2016" (the
+19th day of an unknown month in 2016). We feel that there's a
+(probably weak) argument that this is a defense-in-depth change to
+glibc, not a vulnerability fix, because there's no universally
+understood way for glibc to inform an arbitrary application that it
+has elected to produce a malformed, but memory-safe, result.
 
-IMPACT
-======
 
-A malicious guest can crash the host, leading to a Denial of Service.
+> LD_POINTER_GUARD is not ignored for privileged binaries
+> https://sourceware.org/bugzilla/show_bug.cgi?id=18928
+> 
+> LD_POINTER_GUARD was an environment variable which controls
+> security-related behavior, but was not ignored for privileged binaries
+> (in AT_SECURE mode).  This might allow local attackers (who can supply
+> the environment variable) to bypass intended security restrictions.
 
-VULNERABLE SYSTEMS
-==================
+Use CVE-2015-8777. We don't feel that there is any way to conclude
+that this is a vulnerability unless confirmed by the upstream vendor
+(and it obviously is confirmed). For example, maybe LD_POINTER_GUARD
+was originally envisioned as a defense against remote attacks, and the
+ability of unprivileged local users to run setuid/setgid programs with
+LD_POINTER_GUARD=0 was an intentional workaround for scenarios in
+which pointer guarding was not working properly.
 
-Xen versions from 3.3 onwards are affected.
 
-Only systems using Intel or Cyrix CPUs are affected. ARM and AMD
-systems are unaffected.
+> hcreate((size_t)-1) should fail with ENOMEM
+> https://sourceware.org/bugzilla/show_bug.cgi?id=18240
+> 
+> This is an integer overflow in hcreate and hcreate_r which can result in
+> an out-of-bound memory access.  This could lead to application crashes
+> or, potentially, arbitrary code execution.
 
-Only HVM guests using shadow mode paging can expose this
-vulnerability.  PV guests, and HVM guests using Hardware Assisted
-Paging (also known as EPT on affected hardware), are unaffected.
+Use CVE-2015-8778. We don't happen to know of any cases in which an
+application allows a user to specify hcreate arguments in a way that
+crosses a privilege boundary.
 
-Note that while unsupported, guests with enabled nested virtualization
-are vulnerable even when using EPT.
 
-CHECKING FOR VULNERABLE CONFIGURATION
-=====================================
+> nan function unbounded stack allocation
+> https://sourceware.org/bugzilla/show_bug.cgi?id=16962
+> 
+> A stack overflow (unbounded alloca) can cause applications which process
+> long strings with the nan function to crash or, potentially, execute
+> arbitrary code.
 
-To discover whether your HVM guests are using HAP, or shadow page
-tables: request debug key `q' (from the Xen console, or with
-`xl debug-keys q').  This will print (to the console, and visible in
-`xl dmesg'), debug information for every domain, containing something
-like this:
+Use CVE-2014-9761. Here, it seems somewhat more plausible that the nan
+argument would ultimately originate from untrusted input in a way that
+crosses a privilege boundary. We don't know of a specific example that
+would be realistic.
 
-  (XEN) General information for domain 2:
-  (XEN)     refcnt=1 dying=2 pause_count=2
-  (XEN)     nr_pages=2 xenheap_pages=0 shared_pages=0 paged_pages=0 dirty_cpus={} max_pages=262400
-  (XEN)     handle=ef58ef1a-784d-4e59-8079-42bdee87f219 vm_assist=00000000
-  (XEN)     paging assistance: hap refcounts translate external
-                               ^^^
-The presence of `hap' here indicates that the host is not
-vulnerable to this domain.  For an HVM domain the presence of `shadow'
-indicates that the domain can exploit the vulnerability.
 
-Note that `General information' will also be printed for PV domains.
-For most PV domains there will be no `paging assistance' reported.
-But PV guests currently being migrated will report
-  (XEN)     paging assistance: shadow log_dirty
+> catopen() Multiple unbounded stack allocations
+> https://sourceware.org/bugzilla/show_bug.cgi?id=17905
+> 
+> A stack overflow (unbounded alloca) in the catopen function can cause
+> applications which pass long strings to the catopen function to crash
+> or, potentially execute arbitrary code.
 
-Overall: a domain can exploit the vulnerability if this debug output
-contains a `paging assistance' line which reports `translate' and
-which does not report `hap'.
+Use CVE-2015-8779. At least for the
+https://sourceware.org/bugzilla/show_bug.cgi?id=17905#c0 example, we
+don't happen to know of any cases in which an application allows a
+user to specify an arbitrary pathname in a way that crosses a
+privilege boundary, and then decides to catopen that pathname.
 
-MITIGATION
-==========
-
-Running only PV guests will avoid this vulnerability.
-
-Running HVM guests on only AMD hardware will also avoid this
-vulnerability.
-
-Running HVM guests with Hardware Assisted Paging (HAP) enabled will
-also avoid this vulnerability.  This is the default mode on hardware
-supporting HAP, but can be overridden by hypervisor command line
-option and guest configuration setting.  Such overrides ("hap=0" in
-either case, with variants like "no-hap" being possible in the
-hypervisor command line case) would need to be removed to avoid this
-vulnerability.
-
-CREDITS
-=======
-
-This issue was discovered by Jan Beulich of SUSE.
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue.
-
-xsa168.patch      xen-unstable, Xen 4.6.x, Xen 4.5.x, Xen 4.4.x, Xen 4.3.x
-
-$ sha256sum xsa168*
-c95198a66485d6e538d113ce2b84630d77c15f597113c38fadd6bf1e24e4c8ec  xsa168.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+Version: GnuPG v1
 
-iQEcBAEBAgAGBQJWn3dEAAoJEIP+FMlX6CvZLaAH/A1FzwQebCOF0MCEMcM9V/zK
-At3L0XG5oBiVZVpbXAfYULeKaLtTGLBXqhBJjzej0FypCvEYX6BLBITLsw7kMqoW
-JSYHNHlg4pLH2Wnf6i3fVC7EIHx5XNuDa8Zeyt73wEFJhVpp43PcMwMzBolTUBmP
-+f5WDkLYflYXv+0XiHfbBLA2fl+K+A5OdDhKgjPZJouGvdfiZxX7EChR0asmmD1i
-AbSZYTLGhdlSU+fvw+w2XUYSeINS1FEhsZxMbWMVuz7jmPBmOn6u8NLrBdZatYoE
-Z2Fly81pWD7KDwusVscoLBdmBmI1Wr3u975j5EkQLbsCTsqo5ayP3BpfsieijIg=
-=UJX5
+iQIcBAEBCAAGBQJWnvVjAAoJEL54rhJi8gl5hXAQAJb94GQ4nmQNvRV/oxuJ8gkP
+GIjkWpfVAeHLJQZ4wxbFIBFrwexeimaZFICEyRnjsA8Jcw0vfdfKy+WbygpgmVuo
+jp38VYkreUXH1ZHJTEX+uTx7ySnKClccZ/599VwzYTMA5JI65srqtqMW52EOC0Lp
+nbqsW7aaQ9rJpXOqcgPNPHf01JIDOgzVMlIkzolWN5dP8YbwIvmWwfOQk0SePJj7
+6fhdj6M12Kob0uqytI4zTSnKa0z2qXC0SsoPgcxtWOqQut7oYhMESMD2a9zbhKPj
+5X4QdICT9ki86ysvujZV3+QoxkBJwd09nWY2AZm/vVgvTzNdArq2V+BPsNkLK+IJ
+xt1u385bw2GYjskLnr2UdyrbOQO5lqgcX9O/7+bzRbWhJsW58iIVwiX/a+slB7Bw
+CvaI565uncU6tR+UNUAT7BTJu2YLfGdqYzMG0G7rKmPVno0+q21cxjyigKpkRKxL
+yq95x3Ww/Yq4CIN4weGjAsOhtQ7h/5AP1D+aOgYp09KcvoKhV9meORCwmg0qZv5V
+RDr+7EquBWOuO84O8LnRcDFpiRPT+P1+CtS+YRo/tlLEVVTo5pe50+9t/7v7ey2o
+xta3mjd8tUdV4GWyItbn1Wzp0rv28/1kttlVJ6oUMpLzAFY8iQHJi+lmVtV+bDT2
+Ta6wlakhBjLtTQ7bCWtU
+=VJ/C
 -----END PGP SIGNATURE-----
-
-Download attachment "xsa168.patch" of type "application/octet-stream" (1005 bytes)
