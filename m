@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1280" "Monday" "14" "November" "2016" "14:46:55" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<5f7c61458c5f4f3d9c95c80a8da2521e@imshyb02.MITRE.ORG>" "34" "[oss-security] Re: CVE needed? / gnuchess 6.2.4 fixed user input buffer overflow" nil nil nil "11" "2016111419:46:55" "[oss-security] Re: CVE needed? / gnuchess 6.2.4 fixed user input buffer overflow" (number mark "U       cve-assign@m Nov 14   34/1280  " thread-indent "\"[oss-security] Re: CVE needed? / gnuchess 6.2.4 fixed user input buffer overflow\"\n") "<5147e375-7b26-a93d-b052-85cd8222c9fa@pipping.org>" ("<5147e375-7b26-a93d-b052-85cd8222c9fa@pipping.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1838" "Wednesday" "20" "January" "2016" "19:12:37" "+0100" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20160120191237.55100e02@pc1>" "52" "Re: [oss-security] Prime example of a can of worms" "^Date:" nil nil "1" "2016012018:12:37" "[oss-security] Prime example of a can of worms" (number mark "        hanno@hboeck Jan 20   52/1838  " thread-indent "\"Re: [oss-security] Prime example of a can of worms\"\n") "<CANO=Ty1Rp1m=qTr7Y+JGfFwAO3Q7nFwWdYGd6-Nb7N==DcZ-HA@mail.gmail.com>" ("<CANO=Ty18_pMLco8RdabsEbhs9sLahRhT_U93PGhDVwhcRaqzpQ@mail.gmail.com>" "<CAFRnB2Wrz=zexGonV5fHosVqfiOhNvA6Ya2YsCYyDkt7UE_0mw@mail.gmail.com>" "<20151019193411.GA15710@hunt>" "<87eggqmta9.fsf@alice.fifthhorseman.net>" "<20151021170113.128d3a8e@silentmaxx>" "<CANO=Ty0eLFpezes_WfNTN0eKj6u5BinhwBQkM6BR7PZPg3eCiA@mail.gmail.com>" "<20151023145631.GA21048@gremlin.ru>" "<CANO=Ty16P4GKb4HYtFugYsjufSZOBf+euv7O6WopKsAPuhKHtw@mail.gmail.com>" "<87vb6o5fsm.fsf@alice.fifthhorseman.net>" "<CANO=Ty0shFs5oAykxDPRsfMAw65bnEwCN7_m_df4j61XEpthBQ@mail.gmail.com>" "<87lh7k5dxs.fsf@alice.fifthhorseman.net>" "<CANO=Ty1Rp1m=qTr7Y+JGfFwAO3Q7nFwWdYGd6-Nb7N==DcZ-HA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 5261 invoked by uid 550); 14 Nov 2016 19:47:07 -0000
+Received: (qmail 5204 invoked by uid 550); 20 Jan 2016 18:12:10 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,50 +11,79 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 5183 invoked from network); 20 Jan 2016 18:12:10 -0000
+Message-ID: <20160120191237.55100e02@pc1>
+In-Reply-To: <CANO=Ty1Rp1m=qTr7Y+JGfFwAO3Q7nFwWdYGd6-Nb7N==DcZ-HA@mail.gmail.com>
+References: <CANO=Ty18_pMLco8RdabsEbhs9sLahRhT_U93PGhDVwhcRaqzpQ@mail.gmail.com>
+	<CAFRnB2Wrz=zexGonV5fHosVqfiOhNvA6Ya2YsCYyDkt7UE_0mw@mail.gmail.com>
+	<20151019193411.GA15710@hunt>
+	<87eggqmta9.fsf@alice.fifthhorseman.net>
+	<20151021170113.128d3a8e@silentmaxx>
+	<CANO=Ty0eLFpezes_WfNTN0eKj6u5BinhwBQkM6BR7PZPg3eCiA@mail.gmail.com>
+	<20151023145631.GA21048@gremlin.ru>
+	<CANO=Ty16P4GKb4HYtFugYsjufSZOBf+euv7O6WopKsAPuhKHtw@mail.gmail.com>
+	<87vb6o5fsm.fsf@alice.fifthhorseman.net>
+	<CANO=Ty0shFs5oAykxDPRsfMAw65bnEwCN7_m_df4j61XEpthBQ@mail.gmail.com>
+	<87lh7k5dxs.fsf@alice.fifthhorseman.net>
+	<CANO=Ty1Rp1m=qTr7Y+JGfFwAO3Q7nFwWdYGd6-Nb7N==DcZ-HA@mail.gmail.com>
+X-Mailer: Claws Mail 3.13.1 (GTK+ 2.24.29; x86_64-pc-linux-gnu)
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512; protocol="application/pgp-signature"; boundary="=_zucker.schokokeks.org-13917-1453313518-0001-2"
+Date: Wed, 20 Jan 2016 19:12:37 +0100
+From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5243 invoked from network); 14 Nov 2016 19:47:06 -0000
-From: <cve-assign@mitre.org>
-To: <sebastian@pipping.org>
-CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>,
-	<aceballos@gmail.com>
-In-Reply-To: <5147e375-7b26-a93d-b052-85cd8222c9fa@pipping.org>
-Message-ID: <5f7c61458c5f4f3d9c95c80a8da2521e@imshyb02.MITRE.ORG>
-Date: Mon, 14 Nov 2016 14:46:55 -0500
-MIME-Version: 1.0
-Content-Type: text/plain
-Subject: [oss-security] Re: CVE needed? / gnuchess 6.2.4 fixed user input buffer overflow
+Subject: Re: [oss-security] Prime example of a can of worms
+To: oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--=_zucker.schokokeks.org-13917-1453313518-0001-2
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-> http://lists.gnu.org/archive/html/bug-gnu-chess/2015-10/msg00002.html
-> http://svn.savannah.gnu.org/viewvc?view=rev&root=chess&revision=134
+On Wed, 20 Jan 2016 11:07:19 -0700
+Kurt Seifried <kseifried@redhat.com> wrote:
 
-> frontend/move.cc
+> Yes it would be bad:
+>=20
+> https://blog.shodan.io/duplicate-ssh-keys-everywhere/
+>=20
+> There was another analysis with even more worrying numbers but I
+> can't find it.
 
->> ValidateMove function that is expecting 128
+Not sure if that's what you meant, but may be:
+http://blog.sec-consult.com/2015/11/house-of-keys-industry-wide-https.html
 
-Use CVE-2015-8972.
+The more worrying part of that one is that they have not only found
+these in the wild, they also extracted the private keys from publicly
+available firmware images (and afaik plan to publish them).
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
+--=20
+Hanno B=C3=B6ck
+http://hboeck.de/
+
+mail/jabber: hanno@hboeck.de
+GPG: BBB51E42
+
+--=_zucker.schokokeks.org-13917-1453313518-0001-2
+Content-Type: application/pgp-signature
+Content-Transfer-Encoding: 7bit
+Content-Description: OpenPGP digital signature
+
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Version: GnuPG v2
 
-iQIcBAEBCAAGBQJYKhRRAAoJEHb/MwWLVhi2DwcP/1juLQPRJva94HfwKmS+gZhL
-yhKtVh9QtPrmwwBENu+m7q/DICQbzLMkm55OIxCqI/0IpH6UrSwV3ga1r1n8q6na
-+6Z3hWSsl6AlIZ7ACWSsQikoc9xSRibIG4DIFR9yX6KpRcFX6SxvzZ2gxM5riU4m
-sxreTblY5nqczyW7PT2gIOB93SBzsMnZDXf6eVJkNixuNb2zo0AAA32ccXjPCJJl
-u2dU9q6z6PfuyMWymhXjY31NXzZlm8upMdyrvx/xqdy8Crpw/RYY67AEa1k2l15X
-7C7v466fKnMmR3XYUVRLqnFjFdT2XAc11ITyl9HbXKPpsEbfTnUxiUgmpzIFU9y8
-jrRNdRtsY469RPTxDjZTnfnu8blcTK9CfhzeSWva0SEc0phVtjjyPR6xrNuhUmKh
-6714CVSSKtzbti2m2i/Aio6xfHef7RH7S8TcoEx5xnNHCJ77PPXEWPr2wkeSDeUc
-NEZpw6IV3rhtyOrGNhEWxtU+NOYgK1qGCkpPWfZX3loNVihNETODLD1VsH6YYS0l
-E5/wCzZ9Bu3k9qWgd9VTJQKZ/Jkfg/q4MCFcTqeqDNmEOrg+I8uJegsikwGnLij3
-i79vBgnNt2nVmKIbNsX59zRlfgRS81Ok+zoLrjHEitGsfGYBh26vn7x2l/oFGEgU
-l93Rb5Wp7wStDB4bzHHo
-=Gg4P
+iQIcBAEBCgAGBQJWn84VAAoJEKWIAHK7tR5CF1kQAL5Cins2+QOszyZXB6DotFwM
+5fIw3wGBsDtKCCgcjsw74vzHyHCK6EJKG4MlbUP+O9kAgCHTFfWKrimvLrkACp4y
+p5nxV3h59aieq1IXc9SzH1ndLOHRzqipQxhT05URTInPvl/jM2NjnDWzqyP3OB9F
+zmS8g1p2D1E9ns3ATmKHPt7kTmkEbyqKG5msaKTExxrtYKhNM6k1mjFhbXWuPnXU
+aAb+HxyBHi5PNp4bmhqnKm+weXEJewj1AXHWz579YfevoJpp33BfjwYrN8zU0X2d
+e444ExQAseeEBa+Ca1ymIKCXm3MTWVf8Ru8q2hhxp/TMR1/J1tECFEazWVRYDxtr
+mck4eHVBGH7hMo4x+GDcFacx6qX8zxTaIhbrSoqpSWGXfbPa484Qr4gPSJf9SY4O
+y2bLtg8eHEI7EjlI+0pX9Mjgbv+BD1KSoDj/EIaYt8Ci6tRykG4qvjbZlLuny7qp
+hXlas7qmNDAt4r7jj0Wbupl+FpJJlJK/3DSPJGOKRmWb2fql2mwCXbbmRWxex1jH
+ELeqlzeBrsX8tCkbZhlEXiG3j38WHhk0YpHuiU8q1MJMks5fSvxo9/cPDu/4kCiM
+nNdDXC5Ea9GvFfed+fQexQ0o2ifO3Wi38ctfFwKBdgbI4nRsO2keLl/gupaj8gup
++Mx/PJpFMgHt8PS5DtMg
+=1dDn
 -----END PGP SIGNATURE-----
+
+--=_zucker.schokokeks.org-13917-1453313518-0001-2--
