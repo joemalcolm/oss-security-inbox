@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["8951" "Monday" "1" "June" "2015" "21:11:32" "+0800" "=?ISO-8859-1?Q?wen=5Fguanxing?=" "wen_guanxing@venustech.com.cn" "<tencent_6A242535557CA1EC0DED28C3@qq.com>" "152" "[oss-security] CVE-2015-3210: PCRE Library Heap Overflow Vulnerability" nil nil nil "6" "2015060113:11:32" "[oss-security] CVE-2015-3210: PCRE Library Heap Overflow Vulnerability" (number mark "        wen_guanxing Jun  1  152/8951  " thread-indent "\"[oss-security] CVE-2015-3210: PCRE Library Heap Overflow Vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5053" "Wednesday" "20" "January" "2016" "10:25:42" "-0700" "Kurt Seifried" "kseifried@redhat.com" "<CANO=Ty0shFs5oAykxDPRsfMAw65bnEwCN7_m_df4j61XEpthBQ@mail.gmail.com>" "127" "Re: [oss-security] Prime example of a can of worms" "^Cc:" nil nil "1" "2016012017:25:42" "[oss-security] Prime example of a can of worms" (number mark "        kseifried@re Jan 20  127/5053  " thread-indent "\"Re: [oss-security] Prime example of a can of worms\"\n") "<87vb6o5fsm.fsf@alice.fifthhorseman.net>" ("<CANO=Ty18_pMLco8RdabsEbhs9sLahRhT_U93PGhDVwhcRaqzpQ@mail.gmail.com>" "<CAFRnB2Wrz=zexGonV5fHosVqfiOhNvA6Ya2YsCYyDkt7UE_0mw@mail.gmail.com>" "<20151019193411.GA15710@hunt>" "<87eggqmta9.fsf@alice.fifthhorseman.net>" "<20151021170113.128d3a8e@silentmaxx>" "<CANO=Ty0eLFpezes_WfNTN0eKj6u5BinhwBQkM6BR7PZPg3eCiA@mail.gmail.com>" "<20151023145631.GA21048@gremlin.ru>" "<CANO=Ty16P4GKb4HYtFugYsjufSZOBf+euv7O6WopKsAPuhKHtw@mail.gmail.com>" "<87vb6o5fsm.fsf@alice.fifthhorseman.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 18377 invoked by uid 550); 1 Jun 2015 13:12:07 -0000
+Received: (qmail 32698 invoked by uid 550); 20 Jan 2016 17:25:55 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,190 +11,165 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 18339 invoked from network); 1 Jun 2015 13:12:01 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=venustech.com.cn;
-	 h=x-mailer:message-id:date:date:content-transfer-encoding
-	:content-type:content-type:mime-version:subject:subject:to:from
-	:from; s=dkim; t=1433164090; x=1434028091; bh=/vZRNxillg+xFVOch9
-	mLtcxFtgEqlgstGKwFHXxfYNE=; b=MHLHYX6w1XusWdvQY20TSJoNwicSgnKPpc
-	j3ZLhbLullGaYxVmYTN3kq5i1V1P2CR/sCwUoikbyCGe1LAP9hWtWxDiW86drQ6c
-	UGjo4wSgQOa0rCrmD+ggeqX4/MsKk/tTGpWa5tyU5khS+gwTm4Rje7zQCr8spV9K
-	AOA4+nHJs=
-X-QQ-FEAT: pJFHdIvhWwPwUd/oyQQAYkTwxkDoIb8V+HL+DfUTCV2wTGLg7mOUKI1DSMKlA
-	5+E53eZG+KUiXNSJvBZ+hLZXfJ7eCePTThQSG5+dgxQS1RDNYDQXM6r2QztUdeIvnRRrBSU
-	cQ65L/djvbY0cLS4cdlXLs/7OUImjvY7aKjhqNxbEi03QKioEmX5rVKW21M6gHsVICa7wZ/
-	CK0f+30AhzQ==
-X-QQ-SSF: 00000000000000F000000000000000N
-X-HAS-ATTACH: no
-X-QQ-BUSINESS-ORIGIN: 2
-X-Originating-IP: 111.197.192.60
-X-QQ-STYLE: 
-X-QQ-mid: webmail802t1433164292t9539606
-Mime-Version: 1.0
-Content-Type: multipart/alternative;
-	boundary="----=_NextPart_556C5A04_0923FFB8_3FA8583B"
-Content-Transfer-Encoding: 8Bit
-X-Priority: 3
-Message-ID: <tencent_6A242535557CA1EC0DED28C3@qq.com>
-X-QQ-MIME: TCMime 1.0 by Tencent
-X-Mailer: QQMail 2.x
-X-QQ-Mailer: QQMail 2.x
-X-QQ-SENDSIZE: 520
-Date: Mon, 1 Jun 2015 21:11:32 +0800
-From: "=?ISO-8859-1?B?d2VuX2d1YW54aW5n?=" <wen_guanxing@venustech.com.cn>
+Received: (qmail 32677 invoked from network); 20 Jan 2016 17:25:54 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=ZiycsuTlDe5o/RmH1B55CVogCD0ZtXZ4Dz2JHk0D7mc=;
+        b=YA28ge6Xzr9dvITi73cFZ8SRILc+qaxukTgnMA68e68Azp4PfJXJoHYiW6/46ZnoGB
+         +5X1thOXIZcoGhsHCdYau/38qzkSPPl80L0DYEiKq7ASOr6VJC+PCGUL5bVY77JaxwZO
+         /nlefy0AhoGvhsWth90nrY52cP05cSjcbSpDrFDM0cJW09TGKFfvPd/jfgzUGEJSMs6Y
+         8ve+NJbVO1hC+MvDJ7hAWnDBygH7eueFBv833fxlgg0COMSOMgN4wlfnIz5b7Mb0jEVk
+         vRjf6zlqjoOetXTXVHuLj9DpKJMJscYDXzTUKCW6g3myo/icy2dyYWag7/NazWSLUunN
+         7TuQ==
+X-Gm-Message-State: ALoCoQmb0/pFsLsRCjE9MBtpdxCrGhsR6h1mowa0T1u8xSsY/Q97vF+zPNI0AyjcdzS3x911w0u2FrnD3GNzFt/u4q2ixFZaZghUB8DrDh118V1fDjoszBs=
+MIME-Version: 1.0
+X-Received: by 10.13.206.2 with SMTP id q2mr23654094ywd.76.1453310742746; Wed,
+ 20 Jan 2016 09:25:42 -0800 (PST)
+In-Reply-To: <87vb6o5fsm.fsf@alice.fifthhorseman.net>
+References: <CANO=Ty18_pMLco8RdabsEbhs9sLahRhT_U93PGhDVwhcRaqzpQ@mail.gmail.com>
+	<CAFRnB2Wrz=zexGonV5fHosVqfiOhNvA6Ya2YsCYyDkt7UE_0mw@mail.gmail.com>
+	<20151019193411.GA15710@hunt>
+	<87eggqmta9.fsf@alice.fifthhorseman.net>
+	<20151021170113.128d3a8e@silentmaxx>
+	<CANO=Ty0eLFpezes_WfNTN0eKj6u5BinhwBQkM6BR7PZPg3eCiA@mail.gmail.com>
+	<20151023145631.GA21048@gremlin.ru>
+	<CANO=Ty16P4GKb4HYtFugYsjufSZOBf+euv7O6WopKsAPuhKHtw@mail.gmail.com>
+	<87vb6o5fsm.fsf@alice.fifthhorseman.net>
+Message-ID: <CANO=Ty0shFs5oAykxDPRsfMAw65bnEwCN7_m_df4j61XEpthBQ@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=001a114da67e92166c0529c74692
+Cc: oss-security <oss-security@lists.openwall.com>
+Date: Wed, 20 Jan 2016 10:25:42 -0700
+From: Kurt Seifried <kseifried@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE-2015-3210: PCRE Library Heap Overflow Vulnerability
-To: "=?ISO-8859-1?B?b3NzLXNlY3VyaXR5?=" <oss-security@lists.openwall.com>
+Subject: Re: [oss-security] Prime example of a can of worms
+To: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
 
-------=_NextPart_556C5A04_0923FFB8_3FA8583B
-Content-Type: text/plain;
-	charset="ISO-8859-1"
-Content-Transfer-Encoding: base64
+--001a114da67e92166c0529c74692
+Content-Type: text/plain; charset=UTF-8
 
-SS4gU3VtbWFyeSBQQ1JFIGlzIGEgcmVndWxhciBleHByZXNzaW9uIEMgbGli
-cmFyeSBpbnNwaXJlZCBieSB0aGUgcmVndWxhciBleHByZXNzaW9uIGNhcGFi
-aWxpdGllcyBpbiB0aGUgUGVybCBwcm9ncmFtbWluZyBsYW5ndWFnZS4gVGhl
-IFBDUkUgbGlicmFyeSBpcyBpbmNvcnBvcmF0ZWQgaW50byBhIG51bWJlciBv
-ZiBwcm9taW5lbnQgcHJvZ3JhbXMsIHN1Y2ggYXMgQWRvYmUgRmxhc2gsIEFw
-YWNoZSwgTmdpbngsIFBIUC4gUENSRSBsaWJyYXJ5IGlzIHByb25lIHRvIGEg
-dnVsbmVyYWJpbGl0eSB3aGljaCBsZWFkcyB0byBIZWFwIE92ZXJmbG93LiBE
-dXJpbmcgdGhlIGNvbXBpbGF0aW9uIG9mIGEgbWFsZm9ybWVkIHJlZ3VsYXIg
-ZXhwcmVzc2lvbiwgbW9yZSBkYXRhIGlzIHdyaXR0ZW4gb24gdGhlIG1hbGxv
-Y2VkIGJsb2NrIHRoYW4gdGhlIGV4cGVjdGVkIHNpemUgb3V0cHV0IGJ5IGNv
-bXBpbGVfcmVnZXguIEV4cGxvaXRzIHdpdGggYWR2YW5jZWQgSGVhcCBGZW5n
-c2h1aSB0ZWNobmlxdWVzIG1heSBhbGxvdyBhbiBhdHRhY2tlciB0byBleGVj
-dXRlIGFyYml0cmFyeSBjb2RlIGluIHRoZSBjb250ZXh0IG9mIHRoZSB1c2Vy
-IHJ1bm5pbmcgdGhlIGFmZmVjdGVkIGFwcGxpY2F0aW9uLiAtLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0gSUkuIERlc2NyaXB0aW9uIExhdGVzdCB2ZXJzaW9uIG9m
-IFBDUkUgaXMgcHJvbmUgdG8gYSBIZWFwIE92ZXJmbG93IHZ1bG5lcmFiaWxp
-dHkgd2hpY2ggY291bGQgY2F1c2VkIGJ5IHRoZSBmb2xsb3dpbmcgcmVndWxh
-ciBleHByZXNzaW9uLiAvXig/UD1CKSgoP1A9QikoP0o6KD9QPEI+YykoP1A8
-Qj5hKD9QPUIpKSk+V0dYQ1JFRElUUykvIFRvIHJlcHJvZHVjZSB0aGUgcHJv
-YmxlbSwgd2UgY291bGQgdXNlIHBjcmV0ZXN0IHByb3ZpZGUgYnkgUENSRSBs
-aWJyYXJ5IG9yIGFwcGxpY2F0aW9ucyB3aGljaCBpcyB3cmFwcGVkIHdpdGgg
-UENSRSBzdWNoIGFzIFBIUC4gRm9yIHBjcmV0ZXN0LCBzaW1wbHkgdHlwZSB0
-aGUgcmVndWxhciBleHByZXNzaW9uIGFmdGVyIHRoZSByZT4gRm9yIFBIUCwg
-bGF0ZXN0IHZlcnNpb24gb2YgUEhQIDUuNi45ICh3cmFwcGVkIHdpdGggUENS
-RSA4LjM3KSBjb3VsZCBiZSB0cmlnZ2VyZWQgYnkgZm9sbG93aW5nIGNvZGUg
-c25pcHBldDogPD9waHAgcHJlZ19tYXRjaCgiL14oP1A9QikoKD9QPUIpKD9K
-Oig/UDxCPmMpKD9QPEI+YSg/UD1CKSkpPldHWENSRURJVFMpLyIsIkFETEFC
-IiwkYXJyKTsgPz4gRmlyc3QsIHBjcmVfY29tcGlsZTIgaW52b2tlIGNvbXBp
-bGVfcmVnZXgoKSB0byBjYWx1Y2F0ZSB0aGUgc2l6ZSBvZiBtZW1vcnkgdGhh
-dCBpcyB1c2VkIHRvIHNhdmUgdGhlIHJlZ3VsYXIgZXhwcmVzc2lvbi4gcmUg
-dGhlbiBwb2ludHMgdG8gdGhlIG5ldyBhbGxvY2F0ZWQgbWVtb3J5IHdpdGgg
-dGhlIHNpemUgYWJvdmUuIE5leHQsIHBjcmVfY29tcGlsZTIgaW52b2tlIGNv
-bXBpbGVfcmVnZXgoKSBhZ2FpbiB0byBmaWxsIHRoZSByZWd1bGFyIGV4cHJl
-c3Npb24gaW50byB0aGUgYWxsb2NhdGVkIG1lbW9yeS4gVGhlIHByb2JsZW0g
-aGVyZSBpcyB0aGF0IG1vcmUgZGF0YSBpcyB3cml0dGVuIHRoZW4gZXhwZWN0
-ZWQuIEZvbGxvd2luZyB0ZXN0IGlzIGNvbnZleWVkIHVuZGVyIEthbGkgTGlu
-dXggKGJhc2VkIG9uIERlYmlhbiB4NjQpIHdpdGggcGhwIDUuNi45OiA9PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PSBnZGIgcGhwIHBvYy5waHAgOTIxNyAgICByZSA9IChS
-RUFMX1BDUkUgKikoUFVCTChtYWxsb2MpKShzaXplKTsgKGdkYikgeC8xMGkg
-JHJpcCA9PiAweDQ2ZjNjYiA8cGhwX3BjcmVfY29tcGlsZTIrMjE4Nz46ICAg
-bW92ICAgIHJkaSxyYnAgICAgMHg0NmYzY2UgPHBocF9wY3JlX2NvbXBpbGUy
-KzIxOTA+OiAgIGNhbGwgICBRV09SRCBQVFIgW3JheF0gKGdkYikgeCAkcmJw
-ICAgIDB4OTc6ICAgICAgICBDYW5ub3QgYWNjZXNzIG1lbW9yeSBhdCBhZGRy
-ZXNzIDB4OTcgPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT0gU28gdGhlIGV4cGVjdGVkIHNp
-emUgb2YgdGhlIGFib3ZlIHJlZ3VsYXIgZXhwcmVzc2lvbiBpcyAweDk3ID0g
-MTUxLiBBbmQgdGhlIGJhc2UgYWRkcmVzcyBvZiBhbGxvY2F0ZWQgbWVtb3J5
-IGlzIDB4MTAwNzQ4MC4gSGVyZSBpcyB0aGUgbGF5b3V0IG9mIDB4MTAwNzQ4
-MCBqdXN0IGJlZm9yZSB0aGUgc2Vjb25kIGNvbXBpbGVfcmVnZXhwOiA9PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PSAoZ2RiKSB4LzE2MHggMHgxMDA3NDgwIDB4MTAwNzQ4
-MDogICAgIFsweDQ1ICAgIDB4NTIgICAgMHg0MyAgICAweDUwICAgIDB4OTcg
-ICAgMHgwMCAgICAweDAwICAgIDB4MDAgMHgxMDA3NDg4OiAgICAgIDB4MDAg
-ICAgMHgwMCAgICAweDAwICAgIDB4MDAgICAgMHgwMCAgICAweDA0ICAgIDB4
-MDAgICAgMHgwMCAweDEwMDc0OTA6ICAgICAgMHhmZiAgICAweGZmICAgIDB4
-ZmYgICAgMHhmZiAgICAweGZmICAgIDB4ZmYgICAgMHhmZiAgICAweGZmIDB4
-MTAwNzQ5ODogICAgICAweDAwICAgIDB4MDAgICAgMHgwMCAgICAweDAwICAg
-IDB4MDAgICAgMHgwMCAgICAweDAwICAgIDB4MDAgMHgxMDA3NGEwOiAgICAg
-IDB4MDAgICAgMHgwMCAgICAweDQwICAgIDB4MDAgICAgMHgwNCAgICAweDAw
-ICAgIDB4MDIgICAgMHgwMCAweDEwMDc0YTg6ICAgICAgMHgwMCAgICAweDAw
-ICAgIDB4MDAgICAgMHgwMCAgICAweDAwICAgIDB4MDAgICAgMHgwMCAgICAw
-eDAwIDB4MTAwNzRiMDogICAgICAweGQwICAgIDB4N2EgICAgMHgwMCAgICAw
-eDAxICAgIDB4MDAgICAgMHgwMCAgICAweDAwICAgIDB4MDAgMHgxMDA3NGI4
-OiAgICAgIDB4MDAgICAgMHgwMCAgICAweDAwICAgIDB4MDAgICAgMHgwMCAg
-ICAweDAwICAgIDB4MDAgICAgMHgwMCAweDEwMDc0YzA6ICAgICAgMHgwMCAg
-ICAweDAyICAgIDB4NDIgICAgMHgwMCAgICAweDAwICAgIDB4MDMgICAgMHg0
-MiAgICAweDAwIDB4MTAwNzRjODogICAgICAweDgzICAgIDB4MDAgICAgMHgw
-MCAgICAweDAwICAgIDB4MDAgICAgMHgwMCAgICAweDAwICAgIDB4MDAgMHgx
-MDA3NGQwOiAgICAgIDB4MDAgICAgMHgwMCAgICAweDAwICAgIDB4MDAgICAg
-MHgwMCAgICAweDAwICAgIDB4MDAgICAgMHgwMCAweDEwMDc0ZDg6ICAgICAg
-MHgwMCAgICAweDAwICAgIDB4MDAgICAgMHgwMCAgICAweDAwICAgIDB4MDAg
-ICAgMHgwMCAgICAweDAwIDB4MTAwNzRlMDogICAgICAweDAwICAgIDB4MDAg
-ICAgMHgwMCAgICAweDAwICAgIDB4MDAgICAgMHgwMCAgICAweDAwICAgIDB4
-MDAgMHgxMDA3NGU4OiAgICAgIDB4ODAgICAgMHg0OCAgICAweGQ4ICAgIDB4
-ZjYgICAgMHhmZiAgICAweDdmICAgIDB4MDAgICAgMHgwMCAweDEwMDc0ZjA6
-ICAgICAgMHhmZiAgICAweGZmICAgIDB4ZmYgICAgMHhmZiAgICAweDAwICAg
-IDB4MDAgICAgMHgwMCAgICAweDAwIDB4MTAwNzRmODogICAgICAweDAwICAg
-IDB4MDAgICAgMHgwMCAgICAweDAwICAgIDB4MDAgICAgMHgwMCAgICAweDAw
-ICAgIDB4MDAgMHgxMDA3NTAwOiAgICAgIDB4MDAgICAgMHgwMCAgICAweDAw
-ICAgIDB4MDAgICAgMHgwMCAgICAweDAwICAgIDB4MDAgICAgMHgwMCAweDEw
-MDc1MDg6ICAgICAgMHg2MCAgICAweDc1ICAgIDB4MDAgICAgMHgwMSAgICAw
-eDAwICAgIDB4MDAgICAgMHgwMCAgICAweDAwIDB4MTAwNzUxMDogICAgICAw
-eGZmICAgIDB4ZmYgICAgMHhmZiAgICAweGZmICAgIDB4ZmYgICAgMHhmZiAg
-ICAweGZmXSAgIDB4ZmYgMHgxMDA3NTE4OiAgICAgIDB4YTEgICAgMHgwMSAg
-ICAweDAwICAgIDB4MDAgICAgMHgwMCAgICAweDAwICAgIDB4MDAgICAgMHgw
-MCA9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PSBBZnRlciB0aGUgc2Vjb25kIGNvbXBpbGVf
-cmVnZXhwOiA9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PSAoZ2RiKSB4LzE2MHggMHgxMDA3
-NDgwIDB4MTAwNzQ4MDogICAgIFsweDQ1ICAgIDB4NTIgICAgMHg0MyAgICAw
-eDUwICAgIDB4OTcgICAgMHgwMCAgICAweDAwICAgIDB4MDAgMHgxMDA3NDg4
-OiAgICAgIDB4MDAgICAgMHgwMCAgICAweDAwICAgIDB4MDAgICAgMHgwMCAg
-ICAweDA0ICAgIDB4MDAgICAgMHgwMCAweDEwMDc0OTA6ICAgICAgMHhmZiAg
-ICAweGZmICAgIDB4ZmYgICAgMHhmZiAgICAweGZmICAgIDB4ZmYgICAgMHhm
-ZiAgICAweGZmIDB4MTAwNzQ5ODogICAgICAweDAwICAgIDB4MDAgICAgMHgw
-MCAgICAweDAwICAgIDB4MDAgICAgMHgwMCAgICAweDAwICAgIDB4MDAgMHgx
-MDA3NGEwOiAgICAgIDB4MDAgICAgMHgwMCAgICAweDQwICAgIDB4MDAgICAg
-MHgwNCAgICAweDAwICAgIDB4MDIgICAgMHgwMCAweDEwMDc0YTg6ICAgICAg
-MHgwMCAgICAweDAwICAgIDB4MDAgICAgMHgwMCAgICAweDAwICAgIDB4MDAg
-ICAgMHgwMCAgICAweDAwIDB4MTAwNzRiMDogICAgICAweGQwICAgIDB4N2Eg
-ICAgMHgwMCAgICAweDAxICAgIDB4MDAgICAgMHgwMCAgICAweDAwICAgIDB4
-MDAgMHgxMDA3NGI4OiAgICAgIDB4MDAgICAgMHgwMCAgICAweDAwICAgIDB4
-MDAgICAgMHgwMCAgICAweDAwICAgIDB4MDAgICAgMHgwMCAweDEwMDc0YzA6
-ICAgICAgMHgwMCAgICAweDAyICAgIDB4NDIgICAgMHgwMCAgICAweDAwICAg
-IDB4MDMgICAgMHg0MiAgICAweDAwIDB4MTAwNzRjODogICAgICAweDgzICAg
-IDB4MDAgICAgMHg1MSAgICAweDFiICAgIDB4NzMgICAgMHgwMCAgICAweDAw
-ICAgIDB4MDAgMHgxMDA3NGQwOiAgICAgIDB4MDIgICAgMHg4NSAgICAweDAw
-ICAgIDB4NDUgICAgMHgwMCAgICAweDAxICAgIDB4NzMgICAgMHgwMCAweDEw
-MDc0ZDg6ICAgICAgMHgwMCAgICAweDAwICAgIDB4MDIgICAgMHg4MyAgICAw
-eDAwICAgIDB4MjIgICAgMHg4NSAgICAweDAwIDB4MTAwNzRlMDogICAgICAw
-eDA3ICAgIDB4MDAgICAgMHgwMiAgICAweDFkICAgIDB4NjMgICAgMHg3OCAg
-ICAweDAwICAgIDB4MDcgMHgxMDA3NGU4OiAgICAgIDB4ODEgICAgMHgwMCAg
-ICAweDEyICAgIDB4ODUgICAgMHgwMCAgICAweDBjICAgIDB4MDAgICAgMHgw
-MyAweDEwMDc0ZjA6ICAgICAgMHgxZCAgICAweDYxICAgIDB4NzMgICAgMHgw
-MCAgICAweDAwICAgIDB4MDAgICAgMHgwMiAgICAweDc4IDB4MTAwNzRmODog
-ICAgICAweDAwICAgIDB4MGMgICAgMHg3OCAgICAweDAwICAgIDB4MTIgICAg
-MHg3OCAgICAweDAwICAgIDB4MjIgMHgxMDA3NTAwOiAgICAgIDB4MWQgICAg
-MHgzZSAgICAweDFkICAgIDB4NTcgICAgMHgxZCAgICAweDQ3ICAgIDB4MWQg
-ICAgMHg1OCAweDEwMDc1MDg6ICAgICAgMHgxZCAgICAweDQzICAgIDB4MWQg
-ICAgMHg1MiAgICAweDFkICAgIDB4NDUgICAgMHgxZCAgICAweDQ0IDB4MTAw
-NzUxMDogICAgICAweDFkICAgIDB4NDkgICAgMHgxZCAgICAweDU0ICAgIDB4
-MWQgICAgMHg1MyAgICAweDc4XSAgKjB4MDAgMHgxMDA3NTE4OiAgICAgKjB4
-NDUgICAqMHg3OCAgICoweDAwICAgKjB4NTEgICAgMHgwMCAgICAweDAwICAg
-IDB4MDAgICAgMHgwMCA9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PSBPYnZpb3VzbHksIDUg
-bW9yZSBieXRlcyBpcyB3cml0dGVuIG9uIHRoZSBoZWFwIGluIHRoaXMgY2Fz
-ZS4gVGhpcyBvdmVyZmxvdyBjYW4gYmUgdXNlZCB0byBtb2RpZnkgYWRqYWNl
-bnQgbGVuZ3RoIGZpZWxkIG9mIGFycmF5L3ZlY3Rvci9zdHJpbmcsIGdhaW5p
-bmcgdGhlIGF0dGFja2VyIHRoZSBhYmlsaXR5IHRvIHJlYWQvd3JpdGUgdGhl
-IHdob2xlIG1lbW9yeSAgaW4gdGhlIGNvbnRleHQgb2YgdGhlIGFmZmVjdGVk
-IGFwcGxpY2F0aW9uIChUaGUgc2FtZSB0cmljayBhcyBDVkUtMjAxMy0wNjM0
-KS4gLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tIElJSS4gSW1wYWN0IEhlYXAgT3Zl
-cmZsb3cgLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tIElWLiBBZmZlY3RlZCBQQ1JF
-IHZlcnNpb24gPiA4LjMzICg4LjM0LCA4LjM1LCA4LjM2LCA4LjM3IGFyZSBj
-b25maXJtZWQgdG8gYmUgdnVsbmVyYWJsZSkuIFBDUkUyIDEwLjEwIGlzIGFs
-c28gY29uZmlybWVkIHRvIGJlIHZ1bG5lcmFibGUuICBPdGhlciBhcHBsaWNh
-dGlvbnMgbWF5IGFsc28gYmUgYWZmZWN0ZWQuIC0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLSBWLiBDcmVkaXQgV2VuIEd1YW54aW5nIGZyb20gVmVudXN0ZWNoIEFE
-TEFCIGlzIGNyZWRpdGVkIGZvciB0aGlzIHZ1bG5lcmFiaWxpdHku
+On Wed, Jan 20, 2016 at 10:20 AM, Daniel Kahn Gillmor <dkg@fifthhorseman.net
+> wrote:
 
-------=_NextPart_556C5A04_0923FFB8_3FA8583B--
+> Hi Kurt--
+>
+> On Wed 2016-01-20 10:45:07 -0500, Kurt Seifried wrote:
+> > I finally got the article written and published, it's at:
+> >
+> > https://securityblog.redhat.com/2016/01/20/primes-parameters-and-moduli/
+>
+> Thanks for this writeup!
+>
+> the chart at
+>
+> https://securityblog.redhat.com/wp-content/uploads/2015/12/DH-Param-Compromise-300x269.jpg
+> uses the terms "keys" in the axis labels, but i think you mean "primes"
+> or "moduli".
+>
 
+Sorry yes, although this also applies equally to keys/etc.
+
+
+>
+> > TL;DR: I found a lot of messy problems and no really good solutions. But
+> > ultimately we need to start using bigger keys/primes or this is all just
+> a
+> > waste of compute time (might as well go back to clear text).
+>
+> yes, larger primes are clearly needed.
+>
+> The discussion gets a little ways into the issue of negotiating primes
+> between peers, but doesn't address some underlying issues.
+>
+> For one, the writeup addresses probabilistic primality tests, but
+> doesn't describe proofs of primality, which are significantly more
+> expensive to generate (and still probably more expensive to verify than
+> a short Miller-Rabin test).  But these proofs provide certainty in a way
+> that probabilistic tests might not.  If we're talking about runtime
+> primality checking when communicating with a potential adversary, are
+> there proofs about the (im)possibility of generating a pseudoprime that
+> is more or less likely to pass a miller-rabin test?
+>
+
+I looked at this a bit and quite honestly the computational time involved
+is just to much to be useful, unless we're talking about generating a small
+set of highly trusted primes. For normal people, this just isn't feasible
+(witness prime generation taking between less then a second, and more than
+10 minutes, nobody wants to wait 10 minutes...).
+
+
+>
+> Additionally, the fact that the modulus is prime is an insufficient test
+> -- it needs to be a prime of a certain structure, or else the remote
+> peer can force the user into a small subgroup, which can lead to
+> unknown-key-share attacks, key factorization, or other problems.
+>
+> One approach is to require that moduli be safe primes (p = (q*2) + 1,
+> where q is also prime) and to verify that the peer's public share k is
+> in the range 1 < k < p-1 to avoid the small-subgroup attack of size 2.
+> This appears to be the best we know how to do with diffie hellman over
+> finite fields, but it limits the range of acceptable moduli even
+> further, and requires two primality tests for the peer seeing the primes
+> for the first time.
+>
+> It's also worth noting that we have a similar concern with elliptic
+> curve DH (ECDH) -- the structure of the curve itself (which is the
+> equivalent of the generator and the modulus for finite-field diffie
+> hellman) is relevant to the security of the key exchange.
+>
+
+Yup, that was a lesson learned.
+
+
+>
+> In the ECDH space, there appears to be little argument about trying to
+> use a diversity of groups: while many specifications provide ways to use
+> custom (generically-specified) curves, pretty much no one uses them in
+> practice, and the custom-curve implementations are likely to be both
+> inefficient and leaky (to say nothing of the difficulty of verifying
+> that the offered curve is well-structured at runtime).  Indeed, the bulk
+> of the discussion around ECDH is about picking a small handful of good
+> curves that we can publicly vet, and then using those specific curves
+> everywhere (see curve 25519 and goldilocks 448, the CFRG's upcoming
+> recommendations).
+>
+> Encouraging peers to select a diversity of large custom groups in for
+> finite-field DH seems likely to be slow (additional runtime checks, no
+> optimized implementations), buggy (missing or inadequate runtime checks,
+> side-channel leakage), and bandwidth-heavy (the moduli themselves must
+> be transmitted in addition to the public keys), and as you say, the
+> diversity of groups doesn't win you as much as just switching to larger
+> groups in the first place.
+>
+> I agree that we need machinery in place to be able to relatively easily
+> drop believed-weak, widely-shared groups, and to introduce new
+> widely-shared groups.  But i'm not convinced that encouraging the use of
+> a diversity of groups is really the "Best Default/Operational" tradeoff,
+> as it is indicated in your chart, given the concerns above.
+>
+
+Agreed, I listed the diversity more as a stop-gap for the cases where
+people have older hard/software (e.g. Java) that will never support larger
+primes/keys. At least then you don't get caught in dragnets for the
+default/commonly used primes.
+
+
+>
+> Thanks very much for your analysis.
+>
+> Regards,
+>
+>         --dkg
+>
+
+
+
+-- 
+
+--
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@redhat.com
+
+--001a114da67e92166c0529c74692--
