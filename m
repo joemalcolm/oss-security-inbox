@@ -1,76 +1,147 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/08/2
-Message-ID: <CAF50zSoHrRWRy5aZ0GBG8RYwjzs4y1tWw_PfvEJaa-n7f+O+FA@mail.gmail.com>
-Date: Mon, 7 Mar 2016 18:31:22 -0700
-From: distributed weaknessfiling <distributedweaknessfiling@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Distributed Weakness Filing (DWF) System
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/20/4
+Message-Id: <E1aLrZ9-0003RR-Dg@xenbits.xen.org>
+Date: Wed, 20 Jan 2016 12:08:47 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 168 (CVE-2016-1571) - VMX: intercept issue with INVLPG on non-canonical address
 Content-Type: text/plain; charset=utf-8
 
-So in the interests of full disclosure and transparency I (Kurt Seifried)
-am writing this email as an individual and member of the DWF System, and
-not as an employee of Red Hat. Please note that although I have a day job
-at Red Hat I also (like many information security people) work on other
-projects in my personal life, either because they are not work related, or
-because it's simply not appropriate to work on the project as part of my
-day job (in this case it's less about Red Hat, and more about the fact that
-as a Red Hat Employee I am a member of the CVE Editorial Board).
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I have increasingly noticed problems with Mitre's handling of the CVE
-database. This has come to a head now that I have multiple, confirmed,
-public reports of security researchers being unable to get CVE numbers
-assigned to them in a timely manner, if at all. As such the solution is
-simple:
+            Xen Security Advisory CVE-2016-1571 / XSA-168
+                              version 3
 
-We need a distributed, scale out method for assigning vulnerability
-identifiers that is as compatible with the existing CVE system as possible.
-Not just in terms of format but in terms of process and usage. As such I
-took on the task, creating the DWF system and getting a number of other
-people involved (Larry Cashdollar, Zachary Wikholm, Josh Bressers, etc.).
-My goal is to create a simple system for assigning vulnerability
-identifiers that relies on the community and not a single entity or
-organization. Additionally I want to reduce the time and effort needed to
-get identifiers, something best achieved by pushing assigning out to as
-close to the vulnerability discover/handling as possible.
+       VMX: intercept issue with INVLPG on non-canonical address
 
-With this in mind we have created a system that has several main components:
+UPDATES IN VERSION 3
+====================
 
-1) Documentation and Guidelines for how this whole thing works (
-https://github.com/distributedweaknessfiling/DWF-Documentation/)
+Public release.
 
-2) DWF Numbering authorities that can self assign DWF numbers, or assign on
-behalf of people that need DWF numbers but are not a numbering authority (
-https://github.com/distributedweaknessfiling/DNA-Registry)
+ISSUE DESCRIPTION
+=================
 
-3) A database of DWF entries (
-https://github.com/distributedweaknessfiling/DWF-Database)
+While INVLPG does not cause a General Protection Fault when used on a
+non-canonical address, INVVPID in its "individual address" variant,
+which is used to back the intercepted INVLPG in certain cases, fails in
+such cases. Failure of INVVPID results in a hypervisor bug check.
 
-4) A database of artifacts, files and related files for DWF entries (so
-that when websites disappear the required content is hopefully still
-available) (
-https://github.com/distributedweaknessfiling/DWF-Database-Artifacts)
+IMPACT
+======
 
-There are 4 primary ways to get a DWF identifier:
+A malicious guest can crash the host, leading to a Denial of Service.
 
-1) If you already have a CVE identifier you can map it directly to DWF,
-e.g. CVE-2000-1234 maps directly to DWF-2000-1234.
+VULNERABLE SYSTEMS
+==================
 
-2) If you are a DWF Numbering Authority (DNA) (
-https://github.com/distributedweaknessfiling/DNA-Registry) you can self
-assign a DWF to the issue(s).
+Xen versions from 3.3 onwards are affected.
 
-3) You can request a DWF from a DNA, this is ideal if the DNA is associated
-with the flawed software, or the DNA will assist in the handling of the
-security vulnerability.
+Only systems using Intel or Cyrix CPUs are affected. ARM and AMD
+systems are unaffected.
 
-4) You can request a DWF directly either via PULL request in GitHUB to the
-DWF Database (https://github.com/distributedweaknessfiling/DWF-Database) or
-by emailing us at distributedweaknessfiling@...il.com.
-Please note that the DWF would be happy to work with any and all entities
-(including Mitre!) with respect to making DWF better, or helping integrate
-the efforts of others.
+Only HVM guests using shadow mode paging can expose this
+vulnerability.  PV guests, and HVM guests using Hardware Assisted
+Paging (also known as EPT on affected hardware), are unaffected.
 
-https://distributedweaknessfiling.org
+Note that while unsupported, guests with enabled nested virtualization
+are vulnerable even when using EPT.
 
--Kurt Seifried
+CHECKING FOR VULNERABLE CONFIGURATION
+=====================================
 
+To discover whether your HVM guests are using HAP, or shadow page
+tables: request debug key `q' (from the Xen console, or with
+`xl debug-keys q').  This will print (to the console, and visible in
+`xl dmesg'), debug information for every domain, containing something
+like this:
+
+  (XEN) General information for domain 2:
+  (XEN)     refcnt=1 dying=2 pause_count=2
+  (XEN)     nr_pages=2 xenheap_pages=0 shared_pages=0 paged_pages=0 dirty_cpus={} max_pages=262400
+  (XEN)     handle=ef58ef1a-784d-4e59-8079-42bdee87f219 vm_assist=00000000
+  (XEN)     paging assistance: hap refcounts translate external
+                               ^^^
+The presence of `hap' here indicates that the host is not
+vulnerable to this domain.  For an HVM domain the presence of `shadow'
+indicates that the domain can exploit the vulnerability.
+
+Note that `General information' will also be printed for PV domains.
+For most PV domains there will be no `paging assistance' reported.
+But PV guests currently being migrated will report
+  (XEN)     paging assistance: shadow log_dirty
+
+Overall: a domain can exploit the vulnerability if this debug output
+contains a `paging assistance' line which reports `translate' and
+which does not report `hap'.
+
+MITIGATION
+==========
+
+Running only PV guests will avoid this vulnerability.
+
+Running HVM guests on only AMD hardware will also avoid this
+vulnerability.
+
+Running HVM guests with Hardware Assisted Paging (HAP) enabled will
+also avoid this vulnerability.  This is the default mode on hardware
+supporting HAP, but can be overridden by hypervisor command line
+option and guest configuration setting.  Such overrides ("hap=0" in
+either case, with variants like "no-hap" being possible in the
+hypervisor command line case) would need to be removed to avoid this
+vulnerability.
+
+CREDITS
+=======
+
+This issue was discovered by Jan Beulich of SUSE.
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue.
+
+xsa168.patch      xen-unstable, Xen 4.6.x, Xen 4.5.x, Xen 4.4.x, Xen 4.3.x
+
+$ sha256sum xsa168*
+c95198a66485d6e538d113ce2b84630d77c15f597113c38fadd6bf1e24e4c8ec  xsa168.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQEcBAEBAgAGBQJWn3dEAAoJEIP+FMlX6CvZLaAH/A1FzwQebCOF0MCEMcM9V/zK
+At3L0XG5oBiVZVpbXAfYULeKaLtTGLBXqhBJjzej0FypCvEYX6BLBITLsw7kMqoW
+JSYHNHlg4pLH2Wnf6i3fVC7EIHx5XNuDa8Zeyt73wEFJhVpp43PcMwMzBolTUBmP
++f5WDkLYflYXv+0XiHfbBLA2fl+K+A5OdDhKgjPZJouGvdfiZxX7EChR0asmmD1i
+AbSZYTLGhdlSU+fvw+w2XUYSeINS1FEhsZxMbWMVuz7jmPBmOn6u8NLrBdZatYoE
+Z2Fly81pWD7KDwusVscoLBdmBmI1Wr3u975j5EkQLbsCTsqo5ayP3BpfsieijIg=
+=UJX5
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa168.patch" of type "application/octet-stream" (1005 bytes)
