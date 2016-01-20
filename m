@@ -1,25 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/16/3
-Message-ID: <56C32F61.1010306@redhat.com>
-Date: Tue, 16 Feb 2016 15:17:05 +0100
-From: Florian Weimer <fweimer@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2015-7547: stack-based buffer overflow in glibc's getaddrinfo function
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/20/11
+Message-ID: <87lh7k5dxs.fsf@alice.fifthhorseman.net>
+Date: Wed, 20 Jan 2016 13:00:15 -0500
+From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: Prime example of a can of worms
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Wed 2016-01-20 12:25:42 -0500, Kurt Seifried wrote:
+> Sorry yes, although this also applies equally to keys/etc.
 
-today, we are disclosing a vulnerability in the nss_dns backend for
-getaddrinfo, related to handling dual A/AAAA queries:
+sure, though i hope we're not in a "few keys" scenario, that would
+definitely be bad :)
 
-The security impact of this issue was discovered roughly at the same
-time by the Google Security Team and Red Hat.
+> [dkg wrote:]
+>> For one, the writeup addresses probabilistic primality tests, but
+>> doesn't describe proofs of primality, which are significantly more
+>> expensive to generate (and still probably more expensive to verify than
+>> a short Miller-Rabin test).  But these proofs provide certainty in a way
+>> that probabilistic tests might not.  If we're talking about runtime
+>> primality checking when communicating with a potential adversary, are
+>> there proofs about the (im)possibility of generating a pseudoprime that
+>> is more or less likely to pass a miller-rabin test?
+>
+> I looked at this a bit and quite honestly the computational time involved
+> is just to much to be useful, unless we're talking about generating a small
+> set of highly trusted primes. For normal people, this just isn't feasible
+> (witness prime generation taking between less then a second, and more than
+> 10 minutes, nobody wants to wait 10 minutes...).
 
-Background information:
+right, i'm not suggesting that proof generation be done at runtime, just
+that it is an example of a stronger guarantee than we have for runtime
+checks, and that it *only* applies to the "generating a small set of
+highly-trusted primes" case.
 
-  https://sourceware.org/ml/libc-alpha/2016-02/msg00416.html
+> Agreed, I listed the diversity more as a stop-gap for the cases where
+> people have older hard/software (e.g. Java) that will never support larger
+> primes/keys. At least then you don't get caught in dragnets for the
+> default/commonly used primes.
 
-https://googleonlinesecurity.blogspot.com/2016/02/cve-2015-7547-glibc-getaddrinfo-stack.html
+I agree with this analysis, but the chart in the middle of your paper
+makes it looks like the diversity is "best", while the "small set of
+heavily-evaluated primes" (i'm assuming that's what's meant with the
+"few keys" side of the X axis) is merely "good".
 
-Thanks,
-Florian
+     --dkg
