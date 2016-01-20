@@ -1,25 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/11/3
-Message-ID: <20160611055627.GA26999@1wt.eu>
-Date: Sat, 11 Jun 2016 07:56:27 +0200
-From: Willy Tarreau <w@....eu>
-To: John Johansen <john.johansen@...onical.com>
-Cc: oss-security@...ts.openwall.com, Jann Horn <jannh@...gle.com>, Tyler Hicks <tyhicks@...onical.com>, "security@...nel.org" <security@...nel.org>
-Subject: Re: [vs-plain] Linux kernel stack overflow via ecryptfs and /proc/$pid/environ
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/20/17
+Message-ID: <569FEAAD.1090800@redhat.com>
+Date: Wed, 20 Jan 2016 20:14:37 +0000
+From: Tristan Cacqueray <tdecacqu@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: [OSSA 2016-004] Swift proxy-server DoS through Large Object (CVE-2016-0737, CVE-2016-0738)
 Content-Type: text/plain; charset=utf-8
 
-John, Jann,
+==========================================================
+OSSA-2016-004: Swift proxy-server DoS through Large Object
+==========================================================
 
-On Fri, Jun 10, 2016 at 02:46:23PM -0700, John Johansen wrote:
-> The flaw in eCryptfs was assigned CVE-2016-1583.
-> 
-> If backporting these patches to kernels pre 4.6 you may need to
-> cherry-pick patch 6a480a7842545ec520a91730209ec0bae41694c1
+:Date: January 20, 2016
+:CVE: CVE-2016-0737 (client to proxy), CVE-2016-0738 (proxy to server)
 
-In the future, please add such precious information to the relevant
-commit message, because it significantly helps doing backports and
-everyone does not necessarily read a security list archives at the
-same time.
 
-Thanks!
-Willy
+Affects
+~~~~~~~
+- Swift: >=2.2.1 <= 2.3.0, >= 2.4.0 <= 2.5.0
+
+
+Description
+~~~~~~~~~~~
+Romain LE DISEZ from OVH and Örjan Persson from Kiliaro independently
+reported two vulnerabilities in Swift Large Object. By repeatedly
+requesting and interrupting connections to a Large Object (Dynamic or
+Static) URL, a remote attacker may exhausts Swift proxy-server
+resources, potentially resulting in a denial of service. Note that
+there are two distinct bugs that can exhaust proxy resources, one for
+client connection (client to proxy), one for servers connection (proxy
+to server). All Swift setup are affected.
+
+
+Patches
+~~~~~~~
+- https://review.openstack.org/217750 (client to proxy) (Kilo)
+- https://review.openstack.org/270234 (proxy to server) (Kilo)
+- https://review.openstack.org/270235 (proxy to server) (Liberty)
+- https://review.openstack.org/270233 (proxy to server) (Mitaka)
+
+
+Credits
+~~~~~~~
+- Romain LE DISEZ from OVH (CVE-2016-0737)
+- Örjan Persson from Kiliaro (CVE-2016-0738)
+
+
+References
+~~~~~~~~~~
+- https://bugs.launchpad.net/bugs/1466549 (client to proxy)
+- https://bugs.launchpad.net/bugs/1493303 (proxy to server)
+- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-0737 (client
+  to proxy)
+- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-0738 (proxy to
+  server)
+
+
+Notes
+~~~~~
+- The client to proxy issue (CVE-2016-0737) is already fixed in Liberty
+- The remaining fix will be included in future 2.3.1 (Kilo) and 2.5.1
+  (Liberty) releases.
+
+-- 
+Tristan Cacqueray
+OpenStack Vulnerability Management Team
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
