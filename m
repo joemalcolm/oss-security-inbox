@@ -1,4 +1,9 @@
-Received: (qmail 7700 invoked by uid 550); 6 Sep 2023 09:58:44 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1524" "Wednesday" "20" "January" "2016" "11:18:39" "-0800" "Reed Loden" "reed@reedloden.com" "<CALPTtNX+xVz+Uf=tTUMp7a+NKdUp=CYGip8a5+YcFGwZsXhJ-A@mail.gmail.com>" "42" "[oss-security] CVE request: Two vulnerabilities in git-fastclone ruby gem" nil nil nil "1" "2016012019:18:39" "[oss-security] CVE request: Two vulnerabilities in git-fastclone ruby gem" (number mark "U       reed@reedlod Jan 20   42/1524  " thread-indent "\"[oss-security] CVE request: Two vulnerabilities in git-fastclone ruby gem\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 5673 invoked by uid 550); 20 Jan 2016 19:19:10 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,39 +12,77 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 16340 invoked from network); 6 Sep 2023 09:34:56 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Daniel Gaspar <dpgaspar@apache.org>
-To: oss-security@lists.openwall.com
-Message-ID: <23a4e7b4-1db4-9ab1-0a79-48484874b5b3@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Wed, 06 Sep 2023 09:34:41 +0000
+Received: (qmail 5655 invoked from network); 20 Jan 2016 19:19:10 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=reedloden.com; s=google;
+        h=mime-version:from:date:message-id:subject:to:cc:content-type;
+        bh=MhAomhCpovoZ2vy13ohwcCUfqZ7c4FUv4a5NgeJtawE=;
+        b=FVKsTeNzuvPwdG1n5+giy/qtmhSYMCURDDYoMCQQpKlGin/ZyQ1IMR09ZMda3wjM9/
+         R5owgSxH5YhwxpMuBLttGQu8oIm60yrKFaIAqUBBP2ie0K82Iqd1ieD20YpeCMY5EDBS
+         e97IC26cOXTKPld9BTORnXs2jPYoyR6gP8Dfg=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc
+         :content-type;
+        bh=MhAomhCpovoZ2vy13ohwcCUfqZ7c4FUv4a5NgeJtawE=;
+        b=WDbMrpsPSuDy0Z5TxW05tNFfLuwA96SEnzBogwF8Eda6RW0tY9h1h6tFffE8QwVTzY
+         5DzkqLa0m7TGQP3rSEAlG5UOa5hniDo7dLsbf73Aih8L2kP0tddU75h4R3UBF444JEMO
+         TL3J82zQW55Kkt3uBWciFyU3khMKHIqNfUlENVoddbtKkkg8SnjaaHTHA44tLvqQrgwW
+         6F/l7ft1zQ+F7njzrRU3Oes7NFbFx+IauDoLyOJHflVg7QYzZKvWV7SQ2mkzx/sp02FU
+         /tRzz8BCiYob0F8CiawnWFfy3yoK0LEBAfa8e8KSa7wMETffVummVqRfVA09b51+fp06
+         92Pw==
+X-Gm-Message-State: AG10YOSQNEpuFJOmbLNJU93WEkRXS8xsnGvMhSfCQ93XIuwwGoj7wEpoKn/NSmimd1LatyL85SdTCuyft6GvCIxL
+X-Received: by 10.182.102.136 with SMTP id fo8mr27387745obb.11.1453317538441;
+ Wed, 20 Jan 2016 11:18:58 -0800 (PST)
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2023-39265: Apache Superset: Possible Unauthorized
- Registration of SQLite Database Connections 
+From: Reed Loden <reed@reedloden.com>
+Date: Wed, 20 Jan 2016 11:18:39 -0800
+Message-ID: <CALPTtNX+xVz+Uf=tTUMp7a+NKdUp=CYGip8a5+YcFGwZsXhJ-A@mail.gmail.com>
+To: oss-security@lists.openwall.com, 
+	Assign a CVE Identifier <cve-assign@mitre.org>
+Cc: Blake Burkhart <bburky@bburky.com>
+Content-Type: text/plain; charset=UTF-8
+Subject: [oss-security] CVE request: Two vulnerabilities in git-fastclone ruby gem
 
-Affected versions:
+Blake Burkhart (@bburky) recently reported two issues to Square via their
+open source bug bounty program (https://hackerone.com/square-open-source)
+concerning their `git-fastclone` ruby gem.
 
-- Apache Superset through 2.1.0
+git-fastclone is "A git command that uses reference repositories and threading
+to quickly and recursively clone repositories with many nested submodules."
 
-Description:
+Homepage: https://github.com/square/git-fastclone
 
-Apache Superset would allow for SQLite database connections to be incorrect=
-ly registered when an attacker uses alternative driver names like=C2=A0sqli=
-te+pysqlite or by using database imports. This could allow for unexpected f=
-ile creation on Superset webservers. Additionally, if Apache Superset is us=
-ing a SQLite database for its metadata (not advised for production use) it =
-could result in more severe vulnerabilities related to confidentiality and =
-integrity.=C2=A0This vulnerability exists in Apache Superset versions up to=
- and including 2.1.0.
+Download: https://rubygems.org/gems/git-fastclone
 
-Credit:
+* git-fastclone permits arbitrary shell command execution from .gitmodules
 
-Naveen Sunkavally (Horizon3.ai) (finder)
+  https://github.com/square/git-fastclone/pull/2
 
-References:
+  git-fastclone before 1.0.1 uses the git URL provided without validating
+  the protocol being requested, which allows for executing arbitrary code
+  found in the URL (such as with the 'ext' protocol).
 
-https://superset.apache.org
-https://www.cve.org/CVERecord?id=3DCVE-2023-39265
+  This is basically the same issue as CVE-2015-7545, just in a different
+  client implementation. What's policy here? Should a new CVE be assigned?
 
+  Fixed in v1.0.1. Affects all previous versions.
+
+* git-fastclone permits arbitrary shell command execution via shell
+  metacharacter injection into variables/parameters
+
+  https://github.com/square/git-fastclone/pull/5
+
+  git-fastclone before 1.0.5 passes user modifiable strings directly to a shell
+  command. An attacker can execute malicious commands by modifying the
+  strings that are passed as arguments to "cd " and "git clone " commands in
+  the library.
+
+  No CVE has been assigned.
+
+  Fixed in v1.0.5. Affects all previous versions.
+
+Can CVE(s) be assigned, as needed?
+
+Thanks,
+~reed
