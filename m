@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1524" "Saturday" "4" "June" "2016" "22:16:52" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160605021652.356446C0308@smtpvmsrv1.mitre.org>" "42" "[oss-security] Re: Libtorrent http_parser.cpp denial of service" nil nil nil "6" "2016060502:16:52" "[oss-security] Re: Libtorrent http_parser.cpp denial of service" (number mark "U       cve-assign@m Jun  4   42/1524  " thread-indent "\"[oss-security] Re: Libtorrent http_parser.cpp denial of service\"\n") "<DD545187-DC87-48DC-A3AB-69F8000E2F11@gmail.com>" ("<DD545187-DC87-48DC-A3AB-69F8000E2F11@gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["615" "Wednesday" "20" "January" "2016" "08:45:07" "-0700" "Kurt Seifried" "kseifried@redhat.com" "<CANO=Ty16P4GKb4HYtFugYsjufSZOBf+euv7O6WopKsAPuhKHtw@mail.gmail.com>" "18" "Re: [oss-security] Prime example of a can of worms" "^Date:" nil nil "1" "2016012015:45:07" "[oss-security] Prime example of a can of worms" (number mark "U       kseifried@re Jan 20   18/615   " thread-indent "\"Re: [oss-security] Prime example of a can of worms\"\n") "<20151023145631.GA21048@gremlin.ru>" ("<CANO=Ty18_pMLco8RdabsEbhs9sLahRhT_U93PGhDVwhcRaqzpQ@mail.gmail.com>" "<CAFRnB2Wrz=zexGonV5fHosVqfiOhNvA6Ya2YsCYyDkt7UE_0mw@mail.gmail.com>" "<20151019193411.GA15710@hunt>" "<87eggqmta9.fsf@alice.fifthhorseman.net>" "<20151021170113.128d3a8e@silentmaxx>" "<CANO=Ty0eLFpezes_WfNTN0eKj6u5BinhwBQkM6BR7PZPg3eCiA@mail.gmail.com>" "<20151023145631.GA21048@gremlin.ru>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 3341 invoked by uid 550); 5 Jun 2016 02:17:13 -0000
+Received: (qmail 27995 invoked by uid 550); 20 Jan 2016 15:45:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,55 +11,53 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 27975 invoked from network); 20 Jan 2016 15:45:19 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:content-type;
+        bh=Ar0kkXEoAiRt1KNayw++l07bkYTJ5bAypfg4Pr/CA8U=;
+        b=BpttW01+/qHQ4fMsWPPI2lUcu/1yruUo4h8yTNgKDvokaUiVqNO5V7mGpf5mI/lBJc
+         K5zJs3rqgFoNYiLRgHzjWq0Ig3bhXBT7RzGFqjjFqU9aZO6n2EX7cW9VQMKY562fJ5OH
+         rXMbIO5b5unfE3r0PxBoV2QeiZIzZ04q4XiBtZgVow0KBSs6Qv6yVCkCNn91x/i68eH1
+         jQ8LjlhuAFVGw/m2yhglzh3ai20n5PYC+7y4fA572sMzt/6j7xts7Eiu2GJ7SMVICtC/
+         SV+ztiCHsNBW9PSFQ/56MkEETlsMHfse/r5hZSv52hRZKDs6/ujMXZhkAI97uuGNM2Nx
+         n7tw==
+X-Gm-Message-State: ALoCoQlipfw4RSgChLF+LtMqk5fPuAVU6ewIMeDDP3MtUh5VI7CrNgiVMjFxPTpW4KN200yjC0Qu2/lXcsbnMINfH9qvHXsjLslIutOubwBBNKfJHiwL2kA=
+MIME-Version: 1.0
+X-Received: by 10.37.29.194 with SMTP id d185mr11205569ybd.109.1453304707619;
+ Wed, 20 Jan 2016 07:45:07 -0800 (PST)
+In-Reply-To: <20151023145631.GA21048@gremlin.ru>
+References: <CANO=Ty18_pMLco8RdabsEbhs9sLahRhT_U93PGhDVwhcRaqzpQ@mail.gmail.com>
+	<CAFRnB2Wrz=zexGonV5fHosVqfiOhNvA6Ya2YsCYyDkt7UE_0mw@mail.gmail.com>
+	<20151019193411.GA15710@hunt>
+	<87eggqmta9.fsf@alice.fifthhorseman.net>
+	<20151021170113.128d3a8e@silentmaxx>
+	<CANO=Ty0eLFpezes_WfNTN0eKj6u5BinhwBQkM6BR7PZPg3eCiA@mail.gmail.com>
+	<20151023145631.GA21048@gremlin.ru>
+Message-ID: <CANO=Ty16P4GKb4HYtFugYsjufSZOBf+euv7O6WopKsAPuhKHtw@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=001a11428d0ed959f80529c5de8d
+Date: Wed, 20 Jan 2016 08:45:07 -0700
+From: Kurt Seifried <kseifried@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3275 invoked from network); 5 Jun 2016 02:17:04 -0000
-From: cve-assign@mitre.org
-To: bperry.volatile@gmail.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <DD545187-DC87-48DC-A3AB-69F8000E2F11@gmail.com>
-Message-Id: <20160605021652.356446C0308@smtpvmsrv1.mitre.org>
-Date: Sat,  4 Jun 2016 22:16:52 -0400 (EDT)
-Subject: [oss-security] Re: Libtorrent http_parser.cpp denial of service
+Subject: Re: [oss-security] Prime example of a can of worms
+To: oss-security <oss-security@lists.openwall.com>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--001a11428d0ed959f80529c5de8d
+Content-Type: text/plain; charset=UTF-8
 
-> I recently opened a bug on libtorrent regarding malformed HTTP or UPnP
-> responses
-> 
-> https://github.com/arvidn/libtorrent/issues/780
-> https://github.com/arvidn/libtorrent/pull/782
+I finally got the article written and published, it's at:
 
->> A specially crafted HTTP response from a tracker (or potentially a
->> UPnP broadcast) can crash libtorrent in the parse_chunk_header()
->> function.
->> 
->> AddressSanitizer: SEGV on unknown address
->> 
->> Memcheck, a memory error detector
->> Invalid read of size 1
+https://securityblog.redhat.com/2016/01/20/primes-parameters-and-moduli/
 
-Use CVE-2016-5301.
+TL;DR: I found a lot of messy problems and no really good solutions. But
+ultimately we need to start using bigger keys/primes or this is all just a
+waste of compute time (might as well go back to clear text).
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQIcBAEBCAAGBQJXU4siAAoJEHb/MwWLVhi2KbIP/1tVXGYZeEa2sb34OgsgVYiV
-M8l+7yc+cOfOmPASgA3qo5ANkjX7QHCn1IjZaRM77716b1fM4+PQI49PZHpve9FE
-5fhx1Mn+2hQicbOyEbzkRz/p/qU1seUWwFfo/6rHRtgLDGl/A375PkCWL6nVG6sw
-ufJ57CdKPLPv2/ZL/BEwP2DeYlCAYTd8lHiFeia4VvxG3VEgeYM4kkS9tiHuvcdN
-SlmfTW/1uWL+Q45wmvlRNq4WZhTWjaNm5VYFIrV1E1iagtC9S2OBvnEwZpwDH1VP
-rSTW7erlRz8ZThjKf9zwGpFwFMzkYzx0kDhMBkLOIrvorXLiTx+QJAsdNBycryKy
-LQ8y33OUB+eIHgwaAVoTSAzuWcoC/tjuSNh/JpIyPQtkeKCbBVeosLxmrlLoo9q0
-GImRXM4hOAwIgvPfJQrWbbdP3OV8r3xZd09+MVbTuBkIqr0nLP3ljPAEYZQFhZXQ
-gNETQglchAU8qqLntwO8XjcxeeEncYWoTEnet4fgGfiimXjjQsH/fCM4W27gUPak
-x/8hROSJB7fkldlddtk4wgc8j9mEk4dfzyRbpc99DNWYE4MJ5HkXMS63hkViqq/A
-fQ8EaIoa1LOrq+FFjwitrHMCOHEkHnejDAMMqAnEK/X5VXc9t3SsVlcIg4KWmNmP
-lrec6mVfkk8wKlKpEsNz
-=BR8M
------END PGP SIGNATURE-----
+--
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@redhat.com
+
+--001a11428d0ed959f80529c5de8d--
