@@ -1,29 +1,13 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/13/5
-Message-ID: <1061369962.2838882.1476362811840.JavaMail.zimbra@redhat.com>
-Date: Thu, 13 Oct 2016 08:46:51 -0400 (EDT)
-From: Vladis Dronov <vdronov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/20/6
+Message-ID: <20160120150602.GA7709@boyd>
+Date: Wed, 20 Jan 2016 09:06:03 -0600
+From: Tyler Hicks <tyhicks@...onical.com>
 To: oss-security@...ts.openwall.com
-Subject: kernel: Stack corruption while reading /proc/keys (CVE-2016-7042)
+Cc: Jann Horn <jann@...jh.net>
+Subject: Security issue in eCryptfs-utils (CVE-2016-1572)
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+View attachment "msg-5829-2.txt" of type "text/plain" (843 bytes)
 
-It was found that when gcc stack protector is turned on, proc_keys_show() can
-cause a panic in the Linux kernel due to the stack corruption. This happens
-because xbuf[] is not big enough to hold a 64-bit timeout value rendered as weeks.
-
-CVE-2016-7042 was assigned to this flaw internally by the Red Hat. Please, use it
-in the public communications regarding this flaw.
-
-References:
-
-https://bugzilla.redhat.com/show_bug.cgi?id=1373966 (patch)
-
-https://bugzilla.redhat.com/show_bug.cgi?id=1373499 (reproducer, patch)
-
-Note: Unfortunately, I'm not sure if the patch was already sent to security@...nel.org
-or alike by the patch author.
-
-Best regards,
-Vladis Dronov | Red Hat, Inc. | Product Security Engineer
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
