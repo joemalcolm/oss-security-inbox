@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["610" "Monday" "2" "November" "2020" "17:16:46" "+0530" "P J P" "ppandit@redhat.com" "<nycvar.YSQ.7.78.906.2011021713510.1506567@xnncv>" "18" "[oss-security] CVE-2020-27617 QEMU: net: an assert failure via eth_get_gso_type" nil nil nil "11" "2020110211:46:46" "[oss-security] CVE-2020-27617 QEMU: net: an assert failure via eth_get_gso_type" (number mark "U       ppandit@redh Nov  2   18/610   " thread-indent "\"[oss-security] CVE-2020-27617 QEMU: net: an assert failure via eth_get_gso_type\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2020-27617 QEMU: net: an assert failure via eth_get_gso_type" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5946" "Tuesday" "19" "January" "2016" "21:51:10" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160120025110.E39DC42E01D@smtpvbsrv1.mitre.org>" "128" "[oss-security] Re: CVE assignment request for security bugs fixed in glibc 2.23" "^Cc:" nil nil "1" "2016012002:51:10" "[oss-security] Re: CVE assignment request for security bugs fixed in glibc 2.23" (number mark "        cve-assign@m Jan 19  128/5946  " thread-indent "\"[oss-security] Re: CVE assignment request for security bugs fixed in glibc 2.23\"\n") "<569E7AA1.1040700@redhat.com>" ("<569E7AA1.1040700@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 20380 invoked by uid 550); 2 Nov 2020 11:53:53 -0000
+Received: (qmail 28533 invoked by uid 550); 20 Jan 2016 02:51:24 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,47 +11,141 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 28515 invoked from network); 20 Jan 2016 02:51:23 -0000
+In-Reply-To: <569E7AA1.1040700@redhat.com>
+Message-Id: <20160120025110.E39DC42E01D@smtpvbsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Tue, 19 Jan 2016 21:51:10 -0500 (EST)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 20361 invoked from network); 2 Nov 2020 11:53:53 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1604318021;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type;
-	bh=sVZAXaFj3DQuPSkDrZwdXFHu4swZmP5kFcTj3ZyS5uA=;
-	b=F+qTLLid6s3HD4SCG3NxNc9S9zrqKezjL4B+YQneqJtKW/CaiqBgbx7omgorjEMh8ffUiA
-	vljcBzxDT6H0cXTY8sl9loV4vkE4pRH1wzbWkUvgZZKCUmvjk80uicho4p3IhmtC7RcFOM
-	C7AxnD0BAOvqmJzEpVDMMn9mE6uJE+8=
-X-MC-Unique: WFUmLL_CPzuRYGBbl8PYhA-1
-Date: Mon, 2 Nov 2020 17:16:46 +0530 (IST)
-From: P J P <ppandit@redhat.com>
-X-X-Sender: pjp@kaapi
-To: oss security list <oss-security@lists.openwall.com>
-cc: Gaoning Pan <pgn@zju.edu.cn>
-Message-ID: <nycvar.YSQ.7.78.906.2011021713510.1506567@xnncv>
-MIME-Version: 1.0
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.16
-Authentication-Results: relay.mimecast.com;
-	auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=ppandit@redhat.com
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-Subject: [oss-security] CVE-2020-27617 QEMU: net: an assert failure via eth_get_gso_type
+Subject: [oss-security] Re: CVE assignment request for security bugs fixed in glibc 2.23
+To: fweimer@redhat.com
 
-   Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-An assert(3) failure issue was found in the networking helper functions of 
-QEMU. It could occur in the eth_get_gso_type() routine, if a packet does not 
-have a valid networking L3 protocol (ex. IPv4, IPv6) value. A guest user may 
-use this flaw to crash the QEMU process on the host resulting in DoS scenario.
+The MITRE CVE team generally can assign IDs for security-fix releases
+of products where a notable upstream vendor has already made a final
+determination of what issues are, from their perspective,
+vulnerabilities that require customers to perform a product update.
+This is, to some extent, independent of what our perspective otherwise
+would have been.
 
-Upstream patch:
----------------
-   -> https://lists.nongnu.org/archive/html/qemu-devel/2020-10/msg06023.html
+Based on the set of issues mentioned, however, we probably don't have
+a shared understanding of what glibc bugs should be considered
+vulnerabilities and what ones should be considered ordinary bugs. This
+doesn't mean that there ought to be a decision process that is
+specific to glibc alone: there are people sending CVE ID requests to
+MITRE for other libraries, including similarly general-purpose
+libraries.
 
-This issue was reported by Gaoning Pan of Zhejiang University.
+Possibly part of the glibc vulnerability model is that memory-safety
+issues should be considered vulnerabilities, regardless of how
+unlikely it is for an attack to cross a privilege boundary. Similarly,
+possibly part of the model is that issues in which glibc simply
+provides the wrong answer are not vulnerabilities, regardless of
+whether there's a plausible scenario in which the wrong answer leads
+to a catastrophic security failure. If there should be some CVE IDs
+for wrong-answer issues, we don't know the best way to subdivide the
+space of wrong answers, e.g., wrong results in floating-point math are
+perhaps attackable less often than wrong results in string operations.
+None of this is going to be resolved today, so here are the five CVE
+IDs for the listed issues.
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
 
+> Passing out of range data to strftime() causes a segfault
+> https://sourceware.org/bugzilla/show_bug.cgi?id=18985
+> 
+> Out-of-range time values passed to the strftime function may cause it to
+> crash, leading to a denial of service, or potentially disclosure
+> information.
+
+Use CVE-2015-8776. We don't happen to know of any cases in which a
+reasonable application would, for example, allow a user to enter an
+integer value that refers to the 13th month in a way that crosses a
+privilege boundary. The glibc change might suggest that that
+application should be happy with output of the form "19 ? 2016" (the
+19th day of an unknown month in 2016). We feel that there's a
+(probably weak) argument that this is a defense-in-depth change to
+glibc, not a vulnerability fix, because there's no universally
+understood way for glibc to inform an arbitrary application that it
+has elected to produce a malformed, but memory-safe, result.
+
+
+> LD_POINTER_GUARD is not ignored for privileged binaries
+> https://sourceware.org/bugzilla/show_bug.cgi?id=18928
+> 
+> LD_POINTER_GUARD was an environment variable which controls
+> security-related behavior, but was not ignored for privileged binaries
+> (in AT_SECURE mode).  This might allow local attackers (who can supply
+> the environment variable) to bypass intended security restrictions.
+
+Use CVE-2015-8777. We don't feel that there is any way to conclude
+that this is a vulnerability unless confirmed by the upstream vendor
+(and it obviously is confirmed). For example, maybe LD_POINTER_GUARD
+was originally envisioned as a defense against remote attacks, and the
+ability of unprivileged local users to run setuid/setgid programs with
+LD_POINTER_GUARD=0 was an intentional workaround for scenarios in
+which pointer guarding was not working properly.
+
+
+> hcreate((size_t)-1) should fail with ENOMEM
+> https://sourceware.org/bugzilla/show_bug.cgi?id=18240
+> 
+> This is an integer overflow in hcreate and hcreate_r which can result in
+> an out-of-bound memory access.  This could lead to application crashes
+> or, potentially, arbitrary code execution.
+
+Use CVE-2015-8778. We don't happen to know of any cases in which an
+application allows a user to specify hcreate arguments in a way that
+crosses a privilege boundary.
+
+
+> nan function unbounded stack allocation
+> https://sourceware.org/bugzilla/show_bug.cgi?id=16962
+> 
+> A stack overflow (unbounded alloca) can cause applications which process
+> long strings with the nan function to crash or, potentially, execute
+> arbitrary code.
+
+Use CVE-2014-9761. Here, it seems somewhat more plausible that the nan
+argument would ultimately originate from untrusted input in a way that
+crosses a privilege boundary. We don't know of a specific example that
+would be realistic.
+
+
+> catopen() Multiple unbounded stack allocations
+> https://sourceware.org/bugzilla/show_bug.cgi?id=17905
+> 
+> A stack overflow (unbounded alloca) in the catopen function can cause
+> applications which pass long strings to the catopen function to crash
+> or, potentially execute arbitrary code.
+
+Use CVE-2015-8779. At least for the
+https://sourceware.org/bugzilla/show_bug.cgi?id=17905#c0 example, we
+don't happen to know of any cases in which an application allows a
+user to specify an arbitrary pathname in a way that crosses a
+privilege boundary, and then decides to catopen that pathname.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJWnvVjAAoJEL54rhJi8gl5hXAQAJb94GQ4nmQNvRV/oxuJ8gkP
+GIjkWpfVAeHLJQZ4wxbFIBFrwexeimaZFICEyRnjsA8Jcw0vfdfKy+WbygpgmVuo
+jp38VYkreUXH1ZHJTEX+uTx7ySnKClccZ/599VwzYTMA5JI65srqtqMW52EOC0Lp
+nbqsW7aaQ9rJpXOqcgPNPHf01JIDOgzVMlIkzolWN5dP8YbwIvmWwfOQk0SePJj7
+6fhdj6M12Kob0uqytI4zTSnKa0z2qXC0SsoPgcxtWOqQut7oYhMESMD2a9zbhKPj
+5X4QdICT9ki86ysvujZV3+QoxkBJwd09nWY2AZm/vVgvTzNdArq2V+BPsNkLK+IJ
+xt1u385bw2GYjskLnr2UdyrbOQO5lqgcX9O/7+bzRbWhJsW58iIVwiX/a+slB7Bw
+CvaI565uncU6tR+UNUAT7BTJu2YLfGdqYzMG0G7rKmPVno0+q21cxjyigKpkRKxL
+yq95x3Ww/Yq4CIN4weGjAsOhtQ7h/5AP1D+aOgYp09KcvoKhV9meORCwmg0qZv5V
+RDr+7EquBWOuO84O8LnRcDFpiRPT+P1+CtS+YRo/tlLEVVTo5pe50+9t/7v7ey2o
+xta3mjd8tUdV4GWyItbn1Wzp0rv28/1kttlVJ6oUMpLzAFY8iQHJi+lmVtV+bDT2
+Ta6wlakhBjLtTQ7bCWtU
+=VJ/C
+-----END PGP SIGNATURE-----
