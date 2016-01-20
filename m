@@ -1,64 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/28/6
-Message-Id: <20160428155738.EBD503AE1B2@smtpvbsrv1.mitre.org>
-Date: Thu, 28 Apr 2016 11:57:38 -0400 (EDT)
-From: cve-assign@...re.org
-To: manhluat93.php@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: [CVE Requests] PHP issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/20/5
+Message-ID: <1453296861.9500.81.camel@opteya.com>
+Date: Wed, 20 Jan 2016 14:34:21 +0100
+From: Yann Droneaud <ydroneaud@...eya.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Qualys Security Advisory - Roaming through the OpenSSH client: CVE-2016-0777 and CVE-2016-0778
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi,
 
-> 1. Heap corruption in tar/zip/phar parser
-> https://bugs.php.net/bug.php?id=71354
+Le lundi 18 janvier 2016 à 14:05 +0100, Florian Weimer a écrit :
+> On 01/15/2016 01:56 PM, Yann Droneaud wrote:
+> > Le vendredi 15 janvier 2016 à 12:06 +0100, Florian Weimer a écrit :
+> > > On 01/14/2016 06:13 PM, Qualys Security Advisory wrote:
+> > > > Internal stdio buffering is the most severe of the three
+> > > > problems discussed in this section, although GNU/Linux is not
+> > > > affected because the glibc mmap()s and munmap()s (and therefore
+> > > > cleanses) stdio buffers.
+> > > 
+> > > This will change in glibc 2.23, stdio will use regular malloc and
+> > > free for its buffers.  I did not expect this change to have
+> > > security implications.  Considering that the actual bug lies
+> > > elsewhere, and stdio usage is based on copying out of the buffer
+> > > (so leaks can still happen elsewhere), I do not wish to revert
+> > > this change.
+> > > 
+> > 
+> > Would setvbuf(stream, NULL, _IONBF, 0); be used to disable buffer
+> > before reading/writting sensible data to a stream ?
+> 
+> That entirely depends on how the data is read or written.  glibc will
+> make additional copies on the heap in some cases.  In any case, this
+> is an implementation detail.
+> 
 
-Use CVE-2016-4342.
+So one should probably not use stdio stream (fgets(), fread(),
+fscanf(), fputs(), fwrite(), etc.) to load sensible data from/to,
+depending on the threat model. In particular, in case it's not from/to
+a local socket nor a pipe, reading or writing such data in cleartext
+might be bad idea after all).
 
+> Even if the data is gone from the process image, the kernel or its
+> hypervisor may still keep copies, particularly if the data is (or was
+> once) on the file system.  It is very hard to override data reliably
+> on modern systems.
 
-> 2. Uninitialized pointer in phar_make_dirstream()
-> https://bugs.php.net/bug.php?id=71331
+If an userspace application is allowed to access sensitible
+information, this imply the kernel is also allowed to access it.
 
-Use CVE-2016-4343.
+Userspace has to trust kernel/hypervisor. And kernel/hypervisor has to
+work so that they are trustworthy from the userspace point of view,
+that is, to not exchange data between namespaces, users, processes when
+not explicitly allowed to.
 
+AFAICT, having shadows / ghosts copies in kernelspace is not a problem
+*provided* it's harder for a malicious party to retrieve them through a
+kernel exploit than through an userspace exploit. And it should be !
 
-> 3. Multiple Heap Overflow due to integer overflows | xml/filter_url/addcslashes
-> https://bugs.php.net/bug.php?id=71637
+Anyway, having the (Linux) kernel clearing memory, buffers, whatever...
+as soon as it doesn't need them anymore will probably happen at some
+point to prevent most leak.
 
->> ext/xml/xml.c
+Regards.
 
-Use CVE-2016-4344.
+-- 
+Yann Droneaud
+OPTEYA
 
-
->> ext/filter/sanitizing_filters.c
-
-Use CVE-2016-4345.
-
-
->> ext/standard/string.c
-
-Use CVE-2016-4346.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXIjJmAAoJEHb/MwWLVhi2TDUQAJYgRTY/sXSPOhCSGULqnbSv
-/LTTtL494AMrbdwVwuAEEE2gQnQh1ceEyT6T7CCOZMIwid7c8eDjFTrglCSuN75s
-731+HOkd4e5UV7/Ms/rUUHarAz8iaroYqcJfFjFRZqbGrIA6K40Z9BOkvjbEQeDU
-f4tXQZqtiK7zvQWPbootRZ4+97U6BwuxBRs39nJTkKwcuGF6c25rORoJoof5wypV
-HFfUiwbPPlxHroNlZKb9MrhUUriT1PAo+HrOEthPX5H5RLBVzuB8wNdaz/XztUWB
-88Ia2upuBIIYDiygUrhL3ZiT5ot13qxBES8gF9VrLtPKLTDudg24B9/sUu/+AdFS
-c28Z1dU9Khh4wO+e44c+BWU2yX/92RLxf2aQHuu51UKGtvJQSOGtPL/jVVwYkqS7
-9Nk5DRq4SHU6xMi2u3o9huY3A3jiVQ10SsVE+ogq7xpmTWTtRotcv2QXk0eTX0gN
-Q/KmOG44Tn/eszUz8qo3cuspVqmpNygvZJZg2ezuiZhEiFf5en88S4f6FUWCEA/Y
-utxuKZRyPXIx3O+SBFEuytPDXhDlNyknpJIfOOR5DRf/fno9Jd8zRr43xRYa7K34
-pVtF417ZDQbO/Qfu9kjpXV2t34uM8HPSk8RQopj8Pda/FDJjPUSVB6slA4Ug+V9I
-v6LoUj4kgrDaip73ispF
-=o+rt
------END PGP SIGNATURE-----
