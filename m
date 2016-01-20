@@ -1,35 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/26/2
-Message-ID: <CACn5sdSfj16w6g_-WODTBY20AMFxw50qUJARvhhAByhR0yOrwg@mail.gmail.com>
-Date: Sat, 26 Nov 2016 15:11:44 -0300
-From: Gustavo Grieco <gustavo.grieco@...il.com>
-To: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: CVE Request: resource exhaustion in regex expression handling in WebKit
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/20/13
+Message-ID: <20160120191237.55100e02@pc1>
+Date: Wed, 20 Jan 2016 19:12:37 +0100
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: Prime example of a can of worms
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On Wed, 20 Jan 2016 11:07:19 -0700
+Kurt Seifried <kseifried@...hat.com> wrote:
 
-Trying to parse and execute this regex code in WebKit:
+> Yes it would be bad:
+> 
+> https://blog.shodan.io/duplicate-ssh-keys-everywhere/
+> 
+> There was another analysis with even more worrying numbers but I
+> can't find it.
 
-/($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($(${-2,16}+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)/
+Not sure if that's what you meant, but may be:
+http://blog.sec-consult.com/2015/11/house-of-keys-industry-wide-https.html
 
-will consume large amounts of memory (8GB or more), after a few seconds.
-This seems to be a case of CWE-400 (uncontrolled resource consumption).
+The more worrying part of that one is that they have not only found
+these in the wild, they also extracted the private keys from publicly
+available firmware images (and afaik plan to publish them).
 
-At least, version 2.4.11 Webkit and very recent webkit revisions like
-https://github.com/WebKit/webkit/commit/fcf81f3ad83cd910727c7a1824e503
-77a474c8f4 are affected.
+-- 
+Hanno Böck
+http://hboeck.de/
 
-You can quickly test this issue in different webkit browsers here:
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
 
-https://dcc.fceia.unr.edu.ar/~ggrieco/oom.html
-
-Fortunately, Chrome and Firefox based browsers are *not* affected.
-
-Please assign a CVE if suitable. It is worth to mention, that a month ago,
-i asked to MITRE about another issue related with uncontrolled resource
-consumption in Firefox loading a SVG but receive no response.
-
-Regards,
-Gustavo.
-
+Content of type "application/pgp-signature" skipped
