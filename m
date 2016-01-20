@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["967" "Friday" "22" "May" "2015" "22:28:01" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150523022801.B3FA16C000C@smtpvmsrv1.mitre.org>" "29" "[oss-security] Re: CVE request: Multiple SQL injection vulnerabilities in GigPress - WordPress plugins." nil nil nil "5" "2015052302:28:01" "[oss-security] Re: CVE request: Multiple SQL injection vulnerabilities in GigPress - WordPress plugins." (number mark "        cve-assign@m May 22   29/967   " thread-indent "\"[oss-security] Re: CVE request: Multiple SQL injection vulnerabilities in GigPress - WordPress plugins.\"\n") "<CAEhYM0Yo=OQHMGXGwxn7z+-c18rdXcOd8+O134M03CMswGSOyQ@mail.gmail.com>" ("<CAEhYM0Yo=OQHMGXGwxn7z+-c18rdXcOd8+O134M03CMswGSOyQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["734" "Wednesday" "20" "January" "2016" "11:07:19" "-0700" "Kurt Seifried" "kseifried@redhat.com" "<CANO=Ty1Rp1m=qTr7Y+JGfFwAO3Q7nFwWdYGd6-Nb7N==DcZ-HA@mail.gmail.com>" "27" "Re: [oss-security] Prime example of a can of worms" "^Cc:" nil nil "1" "2016012018:07:19" "[oss-security] Prime example of a can of worms" (number mark "        kseifried@re Jan 20   27/734   " thread-indent "\"Re: [oss-security] Prime example of a can of worms\"\n") "<87lh7k5dxs.fsf@alice.fifthhorseman.net>" ("<CANO=Ty18_pMLco8RdabsEbhs9sLahRhT_U93PGhDVwhcRaqzpQ@mail.gmail.com>" "<CAFRnB2Wrz=zexGonV5fHosVqfiOhNvA6Ya2YsCYyDkt7UE_0mw@mail.gmail.com>" "<20151019193411.GA15710@hunt>" "<87eggqmta9.fsf@alice.fifthhorseman.net>" "<20151021170113.128d3a8e@silentmaxx>" "<CANO=Ty0eLFpezes_WfNTN0eKj6u5BinhwBQkM6BR7PZPg3eCiA@mail.gmail.com>" "<20151023145631.GA21048@gremlin.ru>" "<CANO=Ty16P4GKb4HYtFugYsjufSZOBf+euv7O6WopKsAPuhKHtw@mail.gmail.com>" "<87vb6o5fsm.fsf@alice.fifthhorseman.net>" "<CANO=Ty0shFs5oAykxDPRsfMAw65bnEwCN7_m_df4j61XEpthBQ@mail.gmail.com>" "<87lh7k5dxs.fsf@alice.fifthhorseman.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 9397 invoked by uid 550); 23 May 2015 02:28:14 -0000
+Received: (qmail 23688 invoked by uid 550); 20 Jan 2016 18:07:32 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,42 +11,67 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 9373 invoked from network); 23 May 2015 02:28:13 -0000
-In-Reply-To: <CAEhYM0Yo=OQHMGXGwxn7z+-c18rdXcOd8+O134M03CMswGSOyQ@mail.gmail.com>
-Message-Id: <20150523022801.B3FA16C000C@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Fri, 22 May 2015 22:28:01 -0400 (EDT)
-From: cve-assign@mitre.org
+Received: (qmail 23663 invoked from network); 20 Jan 2016 18:07:31 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=x0+zYafouXgQfnfBi2IYMwFgVPwKIIWQUb2SG7of3RI=;
+        b=DhZhVLlWEkiT8vNCY7dJUgORpOtt+BEHrmd0igrBuHanV3RioZrT3bc+/+CwDpw/Ix
+         jz14EgB8YisvT1LEFTM9HUFzs7MXtP3eR03YI3EDXmct+9OnyPyMyzYfOSHmLca/Ldpo
+         O+WcLIN/D1LTfGYAnZnxusN97Ow6y0lPD3v2zgo9SmAsuwFrWG7dPXqLFD1zyp5GUhkw
+         RA0QSevFZzJ2tfehJmJPiFZXzRb83PkR6bDEvBxn/GPsLMn+FAY+00wwdsyt1Dn528a4
+         q8bbjHgdD4ydjo7Le7vL6luwRMnDQXwkwZsIs9dCFkpHJbcMAIpU2WcT5til8sLkEgrZ
+         a71A==
+X-Gm-Message-State: ALoCoQkwctuGAjsLDmn4poDN8WTc+1ad3q2a5W/7cFk1G9feBxLO1fNyAEEtGWkv8DVZSWh6O7OaTRbw6POrNZrUvd3F2lKX5CU7zCL3+25nbCNItj8yv7Y=
+MIME-Version: 1.0
+X-Received: by 10.13.206.2 with SMTP id q2mr23757290ywd.76.1453313239761; Wed,
+ 20 Jan 2016 10:07:19 -0800 (PST)
+In-Reply-To: <87lh7k5dxs.fsf@alice.fifthhorseman.net>
+References: <CANO=Ty18_pMLco8RdabsEbhs9sLahRhT_U93PGhDVwhcRaqzpQ@mail.gmail.com>
+	<CAFRnB2Wrz=zexGonV5fHosVqfiOhNvA6Ya2YsCYyDkt7UE_0mw@mail.gmail.com>
+	<20151019193411.GA15710@hunt>
+	<87eggqmta9.fsf@alice.fifthhorseman.net>
+	<20151021170113.128d3a8e@silentmaxx>
+	<CANO=Ty0eLFpezes_WfNTN0eKj6u5BinhwBQkM6BR7PZPg3eCiA@mail.gmail.com>
+	<20151023145631.GA21048@gremlin.ru>
+	<CANO=Ty16P4GKb4HYtFugYsjufSZOBf+euv7O6WopKsAPuhKHtw@mail.gmail.com>
+	<87vb6o5fsm.fsf@alice.fifthhorseman.net>
+	<CANO=Ty0shFs5oAykxDPRsfMAw65bnEwCN7_m_df4j61XEpthBQ@mail.gmail.com>
+	<87lh7k5dxs.fsf@alice.fifthhorseman.net>
+Message-ID: <CANO=Ty1Rp1m=qTr7Y+JGfFwAO3Q7nFwWdYGd6-Nb7N==DcZ-HA@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=001a114da67e677d2e0529c7db69
+Cc: oss-security <oss-security@lists.openwall.com>
+Date: Wed, 20 Jan 2016 11:07:19 -0700
+From: Kurt Seifried <kseifried@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE request: Multiple SQL injection vulnerabilities in GigPress - WordPress plugins.
-To: adrimf85@gmail.com
+Subject: Re: [oss-security] Prime example of a can of worms
+To: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+--001a114da67e677d2e0529c7db69
+Content-Type: text/plain; charset=UTF-8
 
-> * Multiple SQL injection vulnerabilities in GigPress.
-> * vulnerable version: 2.3.8
-> * patched version: 2.3.9
+On Wed, Jan 20, 2016 at 11:00 AM, Daniel Kahn Gillmor <dkg@fifthhorseman.net
+> wrote:
 
-> * changelog: https://wordpress.org/plugins/gigpress/changelog/
+> On Wed 2016-01-20 12:25:42 -0500, Kurt Seifried wrote:
+> > Sorry yes, although this also applies equally to keys/etc.
+>
+> sure, though i hope we're not in a "few keys" scenario, that would
+> definitely be bad :)
+>
 
->> Fixed SQL injection vulnerability in handlers.php
+Yes it would be bad:
 
-Use CVE-2015-4066.
+https://blog.shodan.io/duplicate-ssh-keys-everywhere/
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+There was another analysis with even more worrying numbers but I can't find
+it.
 
-iQEcBAEBAgAGBQJVX+NGAAoJEKllVAevmvmsuOMH/2AvzaZe1qBb8v+yj/wQUMQM
-/Amy9dCBwBj58VwACPzM2mM9VJFSt6U0m2QtceVGt0NCY1+bfz6Pn0Hn5GXNx0zi
-Lt3DvM8JCDin2igmLY0Xy0X+fZGCqQwvE4HcVHuER0fncfibJXXXkx05QGb02h2O
-4m4P/PFwsjcKvrzEGnCCNgq4FHRBcOr6Nolp750h6GCTtTFBd8eIgqsw1iBEfo3C
-3H5CiKBwgRIZhhUYeJ7ehy1m1gs3JLsKJnWahxI1Tw0hIctVRrqzdFUNc6bFzjzD
-HhuPkd13zvZjkIOUNJtqP3h9A9hYXmnv7HKnesf1waPfeT4IdCMg6X4Jm1pPrvc=
-=e5Pr
------END PGP SIGNATURE-----
+
+--
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@redhat.com
+
+--001a114da67e677d2e0529c7db69--
