@@ -1,52 +1,89 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/18/13
-Message-ID: <20160818142216.GH2701@suse.de>
-Date: Thu, 18 Aug 2016 16:22:16 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>, cve-assign@...re.org
-Cc: security@...nel.org
-Subject: CVE Request: Linux kernel crash of OHCI when plugging in malicious USB devices
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/20/8
+Message-ID: <87vb6o5fsm.fsf@alice.fifthhorseman.net>
+Date: Wed, 20 Jan 2016 12:20:09 -0500
+From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
+To: Kurt Seifried <kseifried@...hat.com>, oss-security@...ts.openwall.com
+Subject: Re: Prime example of a can of worms
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi Kurt--
 
-I think this does not have a CVE yet, please assign.
+On Wed 2016-01-20 10:45:07 -0500, Kurt Seifried wrote:
+> I finally got the article written and published, it's at:
+>
+> https://securityblog.redhat.com/2016/01/20/primes-parameters-and-moduli/
 
-https://www.spinics.net/lists/linux-usb/msg144177.html
+Thanks for this writeup!
 
-Headline:         Linux Kernel Panic Over USB with HID Keyboard wMaxPacketSize
-Platforms:        Ubuntu
-Versions:         Linux Kernel 4.4.0-22-generic
-CVSS Score:       4.7
-CVSS Vector:      AV:L/AC:M/Au:N/C:N/I:N/A:C
-Filed Defects:    
-Related Defects:  
-CWE Tags:         
-Cycle:            
-Found by:         Jake Lamberson
+the chart at
+https://securityblog.redhat.com/wp-content/uploads/2015/12/DH-Param-Compromise-300x269.jpg
+uses the terms "keys" in the axis labels, but i think you mean "primes"
+or "moduli".
 
+> TL;DR: I found a lot of messy problems and no really good solutions. But
+> ultimately we need to start using bigger keys/primes or this is all just a
+> waste of compute time (might as well go back to clear text).
 
-Linux Kernel panics when using an OHCI controller if a USB device reports being 
-a generic HID keyboard and reports a wMaxPacketSize of over 4095. The OHCI
-controller driver fails to reserve bandwidth for the device, causing the 
-keyboard handler to fail when attaching to the HID. Later, when the device is 
-removed, the system crashes due to a null pointer dereference in a linked list 
-of endpoint descriptors. The crash can be re-created using a Facedancer and UMAP 
-software. Given an appropriately configured Facedancer and UMAP setup, the crash 
-can be re-created with: 
-sudo board=facedancer21 python3 umap.py -P /dev/serial_device_here -f 03:00:00:E:0046 -l LOG
+yes, larger primes are clearly needed.
 
-Note: OHCI is a USB 1.1 controller standard that can be included with devices
-that support either USB 1.1 or 2.0 as their highest USB spec. USB 3.0 devices
-all use xHCI, which implements USB 1.1, 2.0, and 3.0, making them immune to
-this particular bug.
+The discussion gets a little ways into the issue of negotiating primes
+between peers, but doesn't address some underlying issues.
 
------------------
+For one, the writeup addresses probabilistic primality tests, but
+doesn't describe proofs of primality, which are significantly more
+expensive to generate (and still probably more expensive to verify than
+a short Miller-Rabin test).  But these proofs provide certainty in a way
+that probabilistic tests might not.  If we're talking about runtime
+primality checking when communicating with a potential adversary, are
+there proofs about the (im)possibility of generating a pseudoprime that
+is more or less likely to pass a miller-rabin test?
 
-The proposed fixing patch is here:
-https://www.spinics.net/lists/linux-usb/msg144269.html
+Additionally, the fact that the modulus is prime is an insufficient test
+-- it needs to be a prime of a certain structure, or else the remote
+peer can force the user into a small subgroup, which can lead to
+unknown-key-share attacks, key factorization, or other problems.
 
+One approach is to require that moduli be safe primes (p = (q*2) + 1,
+where q is also prime) and to verify that the peer's public share k is
+in the range 1 < k < p-1 to avoid the small-subgroup attack of size 2.
+This appears to be the best we know how to do with diffie hellman over
+finite fields, but it limits the range of acceptable moduli even
+further, and requires two primality tests for the peer seeing the primes
+for the first time.
 
-It has not yet been committed to the USB tree or to Linus Tree as far as I see.
+It's also worth noting that we have a similar concern with elliptic
+curve DH (ECDH) -- the structure of the curve itself (which is the
+equivalent of the generator and the modulus for finite-field diffie
+hellman) is relevant to the security of the key exchange.
 
-Ciao, Marcus
+In the ECDH space, there appears to be little argument about trying to
+use a diversity of groups: while many specifications provide ways to use
+custom (generically-specified) curves, pretty much no one uses them in
+practice, and the custom-curve implementations are likely to be both
+inefficient and leaky (to say nothing of the difficulty of verifying
+that the offered curve is well-structured at runtime).  Indeed, the bulk
+of the discussion around ECDH is about picking a small handful of good
+curves that we can publicly vet, and then using those specific curves
+everywhere (see curve 25519 and goldilocks 448, the CFRG's upcoming
+recommendations).
+
+Encouraging peers to select a diversity of large custom groups in for
+finite-field DH seems likely to be slow (additional runtime checks, no
+optimized implementations), buggy (missing or inadequate runtime checks,
+side-channel leakage), and bandwidth-heavy (the moduli themselves must
+be transmitted in addition to the public keys), and as you say, the
+diversity of groups doesn't win you as much as just switching to larger
+groups in the first place.
+
+I agree that we need machinery in place to be able to relatively easily
+drop believed-weak, widely-shared groups, and to introduce new
+widely-shared groups.  But i'm not convinced that encouraging the use of
+a diversity of groups is really the "Best Default/Operational" tradeoff,
+as it is indicated in your chart, given the concerns above.
+
+Thanks very much for your analysis.
+
+Regards,
+
+        --dkg
