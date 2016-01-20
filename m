@@ -1,49 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/23/1
-Message-ID: <34405e1f08734a7fb48464fb06a54bc6@imshyb02.MITRE.ORG>
-Date: Tue, 22 Nov 2016 19:14:03 -0500
-From: <cve-assign@...re.org>
-To: <ago@...too.org>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: imagemagick: heap-based buffer overflow in IsPixelGray (pixel-accessor.h)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/20/14
+Message-ID: <CALPTtNX+xVz+Uf=tTUMp7a+NKdUp=CYGip8a5+YcFGwZsXhJ-A@mail.gmail.com>
+Date: Wed, 20 Jan 2016 11:18:39 -0800
+From: Reed Loden <reed@...dloden.com>
+To: oss-security@...ts.openwall.com,  Assign a CVE Identifier <cve-assign@...re.org>
+Cc: Blake Burkhart <bburky@...rky.com>
+Subject: CVE request: Two vulnerabilities in git-fastclone ruby gem
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Blake Burkhart (@bburky) recently reported two issues to Square via their
+open source bug bounty program (https://hackerone.com/square-open-source)
+concerning their `git-fastclone` ruby gem.
 
-> https://blogs.gentoo.org/ago/2016/11/19/imagemagick-heap-based-buffer-overflow-in-ispixelgray-pixel-accessor-h
+git-fastclone is "A git command that uses reference repositories and threading
+to quickly and recursively clone repositories with many nested submodules."
 
-> ImageMagick-7.0.3-6/./MagickCore/pixel-accessor.h:507:30
-> imagemagick-7.0.3.6/work/ImageMagick-7.0.3-6/MagickCore/attribute.c:677
+Homepage: https://github.com/square/git-fastclone
 
-> AddressSanitizer: heap-buffer-overflow
-> READ of size 4
+Download: https://rubygems.org/gems/git-fastclone
 
-> https://github.com/ImageMagick/ImageMagick/commit/ce98a7acbcfca7f0a178f4b1e7b957e419e0cc99
-> 
-> coders/sgi.c
+* git-fastclone permits arbitrary shell command execution from .gitmodules
 
-Use CVE-2016-9556 for this buffer over-read.
+  https://github.com/square/git-fastclone/pull/2
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+  git-fastclone before 1.0.1 uses the git URL provided without validating
+  the protocol being requested, which allows for executing arbitrary code
+  found in the URL (such as with the 'ext' protocol).
 
-iQIcBAEBCAAGBQJYNN5eAAoJEHb/MwWLVhi2c/EP/iCKNHI2pUBD95pymlj+Fkt2
-JJOJzfWG2KSFsFT0jjfIfEg0DCyD+0gjlUe/QEboA57lKMHx1Bu/xKvyGrpoaI86
-T3utbgSUF3ZwYaNGySIMpVG96Fdtp8dfJWEMSBSw3deOVCjAFHqExRbOiIQwkaDD
-rvS2SzFNa3H/tmhPyrTiTUwmjV+pnG81YvwKJhkxapLyPbROBuI0QuGmm7hv7kzF
-ADJI3WVzW3d2N5xU+HFg5sQgmH0dwybwWD/KkzpYJ1daTq53mdOaOW2c/qjhWbk7
-wukuNqT8PhNxLLpNRMaZCNKIHdBD+RCh9Oi/zQwXHpSkJ7EgfW/LRCx1OIuXrGBD
-gWMbm6KqI13DvbV6ct9elpr54/dZ8zklNrar++PsDRksmwFLiz1mBbzdAPJiTVKT
-gNEjqSkM1wqPlFQO/pWAwJU0Ja7bLQg5XUE5gfrl1pFNMqBJ54IzdJUnKXNw64lc
-u72Aa3tZ+XKN902zpbqaVb+9PHqL/FFVYCfd64l0CRkEToPP9OIg10sCL9VEVeEw
-eyDDYR8jIEVu3ilvm/ieQsb5ZVkhPvkWlGwhaJRzG89U9D5j9S4qrOIk5CXPnJ82
-Z8bXCzxAX7ebnRstDbz5lOJ1Lb6ahvmboHuxs4VoEryN+9fdmWCKVYTVRNRi8oAd
-ER7izj3MLcjre+i4Oifq
-=irqB
------END PGP SIGNATURE-----
+  This is basically the same issue as CVE-2015-7545, just in a different
+  client implementation. What's policy here? Should a new CVE be assigned?
+
+  Fixed in v1.0.1. Affects all previous versions.
+
+* git-fastclone permits arbitrary shell command execution via shell
+  metacharacter injection into variables/parameters
+
+  https://github.com/square/git-fastclone/pull/5
+
+  git-fastclone before 1.0.5 passes user modifiable strings directly to a shell
+  command. An attacker can execute malicious commands by modifying the
+  strings that are passed as arguments to "cd " and "git clone " commands in
+  the library.
+
+  No CVE has been assigned.
+
+  Fixed in v1.0.5. Affects all previous versions.
+
+Can CVE(s) be assigned, as needed?
+
+Thanks,
+~reed
