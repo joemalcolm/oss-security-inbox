@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1070" "Tuesday" "4" "June" "2019" "16:07:30" "+0200" "Heiko Schlittermann" "hs@schlittermann.de" "<20190604140730.7yz733eajye2kfbs@jumper.schlittermann.de>" "34" "Re: [oss-security] CVE-2019-10149: Exim 4.87 to 4.91: possible remote exploit" nil nil nil "6" "2019060414:07:30" "[oss-security] CVE-2019-10149: Exim 4.87 to 4.91: possible remote exploit" (number mark "U       hs@schlitter Jun  4   34/1070  " thread-indent "\"Re: [oss-security] CVE-2019-10149: Exim 4.87 to 4.91: possible remote exploit\"\n") "<20190604132534.GA16994@openwall.com>" ("<20190603201923.akdidsegyfzq3ykj@jumper.schlittermann.de>" "<20190604132534.GA16994@openwall.com>") nil nil nil nil nil nil nil "Re: [oss-security] CVE-2019-10149: Exim 4.87 to 4.91: possible remote exploit" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3835" "Wednesday" "20" "January" "2016" "12:20:09" "-0500" "Daniel Kahn Gillmor" "dkg@fifthhorseman.net" "<87vb6o5fsm.fsf@alice.fifthhorseman.net>" "80" "Re: [oss-security] Prime example of a can of worms" "^Date:" nil nil "1" "2016012017:20:09" "[oss-security] Prime example of a can of worms" (number mark "        dkg@fifthhor Jan 20   80/3835  " thread-indent "\"Re: [oss-security] Prime example of a can of worms\"\n") "<CANO=Ty16P4GKb4HYtFugYsjufSZOBf+euv7O6WopKsAPuhKHtw@mail.gmail.com>" ("<CANO=Ty18_pMLco8RdabsEbhs9sLahRhT_U93PGhDVwhcRaqzpQ@mail.gmail.com>" "<CAFRnB2Wrz=zexGonV5fHosVqfiOhNvA6Ya2YsCYyDkt7UE_0mw@mail.gmail.com>" "<20151019193411.GA15710@hunt>" "<87eggqmta9.fsf@alice.fifthhorseman.net>" "<20151021170113.128d3a8e@silentmaxx>" "<CANO=Ty0eLFpezes_WfNTN0eKj6u5BinhwBQkM6BR7PZPg3eCiA@mail.gmail.com>" "<20151023145631.GA21048@gremlin.ru>" "<CANO=Ty16P4GKb4HYtFugYsjufSZOBf+euv7O6WopKsAPuhKHtw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 7746 invoked by uid 550); 4 Jun 2019 14:23:37 -0000
+Received: (qmail 22122 invoked by uid 550); 20 Jan 2016 17:20:35 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,71 +11,96 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 27759 invoked from network); 4 Jun 2019 14:07:42 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=schlittermann.de; s=dd201504; h=In-Reply-To:Content-Type:MIME-Version:
-	References:Message-ID:Subject:To:From:Date:Cc:Content-Description:Content-ID:
-	Content-Transfer-Encoding:Resent-Cc:Resent-To;
-	bh=FBsrCTrCMEUzBeDJEl6hoqulVMo+fXzrYz1qlqFRNu8=; b=gtJiQswknrTmlY/Ho3PAb1Y9OL
-	r+WANa/tD/e3R9KB5mLtSSEcHRoz8O5H57RlGBlKGOndX+onxyJy+jUqCOc28qbzUFVRgdHBEj6pK
-	3OdANPSebUyoajgd89dcAZQXhAM25gDq1X18CDv4ErpptKMIe9DaXcAH38rtbxjS/0W0=;
-Date: Tue, 4 Jun 2019 16:07:30 +0200
-From: Heiko Schlittermann <hs@schlittermann.de>
-To: oss-security@lists.openwall.com
-Message-ID: <20190604140730.7yz733eajye2kfbs@jumper.schlittermann.de>
-References: <20190603201923.akdidsegyfzq3ykj@jumper.schlittermann.de>
- <20190604132534.GA16994@openwall.com>
+Received: (qmail 22098 invoked from network); 20 Jan 2016 17:20:34 -0000
+In-Reply-To: <CANO=Ty16P4GKb4HYtFugYsjufSZOBf+euv7O6WopKsAPuhKHtw@mail.gmail.com>
+References: <CANO=Ty18_pMLco8RdabsEbhs9sLahRhT_U93PGhDVwhcRaqzpQ@mail.gmail.com> <CAFRnB2Wrz=zexGonV5fHosVqfiOhNvA6Ya2YsCYyDkt7UE_0mw@mail.gmail.com> <20151019193411.GA15710@hunt> <87eggqmta9.fsf@alice.fifthhorseman.net> <20151021170113.128d3a8e@silentmaxx> <CANO=Ty0eLFpezes_WfNTN0eKj6u5BinhwBQkM6BR7PZPg3eCiA@mail.gmail.com> <20151023145631.GA21048@gremlin.ru> <CANO=Ty16P4GKb4HYtFugYsjufSZOBf+euv7O6WopKsAPuhKHtw@mail.gmail.com>
+User-Agent: Notmuch/0.21+68~g28d25e7 (http://notmuchmail.org) Emacs/24.5.1 (x86_64-pc-linux-gnu)
+Message-ID: <87vb6o5fsm.fsf@alice.fifthhorseman.net>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="7lfmscslmv5lwgpd"
-Content-Disposition: inline
-In-Reply-To: <20190604132534.GA16994@openwall.com>
-Organization: schlittermann -- internet & unix support
-X-Face: =y#&-VlCH8uT|8#-#JE_^c<:+qPbYxFD`}8`m)xjyA$93tpwm-vKsa(V,0?906(2VIVNQbU
- QzD%zhE+~-AA?\v-v.HY6]ebO4_$vY`l|||Q!EZT5*Xx/>Fj{8E_a.;;#<4S$>&T%n5()2Yt=R5FSC
- y:Na&@T{Rf`kPq^'ffPFA%`mP~>%-LU$d*]]{-%>j={&MsMND.">]H)&#AoSI~(U8Jk;v*;,Pf+l85
- X?H&`
-X-Telegram: @HeikoSchlittermann
-X-Threema: T5RPWMSS
-X-Phone: +49.172.7909055
-X-GPG-Fingerprint: E5CA 331D 44AB 8E4C 806F  DBEE 2610 1B62 F693 76CE
-X-GPG-Key-ID: F69376CE
-User-Agent: NeoMutt/20170113 (1.7.2)
-Subject: Re: [oss-security] CVE-2019-10149: Exim 4.87 to 4.91: possible
- remote exploit
+Content-Type: text/plain
+Date: Wed, 20 Jan 2016 12:20:09 -0500
+From: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Prime example of a can of worms
+To: Kurt Seifried <kseifried@redhat.com>, oss-security@lists.openwall.com
 
---7lfmscslmv5lwgpd
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Hi Kurt--
 
-Solar Designer <solar@openwall.com> (Di 04 Jun 2019 15:25:34 CEST):
-> $ diff -urwx doc exim-4.91 exim-4.92 | diffstat -s
->  131 files changed, 6898 insertions(+), 4395 deletions(-)
-> $ diff -urwx doc exim-4.91 exim-4.92 | wc
->   27635  114347  935620
+On Wed 2016-01-20 10:45:07 -0500, Kurt Seifried wrote:
+> I finally got the article written and published, it's at:
+>
+> https://securityblog.redhat.com/2016/01/20/primes-parameters-and-moduli/
 
-I'll talk to the other devs about this.
+Thanks for this writeup!
 
-If the distros give their OK, we're fine to release the patches to the
-public sooner.
+the chart at
+https://securityblog.redhat.com/wp-content/uploads/2015/12/DH-Param-Compromise-300x269.jpg
+uses the terms "keys" in the axis labels, but i think you mean "primes"
+or "moduli".
 
---
-Heiko
+> TL;DR: I found a lot of messy problems and no really good solutions. But
+> ultimately we need to start using bigger keys/primes or this is all just a
+> waste of compute time (might as well go back to clear text).
 
---7lfmscslmv5lwgpd
-Content-Type: application/pgp-signature; name="signature.asc"
+yes, larger primes are clearly needed.
 
------BEGIN PGP SIGNATURE-----
+The discussion gets a little ways into the issue of negotiating primes
+between peers, but doesn't address some underlying issues.
 
-iQEzBAABCgAdFiEE0L/WueylaUpvFJ3Or0zGdqa2wUIFAlz2eyIACgkQr0zGdqa2
-wUKBtgf+LO0ztE6eYz+zN3EtPQ7Dm8w6vRq+8xSd8XYLlYsDb/hAm8JaQJfk0Zpr
-HEi1xq4V+vwOcjR/LlVWpjStMhwa7ujQ1LZSIJ/2t9cjws06rl6SeEIp8+q86rYi
-ENggGmAu+UadYIdlWj52sadErLJGT9ieO63O10Eo4Kmm9HKMtoRlKw7vzqeDFpuW
-8fWL534NYLkm2XStL0aIb05stIloQ1HY3g8AQS5qhA2/UcndNksG/ieTK3uItv5q
-ibSPrxxMon2RZtkbvrXLYvHmzj0ZbI/gRgW3boUOBUkeqZF14f+OwhAQ0oVVp1Xx
-wNQuEBC2HurC+LJp/IHSYXuCRKjzzQ==
-=c7c5
------END PGP SIGNATURE-----
+For one, the writeup addresses probabilistic primality tests, but
+doesn't describe proofs of primality, which are significantly more
+expensive to generate (and still probably more expensive to verify than
+a short Miller-Rabin test).  But these proofs provide certainty in a way
+that probabilistic tests might not.  If we're talking about runtime
+primality checking when communicating with a potential adversary, are
+there proofs about the (im)possibility of generating a pseudoprime that
+is more or less likely to pass a miller-rabin test?
 
---7lfmscslmv5lwgpd--
+Additionally, the fact that the modulus is prime is an insufficient test
+-- it needs to be a prime of a certain structure, or else the remote
+peer can force the user into a small subgroup, which can lead to
+unknown-key-share attacks, key factorization, or other problems.
+
+One approach is to require that moduli be safe primes (p = (q*2) + 1,
+where q is also prime) and to verify that the peer's public share k is
+in the range 1 < k < p-1 to avoid the small-subgroup attack of size 2.
+This appears to be the best we know how to do with diffie hellman over
+finite fields, but it limits the range of acceptable moduli even
+further, and requires two primality tests for the peer seeing the primes
+for the first time.
+
+It's also worth noting that we have a similar concern with elliptic
+curve DH (ECDH) -- the structure of the curve itself (which is the
+equivalent of the generator and the modulus for finite-field diffie
+hellman) is relevant to the security of the key exchange.
+
+In the ECDH space, there appears to be little argument about trying to
+use a diversity of groups: while many specifications provide ways to use
+custom (generically-specified) curves, pretty much no one uses them in
+practice, and the custom-curve implementations are likely to be both
+inefficient and leaky (to say nothing of the difficulty of verifying
+that the offered curve is well-structured at runtime).  Indeed, the bulk
+of the discussion around ECDH is about picking a small handful of good
+curves that we can publicly vet, and then using those specific curves
+everywhere (see curve 25519 and goldilocks 448, the CFRG's upcoming
+recommendations).
+
+Encouraging peers to select a diversity of large custom groups in for
+finite-field DH seems likely to be slow (additional runtime checks, no
+optimized implementations), buggy (missing or inadequate runtime checks,
+side-channel leakage), and bandwidth-heavy (the moduli themselves must
+be transmitted in addition to the public keys), and as you say, the
+diversity of groups doesn't win you as much as just switching to larger
+groups in the first place.
+
+I agree that we need machinery in place to be able to relatively easily
+drop believed-weak, widely-shared groups, and to introduce new
+widely-shared groups.  But i'm not convinced that encouraging the use of
+a diversity of groups is really the "Best Default/Operational" tradeoff,
+as it is indicated in your chart, given the concerns above.
+
+Thanks very much for your analysis.
+
+Regards,
+
+        --dkg
