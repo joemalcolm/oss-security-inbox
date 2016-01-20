@@ -1,47 +1,86 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/14/3
-Message-Id: <20161014071750.E195342E060@smtpvbsrv1.mitre.org>
-Date: Fri, 14 Oct 2016 03:17:50 -0400 (EDT)
-From: cve-assign@...re.org
-To: meissner@...e.de
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: another recursion in GRE
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/20/16
+Message-ID: <CALPTtNVfowfZmQxBUjhGvC8b7quqnXLWQZL=2xBO7uD-MGvewg@mail.gmail.com>
+Date: Wed, 20 Jan 2016 12:05:02 -0800
+From: Reed Loden <reed@...dloden.com>
+To: oss-security@...ts.openwall.com,  Assign a CVE Identifier <cve-assign@...re.org>
+Cc: report@...esecurity.io
+Subject: CVE request: Two vulnerabilities in mapbox.js node module
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Noticed these via the Node Security Project.
 
-> If a packet has the layout: | IPv4 header | GRE header | IPv4 header | GRE header | ...
-> depending on left over stack it could run the kernel out of stack due to
-> recursion and so crash the kernel.
+mapbox.js is "Mapbox JavaScript API, a Leaflet Plugin".
+http://mapbox.com/mapbox.js/
 
-> commit fac8e0f579695a3ecbc4d3cac369139d7f819971
+Homepage: https://github.com/mapbox/mapbox.js
 
->     This
->     generalizes that solution to prevent any kind of tunnel stacking
->     that would cause problems.
+Download: https://www.npmjs.com/package/mapbox.js
 
-Use CVE-2016-8666.
+* Content Injection via TileJSON attribute
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+  https://nodesecurity.io/advisories/49
 
-iQIcBAEBCAAGBQJYAIYdAAoJEHb/MwWLVhi25UIP/iSHd0YpyLjwP1wtmcZYOXx7
-jT7XMtGRXR7uXNUGBDd92u7VMe9Vy344znXvevg2MSRfIW1i8t6lQvaNE3TDDxC4
-yDXlnrLaSR6bfjNCv9ngaEiSgKlG+640LL5OTQvMQC8mhN+Bh3/UWmp1UjyadBEt
-wks3QEZQAhtnbLAUOa7j7BGZu5+F52WUtzwc5j4ncLZ7jbR8nUPg+DgASu2HRgiB
-MhPZsaGnyuNIXis35IgB08p91IsIOrg055s3j8uFle7twyaEykU1XbbpnAwGu8q7
-p3tw9cNp1KI7XbjbLG2Dh+wxubvvwJ0NsV4g5FXbXbn7CxJ/UWJ2Deymn/NdwXgg
-wrmkMy/N2H8eLweP3tn3KQlNef/4G3D9hHsqnb8KoOX+3cmH3UMMb7oSoovhCyQm
-/rBfmHX38BVRF2Rq8qYIS5hBADSo0DtLmSmqtMLsVI2Dflyo79CX7cSjAvhezxJu
-c4hqHbum5DsgvHFUS5gEIRQEHjv4sDRVYGav7Aik6NG6dlA7edGmLaWGczqtgujP
-c1BvVbbzDm9Ug9Hvq9C+qfjfDoPVtw/SpUz5T+jcu1BFf0aaUkejhrdn1FCtb1GC
-pbZIDGt4vRoeNAzUd4kCkjtS3cvbOK+MtsuV0C4YzdMwfG5odSS7bS1KX0zt6pL7
-2ZaO/xi1g1pNa4zIuC4S
-=ShWc
------END PGP SIGNATURE-----
+  Overview:
+
+  Mapbox.js versions 1.x prior to 1.6.5 and 2.x prior to 2.1.7 are vulnerable
+  to a cross-site-scripting attack in certain uncommon usage scenarios.
+
+  If you use L.mapbox.map or L.mapbox.tileLayer to load untrusted TileJSON
+  content from a non-Mapbox URL, it is possible for a malicious user with
+  control over the TileJSON content to inject script content into the
+  "attribution" value of the TileJSON which will be executed in the context of
+  the page using Mapbox.js.
+
+  Such usage is uncommon. The following usage scenarios are not vulnerable:
+
+  * only trusted TileJSON content is loaded
+  * TileJSON content comes only from mapbox.com URLs
+  * a Mapbox map ID is supplied, rather than a TileJSON URL
+
+  Remediation:
+
+  Upgrade to Mapbox.js version 2.1.7. If you are still using a 1.x version and
+  unable to upgrade to 2.1.7, upgrade to 1.6.5.
+
+  Credit: John Firebaugh
+
+
+* Content Injection via TileJSON Name
+
+  https://nodesecurity.io/advisories/74
+
+  Overview:
+
+  Mapbox.js versions 1.x prior to 1.6.6 and 2.x prior to 2.2.4 are vulnerable
+  to a cross-site-scripting attack in certain uncommon usage scenarios.
+
+  If you use L.mapbox.map and L.mapbox.shareControl it is possible for a
+  malicious user with control over the TileJSON content to inject script
+  content into the name value of the TileJSON. After clicking on the share
+  control, the malicious code will execute in the context of the page using
+  Mapbox.js.
+
+  Such usage is uncommon. L.mapbox.shareControl is not automatically added to
+  mapbox.js maps and must be explicitly added. The following usage scenarios
+  are not vulnerable:
+
+  * the map does not use a share control (L.mapbox.sharecontrol)
+  * only trusted TileJSON content is loaded
+
+  Remediation:
+
+  Upgrade to Mapbox.js version 2.2.4. If you are still using a 1.x version and
+  unable to upgrade to 2.2.4, upgrade to 1.6.6.
+
+  If you are unable to upgrade to either 2.2.4 or 1.6.6, you can also remove
+  instances of L.mapbox.shareControl from your maps.
+
+  Credit: Alexandra Ulsh
+
+
+The advisories state that a CVE has been requested, but I haven't seen any
+assignments yet. Please assign CVEs as appropriate.
+
+Thanks,
+~reed
