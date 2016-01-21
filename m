@@ -1,17 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/13/9
-Message-ID: <20160713172318.GA28955@sisay.ephaone.org>
-Date: Wed, 13 Jul 2016 19:23:18 +0200
-From: Michael Scherer <misc@...b.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/21/6
+Message-ID: <1453390620.3030.60.camel@trustmatta.com>
+Date: Thu, 21 Jan 2016 16:37:00 +0100
+From: Florent Daigniere <florent.daigniere@...stmatta.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: openshift-node is logging private RSA keys to the systemd journal
+Subject: Re: Prime example of a can of worms
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Thu, 2016-01-21 at 10:15 -0500, Steve Grubb wrote:
+> On Thursday, January 21, 2016 11:43:45 AM Florent Daigniere wrote:
+> > On Thu, 2016-01-21 at 04:05 +0300, gremlin@...mlin.ru wrote:
+> > > On 2016-01-20 08:45:07 -0700, Kurt Seifried wrote:
+> > > 
+> > >  > I finally got the article written and published, it's at:
+> > >  > https://securityblog.redhat.com/2016/01/20/primes-parameters-a
+> > > nd-m
+> > > oduli/
+> > > 
+> > > In that article you wrote:
+> > > 
+> > >  > I think the best plan for dealing with this in the short term
+> > >  > is deploying larger primes (2048 bits minimum, ideally 4096
+> > >  > bits) right now wherever possible.
+> > > 
+> > > 4096 bit keys seem to be the absolute minimum, and personally
+> > > I've
+> > > already moved to 8192 bit keys.
+> > 
+> > I'd like to know where you guys picked those numbers from:
+> > http://www.keylength.com/en/compare/ suggests that 2048 bits is oka
+> > y
+> > for everyone but the BSI (at least not past 2016). Surely a
+> > recommendation today should have a higher standard than that.
+> > 
+> > On the other hand, 3072 bits seems to be enough for everyone for
+> > the
+> > next decade or so.
+> 
+> I think that is assuming that quantum computers are not brought to
+> market any 
+> time soon. 
 
-I stumbled on https://github.com/openshift/origin/issues/3951 , which was found by Adam Miller,
-but he didn't request a CVE id. The vendor (Red Hat) told me to request the 
-CVE on oss-sec since the issue is public since a while. 
+Indeed. It's also assuming no other major breakthrough happens (whether
+it's in maths, moore's law or anything else)...
 
--- 
-Michael Scherer
+but here we are talking about making recommendations towards replacing
+legacy crypto we suspect^wknow to be broken, in practice, in the real
+world, today.
+
+I think that it's very important to keep the message simple: use bigger
+(possibly standardized) groups, of at least X bits. The BSI thinks that
+X should be greater than 2048 bits and so do I.
+
+Florent
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
