@@ -1,4 +1,9 @@
-Received: (qmail 15788 invoked by uid 550); 8 Dec 2022 14:33:32 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4439" "Thursday" "21" "January" "2016" "10:15:55" "-0500" "Steve Grubb" "sgrubb@redhat.com" "<1793542.7Axp6M92oG@x2>" "127" "Re: [oss-security] Prime example of a can of worms" "^Cc:" nil nil "1" "2016012115:15:55" "[oss-security] Prime example of a can of worms" (number mark "        sgrubb@redha Jan 21  127/4439  " thread-indent "\"Re: [oss-security] Prime example of a can of worms\"\n") "<1453373025.3030.24.camel@trustmatta.com>" ("<CANO=Ty18_pMLco8RdabsEbhs9sLahRhT_U93PGhDVwhcRaqzpQ@mail.gmail.com>" "<20160121010506.GA21071@gremlin.ru>" "<1453373025.3030.24.camel@trustmatta.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 11267 invoked by uid 550); 21 Jan 2016 15:16:13 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,95 +11,146 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11287 invoked from network); 8 Dec 2022 00:22:37 -0000
-Date: Wed, 7 Dec 2022 18:22:21 -0600
-From: John Helmert III <ajak@gentoo.org>
-To: oss-security@lists.openwall.com, secalert@redhat.com
-Message-ID: <Y5EuPT5dLDd4FlKe@gentoo.org>
-References: <CAP9KPhDh6PJu-0mD12wYUraf1Ya1MSUPwz1PsPO5omi39-OYLw@mail.gmail.com>
+Received: (qmail 10209 invoked from network); 21 Jan 2016 15:16:12 -0000
+Message-ID: <1793542.7Axp6M92oG@x2>
+Organization: Red Hat
+User-Agent: KMail/4.14.10 (Linux/4.2.3-203.fc22.x86_64; KDE/4.14.14; x86_64; ; )
+In-Reply-To: <1453373025.3030.24.camel@trustmatta.com>
+References: <CANO=Ty18_pMLco8RdabsEbhs9sLahRhT_U93PGhDVwhcRaqzpQ@mail.gmail.com> <20160121010506.GA21071@gremlin.ru> <1453373025.3030.24.camel@trustmatta.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="TwYgzBjeJV4dye4m"
-Content-Disposition: inline
-In-Reply-To: <CAP9KPhDh6PJu-0mD12wYUraf1Ya1MSUPwz1PsPO5omi39-OYLw@mail.gmail.com>
-Subject: Re: [oss-security] CVE-2022-4170: rxvt-unicode code execution via
- background OSC
+Content-Type: multipart/signed; boundary="nextPart2728256.z3Y7yq03Jr"; micalg="pgp-sha1"; protocol="application/pgp-signature"
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.26
+Cc: Florent Daigniere <florent.daigniere@trustmatta.com>
+Date: Thu, 21 Jan 2016 10:15:55 -0500
+From: Steve Grubb <sgrubb@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Prime example of a can of worms
+To: oss-security@lists.openwall.com
 
---TwYgzBjeJV4dye4m
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+--nextPart2728256.z3Y7yq03Jr
 Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="us-ascii"
 
-On Mon, Dec 05, 2022 at 10:22:33PM +1100, David Leadbeater wrote:
-> I've discovered rxvt-unicode 9.25 and 9.26 are vulnerable to remote
-> code execution, in the Perl background extension, when an attacker can
-> control the data written to the user's terminal and certain options
-> are set.
+On Thursday, January 21, 2016 11:43:45 AM Florent Daigniere wrote:
+> On Thu, 2016-01-21 at 04:05 +0300, gremlin@gremlin.ru wrote:
+> > On 2016-01-20 08:45:07 -0700, Kurt Seifried wrote:
+> >=20
+> >  > I finally got the article written and published, it's at:
+> >  > https://securityblog.redhat.com/2016/01/20/primes-parameters-and-m
+> > oduli/
+> >=20
+> > In that article you wrote:
+> >=20
+> >  > I think the best plan for dealing with this in the short term
+> >  > is deploying larger primes (2048 bits minimum, ideally 4096
+> >  > bits) right now wherever possible.
+> >=20
+> > 4096 bit keys seem to be the absolute minimum, and personally I've
+> > already moved to 8192 bit keys.
 >=20
-> The "background" extension is automatically loaded if certain X
-> resources are set such as 'transparent' (see the full list at the top
-> of src/perl/background[1]). So it is possible to be using this
-> extension without realising it.
+> I'd like to know where you guys picked those numbers from:
+> http://www.keylength.com/en/compare/ suggests that 2048 bits is okay
+> for everyone but the BSI (at least not past 2016). Surely a
+> recommendation today should have a higher standard than that.
 >=20
-> This is accidentally fixed on version 9.30, and I haven't confirmed
-> 9.29, it appears to not be exploitable, but only due to another (not
-> security) bug. The actual bug which makes this not vulnerable on 9.30
-> is simply a wrong number in "on_osc_seq".
->=20
-> For 9.25 and 9.26 the patch at[2] can be backported. The body of the fix =
-is:
->=20
->  sub q0 {
-> -   (my $str =3D shift) =3D~ s/\x00//g; # make sure there really aren't
-> any embedded NULs
-> -   "q\x00$str\x00"
-> +   "qq\x00\Q$_[0]\E\x00"
->  }
->=20
-> Isn't Perl quoting fun? Paranoid people may wish to remove the entire
-> "on_osc_seq" subroutine to avoid passing any potentially untrusted
-> input anywhere near eval (this feature is deprecated and the
-> maintainer did mention they are considering what to do longer term).
->=20
-> It doesn't make sense to withhold an exploit for this; the fix gives a
-> pretty good idea where to look and this isn't vulnerable in the latest
-> version.
->=20
-> $ urxvt -transparent
->=20
-> Inside that running terminal:
->=20
-> # Make tint be "\\", which means the ending \x00 is quoted under our cont=
-rol
-> $ printf '\e]705;\\\a'
-> # Make the second q0 end the quoted q-string and then be valid perl
-> under our control
-> $ printf '\e]20;,rootalign root),`touch /tmp/cve-2022-4170` #\a'
->=20
-> This has been assigned CVE-2022-4170.
+> On the other hand, 3072 bits seems to be enough for everyone for the
+> next decade or so.
 
-Can this CVE be made public (ie, not "reserved" according to [1])?
+I think that is assuming that quantum computers are not brought to market a=
+ny=20
+time soon. Over the summer the NSA's Suite B page kind of backpeddled on th=
+e=20
+ECC requirements and refocused on RSA. I attended a speech this fall where=
+=20
+NIST talked about what quantum computers will do. The presentation is here =
+but=20
+does not have speakers notes:
 
-[1] https://github.com/CVEProject/cvelist/blob/master/2022/4xxx/CVE-2022-41=
-70.json
+http://csrc.nist.gov/news_events/cif_2015/research/day1_research_200-250pt3=
+.pdf
 
-> David
+This is the notes that I took while listening to the speech:
+
+This panelist talked about quantum crypto. The issue is that quantum comput=
+ers=20
+could use Shor's algorithm and Grover's algorithm to kill PKI. In the futur=
+e=20
+key sizes could be around a million bits. This will mean changes to network=
+=20
+protocols. Its estimated that a key space of N can be search in the square=
+=20
+root of N time. So, in current technology, if you need 128 bits of strength=
+,=20
+you will need to square it to get the key size.
+
+Hallway discussions mentioned that ECC is dead due to trust issues and fuzz=
+y=20
+IP issues which slowed vendor uptake. There was a mention of RSA officially=
+=20
+being allowed to go to 16k key sizes.
+
+-Steve
+
+
+> I haven't found anyone suggesting that bigger groups are either
+> necessary or worth it. If you want QC proof crypto you need groups of
+> ~16k bits.
 >=20
-> [1]: http://cvs.schmorp.de/rxvt-unicode/src/perl/background?revision=3D1.=
-109&view=3Dmarkup
-> [2]: http://cvs.schmorp.de/rxvt-unicode/src/perl/background?r1=3D1.105&r2=
-=3D1.109
+> My favourite recommendation (ECRYPT II):
+> http://www.keylength.com/en/3/
+> where
+> 1024 bits -> level 3 (<<2015)
+> 2048 bits -> level 5 (2020)
+> 3248 bits -> level 7 (2040)
+> for any of the modelled adversaries.
+>=20
+> > Here are some numbers:
+> >=20
+> > `openssl dhparam -2 4096` took 1:53:29 to generate (HH:MM:SS);
+> > `openssl dhparam -5 4096` took 1:43:44;
+> > `openssl dhparam -2 8192` took 25:51:34;
+> > `openssl dhparam -5 8192` took 16:51:47.
+> >=20
+> >  > Why not huge primes?
+> >  > Why not simply use really large primes? Because computation
+> >  > is expensive, battery life matters more than ever and latency
+> >  > will become problems that users will not tolerate.
+> >=20
+> > Any and all cryptographic transforms must be expensive - that means
+> > at least time and electric power.=20
+>=20
+> There is a good reason why no one wants custom-groups in protocol
+> design. I haven't seen it mentioned much so far so I will spell it out
+> again:
+>=20
+> Custom groups need to be transmitted for each handshake: that's
+> problematic on most networks (none of the group sizes suggested will
+> fit on a MTU worth of data) as it will involve fragmentation and
+> potentially retransmission.
+>=20
+> If anything, TLS has proven that it won't work; both because=20
+> - no one will use the feature, even if it's present (status-quo with
+> 1024 bits groups today)
+> - it's impractical for it to be used anywhere where the connectivity is
+> anything less than perfect (mobile networks, high-latency networks,
+> ...)
+>=20
+> K.I.S.S.!
+>=20
+> Florent
 
---TwYgzBjeJV4dye4m
+--nextPart2728256.z3Y7yq03Jr
 Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part.
+Content-Transfer-Encoding: 7Bit
 
 -----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
 
-iHUEABYKAB0WIQQyG9yfCrmO0LPSdG2gXq2+aa/JtQUCY5EuPAAKCRCgXq2+aa/J
-tdzaAP9E829Mm+Y4hFKYgaoKbhZDDNA+V+jWLAaWwlaA7NsP+AD/Zw1jWkrbEUaD
-EgQAUoh5pNBeBVnSJ/YmGPDX3pKi/As=
-=gsmK
+iEYEABECAAYFAlag9isACgkQCfgKaXAKiuYYcwCfTtpTCyDaq4mp5itcpo4ZXtq4
+Ep0AoJSX3pNiQWbip3+GDF5bRr4vfURG
+=E6xP
 -----END PGP SIGNATURE-----
 
---TwYgzBjeJV4dye4m--
+--nextPart2728256.z3Y7yq03Jr--
+
