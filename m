@@ -1,53 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/06/3
-Message-ID: <20160306102959.GA26781@openwall.com>
-Date: Sun, 6 Mar 2016 13:29:59 +0300
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/22/2
+Message-ID: <56A126C4.7090905@andrewg.com>
+Date: Thu, 21 Jan 2016 18:43:16 +0000
+From: Andrew Gallagher <andrewg@...rewg.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Concerns about CVE coverage shrinking - direct impact to researchers/companies
+Subject: Re: Prime example of a can of worms
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Mar 06, 2016 at 09:27:00AM +0300, gremlin@...mlin.ru wrote:
-> On 2016-03-05 20:20:39 +0300, Solar Designer wrote:
->  > Problem solved:
->  > http://www.openwall.com/ove
+On Thu, 21 Jan 2016 10:15:55 -0500 Steve Grubb wrote:
 > 
-> Hmmm... sorry to say, but I've garbaged 21 IDs by simply visiting
-> this page and reloading it twice just to see what would happen :-)
+> Hallway discussions mentioned that ECC is dead due to trust issues
+> and fuzzy IP issues which slowed vendor uptake. There was a mention
+> of RSA officially being allowed to go to 16k key sizes.
 
-A few people said they felt sorry about that, but I think this is
-actually OK.
+Was there any mention of the relative ease of quantum attacks against
+ECC compared to classically-equivalent RSA? [1] That was suggested on
+a couple of discussion groups as a possible motivation for the newly
+rekindled RSA love.
 
-> So I'd suggest adding a BRB (Big Red Button) for those who actually
-> need an ID,
+[1] http://arxiv.org/abs/quant-ph/0301141
 
-I had thought of that and decided to do without it for now.  (Also
-considered captcha.)  I like to emphasize how very easy it is to obtain
-OVE IDs.  Not even having to click a button serves that goal well.
+-- 
+Andrew Gallagher
+Senior Systems Engineer, Ward Solutions Ltd.
+2054 Castle Drive, Citywest, Dublin 24
++353 87 1200174
 
-I don't mind adding a button a bit later, though.  We'll see.
 
-> and displaying some statistics ("1234 IDs were assigned
-> today") for everyone else.
-
-This is currently available through OVE IDs themselves - they are
-sequential, starting with 0001 at midnight UTC.
-
->  > Having IDs is of some use even without or before all of that.
-> 
-> Yes. So prepare for the above link to become really popular.
-
-As it is, it should survive quite a few thousand of unique IPs per day
-(and yes, it temporarily records per IP address statistics, and it has
-per-IP and per-netblock limits), before (gradually) denying service for
-the rest of the day.  It might or might not survive a Slashdot-alike
-event, but even if not then waiting a day for the next batch of IDs is
-quicker than waiting weeks for CVE IDs.
-
-BTW, there is not a hard-coded limit of 9999.  There is logic in place
-to try and keep the daily IDs within 9999 (the service becomes less
-generous as the 4-digit space gets closer to being exhausted), but if
-the requests and unique IPs are too numerous this may be crossed anyway,
-resulting in 5- or 6-digit IDs (and going back to 4-digit the next day).
-
-Alexander
+Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
