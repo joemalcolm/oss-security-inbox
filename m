@@ -1,109 +1,81 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/26/6
-Message-ID: <CANNt_rZQ9ZbmeB3kNGgBafny=TYoGbm7xMJPrzD2KNUt60Ld=Q@mail.gmail.com>
-Date: Mon, 26 Dec 2016 12:57:26 -0500
-From: Michael Hess <mlhess@...ch.edu>
-To: security@...pal.org, oss-security@...ts.openwall.com, security@...milo.org
-Subject: Re: [security] PHPMailer < 5.2.18 Remote Code Execution [CVE-2016-10033]
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/21/3
+Message-ID: <1453373025.3030.24.camel@trustmatta.com>
+Date: Thu, 21 Jan 2016 11:43:45 +0100
+From: Florent Daigniere <florent.daigniere@...stmatta.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Prime example of a can of worms
 Content-Type: text/plain; charset=utf-8
 
-The Drupal Security team is going to release a PSA on this topic, we
-don't normally do it, but given the holiday we will issue PSA-004, in
-about 30 min.
+On Thu, 2016-01-21 at 04:05 +0300, gremlin@...mlin.ru wrote:
+> On 2016-01-20 08:45:07 -0700, Kurt Seifried wrote:
+> 
+>  > I finally got the article written and published, it's at:
+>  > https://securityblog.redhat.com/2016/01/20/primes-parameters-and-m
+> oduli/
+> 
+> In that article you wrote:
+> 
+>  > I think the best plan for dealing with this in the short term
+>  > is deploying larger primes (2048 bits minimum, ideally 4096
+>  > bits) right now wherever possible.
+> 
+> 4096 bit keys seem to be the absolute minimum, and personally I've
+> already moved to 8192 bit keys.
+> 
 
-The text is below.
+I'd like to know where you guys picked those numbers from:
+http://www.keylength.com/en/compare/ suggests that 2048 bits is okay
+for everyone but the BSI (at least not past 2016). Surely a
+recommendation today should have a higher standard than that.
 
-Thanks,
-Michael on behalf of the Drupal Security Team.
+On the other hand, 3072 bits seems to be enough for everyone for the
+next decade or so.
 
+I haven't found anyone suggesting that bigger groups are either
+necessary or worth it. If you want QC proof crypto you need groups of
+~16k bits.
 
+My favourite recommendation (ECRYPT II):
+http://www.keylength.com/en/3/
+where
+1024 bits -> level 3 (<<2015)
+2048 bits -> level 5 (2020)
+3248 bits -> level 7 (2040)
+for any of the modelled adversaries.
 
-Posted by Drupal Security Team on December 26, 2016 at 12:50pm
+> Here are some numbers:
+> 
+> `openssl dhparam -2 4096` took 1:53:29 to generate (HH:MM:SS);
+> `openssl dhparam -5 4096` took 1:43:44;
+> `openssl dhparam -2 8192` took 25:51:34;
+> `openssl dhparam -5 8192` took 16:51:47.
+> 
+>  > Why not huge primes?
+>  > Why not simply use really large primes? Because computation
+>  > is expensive, battery life matters more than ever and latency
+>  > will become problems that users will not tolerate.
+> 
+> Any and all cryptographic transforms must be expensive - that means
+> at least time and electric power. 
 
-Advisory ID: DRUPAL-SA-PSA-2016-004
-Project: PHPMailer (third-party library)
-Version: 7.x, 8.x
-Date: 2016-December-26
-Security risk: 23/25 (Highly Critical)
-AC:None/A:User/CI:All/II:All/E:Exploit/TD:All
-Vulnerability: Arbitrary PHP code execution
+There is a good reason why no one wants custom-groups in protocol
+design. I haven't seen it mentioned much so far so I will spell it out
+again:
 
-Description
+Custom groups need to be transmitted for each handshake: that's
+problematic on most networks (none of the group sizes suggested will
+fit on a MTU worth of data) as it will involve fragmentation and
+potentially retransmission.
 
-The PHPMailer and SMTP modules (and maybe others) add support for
-sending e-mails using the 3rd party PHPMailer library.
+If anything, TLS has proven that it won't work; both because 
+- no one will use the feature, even if it's present (status-quo with
+1024 bits groups today)
+- it's impractical for it to be used anywhere where the connectivity is
+anything less than perfect (mobile networks, high-latency networks,
+...)
 
-In general the Drupal project does not create advisories for 3rd party
-libraries. Drupal site maintainers should pay attention to the
-notifications provided by those 3rd party libraries as outlined in
-PSA-2011-002 - External libraries and plugins. However, given the
-extreme criticality of this issue and the timing of its release we are
-issuing a Public Service Announcement to alert potentially affected
-Drupal site maintainers.
+K.I.S.S.!
 
-CVE identifier(s) issued
-
-CVE-2016-10033
-
-Versions affected
-
-All versions of the external PHPMailer library < 5.2.18.
-
-Drupal core is not affected. If you do not use the contributed
-PHPMailer third party library, there is nothing you need to do.
-
-Solution
-
-Upgrade to the newest version of the phpmailler library.
-https://github.com/PHPMailer/PHPMailer
-
-Reported by
-
-Dawid Golunski
-
-Contact and More Information
-
-The Drupal security team can be reached at security at drupal.org or
-via the contact form at https://www.drupal.org/contact.
-
-Learn more about the Drupal Security team and their policies, writing
-secure code for Drupal, andsecuring your site.
-
-Follow the Drupal Security Team on Twitter at https://twitter.com/drupalsecurity
-
-
-
-On Mon, Dec 26, 2016 at 9:55 AM, Peter Bex <peter@...e-magic.net> wrote:
-> On Mon, Dec 26, 2016 at 03:46:50PM +0100, Hanno Böck wrote:
->> Hi,
->>
->> Given I had plenty of time on the train to 33c3 I did a quick
->> lookaround on what contains PHPMailer. As the details of the vuln
->> aren't clear yet this doesn't necessarily mean they're vulnerable, just
->> that they ship the affected code.
->
-> It looks like the vulnerability is due to a missing escaping of shell
-> arguments in the sender's e-mail address.  This commit seems to be
-> the one that fixes the bug:
-> https://github.com/PHPMailer/PHPMailer/commit/4835657cd639fbd09afd33307cef164edf807cdc#diff-ace81e501931d8763b49f2410cf3094dR1449
->
-> So it depends on whether a web form allows one to control the "from"
-> mail address or not.
->
->> Drupal doesn't contain PHPMailer, although mentioned in the advisory.
->> But there are probably plugins and extensions using it. I also saw it
->> used in some wordpress themes.
->
-> I noticed this Drupal module: https://www.drupal.org/project/phpmailer
-> which has some sort of integration with the widely used mimemail module.
-> The linked module http://drupal.org/project/smtp also uses PHPMailer.
-> There are undoubtedly more modules that do.
->
-> The LCMS system Chamilo also uses PHPMailer for sending mails internally.
->
-> Cheers,
-> Peter Bex
->
-> --
-> [ Security | https://lists.drupal.org/mailman/listinfo/security ]
-> [Security team mailing list management and scheduling is documented here | https://security.drupal.org/handling-list-emails]
+Florent
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
