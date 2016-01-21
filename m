@@ -1,95 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/27/1
-Message-ID: <20161227001009.GS20382@tracyreed.org>
-Date: Mon, 26 Dec 2016 16:10:09 -0800
-From: Tracy Reed <treed@...raviolet.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: PHPMailer < 5.2.18 Remote Code Execution [CVE-2016-10033]
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/21/2
+Message-Id: <20160121075655.E2AEC6C0066@smtpvmsrv1.mitre.org>
+Date: Thu, 21 Jan 2016 02:56:55 -0500 (EST)
+From: cve-assign@...re.org
+To: kseifried@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE for node.js websockets (ws)
 Content-Type: text/plain; charset=utf-8
 
-Note that confining the http process using SELinux or similar MAC system
-can go a long way to constraining and limiting the damage of inevitable
-vulnerabilities such as this. Particularly since this is command
-injection which is precisely what SELinux is good at limiting (as
-opposed to SQL injection).
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-My shop has a policy that SELinux will be enabled on all web
-applications and it has already saved us a few times despite being very
-good at getting things patched up promptly. 
+> https://nodesecurity.io/advisories/67
 
-On Sun, Dec 25, 2016 at 06:21:07PM PST, Dawid Golunski spake thusly:
-> PHPMailer < 5.2.18 Remote Code Execution [CVE-2016-10033]
-> 
-> Severity: CRITICAL
-> 
-> Discovered by:
-> Dawid Golunski (@dawid_golunski)
-> https://legalhackers.com
-> 
-> 
-> PHPMailer
-> "Probably the world's most popular code for sending email from PHP!
-> Used by many open-source projects: WordPress, Drupal, 1CRM, SugarCRM, Yii,
-> Joomla! and many more"
-> 
-> Desc:
-> An independent research uncovered a critical vulnerability in PHPMailer that
-> could potentially be used by (unauthenticated) remote attackers to achieve
-> remote arbitrary code execution in the context of the web server user and
-> remotely compromise the target web application.
-> To exploit the vulnerability an attacker could target common website
-> components such as contact/feedback forms, registration forms, password
-> email resets and others that send out emails with the help of a vulnerable
-> version of the PHPMailer class.
-> 
-> 
-> Patching:
-> Responsibly disclosed to PHPMailer team.
-> They've released a critical security release.
-> If you are using an affected release update to the 5.2.18 security
-> release as advised at:
-> https://github.com/PHPMailer/PHPMailer/blob/master/changelog.md
-> 
-> Notes:
-> I know this is a bad timing and a short notice (for everyone probably ;)
-> I've spent most of my Christmas break working on this issue with
-> affected vendors.
-> This has been quite a rush as one of the vendors leaked excessive
-> information on this vulnerability at one point which could aid
-> potential attackers.
-> 
-> I've released a limited advisory at the link below:
-> 
-> https://legalhackers.com/advisories/PHPMailer-Exploit-Remote-Code-Exec-CVE-2016-10033-Vuln.html
-> 
-> This is to give people a chance to immediately patch or at least be
-> aware of the issue before we get closer to a working day/end of
-> holiday for affected users to act on this issue.
-> 
-> I'm planning to release the full advisory and a PoC exploit shortly so
-> that everyone is on the same page.
-> 
-> Upcoming video PoC:
-> 
-> https://legalhackers.com/videos/PHPMailer-Exploit-Remote-Code-Exec-Vuln-CVE-2016-10033-PoC.html
-> 
-> 
-> For updates follow:
-> 
-> https://twitter.com/dawid_golunski
-> 
-> I'll also send another email to the list once it is published.
-> 
-> For now,
-> Patch it now before someone else patches it for you (through a reverse shell ;)
-> 
-> -- 
-> Regards,
-> Dawid Golunski
-> https://legalhackers.com
-> t: @dawid_golunski
+We currently feel that a CVE ID should not exist (unless an affected
+application is identified) because any related instances of
+security-relevant behavior would be site-specific, and therefore
+outside the scope of CVE.
 
--- 
-Tracy Reed
+For example:
 
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+  https://gist.github.com/c0nrad/e92005446c480707a74a#gistcomment-1664152
+  https://nodejs.org/api/dgram.html#dgram_socket_send_buf_offset_length_port_address_callback
+
+suggests that the problem is that Node.js allows people to write
+incorrect server-side code in which there is a call to socket.send,
+socket.ping, or socket.pong with a numerical argument. However, the
+documentation states that the argument must be a Buffer object or
+string. Behavior in the case of a numerical argument seems to be
+undefined. The change seems to be a hardening measure in which
+numerical arguments are automatically converted to strings, thereby
+making it safer to execute a specific type of incorrect code.
+
+If incorrect server-side code actually exists in a product, then a CVE
+ID can be assigned.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJWoI5eAAoJEL54rhJi8gl5JsAQAKBciZvNRlApccHSGlmNWMHR
+FTnjGchK1LxzJ9dyJ1Ap/kR3ZoYGj1HxeiajsCVu+gqkB71/N1V6kEKWfZtZBUI/
+fQTEv1Ydadp8E5apigN5+bGf2mX+ahRZjfr2mJn/uoI/3tXcX8JUlduR1r162xmJ
+4641oTYzh5UkNYJPBFeCPwjsCqqVHsSeBoftifMXhdSMP06qJYQE4Bxu8kuMRNQj
+ZwonpjKXAK86+qiM67Ic+ndxB3u/KNITqp++wsWVZBefmaDzsSsAf0K3kxSckX02
+ngQi7/8MeHCZyTU3lLGsr7EUzb69RHHhPlE5bRRfE12mZi07htRu4IR4jzJNcNYg
+wEPzLp+irLY4oF/RplysEj0jf2j952xTQGD0HfoqGPsgK9EY2Z+O6s+GEJJF94hS
+b53sAtwSSZolXT7sSRSAbN7YAB1me+PN8AUaCKY8VXwJD3O4dYxsee1jTrx9BEqc
+hyst7ADv2fhqL5nXdUdOXunUmwTqy4oNQXNTVyRIGsfu3Kllk6AO9bdX73JHHSAl
+zmY2ruUKyGG2HCMLvBwCZ7YEM5oTF5UrGSvBcyWiLMA/55okt+a2TxMGR2Ne8/S3
+pNV97DHNb38NQhhwSMbWKcezh2FK1lAnQnM4xxe5MAR+al3TOfSQoS39lmxLuIdg
+dBrwTilumCdT13FjYkhf
+=hyHR
+-----END PGP SIGNATURE-----
