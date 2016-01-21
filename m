@@ -1,4 +1,9 @@
-Received: (qmail 16202 invoked by uid 550); 11 Apr 2022 10:51:32 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3389" "Thursday" "21" "January" "2016" "11:43:45" "+0100" "Florent Daigniere" "florent.daigniere@trustmatta.com" "<1453373025.3030.24.camel@trustmatta.com>" "94" "Re: [oss-security] Prime example of a can of worms" "^Date:" nil nil "1" "2016012110:43:45" "[oss-security] Prime example of a can of worms" (number mark "        florent.daig Jan 21   94/3389  " thread-indent "\"Re: [oss-security] Prime example of a can of worms\"\n") "<20160121010506.GA21071@gremlin.ru>" ("<CANO=Ty18_pMLco8RdabsEbhs9sLahRhT_U93PGhDVwhcRaqzpQ@mail.gmail.com>" "<CAFRnB2Wrz=zexGonV5fHosVqfiOhNvA6Ya2YsCYyDkt7UE_0mw@mail.gmail.com>" "<20151019193411.GA15710@hunt>" "<87eggqmta9.fsf@alice.fifthhorseman.net>" "<20151021170113.128d3a8e@silentmaxx>" "<CANO=Ty0eLFpezes_WfNTN0eKj6u5BinhwBQkM6BR7PZPg3eCiA@mail.gmail.com>" "<20151023145631.GA21048@gremlin.ru>" "<CANO=Ty16P4GKb4HYtFugYsjufSZOBf+euv7O6WopKsAPuhKHtw@mail.gmail.com>" "<20160121010506.GA21071@gremlin.ru>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 30554 invoked by uid 550); 21 Jan 2016 10:43:32 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,120 +11,131 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 30530 invoked from network); 21 Jan 2016 10:43:31 -0000
+Authentication-Results: filter.trustmatta.local; dkim=pass
+	reason="1024-bit key; unprotected key"
+	header.d=trustmatta.com header.i=@trustmatta.com header.b=R0p6fCXK;
+	dkim-adsp=pass; dkim-atps=neutral
+X-Spam-ASN:  
+Message-ID: <1453373025.3030.24.camel@trustmatta.com>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=trustmatta.com;
+	s=dkim2015; t=1453372996;
+	bh=kESKeLnCDtZTMJG5jcFEypXlhideGPfS1ktTAU8sZjw=;
+	h=Subject:From:To:Date:In-Reply-To:References;
+	b=R0p6fCXKukX6lSRdPFhmO9YHbaBN2oZwKcXqbV4QT1tfe9SQquGVvbeKLP2vXkL2n
+	 LXV29is4/W063ZDrfmGAmTQBPHHHaJt3T/XzliNvBo5bMO8etiB2eN11blpd8+rtJ/
+	 Po/MXRnIZ/GDRe2ITct2dkhg70rQQpEZCbnJNkRQ=
+In-Reply-To: <20160121010506.GA21071@gremlin.ru>
+References: 
+	<CANO=Ty18_pMLco8RdabsEbhs9sLahRhT_U93PGhDVwhcRaqzpQ@mail.gmail.com>
+	 <CAFRnB2Wrz=zexGonV5fHosVqfiOhNvA6Ya2YsCYyDkt7UE_0mw@mail.gmail.com>
+	 <20151019193411.GA15710@hunt> <87eggqmta9.fsf@alice.fifthhorseman.net>
+	 <20151021170113.128d3a8e@silentmaxx>
+	 <CANO=Ty0eLFpezes_WfNTN0eKj6u5BinhwBQkM6BR7PZPg3eCiA@mail.gmail.com>
+	 <20151023145631.GA21048@gremlin.ru>
+	 <CANO=Ty16P4GKb4HYtFugYsjufSZOBf+euv7O6WopKsAPuhKHtw@mail.gmail.com>
+	 <20160121010506.GA21071@gremlin.ru>
+Content-Type: multipart/signed; micalg="pgp-sha256";
+	protocol="application/pgp-signature"; boundary="=-lI58MDbIeGpnLNcmXoII"
+Mime-Version: 1.0
+X-Envelope-From: <florent.daigniere@trustmatta.com>
+Date: Thu, 21 Jan 2016 11:43:45 +0100
+From: Florent Daigniere <florent.daigniere@trustmatta.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15684 invoked from network); 11 Apr 2022 08:04:36 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:content-language:to:from
-         :subject:content-transfer-encoding;
-        bh=brC2sUKoZCBHDehqzZO+MqF9TiFsbv6vUTLZbzj01jQ=;
-        b=ddpEjo8OYyctzs4dtcO+9CPVfpCRK7XttlbagZSM7AFeYcDyqUYWAN0Piu6RbGoyhd
-         WNArfxz1Ozurt2WWNrrmAIX/ENxNJFEvzjTGioa90hgOC2ABNIPNau9oZZnvoRiXDVAA
-         RZcTVGmZNeCXnduxGAQlDvdHhnIEJpSXkIt/DJLDW7VP8pl33GfjwjgQvGw3wXRFAYrU
-         K/3EuLjMpdWVQoHGjuYngYQMjBrwr6HaYtyRvsELGu8y3/vphfO7I9m7dXr5+PigG8zZ
-         QcDyaW2pmLr4yN+giE0cWv4aGGXLLCm24l+ZxdJZJpsOiOgyNRiDGD28SfxHpMKb3ee/
-         Vn7w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent
-         :content-language:to:from:subject:content-transfer-encoding;
-        bh=brC2sUKoZCBHDehqzZO+MqF9TiFsbv6vUTLZbzj01jQ=;
-        b=bOUe4MpVyKqpIa5qzwE3xgJINcGm7VDcq3QZhXWSR3G71uRUKseTh791LAl+J/Mt1w
-         G4pY4JsLkdNZwADgBdg8LKeOHLSuwFhfvEt/kmWJ0SZ+IDPXbGg4izGMoHjszyExBmzk
-         g6MC2zi6yzPWxQQifAO4L349MCvs9gbYh4zrKlnTWg69DK023vQoAwq23HGBMNLIowAj
-         fyhasA5MRU9O45ud3+DvOdqz6sTTE+GWVI8zonqkYBTzmw6zF8R0GZBUOHe16zMdilTB
-         u9qZNmcf1AfsrDg7Nj3U1oYOHz7/hdqb1kImNCnIgJzIoZG4XJjOsxBD+E/INXM5WSR+
-         n84A==
-X-Gm-Message-State: AOAM533NME/4LLY0ZaAf7IgKXhgN96OXFM7/U4ezdpgy5ukHMla5vZu5
-	QZB7GjLvo6OeWxKvdwO4C6XbAR+zeUo=
-X-Google-Smtp-Source: ABdhPJwtdtagEcrXX4fzjRsxBVbmj6Nx6t8ufSnSjy0tB5RJeEbRsPTnz2lmakC6h/iYZ9dtfssGdw==
-X-Received: by 2002:a2e:860e:0:b0:24b:68ff:6284 with SMTP id a14-20020a2e860e000000b0024b68ff6284mr356290lji.198.1649664265172;
-        Mon, 11 Apr 2022 01:04:25 -0700 (PDT)
-Message-ID: <011d90a3-078b-ca82-0eee-d7ae3f5b8e13@gmail.com>
-Date: Mon, 11 Apr 2022 10:04:24 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.7.0
-Content-Language: en-US
+Subject: Re: [oss-security] Prime example of a can of worms
 To: oss-security@lists.openwall.com
-From: Mariusz Felisiak <felisiak.mariusz@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+
+--=-lI58MDbIeGpnLNcmXoII
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+On Thu, 2016-01-21 at 04:05 +0300, gremlin@gremlin.ru wrote:
+> On 2016-01-20 08:45:07 -0700, Kurt Seifried wrote:
+>=20
+> =C2=A0> I finally got the article written and published, it's at:
+> =C2=A0> https://securityblog.redhat.com/2016/01/20/primes-parameters-and-m
+> oduli/
+>=20
+> In that article you wrote:
+>=20
+> =C2=A0> I think the best plan for dealing with this in the short term
+> =C2=A0> is deploying larger primes (2048 bits minimum, ideally 4096
+> =C2=A0> bits) right now wherever possible.
+>=20
+> 4096 bit keys seem to be the absolute minimum, and personally I've
+> already moved to 8192 bit keys.
+>=20
+
+I'd like to know where you guys picked those numbers from:
+http://www.keylength.com/en/compare/=C2=A0suggests that 2048 bits is okay
+for everyone but the BSI (at least not past 2016). Surely a
+recommendation today should have a higher standard than that.
+
+On the other hand,=C2=A03072 bits seems to be enough for everyone for the
+next decade or so.
+
+I haven't found anyone suggesting that bigger groups are either
+necessary or worth it. If you want QC proof crypto you need groups of
+~16k bits.
+
+My favourite recommendation (ECRYPT=C2=A0II):
+http://www.keylength.com/en/3/
+where
+1024 bits -> level 3 (<<2015)
+2048 bits -> level 5 (2020)
+3248 bits -> level 7 (2040)
+for any of the modelled adversaries.
+
+> Here are some numbers:
+>=20
+> `openssl dhparam -2 4096` took 1:53:29 to generate (HH:MM:SS);
+> `openssl dhparam -5 4096` took 1:43:44;
+> `openssl dhparam -2 8192` took 25:51:34;
+> `openssl dhparam -5 8192` took 16:51:47.
+>=20
+> =C2=A0> Why not huge primes?
+> =C2=A0> Why not simply use really large primes? Because computation
+> =C2=A0> is expensive, battery life matters more than ever and latency
+> =C2=A0> will become problems that users will not tolerate.
+>=20
+> Any and all cryptographic transforms must be expensive - that means
+> at least time and electric power.=C2=A0
+
+There is a good reason why no one wants custom-groups in protocol
+design. I haven't seen it mentioned much so far so I will spell it out
+again:
+
+Custom groups need to be transmitted for each handshake: that's
+problematic on most networks (none of the group sizes suggested will
+fit on a MTU worth of data) as it will involve fragmentation and
+potentially retransmission.
+
+If anything, TLS has proven that it won't work; both because=C2=A0
+- no one will use the feature, even if it's present (status-quo with
+1024 bits groups today)
+- it's impractical for it to be used anywhere where the connectivity is
+anything less than perfect (mobile networks, high-latency networks,
+...)
+
+K.I.S.S.!
+
+Florent=
+
+--=-lI58MDbIeGpnLNcmXoII
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
 Content-Transfer-Encoding: 7bit
-Subject: [oss-security] Django: CVE-2022-28347: Potential SQL injection via
- QuerySet.explain(**options) on PostgreSQL
 
-https://www.djangoproject.com/weblog/2022/apr/11/security-releases/
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-In accordance with `our security release policy
-<https://docs.djangoproject.com/en/dev/internals/security/>`_, the 
-Django team
-is issuing
-`Django 4.0.4 <https://docs.djangoproject.com/en/dev/releases/4.0.4/>`_,
-`Django 3.2.13 
-<https://docs.djangoproject.com/en/dev/releases/3.2.13/>`_, and
-`Django 2.2.28 <https://docs.djangoproject.com/en/dev/releases/2.2.28/>`_.
-These release addresses the security issues detailed below. We encourage all
-users of Django to upgrade as soon as possible.
+iQEcBAABCAAGBQJWoLZhAAoJEOrF6/B6qcKjTfoIAKcQKCkmo0woVq6ziw6ajjAP
+cVnLXlhujzw36I5JMqylI+reaLGwcUzvTUXkcbJVCfqInnI6nZHzlFsTdKiw5z9X
+P0MiNAu1G+Wt4zsvuBg/0vTIS5kvncPa1BaZlyaPxOJ8TvxR1oDpQdmwZ52bnDB0
+rkeyONAbxA/JqczcBBFTvjptfLZxMq1otZS7T4g2Fy7tZbsRBGyG2ezLdfUgyqmW
+VEdY5LpXz0a0O+mnDQ2COFqgH2ZKJcUHjHiRTJgZMXfjgmNt6Qaw5AwPEZfDHu4t
+NAB9hOc9H6g0J+fQfGbpwdRmymkNyVE8TSOOLvhYBMlUtApJrqnA5Tmp2ckLr6U=
+=dLC8
+-----END PGP SIGNATURE-----
 
-CVE-2022-28347: Potential SQL injection via 
-``QuerySet.explain(**options)`` on PostgreSQL
-=========================================================================================
-
-``QuerySet.explain()`` method was subject to SQL injection in option 
-names, using a suitably crafted dictionary, with dictionary expansion, 
-as the ``**options`` argument.
-
-This issue has severity "high" according to the Django security policy.
-
-Affected supported versions
-===========================
-
-* Django main branch
-* Django 4.0
-* Django 3.2
-* Django 2.2
-
-Resolution
-==========
-
-Patches to resolve the issue have been applied to Django's main branch 
-and to
-the 4.0, 3.2, and 2.2 release branches. The patches may be obtained from the
-following changesets.
-
-* On the `main branch 
-<https://github.com/django/django/commit/6723a26e59b0b5429a0c5873941e01a2e1bdbb81>`__
-* On the `4.0 release branch 
-<https://github.com/django/django/commit/00b0fc50e1738c7174c495464a5ef069408a4402>`__
-* On the `3.2 release branch 
-<https://github.com/django/django/commit/9e19accb6e0a00ba77d5a95a91675bf18877c72d>`__
-* On the `2.2 release branch 
-<https://github.com/django/django/commit/29a6c98b4c13af82064f993f0acc6e8fafa4d3f5>`__
-
-The following releases have been issued:
-
-* Django 4.0.4 (`download Django 4.0.4 
-<https://www.djangoproject.com/m/releases/4.0/Django-4.0.4.tar.gz>`_ | 
-`4.0.4 checksums 
-<https://www.djangoproject.com/m/pgp/Django-4.0.4.checksum.txt>`_)
-* Django 3.2.13 (`download Django 3.2.13 
-<https://www.djangoproject.com/m/releases/3.2/Django-3.2.13.tar.gz>`_ | 
-`3.2.13 checksums 
-<https://www.djangoproject.com/m/pgp/Django-3.2.13.checksum.txt>`_)
-* Django 2.2.28 (`download Django 2.2.28 
-<https://www.djangoproject.com/m/releases/2.2/Django-2.2.28.tar.gz>`_ | 
-`2.2.28 checksums 
-<https://www.djangoproject.com/m/pgp/Django-2.2.28.checksum.txt>`_)
-
-The PGP key ID used for this release is Mariusz Felisiak: 
-`2EF56372BA48CD1B <https://github.com/felixxm.gpg>`_.
-
-General notes regarding security reporting
-==========================================
-
-As always, we ask that potential security issues be reported via
-private email to ``security@djangoproject.com``, and not via Django's
-Trac instance or the django-developers list. Please see `our security
-policies <https://www.djangoproject.com/security/>`_ for further
-information.
-
+--=-lI58MDbIeGpnLNcmXoII--
