@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3106" "Thursday" "28" "September" "2017" "20:17:26" "+0200" "chbi@chbi.eu" "chbi@chbi.eu" "<83acfdf4-1398-8017-fc91-ab65e855d743@chbi.eu>" "86" "[oss-security] Stored XSS vulnerability in Tine 2.0 Community Edition <= 2017.08.3" nil nil nil "9" "2017092818:17:26" "[oss-security] Stored XSS vulnerability in Tine 2.0 Community Edition <= 2017.08.3" (number mark "U       chbi@chbi.eu Sep 28   86/3106  " thread-indent "\"[oss-security] Stored XSS vulnerability in Tine 2.0 Community Edition <= 2017.08.3\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1820" "Thursday" "21" "January" "2016" "18:43:16" "+0000" "Andrew Gallagher" "andrewg@andrewg.com" "<56A126C4.7090905@andrewg.com>" "47" "[oss-security] Re: Prime example of a can of worms" "^Date:" nil nil "1" "2016012118:43:16" "[oss-security] Re: Prime example of a can of worms" (number mark "        andrewg@andr Jan 21   47/1820  " thread-indent "\"[oss-security] Re: Prime example of a can of worms\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 19588 invoked by uid 550); 28 Sep 2017 18:26:40 -0000
+Received: (qmail 22466 invoked by uid 550); 22 Jan 2016 02:57:57 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,103 +11,75 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7688 invoked from network); 28 Sep 2017 18:17:46 -0000
-To: oss-security@lists.openwall.com
-From: chbi@chbi.eu
-Message-ID: <83acfdf4-1398-8017-fc91-ab65e855d743@chbi.eu>
-Date: Thu, 28 Sep 2017 20:17:26 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.3.0
+Received: (qmail 26472 invoked from network); 21 Jan 2016 18:43:34 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=andrewg.com;
+	s=andrewg-com; t=1453401802;
+	bh=0U/w2ZcNkUX71nSjz51cBOQGqcHsr5YKZIt0O54rcnI=;
+	h=To:From:Subject:Date:From;
+	b=VcO/sFva/i4owD66y6bUYjsyQkjD3XHy0Ht4l4LzMMQYLExt/jMRmEnfqprYUrKd3
+	 uDmy+/b+2W7KUMxotRlXGG56pvKfmlQ1nD3yg/4pSb2be77xZ/HpVgK318sm+8RkE8
+	 EogpOQNux5TbwnuEbnDQZjibylkWrGFh3RybbcKB7DSvcgfdfcfs928YTkMpDNxpNK
+	 Jk2RS6R2kb/Z3De50VeZdEFoo5v9QvE+PCbjlzMV5G0B8vtRbS355iprhqhKL0u4sO
+	 w31V5Z78fLFS5JYwBF2kRyV1YuYYQbVj3jRqzAg1Qmb7bdJ1/ao1eY/YX1F/Iusn+J
+	 unzNAPRffdeiw==
+X-Enigmail-Draft-Status: N1110
+Message-ID: <56A126C4.7090905@andrewg.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Icedove/38.5.0
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
  protocol="application/pgp-signature";
- boundary="tXIlfdxwgSB38Taqer8Saot2PEXq0hknc"
-Subject: [oss-security] Stored XSS vulnerability in Tine 2.0 Community Edition <= 2017.08.3
-
---tXIlfdxwgSB38Taqer8Saot2PEXq0hknc
-Content-Type: multipart/mixed; boundary="tLIfkPbgs9tKpNtG274sqcgB3SWrU1JMj";
- protected-headers="v1"
-From: chbi@chbi.eu
+ boundary="kUnw9XILrhw3gIAwlMcu6OOcW8MbL4deH"
+Date: Thu, 21 Jan 2016 18:43:16 +0000
+From: Andrew Gallagher <andrewg@andrewg.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: Prime example of a can of worms
 To: oss-security@lists.openwall.com
-Message-ID: <83acfdf4-1398-8017-fc91-ab65e855d743@chbi.eu>
-Subject: Stored XSS vulnerability in Tine 2.0 Community Edition <= 2017.08.3
 
---tLIfkPbgs9tKpNtG274sqcgB3SWrU1JMj
+--kUnw9XILrhw3gIAwlMcu6OOcW8MbL4deH
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
 Content-Transfer-Encoding: quoted-printable
 
-Hi,
+On Thu, 21 Jan 2016 10:15:55 -0500 Steve Grubb wrote:
+>=20
+> Hallway discussions mentioned that ECC is dead due to trust issues
+> and fuzzy IP issues which slowed vendor uptake. There was a mention
+> of RSA officially being allowed to go to 16k key sizes.
 
-there are security issues in Tine 2.0 Community Edition <=3D 2017.08.3
-(https://github.com/tine20/Tine-2.0-Open-Source-Groupware-and-CRM/)
+Was there any mention of the relative ease of quantum attacks against
+ECC compared to classically-equivalent RSA? [1] That was suggested on
+a couple of discussion groups as a possible motivation for the newly
+rekindled RSA love.
 
-
-Stored XSS vulnerability via IMG tag at "History" of Profile, Calendar,
-Tasks and CRM allows an authenticated user to inject JavaScript which is
-triggered by the application administrator and other users.
-
-Stored XSS vulnerability via IMG tag at "Leadname" of CRM allows an
-authenticated user to inject JavaScript which is triggered by the
-application administrator and other users.
-
-Stored XSS vulnerability via IMG tag at "Filename" of Filemanager allows
-an authenticated user to inject JavaScript which is triggered by the
-application administrator and other users.
-
-
-Fix:
-https://github.com/tine20/Tine-2.0-Open-Source-Groupware-and-CRM/commit/bc8=
-a6fbd3128cf5ef27d808f6c6ba869fdc2262b
-https://github.com/tine20/Tine-2.0-Open-Source-Groupware-and-CRM/commit/146=
-c5aaafd826c1c8990333c393bff6f64c90786
-https://github.com/tine20/Tine-2.0-Open-Source-Groupware-and-CRM/commit/24e=
-39e1e930097b8793a03b8864d3c484ede546b
-
-
-The issues are fixed in Tine Community Edition 2017.08.4.
-
-
-Until now vendor has not marked the new version as security update and
-also not mentioned the security issues.
-(https://github.com/tine20/Tine-2.0-Open-Source-Groupware-and-CRM/releases/=
-tag/2017.08.4)
-
-
-I've requested CVE IDs (MITRE), but I have not received any yet.
-
+[1] http://arxiv.org/abs/quant-ph/0301141
 
 --=20
-chbi
-https://chbi.eu
+Andrew Gallagher
+Senior Systems Engineer, Ward Solutions Ltd.
+2054 Castle Drive, Citywest, Dublin 24
++353 87 1200174
 
-GPG: 3DE9 9187 4BE9 EAE6 3CA8  DC20 BA7B 93F9 9037 AE7E
-     https://chbi.eu/chbi.asc
 
-
---tLIfkPbgs9tKpNtG274sqcgB3SWrU1JMj--
-
---tXIlfdxwgSB38Taqer8Saot2PEXq0hknc
+--kUnw9XILrhw3gIAwlMcu6OOcW8MbL4deH
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Description: OpenPGP digital signature
 Content-Disposition: attachment; filename="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCgAdFiEEPemRh0vp6uY8qNwgunuT+ZA3rn4FAlnNPLwACgkQunuT+ZA3
-rn4qWA/9FuenA93AcXXduMeylZi2+eWD6t+Sla9oJ+eh2l3xNy9o+KZGruUjI3Lw
-b6uJvolYxD1bZwLQVHDS/KJXrgVCenRZGx3BSX6ogv4YjMonjpzbkLUeCEr5jOvQ
-sl8cupnfxDxXhewjXpbBQhYvbaX0tHMoEO/wRWiW5p9NiN8wzp7nG9+GSq2t9+iR
-xdAlENe3BOR2XmKoHfe6ka70el0CJZtNOzxRkDZ+5gydozULMqLuN2cX3Jp6NxZO
-+VMjTHAH2faczIkdxIYcDIQ4E0SUSl9foOtbhX5rEZVh01gundTTBY088guIDa8/
-kQHbB0lNv4tgM5wHohOWcPp5v1sGLwpA8bI5uX0FAcWIz9x4uWFTBYqtysT3Lu8E
-P+4qd3dN4/joqaSNiqxwBzZN7i+N8ARQFDGyF67/nr1gY6ALwece0I9qc0pi5717
-5Ih/dUV8eUH89RIv9lzrlaDOqj/MIhhaGhH4DMkeZAqJyqpSOZ2O9QA036+RnXY1
-Wrs85RH5YvLgoPX7JiN8RCHGacZIx8kTvSEuFUWKSda9sXToTE1IKv9DRN/YK+e9
-m8g5wXDd2YYph5ONgofeqWW02YJVvC0LK3DOeufQ699fpnlsiq/pzKzwd1NdqCDw
-FVlmiyniKL9Y442cQ1R7u/EccFmYsCMGOBQLkGMemEAK2EEQz2I=
-=Ff99
+iQIcBAEBCgAGBQJWoSbEAAoJEFwexATVkGYp4T8P/2/u9mmP1yfjaPsFRVW7QAfb
+AYYcSbk7V4fBRpA/6aRJA5EB2++GQl6u1TUjLTg6GmiHE8oyAwJdRqC2sEtDjG8Y
+cP0APa7Q4bbCY+OLcuu4+glBO9OC7gWlyUOimFNAsvNnS8D28i6FmqvxDbZf5Gqd
+svFOBL2NiTT7Z92wYgR6A6EOfaHxSBOH57Xdoz8Uf5otfFlPsiLx/H3MpTm73buo
+jxFXEZhs48jK9IhQKR5HVfDLueuhwfrZRJb7m+/4GEdELVpevFT3Tv7D+DEnJoAr
+scgFqsbwnO8WtWOePNmlBqHEfgm7Spq53B7GhwjafZFgNk/NGuMCtE25CEbEb8X7
+5KLOEE3nguMHFpek+W8FYZrEctcwt7VMnuT8lrHVJyKjLIYtJNOsNqvzZ4NOFXbl
+gUDCWRndFVEJrB4O/70jdIJwp1PoxAKD5jTxwlosLegbIvQgIqM78hfjRVVAdc4g
++8girTS/pDtWle7vkhZE2xh2OhjdFrc25GxBP0ZGt6PlX/haEMPHGLyFvo+UL5WG
+zgyMLB1V8nq7Si8e41xFrjbZ8KglM2VEJfRpl4Q1x8p6I8cHPyUympw4bw4Zutl7
+d8xZ8Ipg+huBa3a8ZvcpAaXve5fVOJNdX3Nb9ZZJl8yZnMjHBP41QZdKTa78lQ1q
+4AloEtI2WBiVn7DyJxcl
+=W9Qm
 -----END PGP SIGNATURE-----
 
---tXIlfdxwgSB38Taqer8Saot2PEXq0hknc--
+--kUnw9XILrhw3gIAwlMcu6OOcW8MbL4deH--
