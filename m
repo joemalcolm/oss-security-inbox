@@ -1,56 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/14/17
-Message-ID: <CANO=Ty1YYz+=Yn9TfCEeinqL+2W3pjpew8m55dWTZts7Yu=FZQ@mail.gmail.com>
-Date: Wed, 14 Dec 2016 12:00:42 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: vulnerable version: 4.8.12 and previous versions but xml file says: cpe:/o:linux:linux_kernel:4.8.12"/>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/21/4
+Message-ID: <20160121154650.41c0e854@fabiankeil.de>
+Date: Thu, 21 Jan 2016 15:46:50 +0100
+From: Fabian Keil <fk@...iankeil.de>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Subject: CVE request for Privoxy 3.0.24
 Content-Type: text/plain; charset=utf-8
 
-At the bottom of ever NVD web page:
+Privoxy is a non-caching web proxy with advanced filtering capabilities
+for enhancing privacy, modifying web page data and HTTP headers, controlling
+access, and removing ads and other obnoxious Internet junk. For details see:
+http://www.privoxy.org/ or http://jvauzb4sb3bwlsnc.onion/
 
-Send comments or suggestions to nvd@...t.gov
+A couple of invalid reads were fixed in Privoxy 3.0.24 whose
+release is scheduled for this weekend.
 
-They can fix this, we can't.
+Two of them are security issues (remote DoS when built with ASAN),
+please assign CVEs:
 
-On Wed, Dec 14, 2016 at 11:57 AM, Sona Sarmadi <sona.sarmadi@...a.com>
-wrote:
+- Prevent invalid reads in case of corrupt chunk-encoded content.
+  http://ijbswa.cvs.sourceforge.net/viewvc/ijbswa/current/filters.c?r1=1.196&r2=1.197
 
->
->
-> On 2016-12-14 15:26, Kurt Seifried wrote:
-> > Why are you complaining about a nist.gov website/data on an opensource
-> > security mailing list/to MITRE? (hint: we can't fix it and neither can
-> > MITRE) Please contact NIST.
-> >
-> Thanks for being so helpful.
->
-> I was just trying to see of there are other people out there who also
-> think this is a problem. This list seemed like a place where I could
-> find such people.
-> Perhaps someone knows a work around, perhaps some post-processing tool.
-> If none exists, I guess we have to try to fix the problem at the source
-> or use another CVE databse.
->
-> Cheers
-> //Sona
-> > On Wed, Dec 14, 2016 at 1:19 AM, Sona Sarmadi <sona.sarmadi@...a.com>
-> wrote:
-> >
-> >> Hi all,
-> >>
-> >> It seems that nvd.xml files (e.g. nvdcve-2.0-2016.xml) does not list
-> >> vulnerable versions correctly. One example is the following CVE.
-> Vulnerable
-> >>
->
->
+- Remove empty Host headers in client requests.
+  Previously they would result in invalid reads.
+  http://ijbswa.cvs.sourceforge.net/viewvc/ijbswa/current/parsers.c?r1=1.302&r2=1.303
 
+The issues were found with afl-fuzz and AddressSanitizer.
 
--- 
+Fabian
 
---
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
-
+Content of type "application/pgp-signature" skipped
