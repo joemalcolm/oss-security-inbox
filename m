@@ -1,28 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/20/1
-Message-ID: <578F2925.2090104@tu-bs.de>
-Date: Wed, 20 Jul 2016 09:32:53 +0200
-From: Christian Wressnegger <c.wressnegger@...bs.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/21/1
+Message-ID: <20160121010506.GA21071@gremlin.ru>
+Date: Thu, 21 Jan 2016 04:05:07 +0300
+From: gremlin@...mlin.ru
 To: oss-security@...ts.openwall.com
-Cc: Fabian Yamaguchi <f.yamaguchi@...bs.de>, Alwin Maier <alwin.maier@...bs.de>
-Subject: Buffer overflow in libarchive-3.2.0
+Subject: Re: Prime example of a can of worms
 Content-Type: text/plain; charset=utf-8
 
-Hi oss-security,
-(please note, I'm not on the list.)
+On 2016-01-20 08:45:07 -0700, Kurt Seifried wrote:
 
-We've recently discovered a vulnerability in libarchive-3.2.0 when
-writing iso9660 containers and reported it to the developers.
+ > I finally got the article written and published, it's at:
+ > https://securityblog.redhat.com/2016/01/20/primes-parameters-and-moduli/
 
-https://github.com/libarchive/libarchive/issues/711
+In that article you wrote:
 
-The issue has been addressed by the following commit
+ > I think the best plan for dealing with this in the short term
+ > is deploying larger primes (2048 bits minimum, ideally 4096
+ > bits) right now wherever possible.
 
-https://github.com/libarchive/libarchive/commit/3014e19820ea53c15c90f9d447ca3e668a0b76c6
+4096 bit keys seem to be the absolute minimum, and personally I've
+already moved to 8192 bit keys.
 
-and included in version 3.2.1 of the library.
+Here are some numbers:
 
-I was wondering whether anybody could assign a CVE for this?
+`openssl dhparam -2 4096` took 1:53:29 to generate (HH:MM:SS);
+`openssl dhparam -5 4096` took 1:43:44;
+`openssl dhparam -2 8192` took 25:51:34;
+`openssl dhparam -5 8192` took 16:51:47.
 
-Thanks and kind regards,
-Christian Wressnegger (TU Braunschweig)
+ > Why not huge primes?
+ > Why not simply use really large primes? Because computation
+ > is expensive, battery life matters more than ever and latency
+ > will become problems that users will not tolerate.
+
+Any and all cryptographic transforms must be expensive - that means
+at least time and electric power. As every single bit requires at
+least two transistors (physical areas on the chip) just to store it
+and much more to process, and each of those transistors consume at
+least hundreds of pA, the cryptoprocessors (which are already used
+for brute-force attacks) would be much more power-consuming.
+
+Said that, the attackers would need building yet another power
+station to get more gigawatts for their key-breaking datacenters
+and, as all this power would finally become heat, such facility
+should be built at least at Taimyr or Melville peninsula - both
+are continental (for laying cables) and cold just enough :-)
+
+Also, there are elliptic curves-based algorithms, but they have
+one strong disadvantage: although the computations are more
+complex, that must not be the reason to reduce the key size.
+
+ > Additionally the computation time and effort needed to find huge
+ > primes (say 16k) is difficult at best for many users and not
+ > possible for many (anyone using a system on a chip for example).
+
+That would require a really good hardware RNG. For now, I have an
+experimental USB device (based on ATtiny85 and LM393) for such
+purposes, but most SoC systems lack them (despite of adding them
+would be simple and inexpensive: dual op-amp and one GPIO pin).
+
+
+-- 
+Alexey V. Vissarionov aka Gremlin from Kremlin
+GPG: 8832FE9FA791F7968AC96E4E909DAC45EF3B1FA8
