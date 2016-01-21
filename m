@@ -1,111 +1,107 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/26/1
-Message-Id: <E1bS15c-0004H5-KP@xenbits.xenproject.org>
-Date: Tue, 26 Jul 2016 12:04:00 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 182 (CVE-2016-6258) - x86: Privilege escalation in PV guests
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/21/5
+Message-ID: <1793542.7Axp6M92oG@x2>
+Date: Thu, 21 Jan 2016 10:15:55 -0500
+From: Steve Grubb <sgrubb@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: Florent Daigniere <florent.daigniere@...stmatta.com>
+Subject: Re: Prime example of a can of worms
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Thursday, January 21, 2016 11:43:45 AM Florent Daigniere wrote:
+> On Thu, 2016-01-21 at 04:05 +0300, gremlin@...mlin.ru wrote:
+> > On 2016-01-20 08:45:07 -0700, Kurt Seifried wrote:
+> > 
+> >  > I finally got the article written and published, it's at:
+> >  > https://securityblog.redhat.com/2016/01/20/primes-parameters-and-m
+> > oduli/
+> > 
+> > In that article you wrote:
+> > 
+> >  > I think the best plan for dealing with this in the short term
+> >  > is deploying larger primes (2048 bits minimum, ideally 4096
+> >  > bits) right now wherever possible.
+> > 
+> > 4096 bit keys seem to be the absolute minimum, and personally I've
+> > already moved to 8192 bit keys.
+> 
+> I'd like to know where you guys picked those numbers from:
+> http://www.keylength.com/en/compare/ suggests that 2048 bits is okay
+> for everyone but the BSI (at least not past 2016). Surely a
+> recommendation today should have a higher standard than that.
+> 
+> On the other hand, 3072 bits seems to be enough for everyone for the
+> next decade or so.
 
-            Xen Security Advisory CVE-2016-6258 / XSA-182
-                              version 3
+I think that is assuming that quantum computers are not brought to market any 
+time soon. Over the summer the NSA's Suite B page kind of backpeddled on the 
+ECC requirements and refocused on RSA. I attended a speech this fall where 
+NIST talked about what quantum computers will do. The presentation is here but 
+does not have speakers notes:
 
-                x86: Privilege escalation in PV guests
+http://csrc.nist.gov/news_events/cif_2015/research/day1_research_200-250pt3.pdf
 
-UPDATES IN VERSION 3
-====================
+This is the notes that I took while listening to the speech:
 
-Public release.
+This panelist talked about quantum crypto. The issue is that quantum computers 
+could use Shor's algorithm and Grover's algorithm to kill PKI. In the future 
+key sizes could be around a million bits. This will mean changes to network 
+protocols. Its estimated that a key space of N can be search in the square 
+root of N time. So, in current technology, if you need 128 bits of strength, 
+you will need to square it to get the key size.
 
-ISSUE DESCRIPTION
-=================
+Hallway discussions mentioned that ECC is dead due to trust issues and fuzzy 
+IP issues which slowed vendor uptake. There was a mention of RSA officially 
+being allowed to go to 16k key sizes.
 
-The PV pagetable code has fast-paths for making updates to pre-existing
-pagetable entries, to skip expensive re-validation in safe cases
-(e.g. clearing only Access/Dirty bits).  The bits considered safe were too
-broad, and not actually safe.
+-Steve
 
-IMPACT
-======
 
-A malicous PV guest administrator can escalate their privilege to that
-of the host.
+> I haven't found anyone suggesting that bigger groups are either
+> necessary or worth it. If you want QC proof crypto you need groups of
+> ~16k bits.
+> 
+> My favourite recommendation (ECRYPT II):
+> http://www.keylength.com/en/3/
+> where
+> 1024 bits -> level 3 (<<2015)
+> 2048 bits -> level 5 (2020)
+> 3248 bits -> level 7 (2040)
+> for any of the modelled adversaries.
+> 
+> > Here are some numbers:
+> > 
+> > `openssl dhparam -2 4096` took 1:53:29 to generate (HH:MM:SS);
+> > `openssl dhparam -5 4096` took 1:43:44;
+> > `openssl dhparam -2 8192` took 25:51:34;
+> > `openssl dhparam -5 8192` took 16:51:47.
+> > 
+> >  > Why not huge primes?
+> >  > Why not simply use really large primes? Because computation
+> >  > is expensive, battery life matters more than ever and latency
+> >  > will become problems that users will not tolerate.
+> > 
+> > Any and all cryptographic transforms must be expensive - that means
+> > at least time and electric power. 
+> 
+> There is a good reason why no one wants custom-groups in protocol
+> design. I haven't seen it mentioned much so far so I will spell it out
+> again:
+> 
+> Custom groups need to be transmitted for each handshake: that's
+> problematic on most networks (none of the group sizes suggested will
+> fit on a MTU worth of data) as it will involve fragmentation and
+> potentially retransmission.
+> 
+> If anything, TLS has proven that it won't work; both because 
+> - no one will use the feature, even if it's present (status-quo with
+> 1024 bits groups today)
+> - it's impractical for it to be used anywhere where the connectivity is
+> anything less than perfect (mobile networks, high-latency networks,
+> ...)
+> 
+> K.I.S.S.!
+> 
+> Florent
 
-VULNERABLE SYSTEMS
-==================
-
-All versions of Xen are vulnerable.
-
-The vulnerability is only exposed to PV guests on x86 hardware.
-
-The vulnerability is not exposed to x86 HVM guests, or ARM guests.
-
-MITIGATION
-==========
-
-Running only HVM guests will avoid this vulnerability.
-
-CREDITS
-=======
-
-This issue was discovered by Jérémie Boutoille of Quarkslab.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa182.patch           xen-unstable, Xen 4.7.x
-xsa182-4.6.patch       Xen 4.6.x
-xsa182-4.5.patch       Xen 4.5.x, 4.4.x, 4.3.x
-
-$ sha256sum xsa182*
-303400b9a832a3c1d423cc2cc97c2f00482793722f9ef7dd246783a049ac2792  xsa182-unstable.patch
-2383695b1dc114e4e31e42dd05d4c86239ce9606478b5e1a71db1111d95b63a2  xsa182-4.5.patch
-f10665acaf17dedd15c40bfeb832b188db1ab3e789d95cc3787575529a280813  xsa182-4.6.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQEcBAEBAgAGBQJXl0M8AAoJEIP+FMlX6CvZvsUIAKeTcuCNrXAkCMsa1jcTOJEB
-zo1sZB6DeUZjAjYm+vVTv3bcr8E9e+B02Cyg6Y97TByrpwsarvOyYZzds/wf3TO+
-3hm6cKPRBhUdQBgXLi6DqgsBIb+BvMEqT6jXpmNmLWqlJtuJPrCn74e2K0hXFgt2
-RDELGjg6qsTW7hJtwNfkEI6/nj2/lBsNVHkp1F7olxT17euC4nJoLEzeDRc8UN/+
-pf9UT1yoEVOddPA+iIjC7PeSYyWhJFyNR0m4BN7MshKEoy+tiIQJDZzyLJLh46uf
-c28vUByyu6fCersz63ZkpF9MHWR0+8cChOvmY3Tuyy/yitUMbcJoygu/35QV2tc=
-=u+6O
------END PGP SIGNATURE-----
-
-Download attachment "xsa182-unstable.patch" of type "application/octet-stream" (4336 bytes)
-
-Download attachment "xsa182-4.5.patch" of type "application/octet-stream" (4265 bytes)
-
-Download attachment "xsa182-4.6.patch" of type "application/octet-stream" (4291 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (182 bytes)
