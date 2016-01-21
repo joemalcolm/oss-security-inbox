@@ -1,4 +1,9 @@
-Received: (qmail 3108 invoked by uid 550); 13 Oct 2022 06:17:46 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2111" "Thursday" "21" "January" "2016" "02:56:55" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160121075655.E2AEC6C0066@smtpvmsrv1.mitre.org>" "49" "[oss-security] Re: CVE for node.js websockets (ws)" "^Cc:" nil nil "1" "2016012107:56:55" "[oss-security] Re: CVE for node.js websockets (ws)" (number mark "        cve-assign@m Jan 21   49/2111  " thread-indent "\"[oss-security] Re: CVE for node.js websockets (ws)\"\n") "<CANO=Ty2__zBT=MeY=6mQaepEM1vr=igkrmeZkX3XM5pwttEbEg@mail.gmail.com>" ("<CANO=Ty2__zBT=MeY=6mQaepEM1vr=igkrmeZkX3XM5pwttEbEg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 12131 invoked by uid 550); 21 Jan 2016 07:57:08 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,71 +11,62 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 12107 invoked from network); 21 Jan 2016 07:57:07 -0000
+In-Reply-To: <CANO=Ty2__zBT=MeY=6mQaepEM1vr=igkrmeZkX3XM5pwttEbEg@mail.gmail.com>
+Message-Id: <20160121075655.E2AEC6C0066@smtpvmsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Thu, 21 Jan 2016 02:56:55 -0500 (EST)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 19494 invoked from network); 12 Oct 2022 22:16:16 -0000
-Authentication-Results: apache.org; auth=none
-X-Gm-Message-State: ACrzQf3XCmI9F0LTtxk1rjVCWHVDVa43S8hH7Lr5t5zbu+VK1+KtSKSr
-	c5D+LZ4KIesukvrQ4HflPDCWSCOB9hiCnQfvsJw=
-X-Google-Smtp-Source: AMsMyM6p+kh/pY5/hHRw8F979YtR7pda78KvnwwSKpTsouVPAAS8ZWRBQ0Q4plN8/P3tHolQgnx0O+WDJj/wz4msKsw=
-X-Received: by 2002:a05:6402:1d86:b0:457:e84:f0e with SMTP id
- dk6-20020a0564021d8600b004570e840f0emr28972329edb.241.1665612930931; Wed, 12
- Oct 2022 15:15:30 -0700 (PDT)
-MIME-Version: 1.0
-References: <CAH9eYVo6DNN9awE8txmY_U2aYposhy7pon689n0L6h5yROpqPg@mail.gmail.com>
- <2658c645-b4f7-1a39-2742-927e937be657@oracle.com>
-In-Reply-To: <2658c645-b4f7-1a39-2742-927e937be657@oracle.com>
-From: Brian Demers <bdemers@apache.org>
-Date: Wed, 12 Oct 2022 18:15:19 -0400
-X-Gmail-Original-Message-ID: <CAH9eYVog2BcGtOVgLp3Spc5=NN3d4RQAe3yGEmkF1+9zhz3H5w@mail.gmail.com>
-Message-ID: <CAH9eYVog2BcGtOVgLp3Spc5=NN3d4RQAe3yGEmkF1+9zhz3H5w@mail.gmail.com>
-To: Alan Coopersmith <alan.coopersmith@oracle.com>
-Cc: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="00000000000014e1a705eaddbb08"
-Subject: Re: [oss-security] CVE-2022-40664: Apache Shiro: Authentication
- Bypass Vulnerability in Shiro when forwarding or including via RequestDispatcher
+Subject: [oss-security] Re: CVE for node.js websockets (ws)
+To: kseifried@redhat.com
 
---00000000000014e1a705eaddbb08
-Content-Type: text/plain; charset="UTF-8"
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Thanks for the feedback Alan, I'll make sure to include additional info in
-the future.
+> https://nodesecurity.io/advisories/67
 
-For now:
+We currently feel that a CVE ID should not exist (unless an affected
+application is identified) because any related instances of
+security-relevant behavior would be site-specific, and therefore
+outside the scope of CVE.
 
-Mitigation:
-  Update to Shiro 1.10.0
+For example:
 
-References:
-  https://lists.apache.org/thread/loc2ktxng32xpy7lfwxto13k4lvnhjwg
+  https://gist.github.com/c0nrad/e92005446c480707a74a#gistcomment-1664152
+  https://nodejs.org/api/dgram.html#dgram_socket_send_buf_offset_length_port_address_callback
 
-On Wed, Oct 12, 2022 at 3:21 PM Alan Coopersmith <
-alan.coopersmith@oracle.com> wrote:
+suggests that the problem is that Node.js allows people to write
+incorrect server-side code in which there is a call to socket.send,
+socket.ping, or socket.pong with a numerical argument. However, the
+documentation states that the argument must be a Buffer object or
+string. Behavior in the case of a numerical argument seems to be
+undefined. The change seems to be a hardening measure in which
+numerical arguments are automatically converted to strings, thereby
+making it safer to execute a specific type of incorrect code.
 
-> On 10/11/22 19:52, Brian Demers wrote:
-> > Description:
-> >
-> > Apache Shiro before 1.10.0, Authentication Bypass Vulnerability in
-> > Shiro when forwarding or including via RequestDispatcher.
-> >
-> > Credit:
-> >
-> > Apache Shiro would like to thank Y4tacker for reporting this issue
->
-> Thanks for informing oss-security of these issues, but good security
-> announcements have a little more detail, like what actions users or
-> distributors need to take (upgrade to a new version?  what version?)
-> and information on where to find more details, like a bug id in your
-> bug tracker.  If you look at the announcements from other Apache
-> projects, you'll see they often include those.
->
-> Some good examples:
-> https://www.openwall.com/lists/oss-security/2021/12/18/2
-> https://www.openwall.com/lists/oss-security/2022/01/05/4
-> https://www.openwall.com/lists/oss-security/2022/01/06/2
->
-> --
->          -Alan Coopersmith-                 alan.coopersmith@oracle.com
->           Oracle Solaris Engineering - https://blogs.oracle.com/solaris
->
+If incorrect server-side code actually exists in a product, then a CVE
+ID can be assigned.
 
---00000000000014e1a705eaddbb08--
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJWoI5eAAoJEL54rhJi8gl5JsAQAKBciZvNRlApccHSGlmNWMHR
+FTnjGchK1LxzJ9dyJ1Ap/kR3ZoYGj1HxeiajsCVu+gqkB71/N1V6kEKWfZtZBUI/
+fQTEv1Ydadp8E5apigN5+bGf2mX+ahRZjfr2mJn/uoI/3tXcX8JUlduR1r162xmJ
+4641oTYzh5UkNYJPBFeCPwjsCqqVHsSeBoftifMXhdSMP06qJYQE4Bxu8kuMRNQj
+ZwonpjKXAK86+qiM67Ic+ndxB3u/KNITqp++wsWVZBefmaDzsSsAf0K3kxSckX02
+ngQi7/8MeHCZyTU3lLGsr7EUzb69RHHhPlE5bRRfE12mZi07htRu4IR4jzJNcNYg
+wEPzLp+irLY4oF/RplysEj0jf2j952xTQGD0HfoqGPsgK9EY2Z+O6s+GEJJF94hS
+b53sAtwSSZolXT7sSRSAbN7YAB1me+PN8AUaCKY8VXwJD3O4dYxsee1jTrx9BEqc
+hyst7ADv2fhqL5nXdUdOXunUmwTqy4oNQXNTVyRIGsfu3Kllk6AO9bdX73JHHSAl
+zmY2ruUKyGG2HCMLvBwCZ7YEM5oTF5UrGSvBcyWiLMA/55okt+a2TxMGR2Ne8/S3
+pNV97DHNb38NQhhwSMbWKcezh2FK1lAnQnM4xxe5MAR+al3TOfSQoS39lmxLuIdg
+dBrwTilumCdT13FjYkhf
+=hyHR
+-----END PGP SIGNATURE-----
