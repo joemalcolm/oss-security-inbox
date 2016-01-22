@@ -1,132 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/02/7
-Message-ID: <CA+q1=fQRZYp6w5EA1=y+nHULCLpUNZTGGExpYg+n2SD-0sDR8g@mail.gmail.com>
-Date: Thu, 1 Sep 2016 20:30:15 -0700
-From: Diogo Mónica <diogo.monica@...ker.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: cve request: docker swarmkit Dos occurs by repeatly joining and quitting swam cluster as a node
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/22/4
+Message-Id: <20160122143319.A768273C204@smtpvmsrv1.mitre.org>
+Date: Fri, 22 Jan 2016 09:33:19 -0500 (EST)
+From: cve-assign@...re.org
+To: gustavo.grieco@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: out-of-bounds write with cpio 2.11
 Content-Type: text/plain; charset=utf-8
 
-If you read the report, you'll see that no claims are made about shutting
-down the swarm. The reporter simply claims that no new nodes can join the
-swarm:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-"it results in a machine could not join the swarm cluster after another
-node’s repeatedly joining and quitting the swarm"
+> in the parsing of cpio files
+> 
+> AddressSanitizer: heap-buffer-overflow
+> WRITE of size 2
+> 
+> util.c:1392 cpio_safer_name_suffix
 
-As we describe in our documentation, possession of the token gives the
-permission to join new workers. Joining new workers effectively means
-reserving some resources for your worker. If the system runs out of
-resources, I believe it is expected that no new workers should be able to
-join.
+Use CVE-2016-2037.
 
-Again, this is simply not a vulnerability of either Docker swarm or Docker
-swarmkit, and I kindly request that this CVE is rescinded.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-
-On Thu, Sep 1, 2016 at 7:53 PM, Kurt Seifried <kseifried@...hat.com> wrote:
-
-> On Thu, Sep 1, 2016 at 8:48 PM, Diogo Monica <diogo.monica@...ker.com>
-> wrote:
->
-> > Can you please describe how this vulnerability makes a worker node be
-> able
-> > to administer the swarm?
-> >
->
-> It allows a worker node to disable and effectively shut down the swarm, I
-> assume shutting down the swan is an administrative function, if not please
-> let me know where the documentation for workers covers this (allowing a
-> worker to shutdown the swarm). Thanks!
->
->
-> >
-> >
-> >
-> >
-> >
-> >
-> > On Thu, Sep 1, 2016 at 7:12 PM -0700, "Kurt Seifried" <
-> > kseifried@...hat.com> wrote:
-> >
-> >
-> >
-> >
-> >
-> >
-> >
-> >
-> >
-> >
-> > On Thu, Sep 1, 2016 at 5:17 PM, Diogo Mónica
-> > wrote:
-> >
-> > > A few weeks ago (Aug 4, 2016), a CVE (CVE-2016-6595) describing a DoS
-> on
-> > > docker swarm got issued. We believe this not a real issue, and would
-> like
-> > > to have the CVE rescinded.
-> > >
-> > > The person reporting this "vulnerability" is exhausting the resources
-> of
-> > a
-> > > remote manager by doing hundreds of join/leave operations without
-> > removing
-> > > the state that is left by old nodes. At some point the manager
-> obviously
-> > > stops being able to accept new nodes, since it runs out of memory.
-> > >
-> > > Given that both for Docker swarm and for Docker Swarmkit nodes are
-> > > *required* to provide a secret token (it's actually the only mode of
-> > > operation), this means that no adversary can simply join nodes and
-> > exhaust
-> > > manager resources.
-> > >
-> > > We can't do anything about a manager running out of memory and not
-> being
-> > > able to add new legitimate nodes to the system. This is merely a
-> resource
-> > > provisioning issue, and definitely not a CVE worthy vulnerability.
-> > >
-> >
-> > I checked the documentation and it looks like a worker node is only
-> > supposed to work and is not supposed to be able to administer the swarm.
-> As
-> > such this is a trust boundary violation, and needs a CVE.
-> >
-> >
-> >
-> > > Thank you,
-> > > --
-> > > Diogo Mónica
-> > >
-> >
-> >
-> >
-> > --
-> >
-> > --
-> > Kurt Seifried -- Red Hat -- Product Security -- Cloud
-> > PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-> > Red Hat Product Security contact: secalert@...hat.com
-> >
-> >
-> >
-> >
-> >
-> >
->
->
-> --
->
-> --
-> Kurt Seifried -- Red Hat -- Product Security -- Cloud
-> PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-> Red Hat Product Security contact: secalert@...hat.com
->
-
-
-
--- 
-Diogo Mónica
-
+iQIcBAEBCAAGBQJWoj0bAAoJEL54rhJi8gl5AHUP/RkKp+uneF867005iGi48jaF
+VpkwLC6mGHB/xFRvMCi1JQIHbtWY2sjaCxhNeBtLrQ2T6rp+ob+L2OORnbT3lyJe
+5qPSgp5mxFhlyWOJESoT8Hvla3AYpbkzb2vN1IrHvFgyFstRUjwvTdFv/Pup7En7
+B8jbbLNUsgFlAO7orTd9jLi4CrZTVyy1qOb9E7cs7hwPyyvWRaxQWOmR27gjr9Vx
+1MWh5L7v8VFvE4zP9AvVH+o3jId3LKoQyiwPc9+mHJcEDk6a1O+me/bXaDufcMN1
+k5orCuAq1GJ71MAbCFYbO7A/xZic8gUZ6nOzeLcSAWZALP9XJrX93ZF74ldcl165
+MrX6js5WXAE81jXCCWDlBj+ee7A5OazgCRTrSxSIjYfQU94oSKBch56fXwC1yS+M
+htjPXgs2ILv/HmFDWgxZpipdFuFSBqboHc8kjq0dA+6a3C7iRqsXzLHU9MGJsGiH
+lfBfDYMcBbb7rE9ryBAomV7jq9BD6xoaKTYXIjQ4ynrJxOY1jfn0mITPltikEF8/
+iOkgg3s9oZbY5DPwVfae7n6gPvpcQPJl9guEpGdmRrgW85NNUf6goDrgTIokwdoZ
+HCnTSwjv8i1Wg3tqvt6kvy0ssWAe0GwGCbgJyBmp/sq/LXb2TZ/XTG/a94scX40D
+p67V2HPHK+2GL8/v32B/
+=Vsja
+-----END PGP SIGNATURE-----
