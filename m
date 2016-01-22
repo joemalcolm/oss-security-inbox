@@ -1,52 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/13/2
-Message-ID: <22143afd-005a-6fff-2c75-f5e74c2b92fe@pipping.org>
-Date: Sun, 13 Nov 2016 16:28:19 +0100
-From: Sebastian Pipping <sebastian@...ping.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/22/5
+Message-ID: <41532875.k1hQz0ZxHK@x2>
+Date: Fri, 22 Jan 2016 11:57:42 -0500
+From: Steve Grubb <sgrubb@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Antonio Ceballos <aceballos@...il.com>
-Subject: CVE needed? / gnuchess 6.2.4 fixed user input buffer overflow
+Cc: Andrew Gallagher <andrewg@...rewg.com>
+Subject: Re: Re: Prime example of a can of worms
 Content-Type: text/plain; charset=utf-8
 
-Hi there!
+On Thursday, January 21, 2016 06:43:16 PM Andrew Gallagher wrote:
+> On Thu, 21 Jan 2016 10:15:55 -0500 Steve Grubb wrote:
+> > Hallway discussions mentioned that ECC is dead due to trust issues
+> > and fuzzy IP issues which slowed vendor uptake. There was a mention
+> > of RSA officially being allowed to go to 16k key sizes.
+> 
+> Was there any mention of the relative ease of quantum attacks against
+> ECC compared to classically-equivalent RSA? 
+
+Yes. At one time ECC looked good because it offered comparable strength with 
+fewer operations so it was faster in the age of slower CPUs. Now, the threat 
+has changed and people are looking over the not too distant future at how best 
+to provide some resistance in the face of a very different landscape. Things 
+that are computationally expensive start looking better. The slide on page 9 
+kind of shows the concern. The leftover part of rectangle X not covered by 
+rectangle Z means spilled secrets.
+
+To my mind, one of the things that we as an open source community need to 
+think hard about is how we are going to protect data in the Quantum computing 
+age. If many of the new QR algorithms get patented, where does that leave us? 
+Its kinda like ECC all over again except this time the consequences are much 
+more dire because there may not be any IP unencumbered algorithm to jump to. I 
+certainly hope that won't be the case.
+
+-Steve
 
 
-gnuchess 6.2.4 fixed a stack buffer overflow related to user move input,
-i.e. 160 characters input can crash unpatched gnuchess 6.2.3.
+> [1] That was suggested on a couple of discussion groups as a possible
+> motivation for the newly rekindled RSA love.
+> 
+> [1] http://arxiv.org/abs/quant-ph/0301141
 
-I am unsure if this can be used to execute arbitrary code and if it
-needs a CVE or not: gnuchess itself does not seem to accept input from a
-file so it may need some other application in front (e.g. a website
-using gnuchess for a backend or some mobile/desktop application
-forwarding evil input to gnuchess with improper validation) to attack.
-
-The patch in 6.2.4 is this, content from s goes into mvstr later:
-
-
-# diff -u4 gnuchess-6.2.3/src/frontend/move.cc
-gnuchess-6.2.4/src/frontend/move.cc
---- gnuchess-6.2.3/src/frontend/move.cc        2015-01-01
-23:57:25.000000000 +0100
-+++ gnuchess-6.2.4/src/frontend/move.cc        2016-09-20
-01:12:35.000000000 +0200
-@@ -541,8 +541,13 @@
-    char mvstr[MAXSTR], *p;
-    BitBoard b, b2;
-    leaf *n1, *n2;
-
-+   /* User input could be longer than MAXSTR */
-+   if ( strlen(s) >= MAXSTR ) {
-+      s[MAXSTR-1] = '\0';
-+   }
-+
-    TreePtr[2] = TreePtr[1];
-    GenMoves (1);
-    FilterIllegalMoves (1);
-    side = board.side;
-
-
-Thanks and best
-
-
-
-Sebastian
+Download attachment "signature.asc" of type "application/pgp-signature" (182 bytes)
