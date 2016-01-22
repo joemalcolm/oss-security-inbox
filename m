@@ -1,56 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/17/1
-Message-Id: <20160917014919.76934B2E003@smtpvbsrv1.mitre.org>
-Date: Fri, 16 Sep 2016 21:49:19 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/22/6
+Message-Id: <20160122185407.D525752E002@smtpvbsrv1.mitre.org>
+Date: Fri, 22 Jan 2016 13:54:07 -0500 (EST)
 From: cve-assign@...re.org
-To: ago@...too.org
+To: feld@...d.me
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: libav: NULL pointer dereference in put_no_rnd_pixels8_xy2_mmx (rnd_template.c)
+Subject: Re: imlib2 may need some CVEs assigned
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> https://blogs.gentoo.org/ago/2016/09/17/libav-null-pointer-dereference-in-put_no_rnd_pixels8_xy2_mmx-rnd_template-c/
+> imlib2 1.4.7's changelog seems to indicate fixes for issues that should
+> probably have some CVEs assigned
 > 
-> A fuzzing, with an mp3 file as input, discovered a null pointer access in
-> put_no_rnd_pixels8_xy2_mmx.
-> 
-> Input #0, h263, from '9.crashes'
-> 
-> AddressSanitizer: SEGV on unknown address
-> 
-> put_no_rnd_pixels8_xy2_mmx libav-11.7/libavcodec/x86/rnd_template.c:37:5
-> 
-> https://git.libav.org/?p=libav.git;a=commit;h=136f55207521f0b03194ef5b55ba70f1635d6aee
+> https://git.enlightenment.org/legacy/imlib2.git/tree/ChangeLog
 
->> mpegvideo_motion: Handle edge emulation even without unrestricted_mv
->> 
->> Fix out of bounds read.
->> 
->> libavcodec/mpegvideo_motion.c
+We feel that the best approach for now is to assign CVE IDs for the
+three cases in which the changelog suggests that a crash would occur.
 
-Use CVE-2016-7424.
+> https://git.enlightenment.org/legacy/imlib2.git/commit/?h=v1.4.7&id=39641e74a560982fbf93f29bf96b37d27803cb56
+> GIF loader: Fix segv on images without colormap.
+
+Use CVE-2014-9762.
+
+
+> https://git.enlightenment.org/legacy/imlib2.git/commit/?h=v1.4.7&id=c21beaf1780cf3ca291735ae7d58a3dde63277a2
+> Prevent division-by-zero crashes
+
+Use CVE-2014-9763.
+
+
+> https://git.enlightenment.org/legacy/imlib2.git/commit/?h=v1.4.7&id=1f9b0b32728803a1578e658cd0955df773e34f49
+> Fix segfault when opening input/queue/id:000007,src:000000,op:flip1,pos:51 with feh
+
+Use CVE-2014-9764.
 
 - -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJX3KC3AAoJEHb/MwWLVhi22mgQAIBJvVTNLEjK2nah32PovlaX
-Ttm/nelFwY1rclJ0omateDF2UVID2ha/pI7V14mLiEcf1YfrLa+fh4AsCHOPFcSw
-sMxzP79oyiSi5H5zwj4O1RAYD5zi3t4sWyM18cig+Sd10iMhTI6JShcBOtrbL344
-o1d/x4DLUoBQIUDx+LVOwIXq5QreSM48mrJANIKhIBu1tzEu41yceD+lr2l05etH
-63GgxmF5WOP3vPB7pEr4b21HdfonAKjOjZpevVUhHfzzjP5ccYHDd5bMbwUXwEi8
-WO1UhmZPekY3zWTOSSLAaZL8DjtqJg2FIacpHrZk+czjbet4ybOualFfGOyE2Vvh
-AMCo5XIR63z73A4e9QbkN/UvxjGnjbY8/lz9poWGvzVfEj2FCaItgXWW1QOgqc/V
-Xasq9ZRsrZ25RILLRVA65w4RTEssHN+A6meyvU6Vub/R+M5jbZLqOq1JHvE9C8PO
-yjJv1Gdc6evvHM+54QURCjnDIU7XNczvy2ALpfYRC+5S3ILSKuvQ0pbvebXIHofU
-XVvAToc04+Bn5wJXQ68H8ZERrKgwS0Od9RFcWNs3tYSXU+P7/A806OiBbxdw8riX
-jrxDBGftqSlptgA2tcuyA0pcQFF6yTMLverW9CQdzE1Lsv6+WDh3Nv5iztJQIHrC
-3CA42JEkSvBTLCKzrG8z
-=OD1P
+iQIcBAEBCAAGBQJWonoYAAoJEL54rhJi8gl5aFcQAJIhYKuGQbyH9RK1mzgqFx7n
+hs5b4vQgKmysd0O5+063aZdDh0JwDUn6HCXl9gYDrGyo5QusrqyTI/A1YxRNGwtP
+DXdUSbdQOoLrZoRKFngo0p5jiDO8nBjvNQCtXiI/ilh2uEopeUKfEFAJlpOf4JGA
+5TWpq9mh+2GSHRtRkQb/PeMLADz4z7ur6FmADcngWwZ1HAAYvRBkumhuNrgmwuYi
+gfNwZQnb66wTlvZ9Tqx4JIRDCWNlIo7ZYkbYOYi3zWJMX2l7eb+RK0jPsDc6SiCf
+0J9kl5JqNHQ0+hu/FnNf3nV8FCdiCqnP9AXkMHNqvF+KDO6iqaKDDlqd0H/F93sF
+Rp5dWO8NreG6pTG4KgfccuXx7veZAi6GJcezveoj9GHBNbWG0o7cLPusfHOGi/QQ
+iln+BakiJl7XOL9O1ngcS/UOlvKspi6EYTYB0bksgePOdKawqtvSPNW23fPqEhJ8
+FF1KLwK/c53wNbl3YWNEcZW5fN1CN1jeGuRvbKd3G1OGV59sHGD0Qt0c6DzIqTJP
+zuJaNdreCbnZiKn8SZF/+fNvHMYS+alIr1XSm1cdbAxmvqSwzIBre0gUNfUqOjWQ
+BcpiklApxD+eHv3n9dOrHD9PSYss3QvFDpofvYBUjUzYz/CGnf317Pm4hccIdnbR
+jX1Yexx+h29NgMWslfvG
+=bde7
 -----END PGP SIGNATURE-----
