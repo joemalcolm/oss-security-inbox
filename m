@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3516" "Thursday" "9" "February" "2017" "14:46:31" "+0100" "Agostino Sarubbo" "ago@gentoo.org" "<3455585.WHHIzQRhE4@blackgate>" "97" "[oss-security] zziplib: out of bounds read in zzip_mem_entry_new (memdisk.c)" nil nil nil "2" "2017020913:46:31" "[oss-security] zziplib: out of bounds read in zzip_mem_entry_new (memdisk.c)" (number mark "U       ago@gentoo.o Feb  9   97/3516  " thread-indent "\"[oss-security] zziplib: out of bounds read in zzip_mem_entry_new (memdisk.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1935" "Friday" "22" "January" "2016" "13:54:07" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160122185407.D525752E002@smtpvbsrv1.mitre.org>" "50" "[oss-security] Re: imlib2 may need some CVEs assigned" "^Cc:" nil nil "1" "2016012218:54:07" "[oss-security] Re: imlib2 may need some CVEs assigned" (number mark "        cve-assign@m Jan 22   50/1935  " thread-indent "\"[oss-security] Re: imlib2 may need some CVEs assigned\"\n") "<1453311159.1817542.497713370.3C97F695@webmail.messagingengine.com>" ("<1453311159.1817542.497713370.3C97F695@webmail.messagingengine.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 26493 invoked by uid 550); 9 Feb 2017 13:48:11 -0000
+Received: (qmail 24259 invoked by uid 550); 22 Jan 2016 18:54:28 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,112 +11,63 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 24195 invoked from network); 22 Jan 2016 18:54:21 -0000
+In-Reply-To: <1453311159.1817542.497713370.3C97F695@webmail.messagingengine.com>
+Message-Id: <20160122185407.D525752E002@smtpvbsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Fri, 22 Jan 2016 13:54:07 -0500 (EST)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15732 invoked from network); 9 Feb 2017 13:46:49 -0000
-From: Agostino Sarubbo <ago@gentoo.org>
-To: oss-security@lists.openwall.com
-Date: Thu, 09 Feb 2017 14:46:31 +0100
-Message-ID: <3455585.WHHIzQRhE4@blackgate>
-User-Agent: KMail/4.14.10 (Linux/4.4.39-gentoo; KDE/4.14.24; x86_64; ; )
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"
-Subject: [oss-security] zziplib: out of bounds read in zzip_mem_entry_new (memdisk.c)
+Subject: [oss-security] Re: imlib2 may need some CVEs assigned
+To: feld@feld.me
 
-Description:
-zziplib is an intentionally lightweight library that offers the ability to 
-easily extract data from files archived in a single zip file.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-A fuzz on it discovered an out of bounds read.
+> imlib2 1.4.7's changelog seems to indicate fixes for issues that should
+> probably have some CVEs assigned
+> 
+> https://git.enlightenment.org/legacy/imlib2.git/tree/ChangeLog
 
-The complete ASan output:
+We feel that the best approach for now is to assign CVE IDs for the
+three cases in which the changelog suggests that a crash would occur.
 
-# unzzipcat-mem $FILE
-==7934==ERROR: AddressSanitizer: unknown-crash on address 0x7f439a704000 at pc 
-0x0000004bb815 bp 0x7fff911ebe30 sp 0x7fff911eb5e0
-READ of size 59396 at 0x7f439a704000 thread T0
-    #0 0x4bb814 in __asan_memcpy /tmp/portage/sys-devel/llvm-3.9.0-
-r1/work/llvm-3.9.0.src/projects/compiler-rt/lib/asan/asan_interceptors.cc:413
-    #1 0x7f439a3da299 in zzip_mem_entry_new /tmp/portage/dev-
-libs/zziplib-0.13.62-r1/work/zziplib-0.13.62/zzip/memdisk.c:210:13
-    #2 0x7f439a3da299 in zzip_mem_disk_load /tmp/portage/dev-
-libs/zziplib-0.13.62-r1/work/zziplib-0.13.62/zzip/memdisk.c:137
-    #3 0x7f439a3d98b7 in zzip_mem_disk_open /tmp/portage/dev-
-libs/zziplib-0.13.62-r1/work/zziplib-0.13.62/zzip/memdisk.c:89:5
-    #4 0x50982d in main /tmp/portage/dev-libs/zziplib-0.13.62-
-r1/work/zziplib-0.13.62/bins/unzzipcat-mem.c:82:12
-    #5 0x7f439951961f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
-    #6 0x419748 in _init (/usr/bin/unzzipcat-mem+0x419748)
+> https://git.enlightenment.org/legacy/imlib2.git/commit/?h=v1.4.7&id=39641e74a560982fbf93f29bf96b37d27803cb56
+> GIF loader: Fix segv on images without colormap.
 
-AddressSanitizer can not describe address in more detail (wild memory access 
-suspected).
-SUMMARY: AddressSanitizer: unknown-crash /tmp/portage/sys-devel/llvm-3.9.0-
-r1/work/llvm-3.9.0.src/projects/compiler-rt/lib/asan/asan_interceptors.cc:413 
-in __asan_memcpy
-Shadow bytes around the buggy address:
-  0x0fe8f34d87b0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0fe8f34d87c0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0fe8f34d87d0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0fe8f34d87e0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0fe8f34d87f0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-=>0x0fe8f34d8800:[fe]fe fe fe fe fe fe fe fe fe fe fe fe fe fe fe
-  0x0fe8f34d8810: fe fe fe fe fe fe fe fe fe fe fe fe fe fe fe fe
-  0x0fe8f34d8820: fe fe fe fe fe fe fe fe fe fe fe fe fe fe fe fe
-  0x0fe8f34d8830: fe fe fe fe fe fe fe fe fe fe fe fe fe fe fe fe
-  0x0fe8f34d8840: fe fe fe fe fe fe fe fe fe fe fe fe fe fe fe fe
-  0x0fe8f34d8850: fe fe fe fe fe fe fe fe fe fe fe fe fe fe fe fe
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Heap right redzone:      fb
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack partial redzone:   f4
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==7934==ABORTING
+Use CVE-2014-9762.
 
-Affected version:
-0.13.62
 
-Fixed version:
-N/A
+> https://git.enlightenment.org/legacy/imlib2.git/commit/?h=v1.4.7&id=c21beaf1780cf3ca291735ae7d58a3dde63277a2
+> Prevent division-by-zero crashes
 
-Commit fix:
-N/A
+Use CVE-2014-9763.
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
 
-CVE:
-N/A
+> https://git.enlightenment.org/legacy/imlib2.git/commit/?h=v1.4.7&id=1f9b0b32728803a1578e658cd0955df773e34f49
+> Fix segfault when opening input/queue/id:000007,src:000000,op:flip1,pos:51 with feh
 
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00156-zziplib-oobread-zzip_mem_entry_new
+Use CVE-2014-9764.
 
-Timeline:
-2017-01-17: bug discovered and poked upstream
-2017-02-09: blog post about the issue
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/02/09/zziplib-out-of-bounds-read-in-zzip_mem_entry_new-memdisk-c
-
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+iQIcBAEBCAAGBQJWonoYAAoJEL54rhJi8gl5aFcQAJIhYKuGQbyH9RK1mzgqFx7n
+hs5b4vQgKmysd0O5+063aZdDh0JwDUn6HCXl9gYDrGyo5QusrqyTI/A1YxRNGwtP
+DXdUSbdQOoLrZoRKFngo0p5jiDO8nBjvNQCtXiI/ilh2uEopeUKfEFAJlpOf4JGA
+5TWpq9mh+2GSHRtRkQb/PeMLADz4z7ur6FmADcngWwZ1HAAYvRBkumhuNrgmwuYi
+gfNwZQnb66wTlvZ9Tqx4JIRDCWNlIo7ZYkbYOYi3zWJMX2l7eb+RK0jPsDc6SiCf
+0J9kl5JqNHQ0+hu/FnNf3nV8FCdiCqnP9AXkMHNqvF+KDO6iqaKDDlqd0H/F93sF
+Rp5dWO8NreG6pTG4KgfccuXx7veZAi6GJcezveoj9GHBNbWG0o7cLPusfHOGi/QQ
+iln+BakiJl7XOL9O1ngcS/UOlvKspi6EYTYB0bksgePOdKawqtvSPNW23fPqEhJ8
+FF1KLwK/c53wNbl3YWNEcZW5fN1CN1jeGuRvbKd3G1OGV59sHGD0Qt0c6DzIqTJP
+zuJaNdreCbnZiKn8SZF/+fNvHMYS+alIr1XSm1cdbAxmvqSwzIBre0gUNfUqOjWQ
+BcpiklApxD+eHv3n9dOrHD9PSYss3QvFDpofvYBUjUzYz/CGnf317Pm4hccIdnbR
+jX1Yexx+h29NgMWslfvG
+=bde7
+-----END PGP SIGNATURE-----
