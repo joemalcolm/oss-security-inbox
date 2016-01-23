@@ -1,62 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/16/14
-Message-Id: <20161016030229.F231642E027@smtpvbsrv1.mitre.org>
-Date: Sat, 15 Oct 2016 23:02:29 -0400 (EDT)
-From: cve-assign@...re.org
-To: ago@...too.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Fuzzing jasper
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/23/1
+Message-ID: <CABniQZOu_2SA++N-KbO72cj1=g9qyTr_kUB3wGBsX4uLhw1JMA@mail.gmail.com>
+Date: Sun, 24 Jan 2016 03:51:44 +0800
+From: Shawn <citypw@...il.com>
+To: oss-security@...ts.openwall.com
+Cc: Pray3r Z <pray3r.z@...il.com>
+Subject: CVE request for prima wlan driver: Address buffer overflow due to invalid length
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+**Introduction***
 
-> AddressSanitizer: SEGV on unknown address
-> 0x527ebf in bmp_getdata ... jasper-1.900.1/src/libjasper/bmp/bmp_dec.c:383:5
-> 
-> AddressSanitizer: SEGV on unknown address
-> 0x528252 in bmp_getdata ... jasper-1.900.1/src/libjasper/bmp/bmp_dec.c:385:5
+One exploitable bug has been fixed in prima wlan driver a few months
+ago.
 
-Use CVE-2016-8690 for both of these (the first and fifth items in the
-http://www.openwall.com/lists/oss-security/2016/08/23/6 post).
+Upstream fix:
+https://github.com/sonyxperiadev/prima/commit/4b91219ada9e73c897da2e0ae7bf2ff043dde950
+
+Cyanogenmod's backport fix:
+https://github.com/CyanogenMod/android_kernel_sony_msm8960t/commit/d58f1eacbdf55946ec7062ab6e4df462bf30ef32
+
+It was lacking a check for valid length of copy a buffer, which can be
+crafted by userspace. The application could communicate with wlan
+driver via ioctl() with 0x8bf7 to enter into vulnerable code path.
+
+This issue may leads to a local DoS or privilege escalation. Some
+android phone/tablet are still using the vulnerable version of prima
+driver. We've aware of android-msm-flo-3.4-marshmallow for Nexus 7(
+2013) is affected by this isuee:
+
+https://android.googlesource.com/kernel/msm/+/android-msm-flo-3.4-marshmallow
+
+Plz review the file:
+
+msm-kernel/drivers/staging/prima/CORE/HDD/src/wlan_hdd_wext.c
 
 
-> AddressSanitizer: FPE on unknown address
-> 0x56de63 in jpc_dec_process_siz ... jasper-1.900.1/src/libjasper/jpc/jpc_dec.c:1195:17
+Then we've already sent a patch to backport fix for the branch and
+still doesn't get any answer yet:
 
-Use CVE-2016-8691.
+https://android.googlesource.com/kernel/msm/+/15c8afebed947b30370095cbb7de6257891a3971%5E!/#F0
+
+PoC:
+
+https://raw.githubusercontent.com/hardenedlinux/offensive_poc/master/prima_wlan_poc/wext_poc.c
+
+Panic log:
+https://raw.githubusercontent.com/hardenedlinux/offensive_poc/master/prima_wlan_poc/panic.log
+
+Mitigation:
+
+We haven't exmine if this issue can be exploited to gain the root
+privileges. But some fancy mitigation like PXN is not support well for
+android armv7. Porting PaX UDEREF is an another option.
 
 
-> AddressSanitizer: FPE on unknown address
-> 0x56dee3 in jpc_dec_process_siz ... jasper-1.900.1/src/libjasper/jpc/jpc_dec.c:1197:18
-
-Use CVE-2016-8692.
 
 
-> AddressSanitizer: attempting double-free
-> 0x51f8f8 in mem_close ... jasper-1.900.1/src/libjasper/base/jas_stream.c:1073:3
+-- 
+GNU powered it...
+GPL protect it...
+God blessing it...
 
-Use CVE-2016-8693.
+regards
+Shawn
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYAu2GAAoJEHb/MwWLVhi2D2wQAI6W9/5UOJJD9vMc25GdYVGo
-Is0tX/21v2ibFpgyAAHBLaQd1ohNeu9U5Y6Nj9lAYAydmcoEZrXX9FxEMNp6XlI3
-ybIDOapRLsjqLovdEzZUEnEDiHWAFS/t/p4hZv67PB7fHWKkeA3QhthSf3OlGVNm
-IDQX8jMzhb96ZLS9aq5Hlz28K2z2Bx9j08WXQ0Fkp2ksMOCdNF0QwRp1TuA7Ork8
-gtxNSVS+r8oAwWBH9fdwU8d9rgBoh0nkMVt9PJex5Hd4ys8CrOS6gBBc9HqDcxdc
-bVdYRUuNbXJjZdlOcfQU37a6MyWJ0gCmCp6xs7u1joAnNmzT9C894xLInJFzx37n
-JVqNBMltWgkkp1ClyVIdkRJErif2JstRpL59JBaMXgSRD0ZCZRsMrehc6SobX0A1
-iUGxdjG/jpP7c8ZPaC2SS/1y0cEpP7CsbDFliZaGxt6QcKOfNqs33L3DSuc7qn0d
-OJIH4GMNlZQFgf7+c67+ZSi86HVmTda9DJjm2a9uqU7tKKE/kJWC9OyWTef9K0aJ
-1HAu1yNjgGmc/oIIMCk/8wNO4UqlHiXhcF/kjWUBc4/eTAPxYLHSH5703HTStaVU
-EN0ONeBMsfx6lhZgoJqDC+ItztjnDR90VGJyrH98XoEn+3KzjGkgEeaYv/N/mUfw
-Q/58lzCKYeVI4ovM1u+J
-=1lOZ
------END PGP SIGNATURE-----
+View attachment "wext_poc.c" of type "text/x-csrc" (1811 bytes)
