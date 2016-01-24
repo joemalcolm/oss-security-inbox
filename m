@@ -1,4 +1,9 @@
-Received: (qmail 32348 invoked by uid 550); 20 May 2026 10:44:45 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1401" "Sunday" "24" "January" "2016" "13:00:14" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160124180014.671AC6C07B6@smtpvmsrv1.mitre.org>" "35" "[oss-security] Re: CVE Request: Host based account hijack attack on php-openid" nil nil nil "1" "2016012418:00:14" "[oss-security] Re: CVE Request: Host based account hijack attack on php-openid" (number mark "U       cve-assign@m Jan 24   35/1401  " thread-indent "\"[oss-security] Re: CVE Request: Host based account hijack attack on php-openid\"\n") "<CAJCHTFX--F249k4kdfrWv5iHDu33SwBwZqWkhL+_v=2knRQgew@mail.gmail.com>" ("<CAJCHTFX--F249k4kdfrWv5iHDu33SwBwZqWkhL+_v=2knRQgew@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 18373 invoked by uid 550); 24 Jan 2016 18:00:27 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,47 +12,47 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 20292 invoked from network); 20 May 2026 10:41:33 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
-	s=smtp-20201208; t=1779273683;
-	bh=4boj2m/7RoqbCLbBvARVZZ2UAjxtlQGMY5kEkL+cTGU=;
-	h=Date:From:To:Subject:In-Reply-To:References:From;
-	b=pXsS36JlNdr8Y2YE7Un0YXYF02vEU0x/l+OdL1q6puY5f7rQV3wVWB88QsOHRLaIi
-	 CENxJpzRU8USWY+5STfceSlUE87PiR0JdlnQ/JiiSSKbGHInfVlgatN3QihpubjnaB
-	 d1cWhxgiKrQaDxKY//8UsINXibtCzJBw1CSaOycFr130XVrY01Xc4puRIZe6rap5qN
-	 lM5xlhV7XMnhTSdRcsh0SitPKwtLLwDxRJkyJnS18lfjwlMLpKAgOE+HbKmO68f0TC
-	 5xcbcmiMMQwZ5vJ/glrWj68C3NND+WKcQS/Q+O+Kz3/BAFn037Ww8dvX0IJ8m3U/oh
-	 lzXj1L8p4lZbg==
-MIME-Version: 1.0
-Date: Wed, 20 May 2026 12:41:23 +0200
-From: gabriel.corona@free.fr
-To: oss-security@lists.openwall.com
-In-Reply-To: <20260519203345.01f21f23@riseup.net>
-References: <20260519203345.01f21f23@riseup.net>
-User-Agent: Webmail Free/1.6.14
-Message-ID: <d6b157bf500fefea7bafa7a0c0f00c6e@free.fr>
-X-Sender: gabriel.corona@free.fr
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 8bit
-Subject: Re: [oss-security] PCManFM-Qt allows arbitrary files to be opened via
- the org.freedesktop.FileManager1.ShowFolders method
+Received: (qmail 18355 invoked from network); 24 Jan 2016 18:00:26 -0000
+From: cve-assign@mitre.org
+To: zemnmez@gmail.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <CAJCHTFX--F249k4kdfrWv5iHDu33SwBwZqWkhL+_v=2knRQgew@mail.gmail.com>
+Message-Id: <20160124180014.671AC6C07B6@smtpvmsrv1.mitre.org>
+Date: Sun, 24 Jan 2016 13:00:14 -0500 (EST)
+Subject: [oss-security] Re: CVE Request: Host based account hijack attack on php-openid
 
-> Checking whether a path is a file or
-> directory can block I/O under special circumstances; so, it isn't an
-> option in this case."
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-I am not sure I am following that argument …
+> Apache after 1.3 and many other webservers derive SERVER_NAME from the HOST
+> header.
 
-When I am calling "$file-manager $some-path", I should be expecting to 
-actually
-open up a file manager not something else which happens to actually 
-handle the file.
-The file manager should not try to delegate to another program at all.
+> By changing the Host header and making the request
+> to the vulnerable website S, S thinks the openid.realm through SERVER_NAME
+> should be evil.com, and accepts the OpenID login, allowing the attacker
+> access to the victim's account on S.
 
-If we want the "automagically call the correct program" functionality,
-we can use xdg-open / kde-open / dde-open / gnome-open / exo-open /
-org.freedesktop.portal.OpenURI.OpenFile.
+Use CVE-2016-2049.
 
-Gabriel
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJWpQ5sAAoJEL54rhJi8gl5uIcP/1Vmxty5Royhdw4dUJDbemku
+tDRyr1dcRwzxpVeJuV7VhJSI8xoe2Px/z/Hv3XiwOBAAPaH+RxXQsxUvf9wlq/8j
+3i7Z4TxYTgktxM+535G29VpcSpgHqf/kJnMv+l3HjIBpqQL9Hatu4bJwIEhB5QMv
+DJ9vAAN5IPJKA9CRErmGdQfBKpK3M98wn7r3A/iziLJV2Fju2Mp0fxzmGmmXh/Ym
+FMK48RlUXzjBw5Xjmyq6pembNKpnzk83R8HTs4Ed+sJOKDEK5Z0AjMniEwHI//Lp
+GKmvQNZZOi4W4Eva4ejIKD74KNlreFnBoTOf+ed3ExwfE6sOI8sAOo8VigYmo/3d
+S6JTFzCA8kemEPCePwXmQXl6Rm2VK75gVb0oTWg7OHOXSdGX16kcdqYSnYpx8lJn
++uGPa+5/VfOApvL8EM+CHGaIMFpu+5RYPrO83Q2ghcweFXfoAzrwWdy8ensU25mv
+vAYyomlOe1DmzcFYvuV9KnPyIYmvN9XO2spGFQQv6eK+rp1rNDtVkSUzinT6LUKY
+OZWCBr7kIebq95bHf3ni3UW1h1rLCdmlIjQusEL7ylnx+UU2vX2e3FCxl73dyq8S
+0Is1gMM+4TNckEwAa3Ugq6H9THkk7eTbas7biyfRHIp6gFZBmKAZffYarck6D7rZ
+4APPDEJNYvCuhlOXBYY4
+=JhGH
+-----END PGP SIGNATURE-----
