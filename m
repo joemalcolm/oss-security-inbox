@@ -1,46 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/25/6
-Message-ID: <20160725083930.GA31840@suse.de>
-Date: Mon, 25 Jul 2016 10:39:30 +0200
-From: Sebastian Krahmer <krahmer@...e.com>
-To: "Eric W. Biederman" <ebiederm@...ssion.com>, oss-security@...ts.openwall.com, pkg-shadow-devel@...ts.alioth.debian.org
-Subject: Re: Re: [Pkg-shadow-devel] subuid security patches for shadow package
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/24/2
+Message-ID: <CAJCHTFX--F249k4kdfrWv5iHDu33SwBwZqWkhL+_v=2knRQgew@mail.gmail.com>
+Date: Sun, 24 Jan 2016 03:21:31 +0000
+From: Zemn mez <zemnmez@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request: Host based account hijack attack on php-openid
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jul 25, 2016 at 10:03:31AM +0200, Sebastian Krahmer wrote:
-> On Wed, Jul 20, 2016 at 11:48:52PM +0200, Nicolas François wrote:
-> > Hi,
-> > 
-> > The first point looks like a non issue to me.
-> > 
-> > getlogin() is used to differentiate users with the same UID.
-> > The result of getlogin() is checked: if it returns a username that do not
-> > have the UID returned by getuid(), it will be ignored.
-> > 
-> > 
-> > Best Regards,
-> > -- 
-> > Nekral
-> 
-> I agree that its not a severe issue. But its dubious code at best.
-> I couldnt even imagine someone would have usernames with different UID's?
-> Maybe such configs should not be encouraged and potential issues with
-> that discussed.
-> 
-> My understanding of secure coding is that getlogin() should not
-> be trusted. Having same username with multiple UIDs is also to be avoided
-> IMHO, since its asking for trouble (I dont know if thats some requirement
-> of LSB or POSIX or so?)
+An authorization hijacking attack can be carried out on a webserver using
+php-openid for authentication.
 
-Err, sorry. Shared UID, different name (the other way around, thanks Alex).
-But then you are open to GID hopping attacks (as also previously
-pointed out) since you actually _do_ rely on getlogin() trust.
+In example usage (which the vast majority of sites use verbatim),
+php-openid checks the `openid.realm` parameter against the PHP variable
+`$SERVER['SERVER_NAME']`. (
+https://github.com/openid/php-openid/blob/fb4cdfcaa578436c451f8e8687dfb61165074488/examples/consumer/common.php#L109
+)
 
-Sebastian
+Apache after 1.3 and many other webservers derive SERVER_NAME from the HOST
+header.
 
--- 
+The attacker coerces the victim into logging into his server with OpenID
+provider P. The victim has an account on a website S that also uses P for
+authentication.
 
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.com - SuSE Security Team
+When the victim logs into the attacker's site, the attacker captures the
+request made to it via the victim's browser upon successful login.
+
+The attacker makes a login request to S with the request made to it by the
+victim to log into their website, changing the `Host` HTTP header to
+reflect the attacker's server.
+
+The captured request represents an authorization destined for the
+attacker's evil.com that the victim has allowed a login to evil.com through
+the OpenID provider P. By changing the Host header and making the request
+to the vulnerable website S, S thinks the openid.realm through SERVER_NAME
+should be evil.com, and accepts the OpenID login, allowing the attacker
+access to the victim's account on S.
+
+
+Zemnmez and Nathaniel "XMPPwocky" Theis
 
