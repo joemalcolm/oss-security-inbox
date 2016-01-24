@@ -1,107 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/05/7
-Message-ID: <20160505112350.66f699b5@pc1>
-Date: Thu, 5 May 2016 11:23:50 +0200
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: broken RSA keys
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/24/6
+Message-Id: <20160124180313.5D41C6C04A5@smtpvmsrv1.mitre.org>
+Date: Sun, 24 Jan 2016 13:03:13 -0500 (EST)
+From: cve-assign@...re.org
+To: carnil@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: Linux: fuse: possible denial of service in fuse_fill_write_pages()
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-I've now done a bit more thorough analysis, but I really don't think
-there's anything overly interesting to find here.
+> https://bugzilla.redhat.com/show_bug.cgi?id=1290642
+> https://git.kernel.org/linus/3ca8138f014a913f98e6ef40e939868e1e9ea876
 
-A comment before: The guy who publicized this stuff via his blog writes
-some very confused blog entrys and has lately written one where he
-threw a lot of insults at me and declared that I'm responsible for
-everything that's wrong with computers and with the world. So please
-understand that I find it a bit hard to deal with these people, and I
-won't attempt to communicate with them in any way. But I'll try to do my
-best to clarify what I know. (I don't know if/how the author of phuctor
-who wrote in this thread is related to these blogposts.)
+> I got a report about unkillable task eating CPU. Further investigation
+> shows, that the problem is in the fuse_fill_write_pages() function. If
+> iov's first segment has zero length, we get an infinite loop, because
+> we never reach iov_iter_advance() call.
 
-As a background: What we're talking about is a so-called batch-gcd
-attack, developed by DJB. Arjen Lenstra and Nadia Heninger were as far
-as I know the first ones to use this on publicly available keysets in
-order to find vulnerable keys. The implementation from Nadia Heninger is
-freely available [1] and some code to turn a pgp keyserver dump into a
-mysql database is available from me [2]. So everyone should be able to
-replicate what I'm saying (the workflow is: use my script to turn
-keyserver dump into a database, select the rsa_n value from the
-keys_rsa table, run sort -u on it, feed the result into nadia's fastgcd
-tool). It takes a couple of hours on a fast machine to replicate the
-attack.
-
-What one will find are 273 vulnerable moduli. Of those most have
-invalid self signatures. If you look at them the most plausible
-explanation is that they're the result of data errors. You'll
-find corresponding valid keys for most/all of them (I have only checked
-some manually). If you look into them you'll find stuff like this:
-f92f34e31bfcd57369ae04bf87888cfbca5525e3b24dd55aa4f7775ffb631c24f511c8de4c6707d3f685ea75c8b5f6e432e86fea10edaa6ed4812cdd51a90203010001300b06092a864886f70d010104030100fdfdfdfd00000000000000000000000000b0120a01e8220a01684640005000000010000000010000002a000000
-f92f34e31bfcd57369ae04bf87888cfbca5525e3b24dd55aa4f7775ffb631c24f511c8de4c6707d3f685ea75c8b5f6e432e86fea10edaa6ed4812cdd51a90203010001300b06092a864886f70d010104030100fdfdfdfd00000000000000000000000000b0120a01e8220a01684640005000000010000000010000002a000000
-
-Or in short: lots of repetitions, zero and ff values. I think it'll be
-very hard to pinpoint what the source of these issues is, but it looks
-a lot like simple data errors. I assume network transmission problems,
-disk failures or software bugs. It's also possible that
-people just messed with a hexeditor in keys and uploaded them. I think
-all primefactor patterns are just factors that happen to be likely once
-you do such random data errors.
-
-Now to the 10 keys that have valid selfsigs. Two are for
-alice@...mple.com (and honestly it may be that these one comes from me,
-but I don't remember exactly. I created broken test keys, but I don't
-know if I uploaded any. At least the date roughly matches when I worked
-on this).
-2 keys are for Texas Instruments and 512 bit. That's probably some joke
-referring to the breakage of TI signing keys [3]. One key is for "FAKE:
-key generation test", one has an empty userid field. They're probably
-examples as well.
-
-That leaves 4 keys that look somewhat reasonable. They're all really
-old (>10 years). Of those two have very small gcd factors and are
-pre-2000. The other two are from 2001 and have large factors.
-The last two are supposedly (from what Nadia Heninger told me) from a
-software called CryptoEx from a german company Glück&Kanja.
-Unfortunately one doesn't find this software anywhere online, just some
-old press releases. The product later got bought by PGP (aka
-what today belongs to symantec).
-
-Honestly I don't think there's too much to see here. There likely was a
-very old commercial PGP implementation that created broken keys. Maybe
-there were two (because of the two keys with small primefactors). And
-the keyservers take broken copies of valid keys without complains, as
-they don't check any signatures. Plus there are some keys that look
-like people manually creating broken test keys. I don't see any sign of
-a deliberate attack in this data. But you don't have to take my word
-for it. The software and data I used to analyze this is all public.
-
-I'll upload a keyids file to the pgpmoduli repo:
-https://github.com/hannob/pgpmoduli
-
-The way to interpret that data is that line numbers match. I.e. the gcd
-in line 10 of gcds matches the modulus in line 10 of vulnerable_moduli
-and the keyid in line 10 of keyids etc.
-
-Slightly related: There are other ways to search for bad pgp (or
-generally crypto) keys. I once searched for broken DSA keys (due to
-duplicate r values) [4] and found one broken key and for RSA-CRT issues
-and found one other broken key (E46DEB00098894FD). The first came from
-a beta of an app, the second is of unknown source (the crt issue is
-something I haven't published anywhere before).
+Use CVE-2015-8785.
 
 
-[1] https://factorable.net/resources.html
-[2] https://github.com/hannob/pgpecosystem
-[3]
-https://en.wikipedia.org/wiki/Texas_Instruments_signing_key_controversy
-[4] https://eprint.iacr.org/2015/262
--- 
-Hanno Böck
-https://hboeck.de/
+> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=124d3b7041f9a0ca7c43a6293e1cae4576c32fd5
 
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
+> Frederik Himpe reported an unkillable and un-straceable pan process.
 
-Content of type "application/pgp-signature" skipped
+> Zero length iovecs can go into an infinite loop in writev, because the
+> iovec iterator does not always advance over them.
+
+> The sequence required to trigger this is not trivial. I think it
+> requires that a zero-length iovec be followed by a non-zero-length
+> iovec which causes a pagefault in the atomic usercopy. This causes the
+> writev code to drop back into single-segment copy mode, which then
+> tries to copy the 0 bytes of the zero-length iovec; a zero length copy
+> looks like a failure though, so it loops.
+
+Use CVE-2008-7316.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJWpQ7BAAoJEL54rhJi8gl5Am8QAIDWhohuCTV/LLATmZ2l79qT
+6nH6UaXEQDTBLo3zaroI37UuALPBO3jj6gs+QrvAgs/p6lIVmYVZXbW+s23JXcly
+UaF82HMfSa7G4TpErnY140XiyuY9litUunfxtJ1GBaB+NYDyPKOUI2O/LAfbnS7J
+KvkB+9fzPNb6sgmHCNVtLQB8FI/zWscDL+YUAJtRlFzaj6m4Zmld+DfgNKEVj5v5
+BYx2arc67iCKDeravJ+FTBJ7q332z/zgDjYOYSsHRlsBtkcZjkOXQaFDxEXOMXUK
+VWjA3HG4UIryj5lt0WCJvrxEVQGUKxuKqoznYb9n2yUeIX/tpqbARkHxAkcaoZch
+N9qSZS7aoSqb0Zpg2kJPzrpM7lFsyZUARYoX4JzeNC/luFxfcyyD4Rsq6ZvtS4gN
+626g1nWB8te7xtUAWL8EEvAyLi8M5Xy9yNBQ/TJvi4AYUgMMJcRTzQNwEstwwIiv
+k0jo9ExujeusDwJ0OTww7jtqfHLeyY+WqwWK11Lfs7A1a03qMgmcYTQoZ/PFyklX
+SKygUyCIh8ampY97myeL6pa7Vk4gBnlcntr7hmCBKVPGY7uJbKC/21pgkuwoMAs9
+0E5vO/87fYlrWv1NYoGomk/fYWKFBgtmDLDP/9Cr0wqkxL/zYTurKiCTxo/MFJUw
+maIt64IN9PU7Nt9URjLb
+=2eQ6
+-----END PGP SIGNATURE-----
