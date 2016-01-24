@@ -1,29 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/30/8
-Message-Id: <8F926CD5-3628-4E1D-89B7-CAA0F98D63DE@gmail.com>
-Date: Thu, 30 Jun 2016 21:58:13 +0800
-From: Marcel Böhme <boehme.marcel@...il.com>
-To: cve-assign@...re.org
-Cc: oss-security@...ts.openwall.com, florian@...h-krohm.de, nickc@...hat.com, bschmidt@...hat.com
-Subject: Re: CVE Request: No demangling of untrusted binaries (2)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/24/4
+Message-ID: <20160124153743.GA19655@eldamar.local>
+Date: Sun, 24 Jan 2016 16:37:43 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Subject: CVE Request: tiff: potential out-of-bound write in NeXTDecode()
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi
 
-> On 30 Jun 2016, at 9:44 PM, cve-assign@...re.org wrote:
+Could you assign a CVE for the following issue in tiff:
+
+http://bugzilla.maptools.org/show_bug.cgi?id=2508
+
+> 2015-12-27  Even Rouault <even.rouault at spatialys.com>
 > 
-> Use CVE-2016-6131.
-> 
-> As far as we can tell, there was only one vulnerability reported here.
-Yes. This was a CVE request for only one vulnerability that was reported here.
+>         * libtiff/tif_next.c: fix potential out-of-bound write in NeXTDecode()
+>         triggered by http://lcamtuf.coredump.cx/afl/vulns/libtiff5.tif
+>         (bugzilla #2508)
 
-> We don't understand the reference to "All vulnerabilities were found
-> with" - this seems to imply more than one vulnerability. Also, we
-> don't understand the parenthesized numbers such as "No demangling of
-> untrusted binaries (2)" in the Subject line, and "Libiberty Demangler
-> segfaults (6)" and "Fix fir PR71696 in Libiberty Demangler (6)" in the
-> references.
-Moreover, this was also meant as a small update on the progress of the other vulnerabilities in GNU Libiberty that have been reported and assigned CVEs previously (and assigning credit to the tool we used; http://seclists.org/oss-sec/2016/q2/238).
+Fixing commit:
 
-Thanks!
-- Marcel
+https://github.com/vadz/libtiff/commit/b18012dae552f85dcc5c57d3bf4e997a15b1cc1c
+
+Regards,
+Salvatore
