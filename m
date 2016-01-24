@@ -1,32 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/17/5
-Message-ID: <20160817152127.4bmib7pf4hhqc4ro@eldamar.local>
-Date: Wed, 17 Aug 2016 17:21:27 +0200
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/24/3
+Message-ID: <20160124153737.GA18993@eldamar.local>
+Date: Sun, 24 Jan 2016 16:37:37 +0100
 From: Salvatore Bonaccorso <carnil@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2016-5696: linux kernel - challange ack information leak.
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Subject: CVE Request: tiff: Out-of-bounds write for invalid images using LogL compression
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi
 
-On Wed, Aug 17, 2016 at 05:01:45PM +0200, Gsunde Orangen wrote:
-> > > Heh, fair enough.  This fix is now in the kernels that were released
-> today
-> > > (4.7.1, 4.6.7, 4.4.18, and 3.14.76), hope that helps.
-> It seems that Greg keeps on being bothered with questions ;-)
-> Here's one more: the relevant Upstream commit
-> 75ff39ccc1bd5d3c455b6822ab09e533c551f758
-> is referenced in all change logs of yesterday's kernel releases...
-> ... Except for: 4.7.1 (https://cdn.kernel.org/pub/
-> linux/kernel/v4.x/ChangeLog-4.7.1)
-> Did 4.7.1 miss the fix?
+Could you assign a CVE for the following issue in tiff:
 
-That commit was actually already part of v4.7.
+http://bugzilla.maptools.org/show_bug.cgi?id=2522
 
-$ git tag --contains 75ff39ccc1bd5d3c455b6822ab09e533c551f758
-v4.7
-v4.8-rc1
-v4.8-rc2
+> 2015-12-27  Even Rouault <even.rouault at spatialys.com>
+> 
+>         * libtiff/tif_luv.c: fix potential out-of-bound writes in decode
+>         functions in non debug builds by replacing assert()s by regular if
+>         checks (bugzilla #2522).
+>         Fix potential out-of-bound reads in case of short input data.
+
+Fixing commit:
+
+https://github.com/vadz/libtiff/commit/aaab5c3c9d2a2c6984f23ccbc79702610439bc65
 
 Regards,
 Salvatore
