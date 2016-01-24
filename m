@@ -1,31 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/16/7
-Message-ID: <569A84B7.7030709@debian.org>
-Date: Sat, 16 Jan 2016 17:58:15 +0000
-From: Simon McVittie <smcv@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Setgid/Setuid binary writing privilege escalation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/24/5
+Message-Id: <20160124180014.671AC6C07B6@smtpvmsrv1.mitre.org>
+Date: Sun, 24 Jan 2016 13:00:14 -0500 (EST)
+From: cve-assign@...re.org
+To: zemnmez@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: Host based account hijack attack on php-openid
 Content-Type: text/plain; charset=utf-8
 
-On 16/01/16 16:39, halfdog wrote:
-> As staff is
-> has rwx permissions on python dist-packages and /var/local, any root
-> process accessing those is at high risk to be used to escalate to uid
-> root also.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-The staff group on Debian derivatives like Ubuntu is meant to be
-root-equivalent anyway[1] (see
-/usr/share/doc/base-passwd/users-and-groups.txt.gz for details of what
-this group means). If you want to escalate from staff to root, there's
-no need to use clever tricks like these, because staff has write access
-to directories on root's default PATH.
+> Apache after 1.3 and many other webservers derive SERVER_NAME from the HOST
+> header.
 
-There is a long-term plan to make everything that is currently 0775
-root:staff instead be 0755 root:root, at least on new installations
-<https://bugs.debian.org/299007> but it was being done gradually to
-avoid breaking existing systems where the sysadmin might be relying on
-the staff group's current functionality, and unfortunately it now seems
-to have stalled altogether. I'll contact that bug and try to get things
-moving again.
+> By changing the Host header and making the request
+> to the vulnerable website S, S thinks the openid.realm through SERVER_NAME
+> should be evil.com, and accepts the OpenID login, allowing the attacker
+> access to the victim's account on S.
 
-    S
+Use CVE-2016-2049.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJWpQ5sAAoJEL54rhJi8gl5uIcP/1Vmxty5Royhdw4dUJDbemku
+tDRyr1dcRwzxpVeJuV7VhJSI8xoe2Px/z/Hv3XiwOBAAPaH+RxXQsxUvf9wlq/8j
+3i7Z4TxYTgktxM+535G29VpcSpgHqf/kJnMv+l3HjIBpqQL9Hatu4bJwIEhB5QMv
+DJ9vAAN5IPJKA9CRErmGdQfBKpK3M98wn7r3A/iziLJV2Fju2Mp0fxzmGmmXh/Ym
+FMK48RlUXzjBw5Xjmyq6pembNKpnzk83R8HTs4Ed+sJOKDEK5Z0AjMniEwHI//Lp
+GKmvQNZZOi4W4Eva4ejIKD74KNlreFnBoTOf+ed3ExwfE6sOI8sAOo8VigYmo/3d
+S6JTFzCA8kemEPCePwXmQXl6Rm2VK75gVb0oTWg7OHOXSdGX16kcdqYSnYpx8lJn
++uGPa+5/VfOApvL8EM+CHGaIMFpu+5RYPrO83Q2ghcweFXfoAzrwWdy8ensU25mv
+vAYyomlOe1DmzcFYvuV9KnPyIYmvN9XO2spGFQQv6eK+rp1rNDtVkSUzinT6LUKY
+OZWCBr7kIebq95bHf3ni3UW1h1rLCdmlIjQusEL7ylnx+UU2vX2e3FCxl73dyq8S
+0Is1gMM+4TNckEwAa3Ugq6H9THkk7eTbas7biyfRHIp6gFZBmKAZffYarck6D7rZ
+4APPDEJNYvCuhlOXBYY4
+=JhGH
+-----END PGP SIGNATURE-----
