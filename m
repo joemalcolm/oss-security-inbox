@@ -1,59 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/24/4
-Message-Id: <20160624180441.197D272E3E4@smtpvbsrv1.mitre.org>
-Date: Fri, 24 Jun 2016 14:04:41 -0400 (EDT)
-From: cve-assign@...re.org
-To: hanno@...eck.de
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Out of bounds read and signed integer overflow in libarchive
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/24/1
+Message-ID: <20160124064746.GA23949@eldamar.local>
+Date: Sun, 24 Jan 2016 07:47:46 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Subject: CVE Request: Linux: fuse: possible denial of service in fuse_fill_write_pages()
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi
 
-> https://blog.fuzzing-project.org/48-Out-of-bounds-read-and-signed-integer-overflow-in-libarchive.html
+Can you assign a CVE for the following issue found
 
-> https://groups.google.com/forum/message/raw?msg=libarchive-discuss/sui01WaM3ic/WhAgI4ylAwAJ
+https://bugzilla.redhat.com/show_bug.cgi?id=1290642
 
->> Libarchive 3.2.1 is a security follow-up to the recent libarchive 3.2.0 release. 
->> Special thanks to ...
->> Hanno Boeck
+> A patch was posted to fix an issue regarding unkillable task eating
+> CPU.
+> 
+> The problem is in the fuse_fill_write_pages() function.  When a user
+> calls the sys_writev syscall with specially crafted sequence of iovs
+> the kernel function may never terminate and continue in a tight loop,
+> the process is unable to be killed.
 
-> https://github.com/libarchive/libarchive/issues/717#event-697151157
-> Signed integer overflow in ISO parser
+Introduced in:
+https://git.kernel.org/linus/ea9b9907b82a09bd1a708004454f7065de77c5b0
+(v2.6.26-rc1)
 
->> ubsan error:
->> libarchive/archive_read_support_format_iso9660.c:1094:32: runtime error:
->> signed integer overflow: 8388631 * 2048 cannot be represented in type 'int'
+Fixed by:
+https://git.kernel.org/linus/3ca8138f014a913f98e6ef40e939868e1e9ea876
+(v4.4-rc5)
 
->> https://github.com/libarchive/libarchive/commit/3ad08e01b4d253c66ae56414886089684155af22
-
->> Issue 717: Fix integer overflow when computing location of volume descriptor
->> 
->> The multiplication here defaulted to 'int' but calculations
->> of file positions should always use int64_t.
-
-Use CVE-2016-5844 for this Issue 717 vulnerability.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXbXWYAAoJEHb/MwWLVhi2eMAQAKmIYX47UBBcOsh7ir2AvNL2
-wAtlGAKek6Yl8Vvrm2pjoUManrejmNAhd21YGn8a7o9Saep9HRG6Cgq6nwaqw+oJ
-12Xbjt4GvVsqjed7xSStxB67yP62GiJQZk336zOcdbV5l+r5+1Dacr/TTeGViYlQ
-nb2dAbkRK5+ns/RwUbxE1p0EUM2GSTxBPD0oQgtDAv7vVjFNvIFX7mRJYcvCxERY
-ye927HivZLe7rUDBIZJQAep9Yatj+fraZLhbeR3DFJPy85Q/sXGLbQ6H45Mw2U8h
-zsyt9uoLeDMp/jyrtcsXHAJ6dF/Ud7K88glkBJG4nRZVU1K0l9D1Hd7l1F5R30Sd
-6heRhVt9E9mnUOeAHDu81tfpJaG70waGQ+iYMt05t/tQ/hQs/9gTBey+uhLBaePb
-e9KB7O73CicYTtME/g12TUzsnUW0ybgNNxPp+jOkFYci2KpSaOirPswgUa04FGeo
-uqFRjfoFJXNZF2q95ZwL4aJLk2mhN4cr+SvkPg5hIEKnkH01EH2VYYssrhsRI5Pb
-kFnU+dNKAn1mM5VsKuuwyVjsvsVv1lCioZ/mg00+vbTRqnMQ8A7IEc5dcygw4aeI
-RWtvernPlIcBsZ9I9YMxknnuZTWQ8H0uJpKcdfnHSCCtG8JRrlBLosAav7EOLW8P
-ryURB61OPZjxkhE+8zyU
-=+FS6
------END PGP SIGNATURE-----
+Regards,
+Salvatore
