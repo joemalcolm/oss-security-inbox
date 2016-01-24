@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["727" "Friday" "22" "May" "2015" "11:17:35" "+0200" "=?UTF-8?B?QWRyacOhbiBNLiBGLg==?=" "adrimf85@gmail.com" "<CAEhYM0ZC2yGjHUNuR63twE_WfWxj-o7Gn2-dC7A_vR0t2W-DLw@mail.gmail.com>" "27" "[oss-security] CVE request: Multiple vulnerabilities in some WordPress plugins: NewStatPress & WordPress Landing Pages." nil nil nil "5" "2015052209:17:35" "[oss-security] CVE request: Multiple vulnerabilities in some WordPress plugins: NewStatPress & WordPress Landing Pages." (number mark "        adrimf85@gma May 22   27/727   " thread-indent "\"[oss-security] CVE request: Multiple vulnerabilities in some WordPress plugins: NewStatPress & WordPress Landing Pages.\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2049" "Sunday" "24" "January" "2016" "13:07:26" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160124180726.F02FE6C00EA@smtpvmsrv1.mitre.org>" "49" "[oss-security] Re: CVE Request: tiff: potential out-of-bound write in NeXTDecode()" nil nil nil "1" "2016012418:07:26" "[oss-security] Re: CVE Request: tiff: potential out-of-bound write in NeXTDecode()" (number mark "U       cve-assign@m Jan 24   49/2049  " thread-indent "\"[oss-security] Re: CVE Request: tiff: potential out-of-bound write in NeXTDecode()\"\n") "<20160124153743.GA19655@eldamar.local>" ("<20160124153743.GA19655@eldamar.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 1462 invoked by uid 550); 22 May 2015 09:18:10 -0000
+Received: (qmail 14203 invoked by uid 550); 24 Jan 2016 18:07:39 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,54 +11,62 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 1436 invoked from network); 22 May 2015 09:18:09 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:cc:content-type;
-        bh=i5Yhrb/BueOj8eNgcCFI4dNVppoUUbTse31v/Btu7WY=;
-        b=UqGedbVrWM/Vuw8gqU0A4b5az9PJAEpkFazeknN5WV35CBgoz/x8R+U8T/kApSSqql
-         ABm50QDejj0XynDb49WN8UfxQh1X0ipj5MRkWkEetUpUkhjJOPCl1NF5ftruERvIzAzL
-         emZfuKfJMLuICLWAVGPNLD2ylult5AFSwoDBMOPy+krJuYoZUg3KuRDkDTbhO01DNEBe
-         W/vQLurE45I2iC36Ver4ITF6U4zDHIRpLnzDqw0kV9oVhdYzN5cBHMkRCk96t5Gz/6kE
-         4PoIop5c+wj6tjppRgpu52nxgXyuZB0b3QgZDBspRsEQQTP2eYpejzFuQjG872OaJatc
-         17Sw==
-X-Received: by 10.112.16.167 with SMTP id h7mr5735797lbd.124.1432286278046;
- Fri, 22 May 2015 02:17:58 -0700 (PDT)
-MIME-Version: 1.0
-Message-ID: <CAEhYM0ZC2yGjHUNuR63twE_WfWxj-o7Gn2-dC7A_vR0t2W-DLw@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=001a11c3cc42d1da4e0516a822fc
-Cc: cve-assign@mitre.org
-Date: Fri, 22 May 2015 11:17:35 +0200
-From: =?UTF-8?B?QWRyacOhbiBNLiBGLg==?= <adrimf85@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE request: Multiple vulnerabilities in some WordPress plugins:
- NewStatPress & WordPress Landing Pages.
-To: oss-security@lists.openwall.com
+Received: (qmail 14185 invoked from network); 24 Jan 2016 18:07:38 -0000
+From: cve-assign@mitre.org
+To: carnil@debian.org
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <20160124153743.GA19655@eldamar.local>
+Message-Id: <20160124180726.F02FE6C00EA@smtpvmsrv1.mitre.org>
+Date: Sun, 24 Jan 2016 13:07:26 -0500 (EST)
+Subject: [oss-security] Re: CVE Request: tiff: potential out-of-bound write in NeXTDecode()
 
---001a11c3cc42d1da4e0516a822fc
-Content-Type: text/plain; charset=UTF-8
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Hi!
+> Could you assign a CVE for the following issue in tiff:
+> 
+> http://bugzilla.maptools.org/show_bug.cgi?id=2508
+> 
+>> 2015-12-27  Even Rouault <even.rouault at spatialys.com>
+>>
+>>         * libtiff/tif_next.c: fix potential out-of-bound write in NeXTDecode()
+>>         triggered by http://lcamtuf.coredump.cx/afl/vulns/libtiff5.tif
+>>         (bugzilla #2508)
+> 
+> Fixing commit:
+> 
+> https://github.com/vadz/libtiff/commit/b18012dae552f85dcc5c57d3bf4e997a15b1cc1c
 
-I discovered multiple vulnerabilities in some WordPress plugins:
+As mentioned in the
+http://openwall.com/lists/oss-security/2015/02/07/5 post, this
+libtiff5.tif file was first associated with CVE-2015-1547. However,
+https://bugs.mageia.org/show_bug.cgi?id=15519 is about "libtiff new
+security issue (second issue from PoC for CVE-2015-1547) ... this is
+actually another issue in libtiff itself." This suggests that a
+separate CVE ID is useful, because there were two separate types of
+problems, discovered at different times, that were triggered by the
+same example .tif file. Use CVE-2015-8784.
 
-- Multiple vulnerabilities in WordPress plugin "NewStatPress" (SQLi, XSS)
-* vulnerable version: 0.9.8
-* patched version: 0.9.9
-* vendor: https://wordpress.org/plugins/newstatpress/
-* changelog: https://wordpress.org/plugins/newstatpress/changelog/
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-- Multiple vulnerabilities in WordPress plugin "WordPress Landing Pages"
-(SQLi, XSS)
-* vulnerable version: 1.8.4
-* patched version: 1.8.5
-* vendor: https://wordpress.org/plugins/landing-pages/
-* changelog: https://wordpress.org/plugins/landing-pages/changelog/
-
-I request a CVE for them.
-
-Thanks!
-
-A.
-
---001a11c3cc42d1da4e0516a822fc--
+iQIcBAEBCAAGBQJWpQ/XAAoJEL54rhJi8gl5fHkQAJn5r1tcywWFYkpi7xgmiS7X
+GZ00mtvvyl4tO13+qnLSH7Odv7wfVUaKhcdoAXbCjqvlGYwfHt93+kP/6uqjD/te
+sJgo2E89yzaI+kc5p3+Ta1FubRfG/rljUyk+RnxZ1LprGf9eZ9BHV4C0ORNHyUOC
+nA/UvWsbmaVZoWn2FqakcFsPA/GzcfYjBNdLPNvZe/RdUzyivm79k/VUgHz+EzbT
+ERPaA5scDo7irc0jNjkerkNCuav8Wsn3nnXBVDngewQb5h0BUhjVIKhJOnOugqS6
+/fNMxKj8whnhuQI9NsYlqPXo+bmLXOJWc5aoAXZD/kabMOU2zUvMguqCZChRx+GM
+Ww3bYOed4b7ug0K5p8ZIeO6oP/XoInrQbPC09kvVX/xnKXXicIbxmnENVjbWOu80
+lXyoRp2qI3FnaIVhHWBkRbnxWVhqlSyr2fUeu9DBW52TMVgTWnr6Ovm/9lDtv67P
+JFFwTN15Zxvi6B8o2B/Rrpo6smTPWDV6D88rqF+U0wR/MZ9kJ5zHGR4tFTMUQK3J
+P6cGRkSnJwhrdp6eWiaLu9EZkOwSTPBhioEoSaWG1EmzFI6gXzlmd8gGeG/XikAQ
+c7oEaLuVxXhZyHBTBn+og+73FTJCdTHJLi4MgQWnErkaA9Tjzu9vNKqe4rotIiCH
+eH4woIieb01417xgvS7x
+=EnxA
+-----END PGP SIGNATURE-----
