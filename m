@@ -1,34 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/24/11
-Message-ID: <20160224080303.GA1667@altlinux.org>
-Date: Wed, 24 Feb 2016 11:03:04 +0300
-From: "Dmitry V. Levin" <ldv@...linux.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Access to /dev/pts devices via pt_chown and user namespaces
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/24/10
+Message-ID: <CAKws9z1PtHH8r9p-knF=OvKrj6WS57B8vvstY=f7oicfXX8Z3Q@mail.gmail.com>
+Date: Sun, 24 Jan 2016 18:40:37 -0500
+From: Scott Arciszewski <scott@...agonie.com>
+To: oss-security@...ts.openwall.com,  Assign a CVE Identifier <cve-assign@...re.org>
+Subject: PSA: Don't use RNCryptor
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Feb 24, 2016 at 07:01:11AM +0000, Simon McVittie wrote:
-[...]
-> <https://bugs.debian.org/717544> has some interesting background. The
-> Debian and Ubuntu glibc maintainers tried turning off pt_chown in 2014,
-> but had to turn it back on because it caused too many regressions: in
-> particular "mount -t devpts devpts-foo chroot-foo/dev/pts" apparently
-> alters the mount options for the "real" /dev/pts, not just the one being
-> mounted in the chroot (presumably losing the noexec,nosuid,gid=5 and
-> mode=620 or mode=600 options that are expected in Debian). I don't know
-> whether the default mount options were subsequently altered in util-linux
-> and/or the kernel as suggested on that bug, or whether manually mounting
-> devpts is just not going to be a supported action in Debian 9.
+I've discovered that several people are promoting a cryptography library
+called RNCryptor on Stack Exchange websites.
 
-Linux kernel, starting with version 2.6.29, allows multiple instances
-of devpts filesystem (assuming that CONFIG_DEVPTS_MULTIPLE_INSTANCES
-is enabled) when "newinstance" mount option is specified for devpts.
-The feature is primarily to support containers, but also addresses
-the issue: 
-https://www.kernel.org/doc/Documentation/filesystems/devpts.txt
+Last year, I found that it failed to compare MACs in constant-time (which
+is rule #1 of the cryptography coding standards, by the way). This is not
+only a remotely exploitable cryptographic side-channel that allows for MAC
+forgeries that result in chosen-ciphertext attacks, but it's also a sign of
+poor security engineering that promises more vulnerabilities will be
+discovered in other components.
 
+Today, I spend two minutes looking through the C and Python versions and
+discovered they are also susceptible to timing attack vulnerabilities.
 
--- 
-ldv
+*
+https://github.com/RNCryptor/RNCryptor-C/blob/ca238ab862205abdcb2e2ae173d2695037639154/rncryptor_c.c#L429
+*
+https://github.com/RNCryptor/RNCryptor-python/blob/71031f243bcba2aaa7bca4ff9a4c01358427b476/RNCryptor.py#L87
 
-Content of type "application/pgp-signature" skipped
+And of course, my original finding:
+https://github.com/RNCryptor/RNCryptor-php/blob/f7ab514209fe476c4aa83a1df1fe9bb655e9e9b0/lib/RNCryptor/Decryptor.php#L99
+
+I'd like to take this opportunity to tell every programmer and information
+security professional that reads this mailing list: DON'T USE RNCRYPTOR.
+
+If you need portable, highly secure cryptography, there is no better answer
+than libsodium:
+https://paragonie.com/blog/2015/11/choosing-right-cryptography-library-for-your-php-project-guide
+
+(If you're interested in seeing the Stack Exchange discussion:
+http://stackoverflow.com/a/34969963/2224584)
+
+Scott Arciszewski
+Chief Development Officer
+Paragon Initiative Enterprises <https://paragonie.com>
+
