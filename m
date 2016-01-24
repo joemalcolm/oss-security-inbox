@@ -1,26 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/31/4
-Message-ID: <20160731134344.GA15745@kroah.com>
-Date: Sun, 31 Jul 2016 06:43:44 -0700
-From: Greg KH <greg@...ah.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: badUSB exploit - affects all Linux distros
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/24/7
+Message-Id: <20160124180526.936F633215E@smtpvbsrv1.mitre.org>
+Date: Sun, 24 Jan 2016 13:05:26 -0500 (EST)
+From: cve-assign@...re.org
+To: carnil@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: tiff: Out-of-bounds write for invalid images using LogL compression
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Jul 31, 2016 at 06:39:56AM -0700, Greg KH wrote:
-> On Sun, Jul 31, 2016 at 01:34:02PM +0200, פאי פי wrote:
-> > Title: badUSB exploit - affects all Linux distros
-> > ---------------------------------------------------------
-> > 
-> > Dear oss-security mail list members,
-> > 
-> > Please, I urge you to fix the known badUSB security exploit that exists in any Linux distro.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
+
+> http://bugzilla.maptools.org/show_bug.cgi?id=2522
 > 
-> First off, it is not an "exploit", is is "working as designed". :)
+>> 2015-12-27  Even Rouault <even.rouault at spatialys.com>
+>>
+>>         * libtiff/tif_luv.c: fix potential out-of-bound writes in decode
+>>         functions in non debug builds by replacing assert()s by regular if
+>>         checks (bugzilla #2522).
+>>         Fix potential out-of-bound reads in case of short input data.
+> 
+> Fixing commit:
+> 
+> https://github.com/vadz/libtiff/commit/aaab5c3c9d2a2c6984f23ccbc79702610439bc65
 
-Also, please see the archives when this was discussed last time, there
-is lots of information about it there, I suggest starting with that.
+Use CVE-2015-8781 for the original
+http://bugzilla.maptools.org/show_bug.cgi?id=2522#c0 report of "an out
+of bounds write at tif_luv.c:208" by Clay Wood.
 
-thanks,
+Use CVE-2015-8782 for the other out-of-bounds writes fixed by the vendor in
+aaab5c3c9d2a2c6984f23ccbc79702610439bc65. These seem to have similar causes.
 
-greg k-h
+Use CVE-2015-8783 for the out-of-bounds reads fixed by the vendor in
+aaab5c3c9d2a2c6984f23ccbc79702610439bc65. These seem to have similar causes.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJWpQ8tAAoJEL54rhJi8gl5vB8QAL/5LosqDnJFuT8/Jk/NjNtJ
+D1FqnqQNfPBzsYabPAnfWUQnm207G7loabLvZ+Kk8EtpWq+sDdC9au9dPi/wCqXN
+jpdeKW1wq7/gozHWT+qVSmEMHWIdz2mlkvOXeiRwPNvNqWa2DpH3ilqpwuK6tfXG
+qkZhBYJD6UQSeZ7XToxPkZpepYstJtuIfW59fyIbKL0myf1lrrFEgp5kC1S0SRG9
+jzH4Ts/bnIy2XKWbV5V3ZLUvCp7QjnPopH3cWXkccv/8tMFYtOSx/eWEGDf9q8Cf
+nRykzi7rQL59M76LoWsLwLiPXClAE4YkdignBqrCkPc1XRPcseFRFSykci4cLFWI
+94PW5ptFU3ureAqmn5aGmodjSkIlbPaYN7KL/ZLYOCmAgqu3UQC/5pi9Rw/I+yjw
+9SHjK173FUF2eBxok1A0ewIdOw9QVxqjLdlE9bMuwxpYO1zaTtd1YNUJH/fuo+v1
+V3Xp6ahyA0dMhC5m9dsNmrUbnDga7tXQJZocqU9/xzbENwN4RX1zwi/3SRMLU9yY
+Z2vCGti3InnIHXIx4H/kn1liUl6eY6VEIfwk5zAyG1KwF9zJfT0XGCfa66aFwe33
+VJIrZ028NoSNvTGDrnWfZOrR/HkvAKCN+tZCNG8WI1mdV+wf2d9JxzGBTTnxgSCu
++8v5XwQMfkDPCz0TjHRX
+=C/X+
+-----END PGP SIGNATURE-----
