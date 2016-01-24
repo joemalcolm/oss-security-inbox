@@ -1,4 +1,9 @@
-Received: (qmail 32365 invoked by uid 550); 12 May 2025 19:20:41 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1697" "Sunday" "24" "January" "2016" "18:40:37" "-0500" "Scott Arciszewski" "scott@paragonie.com" "<CAKws9z1PtHH8r9p-knF=OvKrj6WS57B8vvstY=f7oicfXX8Z3Q@mail.gmail.com>" "39" "[oss-security] PSA: Don't use RNCryptor" "^Date:" nil nil "1" "2016012423:40:37" "[oss-security] PSA: Don't use RNCryptor" (number mark "        scott@parago Jan 24   39/1697  " thread-indent "\"[oss-security] PSA: Don't use RNCryptor\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 26092 invoked by uid 550); 24 Jan 2016 23:40:59 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,92 +11,77 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 22199 invoked from network); 12 May 2025 18:47:49 -0000
+Received: (qmail 26038 invoked from network); 24 Jan 2016 23:40:49 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747075659; x=1747680459; darn=lists.openwall.com;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=GPd13qeE9LQuM2FFCzM6i3PwzEmQvTOGFt3fqXoNPCs=;
-        b=YS0eQAqe9bQYN+1+zQGITmpmuNmJ/tjbeLzdAMKfFAbJPzOfvB3SSUbbDvcHOW/cxV
-         ixkkcoDAW/SaltlgpYAqMytUcLU7wTQ4GAYRGX/BRlXvvvbTEZPuyGpPPlcMShGYH4da
-         WAiQ+E5XWN5LLC/544IVWwELKbLobomCUXR8UvKwkJMcL176tj0aJKuDqwL/SV/EvE/Q
-         JWIsd+AdC2tx/qp0I7DnxU2AI+9CbIRdbcximvzd45Kemf/i6GNNgCm3DR87A4Obcd7f
-         1kY+bR1HhK1mDjsuXxEvYgqhJ0kN1Fr5crefcRrdlAY8P4pJolJ4iPLYZgP/YH+TJVkV
-         k9nw==
+        d=paragonie-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=6C+ltDRtvgB/ti6CMVHW+yctcuQuOZ4dBi3oCFbs9zc=;
+        b=UbZT7X7kuIOIb6Uebzz2BZaxtryFo9b79tmvaffuIWhq/U3SlfYgXh9aT1IcSlDJUE
+         7pMJkh2+envZATmT2vVQzycN0dBZtncQ+CElHQ02RB7MmNsrpPCsKOuc7FBXs9bhG1ov
+         s1NxcCHHlQ6nAeYJ6ZUajqTUDfPQFy6Wp7y6dHwhLinJovXvyGcfeLTsf/NVIv69y/KD
+         56Qkgo13E/fseRCtK9MFW51wONPbEyPg7SYzDN5AGmyNpIFaVJOag3XPN6kexPUBEjD0
+         O7o6C1jFI8wLSMF7mBWjEppuhsq1DTqTFqYdlGMT3+3r2Tp4ql01aMBX5imGiZ0azPJe
+         7aFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747075659; x=1747680459;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=GPd13qeE9LQuM2FFCzM6i3PwzEmQvTOGFt3fqXoNPCs=;
-        b=G2HWIvq4Mg8mRRLCO7DSgxuVvH4cCyQBz4wyJ7olMD15BNB9T11aSjiIpbWTaFBeLe
-         aFcXSQTZcxFjm6Tls1uGuThe6clfGI1Nps/fbDT/QMnhW8RY/iRxGJ/nZKl7fj+07EmO
-         sZYiRBz/0U14m3zaOqZSa3IQwa7wU+GBEhN544D4L2VNplFsp3Q8B0z1tyfUW2FTV19h
-         +AB3fkDzDPAWI+04NdTVPycHFc4Ty/SRo6ucC9pl3cbeZMsKo7h7yZIo/p9c8rhXDO4N
-         7R9xgm8LFLzNficoMSuVAZHsaFiBzmI32YpFjj4B9ZmDTo60pTj7BiRmqLFgsaUEZx3p
-         sxig==
-X-Gm-Message-State: AOJu0YwdvUWz/PCnjX74I1VB7gdVmJ+LzFWaQKa0JZJmEOYeABAh7/dN
-	BYgAVbJjh1cnuwTEelbC3Kik2WTN8DbX42v/6V3o7XpuW+mw5AhpxWoawTLJ
-X-Gm-Gg: ASbGncta8UcfABeEQNA1PfsD9Ng9zHCL4nn7hRXA9lp1GgoPye6M+VBfXZN8quaHELN
-	qG2jk9vP/TtmgECKCdGjxdi36xBWlfES7oNMhXL6d0z2njA5qCfon+EO9tkmmL0Vjse0afP3T5p
-	lj7TrEwhZwJ6cgVL5nuxxehjoKasrOYWOOOrG2DySuvAucvwHq39CFnYXU8LUzZ9hoDcU1O9hNt
-	KmgX7AxYz/U/SdzcOd097RcT899uxnPGQurlyF3QiiFb1XmHAd3qSAcPYiKkE1cR5FVmaHP6iZ8
-	hxJO0jNzAbRXQ+/gYhkslZRBDItDK75VCG1hncRqRJJsJgIz6ERSkM10aIIvjvHsT9N4a60JFSg
-	Kahqk4QvaJoNOvwdqiuDzA2yzI1M=
-X-Google-Smtp-Source: AGHT+IGnrj3dV6rNPFGNH/uYJqmvjZU/xRaoAJMKw+bykMOhdnSvdsadwH3zXjb6SuAwKDkymbkSTw==
-X-Received: by 2002:a05:6512:6401:b0:54a:c4af:18 with SMTP id 2adb3069b0e04-54fc67c5defmr4510857e87.22.1747075659268;
-        Mon, 12 May 2025 11:47:39 -0700 (PDT)
-Message-ID: <42b72ad8-61d2-48f6-9d29-0774149e344e@gmail.com>
-Date: Mon, 12 May 2025 20:47:38 +0200
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
+         :content-type;
+        bh=6C+ltDRtvgB/ti6CMVHW+yctcuQuOZ4dBi3oCFbs9zc=;
+        b=lFPoHobz9IrVNAG8CbeR553o0qDWqLVNnnjTwc8JijXcxfUxYrw/eDmWMvQsr7DXh8
+         8fUeHCjwTVaLFeAFebulyhxSDvLVSiAWpwPS/ORZrTjfKdizcbguVA6Ru0G5woCcTrqm
+         zZZEk/rihWsxPIzwGGegiFaGs/D+5gUlg1Mex/43OA8UKPPFn+pcDJx6/Rul2ILiy5/w
+         DEI/TtZpyEccugIfpgkpkLQmZvTPR38FBiaYTlAsNqrw1hXfmMxPBZONqIQQGBOPcqbm
+         OR4RsQ9T6Qt50/j66rt+MXWJAQDCugCrc8/fwptePPSUXs8jjWHNYDtNFUdO7QXHcu/4
+         3vXw==
+X-Gm-Message-State: AG10YORPDwSuDwjPOQ9HeGV5Gs/fRciN3DdvAYhL/KXvzgPDKfFdHMdKJ9GAbFSywvAw9ChYfyobUlD4f1AVaA==
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-GB
-To: oss-security@lists.openwall.com
-References: <23c5cd0c-2a9b-4caa-a936-381210400cc2@oracle.com>
-From: Albert Veli <albert.veli@gmail.com>
-In-Reply-To: <23c5cd0c-2a9b-4caa-a936-381210400cc2@oracle.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Subject: Re: [oss-security] Dropbear SSH 2025.88 fixes CVE-2025-47203
+X-Received: by 10.25.17.89 with SMTP id g86mr4128338lfi.82.1453678837636; Sun,
+ 24 Jan 2016 15:40:37 -0800 (PST)
+Message-ID: <CAKws9z1PtHH8r9p-knF=OvKrj6WS57B8vvstY=f7oicfXX8Z3Q@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=001a113f8fa6bc3827052a1cfa0a
+Date: Sun, 24 Jan 2016 18:40:37 -0500
+From: Scott Arciszewski <scott@paragonie.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] PSA: Don't use RNCryptor
+To: oss-security@lists.openwall.com, 
+	Assign a CVE Identifier <cve-assign@mitre.org>
 
-Hi!
+--001a113f8fa6bc3827052a1cfa0a
+Content-Type: text/plain; charset=UTF-8
 
-On 2025-05-09 18:15, Alan Coopersmith wrote:
-> https://lists.ucc.gu.uwa.edu.au/pipermail/dropbear/2025q2/002385.html
-> announces the release of Dropbear SSH 2025.88 including this fix:
->
->> - Security: Don't allow dbclient hostname arguments to be interpreted
->>   by the shell.
->>
->>   dbclient hostname arguments with a comma (for multihop) would be
->>   passed to the shell which could result in running arbitrary shell
->>   commands locally. That could be a security issue in situations
->>   where dbclient is passed untrusted hostname arguments.
->>
->>   Now the multihop command is executed directly, no shell is involved.
->>   Thanks to Marcin Nowak for the report, tracked as CVE-2025-47203
+I've discovered that several people are promoting a cryptography library
+called RNCryptor on Stack Exchange websites.
 
-I'm currently triaging CVE-2025-47203 to determine whether an embedded 
-system we maintain is actually affected. It runs 2024.86, and is built 
-with DROPBEAR_CLI_PROXYCMD and DROPBEAR_CLI_MULTIHOP enabled.
+Last year, I found that it failed to compare MACs in constant-time (which
+is rule #1 of the cryptography coding standards, by the way). This is not
+only a remotely exploitable cryptographic side-channel that allows for MAC
+forgeries that result in chosen-ciphertext attacks, but it's also a sign of
+poor security engineering that promises more vulnerabilities will be
+discovered in other components.
 
-However, despite attempting various multihop hostname inputs containing 
-shell metacharacters (e.g. semicolons, backticks, pipes, $(cmd)), I’ve 
-been unable to trigger any shell execution or command injection. All 
-such inputs are interpreted literally as hostnames.
+Today, I spend two minutes looking through the C and Python versions and
+discovered they are also susceptible to timing attack vulnerabilities.
 
-I have two main questions:
+*
+https://github.com/RNCryptor/RNCryptor-C/blob/ca238ab862205abdcb2e2ae173d2695037639154/rncryptor_c.c#L429
+*
+https://github.com/RNCryptor/RNCryptor-python/blob/71031f243bcba2aaa7bca4ff9a4c01358427b476/RNCryptor.py#L87
 
-1. Is there a reliable way to confirm from the command line whether I'm 
-vulnerable?
+And of course, my original finding:
+https://github.com/RNCryptor/RNCryptor-php/blob/f7ab514209fe476c4aa83a1df1fe9bb655e9e9b0/lib/RNCryptor/Decryptor.php#L99
 
-2. Both dbclient and ssh are symlinks to the same dropbear binary. Does 
-this CVE apply equally to both, or is it specific to dbclient?
+I'd like to take this opportunity to tell every programmer and information
+security professional that reads this mailing list: DON'T USE RNCRYPTOR.
 
-Thanks in advance,
+If you need portable, highly secure cryptography, there is no better answer
+than libsodium:
+https://paragonie.com/blog/2015/11/choosing-right-cryptography-library-for-your-php-project-guide
 
-Albert
+(If you're interested in seeing the Stack Exchange discussion:
+http://stackoverflow.com/a/34969963/2224584)
 
+Scott Arciszewski
+Chief Development Officer
+Paragon Initiative Enterprises <https://paragonie.com>
+
+--001a113f8fa6bc3827052a1cfa0a--
