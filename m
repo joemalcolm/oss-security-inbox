@@ -1,43 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/30/4
-Message-Id: <9BC348CE-0958-4F38-A0DB-D228EE0D9E27@gmail.com>
-Date: Thu, 30 Jun 2016 15:25:16 +0800
-From: Marcel Böhme <boehme.marcel@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: florian@...h-krohm.de, nickc@...hat.com, Bernd Schmidt <bschmidt@...hat.com>
-Subject: CVE Request: No demangling of untrusted binaries (2)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/25/11
+Message-ID: <20160125193416.GD14069@TC.local>
+Date: Mon, 25 Jan 2016 11:34:16 -0800
+From: Aaron Patterson <tenderlove@...y-lang.org>
+To: security@...e.de, rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com, ruby-security-ann@...glegroups.com
+Subject: [CVE-2015-7578] Possible XSS vulnerability in rails-html-sanitizer
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+Possible XSS vulnerability in rails-html-sanitizer
 
-Another vulnerability in GNU Libiberty was found that impacts the security of binary analysis tools, such as Valgrind, GDB, Binutils (e.g., objdump, nm, ..), Gcov, or other LibBFD-based tools. An attacker might modify a program binary such that it executes malicious code upon *analysis* of the binary (e.g., to find whether it is malicious in the first place) or during the attempt to reverse-engineer an untrusted binary.
+There is a possible XSS vulnerability in rails-html-sanitizer. This
+vulnerability has been assigned the CVE identifier CVE-2015-7578.
 
-Workaround: Until the patches propagate to the vulnerable tools, switch off default demangling! E.g.,
-$ echo "set demangle-style none"  >>  ~/.gdbinit
-$ echo "--demangle=no" >> ~/.valgrindrc
+Versions Affected:  All.
+Not affected:       None.
+Fixed Versions:     1.0.3
 
-A stackoverflow in the libiberty demangler causes its host application to crash on a tainted branch instruction. The problem is caused by a self-reference in a mangled type string that is "remembered" for later reference. This leads to an infinite recursion during the demangling.
-* GDB exploitable classifies the stack overflow as exploitable.
-* Bug Report: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=71696
-* Patch under review: https://gcc.gnu.org/ml/gcc-patches/2016-06/msg02030.html
+Impact
+------
+There is a possible XSS vulnerability in rails-html-sanitizer.  Certain
+attributes are not removed from tags when they are sanitized, and these
+attributes can lead to an XSS attack on target applications.
 
-All vulnerabilities were found with a more efficient version of the AFL fuzzer, called AFLFast.
+All users running an affected release should either upgrade or use one of the
+workarounds immediately.
 
-Update on the previously reported, related vulnerabilities:
-CVE-2016-2226: Fixed in trunk
-CVE-2016-4487: Fixed in trunk
-CVE-2016-4488: Fixed in trunk
-CVE-2016-4489: Fixed in trunk
-CVE-2016-4490: Fixed in trunk
-CVE-2016-4491: Patch under review
-CVE-2016-4492: Patch accepted
-CVE-2016-4493: Patch accepted
+Releases
+--------
+The FIXED releases are available at the normal locations.
 
-Best regards,
-- Marcel
+Workarounds
+-----------
+There are no feasible workarounds for this issue.
 
----
-Marcel Böhme
-Post-doctoral Research Fellow
-TSUNAMi Security Research Center
-National University of Singapore
+Patches
+-------
+To aid users who aren't able to upgrade immediately we have provided patches for
+the two supported release series. They are in git-am format and consist of a
+single changeset.
+
+* 1-0-sanitize_data_attributes.patch - Patch for 1.0 series
+
+Credits
+-------
+Thanks to Ben Murphy and Marien for reporting this
+
+-- 
+Aaron Patterson
+http://tenderlovemaking.com/
+
+View attachment "1-0-sanitize_data_attributes.patch" of type "text/plain" (7269 bytes)
+
+Content of type "application/pgp-signature" skipped
