@@ -1,73 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/12/14
-Message-ID: <305647a8-4b7a-7dac-a2ad-b976691ae05b@voidsec.com>
-Date: Fri, 13 May 2016 00:20:44 +0100
-From: VoidSec <voidsec@...dsec.com>
-To: oss-security@...ts.openwall.com
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/25/2
+Message-ID: <628131663.11879492.1453704093304.JavaMail.zimbra@redhat.com>
+Date: Mon, 25 Jan 2016 01:41:33 -0500 (EST)
+From: Wade Mealing <wmealing@...hat.com>
+To: OSS Security List <oss-security@...ts.openwall.com>
 Cc: cve-assign@...re.org
-Subject: CVE Request for VirIT Explorer v.8.1.68 Local Privilege Escalation
+Subject: Linux kernel : Denial of service with specially crafted key file.
 Content-Type: text/plain; charset=utf-8
 
-Request a CVE ID for VirIT Explorer Lite & Pro v.8.1.68 - Local Privilege Escalation (SYSTEM Privilege)/Arbitrary Code Execution
+Gday,
 
-Exploit Author: Paolo Stagno - voidsec@...dsec.com
-Vendor Homepage: http://www.tgsoft.it
-Version: VirIT Explorer Lite & Pro v.8.1.68
-CVSS v2: 6.8 (AV:L/AC:L/Au:S/C:C/I:C/A:C/E:H/RL:U/RC:C)
+I would like a CVE for the following issue:
 
-Overview
----- 
-Vir.IT eXplorer [1] is an AntiVirus, AntiSpyware and AntiMalware software made in Italy and developed by TG Soft S.a.s.
+An issue with ASN1.1 DER decoder was reported that a specially created key can lead to a kernel panic via x509 certificate DER signature parsing.
 
-A major flaws exists in the last version of Vir.IT eXplorer, this vulnerability allow a local attacker,
-to execute arbitrary code in the context of the application with SYSTEM privilege.
+Vulnerable code:
 
-Details
----- 
-The flaw resides in the viritsvclite Service due to bad privileges for the main Vir.IT folder, by default, any user (even guest) will be able to 
-replace, modify or alter the file. This would allow an attacker to inject code or replace the executable and have it run in the context of the system.
+...
+int public_key_verify_signature(const struct public_key *pk,
+                                const struct public_key_signature *sig)
+{
+        const struct public_key_algorithm *algo;
 
-This would allow a complete compromise of the system on which the antivirus was installed; an attacker can replace the executable, 
-reboot the system and it would then compromise the machine. As NT AUTHORITY\SYSTEM is the highest privilege level on a Windows machine, 
-this allows a total control and access to the system.
+        BUG_ON(!pk);
+        BUG_ON(!pk->mpi[0]);
 
-Services: viritsvclite
-Folder: %SYSTEMDRIVE%\VEXPLite
-Executable: %SYSTEMDRIVE%\VEXPLite\viritsvc.exe
 
-[2] icacls.exe VEXPLite
-C:\VEXPLite Everyone:(OI)(CI)(F)    <=================== Vulnerable
-            BUILTIN\Administrators:(I)(F)
-            BUILTIN\Administrators:(I)(OI)(CI)(IO)(F)
-            NT AUTHORITY\SYSTEM:(I)(F)
-            NT AUTHORITY\SYSTEM:(I)(OI)(CI)(IO)(F)
-            BUILTIN\Users:(I)(OI)(CI)(RX)
-            NT AUTHORITY\Authenticated Users:(I)(M)
-            NT AUTHORITY\Authenticated Users:(I)(OI)(CI)(IO)(M)
 
-Exploit
----- 
-https://gist.github.com/VoidSec/9971092829dd1fec146e1595843aae65
-https://www.youtube.com/watch?v=5a09efEvjTk (video proof)
+An attacker could craft a BER file without a public key and panic the system.  
 
-Remediation
----- 
-Remove the permissions on the VEXPLite folder, all of its files and on the viritsvc.exe Service executables to allow only
-privileged users to alter the files, apply vendor patch once distributed.
+There is no patch upstream at the time of writing.
 
-Footnotes
----- 
-[1] http://www.tgsoft.it/english/prodotti_eng.asp
-[2] https://technet.microsoft.com/en-us/library/cc753525%28WS.10%29.aspx
-
-----
-
-*VoidSec *| voidsec@...dsec.com <mailto:voidsec@...dsec.com> |
-http://voidsec.com <http://voidsec.com/>
-
-/The information contained in this document is confidential and/or
-exclusive and is intended only for the use of the addressee.
-Unauthorized use, disclosure or copying of this information, or any part
-thereof is strictly prohibited and may be unlawful./
-
+Reference:
+https://bugzilla.redhat.com/show_bug.cgi?id=1300237
 
