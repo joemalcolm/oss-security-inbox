@@ -1,40 +1,78 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/21/3
-Message-ID: <CANO=Ty0UAEvgon1PMdTTp4+7bj5SvpKdSD4Won=7NQXrS-2y2A@mail.gmail.com>
-Date: Thu, 20 Oct 2016 19:51:05 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: Requesting membership to linux-distros
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/25/12
+Message-ID: <20160125193537.GE14069@TC.local>
+Date: Mon, 25 Jan 2016 11:35:37 -0800
+From: Aaron Patterson <tenderlove@...y-lang.org>
+To: security@...e.de, rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com, ruby-security-ann@...glegroups.com
+Subject: [CVE-2015-7579] XSS vulnerability in rails-html-sanitizer
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Oct 20, 2016 at 7:36 PM, Alex Crawford <alex.crawford@...eos.com>
-wrote:
+XSS vulnerability in rails-html-sanitizer
 
-> Hello, I run the CoreOS Linux team for CoreOS, Inc [1]. I thought I
-> requested membership in the past, but after double-checking I definitely
-> did not. Shoot. DirtyCOW reminded me to actually get this set up. Is
-> anything else needed from me?
->
+There is a XSS vulnerability in `Rails::Html::FullSanitizer` used by Action View's `strip_tags`.
+This vulnerability has been assigned the CVE identifier CVE-2015-7579.
 
-I found a security page: https://coreos.com/security/ but it only mentions
-some upstream security. I can't find any security advisories, the closest I
-can find is a few blog postings. Do you have an advisory page?
+Versions Affected:  1.0.2
+Not affected:       1.0.0, 1.0.1
+Fixed Versions:     1.0.3
 
+Impact
+------
+Due to the way that `Rails::Html::FullSanitizer` is implemented, if an attacker
+passes an already escaped HTML entity to the input of Action View's `strip_tags`
+these entities will be unescaped what may cause a XSS attack if used in combination
+with `raw` or `html_safe`.
 
->
-> Thanks.
->
-> -Alex
->
-> [1]: https://coreos.com/
->
+For example:
 
+    strip_tags("&lt;script&gt;alert('XSS')&lt;/script&gt;")
 
+Would generate:
+
+    <script>alert('XSS')</script>
+
+After the fix it will generate:
+
+    &lt;script&gt;alert('XSS')&lt;/script&gt;
+
+All users running an affected release should either upgrade or use one of the
+workarounds immediately.
+
+Releases
+--------
+The FIXED releases are available at the normal locations.
+
+Workarounds
+-----------
+If you can't upgrade, please use the following monkey patch in an initializer
+that is loaded before your application:
+
+```
+$ cat config/initializers/strip_tags_fix.rb
+class ActionView::Base
+  def strip_tags(html)
+    self.class.full_sanitizer.sanitize(html)
+  end
+end
+```
+
+Patches
+-------
+To aid users who aren't able to upgrade immediately we have provided patches
+for the two supported release series. They are in git-am format and consist
+of a single changeset.
+
+* Do-not-unescape-already-escaped-HTML-entities.patch
+
+Credits
+-------
+Thank you to Arthur Neves from GitHub and Spyros Livathinos from Zendesk for
+reporting the problem and working with us to fix it.
 
 -- 
+Aaron Patterson
+http://tenderlovemaking.com/
 
---
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
+View attachment "Do-not-unescape-already-escaped-HTML-entities.patch" of type "text/plain" (5012 bytes)
 
+Content of type "application/pgp-signature" skipped
