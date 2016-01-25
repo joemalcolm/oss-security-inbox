@@ -1,47 +1,97 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/08/18
-Message-Id: <20160908171737.A9CCD52E01E@smtpvbsrv1.mitre.org>
-Date: Thu,  8 Sep 2016 13:17:37 -0400 (EDT)
-From: cve-assign@...re.org
-To: dmoppert@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: libarchive (pre 3.2.0) denial of service with gzip quine
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/25/14
+Message-ID: <20160125193757.GG14069@TC.local>
+Date: Mon, 25 Jan 2016 11:37:57 -0800
+From: Aaron Patterson <tenderlove@...y-lang.org>
+To: security@...e.de, rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com, ruby-security-ann@...glegroups.com
+Subject: [CVE-2016-0753] Possible Input Validation Circumvention in Active Model
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Possible Input Validation Circumvention in Active Model
 
-> This was fixed in libarchive 3.2.0, but never got a CVE.
-> 
-> Upstream ticket:
-> 
-> https://github.com/libarchive/libarchive/issues/660
-> 
-> Original report:
-> 
-> https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=207362
+There is a possible input validation circumvention vulnerability in Active
+Model. This vulnerability has been assigned the CVE identifier CVE-2016-0753.
 
-Use CVE-2016-7166.
+Versions Affected:  4.1.0 and newer
+Not affected:       4.0.13 and older
+Fixed Versions:     5.0.0.beta1.1, 4.2.5.1, 4.1.14.1
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Impact
+------
+Code that uses Active Model based models (including Active Record models) and
+does not validate user input before passing it to the model can be subject to
+an attack where specially crafted input will cause the model to skip
+validations.
 
-iQIcBAEBCAAGBQJX0ZzHAAoJEHb/MwWLVhi2eIsP/RiYpHsHUUOkbj4ZwPiaeUri
-FdB3DXqHIw7rh8sUFFWiwBuYVhOINLyEwAz9mHU9lqjMLNGvbgcA9++bC6506n6B
-qVc8KQtMzOFtanRlC221OBccjFrYquKXmJYMcyPj4L9/0PQhZY7WIXY45kAgad7Y
-0ihdIkcfDZoCogVRMU68+Z1tpzKsU/VjHAjRX78vP7DxqSuhOinI3Bs+NIM8UwY8
-E/oyutjKbFqLxqe3ggOtXh/MYniWD11RaL4xt2k4wVOgJia01YJ+xDlRvES4iMON
-meFsRIGWeRhHSY1sg4WYyONzb7H/HX0QuODsTr6vF7CaDjiwL4145bjhoP9Icb5n
-BZEBrtnjjEFwJENwI13lrmQpdV/HL4hFJ20AuYxTPlKvneV2zlZ72s7wxxqsuo5G
-kUKH5e48cZ8CG+JKkF0it86wszqA/5RIgH1rOaexMLi3Gc56b52S6GxOqJA79LQZ
-P5xSPSgZRxTzblUyqF53fLV1sVKwvGLOgxWPcwbF4IeTH8bNt0w8vuIMnnMplKuS
-KYEvoutuNi2E8mmD8xIQ8V96/Oqxth/IO31EQL+GozTOBzH4o8SFi8QodPtfmp/i
-9jJEP1xn0tn26t7v8Wz6BS2jCr7SvqOynZXO/Ymichhg5VIFFZd/LTH7LMDx336H
-XD+j8qjHOKLO8GPz7O7z
-=VcJZ
------END PGP SIGNATURE-----
+Vulnerable code will look something like this:
+
+```ruby
+SomeModel.new(unverified_user_input)
+```
+
+Rails users using Strong Parameters are generally not impacted by this issue
+as they are encouraged to whitelist parameters and must specifically opt-out
+of input verification using the `permit!` method to allow mass assignment.
+
+For example, a vulnerable Rails application will have code that looks like
+this:
+
+```ruby
+def create
+  params.permit! # allow all parameters
+  @user = User.new params[:users]
+end
+```
+
+Active Model and Active Record objects are not equipped to handle arbitrary
+user input.  It is up to the application to verify input before passing it to
+Active Model models.  Rails users already have Strong Parameters in place to
+handle white listing, but applications using Active Model and Active Record
+outside of a Rails environment may be impacted.
+
+All users running an affected release should either upgrade or use one of the
+workarounds immediately.
+
+Releases
+--------
+The FIXED releases are available at the normal locations.
+
+Workarounds
+-----------
+There are several workarounds depending on the application.  Inside a Rails
+application, stop using `permit!`.  Outside a Rails application, either use
+Hash#slice to select the parameters you need, or integrate Strong Parameters
+with your application.
+
+Patches
+-------
+To aid users who aren't able to upgrade immediately we have provided patches for
+the two supported release series. They are in git-am format and consist of a
+single changeset.
+
+* 4-1-validation_skip.patch - Patch for 4.1 series
+* 4-2-validation_skip.patch - Patch for 4.2 series
+* 5-0-validation_skip.patch - Patch for 5.0 series
+
+Please note that only the 4.1.x and 4.2.x series are supported at present. Users
+of earlier unsupported releases are advised to upgrade as soon as possible as we
+cannot guarantee the continued availability of security fixes for unsupported
+releases.
+
+Credits
+-------
+Thanks to:
+
+[John Backus](https://github.com/backus) from BlockScore for reporting this!
+
+-- 
+Aaron Patterson
+http://tenderlovemaking.com/
+
+View attachment "4-1-validation_skip.patch" of type "text/plain" (3781 bytes)
+
+View attachment "4-2-validation_skip.patch" of type "text/plain" (3843 bytes)
+
+View attachment "5-0-validation_skip.patch" of type "text/plain" (4872 bytes)
+
+Content of type "application/pgp-signature" skipped
