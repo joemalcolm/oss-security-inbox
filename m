@@ -1,86 +1,112 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/03/1
-Message-Id: <E1b8lhG-000336-Hz@xenbits.xenproject.org>
-Date: Fri, 03 Jun 2016 09:47:18 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 181 - arm: Host crash caused by VMID exhaustion
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/25/10
+Message-ID: <20160125193308.GC14069@TC.local>
+Date: Mon, 25 Jan 2016 11:33:08 -0800
+From: Aaron Patterson <tenderlove@...y-lang.org>
+To: security@...e.de, rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com, ruby-security-ann@...glegroups.com
+Subject: [CVE-2015-7577] Nested attributes rejection proc bypass in Active Record.
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Nested attributes rejection proc bypass in Active Record.
 
-                    Xen Security Advisory XSA-181
+There is a vulnerability in how the nested attributes feature in Active Record
+handles updates in combination with destroy flags when destroying records is
+disabled. This vulnerability has been assigned the CVE identifier CVE-2015-7577.
 
-               arm: Host crash caused by VMID exhaustion
+Versions Affected:  3.1.0 and newer
+Not affected:       3.0.x and older
+Fixed Versions:     5.0.0.beta1.1, 4.2.5.1, 4.1.14.1, 3.2.22.1
 
-ISSUE DESCRIPTION
-=================
+Impact
+------
+When using the nested attributes feature in Active Record you can prevent the
+destruction of associated records by passing the `allow_destroy: false` option
+to the `accepts_nested_attributes_for` method. However due to a change in the
+commit [a9b4b5d][1] the `_destroy` flag prevents the `:reject_if` proc from
+being called because it assumes that the record will be destroyed anyway.
 
-VMIDs are a finite hardware resource, and allocated as part of domain
-creation.  If no free VMIDs are available when trying to create a new domain,
-a bug in the error path causes a NULL pointer to be used, resulting in a Data
-Abort and host crash.
+However this isn't true if `:allow_destroy` is false so this leads to changes
+that would have been rejected being applied to the record. Attackers could use
+this do things like set attributes to invalid values and to clear all of the
+attributes amongst other things. The severity will be dependent on how the
+application has used this feature.
 
-IMPACT
-======
+All users running an affected release should either upgrade or use one of
+the workarounds immediately.
 
-Attempting to create too many concurrent domains causes a host crash rather
-than a graceful error.  A malicious device driver domain can hold references
-to domains, preventing its VMID being released.
+Releases
+--------
+The FIXED releases are available at the normal locations.
 
-VULNERABLE SYSTEMS
-==================
+Workarounds
+-----------
+If you can't upgrade, please use the following monkey patch in an initializer
+that is loaded before your application:
 
-Xen versions 4.4 and later are affected.  Older Xen versions are unaffected.
+```
+$ cat config/initializers/nested_attributes_bypass_fix.rb
+module ActiveRecord
+  module NestedAttributes
+    private
 
-x86 systems are not affected.
+    def reject_new_record?(association_name, attributes)
+      will_be_destroyed?(association_name, attributes) || call_reject_if(association_name, attributes)
+    end
 
-Only arm systems with less-privileged device driver domains can expose this
-vulnerability.
+    def call_reject_if(association_name, attributes)
+      return false if will_be_destroyed?(association_name, attributes)
 
-MITIGATION
-==========
+      case callback = self.nested_attributes_options[association_name][:reject_if]
+      when Symbol
+        method(callback).arity == 0 ? send(callback) : send(callback, attributes)
+      when Proc
+        callback.call(attributes)
+      end
+    end
 
-There is no mitigation.  Not using driver domains reclassifies the problem,
-but does not fix it.
+    def will_be_destroyed?(association_name, attributes)
+      allow_destroy?(association_name) && has_destroy_flag?(attributes)
+    end
 
-NOTE REGARDING LACK OF EMBARGO
-==============================
+    def allow_destroy?(association_name)
+      self.nested_attributes_options[association_name][:allow_destroy]
+    end
+  end
+end
+```
 
-The crash was discussed publicly on xen-devel, before it was appreciated
-that there was a security problem.
+Patches
+-------
+To aid users who aren't able to upgrade immediately we have provided patches for
+the two supported release series. They are in git-am format and consist of a
+single changeset.
 
-CREDITS
-=======
+* 3-2-nested-attributes-reject-if-bypass.patch - Patch for 3.2 series
+* 4-1-nested-attributes-reject-if-bypass.patch - Patch for 4.1 series
+* 4-2-nested-attributes-reject-if-bypass.patch - Patch for 4.2 series
+* 5-0-nested-attributes-reject-if-bypass.patch - Patch for 5.0 series
 
-This issue was discovered by Aaron Cornelius of DornerWorks.
+Please note that only the 4.1.x and 4.2.x series are supported at present. Users
+of earlier unsupported releases are advised to upgrade as soon as possible as we
+cannot guarantee the continued availability of security fixes for unsupported
+releases.
 
-RESOLUTION
-==========
+Credits
+-------
+Thank you to Justin Coyne for reporting the problem and working with us to fix it.
 
-Applying the appropriate attached patch resolves this issue.
+[1]: https://github.com/rails/rails/commit/a9b4b5da7c216e4464eeb9dbd0a39ea258d64325
 
-xsa181.patch           xen-unstable, Xen 4.6.x, 4.5.x
-xsa181-4.4.patch       Xen 4.4.x
+-- 
+Aaron Patterson
+http://tenderlovemaking.com/
 
-$ sha256sum xsa181*
-6756fcf44446675e5277f6d6c0e8a0aaa51a7909ad9a55af89a09367fded8733  xsa181.patch
-97a90c7cb42466647622cb2ed98de531b7ba2e174a1bc639a32a6f1b626d503f  xsa181-4.4.patch
-$
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+View attachment "3-2-nested-attributes-reject-if-bypass.patch" of type "text/plain" (3820 bytes)
 
-iQEcBAEBAgAGBQJXUVIbAAoJEIP+FMlX6CvZAe8IAIwe1A/05KM9PfJTCwb23WEs
-pfSiEZy7KzmavYwzV4TLwzWuCNzkRAuEejvQ9dTFnk8ZBkCZIbAaMoCPJljK/8gg
-oBcn0cXE9Kz9kWBk+JCWHynboVh010p+7DGlcvrxmAwxJCUjGy4YcajDZ4uGJoHA
-pgJxIk/w4CIzF+AQYm7bRW8dHF3yym4V6dmR4pGqXeYS41XbMqpEenGBggoBeH+C
-TJLUzaNZfATcPK5NUCqBD7IiQtHyYJT8xEtIKDH4hfjEzffydHbErDb/lKk3fxK0
-ECzrhdWMExnkUX4VkC393QaqGf78P6sa+psfZt4I7DDFDI2uEvXYmgVXjOuvSpg=
-=hUSO
------END PGP SIGNATURE-----
+View attachment "4-1-nested-attributes-reject-if-bypass.patch" of type "text/plain" (4006 bytes)
 
-Download attachment "xsa181.patch" of type "application/octet-stream" (1243 bytes)
+View attachment "4-2-nested-attributes-reject-if-bypass.patch" of type "text/plain" (4006 bytes)
 
-Download attachment "xsa181-4.4.patch" of type "application/octet-stream" (1285 bytes)
+View attachment "5-0-nested-attributes-reject-if-bypass.patch" of type "text/plain" (4008 bytes)
+
+Content of type "application/pgp-signature" skipped
