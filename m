@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1815" "Tuesday" "1" "September" "2015" "13:00:00" "+0530" "Dis close" "disclose@cybersecurityworks.com" "<CAMWaY3OZfnQ=yBQT9kDSaUvozzxOOX6wnMDBw9+djpdD8Hsccg@mail.gmail.com>" "83" "[oss-security] Re: CVE Request - LFI/Path Traversal in NextGen Gallery WordPress Plugin." nil nil nil "9" "2015090107:30:00" "[oss-security] Re: CVE Request - LFI/Path Traversal in NextGen Gallery WordPress Plugin." (number mark "U       disclose@cyb Sep  1   83/1815  " thread-indent "\"[oss-security] Re: CVE Request - LFI/Path Traversal in NextGen Gallery WordPress Plugin.\"\n") "<CAMWaY3M07iTMoOswVgZR172J-4PB6UN6Xt0TsoZXKsUGSwdNxw@mail.gmail.com>" ("<CAMWaY3M07iTMoOswVgZR172J-4PB6UN6Xt0TsoZXKsUGSwdNxw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3711" "Sunday" "24" "January" "2016" "20:36:48" "-0800" "Andy Lutomirski" "luto@kernel.org" "<CALCETrV-MJzSXBJMAULepDBS46Q-JNVzMjngmoP9WuFnBhXrEA@mail.gmail.com>" "94" "[oss-security] CVE Request: x86 Linux TLB flush bug" nil nil nil "1" "2016012504:36:48" "[oss-security] CVE Request: x86 Linux TLB flush bug" (number mark "U       luto@kernel. Jan 24   94/3711  " thread-indent "\"[oss-security] CVE Request: x86 Linux TLB flush bug\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 3351 invoked by uid 550); 1 Sep 2015 11:07:13 -0000
+Received: (qmail 5936 invoked by uid 550); 25 Jan 2016 04:37:23 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,112 +12,111 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 16257 invoked from network); 1 Sep 2015 07:30:12 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=nGlMFqwkNXRSWuj+fazU/6nsS1yM3TD7lvyufFMZRcE=;
-        b=SWoqMKrPPzuDNwgR8aE6HzDnwqiLZIua1G+AzH8W97hB5xLwZg4D7288I7b71F0Jx+
-         ZI1kr8CZgNz2gq/Ffv5wX4tYs8ySovnSmM3iBeQTwcWKD6RBP0NjOkvjlBdSH71VGgjS
-         RgsZQq8H2BN0tQrvisD/danznt4BHXNVYU8PdjKBAxLg4TZVQOe5uMv8wxqUVGUoqPrI
-         EVQu12fv9hmrOCrLLq5vVfiovygQJlzQgL9txmkqyx7UCvL9Rs+ScKp53eEaiGixb5WZ
-         DtVTN7W6cwGD1/u5zEL7lsyEw//5+m+v02nRHmKRj//ud1LsCIE1LoQOWgToSednDUlG
-         uIDw==
-X-Gm-Message-State: ALoCoQnnK9JvEx4LG2NmwZTT0cn+QZgwjSvyBV/S3i5noY3CuFnxHQnaBWg6Li7b9f9nNGNYO9FX
+Received: (qmail 5918 invoked from network); 25 Jan 2016 04:37:22 -0000
+X-Gm-Message-State: AG10YOSbZbbdhOL6FxvcqKdXC7zePkdwm9SouItfEy5dmroIBgn5suDxePyfHywIbEl4MH/KRuJBZWT02TZzcmVR
+X-Received: by 10.182.210.234 with SMTP id mx10mr11573927obc.47.1453696628119;
+ Sun, 24 Jan 2016 20:37:08 -0800 (PST)
 MIME-Version: 1.0
-X-Received: by 10.107.37.12 with SMTP id l12mr26619400iol.92.1441092600640;
- Tue, 01 Sep 2015 00:30:00 -0700 (PDT)
-In-Reply-To: <CAMWaY3M07iTMoOswVgZR172J-4PB6UN6Xt0TsoZXKsUGSwdNxw@mail.gmail.com>
-References: <CAMWaY3M07iTMoOswVgZR172J-4PB6UN6Xt0TsoZXKsUGSwdNxw@mail.gmail.com>
-Date: Tue, 1 Sep 2015 13:00:00 +0530
-Message-ID: <CAMWaY3OZfnQ=yBQT9kDSaUvozzxOOX6wnMDBw9+djpdD8Hsccg@mail.gmail.com>
-From: Dis close <disclose@cybersecurityworks.com>
-To: oss-security@lists.openwall.com
-Cc: cve-assign@mitre.org
-Content-Type: multipart/alternative; boundary=001a1141b24e8cce92051eaa843f
-Subject: [oss-security] Re: CVE Request - LFI/Path Traversal in NextGen Gallery WordPress Plugin.
-
---001a1141b24e8cce92051eaa843f
+From: Andy Lutomirski <luto@kernel.org>
+Date: Sun, 24 Jan 2016 20:36:48 -0800
+X-Gmail-Original-Message-ID: <CALCETrV-MJzSXBJMAULepDBS46Q-JNVzMjngmoP9WuFnBhXrEA@mail.gmail.com>
+Message-ID: <CALCETrV-MJzSXBJMAULepDBS46Q-JNVzMjngmoP9WuFnBhXrEA@mail.gmail.com>
+To: oss security list <oss-security@lists.openwall.com>
 Content-Type: text/plain; charset=UTF-8
+X-Virus-Scanned: ClamAV using ClamSMTP
+Subject: [oss-security] CVE Request: x86 Linux TLB flush bug
 
-Hi List:
+Linux on x86 and x86_64 had a race condition in the TLB flush logic.
+I don't know how exploitable it is.
+
+On x86, when changing a paging structure [1], the OS needs to ensure
+that the processor's TLB is flushed to evict any stale cached copies
+of the old paging data.  On SMP systems, the TLB flush needs to be
+propagated to other CPUs that share the paging structures.
+
+x86 has no hardware cross-core TLB flush mechanism.  Instead, Linux
+does the following dance:
+
+CPU A:
+A1. Change the paging structure.
+A2. Flush local TLB, if applicable.
+A3. Check if other CPUs are sharing the paging structures; if so, send
+them IPIs to flush them.
+
+At this point, if a physical page was unmapped, it can be safely reused.
+
+The check in step 3 interacts with context switches on remote cpus.
+When CPU B starts to use the paging structure that A is modifying, it
+does:
+
+CPU B:
+
+B1. Set a bit indicating that CPU B is using the paging structures
+(LOCK-prefixed atomic insn).
+B2. Load the paging hierarchy root into CR3.
+B3. (implicit) Start filling the TLB.
+
+For this whole dance to work, Linux needs to avoid any outcome in
+which CPU B fills a TLB entry that CPU A modified if CPU A does not
+send an IPI to CPU B.  In a sequential consistency model, we're fine.
+CPU A will only fail to send the IPI if it sees the bit that CPU B
+sets being clear after modifying the paging structures and, if that
+happens, then CPU B hasn't filled its TLB yet.
+
+Real CPUs aren't sequentially consistent.  The work done by CPU B is
+well behaved.  B3 is a TLB fill, and it therefore does not follow the
+usual x86 memory ordering rules.  Fortunately, B2 is "serializing" and
+therefore orders everything.
+
+Unfortunately, the work done by CPU A may have been incorrect.  A1 is
+an ordinary store and A3 is an ordinary load.  Therefore, x86 CPUs are
+permitted to reverse their order such that CPU A checks whether the
+paging structures are shared prior to modifying them.
+
+As a mitigating factor, A2, *if it occurs*, is serializing and
+prevents this problem.
+
+The upshot is that, in principle, when Linux invalidates a paging
+structure that is not in use locally, it could, in principle, race
+against another CPU that is switching to a process that uses the
+paging structure in question.
+
+I have not tried to exploit this.  Doing so would involve finding a
+code path that unmaps a page *no in use by the current task* and
+requests a TLB flush without any intervening memory barriers, implied
+or otherwise.
+
+A successful exploit would result in a user thread running with a
+stale cached virtual -> physical translation.  If the translation in
+question were writable and the physical page got reused for something
+critical (e.g. a page table), then this would permit privilege
+escalation without any syscalls whatsoever.
+
+There are some mitigating factors.  Code paths that would do this are
+not that common.  Actually triggering the race would involve the CPU
+speculating a load before a prior store in a different function, and
+that load would have to be speculated across a branch for which the
+not-taken side lead to a serializing instruction.  I have no idea
+whether actual microarchitectures do this.
 
 
-After the vulnerability was disclosed in public the vendor has fixed the
-issue on the same day 28-08-2015 in the latest version i.e NextGen Gallery
-2.1.9. (https://wordpress.org/plugins/nextgen-gallery/) .
 
-Please let us know the status for the CVE.
+commit 4eaffdd5a5fe6ff9f95e1ab4de1ac904d5e0fa8b
+Author: Andy Lutomirski <luto@kernel.org>
+Date:   Tue Jan 12 12:47:40 2016 -0800
 
+    x86/mm: Improve switch_mm() barrier comments
 
-On 28 August 2015 at 15:50, Dis close <disclose@cybersecurityworks.com>
-wrote:
+commit 71b3c126e61177eb693423f2e18a1914205b165e
+Author: Andy Lutomirski <luto@kernel.org>
+Date:   Wed Jan 6 12:21:01 2016 -0800
 
-> Hi List:
->
->
-> We are requesting CVE for the below mentioned security issue in NextGen
-> Gallery Plugin:
->
->
-> Plugin Details:
-> ==============
-> Plugin Name: NextGen Gallery
-> Version: 2.1.7
-> Homepage: https://wordpress.org/plugins/nextgen-gallery/
->
->
->
-> Description
-> ===============
-> NextGEN Gallery is most popular *WordPress Gallery Plugin *with over 13
-> millions downloads.
->
-> Vulnerability
-> ===============
-> The plugin fails to validate user input in one of the variables, which
-> allows a  log-in user to access system files and other unauthorized files
-> on the server.
->
-> POC Video Link: https://www.youtube.com/watch?v=KkPVMxubUis
->
->
-> Proof of Concept
-> ================
->
-> Accessing the POST request http://localhost/wordpress/?photocrati_ajax=1
-> and modifying the *dir* variable with ../../../ input user can traverse
-> file system and access files even outside the application directory.
->
->
-> Disclosure Timeline
-> ==================
->
-> 17-02-2015: Reported to WP Plugins
-> 18-02-2015: Acknowledged by WP Plugin, saying that vendor will be
-> informed. But till now no response from WP plugin or vendor.
->
->
-> Discovered by ( Please provide credit to following)
-> =====================================
->
-> Sathish Kumar
-> Cyber Security Works Pvt Ltd.
->
->
-> ----------
-> Cheers !!!
->
-> Team CSW
->
+    x86/mm: Add barriers and document switch_mm()-vs-flush synchronization
 
 
+If any of you try analyze this further, please let me know.
 
--- 
-----------
-Cheers !!!
+--Andy
 
-Team CSW
-
---001a1141b24e8cce92051eaa843f--
+[1] There are some exceptions when adding entries for previously
+non-present pages.
