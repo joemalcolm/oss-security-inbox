@@ -1,63 +1,103 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/27/12
-Message-Id: <20160427215800.7EB1B72E003@smtpvbsrv1.mitre.org>
-Date: Wed, 27 Apr 2016 17:58:00 -0400 (EDT)
-From: cve-assign@...re.org
-To: carnil@...ian.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: vtun: denial-of-service: high CPU usage after SIGHUP
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/25/1
+Message-ID: <CALCETrV-MJzSXBJMAULepDBS46Q-JNVzMjngmoP9WuFnBhXrEA@mail.gmail.com>
+Date: Sun, 24 Jan 2016 20:36:48 -0800
+From: Andy Lutomirski <luto@...nel.org>
+To: oss security list <oss-security@...ts.openwall.com>
+Subject: CVE Request: x86 Linux TLB flush bug
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Linux on x86 and x86_64 had a race condition in the TLB flush logic.
+I don't know how exploitable it is.
 
-> https://bugs.debian.org/818489
+On x86, when changing a paging structure [1], the OS needs to ensure
+that the processor's TLB is flushed to evict any stale cached copies
+of the old paging data.  On SMP systems, the TLB flush needs to be
+propagated to other CPUs that share the paging structures.
 
-Can you describe how this crosses a privilege boundary?
+x86 has no hardware cross-core TLB flush mechanism.  Instead, Linux
+does the following dance:
+
+CPU A:
+A1. Change the paging structure.
+A2. Flush local TLB, if applicable.
+A3. Check if other CPUs are sharing the paging structures; if so, send
+them IPIs to flush them.
+
+At this point, if a physical page was unmapped, it can be safely reused.
+
+The check in step 3 interacts with context switches on remote cpus.
+When CPU B starts to use the paging structure that A is modifying, it
+does:
+
+CPU B:
+
+B1. Set a bit indicating that CPU B is using the paging structures
+(LOCK-prefixed atomic insn).
+B2. Load the paging hierarchy root into CR3.
+B3. (implicit) Start filling the TLB.
+
+For this whole dance to work, Linux needs to avoid any outcome in
+which CPU B fills a TLB entry that CPU A modified if CPU A does not
+send an IPI to CPU B.  In a sequential consistency model, we're fine.
+CPU A will only fail to send the IPI if it sees the bit that CPU B
+sets being clear after modifying the paging structures and, if that
+happens, then CPU B hasn't filled its TLB yet.
+
+Real CPUs aren't sequentially consistent.  The work done by CPU B is
+well behaved.  B3 is a TLB fill, and it therefore does not follow the
+usual x86 memory ordering rules.  Fortunately, B2 is "serializing" and
+therefore orders everything.
+
+Unfortunately, the work done by CPU A may have been incorrect.  A1 is
+an ordinary store and A3 is an ordinary load.  Therefore, x86 CPUs are
+permitted to reverse their order such that CPU A checks whether the
+paging structures are shared prior to modifying them.
+
+As a mitigating factor, A2, *if it occurs*, is serializing and
+prevents this problem.
+
+The upshot is that, in principle, when Linux invalidates a paging
+structure that is not in use locally, it could, in principle, race
+against another CPU that is switching to a process that uses the
+paging structure in question.
+
+I have not tried to exploit this.  Doing so would involve finding a
+code path that unmaps a page *no in use by the current task* and
+requests a TLB flush without any intervening memory barriers, implied
+or otherwise.
+
+A successful exploit would result in a user thread running with a
+stale cached virtual -> physical translation.  If the translation in
+question were writable and the physical page got reused for something
+critical (e.g. a page table), then this would permit privilege
+escalation without any syscalls whatsoever.
+
+There are some mitigating factors.  Code paths that would do this are
+not that common.  Actually triggering the race would involve the CPU
+speculating a load before a prior store in a different function, and
+that load would have to be speculated across a branch for which the
+not-taken side lead to a serializing instruction.  I have no idea
+whether actual microarchitectures do this.
 
 
->> When you send a SIGHUP to a vtun client process and it cannot connects
->> to the remote server, vtun try to reconnect without sleep between each attempt.
->> In result, the vtun process uses lot of CPU, and write to syslog without limit.
 
-Is there an important way in which this differs from "The vtun client
-is not installed. The attacker simply writes their own program to
-reconnect without sleeping and make many syslog calls"?
+commit 4eaffdd5a5fe6ff9f95e1ab4de1ac904d5e0fa8b
+Author: Andy Lutomirski <luto@...nel.org>
+Date:   Tue Jan 12 12:47:40 2016 -0800
 
-For example: does vtun's resource consumption belong to the root
-account in a common scenario, but SIGHUP is accepted from an
-unprivileged user? Are different unprivileged users successfully
-sending SIGHUP to one another's vtun client processes? Do you mean
-that there's a potentially common attack pattern in which a
-man-in-the-middle attacker intentionally blocks connections to the
-remote server in order to trick the victim into sending a SIGHUP, and
-(in some sense) this man-in-the-middle attacker is thereby able to
-trigger the excessive resource consumption?
+    x86/mm: Improve switch_mm() barrier comments
 
-Sometimes there are CVE IDs for "a client application inadvertently
-starts launching a network DoS attack" but this is typically only in
-cases where someone can send forged packets to the client application
-in order to start the attack.
+commit 71b3c126e61177eb693423f2e18a1914205b165e
+Author: Andy Lutomirski <luto@...nel.org>
+Date:   Wed Jan 6 12:21:01 2016 -0800
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+    x86/mm: Add barriers and document switch_mm()-vs-flush synchronization
 
-iQIcBAEBCAAGBQJXITVqAAoJEHb/MwWLVhi2NQwP/37KVYfIc7/Z173IQyaV7NEh
-i5ZFzn36q56XXT80nuMIYGH/SuXffuhou4YEUXscYf7FBC4/TgQKP6sy1UMcjmQ0
-CawCkWIk9PTA98GvddXknMg2KfDwbM3p0UxzxYpzDT/jUflaaB9HOSruCElv++gu
-ZlE4CF7WMgg4tmKjk7pK5IyoDkMX9a9TjJAxbT0hISUwjhVMrZNQsXQh84fby2iZ
-BNnmFbWb7igvNKkxF+s2RN+8OPKIo4K0NWii+a53HcM3pxisvP7ras20FSMBJv5H
-lmwvYC7NFYSMRCByp9G197RpBrOhQSUQMLgKhojHSW8LDfag/OHYH1g/5HGghnzp
-dul8/kn8DsmH2oC2GnE8QaNkzhozp9ustIvn4xaPIi676I+nIG16XlRYDNWNVICc
-OyxMegvBFRu779jXUDaIWUF4g8T+nrGq5EuIQI03LxczCo0Vr4WAd+uzSVZ7icWq
-M7Qgk99dH7bfXVDQCfP1sz60wohuT03oUjjQwcorABLJoGB9BnAzUiWt6e/g0BG8
-6fv648XOxzZO7dC516B4nkq5JesIjbmlQzcbA+vzVwB/4iRqMs5QiNRNjrvHghuc
-JooYBuSoiTDBJ6C77/O/M9AdTA2fGa5/COAHiEsV/CuHJS2T9eRQTyVfdKDlMRdE
-IN85CZw1R11EdMmLzsj+
-=huSO
------END PGP SIGNATURE-----
+
+If any of you try analyze this further, please let me know.
+
+--Andy
+
+[1] There are some exceptions when adding entries for previously
+non-present pages.
