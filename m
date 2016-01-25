@@ -1,4 +1,9 @@
-Received: (qmail 8128 invoked by uid 550); 17 Jun 2023 11:02:30 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["16186" "Monday" "25" "January" "2016" "11:30:43" "-0800" "Aaron Patterson" "tenderlove@ruby-lang.org" "<20160125193043.GA14069@TC.local>" "488" "[oss-security] [CVE-2015-7576] Timing attack vulnerability in basic authentication in Action Controller." nil nil nil "1" "2016012519:30:43" "[oss-security] [CVE-2015-7576] Timing attack vulnerability in basic authentication in Action Controller." (number mark "U       tenderlove@r Jan 25  488/16186 " thread-indent "\"[oss-security] [CVE-2015-7576] Timing attack vulnerability in basic authentication in Action Controller.\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 22439 invoked by uid 550); 25 Jan 2016 19:30:59 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,154 +12,531 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13396 invoked from network); 16 Jun 2023 09:44:12 -0000
+Received: (qmail 22418 invoked from network); 25 Jan 2016 19:30:58 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1686908640; x=1689500640;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=4pHKtXvBO6HBfhyFVLXF0REYU9r06c9Q75Rav/6Q4OU=;
-        b=OLGgMVveYOAeUJwppQMzUYsTB1hrA9BlHUFQIIC6jBNDX3gH1OF78lLMtiZ7t3LgdJ
-         2zoHgzUI1sMFpsEuj5XIw8yP/zOXCuZSXM1un3eK1jgJ1fV0JH0PDxps/e33zX37lgkW
-         N+HNE9WIkmK95GoXeufIcDJU3eq7TAlun9oOM=
+        d=tenderlovemaking-com.20150623.gappssmtp.com; s=20150623;
+        h=sender:date:from:to:subject:message-id:mime-version:content-type
+         :content-disposition:user-agent;
+        bh=N3CiFbIjP87JAHTC1ImGMC/j5myutjsqb/Thpj9hZqA=;
+        b=AmwZb9vU52qrFCcgKRyP62r0jOO5wK7BJ9bAsYym+QJYWtCJ0f0IDuHg26+QOV+YN5
+         YC5SHJacALRC8xcuNSARTelOY3i4qndRI6dcX2c1GwOq9d6D/p1x+lH7xor6NsMhrFoM
+         idwuPE6EfYyAuIWO0F5dFZOzJ9dc7Isoyt7WTGadKJoTMPvXU9S5D2XWlYwNsZLFddel
+         2+ZR7zM4pg2dC/uAIYan7BseHNh9afD3pZaHDsdn4Zfa3/pufnJ+NQZ6qUXX8b7xwww/
+         qIKxt8Z9N1k6HsKOJilHVuZTTw7T2BE/UdT0eMFJLMjCdPwnpJvwUZ1fhx0icWEgsj4G
+         JuzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686908640; x=1689500640;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=4pHKtXvBO6HBfhyFVLXF0REYU9r06c9Q75Rav/6Q4OU=;
-        b=DW4aCca+/tTfwCFOrBwpeW5TwI/WkKlmXLHettFmfP5OLgL8tgyICih+dQVQzzWom5
-         UyZfzQaBh4dy7ehQ+zAzvENi7ZiB5Jmj0LsC/Hph0hokEEEmp2GR6V6d1RxEZ8Ycco5F
-         juDvY0QLsSgeoTwpw5wdpx0Wa8gTGrHZzuN74BDnHGqzQsurccevPeNi7oAqOsd9G3w7
-         yUkr+/PiNPmzyJwFnLwl7pxoHbYYxvkqvMc9y7idoX7pTAfIVvFsd0AhhrtSDivIhNiU
-         Bk2FQI+MdtNnv1cSOlthKHnUrCM1elMw1iqNSf+ghlQgHfVp9nZ/G4t+/5UVhekZ40yW
-         bpDA==
-X-Gm-Message-State: AC+VfDzwk2Gwls4wop/YlXH7f2tm0qgSCUngZie+Uk6SMEf7/ENdo6ep
-	vHe1pzAtiptUaipDR277RzGuQMQft5E8KWD9OBr7r5xxdqozC4Kmve6trgIa
-X-Google-Smtp-Source: ACHHUZ5puIk1/VU9NLz3IyCXojMgrcOPjOWprx7AltYbKH+SSv4ScV5R8IBgU2re3dSJwHKVJcuxeCmXkFkO8U5BQeQ=
-X-Received: by 2002:a81:49c9:0:b0:569:51d4:e723 with SMTP id
- w192-20020a8149c9000000b0056951d4e723mr1867646ywa.36.1686908640100; Fri, 16
- Jun 2023 02:44:00 -0700 (PDT)
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:sender:date:from:to:subject:message-id
+         :mime-version:content-type:content-disposition:user-agent;
+        bh=N3CiFbIjP87JAHTC1ImGMC/j5myutjsqb/Thpj9hZqA=;
+        b=dyVGrFOK7uKg69exm95I0hNl3c8MasQVL5fv0LHW+9QJtjj6dh0fk8OkXwn6N4aPBr
+         aclmO3p6t10DjeCEjkaz3iOMbqTPw+eta1duEiB6VGi6nY2ftpr8yrk0ZQKIyASAuVq/
+         HqxuNEkDbNQayXqbqG4U+mJb8vpatWhFUVbKY5iRWyV+IOv5/ckx9YNzZknRpyjw5Hua
+         QfdNgBIdoG2Kf/sZfXtj07Rkp9QRPBXwxNdth4Zu0xs+12I+ka6/QDzFes/38KULW2lf
+         vpk3NEEijIwVAQmdYFoD/frfq2NkpIS1hhmcsUx8Rxk+69j2OR1Js6A2yt9juUGCkhLF
+         0pMw==
+X-Gm-Message-State: AG10YOS0K3IYd7VV4cu7UOS54jZqTTgDCjiq1T0SWcs6PiTfOwBJTpBbIkZ0xIF2RLqy9A==
+X-Received: by 10.98.17.79 with SMTP id z76mr28565924pfi.16.1453750246543;
+        Mon, 25 Jan 2016 11:30:46 -0800 (PST)
+Sender: Aaron Patterson <aaron@tenderlovemaking.com>
+Date: Mon, 25 Jan 2016 11:30:43 -0800
+From: Aaron Patterson <tenderlove@ruby-lang.org>
+To: security@suse.de, rubyonrails-security@googlegroups.com,
+	oss-security@lists.openwall.com, ruby-security-ann@googlegroups.com
+Message-ID: <20160125193043.GA14069@TC.local>
 MIME-Version: 1.0
-From: =?UTF-8?Q?Tam=C3=A1s_Koczka?= <poprdi@chromium.org>
-Date: Fri, 16 Jun 2023 11:43:49 +0200
-Message-ID: <CAEviOmOzG=KTzqee5hsrLUsCSL2ic7Kj-CzrBhEx7PxXx=5FKA@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] Our learnings from 42 Linux kernel exploits, we are limiting io_uring
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="24zk1gE8NUlDmwG9"
+Content-Disposition: inline
+User-Agent: Mutt/1.5.23 (2014-03-12)
+Subject: [oss-security] [CVE-2015-7576] Timing attack vulnerability in basic authentication
+ in Action Controller.
 
-Hello everyone,
+--24zk1gE8NUlDmwG9
+Content-Type: multipart/mixed; boundary="h31gzZEtNLTqOjlF"
+Content-Disposition: inline
 
-We've posted the following article to the Google Security Blog which
-contains some of our learnings from 42 Linux kernel exploits we got so
-far on our kCTF VRP and the actions we are taking based on these
-learnings (tl;dr: we are limiting io_uring in our products):
 
-=======================
-In 2020[1], we integrated kCTF into Google's Vulnerability Rewards
-Program (VRP) to support researchers evaluating the security of Google
-Kubernetes Engine (GKE) and the underlying Linux kernel. As the Linux
-kernel is a key component not just for Google, but for the Internet,
-we started heavily investing in this area. We extended the VRP's scope
-and maximum reward in 2021[2] (to $50k), then again in February
-2022[3] (to $91k), and finally in August 2022[4] (to $133k). In 2022,
-we also summarized our learnings to date in our cookbook[5], and
-introduced our experimental mitigations[6] for the most common
-exploitation techniques.
+--h31gzZEtNLTqOjlF
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-In this post, we'd like to share our learnings and statistics about
-the latest Linux kernel exploit submissions, how effective our
-mitigations[7] are against them, what we do to protect our users, and,
-finally, how we are changing our program to align incentives to the
-areas we are most interested in.
+Timing attack vulnerability in basic authentication in Action Controller.
 
-= Learnings and Statistics =
+There is a timing attack vulnerability in the basic authentication support
+in Action Controller. This vulnerability has been assigned the CVE
+identifier CVE-2015-7576.
 
-Since its inception, the program has rewarded researchers with a total
-of 1.8 million USD, and in the past year, there has been a clear
-trend: 60% of the submissions[8] exploited the io_uring component of
-the Linux kernel (we paid out around 1 million USD for io_uring
-alone). Furthermore, io_uring vulnerabilities were used in all the
-submissions which bypassed our mitigations.
+Versions Affected:  All.
+Not affected:       None.
+Fixed Versions:     5.0.0.beta1.1, 4.2.5.1, 4.1.14.1, 3.2.22.1
 
-= Limiting io_uring =
+Impact
+------
+Due to the way that Action Controller compares user names and passwords in
+basic authentication authorization code, it is possible for an attacker to
+analyze the time taken by a response and intuit the password.
 
-To protect our users, we decided to limit the usage of io_uring in
-Google products:
+For example, this string comparison:
 
- * ChromeOS: We disabled[9] io_uring (while we explore new ways to sandbox it).
+  "foo" =3D=3D "bar"
 
- * Android: Our seccomp-bpf filter[10] ensures that io_uring is
-unreachable to apps. Future Android releases will use SELinux to limit
-io_uring access to a select few system processes[11].
+is possibly faster than this comparison:
 
- * GKE AutoPilot: We are investigating disabling io_uring by default.
+  "foo" =3D=3D "fo1"
 
- * It is disabled on production Google servers.
+Attackers can use this information to attempt to guess the username and
+password used in the basic authentication system.
 
-While io_uring brings performance benefits, and promptly reacts to
-security issues with comprehensive security fixes (like
-backporting[12] the 5.15 version to the 5.10 stable tree), it is a
-fairly new part of the kernel. As such, io_uring continues to be
-actively developed, but it is still affected by severe vulnerabilities
-and also provides strong exploitation primitives. For these reasons,
-we currently consider it safe only for use by trusted components.
+You can tell you application is vulnerable to this attack by looking for
+`http_basic_authenticate_with` method calls in your application.
 
-= Transparency =
+All users running an affected release should either upgrade or use one of
+the workarounds immediately.
 
-Currently, we make vulnerability details public on our spreadsheet[8]
-(which now also includes CVE details), and we have summarized
-different exploitation techniques in our cookbook[5]. In the future,
-to make our efforts more transparent and give faster feedback to the
-community, we will ask researchers to open-source their
-submissions[13], including the code they used.
+Releases
+--------
+The FIXED releases are available at the normal locations.
 
-= Introducing kernelCTF =
+Workarounds
+-----------
+If you can't upgrade, please use the following monkey patch in an initializ=
+er
+that is loaded before your application:
 
-To better align incentives with our areas of interest, we are shifting
-our focus from GKE and kCTF to the latest stable kernel and our
-mitigations. As a result, starting today we will handle kernel exploit
-submissions under a new name, "kernelCTF," with its own reward
-structure and submission process[14]. The maximum total payout for
-kernelCTF is still $133,337 per submission. While the specific GKE
-kernel configuration is still covered by the new kernelCTF, exploits
-affecting non-kernel components like the full GKE stack (including
-Kubernetes), the container runtime, and GKE itself, are now separately
-eligible for vulnerability rewards under the kCTF VRP which is
-returning to its original reward amounts and conditions.
+```
+$ cat config/initializers/basic_auth_fix.rb
+module ActiveSupport
+  module SecurityUtils
+    def secure_compare(a, b)
+      return false unless a.bytesize =3D=3D b.bytesize
 
-= Conclusion =
+      l =3D a.unpack "C#{a.bytesize}"
 
-Our goal remains the same: we are building a pipeline to analyze,
-experiment, measure, and build security mitigations to make the Linux
-kernel as safe as possible, with the help of the security community.
-We hope that over time, we will be able to implement security
-mitigations that make it more difficult to exploit Linux kernel
-vulnerabilities.
+      res =3D 0
+      b.each_byte { |byte| res |=3D byte ^ l.shift }
+      res =3D=3D 0
+    end
+    module_function :secure_compare
 
-With the name change, we have moved our communication channel to
-#kernelctf on Discord[15], with a separate #kernelctf-announcements
-channel[16]. Please join us there for the latest updates regarding
-kernelCTF.
+    def variable_size_secure_compare(a, b)
+      secure_compare(::Digest::SHA256.hexdigest(a), ::Digest::SHA256.hexdig=
+est(b))
+    end
+    module_function :variable_size_secure_compare
+  end
+end
 
-[1] https://security.googleblog.com/2020/05/expanding-our-work-with-open-source.html
-[2] https://security.googleblog.com/2021/11/trick-treat-paying-leets-and-sweets-for.html
-[3] https://security.googleblog.com/2022/02/roses-are-red-violets-are-blue-giving.html
-[4] https://security.googleblog.com/2022/08/making-linux-kernel-exploit-cooking.html
-[5] https://docs.google.com/document/d/1a9uUAISBzw3ur1aLQqKc5JOQLaJYiOP5pe_B4xCT1KA/edit
-[6] https://security.googleblog.com/2022/08/making-linux-kernel-exploit-cooking.html#:~:text=The%20mitigations%20we%27ve%20built%20attempt%20to%20tackle%20the%20following%20exploit%20primitives
-[7] https://github.com/thejh/linux/blob/slub-virtual/MITIGATION_README
-[8] https://docs.google.com/spreadsheets/d/e/2PACX-1vS1REdTA29OJftst8xN5B5x8iIUcxuK6bXdzF8G1UXCmRtoNsoQ9MbebdRdFnj6qZ0Yd7LwQfvYC2oF/pubhtml
-[9] https://chromium-review.googlesource.com/c/chromiumos/third_party/kernel/+/4228112
-[10] https://cs.android.com/android/platform/superproject/+/master:bionic/libc/SECCOMP_ALLOWLIST_COMMON.TXT
-[11] https://android-review.googlesource.com/c/platform/system/sepolicy/+/2302679
-[12] https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/commit/?id=788d0824269bef539fe31a785b1517882eafed93
-[13] https://google.github.io/security-research/kernelctf/rules#note-about-making-the-exploit-public
-[14] https://google.github.io/security-research/kernelctf/rules
-[15] https://discord.gg/A3qZcyaZ69
-[16] https://discord.gg/AjGJ3acF2e
-=======================
+module ActionController
+  class Base
+    def self.http_basic_authenticate_with(options =3D {})
+      before_action(options.except(:name, :password, :realm)) do
+        authenticate_or_request_with_http_basic(options[:realm] || "Applica=
+tion") do |name, password|
+          # This comparison uses & so that it doesn't short circuit and
+          # uses `variable_size_secure_compare` so that length information
+          # isn't leaked.
+          ActiveSupport::SecurityUtils.variable_size_secure_compare(name, o=
+ptions[:name]) &
+            ActiveSupport::SecurityUtils.variable_size_secure_compare(passw=
+ord, options[:password])
+        end
+      end
+    end
+  end
+end
+```
 
-The article can also be read on our blog:
-https://security.googleblog.com/2023/06/learnings-from-kctf-vrps-42-linux.html
 
---
-Tamas
+Patches
+-------
+To aid users who aren't able to upgrade immediately we have provided patche=
+s for
+the two supported release series. They are in git-am format and consist of a
+single changeset.
+
+* 4-1-basic_auth.patch - Patch for 4.1 series
+* 4-2-basic_auth.patch - Patch for 4.2 series
+* 5-0-basic_auth.patch - Patch for 5.0 series
+
+Please note that only the 4.1.x and 4.2.x series are supported at present. =
+Users
+of earlier unsupported releases are advised to upgrade as soon as possible =
+as we
+cannot guarantee the continued availability of security fixes for unsupport=
+ed
+releases.
+
+Credits
+-------
+
+Thank you to Daniel Waterworth for reporting the problem and working with u=
+s to
+fix it.
+
+--=20
+Aaron Patterson
+http://tenderlovemaking.com/
+
+--h31gzZEtNLTqOjlF
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: attachment; filename="3-2-basic_auth.patch"
+Content-Transfer-Encoding: quoted-printable
+
+=46rom 9ffe46fb65dcde8670484403c827182621ac2901 Mon Sep 17 00:00:00 2001
+From: Aaron Patterson <aaron.patterson@gmail.com>
+Date: Thu, 29 Oct 2015 10:42:44 -0700
+Subject: [PATCH] use secure string comparisons for basic auth username /
+ password
+
+this will avoid timing attacks against applications that use basic auth.
+
+Conflicts:
+	activesupport/lib/active_support/security_utils.rb
+
+Conflicts:
+	actionpack/lib/action_controller/metal/http_authentication.rb
+
+CVE-2015-7576
+---
+ .../action_controller/metal/http_authentication.rb |  7 +++++-
+ activesupport/lib/active_support/security_utils.rb | 27 ++++++++++++++++++=
+++++
+ 2 files changed, 33 insertions(+), 1 deletion(-)
+ create mode 100644 activesupport/lib/active_support/security_utils.rb
+
+diff --git a/actionpack/lib/action_controller/metal/http_authentication.rb =
+b/actionpack/lib/action_controller/metal/http_authentication.rb
+index fe4ab65..2ae5160 100644
+--- a/actionpack/lib/action_controller/metal/http_authentication.rb
++++ b/actionpack/lib/action_controller/metal/http_authentication.rb
+@@ -1,5 +1,6 @@
+ require 'active_support/base64'
+ require 'active_support/core_ext/object/blank'
++require 'active_support/security_utils'
+=20
+ module ActionController
+   module HttpAuthentication
+@@ -111,7 +112,11 @@ module ActionController
+           def http_basic_authenticate_with(options =3D {})
+             before_filter(options.except(:name, :password, :realm)) do
+               authenticate_or_request_with_http_basic(options[:realm] || "=
+Application") do |name, password|
+-                name =3D=3D options[:name] && password =3D=3D options[:pas=
+sword]
++                # This comparison uses & so that it doesn't short circuit =
+and
++                # uses `variable_size_secure_compare` so that length infor=
+mation
++                # isn't leaked.
++                ActiveSupport::SecurityUtils.variable_size_secure_compare(=
+name, options[:name]) &
++                  ActiveSupport::SecurityUtils.variable_size_secure_compar=
+e(password, options[:password])
+               end
+             end
+           end
+diff --git a/activesupport/lib/active_support/security_utils.rb b/activesup=
+port/lib/active_support/security_utils.rb
+new file mode 100644
+index 0000000..9be8613
+--- /dev/null
++++ b/activesupport/lib/active_support/security_utils.rb
+@@ -0,0 +1,27 @@
++require 'digest'
++
++module ActiveSupport
++  module SecurityUtils
++    # Constant time string comparison.
++    #
++    # The values compared should be of fixed length, such as strings
++    # that have already been processed by HMAC. This should not be used
++    # on variable length plaintext strings because it could leak length in=
+fo
++    # via timing attacks.
++    def secure_compare(a, b)
++      return false unless a.bytesize =3D=3D b.bytesize
++
++      l =3D a.unpack "C#{a.bytesize}"
++
++      res =3D 0
++      b.each_byte { |byte| res |=3D byte ^ l.shift }
++      res =3D=3D 0
++    end
++    module_function :secure_compare
++
++    def variable_size_secure_compare(a, b) # :nodoc:
++      secure_compare(::Digest::SHA256.hexdigest(a), ::Digest::SHA256.hexdi=
+gest(b))
++    end
++    module_function :variable_size_secure_compare
++  end
++end
+--=20
+2.2.1
+
+
+--h31gzZEtNLTqOjlF
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: attachment; filename="4-1-basic_auth.patch"
+Content-Transfer-Encoding: quoted-printable
+
+=46rom 0de876c53fe9355f1e9a73e923519f2a2241f527 Mon Sep 17 00:00:00 2001
+From: Aaron Patterson <aaron.patterson@gmail.com>
+Date: Thu, 29 Oct 2015 10:42:44 -0700
+Subject: [PATCH] use secure string comparisons for basic auth username /
+ password
+
+this will avoid timing attacks against applications that use basic auth.
+
+Conflicts:
+	activesupport/lib/active_support/security_utils.rb
+
+CVE-2015-7576
+---
+ .../action_controller/metal/http_authentication.rb |  7 +++++-
+ activesupport/lib/active_support/security_utils.rb | 27 ++++++++++++++++++=
+++++
+ 2 files changed, 33 insertions(+), 1 deletion(-)
+ create mode 100644 activesupport/lib/active_support/security_utils.rb
+
+diff --git a/actionpack/lib/action_controller/metal/http_authentication.rb =
+b/actionpack/lib/action_controller/metal/http_authentication.rb
+index 167df2f..db93e20 100644
+--- a/actionpack/lib/action_controller/metal/http_authentication.rb
++++ b/actionpack/lib/action_controller/metal/http_authentication.rb
+@@ -1,4 +1,5 @@
+ require 'base64'
++require 'active_support/security_utils'
+=20
+ module ActionController
+   # Makes it dead easy to do HTTP Basic, Digest and Token authentication.
+@@ -70,7 +71,11 @@ module ActionController
+           def http_basic_authenticate_with(options =3D {})
+             before_action(options.except(:name, :password, :realm)) do
+               authenticate_or_request_with_http_basic(options[:realm] || "=
+Application") do |name, password|
+-                name =3D=3D options[:name] && password =3D=3D options[:pas=
+sword]
++                # This comparison uses & so that it doesn't short circuit =
+and
++                # uses `variable_size_secure_compare` so that length infor=
+mation
++                # isn't leaked.
++                ActiveSupport::SecurityUtils.variable_size_secure_compare(=
+name, options[:name]) &
++                  ActiveSupport::SecurityUtils.variable_size_secure_compar=
+e(password, options[:password])
+               end
+             end
+           end
+diff --git a/activesupport/lib/active_support/security_utils.rb b/activesup=
+port/lib/active_support/security_utils.rb
+new file mode 100644
+index 0000000..bb22125
+--- /dev/null
++++ b/activesupport/lib/active_support/security_utils.rb
+@@ -0,0 +1,27 @@
++require 'digest'
++
++module ActiveSupport
++  module SecurityUtils
++    # Constant time string comparison.
++    #
++    # The values compared should be of fixed length, such as strings
++    # that have already been processed by HMAC. This should not be used
++    # on variable length plaintext strings because it could leak length in=
+fo
++    # via timing attacks.
++    def secure_compare(a, b)
++      return false unless a.bytesize =3D=3D b.bytesize
++
++      l =3D a.unpack "C#{a.bytesize}"
++
++      res =3D 0
++      b.each_byte { |byte| res |=3D byte ^ l.shift }
++      res =3D=3D 0
++    end
++    module_function :secure_compare
++
++    def variable_size_secure_compare(a, b) # :nodoc:
++      secure_compare(::Digest::SHA256.hexdigest(a), ::Digest::SHA256.hexdi=
+gest(b))
++    end
++    module_function :variable_size_secure_compare
++  end
++end
+--=20
+2.2.1
+
+
+--h31gzZEtNLTqOjlF
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: attachment; filename="4-2-basic_auth.patch"
+Content-Transfer-Encoding: quoted-printable
+
+=46rom 53b153b90fc2400a8568cf4aa5017c612bf62401 Mon Sep 17 00:00:00 2001
+From: Aaron Patterson <aaron.patterson@gmail.com>
+Date: Thu, 29 Oct 2015 10:42:44 -0700
+Subject: [PATCH] use secure string comparisons for basic auth username /
+ password
+
+this will avoid timing attacks against applications that use basic auth.
+
+CVE-2015-7576
+---
+ actionpack/lib/action_controller/metal/http_authentication.rb | 7 ++++++-
+ activesupport/lib/active_support/security_utils.rb            | 7 +++++++
+ 2 files changed, 13 insertions(+), 1 deletion(-)
+
+diff --git a/actionpack/lib/action_controller/metal/http_authentication.rb =
+b/actionpack/lib/action_controller/metal/http_authentication.rb
+index a219d35..2777d0f 100644
+--- a/actionpack/lib/action_controller/metal/http_authentication.rb
++++ b/actionpack/lib/action_controller/metal/http_authentication.rb
+@@ -1,4 +1,5 @@
+ require 'base64'
++require 'active_support/security_utils'
+=20
+ module ActionController
+   # Makes it dead easy to do HTTP Basic, Digest and Token authentication.
+@@ -68,7 +69,11 @@ module ActionController
+           def http_basic_authenticate_with(options =3D {})
+             before_action(options.except(:name, :password, :realm)) do
+               authenticate_or_request_with_http_basic(options[:realm] || "=
+Application") do |name, password|
+-                name =3D=3D options[:name] && password =3D=3D options[:pas=
+sword]
++                # This comparison uses & so that it doesn't short circuit =
+and
++                # uses `variable_size_secure_compare` so that length infor=
+mation
++                # isn't leaked.
++                ActiveSupport::SecurityUtils.variable_size_secure_compare(=
+name, options[:name]) &
++                  ActiveSupport::SecurityUtils.variable_size_secure_compar=
+e(password, options[:password])
+               end
+             end
+           end
+diff --git a/activesupport/lib/active_support/security_utils.rb b/activesup=
+port/lib/active_support/security_utils.rb
+index 64c4801..bb22125 100644
+--- a/activesupport/lib/active_support/security_utils.rb
++++ b/activesupport/lib/active_support/security_utils.rb
+@@ -1,3 +1,5 @@
++require 'digest'
++
+ module ActiveSupport
+   module SecurityUtils
+     # Constant time string comparison.
+@@ -16,5 +18,10 @@ module ActiveSupport
+       res =3D=3D 0
+     end
+     module_function :secure_compare
++
++    def variable_size_secure_compare(a, b) # :nodoc:
++      secure_compare(::Digest::SHA256.hexdigest(a), ::Digest::SHA256.hexdi=
+gest(b))
++    end
++    module_function :variable_size_secure_compare
+   end
+ end
+--=20
+2.2.1
+
+
+--h31gzZEtNLTqOjlF
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: attachment; filename="5-0-basic_auth.patch"
+Content-Transfer-Encoding: quoted-printable
+
+=46rom b0b42de5f04100e9672170898cb94584309fdc39 Mon Sep 17 00:00:00 2001
+From: Aaron Patterson <aaron.patterson@gmail.com>
+Date: Thu, 29 Oct 2015 10:42:44 -0700
+Subject: [PATCH] use secure string comparisons for basic auth username /
+ password
+
+this will avoid timing attacks against applications that use basic auth.
+
+CVE-2015-7576
+---
+ actionpack/lib/action_controller/metal/http_authentication.rb | 7 ++++++-
+ activesupport/lib/active_support/security_utils.rb            | 7 +++++++
+ 2 files changed, 13 insertions(+), 1 deletion(-)
+
+diff --git a/actionpack/lib/action_controller/metal/http_authentication.rb =
+b/actionpack/lib/action_controller/metal/http_authentication.rb
+index 2ac6e37..35be6d9 100644
+--- a/actionpack/lib/action_controller/metal/http_authentication.rb
++++ b/actionpack/lib/action_controller/metal/http_authentication.rb
+@@ -1,4 +1,5 @@
+ require 'base64'
++require 'active_support/security_utils'
+=20
+ module ActionController
+   # Makes it dead easy to do HTTP Basic, Digest and Token authentication.
+@@ -68,7 +69,11 @@ module ActionController
+           def http_basic_authenticate_with(options =3D {})
+             before_action(options.except(:name, :password, :realm)) do
+               authenticate_or_request_with_http_basic(options[:realm] || "=
+Application") do |name, password|
+-                name =3D=3D options[:name] && password =3D=3D options[:pas=
+sword]
++                # This comparison uses & so that it doesn't short circuit =
+and
++                # uses `variable_size_secure_compare` so that length infor=
+mation
++                # isn't leaked.
++                ActiveSupport::SecurityUtils.variable_size_secure_compare(=
+name, options[:name]) &
++                  ActiveSupport::SecurityUtils.variable_size_secure_compar=
+e(password, options[:password])
+               end
+             end
+           end
+diff --git a/activesupport/lib/active_support/security_utils.rb b/activesup=
+port/lib/active_support/security_utils.rb
+index 64c4801..9be8613 100644
+--- a/activesupport/lib/active_support/security_utils.rb
++++ b/activesupport/lib/active_support/security_utils.rb
+@@ -1,3 +1,5 @@
++require 'digest'
++
+ module ActiveSupport
+   module SecurityUtils
+     # Constant time string comparison.
+@@ -16,5 +18,10 @@ module ActiveSupport
+       res =3D=3D 0
+     end
+     module_function :secure_compare
++
++    def variable_size_secure_compare(a, b) # :nodoc:
++      secure_compare(::Digest::SHA256.hexdigest(a), ::Digest::SHA256.hexdi=
+gest(b))
++    end
++    module_function :variable_size_secure_compare
+   end
+ end
+--=20
+2.2.1
+
+
+--h31gzZEtNLTqOjlF--
+
+--24zk1gE8NUlDmwG9
+Content-Type: application/pgp-signature
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEcBAEBAgAGBQJWpnfjAAoJEJUxcLy0/6/GnUgH+gOKMfxoZZrToz4+kRCa5BIl
+LQvrBgXztcwrCsPkFNRn0IgtJZTXOmVom5z+Bhkmcg8oq5okdutv+jFPKKDQRbkE
+GF/5ptaq+P/SsQ+e1js7+EYQCVkmdjCw1qwyG5Rqn0XT0Bf4/JjN1emHDPVznAR/
+qE5OhUSpk1OXx1dh2NxGgYj67830qhPOsGYlLuYfzpjK75L/9+40Ad/tVzaVA8H9
+ZQlMj5U3KgP8P9bZOIYJt+NIsBtnHX5dYa7c9amT18GsQCgdZsNwVjLLJ1P/W0eQ
+rVINzpKFpXPue6TbT5l2iiiqiZlfMX7ibmyqOBlQId8BhiX4LnXobMbQq2C57/w=
+=UQlY
+-----END PGP SIGNATURE-----
+
+--24zk1gE8NUlDmwG9--
