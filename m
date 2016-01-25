@@ -1,58 +1,89 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/22/4
-Message-ID: <CAKG8Do6pS1wRkC2YTU_btNED5Zhc71uchaC6g=FU4CrzUzt1Vw@mail.gmail.com>
-Date: Mon, 22 Aug 2016 10:16:30 +0200
-From: Cedric Buissart <cbuissar@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2016-5404 freeipa: Insufficient privileges check in certificate revocation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/25/6
+Message-ID: <3626D6E697A150459C44C0E5D8D8D00E0DBD56EB@EX02.corp.qihoo.net>
+Date: Mon, 25 Jan 2016 08:01:08 +0000
+From: limingxing <limingxing@....cn>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Out-of-bounds Read in the libxml2's htmlParseNameComplex() function
 Content-Type: text/plain; charset=utf-8
 
-Patch for this incident is now upstream.
-For the master branch commit :
-https://git.fedorahosted.org/cgit/freeipa.git/commit/?id=cf74584d0f772f3f5eccc1d30c001e4212a104fd
-
-Other branches have been fixed too.
-
-Regards,
-
-Cedric
-
-On Wed, Aug 17, 2016 at 7:30 PM, Cedric Buissart <cbuissar@...hat.com>
-wrote:
-
-> Hi,
->
-> This is to disclose the following CVE:
->
-> CVE-2016-5404 freeipa: Insufficient privileges check in certificate
-> revocation
->
-> Description :
-> An insufficient permission check issue was found in the way IPA server
-> treats certificate revocation requests. An attacker logged in with the
-> 'retrieve certificate' permission enabled could use this flaw to revoke
-> certificates, possibly triggering a denial of service attack.
->
-> All versions are affected.
->
-> Patches can be found on the corresponding Red Hat Bugzilla:
-> https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2016-5404
->
-> Impact: Moderate
-> CVSS3 scoring : 4.3 CVSS:3.0/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:L
->
-> Reported by: Fraser Tweedale (Red Hat)
->
-> Best Regards,
->
-> --
-> Cedric Buissart,
-> Product Security
->
 
 
+Hello,
+We find a vulnerability in the way libxml2's htmlParseNameComplex() function parsed certain xml file.
+I was successful in reproducing this issuel in the latest version of libxml2(git clone git://git.gnome.org/libxml2).
+HTMLparser.c line:2517 :
 
--- 
-Cedric Buissart,
-Product Security
+       return(xmlDictLookup(ctxt->dict, ctxt->input->cur - len, len));
 
+"ctxt->input->cur - len"  cause Out-of-bounds Read.
+
+Bug info:
+ERROR: AddressSanitizer: heap-buffer-overflow on address 0x60620000d8ff at pc 0x62f90d bp 0x7fffa1464060 sp 0x7fffa1464058
+READ of size 1 at 0x60620000d8ff thread T0
+    #0 0x62f90c (/home/r/libxml2/testHTML+0x62f90c)
+    #1 0x631c40 (/home/r/libxml2/testHTML+0x631c40)
+    #2 0x4eb94c (/home/r/libxml2/testHTML+0x4eb94c)
+    #3 0x4eb09c (/home/r/libxml2/testHTML+0x4eb09c)
+    #4 0x4ecdb4 (/home/r/libxml2/testHTML+0x4ecdb4)
+    #5 0x4f993b (/home/r/libxml2/testHTML+0x4f993b)
+    #6 0x4ff225 (/home/r/libxml2/testHTML+0x4ff225)
+    #7 0x5008d1 (/home/r/libxml2/testHTML+0x5008d1)
+    #8 0x50ba97 (/home/r/libxml2/testHTML+0x50ba97)
+    #9 0x50bc89 (/home/r/libxml2/testHTML+0x50bc89)
+    #10 0x403df6 (/home/r/libxml2/testHTML+0x403df6)
+    #11 0x4046a0 (/home/r/libxml2/testHTML+0x4046a0)
+    #12 0x7fb1877a5ec4 (/lib/x86_64-linux-gnu/libc-2.19.so+0x21ec4)
+    #13 0x4025b8 (/home/r/libxml2/testHTML+0x4025b8)
+0x60620000d8ff is located 1 bytes to the left of 4096-byte region [0x60620000d900,0x60620000e900)
+allocated by thread T0 here:
+    #0 0x7fb187e6541a (/usr/lib/x86_64-linux-gnu/libasan.so.0.0.0+0x1541a)
+    #1 0x5aa0a2 (/home/r/libxml2/testHTML+0x5aa0a2)
+    #2 0x67f4b0 (/home/r/libxml2/testHTML+0x67f4b0)
+    #3 0x67f873 (/home/r/libxml2/testHTML+0x67f873)
+    #4 0x67ed01 (/home/r/libxml2/testHTML+0x67ed01)
+    #5 0x4e47cd (/home/r/libxml2/testHTML+0x4e47cd)
+    #6 0x4eb704 (/home/r/libxml2/testHTML+0x4eb704)
+    #7 0x4eb09c (/home/r/libxml2/testHTML+0x4eb09c)
+    #8 0x4ecdb4 (/home/r/libxml2/testHTML+0x4ecdb4)
+    #9 0x4f993b (/home/r/libxml2/testHTML+0x4f993b)
+    #10 0x4ff225 (/home/r/libxml2/testHTML+0x4ff225)
+    #11 0x5008d1 (/home/r/libxml2/testHTML+0x5008d1)
+    #12 0x50ba97 (/home/r/libxml2/testHTML+0x50ba97)
+    #13 0x50bc89 (/home/r/libxml2/testHTML+0x50bc89)
+    #14 0x403df6 (/home/r/libxml2/testHTML+0x403df6)
+    #15 0x4046a0 (/home/r/libxml2/testHTML+0x4046a0)
+    #16 0x7fb1877a5ec4 (/lib/x86_64-linux-gnu/libc-2.19.so+0x21ec4)
+Shadow bytes around the buggy address:
+  0x0c0cbfff9ac0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c0cbfff9ad0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c0cbfff9ae0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c0cbfff9af0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c0cbfff9b00: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+=>0x0c0cbfff9b10: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa[fa]
+  0x0c0cbfff9b20:00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c0cbfff9b30: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c0cbfff9b40: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c0cbfff9b50: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c0cbfff9b60: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:     fa
+  Heap righ redzone:     fb
+  Freed Heap region:     fd
+  Stack left redzone:    f1
+  Stack mid redzone:     f2
+  Stack right redzone:   f3
+  Stack partial redzone: f4
+  Stack after return:    f5
+  Stack use after scope: f8
+  Global redzone:        f9
+  Global init order:     f6
+  Poisoned by user:      f7
+  ASan internal:         fe
+==20154== ABORTING
+
+
+This vulnerability was found by Qihoo 360 Codesafe Team
+Download attachment "libxml_poc.zip" of type "application/octet-stream" (1136 bytes)
