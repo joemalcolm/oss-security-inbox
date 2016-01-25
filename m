@@ -1,28 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/13/3
-Message-ID: <CAH9eYVrC4Jj+NpEF_nM0J-+2zN21e_SS_9-Yq0TQsdnfwFZcyQ@mail.gmail.com>
-Date: Tue, 13 Sep 2016 10:37:33 -0400
-From: Brian Demers <bdemers@...che.org>
-To: announce@...ro.apache.org, "user@...ro.apache.org" <user@...ro.apache.org>, dev@...ro.apache.org,  "security@...che.org" <security@...che.org>, oss-security@...ts.openwall.com,  bugtraq@...urityfocus.com
-Subject: [ANNOUNCE][CVE-2016-6802] Apache Shiro 1.3.2 released
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/25/3
+Message-Id: <20160125075152.2BE1073C278@smtpvmsrv1.mitre.org>
+Date: Mon, 25 Jan 2016 02:51:52 -0500 (EST)
+From: cve-assign@...re.org
+To: s2exqx@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Fwd: out of bound write in libdwarf -20151114
 Content-Type: text/plain; charset=utf-8
 
-The Shiro team is pleased to announce the release of Apache Shiro version 1.3.2.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-This security release contains 1 fix since the 1.3.1 release and is
-available for Download now [1].
+> Invalid write of size 8
+> get_abbrev_array_info
 
-    CVE-2016-6802:
-    Apache Shiro before 1.3.2,  when using a non-root servlet context path,
-    specifically crafted requests can be used to by pass some security servlet
-    filters, resulting in unauthorized access.
+Use CVE-2016-2050.
 
-Release binaries (.jars) are also available through Maven Central and
-source bundles through Apache distribution mirrors.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-For more information on Shiro, please read the documentation[2].
-
--The Apache Shiro Team
-
-[1] http://shiro.apache.org/download.html
-[2] http://shiro.apache.org/documentation.html
+iQIcBAEBCAAGBQJWpdOTAAoJEL54rhJi8gl5aDEP/iXryPStPNjfgnhIvytmvfXO
+/Y/Wo5RtiypUcjFiZj0PYPe8lXHcPEqPA2HKjvahGVphNpAt0uUs+RfMlzCG1hZh
+OnumAXKA4vCWpIFNZB29v0Z4cD0MEbJKD1v9ElUoyGGSmlWBCgSDIb5Jgu2dc1OG
+WrMbKqGvxXtaetmbDGrIjM5HKj+JBz4CtWeQtNobudf4U482SuIPLc2UnqT/ZQ6O
+wkGphEkwn8a7n3/QNieqm1DcyeKDaVGSbDeXFVd+mH4teIoVBddXV288iCw/89Z2
+CXCciwZqiKTKduiYzOfxFQ3OfbTSlH75M4AxMWP8IBhqwGuTsWbdFj74R+V46aby
+aYwNHPpXX6scCWH+wxeLdrzCSnjfBVmBRaJDBcnh8qzkkfuKW/t3TrNBaiNfuvYN
+XfyjCEc4qICIMQV2UlUWS0KCZG8xjygqSL9/82Yw4p4VzY8EGsAluZiLffpCU1Wj
+xqS8m5zaN+CZP28n/eJuniVg3F5wdV+tijuuirzA25HihBI00DW7BGrGoWdClzE8
+kJ3qLn0xDrR/O93UQfektBU+6un/7kBTfxyB1vi9i4D9ckn+73is9STdq5VazC82
+CVSLE8UJKWp2Io1XCUtG2MacO9q3rof/81G3IlCEi8IklnPpbMjJinrBDlCpkJwR
+lBhVB0OVaUVPvtS9u7Ud
+=uTC+
+-----END PGP SIGNATURE-----
