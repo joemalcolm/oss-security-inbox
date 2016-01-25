@@ -1,22 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/22/3
-Message-ID: <HK2PR04MB070661404763CA3B45FF7C219CC90@HK2PR04MB0706.apcprd04.prod.outlook.com>
-Date: Thu, 22 Sep 2016 07:12:32 +0000
-From: ajax secure <ajax4sec@...mail.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-CC: "cve-assign@...re.org" <cve-assign@...re.org>
-Subject: CVE Request: VLC: Potential divide-by-zero issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/25/16
+Message-ID: <20160125194008.GI14069@TC.local>
+Date: Mon, 25 Jan 2016 11:40:08 -0800
+From: Aaron Patterson <tenderlove@...y-lang.org>
+To: security@...e.de, rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com, ruby-security-ann@...glegroups.com
+Subject: [CVE-2015-7581] Object leak vulnerability for wildcard controller routes in Action Pack
 Content-Type: text/plain; charset=utf-8
 
-Hi
+Object leak vulnerability for wildcard controller routes in Action Pack
 
-Xiangkun Jia has discovered a divide-by-zero in VLC, which makes the application crashed and may be caused by buffer overflow. The fix is in
+There is an object leak vulnerability for wildcard controllers in Action Pack.
+This vulnerability has been assigned the CVE identifier CVE-2015-7581.
 
-http://git.videolan.org/?p=vlc/vlc-2.2.git;a=commit;h=85a64e10d665edf8a29526543b5c6fd4923437fd
+Versions Affected:  >= 4.0.0 and < 5.0.0.beta1
+Not affected:       < 4.0.0, 5.0.0.beta1 and newer
+Fixed Versions:     4.2.5.1, 4.1.14.1
 
-Can you assign a CVE for this issue? Thank you.
+Impact
+------
+Users that have a route that contains the string ":controller" are susceptible
+to objects being leaked globally which can lead to unbounded memory growth.
+To identify if your application is vulnerable, look for routes that contain
+":controller".
 
-Regards,
-Xiangkun Jia
-Institute of Software, Chinese Academy of Sciences
+Internally, Action Pack keeps a map of "url controller name" to "controller
+class name".  This map is cached globally, and is populated even if the
+controller class doesn't actually exist.
 
+All users running an affected release should either upgrade or use one of the
+workarounds immediately.
+
+Releases
+--------
+The FIXED releases are available at the normal locations.
+
+Workarounds
+-----------
+There are no feasible workarounds for this issue.
+
+Patches
+-------
+To aid users who aren't able to upgrade immediately we have provided patches for the two supported release series.  They are in git-am format and consist of a single changeset.
+
+* 4-1-wildcard_route.patch - Patch for 4.1 series
+* 4-2-wildcard_route.patch - Patch for 4.2 series
+
+Please note that only the 4.1.x and 4.2.x series are supported at present.  Users of earlier unsupported releases are advised to upgrade as soon as possible as we cannot guarantee the continued availability of security fixes for unsupported releases.
+
+Credits
+-------
+
+-- 
+Aaron Patterson
+http://tenderlovemaking.com/
+
+View attachment "4-1-wildcard_route.patch" of type "text/plain" (1817 bytes)
+
+View attachment "4-2-wildcard_route.patch" of type "text/plain" (1751 bytes)
+
+Content of type "application/pgp-signature" skipped
