@@ -1,52 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/05/1
-Message-Id: <20160605021652.356446C0308@smtpvmsrv1.mitre.org>
-Date: Sat,  4 Jun 2016 22:16:52 -0400 (EDT)
-From: cve-assign@...re.org
-To: bperry.volatile@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Libtorrent http_parser.cpp denial of service
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/25/5
+Message-ID: <87oaca9jeo.fsf@mid.deneb.enyo.de>
+Date: Mon, 25 Jan 2016 09:02:07 +0100
+From: Florian Weimer <fw@...eb.enyo.de>
+To: oss-security@...ts.openwall.com
+Subject: Linux potential division by zero in TCP code
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+While looking for something else entirely, I came across this commit,
+initially reported at <https://lkml.org/lkml/2015/12/21/435>:
 
-> I recently opened a bug on libtorrent regarding malformed HTTP or UPnP
-> responses
-> 
-> https://github.com/arvidn/libtorrent/issues/780
-> https://github.com/arvidn/libtorrent/pull/782
+commit 8b8a321ff72c785ed5e8b4cf6eda20b35d427390
+Author: Yuchung Cheng <ycheng@...gle.com>
+Date:   Wed Jan 6 12:42:38 2016 -0800
 
->> A specially crafted HTTP response from a tracker (or potentially a
->> UPnP broadcast) can crash libtorrent in the parse_chunk_header()
->> function.
->> 
->> AddressSanitizer: SEGV on unknown address
->> 
->> Memcheck, a memory error detector
->> Invalid read of size 1
+    tcp: fix zero cwnd in tcp_cwnd_reduction
+    
+    Patch 3759824da87b ("tcp: PRR uses CRB mode by default and SS mode
+    conditionally") introduced a bug that cwnd may become 0 when both
+    inflight and sndcnt are 0 (cwnd = inflight + sndcnt). This may lead
+    to a div-by-zero if the connection starts another cwnd reduction
+    phase by setting tp->prior_cwnd to the current cwnd (0) in
+    tcp_init_cwnd_reduction().
+    
+    To prevent this we skip PRR operation when nothing is acked or
+    sacked. Then cwnd must be positive in all cases as long as ssthresh
+    is positive:
+    
+    1) The proportional reduction mode
+       inflight > ssthresh > 0
+    
+    2) The reduction bound mode
+      a) inflight == ssthresh > 0
+    
+      b) inflight < ssthresh
+         sndcnt > 0 since newly_acked_sacked > 0 and inflight < ssthresh
+    
+    Therefore in all cases inflight and sndcnt can not both be 0.
+    We check invalid tp->prior_cwnd to avoid potential div0 bugs.
+    
+    In reality this bug is triggered only with a sequence of less common
+    events.  For example, the connection is terminating an ECN-triggered
+    cwnd reduction with an inflight 0, then it receives reordered/old
+    ACKs or DSACKs from prior transmission (which acks nothing). Or the
+    connection is in fast recovery stage that marks everything lost,
+    but fails to retransmit due to local issues, then receives data
+    packets from other end which acks nothing.
 
-Use CVE-2016-5301.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXU4siAAoJEHb/MwWLVhi2KbIP/1tVXGYZeEa2sb34OgsgVYiV
-M8l+7yc+cOfOmPASgA3qo5ANkjX7QHCn1IjZaRM77716b1fM4+PQI49PZHpve9FE
-5fhx1Mn+2hQicbOyEbzkRz/p/qU1seUWwFfo/6rHRtgLDGl/A375PkCWL6nVG6sw
-ufJ57CdKPLPv2/ZL/BEwP2DeYlCAYTd8lHiFeia4VvxG3VEgeYM4kkS9tiHuvcdN
-SlmfTW/1uWL+Q45wmvlRNq4WZhTWjaNm5VYFIrV1E1iagtC9S2OBvnEwZpwDH1VP
-rSTW7erlRz8ZThjKf9zwGpFwFMzkYzx0kDhMBkLOIrvorXLiTx+QJAsdNBycryKy
-LQ8y33OUB+eIHgwaAVoTSAzuWcoC/tjuSNh/JpIyPQtkeKCbBVeosLxmrlLoo9q0
-GImRXM4hOAwIgvPfJQrWbbdP3OV8r3xZd09+MVbTuBkIqr0nLP3ljPAEYZQFhZXQ
-gNETQglchAU8qqLntwO8XjcxeeEncYWoTEnet4fgGfiimXjjQsH/fCM4W27gUPak
-x/8hROSJB7fkldlddtk4wgc8j9mEk4dfzyRbpc99DNWYE4MJ5HkXMS63hkViqq/A
-fQ8EaIoa1LOrq+FFjwitrHMCOHEkHnejDAMMqAnEK/X5VXc9t3SsVlcIg4KWmNmP
-lrec6mVfkk8wKlKpEsNz
-=BR8M
------END PGP SIGNATURE-----
+I haven't analyzed this, but it looks potentially security-relvant
+(although the last paragraph above suggests it's not entirely
+straightforward to trigger).
