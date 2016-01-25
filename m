@@ -1,56 +1,102 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/01/14
-Message-ID: <7f592892df564803a9af7dea4b4ece8a@imshyb02.MITRE.ORG>
-Date: Thu, 1 Dec 2016 14:15:46 -0500
-From: <cve-assign@...re.org>
-To: <andreyknvl@...gle.com>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <dvyukov@...gle.com>, <kcc@...gle.com>
-Subject: Re: CVE Request: Linux: net: out-of-bounds due do a signedness issue when defragging ipv6
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/25/13
+Message-ID: <20160125193641.GF14069@TC.local>
+Date: Mon, 25 Jan 2016 11:36:41 -0800
+From: Aaron Patterson <tenderlove@...y-lang.org>
+To: security@...e.de, rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com, ruby-security-ann@...glegroups.com
+Subject: [CVE-2016-0752] Possible Information Leak Vulnerability in Action View
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Possible Information Leak Vulnerability in Action View
 
-> A fix was sent upstream:
-> https://www.spinics.net/lists/netdev/msg407525.html
-> 
-> More details here:
-> https://groups.google.com/forum/#!topic/syzkaller/GFbGpX7nTEo
+There is a possible directory traversal and information leak vulnerability in
+Action View. This vulnerability has been assigned the CVE identifier
+CVE-2016-0752.
 
->> Problem is that all network headers before fragment header are pulled.
->> Normal ipv6 reassembly will drop the skb when errors occur further down
->> the line.
->> 
->> netfilter doesn't do this
+Versions Affected:  All.
+Not affected:       None.
+Fixed Versions:     5.0.0.beta1.1, 4.2.5.1, 4.1.14.1, 3.2.22.1
 
-Use CVE-2016-9755.
+Impact
+------
+Applications that pass unverified user input to the `render` method in a
+controller may be vulnerable to an information leak vulnerability.
 
-The scope of this CVE does not include the GFbGpX7nTEo discussion of
+Impacted code will look something like this:
 
-  https://groups.google.com/forum/#!original/syzkaller/GFbGpX7nTEo/XIKCs1NwAwAJ
+```ruby
+def index
+  render params[:id]
+end
+```
 
-  "A quick grep shows that the same issue can potentially happen in
-  multiple places across the kernel"
+Carefully crafted requests can cause the above code to render files from
+unexpected places like outside the application's view directory, and can
+possibly escalate this to a remote code execution attack.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+All users running an affected release should either upgrade or use one of the
+workarounds immediately.
 
-iQIcBAEBCAAGBQJYQHVxAAoJEHb/MwWLVhi2ivwQAK972EbLLzsDaSmHZyK/hlEG
-08kbLjW7Fmvs4GjSEb3XWMYI7IZzuZOURbCwyZQ9jcXDdAk371trf7OIX/aImXxM
-L6vFWqU2KZE+p/BkK9BbEJvkExUDPEO2mF10kHVrGBFvmM5u6zGPKynwaWWHZXwo
-j52JVuGvJUxvFOSUVJBKwxhjEgEx4TYnc5M7r0aO9mfAs9/ZbJZmJ33ZXHwS+UAu
-feIwdIZk2dEzY6CUg8vJ+IGxh5O6m/9KECend3yA47GQRprYqIWMkfqg2RUcPjsH
-BX78nJQmZWpahDbbst3PD+VUvLh617hOlipZnBLujoe3ts4dyFbv6QRvVfCMQy/8
-ua1s0su0PpnJNFXuS+MydirJB2VhpLFka7fIjYrmwLdIMHWw90GW7rpTRvrUAW/A
-tKcTL9zPeU75M2VIT4/zonUXK9Gb5nDvdsvSQxWDe4fptlJe8OfmzXbf3KpSaHRd
-8RxqX4VeHiHA/rQCxpMlnq1RK5IIth9YusbK52LBqf5q14WBQsUTIMkUlo0lJ1Qa
-x5Pr3AkVRcOlqCeMmg6IILPHdNfOgoEVYgtlDzh0OZNXk6T6PvK6c3GnMCo8JcFt
-HNuCdLMG4NMr7iX4W0Ptu31IwQC5bBmL7dn07OwJkVDJ5OLYe2QYUBKfofjMgEKg
-GvcQC04f5qGYKWPU14/C
-=YbPe
------END PGP SIGNATURE-----
+Releases
+--------
+The FIXED releases are available at the normal locations.
+
+Workarounds
+-----------
+A workaround to this issue is to not pass arbitrary user input to the `render`
+method.  Instead, verify that data before passing it to the `render` method.
+
+For example, change this:
+
+```ruby
+def index
+  render params[:id]
+end
+```
+
+To this:
+
+```ruby
+def index
+  render verify_template(params[:id])
+end
+
+private
+def verify_template(name)
+  # add verification logic particular to your application here
+end
+```
+
+Patches
+-------
+To aid users who aren't able to upgrade immediately we have provided patches for
+the two supported release series. They are in git-am format and consist of a
+single changeset.
+
+* 3-2-render_data_leak.patch - Patch for 3.2 series
+* 4-1-render_data_leak.patch - Patch for 4.1 series
+* 4-2-render_data_leak.patch - Patch for 4.2 series
+* 5-0-render_data_leak.patch - Patch for 5.0 series
+
+Please note that only the 4.1.x and 4.2.x series are supported at present. Users
+of earlier unsupported releases are advised to upgrade as soon as possible as we
+cannot guarantee the continued availability of security fixes for unsupported
+releases.
+
+Credits
+-------
+Thanks John Poulin for reporting this!
+
+-- 
+Aaron Patterson
+http://tenderlovemaking.com/
+
+View attachment "3-2-render_data_leak.patch" of type "text/plain" (5922 bytes)
+
+View attachment "4-1-render_data_leak.patch" of type "text/plain" (11315 bytes)
+
+View attachment "4-2-render_data_leak.patch" of type "text/plain" (11315 bytes)
+
+View attachment "5-0-render_data_leak.patch" of type "text/plain" (11029 bytes)
+
+Content of type "application/pgp-signature" skipped
