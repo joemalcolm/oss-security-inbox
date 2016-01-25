@@ -1,123 +1,125 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/04/4
-Message-Id: <20161004164544.B3A4342E016@smtpvbsrv1.mitre.org>
-Date: Tue,  4 Oct 2016 12:45:44 -0400 (EDT)
-From: cve-assign@...re.org
-To: meissner@...e.de
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: X.Org security advisory: Protocol handling issues in X Window System client libraries
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/25/8
+Message-ID: <20160125193043.GA14069@TC.local>
+Date: Mon, 25 Jan 2016 11:30:43 -0800
+From: Aaron Patterson <tenderlove@...y-lang.org>
+To: security@...e.de, rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com, ruby-security-ann@...glegroups.com
+Subject: [CVE-2015-7576] Timing attack vulnerability in basic authentication in Action Controller.
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Timing attack vulnerability in basic authentication in Action Controller.
 
-> libX11 - insufficient validation of data from the X server
->        can cause out of boundary memory read (XGetImage())
->        or write (XListFonts()).
->        Affected versions libX11 <= 1.6.3
+There is a timing attack vulnerability in the basic authentication support
+in Action Controller. This vulnerability has been assigned the CVE
+identifier CVE-2015-7576.
 
-> https://cgit.freedesktop.org/xorg/lib/libX11/commit/?id=8ea762f94f4c942d898fdeb590a1630c83235c17 Validation of server responses in XGetImage()
+Versions Affected:  All.
+Not affected:       None.
+Fixed Versions:     5.0.0.beta1.1, 4.2.5.1, 4.1.14.1, 3.2.22.1
 
-Use CVE-2016-7942.
+Impact
+------
+Due to the way that Action Controller compares user names and passwords in
+basic authentication authorization code, it is possible for an attacker to
+analyze the time taken by a response and intuit the password.
 
+For example, this string comparison:
 
-> https://cgit.freedesktop.org/xorg/lib/libX11/commit/?id=8c29f1607a31dac0911e45a0dd3d74173822b3c9 The validation of server responses avoids out of boundary accesses.
+  "foo" == "bar"
 
-Use CVE-2016-7943.
+is possibly faster than this comparison:
 
+  "foo" == "fo1"
 
-> libXfixes - insufficient validation of data from the X server
->       can cause an integer overflow on 32 bit architectures.
->       Affected versions : libXfixes <= 5.0.2
-> https://cgit.freedesktop.org/xorg/lib/libXfixes/commit/?id=61c1039ee23a2d1de712843bed3480654d7ef42e Integer overflow on illegal server response
+Attackers can use this information to attempt to guess the username and
+password used in the basic authentication system.
 
-Use CVE-2016-7944.
+You can tell you application is vulnerable to this attack by looking for
+`http_basic_authenticate_with` method calls in your application.
 
+All users running an affected release should either upgrade or use one of
+the workarounds immediately.
 
-> libXi - insufficient validation of data from the X server
->       can cause out of boundary memory access or
->       endless loops (Denial of Service).
->       Affected versions libXi <= 1.7.6
-> https://cgit.freedesktop.org/xorg/lib/libXi/commit/?id=19a9cd607de73947fcfb104682f203ffe4e1f4e5 Properly validate server responses.
+Releases
+--------
+The FIXED releases are available at the normal locations.
 
-Use CVE-2016-7945 for all of the integer overflows
+Workarounds
+-----------
+If you can't upgrade, please use the following monkey patch in an initializer
+that is loaded before your application:
 
-Use CVE-2016-7946 for all of the other mishandling of the reply data.
+```
+$ cat config/initializers/basic_auth_fix.rb
+module ActiveSupport
+  module SecurityUtils
+    def secure_compare(a, b)
+      return false unless a.bytesize == b.bytesize
 
+      l = a.unpack "C#{a.bytesize}"
 
-> libXrandr - insufficient validation of data from the X server
->       can cause out of boundary memory writes.
->       Affected versions: libXrandr <= 1.5.0
-> https://cgit.freedesktop.org/xorg/lib/libXrandr/commit/?id=a0df3e1c7728205e5c7650b2e6dce684139254a6 Avoid out of boundary accesses on illegal responses
+      res = 0
+      b.each_byte { |byte| res |= byte ^ l.shift }
+      res == 0
+    end
+    module_function :secure_compare
 
-Use CVE-2016-7947 for all of the integer overflows
+    def variable_size_secure_compare(a, b)
+      secure_compare(::Digest::SHA256.hexdigest(a), ::Digest::SHA256.hexdigest(b))
+    end
+    module_function :variable_size_secure_compare
+  end
+end
 
-Use CVE-2016-7948 for all of the other mishandling of the reply data.
-
-
-> libXrender - insufficient validation of data from the X server
->       can cause out of boundary memory writes.
->       Affected version: libXrender <= 0.9.9
-
-> https://cgit.freedesktop.org/xorg/lib/libXrender/commit/?id=9362c7ddd1af3b168953d0737877bc52d79c94f4 Validate lengths while parsing server data.
-
-Use CVE-2016-7949.
-
-
-> https://cgit.freedesktop.org/xorg/lib/libXrender/commit/?id=8fad00b0b647ee662ce4737ca15be033b7a21714 Avoid OOB write in XRenderQueryFilters
-
-Use CVE-2016-7950.
-
-
-> XRecord - insufficient validation of data from the X server
->         can cause out of boundary memory access or
->       endless loops (Denial of Service).
->        Affected version libXtst <= 1.2.2
-> https://cgit.freedesktop.org/xorg/lib/libXtst/commit/?id=9556ad67af3129ec4a7a4f4b54a0d59701beeae3 Out of boundary access and endless loop in libXtst
-
-Use CVE-2016-7951 for all of the integer overflows
-
-Use CVE-2016-7952 for all of the other mishandling of the reply data.
-
-
-> libXv - insufficient validation of data from the X server
->         can cause out of boundary memory and memory corruption.
->       CVE-2016-5407
->       affected versions libXv <= 1.0.10
-> https://cgit.freedesktop.org/xorg/lib/libXv/commit/?id=d9da580b46a28ab497de2e94fdc7b9ff953dab17 Protocol handling issues in libXv
-
-(aka 87b3c94)
-
-People may want to look at https://access.redhat.com/security/cve/cve-2016-5407
-in the coming days for additional information.
+module ActionController
+  class Base
+    def self.http_basic_authenticate_with(options = {})
+      before_action(options.except(:name, :password, :realm)) do
+        authenticate_or_request_with_http_basic(options[:realm] || "Application") do |name, password|
+          # This comparison uses & so that it doesn't short circuit and
+          # uses `variable_size_secure_compare` so that length information
+          # isn't leaked.
+          ActiveSupport::SecurityUtils.variable_size_secure_compare(name, options[:name]) &
+            ActiveSupport::SecurityUtils.variable_size_secure_compare(password, options[:password])
+        end
+      end
+    end
+  end
+end
+```
 
 
-> libXvMC - insufficient validation of data from the X server
->       can cause a one byte buffer read underrun.
->       Affected versions: libXvMC <= 1.0.9
-> https://cgit.freedesktop.org/xorg/lib/libXvMC/commit/?id=2cd95e7da8367cccdcdd5c9b160012d1dec5cbdb Avoid buffer underflow on empty strings.
+Patches
+-------
+To aid users who aren't able to upgrade immediately we have provided patches for
+the two supported release series. They are in git-am format and consist of a
+single changeset.
 
-Use CVE-2016-7953.
+* 4-1-basic_auth.patch - Patch for 4.1 series
+* 4-2-basic_auth.patch - Patch for 4.2 series
+* 5-0-basic_auth.patch - Patch for 5.0 series
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Please note that only the 4.1.x and 4.2.x series are supported at present. Users
+of earlier unsupported releases are advised to upgrade as soon as possible as we
+cannot guarantee the continued availability of security fixes for unsupported
+releases.
 
-iQIcBAEBCAAGBQJX89wWAAoJEHb/MwWLVhi2B1oQAIpH3CzWwMQ3IAuGhWgV5YvZ
-LSmNkx+lXjT2yFHpkOxie4JgX0udC/KbK+SnTKZNS3pP3Bkq0A6M1nw3o1bOFyeL
-qTAIncyXiyWEIhWsU/1VXExdlWY3ZakxEZiKxkHZqAgr96+p0+3w8I1URpDmE4Dz
-G552K/E3OOrxFBgd5tj724HXYkyrXaWbpxAvYGMt971OHplv5fVKCZnakDL11DVR
-4yFGJmFTVsN28X2qgOJif5K6m8BlP3X6y3349FygbfdwWrEUVGWI+X5izL5G11Bf
-vxJ24ibfi3f9f5ktT2m561k4ftR/nMIyFJiRv+3L2MGIsPFIgjvp5SyHsvEZKh4Y
-GTLGggTQJ1dMrKEdrTGXizyewRVga07+8h9XtPgPpHoqNk3hjnkC0LHiA7lHh+HR
-YCyID6lAR1BGnfvEW5tkf9dQszk0Xoi+rbF/x5fDxOhCYA/8ywJmd3O6QUefLaHG
-1BLJCoH/+7FUg9MMKKGDBrova0m1mwcDHncbSNz0aA7Scti06WX1xLZP3w2VT079
-eD1Q7JQ8A8xeEVqCrRLyI0B+Y3RcSIoZUMLjwVjN+9ao29JmAykAH6kyoT0zfB+u
-F8tVW0BRQudxuhTEtLPnK2EfBb+gG5asMPLSNZixYDe+hHh5jM1VMzv6GE90mlqA
-mQ0YAv9uozEzoV/R5ADg
-=Lv54
------END PGP SIGNATURE-----
+Credits
+-------
+
+Thank you to Daniel Waterworth for reporting the problem and working with us to
+fix it.
+
+-- 
+Aaron Patterson
+http://tenderlovemaking.com/
+
+View attachment "3-2-basic_auth.patch" of type "text/plain" (3133 bytes)
+
+View attachment "4-1-basic_auth.patch" of type "text/plain" (3039 bytes)
+
+View attachment "4-2-basic_auth.patch" of type "text/plain" (2533 bytes)
+
+View attachment "5-0-basic_auth.patch" of type "text/plain" (2534 bytes)
+
+Content of type "application/pgp-signature" skipped
