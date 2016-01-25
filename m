@@ -1,40 +1,81 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/04/1
-Message-ID: <402a5fef90b34b4d944e9a62a089723a@imshyb02.MITRE.ORG>
-Date: Fri, 4 Nov 2016 03:03:42 -0400
-From: <cve-assign@...re.org>
-To: <rootredrain@...il.com>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <dickey@...isible-island.net>
-Subject: Re: CVE request:Lynx invalid URL parsing with '?'
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/25/9
+Message-ID: <20160125193202.GB14069@TC.local>
+Date: Mon, 25 Jan 2016 11:32:02 -0800
+From: Aaron Patterson <tenderlove@...y-lang.org>
+To: security@...e.de, rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com, ruby-security-ann@...glegroups.com
+Subject: [CVE-2016-0751] Possible Object Leak and Denial of Service attack in Action Pack
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Possible Object Leak and Denial of Service attack in Action Pack
 
-> lynx  "http://google.com?@...kdog.me/"
-> wrongly make lynx send a request to hackdog.me
+There is a possible object leak which can lead to a denial of service
+vulnerability in Action Pack. This vulnerability has been
+assigned the CVE identifier CVE-2016-0751.
 
-Use CVE-2016-9179.
+Versions Affected:  All.
+Not affected:       None.
+Fixed Versions:     5.0.0.beta1.1, 4.2.5.1, 4.1.14.1, 3.2.22.1
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Impact
+------
+A carefully crafted accept header can cause a global cache of mime types to
+grow indefinitely which can lead to a possible denial of service attack in
+Action Pack.
 
-iQIcBAEBCAAGBQJYHDILAAoJEHb/MwWLVhi2dR0P/2Zr1VU0tQcBP4Tu543JzPV6
-CiHZdspG7fRKuCOaH8QHFHXFWksirFSumHfSPSLt8QjQ9IQJc9iCqan/0Zg4A/5C
-yNSnpqdHMfGMK/z+oiuFBNbqEu3ik1DS63a3KR/H9O1qqfyDAx3BeAbXIV3GLNi1
-JqspcJy6XB/O0s2N5K8FfjG2/mwhAX+tESncJB7qssqR4x6DXfADXCeYmGcaE3Y2
-iucJGwM8mtJRWLibqIbg8zbtVImCkRMD5XC00ZbVY/i8+4DwE972Z1solumACD0i
-bI4y1T+5I8MEndCJiZ2viHqD/BItfjaPS6swEnV713WE1/5xTT1b/ser/lSZ0OwE
-/0lB04X1OmlU/cO2c+zzarkYlJYAzIZz6PedMy0oSO5CkZ3RsyqkTTxj9EueE12F
-Fcwoe01zZGNUmbz+C+2ObAn+nP7uFowG59ojfbOBE0oTpFBXiR9EypvkshehwU9S
-M0vgX+PZ8CTH8+Cy83f9A3JPdIDkdJYg59QOWZ5FslI0PdgTPxyKNfxobesf/nFV
-VmTMa6ht8uxfYZ/9w9BnwwJOC0641SvxpMBa2fRaUFiY8Iham+UOa6IljtVd5y2F
-hL7C2lVNracS2pCUSvL8JobCjaA5HPgKni/jf1chHjkRtMouWu0jDi8hdZQwI6W4
-tyL6v/kL4pVDf4OSBXw9
-=21bX
------END PGP SIGNATURE-----
+All users running an affected release should either upgrade or use one of the
+workarounds immediately.
+
+Releases
+--------
+The FIXED releases are available at the normal locations.
+
+Workarounds
+-----------
+This attack can be mitigated by a proxy that only allows known mime types in
+the Accept header.
+
+Placing the following code in an initializer will also mitigate the issue:
+
+```ruby
+require 'action_dispatch/http/mime_type'
+
+Mime.const_set :LOOKUP, Hash.new { |h,k|
+  Mime::Type.new(k) unless k.blank?
+}
+```
+
+Patches
+-------
+To aid users who aren't able to upgrade immediately we have provided patches for
+the two supported release series. They are in git-am format and consist of a
+single changeset.
+
+* 5-0-mime_types_leak.patch - Patch for 5.0 series
+* 4-2-mime_types_leak.patch - Patch for 4.2 series
+* 4-1-mime_types_leak.patch - Patch for 4.1 series
+* 3-2-mime_types_leak.patch - Patch for 3.2 series
+
+Please note that only the 4.1.x and 4.2.x series are supported at present. Users
+of earlier unsupported releases are advised to upgrade as soon as possible as we
+cannot guarantee the continued availability of security fixes for unsupported
+releases.
+
+Credits
+-------
+Aaron Patterson <3<3
+
+
+-- 
+Aaron Patterson
+http://tenderlovemaking.com/
+
+View attachment "3-2-mime_types_leak.patch" of type "text/plain" (2126 bytes)
+
+View attachment "4-1-mime_types_leak.patch" of type "text/plain" (1983 bytes)
+
+View attachment "4-2-mime_types_leak.patch" of type "text/plain" (1983 bytes)
+
+View attachment "5-0-mime_types_leak.patch" of type "text/plain" (1998 bytes)
+
+Content of type "application/pgp-signature" skipped
