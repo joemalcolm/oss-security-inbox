@@ -1,52 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/23/9
-Message-ID: <1439716096.1919046.1471986277289.JavaMail.zimbra@redhat.com>
-Date: Tue, 23 Aug 2016 17:04:37 -0400 (EDT)
-From: CAI Qian <caiqian@...hat.com>
-To: cve-assign@...re.org
-Cc: oss-security@...ts.openwall.com
-Subject: cve request: overlayfs: Fix dentry reference leak
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/25/4
+Message-Id: <20160125075349.450551BE0EA@smtpvbsrv1.mitre.org>
+Date: Mon, 25 Jan 2016 02:53:49 -0500 (EST)
+From: cve-assign@...re.org
+To: wmealing@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Linux kernel : Denial of service with specially crafted key file.
 Content-Type: text/plain; charset=utf-8
 
-=== Description ===
-commit ab79efab0a0ba01a74df782eb7fa44b044dae8b5 upstream.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-In ovl_copy_up_locked(), newdentry is leaked if the function exits through
-out_cleanup as this just to out after calling ovl_cleanup() - which doesn't
-actually release the ref on newdentry.
+> An issue with ASN1.1 DER decoder was reported that a specially created
+> key can lead to a kernel panic via x509 certificate DER signature
+> parsing.
+> 
+> Vulnerable code:
 
-The out_cleanup segment should instead exit through out2 as certainly
-newdentry leaks - and possibly upper does also, though this isn't caught
-given the catch of newdentry.
+>> crypto/asymmetric_keys/public_key.c
 
-Without this fix, something like the following is seen:
+> int public_key_verify_signature(const struct public_key *pk,
+>                                 const struct public_key_signature *sig)
+> {
+>         const struct public_key_algorithm *algo;
+> 
+>         BUG_ON(!pk);
+>         BUG_ON(!pk->mpi[0]);
+> 
+> An attacker could craft a BER file without a public key and panic the system.
 
-	BUG: Dentry ffff880023e9eb20{i=f861,n=#ffff880023e82d90} still in use (1) [unmount of tmpfs tmpfs]
-	BUG: Dentry ffff880023ece640{i=0,n=bigfile}  still in use (1) [unmount of tmpfs tmpfs]
+> https://bugzilla.redhat.com/show_bug.cgi?id=1300237
 
-when unmounting the upper layer after an error occurred in copyup.
+Use CVE-2016-2053.
 
-An error can be induced by creating a big file in a lower layer with
-something like:
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-	dd if=/dev/zero of=/lower/a/bigfile bs=65536 count=1 seek=$((0xf000))
-
-to create a large file (4.1G).  Overlay an upper layer that is too small
-(on tmpfs might do) and then induce a copy up by opening it writably.
-
-=== POC Exploit ===
-This can be reproduced in a DevOps environment when the docker runtime storage is on overlayfs over
-xfs as a local DoS. An attacker access to a developer account could run a crafted image from elsewhere
-like docker by creating a big file in the container filesystem and try to read it running by any
-user like below by forcing xfs_file_open() returns -EFBIG,
-
-$ cat Dockerfile
-FROM fedora
-USER nobody
-RUN dd if=/dev/zero of=/home/nobody/bigfile bs=1024k seek=2046 count=1
-ADD open /home/nobody
-CMD ["/home/nobody/open", "/home/nobody/bigfile"]
-
-and possibly trigger kernel dentry leaks inside the container that will eventually running out of
-kernel resources for other developers. Hence, a local DoS.
-   CAI Qian
+iQIcBAEBCAAGBQJWpdMuAAoJEL54rhJi8gl5SRMP/3rjH4bN46xreT6aN9KS6CR6
+PzOg7gaoVxRKQb6Ygc8NoxLCoSpnetUv14T3CSlN7J6RgVz6jy+CBOyIbkzMgm7S
+Le8DttB6hiv0shB+LqZhVnajET7r6mGyrYYiJ0rgsNaupI1QZMnwHGv2yySvSkWY
+SSp65kpmNqQ4J9SWxJ9EiMYjrhCEa9q9hsTmglosTwVVqR87wyIWFvmvyDCZlt+f
+9or4hrfJjPCLK9q9iJU18SlczTK/VNsJJMHOI6ZQb0lZEjX9MvnwherHnVe5VE1y
+a5ABDMFNgEiFeQWOm+pViwoGDG2EtDOHEqd2ZplPdW9MUwFKMeqAlZ+xy6M/r477
+Wqw25I9iwAVnKJ2c9a/JLQr4vFWXoLGjYmaT3dp8F7NrQO2VB/W0vG2VWlYltrgp
+drRvy0P10xFGsN/CxjgTw9v8CNkRUSRI4wgVNsm+SBS+PNnLwH+FgFOhS6XNFPRy
+R4EvIOec0WHrkPQRfL0qIlqA6sUfNuwQfQO4CvksEtpOPeeDVUwDVXwkMULWWSzL
+3yOE3eMGgP7ALJ88TS2uzMGH0U5AfaBAnDmepo3RI7a4kbqHJt68pKkf3uuF1HIw
+dp35mQ7gGJHtWoPAVZ/F7DdJkgU2hEecTle4ZP3D2c5rTpYQCS0gDkMEqjDvZ+BF
+jbbGSEREYy5xgjenLML7
+=NE0Y
+-----END PGP SIGNATURE-----
