@@ -1,77 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/24/1
-Message-ID: <20160924134419.2wc6wvb3i5tnzd6c@eldamar.local>
-Date: Sat, 24 Sep 2016 15:44:19 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Subject: CVE Request: irssi: information disclosure vulnerabilit in buf.pl
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/26/7
+Message-Id: <20160126174912.8D47B73C4C1@smtpvmsrv1.mitre.org>
+Date: Tue, 26 Jan 2016 12:49:12 -0500 (EST)
+From: cve-assign@...re.org
+To: limingxing@....cn
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Out-of-bounds Read in the libxml2's htmlParseNameComplex() function
 Content-Type: text/plain; charset=utf-8
 
-Hi
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-An information disclosure vulnerability in the buf.pl script provided
-by irssi, a terminal based IRC client has been found. Quoting the
-advisory at:
+> HTMLparser.c line:2517 :
+> 
+>        return(xmlDictLookup(ctxt->dict, ctxt->input->cur - len, len));
+> 
+> "ctxt->input->cur - len"  cause Out-of-bounds Read.
+> 
+> heap-buffer-overflow
+> READ of size 1
 
-https://irssi.org/2016/09/22/buf.pl-update/
+Use CVE-2016-2073.
 
-                  ]
-> buf.pl update available
-> 
-> Posted on September 22^nd 2016
-> 
-> An information disclosure vulnerability was found, reported and fixed
-> in the buf.pl script by its author.
-> 
-> CWE Classification: CWE-732, CWE-538
-> 
-> Impact
-> 
-> Other users on the same machine may be able to retrieve the whole
-> window contents after /UPGRADE when the buf.pl script is loaded.
-> Furthermore, this dump of the windows contents is never removed
-> afterwards.
-> 
-> Since buf.pl is also an Irssi core script and we recommended its use
-> to retain your window content, many people could potentially be
-> affected by this.
-> 
-> Remote users may be able to retrieve these contents when combined with
-> other path traversal vulnerabilities in public facing services on that
-> machine.
-> 
-> Detailed analysis
-> 
-> buf.pl restores the scrollbuffer between “/upgrade”s by writing the
-> contents to a file, and reading that after the new process was
-> spawned. Through that file, the contents of (private) chat
-> conversations may leak to other users.
-> 
-> Mitigating facts
-> 
-> Careful users with a limited umask (e.g. 077) are not affected by this
-> bug.  However, most Linux systems default to a umask of 022, meaning
-> that files written without further restricting the permissions, are
-> readable by any user.
-> 
-> Affected versions
-> 
-> All up to 2.13
-> 
-> Fixed versions
-> 
-> buf.pl 2.20
-> 
-> Resolution
-> 
-> Update the buf.pl script with the latest version from scripts.irssi.org.
 
-Upstream fix:
-https://github.com/irssi/scripts.irssi.org/commit/f1b1eb154baa684fad5d65bf4dff79c8ded8b65a
+> From: Salvatore Bonaccorso
+> 
+> While checking upstream bugzilla to see if that was reported I noticed
+> 
+> https://bugzilla.gnome.org/show_bug.cgi?id=749115
+> 
+> Does this have the same root cause?
 
-Debian Bug report: https://bugs.debian.org/838762
+The CVE-2016-2073 PoC is an '&' followed by three characters, one of
+which is a 0273 character. The PoC in 749115 has an unexpected
+character immediately after a "<!DOCTYPE html" substring. We feel that
+the CVE-2016-2073 report can have that unique ID on the basis of (at
+least) a different attack methodology. CVE assignment for 749115 is
+also possible unless 749115 already has a CVE ID.
 
-Could a CVE be assigned for this issue?
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Regards,
-Salvatore
+iQIcBAEBCAAGBQJWp7B+AAoJEL54rhJi8gl5DrYP/210C002flIvBM/PY66OYkJw
+BXYc5DDLMANTpXaXoaHqYGODfRtwQjZF/sFYUgtOxFTYi3UCHxOpRNjhU77OOlQA
+7aNSZ+PU/Tl15dt7PEJWdNuK0mD9Lofzg6HhxkJD6F6EQHarH0NHIbdEGV6WKGGR
+c2hACkO8WLCQxd+914f5YJBPsd+pKmWADKcmjV3yQMSr+6irHfzp+9UEDX/ma/3b
+9yRwy+7Ubse2t5GNq/F4lepT2fF/lTLweNhSJgdzPg59/NGjf9ZBD14d/RmrRCgR
+KLlIjavWH8fGOAecBcyz7zVJAadQFOVy4DuCyOrvcVMJ6cCPjfv+oZD1r2COhPHW
+9kYlHo5icgJQU8m796+H4pC9a71ckCFZ2EZ7uy8nWS1SG7WmUMJjE5lryt4O9MFt
+8mmiJFXZGpX1gfaq2xHLkptGNMoaTkl+id2Vr/j2ATSCXHV3oNs4+IQLThp9vZ0Y
+q+fajmn0Yp0sO34/vWmDzoxvNWTuwf+LgPjFNsirG80a1Ivv2XtHaxh8G2xTCZh4
+L6gv9PT3ha/UK2RKQxB7atIt/LS2I+DqD72TckY69JygqFg43Q+QAdGQKn1YP2tA
+pgs1SmgAtfOCPoph+4BYZAyIvmMzVDfAI4kjJE7AlZqAIwO3mIxaDFEd1OW3u/JY
+fYAMTYnQVg9Ld8+b+XPY
+=QCuy
+-----END PGP SIGNATURE-----
