@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["397" "Tuesday" "10" "November" "2020" "13:37:31" "-0500" "Len Brown" "lenb@kernel.org" "<CAJvTdK=tZjaiCaS=1=L=r0ZKg16jLS0OMqQ3bfxmhnopMo59Gw@mail.gmail.com>" "13" "[oss-security] CVE-2020-8694 RAPL power meter, Linux intel_powercap" nil nil nil "11" "2020111018:37:31" "[oss-security] CVE-2020-8694 RAPL power meter, Linux intel_powercap" (number mark "U       lenb@kernel. Nov 10   13/397   " thread-indent "\"[oss-security] CVE-2020-8694 RAPL power meter, Linux intel_powercap\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2020-8694 RAPL power meter, Linux intel_powercap" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1358" "Tuesday" "26" "January" "2016" "02:02:28" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160126070228.0FB366C08F0@smtpvmsrv1.mitre.org>" "33" "[oss-security] Re: Linux potential division by zero in TCP code" "^Cc:" nil nil "1" "2016012607:02:28" "[oss-security] Re: Linux potential division by zero in TCP code" (number mark "        cve-assign@m Jan 26   33/1358  " thread-indent "\"[oss-security] Re: Linux potential division by zero in TCP code\"\n") "<87oaca9jeo.fsf@mid.deneb.enyo.de>" ("<87oaca9jeo.fsf@mid.deneb.enyo.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 18351 invoked by uid 550); 10 Nov 2020 18:51:14 -0000
+Received: (qmail 3183 invoked by uid 550); 26 Jan 2016 07:03:57 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,41 +11,46 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 1846 invoked from network); 26 Jan 2016 07:02:39 -0000
+In-Reply-To: <87oaca9jeo.fsf@mid.deneb.enyo.de>
+Message-Id: <20160126070228.0FB366C08F0@smtpvmsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Tue, 26 Jan 2016 02:02:28 -0500 (EST)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13825 invoked from network); 10 Nov 2020 18:37:54 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=Uj8MpUj0/GWybRLiyj/fECoyAz7EW1g/jV1qpkFG5XY=;
-        b=qg+NqfaXSABKd7zuR1pE8e150npUMqXth+D4olW97NBM/94j25Bbf9d+PfeYEcrqfe
-         9mRIdUUuUdmESYaIeT5HW4uz9C0n6eyrQpaTwQUtdUxvhm7lrcwEfoJbQGvaM0ueO/p3
-         apBrfk0WwiP9rvj3vEwalgaFYDvJYynDGxmVDGsNbfy40PycPJ+TMfsaQquQBgeaTTUu
-         /wTooXvzRVA/rSAkUlIuB+js2RwX9DCXmr8M3SXBJBwBYBT+/DDzrD9RCSxOvXZIl4Qa
-         OCdnyDJJitbRKRDXKcVL5P1fdHqSisdE41L/cFS2mxIzjPxUW3/cHhJL3uMH7D4N6jf0
-         PHmg==
-X-Gm-Message-State: AOAM532I6W/4aFjVTL8UE88pKSplt3excP1ljNb0Dx9kMkD2V7VagGsi
-	jdU0HTITGpAAiwFrCCK2Y9ZpW04fw6LksJNDzg7YPq46uFtY+w==
-X-Google-Smtp-Source: ABdhPJya5m3Jaa7GPGqrJeIFmgekwVAr5DbKI1emdZao2BORG4oQ2m8cLDJfXStLwwZ9aTmQ8jqFOe/ZILNBPBQ4xoM=
-X-Received: by 2002:a17:907:1112:: with SMTP id qu18mr21108097ejb.507.1605033462885;
- Tue, 10 Nov 2020 10:37:42 -0800 (PST)
-MIME-Version: 1.0
-From: Len Brown <lenb@kernel.org>
-Date: Tue, 10 Nov 2020 13:37:31 -0500
-Message-ID: <CAJvTdK=tZjaiCaS=1=L=r0ZKg16jLS0OMqQ3bfxmhnopMo59Gw@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] CVE-2020-8694 RAPL power meter, Linux intel_powercap
+Subject: [oss-security] Re: Linux potential division by zero in TCP code
+To: fw@deneb.enyo.de
 
-FYI,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Today Linux was patched:
+> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=8b8a321ff72c785ed5e8b4cf6eda20b35d427390
 
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=949dd0104c496fa7c14991a23c03c62e44637e71
+> This may lead to a div-by-zero if the connection starts another cwnd
+> reduction phase by setting tp->prior_cwnd to the current cwnd (0) in
+> tcp_init_cwnd_reduction().
 
-to help address the vulnerability of employing the hardware RAPL power
-meter in a side-channel attack.
+Use CVE-2016-2070.
 
-https://www.intel.com/content/www/us/en/security-center/advisory/intel-sa-00389.html
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-thanks,
-Len Brown, Intel Open Source Technology Center
+iQIcBAEBCAAGBQJWpxcsAAoJEL54rhJi8gl5VhcP/jESXeUc6StXDhNzxWKwNAMX
+HTJ6wMy29qNG2fvAQWPnS63CVvPbnlkbpLDpQ9b9oG0lJ76IPXjgBI2k9ZOUbaBO
+A8vRk4umLqEP5WySGa5GnJsz3MT01tD1nCsTMLaE0YxjL/4Jx7lpiC6HlKCz4yER
+6sEqrxqVhLEVYgQ1N+7+kay1HH6yNkoqu00Z1YjzlihoWFYJ1OGicdMuz6DojBOb
+fSKQBaSC471xNN3+NdEq/2b2C2mrqwxV9kTo34Wp0MOO6gXPy1cL89pvU9urN8WF
+c89+BM/alw2lZmHNtKKuQpYDxBoaA/NQiDGB866FeUrTp4N5CSN2wWSuINnBkQjl
+jCDp38o/LRwuzf1CXYMxJlf7ut2D+t5AWKC/ZfAHcb3CJyHRJ+Pdy1jpeJRWLt/o
+3YNvy/oxGhUSRAej0fsmCZlTfNV7xPdKWzfBizpZIDIHf73yJChVn3Sh2qXe+IAQ
+oJxnj9UYiafTKaHnJFmRUxUf0MtPBy5gu637hk7ej1tBqZY3HmaKxpth9d7BSKhV
+z4NNNhD+8TA2QQkgWiQkqOyc0gEDFI7mqqHkrCr0N0ybBQW7n5f+yXzvKQCcN2qa
+rvW5sQ727d1MnzmWeZYWiVY5w+RnxzwQgYrdcROLuV2zEgY6ENHhLVO5dObqErgZ
+tV9XXTx2FUTvFwOxMSzu
+=m2BO
+-----END PGP SIGNATURE-----
