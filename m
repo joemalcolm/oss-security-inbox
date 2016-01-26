@@ -1,61 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/14/5
-Message-ID: <CANO=Ty1yr2POsK=ntTap9dUKRTFQCxcdDza-HxHyPLOS1A2kDA@mail.gmail.com>
-Date: Wed, 14 Dec 2016 07:26:34 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: vulnerable version: 4.8.12 and previous versions but xml file says: cpe:/o:linux:linux_kernel:4.8.12"/>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/26/6
+Message-ID: <20160126170245.GA2314@eldamar.local>
+Date: Tue, 26 Jan 2016 18:02:45 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Out-of-bounds Read in the libxml2's htmlParseNameComplex() function
 Content-Type: text/plain; charset=utf-8
 
-Why are you complaining about a nist.gov website/data on an opensource
-security mailing list/to MITRE? (hint: we can't fix it and neither can
-MITRE) Please contact NIST.
+Hi,
 
+On Mon, Jan 25, 2016 at 08:01:08AM +0000, limingxing wrote:
+> 
+> 
+> Hello,
+> We find a vulnerability in the way libxml2's htmlParseNameComplex() function parsed certain xml file.
+> I was successful in reproducing this issuel in the latest version of libxml2(git clone git://git.gnome.org/libxml2).
+> HTMLparser.c line:2517 :
+> 
+>        return(xmlDictLookup(ctxt->dict, ctxt->input->cur - len, len));
+> 
+> "ctxt->input->cur - len"  cause Out-of-bounds Read.
 
+While checking upstream bugzilla to see if that was reported I noticed
 
-On Wed, Dec 14, 2016 at 1:19 AM, Sona Sarmadi <sona.sarmadi@...a.com> wrote:
+https://bugzilla.gnome.org/show_bug.cgi?id=749115
 
-> Hi all,
->
-> It seems that nvd.xml files (e.g. nvdcve-2.0-2016.xml) does not list
-> vulnerable versions correctly. One example is the following CVE. Vulnerable
-> versions are according to the link below "linux kernel 4.8.12 and previous
-> versions":
->
-> https://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2016-8655
->
->       Race condition in net/packet/af_packet.c in the Linux kernel through
-> 4.8.12 ..
->
->
-> Vulnerable software and versions
-> + Configuration 1
-> * OR
-> * cpe:/o:linux:linux_kernel:4.8.12 and previous versions
->
-> While in the xml file it just mention "cpe:/o:linux:linux_kernel:4.8.12"
->
-> nvdcve-2.0-2016.xml:
-> ..
-> <entry id="CVE-2016-9919">
->     <vuln:vulnerable-configuration id="http://nvd.nist.gov/">
->       <cpe-lang:logical-test operator="OR" negate="false">
->         <cpe-lang:fact-ref name="cpe:/o:linux:linux_kernel:4.8.12"/>
->       </cpe-lang:logical-test>
->     </vuln:vulnerable-configuration>
->     <vuln:vulnerable-software-list>
->       <vuln:product>cpe:/o:linux:linux_kernel:4.8.12</vuln:product>
->
-> Cheers
-> //Sona
->
+Does this have the same root cause?
 
-
-
--- 
-
---
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
-
+Regards,
+Salvatore
