@@ -1,44 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/16/6
-Message-Id: <20161016025220.4E2E36C0D4B@smtpvmsrv1.mitre.org>
-Date: Sat, 15 Oct 2016 22:52:20 -0400 (EDT)
-From: cve-assign@...re.org
-To: ago@...too.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: graphicsmagick: stack-based buffer overflow in ReadSCTImage (sct.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/26/5
+Message-ID: <d47bb80.ff77.1527e58ea1c.Coremail.xiaoqixue_1@163.com>
+Date: Tue, 26 Jan 2016 22:31:42 +0800 (CST)
+From: xiaoqixue_1  <xiaoqixue_1@....com>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: a bug in gif2rgb.c in giflib-5.1.2
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
 
-> https://blogs.gentoo.org/ago/2016/09/15/graphicsmagick-stack-based-buffer-overflow-in-readsctimage-sct-c/
 
-> AddressSanitizer: stack-buffer-overflow ... READ of size 769
-> 0x7f73e9a8399f in ReadSCTImage ... GraphicsMagick-1.3.25/coders/sct.c:126
 
-> http://hg.code.sf.net/p/graphicsmagick/code/rev/0a0dfa81906d
 
-Use CVE-2016-8682.
+We find a memory allocation whose size could be zero in gif2rgb.c. 
+and It will result to several memory out of bound read and write. the bug in gif2rgb.c:386 :
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+386 if ((ScreenBuffer = (GifRowType *) 
+387 malloc(GifFile->SHeight * sizeof(GifRowType))) == NULL) 
+388 GIF_EXIT("Failed to allocate memory required, aborted.");
 
-iQIcBAEBCAAGBQJYAudjAAoJEHb/MwWLVhi2Cd4P/2uPjJJV28gcOqSxM0Xj1TSh
-UIn+ZanqSHgiWTIlWtTyj2dc6VPvvQDNNInI4TAHhUSvKxS/LW3g2UiH0hekIjVh
-JdUkDQvFfgh0gfHpVtqHejfHQEn7ImG5a7JqwXzTrtzQRcGcQQU7UIXkNV+ekdpw
-n2TUNDaKej8gTHt586futWz3v3Q0v5e8PCZuT1zKUyXSX0uLpk3r/fUnxyfjvR3z
-M4bStOOgTR3MJUw45GV02rTbZI/huQEdqW2ESc61d56inr5Vo5j/bw5Cu1LooWne
-AQngylwjPZmmmmhCpcmV5izqHyt5WcMnMrHustBToBapbweL/hhY7Xmag+nT2ydL
-f5AR7Q0WlgOfEYacl3haA3ux7aa2RAEBUttSH6fXtneTlWJybsyeDWpwZ7uCJZWX
-C250fBsOsk3A+BgHzXuMhvKvIoXbQCdjpI92r5aN3j+GKm/WmrqazFgWenczbymJ
-Rl+YYVXyVALbeGh5XzV7rUr6Vsz757YGSjrylk7iK1sBj99ZRW8zqjSBz0AE8pXU
-csKWMvaExOLHy3VaqmImQIJ0Ey3+LIxzGNd1pNNWJ5nFPXwvo1Vci6cfIgqItHEw
-1BoO0N/TzxVdM8s10sR7TDqFkCinofPxCszrMQWu3b7cv854CLX8cxpfJZjtYCJk
-ln3CicstgzDPDtG29ma/
-=yO2d
------END PGP SIGNATURE-----
+
+Please see "http://sourceforge.net/p/giflib/bugs/82/" for more details.
+
+
+
+
+the bug was found by Qixue Xiao at Tsinghua University.
