@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4921" "Friday" "22" "September" "2017" "07:50:24" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<627417.131184728-sendEmail@localhost>" "90" "[oss-security] bento4: NULL pointer dereference in AP4_DataAtom::~AP4_DataAtom (Ap4MetaData.cpp)" nil nil nil "9" "2017092207:50:24" "[oss-security] bento4: NULL pointer dereference in AP4_DataAtom::~AP4_DataAtom (Ap4MetaData.cpp)" (number mark "U       ago@gentoo.o Sep 22   90/4921  " thread-indent "\"[oss-security] bento4: NULL pointer dereference in AP4_DataAtom::~AP4_DataAtom (Ap4MetaData.cpp)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1866" "Tuesday" "26" "January" "2016" "12:49:12" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160126174912.8D47B73C4C1@smtpvmsrv1.mitre.org>" "52" "[oss-security] Re: Out-of-bounds Read in the libxml2's htmlParseNameComplex() function" "^Cc:" nil nil "1" "2016012617:49:12" "[oss-security] Re: Out-of-bounds Read in the libxml2's htmlParseNameComplex() function" (number mark "        cve-assign@m Jan 26   52/1866  " thread-indent "\"[oss-security] Re: Out-of-bounds Read in the libxml2's htmlParseNameComplex() function\"\n") "<3626D6E697A150459C44C0E5D8D8D00E0DBD56EB@EX02.corp.qihoo.net>" ("<3626D6E697A150459C44C0E5D8D8D00E0DBD56EB@EX02.corp.qihoo.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 30695 invoked by uid 550); 22 Sep 2017 07:50:42 -0000
+Received: (qmail 29908 invoked by uid 550); 26 Jan 2016 17:49:43 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,103 +11,65 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 29888 invoked from network); 26 Jan 2016 17:49:42 -0000
+In-Reply-To: <3626D6E697A150459C44C0E5D8D8D00E0DBD56EB@EX02.corp.qihoo.net>
+Message-Id: <20160126174912.8D47B73C4C1@smtpvmsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Tue, 26 Jan 2016 12:49:12 -0500 (EST)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30577 invoked from network); 22 Sep 2017 07:50:41 -0000
-Message-ID: <627417.131184728-sendEmail@localhost>
-From: "Agostino Sarubbo" <ago@gentoo.org>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Date: Fri, 22 Sep 2017 07:50:24 +0000
-MIME-Version: 1.0
-Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-732739.492858858"
-Subject: [oss-security] bento4: NULL pointer dereference in AP4_DataAtom::~AP4_DataAtom (Ap4MetaData.cpp)
+Subject: [oss-security] Re: Out-of-bounds Read in the libxml2's htmlParseNameComplex() function
+To: limingxing@360.cn
 
-------MIME delimiter for sendEmail-732739.492858858
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 7bit
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Description:
-bento4 is a fast, modern, open source C++ toolkit for all your MP4 and MPEG DASH media format needs.
+> HTMLparser.c line:2517 :
+> 
+>        return(xmlDictLookup(ctxt->dict, ctxt->input->cur - len, len));
+> 
+> "ctxt->input->cur - len"  cause Out-of-bounds Read.
+> 
+> heap-buffer-overflow
+> READ of size 1
 
-The complete ASan output of the issue:
-
-# mp42aac $FILE out.aac
-ASAN:DEADLYSIGNAL
-=================================================================
-==11595==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 0x0000005b27fe bp 0x7ffce60a67e0 sp 0x7ffce60a67c0 T0)
-==11595==The signal is caused by a READ memory access.
-==11595==Hint: address points to the zero page.
-    #0 0x5b27fd in AP4_DataAtom::~AP4_DataAtom() /tmp/Bento4-1.5.0-617/Source/C++/MetaData/Ap4MetaData.cpp:1357:5
-    #1 0x5b27fd in AP4_DataAtom::~AP4_DataAtom() /tmp/Bento4-1.5.0-617/Source/C++/MetaData/Ap4MetaData.cpp:1356
-    #2 0x5bf8d4 in AP4_List::DeleteReferences() /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4List.h:476:9
-    #3 0x5bf8d4 in AP4_AtomParent::~AP4_AtomParent() /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4Atom.cpp:512
-    #4 0x60e6d8 in AP4_ContainerAtom::~AP4_ContainerAtom() /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.h:48:7
-    #5 0x60e6d8 in AP4_ContainerAtom::~AP4_ContainerAtom() /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.h:48
-    #6 0x5bf8d4 in AP4_List::DeleteReferences() /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4List.h:476:9
-    #7 0x5bf8d4 in AP4_AtomParent::~AP4_AtomParent() /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4Atom.cpp:512
-    #8 0x60e6d8 in AP4_ContainerAtom::~AP4_ContainerAtom() /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.h:48:7
-    #9 0x60e6d8 in AP4_ContainerAtom::~AP4_ContainerAtom() /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.h:48
-    #10 0x5bf8d4 in AP4_List::DeleteReferences() /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4List.h:476:9
-    #11 0x5bf8d4 in AP4_AtomParent::~AP4_AtomParent() /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4Atom.cpp:512
-    #12 0x60e6d8 in AP4_ContainerAtom::~AP4_ContainerAtom() /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.h:48:7
-    #13 0x60e6d8 in AP4_ContainerAtom::~AP4_ContainerAtom() /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.h:48
-    #14 0x5bf8d4 in AP4_List::DeleteReferences() /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4List.h:476:9
-    #15 0x5bf8d4 in AP4_AtomParent::~AP4_AtomParent() /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4Atom.cpp:512
-    #16 0x60e6d8 in AP4_ContainerAtom::~AP4_ContainerAtom() /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.h:48:7
-    #17 0x60e6d8 in AP4_ContainerAtom::~AP4_ContainerAtom() /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.h:48
-    #18 0x5bf8d4 in AP4_List::DeleteReferences() /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4List.h:476:9
-    #19 0x5bf8d4 in AP4_AtomParent::~AP4_AtomParent() /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4Atom.cpp:512
-    #20 0x553af8 in AP4_ContainerAtom::~AP4_ContainerAtom() /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.h:48:7
-    #21 0x553af8 in AP4_MoovAtom::~AP4_MoovAtom() /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4MoovAtom.h:47
-    #22 0x553af8 in AP4_MoovAtom::~AP4_MoovAtom() /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4MoovAtom.h:47
-    #23 0x5bf8d4 in AP4_List::DeleteReferences() /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4List.h:476:9
-    #24 0x5bf8d4 in AP4_AtomParent::~AP4_AtomParent() /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4Atom.cpp:512
-    #25 0x54f634 in AP4_File::~AP4_File() /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4File.cpp:85:1
-    #26 0x5433c4 in main /tmp/Bento4-1.5.0-617/Source/C++/Apps/Mp42Aac/Mp42Aac.cpp:292:5
-    #27 0x7f0ba50e1680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #28 0x44f3f8 in _start (/usr/bin/mp42aac+0x44f3f8)
-
-AddressSanitizer can not provide additional info.
-SUMMARY: AddressSanitizer: SEGV /tmp/Bento4-1.5.0-617/Source/C++/MetaData/Ap4MetaData.cpp:1357:5 in AP4_DataAtom::~AP4_DataAtom()
-==11595==ABORTING
-Audio Track:
-  duration: 7848 ms
-  sample count: 16
-
-Affected version:
-1.5.0-617
-
-Fixed version:
-N/A
-
-Commit fix:
-https://github.com/axiomatic-systems/Bento4/commit/41cad602709436628f07b4c4f64e9ff7a611f687
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-CVE-2017-14641
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00338-bento4-NULLptr-AP4_DataAtom_AP4_DataAtom
-
-Timeline:
-2017-09-08: bug discovered and reported to upstream
-2017-09-14: blog post about the issue
-2017-09-21: CVE assigned
-
-Note:
-This bug was found with American Fuzzy Lop.
-This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/09/14/bento4-null-pointer-dereference-in-ap4_dataatomap4_dataatom-ap4metadata-cpp/
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
+Use CVE-2016-2073.
 
 
-------MIME delimiter for sendEmail-732739.492858858--
+> From: Salvatore Bonaccorso
+> 
+> While checking upstream bugzilla to see if that was reported I noticed
+> 
+> https://bugzilla.gnome.org/show_bug.cgi?id=749115
+> 
+> Does this have the same root cause?
 
+The CVE-2016-2073 PoC is an '&' followed by three characters, one of
+which is a 0273 character. The PoC in 749115 has an unexpected
+character immediately after a "<!DOCTYPE html" substring. We feel that
+the CVE-2016-2073 report can have that unique ID on the basis of (at
+least) a different attack methodology. CVE assignment for 749115 is
+also possible unless 749115 already has a CVE ID.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJWp7B+AAoJEL54rhJi8gl5DrYP/210C002flIvBM/PY66OYkJw
+BXYc5DDLMANTpXaXoaHqYGODfRtwQjZF/sFYUgtOxFTYi3UCHxOpRNjhU77OOlQA
+7aNSZ+PU/Tl15dt7PEJWdNuK0mD9Lofzg6HhxkJD6F6EQHarH0NHIbdEGV6WKGGR
+c2hACkO8WLCQxd+914f5YJBPsd+pKmWADKcmjV3yQMSr+6irHfzp+9UEDX/ma/3b
+9yRwy+7Ubse2t5GNq/F4lepT2fF/lTLweNhSJgdzPg59/NGjf9ZBD14d/RmrRCgR
+KLlIjavWH8fGOAecBcyz7zVJAadQFOVy4DuCyOrvcVMJ6cCPjfv+oZD1r2COhPHW
+9kYlHo5icgJQU8m796+H4pC9a71ckCFZ2EZ7uy8nWS1SG7WmUMJjE5lryt4O9MFt
+8mmiJFXZGpX1gfaq2xHLkptGNMoaTkl+id2Vr/j2ATSCXHV3oNs4+IQLThp9vZ0Y
+q+fajmn0Yp0sO34/vWmDzoxvNWTuwf+LgPjFNsirG80a1Ivv2XtHaxh8G2xTCZh4
+L6gv9PT3ha/UK2RKQxB7atIt/LS2I+DqD72TckY69JygqFg43Q+QAdGQKn1YP2tA
+pgs1SmgAtfOCPoph+4BYZAyIvmMzVDfAI4kjJE7AlZqAIwO3mIxaDFEd1OW3u/JY
+fYAMTYnQVg9Ld8+b+XPY
+=QCuy
+-----END PGP SIGNATURE-----
