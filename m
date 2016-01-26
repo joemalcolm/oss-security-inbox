@@ -1,84 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/08/24
-Message-Id: <20160908221651.01CE834E00D@smtpvbsrv1.mitre.org>
-Date: Thu,  8 Sep 2016 18:16:51 -0400 (EDT)
-From: cve-assign@...re.org
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/26/3
+Message-ID: <20160126080546.GA27464@meddwl>
+Date: Tue, 26 Jan 2016 09:05:46 +0100
+From: Sergei Golubchik <serg@...iadb.org>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: Persistent Cross-Site Scripting vulnerability in WordPress due to unsafe processing of file names
+Subject: Flaw in mariadb clients SSL certificate validation
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi,
 
-> https://wordpress.org/news/2016/09/wordpress-4-6-1-security-and-maintenance-release/
+MariaDB (as well as MySQL and Percona Server) has an option to validate
+server certificate, when establishing an SSL connection. It checks that
+the certificate belongs to the host that the client wants to connect to.
+This validation, of course, should normally always be enabled to prevent
+MITM attacks.
 
-(Please note the "extra" CVE ID below for the other vulnerability
-fixed in 4.6.1.)
+Recently (end of November) two security researchers Paul Kehrer and Alex
+Gaynor have found a flaw in this certificate validation code that allows
+to trick it into accepting certificate from other hosts. For example,
+if the host 'foo.com' has a certificate with the "Organizational Unit"
+being, say, "/CN=bar.com", then MariaDB client will see the result as
 
+   /OU=/CN=bar.com/CN=foo.com
 
-> a cross-site scripting vulnerability via image filename, reported by
-> SumOfPwn researcher Cengiz Han Sahin
+and will think that this certificate belongs to bar.com. This bugs is in
+15 year old code and is present in all MariaDB/MySQL/Percona Server
+versions. 
 
-Use CVE-2016-7168.
+This vulnerability got CVE-2016-2047.
 
+It is fixed in MariaDB 5.5.47, MariaDB 10.0.23, MariaDB 10.1.10
+(all released in December).
 
-> lure an admin into uploading the image with the malicious file name
-
-> A WordPress admin uploads a malicious image file requested by a user
-> this admin trusts or a popular malicious image that was spread via
-> social media.
-
-We are not sure whether this CVE-2016-7168 issue is best interpreted
-as a vulnerability. We think it means that the admin has the
-unfiltered_html capability, and proceeds with uploading the file even
-though its name (which contains an embedded IMG string with
-onerror=alert in the PoC) is visible to the admin. It seems to be more
-of a design change in which the meaning of unfiltered_html is slightly
-redefined, in a way that is helpful to many users but not all.
-
-One counterargument use case is:
-
-  - the admin of WordPress site A observes that all of their images
-    are being stolen for use on WordPress site B
-
-  - the process for stealing the images keeps each original filename
-
-  - the admin of WordPress site A specifically wants one image
-    filename to contain JavaScript code, as part of an effort to
-    identify the operators of WordPress site B (this JavaScript code
-    has no effect on site visitors when encountered in the context of
-    WordPress site A)
-
-  - the admin of WordPress site A has always relied on the Media
-    Upload functionality in wp-admin/media-new.php for entering these
-    filenames, and this is now broken with the upgrade to 4.6.1
-
-
-> a path traversal vulnerability in the upgrade package uploader,
-> reported by Dominik Schilling from the WordPress security team
-
-Use CVE-2016-7169.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJX0eL2AAoJEHb/MwWLVhi2Lh4P/2cDC6Zf4kN3HFWGcb9W2imm
-gzqdAzr2nX29Jj3JDpRuNMEI+2M2eO8uNXCwMbyTd0bOTjtkUsclvnI5uuD/Of6N
-J3+uj5h75yHcEaB6sHNnDRYaViUiLaHZEvpTsre+O47p1kQwR8OlTB65W4IkE6bH
-NeA0K/TxpOtoIpPnHtnozgEpjUfTKfyppbyasRs7jxK4y6IG5wsZSjWKR5JjD2i/
-0JafwL4KFqRwTDy3DqtRLGzOzL0gQqDPQ4peFK/uvwqDTg/VEUqcgLtvovX2PZes
-VJWfqAjH51jXy9/A8MFyZqkpZQ71miNe+K2edMXSeXWps6YEjP/UH/zgDCg7HXof
-2e3j7l37sN3Z2KYZcD0qnd7ZhYmSgfpadOP9XFAj/jd9Fp5m/laU8uu+JjHBKntZ
-Iy30HYcNJpVvysoBtFFEW49ehjVbRMtfYMlK0I9cZmWMWPK9U98HstQlD67jkzkc
-FpBI5wt/YNZFRzVCBu/NnvgYxP78/tF++gvKz9xc0k7xv6DDxbUwd5EcTKD15nJU
-DT0s4kFfaFGEbPOY42XCPdKLpF30tQnsYduoFJNGJSW84sY8P+E0t0vh8dIUgeni
-iyboz/dba+EAqfmVnDz38f2aR+hv14B7xxdGwBhEr0Z9tFtW7bnLp3KOKMuw/m5s
-nVA/yYzhdOE+0L98iiGf
-=g17f
------END PGP SIGNATURE-----
+Regards,
+Sergei
+Chief Architect MariaDB
+and security@...iadb.org
