@@ -1,23 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/08/1
-Message-ID: <56DE2409.1060603@isc.org>
-Date: Tue, 8 Mar 2016 01:59:53 +0100
-From: ISC Security Officer <security-officer@....org>
-To: oss-security@...ts.openwall.com
-Cc: ISC Security Officer <security-officer@....org>
-Subject: ISC DHCP vulnerability CVE-2016-2774 is now public
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/26/2
+Message-Id: <20160126070228.0FB366C08F0@smtpvmsrv1.mitre.org>
+Date: Tue, 26 Jan 2016 02:02:28 -0500 (EST)
+From: cve-assign@...re.org
+To: fw@...eb.enyo.de
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Linux potential division by zero in TCP code
 Content-Type: text/plain; charset=utf-8
 
-Please be advised that ISC announced a security advisory for a
-vulnerability in the ISC DHCP servers.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-CVE-2016-2774 is a denial-of-service vector which can be exploited
-against running ISC DHCP servers by opening (and never closing) a large
-number of TCP connections to the ports the server is using for
-inter-process communication.
+> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=8b8a321ff72c785ed5e8b4cf6eda20b35d427390
 
-https://kb.isc.org/article/AA-01354
+> This may lead to a div-by-zero if the connection starts another cwnd
+> reduction phase by setting tp->prior_cwnd to the current cwnd (0) in
+> tcp_init_cwnd_reduction().
 
-Kind Regards,
-Marcin Siodelski
-ISC Security Officer
+Use CVE-2016-2070.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJWpxcsAAoJEL54rhJi8gl5VhcP/jESXeUc6StXDhNzxWKwNAMX
+HTJ6wMy29qNG2fvAQWPnS63CVvPbnlkbpLDpQ9b9oG0lJ76IPXjgBI2k9ZOUbaBO
+A8vRk4umLqEP5WySGa5GnJsz3MT01tD1nCsTMLaE0YxjL/4Jx7lpiC6HlKCz4yER
+6sEqrxqVhLEVYgQ1N+7+kay1HH6yNkoqu00Z1YjzlihoWFYJ1OGicdMuz6DojBOb
+fSKQBaSC471xNN3+NdEq/2b2C2mrqwxV9kTo34Wp0MOO6gXPy1cL89pvU9urN8WF
+c89+BM/alw2lZmHNtKKuQpYDxBoaA/NQiDGB866FeUrTp4N5CSN2wWSuINnBkQjl
+jCDp38o/LRwuzf1CXYMxJlf7ut2D+t5AWKC/ZfAHcb3CJyHRJ+Pdy1jpeJRWLt/o
+3YNvy/oxGhUSRAej0fsmCZlTfNV7xPdKWzfBizpZIDIHf73yJChVn3Sh2qXe+IAQ
+oJxnj9UYiafTKaHnJFmRUxUf0MtPBy5gu637hk7ej1tBqZY3HmaKxpth9d7BSKhV
+z4NNNhD+8TA2QQkgWiQkqOyc0gEDFI7mqqHkrCr0N0ybBQW7n5f+yXzvKQCcN2qa
+rvW5sQ727d1MnzmWeZYWiVY5w+RnxzwQgYrdcROLuV2zEgY6ENHhLVO5dObqErgZ
+tV9XXTx2FUTvFwOxMSzu
+=m2BO
+-----END PGP SIGNATURE-----
