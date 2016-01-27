@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2245" "Saturday" "27" "April" "2019" "18:38:28" "+0200" "andreas@rammhold.de" "andreas@rammhold.de" "<20190427163828.rnp75yis33ysgvzp@ranzbook>" "55" "Re: [oss-security] Multiple BIND vulnerabilities disclosed (CVE-2018-5743, CVE-2019-6467, and CVE-2019-6468)" "^Date:" nil nil "4" "2019042716:38:28" "[oss-security] Multiple BIND vulnerabilities disclosed (CVE-2018-5743, CVE-2019-6467, and CVE-2019-6468)" (number mark "        andreas@ramm Apr 27   55/2245  " thread-indent "\"Re: [oss-security] Multiple BIND vulnerabilities disclosed (CVE-2018-5743, CVE-2019-6467, and CVE-2019-6468)\"\n") "<87wojie6jy.fsf@dell.be.48ers.dk>" ("<68fd216c-b9d7-ded4-ecb5-a5da62fc01b0@isc.org>" "<87wojie6jy.fsf@dell.be.48ers.dk>") nil nil nil nil nil nil nil "Re: [oss-security] Multiple BIND vulnerabilities disclosed (CVE-2018-5743, CVE-2019-6467, and CVE-2019-6468)" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2658" "Wednesday" "27" "January" "2016" "07:59:36" "-0800" "Adam Jacobs" "AJacobs@mocana.com" "<50DADDE6B33B1B47904E685AAFDC182448CF2B4300@yugi.mocana.local>" "73" "[oss-security] RE: [Pool] shodan.io actively infiltrating ntp.org IPv6 pools for scanning purposes" "^CC:" nil nil "1" "2016012715:59:36" "[oss-security] RE: [Pool] shodan.io actively infiltrating ntp.org IPv6 pools for scanning purposes" (number mark "        AJacobs@moca Jan 27   73/2658  " thread-indent "\"[oss-security] RE: [Pool] shodan.io actively infiltrating ntp.org IPv6 pools for scanning purposes\"\n") "<2413003.GtkKFizscD@chimera>" ("<2413003.GtkKFizscD@chimera>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 5779 invoked by uid 550); 27 Apr 2019 17:12:04 -0000
+Received: (qmail 28489 invoked by uid 550); 27 Jan 2016 16:01:08 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,103 +11,120 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3765 invoked from network); 27 Apr 2019 16:38:42 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=rammhold-de.20150623.gappssmtp.com; s=20150623;
-        h=from:date:to:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=qIITmxfGaOyRrEOKWGKn8Vj9f0f+M01v2EH54ZhObc4=;
-        b=z6Qhew6a01pO1HpDefW+VMGeRoAzvsNpCrM3bLlD/CYX+0JIPZoX+tAk+YewVr2yfB
-         Ec9gIW4W6k1UPwQDkS7jpoyxQsuZgt2y2Iln8iglEttVcYaft6SZTzE7u5nEzzbUTn90
-         zoE7LPHtLq9qvX9ezVPJ08w4QOSqzG+bk15eLwMCqMOJwXVkHunDS25hot/PLcF3yhJS
-         qGlsKg/ogQLS4YXya7kYepkLg+u+RMU4UErtzEvCZQS6Zu6i76U3ZYk/TAFKChYbstDi
-         yesaTQN7XFqGjqAk6gMEfYBhbwdikD/ifbLPfMnjwiq+BH15DUmmR0feL5lEpU9d77X3
-         EHfw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:date:to:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=qIITmxfGaOyRrEOKWGKn8Vj9f0f+M01v2EH54ZhObc4=;
-        b=a1rXrbkgk+vXfurIufZ1/OxigKEV8LMu8YCfL5suE2eKXe0kwIc67GmXqTHAZPGKh8
-         eXN/vk0uEtrxo4zyLKNDROoJy0zQU4/2B/CJlBHIEhqLziuRABk/gMCgYns3gSKH2AZQ
-         TMySY/jQ+T/fq9cE5yvTbwdmhZBa0Kx6JKMOFWrdhCdXXjE1cOWRJAoE4VrQL+A+tAJQ
-         xtI3tGBhUKYk7fsT+E48R9ORSsZZNrg6iYgPrr5rAHhwfcVjSE8Gkzp4+L8lJ/4aJGsp
-         RlO3DElyUCuQVoWyRfe99ayWNne4AxDLGs6sSmoKeLvSI9T1E8sR+y4GV0tHKyOwcUOz
-         kHJQ==
-X-Gm-Message-State: APjAAAWDyNOQ1ULTsKQrYr6rG4/2wFlXULO5stBoHZKt1sqmKTxvGZRY
-	qmvH0s8vC+/iVr7EJB2o5hJgKCHGEQTaXQ==
-X-Google-Smtp-Source: APXvYqyd4Zxign6MX7PMg53bm0PqKUivzdv3lvRxZB235Srqr/4u3lW+I+J2k/cewumXqBIDw/AN7Q==
-X-Received: by 2002:a5d:4eca:: with SMTP id s10mr18182580wrv.319.1556383110941;
-        Sat, 27 Apr 2019 09:38:30 -0700 (PDT)
-X-Google-Original-From: andreas+oss-sec@rammhold.de
-Message-ID: <20190427163828.rnp75yis33ysgvzp@ranzbook>
-References: <68fd216c-b9d7-ded4-ecb5-a5da62fc01b0@isc.org>
- <87wojie6jy.fsf@dell.be.48ers.dk>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="ikbvgs6f7h5rrr4j"
-Content-Disposition: inline
-In-Reply-To: <87wojie6jy.fsf@dell.be.48ers.dk>
-User-Agent: NeoMutt/20180716
-Date: Sat, 27 Apr 2019 18:38:28 +0200
-From: andreas@rammhold.de
-Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Multiple BIND vulnerabilities disclosed
- (CVE-2018-5743, CVE-2019-6467, and CVE-2019-6468)
-To: oss-security@lists.openwall.com
-
---ikbvgs6f7h5rrr4j
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Received: (qmail 28188 invoked from network); 27 Jan 2016 16:00:04 -0000
+X-ASG-Debug-ID: 1453910392-088e3111f3789b10001-Ebmqpw
+X-Barracuda-Envelope-From: AJacobs@mocana.com
+Thread-Topic: [Pool] shodan.io actively infiltrating ntp.org IPv6 pools for
+	scanning purposes
+X-ASG-Orig-Subj: RE: [Pool] shodan.io actively infiltrating ntp.org IPv6 pools for
+	scanning purposes
+Thread-Index: AdFZG0hvU9GoMf+0S8S5RZECn2p0FwAAHAns
+Message-ID: <50DADDE6B33B1B47904E685AAFDC182448CF2B4300@yugi.mocana.local>
+References: <2413003.GtkKFizscD@chimera>
+In-Reply-To: <2413003.GtkKFizscD@chimera>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+acceptlanguage: en-US
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+X-Barracuda-Connect: UNKNOWN[10.200.16.9]
+X-Barracuda-Start-Time: 1453910392
+X-Barracuda-Encrypted: RC4-MD5
+X-Barracuda-URL: https://10.200.40.6:443/cgi-mod/mark.cgi
+X-Barracuda-Scan-Msg-Size: 2684
+X-Virus-Scanned: by bsmtpd at mocana.com
+X-Barracuda-BRTS-Status: 1
+X-Barracuda-Spam-Score: 0.50
+X-Barracuda-Spam-Status: No, SCORE=0.50 using global scores of TAG_LEVEL=1000.0 QUARANTINE_LEVEL=1000.0 KILL_LEVEL=9.0 tests=BSF_RULE7568M
+X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.3.26500
+	Rule breakdown below
+	 pts rule name              description
+	---- ---------------------- --------------------------------------------------
+	0.50 BSF_RULE7568M          Custom Rule 7568M
+CC: "team@security.debian.org" <team@security.debian.org>,
+	"secalert@redhat.com" <secalert@redhat.com>
+Date: Wed, 27 Jan 2016 07:59:36 -0800
+From: Adam Jacobs <AJacobs@mocana.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] RE: [Pool] shodan.io actively infiltrating ntp.org IPv6 pools for
+	scanning purposes
+To: Luca BRUNO <lucab@debian.org>, "pool@lists.ntp.org" <pool@lists.ntp.org>,
+	"oss-security@lists.openwall.com" <oss-security@lists.openwall.com>,
+	"linuxbrad@gmail.com" <linuxbrad@gmail.com>
 
-On 12:13 25.04.19, Peter Korsgaard wrote:
-> It is a bit unfortunate that these security fixes now use
-> isc_atomic_xadd() which are not available on all architectures:
->=20
-> .libs/client.o: In function `mark_tcp_active':
-> client.c:(.text+0xc7c): undefined reference to `isc_atomic_xadd'
-> client.c:(.text+0xca0): undefined reference to `isc_atomic_xadd'
-> .libs/client.o: In function `client_accept':
-> client.c:(.text+0x2210): undefined reference to `isc_atomic_xadd'
-> client.c:(.text+0x230c): undefined reference to `isc_atomic_xadd'
-> .libs/client.o: In function `exit_check':
-> client.c:(.text+0x2958): undefined reference to `isc_atomic_xadd'
-> .libs/client.o:client.c:(.text+0x5cb4): more undefined references to `isc=
-_atomic_xadd' follow
-> collect2: error: ld returned 1 exit status
+Infuriating!
 
-There is a commit [1] on ISCs GitLab that removes the atomic operations
-in favor of refcounting and thus fixes the aarch64 (and other archs?)
-build error.
+________________________________________
+From: pool [pool-bounces+ajacobs=3Dmocana.com@lists.ntp.org] On Behalf Of L=
+uca BRUNO [lucab@debian.org]
+Sent: Wednesday, January 27, 2016 03:24
+To: pool@lists.ntp.org; oss-security@lists.openwall.com; linuxbrad@gmail.com
+Cc: team@security.debian.org; secalert@redhat.com
+Subject: [Pool] shodan.io actively infiltrating ntp.org IPv6 pools for  sca=
+nning purposes
 
-I applied that commit for NixOS. Looks good so far [2].
+[cross-posted to pool-ntp and oss-sec]
 
+Hi,
+while reviewing network logs this morning I spotted some anomalies related
+to scan probes, ntp.org pools and IPv6.
 
-cheers, andi-
+It looks like Brad already observed and blogged about this some days ago,
+but I haven't seen this discussed in the usual ntp-pools, Debian and
+oss-sec ML, so I'm reposting this here:
+http://netpatterns.blogspot.de/2016/01/the-rising-sophistication-of-network=
+.html
 
-[1] https://gitlab.isc.org/isc-projects/bind9/commit/d72f436b7d7c697b262968=
-c48c2d7643069ab17f
-[2] https://github.com/NixOS/nixpkgs/pull/60330/checks
+In summary, some machines (which seem related to the shodan.io scanning pro=
+ject)
+are actively participating in pool.ntp.org as IPv6 endpoints.
+However, clients connecting to them for NTP timesync, are subsequently scan=
+ned
+by probes originating from *.scan6.shodan.io hosts.
 
---ikbvgs6f7h5rrr4j
-Content-Type: application/pgp-signature; name="signature.asc"
+Confirming original report from Brad, I can add that those scanners seem to
+implement some kind of rate-limiting: they will timeout NTP and won't re-sc=
+an
+recent clients when doing multiple/subsequent NTP requests.
+Moreover, this is not targeted/restricted to the Debian pool only, but plag=
+ue
+the whole IPv6 pool, as seen on a sample query to the RedHat pool:
 
------BEGIN PGP SIGNATURE-----
+```
+$ dig +short -t AAAA 2.rhel.pool.ntp.org | grep -E ':[[:xdigit:]]00[[:xdigi=
+t:]]$'
+2a03:b0c0:3:d0::18:b001
+$ dig +short -x 2a03:b0c0:3:d0::18:b001
+analog.data.shodan.io.
+```
+(Upon querying this server for NTP, the machine immediately got IPv6-scanned
+by rock.scan6.shodan.io)
 
-iQIzBAABCAAdFiEE0IG39SavZobwL+lX5DLkELXkjIYFAlzEhYMACgkQ5DLkELXk
-jIaN0g/8CFq/2aPdFXAlbHW9emr4PIgYcamQ7iq/FbmEgH3g4TmD86QgnuCxey+t
-gzHXYgOUffTJZy64ip8un+P8rUVCYF1Y5cKVYwS7ECvjZj8XWtCobM6i1HHg8YwG
-19Ew5MfvVdAwnx/mUyROIJ2TGTOuVRGckIH1yzy3oxkZg0FxDTHqzRLpbWPLZLOp
-ZMsB4JtxB01K4tdYeQji0qTAONAo7lwpQejHaqcy5UeGo+rN2kphlt81zHqENYOi
-M90c44C8T/2m5srMRbkPSRkkt0V425NQcxO9IVD3MWg+v3zh2ETnu0dHJAfqVlIR
-4inWpyBlPekZ2jYzBgib6moIxxhJmBk2pSF4AS7DfuCzPfzwH8x3LoDo8kCoyzSb
-Wctx1kWuUSptmLdNVWCrMCxROFgknMGYbZB+6IHQ5+AY7OsWGJpSRE0TOaenia3g
-tfZvjWiwAvi0gAkjJ7VKLVqdV8lnJpY4mziGD/5xMcmOhEK1yT0iJpgb9XS7RpNK
-/nJCE0GysGUMaUN9VwRHB3T5KyuqiwqkaB3McEt0XXA6d/9zaS8KQXuY838qbrGj
-yRbaf3tYH3U3qDUACA1FL4VEsNpLfrpRaoPHT1Y+u5kX++bRtMVk1oTVzD6vdR2/
-MZHGk92MTjc3h682P5PlWxz22oYuMVEz00eGKW5aOqFpBMPy4vQ=
-=JvGa
------END PGP SIGNATURE-----
+pool.ntp.org services are the default NTP servers in many default configura=
+tions
+(at least most of Linux distro) and I guess that this kind of behavior is d=
+angerously
+increasing the exposure level of way too many systems.
 
---ikbvgs6f7h5rrr4j--
+For ntp.org admins: can those rogue server be expunged from the pools, and =
+the whole
+shodan.io situation clarified? (Brad's post has a comprehensive endpoints l=
+ist and
+helper tools for detection)
+
+For oss-sec crowd: is there anything we can do to improve the situation and=
+ avoid
+similar cases in the future? Should crowd-sourced and fundamental services =
+like this
+be encouraged to move to a stronger WoT?
+
+Ciao, Luca
+
+--
+ .''`.  ** Debian GNU/Linux **  | Luca Bruno (kaeso)
+: :'  :   The Universal O.S.    | lucab (AT) debian.org
+`. `'`                          | GPG: 0xBB1A3A854F3BBEBF
+  `-     http://www.debian.org  | Debian GNU/Linux Developer=
