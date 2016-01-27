@@ -1,40 +1,99 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/13/4
-Message-ID: <dbaa8dbe-68a9-012d-4ea1-a6dd0e1d748e@redhat.com>
-Date: Mon, 13 Jun 2016 11:07:49 -0400
-From: Paul Wouters <pwouters@...hat.com>
-To: oss-security@...ts.openwall.com, huzaifas@...hat.com
-Cc: cve-assign@...re.org
-Subject: Re: Re: CVE Request: IKEv1 protocol is vulnerable to DoS amplification attack
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/27/4
+Message-ID: <56A8D4FD.3010904@ruecker.fi>
+Date: Wed, 27 Jan 2016 14:32:29 +0000
+From: Thomas B. Rücker <thomas@...cker.fi>
+To: oss-security@...ts.openwall.com, pool@...ts.ntp.org, linuxbrad@...il.com
+Cc: team@...urity.debian.org, secalert@...hat.com
+Subject: Re: shodan.io actively infiltrating ntp.org IPv6 pools for scanning purposes
 Content-Type: text/plain; charset=utf-8
 
-On 06/13/2016 10:40 AM, cve-assign@...re.org wrote:
->> Its not libreswan which is flawed, but its the protocol which they are trying to implement.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 01/27/2016 11:24 AM, Luca BRUNO wrote:
+> [cross-posted to pool-ntp and oss-sec]
 > 
->> which implement IKEv1 are flawed, since they follow this protocol
+> Hi, while reviewing network logs this morning I spotted some
+> anomalies related to scan probes, ntp.org pools and IPv6.
 > 
-> Many protocols could be described as "flawed." The IKEv1 protocol amplification concern does not make it flawed in a way that would lead to a per-protocol
-> CVE ID assignment. We are maintaining the CVE-2016-5361 ID assignment for the upstream announcement of "libreswan 3.16 vulnerable to DDOS attack. Please
-> upgrade to 3.17" and accompanying upstream patch, as described in the http://www.openwall.com/lists/oss-security/2016/06/10/4 post.
+> It looks like Brad already observed and blogged about this some
+> days ago, but I haven't seen this discussed in the usual ntp-pools,
+> Debian and oss-sec ML, so I'm reposting this here: 
+> http://netpatterns.blogspot.de/2016/01/the-rising-sophistication-of-ne
+twork.html
+>
+>
+> 
+In summary, some machines (which seem related to the shodan.io scanning
+project)
+> are actively participating in pool.ntp.org as IPv6 endpoints. 
+> However, clients connecting to them for NTP timesync, are
+> subsequently scanned by probes originating from *.scan6.shodan.io
+> hosts.
+> 
+> Confirming original report from Brad, I can add that those scanners
+> seem to implement some kind of rate-limiting: they will timeout NTP
+> and won't re-scan recent clients when doing multiple/subsequent NTP
+> requests. Moreover, this is not targeted/restricted to the Debian
+> pool only, but plague the whole IPv6 pool, as seen on a sample
+> query to the RedHat pool:
+> 
+> ``` $ dig +short -t AAAA 2.rhel.pool.ntp.org | grep -E
+> ':[[:xdigit:]]00[[:xdigit:]]$' 2a03:b0c0:3:d0::18:b001 $ dig +short
+> -x 2a03:b0c0:3:d0::18:b001 analog.data.shodan.io. ```
 
-<with upstream libreswan hat on>
+While it's quite possible that the nodes are being run by Shodan, I
+don't see conclusive proof of that just yet.
+The reverse DNS, in my understanding could point to anything, including
+"localhost" and "example.org". It only gets confirmed by doing another
+DNS request, a forward lookup, for the previously received FQDN and
+comparing it to the initial IPv6 address.
 
-If you want us to keep honestly reporting security issues, I recommend you
-not single out single implementations over RFC compliant protocol flaws.
+In the example at hand this fails, as a lookup yields:
+analog.data.shodan.io has no AAAA record
+While whois data for the IPv6 address shows this to be a digitalocean
+droplet, just like mentioned by the linked blogpost regarding the other
+addresses. So there is no obvious association with Shodan.
 
-I'm fine if you list the CVE with the 6 vulnerable implementations, then say
-libreswan has fixed it.
 
-I'm not okay with libreswan being listed as vulnerable and the other 5 vulnerable
-implementations not being listed.
+> (Upon querying this server for NTP, the machine immediately got
+> IPv6-scanned by rock.scan6.shodan.io)
+> 
+> pool.ntp.org services are the default NTP servers in many default
+> configurations (at least most of Linux distro) and I guess that
+> this kind of behavior is dangerously increasing the exposure level
+> of way too many systems.
+> 
+> For ntp.org admins: can those rogue server be expunged from the
+> pools, and the whole shodan.io situation clarified? (Brad's post
+> has a comprehensive endpoints list and helper tools for detection)
+> 
+> For oss-sec crowd: is there anything we can do to improve the
+> situation and avoid similar cases in the future? Should
+> crowd-sourced and fundamental services like this be encouraged to
+> move to a stronger WoT?
 
-If you keep the CVE as-is, we will document it at libreswan.org/security/ as a
-mis-issued CVE entry.
+I think it would be good if someone would ask Shodan for a statement.
+This could clarify the above issue.
 
-Related, I would _REALLY_ appreciate it if MITR talks to us before issuing CVE's
-for our software. We've been at this long before MITR, we respond within days, we
-are known to have coordinated CVE issues for IKE implementation issues across
-various implementations. You can contact us at security@...reswan.org, PGP key
-available at the usual places.
 
-Paul
+- From a security PoV I find this a fascinating and efficient approach to
+finding hosts in, by design, sparsely populated IPv6 subnets. Just goes
+to show, that if you don't want scans to reach your network, you should
+run a perimeter firewall (determining sensible rules is on another page)
+.
+
+Cheers,
+
+Thomas
+
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iEYEARECAAYFAlao1P0ACgkQfkVKO9VkYGlXxwCeLZoe5ANFbCyOKtaESwagM54k
+fk0AnRP4OrloTSsT1zJdO13jpBkyQLDa
+=BShC
+-----END PGP SIGNATURE-----
