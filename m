@@ -1,20 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/08/3
-Message-ID: <56B8C61D.6060006@oracle.com>
-Date: Mon, 8 Feb 2016 16:45:17 +0000
-From: John Haxby <john.haxby@...cle.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2016-0617: linux kernel: hugetlbfs: fix bugs in hugetlb_vmtruncate_list()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/27/6
+Message-ID: <20160127154041.GA9254@eldamar.local>
+Date: Wed, 27 Jan 2016 16:40:41 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Subject: CVE Request: Linux: NULL pointer dereference netfilter/nf_nat_redirect.c in nf_nat_redirect_ipv4 function
 Content-Type: text/plain; charset=utf-8
 
-Hello All,
+Hi
 
-There was a bug in the linux kernel's hugetlbfs handling of punching
-holes in huegtlbfs files with either truncate or fallocate.  The problem
-was introduced in 1bfad99ab (" hugetlbfs: hugetlb_vmtruncate_list()
-needs to take a range", 4.3-rc1) and, I think, fixed in 9aacdd354d19
-("fs/hugetlbfs/inode.c: fix bugs in hugetlb_vmtruncate_list(), 4.5-rc1).
+>From https://bugzilla.redhat.com/show_bug.cgi?id=1300731 
+> Kernel NULL pointer dereference vulnerability was found in
+> netfilter/nf_nat_redirect.c in nf_nat_redirect_ipv4 function introduced by
+> commit 8b13eddfdf04cbfa561725cfc42d6868fe896f56 ("netfilter: refactor NAT
+> redirect IPv4 to use it from nf_tables").
+> 
+> Vulnerable code:
+> 
+> unsigned int
+> nf_nat_redirect_ipv4(struct sk_buff *skb,
+> ...
+> {
+> ...
+> 		rcu_read_lock();
+> 		indev = __in_dev_get_rcu(skb->dev);
+> 		if (indev != NULL) {
+> 			ifa = indev->ifa_list;
+> 			newdst = ifa->ifa_local; <---
+> 		}
+> 		rcu_read_unlock();
+> ...
+> }
+> 
+> 'ifa' is not checked before access and can be accessed even if it's NULL.
+> Crash might happen when packets that need to be redirected somehow arrive on an
+>  interface which hasn't been yet fully configured.
+> 
+> Patch and crash report:
+> 
+> https://lkml.org/lkml/2015/12/2/618
 
-This issue was assigned CVE-2016-0617.
+This was introduced in:
+https://git.kernel.org/linus/8b13eddfdf04cbfa561725cfc42d6868fe896f56 (v3.19-rc1)
 
-jch
+Fixed by:
+https://git.kernel.org/linus/94f9cd81436c85d8c3a318ba92e236ede73752fc (v4.4-rc1)
+
+Can you assign a CVE to track this issue?
+
+Regards,
+Salvatore
