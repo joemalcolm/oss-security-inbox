@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2102" "Sunday" "4" "December" "2016" "22:17:35" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<3fd03cb43fae4c9f8d4744e04038bcac@imshyb02.MITRE.ORG>" "50" "[oss-security] Re: graphicsmagick: memory allocation failure in MagickRealloc (memory.c)" "^CC:" nil nil "12" "2016120503:17:35" "[oss-security] Re: graphicsmagick: memory allocation failure in MagickRealloc (memory.c)" (number mark "        cve-assign@m Dec  4   50/2102  " thread-indent "\"[oss-security] Re: graphicsmagick: memory allocation failure in MagickRealloc (memory.c)\"\n") "<54839894.ARmt1DTBun@arcadia>" ("<54839894.ARmt1DTBun@arcadia>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1005" "Wednesday" "27" "January" "2016" "11:07:17" "-0700" "Richard Johnson" "rdump@river.com" "<56A90755.2030706@river.com>" "27" "Re: [oss-security] shodan.io actively infiltrating ntp.org IPv6 pools for scanning purposes" "^Cc:" nil nil "1" "2016012718:07:17" "[oss-security] shodan.io actively infiltrating ntp.org IPv6 pools for scanning purposes" (number mark "        rdump@river. Jan 27   27/1005  " thread-indent "\"Re: [oss-security] shodan.io actively infiltrating ntp.org IPv6 pools for scanning purposes\"\n") "<CAOp4FwR2S=DRH2TDp_sFPbaDPRUf=-bcmTJxa0+tyP52_xvejw@mail.gmail.com>" ("<2413003.GtkKFizscD@chimera>" "<CAOp4FwR2S=DRH2TDp_sFPbaDPRUf=-bcmTJxa0+tyP52_xvejw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 21876 invoked by uid 550); 5 Dec 2016 03:17:49 -0000
+Received: (qmail 16012 invoked by uid 550); 28 Jan 2016 04:33:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,65 +11,48 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 21837 invoked from network); 5 Dec 2016 03:17:47 -0000
-In-Reply-To: <54839894.ARmt1DTBun@arcadia>
-Message-ID: <3fd03cb43fae4c9f8d4744e04038bcac@imshyb02.MITRE.ORG>
+Received: (qmail 13337 invoked from network); 27 Jan 2016 18:07:32 -0000
+References: <2413003.GtkKFizscD@chimera>
+ <CAOp4FwR2S=DRH2TDp_sFPbaDPRUf=-bcmTJxa0+tyP52_xvejw@mail.gmail.com>
+Message-ID: <56A90755.2030706@river.com>
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:38.0)
+ Gecko/20100101 Thunderbird/38.5.1
 MIME-Version: 1.0
-Content-Type: text/plain
-CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
-Date: Sun, 4 Dec 2016 22:17:35 -0500
-From: <cve-assign@mitre.org>
+In-Reply-To: <CAOp4FwR2S=DRH2TDp_sFPbaDPRUf=-bcmTJxa0+tyP52_xvejw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: pool@lists.ntp.org, team@security.debian.org, secalert@redhat.com
+Date: Wed, 27 Jan 2016 11:07:17 -0700
+From: Richard Johnson <rdump@river.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: graphicsmagick: memory allocation failure in MagickRealloc (memory.c)
-To: <ago@gentoo.org>
+Subject: Re: [oss-security] shodan.io actively infiltrating ntp.org IPv6 pools
+ for scanning purposes
+To: oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
-
-> https://blogs.gentoo.org/ago/2016/12/01/graphicsmagick-memory-allocation-failure-in-magickrealloc-memory-c
-> 
-> The problem is that the embedded JPEG data claims to have dimensions 
-> 5939556833 and
-> this is only learned after we are in the JPEG reader.
-> 
-> AddressSanitizer failed to allocate 0xfb8065000 bytes of LargeMmapAllocator
-> 
-> MagickRealloc ... GraphicsMagick-1.3.24/magick/memory.c:471:18
-> OpenCache ... GraphicsMagick-1.3.24/magick/pixel_cache.c:3155:7
+On 2016-01-27 06:05, Loganaden Velvindron wrote:
+> Shouldn't we have some kind of policy for operators participating in
+> pool.ntp.org to prevent such issues ?
 
 
->> From: Bob Friesenhahn
->> Date: Thu, 1 Dec 2016 21:20:13 -0600 (CST)
->> ...
->> We did make an unreleased fix (Mercurial changeset 14953:38d0f281e8c8,
->> and earlier changeset 14831:28c0bb8bf89a), but perhaps not the way you
->> like. The fix which was made was to require that the embedded JPEG
->> data has the same dimensions as the containing JNG file. The existing
->> resource limit mechanism would then allow the user to constrain the
->> size of the JNG image. The default constraints in a 64-bit build are
->> larger than what the JPEG format supports.
+If the issue is 'port scanning by the IPv6 NTP pool participant', why bother?
 
-Use CVE-2016-9830.
+Any IPv6 NTP pool provider will naturally have peer IPv6 addresses to use and
+record. It's one way that researchers at measurement organizations already
+track IPv6 use and growth.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Others can, do, and will use popular public services like NTP to enumerate and
+record active peer addresses as well. And some of those others will do things
+with that data.
 
-iQIcBAEBCAAGBQJYRNjcAAoJEHb/MwWLVhi2unEP/026aCl/yFoWW+oA6eBTE90K
-crzLOqQvjd0xCLXZtZJzRYn1WD1YUm+2ViYpAWScUzazeqqQbdrESua2oHBUt9wJ
-9MB0fHmxrt/X4FYeudBB98Jvm5d+fUs7OYNg6nlEUeeOVLyU8hSTbn6s0FVGp7TT
-ewBIlJTixW76jKB63DNDZ6lVc/UvYgCzaYiR5SfjXRWjfddQZjtgbsxDb3B+iQ4s
-kAbtvPDknfia5B0dewSogp7A0e5I2wfanhTWQRCYO7hTJFH7BhRd4u/Sj6bHn8WB
-mxm9kq/ghCzG3vHRelZLIXp6rQ0LR5x9BfjCfFMU5PwEbWGpH/z0Omie5XsSH5hk
-YR0Erj9BUBthPAeRCFYbkl9yhUfIn14d6Oj8SyMHto6FZ7kutFeWp1M/zQStXN2w
-U/zKpHE1aOknMW0mGqenRI5BS5bhbR+KHimPfQVdTG/1DcbhPblsrpisChP4R4Nl
-zwS2C5AYusq0jhAlJM+dFOIXyDM5t5tkP/Iqb+Xhks5SNnu67vl4t47JSY4nONgF
-0MP2myZ0GtvkTI2AUDKFxapC2+LWNfOIqNAiIRino5ydLsvEke5jiglesTnEsI5S
-/k65wgNAGUNHRi3+unBMeeOBxuPRFliLi+zj/GOvWPz1voZ4oMPFdrY2AG1jOJvx
-HpRkWF3tQVXvCyW5QUgX
-=ES9U
------END PGP SIGNATURE-----
+A policy that says "do not log peer addresses" would be nice for privacy
+reasons, and bad for maintenance reasons. Practically speaking, violations
+will be undetectable, and it'll be unenforceable.
+
+Maybe a policy that says 'do not engage in DoS' instead?
+
+Either way, when we don't want to be scanned, regardless of how the scanner
+gets their target addresses, we tend to use perimeter firewalls.
+
+
+Richard
+
