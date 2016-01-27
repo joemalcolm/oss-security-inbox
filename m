@@ -1,48 +1,107 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/23/2
-Message-ID: <ec9146bf-2667-749a-8250-6dd28b319c8b@web.de>
-Date: Sat, 23 Jul 2016 16:36:58 +0200
-From: Walter <dpankraz1@....de>
-To: oss-security@...ts.openwall.com
-Subject: XSS vulnerability in ILIAS before version 5.1.3, 5.0.11 and 4.4.14
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/27/5
+Message-ID: <CANO=Ty1ZFtpeUespB+nn0gZ8oC7PAkkr7+eTR1U+RyLtGKHKtA@mail.gmail.com>
+Date: Wed, 27 Jan 2016 07:43:30 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Cc: pool@...ts.ntp.org, linuxbrad@...il.com, team@...urity.debian.org,  secalert <secalert@...hat.com>
+Subject: Re: shodan.io actively infiltrating ntp.org IPv6 pools for scanning purposes
 Content-Type: text/plain; charset=utf-8
 
-A cross-site scripting vulnerability in ILIAS <http://www.ilias.de>
-(Integrated Learning, Information and Work Cooperation System) version
-5.1.2 has been found by Quadas.
+On Wed, Jan 27, 2016 at 4:24 AM, Luca BRUNO <lucab@...ian.org> wrote:
 
-Impact:
+> [cross-posted to pool-ntp and oss-sec]
+>
+> Hi,
+> while reviewing network logs this morning I spotted some anomalies related
+> to scan probes, ntp.org pools and IPv6.
+>
+> It looks like Brad already observed and blogged about this some days ago,
+> but I haven't seen this discussed in the usual ntp-pools, Debian and
+> oss-sec ML, so I'm reposting this here:
+>
+> http://netpatterns.blogspot.de/2016/01/the-rising-sophistication-of-network.html
+>
+> In summary, some machines (which seem related to the shodan.io scanning
+> project)
+> are actively participating in pool.ntp.org as IPv6 endpoints.
+> However, clients connecting to them for NTP timesync, are subsequently
+> scanned
+> by probes originating from *.scan6.shodan.io hosts.
+>
+> Confirming original report from Brad, I can add that those scanners seem to
+> implement some kind of rate-limiting: they will timeout NTP and won't
+> re-scan
+> recent clients when doing multiple/subsequent NTP requests.
+> Moreover, this is not targeted/restricted to the Debian pool only, but
+> plague
+> the whole IPv6 pool, as seen on a sample query to the RedHat pool:
+>
+> ```
+> $ dig +short -t AAAA 2.rhel.pool.ntp.org | grep -E
+> ':[[:xdigit:]]00[[:xdigit:]]$'
+> 2a03:b0c0:3:d0::18:b001
+> $ dig +short -x 2a03:b0c0:3:d0::18:b001
+> analog.data.shodan.io.
+> ```
+> (Upon querying this server for NTP, the machine immediately got
+> IPv6-scanned
+> by rock.scan6.shodan.io)
+>
+> pool.ntp.org services are the default NTP servers in many default
+> configurations
+> (at least most of Linux distro) and I guess that this kind of behavior is
+> dangerously
+> increasing the exposure level of way too many systems.
+>
+> For ntp.org admins: can those rogue server be expunged from the pools,
+> and the whole
+> shodan.io situation clarified? (Brad's post has a comprehensive endpoints
+> list and
+> helper tools for detection)
+>
+> For oss-sec crowd: is there anything we can do to improve the situation
+> and avoid
+> similar cases in the future? Should crowd-sourced and fundamental services
+> like this
+> be encouraged to move to a stronger WoT?
+>
+> Ciao, Luca
+>
+> --
+>  .''`.  ** Debian GNU/Linux **  | Luca Bruno (kaeso)
+> : :'  :   The Universal O.S.    | lucab (AT) debian.org
+> `. `'`                          | GPG: 0xBB1A3A854F3BBEBF
+>   `-     http://www.debian.org  | Debian GNU/Linux Developer
+>
 
-    This remotely accessible vulnerability is always reproducible and
-    possibly works in any version before 5.1.3, 5.0.11 and 4.4.14.
-    An attacker can supply java script code in the filename of an
-    uploaded file, which will be executed in browsers of other users. It
-    is not
-    required to open this file. Browsing into the folder will trigger
-    the code execution.
 
-Exploit:
+Unfortunately there are strong economic incentives for this kind of
+behavior. scanning is a great example, you want to scan the Internet of
+things, this is easy with IPv4 (just bulk scan the used public space which
+is like 3 billion IPs) and basically impossible with IPv6. Simply leverage
+the fact that these IoT things often connect out to NTP servers by default
+using the pool.ntp.org servers. No matter what you do on the ntp.org pool
+the people who want to scan will most likely be willing to spend time and
+money to get at that data (hosting ntp servers, sniffing traffic to them,
+etc.). Sadly what you need is business process to detect this activity (and
+other forms of shenanigans) and then deal with the offender (e.g. remove
+their ntp server from the pool).
 
-  * log in
-  * open a folder you can upload a file to
-  * select the "upload files"-dialog
-  * drop a random file in
-  * write code (e.g. JavaScript) in the filename
-  * upload file
+Sadly we can't really rely on the IoT device makers to fix this, they have
+basically 0 incentive to prevent scanners from hitting their products
+(they're already sold, to late for the customer to make an informed
+decision).
 
-    From this moment the code will run on any user's web browser who
-    opens the folder you uploaded the file in.
+I'm also not sure that having scanners scan and publish these results is
+such a bad thing, it raises awareness, and hopfully long term leads to
+things like legislation that forces device makers to make safe devices
+(e.g. no web interface with password "Admin").
 
+-- 
 
-Patch:
-
-    Vulnerability was fixed with version 5.1.3, 5.0.11 and 4.4.14.
-    Ticket-ID was 0017977 but unfortunately the ticket was set on
-    private view status. Link to the ticket
-    <http://www.ilias.de/mantis/view.php?id=17977> (account is required)
-    Surprisingly there are no commits on GitHub
-    <https://github.com/ILIAS-eLearning/ILIAS>.
-
-
-Can a CVE-ID be assigned please?
+--
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
 
