@@ -1,18 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/27/12
-Message-ID: <CAMYtjAosvNp_=jmVHQWFJLFoAC12Aq0zk83kivf3W0QihPVDQQ@mail.gmail.com>
-Date: Wed, 27 Jan 2016 23:46:43 +0100
-From: Pere Orga <pere@...a.cat>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/28/3
+Message-ID: <56A90755.2030706@river.com>
+Date: Wed, 27 Jan 2016 11:07:17 -0700
+From: Richard Johnson <rdump@...er.com>
 To: oss-security@...ts.openwall.com
-Cc: Drupal Security Team <security@...pal.org>
-Subject: CVE request for Drupal contributed module (Open Atrium - Access Bypass - SA-CONTRIB-2016-003)
+Cc: pool@...ts.ntp.org, team@...urity.debian.org, secalert@...hat.com
+Subject: Re: shodan.io actively infiltrating ntp.org IPv6 pools for scanning purposes
 Content-Type: text/plain; charset=utf-8
 
-Hi
+On 2016-01-27 06:05, Loganaden Velvindron wrote:
+> Shouldn't we have some kind of policy for operators participating in
+> pool.ntp.org to prevent such issues ?
 
-Please can I have a CVE ID assigned to the following vulnerability:
-https://www.drupal.org/node/2657654
 
-Thanks
--- 
-Pere Orga on behalf of the Drupal Security Team
+If the issue is 'port scanning by the IPv6 NTP pool participant', why bother?
+
+Any IPv6 NTP pool provider will naturally have peer IPv6 addresses to use and
+record. It's one way that researchers at measurement organizations already
+track IPv6 use and growth.
+
+Others can, do, and will use popular public services like NTP to enumerate and
+record active peer addresses as well. And some of those others will do things
+with that data.
+
+A policy that says "do not log peer addresses" would be nice for privacy
+reasons, and bad for maintenance reasons. Practically speaking, violations
+will be undetectable, and it'll be unenforceable.
+
+Maybe a policy that says 'do not engage in DoS' instead?
+
+Either way, when we don't want to be scanned, regardless of how the scanner
+gets their target addresses, we tend to use perimeter firewalls.
+
+
+Richard
+
