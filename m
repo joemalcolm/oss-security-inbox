@@ -1,21 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/18/1
-Message-ID: <CAEsznC7n7U35nHEx64ma39PtbqKd6TjPyvAWJMBaP6YRacJEog@mail.gmail.com>
-Date: Tue, 18 Oct 2016 10:42:15 +0300
-From: Lior Kaplan <kaplanlior@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE assignment for PHP 5.6.27 and 7.0.12
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/27/7
+Message-ID: <CAFB0D2S-jjKKegnTqXo+Kcn9JME+=KwAjUVKMBVCWS=z1uxQUQ@mail.gmail.com>
+Date: Wed, 27 Jan 2016 10:47:18 -0500
+From: Justin Bull <me@...tinbull.ca>
+To: rubyonrails-security@...glegroups.com
+Cc: security@...e.de, oss-security@...ts.openwall.com,  ruby-security-ann@...glegroups.com
+Subject: Re: [CVE-2016-0751] Possible Object Leak and Denial of Service attack in Action Pack
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Mon, Jan 25, 2016 at 2:32 PM, Aaron Patterson <tenderlove@...y-lang.org>
+wrote:
 
-Please assign a CVE for the following issue:
+>
+> Workarounds
+> -----------
+> This attack can be mitigated by a proxy that only allows known mime types
+> in
+> the Accept header.
+>
+> Placing the following code in an initializer will also mitigate the issue:
+>
+> ```ruby
+> require 'action_dispatch/http/mime_type'
+>
+> Mime.const_set :LOOKUP, Hash.new { |h,k|
+>   Mime::Type.new(k) unless k.blank?
+> }
+> ```
+>
 
-Bug #73147    Use After Free in unserialize()
-https://bugs.php.net/bug.php?id=73147
-http://git.php.net/?p=php-src.git;a=commit;h=0e6fe3a4c96be2d3e88389a5776f878021b4c59f
+I know 4.0.x isn't a supported Rails version, but it's worth noting that
+with our app, that workaround breaks the `params` hash in Action
+Controller. The request must be "application/json" with a POST payload. The
+workaround, for some reason, completely removes the post payload hash from
+`params`. Note that a "multipart/form-data" request and GET parameters work
+just fine.
 
-Thanks,
+Advice as to a workaround that preserves "application/json" POST request
+parameters would be appreciated.
 
-Kaplan
+-- 
+Best Regards,
+Justin Bull
+PGP Fingerprint: E09D 38DE 8FB7 5745 2044 A0F4 1A2B DEAA 68FD B34C
 
