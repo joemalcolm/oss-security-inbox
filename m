@@ -1,50 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/27/2
-Message-Id: <20161027064453.D3E771BE040@smtpvbsrv1.mitre.org>
-Date: Thu, 27 Oct 2016 02:44:53 -0400 (EDT)
-From: cve-assign@...re.org
-To: gustavo.grieco@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: librsvg and cairo are causing libpng to write out-of-bounds
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/27/3
+Message-ID: <CAOp4FwR2S=DRH2TDp_sFPbaDPRUf=-bcmTJxa0+tyP52_xvejw@mail.gmail.com>
+Date: Wed, 27 Jan 2016 17:05:55 +0400
+From: Loganaden Velvindron <loganaden@...il.com>
+To: oss-security@...ts.openwall.com
+Cc: pool@...ts.ntp.org, linuxbrad@...il.com, team@...urity.debian.org,  secalert@...hat.com
+Subject: Re: shodan.io actively infiltrating ntp.org IPv6 pools for scanning purposes
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Wed, Jan 27, 2016 at 3:24 PM, Luca BRUNO <lucab@...ian.org> wrote:
 
-> A patch was recently proposed:
-> 
-> https://bugs.freedesktop.org/attachment.cgi?id=127421
-> 
-> thanks to John Bowler and his detailed analysis of this issue:
-> 
-> https://bugs.freedesktop.org/show_bug.cgi?id=98165
-> 
-> Can we have a CVE, now that we know it was an integer overflow and we have
-> a patch?
+> [cross-posted to pool-ntp and oss-sec]
+>
+> Hi,
+> while reviewing network logs this morning I spotted some anomalies related
+> to scan probes, ntp.org pools and IPv6.
+>
+> It looks like Brad already observed and blogged about this some days ago,
+> but I haven't seen this discussed in the usual ntp-pools, Debian and
+> oss-sec ML, so I'm reposting this here:
+>
+> http://netpatterns.blogspot.de/2016/01/the-rising-sophistication-of-network.html
+>
+> In summary, some machines (which seem related to the shodan.io scanning
+> project)
+> are actively participating in pool.ntp.org as IPv6 endpoints.
+> However, clients connecting to them for NTP timesync, are subsequently
+> scanned
+> by probes originating from *.scan6.shodan.io hosts.
+>
+>
+Shouldn't we have some kind of policy for operators participating in
+pool.ntp.org to prevent such issues ?
 
-Yes, use CVE-2016-9082 for everything fixed by
-attachment.cgi?id=127421. Our understanding is that cairo is the
-primary affected product.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYEaIXAAoJEHb/MwWLVhi2F84P/RGLhyp408cPps8/bkAIzpL5
-zJ8/+sqWYlVfYt+Mwcd4InGIzxHhaBRtPbX7c8FsWRhySib7QRadPdnp4U9xUNXP
-o7Z4kV55WIaJhqo5soJT0kMBoI+itrktfJHFsyWnX3KGPvrsc+lembzQ0313Bw8f
-G8KSmcSIfEBChOPdqezTsVHggDpwPdmXjBrNrd44WbQJA95oUz9dr9VPknSX52Bw
-eBUJRuZ19EV3qlwaw0zrZcme1oqReyELGj8LRBLXGIbEbKfX9azjnHefWJXQW8qr
-N3iWWoKSHe2RMo61FcG0T75AVF+A8SCsnbrWsmR4tDMmV98KNqdEoBZmvqH0wrBH
-1A3pfvLYE4b9y6IsuWOjSvncvnxaWjHL+U0Vl7ndvHjWUWx6FTXkNLy6+YtxOu7D
-wTfMhCSjaXtGoQS6yXYTJlHO1iFE9E3b/7p7Bn/Wgztba78OUUZQyVf4+jT49YQg
-dO3OlSx0piN/VSg3ow6+YBHcN9Hr4abgRjFQD9stw2Ski8AOnGZ6vAn5XYqP9xLG
-xbWdGECCFX3WlTrQwW/2yKV4B1QndNeqvnhYFTEKNxePPI4236mTHC49mP64SFVG
-qALbGd+izC6KRtK1TG6jmFze8wQ1zyfCg3pWd0wottDwoSDOIkUGLv+6U5Cpqz6O
-nve18XRyf0Tm9+hQQ8/X
-=3wl0
------END PGP SIGNATURE-----
