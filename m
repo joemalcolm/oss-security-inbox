@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1642" "Tuesday" "15" "September" "2015" "13:10:17" "-0300" "Gustavo Grieco" "gustavo.grieco@gmail.com" "<CACn5sdScL+e_x+QH4wS-cUKaEAMhSSy-jjeKufXu53j6-as_HA@mail.gmail.com>" "50" "Re: [oss-security] Heap overflow and DoS in unzip 6.0" nil nil nil "9" "2015091516:10:17" "[oss-security] Heap overflow and DoS in unzip 6.0" (number mark "        gustavo.grie Sep 15   50/1642  " thread-indent "\"Re: [oss-security] Heap overflow and DoS in unzip 6.0\"\n") "<20150915180357.7a0097a4@redhat.com>" ("<CACn5sdRQaUEHfde5QzqnOSv829baMEgDBCN7n8rzzrb+1s2uMw@mail.gmail.com>" "<20150915180357.7a0097a4@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1133" "Wednesday" "27" "January" "2016" "10:47:18" "-0500" "Justin Bull" "me@justinbull.ca" "<CAFB0D2S-jjKKegnTqXo+Kcn9JME+=KwAjUVKMBVCWS=z1uxQUQ@mail.gmail.com>" "40" "[oss-security] Re: [CVE-2016-0751] Possible Object Leak and Denial of Service attack in Action Pack" "^Cc:" nil nil "1" "2016012715:47:18" "[oss-security] Re: [CVE-2016-0751] Possible Object Leak and Denial of Service attack in Action Pack" (number mark "U       me@justinbul Jan 27   40/1133  " thread-indent "\"[oss-security] Re: [CVE-2016-0751] Possible Object Leak and Denial of Service attack in Action Pack\"\n") "<20160125193202.GB14069@TC.local>" ("<20160125193202.GB14069@TC.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 14219 invoked by uid 550); 15 Sep 2015 16:10:30 -0000
+Received: (qmail 13777 invoked by uid 550); 27 Jan 2016 15:47:50 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,80 +11,84 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 14179 invoked from network); 15 Sep 2015 16:10:28 -0000
+Received: (qmail 13759 invoked from network); 27 Jan 2016 15:47:49 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+        d=justinbull-ca.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=9tUUQ4pAQH68LYMy78afgDAthkyjcsPxaPeqCOV1etI=;
-        b=xbh14I6C5M5UgLQGI7wWbaF9B7QOeIOU8UnYBAyuyeEp0KnNBW+/Rb3iNtGs2/Eq7d
-         nsOE2lyqijY71favXQsFTKsBQ2zDJG0WQrsXnmI4jZHKMVPEGYGXwvHBgW11jfOYSrS+
-         e2hR3jdo5qv9sBnh/geHZKUVpIS3cXwX+aFQkWB0f6ktAXrvimhXhTVTEaJF+1JYQ0Xz
-         CpVdTttTsf9+Bfs/kl06LPm0yObiMq3EO86HUfe63SvNVEhWXn/4NAyfhOr/0kYud7gA
-         a+5kDkz/tDaW63slc1tf5vykU7e6nvpyfionZ9jzzNwFWNiemIQaAykg3jFQQCUFI61V
-         8KlA==
+        bh=eJ4zlzVS80DSfHK19lfZDdpEBEdfPO7fM5HbzWkTIoE=;
+        b=qguHtnlwlfdLWOP3FtXEMe6HPqNcpVCqH844zQR5OzI2aw8bPGEYG93haYwFM1VpwR
+         eSnpom5CwVkRwSDdfttjS2D4zzgLLBurnj9xE8XAS88cAl/Ujud8adnQKU9bk1adRICU
+         OOvGq4edB9pnR7bRk9fd2LVAL1KXBEf9INUHFuEZY+AgdpNt7sLbsk3lY4SbG6cpYpr1
+         DMl3gB7CTtWpZaZvfd2CTawSUXLEimW4VlYBxF4L6ViPsmNRSdYaj1Kv4hxQiilR/Wgn
+         Nh6cTOhQod8aa/vIiiBY/nTmmw5+WjkX31kNF1Ij5B6mPkIjyEFtNc+rpYwBXUc3YITC
+         dSVA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=eJ4zlzVS80DSfHK19lfZDdpEBEdfPO7fM5HbzWkTIoE=;
+        b=dw+KJVz3gtEjMMXvCr5XeeWD88LkxJKbcAVXgkuT7xFf75DjiJjSBZZnaNtdxLTixL
+         oQhi5ahnmACwVYPKFEHJ6TQYDUu3LJzjqen0cCqCNTesRCmgo22CJDLSnxxRngSkRdqr
+         dba/vkZXZ3S9eonsydTUjsm2ta5rmWYiQpvAnp779Cyl2xpPqNM0Wcf/gvOV6OdtuvK9
+         t3fKw7YFfp9ndL41WSusrwbqUG8nMvCFPHU8i+JD1Iktf46nB4kney0Y+5siwXj2Rt30
+         I6mkpmthKV1HrbyjYUmCJwZj7/uvrWXq+g5wlfgBUr0DTxyiUb4ojW1cxS8+NtMAFzfW
+         3SPg==
+X-Gm-Message-State: AG10YOSn7OHrfAlcyd2DI6XawK9NZjiYzcZsqBQd/oEdbIwxFN5Q0X2sCeLwKBoljK3VIiED2DtbLfY+bS18lg==
+X-Received: by 10.60.60.3 with SMTP id d3mr22463785oer.24.1453909657776; Wed,
+ 27 Jan 2016 07:47:37 -0800 (PST)
 MIME-Version: 1.0
-X-Received: by 10.153.8.37 with SMTP id dh5mr681859lad.53.1442333417492; Tue,
- 15 Sep 2015 09:10:17 -0700 (PDT)
-In-Reply-To: <20150915180357.7a0097a4@redhat.com>
-References: <CACn5sdRQaUEHfde5QzqnOSv829baMEgDBCN7n8rzzrb+1s2uMw@mail.gmail.com>
-	<20150915180357.7a0097a4@redhat.com>
-Message-ID: <CACn5sdScL+e_x+QH4wS-cUKaEAMhSSy-jjeKufXu53j6-as_HA@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=001a11369b58ff597f051fcb6a5e
-Cc: cve-assign@mitre.org
-Date: Tue, 15 Sep 2015 13:10:17 -0300
-From: Gustavo Grieco <gustavo.grieco@gmail.com>
+X-Originating-IP: [207.35.8.98]
+In-Reply-To: <20160125193202.GB14069@TC.local>
+References: <20160125193202.GB14069@TC.local>
+Message-ID: <CAFB0D2S-jjKKegnTqXo+Kcn9JME+=KwAjUVKMBVCWS=z1uxQUQ@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=089e013a04a8b01713052a52b898
+Cc: security@suse.de, oss-security@lists.openwall.com, 
+	ruby-security-ann@googlegroups.com
+Date: Wed, 27 Jan 2016 10:47:18 -0500
+From: Justin Bull <me@justinbull.ca>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Heap overflow and DoS in unzip 6.0
-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: [CVE-2016-0751] Possible Object Leak and Denial of Service attack
+ in Action Pack
+To: rubyonrails-security@googlegroups.com
 
---001a11369b58ff597f051fcb6a5e
+--089e013a04a8b01713052a52b898
 Content-Type: text/plain; charset=UTF-8
 
-2015-09-15 13:03 GMT-03:00 Stefan Cornelius <scorneli@redhat.com>:
+On Mon, Jan 25, 2016 at 2:32 PM, Aaron Patterson <tenderlove@ruby-lang.org>
+wrote:
 
-> On Mon, 7 Sep 2015 08:57:20 -0300
-> Gustavo Grieco <gustavo.grieco@gmail.com> wrote:
 >
-> > Hello,
-> >
-> > Two issues were found in unzip 6.0:
-> >
-> > * A heap overflow triggered by unzipping a file with password (e.g
-> > unzip -p -P x sigsegv.zip)
-> > * A denegation of service with a file that never finishes unzipping
-> > (e.g. unzip sigxcpu.zip).
-> >
-> > Upstream is notified. Nevertheless the test cases as well as the
-> > valgrind and the adress sanitizer reports of the heap overflow case
-> > are attached (as a single file) in case someone wants to provide some
-> > feedback. These issues were found with QuickFuzz.
-> >
-> > Regards,
-> > Gustavo.
+> Workarounds
+> -----------
+> This attack can be mitigated by a proxy that only allows known mime types
+> in
+> the Accept header.
 >
-> Can CVEs be assigned?
+> Placing the following code in an initializer will also mitigate the issue:
 >
-> Thanks in advance,
+> ```ruby
+> require 'action_dispatch/http/mime_type'
+>
+> Mime.const_set :LOOKUP, Hash.new { |h,k|
+>   Mime::Type.new(k) unless k.blank?
+> }
+> ```
 >
 
-AFAIK, upstream is still working on the heap overflow issue (the DoS is
-fixed in the last unzip beta). In concrete, they said:
+I know 4.0.x isn't a supported Rails version, but it's worth noting that
+with our app, that workaround breaks the `params` hash in Action
+Controller. The request must be "application/json" with a POST payload. The
+workaround, for some reason, completely removes the post payload hash from
+`params`. Note that a "multipart/form-data" request and GET parameters work
+just fine.
 
-"My initial (quick) analysis suggested that the basic problem is
-corrupt (unrealistic) Extra-Field sizes, which UnZip does not check well
-enough. I need to verify that that is the cause, and then figure out
-what to do about it. Currently, if the program sees an Extra-Field
-length of, say, 0x1007, it tends to believe it, even if that's bigger
-than the actual archive member's length (or perhaps even bigger than the
-whole archive). If it actually tries to read data which haven't been
-read, then valgrind gets upset (with good reason). At least that's what
-I believe so far."
+Advice as to a workaround that preserves "application/json" POST request
+parameters would be appreciated.
 
+-- 
+Best Regards,
+Justin Bull
+PGP Fingerprint: E09D 38DE 8FB7 5745 2044 A0F4 1A2B DEAA 68FD B34C
 
-
-> --
-> Stefan Cornelius / Red Hat Product Security
->
-
---001a11369b58ff597f051fcb6a5e--
+--089e013a04a8b01713052a52b898--
