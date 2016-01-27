@@ -1,31 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/17/6
-Message-ID: <20161117175017.GM5329@io.lakedaemon.net>
-Date: Thu, 17 Nov 2016 17:50:17 +0000
-From: Jason Cooper <osssecurity@...edaemon.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2016-4484: - Cryptsetup Initrd root Shell
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/27/8
+Message-ID: <50DADDE6B33B1B47904E685AAFDC182448CF2B4300@yugi.mocana.local>
+Date: Wed, 27 Jan 2016 07:59:36 -0800
+From: Adam Jacobs <AJacobs@...ana.com>
+To: Luca BRUNO <lucab@...ian.org>, "pool@...ts.ntp.org" <pool@...ts.ntp.org>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "linuxbrad@...il.com" <linuxbrad@...il.com>
+CC: "team@...urity.debian.org" <team@...urity.debian.org>, "secalert@...hat.com" <secalert@...hat.com>
+Subject: RE: [Pool] shodan.io actively infiltrating ntp.org IPv6 pools for scanning purposes
 Content-Type: text/plain; charset=utf-8
 
-Hi John,
+Infuriating!
 
-On Thu, Nov 17, 2016 at 04:56:06PM +0000, John Haxby wrote:
-> On 17/11/16 16:39, Jason Cooper wrote:
-> > However, the golden rule still applies.  Physical access trumps all
-> > defensive measures.  The absolute best you can do is detect that
-> > physical access occurred.  From there, you're hoping there are no
-> > hardware implants or other devices outside the scope of software
-> > security.
-> 
-> I agree.  However, it ought be to be harder than leaning on the enter
-> key to break into a system.  You lock your doors even though it doesn't
-> stop a determined burglar?
+________________________________________
+From: pool [pool-bounces+ajacobs=mocana.com@...ts.ntp.org] On Behalf Of Luca BRUNO [lucab@...ian.org]
+Sent: Wednesday, January 27, 2016 03:24
+To: pool@...ts.ntp.org; oss-security@...ts.openwall.com; linuxbrad@...il.com
+Cc: team@...urity.debian.org; secalert@...hat.com
+Subject: [Pool] shodan.io actively infiltrating ntp.org IPv6 pools for  scanning purposes
 
-Yes, as I said before, non-deterministic failure modes are bad.  This
-CVE is a bug in the initrd script and needs to be fixed.  What I
-disagree with, and still do, is the "sky is falling!" nature of the
-alert.
+[cross-posted to pool-ntp and oss-sec]
 
-thx,
+Hi,
+while reviewing network logs this morning I spotted some anomalies related
+to scan probes, ntp.org pools and IPv6.
 
-Jason.
+It looks like Brad already observed and blogged about this some days ago,
+but I haven't seen this discussed in the usual ntp-pools, Debian and
+oss-sec ML, so I'm reposting this here:
+http://netpatterns.blogspot.de/2016/01/the-rising-sophistication-of-network.html
+
+In summary, some machines (which seem related to the shodan.io scanning project)
+are actively participating in pool.ntp.org as IPv6 endpoints.
+However, clients connecting to them for NTP timesync, are subsequently scanned
+by probes originating from *.scan6.shodan.io hosts.
+
+Confirming original report from Brad, I can add that those scanners seem to
+implement some kind of rate-limiting: they will timeout NTP and won't re-scan
+recent clients when doing multiple/subsequent NTP requests.
+Moreover, this is not targeted/restricted to the Debian pool only, but plague
+the whole IPv6 pool, as seen on a sample query to the RedHat pool:
+
+```
+$ dig +short -t AAAA 2.rhel.pool.ntp.org | grep -E ':[[:xdigit:]]00[[:xdigit:]]$'
+2a03:b0c0:3:d0::18:b001
+$ dig +short -x 2a03:b0c0:3:d0::18:b001
+analog.data.shodan.io.
+```
+(Upon querying this server for NTP, the machine immediately got IPv6-scanned
+by rock.scan6.shodan.io)
+
+pool.ntp.org services are the default NTP servers in many default configurations
+(at least most of Linux distro) and I guess that this kind of behavior is dangerously
+increasing the exposure level of way too many systems.
+
+For ntp.org admins: can those rogue server be expunged from the pools, and the whole
+shodan.io situation clarified? (Brad's post has a comprehensive endpoints list and
+helper tools for detection)
+
+For oss-sec crowd: is there anything we can do to improve the situation and avoid
+similar cases in the future? Should crowd-sourced and fundamental services like this
+be encouraged to move to a stronger WoT?
+
+Ciao, Luca
+
+--
+ .''`.  ** Debian GNU/Linux **  | Luca Bruno (kaeso)
+: :'  :   The Universal O.S.    | lucab (AT) debian.org
+`. `'`                          | GPG: 0xBB1A3A854F3BBEBF
+  `-     http://www.debian.org  | Debian GNU/Linux Developer
