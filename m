@@ -1,54 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/03/9
-Message-ID: <52f58a81-5a5a-005d-cc87-27f1cce0379e@gmail.com>
-Date: Tue, 3 May 2016 18:52:43 +0200
-From: Gsunde Orangen <gsunde.orangen@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: OpenSSL Security Advisory [3rd May 2016]
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/27/2
+Message-ID: <2413003.GtkKFizscD@chimera>
+Date: Wed, 27 Jan 2016 12:24:06 +0100
+From: Luca BRUNO <lucab@...ian.org>
+To: pool@...ts.ntp.org, oss-security@...ts.openwall.com, linuxbrad@...il.com
+Cc: team@...urity.debian.org, secalert@...hat.com
+Subject: shodan.io actively infiltrating ntp.org IPv6 pools for scanning purposes
 Content-Type: text/plain; charset=utf-8
 
-My current view on three of the issues:
+[cross-posted to pool-ntp and oss-sec]
 
-* Padding oracle in AES-NI CBC MAC check (CVE-2016-2107)
-The advisory says: "This issue was introduced as part of the fix for
-Lucky 13 padding attack (CVE-2013-0169)".
-So the following versions should be affected (ref.
-https://openssl.org/news/vulnerabilities.html#y2013):
- - 1.0.2 through 1.02g
- - 1.0.1d through 1.0.1s
- - 1.0.0k and all later versions
- - 0.9.8y and all later versions
+Hi,
+while reviewing network logs this morning I spotted some anomalies related
+to scan probes, ntp.org pools and IPv6.
 
-* ASN.1 BIO excessive memory allocation (CVE-2016-2109)
-The OpenSSL code history tells that the vulnerable code is also in the
-0.9.8 and 1.0.0 lines --> affected
+It looks like Brad already observed and blogged about this some days ago,
+but I haven't seen this discussed in the usual ntp-pools, Debian and
+oss-sec ML, so I'm reposting this here:
+http://netpatterns.blogspot.de/2016/01/the-rising-sophistication-of-network.html
 
-* EBCDIC overread (CVE-2016-2176)
-The OpenSS code history tells that the vulnerable code is also in the
-0.9.8 and 1.0.0 lines --> affected
-(btw: curious about where there are still EBCDIC systems that use
-OpenSSL and are interested in fixing vulnerabilities...?)
+In summary, some machines (which seem related to the shodan.io scanning project)
+are actively participating in pool.ntp.org as IPv6 endpoints.
+However, clients connecting to them for NTP timesync, are subsequently scanned
+by probes originating from *.scan6.shodan.io hosts.
 
-Gsunde
+Confirming original report from Brad, I can add that those scanners seem to
+implement some kind of rate-limiting: they will timeout NTP and won't re-scan
+recent clients when doing multiple/subsequent NTP requests.
+Moreover, this is not targeted/restricted to the Debian pool only, but plague
+the whole IPv6 pool, as seen on a sample query to the RedHat pool:
 
+```
+$ dig +short -t AAAA 2.rhel.pool.ntp.org | grep -E ':[[:xdigit:]]00[[:xdigit:]]$'
+2a03:b0c0:3:d0::18:b001
+$ dig +short -x 2a03:b0c0:3:d0::18:b001
+analog.data.shodan.io.
+```
+(Upon querying this server for NTP, the machine immediately got IPv6-scanned
+by rock.scan6.shodan.io)
 
+pool.ntp.org services are the default NTP servers in many default configurations
+(at least most of Linux distro) and I guess that this kind of behavior is dangerously
+increasing the exposure level of way too many systems.
 
-On 03.05.2016, 17:21 Solar Designer wrote:
-> Now we need to figure out which of these affect latest OpenSSL 1.0.0,
-> even if unsupported.  I guess "Memory corruption in the ASN.1 encoder
-> (CVE-2016-2108)" was fixed in 1.0.0 branch in 2015 as well?  I guess
-> "Padding oracle in AES-NI CBC MAC check (CVE-2016-2107)" doesn't affect
-> 1.0.0 since it lacks AES-NI support?  (I haven't confirmed either yet.)
-> 
-> ----- Forwarded message from OpenSSL <openssl@...nssl.org> -----
-> 
-> Date: Tue, 3 May 2016 14:04:55 +0000
-> From: OpenSSL <openssl@...nssl.org>
-> To: OpenSSL Developer ML <openssl-dev@...nssl.org>,
->  OpenSSL User Support ML <openssl-users@...nssl.org>,
->  OpenSSL Announce ML <openssl-announce@...nssl.org>
-> Subject: [openssl-announce] OpenSSL Security Advisory
-> 
-> 
-> OpenSSL Security Advisory [3rd May 2016]
-> ========================================
+For ntp.org admins: can those rogue server be expunged from the pools, and the whole
+shodan.io situation clarified? (Brad's post has a comprehensive endpoints list and 
+helper tools for detection)
+
+For oss-sec crowd: is there anything we can do to improve the situation and avoid
+similar cases in the future? Should crowd-sourced and fundamental services like this
+be encouraged to move to a stronger WoT?
+
+Ciao, Luca
+
+-- 
+ .''`.  ** Debian GNU/Linux **  | Luca Bruno (kaeso)
+: :'  :   The Universal O.S.    | lucab (AT) debian.org
+`. `'`                          | GPG: 0xBB1A3A854F3BBEBF
+  `-     http://www.debian.org  | Debian GNU/Linux Developer
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
