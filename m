@@ -1,28 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/22/2
-Message-ID: <f6e1aee5-5842-b46d-27fa-24ffe08c4762@archlinux.org>
-Date: Sat, 22 Oct 2016 21:18:11 +1000
-From: Allan McRae <allan@...hlinux.org>
-To: oss-security@...ts.openwall.com
-Cc: Levente Polyak <anthraxx@...hlinux.org>
-Subject: Addition to linux-distros for Arch Linux
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/27/1
+Message-Id: <20160127054008.4655CB2E019@smtpvbsrv1.mitre.org>
+Date: Wed, 27 Jan 2016 00:40:08 -0500 (EST)
+From: cve-assign@...re.org
+To: xiaoqixue_1@....com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: a bug in gif2rgb.c in giflib-5.1.2
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Can Levente Polyak (CCed) please be added to the linux-distros list
-representing Arch Linux [1]?  He leads the Arch Linux Security team,
-which monitors and fixes all security issues in our packages [2].
+> We find a memory allocation whose size could be zero in gif2rgb.c.
+> and It will result to several memory out of bound read and write. the bug in gif2rgb.c:386 :
+> 
+> 386 if ((ScreenBuffer = (GifRowType *) 
+> 387 malloc(GifFile->SHeight * sizeof(GifRowType))) == NULL) 
+> 388 GIF_EXIT("Failed to allocate memory required, aborted.");
+> 
+> 
+> Please see "http://sourceforge.net/p/giflib/bugs/82/" for more details.
 
-His PGP fingerprint is E240B57E2C4630BA768E2F26FC1B547C8D8172C8.
+Can you provide more information about the relationship between
+http://sourceforge.net/p/giflib/bugs/82/ and the above instance of
+GifFile->SHeight in the malloc call? The
+http://sourceforge.net/p/giflib/code/ci/4cc68b315ff9a378aef6664e1be6b2144ad4a5e6/
+patch for http://sourceforge.net/p/giflib/bugs/82/ adds a check for
+"GifFile->SWidth == 0" but does not add new validation of the
+GifFile->SHeight value.
 
-Thanks,
-Allan
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-[1] https://www.archlinux.org/people/developers/#anthraxx
-[2]
-https://lists.archlinux.org/pipermail/arch-security/2016-September/thread.html
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (485 bytes)
+iQIcBAEBCAAGBQJWqFekAAoJEL54rhJi8gl5AtQP/imjqKTZMrt2KiqYaIAiEbvK
+KBvoKNDaBesh4kJQ2XHIlT+kG5y2Qr0KiXYR3+O0nrbebXzM9pUlcAI6H3jAhiOX
+h2mRNBXKGOof7wbsoAFsKrYEKAdASvLxy+KSl74Bxb00Z68PSezgBo1SoHi/xW3z
+C5yFxRnOjYLlVz/X76+gYYqbLgwnLHUPWN4mIxu2unDZ67Mc43i8br4pr1eXH4an
+1GgExNhoMsIk2vwPLatOL7DDEqBJKLygVh5QYtXs1uXjBx/RA4opzJRsb3mgmX2D
+K4q5mjgrUfx85meR/9zBVs22HLSWcJPQoqQnaRHcKKN0R8J0P+31X2NYBqbMj9d3
+HVZaaX9zB4Uq3Mpj9ZTgGnvyJuI/YVi7VviYTWhn17NGrvH3ivCr/vvhs7nudBti
+PfQj6if3vhy6cH7WYUN9ybzG3NXFdPpL9ZU5WN5GAyICXfYo3m63X03OZWPuTm3h
+skzp2a4dAfh+6KTF53ebUzoi0V+vX3tq5+jnMbDam/UfZBOdq+cK0CYU2VrOmNCj
+F0LcBDjzGBxepVLQS54Bvh/B5ymrIWjcub4zJ6gIIh0Sg5sUBBW2eg80my5wrD46
+7mvpMgl2D2FWy8dHkdyf4abotfnZj62d43XD+tqjfERuTRnJCDNh/O8q4MyMVw73
+69PiDuGJuPAhFns58FDN
+=bNmf
+-----END PGP SIGNATURE-----
