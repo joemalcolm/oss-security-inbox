@@ -1,48 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/03/5
-Message-Id: <20161003142341.C426D42E00C@smtpvbsrv1.mitre.org>
-Date: Mon,  3 Oct 2016 10:23:41 -0400 (EDT)
-From: cve-assign@...re.org
-To: ppandit@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, liqiang6-s@....cn
-Subject: Re: CVE request Qemu: net: Infinite loop in mcf_fec_do_tx
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/27/11
+Message-ID: <20160127220326.5a8828a2@pc1>
+Date: Wed, 27 Jan 2016 22:03:26 +0100
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: Heap buffer overflow in fgetwln function of libbsd
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+https://blog.fuzzing-project.org/36-Heap-buffer-overflow-in-fgetwln-function-of-libbsd.html
 
-> Quick Emulator(Qemu) built with the ColdFire Fast Ethernet Controller emulator
-> support is vulnerable to an infinite loop issue. It could occur while
-> processing packets on the transmit queue in 'mcf_fec_do_tx'.
-> 
-> A privileged user/process inside guest could use this issue to crash the Qemu
-> process on the host leading to DoS.
-> 
-> https://lists.gnu.org/archive/html/qemu-devel/2016-09/msg05557.html
+libbsd is a library to provide common functions from BSD systems on
+Linux.
 
->> http://git.qemu.org/?p=qemu.git;a=commit;h=070c4b92b8cd5390889716677a0b92444d6e087a
+libbsd 0.8.1 and earlier contains a buffer overflow in the function
+fgetwln(). An if checks if it is necessary to reallocate memory in the
+target buffer. However this check is off by one, therefore an out of
+bounds write happens.
 
-Use CVE-2016-7908.
+Upstream has released version 0.8.2 to fix this.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+I have checked where this function gets used. I didn't find any code
+using it, so I assume the impact is limited.
 
-iQIcBAEBCAAGBQJX8mkIAAoJEHb/MwWLVhi2JYoP/3+0IfxTkbFklvyaC8xBr/WW
-LOk4tonp6F9z+camxOsWlHoIMMJgJ8J8L2qgfVGspdtSHkG+d3XSJ7r287aftPiq
-raCjWOW8vpVS9YgE60K04VJTqOBwepq25okTngZenmFX4SgqdR4WdETTNoyXgssS
-Qmh5PR2zVLuQ/ZJgoYvL9rjnEGWjwXtaxCi4OwFLrcvU7NmxEP9vRi4l73a81qbU
-i6KkzJDzYmhGe2RRWGkTkCdsDEf85n8E6lHTN1u7JQ4j3AN1EbF9J6xZxhvwXmna
-wB8QMWYx1l/TNePFvw6fIwnTApmeetAlsPrkxSJ/zp0g4vFSOP6ApG4Y962yiTdP
-WuPU14aqHxY5Qqwj5rSCjuxUoKFWUaXovIpiTi3BsnGO8+4iuPOkzh1yLvdI+XIU
-3Hhk/oTcfutLbsQ+Dx762D/mP5iH49PDgaqq8zsPbhUmxMycaWAQQi35T195TW2q
-euMcc+MNzkLrDxwTpCqzVsJYewTmYzyE/LJXi93wxphkYmAV6qhipTw2iqiFkOrf
-DiNnJwLILlr3suNbZwBfoMLwa3ynoUjbk5Zw6Qcp3U5QFOGbM0THRI3yCIB8m6u1
-D4tru7IyKkjeV2p05Vv/Ollo3DvHetwN7cOo9D8mr+fRLngeNC6U0cgPX1mo9qvs
-pzZ1pgv1R0dLJsp5F7yN
-=1UlC
------END PGP SIGNATURE-----
+This bug was found with the help of Address Sanitizer.
+
+https://bugs.freedesktop.org/show_bug.cgi?id=93881
+http://cgit.freedesktop.org/libbsd/commit/?id=c8f0723d2b4520bdd6b9eb7c3e7976de726d7ff7
+
+-- 
+Hanno Böck
+http://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
+
+Content of type "application/pgp-signature" skipped
