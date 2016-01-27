@@ -1,48 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/24/2
-Message-Id: <20160424035818.A9F8672E09B@smtpvbsrv1.mitre.org>
-Date: Sat, 23 Apr 2016 23:58:18 -0400 (EDT)
-From: cve-assign@...re.org
-To: felipe.andres.manzano@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: Poppler < 0.40.0
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/28/1
+Message-ID: <56A8F223.2050908@knoware.nl.eu.org>
+Date: Wed, 27 Jan 2016 17:36:51 +0100
+From: Rob Janssen <rob@...ware.nl.eu.org>
+To: Luca BRUNO <lucab@...ian.org>, pool@...ts.ntp.org, oss-security@...ts.openwall.com, linuxbrad@...il.com
+Cc: team@...urity.debian.org, secalert@...hat.com
+Subject: Re: [Pool] shodan.io actively infiltrating ntp.org IPv6 pools for scanning purposes
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Luca BRUNO wrote:
+> [cross-posted to pool-ntp and oss-sec]
+>
+>
+> For ntp.org admins: can those rogue server be expunged from the pools, and the whole
+> shodan.io situation clarified?
 
-> This is a clean heap overflow.
-> 
-> https://cgit.freedesktop.org/poppler/poppler/commit/?id=b3425dd3261679958cd56c0f71995c15d2124433
+shodan.io are the bad guys!  block them wherever possible, put them in default blocklists suggested
+for firewalls, etc.
 
->> ExponentialFunction::ExponentialFunction(Object *funcObj, Dict *dict) {
->> ...
->> +  if (unlikely(n > funcMaxOutputs)) {
->> +  error(errSyntaxError, -1, "Function's C0 array is wrong length");
->> +  n = funcMaxOutputs;
->> +  }
+these guys really don't care.   when submitting networks for exclusion, they reply as if they will do something,
+sometimes the scanning may pause for a day or a week, then it always comes back.
 
-Use CVE-2015-8868.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXHEP+AAoJEHb/MwWLVhi2yCQP/jdyOQR6mHI2snwddK0mkFjC
-DOUAa2SMTDyVvoOmRcBUWspMtqgfBUlyzGQvBSSf7wKq5QyyDGVzc0q392Ik+j8A
-4NrFumG2uhUZGmt7ILzVAVRgOSVkNVVK3Ar8Ef/gX/MV+/ZQT/+YQFYlsauU28eE
-VF1gKrPNLoczFnPbmjzZbf6RnqIaAnvce1IIF6UZblEhudAUvjG0X4QNvyxJBqWb
-i0KOViYPc+VLqkYcNzGy3PFoDlUhU96xiSVpNPC7yoYFfrWrO4qLbO6V58tMALoz
-vcKPRdonELjcedxO1mpZAXkVXXkBrgWP/m/K3HsI7XM/qLaRYcjvtOZFBe+SNQrF
-HhVzGUBO8eB/1irkZTvqs3Qywbr4RZ9AC9+85Bl6lY4Tf58YmudMomn+IsPWAJ/o
-N0IBTnCH1xaTGStK4XFwgO6+wPoIh2x0gkpeOLgXA3ebpPcLN0x84Anbu0MRUpHN
-n6Ql07YXAtwmNpUrnQORklKqGSSo0k2GaANJKcxszHgF3fHCifQpbx2u6C0CON6f
-cVpYvbIRc+YhhlCgqt/I4BAE0QTw82zMht0rfx3+55l0Hx+eecqxnO+bNWBDZp0J
-xx1xQ/RF+KTs+OrozZk87w+M0La9Kn5VWQUEhwiXGOwom7edzJriJ9hteV7XSUT+
-nEohPLvL3NfXqCsYei4f
-=M8Dv
------END PGP SIGNATURE-----
+Rob
