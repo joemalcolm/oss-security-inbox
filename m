@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["989" "Monday" "19" "March" "2018" "12:47:45" "+0100" "=?UTF-8?B?RnJhbmNlc2NvIENoaWNjaGlyaWNjw7I=?=" "ilgrosso@apache.org" "<bf269dd1-c9df-54dd-209a-7a32d03705c7@apache.org>" "42" "[oss-security] [SECURITY] CVE-2018-1321: Remote code execution by administrators with report and template entitlements" nil nil nil "3" "2018031911:47:45" "[oss-security] [SECURITY] CVE-2018-1321: Remote code execution by administrators with report and template entitlements" (number mark "U       ilgrosso@apa Mar 19   42/989   " thread-indent "\"[oss-security] [SECURITY] CVE-2018-1321: Remote code execution by administrators with report and template entitlements\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3416" "Wednesday" "27" "January" "2016" "14:32:29" "+0000" "=?UTF-8?B?VGhvbWFzIEIuIFLDvGNrZXI=?=" "thomas@ruecker.fi" "<56A8D4FD.3010904@ruecker.fi>" "89" "Re: [oss-security] shodan.io actively infiltrating ntp.org IPv6 pools for scanning purposes" "^Cc:" nil nil "1" "2016012714:32:29" "[oss-security] shodan.io actively infiltrating ntp.org IPv6 pools for scanning purposes" (number mark "        thomas@rueck Jan 27   89/3416  " thread-indent "\"Re: [oss-security] shodan.io actively infiltrating ntp.org IPv6 pools for scanning purposes\"\n") "<2413003.GtkKFizscD@chimera>" ("<2413003.GtkKFizscD@chimera>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 14245 invoked by uid 550); 19 Mar 2018 12:10:34 -0000
+Received: (qmail 13358 invoked by uid 550); 27 Jan 2016 14:32:46 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,62 +11,109 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 19640 invoked from network); 19 Mar 2018 11:48:02 -0000
-To: "user@syncope.apache.org" <user@syncope.apache.org>,
- dev@syncope.apache.org, "security@apache.org" <security@apache.org>,
- oss-security@lists.openwall.com
-From: =?UTF-8?Q?Francesco_Chicchiricc=c3=b2?= <ilgrosso@apache.org>
-Message-ID: <bf269dd1-c9df-54dd-209a-7a32d03705c7@apache.org>
-Date: Mon, 19 Mar 2018 12:47:45 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.6.0
+Received: (qmail 13339 invoked from network); 27 Jan 2016 14:32:46 -0000
+References: <2413003.GtkKFizscD@chimera>
+Message-ID: <56A8D4FD.3010904@ruecker.fi>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.5.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-Subject: [oss-security] [SECURITY] CVE-2018-1321: Remote code execution by administrators
- with report and template entitlements
+In-Reply-To: <2413003.GtkKFizscD@chimera>
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+Cc: team@security.debian.org, secalert@redhat.com
+Date: Wed, 27 Jan 2016 14:32:29 +0000
+From: =?UTF-8?Q?Thomas_B._R=c3=bccker?= <thomas@ruecker.fi>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] shodan.io actively infiltrating ntp.org IPv6 pools
+ for scanning purposes
+To: oss-security@lists.openwall.com, pool@lists.ntp.org, linuxbrad@gmail.com
 
-CVE-2018-1321: Remote code execution by administrators with report and 
-template entitlements
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Severity: Medium
+On 01/27/2016 11:24 AM, Luca BRUNO wrote:
+> [cross-posted to pool-ntp and oss-sec]
+> 
+> Hi, while reviewing network logs this morning I spotted some
+> anomalies related to scan probes, ntp.org pools and IPv6.
+> 
+> It looks like Brad already observed and blogged about this some
+> days ago, but I haven't seen this discussed in the usual ntp-pools,
+> Debian and oss-sec ML, so I'm reposting this here: 
+> http://netpatterns.blogspot.de/2016/01/the-rising-sophistication-of-ne
+twork.html
+>
+>
+> 
+In summary, some machines (which seem related to the shodan.io scanning
+project)
+> are actively participating in pool.ntp.org as IPv6 endpoints. 
+> However, clients connecting to them for NTP timesync, are
+> subsequently scanned by probes originating from *.scan6.shodan.io
+> hosts.
+> 
+> Confirming original report from Brad, I can add that those scanners
+> seem to implement some kind of rate-limiting: they will timeout NTP
+> and won't re-scan recent clients when doing multiple/subsequent NTP
+> requests. Moreover, this is not targeted/restricted to the Debian
+> pool only, but plague the whole IPv6 pool, as seen on a sample
+> query to the RedHat pool:
+> 
+> ``` $ dig +short -t AAAA 2.rhel.pool.ntp.org | grep -E
+> ':[[:xdigit:]]00[[:xdigit:]]$' 2a03:b0c0:3:d0::18:b001 $ dig +short
+> -x 2a03:b0c0:3:d0::18:b001 analog.data.shodan.io. ```
 
-Vendor:
-The Apache Software Foundation
+While it's quite possible that the nodes are being run by Shodan, I
+don't see conclusive proof of that just yet.
+The reverse DNS, in my understanding could point to anything, including
+"localhost" and "example.org". It only gets confirmed by doing another
+DNS request, a forward lookup, for the previously received FQDN and
+comparing it to the initial IPv6 address.
 
-Versions Affected:
-* Releases prior to 1.2.11
-* Releases prior to 2.0.8
+In the example at hand this fails, as a lookup yields:
+analog.data.shodan.io has no AAAA record
+While whois data for the IPv6 address shows this to be a digitalocean
+droplet, just like mentioned by the linked blogpost regarding the other
+addresses. So there is no obvious association with Shodan.
 
-The unsupported Releases 1.0.x, 1.1.x may be also affected.
 
-Description:
-An administrator with report and template entitlements can use XSL 
-Transformations (XSLT) to perform malicious operations, including but 
-not limited to file read, file write, and code execution.
+> (Upon querying this server for NTP, the machine immediately got
+> IPv6-scanned by rock.scan6.shodan.io)
+> 
+> pool.ntp.org services are the default NTP servers in many default
+> configurations (at least most of Linux distro) and I guess that
+> this kind of behavior is dangerously increasing the exposure level
+> of way too many systems.
+> 
+> For ntp.org admins: can those rogue server be expunged from the
+> pools, and the whole shodan.io situation clarified? (Brad's post
+> has a comprehensive endpoints list and helper tools for detection)
+> 
+> For oss-sec crowd: is there anything we can do to improve the
+> situation and avoid similar cases in the future? Should
+> crowd-sourced and fundamental services like this be encouraged to
+> move to a stronger WoT?
 
-Solution:
-Syncope 1.2.x users upgrade to 1.2.11.
-Syncope 2.0.x users upgrade to 2.0.8.
+I think it would be good if someone would ask Shodan for a statement.
+This could clarify the above issue.
 
-Mitigation:
-Do not assign report and template entitlements to any administrator.
 
-Credit:
-This issue was discovered by ﻿Che-Chun Kuo.
+- From a security PoV I find this a fascinating and efficient approach to
+finding hosts in, by design, sparsely populated IPv6 subnets. Just goes
+to show, that if you don't want scans to reach your network, you should
+run a perimeter firewall (determining sensible rules is on another page)
+.
 
-References:
-[1] http://syncope.apache.org/security.html
+Cheers,
 
--- 
-Francesco Chicchiriccò
+Thomas
 
-Tirasa - Open Source Excellence
-http://www.tirasa.net/
 
-Member at The Apache Software Foundation
-Syncope, Cocoon, Olingo, CXF, OpenJPA, PonyMail
-http://home.apache.org/~ilgrosso/
 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iEYEARECAAYFAlao1P0ACgkQfkVKO9VkYGlXxwCeLZoe5ANFbCyOKtaESwagM54k
+fk0AnRP4OrloTSsT1zJdO13jpBkyQLDa
+=BShC
+-----END PGP SIGNATURE-----
