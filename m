@@ -1,26 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/05/3
-Message-ID: <1467728683@msgid.manchmal.in-ulm.de>
-Date: Tue, 5 Jul 2016 16:32:05 +0200
-From: Christoph Biedl <debian.axhn@...chmal.in-ulm.de>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2016-6160: Segmentation fault in tcprewrite (tcpreplay)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/27/9
+Message-Id: <20160127174044.A4E7C3AE070@smtpvbsrv1.mitre.org>
+Date: Wed, 27 Jan 2016 12:40:44 -0500 (EST)
+From: cve-assign@...re.org
+To: carnil@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: Linux: NULL pointer dereference netfilter/nf_nat_redirect.c in nf_nat_redirect_ipv4 function
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-as already reported in Debian BTS#829350, the tcprewrite program, part
-of the tcpreplay suite, does not check the size of the frames it
-processes. Huge frames may trigger a segmentation fault, and they
-occur on interfaces with an MTU of or close to 65536. For example, the
-loopback interface lo of the Linux kernel has such a value.
+> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=94f9cd81436c85d8c3a318ba92e236ede73752fc
+> netfilter: nf_nat_redirect: add missing NULL pointer check
 
-This has been assigned CVE-2016-6160.
+Use CVE-2015-8787.
 
-The Debian BTS also contains a fix.
 
-    Christoph
+>> this was once fixed in 2003.
+>> 
+>> http://marc.info/?l=netfilter-devel&m=106668497403047&w=2
 
-[1] https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=829350
+Use CVE-2003-1604 for this similar issue in the past. The added test
+for "indev->ifa_list == NULL" existed in 2.6.0 but did not exist in
+2.5.75.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJWqP+eAAoJEL54rhJi8gl5hr4P/jr7hZkO6mvdXvUvm2aHc4Xk
+9LgjyWsH0mtluEV50n8XiTMjpgCN0Zoyfyp5xKSPmrWDcPU18Va1f+9pdH1q8EW+
+V4YqsQPXm67JumFTvfZ0RkzFFtrCdAsHwjg0k1PBnAVj7Xv5P3vXOuEN+zyVUUIF
+uYdwzaROhD83abJEtTOP/iIchx8SL1tlj69C5zBSCJZDwkXt/4q4FvI0A3HBoPgx
+7DpkibYIVMl7/uPfDly2nc2r/uxWooqtm4CU4MB96hGp3kjM1feKtUDk0V0mj52m
+MXaSnjyGEES89ubuUGAnwA3QXOxm2NgBXzATbQXhtoaIiWY1ur+c4Couka2n0owu
+BfIhn2auRuMAdbUK9uMPzBPRj4BkGaMaJjbGsQa/Ldb/UiNoQ3O7jRQ3WkKlJPo8
+Qt0d3bDp+XUiv1O2j4Az4lr3uUNoc4M3VSEyfkXin0nIe7qmU7L0rPlKPg09zzo9
+i+C+jXffMb5tTghS0uKvkqLvtp1SdRmflhX+pq04giIhyJm96ySSHDAwUfwxOyPH
+5AZg0QgnfwXFPR/XdWBjlH65hufbDGHjghmMH5ZD/opobjefbx+nKGZaegBvANAW
+6aRWoefjVAfJ3ADf8IypDRpqL5dUiuZn8wy3cTY58eidQHz19YwHwZrFrDrygI8b
+1l+I4JYQ96Ugm67xWHvM
+=yd8J
+-----END PGP SIGNATURE-----
